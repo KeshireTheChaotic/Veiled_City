@@ -28,7 +28,8 @@ export function loadConfig(){
     rulesMaxOutputTokens:Number(process.env.RULES_MAX_OUTPUT_TOKENS||500),
     assemblyMaxOutputTokens:Number(process.env.ASSEMBLY_MAX_OUTPUT_TOKENS||1200),
     npcProxyMaxOutputTokens:Number(process.env.NPC_PROXY_MAX_OUTPUT_TOKENS||1200),
-    characterMaxOutputTokens:Number(process.env.CHARACTER_MAX_OUTPUT_TOKENS||1800),
+    characterMaxOutputTokens:Number(process.env.CHARACTER_MAX_OUTPUT_TOKENS||3200),
+    structuredRetryMaxTokens:Number(process.env.STRUCTURED_JSON_RETRY_MAX_TOKENS||6000),
     downtimeMaxOutputTokens:Number(process.env.DOWNTIME_MAX_OUTPUT_TOKENS||1800),
     defaultResponseMode:process.env.DEFAULT_RESPONSE_MODE||"assisted"
   };

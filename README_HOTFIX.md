@@ -1,21 +1,27 @@
-# Veiled City v3.2.2 Command-Size Hotfix
+# Veiled City v3.2.3 JSON Hotfix
 
-Apply over a v3.2.1 installation. This patch does **not** contain or replace `bot/.env` or `bot/data/veiled_city.sqlite`.
+Apply these files over an existing **v3.2.2** installation.
 
-After copying the files into your existing Veiled City folder, run from `bot/`:
+This fixes `/vc-character concept` failures involving quoted descriptions and malformed/truncated structured JSON, including `Expected double-quoted property name` and `Unexpected end of JSON input`.
+
+Preserve your existing `bot/.env` and `bot/data/veiled_city.sqlite`.
+
+From `bot/` run:
 
 ```powershell
 npm install
 npm run check
 npm run test:offline
-npm run register
 npm start
 ```
 
-Expected registration result:
+No `npm run register` is required when upgrading directly from v3.2.2 because the Discord command tree is unchanged.
 
-```text
-Registered 17 root command(s) to guild <guild id>.
+Optional `.env` update:
+
+```env
+CHARACTER_MAX_OUTPUT_TOKENS=3200
+STRUCTURED_JSON_RETRY_MAX_TOKENS=6000
 ```
 
-Command families are now split (`/vc-session`, `/vc-character`, `/vc-encounter`, `/vc-combat`, etc.) to remain below Discord's 8,000-character per-command limit.
+The code enforces at least 3200 output tokens for character concepts even if the old `.env` still says 1800.

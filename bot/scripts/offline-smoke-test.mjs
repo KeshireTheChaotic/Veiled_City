@@ -6,6 +6,7 @@ import { applyGMEvents } from "../src/state.js";
 import { baseBattlePoints, partyTier, livePcRoster, autoBuildComposition, recomputeBudget, EncounterLibrary } from "../src/encounter.js";
 import { buildCombatants, hpMarksForDamage } from "../src/combat.js";
 import { prepareLevelup, applyLevelupToData, validateConceptDraft } from "../src/character-system.js";
+import { GMService, parseStructuredJsonText } from "../src/gm.js";
 
 const dir=fs.mkdtempSync(path.join(os.tmpdir(),"veilkeeper31-"));
 const dbPath=path.join(dir,"test.sqlite");
@@ -148,6 +149,41 @@ if(db.listDowntimeProjects(cycle.id)[0].progress!==2) throw new Error("Downtime 
 db.resolveDowntimeCycle(cycle.id,"Downtime test resolved.");
 if(db.getDowntimeCycle(cycle.id).status!=="resolved") throw new Error("Downtime cycle resolution failed.");
 
-console.log("Veilkeeper v3.2.2 offline smoke test: PASS");
+
+// v3.2.3 structured JSON robustness: quoted player text + truncated first response retry.
+const quotedDescription=`An orphan called "Rat Princess" says the grave whispers "don't follow"; path C:\\Temp\\veil\nShe carries {chalk} and a key.`;
+const roundTrip=parseStructuredJsonText(JSON.stringify({description:quotedDescription}),{label:"quoted-input regression"});
+if(roundTrip.description!==quotedDescription) throw new Error("Quoted/backslash/newline JSON round-trip failed.");
+let truncatedDetected=false;
+try{ parseStructuredJsonText('{"name":"Ryas","notes":"unfinished',{label:"truncated regression"}); }
+catch(e){ truncatedDetected=e.code==="STRUCTURED_JSON_TRUNCATED"; }
+if(!truncatedDetected) throw new Error("Unexpected-end/truncated JSON was not detected.");
+let malformedQuoteDetected=false;
+try{ parseStructuredJsonText('{"name":"Ryas","notes":"Known as "Rat Princess"."}',{label:"quoted-output regression"}); }
+catch(e){ malformedQuoteDetected=e.code==="STRUCTURED_JSON_INVALID"; }
+if(!malformedQuoteDetected) throw new Error("Malformed quoted JSON was not detected.");
+let structuredCalls=0;
+const retryDraft={
+  name:"Ryas",pronouns:"she/her",class:"Ranger",subclass:"Wayfinder",ancestry:"Spirit-Touched",community:"Streetborne",
+  domains:["Bone","Veil"],traits:{agility:1,strength:0,finesse:1,instinct:2,presence:-1,knowledge:0},
+  resources:{hp:{current:0,max:0},stress:{current:0,max:0},hope:2,armor:{current:0,max:0}},evasion:0,proficiency:1,
+  experiences:["Street Survivor","Grave-Touched"],domain_cards:["Untouchable","Threshold Sense"],inventory:[],background:"Orphaned street survivor.",
+  home:"The streets",person:"",obligation:"Stay alive",opening_status:"On the run",goals:["Understand the grave resonance"],
+  unresolved_incident:"A near-death event left a grave resonance.",faction_connections:[],entry_hooks:["A ghost points her toward the current incident"],exit_hooks:["She disappears into the city"],
+  hook_proposals:[{text:"Why does the grave keep noticing her?",classification:"open_question"}],notes:'Known as "Rat Princess".',mechanical_notes:"Verify exact class chassis values."
+};
+const fakeAI={responses:{create:async(req)=>{
+  structuredCalls++;
+  if(structuredCalls===1) return {status:"incomplete",incomplete_details:{reason:"max_output_tokens"},output_text:'{"name":"Ryas","notes":"Known as \"Rat Princess\"'};
+  if(!String(req.input).includes("STRUCTURED OUTPUT RETRY")) throw new Error("Structured retry instruction missing.");
+  if(Number(req.max_output_tokens||0)<3000) throw new Error("Structured retry did not increase output budget.");
+  return {status:"completed",output_text:JSON.stringify(retryDraft)};
+}}};
+const fakeContent={search:()=>[]};
+const jsonGM=new GMService({db:null,content:fakeContent,config:{openaiKey:"test",maxContentChunks:8,characterModel:"test-model",characterMaxOutputTokens:1800,structuredRetryMaxTokens:6000},ai:fakeAI});
+const generated=await jsonGM.draftCharacterConcept({guildId:"g",userId:"u",userName:"Tester",description:quotedDescription});
+if(generated.name!=="Ryas"||structuredCalls!==2) throw new Error("Structured concept retry failed.");
+
+console.log("Veilkeeper v3.2.3 offline smoke test: PASS");
 db.close();
 fs.rmSync(dir,{recursive:true,force:true});
