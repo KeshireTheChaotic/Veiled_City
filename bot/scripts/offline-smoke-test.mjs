@@ -148,6 +148,6 @@ if(db.listDowntimeProjects(cycle.id)[0].progress!==2) throw new Error("Downtime 
 db.resolveDowntimeCycle(cycle.id,"Downtime test resolved.");
 if(db.getDowntimeCycle(cycle.id).status!=="resolved") throw new Error("Downtime cycle resolution failed.");
 
-console.log("Veilkeeper v3.2.0 offline smoke test: PASS");
+console.log("Veilkeeper v3.2.2 offline smoke test: PASS");
 db.close();
 fs.rmSync(dir,{recursive:true,force:true});

@@ -11,8 +11,7 @@ import { buildCombatants, hpMarksForDamage, combatantLine } from "./combat.js";
 import { applyGMEvents } from "./state.js";
 
 export function buildCommands(){
-  return [
-    new SlashCommandBuilder()
+  const monolith = new SlashCommandBuilder()
       .setName("vc")
       .setDescription("Veiled City multiplayer campaign commands")
       .addSubcommandGroup(g=>g.setName("campaign").setDescription("Campaign setup and status")
@@ -249,7 +248,32 @@ export function buildCommands(){
           .addStringOption(o=>o.setName("visibility").setDescription("Who may know it").setRequired(true).addChoices(
             {name:"Party",value:"party"},{name:"Public",value:"public"},{name:"Specific player",value:"player"},{name:"GM only",value:"gm"}))
           .addUserOption(o=>o.setName("player").setDescription("Required for player visibility"))))
-  ].map(x=>x.toJSON());
+  ;
+  const full=monolith.toJSON();
+  const splitMap={
+    character:{
+      "vc-character":["create","import","list","select","sheet","retire","death","concept","concept-status","concept-accept"],
+      "vc-level":["level-up","level-choose","level-confirm"]
+    },
+    encounter:{
+      "vc-encounter":["build","status","adjust","add","remove","start","end"],
+      "vc-combat":["combatants","damage","heal","stress","condition","combatant-status"]
+    }
+  };
+  const commands=[];
+  for(const group of full.options??[]){
+    const partitions=splitMap[group.name];
+    if(partitions){
+      for(const [name,names] of Object.entries(partitions)){
+        const wanted=new Set(names);
+        const options=(group.options??[]).filter(o=>wanted.has(o.name));
+        commands.push({name,description:group.description,type:1,options});
+      }
+    }else{
+      commands.push({name:`vc-${group.name}`,description:group.description,type:1,options:group.options??[]});
+    }
+  }
+  return commands;
 }
 
 function json(c){ return c?.data ?? {}; }
@@ -398,7 +422,7 @@ function formatNpcProxyPacket(proxy,{offered=false}={}){
     list("Scene Cues",p.scene_cues),
     `\n## DO`,dos.map(x=>`- ${x}`).join("\n"),
     `\n## DON'T`,donts.map(x=>`- ${x}`).join("\n"),
-    offered?`\n**To accept:** \`/vc npc claim npc:${proxy.npc_name}\`\n**To decline:** \`/vc npc decline npc:${proxy.npc_name}\``:
+    offered?`\n**To accept:** \`/vc-npc claim npc:${proxy.npc_name}\`\n**To decline:** \`/vc-npc decline npc:${proxy.npc_name}\``:
       `\nWhen posting as this NPC, prefix with \`${proxy.npc_name}:\` or \`[${proxy.npc_name}]\` if you also control another character. If this is your only active role, ordinary #the-table messages default to this NPC.`
   ].filter(Boolean).join("\n").slice(0,12000);
 }
@@ -441,7 +465,7 @@ function formatLevelupDraft(draft,character){
     `**Level Up — ${character?.name||"Character"} ${draft.from_level} → ${draft.to_level}**`,
     `Tier achievement: ${achievement.new_experience?"new Experience +2; ":""}${achievement.proficiency?"+1 Proficiency; ":""}${achievement.clear_trait_marks?"clear marked traits":"none"}`,
     `Legal advancements: ${legalAdvancements(draft.to_level).join(", ")}`,
-    p?`Selected: ${p.advancements.join(" + ")}\nMandatory card: ${p.automatic_domain_card.name} (${p.automatic_domain_card.domain} ${p.automatic_domain_card.level})\nStatus: **${draft.status}**`:`Use \`/vc character level-choose\` to choose two advancements and the mandatory domain card.`,
+    p?`Selected: ${p.advancements.join(" + ")}\nMandatory card: ${p.automatic_domain_card.name} (${p.automatic_domain_card.domain} ${p.automatic_domain_card.level})\nStatus: **${draft.status}**`:`Use \`/vc-level level-choose\` to choose two advancements and the mandatory domain card.`,
     `Draft ID: \`${draft.id.slice(0,8)}\``
   ].join("\n").slice(0,1900);
 }
@@ -478,11 +502,22 @@ async function deletePublishedNotInSnapshot({db,guild,snapshot}){
 }
 
 export async function handleCommand(interaction,{db,gm}){
-  if(!interaction.isChatInputCommand()||interaction.commandName!=="vc") return false;
+  if(!interaction.isChatInputCommand()) return false;
+  const commandName=interaction.commandName;
+  if(commandName!=="vc"&&!commandName.startsWith("vc-")) return false;
   if(!interaction.guildId) { await interaction.reply({content:"Veiled City commands must be used in a server.",ephemeral:true}); return true; }
   await ensurePlayer(db,interaction);
-  const group=interaction.options.getSubcommandGroup();
-  const sub=interaction.options.getSubcommand();
+  let group;
+  let sub;
+  if(commandName==="vc"){
+    // Compatibility with any stale pre-3.2.2 guild command until Discord replaces it.
+    group=interaction.options.getSubcommandGroup();
+    sub=interaction.options.getSubcommand();
+  }else{
+    const root=commandName.slice(3);
+    group=root==="level"?"character":root==="combat"?"encounter":root;
+    sub=interaction.options.getSubcommand();
+  }
   try{
     if(group==="campaign"&&sub==="setup"){
       if(!isGM(db,interaction)) throw new Error("Manage Server or the configured GM role is required.");
@@ -540,10 +575,10 @@ export async function handleCommand(interaction,{db,gm}){
       // Known players default to absent/offscreen until they opt in.
       for(const p of db.listPlayers(interaction.guildId)) db.setPresence(s.id,p.discord_user_id,"absent","offscreen",null,"Not checked in.");
       const next=s.assembly_phase==="party"
-        ?"Returning established party: check in with `/vc session present`."
+        ?"Returning established party: check in with `/vc-session present`."
         :assembly==="manual"
           ?"Manual assembly selected; the human GM introduces the PCs."
-          :"After expected players check in, the GM runs `/vc session assemble`.";
+          :"After expected players check in, the GM runs `/vc-session assemble`.";
       await interaction.reply(`**Session ${s.session_number} started${s.title?`: ${s.title}`:""}.** Assembly: **${assembly}**. ${next}`);
       await postGmLog({db,guild:interaction.guild,sessionId:s.id,title:`Session ${s.session_number} started`,details:`${s.title||"Untitled session"}
 Assembly mode: ${assembly}
@@ -656,7 +691,7 @@ Initial phase: ${s.assembly_phase}`});
         domains:(interaction.options.getString("domains")||"").split(",").map(x=>x.trim()).filter(Boolean)
       };
       const c=db.createCharacter(interaction.guildId,interaction.user.id,name,data);
-      await interaction.reply({content:`Created:\n${formatSheet(c)}\n\nUse \`/vc character import\` for a fully populated sheet or \`/vc character select\` during a session.`,ephemeral:true});
+      await interaction.reply({content:`Created:\n${formatSheet(c)}\n\nUse \`/vc-character import\` for a fully populated sheet or \`/vc-character select\` during a session.`,ephemeral:true});
       return true;
     }
     if(group==="character"&&sub==="import"){
@@ -723,7 +758,7 @@ Initial phase: ${s.assembly_phase}`});
       const draft=await gm.draftCharacterConcept({guildId:interaction.guildId,userId:interaction.user.id,userName:interaction.member?.displayName||interaction.user.username,description});
       const validation=validateConceptDraft(draft);
       const row=db.createCharacterDraft(interaction.guildId,interaction.user.id,description,draft);
-      const note=validation.ok?"\n\n✅ Draft passes v3.2 level-1 structural validation. Review it, then use /vc character concept-accept.":`\n\n⚠️ Draft needs revision before acceptance:\n${validation.errors.map(x=>`• ${x}`).join("\n")}\nRun /vc character concept again with the correction in your description.`;
+      const note=validation.ok?"\n\n✅ Draft passes v3.2 level-1 structural validation. Review it, then use /vc-character concept-accept.":`\n\n⚠️ Draft needs revision before acceptance:\n${validation.errors.map(x=>`• ${x}`).join("\n")}\nRun /vc-character concept again with the correction in your description.`;
       await interaction.editReply((formatConceptDraft(row)+note).slice(0,1950));
       return true;
     }
@@ -756,7 +791,7 @@ Initial phase: ${s.assembly_phase}`});
     }
     if(group==="character"&&sub==="level-choose"){
       const draft=db.latestLevelupDraft(interaction.guildId,interaction.user.id);
-      if(!draft) throw new Error("No pending level-up draft. Start with `/vc character level-up`.");
+      if(!draft) throw new Error("No pending level-up draft. Start with `/vc-level level-up`.");
       const c=db.getCharacter(draft.character_id); if(!c||c.owner_user_id!==interaction.user.id) throw new Error("Level-up character is unavailable.");
       const plan=prepareLevelup(c,{
         advancementOne:interaction.options.getString("advancement_one",true),
@@ -770,12 +805,12 @@ Initial phase: ${s.assembly_phase}`});
         customCards:customDomainCards(gm)
       });
       const ready=db.updateLevelupDraft(draft.id,{...draft.choices,plan},"ready");
-      await interaction.reply({content:formatLevelupDraft(ready,c)+"\n\nUse `/vc character level-confirm` to commit this level-up.",ephemeral:true});
+      await interaction.reply({content:formatLevelupDraft(ready,c)+"\n\nUse `/vc-level level-confirm` to commit this level-up.",ephemeral:true});
       return true;
     }
     if(group==="character"&&sub==="level-confirm"){
       const draft=db.latestLevelupDraft(interaction.guildId,interaction.user.id);
-      if(!draft||draft.status!=="ready"||!draft.choices?.plan) throw new Error("No ready level-up draft. Use `/vc character level-choose` first.");
+      if(!draft||draft.status!=="ready"||!draft.choices?.plan) throw new Error("No ready level-up draft. Use `/vc-level level-choose` first.");
       const c=db.getCharacter(draft.character_id); if(!c||c.owner_user_id!==interaction.user.id) throw new Error("Level-up character is unavailable.");
       db.snapshotCampaign(interaction.guildId,{label:`Pre-level ${c.name}`,reason:`Before ${c.name} level ${draft.from_level}→${draft.to_level}`,createdBy:interaction.user.id});
       const next=applyLevelupToData(c.data,draft.choices.plan);
@@ -987,7 +1022,7 @@ Initial phase: ${s.assembly_phase}`});
       }
       if(["damage","heal","stress","condition","combatant-status"].includes(sub)){
         const e=db.getCurrentEncounter(session.id); if(!e||e.status!=="active") throw new Error("No active encounter.");
-        const target=interaction.options.getString("target",true); const c=db.findCombatant(e.id,target); if(!c) throw new Error("Combatant not found. Use `/vc encounter combatants` for IDs.");
+        const target=interaction.options.getString("target",true); const c=db.findCombatant(e.id,target); if(!c) throw new Error("Combatant not found. Use `/vc-combat combatants` for IDs.");
         let next=c; let detail="";
         if(sub==="damage"){
           const amount=interaction.options.getInteger("amount",true); const marks=hpMarksForDamage(c,amount);
@@ -1137,7 +1172,7 @@ Initial phase: ${s.assembly_phase}`});
       if(db.getActiveSession(interaction.guildId)) throw new Error("Downtime can only be opened between sessions.");
       const last=db.db.prepare("SELECT id FROM sessions WHERE guild_id=? AND status='ended' ORDER BY session_number DESC LIMIT 1").get(interaction.guildId);
       const cycle=db.openDowntime(interaction.guildId,{label:interaction.options.getString("label")||"Between Sessions",sourceSessionId:last?.id||null,notes:interaction.options.getString("notes")||"",openedBy:interaction.user.id});
-      await interaction.reply({content:`Opened downtime cycle **${cycle.label}**. Players may submit projects with \`/vc downtime project\`.`,ephemeral:false});
+      await interaction.reply({content:`Opened downtime cycle **${cycle.label}**. Players may submit projects with \`/vc-downtime project\`.`,ephemeral:false});
       return true;
     }
     if(group==="downtime"&&sub==="project"){
@@ -1184,8 +1219,8 @@ Initial phase: ${s.assembly_phase}`});
     if(group==="canon"&&sub==="set"){
       if(!isGM(db,interaction)) throw new Error("GM/admin permission required.");
       const s=db.getActiveSession(interaction.guildId);
-      const r=db.proposeCanon(interaction.guildId,{key:interaction.options.getString("key",true),value:interaction.options.getString("value",true),visibility:interaction.options.getString("visibility")||"party",sessionId:s?.id||null,sourceType:"human_gm",sourceId:interaction.user.id,provenance:"/vc canon set"});
-      if(r.status==="conflict") await interaction.reply({content:`⚠️ Canon conflict created: \`${r.conflict.id.slice(0,8)}\`\nExisting: ${r.existing.value}\nProposed: ${r.conflict.proposed_value}\nResolve with \`/vc canon resolve\`.`,ephemeral:true});
+      const r=db.proposeCanon(interaction.guildId,{key:interaction.options.getString("key",true),value:interaction.options.getString("value",true),visibility:interaction.options.getString("visibility")||"party",sessionId:s?.id||null,sourceType:"human_gm",sourceId:interaction.user.id,provenance:"/vc-canon set"});
+      if(r.status==="conflict") await interaction.reply({content:`⚠️ Canon conflict created: \`${r.conflict.id.slice(0,8)}\`\nExisting: ${r.existing.value}\nProposed: ${r.conflict.proposed_value}\nResolve with \`/vc-canon resolve\`.`,ephemeral:true});
       else await interaction.reply({content:`Canon **${r.status}**: \`${interaction.options.getString("key",true).toLowerCase()}\` = ${interaction.options.getString("value",true)}`,ephemeral:true});
       return true;
     }

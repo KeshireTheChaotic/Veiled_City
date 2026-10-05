@@ -1,3 +1,33 @@
+const MAX_COMMAND_CHARS=8000;
+
+function longestLocalizedLength(base,localizations){
+  let max=typeof base==="string"?base.length:base==null?0:String(base).length;
+  if(localizations&&typeof localizations==="object"){
+    for(const value of Object.values(localizations)){
+      const n=typeof value==="string"?value.length:value==null?0:String(value).length;
+      if(n>max) max=n;
+    }
+  }
+  return max;
+}
+
+// Discord's 8,000-character limit counts the combined name, description, and
+// value properties of one command, its options/subcommands/groups, and choices.
+// When localizations exist, only the longest variant of each field counts.
+export function commandCharacterCount(command){
+  let total=0;
+  function walk(node){
+    if(!node||typeof node!=="object") return;
+    if("name" in node) total+=longestLocalizedLength(node.name,node.name_localizations);
+    if("description" in node) total+=longestLocalizedLength(node.description,node.description_localizations);
+    if("value" in node&&node.value!=null) total+=String(node.value).length;
+    for(const child of node.options??[]) walk(child);
+    for(const choice of node.choices??[]) walk(choice);
+  }
+  walk(command);
+  return total;
+}
+
 export function validateCommandSchema(commands){
   const errors=[];
   const pathName=(parts)=>parts.join(" ");
@@ -19,14 +49,21 @@ export function validateCommandSchema(commands){
   }
 
   function validateNode(node,path=[node.name]){
-    if(!/^[\w-]{1,32}$/.test(node.name??"")) errors.push(`${pathName(path)} has invalid Discord command name '${node.name}'.`);
+    if(!/^[-_'\p{L}\p{N}\p{sc=Deva}\p{sc=Thai}]{1,32}$/u.test(node.name??"")) errors.push(`${pathName(path)} has invalid Discord command name '${node.name}'.`);
     if(typeof node.description==="string"&&(node.description.length<1||node.description.length>100)){
       errors.push(`${pathName(path)} description length is ${node.description.length}; expected 1-100.`);
     }
     validateOptions(node.options??[],path);
   }
 
-  for(const command of commands) validateNode(command,[command.name]);
+  const seen=new Set();
+  for(const command of commands){
+    if(seen.has(command.name)) errors.push(`Duplicate root command name '${command.name}'.`);
+    seen.add(command.name);
+    validateNode(command,[command.name]);
+    const chars=commandCharacterCount(command);
+    if(chars>MAX_COMMAND_CHARS) errors.push(`${command.name} uses ${chars} Discord command characters; maximum is ${MAX_COMMAND_CHARS}. Split or shorten this command.`);
+  }
   return errors;
 }
 

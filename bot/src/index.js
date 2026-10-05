@@ -70,7 +70,7 @@ function resolveController(session,message){
 }
 
 client.once("ready",()=>{
-  console.log(`Veilkeeper v3.2.0 logged in as ${client.user.tag}`);
+  console.log(`Veilkeeper v3.2.2 logged in as ${client.user.tag}`);
   console.log(`Indexed ${content.chunks.length} Veiled City content chunks.`);
 });
 
