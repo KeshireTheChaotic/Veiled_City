@@ -875,6 +875,76 @@ export class VeiledDB {
     return {processed,created,skipped};
   }
 
+  // ----- v3.3.1 player-safe character-concept context -----
+  recentSessions(guildId,{limit=10}={}){
+    return this.db.prepare(`SELECT * FROM sessions WHERE guild_id=? AND status='ended' ORDER BY session_number DESC LIMIT ?`).all(guildId,Math.max(1,Math.min(25,Number(limit)||10))).reverse();
+  }
+  recentPartyMessages(guildId,{limit=40}={}){
+    return this.db.prepare(`SELECT * FROM (SELECT * FROM messages WHERE guild_id=? AND visibility IN ('public','party') ORDER BY id DESC LIMIT ?) ORDER BY id ASC`).all(guildId,Math.max(1,Math.min(100,Number(limit)||40)));
+  }
+  playerSafeThreads(guildId,{limit=120}={}){
+    return this.db.prepare(`SELECT * FROM threads WHERE guild_id=? AND visibility IN ('public','party') ORDER BY CASE status WHEN 'active' THEN 0 WHEN 'dormant' THEN 1 ELSE 2 END,updated_at DESC LIMIT ?`).all(guildId,Math.max(1,Math.min(250,Number(limit)||120)));
+  }
+  playerSafeFacts(guildId,{limit=160}={}){
+    return this.db.prepare(`SELECT * FROM facts WHERE guild_id=? AND visibility IN ('public','party') ORDER BY created_at DESC LIMIT ?`).all(guildId,Math.max(1,Math.min(300,Number(limit)||160)));
+  }
+  playerSafeClocks(guildId){
+    return this.db.prepare(`SELECT * FROM clocks WHERE guild_id=? AND visibility IN ('public','party') ORDER BY clock_key`).all(guildId);
+  }
+  playerSafeDowntime(guildId){
+    const cycle=this.db.prepare(`SELECT * FROM downtime_cycles WHERE guild_id=? AND status IN ('open','resolving','resolved') ORDER BY opened_at DESC LIMIT 1`).get(guildId);
+    if(!cycle) return {cycle:null,projects:[]};
+    const projects=this.db.prepare(`SELECT * FROM downtime_projects WHERE cycle_id=? AND visibility IN ('public','party') ORDER BY created_at`).all(cycle.id);
+    return {cycle,projects};
+  }
+
+  // ----- v3.3.1 imported GM-only concept hooks -----
+  upsertCharacterGmHook(guildId,characterId,hook,{source="external_character_creator"}={}){
+    const c=this.getCharacter(characterId); if(!c||c.guild_id!==guildId) throw new Error("Character not found for GM hook import.");
+    const key=String(hook?.key||hook?.title||randomUUID()).trim().toLowerCase().replace(/[^a-z0-9._-]+/g,"-").replace(/^-+|-+$/g,"")||randomUUID();
+    const existing=this.db.prepare(`SELECT * FROM character_gm_hooks WHERE character_id=? AND hook_key=?`).get(characterId,key);
+    const id=existing?.id||randomUUID();
+    const title=String(hook?.title||key).trim();
+    const type=String(hook?.type||"other").trim();
+    const premise=String(hook?.premise||"").trim();
+    const permission=String(hook?.permission||"open_question").trim();
+    const suggestedEntry=String(hook?.suggested_entry||"").trim();
+    this.db.prepare(`INSERT INTO character_gm_hooks(id,guild_id,character_id,hook_key,title,hook_type,premise,permission,suggested_entry,payload_json,source)
+      VALUES(?,?,?,?,?,?,?,?,?,?,?) ON CONFLICT(character_id,hook_key) DO UPDATE SET title=excluded.title,hook_type=excluded.hook_type,premise=excluded.premise,permission=excluded.permission,suggested_entry=excluded.suggested_entry,payload_json=excluded.payload_json,source=excluded.source,status='active',updated_at=CURRENT_TIMESTAMP`)
+      .run(id,guildId,characterId,key,title,type,premise,permission,suggestedEntry,JSON.stringify(hook||{}),source);
+    return this.getCharacterGmHook(id);
+  }
+  getCharacterGmHook(id){ const r=this.db.prepare(`SELECT * FROM character_gm_hooks WHERE id=?`).get(id); return r?{...r,payload:JSON.parse(r.payload_json||"{}")} : null; }
+  listCharacterGmHooks(guildId,characterId,{includeResolved=false}={}){
+    const sql=includeResolved?`SELECT * FROM character_gm_hooks WHERE guild_id=? AND character_id=? ORDER BY updated_at DESC`:`SELECT * FROM character_gm_hooks WHERE guild_id=? AND character_id=? AND status='active' ORDER BY updated_at DESC`;
+    return this.db.prepare(sql).all(guildId,characterId).map(r=>({...r,payload:JSON.parse(r.payload_json||"{}")}));
+  }
+  importCharacterGmHooks(guildId,character,packet){
+    if(!character||character.guild_id!==guildId) throw new Error("Campaign character not found.");
+    if(!packet||typeof packet!=="object") throw new Error("GM hook package must be a JSON object.");
+    const hooks=Array.isArray(packet.hooks)?packet.hooks:[];
+    const canonSuggestions=Array.isArray(packet.canon_suggestions)?packet.canon_suggestions:[];
+    let imported=0,relationships=0;
+    for(const h of hooks){
+      this.upsertCharacterGmHook(guildId,character.id,h); imported++;
+      for(const t of Array.isArray(h.targets)?h.targets:[]){
+        const type=String(t.type||"entity");
+        let key,label=String(t.label||t.key||"").trim(); if(!label) continue;
+        if(type==="character"){
+          const other=this.findGuildCharacter(guildId,label,{includeClosed:true}); if(!other) continue; key=other.id; label=other.name;
+        }else key=String(t.key||this.relationshipEntityKey(type,label));
+        this.upsertRelationship(guildId,{fromType:"character",fromKey:character.id,fromLabel:character.name,toType:type,toKey:key,toLabel:label,relationshipType:t.relationship_type||"contact",score:Number(t.score)||0,visibility:"gm",note:String(t.note||h.premise||"Imported GM-only concept hook."),source:"external_character_creator",sourceCharacterId:character.id});
+        relationships++;
+      }
+    }
+    for(const s of canonSuggestions){
+      const key=String(s?.key||`canon-suggestion-${randomUUID()}`).trim();
+      this.upsertCharacterGmHook(guildId,character.id,{key:`canon.${key}`,title:`Canon suggestion: ${key}`,type:"canon_suggestion",premise:String(s?.value||""),permission:"gm_review_required",suggested_entry:"",notes:String(s?.reason||""),canon_suggestion:s});
+      imported++;
+    }
+    return {hooks:imported,relationships,canon_suggestions:canonSuggestions.length};
+  }
+
   // ----- v3.3.0 evidence / handouts -----
   createHandout(guildId,{sessionId=null,title,kind="document",authority="canonical",visibility="party",subjectUserId=null,subjectCharacterId=null,content="",canonicalFacts=[],caseKey="",npcKey="",locationKey="",source="human_gm",metadata={}}={}){
     if(!String(title||"").trim()) throw new Error("Handout title is required.");
@@ -904,7 +974,7 @@ export class VeiledDB {
     const id=randomUUID();
     const sessionIds=this.db.prepare("SELECT id FROM sessions WHERE guild_id=?").all(guildId).map(x=>x.id);
     const qmarks=sessionIds.length?sessionIds.map(()=>"?").join(","):"NULL";
-    const directTables=["players","characters","sessions","facts","clocks","threads","reference_entries","published_messages","npc_proxies","encounters","encounter_combatants","character_drafts","levelup_drafts","canon_events","canon_conflicts","downtime_cycles","downtime_projects","rules_rulings","relationships","relationship_hook_imports","handouts","encounter_aftermath"];
+    const directTables=["players","characters","sessions","facts","clocks","threads","reference_entries","published_messages","npc_proxies","encounters","encounter_combatants","character_drafts","levelup_drafts","canon_events","canon_conflicts","downtime_cycles","downtime_projects","rules_rulings","relationships","relationship_hook_imports","character_gm_hooks","handouts","encounter_aftermath"];
     const state={campaign:this.getCampaign(guildId),tables:{}};
     for(const table of directTables){
       try{state.tables[table]=this.db.prepare(`SELECT * FROM ${table} WHERE guild_id=?`).all(guildId);}catch{state.tables[table]=[];}
@@ -930,8 +1000,8 @@ export class VeiledDB {
     const snap=this.getSnapshot(snapshotId); if(!snap||snap.guild_id!==guildId) throw new Error("Snapshot not found for this campaign.");
     this.snapshotCampaign(guildId,{label:"Pre-rollback safety",reason:`Before rollback to ${snapshotId}`,createdBy:actorId});
     const state=snap.state;
-    const delOrder=["encounter_aftermath","encounter_combatants","npc_proxies","session_characters","session_presence","levelup_drafts","downtime_projects","canon_conflicts","canon_events","relationships","relationship_hook_imports","handouts","encounters","sessions","character_drafts","characters","players","facts","clocks","threads","reference_entries","published_messages","downtime_cycles","rules_rulings"];
-    const insertOrder=["players","characters","sessions","session_presence","session_characters","facts","clocks","threads","reference_entries","published_messages","npc_proxies","encounters","encounter_combatants","character_drafts","levelup_drafts","canon_events","canon_conflicts","downtime_cycles","downtime_projects","rules_rulings","relationships","relationship_hook_imports","handouts","encounter_aftermath"];
+    const delOrder=["encounter_aftermath","encounter_combatants","npc_proxies","session_characters","session_presence","levelup_drafts","downtime_projects","canon_conflicts","canon_events","relationships","relationship_hook_imports","character_gm_hooks","handouts","encounters","sessions","character_drafts","characters","players","facts","clocks","threads","reference_entries","published_messages","downtime_cycles","rules_rulings"];
+    const insertOrder=["players","characters","sessions","session_presence","session_characters","facts","clocks","threads","reference_entries","published_messages","npc_proxies","encounters","encounter_combatants","character_drafts","levelup_drafts","canon_events","canon_conflicts","downtime_cycles","downtime_projects","rules_rulings","relationships","relationship_hook_imports","character_gm_hooks","handouts","encounter_aftermath"];
     this.db.exec("BEGIN IMMEDIATE");
     try{
       for(const t of delOrder){

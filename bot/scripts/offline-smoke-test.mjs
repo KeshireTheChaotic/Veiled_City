@@ -9,6 +9,7 @@ import { prepareLevelup, applyLevelupToData } from "../src/character-system.js";
 import { GMService, parseStructuredJsonText } from "../src/gm.js";
 import { createPlayerExportFiles, createGmExportFiles } from "../src/character-export.js";
 import { handoutFiles } from "../src/handout.js";
+import { buildConceptCampaignContext, createConceptContextPackage } from "../src/concept-context.js";
 
 const dir=fs.mkdtempSync(path.join(os.tmpdir(),"veilkeeper31-"));
 const dbPath=path.join(dir,"test.sqlite");
@@ -217,6 +218,22 @@ if(!gmPrivateJson.private_facts.some(x=>x.key==="export-secret")) throw new Erro
 const gmCanonJson=JSON.parse(gmExports.find(x=>x.name==="GM_CANON_Test_Detective.json").buffer.toString("utf8"));
 if(!gmCanonJson.canon.some(x=>x.key==="test_detective.hidden_origin")) throw new Error("Character-associated canon missing from export.");
 
-console.log("Veilkeeper v3.3.0 offline smoke test: PASS");
+
+// v3.3.1 player-safe external character-concept context + GM hook import.
+db.addFact(guild,{category:"secret",key:"context-gm-secret",content:"This must never be exported to a player concept package.",visibility:"gm",source:"test"});
+db.addFact(guild,{category:"secret",key:"context-character-secret",content:"Old PC private knowledge must not transfer to a new concept.",visibility:"character",subjectCharacterId:char.id,source:"test"});
+const context=buildConceptCampaignContext({db,guildId:guild,userId:user,historySessions:10});
+if(context.player_safe_facts.some(f=>["context-gm-secret","context-character-secret"].includes(f.key))) throw new Error("Concept context leaked GM/character-private facts.");
+if(!context.relationship_graph.every(r=>r.visibility===undefined)){} // view intentionally omits visibility after filtering
+const contextPkg=createConceptContextPackage({db,contentRoot:path.resolve(process.cwd(),"../content"),guildId:guild,userId:user,historySessions:10});
+if(!contextPkg.buffer.subarray(0,2).equals(Buffer.from("PK"))||!contextPkg.files.includes("AI_CHARACTER_CREATION_INSTRUCTIONS.md")||!contextPkg.files.includes("REFERENCE/PLAYER_COMPENDIUM.md")) throw new Error("Character concept context ZIP generation failed.");
+const hookPacket={schema:"veiled-city-gm-hooks-import-v3.3.1",character_name:"Test Detective",hooks:[{key:"mara-contact",title:"Mara may know the new lead",type:"relationship",premise:"Mara has reason to contact the character about a current case.",permission:"open_question",suggested_entry:"Lantern Office referral.",targets:[{type:"npc",label:"Mara Voss",relationship_type:"contact",score:1,note:"Potential GM-only connection."}],notes:"proposal"}],canon_suggestions:[{key:"character.test-detective.future-debt",value:"A future debt may exist.",reason:"Campaign fit."}]};
+const hookImport=db.importCharacterGmHooks(guild,char,hookPacket);
+if(hookImport.hooks!==2||hookImport.relationships!==1||hookImport.canon_suggestions!==1) throw new Error("GM hook package import failed.");
+if(db.listCharacterGmHooks(guild,char.id).length<2) throw new Error("Imported GM hooks were not persisted.");
+if(!db.listRelationships(guild,{includeGM:true}).some(r=>r.from_key===char.id&&r.to_label==="Mara Voss"&&r.visibility==="gm")) throw new Error("Imported GM-hook relationship was not persisted privately.");
+if(db.currentCanon(guild,"character.test-detective.future-debt")) throw new Error("GM hook canon suggestion was incorrectly promoted to authoritative canon.");
+
+console.log("Veilkeeper v3.3.1 offline smoke test: PASS");
 db.close();
 fs.rmSync(dir,{recursive:true,force:true});

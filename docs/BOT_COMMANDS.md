@@ -1,4 +1,4 @@
-# Veilkeeper v3.3.0 Command Reference
+# Veilkeeper v3.3.1 Command Reference
 
 Veilkeeper uses split `vc-*` root commands to remain below Discord's per-command size limit.
 
@@ -24,6 +24,8 @@ Veilkeeper uses split `vc-*` root commands to remain below Discord's per-command
 ## Characters
 - `/vc-character create`
 - `/vc-character import`
+- `/vc-character context-export [history_sessions]` — export current player-safe campaign/rules context for external AI character creation
+- `/vc-character import-gm-hooks file:<json> [character]` — **GM/Admin** import reviewed GM-only hook proposals
 - `/vc-character list`
 - `/vc-character select`
 - `/vc-character sheet`

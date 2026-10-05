@@ -1,6 +1,6 @@
 {
   "name": "veiled-city-discord-gm",
-  "version": "3.3.0",
+  "version": "3.3.1",
   "private": true,
   "type": "module",
   "description": "Stateful multiplayer Discord GM bot for Veiled City / Daggerheart.",
@@ -10,7 +10,7 @@
   "scripts": {
     "start": "node src/index.js",
     "register": "node src/register-commands.js",
-    "check": "node --check src/index.js && node --check src/db.js && node --check src/gm.js && node --check src/commands.js && node --check src/command-schema.js && node --check src/state.js && node --check src/publishing.js && node --check src/encounter.js && node --check src/character-system.js && node --check src/character-export.js && node --check src/combat.js && node --check src/handout.js && node scripts/validate-command-schema.mjs",
+    "check": "node --check src/index.js && node --check src/db.js && node --check src/gm.js && node --check src/commands.js && node --check src/command-schema.js && node --check src/state.js && node --check src/publishing.js && node --check src/encounter.js && node --check src/character-system.js && node --check src/character-export.js && node --check src/combat.js && node --check src/handout.js && node --check src/concept-context.js && node scripts/validate-command-schema.mjs",
     "export": "node scripts/export-campaign.mjs",
     "cost": "node scripts/cost-estimate.mjs",
     "test:offline": "node scripts/offline-smoke-test.mjs"

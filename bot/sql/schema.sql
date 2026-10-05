@@ -511,3 +511,26 @@ CREATE TABLE IF NOT EXISTS encounter_aftermath (
   FOREIGN KEY (session_id) REFERENCES sessions(id) ON DELETE CASCADE
 );
 CREATE INDEX IF NOT EXISTS idx_aftermath_status ON encounter_aftermath(guild_id,status,created_at DESC);
+
+-- v3.3.1: GM-private hook packages produced by external character-creation assistants
+CREATE TABLE IF NOT EXISTS character_gm_hooks (
+  id TEXT PRIMARY KEY,
+  guild_id TEXT NOT NULL,
+  character_id TEXT NOT NULL,
+  hook_key TEXT NOT NULL,
+  title TEXT NOT NULL DEFAULT '',
+  hook_type TEXT NOT NULL DEFAULT 'other',
+  premise TEXT NOT NULL DEFAULT '',
+  permission TEXT NOT NULL DEFAULT 'open_question',
+  suggested_entry TEXT NOT NULL DEFAULT '',
+  payload_json TEXT NOT NULL DEFAULT '{}',
+  source TEXT NOT NULL DEFAULT 'external_character_creator',
+  status TEXT NOT NULL DEFAULT 'active' CHECK(status IN ('active','resolved','discarded')),
+  created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (guild_id) REFERENCES campaigns(guild_id) ON DELETE CASCADE,
+  FOREIGN KEY (character_id) REFERENCES characters(id) ON DELETE CASCADE,
+  UNIQUE(character_id,hook_key)
+);
+CREATE INDEX IF NOT EXISTS idx_character_gm_hooks
+  ON character_gm_hooks(guild_id,character_id,status,updated_at DESC);

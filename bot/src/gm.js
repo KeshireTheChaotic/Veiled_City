@@ -269,9 +269,10 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
     const rulings=this.db.searchRulesRulings(guildId,messageText);
     const actorRelationships=this.db.listRelationships(guildId,{includeGM:false,characterId:actorKnowledgeId,userId:actorUserId});
     const gmRelationships=this.db.listRelationships(guildId,{includeGM:true});
+    const gmCharacterHooks=roster.filter(r=>r.character_id).flatMap(r=>this.db.listCharacterGmHooks(guildId,r.character_id).map(h=>({character_id:r.character_id,character_name:r.name,key:h.hook_key,title:h.title,type:h.hook_type,premise:h.premise,permission:h.permission,suggested_entry:h.suggested_entry,payload:h.payload})));
     const visibleHandouts=this.db.listHandoutsFor(guildId,actorUserId,{characterId:actorKnowledgeId,includeGM:false,limit:40}).map(h=>({id:h.id,title:h.title,kind:h.kind,authority:h.authority,visibility:h.visibility,case_key:h.case_key,npc_key:h.npc_key,location_key:h.location_key}));
     return {
-      campaign,session,assembly,party_state:partyState,current_encounter:currentEncounter,current_combatants:currentCombatants,canon,rulings,actor_relationships:actorRelationships,gm_relationships:gmRelationships,visible_handouts:visibleHandouts,
+      campaign,session,assembly,party_state:partyState,current_encounter:currentEncounter,current_combatants:currentCombatants,canon,rulings,actor_relationships:actorRelationships,gm_relationships:gmRelationships,gm_character_hooks:gmCharacterHooks,visible_handouts:visibleHandouts,
       actor_assignment:actorAssignment?(actorAssignment.npc_proxy?{
         assignment_kind:"npc_proxy",controller_user_id:actorUserId,npc_proxy_id:actorAssignment.id,
         npc_name:actorAssignment.npc_name,knowledge_id:actorAssignment.knowledge_id,control_level:actorAssignment.control_level,
@@ -309,6 +310,7 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
       "Daggerheart encounter balance is multiplayer-only in this package. Do not use legacy one-PC/solo encounter assumptions.",
       "Use events for newly established facts/clues, resource consequences, clocks, threads, Veil exposure, player-known NPC/location reference changes, and durable canon.",
       "Use relationships for durable changes between characters, NPCs, factions, locations, obligations, or other entities. Relationship score ranges -5 to +5; delta changes an existing score, set establishes it. Do not manufacture emotional commitments for PCs.",
+      "Imported GM-only character hook proposals are optional seeds, not authoritative truth. Use them only when they fit established canon and current fiction; never reveal a proposed hidden answer merely because it exists in the hook list. Canon suggestions remain suggestions until the human GM promotes them to the canon ledger.",
       "Use handouts only when the fiction produces an actual piece of evidence or artifact worth preserving. First list canonical_facts, then render player_visible_text from only those facts plus deliberately unreliable/illustrative framing. Do not add hidden canon accidentally through decorative details.",
       "Handout authority: canonical=deliberately shown details are true; partial=genuine but incomplete/uncertain; unreliable=may be forged/corrupted/lying; illustrative=visual/text aid whose incidental details are not canon.",
       "For canon events: key must be a stable normalized concept (example npc.mara-voss.surname or location.hollow-street.access-rule); value is the newly established durable fact. The application will refuse silent contradictions and queue a GM conflict instead.",
@@ -340,6 +342,7 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
       `CLOCKS (MAY BE SECRET):\n${JSON.stringify(ctx.clocks)}`,
       `RELATIONSHIP GRAPH VISIBLE TO ACTOR:\n${JSON.stringify(ctx.actor_relationships)}`,
       `GM RELATIONSHIP GRAPH (MAY BE SECRET):\n${JSON.stringify(ctx.gm_relationships)}`,
+      `IMPORTED GM-ONLY CHARACTER HOOK PROPOSALS (OPTIONAL; DO NOT REVEAL DIRECTLY):\n${JSON.stringify(ctx.gm_character_hooks)}`,
       `KNOWN HANDOUT/EVIDENCE INDEX VISIBLE TO ACTOR:\n${JSON.stringify(ctx.visible_handouts)}`,
       `RELEVANT VEILED CITY REFERENCE:\n${JSON.stringify(ctx.reference_chunks)}`,
       `CURRENT PLAYER INPUT:\nuser_id=${actorUserId}\nname=${actorName}\nscope=${scope}\n${messageText}`
@@ -366,6 +369,7 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
     if(roster.length<2) throw new Error("At least two present characters are required to generate a convergence scene.");
     const partyState=this.db.getPartyState(guildId);
     const facts=this.db.factsFor(guildId,"",{includeGM:true,limit:120});
+    const importedHooks=roster.filter(r=>r.character_id).flatMap(r=>this.db.listCharacterGmHooks(guildId,r.character_id).map(h=>({character_id:r.character_id,character_name:r.name,title:h.title,type:h.hook_type,premise:h.premise,permission:h.permission,suggested_entry:h.suggested_entry,payload:h.payload})));
     const query=roster.map(r=>`${r.name} ${JSON.stringify(r.data||{})}`).join(" ");
     const chunks=this.content.search(`party convergence ${requested} ${query}`,Math.min(this.config.maxContentChunks,6),{gm:true});
     const prompt=[
@@ -384,6 +388,7 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
       `Previously established party state: ${JSON.stringify(partyState)}`,
       `Present roster: ${JSON.stringify(summarizeRoster(roster))}`,
       `Known campaign facts (GM context; protect secrets): ${JSON.stringify(facts)}`,
+      `Imported GM-only character hook proposals (optional seeds; protect secrets): ${JSON.stringify(importedHooks)}`,
       `Relevant Veiled City references (GM context; protect secrets): ${JSON.stringify(chunks.map(c=>({source:c.file,text:c.body})))}`,
     ].join("\n\n");
     return this.requestStructured({
@@ -404,6 +409,7 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
     const plan=this.db.getAssemblyPlan(session.id)||{};
     const recent=this.db.recentMessages(guildId,40).filter(x=>["public","party"].includes(x.visibility)).slice(-18);
     const facts=this.db.factsFor(guildId,userId,{characterId,includeGM:true,limit:80});
+    const importedHooks=this.db.listCharacterGmHooks(guildId,characterId).map(h=>({title:h.title,type:h.hook_type,premise:h.premise,permission:h.permission,suggested_entry:h.suggested_entry,payload:h.payload}));
     const query=`arrival ${character.name} ${reason} ${JSON.stringify(character.data||{})}`;
     const chunks=this.content.search(query,Math.min(this.config.maxContentChunks,4),{gm:true});
     const prompt=[
@@ -422,6 +428,7 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
       `Current roster: ${JSON.stringify(summarizeRoster(roster))}`,
       `Recent party transcript: ${JSON.stringify(recent.map(x=>({speaker:x.speaker_name,content:x.content})))}`,
       `Known facts (GM context; protect secrets): ${JSON.stringify(facts)}`,
+      `Imported GM-only hook proposals for this character (optional seeds; protect secrets): ${JSON.stringify(importedHooks)}`,
       `Relevant setting references: ${JSON.stringify(chunks.map(c=>({source:c.file,text:c.body})))}`,
     ].join("\n\n");
     return this.requestStructured({

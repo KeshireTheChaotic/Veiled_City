@@ -1,3 +1,6 @@
+Dockerfile
+README.md
+VALIDATION_REPORT.md
 bot/.env.example
 bot/.gitignore
 bot/data/.gitkeep
@@ -12,6 +15,7 @@ bot/src/character-system.js
 bot/src/combat.js
 bot/src/command-schema.js
 bot/src/commands.js
+bot/src/concept-context.js
 bot/src/config.js
 bot/src/content.js
 bot/src/db.js
@@ -25,13 +29,13 @@ bot/src/register-commands.js
 bot/src/state.js
 content/CARDS/ANCESTRIES_AND_COMMUNITIES.md
 content/CARDS/CUSTOM_DOMAINS.md
-content/CARDS/DOMAIN_ACCESS.md
-content/CARDS/domain_cards.json
 content/CARDS/DOMAINS/HEX.md
 content/CARDS/DOMAINS/PACT.md
 content/CARDS/DOMAINS/SIGNAL.md
 content/CARDS/DOMAINS/VEIL.md
+content/CARDS/DOMAIN_ACCESS.md
 content/CARDS/OCCULT_SCARS.md
+content/CARDS/domain_cards.json
 content/ENGINE/AI_GM_CONSTITUTION.md
 content/ENGINE/CONTENT_ROUTING.md
 content/ENGINE/CROSS_MODEL_HANDOFF.md
@@ -43,8 +47,8 @@ content/ENGINE/MULTIPLAYER_GM_RULES.md
 content/ENGINE/ORACLE.md
 content/ENGINE/PERSISTENCE_SCHEMA.md
 content/ENGINE/validate_package.py
-content/GM_PRIVATE/ADVERSARIES/adversaries.json
 content/GM_PRIVATE/ADVERSARIES/ADVERSARY_COMPENDIUM.md
+content/GM_PRIVATE/ADVERSARIES/adversaries.json
 content/GM_PRIVATE/AI_DM_COMPENDIUM.md
 content/GM_PRIVATE/CAMPAIGN_ARC.md
 content/GM_PRIVATE/CHASE_TOOLKIT.md
@@ -67,10 +71,8 @@ content/GM_PRIVATE/MYSTERIES/07_NIGHT_OF_OPEN_EYES.md
 content/GM_PRIVATE/MYSTERIES/mystery_index.json
 content/GM_PRIVATE/NPCS/NPC_DOSSIERS.md
 content/GM_PRIVATE/NPCS/npcs.json
-content/manifest.json
 content/MANIFEST.txt
 content/PLAYER/BLANK_CHARACTER_SHEET.docx
-content/PLAYER/blank_character_sheet.md
 content/PLAYER/CAMPAIGN_FRAME.md
 content/PLAYER/CASE_HOOKS.md
 content/PLAYER/CHARACTER_CREATION.md
@@ -82,13 +84,14 @@ content/PLAYER/PLAYER_COMPENDIUM.md
 content/PLAYER/QUICK_REFERENCE.md
 content/PLAYER/SETTING_GUIDE.md
 content/PLAYER/VEHICLES.md
+content/PLAYER/blank_character_sheet.md
 content/README.md
 content/SOURCES.md
 content/STATE/CAMPAIGN_STATE.json
 content/STATE/SESSION_JOURNAL.md
 content/STATE/SESSION_SAVE_TEMPLATE.md
+content/manifest.json
 docker-compose.yml
-Dockerfile
 docs/ACCESSIBILITY.md
 docs/API_COSTS_2026-10-01.md
 docs/BOT_COMMANDS.md
@@ -99,6 +102,8 @@ docs/CHANGELOG_v3.2.2_DISCORD.md
 docs/CHANGELOG_v3.2.3_DISCORD.md
 docs/CHANGELOG_v3.2.4_DISCORD.md
 docs/CHANGELOG_v3.3.0_DISCORD.md
+docs/CHANGELOG_v3.3.1_DISCORD.md
+docs/CHARACTER_CONCEPT_CONTEXT.md
 docs/CHARACTER_EXPORT.md
 docs/COMBAT_STATE.md
 docs/DEPLOYMENT.md
@@ -128,5 +133,4 @@ docs/UPGRADE_3.2.1_TO_3.2.2.md
 docs/UPGRADE_3.2.2_TO_3.2.3.md
 docs/UPGRADE_3.2.3_TO_3.2.4.md
 docs/UPGRADE_3.2.4_TO_3.3.0.md
-README.md
-VALIDATION_REPORT.md
+docs/UPGRADE_3.3.0_TO_3.3.1.md

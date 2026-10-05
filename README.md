@@ -1,68 +1,41 @@
-# VEILED CITY MULTIPLAYER DISCORD ENGINE v3.3.0
+# VEILED CITY MULTIPLAYER DISCORD ENGINE v3.3.1
 
 A deployable Discord multiplayer GM layer for **Veiled City**, using Daggerheart SRD 2.0 as its mechanical baseline.
 
-## v3.3.0 — Evidence, relationships, and encounter consequences
+## v3.3.1 — External Character Concept Context
 
-This release adds three campaign-state systems intended for long-running investigative play:
-
-- **Handouts & Evidence** — Veilkeeper can create evidence during narration, or the GM can create/generate it explicitly. Every handout has authority and visibility metadata and can be delivered or exported without making hidden source facts player-visible.
-- **Relationship Graph** — durable character/NPC/faction/location relationships are stored as structured edges with type, intensity, visibility, and notes. New characters seed their hook relationships automatically; existing characters can be backfilled once with `/vc-relationship import-hooks`.
-- **Encounter Aftermath** — ending an encounter can automatically generate and apply aftermath consequences, require GM confirmation, or skip aftermath entirely.
-
-The unreliable `/vc-character concept` command has been removed. Character creation/import remains available through `/vc-character create` and `/vc-character import`.
-
-## New commands
-
-### Handouts / evidence
+The unreliable in-bot character concept generator remains removed. Instead, players can now export a current, player-safe campaign package for use with ChatGPT or another capable external AI:
 
 ```text
-/vc-handout generate
-/vc-handout create
-/vc-handout list
-/vc-handout show
-/vc-handout export
-/vc-handout deliver
-/vc-handout archive
+/vc-character context-export [history_sessions]
 ```
 
-`generate` uses the configured low-cost handout model. `create` and all export/rendering operations are local and make no OpenAI call.
+The ZIP contains the bundled Veiled City Player Compendium plus current campaign continuity: recent session recaps, established party/current roster, active cases, known NPCs/locations, public/party relationships, player-safe canon/facts/clocks, evidence, and downtime state.
 
-### Relationship graph
+The export intentionally excludes GM-only data and character-private information so a new/replacement PC does not inherit secrets from an older PC.
+
+The included AI instructions ask the external model to produce:
 
 ```text
-/vc-relationship list
-/vc-relationship set
-/vc-relationship adjust
-/vc-relationship import-hooks
+CHARACTER_<Name>.json
+GM_HOOKS_<Name>.json
 ```
 
-Run `import-hooks` once after upgrading if the campaign already contains characters created before v3.3.0. Reruns safely skip characters already imported.
-
-### Encounter aftermath
+The player imports the character normally:
 
 ```text
-/vc-encounter end [aftermath:auto|confirm|none]
-/vc-encounter aftermath-status
-/vc-encounter aftermath-confirm
-/vc-encounter aftermath-discard
+/vc-character import
 ```
 
-Default behavior is controlled by `ENCOUNTER_AFTERMATH_MODE`. `auto` applies consequences immediately after a pre-aftermath snapshot. `confirm` stores a pending draft for a GM to review. `none` simply ends the encounter.
+After review, the GM imports the separate hook proposal package:
 
-## Optional `.env` settings
-
-```env
-OPENAI_HANDOUT_MODEL=gpt-6-luna
-HANDOUT_MAX_OUTPUT_TOKENS=1200
-OPENAI_AFTERMATH_MODEL=gpt-6-luna
-AFTERMATH_MAX_OUTPUT_TOKENS=1800
-ENCOUNTER_AFTERMATH_MODE=auto
+```text
+/vc-character import-gm-hooks
 ```
 
-No new API key, Discord permission, or Discord channel is required.
+Imported hooks and relationship suggestions remain GM-private. Suggested canon is **not** automatically canonized; the GM must deliberately promote accepted facts with `/vc-canon set`.
 
-## Upgrade from v3.2.4
+## Upgrade from v3.3.0
 
 Preserve:
 
@@ -71,9 +44,10 @@ bot/.env
 bot/data/veiled_city.sqlite
 ```
 
-Then run from `bot/`:
+Then run:
 
 ```bash
+cd bot
 npm install
 npm run check
 npm run test:offline
@@ -81,12 +55,10 @@ npm run register
 npm start
 ```
 
-`npm run register` is required because `/vc-character concept` was removed and the `/vc-handout`, `/vc-relationship`, and encounter-aftermath commands were added.
+No new channels, Discord permissions, API keys, or `.env` settings are required. Character-context export and GM-hook import are local operations with no OpenAI API cost.
 
 See:
 
-- `docs/HANDOUTS_AND_EVIDENCE.md`
-- `docs/RELATIONSHIP_GRAPH.md`
-- `docs/ENCOUNTER_AFTERMATH.md`
-- `docs/UPGRADE_3.2.4_TO_3.3.0.md`
+- `docs/CHARACTER_CONCEPT_CONTEXT.md`
+- `docs/UPGRADE_3.3.0_TO_3.3.1.md`
 - `docs/BOT_COMMANDS.md`

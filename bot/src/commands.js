@@ -12,6 +12,7 @@ import { buildCombatants, hpMarksForDamage, combatantLine } from "./combat.js";
 import { applyGMEvents, applyRelationshipDrafts, applyHandoutDrafts } from "./state.js";
 import { createPlayerExportFiles, createGmExportFiles } from "./character-export.js";
 import { handoutFiles, handoutSummary } from "./handout.js";
+import { createConceptContextPackage } from "./concept-context.js";
 
 export function buildCommands(){
   const monolith = new SlashCommandBuilder()
@@ -79,6 +80,11 @@ export function buildCommands(){
           .addStringOption(o=>o.setName("domains").setDescription("Comma-separated domains")))
         .addSubcommand(s=>s.setName("import").setDescription("Import a player-safe character JSON")
           .addAttachmentOption(o=>o.setName("file").setDescription("Character JSON file").setRequired(true)))
+        .addSubcommand(s=>s.setName("context-export").setDescription("Export current campaign context for external character creation")
+          .addIntegerOption(o=>o.setName("history_sessions").setDescription("Completed session recaps to include (default 10)").setMinValue(1).setMaxValue(25)))
+        .addSubcommand(s=>s.setName("import-gm-hooks").setDescription("GM: import GM-only hook proposals for an existing character")
+          .addAttachmentOption(o=>o.setName("file").setDescription("GM_HOOKS character JSON file").setRequired(true))
+          .addStringOption(o=>o.setName("character").setDescription("Override character name from the hook file")))
         .addSubcommand(s=>s.setName("list").setDescription("List your characters"))
         .addSubcommand(s=>s.setName("select").setDescription("Use a character in the current session")
           .addStringOption(o=>o.setName("character").setDescription("Character name").setRequired(true)))
@@ -312,7 +318,7 @@ export function buildCommands(){
   const full=monolith.toJSON();
   const splitMap={
     character:{
-      "vc-character":["create","import","list","select","sheet","export","export-gm","retire","death"],
+      "vc-character":["create","import","context-export","import-gm-hooks","list","select","sheet","export","export-gm","retire","death"],
       "vc-level":["level-up","level-choose","level-confirm"]
     },
     encounter:{
@@ -794,6 +800,35 @@ Initial phase: ${s.assembly_phase}`});
       const data=await res.json();
       const c=db.importCharacter(interaction.guildId,interaction.user.id,data);
       await interaction.reply({content:`Imported **${c.name}**.`,ephemeral:true});
+      return true;
+    }
+    if(group==="character"&&sub==="context-export"){
+      const history=interaction.options.getInteger("history_sessions")||10;
+      const pkg=createConceptContextPackage({db,contentRoot:gm.content.root,guildId:interaction.guildId,userId:interaction.user.id,historySessions:history});
+      const s=db.getActiveSession(interaction.guildId);
+      db.audit(interaction.guildId,s?.id||null,"player",interaction.user.id,"character_concept_context_export",{history_sessions:history,files:pkg.files});
+      await interaction.reply({content:`Player-safe character-creation context package generated from the **current campaign state** with the last **${history}** completed session recap(s). Upload this ZIP to ChatGPT and follow the included AI instructions.`,files:[new AttachmentBuilder(pkg.buffer,{name:pkg.name})],ephemeral:true});
+      return true;
+    }
+    if(group==="character"&&sub==="import-gm-hooks"){
+      if(!isGM(db,interaction)) throw new Error("GM/admin permission required to import GM-only character hooks.");
+      const a=interaction.options.getAttachment("file",true);
+      if(!a.name?.toLowerCase().endsWith(".json")) throw new Error("GM hook import requires a .json file.");
+      const res=await fetch(a.url); if(!res.ok) throw new Error("Could not download the GM hook attachment.");
+      const packet=await res.json();
+      if(packet.schema && packet.schema!=="veiled-city-gm-hooks-import-v3.3.1") throw new Error(`Unsupported GM hook schema: ${packet.schema}`);
+      const name=interaction.options.getString("character")||packet.character_name;
+      if(!String(name||"").trim()) throw new Error("The GM hook package must include character_name or you must provide the character option.");
+      const c=db.findGuildCharacter(interaction.guildId,name,{includeClosed:true}); if(!c) throw new Error(`Campaign character not found: ${name}`);
+      db.snapshotCampaign(interaction.guildId,{label:`Pre-GM-hook import ${c.name}`,reason:"Before importing external character concept GM hooks",createdBy:interaction.user.id});
+      const result=db.importCharacterGmHooks(interaction.guildId,c,packet);
+      const s=db.getActiveSession(interaction.guildId);
+      db.audit(interaction.guildId,s?.id||null,"human_gm",interaction.user.id,"character_gm_hooks_import",{character_id:c.id,file:a.name,...result});
+      await postGmLog({db,guild:interaction.guild,sessionId:s?.id||null,title:`GM hooks imported — ${c.name}`,details:`Hooks/suggestions stored: ${result.hooks}
+GM-private relationships created/updated: ${result.relationships}
+Canon suggestions stored for review: ${result.canon_suggestions}
+Source file: ${a.name}`});
+      await interaction.reply({content:`Imported GM-only concept material for **${c.name}**. **${result.hooks}** hook/suggestion record(s), **${result.relationships}** GM-private relationship edge(s), and **${result.canon_suggestions}** canon suggestion(s). Canon suggestions are **not authoritative** until you promote them with \`/vc-canon set\`.`,ephemeral:true});
       return true;
     }
     if(group==="character"&&sub==="list"){

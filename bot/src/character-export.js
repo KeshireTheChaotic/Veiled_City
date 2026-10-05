@@ -3,7 +3,7 @@ import { Buffer } from "node:buffer";
 function safeText(v){
   return v==null?"":String(v);
 }
-function safeStem(name){
+export function safeStem(name){
   const s=safeText(name).normalize("NFKD").replace(/[^A-Za-z0-9]+/g,"_").replace(/^_+|_+$/g,"");
   return s||"Character";
 }
@@ -36,7 +36,7 @@ export function buildPlayerExport(db,guildId,character){
     ...d,
     name:character.name,
     export_meta:{
-      schema:"veiled-city-character-export-v3.3.0",
+      schema:"veiled-city-character-export-v3.3.1",
       visibility:"player_safe",
       character_id:character.id,
       status:character.status,
@@ -48,10 +48,10 @@ export function buildPlayerExport(db,guildId,character){
   };
 }
 
-export function buildGmHooksExport(character){
+export function buildGmHooksExport(character,db=null,guildId=null){
   const d=character.data||{};
   return {
-    export_meta:{schema:"veiled-city-gm-hooks-v3.3.0",visibility:"gm_private",character_id:character.id,name:character.name,exported_at:new Date().toISOString()},
+    export_meta:{schema:"veiled-city-gm-hooks-v3.3.1",visibility:"gm_private",character_id:character.id,name:character.name,exported_at:new Date().toISOString()},
     character:{name:character.name,level:d.level??1,class:d.class||"",subclass:d.subclass||"",ancestry:d.ancestry||"",community:d.community||"",domains:d.domains||[]},
     background:d.background||"",
     home:d.home||"",
@@ -65,7 +65,8 @@ export function buildGmHooksExport(character){
     faction_connections:d.faction_connections||[],
     entry_hooks:d.entry_hooks||[],
     exit_hooks:d.exit_hooks||[],
-    notes:d.notes||""
+    notes:d.notes||"",
+    imported_gm_hooks:(db&&guildId)?db.listCharacterGmHooks(guildId,character.id,{includeResolved:true}).map(h=>({key:h.hook_key,title:h.title,type:h.hook_type,premise:h.premise,permission:h.permission,suggested_entry:h.suggested_entry,status:h.status,payload:h.payload,source:h.source,updated_at:h.updated_at})):[]
   };
 }
 
@@ -76,7 +77,7 @@ export function buildGmPrivateExport(db,guildId,character){
   const threads=db.characterPrivateThreads(guildId,character.id,owner).map(threadView);
   const references=db.characterPrivateReferences(guildId,character.id,owner).map(referenceView);
   return {
-    export_meta:{schema:"veiled-city-gm-private-v3.3.0",visibility:"gm_private",character_id:character.id,name:character.name,exported_at:new Date().toISOString()},
+    export_meta:{schema:"veiled-city-gm-private-v3.3.1",visibility:"gm_private",character_id:character.id,name:character.name,exported_at:new Date().toISOString()},
     character:{name:character.name,status:character.status,owner_user_id:character.owner_user_id||null},
     private_facts:facts,
     private_clocks:clocks,
@@ -102,7 +103,7 @@ export function buildGmCanonExport(db,guildId,character){
     id:r.id,key:r.canon_key,existing_value:r.existing_value,proposed_value:r.proposed_value,proposed_visibility:r.proposed_visibility,status:r.status,created_at:r.created_at
   }));
   return {
-    export_meta:{schema:"veiled-city-gm-canon-v3.3.0",visibility:"gm_private",character_id:character.id,name:character.name,exported_at:new Date().toISOString()},
+    export_meta:{schema:"veiled-city-gm-canon-v3.3.1",visibility:"gm_private",character_id:character.id,name:character.name,exported_at:new Date().toISOString()},
     canon,
     pending_conflicts:conflicts
   };
@@ -208,7 +209,7 @@ function dosStamp(date=new Date()){
 }
 function u16(v){const b=Buffer.alloc(2);b.writeUInt16LE(v&0xffff);return b;}
 function u32(v){const b=Buffer.alloc(4);b.writeUInt32LE(v>>>0);return b;}
-function zipStore(entries){
+export function zipStore(entries){
   const locals=[],centrals=[]; let offset=0; const stamp=dosStamp();
   for(const [name,value] of entries){
     const n=Buffer.from(name,"utf8"), data=Buffer.isBuffer(value)?value:Buffer.from(value,"utf8"), crc=crc32(data);
@@ -269,7 +270,7 @@ export function createPlayerExportFiles({db,guildId,character,format="docx"}){
 }
 export function createGmExportFiles({db,guildId,character,format="all"}){
   const stem=safeStem(character.name);
-  const hooks=buildGmHooksExport(character), priv=buildGmPrivateExport(db,guildId,character), canon=buildGmCanonExport(db,guildId,character);
+  const hooks=buildGmHooksExport(character,db,guildId), priv=buildGmPrivateExport(db,guildId,character), canon=buildGmCanonExport(db,guildId,character);
   return [
     ...filesForPayload(`GM_HOOKS_${stem}`,hooks,gmHooksMarkdown(hooks),format),
     ...filesForPayload(`GM_PRIVATE_${stem}`,priv,gmPrivateMarkdown(priv),format),
