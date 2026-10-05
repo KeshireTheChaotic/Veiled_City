@@ -1,4 +1,4 @@
-# Character Export — v3.2.4
+# Character Export — v3.3.0
 
 Veilkeeper can now generate downloadable files from the live SQLite character record. Exports reflect current level, resources, advancement state, hooks, inventory, and campaign knowledge instead of the original import packet.
 

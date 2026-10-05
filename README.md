@@ -1,52 +1,77 @@
-# VEILED CITY MULTIPLAYER DISCORD ENGINE v3.2.4
+# VEILED CITY MULTIPLAYER DISCORD ENGINE v3.3.0
 
 A deployable Discord multiplayer GM layer for **Veiled City**, using Daggerheart SRD 2.0 as its mechanical baseline.
 
-## v3.2.4 — live character export
+## v3.3.0 — Evidence, relationships, and encounter consequences
 
-This release adds downloadable character-sheet exports generated directly from authoritative SQLite campaign state.
+This release adds three campaign-state systems intended for long-running investigative play:
 
-### Player export
+- **Handouts & Evidence** — Veilkeeper can create evidence during narration, or the GM can create/generate it explicitly. Every handout has authority and visibility metadata and can be delivered or exported without making hidden source facts player-visible.
+- **Relationship Graph** — durable character/NPC/faction/location relationships are stored as structured edges with type, intensity, visibility, and notes. New characters seed their hook relationships automatically; existing characters can be backfilled once with `/vc-relationship import-hooks`.
+- **Encounter Aftermath** — ending an encounter can automatically generate and apply aftermath consequences, require GM confirmation, or skip aftermath entirely.
 
-```text
-/vc-character export
-```
+The unreliable `/vc-character concept` command has been removed. Character creation/import remains available through `/vc-character create` and `/vc-character import`.
 
-Exports an owned character in `docx`, `json`, `markdown`, or `all`. The output reflects current resources, level, advancement state, equipment, hooks, and player/character-visible campaign knowledge. Player exports do not include GM-private information.
+## New commands
 
-### GM export
-
-```text
-/vc-character export-gm character:"Character Name" format:all
-```
-
-GM/Admin only. Generates three deliberately separated bundles using the requested naming convention:
+### Handouts / evidence
 
 ```text
-GM_HOOKS_character
-GM_PRIVATE_character
-GM_CANON_character
+/vc-handout generate
+/vc-handout create
+/vc-handout list
+/vc-handout show
+/vc-handout export
+/vc-handout deliver
+/vc-handout archive
 ```
 
-Each can be JSON, Markdown, DOCX, or all three. `format:all` produces nine attachments total.
+`generate` uses the configured low-cost handout model. `create` and all export/rendering operations are local and make no OpenAI call.
 
-DOCX generation is local and deterministic; it requires no OpenAI request and no new npm package.
+### Relationship graph
 
-## Existing v3.2 systems
+```text
+/vc-relationship list
+/vc-relationship set
+/vc-relationship adjust
+/vc-relationship import-hooks
+```
 
-- Split Discord command roots compatible with Discord's 8,000-character command-size limit.
-- AI-assisted character concepts with structured hook permissions.
-- Deterministic combat state and Daggerheart Battle Point encounter construction.
-- Validated character advancement.
-- Campaign snapshots and rollback.
-- Canon ledger and conflict resolution.
-- Downtime/world turns.
-- Grounded rules desk.
-- Guest/drop-in PCs, party convergence, NPC proxy antagonists, private scenes, and visibility-aware knowledge.
+Run `import-hooks` once after upgrading if the campaign already contains characters created before v3.3.0. Reruns safely skip characters already imported.
 
-## Upgrade from v3.2.3
+### Encounter aftermath
 
-Preserve `bot/.env` and `bot/data/veiled_city.sqlite`, then run from `bot/`:
+```text
+/vc-encounter end [aftermath:auto|confirm|none]
+/vc-encounter aftermath-status
+/vc-encounter aftermath-confirm
+/vc-encounter aftermath-discard
+```
+
+Default behavior is controlled by `ENCOUNTER_AFTERMATH_MODE`. `auto` applies consequences immediately after a pre-aftermath snapshot. `confirm` stores a pending draft for a GM to review. `none` simply ends the encounter.
+
+## Optional `.env` settings
+
+```env
+OPENAI_HANDOUT_MODEL=gpt-6-luna
+HANDOUT_MAX_OUTPUT_TOKENS=1200
+OPENAI_AFTERMATH_MODEL=gpt-6-luna
+AFTERMATH_MAX_OUTPUT_TOKENS=1800
+ENCOUNTER_AFTERMATH_MODE=auto
+```
+
+No new API key, Discord permission, or Discord channel is required.
+
+## Upgrade from v3.2.4
+
+Preserve:
+
+```text
+bot/.env
+bot/data/veiled_city.sqlite
+```
+
+Then run from `bot/`:
 
 ```bash
 npm install
@@ -56,6 +81,12 @@ npm run register
 npm start
 ```
 
-`npm run register` is required because the Discord command definition changed.
+`npm run register` is required because `/vc-character concept` was removed and the `/vc-handout`, `/vc-relationship`, and encounter-aftermath commands were added.
 
-See `docs/CHARACTER_EXPORT.md` and `docs/UPGRADE_3.2.3_TO_3.2.4.md`.
+See:
+
+- `docs/HANDOUTS_AND_EVIDENCE.md`
+- `docs/RELATIONSHIP_GRAPH.md`
+- `docs/ENCOUNTER_AFTERMATH.md`
+- `docs/UPGRADE_3.2.4_TO_3.3.0.md`
+- `docs/BOT_COMMANDS.md`

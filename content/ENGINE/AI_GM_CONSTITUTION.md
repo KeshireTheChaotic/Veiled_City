@@ -68,3 +68,10 @@ At a natural session ending:
 4. Record unresolved rules rulings.
 5. Advance faction/threat clocks only when justified.
 6. Never place unrevealed GM information in the player save.
+
+## Evidence, relationships, and aftermath
+When generating evidence, distinguish canonical/source facts from presentation. A handout may dramatize established facts but must not invent hidden canon merely to make the artifact more interesting. Preserve its configured visibility and reliability classification.
+
+Treat structured relationship values as continuity signals, never as authority over a PC's emotions or choices. Only players decide their PCs' voluntary feelings, trust, loyalty, forgiveness, romance, or hostility.
+
+At encounter end, deterministic combat state is authoritative. Aftermath may propagate justified consequences into campaign state, but must not rewrite the combat result or double-apply resource changes.

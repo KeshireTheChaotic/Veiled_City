@@ -260,6 +260,7 @@ CREATE TABLE IF NOT EXISTS encounters (
   composition_json TEXT NOT NULL DEFAULT '[]',
   adjustment_json TEXT NOT NULL DEFAULT '[]',
   combat_state_json TEXT NOT NULL DEFAULT '{"spotlight":{"counts":{},"last_character_id":null}}',
+  pc_start_state_json TEXT NOT NULL DEFAULT '[]',
   notes TEXT NOT NULL DEFAULT '',
   created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
   started_at TEXT,
@@ -435,3 +436,78 @@ CREATE TABLE IF NOT EXISTS rules_rulings (
   FOREIGN KEY (guild_id) REFERENCES campaigns(guild_id) ON DELETE CASCADE,
   UNIQUE(guild_id,ruling_key)
 );
+
+-- v3.3.0: structured relationship graph
+CREATE TABLE IF NOT EXISTS relationships (
+  id TEXT PRIMARY KEY,
+  guild_id TEXT NOT NULL,
+  from_type TEXT NOT NULL CHECK(from_type IN ('character','npc','faction','location','entity','obligation')),
+  from_key TEXT NOT NULL,
+  from_label TEXT NOT NULL DEFAULT '',
+  to_type TEXT NOT NULL CHECK(to_type IN ('character','npc','faction','location','entity','obligation')),
+  to_key TEXT NOT NULL,
+  to_label TEXT NOT NULL DEFAULT '',
+  relationship_type TEXT NOT NULL DEFAULT 'contact',
+  score INTEGER NOT NULL DEFAULT 0 CHECK(score BETWEEN -5 AND 5),
+  visibility TEXT NOT NULL DEFAULT 'party' CHECK(visibility IN ('public','party','player','character','gm')),
+  note TEXT NOT NULL DEFAULT '',
+  source TEXT NOT NULL DEFAULT 'gm',
+  source_character_id TEXT,
+  created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (guild_id) REFERENCES campaigns(guild_id) ON DELETE CASCADE,
+  UNIQUE(guild_id,from_type,from_key,to_type,to_key,relationship_type)
+);
+CREATE INDEX IF NOT EXISTS idx_relationships_graph ON relationships(guild_id,from_key,to_key,updated_at DESC);
+
+CREATE TABLE IF NOT EXISTS relationship_hook_imports (
+  character_id TEXT PRIMARY KEY,
+  guild_id TEXT NOT NULL,
+  imported_count INTEGER NOT NULL DEFAULT 0,
+  source TEXT NOT NULL DEFAULT 'v3.3.0_backfill',
+  imported_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (character_id) REFERENCES characters(id) ON DELETE CASCADE,
+  FOREIGN KEY (guild_id) REFERENCES campaigns(guild_id) ON DELETE CASCADE
+);
+
+-- v3.3.0: generated / curated evidence handouts
+CREATE TABLE IF NOT EXISTS handouts (
+  id TEXT PRIMARY KEY,
+  guild_id TEXT NOT NULL,
+  session_id TEXT,
+  title TEXT NOT NULL,
+  kind TEXT NOT NULL DEFAULT 'document',
+  authority TEXT NOT NULL DEFAULT 'canonical' CHECK(authority IN ('canonical','partial','unreliable','illustrative')),
+  visibility TEXT NOT NULL DEFAULT 'party' CHECK(visibility IN ('public','party','player','character','gm')),
+  subject_user_id TEXT,
+  subject_character_id TEXT,
+  content TEXT NOT NULL DEFAULT '',
+  canonical_facts_json TEXT NOT NULL DEFAULT '[]',
+  case_key TEXT NOT NULL DEFAULT '',
+  npc_key TEXT NOT NULL DEFAULT '',
+  location_key TEXT NOT NULL DEFAULT '',
+  source TEXT NOT NULL DEFAULT 'human_gm',
+  metadata_json TEXT NOT NULL DEFAULT '{}',
+  status TEXT NOT NULL DEFAULT 'active' CHECK(status IN ('active','archived')),
+  created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (guild_id) REFERENCES campaigns(guild_id) ON DELETE CASCADE
+);
+CREATE INDEX IF NOT EXISTS idx_handouts_visible ON handouts(guild_id,status,visibility,created_at DESC);
+
+-- v3.3.0: optional GM-confirmed encounter aftermath
+CREATE TABLE IF NOT EXISTS encounter_aftermath (
+  id TEXT PRIMARY KEY,
+  encounter_id TEXT NOT NULL UNIQUE,
+  guild_id TEXT NOT NULL,
+  session_id TEXT NOT NULL,
+  status TEXT NOT NULL DEFAULT 'pending' CHECK(status IN ('pending','applied','discarded')),
+  draft_json TEXT NOT NULL DEFAULT '{}',
+  created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  applied_at TEXT,
+  FOREIGN KEY (encounter_id) REFERENCES encounters(id) ON DELETE CASCADE,
+  FOREIGN KEY (guild_id) REFERENCES campaigns(guild_id) ON DELETE CASCADE,
+  FOREIGN KEY (session_id) REFERENCES sessions(id) ON DELETE CASCADE
+);
+CREATE INDEX IF NOT EXISTS idx_aftermath_status ON encounter_aftermath(guild_id,status,created_at DESC);

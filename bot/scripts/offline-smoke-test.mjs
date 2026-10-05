@@ -2,12 +2,13 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import { VeiledDB } from "../src/db.js";
-import { applyGMEvents } from "../src/state.js";
+import { applyGMEvents, applyRelationshipDrafts, applyHandoutDrafts } from "../src/state.js";
 import { baseBattlePoints, partyTier, livePcRoster, autoBuildComposition, recomputeBudget, EncounterLibrary } from "../src/encounter.js";
 import { buildCombatants, hpMarksForDamage } from "../src/combat.js";
-import { prepareLevelup, applyLevelupToData, validateConceptDraft } from "../src/character-system.js";
+import { prepareLevelup, applyLevelupToData } from "../src/character-system.js";
 import { GMService, parseStructuredJsonText } from "../src/gm.js";
 import { createPlayerExportFiles, createGmExportFiles } from "../src/character-export.js";
+import { handoutFiles } from "../src/handout.js";
 
 const dir=fs.mkdtempSync(path.join(os.tmpdir(),"veilkeeper31-"));
 const dbPath=path.join(dir,"test.sqlite");
@@ -22,6 +23,8 @@ db.upsertPlayer(guild,user2,"Guest Tester");
 db.setPrivateChannel(guild,user,"private-a");
 const char=db.createCharacter(guild,user,"Test Detective",{class:"Ranger",domains:["Bone","Veil"],home:"Mercer Investigations",gm_hooks:["An impossible cold case"]});
 const char2=db.createCharacter(guild,user2,"Test Medium",{class:"Bard",domains:["Grace","Veil"],unresolved_incident:"A ghost knows their name."});
+const seededRelationships=db.listRelationships(guild,{includeGM:true}).filter(r=>r.source_character_id===char.id);
+if(!seededRelationships.some(r=>r.relationship_type==="home")) throw new Error("New-character hook relationship seeding failed.");
 const session=db.startSession(guild,"Smoke Test","crossed_cases");
 if(session.assembly_mode!=="crossed_cases"||session.assembly_phase!=="assembly") throw new Error("Assembly session initialization failed.");
 db.setPresence(session.id,user,"present");
@@ -99,8 +102,10 @@ let calc=recomputeBudget({tier:encounterTier,base_bp:encounterBase,difficulty:"s
 const encounter=db.createEncounter(guild,session.id,{tier:encounterTier,pc_count:combatRoster.length,difficulty:"standard",style:"balanced",base_bp:encounterBase,budget_bp:calc.budget,spent_bp:calc.spent,objective:"Protect the witness",environment_name:"Occult Crime Scene",composition,adjustments:calc.derived});
 if(encounter.base_bp!==8||encounter.pc_count!==2||!encounter.composition.length) throw new Error("Encounter persistence failed.");
 if(encounter.composition.some(x=>x.type==="Minion"&&x.unit_count%x.quantity!==0)) throw new Error("Minion group sizing failed.");
-const activeEncounter=db.setEncounterStatus(encounter.id,"active");
-if(activeEncounter.status!=="active"||db.getCurrentEncounter(session.id).id!==encounter.id) throw new Error("Encounter activation failed.");
+let activeEncounter=db.setEncounterStatus(encounter.id,"active");
+db.captureEncounterStartState(encounter.id);
+activeEncounter=db.getEncounter(encounter.id);
+if(activeEncounter.status!=="active"||db.getCurrentEncounter(session.id).id!==encounter.id||activeEncounter.pc_start_state.length!==2) throw new Error("Encounter activation/start-state capture failed.");
 const combatants=db.initializeCombatants(encounter.id,buildCombatants(activeEncounter,encounterLib));
 if(!combatants.length) throw new Error("Deterministic combatant initialization failed.");
 const firstCombatant=combatants[0];
@@ -112,11 +117,7 @@ if((db.getEncounter(encounter.id).combat_state?.spotlight?.counts?.[char.id]||0)
 if(db.changeFear(guild,2)!==2) throw new Error("Fear tracking failed.");
 db.setEncounterStatus(encounter.id,"ended");
 if(db.getCurrentEncounter(session.id)) throw new Error("Encounter end/current lookup failed.");
-// v3.2 character concept + advancement validation.
-const conceptDraft={name:"Example",class:"Ranger",subclass:"Wayfinder",ancestry:"Spirit-Touched",community:"Institutionborne",domains:["Bone","Veil"],traits:{agility:1,strength:0,finesse:1,instinct:2,presence:-1,knowledge:0},experiences:["Private Investigator","Former Detective"],domain_cards:["Card A","Card B"],hook_proposals:[{text:"The old case is unresolved.",classification:"open_question"}]};
-if(!validateConceptDraft(conceptDraft).ok) throw new Error("Character concept validation failed.");
-const savedDraft=db.createCharacterDraft(guild,user,"Example detective",conceptDraft);
-if(!db.latestCharacterDraft(guild,user)?.id===savedDraft.id) throw new Error("Character draft persistence failed.");
+// v3.2 advancement validation (concept command removed in v3.3.0).
 const levelChar=db.updateCharacterData(char.id,d=>{d.level=1;d.proficiency=1;d.experiences=[{name:"Private Investigator",modifier:2},{name:"Former Detective",modifier:2}];d.resources={hp:{current:6,max:6},stress:{current:0,max:6},hope:2,armor:{current:0,max:3}};d.domains=["Bone","Veil"];d.domain_cards=[];d.advancement_state={trait_marks:[],slot_usage:{},history:[]};});
 const plan=prepareLevelup(levelChar,{advancementOne:"hp",advancementTwo:"stress",domainCard:"Test Bone Card",domain:"Bone",cardLevel:2,tierExperience:"Occult Casework",customCards:{}});
 const leveled=applyLevelupToData(levelChar.data,plan);
@@ -164,26 +165,40 @@ try{ parseStructuredJsonText('{"name":"Ryas","notes":"Known as "Rat Princess"."}
 catch(e){ malformedQuoteDetected=e.code==="STRUCTURED_JSON_INVALID"; }
 if(!malformedQuoteDetected) throw new Error("Malformed quoted JSON was not detected.");
 let structuredCalls=0;
-const retryDraft={
-  name:"Ryas",pronouns:"she/her",class:"Ranger",subclass:"Wayfinder",ancestry:"Spirit-Touched",community:"Streetborne",
-  domains:["Bone","Veil"],traits:{agility:1,strength:0,finesse:1,instinct:2,presence:-1,knowledge:0},
-  resources:{hp:{current:0,max:0},stress:{current:0,max:0},hope:2,armor:{current:0,max:0}},evasion:0,proficiency:1,
-  experiences:["Street Survivor","Grave-Touched"],domain_cards:["Untouchable","Threshold Sense"],inventory:[],background:"Orphaned street survivor.",
-  home:"The streets",person:"",obligation:"Stay alive",opening_status:"On the run",goals:["Understand the grave resonance"],
-  unresolved_incident:"A near-death event left a grave resonance.",faction_connections:[],entry_hooks:["A ghost points her toward the current incident"],exit_hooks:["She disappears into the city"],
-  hook_proposals:[{text:"Why does the grave keep noticing her?",classification:"open_question"}],notes:'Known as "Rat Princess".',mechanical_notes:"Verify exact class chassis values."
-};
 const fakeAI={responses:{create:async(req)=>{
   structuredCalls++;
-  if(structuredCalls===1) return {status:"incomplete",incomplete_details:{reason:"max_output_tokens"},output_text:'{"name":"Ryas","notes":"Known as \"Rat Princess\"'};
+  if(structuredCalls===1) return {status:"incomplete",incomplete_details:{reason:"max_output_tokens"},output_text:'{"title":"Test Evidence","player_visible_text":"unfinished"'};
   if(!String(req.input).includes("STRUCTURED OUTPUT RETRY")) throw new Error("Structured retry instruction missing.");
-  if(Number(req.max_output_tokens||0)<3000) throw new Error("Structured retry did not increase output budget.");
-  return {status:"completed",output_text:JSON.stringify(retryDraft)};
+  return {status:"completed",output_text:JSON.stringify({title:"Test Evidence",kind:"document",authority:"canonical",canonical_facts:["The timestamp is 03:17."],player_visible_text:"INCIDENT MEMO\nTimestamp: 03:17",visibility:"party",target_user_id:"",target_character_id:"",case_key:"test-case",npc_key:"",location_key:""})};
 }}};
 const fakeContent={search:()=>[]};
-const jsonGM=new GMService({db:null,content:fakeContent,config:{openaiKey:"test",maxContentChunks:8,characterModel:"test-model",characterMaxOutputTokens:1800,structuredRetryMaxTokens:6000},ai:fakeAI});
-const generated=await jsonGM.draftCharacterConcept({guildId:"g",userId:"u",userName:"Tester",description:quotedDescription});
-if(generated.name!=="Ryas"||structuredCalls!==2) throw new Error("Structured concept retry failed.");
+const jsonGM=new GMService({db,content:fakeContent,config:{openaiKey:"test",maxContentChunks:8,handoutModel:"test-model",handoutMaxOutputTokens:1000,structuredRetryMaxTokens:6000},ai:fakeAI});
+const generatedHandout=await jsonGM.generateHandout({guildId:guild,title:"Test Evidence",kind:"document",facts:["The timestamp is 03:17."],authority:"canonical",visibility:"party",caseKey:"test-case"});
+if(generatedHandout.title!=="Test Evidence"||structuredCalls!==2) throw new Error("Structured handout retry failed.");
+
+// v3.3.0 relationship graph + legacy hook backfill.
+const legacy=db.createCharacter(guild,user,"Legacy Contact Test",{person:"Jonas Reed",obligation:"Owes the Lantern Office",faction_connections:["Lantern Office"]});
+db.db.prepare("DELETE FROM relationships WHERE source_character_id=?").run(legacy.id);
+db.db.prepare("DELETE FROM relationship_hook_imports WHERE character_id=?").run(legacy.id);
+const backfill=db.importExistingHookRelationships(guild,{characterId:legacy.id});
+if(backfill.created<3||db.importExistingHookRelationships(guild,{characterId:legacy.id}).skipped!==1) throw new Error("One-time hook relationship backfill failed.");
+const relDrafts=applyRelationshipDrafts(db,guild,[{from_type:"character",from_key:char.id,from_label:char.name,to_type:"npc",to_key:"Mara Voss",to_label:"Mara Voss",relationship_type:"trust",mode:"set",score:2,visibility:"party",note:"Earned trust."}],{mode:"party",actorCharacterId:char.id},"test");
+if(!relDrafts[0].ok||!db.listRelationships(guild,{includeGM:true}).some(r=>r.relationship_type==="trust"&&r.score===2)) throw new Error("Relationship graph apply failed.");
+
+// v3.3.0 handout/evidence persistence and local export.
+const hDraft=applyHandoutDrafts(db,guild,session.id,[generatedHandout],{mode:"party",actorCharacterId:char.id},"test")[0];
+if(!hDraft.ok||!db.listHandoutsFor(guild,user,{characterId:char.id}).some(h=>h.id===hDraft.row.id)) throw new Error("Handout persistence/visibility failed.");
+const hf=handoutFiles(hDraft.row,"all");
+if(hf.length!==3||!hf.find(x=>x.name.endsWith(".docx")).buffer.subarray(0,2).equals(Buffer.from("PK"))) throw new Error("Handout all-format export failed.");
+
+// v3.3.0 optional encounter aftermath draft persistence/application primitives.
+const endedEncounter=db.getEncounter(encounter.id);
+const aftermathDraft={player_summary:"The witness survived; one attacker escaped.",gm_notes:"Test aftermath.",events:[{type:"veil_exposure_delta",key:"",target_user_id:"",target_character_id:"",amount:1,value:"",visibility:"party",note:"",status:""}],handouts:[],relationships:[]};
+let aft=db.createEncounterAftermath(endedEncounter.id,guild,session.id,aftermathDraft,"pending");
+if(aft.status!=="pending") throw new Error("Aftermath draft persistence failed.");
+applyGMEvents(db,guild,session.id,aft.draft.events,{mode:"party"});
+db.setEncounterAftermathStatus(endedEncounter.id,"applied");
+if(db.getEncounterAftermath(endedEncounter.id).status!=="applied") throw new Error("Aftermath status application failed.");
 
 // v3.2.4 live character export: player-safe + GM hooks/private/canon in JSON/Markdown/DOCX.
 db.addFact(guild,{category:"secret",key:"export-secret",content:"Character-linked private fact.",visibility:"gm",subjectCharacterId:char.id,source:"test"});
@@ -202,6 +217,6 @@ if(!gmPrivateJson.private_facts.some(x=>x.key==="export-secret")) throw new Erro
 const gmCanonJson=JSON.parse(gmExports.find(x=>x.name==="GM_CANON_Test_Detective.json").buffer.toString("utf8"));
 if(!gmCanonJson.canon.some(x=>x.key==="test_detective.hidden_origin")) throw new Error("Character-associated canon missing from export.");
 
-console.log("Veilkeeper v3.2.4 offline smoke test: PASS");
+console.log("Veilkeeper v3.3.0 offline smoke test: PASS");
 db.close();
 fs.rmSync(dir,{recursive:true,force:true});

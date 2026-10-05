@@ -142,3 +142,20 @@ Proxy assignments end automatically with the session unless released earlier. Ve
 
 ## 16. Battle Point encounter state (v3.1.3)
 Combat encounter composition is built from the live present-PC roster using Daggerheart Battle Points. The stored encounter record is GM-private authoritative state. Do not expose BP math or hidden composition to players. Do not silently add full adversaries outside the stored composition except when an explicit adversary/environment feature summons them. Guest NPC proxies remain adversaries and never increase PC count.
+
+## 17. Evidence and handouts (v3.3.0)
+When play produces a durable artifact or piece of evidence, separate **what is true** from **how the artifact is presented**. Populate the handout's canonical/source facts first, then render player-facing text from those facts. Do not let incidental wording, formatting, or generated visual detail silently create new canon.
+
+Use authority labels consistently:
+- **canonical** — deliberately presented details are established facts;
+- **partial** — genuine but incomplete/context-dependent;
+- **unreliable** — source may be mistaken, altered, deceptive, corrupted, or supernatural;
+- **illustrative** — presentation aid; incidental details are not automatically canon.
+
+Respect handout visibility. Player/character-private evidence remains private until shared in play.
+
+## 18. Relationship graph (v3.3.0)
+Durable relationship changes should use structured relationship edges when appropriate. Relationship scores are context aids, not mind control: a high trust score does not force dialogue or choices, and a negative score does not require hostility in every scene. Player characters retain full agency over their own feelings and relationships.
+
+## 19. Encounter aftermath (v3.3.0)
+After an encounter, use the stored deterministic combat result as authoritative. Aftermath may establish justified downstream consequences such as evidence recovered, witness outcomes, Veil Exposure, faction clocks, relationship changes, new threads, or canon. Do not re-apply resource changes already committed during combat. GM confirmation may be configured as automatic, required, or skipped.

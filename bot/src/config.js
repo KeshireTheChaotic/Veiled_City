@@ -17,8 +17,9 @@ export function loadConfig(){
     rulesModel:process.env.OPENAI_RULES_MODEL||process.env.OPENAI_ROUTER_MODEL||"gpt-6-luna",
     assemblyModel:process.env.OPENAI_ASSEMBLY_MODEL||process.env.OPENAI_ROUTER_MODEL||"gpt-6-luna",
     npcProxyModel:process.env.OPENAI_NPC_PROXY_MODEL||process.env.OPENAI_ASSEMBLY_MODEL||process.env.OPENAI_ROUTER_MODEL||"gpt-6-luna",
-    characterModel:process.env.OPENAI_CHARACTER_MODEL||process.env.OPENAI_ASSEMBLY_MODEL||process.env.OPENAI_ROUTER_MODEL||"gpt-6-luna",
     downtimeModel:process.env.OPENAI_DOWNTIME_MODEL||process.env.OPENAI_GM_MODEL||"gpt-6.1-sol",
+    handoutModel:process.env.OPENAI_HANDOUT_MODEL||process.env.OPENAI_ROUTER_MODEL||"gpt-6-luna",
+    aftermathModel:process.env.OPENAI_AFTERMATH_MODEL||process.env.OPENAI_SUMMARY_MODEL||process.env.OPENAI_ROUTER_MODEL||"gpt-6-luna",
     reasoningEffort:process.env.OPENAI_REASONING_EFFORT||"low",
     dbPath:path.resolve(cwd,process.env.DATABASE_PATH||"./data/veiled_city.sqlite"),
     contentRoot:path.resolve(cwd,process.env.CONTENT_ROOT||"../content"),
@@ -28,9 +29,11 @@ export function loadConfig(){
     rulesMaxOutputTokens:Number(process.env.RULES_MAX_OUTPUT_TOKENS||500),
     assemblyMaxOutputTokens:Number(process.env.ASSEMBLY_MAX_OUTPUT_TOKENS||1200),
     npcProxyMaxOutputTokens:Number(process.env.NPC_PROXY_MAX_OUTPUT_TOKENS||1200),
-    characterMaxOutputTokens:Number(process.env.CHARACTER_MAX_OUTPUT_TOKENS||3200),
     structuredRetryMaxTokens:Number(process.env.STRUCTURED_JSON_RETRY_MAX_TOKENS||6000),
     downtimeMaxOutputTokens:Number(process.env.DOWNTIME_MAX_OUTPUT_TOKENS||1800),
+    handoutMaxOutputTokens:Number(process.env.HANDOUT_MAX_OUTPUT_TOKENS||1200),
+    aftermathMaxOutputTokens:Number(process.env.AFTERMATH_MAX_OUTPUT_TOKENS||1800),
+    encounterAftermathMode:process.env.ENCOUNTER_AFTERMATH_MODE||"auto",
     defaultResponseMode:process.env.DEFAULT_RESPONSE_MODE||"assisted"
   };
 }

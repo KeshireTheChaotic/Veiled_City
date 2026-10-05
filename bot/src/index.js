@@ -6,8 +6,8 @@ import { VeiledDB } from "./db.js";
 import { ContentIndex } from "./content.js";
 import { GMService } from "./gm.js";
 import { handleCommand } from "./commands.js";
-import { applyGMEvents } from "./state.js";
-import { publishEventResults, postGmLog, postStateError } from "./publishing.js";
+import { applyGMEvents, applyRelationshipDrafts, applyHandoutDrafts } from "./state.js";
+import { publishEventResults, postGmLog, postStateError, deliverHandout } from "./publishing.js";
 
 const config=loadConfig();
 const db=new VeiledDB(config.dbPath,path.resolve(process.cwd(),"./sql/schema.sql"));
@@ -70,7 +70,7 @@ function resolveController(session,message){
 }
 
 client.once("ready",()=>{
-  console.log(`Veilkeeper v3.2.2 logged in as ${client.user.tag}`);
+  console.log(`Veilkeeper v3.3.0 logged in as ${client.user.tag}`);
   console.log(`Indexed ${content.chunks.length} Veiled City content chunks.`);
 });
 
@@ -135,8 +135,12 @@ client.on("messageCreate",async message=>{
       const cleaned=playerText.replaceAll(`<@${client.user.id}>`,"").replaceAll(`<@!${client.user.id}>`,"").trim();
       const result=await gm.runTurn({guildId:message.guild.id,actorUserId:message.author.id,actorName:speaker,actorAssignment:controlled,messageText:cleaned||playerText,scope:"private"});
       if(!result.respond) return;
-      if((result.events||[]).some(e=>!["log_only","relationship"].includes(e.type))) db.snapshotCampaign(message.guild.id,{label:"Pre-private GM mutation",reason:`Automatic snapshot before eventful private GM turn by ${speaker}`,createdBy:"veilkeeper"});
-      const applied=applyGMEvents(db,message.guild.id,session.id,result.events,{mode:"private",actorUserId:message.author.id,actorCharacterId:controlled?.character_id||null});
+      if((result.events||[]).some(e=>e.type!=="log_only")||(result.relationships||[]).length||(result.handouts||[]).length) db.snapshotCampaign(message.guild.id,{label:"Pre-private GM mutation",reason:`Automatic snapshot before eventful private GM turn by ${speaker}`,createdBy:"veilkeeper"});
+      const scope={mode:"private",actorUserId:message.author.id,actorCharacterId:controlled?.character_id||null};
+      const applied=applyGMEvents(db,message.guild.id,session.id,result.events,scope);
+      const relApplied=applyRelationshipDrafts(db,message.guild.id,result.relationships||[],scope,"ai_gm");
+      const handApplied=applyHandoutDrafts(db,message.guild.id,session.id,result.handouts||[],scope,"ai_gm");
+      for(const h of handApplied.filter(x=>x.ok)) await deliverHandout({db,guild:message.guild,handout:h.row,format:"markdown"});
       for(const r of applied.filter(x=>x.type==="canon"&&x.status==="conflict")) await postStateError({db,guild:message.guild,error:new Error(`Canon conflict ${r.conflict_id} requires GM resolution`),context:"canon-conflict-private",sessionId:session.id});
       if(result.narration?.trim()){
         for(const c of splitDiscord(result.narration)) await message.channel.send(c.trim());
@@ -150,7 +154,10 @@ client.on("messageCreate",async message=>{
         await sendPrivate(message.guild,pm.discord_user_id,`**Veilkeeper — private:**\n${pm.content}`,session.id,privateKnowledgeId);
       }
       db.audit(message.guild.id,session.id,"ai","gm","private_turn",{actor:message.author.id,events:result.events});
-      if(applied.length) await postGmLog({db,guild:message.guild,sessionId:session.id,title:"Private GM state update",details:`Actor: ${speaker}\nEvents: ${applied.map(x=>x.type).join(", ")}`});
+      if(applied.length||relApplied.length||handApplied.length) await postGmLog({db,guild:message.guild,sessionId:session.id,title:"Private GM state update",details:`Actor: ${speaker}
+Events: ${applied.map(x=>x.type).join(", ")||"none"}
+Relationships: ${relApplied.filter(x=>x.ok).length}
+Handouts: ${handApplied.filter(x=>x.ok).length}`});
     }catch(err){
       console.error("Private GM turn failed",err);
       const ref=await postStateError({db,guild:message.guild,error:err,context:`private-turn:${message.author.id}`,sessionId:session.id});
@@ -185,9 +192,13 @@ client.on("messageCreate",async message=>{
     const cleaned=playerText.replaceAll(`<@${client.user.id}>`,"").replaceAll(`<@!${client.user.id}>`,"").trim();
     const result=await gm.runTurn({guildId:message.guild.id,actorUserId:message.author.id,actorName:speaker,actorAssignment:controlled,messageText:cleaned||playerText,scope:"party"});
     if(!result.respond) return;
-    if((result.events||[]).some(e=>!["log_only","relationship"].includes(e.type))) db.snapshotCampaign(message.guild.id,{label:"Pre-GM mutation",reason:`Automatic snapshot before eventful GM turn by ${speaker}`,createdBy:"veilkeeper"});
-    const applied=applyGMEvents(db,message.guild.id,session.id,result.events,{mode:"party",actorUserId:message.author.id,actorCharacterId:controlled?.character_id||null});
+    if((result.events||[]).some(e=>e.type!=="log_only")||(result.relationships||[]).length||(result.handouts||[]).length) db.snapshotCampaign(message.guild.id,{label:"Pre-GM mutation",reason:`Automatic snapshot before eventful GM turn by ${speaker}`,createdBy:"veilkeeper"});
+    const scope={mode:"party",actorUserId:message.author.id,actorCharacterId:controlled?.character_id||null};
+    const applied=applyGMEvents(db,message.guild.id,session.id,result.events,scope);
+    const relApplied=applyRelationshipDrafts(db,message.guild.id,result.relationships||[],scope,"ai_gm");
+    const handApplied=applyHandoutDrafts(db,message.guild.id,session.id,result.handouts||[],scope,"ai_gm");
     await publishEventResults({db,guild:message.guild,results:applied});
+    for(const h of handApplied.filter(x=>x.ok)) await deliverHandout({db,guild:message.guild,handout:h.row,format:"markdown"});
     for(const r of applied.filter(x=>x.type==="canon"&&x.status==="conflict")) await postStateError({db,guild:message.guild,error:new Error(`Canon conflict ${r.conflict_id} requires GM resolution`),context:"canon-conflict-party",sessionId:session.id});
     if(result.narration?.trim()){
       for(const c of splitDiscord(result.narration)) await message.channel.send(c.trim());
@@ -201,7 +212,10 @@ client.on("messageCreate",async message=>{
       await sendPrivate(message.guild,pm.discord_user_id,`**Veilkeeper — private:**\n${pm.content}`,session.id,privateKnowledgeId);
     }
     db.audit(message.guild.id,session.id,"ai","gm","turn",{actor:message.author.id,events:result.events});
-    if(applied.length) await postGmLog({db,guild:message.guild,sessionId:session.id,title:"GM state update",details:`Actor: ${speaker}\nEvents: ${applied.map(x=>x.type).join(", ")}`});
+    if(applied.length||relApplied.length||handApplied.length) await postGmLog({db,guild:message.guild,sessionId:session.id,title:"GM state update",details:`Actor: ${speaker}
+Events: ${applied.map(x=>x.type).join(", ")||"none"}
+Relationships: ${relApplied.filter(x=>x.ok).length}
+Handouts: ${handApplied.filter(x=>x.ok).length}`});
   }catch(err){
     console.error("GM turn failed",err);
     const ref=await postStateError({db,guild:message.guild,error:err,context:`party-turn:${message.author.id}`,sessionId:session.id});

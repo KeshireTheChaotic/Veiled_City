@@ -5,12 +5,13 @@ import {
   AttachmentBuilder
 } from "discord.js";
 import { dualityRoll, parseDice } from "./dice.js";
-import { publishJournal, postJournalEntry, publishEventResults, postGmLog, postStateError, postPrivateRelay, syncConfiguredSurfaces, postPlayMessage, sendPlayerPrivate } from "./publishing.js";
+import { publishJournal, postJournalEntry, publishEventResults, postGmLog, postStateError, postPrivateRelay, syncConfiguredSurfaces, postPlayMessage, sendPlayerPrivate, deliverHandout } from "./publishing.js";
 import { EncounterLibrary, livePcRoster, partyTier, baseBattlePoints, DIFFICULTY_ADJUSTMENTS, autoBuildComposition, recomputeBudget, battlePointCost, HEAVY_ROLES, defaultObjective } from "./encounter.js";
-import { validateConceptDraft, prepareLevelup, applyLevelupToData, legalAdvancements, tierAchievement } from "./character-system.js";
+import { prepareLevelup, applyLevelupToData, legalAdvancements, tierAchievement } from "./character-system.js";
 import { buildCombatants, hpMarksForDamage, combatantLine } from "./combat.js";
-import { applyGMEvents } from "./state.js";
+import { applyGMEvents, applyRelationshipDrafts, applyHandoutDrafts } from "./state.js";
 import { createPlayerExportFiles, createGmExportFiles } from "./character-export.js";
+import { handoutFiles, handoutSummary } from "./handout.js";
 
 export function buildCommands(){
   const monolith = new SlashCommandBuilder()
@@ -95,10 +96,6 @@ export function buildCommands(){
           .addStringOption(o=>o.setName("character").setDescription("Character name").setRequired(true)))
         .addSubcommand(s=>s.setName("death").setDescription("Mark a character dead after resolving the death move")
           .addStringOption(o=>o.setName("character").setDescription("Character name").setRequired(true)))
-        .addSubcommand(s=>s.setName("concept").setDescription("Draft a level-1 character from a plain-English description")
-          .addStringOption(o=>o.setName("description").setDescription("Character concept, tone, background, capabilities, hooks").setRequired(true)))
-        .addSubcommand(s=>s.setName("concept-status").setDescription("Show your latest AI-assisted character draft"))
-        .addSubcommand(s=>s.setName("concept-accept").setDescription("Validate and create your latest character concept draft"))
         .addSubcommand(s=>s.setName("level-up").setDescription("Start a validated level-up draft")
           .addStringOption(o=>o.setName("character").setDescription("Owned character name").setRequired(true)))
         .addSubcommand(s=>s.setName("level-choose").setDescription("Choose the two advancements and mandatory new domain card")
@@ -168,7 +165,12 @@ export function buildCommands(){
           .addStringOption(o=>o.setName("adversary").setDescription("Adversary name").setRequired(true))
           .addIntegerOption(o=>o.setName("quantity").setDescription("Units/groups to remove").setMinValue(1).setMaxValue(10)))
         .addSubcommand(s=>s.setName("start").setDescription("Mark the planned encounter active and initialize combatants"))
-        .addSubcommand(s=>s.setName("end").setDescription("End the current encounter"))
+        .addSubcommand(s=>s.setName("end").setDescription("End the current encounter and optionally resolve aftermath")
+          .addStringOption(o=>o.setName("aftermath").setDescription("How to handle post-encounter consequences").addChoices(
+            {name:"Auto apply (default)",value:"auto"},{name:"Require GM confirmation",value:"confirm"},{name:"Skip aftermath",value:"none"})))
+        .addSubcommand(s=>s.setName("aftermath-status").setDescription("Show the latest encounter aftermath draft/status"))
+        .addSubcommand(s=>s.setName("aftermath-confirm").setDescription("GM: apply a pending encounter aftermath"))
+        .addSubcommand(s=>s.setName("aftermath-discard").setDescription("GM: discard a pending encounter aftermath"))
         .addSubcommand(s=>s.setName("combatants").setDescription("Show deterministic adversary HP/Stress/conditions"))
         .addSubcommand(s=>s.setName("damage").setDescription("Apply rolled damage to an adversary using thresholds")
           .addStringOption(o=>o.setName("target").setDescription("Combatant name or 8-char ID").setRequired(true))
@@ -190,6 +192,54 @@ export function buildCommands(){
         .addSubcommand(s=>s.setName("establish").setDescription("Mark present PCs as a continuing party")
           .addStringOption(o=>o.setName("name").setDescription("Optional party/team name")))
         .addSubcommand(s=>s.setName("status").setDescription("Show established party status")))
+      .addSubcommandGroup(g=>g.setName("relationship").setDescription("Structured character/NPC/faction relationship graph")
+        .addSubcommand(s=>s.setName("list").setDescription("Show relationships visible to you")
+          .addStringOption(o=>o.setName("character").setDescription("Owned character; defaults to current")))
+        .addSubcommand(s=>s.setName("set").setDescription("GM: create or replace a relationship edge")
+          .addStringOption(o=>o.setName("from_type").setDescription("Source entity type").setRequired(true).addChoices({name:"Character",value:"character"},{name:"NPC",value:"npc"},{name:"Faction",value:"faction"},{name:"Location",value:"location"},{name:"Other",value:"entity"}))
+          .addStringOption(o=>o.setName("from").setDescription("Source character/name/key").setRequired(true))
+          .addStringOption(o=>o.setName("to_type").setDescription("Target entity type").setRequired(true).addChoices({name:"Character",value:"character"},{name:"NPC",value:"npc"},{name:"Faction",value:"faction"},{name:"Location",value:"location"},{name:"Other",value:"entity"}))
+          .addStringOption(o=>o.setName("to").setDescription("Target character/name/key").setRequired(true))
+          .addStringOption(o=>o.setName("relation").setDescription("Relationship type").setRequired(true).addChoices({name:"Trust",value:"trust"},{name:"Debt",value:"debt"},{name:"Fear",value:"fear"},{name:"Hostility",value:"hostility"},{name:"Affection",value:"affection"},{name:"Authority",value:"authority"},{name:"Family",value:"family"},{name:"Ally",value:"ally"},{name:"Rival",value:"rival"},{name:"Contact",value:"contact"},{name:"Suspicion",value:"suspicion"},{name:"Other",value:"other"}))
+          .addIntegerOption(o=>o.setName("score").setDescription("Intensity from -5 to +5").setMinValue(-5).setMaxValue(5).setRequired(true))
+          .addStringOption(o=>o.setName("visibility").setDescription("Visibility").addChoices({name:"Party",value:"party"},{name:"Public",value:"public"},{name:"Character",value:"character"},{name:"GM only",value:"gm"}))
+          .addStringOption(o=>o.setName("note").setDescription("Short context note")))
+        .addSubcommand(s=>s.setName("adjust").setDescription("GM: change a relationship score")
+          .addStringOption(o=>o.setName("id").setDescription("Relationship ID/prefix").setRequired(true))
+          .addIntegerOption(o=>o.setName("delta").setDescription("Score change").setMinValue(-10).setMaxValue(10).setRequired(true)))
+        .addSubcommand(s=>s.setName("import-hooks").setDescription("GM: one-time backfill of existing character hook relationships")
+          .addStringOption(o=>o.setName("character").setDescription("Optional campaign character; blank imports all legacy characters"))))
+      .addSubcommandGroup(g=>g.setName("handout").setDescription("Evidence and generated campaign handouts")
+        .addSubcommand(s=>s.setName("generate").setDescription("GM: generate a handout from established facts")
+          .addStringOption(o=>o.setName("title").setDescription("Handout title").setRequired(true))
+          .addStringOption(o=>o.setName("kind").setDescription("Artifact type").setRequired(true).addChoices({name:"Document/report",value:"document"},{name:"Email/message",value:"email"},{name:"Transcript",value:"transcript"},{name:"Call/digital log",value:"log"},{name:"Evidence card",value:"evidence"},{name:"Photo description",value:"photo_description"},{name:"Other",value:"other"}))
+          .addStringOption(o=>o.setName("facts").setDescription("Semicolon/newline-separated facts the artifact may contain").setRequired(true))
+          .addStringOption(o=>o.setName("authority").setDescription("Evidence authority").addChoices({name:"Canonical",value:"canonical"},{name:"Partial",value:"partial"},{name:"Unreliable",value:"unreliable"},{name:"Illustrative",value:"illustrative"}))
+          .addStringOption(o=>o.setName("visibility").setDescription("Who receives it").addChoices({name:"Party",value:"party"},{name:"Public",value:"public"},{name:"Specific player",value:"player"},{name:"Specific character",value:"character"},{name:"GM only",value:"gm"}))
+          .addUserOption(o=>o.setName("player").setDescription("Target for player-private visibility"))
+          .addStringOption(o=>o.setName("character").setDescription("Target campaign character for character-private visibility"))
+          .addStringOption(o=>o.setName("case").setDescription("Optional case/thread key"))
+          .addStringOption(o=>o.setName("npc").setDescription("Optional linked NPC"))
+          .addStringOption(o=>o.setName("location").setDescription("Optional linked location")))
+        .addSubcommand(s=>s.setName("create").setDescription("GM: store a handout without an AI generation call")
+          .addStringOption(o=>o.setName("title").setDescription("Handout title").setRequired(true))
+          .addStringOption(o=>o.setName("content").setDescription("Player-facing artifact text").setRequired(true))
+          .addStringOption(o=>o.setName("facts").setDescription("Optional semicolon/newline-separated canonical/source facts"))
+          .addStringOption(o=>o.setName("kind").setDescription("Artifact type"))
+          .addStringOption(o=>o.setName("authority").setDescription("Evidence authority").addChoices({name:"Canonical",value:"canonical"},{name:"Partial",value:"partial"},{name:"Unreliable",value:"unreliable"},{name:"Illustrative",value:"illustrative"}))
+          .addStringOption(o=>o.setName("visibility").setDescription("Who receives it").addChoices({name:"Party",value:"party"},{name:"Public",value:"public"},{name:"Specific player",value:"player"},{name:"Specific character",value:"character"},{name:"GM only",value:"gm"}))
+          .addUserOption(o=>o.setName("player").setDescription("Target for player-private visibility"))
+          .addStringOption(o=>o.setName("character").setDescription("Target campaign character")))
+        .addSubcommand(s=>s.setName("list").setDescription("List evidence handouts visible to you"))
+        .addSubcommand(s=>s.setName("show").setDescription("Show a visible handout")
+          .addStringOption(o=>o.setName("id").setDescription("Handout ID/prefix or title").setRequired(true)))
+        .addSubcommand(s=>s.setName("export").setDescription("Download a visible handout")
+          .addStringOption(o=>o.setName("id").setDescription("Handout ID/prefix or title").setRequired(true))
+          .addStringOption(o=>o.setName("format").setDescription("Export format").addChoices({name:"Markdown",value:"markdown"},{name:"JSON",value:"json"},{name:"DOCX",value:"docx"},{name:"All",value:"all"})))
+        .addSubcommand(s=>s.setName("deliver").setDescription("GM: re-deliver an existing handout")
+          .addStringOption(o=>o.setName("id").setDescription("Handout ID/prefix or title").setRequired(true)))
+        .addSubcommand(s=>s.setName("archive").setDescription("GM: archive a handout")
+          .addStringOption(o=>o.setName("id").setDescription("Handout ID/prefix or title").setRequired(true))))
       .addSubcommandGroup(g=>g.setName("player").setDescription("Player preferences")
         .addSubcommand(s=>s.setName("private-channel").setDescription("Use this channel for your private GM information"))
         .addSubcommand(s=>s.setName("accessibility").setDescription("Set response/accessibility preferences")
@@ -262,11 +312,11 @@ export function buildCommands(){
   const full=monolith.toJSON();
   const splitMap={
     character:{
-      "vc-character":["create","import","list","select","sheet","export","export-gm","retire","death","concept","concept-status","concept-accept"],
+      "vc-character":["create","import","list","select","sheet","export","export-gm","retire","death"],
       "vc-level":["level-up","level-choose","level-confirm"]
     },
     encounter:{
-      "vc-encounter":["build","status","adjust","add","remove","start","end"],
+      "vc-encounter":["build","status","adjust","add","remove","start","end","aftermath-status","aftermath-confirm","aftermath-discard"],
       "vc-combat":["combatants","damage","heal","stress","condition","combatant-status"]
     }
   };
@@ -461,23 +511,6 @@ async function deliverNpcProxyPacket({db,guild,proxy,offered=false}){
   return relay.ok?relay:{ok:false,via:"unavailable",ref:relay.ref,content};
 }
 
-function formatConceptDraft(row){
-  if(!row) return "No pending character concept draft.";
-  const d=row.draft||{}; const hooks=d.hook_proposals||[];
-  return [
-    `**Character Draft — ${d.name||"Unnamed"}**`,
-    `${d.class||"?"}${d.subclass?` / ${d.subclass}`:""} • ${d.ancestry||"?"} • ${d.community||"?"}`,
-    `Domains: ${(d.domains||[]).join(" / ")||"—"}`,
-    `Experiences: ${(d.experiences||[]).join("; ")||"—"}`,
-    `Cards: ${(d.domain_cards||[]).map(x=>typeof x==="string"?x:x.name).join("; ")||"—"}`,
-    d.home?`Home: ${d.home}`:"", d.person?`Person: ${d.person}`:"", d.obligation?`Obligation: ${d.obligation}`:"",
-    d.unresolved_incident?`Unresolved incident: ${d.unresolved_incident}`:"",
-    hooks.length?`**Hook permissions**\n${hooks.map(h=>`• **${h.classification.replaceAll("_"," ")}** — ${h.text}`).join("\n")}`:"",
-    d.mechanical_notes?`Mechanical notes: ${d.mechanical_notes}`:"",
-    `Draft ID: \`${row.id.slice(0,8)}\``
-  ].filter(Boolean).join("\n").slice(0,1900);
-}
-
 function formatLevelupDraft(draft,character){
   if(!draft) return "No pending level-up draft.";
   const p=draft.choices?.plan;
@@ -520,6 +553,44 @@ async function deletePublishedNotInSnapshot({db,guild,snapshot}){
     if(target.has(`${row.channel_id}:${row.message_id}`)) continue;
     try{const ch=await guild.channels.fetch(row.channel_id); const m=await ch?.messages?.fetch(row.message_id); if(m) await m.delete();}catch{}
   }
+}
+
+
+function factList(text){return String(text||"").split(/\n|;/).map(x=>x.trim()).filter(Boolean);}
+function activeCharacterForUser(db,guildId,userId){
+  const s=db.getActiveSession(guildId); if(s){const a=db.activeAssignment(s.id,userId); if(a) return db.getCharacter(a.character_id);}
+  return db.listCharacters(guildId,userId,{includeClosed:false})[0]||null;
+}
+function handoutVisibleTo(db,guildId,userId,handout,isGm=false){
+  if(!handout||handout.guild_id!==guildId) return false; if(isGm) return true;
+  if(["public","party"].includes(handout.visibility)) return true;
+  if(handout.visibility==="player") return handout.subject_user_id===userId;
+  if(handout.visibility==="character"){const c=activeCharacterForUser(db,guildId,userId); return !!c&&c.id===handout.subject_character_id;}
+  return false;
+}
+function relationshipLine(r){return `• \`${r.id.slice(0,8)}\` **${r.from_label||r.from_key}** — ${r.relationship_type} (${r.score>=0?"+":""}${r.score}) → **${r.to_label||r.to_key}**${r.note?` — ${r.note}`:""}`;}
+function resolveEndpoint(db,guildId,type,value){
+  if(type==="character"){const c=db.findGuildCharacter(guildId,value,{includeClosed:true}); if(!c) throw new Error(`Character endpoint not found: ${value}`); return {key:c.id,label:c.name};}
+  return {key:db.relationshipEntityKey(type,value),label:String(value).trim()};
+}
+function latestEncounterForSession(db,sessionId){return db.listEncounters(sessionId)[0]||null;}
+
+async function applyEncounterAftermath({db,guild,encounter,draft,actorId}){
+  db.snapshotCampaign(guild.id,{label:`Pre-aftermath encounter ${encounter.encounter_number}`,reason:"Automatic snapshot before encounter aftermath",createdBy:actorId});
+  const scope={mode:"party",actorUserId:null,actorCharacterId:null};
+  const events=applyGMEvents(db,guild.id,encounter.session_id,draft.events||[],scope);
+  const relationships=applyRelationshipDrafts(db,guild.id,draft.relationships||[],scope,"encounter_aftermath");
+  const handouts=applyHandoutDrafts(db,guild.id,encounter.session_id,draft.handouts||[],scope,"encounter_aftermath");
+  await publishEventResults({db,guild,results:events});
+  for(const h of handouts.filter(x=>x.ok)) await deliverHandout({db,guild,handout:h.row,format:"markdown"});
+  for(const r of events.filter(x=>x.type==="canon"&&x.status==="conflict")) await postStateError({db,guild,error:new Error(`Canon conflict ${r.conflict_id} requires GM resolution`),context:"encounter-aftermath-canon",sessionId:encounter.session_id});
+  if(draft.player_summary?.trim()){
+    await postPlayMessage({db,guild,content:`**Encounter Aftermath**\n${draft.player_summary}`,sessionId:encounter.session_id});
+    await postJournalEntry({db,guild,title:`Encounter ${encounter.encounter_number} Aftermath`,content:draft.player_summary});
+  }
+  db.setEncounterAftermathStatus(encounter.id,"applied");
+  await postGmLog({db,guild,sessionId:encounter.session_id,title:`Encounter #${encounter.encounter_number} aftermath applied`,details:`Events: ${events.length}\nRelationships: ${relationships.filter(x=>x.ok).length}\nHandouts: ${handouts.filter(x=>x.ok).length}\n${draft.gm_notes||""}`});
+  return {events,relationships,handouts};
 }
 
 export async function handleCommand(interaction,{db,gm}){
@@ -797,35 +868,6 @@ Initial phase: ${s.assembly_phase}`});
       return true;
     }
 
-    if(group==="character"&&sub==="concept"){
-      await interaction.deferReply({ephemeral:true});
-      const description=interaction.options.getString("description",true);
-      const draft=await gm.draftCharacterConcept({guildId:interaction.guildId,userId:interaction.user.id,userName:interaction.member?.displayName||interaction.user.username,description});
-      const validation=validateConceptDraft(draft);
-      const row=db.createCharacterDraft(interaction.guildId,interaction.user.id,description,draft);
-      const note=validation.ok?"\n\n✅ Draft passes v3.2 level-1 structural validation. Review it, then use /vc-character concept-accept.":`\n\n⚠️ Draft needs revision before acceptance:\n${validation.errors.map(x=>`• ${x}`).join("\n")}\nRun /vc-character concept again with the correction in your description.`;
-      await interaction.editReply((formatConceptDraft(row)+note).slice(0,1950));
-      return true;
-    }
-    if(group==="character"&&sub==="concept-status"){
-      const row=db.latestCharacterDraft(interaction.guildId,interaction.user.id,{status:"draft"});
-      await interaction.reply({content:formatConceptDraft(row),ephemeral:true});
-      return true;
-    }
-    if(group==="character"&&sub==="concept-accept"){
-      const row=db.latestCharacterDraft(interaction.guildId,interaction.user.id,{status:"draft"});
-      if(!row) throw new Error("No pending character concept draft.");
-      const v=validateConceptDraft(row.draft); if(!v.ok) throw new Error(`Draft is not valid: ${v.errors.join("; ")}`);
-      const d=structuredClone(row.draft);
-      d.class=v.normalizedClass||d.class;
-      d.hook_permissions=(d.hook_proposals||[]).map(h=>({text:h.text,classification:h.classification}));
-      d.gm_hooks=(d.hook_proposals||[]).filter(h=>h.classification!=="established").map(h=>h.text);
-      const c=db.createCharacter(interaction.guildId,interaction.user.id,d.name,d);
-      db.setCharacterDraftStatus(row.id,"accepted");
-      db.audit(interaction.guildId,null,"player",interaction.user.id,"character_concept_accept",{character_id:c.id,draft_id:row.id});
-      await interaction.reply({content:`Created **${c.name}** from the approved concept draft.\n\n${formatSheet(c)}`,ephemeral:true});
-      return true;
-    }
     if(group==="character"&&sub==="level-up"){
       const c=db.findOwnedCharacter(interaction.guildId,interaction.user.id,interaction.options.getString("character",true));
       if(!c) throw new Error("Character not found or unavailable.");
@@ -1051,6 +1093,8 @@ Initial phase: ${s.assembly_phase}`});
         let e=db.getCurrentEncounter(session.id); if(!e||e.status!=="planned") throw new Error("No planned encounter is available to start.");
         db.snapshotCampaign(interaction.guildId,{label:`Pre-encounter ${e.encounter_number}`,reason:"Automatic snapshot before encounter start",createdBy:interaction.user.id});
         e=db.setEncounterStatus(e.id,"active");
+        db.captureEncounterStartState(e.id);
+        e=db.getEncounter(e.id);
         const combatants=db.initializeCombatants(e.id,buildCombatants(e,lib));
         db.audit(interaction.guildId,session.id,"human_gm",interaction.user.id,"encounter_start",{encounter_id:e.id,budget:e.budget_bp,spent:e.spent_bp,combatants:combatants.length});
         await postGmLog({db,guild:interaction.guild,sessionId:session.id,title:`Encounter #${e.encounter_number} started`,details:`${e.spent_bp}/${e.budget_bp} BP • ${e.objective}\nDeterministic combatants initialized: ${combatants.length}`});
@@ -1090,10 +1134,112 @@ Initial phase: ${s.assembly_phase}`});
       }
       if(sub==="end"){
         let e=db.getCurrentEncounter(session.id); if(!e) throw new Error("No planned or active encounter.");
+        const mode=interaction.options.getString("aftermath")||gm.config.encounterAftermathMode||"auto";
         e=db.setEncounterStatus(e.id,"ended");
-        db.audit(interaction.guildId,session.id,"human_gm",interaction.user.id,"encounter_end",{encounter_id:e.id});
-        await postGmLog({db,guild:interaction.guild,sessionId:session.id,title:`Encounter #${e.encounter_number} ended`,details:`Final composition budget: ${e.spent_bp}/${e.budget_bp} BP.`});
-        await interaction.reply({content:`Encounter #${e.encounter_number} ended.`,ephemeral:true}); return true;
+        db.audit(interaction.guildId,session.id,"human_gm",interaction.user.id,"encounter_end",{encounter_id:e.id,aftermath_mode:mode});
+        await postGmLog({db,guild:interaction.guild,sessionId:session.id,title:`Encounter #${e.encounter_number} ended`,details:`Final composition budget: ${e.spent_bp}/${e.budget_bp} BP.
+Aftermath mode: ${mode}`});
+        if(mode==="none"){
+          await interaction.reply({content:`Encounter #${e.encounter_number} ended. Aftermath generation skipped.`,ephemeral:true}); return true;
+        }
+        await interaction.deferReply({ephemeral:true});
+        const draft=await gm.buildEncounterAftermath({guildId:interaction.guildId,encounter:e});
+        db.createEncounterAftermath(e.id,interaction.guildId,session.id,draft,"pending");
+        if(mode==="confirm"){
+          await interaction.editReply(`Encounter #${e.encounter_number} ended. **Aftermath awaiting GM confirmation.**
+
+${draft.player_summary||"No player-safe summary."}
+
+GM notes: ${draft.gm_notes||"—"}
+Use \`/vc-encounter aftermath-confirm\` or \`/vc-encounter aftermath-discard\`.`.slice(0,1950)); return true;
+        }
+        await applyEncounterAftermath({db,guild:interaction.guild,encounter:e,draft,actorId:interaction.user.id});
+        await interaction.editReply(`Encounter #${e.encounter_number} ended and aftermath was applied automatically.`); return true;
+      }
+      if(["aftermath-status","aftermath-confirm","aftermath-discard"].includes(sub)){
+        const e=latestEncounterForSession(db,session.id); if(!e) throw new Error("No encounter exists in this session.");
+        const a=db.getEncounterAftermath(e.id);
+        if(sub==="aftermath-status"){
+          await interaction.reply({content:a?`**Encounter #${e.encounter_number} aftermath — ${a.status}**
+${a.draft.player_summary||"No summary."}
+${isGM(db,interaction)&&a.draft.gm_notes?`
+GM notes: ${a.draft.gm_notes}`:""}`.slice(0,1950):"No aftermath draft exists for the latest encounter.",ephemeral:true}); return true;
+        }
+        if(!isGM(db,interaction)) throw new Error("GM/admin permission required.");
+        if(!a||a.status!=="pending") throw new Error("No pending aftermath exists for the latest encounter.");
+        if(sub==="aftermath-discard"){
+          db.setEncounterAftermathStatus(e.id,"discarded");
+          await interaction.reply({content:`Encounter #${e.encounter_number} aftermath discarded; no proposed consequences were applied.`,ephemeral:true}); return true;
+        }
+        await interaction.deferReply({ephemeral:true});
+        await applyEncounterAftermath({db,guild:interaction.guild,encounter:e,draft:a.draft,actorId:interaction.user.id});
+        await interaction.editReply(`Encounter #${e.encounter_number} aftermath confirmed and applied.`); return true;
+      }
+    }
+
+    if(group==="relationship"){
+      if(sub==="list"){
+        const q=interaction.options.getString("character");
+        let c=q?findOwnedAnyCharacter(db,interaction.guildId,interaction.user.id,q):activeCharacterForUser(db,interaction.guildId,interaction.user.id);
+        if(isGM(db,interaction)&&q) c=db.findGuildCharacter(interaction.guildId,q,{includeClosed:true})||c;
+        let rows=db.listRelationships(interaction.guildId,{includeGM:isGM(db,interaction),characterId:c?.id||null,userId:interaction.user.id});
+        if(c) rows=rows.filter(r=>r.from_key===c.id||r.to_key===c.id||r.source_character_id===c.id);
+        await interaction.reply({content:rows.length?rows.slice(0,30).map(relationshipLine).join("\n").slice(0,1950):"No matching relationships are recorded.",ephemeral:true}); return true;
+      }
+      if(!isGM(db,interaction)) throw new Error("GM/admin permission required.");
+      if(sub==="set"){
+        const ft=interaction.options.getString("from_type",true), tt=interaction.options.getString("to_type",true);
+        const from=resolveEndpoint(db,interaction.guildId,ft,interaction.options.getString("from",true));
+        const to=resolveEndpoint(db,interaction.guildId,tt,interaction.options.getString("to",true));
+        const row=db.upsertRelationship(interaction.guildId,{fromType:ft,fromKey:from.key,fromLabel:from.label,toType:tt,toKey:to.key,toLabel:to.label,relationshipType:interaction.options.getString("relation",true),score:interaction.options.getInteger("score",true),visibility:interaction.options.getString("visibility")||"party",note:interaction.options.getString("note")||"",source:"human_gm",sourceCharacterId:ft==="character"?from.key:null});
+        await interaction.reply({content:`Saved relationship:\n${relationshipLine(row)}`,ephemeral:true}); return true;
+      }
+      if(sub==="adjust"){
+        const q=interaction.options.getString("id",true).toLowerCase(); const rows=db.listRelationships(interaction.guildId,{includeGM:true}); const row=rows.find(r=>r.id.toLowerCase().startsWith(q)); if(!row) throw new Error("Relationship ID not found.");
+        const next=db.adjustRelationship(row.id,interaction.options.getInteger("delta",true)); await interaction.reply({content:`Updated relationship:\n${relationshipLine(next)}`,ephemeral:true}); return true;
+      }
+      if(sub==="import-hooks"){
+        const q=interaction.options.getString("character"); let cid=null; if(q){const c=db.findGuildCharacter(interaction.guildId,q,{includeClosed:true}); if(!c) throw new Error("Campaign character not found."); cid=c.id;}
+        const result=db.importExistingHookRelationships(interaction.guildId,{characterId:cid});
+        await interaction.reply({content:`Hook relationship backfill complete. Characters processed: **${result.processed}** • new relationship edges: **${result.created}** • already imported/skipped: **${result.skipped}**. This importer is one-time per character.`,ephemeral:true}); return true;
+      }
+    }
+
+    if(group==="handout"){
+      const gmUser=isGM(db,interaction);
+      if(sub==="list"){
+        const c=activeCharacterForUser(db,interaction.guildId,interaction.user.id);
+        const rows=db.listHandoutsFor(interaction.guildId,interaction.user.id,{characterId:c?.id||null,includeGM:gmUser,limit:40});
+        await interaction.reply({content:rows.length?rows.map(h=>`• \`${h.id.slice(0,8)}\` **${h.title}** — ${h.kind} / ${h.authority} / ${h.visibility}`).join("\n").slice(0,1950):"No visible handouts/evidence are recorded.",ephemeral:true}); return true;
+      }
+      if(["show","export"].includes(sub)){
+        const h=db.findHandout(interaction.guildId,interaction.options.getString("id",true)); if(!h||!handoutVisibleTo(db,interaction.guildId,interaction.user.id,h,gmUser)) throw new Error("Handout not found or not visible to you.");
+        if(sub==="show"){await interaction.reply({content:handoutSummary(h).slice(0,1950),ephemeral:true});return true;}
+        const format=interaction.options.getString("format")||"markdown"; const files=handoutFiles(h,format); await interaction.reply({content:`Evidence export: **${h.title}** (${format}).`,files:exportAttachments(files),ephemeral:true});return true;
+      }
+      if(!gmUser) throw new Error("GM/admin permission required.");
+      if(sub==="archive"||sub==="deliver"){
+        const h=db.findHandout(interaction.guildId,interaction.options.getString("id",true)); if(!h) throw new Error("Handout not found.");
+        if(sub==="archive"){db.archiveHandout(h.id);await interaction.reply({content:`Archived **${h.title}**.`,ephemeral:true});return true;}
+        const result=await deliverHandout({db,guild:interaction.guild,handout:h,format:"markdown"}); await interaction.reply({content:`Delivery ${result.ok?"completed":"failed"} via **${result.via}**.`,ephemeral:true}); return true;
+      }
+      if(["create","generate"].includes(sub)){
+        const title=interaction.options.getString("title",true); const visibility=interaction.options.getString("visibility")||"party"; const authority=interaction.options.getString("authority")||"canonical";
+        const targetUser=interaction.options.getUser("player")?.id||null; const cq=interaction.options.getString("character"); const targetChar=cq?db.findGuildCharacter(interaction.guildId,cq,{includeClosed:true}):null;
+        if(visibility==="player"&&!targetUser) throw new Error("Specific player visibility requires the player option.");
+        if(visibility==="character"&&!targetChar) throw new Error("Specific character visibility requires the character option.");
+        let row;
+        if(sub==="create"){
+          const facts=factList(interaction.options.getString("facts")||"");
+          row=db.createHandout(interaction.guildId,{sessionId:db.getActiveSession(interaction.guildId)?.id||null,title,kind:interaction.options.getString("kind")||"document",authority,visibility,subjectUserId:targetUser,subjectCharacterId:targetChar?.id||null,content:interaction.options.getString("content",true),canonicalFacts:facts,source:"human_gm"});
+        }else{
+          await interaction.deferReply({ephemeral:true});
+          const draft=await gm.generateHandout({guildId:interaction.guildId,userId:targetUser,characterId:targetChar?.id||null,title,kind:interaction.options.getString("kind",true),facts:factList(interaction.options.getString("facts",true)),authority,visibility,caseKey:interaction.options.getString("case")||"",npcKey:interaction.options.getString("npc")||"",locationKey:interaction.options.getString("location")||""});
+          row=db.createHandout(interaction.guildId,{sessionId:db.getActiveSession(interaction.guildId)?.id||null,title:draft.title,kind:draft.kind,authority:draft.authority,visibility:draft.visibility,subjectUserId:draft.target_user_id||null,subjectCharacterId:draft.target_character_id||null,content:draft.player_visible_text,canonicalFacts:draft.canonical_facts,caseKey:draft.case_key,npcKey:draft.npc_key,locationKey:draft.location_key,source:"ai_handout",metadata:{generated:true}});
+        }
+        const delivery=await deliverHandout({db,guild:interaction.guild,handout:row,format:"markdown"});
+        const msg=`Created **${row.title}** (\`${row.id.slice(0,8)}\`) and ${delivery.ok?`delivered via ${delivery.via}`:"stored it; delivery was unavailable"}.`;
+        if(interaction.deferred) await interaction.editReply(msg); else await interaction.reply({content:msg,ephemeral:true}); return true;
       }
     }
 
@@ -1251,8 +1397,12 @@ Initial phase: ${s.assembly_phase}`});
         if(p.visibility==="party") await postJournalEntry({db,guild:interaction.guild,title:`Downtime: ${p.title}`,content:msg});
         else await sendPlayerPrivate({db,guild:interaction.guild,userId:p.discord_user_id,content:msg,sessionId:null,characterId:p.visibility==="character"?p.character_id:null});
       }
-      const eventResults=applyGMEvents(db,interaction.guildId,cycle.source_session_id||null,resolved.events||[],{mode:"party",actorUserId:null,actorCharacterId:null});
+      const dscope={mode:"party",actorUserId:null,actorCharacterId:null};
+      const eventResults=applyGMEvents(db,interaction.guildId,cycle.source_session_id||null,resolved.events||[],dscope);
+      const relationshipResults=applyRelationshipDrafts(db,interaction.guildId,resolved.relationships||[],dscope,"downtime");
+      const handoutResults=applyHandoutDrafts(db,interaction.guildId,cycle.source_session_id||null,resolved.handouts||[],dscope,"downtime");
       await publishEventResults({db,guild:interaction.guild,results:eventResults});
+      for(const h of handoutResults.filter(x=>x.ok)) await deliverHandout({db,guild:interaction.guild,handout:h.row,format:"markdown"});
       for(const r of eventResults.filter(x=>x.type==="canon"&&x.status==="conflict")) await postStateError({db,guild:interaction.guild,error:new Error(`Pending canon conflict ${r.conflict_id}`),context:"downtime-canon-conflict",sessionId:cycle.source_session_id||null});
       const done=db.resolveDowntimeCycle(cycle.id,resolved.summary||"");
       await postGmLog({db,guild:interaction.guild,title:`Downtime resolved — ${done.label}`,details:`${resolved.summary||""}\nWorld moves: ${(resolved.world_moves||[]).join("; ")||"none"}`});

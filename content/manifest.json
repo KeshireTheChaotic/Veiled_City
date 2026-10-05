@@ -1,6 +1,6 @@
 {
   "package": "Veiled City Multiplayer Campaign Content",
-  "version": "2.0 + multiplayer 3.1.3 integration",
+  "version": "2.0 + multiplayer 3.3.0 integration",
   "files": [
     {
       "path": "CARDS/ANCESTRIES_AND_COMMUNITIES.md",
@@ -11,6 +11,16 @@
       "path": "CARDS/CUSTOM_DOMAINS.md",
       "bytes": 469,
       "sha256": "a86f6f9349dd94a48cb279006bdb5cfb6c958b3aed50bf6007c9fa3644ea31b8"
+    },
+    {
+      "path": "CARDS/DOMAIN_ACCESS.md",
+      "bytes": 1133,
+      "sha256": "3ed5ce4c46702b3026f66df66cd79c064d6d7bf1e60e7f56c1b06640be0ccc80"
+    },
+    {
+      "path": "CARDS/domain_cards.json",
+      "bytes": 32105,
+      "sha256": "b3525d2ebde6aa8de5615bcd4a7904c8127d8b7c2fe592f9335dde2552f2780f"
     },
     {
       "path": "CARDS/DOMAINS/HEX.md",
@@ -33,24 +43,14 @@
       "sha256": "891232961d509e1aad7c6cf67d901d3dc95853faeb5e59902f07729ba42353be"
     },
     {
-      "path": "CARDS/DOMAIN_ACCESS.md",
-      "bytes": 1133,
-      "sha256": "3ed5ce4c46702b3026f66df66cd79c064d6d7bf1e60e7f56c1b06640be0ccc80"
-    },
-    {
       "path": "CARDS/OCCULT_SCARS.md",
       "bytes": 2878,
       "sha256": "c75987cce87d7cf5e3a75981e12acb9e010f0538c42275520e6e811c362f80e9"
     },
     {
-      "path": "CARDS/domain_cards.json",
-      "bytes": 32105,
-      "sha256": "b3525d2ebde6aa8de5615bcd4a7904c8127d8b7c2fe592f9335dde2552f2780f"
-    },
-    {
       "path": "ENGINE/AI_GM_CONSTITUTION.md",
-      "bytes": 3854,
-      "sha256": "7ea7bfd583e7845893ae686f2ea607d211e6b54c525188502587dd4a5bc2cc2f"
+      "bytes": 4586,
+      "sha256": "33c0c2377645214cedd090fba1c4a00fd021d81ae7b512b642393246784cadea"
     },
     {
       "path": "ENGINE/CONTENT_ROUTING.md",
@@ -64,8 +64,8 @@
     },
     {
       "path": "ENGINE/DAGGERHEART_MULTIPLAYER_CORE.md",
-      "bytes": 1766,
-      "sha256": "7fc252c6ed1c2f07f18cf5de96d03392e7e8f08c9c94b84e16570c243a7f8e8f"
+      "bytes": 4461,
+      "sha256": "deeffe1adfad72cb251c532df58bfea784f1a3fdbfa3183afcdc1151b274d787"
     },
     {
       "path": "ENGINE/MOBILE_TRAVEL_MODE.md",
@@ -84,8 +84,8 @@
     },
     {
       "path": "ENGINE/MULTIPLAYER_GM_RULES.md",
-      "bytes": 10136,
-      "sha256": "f163b8d87a16f676b42f82642b4b98463378397e3a0704f9b5b23663c58ea4d7"
+      "bytes": 11766,
+      "sha256": "d27b78d941f0e286f3cdebda202ed8394516b26f648acb0b14b6742a6e05efe0"
     },
     {
       "path": "ENGINE/ORACLE.md",
@@ -103,14 +103,14 @@
       "sha256": "9cf93a844d7eb9dd16366bbce65a922855c5518031ed538fa2e0719903e7f5dc"
     },
     {
-      "path": "GM_PRIVATE/ADVERSARIES/ADVERSARY_COMPENDIUM.md",
-      "bytes": 35944,
-      "sha256": "707ed16d8dd1ba8f259c48b61afd4d99b045696384e9c656cd336ea07f5e05d7"
-    },
-    {
       "path": "GM_PRIVATE/ADVERSARIES/adversaries.json",
       "bytes": 42311,
       "sha256": "bde06fb63e66b11a5bbdfdb68fdcd942a1a9a8726cca5f7c5a257d7ef5bc2a87"
+    },
+    {
+      "path": "GM_PRIVATE/ADVERSARIES/ADVERSARY_COMPENDIUM.md",
+      "bytes": 35944,
+      "sha256": "707ed16d8dd1ba8f259c48b61afd4d99b045696384e9c656cd336ea07f5e05d7"
     },
     {
       "path": "GM_PRIVATE/AI_DM_COMPENDIUM.md",
@@ -228,6 +228,11 @@
       "sha256": "92caad613823fd3aae995ee77ee7f8decf3c5f351ee8177794f238a32423a2ff"
     },
     {
+      "path": "PLAYER/blank_character_sheet.md",
+      "bytes": 1267,
+      "sha256": "edd2ce41421a802e5bc834b6a42c24c97b96a4ada228f3d25de691c5d599a239"
+    },
+    {
       "path": "PLAYER/CAMPAIGN_FRAME.md",
       "bytes": 4521,
       "sha256": "1e66864ad6bfe7e1ce946e44053b8b214f031328534a4d43e32b065cf289c1ee"
@@ -281,11 +286,6 @@
       "path": "PLAYER/VEHICLES.md",
       "bytes": 4505,
       "sha256": "c0a4a5ba911f47bc180b1f16f001c89bef2a06dd16d74381f073f741e11bc181"
-    },
-    {
-      "path": "PLAYER/blank_character_sheet.md",
-      "bytes": 1267,
-      "sha256": "edd2ce41421a802e5bc834b6a42c24c97b96a4ada228f3d25de691c5d599a239"
     },
     {
       "path": "README.md",

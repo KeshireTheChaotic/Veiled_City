@@ -1,3 +1,5 @@
+import { AttachmentBuilder } from "discord.js";
+import { handoutFiles, handoutSummary } from "./handout.js";
 import { randomUUID } from "node:crypto";
 
 function chunks(text,limit=1900){
@@ -164,5 +166,49 @@ export async function sendPlayerPrivate({db,guild,userId,content,sessionId=null,
     return {ok:true,via:"dm"};
   }catch{
     return {ok:false,via:"unavailable"};
+  }
+}
+
+
+function handoutAttachments(handout,format="markdown"){
+  return handoutFiles(handout,format).map(f=>new AttachmentBuilder(f.buffer,{name:f.name}));
+}
+
+export async function deliverHandout({db,guild,handout,format="markdown"}){
+  if(!handout) return {ok:false,via:"missing"};
+  const summary=handoutSummary(handout);
+  const files=handoutAttachments(handout,format);
+  const campaign=db.getCampaign(guild.id);
+  if(["public","party"].includes(handout.visibility)){
+    const ch=await textChannel(guild,campaign?.play_channel_id);
+    if(!ch) return {ok:false,via:"unavailable"};
+    await ch.send({content:summary.slice(0,1900),files});
+    return {ok:true,via:"play_channel"};
+  }
+  if(handout.visibility==="gm"){
+    const ch=await textChannel(guild,campaign?.gm_log_channel_id);
+    if(!ch) return {ok:false,via:"unavailable"};
+    await ch.send({content:summary.slice(0,1900),files});
+    return {ok:true,via:"gm_log"};
+  }
+  let userId=handout.subject_user_id||null;
+  if(!userId&&handout.subject_character_id){
+    userId=db.getCharacter(handout.subject_character_id)?.owner_user_id||null;
+  }
+  if(!userId) return {ok:false,via:"unavailable"};
+  const p=db.getPlayer(guild.id,userId);
+  if(p?.private_channel_id){
+    try{
+      const ch=await textChannel(guild,p.private_channel_id);
+      if(ch){await ch.send({content:summary.slice(0,1900),files});return {ok:true,via:"private_channel"};}
+    }catch{}
+  }
+  try{
+    const member=await guild.members.fetch(userId);
+    await member.send({content:summary.slice(0,1900),files});
+    return {ok:true,via:"dm"};
+  }catch{
+    const relay=await postPrivateRelay({db,guild,userId,title:`Evidence handout delivery failed — ${handout.title}`,content:summary,sessionId:handout.session_id,context:`handout:${handout.id}`});
+    return relay.ok?relay:{ok:false,via:"unavailable",ref:relay.ref};
   }
 }

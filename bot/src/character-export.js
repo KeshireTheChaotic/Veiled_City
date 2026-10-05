@@ -27,6 +27,7 @@ function clockView(row){return {key:row.clock_key,label:row.label,value:row.valu
 function threadView(row){return {id:row.id,label:row.label,status:row.status,visibility:row.visibility,notes:row.notes,updated_at:row.updated_at};}
 function referenceView(row){return {kind:row.kind,key:row.entity_key,name:row.display_name,summary:row.summary,visibility:row.visibility,updated_at:row.updated_at};}
 function canonView(row){return {key:row.canon_key,value:row.value,visibility:row.visibility,status:row.status,session_id:row.session_id,source_type:row.source_type,source_id:row.source_id,provenance:row.provenance,created_at:row.created_at};}
+function relationshipView(row){return {id:row.id,from_type:row.from_type,from_key:row.from_key,from_label:row.from_label,to_type:row.to_type,to_key:row.to_key,to_label:row.to_label,relationship_type:row.relationship_type,score:row.score,visibility:row.visibility,note:row.note,source:row.source,updated_at:row.updated_at};}
 
 export function buildPlayerExport(db,guildId,character){
   const d=structuredClone(character.data||{});
@@ -35,21 +36,22 @@ export function buildPlayerExport(db,guildId,character){
     ...d,
     name:character.name,
     export_meta:{
-      schema:"veiled-city-character-export-v3.2.4",
+      schema:"veiled-city-character-export-v3.3.0",
       visibility:"player_safe",
       character_id:character.id,
       status:character.status,
       is_guest:Boolean(character.is_guest),
       exported_at:new Date().toISOString()
     },
-    campaign_knowledge:known
+    campaign_knowledge:known,
+    relationships:db.listRelationships(guildId,{includeGM:false,characterId:character.id,userId:character.owner_user_id||""}).filter(r=>r.from_key===character.id||r.to_key===character.id||r.source_character_id===character.id).map(relationshipView)
   };
 }
 
 export function buildGmHooksExport(character){
   const d=character.data||{};
   return {
-    export_meta:{schema:"veiled-city-gm-hooks-v3.2.4",visibility:"gm_private",character_id:character.id,name:character.name,exported_at:new Date().toISOString()},
+    export_meta:{schema:"veiled-city-gm-hooks-v3.3.0",visibility:"gm_private",character_id:character.id,name:character.name,exported_at:new Date().toISOString()},
     character:{name:character.name,level:d.level??1,class:d.class||"",subclass:d.subclass||"",ancestry:d.ancestry||"",community:d.community||"",domains:d.domains||[]},
     background:d.background||"",
     home:d.home||"",
@@ -74,12 +76,13 @@ export function buildGmPrivateExport(db,guildId,character){
   const threads=db.characterPrivateThreads(guildId,character.id,owner).map(threadView);
   const references=db.characterPrivateReferences(guildId,character.id,owner).map(referenceView);
   return {
-    export_meta:{schema:"veiled-city-gm-private-v3.2.4",visibility:"gm_private",character_id:character.id,name:character.name,exported_at:new Date().toISOString()},
+    export_meta:{schema:"veiled-city-gm-private-v3.3.0",visibility:"gm_private",character_id:character.id,name:character.name,exported_at:new Date().toISOString()},
     character:{name:character.name,status:character.status,owner_user_id:character.owner_user_id||null},
     private_facts:facts,
     private_clocks:clocks,
     private_threads:threads,
-    private_references:references
+    private_references:references,
+    relationships:db.listRelationships(guildId,{includeGM:true,characterId:character.id,userId:owner}).filter(r=>r.from_key===character.id||r.to_key===character.id||r.source_character_id===character.id).map(relationshipView)
   };
 }
 
@@ -99,7 +102,7 @@ export function buildGmCanonExport(db,guildId,character){
     id:r.id,key:r.canon_key,existing_value:r.existing_value,proposed_value:r.proposed_value,proposed_visibility:r.proposed_visibility,status:r.status,created_at:r.created_at
   }));
   return {
-    export_meta:{schema:"veiled-city-gm-canon-v3.2.4",visibility:"gm_private",character_id:character.id,name:character.name,exported_at:new Date().toISOString()},
+    export_meta:{schema:"veiled-city-gm-canon-v3.3.0",visibility:"gm_private",character_id:character.id,name:character.name,exported_at:new Date().toISOString()},
     canon,
     pending_conflicts:conflicts
   };
@@ -143,6 +146,7 @@ export function playerMarkdown(payload){
     ``,
     section("Goals",payload.goals||[]),
     section("Faction Connections",payload.faction_connections||[]),
+    section("Relationships",(payload.relationships||[]).map(r=>`${r.from_label||r.from_key} — ${r.relationship_type} (${r.score>=0?"+":""}${r.score}) → ${r.to_label||r.to_key}${r.note?`: ${r.note}`:""}`)),
     section("Known Campaign Information",(payload.campaign_knowledge||[]).map(f=>`[${f.visibility}] ${f.content}`)),
     `## Export Metadata`,
     `- Status: ${payload.export_meta?.status||"—"}`,
@@ -175,7 +179,8 @@ export function gmPrivateMarkdown(payload){
     section("Private Facts",(payload.private_facts||[]).map(x=>`[${x.visibility}] ${x.key}: ${x.content}`)),
     section("Private Clocks",(payload.private_clocks||[]).map(x=>`${x.label}: ${x.value}/${x.max_value} [${x.visibility}]`)),
     section("Private Threads",(payload.private_threads||[]).map(x=>`${x.label} — ${x.status}: ${x.notes||""}`)),
-    section("Private References",(payload.private_references||[]).map(x=>`${x.kind}: ${x.name} — ${x.summary}`))
+    section("Private References",(payload.private_references||[]).map(x=>`${x.kind}: ${x.name} — ${x.summary}`)),
+    section("Relationship Graph",(payload.relationships||[]).map(r=>`${r.from_label||r.from_key} — ${r.relationship_type} (${r.score>=0?"+":""}${r.score}) → ${r.to_label||r.to_key}${r.note?`: ${r.note}`:""} [${r.visibility}]`))
   ].join("\n");
 }
 export function gmCanonMarkdown(payload){

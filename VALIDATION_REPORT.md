@@ -1,47 +1,41 @@
-# Veiled City Multiplayer Discord v3.2.4 — Validation Report
-
-**Build date:** 2026-10-05
+# Veiled City Multiplayer Discord Engine v3.3.0 — Validation Report
 
 ## Result
 **PASS**
 
-## Character export checks
+## Static validation
+- All bot `src/*.js` and `scripts/*.mjs` pass `node --check` under Node 22.16.0.
+- Discord command schema preflight passes with **19 root commands**.
+- Largest command is `/vc-encounter` at **1,649 / 8,000** counted Discord command characters.
+- No required-after-optional slash-command ordering errors were detected.
 
-- Player-safe live export from current SQLite character state: **PASS**.
-- Player `format:all` returns JSON + Markdown + DOCX: **PASS**.
-- Player export excludes character-linked GM-only facts: **PASS**.
-- GM `format:all` returns 9 files: **PASS**.
-- Required GM naming conventions: **PASS**.
-  - `GM_HOOKS_character.*`
-  - `GM_PRIVATE_character.*`
-  - `GM_CANON_character.*`
-- GM_PRIVATE export includes character-linked private facts/clocks: **PASS**.
-- GM_CANON export retrieves associated canon ledger entries: **PASS**.
-- DOCX output is a valid OOXML ZIP package: **PASS**.
-- Sample generated DOCX rendered successfully through LibreOffice: **PASS**.
-- Rendered pages visually inspected for clipping/overlap: **PASS**.
+## Offline runtime validation
+`bot/scripts/offline-smoke-test.mjs` passes with provider/Discord dependencies stubbed only to prevent live network calls. Tested areas include:
+- campaign/session/character persistence
+- automatic new-character hook relationship seeding
+- one-time legacy hook relationship import and repeat-safe skipping
+- relationship mutation
+- handout persistence and JSON/Markdown/DOCX export
+- encounter PC start-state capture
+- encounter aftermath draft/status primitives
+- character export and existing v3.2 systems exercised by the smoke suite
+- structured JSON retry behavior without a live provider call
 
-## Code / content checks
+## Migration validation
+A database created from the v3.2.4 schema was opened by v3.3.0 and verified to preserve legacy character data while adding:
+- `relationships`
+- `relationship_hook_imports`
+- `handouts`
+- `encounter_aftermath`
+- `encounters.pc_start_state_json`
 
-- Modified JavaScript syntax (`node --check`): **PASS**.
-- Discord command-schema validation: **PASS**.
-- Root commands: **17**.
-- `/vc-character` command size: **1172 / 8000 characters**.
-- Character export database integration test: **PASS**.
-- Veiled City content validator: **PASS**.
-- Domain cards: **84**.
-- Content Markdown files: **51**.
-- Content JSON files: **10**.
+The legacy hook backfill created relationship edges on the first run and created none on the second run.
 
-## Deployment impact
+## Content validation
+`content/ENGINE/validate_package.py` passes:
+- Domain cards: **84**
+- Markdown files: **51**
+- JSON files: **10**
 
-- Database migration: **none**.
-- New Discord channels: **none**.
-- New Discord permissions: **none**.
-- New OpenAI/API settings: **none**.
-- Additional npm dependencies: **none**.
-- Discord command re-registration: **required** (`npm run register`).
-
-## Credential-dependent tests
-
-Live Discord attachment delivery was not exercised because it requires the user's Discord credentials. The generated attachment buffers, names, command schema, and export content were validated locally.
+## Not exercised live
+The validation environment did not connect to a real Discord guild or OpenAI API. Live handout generation, live aftermath generation, Discord attachment delivery, and live command registration require the operator's credentials and billing configuration.

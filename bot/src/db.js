@@ -36,6 +36,7 @@ export class VeiledDB {
     add("messages","subject_character_id","TEXT");
     add("campaigns","fear","INTEGER NOT NULL DEFAULT 0");
     add("encounters","combat_state_json",`TEXT NOT NULL DEFAULT '{"spotlight":{"counts":{},"last_character_id":null}}'`);
+    add("encounters","pc_start_state_json",`TEXT NOT NULL DEFAULT '[]'`);
   }
 
   close() { this.db.close(); }
@@ -169,7 +170,9 @@ export class VeiledDB {
       INSERT INTO characters(id,guild_id,owner_user_id,name,status,is_guest,character_json)
       VALUES(?,?,?,?,?,?,?)
     `).run(id,guildId,ownerUserId ?? null,name,guest?"guest":"active",guest?1:0,JSON.stringify(payload));
-    return this.getCharacter(id);
+    const created=this.getCharacter(id);
+    this.seedCharacterHookRelationships(created,{markImported:true,source:"character_create"});
+    return created;
   }
 
   importCharacter(guildId,ownerUserId,data,{guest=false}={}) {
@@ -661,12 +664,12 @@ export class VeiledDB {
 
   getEncounter(id){
     const r=this.db.prepare("SELECT * FROM encounters WHERE id=?").get(id);
-    return r?{...r,composition:JSON.parse(r.composition_json||"[]"),adjustments:JSON.parse(r.adjustment_json||"[]"),combat_state:JSON.parse(r.combat_state_json||"{\"spotlight\":{\"counts\":{},\"last_character_id\":null}}")}:null;
+    return r?{...r,composition:JSON.parse(r.composition_json||"[]"),adjustments:JSON.parse(r.adjustment_json||"[]"),combat_state:JSON.parse(r.combat_state_json||"{\"spotlight\":{\"counts\":{},\"last_character_id\":null}}"),pc_start_state:JSON.parse(r.pc_start_state_json||"[]")}:null;
   }
 
   getCurrentEncounter(sessionId){
     const r=this.db.prepare("SELECT * FROM encounters WHERE session_id=? AND status IN ('active','planned') ORDER BY CASE status WHEN 'active' THEN 0 ELSE 1 END, encounter_number DESC LIMIT 1").get(sessionId);
-    return r?{...r,composition:JSON.parse(r.composition_json||"[]"),adjustments:JSON.parse(r.adjustment_json||"[]"),combat_state:JSON.parse(r.combat_state_json||"{\"spotlight\":{\"counts\":{},\"last_character_id\":null}}")}:null;
+    return r?{...r,composition:JSON.parse(r.composition_json||"[]"),adjustments:JSON.parse(r.adjustment_json||"[]"),combat_state:JSON.parse(r.combat_state_json||"{\"spotlight\":{\"counts\":{},\"last_character_id\":null}}"),pc_start_state:JSON.parse(r.pc_start_state_json||"[]")}:null;
   }
 
   updateEncounter(id,patch={}){
@@ -689,7 +692,7 @@ export class VeiledDB {
   }
 
   listEncounters(sessionId){
-    return this.db.prepare("SELECT * FROM encounters WHERE session_id=? ORDER BY encounter_number DESC").all(sessionId).map(r=>({...r,composition:JSON.parse(r.composition_json||"[]"),adjustments:JSON.parse(r.adjustment_json||"[]"),combat_state:JSON.parse(r.combat_state_json||"{\"spotlight\":{\"counts\":{},\"last_character_id\":null}}")}));
+    return this.db.prepare("SELECT * FROM encounters WHERE session_id=? ORDER BY encounter_number DESC").all(sessionId).map(r=>({...r,composition:JSON.parse(r.composition_json||"[]"),adjustments:JSON.parse(r.adjustment_json||"[]"),combat_state:JSON.parse(r.combat_state_json||"{\"spotlight\":{\"counts\":{},\"last_character_id\":null}}"),pc_start_state:JSON.parse(r.pc_start_state_json||"[]")}));
   }
 
 
@@ -801,11 +804,107 @@ export class VeiledDB {
     return {...r,conditions:JSON.parse(r.conditions_json||"[]")};
   }
 
+  captureEncounterStartState(encounterId){
+    const e=this.getEncounter(encounterId); if(!e) throw new Error("Encounter not found.");
+    const roster=this.roster(e.session_id).filter(r=>["present","guest","late"].includes(r.presence)&&r.character_id);
+    const state=roster.map(r=>({
+      character_id:r.character_id,name:r.name,owner_user_id:r.discord_user_id,
+      resources:r.data?.resources||{},conditions:r.data?.conditions||[]
+    }));
+    this.db.prepare("UPDATE encounters SET pc_start_state_json=?,updated_at=CURRENT_TIMESTAMP WHERE id=?").run(JSON.stringify(state),encounterId);
+    return state;
+  }
+
+  // ----- v3.3.0 structured relationship graph -----
+  relationshipEntityKey(type,labelOrKey){
+    const raw=String(labelOrKey||"").trim();
+    const slug=raw.toLowerCase().replace(/[^a-z0-9._-]+/g,"-").replace(/^-+|-+$/g,"")||"unknown";
+    return `${type}:${slug}`;
+  }
+
+  upsertRelationship(guildId,{fromType,fromKey,fromLabel="",toType,toKey,toLabel="",relationshipType="contact",score=0,visibility="party",note="",source="gm",sourceCharacterId=null}={}){
+    const allowedType=new Set(["character","npc","faction","location","entity","obligation"]);
+    const allowedRel=new Set(["trust","debt","fear","hostility","affection","authority","obligation","family","ally","rival","contact","important_person","home","suspicion","protective","other"]);
+    if(!allowedType.has(fromType)||!allowedType.has(toType)) throw new Error("Invalid relationship entity type.");
+    if(!allowedRel.has(relationshipType)) relationshipType="other";
+    if(!new Set(["public","party","player","character","gm"]).has(visibility)) throw new Error("Invalid relationship visibility.");
+    const fk=String(fromKey||"").trim(), tk=String(toKey||"").trim(); if(!fk||!tk) throw new Error("Relationship endpoints are required.");
+    const existing=this.db.prepare(`SELECT * FROM relationships WHERE guild_id=? AND from_type=? AND from_key=? AND to_type=? AND to_key=? AND relationship_type=?`).get(guildId,fromType,fk,toType,tk,relationshipType);
+    const id=existing?.id||randomUUID();
+    this.db.prepare(`INSERT INTO relationships(id,guild_id,from_type,from_key,from_label,to_type,to_key,to_label,relationship_type,score,visibility,note,source,source_character_id)
+      VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?) ON CONFLICT(guild_id,from_type,from_key,to_type,to_key,relationship_type) DO UPDATE SET
+      from_label=excluded.from_label,to_label=excluded.to_label,score=excluded.score,visibility=excluded.visibility,note=excluded.note,source=excluded.source,source_character_id=COALESCE(excluded.source_character_id,relationships.source_character_id),updated_at=CURRENT_TIMESTAMP`)
+      .run(id,guildId,fromType,fk,fromLabel||fk,toType,tk,toLabel||tk,relationshipType,Math.max(-5,Math.min(5,Number(score)||0)),visibility,note||"",source||"gm",sourceCharacterId||null);
+    return this.getRelationship(id);
+  }
+
+  getRelationship(id){ return this.db.prepare("SELECT * FROM relationships WHERE id=?").get(id); }
+  listRelationships(guildId,{includeGM=false,characterId=null,userId=null}={}){
+    const rows=this.db.prepare("SELECT * FROM relationships WHERE guild_id=? ORDER BY updated_at DESC").all(guildId);
+    return rows.filter(r=>includeGM||["public","party"].includes(r.visibility)||(r.visibility==="character"&&characterId&&(r.from_key===characterId||r.to_key===characterId||r.source_character_id===characterId))||(r.visibility==="player"&&userId&&r.note.includes(`player:${userId}`)));
+  }
+  adjustRelationship(id,delta){
+    const r=this.getRelationship(id); if(!r) throw new Error("Relationship not found.");
+    const score=Math.max(-5,Math.min(5,Number(r.score||0)+(Number(delta)||0)));
+    this.db.prepare("UPDATE relationships SET score=?,updated_at=CURRENT_TIMESTAMP WHERE id=?").run(score,id); return this.getRelationship(id);
+  }
+
+  seedCharacterHookRelationships(character,{markImported=false,source="hook_import"}={}){
+    if(!character) return {created:0,skipped:true};
+    const already=this.db.prepare("SELECT * FROM relationship_hook_imports WHERE character_id=?").get(character.id);
+    if(already&&markImported) return {created:0,skipped:true};
+    const d=character.data||{}; let created=0;
+    const add=(toType,label,rel,score=1,note="")=>{
+      const text=String(label||"").trim(); if(!text) return;
+      this.upsertRelationship(character.guild_id,{fromType:"character",fromKey:character.id,fromLabel:character.name,toType,toKey:this.relationshipEntityKey(toType,text),toLabel:text,relationshipType:rel,score,visibility:"character",note,source,sourceCharacterId:character.id}); created++;
+    };
+    add("location",d.home,"home",2,"Imported from character Home hook.");
+    add("entity",d.person,"important_person",2,"Imported from character Person hook.");
+    add("obligation",d.obligation,"obligation",2,"Imported from character Obligation hook.");
+    for(const f of d.faction_connections||[]) add("faction",typeof f==="string"?f:(f.name||JSON.stringify(f)),"contact",1,"Imported from character Faction Connection hook.");
+    if(markImported){
+      this.db.prepare(`INSERT INTO relationship_hook_imports(character_id,guild_id,imported_count,source) VALUES(?,?,?,?) ON CONFLICT(character_id) DO UPDATE SET imported_count=excluded.imported_count,source=excluded.source,imported_at=CURRENT_TIMESTAMP`).run(character.id,character.guild_id,created,source);
+    }
+    return {created,skipped:false};
+  }
+
+  importExistingHookRelationships(guildId,{characterId=null}={}){
+    const chars=characterId?[this.getCharacter(characterId)].filter(Boolean):this.listGuildCharacters(guildId,{includeClosed:true});
+    let created=0,skipped=0,processed=0;
+    for(const c of chars){ if(c.guild_id!==guildId) continue; const r=this.seedCharacterHookRelationships(c,{markImported:true,source:"v3.3.0_backfill"}); processed++; created+=r.created; if(r.skipped) skipped++; }
+    return {processed,created,skipped};
+  }
+
+  // ----- v3.3.0 evidence / handouts -----
+  createHandout(guildId,{sessionId=null,title,kind="document",authority="canonical",visibility="party",subjectUserId=null,subjectCharacterId=null,content="",canonicalFacts=[],caseKey="",npcKey="",locationKey="",source="human_gm",metadata={}}={}){
+    if(!String(title||"").trim()) throw new Error("Handout title is required.");
+    const id=randomUUID();
+    this.db.prepare(`INSERT INTO handouts(id,guild_id,session_id,title,kind,authority,visibility,subject_user_id,subject_character_id,content,canonical_facts_json,case_key,npc_key,location_key,source,metadata_json)
+      VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`).run(id,guildId,sessionId,String(title).trim(),kind,authority,visibility,subjectUserId,subjectCharacterId,String(content||""),JSON.stringify(canonicalFacts||[]),caseKey||"",npcKey||"",locationKey||"",source,JSON.stringify(metadata||{}));
+    return this.getHandout(id);
+  }
+  getHandout(id){ const r=this.db.prepare("SELECT * FROM handouts WHERE id=?").get(id); return r?{...r,canonical_facts:JSON.parse(r.canonical_facts_json||"[]"),metadata:JSON.parse(r.metadata_json||"{}")} : null; }
+  findHandout(guildId,query){ const rows=this.db.prepare("SELECT * FROM handouts WHERE guild_id=? AND status='active' ORDER BY created_at DESC").all(guildId); const q=String(query||"").trim().toLowerCase(); const r=rows.find(x=>x.id.toLowerCase().startsWith(q))||rows.find(x=>x.title.toLowerCase()===q)||rows.find(x=>x.title.toLowerCase().includes(q)); return r?this.getHandout(r.id):null; }
+  listHandoutsFor(guildId,userId,{characterId=null,includeGM=false,limit=100}={}){
+    const rows=this.db.prepare("SELECT * FROM handouts WHERE guild_id=? AND status='active' ORDER BY created_at DESC LIMIT ?").all(guildId,limit);
+    return rows.filter(r=>includeGM||["public","party"].includes(r.visibility)||(r.visibility==="player"&&r.subject_user_id===userId)||(r.visibility==="character"&&r.subject_character_id===characterId)).map(r=>this.getHandout(r.id));
+  }
+  archiveHandout(id){ this.db.prepare("UPDATE handouts SET status='archived',updated_at=CURRENT_TIMESTAMP WHERE id=?").run(id); return this.getHandout(id); }
+
+  // ----- v3.3.0 encounter aftermath drafts -----
+  createEncounterAftermath(encounterId,guildId,sessionId,draft,status="pending"){
+    const existing=this.db.prepare("SELECT * FROM encounter_aftermath WHERE encounter_id=?").get(encounterId); const id=existing?.id||randomUUID();
+    this.db.prepare(`INSERT INTO encounter_aftermath(id,encounter_id,guild_id,session_id,status,draft_json) VALUES(?,?,?,?,?,?) ON CONFLICT(encounter_id) DO UPDATE SET status=excluded.status,draft_json=excluded.draft_json,updated_at=CURRENT_TIMESTAMP`).run(id,encounterId,guildId,sessionId,status,JSON.stringify(draft||{}));
+    return this.getEncounterAftermath(encounterId);
+  }
+  getEncounterAftermath(encounterId){ const r=this.db.prepare("SELECT * FROM encounter_aftermath WHERE encounter_id=?").get(encounterId); return r?{...r,draft:JSON.parse(r.draft_json||"{}")} : null; }
+  setEncounterAftermathStatus(encounterId,status){ if(!new Set(["pending","applied","discarded"]).has(status)) throw new Error("Invalid aftermath status."); this.db.prepare("UPDATE encounter_aftermath SET status=?,applied_at=CASE WHEN ?='applied' THEN CURRENT_TIMESTAMP ELSE applied_at END,updated_at=CURRENT_TIMESTAMP WHERE encounter_id=?").run(status,status,encounterId); return this.getEncounterAftermath(encounterId); }
+
   snapshotCampaign(guildId,{label="Snapshot",reason="",createdBy=null}={}){
     const id=randomUUID();
     const sessionIds=this.db.prepare("SELECT id FROM sessions WHERE guild_id=?").all(guildId).map(x=>x.id);
     const qmarks=sessionIds.length?sessionIds.map(()=>"?").join(","):"NULL";
-    const directTables=["players","characters","sessions","facts","clocks","threads","reference_entries","published_messages","npc_proxies","encounters","encounter_combatants","character_drafts","levelup_drafts","canon_events","canon_conflicts","downtime_cycles","downtime_projects","rules_rulings"];
+    const directTables=["players","characters","sessions","facts","clocks","threads","reference_entries","published_messages","npc_proxies","encounters","encounter_combatants","character_drafts","levelup_drafts","canon_events","canon_conflicts","downtime_cycles","downtime_projects","rules_rulings","relationships","relationship_hook_imports","handouts","encounter_aftermath"];
     const state={campaign:this.getCampaign(guildId),tables:{}};
     for(const table of directTables){
       try{state.tables[table]=this.db.prepare(`SELECT * FROM ${table} WHERE guild_id=?`).all(guildId);}catch{state.tables[table]=[];}
@@ -831,8 +930,8 @@ export class VeiledDB {
     const snap=this.getSnapshot(snapshotId); if(!snap||snap.guild_id!==guildId) throw new Error("Snapshot not found for this campaign.");
     this.snapshotCampaign(guildId,{label:"Pre-rollback safety",reason:`Before rollback to ${snapshotId}`,createdBy:actorId});
     const state=snap.state;
-    const delOrder=["encounter_combatants","npc_proxies","session_characters","session_presence","levelup_drafts","downtime_projects","canon_conflicts","canon_events","encounters","sessions","character_drafts","characters","players","facts","clocks","threads","reference_entries","published_messages","downtime_cycles","rules_rulings"];
-    const insertOrder=["players","characters","sessions","session_presence","session_characters","facts","clocks","threads","reference_entries","published_messages","npc_proxies","encounters","encounter_combatants","character_drafts","levelup_drafts","canon_events","canon_conflicts","downtime_cycles","downtime_projects","rules_rulings"];
+    const delOrder=["encounter_aftermath","encounter_combatants","npc_proxies","session_characters","session_presence","levelup_drafts","downtime_projects","canon_conflicts","canon_events","relationships","relationship_hook_imports","handouts","encounters","sessions","character_drafts","characters","players","facts","clocks","threads","reference_entries","published_messages","downtime_cycles","rules_rulings"];
+    const insertOrder=["players","characters","sessions","session_presence","session_characters","facts","clocks","threads","reference_entries","published_messages","npc_proxies","encounters","encounter_combatants","character_drafts","levelup_drafts","canon_events","canon_conflicts","downtime_cycles","downtime_projects","rules_rulings","relationships","relationship_hook_imports","handouts","encounter_aftermath"];
     this.db.exec("BEGIN IMMEDIATE");
     try{
       for(const t of delOrder){

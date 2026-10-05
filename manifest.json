@@ -1,27 +1,12 @@
 {
   "package": "Veiled_City_Multiplayer_Discord",
-  "version": "3.2.4",
+  "version": "3.3.0",
   "generated": "2026-10-05",
   "files": [
     {
-      "path": "Dockerfile",
-      "size_bytes": 232,
-      "sha256": "8f99d6090a1ef3c235078d9964b384161cc9d75f2e3e480702ad8015ab48965a"
-    },
-    {
-      "path": "README.md",
-      "size_bytes": 1961,
-      "sha256": "15514bdd9ff4683cc372574ce28b40efba29d812277b2068643d819c404ff4a1"
-    },
-    {
-      "path": "VALIDATION_REPORT.md",
-      "size_bytes": 1776,
-      "sha256": "c79357da458fed8d93041493a63b9ddc68ca3bad21668fc9d259b188f5771b14"
-    },
-    {
       "path": "bot/.env.example",
-      "size_bytes": 1302,
-      "sha256": "6606c82d25da928d47364fd0d56fc53f451f612288eab4566453087ec00dcffb"
+      "size_bytes": 1565,
+      "sha256": "03b664573da4140b7fc66f46e4b5aca9425fdaf98c3b70271c4f126af74de649"
     },
     {
       "path": "bot/.gitignore",
@@ -35,8 +20,8 @@
     },
     {
       "path": "bot/package.json",
-      "size_bytes": 1005,
-      "sha256": "f154c09179184c6b7c110da6263a041fd3b1901f38c7c7ec583c71b8904dac75"
+      "size_bytes": 1036,
+      "sha256": "f53cdf8aae89f5dd01daaed6c84855b74b502c709419ee75ffe57bd389d5a872"
     },
     {
       "path": "bot/scripts/cost-estimate.mjs",
@@ -45,13 +30,13 @@
     },
     {
       "path": "bot/scripts/export-campaign.mjs",
-      "size_bytes": 3967,
-      "sha256": "7014d1f9a512ada1d1a8a1c2c9a3cfd707a96fadfa228ec06c35377d5d00c483"
+      "size_bytes": 4472,
+      "sha256": "3a27043ff0ff69bf3906591aaab882c03b3ea7ee1a6cfb0a0cf509b6c7f6b75b"
     },
     {
       "path": "bot/scripts/offline-smoke-test.mjs",
-      "size_bytes": 19083,
-      "sha256": "574fc8a50adb00b9d8a6567f28a207a16becbf919a55e656c360b9a8f0470ec4"
+      "size_bytes": 20597,
+      "sha256": "cdc210a7cf6f3623eb76e3eee2e6e6e0c1ae7ac2239a885b4592a0bb779ede40"
     },
     {
       "path": "bot/scripts/validate-command-schema.mjs",
@@ -60,13 +45,13 @@
     },
     {
       "path": "bot/sql/schema.sql",
-      "size_bytes": 17296,
-      "sha256": "75f44179d27bef1c5d9f17e8c23e07f05a76e2dd7b6afda3be16a4e7e2a2946c"
+      "size_bytes": 20897,
+      "sha256": "c95e30cac5bdc7f2af54bbc9bcd6802436f8cc4392fe3531d26f321991163800"
     },
     {
       "path": "bot/src/character-export.js",
-      "size_bytes": 17101,
-      "sha256": "47d898ad75fc5845bc22e078b295f6ffd1403b90a629a85151b2993e63874abe"
+      "size_bytes": 18343,
+      "sha256": "39e33f670bd9d0f8d4f73903bda2d7671a55737b634455ef1e7626f22761b3e5"
     },
     {
       "path": "bot/src/character-system.js",
@@ -85,13 +70,13 @@
     },
     {
       "path": "bot/src/commands.js",
-      "size_bytes": 108513,
-      "sha256": "24c41ed8cc8cf70aaea5ffa1c2dcb116f78448d84c96a8ec31938a244a47681a"
+      "size_bytes": 126195,
+      "sha256": "b17a53bf1c7d6207273c7120b0cda7eed60b870c2874b52dd818ffea78b7b653"
     },
     {
       "path": "bot/src/config.js",
-      "size_bytes": 2099,
-      "sha256": "10926b8230b1e65240d178b8f6ac6c6bfd2a6f5c486c002bdf10c2d3f4f75fc5"
+      "size_bytes": 2349,
+      "sha256": "a8a49e1e9b83512a6dc2a9b8e556624de75ea001258d89707a1ba3aa580e6332"
     },
     {
       "path": "bot/src/content.js",
@@ -100,8 +85,8 @@
     },
     {
       "path": "bot/src/db.js",
-      "size_bytes": 51304,
-      "sha256": "206eff485cd9f4e94392e417d981dee165abfd3472ce18bcb3f1a7e1e7d4c43f"
+      "size_bytes": 61284,
+      "sha256": "c5d56907e5e883c1b0b3c83120d93f4dd229ddfb39a61206fdf51845e4951264"
     },
     {
       "path": "bot/src/dice.js",
@@ -115,18 +100,23 @@
     },
     {
       "path": "bot/src/gm.js",
-      "size_bytes": 39423,
-      "sha256": "b92fa7cdcf89f8521c2bb512bd8eac87a7affa7e4833524f5a13c3dfd455cf21"
+      "size_bytes": 43750,
+      "sha256": "c1193d4571ce181ff5c0930dbfb8442a075008910b1e67bfffbec90d2233de38"
+    },
+    {
+      "path": "bot/src/handout.js",
+      "size_bytes": 2558,
+      "sha256": "7df9273cbad7530715d82a81db06ce8a5823c3a2b54d8725821eba81c2e3a00a"
     },
     {
       "path": "bot/src/index.js",
-      "size_bytes": 13554,
-      "sha256": "eb8adb17bce55aaef8f5ee6eba30a04f461399135c2c07777a2a04ba2749d806"
+      "size_bytes": 14723,
+      "sha256": "d859eacb20d87e97a130132b74118e5d244de33cc20aa54e997c634b5ee5dd30"
     },
     {
       "path": "bot/src/publishing.js",
-      "size_bytes": 7227,
-      "sha256": "5742167bd7ff55160b09ffd4c33a1dac02e36e3f3983a495f8819320a06889f4"
+      "size_bytes": 9190,
+      "sha256": "10a0da076c2fd630237f105ce055d890da591d1abce5983ff7e8fae80e477688"
     },
     {
       "path": "bot/src/register-commands.js",
@@ -135,8 +125,8 @@
     },
     {
       "path": "bot/src/state.js",
-      "size_bytes": 5851,
-      "sha256": "a67de158685860a6ef8459bc36184f33de8e3f6b4d64168226b03720058fa6a1"
+      "size_bytes": 8912,
+      "sha256": "f790c6b20f7e01d5018abdf06a676412b30bf79ff215eea8a001551f8a7b8d9e"
     },
     {
       "path": "content/CARDS/ANCESTRIES_AND_COMMUNITIES.md",
@@ -147,6 +137,16 @@
       "path": "content/CARDS/CUSTOM_DOMAINS.md",
       "size_bytes": 469,
       "sha256": "a86f6f9349dd94a48cb279006bdb5cfb6c958b3aed50bf6007c9fa3644ea31b8"
+    },
+    {
+      "path": "content/CARDS/DOMAIN_ACCESS.md",
+      "size_bytes": 1133,
+      "sha256": "3ed5ce4c46702b3026f66df66cd79c064d6d7bf1e60e7f56c1b06640be0ccc80"
+    },
+    {
+      "path": "content/CARDS/domain_cards.json",
+      "size_bytes": 32105,
+      "sha256": "b3525d2ebde6aa8de5615bcd4a7904c8127d8b7c2fe592f9335dde2552f2780f"
     },
     {
       "path": "content/CARDS/DOMAINS/HEX.md",
@@ -169,24 +169,14 @@
       "sha256": "891232961d509e1aad7c6cf67d901d3dc95853faeb5e59902f07729ba42353be"
     },
     {
-      "path": "content/CARDS/DOMAIN_ACCESS.md",
-      "size_bytes": 1133,
-      "sha256": "3ed5ce4c46702b3026f66df66cd79c064d6d7bf1e60e7f56c1b06640be0ccc80"
-    },
-    {
       "path": "content/CARDS/OCCULT_SCARS.md",
       "size_bytes": 2878,
       "sha256": "c75987cce87d7cf5e3a75981e12acb9e010f0538c42275520e6e811c362f80e9"
     },
     {
-      "path": "content/CARDS/domain_cards.json",
-      "size_bytes": 32105,
-      "sha256": "b3525d2ebde6aa8de5615bcd4a7904c8127d8b7c2fe592f9335dde2552f2780f"
-    },
-    {
       "path": "content/ENGINE/AI_GM_CONSTITUTION.md",
-      "size_bytes": 3854,
-      "sha256": "7ea7bfd583e7845893ae686f2ea607d211e6b54c525188502587dd4a5bc2cc2f"
+      "size_bytes": 4586,
+      "sha256": "33c0c2377645214cedd090fba1c4a00fd021d81ae7b512b642393246784cadea"
     },
     {
       "path": "content/ENGINE/CONTENT_ROUTING.md",
@@ -220,8 +210,8 @@
     },
     {
       "path": "content/ENGINE/MULTIPLAYER_GM_RULES.md",
-      "size_bytes": 10136,
-      "sha256": "f163b8d87a16f676b42f82642b4b98463378397e3a0704f9b5b23663c58ea4d7"
+      "size_bytes": 11766,
+      "sha256": "d27b78d941f0e286f3cdebda202ed8394516b26f648acb0b14b6742a6e05efe0"
     },
     {
       "path": "content/ENGINE/ORACLE.md",
@@ -239,14 +229,14 @@
       "sha256": "9cf93a844d7eb9dd16366bbce65a922855c5518031ed538fa2e0719903e7f5dc"
     },
     {
-      "path": "content/GM_PRIVATE/ADVERSARIES/ADVERSARY_COMPENDIUM.md",
-      "size_bytes": 35944,
-      "sha256": "707ed16d8dd1ba8f259c48b61afd4d99b045696384e9c656cd336ea07f5e05d7"
-    },
-    {
       "path": "content/GM_PRIVATE/ADVERSARIES/adversaries.json",
       "size_bytes": 42311,
       "sha256": "bde06fb63e66b11a5bbdfdb68fdcd942a1a9a8726cca5f7c5a257d7ef5bc2a87"
+    },
+    {
+      "path": "content/GM_PRIVATE/ADVERSARIES/ADVERSARY_COMPENDIUM.md",
+      "size_bytes": 35944,
+      "sha256": "707ed16d8dd1ba8f259c48b61afd4d99b045696384e9c656cd336ea07f5e05d7"
     },
     {
       "path": "content/GM_PRIVATE/AI_DM_COMPENDIUM.md",
@@ -359,14 +349,24 @@
       "sha256": "4d6f27dccd98e0ab8c58da85087e746533be3121a338d85685ce4c9ccdcd0600"
     },
     {
+      "path": "content/manifest.json",
+      "size_bytes": 10358,
+      "sha256": "a19577ff87d7f411ba9b21b165bd16bd400c610571c32d3ca4b11fad5586a757"
+    },
+    {
       "path": "content/MANIFEST.txt",
       "size_bytes": 1913,
-      "sha256": "41580acfdc9770d4e7563169558ea054766b9d2989ce9ceec960b5ce030a3b35"
+      "sha256": "cf58d7422b8d6b8a81b35ed0ee7a91eda06b32ca1a19f053f6d200976ff36940"
     },
     {
       "path": "content/PLAYER/BLANK_CHARACTER_SHEET.docx",
       "size_bytes": 37751,
       "sha256": "92caad613823fd3aae995ee77ee7f8decf3c5f351ee8177794f238a32423a2ff"
+    },
+    {
+      "path": "content/PLAYER/blank_character_sheet.md",
+      "size_bytes": 1267,
+      "sha256": "edd2ce41421a802e5bc834b6a42c24c97b96a4ada228f3d25de691c5d599a239"
     },
     {
       "path": "content/PLAYER/CAMPAIGN_FRAME.md",
@@ -424,11 +424,6 @@
       "sha256": "c0a4a5ba911f47bc180b1f16f001c89bef2a06dd16d74381f073f741e11bc181"
     },
     {
-      "path": "content/PLAYER/blank_character_sheet.md",
-      "size_bytes": 1267,
-      "sha256": "edd2ce41421a802e5bc834b6a42c24c97b96a4ada228f3d25de691c5d599a239"
-    },
-    {
       "path": "content/README.md",
       "size_bytes": 3111,
       "sha256": "78fbd55c90da6a3ec16406a2ad0d1c144649166002ed320ebfc269231fa82eef"
@@ -454,14 +449,14 @@
       "sha256": "2f2aa67775fc5811245d61a28152d2b275a1a6abe9c8be81522c8c795ea7d636"
     },
     {
-      "path": "content/manifest.json",
-      "size_bytes": 10358,
-      "sha256": "d9b960c426cebcdec301308bec792ea57f046fb386ba133721010ad42e5ab611"
-    },
-    {
       "path": "docker-compose.yml",
       "size_bytes": 271,
       "sha256": "31d796814f98561baea1d69957d945180b56a1fa8b8e8e0b5d1f191a67c0ab58"
+    },
+    {
+      "path": "Dockerfile",
+      "size_bytes": 232,
+      "sha256": "8f99d6090a1ef3c235078d9964b384161cc9d75f2e3e480702ad8015ab48965a"
     },
     {
       "path": "docs/ACCESSIBILITY.md",
@@ -475,8 +470,8 @@
     },
     {
       "path": "docs/BOT_COMMANDS.md",
-      "size_bytes": 3514,
-      "sha256": "b1cd145378bceea2ab1e06e2f9f33953a8b18ac89176c11538f23bf6a1e0d943"
+      "size_bytes": 3532,
+      "sha256": "a06b740e30c6c14b04ad9e7a27890daaeedb45eb0224b9f34894fe5ee204c6f0"
     },
     {
       "path": "docs/CANON_LEDGER.md",
@@ -509,14 +504,14 @@
       "sha256": "1280e05ee27cf752ab380449e727de695a1f05e67a2783fd90901e9b8f4a68ca"
     },
     {
-      "path": "docs/CHARACTER_CONCEPT_WIZARD.md",
-      "size_bytes": 1639,
-      "sha256": "e811e672334699d8d6be7209108ea418e385642d517692a868795a7b1a5f5161"
+      "path": "docs/CHANGELOG_v3.3.0_DISCORD.md",
+      "size_bytes": 1434,
+      "sha256": "060df58ea672e7f3ad4c0b4889e86f490bb52e064a38e70c561e9289a395147b"
     },
     {
       "path": "docs/CHARACTER_EXPORT.md",
       "size_bytes": 2230,
-      "sha256": "798b7af2990a8afefa5ad936ce2b9b19ff44b2fb65397443db0ef87aecdc00bb"
+      "sha256": "2891b97c19f2b6dad33da45f2a3b185029abebb484b76010d903d9dd545e6d14"
     },
     {
       "path": "docs/COMBAT_STATE.md",
@@ -539,9 +534,19 @@
       "sha256": "5809df6181dfe0630fb93ac86389e19ce541411f04b3c65f0a8d2b0e3aa119d5"
     },
     {
+      "path": "docs/ENCOUNTER_AFTERMATH.md",
+      "size_bytes": 1256,
+      "sha256": "6af597b5117967b842a403314f4910dfb145da6d8383c78218338c0a4146cd22"
+    },
+    {
       "path": "docs/ENCOUNTER_BUILDER.md",
       "size_bytes": 2568,
       "sha256": "9edc2104cdb8f75213bcc9e5a0c7cb373531b8cdb0dce8ebf5259b70e8bad4ca"
+    },
+    {
+      "path": "docs/HANDOUTS_AND_EVIDENCE.md",
+      "size_bytes": 2026,
+      "sha256": "b1c3ac422015fcb9f44bef42a4a1f3b79b8db8bad52f62e6f4f07a3f8522ee5b"
     },
     {
       "path": "docs/LEVEL_UP.md",
@@ -567,6 +572,11 @@
       "path": "docs/PLAYER_LIFECYCLE.md",
       "size_bytes": 5410,
       "sha256": "78c5926c7ce148a8779a29672f955e109c7aa89b047a595cdf41f3d5764c8e75"
+    },
+    {
+      "path": "docs/RELATIONSHIP_GRAPH.md",
+      "size_bytes": 1514,
+      "sha256": "184d6587aa552626d1226cebe81729642a423f24e58efd21c23a5d4cd9613d5a"
     },
     {
       "path": "docs/RULES_DESK.md",
@@ -637,6 +647,21 @@
       "path": "docs/UPGRADE_3.2.3_TO_3.2.4.md",
       "size_bytes": 803,
       "sha256": "3dc6c8e18c38a927e3c995b47feadbb350d6e36043221ea79ff3a97648e3bc07"
+    },
+    {
+      "path": "docs/UPGRADE_3.2.4_TO_3.3.0.md",
+      "size_bytes": 1271,
+      "sha256": "b30af27c6e60dd28a0d53dd52daeadfadf1906ddfbf5a4d3ce0d8f37c00acfae"
+    },
+    {
+      "path": "README.md",
+      "size_bytes": 3030,
+      "sha256": "9552dc425df276f16787d8537edf4b710bcd7bbc819b61bd9b00d00dc96eb165"
+    },
+    {
+      "path": "VALIDATION_REPORT.md",
+      "size_bytes": 1850,
+      "sha256": "2fdbb6c669936e67e85144decda97ed92a16a90fa43120c54e6c4580f40f9d28"
     }
   ]
 }

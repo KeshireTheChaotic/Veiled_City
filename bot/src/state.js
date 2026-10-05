@@ -146,3 +146,47 @@ export function applyGMEvents(db,guildId,sessionId,events=[],scope={mode:"party"
   }
   return results;
 }
+
+function resolveRelationshipEndpoint(db,guildId,type,key,label=""){
+  if(type==="character"){
+    const c=db.getCharacter(key)||db.findGuildCharacter(guildId,key,{includeClosed:true})||db.findGuildCharacter(guildId,label,{includeClosed:true});
+    if(c) return {key:c.id,label:c.name};
+  }
+  const raw=String(key||label||"").trim();
+  return {key:raw.includes(":")?raw:db.relationshipEntityKey(type,raw),label:String(label||raw)};
+}
+
+export function applyRelationshipDrafts(db,guildId,relationships=[],scope={mode:"party",actorUserId:null,actorCharacterId:null},source="ai_gm"){
+  const out=[];
+  for(const r of relationships||[]){
+    try{
+      const from=resolveRelationshipEndpoint(db,guildId,r.from_type,r.from_key,r.from_label);
+      const to=resolveRelationshipEndpoint(db,guildId,r.to_type,r.to_key,r.to_label);
+      let visibility=r.visibility||"party";
+      if(scope.mode==="private" && ["public","party"].includes(visibility)) visibility=scope.actorCharacterId?"character":"gm";
+      const existing=db.db.prepare(`SELECT * FROM relationships WHERE guild_id=? AND from_type=? AND from_key=? AND to_type=? AND to_key=? AND relationship_type=?`).get(guildId,r.from_type,from.key,r.to_type,to.key,r.relationship_type||"other");
+      const score=r.mode==="delta"?Math.max(-5,Math.min(5,Number(existing?.score||0)+Number(r.score||0))):Math.max(-5,Math.min(5,Number(r.score||0)));
+      const row=db.upsertRelationship(guildId,{fromType:r.from_type,fromKey:from.key,fromLabel:from.label,toType:r.to_type,toKey:to.key,toLabel:to.label,relationshipType:r.relationship_type||"other",score,visibility,note:r.note||"",source,sourceCharacterId:scope.actorCharacterId||null});
+      out.push({ok:true,row});
+    }catch(err){out.push({ok:false,error:String(err.message||err),draft:r});}
+  }
+  return out;
+}
+
+export function applyHandoutDrafts(db,guildId,sessionId,handouts=[],scope={mode:"party",actorUserId:null,actorCharacterId:null},source="ai_gm"){
+  const out=[];
+  for(const h of handouts||[]){
+    try{
+      let visibility=h.visibility||"party", userId=h.target_user_id||null, characterId=h.target_character_id||null;
+      if(scope.mode==="private" && ["public","party"].includes(visibility)){
+        if(scope.actorCharacterId){visibility="character";characterId=scope.actorCharacterId;userId=null;}
+        else {visibility="player";userId=scope.actorUserId;characterId=null;}
+      }
+      if(visibility==="character"&&!characterId) characterId=scope.actorCharacterId||null;
+      if(visibility==="player"&&!userId) userId=scope.actorUserId||null;
+      const row=db.createHandout(guildId,{sessionId,title:h.title,kind:h.kind||"document",authority:h.authority||"canonical",visibility,subjectUserId:userId,subjectCharacterId:characterId,content:h.player_visible_text||"",canonicalFacts:h.canonical_facts||[],caseKey:h.case_key||"",npcKey:h.npc_key||"",locationKey:h.location_key||"",source,metadata:{generated:true}});
+      out.push({ok:true,row});
+    }catch(err){out.push({ok:false,error:String(err.message||err),draft:h});}
+  }
+  return out;
+}
