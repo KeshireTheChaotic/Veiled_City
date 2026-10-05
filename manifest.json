@@ -1,0 +1,522 @@
+{
+  "package": "Veiled_City_Multiplayer_Discord",
+  "version": "3.1.3",
+  "generated": "2026-10-05",
+  "files": [
+    {
+      "path": "Dockerfile",
+      "size_bytes": 232,
+      "sha256": "8f99d6090a1ef3c235078d9964b384161cc9d75f2e3e480702ad8015ab48965a"
+    },
+    {
+      "path": "README.md",
+      "size_bytes": 2531,
+      "sha256": "c60849a6ce09789a9eea31157c87ecd3d13f2594467688141c183efffa451934"
+    },
+    {
+      "path": "VALIDATION_REPORT.md",
+      "size_bytes": 1813,
+      "sha256": "4a9dc6910ed9673d8faaaff49c87e82f432d60cdbe8dd605027095d0aefb4da1"
+    },
+    {
+      "path": "bot/.env.example",
+      "size_bytes": 1098,
+      "sha256": "dc117b8ab2e4e64018a5aaae1e6b142981a6a4bfe823a72d0803d4fa89816f88"
+    },
+    {
+      "path": "bot/.gitignore",
+      "size_bytes": 55,
+      "sha256": "0fce93aa90f39fc5e9d32533aa12061c48241f0994da819282c5bdc5161f8da2"
+    },
+    {
+      "path": "bot/data/.gitkeep",
+      "size_bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "bot/package.json",
+      "size_bytes": 813,
+      "sha256": "d3f2b2da5e1a05c93afbacd5d5de2bfb7504ca0407abe324a8013ea3d3562f00"
+    },
+    {
+      "path": "bot/scripts/cost-estimate.mjs",
+      "size_bytes": 856,
+      "sha256": "685717b40e9fb2c2348bf052b371d33bcd6d82bd11f5da7bdd29f05b71ba199b"
+    },
+    {
+      "path": "bot/scripts/export-campaign.mjs",
+      "size_bytes": 2811,
+      "sha256": "406f1454fd3dba2545dc4980aad6ccd7e20e4942bee2f2f954e226ede9663535"
+    },
+    {
+      "path": "bot/scripts/offline-smoke-test.mjs",
+      "size_bytes": 9243,
+      "sha256": "204c6ecd406bd8031414dc51db4d69b19e110c3bec5ba1b646f0a6bcbc968a11"
+    },
+    {
+      "path": "bot/sql/schema.sql",
+      "size_bytes": 10077,
+      "sha256": "c50a6cc367b62aa91c17e92ee494d5c34281c010a0470176f258c7c5310158d5"
+    },
+    {
+      "path": "bot/src/commands.js",
+      "size_bytes": 67949,
+      "sha256": "0e86ba2f70fd74c4a01cb38ac8775a0807e7c24097287f8a573378947d38d211"
+    },
+    {
+      "path": "bot/src/config.js",
+      "size_bytes": 1610,
+      "sha256": "5e825be6ea5341e1b3db646a77f32eafb841f62310714ca666e1840d97ce7c98"
+    },
+    {
+      "path": "bot/src/content.js",
+      "size_bytes": 1536,
+      "sha256": "e1e3fc8e87ca485f418ad5ad52cc5fe3bbc75f9caf2ce1a231bd52d69521f188"
+    },
+    {
+      "path": "bot/src/db.js",
+      "size_bytes": 31405,
+      "sha256": "a8c9bbb7086edcb29d825c2e1b59061efb6e6a4a45d6f6c58dfc1fa3e64e2890"
+    },
+    {
+      "path": "bot/src/dice.js",
+      "size_bytes": 1218,
+      "sha256": "4bf0b2d1dc9ff32eb2a62ad96ad36fa147207b5eac102f3c260dfa495515fd56"
+    },
+    {
+      "path": "bot/src/encounter.js",
+      "size_bytes": 6849,
+      "sha256": "0ba9f2df3c9987ee3f733b0abf1b228c790797392c05bc26f5cd5c8e00b29997"
+    },
+    {
+      "path": "bot/src/gm.js",
+      "size_bytes": 27504,
+      "sha256": "5d1fffc687a4a093725ea43067c5443c9cd8770717a9e6715fd0c7dc0faaa1bf"
+    },
+    {
+      "path": "bot/src/index.js",
+      "size_bytes": 12450,
+      "sha256": "26049a5453d8412a3d65b0f0b437acfbaae20908a4769186d1bb7dc8a09c3a86"
+    },
+    {
+      "path": "bot/src/publishing.js",
+      "size_bytes": 6931,
+      "sha256": "e358ecc79a5accface00ed818ea3e9c45703c3d904932d6fa799ad891ced80d3"
+    },
+    {
+      "path": "bot/src/register-commands.js",
+      "size_bytes": 782,
+      "sha256": "7ba6b4ab22a66b5913855f7bcb1a178c90d06349e1fbd8a3fa4bcb9d77405741"
+    },
+    {
+      "path": "bot/src/state.js",
+      "size_bytes": 5151,
+      "sha256": "e59c8bba63f18859363f8459865ebf49150bd68d71484523a37b93eba4fde921"
+    },
+    {
+      "path": "content/CARDS/ANCESTRIES_AND_COMMUNITIES.md",
+      "size_bytes": 5481,
+      "sha256": "310ec6017770595ce9615465fe23193558eb0cef31a85b6f8e66b7a405664315"
+    },
+    {
+      "path": "content/CARDS/CUSTOM_DOMAINS.md",
+      "size_bytes": 469,
+      "sha256": "a86f6f9349dd94a48cb279006bdb5cfb6c958b3aed50bf6007c9fa3644ea31b8"
+    },
+    {
+      "path": "content/CARDS/DOMAINS/HEX.md",
+      "size_bytes": 6919,
+      "sha256": "f4dbc6a5163d1fd3a958d1ffc7b3f86704cc4a6bedbb8151f243baa2107c1a0e"
+    },
+    {
+      "path": "content/CARDS/DOMAINS/PACT.md",
+      "size_bytes": 6738,
+      "sha256": "a218b5b75b221a7f0d604019974c73a77cae4f0da4cfd4280263ace5ca095df6"
+    },
+    {
+      "path": "content/CARDS/DOMAINS/SIGNAL.md",
+      "size_bytes": 6872,
+      "sha256": "dc2d0192c22d20471d6a0b52e4f537411b9ce825b80658584fa575bb0cf7b64e"
+    },
+    {
+      "path": "content/CARDS/DOMAINS/VEIL.md",
+      "size_bytes": 6717,
+      "sha256": "891232961d509e1aad7c6cf67d901d3dc95853faeb5e59902f07729ba42353be"
+    },
+    {
+      "path": "content/CARDS/DOMAIN_ACCESS.md",
+      "size_bytes": 1133,
+      "sha256": "3ed5ce4c46702b3026f66df66cd79c064d6d7bf1e60e7f56c1b06640be0ccc80"
+    },
+    {
+      "path": "content/CARDS/OCCULT_SCARS.md",
+      "size_bytes": 2878,
+      "sha256": "c75987cce87d7cf5e3a75981e12acb9e010f0538c42275520e6e811c362f80e9"
+    },
+    {
+      "path": "content/CARDS/domain_cards.json",
+      "size_bytes": 32105,
+      "sha256": "b3525d2ebde6aa8de5615bcd4a7904c8127d8b7c2fe592f9335dde2552f2780f"
+    },
+    {
+      "path": "content/ENGINE/AI_GM_CONSTITUTION.md",
+      "size_bytes": 3854,
+      "sha256": "7ea7bfd583e7845893ae686f2ea607d211e6b54c525188502587dd4a5bc2cc2f"
+    },
+    {
+      "path": "content/ENGINE/CONTENT_ROUTING.md",
+      "size_bytes": 1003,
+      "sha256": "ac4664d2cc63d6c55052414878f038435965aff6a6ca569ede6a20b9bdf062cd"
+    },
+    {
+      "path": "content/ENGINE/CROSS_MODEL_HANDOFF.md",
+      "size_bytes": 1303,
+      "sha256": "6d9328c116a290fa972088eee1a6f072235d1ca11243f16c847732ffacf5e7dc"
+    },
+    {
+      "path": "content/ENGINE/DAGGERHEART_MULTIPLAYER_CORE.md",
+      "size_bytes": 1766,
+      "sha256": "7fc252c6ed1c2f07f18cf5de96d03392e7e8f08c9c94b84e16570c243a7f8e8f"
+    },
+    {
+      "path": "content/ENGINE/MOBILE_TRAVEL_MODE.md",
+      "size_bytes": 1607,
+      "sha256": "8ff8e99ebe79e0a0c8a8b0434d6df1d78cbbf243999d5e130784968aae609bbe"
+    },
+    {
+      "path": "content/ENGINE/MODEL_START_PROMPT.md",
+      "size_bytes": 1792,
+      "sha256": "6915e7795f1256387584d0d5a0e296b34a241b91358e8df8ae4ecac123bf4788"
+    },
+    {
+      "path": "content/ENGINE/MULTIPLAYER_ENCOUNTER_GUIDE.md",
+      "size_bytes": 2235,
+      "sha256": "9ef254a557e188a70528151a564196892752d24f4ae1719a3ec7ecfcdda1c360"
+    },
+    {
+      "path": "content/ENGINE/MULTIPLAYER_GM_RULES.md",
+      "size_bytes": 10136,
+      "sha256": "f163b8d87a16f676b42f82642b4b98463378397e3a0704f9b5b23663c58ea4d7"
+    },
+    {
+      "path": "content/ENGINE/ORACLE.md",
+      "size_bytes": 1151,
+      "sha256": "151b000475a3706eab50e13a607a0b3940ecf58210c53c4a3960974e73f74583"
+    },
+    {
+      "path": "content/ENGINE/PERSISTENCE_SCHEMA.md",
+      "size_bytes": 1733,
+      "sha256": "1ce88d1a3bbbfc44277fbe7687a1ace9699c3797e78e8c93ed9b6a5f2353f4da"
+    },
+    {
+      "path": "content/ENGINE/validate_package.py",
+      "size_bytes": 1223,
+      "sha256": "9cf93a844d7eb9dd16366bbce65a922855c5518031ed538fa2e0719903e7f5dc"
+    },
+    {
+      "path": "content/GM_PRIVATE/ADVERSARIES/ADVERSARY_COMPENDIUM.md",
+      "size_bytes": 35944,
+      "sha256": "707ed16d8dd1ba8f259c48b61afd4d99b045696384e9c656cd336ea07f5e05d7"
+    },
+    {
+      "path": "content/GM_PRIVATE/ADVERSARIES/adversaries.json",
+      "size_bytes": 42311,
+      "sha256": "bde06fb63e66b11a5bbdfdb68fdcd942a1a9a8726cca5f7c5a257d7ef5bc2a87"
+    },
+    {
+      "path": "content/GM_PRIVATE/AI_DM_COMPENDIUM.md",
+      "size_bytes": 119690,
+      "sha256": "55cb0e7006846ff8ed27858b033bde3508dfd9524639a8824909e14dc3fffe10"
+    },
+    {
+      "path": "content/GM_PRIVATE/CAMPAIGN_ARC.md",
+      "size_bytes": 3584,
+      "sha256": "a390a0043ab2882fa551c8fbc86891a1a2f037d7ab9db9084062bf58992f8a34"
+    },
+    {
+      "path": "content/GM_PRIVATE/CHASE_TOOLKIT.md",
+      "size_bytes": 2090,
+      "sha256": "81630a7c3c3119b3b2d8738af76ed5e6cfc217bb951d331116045d4f52e3a8bc"
+    },
+    {
+      "path": "content/GM_PRIVATE/DEFAULT_CAMPAIGN_SECRETS.md",
+      "size_bytes": 2172,
+      "sha256": "d83131e2f3bf7847a907c3763bedebda824d301099ccc787783be265710c7b86"
+    },
+    {
+      "path": "content/GM_PRIVATE/ENVIRONMENTS/ENVIRONMENT_COMPENDIUM.md",
+      "size_bytes": 12647,
+      "sha256": "82b7b1c95d0ef79a63a42c5b6bb70bfb189fb5e7aad4414408c362299b19be2a"
+    },
+    {
+      "path": "content/GM_PRIVATE/ENVIRONMENTS/environments.json",
+      "size_bytes": 14056,
+      "sha256": "0b5f5004caf4d761c33ce851a020e081a2b6fb980526a38fcc51c7eaec413898"
+    },
+    {
+      "path": "content/GM_PRIVATE/FACTIONS/FACTION_DOSSIERS.md",
+      "size_bytes": 9007,
+      "sha256": "c8b6503ea158024f980bc84291ee79521d1c7f7fbf14300d33e53671e8a52985"
+    },
+    {
+      "path": "content/GM_PRIVATE/FACTIONS/factions.json",
+      "size_bytes": 10010,
+      "sha256": "f3c6a7860655851faad86d054efb6abacf3a264f83f1f0517b76b25f8c90f702"
+    },
+    {
+      "path": "content/GM_PRIVATE/GENERATORS.md",
+      "size_bytes": 5828,
+      "sha256": "5f273a883b7aa72f3964054d83c5f9ec7c6795d69ab26d07005d84b3ca509d19"
+    },
+    {
+      "path": "content/GM_PRIVATE/GM_STATE.json",
+      "size_bytes": 3253,
+      "sha256": "20487b0ff6e722bae585013ceb6264e3865a30e02ff058f5ca510a0c47537064"
+    },
+    {
+      "path": "content/GM_PRIVATE/LOCATIONS/LOCATION_DOSSIERS.md",
+      "size_bytes": 5296,
+      "sha256": "e41e2510ccfb3c77aa7402056d7044f048c55fb55da052d0a7f3c20a82d6312a"
+    },
+    {
+      "path": "content/GM_PRIVATE/LOCATIONS/locations.json",
+      "size_bytes": 5633,
+      "sha256": "3c25ed91e0141bdc66d3e8edd540821ef416cff5b28bee722bc3625eef19fa8b"
+    },
+    {
+      "path": "content/GM_PRIVATE/MYSTERIES/01_THE_317_CALL.md",
+      "size_bytes": 5778,
+      "sha256": "6c732d9ee1beba0422a96523ef61d8a4306760a13772a6833513daf18f8b64bb"
+    },
+    {
+      "path": "content/GM_PRIVATE/MYSTERIES/02_RENT_DUE_IN_BLOOD.md",
+      "size_bytes": 3813,
+      "sha256": "91fb1b1cf7c76fedd57d0f2377583845b782ee6585e7feaa8d11191d1fb7eab5"
+    },
+    {
+      "path": "content/GM_PRIVATE/MYSTERIES/03_DEAD_LETTER_OFFICE.md",
+      "size_bytes": 3193,
+      "sha256": "35c97e7fad997e2fb0ab313d0f5f05da9292c57cf3fa38be5885e8e2073147ca"
+    },
+    {
+      "path": "content/GM_PRIVATE/MYSTERIES/04_SAINT_OF_THE_RED_LINE.md",
+      "size_bytes": 3120,
+      "sha256": "fb44e328e6dc2b5f72480dd90bef8f5a29fdce9f1c9e629ab3188f8cffefae39"
+    },
+    {
+      "path": "content/GM_PRIVATE/MYSTERIES/05_HOUSE_WITHOUT_ADDRESS.md",
+      "size_bytes": 3171,
+      "sha256": "4429eb18ecbc4cae1a97a037e41cc1af35e57c829a032b550c9da8a98c5be989"
+    },
+    {
+      "path": "content/GM_PRIVATE/MYSTERIES/06_THE_PERFECT_FORECAST.md",
+      "size_bytes": 3769,
+      "sha256": "0ab7997bff8719a81d71d839e9fdcbcd63fc4d2487bc07cf269fd73898f3463a"
+    },
+    {
+      "path": "content/GM_PRIVATE/MYSTERIES/07_NIGHT_OF_OPEN_EYES.md",
+      "size_bytes": 6186,
+      "sha256": "189d0c2a7fb4864c37497b3f0e2e749fa90050e458e27912e0f7c7596e870ebd"
+    },
+    {
+      "path": "content/GM_PRIVATE/MYSTERIES/mystery_index.json",
+      "size_bytes": 1496,
+      "sha256": "c181e8bdaca3d1d5180ee201cf13b28e46f8587d516adf9cf32a58d40bd77bf6"
+    },
+    {
+      "path": "content/GM_PRIVATE/NPCS/NPC_DOSSIERS.md",
+      "size_bytes": 12821,
+      "sha256": "7aba85c1af5ca5997c297dba16e1a5edfae65d13d9ddf68fd4f9650f211cb933"
+    },
+    {
+      "path": "content/GM_PRIVATE/NPCS/npcs.json",
+      "size_bytes": 14034,
+      "sha256": "4d6f27dccd98e0ab8c58da85087e746533be3121a338d85685ce4c9ccdcd0600"
+    },
+    {
+      "path": "content/MANIFEST.txt",
+      "size_bytes": 1913,
+      "sha256": "41580acfdc9770d4e7563169558ea054766b9d2989ce9ceec960b5ce030a3b35"
+    },
+    {
+      "path": "content/PLAYER/BLANK_CHARACTER_SHEET.docx",
+      "size_bytes": 37751,
+      "sha256": "92caad613823fd3aae995ee77ee7f8decf3c5f351ee8177794f238a32423a2ff"
+    },
+    {
+      "path": "content/PLAYER/CAMPAIGN_FRAME.md",
+      "size_bytes": 4521,
+      "sha256": "1e66864ad6bfe7e1ce946e44053b8b214f031328534a4d43e32b065cf289c1ee"
+    },
+    {
+      "path": "content/PLAYER/CASE_HOOKS.md",
+      "size_bytes": 1736,
+      "sha256": "0b961310bae1e6b923db4895e5635a5b2774adcae7f0087453b985910c1f7727"
+    },
+    {
+      "path": "content/PLAYER/CHARACTER_CREATION.md",
+      "size_bytes": 4782,
+      "sha256": "9acb3ab4177ba7170b9fdae951ad3c20e8062c23b9a618d86dfb296a10a2848c"
+    },
+    {
+      "path": "content/PLAYER/CITY_LOCATIONS.md",
+      "size_bytes": 2567,
+      "sha256": "9b9fe7415aa16a698d9024381d0ce66fa96624fbe12975f7844444be3db2bf26"
+    },
+    {
+      "path": "content/PLAYER/FACTION_PRIMER.md",
+      "size_bytes": 985,
+      "sha256": "b200d0054eea32fe663263f011f3e752dfd9d26ddd3f260383a590a80dc65a04"
+    },
+    {
+      "path": "content/PLAYER/MODERN_EQUIPMENT.md",
+      "size_bytes": 7424,
+      "sha256": "ae66a7add3d5d9398ce0eb56b5203053299b17cce6fe33dafab002ec14d9619f"
+    },
+    {
+      "path": "content/PLAYER/OCCULT_SERVICES.md",
+      "size_bytes": 1530,
+      "sha256": "0815aed23f40b4ccaa7a70d97a5c6c277e7a26012840511fcfb0f3266f9ad82b"
+    },
+    {
+      "path": "content/PLAYER/PLAYER_COMPENDIUM.md",
+      "size_bytes": 69398,
+      "sha256": "9c561de6aaedb7b2aedfe273b75d0bd4ce103efa033a3e53fe2ed8dd351a933c"
+    },
+    {
+      "path": "content/PLAYER/QUICK_REFERENCE.md",
+      "size_bytes": 1360,
+      "sha256": "8b69c49f5e8e7d574036b562a5df1efd702809f298d77b14c5e606e7f9cb9245"
+    },
+    {
+      "path": "content/PLAYER/SETTING_GUIDE.md",
+      "size_bytes": 3131,
+      "sha256": "73643afea1c314cbf9397da050efb8bbcd124aba405b3277f99a5147c73fb8fa"
+    },
+    {
+      "path": "content/PLAYER/VEHICLES.md",
+      "size_bytes": 4505,
+      "sha256": "c0a4a5ba911f47bc180b1f16f001c89bef2a06dd16d74381f073f741e11bc181"
+    },
+    {
+      "path": "content/PLAYER/blank_character_sheet.md",
+      "size_bytes": 1267,
+      "sha256": "edd2ce41421a802e5bc834b6a42c24c97b96a4ada228f3d25de691c5d599a239"
+    },
+    {
+      "path": "content/README.md",
+      "size_bytes": 3111,
+      "sha256": "78fbd55c90da6a3ec16406a2ad0d1c144649166002ed320ebfc269231fa82eef"
+    },
+    {
+      "path": "content/SOURCES.md",
+      "size_bytes": 822,
+      "sha256": "3226e2295d3cc606d86f8bdae6b0b3ae75b6b37e1a15d168c9d5fe332568f70c"
+    },
+    {
+      "path": "content/STATE/CAMPAIGN_STATE.json",
+      "size_bytes": 1588,
+      "sha256": "a1f7e368f06a10cdcf11a547e13c42a81403c1e2d7cb5b6fe9e5540d0ac7708f"
+    },
+    {
+      "path": "content/STATE/SESSION_JOURNAL.md",
+      "size_bytes": 318,
+      "sha256": "3eacdf8c7eeb09a41b25c638bad6c4626cd53ebae7d333605caa8fb64bcae210"
+    },
+    {
+      "path": "content/STATE/SESSION_SAVE_TEMPLATE.md",
+      "size_bytes": 447,
+      "sha256": "2f2aa67775fc5811245d61a28152d2b275a1a6abe9c8be81522c8c795ea7d636"
+    },
+    {
+      "path": "docker-compose.yml",
+      "size_bytes": 271,
+      "sha256": "31d796814f98561baea1d69957d945180b56a1fa8b8e8e0b5d1f191a67c0ab58"
+    },
+    {
+      "path": "docs/ACCESSIBILITY.md",
+      "size_bytes": 1498,
+      "sha256": "6688a5440a409b305e63a1b9519f6632e226b2580ce048f5ba28ee50fd163b30"
+    },
+    {
+      "path": "docs/API_COSTS_2026-10-01.md",
+      "size_bytes": 1660,
+      "sha256": "f2d696245cb546ea5c31ca4b9611e77d872995528edd1a81f073047b3ad6335c"
+    },
+    {
+      "path": "docs/BOT_COMMANDS.md",
+      "size_bytes": 3835,
+      "sha256": "0690cc9bb194e6a78593998edf3b530e648788977ad5847f67ebef753b3ab25a"
+    },
+    {
+      "path": "docs/DEPLOYMENT.md",
+      "size_bytes": 1623,
+      "sha256": "ed959d64f3a769c459ebd912a50e89fc1b5d7f5cd1c5a20be9c6efc0b5b388fa"
+    },
+    {
+      "path": "docs/DISCORD_SETUP.md",
+      "size_bytes": 2165,
+      "sha256": "86706c5b87e0a4b66345c58f643288221a869c2fae4dcd655eca589be3417f85"
+    },
+    {
+      "path": "docs/ENCOUNTER_BUILDER.md",
+      "size_bytes": 2568,
+      "sha256": "05f494be4da9b01a9827dbcfbd142410c92c8964e5f6776352ed2bbe59095992"
+    },
+    {
+      "path": "docs/NPC_PROXY_CONTROL.md",
+      "size_bytes": 3988,
+      "sha256": "1cbb155536bf8124e7b2a768d3b9da38f739ab4a7846358cc0f4f61bfe32264f"
+    },
+    {
+      "path": "docs/OPENAI_SETUP.md",
+      "size_bytes": 2795,
+      "sha256": "87464b385fc1f35028e5da217ca954d0c31d8d92d264e4aff7a39cfed51f6b7b"
+    },
+    {
+      "path": "docs/PARTY_ASSEMBLY.md",
+      "size_bytes": 4684,
+      "sha256": "3163c3224f1470b10f5f751493d9c7151b54ff4daf9222be337aec9f01e0e20d"
+    },
+    {
+      "path": "docs/PLAYER_LIFECYCLE.md",
+      "size_bytes": 5410,
+      "sha256": "17b2054dff71b83016ecf13b8359d748677f2cd0234c5b9fa3caa37fa887e760"
+    },
+    {
+      "path": "docs/RULES_DESK.md",
+      "size_bytes": 1500,
+      "sha256": "721a6c8099a865346505b6ba0971bbaf258061bfee687c2c0495017ade0c9655"
+    },
+    {
+      "path": "docs/SECURITY_AND_PRIVACY.md",
+      "size_bytes": 2830,
+      "sha256": "91d93a6a6c1a5ba6328a2678d3166147f8bad6b58a4cc8e34b362add65a88054"
+    },
+    {
+      "path": "docs/SERVER_CHANNEL_SETUP.md",
+      "size_bytes": 3343,
+      "sha256": "59240ee9123e1d7b7366c2ea1cd387b859e8308715da3ba333cc3d43936ca8c8"
+    },
+    {
+      "path": "docs/UPGRADE_3.0_TO_3.1.md",
+      "size_bytes": 1481,
+      "sha256": "65ad7a21f6b0d6dce08a4d7ffef02690d8f4f77919be27738d83c6e405dc0b41"
+    },
+    {
+      "path": "docs/UPGRADE_3.1.1_TO_3.1.2.md",
+      "size_bytes": 1527,
+      "sha256": "cf20d3e256ece494f35e221bbe22a4b7046a834090020e4c2432f6fabe86b619"
+    },
+    {
+      "path": "docs/UPGRADE_3.1.2_TO_3.1.3.md",
+      "size_bytes": 1254,
+      "sha256": "24992e93af48f6aaec963a5372cb5ed042e4e3b468264ad6d0c8addb213dac86"
+    },
+    {
+      "path": "docs/UPGRADE_3.1_TO_3.1.1.md",
+      "size_bytes": 2005,
+      "sha256": "2387179093f213388acf7ebeebbcf0a2d2979119cf35c5980a7dd088cbf27c25"
+    }
+  ]
+}

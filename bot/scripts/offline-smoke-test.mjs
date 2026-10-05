@@ -1,0 +1,109 @@
+import fs from "node:fs";
+import os from "node:os";
+import path from "node:path";
+import { VeiledDB } from "../src/db.js";
+import { applyGMEvents } from "../src/state.js";
+import { baseBattlePoints, partyTier, livePcRoster, autoBuildComposition, recomputeBudget, EncounterLibrary } from "../src/encounter.js";
+
+const dir=fs.mkdtempSync(path.join(os.tmpdir(),"veilkeeper31-"));
+const dbPath=path.join(dir,"test.sqlite");
+const schema=path.resolve(process.cwd(),"./sql/schema.sql");
+const db=new VeiledDB(dbPath,schema);
+const guild="guild-test", user="player-a", user2="player-b";
+db.ensureCampaign(guild);
+db.configureCampaign(guild,{playChannelId:"play",gmRoleId:"gm",responseMode:"assisted"});
+db.configureChannels(guild,{rulesChannelId:"rules",caseBoardChannelId:"cases",journalChannelId:"journal",knownNpcsChannelId:"npcs",knownLocationsChannelId:"locations",gmLogChannelId:"gmlog",stateErrorsChannelId:"errors"});
+db.upsertPlayer(guild,user,"Tester");
+db.upsertPlayer(guild,user2,"Guest Tester");
+db.setPrivateChannel(guild,user,"private-a");
+const char=db.createCharacter(guild,user,"Test Detective",{class:"Ranger",domains:["Bone","Veil"],home:"Mercer Investigations",gm_hooks:["An impossible cold case"]});
+const char2=db.createCharacter(guild,user2,"Test Medium",{class:"Bard",domains:["Grace","Veil"],unresolved_incident:"A ghost knows their name."});
+const session=db.startSession(guild,"Smoke Test","crossed_cases");
+if(session.assembly_mode!=="crossed_cases"||session.assembly_phase!=="assembly") throw new Error("Assembly session initialization failed.");
+db.setPresence(session.id,user,"present");
+db.assignCharacter(session.id,user,char.id);
+db.setPresence(session.id,user2,"present");
+db.assignCharacter(session.id,user2,char2.id);
+db.setAssemblyPlan(session.id,{
+  public_opening:"Two unrelated investigations converge.",
+  convergence_goal:"Discover the shared supernatural link.",
+  character_entries:[],
+  bonds:[{from_character:"Test Detective",to_character:"Test Medium",reason:"Each holds a clue the other needs."}],
+  gm_notes:"test"
+});
+if(db.getAssemblyPlan(session.id).convergence_goal!=="Discover the shared supernatural link.") throw new Error("Assembly plan persistence failed.");
+db.setAssemblyPhase(session.id,"converged");
+if(db.getSession(session.id).assembly_phase!=="converged") throw new Error("Assembly phase update failed.");
+const party=db.establishParty(guild,session.id,{name:"Test Team",bonds:db.getAssemblyPlan(session.id).bonds});
+if(!party.established||party.members.length!==2||!db.partyHasCharacter(guild,char.id)) throw new Error("Persistent party state failed.");
+
+db.addMessage({guildId:guild,sessionId:session.id,userId:user,speakerName:"Test Detective",characterId:char.id,visibility:"character",subjectCharacterId:char.id,content:"I inspect the mark privately."});
+
+const privateResults=applyGMEvents(db,guild,session.id,[
+  {type:"clue",key:"private-mark",target_user_id:"",target_character_id:"",amount:0,value:"The mark belongs to a hidden court.",visibility:"party",note:"",status:""},
+  {type:"npc_update",key:"Mara Voss",target_user_id:"",target_character_id:"",amount:0,value:"Lantern Office investigator; cautiously cooperative.",visibility:"party",note:"",status:""}
+],{mode:"private",actorUserId:user,actorCharacterId:char.id});
+if(privateResults.some(x=>x.publish)) throw new Error("Private knowledge was incorrectly marked publishable.");
+const privateFacts=db.factsFor(guild,user,{characterId:char.id,includeGM:false});
+if(!privateFacts.some(x=>x.fact_key==="private-mark"&&x.visibility==="character")) throw new Error("Private clue scoping failed.");
+
+const partyResults=applyGMEvents(db,guild,session.id,[
+  {type:"thread",key:"case-1",target_user_id:"",target_character_id:"",amount:0,value:"Find the missing caller",visibility:"party",note:"Three calls trace to the transit grid.",status:"active"},
+  {type:"npc_update",key:"Mara Voss",target_user_id:"",target_character_id:"",amount:0,value:"Lantern Office investigator; cautiously cooperative.",visibility:"party",note:"",status:""},
+  {type:"location_update",key:"Hollow Street",target_user_id:"",target_character_id:"",amount:0,value:"A discovered occult street with unstable entrances.",visibility:"party",note:"",status:""}
+],{mode:"party",actorUserId:user,actorCharacterId:char.id});
+if(partyResults.filter(x=>x.publish).length!==3) throw new Error("Party publishing flags failed.");
+if(!db.getPlayerByPrivateChannel(guild,"private-a")) throw new Error("Private channel lookup failed.");
+if(db.getCharacter(char.id).data.home!=="Mercer Investigations") throw new Error("Structured character hook preservation failed.");
+if(db.listReferences(guild,"npc").length!==1||db.listReferences(guild,"location").length!==1) throw new Error("Reference upsert failed.");
+if(db.recentMessagesFor(guild,"other",{characterId:"other",limit:10}).some(x=>x.visibility==="character")) throw new Error("Private message isolation failed.");
+
+
+// v3.1.2 guest-controlled NPC antagonist proxy.
+const npcPacket={
+  npc_name:"Doctor Vale",
+  public_identity:"An occult researcher known to the party.",
+  portrayal:"Controlled, clinical, impatient with uncertainty.",
+  current_objective:"Recover the seized correction device without exposing Aster Vale's wider network.",
+  known_information:["The device was moved after containment."],
+  relationships:["Distrusts Mercer."],
+  capabilities:["Occult analysis", "Prepared warding technique"],
+  limitations:["Does not know Mercer private-channel discoveries."],
+  scene_cues:["Prefers negotiation before escalation."]
+};
+let npcProxy=db.upsertNpcProxy(guild,session.id,{npcName:"Doctor Vale",userId:user2,controlLevel:"tactical",status:"offered",playerPacket:npcPacket,gmNote:"GM-only packet test"});
+if(npcProxy.status!=="offered"||npcProxy.knowledge_id!=="npc:doctor-vale") throw new Error("NPC proxy offer persistence failed.");
+npcProxy=db.activateNpcProxy(npcProxy.id,user2);
+const npcAssignments=db.npcProxyAssignments(session.id,user2);
+if(npcAssignments.length!==1||!npcAssignments[0].npc_proxy||npcAssignments[0].name!=="Doctor Vale") throw new Error("NPC proxy activation/controller mapping failed.");
+db.addFact(guild,{category:"clue",key:"vale-private-test",content:"Vale knows a private antagonist-only fact.",visibility:"character",subjectCharacterId:npcProxy.knowledge_id,sessionId:session.id,source:"test"});
+if(db.factsFor(guild,user2,{characterId:char2.id,includeGM:false}).some(x=>x.fact_key==="vale-private-test")) throw new Error("NPC-private knowledge leaked into the guest player's PC knowledge.");
+if(!db.factsFor(guild,user2,{characterId:npcProxy.knowledge_id,includeGM:false}).some(x=>x.fact_key==="vale-private-test")) throw new Error("NPC-private knowledge was not retrievable by NPC proxy context.");
+
+db.releaseNpcProxy(npcProxy.id);
+if(db.npcProxyAssignments(session.id,user2).length!==0) throw new Error("NPC proxy release failed.");
+
+// v3.1.3 multiplayer Battle Point encounter builder persistence.
+const encounterLib=new EncounterLibrary(path.resolve(process.cwd(),"../content"));
+const combatRoster=livePcRoster(db,session.id);
+if(combatRoster.length!==2) throw new Error("Live encounter roster count failed.");
+const encounterTier=partyTier(combatRoster);
+const encounterBase=baseBattlePoints(combatRoster.length);
+if(encounterBase!==8||encounterTier!==1) throw new Error("Battle Point base/tier calculation failed.");
+let composition=autoBuildComposition({adversaries:encounterLib.adversaries,tier:encounterTier,budget:encounterBase,pcCount:combatRoster.length,style:"balanced"});
+let calc=recomputeBudget({tier:encounterTier,base_bp:encounterBase,difficulty:"standard",custom_adjustment_bp:0,damage_boosted:0,composition});
+const encounter=db.createEncounter(guild,session.id,{tier:encounterTier,pc_count:combatRoster.length,difficulty:"standard",style:"balanced",base_bp:encounterBase,budget_bp:calc.budget,spent_bp:calc.spent,objective:"Protect the witness",environment_name:"Occult Crime Scene",composition,adjustments:calc.derived});
+if(encounter.base_bp!==8||encounter.pc_count!==2||!encounter.composition.length) throw new Error("Encounter persistence failed.");
+if(encounter.composition.some(x=>x.type==="Minion"&&x.unit_count%x.quantity!==0)) throw new Error("Minion group sizing failed.");
+const activeEncounter=db.setEncounterStatus(encounter.id,"active");
+if(activeEncounter.status!=="active"||db.getCurrentEncounter(session.id).id!==encounter.id) throw new Error("Encounter activation failed.");
+db.setEncounterStatus(encounter.id,"ended");
+if(db.getCurrentEncounter(session.id)) throw new Error("Encounter end/current lookup failed.");
+const autoRelease=db.upsertNpcProxy(guild,session.id,{npcName:"Cicada",userId:user2,controlLevel:"portrayal",status:"active",playerPacket:{current_objective:"Test"}});
+if(!db.npcProxyAssignments(session.id,user2).some(x=>x.id===autoRelease.id)) throw new Error("Second NPC proxy activation failed.");
+db.endSession(guild,"Smoke test complete.");
+if(db.listNpcProxies(session.id,{statuses:["active","offered"]}).length!==0) throw new Error("Session-end NPC proxy auto-release failed.");
+
+console.log("Veilkeeper v3.1.3 offline smoke test: PASS");
+db.close();
+fs.rmSync(dir,{recursive:true,force:true});

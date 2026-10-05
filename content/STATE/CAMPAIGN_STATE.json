@@ -1,0 +1,85 @@
+{
+  "schema_version": "1.0",
+  "visibility": "player_safe",
+  "campaign": {
+    "title": "",
+    "campaign_id": "NEW",
+    "session": 0,
+    "world_datetime": "",
+    "current_location": "",
+    "tone_notes": []
+  },
+  "pc": {
+    "name": "",
+    "pronouns": "",
+    "level": 1,
+    "class": "",
+    "subclass": "",
+    "ancestry": "",
+    "community": "",
+    "traits": {
+      "agility": 0,
+      "strength": 0,
+      "finesse": 0,
+      "instinct": 0,
+      "presence": 0,
+      "knowledge": 0
+    },
+    "evasion": 0,
+    "hp": {
+      "current": 0,
+      "max": 0
+    },
+    "stress": {
+      "current": 0,
+      "max": 0
+    },
+    "hope": 0,
+    "armor": {
+      "current": 0,
+      "max": 0
+    },
+    "thresholds": {
+      "major": 0,
+      "severe": 0
+    },
+    "experiences": [],
+    "domain_cards": [],
+    "equipment": [],
+    "gold_or_resources": "",
+    "conditions": []
+  },
+  "veil_exposure": 0,
+  "known_npcs": {},
+  "known_factions": {},
+  "known_locations": {},
+  "active_threads": [],
+  "resolved_threads": [],
+  "player_known_clues": [],
+  "relationships": {},
+  "debts_and_bargains": [],
+  "session_journal": [],
+  "open_rules_rulings": [],
+  "rules_baseline": "Daggerheart SRD 2.0",
+  "travel_mode": true,
+  "anchors": {
+    "home": "",
+    "person": "",
+    "obligation": ""
+  },
+  "known_occult_scars": [],
+  "faction_standing": {},
+  "contacts": {},
+  "case_board": {
+    "open_cases": [],
+    "known_clues": [],
+    "hypotheses": [],
+    "ruled_out": []
+  },
+  "assets": {
+    "vehicles": [],
+    "safehouses": [],
+    "services": []
+  },
+  "save_notes": []
+}

@@ -1,0 +1,12 @@
+services:
+  veilkeeper:
+    build: .
+    container_name: veilkeeper
+    restart: unless-stopped
+    env_file:
+      - ./bot/.env
+    environment:
+      CONTENT_ROOT: /app/content
+      DATABASE_PATH: /app/data/veiled_city.sqlite
+    volumes:
+      - ./bot/data:/app/data

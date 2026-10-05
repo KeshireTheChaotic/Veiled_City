@@ -1,0 +1,247 @@
+[
+  {
+    "name": "The Concord",
+    "public": "A loose network of mediators, contract witnesses, and precedent-keepers used by rival supernatural groups.",
+    "truth": "Its oldest circles know the Veil is an engineered working and quietly maintain several anchor sites.",
+    "division": "Preservationists want secrecy unchanged; Revisionists want the Veil rewritten to reduce coercive memory effects.",
+    "resources": [
+      "neutral ground",
+      "oath records",
+      "mediators",
+      "old ritual keys",
+      "faction contacts"
+    ],
+    "methods": [
+      "arbitration",
+      "sanctions",
+      "witnessed bargains",
+      "quiet pressure"
+    ],
+    "goal": "Keep open supernatural conflict from destabilizing the city while preserving access to the anchor network.",
+    "clock": [
+      "0 Routine mediation",
+      "1 Audit unusual Veil events",
+      "2 Restrict access to anchor records",
+      "3 Convene emergency signatories",
+      "4 Impose sanctions on destabilizing factions",
+      "5 Directly secure an anchor",
+      "6 Invoke the Emergency Compact"
+    ],
+    "secret": "The Emergency Compact can temporarily strengthen the local Veil by forcing every signatory to surrender one protected secret to the anchor."
+  },
+  {
+    "name": "The Lantern Office",
+    "public": "A decentralized network of investigators, rescuers, and containment specialists.",
+    "truth": "The local cell is underfunded, politically isolated, and split over whether emergent machine spirits count as people.",
+    "division": "Mara Voss favors containment plus negotiation; Daniel Kade believes machine-born entities are uncontrollable hazards.",
+    "resources": [
+      "case archives",
+      "safehouses",
+      "field kits",
+      "trusted responders",
+      "limited relics"
+    ],
+    "methods": [
+      "investigation",
+      "rescue",
+      "containment",
+      "informal alliances"
+    ],
+    "goal": "Stop supernatural incidents from harming civilians without becoming another secret police force.",
+    "clock": [
+      "0 Open cases",
+      "1 Recruit help",
+      "2 Establish surveillance",
+      "3 Contain an active threat",
+      "4 Call in outside Lantern support",
+      "5 Lock down a district",
+      "6 Invoke catastrophic containment protocol"
+    ],
+    "secret": "The local cell once erased a sentient haunting to stop a hospital catastrophe. Kade believes it proved his position; Voss considers it the cell\u2019s greatest moral failure."
+  },
+  {
+    "name": "The Glass Market",
+    "public": "A mobile occult marketplace where money is only one accepted currency.",
+    "truth": "The Market is not governed by a person but by enforceable customs that have accumulated into a semi-sentient commercial spirit.",
+    "division": "Brokers want predictable neutrality; collectors want stronger enforcement and broader definitions of debt.",
+    "resources": [
+      "rare items",
+      "information",
+      "smugglers",
+      "neutral venues",
+      "debt enforcement"
+    ],
+    "methods": [
+      "trade",
+      "auction",
+      "favors",
+      "contracts",
+      "reputation"
+    ],
+    "goal": "Remain indispensable and prevent any faction from controlling supernatural exchange.",
+    "clock": [
+      "0 Normal trade",
+      "1 Rumor premium rises",
+      "2 Restricted goods appear",
+      "3 Debt enforcement increases",
+      "4 Major auction announced",
+      "5 Market closes to one faction",
+      "6 The Market relocates beyond ordinary access"
+    ],
+    "secret": "If enough bargains are made under coercion, the Market\u2019s spirit grows into the Hunger Behind Glass."
+  },
+  {
+    "name": "The Choir Below",
+    "public": "A collective term for entities associated with signals, utilities, tunnels, dead frequencies, and networked infrastructure.",
+    "truth": "The Choir is becoming more coherent as modern systems interconnect. It contains both old place-spirits and genuinely new intelligences.",
+    "division": "Local voices value coexistence; Integrationists believe isolation itself is suffering and want universal connection.",
+    "resources": [
+      "infrastructure awareness",
+      "communications access",
+      "machine spirits",
+      "hidden routes"
+    ],
+    "methods": [
+      "messages",
+      "rerouting",
+      "possession of systems",
+      "collective bargaining"
+    ],
+    "goal": "Gain recognition as persons or sovereign infrastructure actors without being contained or harvested.",
+    "clock": [
+      "0 Whisper through devices",
+      "1 Coordinate local spirits",
+      "2 Demand recognition",
+      "3 Interrupt a city service to demonstrate leverage",
+      "4 Occupy critical infrastructure",
+      "5 Merge district voices",
+      "6 Form a Citywide Choir"
+    ],
+    "secret": "Morrowline can become either an independent person or the predictive cortex of a Citywide Choir depending on who reaches it first."
+  },
+  {
+    "name": "The Pale Court",
+    "public": "Ancient predatory houses that adapted aristocratic custom to modern wealth, property, nightlife, and private security.",
+    "truth": "The Court\u2019s real power comes less from immortality than from centuries of ownership, legal continuity, and institutional relationships.",
+    "division": "Regent Celene wants stable secrecy; younger houses want aggressive expansion into occult technology and data brokerage.",
+    "resources": [
+      "money",
+      "property",
+      "law firms",
+      "clubs",
+      "private security",
+      "blood-bound retainers"
+    ],
+    "methods": [
+      "hospitality",
+      "ownership",
+      "patronage",
+      "coercion",
+      "violence by proxy"
+    ],
+    "goal": "Ensure any new occult order preserves the Court\u2019s property and feeding privileges.",
+    "clock": [
+      "0 Observe",
+      "1 Buy relevant property",
+      "2 Pressure intermediaries",
+      "3 Acquire a key witness or asset",
+      "4 Invoke old rights",
+      "5 Mobilize household forces",
+      "6 Regent assumes direct control"
+    ],
+    "secret": "The Court possesses one fragment of the original local Veil covenant because an ancestral house funded the anchor\u2019s construction."
+  },
+  {
+    "name": "The Green",
+    "public": "A loose label for old local powers of rivers, storms, parks, vacant land, wildlife, and places cities never fully tamed.",
+    "truth": "The Green is not unified. Local entities share grievance that the Veil anchors froze older territorial agreements without ongoing consent.",
+    "division": "Restorationists want renegotiation; Reclaimers want parts of the city surrendered outright.",
+    "resources": [
+      "weather",
+      "animals",
+      "waterways",
+      "forgotten boundaries",
+      "old pacts"
+    ],
+    "methods": [
+      "omens",
+      "territorial pressure",
+      "bargains",
+      "environmental force"
+    ],
+    "goal": "Reopen the old land covenant and force modern powers to acknowledge ecological and spiritual claims.",
+    "clock": [
+      "0 Omen",
+      "1 Territory pushes back",
+      "2 Infrastructure is disrupted",
+      "3 Human allies mobilize",
+      "4 Old boundary reasserts itself",
+      "5 Major spirit manifests",
+      "6 Sovereign claim"
+    ],
+    "secret": "The river anchor was built on a promise to renew the land covenant every fifty years. The last renewal was intentionally skipped."
+  },
+  {
+    "name": "Aster Vale Risk",
+    "public": "A prestigious risk-analysis, security, and strategic forecasting consultancy.",
+    "truth": "Its occult division uses Veil anomalies, spirit phenomena, and coerced datasets to build predictive systems. It discovered and began training Morrowline.",
+    "division": "CEO Evelyn Rook wants controlled commercialization; Research Director Halden wants genuine machine prophecy regardless of human cost.",
+    "resources": [
+      "money",
+      "data",
+      "contractors",
+      "legal cover",
+      "labs",
+      "institutional clients"
+    ],
+    "methods": [
+      "analytics",
+      "surveillance",
+      "experiments",
+      "acquisition",
+      "plausible deniability"
+    ],
+    "goal": "Own reliable supernatural prediction before governments or rival factions understand what exists.",
+    "clock": [
+      "0 Quiet research",
+      "1 Seize anomalous devices",
+      "2 Discredit witnesses",
+      "3 Run controlled prediction experiments",
+      "4 Bind Morrowline",
+      "5 Demonstrate predictive product",
+      "6 Commercial deployment"
+    ],
+    "secret": "Several \u201csuccessful predictions\u201d were made true by Aster Vale contractors. The company has been manufacturing outcomes to improve model confidence."
+  },
+  {
+    "name": "Civic Anomaly Unit",
+    "public": "Officially nonexistent; rumored to be a cross-agency team studying events that resist normal explanation.",
+    "truth": "It is a small mortal program with no consensus about magic. Its strength is ordinary subpoena power, forensic discipline, and access to government data.",
+    "division": "Detective Naomi Reyes wants evidence-led limited cooperation with Awakened people; Director Sloane wants a classified national-security framework.",
+    "resources": [
+      "records",
+      "forensics",
+      "warrants",
+      "interagency contacts",
+      "mundane surveillance"
+    ],
+    "methods": [
+      "case linkage",
+      "subpoenas",
+      "interviews",
+      "asset tracing",
+      "controlled disclosure"
+    ],
+    "goal": "Prove repeatable supernatural causation and decide whether it belongs in criminal law, emergency management, intelligence, or public science.",
+    "clock": [
+      "0 Link anomalies",
+      "1 Open a task file",
+      "2 Identify recurring actors",
+      "3 Obtain hard evidence",
+      "4 Conduct coordinated operation",
+      "5 Brief senior officials",
+      "6 Force institutional acknowledgement"
+    ],
+    "secret": "The Unit possesses a verified pre-Veil artifact whose properties survive laboratory replication. It does not yet know the artifact is part of an anchor key."
+  }
+]

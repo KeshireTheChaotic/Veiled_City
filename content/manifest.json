@@ -1,0 +1,316 @@
+{
+  "package": "Veiled City Multiplayer Campaign Content",
+  "version": "2.0 + multiplayer 3.1.3 integration",
+  "files": [
+    {
+      "path": "CARDS/ANCESTRIES_AND_COMMUNITIES.md",
+      "bytes": 5481,
+      "sha256": "310ec6017770595ce9615465fe23193558eb0cef31a85b6f8e66b7a405664315"
+    },
+    {
+      "path": "CARDS/CUSTOM_DOMAINS.md",
+      "bytes": 469,
+      "sha256": "a86f6f9349dd94a48cb279006bdb5cfb6c958b3aed50bf6007c9fa3644ea31b8"
+    },
+    {
+      "path": "CARDS/DOMAINS/HEX.md",
+      "bytes": 6919,
+      "sha256": "f4dbc6a5163d1fd3a958d1ffc7b3f86704cc4a6bedbb8151f243baa2107c1a0e"
+    },
+    {
+      "path": "CARDS/DOMAINS/PACT.md",
+      "bytes": 6738,
+      "sha256": "a218b5b75b221a7f0d604019974c73a77cae4f0da4cfd4280263ace5ca095df6"
+    },
+    {
+      "path": "CARDS/DOMAINS/SIGNAL.md",
+      "bytes": 6872,
+      "sha256": "dc2d0192c22d20471d6a0b52e4f537411b9ce825b80658584fa575bb0cf7b64e"
+    },
+    {
+      "path": "CARDS/DOMAINS/VEIL.md",
+      "bytes": 6717,
+      "sha256": "891232961d509e1aad7c6cf67d901d3dc95853faeb5e59902f07729ba42353be"
+    },
+    {
+      "path": "CARDS/DOMAIN_ACCESS.md",
+      "bytes": 1133,
+      "sha256": "3ed5ce4c46702b3026f66df66cd79c064d6d7bf1e60e7f56c1b06640be0ccc80"
+    },
+    {
+      "path": "CARDS/OCCULT_SCARS.md",
+      "bytes": 2878,
+      "sha256": "c75987cce87d7cf5e3a75981e12acb9e010f0538c42275520e6e811c362f80e9"
+    },
+    {
+      "path": "CARDS/domain_cards.json",
+      "bytes": 32105,
+      "sha256": "b3525d2ebde6aa8de5615bcd4a7904c8127d8b7c2fe592f9335dde2552f2780f"
+    },
+    {
+      "path": "ENGINE/AI_GM_CONSTITUTION.md",
+      "bytes": 3854,
+      "sha256": "7ea7bfd583e7845893ae686f2ea607d211e6b54c525188502587dd4a5bc2cc2f"
+    },
+    {
+      "path": "ENGINE/CONTENT_ROUTING.md",
+      "bytes": 1003,
+      "sha256": "ac4664d2cc63d6c55052414878f038435965aff6a6ca569ede6a20b9bdf062cd"
+    },
+    {
+      "path": "ENGINE/CROSS_MODEL_HANDOFF.md",
+      "bytes": 1303,
+      "sha256": "6d9328c116a290fa972088eee1a6f072235d1ca11243f16c847732ffacf5e7dc"
+    },
+    {
+      "path": "ENGINE/DAGGERHEART_MULTIPLAYER_CORE.md",
+      "bytes": 1766,
+      "sha256": "7fc252c6ed1c2f07f18cf5de96d03392e7e8f08c9c94b84e16570c243a7f8e8f"
+    },
+    {
+      "path": "ENGINE/MOBILE_TRAVEL_MODE.md",
+      "bytes": 1607,
+      "sha256": "8ff8e99ebe79e0a0c8a8b0434d6df1d78cbbf243999d5e130784968aae609bbe"
+    },
+    {
+      "path": "ENGINE/MODEL_START_PROMPT.md",
+      "bytes": 1792,
+      "sha256": "6915e7795f1256387584d0d5a0e296b34a241b91358e8df8ae4ecac123bf4788"
+    },
+    {
+      "path": "ENGINE/MULTIPLAYER_ENCOUNTER_GUIDE.md",
+      "bytes": 2235,
+      "sha256": "9ef254a557e188a70528151a564196892752d24f4ae1719a3ec7ecfcdda1c360"
+    },
+    {
+      "path": "ENGINE/MULTIPLAYER_GM_RULES.md",
+      "bytes": 10136,
+      "sha256": "f163b8d87a16f676b42f82642b4b98463378397e3a0704f9b5b23663c58ea4d7"
+    },
+    {
+      "path": "ENGINE/ORACLE.md",
+      "bytes": 1151,
+      "sha256": "151b000475a3706eab50e13a607a0b3940ecf58210c53c4a3960974e73f74583"
+    },
+    {
+      "path": "ENGINE/PERSISTENCE_SCHEMA.md",
+      "bytes": 1733,
+      "sha256": "1ce88d1a3bbbfc44277fbe7687a1ace9699c3797e78e8c93ed9b6a5f2353f4da"
+    },
+    {
+      "path": "ENGINE/validate_package.py",
+      "bytes": 1223,
+      "sha256": "9cf93a844d7eb9dd16366bbce65a922855c5518031ed538fa2e0719903e7f5dc"
+    },
+    {
+      "path": "GM_PRIVATE/ADVERSARIES/ADVERSARY_COMPENDIUM.md",
+      "bytes": 35944,
+      "sha256": "707ed16d8dd1ba8f259c48b61afd4d99b045696384e9c656cd336ea07f5e05d7"
+    },
+    {
+      "path": "GM_PRIVATE/ADVERSARIES/adversaries.json",
+      "bytes": 42311,
+      "sha256": "bde06fb63e66b11a5bbdfdb68fdcd942a1a9a8726cca5f7c5a257d7ef5bc2a87"
+    },
+    {
+      "path": "GM_PRIVATE/AI_DM_COMPENDIUM.md",
+      "bytes": 119690,
+      "sha256": "55cb0e7006846ff8ed27858b033bde3508dfd9524639a8824909e14dc3fffe10"
+    },
+    {
+      "path": "GM_PRIVATE/CAMPAIGN_ARC.md",
+      "bytes": 3584,
+      "sha256": "a390a0043ab2882fa551c8fbc86891a1a2f037d7ab9db9084062bf58992f8a34"
+    },
+    {
+      "path": "GM_PRIVATE/CHASE_TOOLKIT.md",
+      "bytes": 2090,
+      "sha256": "81630a7c3c3119b3b2d8738af76ed5e6cfc217bb951d331116045d4f52e3a8bc"
+    },
+    {
+      "path": "GM_PRIVATE/DEFAULT_CAMPAIGN_SECRETS.md",
+      "bytes": 2172,
+      "sha256": "d83131e2f3bf7847a907c3763bedebda824d301099ccc787783be265710c7b86"
+    },
+    {
+      "path": "GM_PRIVATE/ENVIRONMENTS/ENVIRONMENT_COMPENDIUM.md",
+      "bytes": 12647,
+      "sha256": "82b7b1c95d0ef79a63a42c5b6bb70bfb189fb5e7aad4414408c362299b19be2a"
+    },
+    {
+      "path": "GM_PRIVATE/ENVIRONMENTS/environments.json",
+      "bytes": 14056,
+      "sha256": "0b5f5004caf4d761c33ce851a020e081a2b6fb980526a38fcc51c7eaec413898"
+    },
+    {
+      "path": "GM_PRIVATE/FACTIONS/FACTION_DOSSIERS.md",
+      "bytes": 9007,
+      "sha256": "c8b6503ea158024f980bc84291ee79521d1c7f7fbf14300d33e53671e8a52985"
+    },
+    {
+      "path": "GM_PRIVATE/FACTIONS/factions.json",
+      "bytes": 10010,
+      "sha256": "f3c6a7860655851faad86d054efb6abacf3a264f83f1f0517b76b25f8c90f702"
+    },
+    {
+      "path": "GM_PRIVATE/GENERATORS.md",
+      "bytes": 5828,
+      "sha256": "5f273a883b7aa72f3964054d83c5f9ec7c6795d69ab26d07005d84b3ca509d19"
+    },
+    {
+      "path": "GM_PRIVATE/GM_STATE.json",
+      "bytes": 3253,
+      "sha256": "20487b0ff6e722bae585013ceb6264e3865a30e02ff058f5ca510a0c47537064"
+    },
+    {
+      "path": "GM_PRIVATE/LOCATIONS/LOCATION_DOSSIERS.md",
+      "bytes": 5296,
+      "sha256": "e41e2510ccfb3c77aa7402056d7044f048c55fb55da052d0a7f3c20a82d6312a"
+    },
+    {
+      "path": "GM_PRIVATE/LOCATIONS/locations.json",
+      "bytes": 5633,
+      "sha256": "3c25ed91e0141bdc66d3e8edd540821ef416cff5b28bee722bc3625eef19fa8b"
+    },
+    {
+      "path": "GM_PRIVATE/MYSTERIES/01_THE_317_CALL.md",
+      "bytes": 5778,
+      "sha256": "6c732d9ee1beba0422a96523ef61d8a4306760a13772a6833513daf18f8b64bb"
+    },
+    {
+      "path": "GM_PRIVATE/MYSTERIES/02_RENT_DUE_IN_BLOOD.md",
+      "bytes": 3813,
+      "sha256": "91fb1b1cf7c76fedd57d0f2377583845b782ee6585e7feaa8d11191d1fb7eab5"
+    },
+    {
+      "path": "GM_PRIVATE/MYSTERIES/03_DEAD_LETTER_OFFICE.md",
+      "bytes": 3193,
+      "sha256": "35c97e7fad997e2fb0ab313d0f5f05da9292c57cf3fa38be5885e8e2073147ca"
+    },
+    {
+      "path": "GM_PRIVATE/MYSTERIES/04_SAINT_OF_THE_RED_LINE.md",
+      "bytes": 3120,
+      "sha256": "fb44e328e6dc2b5f72480dd90bef8f5a29fdce9f1c9e629ab3188f8cffefae39"
+    },
+    {
+      "path": "GM_PRIVATE/MYSTERIES/05_HOUSE_WITHOUT_ADDRESS.md",
+      "bytes": 3171,
+      "sha256": "4429eb18ecbc4cae1a97a037e41cc1af35e57c829a032b550c9da8a98c5be989"
+    },
+    {
+      "path": "GM_PRIVATE/MYSTERIES/06_THE_PERFECT_FORECAST.md",
+      "bytes": 3769,
+      "sha256": "0ab7997bff8719a81d71d839e9fdcbcd63fc4d2487bc07cf269fd73898f3463a"
+    },
+    {
+      "path": "GM_PRIVATE/MYSTERIES/07_NIGHT_OF_OPEN_EYES.md",
+      "bytes": 6186,
+      "sha256": "189d0c2a7fb4864c37497b3f0e2e749fa90050e458e27912e0f7c7596e870ebd"
+    },
+    {
+      "path": "GM_PRIVATE/MYSTERIES/mystery_index.json",
+      "bytes": 1496,
+      "sha256": "c181e8bdaca3d1d5180ee201cf13b28e46f8587d516adf9cf32a58d40bd77bf6"
+    },
+    {
+      "path": "GM_PRIVATE/NPCS/NPC_DOSSIERS.md",
+      "bytes": 12821,
+      "sha256": "7aba85c1af5ca5997c297dba16e1a5edfae65d13d9ddf68fd4f9650f211cb933"
+    },
+    {
+      "path": "GM_PRIVATE/NPCS/npcs.json",
+      "bytes": 14034,
+      "sha256": "4d6f27dccd98e0ab8c58da85087e746533be3121a338d85685ce4c9ccdcd0600"
+    },
+    {
+      "path": "PLAYER/BLANK_CHARACTER_SHEET.docx",
+      "bytes": 37751,
+      "sha256": "92caad613823fd3aae995ee77ee7f8decf3c5f351ee8177794f238a32423a2ff"
+    },
+    {
+      "path": "PLAYER/CAMPAIGN_FRAME.md",
+      "bytes": 4521,
+      "sha256": "1e66864ad6bfe7e1ce946e44053b8b214f031328534a4d43e32b065cf289c1ee"
+    },
+    {
+      "path": "PLAYER/CASE_HOOKS.md",
+      "bytes": 1736,
+      "sha256": "0b961310bae1e6b923db4895e5635a5b2774adcae7f0087453b985910c1f7727"
+    },
+    {
+      "path": "PLAYER/CHARACTER_CREATION.md",
+      "bytes": 4782,
+      "sha256": "9acb3ab4177ba7170b9fdae951ad3c20e8062c23b9a618d86dfb296a10a2848c"
+    },
+    {
+      "path": "PLAYER/CITY_LOCATIONS.md",
+      "bytes": 2567,
+      "sha256": "9b9fe7415aa16a698d9024381d0ce66fa96624fbe12975f7844444be3db2bf26"
+    },
+    {
+      "path": "PLAYER/FACTION_PRIMER.md",
+      "bytes": 985,
+      "sha256": "b200d0054eea32fe663263f011f3e752dfd9d26ddd3f260383a590a80dc65a04"
+    },
+    {
+      "path": "PLAYER/MODERN_EQUIPMENT.md",
+      "bytes": 7424,
+      "sha256": "ae66a7add3d5d9398ce0eb56b5203053299b17cce6fe33dafab002ec14d9619f"
+    },
+    {
+      "path": "PLAYER/OCCULT_SERVICES.md",
+      "bytes": 1530,
+      "sha256": "0815aed23f40b4ccaa7a70d97a5c6c277e7a26012840511fcfb0f3266f9ad82b"
+    },
+    {
+      "path": "PLAYER/PLAYER_COMPENDIUM.md",
+      "bytes": 69398,
+      "sha256": "9c561de6aaedb7b2aedfe273b75d0bd4ce103efa033a3e53fe2ed8dd351a933c"
+    },
+    {
+      "path": "PLAYER/QUICK_REFERENCE.md",
+      "bytes": 1360,
+      "sha256": "8b69c49f5e8e7d574036b562a5df1efd702809f298d77b14c5e606e7f9cb9245"
+    },
+    {
+      "path": "PLAYER/SETTING_GUIDE.md",
+      "bytes": 3131,
+      "sha256": "73643afea1c314cbf9397da050efb8bbcd124aba405b3277f99a5147c73fb8fa"
+    },
+    {
+      "path": "PLAYER/VEHICLES.md",
+      "bytes": 4505,
+      "sha256": "c0a4a5ba911f47bc180b1f16f001c89bef2a06dd16d74381f073f741e11bc181"
+    },
+    {
+      "path": "PLAYER/blank_character_sheet.md",
+      "bytes": 1267,
+      "sha256": "edd2ce41421a802e5bc834b6a42c24c97b96a4ada228f3d25de691c5d599a239"
+    },
+    {
+      "path": "README.md",
+      "bytes": 3111,
+      "sha256": "78fbd55c90da6a3ec16406a2ad0d1c144649166002ed320ebfc269231fa82eef"
+    },
+    {
+      "path": "SOURCES.md",
+      "bytes": 822,
+      "sha256": "3226e2295d3cc606d86f8bdae6b0b3ae75b6b37e1a15d168c9d5fe332568f70c"
+    },
+    {
+      "path": "STATE/CAMPAIGN_STATE.json",
+      "bytes": 1588,
+      "sha256": "a1f7e368f06a10cdcf11a547e13c42a81403c1e2d7cb5b6fe9e5540d0ac7708f"
+    },
+    {
+      "path": "STATE/SESSION_JOURNAL.md",
+      "bytes": 318,
+      "sha256": "3eacdf8c7eeb09a41b25c638bad6c4626cd53ebae7d333605caa8fb64bcae210"
+    },
+    {
+      "path": "STATE/SESSION_SAVE_TEMPLATE.md",
+      "bytes": 447,
+      "sha256": "2f2aa67775fc5811245d61a28152d2b275a1a6abe9c8be81522c8c795ea7d636"
+    }
+  ]
+}

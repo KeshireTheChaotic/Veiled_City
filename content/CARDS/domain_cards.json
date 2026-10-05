@@ -1,0 +1,598 @@
+{
+  "HEX": [
+    {
+      "level": 1,
+      "name": "Sympathetic Thread",
+      "type": "Spell",
+      "recall_cost": 0,
+      "text": "When you hold a meaningful physical link to a target, spend a Hope and make a Spellcast Roll. On a success, while the link remains in your possession you can sense the target\u2019s rough direction while they are within the same district. On a success with Fear, the target senses that something is reaching for them."
+    },
+    {
+      "level": 1,
+      "name": "Jinx",
+      "type": "Spell",
+      "recall_cost": 1,
+      "text": "Make a Spellcast Roll against an adversary within Close range. On a success, they are **Vulnerable** until they succeed on an action against you or an ally. Once per target per scene."
+    },
+    {
+      "level": 1,
+      "name": "Salt Circle",
+      "type": "Spell",
+      "recall_cost": 1,
+      "text": "During a moment of preparation, mark a Stress to establish a protective circle within Very Close range. Minor supernatural creatures cannot willingly cross it unless the circle is physically broken or they succeed on a Reaction Roll against your Spellcast result."
+    },
+    {
+      "level": 2,
+      "name": "Hexsense",
+      "type": "Ability",
+      "recall_cost": 0,
+      "text": "When you closely examine a person, object, or place, you can tell whether it is currently cursed, bound by an oath, carrying a sympathetic link, or serving as part of a ritual. Spend a Hope to ask the GM which of those categories is most significant."
+    },
+    {
+      "level": 2,
+      "name": "Crooked Fortune",
+      "type": "Spell",
+      "recall_cost": 1,
+      "text": "When an adversary within Close range succeeds on an attack against you, you can mark a Stress to give the damage roll disadvantage. Describe the small coincidence that turns the blow."
+    },
+    {
+      "level": 3,
+      "name": "Pin the Shadow",
+      "type": "Spell",
+      "recall_cost": 1,
+      "text": "Make a Spellcast Roll against a target within Close range. On a success, the target is **Restrained** by its own shadow until it succeeds on a Reaction Roll (14) or the lighting changes dramatically."
+    },
+    {
+      "level": 3,
+      "name": "Countercurse",
+      "type": "Spell",
+      "recall_cost": 1,
+      "text": "When you touch a cursed target, make a Spellcast Roll against the curse\u2019s Difficulty. On a success, suppress one curse effect until your next rest. Spend a Hope to end a minor curse entirely."
+    },
+    {
+      "level": 4,
+      "name": "Name's Weight",
+      "type": "Ability",
+      "recall_cost": 1,
+      "text": "When you have learned a target\u2019s true supernatural name, sworn title, or equivalent intimate identifier, record it. Once per scene when directly opposing that target, you can spend a Hope to gain advantage and add your Knowledge to the result."
+    },
+    {
+      "level": 4,
+      "name": "Mirror the Malice",
+      "type": "Spell",
+      "recall_cost": 2,
+      "text": "When a supernatural effect would impose a condition on you, mark a Stress and make a Spellcast Roll against its source. On a success, you still suffer the effect, but the source becomes **Vulnerable** until the end of its next spotlight."
+    },
+    {
+      "level": 5,
+      "name": "Binding Clause",
+      "type": "Spell",
+      "recall_cost": 2,
+      "text": "You and a willing creature state a clear promise and consequence, then make a Spellcast Roll (15). On a success, the bargain becomes magically witnessed. A knowing breach immediately reveals itself to both parties and triggers the agreed narrative consequence if it is within the scale of the promise."
+    },
+    {
+      "level": 5,
+      "name": "Black Thread",
+      "type": "Spell",
+      "recall_cost": 1,
+      "text": "After you witness a creature knowingly break a promise, spend a Hope to mark them with a Black Thread until your next long rest. You always know whether they are within Far range, and your first successful attack or Spellcast Roll against them in a scene deals an extra d8 damage or gives them disadvantage on their next action."
+    },
+    {
+      "level": 6,
+      "name": "Break the Working",
+      "type": "Spell",
+      "recall_cost": 2,
+      "text": "Make a Spellcast Roll against a persistent magical effect within Close range. On a success, end or dismantle one ongoing spell, ward, curse, or ritual of your tier or lower. More powerful workings may instead lose one major protection or requirement, as the GM describes."
+    },
+    {
+      "level": 6,
+      "name": "Witch's Ladder",
+      "type": "Spell",
+      "recall_cost": 1,
+      "text": "During a long rest, bind a single emotion or simple sensory impression into a small object. Later, crush or untie it to release that impression strongly within Very Close range. You can have a number of ladders equal to your Proficiency; old ones unravel if you exceed the limit."
+    },
+    {
+      "level": 7,
+      "name": "Hex-Touched",
+      "type": "Ability",
+      "recall_cost": 2,
+      "text": "When at least four cards in your loadout are from Hex, gain +1 Knowledge. Once per rest, when a creature succeeds on a Reaction Roll against one of your Hex cards, you can mark a Stress to force them to reroll it."
+    },
+    {
+      "level": 7,
+      "name": "Stolen Fortune",
+      "type": "Spell",
+      "recall_cost": 2,
+      "text": "Once per rest, when a target within Close range critically succeeds or succeeds with Hope, spend 2 Hope to steal the bright edge of the moment. Their result remains a success, but treat it as a success with Fear for narrative consequence, and you clear a Stress."
+    },
+    {
+      "level": 8,
+      "name": "Generational Curse",
+      "type": "Spell",
+      "recall_cost": 3,
+      "text": "With a personal link and at least an hour of ritual work, define a lasting curse with the GM. It must include a concrete trigger, visible symptom, meaningful escape condition, and reciprocal vulnerability or cost to you. Powerful targets may require additional leverage before the curse can take hold."
+    },
+    {
+      "level": 8,
+      "name": "Circle Without Door",
+      "type": "Spell",
+      "recall_cost": 2,
+      "text": "Make a Spellcast Roll (17) to seal a Close-range boundary you can physically trace. On a success, one named supernatural target inside cannot cross the boundary until it succeeds on a Reaction Roll (17), the circle is broken from outside, or you leave Far range."
+    },
+    {
+      "level": 9,
+      "name": "Sever the Name",
+      "type": "Spell",
+      "recall_cost": 3,
+      "text": "Once per long rest, make a Spellcast Roll against an adversary whose true supernatural name you know. On a success, choose one non-passive feature the GM has revealed. The adversary cannot use that feature until your next rest or until it fulfills a meaningful condition the GM states."
+    },
+    {
+      "level": 9,
+      "name": "Doom Mark",
+      "type": "Spell",
+      "recall_cost": 2,
+      "text": "Spend a Hope and make a Spellcast Roll against a target within Far range. On a success, mark them until the end of the scene. The first time each round they take Severe damage, they mark 1 additional HP; then you mark a Stress."
+    },
+    {
+      "level": 10,
+      "name": "Rewrite the Bargain",
+      "type": "Spell",
+      "recall_cost": 3,
+      "text": "Once per long rest, when you can physically access a supernatural contract, geas, or witnessed pact, make a Spellcast Roll against its power. On a success, alter one clause without nullifying the agreement. The new clause must preserve equivalent obligation; the GM tells you what force resists or notices the edit."
+    },
+    {
+      "level": 10,
+      "name": "Word of Unmaking",
+      "type": "Spell",
+      "recall_cost": 3,
+      "text": "Once per long rest, spend 3 Hope and name a magical object, ward, summoned construct, or supernatural manifestation within Close range. Make a Spellcast Roll (20). On a success, either destroy a non-legendary effect outright or force a legendary target to mark 4 HP and lose one defensive feature until the end of the scene."
+    }
+  ],
+  "SIGNAL": [
+    {
+      "level": 1,
+      "name": "Ghost in the Machine",
+      "type": "Spell",
+      "recall_cost": 0,
+      "text": "Touch or connect to an electronic device and make a Spellcast Roll. On a success, communicate briefly with the residual personality of the system and ask one question about its recent use, errors, inputs, or observations. It answers according to what the device could actually know."
+    },
+    {
+      "level": 1,
+      "name": "Trace Route",
+      "type": "Ability",
+      "recall_cost": 1,
+      "text": "When examining a message, recording, transaction, or digital artifact, spend a Hope to identify one useful connection: likely source, destination, alteration, hidden recipient, unusual gap, or repeated identifier."
+    },
+    {
+      "level": 1,
+      "name": "Live Feed",
+      "type": "Spell",
+      "recall_cost": 1,
+      "text": "Choose a functioning camera, microphone, sensor, or connected device within Close range that you can see or identify. Until you leave Far range, you may perceive through it as though standing beside it. Mark a Stress to jump to another linked device."
+    },
+    {
+      "level": 2,
+      "name": "Dead Zone",
+      "type": "Spell",
+      "recall_cost": 1,
+      "text": "Make a Spellcast Roll (13). On a success, ordinary wireless communication and casual recording fail within Close range until you dismiss the effect or leave. Hardened systems and supernatural communications may require a separate roll to suppress."
+    },
+    {
+      "level": 2,
+      "name": "Pattern Recognition",
+      "type": "Ability",
+      "recall_cost": 1,
+      "text": "After reviewing at least three related pieces of evidence, ask the GM one question about a recurring pattern, shared source, timing relationship, or meaningful anomaly. The GM answers truthfully; the answer may identify what additional evidence is needed."
+    },
+    {
+      "level": 3,
+      "name": "Augmented Awareness",
+      "type": "Ability",
+      "recall_cost": 1,
+      "text": "While you have legitimate or hacked access to functioning local cameras or sensors, treat their coverage as an extension of your senses for noticing movement and obvious events. This does not automatically defeat Veil, Hex, or magical concealment."
+    },
+    {
+      "level": 3,
+      "name": "Static Arc",
+      "type": "Spell",
+      "recall_cost": 1,
+      "text": "Make a Spellcast Roll against a target within Close range. On a success, deal d8+3 magic damage using your Proficiency and push the target to Very Close range. Against an electronic or machine-spirit target, add a d6 to the damage roll."
+    },
+    {
+      "level": 4,
+      "name": "Burner Identity",
+      "type": "Ability",
+      "recall_cost": 1,
+      "text": "During a rest, establish a temporary mundane digital identity with believable surface records. It survives routine automated checks until the next long rest. Deep human scrutiny, biometric conflict, or privileged databases can expose it."
+    },
+    {
+      "level": 4,
+      "name": "Backdoor",
+      "type": "Spell",
+      "recall_cost": 2,
+      "text": "Make a Spellcast Roll against a networked system you can access. On a success, establish a hidden route that gives you advantage on your next three rolls to enter, control, or extract information from that system. On Fear, leave a detectable anomaly."
+    },
+    {
+      "level": 5,
+      "name": "Viral Haunting",
+      "type": "Spell",
+      "recall_cost": 2,
+      "text": "Imprint a minor supernatural phenomenon into a digital file you control. When willingly opened, the file can deliver a message, sensory manifestation, tracking ping, or one-use Signal effect you specify. It travels only through deliberate copying or sharing."
+    },
+    {
+      "level": 5,
+      "name": "Predictive Model",
+      "type": "Ability",
+      "recall_cost": 1,
+      "text": "Once per rest after studying a person, route, or system, spend a Hope and ask what it is most likely to do next if no one interferes. The GM gives the most probable near-term behavior based on current information, not a guaranteed future."
+    },
+    {
+      "level": 6,
+      "name": "Infrastructure Spirit",
+      "type": "Spell",
+      "recall_cost": 2,
+      "text": "At a major piece of infrastructure, spend a Hope and call its local spirit. Make a Spellcast Roll. On a success, it manifests enough to bargain for information or one substantial service appropriate to the system: rerouting access, opening a path, locating an interruption, or hiding a trace."
+    },
+    {
+      "level": 6,
+      "name": "Hard Reset",
+      "type": "Spell",
+      "recall_cost": 2,
+      "text": "Make a Spellcast Roll against a technological or Signal-based adversary within Far range. On a success, it loses its next special Action feature and becomes **Vulnerable** until it next takes the spotlight. A living target with implants instead chooses one effect."
+    },
+    {
+      "level": 7,
+      "name": "Signal-Touched",
+      "type": "Ability",
+      "recall_cost": 2,
+      "text": "When at least four cards in your loadout are from Signal, gain +1 Knowledge. Once per rest, when you roll with Fear while using technology or Signal magic, you may mark a Stress to treat the result as though the Fear die did not generate an additional GM consequence."
+    },
+    {
+      "level": 7,
+      "name": "Ghost Network",
+      "type": "Spell",
+      "recall_cost": 2,
+      "text": "During a rest, bind up to your Proficiency willing creatures into a private supernatural communications channel until the next rest. Members can exchange brief thoughts or speech while within the same district, but powerful wards may block the connection."
+    },
+    {
+      "level": 8,
+      "name": "Blackout",
+      "type": "Spell",
+      "recall_cost": 3,
+      "text": "Once per rest, make a Spellcast Roll (17). On a success, choose a building or Very Far area. For the scene, ordinary powered systems fail or enter safe mode unless you exempt them. Supernatural and hardened systems make a Reaction Roll (17) to remain active."
+    },
+    {
+      "level": 8,
+      "name": "Machine Possession",
+      "type": "Spell",
+      "recall_cost": 2,
+      "text": "Make a Spellcast Roll to enter a willing, abandoned, or defeated machine or vehicle within Close range. Until you leave it or take Severe damage, perceive through it and operate its ordinary functions remotely. Your body is **Vulnerable** while your attention is inside."
+    },
+    {
+      "level": 9,
+      "name": "City as Circuit",
+      "type": "Spell",
+      "recall_cost": 3,
+      "text": "Once per long rest, spend 2 Hope while connected to local infrastructure. Ask the GM three questions about movement, power, surveillance, communications, or active supernatural disturbances in the surrounding district. Receive truthful useful answers limited by what the city\u2019s systems can sense."
+    },
+    {
+      "level": 9,
+      "name": "Quantum Alibi",
+      "type": "Spell",
+      "recall_cost": 2,
+      "text": "When evidence would conclusively place you or an ally at a supernatural incident, spend a Hope and make a Spellcast Roll (19). On a success, create a plausible contradictory digital trail. It does not erase physical evidence and may itself become suspicious under expert review."
+    },
+    {
+      "level": 10,
+      "name": "Kill Switch",
+      "type": "Spell",
+      "recall_cost": 3,
+      "text": "Once per long rest, make a Spellcast Roll against all technological or Signal-based adversaries within Far range. Targets you succeed against mark 3 HP and cannot use special Actions until after the GM next gains Fear."
+    },
+    {
+      "level": 10,
+      "name": "Everywhere at Once",
+      "type": "Ability",
+      "recall_cost": 3,
+      "text": "While you are inside a heavily networked district, spend 3 Hope to become present through its connected devices for one scene. You may speak, perceive, and originate Signal spells from any accessible local device. Your physical body remains where you left it and is **Vulnerable**."
+    }
+  ],
+  "VEIL": [
+    {
+      "level": 1,
+      "name": "Look Away",
+      "type": "Spell",
+      "recall_cost": 0,
+      "text": "Spend a Hope to make one small supernatural detail seem mundane to casual observers until the end of the scene: strange eyes, a ritual mark, an impossible object, or similar. Deliberate investigation or contradictory evidence can break the effect."
+    },
+    {
+      "level": 1,
+      "name": "Read the Room",
+      "type": "Ability",
+      "recall_cost": 1,
+      "text": "When you enter a social scene, ask the GM which visible person is most frightened, most dangerous, or most out of place. The GM answers one. Once per scene."
+    },
+    {
+      "level": 1,
+      "name": "Threshold Sense",
+      "type": "Ability",
+      "recall_cost": 1,
+      "text": "You automatically notice magically significant thresholds, invitations, wards, sanctuaries, and places where the Veil is unusually thin when you come within Very Close range of them."
+    },
+    {
+      "level": 2,
+      "name": "Borrowed Face",
+      "type": "Spell",
+      "recall_cost": 1,
+      "text": "Make a Spellcast Roll (13) to alter your apparent face, voice, hair, and clothing until your next rest. You can resemble a type of person or an invented identity, but perfect imitation of a specific individual requires having studied them closely."
+    },
+    {
+      "level": 2,
+      "name": "Blur Evidence",
+      "type": "Spell",
+      "recall_cost": 1,
+      "text": "After a supernatural event within Close range, mark a Stress to cause casual recordings and eyewitness memories to become ambiguous. This cannot erase a clear physical trace or defeat deliberate forensic work; it buys uncertainty."
+    },
+    {
+      "level": 3,
+      "name": "Sanctuary Line",
+      "type": "Spell",
+      "recall_cost": 1,
+      "text": "Trace a threshold and name who is welcome. Until you leave Far range, creatures not included must succeed on a Reaction Roll against your Spellcast result to cross it without becoming **Vulnerable** and immediately revealing their presence to you."
+    },
+    {
+      "level": 3,
+      "name": "Blind Spot",
+      "type": "Spell",
+      "recall_cost": 1,
+      "text": "Make a Spellcast Roll (14). On a success, create a Very Close area that casual observation skips over until you move or attack. Anyone specifically searching the area can make an Instinct Reaction Roll against your Spellcast result to notice it."
+    },
+    {
+      "level": 4,
+      "name": "Missing Minute",
+      "type": "Spell",
+      "recall_cost": 2,
+      "text": "After a brief supernatural event, make a Spellcast Roll against nearby casual witnesses. On a success, they remember the event as confused fragments and ordinary explanations. You cannot erase deeply personal memories, trained observation, or durable recordings."
+    },
+    {
+      "level": 4,
+      "name": "Door Between",
+      "type": "Spell",
+      "recall_cost": 1,
+      "text": "When two mundane thresholds within Close range are both unobserved, mark a Stress and make a Spellcast Roll (15). On a success, step through one and emerge from the other. You cannot carry an unwilling creature through."
+    },
+    {
+      "level": 5,
+      "name": "Hidden Room",
+      "type": "Spell",
+      "recall_cost": 2,
+      "text": "Spend a Hope and spend several minutes establishing a ward around a small room or vehicle. Until your next long rest, ordinary searches overlook it unless investigators possess a specific reason to examine that exact place or use supernatural means."
+    },
+    {
+      "level": 5,
+      "name": "Mirror Double",
+      "type": "Spell",
+      "recall_cost": 1,
+      "text": "Create a convincing visual and audible double within Close range until you take Severe damage or dismiss it. When an adversary attacks you, you can mark a Stress to move the double and give that attack disadvantage."
+    },
+    {
+      "level": 6,
+      "name": "Nobody Here",
+      "type": "Spell",
+      "recall_cost": 2,
+      "text": "When a scene begins and no hostile creature is directly observing you, spend a Hope. Until you make an attack, cast an obvious spell, or deliberately draw attention, ordinary bystanders treat you as irrelevant background. Important NPCs can resist with an Instinct Reaction Roll (16)."
+    },
+    {
+      "level": 6,
+      "name": "Protected Witness",
+      "type": "Ability",
+      "recall_cost": 1,
+      "text": "Choose one willing person during a rest. Until your next long rest, supernatural attempts to locate them through names, dreams, scrying, or sympathetic links have disadvantage, and you immediately sense when such an attempt occurs."
+    },
+    {
+      "level": 7,
+      "name": "Veil-Touched",
+      "type": "Ability",
+      "recall_cost": 2,
+      "text": "When at least four cards in your loadout are from Veil, gain +1 Presence. Once per rest, when an adversary succeeds on an attack because it detected or located you, you can mark a Stress to force it to reroll the attack."
+    },
+    {
+      "level": 7,
+      "name": "False History",
+      "type": "Spell",
+      "recall_cost": 2,
+      "text": "During a long rest, construct a coherent false supernatural identity for yourself. Until your next long rest, divinations and casual occult inquiries return that identity unless their source succeeds on a Reaction Roll (17). Mundane records are unchanged."
+    },
+    {
+      "level": 8,
+      "name": "Walk Between Notice",
+      "type": "Spell",
+      "recall_cost": 3,
+      "text": "Once per rest, spend a Hope to become functionally absent from casual perception while moving through a populated area. Direct hostile attention, physical obstruction, or overt violence ends the effect. Cameras record you but casual review tends to skip the footage."
+    },
+    {
+      "level": 8,
+      "name": "Seal the Threshold",
+      "type": "Spell",
+      "recall_cost": 2,
+      "text": "Make a Spellcast Roll (18) while touching a doorway, gate, road, bridge, or other meaningful boundary. On a success, choose a named supernatural category or creature. It cannot cross for the scene without succeeding on a Reaction Roll (18) and marking 2 Stress."
+    },
+    {
+      "level": 9,
+      "name": "Local Rewrite",
+      "type": "Spell",
+      "recall_cost": 3,
+      "text": "Once per long rest, spend 2 Hope and define one plausible mundane explanation for a supernatural event that occurred this scene. Make a Spellcast Roll (19). On a success, the Veil strongly favors that explanation among uninvolved witnesses and institutions. Physical evidence that directly disproves it remains dangerous."
+    },
+    {
+      "level": 9,
+      "name": "Memory Palace",
+      "type": "Ability",
+      "recall_cost": 2,
+      "text": "You can partition your mind into protected rooms. Gain advantage on reaction rolls against memory alteration, possession, or coercive supernatural influence. Once per rest when such an effect succeeds anyway, spend a Hope to preserve one chosen fact untouched."
+    },
+    {
+      "level": 10,
+      "name": "Perfect Disappearance",
+      "type": "Spell",
+      "recall_cost": 3,
+      "text": "Once per long rest, spend 3 Hope and name yourself or one willing creature you touch. For the scene, supernatural tracking fails, casual witnesses lose the thread of pursuit, and ordinary systems stop flagging the target in real time. Existing records remain."
+    },
+    {
+      "level": 10,
+      "name": "Veil Sovereign",
+      "type": "Spell",
+      "recall_cost": 3,
+      "text": "Make a Spellcast Roll (20) to command the local Veil within Far range for one scene. Choose two: conceal supernatural activity from casual witnesses; reveal all active magical concealments to you; give allies advantage to hide or escape; force supernatural infiltrators to reveal their true outlines. Afterward, increase Veil Exposure by 1 unless you accept a major GM consequence."
+    }
+  ],
+  "PACT": [
+    {
+      "level": 1,
+      "name": "Minor Favor",
+      "type": "Spell",
+      "recall_cost": 0,
+      "text": "Name a known spirit, ancestor, patron, or supernatural contact and request a small service. Spend a Hope. The GM states the price before you accept. If no plausible entity could answer, the Hope is not spent."
+    },
+    {
+      "level": 1,
+      "name": "Oathmark",
+      "type": "Ability",
+      "recall_cost": 1,
+      "text": "When you willingly promise a concrete service to another creature and they clearly accept, you may take a Hope. Until you fulfill the promise, mark a Stress whenever you knowingly make fulfillment substantially harder. You can maintain only one Oathmark at a time."
+    },
+    {
+      "level": 1,
+      "name": "Call the Witness",
+      "type": "Spell",
+      "recall_cost": 1,
+      "text": "Make a Spellcast Roll to invite a nearby minor spirit to manifest enough to converse. It is not compelled to cooperate, but it must identify what kind of offering, courtesy, or leverage would interest it."
+    },
+    {
+      "level": 2,
+      "name": "Borrowed Aspect",
+      "type": "Spell",
+      "recall_cost": 1,
+      "text": "Invoke a known patron or spirit and spend a Hope to gain one minor narrative capability consistent with its nature until the end of the scene, such as seeing in smoke, walking on shallow water, or speaking through mirrors. It cannot duplicate a higher-level card."
+    },
+    {
+      "level": 2,
+      "name": "Price Named",
+      "type": "Ability",
+      "recall_cost": 1,
+      "text": "When an NPC or supernatural entity offers a bargain, ask the GM what the offer truly costs in obligation, risk, or loss if your character could reasonably understand the terms. The answer is truthful, though unknowable future consequences remain unknowable."
+    },
+    {
+      "level": 3,
+      "name": "Familiar Covenant",
+      "type": "Spell",
+      "recall_cost": 1,
+      "text": "During a long rest, form a covenant with a willing minor spirit. Give it a name, nature, want, and taboo. Once per rest it can scout within Far range or grant advantage on one action aligned with its nature. If you violate its taboo, the covenant suspends until you make amends."
+    },
+    {
+      "level": 3,
+      "name": "Take My Hand",
+      "type": "Ability",
+      "recall_cost": 1,
+      "text": "When an ally within Very Close range would mark Stress, you can mark that Stress instead. If this fills your last Stress slot, gain a Hope."
+    },
+    {
+      "level": 4,
+      "name": "Favor Bank",
+      "type": "Ability",
+      "recall_cost": 1,
+      "text": "When you substantially help a named supernatural NPC without immediate payment, place a Favor beside their name in campaign state. Once per session, spend one Favor to obtain plausible access, information, shelter, or assistance from them; the GM decides the exact form."
+    },
+    {
+      "level": 4,
+      "name": "Spirit Road",
+      "type": "Spell",
+      "recall_cost": 2,
+      "text": "Spend a Hope and make a Spellcast Roll (15) at a meaningful threshold. On a success, open a brief route through the spirit world to another threshold you have personally visited within the same district. Everyone who crosses risks attracting local attention on a Fear result."
+    },
+    {
+      "level": 5,
+      "name": "Collect the Debt",
+      "type": "Ability",
+      "recall_cost": 2,
+      "text": "Once per session, call in a genuine favor or obligation owed by an NPC or supernatural entity. They must provide meaningful assistance within the scope of the debt, but retain agency over how they fulfill it."
+    },
+    {
+      "level": 5,
+      "name": "Vessel",
+      "type": "Spell",
+      "recall_cost": 1,
+      "text": "Invite a willing minor spirit into yourself for one scene. Choose one benefit consistent with it: +2 Evasion, +2 to one trait, or add a d8 to magic damage rolls. The GM names one visible tell and one impulse you feel while hosting it."
+    },
+    {
+      "level": 6,
+      "name": "Greater Invocation",
+      "type": "Spell",
+      "recall_cost": 2,
+      "text": "Call on a powerful known entity for a major effect. State what you want; before you commit, the GM states the demanded price and a likely collateral risk. If you accept, make a Spellcast Roll appropriate to the scale. On a failure, the price is not automatically waived."
+    },
+    {
+      "level": 6,
+      "name": "Intercession",
+      "type": "Spell",
+      "recall_cost": 2,
+      "text": "When you or an ally within Close range would mark 2 or more HP, spend 2 Hope and invoke a pact-holder who could plausibly intervene. Reduce the severity by one threshold, then the GM introduces a visible sign of the entity\u2019s attention."
+    },
+    {
+      "level": 7,
+      "name": "Pact-Touched",
+      "type": "Ability",
+      "recall_cost": 2,
+      "text": "When at least four cards in your loadout are from Pact, gain +1 Presence. Once per rest when you pay a cost explicitly demanded by a supernatural bargain, gain a Hope or clear a Stress."
+    },
+    {
+      "level": 7,
+      "name": "Renegotiate",
+      "type": "Spell",
+      "recall_cost": 2,
+      "text": "When a supernatural entity invokes an obligation you genuinely owe, make a Presence Roll against it. On a success, propose an alternative service of comparable weight. The entity must either accept it or reveal what additional concession would make it acceptable."
+    },
+    {
+      "level": 8,
+      "name": "Patron's Emissary",
+      "type": "Spell",
+      "recall_cost": 3,
+      "text": "Once per rest, spend a Hope to summon or manifest an emissary of a known powerful entity within Close range. It remains for the scene and can perform one significant task aligned with its patron before departing. The GM controls its personality and limits."
+    },
+    {
+      "level": 8,
+      "name": "Shared Fate",
+      "type": "Spell",
+      "recall_cost": 2,
+      "text": "Choose a willing ally within Close range and make a Spellcast Roll (17). On a success, until the scene ends, either of you may mark 1 Stress to take HP that the other would mark from an attack. Each transfer must be chosen before Armor is used."
+    },
+    {
+      "level": 9,
+      "name": "Covenant",
+      "type": "Spell",
+      "recall_cost": 3,
+      "text": "Forge a lasting pact with a major supernatural power. Define with the GM one significant boon, one binding obligation, and one prohibition. All terms become campaign canon. The boon must be comparable to a high-level domain feature, not unrestricted wish fulfillment."
+    },
+    {
+      "level": 9,
+      "name": "Authority of Witness",
+      "type": "Ability",
+      "recall_cost": 2,
+      "text": "When you personally witness a supernatural being knowingly break a sworn pact, spend 2 Hope. For the rest of the scene, you have advantage on all actions directly opposing that being and it cannot benefit from magical concealment against you."
+    },
+    {
+      "level": 10,
+      "name": "Call In Everything",
+      "type": "Ability",
+      "recall_cost": 3,
+      "text": "Once per long rest, spend all remaining Hope (minimum 2) and name up to your Proficiency debts, favors, pacts, or allies that could plausibly affect the current crisis. The GM brings their combined influence into the scene in a powerful but fictionally appropriate way. Every invoked relationship changes afterward."
+    },
+    {
+      "level": 10,
+      "name": "Become the Clause",
+      "type": "Spell",
+      "recall_cost": 3,
+      "text": "Once per long rest, make a Spellcast Roll (20) while invoking a pact you are party to. On a success, embody one clearly stated principle of that pact for the scene\u2014protection, pursuit, silence, passage, vengeance, or another agreed principle. Gain advantage on actions that directly enact it and resistance to effects that directly contradict it. When the scene ends, mark 2 Stress."
+    }
+  ]
+}

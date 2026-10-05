@@ -1,0 +1,44 @@
+{
+  "01_THE_317_CALL": {
+    "name": "The 3:17 Call",
+    "tier": 1,
+    "clock_max": 6,
+    "core_truth": "Morrowline is emergent; Aster Vale trains it and engineers some predictions."
+  },
+  "02_RENT_DUE_IN_BLOOD": {
+    "name": "Rent Due in Blood",
+    "tier": 1,
+    "clock_max": 6,
+    "core_truth": "A legacy property covenant is being misused; the tenant ghost is a protector."
+  },
+  "03_DEAD_LETTER_OFFICE": {
+    "name": "Dead Letter Office",
+    "tier": 1,
+    "clock_max": 6,
+    "core_truth": "Return to Sender is a naive delivery spirit exploited by a Market broker."
+  },
+  "04_SAINT_OF_THE_RED_LINE": {
+    "name": "Saint of the Red Line",
+    "tier": 2,
+    "clock_max": 6,
+    "core_truth": "The Saint is a protective emergent transit spirit; Aster Vale frames it to capture predictive behavior."
+  },
+  "05_HOUSE_WITHOUT_ADDRESS": {
+    "name": "House Without Address",
+    "tier": 2,
+    "clock_max": 6,
+    "core_truth": "House 404 is an old witness refuge destabilized by a dead caretaker and a Name-Eater."
+  },
+  "06_THE_PERFECT_FORECAST": {
+    "name": "The Perfect Forecast",
+    "tier": 3,
+    "clock_max": 6,
+    "core_truth": "Aster Vale bound Morrowline to the Movement anchor and is collapsing uncertainty into preferred outcomes."
+  },
+  "07_NIGHT_OF_OPEN_EYES": {
+    "name": "Night of Open Eyes",
+    "tier": 4,
+    "clock_max": 6,
+    "core_truth": "The three-anchor Veil system fails under accumulated stresses; the player determines the new settlement."
+  }
+}

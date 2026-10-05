@@ -1,0 +1,122 @@
+[
+  {
+    "name": "The Lantern House",
+    "public": "A converted brick firehouse used as a local Lantern office, clinic, archive, and very imperfect safehouse.",
+    "secret": "The basement contains a sealed room from the prior cell\u2019s hospital-haunting case."
+  },
+  {
+    "name": "Saint Arden Emergency",
+    "public": "A busy teaching hospital where Dr. Victor Shaw works nights.",
+    "secret": "The oldest elevator occasionally opens onto a nonphysical \u201cservice floor\u201d after deaths with unresolved supernatural causes."
+  },
+  {
+    "name": "Westway Mall",
+    "public": "A mostly abandoned suburban mall with redevelopment signs that never quite lead to redevelopment.",
+    "secret": "One of the Glass Market\u2019s most reliable local manifestations appears here after midnight."
+  },
+  {
+    "name": "Platform Zero",
+    "public": "A transit platform absent from official maps.",
+    "secret": "It is a liminal junction linking several supernatural transit routes and one Veil-anchor maintenance path."
+  },
+  {
+    "name": "The Blue Hour",
+    "public": "A stylish nightclub favored by Pale Court clients and ordinary professionals who think they are being adventurous.",
+    "secret": "The VIP threshold is bound to Court hospitality law."
+  },
+  {
+    "name": "The Rook Building",
+    "public": "Aster Vale Risk\u2019s glass-and-steel regional headquarters.",
+    "secret": "Three basement levels are missing from public plans; one houses the Forecast Lab."
+  },
+  {
+    "name": "Kestrel Data Annex",
+    "public": "A municipal data center and traffic-control facility.",
+    "secret": "Mina hid part of Morrowline\u2019s refusal-training set in redundant traffic archives."
+  },
+  {
+    "name": "Riverside Marker 14",
+    "public": "An old stone marker beside a levee trail.",
+    "secret": "It records the original land covenant in a symbolic legal language Mother Juniper can interpret."
+  },
+  {
+    "name": "Mercy House",
+    "public": "Father Ortiz\u2019s sanctuary and mutual-aid center.",
+    "secret": "Its basement threshold becomes unusually stable during Veil disturbances."
+  },
+  {
+    "name": "Harridan & Patel",
+    "public": "A small law office handling property, contracts, and several clients who prefer not to be photographed.",
+    "secret": "Samir keeps a physically handwritten index of supernatural contract precedents off-site."
+  },
+  {
+    "name": "The Municipal Archive",
+    "public": "A public archive beneath the old courthouse.",
+    "secret": "A restricted sublevel contains the chain-of-title documents for the local Veil anchors."
+  },
+  {
+    "name": "Crown & Ash Townhouse",
+    "public": "Historic property used by the Pale Court for formal meetings.",
+    "secret": "Regent Celene\u2019s covenant fragment can temporarily disable one anchor safeguard from here."
+  },
+  {
+    "name": "Switchyard 19",
+    "public": "Rail, fiber, power, and drainage infrastructure converge in one fenced industrial corridor.",
+    "secret": "The Choir treats the junction as a sacred crossroads."
+  },
+  {
+    "name": "Linden Community Gardens",
+    "public": "A thriving garden network on land repeatedly targeted for development.",
+    "secret": "Mother Juniper can open a Green path from the oldest tool shed."
+  },
+  {
+    "name": "The Meridian Hotel",
+    "public": "An aging downtown hotel with more conference rooms than guests.",
+    "secret": "The Glass Market sometimes occupies an entire impossible mezzanine during major auctions."
+  },
+  {
+    "name": "Foxglove Storage",
+    "public": "Self-storage facility near the highway.",
+    "secret": "Lantern evidence lockers occupy three units under false company names."
+  },
+  {
+    "name": "Old Bell Telephone Exchange",
+    "public": "A decommissioned switching building.",
+    "secret": "Switchboard\u2019s seven component spirits can be addressed separately here."
+  },
+  {
+    "name": "Aster Vale Safe Apartment",
+    "public": "A furnished corporate lease in an ordinary residential tower.",
+    "secret": "Used to isolate defectors, witnesses, or consultants under \u201cprotective relocation.\u201d"
+  },
+  {
+    "name": "North River Pump Station",
+    "public": "Mundane flood-control infrastructure on the river.",
+    "secret": "One of three local anchor sites is physically threaded through the pump station\u2019s oldest foundation."
+  },
+  {
+    "name": "The Museum Annex",
+    "public": "A climate-controlled storage building for artifacts not currently on display.",
+    "secret": "The Civic Anomaly Unit\u2019s pre-Veil artifact was quietly moved here under a false accession number."
+  },
+  {
+    "name": "County Morgue B",
+    "public": "Older morgue wing where Owen works nights.",
+    "secret": "The refrigeration grid overlaps a grave-resonance current and attracts unusually coherent ghosts."
+  },
+  {
+    "name": "Red Line Memorial",
+    "public": "An informal cluster of flowers, transit cards, and names at a station wall.",
+    "secret": "The \u201cSaint of the Red Line\u201d can manifest through the memorial during imminent transit deaths."
+  },
+  {
+    "name": "House 404",
+    "public": "A detached house that appears on navigation systems only under specific conditions.",
+    "secret": "Its legal address was magically stolen; the house exists in the gap created by missing ownership records."
+  },
+  {
+    "name": "The Anchor Chamber",
+    "public": "A location the PC should not know at campaign start.",
+    "secret": "The local Veil\u2019s principal civic anchor is an impossible ritual structure layered through courthouse, transit, and river infrastructure rather than one room."
+  }
+]

@@ -1,0 +1,134 @@
+{
+  "schema_version": "1.0",
+  "visibility": "gm_private",
+  "campaign_id": "NEW",
+  "last_updated_session": 0,
+  "hidden_truths": [],
+  "npc_secrets": {},
+  "faction_clocks": {},
+  "threat_clocks": {
+    "the_317_call": 0
+  },
+  "unrevealed_locations": [],
+  "unrevealed_clues": [],
+  "future_events": [],
+  "oracle_private_log": [],
+  "continuity_notes": [],
+  "rules_rulings_private": [],
+  "campaign_arc": "city_of_broken_seals",
+  "active_mystery": "",
+  "mystery_states": {
+    "01_THE_317_CALL": {
+      "status": "dormant",
+      "clock": 0,
+      "discovered_clues": [],
+      "triggered_consequences": [],
+      "notes": []
+    },
+    "02_RENT_DUE_IN_BLOOD": {
+      "status": "dormant",
+      "clock": 0,
+      "discovered_clues": [],
+      "triggered_consequences": [],
+      "notes": []
+    },
+    "03_DEAD_LETTER_OFFICE": {
+      "status": "dormant",
+      "clock": 0,
+      "discovered_clues": [],
+      "triggered_consequences": [],
+      "notes": []
+    },
+    "04_SAINT_OF_THE_RED_LINE": {
+      "status": "dormant",
+      "clock": 0,
+      "discovered_clues": [],
+      "triggered_consequences": [],
+      "notes": []
+    },
+    "05_HOUSE_WITHOUT_ADDRESS": {
+      "status": "dormant",
+      "clock": 0,
+      "discovered_clues": [],
+      "triggered_consequences": [],
+      "notes": []
+    },
+    "06_THE_PERFECT_FORECAST": {
+      "status": "dormant",
+      "clock": 0,
+      "discovered_clues": [],
+      "triggered_consequences": [],
+      "notes": []
+    },
+    "07_NIGHT_OF_OPEN_EYES": {
+      "status": "dormant",
+      "clock": 0,
+      "discovered_clues": [],
+      "triggered_consequences": [],
+      "notes": []
+    }
+  },
+  "faction_states": {
+    "The Concord": {
+      "clock": 0,
+      "standing_with_pc": "unknown",
+      "last_move": "",
+      "notes": []
+    },
+    "The Lantern Office": {
+      "clock": 0,
+      "standing_with_pc": "unknown",
+      "last_move": "",
+      "notes": []
+    },
+    "The Glass Market": {
+      "clock": 0,
+      "standing_with_pc": "unknown",
+      "last_move": "",
+      "notes": []
+    },
+    "The Choir Below": {
+      "clock": 0,
+      "standing_with_pc": "unknown",
+      "last_move": "",
+      "notes": []
+    },
+    "The Pale Court": {
+      "clock": 0,
+      "standing_with_pc": "unknown",
+      "last_move": "",
+      "notes": []
+    },
+    "The Green": {
+      "clock": 0,
+      "standing_with_pc": "unknown",
+      "last_move": "",
+      "notes": []
+    },
+    "Aster Vale Risk": {
+      "clock": 0,
+      "standing_with_pc": "unknown",
+      "last_move": "",
+      "notes": []
+    },
+    "Civic Anomaly Unit": {
+      "clock": 0,
+      "standing_with_pc": "unknown",
+      "last_move": "",
+      "notes": []
+    }
+  },
+  "npc_hidden_state": {},
+  "location_hidden_state": {},
+  "veil_anchor_state": {},
+  "occult_scar_offers": [],
+  "hidden_case_truths": {},
+  "continuity_invariants": [
+    "Morrowline is emergent, limited, and not omniscient.",
+    "Aster Vale has engineered some predicted events.",
+    "The local Veil uses three interdependent anchor domains: law/ownership, movement/infrastructure, land/water.",
+    "The Green land covenant renewal was skipped.",
+    "The final secrecy arrangement is not predetermined."
+  ],
+  "pending_between_scene_moves": []
+}

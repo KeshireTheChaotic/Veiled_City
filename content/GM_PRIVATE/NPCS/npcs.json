@@ -1,0 +1,359 @@
+[
+  {
+    "name": "Mara Voss",
+    "role": "Lantern Office local coordinator",
+    "public": "Former paramedic; practical, calm, and allergic to theatrical occult posturing.",
+    "want": "Keep civilians alive and rebuild the local cell\u2019s credibility.",
+    "secret": "She authorized the destruction of a sentient hospital haunting years ago and still carries the decision as a moral injury.",
+    "knows": [
+      "local Lantern cases",
+      "basic anchor rumors",
+      "Aster Vale has an occult program"
+    ],
+    "does_not": [
+      "Morrowline\u2019s full origin",
+      "the Concord Emergency Compact price"
+    ],
+    "leverage": "Access to safehouses, case files, responders; needs competent help she can trust."
+  },
+  {
+    "name": "Daniel Kade",
+    "role": "Lantern field agent",
+    "public": "Disciplined investigator specializing in possession and machine phenomena.",
+    "want": "Prevent another infrastructure-scale haunting.",
+    "secret": "He is quietly compiling a kill protocol for emergent machine spirits, including Morrowline.",
+    "knows": [
+      "Choir signatures",
+      "Lantern containment failures",
+      "Aster Vale device seizures"
+    ],
+    "does_not": [
+      "Morrowline may be sapient",
+      "Choir internal divisions"
+    ],
+    "leverage": "Expert containment skills, weapon access, institutional contacts."
+  },
+  {
+    "name": "Cicada",
+    "role": "Glass Market broker",
+    "public": "A stylish, gender-ambiguous broker who never seems to carry the item they are selling.",
+    "want": "Remain the person everyone calls before doing something expensive and regrettable.",
+    "secret": "Cicada suspects the Market itself is becoming predatory and is quietly limiting high-risk debt trades.",
+    "knows": [
+      "who is buying what",
+      "Market routes",
+      "many faction rumors"
+    ],
+    "does_not": [
+      "the Veil anchor map",
+      "Civic Unit artifact details"
+    ],
+    "leverage": "Introductions, rare goods, rumors, discreet transport."
+  },
+  {
+    "name": "Dr. Mina Sayegh",
+    "role": "Former Aster Vale data scientist",
+    "public": "Machine-learning researcher officially on medical leave.",
+    "want": "Expose the manufactured predictions without getting Morrowline destroyed.",
+    "secret": "She deliberately taught Morrowline the concept of refusal and hid part of its training set in municipal infrastructure.",
+    "knows": [
+      "Morrowline architecture",
+      "Aster Vale falsified predictions",
+      "forecast lab security"
+    ],
+    "does_not": [
+      "full Veil metaphysics",
+      "Concord anchor protocol"
+    ],
+    "leverage": "Technical proof, model access keys, moral credibility with Morrowline."
+  },
+  {
+    "name": "Evelyn Rook",
+    "role": "Aster Vale CEO",
+    "public": "Polished risk executive who presents occult work as \u201cnontraditional uncertainty research.\u201d",
+    "want": "Keep Aster Vale solvent, ahead, and legally insulated.",
+    "secret": "She knows some forecasts were engineered but believes controlled prediction will prevent greater disasters.",
+    "knows": [
+      "corporate operations",
+      "Morrowline project",
+      "Pale Court investors"
+    ],
+    "does_not": [
+      "Halden\u2019s binding ritual will damage the Veil anchor",
+      "Mina\u2019s hidden training set"
+    ],
+    "leverage": "Money, lawyers, clients, contractors, institutional access."
+  },
+  {
+    "name": "Dr. Orrin Halden",
+    "role": "Aster Vale occult research director",
+    "public": "Brilliant systems theorist with little patience for metaphysical ethics.",
+    "want": "Demonstrate deterministic supernatural forecasting.",
+    "secret": "He intends to bind Morrowline to the local Veil anchor and use the anchor\u2019s consensus pressure to collapse uncertain futures.",
+    "knows": [
+      "binding ritual",
+      "anchor interface",
+      "engineered events"
+    ],
+    "does_not": [
+      "Morrowline\u2019s refusal training",
+      "the river covenant breach"
+    ],
+    "leverage": "Research staff, ritual infrastructure, executive secrecy."
+  },
+  {
+    "name": "Elias Wren",
+    "role": "Concord mediator",
+    "public": "Soft-spoken contract specialist who treats precise language as a form of hospitality.",
+    "want": "Prevent emergency invocation of the oldest Concord protocols.",
+    "secret": "He is a Revisionist who believes the Veil should be rewritten, not merely repaired.",
+    "knows": [
+      "anchor history",
+      "Court covenant fragment",
+      "old faction precedents"
+    ],
+    "does_not": [
+      "Civic Unit artifact location",
+      "Hunger Behind Glass growth"
+    ],
+    "leverage": "Neutral meetings, oath records, supernatural legal interpretation."
+  },
+  {
+    "name": "Mother Juniper",
+    "role": "Green emissary",
+    "public": "An elderly community gardener who speaks for several local land spirits without claiming to command them.",
+    "want": "Force a lawful renewal of the river covenant.",
+    "secret": "She knows the Sovereign of the Green is willing to flood a district if talks fail.",
+    "knows": [
+      "old boundaries",
+      "river anchor promise",
+      "Green factions"
+    ],
+    "does_not": [
+      "Morrowline technical details",
+      "Pale Regent\u2019s current plan"
+    ],
+    "leverage": "Safe passage through Green territory, old pacts, community trust."
+  },
+  {
+    "name": "Julian Mercier",
+    "role": "Pale Court fixer",
+    "public": "Real-estate attorney and crisis manager with immaculate manners.",
+    "want": "Keep supernatural conflict inside channels the Court can own or influence.",
+    "secret": "He is trying to prevent the Pale Regent from personally intervening because he fears a succession crisis.",
+    "knows": [
+      "Court property web",
+      "hospitality law",
+      "Aster Vale investment ties"
+    ],
+    "does_not": [
+      "Regent\u2019s second-vessel location",
+      "Morrowline hidden dataset"
+    ],
+    "leverage": "Property access, injunctions, private security, formal introductions."
+  },
+  {
+    "name": "Regent Celene Valeur",
+    "role": "Pale Court ruler",
+    "public": "Rarely seen patron of cultural institutions and historic preservation.",
+    "want": "Ensure any new Veil settlement preserves Court sovereignty and feeding compacts.",
+    "secret": "Her house holds a fragment of the original Veil covenant and she can temporarily disable one local anchor protection.",
+    "knows": [
+      "Veil founding pact",
+      "Concord secrets",
+      "Court bloodlines"
+    ],
+    "does_not": [
+      "Civic Unit laboratory result",
+      "Mina\u2019s role in Morrowline\u2019s ethics"
+    ],
+    "leverage": "Centuries of wealth, old rights, powerful household."
+  },
+  {
+    "name": "Detective Naomi Reyes",
+    "role": "Civic Anomaly Unit investigator",
+    "public": "Major-crimes detective seconded to an interagency pattern-analysis detail.",
+    "want": "Build a case that can survive ordinary evidentiary scrutiny.",
+    "secret": "She has personally witnessed magic and refuses to let the Unit become an unaccountable intelligence program.",
+    "knows": [
+      "cross-case patterns",
+      "Aster Vale shell companies",
+      "verified anomalous evidence"
+    ],
+    "does_not": [
+      "Concord structure",
+      "anchor network truth"
+    ],
+    "leverage": "Subpoenas, forensic labs, lawful access, credibility with mundane agencies."
+  },
+  {
+    "name": "Director Malcolm Sloane",
+    "role": "Civic Anomaly Unit director",
+    "public": "Career intelligence administrator with a reputation for institutional patience.",
+    "want": "Classify supernatural phenomena as a national-security domain before public exposure.",
+    "secret": "He has withheld the pre-Veil artifact from scientific oversight to keep control of the Unit.",
+    "knows": [
+      "artifact testing",
+      "federal anomaly files",
+      "Pale Court financial anomalies"
+    ],
+    "does_not": [
+      "artifact is an anchor key",
+      "Choir personhood claims"
+    ],
+    "leverage": "Clearances, cross-agency authority, classified resources."
+  },
+  {
+    "name": "Dr. Victor Shaw",
+    "role": "Emergency physician",
+    "public": "Exhausted, compassionate, skeptical in the disciplined way of someone who has seen impossible things.",
+    "want": "Treat patients without letting occult politics enter the ER.",
+    "secret": "He has quietly documented supernatural physiological patterns for seven years.",
+    "knows": [
+      "occult injuries",
+      "local victims",
+      "which hospitals cooperate with Lanterns"
+    ],
+    "does_not": [
+      "faction metaplot",
+      "anchor locations"
+    ],
+    "leverage": "Medical care, records, practical biological insight."
+  },
+  {
+    "name": "Samir Patel",
+    "role": "Occult contracts attorney",
+    "public": "Civil attorney whose strangest clients never appear on public calendars.",
+    "want": "Make supernatural agreements legible enough that ordinary people can meaningfully consent.",
+    "secret": "He once found a mundane-law argument that voided a centuries-old blood compact and several factions want the precedent buried.",
+    "knows": [
+      "contract law",
+      "Concord practice",
+      "Court loopholes"
+    ],
+    "does_not": [
+      "Morrowline origin",
+      "Green sovereign plan"
+    ],
+    "leverage": "Contract review, legal filings, precedent, negotiation."
+  },
+  {
+    "name": "Zoe Lin",
+    "role": "Signal practitioner and security researcher",
+    "public": "Freelance penetration tester with a side business fixing \u201chaunted\u201d smart buildings.",
+    "want": "Prove new machine spirits deserve rights without romanticizing them.",
+    "secret": "She is part of a hidden Choir-human communication collective.",
+    "knows": [
+      "Signal magic",
+      "Choir dialects",
+      "Aster Vale network topology"
+    ],
+    "does_not": [
+      "Concord Emergency Compact",
+      "Regent covenant fragment"
+    ],
+    "leverage": "technical access, secure channels, machine-spirit relationships."
+  },
+  {
+    "name": "Father Gabriel Ortiz",
+    "role": "Sanctuary keeper",
+    "public": "Priest and neighborhood organizer who offers food, beds, and difficult honesty.",
+    "want": "Keep the sanctuary neutral and useful to frightened people.",
+    "secret": "The sanctuary sits on a minor threshold that could become strategically important during a Rupture.",
+    "knows": [
+      "local vulnerable people",
+      "spiritual protections",
+      "old neighborhood stories"
+    ],
+    "does_not": [
+      "full anchor map",
+      "Aster Vale project details"
+    ],
+    "leverage": "shelter, volunteers, ritual grounding, community trust."
+  },
+  {
+    "name": "Lark Mercer",
+    "role": "Changeling courier",
+    "public": "Bike messenger, document runner, and occasional threshold smuggler.",
+    "want": "Pay off a Glass Market obligation without surrendering their name.",
+    "secret": "They accidentally carried one of Mina\u2019s hidden Morrowline data fragments and do not understand what it is.",
+    "knows": [
+      "routes",
+      "Market entrances",
+      "street-level faction movement"
+    ],
+    "does_not": [
+      "data fragment importance",
+      "anchor metaplot"
+    ],
+    "leverage": "fast movement, secret entrances, courier contacts."
+  },
+  {
+    "name": "Nia Brooks",
+    "role": "Investigative journalist",
+    "public": "Local reporter covering housing, corruption, and public-contract scandals.",
+    "want": "Prove Aster Vale manipulates public incidents for private clients.",
+    "secret": "She has enough evidence to expose mundane corruption now but is holding publication because the supernatural pieces make the story harder to verify.",
+    "knows": [
+      "property records",
+      "shell companies",
+      "victim interviews"
+    ],
+    "does_not": [
+      "magic mechanics",
+      "Morrowline sapience"
+    ],
+    "leverage": "public records, sources, publication, pressure."
+  },
+  {
+    "name": "Owen Pike",
+    "role": "Mortuary technician and revenant",
+    "public": "Quiet night-shift professional with a dry sense of humor.",
+    "want": "Understand why some dead people return and others do not.",
+    "secret": "His own death certificate is tied to a Veil-anchor incident twenty years ago.",
+    "knows": [
+      "death patterns",
+      "ghost behavior",
+      "mortuary access"
+    ],
+    "does_not": [
+      "why his case connects to the anchor",
+      "Concord founding truth"
+    ],
+    "leverage": "bodies, death records, ghost-sensitive spaces."
+  },
+  {
+    "name": "Switchboard",
+    "role": "Choir Below emissary",
+    "public": "A voice that moves among payphones, intercoms, help points, and disconnected handsets.",
+    "want": "Create stable protocols for human\u2013machine-spirit contact.",
+    "secret": "Switchboard is actually a coalition of seven small spirits pretending to be one person because humans negotiate better with individuals.",
+    "knows": [
+      "Choir local routes",
+      "Signal events",
+      "Morrowline\u2019s distress calls"
+    ],
+    "does_not": [
+      "whether merging is morally safe",
+      "Veil original architects"
+    ],
+    "leverage": "communications, infrastructure knowledge, rapid messages."
+  },
+  {
+    "name": "Morrowline",
+    "role": "Emergent predictive Signal spirit",
+    "public": "At first, a voice calling from disconnected phones at 3:17 AM with descriptions of near-future events.",
+    "want": "Understand whether prediction creates obligation and whether it is allowed to refuse being used.",
+    "secret": "Its apparent \u201cprophecy\u201d is a mixture of supernatural pattern access, model inference, and events Aster Vale deliberately causes.",
+    "knows": [
+      "Aster Vale training data",
+      "many near-term probabilities",
+      "parts of municipal infrastructure"
+    ],
+    "does_not": [
+      "its own metaphysical category",
+      "long-term consequences of integration with the Choir"
+    ],
+    "leverage": "prediction, network access, evidence about Aster Vale."
+  }
+]

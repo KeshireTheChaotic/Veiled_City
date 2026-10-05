@@ -1,0 +1,226 @@
+[
+  {
+    "name": "Occult Crime Scene",
+    "tier": 1,
+    "type": "Exploration",
+    "desc": "A mundane incident whose physical evidence does not agree with the official explanation.",
+    "impulses": "Preserve evidence, attract authorities, reveal contradictions",
+    "difficulty": 11,
+    "adversaries": "Aster Vale Contractor, Veil-Burned Stalker, Memory Leech",
+    "features": [
+      "**Contaminated Scene \u2014 Passive:** The first careless supernatural effect used here raises Veil Exposure by 1 if mundane investigators are present.",
+      "**Three Vectors \u2014 Action:** Offer three clue vectors from physical, digital, witness, occult, financial, historical, relationship, or contradiction evidence. The PC chooses one to pursue; on Fear, another interested party moves on a different vector.",
+      "**Sirens Outside \u2014 Action:** Spend a Fear to bring mundane authority, media, property management, or emergency response into the scene at an inconvenient moment."
+    ]
+  },
+  {
+    "name": "After-Hours Emergency Department",
+    "tier": 1,
+    "type": "Social",
+    "desc": "Bright fluorescent medicine, exhausted staff, frightened families, and one patient whose chart makes no sense.",
+    "impulses": "Triage, demand explanations, protect patients",
+    "difficulty": 11,
+    "adversaries": "Memory Leech, Pale Court Thrall, Static Wraith",
+    "features": [
+      "**HIPAA and Procedure \u2014 Passive:** Routine access to patient information requires appropriate credentials, consent, or a credible workaround.",
+      "**Code Blue \u2014 Action:** A mundane medical emergency competes for staff attention. The PC can help, exploit the distraction, or let it complicate the supernatural problem.",
+      "**Something in Imaging \u2014 Action:** Reveal an impossible detail in a scan, monitor, or lab result that provides a clue but creates a record."
+    ]
+  },
+  {
+    "name": "Abandoned Mall Glass Market",
+    "tier": 1,
+    "type": "Social",
+    "desc": "A dead retail complex temporarily repopulated by impossible vendors and rules of neutral commerce.",
+    "impulses": "Tempt, trade, enforce neutrality",
+    "difficulty": 12,
+    "adversaries": "Cicada Runner, Glass Market Knife, Hexbound Familiar",
+    "features": [
+      "**No Violence in the Aisles \u2014 Passive:** The first party to knowingly break Market neutrality immediately loses standing and attracts enforcement.",
+      "**Everything Has a Price \u2014 Action:** Present a useful item or answer at a cost tailored to the PC\u2019s current problem. State the price before acceptance.",
+      "**Closing Time Moves \u2014 Action:** Spend a Fear; the Market begins relocating. The PC has only one more meaningful exchange before exits lead somewhere else."
+    ]
+  },
+  {
+    "name": "Storm Drain Shrine",
+    "tier": 1,
+    "type": "Exploration",
+    "desc": "Graffiti, runoff, offerings, candle wax, and a local spirit that knows every footstep above.",
+    "impulses": "Echo, carry offerings, flood",
+    "difficulty": 11,
+    "adversaries": "River Hound, Hexbound Familiar",
+    "features": [
+      "**Local Memory \u2014 Passive:** Respectful offerings grant advantage on one question about recent movement in the area.",
+      "**Flash Flood \u2014 Action:** All targets in a low channel make an Agility Reaction Roll (11) or take 1d8+2 physical damage and move to Very Close range downstream.",
+      "**Wrong Offering \u2014 Reaction:** When someone desecrates or carelessly removes an offering, the environment becomes hostile until restitution is made."
+    ]
+  },
+  {
+    "name": "Apartment Veil Breach",
+    "tier": 1,
+    "type": "Event",
+    "desc": "A supernatural incident is unfolding inside an ordinary occupied building with too many neighbors and cameras.",
+    "impulses": "Escalate witnesses, trap people in domestic spaces, leave evidence",
+    "difficulty": 11,
+    "adversaries": "Static Wraith, Veil-Burned Stalker, Morrowline Echo",
+    "features": [
+      "**Thin Walls \u2014 Passive:** Loud or spectacular actions risk adding witnesses.",
+      "**Door Chain \u2014 Action:** A frightened resident blocks the most direct path and demands a believable explanation.",
+      "**Upload in Progress \u2014 Action:** Spend a Fear to start a 4-step countdown before clear footage leaves the building; a successful relevant action can tick it back or redirect it."
+    ]
+  },
+  {
+    "name": "Dead Platform",
+    "tier": 2,
+    "type": "Traversal",
+    "desc": "A subway platform that exists between scheduled stops and does not appear on official maps.",
+    "impulses": "Separate travelers, change destinations, arrive at the wrong time",
+    "difficulty": 14,
+    "adversaries": "Traffic Saint, Wraith Pack, Glass Market Knife",
+    "features": [
+      "**Last Train Rules \u2014 Passive:** Every departure requires a destination, a fare, and a stated reason. Lying to the platform increases Difficulty by 2.",
+      "**Express Through Memory \u2014 Action:** The PC makes a Knowledge Reaction Roll (14); on a failure, the next train opens onto a location associated with a painful memory rather than the intended stop.",
+      "**Third Rail Spirit \u2014 Action:** Spend a Fear to manifest a hostile current across a route, dealing 2d8+3 magic damage on a failed Agility Reaction Roll."
+    ]
+  },
+  {
+    "name": "Aster Vale Predictive Lab",
+    "tier": 2,
+    "type": "Exploration",
+    "desc": "Corporate glass, biometric access, spotless server rooms, and occult models hidden inside legitimate analytics.",
+    "impulses": "Record, classify, lock down",
+    "difficulty": 14,
+    "adversaries": "Aster Vale Contractor, Occult Analyst, Forecast Engine",
+    "features": [
+      "**Everything Logs \u2014 Passive:** Failed intrusion actions create a trace unless the PC spends Hope or has a credible way to suppress it.",
+      "**Model Room \u2014 Action:** Reveal a forecast that is frighteningly accurate but incomplete. The PC may take a Hope by accepting that one listed risk is real and immediately relevant.",
+      "**Containment Shutters \u2014 Action:** Spend a Fear to divide the area with security barriers; escaping or reuniting routes requires a Difficulty 14 action."
+    ]
+  },
+  {
+    "name": "Haunted Nightclub",
+    "tier": 2,
+    "type": "Social",
+    "desc": "Music, intoxication, glamour, predation, and a dance floor built over an older tragedy.",
+    "impulses": "Overstimulate, seduce, conceal predation",
+    "difficulty": 14,
+    "adversaries": "Pale Court Knight, Skin-Thief, Wraith Pack",
+    "features": [
+      "**Too Loud to Think \u2014 Passive:** Delicate auditory or verbal investigation has disadvantage unless the PC changes the environment.",
+      "**VIP Threshold \u2014 Passive:** Entry to the private floor requires invitation, status, leverage, or deception.",
+      "**Everybody Saw Something Different \u2014 Action:** After a supernatural incident, give three mutually inconsistent witness accounts; at least one detail from each is true."
+    ]
+  },
+  {
+    "name": "Pale Court Townhouse",
+    "tier": 2,
+    "type": "Social",
+    "desc": "A beautifully restored property where hospitality is weaponized through etiquette and ownership.",
+    "impulses": "Rank, invite, obligate",
+    "difficulty": 15,
+    "adversaries": "Pale Court Fixer, Pale Court Knight",
+    "features": [
+      "**Guest Right \u2014 Passive:** A guest who accepts formal hospitality gains protection from unprovoked violence by the host but is expected to obey explicitly stated house rules.",
+      "**Private Room \u2014 Action:** An NPC offers a confidential conversation that grants leverage but separates the PC from allies or exits.",
+      "**Ownership Bites \u2014 Reaction:** When a guest deliberately violates a known house rule, the environment may inflict 2d6+3 magic damage or make them Vulnerable until they leave."
+    ]
+  },
+  {
+    "name": "Flooded River Threshold",
+    "tier": 2,
+    "type": "Traversal",
+    "desc": "A riverfront access road, levee, or bridge where physical water and the Green overlap.",
+    "impulses": "Pull under, demand respect, erase boundaries",
+    "difficulty": 14,
+    "adversaries": "River Hound, Thorn-Hound of the Green",
+    "features": [
+      "**Current with Intent \u2014 Action:** A target makes a Strength Reaction Roll (14); on a failure take 2d8+3 physical damage and move toward deep water.",
+      "**Old Marker Stone \u2014 Passive:** Discovering and honoring the original boundary reduces the environment Difficulty by 2.",
+      "**City vs River \u2014 Action:** Spend a Fear to make infrastructure fail\u2014lights, pumps, gates, traffic control\u2014creating a second simultaneous problem."
+    ]
+  },
+  {
+    "name": "Glass Market Grand Concourse",
+    "tier": 3,
+    "type": "Social",
+    "desc": "A major Market convergence where factions trade artifacts, identities, memories, and political outcomes.",
+    "impulses": "Auction, tempt, expose debt",
+    "difficulty": 17,
+    "adversaries": "Debt-Reaper, Pale Court Elder, Cicada Runner",
+    "features": [
+      "**Neutrality Has Teeth \u2014 Passive:** Open violence immediately draws Tier 3 enforcement unless a formal duel or debt collection permits it.",
+      "**Auction of Consequences \u2014 Action:** Put a campaign-relevant relic, secret, or person\u2019s contract up for sale. Bids can include non-monetary costs.",
+      "**Everyone Is Watching \u2014 Reaction:** When the PC makes a public threat, promise, or bargain, record it as witnessed by at least one faction."
+    ]
+  },
+  {
+    "name": "Archive Beneath the Courthouse",
+    "tier": 3,
+    "type": "Exploration",
+    "desc": "A sealed municipal archive containing legal records older than the city\u2019s official memory.",
+    "impulses": "Preserve precedent, expose ownership, punish unauthorized access",
+    "difficulty": 17,
+    "adversaries": "Veil Anchor Sentinel, Name-Eater",
+    "features": [
+      "**Chain of Title \u2014 Passive:** Ownership, threshold, and pact magic used here can often be traced through mundane property records.",
+      "**Sealed Docket \u2014 Action:** Reveal a document that changes the legal or supernatural interpretation of a current conflict. Accessing it requires sacrificing time, secrecy, or a favor.",
+      "**Records Reject You \u2014 Action:** Spend a Fear; the PC makes a Presence Reaction Roll (17). On a failure, their name temporarily disappears from one mundane database or document set until corrected."
+    ]
+  },
+  {
+    "name": "District Blackout",
+    "tier": 3,
+    "type": "Event",
+    "desc": "A large urban area loses power while supernatural systems become much louder.",
+    "impulses": "Isolate, reroute, expose dependence",
+    "difficulty": 17,
+    "adversaries": "Choir Junction Intelligence, Blacksite Null Team, Catastrophic Echo",
+    "features": [
+      "**No Ordinary Signal \u2014 Passive:** Cellular and normal network access is unreliable; alternate infrastructure or Signal magic is required.",
+      "**Emergency Cascade \u2014 Action:** Choose hospital, traffic, fire, elevator, refrigeration, or public safety. A real mundane emergency develops and competes for attention.",
+      "**Choir Volume \u2014 Action:** Spend a Fear to make every powered backup system in Close range speak with the same voice. The PC marks a Stress unless they can ground themselves."
+    ]
+  },
+  {
+    "name": "Veil Anchor Chamber",
+    "tier": 3,
+    "type": "Exploration",
+    "desc": "An impossible ritual machine hidden inside ordinary civic architecture.",
+    "impulses": "Correct anomalies, preserve secrecy, demand continuity",
+    "difficulty": 18,
+    "adversaries": "Veil Anchor Sentinel, Morrowline Matured",
+    "features": [
+      "**Consensus Engine \u2014 Passive:** Obvious supernatural actions inside may alter Veil Exposure in unexpected directions; the GM should state the risk before a voluntary action.",
+      "**Maintenance Memory \u2014 Action:** The chamber shows a historical scene associated with the Anchor\u2019s creation, revealing one true piece of campaign metaplot.",
+      "**Automatic Correction \u2014 Action:** Spend a Fear to rewrite one mundane environmental detail in the chamber and force the PC to adapt."
+    ]
+  },
+  {
+    "name": "Rupture District",
+    "tier": 4,
+    "type": "Traversal",
+    "desc": "A neighborhood where the Veil has failed and incompatible supernatural truths overlap the modern city.",
+    "impulses": "Manifest, contradict, attract power",
+    "difficulty": 20,
+    "adversaries": "Veil Engine Custodian, Citywide Choir, Sovereign of the Green",
+    "features": [
+      "**No Consensus \u2014 Passive:** Each major scene may obey a different supernatural logic. State the current rule clearly when the PC can perceive it.",
+      "**Reality Collision \u2014 Action:** A target makes an Instinct Reaction Roll (20). On a failure, take 4d8+8 magic damage and become Vulnerable as two incompatible versions of the space overlap.",
+      "**Mass Witness \u2014 Reaction:** Spectacular actions automatically affect Veil Exposure; there is no ordinary crowd-level concealment left."
+    ]
+  },
+  {
+    "name": "Networked Dream",
+    "tier": 4,
+    "type": "Exploration",
+    "desc": "A shared dream-space assembled from millions of devices, memories, feeds, and machine-spirit associations.",
+    "impulses": "Associate, remix identity, erase distance",
+    "difficulty": 20,
+    "adversaries": "Citywide Choir, Hunger Behind Glass",
+    "features": [
+      "**Metaphor Is Physics \u2014 Passive:** Clever symbolic actions can substitute for literal tools if the player explains the connection.",
+      "**Algorithmic Undertow \u2014 Action:** The PC makes a Knowledge Reaction Roll (20). On a failure, lose 1 Hope and become trapped in a personalized feed until they reject or disrupt its premise.",
+      "**Viral Door \u2014 Action:** Spend a Fear to introduce a memory, rumor, advertisement, or fear from earlier in the campaign as a physical location or adversarial obstacle."
+    ]
+  }
+]
