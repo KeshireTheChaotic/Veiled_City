@@ -4,8 +4,11 @@ import {
   PermissionFlagsBits
 } from "discord.js";
 import { dualityRoll, parseDice } from "./dice.js";
-import { publishJournal, postGmLog, postStateError, postPrivateRelay, syncConfiguredSurfaces, postPlayMessage, sendPlayerPrivate } from "./publishing.js";
+import { publishJournal, postJournalEntry, publishEventResults, postGmLog, postStateError, postPrivateRelay, syncConfiguredSurfaces, postPlayMessage, sendPlayerPrivate } from "./publishing.js";
 import { EncounterLibrary, livePcRoster, partyTier, baseBattlePoints, DIFFICULTY_ADJUSTMENTS, autoBuildComposition, recomputeBudget, battlePointCost, HEAVY_ROLES, defaultObjective } from "./encounter.js";
+import { validateConceptDraft, prepareLevelup, applyLevelupToData, legalAdvancements, tierAchievement } from "./character-system.js";
+import { buildCombatants, hpMarksForDamage, combatantLine } from "./combat.js";
+import { applyGMEvents } from "./state.js";
 
 export function buildCommands(){
   return [
@@ -82,7 +85,25 @@ export function buildCommands(){
         .addSubcommand(s=>s.setName("retire").setDescription("Retire a character")
           .addStringOption(o=>o.setName("character").setDescription("Character name").setRequired(true)))
         .addSubcommand(s=>s.setName("death").setDescription("Mark a character dead after resolving the death move")
-          .addStringOption(o=>o.setName("character").setDescription("Character name").setRequired(true))))
+          .addStringOption(o=>o.setName("character").setDescription("Character name").setRequired(true)))
+        .addSubcommand(s=>s.setName("concept").setDescription("Draft a level-1 character from a plain-English description")
+          .addStringOption(o=>o.setName("description").setDescription("Character concept, tone, background, capabilities, hooks").setRequired(true)))
+        .addSubcommand(s=>s.setName("concept-status").setDescription("Show your latest AI-assisted character draft"))
+        .addSubcommand(s=>s.setName("concept-accept").setDescription("Validate and create your latest character concept draft"))
+        .addSubcommand(s=>s.setName("level-up").setDescription("Start a validated level-up draft")
+          .addStringOption(o=>o.setName("character").setDescription("Owned character name").setRequired(true)))
+        .addSubcommand(s=>s.setName("level-choose").setDescription("Choose the two advancements and mandatory new domain card")
+          .addStringOption(o=>o.setName("advancement_one").setDescription("First advancement").setRequired(true).addChoices(
+            {name:"Increase two traits",value:"traits"},{name:"+1 HP slot",value:"hp"},{name:"+1 Stress slot",value:"stress"},{name:"Increase two Experiences",value:"experience"},{name:"Additional domain card",value:"domain"},{name:"+1 Evasion",value:"evasion"},{name:"Upgrade subclass",value:"subclass"},{name:"+1 Proficiency (costs both)",value:"proficiency"},{name:"Multiclass (costs both)",value:"multiclass"}))
+          .addStringOption(o=>o.setName("advancement_two").setDescription("Second advancement").setRequired(true).addChoices(
+            {name:"Increase two traits",value:"traits"},{name:"+1 HP slot",value:"hp"},{name:"+1 Stress slot",value:"stress"},{name:"Increase two Experiences",value:"experience"},{name:"Additional domain card",value:"domain"},{name:"+1 Evasion",value:"evasion"},{name:"Upgrade subclass",value:"subclass"},{name:"+1 Proficiency (costs both)",value:"proficiency"},{name:"Multiclass (costs both)",value:"multiclass"}))
+          .addStringOption(o=>o.setName("detail_one").setDescription("Targets/details for first advancement"))
+          .addStringOption(o=>o.setName("detail_two").setDescription("Targets/details for second advancement"))
+          .addStringOption(o=>o.setName("domain_card").setDescription("Mandatory new domain card name").setRequired(true))
+          .addStringOption(o=>o.setName("domain").setDescription("Card domain; required for official/non-bundled cards"))
+          .addIntegerOption(o=>o.setName("card_level").setDescription("Card level; required for official/non-bundled cards").setMinValue(1).setMaxValue(10))
+          .addStringOption(o=>o.setName("tier_experience").setDescription("New +2 Experience required at levels 2, 5, and 8")))
+        .addSubcommand(s=>s.setName("level-confirm").setDescription("Commit your ready level-up draft")))
       .addSubcommandGroup(g=>g.setName("guest").setDescription("Guest and drop-in characters")
         .addSubcommand(s=>s.setName("create").setDescription("Create a one-shot/guest character")
           .addStringOption(o=>o.setName("name").setDescription("Guest character name").setRequired(true))
@@ -137,8 +158,25 @@ export function buildCommands(){
         .addSubcommand(s=>s.setName("remove").setDescription("Remove an adversary from the current encounter")
           .addStringOption(o=>o.setName("adversary").setDescription("Adversary name").setRequired(true))
           .addIntegerOption(o=>o.setName("quantity").setDescription("Units/groups to remove").setMinValue(1).setMaxValue(10)))
-        .addSubcommand(s=>s.setName("start").setDescription("Mark the planned encounter active"))
-        .addSubcommand(s=>s.setName("end").setDescription("End the current encounter")))
+        .addSubcommand(s=>s.setName("start").setDescription("Mark the planned encounter active and initialize combatants"))
+        .addSubcommand(s=>s.setName("end").setDescription("End the current encounter"))
+        .addSubcommand(s=>s.setName("combatants").setDescription("Show deterministic adversary HP/Stress/conditions"))
+        .addSubcommand(s=>s.setName("damage").setDescription("Apply rolled damage to an adversary using thresholds")
+          .addStringOption(o=>o.setName("target").setDescription("Combatant name or 8-char ID").setRequired(true))
+          .addIntegerOption(o=>o.setName("amount").setDescription("Rolled incoming damage").setMinValue(0).setRequired(true)))
+        .addSubcommand(s=>s.setName("heal").setDescription("Restore adversary HP")
+          .addStringOption(o=>o.setName("target").setDescription("Combatant name or 8-char ID").setRequired(true))
+          .addIntegerOption(o=>o.setName("hp").setDescription("HP to restore").setMinValue(1).setRequired(true)))
+        .addSubcommand(s=>s.setName("stress").setDescription("Mark or clear adversary Stress")
+          .addStringOption(o=>o.setName("target").setDescription("Combatant name or 8-char ID").setRequired(true))
+          .addIntegerOption(o=>o.setName("delta").setDescription("Positive marks Stress; negative clears").setRequired(true)))
+        .addSubcommand(s=>s.setName("condition").setDescription("Add/remove an adversary condition")
+          .addStringOption(o=>o.setName("target").setDescription("Combatant name or 8-char ID").setRequired(true))
+          .addStringOption(o=>o.setName("condition").setDescription("Condition name").setRequired(true))
+          .addBooleanOption(o=>o.setName("remove").setDescription("Remove instead of add")))
+        .addSubcommand(s=>s.setName("combatant-status").setDescription("Set adversary active/defeated/escaped/removed")
+          .addStringOption(o=>o.setName("target").setDescription("Combatant name or 8-char ID").setRequired(true))
+          .addStringOption(o=>o.setName("status").setDescription("New status").setRequired(true).addChoices({name:"Active",value:"active"},{name:"Defeated",value:"defeated"},{name:"Escaped",value:"escaped"},{name:"Removed",value:"removed"}))))
       .addSubcommandGroup(g=>g.setName("party").setDescription("Persistent working-group state")
         .addSubcommand(s=>s.setName("establish").setDescription("Mark present PCs as a continuing party")
           .addStringOption(o=>o.setName("name").setDescription("Optional party/team name")))
@@ -156,12 +194,49 @@ export function buildCommands(){
           .addIntegerOption(o=>o.setName("modifier").setDescription("Trait/other modifier"))
           .addIntegerOption(o=>o.setName("experience").setDescription("Experience modifier"))
           .addIntegerOption(o=>o.setName("advantage").setDescription("Advantage d6 count"))
-          .addIntegerOption(o=>o.setName("disadvantage").setDescription("Disadvantage d6 count")))
+          .addIntegerOption(o=>o.setName("disadvantage").setDescription("Disadvantage d6 count"))
+          .addBooleanOption(o=>o.setName("reaction").setDescription("Reaction roll: does not generate Hope/Fear or count spotlight")))
         .addSubcommand(s=>s.setName("damage").setDescription("Roll damage/other dice")
           .addStringOption(o=>o.setName("dice").setDescription("e.g. 2d8+3").setRequired(true))))
-      .addSubcommandGroup(g=>g.setName("rules").setDescription("Low-cost player-safe rules desk")
+      .addSubcommandGroup(g=>g.setName("rules").setDescription("Grounded rules desk and persistent GM rulings")
         .addSubcommand(s=>s.setName("ask").setDescription("Ask a concise Daggerheart/Veiled City rules question")
-          .addStringOption(o=>o.setName("question").setDescription("Rules question").setRequired(true))))
+          .addStringOption(o=>o.setName("question").setDescription("Rules question").setRequired(true)))
+        .addSubcommand(s=>s.setName("ruling").setDescription("GM: save/replace an authoritative campaign ruling")
+          .addStringOption(o=>o.setName("key").setDescription("Short stable key, e.g. veil-camera").setRequired(true))
+          .addStringOption(o=>o.setName("question").setDescription("Question this ruling answers").setRequired(true))
+          .addStringOption(o=>o.setName("ruling").setDescription("Authoritative campaign ruling").setRequired(true)))
+        .addSubcommand(s=>s.setName("rulings").setDescription("Show saved campaign rulings")))
+      .addSubcommandGroup(g=>g.setName("downtime").setDescription("Formal between-session projects and world turns")
+        .addSubcommand(s=>s.setName("open").setDescription("GM: open a between-session downtime cycle")
+          .addStringOption(o=>o.setName("label").setDescription("Downtime label"))
+          .addStringOption(o=>o.setName("notes").setDescription("GM notes")))
+        .addSubcommand(s=>s.setName("project").setDescription("Submit a character downtime project")
+          .addStringOption(o=>o.setName("type").setDescription("Project type").setRequired(true).addChoices({name:"Recovery",value:"recovery"},{name:"Investigation",value:"investigation"},{name:"Crafting",value:"crafting"},{name:"Ritual",value:"ritual"},{name:"Relationship",value:"relationship"},{name:"Income/upkeep",value:"income"},{name:"Surveillance",value:"surveillance"},{name:"Research",value:"research"},{name:"Long-term project",value:"project"},{name:"Other",value:"other"}))
+          .addStringOption(o=>o.setName("title").setDescription("Short project title").setRequired(true))
+          .addStringOption(o=>o.setName("objective").setDescription("What you are trying to accomplish").setRequired(true))
+          .addStringOption(o=>o.setName("character").setDescription("Owned character; defaults to first active/reserve"))
+          .addIntegerOption(o=>o.setName("countdown").setDescription("Project countdown/progress target").setMinValue(1).setMaxValue(20))
+          .addStringOption(o=>o.setName("visibility").setDescription("Who can know about this project").addChoices({name:"Party",value:"party"},{name:"Character private",value:"character"},{name:"Player private",value:"player"})))
+        .addSubcommand(s=>s.setName("status").setDescription("Show current downtime projects available to you"))
+        .addSubcommand(s=>s.setName("resolve").setDescription("GM: resolve the current downtime cycle and world turn")))
+      .addSubcommandGroup(g=>g.setName("canon").setDescription("Authoritative campaign canon and conflict resolution")
+        .addSubcommand(s=>s.setName("set").setDescription("GM: establish a durable canon value")
+          .addStringOption(o=>o.setName("key").setDescription("Stable key, e.g. npc.mara-voss.surname").setRequired(true))
+          .addStringOption(o=>o.setName("value").setDescription("Canon value").setRequired(true))
+          .addStringOption(o=>o.setName("visibility").setDescription("Visibility").addChoices({name:"Party",value:"party"},{name:"Public",value:"public"},{name:"GM only",value:"gm"})))
+        .addSubcommand(s=>s.setName("status").setDescription("Show current canon visible to you"))
+        .addSubcommand(s=>s.setName("conflicts").setDescription("GM: list pending canon conflicts"))
+        .addSubcommand(s=>s.setName("resolve").setDescription("GM: resolve a canon conflict")
+          .addStringOption(o=>o.setName("conflict_id").setDescription("Conflict ID/prefix").setRequired(true))
+          .addStringOption(o=>o.setName("resolution").setDescription("Resolution").setRequired(true).addChoices({name:"Keep existing",value:"existing"},{name:"Accept proposed",value:"proposed"},{name:"Use custom value",value:"custom"}))
+          .addStringOption(o=>o.setName("custom_value").setDescription("Required for custom"))))
+      .addSubcommandGroup(g=>g.setName("admin").setDescription("GM state snapshots and rollback")
+        .addSubcommand(s=>s.setName("snapshot").setDescription("Create a manual campaign-state snapshot")
+          .addStringOption(o=>o.setName("label").setDescription("Snapshot label"))
+          .addStringOption(o=>o.setName("reason").setDescription("Reason")))
+        .addSubcommand(s=>s.setName("snapshots").setDescription("List recent campaign snapshots"))
+        .addSubcommand(s=>s.setName("rollback").setDescription("Restore a snapshot; creates a pre-rollback safety snapshot")
+          .addStringOption(o=>o.setName("snapshot_id").setDescription("Snapshot ID/prefix").setRequired(true))))
       .addSubcommandGroup(g=>g.setName("intel").setDescription("Player-safe campaign information")
         .addSubcommand(s=>s.setName("recap").setDescription("Show the latest saved recap"))
         .addSubcommand(s=>s.setName("clues").setDescription("Show clues available to you"))
@@ -187,7 +262,7 @@ function formatSheet(c){
     `${d.ancestry||"Ancestry unset"} • ${d.community||"Community unset"} • Level ${d.level||1}`,
     `Domains: ${domains}`,
     `HP ${r.hp?.current??"?"}/${r.hp?.max??"?"} • Stress ${r.stress?.current??"?"}/${r.stress?.max??6} • Hope ${r.hope??"?"} • Armor ${r.armor?.current??"?"}/${r.armor?.max??"?"}`,
-    d.experiences?.length?`Experiences: ${d.experiences.join("; ")}`:"",
+    d.experiences?.length?`Experiences: ${d.experiences.map(e=>typeof e==="string"?e:`${e.name}${e.modifier!=null?` +${e.modifier}`:""}`).join("; ")}`:"",
     `Status: ${c.status}${c.is_guest?" (guest)":""}`
   ].filter(Boolean).join("\n");
 }
@@ -341,6 +416,67 @@ async function deliverNpcProxyPacket({db,guild,proxy,offered=false}){
   return relay.ok?relay:{ok:false,via:"unavailable",ref:relay.ref,content};
 }
 
+function formatConceptDraft(row){
+  if(!row) return "No pending character concept draft.";
+  const d=row.draft||{}; const hooks=d.hook_proposals||[];
+  return [
+    `**Character Draft — ${d.name||"Unnamed"}**`,
+    `${d.class||"?"}${d.subclass?` / ${d.subclass}`:""} • ${d.ancestry||"?"} • ${d.community||"?"}`,
+    `Domains: ${(d.domains||[]).join(" / ")||"—"}`,
+    `Experiences: ${(d.experiences||[]).join("; ")||"—"}`,
+    `Cards: ${(d.domain_cards||[]).map(x=>typeof x==="string"?x:x.name).join("; ")||"—"}`,
+    d.home?`Home: ${d.home}`:"", d.person?`Person: ${d.person}`:"", d.obligation?`Obligation: ${d.obligation}`:"",
+    d.unresolved_incident?`Unresolved incident: ${d.unresolved_incident}`:"",
+    hooks.length?`**Hook permissions**\n${hooks.map(h=>`• **${h.classification.replaceAll("_"," ")}** — ${h.text}`).join("\n")}`:"",
+    d.mechanical_notes?`Mechanical notes: ${d.mechanical_notes}`:"",
+    `Draft ID: \`${row.id.slice(0,8)}\``
+  ].filter(Boolean).join("\n").slice(0,1900);
+}
+
+function formatLevelupDraft(draft,character){
+  if(!draft) return "No pending level-up draft.";
+  const p=draft.choices?.plan;
+  const achievement=tierAchievement(draft.to_level);
+  return [
+    `**Level Up — ${character?.name||"Character"} ${draft.from_level} → ${draft.to_level}**`,
+    `Tier achievement: ${achievement.new_experience?"new Experience +2; ":""}${achievement.proficiency?"+1 Proficiency; ":""}${achievement.clear_trait_marks?"clear marked traits":"none"}`,
+    `Legal advancements: ${legalAdvancements(draft.to_level).join(", ")}`,
+    p?`Selected: ${p.advancements.join(" + ")}\nMandatory card: ${p.automatic_domain_card.name} (${p.automatic_domain_card.domain} ${p.automatic_domain_card.level})\nStatus: **${draft.status}**`:`Use \`/vc character level-choose\` to choose two advancements and the mandatory domain card.`,
+    `Draft ID: \`${draft.id.slice(0,8)}\``
+  ].join("\n").slice(0,1900);
+}
+
+function customDomainCards(gm){
+  try{return JSON.parse(gm.content.read("CARDS/domain_cards.json")||"{}");}catch{return {};}
+}
+
+function byPrefix(rows,id){
+  const q=String(id||"").trim().toLowerCase();
+  return rows.find(r=>String(r.id).toLowerCase()===q)||rows.find(r=>String(r.id).toLowerCase().startsWith(q));
+}
+
+function visibleDowntimeProjects(db,cycle,userId,isGm){
+  const rows=db.listDowntimeProjects(cycle.id);
+  if(isGm) return rows;
+  const owned=new Set(db.listCharacters(cycle.guild_id,userId,{includeClosed:true}).map(c=>c.id));
+  return rows.filter(r=>r.visibility==="party"||r.discord_user_id===userId||owned.has(r.character_id));
+}
+
+function downtimeStatusText(cycle,projects){
+  if(!cycle) return "No open downtime cycle.";
+  const lines=projects.map(p=>`• \`${p.id.slice(0,8)}\` **${p.title}** [${p.project_type}] — ${p.progress}/${p.max_progress} — ${p.status}${p.result?`\n  ${p.result}`:""}`);
+  return [`**${cycle.label}** — ${cycle.status}`,cycle.notes||"",lines.length?lines.join("\n"):"No submitted projects."].filter(Boolean).join("\n").slice(0,1900);
+}
+
+async function deletePublishedNotInSnapshot({db,guild,snapshot}){
+  const target=new Set((snapshot?.state?.tables?.published_messages||[]).map(r=>`${r.channel_id}:${r.message_id}`));
+  const current=db.db.prepare("SELECT * FROM published_messages WHERE guild_id=?").all(guild.id);
+  for(const row of current){
+    if(target.has(`${row.channel_id}:${row.message_id}`)) continue;
+    try{const ch=await guild.channels.fetch(row.channel_id); const m=await ch?.messages?.fetch(row.message_id); if(m) await m.delete();}catch{}
+  }
+}
+
 export async function handleCommand(interaction,{db,gm}){
   if(!interaction.isChatInputCommand()||interaction.commandName!=="vc") return false;
   if(!interaction.guildId) { await interaction.reply({content:"Veiled City commands must be used in a server.",ephemeral:true}); return true; }
@@ -367,7 +503,7 @@ export async function handleCommand(interaction,{db,gm}){
         `Rules: ${ch(c.rules_channel_id)} • Case board: ${ch(c.case_board_channel_id)} • Journal: ${ch(c.journal_channel_id)}`,
         `Known NPCs: ${ch(c.known_npcs_channel_id)} • Known locations: ${ch(c.known_locations_channel_id)}`,
         `GM log: ${ch(c.gm_log_channel_id)} • State errors: ${ch(c.state_errors_channel_id)}`,
-        `Veil Exposure: ${c.veil_exposure}/6`,
+        `Veil Exposure: ${c.veil_exposure}/6 • Fear: ${c.fear??0}/12`,
         `Session: ${s?`#${s.session_number} ${s.title||""} • ${s.assembly_phase||"assembly"}`:"none active"}`,
         `Party: ${db.getPartyState(interaction.guildId).established?"established":"not established"}`
       ].join("\n"),ephemeral:true});
@@ -398,6 +534,8 @@ export async function handleCommand(interaction,{db,gm}){
     if(group==="session"&&sub==="start"){
       if(!isGM(db,interaction)) throw new Error("Only a GM/admin may start sessions.");
       const assembly=interaction.options.getString("assembly")||"auto";
+      db.ensureCampaign(interaction.guildId);
+      db.snapshotCampaign(interaction.guildId,{label:"Pre-session",reason:"Automatic snapshot before session start",createdBy:interaction.user.id});
       const s=db.startSession(interaction.guildId,interaction.options.getString("title")||"",assembly);
       // Known players default to absent/offscreen until they opt in.
       for(const p of db.listPlayers(interaction.guildId)) db.setPresence(s.id,p.discord_user_id,"absent","offscreen",null,"Not checked in.");
@@ -456,11 +594,14 @@ Initial phase: ${s.assembly_phase}`});
     if(group==="session"&&sub==="end"){
       if(!isGM(db,interaction)) throw new Error("Only a GM/admin may end sessions.");
       await interaction.deferReply();
+      const activeBefore=db.getActiveSession(interaction.guildId);
+      db.snapshotCampaign(interaction.guildId,{label:`Pre-end Session ${activeBefore?.session_number||""}`.trim(),reason:"Automatic snapshot before session end",createdBy:interaction.user.id});
       const recap=await gm.summarizeSession(interaction.guildId);
       const s=db.endSession(interaction.guildId,recap);
       db.addFact(interaction.guildId,{category:"recap",key:`session-${s.session_number}-recap`,content:recap,visibility:"party",sessionId:s.id,source:"system"});
       await publishJournal({db,guild:interaction.guild,session:s,recap});
       await postGmLog({db,guild:interaction.guild,sessionId:s.id,title:`Session ${s.session_number} ended`,details:"Player-safe recap generated and campaign state closed."});
+      db.snapshotCampaign(interaction.guildId,{label:`Post-session ${s.session_number}`,reason:"Automatic snapshot after session end",createdBy:interaction.user.id});
       await interaction.editReply(`**Session ${s.session_number} ended.**\n\n${recap}`);
       return true;
     }
@@ -567,11 +708,81 @@ Initial phase: ${s.assembly_phase}`});
       if(!c) throw new Error("Character not found.");
       const s=db.getActiveSession(interaction.guildId);
       const status=sub==="death"?"dead":"retired";
+      db.snapshotCampaign(interaction.guildId,{label:`Pre-${status} ${c.name}`,reason:`Automatic snapshot before marking ${c.name} ${status}`,createdBy:interaction.user.id});
       db.setCharacterStatus(c.id,status,s?.id||null);
       if(s){
         db.db.prepare("UPDATE session_characters SET left_at=CURRENT_TIMESTAMP WHERE session_id=? AND character_id=? AND left_at IS NULL").run(s.id,c.id);
       }
       await interaction.reply(`**${c.name}** is now marked **${status}**. You may create/select another character immediately; the GM will bring them in when the fiction allows.`);
+      return true;
+    }
+
+    if(group==="character"&&sub==="concept"){
+      await interaction.deferReply({ephemeral:true});
+      const description=interaction.options.getString("description",true);
+      const draft=await gm.draftCharacterConcept({guildId:interaction.guildId,userId:interaction.user.id,userName:interaction.member?.displayName||interaction.user.username,description});
+      const validation=validateConceptDraft(draft);
+      const row=db.createCharacterDraft(interaction.guildId,interaction.user.id,description,draft);
+      const note=validation.ok?"\n\n✅ Draft passes v3.2 level-1 structural validation. Review it, then use /vc character concept-accept.":`\n\n⚠️ Draft needs revision before acceptance:\n${validation.errors.map(x=>`• ${x}`).join("\n")}\nRun /vc character concept again with the correction in your description.`;
+      await interaction.editReply((formatConceptDraft(row)+note).slice(0,1950));
+      return true;
+    }
+    if(group==="character"&&sub==="concept-status"){
+      const row=db.latestCharacterDraft(interaction.guildId,interaction.user.id,{status:"draft"});
+      await interaction.reply({content:formatConceptDraft(row),ephemeral:true});
+      return true;
+    }
+    if(group==="character"&&sub==="concept-accept"){
+      const row=db.latestCharacterDraft(interaction.guildId,interaction.user.id,{status:"draft"});
+      if(!row) throw new Error("No pending character concept draft.");
+      const v=validateConceptDraft(row.draft); if(!v.ok) throw new Error(`Draft is not valid: ${v.errors.join("; ")}`);
+      const d=structuredClone(row.draft);
+      d.class=v.normalizedClass||d.class;
+      d.hook_permissions=(d.hook_proposals||[]).map(h=>({text:h.text,classification:h.classification}));
+      d.gm_hooks=(d.hook_proposals||[]).filter(h=>h.classification!=="established").map(h=>h.text);
+      const c=db.createCharacter(interaction.guildId,interaction.user.id,d.name,d);
+      db.setCharacterDraftStatus(row.id,"accepted");
+      db.audit(interaction.guildId,null,"player",interaction.user.id,"character_concept_accept",{character_id:c.id,draft_id:row.id});
+      await interaction.reply({content:`Created **${c.name}** from the approved concept draft.\n\n${formatSheet(c)}`,ephemeral:true});
+      return true;
+    }
+    if(group==="character"&&sub==="level-up"){
+      const c=db.findOwnedCharacter(interaction.guildId,interaction.user.id,interaction.options.getString("character",true));
+      if(!c) throw new Error("Character not found or unavailable.");
+      const from=Number(c.data?.level||1); if(from>=10) throw new Error("This character is already level 10.");
+      const draft=db.createLevelupDraft(interaction.guildId,interaction.user.id,c.id,from,from+1,{legal_advancements:legalAdvancements(from+1),tier_achievement:tierAchievement(from+1)});
+      await interaction.reply({content:formatLevelupDraft(draft,c),ephemeral:true});
+      return true;
+    }
+    if(group==="character"&&sub==="level-choose"){
+      const draft=db.latestLevelupDraft(interaction.guildId,interaction.user.id);
+      if(!draft) throw new Error("No pending level-up draft. Start with `/vc character level-up`.");
+      const c=db.getCharacter(draft.character_id); if(!c||c.owner_user_id!==interaction.user.id) throw new Error("Level-up character is unavailable.");
+      const plan=prepareLevelup(c,{
+        advancementOne:interaction.options.getString("advancement_one",true),
+        advancementTwo:interaction.options.getString("advancement_two",true),
+        detailOne:interaction.options.getString("detail_one")||"",
+        detailTwo:interaction.options.getString("detail_two")||"",
+        domainCard:interaction.options.getString("domain_card",true),
+        domain:interaction.options.getString("domain")||"",
+        cardLevel:interaction.options.getInteger("card_level"),
+        tierExperience:interaction.options.getString("tier_experience")||"",
+        customCards:customDomainCards(gm)
+      });
+      const ready=db.updateLevelupDraft(draft.id,{...draft.choices,plan},"ready");
+      await interaction.reply({content:formatLevelupDraft(ready,c)+"\n\nUse `/vc character level-confirm` to commit this level-up.",ephemeral:true});
+      return true;
+    }
+    if(group==="character"&&sub==="level-confirm"){
+      const draft=db.latestLevelupDraft(interaction.guildId,interaction.user.id);
+      if(!draft||draft.status!=="ready"||!draft.choices?.plan) throw new Error("No ready level-up draft. Use `/vc character level-choose` first.");
+      const c=db.getCharacter(draft.character_id); if(!c||c.owner_user_id!==interaction.user.id) throw new Error("Level-up character is unavailable.");
+      db.snapshotCampaign(interaction.guildId,{label:`Pre-level ${c.name}`,reason:`Before ${c.name} level ${draft.from_level}→${draft.to_level}`,createdBy:interaction.user.id});
+      const next=applyLevelupToData(c.data,draft.choices.plan);
+      const updated=db.updateCharacterData(c.id,d=>{for(const k of Object.keys(d)) delete d[k]; Object.assign(d,next);});
+      db.updateLevelupDraft(draft.id,draft.choices,"applied");
+      db.audit(interaction.guildId,null,"player",interaction.user.id,"character_level_up",{character_id:c.id,from:draft.from_level,to:draft.to_level,plan:draft.choices.plan});
+      await interaction.reply({content:`✅ **${updated.name}** is now **Level ${updated.data.level}**. A pre-level snapshot was created automatically.\n\n${formatSheet(updated)}`,ephemeral:true});
       return true;
     }
 
@@ -758,10 +969,44 @@ Initial phase: ${s.assembly_phase}`});
       }
       if(sub==="start"){
         let e=db.getCurrentEncounter(session.id); if(!e||e.status!=="planned") throw new Error("No planned encounter is available to start.");
+        db.snapshotCampaign(interaction.guildId,{label:`Pre-encounter ${e.encounter_number}`,reason:"Automatic snapshot before encounter start",createdBy:interaction.user.id});
         e=db.setEncounterStatus(e.id,"active");
-        db.audit(interaction.guildId,session.id,"human_gm",interaction.user.id,"encounter_start",{encounter_id:e.id,budget:e.budget_bp,spent:e.spent_bp});
-        await postGmLog({db,guild:interaction.guild,sessionId:session.id,title:`Encounter #${e.encounter_number} started`,details:`${e.spent_bp}/${e.budget_bp} BP • ${e.objective}`});
-        await interaction.reply({content:`Encounter #${e.encounter_number} is now **active**. ${e.spent_bp>e.budget_bp?`⚠️ Composition is ${e.spent_bp-e.budget_bp} BP over budget.`:""}`,ephemeral:true}); return true;
+        const combatants=db.initializeCombatants(e.id,buildCombatants(e,lib));
+        db.audit(interaction.guildId,session.id,"human_gm",interaction.user.id,"encounter_start",{encounter_id:e.id,budget:e.budget_bp,spent:e.spent_bp,combatants:combatants.length});
+        await postGmLog({db,guild:interaction.guild,sessionId:session.id,title:`Encounter #${e.encounter_number} started`,details:`${e.spent_bp}/${e.budget_bp} BP • ${e.objective}\nDeterministic combatants initialized: ${combatants.length}`});
+        await interaction.reply({content:`Encounter #${e.encounter_number} is now **active** with **${combatants.length}** tracked adversary combatants. ${e.spent_bp>e.budget_bp?`⚠️ Composition is ${e.spent_bp-e.budget_bp} BP over budget.`:""}`,ephemeral:true}); return true;
+      }
+      if(sub==="combatants"){
+        const e=db.getCurrentEncounter(session.id); if(!e||e.status!=="active") throw new Error("No active encounter.");
+        const rows=db.listCombatants(e.id);
+        const roster=db.roster(session.id); const counts=e.combat_state?.spotlight?.counts||{};
+        const spotlight=roster.filter(r=>r.character_id&&["present","guest","late"].includes(r.presence)).map(r=>`${r.name}: ${counts[r.character_id]||0}`).join(" • ")||"none";
+        const body=rows.length?rows.map(combatantLine).join("\n"):"No adversary combatants initialized.";
+        await interaction.reply({content:`**Encounter #${e.encounter_number} Combat State**\nFear: **${db.getCampaign(interaction.guildId)?.fear||0}/12**\nSpotlight actions: ${spotlight}\n\n${body}`.slice(0,1950),ephemeral:true});
+        return true;
+      }
+      if(["damage","heal","stress","condition","combatant-status"].includes(sub)){
+        const e=db.getCurrentEncounter(session.id); if(!e||e.status!=="active") throw new Error("No active encounter.");
+        const target=interaction.options.getString("target",true); const c=db.findCombatant(e.id,target); if(!c) throw new Error("Combatant not found. Use `/vc encounter combatants` for IDs.");
+        let next=c; let detail="";
+        if(sub==="damage"){
+          const amount=interaction.options.getInteger("amount",true); const marks=hpMarksForDamage(c,amount);
+          const hp=Math.max(0,c.hp_current-marks); next=db.updateCombatant(c.id,{hp_current:hp,status:hp<=0?"defeated":c.status});
+          detail=`${amount} damage → ${marks} HP marked`;
+        }else if(sub==="heal"){
+          const hp=interaction.options.getInteger("hp",true); next=db.updateCombatant(c.id,{hp_current:Math.min(c.hp_max,c.hp_current+hp),status:c.status==="defeated"?"active":c.status}); detail=`restored ${hp} HP`;
+        }else if(sub==="stress"){
+          const delta=interaction.options.getInteger("delta",true); next=db.updateCombatant(c.id,{stress_current:c.stress_current+delta}); detail=`Stress ${delta>=0?"+":""}${delta}`;
+        }else if(sub==="condition"){
+          const name=interaction.options.getString("condition",true).trim(); const remove=interaction.options.getBoolean("remove")||false; let cond=[...(c.conditions||[])];
+          if(remove) cond=cond.filter(x=>x.toLowerCase()!==name.toLowerCase()); else if(!cond.some(x=>x.toLowerCase()===name.toLowerCase())) cond.push(name);
+          next=db.updateCombatant(c.id,{conditions:cond}); detail=`${remove?"removed":"added"} condition/effect: ${name}`;
+        }else{
+          const status=interaction.options.getString("status",true); next=db.updateCombatant(c.id,{status}); detail=`status → ${status}`;
+        }
+        db.audit(interaction.guildId,session.id,"human_gm",interaction.user.id,`combat_${sub}`,{encounter_id:e.id,combatant_id:c.id,detail});
+        await interaction.reply({content:`${detail}\n${combatantLine(next)}`,ephemeral:true});
+        return true;
       }
       if(sub==="end"){
         let e=db.getCurrentEncounter(session.id); if(!e) throw new Error("No planned or active encounter.");
@@ -776,8 +1021,10 @@ Initial phase: ${s.assembly_phase}`});
       if(!isGM(db,interaction)) throw new Error("Only a GM/admin may establish the continuing party.");
       const s=requireSession(db,interaction.guildId);
       const plan=db.getAssemblyPlan(s.id)||{};
+      const priorParty=db.getPartyState(interaction.guildId);
       const party=db.establishParty(interaction.guildId,s.id,{name:interaction.options.getString("name")||"",bonds:plan.bonds||[]});
       const memberNames=(party.members||[]).map(m=>m.name);
+      if(!priorParty.established && Number(db.getCampaign(interaction.guildId)?.fear||0)===0) db.changeFear(interaction.guildId,memberNames.length);
       if(!memberNames.length) throw new Error("No present characters are available to establish as a party.");
       db.addFact(interaction.guildId,{
         category:"party",key:`party-established-${s.id}`,
@@ -821,15 +1068,33 @@ Initial phase: ${s.assembly_phase}`});
     if(group==="roll"&&sub==="duality"){
       const s=requireSession(db,interaction.guildId);
       const a=db.controlledAssignment(s.id,interaction.user.id);
+      const reaction=interaction.options.getBoolean("reaction")||false;
       const r=dualityRoll({
         modifier:interaction.options.getInteger("modifier")||0,
         experience:interaction.options.getInteger("experience")||0,
         advantage:interaction.options.getInteger("advantage")||0,
         disadvantage:interaction.options.getInteger("disadvantage")||0
       });
-      db.addRoll(interaction.guildId,s.id,interaction.user.id,a?.character_id||null,"duality",r);
+      db.addRoll(interaction.guildId,s.id,interaction.user.id,a?.character_id||null,reaction?"reaction":"duality",{...r,reaction});
+      let resourceNote="";
+      if(!reaction){
+        if(a?.character_id && ["Hope","Critical"].includes(r.duality)){
+          const updated=db.updateCharacterData(a.character_id,data=>{
+            data.resources=data.resources||{}; data.resources.hope=Math.min(6,Number(data.resources.hope||0)+1);
+            if(r.duality==="Critical"){
+              data.resources.stress=data.resources.stress||{current:0,max:6};
+              data.resources.stress.current=Math.max(0,Number(data.resources.stress.current||0)-1);
+            }
+          });
+          resourceNote=` • Hope ${updated.data.resources.hope}/6${r.duality==="Critical"?"; cleared 1 Stress":""}`;
+        }else if(r.duality==="Fear"){
+          const fear=db.changeFear(interaction.guildId,1); resourceNote=` • GM Fear ${fear}/12`;
+        }
+        const e=db.getCurrentEncounter(s.id);
+        if(e?.status==="active"&&a?.character_id) db.recordSpotlight(e.id,a.character_id);
+      }
       const adv=r.adv_dice.length?` • d6 [${r.adv_dice.join(", ")}] = ${r.adv_net>=0?"+":""}${r.adv_net}`:"";
-      await interaction.reply(`🎲 **Duality:** Hope **${r.hope}** / Fear **${r.fear}**${adv} • modifiers ${r.modifier+r.experience>=0?"+":""}${r.modifier+r.experience} → **${r.total} — ${r.duality}**`);
+      await interaction.reply(`🎲 **${reaction?"Reaction":"Duality"}:** Hope **${r.hope}** / Fear **${r.fear}**${adv} • modifiers ${r.modifier+r.experience>=0?"+":""}${r.modifier+r.experience} → **${r.total} — ${r.duality}**${resourceNote}`);
       return true;
     }
     if(group==="roll"&&sub==="damage"){
@@ -850,7 +1115,123 @@ Initial phase: ${s.assembly_phase}`});
         question:interaction.options.getString("question",true),characterId:a?.character_id||null
       });
       const src=r.sources?.length?`\n\n_Reference: ${r.sources.join(", ")}_`:"";
-      await interaction.editReply(`**Rules desk:** ${r.answer}${src}`);
+      const basis=r.basis?`\n**Basis:** ${r.basis}`:"";
+      await interaction.editReply(`**Rules desk — ${r.classification}:** ${r.answer}${basis}${src}`.slice(0,1950));
+      return true;
+    }
+    if(group==="rules"&&sub==="ruling"){
+      if(!isGM(db,interaction)) throw new Error("GM/admin permission required.");
+      db.snapshotCampaign(interaction.guildId,{label:"Pre-rules ruling",reason:"Automatic snapshot before changing authoritative GM rules rulings",createdBy:interaction.user.id});
+      const row=db.upsertRulesRuling(interaction.guildId,{key:interaction.options.getString("key",true),question:interaction.options.getString("question",true),ruling:interaction.options.getString("ruling",true),createdBy:interaction.user.id});
+      await interaction.reply({content:`Saved **GM_RULING** \`${row.ruling_key}\`: ${row.ruling}`,ephemeral:true});
+      return true;
+    }
+    if(group==="rules"&&sub==="rulings"){
+      const rows=db.searchRulesRulings(interaction.guildId,"");
+      await interaction.reply({content:rows.length?`**Campaign GM Rulings**\n${rows.map(r=>`• \`${r.ruling_key}\` — ${r.question}: **${r.ruling}**`).join("\n")}`.slice(0,1950):"No saved GM rulings.",ephemeral:true});
+      return true;
+    }
+
+    if(group==="downtime"&&sub==="open"){
+      if(!isGM(db,interaction)) throw new Error("GM/admin permission required.");
+      if(db.getActiveSession(interaction.guildId)) throw new Error("Downtime can only be opened between sessions.");
+      const last=db.db.prepare("SELECT id FROM sessions WHERE guild_id=? AND status='ended' ORDER BY session_number DESC LIMIT 1").get(interaction.guildId);
+      const cycle=db.openDowntime(interaction.guildId,{label:interaction.options.getString("label")||"Between Sessions",sourceSessionId:last?.id||null,notes:interaction.options.getString("notes")||"",openedBy:interaction.user.id});
+      await interaction.reply({content:`Opened downtime cycle **${cycle.label}**. Players may submit projects with \`/vc downtime project\`.`,ephemeral:false});
+      return true;
+    }
+    if(group==="downtime"&&sub==="project"){
+      const cycle=db.currentDowntime(interaction.guildId); if(!cycle||cycle.status!=="open") throw new Error("No open downtime cycle.");
+      const q=interaction.options.getString("character"); const c=db.findOwnedCharacter(interaction.guildId,interaction.user.id,q); if(!c) throw new Error("No eligible owned character found.");
+      const row=db.addDowntimeProject(cycle.id,interaction.guildId,{userId:interaction.user.id,characterId:c.id,type:interaction.options.getString("type",true),title:interaction.options.getString("title",true),objective:interaction.options.getString("objective",true),maxProgress:interaction.options.getInteger("countdown")||4,visibility:interaction.options.getString("visibility")||"party"});
+      await interaction.reply({content:`Submitted **${row.title}** for **${c.name}** (${row.project_type}, ${row.max_progress}-step project).`,ephemeral:row.visibility!=="party"});
+      return true;
+    }
+    if(group==="downtime"&&sub==="status"){
+      const cycle=db.currentDowntime(interaction.guildId); if(!cycle){await interaction.reply({content:"No open downtime cycle.",ephemeral:true}); return true;}
+      await interaction.reply({content:downtimeStatusText(cycle,visibleDowntimeProjects(db,cycle,interaction.user.id,isGM(db,interaction))),ephemeral:true});
+      return true;
+    }
+    if(group==="downtime"&&sub==="resolve"){
+      if(!isGM(db,interaction)) throw new Error("GM/admin permission required.");
+      if(db.getActiveSession(interaction.guildId)) throw new Error("Resolve downtime between sessions, not during an active session.");
+      const cycle=db.currentDowntime(interaction.guildId); if(!cycle||cycle.status!=="open") throw new Error("No open downtime cycle.");
+      const projects=db.listDowntimeProjects(cycle.id); if(!projects.length) throw new Error("No downtime projects were submitted.");
+      db.snapshotCampaign(interaction.guildId,{label:`Pre-downtime ${cycle.label}`,reason:"Automatic snapshot before downtime resolution",createdBy:interaction.user.id});
+      db.db.prepare("UPDATE downtime_cycles SET status='resolving' WHERE id=?").run(cycle.id);
+      await interaction.deferReply({ephemeral:true});
+      const resolved=await gm.resolveDowntime({guildId:interaction.guildId,cycle:{...cycle,status:"resolving"},projects});
+      const byId=new Map(projects.map(p=>[p.id,p]));
+      for(const r of resolved.project_results||[]){
+        const p=byId.get(r.project_id); if(!p) continue;
+        const progress=Math.max(0,Math.min(p.max_progress,Number(p.progress||0)+Number(r.progress_delta||0)));
+        const status=r.status==="completed"||progress>=p.max_progress?"completed":r.status;
+        db.updateDowntimeProject(p.id,{progress,status,result:r.result||""});
+        const msg=`**Downtime — ${p.title}**\n${r.result||"Resolved."}\nProgress: ${progress}/${p.max_progress} • ${status}`;
+        if(p.visibility==="party") await postJournalEntry({db,guild:interaction.guild,title:`Downtime: ${p.title}`,content:msg});
+        else await sendPlayerPrivate({db,guild:interaction.guild,userId:p.discord_user_id,content:msg,sessionId:null,characterId:p.visibility==="character"?p.character_id:null});
+      }
+      const eventResults=applyGMEvents(db,interaction.guildId,cycle.source_session_id||null,resolved.events||[],{mode:"party",actorUserId:null,actorCharacterId:null});
+      await publishEventResults({db,guild:interaction.guild,results:eventResults});
+      for(const r of eventResults.filter(x=>x.type==="canon"&&x.status==="conflict")) await postStateError({db,guild:interaction.guild,error:new Error(`Pending canon conflict ${r.conflict_id}`),context:"downtime-canon-conflict",sessionId:cycle.source_session_id||null});
+      const done=db.resolveDowntimeCycle(cycle.id,resolved.summary||"");
+      await postGmLog({db,guild:interaction.guild,title:`Downtime resolved — ${done.label}`,details:`${resolved.summary||""}\nWorld moves: ${(resolved.world_moves||[]).join("; ")||"none"}`});
+      db.snapshotCampaign(interaction.guildId,{label:`Post-downtime ${done.label}`,reason:"Automatic snapshot after downtime resolution",createdBy:interaction.user.id});
+      await interaction.editReply(`Downtime resolved. **${projects.length}** project(s) processed. Party-visible results were posted to the journal; private results were delivered privately.`);
+      return true;
+    }
+
+    if(group==="canon"&&sub==="set"){
+      if(!isGM(db,interaction)) throw new Error("GM/admin permission required.");
+      const s=db.getActiveSession(interaction.guildId);
+      const r=db.proposeCanon(interaction.guildId,{key:interaction.options.getString("key",true),value:interaction.options.getString("value",true),visibility:interaction.options.getString("visibility")||"party",sessionId:s?.id||null,sourceType:"human_gm",sourceId:interaction.user.id,provenance:"/vc canon set"});
+      if(r.status==="conflict") await interaction.reply({content:`⚠️ Canon conflict created: \`${r.conflict.id.slice(0,8)}\`\nExisting: ${r.existing.value}\nProposed: ${r.conflict.proposed_value}\nResolve with \`/vc canon resolve\`.`,ephemeral:true});
+      else await interaction.reply({content:`Canon **${r.status}**: \`${interaction.options.getString("key",true).toLowerCase()}\` = ${interaction.options.getString("value",true)}`,ephemeral:true});
+      return true;
+    }
+    if(group==="canon"&&sub==="status"){
+      const rows=db.listCanon(interaction.guildId,{includeGM:isGM(db,interaction),limit:100});
+      await interaction.reply({content:rows.length?`**Campaign Canon**\n${rows.map(r=>`• \`${r.canon_key}\` = ${r.value}${r.visibility==="gm"?" *(GM)*":""}`).join("\n")}`.slice(0,1950):"No structured canon entries yet.",ephemeral:true});
+      return true;
+    }
+    if(group==="canon"&&sub==="conflicts"){
+      if(!isGM(db,interaction)) throw new Error("GM/admin permission required.");
+      const rows=db.listCanonConflicts(interaction.guildId);
+      await interaction.reply({content:rows.length?`**Pending Canon Conflicts**\n${rows.map(r=>`• \`${r.id.slice(0,8)}\` **${r.canon_key}**\n  existing: ${r.existing_value}\n  proposed: ${r.proposed_value}`).join("\n")}`.slice(0,1950):"No pending canon conflicts.",ephemeral:true});
+      return true;
+    }
+    if(group==="canon"&&sub==="resolve"){
+      if(!isGM(db,interaction)) throw new Error("GM/admin permission required.");
+      const rows=db.listCanonConflicts(interaction.guildId); const row=byPrefix(rows,interaction.options.getString("conflict_id",true)); if(!row) throw new Error("Pending canon conflict not found.");
+      db.snapshotCampaign(interaction.guildId,{label:`Pre-canon ${row.canon_key}`,reason:`Before resolving canon conflict ${row.id}`,createdBy:interaction.user.id});
+      const event=db.resolveCanonConflict(interaction.guildId,row.id,{resolution:interaction.options.getString("resolution",true),customValue:interaction.options.getString("custom_value")||"",actorId:interaction.user.id});
+      await postGmLog({db,guild:interaction.guild,title:"Canon conflict resolved",details:`${row.canon_key} → ${event?.value||"existing canon retained"}`});
+      await interaction.reply({content:`Resolved **${row.canon_key}** → ${event?.value||row.existing_value}`,ephemeral:true});
+      return true;
+    }
+
+    if(group==="admin"&&sub==="snapshot"){
+      if(!isGM(db,interaction)) throw new Error("GM/admin permission required.");
+      const row=db.snapshotCampaign(interaction.guildId,{label:interaction.options.getString("label")||"Manual snapshot",reason:interaction.options.getString("reason")||"Manual GM snapshot",createdBy:interaction.user.id});
+      await interaction.reply({content:`Snapshot created: \`${row.id.slice(0,8)}\` **${row.label}**`,ephemeral:true});
+      return true;
+    }
+    if(group==="admin"&&sub==="snapshots"){
+      if(!isGM(db,interaction)) throw new Error("GM/admin permission required.");
+      const rows=db.listSnapshots(interaction.guildId,12);
+      await interaction.reply({content:rows.length?`**Recent Snapshots**\n${rows.map(r=>`• \`${r.id.slice(0,8)}\` **${r.label}** — ${r.reason||""} — ${r.created_at}`).join("\n")}`.slice(0,1950):"No snapshots yet.",ephemeral:true});
+      return true;
+    }
+    if(group==="admin"&&sub==="rollback"){
+      if(!isGM(db,interaction)) throw new Error("GM/admin permission required.");
+      const snap=byPrefix(db.listSnapshots(interaction.guildId,100),interaction.options.getString("snapshot_id",true)); if(!snap) throw new Error("Snapshot not found.");
+      const full=db.getSnapshot(snap.id);
+      await interaction.deferReply({ephemeral:true});
+      await deletePublishedNotInSnapshot({db,guild:interaction.guild,snapshot:full});
+      db.restoreSnapshot(interaction.guildId,snap.id,{actorId:interaction.user.id});
+      await syncConfiguredSurfaces({db,guild:interaction.guild});
+      await postGmLog({db,guild:interaction.guild,title:"Campaign rollback",details:`Restored snapshot ${snap.id.slice(0,8)} — ${snap.label}. A pre-rollback safety snapshot was created automatically.`});
+      await interaction.editReply(`Restored snapshot \`${snap.id.slice(0,8)}\` **${snap.label}**. A pre-rollback safety snapshot was created automatically.`);
       return true;
     }
 
@@ -881,8 +1262,9 @@ Initial phase: ${s.assembly_phase}`});
       if(sub==="fear"){
         const s=db.getActiveSession(interaction.guildId);
         const delta=interaction.options.getInteger("delta",true);
-        db.audit(interaction.guildId,s?.id||null,"human_gm",interaction.user.id,"fear_delta",{delta});
-        await interaction.reply({content:`Recorded Fear change: ${delta>=0?"+":""}${delta}. (Fear remains a table resource; this command logs rather than automates spending.)`,ephemeral:true});
+        const fear=db.changeFear(interaction.guildId,delta);
+        db.audit(interaction.guildId,s?.id||null,"human_gm",interaction.user.id,"fear_delta",{delta,fear});
+        await interaction.reply({content:`Fear ${delta>=0?"+":""}${delta} → **${fear}/12**.`,ephemeral:true});
         return true;
       }
       if(sub==="fact"){

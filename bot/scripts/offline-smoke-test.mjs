@@ -4,6 +4,8 @@ import path from "node:path";
 import { VeiledDB } from "../src/db.js";
 import { applyGMEvents } from "../src/state.js";
 import { baseBattlePoints, partyTier, livePcRoster, autoBuildComposition, recomputeBudget, EncounterLibrary } from "../src/encounter.js";
+import { buildCombatants, hpMarksForDamage } from "../src/combat.js";
+import { prepareLevelup, applyLevelupToData, validateConceptDraft } from "../src/character-system.js";
 
 const dir=fs.mkdtempSync(path.join(os.tmpdir(),"veilkeeper31-"));
 const dbPath=path.join(dir,"test.sqlite");
@@ -97,13 +99,55 @@ if(encounter.base_bp!==8||encounter.pc_count!==2||!encounter.composition.length)
 if(encounter.composition.some(x=>x.type==="Minion"&&x.unit_count%x.quantity!==0)) throw new Error("Minion group sizing failed.");
 const activeEncounter=db.setEncounterStatus(encounter.id,"active");
 if(activeEncounter.status!=="active"||db.getCurrentEncounter(session.id).id!==encounter.id) throw new Error("Encounter activation failed.");
+const combatants=db.initializeCombatants(encounter.id,buildCombatants(activeEncounter,encounterLib));
+if(!combatants.length) throw new Error("Deterministic combatant initialization failed.");
+const firstCombatant=combatants[0];
+const marks=hpMarksForDamage(firstCombatant,Math.max(1,firstCombatant.major_threshold||1));
+const damaged=db.updateCombatant(firstCombatant.id,{hp_current:firstCombatant.hp_current-marks,conditions:["Vulnerable until next spotlight"]});
+if(damaged.hp_current>=firstCombatant.hp_current||!damaged.conditions.length) throw new Error("Combatant HP/condition tracking failed.");
+db.recordSpotlight(encounter.id,char.id);
+if((db.getEncounter(encounter.id).combat_state?.spotlight?.counts?.[char.id]||0)!==1) throw new Error("Spotlight tracking failed.");
+if(db.changeFear(guild,2)!==2) throw new Error("Fear tracking failed.");
 db.setEncounterStatus(encounter.id,"ended");
 if(db.getCurrentEncounter(session.id)) throw new Error("Encounter end/current lookup failed.");
+// v3.2 character concept + advancement validation.
+const conceptDraft={name:"Example",class:"Ranger",subclass:"Wayfinder",ancestry:"Spirit-Touched",community:"Institutionborne",domains:["Bone","Veil"],traits:{agility:1,strength:0,finesse:1,instinct:2,presence:-1,knowledge:0},experiences:["Private Investigator","Former Detective"],domain_cards:["Card A","Card B"],hook_proposals:[{text:"The old case is unresolved.",classification:"open_question"}]};
+if(!validateConceptDraft(conceptDraft).ok) throw new Error("Character concept validation failed.");
+const savedDraft=db.createCharacterDraft(guild,user,"Example detective",conceptDraft);
+if(!db.latestCharacterDraft(guild,user)?.id===savedDraft.id) throw new Error("Character draft persistence failed.");
+const levelChar=db.updateCharacterData(char.id,d=>{d.level=1;d.proficiency=1;d.experiences=[{name:"Private Investigator",modifier:2},{name:"Former Detective",modifier:2}];d.resources={hp:{current:6,max:6},stress:{current:0,max:6},hope:2,armor:{current:0,max:3}};d.domains=["Bone","Veil"];d.domain_cards=[];d.advancement_state={trait_marks:[],slot_usage:{},history:[]};});
+const plan=prepareLevelup(levelChar,{advancementOne:"hp",advancementTwo:"stress",domainCard:"Test Bone Card",domain:"Bone",cardLevel:2,tierExperience:"Occult Casework",customCards:{}});
+const leveled=applyLevelupToData(levelChar.data,plan);
+if(leveled.level!==2||leveled.proficiency!==2||leveled.resources.hp.max!==7||leveled.resources.stress.max!==7) throw new Error("Validated level-up application failed.");
+const ld=db.createLevelupDraft(guild,user,char.id,1,2,{plan}); db.updateLevelupDraft(ld.id,{plan},"ready");
+
+// v3.2 canon conflict resolution and rules ruling persistence.
+let canon=db.proposeCanon(guild,{key:"npc.test.identity",value:"Known identity",visibility:"party",sessionId:session.id,sourceType:"test",sourceId:"test"});
+if(canon.status!=="accepted") throw new Error("Canon establishment failed.");
+canon=db.proposeCanon(guild,{key:"npc.test.identity",value:"Contradictory identity",visibility:"party",sessionId:session.id,sourceType:"test",sourceId:"test"});
+if(canon.status!=="conflict") throw new Error("Canon conflict detection failed.");
+const resolvedCanon=db.resolveCanonConflict(guild,canon.conflict.id,{resolution:"existing",actorId:"gm"});
+if(resolvedCanon.value!=="Known identity") throw new Error("Canon conflict resolution failed.");
+const ruling=db.upsertRulesRuling(guild,{key:"test-ruling",question:"Test?",ruling:"Use the saved ruling.",createdBy:"gm"});
+if(!db.searchRulesRulings(guild,"").some(x=>x.id===ruling.id)) throw new Error("Rules ruling persistence failed.");
+
+// v3.2 snapshot/rollback.
+const snap=db.snapshotCampaign(guild,{label:"Before mutation",reason:"offline test",createdBy:"gm"});
+db.changeVeilExposure(guild,3);
+db.restoreSnapshot(guild,snap.id,{actorId:"gm"});
+if(db.getCampaign(guild).veil_exposure!==0) throw new Error("Snapshot rollback failed.");
+
 const autoRelease=db.upsertNpcProxy(guild,session.id,{npcName:"Cicada",userId:user2,controlLevel:"portrayal",status:"active",playerPacket:{current_objective:"Test"}});
 if(!db.npcProxyAssignments(session.id,user2).some(x=>x.id===autoRelease.id)) throw new Error("Second NPC proxy activation failed.");
 db.endSession(guild,"Smoke test complete.");
 if(db.listNpcProxies(session.id,{statuses:["active","offered"]}).length!==0) throw new Error("Session-end NPC proxy auto-release failed.");
+const cycle=db.openDowntime(guild,{label:"Test Downtime",sourceSessionId:session.id,openedBy:"gm"});
+const project=db.addDowntimeProject(cycle.id,guild,{userId:user,characterId:char.id,type:"research",title:"Research the Mark",objective:"Identify its origin",maxProgress:4,visibility:"party"});
+db.updateDowntimeProject(project.id,{progress:2,status:"active",result:"Partial lead."});
+if(db.listDowntimeProjects(cycle.id)[0].progress!==2) throw new Error("Downtime project tracking failed.");
+db.resolveDowntimeCycle(cycle.id,"Downtime test resolved.");
+if(db.getDowntimeCycle(cycle.id).status!=="resolved") throw new Error("Downtime cycle resolution failed.");
 
-console.log("Veilkeeper v3.1.3 offline smoke test: PASS");
+console.log("Veilkeeper v3.2.0 offline smoke test: PASS");
 db.close();
 fs.rmSync(dir,{recursive:true,force:true});

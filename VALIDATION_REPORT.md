@@ -1,38 +1,37 @@
-# Veiled City Multiplayer Discord v3.1.3 — Validation Report
+# Veiled City Multiplayer Discord v3.2.0 — Validation Report
 
 **Build date:** 2026-10-05
 
 ## Result
 **PASS**
 
-## v3.1.3 encounter validation
-- Daggerheart Battle Point base formula implemented as `(3 × active PCs) + 2`.
-- Difficulty adjustments: easy/shorter `-1`, standard `0`, hard/longer `+2`.
-- Role costs implemented: Minion group/Social/Support 1; Horde/Ranged/Skulk/Standard 2; Leader 3; Bruiser 4; Solo 5.
-- Derived modifiers tested: 2+ Solos `-2`, global damage boost `-2`, lower-tier opposition `+1`, no heavy role `+1`.
-- Active PC count is sourced from Present/Guest/Late session assignments only; NPC proxies do not count.
-- Minion groups scale to the live party size.
-- Auto-builder matrix exercised across Tiers 1–4, 2–6 PCs, all three difficulty modes, and all five composition styles with repeated randomized runs; no generated plan exceeded its BP budget.
-- Tier 4 role coverage expanded to avoid Solo-only encounter composition.
-- Encounter lifecycle persistence tested: planned → active → ended.
-- Session end automatically closes unfinished encounter records.
+## v3.2.0 systems validated
+- AI-assisted Level 1 character concept drafts validate the required trait spread, domains, Experiences, starting cards, structured hooks, and player/GM hook permissions before acceptance.
+- Level-up planning/application validates sequential levels, tier achievements, advancement-choice limits, double-choice proficiency/multiclass advances, domain-card progression, and structured advancement history.
+- Deterministic combat state persists individual adversary/minion HP, Stress, thresholds, conditions/effects, status, GM Fear, and non-binding spotlight counts in SQLite.
+- Normal Duality rolls can mutate Hope/Fear/Critical resources deterministically; Reaction rolls are excluded from Hope/Fear generation and spotlight tracking.
+- Campaign snapshots capture authoritative campaign state; rollback creates a safety snapshot first and restores the selected snapshot while preserving operational logs.
+- Canon proposals are versioned; contradictory facts create pending conflicts and require explicit GM resolution instead of silent replacement.
+- Downtime cycles/projects persist between sessions, respect visibility, accept deterministic state events, and record resolved world consequences.
+- Rules rulings persist and the Rules Desk supports authority labels: RAW, Veiled City House Rule, Homebrew Content, GM Ruling, or Provisional Ruling.
 
 ## Compatibility / migration
-- v3.1.2 SQLite → v3.1.3 migration test: PASS.
-- Existing characters, sessions, party state, NPC proxies, private knowledge, and campaign data remain intact.
-- New encounter storage is additive.
+- v3.1.3 SQLite → v3.2.0 migration test: **PASS**.
+- Existing characters, sessions, party state, NPC proxies, private knowledge, encounters, and campaign data remain intact.
+- New tables/columns are additive.
 
-## Code / package checks
-- `npm run check`: PASS.
-- `npm run test:offline`: PASS.
-- Content validator: PASS.
-- Adversaries: 41.
-- Markdown files: 51.
-- JSON files: 10.
-- Legacy one-PC encounter files removed and references replaced with multiplayer guides.
+## Code / content checks
+- `npm run check`: **PASS**.
+- `npm run test:offline`: **PASS**.
+- Veiled City content validator: **PASS**.
+- Domain cards: **84**.
+- Content Markdown files: **51**.
+- Content JSON files: **10**.
+- Final Daggerheart action handling uses freeform spotlight play; Veilkeeper's spotlight counters are advisory and do not create an initiative/action-token economy.
 
 ## Not exercised without user credentials
-- Live Discord command registration and interaction delivery.
-- Live OpenAI GM calls.
+- Live Discord command registration/interactions.
+- Live OpenAI character-draft, GM, rules, and downtime calls.
+- Live private-channel/DM delivery.
 
-Those require the user's Discord/OpenAI credentials and are intentionally not part of offline validation.
+Those require the user's Discord/OpenAI credentials and are intentionally excluded from offline validation.

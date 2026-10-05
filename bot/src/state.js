@@ -31,7 +31,7 @@ function privateVisibility(event,scope){
     targetCharacterId:event.target_character_id||null
   };
   // A private scene cannot silently publish newly learned information to the party.
-  if(["fact","clue","thread","npc_update","location_update"].includes(event.type)){
+  if(["fact","clue","thread","npc_update","location_update","canon"].includes(event.type)){
     const characterId=scope.actorCharacterId||event.target_character_id||null;
     return characterId
       ?{visibility:"character",targetUserId:null,targetCharacterId:characterId}
@@ -81,10 +81,16 @@ export function applyGMEvents(db,guildId,sessionId,events=[],scope={mode:"party"
         }
         case "resource_delta":{
           const allowed=new Set(["hope","hp","stress","armor"]);
-          if(!allowed.has(e.key)||!e.target_user_id) break;
-          const a=activeCharacterFor(db,sessionId,e.target_user_id);
-          if(!a) break;
-          db.updateCharacterData(a.character_id,data=>{
+          if(!allowed.has(e.key)) break;
+          let characterId=e.target_character_id||null;
+          if(!characterId && e.target_user_id){
+            const a=activeCharacterFor(db,sessionId,e.target_user_id);
+            characterId=a?.character_id||null;
+          }
+          if(!characterId) break;
+          const ch=db.getCharacter(characterId);
+          if(!ch || ch.guild_id!==guildId) break;
+          db.updateCharacterData(characterId,data=>{
             const res=data.resources??(data.resources={});
             if(e.key==="hope"){
               res.hope=Math.max(0,(Number(res.hope)||0)+(Number(e.amount)||0));
@@ -93,7 +99,7 @@ export function applyGMEvents(db,guildId,sessionId,events=[],scope={mode:"party"
               obj.current=Math.max(0,Math.min(Number(obj.max)||999,(Number(obj.current)||0)+(Number(e.amount)||0)));
             }
           });
-          results.push({type:e.type,key:e.key,target:e.target_user_id,amount:e.amount});
+          results.push({type:e.type,key:e.key,target_character_id:characterId,target_user_id:e.target_user_id||null,amount:e.amount});
           break;
         }
         case "thread":{
@@ -119,6 +125,12 @@ export function applyGMEvents(db,guildId,sessionId,events=[],scope={mode:"party"
             visibility:vis.visibility,subjectUserId:vis.targetUserId,subjectCharacterId:vis.targetCharacterId
           });
           results.push({type:e.type,kind,key:row.entity_key,row,publish:vis.visibility==="party"||vis.visibility==="public"});
+          break;
+        }
+        case "canon":{
+          if(!e.key?.trim()||!e.value?.trim()) break;
+          const r=db.proposeCanon(guildId,{key:e.key,value:e.value,visibility:vis.visibility,sessionId,sourceType:"ai",sourceId:"gm",provenance:e.note||"AI GM turn"});
+          results.push({type:e.type,key:e.key,ok:r.status!=="conflict",status:r.status,conflict_id:r.conflict?.id||null});
           break;
         }
         case "relationship":

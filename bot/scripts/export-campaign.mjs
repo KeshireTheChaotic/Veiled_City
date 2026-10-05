@@ -18,7 +18,7 @@ const sessions=all("SELECT * FROM sessions WHERE guild_id=? ORDER BY session_num
 const sessionIds=sessions.map(x=>x.id);
 const placeholders=sessionIds.length?sessionIds.map(()=>"?").join(","):"''";
 const exportObj={
-  export_version:"3.1.3",
+  export_version:"3.2.0",
   visibility:mode==="player"?"player_safe":"gm_private_full",
   exported_at:new Date().toISOString(),
   campaign:one("SELECT * FROM campaigns WHERE guild_id=?",guildId),
@@ -29,6 +29,7 @@ const exportObj={
   assignments:sessionIds.length?all(`SELECT * FROM session_characters WHERE session_id IN (${placeholders})`,...sessionIds):[],
   npc_proxies:mode!=="player" && sessionIds.length?all(`SELECT * FROM npc_proxies WHERE session_id IN (${placeholders})`,...sessionIds):[],
   encounters:mode!=="player" && sessionIds.length?all(`SELECT * FROM encounters WHERE session_id IN (${placeholders})`,...sessionIds):[],
+  encounter_combatants:mode!=="player" && sessionIds.length?all(`SELECT * FROM encounter_combatants WHERE session_id IN (${placeholders})`,...sessionIds):[],
   facts:mode==="player"
     ? all("SELECT * FROM facts WHERE guild_id=? AND visibility IN ('public','party')",guildId)
     : all("SELECT * FROM facts WHERE guild_id=?",guildId),
@@ -41,9 +42,19 @@ const exportObj={
   messages:mode==="player"
     ? all("SELECT * FROM messages WHERE guild_id=? AND visibility='party'",guildId)
     : all("SELECT * FROM messages WHERE guild_id=?",guildId),
-  rolls:all("SELECT * FROM rolls WHERE guild_id=?",guildId)
+  rolls:all("SELECT * FROM rolls WHERE guild_id=?",guildId),
+  canon:mode==="player" ? all("SELECT * FROM canon_events WHERE guild_id=? AND status='current' AND visibility!='gm'",guildId) : all("SELECT * FROM canon_events WHERE guild_id=?",guildId),
+  rules_rulings:all("SELECT * FROM rules_rulings WHERE guild_id=? AND active=1",guildId),
+  downtime_cycles:all("SELECT * FROM downtime_cycles WHERE guild_id=?",guildId),
+  downtime_projects:mode==="player" ? all("SELECT * FROM downtime_projects WHERE guild_id=? AND visibility IN ('public','party')",guildId) : all("SELECT * FROM downtime_projects WHERE guild_id=?",guildId)
 };
-if(mode!=="player") exportObj.audit_log=all("SELECT * FROM audit_log WHERE guild_id=?",guildId);
+if(mode!=="player") {
+  exportObj.audit_log=all("SELECT * FROM audit_log WHERE guild_id=?",guildId);
+  exportObj.canon_conflicts=all("SELECT * FROM canon_conflicts WHERE guild_id=?",guildId);
+  exportObj.character_drafts=all("SELECT * FROM character_drafts WHERE guild_id=?",guildId);
+  exportObj.levelup_drafts=all("SELECT * FROM levelup_drafts WHERE guild_id=?",guildId);
+  exportObj.snapshots=all("SELECT id,guild_id,label,reason,created_by,created_at FROM campaign_snapshots WHERE guild_id=? ORDER BY created_at",guildId);
+}
 
 const out=path.resolve(process.cwd(),`./data/veiled-city-${guildId}-${mode}-${Date.now()}.json`);
 fs.writeFileSync(out,JSON.stringify(exportObj,null,2));

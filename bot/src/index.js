@@ -70,7 +70,7 @@ function resolveController(session,message){
 }
 
 client.once("ready",()=>{
-  console.log(`Veilkeeper v3.1.3 logged in as ${client.user.tag}`);
+  console.log(`Veilkeeper v3.2.0 logged in as ${client.user.tag}`);
   console.log(`Indexed ${content.chunks.length} Veiled City content chunks.`);
 });
 
@@ -103,7 +103,8 @@ client.on("messageCreate",async message=>{
       const cleaned=message.content.replaceAll(`<@${client.user.id}>`,"").replaceAll(`<@!${client.user.id}>`,"").trim();
       const r=await gm.answerRulesQuestion({guildId:message.guild.id,userId:message.author.id,userName:message.member?.displayName||message.author.username,question:cleaned||message.content,characterId:a?.character_id||null});
       const src=r.sources?.length?`\n\n_Reference: ${r.sources.join(", ")}_`:"";
-      await message.reply(`**Rules desk:** ${r.answer}${src}`);
+      const basis=r.basis?`\n**Basis:** ${r.basis}`:"";
+      await message.reply(`**Rules desk — ${r.classification}:** ${r.answer}${basis}${src}`.slice(0,1950));
       db.audit(message.guild.id,s?.id||null,"ai","rules", "rules_answer",{user:message.author.id,sources:r.sources});
     }catch(err){
       console.error("Rules desk failed",err);
@@ -134,7 +135,9 @@ client.on("messageCreate",async message=>{
       const cleaned=playerText.replaceAll(`<@${client.user.id}>`,"").replaceAll(`<@!${client.user.id}>`,"").trim();
       const result=await gm.runTurn({guildId:message.guild.id,actorUserId:message.author.id,actorName:speaker,actorAssignment:controlled,messageText:cleaned||playerText,scope:"private"});
       if(!result.respond) return;
+      if((result.events||[]).some(e=>!["log_only","relationship"].includes(e.type))) db.snapshotCampaign(message.guild.id,{label:"Pre-private GM mutation",reason:`Automatic snapshot before eventful private GM turn by ${speaker}`,createdBy:"veilkeeper"});
       const applied=applyGMEvents(db,message.guild.id,session.id,result.events,{mode:"private",actorUserId:message.author.id,actorCharacterId:controlled?.character_id||null});
+      for(const r of applied.filter(x=>x.type==="canon"&&x.status==="conflict")) await postStateError({db,guild:message.guild,error:new Error(`Canon conflict ${r.conflict_id} requires GM resolution`),context:"canon-conflict-private",sessionId:session.id});
       if(result.narration?.trim()){
         for(const c of splitDiscord(result.narration)) await message.channel.send(c.trim());
         db.addMessage({guildId:message.guild.id,sessionId:session.id,userId:client.user.id,speakerName:"Veilkeeper",visibility:vis,subjectUserId:vis==="player"?message.author.id:null,subjectCharacterId:vis==="character"?controlled.character_id:null,content:result.narration});
@@ -182,8 +185,10 @@ client.on("messageCreate",async message=>{
     const cleaned=playerText.replaceAll(`<@${client.user.id}>`,"").replaceAll(`<@!${client.user.id}>`,"").trim();
     const result=await gm.runTurn({guildId:message.guild.id,actorUserId:message.author.id,actorName:speaker,actorAssignment:controlled,messageText:cleaned||playerText,scope:"party"});
     if(!result.respond) return;
+    if((result.events||[]).some(e=>!["log_only","relationship"].includes(e.type))) db.snapshotCampaign(message.guild.id,{label:"Pre-GM mutation",reason:`Automatic snapshot before eventful GM turn by ${speaker}`,createdBy:"veilkeeper"});
     const applied=applyGMEvents(db,message.guild.id,session.id,result.events,{mode:"party",actorUserId:message.author.id,actorCharacterId:controlled?.character_id||null});
     await publishEventResults({db,guild:message.guild,results:applied});
+    for(const r of applied.filter(x=>x.type==="canon"&&x.status==="conflict")) await postStateError({db,guild:message.guild,error:new Error(`Canon conflict ${r.conflict_id} requires GM resolution`),context:"canon-conflict-party",sessionId:session.id});
     if(result.narration?.trim()){
       for(const c of splitDiscord(result.narration)) await message.channel.send(c.trim());
       db.addMessage({guildId:message.guild.id,sessionId:session.id,userId:client.user.id,speakerName:"Veilkeeper",visibility:"party",content:result.narration});

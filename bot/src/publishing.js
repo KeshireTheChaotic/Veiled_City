@@ -70,6 +70,14 @@ export async function publishJournal({db,guild,session,recap}){
   return true;
 }
 
+export async function postJournalEntry({db,guild,title="Campaign Update",content=""}){
+  const c=db.getCampaign(guild.id);
+  const ch=await textChannel(guild,c?.journal_channel_id);
+  if(!ch) return false;
+  for(const p of chunks(`## ${title}\n\n${content}`)) await ch.send(p);
+  return true;
+}
+
 export async function postGmLog({db,guild,sessionId=null,title="GM Log",details=""}){
   const c=db.getCampaign(guild.id);
   const ch=await textChannel(guild,c?.gm_log_channel_id);

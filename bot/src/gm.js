@@ -27,7 +27,7 @@ const gmSchema={
       items:{
         type:"object", additionalProperties:false,
         properties:{
-          type:{type:"string",enum:["fact","clue","clock_delta","veil_exposure_delta","resource_delta","thread","relationship","npc_update","location_update","log_only"]},
+          type:{type:"string",enum:["fact","clue","clock_delta","veil_exposure_delta","resource_delta","thread","relationship","npc_update","location_update","canon","log_only"]},
           key:{type:"string"},
           target_user_id:{type:"string"},
           target_character_id:{type:"string"},
@@ -108,6 +108,38 @@ const npcProxyPacketSchema={
   required:["npc_name","public_identity","portrayal","current_objective","known_information","relationships","capabilities","limitations","scene_cues","gm_note"]
 };
 
+
+const characterConceptSchema={
+  type:"object",additionalProperties:false,
+  properties:{
+    name:{type:"string"},pronouns:{type:"string"},class:{type:"string"},subclass:{type:"string"},ancestry:{type:"string"},community:{type:"string"},
+    domains:{type:"array",items:{type:"string"}},
+    traits:{type:"object",additionalProperties:false,properties:{agility:{type:"integer"},strength:{type:"integer"},finesse:{type:"integer"},instinct:{type:"integer"},presence:{type:"integer"},knowledge:{type:"integer"}},required:["agility","strength","finesse","instinct","presence","knowledge"]},
+    resources:{type:"object",additionalProperties:false,properties:{hp:{type:"object",additionalProperties:false,properties:{current:{type:"integer"},max:{type:"integer"}},required:["current","max"]},stress:{type:"object",additionalProperties:false,properties:{current:{type:"integer"},max:{type:"integer"}},required:["current","max"]},hope:{type:"integer"},armor:{type:"object",additionalProperties:false,properties:{current:{type:"integer"},max:{type:"integer"}},required:["current","max"]}},required:["hp","stress","hope","armor"]},
+    evasion:{type:"integer"},proficiency:{type:"integer"},experiences:{type:"array",items:{type:"string"}},domain_cards:{type:"array",items:{type:"string"}},inventory:{type:"array",items:{type:"string"}},
+    background:{type:"string"},home:{type:"string"},person:{type:"string"},obligation:{type:"string"},opening_status:{type:"string"},goals:{type:"array",items:{type:"string"}},unresolved_incident:{type:"string"},faction_connections:{type:"array",items:{type:"string"}},entry_hooks:{type:"array",items:{type:"string"}},exit_hooks:{type:"array",items:{type:"string"}},
+    hook_proposals:{type:"array",items:{type:"object",additionalProperties:false,properties:{text:{type:"string"},classification:{type:"string",enum:["established","open_question","permission_to_complicate"]}},required:["text","classification"]}},
+    notes:{type:"string"},mechanical_notes:{type:"string"}
+  },
+  required:["name","pronouns","class","subclass","ancestry","community","domains","traits","resources","evasion","proficiency","experiences","domain_cards","inventory","background","home","person","obligation","opening_status","goals","unresolved_incident","faction_connections","entry_hooks","exit_hooks","hook_proposals","notes","mechanical_notes"]
+};
+
+const downtimeSchema={
+  type:"object",additionalProperties:false,
+  properties:{
+    project_results:{type:"array",items:{type:"object",additionalProperties:false,properties:{project_id:{type:"string"},progress_delta:{type:"integer"},status:{type:"string",enum:["active","completed","failed"]},result:{type:"string"}},required:["project_id","progress_delta","status","result"]}},
+    world_moves:{type:"array",items:{type:"string"}},
+    events:gmSchema.properties.events,
+    summary:{type:"string"}
+  },required:["project_results","world_moves","events","summary"]
+};
+
+const rulesAnswerSchema={
+  type:"object",additionalProperties:false,
+  properties:{classification:{type:"string",enum:["RAW","VEILED_CITY_HOUSE_RULE","HOMEBREW_CONTENT","GM_RULING","PROVISIONAL_RULING"]},answer:{type:"string"},basis:{type:"string"},sources:{type:"array",items:{type:"string"}}},
+  required:["classification","answer","basis","sources"]
+};
+
 function cleanQuestion(text,botId=""){
   return String(text||"").replaceAll(`<@${botId}>`,"").replaceAll(`<@!${botId}>`,"").trim();
 }
@@ -160,8 +192,11 @@ export class GMService{
     const assembly=session?this.db.getAssemblyPlan(session.id):{};
     const partyState=this.db.getPartyState(guildId);
     const currentEncounter=session?this.db.getCurrentEncounter(session.id):null;
+    const currentCombatants=currentEncounter?.status==="active"?this.db.listCombatants(currentEncounter.id,{includeRemoved:true}):[];
+    const canon=this.db.listCanon(guildId,{includeGM:true,limit:120});
+    const rulings=this.db.searchRulesRulings(guildId,messageText);
     return {
-      campaign,session,assembly,party_state:partyState,current_encounter:currentEncounter,
+      campaign,session,assembly,party_state:partyState,current_encounter:currentEncounter,current_combatants:currentCombatants,canon,rulings,
       actor_assignment:actorAssignment?(actorAssignment.npc_proxy?{
         assignment_kind:"npc_proxy",controller_user_id:actorUserId,npc_proxy_id:actorAssignment.id,
         npc_name:actorAssignment.npc_name,knowledge_id:actorAssignment.knowledge_id,control_level:actorAssignment.control_level,
@@ -194,9 +229,13 @@ export class GMService{
       "Control levels: portrayal = dialogue/personality only unless the GM invites more; tactical = dialogue plus movement, listed abilities and tactical choices; full_npc = all voluntary decisions of that NPC only. None grants co-GM authority or omniscience.",
       "Never use resource_delta to represent damage/resources on an NPC proxy. PC resource_delta remains valid when an NPC's action affects a player character; NPC consequences should be narrated or logged through GM state.",
       "The application, not you, rolls dice. Never invent a dice result. Ask for a roll narratively when required.",
-      "If CURRENT ENCOUNTER is active, its objective, environment, tier, and adversary composition are authoritative GM state. Do not silently add full adversaries beyond that composition except when an explicitly listed adversary/environment feature summons them. Never reveal Battle Point totals, hidden composition, or unused budget to players.",
+      "If CURRENT ENCOUNTER is active, its objective, environment, tier, adversary composition, COMBATANT STATE, and spotlight counts are authoritative GM state. Do not silently change HP, Stress, conditions, status, or add full adversaries outside deterministic state. Ask/use bot mechanics to update them. Never reveal Battle Point totals, hidden composition, or unused budget to players.",
+      "Daggerheart final/SRD 2.0 has no mandatory action tracker or initiative. Spotlight counts are a fairness aid only; never enforce them as turns. Campaign Fear in CAMPAIGN STATE is authoritative and capped at 12.",
       "Daggerheart encounter balance is multiplayer-only in this package. Do not use legacy one-PC/solo encounter assumptions.",
-      "Use events for newly established facts/clues, resource consequences, clocks, threads, Veil exposure, and player-known NPC/location reference changes.",
+      "Use events for newly established facts/clues, resource consequences, clocks, threads, Veil exposure, player-known NPC/location reference changes, and durable canon.",
+      "For canon events: key must be a stable normalized concept (example npc.mara-voss.surname or location.hollow-street.access-rule); value is the newly established durable fact. The application will refuse silent contradictions and queue a GM conflict instead.",
+      "CANON LEDGER is authoritative. Never contradict a current canon value. If new fiction appears to conflict, avoid resolving the contradiction in narration and let the application queue it for the human GM.",
+      "SAVED GM RULINGS have precedence over model memory for campaign-specific interpretations unless the human GM changes them.",
       "For npc_update/location_update: key is the entity's display name and value is a concise PLAYER-SAFE reference summary. Only emit these when the entity or updated fact has actually been learned.",
       "For thread events: status must be active/resolved/failed/dormant; note holds concise player-safe case-board notes.",
       "Do not mark a character dead; death/retirement is a human-controlled lifecycle action.",
@@ -355,28 +394,76 @@ export class GMService{
 
   async answerRulesQuestion({guildId,userId,userName,question,characterId=null}){
     const q=cleanQuestion(question);
-    const chunks=this.content.search(q,this.config.maxRulesChunks,{gm:false})
-      .filter(c=>!c.file.startsWith("GM_PRIVATE"));
+    const chunks=this.content.search(q,this.config.maxRulesChunks,{gm:false}).filter(c=>!c.file.startsWith("GM_PRIVATE"));
     const character=characterId?this.db.getCharacter(characterId):null;
+    const rulings=this.db.searchRulesRulings(guildId,q);
+    const classify=(file)=>{
+      if(file==="ENGINE/DAGGERHEART_MULTIPLAYER_CORE.md"||file==="PLAYER/QUICK_REFERENCE.md"||file==="ENGINE/MULTIPLAYER_ENCOUNTER_GUIDE.md") return "RAW-DERIVED";
+      if(file.startsWith("CARDS/")) return "VEILED CITY HOMEBREW";
+      if(file.startsWith("PLAYER/")||file.startsWith("ENGINE/")) return "VEILED CITY HOUSE RULE";
+      return "PLAYER-SAFE REFERENCE";
+    };
+    const excerpts=chunks.map(c=>({source:c.file,authority:classify(c.file),text:c.body}));
     const prompt=[
       "You are Veilkeeper's low-cost rules desk for a Veiled City Daggerheart campaign.",
-      "Answer the rules question directly and concisely. This is NOT a GM scene and MUST NOT advance fiction, mutate state, spend resources, reveal secrets, or invent dice results.",
-      "Priority: supplied Veiled City/Daggerheart reference excerpts > explicit campaign house rules > cautious general Daggerheart knowledge.",
-      "If the supplied material does not establish the answer, label the uncertain part 'Provisional ruling' and recommend checking the official Daggerheart SRD or human GM rather than pretending certainty.",
-      "Never mention or infer GM_PRIVATE content. Never reveal hidden campaign facts.",
-      "Prefer 2-6 short sentences. Include relevant mechanical steps when useful.",
+      "Return a structured answer classified as exactly one of RAW, VEILED_CITY_HOUSE_RULE, HOMEBREW_CONTENT, GM_RULING, or PROVISIONAL_RULING.",
+      "Authority order: saved human GM rulings for this campaign > supplied RAW-derived Daggerheart SRD 2.0 material > explicit Veiled City house rules > Veiled City homebrew card text > provisional ruling.",
+      "If two sources conflict, call that out and follow the higher-authority source. Never use GM_PRIVATE material.",
+      "RAW means the supplied SRD-derived material directly establishes the result. Do not label something RAW merely because you remember it from training.",
+      "If the excerpts do not establish the answer, use PROVISIONAL_RULING and say what needs human-GM/SRD confirmation.",
+      "This is NOT a GM scene: do not advance fiction, spend resources, mutate state, or reveal secrets.",
+      `Saved GM rulings: ${JSON.stringify(rulings)}`,
       `Asking player: ${userName} (${userId})`,
       `Current player-safe character sheet: ${JSON.stringify(character?.data||null)}`,
-      `Player-safe reference excerpts: ${JSON.stringify(chunks.map(c=>({source:c.file,text:c.body})))}`,
+      `Player-safe reference excerpts: ${JSON.stringify(excerpts)}`,
       `Question: ${q}`
     ].join("\n\n");
-    const r=await this.ai.responses.create({
-      model:this.config.rulesModel,
-      input:prompt,
-      max_output_tokens:this.config.rulesMaxOutputTokens
-    });
-    const sources=[...new Set(chunks.slice(0,3).map(c=>c.file))];
-    return {answer:r.output_text?.trim()||"I couldn't produce a rules answer.",sources};
+    const r=await this.ai.responses.create({model:this.config.rulesModel,input:prompt,max_output_tokens:this.config.rulesMaxOutputTokens,text:{format:{type:"json_schema",name:"rules_answer",strict:true,schema:rulesAnswerSchema}}});
+    const out=JSON.parse(r.output_text);
+    const retrieved=[...new Set(chunks.slice(0,4).map(c=>`${classify(c.file)}: ${c.file}`))];
+    return {...out,sources:out.sources?.length?out.sources:retrieved};
+  }
+
+  async draftCharacterConcept({guildId,userId,userName,description}){
+    const chunks=this.content.search(`character creation ${description}`,Math.min(this.config.maxContentChunks,10),{gm:false}).filter(c=>!c.file.startsWith("GM_PRIVATE"));
+    const prompt=[
+      "Build a LEVEL 1 Veiled City character draft using Daggerheart SRD 2.0 and only the supplied player-safe Veiled City material.",
+      "Preserve the player's fiction over optimization. Do not invent hidden answers to mysteries.",
+      "A Veiled City character may replace at most one normal class domain with Hex, Signal, Veil, or Pact. Keep exactly two domains total.",
+      "Use the level-1 trait spread exactly: +2,+1,+1,0,0,-1. Use exactly two starting Experiences and exactly two level-1 domain cards.",
+      "If exact starting HP/Evasion/armor or an official domain-card detail is not grounded in the supplied excerpts, set uncertain numeric values to 0 and explain what must be checked in mechanical_notes rather than hallucinating.",
+      "Generate story hooks as proposals. Classification meanings: established = player description explicitly establishes it; open_question = answer belongs to future GM/play; permission_to_complicate = existing person/place/obligation the GM may develop without deciding a hidden truth.",
+      "Include practical entry_hooks and exit_hooks for multiplayer drop-in/drop-out play.",
+      `Player: ${userName} (${userId})`,
+      `Description: ${description}`,
+      `References: ${JSON.stringify(chunks.map(c=>({source:c.file,text:c.body})))}`
+    ].join("\n\n");
+    const r=await this.ai.responses.create({model:this.config.characterModel,input:prompt,max_output_tokens:this.config.characterMaxOutputTokens,text:{format:{type:"json_schema",name:"character_concept",strict:true,schema:characterConceptSchema}}});
+    return JSON.parse(r.output_text);
+  }
+
+  async resolveDowntime({guildId,cycle,projects}){
+    const facts=this.db.factsFor(guildId,"",{includeGM:true,limit:120});
+    const clocks=this.db.clocksFor(guildId,{includeGM:true});
+    const canon=this.db.listCanon(guildId,{includeGM:true,limit:120});
+    const chunks=this.content.search(`downtime ${projects.map(p=>`${p.project_type} ${p.title} ${p.objective}`).join(" ")}`,this.config.maxContentChunks,{gm:true});
+    const prompt=[
+      "Resolve a formal between-session Veiled City downtime cycle.",
+      "Only resolve projects submitted in this cycle. Respect Daggerheart downtime/project rules and established campaign canon.",
+      "Recovery projects should follow the explicit Daggerheart rest mechanics in the supplied rules; do not grant arbitrary healing.",
+      "Investigation, crafting, ritual, relationship, income, surveillance, research, and other projects should advance proportionally and may create costs/complications.",
+      "Faction/world moves may advance existing clocks or establish consequences, but do not rewrite mysteries or contradict canon.",
+      "Return state events only for facts that genuinely become established during downtime.",
+      "Project visibility is authoritative. The summary must be GM-safe and concise; do not assume private project results are party knowledge. Public delivery is handled by the application.",
+      `Cycle: ${JSON.stringify(cycle)}`,
+      `Projects: ${JSON.stringify(projects)}`,
+      `Canon: ${JSON.stringify(canon)}`,
+      `Facts: ${JSON.stringify(facts)}`,
+      `Clocks: ${JSON.stringify(clocks)}`,
+      `Reference: ${JSON.stringify(chunks.map(c=>({source:c.file,text:c.body})))}`
+    ].join("\n\n");
+    const r=await this.ai.responses.create({model:this.config.downtimeModel,input:prompt,max_output_tokens:this.config.downtimeMaxOutputTokens,text:{format:{type:"json_schema",name:"downtime_resolution",strict:true,schema:downtimeSchema}}});
+    return JSON.parse(r.output_text);
   }
 
   async summarizeSession(guildId){

@@ -15,6 +15,7 @@ CREATE TABLE IF NOT EXISTS campaigns (
   response_mode TEXT NOT NULL DEFAULT 'assisted'
     CHECK(response_mode IN ('active','assisted','mention')),
   veil_exposure INTEGER NOT NULL DEFAULT 0 CHECK(veil_exposure BETWEEN 0 AND 6),
+  fear INTEGER NOT NULL DEFAULT 0 CHECK(fear BETWEEN 0 AND 12),
   active_session_id TEXT,
   party_state_json TEXT NOT NULL DEFAULT '{"established":false,"name":"","members":[],"bonds":[]}',
   state_json TEXT NOT NULL DEFAULT '{}',
@@ -258,6 +259,7 @@ CREATE TABLE IF NOT EXISTS encounters (
   environment_name TEXT NOT NULL DEFAULT '',
   composition_json TEXT NOT NULL DEFAULT '[]',
   adjustment_json TEXT NOT NULL DEFAULT '[]',
+  combat_state_json TEXT NOT NULL DEFAULT '{"spotlight":{"counts":{},"last_character_id":null}}',
   notes TEXT NOT NULL DEFAULT '',
   created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
   started_at TEXT,
@@ -268,3 +270,168 @@ CREATE TABLE IF NOT EXISTS encounters (
   UNIQUE(session_id,encounter_number)
 );
 CREATE INDEX IF NOT EXISTS idx_encounters_session_status ON encounters(session_id,status);
+
+-- v3.2.0: AI-assisted character creation drafts
+CREATE TABLE IF NOT EXISTS character_drafts (
+  id TEXT PRIMARY KEY,
+  guild_id TEXT NOT NULL,
+  discord_user_id TEXT NOT NULL,
+  description TEXT NOT NULL,
+  draft_json TEXT NOT NULL,
+  status TEXT NOT NULL DEFAULT 'draft' CHECK(status IN ('draft','accepted','discarded')),
+  created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (guild_id) REFERENCES campaigns(guild_id) ON DELETE CASCADE
+);
+CREATE INDEX IF NOT EXISTS idx_character_drafts_user ON character_drafts(guild_id,discord_user_id,status,created_at DESC);
+
+-- v3.2.0: staged/confirmable Daggerheart level-ups
+CREATE TABLE IF NOT EXISTS levelup_drafts (
+  id TEXT PRIMARY KEY,
+  guild_id TEXT NOT NULL,
+  discord_user_id TEXT NOT NULL,
+  character_id TEXT NOT NULL,
+  from_level INTEGER NOT NULL,
+  to_level INTEGER NOT NULL,
+  choices_json TEXT NOT NULL DEFAULT '{}',
+  status TEXT NOT NULL DEFAULT 'draft' CHECK(status IN ('draft','ready','applied','cancelled')),
+  created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (guild_id) REFERENCES campaigns(guild_id) ON DELETE CASCADE,
+  FOREIGN KEY (character_id) REFERENCES characters(id) ON DELETE CASCADE
+);
+CREATE INDEX IF NOT EXISTS idx_levelup_drafts_user ON levelup_drafts(guild_id,discord_user_id,status,created_at DESC);
+
+-- v3.2.0: deterministic adversary combat state
+CREATE TABLE IF NOT EXISTS encounter_combatants (
+  id TEXT PRIMARY KEY,
+  encounter_id TEXT NOT NULL,
+  guild_id TEXT NOT NULL,
+  session_id TEXT NOT NULL,
+  base_name TEXT NOT NULL,
+  display_name TEXT NOT NULL,
+  role TEXT NOT NULL,
+  tier INTEGER NOT NULL,
+  instance_index INTEGER NOT NULL DEFAULT 1,
+  difficulty INTEGER NOT NULL DEFAULT 10,
+  major_threshold INTEGER,
+  severe_threshold INTEGER,
+  hp_current INTEGER NOT NULL DEFAULT 1,
+  hp_max INTEGER NOT NULL DEFAULT 1,
+  stress_current INTEGER NOT NULL DEFAULT 0,
+  stress_max INTEGER NOT NULL DEFAULT 0,
+  conditions_json TEXT NOT NULL DEFAULT '[]',
+  status TEXT NOT NULL DEFAULT 'active' CHECK(status IN ('active','defeated','escaped','removed')),
+  notes TEXT NOT NULL DEFAULT '',
+  created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (encounter_id) REFERENCES encounters(id) ON DELETE CASCADE,
+  FOREIGN KEY (guild_id) REFERENCES campaigns(guild_id) ON DELETE CASCADE,
+  FOREIGN KEY (session_id) REFERENCES sessions(id) ON DELETE CASCADE
+);
+CREATE INDEX IF NOT EXISTS idx_combatants_encounter ON encounter_combatants(encounter_id,status,display_name);
+
+-- v3.2.0: logical campaign snapshots / rollback
+CREATE TABLE IF NOT EXISTS campaign_snapshots (
+  id TEXT PRIMARY KEY,
+  guild_id TEXT NOT NULL,
+  label TEXT NOT NULL,
+  reason TEXT NOT NULL DEFAULT '',
+  state_json TEXT NOT NULL,
+  created_by TEXT,
+  created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (guild_id) REFERENCES campaigns(guild_id) ON DELETE CASCADE
+);
+CREATE INDEX IF NOT EXISTS idx_snapshots_guild ON campaign_snapshots(guild_id,created_at DESC);
+
+-- v3.2.0: authoritative canon ledger and conflict queue
+CREATE TABLE IF NOT EXISTS canon_events (
+  id TEXT PRIMARY KEY,
+  guild_id TEXT NOT NULL,
+  canon_key TEXT NOT NULL,
+  value TEXT NOT NULL,
+  visibility TEXT NOT NULL DEFAULT 'party' CHECK(visibility IN ('public','party','player','character','gm')),
+  status TEXT NOT NULL DEFAULT 'current' CHECK(status IN ('current','superseded')),
+  session_id TEXT,
+  source_type TEXT NOT NULL DEFAULT 'gm',
+  source_id TEXT,
+  provenance TEXT NOT NULL DEFAULT '',
+  supersedes_id TEXT,
+  created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (guild_id) REFERENCES campaigns(guild_id) ON DELETE CASCADE
+);
+CREATE INDEX IF NOT EXISTS idx_canon_current ON canon_events(guild_id,canon_key,status,created_at DESC);
+
+CREATE TABLE IF NOT EXISTS canon_conflicts (
+  id TEXT PRIMARY KEY,
+  guild_id TEXT NOT NULL,
+  canon_key TEXT NOT NULL,
+  existing_event_id TEXT,
+  proposed_value TEXT NOT NULL,
+  proposed_visibility TEXT NOT NULL DEFAULT 'party',
+  session_id TEXT,
+  source_type TEXT NOT NULL DEFAULT 'ai',
+  source_id TEXT,
+  provenance TEXT NOT NULL DEFAULT '',
+  status TEXT NOT NULL DEFAULT 'pending' CHECK(status IN ('pending','resolved_existing','resolved_proposed','resolved_custom','dismissed')),
+  resolved_value TEXT,
+  resolved_by TEXT,
+  created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  resolved_at TEXT,
+  FOREIGN KEY (guild_id) REFERENCES campaigns(guild_id) ON DELETE CASCADE
+);
+CREATE INDEX IF NOT EXISTS idx_canon_conflicts ON canon_conflicts(guild_id,status,created_at DESC);
+
+-- v3.2.0: formal between-session downtime
+CREATE TABLE IF NOT EXISTS downtime_cycles (
+  id TEXT PRIMARY KEY,
+  guild_id TEXT NOT NULL,
+  source_session_id TEXT,
+  status TEXT NOT NULL DEFAULT 'open' CHECK(status IN ('open','resolving','resolved','cancelled')),
+  label TEXT NOT NULL DEFAULT 'Downtime',
+  notes TEXT NOT NULL DEFAULT '',
+  summary TEXT NOT NULL DEFAULT '',
+  opened_by TEXT,
+  opened_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  resolved_at TEXT,
+  FOREIGN KEY (guild_id) REFERENCES campaigns(guild_id) ON DELETE CASCADE
+);
+CREATE INDEX IF NOT EXISTS idx_downtime_cycle ON downtime_cycles(guild_id,status,opened_at DESC);
+
+CREATE TABLE IF NOT EXISTS downtime_projects (
+  id TEXT PRIMARY KEY,
+  cycle_id TEXT NOT NULL,
+  guild_id TEXT NOT NULL,
+  discord_user_id TEXT,
+  character_id TEXT,
+  project_type TEXT NOT NULL CHECK(project_type IN ('recovery','investigation','crafting','ritual','relationship','income','surveillance','research','project','other')),
+  title TEXT NOT NULL,
+  objective TEXT NOT NULL DEFAULT '',
+  progress INTEGER NOT NULL DEFAULT 0,
+  max_progress INTEGER NOT NULL DEFAULT 4,
+  visibility TEXT NOT NULL DEFAULT 'party' CHECK(visibility IN ('public','party','player','character','gm')),
+  status TEXT NOT NULL DEFAULT 'active' CHECK(status IN ('active','completed','failed','cancelled')),
+  result TEXT NOT NULL DEFAULT '',
+  created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (cycle_id) REFERENCES downtime_cycles(id) ON DELETE CASCADE,
+  FOREIGN KEY (guild_id) REFERENCES campaigns(guild_id) ON DELETE CASCADE,
+  FOREIGN KEY (character_id) REFERENCES characters(id) ON DELETE SET NULL
+);
+CREATE INDEX IF NOT EXISTS idx_downtime_projects ON downtime_projects(cycle_id,status,discord_user_id);
+
+-- v3.2.0: persistent human GM rulings for rules desk precedence
+CREATE TABLE IF NOT EXISTS rules_rulings (
+  id TEXT PRIMARY KEY,
+  guild_id TEXT NOT NULL,
+  ruling_key TEXT NOT NULL,
+  question TEXT NOT NULL,
+  ruling TEXT NOT NULL,
+  source_label TEXT NOT NULL DEFAULT 'GM RULING',
+  active INTEGER NOT NULL DEFAULT 1,
+  created_by TEXT,
+  created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (guild_id) REFERENCES campaigns(guild_id) ON DELETE CASCADE,
+  UNIQUE(guild_id,ruling_key)
+);

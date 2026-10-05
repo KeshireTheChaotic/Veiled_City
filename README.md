@@ -1,36 +1,32 @@
-# VEILED CITY MULTIPLAYER DISCORD ENGINE v3.1.3
+# VEILED CITY MULTIPLAYER DISCORD ENGINE v3.2.0
 
-A deployable Discord multiplayer layer for the Veiled City Daggerheart campaign package.
+A deployable Discord multiplayer GM layer for **Veiled City**, using Daggerheart SRD 2.0 as its mechanical baseline.
 
-## v3.1.3 focus — Multiplayer Encounter Builder
-v3.1.3 drops the legacy solo encounter-balancing mode and adds deterministic multiplayer encounter construction using Daggerheart Battle Points.
+## v3.2.0 focus — campaign integrity and full lifecycle support
 
-New in v3.1.3:
-- `/vc encounter build` budgets opposition from the **live present-PC roster**.
-- Base Battle Points use `(3 × PCs) + 2`.
-- Easy/standard/hard encounter adjustments are supported.
-- Official role costs are encoded for Minion, Social, Support, Horde, Ranged, Skulk, Standard, Leader, Bruiser, and Solo adversaries.
-- Composition modifiers are derived for 2+ Solos, boosted damage, lower-tier adversaries, and encounters without a heavy role.
-- Tier auto-selection uses the highest tier represented by present PCs.
-- Minions are budgeted as party-sized groups.
-- Veiled City adversary JSON now includes Battle Point metadata.
-- Encounter plans persist in SQLite and are passed to the AI GM as GM-private authoritative state.
-- Objectives and Veiled City environments are stored alongside opposition.
-- `/vc encounter add`, `remove`, `adjust`, `status`, `start`, and `end` support human-GM control.
-- Legacy one-PC encounter instructions have been removed.
+v3.2.0 adds seven major systems:
 
-v3.1.2 NPC Proxy, v3.1.1 party assembly, and all v3.1 Discord quality/cost features remain intact.
+1. **AI-assisted character concepts** — `/vc character concept` turns a plain-English concept into a Level 1 draft with structured hooks and explicit player/GM permissions.
+2. **Deterministic combat state** — adversary HP, Stress, thresholds, conditions/effects, status, Fear, and non-binding spotlight counts live in SQLite rather than model memory.
+3. **Validated level-ups** — `/vc character level-up`, `level-choose`, and `level-confirm` enforce tier achievements, advancement slots, domain access, and mandatory domain-card progression.
+4. **Snapshots and rollback** — automatic snapshots surround sessions and major mutations; GM commands can create/list/restore snapshots.
+5. **Canon ledger** — durable canon is versioned; contradictory proposals create pending conflicts instead of silently overwriting established facts.
+6. **Downtime/world turns** — between-session projects can be submitted and resolved with visibility-aware results and world consequences.
+7. **Grounded rules desk** — answers are labeled RAW, Veiled City House Rule, Homebrew Content, GM Ruling, or Provisional Ruling. Saved human-GM rulings have precedence.
+
+All v3.1.3 features remain: Battle Point encounter building, guest/drop-in PCs, party convergence, private scenes, NPC proxy antagonists, reference channels, and low-cost rules questions.
 
 ## Architecture
-**Discord is the interface. SQLite is authoritative state. The language model is the GM, not the database.**
 
-Dice, attendance, character ownership, encounter budgets, encounter composition, and lifecycle state are deterministic application data. The model cannot silently change them.
+**Discord is the interface. SQLite is authoritative state. The language model proposes fiction; application code owns persistent mechanics.**
+
+The final Daggerheart rules do not use a mandatory initiative/action-token tracker. Veilkeeper therefore records encounter **spotlight counts only as a fairness aid** and never treats them as turns or action limits.
 
 ## Fast setup
-1. Read `docs/DISCORD_SETUP.md` and `docs/SERVER_CHANNEL_SETUP.md`.
-2. Read `docs/OPENAI_SETUP.md`.
-3. Copy `bot/.env.example` to `bot/.env` and fill credentials.
-4. Install/register/start:
+
+1. Read `docs/DISCORD_SETUP.md`, `docs/SERVER_CHANNEL_SETUP.md`, and `docs/OPENAI_SETUP.md`.
+2. Copy `bot/.env.example` to `bot/.env` and fill credentials.
+3. Install/register/start:
    ```bash
    cd bot
    npm install
@@ -39,14 +35,31 @@ Dice, attendance, character ownership, encounter budgets, encounter composition,
    npm run register
    npm start
    ```
-5. Configure the main table and support channels as in v3.1.2.
-6. Start sessions normally.
-7. Before a planned combat, use `/vc encounter build` and review with `/vc encounter status`.
-8. Mark the encounter active with `/vc encounter start` and close it with `/vc encounter end`.
+4. Configure your existing v3.1 support channels with `/vc campaign setup` and `/vc campaign channels`.
+5. No new Discord channels or permissions are required for v3.2.0.
 
-## Encounter Builder
-Read `docs/ENCOUNTER_BUILDER.md`.
+## New documentation
+
+- `docs/CHARACTER_CONCEPT_WIZARD.md`
+- `docs/LEVEL_UP.md`
+- `docs/COMBAT_STATE.md`
+- `docs/SNAPSHOTS_AND_ROLLBACK.md`
+- `docs/CANON_LEDGER.md`
+- `docs/DOWNTIME.md`
+- `docs/RULES_GROUNDING.md`
+- `docs/UPGRADE_3.1.3_TO_3.2.0.md`
 
 ## Upgrade
-From v3.1.2, read `docs/UPGRADE_3.1.2_TO_3.1.3.md`.
-Back up `bot/data/veiled_city.sqlite` before first v3.1.3 start. The database migration is additive.
+
+Back up `bot/data/veiled_city.sqlite`, preserve your existing `bot/.env`, replace the application/content files, then run:
+
+```bash
+cd bot
+npm install
+npm run check
+npm run test:offline
+npm run register
+npm start
+```
+
+`npm run register` is required because the slash-command tree changed. Database migration is additive and existing v3.1.3 campaigns/characters remain valid.

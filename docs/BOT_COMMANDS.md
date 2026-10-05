@@ -1,33 +1,27 @@
-# Veilkeeper v3.1.2 Command Reference
+# Veilkeeper v3.2.0 Command Reference
 
 All commands live under `/vc`.
 
 ## Campaign
-- `/vc campaign setup` — main `#the-table`, GM role, response policy.
-- `/vc campaign channels` — set rules, case-board, journal, known-NPC, known-location, GM-log, and error channels.
-- `/vc campaign sync` — republish current player-visible case/NPC/location state into configured channels.
-- `/vc campaign status` — show complete channel configuration, mode, Veil Exposure, and session.
+- `/vc campaign setup` — configure `#the-table`, GM role, response mode.
+- `/vc campaign channels` — configure support/reference/log channels.
+- `/vc campaign sync` — republish bot-managed case/NPC/location surfaces.
+- `/vc campaign status` — campaign channels, Veil Exposure, Fear, session, party.
 
-## Rules Desk
-- `/vc rules ask question:<text>` — cheap, concise, player-safe rules lookup. Does not mutate campaign state.
-- Ordinary rules questions typed in the configured `#rules-questions` channel use the same low-cost path.
+## Session and party
+- `/vc session start [assembly:<mode>]`
+- `/vc session present [character]`
+- `/vc session assemble`
+- `/vc session assembly-status`
+- `/vc session converged`
+- `/vc session absent mode:<offscreen|background|proxy>`
+- `/vc session arrive [character]`
+- `/vc session leave mode:<...>`
+- `/vc session end`
+- `/vc party establish [name]`
+- `/vc party status`
 
-## Session attendance & assembly
-- `/vc session start assembly:<mode>` — start a session and choose convergence behavior.
-- `/vc session present` — initial check-in.
-- `/vc session assemble` — GM-only; generate/send private hooks and post the shared opening.
-- `/vc session assembly-status` — GM-only; show mode, phase, convergence goal, and proposed links.
-- `/vc session converged` — GM-only; mark immediate objectives as overlapping.
-- `/vc session absent`
-- `/vc session arrive` — late entry; may generate a low-cost arrival hook.
-- `/vc session leave`
-- `/vc session end` — also posts the recap to the configured journal.
-
-## Persistent party
-- `/vc party establish [name:<text>]` — GM-only; save present PCs as an ongoing working group.
-- `/vc party status` — show persistent party members and current phase.
-
-## Characters
+## Character lifecycle
 - `/vc character create`
 - `/vc character import`
 - `/vc character list`
@@ -36,52 +30,85 @@ All commands live under `/vc`.
 - `/vc character retire`
 - `/vc character death`
 
-## Guests
+### AI-assisted character creation
+- `/vc character concept description:<plain English>`
+- `/vc character concept-status`
+- `/vc character concept-accept`
+
+### Validated advancement
+- `/vc character level-up character:<name>`
+- `/vc character level-choose ...`
+- `/vc character level-confirm`
+
+## Guests and NPC proxies
 - `/vc guest create`
 - `/vc guest claim`
+- `/vc npc offer`
+- `/vc npc proxy`
+- `/vc npc claim`
+- `/vc npc decline`
+- `/vc npc status`
+- `/vc npc packet`
+- `/vc npc release`
 
-## Guest-controlled NPC antagonists
-- `/vc npc offer npc:<name> player:@Guest control:<level> [objective] [gm_notes]` — GM-only; generate and privately deliver a sanitized package. Guest must claim it.
-- `/vc npc proxy npc:<name> player:@Guest control:<level> [objective] [gm_notes]` — GM-only; activate immediately and deliver the same package.
-- `/vc npc claim npc:<name>` — accept an offered proxy.
-- `/vc npc decline npc:<name>` — decline an offered proxy.
-- `/vc npc status` — show active/offered assignments visible to you.
-- `/vc npc packet npc:<name>` — re-send your sanitized package.
-- `/vc npc release npc:<name>` — end control; assigned player or GM may release.
+## Encounter building and combat state
+GM/admin only.
 
-Control levels: `portrayal`, `tactical` (recommended), `full_npc`. See `docs/NPC_PROXY_CONTROL.md`.
+- `/vc encounter build`
+- `/vc encounter status`
+- `/vc encounter adjust`
+- `/vc encounter add`
+- `/vc encounter remove`
+- `/vc encounter start`
+- `/vc encounter combatants`
+- `/vc encounter damage`
+- `/vc encounter heal`
+- `/vc encounter stress`
+- `/vc encounter condition`
+- `/vc encounter combatant-status`
+- `/vc encounter end`
 
-## Player preferences
-- `/vc player private-channel` — run inside the player's private GM channel. In v3.1 that channel becomes two-way AI GM input/output during active sessions.
-- `/vc player accessibility`
+`condition` also tracks temporary effects and Vulnerable/Restrained-style states. `/vc encounter combatants` shows advisory spotlight counts and Fear.
 
 ## Dice
-- `/vc roll duality`
-- `/vc roll damage`
+- `/vc roll duality [reaction:true]`
+- `/vc roll damage dice:<expression>`
 
-Dice are generated in application code, not by the language model.
+Normal Duality rolls deterministically apply Hope/Fear and, during active encounters, spotlight counts. `reaction:true` suppresses Hope/Fear and spotlight changes.
 
-## Intel
+## Rules desk
+- `/vc rules ask question:<text>`
+- `/vc rules ruling key:<key> question:<question> ruling:<answer>` — GM/admin.
+- `/vc rules rulings`
+
+Answers are labeled RAW, Veiled City House Rule, Homebrew Content, GM Ruling, or Provisional Ruling.
+
+## Downtime
+- `/vc downtime open` — GM/admin; between sessions.
+- `/vc downtime project`
+- `/vc downtime status`
+- `/vc downtime resolve` — GM/admin.
+
+## Canon
+- `/vc canon set` — GM/admin.
+- `/vc canon status`
+- `/vc canon conflicts` — GM/admin.
+- `/vc canon resolve` — GM/admin.
+
+## Snapshots / rollback
+- `/vc admin snapshot`
+- `/vc admin snapshots`
+- `/vc admin rollback`
+
+All admin commands require Manage Server or the configured GM role.
+
+## Player preferences and intel
+- `/vc player private-channel`
+- `/vc player accessibility`
 - `/vc intel recap`
 - `/vc intel clues`
 - `/vc intel caseboard`
 
-## Human GM/admin
-- `/vc gm fear`
+## GM utilities
+- `/vc gm fear delta:<+/- amount>` — deterministically changes Fear, capped 0–12.
 - `/vc gm fact`
-
-GM/admin tools require Manage Server or the configured GM role.
-
-
-## `/vc encounter` — v3.1.3 multiplayer Battle Point builder
-GM/admin only.
-
-- `/vc encounter build` — build from the live session roster.
-- `/vc encounter status` — show GM-private BP budget/composition.
-- `/vc encounter adjust` — change difficulty, damage boost, or custom BP adjustment; optionally rebalance before start.
-- `/vc encounter add adversary:<name> quantity:<n>` — add opposition. Minion quantity is party-sized groups.
-- `/vc encounter remove adversary:<name> quantity:<n>` — remove opposition.
-- `/vc encounter start` — mark the plan active.
-- `/vc encounter end` — close the encounter.
-
-The builder requires at least two present PCs. NPC Proxy antagonists remain adversaries and do not increase PC count.

@@ -34,6 +34,8 @@ export class VeiledDB {
     ]) add("sessions",name,def);
     add("messages","subject_user_id","TEXT");
     add("messages","subject_character_id","TEXT");
+    add("campaigns","fear","INTEGER NOT NULL DEFAULT 0");
+    add("encounters","combat_state_json",`TEXT NOT NULL DEFAULT '{"spotlight":{"counts":{},"last_character_id":null}}'`);
   }
 
   close() { this.db.close(); }
@@ -143,6 +145,13 @@ export class VeiledDB {
       experiences: data.experiences ?? [],
       domain_cards: data.domain_cards ?? [],
       inventory: data.inventory ?? [],
+      evasion: data.evasion ?? 0,
+      proficiency: data.proficiency ?? 1,
+      thresholds: data.thresholds ?? {},
+      subclass_rank: data.subclass_rank ?? "foundation",
+      multiclass: data.multiclass ?? null,
+      advancement_state: data.advancement_state ?? {trait_marks:[],slot_usage:{},history:[]},
+      hook_permissions: data.hook_permissions ?? [],
       background: data.background ?? "",
       home: data.home ?? "",
       person: data.person ?? "",
@@ -607,12 +616,12 @@ export class VeiledDB {
 
   getEncounter(id){
     const r=this.db.prepare("SELECT * FROM encounters WHERE id=?").get(id);
-    return r?{...r,composition:JSON.parse(r.composition_json||"[]"),adjustments:JSON.parse(r.adjustment_json||"[]")}:null;
+    return r?{...r,composition:JSON.parse(r.composition_json||"[]"),adjustments:JSON.parse(r.adjustment_json||"[]"),combat_state:JSON.parse(r.combat_state_json||"{\"spotlight\":{\"counts\":{},\"last_character_id\":null}}")}:null;
   }
 
   getCurrentEncounter(sessionId){
     const r=this.db.prepare("SELECT * FROM encounters WHERE session_id=? AND status IN ('active','planned') ORDER BY CASE status WHEN 'active' THEN 0 ELSE 1 END, encounter_number DESC LIMIT 1").get(sessionId);
-    return r?{...r,composition:JSON.parse(r.composition_json||"[]"),adjustments:JSON.parse(r.adjustment_json||"[]")}:null;
+    return r?{...r,composition:JSON.parse(r.composition_json||"[]"),adjustments:JSON.parse(r.adjustment_json||"[]"),combat_state:JSON.parse(r.combat_state_json||"{\"spotlight\":{\"counts\":{},\"last_character_id\":null}}")}:null;
   }
 
   updateEncounter(id,patch={}){
@@ -635,7 +644,257 @@ export class VeiledDB {
   }
 
   listEncounters(sessionId){
-    return this.db.prepare("SELECT * FROM encounters WHERE session_id=? ORDER BY encounter_number DESC").all(sessionId).map(r=>({...r,composition:JSON.parse(r.composition_json||"[]"),adjustments:JSON.parse(r.adjustment_json||"[]")}));
+    return this.db.prepare("SELECT * FROM encounters WHERE session_id=? ORDER BY encounter_number DESC").all(sessionId).map(r=>({...r,composition:JSON.parse(r.composition_json||"[]"),adjustments:JSON.parse(r.adjustment_json||"[]"),combat_state:JSON.parse(r.combat_state_json||"{\"spotlight\":{\"counts\":{},\"last_character_id\":null}}")}));
+  }
+
+
+  changeFear(guildId,delta){
+    this.ensureCampaign(guildId);
+    const c=this.getCampaign(guildId); const next=Math.max(0,Math.min(12,Number(c.fear||0)+(Number(delta)||0)));
+    this.db.prepare("UPDATE campaigns SET fear=?,updated_at=CURRENT_TIMESTAMP WHERE guild_id=?").run(next,guildId);
+    return next;
+  }
+
+  updateEncounterCombatState(id,mutator){
+    const e=this.getEncounter(id); if(!e) throw new Error("Encounter not found.");
+    const next=structuredClone(e.combat_state||{spotlight:{counts:{},last_character_id:null}});
+    mutator(next);
+    this.db.prepare("UPDATE encounters SET combat_state_json=?,updated_at=CURRENT_TIMESTAMP WHERE id=?").run(JSON.stringify(next),id);
+    return this.getEncounter(id);
+  }
+
+  recordSpotlight(encounterId,characterId){
+    return this.updateEncounterCombatState(encounterId,state=>{
+      state.spotlight=state.spotlight||{counts:{},last_character_id:null}; state.spotlight.counts=state.spotlight.counts||{};
+      state.spotlight.counts[characterId]=Number(state.spotlight.counts[characterId]||0)+1;
+      state.spotlight.last_character_id=characterId;
+    });
+  }
+
+  createCharacterDraft(guildId,userId,description,draft){
+    const id=randomUUID();
+    this.db.prepare(`INSERT INTO character_drafts(id,guild_id,discord_user_id,description,draft_json) VALUES(?,?,?,?,?)`)
+      .run(id,guildId,userId,description,JSON.stringify(draft||{}));
+    return this.getCharacterDraft(id);
+  }
+
+  getCharacterDraft(id){
+    const r=this.db.prepare("SELECT * FROM character_drafts WHERE id=?").get(id);
+    return r?{...r,draft:JSON.parse(r.draft_json||"{}")} : null;
+  }
+
+  latestCharacterDraft(guildId,userId,{status="draft"}={}){
+    const r=this.db.prepare("SELECT * FROM character_drafts WHERE guild_id=? AND discord_user_id=? AND status=? ORDER BY created_at DESC LIMIT 1").get(guildId,userId,status);
+    return r?{...r,draft:JSON.parse(r.draft_json||"{}")} : null;
+  }
+
+  setCharacterDraftStatus(id,status){
+    if(!new Set(["draft","accepted","discarded"]).has(status)) throw new Error("Invalid character draft status.");
+    this.db.prepare("UPDATE character_drafts SET status=?,updated_at=CURRENT_TIMESTAMP WHERE id=?").run(status,id);
+    return this.getCharacterDraft(id);
+  }
+
+  createLevelupDraft(guildId,userId,characterId,fromLevel,toLevel,choices={}){
+    this.db.prepare("UPDATE levelup_drafts SET status='cancelled',updated_at=CURRENT_TIMESTAMP WHERE guild_id=? AND discord_user_id=? AND character_id=? AND status IN ('draft','ready')")
+      .run(guildId,userId,characterId);
+    const id=randomUUID();
+    this.db.prepare(`INSERT INTO levelup_drafts(id,guild_id,discord_user_id,character_id,from_level,to_level,choices_json) VALUES(?,?,?,?,?,?,?)`)
+      .run(id,guildId,userId,characterId,fromLevel,toLevel,JSON.stringify(choices||{}));
+    return this.getLevelupDraft(id);
+  }
+
+  getLevelupDraft(id){
+    const r=this.db.prepare("SELECT * FROM levelup_drafts WHERE id=?").get(id);
+    return r?{...r,choices:JSON.parse(r.choices_json||"{}")} : null;
+  }
+
+  latestLevelupDraft(guildId,userId,characterId=null){
+    let r;
+    if(characterId) r=this.db.prepare("SELECT * FROM levelup_drafts WHERE guild_id=? AND discord_user_id=? AND character_id=? AND status IN ('draft','ready') ORDER BY created_at DESC LIMIT 1").get(guildId,userId,characterId);
+    else r=this.db.prepare("SELECT * FROM levelup_drafts WHERE guild_id=? AND discord_user_id=? AND status IN ('draft','ready') ORDER BY created_at DESC LIMIT 1").get(guildId,userId);
+    return r?{...r,choices:JSON.parse(r.choices_json||"{}")} : null;
+  }
+
+  updateLevelupDraft(id,choices,status="ready"){
+    if(!new Set(["draft","ready","applied","cancelled"]).has(status)) throw new Error("Invalid level-up draft status.");
+    this.db.prepare("UPDATE levelup_drafts SET choices_json=?,status=?,updated_at=CURRENT_TIMESTAMP WHERE id=?")
+      .run(JSON.stringify(choices||{}),status,id);
+    return this.getLevelupDraft(id);
+  }
+
+  initializeCombatants(encounterId,rows=[]){
+    const enc=this.getEncounter(encounterId); if(!enc) throw new Error("Encounter not found.");
+    this.db.prepare("DELETE FROM encounter_combatants WHERE encounter_id=?").run(encounterId);
+    const ins=this.db.prepare(`INSERT INTO encounter_combatants(id,encounter_id,guild_id,session_id,base_name,display_name,role,tier,instance_index,difficulty,major_threshold,severe_threshold,hp_current,hp_max,stress_current,stress_max,conditions_json,status,notes) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`);
+    for(const r of rows){
+      const id=randomUUID();
+      ins.run(id,encounterId,enc.guild_id,enc.session_id,r.base_name,r.display_name,r.role,r.tier,r.instance_index||1,r.difficulty||10,r.major_threshold??null,r.severe_threshold??null,r.hp_max||1,r.hp_max||1,0,r.stress_max||0,JSON.stringify([]),"active",r.notes||"");
+    }
+    return this.listCombatants(encounterId);
+  }
+
+  listCombatants(encounterId,{includeRemoved=false}={}){
+    const sql=includeRemoved?"SELECT * FROM encounter_combatants WHERE encounter_id=? ORDER BY base_name,instance_index":"SELECT * FROM encounter_combatants WHERE encounter_id=? AND status!='removed' ORDER BY base_name,instance_index";
+    return this.db.prepare(sql).all(encounterId).map(r=>({...r,conditions:JSON.parse(r.conditions_json||"[]")}));
+  }
+
+  findCombatant(encounterId,query){
+    const rows=this.listCombatants(encounterId,{includeRemoved:true});
+    const q=String(query||"").trim().toLowerCase();
+    const r=rows.find(x=>x.id.toLowerCase().startsWith(q))||rows.find(x=>x.display_name.toLowerCase()===q)||rows.find(x=>x.display_name.toLowerCase().includes(q));
+    return r||null;
+  }
+
+  updateCombatant(id,patch={}){
+    const cur=this.db.prepare("SELECT * FROM encounter_combatants WHERE id=?").get(id); if(!cur) throw new Error("Combatant not found.");
+    let conditions=JSON.parse(cur.conditions_json||"[]");
+    if(patch.conditions) conditions=patch.conditions;
+    const next={...cur,...patch};
+    this.db.prepare(`UPDATE encounter_combatants SET hp_current=?,stress_current=?,conditions_json=?,status=?,notes=?,updated_at=CURRENT_TIMESTAMP WHERE id=?`)
+      .run(Math.max(0,Math.min(cur.hp_max,Number(next.hp_current))),Math.max(0,Math.min(cur.stress_max,Number(next.stress_current))),JSON.stringify(conditions),next.status,next.notes||"",id);
+    const r=this.db.prepare("SELECT * FROM encounter_combatants WHERE id=?").get(id);
+    return {...r,conditions:JSON.parse(r.conditions_json||"[]")};
+  }
+
+  snapshotCampaign(guildId,{label="Snapshot",reason="",createdBy=null}={}){
+    const id=randomUUID();
+    const sessionIds=this.db.prepare("SELECT id FROM sessions WHERE guild_id=?").all(guildId).map(x=>x.id);
+    const qmarks=sessionIds.length?sessionIds.map(()=>"?").join(","):"NULL";
+    const directTables=["players","characters","sessions","facts","clocks","threads","reference_entries","published_messages","npc_proxies","encounters","encounter_combatants","character_drafts","levelup_drafts","canon_events","canon_conflicts","downtime_cycles","downtime_projects","rules_rulings"];
+    const state={campaign:this.getCampaign(guildId),tables:{}};
+    for(const table of directTables){
+      try{state.tables[table]=this.db.prepare(`SELECT * FROM ${table} WHERE guild_id=?`).all(guildId);}catch{state.tables[table]=[];}
+    }
+    for(const table of ["session_presence","session_characters"]){
+      state.tables[table]=sessionIds.length?this.db.prepare(`SELECT * FROM ${table} WHERE session_id IN (${qmarks})`).all(...sessionIds):[];
+    }
+    this.db.prepare("INSERT INTO campaign_snapshots(id,guild_id,label,reason,state_json,created_by) VALUES(?,?,?,?,?,?)")
+      .run(id,guildId,label,reason,JSON.stringify(state),createdBy);
+    return this.getSnapshot(id);
+  }
+
+  getSnapshot(id){
+    const r=this.db.prepare("SELECT * FROM campaign_snapshots WHERE id=?").get(id);
+    return r?{...r,state:JSON.parse(r.state_json)}:null;
+  }
+
+  listSnapshots(guildId,limit=12){
+    return this.db.prepare("SELECT id,label,reason,created_by,created_at FROM campaign_snapshots WHERE guild_id=? ORDER BY created_at DESC LIMIT ?").all(guildId,limit);
+  }
+
+  restoreSnapshot(guildId,snapshotId,{actorId=null}={}){
+    const snap=this.getSnapshot(snapshotId); if(!snap||snap.guild_id!==guildId) throw new Error("Snapshot not found for this campaign.");
+    this.snapshotCampaign(guildId,{label:"Pre-rollback safety",reason:`Before rollback to ${snapshotId}`,createdBy:actorId});
+    const state=snap.state;
+    const delOrder=["encounter_combatants","npc_proxies","session_characters","session_presence","levelup_drafts","downtime_projects","canon_conflicts","canon_events","encounters","sessions","character_drafts","characters","players","facts","clocks","threads","reference_entries","published_messages","downtime_cycles","rules_rulings"];
+    const insertOrder=["players","characters","sessions","session_presence","session_characters","facts","clocks","threads","reference_entries","published_messages","npc_proxies","encounters","encounter_combatants","character_drafts","levelup_drafts","canon_events","canon_conflicts","downtime_cycles","downtime_projects","rules_rulings"];
+    this.db.exec("BEGIN IMMEDIATE");
+    try{
+      for(const t of delOrder){
+        if(["session_presence","session_characters"].includes(t)){
+          this.db.prepare(`DELETE FROM ${t} WHERE session_id IN (SELECT id FROM sessions WHERE guild_id=?)`).run(guildId);
+        }else this.db.prepare(`DELETE FROM ${t} WHERE guild_id=?`).run(guildId);
+      }
+      const c=state.campaign||{};
+      const ccols=this.db.prepare("PRAGMA table_info(campaigns)").all().map(x=>x.name).filter(x=>x!=="guild_id");
+      const set=ccols.map(x=>`${x}=?`).join(",");
+      this.db.prepare(`UPDATE campaigns SET ${set} WHERE guild_id=?`).run(...ccols.map(x=>c[x]),guildId);
+      for(const t of insertOrder){
+        for(const row of state.tables?.[t]||[]){
+          const cols=Object.keys(row); if(!cols.length) continue;
+          const sql=`INSERT INTO ${t}(${cols.join(",")}) VALUES(${cols.map(()=>"?").join(",")})`;
+          this.db.prepare(sql).run(...cols.map(k=>row[k]));
+        }
+      }
+      this.db.exec("COMMIT");
+    }catch(err){this.db.exec("ROLLBACK"); throw err;}
+    return snap;
+  }
+
+  currentCanon(guildId,key){
+    return this.db.prepare("SELECT * FROM canon_events WHERE guild_id=? AND canon_key=? AND status='current' ORDER BY created_at DESC LIMIT 1").get(guildId,key);
+  }
+
+  proposeCanon(guildId,{key,value,visibility="party",sessionId=null,sourceType="ai",sourceId=null,provenance=""}={}){
+    if(!key?.trim()||!value?.trim()) throw new Error("Canon key and value are required.");
+    const k=key.trim().toLowerCase(); const existing=this.currentCanon(guildId,k);
+    if(existing && existing.value.trim()!==value.trim()){
+      const id=randomUUID();
+      this.db.prepare(`INSERT INTO canon_conflicts(id,guild_id,canon_key,existing_event_id,proposed_value,proposed_visibility,session_id,source_type,source_id,provenance) VALUES(?,?,?,?,?,?,?,?,?,?)`)
+        .run(id,guildId,k,existing.id,value.trim(),visibility,sessionId,sourceType,sourceId,provenance);
+      return {status:"conflict",conflict:this.db.prepare("SELECT * FROM canon_conflicts WHERE id=?").get(id),existing};
+    }
+    if(existing) return {status:"unchanged",event:existing};
+    const id=randomUUID();
+    this.db.prepare(`INSERT INTO canon_events(id,guild_id,canon_key,value,visibility,session_id,source_type,source_id,provenance) VALUES(?,?,?,?,?,?,?,?,?)`)
+      .run(id,guildId,k,value.trim(),visibility,sessionId,sourceType,sourceId,provenance);
+    return {status:"accepted",event:this.currentCanon(guildId,k)};
+  }
+
+  listCanon(guildId,{includeGM=false,limit=100}={}){
+    const sql=includeGM?"SELECT * FROM canon_events WHERE guild_id=? AND status='current' ORDER BY canon_key LIMIT ?":"SELECT * FROM canon_events WHERE guild_id=? AND status='current' AND visibility!='gm' ORDER BY canon_key LIMIT ?";
+    return this.db.prepare(sql).all(guildId,limit);
+  }
+
+  listCanonConflicts(guildId){ return this.db.prepare("SELECT cc.*,ce.value existing_value FROM canon_conflicts cc LEFT JOIN canon_events ce ON ce.id=cc.existing_event_id WHERE cc.guild_id=? AND cc.status='pending' ORDER BY cc.created_at").all(guildId); }
+
+  resolveCanonConflict(guildId,id,{resolution="existing",customValue="",actorId=null}={}){
+    const c=this.db.prepare("SELECT * FROM canon_conflicts WHERE id=? AND guild_id=? AND status='pending'").get(id,guildId); if(!c) throw new Error("Pending canon conflict not found.");
+    const existing=c.existing_event_id?this.db.prepare("SELECT * FROM canon_events WHERE id=?").get(c.existing_event_id):null;
+    if(resolution==="existing"){
+      this.db.prepare("UPDATE canon_conflicts SET status='resolved_existing',resolved_value=?,resolved_by=?,resolved_at=CURRENT_TIMESTAMP WHERE id=?").run(existing?.value||"",actorId,id);
+      return existing;
+    }
+    const value=resolution==="custom"?String(customValue||"").trim():c.proposed_value;
+    if(!value) throw new Error("A custom canon resolution requires a value.");
+    if(existing) this.db.prepare("UPDATE canon_events SET status='superseded' WHERE id=?").run(existing.id);
+    const eid=randomUUID();
+    this.db.prepare(`INSERT INTO canon_events(id,guild_id,canon_key,value,visibility,session_id,source_type,source_id,provenance,supersedes_id) VALUES(?,?,?,?,?,?,?,?,?,?)`)
+      .run(eid,guildId,c.canon_key,value,c.proposed_visibility,c.session_id,"human_gm",actorId,`Resolved canon conflict ${id}`,existing?.id||null);
+    this.db.prepare("UPDATE canon_conflicts SET status=?,resolved_value=?,resolved_by=?,resolved_at=CURRENT_TIMESTAMP WHERE id=?")
+      .run(resolution==="custom"?"resolved_custom":"resolved_proposed",value,actorId,id);
+    return this.currentCanon(guildId,c.canon_key);
+  }
+
+  openDowntime(guildId,{label="Downtime",sourceSessionId=null,notes="",openedBy=null}={}){
+    const existing=this.db.prepare("SELECT * FROM downtime_cycles WHERE guild_id=? AND status='open' ORDER BY opened_at DESC LIMIT 1").get(guildId); if(existing) return existing;
+    const id=randomUUID();
+    this.db.prepare("INSERT INTO downtime_cycles(id,guild_id,source_session_id,label,notes,opened_by) VALUES(?,?,?,?,?,?)").run(id,guildId,sourceSessionId,label,notes,openedBy);
+    return this.getDowntimeCycle(id);
+  }
+
+  getDowntimeCycle(id){ return this.db.prepare("SELECT * FROM downtime_cycles WHERE id=?").get(id); }
+  currentDowntime(guildId){ return this.db.prepare("SELECT * FROM downtime_cycles WHERE guild_id=? AND status IN ('open','resolving') ORDER BY opened_at DESC LIMIT 1").get(guildId); }
+
+  addDowntimeProject(cycleId,guildId,{userId=null,characterId=null,type="project",title,objective="",maxProgress=4,visibility="party"}={}){
+    const id=randomUUID();
+    this.db.prepare(`INSERT INTO downtime_projects(id,cycle_id,guild_id,discord_user_id,character_id,project_type,title,objective,max_progress,visibility) VALUES(?,?,?,?,?,?,?,?,?,?)`)
+      .run(id,cycleId,guildId,userId,characterId,type,title,objective,maxProgress,visibility);
+    return this.db.prepare("SELECT * FROM downtime_projects WHERE id=?").get(id);
+  }
+  listDowntimeProjects(cycleId){ return this.db.prepare("SELECT * FROM downtime_projects WHERE cycle_id=? ORDER BY created_at").all(cycleId); }
+  updateDowntimeProject(id,patch={}){
+    const r=this.db.prepare("SELECT * FROM downtime_projects WHERE id=?").get(id); if(!r) throw new Error("Downtime project not found.");
+    const n={...r,...patch};
+    this.db.prepare("UPDATE downtime_projects SET progress=?,status=?,result=?,updated_at=CURRENT_TIMESTAMP WHERE id=?").run(n.progress,n.status,n.result||"",id);
+    return this.db.prepare("SELECT * FROM downtime_projects WHERE id=?").get(id);
+  }
+  resolveDowntimeCycle(id,summary=""){
+    this.db.prepare("UPDATE downtime_cycles SET status='resolved',summary=?,resolved_at=CURRENT_TIMESTAMP WHERE id=?").run(summary,id);
+    return this.getDowntimeCycle(id);
+  }
+
+  upsertRulesRuling(guildId,{key,question,ruling,createdBy=null}={}){
+    const id=randomUUID(); const k=String(key||question||"").trim().toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
+    if(!k||!ruling?.trim()) throw new Error("Ruling key/question and text are required.");
+    this.db.prepare(`INSERT INTO rules_rulings(id,guild_id,ruling_key,question,ruling,created_by) VALUES(?,?,?,?,?,?) ON CONFLICT(guild_id,ruling_key) DO UPDATE SET question=excluded.question,ruling=excluded.ruling,created_by=excluded.created_by,active=1,updated_at=CURRENT_TIMESTAMP`)
+      .run(id,guildId,k,question||key,ruling.trim(),createdBy);
+    return this.db.prepare("SELECT * FROM rules_rulings WHERE guild_id=? AND ruling_key=?").get(guildId,k);
+  }
+  searchRulesRulings(guildId,query=""){
+    const q=String(query).toLowerCase();
+    return this.db.prepare("SELECT * FROM rules_rulings WHERE guild_id=? AND active=1 ORDER BY updated_at DESC").all(guildId)
+      .filter(r=>!q||q.includes(r.ruling_key)||r.question.toLowerCase().split(/\\s+/).some(w=>w.length>4&&q.includes(w))).slice(0,8);
   }
 
   audit(guildId,sessionId,actorType,actorId,action,payload={}) {
