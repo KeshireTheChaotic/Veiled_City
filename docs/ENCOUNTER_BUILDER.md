@@ -5,7 +5,7 @@ v3.1.3 drops the legacy solo encounter model. Combat construction is multiplayer
 ## Build an encounter
 
 ```text
-/vc encounter build difficulty:standard tier:auto style:balanced
+/vc-encounter build difficulty:standard tier:auto style:balanced
 ```
 
 Optional fields:
@@ -48,13 +48,13 @@ Adversary costs:
 ## GM workflow
 
 ```text
-/vc encounter build
-/vc encounter status
-/vc encounter adjust
-/vc encounter add
-/vc encounter remove
-/vc encounter start
-/vc encounter end
+/vc-encounter build
+/vc-encounter status
+/vc-encounter adjust
+/vc-encounter add
+/vc-encounter remove
+/vc-encounter start
+/vc-encounter end
 ```
 
 `status` is GM-only and reveals BP math and hidden composition.

@@ -4,13 +4,13 @@ Long campaigns eventually produce contradictory names, relationships, rules, dat
 
 ## Commands
 
-`/vc canon set key:<stable-key> value:<fact>`
+`/vc-canon set key:<stable-key> value:<fact>`
 
-`/vc canon status`
+`/vc-canon status`
 
-`/vc canon conflicts`
+`/vc-canon conflicts`
 
-`/vc canon resolve conflict_id:<id> resolution:<existing|proposed|custom>`
+`/vc-canon resolve conflict_id:<id> resolution:<existing|proposed|custom>`
 
 ## Behavior
 

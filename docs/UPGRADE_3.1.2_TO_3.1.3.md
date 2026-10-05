@@ -21,7 +21,7 @@ npm run register
 npm start
 ```
 
-`npm run register` is required because `/vc encounter` commands are new.
+`npm run register` is required because `/vc-encounter` commands are new.
 
 ## Database migration
 The new `encounters` table is additive. Existing campaigns, characters, sessions, NPC proxies, party state, private knowledge, and published references are preserved.
@@ -30,7 +30,7 @@ The new `encounters` table is additive. Existing campaigns, characters, sessions
 The encounter builder is GM-only and uses existing Veilkeeper permissions. No additional server setup is required.
 
 ## No new API billing requirement
-Battle Point construction and encounter persistence are deterministic/local. `/vc encounter` commands do not require an additional AI model call.
+Battle Point construction and encounter persistence are deterministic/local. `/vc-encounter` commands do not require an additional AI model call.
 
 ## Removed legacy content
 The package no longer includes `DAGGERHEART_SOLO_RULES.md` or `SOLO_ENCOUNTER_GUIDE.md`. References are replaced by multiplayer operating and encounter guides.

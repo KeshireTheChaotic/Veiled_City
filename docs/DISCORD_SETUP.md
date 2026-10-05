@@ -45,12 +45,12 @@ npm start
 
 ## Configure the server
 Main table:
-`/vc campaign setup play_channel:#the-table mode:assisted`
+`/vc-campaign setup play_channel:#the-table mode:assisted`
 
 Support channels:
-`/vc campaign channels` with the appropriate channel selections.
+`/vc-campaign channels` with the appropriate channel selections.
 
-Each player then runs `/vc player private-channel` in their own private channel.
+Each player then runs `/vc-player private-channel` in their own private channel.
 
 See `SERVER_CHANNEL_SETUP.md` for the full category/channel layout and permission intent.
 

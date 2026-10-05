@@ -7,6 +7,7 @@ import { baseBattlePoints, partyTier, livePcRoster, autoBuildComposition, recomp
 import { buildCombatants, hpMarksForDamage } from "../src/combat.js";
 import { prepareLevelup, applyLevelupToData, validateConceptDraft } from "../src/character-system.js";
 import { GMService, parseStructuredJsonText } from "../src/gm.js";
+import { createPlayerExportFiles, createGmExportFiles } from "../src/character-export.js";
 
 const dir=fs.mkdtempSync(path.join(os.tmpdir(),"veilkeeper31-"));
 const dbPath=path.join(dir,"test.sqlite");
@@ -184,6 +185,23 @@ const jsonGM=new GMService({db:null,content:fakeContent,config:{openaiKey:"test"
 const generated=await jsonGM.draftCharacterConcept({guildId:"g",userId:"u",userName:"Tester",description:quotedDescription});
 if(generated.name!=="Ryas"||structuredCalls!==2) throw new Error("Structured concept retry failed.");
 
-console.log("Veilkeeper v3.2.3 offline smoke test: PASS");
+// v3.2.4 live character export: player-safe + GM hooks/private/canon in JSON/Markdown/DOCX.
+db.addFact(guild,{category:"secret",key:"export-secret",content:"Character-linked private fact.",visibility:"gm",subjectCharacterId:char.id,source:"test"});
+db.proposeCanon(guild,{key:"test_detective.hidden_origin",value:"Test Detective has a hidden origin.",visibility:"gm",sourceType:"test",sourceId:char.id,provenance:"export test"});
+const liveCharacter=db.getCharacter(char.id);
+const playerExports=createPlayerExportFiles({db,guildId:guild,character:liveCharacter,format:"all"});
+if(playerExports.length!==3||!playerExports.some(x=>x.name.endsWith(".docx"))||!playerExports.some(x=>x.name.endsWith(".json"))||!playerExports.some(x=>x.name.endsWith(".md"))) throw new Error("Player all-format export failed.");
+if(!playerExports.find(x=>x.name.endsWith(".docx")).buffer.subarray(0,2).equals(Buffer.from("PK"))) throw new Error("Player DOCX export is not a ZIP/OOXML package.");
+const gmExports=createGmExportFiles({db,guildId:guild,character:liveCharacter,format:"all"});
+if(gmExports.length!==9) throw new Error("GM all-format export should produce nine files.");
+for(const prefix of ["GM_HOOKS_Test_Detective","GM_PRIVATE_Test_Detective","GM_CANON_Test_Detective"]){
+  for(const ext of ["json","md","docx"]) if(!gmExports.some(x=>x.name===`${prefix}.${ext}`)) throw new Error(`Missing GM export ${prefix}.${ext}`);
+}
+const gmPrivateJson=JSON.parse(gmExports.find(x=>x.name==="GM_PRIVATE_Test_Detective.json").buffer.toString("utf8"));
+if(!gmPrivateJson.private_facts.some(x=>x.key==="export-secret")) throw new Error("GM-private character facts missing from export.");
+const gmCanonJson=JSON.parse(gmExports.find(x=>x.name==="GM_CANON_Test_Detective.json").buffer.toString("utf8"));
+if(!gmCanonJson.canon.some(x=>x.key==="test_detective.hidden_origin")) throw new Error("Character-associated canon missing from export.");
+
+console.log("Veilkeeper v3.2.4 offline smoke test: PASS");
 db.close();
 fs.rmSync(dir,{recursive:true,force:true});

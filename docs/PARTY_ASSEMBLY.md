@@ -18,13 +18,13 @@ Veilkeeper must never invent friendship, trust, loyalty, shared history, or cons
 ## Recommended first-session workflow
 
 1. GM starts:
-   `/vc session start title:Opening Night assembly:auto`
+   `/vc-session start title:Opening Night assembly:auto`
 
 2. Players check in:
-   `/vc session present character:<name>`
+   `/vc-session present character:<name>`
 
 3. After the expected players are present, the GM runs:
-   `/vc session assemble`
+   `/vc-session assemble`
 
 4. Veilkeeper:
    - creates one GM-private convergence plan;
@@ -33,12 +33,12 @@ Veilkeeper must never invent friendship, trust, loyalty, shared history, or cons
    - leaves all PC actions and dialogue to the players.
 
 5. When the PCs clearly recognize a shared immediate objective:
-   `/vc session converged`
+   `/vc-session converged`
 
 6. If the players later decide to remain an ongoing team:
-   `/vc party establish`
+   `/vc-party establish`
    or
-   `/vc party establish name:<team name>`
+   `/vc-party establish name:<team name>`
 
 The party state persists across sessions.
 
@@ -68,7 +68,7 @@ The party state persists across sessions.
 
 ## GM status
 
-`/vc session assembly-status`
+`/vc-session assembly-status`
 
 Shows the GM:
 - mode and phase;
@@ -84,7 +84,7 @@ It is ephemeral and GM-only.
 
 A player joining after play begins uses:
 
-`/vc session arrive character:<name>`
+`/vc-session arrive character:<name>`
 
 Veilkeeper can generate:
 - a private reason the character is at/near the current scene;
@@ -95,13 +95,13 @@ It does **not** retcon the character as having been present all along.
 
 ## Guest characters
 
-`/vc guest claim character:<name>`
+`/vc-guest claim character:<name>`
 
 If the session has moved beyond initial Assembly, Veilkeeper can generate an entry hook for the guest.
 
 ## Replacement characters / character switches
 
-`/vc character select character:<name>`
+`/vc-character select character:<name>`
 
 When switching away from another active PC mid-session, Veilkeeper can generate a fictionally appropriate entry for the new PC.
 
@@ -113,11 +113,11 @@ This supports:
 
 ## Persistent party state
 
-`/vc party status`
+`/vc-party status`
 
 Shows the stored continuing group.
 
-`/vc party establish`
+`/vc-party establish`
 
 Saves the currently present characters as the continuing party and marks the session phase `party`.
 

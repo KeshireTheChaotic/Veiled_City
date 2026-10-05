@@ -19,9 +19,9 @@
    npm start
    ```
 6. On first start, v3.1 adds the new channel/message-scope columns and creates new reference/publishing tables. Existing v3.0 campaign, player, character, session, fact, thread, roll, and audit records remain.
-7. In Discord configure support channels with `/vc campaign channels`.
-8. Re-run `/vc player private-channel` only if a player's private channel has changed; existing private-channel IDs are preserved.
-9. Run `/vc campaign sync` to publish any existing player-visible case threads/reference entries.
+7. In Discord configure support channels with `/vc-campaign channels`.
+8. Re-run `/vc-player private-channel` only if a player's private channel has changed; existing private-channel IDs are preserved.
+9. Run `/vc-campaign sync` to publish any existing player-visible case threads/reference entries.
 
 ### Important privacy change
 v3.1 stores explicit subject IDs on new private transcript messages. Existing v3.0 private transcript rows did not contain that field. They remain in the database for audit/history but are not selected as player-specific runtime context by the new scoped transcript query unless they can be associated through new v3.1 messages/facts. This intentionally favors secrecy over trying to guess ownership of legacy private rows.

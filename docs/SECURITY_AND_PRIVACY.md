@@ -23,7 +23,7 @@ The bot also needs the **Message Content** privileged intent if you want it to r
 Do not grant Administrator unless you intentionally accept the additional risk.
 
 ## Private-player channels
-Discord channel permissions, not the language model, are the primary confidentiality boundary for player-only delivery. Configure a private channel for each player and run `/vc player private-channel` there. In v3.1 the registered player's own messages in that channel are also private GM input during active sessions; other players must not be able to view the channel.
+Discord channel permissions, not the language model, are the primary confidentiality boundary for player-only delivery. Configure a private channel for each player and run `/vc-player private-channel` there. In v3.1 the registered player's own messages in that channel are also private GM input during active sessions; other players must not be able to view the channel.
 
 The database additionally stores visibility as public / party / player / character / gm. v3.1 also records the intended user/character subject on new private transcript rows so private runtime context can be selected without mixing players.
 

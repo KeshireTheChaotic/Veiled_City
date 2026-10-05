@@ -4,23 +4,23 @@ Downtime is intentionally resolved **between active sessions**.
 
 ## GM opens downtime
 
-`/vc downtime open label:<optional>`
+`/vc-downtime open label:<optional>`
 
 ## Players submit projects
 
-`/vc downtime project type:<type> title:<title> objective:<goal> ...`
+`/vc-downtime project type:<type> title:<title> objective:<goal> ...`
 
 Supported project categories include recovery, investigation, crafting, ritual, relationship, income/upkeep, surveillance, research, long-term project, and other.
 
 Each project has a countdown/progress target and visibility of Party, Character Private, or Player Private.
 
-`/vc downtime status` shows only projects the viewer is allowed to see.
+`/vc-downtime status` shows only projects the viewer is allowed to see.
 
 ## Resolution
 
 The GM runs:
 
-`/vc downtime resolve`
+`/vc-downtime resolve`
 
 Veilkeeper creates a pre-resolution snapshot, resolves submitted projects against Daggerheart/Veiled City rules and current campaign state, applies legitimate state events, then creates a post-resolution snapshot.
 

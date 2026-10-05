@@ -3,7 +3,7 @@
 Veilkeeper can temporarily hand one established NPC antagonist to a guest player without treating that NPC as a guest PC and without exposing the full GM record.
 
 ## Why this is a separate system
-An antagonist may know secrets the party does not, while the GM may know far more than the antagonist. `/vc guest claim` is therefore not used for antagonists. NPC control uses a **sanitized NPC Proxy package** with its own knowledge boundary.
+An antagonist may know secrets the party does not, while the GM may know far more than the antagonist. `/vc-guest claim` is therefore not used for antagonists. NPC control uses a **sanitized NPC Proxy package** with its own knowledge boundary.
 
 ## Control levels
 - **Portrayal** — the guest controls dialogue, demeanor, social choices, and characterization. Veilkeeper retains tactics/mechanics unless the human GM explicitly expands authority.
@@ -13,7 +13,7 @@ An antagonist may know secrets the party does not, while the GM may know far mor
 ## Recommended workflow: offer then claim
 Human GM:
 
-`/vc npc offer npc:"Doctor Vale" player:@Guest control:tactical objective:"Recover the correction device without being captured."`
+`/vc-npc offer npc:"Doctor Vale" player:@Guest control:tactical objective:"Recover the correction device without being captured."`
 
 Veilkeeper generates and stores a sanitized package, then delivers it in this order:
 1. the guest's registered private GM channel;
@@ -24,16 +24,16 @@ The guest receives the full player-facing package before accepting, including ex
 
 Guest:
 
-`/vc npc claim npc:"Doctor Vale"`
+`/vc-npc claim npc:"Doctor Vale"`
 
 To decline:
 
-`/vc npc decline npc:"Doctor Vale"`
+`/vc-npc decline npc:"Doctor Vale"`
 
 ## Immediate assignment
 A GM may skip the claim step:
 
-`/vc npc proxy npc:"Doctor Vale" player:@Guest control:tactical`
+`/vc-npc proxy npc:"Doctor Vale" player:@Guest control:tactical`
 
 This activates control immediately and sends the same sanitized package.
 
@@ -72,14 +72,14 @@ NPC-private discoveries are stored under a stable NPC knowledge identity rather 
 ## Ending control
 The guest or human GM can use:
 
-`/vc npc release npc:"Doctor Vale"`
+`/vc-npc release npc:"Doctor Vale"`
 
 All active/offered NPC proxies are also released automatically when the session ends. Veilkeeper resumes normal GM control afterward.
 
 ## Other commands
-`/vc npc status` — player sees their offers/active proxies; GM sees all active/offered proxies.
+`/vc-npc status` — player sees their offers/active proxies; GM sees all active/offered proxies.
 
-`/vc npc packet npc:"Doctor Vale"` — re-send the sanitized player package using the same private-channel → DM → `#state-errors` fallback.
+`/vc-npc packet npc:"Doctor Vale"` — re-send the sanitized player package using the same private-channel → DM → `#state-errors` fallback.
 
 ## Human-GM review
 The packet generator uses GM-private context to understand the antagonist, but outputs a deliberately sanitized player packet. If an antagonist sits at the center of a major mystery, use a precise `objective:` and `gm_notes:` when creating the proxy and review the GM log entry after generation.

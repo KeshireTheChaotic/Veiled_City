@@ -18,11 +18,11 @@ Veilkeeper creates snapshots around major mutations, including:
 
 ## GM commands
 
-`/vc admin snapshot`
+`/vc-admin snapshot`
 
-`/vc admin snapshots`
+`/vc-admin snapshots`
 
-`/vc admin rollback snapshot_id:<prefix>`
+`/vc-admin rollback snapshot_id:<prefix>`
 
 Rollback creates a **Pre-rollback safety** snapshot first, restores the selected authoritative state, and resynchronizes configured case/NPC/location surfaces. Bot-managed published-message identities are included in snapshot state.
 

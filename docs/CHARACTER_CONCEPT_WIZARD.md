@@ -6,7 +6,7 @@ Players no longer need to understand every Veiled City/Daggerheart option before
 
 Use:
 
-`/vc character concept description:<plain-English concept>`
+`/vc-character concept description:<plain-English concept>`
 
 Veilkeeper uses only player-safe campaign material and creates a **Level 1 draft**. The draft preserves the player's concept over optimization and includes class/subclass, ancestry/community, two domains, Level 1 trait spread, two Experiences, starting cards, equipment suggestions, and structured campaign hooks.
 
@@ -14,13 +14,13 @@ The draft is not a character until approved.
 
 Review it with:
 
-`/vc character concept-status`
+`/vc-character concept-status`
 
 Accept it with:
 
-`/vc character concept-accept`
+`/vc-character concept-accept`
 
-If the draft needs changes, simply run `/vc character concept` again with the revised description. The most recent pending draft is used.
+If the draft needs changes, simply run `/vc-character concept` again with the revised description. The most recent pending draft is used.
 
 ## Hook permissions
 

@@ -3,7 +3,7 @@
 The bot is intended for Discord mobile as well as desktop.
 
 ## Per-player settings
-Use `/vc player accessibility` to store:
+Use `/vc-player accessibility` to store:
 - **response length:** compact / standard / descriptive;
 - **mechanics detail:** full / standard / narrative;
 - **screen-reader:** on/off.
@@ -11,7 +11,7 @@ Use `/vc player accessibility` to store:
 The first implementation stores these preferences for the GM context. Public scenes remain compact by default.
 
 ## Private information
-Run `/vc player private-channel` inside a channel that only the player, bot, and intended human GM can read. The bot prefers that channel for private discoveries and falls back to Discord DM.
+Run `/vc-player private-channel` inside a channel that only the player, bot, and intended human GM can read. The bot prefers that channel for private discoveries and falls back to Discord DM.
 
 ## Recommended Discord layout
 - `#the-table` — main in-character play channel
@@ -25,7 +25,7 @@ Run `/vc player private-channel` inside a channel that only the player, bot, and
 - Slash commands for mechanical actions.
 - No need to upload the rulebook each session.
 - Persistent SQLite state survives Discord scrolling/history limits.
-- `/vc intel recap`, `/vc intel clues`, `/vc intel caseboard` provide compact catch-up views.
+- `/vc-intel recap`, `/vc-intel clues`, `/vc-intel caseboard` provide compact catch-up views.
 
 ## Screen-reader practice
 Prefer:

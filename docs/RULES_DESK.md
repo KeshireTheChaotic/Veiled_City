@@ -5,7 +5,7 @@ v3.1 adds a separate rules-answer path so routine mechanical questions do not in
 ## Configure
 Set a Discord channel:
 
-`/vc campaign channels rules_channel:#rules-questions`
+`/vc-campaign channels rules_channel:#rules-questions`
 
 Set the inexpensive model in `.env`:
 
@@ -34,7 +34,7 @@ Examples:
 - `How does Severe damage interact with armor?`
 - `Can my Veil domain card work on a security camera?`
 
-Use `/vc rules ask` if you want the same behavior outside the dedicated channel.
+Use `/vc-rules ask` if you want the same behavior outside the dedicated channel.
 
 ## What belongs at the table instead
 If the question is really a fictional action—"I use Threshold Sense on this specific locked door; what do I notice?"—ask it in `#the-table`. That requires world state and should use the normal GM path.

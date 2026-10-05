@@ -4,10 +4,10 @@ The table still decides **when** a narrative milestone grants a level. Veilkeepe
 
 ## Workflow
 
-1. `/vc character level-up character:<name>`
-2. `/vc character level-choose ...`
+1. `/vc-level level-up character:<name>`
+2. `/vc-level level-choose ...`
 3. Review the draft.
-4. `/vc character level-confirm`
+4. `/vc-level level-confirm`
 
 Confirmation creates an automatic pre-level snapshot before changing the sheet.
 

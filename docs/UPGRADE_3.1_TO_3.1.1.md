@@ -90,13 +90,13 @@ If a player has not registered a private channel, Veilkeeper attempts a Discord 
 ## 10. First use
 
 ```text
-/vc session start assembly:auto
+/vc-session start assembly:auto
 ```
 
 Players check in, then:
 
 ```text
-/vc session assemble
+/vc-session assemble
 ```
 
 See `docs/PARTY_ASSEMBLY.md`.

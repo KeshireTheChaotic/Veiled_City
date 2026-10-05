@@ -43,11 +43,11 @@ npm start
 ## 6. Discord setup
 No new permissions or channels are required.
 
-However, for the requested delivery fallback, **configure `#state-errors`** using `/vc campaign channels`. If the guest has neither a registered private GM channel nor open DMs, Veilkeeper posts the sanitized NPC package there so an admin GM can relay it.
+However, for the requested delivery fallback, **configure `#state-errors`** using `/vc-campaign channels`. If the guest has neither a registered private GM channel nor open DMs, Veilkeeper posts the sanitized NPC package there so an admin GM can relay it.
 
 Each recurring player/guest should ideally have a private channel and run:
 
-`/vc player private-channel`
+`/vc-player private-channel`
 
 ## 7. Existing characters/campaign state
 No character JSON changes are required. Existing PCs, guests, party state, facts, and sessions remain compatible.

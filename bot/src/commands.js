@@ -1,7 +1,8 @@
 import {
   SlashCommandBuilder,
   ChannelType,
-  PermissionFlagsBits
+  PermissionFlagsBits,
+  AttachmentBuilder
 } from "discord.js";
 import { dualityRoll, parseDice } from "./dice.js";
 import { publishJournal, postJournalEntry, publishEventResults, postGmLog, postStateError, postPrivateRelay, syncConfiguredSurfaces, postPlayMessage, sendPlayerPrivate } from "./publishing.js";
@@ -9,6 +10,7 @@ import { EncounterLibrary, livePcRoster, partyTier, baseBattlePoints, DIFFICULTY
 import { validateConceptDraft, prepareLevelup, applyLevelupToData, legalAdvancements, tierAchievement } from "./character-system.js";
 import { buildCombatants, hpMarksForDamage, combatantLine } from "./combat.js";
 import { applyGMEvents } from "./state.js";
+import { createPlayerExportFiles, createGmExportFiles } from "./character-export.js";
 
 export function buildCommands(){
   const monolith = new SlashCommandBuilder()
@@ -81,6 +83,14 @@ export function buildCommands(){
           .addStringOption(o=>o.setName("character").setDescription("Character name").setRequired(true)))
         .addSubcommand(s=>s.setName("sheet").setDescription("Show your current or named character")
           .addStringOption(o=>o.setName("character").setDescription("Character name")))
+        .addSubcommand(s=>s.setName("export").setDescription("Download a current player-safe character sheet")
+          .addStringOption(o=>o.setName("character").setDescription("Owned character name; defaults to current"))
+          .addStringOption(o=>o.setName("format").setDescription("Export format").addChoices(
+            {name:"DOCX",value:"docx"},{name:"JSON",value:"json"},{name:"Markdown",value:"markdown"},{name:"All (JSON + Markdown + DOCX)",value:"all"})))
+        .addSubcommand(s=>s.setName("export-gm").setDescription("GM: download hooks, private state, and canon for a character")
+          .addStringOption(o=>o.setName("character").setDescription("Campaign character name").setRequired(true))
+          .addStringOption(o=>o.setName("format").setDescription("Export format").addChoices(
+            {name:"DOCX",value:"docx"},{name:"JSON",value:"json"},{name:"Markdown",value:"markdown"},{name:"All (JSON + Markdown + DOCX)",value:"all"})))
         .addSubcommand(s=>s.setName("retire").setDescription("Retire a character")
           .addStringOption(o=>o.setName("character").setDescription("Character name").setRequired(true)))
         .addSubcommand(s=>s.setName("death").setDescription("Mark a character dead after resolving the death move")
@@ -252,7 +262,7 @@ export function buildCommands(){
   const full=monolith.toJSON();
   const splitMap={
     character:{
-      "vc-character":["create","import","list","select","sheet","retire","death","concept","concept-status","concept-accept"],
+      "vc-character":["create","import","list","select","sheet","export","export-gm","retire","death","concept","concept-status","concept-accept"],
       "vc-level":["level-up","level-choose","level-confirm"]
     },
     encounter:{
@@ -277,6 +287,17 @@ export function buildCommands(){
 }
 
 function json(c){ return c?.data ?? {}; }
+function exportAttachments(files){
+  return files.map(f=>new AttachmentBuilder(f.buffer,{name:f.name}));
+}
+
+function findOwnedAnyCharacter(db,guildId,userId,query){
+  const rows=db.listCharacters(guildId,userId,{includeClosed:true});
+  const q=String(query||"").trim().toLowerCase();
+  if(!q) return rows.find(c=>["active","reserve","guest"].includes(c.status)) ?? rows[0] ?? null;
+  return rows.find(c=>c.name.toLowerCase()===q) ?? rows.find(c=>c.name.toLowerCase().includes(q)) ?? null;
+}
+
 function formatSheet(c){
   if(!c) return "No character found.";
   const d=json(c), r=d.resources||{};
@@ -736,6 +757,30 @@ Initial phase: ${s.assembly_phase}`});
       }
       if(!c) c=db.listCharacters(interaction.guildId,interaction.user.id,{includeClosed:false})[0];
       await interaction.reply({content:formatSheet(c),ephemeral:true});
+      return true;
+    }
+    if(group==="character"&&sub==="export"){
+      const q=interaction.options.getString("character");
+      const s=db.getActiveSession(interaction.guildId);
+      let c=q?findOwnedAnyCharacter(db,interaction.guildId,interaction.user.id,q):null;
+      if(!c&&s){ const a=db.activeAssignment(s.id,interaction.user.id); if(a) c=db.getCharacter(a.character_id); }
+      if(!c) c=findOwnedAnyCharacter(db,interaction.guildId,interaction.user.id,"");
+      if(!c) throw new Error("No owned character found to export.");
+      const format=interaction.options.getString("format")||"docx";
+      const files=createPlayerExportFiles({db,guildId:interaction.guildId,character:c,format});
+      db.audit(interaction.guildId,s?.id||null,"player",interaction.user.id,"character_export",{character_id:c.id,format,files:files.map(x=>x.name)});
+      await interaction.reply({content:`Current player-safe export for **${c.name}** (${format}).`,files:exportAttachments(files),ephemeral:true});
+      return true;
+    }
+    if(group==="character"&&sub==="export-gm"){
+      if(!isGM(db,interaction)) throw new Error("GM/admin permission required for GM-private character exports.");
+      const c=db.findGuildCharacter(interaction.guildId,interaction.options.getString("character",true),{includeClosed:true});
+      if(!c) throw new Error("Campaign character not found.");
+      const format=interaction.options.getString("format")||"all";
+      const files=createGmExportFiles({db,guildId:interaction.guildId,character:c,format});
+      const s=db.getActiveSession(interaction.guildId);
+      db.audit(interaction.guildId,s?.id||null,"gm",interaction.user.id,"character_export_gm",{character_id:c.id,format,files:files.map(x=>x.name)});
+      await interaction.reply({content:`GM-private export for **${c.name}**. Do not share these files with the player unless the information has been revealed in play.`,files:exportAttachments(files),ephemeral:true});
       return true;
     }
     if(group==="character"&&["retire","death"].includes(sub)){

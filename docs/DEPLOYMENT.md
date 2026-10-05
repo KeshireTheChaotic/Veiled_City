@@ -52,7 +52,7 @@ Before replacing versions:
 7. Start the bot.
 
 ## Response modes
-`/vc campaign setup ... mode:`
+`/vc-campaign setup ... mode:`
 
 - **mention** — lowest API cost; normal chat is ignored until the bot is mentioned.
 - **assisted** — recommended default; obvious in-world actions/questions are routed, casual chatter is ignored.

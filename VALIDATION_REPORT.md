@@ -1,37 +1,47 @@
-# Veiled City Multiplayer Discord v3.2.0 — Validation Report
+# Veiled City Multiplayer Discord v3.2.4 — Validation Report
 
 **Build date:** 2026-10-05
 
 ## Result
 **PASS**
 
-## v3.2.0 systems validated
-- AI-assisted Level 1 character concept drafts validate the required trait spread, domains, Experiences, starting cards, structured hooks, and player/GM hook permissions before acceptance.
-- Level-up planning/application validates sequential levels, tier achievements, advancement-choice limits, double-choice proficiency/multiclass advances, domain-card progression, and structured advancement history.
-- Deterministic combat state persists individual adversary/minion HP, Stress, thresholds, conditions/effects, status, GM Fear, and non-binding spotlight counts in SQLite.
-- Normal Duality rolls can mutate Hope/Fear/Critical resources deterministically; Reaction rolls are excluded from Hope/Fear generation and spotlight tracking.
-- Campaign snapshots capture authoritative campaign state; rollback creates a safety snapshot first and restores the selected snapshot while preserving operational logs.
-- Canon proposals are versioned; contradictory facts create pending conflicts and require explicit GM resolution instead of silent replacement.
-- Downtime cycles/projects persist between sessions, respect visibility, accept deterministic state events, and record resolved world consequences.
-- Rules rulings persist and the Rules Desk supports authority labels: RAW, Veiled City House Rule, Homebrew Content, GM Ruling, or Provisional Ruling.
+## Character export checks
 
-## Compatibility / migration
-- v3.1.3 SQLite → v3.2.0 migration test: **PASS**.
-- Existing characters, sessions, party state, NPC proxies, private knowledge, encounters, and campaign data remain intact.
-- New tables/columns are additive.
+- Player-safe live export from current SQLite character state: **PASS**.
+- Player `format:all` returns JSON + Markdown + DOCX: **PASS**.
+- Player export excludes character-linked GM-only facts: **PASS**.
+- GM `format:all` returns 9 files: **PASS**.
+- Required GM naming conventions: **PASS**.
+  - `GM_HOOKS_character.*`
+  - `GM_PRIVATE_character.*`
+  - `GM_CANON_character.*`
+- GM_PRIVATE export includes character-linked private facts/clocks: **PASS**.
+- GM_CANON export retrieves associated canon ledger entries: **PASS**.
+- DOCX output is a valid OOXML ZIP package: **PASS**.
+- Sample generated DOCX rendered successfully through LibreOffice: **PASS**.
+- Rendered pages visually inspected for clipping/overlap: **PASS**.
 
 ## Code / content checks
-- `npm run check`: **PASS**.
-- `npm run test:offline`: **PASS**.
+
+- Modified JavaScript syntax (`node --check`): **PASS**.
+- Discord command-schema validation: **PASS**.
+- Root commands: **17**.
+- `/vc-character` command size: **1172 / 8000 characters**.
+- Character export database integration test: **PASS**.
 - Veiled City content validator: **PASS**.
 - Domain cards: **84**.
 - Content Markdown files: **51**.
 - Content JSON files: **10**.
-- Final Daggerheart action handling uses freeform spotlight play; Veilkeeper's spotlight counters are advisory and do not create an initiative/action-token economy.
 
-## Not exercised without user credentials
-- Live Discord command registration/interactions.
-- Live OpenAI character-draft, GM, rules, and downtime calls.
-- Live private-channel/DM delivery.
+## Deployment impact
 
-Those require the user's Discord/OpenAI credentials and are intentionally excluded from offline validation.
+- Database migration: **none**.
+- New Discord channels: **none**.
+- New Discord permissions: **none**.
+- New OpenAI/API settings: **none**.
+- Additional npm dependencies: **none**.
+- Discord command re-registration: **required** (`npm run register`).
+
+## Credential-dependent tests
+
+Live Discord attachment delivery was not exercised because it requires the user's Discord credentials. The generated attachment buffers, names, command schema, and export content were validated locally.

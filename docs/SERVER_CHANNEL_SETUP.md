@@ -7,7 +7,7 @@
 - `#house-rules` — Veil Exposure, attendance, guest/proxy, private-knowledge, and campaign-specific rules.
 
 ## CAMPAIGN
-- `#the-table` — main IC channel; configured by `/vc campaign setup`.
+- `#the-table` — main IC channel; configured by `/vc-campaign setup`.
 - `#case-board` — v3.1 automatically creates/edits player-visible case-thread messages.
 - `#party-journal` — v3.1 automatically receives end-of-session recaps.
 - `#known-npcs` — v3.1 automatically creates/edits player-known NPC summaries emitted by the GM.
@@ -22,7 +22,7 @@ Recommended: players may read `#party-journal`, `#known-npcs`, and `#known-locat
 ## PRIVATE
 Create one channel per player, visible only to that player, Veilkeeper, and optionally the human GM. Example: `#keshire-to-gm`.
 
-The player runs `/vc player private-channel` inside it. During an active session, the channel is now two-way: messages from that player are sent to the AI GM privately and private discoveries do not become party knowledge automatically.
+The player runs `/vc-player private-channel` inside it. During an active session, the channel is now two-way: messages from that player are sent to the AI GM privately and private discoveries do not become party knowledge automatically.
 
 ## GM PRIVATE
 - `#gm-log` — automatic session lifecycle and meaningful state-event summaries. GM-only.
@@ -30,7 +30,7 @@ The player runs `/vc player private-channel` inside it. During an active session
 
 ## Configure all support channels
 ```text
-/vc campaign channels
+/vc-campaign channels
   rules_channel:#rules-questions
   case_board:#case-board
   journal:#party-journal
@@ -40,7 +40,7 @@ The player runs `/vc player private-channel` inside it. During an active session
   state_errors:#state-errors
 ```
 
-Run `/vc campaign sync` afterward if upgrading an existing database with already-recorded case threads or references.
+Run `/vc-campaign sync` afterward if upgrading an existing database with already-recorded case threads or references.
 
 
 ## Party assembly channel use

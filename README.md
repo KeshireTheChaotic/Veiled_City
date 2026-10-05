@@ -1,60 +1,54 @@
-# VEILED CITY MULTIPLAYER DISCORD ENGINE v3.2.0
+# VEILED CITY MULTIPLAYER DISCORD ENGINE v3.2.4
 
 A deployable Discord multiplayer GM layer for **Veiled City**, using Daggerheart SRD 2.0 as its mechanical baseline.
 
-## v3.2.0 focus — campaign integrity and full lifecycle support
+## v3.2.4 — live character export
 
-v3.2.0 adds seven major systems:
+This release adds downloadable character-sheet exports generated directly from authoritative SQLite campaign state.
 
-1. **AI-assisted character concepts** — `/vc character concept` turns a plain-English concept into a Level 1 draft with structured hooks and explicit player/GM permissions.
-2. **Deterministic combat state** — adversary HP, Stress, thresholds, conditions/effects, status, Fear, and non-binding spotlight counts live in SQLite rather than model memory.
-3. **Validated level-ups** — `/vc character level-up`, `level-choose`, and `level-confirm` enforce tier achievements, advancement slots, domain access, and mandatory domain-card progression.
-4. **Snapshots and rollback** — automatic snapshots surround sessions and major mutations; GM commands can create/list/restore snapshots.
-5. **Canon ledger** — durable canon is versioned; contradictory proposals create pending conflicts instead of silently overwriting established facts.
-6. **Downtime/world turns** — between-session projects can be submitted and resolved with visibility-aware results and world consequences.
-7. **Grounded rules desk** — answers are labeled RAW, Veiled City House Rule, Homebrew Content, GM Ruling, or Provisional Ruling. Saved human-GM rulings have precedence.
+### Player export
 
-All v3.1.3 features remain: Battle Point encounter building, guest/drop-in PCs, party convergence, private scenes, NPC proxy antagonists, reference channels, and low-cost rules questions.
+```text
+/vc-character export
+```
 
-## Architecture
+Exports an owned character in `docx`, `json`, `markdown`, or `all`. The output reflects current resources, level, advancement state, equipment, hooks, and player/character-visible campaign knowledge. Player exports do not include GM-private information.
 
-**Discord is the interface. SQLite is authoritative state. The language model proposes fiction; application code owns persistent mechanics.**
+### GM export
 
-The final Daggerheart rules do not use a mandatory initiative/action-token tracker. Veilkeeper therefore records encounter **spotlight counts only as a fairness aid** and never treats them as turns or action limits.
+```text
+/vc-character export-gm character:"Character Name" format:all
+```
 
-## Fast setup
+GM/Admin only. Generates three deliberately separated bundles using the requested naming convention:
 
-1. Read `docs/DISCORD_SETUP.md`, `docs/SERVER_CHANNEL_SETUP.md`, and `docs/OPENAI_SETUP.md`.
-2. Copy `bot/.env.example` to `bot/.env` and fill credentials.
-3. Install/register/start:
-   ```bash
-   cd bot
-   npm install
-   npm run check
-   npm run test:offline
-   npm run register
-   npm start
-   ```
-4. Configure your existing v3.1 support channels with `/vc campaign setup` and `/vc campaign channels`.
-5. No new Discord channels or permissions are required for v3.2.0.
+```text
+GM_HOOKS_character
+GM_PRIVATE_character
+GM_CANON_character
+```
 
-## New documentation
+Each can be JSON, Markdown, DOCX, or all three. `format:all` produces nine attachments total.
 
-- `docs/CHARACTER_CONCEPT_WIZARD.md`
-- `docs/LEVEL_UP.md`
-- `docs/COMBAT_STATE.md`
-- `docs/SNAPSHOTS_AND_ROLLBACK.md`
-- `docs/CANON_LEDGER.md`
-- `docs/DOWNTIME.md`
-- `docs/RULES_GROUNDING.md`
-- `docs/UPGRADE_3.1.3_TO_3.2.0.md`
+DOCX generation is local and deterministic; it requires no OpenAI request and no new npm package.
 
-## Upgrade
+## Existing v3.2 systems
 
-Back up `bot/data/veiled_city.sqlite`, preserve your existing `bot/.env`, replace the application/content files, then run:
+- Split Discord command roots compatible with Discord's 8,000-character command-size limit.
+- AI-assisted character concepts with structured hook permissions.
+- Deterministic combat state and Daggerheart Battle Point encounter construction.
+- Validated character advancement.
+- Campaign snapshots and rollback.
+- Canon ledger and conflict resolution.
+- Downtime/world turns.
+- Grounded rules desk.
+- Guest/drop-in PCs, party convergence, NPC proxy antagonists, private scenes, and visibility-aware knowledge.
+
+## Upgrade from v3.2.3
+
+Preserve `bot/.env` and `bot/data/veiled_city.sqlite`, then run from `bot/`:
 
 ```bash
-cd bot
 npm install
 npm run check
 npm run test:offline
@@ -62,4 +56,6 @@ npm run register
 npm start
 ```
 
-`npm run register` is required because the slash-command tree changed. Database migration is additive and existing v3.1.3 campaigns/characters remain valid.
+`npm run register` is required because the Discord command definition changed.
+
+See `docs/CHARACTER_EXPORT.md` and `docs/UPGRADE_3.2.3_TO_3.2.4.md`.

@@ -30,12 +30,12 @@ Veilkeeper v3.2 targets **Daggerheart SRD 2.0 (August 25, 2026)**. The rules des
 ### Spotlight and action economy
 Daggerheart does **not** use a mandatory initiative or action-token tracker. The bot records how often each active PC makes an action roll during an encounter only as a **spotlight fairness aid**. It never converts those counts into turns, initiative, or an action limit.
 
-`/vc roll duality` is treated as an action roll unless `reaction:true` is selected. A reaction roll does not generate Hope/Fear and does not increment spotlight tracking.
+`/vc-roll duality` is treated as an action roll unless `reaction:true` is selected. A reaction roll does not generate Hope/Fear and does not increment spotlight tracking.
 
 For normal action rolls, Veilkeeper deterministically records metacurrency from the Duality Dice: rolls with Hope add Hope to the acting PC (maximum 6); rolls with Fear add GM Fear (maximum 12); a Critical Success gains Hope and clears 1 Stress. Narrative success/failure still depends on the Difficulty and the GM's adjudication.
 
 ## Advancement
-Level advancement is validated by `/vc character level-up`, `/vc character level-choose`, and `/vc character level-confirm`.
+Level advancement is validated by `/vc-level level-up`, `/vc-level level-choose`, and `/vc-level level-confirm`.
 
 - Levels are grouped into four tiers: Level 1; Levels 2–4; Levels 5–7; Levels 8–10.
 - Each level-up grants two advancement choices from legal, unmarked slots in the current tier or an eligible lower tier.

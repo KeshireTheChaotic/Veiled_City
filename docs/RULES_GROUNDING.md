@@ -1,6 +1,6 @@
 # Grounded Rules Desk — v3.2.0
 
-The rules channel and `/vc rules ask` now return an explicit authority label:
+The rules channel and `/vc-rules ask` now return an explicit authority label:
 
 - **RAW** — directly established by the supplied Daggerheart SRD 2.0-derived reference material.
 - **VEILED_CITY_HOUSE_RULE** — explicit Veiled City campaign rule.
@@ -18,11 +18,11 @@ The rules model cannot mutate campaign state.
 
 Save or replace a campaign ruling:
 
-`/vc rules ruling key:<short-key> question:<question> ruling:<answer>`
+`/vc-rules ruling key:<short-key> question:<question> ruling:<answer>`
 
 View saved rulings:
 
-`/vc rules rulings`
+`/vc-rules rulings`
 
 These rulings are stored in SQLite and passed to both the rules desk and main GM when relevant.
 

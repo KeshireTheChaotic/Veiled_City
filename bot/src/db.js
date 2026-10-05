@@ -197,6 +197,20 @@ export class VeiledDB {
       chars.find(c=>c.name.toLowerCase().includes(q)) ?? null;
   }
 
+  listGuildCharacters(guildId,{includeClosed=true}={}) {
+    let sql="SELECT * FROM characters WHERE guild_id=?";
+    if(!includeClosed) sql+=" AND status IN ('active','reserve','guest')";
+    sql+=" ORDER BY name";
+    return this.db.prepare(sql).all(guildId).map(c=>({...c,data:JSON.parse(c.character_json)}));
+  }
+
+  findGuildCharacter(guildId,query,{includeClosed=true}={}) {
+    const chars=this.listGuildCharacters(guildId,{includeClosed});
+    const q=String(query||"").trim().toLowerCase();
+    if(!q) return chars[0] ?? null;
+    return chars.find(c=>c.name.toLowerCase()===q) ?? chars.find(c=>c.name.toLowerCase().includes(q)) ?? null;
+  }
+
   updateCharacterData(id,mutator) {
     const c=this.getCharacter(id);
     if(!c) throw new Error("Character not found.");
@@ -495,6 +509,37 @@ export class VeiledDB {
   clocksFor(guildId,{includeGM=false}={}) {
     const sql=includeGM?"SELECT * FROM clocks WHERE guild_id=?":"SELECT * FROM clocks WHERE guild_id=? AND visibility!='gm'";
     return this.db.prepare(sql).all(guildId);
+  }
+
+  characterPrivateFacts(guildId,characterId,ownerUserId="") {
+    return this.db.prepare(`
+      SELECT * FROM facts WHERE guild_id=? AND (
+        subject_character_id=?
+        OR (subject_user_id=? AND visibility IN ('player','gm'))
+      ) AND visibility IN ('player','character','gm')
+      ORDER BY created_at
+    `).all(guildId,characterId,ownerUserId);
+  }
+
+  characterPrivateClocks(guildId,characterId,ownerUserId="") {
+    return this.db.prepare(`
+      SELECT * FROM clocks WHERE guild_id=? AND (subject_character_id=? OR subject_user_id=?)
+        AND visibility IN ('player','character','gm') ORDER BY clock_key
+    `).all(guildId,characterId,ownerUserId);
+  }
+
+  characterPrivateThreads(guildId,characterId,ownerUserId="") {
+    return this.db.prepare(`
+      SELECT * FROM threads WHERE guild_id=? AND (subject_character_id=? OR subject_user_id=?)
+        AND visibility IN ('player','character','gm') ORDER BY updated_at DESC
+    `).all(guildId,characterId,ownerUserId);
+  }
+
+  characterPrivateReferences(guildId,characterId,ownerUserId="") {
+    return this.db.prepare(`
+      SELECT * FROM reference_entries WHERE guild_id=? AND (subject_character_id=? OR subject_user_id=?)
+        AND visibility IN ('player','character','gm') ORDER BY kind,display_name
+    `).all(guildId,characterId,ownerUserId);
   }
 
   changeClock(guildId,key,delta,{label=null,visibility="gm",subjectUserId=null,max=6}={}) {

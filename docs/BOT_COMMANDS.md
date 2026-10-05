@@ -1,4 +1,4 @@
-# Veilkeeper v3.2.2 Command Reference
+# Veilkeeper v3.2.4 Command Reference
 
 Veilkeeper uses split root commands to stay within Discord's per-command size limit. The root name identifies the command family.
 
@@ -27,6 +27,8 @@ Veilkeeper uses split root commands to stay within Discord's per-command size li
 - `/vc-character list`
 - `/vc-character select`
 - `/vc-character sheet`
+- `/vc-character export [character] [format:<docx|json|markdown|all>]` — player-safe live export.
+- `/vc-character export-gm character:<name> [format:<docx|json|markdown|all>]` — GM/Admin private export bundles.
 - `/vc-character retire`
 - `/vc-character death`
 
