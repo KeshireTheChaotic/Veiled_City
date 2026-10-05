@@ -97,9 +97,9 @@ export function buildCommands(){
             {name:"Increase two traits",value:"traits"},{name:"+1 HP slot",value:"hp"},{name:"+1 Stress slot",value:"stress"},{name:"Increase two Experiences",value:"experience"},{name:"Additional domain card",value:"domain"},{name:"+1 Evasion",value:"evasion"},{name:"Upgrade subclass",value:"subclass"},{name:"+1 Proficiency (costs both)",value:"proficiency"},{name:"Multiclass (costs both)",value:"multiclass"}))
           .addStringOption(o=>o.setName("advancement_two").setDescription("Second advancement").setRequired(true).addChoices(
             {name:"Increase two traits",value:"traits"},{name:"+1 HP slot",value:"hp"},{name:"+1 Stress slot",value:"stress"},{name:"Increase two Experiences",value:"experience"},{name:"Additional domain card",value:"domain"},{name:"+1 Evasion",value:"evasion"},{name:"Upgrade subclass",value:"subclass"},{name:"+1 Proficiency (costs both)",value:"proficiency"},{name:"Multiclass (costs both)",value:"multiclass"}))
+          .addStringOption(o=>o.setName("domain_card").setDescription("Mandatory new domain card name").setRequired(true))
           .addStringOption(o=>o.setName("detail_one").setDescription("Targets/details for first advancement"))
           .addStringOption(o=>o.setName("detail_two").setDescription("Targets/details for second advancement"))
-          .addStringOption(o=>o.setName("domain_card").setDescription("Mandatory new domain card name").setRequired(true))
           .addStringOption(o=>o.setName("domain").setDescription("Card domain; required for official/non-bundled cards"))
           .addIntegerOption(o=>o.setName("card_level").setDescription("Card level; required for official/non-bundled cards").setMinValue(1).setMaxValue(10))
           .addStringOption(o=>o.setName("tier_experience").setDescription("New +2 Experience required at levels 2, 5, and 8")))
