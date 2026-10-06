@@ -28,6 +28,7 @@ bot/src/index.js
 bot/src/publishing.js
 bot/src/register-commands.js
 bot/src/state.js
+bot/src/voice.js
 content/CARDS/ANCESTRIES_AND_COMMUNITIES.md
 content/CARDS/CUSTOM_DOMAINS.md
 content/CARDS/DOMAINS/HEX.md
@@ -108,6 +109,7 @@ docs/CHANGELOG_v3.3.0_DISCORD.md
 docs/CHANGELOG_v3.3.1_DISCORD.md
 docs/CHANGELOG_v3.3.2_DISCORD.md
 docs/CHANGELOG_v3.3.3_DISCORD.md
+docs/CHANGELOG_v3.4.0_DISCORD.md
 docs/CHARACTER_CONCEPT_CONTEXT.md
 docs/CHARACTER_EXPORT.md
 docs/CHARACTER_NARRATIVE_MARKDOWN.md
@@ -142,3 +144,5 @@ docs/UPGRADE_3.2.4_TO_3.3.0.md
 docs/UPGRADE_3.3.0_TO_3.3.1.md
 docs/UPGRADE_3.3.1_TO_3.3.2.md
 docs/UPGRADE_3.3.2_TO_3.3.3.md
+docs/UPGRADE_3.3.3_TO_3.4.0.md
+docs/VOICE_NARRATION.md

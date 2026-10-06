@@ -1,5 +1,6 @@
 FROM node:24-bookworm-slim
 WORKDIR /app/bot
+RUN apt-get update && apt-get install -y --no-install-recommends ffmpeg ca-certificates && rm -rf /var/lib/apt/lists/*
 COPY bot/package*.json ./
 RUN npm install --omit=dev
 COPY bot ./

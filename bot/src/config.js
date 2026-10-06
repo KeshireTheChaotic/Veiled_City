@@ -34,6 +34,14 @@ export function loadConfig(){
     handoutMaxOutputTokens:Number(process.env.HANDOUT_MAX_OUTPUT_TOKENS||1200),
     aftermathMaxOutputTokens:Number(process.env.AFTERMATH_MAX_OUTPUT_TOKENS||1800),
     encounterAftermathMode:process.env.ENCOUNTER_AFTERMATH_MODE||"auto",
+    voiceEnabled:/^(1|true|yes|on)$/i.test(process.env.VOICE_ENABLED||"false"),
+    voiceModel:process.env.OPENAI_VOICE_MODEL||"gpt-4o-mini-tts",
+    voiceMode:process.env.VOICE_MODE||"narrative",
+    voiceName:process.env.VOICE_NAME||process.env.VOICE_CUSTOM_ID||"cedar",
+    voiceInstructions:process.env.VOICE_INSTRUCTIONS||"Low-key occult noir narrator. Measured pace, restrained emotion, clear diction, cinematic but never melodramatic.",
+    voiceSpeed:Number(process.env.VOICE_SPEED||1),
+    voiceMaxCharsPerTurn:Number(process.env.VOICE_MAX_CHARS_PER_TURN||12000),
+    voiceMaxQueue:Number(process.env.VOICE_MAX_QUEUE||8),
     defaultResponseMode:process.env.DEFAULT_RESPONSE_MODE||"assisted"
   };
 }

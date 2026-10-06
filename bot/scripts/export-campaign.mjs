@@ -18,7 +18,7 @@ const sessions=all("SELECT * FROM sessions WHERE guild_id=? ORDER BY session_num
 const sessionIds=sessions.map(x=>x.id);
 const placeholders=sessionIds.length?sessionIds.map(()=>"?").join(","):"''";
 const exportObj={
-  export_version:"3.3.3",
+  export_version:"3.4.0",
   visibility:mode==="player"?"player_safe":"gm_private_full",
   exported_at:new Date().toISOString(),
   campaign:one("SELECT * FROM campaigns WHERE guild_id=?",guildId),

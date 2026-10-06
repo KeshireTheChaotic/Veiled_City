@@ -1,6 +1,18 @@
-# VEILED CITY MULTIPLAYER DISCORD ENGINE v3.3.3
+# VEILED CITY MULTIPLAYER DISCORD ENGINE v3.4.0
 
 A deployable Discord multiplayer GM layer for **Veiled City**, using Daggerheart SRD 2.0 as its mechanical baseline.
+
+## v3.4.0 — Discord Voice Narration
+
+v3.4.0 adds optional AI-generated narration in Discord voice channels while keeping Discord text and SQLite as the authoritative campaign record. Public `#the-table` GM narration can be synthesized through OpenAI's speech endpoint and played through Discord using `/vc-voice`. Private scenes, GM-only material, rules answers, handouts, errors, and hidden canon are excluded from automatic voice output.
+
+Voice is disabled by default. Native installs require **FFmpeg** in `PATH`; the Docker image installs FFmpeg automatically. After setting `VOICE_ENABLED=true`, join the desired voice channel and run `/vc-voice join`. Built-in OpenAI voices and eligible sample-based custom voice IDs are supported.
+
+See:
+
+- `docs/VOICE_NARRATION.md`
+- `docs/UPGRADE_3.3.3_TO_3.4.0.md`
+- `docs/CHANGELOG_v3.4.0_DISCORD.md`
 
 ## v3.3.3 — Character Narrative Markdown
 
@@ -19,7 +31,7 @@ Runtime narrative is stored in SQLite and included in snapshots/rollback. Veilke
 
 The external `/vc-character context-export` package now instructs ChatGPT/other assistants to generate these Markdown files when useful alongside `CHARACTER_<Name>.json` and `GM_HOOKS_<Name>.json`.
 
-## Upgrade from v3.3.2
+## v3.3.3 historical upgrade notes
 
 Preserve:
 

@@ -8,14 +8,16 @@ import { GMService } from "./gm.js";
 import { handleCommand } from "./commands.js";
 import { applyGMEvents, applyRelationshipDrafts, applyHandoutDrafts } from "./state.js";
 import { publishEventResults, postGmLog, postStateError, deliverHandout } from "./publishing.js";
+import { VoiceNarrator } from "./voice.js";
 
 const config=loadConfig();
 const db=new VeiledDB(config.dbPath,path.resolve(process.cwd(),"./sql/schema.sql"));
 const content=new ContentIndex(config.contentRoot);
 const gm=new GMService({db,content,config});
+const voice=new VoiceNarrator(config);
 
 const client=new Client({
-  intents:[GatewayIntentBits.Guilds,GatewayIntentBits.GuildMessages,GatewayIntentBits.MessageContent,GatewayIntentBits.DirectMessages],
+  intents:[GatewayIntentBits.Guilds,GatewayIntentBits.GuildMessages,GatewayIntentBits.MessageContent,GatewayIntentBits.DirectMessages,GatewayIntentBits.GuildVoiceStates],
   partials:[Partials.Channel]
 });
 
@@ -70,13 +72,14 @@ function resolveController(session,message){
 }
 
 client.once("ready",()=>{
-  console.log(`Veilkeeper v3.3.3 logged in as ${client.user.tag}`);
+  console.log(`Veilkeeper v3.4.0 logged in as ${client.user.tag}`);
+  console.log(`Voice narration: ${config.voiceEnabled?`enabled (${config.voiceName}/${config.voiceModel})`:"disabled"}.`);
   console.log(`Indexed ${content.chunks.length} Veiled City content chunks.`);
 });
 
 client.on("interactionCreate",async interaction=>{
   try{
-    await handleCommand(interaction,{db,gm});
+    await handleCommand(interaction,{db,gm,voice});
   }catch(err){
     console.error(err);
     if(interaction.guild) await postStateError({db,guild:interaction.guild,error:err,context:`interaction:${interaction.commandName||"unknown"}`,sessionId:db.getActiveSession(interaction.guildId)?.id||null});
@@ -203,6 +206,12 @@ Handouts: ${handApplied.filter(x=>x.ok).length}`});
     if(result.narration?.trim()){
       for(const c of splitDiscord(result.narration)) await message.channel.send(c.trim());
       db.addMessage({guildId:message.guild.id,sessionId:session.id,userId:client.user.id,speakerName:"Veilkeeper",visibility:"party",content:result.narration});
+      // Voice is a non-authoritative output layer. Only player-visible party narration is synthesized.
+      // Private scenes, GM state, mechanics, handouts, and rules output are never auto-spoken.
+      voice.narrate(message.guild,result.narration).catch(async err=>{
+        console.error("Voice narration failed",err);
+        await postStateError({db,guild:message.guild,error:err,context:"voice-narration",sessionId:session.id});
+      });
     }
     for(const pm of result.private_messages||[]){
       if(!pm.discord_user_id||!pm.content?.trim()) continue;
@@ -223,7 +232,7 @@ Handouts: ${handApplied.filter(x=>x.ok).length}`});
   }
 });
 
-process.on("SIGINT",()=>{ db.close(); client.destroy(); process.exit(0); });
-process.on("SIGTERM",()=>{ db.close(); client.destroy(); process.exit(0); });
+process.on("SIGINT",()=>{ voice.destroy(); db.close(); client.destroy(); process.exit(0); });
+process.on("SIGTERM",()=>{ voice.destroy(); db.close(); client.destroy(); process.exit(0); });
 
 await client.login(config.discordToken);

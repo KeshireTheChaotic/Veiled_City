@@ -316,6 +316,20 @@ export function buildCommands(){
           .addStringOption(o=>o.setName("conflict_id").setDescription("Conflict ID/prefix").setRequired(true))
           .addStringOption(o=>o.setName("resolution").setDescription("Resolution").setRequired(true).addChoices({name:"Keep existing",value:"existing"},{name:"Accept proposed",value:"proposed"},{name:"Use custom value",value:"custom"}))
           .addStringOption(o=>o.setName("custom_value").setDescription("Required for custom"))))
+      .addSubcommandGroup(g=>g.setName("voice").setDescription("Discord voice narration controls")
+        .addSubcommand(s=>s.setName("join").setDescription("Have Veilkeeper join your current voice channel"))
+        .addSubcommand(s=>s.setName("leave").setDescription("GM: disconnect Veilkeeper from voice"))
+        .addSubcommand(s=>s.setName("status").setDescription("Show voice narration status"))
+        .addSubcommand(s=>s.setName("repeat").setDescription("Replay the most recent narration without a new TTS charge"))
+        .addSubcommand(s=>s.setName("pause").setDescription("GM: pause voice narration playback"))
+        .addSubcommand(s=>s.setName("resume").setDescription("GM: resume voice narration playback"))
+        .addSubcommand(s=>s.setName("configure").setDescription("GM: change runtime voice settings")
+          .addStringOption(o=>o.setName("mode").setDescription("What Veilkeeper narrates").addChoices({name:"Off",value:"off"},{name:"Narrative",value:"narrative"},{name:"Full IC narration",value:"full"}))
+          .addStringOption(o=>o.setName("voice").setDescription("Built-in voice name or custom voice_... ID"))
+          .addNumberOption(o=>o.setName("speed").setDescription("Speech speed 0.25-4.0").setMinValue(0.25).setMaxValue(4))
+          .addStringOption(o=>o.setName("instructions").setDescription("Voice delivery/style instructions")))
+        .addSubcommand(s=>s.setName("narrate").setDescription("GM: speak a one-off narration line")
+          .addStringOption(o=>o.setName("text").setDescription("Text for Veilkeeper to narrate").setRequired(true))))
       .addSubcommandGroup(g=>g.setName("admin").setDescription("GM state snapshots and rollback")
         .addSubcommand(s=>s.setName("snapshot").setDescription("Create a manual campaign-state snapshot")
           .addStringOption(o=>o.setName("label").setDescription("Snapshot label"))
@@ -620,7 +634,7 @@ async function applyEncounterAftermath({db,guild,encounter,draft,actorId}){
   return {events,relationships,handouts};
 }
 
-export async function handleCommand(interaction,{db,gm}){
+export async function handleCommand(interaction,{db,gm,voice=null}){
   if(!interaction.isChatInputCommand()) return false;
   const commandName=interaction.commandName;
   if(commandName!=="vc"&&!commandName.startsWith("vc-")) return false;
@@ -638,6 +652,60 @@ export async function handleCommand(interaction,{db,gm}){
     sub=interaction.options.getSubcommand();
   }
   try{
+    if(group==="voice"){
+      if(!voice) throw new Error("Voice subsystem is unavailable in this runtime.");
+      if(sub==="status"){
+        const st=voice.status(interaction.guildId);
+        const where=st.channelId?`<#${st.channelId}>`:"not connected";
+        await interaction.reply({content:[
+          `**Veilkeeper Voice** — ${st.enabled?"enabled":"disabled"}`,
+          `Connection: ${where} • Mode: **${st.mode}**`,
+          `Model: **${st.model}** • Voice: **${st.voice}** • Speed: **${st.speed}×**`,
+          `Playback: ${st.paused?"paused":"ready"} • Queue: ${st.queued} • Last narration cached: ${st.hasLast?"yes":"no"}`,
+          `FFmpeg: ${st.ffmpeg?"detected":"NOT FOUND"}`,
+          `Voice output is AI-generated.`
+        ].join("\n"),ephemeral:true});
+        return true;
+      }
+      if(sub==="join"){
+        const ch=interaction.member?.voice?.channel;
+        if(!ch) throw new Error("Join the voice channel you want Veilkeeper to use, then run this command again.");
+        await interaction.deferReply({ephemeral:true});
+        const st=await voice.join(interaction.guild,ch);
+        await interaction.editReply(`Veilkeeper joined **${ch.name}** for AI-generated narration. Mode: **${st.mode}** • Voice: **${st.voice}**. Discord text remains the authoritative campaign record.`);
+        return true;
+      }
+      if(sub==="repeat"){
+        const r=voice.repeat(interaction.guildId);
+        await interaction.reply({content:`Replaying the last narration (${r.segments} audio segment${r.segments===1?"":"s"}) from cache; no new speech-generation request was made.`,ephemeral:true});
+        return true;
+      }
+      if(!isGM(db,interaction)) throw new Error("GM/admin permission required for this voice control.");
+      if(sub==="leave"){ voice.leave(interaction.guildId); await interaction.reply({content:"Veilkeeper disconnected from voice.",ephemeral:true}); return true; }
+      if(sub==="pause"){ voice.pause(interaction.guildId); await interaction.reply({content:"Voice narration paused.",ephemeral:true}); return true; }
+      if(sub==="resume"){ voice.resume(interaction.guildId); await interaction.reply({content:"Voice narration resumed.",ephemeral:true}); return true; }
+      if(sub==="configure"){
+        const mode=interaction.options.getString("mode");
+        const voiceName=interaction.options.getString("voice");
+        const speed=interaction.options.getNumber("speed");
+        const instructions=interaction.options.getString("instructions");
+        if(mode) voice.setMode(interaction.guildId,mode);
+        if(voiceName) voice.setVoice(interaction.guildId,voiceName);
+        if(speed!=null) voice.setSpeed(interaction.guildId,speed);
+        if(instructions!=null) voice.setInstructions(interaction.guildId,instructions);
+        const st=voice.status(interaction.guildId);
+        await interaction.reply({content:`Runtime voice settings updated: mode **${st.mode}**, voice **${st.voice}**, speed **${st.speed}×**. These runtime overrides reset when Veilkeeper restarts; set the matching .env values for permanent defaults.`,ephemeral:true});
+        return true;
+      }
+      if(sub==="narrate"){
+        await interaction.deferReply({ephemeral:true});
+        const r=await voice.narrate(interaction.guild,interaction.options.getString("text",true),{force:true});
+        if(!r.ok) throw new Error(r.reason==="not_connected"?"Veilkeeper is not connected to voice. Use /vc-voice join first.":"Voice narration is disabled or empty.");
+        await interaction.editReply(`Queued one-off AI narration (${r.segments} segment${r.segments===1?"":"s"}).`);
+        return true;
+      }
+    }
+
     if(group==="campaign"&&sub==="setup"){
       if(!isGM(db,interaction)) throw new Error("Manage Server or the configured GM role is required.");
       const ch=interaction.options.getChannel("play_channel",true);

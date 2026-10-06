@@ -1,4 +1,4 @@
-# Veilkeeper v3.3.3 Command Reference
+# Veilkeeper v3.4.0 Command Reference
 
 Veilkeeper uses split `vc-*` root commands to remain below Discord's per-command size limit.
 
@@ -130,3 +130,16 @@ Combat-state controls:
 - `/vc-gm fact`
 
 GM/admin commands require Manage Server or the configured GM role.
+
+
+## `/vc-voice` — Discord narration
+
+- `/vc-voice join` — join the requesting player’s current voice channel
+- `/vc-voice status` — show enablement, channel, model, voice, queue, and FFmpeg state
+- `/vc-voice repeat` — replay the most recent cached narration without another TTS request
+- `/vc-voice leave` — GM/Admin disconnect
+- `/vc-voice pause` / `/vc-voice resume` — GM/Admin playback control
+- `/vc-voice configure [mode] [voice] [speed] [instructions]` — GM/Admin runtime voice settings
+- `/vc-voice narrate text:<text>` — GM/Admin one-off AI narration
+
+Voice narration is non-authoritative; the text message remains the campaign record. See `VOICE_NARRATION.md`.
