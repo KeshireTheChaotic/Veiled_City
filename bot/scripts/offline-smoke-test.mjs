@@ -11,7 +11,7 @@ import { createPlayerExportFiles, createGmExportFiles } from "../src/character-e
 import { handoutFiles } from "../src/handout.js";
 import { buildConceptCampaignContext, createConceptContextPackage } from "../src/concept-context.js";
 
-const dir=fs.mkdtempSync(path.join(os.tmpdir(),"veilkeeper31-"));
+const dir=fs.mkdtempSync(path.join(os.tmpdir(),"veilkeeper332-"));
 const dbPath=path.join(dir,"test.sqlite");
 const schema=path.resolve(process.cwd(),"./sql/schema.sql");
 const db=new VeiledDB(dbPath,schema);
@@ -227,13 +227,46 @@ if(context.player_safe_facts.some(f=>["context-gm-secret","context-character-sec
 if(!context.relationship_graph.every(r=>r.visibility===undefined)){} // view intentionally omits visibility after filtering
 const contextPkg=createConceptContextPackage({db,contentRoot:path.resolve(process.cwd(),"../content"),guildId:guild,userId:user,historySessions:10});
 if(!contextPkg.buffer.subarray(0,2).equals(Buffer.from("PK"))||!contextPkg.files.includes("AI_CHARACTER_CREATION_INSTRUCTIONS.md")||!contextPkg.files.includes("REFERENCE/PLAYER_COMPENDIUM.md")) throw new Error("Character concept context ZIP generation failed.");
-const hookPacket={schema:"veiled-city-gm-hooks-import-v3.3.1",character_name:"Test Detective",hooks:[{key:"mara-contact",title:"Mara may know the new lead",type:"relationship",premise:"Mara has reason to contact the character about a current case.",permission:"open_question",suggested_entry:"Lantern Office referral.",targets:[{type:"npc",label:"Mara Voss",relationship_type:"contact",score:1,note:"Potential GM-only connection."}],notes:"proposal"}],canon_suggestions:[{key:"character.test-detective.future-debt",value:"A future debt may exist.",reason:"Campaign fit."}]};
+const hookPacket={schema:"veiled-city-gm-hooks-import-v3.3.2",character_name:"Test Detective",hooks:[{key:"mara-contact",title:"Mara may know the new lead",type:"relationship",premise:"Mara has reason to contact the character about a current case.",permission:"open_question",suggested_entry:"Lantern Office referral.",targets:[{type:"npc",label:"Mara Voss",relationship_type:"contact",score:1,note:"Potential GM-only connection."}],notes:"proposal"}],canon_suggestions:[{key:"character.test-detective.future-debt",value:"A future debt may exist.",reason:"Campaign fit."}]};
 const hookImport=db.importCharacterGmHooks(guild,char,hookPacket);
 if(hookImport.hooks!==2||hookImport.relationships!==1||hookImport.canon_suggestions!==1) throw new Error("GM hook package import failed.");
-if(db.listCharacterGmHooks(guild,char.id).length<2) throw new Error("Imported GM hooks were not persisted.");
+if(db.listCharacterGmHooks(guild,char.id,{includeCanonSuggestions:true}).length<2) throw new Error("Imported GM hooks were not persisted.");
+if(db.listCharacterGmHooks(guild,char.id).some(h=>h.hook_type==="canon_suggestion")) throw new Error("Pending canon proposals leaked into normal AI GM hook context.");
 if(!db.listRelationships(guild,{includeGM:true}).some(r=>r.from_key===char.id&&r.to_label==="Mara Voss"&&r.visibility==="gm")) throw new Error("Imported GM-hook relationship was not persisted privately.");
 if(db.currentCanon(guild,"character.test-detective.future-debt")) throw new Error("GM hook canon suggestion was incorrectly promoted to authoritative canon.");
 
-console.log("Veilkeeper v3.3.1 offline smoke test: PASS");
+// v3.3.2 imported canon proposal review queue and lifecycle.
+let proposals=db.listCanonProposals(guild,{status:"pending",characterId:char.id,limit:20});
+const futureDebt=proposals.find(p=>p.canon_key==="character.test-detective.future-debt");
+if(!futureDebt||futureDebt.status!=="pending") throw new Error("Imported canon suggestion did not enter the pending proposal queue.");
+let proposalResult=db.resolveCanonProposal(guild,futureDebt.id,{resolution:"accept",actorId:"gm",note:"Accepted in offline test."});
+if(proposalResult.status!=="accepted"||db.currentCanon(guild,futureDebt.canon_key)?.value!=="A future debt may exist.") throw new Error("Pending canon proposal acceptance failed.");
+if(db.getCanonProposal(guild,futureDebt.id).status!=="accepted") throw new Error("Accepted proposal status was not persisted.");
+
+// Accepted proposal that contradicts current canon must create and stay linked to a conflict.
+db.proposeCanon(guild,{key:"character.test-detective.origin-case",value:"Existing answer",visibility:"gm",sourceType:"test",sourceId:"test"});
+const conflictPacket={schema:"veiled-city-gm-hooks-import-v3.3.2",character_name:"Test Detective",hooks:[],canon_suggestions:[{key:"character.test-detective.origin-case",value:"Imported alternate answer",reason:"Conflict lifecycle test.",visibility:"gm"}]};
+db.importCharacterGmHooks(guild,char,conflictPacket);
+const originProposal=db.listCanonProposals(guild,{status:"pending",characterId:char.id,limit:20}).find(p=>p.canon_key==="character.test-detective.origin-case");
+if(!originProposal) throw new Error("Conflict-test canon proposal missing.");
+proposalResult=db.resolveCanonProposal(guild,originProposal.id,{resolution:"accept",actorId:"gm"});
+if(proposalResult.status!=="conflict"||!proposalResult.conflict?.id) throw new Error("Canon proposal contradiction did not create a linked conflict.");
+if(db.getCanonProposal(guild,originProposal.id).canon_conflict_id!==proposalResult.conflict.id) throw new Error("Canon proposal conflict linkage failed.");
+db.resolveCanonConflict(guild,proposalResult.conflict.id,{resolution:"proposed",actorId:"gm"});
+const acceptedConflictProposal=db.getCanonProposal(guild,originProposal.id);
+if(acceptedConflictProposal.status!=="accepted"||db.currentCanon(guild,originProposal.canon_key)?.value!=="Imported alternate answer") throw new Error("Canon conflict resolution did not synchronize proposal state.");
+
+// Rejection closes the proposal without creating canon.
+const rejectPacket={schema:"veiled-city-gm-hooks-import-v3.3.2",character_name:"Test Detective",hooks:[],canon_suggestions:[{key:"character.test-detective.rejected-thread",value:"This should never become canon.",reason:"Rejection lifecycle test."}]};
+db.importCharacterGmHooks(guild,char,rejectPacket);
+const rejectProposal=db.listCanonProposals(guild,{status:"pending",characterId:char.id,limit:20}).find(p=>p.canon_key==="character.test-detective.rejected-thread");
+proposalResult=db.resolveCanonProposal(guild,rejectProposal.id,{resolution:"reject",actorId:"gm",note:"Not a fit."});
+if(proposalResult.status!=="rejected"||db.currentCanon(guild,rejectProposal.canon_key)) throw new Error("Canon proposal rejection failed.");
+
+// GM canon export includes proposal provenance/status.
+const gmCanonWithProposals=JSON.parse(createGmExportFiles({db,guildId:guild,character:db.getCharacter(char.id),format:"json"}).find(x=>x.name==="GM_CANON_Test_Detective.json").buffer.toString("utf8"));
+if(!gmCanonWithProposals.canon_proposals.some(p=>p.id===futureDebt.id&&p.status==="accepted")) throw new Error("GM canon export omitted canon proposal history.");
+
+console.log("Veilkeeper v3.3.2 offline smoke test: PASS");
 db.close();
 fs.rmSync(dir,{recursive:true,force:true});

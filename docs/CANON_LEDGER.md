@@ -1,29 +1,48 @@
-# Canon Ledger and Conflict Resolution — v3.2.0
+# Canon Ledger, Proposal Review, and Conflict Resolution — v3.3.2
 
-Long campaigns eventually produce contradictory names, relationships, rules, dates, and facts. v3.2.0 separates **durable canon** from ordinary notes.
+Veilkeeper separates **durable canon** from notes, GM hook proposals, and unresolved contradictions.
 
-## Commands
+## Direct canon commands
 
-`/vc-canon set key:<stable-key> value:<fact>`
+```text
+/vc-canon set key:<stable-key> value:<fact>
+/vc-canon status
+/vc-canon conflicts
+/vc-canon resolve conflict_id:<id> resolution:<existing|proposed|custom>
+```
 
-`/vc-canon status`
+`/vc-canon set` remains available for facts the GM already intends to establish.
 
-`/vc-canon conflicts`
+## Imported character canon proposals
 
-`/vc-canon resolve conflict_id:<id> resolution:<existing|proposed|custom>`
+`GM_HOOKS_<Character>.json` may contain `canon_suggestions`. Importing that file does **not** establish those statements as true. Each suggestion enters a GM-only proposal queue. Pending/conflicted canon suggestions are excluded from normal AI-GM hook context; only accepted canon reaches the GM through the authoritative ledger.
 
-## Behavior
+```text
+/vc-canon proposals [status] [character]
+```
 
-Every current canon entry has a stable key, value, visibility, source/provenance, and supersession history.
+By default this shows actionable `pending` and `conflict` proposals. The GM can also filter for accepted, rejected, or all proposal history.
 
-When AI or human input proposes a different value for an existing key, Veilkeeper does **not** silently overwrite it. It creates a pending conflict for the human GM.
+Resolve a proposal with:
 
-Resolution can:
+```text
+/vc-canon proposal-resolve proposal_id:<id> resolution:<accept|reject|custom>
+```
 
-- retain the existing fact;
-- accept the proposed replacement;
-- write a custom corrected value.
+Optional fields allow a custom edited value, canon visibility override, and GM resolution note.
 
-Replacing canon supersedes the previous record rather than deleting history.
+### Resolution behavior
 
-The AI GM receives the current canon ledger as authoritative context and is instructed not to resolve contradictions by improvisation.
+- **Accept** — submits the proposal to the authoritative ledger.
+- **Reject** — closes the proposal without creating canon.
+- **Accept edited value** — submits the GM-edited value while retaining the original proposal for provenance.
+- If the accepted value contradicts current canon, the proposal becomes `conflict` and is linked to a normal canon conflict.
+- Resolving that conflict with either `/vc-canon proposal-resolve` or `/vc-canon resolve` automatically updates the proposal to `accepted` or `rejected`.
+
+The proposal record retains its character, original proposed value, reason, visibility, source hook, linked conflict/event, final resolution value, GM note, resolver, and timestamps.
+
+## Existing v3.3.1 campaigns
+
+Old `canon_suggestion` character hooks are backfilled into the proposal queue automatically when proposals are first queried. If the exact suggestion is already current canon, it is marked accepted rather than reopened for review.
+
+Replacing canon supersedes the previous canon event instead of deleting history. The AI GM receives current canon as authoritative context and is instructed not to improvise its way through contradictions.

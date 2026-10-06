@@ -1,6 +1,6 @@
 # Character Concept Context Export
 
-v3.3.1 replaces the removed in-bot AI concept generator with a player-safe export designed for external ChatGPT/Claude/Gemini character creation.
+v3.3.2 continues the external character-creation workflow introduced in v3.3.1 and replaces the removed in-bot AI concept generator with a player-safe export designed for external ChatGPT/Claude/Gemini character creation.
 
 ## Player command
 
@@ -64,6 +64,6 @@ The command:
 - stores canon suggestions only as GM-private suggestions;
 - does **not** automatically make canon suggestions authoritative.
 
-Promote an accepted canon suggestion later with `/vc-canon set`.
+Imported canon suggestions enter `/vc-canon proposals` and are withheld from normal AI-GM hook context while pending or conflicted. Review them there and use `/vc-canon proposal-resolve` to accept, reject, or edit them. Accepted proposals pass through the normal canon ledger and create a linked conflict if they contradict established canon.
 
 Imported GM hooks are supplied to Veilkeeper as optional GM seeds during normal play and are included in future GM character exports.

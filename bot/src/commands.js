@@ -291,6 +291,15 @@ export function buildCommands(){
           .addStringOption(o=>o.setName("visibility").setDescription("Visibility").addChoices({name:"Party",value:"party"},{name:"Public",value:"public"},{name:"GM only",value:"gm"})))
         .addSubcommand(s=>s.setName("status").setDescription("Show current canon visible to you"))
         .addSubcommand(s=>s.setName("conflicts").setDescription("GM: list pending canon conflicts"))
+        .addSubcommand(s=>s.setName("proposals").setDescription("GM: review imported character canon proposals")
+          .addStringOption(o=>o.setName("status").setDescription("Proposal status; defaults to actionable").addChoices({name:"Actionable",value:"actionable"},{name:"Pending",value:"pending"},{name:"Conflict",value:"conflict"},{name:"Accepted",value:"accepted"},{name:"Rejected",value:"rejected"},{name:"All",value:"all"}))
+          .addStringOption(o=>o.setName("character").setDescription("Optional campaign character filter")))
+        .addSubcommand(s=>s.setName("proposal-resolve").setDescription("GM: accept, reject, or edit an imported canon proposal")
+          .addStringOption(o=>o.setName("proposal_id").setDescription("Proposal ID/prefix").setRequired(true))
+          .addStringOption(o=>o.setName("resolution").setDescription("Resolution").setRequired(true).addChoices({name:"Accept proposal",value:"accept"},{name:"Reject proposal",value:"reject"},{name:"Accept edited value",value:"custom"}))
+          .addStringOption(o=>o.setName("custom_value").setDescription("Required for edited value"))
+          .addStringOption(o=>o.setName("visibility").setDescription("Override canon visibility").addChoices({name:"GM only",value:"gm"},{name:"Party",value:"party"},{name:"Public",value:"public"}))
+          .addStringOption(o=>o.setName("note").setDescription("Optional GM resolution note")))
         .addSubcommand(s=>s.setName("resolve").setDescription("GM: resolve a canon conflict")
           .addStringOption(o=>o.setName("conflict_id").setDescription("Conflict ID/prefix").setRequired(true))
           .addStringOption(o=>o.setName("resolution").setDescription("Resolution").setRequired(true).addChoices({name:"Keep existing",value:"existing"},{name:"Accept proposed",value:"proposed"},{name:"Use custom value",value:"custom"}))
@@ -816,7 +825,7 @@ Initial phase: ${s.assembly_phase}`});
       if(!a.name?.toLowerCase().endsWith(".json")) throw new Error("GM hook import requires a .json file.");
       const res=await fetch(a.url); if(!res.ok) throw new Error("Could not download the GM hook attachment.");
       const packet=await res.json();
-      if(packet.schema && packet.schema!=="veiled-city-gm-hooks-import-v3.3.1") throw new Error(`Unsupported GM hook schema: ${packet.schema}`);
+      if(packet.schema && !["veiled-city-gm-hooks-import-v3.3.1","veiled-city-gm-hooks-import-v3.3.2"].includes(packet.schema)) throw new Error(`Unsupported GM hook schema: ${packet.schema}`);
       const name=interaction.options.getString("character")||packet.character_name;
       if(!String(name||"").trim()) throw new Error("The GM hook package must include character_name or you must provide the character option.");
       const c=db.findGuildCharacter(interaction.guildId,name,{includeClosed:true}); if(!c) throw new Error(`Campaign character not found: ${name}`);
@@ -828,7 +837,7 @@ Initial phase: ${s.assembly_phase}`});
 GM-private relationships created/updated: ${result.relationships}
 Canon suggestions stored for review: ${result.canon_suggestions}
 Source file: ${a.name}`});
-      await interaction.reply({content:`Imported GM-only concept material for **${c.name}**. **${result.hooks}** hook/suggestion record(s), **${result.relationships}** GM-private relationship edge(s), and **${result.canon_suggestions}** canon suggestion(s). Canon suggestions are **not authoritative** until you promote them with \`/vc-canon set\`.`,ephemeral:true});
+      await interaction.reply({content:`Imported GM-only concept material for **${c.name}**. **${result.hooks}** hook/suggestion record(s), **${result.relationships}** GM-private relationship edge(s), and **${result.canon_suggestions}** canon suggestion(s). Canon suggestions are **not authoritative** and are withheld from normal AI-GM hook context until reviewed with \`/vc-canon proposals\` and \`/vc-canon proposal-resolve\`.`,ephemeral:true});
       return true;
     }
     if(group==="character"&&sub==="list"){
@@ -1465,13 +1474,50 @@ GM notes: ${a.draft.gm_notes}`:""}`.slice(0,1950):"No aftermath draft exists for
       await interaction.reply({content:rows.length?`**Pending Canon Conflicts**\n${rows.map(r=>`• \`${r.id.slice(0,8)}\` **${r.canon_key}**\n  existing: ${r.existing_value}\n  proposed: ${r.proposed_value}`).join("\n")}`.slice(0,1950):"No pending canon conflicts.",ephemeral:true});
       return true;
     }
+    if(group==="canon"&&sub==="proposals"){
+      if(!isGM(db,interaction)) throw new Error("GM/admin permission required.");
+      const status=interaction.options.getString("status")||"actionable";
+      const characterName=interaction.options.getString("character");
+      let characterId=null;
+      if(characterName){
+        const c=db.findGuildCharacter(interaction.guildId,characterName,{includeClosed:true});
+        if(!c) throw new Error(`Campaign character not found: ${characterName}`);
+        characterId=c.id;
+      }
+      const rows=db.listCanonProposals(interaction.guildId,{status,characterId,limit:30});
+      const body=rows.map(r=>{
+        const state=r.status.toUpperCase();
+        const current=r.current_value!=null?`\n  current: ${r.current_value}`:"";
+        const reason=r.reason?`\n  why: ${r.reason}`:"";
+        return `• \`${r.id.slice(0,8)}\` **${r.character_name}** • ${state}\n  \`${r.canon_key}\` → ${r.proposed_value}${current}${reason}`;
+      }).join("\n");
+      await interaction.reply({content:rows.length?`**Imported Canon Proposals — ${status}**\n${body}`.slice(0,1950):`No ${status} canon proposals found.`,ephemeral:true});
+      return true;
+    }
+    if(group==="canon"&&sub==="proposal-resolve"){
+      if(!isGM(db,interaction)) throw new Error("GM/admin permission required.");
+      const rows=db.listCanonProposals(interaction.guildId,{status:"all",limit:100});
+      const row=byPrefix(rows,interaction.options.getString("proposal_id",true)); if(!row) throw new Error("Canon proposal not found.");
+      db.snapshotCampaign(interaction.guildId,{label:`Pre-proposal ${row.canon_key}`,reason:`Before resolving imported canon proposal ${row.id}`,createdBy:interaction.user.id});
+      const result=db.resolveCanonProposal(interaction.guildId,row.id,{resolution:interaction.options.getString("resolution",true),customValue:interaction.options.getString("custom_value")||"",visibility:interaction.options.getString("visibility")||null,actorId:interaction.user.id,note:interaction.options.getString("note")||""});
+      const p=result.proposal;
+      if(result.status==="conflict"){
+        await postGmLog({db,guild:interaction.guild,title:"Canon proposal conflict",details:`${p.character_name}: ${p.canon_key} → ${p.proposed_value}\nConflict ${result.conflict.id.slice(0,8)} created for GM resolution.`});
+        await interaction.reply({content:`⚠️ Proposal \`${p.id.slice(0,8)}\` conflicts with existing canon. Canon conflict \`${result.conflict.id.slice(0,8)}\` was created. Resolve it with \`/vc-canon proposal-resolve\` (same proposal) or \`/vc-canon resolve\`.`,ephemeral:true});
+      }else{
+        await postGmLog({db,guild:interaction.guild,title:`Canon proposal ${result.status}`,details:`${p.character_name}: ${p.canon_key}\nProposal: ${p.proposed_value}\nResolution: ${p.resolution_value||"rejected"}`});
+        await interaction.reply({content:`Canon proposal \`${p.id.slice(0,8)}\` **${result.status}** for **${p.character_name}**.${p.resolution_value?`\n\`${p.canon_key}\` = ${p.resolution_value}`:""}`,ephemeral:true});
+      }
+      return true;
+    }
     if(group==="canon"&&sub==="resolve"){
       if(!isGM(db,interaction)) throw new Error("GM/admin permission required.");
       const rows=db.listCanonConflicts(interaction.guildId); const row=byPrefix(rows,interaction.options.getString("conflict_id",true)); if(!row) throw new Error("Pending canon conflict not found.");
       db.snapshotCampaign(interaction.guildId,{label:`Pre-canon ${row.canon_key}`,reason:`Before resolving canon conflict ${row.id}`,createdBy:interaction.user.id});
       const event=db.resolveCanonConflict(interaction.guildId,row.id,{resolution:interaction.options.getString("resolution",true),customValue:interaction.options.getString("custom_value")||"",actorId:interaction.user.id});
-      await postGmLog({db,guild:interaction.guild,title:"Canon conflict resolved",details:`${row.canon_key} → ${event?.value||"existing canon retained"}`});
-      await interaction.reply({content:`Resolved **${row.canon_key}** → ${event?.value||row.existing_value}`,ephemeral:true});
+      const proposalNote=row.source_type==="canon_proposal"&&row.source_id?` Imported proposal \`${row.source_id.slice(0,8)}\` was updated automatically.`:"";
+      await postGmLog({db,guild:interaction.guild,title:"Canon conflict resolved",details:`${row.canon_key} → ${event?.value||"existing canon retained"}${proposalNote}`});
+      await interaction.reply({content:`Resolved **${row.canon_key}** → ${event?.value||row.existing_value}.${proposalNote}`,ephemeral:true});
       return true;
     }
 
@@ -1544,7 +1590,7 @@ GM notes: ${a.draft.gm_notes}`:""}`.slice(0,1950):"No aftermath draft exists for
     }
   } catch(err){
     const msg=err.message||String(err);
-    const expected=/required|not found|unavailable|no active session|already active|only a gm|gm\/admin permission|manage server|choose another player|requires a proxy|must include|import requires|could not download|no active owned character|at least two present|manual assembly|already in established-party|invalid assembly|npc proxy|offered to another player|not releasable/i.test(msg);
+    const expected=/required|not found|unavailable|no active session|already active|already accepted|already rejected|canon proposal|only a gm|gm\/admin permission|manage server|choose another player|requires a proxy|must include|import requires|could not download|no active owned character|at least two present|manual assembly|already in established-party|invalid assembly|npc proxy|offered to another player|not releasable/i.test(msg);
     if(!expected && interaction.guild){
       await postStateError({db,guild:interaction.guild,error:err,context:`command:/vc ${group||""} ${sub||""}`,sessionId:db.getActiveSession(interaction.guildId)?.id||null});
     }

@@ -1,4 +1,4 @@
-# Veilkeeper v3.3.1 Command Reference
+# Veilkeeper v3.3.2 Command Reference
 
 Veilkeeper uses split `vc-*` root commands to remain below Discord's per-command size limit.
 
@@ -107,7 +107,9 @@ Combat-state controls:
 - `/vc-canon set` — GM.
 - `/vc-canon status`
 - `/vc-canon conflicts` — GM.
-- `/vc-canon resolve` — GM.
+- `/vc-canon proposals [status] [character]` — GM; review imported character canon proposals.
+- `/vc-canon proposal-resolve` — GM; accept, reject, or accept an edited proposal value.
+- `/vc-canon resolve` — GM; resolving a conflict linked to an imported proposal also updates the proposal automatically.
 
 ## Snapshots / Rollback
 - `/vc-admin snapshot`

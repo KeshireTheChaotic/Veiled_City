@@ -1,27 +1,24 @@
-# Veiled City v3.2.3 JSON Hotfix
+# Veiled City v3.3.2 Canon Proposal Review Hotfix
 
-Apply these files over an existing **v3.2.2** installation.
+Overlay this package onto an existing **v3.3.1** installation.
 
-This fixes `/vc-character concept` failures involving quoted descriptions and malformed/truncated structured JSON, including `Expected double-quoted property name` and `Unexpected end of JSON input`.
+Preserve your existing:
 
-Preserve your existing `bot/.env` and `bot/data/veiled_city.sqlite`.
+```text
+bot/.env
+bot/data/veiled_city.sqlite
+```
 
-From `bot/` run:
+Then from `bot/` run:
 
-```powershell
+```bash
 npm install
 npm run check
 npm run test:offline
+npm run register
 npm start
 ```
 
-No `npm run register` is required when upgrading directly from v3.2.2 because the Discord command tree is unchanged.
+`npm run register` is required because `/vc-canon proposals` and `/vc-canon proposal-resolve` were added.
 
-Optional `.env` update:
-
-```env
-CHARACTER_MAX_OUTPUT_TOKENS=3200
-STRUCTURED_JSON_RETRY_MAX_TOKENS=6000
-```
-
-The code enforces at least 3200 output tokens for character concepts even if the old `.env` still says 1800.
+The SQLite change is additive. The new `canon_proposals` table is created automatically, and existing v3.3.1 `canon_suggestion` hooks are backfilled on first proposal review.

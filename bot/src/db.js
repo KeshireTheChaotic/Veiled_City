@@ -915,9 +915,128 @@ export class VeiledDB {
     return this.getCharacterGmHook(id);
   }
   getCharacterGmHook(id){ const r=this.db.prepare(`SELECT * FROM character_gm_hooks WHERE id=?`).get(id); return r?{...r,payload:JSON.parse(r.payload_json||"{}")} : null; }
-  listCharacterGmHooks(guildId,characterId,{includeResolved=false}={}){
-    const sql=includeResolved?`SELECT * FROM character_gm_hooks WHERE guild_id=? AND character_id=? ORDER BY updated_at DESC`:`SELECT * FROM character_gm_hooks WHERE guild_id=? AND character_id=? AND status='active' ORDER BY updated_at DESC`;
+  listCharacterGmHooks(guildId,characterId,{includeResolved=false,includeCanonSuggestions=false}={}){
+    const where=[`guild_id=?`,`character_id=?`];
+    if(!includeResolved) where.push(`status='active'`);
+    if(!includeCanonSuggestions) where.push(`hook_type!='canon_suggestion'`);
+    const sql=`SELECT * FROM character_gm_hooks WHERE ${where.join(" AND ")} ORDER BY updated_at DESC`;
     return this.db.prepare(sql).all(guildId,characterId).map(r=>({...r,payload:JSON.parse(r.payload_json||"{}")}));
+  }
+
+
+  upsertCanonProposal(guildId,characterId,hookId,suggestion,{source="external_character_creator"}={}){
+    const c=this.getCharacter(characterId); if(!c||c.guild_id!==guildId) throw new Error("Character not found for canon proposal.");
+    const key=String(suggestion?.key||"").trim().toLowerCase();
+    const value=String(suggestion?.value||"").trim();
+    if(!key||!value) throw new Error("Canon proposal requires key and value.");
+    const vis=["public","party","gm"].includes(String(suggestion?.visibility||"").toLowerCase())?String(suggestion.visibility).toLowerCase():"gm";
+    const existing=this.db.prepare(`SELECT * FROM canon_proposals WHERE character_id=? AND canon_key=? AND proposed_value=?`).get(characterId,key,value);
+    if(existing) return existing;
+    const id=randomUUID();
+    this.db.prepare(`INSERT INTO canon_proposals(id,guild_id,character_id,hook_id,canon_key,proposed_value,proposed_visibility,reason,source) VALUES(?,?,?,?,?,?,?,?,?)`)
+      .run(id,guildId,characterId,hookId||null,key,value,vis,String(suggestion?.reason||"").trim(),source);
+    return this.db.prepare(`SELECT * FROM canon_proposals WHERE id=?`).get(id);
+  }
+
+  backfillLegacyCanonProposals(guildId){
+    const hooks=this.db.prepare(`SELECT * FROM character_gm_hooks WHERE guild_id=? AND hook_type='canon_suggestion' ORDER BY created_at`).all(guildId);
+    let created=0;
+    for(const h of hooks){
+      let payload={}; try{payload=JSON.parse(h.payload_json||"{}");}catch{}
+      const nested=payload?.canon_suggestion&&typeof payload.canon_suggestion==="object"?payload.canon_suggestion:{};
+      const key=String(nested.key||h.hook_key.replace(/^canon\./,"")).trim();
+      const value=String(nested.value||h.premise||"").trim();
+      if(!key||!value) continue;
+      const before=this.db.prepare(`SELECT id FROM canon_proposals WHERE character_id=? AND canon_key=? AND proposed_value=?`).get(h.character_id,key.toLowerCase(),value);
+      const row=this.upsertCanonProposal(guildId,h.character_id,h.id,{key,value,visibility:nested.visibility||"gm",reason:nested.reason||payload.notes||""},{source:h.source||"external_character_creator"});
+      if(!before&&row){
+        const current=this.currentCanon(guildId,key.toLowerCase());
+        if(current&&current.value.trim()===value){
+          this.db.prepare(`UPDATE canon_proposals SET status='accepted',canon_event_id=?,resolution_value=?,resolution_note='Backfilled from v3.3.1; matching canon already existed.',resolved_at=CURRENT_TIMESTAMP,updated_at=CURRENT_TIMESTAMP WHERE id=?`).run(current.id,current.value,row.id);
+        }else if(h.status==='discarded'){
+          this.db.prepare(`UPDATE canon_proposals SET status='rejected',resolution_note='Backfilled from a discarded v3.3.1 canon-suggestion hook.',resolved_at=CURRENT_TIMESTAMP,updated_at=CURRENT_TIMESTAMP WHERE id=?`).run(row.id);
+        }
+        created++;
+      }
+    }
+    return created;
+  }
+
+  listCanonProposals(guildId,{status="actionable",characterId=null,limit=25}={}){
+    this.backfillLegacyCanonProposals(guildId);
+    const allowed=new Set(["pending","accepted","rejected","conflict","all","actionable"]); if(!allowed.has(status)) status="actionable";
+    const where=["cp.guild_id=?"]; const args=[guildId];
+    if(status==="actionable") where.push(`cp.status IN ('pending','conflict')`); else if(status!=="all"){where.push("cp.status=?");args.push(status);}
+    if(characterId){where.push("cp.character_id=?");args.push(characterId);}
+    args.push(Math.max(1,Math.min(100,Number(limit)||25)));
+    return this.db.prepare(`SELECT cp.*,c.name character_name,ce.value current_value FROM canon_proposals cp JOIN characters c ON c.id=cp.character_id LEFT JOIN canon_events ce ON ce.guild_id=cp.guild_id AND ce.canon_key=cp.canon_key AND ce.status='current' WHERE ${where.join(" AND ")} ORDER BY CASE cp.status WHEN 'conflict' THEN 0 WHEN 'pending' THEN 1 ELSE 2 END,cp.created_at DESC LIMIT ?`).all(...args);
+  }
+
+  getCanonProposal(guildId,id){
+    this.backfillLegacyCanonProposals(guildId);
+    return this.db.prepare(`SELECT cp.*,c.name character_name,ce.value current_value FROM canon_proposals cp JOIN characters c ON c.id=cp.character_id LEFT JOIN canon_events ce ON ce.guild_id=cp.guild_id AND ce.canon_key=cp.canon_key AND ce.status='current' WHERE cp.guild_id=? AND cp.id=?`).get(guildId,id);
+  }
+
+  updateCanonProposalHook(proposal,status,{resolutionValue="",conflictId=null,eventId=null,note="",actorId=null}={}){
+    if(!proposal?.hook_id) return;
+    const h=this.db.prepare(`SELECT * FROM character_gm_hooks WHERE id=?`).get(proposal.hook_id); if(!h) return;
+    let payload={}; try{payload=JSON.parse(h.payload_json||"{}");}catch{}
+    const nested=payload?.canon_suggestion&&typeof payload.canon_suggestion==="object"?payload.canon_suggestion:{};
+    const sameKey=String(nested.key||h.hook_key.replace(/^canon\./,"")).trim().toLowerCase()===proposal.canon_key;
+    const sameValue=String(nested.value||h.premise||"").trim()===proposal.proposed_value;
+    if(!sameKey||!sameValue) return;
+    payload.proposal_status=status;
+    payload.proposal_id=proposal.id;
+    payload.canon_conflict_id=conflictId||null;
+    payload.canon_event_id=eventId||null;
+    payload.resolution_value=resolutionValue||"";
+    payload.resolution_note=note||"";
+    payload.resolved_by=actorId||null;
+    const hookStatus=status==="accepted"?"resolved":status==="rejected"?"discarded":"active";
+    this.db.prepare(`UPDATE character_gm_hooks SET status=?,payload_json=?,updated_at=CURRENT_TIMESTAMP WHERE id=?`).run(hookStatus,JSON.stringify(payload),h.id);
+  }
+
+  setCanonProposalState(guildId,proposalId,status,{resolutionValue="",conflictId=null,eventId=null,note="",actorId=null}={}){
+    const proposal=this.db.prepare(`SELECT * FROM canon_proposals WHERE guild_id=? AND id=?`).get(guildId,proposalId); if(!proposal) throw new Error("Canon proposal not found.");
+    const resolved=status==="accepted"||status==="rejected";
+    this.db.prepare(`UPDATE canon_proposals SET status=?,canon_event_id=?,canon_conflict_id=?,resolution_value=?,resolution_note=?,resolved_by=?,resolved_at=${resolved?"CURRENT_TIMESTAMP":"NULL"},updated_at=CURRENT_TIMESTAMP WHERE id=? AND guild_id=?`)
+      .run(status,eventId||null,conflictId||null,String(resolutionValue||""),String(note||""),actorId||null,proposalId,guildId);
+    const updated=this.getCanonProposal(guildId,proposalId);
+    this.updateCanonProposalHook(updated,status,{resolutionValue,conflictId,eventId,note,actorId});
+    return updated;
+  }
+
+  resolveCanonProposal(guildId,id,{resolution="accept",customValue="",visibility=null,actorId=null,note=""}={}){
+    const proposal=this.getCanonProposal(guildId,id); if(!proposal) throw new Error("Canon proposal not found.");
+    if(["accepted","rejected"].includes(proposal.status)) throw new Error(`Canon proposal is already ${proposal.status}.`);
+    if(!["accept","reject","custom"].includes(resolution)) throw new Error("Invalid canon proposal resolution.");
+    if(resolution==="custom"&&!String(customValue||"").trim()) throw new Error("A custom proposal resolution requires a value.");
+
+    // A proposal already linked to a pending canon conflict is resolved through that conflict,
+    // keeping proposal and ledger status synchronized even when /vc-canon resolve is used later.
+    if(proposal.status==="conflict"&&proposal.canon_conflict_id){
+      const conflict=this.db.prepare(`SELECT * FROM canon_conflicts WHERE id=? AND guild_id=? AND status='pending'`).get(proposal.canon_conflict_id,guildId);
+      if(!conflict) throw new Error("The proposal's canon conflict is no longer pending; refresh /vc-canon proposals.");
+      const vis=["public","party","gm"].includes(String(visibility||"").toLowerCase())?String(visibility).toLowerCase():null;
+      if(vis) this.db.prepare(`UPDATE canon_conflicts SET proposed_visibility=? WHERE id=?`).run(vis,conflict.id);
+      const mode=resolution==="reject"?"existing":resolution==="custom"?"custom":"proposed";
+      const event=this.resolveCanonConflict(guildId,conflict.id,{resolution:mode,customValue:customValue||"",actorId});
+      return {status:this.getCanonProposal(guildId,id).status,proposal:this.getCanonProposal(guildId,id),event,conflict:null};
+    }
+
+    if(resolution==="reject"){
+      const updated=this.setCanonProposalState(guildId,id,"rejected",{resolutionValue:proposal.current_value||"",note,actorId});
+      return {status:"rejected",proposal:updated,event:null,conflict:null};
+    }
+    const value=resolution==="custom"?String(customValue).trim():proposal.proposed_value;
+    const vis=["public","party","gm"].includes(String(visibility||"").toLowerCase())?String(visibility).toLowerCase():proposal.proposed_visibility;
+    const r=this.proposeCanon(guildId,{key:proposal.canon_key,value,visibility:vis,sessionId:null,sourceType:"canon_proposal",sourceId:proposal.id,provenance:`Canon proposal ${proposal.id} for ${proposal.character_name}${note?`: ${note}`:""}`});
+    if(r.status==="conflict"){
+      const updated=this.setCanonProposalState(guildId,id,"conflict",{conflictId:r.conflict.id,note,actorId});
+      return {status:"conflict",proposal:updated,event:null,conflict:r.conflict,existing:r.existing};
+    }
+    const updated=this.setCanonProposalState(guildId,id,"accepted",{resolutionValue:r.event?.value||value,eventId:r.event?.id||null,note,actorId});
+    return {status:"accepted",proposal:updated,event:r.event,conflict:null,unchanged:r.status==="unchanged"};
   }
   importCharacterGmHooks(guildId,character,packet){
     if(!character||character.guild_id!==guildId) throw new Error("Campaign character not found.");
@@ -939,7 +1058,8 @@ export class VeiledDB {
     }
     for(const s of canonSuggestions){
       const key=String(s?.key||`canon-suggestion-${randomUUID()}`).trim();
-      this.upsertCharacterGmHook(guildId,character.id,{key:`canon.${key}`,title:`Canon suggestion: ${key}`,type:"canon_suggestion",premise:String(s?.value||""),permission:"gm_review_required",suggested_entry:"",notes:String(s?.reason||""),canon_suggestion:s});
+      const hook=this.upsertCharacterGmHook(guildId,character.id,{key:`canon.${key}`,title:`Canon suggestion: ${key}`,type:"canon_suggestion",premise:String(s?.value||""),permission:"gm_review_required",suggested_entry:"",notes:String(s?.reason||""),canon_suggestion:s});
+      if(String(s?.value||"").trim()) this.upsertCanonProposal(guildId,character.id,hook.id,{...s,key});
       imported++;
     }
     return {hooks:imported,relationships,canon_suggestions:canonSuggestions.length};
@@ -974,7 +1094,7 @@ export class VeiledDB {
     const id=randomUUID();
     const sessionIds=this.db.prepare("SELECT id FROM sessions WHERE guild_id=?").all(guildId).map(x=>x.id);
     const qmarks=sessionIds.length?sessionIds.map(()=>"?").join(","):"NULL";
-    const directTables=["players","characters","sessions","facts","clocks","threads","reference_entries","published_messages","npc_proxies","encounters","encounter_combatants","character_drafts","levelup_drafts","canon_events","canon_conflicts","downtime_cycles","downtime_projects","rules_rulings","relationships","relationship_hook_imports","character_gm_hooks","handouts","encounter_aftermath"];
+    const directTables=["players","characters","sessions","facts","clocks","threads","reference_entries","published_messages","npc_proxies","encounters","encounter_combatants","character_drafts","levelup_drafts","canon_events","canon_conflicts","downtime_cycles","downtime_projects","rules_rulings","relationships","relationship_hook_imports","character_gm_hooks","canon_proposals","handouts","encounter_aftermath"];
     const state={campaign:this.getCampaign(guildId),tables:{}};
     for(const table of directTables){
       try{state.tables[table]=this.db.prepare(`SELECT * FROM ${table} WHERE guild_id=?`).all(guildId);}catch{state.tables[table]=[];}
@@ -1000,8 +1120,8 @@ export class VeiledDB {
     const snap=this.getSnapshot(snapshotId); if(!snap||snap.guild_id!==guildId) throw new Error("Snapshot not found for this campaign.");
     this.snapshotCampaign(guildId,{label:"Pre-rollback safety",reason:`Before rollback to ${snapshotId}`,createdBy:actorId});
     const state=snap.state;
-    const delOrder=["encounter_aftermath","encounter_combatants","npc_proxies","session_characters","session_presence","levelup_drafts","downtime_projects","canon_conflicts","canon_events","relationships","relationship_hook_imports","character_gm_hooks","handouts","encounters","sessions","character_drafts","characters","players","facts","clocks","threads","reference_entries","published_messages","downtime_cycles","rules_rulings"];
-    const insertOrder=["players","characters","sessions","session_presence","session_characters","facts","clocks","threads","reference_entries","published_messages","npc_proxies","encounters","encounter_combatants","character_drafts","levelup_drafts","canon_events","canon_conflicts","downtime_cycles","downtime_projects","rules_rulings","relationships","relationship_hook_imports","character_gm_hooks","handouts","encounter_aftermath"];
+    const delOrder=["encounter_aftermath","encounter_combatants","npc_proxies","session_characters","session_presence","levelup_drafts","downtime_projects","canon_conflicts","canon_events","relationships","relationship_hook_imports","canon_proposals","character_gm_hooks","handouts","encounters","sessions","character_drafts","characters","players","facts","clocks","threads","reference_entries","published_messages","downtime_cycles","rules_rulings"];
+    const insertOrder=["players","characters","sessions","session_presence","session_characters","facts","clocks","threads","reference_entries","published_messages","npc_proxies","encounters","encounter_combatants","character_drafts","levelup_drafts","canon_events","canon_conflicts","downtime_cycles","downtime_projects","rules_rulings","relationships","relationship_hook_imports","character_gm_hooks","canon_proposals","handouts","encounter_aftermath"];
     this.db.exec("BEGIN IMMEDIATE");
     try{
       for(const t of delOrder){
@@ -1057,6 +1177,10 @@ export class VeiledDB {
     const existing=c.existing_event_id?this.db.prepare("SELECT * FROM canon_events WHERE id=?").get(c.existing_event_id):null;
     if(resolution==="existing"){
       this.db.prepare("UPDATE canon_conflicts SET status='resolved_existing',resolved_value=?,resolved_by=?,resolved_at=CURRENT_TIMESTAMP WHERE id=?").run(existing?.value||"",actorId,id);
+      if(c.source_type==="canon_proposal"&&c.source_id){
+        const p=this.db.prepare(`SELECT id FROM canon_proposals WHERE id=? AND guild_id=?`).get(c.source_id,guildId);
+        if(p) this.setCanonProposalState(guildId,p.id,"rejected",{resolutionValue:existing?.value||"",conflictId:id,eventId:existing?.id||null,note:"Existing canon retained during conflict resolution.",actorId});
+      }
       return existing;
     }
     const value=resolution==="custom"?String(customValue||"").trim():c.proposed_value;
@@ -1064,10 +1188,15 @@ export class VeiledDB {
     if(existing) this.db.prepare("UPDATE canon_events SET status='superseded' WHERE id=?").run(existing.id);
     const eid=randomUUID();
     this.db.prepare(`INSERT INTO canon_events(id,guild_id,canon_key,value,visibility,session_id,source_type,source_id,provenance,supersedes_id) VALUES(?,?,?,?,?,?,?,?,?,?)`)
-      .run(eid,guildId,c.canon_key,value,c.proposed_visibility,c.session_id,"human_gm",actorId,`Resolved canon conflict ${id}`,existing?.id||null);
+      .run(eid,guildId,c.canon_key,value,c.proposed_visibility,c.session_id,"human_gm",actorId,`Resolved canon conflict ${id}${c.source_type==="canon_proposal"?` from proposal ${c.source_id}`:""}`,existing?.id||null);
     this.db.prepare("UPDATE canon_conflicts SET status=?,resolved_value=?,resolved_by=?,resolved_at=CURRENT_TIMESTAMP WHERE id=?")
       .run(resolution==="custom"?"resolved_custom":"resolved_proposed",value,actorId,id);
-    return this.currentCanon(guildId,c.canon_key);
+    const event=this.currentCanon(guildId,c.canon_key);
+    if(c.source_type==="canon_proposal"&&c.source_id){
+      const p=this.db.prepare(`SELECT id FROM canon_proposals WHERE id=? AND guild_id=?`).get(c.source_id,guildId);
+      if(p) this.setCanonProposalState(guildId,p.id,"accepted",{resolutionValue:value,conflictId:id,eventId:event?.id||null,note:resolution==="custom"?"Accepted with GM-edited value during conflict resolution.":"Imported proposal accepted during conflict resolution.",actorId});
+    }
+    return event;
   }
 
   openDowntime(guildId,{label="Downtime",sourceSessionId=null,notes="",openedBy=null}={}){

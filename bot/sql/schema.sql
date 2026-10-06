@@ -534,3 +534,32 @@ CREATE TABLE IF NOT EXISTS character_gm_hooks (
 );
 CREATE INDEX IF NOT EXISTS idx_character_gm_hooks
   ON character_gm_hooks(guild_id,character_id,status,updated_at DESC);
+
+
+-- v3.3.2: reviewable canon proposals imported with GM character hooks
+CREATE TABLE IF NOT EXISTS canon_proposals (
+  id TEXT PRIMARY KEY,
+  guild_id TEXT NOT NULL,
+  character_id TEXT NOT NULL,
+  hook_id TEXT,
+  canon_key TEXT NOT NULL,
+  proposed_value TEXT NOT NULL,
+  proposed_visibility TEXT NOT NULL DEFAULT 'gm' CHECK(proposed_visibility IN ('public','party','gm')),
+  reason TEXT NOT NULL DEFAULT '',
+  status TEXT NOT NULL DEFAULT 'pending' CHECK(status IN ('pending','accepted','rejected','conflict')),
+  canon_event_id TEXT,
+  canon_conflict_id TEXT,
+  resolution_value TEXT NOT NULL DEFAULT '',
+  resolution_note TEXT NOT NULL DEFAULT '',
+  resolved_by TEXT,
+  source TEXT NOT NULL DEFAULT 'external_character_creator',
+  created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  resolved_at TEXT,
+  FOREIGN KEY (guild_id) REFERENCES campaigns(guild_id) ON DELETE CASCADE,
+  FOREIGN KEY (character_id) REFERENCES characters(id) ON DELETE CASCADE,
+  FOREIGN KEY (hook_id) REFERENCES character_gm_hooks(id) ON DELETE SET NULL,
+  UNIQUE(character_id,canon_key,proposed_value)
+);
+CREATE INDEX IF NOT EXISTS idx_canon_proposals_review
+  ON canon_proposals(guild_id,status,created_at DESC);
