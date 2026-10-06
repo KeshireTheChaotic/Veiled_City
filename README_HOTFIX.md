@@ -1,17 +1,22 @@
-# Veiled City v3.3.2 Canon Proposal Review Hotfix
+# Veiled City v3.3.3 — Character Narrative Markdown Hotfix
 
-Overlay this package onto an existing **v3.3.1** installation.
+Use this over an existing **v3.3.2** installation.
 
-Preserve your existing:
+## Adds
+
+- `PLAYER/PLAYERS/<Character_Name>.md` player-safe narrative storage/export.
+- `GM_PRIVATE/PLAYERS/GM_PRIVATE_<Character_Name>.md` GM-private narrative storage/export.
+- `/vc-character narrative-import`
+- `/vc-character narrative-export`
+- Optional narrative `.md` attachments on `/vc-character import` and `/vc-character import-gm-hooks`.
+- Runtime use of custom narrative in GM turns, assembly, arrivals, encounter aftermath, and relevant downtime.
+- Snapshot/rollback support for narrative Markdown.
+
+## Upgrade
+
+Preserve your existing `bot/.env` and `bot/data/veiled_city.sqlite`, overlay this hotfix, then run from `bot/`:
 
 ```text
-bot/.env
-bot/data/veiled_city.sqlite
-```
-
-Then from `bot/` run:
-
-```bash
 npm install
 npm run check
 npm run test:offline
@@ -19,6 +24,4 @@ npm run register
 npm start
 ```
 
-`npm run register` is required because `/vc-canon proposals` and `/vc-canon proposal-resolve` were added.
-
-The SQLite change is additive. The new `canon_proposals` table is created automatically, and existing v3.3.1 `canon_suggestion` hooks are backfilled on first proposal review.
+`npm run register` is required because `/vc-character` changed.

@@ -563,3 +563,22 @@ CREATE TABLE IF NOT EXISTS canon_proposals (
 );
 CREATE INDEX IF NOT EXISTS idx_canon_proposals_review
   ON canon_proposals(guild_id,status,created_at DESC);
+
+
+-- v3.3.3: freeform character narrative markdown not represented by structured JSON
+CREATE TABLE IF NOT EXISTS character_narratives (
+  id TEXT PRIMARY KEY,
+  guild_id TEXT NOT NULL,
+  character_id TEXT NOT NULL,
+  scope TEXT NOT NULL CHECK(scope IN ('player','gm_private')),
+  markdown TEXT NOT NULL DEFAULT '',
+  source_filename TEXT NOT NULL DEFAULT '',
+  imported_by TEXT,
+  created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (guild_id) REFERENCES campaigns(guild_id) ON DELETE CASCADE,
+  FOREIGN KEY (character_id) REFERENCES characters(id) ON DELETE CASCADE,
+  UNIQUE(guild_id,character_id,scope)
+);
+CREATE INDEX IF NOT EXISTS idx_character_narratives
+  ON character_narratives(guild_id,character_id,scope,updated_at DESC);

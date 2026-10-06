@@ -1,6 +1,6 @@
 # Character Concept Context Export
 
-v3.3.2 continues the external character-creation workflow introduced in v3.3.1 and replaces the removed in-bot AI concept generator with a player-safe export designed for external ChatGPT/Claude/Gemini character creation.
+v3.3.3 continues the external character-creation workflow introduced in v3.3.1 and replaces the removed in-bot AI concept generator with a player-safe export designed for external ChatGPT/Claude/Gemini character creation.
 
 ## Player command
 
@@ -67,3 +67,8 @@ The command:
 Imported canon suggestions enter `/vc-canon proposals` and are withheld from normal AI-GM hook context while pending or conflicted. Review them there and use `/vc-canon proposal-resolve` to accept, reject, or edit them. Accepted proposals pass through the normal canon ledger and create a linked conflict if they contradict established canon.
 
 Imported GM hooks are supplied to Veilkeeper as optional GM seeds during normal play and are included in future GM character exports.
+
+
+## v3.3.3 freeform narrative output
+
+The generated AI instruction package now documents `PLAYER/PLAYERS/<Character>.md` and `GM_PRIVATE/PLAYERS/GM_PRIVATE_<Character>.md` for prose that should not be forced into JSON. These files can be attached during the normal imports or added later with `/vc-character narrative-import`.

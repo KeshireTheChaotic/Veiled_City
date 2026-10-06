@@ -1,5 +1,6 @@
 import OpenAI from "openai";
 import { summarizeRoster } from "./state.js";
+import { narrativeContext } from "./character-narrative.js";
 
 const routerSchema={
   type:"object",
@@ -270,9 +271,11 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
     const actorRelationships=this.db.listRelationships(guildId,{includeGM:false,characterId:actorKnowledgeId,userId:actorUserId});
     const gmRelationships=this.db.listRelationships(guildId,{includeGM:true});
     const gmCharacterHooks=roster.filter(r=>r.character_id).flatMap(r=>this.db.listCharacterGmHooks(guildId,r.character_id).map(h=>({character_id:r.character_id,character_name:r.name,key:h.hook_key,title:h.title,type:h.hook_type,premise:h.premise,permission:h.permission,suggested_entry:h.suggested_entry,payload:h.payload})));
+    const narrativeIds=[...new Set([...roster.map(r=>r.character_id).filter(Boolean),actorKnowledgeId].filter(Boolean))];
+    const characterNarratives=narrativeContext(this.db,guildId,narrativeIds,{includeGM:true,maxChars:8000});
     const visibleHandouts=this.db.listHandoutsFor(guildId,actorUserId,{characterId:actorKnowledgeId,includeGM:false,limit:40}).map(h=>({id:h.id,title:h.title,kind:h.kind,authority:h.authority,visibility:h.visibility,case_key:h.case_key,npc_key:h.npc_key,location_key:h.location_key}));
     return {
-      campaign,session,assembly,party_state:partyState,current_encounter:currentEncounter,current_combatants:currentCombatants,canon,rulings,actor_relationships:actorRelationships,gm_relationships:gmRelationships,gm_character_hooks:gmCharacterHooks,visible_handouts:visibleHandouts,
+      campaign,session,assembly,party_state:partyState,current_encounter:currentEncounter,current_combatants:currentCombatants,canon,rulings,actor_relationships:actorRelationships,gm_relationships:gmRelationships,gm_character_hooks:gmCharacterHooks,character_narratives:characterNarratives,visible_handouts:visibleHandouts,
       actor_assignment:actorAssignment?(actorAssignment.npc_proxy?{
         assignment_kind:"npc_proxy",controller_user_id:actorUserId,npc_proxy_id:actorAssignment.id,
         npc_name:actorAssignment.npc_name,knowledge_id:actorAssignment.knowledge_id,control_level:actorAssignment.control_level,
@@ -311,6 +314,7 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
       "Use events for newly established facts/clues, resource consequences, clocks, threads, Veil exposure, player-known NPC/location reference changes, and durable canon.",
       "Use relationships for durable changes between characters, NPCs, factions, locations, obligations, or other entities. Relationship score ranges -5 to +5; delta changes an existing score, set establishes it. Do not manufacture emotional commitments for PCs.",
       "Imported GM-only character hook proposals are optional seeds, not authoritative truth. Use them only when they fit established canon and current fiction; never reveal a proposed hidden answer merely because it exists in the hook list. Canon suggestions remain suggestions until the human GM promotes them to the canon ledger.",
+      "CHARACTER NARRATIVES are supplemental freeform context. PLAYER narrative is player-safe character prose; GM_PRIVATE narrative is secret GM context. Structured character JSON controls mechanics/resources, and the canon ledger controls durable world truth when narrative prose conflicts with either. Never expose GM_PRIVATE narrative until discovered in play.",
       "Use handouts only when the fiction produces an actual piece of evidence or artifact worth preserving. First list canonical_facts, then render player_visible_text from only those facts plus deliberately unreliable/illustrative framing. Do not add hidden canon accidentally through decorative details.",
       "Handout authority: canonical=deliberately shown details are true; partial=genuine but incomplete/uncertain; unreliable=may be forged/corrupted/lying; illustrative=visual/text aid whose incidental details are not canon.",
       "For canon events: key must be a stable normalized concept (example npc.mara-voss.surname or location.hollow-street.access-rule); value is the newly established durable fact. The application will refuse silent contradictions and queue a GM conflict instead.",
@@ -343,6 +347,7 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
       `RELATIONSHIP GRAPH VISIBLE TO ACTOR:\n${JSON.stringify(ctx.actor_relationships)}`,
       `GM RELATIONSHIP GRAPH (MAY BE SECRET):\n${JSON.stringify(ctx.gm_relationships)}`,
       `IMPORTED GM-ONLY CHARACTER HOOK PROPOSALS (OPTIONAL; DO NOT REVEAL DIRECTLY):\n${JSON.stringify(ctx.gm_character_hooks)}`,
+      `FREEFORM CHARACTER NARRATIVES (PLAYER + GM_PRIVATE; PROTECT GM_PRIVATE):\n${JSON.stringify(ctx.character_narratives)}`,
       `KNOWN HANDOUT/EVIDENCE INDEX VISIBLE TO ACTOR:\n${JSON.stringify(ctx.visible_handouts)}`,
       `RELEVANT VEILED CITY REFERENCE:\n${JSON.stringify(ctx.reference_chunks)}`,
       `CURRENT PLAYER INPUT:\nuser_id=${actorUserId}\nname=${actorName}\nscope=${scope}\n${messageText}`
@@ -370,6 +375,7 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
     const partyState=this.db.getPartyState(guildId);
     const facts=this.db.factsFor(guildId,"",{includeGM:true,limit:120});
     const importedHooks=roster.filter(r=>r.character_id).flatMap(r=>this.db.listCharacterGmHooks(guildId,r.character_id).map(h=>({character_id:r.character_id,character_name:r.name,title:h.title,type:h.hook_type,premise:h.premise,permission:h.permission,suggested_entry:h.suggested_entry,payload:h.payload})));
+    const narratives=narrativeContext(this.db,guildId,roster.map(r=>r.character_id).filter(Boolean),{includeGM:true,maxChars:6000});
     const query=roster.map(r=>`${r.name} ${JSON.stringify(r.data||{})}`).join(" ");
     const chunks=this.content.search(`party convergence ${requested} ${query}`,Math.min(this.config.maxContentChunks,6),{gm:true});
     const prompt=[
@@ -389,6 +395,7 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
       `Present roster: ${JSON.stringify(summarizeRoster(roster))}`,
       `Known campaign facts (GM context; protect secrets): ${JSON.stringify(facts)}`,
       `Imported GM-only character hook proposals (optional seeds; protect secrets): ${JSON.stringify(importedHooks)}`,
+      `Freeform character narratives (player + GM-private; protect GM-private): ${JSON.stringify(narratives)}`,
       `Relevant Veiled City references (GM context; protect secrets): ${JSON.stringify(chunks.map(c=>({source:c.file,text:c.body})))}`,
     ].join("\n\n");
     return this.requestStructured({
@@ -410,6 +417,7 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
     const recent=this.db.recentMessages(guildId,40).filter(x=>["public","party"].includes(x.visibility)).slice(-18);
     const facts=this.db.factsFor(guildId,userId,{characterId,includeGM:true,limit:80});
     const importedHooks=this.db.listCharacterGmHooks(guildId,characterId).map(h=>({title:h.title,type:h.hook_type,premise:h.premise,permission:h.permission,suggested_entry:h.suggested_entry,payload:h.payload}));
+    const narratives=narrativeContext(this.db,guildId,[characterId],{includeGM:true,maxChars:8000});
     const query=`arrival ${character.name} ${reason} ${JSON.stringify(character.data||{})}`;
     const chunks=this.content.search(query,Math.min(this.config.maxContentChunks,4),{gm:true});
     const prompt=[
@@ -429,6 +437,7 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
       `Recent party transcript: ${JSON.stringify(recent.map(x=>({speaker:x.speaker_name,content:x.content})))}`,
       `Known facts (GM context; protect secrets): ${JSON.stringify(facts)}`,
       `Imported GM-only hook proposals for this character (optional seeds; protect secrets): ${JSON.stringify(importedHooks)}`,
+      `Freeform character narrative for this character (player + GM-private; protect GM-private): ${JSON.stringify(narratives)}`,
       `Relevant setting references: ${JSON.stringify(chunks.map(c=>({source:c.file,text:c.body})))}`,
     ].join("\n\n");
     return this.requestStructured({
@@ -534,6 +543,7 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
     const roster=this.db.roster(encounter.session_id).filter(r=>r.character_id);
     const recent=this.db.recentMessages(guildId,100).filter(m=>m.session_id===encounter.session_id).slice(-40);
     const relationships=this.db.listRelationships(guildId,{includeGM:true});
+    const narratives=narrativeContext(this.db,guildId,roster.map(r=>r.character_id).filter(Boolean),{includeGM:true,maxChars:5000});
     const facts=this.db.factsFor(guildId,"",{includeGM:true,limit:100});
     const clocks=this.db.clocksFor(guildId,{includeGM:true});
     const prompt=[
@@ -551,6 +561,7 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
       `Facts: ${JSON.stringify(facts)}`,
       `Clocks: ${JSON.stringify(clocks)}`,
       `Relationships: ${JSON.stringify(relationships)}`,
+      `Freeform character narratives (supplemental; GM-private must remain secret): ${JSON.stringify(narratives)}`,
       `Session: ${JSON.stringify(session)}`
     ].join("\n\n");
     return this.requestStructured({model:this.config.aftermathModel,input:prompt,max_output_tokens:this.config.aftermathMaxOutputTokens,text:{format:{type:"json_schema",name:"veiled_city_aftermath",strict:true,schema:aftermathSchema}}},{label:"encounter aftermath"});
@@ -560,6 +571,7 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
     const facts=this.db.factsFor(guildId,"",{includeGM:true,limit:120});
     const clocks=this.db.clocksFor(guildId,{includeGM:true});
     const canon=this.db.listCanon(guildId,{includeGM:true,limit:120});
+    const narratives=narrativeContext(this.db,guildId,[...new Set(projects.map(p=>p.character_id).filter(Boolean))],{includeGM:true,maxChars:5000});
     const chunks=this.content.search(`downtime ${projects.map(p=>`${p.project_type} ${p.title} ${p.objective}`).join(" ")}`,this.config.maxContentChunks,{gm:true});
     const prompt=[
       "Resolve a formal between-session Veiled City downtime cycle.",
@@ -575,6 +587,7 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
       `Canon: ${JSON.stringify(canon)}`,
       `Facts: ${JSON.stringify(facts)}`,
       `Clocks: ${JSON.stringify(clocks)}`,
+      `Freeform character narratives for project owners (supplemental; protect GM-private): ${JSON.stringify(narratives)}`,
       `Reference: ${JSON.stringify(chunks.map(c=>({source:c.file,text:c.body})))}`
     ].join("\n\n");
     return this.requestStructured({model:this.config.downtimeModel,input:prompt,max_output_tokens:this.config.downtimeMaxOutputTokens,text:{format:{type:"json_schema",name:"downtime_resolution",strict:true,schema:downtimeSchema}}},{label:"downtime resolution"});

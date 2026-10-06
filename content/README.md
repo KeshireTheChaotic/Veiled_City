@@ -7,10 +7,12 @@ This package is intentionally split by visibility.
 
 ## READ THIS FIRST
 - `PLAYER/` — **PLAYER SAFE.** No intended campaign spoilers.
+  - `PLAYER/PLAYERS/` — standard portable path for player-safe per-character freeform Markdown.
 - `CARDS/` — **PLAYER SAFE.** Character options and item/card mechanics.
 - `ENGINE/` — **PLAYER SAFE.** Model-independent GM operating instructions and persistence protocol.
 - `STATE/` — player-facing save state and schemas.
 - `GM_PRIVATE/` — **AI DM ONLY / SPOILERS. DO NOT OPEN DURING PLAY.** Mysteries, hidden motives, unrevealed clocks, adversaries, secret location truths, and campaign metaplot.
+  - `GM_PRIVATE/PLAYERS/` — standard portable path for GM-only per-character freeform Markdown.
 
 ## Current rules baseline
 Built for **Daggerheart SRD 2.0 (August 25, 2026)**. Core rules remain authoritative. This package contains original homebrew rather than reproducing the core rulebook.

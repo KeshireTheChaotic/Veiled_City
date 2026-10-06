@@ -180,6 +180,35 @@ export class VeiledDB {
     return this.createCharacter(guildId,ownerUserId,data.name,data,{guest});
   }
 
+  upsertCharacterNarrative(guildId,characterId,scope,markdown,{sourceFilename="",importedBy=null}={}) {
+    if(!new Set(["player","gm_private"]).has(scope)) throw new Error("Narrative scope must be player or gm_private.");
+    const c=this.getCharacter(characterId);
+    if(!c||c.guild_id!==guildId) throw new Error("Campaign character not found.");
+    const text=String(markdown??"").replace(/^\uFEFF/,"").replace(/\r\n?/g,"\n").trimEnd()+"\n";
+    if(!text.trim()) throw new Error("Narrative Markdown cannot be empty.");
+    if(Buffer.byteLength(text,"utf8")>131072) throw new Error("Narrative Markdown is too large; maximum is 128 KiB.");
+    const existing=this.db.prepare("SELECT id FROM character_narratives WHERE guild_id=? AND character_id=? AND scope=?").get(guildId,characterId,scope);
+    const id=existing?.id||randomUUID();
+    this.db.prepare(`INSERT INTO character_narratives(id,guild_id,character_id,scope,markdown,source_filename,imported_by)
+      VALUES(?,?,?,?,?,?,?)
+      ON CONFLICT(guild_id,character_id,scope) DO UPDATE SET markdown=excluded.markdown,source_filename=excluded.source_filename,imported_by=excluded.imported_by,updated_at=CURRENT_TIMESTAMP`)
+      .run(id,guildId,characterId,scope,text,String(sourceFilename||""),importedBy);
+    return this.getCharacterNarrative(guildId,characterId,scope);
+  }
+
+  getCharacterNarrative(guildId,characterId,scope) {
+    return this.db.prepare("SELECT * FROM character_narratives WHERE guild_id=? AND character_id=? AND scope=?").get(guildId,characterId,scope)||null;
+  }
+
+  listCharacterNarratives(guildId,{characterIds=null,includeGM=false}={}) {
+    let sql="SELECT * FROM character_narratives WHERE guild_id=?";
+    const args=[guildId];
+    if(!includeGM) sql+=" AND scope='player'";
+    if(Array.isArray(characterIds)&&characterIds.length){ sql+=` AND character_id IN (${characterIds.map(()=>"?").join(",")})`; args.push(...characterIds); }
+    sql+=" ORDER BY updated_at DESC";
+    return this.db.prepare(sql).all(...args);
+  }
+
   getCharacter(id) {
     const c=this.db.prepare("SELECT * FROM characters WHERE id=?").get(id);
     return c ? {...c,data:JSON.parse(c.character_json)} : null;
@@ -1094,7 +1123,7 @@ export class VeiledDB {
     const id=randomUUID();
     const sessionIds=this.db.prepare("SELECT id FROM sessions WHERE guild_id=?").all(guildId).map(x=>x.id);
     const qmarks=sessionIds.length?sessionIds.map(()=>"?").join(","):"NULL";
-    const directTables=["players","characters","sessions","facts","clocks","threads","reference_entries","published_messages","npc_proxies","encounters","encounter_combatants","character_drafts","levelup_drafts","canon_events","canon_conflicts","downtime_cycles","downtime_projects","rules_rulings","relationships","relationship_hook_imports","character_gm_hooks","canon_proposals","handouts","encounter_aftermath"];
+    const directTables=["players","characters","sessions","facts","clocks","threads","reference_entries","published_messages","npc_proxies","encounters","encounter_combatants","character_drafts","levelup_drafts","canon_events","canon_conflicts","downtime_cycles","downtime_projects","rules_rulings","relationships","relationship_hook_imports","character_gm_hooks","canon_proposals","handouts","encounter_aftermath","character_narratives"];
     const state={campaign:this.getCampaign(guildId),tables:{}};
     for(const table of directTables){
       try{state.tables[table]=this.db.prepare(`SELECT * FROM ${table} WHERE guild_id=?`).all(guildId);}catch{state.tables[table]=[];}
@@ -1120,8 +1149,8 @@ export class VeiledDB {
     const snap=this.getSnapshot(snapshotId); if(!snap||snap.guild_id!==guildId) throw new Error("Snapshot not found for this campaign.");
     this.snapshotCampaign(guildId,{label:"Pre-rollback safety",reason:`Before rollback to ${snapshotId}`,createdBy:actorId});
     const state=snap.state;
-    const delOrder=["encounter_aftermath","encounter_combatants","npc_proxies","session_characters","session_presence","levelup_drafts","downtime_projects","canon_conflicts","canon_events","relationships","relationship_hook_imports","canon_proposals","character_gm_hooks","handouts","encounters","sessions","character_drafts","characters","players","facts","clocks","threads","reference_entries","published_messages","downtime_cycles","rules_rulings"];
-    const insertOrder=["players","characters","sessions","session_presence","session_characters","facts","clocks","threads","reference_entries","published_messages","npc_proxies","encounters","encounter_combatants","character_drafts","levelup_drafts","canon_events","canon_conflicts","downtime_cycles","downtime_projects","rules_rulings","relationships","relationship_hook_imports","character_gm_hooks","canon_proposals","handouts","encounter_aftermath"];
+    const delOrder=["encounter_aftermath","encounter_combatants","npc_proxies","session_characters","session_presence","levelup_drafts","downtime_projects","canon_conflicts","canon_events","relationships","relationship_hook_imports","canon_proposals","character_gm_hooks","character_narratives","handouts","encounters","sessions","character_drafts","characters","players","facts","clocks","threads","reference_entries","published_messages","downtime_cycles","rules_rulings"];
+    const insertOrder=["players","characters","sessions","session_presence","session_characters","facts","clocks","threads","reference_entries","published_messages","npc_proxies","encounters","encounter_combatants","character_drafts","levelup_drafts","canon_events","canon_conflicts","downtime_cycles","downtime_projects","rules_rulings","relationships","relationship_hook_imports","character_gm_hooks","canon_proposals","handouts","encounter_aftermath","character_narratives"];
     this.db.exec("BEGIN IMMEDIATE");
     try{
       for(const t of delOrder){

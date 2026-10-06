@@ -1,36 +1,25 @@
-# VEILED CITY MULTIPLAYER DISCORD ENGINE v3.3.2
+# VEILED CITY MULTIPLAYER DISCORD ENGINE v3.3.3
 
 A deployable Discord multiplayer GM layer for **Veiled City**, using Daggerheart SRD 2.0 as its mechanical baseline.
 
-## v3.3.2 — Canon Proposal Review
+## v3.3.3 — Character Narrative Markdown
 
-External character creation introduced in v3.3.1 can propose GM-only campaign hooks and possible canon. v3.3.2 adds a formal review lifecycle so those suggestions no longer require manual promotion with `/vc-canon set`.
+v3.3.3 adds a dedicated freeform narrative layer for character information that should be available to Veilkeeper but does not fit the structured character JSON.
 
-After importing `GM_HOOKS_<Name>.json` with:
-
-```text
-/vc-character import-gm-hooks
-```
-
-review imported canon suggestions with:
+Standard portable paths are:
 
 ```text
-/vc-canon proposals
+PLAYER/PLAYERS/<Character_Name>.md
+GM_PRIVATE/PLAYERS/GM_PRIVATE_<Character_Name>.md
 ```
 
-and resolve one with:
+Import/update them with `/vc-character narrative-import`, or attach them directly to `/vc-character import` and `/vc-character import-gm-hooks`. Export them with `/vc-character narrative-export`; the returned ZIP preserves the standard directory layout.
 
-```text
-/vc-canon proposal-resolve
-```
+Runtime narrative is stored in SQLite and included in snapshots/rollback. Veilkeeper uses it as supplemental context during ordinary GM turns, party assembly, character arrivals, encounter aftermath, and relevant downtime. **Structured JSON remains authoritative for mechanics/resources; the canon ledger remains authoritative for durable world truth. GM-private Markdown is never player-visible by default.**
 
-The GM may **accept**, **reject**, or **accept an edited value**. Acceptance writes through the normal authoritative canon ledger. If the proposal contradicts an existing canon key, Veilkeeper creates a linked canon conflict instead of overwriting it. Resolving that conflict automatically updates the originating proposal to accepted or rejected.
+The external `/vc-character context-export` package now instructs ChatGPT/other assistants to generate these Markdown files when useful alongside `CHARACTER_<Name>.json` and `GM_HOOKS_<Name>.json`.
 
-Pending/conflicted canon proposals are also excluded from normal AI-GM hook context, so an unreviewed external suggestion cannot leak into narration as if it were true. Proposal records retain character association, reason, source, current/proposed value, conflict linkage, final value, resolution note, and audit timestamps. Existing v3.3.1 canon-suggestion hooks are backfilled into the proposal queue automatically; if an identical value is already current canon, the backfilled proposal is recognized as accepted.
-
-GM character exports now include canon-proposal history in `GM_CANON_<Character>.*`.
-
-## Upgrade from v3.3.1
+## Upgrade from v3.3.2
 
 Preserve:
 
@@ -50,11 +39,12 @@ npm run register
 npm start
 ```
 
-`npm run register` is required because `/vc-canon` gained two subcommands. The database migration is additive and requires no manual conversion.
+`npm run register` is required because `/vc-character` gained two subcommands and new optional attachment fields. The database migration is additive and requires no manual conversion.
 
 See:
 
-- `docs/CANON_LEDGER.md`
+- `docs/CHARACTER_NARRATIVE_MARKDOWN.md`
 - `docs/CHARACTER_CONCEPT_CONTEXT.md`
-- `docs/UPGRADE_3.3.1_TO_3.3.2.md`
+- `docs/CANON_LEDGER.md`
+- `docs/UPGRADE_3.3.2_TO_3.3.3.md`
 - `docs/BOT_COMMANDS.md`

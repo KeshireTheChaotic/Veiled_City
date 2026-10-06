@@ -13,6 +13,7 @@ import { applyGMEvents, applyRelationshipDrafts, applyHandoutDrafts } from "./st
 import { createPlayerExportFiles, createGmExportFiles } from "./character-export.js";
 import { handoutFiles, handoutSummary } from "./handout.js";
 import { createConceptContextPackage } from "./concept-context.js";
+import { normalizeNarrativeMarkdown, narrativeRelativePath, createNarrativeExportPackage } from "./character-narrative.js";
 
 export function buildCommands(){
   const monolith = new SlashCommandBuilder()
@@ -79,12 +80,23 @@ export function buildCommands(){
           .addStringOption(o=>o.setName("community").setDescription("Community"))
           .addStringOption(o=>o.setName("domains").setDescription("Comma-separated domains")))
         .addSubcommand(s=>s.setName("import").setDescription("Import a player-safe character JSON")
-          .addAttachmentOption(o=>o.setName("file").setDescription("Character JSON file").setRequired(true)))
+          .addAttachmentOption(o=>o.setName("file").setDescription("Character JSON file").setRequired(true))
+          .addAttachmentOption(o=>o.setName("narrative").setDescription("Optional PLAYER/PLAYERS character Markdown")))
         .addSubcommand(s=>s.setName("context-export").setDescription("Export current campaign context for external character creation")
           .addIntegerOption(o=>o.setName("history_sessions").setDescription("Completed session recaps to include (default 10)").setMinValue(1).setMaxValue(25)))
         .addSubcommand(s=>s.setName("import-gm-hooks").setDescription("GM: import GM-only hook proposals for an existing character")
           .addAttachmentOption(o=>o.setName("file").setDescription("GM_HOOKS character JSON file").setRequired(true))
-          .addStringOption(o=>o.setName("character").setDescription("Override character name from the hook file")))
+          .addStringOption(o=>o.setName("character").setDescription("Override character name from the hook file"))
+          .addAttachmentOption(o=>o.setName("narrative").setDescription("Optional GM_PRIVATE/PLAYERS character Markdown")))
+        .addSubcommand(s=>s.setName("narrative-import").setDescription("Import/update freeform character Markdown")
+          .addStringOption(o=>o.setName("character").setDescription("Character name").setRequired(true))
+          .addStringOption(o=>o.setName("scope").setDescription("Narrative visibility").setRequired(true).addChoices(
+            {name:"Player-safe",value:"player"},{name:"GM private",value:"gm_private"}))
+          .addAttachmentOption(o=>o.setName("file").setDescription("Markdown .md file").setRequired(true)))
+        .addSubcommand(s=>s.setName("narrative-export").setDescription("Export freeform character Markdown with standard paths")
+          .addStringOption(o=>o.setName("character").setDescription("Character name; defaults to current/owned"))
+          .addStringOption(o=>o.setName("scope").setDescription("Export scope").addChoices(
+            {name:"Player-safe",value:"player"},{name:"GM private",value:"gm_private"},{name:"Both",value:"all"})))
         .addSubcommand(s=>s.setName("list").setDescription("List your characters"))
         .addSubcommand(s=>s.setName("select").setDescription("Use a character in the current session")
           .addStringOption(o=>o.setName("character").setDescription("Character name").setRequired(true)))
@@ -327,7 +339,7 @@ export function buildCommands(){
   const full=monolith.toJSON();
   const splitMap={
     character:{
-      "vc-character":["create","import","context-export","import-gm-hooks","list","select","sheet","export","export-gm","retire","death"],
+      "vc-character":["create","import","context-export","import-gm-hooks","narrative-import","narrative-export","list","select","sheet","export","export-gm","retire","death"],
       "vc-level":["level-up","level-choose","level-confirm"]
     },
     encounter:{
@@ -807,8 +819,20 @@ Initial phase: ${s.assembly_phase}`});
       const res=await fetch(a.url);
       if(!res.ok) throw new Error("Could not download the attachment.");
       const data=await res.json();
+      const narrative=interaction.options.getAttachment("narrative");
+      let narrativeMarkdown=null;
+      if(narrative){
+        if(!narrative.name?.toLowerCase().endsWith(".md")) throw new Error("Character narrative must be a .md file.");
+        const nr=await fetch(narrative.url); if(!nr.ok) throw new Error("Could not download the narrative attachment.");
+        narrativeMarkdown=normalizeNarrativeMarkdown(await nr.text());
+      }
       const c=db.importCharacter(interaction.guildId,interaction.user.id,data);
-      await interaction.reply({content:`Imported **${c.name}**.`,ephemeral:true});
+      let narrativeNote="";
+      if(narrativeMarkdown){
+        db.upsertCharacterNarrative(interaction.guildId,c.id,"player",narrativeMarkdown,{sourceFilename:narrative.name,importedBy:interaction.user.id});
+        narrativeNote=` Player narrative imported as \`${narrativeRelativePath(c.name,"player")}\`.`;
+      }
+      await interaction.reply({content:`Imported **${c.name}**.${narrativeNote}`,ephemeral:true});
       return true;
     }
     if(group==="character"&&sub==="context-export"){
@@ -825,21 +849,71 @@ Initial phase: ${s.assembly_phase}`});
       if(!a.name?.toLowerCase().endsWith(".json")) throw new Error("GM hook import requires a .json file.");
       const res=await fetch(a.url); if(!res.ok) throw new Error("Could not download the GM hook attachment.");
       const packet=await res.json();
-      if(packet.schema && !["veiled-city-gm-hooks-import-v3.3.1","veiled-city-gm-hooks-import-v3.3.2"].includes(packet.schema)) throw new Error(`Unsupported GM hook schema: ${packet.schema}`);
+      if(packet.schema && !["veiled-city-gm-hooks-import-v3.3.1","veiled-city-gm-hooks-import-v3.3.2","veiled-city-gm-hooks-import-v3.3.3"].includes(packet.schema)) throw new Error(`Unsupported GM hook schema: ${packet.schema}`);
       const name=interaction.options.getString("character")||packet.character_name;
       if(!String(name||"").trim()) throw new Error("The GM hook package must include character_name or you must provide the character option.");
       const c=db.findGuildCharacter(interaction.guildId,name,{includeClosed:true}); if(!c) throw new Error(`Campaign character not found: ${name}`);
+      const narrative=interaction.options.getAttachment("narrative");
+      let narrativeMarkdown=null;
+      if(narrative){
+        if(!narrative.name?.toLowerCase().endsWith(".md")) throw new Error("GM-private narrative must be a .md file.");
+        const nr=await fetch(narrative.url); if(!nr.ok) throw new Error("Could not download the GM-private narrative attachment.");
+        narrativeMarkdown=normalizeNarrativeMarkdown(await nr.text());
+      }
       db.snapshotCampaign(interaction.guildId,{label:`Pre-GM-hook import ${c.name}`,reason:"Before importing external character concept GM hooks",createdBy:interaction.user.id});
       const result=db.importCharacterGmHooks(interaction.guildId,c,packet);
+      let narrativeImported=false;
+      if(narrativeMarkdown){
+        db.upsertCharacterNarrative(interaction.guildId,c.id,"gm_private",narrativeMarkdown,{sourceFilename:narrative.name,importedBy:interaction.user.id});
+        narrativeImported=true;
+      }
       const s=db.getActiveSession(interaction.guildId);
-      db.audit(interaction.guildId,s?.id||null,"human_gm",interaction.user.id,"character_gm_hooks_import",{character_id:c.id,file:a.name,...result});
+      db.audit(interaction.guildId,s?.id||null,"human_gm",interaction.user.id,"character_gm_hooks_import",{character_id:c.id,file:a.name,narrative_file:narrative?.name||null,...result});
       await postGmLog({db,guild:interaction.guild,sessionId:s?.id||null,title:`GM hooks imported — ${c.name}`,details:`Hooks/suggestions stored: ${result.hooks}
 GM-private relationships created/updated: ${result.relationships}
 Canon suggestions stored for review: ${result.canon_suggestions}
-Source file: ${a.name}`});
-      await interaction.reply({content:`Imported GM-only concept material for **${c.name}**. **${result.hooks}** hook/suggestion record(s), **${result.relationships}** GM-private relationship edge(s), and **${result.canon_suggestions}** canon suggestion(s). Canon suggestions are **not authoritative** and are withheld from normal AI-GM hook context until reviewed with \`/vc-canon proposals\` and \`/vc-canon proposal-resolve\`.`,ephemeral:true});
+Source file: ${a.name}${narrativeImported?`\nGM-private narrative: ${narrativeRelativePath(c.name,"gm_private")}`:""}`});
+      await interaction.reply({content:`Imported GM-only concept material for **${c.name}**. **${result.hooks}** hook/suggestion record(s), **${result.relationships}** GM-private relationship edge(s), and **${result.canon_suggestions}** canon suggestion(s).${narrativeImported?` GM-private Markdown was also imported as \`${narrativeRelativePath(c.name,"gm_private")}\`.`:""} Canon suggestions are **not authoritative** and are withheld from normal AI-GM hook context until reviewed with \`/vc-canon proposals\` and \`/vc-canon proposal-resolve\`.`,ephemeral:true});
       return true;
     }
+    if(group==="character"&&sub==="narrative-import"){
+      const scope=interaction.options.getString("scope",true);
+      const query=interaction.options.getString("character",true);
+      const gm=isGM(db,interaction);
+      if(scope==="gm_private"&&!gm) throw new Error("GM/admin permission required for GM-private narrative imports.");
+      const c=gm?db.findGuildCharacter(interaction.guildId,query,{includeClosed:true}):findOwnedAnyCharacter(db,interaction.guildId,interaction.user.id,query);
+      if(!c) throw new Error("Character not found or unavailable.");
+      if(!gm&&c.owner_user_id!==interaction.user.id) throw new Error("You may only import player narrative for your own character.");
+      const a=interaction.options.getAttachment("file",true);
+      if(!a.name?.toLowerCase().endsWith(".md")) throw new Error("Narrative import requires a .md file.");
+      const res=await fetch(a.url); if(!res.ok) throw new Error("Could not download the Markdown attachment.");
+      const md=normalizeNarrativeMarkdown(await res.text());
+      db.snapshotCampaign(interaction.guildId,{label:`Pre-narrative import ${c.name}`,reason:`Before ${scope} Markdown narrative import`,createdBy:interaction.user.id});
+      db.upsertCharacterNarrative(interaction.guildId,c.id,scope,md,{sourceFilename:a.name,importedBy:interaction.user.id});
+      const sess=db.getActiveSession(interaction.guildId);
+      db.audit(interaction.guildId,sess?.id||null,gm?"human_gm":"player",interaction.user.id,"character_narrative_import",{character_id:c.id,scope,file:a.name,path:narrativeRelativePath(c.name,scope)});
+      if(scope==="gm_private") await postGmLog({db,guild:interaction.guild,sessionId:sess?.id||null,title:`GM-private narrative imported — ${c.name}`,details:`Stored as ${narrativeRelativePath(c.name,scope)}\nSource: ${a.name}`});
+      await interaction.reply({content:`Imported **${scope==="gm_private"?"GM-private":"player-safe"}** Markdown narrative for **${c.name}**. Standard path: \`${narrativeRelativePath(c.name,scope)}\`.`,ephemeral:true});
+      return true;
+    }
+    if(group==="character"&&sub==="narrative-export"){
+      const scope=interaction.options.getString("scope")||"player";
+      const gm=isGM(db,interaction);
+      if(["gm_private","all"].includes(scope)&&!gm) throw new Error("GM/admin permission required to export GM-private narrative.");
+      const q=interaction.options.getString("character");
+      const sess=db.getActiveSession(interaction.guildId);
+      let c=null;
+      if(q) c=gm?db.findGuildCharacter(interaction.guildId,q,{includeClosed:true}):findOwnedAnyCharacter(db,interaction.guildId,interaction.user.id,q);
+      if(!c&&!q&&sess){const a=db.activeAssignment(sess.id,interaction.user.id); if(a) c=db.getCharacter(a.character_id);}
+      if(!c&&!q) c=findOwnedAnyCharacter(db,interaction.guildId,interaction.user.id,"");
+      if(!c) throw new Error("Character not found or unavailable.");
+      if(!gm&&c.owner_user_id!==interaction.user.id) throw new Error("You may only export your own player narrative.");
+      const pkg=createNarrativeExportPackage({db,guildId:interaction.guildId,character:c,scope});
+      db.audit(interaction.guildId,sess?.id||null,gm?"gm":"player",interaction.user.id,"character_narrative_export",{character_id:c.id,scope,files:pkg.files});
+      await interaction.reply({content:`Narrative Markdown export for **${c.name}**. The ZIP preserves the standard \`PLAYER/PLAYERS\` and/or \`GM_PRIVATE/PLAYERS\` paths.`,files:[new AttachmentBuilder(pkg.buffer,{name:pkg.name})],ephemeral:true});
+      return true;
+    }
+
     if(group==="character"&&sub==="list"){
       const rows=db.listCharacters(interaction.guildId,interaction.user.id,{includeClosed:true});
       await interaction.reply({content:rows.length?rows.map(c=>`• **${c.name}** — ${c.status}${c.is_guest?" / guest":""}`).join("\n"):"You have no characters yet.",ephemeral:true});

@@ -36,7 +36,7 @@ export function buildPlayerExport(db,guildId,character){
     ...d,
     name:character.name,
     export_meta:{
-      schema:"veiled-city-character-export-v3.3.2",
+      schema:"veiled-city-character-export-v3.3.3",
       visibility:"player_safe",
       character_id:character.id,
       status:character.status,
@@ -51,7 +51,7 @@ export function buildPlayerExport(db,guildId,character){
 export function buildGmHooksExport(character,db=null,guildId=null){
   const d=character.data||{};
   return {
-    export_meta:{schema:"veiled-city-gm-hooks-v3.3.2",visibility:"gm_private",character_id:character.id,name:character.name,exported_at:new Date().toISOString()},
+    export_meta:{schema:"veiled-city-gm-hooks-v3.3.3",visibility:"gm_private",character_id:character.id,name:character.name,exported_at:new Date().toISOString()},
     character:{name:character.name,level:d.level??1,class:d.class||"",subclass:d.subclass||"",ancestry:d.ancestry||"",community:d.community||"",domains:d.domains||[]},
     background:d.background||"",
     home:d.home||"",
@@ -77,7 +77,7 @@ export function buildGmPrivateExport(db,guildId,character){
   const threads=db.characterPrivateThreads(guildId,character.id,owner).map(threadView);
   const references=db.characterPrivateReferences(guildId,character.id,owner).map(referenceView);
   return {
-    export_meta:{schema:"veiled-city-gm-private-v3.3.2",visibility:"gm_private",character_id:character.id,name:character.name,exported_at:new Date().toISOString()},
+    export_meta:{schema:"veiled-city-gm-private-v3.3.3",visibility:"gm_private",character_id:character.id,name:character.name,exported_at:new Date().toISOString()},
     character:{name:character.name,status:character.status,owner_user_id:character.owner_user_id||null},
     private_facts:facts,
     private_clocks:clocks,
@@ -106,7 +106,7 @@ export function buildGmCanonExport(db,guildId,character){
     id:r.id,key:r.canon_key,proposed_value:r.proposed_value,proposed_visibility:r.proposed_visibility,reason:r.reason,status:r.status,current_value:r.current_value||null,canon_event_id:r.canon_event_id||null,canon_conflict_id:r.canon_conflict_id||null,resolution_value:r.resolution_value||"",resolution_note:r.resolution_note||"",created_at:r.created_at,resolved_at:r.resolved_at||null
   }));
   return {
-    export_meta:{schema:"veiled-city-gm-canon-v3.3.2",visibility:"gm_private",character_id:character.id,name:character.name,exported_at:new Date().toISOString()},
+    export_meta:{schema:"veiled-city-gm-canon-v3.3.3",visibility:"gm_private",character_id:character.id,name:character.name,exported_at:new Date().toISOString()},
     canon,
     pending_conflicts:conflicts,
     canon_proposals:proposals

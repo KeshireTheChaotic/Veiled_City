@@ -63,3 +63,20 @@ DOCX files are generated locally by Veilkeeper as standard OOXML packages. No Op
 ## Security
 
 Player exports never include GM-private records. GM exports are delivered ephemerally and should not be reposted to player-visible channels unless the contained information has been revealed in play.
+
+## v3.3.3 — Supplemental narrative Markdown
+
+The normal character JSON/Markdown/DOCX exports remain structured live-state sheets. Freeform prose that does not belong in that structured export is handled separately with:
+
+```text
+/vc-character narrative-export
+```
+
+The returned ZIP uses:
+
+```text
+PLAYER/PLAYERS/<Character_Name>.md
+GM_PRIVATE/PLAYERS/GM_PRIVATE_<Character_Name>.md
+```
+
+This separation prevents custom prose from being mistaken for mechanical JSON fields while still making it available to Veilkeeper as campaign context.

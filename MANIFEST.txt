@@ -11,6 +11,7 @@ bot/scripts/offline-smoke-test.mjs
 bot/scripts/validate-command-schema.mjs
 bot/sql/schema.sql
 bot/src/character-export.js
+bot/src/character-narrative.js
 bot/src/character-system.js
 bot/src/combat.js
 bot/src/command-schema.js
@@ -71,6 +72,7 @@ content/GM_PRIVATE/MYSTERIES/07_NIGHT_OF_OPEN_EYES.md
 content/GM_PRIVATE/MYSTERIES/mystery_index.json
 content/GM_PRIVATE/NPCS/NPC_DOSSIERS.md
 content/GM_PRIVATE/NPCS/npcs.json
+content/GM_PRIVATE/PLAYERS/README.md
 content/MANIFEST.txt
 content/PLAYER/BLANK_CHARACTER_SHEET.docx
 content/PLAYER/CAMPAIGN_FRAME.md
@@ -80,6 +82,7 @@ content/PLAYER/CITY_LOCATIONS.md
 content/PLAYER/FACTION_PRIMER.md
 content/PLAYER/MODERN_EQUIPMENT.md
 content/PLAYER/OCCULT_SERVICES.md
+content/PLAYER/PLAYERS/README.md
 content/PLAYER/PLAYER_COMPENDIUM.md
 content/PLAYER/QUICK_REFERENCE.md
 content/PLAYER/SETTING_GUIDE.md
@@ -103,8 +106,11 @@ docs/CHANGELOG_v3.2.3_DISCORD.md
 docs/CHANGELOG_v3.2.4_DISCORD.md
 docs/CHANGELOG_v3.3.0_DISCORD.md
 docs/CHANGELOG_v3.3.1_DISCORD.md
+docs/CHANGELOG_v3.3.2_DISCORD.md
+docs/CHANGELOG_v3.3.3_DISCORD.md
 docs/CHARACTER_CONCEPT_CONTEXT.md
 docs/CHARACTER_EXPORT.md
+docs/CHARACTER_NARRATIVE_MARKDOWN.md
 docs/COMBAT_STATE.md
 docs/DEPLOYMENT.md
 docs/DISCORD_SETUP.md
@@ -134,3 +140,5 @@ docs/UPGRADE_3.2.2_TO_3.2.3.md
 docs/UPGRADE_3.2.3_TO_3.2.4.md
 docs/UPGRADE_3.2.4_TO_3.3.0.md
 docs/UPGRADE_3.3.0_TO_3.3.1.md
+docs/UPGRADE_3.3.1_TO_3.3.2.md
+docs/UPGRADE_3.3.2_TO_3.3.3.md

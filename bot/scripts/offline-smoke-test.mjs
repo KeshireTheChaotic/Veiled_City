@@ -10,8 +10,9 @@ import { GMService, parseStructuredJsonText } from "../src/gm.js";
 import { createPlayerExportFiles, createGmExportFiles } from "../src/character-export.js";
 import { handoutFiles } from "../src/handout.js";
 import { buildConceptCampaignContext, createConceptContextPackage } from "../src/concept-context.js";
+import { createNarrativeExportPackage, narrativeRelativePath, normalizeNarrativeMarkdown } from "../src/character-narrative.js";
 
-const dir=fs.mkdtempSync(path.join(os.tmpdir(),"veilkeeper332-"));
+const dir=fs.mkdtempSync(path.join(os.tmpdir(),"veilkeeper333-"));
 const dbPath=path.join(dir,"test.sqlite");
 const schema=path.resolve(process.cwd(),"./sql/schema.sql");
 const db=new VeiledDB(dbPath,schema);
@@ -226,8 +227,8 @@ const context=buildConceptCampaignContext({db,guildId:guild,userId:user,historyS
 if(context.player_safe_facts.some(f=>["context-gm-secret","context-character-secret"].includes(f.key))) throw new Error("Concept context leaked GM/character-private facts.");
 if(!context.relationship_graph.every(r=>r.visibility===undefined)){} // view intentionally omits visibility after filtering
 const contextPkg=createConceptContextPackage({db,contentRoot:path.resolve(process.cwd(),"../content"),guildId:guild,userId:user,historySessions:10});
-if(!contextPkg.buffer.subarray(0,2).equals(Buffer.from("PK"))||!contextPkg.files.includes("AI_CHARACTER_CREATION_INSTRUCTIONS.md")||!contextPkg.files.includes("REFERENCE/PLAYER_COMPENDIUM.md")) throw new Error("Character concept context ZIP generation failed.");
-const hookPacket={schema:"veiled-city-gm-hooks-import-v3.3.2",character_name:"Test Detective",hooks:[{key:"mara-contact",title:"Mara may know the new lead",type:"relationship",premise:"Mara has reason to contact the character about a current case.",permission:"open_question",suggested_entry:"Lantern Office referral.",targets:[{type:"npc",label:"Mara Voss",relationship_type:"contact",score:1,note:"Potential GM-only connection."}],notes:"proposal"}],canon_suggestions:[{key:"character.test-detective.future-debt",value:"A future debt may exist.",reason:"Campaign fit."}]};
+if(!contextPkg.buffer.subarray(0,2).equals(Buffer.from("PK"))||!contextPkg.files.includes("AI_CHARACTER_CREATION_INSTRUCTIONS.md")||!contextPkg.files.includes("REFERENCE/PLAYER_COMPENDIUM.md")||!contextPkg.files.includes("SCHEMAS/NARRATIVE_MARKDOWN_PATHS.md")) throw new Error("Character concept context ZIP generation failed.");
+const hookPacket={schema:"veiled-city-gm-hooks-import-v3.3.3",character_name:"Test Detective",hooks:[{key:"mara-contact",title:"Mara may know the new lead",type:"relationship",premise:"Mara has reason to contact the character about a current case.",permission:"open_question",suggested_entry:"Lantern Office referral.",targets:[{type:"npc",label:"Mara Voss",relationship_type:"contact",score:1,note:"Potential GM-only connection."}],notes:"proposal"}],canon_suggestions:[{key:"character.test-detective.future-debt",value:"A future debt may exist.",reason:"Campaign fit."}]};
 const hookImport=db.importCharacterGmHooks(guild,char,hookPacket);
 if(hookImport.hooks!==2||hookImport.relationships!==1||hookImport.canon_suggestions!==1) throw new Error("GM hook package import failed.");
 if(db.listCharacterGmHooks(guild,char.id,{includeCanonSuggestions:true}).length<2) throw new Error("Imported GM hooks were not persisted.");
@@ -245,7 +246,7 @@ if(db.getCanonProposal(guild,futureDebt.id).status!=="accepted") throw new Error
 
 // Accepted proposal that contradicts current canon must create and stay linked to a conflict.
 db.proposeCanon(guild,{key:"character.test-detective.origin-case",value:"Existing answer",visibility:"gm",sourceType:"test",sourceId:"test"});
-const conflictPacket={schema:"veiled-city-gm-hooks-import-v3.3.2",character_name:"Test Detective",hooks:[],canon_suggestions:[{key:"character.test-detective.origin-case",value:"Imported alternate answer",reason:"Conflict lifecycle test.",visibility:"gm"}]};
+const conflictPacket={schema:"veiled-city-gm-hooks-import-v3.3.3",character_name:"Test Detective",hooks:[],canon_suggestions:[{key:"character.test-detective.origin-case",value:"Imported alternate answer",reason:"Conflict lifecycle test.",visibility:"gm"}]};
 db.importCharacterGmHooks(guild,char,conflictPacket);
 const originProposal=db.listCanonProposals(guild,{status:"pending",characterId:char.id,limit:20}).find(p=>p.canon_key==="character.test-detective.origin-case");
 if(!originProposal) throw new Error("Conflict-test canon proposal missing.");
@@ -257,7 +258,7 @@ const acceptedConflictProposal=db.getCanonProposal(guild,originProposal.id);
 if(acceptedConflictProposal.status!=="accepted"||db.currentCanon(guild,originProposal.canon_key)?.value!=="Imported alternate answer") throw new Error("Canon conflict resolution did not synchronize proposal state.");
 
 // Rejection closes the proposal without creating canon.
-const rejectPacket={schema:"veiled-city-gm-hooks-import-v3.3.2",character_name:"Test Detective",hooks:[],canon_suggestions:[{key:"character.test-detective.rejected-thread",value:"This should never become canon.",reason:"Rejection lifecycle test."}]};
+const rejectPacket={schema:"veiled-city-gm-hooks-import-v3.3.3",character_name:"Test Detective",hooks:[],canon_suggestions:[{key:"character.test-detective.rejected-thread",value:"This should never become canon.",reason:"Rejection lifecycle test."}]};
 db.importCharacterGmHooks(guild,char,rejectPacket);
 const rejectProposal=db.listCanonProposals(guild,{status:"pending",characterId:char.id,limit:20}).find(p=>p.canon_key==="character.test-detective.rejected-thread");
 proposalResult=db.resolveCanonProposal(guild,rejectProposal.id,{resolution:"reject",actorId:"gm",note:"Not a fit."});
@@ -267,6 +268,21 @@ if(proposalResult.status!=="rejected"||db.currentCanon(guild,rejectProposal.cano
 const gmCanonWithProposals=JSON.parse(createGmExportFiles({db,guildId:guild,character:db.getCharacter(char.id),format:"json"}).find(x=>x.name==="GM_CANON_Test_Detective.json").buffer.toString("utf8"));
 if(!gmCanonWithProposals.canon_proposals.some(p=>p.id===futureDebt.id&&p.status==="accepted")) throw new Error("GM canon export omitted canon proposal history.");
 
-console.log("Veilkeeper v3.3.2 offline smoke test: PASS");
+// v3.3.3 freeform Markdown character narrative import/export + snapshot safety.
+const playerNarrative=normalizeNarrativeMarkdown("# Test Detective\n\nSpeaks in clipped case-note fragments.\n");
+const gmNarrative=normalizeNarrativeMarkdown("# GM PRIVATE — Test Detective\n\nThe old badge is tied to a sealed occult complaint.\n");
+db.upsertCharacterNarrative(guild,char.id,"player",playerNarrative,{sourceFilename:"Test_Detective.md",importedBy:user});
+db.upsertCharacterNarrative(guild,char.id,"gm_private",gmNarrative,{sourceFilename:"GM_PRIVATE_Test_Detective.md",importedBy:"gm"});
+if(db.getCharacterNarrative(guild,char.id,"player")?.markdown!==playerNarrative) throw new Error("Player narrative persistence failed.");
+if(db.listCharacterNarratives(guild,{characterIds:[char.id],includeGM:false}).some(r=>r.scope==="gm_private")) throw new Error("GM-private narrative leaked through player-safe narrative listing.");
+const narrativePkg=createNarrativeExportPackage({db,guildId:guild,character:db.getCharacter(char.id),scope:"all"});
+if(!narrativePkg.buffer.subarray(0,2).equals(Buffer.from("PK"))) throw new Error("Narrative ZIP export failed.");
+for(const expected of [narrativeRelativePath("Test Detective","player"),narrativeRelativePath("Test Detective","gm_private")]) if(!narrativePkg.files.includes(expected)) throw new Error(`Narrative export missing ${expected}`);
+const narrativeSnap=db.snapshotCampaign(guild,{label:"Narrative snapshot",reason:"v3.3.3 narrative rollback test",createdBy:"gm"});
+db.upsertCharacterNarrative(guild,char.id,"player","# Changed\n",{sourceFilename:"changed.md",importedBy:user});
+db.restoreSnapshot(guild,narrativeSnap.id,{actorId:"gm"});
+if(!db.getCharacterNarrative(guild,char.id,"player")?.markdown.includes("clipped case-note")) throw new Error("Character narrative snapshot/rollback failed.");
+
+console.log("Veilkeeper v3.3.3 offline smoke test: PASS");
 db.close();
 fs.rmSync(dir,{recursive:true,force:true});

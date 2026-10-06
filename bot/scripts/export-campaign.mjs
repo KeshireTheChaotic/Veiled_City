@@ -18,7 +18,7 @@ const sessions=all("SELECT * FROM sessions WHERE guild_id=? ORDER BY session_num
 const sessionIds=sessions.map(x=>x.id);
 const placeholders=sessionIds.length?sessionIds.map(()=>"?").join(","):"''";
 const exportObj={
-  export_version:"3.3.0",
+  export_version:"3.3.3",
   visibility:mode==="player"?"player_safe":"gm_private_full",
   exported_at:new Date().toISOString(),
   campaign:one("SELECT * FROM campaigns WHERE guild_id=?",guildId),
@@ -49,6 +49,7 @@ const exportObj={
   downtime_projects:mode==="player" ? all("SELECT * FROM downtime_projects WHERE guild_id=? AND visibility IN ('public','party')",guildId) : all("SELECT * FROM downtime_projects WHERE guild_id=?",guildId),
   relationships:mode==="player" ? all("SELECT * FROM relationships WHERE guild_id=? AND visibility IN ('public','party')",guildId) : all("SELECT * FROM relationships WHERE guild_id=?",guildId),
   handouts:mode==="player" ? all("SELECT * FROM handouts WHERE guild_id=? AND status='active' AND visibility IN ('public','party')",guildId) : all("SELECT * FROM handouts WHERE guild_id=?",guildId),
+  character_narratives:mode!=="player" ? all("SELECT * FROM character_narratives WHERE guild_id=?",guildId) : [],
   encounter_aftermath:mode!=="player" ? all("SELECT * FROM encounter_aftermath WHERE guild_id=?",guildId) : []
 };
 if(mode!=="player") {
