@@ -1,7 +1,18 @@
-# VEILED CITY MULTIPLAYER DISCORD ENGINE v3.5.0
+# VEILED CITY MULTIPLAYER DISCORD ENGINE v3.5.1
 
 A deployable Discord multiplayer GM layer for **Veiled City**, using Daggerheart SRD 2.0 as its mechanical baseline.
 
+
+
+## v3.5.1 — Dependency Security Maintenance
+
+v3.5.1 updates the Discord runtime dependency set after fresh npm installs of v3.5.0 began reporting known transitive security advisories. `discord.js` is updated from 14.22.1 to 14.27.0, and npm overrides pin the supported Node 22-compatible `undici` line to 6.29.0 and `ws` to 8.22.0. No campaign schema, command, GM/world-director, or gameplay behavior changes are introduced.
+
+A new `npm run audit:prod` command checks production dependencies at `moderate` severity or higher. Existing v3.5.0 databases and `.env` files can be retained unchanged.
+
+See:
+- `docs/UPGRADE_3.5.0_TO_3.5.1.md`
+- `docs/CHANGELOG_v3.5.1_DISCORD.md`
 
 ## v3.5.0 — Autonomous World Director
 

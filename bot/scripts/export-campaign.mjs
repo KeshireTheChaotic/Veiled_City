@@ -20,7 +20,7 @@ const sessions=mode==="player"
 const sessionIds=sessions.map(x=>x.id);
 const placeholders=sessionIds.length?sessionIds.map(()=>"?").join(","):"''";
 const exportObj={
-  export_version:"3.5.0",
+  export_version:"3.5.1",
   visibility:mode==="player"?"player_safe":"gm_private_full",
   exported_at:new Date().toISOString(),
   campaign:one("SELECT * FROM campaigns WHERE guild_id=?",guildId),

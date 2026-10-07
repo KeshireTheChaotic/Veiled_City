@@ -384,7 +384,7 @@ async function processPartyTurn(message,directMention){
 }
 
 client.once("ready",()=>{
-  console.log(`Veilkeeper v3.5.0 logged in as ${client.user.tag}`);
+  console.log(`Veilkeeper v3.5.1 logged in as ${client.user.tag}`);
   console.log(`Voice narration: ${config.voiceEnabled?`enabled (${config.voiceName}/${config.voiceModel})`:"disabled"}.`);
   console.log(`Indexed ${content.chunks.length} Veiled City content chunks.`);
 });
