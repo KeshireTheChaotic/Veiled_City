@@ -6,7 +6,7 @@ import { VeiledDB } from "./db.js";
 import { ContentIndex } from "./content.js";
 import { GMService } from "./gm.js";
 import { handleCommand } from "./commands.js";
-import { applyAuthoritativeMutation } from "./state.js";
+import { applyAuthoritativeMutation, applyCanonProposalDrafts } from "./state.js";
 import { publishEventResults, postGmLog, postStateError, deliverHandout, postPlayMessage } from "./publishing.js";
 import { VoiceNarrator } from "./voice.js";
 import { KeyedSerialQueue } from "./serial-queue.js";
@@ -206,18 +206,83 @@ async function runPrivateSceneDirector({guild,session,actorUserId,actorCharacter
   return {ran:true,ok:true};
 }
 
-function commitTurnMutation({guild,session,result,scope,speaker,label}){
+function commitTurnMutation({guild,session,result,scope,speaker,label,meta={}}){
   const mutates=(result.events||[]).some(e=>e.type!=="log_only")||(result.relationships||[]).length||(result.handouts||[]).length;
   if(mutates) db.snapshotCampaign(guild.id,{label,reason:`Automatic snapshot before eventful GM turn by ${speaker}`,createdBy:"veilkeeper"});
-  return applyAuthoritativeMutation(db,{
-    guildId:guild.id,
-    sessionId:session.id,
-    events:result.events||[],
-    relationships:result.relationships||[],
-    handouts:result.handouts||[],
-    scope,
-    source:"ai_gm"
+  return db.transaction(()=>{
+    const mutation=applyAuthoritativeMutation(db,{
+      guildId:guild.id,
+      sessionId:session.id,
+      events:result.events||[],
+      relationships:result.relationships||[],
+      handouts:result.handouts||[],
+      scope,
+      source:"ai_gm"
+    });
+    const proposalMap=new Map();
+    const addProposal=(d)=>{
+      const key=String(d?.key||"").trim().toLowerCase();
+      const value=String(d?.value||"").trim();
+      if(!key||!value) return;
+      const id=`${key}\u0000${value}`;
+      if(!proposalMap.has(id)) proposalMap.set(id,{key,value,visibility:d.visibility||"party",reason:d.reason||""});
+    };
+    for(const d of result.canon_proposals||[]) addProposal(d);
+    if(scope.mode==="private"){
+      for(const r of mutation.events||[]){
+        if(r?.blocked&&r.type==="canon"&&r.event?.key&&String(r.event?.value||"").trim()){
+          addProposal({key:r.event.key,value:r.event.value,visibility:["public","party","gm"].includes(String(r.event.visibility||"").toLowerCase())?r.event.visibility:"party",reason:r.event.note||"Converted from a blocked private-scene canon attempt."});
+        }
+      }
+    }
+    const canonProposals=applyCanonProposalDrafts(db,guild.id,session.id,[...proposalMap.values()],scope,meta);
+    for(const r of mutation.events||[]){
+      if(!(r?.blocked&&r.type==="canon"&&r.event?.key)) continue;
+      const key=String(r.event.key||"").trim().toLowerCase();
+      const value=String(r.event.value||"").trim();
+      const p=canonProposals.find(x=>x?.ok&&x.row?.canon_key===key&&x.row?.proposed_value===value);
+      if(p){ r.proposal_id=p.row.id; r.proposal_status=p.row.status; }
+    }
+    return {...mutation,canonProposals};
   });
+}
+
+async function notifyCanonProposals({guild,session,message,actorUserId,actorCharacterId,speaker,rows=[]}){
+  const proposals=[...new Map((rows||[]).filter(x=>x?.ok&&x.row).map(x=>[x.row.id,x])).values()];
+  if(!proposals.length) return {count:0,gmFailures:[]};
+  const gmFailures=[];
+  for(const p of proposals){
+    const row=p.row;
+    const details=[
+      `Player: <@${actorUserId}>`,
+      `Character: ${speaker||row.character_name||actorCharacterId||"unknown"}`,
+      `Proposal ID: \`${row.id.slice(0,8)}\``,
+      `Status: ${String(row.status||"pending").toUpperCase()}`,
+      `Key: \`${row.canon_key}\``,
+      `Proposed canon: ${row.proposed_value}`,
+      `Requested visibility: ${row.proposed_visibility}`,
+      row.reason?`Reason: ${row.reason}`:null,
+      `Source: private player→GM scene${row.source_channel_id?` in <#${row.source_channel_id}>`:""}${row.source_message_id?` · message ${row.source_message_id}`:""}`
+    ].filter(Boolean).join("\n");
+    let posted=false;
+    try{ posted=await postGmLog({db,guild,sessionId:session?.id||null,title:"Player canon proposal",details}); }catch{}
+    if(!posted){
+      const ref=await safeStateError({guild,error:new Error(`Player canon proposal ${row.id}: ${row.canon_key} = ${row.proposed_value}`),context:"player-canon-proposal-gm-log",sessionId:session?.id||null});
+      gmFailures.push({id:row.id,ref});
+    }
+    db.audit(guild.id,session?.id||null,"player",actorUserId,"canon_proposal",{proposal_id:row.id,character_id:actorCharacterId||null,status:row.status,key:row.canon_key,source:"player_private_scene"});
+  }
+  const lines=proposals.map(p=>{
+    const row=p.row;
+    const status=String(row.status||"pending").toLowerCase();
+    const statusText=status==="pending"?"Pending human GM review":status==="conflict"?"Awaiting GM conflict resolution":status==="accepted"?"Already accepted":status==="rejected"?"Previously rejected":status;
+    return `• \`${row.id.slice(0,8)}\` \`${row.canon_key}\` → ${row.proposed_value}\n  Status: **${statusText}**`;
+  });
+  const warning=gmFailures.length?`\n\n⚠️ The proposal is safely stored in \`/vc-canon proposals\`, but the configured GM-log notification could not be delivered. A state-error reference was recorded: ${gmFailures.map(x=>x.ref).join(", ")}.`:"";
+  const text=`**📜 Canon proposal ${proposals.length===1?"recorded":"records updated"}**\n${lines.join("\n")}\n\nThis did **not** change campaign canon.${warning}`;
+  for(const c of splitDiscord(text)) await message.channel.send(c.trim());
+  db.addMessage({guildId:guild.id,sessionId:session?.id||null,userId:client.user.id,speakerName:"Veilkeeper",visibility:actorCharacterId?"character":"player",subjectUserId:actorCharacterId?null:actorUserId,subjectCharacterId:actorCharacterId||null,content:text});
+  return {count:proposals.length,gmFailures};
 }
 
 async function processPrivateTurn(message,directMention){
@@ -251,7 +316,7 @@ async function processPrivateTurn(message,directMention){
   const scope={mode:"private",actorUserId:message.author.id,actorCharacterId:controlled?.character_id||null};
   let mutation;
   try{
-    mutation=commitTurnMutation({guild:message.guild,session,result,scope,speaker,label:"Pre-private GM mutation"});
+    mutation=commitTurnMutation({guild:message.guild,session,result,scope,speaker,label:"Pre-private GM mutation",meta:{channelId:message.channel.id,messageId:message.id}});
   }catch(err){
     console.error("Private GM state mutation rolled back",err);
     const ref=await safeStateError({guild:message.guild,error:err,context:`private-turn-state:${message.author.id}`,sessionId:session.id});
@@ -259,10 +324,11 @@ async function processPrivateTurn(message,directMention){
     return;
   }
 
-  const {events:applied,relationships:relApplied,handouts:handApplied}=mutation;
+  const {events:applied,relationships:relApplied,handouts:handApplied,canonProposals=[]}=mutation;
   const outputErrors=[];
   const blockedState=blockedMutationRows(mutation);
   if(blockedState.length) await outputStep(outputErrors,{guild:message.guild,sessionId:session.id,context:"private-blocked-state"},()=>notifyBlockedActions({guild:message.guild,session,actorUserId:message.author.id,actorCharacterId:controlled?.character_id||null,rows:blockedState,context:"private turn"}));
+  if(canonProposals.some(x=>x.ok)) await outputStep(outputErrors,{guild:message.guild,sessionId:session.id,context:"private-canon-proposal"},()=>notifyCanonProposals({guild:message.guild,session,message,actorUserId:message.author.id,actorCharacterId:controlled?.character_id||null,speaker,rows:canonProposals}));
   for(const h of handApplied.filter(x=>x.ok)) await outputStep(outputErrors,{guild:message.guild,sessionId:session.id,context:`private-handout:${h.row.id}`},()=>deliverHandout({db,guild:message.guild,handout:h.row,format:"markdown"}));
   for(const r of applied.filter(x=>x.type==="canon"&&x.status==="conflict")) await outputStep(outputErrors,{guild:message.guild,sessionId:session.id,context:"canon-conflict-private"},()=>postStateError({db,guild:message.guild,error:new Error(`Canon conflict ${r.conflict_id} requires GM resolution`),context:"canon-conflict-private",sessionId:session.id}));
   if(result.narration?.trim()){
@@ -287,7 +353,7 @@ async function processPrivateTurn(message,directMention){
     await outputStep(outputErrors,{guild:message.guild,sessionId:session.id,context:`private-message:${pm.discord_user_id}`},()=>sendPrivate(message.guild,pm.discord_user_id,`**Veilkeeper — private:**\n${pm.content}`,session.id,privateKnowledgeId));
   }
   await outputStep(outputErrors,{guild:message.guild,sessionId:session.id,context:"private-turn-audit"},async()=>db.audit(message.guild.id,session.id,"ai","gm","private_turn",{actor:message.author.id,events:result.events,state_review:result.state_review}));
-  if(applied.length||relApplied.length||handApplied.length) await outputStep(outputErrors,{guild:message.guild,sessionId:session.id,context:"private-gm-log"},()=>postGmLog({db,guild:message.guild,sessionId:session.id,title:"Private GM state update",details:`Actor: ${speaker}\nEvents: ${applied.filter(x=>x.ok).map(x=>x.type).join(", ")||"none"}\nRelationships: ${relApplied.filter(x=>x.ok).length}\nHandouts: ${handApplied.filter(x=>x.ok).length}\nScene: ${result.state_review.scene.decision}${result.state_review.scene.label?` → ${result.state_review.scene.label}`:""}`}));
+  if(applied.length||relApplied.length||handApplied.length) await outputStep(outputErrors,{guild:message.guild,sessionId:session.id,context:"private-gm-log"},()=>postGmLog({db,guild:message.guild,sessionId:session.id,title:"Private GM state update",details:`Actor: ${speaker}\nEvents: ${applied.filter(x=>x.ok).map(x=>x.type).join(", ")||"none"}\nRelationships: ${relApplied.filter(x=>x.ok).length}\nHandouts: ${handApplied.filter(x=>x.ok).length}\nCanon proposals: ${canonProposals.filter(x=>x.ok).length}\nScene: ${result.state_review.scene.decision}${result.state_review.scene.label?` → ${result.state_review.scene.label}`:""}`}));
   if(result.state_review.scene.decision==="transition") await runPrivateSceneDirector({guild:message.guild,session,actorUserId:message.author.id,actorCharacterId:controlled?.character_id||null,actorAssignment:controlled,sceneReview:result.state_review.scene});
   if(outputErrors.length) await message.reply(`⚠️ This private turn's campaign state **was committed**, but ${outputErrors.length} Discord delivery/logging step(s) failed. Do not retry the turn to repair delivery; ask a GM to resend or resync the affected output. References: ${outputErrors.map(x=>x.ref).join(", ")}`).catch(()=>{});
 }
@@ -384,7 +450,7 @@ async function processPartyTurn(message,directMention){
 }
 
 client.once("ready",()=>{
-  console.log(`Veilkeeper v3.5.1 logged in as ${client.user.tag}`);
+  console.log(`Veilkeeper v3.5.4 logged in as ${client.user.tag}`);
   console.log(`Voice narration: ${config.voiceEnabled?`enabled (${config.voiceName}/${config.voiceModel})`:"disabled"}.`);
   console.log(`Indexed ${content.chunks.length} Veiled City content chunks.`);
 });

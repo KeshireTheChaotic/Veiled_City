@@ -3,12 +3,13 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import { VeiledDB } from "../src/db.js";
-import { applyAuthoritativeMutation } from "../src/state.js";
+import { applyAuthoritativeMutation, applyCanonProposalDrafts } from "../src/state.js";
 import { KeyedSerialQueue } from "../src/serial-queue.js";
 import { VoiceNarrator } from "../src/voice.js";
 import { loadConfig } from "../src/config.js";
 import { GMService } from "../src/gm.js";
 import { validatePostTurnStateReview, queueDirectorAfterPartyTurn, describeBlockedAction } from "../src/director.js";
+import { buildSessionRosterReport, chunkRosterReport } from "../src/roster.js";
 
 const tmp=fs.mkdtempSync(path.join(os.tmpdir(),"vc-prod-test-"));
 const db=new VeiledDB(path.join(tmp,"test.sqlite"),path.resolve("./sql/schema.sql"));
@@ -24,6 +25,33 @@ db.setPresence(session.id,u1,"present");
 db.setPresence(session.id,u2,"present");
 db.assignCharacter(session.id,u1,c1.id);
 db.assignCharacter(session.id,u2,c2.id);
+
+// 0) GM session roster reports player→character mappings and distinguishes proxy roles/offers.
+const u3="1003", u4="1004";
+db.upsertPlayer(guild,u3,"Proxy Player");
+db.upsertPlayer(guild,u4,"Unassigned Player");
+db.setPresence(session.id,u3,"present");
+db.setPresence(session.id,u4,"present");
+db.setPresence(session.id,u2,"absent","proxy",u3,"Proxying while absent");
+db.assignCharacter(session.id,u2,c2.id,{role:"primary",controlPolicy:"proxy",proxyUserId:u3});
+db.upsertNpcProxy(guild,session.id,{npcName:"Mara Voss",userId:u3,controlLevel:"tactical",status:"active",playerPacket:{}});
+db.upsertNpcProxy(guild,session.id,{npcName:"Jonas Reed",userId:u4,controlLevel:"portrayal",status:"offered",playerPacket:{}});
+const rosterLines=buildSessionRosterReport(db,guild,session);
+const rosterText=rosterLines.join("\n");
+assert.match(rosterText,/<@1001> \(Player One\) → \*\*One\*\*/);
+assert.match(rosterText,/<@1003> → \*\*Two\*\* — PC proxy for <@1002>/);
+assert.match(rosterText,/<@1003> → \*\*Mara Voss\*\* — NPC proxy/);
+assert.match(rosterText,/Pending NPC Proxy Offers/);
+assert.match(rosterText,/<@1004> ⇢ \*\*Jonas Reed\*\*/);
+assert.match(rosterText,/2 present players? .*no active PC\/guest character assignment|present players have no active PC\/guest character assignment/i);
+const rosterChunks=chunkRosterReport(rosterLines,300);
+assert(rosterChunks.length>1,"large roster report did not split into multiple Discord-safe chunks");
+assert(rosterChunks.every(x=>x.length<=300),"roster chunk exceeded requested size");
+// Restore player two for director cadence tests below; proxy-specific coverage above remains authoritative.
+db.setPresence(session.id,u2,"present","offscreen",null,"");
+db.assignCharacter(session.id,u2,c2.id,{role:"primary",controlPolicy:"player_only"});
+db.setPresence(session.id,u3,"absent","offscreen",null,"");
+db.setPresence(session.id,u4,"absent","offscreen",null,"");
 
 // 1) Authoritative mutation is atomic: an early valid event must roll back if a later event fails.
 const factsBefore=db.db.prepare("SELECT COUNT(*) n FROM facts WHERE guild_id=?").get(guild).n;
@@ -85,6 +113,26 @@ assert.equal(mixedPrivate.events[0].ok,true);
 assert.equal(mixedPrivate.events[1].blocked,true);
 assert(db.factsFor(guild,u1,{characterId:c1.id}).some(f=>f.fact_key.includes("private.safe.fact")),"valid private fact was discarded with blocked canon");
 assert.equal(db.currentCanon(guild,"private.blocked.canon"),undefined);
+
+// Explicit private player canon requests are durable proposals, not canon-ledger writes.
+const playerProposalResults=applyCanonProposalDrafts(db,guild,session.id,[{
+  key:"character.two.species",value:"Two is literally a frog.",visibility:"party",reason:"Player explicitly requested this as campaign canon."
+}],{mode:"private",actorUserId:u1,actorCharacterId:c1.id},{channelId:"private-chan-1",messageId:"private-msg-1"});
+assert.equal(playerProposalResults.length,1);
+assert.equal(playerProposalResults[0].ok,true);
+assert.equal(playerProposalResults[0].row.status,"pending");
+assert.equal(playerProposalResults[0].row.source,"player_private_scene");
+assert.equal(playerProposalResults[0].row.proposed_by_user_id,u1);
+assert.equal(playerProposalResults[0].row.proposed_by_character_id,c1.id);
+assert.equal(playerProposalResults[0].row.source_channel_id,"private-chan-1");
+assert.equal(playerProposalResults[0].row.source_message_id,"private-msg-1");
+assert.equal(db.currentCanon(guild,"character.two.species"),undefined,"player proposal incorrectly mutated canon");
+const queuedPlayerProposal=db.listCanonProposals(guild,{status:"pending",characterId:c1.id,limit:20}).find(r=>r.id===playerProposalResults[0].row.id);
+assert(queuedPlayerProposal,"private player canon proposal did not appear in /vc-canon proposals backing queue");
+assert.equal(queuedPlayerProposal.proposer_display_name,"Player One");
+const duplicateProposal=applyCanonProposalDrafts(db,guild,session.id,[{key:"character.two.species",value:"Two is literally a frog.",visibility:"party",reason:"Repeated request."}],{mode:"private",actorUserId:u1,actorCharacterId:c1.id},{channelId:"private-chan-1",messageId:"private-msg-2"});
+assert.equal(duplicateProposal[0].row.id,playerProposalResults[0].row.id,"exact repeated player proposal created a duplicate queue row");
+
 assert.throws(()=>applyAuthoritativeMutation(db,{
   guildId:guild,sessionId:session.id,scope:{mode:"party",actorUserId:u1,actorCharacterId:c1.id},
   events:[{type:"canon",key:"bad.visibility",amount:0,value:"should reject",visibility:"character",target_user_id:"",target_character_id:c1.id,note:"",status:""}]
@@ -149,7 +197,7 @@ const fakeTurnAI={responses:{create:async(req)=>{
   turnCalls++;
   const bad=structuredClone(noChangeReview);
   if(turnCalls===1) bad.clocks={decision:"changed",reason:"claimed without mutation"};
-  return {output_text:JSON.stringify({respond:true,narration:"Test narration.",private_messages:[],events:[],handouts:[],relationships:[],state_review:bad})};
+  return {output_text:JSON.stringify({respond:true,narration:"Test narration.",private_messages:[],events:[],handouts:[],relationships:[],canon_proposals:[],state_review:bad})};
 }}};
 const fakeContent={read:()=>"",search:()=>[]};
 const gmConfig={openaiKey:"x",gmModel:"test",routerModel:"test",maxRecentMessages:20,maxContentChunks:4,structuredRetryMaxTokens:3000,reasoningEffort:"",downtimeModel:"test",downtimeMaxOutputTokens:1200};
@@ -157,6 +205,18 @@ const gmSvc=new GMService({db,content:fakeContent,config:gmConfig,ai:fakeTurnAI}
 const reviewed=await gmSvc.runTurn({guildId:guild,actorUserId:u1,actorName:"One",actorAssignment:db.activeAssignment(session.id,u1),messageText:"I inspect the door.",scope:"party"});
 assert.equal(turnCalls,2,"inconsistent post-turn review did not trigger corrective retry");
 assert.equal(reviewed.state_review.scene.decision,"continue");
+
+let proposalTurnCalls=0;
+const fakeProposalAI={responses:{create:async(req)=>{
+  proposalTurnCalls++;
+  const proposals=proposalTurnCalls===1?[]:[{key:"character.two.species",value:"Two is literally a frog.",visibility:"party",reason:"Explicit player request for campaign canon."}];
+  return {output_text:JSON.stringify({respond:true,narration:"I will leave canon approval to the GM.",private_messages:[],events:[],handouts:[],relationships:[],canon_proposals:proposals,state_review:noChangeReview})};
+}}};
+const proposalSvc=new GMService({db,content:fakeContent,config:gmConfig,ai:fakeProposalAI});
+const proposalTurn=await proposalSvc.runTurn({guildId:guild,actorUserId:u1,actorName:"One",actorAssignment:db.activeAssignment(session.id,u1),messageText:"Two is literally a frog as campaign canon. Inform the GM.",scope:"private"});
+assert.equal(proposalTurnCalls,2,"explicit private canon request without a proposal did not trigger structured corrective retry");
+assert.equal(proposalTurn.canon_proposals.length,1);
+assert.equal(proposalTurn.state_review.canon.decision,"no_change","canon proposal incorrectly counted as an authoritative canon mutation");
 
 db.addMessage({guildId:guild,sessionId:session.id,userId:u1,speakerName:"One",characterId:c1.id,visibility:"character",subjectCharacterId:c1.id,content:"PRIVATE_DIRECTOR_SENTINEL"});
 let directorInput="";
@@ -219,6 +279,16 @@ assert.deepEqual(synthOrder,["start:first","end:first","start:second","end:secon
 const s2=v2._state(guildObj.id);
 s2.queue=[];
 s2.lastBuffers=[Buffer.from("cached")];
+// Repeat semantics do not need a real decoder/player in this regression. Keep the
+// queue path deterministic so @discordjs/voice does not register a live AudioPlayer
+// and keep Node's global audio-cycle timer running after PASS.
+v2._enqueue=(gid,buffers)=>{
+  const st=v2._state(gid);
+  const room=v2._availableSlots(st);
+  if(buffers.length>room) return false;
+  for(const b of buffers) st.queue.push(Buffer.from(b));
+  return true;
+};
 assert.throws(()=>v2.repeat(guildObj.id,{requesterUserId:u1,requesterChannelId:null}),/Join Veilkeeper's current voice channel/);
 assert.equal(v2.repeat(guildObj.id,{requesterUserId:u1,requesterChannelId:"voice-1"}).segments,1);
 assert.throws(()=>v2.repeat(guildObj.id,{requesterUserId:u1,requesterChannelId:"voice-1"}),/cooldown/);
@@ -229,6 +299,14 @@ await assert.rejects(
   v3.join({id:"voice-guild",voiceAdapterCreator:{}},{id:"voice-2",isVoiceBased:()=>true},{allowMove:false}),
   /GM\/admin must move/
 );
+
+// Tear down real @discordjs/voice AudioPlayers created by the repeat/playback regression.
+// An active AudioPlayer is registered with @discordjs/voice's global audio-cycle timer;
+// leaving it active makes Node remain alive after all assertions have passed.
+v1.destroy();
+v2.destroy();
+v3.destroy();
+await new Promise(resolve=>setImmediate(resolve));
 
 // 8) Voice environment validation fails fast for invalid production settings.
 const saved={...process.env};
@@ -246,4 +324,4 @@ try{
 
 db.close();
 fs.rmSync(tmp,{recursive:true,force:true});
-console.log("Veilkeeper v3.5.1 production regression test: PASS");
+console.log("Veilkeeper v3.5.4 production regression test: PASS");

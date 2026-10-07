@@ -35,6 +35,13 @@ export class VeiledDB {
     ]) add("sessions",name,def);
     add("messages","subject_user_id","TEXT");
     add("messages","subject_character_id","TEXT");
+    for(const [name,def] of [
+      ["proposed_by_user_id","TEXT"],
+      ["proposed_by_character_id","TEXT"],
+      ["source_session_id","TEXT"],
+      ["source_channel_id","TEXT"],
+      ["source_message_id","TEXT"]
+    ]) add("canon_proposals",name,def);
     add("campaigns","fear","INTEGER NOT NULL DEFAULT 0");
     add("encounters","combat_state_json",`TEXT NOT NULL DEFAULT '{"spotlight":{"counts":{},"last_character_id":null}}'`);
     add("encounters","pc_start_state_json",`TEXT NOT NULL DEFAULT '[]'`);
@@ -1033,17 +1040,23 @@ export class VeiledDB {
   }
 
 
-  upsertCanonProposal(guildId,characterId,hookId,suggestion,{source="external_character_creator"}={}){
+  upsertCanonProposal(guildId,characterId,hookId,suggestion,{source="external_character_creator",proposedByUserId=null,proposedByCharacterId=null,sessionId=null,channelId=null,messageId=null}={}){
     const c=this.getCharacter(characterId); if(!c||c.guild_id!==guildId) throw new Error("Character not found for canon proposal.");
     const key=String(suggestion?.key||"").trim().toLowerCase();
     const value=String(suggestion?.value||"").trim();
     if(!key||!value) throw new Error("Canon proposal requires key and value.");
     const vis=["public","party","gm"].includes(String(suggestion?.visibility||"").toLowerCase())?String(suggestion.visibility).toLowerCase():"gm";
     const existing=this.db.prepare(`SELECT * FROM canon_proposals WHERE character_id=? AND canon_key=? AND proposed_value=?`).get(characterId,key,value);
-    if(existing) return existing;
+    if(existing){
+      if(source==="player_private_scene" && (!existing.proposed_by_user_id||!existing.source_message_id)){
+        this.db.prepare(`UPDATE canon_proposals SET proposed_by_user_id=COALESCE(proposed_by_user_id,?),proposed_by_character_id=COALESCE(proposed_by_character_id,?),source_session_id=COALESCE(source_session_id,?),source_channel_id=COALESCE(source_channel_id,?),source_message_id=COALESCE(source_message_id,?),updated_at=CURRENT_TIMESTAMP WHERE id=?`)
+          .run(proposedByUserId||null,proposedByCharacterId||characterId||null,sessionId||null,channelId||null,messageId||null,existing.id);
+      }
+      return this.db.prepare(`SELECT * FROM canon_proposals WHERE id=?`).get(existing.id);
+    }
     const id=randomUUID();
-    this.db.prepare(`INSERT INTO canon_proposals(id,guild_id,character_id,hook_id,canon_key,proposed_value,proposed_visibility,reason,source) VALUES(?,?,?,?,?,?,?,?,?)`)
-      .run(id,guildId,characterId,hookId||null,key,value,vis,String(suggestion?.reason||"").trim(),source);
+    this.db.prepare(`INSERT INTO canon_proposals(id,guild_id,character_id,hook_id,canon_key,proposed_value,proposed_visibility,reason,source,proposed_by_user_id,proposed_by_character_id,source_session_id,source_channel_id,source_message_id) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)`)
+      .run(id,guildId,characterId,hookId||null,key,value,vis,String(suggestion?.reason||"").trim(),source,proposedByUserId||null,proposedByCharacterId||characterId||null,sessionId||null,channelId||null,messageId||null);
     return this.db.prepare(`SELECT * FROM canon_proposals WHERE id=?`).get(id);
   }
 
@@ -1078,12 +1091,12 @@ export class VeiledDB {
     if(status==="actionable") where.push(`cp.status IN ('pending','conflict')`); else if(status!=="all"){where.push("cp.status=?");args.push(status);}
     if(characterId){where.push("cp.character_id=?");args.push(characterId);}
     args.push(Math.max(1,Math.min(100,Number(limit)||25)));
-    return this.db.prepare(`SELECT cp.*,c.name character_name,ce.value current_value FROM canon_proposals cp JOIN characters c ON c.id=cp.character_id LEFT JOIN canon_events ce ON ce.guild_id=cp.guild_id AND ce.canon_key=cp.canon_key AND ce.status='current' WHERE ${where.join(" AND ")} ORDER BY CASE cp.status WHEN 'conflict' THEN 0 WHEN 'pending' THEN 1 ELSE 2 END,cp.created_at DESC LIMIT ?`).all(...args);
+    return this.db.prepare(`SELECT cp.*,c.name character_name,p.display_name proposer_display_name,ce.value current_value FROM canon_proposals cp JOIN characters c ON c.id=cp.character_id LEFT JOIN players p ON p.guild_id=cp.guild_id AND p.discord_user_id=cp.proposed_by_user_id LEFT JOIN canon_events ce ON ce.guild_id=cp.guild_id AND ce.canon_key=cp.canon_key AND ce.status='current' WHERE ${where.join(" AND ")} ORDER BY CASE cp.status WHEN 'conflict' THEN 0 WHEN 'pending' THEN 1 ELSE 2 END,cp.created_at DESC LIMIT ?`).all(...args);
   }
 
   getCanonProposal(guildId,id){
     this.backfillLegacyCanonProposals(guildId);
-    return this.db.prepare(`SELECT cp.*,c.name character_name,ce.value current_value FROM canon_proposals cp JOIN characters c ON c.id=cp.character_id LEFT JOIN canon_events ce ON ce.guild_id=cp.guild_id AND ce.canon_key=cp.canon_key AND ce.status='current' WHERE cp.guild_id=? AND cp.id=?`).get(guildId,id);
+    return this.db.prepare(`SELECT cp.*,c.name character_name,p.display_name proposer_display_name,ce.value current_value FROM canon_proposals cp JOIN characters c ON c.id=cp.character_id LEFT JOIN players p ON p.guild_id=cp.guild_id AND p.discord_user_id=cp.proposed_by_user_id LEFT JOIN canon_events ce ON ce.guild_id=cp.guild_id AND ce.canon_key=cp.canon_key AND ce.status='current' WHERE cp.guild_id=? AND cp.id=?`).get(guildId,id);
   }
 
   updateCanonProposalHook(proposal,status,{resolutionValue="",conflictId=null,eventId=null,note="",actorId=null}={}){

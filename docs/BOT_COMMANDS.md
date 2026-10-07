@@ -13,6 +13,7 @@ Veilkeeper uses split `vc-*` root commands to remain below Discord's per-command
 - `/vc-session present [character]`
 - `/vc-session assemble`
 - `/vc-session assembly-status`
+- `/vc-session roster` — GM-only ephemeral player → PC/guest/proxy assignment view
 - `/vc-session converged`
 - `/vc-session absent mode:<offscreen|background|proxy>`
 - `/vc-session arrive [character]`
@@ -109,8 +110,8 @@ Combat-state controls:
 - `/vc-canon set` — GM.
 - `/vc-canon status`
 - `/vc-canon conflicts` — GM.
-- `/vc-canon proposals [status] [character]` — GM; review imported character canon proposals.
-- `/vc-canon proposal-resolve` — GM; accept, reject, or accept an edited proposal value.
+- `/vc-canon proposals [status] [character]` — GM; review pending imported or private-player canon proposals.
+- `/vc-canon proposal-resolve` — GM; accept, reject, or accept an edited proposal value. Private-player proposals use the same review gate.
 - `/vc-canon resolve` — GM; resolving a conflict linked to an imported proposal also updates the proposal automatically.
 
 ## Snapshots / Rollback

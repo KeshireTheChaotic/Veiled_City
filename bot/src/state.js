@@ -229,6 +229,38 @@ export function applyHandoutDrafts(db,guildId,sessionId,handouts=[],scope={mode:
   return out;
 }
 
+
+export function applyCanonProposalDrafts(db,guildId,sessionId,drafts=[],scope={mode:"party",actorUserId:null,actorCharacterId:null},meta={}){
+  const out=[];
+  for(const d of drafts||[]){
+    if(scope.mode!=="private"){
+      out.push({ok:false,blocked:true,error:"Player canon proposals are accepted only from a private player→GM scene.",draft:d});
+      continue;
+    }
+    if(!scope.actorUserId||!scope.actorCharacterId){
+      out.push({ok:false,blocked:true,error:"A private player canon proposal requires an acting player character so its origin can be recorded.",draft:d});
+      continue;
+    }
+    const key=String(d?.key||"").trim().toLowerCase();
+    const value=String(d?.value||"").trim();
+    if(!key||!value) throw new Error("Canon proposal draft requires key and value.");
+    const visibility=["public","party","gm"].includes(String(d?.visibility||"").toLowerCase())?String(d.visibility).toLowerCase():"party";
+    const before=db.db.prepare(`SELECT * FROM canon_proposals WHERE character_id=? AND canon_key=? AND proposed_value=?`).get(scope.actorCharacterId,key,value);
+    const row=db.upsertCanonProposal(guildId,scope.actorCharacterId,null,{
+      key,value,visibility,reason:String(d?.reason||"").trim()
+    },{
+      source:"player_private_scene",
+      proposedByUserId:scope.actorUserId,
+      proposedByCharacterId:scope.actorCharacterId,
+      sessionId:sessionId||null,
+      channelId:meta.channelId||null,
+      messageId:meta.messageId||null
+    });
+    out.push({ok:true,row,created:!before,source:"player_private_scene"});
+  }
+  return out;
+}
+
 export function assertMutationSuccess({events=[],relationships=[],handouts=[]}={}){
   const failures=[];
   for(const [kind,rows] of [["event",events],["relationship",relationships],["handout",handouts]]){

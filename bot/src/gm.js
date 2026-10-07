@@ -32,6 +32,17 @@ const relationshipDraftSchema={
   required:["from_type","from_key","from_label","to_type","to_key","to_label","relationship_type","mode","score","visibility","note"]
 };
 
+const canonProposalDraftSchema={
+  type:"object",additionalProperties:false,
+  properties:{
+    key:{type:"string",minLength:1},
+    value:{type:"string",minLength:1},
+    visibility:{type:"string",enum:["public","party","gm"]},
+    reason:{type:"string"}
+  },
+  required:["key","value","visibility","reason"]
+};
+
 const reviewItemSchema={type:"object",additionalProperties:false,properties:{decision:{type:"string",enum:["changed","no_change"]},reason:{type:"string",minLength:1}},required:["decision","reason"]};
 const stateReviewSchema={
   type:"object",additionalProperties:false,
@@ -76,9 +87,10 @@ const gmSchema={
     },
     handouts:{type:"array",items:handoutDraftSchema},
     relationships:{type:"array",items:relationshipDraftSchema},
+    canon_proposals:{type:"array",items:canonProposalDraftSchema},
     state_review:stateReviewSchema
   },
-  required:["respond","narration","private_messages","events","handouts","relationships","state_review"]
+  required:["respond","narration","private_messages","events","handouts","relationships","canon_proposals","state_review"]
 };
 
 
@@ -212,6 +224,14 @@ export function parseStructuredJsonText(text,{label="structured response"}={}){
     e.cause=cause;
     throw e;
   }
+}
+
+export function looksLikeExplicitCanonProposalRequest(text){
+  const t=String(text||"").trim();
+  if(!/\bcanon(?:ical)?\b/i.test(t)) return false;
+  return /\b(?:make|set|establish|declare|record|add|submit|propose|treat|mark)\b[\s\S]{0,100}\b(?:campaign\s+)?canon(?:ical)?\b/i.test(t)
+    || /\b(?:as|into)\s+(?:campaign\s+)?canon\b/i.test(t)
+    || /\b(?:campaign\s+)?canon\b[\s\S]{0,100}\b(?:inform|tell|notify)\s+(?:the\s+)?gm\b/i.test(t);
 }
 
 export class GMService{
@@ -353,9 +373,10 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
       "The saved assembly plan is GM-private planning. Never reveal another character's private_hook or hidden reason unless that player shares it or the fiction independently reveals it.",
       "During assembly/convergence, offer reasons to cooperate but never decide that a PC trusts, joins, follows, confesses to, or remains with the group.",
       privateMode
-        ?"THIS IS A PRIVATE PLAYER→GM SCENE. Narration is visible only to the acting player. Do not assume anything said/discovered here was shared with the party. New clue/fact/thread/NPC/location knowledge and clock changes are automatically isolated to this player/character. resource_delta may target only the acting character. Do not emit veil_exposure_delta or canon from a private scene; use a private fact/clue and let the human GM promote durable global canon later. Any private_messages must target only the acting player's Discord user ID."
-        :"THIS IS A PARTY TABLE SCENE. Public narration is visible to all present players. Do not reveal another player's private knowledge unless it has been explicitly shared in play. private_messages may target only players on the current session roster.",
-      "MANDATORY POST-TURN STATE REVIEW: before returning, explicitly review facts/clues, PC resources, clocks, threads, references, relationships, handouts, canon, Veil Exposure, and scene continuity. Every category must be marked changed or no_change with a concrete reason. If marked changed, emit the matching structured mutation; if no mutation is emitted, mark no_change. Never hide a mechanical consequence only in prose.",
+        ?"THIS IS A PRIVATE PLAYER→GM SCENE. Narration is visible only to the acting player. Do not assume anything said/discovered here was shared with the party. New clue/fact/thread/NPC/location knowledge and clock changes are automatically isolated to this player/character. resource_delta may target only the acting character. Do not emit veil_exposure_delta or a canon event from a private scene. HOWEVER, when the player EXPLICITLY asks to make/set/establish/record a statement as campaign canon, or explicitly asks to submit it for GM canon approval, you MUST put that requested statement in canon_proposals instead. Use one proposal per independent claim with a stable normalized key, the exact intended durable value, requested visibility (normally party unless the player clearly requests otherwise), and a concise reason. A canon proposal is NOT a canon-ledger mutation, so state_review.canon remains no_change unless an actual canon event was emitted (which is forbidden here). Never claim in narration that a proposal was recorded, approved, or delivered to the GM; the application sends deterministic confirmation after commit. Any private_messages must target only the acting player's Discord user ID."
+        :"THIS IS A PARTY TABLE SCENE. Public narration is visible to all present players. Do not reveal another player's private knowledge unless it has been explicitly shared in play. private_messages may target only players on the current session roster. canon_proposals must be an empty array; the player canon-proposal workflow is reserved for private player→GM scenes.",
+      "canon_proposals is a GM-review queue, not authoritative canon. Never use it for speculative ideas or ordinary discoveries; use it only for an explicit player request to propose a durable canon statement from a private scene.",
+      "MANDATORY POST-TURN STATE REVIEW: before returning, explicitly review facts/clues, PC resources, clocks, threads, references, relationships, handouts, canon, Veil Exposure, and scene continuity. Every category must be marked changed or no_change with a concrete reason. If marked changed, emit the matching structured mutation; if no mutation is emitted, mark no_change. A canon_proposals entry does not count as a canon change. Never hide a mechanical consequence only in prose.",
       "For scene continuity, choose transition only when fictional location, objective, time frame, or dramatic scene boundary actually changes. Provide a short new-scene label when transitioning; otherwise use continue with an empty label.",
       "Keep narration suitable for Discord. Prefer 1-4 compact paragraphs unless a longer scene is genuinely needed."
     ].join("\n\n");
@@ -387,12 +408,23 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
       text:{format:{type:"json_schema",name:"veiled_city_gm_turn",strict:true,schema:gmSchema}}
     };
     if(this.config.reasoningEffort) req.reasoning={effort:this.config.reasoningEffort};
-    let result=await this.requestStructured(req,{label:"GM turn"});
-    try{ validatePostTurnStateReview(result); return result; }
-    catch(err){
-      const retry={...req,input:`${input}\n\nPOST-TURN REVIEW CORRECTION: The prior structured response failed mandatory state-review consistency: ${String(err.message||err)}. Return a complete replacement response. Every review category must agree exactly with the mutations you emit.`};
-      result=await this.requestStructured(retry,{label:"GM turn state-review retry"});
+    const validateTurn=(result)=>{
       validatePostTurnStateReview(result);
+      const proposals=Array.isArray(result?.canon_proposals)?result.canon_proposals:[];
+      const attemptedCanon=(result?.events||[]).some(e=>e?.type==="canon");
+      if(privateMode && looksLikeExplicitCanonProposalRequest(messageText)){
+        if(!result?.respond) throw new Error("The player explicitly requested a campaign-canon proposal, but the GM turn was marked respond=false.");
+        if(!proposals.length && !attemptedCanon) throw new Error("The player explicitly requested a campaign-canon proposal, but no canon_proposals entry or canon attempt was emitted.");
+      }
+      if(!privateMode && proposals.length) throw new Error("Party-table GM turns may not emit player canon_proposals.");
+      return true;
+    };
+    let result=await this.requestStructured(req,{label:"GM turn"});
+    try{ validateTurn(result); return result; }
+    catch(err){
+      const retry={...req,input:`${input}\n\nSTRUCTURED TURN CORRECTION: The prior response failed required state/proposal consistency: ${String(err.message||err)}. Return a complete replacement response. Every state-review category must agree exactly with mutations. If this private player explicitly requested campaign canon, emit canon_proposals; do not claim application-side recording or notification in narration.`};
+      result=await this.requestStructured(retry,{label:"GM turn state-review retry"});
+      validateTurn(result);
       return result;
     }
   }

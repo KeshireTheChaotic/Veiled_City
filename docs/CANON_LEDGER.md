@@ -46,3 +46,16 @@ The proposal record retains its character, original proposed value, reason, visi
 Old `canon_suggestion` character hooks are backfilled into the proposal queue automatically when proposals are first queried. If the exact suggestion is already current canon, it is marked accepted rather than reopened for review.
 
 Replacing canon supersedes the previous canon event instead of deleting history. The AI GM receives current canon as authoritative context and is instructed not to improvise its way through contradictions.
+
+## Private player canon proposals (v3.5.4)
+
+An explicit player request in that player's configured private GM channel to make/set/establish a statement as campaign canon is **not** written directly to the canon ledger. Veilkeeper records it as a pending canon proposal associated with the acting character.
+
+- The player receives a deterministic private confirmation containing the proposal ID and current review status.
+- The configured GM log receives the proposer, character, key, proposed value, visibility, and source message context.
+- `/vc-canon proposals` shows both imported character-hook proposals and private player proposals.
+- `/vc-canon proposal-resolve` remains the human-GM acceptance/rejection/edit gate.
+- Accepting a contradictory proposal still creates a normal canon conflict rather than silently overwriting current canon.
+- A proposal is not authoritative canon, so the mandatory post-turn `canon` review remains `no_change` until a human GM accepts it.
+
+Configure the GM log with `/vc-campaign channels gm_log:#channel`. If that channel is missing/unwritable, the proposal remains durable in the queue and Veilkeeper emits a state-error fallback reference rather than pretending the GM was notified.

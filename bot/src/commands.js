@@ -14,6 +14,7 @@ import { createPlayerExportFiles, createGmExportFiles } from "./character-export
 import { handoutFiles, handoutSummary } from "./handout.js";
 import { createConceptContextPackage } from "./concept-context.js";
 import { normalizeNarrativeMarkdown, narrativeRelativePath, createNarrativeExportPackage } from "./character-narrative.js";
+import { buildSessionRosterReport, chunkRosterReport } from "./roster.js";
 
 export function buildCommands(){
   const monolith = new SlashCommandBuilder()
@@ -52,6 +53,7 @@ export function buildCommands(){
             {name:"Manual GM assembly",value:"manual"})))
         .addSubcommand(s=>s.setName("assemble").setDescription("Generate and launch the opening convergence scene"))
         .addSubcommand(s=>s.setName("assembly-status").setDescription("Show GM-private convergence status and plan"))
+        .addSubcommand(s=>s.setName("roster").setDescription("GM: show current player-to-character and proxy assignments"))
         .addSubcommand(s=>s.setName("converged").setDescription("Mark that immediate PC objectives now overlap"))
         .addSubcommand(s=>s.setName("end").setDescription("End the active session and generate a recap"))
         .addSubcommand(s=>s.setName("present").setDescription("Join the active session")
@@ -303,10 +305,10 @@ export function buildCommands(){
           .addStringOption(o=>o.setName("visibility").setDescription("Visibility").addChoices({name:"Party",value:"party"},{name:"Public",value:"public"},{name:"GM only",value:"gm"})))
         .addSubcommand(s=>s.setName("status").setDescription("Show current canon visible to you"))
         .addSubcommand(s=>s.setName("conflicts").setDescription("GM: list pending canon conflicts"))
-        .addSubcommand(s=>s.setName("proposals").setDescription("GM: review imported character canon proposals")
+        .addSubcommand(s=>s.setName("proposals").setDescription("GM: review pending character/player canon proposals")
           .addStringOption(o=>o.setName("status").setDescription("Proposal status; defaults to actionable").addChoices({name:"Actionable",value:"actionable"},{name:"Pending",value:"pending"},{name:"Conflict",value:"conflict"},{name:"Accepted",value:"accepted"},{name:"Rejected",value:"rejected"},{name:"All",value:"all"}))
-          .addStringOption(o=>o.setName("character").setDescription("Optional campaign character filter")))
-        .addSubcommand(s=>s.setName("proposal-resolve").setDescription("GM: accept, reject, or edit an imported canon proposal")
+          .addStringOption(o=>o.setName("character").setDescription("Optional originating/associated character filter")))
+        .addSubcommand(s=>s.setName("proposal-resolve").setDescription("GM: accept, reject, or edit a canon proposal")
           .addStringOption(o=>o.setName("proposal_id").setDescription("Proposal ID/prefix").setRequired(true))
           .addStringOption(o=>o.setName("resolution").setDescription("Resolution").setRequired(true).addChoices({name:"Accept proposal",value:"accept"},{name:"Reject proposal",value:"reject"},{name:"Accept edited value",value:"custom"}))
           .addStringOption(o=>o.setName("custom_value").setDescription("Required for edited value"))
@@ -820,6 +822,15 @@ Initial phase: ${s.assembly_phase}`});
       if(!isGM(db,interaction)) throw new Error("Only a GM/admin may view the private assembly plan.");
       const s=requireSession(db,interaction.guildId);
       await interaction.reply({content:compactAssemblyStatus(db,interaction.guildId,s),ephemeral:true});
+      return true;
+    }
+    if(group==="session"&&sub==="roster"){
+      if(!isGM(db,interaction)) throw new Error("Only a GM/admin may view the session roster.");
+      const s=requireSession(db,interaction.guildId);
+      const lines=buildSessionRosterReport(db,interaction.guildId,s);
+      const chunks=chunkRosterReport(lines);
+      await interaction.reply({content:chunks[0],ephemeral:true});
+      for(const chunk of chunks.slice(1)) await interaction.followUp({content:chunk,ephemeral:true});
       return true;
     }
     if(group==="session"&&sub==="converged"){
@@ -1685,23 +1696,26 @@ GM notes: ${a.draft.gm_notes}`:""}`.slice(0,1950):"No aftermath draft exists for
         const state=r.status.toUpperCase();
         const current=r.current_value!=null?`\n  current: ${r.current_value}`:"";
         const reason=r.reason?`\n  why: ${r.reason}`:"";
-        return `• \`${r.id.slice(0,8)}\` **${r.character_name}** • ${state}\n  \`${r.canon_key}\` → ${r.proposed_value}${current}${reason}`;
+        const source=r.source==="player_private_scene"
+          ?`player/private${r.proposed_by_user_id?` by <@${r.proposed_by_user_id}>`:""}`
+          :`import/${r.source||"character-hook"}`;
+        return `• \`${r.id.slice(0,8)}\` **${r.character_name}** • ${state} • ${source}\n  \`${r.canon_key}\` → ${r.proposed_value}${current}${reason}`;
       }).join("\n");
-      await interaction.reply({content:rows.length?`**Imported Canon Proposals — ${status}**\n${body}`.slice(0,1950):`No ${status} canon proposals found.`,ephemeral:true});
+      await interaction.reply({content:rows.length?`**Canon Proposals — ${status}**\n${body}`.slice(0,1950):`No ${status} canon proposals found.`,ephemeral:true});
       return true;
     }
     if(group==="canon"&&sub==="proposal-resolve"){
       if(!isGM(db,interaction)) throw new Error("GM/admin permission required.");
       const rows=db.listCanonProposals(interaction.guildId,{status:"all",limit:100});
       const row=byPrefix(rows,interaction.options.getString("proposal_id",true)); if(!row) throw new Error("Canon proposal not found.");
-      db.snapshotCampaign(interaction.guildId,{label:`Pre-proposal ${row.canon_key}`,reason:`Before resolving imported canon proposal ${row.id}`,createdBy:interaction.user.id});
+      db.snapshotCampaign(interaction.guildId,{label:`Pre-proposal ${row.canon_key}`,reason:`Before resolving canon proposal ${row.id}`,createdBy:interaction.user.id});
       const result=db.resolveCanonProposal(interaction.guildId,row.id,{resolution:interaction.options.getString("resolution",true),customValue:interaction.options.getString("custom_value")||"",visibility:interaction.options.getString("visibility")||null,actorId:interaction.user.id,note:interaction.options.getString("note")||""});
       const p=result.proposal;
       if(result.status==="conflict"){
-        await postGmLog({db,guild:interaction.guild,title:"Canon proposal conflict",details:`${p.character_name}: ${p.canon_key} → ${p.proposed_value}\nConflict ${result.conflict.id.slice(0,8)} created for GM resolution.`});
+        await postGmLog({db,guild:interaction.guild,title:"Canon proposal conflict",details:`${p.character_name}: ${p.canon_key} → ${p.proposed_value}${p.proposed_by_user_id?`\nProposed by: <@${p.proposed_by_user_id}>`:""}\nConflict ${result.conflict.id.slice(0,8)} created for GM resolution.`});
         await interaction.reply({content:`⚠️ Proposal \`${p.id.slice(0,8)}\` conflicts with existing canon. Canon conflict \`${result.conflict.id.slice(0,8)}\` was created. Resolve it with \`/vc-canon proposal-resolve\` (same proposal) or \`/vc-canon resolve\`.`,ephemeral:true});
       }else{
-        await postGmLog({db,guild:interaction.guild,title:`Canon proposal ${result.status}`,details:`${p.character_name}: ${p.canon_key}\nProposal: ${p.proposed_value}\nResolution: ${p.resolution_value||"rejected"}`});
+        await postGmLog({db,guild:interaction.guild,title:`Canon proposal ${result.status}`,details:`${p.character_name}: ${p.canon_key}${p.proposed_by_user_id?`\nProposed by: <@${p.proposed_by_user_id}>`:""}\nProposal: ${p.proposed_value}\nResolution: ${p.resolution_value||"rejected"}`});
         await interaction.reply({content:`Canon proposal \`${p.id.slice(0,8)}\` **${result.status}** for **${p.character_name}**.${p.resolution_value?`\n\`${p.canon_key}\` = ${p.resolution_value}`:""}`,ephemeral:true});
       }
       return true;

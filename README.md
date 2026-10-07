@@ -1,8 +1,34 @@
-# VEILED CITY MULTIPLAYER DISCORD ENGINE v3.5.1
+# VEILED CITY MULTIPLAYER DISCORD ENGINE v3.5.4
 
-A deployable Discord multiplayer GM layer for **Veiled City**, using Daggerheart SRD 2.0 as its mechanical baseline.
+Stateful Discord GM bot for the Veiled City multiplayer Daggerheart campaign.
 
+## v3.5.4 — Private Player Canon Proposals
 
+v3.5.4 makes explicit private player requests for campaign canon durable and reviewable. Veilkeeper now records the request in the existing canon-proposal queue, confirms privately that canon itself was not changed, and posts the proposal to the configured GM log. GM review continues through `/vc-canon proposals` and `/vc-canon proposal-resolve`.
+
+Important: configure the GM log with `/vc-campaign channels gm_log:#your-gm-log`. If GM-log delivery is unavailable, the proposal remains safely queued and Veilkeeper records a state-error fallback reference.
+
+Upgrade notes:
+- `docs/UPGRADE_3.5.3_TO_3.5.4.md`
+- `docs/CHANGELOG_v3.5.4_DISCORD.md`
+
+## v3.5.3 — GM Session Roster
+
+v3.5.3 adds GM-only `/vc-session roster`, an ephemeral authoritative view of the active session's Discord player → character/control mapping. It includes primary and guest PCs, attendance/absence handling, PC proxies, active NPC proxies, pending NPC proxy offers, and warnings for present players without an active PC/guest assignment.
+
+See:
+- `docs/UPGRADE_3.5.2_TO_3.5.3.md`
+- `docs/CHANGELOG_v3.5.3_DISCORD.md`
+
+## v3.5.2 — Production Test Teardown Fix
+
+v3.5.2 fixes `npm run test:production` printing `PASS` but remaining alive on some systems. The voice repeat regression could start a real `@discordjs/voice` AudioPlayer and leave its global audio-cycle timer active after assertions completed. The test now keeps repeat-queue validation deterministic without starting real playback, explicitly destroys all VoiceNarrator test instances, and yields one event-loop turn before completion.
+
+This is a test-harness maintenance release. There are no database, slash-command, gameplay, GM/world-director, privacy, or production voice behavior changes.
+
+See:
+- `docs/UPGRADE_3.5.1_TO_3.5.2.md`
+- `docs/CHANGELOG_v3.5.2_DISCORD.md`
 
 ## v3.5.1 — Dependency Security Maintenance
 

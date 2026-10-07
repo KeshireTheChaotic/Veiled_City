@@ -29,6 +29,7 @@ bot/src/handout.js
 bot/src/index.js
 bot/src/publishing.js
 bot/src/register-commands.js
+bot/src/roster.js
 bot/src/serial-queue.js
 bot/src/state.js
 bot/src/voice.js
@@ -116,6 +117,9 @@ docs/CHANGELOG_v3.4.0_DISCORD.md
 docs/CHANGELOG_v3.4.1_DISCORD.md
 docs/CHANGELOG_v3.5.0_DISCORD.md
 docs/CHANGELOG_v3.5.1_DISCORD.md
+docs/CHANGELOG_v3.5.2_DISCORD.md
+docs/CHANGELOG_v3.5.3_DISCORD.md
+docs/CHANGELOG_v3.5.4_DISCORD.md
 docs/CHARACTER_CONCEPT_CONTEXT.md
 docs/CHARACTER_EXPORT.md
 docs/CHARACTER_NARRATIVE_MARKDOWN.md
@@ -154,5 +158,8 @@ docs/UPGRADE_3.3.3_TO_3.4.0.md
 docs/UPGRADE_3.4.0_TO_3.4.1.md
 docs/UPGRADE_3.4.1_TO_3.5.0.md
 docs/UPGRADE_3.5.0_TO_3.5.1.md
+docs/UPGRADE_3.5.1_TO_3.5.2.md
+docs/UPGRADE_3.5.2_TO_3.5.3.md
+docs/UPGRADE_3.5.3_TO_3.5.4.md
 docs/VOICE_NARRATION.md
 docs/WORLD_DIRECTOR.md

@@ -48,3 +48,6 @@ The autonomous world director is constrained by the same application-level visib
 
 When a scoped action is blocked, the application refuses that mutation, sends the acting player a sanitized private explanation, and writes the detailed reason to the configured GM log. If the private notice cannot be delivered, the GM log records the delivery failure. Other valid mutations in the same generated turn may still commit.
 
+
+### Private canon requests
+Explicit player requests to establish campaign canon from a private scene are never applied directly. v3.5.4 stores them as pending canon proposals, confirms this privately to the player, and attempts a GM-log notification. The proposal queue is durable even if Discord delivery fails.
