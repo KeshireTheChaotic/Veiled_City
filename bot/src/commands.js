@@ -9,7 +9,7 @@ import { publishJournal, postJournalEntry, publishEventResults, postGmLog, postS
 import { EncounterLibrary, livePcRoster, partyTier, baseBattlePoints, DIFFICULTY_ADJUSTMENTS, autoBuildComposition, recomputeBudget, battlePointCost, HEAVY_ROLES, defaultObjective } from "./encounter.js";
 import { prepareLevelup, applyLevelupToData, legalAdvancements, tierAchievement } from "./character-system.js";
 import { buildCombatants, hpMarksForDamage, combatantLine } from "./combat.js";
-import { applyGMEvents, applyRelationshipDrafts, applyHandoutDrafts } from "./state.js";
+import { applyAuthoritativeMutation } from "./state.js";
 import { createPlayerExportFiles, createGmExportFiles } from "./character-export.js";
 import { handoutFiles, handoutSummary } from "./handout.js";
 import { createConceptContextPackage } from "./concept-context.js";
@@ -619,19 +619,34 @@ function latestEncounterForSession(db,sessionId){return db.listEncounters(sessio
 async function applyEncounterAftermath({db,guild,encounter,draft,actorId}){
   db.snapshotCampaign(guild.id,{label:`Pre-aftermath encounter ${encounter.encounter_number}`,reason:"Automatic snapshot before encounter aftermath",createdBy:actorId});
   const scope={mode:"party",actorUserId:null,actorCharacterId:null};
-  const events=applyGMEvents(db,guild.id,encounter.session_id,draft.events||[],scope);
-  const relationships=applyRelationshipDrafts(db,guild.id,draft.relationships||[],scope,"encounter_aftermath");
-  const handouts=applyHandoutDrafts(db,guild.id,encounter.session_id,draft.handouts||[],scope,"encounter_aftermath");
-  await publishEventResults({db,guild,results:events});
-  for(const h of handouts.filter(x=>x.ok)) await deliverHandout({db,guild,handout:h.row,format:"markdown"});
-  for(const r of events.filter(x=>x.type==="canon"&&x.status==="conflict")) await postStateError({db,guild,error:new Error(`Canon conflict ${r.conflict_id} requires GM resolution`),context:"encounter-aftermath-canon",sessionId:encounter.session_id});
+  const mutation=db.transaction(()=>{
+    const applied=applyAuthoritativeMutation(db,{guildId:guild.id,sessionId:encounter.session_id,events:draft.events||[],relationships:draft.relationships||[],handouts:draft.handouts||[],scope,source:"encounter_aftermath"});
+    db.setEncounterAftermathStatus(encounter.id,"applied");
+    return applied;
+  });
+  const {events,relationships,handouts}=mutation;
+  const outputErrors=[];
+  const out=async(context,fn)=>{
+    try{return await fn();}
+    catch(err){
+      const ref=await postStateError({db,guild,error:err,context,sessionId:encounter.session_id});
+      outputErrors.push({context,ref});
+      return null;
+    }
+  };
+  await out("encounter-aftermath-publish",()=>publishEventResults({db,guild,results:events}));
+  for(const h of handouts.filter(x=>x.ok)) await out(`encounter-aftermath-handout:${h.row.id}`,()=>deliverHandout({db,guild,handout:h.row,format:"markdown"}));
+  for(const r of events.filter(x=>x.type==="canon"&&x.status==="conflict")) await out("encounter-aftermath-canon",()=>postStateError({db,guild,error:new Error(`Canon conflict ${r.conflict_id} requires GM resolution`),context:"encounter-aftermath-canon",sessionId:encounter.session_id}));
   if(draft.player_summary?.trim()){
-    await postPlayMessage({db,guild,content:`**Encounter Aftermath**\n${draft.player_summary}`,sessionId:encounter.session_id});
-    await postJournalEntry({db,guild,title:`Encounter ${encounter.encounter_number} Aftermath`,content:draft.player_summary});
+    await out("encounter-aftermath-play",()=>postPlayMessage({db,guild,content:`**Encounter Aftermath**
+${draft.player_summary}`,sessionId:encounter.session_id}));
+    await out("encounter-aftermath-journal",()=>postJournalEntry({db,guild,title:`Encounter ${encounter.encounter_number} Aftermath`,content:draft.player_summary}));
   }
-  db.setEncounterAftermathStatus(encounter.id,"applied");
-  await postGmLog({db,guild,sessionId:encounter.session_id,title:`Encounter #${encounter.encounter_number} aftermath applied`,details:`Events: ${events.length}\nRelationships: ${relationships.filter(x=>x.ok).length}\nHandouts: ${handouts.filter(x=>x.ok).length}\n${draft.gm_notes||""}`});
-  return {events,relationships,handouts};
+  await out("encounter-aftermath-gm-log",()=>postGmLog({db,guild,sessionId:encounter.session_id,title:`Encounter #${encounter.encounter_number} aftermath applied`,details:`Events: ${events.length}
+Relationships: ${relationships.filter(x=>x.ok).length}
+Handouts: ${handouts.filter(x=>x.ok).length}
+${draft.gm_notes||""}`}));
+  return {events,relationships,handouts,outputErrors};
 }
 
 export async function handleCommand(interaction,{db,gm,voice=null}){
@@ -671,12 +686,12 @@ export async function handleCommand(interaction,{db,gm,voice=null}){
         const ch=interaction.member?.voice?.channel;
         if(!ch) throw new Error("Join the voice channel you want Veilkeeper to use, then run this command again.");
         await interaction.deferReply({ephemeral:true});
-        const st=await voice.join(interaction.guild,ch);
+        const st=await voice.join(interaction.guild,ch,{allowMove:isGM(db,interaction)});
         await interaction.editReply(`Veilkeeper joined **${ch.name}** for AI-generated narration. Mode: **${st.mode}** • Voice: **${st.voice}**. Discord text remains the authoritative campaign record.`);
         return true;
       }
       if(sub==="repeat"){
-        const r=voice.repeat(interaction.guildId);
+        const r=voice.repeat(interaction.guildId,{requesterUserId:interaction.user.id,requesterChannelId:interaction.member?.voice?.channelId||null});
         await interaction.reply({content:`Replaying the last narration (${r.segments} audio segment${r.segments===1?"":"s"}) from cache; no new speech-generation request was made.`,ephemeral:true});
         return true;
       }
@@ -700,7 +715,10 @@ export async function handleCommand(interaction,{db,gm,voice=null}){
       if(sub==="narrate"){
         await interaction.deferReply({ephemeral:true});
         const r=await voice.narrate(interaction.guild,interaction.options.getString("text",true),{force:true});
-        if(!r.ok) throw new Error(r.reason==="not_connected"?"Veilkeeper is not connected to voice. Use /vc-voice join first.":"Voice narration is disabled or empty.");
+        if(!r.ok){
+          const reason={not_connected:"Veilkeeper is not connected to voice. Use /vc-voice join first.",queue_full:"Voice narration queue is full. Wait for current narration to finish.",cancelled:"Voice narration was cancelled because the voice connection changed.",disabled:"Voice narration is disabled.",empty:"Narration text was empty after speech-safe cleanup."}[r.reason]||`Voice narration unavailable (${r.reason||"unknown"}).`;
+          throw new Error(reason);
+        }
         await interaction.editReply(`Queued one-off AI narration (${r.segments} segment${r.segments===1?"":"s"}).`);
         return true;
       }
@@ -727,6 +745,7 @@ export async function handleCommand(interaction,{db,gm,voice=null}){
         `GM log: ${ch(c.gm_log_channel_id)} • State errors: ${ch(c.state_errors_channel_id)}`,
         `Veil Exposure: ${c.veil_exposure}/6 • Fear: ${c.fear??0}/12`,
         `Session: ${s?`#${s.session_number} ${s.title||""} • ${s.assembly_phase||"assembly"}`:"none active"}`,
+        ...(s?(()=>{ const d=db.getDirectorState(s.id); return [`World Director: round ${d.round_number||1} • scene ${d.scene_number||1}${d.scene_label?` (${d.scene_label})`:""} • pending **${d.pending_pass?.layer||"none"}**`]; })():[]),
         `Party: ${db.getPartyState(interaction.guildId).established?"established":"not established"}`
       ].join("\n"),ephemeral:true});
       return true;
@@ -1358,8 +1377,9 @@ GM notes: ${a.draft.gm_notes}`:""}`.slice(0,1950):"No aftermath draft exists for
           await interaction.reply({content:`Encounter #${e.encounter_number} aftermath discarded; no proposed consequences were applied.`,ephemeral:true}); return true;
         }
         await interaction.deferReply({ephemeral:true});
-        await applyEncounterAftermath({db,guild:interaction.guild,encounter:e,draft:a.draft,actorId:interaction.user.id});
-        await interaction.editReply(`Encounter #${e.encounter_number} aftermath confirmed and applied.`); return true;
+        const applied=await applyEncounterAftermath({db,guild:interaction.guild,encounter:e,draft:a.draft,actorId:interaction.user.id});
+        const warning=applied.outputErrors.length?` State was committed, but ${applied.outputErrors.length} delivery/logging step(s) failed (${applied.outputErrors.map(x=>x.ref).join(", ")}); do not confirm again.`:"";
+        await interaction.editReply(`Encounter #${e.encounter_number} aftermath confirmed and applied.${warning}`); return true;
       }
     }
 
@@ -1570,30 +1590,64 @@ GM notes: ${a.draft.gm_notes}`:""}`.slice(0,1950):"No aftermath draft exists for
       const cycle=db.currentDowntime(interaction.guildId); if(!cycle||cycle.status!=="open") throw new Error("No open downtime cycle.");
       const projects=db.listDowntimeProjects(cycle.id); if(!projects.length) throw new Error("No downtime projects were submitted.");
       db.snapshotCampaign(interaction.guildId,{label:`Pre-downtime ${cycle.label}`,reason:"Automatic snapshot before downtime resolution",createdBy:interaction.user.id});
-      db.db.prepare("UPDATE downtime_cycles SET status='resolving' WHERE id=?").run(cycle.id);
       await interaction.deferReply({ephemeral:true});
+
+      // Generate both layers before committing either one, so a model/API failure cannot leave a half-resolved downtime cycle.
       const resolved=await gm.resolveDowntime({guildId:interaction.guildId,cycle:{...cycle,status:"resolving"},projects});
+      const director=await gm.runWorldDirector({
+        guildId:interaction.guildId,layer:"downtime",cycle:{...cycle,status:"resolving"},projects,
+        trigger:{cycle_label:cycle.label,project_summary:resolved.summary||"",project_results:resolved.project_results||[]}
+      });
+      const directorHasOutputs=(director.events||[]).length||(director.relationships||[]).length||(director.handouts||[]).length||(director.private_messages||[]).length||String(director.public_narration||"").trim();
+      if(!director.act&&directorHasOutputs) throw new Error("Downtime world director returned act=false with non-empty outputs.");
+
       const byId=new Map(projects.map(p=>[p.id,p]));
-      for(const r of resolved.project_results||[]){
-        const p=byId.get(r.project_id); if(!p) continue;
-        const progress=Math.max(0,Math.min(p.max_progress,Number(p.progress||0)+Number(r.progress_delta||0)));
-        const status=r.status==="completed"||progress>=p.max_progress?"completed":r.status;
-        db.updateDowntimeProject(p.id,{progress,status,result:r.result||""});
-        const msg=`**Downtime — ${p.title}**\n${r.result||"Resolved."}\nProgress: ${progress}/${p.max_progress} • ${status}`;
-        if(p.visibility==="party") await postJournalEntry({db,guild:interaction.guild,title:`Downtime: ${p.title}`,content:msg});
-        else await sendPlayerPrivate({db,guild:interaction.guild,userId:p.discord_user_id,content:msg,sessionId:null,characterId:p.visibility==="character"?p.character_id:null});
+      const projectOutputs=[];
+      const committed=db.transaction(()=>{
+        for(const r of resolved.project_results||[]){
+          const p=byId.get(r.project_id); if(!p) continue;
+          const progress=Math.max(0,Math.min(p.max_progress,Number(p.progress||0)+Number(r.progress_delta||0)));
+          const status=r.status==="completed"||progress>=p.max_progress?"completed":r.status;
+          const updated=db.updateDowntimeProject(p.id,{progress,status,result:r.result||""});
+          projectOutputs.push({project:updated,message:`**Downtime — ${p.title}**\n${r.result||"Resolved."}\nProgress: ${progress}/${p.max_progress} • ${status}`});
+        }
+        const dscope={mode:"party",actorUserId:null,actorCharacterId:null};
+        const projectMutation=applyAuthoritativeMutation(db,{guildId:interaction.guildId,sessionId:cycle.source_session_id||null,events:resolved.events||[],relationships:resolved.relationships||[],handouts:resolved.handouts||[],scope:dscope,source:"downtime_project"});
+        const directorMutation=director.act?applyAuthoritativeMutation(db,{guildId:interaction.guildId,sessionId:cycle.source_session_id||null,events:director.events||[],relationships:director.relationships||[],handouts:director.handouts||[],scope:dscope,source:"world_director_downtime"}):{events:[],relationships:[],handouts:[]};
+        if(cycle.source_session_id) db.completeDirectorPass(cycle.source_session_id,"downtime");
+        const combinedSummary=[resolved.summary||"",director.act?director.gm_notes||"":""].filter(Boolean).join("\n\n");
+        const done=db.resolveDowntimeCycle(cycle.id,combinedSummary);
+        return {projectMutation,directorMutation,done};
+      });
+      const {projectMutation,directorMutation,done}=committed;
+      const eventResults=[...(projectMutation.events||[]),...(directorMutation.events||[])];
+      const handoutResults=[...(projectMutation.handouts||[]),...(directorMutation.handouts||[])];
+      const outputErrors=[];
+      const out=async(context,fn)=>{
+        try{return await fn();}
+        catch(err){const ref=await postStateError({db,guild:interaction.guild,error:err,context,sessionId:cycle.source_session_id||null});outputErrors.push({context,ref});return null;}
+      };
+      for(const item of projectOutputs){
+        if(item.project.visibility==="party") await out(`downtime-project:${item.project.id}`,()=>postJournalEntry({db,guild:interaction.guild,title:`Downtime: ${item.project.title}`,content:item.message}));
+        else await out(`downtime-project-private:${item.project.id}`,()=>sendPlayerPrivate({db,guild:interaction.guild,userId:item.project.discord_user_id,content:item.message,sessionId:null,characterId:item.project.visibility==="character"?item.project.character_id:null}));
       }
-      const dscope={mode:"party",actorUserId:null,actorCharacterId:null};
-      const eventResults=applyGMEvents(db,interaction.guildId,cycle.source_session_id||null,resolved.events||[],dscope);
-      const relationshipResults=applyRelationshipDrafts(db,interaction.guildId,resolved.relationships||[],dscope,"downtime");
-      const handoutResults=applyHandoutDrafts(db,interaction.guildId,cycle.source_session_id||null,resolved.handouts||[],dscope,"downtime");
-      await publishEventResults({db,guild:interaction.guild,results:eventResults});
-      for(const h of handoutResults.filter(x=>x.ok)) await deliverHandout({db,guild:interaction.guild,handout:h.row,format:"markdown"});
-      for(const r of eventResults.filter(x=>x.type==="canon"&&x.status==="conflict")) await postStateError({db,guild:interaction.guild,error:new Error(`Pending canon conflict ${r.conflict_id}`),context:"downtime-canon-conflict",sessionId:cycle.source_session_id||null});
-      const done=db.resolveDowntimeCycle(cycle.id,resolved.summary||"");
-      await postGmLog({db,guild:interaction.guild,title:`Downtime resolved — ${done.label}`,details:`${resolved.summary||""}\nWorld moves: ${(resolved.world_moves||[]).join("; ")||"none"}`});
-      db.snapshotCampaign(interaction.guildId,{label:`Post-downtime ${done.label}`,reason:"Automatic snapshot after downtime resolution",createdBy:interaction.user.id});
-      await interaction.editReply(`Downtime resolved. **${projects.length}** project(s) processed. Party-visible results were posted to the journal; private results were delivered privately.`);
+      await out("downtime-event-publish",()=>publishEventResults({db,guild:interaction.guild,results:eventResults}));
+      for(const h of handoutResults.filter(x=>x.ok)) await out(`downtime-handout:${h.row.id}`,()=>deliverHandout({db,guild:interaction.guild,handout:h.row,format:"markdown"}));
+      for(const r of eventResults.filter(x=>x.type==="canon"&&x.status==="conflict")) await out("downtime-canon-conflict",()=>postStateError({db,guild:interaction.guild,error:new Error(`Pending canon conflict ${r.conflict_id}`),context:"downtime-canon-conflict",sessionId:cycle.source_session_id||null}));
+      if(director.act&&String(director.public_narration||"").trim()) await out("downtime-director-journal",()=>postJournalEntry({db,guild:interaction.guild,title:`World Movement — ${cycle.label}`,content:director.public_narration}));
+      const validPlayers=new Set(db.listPlayers(interaction.guildId).map(p=>p.discord_user_id));
+      for(const pm of director.private_messages||[]){
+        if(!validPlayers.has(pm.discord_user_id)){
+          await out("downtime-director-private-blocked",()=>postGmLog({db,guild:interaction.guild,sessionId:cycle.source_session_id||null,title:"Blocked Veilkeeper action — downtime director",details:`Private message target ${pm.discord_user_id} is not a registered campaign player; delivery was blocked.`}));
+          continue;
+        }
+        const ch=db.findOwnedCharacter(interaction.guildId,pm.discord_user_id,"");
+        await out(`downtime-director-private:${pm.discord_user_id}`,()=>sendPlayerPrivate({db,guild:interaction.guild,userId:pm.discord_user_id,content:`**Veilkeeper — private world movement:**\n${pm.content}`,sessionId:null,characterId:ch?.id||null}));
+      }
+      await out("downtime-gm-log",()=>postGmLog({db,guild:interaction.guild,sessionId:cycle.source_session_id||null,title:`Downtime resolved — ${done.label}`,details:`Project layer: ${resolved.summary||"none"}\nWorld Director: ${director.act?(director.gm_notes||"acted"):"no autonomous world move warranted"}`}));
+      await out("downtime-post-snapshot",async()=>db.snapshotCampaign(interaction.guildId,{label:`Post-downtime ${done.label}`,reason:"Automatic snapshot after downtime project + world-director resolution",createdBy:interaction.user.id}));
+      const warning=outputErrors.length?` State was committed, but ${outputErrors.length} delivery/logging step(s) failed (${outputErrors.map(x=>x.ref).join(", ")}); do not resolve again.`:"";
+      await interaction.editReply(`Downtime resolved. **${projects.length}** project(s) processed, followed by the autonomous in-world downtime director pass.${director.act?" The world advanced in response to the fictional downtime interval.":" No additional world move was warranted."}${warning}`);
       return true;
     }
 
@@ -1732,7 +1786,7 @@ GM notes: ${a.draft.gm_notes}`:""}`.slice(0,1950):"No aftermath draft exists for
     }
   } catch(err){
     const msg=err.message||String(err);
-    const expected=/required|not found|unavailable|no active session|already active|already accepted|already rejected|canon proposal|only a gm|gm\/admin permission|manage server|choose another player|requires a proxy|must include|import requires|could not download|no active owned character|at least two present|manual assembly|already in established-party|invalid assembly|npc proxy|offered to another player|not releasable/i.test(msg);
+    const expected=/required|not found|unavailable|no active session|already active|already accepted|already rejected|canon proposal|only a gm|gm\/admin permission|manage server|choose another player|requires a proxy|must include|import requires|could not download|no active owned character|at least two present|manual assembly|already in established-party|invalid assembly|npc proxy|offered to another player|not releasable|already connected to another voice channel|join veilkeeper's current voice channel|repeat is on cooldown|voice narration queue is full/i.test(msg);
     if(!expected && interaction.guild){
       await postStateError({db,guild:interaction.guild,error:err,context:`command:/vc ${group||""} ${sub||""}`,sessionId:db.getActiveSession(interaction.guildId)?.id||null});
     }

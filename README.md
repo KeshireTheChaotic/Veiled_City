@@ -1,6 +1,26 @@
-# VEILED CITY MULTIPLAYER DISCORD ENGINE v3.4.0
+# VEILED CITY MULTIPLAYER DISCORD ENGINE v3.5.0
 
 A deployable Discord multiplayer GM layer for **Veiled City**, using Daggerheart SRD 2.0 as its mechanical baseline.
+
+
+## v3.5.0 — Autonomous World Director
+
+v3.5.0 adds a proactive **fictional-time** GM/world-director layer while keeping player agency and deterministic combat controls intact. Veilkeeper may now perform bounded world reactions after a completed player-round cadence, at actual scene transitions, and when a GM resolves extended in-game mechanical downtime. It never advances the world merely because real-world time passed.
+
+Normal AI turns now require a schema-backed post-turn state review for facts/clues, resources, clocks, threads, references, relationships, handouts, canon, Veil Exposure, and scene continuity. State-review/mutation mismatches receive one corrective retry and are rejected before commit if still inconsistent. Forbidden scoped actions are blocked and disclosed privately to the acting player and in detail to the GM log.
+
+See:
+- `docs/WORLD_DIRECTOR.md`
+- `docs/UPGRADE_3.4.1_TO_3.5.0.md`
+- `docs/CHANGELOG_v3.5.0_DISCORD.md`
+
+## v3.4.1 — Production Hardening
+
+v3.4.1 serialized multiplayer GM turns, made AI state mutations atomic, separated authoritative state commits from fallible Discord publishing, tightened private-scene/canon isolation, and hardened voice queue ordering/access controls.
+
+See:
+- `docs/UPGRADE_3.4.0_TO_3.4.1.md`
+- `docs/CHANGELOG_v3.4.1_DISCORD.md`
 
 ## v3.4.0 — Discord Voice Narration
 

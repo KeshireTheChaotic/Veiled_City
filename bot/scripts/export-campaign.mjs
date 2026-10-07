@@ -14,11 +14,13 @@ const db=new DatabaseSync(dbPath,{readOnly:true});
 const all=(sql,...a)=>db.prepare(sql).all(...a);
 const one=(sql,...a)=>db.prepare(sql).get(...a);
 
-const sessions=all("SELECT * FROM sessions WHERE guild_id=? ORDER BY session_number",guildId);
+const sessions=mode==="player"
+  ? all("SELECT id,guild_id,session_number,title,assembly_mode,assembly_phase,status,started_at,ended_at,recap FROM sessions WHERE guild_id=? ORDER BY session_number",guildId)
+  : all("SELECT * FROM sessions WHERE guild_id=? ORDER BY session_number",guildId);
 const sessionIds=sessions.map(x=>x.id);
 const placeholders=sessionIds.length?sessionIds.map(()=>"?").join(","):"''";
 const exportObj={
-  export_version:"3.4.0",
+  export_version:"3.5.0",
   visibility:mode==="player"?"player_safe":"gm_private_full",
   exported_at:new Date().toISOString(),
   campaign:one("SELECT * FROM campaigns WHERE guild_id=?",guildId),
@@ -43,7 +45,7 @@ const exportObj={
     ? all("SELECT * FROM messages WHERE guild_id=? AND visibility='party'",guildId)
     : all("SELECT * FROM messages WHERE guild_id=?",guildId),
   rolls:all("SELECT * FROM rolls WHERE guild_id=?",guildId),
-  canon:mode==="player" ? all("SELECT * FROM canon_events WHERE guild_id=? AND status='current' AND visibility!='gm'",guildId) : all("SELECT * FROM canon_events WHERE guild_id=?",guildId),
+  canon:mode==="player" ? all("SELECT * FROM canon_events WHERE guild_id=? AND status='current' AND visibility IN ('public','party')",guildId) : all("SELECT * FROM canon_events WHERE guild_id=?",guildId),
   rules_rulings:all("SELECT * FROM rules_rulings WHERE guild_id=? AND active=1",guildId),
   downtime_cycles:all("SELECT * FROM downtime_cycles WHERE guild_id=?",guildId),
   downtime_projects:mode==="player" ? all("SELECT * FROM downtime_projects WHERE guild_id=? AND visibility IN ('public','party')",guildId) : all("SELECT * FROM downtime_projects WHERE guild_id=?",guildId),

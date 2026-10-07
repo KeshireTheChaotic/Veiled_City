@@ -1,6 +1,6 @@
-# Between-Session Downtime — v3.2.0
+# Extended In-Game Mechanical Downtime — v3.5.0
 
-Downtime is intentionally resolved **between active sessions**.
+Downtime represents an explicit **fictional/mechanical interval** in the campaign. It is normally resolved between active scenes/sessions, but its duration is determined by the fiction — never by how much real-world time passed between Discord messages or play sessions.
 
 ## GM opens downtime
 
@@ -22,8 +22,12 @@ The GM runs:
 
 `/vc-downtime resolve`
 
-Veilkeeper creates a pre-resolution snapshot, resolves submitted projects against Daggerheart/Veiled City rules and current campaign state, applies legitimate state events, then creates a post-resolution snapshot.
+Veilkeeper performs two distinct AI passes: **player-project resolution** and an **autonomous downtime world-director pass**. The project pass resolves submitted work; the director separately decides whether factions, threats, obligations, investigations, clocks, or other offscreen elements reasonably move during the represented fictional interval. Real-life elapsed time is never a trigger or input for advancement.
 
-Party-visible project results are posted to the campaign journal. Private results are sent through the player's private GM channel/DM. Hidden world/faction moves are recorded in GM state/logs rather than exposed to the party.
+Both AI outputs are generated before authoritative state commit and are committed together. An API/generation failure therefore cannot leave the downtime cycle half-resolved. Veilkeeper creates safety snapshots around resolution as documented by the runtime.
 
-Downtime may advance clocks or establish consequences but may not silently rewrite current canon or mystery truths.
+Party-visible project/world results are posted to configured player surfaces. Private results are sent through the player's private GM channel/DM. Hidden movement remains GM-visible.
+
+Downtime may advance clocks or establish consequences proportionally to fictional opportunity, but it must not punish players for taking downtime, silently rewrite mystery truth, contradict canon, or take voluntary PC actions.
+
+See `WORLD_DIRECTOR.md` for the downtime director's authority and safety boundaries.

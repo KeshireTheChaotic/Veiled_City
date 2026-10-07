@@ -1,4 +1,4 @@
-# Veilkeeper Voice Narration — v3.4.0
+# Veilkeeper Voice Narration — v3.5.0
 
 Veilkeeper voice is an **optional output layer** for Discord voice channels. Discord text remains the authoritative campaign record. Voice does not replace SQLite state, canon, handouts, rules resolution, or message history.
 
@@ -163,3 +163,9 @@ Check `OPENAI_VOICE_MODEL` and `VOICE_NAME`. For custom voices, verify the voice
 
 ### Narration is too long or expensive
 Lower `VOICE_MAX_CHARS_PER_TURN`, use `/vc-voice configure mode:off` between narrated scenes, or disconnect with `/vc-voice leave`.
+
+## v3.5.0 queue and access safeguards
+
+Queue capacity is reserved before speech synthesis begins. If the configured queue is full, narration is rejected before an OpenAI speech request is made. Per-guild speech synthesis is serialized so later narration cannot overtake an earlier turn merely because its TTS request completes sooner.
+
+A player can use `/vc-voice join` when Veilkeeper is disconnected or already in that same channel. Moving an existing connection to a different voice channel requires a GM/admin. `/vc-voice repeat` requires the requester to be in Veilkeeper's active voice channel and uses `VOICE_REPEAT_COOLDOWN_SECONDS` (default `8`) as a per-user anti-spam cooldown.

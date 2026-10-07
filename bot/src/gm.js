@@ -1,6 +1,7 @@
 import OpenAI from "openai";
 import { summarizeRoster } from "./state.js";
 import { narrativeContext } from "./character-narrative.js";
+import { validatePostTurnStateReview } from "./director.js";
 
 const routerSchema={
   type:"object",
@@ -29,6 +30,16 @@ const relationshipDraftSchema={
     mode:{type:"string",enum:["set","delta"]},score:{type:"integer"},visibility:{type:"string",enum:["public","party","character","gm"]},note:{type:"string"}
   },
   required:["from_type","from_key","from_label","to_type","to_key","to_label","relationship_type","mode","score","visibility","note"]
+};
+
+const reviewItemSchema={type:"object",additionalProperties:false,properties:{decision:{type:"string",enum:["changed","no_change"]},reason:{type:"string",minLength:1}},required:["decision","reason"]};
+const stateReviewSchema={
+  type:"object",additionalProperties:false,
+  properties:{
+    facts_clues:reviewItemSchema,resources:reviewItemSchema,clocks:reviewItemSchema,threads:reviewItemSchema,references:reviewItemSchema,relationships:reviewItemSchema,handouts:reviewItemSchema,canon:reviewItemSchema,veil_exposure:reviewItemSchema,
+    scene:{type:"object",additionalProperties:false,properties:{decision:{type:"string",enum:["continue","transition"]},label:{type:"string"},reason:{type:"string",minLength:1}},required:["decision","label","reason"]}
+  },
+  required:["facts_clues","resources","clocks","threads","references","relationships","handouts","canon","veil_exposure","scene"]
 };
 
 const gmSchema={
@@ -64,11 +75,26 @@ const gmSchema={
       }
     },
     handouts:{type:"array",items:handoutDraftSchema},
-    relationships:{type:"array",items:relationshipDraftSchema}
+    relationships:{type:"array",items:relationshipDraftSchema},
+    state_review:stateReviewSchema
   },
-  required:["respond","narration","private_messages","events","handouts","relationships"]
+  required:["respond","narration","private_messages","events","handouts","relationships","state_review"]
 };
 
+
+const directorSchema={
+  type:"object",additionalProperties:false,
+  properties:{
+    act:{type:"boolean"},
+    public_narration:{type:"string"},
+    private_messages:gmSchema.properties.private_messages,
+    events:gmSchema.properties.events,
+    handouts:{type:"array",items:handoutDraftSchema},
+    relationships:{type:"array",items:relationshipDraftSchema},
+    gm_notes:{type:"string"}
+  },
+  required:["act","public_narration","private_messages","events","handouts","relationships","gm_notes"]
+};
 
 const aftermathSchema={
   type:"object",additionalProperties:false,
@@ -327,8 +353,10 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
       "The saved assembly plan is GM-private planning. Never reveal another character's private_hook or hidden reason unless that player shares it or the fiction independently reveals it.",
       "During assembly/convergence, offer reasons to cooperate but never decide that a PC trusts, joins, follows, confesses to, or remains with the group.",
       privateMode
-        ?"THIS IS A PRIVATE PLAYER→GM SCENE. Narration is visible only to the acting player. Do not assume anything said/discovered here was shared with the party. New clue/fact/thread/NPC/location knowledge will be automatically scoped to this player/character by the application."
-        :"THIS IS A PARTY TABLE SCENE. Public narration is visible to all present players. Do not reveal another player's private knowledge unless it has been explicitly shared in play.",
+        ?"THIS IS A PRIVATE PLAYER→GM SCENE. Narration is visible only to the acting player. Do not assume anything said/discovered here was shared with the party. New clue/fact/thread/NPC/location knowledge and clock changes are automatically isolated to this player/character. resource_delta may target only the acting character. Do not emit veil_exposure_delta or canon from a private scene; use a private fact/clue and let the human GM promote durable global canon later. Any private_messages must target only the acting player's Discord user ID."
+        :"THIS IS A PARTY TABLE SCENE. Public narration is visible to all present players. Do not reveal another player's private knowledge unless it has been explicitly shared in play. private_messages may target only players on the current session roster.",
+      "MANDATORY POST-TURN STATE REVIEW: before returning, explicitly review facts/clues, PC resources, clocks, threads, references, relationships, handouts, canon, Veil Exposure, and scene continuity. Every category must be marked changed or no_change with a concrete reason. If marked changed, emit the matching structured mutation; if no mutation is emitted, mark no_change. Never hide a mechanical consequence only in prose.",
+      "For scene continuity, choose transition only when fictional location, objective, time frame, or dramatic scene boundary actually changes. Provide a short new-scene label when transitioning; otherwise use continue with an empty label.",
       "Keep narration suitable for Discord. Prefer 1-4 compact paragraphs unless a longer scene is genuinely needed."
     ].join("\n\n");
     const input=[
@@ -359,7 +387,49 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
       text:{format:{type:"json_schema",name:"veiled_city_gm_turn",strict:true,schema:gmSchema}}
     };
     if(this.config.reasoningEffort) req.reasoning={effort:this.config.reasoningEffort};
-    return this.requestStructured(req,{label:"GM turn"});
+    let result=await this.requestStructured(req,{label:"GM turn"});
+    try{ validatePostTurnStateReview(result); return result; }
+    catch(err){
+      const retry={...req,input:`${input}\n\nPOST-TURN REVIEW CORRECTION: The prior structured response failed mandatory state-review consistency: ${String(err.message||err)}. Return a complete replacement response. Every review category must agree exactly with the mutations you emit.`};
+      result=await this.requestStructured(retry,{label:"GM turn state-review retry"});
+      validatePostTurnStateReview(result);
+      return result;
+    }
+  }
+
+  async runWorldDirector({guildId,layer,trigger={},cycle=null,projects=[],actorAssignment=null}){
+    if(!["round","scene","downtime"].includes(layer)) throw new Error(`Unsupported world-director layer: ${layer}`);
+    const directorActor=trigger?.scope==="private"&&trigger?.actor_user_id?String(trigger.actor_user_id):"__world_director__";
+    const ctx=this.buildContext(guildId,directorActor,`${layer} ${JSON.stringify(trigger)}`,actorAssignment);
+    const layerRules={
+      round:[
+        "END-OF-PLAYER-ROUND DIRECTOR PASS. This is a pacing cadence, never initiative. Do not restrict player actions or mention rounds unless fiction itself uses them.",
+        "Make at most one meaningful offscreen/world response: advance justified pressure, let an NPC/faction react, tick an existing clock, expose a consequence, or do nothing.",
+        "Do not create noise merely because the pass fired. If no world move is warranted, return act=false with empty outputs."
+      ],
+      scene:[
+        "SCENE-TRANSITION DIRECTOR PASS. The prior player turn crossed a real scene boundary.",
+        "Reconcile offscreen NPC/faction positioning, clocks, consequences of leaving/arriving, and newly relevant pressure for the new scene. Do not replay the transition already narrated.",
+        "Prefer continuity and consequences over surprise twists. Return act=false if nothing additional should move."
+      ],
+      downtime:[
+        "EXTENDED IN-GAME MECHANICAL DOWNTIME DIRECTOR PASS. This is triggered only by an explicit fictional/mechanical downtime interval, never by real-world elapsed time.",
+        "Advance factions, threats, obligations, investigations, and clocks proportionally to the fictional duration/opportunity represented by the downtime cycle.",
+        "Do not punish players merely for taking downtime. Use established motives, clocks, canon, and opportunities. Return act=false if the world reasonably remains stable."
+      ]
+    }[layer];
+    const prompt=[
+      ctx.constitution,ctx.multi,"# AUTONOMOUS WORLD DIRECTOR",...layerRules,
+      "You may autonomously emit the same authoritative campaign events, relationships, handouts, private_messages, and player-facing narration available to the normal GM, subject to all security/canon/player-agency restrictions.",
+      "Never invent dice results or alter deterministic encounter combat state. Never choose voluntary PC actions. Never contradict canon. Use private_messages only for information a specific current player legitimately perceives.",
+      trigger?.scope==="private"?"PRIVATE SCENE DIRECTOR: this scene transition is visible only to the acting player. Treat public_narration as a transport field that the application will deliver privately. Do not emit global canon or Veil Exposure changes; private-scope guards will block them and report the attempt.":"PARTY/WORLD DIRECTOR: public_narration may be posted to the party when there is a player-visible world consequence.",
+      `Layer: ${layer}`,`Trigger: ${JSON.stringify(trigger)}`,`Campaign: ${JSON.stringify(ctx.campaign)}`,`Session: ${JSON.stringify(ctx.session)}`,`Director state: ${JSON.stringify(ctx.session?this.db.getDirectorState(ctx.session.id):null)}`,
+      `Roster: ${JSON.stringify(ctx.roster)}`,`Recent party transcript: ${JSON.stringify(this.db.recentPartyMessages(guildId,{limit:50}))}`,`Actor-visible recent transcript (includes private context only when this is a private-scene director pass): ${JSON.stringify(ctx.recent)}`,`Actor-visible facts: ${JSON.stringify(ctx.actor_visible_facts)}`,`Facts (GM-private/all): ${JSON.stringify(ctx.gm_all_facts)}`,`Clocks: ${JSON.stringify(ctx.clocks)}`,`Canon: ${JSON.stringify(ctx.canon)}`,`Relationships: ${JSON.stringify(ctx.gm_relationships)}`,
+      `Current encounter: ${JSON.stringify(ctx.current_encounter)}`,`Downtime cycle: ${JSON.stringify(cycle)}`,`Downtime projects: ${JSON.stringify(projects)}`,`Reference: ${JSON.stringify(ctx.reference_chunks)}`
+    ].join("\n\n");
+    const req={model:layer==="downtime"?this.config.downtimeModel:this.config.gmModel,input:prompt,max_output_tokens:layer==="downtime"?this.config.downtimeMaxOutputTokens:Math.min(this.config.structuredRetryMaxTokens||6000,2200),text:{format:{type:"json_schema",name:`world_director_${layer}`,strict:true,schema:directorSchema}}};
+    if(this.config.reasoningEffort) req.reasoning={effort:this.config.reasoningEffort};
+    return this.requestStructured(req,{label:`world director ${layer}`});
   }
 
   async planAssembly({guildId,mode=null}){
@@ -578,8 +648,8 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
       "Only resolve projects submitted in this cycle. Respect Daggerheart downtime/project rules and established campaign canon.",
       "Recovery projects should follow the explicit Daggerheart rest mechanics in the supplied rules; do not grant arbitrary healing.",
       "Investigation, crafting, ritual, relationship, income, surveillance, research, and other projects should advance proportionally and may create costs/complications.",
-      "Faction/world moves may advance existing clocks or establish consequences, but do not rewrite mysteries or contradict canon.",
-      "Return state events only for facts that genuinely become established during downtime.",
+      "This pass resolves PLAYER PROJECTS ONLY. Set world_moves to an empty array. A separate autonomous downtime world-director pass handles faction/world movement after you return.",
+      "Return state events only for facts that genuinely become established as direct consequences of submitted downtime projects.",
       "Relationship projects should update the structured relationship graph when a durable relationship change is actually established. Evidence recovered during downtime may produce handouts, using only established facts.",
       "Project visibility is authoritative. The summary must be GM-safe and concise; do not assume private project results are party knowledge. Public delivery is handled by the application.",
       `Cycle: ${JSON.stringify(cycle)}`,

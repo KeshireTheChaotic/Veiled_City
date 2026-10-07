@@ -1,4 +1,4 @@
-# Veilkeeper v3.4.0 Command Reference
+# Veilkeeper v3.5.0 Command Reference
 
 Veilkeeper uses split `vc-*` root commands to remain below Discord's per-command size limit.
 
@@ -6,7 +6,7 @@ Veilkeeper uses split `vc-*` root commands to remain below Discord's per-command
 - `/vc-campaign setup` — configure play channel, GM role, response mode.
 - `/vc-campaign channels` — configure support/reference/log channels.
 - `/vc-campaign sync` — republish managed case/NPC/location surfaces.
-- `/vc-campaign status` — show campaign/session configuration.
+- `/vc-campaign status` — show campaign/session configuration plus current world-director round/scene/pending state.
 
 ## Session / Party
 - `/vc-session start [assembly]`

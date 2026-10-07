@@ -99,7 +99,8 @@ export async function postStateError({db,guild,error,context="runtime",sessionId
   if(!ch) return ref;
   const stack=String(error?.stack||error?.message||error||"Unknown error").replace(/```/g,"''' ").slice(0,1450);
   const body=`**⚠️ Veilkeeper state/runtime error · ${ref}**\nContext: ${String(context).slice(0,250)}\n` + "```\n" + stack + "\n```";
-  await ch.send(body);
+  try{ await ch.send(body); }
+  catch(sendErr){ console.error(`Could not publish state error ${ref}`,sendErr); }
   return ref;
 }
 

@@ -53,9 +53,10 @@ function voiceParam(name){
 }
 
 export class VoiceNarrator {
-  constructor(config){
+  constructor(config,{getConnection=getVoiceConnection}={}){
     this.config=config;
     this.guilds=new Map();
+    this.getConnection=getConnection;
     this.ffmpegAvailable=this.checkFfmpeg();
   }
 
@@ -69,7 +70,11 @@ export class VoiceNarrator {
   _state(guildId){
     if(!this.guilds.has(guildId)){
       const player=createAudioPlayer({behaviors:{noSubscriber:NoSubscriberBehavior.Pause}});
-      const state={player,queue:[],playing:false,lastBuffers:[],lastText:"",lastAt:null,mode:this.config.voiceMode,voice:this.config.voiceName,instructions:this.config.voiceInstructions,speed:this.config.voiceSpeed,channelId:null,currentTemp:null};
+      const state={
+        player,queue:[],playing:false,reserved:0,speechTail:Promise.resolve(),repeatUsers:new Map(),generation:0,
+        lastBuffers:[],lastText:"",lastAt:null,mode:this.config.voiceMode,voice:this.config.voiceName,
+        instructions:this.config.voiceInstructions,speed:this.config.voiceSpeed,channelId:null,currentTemp:null
+      };
       player.on(AudioPlayerStatus.Idle,()=>this._advance(guildId));
       player.on("error",err=>{ console.error("Voice playback error",err); this._advance(guildId); });
       this.guilds.set(guildId,state);
@@ -77,11 +82,23 @@ export class VoiceNarrator {
     return this.guilds.get(guildId);
   }
 
-  async join(guild,channel){
+  _usedSlots(state){ return state.queue.length+(state.playing?1:0)+state.reserved; }
+  _availableSlots(state){ return Math.max(0,this.config.voiceMaxQueue-this._usedSlots(state)); }
+
+  async join(guild,channel,{allowMove=false}={}){
     if(!this.config.voiceEnabled) throw new Error("Voice narration is disabled. Set VOICE_ENABLED=true and restart Veilkeeper.");
     if(!channel?.isVoiceBased?.()) throw new Error("Join a Discord voice channel first.");
     const state=this._state(guild.id);
-    const existing=getVoiceConnection(guild.id);
+    const existing=this.getConnection(guild.id);
+    const existingChannel=state.channelId||existing?.joinConfig?.channelId||null;
+    if(existing&&existingChannel&&existingChannel!==channel.id&&!allowMove){
+      throw new Error("Veilkeeper is already connected to another voice channel. A GM/admin must move an existing voice connection.");
+    }
+    if(existing&&existingChannel===channel.id){
+      existing.subscribe(state.player);
+      state.channelId=channel.id;
+      return this.status(guild.id);
+    }
     if(existing) existing.destroy();
     const connection=joinVoiceChannel({
       channelId:channel.id,
@@ -98,9 +115,10 @@ export class VoiceNarrator {
 
   leave(guildId){
     const state=this._state(guildId);
+    state.generation+=1;
     state.queue=[];
     state.player.stop(true);
-    const c=getVoiceConnection(guildId);
+    const c=this.getConnection(guildId);
     if(c) c.destroy();
     state.channelId=null;
     return true;
@@ -135,16 +153,16 @@ export class VoiceNarrator {
 
   status(guildId){
     const state=this._state(guildId);
-    const connection=getVoiceConnection(guildId);
+    const connection=this.getConnection(guildId);
     return {
       enabled:this.config.voiceEnabled,
       connected:!!connection,
-      channelId:state.channelId,
+      channelId:state.channelId||connection?.joinConfig?.channelId||null,
       mode:state.mode,
       voice:state.voice,
       model:this.config.voiceModel,
       speed:state.speed,
-      queued:state.queue.length+(state.playing?1:0),
+      queued:state.queue.length+(state.playing?1:0)+state.reserved,
       paused:state.player.state.status===AudioPlayerStatus.Paused||state.player.state.status===AudioPlayerStatus.AutoPaused,
       ffmpeg:this.ffmpegAvailable,
       hasLast:state.lastBuffers.length>0,
@@ -173,37 +191,83 @@ export class VoiceNarrator {
     return Buffer.from(await res.arrayBuffer());
   }
 
-  async narrate(guild,text,{force=false}={}){
+  narrate(guild,text,{force=false}={}){
     const state=this._state(guild.id);
-    if(!this.config.voiceEnabled||(!force&&state.mode==="off")) return {ok:false,reason:"disabled"};
-    if(!getVoiceConnection(guild.id)) return {ok:false,reason:"not_connected"};
-    if(!this.ffmpegAvailable) throw new Error("FFmpeg was not found in PATH. Voice playback requires FFmpeg.");
+    if(!this.config.voiceEnabled||(!force&&state.mode==="off")) return Promise.resolve({ok:false,reason:"disabled"});
+    if(!this.getConnection(guild.id)) return Promise.resolve({ok:false,reason:"not_connected"});
+    if(!this.ffmpegAvailable) return Promise.reject(new Error("FFmpeg was not found in PATH. Voice playback requires FFmpeg."));
     const clean=speechSafeText(text).slice(0,this.config.voiceMaxCharsPerTurn);
-    if(!clean) return {ok:false,reason:"empty"};
+    if(!clean) return Promise.resolve({ok:false,reason:"empty"});
     const parts=splitSpeechText(clean,3900);
-    const buffers=[];
-    for(const part of parts) buffers.push(await this._synthesize(part,state));
-    state.lastBuffers=buffers;
-    state.lastText=clean;
-    state.lastAt=new Date().toISOString();
-    this._enqueue(guild.id,buffers);
-    return {ok:true,segments:buffers.length,characters:clean.length};
+    if(parts.length>this._availableSlots(state)) return Promise.resolve({ok:false,reason:"queue_full",needed:parts.length,available:this._availableSlots(state)});
+
+    // Reserve capacity before any paid TTS call. The per-guild synthesis chain preserves invocation order.
+    state.reserved+=parts.length;
+    const generation=state.generation;
+    const job=async()=>{
+      try{
+        if(generation!==state.generation||!this.getConnection(guild.id)){
+          state.reserved=Math.max(0,state.reserved-parts.length);
+          return {ok:false,reason:"cancelled"};
+        }
+        const buffers=[];
+        for(const part of parts){
+          if(generation!==state.generation||!this.getConnection(guild.id)){
+            state.reserved=Math.max(0,state.reserved-parts.length);
+            return {ok:false,reason:"cancelled"};
+          }
+          buffers.push(await this._synthesize(part,state));
+        }
+        state.reserved=Math.max(0,state.reserved-parts.length);
+        if(generation!==state.generation||!this.getConnection(guild.id)) return {ok:false,reason:"cancelled"};
+        state.lastBuffers=buffers;
+        state.lastText=clean;
+        state.lastAt=new Date().toISOString();
+        this._enqueueReserved(guild.id,buffers);
+        return {ok:true,segments:buffers.length,characters:clean.length};
+      }catch(err){
+        state.reserved=Math.max(0,state.reserved-parts.length);
+        throw err;
+      }
+    };
+    const run=state.speechTail.then(job,job);
+    state.speechTail=run.catch(()=>{});
+    return run;
   }
 
-  repeat(guildId){
+  repeat(guildId,{requesterUserId=null,requesterChannelId=null}={}){
     const state=this._state(guildId);
-    if(!getVoiceConnection(guildId)) throw new Error("Veilkeeper is not connected to a voice channel.");
+    const connection=this.getConnection(guildId);
+    if(!connection) throw new Error("Veilkeeper is not connected to a voice channel.");
+    const activeChannel=state.channelId||connection?.joinConfig?.channelId||null;
+    if(requesterUserId&&!requesterChannelId) throw new Error("Join Veilkeeper's current voice channel before using repeat.");
+    if(requesterChannelId&&activeChannel&&requesterChannelId!==activeChannel) throw new Error("Join Veilkeeper's current voice channel before using repeat.");
     if(!state.lastBuffers.length) throw new Error("There is no previously narrated line to repeat.");
+    const now=Date.now();
+    if(requesterUserId){
+      const prior=state.repeatUsers.get(requesterUserId)||0;
+      const remaining=this.config.voiceRepeatCooldownMs-(now-prior);
+      if(remaining>0) throw new Error(`Repeat is on cooldown for ${Math.ceil(remaining/1000)} more second(s).`);
+    }
+    if(state.lastBuffers.length>this._availableSlots(state)) throw new Error("Voice queue is full; wait for current narration to finish before repeating.");
+    if(requesterUserId) state.repeatUsers.set(requesterUserId,now);
     this._enqueue(guildId,state.lastBuffers);
     return {segments:state.lastBuffers.length};
   }
 
+  _enqueueReserved(guildId,buffers){
+    const state=this._state(guildId);
+    for(const b of buffers) state.queue.push(Buffer.from(b));
+    if(!state.playing) this._advance(guildId);
+  }
+
   _enqueue(guildId,buffers){
     const state=this._state(guildId);
-    const room=Math.max(0,this.config.voiceMaxQueue-state.queue.length-(state.playing?1:0));
-    if(room<=0) return;
-    for(const b of buffers.slice(0,room)) state.queue.push(Buffer.from(b));
+    const room=this._availableSlots(state);
+    if(buffers.length>room) return false;
+    for(const b of buffers) state.queue.push(Buffer.from(b));
     if(!state.playing) this._advance(guildId);
+    return true;
   }
 
   _advance(guildId){

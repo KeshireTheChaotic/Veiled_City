@@ -1,27 +1,27 @@
 {
   "package": "Veiled_City_Multiplayer_Discord",
-  "version": "3.4.0",
-  "generated": "2026-10-06",
+  "version": "3.5.0",
+  "generated": "2026-10-07",
   "files": [
     {
       "path": "Dockerfile",
-      "size_bytes": 351,
-      "sha256": "c978cdf703a2ad074a59e99dac4f913c04ca605a56344a608b22501b2728b570"
+      "size_bytes": 372,
+      "sha256": "5648a16953065585ecd69dc2091a2afb055ea02862bb31c8cc4e44d9a6461e0b"
     },
     {
       "path": "README.md",
-      "size_bytes": 2773,
-      "sha256": "d97ebd0574a9016f18f915eed726110cb3499f44a3a0a2da1a248d2956d693f8"
+      "size_bytes": 4078,
+      "sha256": "1b9850c54afaaa11f18807939f30991e84914c20567c52df5d751f8d76f1ea8d"
     },
     {
       "path": "VALIDATION_REPORT.md",
-      "size_bytes": 2701,
-      "sha256": "067f30693180d09709dfe8d29990649ea0d2850bcfb4c94dedb0cb319aa04742"
+      "size_bytes": 10842,
+      "sha256": "4e4a361d925a3f28af3710a4ec570f5ec6453ccf488e124fc8edf343af90d157"
     },
     {
       "path": "bot/.env.example",
-      "size_bytes": 2512,
-      "sha256": "0e7d2c18169673530d7dde1a3ab7773ec770218a861db840e6a0182711abf4ba"
+      "size_bytes": 2628,
+      "sha256": "540ba8e5e8852a4215cce076050a66ac95897defff794ec38cb58b2ce263264e"
     },
     {
       "path": "bot/.gitignore",
@@ -35,8 +35,8 @@
     },
     {
       "path": "bot/package.json",
-      "size_bytes": 1246,
-      "sha256": "96d5e434add14c57a0826b2b74fa8a47774a3af8f2ff7d6db506e5d0131acf7c"
+      "size_bytes": 1408,
+      "sha256": "a6697c043c05cec3a9fcbf34f6f72af249ca77def5d3082e686f5954b77a08f0"
     },
     {
       "path": "bot/scripts/cost-estimate.mjs",
@@ -45,13 +45,18 @@
     },
     {
       "path": "bot/scripts/export-campaign.mjs",
-      "size_bytes": 4586,
-      "sha256": "4e8ec8ee9d92174b7cb1d36cbe0c33c86389e8075070e49f4bb9dad7fff1d2f8"
+      "size_bytes": 4798,
+      "sha256": "bbfe2424aa65568ae132e1004ab4e03a0e62d2b75484b9b0ebdedee69b641345"
     },
     {
       "path": "bot/scripts/offline-smoke-test.mjs",
       "size_bytes": 29066,
-      "sha256": "ebd0009722f61c994118b11008cbd40d7ac6c3317de4438fe9e7fcc493ecee9d"
+      "sha256": "202bfe084e28d0aeb9f77519625dcfb6dc4f892b8425165634dccca07a63c53b"
+    },
+    {
+      "path": "bot/scripts/production-regression-test.mjs",
+      "size_bytes": 17829,
+      "sha256": "071d504612ca294ede99eb4d4af2f516d2349071ad0c1db94e7ae449a40c81aa"
     },
     {
       "path": "bot/scripts/validate-command-schema.mjs",
@@ -60,8 +65,8 @@
     },
     {
       "path": "bot/sql/schema.sql",
-      "size_bytes": 24006,
-      "sha256": "f5654dd41fea1d69e424e842d7b376eb883ae3767728720993e775ff67fa6785"
+      "size_bytes": 24207,
+      "sha256": "8328069c26c6cf83466a5e8e112dd728f0d0449c2980c4415bb762eaa52873ea"
     },
     {
       "path": "bot/src/character-export.js",
@@ -90,8 +95,8 @@
     },
     {
       "path": "bot/src/commands.js",
-      "size_bytes": 146987,
-      "sha256": "d91dc29b22c537193feb289b14f6ab31d41f116dae5ab827b59ab19247770fa8"
+      "size_bytes": 152380,
+      "sha256": "f8ced236e1266f6db1df47397b5e5a52f9015f07c66df9f90a9a3dfefcf9a259"
     },
     {
       "path": "bot/src/concept-context.js",
@@ -100,8 +105,8 @@
     },
     {
       "path": "bot/src/config.js",
-      "size_bytes": 2980,
-      "sha256": "ab48bc697222d37ba8478ad7b4c173532d837610f9ff207c3b02583def7fe909"
+      "size_bytes": 4247,
+      "sha256": "ecfe5940eff3db94902aa7f4cc3f7c860fc46bf54ad4a12083ecfd1d1c4f1ef9"
     },
     {
       "path": "bot/src/content.js",
@@ -110,13 +115,18 @@
     },
     {
       "path": "bot/src/db.js",
-      "size_bytes": 79864,
-      "sha256": "312e35cd1ffd3cb226c6b4b1885bb623db1da3246a3c12ee7ad4268518c6b0aa"
+      "size_bytes": 84219,
+      "sha256": "3a53d6593858caf87e93ce6736baf117badc9b580988a6582a957a22a043d4d9"
     },
     {
       "path": "bot/src/dice.js",
       "size_bytes": 1218,
       "sha256": "4bf0b2d1dc9ff32eb2a62ad96ad36fa147207b5eac102f3c260dfa495515fd56"
+    },
+    {
+      "path": "bot/src/director.js",
+      "size_bytes": 5611,
+      "sha256": "95257d754fd775cffd207d7a1ec6ccff4cab2da8e55b2b93e6b12ad783b3caa6"
     },
     {
       "path": "bot/src/encounter.js",
@@ -125,8 +135,8 @@
     },
     {
       "path": "bot/src/gm.js",
-      "size_bytes": 47173,
-      "sha256": "b8225cf834b2b0b1d025c0397b157a0de956c1009bd37975bf30eaccfe1196f7"
+      "size_bytes": 54805,
+      "sha256": "4425c3266839d2176a685d44f52240836648708f10590104d66c4490a7ec2d51"
     },
     {
       "path": "bot/src/handout.js",
@@ -135,13 +145,13 @@
     },
     {
       "path": "bot/src/index.js",
-      "size_bytes": 15451,
-      "sha256": "8c58e2e76a231335fe57643e3360aaca1ac2779df67c70c7534292e5000132ae"
+      "size_bytes": 34051,
+      "sha256": "9dd7fcae40a0c89d25a0c7f01eae24177aa0eeb501b5d460e5800ac7eb326daa"
     },
     {
       "path": "bot/src/publishing.js",
-      "size_bytes": 9190,
-      "sha256": "10a0da076c2fd630237f105ce055d890da591d1abce5983ff7e8fae80e477688"
+      "size_bytes": 9280,
+      "sha256": "c572e2061800f121ad1567984d7c4d720896087ef33e9a507e9e978d0e3f03a5"
     },
     {
       "path": "bot/src/register-commands.js",
@@ -149,14 +159,19 @@
       "sha256": "4a9c8b838b1a6c66b2ec974179989d58b6d95c0c93ac7230e8fb65de313091eb"
     },
     {
+      "path": "bot/src/serial-queue.js",
+      "size_bytes": 476,
+      "sha256": "553c2768fcd89edcf3492cbc740a31ca79ab0c1a68be306fd4fb07f40e6acf27"
+    },
+    {
       "path": "bot/src/state.js",
-      "size_bytes": 8912,
-      "sha256": "f790c6b20f7e01d5018abdf06a676412b30bf79ff215eea8a001551f8a7b8d9e"
+      "size_bytes": 14109,
+      "sha256": "b72ee03cbf2c11001d2e65e56f3416ee4dab44780e1ed3d2ef7d996018c87683"
     },
     {
       "path": "bot/src/voice.js",
-      "size_bytes": 8135,
-      "sha256": "e92b654fcb38e7f55f7faeecbd6776e7cf3607fc2aa8b4a58e5e67be4fbc25f0"
+      "size_bytes": 11503,
+      "sha256": "942f91069910836934bda9b530de9f367b284ff88b948e667783ad0a41ab793a"
     },
     {
       "path": "content/CARDS/ANCESTRIES_AND_COMMUNITIES.md",
@@ -505,8 +520,8 @@
     },
     {
       "path": "docs/BOT_COMMANDS.md",
-      "size_bytes": 5204,
-      "sha256": "6fee86bc5d2b5d8920d8f181f0653693995ffe5d2a8e9011c7c37aa8faf50218"
+      "size_bytes": 5258,
+      "sha256": "6ceb4a508b94559395ebfb087918bafa93df55d6378522a933b5c6b69a75d2fe"
     },
     {
       "path": "docs/CANON_LEDGER.md",
@@ -564,6 +579,16 @@
       "sha256": "5e1c064b7e7fb7e06bbc4635c078eb263139d2a1648ea734780874252ad93061"
     },
     {
+      "path": "docs/CHANGELOG_v3.4.1_DISCORD.md",
+      "size_bytes": 1688,
+      "sha256": "dffbd07bde5cc0033a7c5182f15019069a78aa229624482bb32680ebf8fab374"
+    },
+    {
+      "path": "docs/CHANGELOG_v3.5.0_DISCORD.md",
+      "size_bytes": 1434,
+      "sha256": "eed16f270d32aed1b598f9c42d813ca4b2367a71d2ceeffd1cc5301018228777"
+    },
+    {
       "path": "docs/CHARACTER_CONCEPT_CONTEXT.md",
       "size_bytes": 3283,
       "sha256": "181bedb26a88e71a859a1d8ab88d1e9592a1e73b04fc49d8effab7547c6a641a"
@@ -595,8 +620,8 @@
     },
     {
       "path": "docs/DOWNTIME.md",
-      "size_bytes": 1220,
-      "sha256": "5809df6181dfe0630fb93ac86389e19ce541411f04b3c65f0a8d2b0e3aa119d5"
+      "size_bytes": 2060,
+      "sha256": "18f91e43936723825c59ac23c09cb5d3ffda134707a2aef14807d5e10557eb66"
     },
     {
       "path": "docs/ENCOUNTER_AFTERMATH.md",
@@ -655,8 +680,8 @@
     },
     {
       "path": "docs/SECURITY_AND_PRIVACY.md",
-      "size_bytes": 2830,
-      "sha256": "951930010cadfe58725939102b44023720a1b5b2caf95bcfd5607392cece4133"
+      "size_bytes": 3691,
+      "sha256": "069a01d3d0b121d22f50bc3c9a7f8346686738d3769a0e7daa817749e1b683e5"
     },
     {
       "path": "docs/SERVER_CHANNEL_SETUP.md",
@@ -739,9 +764,24 @@
       "sha256": "427af2d90ee8ff85f2e35353212d4faff119307478ab89100d5d3b54954abb03"
     },
     {
+      "path": "docs/UPGRADE_3.4.0_TO_3.4.1.md",
+      "size_bytes": 2726,
+      "sha256": "aee64e8e60e4d459316b86afa2a30c8e1a8371610186b3e85365a704eae8dc95"
+    },
+    {
+      "path": "docs/UPGRADE_3.4.1_TO_3.5.0.md",
+      "size_bytes": 2144,
+      "sha256": "c7074fc7b82cb27ed77368054881feab743434739b60b6080602eecd21c61c54"
+    },
+    {
       "path": "docs/VOICE_NARRATION.md",
-      "size_bytes": 5483,
-      "sha256": "0c583b6f998504e7b026b7e41084a9d5c7e05d527437f9eeadbf49e2ef199eb8"
+      "size_bytes": 6173,
+      "sha256": "cab68f58e328ef737502139287ca2ace1157e1025a6d3dec61dd91126a4e2d5c"
+    },
+    {
+      "path": "docs/WORLD_DIRECTOR.md",
+      "size_bytes": 6474,
+      "sha256": "f664db90142d247bfbc1e2425a9eb9b4234106078968c22fbc218bce998296f9"
     }
   ]
 }

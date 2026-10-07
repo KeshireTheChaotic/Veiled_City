@@ -30,7 +30,8 @@ export class VeiledDB {
     for(const [name,def] of [
       ["assembly_mode","TEXT NOT NULL DEFAULT 'auto'"],
       ["assembly_phase","TEXT NOT NULL DEFAULT 'assembly'"],
-      ["assembly_plan_json","TEXT NOT NULL DEFAULT '{}'"]
+      ["assembly_plan_json","TEXT NOT NULL DEFAULT '{}'"],
+      ["director_state_json",`TEXT NOT NULL DEFAULT '{"version":1,"round_number":1,"acted_user_ids":[],"scene_number":1,"scene_label":"","pass_counts":{"round":0,"scene":0,"downtime":0},"pending_pass":null}'`]
     ]) add("sessions",name,def);
     add("messages","subject_user_id","TEXT");
     add("messages","subject_character_id","TEXT");
@@ -40,6 +41,30 @@ export class VeiledDB {
   }
 
   close() { this.db.close(); }
+
+  transaction(fn){
+    if(typeof fn!=="function") throw new TypeError("transaction requires a synchronous callback.");
+    this._transactionDepth=(this._transactionDepth||0)+1;
+    const depth=this._transactionDepth;
+    const savepoint=`vc_tx_${depth}`;
+    try{
+      if(depth===1) this.db.exec("BEGIN IMMEDIATE");
+      else this.db.exec(`SAVEPOINT ${savepoint}`);
+      const value=fn();
+      if(value&&typeof value.then==="function") throw new Error("VeiledDB.transaction callbacks must be synchronous.");
+      if(depth===1) this.db.exec("COMMIT");
+      else this.db.exec(`RELEASE SAVEPOINT ${savepoint}`);
+      return value;
+    }catch(err){
+      try{
+        if(depth===1) this.db.exec("ROLLBACK");
+        else { this.db.exec(`ROLLBACK TO SAVEPOINT ${savepoint}`); this.db.exec(`RELEASE SAVEPOINT ${savepoint}`); }
+      }catch{}
+      throw err;
+    }finally{
+      this._transactionDepth=depth-1;
+    }
+  }
 
   getCampaign(guildId) {
     return this.db.prepare("SELECT * FROM campaigns WHERE guild_id=?").get(guildId);
@@ -514,6 +539,59 @@ export class VeiledDB {
     `).all(sessionId).map(r=>({...r,data:r.character_json?JSON.parse(r.character_json):null}));
   }
 
+  getDirectorState(sessionId){
+    const row=this.db.prepare("SELECT director_state_json FROM sessions WHERE id=?").get(sessionId);
+    const fallback={version:1,round_number:1,acted_user_ids:[],scene_number:1,scene_label:"",pass_counts:{round:0,scene:0,downtime:0},pending_pass:null};
+    if(!row) return fallback;
+    try{
+      const parsed=JSON.parse(row.director_state_json||"{}");
+      return {...fallback,...parsed,acted_user_ids:Array.isArray(parsed.acted_user_ids)?parsed.acted_user_ids:[],pass_counts:{...fallback.pass_counts,...(parsed.pass_counts||{})}};
+    }catch{return fallback;}
+  }
+
+  setDirectorState(sessionId,state){
+    const current=this.getDirectorState(sessionId);
+    const next={...current,...state,acted_user_ids:Array.isArray(state?.acted_user_ids)?state.acted_user_ids:current.acted_user_ids,pass_counts:{...current.pass_counts,...(state?.pass_counts||{})}};
+    this.db.prepare("UPDATE sessions SET director_state_json=? WHERE id=?").run(JSON.stringify(next),sessionId);
+    return next;
+  }
+
+  resetDirectorRound(sessionId,{sceneLabel=null,advanceScene=false}={}){
+    const current=this.getDirectorState(sessionId);
+    return this.setDirectorState(sessionId,{
+      acted_user_ids:[],
+      round_number:Math.max(1,Number(current.round_number||1)),
+      scene_number:advanceScene?Math.max(1,Number(current.scene_number||1))+1:Math.max(1,Number(current.scene_number||1)),
+      scene_label:sceneLabel===null?current.scene_label:String(sceneLabel||"")
+    });
+  }
+
+  recordDirectorActor(sessionId,userId){
+    const current=this.getDirectorState(sessionId);
+    const acted=new Set(current.acted_user_ids||[]);
+    if(userId) acted.add(String(userId));
+    return this.setDirectorState(sessionId,{acted_user_ids:[...acted]});
+  }
+
+  queueDirectorPass(sessionId,pass){
+    const current=this.getDirectorState(sessionId);
+    if(current.pending_pass) return current.pending_pass;
+    const pending={...pass,queued_at:new Date().toISOString()};
+    this.setDirectorState(sessionId,{pending_pass:pending});
+    return pending;
+  }
+
+  getPendingDirectorPass(sessionId){ return this.getDirectorState(sessionId).pending_pass||null; }
+
+  completeDirectorPass(sessionId,layer,{sceneLabel=null}={}){
+    const current=this.getDirectorState(sessionId);
+    const counts={...current.pass_counts,[layer]:Number(current.pass_counts?.[layer]||0)+1};
+    const patch={pass_counts:counts,pending_pass:null};
+    if(layer==="round"){patch.round_number=Math.max(1,Number(current.round_number||1))+1;patch.acted_user_ids=[];}
+    if(layer==="scene"){patch.scene_number=Math.max(1,Number(current.scene_number||1))+1;patch.scene_label=String(sceneLabel||current.scene_label||"");patch.acted_user_ids=[];}
+    return this.setDirectorState(sessionId,patch);
+  }
+
   addFact(guildId,{category="fact",key,content,visibility="party",subjectUserId=null,subjectCharacterId=null,sessionId=null,source="gm"}) {
     const id=randomUUID();
     this.db.prepare(`
@@ -574,19 +652,21 @@ export class VeiledDB {
     `).all(guildId,characterId,ownerUserId);
   }
 
-  changeClock(guildId,key,delta,{label=null,visibility="gm",subjectUserId=null,max=6}={}) {
+  changeClock(guildId,key,delta,{label=null,visibility="gm",subjectUserId=null,subjectCharacterId=null,max=6}={}) {
     const current=this.db.prepare("SELECT * FROM clocks WHERE guild_id=? AND clock_key=?").get(guildId,key);
     if(!current){
       const v=Math.max(0,Math.min(max,delta));
       this.db.prepare(`
-        INSERT INTO clocks(guild_id,clock_key,label,value,max_value,visibility,subject_user_id)
-        VALUES(?,?,?,?,?,?,?)
-      `).run(guildId,key,label??key,v,max,visibility,subjectUserId);
+        INSERT INTO clocks(guild_id,clock_key,label,value,max_value,visibility,subject_user_id,subject_character_id)
+        VALUES(?,?,?,?,?,?,?,?)
+      `).run(guildId,key,label??key,v,max,visibility,subjectUserId,subjectCharacterId);
       return v;
     }
     const v=Math.max(0,Math.min(current.max_value,current.value+delta));
-    this.db.prepare("UPDATE clocks SET value=?,updated_at=CURRENT_TIMESTAMP WHERE guild_id=? AND clock_key=?")
-      .run(v,guildId,key);
+    this.db.prepare(`
+      UPDATE clocks SET value=?,label=COALESCE(?,label),visibility=?,subject_user_id=?,subject_character_id=?,updated_at=CURRENT_TIMESTAMP
+      WHERE guild_id=? AND clock_key=?
+    `).run(v,label,visibility,subjectUserId,subjectCharacterId,guildId,key);
     return v;
   }
 
@@ -1180,6 +1260,9 @@ export class VeiledDB {
 
   proposeCanon(guildId,{key,value,visibility="party",sessionId=null,sourceType="ai",sourceId=null,provenance=""}={}){
     if(!key?.trim()||!value?.trim()) throw new Error("Canon key and value are required.");
+    const canonVisibility=String(visibility||"party").toLowerCase();
+    if(!["public","party","gm"].includes(canonVisibility)) throw new Error("Canon visibility must be public, party, or gm.");
+    visibility=canonVisibility;
     const k=key.trim().toLowerCase(); const existing=this.currentCanon(guildId,k);
     if(existing && existing.value.trim()!==value.trim()){
       const id=randomUUID();
@@ -1195,7 +1278,7 @@ export class VeiledDB {
   }
 
   listCanon(guildId,{includeGM=false,limit=100}={}){
-    const sql=includeGM?"SELECT * FROM canon_events WHERE guild_id=? AND status='current' ORDER BY canon_key LIMIT ?":"SELECT * FROM canon_events WHERE guild_id=? AND status='current' AND visibility!='gm' ORDER BY canon_key LIMIT ?";
+    const sql=includeGM?"SELECT * FROM canon_events WHERE guild_id=? AND status='current' ORDER BY canon_key LIMIT ?":"SELECT * FROM canon_events WHERE guild_id=? AND status='current' AND visibility IN ('public','party') ORDER BY canon_key LIMIT ?";
     return this.db.prepare(sql).all(guildId,limit);
   }
 

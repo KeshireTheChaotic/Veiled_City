@@ -64,6 +64,7 @@ CREATE TABLE IF NOT EXISTS sessions (
   assembly_phase TEXT NOT NULL DEFAULT 'assembly'
     CHECK(assembly_phase IN ('assembly','converged','party')),
   assembly_plan_json TEXT NOT NULL DEFAULT '{}',
+  director_state_json TEXT NOT NULL DEFAULT '{"version":1,"round_number":1,"acted_user_ids":[],"scene_number":1,"scene_label":"","pass_counts":{"round":0,"scene":0,"downtime":0},"pending_pass":null}',
   status TEXT NOT NULL DEFAULT 'active'
     CHECK(status IN ('active','ended')),
   started_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,

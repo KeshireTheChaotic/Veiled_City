@@ -42,3 +42,9 @@ Guest antagonist control uses a generated **sanitized player-facing package**, n
 For that fallback to work, `#state-errors` should be configured and visible only to Veilkeeper and human GM/admin roles. Do not grant guest players access to `#state-errors`.
 
 The NPC Proxy packet may contain secrets that belong to that NPC, but must exclude unrelated GM-private information, hidden clocks, future scenes, other characters' private facts, and mystery answers the NPC does not know.
+## Autonomous director and blocked actions (v3.5.0)
+
+The autonomous world director is constrained by the same application-level visibility/scope guards as normal AI GM turns. A private scene cannot directly write campaign-global canon or Veil Exposure, mutate another PC's private resources/relationship state, or send its generated private side-message to another player. Private scene director context includes the acting character's private material but its private scene label is not copied into party director state.
+
+When a scoped action is blocked, the application refuses that mutation, sends the acting player a sanitized private explanation, and writes the detailed reason to the configured GM log. If the private notice cannot be delivered, the GM log records the delivery failure. Other valid mutations in the same generated turn may still commit.
+
