@@ -1,3 +1,4 @@
+/** GM-only active-session controller/character roster formatting. */
 const ACTIVE_PRESENCE=new Set(["present","guest","late"]);
 
 function mention(userId){ return userId?`<@${userId}>`:"—"; }

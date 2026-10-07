@@ -1,3 +1,4 @@
+/** Character creation and level-up validation rules for Veiled City Daggerheart characters. */
 export const CLASS_DOMAINS=Object.freeze({
   Assassin:["Blade","Midnight"], Bard:["Codex","Grace"], Brawler:["Valor","Bone"],
   Druid:["Arcana","Sage"], Guardian:["Blade","Valor"], Ranger:["Bone","Sage"],

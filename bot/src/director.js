@@ -1,3 +1,4 @@
+/** Autonomous world-director cadence and blocked-action reporting helpers. Real-world elapsed time never advances campaign state. */
 export const POST_TURN_REVIEW_CATEGORIES=[
   "facts_clues","resources","clocks","threads","references","relationships","handouts","canon","veil_exposure"
 ];
@@ -14,6 +15,7 @@ const CATEGORY_OUTPUTS={
   veil_exposure:r=>(r.events||[]).some(e=>e.type==="veil_exposure_delta")
 };
 
+/** Validate that narrated state changes and structured mutations agree. */
 export function validatePostTurnStateReview(result){
   const review=result?.state_review;
   if(!review||typeof review!=="object") throw new Error("GM turn is missing the mandatory post-turn state review.");
@@ -47,6 +49,7 @@ export function eligibleRoundUsers(db,sessionId){
   return [...users];
 }
 
+/** Queue the next durable world-director pass after a resolved party turn. */
 export function queueDirectorAfterPartyTurn(db,session,userId,stateReview){
   if(!session?.id) return null;
   const existing=db.getPendingDirectorPass(session.id);

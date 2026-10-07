@@ -1,3 +1,4 @@
+/** Per-key promise serialization used to prevent concurrent authoritative GM turns. */
 export class KeyedSerialQueue {
   constructor(){ this.tails=new Map(); }
 

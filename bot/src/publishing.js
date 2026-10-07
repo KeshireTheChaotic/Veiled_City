@@ -1,18 +1,11 @@
+/** Discord publication boundary. Authoritative state is committed before these non-authoritative output operations run. */
 import { AttachmentBuilder } from "discord.js";
 import { handoutFiles, handoutSummary } from "./handout.js";
 import { randomUUID } from "node:crypto";
+import { splitDiscordText } from "./discord/chunking.js";
+import { assertGmOnlyChannel, assertPlayerPrivateChannel } from "./discord/privacy.js";
 
-function chunks(text,limit=1900){
-  const out=[]; let s=String(text||"").trim();
-  while(s.length>limit){
-    let cut=s.lastIndexOf("\n",limit);
-    if(cut<limit*0.5) cut=s.lastIndexOf(" ",limit);
-    if(cut<limit*0.5) cut=limit;
-    out.push(s.slice(0,cut).trim()); s=s.slice(cut).trim();
-  }
-  if(s) out.push(s);
-  return out;
-}
+const chunks = splitDiscordText;
 
 async function textChannel(guild,id){
   if(!id) return null;
@@ -31,7 +24,9 @@ async function upsertBotMessage({db,guild,channelId,surface,key,content}){
       const m=await ch.messages.fetch(existing.message_id);
       await m.edit(content.slice(0,1990));
       return m;
-    }catch{}
+    }catch{
+      // The previously published Discord message may have been deleted; create a replacement below.
+    }
   }
   const m=await ch.send(content.slice(0,1990));
   db.setPublished(guild.id,surface,key,channelId,m.id);
@@ -84,6 +79,8 @@ export async function postGmLog({db,guild,sessionId=null,title="GM Log",details=
   const c=db.getCampaign(guild.id);
   const ch=await textChannel(guild,c?.gm_log_channel_id);
   if(!ch) return false;
+  try { assertGmOnlyChannel({guild,channel:ch,gmRoleId:c?.gm_role_id||null}); }
+  catch (err) { console.error("Unsafe GM log channel configuration", err); return false; }
   const text=`**${title}**${sessionId?` · session ${sessionId.slice(0,8)}`:""}\n${String(details||"").slice(0,1800)}`;
   await ch.send(text);
   return true;
@@ -93,10 +90,14 @@ export async function postStateError({db,guild,error,context="runtime",sessionId
   const ref=randomUUID().slice(0,8);
   try{
     db.audit(guild.id,sessionId,"system","veilkeeper","state_error",{ref,context,error:String(error?.message||error)});
-  }catch{}
+  }catch{
+    // Audit logging must never prevent the primary error from being reported to Discord.
+  }
   const c=db.getCampaign(guild.id);
   const ch=await textChannel(guild,c?.state_errors_channel_id);
   if(!ch) return ref;
+  try { assertGmOnlyChannel({guild,channel:ch,gmRoleId:c?.gm_role_id||null}); }
+  catch (privacyErr) { console.error(`Unsafe state-errors channel; error ${ref} was not published`, privacyErr); return ref; }
   const stack=String(error?.stack||error?.message||error||"Unknown error").replace(/```/g,"''' ").slice(0,1450);
   const body=`**⚠️ Veilkeeper state/runtime error · ${ref}**\nContext: ${String(context).slice(0,250)}\n` + "```\n" + stack + "\n```";
   try{ await ch.send(body); }
@@ -109,10 +110,14 @@ export async function postPrivateRelay({db,guild,userId,title="Private delivery 
   const ref=randomUUID().slice(0,8);
   try{
     db.audit(guild.id,sessionId,"system","veilkeeper","private_delivery_relay",{ref,context,userId,title});
-  }catch{}
+  }catch{
+    // Relay auditing is best-effort; delivery can still proceed when the audit insert fails.
+  }
   const c=db.getCampaign(guild.id);
   const ch=await textChannel(guild,c?.state_errors_channel_id);
   if(!ch) return {ok:false,ref,via:"unavailable"};
+  try { assertGmOnlyChannel({guild,channel:ch,gmRoleId:c?.gm_role_id||null}); }
+  catch { return {ok:false,ref,via:"unsafe_channel"}; }
   const header=`**⚠️ ${title} · ${ref}**\nTarget player: <@${userId}>\nContext: ${String(context).slice(0,250)}\n\n**ADMIN GM: relay the following sanitized player-facing package exactly as needed:**`;
   await ch.send(header.slice(0,1990));
   for(const part of chunks(content)) await ch.send(part);
@@ -122,7 +127,7 @@ export async function postPrivateRelay({db,guild,userId,title="Private delivery 
 export async function syncConfiguredSurfaces({db,guild}){
   const c=db.getCampaign(guild.id);
   if(c?.case_board_channel_id){
-    const rows=db.db.prepare("SELECT * FROM threads WHERE guild_id=? AND visibility IN ('public','party') ORDER BY updated_at DESC").all(guild.id);
+    const rows=db.listPublicPartyThreads(guild.id);
     for(const row of rows) await upsertBotMessage({db,guild,channelId:c.case_board_channel_id,surface:"caseboard",key:row.id,content:threadText(row)});
   }
   for(const [kind,col] of [["npc","known_npcs_channel_id"],["location","known_locations_channel_id"]]){
@@ -152,6 +157,8 @@ export async function sendPlayerPrivate({db,guild,userId,content,sessionId=null,
     try{
       const ch=await textChannel(guild,p.private_channel_id);
       if(ch){
+        const campaign=db.getCampaign(guild.id);
+        assertPlayerPrivateChannel({guild,channel:ch,userId,gmRoleId:campaign?.gm_role_id||null});
         for(const part of chunks(content)) await ch.send(part);
         if(sessionId) db.addMessage({guildId:guild.id,sessionId,userId:null,speakerName:"Veilkeeper",visibility:characterId?"character":"player",subjectUserId:characterId?null:userId,subjectCharacterId:characterId,content});
         return {ok:true,via:"private_channel"};
@@ -189,6 +196,7 @@ export async function deliverHandout({db,guild,handout,format="markdown"}){
   if(handout.visibility==="gm"){
     const ch=await textChannel(guild,campaign?.gm_log_channel_id);
     if(!ch) return {ok:false,via:"unavailable"};
+    assertGmOnlyChannel({guild,channel:ch,gmRoleId:campaign?.gm_role_id||null});
     await ch.send({content:summary.slice(0,1900),files});
     return {ok:true,via:"gm_log"};
   }
@@ -201,8 +209,14 @@ export async function deliverHandout({db,guild,handout,format="markdown"}){
   if(p?.private_channel_id){
     try{
       const ch=await textChannel(guild,p.private_channel_id);
-      if(ch){await ch.send({content:summary.slice(0,1900),files});return {ok:true,via:"private_channel"};}
-    }catch{}
+      if(ch){
+        assertPlayerPrivateChannel({guild,channel:ch,userId,gmRoleId:campaign?.gm_role_id||null});
+        await ch.send({content:summary.slice(0,1900),files});
+        return {ok:true,via:"private_channel"};
+      }
+    }catch{
+      // Invalid/deleted/unsafe private channels fall back to DM delivery.
+    }
   }
   try{
     const member=await guild.members.fetch(userId);

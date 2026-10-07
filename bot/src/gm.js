@@ -1,3 +1,4 @@
+/** AI GM service: prompt/context assembly, structured schemas, and model calls. It proposes state; state.js/VeiledDB enforce authority. */
 import OpenAI from "openai";
 import { summarizeRoster } from "./state.js";
 import { narrativeContext } from "./character-narrative.js";
@@ -301,7 +302,7 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
     const npcProxy=actorAssignment?.npc_proxy?this.db.getNpcProxyById(actorAssignment.id):null;
     const actorKnowledgeId=npcProxy?.knowledge_id||actorAssignment?.character_id||null;
     const recent=this.db.recentMessagesFor(guildId,actorUserId,{characterId:actorKnowledgeId,limit:this.config.maxRecentMessages});
-    const actorFacts=this.db.factsFor(guildId,actorUserId,{characterId:actorKnowledgeId,includeGM:false,limit:60});
+    const actorFacts=this.db.playerFactsFor(guildId,actorUserId,{characterId:actorKnowledgeId,limit:60});
     const gmFacts=this.db.factsFor(guildId,actorUserId,{includeGM:true,limit:100});
     const clocks=this.db.clocksFor(guildId,{includeGM:true});
     const query=[messageText,...recent.slice(-6).map(x=>x.content)].join(" ");
@@ -373,7 +374,17 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
       "The saved assembly plan is GM-private planning. Never reveal another character's private_hook or hidden reason unless that player shares it or the fiction independently reveals it.",
       "During assembly/convergence, offer reasons to cooperate but never decide that a PC trusts, joins, follows, confesses to, or remains with the group.",
       privateMode
-        ?"THIS IS A PRIVATE PLAYER→GM SCENE. Narration is visible only to the acting player. Do not assume anything said/discovered here was shared with the party. New clue/fact/thread/NPC/location knowledge and clock changes are automatically isolated to this player/character. resource_delta may target only the acting character. Do not emit veil_exposure_delta or a canon event from a private scene. HOWEVER, when the player EXPLICITLY asks to make/set/establish/record a statement as campaign canon, or explicitly asks to submit it for GM canon approval, you MUST put that requested statement in canon_proposals instead. Use one proposal per independent claim with a stable normalized key, the exact intended durable value, requested visibility (normally party unless the player clearly requests otherwise), and a concise reason. A canon proposal is NOT a canon-ledger mutation, so state_review.canon remains no_change unless an actual canon event was emitted (which is forbidden here). Never claim in narration that a proposal was recorded, approved, or delivered to the GM; the application sends deterministic confirmation after commit. Any private_messages must target only the acting player's Discord user ID."
+        ?[
+          "THIS IS A PRIVATE PLAYER→GM SCENE. Narration is visible only to the acting player.",
+          "Do not assume anything said or discovered here was shared with the party.",
+          "New clue/fact/thread/NPC/location knowledge and clock changes are automatically isolated to this player/character.",
+          "resource_delta may target only the acting character. Do not emit veil_exposure_delta or a canon event from a private scene.",
+          "When the player explicitly asks to establish/record campaign canon or submit it for GM approval, put that claim in canon_proposals instead.",
+          "Use one proposal per independent claim with a stable normalized key, exact intended durable value, requested visibility, and concise reason.",
+          "A canon proposal is not a canon-ledger mutation, so state_review.canon remains no_change unless an actual canon event was emitted (which is forbidden here).",
+          "Never claim in narration that a proposal was recorded, approved, or delivered to the GM; the application sends deterministic confirmation after commit.",
+          "Any private_messages must target only the acting player's Discord user ID."
+        ].join(" ")
         :"THIS IS A PARTY TABLE SCENE. Public narration is visible to all present players. Do not reveal another player's private knowledge unless it has been explicitly shared in play. private_messages may target only players on the current session roster. canon_proposals must be an empty array; the player canon-proposal workflow is reserved for private player→GM scenes.",
       "canon_proposals is a GM-review queue, not authoritative canon. Never use it for speculative ideas or ordinary discoveries; use it only for an explicit player request to propose a durable canon statement from a private scene.",
       "MANDATORY POST-TURN STATE REVIEW: before returning, explicitly review facts/clues, PC resources, clocks, threads, references, relationships, handouts, canon, Veil Exposure, and scene continuity. Every category must be marked changed or no_change with a concrete reason. If marked changed, emit the matching structured mutation; if no mutation is emitted, mark no_change. A canon_proposals entry does not count as a canon change. Never hide a mechanical consequence only in prose.",
@@ -702,8 +713,8 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
     const roster=this.db.roster(s.id);
     const npcProxies=this.db.listNpcProxies(s.id,{statuses:["active","released"]}).map(p=>({npc_name:p.npc_name,controller_user_id:p.discord_user_id,control_level:p.control_level,status:p.status}));
     const encounters=this.db.listEncounters(s.id).map(e=>({encounter_number:e.encounter_number,status:e.status,tier:e.tier,objective:e.objective,environment:e.environment_name}));
-    const facts=this.db.factsFor(guildId,"",{includeGM:false,limit:120}).filter(x=>["public","party"].includes(x.visibility));
-    const handouts=this.db.db.prepare("SELECT id,title,kind,authority,case_key,npc_key,location_key FROM handouts WHERE guild_id=? AND session_id=? AND status='active' AND visibility IN ('public','party') ORDER BY created_at").all(guildId,s.id);
+    const facts=this.db.playerFactsFor(guildId,"",{limit:120}).filter(x=>["public","party"].includes(x.visibility));
+    const handouts=this.db.listSessionPublicHandouts(guildId,s.id);
     const prompt=[
       "Create a PLAYER-SAFE end-of-session recap for Veiled City.",
       "Never include GM-only, player-private, character-private facts, unrevealed motives, hidden clocks, or secrets not shared with the party.",

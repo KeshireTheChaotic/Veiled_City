@@ -1,3 +1,4 @@
+/** Character export serializers. Player-safe exports must never include GM-only campaign state. */
 import { Buffer } from "node:buffer";
 
 function safeText(v){
@@ -31,7 +32,7 @@ function relationshipView(row){return {id:row.id,from_type:row.from_type,from_ke
 
 export function buildPlayerExport(db,guildId,character){
   const d=structuredClone(character.data||{});
-  const known=db.factsFor(guildId,character.owner_user_id||"",{characterId:character.id,includeGM:false,limit:200}).map(factView);
+  const known=db.playerFactsFor(guildId,character.owner_user_id||"",{characterId:character.id,limit:200}).map(factView);
   return {
     ...d,
     name:character.name,

@@ -1,6 +1,5 @@
+/** Discord command schema and interaction dispatcher. Authorization and privacy checks belong at command boundaries; persistence belongs in VeiledDB. */
 import {
-  SlashCommandBuilder,
-  ChannelType,
   PermissionFlagsBits,
   AttachmentBuilder
 } from "discord.js";
@@ -15,369 +14,11 @@ import { handoutFiles, handoutSummary } from "./handout.js";
 import { createConceptContextPackage } from "./concept-context.js";
 import { normalizeNarrativeMarkdown, narrativeRelativePath, createNarrativeExportPackage } from "./character-narrative.js";
 import { buildSessionRosterReport, chunkRosterReport } from "./roster.js";
+import { chunkDiscordLines } from "./discord/chunking.js";
+import { assertGmOnlyChannel, assertPlayerPrivateChannel } from "./discord/privacy.js";
+import { isExpectedError, PermissionError, NotFoundError } from "./errors.js";
 
-export function buildCommands(){
-  const monolith = new SlashCommandBuilder()
-      .setName("vc")
-      .setDescription("Veiled City multiplayer campaign commands")
-      .addSubcommandGroup(g=>g.setName("campaign").setDescription("Campaign setup and status")
-        .addSubcommand(s=>s.setName("setup").setDescription("Configure this server")
-          .addChannelOption(o=>o.setName("play_channel").setDescription("Main in-character play channel").addChannelTypes(ChannelType.GuildText).setRequired(true))
-          .addRoleOption(o=>o.setName("gm_role").setDescription("Optional human-GM/admin role"))
-          .addStringOption(o=>o.setName("mode").setDescription("AI response policy").addChoices(
-            {name:"Active router",value:"active"},{name:"Assisted",value:"assisted"},{name:"Mention only",value:"mention"})))
-        .addSubcommand(s=>s.setName("status").setDescription("Show campaign configuration"))
-        .addSubcommand(s=>s.setName("channels").setDescription("Configure Veilkeeper support channels")
-          .addChannelOption(o=>o.setName("rules_channel").setDescription("Low-cost rules questions channel").addChannelTypes(ChannelType.GuildText))
-          .addChannelOption(o=>o.setName("case_board").setDescription("Auto-published active/resolved case threads").addChannelTypes(ChannelType.GuildText))
-          .addChannelOption(o=>o.setName("journal").setDescription("Automatic session recap journal").addChannelTypes(ChannelType.GuildText))
-          .addChannelOption(o=>o.setName("known_npcs").setDescription("Auto-published player-known NPCs").addChannelTypes(ChannelType.GuildText))
-          .addChannelOption(o=>o.setName("known_locations").setDescription("Auto-published discovered locations").addChannelTypes(ChannelType.GuildText))
-          .addChannelOption(o=>o.setName("gm_log").setDescription("GM-only operational log").addChannelTypes(ChannelType.GuildText))
-          .addChannelOption(o=>o.setName("state_errors").setDescription("GM-only runtime/state error log").addChannelTypes(ChannelType.GuildText)))
-        .addSubcommand(s=>s.setName("sync").setDescription("Republish current case/NPC/location state to configured channels")))
-      .addSubcommandGroup(g=>g.setName("session").setDescription("Session attendance and lifecycle")
-        .addSubcommand(s=>s.setName("start").setDescription("Start a new session")
-          .addStringOption(o=>o.setName("title").setDescription("Optional session title"))
-          .addStringOption(o=>o.setName("assembly").setDescription("How unrelated PCs converge").addChoices(
-            {name:"Auto (recommended)",value:"auto"},
-            {name:"Already together",value:"already_together"},
-            {name:"Shared incident",value:"shared_incident"},
-            {name:"Common client",value:"common_client"},
-            {name:"Crossed cases",value:"crossed_cases"},
-            {name:"Mutual threat",value:"mutual_threat"},
-            {name:"Faction summons",value:"faction_summons"},
-            {name:"Chain of contacts",value:"chain_contacts"},
-            {name:"Rescue",value:"rescue"},
-            {name:"Debt / favor",value:"debt_favor"},
-            {name:"Manual GM assembly",value:"manual"})))
-        .addSubcommand(s=>s.setName("assemble").setDescription("Generate and launch the opening convergence scene"))
-        .addSubcommand(s=>s.setName("assembly-status").setDescription("Show GM-private convergence status and plan"))
-        .addSubcommand(s=>s.setName("roster").setDescription("GM: show current player-to-character and proxy assignments"))
-        .addSubcommand(s=>s.setName("converged").setDescription("Mark that immediate PC objectives now overlap"))
-        .addSubcommand(s=>s.setName("end").setDescription("End the active session and generate a recap"))
-        .addSubcommand(s=>s.setName("present").setDescription("Join the active session")
-          .addStringOption(o=>o.setName("character").setDescription("Owned character name; defaults to first active character")))
-        .addSubcommand(s=>s.setName("absent").setDescription("Mark yourself absent")
-          .addStringOption(o=>o.setName("mode").setDescription("What happens to your PC").setRequired(true).addChoices(
-            {name:"Offscreen (default/safest)",value:"offscreen"},
-            {name:"Background only",value:"background"},
-            {name:"Human proxy controls PC",value:"proxy"}))
-          .addUserOption(o=>o.setName("proxy").setDescription("Required for proxy mode"))
-          .addStringOption(o=>o.setName("note").setDescription("Optional logistical note")))
-        .addSubcommand(s=>s.setName("arrive").setDescription("Join after being late/absent")
-          .addStringOption(o=>o.setName("character").setDescription("Character to enter with")))
-        .addSubcommand(s=>s.setName("leave").setDescription("Leave early")
-          .addStringOption(o=>o.setName("mode").setDescription("What happens to your PC").setRequired(true).addChoices(
-            {name:"Offscreen",value:"offscreen"},
-            {name:"Background only",value:"background"},
-            {name:"Human proxy controls PC",value:"proxy"}))
-          .addUserOption(o=>o.setName("proxy").setDescription("Required for proxy mode"))))
-      .addSubcommandGroup(g=>g.setName("character").setDescription("Character lifecycle")
-        .addSubcommand(s=>s.setName("create").setDescription("Create a basic character record")
-          .addStringOption(o=>o.setName("name").setDescription("Character name").setRequired(true))
-          .addStringOption(o=>o.setName("class").setDescription("Daggerheart class"))
-          .addStringOption(o=>o.setName("subclass").setDescription("Subclass"))
-          .addStringOption(o=>o.setName("ancestry").setDescription("Veiled City ancestry"))
-          .addStringOption(o=>o.setName("community").setDescription("Community"))
-          .addStringOption(o=>o.setName("domains").setDescription("Comma-separated domains")))
-        .addSubcommand(s=>s.setName("import").setDescription("Import a player-safe character JSON")
-          .addAttachmentOption(o=>o.setName("file").setDescription("Character JSON file").setRequired(true))
-          .addAttachmentOption(o=>o.setName("narrative").setDescription("Optional PLAYER/PLAYERS character Markdown")))
-        .addSubcommand(s=>s.setName("context-export").setDescription("Export current campaign context for external character creation")
-          .addIntegerOption(o=>o.setName("history_sessions").setDescription("Completed session recaps to include (default 10)").setMinValue(1).setMaxValue(25)))
-        .addSubcommand(s=>s.setName("import-gm-hooks").setDescription("GM: import GM-only hook proposals for an existing character")
-          .addAttachmentOption(o=>o.setName("file").setDescription("GM_HOOKS character JSON file").setRequired(true))
-          .addStringOption(o=>o.setName("character").setDescription("Override character name from the hook file"))
-          .addAttachmentOption(o=>o.setName("narrative").setDescription("Optional GM_PRIVATE/PLAYERS character Markdown")))
-        .addSubcommand(s=>s.setName("narrative-import").setDescription("Import/update freeform character Markdown")
-          .addStringOption(o=>o.setName("character").setDescription("Character name").setRequired(true))
-          .addStringOption(o=>o.setName("scope").setDescription("Narrative visibility").setRequired(true).addChoices(
-            {name:"Player-safe",value:"player"},{name:"GM private",value:"gm_private"}))
-          .addAttachmentOption(o=>o.setName("file").setDescription("Markdown .md file").setRequired(true)))
-        .addSubcommand(s=>s.setName("narrative-export").setDescription("Export freeform character Markdown with standard paths")
-          .addStringOption(o=>o.setName("character").setDescription("Character name; defaults to current/owned"))
-          .addStringOption(o=>o.setName("scope").setDescription("Export scope").addChoices(
-            {name:"Player-safe",value:"player"},{name:"GM private",value:"gm_private"},{name:"Both",value:"all"})))
-        .addSubcommand(s=>s.setName("list").setDescription("List your characters"))
-        .addSubcommand(s=>s.setName("select").setDescription("Use a character in the current session")
-          .addStringOption(o=>o.setName("character").setDescription("Character name").setRequired(true)))
-        .addSubcommand(s=>s.setName("sheet").setDescription("Show your current or named character")
-          .addStringOption(o=>o.setName("character").setDescription("Character name")))
-        .addSubcommand(s=>s.setName("export").setDescription("Download a current player-safe character sheet")
-          .addStringOption(o=>o.setName("character").setDescription("Owned character name; defaults to current"))
-          .addStringOption(o=>o.setName("format").setDescription("Export format").addChoices(
-            {name:"DOCX",value:"docx"},{name:"JSON",value:"json"},{name:"Markdown",value:"markdown"},{name:"All (JSON + Markdown + DOCX)",value:"all"})))
-        .addSubcommand(s=>s.setName("export-gm").setDescription("GM: download hooks, private state, and canon for a character")
-          .addStringOption(o=>o.setName("character").setDescription("Campaign character name").setRequired(true))
-          .addStringOption(o=>o.setName("format").setDescription("Export format").addChoices(
-            {name:"DOCX",value:"docx"},{name:"JSON",value:"json"},{name:"Markdown",value:"markdown"},{name:"All (JSON + Markdown + DOCX)",value:"all"})))
-        .addSubcommand(s=>s.setName("retire").setDescription("Retire a character")
-          .addStringOption(o=>o.setName("character").setDescription("Character name").setRequired(true)))
-        .addSubcommand(s=>s.setName("death").setDescription("Mark a character dead after resolving the death move")
-          .addStringOption(o=>o.setName("character").setDescription("Character name").setRequired(true)))
-        .addSubcommand(s=>s.setName("level-up").setDescription("Start a validated level-up draft")
-          .addStringOption(o=>o.setName("character").setDescription("Owned character name").setRequired(true)))
-        .addSubcommand(s=>s.setName("level-choose").setDescription("Choose the two advancements and mandatory new domain card")
-          .addStringOption(o=>o.setName("advancement_one").setDescription("First advancement").setRequired(true).addChoices(
-            {name:"Increase two traits",value:"traits"},{name:"+1 HP slot",value:"hp"},{name:"+1 Stress slot",value:"stress"},{name:"Increase two Experiences",value:"experience"},{name:"Additional domain card",value:"domain"},{name:"+1 Evasion",value:"evasion"},{name:"Upgrade subclass",value:"subclass"},{name:"+1 Proficiency (costs both)",value:"proficiency"},{name:"Multiclass (costs both)",value:"multiclass"}))
-          .addStringOption(o=>o.setName("advancement_two").setDescription("Second advancement").setRequired(true).addChoices(
-            {name:"Increase two traits",value:"traits"},{name:"+1 HP slot",value:"hp"},{name:"+1 Stress slot",value:"stress"},{name:"Increase two Experiences",value:"experience"},{name:"Additional domain card",value:"domain"},{name:"+1 Evasion",value:"evasion"},{name:"Upgrade subclass",value:"subclass"},{name:"+1 Proficiency (costs both)",value:"proficiency"},{name:"Multiclass (costs both)",value:"multiclass"}))
-          .addStringOption(o=>o.setName("domain_card").setDescription("Mandatory new domain card name").setRequired(true))
-          .addStringOption(o=>o.setName("detail_one").setDescription("Targets/details for first advancement"))
-          .addStringOption(o=>o.setName("detail_two").setDescription("Targets/details for second advancement"))
-          .addStringOption(o=>o.setName("domain").setDescription("Card domain; required for official/non-bundled cards"))
-          .addIntegerOption(o=>o.setName("card_level").setDescription("Card level; required for official/non-bundled cards").setMinValue(1).setMaxValue(10))
-          .addStringOption(o=>o.setName("tier_experience").setDescription("New +2 Experience required at levels 2, 5, and 8")))
-        .addSubcommand(s=>s.setName("level-confirm").setDescription("Commit your ready level-up draft")))
-      .addSubcommandGroup(g=>g.setName("guest").setDescription("Guest and drop-in characters")
-        .addSubcommand(s=>s.setName("create").setDescription("Create a one-shot/guest character")
-          .addStringOption(o=>o.setName("name").setDescription("Guest character name").setRequired(true))
-          .addUserOption(o=>o.setName("player").setDescription("Player who will control this guest")))
-        .addSubcommand(s=>s.setName("claim").setDescription("Claim/select a guest character for this session")
-          .addStringOption(o=>o.setName("character").setDescription("Guest character name").setRequired(true))))
-      .addSubcommandGroup(g=>g.setName("npc").setDescription("Guest-controlled NPC antagonist proxy")
-        .addSubcommand(s=>s.setName("offer").setDescription("Offer a sanitized NPC proxy package to a guest player")
-          .addStringOption(o=>o.setName("npc").setDescription("NPC/antagonist name").setRequired(true))
-          .addUserOption(o=>o.setName("player").setDescription("Guest player").setRequired(true))
-          .addStringOption(o=>o.setName("control").setDescription("How much of this NPC the guest controls").setRequired(true).addChoices(
-            {name:"Portrayal only",value:"portrayal"},{name:"Tactical (recommended)",value:"tactical"},{name:"Full NPC",value:"full_npc"}))
-          .addStringOption(o=>o.setName("objective").setDescription("Optional current objective the guest is allowed to know"))
-          .addStringOption(o=>o.setName("gm_notes").setDescription("Optional GM-only source notes; sanitized before delivery")))
-        .addSubcommand(s=>s.setName("proxy").setDescription("Immediately assign an NPC antagonist to a guest player")
-          .addStringOption(o=>o.setName("npc").setDescription("NPC/antagonist name").setRequired(true))
-          .addUserOption(o=>o.setName("player").setDescription("Guest player").setRequired(true))
-          .addStringOption(o=>o.setName("control").setDescription("How much of this NPC the guest controls").setRequired(true).addChoices(
-            {name:"Portrayal only",value:"portrayal"},{name:"Tactical (recommended)",value:"tactical"},{name:"Full NPC",value:"full_npc"}))
-          .addStringOption(o=>o.setName("objective").setDescription("Optional current objective the guest is allowed to know"))
-          .addStringOption(o=>o.setName("gm_notes").setDescription("Optional GM-only source notes; sanitized before delivery")))
-        .addSubcommand(s=>s.setName("claim").setDescription("Accept an NPC proxy offer")
-          .addStringOption(o=>o.setName("npc").setDescription("NPC/antagonist name").setRequired(true)))
-        .addSubcommand(s=>s.setName("decline").setDescription("Decline an NPC proxy offer")
-          .addStringOption(o=>o.setName("npc").setDescription("NPC/antagonist name").setRequired(true)))
-        .addSubcommand(s=>s.setName("release").setDescription("End an NPC proxy assignment")
-          .addStringOption(o=>o.setName("npc").setDescription("NPC/antagonist name").setRequired(true)))
-        .addSubcommand(s=>s.setName("status").setDescription("Show NPC proxy assignments available to you"))
-        .addSubcommand(s=>s.setName("packet").setDescription("Re-send your sanitized NPC control packet")
-          .addStringOption(o=>o.setName("npc").setDescription("NPC/antagonist name").setRequired(true))))
-      .addSubcommandGroup(g=>g.setName("encounter").setDescription("GM-only Daggerheart Battle Point encounter builder")
-        .addSubcommand(s=>s.setName("build").setDescription("Build a multiplayer encounter from the live session roster")
-          .addStringOption(o=>o.setName("difficulty").setDescription("Encounter length/difficulty adjustment").addChoices(
-            {name:"Easy / shorter (-1 BP)",value:"easy"},{name:"Standard",value:"standard"},{name:"Hard / longer (+2 BP)",value:"hard"}))
-          .addStringOption(o=>o.setName("tier").setDescription("Adversary tier; auto uses the highest present PC tier").addChoices(
-            {name:"Auto",value:"auto"},{name:"Tier 1",value:"1"},{name:"Tier 2",value:"2"},{name:"Tier 3",value:"3"},{name:"Tier 4",value:"4"}))
-          .addStringOption(o=>o.setName("style").setDescription("Composition style").addChoices(
-            {name:"Balanced",value:"balanced"},{name:"Boss",value:"boss"},{name:"Swarm",value:"swarm"},{name:"Strike team",value:"strike_team"},{name:"Hunt",value:"hunt"}))
-          .addStringOption(o=>o.setName("objective").setDescription("Player-facing scene objective"))
-          .addStringOption(o=>o.setName("environment").setDescription("Veiled City environment name; blank chooses a tier-appropriate one")))
-        .addSubcommand(s=>s.setName("status").setDescription("Show the GM-private current encounter budget and composition"))
-        .addSubcommand(s=>s.setName("adjust").setDescription("Adjust Battle Point assumptions")
-          .addStringOption(o=>o.setName("difficulty").setDescription("Replace the difficulty adjustment").addChoices(
-            {name:"Easy / shorter (-1 BP)",value:"easy"},{name:"Standard",value:"standard"},{name:"Hard / longer (+2 BP)",value:"hard"}))
-          .addBooleanOption(o=>o.setName("boost_damage").setDescription("Apply +1d4/+2 damage to all adversaries (-2 BP)"))
-          .addIntegerOption(o=>o.setName("custom_delta").setDescription("Additional GM BP adjustment (positive or negative)"))
-          .addBooleanOption(o=>o.setName("rebalance").setDescription("Rebuild composition to the new budget (planned encounters only)"))
-          .addStringOption(o=>o.setName("reason").setDescription("Optional GM note for custom adjustment")))
-        .addSubcommand(s=>s.setName("add").setDescription("Add an adversary to the current encounter")
-          .addStringOption(o=>o.setName("adversary").setDescription("Veiled City adversary name").setRequired(true))
-          .addIntegerOption(o=>o.setName("quantity").setDescription("Units; for Minions this means party-sized groups").setMinValue(1).setMaxValue(10)))
-        .addSubcommand(s=>s.setName("remove").setDescription("Remove an adversary from the current encounter")
-          .addStringOption(o=>o.setName("adversary").setDescription("Adversary name").setRequired(true))
-          .addIntegerOption(o=>o.setName("quantity").setDescription("Units/groups to remove").setMinValue(1).setMaxValue(10)))
-        .addSubcommand(s=>s.setName("start").setDescription("Mark the planned encounter active and initialize combatants"))
-        .addSubcommand(s=>s.setName("end").setDescription("End the current encounter and optionally resolve aftermath")
-          .addStringOption(o=>o.setName("aftermath").setDescription("How to handle post-encounter consequences").addChoices(
-            {name:"Auto apply (default)",value:"auto"},{name:"Require GM confirmation",value:"confirm"},{name:"Skip aftermath",value:"none"})))
-        .addSubcommand(s=>s.setName("aftermath-status").setDescription("Show the latest encounter aftermath draft/status"))
-        .addSubcommand(s=>s.setName("aftermath-confirm").setDescription("GM: apply a pending encounter aftermath"))
-        .addSubcommand(s=>s.setName("aftermath-discard").setDescription("GM: discard a pending encounter aftermath"))
-        .addSubcommand(s=>s.setName("combatants").setDescription("Show deterministic adversary HP/Stress/conditions"))
-        .addSubcommand(s=>s.setName("damage").setDescription("Apply rolled damage to an adversary using thresholds")
-          .addStringOption(o=>o.setName("target").setDescription("Combatant name or 8-char ID").setRequired(true))
-          .addIntegerOption(o=>o.setName("amount").setDescription("Rolled incoming damage").setMinValue(0).setRequired(true)))
-        .addSubcommand(s=>s.setName("heal").setDescription("Restore adversary HP")
-          .addStringOption(o=>o.setName("target").setDescription("Combatant name or 8-char ID").setRequired(true))
-          .addIntegerOption(o=>o.setName("hp").setDescription("HP to restore").setMinValue(1).setRequired(true)))
-        .addSubcommand(s=>s.setName("stress").setDescription("Mark or clear adversary Stress")
-          .addStringOption(o=>o.setName("target").setDescription("Combatant name or 8-char ID").setRequired(true))
-          .addIntegerOption(o=>o.setName("delta").setDescription("Positive marks Stress; negative clears").setRequired(true)))
-        .addSubcommand(s=>s.setName("condition").setDescription("Add/remove an adversary condition")
-          .addStringOption(o=>o.setName("target").setDescription("Combatant name or 8-char ID").setRequired(true))
-          .addStringOption(o=>o.setName("condition").setDescription("Condition name").setRequired(true))
-          .addBooleanOption(o=>o.setName("remove").setDescription("Remove instead of add")))
-        .addSubcommand(s=>s.setName("combatant-status").setDescription("Set adversary active/defeated/escaped/removed")
-          .addStringOption(o=>o.setName("target").setDescription("Combatant name or 8-char ID").setRequired(true))
-          .addStringOption(o=>o.setName("status").setDescription("New status").setRequired(true).addChoices({name:"Active",value:"active"},{name:"Defeated",value:"defeated"},{name:"Escaped",value:"escaped"},{name:"Removed",value:"removed"}))))
-      .addSubcommandGroup(g=>g.setName("party").setDescription("Persistent working-group state")
-        .addSubcommand(s=>s.setName("establish").setDescription("Mark present PCs as a continuing party")
-          .addStringOption(o=>o.setName("name").setDescription("Optional party/team name")))
-        .addSubcommand(s=>s.setName("status").setDescription("Show established party status")))
-      .addSubcommandGroup(g=>g.setName("relationship").setDescription("Structured character/NPC/faction relationship graph")
-        .addSubcommand(s=>s.setName("list").setDescription("Show relationships visible to you")
-          .addStringOption(o=>o.setName("character").setDescription("Owned character; defaults to current")))
-        .addSubcommand(s=>s.setName("set").setDescription("GM: create or replace a relationship edge")
-          .addStringOption(o=>o.setName("from_type").setDescription("Source entity type").setRequired(true).addChoices({name:"Character",value:"character"},{name:"NPC",value:"npc"},{name:"Faction",value:"faction"},{name:"Location",value:"location"},{name:"Other",value:"entity"}))
-          .addStringOption(o=>o.setName("from").setDescription("Source character/name/key").setRequired(true))
-          .addStringOption(o=>o.setName("to_type").setDescription("Target entity type").setRequired(true).addChoices({name:"Character",value:"character"},{name:"NPC",value:"npc"},{name:"Faction",value:"faction"},{name:"Location",value:"location"},{name:"Other",value:"entity"}))
-          .addStringOption(o=>o.setName("to").setDescription("Target character/name/key").setRequired(true))
-          .addStringOption(o=>o.setName("relation").setDescription("Relationship type").setRequired(true).addChoices({name:"Trust",value:"trust"},{name:"Debt",value:"debt"},{name:"Fear",value:"fear"},{name:"Hostility",value:"hostility"},{name:"Affection",value:"affection"},{name:"Authority",value:"authority"},{name:"Family",value:"family"},{name:"Ally",value:"ally"},{name:"Rival",value:"rival"},{name:"Contact",value:"contact"},{name:"Suspicion",value:"suspicion"},{name:"Other",value:"other"}))
-          .addIntegerOption(o=>o.setName("score").setDescription("Intensity from -5 to +5").setMinValue(-5).setMaxValue(5).setRequired(true))
-          .addStringOption(o=>o.setName("visibility").setDescription("Visibility").addChoices({name:"Party",value:"party"},{name:"Public",value:"public"},{name:"Character",value:"character"},{name:"GM only",value:"gm"}))
-          .addStringOption(o=>o.setName("note").setDescription("Short context note")))
-        .addSubcommand(s=>s.setName("adjust").setDescription("GM: change a relationship score")
-          .addStringOption(o=>o.setName("id").setDescription("Relationship ID/prefix").setRequired(true))
-          .addIntegerOption(o=>o.setName("delta").setDescription("Score change").setMinValue(-10).setMaxValue(10).setRequired(true)))
-        .addSubcommand(s=>s.setName("import-hooks").setDescription("GM: one-time backfill of existing character hook relationships")
-          .addStringOption(o=>o.setName("character").setDescription("Optional campaign character; blank imports all legacy characters"))))
-      .addSubcommandGroup(g=>g.setName("handout").setDescription("Evidence and generated campaign handouts")
-        .addSubcommand(s=>s.setName("generate").setDescription("GM: generate a handout from established facts")
-          .addStringOption(o=>o.setName("title").setDescription("Handout title").setRequired(true))
-          .addStringOption(o=>o.setName("kind").setDescription("Artifact type").setRequired(true).addChoices({name:"Document/report",value:"document"},{name:"Email/message",value:"email"},{name:"Transcript",value:"transcript"},{name:"Call/digital log",value:"log"},{name:"Evidence card",value:"evidence"},{name:"Photo description",value:"photo_description"},{name:"Other",value:"other"}))
-          .addStringOption(o=>o.setName("facts").setDescription("Semicolon/newline-separated facts the artifact may contain").setRequired(true))
-          .addStringOption(o=>o.setName("authority").setDescription("Evidence authority").addChoices({name:"Canonical",value:"canonical"},{name:"Partial",value:"partial"},{name:"Unreliable",value:"unreliable"},{name:"Illustrative",value:"illustrative"}))
-          .addStringOption(o=>o.setName("visibility").setDescription("Who receives it").addChoices({name:"Party",value:"party"},{name:"Public",value:"public"},{name:"Specific player",value:"player"},{name:"Specific character",value:"character"},{name:"GM only",value:"gm"}))
-          .addUserOption(o=>o.setName("player").setDescription("Target for player-private visibility"))
-          .addStringOption(o=>o.setName("character").setDescription("Target campaign character for character-private visibility"))
-          .addStringOption(o=>o.setName("case").setDescription("Optional case/thread key"))
-          .addStringOption(o=>o.setName("npc").setDescription("Optional linked NPC"))
-          .addStringOption(o=>o.setName("location").setDescription("Optional linked location")))
-        .addSubcommand(s=>s.setName("create").setDescription("GM: store a handout without an AI generation call")
-          .addStringOption(o=>o.setName("title").setDescription("Handout title").setRequired(true))
-          .addStringOption(o=>o.setName("content").setDescription("Player-facing artifact text").setRequired(true))
-          .addStringOption(o=>o.setName("facts").setDescription("Optional semicolon/newline-separated canonical/source facts"))
-          .addStringOption(o=>o.setName("kind").setDescription("Artifact type"))
-          .addStringOption(o=>o.setName("authority").setDescription("Evidence authority").addChoices({name:"Canonical",value:"canonical"},{name:"Partial",value:"partial"},{name:"Unreliable",value:"unreliable"},{name:"Illustrative",value:"illustrative"}))
-          .addStringOption(o=>o.setName("visibility").setDescription("Who receives it").addChoices({name:"Party",value:"party"},{name:"Public",value:"public"},{name:"Specific player",value:"player"},{name:"Specific character",value:"character"},{name:"GM only",value:"gm"}))
-          .addUserOption(o=>o.setName("player").setDescription("Target for player-private visibility"))
-          .addStringOption(o=>o.setName("character").setDescription("Target campaign character")))
-        .addSubcommand(s=>s.setName("list").setDescription("List evidence handouts visible to you"))
-        .addSubcommand(s=>s.setName("show").setDescription("Show a visible handout")
-          .addStringOption(o=>o.setName("id").setDescription("Handout ID/prefix or title").setRequired(true)))
-        .addSubcommand(s=>s.setName("export").setDescription("Download a visible handout")
-          .addStringOption(o=>o.setName("id").setDescription("Handout ID/prefix or title").setRequired(true))
-          .addStringOption(o=>o.setName("format").setDescription("Export format").addChoices({name:"Markdown",value:"markdown"},{name:"JSON",value:"json"},{name:"DOCX",value:"docx"},{name:"All",value:"all"})))
-        .addSubcommand(s=>s.setName("deliver").setDescription("GM: re-deliver an existing handout")
-          .addStringOption(o=>o.setName("id").setDescription("Handout ID/prefix or title").setRequired(true)))
-        .addSubcommand(s=>s.setName("archive").setDescription("GM: archive a handout")
-          .addStringOption(o=>o.setName("id").setDescription("Handout ID/prefix or title").setRequired(true))))
-      .addSubcommandGroup(g=>g.setName("player").setDescription("Player preferences")
-        .addSubcommand(s=>s.setName("private-channel").setDescription("Use this channel for your private GM information"))
-        .addSubcommand(s=>s.setName("accessibility").setDescription("Set response/accessibility preferences")
-          .addStringOption(o=>o.setName("length").setDescription("GM response length").addChoices(
-            {name:"Compact",value:"compact"},{name:"Standard",value:"standard"},{name:"Descriptive",value:"descriptive"}))
-          .addStringOption(o=>o.setName("mechanics").setDescription("Mechanical detail").addChoices(
-            {name:"Full",value:"full"},{name:"Standard",value:"standard"},{name:"Narrative only",value:"narrative"}))
-          .addBooleanOption(o=>o.setName("screen_reader").setDescription("Prefer screen-reader-friendly formatting"))))
-      .addSubcommandGroup(g=>g.setName("roll").setDescription("Deterministic dice")
-        .addSubcommand(s=>s.setName("duality").setDescription("Roll Daggerheart Duality Dice")
-          .addIntegerOption(o=>o.setName("modifier").setDescription("Trait/other modifier"))
-          .addIntegerOption(o=>o.setName("experience").setDescription("Experience modifier"))
-          .addIntegerOption(o=>o.setName("advantage").setDescription("Advantage d6 count"))
-          .addIntegerOption(o=>o.setName("disadvantage").setDescription("Disadvantage d6 count"))
-          .addBooleanOption(o=>o.setName("reaction").setDescription("Reaction roll: does not generate Hope/Fear or count spotlight")))
-        .addSubcommand(s=>s.setName("damage").setDescription("Roll damage/other dice")
-          .addStringOption(o=>o.setName("dice").setDescription("e.g. 2d8+3").setRequired(true))))
-      .addSubcommandGroup(g=>g.setName("rules").setDescription("Grounded rules desk and persistent GM rulings")
-        .addSubcommand(s=>s.setName("ask").setDescription("Ask a concise Daggerheart/Veiled City rules question")
-          .addStringOption(o=>o.setName("question").setDescription("Rules question").setRequired(true)))
-        .addSubcommand(s=>s.setName("ruling").setDescription("GM: save/replace an authoritative campaign ruling")
-          .addStringOption(o=>o.setName("key").setDescription("Short stable key, e.g. veil-camera").setRequired(true))
-          .addStringOption(o=>o.setName("question").setDescription("Question this ruling answers").setRequired(true))
-          .addStringOption(o=>o.setName("ruling").setDescription("Authoritative campaign ruling").setRequired(true)))
-        .addSubcommand(s=>s.setName("rulings").setDescription("Show saved campaign rulings")))
-      .addSubcommandGroup(g=>g.setName("downtime").setDescription("Formal between-session projects and world turns")
-        .addSubcommand(s=>s.setName("open").setDescription("GM: open a between-session downtime cycle")
-          .addStringOption(o=>o.setName("label").setDescription("Downtime label"))
-          .addStringOption(o=>o.setName("notes").setDescription("GM notes")))
-        .addSubcommand(s=>s.setName("project").setDescription("Submit a character downtime project")
-          .addStringOption(o=>o.setName("type").setDescription("Project type").setRequired(true).addChoices({name:"Recovery",value:"recovery"},{name:"Investigation",value:"investigation"},{name:"Crafting",value:"crafting"},{name:"Ritual",value:"ritual"},{name:"Relationship",value:"relationship"},{name:"Income/upkeep",value:"income"},{name:"Surveillance",value:"surveillance"},{name:"Research",value:"research"},{name:"Long-term project",value:"project"},{name:"Other",value:"other"}))
-          .addStringOption(o=>o.setName("title").setDescription("Short project title").setRequired(true))
-          .addStringOption(o=>o.setName("objective").setDescription("What you are trying to accomplish").setRequired(true))
-          .addStringOption(o=>o.setName("character").setDescription("Owned character; defaults to first active/reserve"))
-          .addIntegerOption(o=>o.setName("countdown").setDescription("Project countdown/progress target").setMinValue(1).setMaxValue(20))
-          .addStringOption(o=>o.setName("visibility").setDescription("Who can know about this project").addChoices({name:"Party",value:"party"},{name:"Character private",value:"character"},{name:"Player private",value:"player"})))
-        .addSubcommand(s=>s.setName("status").setDescription("Show current downtime projects available to you"))
-        .addSubcommand(s=>s.setName("resolve").setDescription("GM: resolve the current downtime cycle and world turn")))
-      .addSubcommandGroup(g=>g.setName("canon").setDescription("Authoritative campaign canon and conflict resolution")
-        .addSubcommand(s=>s.setName("set").setDescription("GM: establish a durable canon value")
-          .addStringOption(o=>o.setName("key").setDescription("Stable key, e.g. npc.mara-voss.surname").setRequired(true))
-          .addStringOption(o=>o.setName("value").setDescription("Canon value").setRequired(true))
-          .addStringOption(o=>o.setName("visibility").setDescription("Visibility").addChoices({name:"Party",value:"party"},{name:"Public",value:"public"},{name:"GM only",value:"gm"})))
-        .addSubcommand(s=>s.setName("status").setDescription("Show current canon visible to you"))
-        .addSubcommand(s=>s.setName("conflicts").setDescription("GM: list pending canon conflicts"))
-        .addSubcommand(s=>s.setName("proposals").setDescription("GM: review pending character/player canon proposals")
-          .addStringOption(o=>o.setName("status").setDescription("Proposal status; defaults to actionable").addChoices({name:"Actionable",value:"actionable"},{name:"Pending",value:"pending"},{name:"Conflict",value:"conflict"},{name:"Accepted",value:"accepted"},{name:"Rejected",value:"rejected"},{name:"All",value:"all"}))
-          .addStringOption(o=>o.setName("character").setDescription("Optional originating/associated character filter")))
-        .addSubcommand(s=>s.setName("proposal-resolve").setDescription("GM: accept, reject, or edit a canon proposal")
-          .addStringOption(o=>o.setName("proposal_id").setDescription("Proposal ID/prefix").setRequired(true))
-          .addStringOption(o=>o.setName("resolution").setDescription("Resolution").setRequired(true).addChoices({name:"Accept proposal",value:"accept"},{name:"Reject proposal",value:"reject"},{name:"Accept edited value",value:"custom"}))
-          .addStringOption(o=>o.setName("custom_value").setDescription("Required for edited value"))
-          .addStringOption(o=>o.setName("visibility").setDescription("Override canon visibility").addChoices({name:"GM only",value:"gm"},{name:"Party",value:"party"},{name:"Public",value:"public"}))
-          .addStringOption(o=>o.setName("note").setDescription("Optional GM resolution note")))
-        .addSubcommand(s=>s.setName("resolve").setDescription("GM: resolve a canon conflict")
-          .addStringOption(o=>o.setName("conflict_id").setDescription("Conflict ID/prefix").setRequired(true))
-          .addStringOption(o=>o.setName("resolution").setDescription("Resolution").setRequired(true).addChoices({name:"Keep existing",value:"existing"},{name:"Accept proposed",value:"proposed"},{name:"Use custom value",value:"custom"}))
-          .addStringOption(o=>o.setName("custom_value").setDescription("Required for custom"))))
-      .addSubcommandGroup(g=>g.setName("voice").setDescription("Discord voice narration controls")
-        .addSubcommand(s=>s.setName("join").setDescription("Have Veilkeeper join your current voice channel"))
-        .addSubcommand(s=>s.setName("leave").setDescription("GM: disconnect Veilkeeper from voice"))
-        .addSubcommand(s=>s.setName("status").setDescription("Show voice narration status"))
-        .addSubcommand(s=>s.setName("repeat").setDescription("Replay the most recent narration without a new TTS charge"))
-        .addSubcommand(s=>s.setName("pause").setDescription("GM: pause voice narration playback"))
-        .addSubcommand(s=>s.setName("resume").setDescription("GM: resume voice narration playback"))
-        .addSubcommand(s=>s.setName("configure").setDescription("GM: change runtime voice settings")
-          .addStringOption(o=>o.setName("mode").setDescription("What Veilkeeper narrates").addChoices({name:"Off",value:"off"},{name:"Narrative",value:"narrative"},{name:"Full IC narration",value:"full"}))
-          .addStringOption(o=>o.setName("voice").setDescription("Built-in voice name or custom voice_... ID"))
-          .addNumberOption(o=>o.setName("speed").setDescription("Speech speed 0.25-4.0").setMinValue(0.25).setMaxValue(4))
-          .addStringOption(o=>o.setName("instructions").setDescription("Voice delivery/style instructions")))
-        .addSubcommand(s=>s.setName("narrate").setDescription("GM: speak a one-off narration line")
-          .addStringOption(o=>o.setName("text").setDescription("Text for Veilkeeper to narrate").setRequired(true))))
-      .addSubcommandGroup(g=>g.setName("admin").setDescription("GM state snapshots and rollback")
-        .addSubcommand(s=>s.setName("snapshot").setDescription("Create a manual campaign-state snapshot")
-          .addStringOption(o=>o.setName("label").setDescription("Snapshot label"))
-          .addStringOption(o=>o.setName("reason").setDescription("Reason")))
-        .addSubcommand(s=>s.setName("snapshots").setDescription("List recent campaign snapshots"))
-        .addSubcommand(s=>s.setName("rollback").setDescription("Restore a snapshot; creates a pre-rollback safety snapshot")
-          .addStringOption(o=>o.setName("snapshot_id").setDescription("Snapshot ID/prefix").setRequired(true))))
-      .addSubcommandGroup(g=>g.setName("intel").setDescription("Player-safe campaign information")
-        .addSubcommand(s=>s.setName("recap").setDescription("Show the latest saved recap"))
-        .addSubcommand(s=>s.setName("clues").setDescription("Show clues available to you"))
-        .addSubcommand(s=>s.setName("caseboard").setDescription("Show active player-visible threads")))
-      .addSubcommandGroup(g=>g.setName("gm").setDescription("Human GM/admin tools")
-        .addSubcommand(s=>s.setName("fear").setDescription("Record a Fear change")
-          .addIntegerOption(o=>o.setName("delta").setDescription("Positive or negative change").setRequired(true)))
-        .addSubcommand(s=>s.setName("fact").setDescription("Add a campaign fact")
-          .addStringOption(o=>o.setName("content").setDescription("Fact text").setRequired(true))
-          .addStringOption(o=>o.setName("visibility").setDescription("Who may know it").setRequired(true).addChoices(
-            {name:"Party",value:"party"},{name:"Public",value:"public"},{name:"Specific player",value:"player"},{name:"GM only",value:"gm"}))
-          .addUserOption(o=>o.setName("player").setDescription("Required for player visibility"))))
-  ;
-  const full=monolith.toJSON();
-  const splitMap={
-    character:{
-      "vc-character":["create","import","context-export","import-gm-hooks","narrative-import","narrative-export","list","select","sheet","export","export-gm","retire","death"],
-      "vc-level":["level-up","level-choose","level-confirm"]
-    },
-    encounter:{
-      "vc-encounter":["build","status","adjust","add","remove","start","end","aftermath-status","aftermath-confirm","aftermath-discard"],
-      "vc-combat":["combatants","damage","heal","stress","condition","combatant-status"]
-    }
-  };
-  const commands=[];
-  for(const group of full.options??[]){
-    const partitions=splitMap[group.name];
-    if(partitions){
-      for(const [name,names] of Object.entries(partitions)){
-        const wanted=new Set(names);
-        const options=(group.options??[]).filter(o=>wanted.has(o.name));
-        commands.push({name,description:group.description,type:1,options});
-      }
-    }else{
-      commands.push({name:`vc-${group.name}`,description:group.description,type:1,options:group.options??[]});
-    }
-  }
-  return commands;
-}
+export { buildCommands } from "./command-definitions.js";
 
 function json(c){ return c?.data ?? {}; }
 function exportAttachments(files){
@@ -415,18 +56,10 @@ function isGM(db,interaction){
 }
 function requireSession(db,guildId){
   const s=db.getActiveSession(guildId);
-  if(!s) throw new Error("No active session.");
+  if(!s) throw new NotFoundError("No active session.");
   return s;
 }
-function findGuest(db,guildId,name,userId){
-  const q=name.toLowerCase();
-  const rows=db.db.prepare(`
-    SELECT * FROM characters WHERE guild_id=? AND is_guest=1 AND status='guest'
-      AND (owner_user_id IS NULL OR owner_user_id=?)
-  `).all(guildId,userId);
-  const r=rows.find(x=>x.name.toLowerCase()===q)||rows.find(x=>x.name.toLowerCase().includes(q));
-  return r?{...r,data:JSON.parse(r.character_json)}:null;
-}
+function findGuest(db,guildId,name,userId){ return db.findGuestCharacter(guildId,name,userId); }
 
 function presentRoster(db,sessionId){
   return db.roster(sessionId).filter(r=>["present","guest","late"].includes(r.presence) && r.character_id);
@@ -591,15 +224,30 @@ function downtimeStatusText(cycle,projects){
 
 async function deletePublishedNotInSnapshot({db,guild,snapshot}){
   const target=new Set((snapshot?.state?.tables?.published_messages||[]).map(r=>`${r.channel_id}:${r.message_id}`));
-  const current=db.db.prepare("SELECT * FROM published_messages WHERE guild_id=?").all(guild.id);
+  const current=db.listPublishedMessages(guild.id);
   for(const row of current){
     if(target.has(`${row.channel_id}:${row.message_id}`)) continue;
-    try{const ch=await guild.channels.fetch(row.channel_id); const m=await ch?.messages?.fetch(row.message_id); if(m) await m.delete();}catch{}
+    try{const ch=await guild.channels.fetch(row.channel_id); const m=await ch?.messages?.fetch(row.message_id); if(m) await m.delete();}
+    catch{ /* Snapshot restore tolerates already-deleted/inaccessible historical Discord messages. */ }
   }
 }
 
 
 function factList(text){return String(text||"").split(/\n|;/).map(x=>x.trim()).filter(Boolean);}
+function chunkTextLines(lines,maxChars=1900){ return chunkDiscordLines(lines,maxChars); }
+
+function factScopeLabel(row){
+  if(row.visibility==="gm") return "GM";
+  if(row.visibility==="player") return row.subject_user_id?`PLAYER <@${row.subject_user_id}>`:"PLAYER";
+  if(row.visibility==="character") return row.subject_character_id?`CHARACTER ${row.subject_character_id.slice(0,8)}`:"CHARACTER";
+  return String(row.visibility||"party").toUpperCase();
+}
+function gmFactLine(row){return `• **[${factScopeLabel(row)}] [${String(row.category||"fact").toUpperCase()}]** \`${row.fact_key}\` — ${row.content}`;}
+function playerFactLine(row){
+  if(row.visibility==="gm") throw new Error("GM-only fact reached a player-safe fact formatter.");
+  const scope=["player","character"].includes(row.visibility)?"PRIVATE":String(row.visibility||"party").toUpperCase();
+  return `• **[${scope}]** ${row.content}`;
+}
 function activeCharacterForUser(db,guildId,userId){
   const s=db.getActiveSession(guildId); if(s){const a=db.activeAssignment(s.id,userId); if(a) return db.getCharacter(a.character_id);}
   return db.listCharacters(guildId,userId,{includeClosed:false})[0]||null;
@@ -651,6 +299,12 @@ ${draft.gm_notes||""}`}));
   return {events,relationships,handouts,outputErrors};
 }
 
+/**
+ * Dispatch one `/vc-*` interaction. Runtime authorization is enforced here even
+ * when Discord command visibility permits a user to discover a command.
+ *
+ * @returns {Promise<boolean>} True when the interaction was handled.
+ */
 export async function handleCommand(interaction,{db,gm,voice=null}){
   if(!interaction.isChatInputCommand()) return false;
   const commandName=interaction.commandName;
@@ -754,11 +408,15 @@ export async function handleCommand(interaction,{db,gm,voice=null}){
     }
     if(group==="campaign"&&sub==="channels"){
       if(!isGM(db,interaction)) throw new Error("GM/admin permission required.");
-      const get=(n)=>interaction.options.getChannel(n)?.id;
+      const get=(n)=>interaction.options.getChannel(n);
+      const campaign=db.getCampaign(interaction.guildId);
+      for(const channel of [get("gm_log"),get("state_errors")].filter(Boolean)){
+        assertGmOnlyChannel({guild:interaction.guild,channel,gmRoleId:campaign?.gm_role_id||null});
+      }
       const c=db.configureChannels(interaction.guildId,{
-        rulesChannelId:get("rules_channel"),caseBoardChannelId:get("case_board"),journalChannelId:get("journal"),
-        knownNpcsChannelId:get("known_npcs"),knownLocationsChannelId:get("known_locations"),
-        gmLogChannelId:get("gm_log"),stateErrorsChannelId:get("state_errors")
+        rulesChannelId:get("rules_channel")?.id,caseBoardChannelId:get("case_board")?.id,journalChannelId:get("journal")?.id,
+        knownNpcsChannelId:get("known_npcs")?.id,knownLocationsChannelId:get("known_locations")?.id,
+        gmLogChannelId:get("gm_log")?.id,stateErrorsChannelId:get("state_errors")?.id
       });
       await interaction.deferReply({ephemeral:true});
       await syncConfiguredSurfaces({db,guild:interaction.guild});
@@ -1078,7 +736,7 @@ Source file: ${a.name}${narrativeImported?`\nGM-private narrative: ${narrativeRe
       db.snapshotCampaign(interaction.guildId,{label:`Pre-${status} ${c.name}`,reason:`Automatic snapshot before marking ${c.name} ${status}`,createdBy:interaction.user.id});
       db.setCharacterStatus(c.id,status,s?.id||null);
       if(s){
-        db.db.prepare("UPDATE session_characters SET left_at=CURRENT_TIMESTAMP WHERE session_id=? AND character_id=? AND left_at IS NULL").run(s.id,c.id);
+        db.markSessionCharacterLeft(s.id,c.id);
       }
       await interaction.reply(`**${c.name}** is now marked **${status}**. You may create/select another character immediately; the GM will bring them in when the fiction allows.`);
       return true;
@@ -1495,8 +1153,10 @@ GM notes: ${a.draft.gm_notes}`:""}`.slice(0,1950):"No aftermath draft exists for
     }
 
     if(group==="player"&&sub==="private-channel"){
+      const campaign=db.getCampaign(interaction.guildId);
+      assertPlayerPrivateChannel({guild:interaction.guild,channel:interaction.channel,userId:interaction.user.id,gmRoleId:campaign?.gm_role_id||null});
       db.setPrivateChannel(interaction.guildId,interaction.user.id,interaction.channelId);
-      await interaction.reply({content:"This channel is now your preferred private GM channel. Ensure only you, the bot, and any intended human GM can read it.",ephemeral:true});
+      await interaction.reply({content:"This channel passed Veilkeeper's privacy validation and is now your preferred private GM channel.",ephemeral:true});
       return true;
     }
     if(group==="player"&&sub==="accessibility"){
@@ -1578,7 +1238,7 @@ GM notes: ${a.draft.gm_notes}`:""}`.slice(0,1950):"No aftermath draft exists for
     if(group==="downtime"&&sub==="open"){
       if(!isGM(db,interaction)) throw new Error("GM/admin permission required.");
       if(db.getActiveSession(interaction.guildId)) throw new Error("Downtime can only be opened between sessions.");
-      const last=db.db.prepare("SELECT id FROM sessions WHERE guild_id=? AND status='ended' ORDER BY session_number DESC LIMIT 1").get(interaction.guildId);
+      const last=db.latestEndedSession(interaction.guildId);
       const cycle=db.openDowntime(interaction.guildId,{label:interaction.options.getString("label")||"Between Sessions",sourceSessionId:last?.id||null,notes:interaction.options.getString("notes")||"",openedBy:interaction.user.id});
       await interaction.reply({content:`Opened downtime cycle **${cycle.label}**. Players may submit projects with \`/vc-downtime project\`.`,ephemeral:false});
       return true;
@@ -1757,29 +1417,36 @@ GM notes: ${a.draft.gm_notes}`:""}`.slice(0,1950):"No aftermath draft exists for
     }
 
     if(group==="intel"&&sub==="recap"){
-      const row=db.db.prepare("SELECT * FROM sessions WHERE guild_id=? AND status='ended' ORDER BY session_number DESC LIMIT 1").get(interaction.guildId);
+      const row=db.latestEndedSession(interaction.guildId);
       await interaction.reply({content:row?.recap||"No completed-session recap yet.",ephemeral:true});
       return true;
     }
     if(group==="intel"&&sub==="clues"){
       const s=db.getActiveSession(interaction.guildId);
       const a=s?db.controlledAssignment(s.id,interaction.user.id):null;
-      const rows=db.factsFor(interaction.guildId,interaction.user.id,{characterId:a?.character_id||null,includeGM:false,limit:80}).filter(x=>x.category==="clue");
-      await interaction.reply({content:rows.length?rows.map(x=>`• ${x.content}`).join("\n"):"No recorded clues are available to you.",ephemeral:true});
+      const rows=db.playerFactsFor(interaction.guildId,interaction.user.id,{characterId:a?.character_id||null,category:"clue",limit:80});
+      const chunks=chunkTextLines(rows.length?["**Clues Available to You**",...rows.map(playerFactLine)]:["No recorded clues are available to you."]);
+      await interaction.reply({content:chunks[0],ephemeral:true});
+      for(const chunk of chunks.slice(1)) await interaction.followUp({content:chunk,ephemeral:true});
+      return true;
+    }
+    if(group==="intel"&&sub==="facts"){
+      const s=db.getActiveSession(interaction.guildId);
+      const a=s?db.controlledAssignment(s.id,interaction.user.id):null;
+      const rows=db.playerFactsFor(interaction.guildId,interaction.user.id,{characterId:a?.character_id||null,category:"fact",limit:80});
+      const chunks=chunkTextLines(rows.length?["**Facts Available to You**",...rows.map(playerFactLine)]:["No recorded facts are available to you."]);
+      await interaction.reply({content:chunks[0],ephemeral:true});
+      for(const chunk of chunks.slice(1)) await interaction.followUp({content:chunk,ephemeral:true});
       return true;
     }
     if(group==="intel"&&sub==="caseboard"){
-      const rows=db.db.prepare(`
-        SELECT * FROM threads WHERE guild_id=? AND status='active'
-          AND (visibility IN ('public','party') OR (visibility='player' AND subject_user_id=?))
-        ORDER BY updated_at DESC
-      `).all(interaction.guildId,interaction.user.id);
+      const rows=db.listVisibleActiveThreads(interaction.guildId,interaction.user.id);
       await interaction.reply({content:rows.length?rows.map(x=>`• **${x.label}**${x.notes?`: ${x.notes}`:""}`).join("\n"):"No active recorded threads.",ephemeral:true});
       return true;
     }
 
     if(group==="gm"){
-      if(!isGM(db,interaction)) throw new Error("GM/admin permission required.");
+      if(!isGM(db,interaction)) throw new PermissionError("GM/admin permission required.");
       if(sub==="fear"){
         const s=db.getActiveSession(interaction.guildId);
         const delta=interaction.options.getInteger("delta",true);
@@ -1788,20 +1455,32 @@ GM notes: ${a.draft.gm_notes}`:""}`.slice(0,1950):"No aftermath draft exists for
         await interaction.reply({content:`Fear ${delta>=0?"+":""}${delta} → **${fear}/12**.`,ephemeral:true});
         return true;
       }
-      if(sub==="fact"){
+      if(sub==="fact-add"){
         const vis=interaction.options.getString("visibility",true);
         const target=interaction.options.getUser("player");
         if(vis==="player"&&!target) throw new Error("Specific-player visibility requires a player.");
         const s=db.getActiveSession(interaction.guildId);
         db.addFact(interaction.guildId,{category:"fact",key:`human-${Date.now()}`,content:interaction.options.getString("content",true),visibility:vis,subjectUserId:target?.id||null,sessionId:s?.id||null,source:"human_gm"});
-        await interaction.reply({content:"Fact recorded.",ephemeral:true});
+        await interaction.reply({content:`Fact recorded as **${vis}** visibility.`,ephemeral:true});
+        return true;
+      }
+      if(sub==="fact-list"){
+        const rows=db.listFactsForGM(interaction.guildId,{
+          visibility:interaction.options.getString("visibility")||"all",
+          category:interaction.options.getString("category")||"",
+          subjectUserId:interaction.options.getUser("player")?.id||"",
+          search:interaction.options.getString("search")||"",
+          limit:interaction.options.getInteger("limit")||50
+        });
+        const chunks=chunkTextLines(rows.length?[`**Campaign Facts — ${rows.length} shown**`,...rows.map(gmFactLine)]:["No matching campaign facts found."]);
+        await interaction.reply({content:chunks[0],ephemeral:true});
+        for(const chunk of chunks.slice(1)) await interaction.followUp({content:chunk,ephemeral:true});
         return true;
       }
     }
   } catch(err){
     const msg=err.message||String(err);
-    const expected=/required|not found|unavailable|no active session|already active|already accepted|already rejected|canon proposal|only a gm|gm\/admin permission|manage server|choose another player|requires a proxy|must include|import requires|could not download|no active owned character|at least two present|manual assembly|already in established-party|invalid assembly|npc proxy|offered to another player|not releasable|already connected to another voice channel|join veilkeeper's current voice channel|repeat is on cooldown|voice narration queue is full/i.test(msg);
-    if(!expected && interaction.guild){
+    if(!isExpectedError(err) && interaction.guild){
       await postStateError({db,guild:interaction.guild,error:err,context:`command:/vc ${group||""} ${sub||""}`,sessionId:db.getActiveSession(interaction.guildId)?.id||null});
     }
     const payload={content:`⚠️ ${msg}`,ephemeral:true};

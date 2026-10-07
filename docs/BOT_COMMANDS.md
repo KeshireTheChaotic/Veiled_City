@@ -124,11 +124,13 @@ Combat-state controls:
 - `/vc-player accessibility`
 - `/vc-intel recap`
 - `/vc-intel clues`
+- `/vc-intel facts`
 - `/vc-intel caseboard`
 
 ## GM utilities
 - `/vc-gm fear delta:<amount>`
-- `/vc-gm fact`
+- `/vc-gm fact-add`
+- `/vc-gm fact-list`
 
 GM/admin commands require Manage Server or the configured GM role.
 

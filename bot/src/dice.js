@@ -1,3 +1,4 @@
+/** Cryptographically backed dice and Duality-roll helpers. */
 import { randomInt, randomUUID } from "node:crypto";
 
 export function d(sides){ return randomInt(1,sides+1); }

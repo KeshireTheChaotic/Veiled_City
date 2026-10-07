@@ -1,3 +1,4 @@
+/** Discord runtime orchestration for message routing, serialized GM turns, world-director passes, and post-commit publication. */
 import "dotenv/config";
 import path from "node:path";
 import { Client, GatewayIntentBits, Partials } from "discord.js";
@@ -11,8 +12,12 @@ import { publishEventResults, postGmLog, postStateError, deliverHandout, postPla
 import { VoiceNarrator } from "./voice.js";
 import { KeyedSerialQueue } from "./serial-queue.js";
 import { queueDirectorAfterPartyTurn, blockedMutationRows, describeBlockedAction } from "./director.js";
+import { splitDiscordText } from "./discord/chunking.js";
+import { assertPlayerPrivateChannel } from "./discord/privacy.js";
+import { createLogger } from "./logger.js";
 
 const config=loadConfig();
+const log=createLogger(config.logLevel);
 const db=new VeiledDB(config.dbPath,path.resolve(process.cwd(),"./sql/schema.sql"));
 const content=new ContentIndex(config.contentRoot);
 const gm=new GMService({db,content,config});
@@ -30,11 +35,15 @@ async function sendPrivate(guild,userId,text,sessionId=null,characterId=null){
     try{
       const ch=await guild.channels.fetch(p.private_channel_id);
       if(ch?.isTextBased()){
-        await ch.send(text);
+        const campaign=db.getCampaign(guild.id);
+        assertPlayerPrivateChannel({guild,channel:ch,userId,gmRoleId:campaign?.gm_role_id||null});
+        for(const part of splitDiscordText(text)) await ch.send(part);
         db.addMessage({guildId:guild.id,sessionId,userId:client.user.id,speakerName:"Veilkeeper",visibility:characterId?"character":"player",subjectUserId:characterId?null:userId,subjectCharacterId:characterId,content:text});
         return true;
       }
-    }catch{}
+    }catch{
+      // Missing or unsafe registered channels fall back to direct-message delivery.
+    }
   }
   try{
     const member=await guild.members.fetch(userId);
@@ -42,14 +51,11 @@ async function sendPrivate(guild,userId,text,sessionId=null,characterId=null){
     db.addMessage({guildId:guild.id,sessionId,userId:client.user.id,speakerName:"Veilkeeper",visibility:characterId?"character":"player",subjectUserId:characterId?null:userId,subjectCharacterId:characterId,content:text});
     return true;
   }catch{
-    console.warn(`Could not deliver private GM message to ${userId}.`);
+    log.warn(`Could not deliver private GM message to ${userId}.`);
     return false;
   }
 }
 
-function splitDiscord(text){
-  return String(text||"").match(/[\s\S]{1,1900}(?:\n|$)/g)||[String(text||"")];
-}
 
 function looksLikeRulesQuestion(text,directMention=false){
   if(directMention) return true;
@@ -76,13 +82,13 @@ function resolveController(session,message){
 
 async function safeStateError({guild,error,context,sessionId}){
   try{return await postStateError({db,guild,error,context,sessionId});}
-  catch(logErr){console.error("Could not post state error",logErr); return "unlogged";}
+  catch(logErr){log.error("Could not post state error",logErr); return "unlogged";}
 }
 
 async function outputStep(errors,{guild,sessionId,context},fn){
   try{return await fn();}
   catch(err){
-    console.error(`Post-commit output failed: ${context}`,err);
+    log.error(`Post-commit output failed: ${context}`,err);
     const ref=await safeStateError({guild,error:err,context,sessionId});
     errors.push({context,ref,error:err});
     return null;
@@ -129,7 +135,7 @@ async function runPendingDirectorPass(guild,session){
     const hasOutputs=(result.events||[]).length||(result.relationships||[]).length||(result.handouts||[]).length||(result.private_messages||[]).length||String(result.public_narration||"").trim();
     if(!result.act&&hasOutputs) throw new Error("World director returned act=false with non-empty outputs.");
   }catch(err){
-    console.error(`World director ${pending.layer} generation failed`,err);
+    log.error(`World director ${pending.layer} generation failed`,err);
     await safeStateError({guild,error:err,context:`world-director-${pending.layer}-generation`,sessionId:session.id});
     return {ran:true,ok:false,pending:true};
   }
@@ -265,7 +271,10 @@ async function notifyCanonProposals({guild,session,message,actorUserId,actorChar
       `Source: private player→GM scene${row.source_channel_id?` in <#${row.source_channel_id}>`:""}${row.source_message_id?` · message ${row.source_message_id}`:""}`
     ].filter(Boolean).join("\n");
     let posted=false;
-    try{ posted=await postGmLog({db,guild,sessionId:session?.id||null,title:"Player canon proposal",details}); }catch{}
+    try{ posted=await postGmLog({db,guild,sessionId:session?.id||null,title:"Player canon proposal",details}); }
+    catch{
+      // A failed GM-log publication must not roll back the durable proposal; state-error fallback handles notice.
+    }
     if(!posted){
       const ref=await safeStateError({guild,error:new Error(`Player canon proposal ${row.id}: ${row.canon_key} = ${row.proposed_value}`),context:"player-canon-proposal-gm-log",sessionId:session?.id||null});
       gmFailures.push({id:row.id,ref});
@@ -280,7 +289,7 @@ async function notifyCanonProposals({guild,session,message,actorUserId,actorChar
   });
   const warning=gmFailures.length?`\n\n⚠️ The proposal is safely stored in \`/vc-canon proposals\`, but the configured GM-log notification could not be delivered. A state-error reference was recorded: ${gmFailures.map(x=>x.ref).join(", ")}.`:"";
   const text=`**📜 Canon proposal ${proposals.length===1?"recorded":"records updated"}**\n${lines.join("\n")}\n\nThis did **not** change campaign canon.${warning}`;
-  for(const c of splitDiscord(text)) await message.channel.send(c.trim());
+  for(const c of splitDiscordText(text)) await message.channel.send(c);
   db.addMessage({guildId:guild.id,sessionId:session?.id||null,userId:client.user.id,speakerName:"Veilkeeper",visibility:actorCharacterId?"character":"player",subjectUserId:actorCharacterId?null:actorUserId,subjectCharacterId:actorCharacterId||null,content:text});
   return {count:proposals.length,gmFailures};
 }
@@ -333,7 +342,7 @@ async function processPrivateTurn(message,directMention){
   for(const r of applied.filter(x=>x.type==="canon"&&x.status==="conflict")) await outputStep(outputErrors,{guild:message.guild,sessionId:session.id,context:"canon-conflict-private"},()=>postStateError({db,guild:message.guild,error:new Error(`Canon conflict ${r.conflict_id} requires GM resolution`),context:"canon-conflict-private",sessionId:session.id}));
   if(result.narration?.trim()){
     const sent=await outputStep(outputErrors,{guild:message.guild,sessionId:session.id,context:"private-narration"},async()=>{
-      for(const c of splitDiscord(result.narration)) await message.channel.send(c.trim());
+      for(const c of splitDiscordText(result.narration)) await message.channel.send(c);
       db.addMessage({guildId:message.guild.id,sessionId:session.id,userId:client.user.id,speakerName:"Veilkeeper",visibility:vis,subjectUserId:vis==="player"?message.author.id:null,subjectCharacterId:vis==="character"?controlled.character_id:null,content:result.narration});
       return true;
     });
@@ -416,7 +425,7 @@ async function processPartyTurn(message,directMention){
   for(const r of applied.filter(x=>x.type==="canon"&&x.status==="conflict")) await outputStep(outputErrors,{guild:message.guild,sessionId:session.id,context:"canon-conflict-party"},()=>postStateError({db,guild:message.guild,error:new Error(`Canon conflict ${r.conflict_id} requires GM resolution`),context:"canon-conflict-party",sessionId:session.id}));
   if(result.narration?.trim()){
     await outputStep(outputErrors,{guild:message.guild,sessionId:session.id,context:"party-narration"},async()=>{
-      for(const c of splitDiscord(result.narration)) await message.channel.send(c.trim());
+      for(const c of splitDiscordText(result.narration)) await message.channel.send(c);
       db.addMessage({guildId:message.guild.id,sessionId:session.id,userId:client.user.id,speakerName:"Veilkeeper",visibility:"party",content:result.narration});
     });
     voice.narrate(message.guild,result.narration).then(r=>{
@@ -450,7 +459,7 @@ async function processPartyTurn(message,directMention){
 }
 
 client.once("ready",()=>{
-  console.log(`Veilkeeper v3.5.4 logged in as ${client.user.tag}`);
+  console.log(`Veilkeeper v3.5.5 logged in as ${client.user.tag}`);
   console.log(`Voice narration: ${config.voiceEnabled?`enabled (${config.voiceName}/${config.voiceModel})`:"disabled"}.`);
   console.log(`Indexed ${content.chunks.length} Veiled City content chunks.`);
 });

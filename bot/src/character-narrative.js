@@ -1,3 +1,4 @@
+/** Freeform character narrative import/export helpers with explicit player vs GM-private scopes. */
 import { zipStore, safeStem } from "./character-export.js";
 
 const MAX_MARKDOWN_BYTES=128*1024;

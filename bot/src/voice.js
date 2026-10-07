@@ -1,3 +1,4 @@
+/** Non-authoritative Discord voice narration service with serialized synthesis/playback and bounded queueing. */
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
@@ -273,7 +274,7 @@ export class VoiceNarrator {
   _advance(guildId){
     const state=this._state(guildId);
     if(state.currentTemp){
-      try{fs.unlinkSync(state.currentTemp);}catch{}
+      try{fs.unlinkSync(state.currentTemp);}catch{ /* Temp cleanup is best-effort during voice teardown. */ }
       state.currentTemp=null;
     }
     const next=state.queue.shift();

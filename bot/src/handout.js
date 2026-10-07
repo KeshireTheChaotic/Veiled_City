@@ -1,3 +1,4 @@
+/** Evidence/handout serialization and delivery-file formatting helpers. */
 import { Buffer } from "node:buffer";
 import { markdownToDocx } from "./character-export.js";
 

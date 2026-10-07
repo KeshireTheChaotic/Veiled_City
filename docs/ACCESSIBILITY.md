@@ -25,7 +25,7 @@ Run `/vc-player private-channel` inside a channel that only the player, bot, and
 - Slash commands for mechanical actions.
 - No need to upload the rulebook each session.
 - Persistent SQLite state survives Discord scrolling/history limits.
-- `/vc-intel recap`, `/vc-intel clues`, `/vc-intel caseboard` provide compact catch-up views.
+- `/vc-intel recap`, `/vc-intel clues`, `/vc-intel facts`, `/vc-intel caseboard` provide compact catch-up views.
 
 ## Screen-reader practice
 Prefer:

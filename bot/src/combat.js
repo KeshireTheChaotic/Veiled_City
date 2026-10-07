@@ -1,3 +1,4 @@
+/** Deterministic combat-state helpers. These functions do not narrate or invoke AI. */
 function parseThresholds(s){
   const m=String(s||"").match(/(\d+)\s*\/\s*(\d+)/); return m?{major:Number(m[1]),severe:Number(m[2])}:{major:null,severe:null};
 }

@@ -51,3 +51,7 @@ When a scoped action is blocked, the application refuses that mutation, sends th
 
 ### Private canon requests
 Explicit player requests to establish campaign canon from a private scene are never applied directly. v3.5.4 stores them as pending canon proposals, confirms this privately to the player, and attempts a GM-log notification. The proposal queue is durable even if Discord delivery fails.
+
+## Fact visibility boundary (v3.5.5)
+
+Player-facing fact access uses `playerFactsFor()`, which has no GM-visibility override. It permits only public/party facts plus facts explicitly scoped to the requesting Discord user or their controlled character. `visibility='gm'` is therefore excluded at the database query boundary, before Discord formatting. The player-safe formatter also refuses a GM-only row if one is ever passed to it unexpectedly. `/vc-gm fact-list` uses a separate GM-only query path.

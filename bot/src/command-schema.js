@@ -1,3 +1,4 @@
+/** Discord application-command schema validation and size-limit checks. */
 const MAX_COMMAND_CHARS=8000;
 
 function longestLocalizedLength(base,localizations){

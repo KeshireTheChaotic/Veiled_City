@@ -1,3 +1,4 @@
+/** Runtime configuration loader with fail-fast type/range validation. */
 import path from "node:path";
 
 const BUILTIN_VOICES=new Set(["alloy","ash","ballad","coral","echo","fable","nova","onyx","sage","shimmer","verse","marin","cedar"]);
@@ -46,17 +47,17 @@ export function loadConfig(){
     reasoningEffort:process.env.OPENAI_REASONING_EFFORT||"low",
     dbPath:path.resolve(cwd,process.env.DATABASE_PATH||"./data/veiled_city.sqlite"),
     contentRoot:path.resolve(cwd,process.env.CONTENT_ROOT||"../content"),
-    maxRecentMessages:Number(process.env.MAX_RECENT_MESSAGES||28),
-    maxContentChunks:Number(process.env.MAX_CONTENT_CHUNKS||8),
-    maxRulesChunks:Number(process.env.MAX_RULES_CHUNKS||6),
-    rulesMaxOutputTokens:Number(process.env.RULES_MAX_OUTPUT_TOKENS||500),
-    assemblyMaxOutputTokens:Number(process.env.ASSEMBLY_MAX_OUTPUT_TOKENS||1200),
-    npcProxyMaxOutputTokens:Number(process.env.NPC_PROXY_MAX_OUTPUT_TOKENS||1200),
-    structuredRetryMaxTokens:Number(process.env.STRUCTURED_JSON_RETRY_MAX_TOKENS||6000),
-    downtimeMaxOutputTokens:Number(process.env.DOWNTIME_MAX_OUTPUT_TOKENS||1800),
-    handoutMaxOutputTokens:Number(process.env.HANDOUT_MAX_OUTPUT_TOKENS||1200),
-    aftermathMaxOutputTokens:Number(process.env.AFTERMATH_MAX_OUTPUT_TOKENS||1800),
-    encounterAftermathMode:process.env.ENCOUNTER_AFTERMATH_MODE||"auto",
+    maxRecentMessages:numberEnv("MAX_RECENT_MESSAGES",28,{min:1,max:500,integer:true}),
+    maxContentChunks:numberEnv("MAX_CONTENT_CHUNKS",8,{min:1,max:100,integer:true}),
+    maxRulesChunks:numberEnv("MAX_RULES_CHUNKS",6,{min:1,max:100,integer:true}),
+    rulesMaxOutputTokens:numberEnv("RULES_MAX_OUTPUT_TOKENS",500,{min:64,max:32000,integer:true}),
+    assemblyMaxOutputTokens:numberEnv("ASSEMBLY_MAX_OUTPUT_TOKENS",1200,{min:64,max:32000,integer:true}),
+    npcProxyMaxOutputTokens:numberEnv("NPC_PROXY_MAX_OUTPUT_TOKENS",1200,{min:64,max:32000,integer:true}),
+    structuredRetryMaxTokens:numberEnv("STRUCTURED_JSON_RETRY_MAX_TOKENS",6000,{min:256,max:64000,integer:true}),
+    downtimeMaxOutputTokens:numberEnv("DOWNTIME_MAX_OUTPUT_TOKENS",1800,{min:64,max:32000,integer:true}),
+    handoutMaxOutputTokens:numberEnv("HANDOUT_MAX_OUTPUT_TOKENS",1200,{min:64,max:32000,integer:true}),
+    aftermathMaxOutputTokens:numberEnv("AFTERMATH_MAX_OUTPUT_TOKENS",1800,{min:64,max:32000,integer:true}),
+    encounterAftermathMode:enumEnv("ENCOUNTER_AFTERMATH_MODE","auto",["auto","confirm","none"]),
     voiceEnabled:/^(1|true|yes|on)$/i.test(process.env.VOICE_ENABLED||"false"),
     voiceModel:String(process.env.OPENAI_VOICE_MODEL||"gpt-4o-mini-tts").trim(),
     voiceMode:enumEnv("VOICE_MODE","narrative",["off","narrative","full"]),
@@ -66,6 +67,7 @@ export function loadConfig(){
     voiceMaxCharsPerTurn:numberEnv("VOICE_MAX_CHARS_PER_TURN",12000,{min:100,max:40000,integer:true}),
     voiceMaxQueue:numberEnv("VOICE_MAX_QUEUE",8,{min:1,max:100,integer:true}),
     voiceRepeatCooldownMs:numberEnv("VOICE_REPEAT_COOLDOWN_SECONDS",8,{min:0,max:300})*1000,
-    defaultResponseMode:process.env.DEFAULT_RESPONSE_MODE||"assisted"
+    defaultResponseMode:enumEnv("DEFAULT_RESPONSE_MODE","assisted",["active","assisted","mention"]),
+    logLevel:enumEnv("LOG_LEVEL","info",["debug","info","warn","error"])
   };
 }

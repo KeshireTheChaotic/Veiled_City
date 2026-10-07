@@ -1,3 +1,4 @@
+/** Discord application-command registration entry point. */
 import "dotenv/config";
 import { REST, Routes } from "discord.js";
 import { buildCommands } from "./commands.js";

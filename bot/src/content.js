@@ -1,3 +1,4 @@
+/** Read-only indexed access to packaged Veiled City content files. */
 import fs from "node:fs";
 import path from "node:path";
 

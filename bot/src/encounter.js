@@ -1,3 +1,4 @@
+/** Encounter budget, composition, and adversary-library helpers. */
 import fs from "node:fs";
 import path from "node:path";
 import { randomInt } from "node:crypto";

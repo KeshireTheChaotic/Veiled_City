@@ -10,6 +10,7 @@ import { loadConfig } from "../src/config.js";
 import { GMService } from "../src/gm.js";
 import { validatePostTurnStateReview, queueDirectorAfterPartyTurn, describeBlockedAction } from "../src/director.js";
 import { buildSessionRosterReport, chunkRosterReport } from "../src/roster.js";
+import { buildCommands, handleCommand } from "../src/commands.js";
 
 const tmp=fs.mkdtempSync(path.join(os.tmpdir(),"vc-prod-test-"));
 const db=new VeiledDB(path.join(tmp,"test.sqlite"),path.resolve("./sql/schema.sql"));
@@ -26,7 +27,75 @@ db.setPresence(session.id,u2,"present");
 db.assignCharacter(session.id,u1,c1.id);
 db.assignCharacter(session.id,u2,c2.id);
 
-// 0) GM session roster reports player→character mappings and distinguishes proxy roles/offers.
+// 0) Facts privacy boundary: player-facing queries can never return GM-only facts.
+db.addFact(guild,{category:"fact",key:"facts.party",content:"Party fact",visibility:"party",sessionId:session.id,source:"test"});
+db.addFact(guild,{category:"fact",key:"facts.public",content:"Public fact",visibility:"public",sessionId:session.id,source:"test"});
+db.addFact(guild,{category:"fact",key:"facts.u1",content:"Player One private fact",visibility:"player",subjectUserId:u1,sessionId:session.id,source:"test"});
+db.addFact(guild,{category:"fact",key:"facts.u2",content:"Player Two private fact",visibility:"player",subjectUserId:u2,sessionId:session.id,source:"test"});
+db.addFact(guild,{category:"fact",key:"facts.c1",content:"Character One private fact",visibility:"character",subjectCharacterId:c1.id,sessionId:session.id,source:"test"});
+db.addFact(guild,{category:"fact",key:"facts.gm",content:"GM ONLY SENTINEL",visibility:"gm",sessionId:session.id,source:"test"});
+db.addFact(guild,{category:"clue",key:"clue.gm",content:"GM ONLY CLUE SENTINEL",visibility:"gm",sessionId:session.id,source:"test"});
+const playerFacts=db.playerFactsFor(guild,u1,{characterId:c1.id,category:"fact",limit:80});
+assert(playerFacts.some(r=>r.fact_key==="facts.party"));
+assert(playerFacts.some(r=>r.fact_key==="facts.public"));
+assert(playerFacts.some(r=>r.fact_key==="facts.u1"));
+assert(playerFacts.some(r=>r.fact_key==="facts.c1"));
+assert(!playerFacts.some(r=>r.fact_key==="facts.u2"),"player fact query leaked another player's private fact");
+assert(!playerFacts.some(r=>r.visibility==="gm"),"player fact query leaked GM-only visibility");
+assert(!db.playerFactsFor(guild,u1,{characterId:c1.id,category:"clue",limit:80}).some(r=>r.visibility==="gm"),"player clue query leaked GM-only visibility");
+const gmFacts=db.listFactsForGM(guild,{visibility:"gm",limit:20});
+assert(gmFacts.some(r=>r.fact_key==="facts.gm"),"GM fact list cannot see GM-only facts");
+assert(gmFacts.some(r=>r.fact_key==="clue.gm"),"GM fact list visibility filter omitted GM-only clue");
+const commandSet=buildCommands();
+const gmCommand=commandSet.find(c=>c.name==="vc-gm");
+const intelCommand=commandSet.find(c=>c.name==="vc-intel");
+assert(gmCommand?.options?.some(o=>o.name==="fact-add"),"/vc-gm fact-add is missing from command schema");
+assert(gmCommand?.options?.some(o=>o.name==="fact-list"),"/vc-gm fact-list is missing from command schema");
+assert(!gmCommand?.options?.some(o=>o.name==="fact"),"legacy /vc-gm fact command still exists");
+assert(intelCommand?.options?.some(o=>o.name==="facts"),"/vc-intel facts is missing from command schema");
+
+function commandInteraction({commandName,sub,userId,isGm=false,strings={},users={},integers={}}){
+  const replies=[];
+  return {
+    commandName,guildId:guild,guild:{id:guild},user:{id:userId,username:`user-${userId}`},
+    member:{displayName:userId===u1?"Player One":userId===u2?"Player Two":`user-${userId}`,roles:{cache:{has:()=>false}}},
+    memberPermissions:{has:()=>isGm},deferred:false,replied:false,
+    isChatInputCommand:()=>true,
+    options:{
+      getSubcommand:()=>sub,getSubcommandGroup:()=>null,
+      getString:(name,required=false)=>strings[name]??(required?(()=>{throw new Error(`missing ${name}`)})():null),
+      getUser:name=>users[name]||null,getInteger:name=>integers[name]??null
+    },
+    reply:async payload=>{replies.push(typeof payload==="string"?{content:payload}:payload);},
+    followUp:async payload=>{replies.push(typeof payload==="string"?{content:payload}:payload);},
+    editReply:async payload=>{replies.push(typeof payload==="string"?{content:payload}:payload);},
+    _replies:replies
+  };
+}
+const playerFactInteraction=commandInteraction({commandName:"vc-intel",sub:"facts",userId:u1});
+await handleCommand(playerFactInteraction,{db,gm:null,voice:null});
+const playerFactOutput=playerFactInteraction._replies.map(r=>r.content||"").join("\n");
+assert.match(playerFactOutput,/Party fact/);
+assert.match(playerFactOutput,/Player One private fact/);
+assert.doesNotMatch(playerFactOutput,/GM ONLY SENTINEL/);
+assert.doesNotMatch(playerFactOutput,/Player Two private fact/);
+const gmFactAddInteraction=commandInteraction({commandName:"vc-gm",sub:"fact-add",userId:u1,isGm:true,strings:{content:"GM COMMAND SECRET SENTINEL",visibility:"gm"}});
+await handleCommand(gmFactAddInteraction,{db,gm:null,voice:null});
+assert.match(gmFactAddInteraction._replies.map(r=>r.content||"").join("\n"),/Fact recorded as \*\*gm\*\*/);
+const gmFactListInteraction=commandInteraction({commandName:"vc-gm",sub:"fact-list",userId:u1,isGm:true,strings:{visibility:"gm"},integers:{limit:20}});
+await handleCommand(gmFactListInteraction,{db,gm:null,voice:null});
+const gmFactOutput=gmFactListInteraction._replies.map(r=>r.content||"").join("\n");
+assert.match(gmFactOutput,/GM ONLY SENTINEL/);
+assert.match(gmFactOutput,/GM ONLY CLUE SENTINEL/);
+assert.match(gmFactOutput,/GM COMMAND SECRET SENTINEL/);
+const playerFactAfterGmAdd=commandInteraction({commandName:"vc-intel",sub:"facts",userId:u1});
+await handleCommand(playerFactAfterGmAdd,{db,gm:null,voice:null});
+assert.doesNotMatch(playerFactAfterGmAdd._replies.map(r=>r.content||"").join("\n"),/GM COMMAND SECRET SENTINEL/);
+const nonGmFactListInteraction=commandInteraction({commandName:"vc-gm",sub:"fact-list",userId:u1,isGm:false,strings:{visibility:"gm"}});
+await handleCommand(nonGmFactListInteraction,{db,gm:null,voice:null});
+assert.match(nonGmFactListInteraction._replies.map(r=>r.content||"").join("\n"),/GM\/admin permission required/i);
+
+// 1) GM session roster reports player→character mappings and distinguishes proxy roles/offers.
 const u3="1003", u4="1004";
 db.upsertPlayer(guild,u3,"Proxy Player");
 db.upsertPlayer(guild,u4,"Unassigned Player");
@@ -324,4 +393,4 @@ try{
 
 db.close();
 fs.rmSync(tmp,{recursive:true,force:true});
-console.log("Veilkeeper v3.5.4 production regression test: PASS");
+console.log("Veilkeeper v3.6.0 production regression test: PASS");

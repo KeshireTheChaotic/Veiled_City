@@ -1,8 +1,16 @@
+/**
+ * SQLite persistence boundary for Veiled City.
+ *
+ * Callers should use VeiledDB methods instead of reaching into `db.db`. This
+ * keeps schema knowledge, visibility filtering, and transaction semantics in
+ * one reviewable layer.
+ */
 import fs from "node:fs";
 import path from "node:path";
 import { randomUUID } from "node:crypto";
 import { DatabaseSync } from "node:sqlite";
 
+/** SQLite repository facade and transaction boundary for campaign state. */
 export class VeiledDB {
   constructor(dbPath, schemaPath) {
     fs.mkdirSync(path.dirname(dbPath), { recursive: true });
@@ -66,7 +74,9 @@ export class VeiledDB {
       try{
         if(depth===1) this.db.exec("ROLLBACK");
         else { this.db.exec(`ROLLBACK TO SAVEPOINT ${savepoint}`); this.db.exec(`RELEASE SAVEPOINT ${savepoint}`); }
-      }catch{}
+      }catch{
+        // Preserve the original transaction error even if SQLite rollback cleanup also fails.
+      }
       throw err;
     }finally{
       this._transactionDepth=depth-1;
@@ -623,6 +633,89 @@ export class VeiledDB {
     return includeGM?this.db.prepare(sql).all(guildId,limit):this.db.prepare(sql).all(guildId,userId,characterId||"",limit);
   }
 
+  // Hard player-safe fact boundary. This method intentionally has no includeGM
+  // switch so player-facing commands cannot accidentally expose visibility='gm'.
+  playerFactsFor(guildId,userId,{characterId=null,category="",limit=80}={}) {
+    const capped=Math.max(1,Math.min(200,Number(limit)||80));
+    const wanted=String(category||"").trim().toLowerCase();
+    return this.db.prepare(`
+      SELECT * FROM facts WHERE guild_id=?
+       AND (
+         visibility IN ('public','party')
+         OR (visibility='player' AND subject_user_id=?)
+         OR (visibility='character' AND subject_character_id=?)
+       )
+       AND (?='' OR lower(category)=?)
+       ORDER BY created_at DESC LIMIT ?
+    `).all(guildId,userId,characterId||"",wanted,wanted,capped);
+  }
+
+  /** List GM-visible facts with filtering performed before LIMIT in SQLite. */
+  listFactsForGM(guildId,{visibility="all",category="",subjectUserId="",search="",limit=50}={}) {
+    const capped=Math.max(1,Math.min(100,Number(limit)||50));
+    const vis=String(visibility||"all").trim().toLowerCase();
+    const cat=String(category||"").trim().toLowerCase();
+    const user=String(subjectUserId||"").trim();
+    const q=String(search||"").trim().toLowerCase();
+    return this.db.prepare(`
+      SELECT rowid AS _rowid,* FROM facts
+      WHERE guild_id=?
+        AND (?='all' OR visibility=?)
+        AND (?='' OR lower(category)=?)
+        AND (?='' OR subject_user_id=?)
+        AND (?='' OR lower(fact_key) LIKE '%' || ? || '%' OR lower(content) LIKE '%' || ? || '%')
+      ORDER BY created_at DESC,_rowid DESC
+      LIMIT ?
+    `).all(guildId,vis,vis,cat,cat,user,user,q,q,q,capped);
+  }
+
+  findGuestCharacter(guildId,name,userId) {
+    const q=String(name||"").toLowerCase();
+    const rows=this.db.prepare(`
+      SELECT * FROM characters WHERE guild_id=? AND is_guest=1 AND status='guest'
+        AND (owner_user_id IS NULL OR owner_user_id=?)
+    `).all(guildId,userId);
+    const row=rows.find(x=>x.name.toLowerCase()===q)||rows.find(x=>x.name.toLowerCase().includes(q));
+    return row?{...row,data:JSON.parse(row.character_json)}:null;
+  }
+
+  listPublishedMessages(guildId) {
+    return this.db.prepare("SELECT * FROM published_messages WHERE guild_id=?").all(guildId);
+  }
+
+  markSessionCharacterLeft(sessionId,characterId) {
+    this.db.prepare("UPDATE session_characters SET left_at=CURRENT_TIMESTAMP WHERE session_id=? AND character_id=? AND left_at IS NULL").run(sessionId,characterId);
+  }
+
+  latestEndedSession(guildId) {
+    return this.db.prepare("SELECT * FROM sessions WHERE guild_id=? AND status='ended' ORDER BY session_number DESC LIMIT 1").get(guildId);
+  }
+
+  listVisibleActiveThreads(guildId,userId) {
+    return this.db.prepare(`
+      SELECT * FROM threads WHERE guild_id=? AND status='active'
+        AND (visibility IN ('public','party') OR (visibility='player' AND subject_user_id=?))
+      ORDER BY updated_at DESC
+    `).all(guildId,userId);
+  }
+
+  listPublicPartyThreads(guildId) {
+    return this.db.prepare("SELECT * FROM threads WHERE guild_id=? AND visibility IN ('public','party') ORDER BY updated_at DESC").all(guildId);
+  }
+
+  getRelationship(guildId,{fromType,fromKey,toType,toKey,relationshipType="other"}) {
+    return this.db.prepare(`SELECT * FROM relationships WHERE guild_id=? AND from_type=? AND from_key=? AND to_type=? AND to_key=? AND relationship_type=?`)
+      .get(guildId,fromType,fromKey,toType,toKey,relationshipType);
+  }
+
+  findCanonProposalByCharacterValue(characterId,key,value) {
+    return this.db.prepare("SELECT * FROM canon_proposals WHERE character_id=? AND canon_key=? AND proposed_value=?").get(characterId,key,value);
+  }
+
+  listSessionPublicHandouts(guildId,sessionId) {
+    return this.db.prepare("SELECT id,title,kind,authority,case_key,npc_key,location_key FROM handouts WHERE guild_id=? AND session_id=? AND status='active' AND visibility IN ('public','party') ORDER BY created_at").all(guildId,sessionId);
+  }
+
   clocksFor(guildId,{includeGM=false}={}) {
     const sql=includeGM?"SELECT * FROM clocks WHERE guild_id=?":"SELECT * FROM clocks WHERE guild_id=? AND visibility!='gm'";
     return this.db.prepare(sql).all(guildId);
@@ -931,7 +1024,7 @@ export class VeiledDB {
     return state;
   }
 
-  // ----- v3.3.0 structured relationship graph -----
+  // Relationship graph persistence.
   relationshipEntityKey(type,labelOrKey){
     const raw=String(labelOrKey||"").trim();
     const slug=raw.toLowerCase().replace(/[^a-z0-9._-]+/g,"-").replace(/^-+|-+$/g,"")||"unknown";
@@ -991,7 +1084,7 @@ export class VeiledDB {
     return {processed,created,skipped};
   }
 
-  // ----- v3.3.1 player-safe character-concept context -----
+  // Player-safe character-concept context persistence.
   recentSessions(guildId,{limit=10}={}){
     return this.db.prepare(`SELECT * FROM sessions WHERE guild_id=? AND status='ended' ORDER BY session_number DESC LIMIT ?`).all(guildId,Math.max(1,Math.min(25,Number(limit)||10))).reverse();
   }
@@ -1014,7 +1107,7 @@ export class VeiledDB {
     return {cycle,projects};
   }
 
-  // ----- v3.3.1 imported GM-only concept hooks -----
+  // Imported GM-only character concept hooks.
   upsertCharacterGmHook(guildId,characterId,hook,{source="external_character_creator"}={}){
     const c=this.getCharacter(characterId); if(!c||c.guild_id!==guildId) throw new Error("Character not found for GM hook import.");
     const key=String(hook?.key||hook?.title||randomUUID()).trim().toLowerCase().replace(/[^a-z0-9._-]+/g,"-").replace(/^-+|-+$/g,"")||randomUUID();
@@ -1064,7 +1157,7 @@ export class VeiledDB {
     const hooks=this.db.prepare(`SELECT * FROM character_gm_hooks WHERE guild_id=? AND hook_type='canon_suggestion' ORDER BY created_at`).all(guildId);
     let created=0;
     for(const h of hooks){
-      let payload={}; try{payload=JSON.parse(h.payload_json||"{}");}catch{}
+      let payload={}; try{payload=JSON.parse(h.payload_json||"{}");}catch{ /* Legacy malformed hook JSON is treated as an empty payload. */ }
       const nested=payload?.canon_suggestion&&typeof payload.canon_suggestion==="object"?payload.canon_suggestion:{};
       const key=String(nested.key||h.hook_key.replace(/^canon\./,"")).trim();
       const value=String(nested.value||h.premise||"").trim();
@@ -1102,7 +1195,7 @@ export class VeiledDB {
   updateCanonProposalHook(proposal,status,{resolutionValue="",conflictId=null,eventId=null,note="",actorId=null}={}){
     if(!proposal?.hook_id) return;
     const h=this.db.prepare(`SELECT * FROM character_gm_hooks WHERE id=?`).get(proposal.hook_id); if(!h) return;
-    let payload={}; try{payload=JSON.parse(h.payload_json||"{}");}catch{}
+    let payload={}; try{payload=JSON.parse(h.payload_json||"{}");}catch{ /* Legacy malformed hook JSON is treated as an empty payload. */ }
     const nested=payload?.canon_suggestion&&typeof payload.canon_suggestion==="object"?payload.canon_suggestion:{};
     const sameKey=String(nested.key||h.hook_key.replace(/^canon\./,"")).trim().toLowerCase()===proposal.canon_key;
     const sameValue=String(nested.value||h.premise||"").trim()===proposal.proposed_value;
@@ -1187,7 +1280,7 @@ export class VeiledDB {
     return {hooks:imported,relationships,canon_suggestions:canonSuggestions.length};
   }
 
-  // ----- v3.3.0 evidence / handouts -----
+  // Evidence and handout persistence.
   createHandout(guildId,{sessionId=null,title,kind="document",authority="canonical",visibility="party",subjectUserId=null,subjectCharacterId=null,content="",canonicalFacts=[],caseKey="",npcKey="",locationKey="",source="human_gm",metadata={}}={}){
     if(!String(title||"").trim()) throw new Error("Handout title is required.");
     const id=randomUUID();
@@ -1203,7 +1296,7 @@ export class VeiledDB {
   }
   archiveHandout(id){ this.db.prepare("UPDATE handouts SET status='archived',updated_at=CURRENT_TIMESTAMP WHERE id=?").run(id); return this.getHandout(id); }
 
-  // ----- v3.3.0 encounter aftermath drafts -----
+  // Encounter-aftermath draft persistence.
   createEncounterAftermath(encounterId,guildId,sessionId,draft,status="pending"){
     const existing=this.db.prepare("SELECT * FROM encounter_aftermath WHERE encounter_id=?").get(encounterId); const id=existing?.id||randomUUID();
     this.db.prepare(`INSERT INTO encounter_aftermath(id,encounter_id,guild_id,session_id,status,draft_json) VALUES(?,?,?,?,?,?) ON CONFLICT(encounter_id) DO UPDATE SET status=excluded.status,draft_json=excluded.draft_json,updated_at=CURRENT_TIMESTAMP`).run(id,encounterId,guildId,sessionId,status,JSON.stringify(draft||{}));

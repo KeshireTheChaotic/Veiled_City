@@ -1,3 +1,4 @@
+/** Player-safe campaign-context package builder for external character concept generation. */
 import fs from "node:fs";
 import path from "node:path";
 import { Buffer } from "node:buffer";

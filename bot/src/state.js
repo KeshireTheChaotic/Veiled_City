@@ -1,3 +1,4 @@
+/** Authoritative AI/state mutation layer. Applies validated structured outputs while enforcing transaction and visibility invariants. */
 import { randomUUID } from "node:crypto";
 
 export function summarizeRoster(rows){
@@ -44,6 +45,7 @@ function fail(message){ throw new Error(message); }
 function block(results,e,message){ results.push({type:e?.type||"unknown",ok:false,blocked:true,error:message,event:e}); return true; }
 function cleanKey(value){ return String(value||"").trim(); }
 
+/** Apply structured GM events while enforcing private-scene scope boundaries. */
 export function applyGMEvents(db,guildId,sessionId,events=[],scope={mode:"party",actorUserId:null,actorCharacterId:null}){
   const results=[];
   for(const e of events||[]){
@@ -199,7 +201,7 @@ export function applyRelationshipDrafts(db,guildId,relationships=[],scope={mode:
       }
       let visibility=r.visibility||"party";
       if(scope.mode==="private") visibility=scope.actorCharacterId?"character":"gm";
-      const existing=db.db.prepare(`SELECT * FROM relationships WHERE guild_id=? AND from_type=? AND from_key=? AND to_type=? AND to_key=? AND relationship_type=?`).get(guildId,r.from_type,from.key,r.to_type,to.key,r.relationship_type||"other");
+      const existing=db.getRelationship(guildId,{fromType:r.from_type,fromKey:from.key,toType:r.to_type,toKey:to.key,relationshipType:r.relationship_type||"other"});
       const score=r.mode==="delta"?Math.max(-5,Math.min(5,Number(existing?.score||0)+Number(r.score||0))):Math.max(-5,Math.min(5,Number(r.score||0)));
       const row=db.upsertRelationship(guildId,{fromType:r.from_type,fromKey:from.key,fromLabel:from.label,toType:r.to_type,toKey:to.key,toLabel:to.label,relationshipType:r.relationship_type||"other",score,visibility,note:r.note||"",source,sourceCharacterId:scope.actorCharacterId||null});
       out.push({ok:true,row});
@@ -245,7 +247,7 @@ export function applyCanonProposalDrafts(db,guildId,sessionId,drafts=[],scope={m
     const value=String(d?.value||"").trim();
     if(!key||!value) throw new Error("Canon proposal draft requires key and value.");
     const visibility=["public","party","gm"].includes(String(d?.visibility||"").toLowerCase())?String(d.visibility).toLowerCase():"party";
-    const before=db.db.prepare(`SELECT * FROM canon_proposals WHERE character_id=? AND canon_key=? AND proposed_value=?`).get(scope.actorCharacterId,key,value);
+    const before=db.findCanonProposalByCharacterValue(scope.actorCharacterId,key,value);
     const row=db.upsertCanonProposal(guildId,scope.actorCharacterId,null,{
       key,value,visibility,reason:String(d?.reason||"").trim()
     },{
@@ -278,6 +280,10 @@ export function assertMutationSuccess({events=[],relationships=[],handouts=[]}={
   return true;
 }
 
+/**
+ * Apply one authoritative AI mutation bundle transactionally. Either all valid
+ * state changes commit together or the surrounding transaction rolls back.
+ */
 export function applyAuthoritativeMutation(db,{guildId,sessionId=null,events=[],relationships=[],handouts=[],scope={mode:"party",actorUserId:null,actorCharacterId:null},source="ai_gm"}){
   return db.transaction(()=>{
     const eventResults=applyGMEvents(db,guildId,sessionId,events,scope);
