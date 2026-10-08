@@ -1,6 +1,9 @@
-# VEILED CITY MULTIPLAYER DISCORD ENGINE v4.4.0
+# VEILED CITY MULTIPLAYER DISCORD ENGINE v4.5.0
 
 Stateful Discord GM bot for the Veiled City multiplayer Daggerheart campaign.
+
+v4.5 adds local consequential-narration checks and network-denied, zero-token
+required validation. See [AI-GM expansion notes](docs/NEXT_EXPANSION.md).
 
 ## v4.4.0 — Living City Phase D
 

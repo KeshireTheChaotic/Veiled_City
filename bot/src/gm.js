@@ -9,6 +9,7 @@ import { simulationContext } from "./simulation.js";
 import { cityContext } from "./city-core.js";
 import { historyContext } from "./city-civic.js";
 import { minorNpcSchema } from "./city-depth.js";
+import { materialClaimSchema, NARRATIVE_CONTRACT, validateNarrativeClaims } from "./narrative-integrity.js";
 
 const routerSchema={
   type:"object",
@@ -98,6 +99,7 @@ const gmSchema={
   properties:{
     respond:{type:"boolean"},
     narration:{type:"string"},
+    narrative_claims:{type:"array",items:materialClaimSchema},
     private_messages:{
       type:"array",
       items:{
@@ -133,7 +135,7 @@ const gmSchema={
     simulation_updates:{type:"array",items:simulationUpdateSchema},
     state_review:stateReviewSchema
   },
-  required:["respond","narration","private_messages","events","handouts","relationships","npc_memories","npc_knowledge","npc_goals","canon_proposals","simulation_updates","state_review"]
+  required:["respond","narration","narrative_claims","private_messages","events","handouts","relationships","npc_memories","npc_knowledge","npc_goals","canon_proposals","simulation_updates","state_review"]
 };
 
 
@@ -142,6 +144,7 @@ const directorSchema={
   properties:{
     act:{type:"boolean"},
     public_narration:{type:"string"},
+    narrative_claims:{type:"array",items:materialClaimSchema},
     private_messages:gmSchema.properties.private_messages,
     events:gmSchema.properties.events,
     handouts:{type:"array",items:handoutDraftSchema},
@@ -153,7 +156,7 @@ const directorSchema={
     simulation_updates:{type:"array",items:simulationUpdateSchema},
     confidence:{type:"integer",minimum:0,maximum:100}
   },
-  required:["act","public_narration","private_messages","events","handouts","relationships","npc_memories","npc_knowledge","npc_goals","simulation_updates","gm_notes","confidence"]
+  required:["act","public_narration","narrative_claims","private_messages","events","handouts","relationships","npc_memories","npc_knowledge","npc_goals","simulation_updates","gm_notes","confidence"]
 };
 
 const aftermathSchema={
@@ -408,6 +411,7 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
       ctx.constitution,
       ctx.multi,
       "\n# RUNTIME SECURITY",
+      NARRATIVE_CONTRACT,
       "GM-private facts/clocks/reference content may be used to simulate the world but MUST NOT appear in narration until legitimately discovered.",
       "PLAYER visibility applies only to target_user_id. CHARACTER visibility applies to target_character_id and persists with that character even if the human later changes PCs.",
       "Never choose voluntary actions, dialogue, beliefs, resource spends, or secrets for a player-controlled character.",
@@ -492,6 +496,7 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
     if(this.config.reasoningEffort) req.reasoning={effort:this.config.reasoningEffort};
     const validateTurn=(result)=>{
       validatePostTurnStateReview(result);
+      validateNarrativeClaims(this.db,guildId,result,{mode:scope,actorUserId,actorCharacterId:ctx.actor_assignment?.character_id});
       if(!privateMode&&result.state_review.scene.decision==="transition"&&
         !(result.simulation_updates||[]).some(update=>update.kind==="residue"))
         throw new Error("A public scene transition requires structured scene residue, including empty lists where nothing was left behind.");
@@ -541,7 +546,7 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
       ]
     }[layer];
     const prompt=[
-      ctx.constitution,ctx.multi,"# AUTONOMOUS WORLD DIRECTOR",...layerRules,SIMULATION_PROMPT,
+      ctx.constitution,ctx.multi,"# AUTONOMOUS WORLD DIRECTOR",...layerRules,SIMULATION_PROMPT,NARRATIVE_CONTRACT,
       `Relevant simulation state: ${JSON.stringify(simulationContext(this.db,guildId,JSON.stringify(trigger)))}`,
       `Relevant civic context (not actor knowledge): ${JSON.stringify(cityContext(this.db,guildId,JSON.stringify(trigger)))}`,
       "You may autonomously emit the same authoritative campaign events, relationships, handouts, private_messages, and player-facing narration available to the normal GM, subject to all security/canon/player-agency restrictions.",
@@ -557,7 +562,9 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
     ].join("\n\n");
     const req={model:layer==="downtime"?this.config.downtimeModel:this.config.gmModel,input:prompt,max_output_tokens:layer==="downtime"?this.config.downtimeMaxOutputTokens:Math.min(this.config.structuredRetryMaxTokens||6000,2200),text:{format:{type:"json_schema",name:`world_director_${layer}`,strict:true,schema:directorSchema}}};
     if(this.config.reasoningEffort) req.reasoning={effort:this.config.reasoningEffort};
-    return this.requestStructured(req,{label:`world director ${layer}`});
+    const result=await this.requestStructured(req,{label:`world director ${layer}`});
+    validateNarrativeClaims(this.db,guildId,result,{mode:trigger.scope||"party",actorUserId:trigger.actor_user_id,actorCharacterId:trigger.actor_character_id});
+    return result;
   }
 
   async planNpcActions({guildId,layer,query,candidates}){
