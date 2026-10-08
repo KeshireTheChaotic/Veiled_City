@@ -1,5 +1,7 @@
 /** Shared release feature contract and read-only GM diagnostics; absent flags are disabled and records never imply PC authority. */
 export const EXPANSION_FEATURES=Object.freeze({
+  natural_language:{phase:"IHY1",records:[],command:"Normal authenticated play messages",authority:"Exact authored declarations only; no inferred PC completion or assent"},
+  roll_requests:{phase:"IHY1",records:["roll_request"],command:"/vc-roll request / pending",authority:"Private sourced pending breakdowns only; no automatic rolls or PC resource spending"},
   supply_dependencies:{phase:"SP7",records:["service_access","supply_transfer"],command:"/vc-city update; /vc-sim action",authority:"Sourced pre-cost world service constraints; human-reviewed conserved NPC deliveries only"},
   history_reconciliation:{phase:"SP6",records:[],command:"/vc-story why",authority:"Read-only current material contradictions; human repair proposals only"},
   narrative_setups:{phase:"SP6",records:["story_setup","setup_payoff"],command:"/vc-story pacing",authority:"Sourced optional setup lifecycle; no guaranteed payoff or culprit invention"},

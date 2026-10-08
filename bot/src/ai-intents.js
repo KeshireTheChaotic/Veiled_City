@@ -24,9 +24,10 @@ import { attemptCityInfluence } from "./city-civic.js";
 import { inviteOrganization } from "./owned-community.js";
 import { suggestSetupPayoff } from "./story-continuity.js";
 import { reconcileHistory } from "./history-reconciliation.js";
+import { prepareRollRequest } from "./roll-requests.js";
 const hash=value=>createHash("sha256").update(JSON.stringify(value)).digest("hex");
 const adapters=new Map();
-export const FEATURE_FLAGS={setup:"narrative_setups",organization:"player_organizations",influence:"audience_influence",evidence:"evidence_custody",dialogue:"dialogue_history",encounter:"encounter_intelligence",goal:"emergent_goals",consequence:"consequences",scene:"scene_continuity",group:"emergent_groups",
+export const FEATURE_FLAGS={roll:"roll_requests",setup:"narrative_setups",organization:"player_organizations",influence:"audience_influence",evidence:"evidence_custody",dialogue:"dialogue_history",encounter:"encounter_intelligence",goal:"emergent_goals",consequence:"consequences",scene:"scene_continuity",group:"emergent_groups",
   strategy:"strategies",arc:"personal_arcs",discovery:"discovery",project:"long_projects",mediation:"conflict_mediation",
   memory:"memory_consolidation",density:"activity_density"};
 export const stateRevision=row=>row?hash(row):"absent";
@@ -53,7 +54,7 @@ export function configureDelegation(db,guild,input,reviewer){
 }
 function preflight(db,guild,intent,context){
   if(!validateIntent(intent)) throw new Error("Invalid closed versioned intent contract.");
-  if(context.scope?.mode==="private"&&!['arc','project','discovery','dialogue','organization','setup'].includes(intent.feature)) throw new Error("Private scope cannot alter shared world state.");
+  if(context.scope?.mode==="private"&&!['arc','project','discovery','dialogue','organization','setup','roll'].includes(intent.feature)) throw new Error("Private scope cannot alter shared world state.");
   if(context.scope?.mode==="private"&&intent.feature==="setup"&&intent.payload.character_id!==context.scope.actorCharacterId)
     throw new Error("Private setup invitation belongs to this character only.");
   if(context.scope?.mode==="private"&&intent.feature==="organization"&&intent.payload.character_id!==context.scope.actorCharacterId)
@@ -133,6 +134,10 @@ export function reviewAiIntent(db,guild,{key,decision:response,expected_revision
 export function intentContext(db,guild){
   const scene=db.getActiveSession(guild)&&db.getCityCalendar(guild).flags.scene_continuity===true?sceneView(db,guild,{gm:true}):null;
   const packet={policy:delegationPolicy(db,guild),flags:db.getCityCalendar(guild).flags,
+    roll_declarations:db.getCityCalendar(guild).flags.roll_requests===true?db.listWorldEvents(guild,{includeGM:true,limit:100})
+      .filter(row=>row.kind==="player_declaration"&&row.status==="active"&&row.session_id===db.getActiveSession(guild)?.id).slice(0,12):[],
+    roll_requests:db.getCityCalendar(guild).flags.roll_requests===true?db.listCityRecords(guild,{kind:"roll_request",includeGM:true,limit:12})
+      .map(row=>({...row,expected_revision:stateRevision(row)})):[],
     scene:scene?{...scene,occupants:scene.occupants.slice(0,32),targets:scene.occupants.slice(0,32).map(row=>({
       entity_type:row.data.entity_type,entity_key:row.data.entity_key,expected_revision:stateRevision(row)}))}:null,
     goal_targets:db.listNpcProfiles(guild,{limit:32}).flatMap(npc=>db.listNpcGoals(guild,npc.npc_key,{limit:8})
@@ -175,6 +180,11 @@ export function intentContext(db,guild){
   bounded.context_metrics={max_chars:24000,estimated_chars:chars,omissions,authority:"Whole scoped records omitted; permission fields are never stripped."};
   return bounded;
 }
+registerIntentAdapter("roll",{
+  current:(db,guild,intent)=>db.getCityRecord(guild,"roll_request",`roll:${intent.payload.source_event}`),
+  impact:()=>({cost:0,review:false,reason:"Private sheet-derived pending request only; never dice, PC spending or outcome."}),
+  apply:(db,guild,intent,key,actor,context)=>prepareRollRequest(db,guild,intent.payload,actor,context)
+});
 registerIntentAdapter("setup",{
   current:(db,guild,intent)=>db.getCityRecord(guild,"story_setup",intent.payload.setup_key),
   impact:()=>({cost:0,review:false,reason:"GM-private optional sourced payoff proposal only; no automatic outcome, culprit or PC choice."}),

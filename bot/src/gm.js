@@ -16,6 +16,7 @@ import { portrayalPacket } from "./portrayal.js";
 import { intentArraySchema, INTENT_PROMPT } from "./ai-intent-contracts.js";
 import { intentContext } from "./ai-intents.js";
 import { decisionAdvisorySchema, decisionContext, validateDecisionAdvisory } from "./decision-advisory.js";
+import { declarationContext } from "./player-language.js";
 
 const routerSchema={
   type:"object",
@@ -407,6 +408,7 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
       {operation:worldDirector?"director":"turn",actorType:"gm",scope:"gm",query:messageText,scene:session?this.db.getDirectorState(session.id).scene_label:""}):null;
     return {
       decision_advisory:decisionContext(this.db,guildId,messageText),
+      player_declaration:declarationContext(this.db,guildId,actorUserId,actorKnowledgeId,messageText),
       ai_management:intentContext(this.db,guildId),
       context_plan:contextPlan,
       campaign,session,assembly,party_state:partyState,current_encounter:currentEncounter,current_combatants:currentCombatants,canon,rulings,actor_relationships:actorRelationships,gm_relationships:gmRelationships,gm_character_hooks:gmCharacterHooks,character_narratives:characterNarratives,visible_handouts:visibleHandouts,
@@ -489,6 +491,7 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
     const input=[
       `CAMPAIGN STATE:\n${JSON.stringify(ctx.campaign)}`,
       `DECISION ADVISORY (GM-private; null when disabled): ${JSON.stringify(ctx.decision_advisory)}`,
+      `AUTHENTICATED DECLARATION (attempts, not completed facts): ${JSON.stringify(ctx.player_declaration)}`,
       `AI MANAGEMENT (GM-private proposals, policy, revisions and receipts; never actor knowledge): ${JSON.stringify(ctx.ai_management)}`,
       `SESSION:\n${JSON.stringify(ctx.session)}`,
       `ASSEMBLY PLAN (GM-PRIVATE; protect per-character hooks):\n${JSON.stringify(ctx.assembly)}`,

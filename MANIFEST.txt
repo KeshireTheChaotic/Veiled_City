@@ -39,6 +39,7 @@ bot/scripts/export-campaign.mjs
 bot/scripts/fixtures/expansion-quality-golden.json
 bot/scripts/fixtures/systems-judgment-golden.json
 bot/scripts/format-check.mjs
+bot/scripts/i-heard-you-1-test.mjs
 bot/scripts/narrative-contract-test.mjs
 bot/scripts/negotiation-preview-test.mjs
 bot/scripts/npc-cognition-regression-test.mjs
@@ -119,11 +120,13 @@ bot/src/operations/overview.js
 bot/src/outcome-preview.js
 bot/src/owned-community.js
 bot/src/personal-continuity.js
+bot/src/player-language.js
 bot/src/portrayal.js
 bot/src/provenance.js
 bot/src/publishing.js
 bot/src/register-commands.js
 bot/src/relationship-state.js
+bot/src/roll-requests.js
 bot/src/roster.js
 bot/src/scene-continuity.js
 bot/src/seed-commands.js
@@ -251,6 +254,8 @@ docs/EXPANSION_GAP_ANALYSIS.md
 docs/EXPANSION_RELEASES.md
 docs/GM_OPERATIONS.md
 docs/HANDOUTS_AND_EVIDENCE.md
+docs/I_HEARD_YOU_GAP_ANALYSIS.md
+docs/I_HEARD_YOU_IMPLEMENTATION.md
 docs/LEVEL_UP.md
 docs/LIVING_CITY.md
 docs/NEXT_EXPANSION.md

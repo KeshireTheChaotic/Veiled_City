@@ -4,6 +4,7 @@ import {
   AttachmentBuilder
 } from "discord.js";
 import { dualityRoll, parseDice } from "./dice.js";
+import { prepareRollRequest, pendingRollRequests, formatRollRequest } from "./roll-requests.js";
 import { publishJournal, postJournalEntry, publishEventResults, postGmLog, postStateError, postPrivateRelay, syncConfiguredSurfaces, postPlayMessage, sendPlayerPrivate, deliverHandout } from "./publishing.js";
 import { EncounterLibrary, livePcRoster, partyTier, baseBattlePoints, DIFFICULTY_ADJUSTMENTS, autoBuildComposition, recomputeBudget, battlePointCost, HEAVY_ROLES, defaultObjective, manageWorldEncounter, recordWorldEncounterOutcome, validateWorldEncounterActivation, worldCombatantDrafts, bindWorldCombatants } from "./encounter.js";
 import { prepareLevelup, applyLevelupToData, legalAdvancements, tierAchievement } from "./character-system.js";
@@ -19,7 +20,7 @@ import { normalizeNarrativeMarkdown, narrativeRelativePath, createNarrativeExpor
 import { buildSessionRosterReport, chunkRosterReport } from "./roster.js";
 import { chunkDiscordLines } from "./discord/chunking.js";
 import { assertGmOnlyChannel, assertPlayerPrivateChannel } from "./discord/privacy.js";
-import { isExpectedError, PermissionError, NotFoundError } from "./errors.js";
+import { isExpectedError, PermissionError, NotFoundError, StateConflictError } from "./errors.js";
 import { replayReceiptIfPresent, installReceiptCapture, isMutatingCommand } from "./idempotency.js";
 import { runCampaignDiagnostics, formatDiagnostics } from "./operations/diagnostics.js";
 import { buildGmOverview, formatGmOverview } from "./operations/overview.js";
@@ -352,7 +353,8 @@ async function executeCommand(interaction,{db,gm,voice=null}){
     sub=interaction.options.getSubcommand();
   }
   if((group!=="story"&&!(group==="admin"&&sub==="seed-drafts")&&!(group==="intel"&&["discover","continuity","organizations"].includes(sub))
-    &&!(group==="handout"&&sub==="evidence")&&!(group==="downtime"&&sub==="long-project-status"))||isMutatingCommand(group,sub)) await ensurePlayer(db,interaction);
+    &&!(group==="handout"&&sub==="evidence")&&!(group==="downtime"&&sub==="long-project-status")
+    &&!(group==="roll"&&sub==="pending"))||isMutatingCommand(group,sub)) await ensurePlayer(db,interaction);
   if(await replayReceiptIfPresent({db,interaction,group,sub})) return true;
   const restoreReceiptCapture=installReceiptCapture({db,interaction,group,sub});
   try{
@@ -1295,10 +1297,26 @@ GM notes: ${a.draft.gm_notes}`:""}`.slice(0,1950):"No aftermath draft exists for
       return true;
     }
 
+    if(group==="roll"&&sub==="pending"){
+      const rows=pendingRollRequests(db,interaction.guildId,interaction.user.id);
+      const chunks=chunkTextLines((rows.map(formatRollRequest).join("\n\n")||"No current pending roll requests.").split("\n"));
+      await interaction.reply({content:chunks[0],ephemeral:true});
+      for(const content of chunks.slice(1)) await interaction.followUp({content,ephemeral:true});return true;
+    }
+    if(group==="roll"&&sub==="request"){
+      if(!isGM(db,interaction)) throw new PermissionError("GM/admin permission required to adjudicate requests.");
+      const row=prepareRollRequest(db,interaction.guildId,JSON.parse(interaction.options.getString("json",true)),interaction.user.id);
+      const chunks=chunkTextLines(formatRollRequest(row).split("\n"));
+      await interaction.reply({content:chunks[0],ephemeral:true});
+      for(const content of chunks.slice(1)) await interaction.followUp({content,ephemeral:true});return true;
+    }
     if(group==="roll"&&sub==="duality"){
       const s=requireSession(db,interaction.guildId);
       const a=db.controlledAssignment(s.id,interaction.user.id);
       const reaction=interaction.options.getBoolean("reaction")||false;
+      if(a?.character_id&&db.getCityCalendar(interaction.guildId).flags.roll_requests===true
+        &&pendingRollRequests(db,interaction.guildId,interaction.user.id).length)
+        throw new StateConflictError("A sheet-derived request is pending. Raw rolls cannot resolve or bypass it; seek native request adjudication.");
       const r=dualityRoll({
         modifier:interaction.options.getInteger("modifier")||0,
         experience:interaction.options.getInteger("experience")||0,

@@ -1,0 +1,34 @@
+# I Heard You — behavioral audit and coverage
+
+Baseline: clean `main`, `cb2f384`, package/README/manifest 8.0.0, schema 440 (2026-10-08). Source: `C:/Users/Keshi/Downloads/SUGGESTIONS-i-heard-you.md`. Production is separate and is not an implementation workspace. The user's execution request authorizes a final production pull, not live flag activation, command registration, paid calls or campaign mutation. Deployment requires the release to exist on production's fetch remote; do not silently push without authorization.
+
+## Baseline behavior and reuse plan
+
+| Proposal | Baseline verdict / production evidence | Gap, reuse and acceptance |
+| --- | --- | --- |
+| P01 | PARTIAL: `index.js` authenticates controllers; `captureDialogue` only accepts explicit `say:`; discovery is routed before persistence | Extend authenticated declaration context and native speech capture with exact ordinary quoted utterances; conservative ambiguity/OOC handling; IHY-01 |
+| P02 | PARTIAL: `dice.js:dualityRoll`, `commands.js` raw duality/metacurrency, `db.addRoll/getSavedRoll`, character traits and decision advisory exist. Pending requests, helper-owned dice and Tag Team state are ABSENT in repository-wide behavior search | Extend native city records/roll persistence and native RNG, sheet-derived source snapshots and owner-only resolution; no second dice engine; IHY-02 |
+| P03 | PARTIAL: `narrative-integrity.js` typed claims/transaction assertions already gate material changes | Extend paraphrase/private-surface and ambiguity coverage, not speculative semantic certification; IHY-03 |
+| P04 | PARTIAL: native listener-owned quotation, subjective interpretation and corrections already implemented in `dialogue-continuity.js`, cognition and memory clusters | Broaden authenticated source capture/relevance/correction references without second memory store; IHY-04 |
+| P05 | PARTIAL: world-bound encounter actor results persist own HP/status; actual PC tactic observation still manual | Add observer-scoped verified tactic pointers through scene access and existing cognition/goals; IHY-05 |
+| P06 | PARTIAL: native organization/arc/project/evidence confirmation is owner-gated but requires typed commands; negotiation supports counteroffers | Add open prose routing to exact revised offers, preserve ambiguity/counterterms and owner authority; reject narrative menus, retain optional mechanical commands; IHY-06 |
+| P07 | PARTIAL: `discoverPersonal`, scoped handouts/facts and natural routing are read-only; current workspace lacks combined case/hypothesis view | Extend existing deterministic scoped discovery; no truth/custody leakage or new investigation engine; IHY-07 |
+| P08 | PARTIAL: `reconcileHistory` bounded read-only material detectors/source proposals exist | Extend stale lineage/plan/resource receipt checks; exclude beliefs/disputed claims; no automatic repair; IHY-08 |
+| P09 | PARTIAL: native director/activity density/source goals/pacing silence and 1/3/4 opportunities exist | Rank existing eligible opportunities, source-relative relevance/repetition/no-move without new scheduler; IHY-09 |
+| P10 | PARTIAL: journals, saved messages, scoped context and GM overview already persist | Read-only sourced reconstructed briefs and GM preparation; no mandatory model call or world progression; IHY-10 |
+| P11 | PARTIAL: existing network guard, SP1–SP9/J01–J15 and end-to-end/endurance fixtures | Extend same required harness with named natural-language/collaboration/UX scenarios and machine-readable results; synthetic semantics remain UNVERIFIED for arbitrary live text; IHY-11 |
+| P12 | PARTIAL: seed/import drafts, native content manifests and safe exports already exist | Inert source-aware package preview/approval/export with collision/rights/privacy bounds; no live-state overwrite; IHY-12 |
+
+All proposals reuse `VeiledDB`, existing typed intents, revisions, native domain mutations, review, snapshots and commit-before-publish. Existing defaults/manual policy remain unchanged. Prior expansion/system-to-player audits and implementation notes remain historical evidence, not proof of new behavior. `content/GM` is absent; engine/player and `GM_PRIVATE` sources were searched instead.
+
+## Authority and breaking-risk review
+
+Inspected engine constitution, multiplayer core/rules, Rules Desk semantics and existing saves/code. External rules verified against [official SRD 2.0](https://www.daggerheart.com/wp-content/uploads/2026/08/DH_SRD_2_2026_08_25.pdf), pp. 48–49: native Duality, single net ordinary advantage die, helper highest-die exception, owner Hope costs, distinct Tag Team selected outcome/one action and combined damage. Saved runtime human rulings retain existing authority. Feature-specific exceptions not representable by approved runtime data require a labelled provisional human ruling, never guessed arithmetic. Group Action and reactions are not Help/Tag Team.
+
+Compatibility risks: source-verified pending requests must not trust raw slash bonuses; no player-facing narrative menus/buttons; default-off new behavior; additive records in schema 440 must participate in logical backups. No destructive migrations or new PC stats. Unknown traits/modifiers fail closed. No new forced real-time reply window, PC speech/consent inference, fabricated dice/difficulty, passive progression or automatic canon repair.
+
+## Phase evidence
+
+Each phase appends actual starting HEAD, before/after contract, sources/flags, production coverage and limits. `COMPLETE` applies only to tested bounded behaviors, not unrestricted language semantics. Mandatory gate: `cd bot; npm run validate`, network denied and dummy credentials. The behavioral coverage matrix and actual release ledger are maintained in `I_HEARD_YOU_IMPLEMENTATION.md`.
+
+Phase 1 (8.1.0, starting cb2f384): P01 conservative owner-authored declaration context and first-person exact quoted speech extend the real authenticated routes. P02 private native pending request foundation extends the existing contract/dispatcher/commit/publication chain. Actual per-character trait values, human-ruling-backed scoped flat modifiers, missing values, forbidden raw bypass, replay and restore are covered by `bot/scripts/i-heard-you-1-test.mjs`. P01 remains PARTIAL for unrestricted natural prose; P02 remains PARTIAL pending phase-2 collaboration, owner spending, source completeness and native resolution. P03–P12 retain baseline classifications. No live flags, campaign data, commands or deployment changed. See the behavioral matrix for bounded proof rather than inferred completion.

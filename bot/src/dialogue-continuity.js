@@ -5,24 +5,24 @@ import { indexWorldEvent } from "./city-calendar.js";
 import { requireCitySource } from "./city-core.js";
 import { motivationKey } from "./simulation-motivation.js";
 import { activeCityProxy } from "./city-constraints.js";
+import { interpretAuthoredText } from "./player-language.js";
 export function captureDialogue(db,guild,user,characterId,messageId,message,{privateScene=false}={}){
   const flags=db.getCityCalendar(guild).flags;
   if(flags.dialogue_history!==true||flags.scene_continuity!==true||!characterId||!messageId||typeof message!=="string") return null;
-  // Explicit syntax only. Planning, quoted hypotheticals and model-generated dialogue are not PC speech.
-  const match=/^say(?: to ([a-z0-9-]{1,160}))?:\s*["“]([^\n]{1,1000})["”]\s*$/i.exec(message.trim());
-  if(!match||privateScene&&!match[1]) return null;
   let pc;try{pc=personalCharacter(db,guild,user,characterId);}catch{return null;}
+  const speech=interpretAuthoredText(message,{natural:flags.natural_language===true}).speech;
+  if(!speech||privateScene&&!speech.target) return null;
   const key=`speech:${motivationKey([messageId,pc.id])}`;
   const prior=db.getWorldEvent(guild,key);if(prior) return prior;
-  const listeners=sceneView(db,guild,{gm:true}).occupants.filter(row=>row.data.entity_type==="npc"&&(!match[1]||row.data.entity_key===match[1]))
+  const listeners=sceneView(db,guild,{gm:true}).occupants.filter(row=>row.data.entity_type==="npc"&&(!speech.target||row.data.entity_key===speech.target))
     .filter(row=>!activeCityProxy(db,guild,row.data.entity_key)&&sceneAccess(db,guild,{observer_type:"npc",observer_key:row.data.entity_key,
       target_type:"character",target_key:pc.id,sense:"sound"})).slice(0,12).map(row=>row.data.entity_key);
   if(!listeners.length) return null;
   return db.transaction(()=>{
     const source=indexWorldEvent(db,guild,{key,source_id:`player:${user}`,kind:"authored_speech",title:"Explicitly authored character speech",visibility:"gm",
-      scene:currentScene(db,guild).key,details:{character_id:pc.id,author:user,quote:match[2],listeners,
+      scene:currentScene(db,guild).key,details:{character_id:pc.id,author:user,quote:speech.quote,listeners,
         private_scene:privateScene,authority:"utterance_only_not_truth_or_consent"}},user);
-    for(const npc of listeners) db.addNpcMemory(guild,{npcKey:npc,memoryType:"relational",content:`${pc.name} said: “${match[2]}” (claim unverified; not consent or binding terms)`,
+    for(const npc of listeners) db.addNpcMemory(guild,{npcKey:npc,memoryType:"relational",content:`${pc.name} said: “${speech.quote}” (claim unverified; not consent or binding terms)`,
       subjectType:"character",subjectKey:pc.id,sourceType:"heard",sourceRef:key,confidence:100,importance:70,
       tags:["authored_dialogue","utterance_not_truth"],dedupe:false});
     return source;
