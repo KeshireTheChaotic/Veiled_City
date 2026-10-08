@@ -14,7 +14,7 @@ export async function runCampaignDiagnostics({db,guild}){
   const campaign=db.getCampaign(guild.id);
   const issues=[];
   const passed=[];
-  if(data.schemaVersion<370) issues.push(`Database schema version ${data.schemaVersion}; expected 370+.`);
+  if(data.schemaVersion<380) issues.push(`Database schema version ${data.schemaVersion}; expected 380+.`);
   else passed.push(`Database schema v${data.schemaVersion}`);
   if(data.presentWithoutCharacter.length) issues.push(`${data.presentWithoutCharacter.length} present roster entr${data.presentWithoutCharacter.length===1?"y has":"ies have"} no active character.`);
   if(data.duplicateCanon.length) issues.push(`${data.duplicateCanon.length} canon key(s) have multiple current entries.`);
@@ -24,6 +24,12 @@ export async function runCampaignDiagnostics({db,guild}){
   if(data.brokenProxies.length) issues.push(`${data.brokenProxies.length} absence proxy assignment(s) have no present valid proxy controller.`);
   if(data.absentControl.length) issues.push(`${data.absentControl.length} absent player assignment(s) remain player_only instead of offscreen/background/proxy control.`);
   if(data.invalidVisibility.length) issues.push(`Invalid visibility values detected: ${data.invalidVisibility.map(x=>`${x.table}=${x.count}`).join(", ")}.`);
+  if(data.npcCognition?.profiles){
+    passed.push(`NPC cognition: ${data.npcCognition.profiles} profiles • ${data.npcCognition.memories} memories • ${data.npcCognition.knowledge} knowledge rows • ${data.npcCognition.goals} goals`);
+    if(!data.npcCognition.seed) issues.push("NPC cognition exists but the one-time v3.8 seed marker is missing; inspect before running the seed command.");
+  } else {
+    issues.push("NPC cognition has not been seeded yet. Run /vc-admin seed-npc-cognition once after reviewing the v3.8 upgrade notes.");
+  }
   if(data.pendingDirector){
     const queued=Date.parse(data.pendingDirector.queued_at||"");
     if(Number.isFinite(queued) && Date.now()-queued>24*60*60*1000) issues.push(`Pending director pass ${data.pendingDirector.layer} has remained technically queued for over 24 hours; inspect/retry or clear it.`);

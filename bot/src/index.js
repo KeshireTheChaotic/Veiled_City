@@ -133,7 +133,7 @@ async function runPendingDirectorPass(guild,session){
   let result;
   try{
     result=normalizeDirectorConfidence(await gm.runWorldDirector({guildId:guild.id,layer:pending.layer,trigger:pending}));
-    const hasOutputs=(result.events||[]).length||(result.relationships||[]).length||(result.handouts||[]).length||(result.private_messages||[]).length||String(result.public_narration||"").trim();
+    const hasOutputs=(result.events||[]).length||(result.relationships||[]).length||(result.handouts||[]).length||(result.npc_memories||[]).length||(result.npc_knowledge||[]).length||(result.npc_goals||[]).length||(result.private_messages||[]).length||String(result.public_narration||"").trim();
     if(!result.act&&hasOutputs) throw new Error("World director returned act=false with non-empty outputs.");
   }catch(err){
     log.error(`World director ${pending.layer} generation failed`,err);
@@ -144,10 +144,10 @@ async function runPendingDirectorPass(guild,session){
 
   let mutation={events:[],relationships:[],handouts:[]};
   if(result.act){
-    const mutates=(result.events||[]).some(e=>e.type!=="log_only")||(result.relationships||[]).length||(result.handouts||[]).length;
+    const mutates=(result.events||[]).some(e=>e.type!=="log_only")||(result.relationships||[]).length||(result.handouts||[]).length||(result.npc_memories||[]).length||(result.npc_knowledge||[]).length||(result.npc_goals||[]).length;
     if(mutates) db.snapshotCampaign(guild.id,{label:`Pre-world-director ${pending.layer}`,reason:`Automatic snapshot before ${pending.layer} director pass`,createdBy:"veilkeeper"});
     try{
-      mutation=applyAuthoritativeMutation(db,{guildId:guild.id,sessionId:session.id,events:result.events||[],relationships:result.relationships||[],handouts:result.handouts||[],scope:{mode:"party",actorUserId:null,actorCharacterId:null},source:`world_director_${pending.layer}`,provenance:{actorType:"ai",actorId:"world_director",triggerText:pending.reason||"",rationale:result.gm_notes||"",confidence:result.confidence??100}});
+      mutation=applyAuthoritativeMutation(db,{guildId:guild.id,sessionId:session.id,events:result.events||[],relationships:result.relationships||[],handouts:result.handouts||[],npcMemories:result.npc_memories||[],npcKnowledge:result.npc_knowledge||[],npcGoals:result.npc_goals||[],scope:{mode:"party",actorUserId:null,actorCharacterId:null},source:`world_director_${pending.layer}`,provenance:{actorType:"ai",actorId:"world_director",triggerText:pending.reason||"",rationale:result.gm_notes||"",confidence:result.confidence??100}});
     }catch(err){
       console.error(`World director ${pending.layer} state mutation rolled back`,err);
       await safeStateError({guild,error:err,context:`world-director-${pending.layer}-state`,sessionId:session.id});
@@ -173,7 +173,7 @@ async function runPendingDirectorPass(guild,session){
     await outputStep(outputErrors,{guild,sessionId:session.id,context:`world-director-${pending.layer}-private-blocked`},()=>notifyBlockedActions({guild,session,rows:pms.blocked.map(x=>({type:"private_message",error:"World-director private message targeted a user outside the active session roster."})),context:`world director/${pending.layer}`}));
   }
   await outputStep(outputErrors,{guild,sessionId:session.id,context:`world-director-${pending.layer}-gm-log`},()=>postGmLog({db,guild,sessionId:session.id,title:`World Director — ${pending.layer}`,details:`${result.gm_notes||"No GM note."}\nEvents: ${(mutation.events||[]).filter(x=>x.ok).map(x=>x.type).join(", ")||"none"}\nRelationships: ${(mutation.relationships||[]).filter(x=>x.ok).length}\nHandouts: ${(mutation.handouts||[]).filter(x=>x.ok).length}`}));
-  db.recordDirectorHistory(guild.id,{sessionId:session.id,layer:pending.layer,trigger:pending,acted:!!result.act,rationale:result.gm_notes||"",publicNarration:result.public_narration||"",mutationSummary:{events:(mutation.events||[]).filter(x=>x.ok).length,relationships:(mutation.relationships||[]).filter(x=>x.ok).length,handouts:(mutation.handouts||[]).filter(x=>x.ok).length},status:"completed"});
+  db.recordDirectorHistory(guild.id,{sessionId:session.id,layer:pending.layer,trigger:pending,acted:!!result.act,rationale:result.gm_notes||"",publicNarration:result.public_narration||"",mutationSummary:{events:(mutation.events||[]).filter(x=>x.ok).length,relationships:(mutation.relationships||[]).filter(x=>x.ok).length,handouts:(mutation.handouts||[]).filter(x=>x.ok).length,npc_memories:(mutation.npcMemories||[]).filter(x=>x.ok).length,npc_knowledge:(mutation.npcKnowledge||[]).filter(x=>x.ok).length,npc_goals:(mutation.npcGoals||[]).filter(x=>x.ok).length},status:"completed"});
   db.audit(guild.id,session.id,"ai","world_director",`director_${pending.layer}`,{pending,result:{act:result.act,gm_notes:result.gm_notes},output_errors:outputErrors.map(x=>x.ref)});
   return {ran:true,ok:true,outputErrors};
 }
@@ -187,7 +187,7 @@ async function runPrivateSceneDirector({guild,session,actorUserId,actorCharacter
   let result;
   try{
     result=normalizeDirectorConfidence(await gm.runWorldDirector({guildId:guild.id,layer:"scene",trigger:{scope:"private",actor_user_id:actorUserId,actor_character_id:actorCharacterId||null,scene_label:sceneReview.label,reason:sceneReview.reason},actorAssignment}));
-    const hasOutputs=(result.events||[]).length||(result.relationships||[]).length||(result.handouts||[]).length||(result.private_messages||[]).length||String(result.public_narration||"").trim();
+    const hasOutputs=(result.events||[]).length||(result.relationships||[]).length||(result.handouts||[]).length||(result.npc_memories||[]).length||(result.npc_knowledge||[]).length||(result.npc_goals||[]).length||(result.private_messages||[]).length||String(result.public_narration||"").trim();
     if(!result.act&&hasOutputs) throw new Error("Private scene director returned act=false with non-empty outputs.");
   }catch(err){
     await safeStateError({guild,error:err,context:"world-director-private-scene-generation",sessionId:session.id});
@@ -197,10 +197,10 @@ async function runPrivateSceneDirector({guild,session,actorUserId,actorCharacter
   const scope={mode:"private",actorUserId,actorCharacterId:actorCharacterId||null};
   let mutation={events:[],relationships:[],handouts:[]};
   if(result.act){
-    const mutates=(result.events||[]).some(e=>e.type!=="log_only")||(result.relationships||[]).length||(result.handouts||[]).length;
+    const mutates=(result.events||[]).some(e=>e.type!=="log_only")||(result.relationships||[]).length||(result.handouts||[]).length||(result.npc_memories||[]).length||(result.npc_knowledge||[]).length||(result.npc_goals||[]).length;
     if(mutates) db.snapshotCampaign(guild.id,{label:"Pre-private scene director",reason:`Automatic snapshot before private scene transition to ${sceneReview.label}`,createdBy:"veilkeeper"});
     try{
-      mutation=applyAuthoritativeMutation(db,{guildId:guild.id,sessionId:session.id,events:result.events||[],relationships:result.relationships||[],handouts:result.handouts||[],scope,source:"world_director_scene_private",provenance:{actorType:"ai",actorId:"world_director",triggerText:sceneReview.reason||"",rationale:result.gm_notes||"",confidence:result.confidence??100}});
+      mutation=applyAuthoritativeMutation(db,{guildId:guild.id,sessionId:session.id,events:result.events||[],relationships:result.relationships||[],handouts:result.handouts||[],npcMemories:result.npc_memories||[],npcKnowledge:result.npc_knowledge||[],npcGoals:result.npc_goals||[],scope,source:"world_director_scene_private",provenance:{actorType:"ai",actorId:"world_director",triggerText:sceneReview.reason||"",rationale:result.gm_notes||"",confidence:result.confidence??100}});
     }catch(err){
       await safeStateError({guild,error:err,context:"world-director-private-scene-state",sessionId:session.id});
       db.recordDirectorHistory(guild.id,{sessionId:session.id,layer:"scene",trigger:{scope:"private",actor_user_id:actorUserId,scene_label:sceneReview.label},acted:!!result.act,rationale:result.gm_notes||"",status:"failed",error:String(err.message||err)});
@@ -218,13 +218,13 @@ async function runPrivateSceneDirector({guild,session,actorUserId,actorCharacter
   if(pms.blocked.length) await outputStep(outputErrors,{guild,sessionId:session.id,context:"private-scene-director-message-blocked"},()=>notifyBlockedActions({guild,session,actorUserId,actorCharacterId,rows:pms.blocked.map(()=>({type:"private_message",error:"Private scene director attempted to message another player."})),context:"private scene director message scope"}));
   for(const pm of pms.deliver) await outputStep(outputErrors,{guild,sessionId:session.id,context:"private-scene-director-private"},()=>sendPrivate(guild,pm.discord_user_id,`**Veilkeeper — private world movement:**\n${pm.content}`,session.id,actorCharacterId||null));
   await outputStep(outputErrors,{guild,sessionId:session.id,context:"private-scene-director-gm-log"},()=>postGmLog({db,guild,sessionId:session.id,title:"World Director — private scene transition",details:`Scene: ${sceneReview.label}\n${result.gm_notes||"No GM note."}\nEvents: ${(mutation.events||[]).filter(x=>x.ok).map(x=>x.type).join(", ")||"none"}`}));
-  db.recordDirectorHistory(guild.id,{sessionId:session.id,layer:"scene",trigger:{scope:"private",actor_user_id:actorUserId,scene_label:sceneReview.label,reason:sceneReview.reason},acted:!!result.act,rationale:result.gm_notes||"",publicNarration:result.public_narration||"",mutationSummary:{events:(mutation.events||[]).filter(x=>x.ok).length,relationships:(mutation.relationships||[]).filter(x=>x.ok).length,handouts:(mutation.handouts||[]).filter(x=>x.ok).length},status:"completed"});
+  db.recordDirectorHistory(guild.id,{sessionId:session.id,layer:"scene",trigger:{scope:"private",actor_user_id:actorUserId,scene_label:sceneReview.label,reason:sceneReview.reason},acted:!!result.act,rationale:result.gm_notes||"",publicNarration:result.public_narration||"",mutationSummary:{events:(mutation.events||[]).filter(x=>x.ok).length,relationships:(mutation.relationships||[]).filter(x=>x.ok).length,handouts:(mutation.handouts||[]).filter(x=>x.ok).length,npc_memories:(mutation.npcMemories||[]).filter(x=>x.ok).length,npc_knowledge:(mutation.npcKnowledge||[]).filter(x=>x.ok).length,npc_goals:(mutation.npcGoals||[]).filter(x=>x.ok).length},status:"completed"});
   db.audit(guild.id,session.id,"ai","world_director","director_scene_private",{actor:actorUserId,scene:sceneReview,result:{act:result.act,gm_notes:result.gm_notes}});
   return {ran:true,ok:true};
 }
 
 function commitTurnMutation({guild,session,result,scope,speaker,label,meta={}}){
-  const mutates=(result.events||[]).some(e=>e.type!=="log_only")||(result.relationships||[]).length||(result.handouts||[]).length;
+  const mutates=(result.events||[]).some(e=>e.type!=="log_only")||(result.relationships||[]).length||(result.handouts||[]).length||(result.npc_memories||[]).length||(result.npc_knowledge||[]).length||(result.npc_goals||[]).length;
   if(mutates) db.snapshotCampaign(guild.id,{label,reason:`Automatic snapshot before eventful GM turn by ${speaker}`,createdBy:"veilkeeper"});
   return db.transaction(()=>{
     const mutation=applyAuthoritativeMutation(db,{
@@ -233,6 +233,9 @@ function commitTurnMutation({guild,session,result,scope,speaker,label,meta={}}){
       events:result.events||[],
       relationships:result.relationships||[],
       handouts:result.handouts||[],
+      npcMemories:result.npc_memories||[],
+      npcKnowledge:result.npc_knowledge||[],
+      npcGoals:result.npc_goals||[],
       scope,
       source:"ai_gm",
       provenance:{actorType:"ai",actorId:scope.actorUserId||"veilkeeper",messageId:meta.messageId||null,triggerText:meta.triggerText||"",rationale:Object.values(result.state_review||{}).filter(x=>x&&x.reason).map(x=>x.reason).join(" | "),confidence:Math.min(...Object.values(result.state_review||{}).filter(x=>x&&Number.isFinite(Number(x.confidence))).map(x=>Number(x.confidence)),100)}

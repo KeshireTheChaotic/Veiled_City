@@ -1,4 +1,7 @@
 .editorconfig
+Dockerfile
+README.md
+VALIDATION_REPORT.md
 bot/.env.example
 bot/.gitignore
 bot/data/.gitkeep
@@ -7,6 +10,7 @@ bot/scripts/check-source.mjs
 bot/scripts/cost-estimate.mjs
 bot/scripts/export-campaign.mjs
 bot/scripts/format-check.mjs
+bot/scripts/npc-cognition-regression-test.mjs
 bot/scripts/offline-smoke-test.mjs
 bot/scripts/operations-regression-test.mjs
 bot/scripts/production-regression-test.mjs
@@ -36,6 +40,7 @@ bot/src/handout.js
 bot/src/idempotency.js
 bot/src/index.js
 bot/src/logger.js
+bot/src/npc-cognition.js
 bot/src/operations/diagnostics.js
 bot/src/operations/overview.js
 bot/src/publishing.js
@@ -46,13 +51,13 @@ bot/src/state.js
 bot/src/voice.js
 content/CARDS/ANCESTRIES_AND_COMMUNITIES.md
 content/CARDS/CUSTOM_DOMAINS.md
-content/CARDS/DOMAIN_ACCESS.md
-content/CARDS/domain_cards.json
 content/CARDS/DOMAINS/HEX.md
 content/CARDS/DOMAINS/PACT.md
 content/CARDS/DOMAINS/SIGNAL.md
 content/CARDS/DOMAINS/VEIL.md
+content/CARDS/DOMAIN_ACCESS.md
 content/CARDS/OCCULT_SCARS.md
+content/CARDS/domain_cards.json
 content/ENGINE/AI_GM_CONSTITUTION.md
 content/ENGINE/CONTENT_ROUTING.md
 content/ENGINE/CROSS_MODEL_HANDOFF.md
@@ -64,8 +69,8 @@ content/ENGINE/MULTIPLAYER_GM_RULES.md
 content/ENGINE/ORACLE.md
 content/ENGINE/PERSISTENCE_SCHEMA.md
 content/ENGINE/validate_package.py
-content/GM_PRIVATE/ADVERSARIES/adversaries.json
 content/GM_PRIVATE/ADVERSARIES/ADVERSARY_COMPENDIUM.md
+content/GM_PRIVATE/ADVERSARIES/adversaries.json
 content/GM_PRIVATE/AI_DM_COMPENDIUM.md
 content/GM_PRIVATE/CAMPAIGN_ARC.md
 content/GM_PRIVATE/CHASE_TOOLKIT.md
@@ -89,10 +94,8 @@ content/GM_PRIVATE/MYSTERIES/mystery_index.json
 content/GM_PRIVATE/NPCS/NPC_DOSSIERS.md
 content/GM_PRIVATE/NPCS/npcs.json
 content/GM_PRIVATE/PLAYERS/README.md
-content/manifest.json
 content/MANIFEST.txt
 content/PLAYER/BLANK_CHARACTER_SHEET.docx
-content/PLAYER/blank_character_sheet.md
 content/PLAYER/CAMPAIGN_FRAME.md
 content/PLAYER/CASE_HOOKS.md
 content/PLAYER/CHARACTER_CREATION.md
@@ -100,18 +103,19 @@ content/PLAYER/CITY_LOCATIONS.md
 content/PLAYER/FACTION_PRIMER.md
 content/PLAYER/MODERN_EQUIPMENT.md
 content/PLAYER/OCCULT_SERVICES.md
-content/PLAYER/PLAYER_COMPENDIUM.md
 content/PLAYER/PLAYERS/README.md
+content/PLAYER/PLAYER_COMPENDIUM.md
 content/PLAYER/QUICK_REFERENCE.md
 content/PLAYER/SETTING_GUIDE.md
 content/PLAYER/VEHICLES.md
+content/PLAYER/blank_character_sheet.md
 content/README.md
 content/SOURCES.md
 content/STATE/CAMPAIGN_STATE.json
 content/STATE/SESSION_JOURNAL.md
 content/STATE/SESSION_SAVE_TEMPLATE.md
+content/manifest.json
 docker-compose.yml
-Dockerfile
 docs/ACCESSIBILITY.md
 docs/API_COSTS_2026-10-01.md
 docs/BOT_COMMANDS.md
@@ -135,6 +139,7 @@ docs/CHANGELOG_v3.5.4_DISCORD.md
 docs/CHANGELOG_v3.5.5_DISCORD.md
 docs/CHANGELOG_v3.6.0_DISCORD.md
 docs/CHANGELOG_v3.7.0_DISCORD.md
+docs/CHANGELOG_v3.8.0_DISCORD.md
 docs/CHARACTER_CONCEPT_CONTEXT.md
 docs/CHARACTER_EXPORT.md
 docs/CHARACTER_NARRATIVE_MARKDOWN.md
@@ -148,6 +153,7 @@ docs/ENCOUNTER_BUILDER.md
 docs/GM_OPERATIONS.md
 docs/HANDOUTS_AND_EVIDENCE.md
 docs/LEVEL_UP.md
+docs/NPC_COGNITION.md
 docs/NPC_PROXY_CONTROL.md
 docs/OPENAI_SETUP.md
 docs/PARTY_ASSEMBLY.md
@@ -181,7 +187,6 @@ docs/UPGRADE_3.5.3_TO_3.5.4.md
 docs/UPGRADE_3.5.4_TO_3.5.5.md
 docs/UPGRADE_3.5.5_TO_3.6.0.md
 docs/UPGRADE_3.6.0_TO_3.7.0.md
+docs/UPGRADE_3.7.0_TO_3.8.0.md
 docs/VOICE_NARRATION.md
 docs/WORLD_DIRECTOR.md
-README.md
-VALIDATION_REPORT.md

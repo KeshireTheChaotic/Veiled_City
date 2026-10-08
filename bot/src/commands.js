@@ -21,6 +21,7 @@ import { isExpectedError, PermissionError, NotFoundError } from "./errors.js";
 import { replayReceiptIfPresent, installReceiptCapture } from "./idempotency.js";
 import { runCampaignDiagnostics, formatDiagnostics } from "./operations/diagnostics.js";
 import { buildGmOverview, formatGmOverview } from "./operations/overview.js";
+import { seedNpcCognition } from "./npc-cognition.js";
 
 export { buildCommands } from "./command-definitions.js";
 
@@ -356,7 +357,7 @@ export async function handleCommand(interaction,{db,gm,voice=null}){
         let mutation={events:[],relationships:[],handouts:[]};
         if(result.act){
           db.snapshotCampaign(interaction.guildId,{label:"Pre-manual-director",reason,createdBy:interaction.user.id});
-          mutation=applyAuthoritativeMutation(db,{guildId:interaction.guildId,sessionId:session.id,events:result.events||[],relationships:result.relationships||[],handouts:result.handouts||[],scope:{mode:"party",actorUserId:null,actorCharacterId:null},source:"world_director_manual",provenance:{interactionId:interaction.id,actorId:interaction.user.id,triggerText:reason,rationale:result.gm_notes||"",confidence:result.confidence??100}});
+          mutation=applyAuthoritativeMutation(db,{guildId:interaction.guildId,sessionId:session.id,events:result.events||[],relationships:result.relationships||[],handouts:result.handouts||[],npcMemories:result.npc_memories||[],npcKnowledge:result.npc_knowledge||[],npcGoals:result.npc_goals||[],scope:{mode:"party",actorUserId:null,actorCharacterId:null},source:"world_director_manual",provenance:{interactionId:interaction.id,actorId:interaction.user.id,triggerText:reason,rationale:result.gm_notes||"",confidence:result.confidence??100}});
           await publishEventResults({db,guild:interaction.guild,results:mutation.events||[]});
           for(const h of (mutation.handouts||[]).filter(x=>x.ok)) await deliverHandout({db,guild:interaction.guild,handout:h.row,format:"markdown"});
           if(String(result.public_narration||"").trim()) await postPlayMessage({db,guild:interaction.guild,sessionId:session.id,content:result.public_narration});
@@ -1316,7 +1317,7 @@ GM notes: ${a.draft.gm_notes}`:""}`.slice(0,1950):"No aftermath draft exists for
           guildId:interaction.guildId,layer:"downtime",cycle:{...cycle,status:"resolving"},projects,
           trigger:{cycle_label:cycle.label,project_summary:resolved.summary||"",project_results:resolved.project_results||[]}
         }));
-      const directorHasOutputs=(director.events||[]).length||(director.relationships||[]).length||(director.handouts||[]).length||(director.private_messages||[]).length||String(director.public_narration||"").trim();
+      const directorHasOutputs=(director.events||[]).length||(director.relationships||[]).length||(director.handouts||[]).length||(director.npc_memories||[]).length||(director.npc_knowledge||[]).length||(director.npc_goals||[]).length||(director.private_messages||[]).length||String(director.public_narration||"").trim();
       if(!director.act&&directorHasOutputs) throw new Error("Downtime world director returned act=false with non-empty outputs.");
 
       const byId=new Map(projects.map(p=>[p.id,p]));
@@ -1331,14 +1332,14 @@ GM notes: ${a.draft.gm_notes}`:""}`.slice(0,1950):"No aftermath draft exists for
         }
         const dscope={mode:"party",actorUserId:null,actorCharacterId:null};
         const projectMutation=applyAuthoritativeMutation(db,{guildId:interaction.guildId,sessionId:cycle.source_session_id||null,events:resolved.events||[],relationships:resolved.relationships||[],handouts:resolved.handouts||[],scope:dscope,source:"downtime_project",provenance:{actorType:"ai",actorId:"downtime",interactionId:interaction.id,triggerText:cycle.label,rationale:resolved.summary||"",confidence:100}});
-        const directorMutation=director.act?applyAuthoritativeMutation(db,{guildId:interaction.guildId,sessionId:cycle.source_session_id||null,events:director.events||[],relationships:director.relationships||[],handouts:director.handouts||[],scope:dscope,source:"world_director_downtime",provenance:{actorType:"ai",actorId:"world_director",interactionId:interaction.id,triggerText:cycle.label,rationale:director.gm_notes||"",confidence:director.confidence??100}}):{events:[],relationships:[],handouts:[]};
+        const directorMutation=director.act?applyAuthoritativeMutation(db,{guildId:interaction.guildId,sessionId:cycle.source_session_id||null,events:director.events||[],relationships:director.relationships||[],handouts:director.handouts||[],npcMemories:director.npc_memories||[],npcKnowledge:director.npc_knowledge||[],npcGoals:director.npc_goals||[],scope:dscope,source:"world_director_downtime",provenance:{actorType:"ai",actorId:"world_director",interactionId:interaction.id,triggerText:cycle.label,rationale:director.gm_notes||"",confidence:director.confidence??100}}):{events:[],relationships:[],handouts:[],npcMemories:[],npcKnowledge:[],npcGoals:[]};
         if(cycle.source_session_id) db.completeDirectorPass(cycle.source_session_id,"downtime");
         const combinedSummary=[resolved.summary||"",director.act?director.gm_notes||"":""].filter(Boolean).join("\n\n");
         const done=db.resolveDowntimeCycle(cycle.id,combinedSummary);
         return {projectMutation,directorMutation,done};
       });
       const {projectMutation,directorMutation,done}=committed;
-      db.recordDirectorHistory(interaction.guildId,{sessionId:cycle.source_session_id||null,layer:"downtime",trigger:{cycle_label:cycle.label,paused:db.isDirectorPaused(interaction.guildId)},acted:!!director.act,rationale:director.gm_notes||"",publicNarration:director.public_narration||"",mutationSummary:{events:(directorMutation.events||[]).filter(x=>x.ok).length,relationships:(directorMutation.relationships||[]).filter(x=>x.ok).length,handouts:(directorMutation.handouts||[]).filter(x=>x.ok).length},status:db.isDirectorPaused(interaction.guildId)?"skipped":"completed"});
+      db.recordDirectorHistory(interaction.guildId,{sessionId:cycle.source_session_id||null,layer:"downtime",trigger:{cycle_label:cycle.label,paused:db.isDirectorPaused(interaction.guildId)},acted:!!director.act,rationale:director.gm_notes||"",publicNarration:director.public_narration||"",mutationSummary:{events:(directorMutation.events||[]).filter(x=>x.ok).length,relationships:(directorMutation.relationships||[]).filter(x=>x.ok).length,handouts:(directorMutation.handouts||[]).filter(x=>x.ok).length,npc_memories:(directorMutation.npcMemories||[]).filter(x=>x.ok).length,npc_knowledge:(directorMutation.npcKnowledge||[]).filter(x=>x.ok).length,npc_goals:(directorMutation.npcGoals||[]).filter(x=>x.ok).length},status:db.isDirectorPaused(interaction.guildId)?"skipped":"completed"});
       const eventResults=[...(projectMutation.events||[]),...(directorMutation.events||[])];
       const handoutResults=[...(projectMutation.handouts||[]),...(directorMutation.handouts||[])];
       const outputErrors=[];
@@ -1439,7 +1440,7 @@ GM notes: ${a.draft.gm_notes}`:""}`.slice(0,1950):"No aftermath draft exists for
       return true;
     }
 
-    if(group==="admin"&&["backup","backups","restore-preview","restore","doctor","ledger"].includes(sub)){
+    if(group==="admin"&&["backup","backups","restore-preview","restore","doctor","ledger","seed-npc-cognition"].includes(sub)){
       if(!isGM(db,interaction)) throw new PermissionError("GM/admin permission required.");
       if(sub==="backup"){
         const row=db.createBackup(interaction.guildId,{label:interaction.options.getString("label")||"Manual backup",reason:interaction.options.getString("reason")||"Manual GM backup",createdBy:interaction.user.id});
@@ -1462,6 +1463,18 @@ GM notes: ${a.draft.gm_notes}`:""}`.slice(0,1950):"No aftermath draft exists for
         await syncConfiguredSurfaces({db,guild:interaction.guild});
         await postGmLog({db,guild:interaction.guild,title:"Campaign backup restored",details:`Restored backup ${row.id.slice(0,8)} — ${row.label}. A safety snapshot was created first.`});
         await interaction.editReply(`Restored backup \`${row.id.slice(0,8)}\` **${row.label}**. A pre-restore safety snapshot was created automatically.`); return true;
+      }
+      if(sub==="seed-npc-cognition"){
+        db.snapshotCampaign(interaction.guildId,{label:"Pre-NPC-cognition seed",reason:"Safety snapshot before one-time v3.8 NPC cognition bootstrap",createdBy:interaction.user.id});
+        const counts=seedNpcCognition({db,content:gm.content,guildId:interaction.guildId,actorId:interaction.user.id});
+        const message=[
+          "**NPC cognition seed complete.** This seed is one-time for this campaign.",
+          `Profiles: **${counts.profiles}** • Goals: **${counts.goals}** • Knowledge rows: **${counts.knowledge}** • Memories: **${counts.memories}**`,
+          `Existing NPC references incorporated: **${counts.references}** • Relationship memories incorporated: **${counts.relationships}**`,
+          "GM-only cognition remains subjective; global campaign facts were not copied into NPC knowledge automatically."
+        ].join("\n");
+        await postGmLog({db,guild:interaction.guild,title:"NPC cognition seeded",details:message});
+        await interaction.reply({content:message,ephemeral:true}); return true;
       }
       if(sub==="ledger"){
         const rows=db.listMutationLedger(interaction.guildId,{limit:interaction.options.getInteger("limit")||30,sourceLayer:interaction.options.getString("layer")||""});
@@ -1534,6 +1547,29 @@ GM notes: ${a.draft.gm_notes}`:""}`.slice(0,1950):"No aftermath draft exists for
       if(sub==="overview"){
         const chunks=chunkTextLines(formatGmOverview(buildGmOverview(db,interaction.guildId),{formatFact:gmFactLine}));
         await interaction.reply({content:chunks[0],ephemeral:true}); for(const c of chunks.slice(1)) await interaction.followUp({content:c,ephemeral:true}); return true;
+      }
+      if(sub==="npc-state"){
+        const profile=db.findNpcProfile(interaction.guildId,interaction.options.getString("npc",true));
+        if(!profile) throw new NotFoundError("NPC cognition profile not found. Run /vc-admin seed-npc-cognition once or use the NPC in play first.");
+        const memories=db.listNpcMemories(interaction.guildId,profile.npc_key,{status:"active",limit:20});
+        const knowledge=db.listNpcKnowledge(interaction.guildId,profile.npc_key,{limit:30});
+        const goals=db.listNpcGoals(interaction.guildId,profile.npc_key,{limit:20});
+        const lines=[
+          `**NPC Cognition — ${profile.display_name}**`,
+          `${profile.role||"Role unspecified"} • activity: **${profile.activity_tier}** • source: ${profile.source}`,
+          profile.public_identity?`Public identity: ${profile.public_identity}`:"",
+          profile.portrayal?`Portrayal: ${profile.portrayal}`:"",
+          `Decision profile: ${JSON.stringify(profile.decision_profile||{})}`,
+          profile.knowledge_boundaries?.length?`Knowledge boundaries: ${profile.knowledge_boundaries.join("; ")}`:"Knowledge boundaries: none recorded",
+          "**Active Goals**",
+          ...(goals.length?goals.map(g=>`• [${g.priority}] **${g.title||g.goal_key}** (${g.horizon}/${g.status}) — ${g.objective}`):["• none"]),
+          "**Knowledge / Beliefs**",
+          ...(knowledge.length?knowledge.map(k=>`• **${k.belief_state}** ${k.knowledge_key} (${k.confidence}%)${k.is_secret?" • secret":""} — ${k.content}`):["• none"]),
+          "**Memories**",
+          ...(memories.length?memories.map(m=>`• **${m.memory_type}** [importance ${m.importance}, confidence ${m.confidence}] — ${m.content}`):["• none"])
+        ].filter(Boolean);
+        const chunks=chunkTextLines(lines);
+        await interaction.reply({content:chunks[0],ephemeral:true}); for(const chunk of chunks.slice(1)) await interaction.followUp({content:chunk,ephemeral:true}); return true;
       }
       if(sub==="fact-edit"||sub==="fact-archive"||sub==="fact-promote"){
         const row=db.findFactForGM(interaction.guildId,interaction.options.getString("fact_id",true)); if(!row) throw new NotFoundError("Fact not found.");

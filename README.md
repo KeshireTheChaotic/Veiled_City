@@ -1,6 +1,22 @@
-# VEILED CITY MULTIPLAYER DISCORD ENGINE v3.7.0
+# VEILED CITY MULTIPLAYER DISCORD ENGINE v3.8.0
 
 Stateful Discord GM bot for the Veiled City multiplayer Daggerheart campaign.
+
+
+## v3.8.0 — Persistent NPC Cognition
+
+v3.8.0 establishes Veilkeeper's first persistent NPC cognition layer. Significant NPCs now have durable **profiles, subjective memories, knowledge/beliefs, goals, and retrieval state** that remain distinct from objective campaign facts and canon. An NPC can therefore remember incorrectly, believe a rumor, lack information the GM knows, or revise an agenda without rewriting campaign truth.
+
+Veilkeeper retrieves only the NPC cognition relevant to the current scene/query rather than injecting every stored memory into each prompt. Retrieval weighs direct relevance, importance, confidence, recency, reinforcement, goals, activity tier, and active NPC-proxy context. The World Director receives a broader goal-aware packet for established active/supporting NPCs.
+
+The cognition model includes Veiled City-specific boundaries for **hospitality, obligation/contract custom, supernatural impressions, thresholds, anchors, and the Veil**. Hospitality or shelter can inform remembered debt or contractual expectation only when established custom, invitation, exchange, oath, Court/Concord practice, or explicit terms justify it; ordinary courtesy is not automatically binding. Supernatural/Veil impressions remain subjective evidence rather than omniscience or automatic canon.
+
+After upgrading, a GM should run `/vc-admin seed-npc-cognition` **once**. The seed imports packaged GM NPC dossiers plus already-structured campaign NPC references and relationship state. It deliberately does not copy arbitrary global/player facts into every NPC's knowledge. Use `/vc-gm npc-state npc:<name>` to inspect the resulting GM-private profile, memories, beliefs, and goals.
+
+See:
+- `docs/NPC_COGNITION.md`
+- `docs/UPGRADE_3.7.0_TO_3.8.0.md`
+- `docs/CHANGELOG_v3.8.0_DISCORD.md`
 
 ## v3.7.0 — GM Operations, Recovery & Provenance
 

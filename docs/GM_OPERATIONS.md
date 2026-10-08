@@ -52,3 +52,12 @@ This guarantees duplicate-delivery protection for the same Discord interaction. 
 The doctor checks database schema version, active roster consistency, orphaned character/session/handout references, proxy consistency, malformed visibility values, duplicate current canon, pending director state, required runtime files, configured GM role existence, GM-only channel privacy, play-channel availability, and registered player-private channel privacy.
 
 Doctor is diagnostic only; it never changes campaign state automatically.
+
+
+## NPC cognition operations (v3.8.0)
+
+After upgrading a campaign, run `/vc-admin seed-npc-cognition` once. The command creates a safety snapshot and then seeds persistent NPC profiles, subjective memories, beliefs/knowledge boundaries, and goals from packaged GM NPC dossiers plus already-structured campaign NPC references and relationship state. A durable seed marker prevents accidental reruns.
+
+Use `/vc-gm npc-state npc:<name-or-key>` to inspect the resulting GM-only cognition. NPC cognition is intentionally subjective and can disagree with objective campaign facts or canon; do not "correct" a mistaken NPC belief by rewriting canon unless the world truth itself has changed.
+
+`/vc-admin doctor` reports whether cognition has been seeded and summarizes its row counts. GM-full campaign exports/backups include the cognition tables; player-safe exports exclude them.

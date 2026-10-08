@@ -123,6 +123,7 @@ Combat-state controls:
 - `/vc-admin restore-preview`
 - `/vc-admin restore`
 - `/vc-admin doctor`
+- `/vc-admin seed-npc-cognition` — one-time bootstrap of persistent NPC cognition from existing campaign/content state
 - `/vc-admin ledger`
 
 ## Player / Intel
@@ -141,6 +142,7 @@ Combat-state controls:
 - `/vc-gm fact-archive`
 - `/vc-gm fact-promote`
 - `/vc-gm overview`
+- `/vc-gm npc-state npc:<name-or-key>` — inspect GM-private NPC profile, memories, beliefs, and goals
 
 World Director operations:
 - `/vc-director status`

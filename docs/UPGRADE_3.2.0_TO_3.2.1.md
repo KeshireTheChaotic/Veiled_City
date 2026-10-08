@@ -25,4 +25,4 @@ npm start
 
 ## Fixed
 
-`/vc-level level-choose` previously placed required `domain_card` after optional `detail_one` and `detail_two`, causing Discord API error `50035 APPLICATION_COMMAND_OPTIONS_REQUIRED_INVALID`. v3.2.1 moves `domain_card` before all optional fields.
+`/vc character level-choose` previously placed required `domain_card` after optional `detail_one` and `detail_two`, causing Discord API error `50035 APPLICATION_COMMAND_OPTIONS_REQUIRED_INVALID`. v3.2.1 moves `domain_card` before all optional fields.

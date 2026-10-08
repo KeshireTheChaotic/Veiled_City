@@ -17,14 +17,16 @@ const character=db.createCharacter(guild,user,"Operator",{resources:{hp:{current
 const session=db.startSession(guild,"Ops","already_together");
 db.setPresence(session.id,user,"present");
 db.assignCharacter(session.id,user,character.id);
-assert.equal(db.doctorData(guild).schemaVersion,370);
+assert.equal(db.doctorData(guild).schemaVersion,380);
 
 // New command surfaces exist.
 const commands=buildCommands();
 assert(commands.find(c=>c.name==="vc-director")?.options?.some(o=>o.name==="history"));
 assert(commands.find(c=>c.name==="vc-admin")?.options?.some(o=>o.name==="doctor"));
 assert(commands.find(c=>c.name==="vc-admin")?.options?.some(o=>o.name==="backup"));
+assert(commands.find(c=>c.name==="vc-admin")?.options?.some(o=>o.name==="seed-npc-cognition"));
 assert(commands.find(c=>c.name==="vc-gm")?.options?.some(o=>o.name==="overview"));
+assert(commands.find(c=>c.name==="vc-gm")?.options?.some(o=>o.name==="npc-state"));
 assert(commands.find(c=>c.name==="vc-gm")?.options?.some(o=>o.name==="fact-promote"));
 
 function interaction({id,sub,integers={},strings={},isGm=true}){
@@ -96,7 +98,7 @@ assert.match(aiEntry.trigger_text,/inspect the sigil/i);
 assert.match(aiEntry.rationale,/plainly visible/i);
 
 // Low-confidence mechanical changes must not be committed as authoritative output.
-const categories=["facts_clues","resources","clocks","threads","references","relationships","handouts","canon","veil_exposure"];
+const categories=["facts_clues","resources","clocks","threads","references","relationships","handouts","canon","veil_exposure","npc_cognition"];
 const review={};
 for(const c of categories) review[c]={decision:"no_change",reason:"No justified change.",confidence:100};
 review.scene={decision:"continue",label:"",reason:"Same scene."};
@@ -117,4 +119,4 @@ assert.equal(Array.isArray(doctor.invalidVisibility),true);
 
 db.close();
 fs.rmSync(tmp,{recursive:true,force:true});
-console.log("Veilkeeper v3.7.0 operations regression test: PASS");
+console.log("Veilkeeper v3.8.0 operations regression test: PASS");

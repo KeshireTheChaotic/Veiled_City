@@ -228,7 +228,7 @@ assert.equal(privateMara.subject_character_id,c1.id);
 
 // 3) Mandatory post-turn review is exhaustive and cross-validates emitted mutations.
 const reviewBase={
-  facts_clues:{decision:"no_change",reason:"No new fact."},resources:{decision:"no_change",reason:"No resource consequence."},clocks:{decision:"no_change",reason:"No clock changed."},threads:{decision:"no_change",reason:"No thread changed."},references:{decision:"no_change",reason:"No reference changed."},relationships:{decision:"no_change",reason:"No relationship changed."},handouts:{decision:"no_change",reason:"No handout."},canon:{decision:"no_change",reason:"No canon."},veil_exposure:{decision:"no_change",reason:"No exposure change."},scene:{decision:"continue",label:"",reason:"Same scene."}
+  facts_clues:{decision:"no_change",reason:"No new fact."},resources:{decision:"no_change",reason:"No resource consequence."},clocks:{decision:"no_change",reason:"No clock changed."},threads:{decision:"no_change",reason:"No thread changed."},references:{decision:"no_change",reason:"No reference changed."},relationships:{decision:"no_change",reason:"No relationship changed."},npc_cognition:{decision:"no_change",reason:"No NPC cognition changed."},handouts:{decision:"no_change",reason:"No handout."},canon:{decision:"no_change",reason:"No canon."},veil_exposure:{decision:"no_change",reason:"No exposure change."},scene:{decision:"continue",label:"",reason:"Same scene."}
 };
 validatePostTurnStateReview({events:[],relationships:[],handouts:[],state_review:reviewBase});
 assert.throws(()=>validatePostTurnStateReview({events:[{type:"clock_delta"}],relationships:[],handouts:[],state_review:reviewBase}),/clocks=no_change/);
@@ -259,14 +259,14 @@ assert.equal(db.getDirectorState(session.id).round_number,2);
 
 // 5) GM turn handling retries an inconsistent mandatory post-turn review and private director context sees private transcript.
 const noChangeReview={
-  facts_clues:{decision:"no_change",reason:"none"},resources:{decision:"no_change",reason:"none"},clocks:{decision:"no_change",reason:"none"},threads:{decision:"no_change",reason:"none"},references:{decision:"no_change",reason:"none"},relationships:{decision:"no_change",reason:"none"},handouts:{decision:"no_change",reason:"none"},canon:{decision:"no_change",reason:"none"},veil_exposure:{decision:"no_change",reason:"none"},scene:{decision:"continue",label:"",reason:"same scene"}
+  facts_clues:{decision:"no_change",reason:"none"},resources:{decision:"no_change",reason:"none"},clocks:{decision:"no_change",reason:"none"},threads:{decision:"no_change",reason:"none"},references:{decision:"no_change",reason:"none"},relationships:{decision:"no_change",reason:"none"},npc_cognition:{decision:"no_change",reason:"none"},handouts:{decision:"no_change",reason:"none"},canon:{decision:"no_change",reason:"none"},veil_exposure:{decision:"no_change",reason:"none"},scene:{decision:"continue",label:"",reason:"same scene"}
 };
 let turnCalls=0;
 const fakeTurnAI={responses:{create:async(req)=>{
   turnCalls++;
   const bad=structuredClone(noChangeReview);
   if(turnCalls===1) bad.clocks={decision:"changed",reason:"claimed without mutation"};
-  return {output_text:JSON.stringify({respond:true,narration:"Test narration.",private_messages:[],events:[],handouts:[],relationships:[],canon_proposals:[],state_review:bad})};
+  return {output_text:JSON.stringify({respond:true,narration:"Test narration.",private_messages:[],events:[],handouts:[],relationships:[],npc_memories:[],npc_knowledge:[],npc_goals:[],canon_proposals:[],state_review:bad})};
 }}};
 const fakeContent={read:()=>"",search:()=>[]};
 const gmConfig={openaiKey:"x",gmModel:"test",routerModel:"test",maxRecentMessages:20,maxContentChunks:4,structuredRetryMaxTokens:3000,reasoningEffort:"",downtimeModel:"test",downtimeMaxOutputTokens:1200};
@@ -279,7 +279,7 @@ let proposalTurnCalls=0;
 const fakeProposalAI={responses:{create:async(req)=>{
   proposalTurnCalls++;
   const proposals=proposalTurnCalls===1?[]:[{key:"character.two.species",value:"Two is literally a frog.",visibility:"party",reason:"Explicit player request for campaign canon."}];
-  return {output_text:JSON.stringify({respond:true,narration:"I will leave canon approval to the GM.",private_messages:[],events:[],handouts:[],relationships:[],canon_proposals:proposals,state_review:noChangeReview})};
+  return {output_text:JSON.stringify({respond:true,narration:"I will leave canon approval to the GM.",private_messages:[],events:[],handouts:[],relationships:[],npc_memories:[],npc_knowledge:[],npc_goals:[],canon_proposals:proposals,state_review:noChangeReview})};
 }}};
 const proposalSvc=new GMService({db,content:fakeContent,config:gmConfig,ai:fakeProposalAI});
 const proposalTurn=await proposalSvc.runTurn({guildId:guild,actorUserId:u1,actorName:"One",actorAssignment:db.activeAssignment(session.id,u1),messageText:"Two is literally a frog as campaign canon. Inform the GM.",scope:"private"});
@@ -289,7 +289,7 @@ assert.equal(proposalTurn.state_review.canon.decision,"no_change","canon proposa
 
 db.addMessage({guildId:guild,sessionId:session.id,userId:u1,speakerName:"One",characterId:c1.id,visibility:"character",subjectCharacterId:c1.id,content:"PRIVATE_DIRECTOR_SENTINEL"});
 let directorInput="";
-const fakeDirectorAI={responses:{create:async(req)=>{directorInput=String(req.input||"");return {output_text:JSON.stringify({act:false,public_narration:"",private_messages:[],events:[],handouts:[],relationships:[],gm_notes:"No move."})};}}};
+const fakeDirectorAI={responses:{create:async(req)=>{directorInput=String(req.input||"");return {output_text:JSON.stringify({act:false,public_narration:"",private_messages:[],events:[],handouts:[],relationships:[],npc_memories:[],npc_knowledge:[],npc_goals:[],gm_notes:"No move.",confidence:100})};}}};
 const directorSvc=new GMService({db,content:fakeContent,config:gmConfig,ai:fakeDirectorAI});
 await directorSvc.runWorldDirector({guildId:guild,layer:"scene",trigger:{scope:"private",actor_user_id:u1,actor_character_id:c1.id,scene_label:"Back Room",reason:"Moved rooms"}});
 assert.match(directorInput,/PRIVATE_DIRECTOR_SENTINEL/,"private scene director did not receive acting character private context");
@@ -298,7 +298,7 @@ assert.match(directorInput,/PRIVATE_DIRECTOR_SENTINEL/,"private scene director d
 const downtimeGuild="guild-downtime-director";
 db.configureCampaign(downtimeGuild,{playChannelId:"play-downtime"});
 let downtimePrompt="";
-const fakeDowntimeAI={responses:{create:async(req)=>{downtimePrompt=String(req.input||"");return {output_text:JSON.stringify({act:false,public_narration:"",private_messages:[],events:[],handouts:[],relationships:[],gm_notes:"World remains stable."})};}}};
+const fakeDowntimeAI={responses:{create:async(req)=>{downtimePrompt=String(req.input||"");return {output_text:JSON.stringify({act:false,public_narration:"",private_messages:[],events:[],handouts:[],relationships:[],npc_memories:[],npc_knowledge:[],npc_goals:[],gm_notes:"World remains stable.",confidence:100})};}}};
 const downtimeSvc=new GMService({db,content:fakeContent,config:gmConfig,ai:fakeDowntimeAI});
 await downtimeSvc.runWorldDirector({guildId:downtimeGuild,layer:"downtime",cycle:{id:"dt-1",label:"Three quiet weeks",status:"resolving"},projects:[{id:"p-1",title:"Research the seal"}],trigger:{cycle_label:"Three quiet weeks"}});
 assert.match(downtimePrompt,/EXTENDED IN-GAME MECHANICAL DOWNTIME DIRECTOR PASS/);
@@ -393,4 +393,4 @@ try{
 
 db.close();
 fs.rmSync(tmp,{recursive:true,force:true});
-console.log("Veilkeeper v3.7.0 production regression test: PASS");
+console.log("Veilkeeper v3.8.0 production regression test: PASS");

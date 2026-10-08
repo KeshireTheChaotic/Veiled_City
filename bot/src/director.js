@@ -1,6 +1,6 @@
 /** Autonomous world-director cadence and blocked-action reporting helpers. Real-world elapsed time never advances campaign state. */
 export const POST_TURN_REVIEW_CATEGORIES=[
-  "facts_clues","resources","clocks","threads","references","relationships","handouts","canon","veil_exposure"
+  "facts_clues","resources","clocks","threads","references","relationships","handouts","canon","veil_exposure","npc_cognition"
 ];
 
 const CATEGORY_OUTPUTS={
@@ -12,7 +12,8 @@ const CATEGORY_OUTPUTS={
   relationships:r=>(r.relationships||[]).length>0,
   handouts:r=>(r.handouts||[]).length>0,
   canon:r=>(r.events||[]).some(e=>e.type==="canon"),
-  veil_exposure:r=>(r.events||[]).some(e=>e.type==="veil_exposure_delta")
+  veil_exposure:r=>(r.events||[]).some(e=>e.type==="veil_exposure_delta"),
+  npc_cognition:r=>(r.npc_memories||[]).length>0||(r.npc_knowledge||[]).length>0||(r.npc_goals||[]).length>0
 };
 
 /** Validate that narrated state changes and structured mutations agree. */
@@ -127,7 +128,7 @@ export function lowConfidenceReviewItems(result,threshold=55){
 export function normalizeDirectorConfidence(result,threshold=55){
   const confidence=Number(result?.confidence??100);
   if(result?.act && Number.isFinite(confidence) && confidence<threshold){
-    return {...result,act:false,public_narration:"",private_messages:[],events:[],handouts:[],relationships:[],review_required:true,gm_notes:`${String(result.gm_notes||"").trim()}${result.gm_notes?"\n":""}LOW-CONFIDENCE REVIEW: Proposed world move (${confidence}%) was not committed; human GM review required.`};
+    return {...result,act:false,public_narration:"",private_messages:[],events:[],handouts:[],relationships:[],npc_memories:[],npc_knowledge:[],npc_goals:[],review_required:true,gm_notes:`${String(result.gm_notes||"").trim()}${result.gm_notes?"\n":""}LOW-CONFIDENCE REVIEW: Proposed world move (${confidence}%) was not committed; human GM review required.`};
   }
   return {...result,review_required:false};
 }

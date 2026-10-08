@@ -658,3 +658,106 @@ CREATE TABLE IF NOT EXISTS campaign_backups (
   FOREIGN KEY (guild_id) REFERENCES campaigns(guild_id) ON DELETE CASCADE
 );
 CREATE INDEX IF NOT EXISTS idx_campaign_backups_campaign ON campaign_backups(guild_id,created_at DESC);
+
+-- v3.8.0: persistent NPC cognition (subjective memory, knowledge, goals, personality)
+CREATE TABLE IF NOT EXISTS npc_profiles (
+  guild_id TEXT NOT NULL,
+  npc_key TEXT NOT NULL,
+  display_name TEXT NOT NULL,
+  role TEXT NOT NULL DEFAULT '',
+  public_identity TEXT NOT NULL DEFAULT '',
+  portrayal TEXT NOT NULL DEFAULT '',
+  activity_tier TEXT NOT NULL DEFAULT 'background'
+    CHECK(activity_tier IN ('active','supporting','background','dormant')),
+  decision_profile_json TEXT NOT NULL DEFAULT '{}',
+  knowledge_boundaries_json TEXT NOT NULL DEFAULT '[]',
+  capabilities_json TEXT NOT NULL DEFAULT '[]',
+  source TEXT NOT NULL DEFAULT 'gm',
+  created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY(guild_id,npc_key),
+  FOREIGN KEY (guild_id) REFERENCES campaigns(guild_id) ON DELETE CASCADE
+);
+CREATE INDEX IF NOT EXISTS idx_npc_profiles_activity
+  ON npc_profiles(guild_id,activity_tier,updated_at DESC);
+
+CREATE TABLE IF NOT EXISTS npc_memories (
+  id TEXT PRIMARY KEY,
+  guild_id TEXT NOT NULL,
+  npc_key TEXT NOT NULL,
+  memory_type TEXT NOT NULL DEFAULT 'episodic'
+    CHECK(memory_type IN ('episodic','semantic','relational','secret','impression')),
+  content TEXT NOT NULL,
+  subject_type TEXT NOT NULL DEFAULT 'entity'
+    CHECK(subject_type IN ('character','npc','faction','location','entity','obligation','veil')),
+  subject_key TEXT NOT NULL DEFAULT '',
+  sentiment INTEGER NOT NULL DEFAULT 0 CHECK(sentiment BETWEEN -5 AND 5),
+  importance INTEGER NOT NULL DEFAULT 50 CHECK(importance BETWEEN 0 AND 100),
+  confidence INTEGER NOT NULL DEFAULT 100 CHECK(confidence BETWEEN 0 AND 100),
+  source_type TEXT NOT NULL DEFAULT 'observed',
+  source_ref TEXT NOT NULL DEFAULT '',
+  tags_json TEXT NOT NULL DEFAULT '[]',
+  status TEXT NOT NULL DEFAULT 'active'
+    CHECK(status IN ('active','challenged','superseded','forgotten')),
+  superseded_by TEXT,
+  recall_count INTEGER NOT NULL DEFAULT 0,
+  last_recalled_at TEXT,
+  created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (guild_id,npc_key) REFERENCES npc_profiles(guild_id,npc_key) ON DELETE CASCADE
+);
+CREATE INDEX IF NOT EXISTS idx_npc_memories_lookup
+  ON npc_memories(guild_id,npc_key,status,importance DESC,created_at DESC);
+
+CREATE TABLE IF NOT EXISTS npc_knowledge (
+  guild_id TEXT NOT NULL,
+  npc_key TEXT NOT NULL,
+  knowledge_key TEXT NOT NULL,
+  content TEXT NOT NULL,
+  belief_state TEXT NOT NULL DEFAULT 'known'
+    CHECK(belief_state IN ('known','suspected','rumor','doubted','unknown')),
+  confidence INTEGER NOT NULL DEFAULT 100 CHECK(confidence BETWEEN 0 AND 100),
+  source_type TEXT NOT NULL DEFAULT 'observed',
+  source_ref TEXT NOT NULL DEFAULT '',
+  is_secret INTEGER NOT NULL DEFAULT 0,
+  created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY(guild_id,npc_key,knowledge_key),
+  FOREIGN KEY (guild_id,npc_key) REFERENCES npc_profiles(guild_id,npc_key) ON DELETE CASCADE
+);
+CREATE INDEX IF NOT EXISTS idx_npc_knowledge_lookup
+  ON npc_knowledge(guild_id,npc_key,belief_state,updated_at DESC);
+
+CREATE TABLE IF NOT EXISTS npc_goals (
+  guild_id TEXT NOT NULL,
+  npc_key TEXT NOT NULL,
+  goal_key TEXT NOT NULL,
+  title TEXT NOT NULL DEFAULT '',
+  objective TEXT NOT NULL,
+  horizon TEXT NOT NULL DEFAULT 'near'
+    CHECK(horizon IN ('immediate','near','long')),
+  priority INTEGER NOT NULL DEFAULT 50 CHECK(priority BETWEEN 0 AND 100),
+  progress INTEGER NOT NULL DEFAULT 0 CHECK(progress BETWEEN 0 AND 100),
+  status TEXT NOT NULL DEFAULT 'active'
+    CHECK(status IN ('active','completed','failed','abandoned')),
+  dependencies_json TEXT NOT NULL DEFAULT '[]',
+  acceptable_methods_json TEXT NOT NULL DEFAULT '[]',
+  rationale TEXT NOT NULL DEFAULT '',
+  source TEXT NOT NULL DEFAULT 'gm',
+  created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY(guild_id,npc_key,goal_key),
+  FOREIGN KEY (guild_id,npc_key) REFERENCES npc_profiles(guild_id,npc_key) ON DELETE CASCADE
+);
+CREATE INDEX IF NOT EXISTS idx_npc_goals_active
+  ON npc_goals(guild_id,npc_key,status,priority DESC,updated_at DESC);
+
+CREATE TABLE IF NOT EXISTS seed_runs (
+  guild_id TEXT NOT NULL,
+  seed_key TEXT NOT NULL,
+  actor_id TEXT,
+  summary_json TEXT NOT NULL DEFAULT '{}',
+  completed_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY(guild_id,seed_key),
+  FOREIGN KEY (guild_id) REFERENCES campaigns(guild_id) ON DELETE CASCADE
+);

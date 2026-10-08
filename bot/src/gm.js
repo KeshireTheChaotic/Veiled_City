@@ -3,6 +3,7 @@ import OpenAI from "openai";
 import { summarizeRoster } from "./state.js";
 import { narrativeContext } from "./character-narrative.js";
 import { validatePostTurnStateReview } from "./director.js";
+import { retrieveNpcCognition } from "./npc-cognition.js";
 
 const routerSchema={
   type:"object",
@@ -33,6 +34,37 @@ const relationshipDraftSchema={
   required:["from_type","from_key","from_label","to_type","to_key","to_label","relationship_type","mode","score","visibility","note"]
 };
 
+const npcMemoryDraftSchema={
+  type:"object",additionalProperties:false,
+  properties:{
+    npc_key:{type:"string",minLength:1},memory_type:{type:"string",enum:["episodic","semantic","relational","secret","impression"]},content:{type:"string",minLength:1},
+    subject_type:{type:"string",enum:["character","npc","faction","location","entity","obligation","veil"]},subject_key:{type:"string"},
+    sentiment:{type:"integer",minimum:-5,maximum:5},importance:{type:"integer",minimum:0,maximum:100},confidence:{type:"integer",minimum:0,maximum:100},
+    source_type:{type:"string",enum:["witnessed","inferred","told","rumor","document","supernatural_impression","seed"]},tags:{type:"array",items:{type:"string"}}
+  },
+  required:["npc_key","memory_type","content","subject_type","subject_key","sentiment","importance","confidence","source_type","tags"]
+};
+
+const npcKnowledgeDraftSchema={
+  type:"object",additionalProperties:false,
+  properties:{
+    npc_key:{type:"string",minLength:1},knowledge_key:{type:"string",minLength:1},content:{type:"string",minLength:1},
+    belief_state:{type:"string",enum:["known","suspected","rumor","doubted","unknown"]},confidence:{type:"integer",minimum:0,maximum:100},
+    source_type:{type:"string",enum:["witnessed","inferred","told","rumor","document","supernatural_impression","seed"]},source_ref:{type:"string"},is_secret:{type:"boolean"}
+  },
+  required:["npc_key","knowledge_key","content","belief_state","confidence","source_type","source_ref","is_secret"]
+};
+
+const npcGoalDraftSchema={
+  type:"object",additionalProperties:false,
+  properties:{
+    npc_key:{type:"string",minLength:1},goal_key:{type:"string",minLength:1},title:{type:"string"},objective:{type:"string",minLength:1},
+    horizon:{type:"string",enum:["immediate","near","long"]},priority:{type:"integer",minimum:0,maximum:100},progress:{type:"integer",minimum:0,maximum:100},
+    status:{type:"string",enum:["active","completed","failed","abandoned"]},dependencies:{type:"array",items:{type:"string"}},acceptable_methods:{type:"array",items:{type:"string"}},rationale:{type:"string"}
+  },
+  required:["npc_key","goal_key","title","objective","horizon","priority","progress","status","dependencies","acceptable_methods","rationale"]
+};
+
 const canonProposalDraftSchema={
   type:"object",additionalProperties:false,
   properties:{
@@ -48,10 +80,10 @@ const reviewItemSchema={type:"object",additionalProperties:false,properties:{dec
 const stateReviewSchema={
   type:"object",additionalProperties:false,
   properties:{
-    facts_clues:reviewItemSchema,resources:reviewItemSchema,clocks:reviewItemSchema,threads:reviewItemSchema,references:reviewItemSchema,relationships:reviewItemSchema,handouts:reviewItemSchema,canon:reviewItemSchema,veil_exposure:reviewItemSchema,
+    facts_clues:reviewItemSchema,resources:reviewItemSchema,clocks:reviewItemSchema,threads:reviewItemSchema,references:reviewItemSchema,relationships:reviewItemSchema,npc_cognition:reviewItemSchema,handouts:reviewItemSchema,canon:reviewItemSchema,veil_exposure:reviewItemSchema,
     scene:{type:"object",additionalProperties:false,properties:{decision:{type:"string",enum:["continue","transition"]},label:{type:"string"},reason:{type:"string",minLength:1}},required:["decision","label","reason"]}
   },
-  required:["facts_clues","resources","clocks","threads","references","relationships","handouts","canon","veil_exposure","scene"]
+  required:["facts_clues","resources","clocks","threads","references","relationships","npc_cognition","handouts","canon","veil_exposure","scene"]
 };
 
 const gmSchema={
@@ -88,10 +120,13 @@ const gmSchema={
     },
     handouts:{type:"array",items:handoutDraftSchema},
     relationships:{type:"array",items:relationshipDraftSchema},
+    npc_memories:{type:"array",items:npcMemoryDraftSchema},
+    npc_knowledge:{type:"array",items:npcKnowledgeDraftSchema},
+    npc_goals:{type:"array",items:npcGoalDraftSchema},
     canon_proposals:{type:"array",items:canonProposalDraftSchema},
     state_review:stateReviewSchema
   },
-  required:["respond","narration","private_messages","events","handouts","relationships","canon_proposals","state_review"]
+  required:["respond","narration","private_messages","events","handouts","relationships","npc_memories","npc_knowledge","npc_goals","canon_proposals","state_review"]
 };
 
 
@@ -104,10 +139,13 @@ const directorSchema={
     events:gmSchema.properties.events,
     handouts:{type:"array",items:handoutDraftSchema},
     relationships:{type:"array",items:relationshipDraftSchema},
+    npc_memories:{type:"array",items:npcMemoryDraftSchema},
+    npc_knowledge:{type:"array",items:npcKnowledgeDraftSchema},
+    npc_goals:{type:"array",items:npcGoalDraftSchema},
     gm_notes:{type:"string"},
     confidence:{type:"integer",minimum:0,maximum:100}
   },
-  required:["act","public_narration","private_messages","events","handouts","relationships","gm_notes","confidence"]
+  required:["act","public_narration","private_messages","events","handouts","relationships","npc_memories","npc_knowledge","npc_goals","gm_notes","confidence"]
 };
 
 const aftermathSchema={
@@ -295,7 +333,7 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
     return out.respond;
   }
 
-  buildContext(guildId,actorUserId,messageText,actorAssignmentOverride=null){
+  buildContext(guildId,actorUserId,messageText,actorAssignmentOverride=null,{worldDirector=false}={}){
     const campaign=this.db.getCampaign(guildId);
     const session=this.db.getActiveSession(guildId);
     const roster=session?this.db.roster(session.id):[];
@@ -322,6 +360,7 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
     const narrativeIds=[...new Set([...roster.map(r=>r.character_id).filter(Boolean),actorKnowledgeId].filter(Boolean))];
     const characterNarratives=narrativeContext(this.db,guildId,narrativeIds,{includeGM:true,maxChars:8000});
     const visibleHandouts=this.db.listHandoutsFor(guildId,actorUserId,{characterId:actorKnowledgeId,includeGM:false,limit:40}).map(h=>({id:h.id,title:h.title,kind:h.kind,authority:h.authority,visibility:h.visibility,case_key:h.case_key,npc_key:h.npc_key,location_key:h.location_key}));
+    const npcCognition=retrieveNpcCognition(this.db,guildId,{query,actorAssignment,worldDirector,maxNpcs:worldDirector?6:4,recordRecall:true});
     return {
       campaign,session,assembly,party_state:partyState,current_encounter:currentEncounter,current_combatants:currentCombatants,canon,rulings,actor_relationships:actorRelationships,gm_relationships:gmRelationships,gm_character_hooks:gmCharacterHooks,character_narratives:characterNarratives,visible_handouts:visibleHandouts,
       actor_assignment:actorAssignment?(actorAssignment.npc_proxy?{
@@ -334,6 +373,7 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
       recent:recent.map(m=>({speaker:m.speaker_name,user_id:m.discord_user_id,visibility:m.visibility,subject_user_id:m.subject_user_id,character_id:m.character_id,content:m.content})),
       actor_visible_facts:actorFacts,
       gm_all_facts:gmFacts,
+      npc_cognition:npcCognition,
       clocks,
       reference_chunks:chunks.map(c=>({source:c.file,text:c.body})),
       constitution,multi
@@ -388,7 +428,11 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
         ].join(" ")
         :"THIS IS A PARTY TABLE SCENE. Public narration is visible to all present players. Do not reveal another player's private knowledge unless it has been explicitly shared in play. private_messages may target only players on the current session roster. canon_proposals must be an empty array; the player canon-proposal workflow is reserved for private player→GM scenes.",
       "canon_proposals is a GM-review queue, not authoritative canon. Never use it for speculative ideas or ordinary discoveries; use it only for an explicit player request to propose a durable canon statement from a private scene.",
-      "MANDATORY POST-TURN STATE REVIEW: before returning, explicitly review facts/clues, PC resources, clocks, threads, references, relationships, handouts, canon, Veil Exposure, and scene continuity. Every category must be marked changed or no_change with a concrete reason and a confidence score from 0-100. If marked changed, emit the matching structured mutation; if no mutation is emitted, mark no_change. A canon_proposals entry does not count as a canon change. Never hide a mechanical consequence only in prose. Confidence below 55 means the proposed change is ambiguous enough that Veilkeeper should avoid committing it and instead preserve it in rationale/GM-visible context for review.",
+      "NPC COGNITION IS SUBJECTIVE, NOT CANON. An NPC may remember incorrectly, believe a rumor, misunderstand supernatural evidence, or lack facts the GM knows. Use NPC_COGNITION as the authority for what that NPC remembers/believes. Never grant an NPC GM-only/global facts merely because those facts are in context.",
+      "After a meaningful NPC interaction, update npc_memories only for NPCs who actually witnessed, experienced, were told about, inferred, read, or supernaturally perceived the event. Do not create a memory just because an NPC exists. Use npc_knowledge for durable beliefs/knowledge and preserve uncertainty with suspected/rumor/doubted states instead of converting subjective belief into objective fact.",
+      "NPC goals and personality constrain behavior. Do not rewrite stable personality every turn. Goals may change when fiction clearly advances, completes, fails, or redirects an established agenda.",
+      "Veiled City setting lens: hospitality can create supernatural/social obligations only when established custom, invitation, shelter, exchange, oath, Court/Concord practice, or explicit terms support it; ordinary politeness is not automatically a binding contract. Record remembered hospitality/debt as relational memory/knowledge, not global canon. Veil/threshold/anchor effects may shape supernatural impressions, but never give an NPC omniscience through the Veil.",
+      "MANDATORY POST-TURN STATE REVIEW: before returning, explicitly review facts/clues, PC resources, clocks, threads, references, relationships, NPC cognition, handouts, canon, Veil Exposure, and scene continuity. Every category must be marked changed or no_change with a concrete reason and a confidence score from 0-100. If marked changed, emit the matching structured mutation; if no mutation is emitted, mark no_change. A canon_proposals entry does not count as a canon change. Never hide a mechanical consequence only in prose. Confidence below 55 means the proposed change is ambiguous enough that Veilkeeper should avoid committing it and instead preserve it in rationale/GM-visible context for review.",
       "For scene continuity, choose transition only when fictional location, objective, time frame, or dramatic scene boundary actually changes. Provide a short new-scene label when transitioning; otherwise use continue with an empty label.",
       "Keep narration suitable for Discord. Prefer 1-4 compact paragraphs unless a longer scene is genuinely needed."
     ].join("\n\n");
@@ -403,7 +447,8 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
       `ROSTER/PRESENCE:\n${JSON.stringify(ctx.roster)}`,
       `RECENT TRANSCRIPT VISIBLE TO THIS PLAYER:\n${JSON.stringify(ctx.recent)}`,
       `FACTS VISIBLE TO ACTING PLAYER:\n${JSON.stringify(ctx.actor_visible_facts)}`,
-      `GM-PRIVATE + ALL KNOWN FACTS:\n${JSON.stringify(ctx.gm_all_facts)}`,
+      `GM-PRIVATE + ALL KNOWN FACTS (OBJECTIVE CAMPAIGN CONTEXT; DO NOT ASSUME NPCS KNOW THESE):\n${JSON.stringify(ctx.gm_all_facts)}`,
+      `NPC_COGNITION (SUBJECTIVE MEMORY/KNOWLEDGE/GOALS; GM-PRIVATE):\n${JSON.stringify(ctx.npc_cognition)}`,
       `CLOCKS (MAY BE SECRET):\n${JSON.stringify(ctx.clocks)}`,
       `RELATIONSHIP GRAPH VISIBLE TO ACTOR:\n${JSON.stringify(ctx.actor_relationships)}`,
       `GM RELATIONSHIP GRAPH (MAY BE SECRET):\n${JSON.stringify(ctx.gm_relationships)}`,
@@ -444,7 +489,7 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
   async runWorldDirector({guildId,layer,trigger={},cycle=null,projects=[],actorAssignment=null}){
     if(!["round","scene","downtime","manual"].includes(layer)) throw new Error(`Unsupported world-director layer: ${layer}`);
     const directorActor=trigger?.scope==="private"&&trigger?.actor_user_id?String(trigger.actor_user_id):"__world_director__";
-    const ctx=this.buildContext(guildId,directorActor,`${layer} ${JSON.stringify(trigger)}`,actorAssignment);
+    const ctx=this.buildContext(guildId,directorActor,`${layer} ${JSON.stringify(trigger)}`,actorAssignment,{worldDirector:true});
     const layerRules={
       round:[
         "END-OF-PLAYER-ROUND DIRECTOR PASS. This is a pacing cadence, never initiative. Do not restrict player actions or mention rounds unless fiction itself uses them.",
@@ -471,10 +516,13 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
       ctx.constitution,ctx.multi,"# AUTONOMOUS WORLD DIRECTOR",...layerRules,
       "You may autonomously emit the same authoritative campaign events, relationships, handouts, private_messages, and player-facing narration available to the normal GM, subject to all security/canon/player-agency restrictions.",
       "Never invent dice results or alter deterministic encounter combat state. Never choose voluntary PC actions. Never contradict canon. Use private_messages only for information a specific current player legitimately perceives.",
+      "NPC COGNITION IS SUBJECTIVE. Use the retrieved NPC cognition packet to constrain what an NPC remembers, believes, wants, and is willing to do. GM facts outside that packet are not automatically known by the NPC.",
+      "When a director consequence meaningfully changes what an involved NPC remembers, believes, or pursues, emit npc_memories/npc_knowledge/npc_goals. Do not update uninvolved NPCs merely because the director pass fired.",
+      "Veiled City setting lens: hospitality, shelter, invitations, gifts, formal introductions, Court/Concord custom, oaths, and explicit bargains can create remembered debt or contractual expectation when established fiction supports it; ordinary courtesy alone does not. Veil/threshold/anchor phenomena can produce supernatural impressions, but those impressions are subjective evidence rather than omniscience or automatic canon.",
       "Return confidence 0-100 for the proposed world move as a whole. If confidence is below 55, return act=false with empty outputs and explain the ambiguity in gm_notes instead of committing a speculative world mutation.",
       trigger?.scope==="private"?"PRIVATE SCENE DIRECTOR: this scene transition is visible only to the acting player. Treat public_narration as a transport field that the application will deliver privately. Do not emit global canon or Veil Exposure changes; private-scope guards will block them and report the attempt.":"PARTY/WORLD DIRECTOR: public_narration may be posted to the party when there is a player-visible world consequence.",
       `Layer: ${layer}`,`Trigger: ${JSON.stringify(trigger)}`,`Campaign: ${JSON.stringify(ctx.campaign)}`,`Session: ${JSON.stringify(ctx.session)}`,`Director state: ${JSON.stringify(ctx.session?this.db.getDirectorState(ctx.session.id):null)}`,
-      `Roster: ${JSON.stringify(ctx.roster)}`,`Recent party transcript: ${JSON.stringify(this.db.recentPartyMessages(guildId,{limit:50}))}`,`Actor-visible recent transcript (includes private context only when this is a private-scene director pass): ${JSON.stringify(ctx.recent)}`,`Actor-visible facts: ${JSON.stringify(ctx.actor_visible_facts)}`,`Facts (GM-private/all): ${JSON.stringify(ctx.gm_all_facts)}`,`Clocks: ${JSON.stringify(ctx.clocks)}`,`Canon: ${JSON.stringify(ctx.canon)}`,`Relationships: ${JSON.stringify(ctx.gm_relationships)}`,
+      `Roster: ${JSON.stringify(ctx.roster)}`,`Recent party transcript: ${JSON.stringify(this.db.recentPartyMessages(guildId,{limit:50}))}`,`Actor-visible recent transcript (includes private context only when this is a private-scene director pass): ${JSON.stringify(ctx.recent)}`,`Actor-visible facts: ${JSON.stringify(ctx.actor_visible_facts)}`,`Facts (GM-private/all; objective context, not automatic NPC knowledge): ${JSON.stringify(ctx.gm_all_facts)}`,`NPC cognition (subjective GM-private state): ${JSON.stringify(ctx.npc_cognition)}`,`Clocks: ${JSON.stringify(ctx.clocks)}`,`Canon: ${JSON.stringify(ctx.canon)}`,`Relationships: ${JSON.stringify(ctx.gm_relationships)}`,
       `Current encounter: ${JSON.stringify(ctx.current_encounter)}`,`Downtime cycle: ${JSON.stringify(cycle)}`,`Downtime projects: ${JSON.stringify(projects)}`,`Reference: ${JSON.stringify(ctx.reference_chunks)}`
     ].join("\n\n");
     const req={model:layer==="downtime"?this.config.downtimeModel:this.config.gmModel,input:prompt,max_output_tokens:layer==="downtime"?this.config.downtimeMaxOutputTokens:Math.min(this.config.structuredRetryMaxTokens||6000,2200),text:{format:{type:"json_schema",name:`world_director_${layer}`,strict:true,schema:directorSchema}}};
@@ -574,6 +622,7 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
     const allFacts=this.db.factsFor(guildId,userId,{includeGM:true,limit:180}).filter(f=>["public","party","gm"].includes(f.visibility));
     const publicRef=this.db.getReference(guildId,"npc",String(npcName||"").trim().toLowerCase());
     const query=`NPC antagonist proxy ${npcName} ${objective} ${gmNotes}`;
+    const cognition=retrieveNpcCognition(this.db,guildId,{query,actorAssignment:{npc_proxy:true,npc_name:npcName},worldDirector:false,maxNpcs:1,memoriesPerNpc:8,knowledgePerNpc:12,goalsPerNpc:5,recordRecall:true});
     const chunks=this.content.search(query,Math.min(this.config.maxContentChunks,8),{gm:true});
     const recent=this.db.recentMessages(guildId,80).filter(m=>["public","party"].includes(m.visibility)).slice(-24);
     const prompt=[
@@ -591,7 +640,8 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
       `Human GM objective override (authoritative when nonblank): ${objective||"none"}`,
       `Human GM notes (GM-only source; sanitize before output): ${gmNotes||"none"}`,
       `Player-safe NPC reference if any: ${JSON.stringify(publicRef||null)}`,
-      `Campaign facts (mixed visibility; use only what this NPC should know): ${JSON.stringify(allFacts)}`,
+      `NPC cognition authority (subjective memory/knowledge/goals; use this to bound what the NPC actually knows/believes): ${JSON.stringify(cognition)}`,
+      `Campaign facts (objective GM context; do NOT give these to the proxy unless the NPC cognition/source context supports that the NPC knows them): ${JSON.stringify(allFacts)}`,
       `Recent transcript (mixed visibility; protect private information): ${JSON.stringify(recent.map(x=>({speaker:x.speaker_name,visibility:x.visibility,content:x.content})))}`,
       `Relevant Veiled City source excerpts (GM context; sanitize): ${JSON.stringify(chunks.map(c=>({source:c.file,text:c.body})))}`
     ].join("\n\n");

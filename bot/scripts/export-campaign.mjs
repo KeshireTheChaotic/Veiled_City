@@ -20,7 +20,7 @@ const sessions=mode==="player"
 const sessionIds=sessions.map(x=>x.id);
 const placeholders=sessionIds.length?sessionIds.map(()=>"?").join(","):"''";
 const exportObj={
-  export_version:"3.6.0",
+  export_version:"3.8.0",
   visibility:mode==="player"?"player_safe":"gm_private_full",
   exported_at:new Date().toISOString(),
   campaign:one("SELECT * FROM campaigns WHERE guild_id=?",guildId),
@@ -52,7 +52,12 @@ const exportObj={
   relationships:mode==="player" ? all("SELECT * FROM relationships WHERE guild_id=? AND visibility IN ('public','party')",guildId) : all("SELECT * FROM relationships WHERE guild_id=?",guildId),
   handouts:mode==="player" ? all("SELECT * FROM handouts WHERE guild_id=? AND status='active' AND visibility IN ('public','party')",guildId) : all("SELECT * FROM handouts WHERE guild_id=?",guildId),
   character_narratives:mode!=="player" ? all("SELECT * FROM character_narratives WHERE guild_id=?",guildId) : [],
-  encounter_aftermath:mode!=="player" ? all("SELECT * FROM encounter_aftermath WHERE guild_id=?",guildId) : []
+  encounter_aftermath:mode!=="player" ? all("SELECT * FROM encounter_aftermath WHERE guild_id=?",guildId) : [],
+  npc_profiles:mode!=="player" ? all("SELECT * FROM npc_profiles WHERE guild_id=?",guildId) : [],
+  npc_memories:mode!=="player" ? all("SELECT * FROM npc_memories WHERE guild_id=?",guildId) : [],
+  npc_knowledge:mode!=="player" ? all("SELECT * FROM npc_knowledge WHERE guild_id=?",guildId) : [],
+  npc_goals:mode!=="player" ? all("SELECT * FROM npc_goals WHERE guild_id=?",guildId) : [],
+  seed_runs:mode!=="player" ? all("SELECT * FROM seed_runs WHERE guild_id=?",guildId) : []
 };
 if(mode!=="player") {
   exportObj.audit_log=all("SELECT * FROM audit_log WHERE guild_id=?",guildId);

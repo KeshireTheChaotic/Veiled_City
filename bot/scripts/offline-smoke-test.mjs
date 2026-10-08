@@ -283,6 +283,6 @@ db.upsertCharacterNarrative(guild,char.id,"player","# Changed\n",{sourceFilename
 db.restoreSnapshot(guild,narrativeSnap.id,{actorId:"gm"});
 if(!db.getCharacterNarrative(guild,char.id,"player")?.markdown.includes("clipped case-note")) throw new Error("Character narrative snapshot/rollback failed.");
 
-console.log("Veilkeeper v3.7.0 offline smoke test: PASS");
+console.log("Veilkeeper v3.8.0 offline smoke test: PASS");
 db.close();
 fs.rmSync(dir,{recursive:true,force:true});

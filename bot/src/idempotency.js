@@ -9,7 +9,7 @@ const READ_ONLY=new Set([
   "campaign:status","session:assembly-status","session:roster","character:list","character:sheet","encounter:status","encounter:combatants",
   "party:status","relationship:list","handout:list","player:accessibility","rules:ask","rules:rulings","downtime:status","canon:status","canon:conflicts","canon:proposals",
   "voice:status","admin:snapshots","admin:backups","admin:restore-preview","admin:doctor","admin:ledger","intel:recap","intel:clues","intel:facts","intel:caseboard",
-  "gm:overview","gm:fact-list","director:status","director:history"
+  "gm:overview","gm:fact-list","gm:npc-state","director:status","director:history"
 ]);
 
 export function commandKey(group,sub){ return `${group||""}:${sub||""}`; }

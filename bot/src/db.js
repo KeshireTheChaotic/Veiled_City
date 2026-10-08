@@ -57,7 +57,7 @@ export class VeiledDB {
     add("facts","confidence","INTEGER NOT NULL DEFAULT 100");
     add("encounters","combat_state_json",`TEXT NOT NULL DEFAULT '{"spotlight":{"counts":{},"last_character_id":null}}'`);
     add("encounters","pc_start_state_json",`TEXT NOT NULL DEFAULT '[]'`);
-    this.db.exec("PRAGMA user_version=370;");
+    this.db.exec("PRAGMA user_version=380;");
   }
 
   close() { this.db.close(); }
@@ -771,7 +771,14 @@ export class VeiledDB {
       }catch{}
     }
     const pending=active?this.getPendingDirectorPass(active.id):null;
-    return {schemaVersion:this.db.prepare("PRAGMA user_version").get().user_version,activeSession:active,presentWithoutCharacter,duplicateCanon,orphanCharacters,orphanAssignments,orphanHandouts,brokenProxies,absentControl,invalidVisibility,pendingDirector:pending};
+    const npcCognition={
+      profiles:this.db.prepare("SELECT COUNT(*) n FROM npc_profiles WHERE guild_id=?").get(guildId).n,
+      memories:this.db.prepare("SELECT COUNT(*) n FROM npc_memories WHERE guild_id=?").get(guildId).n,
+      knowledge:this.db.prepare("SELECT COUNT(*) n FROM npc_knowledge WHERE guild_id=?").get(guildId).n,
+      goals:this.db.prepare("SELECT COUNT(*) n FROM npc_goals WHERE guild_id=?").get(guildId).n,
+      seed:this.getSeedRun(guildId,"npc_cognition_v1")
+    };
+    return {schemaVersion:this.db.prepare("PRAGMA user_version").get().user_version,activeSession:active,presentWithoutCharacter,duplicateCanon,orphanCharacters,orphanAssignments,orphanHandouts,brokenProxies,absentControl,invalidVisibility,pendingDirector:pending,npcCognition};
   }
 
   findGuestCharacter(guildId,name,userId) {
@@ -918,6 +925,107 @@ export class VeiledDB {
       ?"SELECT * FROM reference_entries WHERE guild_id=? AND kind=? AND visibility IN ('public','party') ORDER BY display_name"
       :"SELECT * FROM reference_entries WHERE guild_id=? AND kind=? ORDER BY display_name";
     return this.db.prepare(sql).all(guildId,kind);
+  }
+
+  // v3.8 NPC cognition -------------------------------------------------------
+  upsertNpcProfile(guildId,{npcKey,displayName,role="",publicIdentity="",portrayal="",activityTier="background",decisionProfile={},knowledgeBoundaries=[],capabilities=[],source="gm"}={}){
+    const key=String(npcKey||"").trim().toLowerCase();
+    if(!key) throw new Error("NPC profile requires npcKey.");
+    const name=String(displayName||npcKey||"").trim();
+    if(!name) throw new Error("NPC profile requires displayName.");
+    this.db.prepare(`INSERT INTO npc_profiles(guild_id,npc_key,display_name,role,public_identity,portrayal,activity_tier,decision_profile_json,knowledge_boundaries_json,capabilities_json,source)
+      VALUES(?,?,?,?,?,?,?,?,?,?,?)
+      ON CONFLICT(guild_id,npc_key) DO UPDATE SET display_name=excluded.display_name,role=excluded.role,public_identity=excluded.public_identity,portrayal=excluded.portrayal,activity_tier=excluded.activity_tier,decision_profile_json=excluded.decision_profile_json,knowledge_boundaries_json=excluded.knowledge_boundaries_json,capabilities_json=excluded.capabilities_json,source=excluded.source,updated_at=CURRENT_TIMESTAMP`)
+      .run(guildId,key,name,String(role||""),String(publicIdentity||""),String(portrayal||""),activityTier,JSON.stringify(decisionProfile||{}),JSON.stringify(knowledgeBoundaries||[]),JSON.stringify(capabilities||[]),String(source||"gm"));
+    return this.getNpcProfile(guildId,key);
+  }
+
+  getNpcProfile(guildId,npcKey){
+    const r=this.db.prepare("SELECT * FROM npc_profiles WHERE guild_id=? AND npc_key=?").get(guildId,String(npcKey||"").trim().toLowerCase());
+    return r?{...r,decision_profile:JSON.parse(r.decision_profile_json||"{}"),knowledge_boundaries:JSON.parse(r.knowledge_boundaries_json||"[]"),capabilities:JSON.parse(r.capabilities_json||"[]")} : null;
+  }
+
+  findNpcProfile(guildId,query){
+    const q=String(query||"").trim().toLowerCase(); if(!q) return null;
+    const rows=this.listNpcProfiles(guildId);
+    return rows.find(x=>x.npc_key===q||x.display_name.toLowerCase()===q)
+      ||rows.find(x=>x.npc_key.startsWith(q)||x.display_name.toLowerCase().includes(q))||null;
+  }
+
+  listNpcProfiles(guildId,{activityTier="",limit=200}={}){
+    const cap=Math.max(1,Math.min(500,Number(limit)||200));
+    const rows=this.db.prepare(`SELECT * FROM npc_profiles WHERE guild_id=? AND (?='' OR activity_tier=?) ORDER BY display_name LIMIT ?`).all(guildId,activityTier,activityTier,cap);
+    return rows.map(r=>({...r,decision_profile:JSON.parse(r.decision_profile_json||"{}"),knowledge_boundaries:JSON.parse(r.knowledge_boundaries_json||"[]"),capabilities:JSON.parse(r.capabilities_json||"[]")}));
+  }
+
+  addNpcMemory(guildId,{npcKey,memoryType="episodic",content,subjectType="entity",subjectKey="",sentiment=0,importance=50,confidence=100,sourceType="observed",sourceRef="",tags=[],status="active",dedupe=true}={}){
+    const key=String(npcKey||"").trim().toLowerCase(); const text=String(content||"").trim();
+    if(!key||!text) throw new Error("NPC memory requires npcKey and content.");
+    if(!this.getNpcProfile(guildId,key)) throw new Error(`NPC profile not found: ${key}.`);
+    if(dedupe){
+      const existing=this.db.prepare(`SELECT id FROM npc_memories WHERE guild_id=? AND npc_key=? AND status='active' AND memory_type=? AND content=? AND subject_type=? AND subject_key=? ORDER BY created_at DESC LIMIT 1`).get(guildId,key,memoryType,text,subjectType,String(subjectKey||""));
+      if(existing) return this.getNpcMemory(existing.id);
+    }
+    const id=randomUUID();
+    this.db.prepare(`INSERT INTO npc_memories(id,guild_id,npc_key,memory_type,content,subject_type,subject_key,sentiment,importance,confidence,source_type,source_ref,tags_json,status) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)`)
+      .run(id,guildId,key,memoryType,text,subjectType,String(subjectKey||""),Math.max(-5,Math.min(5,Number(sentiment)||0)),Math.max(0,Math.min(100,Number(importance)||0)),Math.max(0,Math.min(100,Number(confidence)||0)),String(sourceType||"observed"),String(sourceRef||""),JSON.stringify(tags||[]),status);
+    return this.getNpcMemory(id);
+  }
+
+  getNpcMemory(id){
+    const r=this.db.prepare("SELECT * FROM npc_memories WHERE id=?").get(id);
+    return r?{...r,tags:JSON.parse(r.tags_json||"[]")}:null;
+  }
+
+  listNpcMemories(guildId,npcKey,{status="",limit=100}={}){
+    const cap=Math.max(1,Math.min(500,Number(limit)||100));
+    return this.db.prepare(`SELECT * FROM npc_memories WHERE guild_id=? AND npc_key=? AND (?='' OR status=?) ORDER BY importance DESC,created_at DESC LIMIT ?`).all(guildId,String(npcKey||"").toLowerCase(),status,status,cap).map(r=>({...r,tags:JSON.parse(r.tags_json||"[]")}));
+  }
+
+  markNpcMemoriesRecalled(ids=[]){
+    const stmt=this.db.prepare("UPDATE npc_memories SET recall_count=recall_count+1,last_recalled_at=CURRENT_TIMESTAMP WHERE id=?");
+    for(const id of [...new Set(ids.filter(Boolean))]) stmt.run(id);
+  }
+
+  upsertNpcKnowledge(guildId,{npcKey,knowledgeKey,content,beliefState="known",confidence=100,sourceType="observed",sourceRef="",isSecret=false}={}){
+    const key=String(npcKey||"").trim().toLowerCase(); const kk=String(knowledgeKey||"").trim().toLowerCase(); const text=String(content||"").trim();
+    if(!key||!kk||!text) throw new Error("NPC knowledge requires npcKey, knowledgeKey, and content.");
+    if(!this.getNpcProfile(guildId,key)) throw new Error(`NPC profile not found: ${key}.`);
+    this.db.prepare(`INSERT INTO npc_knowledge(guild_id,npc_key,knowledge_key,content,belief_state,confidence,source_type,source_ref,is_secret) VALUES(?,?,?,?,?,?,?,?,?)
+      ON CONFLICT(guild_id,npc_key,knowledge_key) DO UPDATE SET content=excluded.content,belief_state=excluded.belief_state,confidence=excluded.confidence,source_type=excluded.source_type,source_ref=excluded.source_ref,is_secret=excluded.is_secret,updated_at=CURRENT_TIMESTAMP`)
+      .run(guildId,key,kk,text,beliefState,Math.max(0,Math.min(100,Number(confidence)||0)),String(sourceType||"observed"),String(sourceRef||""),isSecret?1:0);
+    return this.db.prepare("SELECT * FROM npc_knowledge WHERE guild_id=? AND npc_key=? AND knowledge_key=?").get(guildId,key,kk);
+  }
+
+  listNpcKnowledge(guildId,npcKey,{beliefState="",limit=100}={}){
+    const cap=Math.max(1,Math.min(500,Number(limit)||100));
+    return this.db.prepare(`SELECT * FROM npc_knowledge WHERE guild_id=? AND npc_key=? AND (?='' OR belief_state=?) ORDER BY updated_at DESC LIMIT ?`).all(guildId,String(npcKey||"").toLowerCase(),beliefState,beliefState,cap);
+  }
+
+  upsertNpcGoal(guildId,{npcKey,goalKey,title="",objective,horizon="near",priority=50,progress=0,status="active",dependencies=[],acceptableMethods=[],rationale="",source="gm"}={}){
+    const key=String(npcKey||"").trim().toLowerCase(); const gk=String(goalKey||"").trim().toLowerCase(); const text=String(objective||"").trim();
+    if(!key||!gk||!text) throw new Error("NPC goal requires npcKey, goalKey, and objective.");
+    if(!this.getNpcProfile(guildId,key)) throw new Error(`NPC profile not found: ${key}.`);
+    this.db.prepare(`INSERT INTO npc_goals(guild_id,npc_key,goal_key,title,objective,horizon,priority,progress,status,dependencies_json,acceptable_methods_json,rationale,source) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)
+      ON CONFLICT(guild_id,npc_key,goal_key) DO UPDATE SET title=excluded.title,objective=excluded.objective,horizon=excluded.horizon,priority=excluded.priority,progress=excluded.progress,status=excluded.status,dependencies_json=excluded.dependencies_json,acceptable_methods_json=excluded.acceptable_methods_json,rationale=excluded.rationale,source=excluded.source,updated_at=CURRENT_TIMESTAMP`)
+      .run(guildId,key,gk,String(title||""),text,horizon,Math.max(0,Math.min(100,Number(priority)||0)),Math.max(0,Math.min(100,Number(progress)||0)),status,JSON.stringify(dependencies||[]),JSON.stringify(acceptableMethods||[]),String(rationale||""),String(source||"gm"));
+    const r=this.db.prepare("SELECT * FROM npc_goals WHERE guild_id=? AND npc_key=? AND goal_key=?").get(guildId,key,gk);
+    return {...r,dependencies:JSON.parse(r.dependencies_json||"[]"),acceptable_methods:JSON.parse(r.acceptable_methods_json||"[]")};
+  }
+
+  listNpcGoals(guildId,npcKey,{status="",limit=50}={}){
+    const cap=Math.max(1,Math.min(200,Number(limit)||50));
+    return this.db.prepare(`SELECT * FROM npc_goals WHERE guild_id=? AND npc_key=? AND (?='' OR status=?) ORDER BY priority DESC,updated_at DESC LIMIT ?`).all(guildId,String(npcKey||"").toLowerCase(),status,status,cap).map(r=>({...r,dependencies:JSON.parse(r.dependencies_json||"[]"),acceptable_methods:JSON.parse(r.acceptable_methods_json||"[]")}));
+  }
+
+  getSeedRun(guildId,seedKey){
+    const r=this.db.prepare("SELECT * FROM seed_runs WHERE guild_id=? AND seed_key=?").get(guildId,seedKey);
+    return r?{...r,summary:JSON.parse(r.summary_json||"{}")} : null;
+  }
+
+  recordSeedRun(guildId,seedKey,{actorId=null,summary={}}={}){
+    this.db.prepare("INSERT INTO seed_runs(guild_id,seed_key,actor_id,summary_json) VALUES(?,?,?,?)").run(guildId,seedKey,actorId,JSON.stringify(summary||{}));
+    return this.getSeedRun(guildId,seedKey);
   }
 
   getPublished(guildId,surface,key){
@@ -1416,7 +1524,7 @@ export class VeiledDB {
     const id=randomUUID();
     const sessionIds=this.db.prepare("SELECT id FROM sessions WHERE guild_id=?").all(guildId).map(x=>x.id);
     const qmarks=sessionIds.length?sessionIds.map(()=>"?").join(","):"NULL";
-    const directTables=["players","characters","sessions","facts","clocks","threads","reference_entries","published_messages","npc_proxies","encounters","encounter_combatants","character_drafts","levelup_drafts","canon_events","canon_conflicts","downtime_cycles","downtime_projects","rules_rulings","relationships","relationship_hook_imports","character_gm_hooks","canon_proposals","handouts","encounter_aftermath","character_narratives"];
+    const directTables=["players","characters","sessions","facts","clocks","threads","reference_entries","published_messages","npc_proxies","encounters","encounter_combatants","character_drafts","levelup_drafts","canon_events","canon_conflicts","downtime_cycles","downtime_projects","rules_rulings","relationships","relationship_hook_imports","character_gm_hooks","canon_proposals","handouts","encounter_aftermath","character_narratives","npc_profiles","npc_memories","npc_knowledge","npc_goals","seed_runs"];
     const state={campaign:this.getCampaign(guildId),tables:{}};
     for(const table of directTables){
       try{state.tables[table]=this.db.prepare(`SELECT * FROM ${table} WHERE guild_id=?`).all(guildId);}catch{state.tables[table]=[];}
@@ -1442,8 +1550,8 @@ export class VeiledDB {
     const snap=this.getSnapshot(snapshotId); if(!snap||snap.guild_id!==guildId) throw new Error("Snapshot not found for this campaign.");
     this.snapshotCampaign(guildId,{label:"Pre-rollback safety",reason:`Before rollback to ${snapshotId}`,createdBy:actorId});
     const state=snap.state;
-    const delOrder=["encounter_aftermath","encounter_combatants","npc_proxies","session_characters","session_presence","levelup_drafts","downtime_projects","canon_conflicts","canon_events","relationships","relationship_hook_imports","canon_proposals","character_gm_hooks","character_narratives","handouts","encounters","sessions","character_drafts","characters","players","facts","clocks","threads","reference_entries","published_messages","downtime_cycles","rules_rulings"];
-    const insertOrder=["players","characters","sessions","session_presence","session_characters","facts","clocks","threads","reference_entries","published_messages","npc_proxies","encounters","encounter_combatants","character_drafts","levelup_drafts","canon_events","canon_conflicts","downtime_cycles","downtime_projects","rules_rulings","relationships","relationship_hook_imports","character_gm_hooks","canon_proposals","handouts","encounter_aftermath","character_narratives"];
+    const delOrder=["encounter_aftermath","encounter_combatants","npc_proxies","session_characters","session_presence","levelup_drafts","downtime_projects","canon_conflicts","canon_events","relationships","relationship_hook_imports","canon_proposals","character_gm_hooks","character_narratives","npc_memories","npc_knowledge","npc_goals","npc_profiles","seed_runs","handouts","encounters","sessions","character_drafts","characters","players","facts","clocks","threads","reference_entries","published_messages","downtime_cycles","rules_rulings"];
+    const insertOrder=["players","characters","sessions","session_presence","session_characters","facts","clocks","threads","reference_entries","published_messages","npc_proxies","encounters","encounter_combatants","character_drafts","levelup_drafts","canon_events","canon_conflicts","downtime_cycles","downtime_projects","rules_rulings","relationships","relationship_hook_imports","character_gm_hooks","canon_proposals","handouts","encounter_aftermath","character_narratives","npc_profiles","npc_memories","npc_knowledge","npc_goals","seed_runs"];
     this.db.exec("BEGIN IMMEDIATE");
     try{
       for(const t of delOrder){
