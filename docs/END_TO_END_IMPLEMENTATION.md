@@ -199,9 +199,115 @@ Read-only inbox/owner commands republish notices without replaying effects.
 Validation: test H covers seed-to-owned-source-to-AI-proposal, inert template review,
 reseed idempotency, read-only repair, defer/reject receipts and forbidden GM consent.
 
-## Remaining phases
+## Phase I — 6.7.0: production whole-loop evaluation
 
-I: cross-feature orchestration and rollout.
+The actual GM request builder now includes bounded AI management state in turn,
+world-director, NPC-director, downtime and aftermath prompts. This integration
+audit found that building context alone did not deliver it to the model. It also
+found director output checks that skipped intent-only proposals; both are fixed.
+Normal/private turns share the extracted `turn-orchestration.js` production commit
+boundary with evaluation. Intent-only turns receive rollback snapshots. NPC
+director intents reuse its existing request and consume fictional work slots;
+Omitted proposals retain deferred receipts. Consequence, strategy, memory,
+project and typed director operations share one cumulative delegated budget per
+NPC director opportunity, including the fair scheduler.
+there is no new per-feature/per-actor inference loop. Institution strategy steps
+have a closed native request contract, including jurisdiction and report keys.
+Routine requests still pass native authority, capacity and personnel checks.
+Legacy NPC goal mutation is refused when emergent goals are enabled: the model
+must use sourced, policy-governed intents. Flags-off legacy behavior is preserved.
+
+`end-to-end-i-test.mjs` exercises all eleven scoped triggers through actual prompt
+construction, synthetic Responses, production commit and future model context.
+It covers native goals, presence, group acceptance, strategy/action inspection,
+service subscription, owner-confirmed arc invitation/decline, nonbinding project
+draft, reversible memory correction, density diagnostics and zero-write private
+conversational discovery. Discovery deliberately bypasses model/commit routing:
+no paid interpretation or mutating intent is needed for an authorized lookup.
+Fake Discord receives only conservative post-commit narration. Forged authority,
+stale policy, private global mutation, duplicate origin, restart and backup restore
+are tested. Other mandatory phase fixtures cover project consent/completion,
+source retraction, causal backlog, dissent, budget fairness and old schemas.
+
+Scope: these are synthetic deterministic contract tests, not evidence that an
+unrestricted live model always proposes good actions. Intent-bearing first-pass
+prose is currently withheld in favor of a neutral continuity message, even when
+an intent succeeds. Native hooks, private inboxes and subsequent grounded context
+carry outcomes; no automatic paid prose-repair request is introduced. Network,
+Discord registration, TTS and production gameplay are not part of validation.
+Storage remains existing city/simulation records; schema stays 440 and existing
+backup/restore paths include policy, drafts, receipts and source records.
+
+## Feature / delegation / seed matrix
+
+Set feature flags with `/vc-city flags json:<object>`. Flags alone grant no AI
+authority. The operation names below are the actual delegation allowlist keys.
+
+| Feature flag | Routine operations (explicit allowlist) | Bootstrap / boundary |
+| --- | --- | --- |
+| `emergent_goals` | `goal.propose`, `goal.reprioritize`, `goal.pause`, `goal.resume` | Owned seeded knowledge; conclusions/unsafe methods reviewed |
+| `consequences` | `consequence.subscribe`, `consequence.unsubscribe`, `consequence.apply` | Reviewed templates; routine physical service effects only |
+| `scene_continuity` | `scene.record` | Sourced reference only; actual arrivals, witness and proxy checks |
+| `emergent_groups` | `group.propose`, `group.respond` | Templates; independent NPC evidence/choices, major transitions reviewed |
+| `strategies` | `strategy.propose`, `strategy.replan`, `strategy.run`, `strategy.pause`, `strategy.resume`, `strategy.abandon` | Templates; native steps/costs, aggressive/disclosure steps reviewed |
+| `personal_arcs` | `arc.candidate`, `arc.invite` | Never seeded as PC truth; owner confirmation/response required |
+| `discovery` | None; read-only player route | Existing visible facts/continuity; no writes, aliases or model call |
+| `long_projects` | `project.propose`, `project.advance`, `project.pause`, `project.resume`, `project.abandon` | Templates; independent phase consent and actual downtime results |
+| `conflict_mediation` | `mediation.reconcile` | Native action records; inspection, not a new roll or spend |
+| `memory_consolidation` | `memory.consolidate`, `memory.revise`, `memory.revert` | Reviewed candidates; original owned evidence preserved |
+| `activity_density` | `density.inspect` | No live seed state; bounded fair native scheduling |
+
+## Staged operator rollout and recovery
+
+1. Back up using existing campaign backup controls. Inspect `/vc-story
+   expansion-status` and `/vc-story ai-inbox`. Defaults remain manual/off; seeding
+   is separate and cannot activate flags, delegation, occupancy or PC consent.
+2. Enable selected flags, for example `/vc-city flags
+   json:{"emergent_goals":true,"memory_consolidation":true}`. Configure shadow
+   proposals with `/vc-story delegation
+   json:{"mode":"suggest_only","allow":[],"max_operations":1,"max_cost":0,"expires_minute":null}`.
+   Existing gameplay requests can propose; no extra shadow provider calls run.
+3. After inspecting sourced receipts, delegate narrowly with `/vc-story delegation
+   json:{"mode":"routine_delegated","allow":["goal.propose","memory.consolidate","memory.revise","memory.revert"],"max_operations":1,"max_cost":0,"expires_minute":1440}`.
+   Replace 1440 with a future **fictional** minute. Limits are per dispatch/
+   opportunity, not a provider spending budget. Begin with one operation and zero
+   cost; explicitly raise limits only after reviewing actual behavior.
+4. For review, refresh `/vc-story ai-inbox json:{"kind":"ai_intent","page":1}`.
+   Copy the returned key and `expected_revision` into `/vc-story ai-review` JSON
+   with `decision` approve/reject/defer. `modify` needs a complete
+   `replacement_intent`; approval is a separate action. Native review kinds are
+   `goal_transition`, `consequence`, `group_transition`, `strategy`, `seed_draft`.
+5. Repair lost notices by reopening the read-only inbox; never replay costs or
+   reissue successful mutation commands to repair delivery. Owners use
+   `/vc-intel continuity`, `/vc-intel arc` and `/vc-downtime long-project-status` /
+   `long-project`. Humans cannot consent on another PC's behalf through AI review.
+6. Revoke with `/vc-story delegation
+   json:{"mode":"manual","allow":[],"max_operations":1,"max_cost":0,"expires_minute":null}`.
+   Existing director pause remains `/vc-admin director pause`. Revocation changes
+   policy revision and queued AI strategy execution rechecks it. Turning a flag
+   off is not cancellation of legacy human-approved native work. Inspect native
+   queues; use `/vc-story strategy` with `op: pause`/`abandon` to cancel pending
+   plan steps, or native action review to reject a queued action. Completed work
+   is not refunded. Restore a verified backup for deliberate world rollback.
+
+## Phase audit / release ledger
+
+Each phase reused the native domains listed below and passed the full required
+network-denied validator before its commit. Verdicts were implement gaps, retain
+native rules/consent, reject authority inferred from prompts or seed text. No
+phase adds a database engine, parallel review manager or mandatory paid request.
+
+| Phase | Audited starting HEAD | Released | Principal reusable boundaries / changed modules |
+| --- | --- | --- | --- |
+| A | `e180793` | 5.9.0 / `a4fe31c` | GM schemas, state transactions, city records; new contracts/dispatcher |
+| B | `a4fe31c` | 6.0.0 / `0e2d184` | Scene continuity, simulation travel, NPC cognition and observation |
+| C | `0e2d184` | 6.1.0 / `e314941` | Motivation lifecycle, source indexing, native consequence cursors |
+| D | `e314941` | 6.2.0 / `3cba7ba` | Groups, subjective actor packets, native strategies/queued guards |
+| E | `3cba7ba` | 6.3.0 / `e4c548a` | Personal continuity, owned commands, early read-only message routing |
+| F | `e4c548a` | 6.4.0 / `24f2a11` | Long projects, downtime results, opaque application principal |
+| G | `24f2a11` | 6.5.0 / `7c5bd3a` | Memory clusters, native scheduler, bounded context and telemetry |
+| H | `7c5bd3a` | 6.6.0 / `83da52c` | Seed archives/drafts, additive owned evidence, native review inbox |
+| I | `83da52c` | 6.7.0 | Real prompt/commit/publication/restore loop and rollout documentation |
 
 Release policy: phase minors roll .9 to the next major .0. After Phase I, perform
 the requested final major release and deploy the clean, verified checkout while

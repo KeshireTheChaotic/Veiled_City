@@ -484,6 +484,7 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
     ].join("\n\n");
     const input=[
       `CAMPAIGN STATE:\n${JSON.stringify(ctx.campaign)}`,
+      `AI MANAGEMENT (GM-private proposals, policy, revisions and receipts; never actor knowledge): ${JSON.stringify(ctx.ai_management)}`,
       `SESSION:\n${JSON.stringify(ctx.session)}`,
       `ASSEMBLY PLAN (GM-PRIVATE; protect per-character hooks):\n${JSON.stringify(ctx.assembly)}`,
       `ESTABLISHED PARTY STATE:\n${JSON.stringify(ctx.party_state)}`,
@@ -576,6 +577,7 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
     }[layer];
     const prompt=[
       ctx.constitution,ctx.multi,"# AUTONOMOUS WORLD DIRECTOR",...layerRules,SIMULATION_PROMPT,NARRATIVE_CONTRACT,
+      `AI MANAGEMENT (GM-private proposals, policy, revisions and receipts; never actor knowledge): ${JSON.stringify(ctx.ai_management)}`,
       `Relevant simulation state: ${JSON.stringify(simulationContext(this.db,guildId,JSON.stringify(trigger)))}`,
       `Relevant civic context (not actor knowledge): ${JSON.stringify(cityContext(this.db,guildId,JSON.stringify(trigger)))}`,
       "You may autonomously emit the same authoritative campaign events, relationships, handouts, private_messages, and player-facing narration available to the normal GM, subject to all security/canon/player-agency restrictions.",
@@ -616,7 +618,8 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
       "Private hooks need an established player recipient. Otherwise leave private_user_id empty. Empty hooks are valid for still-hidden actions.",
       `Layer: ${layer}`,`Scene/query: ${query}`,`Hook delivery identities (not automatic NPC knowledge): ${JSON.stringify(deliveryTargets)}`,
       `Actor-specific packets: ${JSON.stringify(packets)}`].join("\n\n");
-    return this.requestStructured({model:this.config.gmModel,input,max_output_tokens:2400,
+    const management=`\nAI MANAGEMENT (GM-private planning only, not actor knowledge): ${JSON.stringify(intentContext(this.db,guildId))}`;
+    return this.requestStructured({model:this.config.gmModel,input:input+management,max_output_tokens:2400,
       text:{format:{type:"json_schema",name:"npc_director",strict:true,schema:npcDirectorSchema}}},{label:"NPC Director"});
   }
 
@@ -808,6 +811,7 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
     const clocks=this.db.clocksFor(guildId,{includeGM:true});
     const prompt=[
       "Build a concise post-encounter aftermath proposal for Veiled City.",
+      `AI MANAGEMENT (GM-private; proposals are not completed effects): ${JSON.stringify(intentContext(this.db,guildId))}`,
       "The deterministic combat state is authoritative. Do not retroactively change adversary defeat/escape status or PC resources.",
       "Compare pc_start_state with current roster resources to summarize important resource changes; do not emit duplicate resource_delta events for changes already recorded.",
       "Propose only downstream consequences justified by the transcript and encounter: evidence recovered, witnesses/casualties, Veil Exposure, faction clocks, new/changed relationships, NPC/location reference updates, threads, or durable canon.",
@@ -835,6 +839,7 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
     const chunks=this.searchContent(guildId,`downtime ${projects.map(p=>`${p.project_type} ${p.title} ${p.objective}`).join(" ")}`,this.config.maxContentChunks,{gm:true});
     const prompt=[
       "Resolve a formal between-session Veiled City downtime cycle.",
+      `AI MANAGEMENT (GM-private; proposals are not completed effects): ${JSON.stringify(intentContext(this.db,guildId))}`,
       "Only resolve projects submitted in this cycle. Respect Daggerheart downtime/project rules and established campaign canon.",
       "Recovery projects should follow the explicit Daggerheart rest mechanics in the supplied rules; do not grant arbitrary healing.",
       "Investigation, crafting, ritual, relationship, income, surveillance, research, and other projects should advance proportionally and may create costs/complications.",

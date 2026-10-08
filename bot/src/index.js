@@ -7,7 +7,8 @@ import { VeiledDB } from "./db.js";
 import { ContentIndex } from "./content.js";
 import { GMService } from "./gm.js";
 import { handleCommand } from "./commands.js";
-import { applyAuthoritativeMutation, applyCanonProposalDrafts } from "./state.js";
+import { applyAuthoritativeMutation } from "./state.js";
+import { commitGmTurn } from "./turn-orchestration.js";
 import { routeDiscoveryMessage } from "./continuity-routing.js";
 import { captureArcCandidate } from "./personal-continuity.js";
 import { publishEventResults, postGmLog, postStateError, deliverHandout, postPlayMessage } from "./publishing.js";
@@ -141,7 +142,7 @@ async function runPendingDirectorPass(guild,session){
       query:pending.reason||pending.scene_label||""});
     await publishSimulationHooks({db,guild,sessionId:session.id});
     result=normalizeDirectorConfidence(await gm.runWorldDirector({guildId:guild.id,layer:pending.layer,trigger:pending}));
-    const hasOutputs=(result.events||[]).length||(result.relationships||[]).length||(result.handouts||[]).length||(result.npc_memories||[]).length||(result.npc_knowledge||[]).length||(result.npc_goals||[]).length||(result.simulation_updates||[]).length||(result.private_messages||[]).length||String(result.public_narration||"").trim();
+    const hasOutputs=(result.ai_intents||[]).length||(result.events||[]).length||(result.relationships||[]).length||(result.handouts||[]).length||(result.npc_memories||[]).length||(result.npc_knowledge||[]).length||(result.npc_goals||[]).length||(result.simulation_updates||[]).length||(result.private_messages||[]).length||String(result.public_narration||"").trim();
     if(!result.act&&hasOutputs) throw new Error("World director returned act=false with non-empty outputs.");
   }catch(err){
     log.error(`World director ${pending.layer} generation failed`,err);
@@ -152,7 +153,7 @@ async function runPendingDirectorPass(guild,session){
 
   let mutation={events:[],relationships:[],handouts:[]};
   if(result.act){
-    const mutates=(result.events||[]).some(e=>e.type!=="log_only")||(result.relationships||[]).length||(result.handouts||[]).length||(result.npc_memories||[]).length||(result.npc_knowledge||[]).length||(result.npc_goals||[]).length||(result.simulation_updates||[]).length;
+    const mutates=(result.ai_intents||[]).length||(result.events||[]).some(e=>e.type!=="log_only")||(result.relationships||[]).length||(result.handouts||[]).length||(result.npc_memories||[]).length||(result.npc_knowledge||[]).length||(result.npc_goals||[]).length||(result.simulation_updates||[]).length;
     if(mutates) db.snapshotCampaign(guild.id,{label:`Pre-world-director ${pending.layer}`,reason:`Automatic snapshot before ${pending.layer} director pass`,createdBy:"veilkeeper"});
     try{
       mutation=applyAuthoritativeMutation(db,{narrative:result,guildId:guild.id,sessionId:session.id,events:result.events||[],relationships:result.relationships||[],handouts:result.handouts||[],npcMemories:result.npc_memories||[],npcKnowledge:result.npc_knowledge||[],npcGoals:result.npc_goals||[],simulationUpdates:result.simulation_updates||[],scope:{mode:"party",actorUserId:null,actorCharacterId:null},source:`world_director_${pending.layer}`,provenance:{actorType:"ai",actorId:"world_director",triggerText:pending.reason||"",rationale:result.gm_notes||"",confidence:result.confidence??100}});
@@ -231,51 +232,7 @@ async function runPrivateSceneDirector({guild,session,actorUserId,actorCharacter
   return {ran:true,ok:true};
 }
 
-function commitTurnMutation({guild,session,result,scope,speaker,label,meta={}}){
-  const mutates=(result.events||[]).some(e=>e.type!=="log_only")||(result.relationships||[]).length||(result.handouts||[]).length||(result.npc_memories||[]).length||(result.npc_knowledge||[]).length||(result.npc_goals||[]).length||(result.simulation_updates||[]).length;
-  if(mutates) db.snapshotCampaign(guild.id,{label,reason:`Automatic snapshot before eventful GM turn by ${speaker}`,createdBy:"veilkeeper"});
-  return db.transaction(()=>{
-    const mutation=applyAuthoritativeMutation(db,{
-      guildId:guild.id,
-      sessionId:session.id,
-      narrative:result,
-      events:result.events||[],
-      relationships:result.relationships||[],
-      handouts:result.handouts||[],
-      npcMemories:result.npc_memories||[],
-      npcKnowledge:result.npc_knowledge||[],
-      npcGoals:result.npc_goals||[],simulationUpdates:result.simulation_updates||[],
-      scope,
-      source:"ai_gm",
-      provenance:{actorType:"ai",actorId:scope.actorUserId||"veilkeeper",messageId:meta.messageId||null,triggerText:meta.triggerText||"",rationale:Object.values(result.state_review||{}).filter(x=>x&&x.reason).map(x=>x.reason).join(" | "),confidence:Math.min(...Object.values(result.state_review||{}).filter(x=>x&&Number.isFinite(Number(x.confidence))).map(x=>Number(x.confidence)),100)}
-    });
-    const proposalMap=new Map();
-    const addProposal=(d)=>{
-      const key=String(d?.key||"").trim().toLowerCase();
-      const value=String(d?.value||"").trim();
-      if(!key||!value) return;
-      const id=`${key}\u0000${value}`;
-      if(!proposalMap.has(id)) proposalMap.set(id,{key,value,visibility:d.visibility||"party",reason:d.reason||""});
-    };
-    for(const d of result.canon_proposals||[]) addProposal(d);
-    if(scope.mode==="private"){
-      for(const r of mutation.events||[]){
-        if(r?.blocked&&r.type==="canon"&&r.event?.key&&String(r.event?.value||"").trim()){
-          addProposal({key:r.event.key,value:r.event.value,visibility:["public","party","gm"].includes(String(r.event.visibility||"").toLowerCase())?r.event.visibility:"party",reason:r.event.note||"Converted from a blocked private-scene canon attempt."});
-        }
-      }
-    }
-    const canonProposals=applyCanonProposalDrafts(db,guild.id,session.id,[...proposalMap.values()],scope,meta);
-    for(const r of mutation.events||[]){
-      if(!(r?.blocked&&r.type==="canon"&&r.event?.key)) continue;
-      const key=String(r.event.key||"").trim().toLowerCase();
-      const value=String(r.event.value||"").trim();
-      const p=canonProposals.find(x=>x?.ok&&x.row?.canon_key===key&&x.row?.proposed_value===value);
-      if(p){ r.proposal_id=p.row.id; r.proposal_status=p.row.status; }
-    }
-    return {...mutation,canonProposals};
-  });
-}
+function commitTurnMutation(args){ return commitGmTurn({db,...args}); }
 
 async function notifyCanonProposals({guild,session,message,actorUserId,actorCharacterId,speaker,rows=[]}){
   const proposals=[...new Map((rows||[]).filter(x=>x?.ok&&x.row).map(x=>[x.row.id,x])).values()];

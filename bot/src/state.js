@@ -340,6 +340,8 @@ export function applyNpcCognitionDrafts(db,guildId,{memories=[],knowledge=[],goa
   }
   for(const draft of goals||[]){
     try{
+      if(db.getCityCalendar(guildId).flags.emergent_goals===true&&source!=="human_gm")
+        fail("Enabled emergent goals require sourced, policy-governed ai_intents rather than legacy npc_goals.");
       const profile=ensureProfile(draft);
       const before=db.listNpcGoals(guildId,profile.npc_key,{limit:200}).find(x=>x.goal_key===String(draft.goal_key||"").trim().toLowerCase())||null;
       const row=db.upsertNpcGoal(guildId,{

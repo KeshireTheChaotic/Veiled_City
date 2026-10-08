@@ -6,8 +6,11 @@ const list=(items,maxItems=20)=>({type:"array",items,maxItems});
 const object=properties=>({type:"object",additionalProperties:false,properties,required:Object.keys(properties)});
 const actor={actor_type:choice("npc","faction","institution"),actor_key:text(),information_key:text()};
 const source={source_event:text()};
-const action=object({type:text(),target_type:choice("npc","faction","location","institution","district",""),
-  target_key:text(),location_key:text(),information_key:text(),reason:text(1000)});
+const action={anyOf:[object({type:text(),target_type:choice("npc","faction","location","institution","district",""),
+  target_key:text(),location_key:text(),information_key:text(),reason:text(1000)}),
+  object({type:choice("document_request","file_case","interview_request","inspect_request","issue_policy","allocate_resources",
+    "negotiate_request","publish_finding","relocate_staff","seek_warrant"),target_type:choice("npc","location","institution","district",""),
+    target_key:text(),jurisdiction:text(),report_keys:list(text(),8),personnel_key:text(),reason:text(1000)})]};
 export const INTENT_PAYLOADS={
   goal:object({...actor,...source,op:choice("propose","reprioritize","pause","resume","supersede","complete","abandon"),
     goal_key:text(),new_goal_key:text(),objective:text(1000),reason:text(1000),priority:integer(0,100),confidence:integer(0,100),

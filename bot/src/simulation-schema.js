@@ -1,5 +1,6 @@
 /** Strict model proposal schemas for simulation updates and bounded NPC action intents. */
 import { ACTION_TYPES, MAJOR_IMPACTS } from "./simulation.js";
+import { intentArraySchema } from "./ai-intent-contracts.js";
 
 export const simulationUpdateSchema={
   type:"object",additionalProperties:false,
@@ -26,7 +27,7 @@ export const npcActionSchema={
 };
 
 export const npcDirectorSchema={type:"object",additionalProperties:false,
-  properties:{actions:{type:"array",maxItems:4,items:npcActionSchema}},required:["actions"]};
+  properties:{actions:{type:"array",maxItems:4,items:npcActionSchema},ai_intents:intentArraySchema},required:["actions","ai_intents"]};
 
 export const SIMULATION_PROMPT=[
   "city_action proposes an institution intent only: key is stable intent identity; data_json has institution,type,jurisdiction,source_event,report_keys. It cannot grant jurisdiction, transfer unknown information, choose PC actions, or bypass GM review.",

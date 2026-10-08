@@ -109,7 +109,8 @@ export function executeStrategyStep(db,guild,key,{actorId="strategy_opportunity"
         if(data.actor_type!=="institution"&&actorState(db,guild,data.actor_type,data.actor_key).resources[ACTION_COSTS[next.action.type]]<1)
           throw new StateConflictError("Resource shortage: replan, delay, retreat or abandon; no cost applied.");
         const action=data.actor_type==="institution"?submitInstitutionAction(db,guild,{...next.action,
-          key:`step:${motivationKey([key,data.revision,next.key])}`,institution:data.actor_key,source_event:before.source_event},actorId)
+          key:`step:${motivationKey([key,data.revision,next.key])}`,institution:data.actor_key,source_event:before.source_event,
+          strategy_key:key,strategy_revision:data.revision},actorId)
           :submitNpcAction(db,guild,{...next.action,actor_type:data.actor_type,actor_key:data.actor_key,
             goal_key:data.actor_type==="npc"?data.goal_key:goal.id,information_key:data.information_key,strategy_key:key,strategy_revision:data.revision},
             {cycleKey:`strategy:${key}:${data.revision}:${next.key}`,roll});
@@ -125,9 +126,9 @@ export function executeStrategyStep(db,guild,key,{actorId="strategy_opportunity"
     cityAudit(db,guild,"strategy_blocked",key,before,after,actorId);return after;
   }
 }
-export function runStrategyOpportunity(db,guild,budget=1,{excludedActors=new Set()}={}){
+export function runStrategyOpportunity(db,guild,budget=1,{excludedActors=new Set(),delegationBudget={operations:0,cost:0}}={}){
   if(db.isDirectorPaused(guild)||db.getCityCalendar(guild).flags.strategies!==true) return [];
-  const delegationBudget={operations:0,cost:0},seen=new Set(excludedActors);
+  const seen=new Set(excludedActors);
   return db.listCityRecords(guild,{kind:"strategy",status:"active",includeGM:true,limit:20})
     .filter(row=>{if(seen.has(row.actor_key)) return false;seen.add(row.actor_key);return true;}).slice(0,Math.max(0,Math.min(4,budget)))
     .map(row=>row.data.reviewed_by==="ai_policy"?delegateStrategy(db,guild,row,delegationBudget):executeStrategyStep(db,guild,row.record_key));

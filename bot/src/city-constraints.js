@@ -28,6 +28,7 @@ export function npcAvailability(db,guildId,key){
     authority:"routine_preferences_are_not_actual_position"};
 }
 export function assertInstitutionDelegation(db,guildId,institution,input){
+  assertQueuedCompatibility(db,guildId,{id:input.key,entity_key:`institution:${institution.record_key}`,data:input});
   const roles=institution.data.personnel||[];
   if(!roles.length&&!input.personnel_key) return;
   const role=db.getCityRecord(guildId,"personnel",input.personnel_key||"");

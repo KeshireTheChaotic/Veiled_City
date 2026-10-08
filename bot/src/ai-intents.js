@@ -80,7 +80,9 @@ export function dispatchAiIntents(db,guild,intents=[],context={}){
     const key=`intent:${hash([guild,context.sessionId||null,context.origin||"",intent]).slice(0,48)}`;
     const previous=db.getCityRecord(guild,"ai_intent",key);if(previous) return previous;
     try{return db.transaction(()=>{
-      const {adapter,before,impact}=preflight(db,guild,intent,context),verdict=decision(db,guild,intent,impact,budget);
+      const {adapter,before,impact}=preflight(db,guild,intent,context);
+      let verdict=decision(db,guild,intent,impact,budget);
+      if(context.deferred===true&&verdict.status==="accepted") verdict={status:"deferred",reason:"Fictional work slot exhausted; refresh or review later."};
       const result=verdict.status==="accepted"?adapter.apply(db,guild,intent,key,"ai_policy",context):null;
       if(verdict.status==="accepted"){budget.operations++;budget.cost+=impact.cost;}
       return saveReceipt(db,guild,key,intent,verdict.status,verdict.reason,context,{before,impact,result,policy_revision:delegationPolicy(db,guild).revision});
@@ -243,7 +245,8 @@ registerIntentAdapter("strategy",{
   current:(db,guild,intent)=>intent.target_key?db.getCityRecord(guild,"strategy",intent.target_key):null,
   impact:(db,guild,intent,before)=>({cost:["propose","replan"].includes(intent.payload.op)?intent.payload.cost_ceiling
     :intent.payload.op==="run"&&!before?.data.steps.some(step=>step.status==="submitted")?1:0,
-    review:(before?.data.steps||intent.payload.steps).some(step=>!["observe","research","investigate","prepare","travel","protect"].includes(step.action.type)),
+    review:(before?.data.steps||intent.payload.steps).some(step=>!["observe","research","investigate","prepare","travel","protect",
+      "document_request","interview_request","inspect_request"].includes(step.action.type)),
     reason:"Aggressive, disclosure or negotiated plan steps require human review."}),
   apply:(db,guild,intent,key,principal)=>{
     const p=intent.payload,before=intent.target_key?db.getCityRecord(guild,"strategy",intent.target_key):null;
@@ -298,9 +301,8 @@ registerIntentAdapter("project",{
       {principal:applicationPrincipal(guild,`project.${p.op}`,principal)});
   }
 });
-export function continueLongProjects(db,guild,{limit=4}={}){
+export function continueLongProjects(db,guild,{limit=4,budget={operations:0,cost:0}}={}){
   if(db.getCityCalendar(guild).flags.long_projects!==true||db.isDirectorPaused(guild)) return [];
-  const budget={operations:0,cost:0};
   return db.listCityRecords(guild,{kind:"long_project",status:"active",includeGM:true,limit:Math.max(1,Math.min(4,limit))}).map(row=>{
     const reconciled=reconcileLongProject(db,guild,row);if(reconciled.status!=="active") return reconciled;
     const p=row.data,phase=p.phases[p.index];
@@ -329,13 +331,13 @@ registerIntentAdapter("memory",{
   impact:()=>({cost:0,review:false}),
   apply:(db,guild,intent,key,principal)=>manageMemoryCluster(db,guild,{...intent.payload,key:intent.target_key||key},principal)
 });
-export function maintainMemory(db,guild){
+export function maintainMemory(db,guild,budget={operations:0,cost:0}){
   if(delegationPolicy(db,guild).mode!=="routine_delegated") return [];
   const candidate=memoryMaintenanceCandidate(db,guild);if(!candidate) return [];
   const p=candidate.payload;
   return dispatchAiIntents(db,guild,[{version:1,feature:"memory",target_key:candidate.target_key,expected_revision:stateRevision(candidate.expected),
     policy_revision:delegationPolicy(db,guild).revision,source_prerequisites:[],payload:{op:p.op,source_event:p.source_event,actor_type:p.actor_type,
-      actor_key:p.actor_key,topic:p.topic,sources:p.sources}}],{origin:`memory-maintenance:${db.getSimulationClock(guild).tick}`,scope:{mode:"party"}});
+      actor_key:p.actor_key,topic:p.topic,sources:p.sources}}],{origin:`memory-maintenance:${db.getSimulationClock(guild).tick}`,scope:{mode:"party"},budget});
 }
 registerIntentAdapter("density",{
   current:()=>null,impact:()=>({cost:0,review:false}),

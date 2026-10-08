@@ -25,6 +25,7 @@ bot/scripts/end-to-end-e-test.mjs
 bot/scripts/end-to-end-f-test.mjs
 bot/scripts/end-to-end-g-test.mjs
 bot/scripts/end-to-end-h-test.mjs
+bot/scripts/end-to-end-i-test.mjs
 bot/scripts/endurance-test.mjs
 bot/scripts/expansion-a-test.mjs
 bot/scripts/expansion-b-test.mjs
@@ -122,6 +123,7 @@ bot/src/simulation.js
 bot/src/state.js
 bot/src/story-commands.js
 bot/src/story-continuity.js
+bot/src/turn-orchestration.js
 bot/src/voice.js
 bot/src/world-authoring.js
 content/CARDS/ANCESTRIES_AND_COMMUNITIES.md
