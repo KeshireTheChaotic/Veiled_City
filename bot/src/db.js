@@ -1374,6 +1374,12 @@ export class VeiledDB {
     return r?{...r,tags:JSON.parse(r.tags_json||"[]")}:null;
   }
 
+  npcMemoryCorrections(guildId,npcKey,id){
+    return this.db.prepare(`SELECT * FROM npc_memories WHERE guild_id=? AND npc_key=? AND status IN ('active','challenged')
+      AND EXISTS (SELECT 1 FROM json_each(tags_json) WHERE value=?) ORDER BY created_at DESC,id LIMIT 20`)
+      .all(guildId,npcKey,`corrects:${id}`).map(row=>({...row,tags:JSON.parse(row.tags_json||"[]")}));
+  }
+
   listNpcMemories(guildId,npcKey,{status="",limit=100,queryTokens=[]}={}){
     const cap=Math.max(1,Math.min(500,Number(limit)||100));
     const wanted=[...new Set(queryTokens.map(String))].slice(0,20);

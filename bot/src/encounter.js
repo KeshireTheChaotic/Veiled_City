@@ -4,7 +4,8 @@ import path from "node:path";
 import { randomInt } from "node:crypto";
 import { cityObject, cityKey, cityAudit, indexWorldEvent } from "./city-calendar.js";
 import { requireCitySource } from "./city-core.js";
-import { scenePresence, currentScene } from "./scene-continuity.js";
+import { scenePresence, sceneAccess, currentScene } from "./scene-continuity.js";
+import { activeCityProxy } from "./city-constraints.js";
 import { actorSource } from "./simulation-motivation.js";
 
 export const BATTLE_POINT_COSTS=Object.freeze({
@@ -141,6 +142,37 @@ export function recordWorldEncounterOutcome(db,guild,encounter){
   }
   return db.saveCityRecord(guild,{kind:"encounter_outcome",key,source_event:source.event_key,data:{proposal:proposal.record_key,encounter_id:encounter.id,
     results:source.details.results,guidance:"Native combat results only. Defeated is not dead; location, witness knowledge and faction responses require separately sourced reviewed actions."}});
+  });
+}
+/** Only native committed attacks, current actual combatants and genuine sight witnesses establish tactical history. */
+export function recordObservedAttack(db,guild,request){
+  const flags=db.getCityCalendar(guild).flags,data=request.data;
+  if(flags.tactical_memory!==true||flags.scene_continuity!==true||!data.result||!data.breakdown.attack) return null;
+  const key=`observed-attack:${request.record_key}`,prior=db.getWorldEvent(guild,key);if(prior) return prior;
+  const encounter=db.getCurrentEncounter(data.session_id),attack=data.breakdown.attack;
+  if(encounter?.id!==attack.encounter_id||encounter.status!=="active"||currentScene(db,guild).key!==data.scene) return null;
+  const binding=db.getCityRecord(guild,"encounter_binding",encounter.id);
+  const combatants=db.listCombatants(encounter.id),participants=data.tag?.participants||[{character:data.character_id,roll_id:data.roll_id,breakdown:data.breakdown}];
+  const observations=[];
+  for(const participant of participants){
+    const roll=db.getSavedRoll(guild,participant.roll_id),pc=db.getCharacter(participant.character);
+    if(!roll||roll.character_id!==participant.character||roll.session_id!==data.session_id||roll.payload.request!==request.record_key
+      ||pc?.guild_id!==guild) continue;
+    for(const bound of binding?.data.combatants||[]){
+      if(!combatants.some(row=>row.id===bound.id&&row.status==="active")||!db.getNpcProfile(guild,bound.actor)||activeCityProxy(db,guild,bound.actor)
+        ||!sceneAccess(db,guild,{observer_type:"npc",observer_key:bound.actor,target_type:"character",target_key:pc.id,sense:"sight"})) continue;
+      observations.push({npc:bound.actor,character:pc.id,roll_id:roll.id,
+        observation:`I saw ${pc.name} attempt an attack with ${participant.breakdown.attack.weapon}. This establishes observable use, not hidden abilities, modifiers, intent, damage or death.`});
+    }
+  }
+  if(!observations.length) return null;
+  return db.transaction(()=>{
+    const source=indexWorldEvent(db,guild,{key,source_id:request.record_key,kind:"tactical_observation",title:"Witnessed native attack",visibility:"gm",
+      scene:data.scene,details:{encounter_id:encounter.id,observations}},"native_roll");
+    for(const item of observations) db.addNpcMemory(guild,{npcKey:item.npc,memoryType:"episodic",content:item.observation,
+      subjectType:"character",subjectKey:item.character,sourceType:"observed",sourceRef:source.event_key,confidence:100,importance:80,
+      tags:["tactical_history","observed_native_attack",`roll:${item.roll_id}`,"no_new_mechanics"]});
+    return source;
   });
 }
 export function worldCombatantDrafts(db,guild,encounter,rows){

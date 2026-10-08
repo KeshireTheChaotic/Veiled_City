@@ -38,7 +38,12 @@ export function interpretDialogue(db,guild,input){
     ||!Number.isInteger(input.confidence)||input.confidence<0||input.confidence>70
     ||!["promise","offer","refusal","boundary","address","argument","joke","apology","disagreement"].includes(input.topic))
     throw new Error("Bounded subjective dialogue interpretation required.");
+  const prior=input.corrects?db.getNpcMemory(input.corrects):null;
+  if(input.corrects&&(!prior||prior.guild_id!==guild||prior.npc_key!==npc||prior.subject_key!==source.details.character_id
+    ||!prior.tags.includes("dialogue_interpretation")||prior.source_ref===source.event_key))
+    throw new Error("A correction must reference this listener's prior interpretation of the same character.");
   return db.addNpcMemory(guild,{npcKey:npc,memoryType:"impression",content:`Subjective ${input.topic} interpretation of “${source.details.quote}”: ${input.interpretation}. Not canon, future choice or acceptance.`,
     subjectType:"character",subjectKey:source.details.character_id,sourceType:"inferred",sourceRef:source.event_key,
-    importance:70,confidence:Math.min(70,input.confidence??50),tags:["dialogue_interpretation",input.topic,"unverified"]});
+    importance:70,confidence:Math.min(70,input.confidence??50),tags:["dialogue_interpretation",input.topic,"unverified",
+      ...(prior?[`corrects:${prior.id}`,`prior-source:${prior.source_ref}`]:[])]});
 }

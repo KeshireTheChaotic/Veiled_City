@@ -6,6 +6,7 @@ import { cityAudit, cityKey, cityObject, indexWorldEvent } from "./city-calendar
 import { rollRevision, rollBreakdown } from "./roll-requests.js";
 import { dualityRoll, parseDice, d } from "./dice.js";
 import { hpMarksForDamage } from "./combat.js";
+import { recordObservedAttack } from "./encounter.js";
 import { StateConflictError, PermissionError, UserInputError } from "./errors.js";
 function fail(message){throw new StateConflictError(message);}
 /** Called only by the authenticated GM command/review boundary, never by model-supplied identity. */
@@ -237,6 +238,7 @@ export function contributeRoll(db,guild,user,input,{rng=d}={}){
       }
     }else throw new UserInputError("Unsupported mechanical contribution. Describe your intent freely; no narrative response menu is required.");
     const after=save(db,guild,row,data,status,user);
+    recordObservedAttack(db,guild,after);
     const resource_deltas=affected.map(id=>{
       const before=beforeResources.get(id),current=db.getCharacter(id).data.resources;
       return {character:id,hope:{before:before.hope,after:current.hope,delta:current.hope-before.hope},

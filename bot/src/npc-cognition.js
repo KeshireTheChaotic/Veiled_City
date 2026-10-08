@@ -122,7 +122,11 @@ export function retrieveNpcCognition(db,guildId,{
       .map(row=>({...row,_query_match:density?overlapScore(queryTokens,words(`${row.content} ${row.subject_key}`)):0,_score:memoryRank(row,memoryTokens,tick)}))
       .sort((a,b)=>b._query_match-a._query_match||b._score-a._score||String(b.created_at).localeCompare(String(a.created_at)))
       .slice(0,Math.max(1,Math.min(20,Number(memoriesPerNpc)||7)))
-      .map(row=>{const {_score,_query_match,...clean}=row; recalled.push(clean.id); return clean;});
+      .map(row=>{const {_score,_query_match,...clean}=row; recalled.push(clean.id);
+        const source=db.getWorldEvent(guildId,clean.source_ref);
+        const corrections=db.npcMemoryCorrections(guildId,profile.npc_key,clean.id).map(item=>({id:item.id,content:item.content,
+          source_ref:item.source_ref,source_status:db.getWorldEvent(guildId,item.source_ref)?.status||"unverified"}));
+        return {...clean,source_status:source?.status||"unverified",corrections};});
     const knowledge=db.listNpcKnowledge(guildId,profile.npc_key,{limit:160,queryTokens:[...memoryTokens]})
       .map(row=>({...row,_score:knowledgeRank(row,queryTokens)}))
       .sort((a,b)=>b._score-a._score||String(b.updated_at).localeCompare(String(a.updated_at)))
@@ -144,7 +148,7 @@ export function retrieveNpcCognition(db,guildId,{
       goals:goals.slice(0,Math.max(1,Math.min(10,Number(goalsPerNpc)||4))),
       knowledge,
       memories,
-      continuity_authority:"Dialogue quotations establish only what was said. Interpretations, promises, refusals and tactical history are actor-owned, not canon/consent, future decisions or new adversary features. De-escalation and retreat remain valid. Corrections must preserve original memories.",
+      continuity_authority:"Dialogue quotations establish only what was said. Interpretations, promises, refusals and tactical history are actor-owned, not canon/consent, future decisions or new adversary features. De-escalation and retreat remain valid. Corrections preserve original memories; consider active corrective testimony without imposing one global belief. Retracted, superseded or unverified sources are historical testimony, not authority for new consequences. Tactical history grants no new feature, bonus or immunity; preparations require existing sourced goal/review/resource services.",
       memory_clusters:clusterContext(db,guildId,"npc",profile.npc_key,query),
       scene_observations:scene?{...scene,occupants:scene.occupants.slice(0,16)}:null
     };

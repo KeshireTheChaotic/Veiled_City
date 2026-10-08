@@ -21,7 +21,9 @@ export const INTENT_PAYLOADS={
   influence:object({...source,op:choice("attempt"),from_key:text(),to_type:choice("institution","community","audience"),to_key:text(),
     information_key:text(),mechanism:text(),action_id:text(),response:choice("accept","refuse","correct"),interpretation:text(600),prior_key:text(),dissent:list(text(),8)}),
   evidence:object({...source,op:choice("analyze"),handout_id:text(),interpretation:text(600)}),
-  dialogue:object({...source,op:choice("interpret"),npc_key:text(),topic:choice("promise","offer","refusal","boundary","address","argument","joke","apology","disagreement"),interpretation:text(600),confidence:integer(0,70)}),
+  dialogue:{anyOf:[
+    object({...source,op:choice("interpret"),npc_key:text(),topic:choice("promise","offer","refusal","boundary","address","argument","joke","apology","disagreement"),interpretation:text(600),confidence:integer(0,70)}),
+    object({...source,op:choice("interpret"),npc_key:text(),topic:choice("promise","offer","refusal","boundary","address","argument","joke","apology","disagreement"),interpretation:text(600),confidence:integer(0,70),corrects:text()})]},
   encounter:object({...source,op:choice("propose"),actors:list(text(),12),location_key:text(),
     objective:choice("escape","protect_evidence","containment","negotiation"),environment:text()}),
   goal:object({...actor,...source,op:choice("propose","reprioritize","pause","resume","supersede","complete","abandon"),

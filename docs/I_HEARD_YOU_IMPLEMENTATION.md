@@ -65,3 +65,16 @@ New commands:
 | 15, 18, 25–26 | Scoped native revisions/owner checks, logical publication receipts, saved dice/usage, snapshot/restart, required offline guard | Native once-only effects; no billable validation. Further cross-phase recovery negatives remain in final integration |
 
 Native source lookup now rejects omitted active scoped modifier records rather than silently dropping known modifiers. Unsupported feature activation and missing stats require provisional human review. No automatic arbitrary card engine or PC-target armor spending was added; native adversary-target attack threshold handling is reused. All earlier release suites remain mandatory. Phase gate passed with dummy credentials and network denial; final closure resynchronizes metadata and reruns it after documentation changes.
+
+## Phase 3 — 8.3.0 (starting HEAD 7139071)
+
+P04 extends the existing closed `dialogue.interpret` intent with optional correction references. A correction must target the same NPC's prior interpretation of the same PC, using a different authenticated speech source that NPC actually heard. Native memories preserve both exact utterances and both subjective readings; no global truth, relationship, pact or PC preference changes. Cognition packets attach actor-owned correction pointers and active/retracted/unverified source labels. Historical testimony survives source retraction but cannot authorize new consequences.
+
+P05 hooks the native committed request-bound attack into existing encounter/memory services. Only mapped, active world combatants with actual current sight access receive an observation of the PC's visible weapon use. Pending declarations, remote/defeated NPCs and human proxies are excluded. No trait numbers, Difficulty, Hope, Experience, damage, intent or hidden features enter the observation. Actual roll IDs and source pointers persist; replay cannot add memories. No new adversary mechanics, automatic resource-consuming preparations or additional model calls: existing sourced goal/review/resource services remain necessary for lawful adaptation. Non-request-bound legacy attacks and secondhand tactical reports retain their existing manual source paths; arbitrary inferred capabilities remain UNVERIFIED.
+
+| Behavior / scenarios | Evidence | Status |
+| --- | --- | --- |
+| IHY-04; 19, 23, 25 | Required `i-heard-you-3-test.mjs`: actual dispatcher/intent/native memories/cognition, divergent listeners, foreign correction rejection, original preservation, snapshot/restart | COMPLETE for source-linked listener corrections; unrestricted interpretation remains PARTIAL |
+| IHY-05; 21, 23, 25 | Same suite: native owner roll → encounter witness capture → memory → cognition, actual remote/defeated exclusion, replay and retraction | COMPLETE for observable request-bound weapon use; no automatic capability inference or new feature |
+
+No new commands or flags. Uses `dialogue_history`, `scene_continuity`, `tactical_memory` and request-bound roll flags; `dialogue.interpret` may use existing explicit delegation. All flags remain unchanged in live campaigns. Schema remains 440. Disabling these flags stops new capture, not historical records. Required full offline validation is the release gate.
