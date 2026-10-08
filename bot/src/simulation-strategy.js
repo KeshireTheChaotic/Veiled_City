@@ -4,6 +4,7 @@ import { submitInstitutionAction, reviewInstitutionAction } from "./city-core.js
 import { actorSource, motivationKey } from "./simulation-motivation.js";
 import { ACTION_TYPES, ACTION_COSTS, actorState, submitNpcAction } from "./simulation.js";
 import { UserInputError, StateConflictError } from "./errors.js";
+import { delegateStrategy } from "./ai-intents.js";
 function objective(db,guild,input){
   if(input.actor_type==="npc") return db.getNpcGoal(guild,input.actor_key,input.goal_key);
   return db.listSimulationRecords(guild,{kind:"goal",entityKey:`${input.actor_type}:${input.actor_key}`,limit:1000})
@@ -124,8 +125,10 @@ export function executeStrategyStep(db,guild,key,{actorId="strategy_opportunity"
     cityAudit(db,guild,"strategy_blocked",key,before,after,actorId);return after;
   }
 }
-export function runStrategyOpportunity(db,guild,budget=1){
+export function runStrategyOpportunity(db,guild,budget=1,{excludedActors=new Set()}={}){
   if(db.isDirectorPaused(guild)||db.getCityCalendar(guild).flags.strategies!==true) return [];
-  return db.listCityRecords(guild,{kind:"strategy",status:"active",includeGM:true,limit:20}).slice(0,Math.max(0,Math.min(4,budget)))
-    .map(row=>executeStrategyStep(db,guild,row.record_key));
+  const delegationBudget={operations:0,cost:0},seen=new Set(excludedActors);
+  return db.listCityRecords(guild,{kind:"strategy",status:"active",includeGM:true,limit:20})
+    .filter(row=>{if(seen.has(row.actor_key)) return false;seen.add(row.actor_key);return true;}).slice(0,Math.max(0,Math.min(4,budget)))
+    .map(row=>row.data.reviewed_by==="ai_policy"?delegateStrategy(db,guild,row,delegationBudget):executeStrategyStep(db,guild,row.record_key));
 }

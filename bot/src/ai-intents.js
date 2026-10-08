@@ -7,6 +7,10 @@ import { proposeGoalTransition, reviewGoalTransition } from "./simulation-motiva
 import { recordScenePresence, scenePresence, sceneView } from "./scene-continuity.js";
 import { activeCityProxy } from "./city-constraints.js";
 import { subscribeConsequence, reviewConsequence } from "./city-consequences.js";
+import { actorSource } from "./simulation-motivation.js";
+import { manageGroup } from "./city-groups.js";
+import { manageStrategy } from "./simulation-strategy.js";
+import { ContextPlanner } from "./context-planner.js";
 const hash=value=>createHash("sha256").update(JSON.stringify(value)).digest("hex");
 const adapters=new Map();
 export const FEATURE_FLAGS={goal:"emergent_goals",consequence:"consequences",scene:"scene_continuity",group:"emergent_groups",
@@ -105,6 +109,11 @@ export function intentContext(db,guild){
     receipts:db.listCityRecords(guild,{kind:"ai_intent",includeGM:true,limit:12}).map(row=>({...row,expected_revision:stateRevision(row)})),
     causal_targets:["consequence","consequence_subscription"].flatMap(kind=>db.listCityRecords(guild,{kind,includeGM:true,limit:8})
       .map(row=>({...row,expected_revision:stateRevision(row)}))),
+    planning_targets:["group_transition","strategy"].flatMap(kind=>db.listCityRecords(guild,{kind,includeGM:true,limit:8})
+      .map(row=>({...row,expected_revision:stateRevision(row)}))),
+    group_actor_packets:db.listCityRecords(guild,{kind:"group_transition",status:"pending",includeGM:true,limit:4})
+      .flatMap(row=>row.data.members.slice(0,4).map(member=>({proposal:row.record_key,member,
+        packet:new ContextPlanner(db).plan(guild,{actorType:"npc",actorKey:member,query:row.source_event,maxTokens:400})}))),
     target_revision_rule:"Use the supplied state fingerprint; absent for a new target. Proposals are not effects."};
 }
 registerIntentAdapter("goal",{
@@ -173,4 +182,50 @@ export function delegateConsequence(db,guild,row,budget={operations:0,cost:0}){
     policy_revision:delegationPolicy(db,guild).revision,source_prerequisites:[],payload:{source_event:row.source_event,op:"apply",handler:"service",
       entity_key:p.entity_key,event_kinds:p.event_kinds,location_key:p.location_key||"",delta:p.payload.delta}}],
   {origin:`causal:${row.record_key}`,scope:{mode:"party"},budget})[0];
+}
+registerIntentAdapter("group",{
+  current:(db,guild,intent)=>intent.target_key?db.getCityRecord(guild,"group_transition",intent.target_key):null,
+  impact:(db,guild,intent,before)=>({cost:0,review:before?.data.major===true||["split","merge","dissolve"].includes(intent.payload.operation),
+    reason:"Major group changes require human review and independent candidate responses."}),
+  apply:(db,guild,intent,key,principal)=>{
+    const p=intent.payload,member=p.member;
+    actorSource(db,guild,{actor_type:"npc",actor_key:member,information_key:p.information_key,source_event:p.source_event},{requireResources:false});
+    if(p.op==="propose"){
+      if(!p.members.includes(member)) throw new Error("Group proposer must be a candidate.");
+      return manageGroup(db,guild,{...p,key},principal);
+    }
+    const before=db.getCityRecord(guild,"group_transition",intent.target_key);
+    if(before?.source_event!==p.source_event) throw new Error("Response must concern this sourced proposal.");
+    if(before.data.responses[member]) return before;
+    const profile=db.getNpcProfile(guild,member);
+    if(p.decision==="accept"&&["refuse","decline"].includes(profile.decision_profile.group_policy)) throw new Error("Established actor preferences require dissent.");
+    if(!p.reason.trim()) throw new Error("Actor-relative response reason required.");
+    const row=manageGroup(db,guild,{key:intent.target_key,op:"respond",member,decision:p.decision,reason:p.reason,information_key:p.information_key},principal);
+    if(row.data.members.every(candidate=>row.data.responses[candidate])){
+      const accepted=row.data.members.filter(candidate=>row.data.responses[candidate].decision==="accept").length;
+      if(!row.data.major) return manageGroup(db,guild,{key:row.record_key,op:accepted>=(["form"].includes(row.data.operation)?2:1)?"approve":"reject"},principal);
+    }
+    return row;
+  }
+});
+registerIntentAdapter("strategy",{
+  current:(db,guild,intent)=>intent.target_key?db.getCityRecord(guild,"strategy",intent.target_key):null,
+  impact:(db,guild,intent,before)=>({cost:["propose","replan"].includes(intent.payload.op)?intent.payload.cost_ceiling
+    :intent.payload.op==="run"&&!before?.data.steps.some(step=>step.status==="submitted")?1:0,
+    review:(before?.data.steps||intent.payload.steps).some(step=>!["observe","research","investigate","prepare","travel","protect"].includes(step.action.type)),
+    reason:"Aggressive, disclosure or negotiated plan steps require human review."}),
+  apply:(db,guild,intent,key,principal)=>{
+    const p=intent.payload,before=intent.target_key?db.getCityRecord(guild,"strategy",intent.target_key):null;
+    if(before&&(p.actor_type!==before.data.actor_type||p.actor_key!==before.data.actor_key||p.goal_key!==before.data.goal_key)) throw new Error("Plan owner/objective cannot be substituted.");
+    const result=manageStrategy(db,guild,{...p,key:intent.target_key||key},principal);
+    return ["propose","replan"].includes(p.op)?manageStrategy(db,guild,{key:result.record_key,op:"approve"},principal):result;
+  }
+});
+export function delegateStrategy(db,guild,row,budget={operations:0,cost:0}){
+  const p=row.data;
+  return dispatchAiIntents(db,guild,[{version:1,feature:"strategy",target_key:row.record_key,expected_revision:stateRevision(row),
+    policy_revision:delegationPolicy(db,guild).revision,source_prerequisites:[],payload:{actor_type:p.actor_type,actor_key:p.actor_key,
+      information_key:p.information_key,source_event:row.source_event,op:"run",goal_key:p.goal_key,cost_ceiling:p.cost_ceiling,
+      deadline_minute:p.deadline_minute??1000000000,steps:p.steps.map(({key,requires,action})=>({key,requires,action})),
+      alternatives:p.alternatives||[],assumptions:p.assumptions||[]}}],{origin:`strategy:${row.record_key}`,scope:{mode:"party"},budget})[0];
 }

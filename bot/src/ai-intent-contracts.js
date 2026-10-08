@@ -61,5 +61,7 @@ export function validateIntent(value){
 }
 export const INTENT_PROMPT=`Optional ai_intents are version-1 proposals, never completed effects. Use only supplied source IDs,
 state fingerprints and policy revision. Never invent consent, reviewer identity, permission, rolls or movement.
+For group responses use only that member's group_actor_packet, owned evidence and established preferences;
+GM-only planning context is not member knowledge. Dissent is valid and must not be overwritten.
 Use [] when no valid opportunity exists. Feature flags do not authorize execution. Pending/blocked/rejected receipts
 are not accomplished events; describe invitations and plans as proposals. No extra calls per actor are required.`;

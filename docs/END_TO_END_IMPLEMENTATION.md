@@ -55,8 +55,6 @@ Validation: `end-to-end-b-test.mjs` plus existing scene, narrative and offline
 suites. No real Discord/model/TTS calls. Automatic presence does not infer a
 location from an entry hook or invent arrival for an absent PC.
 
-## Remaining phases
-
 ## Phase C — 6.1.0: motivations and durable consequences
 
 All seven goal transitions use owned evidence and native goal history; contested
@@ -75,9 +73,29 @@ fan-out four and no repeated subscription. Retracted sources block execution.
 Other native consequence handlers remain human-reviewed; no disclosure authority
 is granted by a subscription. Mandatory tests cover a 65-event backlog/restart.
 
+## Phase D — 6.2.0: groups and strategies
+
+Existing requests include bounded per-member actor packets and typed proposals /
+responses. Each responding NPC must own the source, remain available/non-proxied
+and respect established refusal preferences. Responses cannot overwrite dissent.
+Routine form/join/leave decisions finalize through native group validation after
+all candidates respond; split/merge/dissolve retain explicit human review.
+
+Typed strategy creation/replanning uses native goal/source/DAG/deadline/cost
+validation, then authorized approval. Run/pause/resume/abandon reference current
+plan fingerprints. Aggressive/disclosure/negotiated steps require human review.
+AI-approved plans recheck delegation for every automatic opportunity, so revocation
+stops future autonomous work. Native resolvers still own dice, resources and actual
+outcomes. Ordinary director proposals exclude actors with active plans; strategy
+work excludes actors already processed that opportunity and deduplicates owners.
+Blocked/planned/actual outcomes enter subsequent planning context and GM inbox.
+
+Validation: `end-to-end-d-test.mjs` plus existing groups/strategy suites; independent
+dissent, actor exclusion, native execution and delegation revocation; no paid calls.
+
 ## Remaining phases
 
-D: groups and strategies. E: owner confirmation and natural-language
+E: owner confirmation and natural-language
 read-only discovery. F: projects and mediation. G: memory maintenance and fairness.
 H: seeds and complete review UX. I: cross-feature orchestration and rollout.
 

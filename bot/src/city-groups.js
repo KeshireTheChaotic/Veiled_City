@@ -40,12 +40,13 @@ export function manageGroup(db,guild,input,actorId){
   if(before.status!=="pending") return before;
   requireCitySource(db,guild,before.source_event);
   if(op==="respond"){
+    if(before.data.responses[input.member]) return before;
     assertNpcAvailability(db,guild,input.member,{});
     if(!before.data.members.includes(input.member)||activeCityProxy(db,guild,input.member)||!["accept","decline"].includes(input.decision))
       throw new StateConflictError("Explicit non-proxied candidate response required.");
     return db.transaction(()=>{
       const after=db.saveCityRecord(guild,{...before,key,data:{...before.data,responses:{...before.data.responses,
-        [input.member]:{decision:input.decision,recorded_by:actorId}}}});
+        [input.member]:{decision:input.decision,recorded_by:actorId,reason:input.reason||"",information_key:input.information_key||""}}}});
       cityAudit(db,guild,"group_response",key,before,after,actorId);return after;
     });
   }

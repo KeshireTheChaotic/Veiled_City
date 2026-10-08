@@ -551,6 +551,7 @@ export function commitNpcDirector(db,prepared,{roll}={}){
     for(const action of (proposed.actions||[]).slice(0,budget)){
       if(actions.length>=budget) break;
       const actor=keyOf(action.actor_type,normalizeNpcKey(action.actor_key));
+      if(db.getCityCalendar(guildId).flags.strategies===true&&db.listCityRecords(guildId,{kind:"strategy",actor,status:"active",includeGM:true,limit:1}).length) continue;
       if(seen.has(actor)||!candidates.some(candidate=>keyOf(candidate.type,candidate.key)===actor)) continue;
       seen.add(actor);
       try{
@@ -575,7 +576,7 @@ export function commitNpcDirector(db,prepared,{roll}={}){
     const consequenceBudget={operations:0,cost:0};
     const consequences=coordinateConsequences(db,guildId,Math.max(0,budget-actions.length-motivations.length),
       {onProposed:row=>delegateConsequence(db,guildId,row,consequenceBudget)});
-    const strategies=runStrategyOpportunity(db,guildId,Math.max(0,budget-actions.length-motivations.length-consequences.length));
+    const strategies=runStrategyOpportunity(db,guildId,Math.max(0,budget-actions.length-motivations.length-consequences.length),{excludedActors:seen});
     if(actions.length+motivations.length+consequences.length+strategies.length<budget) proposeContactGroup(db,guildId);
     proposeCityOpportunity(db,guildId,prepared.query||"","city_director");
     return {clock:db.getSimulationClock(guildId),actions};
