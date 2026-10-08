@@ -93,7 +93,7 @@ export class VeiledDB {
         if(!knownPairs.has(`${relation.guild_id}:${pair}`)) updateRelationshipDimensions(this,relation.guild_id,relation);
       }
     });
-    this.db.exec("PRAGMA user_version=410;");
+    this.db.exec("PRAGMA user_version=420;");
   }
 
   close() { this.db.close(); }
@@ -146,6 +146,44 @@ export class VeiledDB {
   }
   getMutation(guildId,id){
     return this.db.prepare("SELECT * FROM mutation_ledger WHERE guild_id=? AND id=?").get(guildId,id)||null;
+  }
+
+  getCityRecord(guildId,kind,key){
+    const row=this.db.prepare("SELECT * FROM city_records WHERE guild_id=? AND kind=? AND record_key=?").get(guildId,kind,key);
+    return row?{...row,data:JSON.parse(row.data_json)}:null;
+  }
+  saveCityRecord(guildId,{kind,key,actor_key="",location_key="",district_key="",status="active",source_event,data,visibility="gm",subject_key=null}){
+    const clock=this.getSimulationClock(guildId);
+    this.db.prepare(`INSERT INTO city_records(guild_id,kind,record_key,actor_key,location_key,district_key,status,visibility,
+      subject_key,source_event,tick,minute,data_json) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)
+      ON CONFLICT(guild_id,kind,record_key) DO UPDATE SET actor_key=excluded.actor_key,location_key=excluded.location_key,
+        district_key=excluded.district_key,status=excluded.status,visibility=excluded.visibility,subject_key=excluded.subject_key,
+        source_event=excluded.source_event,tick=excluded.tick,minute=excluded.minute,data_json=excluded.data_json`)
+      .run(guildId,kind,key,actor_key,location_key,district_key,status,visibility,subject_key,source_event,clock.tick,clock.minute,JSON.stringify(data));
+    return this.getCityRecord(guildId,kind,key);
+  }
+  listCityRecords(guildId,{kind="",actor="",status="",query="",limit=30,includeGM=false}={}){
+    return this.db.prepare(`SELECT * FROM city_records WHERE guild_id=? AND (?=1 OR visibility IN ('public','party'))
+      AND (?='' OR kind=?) AND (?='' OR actor_key=?) AND (?='' OR status=?)
+      AND (?='' OR instr(lower(record_key||' '||location_key||' '||district_key||' '||data_json),lower(?))>0)
+      ORDER BY minute DESC,rowid DESC LIMIT ?`).all(guildId,includeGM?1:0,kind,kind,actor,actor,status,status,query,query,Math.min(100,limit))
+      .map(row=>({...row,data:JSON.parse(row.data_json)}));
+  }
+  saveWorldLink(guildId,{from,to,relation,asserted_by=""}){
+    this.db.prepare("INSERT OR IGNORE INTO world_event_links(guild_id,from_event,to_event,relation,asserted_by) VALUES(?,?,?,?,?)")
+      .run(guildId,from,to,relation,asserted_by);
+    return {from,to,relation,asserted_by};
+  }
+  worldLinks(guildId){
+    return this.db.prepare("SELECT * FROM world_event_links WHERE guild_id=? ORDER BY rowid LIMIT 1000").all(guildId);
+  }
+  setDistrictLocation(guildId,location,district,source){
+    this.db.prepare(`INSERT INTO district_locations(guild_id,location_key,district_key,source_event) VALUES(?,?,?,?)
+      ON CONFLICT(guild_id,location_key) DO UPDATE SET district_key=excluded.district_key,source_event=excluded.source_event`)
+      .run(guildId,location,district,source);
+  }
+  districtLocations(guildId,district){
+    return this.db.prepare("SELECT * FROM district_locations WHERE guild_id=? AND district_key=? ORDER BY location_key").all(guildId,district);
   }
 
   getSeedDocument(guildId,sourcePath){
@@ -1750,7 +1788,7 @@ export class VeiledDB {
     const directTables=["players","characters","sessions","facts","clocks","threads","reference_entries","published_messages","npc_proxies","encounters","encounter_combatants","character_drafts","levelup_drafts","canon_events","canon_conflicts","downtime_cycles","downtime_projects","rules_rulings","relationships","relationship_hook_imports","character_gm_hooks","canon_proposals","handouts","encounter_aftermath","character_narratives","npc_profiles","npc_memories","npc_knowledge","npc_goals","seed_runs"];
     const state={campaign:this.getCampaign(guildId),tables:{}};
     directTables.push("simulation_entities","simulation_records","simulation_clock","seed_documents","seed_catalog",
-      "city_calendar","world_events","city_schedule");
+      "city_calendar","world_events","city_schedule","city_records","world_event_links","district_locations");
     for(const table of directTables){
       try{state.tables[table]=this.db.prepare(`SELECT * FROM ${table} WHERE guild_id=?`).all(guildId);}catch{state.tables[table]=[];}
     }
@@ -1777,8 +1815,10 @@ export class VeiledDB {
     const state=snap.state;
     const delOrder=["encounter_aftermath","encounter_combatants","npc_proxies","session_characters","session_presence","levelup_drafts","downtime_projects","canon_conflicts","canon_events","relationships","relationship_hook_imports","canon_proposals","character_gm_hooks","character_narratives","npc_memories","npc_knowledge","npc_goals","npc_profiles","seed_runs","handouts","encounters","sessions","character_drafts","characters","players","facts","clocks","threads","reference_entries","published_messages","downtime_cycles","rules_rulings"];
     const insertOrder=["players","characters","sessions","session_presence","session_characters","facts","clocks","threads","reference_entries","published_messages","npc_proxies","encounters","encounter_combatants","character_drafts","levelup_drafts","canon_events","canon_conflicts","downtime_cycles","downtime_projects","rules_rulings","relationships","relationship_hook_imports","character_gm_hooks","canon_proposals","handouts","encounter_aftermath","character_narratives","npc_profiles","npc_memories","npc_knowledge","npc_goals","seed_runs"];
-    delOrder.unshift("city_schedule","world_events","city_calendar","seed_catalog","seed_documents","simulation_records","simulation_entities","simulation_clock");
-    insertOrder.push("simulation_entities","simulation_records","simulation_clock","seed_documents","seed_catalog","city_calendar","world_events","city_schedule");
+    delOrder.unshift("district_locations","world_event_links","city_records","city_schedule","world_events","city_calendar",
+      "seed_catalog","seed_documents","simulation_records","simulation_entities","simulation_clock");
+    insertOrder.push("simulation_entities","simulation_records","simulation_clock","seed_documents","seed_catalog","city_calendar",
+      "world_events","city_schedule","city_records","world_event_links","district_locations");
     this.db.exec("BEGIN IMMEDIATE");
     try{
       for(const t of delOrder){

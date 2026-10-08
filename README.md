@@ -1,6 +1,13 @@
-# VEILED CITY MULTIPLAYER DISCORD ENGINE v4.1.0
+# VEILED CITY MULTIPLAYER DISCORD ENGINE v4.2.0
 
 Stateful Discord GM bot for the Veiled City multiplayer Daggerheart campaign.
+
+## v4.2.0 — Living City Phase B
+
+Adds sourced districts, institutions with explicit report-based knowledge,
+audience beliefs, case/evidence records, causal links, consensual commitments
+and opt-in bounded institution opportunities. See [Living City](docs/LIVING_CITY.md).
+These systems do not change PC mechanics, Veil Exposure or established canon.
 
 ## v4.1.0 — Living City Phase A
 

@@ -862,3 +862,42 @@ CREATE TABLE IF NOT EXISTS city_schedule (
   PRIMARY KEY(guild_id,schedule_key)
 );
 CREATE INDEX IF NOT EXISTS idx_city_schedule_due ON city_schedule(guild_id,status,review_status,due_minute,due_tick);
+
+-- Typed civic domains share provenance/lifecycle columns, not actor knowledge.
+CREATE TABLE IF NOT EXISTS city_records (
+  guild_id TEXT NOT NULL REFERENCES campaigns(guild_id) ON DELETE CASCADE,
+  kind TEXT NOT NULL,
+  record_key TEXT NOT NULL,
+  actor_key TEXT NOT NULL DEFAULT '',
+  location_key TEXT NOT NULL DEFAULT '',
+  district_key TEXT NOT NULL DEFAULT '',
+  status TEXT NOT NULL DEFAULT 'active',
+  visibility TEXT NOT NULL DEFAULT 'gm' CHECK(visibility IN ('public','party','player','character','gm')),
+  subject_key TEXT,
+  source_event TEXT NOT NULL,
+  tick INTEGER NOT NULL,
+  minute INTEGER NOT NULL,
+  data_json TEXT NOT NULL,
+  PRIMARY KEY(guild_id,kind,record_key),
+  FOREIGN KEY(guild_id,source_event) REFERENCES world_events(guild_id,event_key)
+);
+CREATE INDEX IF NOT EXISTS idx_city_records_active ON city_records(guild_id,kind,status,actor_key);
+CREATE INDEX IF NOT EXISTS idx_city_records_place ON city_records(guild_id,district_key,location_key);
+CREATE TABLE IF NOT EXISTS world_event_links (
+  guild_id TEXT NOT NULL,
+  from_event TEXT NOT NULL,
+  to_event TEXT NOT NULL,
+  relation TEXT NOT NULL CHECK(relation IN ('caused_by','enabled_by','reported_by','investigates','contradicts','resolved_by','scheduled_from')),
+  asserted_by TEXT NOT NULL DEFAULT '',
+  PRIMARY KEY(guild_id,from_event,to_event,relation,asserted_by),
+  FOREIGN KEY(guild_id,from_event) REFERENCES world_events(guild_id,event_key),
+  FOREIGN KEY(guild_id,to_event) REFERENCES world_events(guild_id,event_key)
+);
+CREATE TABLE IF NOT EXISTS district_locations (
+  guild_id TEXT NOT NULL,
+  location_key TEXT NOT NULL,
+  district_key TEXT NOT NULL,
+  source_event TEXT NOT NULL,
+  PRIMARY KEY(guild_id,location_key),
+  FOREIGN KEY(guild_id,source_event) REFERENCES world_events(guild_id,event_key)
+);

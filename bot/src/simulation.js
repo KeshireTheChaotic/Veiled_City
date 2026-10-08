@@ -1,6 +1,7 @@
 /** Fictional-time NPC/faction simulation. Models propose intent; bounded application rules resolve and persist outcomes. */
 import { randomInt, randomUUID } from "node:crypto";
 import { normalizeNpcKey, retrieveNpcCognition } from "./npc-cognition.js";
+import { submitInstitutionAction, runInstitutionDirector, proposeCityOpportunity } from "./city-core.js";
 export { updateRelationshipDimensions } from "./relationship-state.js";
 
 export const ACTION_TYPES=["investigate","travel","contact","recruit","observe","prepare","hide","acquire","spend_resource",
@@ -162,6 +163,10 @@ export function applySimulationUpdates(db,guildId,updates=[],{scope={mode:"party
       configureSimulationEntity(db,guildId,"faction",actorKey,{activity_tier:"supporting"});
     let row;
     switch(update.kind){
+      case "city_action":{
+        row=submitInstitutionAction(db,guildId,{...data,key:update.key,confidence},"ai_gm");
+        break;
+      }
       case "voice":{
         if(!db.getNpcProfile(guildId,actorKey)) throw new Error("NPC profile not found for voice update.");
         const state=actorState(db,guildId,"npc",actorKey);
@@ -496,7 +501,7 @@ export async function prepareNpcDirector({db,gm,guildId,layer,cycleKey,query="",
   if(prior?.status==="completed") return {replayed:true,guildId};
   const candidates=simulationCandidates(db,guildId,{layer,query});
   const proposed=candidates.length?await gm.planNpcActions({guildId,layer,query,candidates}):{actions:[]};
-  return {guildId,layer,cycleKey,minutes,cycleId,candidates,proposed};
+  return {guildId,layer,cycleKey,minutes,cycleId,candidates,proposed,query};
 }
 
 export function commitNpcDirector(db,prepared,{roll}={}){
@@ -533,6 +538,8 @@ export function commitNpcDirector(db,prepared,{roll}={}){
     }
     db.putSimulationRecord(guildId,{id:cycleId,kind:"cycle",status:"completed",data:{layer,cycle_key:cycleKey,
       actions:actions.map(row=>row.id).filter(Boolean),blocked:actions.filter(row=>row.status==="blocked")}});
+    runInstitutionDirector(db,guildId,cycleKey);
+    proposeCityOpportunity(db,guildId,prepared.query||"","city_director");
     return {clock:db.getSimulationClock(guildId),actions};
   });
 }

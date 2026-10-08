@@ -6,6 +6,7 @@ import { validatePostTurnStateReview } from "./director.js";
 import { retrieveNpcCognition } from "./npc-cognition.js";
 import { npcDirectorSchema, simulationUpdateSchema, SIMULATION_PROMPT } from "./simulation-schema.js";
 import { simulationContext } from "./simulation.js";
+import { cityContext } from "./city-core.js";
 
 const routerSchema={
   type:"object",
@@ -460,6 +461,7 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
       `NPC_COGNITION (SUBJECTIVE MEMORY/KNOWLEDGE/GOALS; GM-PRIVATE):\n${JSON.stringify(ctx.npc_cognition)}`,
       SIMULATION_PROMPT,
       `SIMULATION (GM-private; never copy wholesale to player narration): ${JSON.stringify(simulationContext(this.db,guildId,messageText))}`,
+      `CIVIC CONTEXT (GM-only reference, not actor knowledge or canon): ${JSON.stringify(cityContext(this.db,guildId,messageText))}`,
       `CLOCKS (MAY BE SECRET):\n${JSON.stringify(ctx.clocks)}`,
       `RELATIONSHIP GRAPH VISIBLE TO ACTOR:\n${JSON.stringify(ctx.actor_relationships)}`,
       `GM RELATIONSHIP GRAPH (MAY BE SECRET):\n${JSON.stringify(ctx.gm_relationships)}`,
@@ -529,6 +531,7 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
     const prompt=[
       ctx.constitution,ctx.multi,"# AUTONOMOUS WORLD DIRECTOR",...layerRules,SIMULATION_PROMPT,
       `Relevant simulation state: ${JSON.stringify(simulationContext(this.db,guildId,JSON.stringify(trigger)))}`,
+      `Relevant civic context (not actor knowledge): ${JSON.stringify(cityContext(this.db,guildId,JSON.stringify(trigger)))}`,
       "You may autonomously emit the same authoritative campaign events, relationships, handouts, private_messages, and player-facing narration available to the normal GM, subject to all security/canon/player-agency restrictions.",
       "Never invent dice results or alter deterministic encounter combat state. Never choose voluntary PC actions. Never contradict canon. Use private_messages only for information a specific current player legitimately perceives.",
       "NPC COGNITION IS SUBJECTIVE. Use the retrieved NPC cognition packet to constrain what an NPC remembers, believes, wants, and is willing to do. GM facts outside that packet are not automatically known by the NPC.",

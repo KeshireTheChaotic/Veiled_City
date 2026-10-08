@@ -2,6 +2,8 @@
 import { AttachmentBuilder, PermissionFlagsBits } from "discord.js";
 import { PermissionError } from "./errors.js";
 import { cityObject, calendarStatus, configureCalendar, indexWorldEvent, scheduleCityEvent, reviewCityEvent } from "./city-calendar.js";
+import { updateCityCore, assignDistrictLocation, fileInstitutionReport, addWorldLink, submitInstitutionAction, reviewInstitutionAction,
+  establishCommitment, configureCityFlags, proposeCityOpportunity, runInstitutionDirector } from "./city-core.js";
 
 export async function handleCityCommand(interaction,{db}){
   const guildId=interaction.guildId;
@@ -16,7 +18,17 @@ export async function handleCityCommand(interaction,{db}){
   else if(sub==="events") result=db.listWorldEvents(guildId,{includeGM:true,query:interaction.options.getString("query")||""});
   else if(sub==="event") result=indexWorldEvent(db,guildId,input,interaction.user.id);
   else if(sub==="schedule") result=scheduleCityEvent(db,guildId,input,interaction.user.id);
-  else if(sub==="review") result=reviewCityEvent(db,guildId,input,interaction.user.id);
+  else if(sub==="review") result=input?.kind==="action"?reviewInstitutionAction(db,guildId,input,interaction.user.id):reviewCityEvent(db,guildId,input,interaction.user.id);
+  else if(sub==="update") result=updateCityCore(db,guildId,input,interaction.user.id);
+  else if(sub==="membership") result=assignDistrictLocation(db,guildId,input,interaction.user.id);
+  else if(sub==="report") result=fileInstitutionReport(db,guildId,input,interaction.user.id);
+  else if(sub==="link") result=addWorldLink(db,guildId,input,interaction.user.id);
+  else if(sub==="action") result=submitInstitutionAction(db,guildId,input,interaction.user.id);
+  else if(sub==="commitment") result=establishCommitment(db,guildId,input,interaction.user.id);
+  else if(sub==="flags") result=configureCityFlags(db,guildId,input,interaction.user.id);
+  else if(sub==="opportunity") result=proposeCityOpportunity(db,guildId,interaction.options.getString("query")||"",interaction.user.id);
+  else if(sub==="run") result=runInstitutionDirector(db,guildId,`manual:${interaction.id}`);
+  else if(sub==="records") result=db.listCityRecords(guildId,{kind:interaction.options.getString("kind")||"",includeGM:true});
   else if(sub==="preview") result={clock:calendarStatus(db,guildId),due:db.dueCitySchedules(guildId),mutates:false};
   else throw new Error("Unknown city command.");
   await interaction.reply({content:`City ${sub} complete. Civic records are GM-private; no PC actions or mechanics were applied.`,

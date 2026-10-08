@@ -8,6 +8,10 @@ Veilkeeper uses split `vc-*` root commands to remain below Discord's per-command
 `preview` provide the fictional calendar and sourced event index. Mutations use
 typed JSON; reads return ephemeral GM-only attachments. See `LIVING_CITY.md`.
 
+Phase B also adds `records`, `update`, `membership`, `report`, `link`, `action`,
+`commitment`, `flags`, `run`, and `opportunity`. These are GM-only; institutional
+review uses `review` with `kind:action`. Institutions/opportunities default off.
+
 ## Campaign
 - `/vc-campaign setup` — configure play channel, GM role, response mode.
 - `/vc-campaign channels` — configure support/reference/log channels.
