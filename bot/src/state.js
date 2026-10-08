@@ -3,6 +3,7 @@ import { randomUUID } from "node:crypto";
 import { normalizeNpcKey } from "./npc-cognition.js";
 import { applySimulationUpdates } from "./simulation.js";
 import { validateNarrativeClaims, assertNarrativeApplied } from "./narrative-integrity.js";
+import { dispatchAiIntents } from "./ai-intents.js";
 
 export function summarizeRoster(rows){
   return rows.map(r=>({
@@ -371,7 +372,7 @@ export function assertMutationSuccess({events=[],relationships=[],handouts=[],np
  * state changes commit together or the surrounding transaction rolls back.
  */
 export function applyAuthoritativeMutation(db,{guildId,sessionId=null,events=[],relationships=[],handouts=[],npcMemories=[],npcKnowledge=[],npcGoals=[],
-  simulationUpdates=[],scope={mode:"party",actorUserId:null,actorCharacterId:null},source="ai_gm",provenance={},narrative=null}){
+  simulationUpdates=[],scope={mode:"party",actorUserId:null,actorCharacterId:null},source="ai_gm",provenance={},narrative=null,aiIntents=narrative?.ai_intents||[]}){
   return db.transaction(()=>{
     if(narrative) validateNarrativeClaims(db,guildId,narrative,scope);
     const eventResults=applyGMEvents(db,guildId,sessionId,events,scope,provenance);
@@ -407,7 +408,15 @@ export function applyAuthoritativeMutation(db,{guildId,sessionId=null,events=[],
     cognition.memories.filter(x=>x?.ok).forEach(result=>db.recordMutation(guildId,{...base,mutationType:"npc_memory",entityKey:`${result.row?.npc_key||""}:${result.row?.id||""}`,visibility:"gm",before:result.before??{},after:result.after??result.row,payload:result.draft||{}}));
     cognition.knowledge.filter(x=>x?.ok).forEach(result=>db.recordMutation(guildId,{...base,mutationType:"npc_knowledge",entityKey:`${result.row?.npc_key||""}:${result.row?.knowledge_key||""}`,visibility:"gm",before:result.before??{},after:result.after??result.row,payload:result.draft||{}}));
     cognition.goals.filter(x=>x?.ok).forEach(result=>db.recordMutation(guildId,{...base,mutationType:"npc_goal",entityKey:`${result.row?.npc_key||""}:${result.row?.goal_key||""}`,visibility:"gm",before:result.before??{},after:result.after??result.row,payload:result.draft||{}}));
+    const intents=dispatchAiIntents(db,guildId,aiIntents,{scope,sessionId,
+      origin:provenance.messageId||provenance.interactionId||source});
+    if(narrative&&intents.length){
+      // First-pass prose cannot guarantee effects that are resolved only at commit.
+      for(const field of ["narration","public_narration","player_summary","summary"]) if(field in narrative)
+        narrative[field]="The scene continues; no additional narrated outcome is established here.";
+      if(narrative.private_messages) narrative.private_messages=[];
+    }
     return {events:eventResults,relationships:relationshipResults,handouts:handoutResults,
-      npcMemories:cognition.memories,npcKnowledge:cognition.knowledge,npcGoals:cognition.goals,simulation};
+      npcMemories:cognition.memories,npcKnowledge:cognition.knowledge,npcGoals:cognition.goals,simulation,intents};
   });
 }

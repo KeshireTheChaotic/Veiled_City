@@ -3,6 +3,7 @@
 Dockerfile
 LICENSE
 README.md
+SUGGESTIONS-End-To-End.md
 bot/.env.example
 bot/.gitignore
 bot/data/.gitkeep
@@ -16,6 +17,7 @@ bot/scripts/city-regression-test.mjs
 bot/scripts/context-conversation-test.mjs
 bot/scripts/contract-fixtures.mjs
 bot/scripts/cost-estimate.mjs
+bot/scripts/end-to-end-a-test.mjs
 bot/scripts/endurance-test.mjs
 bot/scripts/expansion-a-test.mjs
 bot/scripts/expansion-b-test.mjs
@@ -47,6 +49,8 @@ bot/scripts/sync-release.mjs
 bot/scripts/validate-command-schema.mjs
 bot/scripts/validate-offline.mjs
 bot/sql/schema.sql
+bot/src/ai-intent-contracts.js
+bot/src/ai-intents.js
 bot/src/character-export.js
 bot/src/character-narrative.js
 bot/src/character-system.js
@@ -213,6 +217,7 @@ docs/DISCORD_SETUP.md
 docs/DOWNTIME.md
 docs/ENCOUNTER_AFTERMATH.md
 docs/ENCOUNTER_BUILDER.md
+docs/END_TO_END_IMPLEMENTATION.md
 docs/EXPANSION_ARCHITECTURE.md
 docs/EXPANSION_GAP_ANALYSIS.md
 docs/EXPANSION_RELEASES.md

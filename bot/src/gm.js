@@ -13,6 +13,8 @@ import { materialClaimSchema, NARRATIVE_CONTRACT, validateNarrativeClaims } from
 import { ContextPlanner } from "./context-planner.js";
 import { pacingAdvice, validatePacing } from "./story-continuity.js";
 import { portrayalPacket } from "./portrayal.js";
+import { intentArraySchema, INTENT_PROMPT } from "./ai-intent-contracts.js";
+import { intentContext } from "./ai-intents.js";
 
 const routerSchema={
   type:"object",
@@ -249,6 +251,11 @@ const downtimeSchema={
   },required:["project_results","world_moves","events","handouts","relationships","summary"]
 };
 
+for(const schema of [gmSchema,directorSchema,aftermathSchema,downtimeSchema]){
+  schema.properties.ai_intents=intentArraySchema;
+  schema.required.push("ai_intents");
+}
+
 const rulesAnswerSchema={
   type:"object",additionalProperties:false,
   properties:{classification:{type:"string",enum:["RAW","VEILED_CITY_HOUSE_RULE","HOMEBREW_CONTENT","GM_RULING","PROVISIONAL_RULING"]},answer:{type:"string"},basis:{type:"string"},sources:{type:"array",items:{type:"string"}}},
@@ -311,17 +318,20 @@ export class GMService{
     let lastError=null;
     for(let attempt=1;attempt<=2;attempt++){
       const request={...req};
+      if(req.text?.format?.schema?.properties?.ai_intents) request.input=`${req.input}\n\n${INTENT_PROMPT}`;
       if(attempt===2){
         const base=Number(req.max_output_tokens||0);
         const retryCap=Number(this.config.structuredRetryMaxTokens||6000);
         request.max_output_tokens=Math.min(retryCap,Math.max(base?base*2:3000,3000));
-        request.input=`${String(req.input||"")}
+        request.input=`${String(request.input||"")}
 
 STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Return one COMPLETE JSON object matching the schema. Be concise. Do not use Markdown fences or commentary. Preserve quotation marks and other punctuation from user-provided text as ordinary JSON string content.`;
       }
       const response=await this.ai.responses.create(request);
       try{
-        return parseStructuredJsonText(response.output_text,{label});
+        const parsed=parseStructuredJsonText(response.output_text,{label});
+        if(req.text?.format?.schema?.properties?.ai_intents&&parsed.ai_intents===undefined) parsed.ai_intents=[];
+        return parsed;
       }catch(err){
         lastError=err;
         if(attempt===1) continue;
@@ -393,6 +403,7 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
     const contextPlan=(contextFlags.adaptive_context||contextFlags.personal_arcs||contextFlags.memory_consolidation)?new ContextPlanner(this.db).plan(guildId,
       {operation:worldDirector?"director":"turn",actorType:"gm",scope:"gm",query:messageText,scene:session?this.db.getDirectorState(session.id).scene_label:""}):null;
     return {
+      ai_management:intentContext(this.db,guildId),
       context_plan:contextPlan,
       campaign,session,assembly,party_state:partyState,current_encounter:currentEncounter,current_combatants:currentCombatants,canon,rulings,actor_relationships:actorRelationships,gm_relationships:gmRelationships,gm_character_hooks:gmCharacterHooks,character_narratives:characterNarratives,visible_handouts:visibleHandouts,
       actor_assignment:actorAssignment?(actorAssignment.npc_proxy?{

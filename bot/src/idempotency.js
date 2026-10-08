@@ -9,7 +9,7 @@ const READ_ONLY=new Set([
   "campaign:status","session:assembly-status","session:roster","character:list","character:sheet","encounter:status","encounter:combatants",
   "party:status","relationship:list","handout:list","player:accessibility","rules:ask","rules:rulings","downtime:status","canon:status","canon:conflicts","canon:proposals",
   "voice:status","admin:snapshots","admin:backups","admin:restore-preview","admin:doctor","admin:ledger","admin:seed-drafts","intel:recap","intel:clues","intel:facts","intel:caseboard",
-  "story:expansion-status","intel:discover","gm:overview","gm:fact-list","gm:npc-state","director:status","director:history","sim:status","sim:records",
+  "story:ai-inbox","story:expansion-status","intel:discover","gm:overview","gm:fact-list","gm:npc-state","director:status","director:history","sim:status","sim:records",
   "city:status","city:events","city:preview","city:records","city:history","story:context","story:diagnose","story:clues","story:forecast","story:why","story:pacing-status","story:scene-view"
 ]);
 

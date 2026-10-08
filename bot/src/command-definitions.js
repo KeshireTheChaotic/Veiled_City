@@ -491,6 +491,11 @@ export function buildCommands(){
       .addStringOption(o=>o.setName("json").setDescription("key, decision:promote|discard JSON").setRequired(true)))
     .toJSON());
   full.options.push(new SlashCommandBuilder().setName("story").setDescription("GM: sourced context and bounded story operations")
+    .addSubcommand(s=>s.setName("delegation").setDescription("Explicitly configure or revoke bounded AI delegation")
+      .addStringOption(o=>o.setName("json").setDescription("mode, allow, max_operations, max_cost, expires_minute JSON").setRequired(true)))
+    .addSubcommand(s=>s.setName("ai-inbox").setDescription("Read-only GM-private AI proposals, receipts and delegation"))
+    .addSubcommand(s=>s.setName("ai-review").setDescription("Authenticated GM approve or reject a revision-bound AI intent")
+      .addStringOption(o=>o.setName("json").setDescription("key, decision, expected_revision from inbox JSON").setRequired(true)))
     .addSubcommand(s=>s.setName("expansion-status").setDescription("Read-only expansion flags, lifecycle counts, bounds and recovery"))
     .addSubcommand(s=>s.setName("memory").setDescription("Consolidate, revise or revert actor-relative evidence clusters")
       .addStringOption(o=>o.setName("json").setDescription("Actor, source pointers and topic; no canon rewriting").setRequired(true)))

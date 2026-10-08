@@ -291,7 +291,7 @@ async function applyEncounterAftermath({db,guild,encounter,draft,actorId}){
   db.snapshotCampaign(guild.id,{label:`Pre-aftermath encounter ${encounter.encounter_number}`,reason:"Automatic snapshot before encounter aftermath",createdBy:actorId});
   const scope={mode:"party",actorUserId:null,actorCharacterId:null};
   const mutation=db.transaction(()=>{
-    const applied=applyAuthoritativeMutation(db,{guildId:guild.id,sessionId:encounter.session_id,events:draft.events||[],relationships:draft.relationships||[],handouts:draft.handouts||[],scope,source:"encounter_aftermath"});
+    const applied=applyAuthoritativeMutation(db,{narrative:draft,guildId:guild.id,sessionId:encounter.session_id,events:draft.events||[],relationships:draft.relationships||[],handouts:draft.handouts||[],scope,source:"encounter_aftermath"});
     db.setEncounterAftermathStatus(encounter.id,"applied");
     return applied;
   });
@@ -394,7 +394,7 @@ async function executeCommand(interaction,{db,gm,voice=null}){
         let mutation={events:[],relationships:[],handouts:[]};
         if(result.act){
           db.snapshotCampaign(interaction.guildId,{label:"Pre-manual-director",reason,createdBy:interaction.user.id});
-          mutation=applyAuthoritativeMutation(db,{guildId:interaction.guildId,sessionId:session.id,events:result.events||[],relationships:result.relationships||[],handouts:result.handouts||[],npcMemories:result.npc_memories||[],npcKnowledge:result.npc_knowledge||[],npcGoals:result.npc_goals||[],simulationUpdates:result.simulation_updates||[],scope:{mode:"party",actorUserId:null,actorCharacterId:null},source:"world_director_manual",provenance:{interactionId:interaction.id,actorId:interaction.user.id,triggerText:reason,rationale:result.gm_notes||"",confidence:result.confidence??100}});
+          mutation=applyAuthoritativeMutation(db,{narrative:result,guildId:interaction.guildId,sessionId:session.id,events:result.events||[],relationships:result.relationships||[],handouts:result.handouts||[],npcMemories:result.npc_memories||[],npcKnowledge:result.npc_knowledge||[],npcGoals:result.npc_goals||[],simulationUpdates:result.simulation_updates||[],scope:{mode:"party",actorUserId:null,actorCharacterId:null},source:"world_director_manual",provenance:{interactionId:interaction.id,actorId:interaction.user.id,triggerText:reason,rationale:result.gm_notes||"",confidence:result.confidence??100}});
           await publishEventResults({db,guild:interaction.guild,results:mutation.events||[]});
           for(const h of (mutation.handouts||[]).filter(x=>x.ok)) await deliverHandout({db,guild:interaction.guild,handout:h.row,format:"markdown"});
           if(String(result.public_narration||"").trim()) await postPlayMessage({db,guild:interaction.guild,sessionId:session.id,content:result.public_narration});
@@ -1371,8 +1371,8 @@ GM notes: ${a.draft.gm_notes}`:""}`.slice(0,1950):"No aftermath draft exists for
           projectOutputs.push({project:updated,message:`**Downtime — ${p.title}**\n${r.result||"Resolved."}\nProgress: ${progress}/${p.max_progress} • ${status}`});
         }
         const dscope={mode:"party",actorUserId:null,actorCharacterId:null};
-        const projectMutation=applyAuthoritativeMutation(db,{guildId:interaction.guildId,sessionId:cycle.source_session_id||null,events:resolved.events||[],relationships:resolved.relationships||[],handouts:resolved.handouts||[],scope:dscope,source:"downtime_project",provenance:{actorType:"ai",actorId:"downtime",interactionId:interaction.id,triggerText:cycle.label,rationale:resolved.summary||"",confidence:100}});
-        const directorMutation=director.act?applyAuthoritativeMutation(db,{guildId:interaction.guildId,sessionId:cycle.source_session_id||null,events:director.events||[],relationships:director.relationships||[],handouts:director.handouts||[],npcMemories:director.npc_memories||[],npcKnowledge:director.npc_knowledge||[],npcGoals:director.npc_goals||[],simulationUpdates:director.simulation_updates||[],scope:dscope,source:"world_director_downtime",provenance:{actorType:"ai",actorId:"world_director",interactionId:interaction.id,triggerText:cycle.label,rationale:director.gm_notes||"",confidence:director.confidence??100}}):{events:[],relationships:[],handouts:[],npcMemories:[],npcKnowledge:[],npcGoals:[]};
+        const projectMutation=applyAuthoritativeMutation(db,{narrative:resolved,guildId:interaction.guildId,sessionId:cycle.source_session_id||null,events:resolved.events||[],relationships:resolved.relationships||[],handouts:resolved.handouts||[],scope:dscope,source:"downtime_project",provenance:{actorType:"ai",actorId:"downtime",interactionId:interaction.id,triggerText:cycle.label,rationale:resolved.summary||"",confidence:100}});
+        const directorMutation=director.act?applyAuthoritativeMutation(db,{narrative:director,guildId:interaction.guildId,sessionId:cycle.source_session_id||null,events:director.events||[],relationships:director.relationships||[],handouts:director.handouts||[],npcMemories:director.npc_memories||[],npcKnowledge:director.npc_knowledge||[],npcGoals:director.npc_goals||[],simulationUpdates:director.simulation_updates||[],scope:dscope,source:"world_director_downtime",provenance:{actorType:"ai",actorId:"world_director",interactionId:interaction.id,triggerText:cycle.label,rationale:director.gm_notes||"",confidence:director.confidence??100}}):{events:[],relationships:[],handouts:[],npcMemories:[],npcKnowledge:[],npcGoals:[]};
         if(cycle.source_session_id) db.completeDirectorPass(cycle.source_session_id,"downtime");
         const combinedSummary=[resolved.summary||"",director.act?director.gm_notes||"":""].filter(Boolean).join("\n\n");
         const done=db.resolveDowntimeCycle(cycle.id,combinedSummary);
