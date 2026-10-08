@@ -95,6 +95,38 @@ for the Rules Desk or full semantic interpretation of every mystery. Register
 commands after upgrade. `test:continuity` covers silence, scene preservation,
 three routes, failed-roll reachability, fixed truth and unrelated-private refusal.
 
+## Phase D — 4.8.0
+
+Reuse: actors, finite resources, goals, delegation, knowledge/reports, existing
+obligations and review/audit primitives. New private negotiation records keep
+every revision and stable step identity. `/vc-city flags json:{"negotiations":true}`
+opts in. `/vc-story negotiate` JSON: key/step/source_event/op. First offer also
+includes participants [{type,key,goal_key,personnel_key,awareness_keys}] and terms
+{statement,deadline,jurisdiction,costs,major,supernatural,recognized_terms,obligation}.
+Costs: [{party:"npc:key",resource:"materials",amount:1}]; optional obligation:
+{debtor,creditor,content}. Participants need established goals or delegated
+institutional procedure/jurisdiction. Referenced knowledge must actually be held.
+The state machine supports offer/counteroffer/concede/refuse/approve/accept.
+Terms changes invalidate approval; originals remain in history. Deadlines and
+resource totals are checked again before acceptance. Accept requires accepted_by
+mapping each endpoint to its authorized identity (PC owner ID or NPC/faction/
+institution endpoint), recorded by the human GM. Major agreements need approval
+for that revision before any expense. Active proxies cannot be auto-committed.
+
+PC expenses are not supported here. Human consent is attested by the GM, not
+inferred from freeform model text. Acceptance records an existing-style obligation
+and bounded NPC/institution expenses atomically; it does not execute territorial,
+secrecy, canon, legal or supernatural consequences. Those remain separate reviewed
+workflows. This is not a universal law engine or automatic adjudicator of wishes.
+
+`/vc-story forecast json:{"query":"pump"}` or {event_key:...} is GM-only and
+strictly read-only, deriving bounded possible branches from existing event links,
+due schedules, weather, commitments and infrastructure. Dependencies, mitigations
+and uncertainty accompany every branch. No unrolled PC outcomes or new mechanics.
+No new schema; existing backup/restore covers records. Register commands after
+upgrade. `test:negotiation` covers revisions, pending/no-cost review, authority,
+consent, unavailable resources, retry conservation and snapshot/ledger equality.
+
 ## OPTIONAL — MAY INCUR API COSTS
 
 A human may choose a disposable campaign and explicitly run a real narration,

@@ -6,6 +6,8 @@ import { ContextPlanner } from "./context-planner.js";
 import { resolveNpcConversation } from "./npc-conversations.js";
 import { validateNarrativeClaims } from "./narrative-integrity.js";
 import { setPacingCues, pacingAdvice, configureMystery, mysteryView, recordMysteryAttempt } from "./story-continuity.js";
+import { negotiateAgreement } from "./negotiations.js";
+import { previewOutcomes } from "./outcome-preview.js";
 export async function handleStoryCommand(interaction,{db}){
   if(!interaction.memberPermissions?.has(PermissionFlagsBits.ManageGuild)&&
     !interaction.member?.roles?.cache?.has(db.getCampaign(interaction.guildId)?.gm_role_id)) throw new PermissionError("GM/admin permission required.");
@@ -17,6 +19,8 @@ export async function handleStoryCommand(interaction,{db}){
   else if(sub==="mystery") result=configureMystery(db,guild,input,interaction.user.id);
   else if(sub==="clues") result=mysteryView(db,guild,input.key,input);
   else if(sub==="attempt") result=recordMysteryAttempt(db,guild,input,interaction.user.id);
+  else if(sub==="negotiate") result=negotiateAgreement(db,guild,input,interaction.user.id);
+  else if(sub==="forecast") result=previewOutcomes(db,guild,input);
   else if(sub==="diagnose"){
     try{result=validateNarrativeClaims(db,guild,input.result||{},input.scope||{mode:"party"});}
     catch(error){if(error.code!=="NARRATIVE_INTEGRITY") throw error;result={ok:false,...error.diagnostic};}

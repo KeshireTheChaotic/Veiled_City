@@ -1,4 +1,4 @@
-# Veilkeeper v4.7.0 Command Reference
+# Veilkeeper v4.8.0 Command Reference
 
 Veilkeeper uses split `vc-*` root commands to remain below Discord's per-command size limit.
 
@@ -30,6 +30,9 @@ See `NEXT_EXPANSION.md` for fields, limits and feature flags.
 
 v4.7 adds `/vc-story pacing`, `mystery`, `clues` (read-only scoped evidence),
 and `attempt` (existing saved action roll, no automatic mechanics).
+
+v4.8 adds `/vc-story negotiate` (opt-in reviewed bargaining) and `forecast`
+(read-only hypothetical branches). All results remain GM-private.
 
 - `/vc-campaign setup` — configure play channel, GM role, response mode.
 - `/vc-campaign channels` — configure support/reference/log channels.

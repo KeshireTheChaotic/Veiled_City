@@ -474,6 +474,10 @@ export function buildCommands(){
       .addStringOption(o=>o.setName("json").setDescription("key, userId, characterId, optional gm JSON").setRequired(true)))
     .addSubcommand(s=>s.setName("attempt").setDescription("Record an existing action roll without locking essential clues")
       .addStringOption(o=>o.setName("json").setDescription("key/source/mystery/route/roll_id/character_id/difficulty JSON").setRequired(true)))
+    .addSubcommand(s=>s.setName("negotiate").setDescription("Reviewable offers/counteroffers/acceptance; never auto-spend PC resources")
+      .addStringOption(o=>o.setName("json").setDescription("key/step/source_event/op/participants/terms/accepted_by JSON").setRequired(true)))
+    .addSubcommand(s=>s.setName("forecast").setDescription("Read-only hypothetical outcomes and mitigations; GM-only")
+      .addStringOption(o=>o.setName("json").setDescription("query or event_key JSON").setRequired(true)))
     .toJSON());
   const splitMap={
     character:{
