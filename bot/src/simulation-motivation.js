@@ -6,7 +6,7 @@ import { activeCityProxy, assertNpcAvailability } from "./city-constraints.js";
 import { UserInputError, StateConflictError } from "./errors.js";
 export const motivationKey=value=>createHash("sha256").update(JSON.stringify(value)).digest("hex").slice(0,32);
 
-export function actorSource(db,guildId,{actor_type,actor_key,information_key,source_event}){
+export function actorSource(db,guildId,{actor_type,actor_key,information_key,source_event},{requireResources=true}={}){
   const event=requireCitySource(db,guildId,source_event);cityKey(actor_key);cityKey(information_key);
   let evidence,state;
   if(actor_type==="npc"){
@@ -28,7 +28,7 @@ export function actorSource(db,guildId,{actor_type,actor_key,information_key,sou
     throw new StateConflictError("Actor is unavailable.");
   if(!evidence||evidence.belief_state==="unknown"||![event.event_key,event.source_id].includes(evidence.source_ref))
     throw new StateConflictError("Actor has no legitimately acquired evidence for this source event.");
-  if((state.resources?.information??2)<1) throw new StateConflictError("Actor lacks feasible investigative resources.");
+  if(requireResources&&(state.resources?.information??2)<1) throw new StateConflictError("Actor lacks feasible investigative resources.");
   return {event,evidence,state};
 }
 function currentGoal(db,guildId,type,key,goalKey){

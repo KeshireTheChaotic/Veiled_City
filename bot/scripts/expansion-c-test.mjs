@@ -1,0 +1,70 @@
+/** Phase C real-path fixtures: voluntary group lifecycle and bounded durable plans, with no provider calls. */
+import assert from "node:assert/strict";
+import fs from "node:fs";
+import os from "node:os";
+import path from "node:path";
+import { VeiledDB } from "../src/db.js";
+import { configureSimulationEntity, actorState } from "../src/simulation.js";
+import { indexWorldEvent } from "../src/city-calendar.js";
+import { configureCityFlags } from "../src/city-core.js";
+import { manageGroup } from "../src/city-groups.js";
+import { manageStrategy, executeStrategyStep } from "../src/simulation-strategy.js";
+const root=fs.mkdtempSync(path.join(os.tmpdir(),"vc-expansion-c-")),file=path.join(root,"fixture.sqlite"),schema=path.resolve("sql/schema.sql");
+let db=new VeiledDB(file,schema);
+try{
+  const guild="c";db.ensureCampaign(guild);db.ensureCampaign("other");
+  for(const key of ["source","changed"]) indexWorldEvent(db,guild,{key,title:key,source_kind:"gm",source_id:key,kind:"observation",location_key:"station"});
+  for(const key of ["one","two","three"]){
+    db.upsertNpcProfile(guild,{npcKey:key,displayName:key});configureSimulationEntity(db,guild,"npc",key,{location_key:"station"});
+    db.upsertNpcKnowledge(guild,{npcKey:key,knowledgeKey:"report",sourceRef:"source",content:"Shared report",confidence:85});
+    db.upsertNpcGoal(guild,{npcKey:key,goalKey:"goal",objective:"Prepare to investigate",acceptableMethods:["prepare"],priority:70});
+  }
+  const proposal={key:"form",group_key:"circle",name:"Circle",source_event:"source",members:["one","two"]};
+  assert.throws(()=>manageGroup(db,guild,proposal,"gm"),/opt-in/);
+  configureCityFlags(db,guild,{emergent_groups:true,strategies:true});
+  manageGroup(db,guild,proposal,"gm");
+  assert.throws(()=>manageGroup(db,guild,{key:"form",op:"approve"},"gm"),/explicitly respond/);
+  for(const member of proposal.members) manageGroup(db,guild,{key:"form",op:"respond",member,decision:"accept"},"gm");
+  manageGroup(db,guild,{key:"form",op:"approve"},"gm");
+  assert.deepEqual(db.getCityRecord(guild,"community","circle").data.members,["one","two"]);
+  assert.equal(db.getCityRecord(guild,"community","circle").data.capacity,0);
+  assert.equal(db.listNpcKnowledge(guild,"three").length,1,"group formation transfers no knowledge");
+  manageGroup(db,guild,{...proposal,key:"join",operation:"join",members:["three"]},"gm");
+  manageGroup(db,guild,{key:"join",op:"respond",member:"three",decision:"decline"},"gm");
+  assert.throws(()=>manageGroup(db,guild,{key:"join",op:"approve"},"gm"),/No accepted/);
+  manageGroup(db,guild,{key:"join",op:"reject"},"gm");
+  assert.throws(()=>manageGroup(db,guild,{...proposal,key:"fake-dissolve",operation:"dissolve",members:["one","three"]},"gm"),/already be a member/);
+  manageGroup(db,guild,{...proposal,key:"split",operation:"split",group_key:"splinter",from_groups:["circle"]},"gm");
+  for(const member of proposal.members) manageGroup(db,guild,{key:"split",op:"respond",member,decision:"accept"},"gm");
+  manageGroup(db,guild,{key:"split",op:"approve"},"gm");
+  assert.equal(db.getCityRecord(guild,"community","circle").status,"dissolved");
+  const plan={key:"plan",actor_type:"npc",actor_key:"one",goal_key:"goal",information_key:"report",source_event:"source",cost_ceiling:3,
+    alternatives:["Retreat"],risks:["Insufficient supplies"],steps:[{key:"first",requires:[],action:{type:"prepare"}},{key:"second",requires:["first"],action:{type:"prepare"}}]};
+  assert.throws(()=>manageStrategy(db,guild,{...plan,key:"cycle",steps:[{...plan.steps[0],requires:["first"]}]},"gm"),/acyclic/);
+  assert.throws(()=>manageStrategy(db,guild,{...plan,key:"forged",actor_type:"character"},"gm"),/never PCs/);
+  assert.throws(()=>manageStrategy(db,guild,{...plan,key:"unknown",source_event:"changed"},"gm"),/legitimately acquired/);
+  manageStrategy(db,guild,plan,"gm");manageStrategy(db,guild,{key:"plan",op:"approve"},"gm");
+  const material=actorState(db,guild,"npc","one").resources.materials;
+  executeStrategyStep(db,guild,"plan",{roll:()=>20});
+  assert.equal(actorState(db,guild,"npc","one").resources.materials,material-1);
+  assert.throws(()=>manageStrategy(db,guild,{...plan,op:"replan",source_event:"changed"},"gm"),/Reconcile/);
+  executeStrategyStep(db,guild,"plan");assert.equal(db.getCityRecord(guild,"strategy","plan").data.spent,1);
+  executeStrategyStep(db,guild,"plan",{roll:()=>20});executeStrategyStep(db,guild,"plan");
+  assert.equal(db.getCityRecord(guild,"strategy","plan").status,"completed");
+  executeStrategyStep(db,guild,"plan");assert.equal(actorState(db,guild,"npc","one").resources.materials,material-2,"retry never double spends");
+  const delayed={...plan,key:"delayed",actor_key:"two",steps:[{key:"wait",requires:[],action:{type:"prepare",delay_minutes:5}}]};
+  manageStrategy(db,guild,delayed,"gm");manageStrategy(db,guild,{key:"delayed",op:"approve"},"gm");executeStrategyStep(db,guild,"delayed");
+  const actionId=db.getCityRecord(guild,"strategy","delayed").data.steps[0].action_id;
+  assert.equal(db.getSimulationRecord(guild,actionId).status,"scheduled");
+  manageStrategy(db,guild,{key:"delayed",op:"pause"},"gm");
+  assert.equal(db.getSimulationRecord(guild,actionId).status,"rejected","pause cancels queued actions without costs");
+  assert.equal(db.getCityRecord(guild,"strategy","delayed").data.spent,0);
+  const major={...delayed,key:"major",steps:[{key:"review",requires:[],action:{type:"prepare",significance:"faction_transformation"}}]};
+  manageStrategy(db,guild,major,"gm");manageStrategy(db,guild,{key:"major",op:"approve"},"gm");executeStrategyStep(db,guild,"major");
+  assert.equal(db.getSimulationRecord(guild,db.getCityRecord(guild,"strategy","major").data.steps[0].action_id).status,"pending");
+  const snapshot=db.snapshotCampaign(guild,{label:"groups-plans"});db.close();db=new VeiledDB(file,schema);db.restoreSnapshot(guild,snapshot.id);
+  assert.equal(db.getCityRecord(guild,"strategy","plan").data.spent,2);
+  assert.equal(db.listCityRecords(guild,{kind:"strategy"}).length,0);assert.equal(db.getCityRecord("other","strategy","plan"),null);
+  assert.equal(db.listCanon(guild,{includeGM:true}).length,0);
+  console.log("Expansion C PASS: voluntary groups, schisms, DAG plans, costs, review, cancellation, replay and restore; fixture-only.");
+}finally{db.close();fs.rmSync(root,{recursive:true,force:true});}

@@ -19,6 +19,7 @@ bot/scripts/cost-estimate.mjs
 bot/scripts/endurance-test.mjs
 bot/scripts/expansion-a-test.mjs
 bot/scripts/expansion-b-test.mjs
+bot/scripts/expansion-c-test.mjs
 bot/scripts/export-campaign.mjs
 bot/scripts/format-check.mjs
 bot/scripts/narrative-contract-test.mjs
@@ -49,6 +50,7 @@ bot/src/city-consequences.js
 bot/src/city-constraints.js
 bot/src/city-core.js
 bot/src/city-depth.js
+bot/src/city-groups.js
 bot/src/combat.js
 bot/src/command-definitions.js
 bot/src/command-schema.js
@@ -90,6 +92,7 @@ bot/src/serial-queue.js
 bot/src/simulation-commands.js
 bot/src/simulation-motivation.js
 bot/src/simulation-schema.js
+bot/src/simulation-strategy.js
 bot/src/simulation.js
 bot/src/state.js
 bot/src/story-commands.js

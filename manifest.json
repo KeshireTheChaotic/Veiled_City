@@ -1,6 +1,6 @@
 {
   "package": "Veiled_City_Multiplayer_Discord",
-  "version": "5.2.0",
+  "version": "5.3.0",
   "generated": "2026-10-08",
   "files": [
     {
@@ -26,7 +26,7 @@
     {
       "path": "README.md",
       "size_bytes": 14446,
-      "sha256": "1020ebf6003e75ede405ce03a732436d8a96e59b82f3ce81636b75fd82d55c5c"
+      "sha256": "91cb126926d52bc6cc049982e389a6321854d016191ee04eed6ccc87391e66e8"
     },
     {
       "path": "bot/.env.example",
@@ -46,7 +46,7 @@
     {
       "path": "bot/package.json",
       "size_bytes": 2492,
-      "sha256": "8a75bea3cbbf23dd1df9ee8f09cc6d4bcd9baacb8de60031d65b6d0f58e950fe"
+      "sha256": "ca8e0453f730ef5ea10e8bf26bc9173abcb348f9b45e086a32f24c228184828c"
     },
     {
       "path": "bot/scripts/audit-regression-test.mjs",
@@ -107,6 +107,11 @@
       "path": "bot/scripts/expansion-b-test.mjs",
       "size_bytes": 5897,
       "sha256": "6008014c9eded2187bf4976017585a264ca0ed911ccadb76ef91f39a081eb1f5"
+    },
+    {
+      "path": "bot/scripts/expansion-c-test.mjs",
+      "size_bytes": 6356,
+      "sha256": "3fe7444f1c3e468dad750e992bff80c7551c224fd966658bea57c0ba5ff698f9"
     },
     {
       "path": "bot/scripts/export-campaign.mjs",
@@ -200,8 +205,8 @@
     },
     {
       "path": "bot/scripts/validate-offline.mjs",
-      "size_bytes": 1295,
-      "sha256": "4c87a15378fbc856a035fdbafd90a34da58fdd638e24f254dba2243217b1b396"
+      "size_bytes": 1314,
+      "sha256": "089a55ebc87f32f3aeb283d197f6a63bd18f911193d75119de590c5f28bcb129"
     },
     {
       "path": "bot/sql/schema.sql",
@@ -250,13 +255,18 @@
     },
     {
       "path": "bot/src/city-core.js",
-      "size_bytes": 21128,
-      "sha256": "0c5163becef5f39b5f55753a8aa7111b985df56c6583bd6ff383d9010660d198"
+      "size_bytes": 21159,
+      "sha256": "864a6a342a686a2cbc482c2aa80e86302d34433da1737954ff5af11c9a5a68e9"
     },
     {
       "path": "bot/src/city-depth.js",
       "size_bytes": 10636,
       "sha256": "62d4dba434e1130ccf27fc0ea3c5cf77bd5bc425556d811b79a7e439dead3480"
+    },
+    {
+      "path": "bot/src/city-groups.js",
+      "size_bytes": 7758,
+      "sha256": "939d120e2728b43a623c464ae6591c9abbe69f4c241798c10a0b39d2bf8f9650"
     },
     {
       "path": "bot/src/combat.js",
@@ -265,8 +275,8 @@
     },
     {
       "path": "bot/src/command-definitions.js",
-      "size_bytes": 61350,
-      "sha256": "32f6942f270649dc3379b038c14fb1738fb790e29322004c7e6ddbff83d39dcc"
+      "size_bytes": 61854,
+      "sha256": "362eb01f67db3ffbd634b60a2125070243b784103a0e6566cd904b9f37863a52"
     },
     {
       "path": "bot/src/command-schema.js",
@@ -455,8 +465,8 @@
     },
     {
       "path": "bot/src/simulation-motivation.js",
-      "size_bytes": 11420,
-      "sha256": "3d3b56ceaff5e3cbd3274a0edabc45564bb4e58ee5cacca3f85542ca671f784c"
+      "size_bytes": 11465,
+      "sha256": "96412ba0c6e7e65193f6ccfa2e2c353f35045f4ae37d656c306b27916a58e630"
     },
     {
       "path": "bot/src/simulation-schema.js",
@@ -464,9 +474,14 @@
       "sha256": "fbef2eb7561caa7a3a6eca59b51b2884f2ec1ba0de6c37ad0aba25ff674a8c2a"
     },
     {
+      "path": "bot/src/simulation-strategy.js",
+      "size_bytes": 10683,
+      "sha256": "a501c44ba808a1fe57e41154c10ae97c236afed28732a1e5d079072474dc3f99"
+    },
+    {
       "path": "bot/src/simulation.js",
-      "size_bytes": 43145,
-      "sha256": "baa85fbfcfc319b5b1d8df8ec7bf47a187123d08056fe61b416ef96ce789a1f1"
+      "size_bytes": 43570,
+      "sha256": "b878457f59c4a38fdfbe58c81fbb0026b223b80ab4a8783f0ec770b02a67d2cc"
     },
     {
       "path": "bot/src/state.js",
@@ -475,8 +490,8 @@
     },
     {
       "path": "bot/src/story-commands.js",
-      "size_bytes": 3176,
-      "sha256": "e390ff1e92435b388fa7a90d500e4909352a1d11535595e3592f65da8120805a"
+      "size_bytes": 3451,
+      "sha256": "3d3fc933185ce3fdca3362f73855511ad375dedf3f204e392f397b67d40c8982"
     },
     {
       "path": "bot/src/story-continuity.js",
@@ -1010,13 +1025,13 @@
     },
     {
       "path": "docs/EXPANSION_GAP_ANALYSIS.md",
-      "size_bytes": 9596,
-      "sha256": "53683977c29af5b3ab4b43705646b06b892c985bc3ffa30f97cc4f953398fe9c"
+      "size_bytes": 10801,
+      "sha256": "eaadba0013479e256d3d2751bbb06e1d7caf3016fc1666772ef54bc55a2c312f"
     },
     {
       "path": "docs/EXPANSION_RELEASES.md",
-      "size_bytes": 5157,
-      "sha256": "443cc905c93dea107edefa10aa180efa50c2e63e06ba827bcae2260d36997633"
+      "size_bytes": 7395,
+      "sha256": "b3baf43a39ffcbaf56cae823d4e8ee402b557f222e22cb759dc572af865947f6"
     },
     {
       "path": "docs/GM_OPERATIONS.md",

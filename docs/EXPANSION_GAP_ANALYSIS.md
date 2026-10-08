@@ -37,7 +37,7 @@ the actual controlling owner and never accept an input JSON identity as authorit
 | --- | --- | --- | --- |
 | A: P01–02 | dc80bf7 | 5.1.0 | EXTENDED; baseline and phase-specific zero-token gates pass |
 | B: P03 | ecfe238 | 5.2.0 | EXTENDED: occupancy and actor-relative access; offline gates pass |
-| C: P04–05 | pending | next minor | Pending fresh audit |
+| C: P04–05 | 19b8864 | 5.3.0 | EXTENDED: voluntary community lifecycle and durable bounded plans; offline gates pass |
 | D: P06–07 | pending | next minor | Pending fresh audit |
 | E: P08–09 | pending | next minor | Pending fresh audit |
 | F: P10–11 | pending | next minor | Pending fresh audit |
@@ -86,3 +86,20 @@ integration and optional in-person checks in existing NPC conversations.
 private source disclosure refusal, absent PC agency, zero-write views, player
 export, scene transition, restart and restore. Source/visibility/subject metadata
 use existing city tables, so no new schema or parallel physical/combat engine.
+
+### Phase C audit and extension
+
+Fresh 19b8864 audit: communities, relationships, negotiations, actor goals and
+existing action resolvers supply the foundations. P04 EXTENDED in `city-groups.js`:
+source-backed form/join/leave/dissolve/split/merge proposals require explicit NPC
+responses and GM review, check unchanged membership snapshots, retain dissent,
+and never transfer information or resources. Repeated contacts can propose (not
+form) a bounded working group. Roles/projects remain descriptive proposal data.
+P05 EXTENDED in `simulation-strategy.js`: actor-owned objective, ordered DAG,
+bounded alternatives/risks, resource ceiling, fictional deadline, one-step
+execution and material-source replan history. Existing resolvers retain costs,
+methods, movement, personality and major-review authority. Pausing cancels queued
+steps; already executed steps reconcile costs rather than replaying them.
+Fixtures in `expansion-c-test.mjs` cover voluntary/dissenting membership, schisms,
+forged identities/evidence, cyclic dependencies, review, delays, cancellation,
+cost conservation, replay, privacy and snapshot/restart. No schema changes.

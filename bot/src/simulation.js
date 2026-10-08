@@ -6,6 +6,8 @@ import { assertNpcAvailability, npcAvailability, activeCityProxy } from "./city-
 import { applyNpcServiceOutcome } from "./city-civic.js";
 import { runMotivationCycle } from "./simulation-motivation.js";
 import { coordinateConsequences } from "./city-consequences.js";
+import { runStrategyOpportunity } from "./simulation-strategy.js";
+import { proposeContactGroup } from "./city-groups.js";
 export { updateRelationshipDimensions } from "./relationship-state.js";
 
 export const ACTION_TYPES=["investigate","travel","contact","recruit","observe","prepare","hide","acquire","spend_resource",
@@ -19,6 +21,7 @@ const COSTS={investigate:"information",research:"information",observe:"manpower"
   negotiate:"influence",attack:"manpower",protect:"manpower",repair:"materials",sabotage:"materials",spread_rumor:"influence",
   suppress_rumor:"influence",verify_rumor:"information",weaponize_rumor:"influence",request_favor:"influence",
   fulfill_obligation:"materials",betray:"influence",advance_project:"materials"};
+export const ACTION_COSTS=COSTS;
 const keyOf=(type,key)=>`${type}:${key}`;
 const bounded=(value,min,max)=>Math.max(min,Math.min(max,Number(value)||0));
 const text=(value)=>String(value||"").trim();
@@ -548,7 +551,9 @@ export function commitNpcDirector(db,prepared,{roll}={}){
       actions:actions.map(row=>row.id).filter(Boolean),blocked:actions.filter(row=>row.status==="blocked")}});
     runInstitutionDirector(db,guildId,cycleKey);
     const motivations=runMotivationCycle(db,guildId,Math.max(0,budget-actions.length));
-    coordinateConsequences(db,guildId,Math.max(0,budget-actions.length-motivations.length));
+    const consequences=coordinateConsequences(db,guildId,Math.max(0,budget-actions.length-motivations.length));
+    const strategies=runStrategyOpportunity(db,guildId,Math.max(0,budget-actions.length-motivations.length-consequences.length));
+    if(actions.length+motivations.length+consequences.length+strategies.length<budget) proposeContactGroup(db,guildId);
     proposeCityOpportunity(db,guildId,prepared.query||"","city_director");
     return {clock:db.getSimulationClock(guildId),actions};
   });

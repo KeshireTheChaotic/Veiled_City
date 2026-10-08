@@ -74,3 +74,34 @@ Completing a director scene transition archives presence as private scene residu
 atomically with the transition. Historical residue is not current occupancy or
 actor knowledge. Reappearance requires a new arrival/travel source. Backup and
 rollback reuse existing tables and snapshots; no manual migration or reset.
+
+## 5.3.0 — Phase C: groups and strategies
+
+Enable `/vc-city flags json:{"emergent_groups":true,"strategies":true}`; both
+default off. `/vc-story group` accepts
+`{"key":"circle-formation","group_key":"circle","name":"Circle","source_event":"observed-contact","members":["clerk","porter"],"operation":"form"}`.
+Each NPC needs an explicit response using
+`{"key":"circle-formation","op":"respond","member":"clerk","decision":"accept"}`
+(or decline); GM `op:approve` / `reject` completes review. Other operations:
+join, leave, dissolve, split, merge; split/merge require `from_groups` and existing
+source membership. Full dissolution needs every member's acceptance. Proxies
+cannot be autonomously recruited. Community membership grants no secrets,
+resources, debts or allegiance; new groups start at capacity zero.
+
+`/vc-story strategy` accepts
+`{"key":"clerk-plan","actor_type":"npc","actor_key":"clerk","goal_key":"investigate","information_key":"report","source_event":"observed-report","cost_ceiling":3,"alternatives":["Retreat"],"risks":["Insufficient supplies"],"steps":[{"key":"prepare","requires":[],"action":{"type":"prepare"}}]}`.
+GM `op:approve` starts the plan. `op:run` advances one action or reconciles its
+result; director cycles share existing bounded opportunities. Routine actions
+still use application-generated dice; consequential steps remain pending their
+existing review. Optional `deadline_minute` is fictional simulation time, never
+wall-clock time. No plan has guaranteed outcomes or PC targets.
+
+Use pause/resume/abandon/reject for lifecycle control. Pause cancels queued steps
+without costs; executed steps retain costs/history. A cancelled step needs a
+new-key replan, not replay. `op:replan` requires a different legitimately known
+source, the same owner/objective, new unsubmitted step keys and another approval.
+Run to reconcile a submitted result before replanning. Source loss, exhausted
+resources, ended objectives or deadlines block execution with an audit reason.
+Inspect GM `/vc-city records kind:strategy` or `kind:group_transition`. Disable
+flags to stop new opportunities; already queued actions use their native review
+and cancellation controls. Backups and rollback follow the Phase A procedure.
