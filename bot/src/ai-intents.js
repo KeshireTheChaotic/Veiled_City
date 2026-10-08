@@ -22,9 +22,11 @@ import { interpretDialogue } from "./dialogue-continuity.js";
 import { manageEvidence } from "./evidence-custody.js";
 import { attemptCityInfluence } from "./city-civic.js";
 import { inviteOrganization } from "./owned-community.js";
+import { suggestSetupPayoff } from "./story-continuity.js";
+import { reconcileHistory } from "./history-reconciliation.js";
 const hash=value=>createHash("sha256").update(JSON.stringify(value)).digest("hex");
 const adapters=new Map();
-export const FEATURE_FLAGS={organization:"player_organizations",influence:"audience_influence",evidence:"evidence_custody",dialogue:"dialogue_history",encounter:"encounter_intelligence",goal:"emergent_goals",consequence:"consequences",scene:"scene_continuity",group:"emergent_groups",
+export const FEATURE_FLAGS={setup:"narrative_setups",organization:"player_organizations",influence:"audience_influence",evidence:"evidence_custody",dialogue:"dialogue_history",encounter:"encounter_intelligence",goal:"emergent_goals",consequence:"consequences",scene:"scene_continuity",group:"emergent_groups",
   strategy:"strategies",arc:"personal_arcs",discovery:"discovery",project:"long_projects",mediation:"conflict_mediation",
   memory:"memory_consolidation",density:"activity_density"};
 export const stateRevision=row=>row?hash(row):"absent";
@@ -51,7 +53,9 @@ export function configureDelegation(db,guild,input,reviewer){
 }
 function preflight(db,guild,intent,context){
   if(!validateIntent(intent)) throw new Error("Invalid closed versioned intent contract.");
-  if(context.scope?.mode==="private"&&!['arc','project','discovery','dialogue','organization'].includes(intent.feature)) throw new Error("Private scope cannot alter shared world state.");
+  if(context.scope?.mode==="private"&&!['arc','project','discovery','dialogue','organization','setup'].includes(intent.feature)) throw new Error("Private scope cannot alter shared world state.");
+  if(context.scope?.mode==="private"&&intent.feature==="setup"&&intent.payload.character_id!==context.scope.actorCharacterId)
+    throw new Error("Private setup invitation belongs to this character only.");
   if(context.scope?.mode==="private"&&intent.feature==="organization"&&intent.payload.character_id!==context.scope.actorCharacterId)
     throw new Error("Private organization invitation belongs to this character only.");
   if(context.scope?.mode==="private"&&intent.feature==="dialogue"){
@@ -141,6 +145,9 @@ export function intentContext(db,guild){
     personal_targets:["arc","arc_candidate"].flatMap(kind=>db.listCityRecords(guild,{kind,includeGM:true,limit:8})
       .map(row=>({...row,expected_revision:stateRevision(row)}))),
     organization_requests:db.listCityRecords(guild,{kind:"organization_request",includeGM:true,limit:8}).map(row=>({...row,expected_revision:stateRevision(row)})),
+    setup_targets:db.getCityCalendar(guild).flags.narrative_setups===true?db.listCityRecords(guild,{kind:"story_setup",status:"open",includeGM:true,limit:8})
+      .map(row=>({...row,expected_revision:stateRevision(row)})):[],
+    reconciliation:reconcileHistory(db,guild),
     encounter_actors:encounterProposalContext(db,guild),
     influence_actions:db.getCityCalendar(guild).flags.audience_influence===true?db.listSimulationRecords(guild,{kind:"action",status:"completed",limit:12})
       .filter(row=>row.data.result?.information_source&&["contact","negotiate","spread_rumor","suppress_rumor"].includes(row.data.type)):[],
@@ -168,6 +175,11 @@ export function intentContext(db,guild){
   bounded.context_metrics={max_chars:24000,estimated_chars:chars,omissions,authority:"Whole scoped records omitted; permission fields are never stripped."};
   return bounded;
 }
+registerIntentAdapter("setup",{
+  current:(db,guild,intent)=>db.getCityRecord(guild,"story_setup",intent.payload.setup_key),
+  impact:()=>({cost:0,review:false,reason:"GM-private optional sourced payoff proposal only; no automatic outcome, culprit or PC choice."}),
+  apply:(db,guild,intent,key,actor)=>suggestSetupPayoff(db,guild,intent.payload,actor)
+});
 registerIntentAdapter("organization",{
   current:()=>null,
   impact:()=>({cost:0,review:false,reason:"Private nonbinding invitation only; actual owner confirmation and separate human native review required."}),

@@ -1,5 +1,7 @@
 /** Shared release feature contract and read-only GM diagnostics; absent flags are disabled and records never imply PC authority. */
 export const EXPANSION_FEATURES=Object.freeze({
+  history_reconciliation:{phase:"SP6",records:[],command:"/vc-story why",authority:"Read-only current material contradictions; human repair proposals only"},
+  narrative_setups:{phase:"SP6",records:["story_setup","setup_payoff"],command:"/vc-story pacing",authority:"Sourced optional setup lifecycle; no guaranteed payoff or culprit invention"},
   player_organizations:{phase:"SP5",records:["organization_request","community_membership"],command:"/vc-intel organization / organizations",authority:"Owner-confirmed human-reviewed native communities/property/projects; no inferred PC votes or funds"},
   audience_influence:{phase:"SP4",records:["transmission","influence_action"],command:"/vc-city transmit",authority:"Native-cost sourced audience attempts, divergent responses, persistent refusal/correction and review"},
   evidence_custody:{phase:"SP3",records:["evidence_receipt","evidence_effect"],command:"/vc-handout custody / evidence",authority:"One physical original, explicit copies, controller transfers and human-reviewed analysis"},

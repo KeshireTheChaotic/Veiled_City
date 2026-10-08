@@ -1,0 +1,57 @@
+/** SP6 current structural diagnostics are read-only; setup proposals use real owner choice, native intents and immutable mystery anchors. */
+import assert from "node:assert/strict";
+import fs from "node:fs";
+import os from "node:os";
+import path from "node:path";
+import { VeiledDB } from "../src/db.js";
+import { configureCityFlags } from "../src/city-core.js";
+import { indexWorldEvent } from "../src/city-calendar.js";
+import { recordScenePresence } from "../src/scene-continuity.js";
+import { reconcileHistory } from "../src/history-reconciliation.js";
+import { manageNarrativeSetup, suggestSetupPayoff } from "../src/story-continuity.js";
+import { personalArc } from "../src/personal-continuity.js";
+import { configureDelegation, dispatchAiIntents, stateRevision } from "../src/ai-intents.js";
+import { handleStoryCommand } from "../src/story-commands.js";
+import { fakeInteraction } from "./contract-fixtures.mjs";
+const temp=fs.mkdtempSync(path.join(os.tmpdir(),"vc-sp6-")),file=path.join(temp,"test.sqlite"),schema=path.resolve("sql/schema.sql");
+let db=new VeiledDB(file,schema);
+try{
+  const guild="contract";db.ensureCampaign(guild);db.ensureCampaign("other");const session=db.startSession(guild,"Street");
+  configureCityFlags(db,guild,{history_reconciliation:true,narrative_setups:true,scene_continuity:true,personal_arcs:true});
+  indexWorldEvent(db,guild,{key:"source",source_id:"gm",title:"Repeated lantern witnessed",visibility:"party",location_key:"street"});
+  db.setSimulationEntity(guild,"location","street",{});db.setSimulationEntity(guild,"location","remote",{});
+  db.upsertNpcProfile(guild,{npcKey:"witness",displayName:"Witness"});db.setSimulationEntity(guild,"npc","witness",{location_key:"street"});
+  recordScenePresence(db,guild,{entity_type:"npc",entity_key:"witness",source_event:"source",location_key:"street",visibility:"party"},"gm");
+  for(const key of ["belief-a","belief-b"]) db.saveCityRecord(guild,{kind:"belief",key,source_event:"source",data:{interpretation:key,unverified:true}});
+  assert.equal(reconcileHistory(db,guild).findings.length,0,"competing beliefs are not material contradictions");
+  db.setSimulationEntity(guild,"npc","witness",{location_key:"remote"});
+  // Explicit duplicate physical identity models a corrupt historical import, not two ordinary documents or copies.
+  for(const holder of ["npc:witness","location:street"]) db.createHandout(guild,{title:"Legacy original",visibility:"gm",metadata:{evidence:{original:{key:"unique-original",holder,state:"held"},history:[{source_event:"source"}]}}});
+  const before=db.db.prepare("SELECT total_changes() AS n").get().n,report=reconcileHistory(db,guild);
+  assert(report.findings.some(row=>row.type==="stale_actual_npc_position"));assert(report.findings.some(row=>row.type==="incompatible_unique_original_custody"));
+  assert.equal(db.db.prepare("SELECT total_changes() AS n").get().n,before,"detector cannot repair or write receipts/audits");
+  await assert.rejects(()=>handleStoryCommand(fakeInteraction({gm:false,sub:"why",json:{op:"reconcile"}}),{db}),/GM\/admin/);
+  const diagnostic=fakeInteraction({sub:"why",json:{op:"reconcile"}});await handleStoryCommand(diagnostic,{db});assert(diagnostic.deliveries[0].ephemeral);
+  assert.equal(reconcileHistory(db,"other").findings.length,0);
+  db.upsertPlayer(guild,"owner","Owner");const pc=db.createCharacter(guild,"owner","Owner",{});db.assignCharacter(session.id,"owner",pc.id);db.setPresence(session.id,"owner","present");
+  const arc=personalArc(db,guild,"owner",{key:"lantern",type:"desire",statement:"I want to investigate the lantern without violence."});
+  db.proposeCanon(guild,{key:"mystery.culprit",value:"fixed",visibility:"gm"});
+  const setup=manageNarrativeSetup(db,guild,{op:"setup",action:"record",key:"lantern",source_event:"source",text:"The same red lantern recurs.",visibility:"party",anchor_key:"mystery.culprit"},"gm");
+  const payload={op:"suggest",setup_key:setup.record_key,source_event:setup.source_event,character_id:pc.id,choice_source:arc.source_event,suggestion:"Offer an optional nonviolent chance to examine an already established lantern."};
+  configureDelegation(db,guild,{mode:"routine_delegated",allow:["setup.suggest"],max_operations:1,max_cost:0,expires_minute:100},"gm");
+  const intent={version:1,feature:"setup",target_key:setup.record_key,expected_revision:stateRevision(setup),policy_revision:1,source_prerequisites:[],payload};
+  const receipt=dispatchAiIntents(db,guild,[intent],{origin:"setup"})[0];assert.equal(receipt.status,"accepted");
+  assert.equal(db.currentCanon(guild,"mystery.culprit").value,"fixed");
+  assert.equal(suggestSetupPayoff(db,guild,payload,"gm").record_key,receipt.data.result.record_key);
+  assert.throws(()=>suggestSetupPayoff(db,guild,{...payload,choice_source:"source"},"gm"),/authored/);
+  indexWorldEvent(db,guild,{key:"private-omen",source_id:"gm",title:"SYNTHETIC_PRIVATE_OMEN",visibility:"gm"});
+  assert.throws(()=>manageNarrativeSetup(db,guild,{op:"setup",action:"record",key:"leak",source_event:"private-omen",text:"Secret omen",visibility:"party"},"gm"),/broadened/);
+  const hidden=manageNarrativeSetup(db,guild,{op:"setup",action:"record",key:"hidden",source_event:"private-omen",text:"Secret omen",visibility:"gm"},"gm");
+  assert.throws(()=>suggestSetupPayoff(db,guild,{...payload,setup_key:hidden.record_key,source_event:hidden.source_event},"gm"),/legitimately/);
+  manageNarrativeSetup(db,guild,{op:"setup",action:"abandon",key:setup.record_key,source_event:"source",expected_revision:stateRevision(setup)},"gm");
+  assert.equal(manageNarrativeSetup(db,guild,{op:"setup",action:"record",key:"lantern",source_event:"source",text:"Replay"},"gm").status,"abandoned");
+  assert.throws(()=>suggestSetupPayoff(db,guild,payload,"gm"),/open/);
+  const snapshot=db.snapshotCampaign(guild,{label:"Setups",createdBy:"gm"});db.close();db=new VeiledDB(file,schema);db.restoreSnapshot(guild,snapshot.id,{actorId:"gm"});
+  assert.equal(db.getCityRecord(guild,"story_setup","lantern").status,"abandoned");assert.equal(db.currentCanon(guild,"mystery.culprit").value,"fixed");
+  console.log("SP6 PASS: read-only sourced material diagnostics/no belief false positives, private GM auth, actual-choice optional setup proposals, fixed truth, private omen denial and closed replay/restart/restore; zero paid calls.");
+}finally{db.close();fs.rmSync(temp,{recursive:true,force:true});}

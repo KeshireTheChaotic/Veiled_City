@@ -43,7 +43,7 @@ export function manageEvidence(db,guild,input,user,{gm=false}={}){
   if(stateRevision(before)!==input.expected_revision) throw new Error("Evidence revision changed; refresh before acting.");
   const source=requireCitySource(db,guild,input.source_event),copy=input.copy||"original";
   if(copy!=="original") cityKey(copy);
-  let evidence=before?structuredClone(before):{state:"discovered",original:{holder:null,state:"discovered"},copies:{},history:[],pending:null};
+  let evidence=before?structuredClone(before):{state:"discovered",original:{key:row.id,holder:null,state:"discovered"},copies:{},history:[],pending:null};
   if(evidence.pending&&!["accept","decline","status","resolved-transfer"].includes(input.op)) throw new Error("Resolve the pending transfer before another custody operation.");
   const item=copy==="original"?evidence.original:evidence.copies[copy];
   if(!item) throw new Error("Explicit existing original or copy required.");

@@ -1,7 +1,12 @@
 /** Descriptive pacing and source-linked mystery routes; no new PC mechanics, dice or mutable truth store. */
 import { cityObject, cityKey, cityAudit } from "./city-calendar.js";
 import { requireCitySource } from "./city-core.js";
+import { cityVisibility } from "./city-calendar.js";
+import { personalCharacter } from "./personal-continuity.js";
+import { stateRevision } from "./ai-intents.js";
+import { motivationKey } from "./simulation-motivation.js";
 export function setPacingCues(db,guildId,input,actorId){
+  if(input?.op==="setup") return manageNarrativeSetup(db,guildId,input,actorId);
   cityObject(input);requireCitySource(db,guildId,input.source_event);
   const session=db.getActiveSession(guildId);if(!session) throw new Error("Active session required for scene cues.");
   const fields=["stakes","dramatic_question","objective","pressure","unresolved_beats"];
@@ -11,6 +16,53 @@ export function setPacingCues(db,guildId,input,actorId){
   const key=`scene:${session.id}`,before=db.getCityRecord(guildId,"pacing",key);
   return db.transaction(()=>{const after=db.saveCityRecord(guildId,{kind:"pacing",key,source_event:input.source_event,data});
     cityAudit(db,guildId,"pacing_cues",key,before,after,actorId);return after;});
+}
+export function manageNarrativeSetup(db,guild,input,actor){
+  cityObject(input);if(db.getCityCalendar(guild).flags.narrative_setups!==true) throw new Error("Narrative setups are opt-in.");
+  if(Object.keys(input).some(key=>!["op","action","key","source_event","text","visibility","subject_key","anchor_key","expected_revision","replacement_key"].includes(key)))
+    throw new Error("Closed sourced setup operation required; no canon rewriting.");
+  const key=cityKey(input.key),before=db.getCityRecord(guild,"story_setup",key);
+  if(input.action==="record"&&before) return before;
+  const source=requireCitySource(db,guild,input.source_event);
+  if(input.action==="record"){
+    if(typeof input.text!=="string"||!input.text.trim()||input.text.length>600) throw new Error("Bounded sourced setup text required.");
+    const boundary=cityVisibility(db,guild,input.visibility||source.visibility,input.subject_key||source.subject_key);
+    if(boundary.visibility!=="gm"&&!['public','party'].includes(source.visibility)
+      &&(boundary.visibility!==source.visibility||boundary.subject_key!==source.subject_key)) throw new Error("Private omens/setups cannot be broadened without actual disclosure.");
+    const anchor=input.anchor_key?db.currentCanon(guild,input.anchor_key):null;if(input.anchor_key&&!anchor) throw new Error("Existing fixed canon anchor required.");
+    return db.transaction(()=>{
+      const after=db.saveCityRecord(guild,{kind:"story_setup",key,status:"open",source_event:source.event_key,...boundary,
+        data:{text:input.text,anchor_key:input.anchor_key||"",anchor_value:anchor?.value||null,history:[],authority:"Sourced unresolved setup, not a guaranteed outcome or culprit."}});
+      cityAudit(db,guild,"setup_recorded",key,null,after,actor);return after;
+    });
+  }
+  if(!before||before.status!=="open"||stateRevision(before)!==input.expected_revision||!["resolve","abandon","supersede"].includes(input.action))
+    throw new Error("Current open setup and explicit lifecycle review required.");
+  if(input.action==="supersede"&&(input.replacement_key===key||db.getCityRecord(guild,"story_setup",input.replacement_key)?.status!=="open")) throw new Error("Explicit distinct open replacement setup required.");
+  return db.transaction(()=>{
+    const after=db.saveCityRecord(guild,{...before,key,status:{resolve:"resolved",abandon:"abandoned",supersede:"superseded"}[input.action],
+      data:{...before.data,history:[...before.data.history,{source_event:source.event_key,action:input.action,reviewed_by:actor}],replacement_key:input.replacement_key||null}});
+    cityAudit(db,guild,"setup_closed",key,before,after,actor);return after;
+  });
+}
+export function suggestSetupPayoff(db,guild,input,actor){
+  if(db.getCityCalendar(guild).flags.narrative_setups!==true) throw new Error("Narrative setups are opt-in.");
+  const row=db.getCityRecord(guild,"story_setup",input.setup_key),pc=db.getCharacter(input.character_id);
+  if(row?.status!=="open"||row.source_event!==input.source_event||pc?.guild_id!==guild||!pc.owner_user_id) throw new Error("Existing open sourced setup and active campaign character required.");
+  personalCharacter(db,guild,pc.owner_user_id,pc.id);const origin=requireCitySource(db,guild,row.source_event);
+  if(!["public","party"].includes(origin.visibility)&&!(origin.visibility==="character"&&origin.subject_key===pc.id)
+    &&!(origin.visibility==="player"&&origin.subject_key===pc.owner_user_id)
+    &&!(origin.kind==="authored_speech"&&origin.details.character_id===pc.id&&origin.details.author===pc.owner_user_id))
+    throw new Error("Target character has not legitimately witnessed/learned this setup's source.");
+  if(row.visibility==="character"&&row.subject_key!==pc.id||row.visibility==="player"&&row.subject_key!==pc.owner_user_id) throw new Error("Private setup belongs to another participant.");
+  if(row.data.anchor_key&&db.currentCanon(guild,row.data.anchor_key)?.value!==row.data.anchor_value) throw new Error("Mystery anchor changed; request human reconciliation without rewriting truth.");
+  const choice=requireCitySource(db,guild,input.choice_source);
+  if(choice.source_id!==`player:${pc.owner_user_id}`||!(choice.kind==="authored_speech"&&choice.details.character_id===pc.id
+    ||choice.kind==="player_statement"&&choice.subject_key===pc.id)) throw new Error("Payoff proposal needs an actual authored choice/statement, not inferred PC intent.");
+  if(typeof input.suggestion!=="string"||!input.suggestion.trim()||input.suggestion.length>600) throw new Error("Bounded optional development required.");
+  const key=`payoff:${motivationKey([row.record_key,pc.id,choice.event_key])}`,prior=db.getCityRecord(guild,"setup_payoff",key);if(prior) return prior;
+  return db.saveCityRecord(guild,{kind:"setup_payoff",key,status:"pending",source_event:row.source_event,data:{setup:row.record_key,character:pc.id,choice_source:choice.event_key,
+    suggestion:input.suggestion,proposed_by:actor,authority:"GM-private optional proposal, not a completed payoff, NPC knowledge, PC choice, culprit or canon."}});
 }
 export function pacingAdvice(db,guildId,message=""){
   const session=db.getActiveSession(guildId),scene=session?db.getDirectorState(session.id):null;

@@ -19,6 +19,7 @@ import { manageMemoryCluster } from "./memory-clusters.js";
 import { expansionStatus } from "./expansion-contracts.js";
 import { configureDelegation } from "./ai-intents.js";
 import { reviewInbox, reviewWorkflow } from "./ai-review.js";
+import { reconcileHistory } from "./history-reconciliation.js";
 export async function handleStoryCommand(interaction,{db,gm}){
   if(!interaction.memberPermissions?.has(PermissionFlagsBits.ManageGuild)&&
     !interaction.member?.roles?.cache?.has(db.getCampaign(interaction.guildId)?.gm_role_id)) throw new PermissionError("GM/admin permission required.");
@@ -43,7 +44,7 @@ export async function handleStoryCommand(interaction,{db,gm}){
   else if(sub==="attempt") result=recordMysteryAttempt(db,guild,input,interaction.user.id);
   else if(sub==="negotiate") result=negotiateAgreement(db,guild,input,interaction.user.id);
   else if(sub==="forecast") result=previewOutcomes(db,guild,input);
-  else if(sub==="why") result=explainWhy(db,guild,input);
+  else if(sub==="why") result=input.op==="reconcile"?reconcileHistory(db,guild,input):explainWhy(db,guild,input);
   else if(sub==="portray") result=configurePortrayal(db,guild,input,interaction.user.id);
   else if(sub==="author") result=authorWorldDraft(db,gm.content,guild,input,interaction.user.id);
   else if(sub==="author-review") result=reviewWorldDraft(db,gm.content,guild,input,interaction.user.id);
