@@ -37,6 +37,7 @@ bot/scripts/expansion-h-test.mjs
 bot/scripts/expansion-quality-test.mjs
 bot/scripts/export-campaign.mjs
 bot/scripts/fixtures/expansion-quality-golden.json
+bot/scripts/fixtures/i-heard-you-golden.json
 bot/scripts/fixtures/systems-judgment-golden.json
 bot/scripts/format-check.mjs
 bot/scripts/i-heard-you-1-test.mjs

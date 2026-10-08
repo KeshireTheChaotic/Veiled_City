@@ -1,6 +1,6 @@
 {
   "package": "Veiled_City_Multiplayer_Discord",
-  "version": "8.7.0",
+  "version": "8.8.0",
   "generated": "2026-10-08",
   "content_normalization": "utf8-lf",
   "files": [
@@ -27,7 +27,7 @@
     {
       "path": "README.md",
       "size_bytes": 15436,
-      "sha256": "d3ab3f00041acb74dcaa3fa2e99a08327d95270259791aacdf129e1da75c5364"
+      "sha256": "fecbb05844d526c306ca970f70075b6fabeb739e957063cf5958636bc534cc2e"
     },
     {
       "path": "SUGGESTIONS-End-To-End.md",
@@ -52,7 +52,7 @@
     {
       "path": "bot/package.json",
       "size_bytes": 2601,
-      "sha256": "1d9658f2ed2dfe0ec3ec4c22319a347f54da4920058d52a7ee9e4b4a7d5f0bc1"
+      "sha256": "cd71f14b36def669ff6d3616e495078d2ce11de8bd47c4b70f19994c6377d919"
     },
     {
       "path": "bot/scripts/audit-regression-test.mjs",
@@ -186,8 +186,8 @@
     },
     {
       "path": "bot/scripts/expansion-quality-test.mjs",
-      "size_bytes": 10779,
-      "sha256": "2ff9ae05936f49960bf7dc58f5c2cfd0f17df55ef573ea1ae824e8095030006f"
+      "size_bytes": 12527,
+      "sha256": "700ae97f1dcd0440058d7f6033b0f297b226721993c0cb360a2390b418737370"
     },
     {
       "path": "bot/scripts/export-campaign.mjs",
@@ -198,6 +198,11 @@
       "path": "bot/scripts/fixtures/expansion-quality-golden.json",
       "size_bytes": 1903,
       "sha256": "ddacd20a225e67147b2b12cfc992505a6efc2a194e2c553cd5fb9a672caaeebb"
+    },
+    {
+      "path": "bot/scripts/fixtures/i-heard-you-golden.json",
+      "size_bytes": 2921,
+      "sha256": "ca9327468a6174aac01d8765ea07e1a4b952f02273afd523347552c71b241b2d"
     },
     {
       "path": "bot/scripts/fixtures/systems-judgment-golden.json",
@@ -246,8 +251,8 @@
     },
     {
       "path": "bot/scripts/narrative-contract-test.mjs",
-      "size_bytes": 7011,
-      "sha256": "2d1aa32c93edf78c384c172f40da4f317030485c236207c8397b1ded1388b1d4"
+      "size_bytes": 7329,
+      "sha256": "5537cffc2ba1f4911d70789561e12dc4ddf1587c097de1c9e7d00a03eb38427b"
     },
     {
       "path": "bot/scripts/negotiation-preview-test.mjs",
@@ -261,8 +266,8 @@
     },
     {
       "path": "bot/scripts/offline-guard.mjs",
-      "size_bytes": 656,
-      "sha256": "d024ba3b674eb3c55c1d5dfe50585065c87eec85f577a69b0b71d3a5d1bd0801"
+      "size_bytes": 967,
+      "sha256": "d1f5929630e626822e3604de0460e6d45afb48a4fa9109b6607c2feef99fa7f0"
     },
     {
       "path": "bot/scripts/offline-smoke-test.mjs",
@@ -376,8 +381,8 @@
     },
     {
       "path": "bot/scripts/validate-offline.mjs",
-      "size_bytes": 1972,
-      "sha256": "0c252813c443b5a6bf87237ac73e4a33ff68cfbb168a89dde8c7d140e24a4078"
+      "size_bytes": 2497,
+      "sha256": "2d6f1e1a692cf2d24c2ce5d2d2d384e8ceb461822b48fdbe6b52ce2a38673ac3"
     },
     {
       "path": "bot/sql/schema.sql",
@@ -1336,13 +1341,13 @@
     },
     {
       "path": "docs/I_HEARD_YOU_GAP_ANALYSIS.md",
-      "size_bytes": 11091,
-      "sha256": "856c1b85e77164577263f891b4f0f5aa56cbbed76d9d0493aca3c11f7c7d9423"
+      "size_bytes": 11700,
+      "sha256": "f1b798a8ca42b0e3bcb769ff493e5a60f7df874de6bdd6e4b42987be392f022c"
     },
     {
       "path": "docs/I_HEARD_YOU_IMPLEMENTATION.md",
-      "size_bytes": 21901,
-      "sha256": "a52772489ee34541abfedc2309362f8b4e12e6a0899332c9a260e202203022b4"
+      "size_bytes": 23693,
+      "sha256": "1beba5386da7fc9d9807a277802c70c0353b5bd481a8849483f09ce7f9c399b9"
     },
     {
       "path": "docs/LEVEL_UP.md",

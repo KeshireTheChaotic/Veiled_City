@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
+import { spawnSync } from "node:child_process";
 import { VeiledDB } from "../src/db.js";
 import { GMService } from "../src/gm.js";
 import { ContentIndex } from "../src/content.js";
@@ -70,6 +71,9 @@ try{
   await assert.rejects(()=>handleCityCommand(fakeInteraction({gm:false}),{db,gm}),/GM\/admin/);
   const queue=new KeyedSerialQueue(),order=[];
   await Promise.all([queue.enqueue(guild,async()=>{order.push(1);}),queue.enqueue(guild,()=>{order.push(2);})]);assert.deepEqual(order,[1,2]);
-  await assert.rejects(()=>fetch("https://api.openai.com/v1/responses"),/OFFLINE_NETWORK_FORBIDDEN/);
+  const probe=spawnSync(process.execPath,["--import","./scripts/offline-guard.mjs","--input-type=module","-e",
+    'try { await fetch("https://api.openai.com/v1/responses"); } catch {}'],{encoding:"utf8"});
+  assert.equal(probe.status,1,"Even a caught prohibited network attempt fails the guarded child process");
+  assert.match(probe.stderr,/OFFLINE_NETWORK_FORBIDDEN/);
   console.log("Narrative/service contracts PASS: seed 450; 150 privacy cases; bounded retries; mock Discord; zero outbound requests.");
 }finally{db.close();fs.rmSync(temp,{recursive:true,force:true});}

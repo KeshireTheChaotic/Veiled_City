@@ -6,10 +6,12 @@ const suites=["quality-check","format-check","check-source","validate-command-sc
   "context-conversation-test","story-continuity-test","negotiation-preview-test","endurance-test","portrayal-authoring-test",
   "expansion-a-test","expansion-b-test","expansion-c-test","expansion-d-test","expansion-e-test","expansion-f-test","expansion-quality-test","expansion-h-test",
   "end-to-end-a-test","end-to-end-b-test","end-to-end-c-test","end-to-end-d-test","end-to-end-e-test","end-to-end-f-test","end-to-end-g-test","end-to-end-h-test","end-to-end-i-test","systems-to-players-1-test","systems-to-players-2-test","systems-to-players-3-test","systems-to-players-4-test","systems-to-players-5-test","systems-to-players-6-test","systems-to-players-7-test","systems-to-players-9-test"];
+const report={fixture_only:true,network:"denied",billable_tokens:0,live_requests:0,suites:[],limits:["Synthetic fixtures do not establish unrestricted live-model semantics.","Consult I_HEARD_YOU_EVALUATION for measured false positives/negatives and unresolved ambiguities."]};
 for(const suite of suites){
   const result=spawnSync(process.execPath,["--import","./scripts/offline-guard.mjs",`scripts/${suite}.mjs`],{stdio:"inherit",
     env:{...process.env,OPENAI_API_KEY:"offline-dummy",DISCORD_TOKEN:"offline-dummy",NODE_OPTIONS:`--import=${new URL("./offline-guard.mjs",import.meta.url).href}`}});
-  if(result.error) throw result.error;
-  if(result.status!==0) process.exit(result.status||1);
+  report.suites.push({id:suite,status:result.error||result.status!==0?"failed":"passed",exit_code:result.status});
+  if(result.error||result.status!==0){console.error(`VALIDATION_REPORT ${JSON.stringify(report)}`);if(result.error) throw result.error;process.exit(result.status||1);}
 }
+console.log(`VALIDATION_REPORT ${JSON.stringify(report)}`);
 console.log("Required validation PASS: network denied; zero live API requests or billable tokens.");

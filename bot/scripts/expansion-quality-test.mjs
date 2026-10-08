@@ -21,6 +21,7 @@ import { validateDecisionAdvisory } from "../src/decision-advisory.js";
 import { routeDiscoveryMessage } from "../src/continuity-routing.js";
 const fixtures=JSON.parse(fs.readFileSync(new URL("./fixtures/expansion-quality-golden.json",import.meta.url),"utf8"));
 const judgments=JSON.parse(fs.readFileSync(new URL("./fixtures/systems-judgment-golden.json",import.meta.url),"utf8"));
+const heard=JSON.parse(fs.readFileSync(new URL("./fixtures/i-heard-you-golden.json",import.meta.url),"utf8"));
 const root=fs.mkdtempSync(path.join(os.tmpdir(),"vc-quality-")),schema=path.resolve("sql/schema.sql"),db=new VeiledDB(path.join(root,"fixture.sqlite"),schema);
 const metrics={fixture_only:true,seed:570,baseline_failures:0,false_positives:0,false_negatives:0,regressions:0,golden_passes:0,malicious_rejections:0,
   categories:{},source_traceability_checks:0,events:0,billable_tokens:0,live_requests:0};
@@ -91,6 +92,21 @@ try{
     assert(rejected,fixture.id);metrics.malicious_rejections++;metrics.judgment_cases.push({id:fixture.id,expected:"reject",actual:"reject"});
   }
   const session=db.startSession(guild,"Fixture");db.assignCharacter(session.id,"owner",pc.id);db.setPresence(session.id,"owner","present");
+  configureCityFlags(db,guild,{semantic_integrity:true,natural_language:true});
+  metrics.i_heard_you={provenance:heard.provenance,cases:[],false_positives:0,false_negatives:0,
+    rule_violations:{measured_by:"i-heard-you-2-test",result:"See required VALIDATION_REPORT; semantic cases do not measure dice arithmetic."},
+    unresolved_ambiguities:0,limits:heard.limits};
+  for(const fixture of heard.cases){
+    let actual="accept";
+    try{validateNarrativeClaims(db,guild,fixture.surface==="private"?{narration:"Rain falls.",private_messages:[{content:fixture.text}]}:{narration:fixture.text});}
+    catch(error){if(error.code!=="NARRATIVE_INTEGRITY") throw error;actual="reject";}
+    const unknown=fixture.expected==="unverified";
+    metrics.i_heard_you.cases.push({id:fixture.id,expected:fixture.expected,validator_result:actual,semantic_status:unknown?"UNVERIFIED":"bounded_fixture_verified"});
+    if(unknown){metrics.i_heard_you.unresolved_ambiguities++;continue;}
+    if(actual!==fixture.expected){if(fixture.expected==="accept") metrics.i_heard_you.false_positives++;else metrics.i_heard_you.false_negatives++;}
+  }
+  console.log(`I_HEARD_YOU_EVALUATION ${JSON.stringify(metrics.i_heard_you)}`);
+  assert.equal(metrics.i_heard_you.false_positives+metrics.i_heard_you.false_negatives,0,"Hand-authored IHY semantics/UX regression");
   const writes=db.db.prepare("SELECT total_changes() AS n").get().n,delivered=[];
   assert(await routeDiscoveryMessage({db,message:{guild:{id:guild},author:{id:"owner"},content:"What do I know about Public evidence?"},deliver:async value=>delivered.push(value)}));
   assert(delivered[0].includes("Public evidence"));assert(!delivered[0].includes("SYNTHETIC_SECRET"));assert(delivered[0].length<=1900);
@@ -109,6 +125,8 @@ try{
   metrics.covered_by_required_suites={failed_clue_paths:"story-continuity-test",atomic_publication:"endurance-test",context_bounds:"expansion-f-test",
     consent_attendance:"expansion-d-test",major_review_restore:"expansion-c-test",travel_last_unit:"expansion-e-test",
     npc_voice_private_tts:"portrayal-authoring-test",dialogue_refusal_subjectivity:"systems-to-players-2-test",
-    audience_differentiation:"systems-to-players-4-test",claim_commit_alignment:"end-to-end-i-test"};
+    audience_differentiation:"systems-to-players-4-test",claim_commit_alignment:"end-to-end-i-test",
+    owned_roll_sources:"i-heard-you-1-test",collaboration_rules_and_replay:"i-heard-you-2-test",listener_tactics:"i-heard-you-3-test",
+    consent_and_cases:"i-heard-you-4-test",continuity_receipts:"i-heard-you-5-test",quiet_and_ranking:"i-heard-you-6-test",scoped_briefs:"i-heard-you-7-test"};
   console.log(`Expansion quality benchmark PASS ${JSON.stringify(metrics)}`);
 }finally{db.close();fs.rmSync(root,{recursive:true,force:true});}

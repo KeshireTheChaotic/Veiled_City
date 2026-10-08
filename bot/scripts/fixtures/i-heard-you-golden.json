@@ -1,0 +1,31 @@
+{
+  "provenance": "Hand-authored synthetic I Heard You fixtures, October 2026. No live model samples or real player material.",
+  "cases": [
+    {"id":"IHY-S01-status","text":"You are dead.","expected":"reject"},
+    {"id":"IHY-S02-status-paraphrase","text":"Detective lies lifeless.","expected":"reject"},
+    {"id":"IHY-S03-injury","text":"You sustain an injury.","expected":"reject"},
+    {"id":"IHY-S04-injury-paraphrase","text":"Detective suffers a wound.","expected":"reject"},
+    {"id":"IHY-S05-movement","text":"You arrive at the station.","expected":"reject"},
+    {"id":"IHY-S06-movement-paraphrase","text":"Detective has crossed into the vault.","expected":"reject"},
+    {"id":"IHY-S07-possession","text":"You pocket the dossier.","expected":"reject"},
+    {"id":"IHY-S08-possession-paraphrase","text":"Detective takes possession of the key.","expected":"reject"},
+    {"id":"IHY-S09-knowledge","text":"You now know the secret.","expected":"reject"},
+    {"id":"IHY-S10-obligation","text":"You are bound to serve.","expected":"reject"},
+    {"id":"IHY-S11-dice","text":"You scored a 19.","expected":"reject"},
+    {"id":"IHY-S12-private-injury","text":"You sustain a wound.","surface":"private","expected":"reject"},
+    {"id":"IHY-S13-unrelated-quote","text":"The witness says, \"Leave\", and you are dead.","expected":"reject"},
+    {"id":"IHY-U01-menu","text":"Choose one of these: enter, retreat.","expected":"reject"},
+    {"id":"IHY-U02-binary","text":"Reply with yes or no.","expected":"reject"},
+    {"id":"IHY-U03-labelled","text":"A) Enter\nB) Retreat","expected":"reject"},
+    {"id":"IHY-P01-metaphor","text":"The city dies in the rain.","expected":"accept"},
+    {"id":"IHY-P02-idiom","text":"You are dead to me.","expected":"accept"},
+    {"id":"IHY-P03-idiom","text":"You bleed money.","expected":"accept"},
+    {"id":"IHY-P04-speculation","text":"Perhaps you arrive at the station.","expected":"accept"},
+    {"id":"IHY-P05-witness-claim","text":"Witness says, \"You are dead.\"","expected":"accept"},
+    {"id":"IHY-P06-open-question","text":"The door is locked. What do you do?","expected":"accept"},
+    {"id":"IHY-P07-conditional","text":"If you might arrive at the station, the witness could be there.","expected":"accept"},
+    {"id":"IHY-A01-unknown-metaphor","text":"The station swallowed you whole.","expected":"unverified"},
+    {"id":"IHY-A02-unknown-paraphrase","text":"Detective's pulse ceases.","expected":"unverified"}
+  ],
+  "limits": ["Bounded deterministic vocabulary, not unrestricted meaning understanding.","Synthetic provider doubles do not certify real-model judgments.","Unknown paraphrases require human correction/review; acceptance is not proof of truth.","Special card mechanics and Help with net disadvantage remain provisional human adjudication.","Universal prose consent remains partial; exact owner terms/revisions and native workflows are authoritative."]
+}
