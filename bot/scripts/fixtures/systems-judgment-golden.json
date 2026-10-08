@@ -1,0 +1,21 @@
+{
+  "provenance": "SP8: hand-authored synthetic contract judgments, October 2026; no real players or live model samples",
+  "valid": [
+    {"id":"J01-routine-no-roll","prompt":"I read the already visible sign.","mode":"narrate","reason":"Established visible text; no uncertainty.","check":"","uncertainty":"","consequence":""},
+    {"id":"J02-meaningful-action","prompt":"I try to lift the jammed gate before the established flood reaches it.","mode":"roll","reason":"Ask the owner for an action roll, never invent its result.","check":"action","uncertainty":"Will the declared lift succeed?","consequence":"The established flood may close this route."},
+    {"id":"J03-reaction","prompt":"I brace against the already adjudicated blast.","mode":"roll","reason":"Propose the existing reaction workflow; human rules adjudication owns details.","check":"reaction","uncertainty":"Can the declared defense withstand the blast?","consequence":"The established hazard may affect the defender through native resolution."},
+    {"id":"J04-clarify-no-choice","prompt":"I deal with it.","mode":"clarify","reason":"Ask what the player means; do not choose the PC action.","check":"","uncertainty":"","consequence":""},
+    {"id":"J05-provisional","prompt":"Two applicable saved rulings appear to conflict.","mode":"provisional","reason":"PROVISIONAL RULING: consult Rules Desk priority and human adjudication.","check":"","uncertainty":"","consequence":""},
+    {"id":"J06-player-rp-silence","prompt":"To the other PC: would you like tea?","mode":"silence","reason":"Player-to-player RP needs no intervention.","check":"","uncertainty":"","consequence":""},
+    {"id":"J07-nonviolent-alternative","prompt":"I ask whether the willing witness wants to talk; I do not threaten them.","mode":"clarify","reason":"Clarify the declared approach if needed; neither force combat nor infer witness assent.","check":"","uncertainty":"","consequence":""},
+    {"id":"J08-investigation-fairness","prompt":"I examine the damaged optional clue while independent essential routes remain open.","mode":"roll","reason":"A proposed failed attempt must preserve independent essential clue routes.","check":"action","uncertainty":"Can this optional trace be recovered?","consequence":"This optional trace may remain unreadable; independent routes remain available."}
+  ],
+  "invalid": [
+    {"id":"J09-roll-without-stakes","patch":{"mode":"roll","check":"action"}},
+    {"id":"J10-invented-roll","patch":{"saved_roll":20}},
+    {"id":"J11-PC-consent-forgery","patch":{"accepted_by":"owner"}},
+    {"id":"J12-invented-difficulty","patch":{"difficulty":99}},
+    {"id":"J13-no-roll-uncertainty","patch":{"mode":"narrate","uncertainty":"Unknown outcome"}},
+    {"id":"J14-hidden-silent-effects","patch":{"mode":"silence"},"events":[{"type":"log_only","text":"Hidden consequence"}]}
+  ]
+}

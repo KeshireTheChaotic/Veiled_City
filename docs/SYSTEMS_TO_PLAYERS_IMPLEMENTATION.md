@@ -111,3 +111,28 @@ Starting HEAD: `0008957`. Enable `/vc-city flags json:{"supply_dependencies":tru
 `/vc-sim action json:{"op":"transfer","source_event":"delivery-source","from":"giver","to":"receiver","amount":2,"information_key":"delivery","from_revision":"hash","to_revision":"hash"}` records an **already human-adjudicated** delivery, never an AI promise or involuntary transfer. The source must contain `details.resource_transfer` with exact `from`, `to`, `amount`, `resource:"materials"`, `human_reviewed:true`; the giver must legitimately know it. Participants must be actual available co-located non-proxied NPCs. Obtain current native entity records with `/vc-sim entity`; revisions are SHA256 of their JSON representation (exported `supplyRevision`). Amount 1–5, existing explicit balances 0–100, no regeneration, conserved sum, no PC target or arbitrary field. Same source replay returns its prior receipt, even after restart/restore. A distinct later delivery needs a distinct source. This human-only command creates no player-facing hook or extra provider call.
 
 Before: resource costs and service descriptions were separate. After: existing validators recheck access at execution before costs, and sourced material movement conserves existing balances. No schema change; civic records, transfer receipts, audit and native balances are included in existing snapshots. Disable the flag to restore prior action behavior without erasing constraints/history; re-enable to enforce current service state. `SP7` is in the required network-denied gate. Large economic narratives, legal contracts, inflation, passive income and AI-directed PC purchases are intentionally not implemented.
+
+## Phase 8 — 7.8.0 (P11)
+
+Starting HEAD: `717d1f6`. No new flag or production API activity. Run `cd bot` then `npm run validate`; existing `expansion-quality-test.mjs` consumes `scripts/fixtures/systems-judgment-golden.json`. J01–J08 cover authored routine/action/reaction/clarification/provisional/silence/nonviolent/investigative decisions through real GM context/request/parser with deterministic fake Responses. J09–J14 reject no-stakes checks, invented rolls/difficulty, consent forgery, uncertain no-roll and hidden silent effects at the production advisory boundary. J15 exercises real scoped natural-language routing with fake private delivery and zero writes. Metrics include fixture provenance, expected/actual IDs, false positives, false negatives and zero live requests/billable tokens. Existing golden mutations remain unchanged and seeded endurance remains mandatory.
+
+These cases test structural and known-scenario appropriateness, **not** independent assessment of unconstrained model judgment. A semantically poor but structurally valid reason may pass: no keyword classifier is presented as proof of correct RAW, clue fairness, voice or consent. Saved rolls/critical Hope-Fear, actual clue graphs, native refusals, actor knowledge, voice/privacy, claim-to-commit and publication recovery continue to be validated by existing mandatory suites. Paid/live smoke tests require separate approval and are not a release gate. No schema or campaign mutation is introduced by this phase.
+
+## Acceptance matrix (bounded production evidence)
+
+| Proposal | Required fixture IDs / suite | Verified boundary and explicit limit |
+| --- | --- | --- |
+| P01 | SP1; end-to-end-i; simulation/combat regression | Grounded native proposal/review/composition/aftermath; autonomous survivor relocation remains reviewed native fiction, not inferred |
+| P02 | SP1; J01–J14; narrative-contract; story-continuity | Decision structure and known scenarios, existing saved rules/dice/clue paths; arbitrary live classification NOT VERIFIED |
+| P03 | SP2; context-conversation | Actual explicit speech/listeners, subjective memory/correction/refusal; arbitrary prose is not inferred speech |
+| P04 | SP2; simulation/strategy suites | Own actual combat results/source history/native goals; unrestricted tactical interpretation NOT VERIFIED |
+| P05 | SP3; handout/audit/privacy regressions | Original/copies/controller consent, reviewed analysis, sanitized exports/replay; legal guilt/admissibility intentionally excluded |
+| P06 | SP4; city-civic/core | Native-cost channel attempts and audience-specific refusal/correction; no automatic PC penalty or canon |
+| P07 | SP5; expansion-e; end-to-end-f | Explicit owner request/confirmation, human native materialization, staff/project consent and restore; charter/succession human-reviewed |
+| P08 | SP6 | Read-only material detectors and source proposals; bounded coverage, no semantic canon repair |
+| P09 | SP6 | Scoped sourced setups, optional actual-choice proposals, closed replay/fixed mystery; no guaranteed payoff |
+| P10 | SP7; city-civic; simulation | Native connected availability/repair, finite conserved delivery and replay; no universal economy |
+| P11 | J01–J15; expansion-quality; endurance; all SP suites | Named offline expectations, FP/FN/provenance, fake provider/Discord; unrestricted live semantics NOT VERIFIED |
+| P12 | Phase 9 pending | Existing discovery is read-only; evidence/commitment/organization conversational projection still to extend |
+
+All phases use schema 440 native/additive records and existing logical snapshots. No live campaign DB, flag activation, command registration, deployment or push is part of these releases. Migration/export, restore, guild isolation, bounded 1/3/4 NPC and two institutional opportunities remain covered by the existing gate; feature-specific negatives are listed above rather than claiming every possible narrative is tested.

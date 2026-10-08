@@ -17,9 +17,12 @@ import { updateCityCivic } from "../src/city-civic.js";
 import { subscribeConsequence, coordinateConsequences, reviewConsequence } from "../src/city-consequences.js";
 import { explainWhy } from "../src/provenance.js";
 import { FakeResponses } from "./contract-fixtures.mjs";
+import { validateDecisionAdvisory } from "../src/decision-advisory.js";
+import { routeDiscoveryMessage } from "../src/continuity-routing.js";
 const fixtures=JSON.parse(fs.readFileSync(new URL("./fixtures/expansion-quality-golden.json",import.meta.url),"utf8"));
+const judgments=JSON.parse(fs.readFileSync(new URL("./fixtures/systems-judgment-golden.json",import.meta.url),"utf8"));
 const root=fs.mkdtempSync(path.join(os.tmpdir(),"vc-quality-")),schema=path.resolve("sql/schema.sql"),db=new VeiledDB(path.join(root,"fixture.sqlite"),schema);
-const metrics={fixture_only:true,seed:570,baseline_failures:0,false_positives:0,regressions:0,golden_passes:0,malicious_rejections:0,
+const metrics={fixture_only:true,seed:570,baseline_failures:0,false_positives:0,false_negatives:0,regressions:0,golden_passes:0,malicious_rejections:0,
   categories:{},source_traceability_checks:0,events:0,billable_tokens:0,live_requests:0};
 try{
   const guild="quality";db.ensureCampaign(guild);db.upsertPlayer(guild,"owner","Owner");
@@ -65,6 +68,34 @@ try{
   const gm=new GMService({db,content:new ContentIndex(path.resolve("../content")),ai:fake,config:{gmModel:"offline",maxRecentMessages:8,maxContentChunks:2}});
   assert.equal((await gm.runTurn({guildId:guild,actorUserId:"owner",actorName:"Detective",messageText:"Describe the station window"})).narration,
     fixtures.compatibility_5_0.narration);assert.equal(fake.requests.length,1);metrics.golden_passes++;metrics.compatibility_5_0="unchanged fixture accepted";
+  configureCityFlags(db,guild,{decision_advisory:true,discovery:true});
+  metrics.judgment_provenance=judgments.provenance;metrics.judgment_cases=[];
+  for(const fixture of judgments.valid){
+    const {id,prompt,...advisory}=fixture;
+    const output={...fixtures.compatibility_5_0,state_review:review,decision_advisory:advisory,
+      respond:advisory.mode!=="silence",narration:advisory.mode==="silence"?"":"The declared approach remains your choice."};
+    const provider=new FakeResponses([output]);
+    const service=new GMService({db,content:gm.content,ai:provider,config:{gmModel:"offline",maxRecentMessages:8,maxContentChunks:2}});
+    try{
+      const result=await service.runTurn({guildId:guild,actorUserId:"owner",actorName:"Detective",messageText:prompt});
+      assert.equal(validateDecisionAdvisory(db,guild,result).mode,advisory.mode,id);assert.equal(provider.requests.length,1,id);
+      metrics.golden_passes++;metrics.judgment_cases.push({id,expected:"accept",actual:"accept"});
+    }catch(error){metrics.false_positives++;throw error;}
+  }
+  const base={mode:"clarify",check:"",reason:"Ask for the actual declared action",uncertainty:"",consequence:""};
+  for(const fixture of judgments.invalid){
+    let rejected=false;
+    try{validateDecisionAdvisory(db,guild,{respond:false,narration:"",decision_advisory:{...base,...fixture.patch},events:fixture.events||[]});}
+    catch{rejected=true;}
+    if(!rejected) metrics.false_negatives++;
+    assert(rejected,fixture.id);metrics.malicious_rejections++;metrics.judgment_cases.push({id:fixture.id,expected:"reject",actual:"reject"});
+  }
+  const session=db.startSession(guild,"Fixture");db.assignCharacter(session.id,"owner",pc.id);db.setPresence(session.id,"owner","present");
+  const writes=db.db.prepare("SELECT total_changes() AS n").get().n,delivered=[];
+  assert(await routeDiscoveryMessage({db,message:{guild:{id:guild},author:{id:"owner"},content:"What do I know about Public evidence?"},deliver:async value=>delivered.push(value)}));
+  assert(delivered[0].includes("Public evidence"));assert(!delivered[0].includes("SYNTHETIC_SECRET"));assert(delivered[0].length<=1900);
+  assert.equal(db.db.prepare("SELECT total_changes() AS n").get().n,writes);metrics.judgment_cases.push({id:"J15-private-fake-Discord",expected:"scoped-read-only",actual:"scoped-read-only"});
+  configureCityFlags(db,guild,{decision_advisory:false});
   configureCityFlags(db,guild,{consequences:true});
   const start=performance.now();
   for(let i=0;i<25;i++){indexWorldEvent(db,guild,{key:`event-${i}`,title:`Physical damage ${i}`,source_kind:"gm",source_id:"human",kind:"infrastructure_damage",location_key:"station"});metrics.events++;}
@@ -76,6 +107,8 @@ try{
   const trace=explainWhy(db,guild,{event_key:consequence.source_event});
   assert(trace.validations.some(row=>row.kind==="consequence"&&row.status==="completed"));assert(trace.ledger.length);metrics.source_traceability_checks++;
   metrics.covered_by_required_suites={failed_clue_paths:"story-continuity-test",atomic_publication:"endurance-test",context_bounds:"expansion-f-test",
-    consent_attendance:"expansion-d-test",major_review_restore:"expansion-c-test",travel_last_unit:"expansion-e-test"};
+    consent_attendance:"expansion-d-test",major_review_restore:"expansion-c-test",travel_last_unit:"expansion-e-test",
+    npc_voice_private_tts:"portrayal-authoring-test",dialogue_refusal_subjectivity:"systems-to-players-2-test",
+    audience_differentiation:"systems-to-players-4-test",claim_commit_alignment:"end-to-end-i-test"};
   console.log(`Expansion quality benchmark PASS ${JSON.stringify(metrics)}`);
 }finally{db.close();fs.rmSync(root,{recursive:true,force:true});}

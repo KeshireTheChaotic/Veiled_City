@@ -1,6 +1,6 @@
 {
   "package": "Veiled_City_Multiplayer_Discord",
-  "version": "7.7.0",
+  "version": "7.8.0",
   "generated": "2026-10-08",
   "content_normalization": "utf8-lf",
   "files": [
@@ -27,7 +27,7 @@
     {
       "path": "README.md",
       "size_bytes": 15228,
-      "sha256": "4399371e64639f0e17a7d45f13758124f7536329e4d66f380d8fe0b5dbf1358d"
+      "sha256": "7fa7a0607e163d25f2967fb0024d5315b2bb74dd6217c1308d639b443ad78c26"
     },
     {
       "path": "SUGGESTIONS-End-To-End.md",
@@ -52,7 +52,7 @@
     {
       "path": "bot/package.json",
       "size_bytes": 2601,
-      "sha256": "f06113a4a8a0796f5cbeeb1dd61b1e7b29f32591d575fffe20e6d915877a472e"
+      "sha256": "ce5d9fe3462225fb696e93079940f42c5ead83b17d3cd4311da9dbd0759528de"
     },
     {
       "path": "bot/scripts/audit-regression-test.mjs",
@@ -186,8 +186,8 @@
     },
     {
       "path": "bot/scripts/expansion-quality-test.mjs",
-      "size_bytes": 7891,
-      "sha256": "5e3f040d9595ce3afc63965aceff50dd7f27a208574dfde5b584683efa9dd46d"
+      "size_bytes": 10779,
+      "sha256": "2ff9ae05936f49960bf7dc58f5c2cfd0f17df55ef573ea1ae824e8095030006f"
     },
     {
       "path": "bot/scripts/export-campaign.mjs",
@@ -198,6 +198,11 @@
       "path": "bot/scripts/fixtures/expansion-quality-golden.json",
       "size_bytes": 1903,
       "sha256": "ddacd20a225e67147b2b12cfc992505a6efc2a194e2c553cd5fb9a672caaeebb"
+    },
+    {
+      "path": "bot/scripts/fixtures/systems-judgment-golden.json",
+      "size_bytes": 2852,
+      "sha256": "dc9085755ba97609c27315052982d17fa10dba658328e76b500477976cb6bfd3"
     },
     {
       "path": "bot/scripts/format-check.mjs",
@@ -1341,13 +1346,13 @@
     },
     {
       "path": "docs/SYSTEMS_TO_PLAYERS_GAP_ANALYSIS.md",
-      "size_bytes": 13728,
-      "sha256": "25409758a8813235c09218138e22831d9ab4a21a1438bad795fc66511c17fb75"
+      "size_bytes": 14746,
+      "sha256": "034889e3be546f2d497469ea0f27ee5d0c06e9bb58e32589eefcce1e75faf6a0"
     },
     {
       "path": "docs/SYSTEMS_TO_PLAYERS_IMPLEMENTATION.md",
-      "size_bytes": 24797,
-      "sha256": "2d3c8ab51fb2a81df2523345fb5c1456b14f8fa0dce3c23d84dfa80cc4ac4c31"
+      "size_bytes": 28738,
+      "sha256": "008f2e03a5e66365cc699df9d9f72770f5fe9f022938dca157cf2bee25cb901c"
     },
     {
       "path": "docs/UPGRADE_3.0_TO_3.1.md",
