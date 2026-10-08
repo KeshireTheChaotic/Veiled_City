@@ -57,6 +57,7 @@ bot/scripts/story-continuity-test.mjs
 bot/scripts/sync-release.mjs
 bot/scripts/systems-to-players-1-test.mjs
 bot/scripts/systems-to-players-2-test.mjs
+bot/scripts/systems-to-players-3-test.mjs
 bot/scripts/validate-command-schema.mjs
 bot/scripts/validate-offline.mjs
 bot/sql/schema.sql
@@ -93,6 +94,7 @@ bot/src/discord/chunking.js
 bot/src/discord/privacy.js
 bot/src/encounter.js
 bot/src/errors.js
+bot/src/evidence-custody.js
 bot/src/expansion-contracts.js
 bot/src/gm.js
 bot/src/handout.js

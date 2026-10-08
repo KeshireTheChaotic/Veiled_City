@@ -9,6 +9,7 @@ import { EncounterLibrary, livePcRoster, partyTier, baseBattlePoints, DIFFICULTY
 import { prepareLevelup, applyLevelupToData, legalAdvancements, tierAchievement } from "./character-system.js";
 import { buildCombatants, hpMarksForDamage, combatantLine } from "./combat.js";
 import { applyAuthoritativeMutation } from "./state.js";
+import { manageEvidence, evidenceView } from "./evidence-custody.js";
 import { normalizeDirectorConfidence } from "./director.js";
 import { createPlayerExportFiles, createGmExportFiles } from "./character-export.js";
 import { handoutFiles, handoutSummary } from "./handout.js";
@@ -349,7 +350,7 @@ async function executeCommand(interaction,{db,gm,voice=null}){
     sub=interaction.options.getSubcommand();
   }
   if((group!=="story"&&!(group==="admin"&&sub==="seed-drafts")&&!(group==="intel"&&["discover","continuity"].includes(sub))
-    &&!(group==="downtime"&&sub==="long-project-status"))||isMutatingCommand(group,sub)) await ensurePlayer(db,interaction);
+    &&!(group==="handout"&&sub==="evidence")&&!(group==="downtime"&&sub==="long-project-status"))||isMutatingCommand(group,sub)) await ensurePlayer(db,interaction);
   if(await replayReceiptIfPresent({db,interaction,group,sub})) return true;
   const restoreReceiptCapture=installReceiptCapture({db,interaction,group,sub});
   try{
@@ -1193,6 +1194,12 @@ GM notes: ${a.draft.gm_notes}`:""}`.slice(0,1950):"No aftermath draft exists for
 
     if(group==="handout"){
       const gmUser=isGM(db,interaction);
+      if(sub==="custody"||sub==="evidence"){
+        const result=sub==="custody"?manageEvidence(db,interaction.guildId,JSON.parse(interaction.options.getString("json",true)),interaction.user.id,{gm:gmUser})
+          :evidenceView(db,interaction.guildId,interaction.options.getString("id",true),interaction.user.id,{gm:gmUser});
+        await interaction.reply({ephemeral:true,content:"Scoped evidence continuity; custody and interpretations do not establish guilt or canon.",
+          files:[new AttachmentBuilder(Buffer.from(JSON.stringify(result,null,2)),{name:"evidence-continuity.json"})]});return true;
+      }
       if(sub==="list"){
         const c=activeCharacterForUser(db,interaction.guildId,interaction.user.id);
         const rows=db.listHandoutsFor(interaction.guildId,interaction.user.id,{characterId:c?.id||null,includeGM:gmUser,limit:40});

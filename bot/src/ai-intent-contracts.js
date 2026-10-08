@@ -12,6 +12,7 @@ const action={anyOf:[object({type:text(),target_type:choice("npc","faction","loc
     "negotiate_request","publish_finding","relocate_staff","seek_warrant"),target_type:choice("npc","location","institution","district",""),
     target_key:text(),jurisdiction:text(),report_keys:list(text(),8),personnel_key:text(),reason:text(1000)})]};
 export const INTENT_PAYLOADS={
+  evidence:object({...source,op:choice("analyze"),handout_id:text(),interpretation:text(600)}),
   dialogue:object({...source,op:choice("interpret"),npc_key:text(),topic:choice("promise","offer","refusal","boundary","address","argument","joke","apology","disagreement"),interpretation:text(600),confidence:integer(0,70)}),
   encounter:object({...source,op:choice("propose"),actors:list(text(),12),location_key:text(),
     objective:choice("escape","protect_evidence","containment","negotiation"),environment:text()}),

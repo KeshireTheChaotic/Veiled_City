@@ -1900,6 +1900,11 @@ export class VeiledDB {
     return rows.filter(r=>includeGM||["public","party"].includes(r.visibility)||(r.visibility==="player"&&r.subject_user_id===userId)||(r.visibility==="character"&&r.subject_character_id===characterId)).map(r=>this.getHandout(r.id));
   }
   archiveHandout(id){ this.db.prepare("UPDATE handouts SET status='archived',updated_at=CURRENT_TIMESTAMP WHERE id=?").run(id); return this.getHandout(id); }
+  setHandoutEvidence(guildId,id,evidence){
+    const row=this.getHandout(id);if(row?.guild_id!==guildId) throw new Error("Evidence not available.");
+    this.db.prepare("UPDATE handouts SET metadata_json=?,updated_at=CURRENT_TIMESTAMP WHERE guild_id=? AND id=?")
+      .run(JSON.stringify({...row.metadata,evidence}),guildId,id);return this.getHandout(id);
+  }
 
   // Encounter-aftermath draft persistence.
   createEncounterAftermath(encounterId,guildId,sessionId,draft,status="pending"){

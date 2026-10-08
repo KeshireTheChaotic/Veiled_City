@@ -2,6 +2,7 @@ import "dotenv/config";
 import fs from "node:fs";
 import path from "node:path";
 import { DatabaseSync } from "node:sqlite";
+import { handoutPlayerView } from "../src/handout.js";
 
 const guildId=process.argv[2];
 const mode=(process.argv[3]||"full").toLowerCase(); // full | player
@@ -73,6 +74,7 @@ if(mode!=="player") {
   exportObj.levelup_drafts=all("SELECT * FROM levelup_drafts WHERE guild_id=?",guildId);
   exportObj.snapshots=all("SELECT id,guild_id,label,reason,created_by,created_at FROM campaign_snapshots WHERE guild_id=? ORDER BY created_at",guildId);
 }
+if(mode==="player") exportObj.handouts=exportObj.handouts.map(handoutPlayerView);
 
 const out=path.resolve(process.cwd(),`./data/veiled-city-${guildId}-${mode}-${Date.now()}.json`);
 fs.writeFileSync(out,JSON.stringify(exportObj,null,2));
