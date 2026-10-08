@@ -4,6 +4,7 @@ import { normalizeNpcKey, retrieveNpcCognition } from "./npc-cognition.js";
 import { submitInstitutionAction, runInstitutionDirector, proposeCityOpportunity } from "./city-core.js";
 import { assertNpcAvailability, npcAvailability, activeCityProxy, assertQueuedCompatibility } from "./city-constraints.js";
 import { applyNpcServiceOutcome } from "./city-civic.js";
+import { assertServiceAccess } from "./supply-dependencies.js";
 import { runMotivationCycle } from "./simulation-motivation.js";
 import { coordinateConsequences } from "./city-consequences.js";
 import { runStrategyOpportunity } from "./simulation-strategy.js";
@@ -329,6 +330,7 @@ function validateAction(db,guildId,action){
   const location=db.getSimulationEntity(guildId,"location",action.location_key||state.location_key)?.state||{};
   if(action.type==="attack"&&Number(personality.collateral_aversion??50)>=80&&(location.witnesses||[]).length)
     throw new Error("Action conflicts with the NPC's collateral-damage boundary in an occupied location.");
+  assertServiceAccess(db,guildId,{...action,actor_key:key,location_key:action.location_key||state.location_key});
   return {key,state,goal,personality};
 }
 

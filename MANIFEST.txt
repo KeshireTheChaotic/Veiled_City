@@ -61,6 +61,7 @@ bot/scripts/systems-to-players-3-test.mjs
 bot/scripts/systems-to-players-4-test.mjs
 bot/scripts/systems-to-players-5-test.mjs
 bot/scripts/systems-to-players-6-test.mjs
+bot/scripts/systems-to-players-7-test.mjs
 bot/scripts/validate-command-schema.mjs
 bot/scripts/validate-offline.mjs
 bot/sql/schema.sql
@@ -135,6 +136,7 @@ bot/src/simulation.js
 bot/src/state.js
 bot/src/story-commands.js
 bot/src/story-continuity.js
+bot/src/supply-dependencies.js
 bot/src/turn-orchestration.js
 bot/src/voice.js
 bot/src/world-authoring.js

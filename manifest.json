@@ -1,6 +1,6 @@
 {
   "package": "Veiled_City_Multiplayer_Discord",
-  "version": "7.6.0",
+  "version": "7.7.0",
   "generated": "2026-10-08",
   "content_normalization": "utf8-lf",
   "files": [
@@ -27,7 +27,7 @@
     {
       "path": "README.md",
       "size_bytes": 15228,
-      "sha256": "c6a18dc2656cc368f71547a5720b49244e7717a47146f84bb2b32d84e5159c47"
+      "sha256": "4399371e64639f0e17a7d45f13758124f7536329e4d66f380d8fe0b5dbf1358d"
     },
     {
       "path": "SUGGESTIONS-End-To-End.md",
@@ -52,7 +52,7 @@
     {
       "path": "bot/package.json",
       "size_bytes": 2601,
-      "sha256": "ce2ccc0bed77491c12caefb57b68cbb1a84c06c9b011808c616f7b3c6abf8c4d"
+      "sha256": "f06113a4a8a0796f5cbeeb1dd61b1e7b29f32591d575fffe20e6d915877a472e"
     },
     {
       "path": "bot/scripts/audit-regression-test.mjs",
@@ -320,14 +320,19 @@
       "sha256": "ef61bc276640e3aa072c65d56cfab2f0cbfc6145638235a195e529a80def0f5a"
     },
     {
+      "path": "bot/scripts/systems-to-players-7-test.mjs",
+      "size_bytes": 5791,
+      "sha256": "734d49d5b874cae745c76a806d6ecbafcf6410b25f9895940eed4fde56cbe669"
+    },
+    {
       "path": "bot/scripts/validate-command-schema.mjs",
       "size_bytes": 582,
       "sha256": "995a255982387edff58e5f14c8bb07b5508c3b28a19952882aa5716c28aafbe8"
     },
     {
       "path": "bot/scripts/validate-offline.mjs",
-      "size_bytes": 1769,
-      "sha256": "901b90d9e0191ce5ac655d7e9647795048977360b99cc214beeb95fd3c3d7288"
+      "size_bytes": 1797,
+      "sha256": "a37303ef1263161d459e7e692350175c95ff946eb560c0402cdd80a3aac5f72d"
     },
     {
       "path": "bot/sql/schema.sql",
@@ -376,8 +381,8 @@
     },
     {
       "path": "bot/src/city-civic.js",
-      "size_bytes": 26595,
-      "sha256": "960010583dbf7d00dc4b8d87e9b8f1da4b7b7eab96a11e21e5ddb4aa0dd75ab0"
+      "size_bytes": 26926,
+      "sha256": "acbf8743c4609de9272bcd8495cfa3b535314d11ca33ff3af03b1d56ce7df469"
     },
     {
       "path": "bot/src/city-commands.js",
@@ -396,8 +401,8 @@
     },
     {
       "path": "bot/src/city-core.js",
-      "size_bytes": 21544,
-      "sha256": "9548851d13ebd32c4b81d7fe826c2eb047b545c7d33a3fc47f343a0543cc09fc"
+      "size_bytes": 21778,
+      "sha256": "b69b5618127863384b11b1bef9a9b6b139528aeaf2dba4ccba86b40e0eade419"
     },
     {
       "path": "bot/src/city-depth.js",
@@ -506,8 +511,8 @@
     },
     {
       "path": "bot/src/expansion-contracts.js",
-      "size_bytes": 4481,
-      "sha256": "1e9dda948bcc6f744657c616ec875f73a0bd88f64c15f983ad282c81d5b89d04"
+      "size_bytes": 4706,
+      "sha256": "370394e61f0f74c563e752aa0bb09bfc24864d652a3e8732ab59b7c94956d893"
     },
     {
       "path": "bot/src/gm.js",
@@ -651,8 +656,8 @@
     },
     {
       "path": "bot/src/simulation-commands.js",
-      "size_bytes": 5045,
-      "sha256": "6ec5a20cc4ec98a2ed72a8c93f74fb3aa8083b86af199001c6bf8f0aa7a0ea42"
+      "size_bytes": 5283,
+      "sha256": "f9bd110be3714fe4a12b73f6b45344d8e42901bc283ad8e80a0094128afb14a9"
     },
     {
       "path": "bot/src/simulation-motivation.js",
@@ -671,8 +676,8 @@
     },
     {
       "path": "bot/src/simulation.js",
-      "size_bytes": 52162,
-      "sha256": "58981d2bb7b16460fbb074e83f9a5bd94750e7db1a722e02427bcf161c7adee3"
+      "size_bytes": 52340,
+      "sha256": "08412091b5db4dd8a1731e9b573668e8a7a5c6a252667cfd5a43dd4390c43be4"
     },
     {
       "path": "bot/src/state.js",
@@ -688,6 +693,11 @@
       "path": "bot/src/story-continuity.js",
       "size_bytes": 13451,
       "sha256": "d50e0c4723abb402039bbadd9890bef5ee06a3038da4a4d5352e9482c9858d97"
+    },
+    {
+      "path": "bot/src/supply-dependencies.js",
+      "size_bytes": 5266,
+      "sha256": "6938a9de0781953019098718efda76645373baad2da2d7d9a080f41687c3df9a"
     },
     {
       "path": "bot/src/turn-orchestration.js",
@@ -1331,13 +1341,13 @@
     },
     {
       "path": "docs/SYSTEMS_TO_PLAYERS_GAP_ANALYSIS.md",
-      "size_bytes": 12765,
-      "sha256": "d2604e4af126c5b4891760ad56c631ce9a49d841123a3436df297c463c9731c1"
+      "size_bytes": 13728,
+      "sha256": "25409758a8813235c09218138e22831d9ab4a21a1438bad795fc66511c17fb75"
     },
     {
       "path": "docs/SYSTEMS_TO_PLAYERS_IMPLEMENTATION.md",
-      "size_bytes": 22163,
-      "sha256": "daac17403822b3ed3dbf9e6ca4eba613c06be6b38a19cf0b8b84f49427321478"
+      "size_bytes": 24797,
+      "sha256": "2d3c8ab51fb2a81df2523345fb5c1456b14f8fa0dce3c23d84dfa80cc4ac4c31"
     },
     {
       "path": "docs/UPGRADE_3.0_TO_3.1.md",

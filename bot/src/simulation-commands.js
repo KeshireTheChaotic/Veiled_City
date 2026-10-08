@@ -7,6 +7,7 @@ import { publishSimulationHooks } from "./publishing.js";
 import { normalizeNpcKey } from "./npc-cognition.js";
 import { proposeGoalTransition, reviewGoalTransition, runMotivationCycle } from "./simulation-motivation.js";
 import { subscribeConsequence, coordinateConsequences, reviewConsequence } from "./city-consequences.js";
+import { transferSupply } from "./supply-dependencies.js";
 
 function objectInput(interaction,name="json"){
   const value=JSON.parse(interaction.options.getString(name,true));
@@ -44,9 +45,10 @@ export async function handleSimulationCommand(interaction,{db,isGm,sub}){
       {provenance:{actorType:"human_gm",actorId:interaction.user.id,interactionId:interaction.id}}));
     summary="Simulation update recorded";
   }else if(sub==="action"){
-    result=db.transaction(()=>submitNpcAction(db,guildId,objectInput(interaction),{cycleKey:`gm:${interaction.id}`}));
-    summary=`NPC action ${result.status}`;
-    publish=true;
+    const input=objectInput(interaction);
+    result=db.transaction(()=>input.op==="transfer"?transferSupply(db,guildId,input,interaction.user.id):submitNpcAction(db,guildId,input,{cycleKey:`gm:${interaction.id}`}));
+    summary=input.op==="transfer"?"Reviewed NPC material delivery recorded":`NPC action ${result.status}`;
+    publish=input.op!=="transfer";
   }else if(sub==="review"){
     const query=interaction.options.getString("action_id",true);
     const rows=db.listSimulationRecords(guildId,{kind:"action",limit:1000});

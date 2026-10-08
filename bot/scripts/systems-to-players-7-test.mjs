@@ -1,0 +1,60 @@
+/** SP7 native service gating and explicitly reviewed conserved finite materials. */
+import assert from "node:assert/strict";
+import fs from "node:fs";
+import os from "node:os";
+import path from "node:path";
+import { VeiledDB } from "../src/db.js";
+import { configureCityFlags, updateCityCore } from "../src/city-core.js";
+import { indexWorldEvent } from "../src/city-calendar.js";
+import { updateCityCivic, changeCityService, connectCity } from "../src/city-civic.js";
+import { configureSimulationEntity, submitNpcAction, actorState, executeNpcAction } from "../src/simulation.js";
+import { transferSupply, supplyRevision, assertServiceAccess } from "../src/supply-dependencies.js";
+import { handleSimulationCommand } from "../src/simulation-commands.js";
+import { fakeInteraction } from "./contract-fixtures.mjs";
+const root=fs.mkdtempSync(path.join(os.tmpdir(),"vc-sp7-")),file=path.join(root,"fixture.sqlite"),schema=path.resolve("sql/schema.sql");
+let db=new VeiledDB(file,schema);
+try{
+  const guild="contract";db.ensureCampaign(guild);db.ensureCampaign("other");
+  indexWorldEvent(db,guild,{key:"source",title:"Established utility and delivery",source_id:"gm",details:{resource_transfer:{from:"giver",to:"receiver",amount:2,resource:"materials",human_reviewed:true}}});
+  configureSimulationEntity(db,guild,"location","station",{});
+  for(const npc of ["giver","receiver"]){
+    db.upsertNpcProfile(guild,{npcKey:npc,displayName:npc});configureSimulationEntity(db,guild,"npc",npc,{location_key:"station"});
+  }
+  db.upsertNpcKnowledge(guild,{npcKey:"giver",knowledgeKey:"delivery",content:"Reviewed delivery agreement",sourceRef:"source",beliefState:"known",confidence:100});
+  db.upsertNpcGoal(guild,{npcKey:"giver",goalKey:"prepare",objective:"Prepare",acceptableMethods:["prepare"]});
+  updateCityCore(db,guild,{kind:"institution",key:"works",source_event:"source",data:{name:"Works",mandate:"Maintain power",capacity:5,jurisdictions:["station"],procedures:[]}},"gm");
+  for(const key of ["power","lab","unrelated"]) updateCityCivic(db,guild,{kind:"infrastructure",key,source_event:"source",data:{name:key,service:key,native_condition:80,operator:"works",locations:["station"]}},"gm");
+  connectCity(db,guild,{kind:"infrastructure",from:"power",to:"lab",source_event:"source"},"gm");
+  const access={kind:"service_access",key:"lab-access",source_event:"source",data:{consumer_type:"npc",consumer_key:"giver",service_key:"lab",actions:["prepare"],threshold:50,access:true}};
+  updateCityCivic(db,guild,access,"gm");
+  assert.throws(()=>updateCityCivic(db,guild,{...access,key:"bad",data:{...access.data,consumer_type:"character"}},"gm"),/PCs/);
+  configureCityFlags(db,guild,{supply_dependencies:true});
+  changeCityService(db,guild,{key:"power",source_event:"source",condition:40},"gm");
+  assert.equal(db.getCityRecord(guild,"infrastructure","lab").data.effective_condition,40);
+  assert.equal(db.getCityRecord(guild,"infrastructure","unrelated").data.effective_condition,80);
+  const action={actor_type:"npc",actor_key:"giver",goal_key:"prepare",type:"prepare"};
+  const before=actorState(db,guild,"npc","giver").resources.materials;
+  assert.throws(()=>submitNpcAction(db,guild,action,{roll:()=>20}),/before costs/);
+  assert.equal(actorState(db,guild,"npc","giver").resources.materials,before);
+  assertServiceAccess(db,"other",{actor_type:"npc",actor_key:"giver",type:"prepare"});
+  changeCityService(db,guild,{key:"power",source_event:"source",condition:80},"gm");
+  const resolved=submitNpcAction(db,guild,action,{roll:()=>20});executeNpcAction(db,guild,resolved,{roll:()=>20});
+  assert.equal(actorState(db,guild,"npc","giver").resources.materials,before-1);
+  const input={op:"transfer",source_event:"source",from:"giver",to:"receiver",amount:2,information_key:"delivery",from_revision:supplyRevision(db.getSimulationEntity(guild,"npc","giver")),to_revision:supplyRevision(db.getSimulationEntity(guild,"npc","receiver"))};
+  await assert.rejects(()=>handleSimulationCommand(fakeInteraction({json:input}),{db,isGm:false,sub:"action"}),/GM\/admin/);
+  assert.throws(()=>transferSupply(db,guild,{...input,to_revision:"stale"},"gm"),/changed/);
+  const sum=actorState(db,guild,"npc","giver").resources.materials+actorState(db,guild,"npc","receiver").resources.materials;
+  const interaction=fakeInteraction({json:input});await handleSimulationCommand(interaction,{db,isGm:true,sub:"action"});
+  const receipt=transferSupply(db,guild,input,"gm");assert.equal(receipt.data.amount,2);
+  assert.equal(actorState(db,guild,"npc","giver").resources.materials+actorState(db,guild,"npc","receiver").resources.materials,sum);
+  assert.equal(actorState(db,guild,"npc","giver").resources.materials,before-3);
+  assert.throws(()=>transferSupply(db,guild,{...input,accepted_by:"owner"},"gm"),/Unsupported/);
+  changeCityService(db,guild,{key:"power",source_event:"source",condition:40},"gm");
+  configureCityFlags(db,guild,{supply_dependencies:false});submitNpcAction(db,guild,action,{roll:()=>20});
+  assert.throws(()=>transferSupply(db,guild,input,"gm"),/opt-in/);
+  const snapshot=db.snapshotCampaign(guild,{label:"Supply",createdBy:"gm"});db.close();db=new VeiledDB(file,schema);db.restoreSnapshot(guild,snapshot.id,{actorId:"gm"});
+  assert.equal(db.getCityRecord(guild,"supply_transfer",receipt.record_key).data.amount,2);
+  configureCityFlags(db,guild,{supply_dependencies:true});transferSupply(db,guild,input,"gm");
+  assert.equal(db.getSimulationClock(guild).minute,0);
+  console.log("SP7 PASS: connected native outage/repair, local pre-cost gating, legacy opt-out, human command auth, exact delivery provenance, finite conservation, stale/replay/restore and no fictional/wall-time progression; zero paid calls.");
+}finally{db.close();fs.rmSync(root,{recursive:true,force:true});}

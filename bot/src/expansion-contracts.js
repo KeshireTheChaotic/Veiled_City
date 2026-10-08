@@ -1,5 +1,6 @@
 /** Shared release feature contract and read-only GM diagnostics; absent flags are disabled and records never imply PC authority. */
 export const EXPANSION_FEATURES=Object.freeze({
+  supply_dependencies:{phase:"SP7",records:["service_access","supply_transfer"],command:"/vc-city update; /vc-sim action",authority:"Sourced pre-cost world service constraints; human-reviewed conserved NPC deliveries only"},
   history_reconciliation:{phase:"SP6",records:[],command:"/vc-story why",authority:"Read-only current material contradictions; human repair proposals only"},
   narrative_setups:{phase:"SP6",records:["story_setup","setup_payoff"],command:"/vc-story pacing",authority:"Sourced optional setup lifecycle; no guaranteed payoff or culprit invention"},
   player_organizations:{phase:"SP5",records:["organization_request","community_membership"],command:"/vc-intel organization / organizations",authority:"Owner-confirmed human-reviewed native communities/property/projects; no inferred PC votes or funds"},

@@ -2,6 +2,7 @@
 import { cityObject, cityKey, cityInteger, cityAudit, indexWorldEvent, scheduleCityEvent } from "./city-calendar.js";
 import { assertInstitutionDelegation, activeCityProxy } from "./city-constraints.js";
 import { EXPANSION_FEATURES } from "./expansion-contracts.js";
+import { assertServiceAccess } from "./supply-dependencies.js";
 
 export const INSTITUTION_ACTIONS=["document_request","file_case","interview_request","inspect_request","issue_policy",
   "allocate_resources","negotiate_request","publish_finding","relocate_staff","seek_warrant"];
@@ -140,6 +141,7 @@ function validateInstitutionAction(db,guildId,input){
     }
   }
   if(input.policy!==undefined){if(input.type!=="issue_policy") throw new Error("Policy change requires a policy action.");cityKey(input.policy);}
+  assertServiceAccess(db,guildId,{actor_type:"institution",actor_key:input.institution,type:input.type,location_key:input.target_type==="location"?input.target_key:""});
   return institution;
 }
 export function inspectInstitutionAction(db,guildId,key){

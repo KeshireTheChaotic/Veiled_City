@@ -4,8 +4,9 @@ import { cityObject, cityKey, cityInteger, cityAudit, indexWorldEvent } from "./
 import { requireCitySource, requireCityRecord, cityStrings, INSTITUTION_ACTIONS } from "./city-core.js";
 import { activeCityProxy } from "./city-constraints.js";
 import { actorSource } from "./simulation-motivation.js";
+import { validateServiceAccess } from "./supply-dependencies.js";
 
-export const CIVIC_KINDS=["property","infrastructure","routine","community","identity","reputation","weather","personnel","history"];
+export const CIVIC_KINDS=["property","infrastructure","service_access","routine","community","identity","reputation","weather","personnel","history"];
 const location=(db,guildId,key)=>{
   if(!db.getSimulationEntity(guildId,"location",key)) throw new Error("Location is not established in this campaign.");
 };
@@ -32,6 +33,7 @@ function validateCivic(db,guildId,kind,data,key){
   const allowed={
     property:["location","claim_type","claimant","terms","validity","domain","established_terms"],
     infrastructure:["name","service","native_condition","effective_condition","operator","locations","repair_requirements","redundancy"],
+    service_access:["consumer_type","consumer_key","service_key","actions","threshold","access"],
     routine:["npc","residence","occupation","intervals","projects"],
     community:["name","capacity","members","priorities","shared_history","district"],
     identity:["alias","subject_key","subject_type","observer_type","observer","information_key"],
@@ -41,7 +43,9 @@ function validateCivic(db,guildId,kind,data,key){
     history:["title","summary","preserves_contradictions","source_events","authority"]
   };
   if(Object.keys(data).some(field=>field!=="major"&&!allowed[kind]?.includes(field))) throw new Error("Unsupported typed civic field; no player mechanics are accepted.");
-  if(kind==="property"){
+  if(kind==="service_access"){
+    validateServiceAccess(db,guildId,data);
+  }else if(kind==="property"){
     location(db,guildId,data.location);
     if(!["deed","lease","lien","possession","access","threshold","territorial"].includes(data.claim_type)) throw new Error("Invalid property claim type.");
     cityKey(data.claimant);cityKey(data.terms);
@@ -109,7 +113,7 @@ function writeCivic(db,guildId,input,actorId,reviewed=false){
     throw new Error("Use the service consequence operation for established infrastructure changes.");
   if(needsReview(kind,data,before)&&!reviewed) return queueCivicChange(db,guildId,{...input,data},actorId);
   const after=db.saveCityRecord(guildId,{kind,key,source_event:input.source_event,location_key:data.location||"",district_key:data.district||"",
-    actor_key:data.npc||data.observer||data.operator||key,status:data.status==="removed"?"removed":"active",
+    actor_key:kind==="service_access"?`${data.consumer_type}:${data.consumer_key}`:data.npc||data.observer||data.operator||key,status:data.status==="removed"?"removed":"active",
     data:{...data,...(kind==="infrastructure"?{effective_condition:before?.data.effective_condition??data.native_condition}:{}),...(kind==="history"?{authority:"summary_only"}:{})}});
   if(kind==="reputation") for(const [dimension,score] of Object.entries(data.dimensions)){
     db.upsertRelationship(guildId,{fromType:"entity",fromKey:`${data.observer_type}:${data.observer}`,fromLabel:data.observer,
