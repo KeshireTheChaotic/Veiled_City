@@ -65,7 +65,7 @@ const exportObj={
   simulation_clock:mode!=="player" ? all("SELECT * FROM simulation_clock WHERE guild_id=?",guildId) : []
 };
 if(mode!=="player") {
-  for(const table of ["city_calendar","world_events","city_schedule","city_records","world_event_links","district_locations"])
+  for(const table of ["city_calendar","world_events","city_schedule","city_records","world_event_links","district_locations","city_edges"])
     exportObj[table]=all(`SELECT * FROM ${table} WHERE guild_id=?`,guildId);
   exportObj.audit_log=all("SELECT * FROM audit_log WHERE guild_id=?",guildId);
   exportObj.canon_conflicts=all("SELECT * FROM canon_conflicts WHERE guild_id=?",guildId);

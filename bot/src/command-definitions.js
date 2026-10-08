@@ -444,6 +444,14 @@ export function buildCommands(){
       .addStringOption(o=>o.setName("json").setDescription("Commitment terms/participants/interval JSON").setRequired(true)))
     .addSubcommand(s=>s.setName("flags").setDescription("Configure opt-in civic directors and opportunities")
       .addStringOption(o=>o.setName("json").setDescription("Boolean institutions/opportunities flags").setRequired(true)))
+    .addSubcommand(s=>s.setName("connect").setDescription("Establish verified service, travel, or communication edges")
+      .addStringOption(o=>o.setName("json").setDescription("kind, from, to, source_event, optional duration JSON").setRequired(true)))
+    .addSubcommand(s=>s.setName("service").setDescription("Propose a sourced infrastructure condition change")
+      .addStringOption(o=>o.setName("json").setDescription("key, condition, source_event, optional major JSON").setRequired(true)))
+    .addSubcommand(s=>s.setName("transmit").setDescription("Transmit already-known belief through an established channel")
+      .addStringOption(o=>o.setName("json").setDescription("Source/recipient/mechanism/authorization JSON").setRequired(true)))
+    .addSubcommand(s=>s.setName("history").setDescription("Find bounded summaries with original source events")
+      .addStringOption(o=>o.setName("query").setDescription("Relevant historical incident/entity").setRequired(true)))
     .toJSON());
   const splitMap={
     character:{

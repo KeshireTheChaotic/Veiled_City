@@ -2,6 +2,8 @@
 import { randomInt, randomUUID } from "node:crypto";
 import { normalizeNpcKey, retrieveNpcCognition } from "./npc-cognition.js";
 import { submitInstitutionAction, runInstitutionDirector, proposeCityOpportunity } from "./city-core.js";
+import { assertNpcAvailability, npcAvailability, activeCityProxy } from "./city-constraints.js";
+import { applyNpcServiceOutcome } from "./city-civic.js";
 export { updateRelationshipDimensions } from "./relationship-state.js";
 
 export const ACTION_TYPES=["investigate","travel","contact","recruit","observe","prepare","hide","acquire","spend_resource",
@@ -88,7 +90,7 @@ export function simulationCandidates(db,guildId,{layer,query=""}={}){
         :db.getSimulationRecord(guildId,dependency)?.status==="completed");
     });
     const relevant=intersects(query,JSON.stringify([actor.key,goals,state.location_key]));
-    const eligible=!state.removed&&state.activity_tier!=="dormant"&&goals.length&&
+    const eligible=!(actor.type==="npc"&&activeCityProxy(db,guildId,actor.key))&&!state.removed&&state.activity_tier!=="dormant"&&goals.length&&
       (state.activity_tier==="active"||(state.activity_tier==="supporting"&&relevant)||layer==="downtime");
     return {...actor,state,goals,eligible};
   }).filter(actor=>actor.eligible).sort((a,b)=>Number(b.goals[0]?.priority||0)-Number(a.goals[0]?.priority||0)).slice(0,8).map(actor=>{
@@ -98,6 +100,7 @@ export function simulationCandidates(db,guildId,{layer,query=""}={}){
     const obligations=db.listSimulationRecords(guildId,{kind:"obligation",status:"active",limit:100})
       .filter(row=>[row.data.debtor,row.data.creditor].includes(keyOf(actor.type,actor.key)));
     return {...actor,state,goals,knowledge,awareness,obligations,memories:actorMemories(db,guildId,actor,query),
+      availability:actor.type==="npc"?npcAvailability(db,guildId,actor.key):null,
       location:db.getSimulationEntity(guildId,"location",state.location_key)?.state||{},
       relationships:db.listSimulationEntities(guildId,"relationship").filter(row=>
         [row.state.from,row.state.to].includes(keyOf(actor.type,actor.key))).map(row=>row.state)};
@@ -249,6 +252,7 @@ function validateAction(db,guildId,action){
   if(!ACTION_TYPES.includes(action.type)||!["npc","faction"].includes(action.actor_type)) throw new Error("Unknown autonomous action/actor type.");
   const key=normalizeNpcKey(action.actor_key);
   if(action.actor_type==="npc"&&!db.getNpcProfile(guildId,key)) throw new Error("Autonomous NPC profile is missing.");
+  if(action.actor_type==="npc") assertNpcAvailability(db,guildId,key,action);
   if(action.actor_type==="faction"&&!db.getSimulationEntity(guildId,"faction",key)) throw new Error("Autonomous faction is missing.");
   if(!["routine",...MAJOR_IMPACTS].includes(action.significance||"routine")) throw new Error("Invalid action significance.");
   for(const field of ["delay_ticks","delay_minutes"]){
@@ -350,8 +354,9 @@ export function executeNpcAction(db,guildId,record,{approved=false,roll=()=>rand
         data:{content:action.public_hook,target_user_id:action.private_user_id||"",visibility:action.private_user_id?"player":"party",action_id:current.id}});
     }
     const completed=saveRecord(db,guildId,current,{status:"completed",data:{...action,result}});
-    db.recordMutation(guildId,{actorType:"ai",actorId:key,sourceLayer:"npc_director",mutationType:`npc_action:${action.type}`,
+    const mutation=db.recordMutation(guildId,{actorType:"ai",actorId:key,sourceLayer:"npc_director",mutationType:`npc_action:${action.type}`,
       entityKey:current.id,visibility:"gm",before:current,after:completed,rationale:content,payload:result});
+    if(success) applyNpcServiceOutcome(db,guildId,action,mutation);
     return completed;
   });
 }

@@ -93,7 +93,7 @@ export class VeiledDB {
         if(!knownPairs.has(`${relation.guild_id}:${pair}`)) updateRelationshipDimensions(this,relation.guild_id,relation);
       }
     });
-    this.db.exec("PRAGMA user_version=420;");
+    this.db.exec("PRAGMA user_version=430;");
   }
 
   close() { this.db.close(); }
@@ -184,6 +184,22 @@ export class VeiledDB {
   }
   districtLocations(guildId,district){
     return this.db.prepare("SELECT * FROM district_locations WHERE guild_id=? AND district_key=? ORDER BY location_key").all(guildId,district);
+  }
+  cityEdges(guildId,kind){
+    return this.db.prepare("SELECT * FROM city_edges WHERE guild_id=? AND kind=? ORDER BY from_key,to_key LIMIT 1000").all(guildId,kind)
+      .map(row=>({...row,data:JSON.parse(row.data_json)}));
+  }
+  saveCityEdge(guildId,{kind,from,to,duration=0,source_event,data={}}){
+    this.db.prepare(`INSERT INTO city_edges(guild_id,kind,from_key,to_key,duration_minutes,source_event,data_json) VALUES(?,?,?,?,?,?,?)
+      ON CONFLICT(guild_id,kind,from_key,to_key) DO UPDATE SET duration_minutes=excluded.duration_minutes,source_event=excluded.source_event,data_json=excluded.data_json`)
+      .run(guildId,kind,from,to,duration,source_event,JSON.stringify(data));
+    return {kind,from,to,duration,source_event,data};
+  }
+  overlappingCommitment(guildId,actor,start,end){
+    const row=this.db.prepare(`SELECT * FROM city_records WHERE guild_id=? AND kind='commitment' AND status='active'
+      AND json_extract(data_json,'$.start')<? AND json_extract(data_json,'$.end')>?
+      AND EXISTS (SELECT 1 FROM json_each(city_records.data_json,'$.participants') WHERE value=?) LIMIT 1`).get(guildId,end,start,actor);
+    return row?{...row,data:JSON.parse(row.data_json)}:null;
   }
 
   getSeedDocument(guildId,sourcePath){
@@ -1788,7 +1804,7 @@ export class VeiledDB {
     const directTables=["players","characters","sessions","facts","clocks","threads","reference_entries","published_messages","npc_proxies","encounters","encounter_combatants","character_drafts","levelup_drafts","canon_events","canon_conflicts","downtime_cycles","downtime_projects","rules_rulings","relationships","relationship_hook_imports","character_gm_hooks","canon_proposals","handouts","encounter_aftermath","character_narratives","npc_profiles","npc_memories","npc_knowledge","npc_goals","seed_runs"];
     const state={campaign:this.getCampaign(guildId),tables:{}};
     directTables.push("simulation_entities","simulation_records","simulation_clock","seed_documents","seed_catalog",
-      "city_calendar","world_events","city_schedule","city_records","world_event_links","district_locations");
+      "city_calendar","world_events","city_schedule","city_records","world_event_links","district_locations","city_edges");
     for(const table of directTables){
       try{state.tables[table]=this.db.prepare(`SELECT * FROM ${table} WHERE guild_id=?`).all(guildId);}catch{state.tables[table]=[];}
     }
@@ -1815,10 +1831,10 @@ export class VeiledDB {
     const state=snap.state;
     const delOrder=["encounter_aftermath","encounter_combatants","npc_proxies","session_characters","session_presence","levelup_drafts","downtime_projects","canon_conflicts","canon_events","relationships","relationship_hook_imports","canon_proposals","character_gm_hooks","character_narratives","npc_memories","npc_knowledge","npc_goals","npc_profiles","seed_runs","handouts","encounters","sessions","character_drafts","characters","players","facts","clocks","threads","reference_entries","published_messages","downtime_cycles","rules_rulings"];
     const insertOrder=["players","characters","sessions","session_presence","session_characters","facts","clocks","threads","reference_entries","published_messages","npc_proxies","encounters","encounter_combatants","character_drafts","levelup_drafts","canon_events","canon_conflicts","downtime_cycles","downtime_projects","rules_rulings","relationships","relationship_hook_imports","character_gm_hooks","canon_proposals","handouts","encounter_aftermath","character_narratives","npc_profiles","npc_memories","npc_knowledge","npc_goals","seed_runs"];
-    delOrder.unshift("district_locations","world_event_links","city_records","city_schedule","world_events","city_calendar",
+    delOrder.unshift("city_edges","district_locations","world_event_links","city_records","city_schedule","world_events","city_calendar",
       "seed_catalog","seed_documents","simulation_records","simulation_entities","simulation_clock");
     insertOrder.push("simulation_entities","simulation_records","simulation_clock","seed_documents","seed_catalog","city_calendar",
-      "world_events","city_schedule","city_records","world_event_links","district_locations");
+      "world_events","city_schedule","city_records","world_event_links","district_locations","city_edges");
     this.db.exec("BEGIN IMMEDIATE");
     try{
       for(const t of delOrder){

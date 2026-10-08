@@ -12,6 +12,10 @@ Phase B also adds `records`, `update`, `membership`, `report`, `link`, `action`,
 `commitment`, `flags`, `run`, and `opportunity`. These are GM-only; institutional
 review uses `review` with `kind:action`. Institutions/opportunities default off.
 
+Phase C adds `connect`, `service`, `transmit`, and `history`; `update` accepts
+property, infrastructure, routine, community, identity, reputation, weather,
+personnel and history. Consequential changes use `review` with `kind:change`.
+
 ## Campaign
 - `/vc-campaign setup` — configure play channel, GM role, response mode.
 - `/vc-campaign channels` — configure support/reference/log channels.

@@ -194,3 +194,108 @@ backup/restore fixtures. `npm run validate` retains every existing regression.
 Restart and re-register commands. In a disposable live campaign, verify a nurse
 report, reviewed administrative request, private response and backup restore.
 Live model narration and Discord permissions/delivery remain untested here.
+
+## Phase C: civic interdependencies (4.3.0, schema 430)
+
+Gap analysis: locations, repair/sabotage, relationships, proxy assignments,
+rumors and clocks already exist. This phase adds verified civic edges, distinct
+claims and observers, explicit routes/routines, personnel and source-linked
+history; it does not create a new PC economy, legal code or mechanical modifier.
+The additive city_edges table joins existing city_records. All rows are GM-only
+and included in logical backups/restore and GM-full exports, never player dumps.
+
+### Typed updates
+
+Use `/vc-city update` with kind/key/source_event/data:
+
+- `property`: location, claim_type (deed/lease/lien/possession/access/threshold/
+  territorial), claimant, terms, validity (claimed/valid/disputed/expired),
+  domain (mundane/metaphysical). Metaphysical claims require established_terms:true.
+  Different keys preserve competing claims; none automatically settles title,
+  creates an oath, reveals an anchor or controls a PC.
+- `infrastructure`: name, service, native_condition (0..100), operator institution,
+  locations, repair_requirements, redundancy (all/any). Effective condition is
+  derived from verified dependencies. Updating established native condition
+  requires the separate sourced `service` operation.
+- `routine`: npc, residence, occupation, intervals [{start,end,location}], projects.
+  These are preferences, never proof that an NPC has moved. Own-routine and
+  current-commitment context is added to bounded actor packets. Actual position,
+  explicit travel delay and human proxy control remain authoritative.
+- `community`: name, capacity (0..100), established NPC members, priorities,
+  shared_history, optional district. Members do not automatically share secrets.
+  Outbound community reports spend finite capacity, without timer regeneration.
+- `identity`: alias, subject_type (npc/character), subject_key, observer_type,
+  observer, information_key. The observer must legitimately hold the cited
+  information. A mapping is observer-specific, not a global identity revelation.
+- `reputation`: observer_type, observer, identity, dimensions (trust/fear/respect/
+  suspicion, -5..5). These write the existing directed relationship dimensions,
+  not a second generic affinity score. They summarize external beliefs, never
+  a PC's voluntary feelings or choices.
+- `weather`: district, start, end, description, optional environment_key and
+  supernatural_disaster. Forecast/active/past status derives only from fictional
+  minutes. It is descriptive context for established environment adjudication,
+  not automatic PC damage, a DC modifier or a Veil Exposure change.
+- `personnel`: institution, npc, role, capacity, actions, dissent_actions and
+  optional status. Delegation cannot exceed institutional procedures. Role
+  changes, removal and high-authority assignments require review. Personal
+  dissent can block a delegated action without changing official policy.
+- `history`: title, summary (max 5000 chars), source_events,
+  preserves_contradictions:true. Summaries retain original event references and
+  are labelled summary_only. Retraction/supersession never deletes the source.
+
+### Dependencies, travel and consequences
+
+`/vc-city connect` takes kind/from/to/source_event. Infrastructure edges point
+from service provider to dependent. Cycles are rejected. Route edges connect
+existing locations and require duration in fictional minutes (1..10080); add
+each direction explicitly. NPC travel along an established route requires at
+least that delay. No host uptime or routine automatically changes position.
+
+`/vc-city service json:{"key":"pump","condition":30,"source_event":"damage-event"}`
+changes established service condition. The resolver derives downstream condition
+through explicit edges only. `all` uses the weakest dependency; `any` allows
+redundancy. Unrelated districts/locations are untouched. A decrease over 40
+points, footprint over ten nodes, or major:true queues a no-cost pending change.
+Use `/vc-city review` with kind:change and its returned key; approve/modify/defer/
+reject retain history. Dangerous new dependency links are reviewed too.
+Connected propagation is capped at twenty nodes; the bounded index supports
+fewer than 100 infrastructure nodes. Oversize/cyclic graphs fail atomically,
+rather than silently dropping effects. Repairs recompute and reverse supported
+downstream changes. Existing successful NPC repair/sabotage can change explicitly
+linked small networks by ten points, using the existing action cost/result and
+source ledger; large footprints are not silently propagated by routine actions.
+Location service descriptors do not erase existing wards, evidence or damage.
+
+### Information paths and histories
+
+Channel edges use endpoints npc:key, institution:key, community:key or audience:key.
+An edge grants no knowledge. `/vc-city transmit` requires key, source_event,
+from_type/from_key, to_type/to_key, information_key, mechanism, authorized:true
+and optional distortion (0..20). Every hop records origin, holder, mechanism,
+distortion, confidence, source record and fictional tick/minute. Known information
+is read from the sender's actual knowledge/report/message; repeated publication
+cannot verify it or increase confidence. Institutions receive separate reports;
+communities/audiences receive scoped messages; NPC recipients receive subjective
+knowledge. There is no generic PC-private-fact bridge. Human proxy senders require
+explicit proxy_consent_by; proxy NPCs are excluded from autonomous voluntary acts.
+
+Institutions with configured personnel require an authorized personnel_key on
+intents. Delegation capacity is spent atomically with organizational capacity.
+Active human proxies and established staff dissent block automatic actions.
+Manual claims of authority never automatically grant a warrant or control a PC.
+
+`/vc-city history query:<incident>` and normal GM context retrieve relevant source-
+linked summaries before applying limits. Original event identity, truth/status and
+source pointers accompany the summary. History context is capped at 10000 chars;
+it never replaces original records or silently merges disputed interpretations.
+
+### Release gates
+
+Re-register commands after restarting on schema 430. Offline fixtures cover
+bounded outage/repair and unrelated sites; contested property/threshold records;
+travel/routines/proxy protection; multi-layer transmission and duplicate retries;
+observer-specific reputation; no PC weather mechanics; disaster review; personnel
+dissent/capacity; retrieval past 100 unrelated historical summaries; cross-guild
+isolation and backup/restore. Full validation remains mandatory. Live deployment
+smoke tests should exercise private reports and a reviewed service repair in a
+disposable campaign. Live model/Discord coverage is not claimed.

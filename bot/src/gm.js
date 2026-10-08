@@ -7,6 +7,7 @@ import { retrieveNpcCognition } from "./npc-cognition.js";
 import { npcDirectorSchema, simulationUpdateSchema, SIMULATION_PROMPT } from "./simulation-schema.js";
 import { simulationContext } from "./simulation.js";
 import { cityContext } from "./city-core.js";
+import { historyContext } from "./city-civic.js";
 
 const routerSchema={
   type:"object",
@@ -462,6 +463,7 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
       SIMULATION_PROMPT,
       `SIMULATION (GM-private; never copy wholesale to player narration): ${JSON.stringify(simulationContext(this.db,guildId,messageText))}`,
       `CIVIC CONTEXT (GM-only reference, not actor knowledge or canon): ${JSON.stringify(cityContext(this.db,guildId,messageText))}`,
+      `HISTORY (summaries are non-authoritative; use original source/status): ${JSON.stringify(historyContext(this.db,guildId,messageText))}`,
       `CLOCKS (MAY BE SECRET):\n${JSON.stringify(ctx.clocks)}`,
       `RELATIONSHIP GRAPH VISIBLE TO ACTOR:\n${JSON.stringify(ctx.actor_relationships)}`,
       `GM RELATIONSHIP GRAPH (MAY BE SECRET):\n${JSON.stringify(ctx.gm_relationships)}`,

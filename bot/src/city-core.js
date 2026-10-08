@@ -1,5 +1,6 @@
 /** Civic domain validation and institutional knowledge firewall. All descriptors are non-player simulation, never mechanical modifiers. */
 import { cityObject, cityKey, cityInteger, cityAudit, indexWorldEvent, scheduleCityEvent } from "./city-calendar.js";
+import { assertInstitutionDelegation, activeCityProxy } from "./city-constraints.js";
 
 export const INSTITUTION_ACTIONS=["document_request","file_case","interview_request","inspect_request","issue_policy",
   "allocate_resources","negotiate_request","publish_finding","relocate_staff","seek_warrant"];
@@ -27,6 +28,7 @@ export function updateCityCore(db,guildId,input,actorId="human_gm"){
     fields(data,["name","mandate","public_policy","private_objectives","jurisdictions","procedures","capacity","departments","personnel","queue"]);
     cityKey(data.name);cityKey(data.mandate);cityInteger(data.capacity,0,100);
     cityStrings(data.jurisdictions);cityStrings(data.procedures);cityStrings(data.private_objectives||[]);
+    cityStrings(data.personnel||[]);
     if(data.procedures.some(type=>!INSTITUTION_ACTIONS.includes(type))) throw new Error("Unsupported institution procedure.");
     for(const jurisdiction of data.jurisdictions){
       if(!db.getCityRecord(guildId,"district",jurisdiction)&&!db.getSimulationEntity(guildId,"location",jurisdiction))
@@ -79,6 +81,8 @@ export function fileInstitutionReport(db,guildId,input,actorId){
   cityObject(input);requireCityRecord(db,guildId,"institution",input.institution);requireCitySource(db,guildId,input.source_event);
   const key=cityKey(input.key),prior=db.getCityRecord(guildId,"report",key);if(prior) return prior;
   if(input.from_type!=="npc") throw new Error("Institution report requires an explicit NPC source; employee knowledge is not shared automatically.");
+  const proxy=activeCityProxy(db,guildId,input.from_key);
+  if(proxy&&input.proxy_consent_by!==proxy.discord_user_id) throw new Error("Human NPC proxy consent is required for this report.");
   const known=db.getNpcKnowledge(guildId,input.from_key,input.information_key);
   if(!known||known.belief_state==="unknown") throw new Error("Reporter does not know the cited information.");
   if(input.authorized!==true) throw new Error("An authorized report/record transfer must be established explicitly.");
@@ -109,6 +113,7 @@ export function addWorldLink(db,guildId,input,actorId){
 }
 function validateInstitutionAction(db,guildId,input){
   const institution=requireCityRecord(db,guildId,"institution",input.institution);
+  assertInstitutionDelegation(db,guildId,institution,input);
   requireCitySource(db,guildId,input.source_event);
   if(!INSTITUTION_ACTIONS.includes(input.type)||!institution.data.procedures.includes(input.type)) throw new Error("No established institutional procedure authorizes this action.");
   if(!institution.data.jurisdictions.includes(input.jurisdiction)) throw new Error("Institution lacks jurisdiction.");
@@ -176,6 +181,11 @@ export function runInstitutionDirector(db,guildId,cycleKey){
           if(row.data.major&&!row.data.approved_by) throw new Error("Major institutional action still requires review.");
           const next=db.saveCityRecord(guildId,{...institute,key:institute.record_key,data:{...institute.data,capacity:institute.data.capacity-1,
             ...(row.data.policy?{public_policy:row.data.policy}:{}),...(row.data.new_jurisdictions?{jurisdictions:row.data.new_jurisdictions}:{})}});
+          if(row.data.personnel_key){
+            const personnel=db.getCityRecord(guildId,"personnel",row.data.personnel_key);
+            const assigned=db.saveCityRecord(guildId,{...personnel,key:personnel.record_key,data:{...personnel.data,capacity:personnel.data.capacity-1}});
+            cityAudit(db,guildId,"personnel_capacity",personnel.record_key,personnel,assigned,"institution_director");
+          }
           const ledger=cityAudit(db,guildId,"institution_action",row.record_key,institute,next,"institution_director");
           indexWorldEvent(db,guildId,{key:`institution:${row.record_key}`,kind:row.data.type,title:`${institute.data.name}: ${row.data.type}`,
             source_kind:"mutation",source_id:ledger.id,details:{request_only:true,institution:institute.record_key,reports:row.data.report_keys||[]}},"institution_director");
@@ -215,10 +225,8 @@ export function establishCommitment(db,guildId,input,actorId){
         throw new Error("PC commitment needs its owner's explicit acceptance; no inferred consent.");
     }else if(actor.startsWith("npc:")&&!db.getNpcProfile(guildId,actor.slice(4))) throw new Error("NPC participant not found.");
     else if(!actor.startsWith("npc:")&&!actor.startsWith("character:")) throw new Error("Unsupported commitment actor.");
-    for(const prior of db.listCityRecords(guildId,{kind:"commitment",status:"active",includeGM:true,limit:100})){
-      if(prior.data.participants.includes(actor)&&input.start<prior.data.end&&input.end>prior.data.start)
-        throw new Error("Conflicting commitment requires explicit cancellation or delegation first.");
-    }
+    if(db.overlappingCommitment(guildId,actor,input.start,input.end))
+      throw new Error("Conflicting commitment requires explicit cancellation or delegation first.");
   }
   return db.transaction(()=>{
     const obligation=db.putSimulationRecord(guildId,{kind:"obligation",entityKey:input.participants[0],data:{content:input.terms,
@@ -236,7 +244,9 @@ export function cityContext(db,guildId,query){
   for(const term of terms.slice(0,6)) for(const row of db.listCityRecords(guildId,{query:term,includeGM:true,limit:4})) found.set(`${row.kind}:${row.record_key}`,row);
   const records=[];let budget=0;
   for(const row of found.values()){
-    const size=JSON.stringify(row).length;if(records.length>=8||budget+size>10000) break;records.push(row);budget+=size;
+    const temporal=row.kind==="weather"?{...row,temporal_state:db.getSimulationClock(guildId).minute<row.data.start?"forecast"
+      :db.getSimulationClock(guildId).minute<row.data.end?"active":"past"}:row;
+    const size=JSON.stringify(temporal).length;if(records.length>=8||budget+size>10000) break;records.push(temporal);budget+=size;
   }
   return {records,authority:"GM_PRIVATE_REFERENCE_NOT_ACTOR_KNOWLEDGE",chars:budget};
 }

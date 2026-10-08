@@ -901,3 +901,15 @@ CREATE TABLE IF NOT EXISTS district_locations (
   PRIMARY KEY(guild_id,location_key),
   FOREIGN KEY(guild_id,source_event) REFERENCES world_events(guild_id,event_key)
 );
+CREATE TABLE IF NOT EXISTS city_edges (
+  guild_id TEXT NOT NULL,
+  kind TEXT NOT NULL CHECK(kind IN ('infrastructure','route','channel')),
+  from_key TEXT NOT NULL,
+  to_key TEXT NOT NULL,
+  duration_minutes INTEGER NOT NULL DEFAULT 0 CHECK(duration_minutes>=0),
+  source_event TEXT NOT NULL,
+  data_json TEXT NOT NULL DEFAULT '{}',
+  PRIMARY KEY(guild_id,kind,from_key,to_key),
+  FOREIGN KEY(guild_id,source_event) REFERENCES world_events(guild_id,event_key)
+);
+CREATE INDEX IF NOT EXISTS idx_city_edges_from ON city_edges(guild_id,kind,from_key);
