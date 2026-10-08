@@ -1,6 +1,6 @@
 {
   "package": "Veiled_City_Multiplayer_Discord",
-  "version": "8.4.0",
+  "version": "8.5.0",
   "generated": "2026-10-08",
   "content_normalization": "utf8-lf",
   "files": [
@@ -27,7 +27,7 @@
     {
       "path": "README.md",
       "size_bytes": 15436,
-      "sha256": "839bb27ac4f02291d116e5a7f1352acf3d28bf04119c3aa8460e40c8babef30e"
+      "sha256": "c83e69f53842b571384d90e3157ea77e4ca971d43e4955862d0349972d9e262a"
     },
     {
       "path": "SUGGESTIONS-End-To-End.md",
@@ -52,7 +52,7 @@
     {
       "path": "bot/package.json",
       "size_bytes": 2601,
-      "sha256": "d6aed3d4a2d7a313a8fad041a0cc196e664cf14b325a6c47fc705a38567527ca"
+      "sha256": "610c988a82f2dc37c5bc055c9a413ebaac6454d13e422005e0b42e5226ba36f4"
     },
     {
       "path": "bot/scripts/audit-regression-test.mjs",
@@ -230,6 +230,11 @@
       "sha256": "c6d5723b0421cd2cf24f4eb596100eeea24f52213ef951b6bc00a3dba34b2a30"
     },
     {
+      "path": "bot/scripts/i-heard-you-5-test.mjs",
+      "size_bytes": 3424,
+      "sha256": "d8e0065c19f1539e939eaee76d80620688596018f10dad06c48c1cc3fb66df5c"
+    },
+    {
       "path": "bot/scripts/narrative-contract-test.mjs",
       "size_bytes": 7011,
       "sha256": "2d1aa32c93edf78c384c172f40da4f317030485c236207c8397b1ded1388b1d4"
@@ -361,8 +366,8 @@
     },
     {
       "path": "bot/scripts/validate-offline.mjs",
-      "size_bytes": 1909,
-      "sha256": "668a8acda0bb1cbacd323e91f837eb8732e8ba84cbbd927b3669de1b966547cb"
+      "size_bytes": 1930,
+      "sha256": "8fa224fcbb5c0adacb78628923e09c12ff585877fbe4ae544643789f2fb19b0d"
     },
     {
       "path": "bot/sql/schema.sql",
@@ -561,8 +566,8 @@
     },
     {
       "path": "bot/src/history-reconciliation.js",
-      "size_bytes": 3884,
-      "sha256": "d0f0d3c73fbe40f43098be2e5ab6d714c547da55e2c8b4e8ce1540b66e30e1ae"
+      "size_bytes": 8580,
+      "sha256": "83cb6e990acb856dca1ab58fcdd321f606ea5ee6c1f5fa2a62217518eece09a1"
     },
     {
       "path": "bot/src/idempotency.js",
@@ -1316,13 +1321,13 @@
     },
     {
       "path": "docs/I_HEARD_YOU_GAP_ANALYSIS.md",
-      "size_bytes": 9236,
-      "sha256": "4411237ae44f48443a78194647f21cd8fc61b0a37e3c93180b981528a6d38351"
+      "size_bytes": 9871,
+      "sha256": "fd65eeec0b63ff38108fd44507f22d680d4c5f3edd4a57f443656be6ec553728"
     },
     {
       "path": "docs/I_HEARD_YOU_IMPLEMENTATION.md",
-      "size_bytes": 16423,
-      "sha256": "822790601763251a4f0cb5a9ef71c68a7e7720b7aa25dc192218e72a8014bbde"
+      "size_bytes": 18152,
+      "sha256": "5b3205fcaae68dca2eacd73e9b704d2ff14c45000a7954d582b1e73f9bd0103a"
     },
     {
       "path": "docs/LEVEL_UP.md",

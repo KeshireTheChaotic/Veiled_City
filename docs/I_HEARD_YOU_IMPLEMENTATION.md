@@ -93,3 +93,11 @@ Supported direct application reuses native organization confirmation/decline, ar
 | IHY-07; 20, 25–26 | IHY4 scoped discovery/actual old handout/hypothesis/private metadata exclusion; SP9 existing genuine command read-only path | COMPLETE for literal authorized workspace; arbitrary inquiry semantics UNVERIFIED |
 
 No new flags or AI spending delegation; uses existing `natural_language`, `discovery` and native domain flags. Required offline gate denies network; no live data/configuration change. Schema 440 unchanged.
+
+## Phase 5 — 8.5.0 (starting HEAD ee9e535)
+
+P08 audit found existing read-only physical/custody/canon/case-report checks in `reconcileHistory`, native strategy DAG/source validation, accepted commitments and actual roll resource receipts. Extended that same diagnostic, not a repair engine. Open dependent records now inspect source ancestry (sixteen-hop bound), missing/retracted lineage, current strategy objective/deadline, incompatible actual commitments and saved receipt arithmetic/one-Hope costs. Historical testimony and competing NPC beliefs are excluded; present sheets are not compared against historical receipt totals because later legal spending is not a contradiction.
+
+Use existing GM-private `/vc-story why json:{"op":"reconcile"}`; target an old record with `record_kind` and `record_key` (strategy, commitment, long_project, organization_request, roll_request, roll_operation or consent_reply), or existing `handout_id`. Diagnostics name exact records/sources and require backup plus explicit human/native revision, never automatic refunds, dice replacement, source resurrection or canon edits. Bounded coverage/truncation is reported; missing historical receipts cannot be reconstructed as facts. P08 COMPLETE for tested objective detectors, PARTIAL for unrestricted semantic/legacy-history reconciliation.
+
+Required IHY5 suite exercises actual DB/source/reconciliation functions, retracted ancestry, stale objective/deadline, duplicate commitments, malformed versus valid native-style receipts, targeted lookup, unchanged beliefs, zero writes/time and campaign isolation. Existing SP6 command/auth checks remain required. No schema/flag/delegation change; full network-denied gate required before commit.
