@@ -123,7 +123,7 @@ Combat-state controls:
 - `/vc-admin restore-preview`
 - `/vc-admin restore`
 - `/vc-admin doctor`
-- `/vc-admin seed-npc-cognition` — one-time bootstrap of persistent NPC cognition from existing campaign/content state
+- `/vc-admin seed-data` — GM-only, privacy-aware import of all GM/GM_PRIVATE/PLAYER files; add-only runtime bootstrap and safety snapshot (see `CONTENT_SEEDING.md`)
 - `/vc-admin ledger`
 
 ## Player / Intel

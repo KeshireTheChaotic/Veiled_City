@@ -27,16 +27,11 @@ export function normalizeNpcKey(value){
     .replace(/^-+|-+$/g,"");
 }
 
-function ageDays(timestamp){
-  const ms=Date.now()-Date.parse(timestamp||"");
-  return Number.isFinite(ms)&&ms>0?ms/86400000:0;
-}
-
 function parseJson(value,fallback){
   try{return JSON.parse(value||"");}catch{return fallback;}
 }
 
-function memoryRank(row,queryTokens){
+function memoryRank(row,queryTokens,tick){
   const textTokens=words([
     row.content,row.subject_type,row.subject_key,row.source_type,
     ...(parseJson(row.tags_json,[])||[])
@@ -44,9 +39,12 @@ function memoryRank(row,queryTokens){
   const overlap=overlapScore(queryTokens,textTokens);
   const importance=Number(row.importance||0);
   const confidence=Number(row.confidence||0);
-  const recency=Math.max(0,20-Math.min(20,ageDays(row.created_at)*0.5));
+  // Major memories endure; mundane details fade through fictional opportunities,
+  // never because players were away from Discord for real-world days.
+  const age=Math.max(0,tick-Number(row.created_tick||0));
+  const recency=Math.max(0,20-age*(importance>=80?0.05:0.5));
   const reinforcement=Math.min(10,Number(row.recall_count||0)*1.5);
-  return importance*0.45+confidence*0.2+recency+reinforcement+overlap*12;
+  return (importance*0.45+confidence*0.2+recency+reinforcement+overlap*12+Math.abs(Number(row.sentiment)||0)*3)*(row.status==="challenged"?0.75:1);
 }
 
 function knowledgeRank(row,queryTokens){
@@ -82,24 +80,26 @@ export function retrieveNpcCognition(db,guildId,{
   query="",
   actorAssignment=null,
   worldDirector=false,
+  npcKey="",
   maxNpcs=4,
   memoriesPerNpc=7,
   knowledgePerNpc=8,
   goalsPerNpc=4,
   recordRecall=true
 }={}){
-  const profiles=db.listNpcProfiles(guildId);
+  const profiles=db.listNpcProfiles(guildId,{limit:500}).filter(profile=>!npcKey||profile.npc_key===npcKey);
   if(!profiles.length) return [];
   const queryTokens=words(query);
+  const tick=db.getSimulationClock(guildId).tick;
   const proxyNpcKey=actorAssignment?.npc_proxy
     ?normalizeNpcKey(actorAssignment.npc_name||actorAssignment.npc_key||"")
     :"";
   const candidates=profiles.map(profile=>{
     const goals=db.listNpcGoals(guildId,profile.npc_key,{status:"active",limit:20});
     const topPriority=goals.reduce((m,g)=>Math.max(m,Number(g.priority||0)),0);
-    const memorySignal=db.listNpcMemories(guildId,profile.npc_key,{status:"active",limit:120})
+    const memorySignal=db.listNpcMemories(guildId,profile.npc_key,{status:"retrievable",limit:120,queryTokens:[...queryTokens]})
       .reduce((best,row)=>Math.max(best,overlapScore(queryTokens,words(`${row.content} ${(row.tags||[]).join(" ")}`))*18),0);
-    const knowledgeSignal=db.listNpcKnowledge(guildId,profile.npc_key,{limit:120})
+    const knowledgeSignal=db.listNpcKnowledge(guildId,profile.npc_key,{limit:120,queryTokens:[...queryTokens]})
       .reduce((best,row)=>Math.max(best,overlapScore(queryTokens,words(`${row.knowledge_key} ${row.content}`))*18),0);
     const goalSignal=goals.reduce((best,row)=>Math.max(best,overlapScore(queryTokens,words(`${row.title} ${row.objective}`))*16),0);
     const score=profileRank(profile,queryTokens,topPriority,{worldDirector,proxyNpcKey})+memorySignal+knowledgeSignal+goalSignal;
@@ -110,12 +110,14 @@ export function retrieveNpcCognition(db,guildId,{
   const selected=candidates.slice(0,Math.max(1,Math.min(8,Number(maxNpcs)||4)));
   const recalled=[];
   const packets=selected.map(({profile,goals})=>{
-    const memories=db.listNpcMemories(guildId,profile.npc_key,{status:"active",limit:160})
-      .map(row=>({...row,_score:memoryRank(row,queryTokens)}))
+    const goalTokens=words(goals.map(goal=>goal.objective).join(" "));
+    const memoryTokens=new Set([...queryTokens,...goalTokens]);
+    const memories=db.listNpcMemories(guildId,profile.npc_key,{status:"retrievable",limit:160,queryTokens:[...memoryTokens]})
+      .map(row=>({...row,_score:memoryRank(row,memoryTokens,tick)}))
       .sort((a,b)=>b._score-a._score||String(b.created_at).localeCompare(String(a.created_at)))
       .slice(0,Math.max(1,Math.min(20,Number(memoriesPerNpc)||7)))
       .map(row=>{const {_score,...clean}=row; recalled.push(clean.id); return clean;});
-    const knowledge=db.listNpcKnowledge(guildId,profile.npc_key,{limit:160})
+    const knowledge=db.listNpcKnowledge(guildId,profile.npc_key,{limit:160,queryTokens:[...memoryTokens]})
       .map(row=>({...row,_score:knowledgeRank(row,queryTokens)}))
       .sort((a,b)=>b._score-a._score||String(b.updated_at).localeCompare(String(a.updated_at)))
       .slice(0,Math.max(1,Math.min(20,Number(knowledgePerNpc)||8)))
@@ -130,6 +132,7 @@ export function retrieveNpcCognition(db,guildId,{
       decision_profile:profile.decision_profile,
       knowledge_boundaries:profile.knowledge_boundaries,
       capabilities:profile.capabilities,
+      persistent_state:db.getSimulationEntity(guildId,"npc",profile.npc_key)?.state||{},
       goals:goals.slice(0,Math.max(1,Math.min(10,Number(goalsPerNpc)||4))),
       knowledge,
       memories
@@ -144,10 +147,10 @@ export function retrieveNpcCognition(db,guildId,{
  * reference/relationship state. It deliberately does not infer knowledge from
  * arbitrary global facts; mentioning an NPC in a fact does not make them know it.
  */
-export function seedNpcCognition({db,content,guildId,actorId="system"}){
+export function seedNpcCognition({db,content,guildId,actorId="system",incremental=false}){
   const seedKey="npc_cognition_v1";
   const prior=db.getSeedRun(guildId,seedKey);
-  if(prior) throw new Error(`NPC cognition seed already completed at ${prior.completed_at}. It is intentionally one-time.`);
+  if(prior&&!incremental) throw new Error(`NPC cognition seed already completed at ${prior.completed_at}. It is intentionally one-time.`);
 
   let dossiers=[];
   const raw=content.read("GM_PRIVATE/NPCS/npcs.json");
@@ -162,6 +165,7 @@ export function seedNpcCognition({db,content,guildId,actorId="system"}){
     for(const npc of dossiers){
       const key=normalizeNpcKey(npc.name);
       if(!key) continue;
+      if(incremental&&db.getNpcProfile(guildId,key)) continue;
       const lensText=[npc.role,npc.public,npc.want,npc.secret,...(npc.knows||[]),...(npc.does_not||[])].join(" ").toLowerCase();
       const contractAware=/contract|concord|court|hospitality|oath|compact|covenant/.test(lensText);
       const veilAware=/veil|anchor|threshold|occult|supernatural|spirit|ghost|choir|court|green/.test(lensText);
@@ -180,6 +184,8 @@ export function seedNpcCognition({db,content,guildId,actorId="system"}){
           patience:50,
           ambition:50,
           compassion:50,
+          lawfulness:50,
+          collateral_aversion:75,
           contract_honor:contractAware?75:50,
           hospitality_reciprocity:contractAware?75:50,
           veil_awareness:veilAware?"aware":"limited",
@@ -233,6 +239,7 @@ export function seedNpcCognition({db,content,guildId,actorId="system"}){
       const key=normalizeNpcKey(ref.display_name||ref.entity_key);
       if(!key) continue;
       const existingProfile=db.getNpcProfile(guildId,key);
+      if(incremental&&existingProfile) continue;
       if(!existingProfile){
         db.upsertNpcProfile(guildId,{
           npcKey:key,displayName:ref.display_name||ref.entity_key,role:"",
@@ -284,7 +291,7 @@ export function seedNpcCognition({db,content,guildId,actorId="system"}){
       }
     }
 
-    db.recordSeedRun(guildId,seedKey,{actorId,summary:counts});
+    if(!prior) db.recordSeedRun(guildId,seedKey,{actorId,summary:counts});
     db.recordMutation(guildId,{
       actorType:"human_gm",actorId,sourceLayer:"seed",mutationType:"npc_cognition_seed",
       entityKey:seedKey,visibility:"gm",confidence:100,

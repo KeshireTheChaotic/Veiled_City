@@ -9,7 +9,7 @@ const READ_ONLY=new Set([
   "campaign:status","session:assembly-status","session:roster","character:list","character:sheet","encounter:status","encounter:combatants",
   "party:status","relationship:list","handout:list","player:accessibility","rules:ask","rules:rulings","downtime:status","canon:status","canon:conflicts","canon:proposals",
   "voice:status","admin:snapshots","admin:backups","admin:restore-preview","admin:doctor","admin:ledger","intel:recap","intel:clues","intel:facts","intel:caseboard",
-  "gm:overview","gm:fact-list","gm:npc-state","director:status","director:history"
+  "gm:overview","gm:fact-list","gm:npc-state","director:status","director:history","sim:status","sim:records"
 ]);
 
 export function commandKey(group,sub){ return `${group||""}:${sub||""}`; }
@@ -25,7 +25,7 @@ export async function replayReceiptIfPresent({db,interaction,group,sub}){
   return true;
 }
 
-/** Wrap reply/editReply so a successful mutating interaction stores its authoritative receipt. */
+/** Persist the completed operation before attempting its fallible Discord response. */
 export function installReceiptCapture({db,interaction,group,sub}){
   if(!isMutatingCommand(group,sub)||!interaction?.id) return ()=>{};
   const originalReply=interaction.reply?.bind(interaction);
@@ -36,11 +36,21 @@ export function installReceiptCapture({db,interaction,group,sub}){
     const text=typeof payload==="string"?payload:String(payload?.content||"");
     if(/^\s*⚠️/.test(text)) return;
     const key=commandKey(group,sub);
-    db.recordOperationReceipt(interaction.guildId,{interactionId:interaction.id,commandKey:key,actorUserId:interaction.user.id,responseText:text,payload:{commandName:interaction.commandName}});
-    db.recordMutation(interaction.guildId,{sessionId:db.getActiveSession(interaction.guildId)?.id||null,actorType:"human",actorId:interaction.user.id,sourceLayer:"command",sourceInteractionId:interaction.id,mutationType:`command:${key}`,entityKey:key,visibility:"gm",confidence:100,rationale:text,payload:{commandName:interaction.commandName}});
+    db.transaction(()=>{
+      db.recordOperationReceipt(interaction.guildId,{
+        interactionId:interaction.id,commandKey:key,actorUserId:interaction.user.id,
+        responseText:text,payload:{commandName:interaction.commandName}
+      });
+      db.recordMutation(interaction.guildId,{
+        sessionId:db.getActiveSession(interaction.guildId)?.id||null,
+        actorType:"human",actorId:interaction.user.id,sourceLayer:"command",sourceInteractionId:interaction.id,
+        mutationType:`command:${key}`,entityKey:key,visibility:"gm",confidence:100,
+        rationale:text,payload:{commandName:interaction.commandName}
+      });
+    });
     recorded=true;
   };
-  if(originalReply) interaction.reply=async payload=>{ const r=await originalReply(payload); record(payload); return r; };
-  if(originalEdit) interaction.editReply=async payload=>{ const r=await originalEdit(payload); record(payload); return r; };
+  if(originalReply) interaction.reply=async payload=>{ record(payload); return originalReply(payload); };
+  if(originalEdit) interaction.editReply=async payload=>{ record(payload); return originalEdit(payload); };
   return ()=>{ if(originalReply) interaction.reply=originalReply; if(originalEdit) interaction.editReply=originalEdit; };
 }

@@ -24,7 +24,8 @@ const commands=buildCommands();
 assert(commands.find(c=>c.name==="vc-director")?.options?.some(o=>o.name==="history"));
 assert(commands.find(c=>c.name==="vc-admin")?.options?.some(o=>o.name==="doctor"));
 assert(commands.find(c=>c.name==="vc-admin")?.options?.some(o=>o.name==="backup"));
-assert(commands.find(c=>c.name==="vc-admin")?.options?.some(o=>o.name==="seed-npc-cognition"));
+assert(commands.find(c=>c.name==="vc-admin")?.options?.some(o=>o.name==="seed-data"));
+assert(!commands.find(c=>c.name==="vc-admin")?.options?.some(o=>o.name==="seed-npc-cognition"));
 assert(commands.find(c=>c.name==="vc-gm")?.options?.some(o=>o.name==="overview"));
 assert(commands.find(c=>c.name==="vc-gm")?.options?.some(o=>o.name==="npc-state"));
 assert(commands.find(c=>c.name==="vc-gm")?.options?.some(o=>o.name==="fact-promote"));
@@ -53,6 +54,22 @@ assert.equal(db.getCampaign(guild).fear,2,"duplicate Discord interaction applied
 assert.match(second._replies.map(x=>x.content||"").join("\n"),/Already applied/i);
 assert(db.getOperationReceipt(guild,"same-interaction"));
 assert(db.listMutationLedger(guild,{limit:20}).some(r=>r.source_interaction_id==="same-interaction"));
+
+// A committed command stays protected when Discord refuses its final reply.
+const failedReply=interaction({id:"failed-reply",sub:"fear",integers:{delta:1}});
+failedReply.reply=async()=>{throw new Error("Discord delivery failed");};
+await assert.rejects(handleCommand(failedReply,{db,gm:null}),/Discord delivery failed/);
+assert.equal(db.getCampaign(guild).fear,3);
+await handleCommand(interaction({id:"failed-reply",sub:"fear",integers:{delta:1}}),{db,gm:null});
+assert.equal(db.getCampaign(guild).fear,3);
+
+// Overlapping deliveries must serialize their receipt lookup and execution.
+await Promise.all([
+  handleCommand(interaction({id:"concurrent",sub:"fear",integers:{delta:1}}),{db,gm:null}),
+  handleCommand(interaction({id:"concurrent",sub:"fear",integers:{delta:1}}),{db,gm:null})
+]);
+assert.equal(db.getCampaign(guild).fear,4);
+db.changeFear(guild,-2); // Preserve the baseline for the existing backup assertions.
 
 // Facts deduplicate exact repeats and support edit/archive/promotion metadata.
 const f1=db.addFact(guild,{key:"ops.fact",content:"One durable fact",visibility:"gm",source:"test",provenance:{message:"m1"},confidence:77});
@@ -119,4 +136,4 @@ assert.equal(Array.isArray(doctor.invalidVisibility),true);
 
 db.close();
 fs.rmSync(tmp,{recursive:true,force:true});
-console.log("Veilkeeper v3.8.0 operations regression test: PASS");
+console.log("Veilkeeper v4.0.0 operations regression test: PASS");

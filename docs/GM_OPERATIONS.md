@@ -56,7 +56,7 @@ Doctor is diagnostic only; it never changes campaign state automatically.
 
 ## NPC cognition operations (v3.8.0)
 
-After upgrading a campaign, run `/vc-admin seed-npc-cognition` once. The command creates a safety snapshot and then seeds persistent NPC profiles, subjective memories, beliefs/knowledge boundaries, and goals from packaged GM NPC dossiers plus already-structured campaign NPC references and relationship state. A durable seed marker prevents accidental reruns.
+After upgrading a campaign, run `/vc-admin seed-data`. It replaces the former NPC-only command, creates a safety snapshot, and imports all GM/GM_PRIVATE/PLAYER source files with privacy boundaries. It also bootstraps missing NPC cognition and recognized runtime entities without overwriting existing campaign state. Reruns skip existing files and report changed sources for review. See `CONTENT_SEEDING.md` for scope and privacy rules.
 
 Use `/vc-gm npc-state npc:<name-or-key>` to inspect the resulting GM-only cognition. NPC cognition is intentionally subjective and can disagree with objective campaign facts or canon; do not "correct" a mistaken NPC belief by rewriting canon unless the world truth itself has changed.
 

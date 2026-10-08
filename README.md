@@ -1,6 +1,24 @@
-# VEILED CITY MULTIPLAYER DISCORD ENGINE v3.8.0
+# VEILED CITY MULTIPLAYER DISCORD ENGINE v4.0.0
 
 Stateful Discord GM bot for the Veiled City multiplayer Daggerheart campaign.
+
+## v4.0.0 — Campaign simulation and audit fixes
+
+Persistent NPC/faction agency now adds bounded background actions, fictional-time
+delays, finite resources, obligations, rumors, awareness, scene residue,
+relationship dimensions and GM review of consequential actions. The existing
+NPC cognition foundation is retained. New GM-only `/vc-sim` commands configure
+and inspect these systems; run `npm run register` after deployment.
+
+Queue rejection handling, cross-server thread isolation, reply-failure duplicate
+protection and mutation-ledger attribution are also corrected. See
+[`docs/NPC_SIMULATION.md`](docs/NPC_SIMULATION.md) for setup, command examples,
+mechanics, boundaries and coverage of the thirty suggestions.
+
+GM-only `/vc-admin seed-data` replaces `seed-npc-cognition`. It imports every
+file under `GM`, `GM_PRIVATE`, and `PLAYER` into privacy-scoped source/catalog
+tables, seeds recognized runtime entities and matched character narratives,
+and preserves existing campaign state. See [content seeding](docs/CONTENT_SEEDING.md).
 
 
 ## v3.8.0 — Persistent NPC Cognition
@@ -11,7 +29,7 @@ Veilkeeper retrieves only the NPC cognition relevant to the current scene/query 
 
 The cognition model includes Veiled City-specific boundaries for **hospitality, obligation/contract custom, supernatural impressions, thresholds, anchors, and the Veil**. Hospitality or shelter can inform remembered debt or contractual expectation only when established custom, invitation, exchange, oath, Court/Concord practice, or explicit terms justify it; ordinary courtesy is not automatically binding. Supernatural/Veil impressions remain subjective evidence rather than omniscience or automatic canon.
 
-After upgrading, a GM should run `/vc-admin seed-npc-cognition` **once**. The seed imports packaged GM NPC dossiers plus already-structured campaign NPC references and relationship state. It deliberately does not copy arbitrary global/player facts into every NPC's knowledge. Use `/vc-gm npc-state npc:<name>` to inspect the resulting GM-private profile, memories, beliefs, and goals.
+After upgrading, a GM should run `/vc-admin seed-data`. This includes the NPC cognition bootstrap and preserves already-seeded NPC state. It deliberately does not copy arbitrary global/player facts into every NPC's knowledge. Use `/vc-gm npc-state npc:<name>` to inspect the resulting GM-private profile, memories, beliefs, and goals.
 
 See:
 - `docs/NPC_COGNITION.md`

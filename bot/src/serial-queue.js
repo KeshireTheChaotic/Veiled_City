@@ -7,7 +7,8 @@ export class KeyedSerialQueue {
     const previous=this.tails.get(queueKey)||Promise.resolve();
     const run=previous.catch(()=>{}).then(()=>job());
     let tail;
-    tail=run.finally(()=>{
+    // The caller owns the job error; the internal tail must always settle safely.
+    tail=run.catch(()=>{}).finally(()=>{
       if(this.tails.get(queueKey)===tail) this.tails.delete(queueKey);
     });
     this.tails.set(queueKey,tail);

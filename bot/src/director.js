@@ -81,6 +81,10 @@ export function queueDirectorAfterPartyTurn(db,session,userId,stateReview){
 
 export function describeBlockedAction(row){
   const raw=String(row?.error||row?.reason||"This state action is not permitted in the current scope.");
+  if(row?.type==="simulation") return {
+    player:"I did not change global world-simulation state from this private scene. Permitted private facts and NPC memories remain private.",
+    gm:`Blocked private-scene simulation mutation: ${raw}`
+  };
   if(row?.type==="canon"&&/private/i.test(raw)) return {
     player:row?.proposal_id
       ?`I did not write that statement directly into global canon because this is a private scene. It was recorded as canon proposal \`${String(row.proposal_id).slice(0,8)}\` for human GM review.`
@@ -111,7 +115,8 @@ export function blockedMutationRows(mutation){
     ...(mutation?.events||[]).filter(x=>x?.blocked),
     ...(mutation?.relationships||[]).filter(x=>x?.blocked).map(x=>({...x,kind:"relationship"})),
     ...(mutation?.handouts||[]).filter(x=>x?.blocked).map(x=>({...x,kind:"handout"})),
-    ...(mutation?.canonProposals||[]).filter(x=>x?.blocked).map(x=>({...x,kind:"canon_proposal",proposalDraft:x.draft}))
+    ...(mutation?.canonProposals||[]).filter(x=>x?.blocked).map(x=>({...x,kind:"canon_proposal",proposalDraft:x.draft})),
+    ...(mutation?.simulation||[]).filter(x=>x?.blocked)
   ];
 }
 
@@ -128,7 +133,7 @@ export function lowConfidenceReviewItems(result,threshold=55){
 export function normalizeDirectorConfidence(result,threshold=55){
   const confidence=Number(result?.confidence??100);
   if(result?.act && Number.isFinite(confidence) && confidence<threshold){
-    return {...result,act:false,public_narration:"",private_messages:[],events:[],handouts:[],relationships:[],npc_memories:[],npc_knowledge:[],npc_goals:[],review_required:true,gm_notes:`${String(result.gm_notes||"").trim()}${result.gm_notes?"\n":""}LOW-CONFIDENCE REVIEW: Proposed world move (${confidence}%) was not committed; human GM review required.`};
+    return {...result,act:false,public_narration:"",private_messages:[],events:[],handouts:[],relationships:[],npc_memories:[],npc_knowledge:[],npc_goals:[],simulation_updates:[],review_required:true,gm_notes:`${String(result.gm_notes||"").trim()}${result.gm_notes?"\n":""}LOW-CONFIDENCE REVIEW: Proposed world move (${confidence}%) was not committed; human GM review required.`};
   }
   return {...result,review_required:false};
 }

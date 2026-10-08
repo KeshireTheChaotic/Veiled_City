@@ -25,19 +25,31 @@ export class ContentIndex {
     this.root=path.resolve(root);
     this.chunks=[];
     for(const f of walk(this.root)){
-      const rel=path.relative(this.root,f);
+      const rel=path.relative(this.root,f).split(path.sep).join("/");
       const text=fs.readFileSync(f,"utf8");
-      this.chunks.push(...chunkMarkdown(rel,text));
+      const privateSource=/^(?:GM|GM_PRIVATE)\//i.test(rel)||/^PLAYER\/PLAYERS\//i.test(rel)
+        || /^(?:visibility|scope)\s*:\s*(?:gm|gm_private|private|player|character)\s*$/im.test(text);
+      this.chunks.push(...chunkMarkdown(rel,text).map(chunk=>({...chunk,visibility:privateSource?"gm":"party"})));
     }
   }
   read(rel){
     const p=path.join(this.root,rel);
     return fs.existsSync(p)?fs.readFileSync(p,"utf8"):"";
   }
-  search(query,limit=8,{gm=true}={}){
+  search(query,limit=8,{gm=true,documents=[]}={}){
     const q=tokens(query);
-    return this.chunks
-      .filter(c=>gm || !c.file.startsWith("GM_PRIVATE"))
+    const seededPaths=new Set(documents.map(doc=>doc.source_path));
+    const seeded=documents.filter(doc=>doc.encoding==="utf8"&&(gm||doc.visibility==="party"))
+      .flatMap(doc=>chunkMarkdown(doc.source_path,doc.body).flatMap(chunk=>{
+        const pieces=[];
+        for(let offset=0;offset<chunk.body.length;offset+=6000){
+          pieces.push({...chunk,id:`${chunk.id}:${offset}`,body:chunk.body.slice(offset,offset+6000),visibility:doc.visibility});
+        }
+        return pieces;
+      }));
+    return [...this.chunks.filter(chunk=>!seededPaths.has(chunk.file)),...seeded]
+      .filter(c=>gm || (c.visibility!=="gm"&&!/^(?:GM|GM_PRIVATE)\//i.test(c.file)&&!/^PLAYER\/PLAYERS\//i.test(c.file)
+        && !/^(?:visibility|scope)\s*:\s*(?:gm|gm_private|private|player|character)\s*$/im.test(c.body)))
       .map(c=>{
         const t=tokens(c.body+" "+c.file);
         let score=0;

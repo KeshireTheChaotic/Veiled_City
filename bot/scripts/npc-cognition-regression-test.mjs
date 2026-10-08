@@ -88,4 +88,4 @@ assert((snap.state.tables.seed_runs||[]).length===1);
 assert.equal(db.doctorData(guild).schemaVersion,380);
 db.close();
 fs.rmSync(tmp,{recursive:true,force:true});
-console.log("Veilkeeper v3.8.0 NPC cognition regression test: PASS");
+console.log("Veilkeeper v4.0.0 NPC cognition regression test: PASS");

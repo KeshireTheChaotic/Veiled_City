@@ -86,4 +86,4 @@ testChunking();
 testFactFiltering();
 testPrivacyValidation();
 testConfigValidation();
-console.log("Veilkeeper v3.8.0 refactor regression test: PASS");
+console.log("Veilkeeper v4.0.0 refactor regression test: PASS");

@@ -26,10 +26,12 @@ export async function runCampaignDiagnostics({db,guild}){
   if(data.invalidVisibility.length) issues.push(`Invalid visibility values detected: ${data.invalidVisibility.map(x=>`${x.table}=${x.count}`).join(", ")}.`);
   if(data.npcCognition?.profiles){
     passed.push(`NPC cognition: ${data.npcCognition.profiles} profiles • ${data.npcCognition.memories} memories • ${data.npcCognition.knowledge} knowledge rows • ${data.npcCognition.goals} goals`);
-    if(!data.npcCognition.seed) issues.push("NPC cognition exists but the one-time v3.8 seed marker is missing; inspect before running the seed command.");
+    if(!data.npcCognition.seed) issues.push("NPC cognition exists without a seed marker; seed-data preserves existing NPC profiles.");
   } else {
-    issues.push("NPC cognition has not been seeded yet. Run /vc-admin seed-npc-cognition once after reviewing the v3.8 upgrade notes.");
+    issues.push("NPC cognition has not been seeded yet. Run /vc-admin seed-data after reviewing the content seed guide.");
   }
+  if(data.contentSeed?.seed) passed.push(`Content seed: ${data.contentSeed.documents} source files stored with privacy boundaries`);
+  else issues.push("Full content has not been seeded. Run /vc-admin seed-data; existing NPC cognition is preserved.");
   if(data.pendingDirector){
     const queued=Date.parse(data.pendingDirector.queued_at||"");
     if(Number.isFinite(queued) && Date.now()-queued>24*60*60*1000) issues.push(`Pending director pass ${data.pendingDirector.layer} has remained technically queued for over 24 hours; inspect/retry or clear it.`);

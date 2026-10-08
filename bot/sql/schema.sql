@@ -1,5 +1,32 @@
 PRAGMA foreign_keys = ON;
 
+-- Full source archive: private unless explicitly classified as shared PLAYER content.
+CREATE TABLE IF NOT EXISTS seed_documents (
+  guild_id TEXT NOT NULL,
+  source_path TEXT NOT NULL,
+  sha256 TEXT NOT NULL,
+  encoding TEXT NOT NULL CHECK(encoding IN ('utf8','base64')),
+  body TEXT NOT NULL,
+  visibility TEXT NOT NULL CHECK(visibility IN ('party','character','gm')),
+  subject_character_id TEXT,
+  imported_by TEXT NOT NULL,
+  created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY(guild_id,source_path),
+  FOREIGN KEY(guild_id) REFERENCES campaigns(guild_id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS seed_catalog (
+  guild_id TEXT NOT NULL,
+  source_path TEXT NOT NULL,
+  entry_key TEXT NOT NULL,
+  kind TEXT NOT NULL,
+  data_json TEXT NOT NULL,
+  visibility TEXT NOT NULL CHECK(visibility IN ('party','character','gm')),
+  subject_character_id TEXT,
+  PRIMARY KEY(guild_id,source_path,entry_key),
+  FOREIGN KEY(guild_id,source_path) REFERENCES seed_documents(guild_id,source_path) ON DELETE CASCADE
+);
+
 CREATE TABLE IF NOT EXISTS campaigns (
   guild_id TEXT PRIMARY KEY,
   name TEXT NOT NULL DEFAULT 'Veiled City',
@@ -139,7 +166,7 @@ CREATE TABLE IF NOT EXISTS clocks (
 );
 
 CREATE TABLE IF NOT EXISTS threads (
-  id TEXT PRIMARY KEY,
+  id TEXT NOT NULL,
   guild_id TEXT NOT NULL,
   label TEXT NOT NULL,
   status TEXT NOT NULL DEFAULT 'active'
@@ -150,6 +177,7 @@ CREATE TABLE IF NOT EXISTS threads (
   subject_character_id TEXT,
   notes TEXT NOT NULL DEFAULT '',
   updated_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY(guild_id,id),
   FOREIGN KEY (guild_id) REFERENCES campaigns(guild_id) ON DELETE CASCADE
 );
 
@@ -697,6 +725,10 @@ CREATE TABLE IF NOT EXISTS npc_memories (
   source_type TEXT NOT NULL DEFAULT 'observed',
   source_ref TEXT NOT NULL DEFAULT '',
   tags_json TEXT NOT NULL DEFAULT '[]',
+  visibility TEXT NOT NULL DEFAULT 'gm',
+  source_session TEXT,
+  source_scene TEXT NOT NULL DEFAULT '',
+  created_tick INTEGER NOT NULL DEFAULT 0,
   status TEXT NOT NULL DEFAULT 'active'
     CHECK(status IN ('active','challenged','superseded','forgotten')),
   superseded_by TEXT,
@@ -760,4 +792,34 @@ CREATE TABLE IF NOT EXISTS seed_runs (
   completed_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY(guild_id,seed_key),
   FOREIGN KEY (guild_id) REFERENCES campaigns(guild_id) ON DELETE CASCADE
+);
+
+-- Fictional-time simulation. All records are GM-private until an explicit hook
+-- is delivered; subjective state never promotes itself into campaign canon.
+CREATE TABLE IF NOT EXISTS simulation_entities (
+  guild_id TEXT NOT NULL,
+  entity_type TEXT NOT NULL CHECK(entity_type IN ('npc','faction','location','relationship')),
+  entity_key TEXT NOT NULL,
+  state_json TEXT NOT NULL DEFAULT '{}',
+  PRIMARY KEY(guild_id,entity_type,entity_key),
+  FOREIGN KEY(guild_id) REFERENCES campaigns(guild_id) ON DELETE CASCADE
+);
+CREATE TABLE IF NOT EXISTS simulation_records (
+  id TEXT PRIMARY KEY,
+  guild_id TEXT NOT NULL,
+  kind TEXT NOT NULL CHECK(kind IN ('action','cycle','memory','goal','obligation','rumor','awareness','residue','hook')),
+  entity_key TEXT NOT NULL DEFAULT '',
+  status TEXT NOT NULL DEFAULT 'active',
+  due_tick INTEGER,
+  due_minute INTEGER,
+  data_json TEXT NOT NULL DEFAULT '{}',
+  created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY(guild_id) REFERENCES campaigns(guild_id) ON DELETE CASCADE
+);
+CREATE INDEX IF NOT EXISTS idx_simulation_records_lookup ON simulation_records(guild_id,kind,status,entity_key);
+CREATE TABLE IF NOT EXISTS simulation_clock (
+  guild_id TEXT PRIMARY KEY,
+  tick INTEGER NOT NULL DEFAULT 0 CHECK(tick>=0),
+  minute INTEGER NOT NULL DEFAULT 0 CHECK(minute>=0),
+  FOREIGN KEY(guild_id) REFERENCES campaigns(guild_id) ON DELETE CASCADE
 );

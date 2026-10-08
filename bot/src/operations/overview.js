@@ -4,6 +4,7 @@
  * Keeps the `/vc-gm overview` query/aggregation logic out of the Discord
  * dispatcher and exposes one stable read model for future web/CLI surfaces.
  */
+import { simulationOverview } from "../simulation.js";
 export function buildGmOverview(db,guildId){
   const session=db.getActiveSession(guildId);
   const campaign=db.getCampaign(guildId);
@@ -16,7 +17,8 @@ export function buildGmOverview(db,guildId){
   const encounter=session?db.getCurrentEncounter(session.id):null;
   const roster=session?db.roster(session.id):[];
   const present=roster.filter(r=>["present","late","guest"].includes(r.presence));
-  return {session,campaign,facts,conflicts,proposals,clocks,threads,director,encounter,roster,present,directorPaused:db.isDirectorPaused(guildId)};
+  return {session,campaign,facts,conflicts,proposals,clocks,threads,director,encounter,roster,present,
+    simulation:simulationOverview(db,guildId),directorPaused:db.isDirectorPaused(guildId)};
 }
 
 export function formatGmOverview(model,{formatFact}){
@@ -28,6 +30,7 @@ export function formatGmOverview(model,{formatFact}){
     director?`Director: ${directorPaused?"PAUSED":"active"} • round ${director.round_number} • scene ${director.scene_number}${director.pending_pass?` • pending ${director.pending_pass.layer}`:""}`:"",
     `Attention: **${proposals.length}** canon proposal(s) • **${conflicts.length}** canon conflict(s) • **${clocks.length}** active clock(s) • **${threads.length}** active party thread(s)`,
     encounter?`Encounter: #${encounter.encounter_number} ${encounter.status}`:"Encounter: none",
+    `NPC simulation: ${model.simulation.pending.length} pending consequential action(s) • ${model.simulation.deferred.length} deferred • ${model.simulation.scheduled.length} scheduled`,
     facts.length?`Recent facts:\n${facts.slice(0,5).map(formatFact).join("\n")}`:"Recent facts: none"
   ].filter(Boolean);
 }

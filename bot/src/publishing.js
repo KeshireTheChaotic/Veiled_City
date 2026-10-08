@@ -4,6 +4,25 @@ import { handoutFiles, handoutSummary } from "./handout.js";
 import { randomUUID } from "node:crypto";
 import { splitDiscordText } from "./discord/chunking.js";
 import { assertGmOnlyChannel, assertPlayerPrivateChannel } from "./discord/privacy.js";
+import { simulationOverview, acknowledgeSimulationHook } from "./simulation.js";
+
+/** Hooks remain queued on failed delivery and never publish internal action packets. */
+export async function publishSimulationHooks({db,guild,sessionId=null}){
+  let delivered=0;
+  for(const hook of simulationOverview(db,guild.id).hooks){
+    if(hook.data.target_user_id){
+      if(!db.getPlayer(guild.id,hook.data.target_user_id)) continue;
+      const result=await sendPlayerPrivate({db,guild,userId:hook.data.target_user_id,content:hook.data.content,sessionId});
+      if(!result.ok) continue;
+    }else{
+      const message=await postPlayMessage({db,guild,sessionId,content:hook.data.content});
+      if(!message) continue;
+    }
+    acknowledgeSimulationHook(db,guild.id,hook.id);
+    delivered++;
+  }
+  return delivered;
+}
 
 const chunks = splitDiscordText;
 

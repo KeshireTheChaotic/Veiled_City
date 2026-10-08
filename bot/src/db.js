@@ -6,6 +6,7 @@
  * one reviewable layer.
  */
 import fs from "node:fs";
+import { updateRelationshipDimensions, relationshipPairKey } from "./relationship-state.js";
 import path from "node:path";
 import { randomUUID } from "node:crypto";
 import { DatabaseSync } from "node:sqlite";
@@ -57,10 +58,146 @@ export class VeiledDB {
     add("facts","confidence","INTEGER NOT NULL DEFAULT 100");
     add("encounters","combat_state_json",`TEXT NOT NULL DEFAULT '{"spotlight":{"counts":{},"last_character_id":null}}'`);
     add("encounters","pc_start_state_json",`TEXT NOT NULL DEFAULT '[]'`);
+    add("npc_memories","visibility","TEXT NOT NULL DEFAULT 'gm'");
+    add("npc_memories","source_session","TEXT");
+    add("npc_memories","source_scene","TEXT NOT NULL DEFAULT ''");
+    add("npc_memories","created_tick","INTEGER NOT NULL DEFAULT 0");
+    // Older databases used globally unique thread keys. Preserve their IDs so
+    // snapshots and published-message references continue to resolve.
+    const threadColumns=this.db.prepare("PRAGMA table_info(threads)").all();
+    if(!threadColumns.find(c=>c.name==="guild_id")?.pk){
+      this.transaction(()=>{
+        this.db.exec(`
+          CREATE TABLE threads_scoped (
+            id TEXT NOT NULL, guild_id TEXT NOT NULL, label TEXT NOT NULL,
+            status TEXT NOT NULL DEFAULT 'active' CHECK(status IN ('active','resolved','failed','dormant')),
+            visibility TEXT NOT NULL DEFAULT 'party' CHECK(visibility IN ('public','party','player','character','gm')),
+            subject_user_id TEXT, subject_character_id TEXT,
+            notes TEXT NOT NULL DEFAULT '', updated_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+            PRIMARY KEY(guild_id,id),
+            FOREIGN KEY(guild_id) REFERENCES campaigns(guild_id) ON DELETE CASCADE
+          );
+          INSERT INTO threads_scoped SELECT id,guild_id,label,status,visibility,
+            subject_user_id,subject_character_id,notes,updated_at FROM threads;
+          DROP TABLE threads;
+          ALTER TABLE threads_scoped RENAME TO threads;
+        `);
+      });
+    }
+    const knownPairs=new Set(this.db.prepare("SELECT guild_id,entity_key FROM simulation_entities WHERE entity_type='relationship'")
+      .all().map(row=>`${row.guild_id}:${row.entity_key}`));
+    this.transaction(()=>{
+      for(const relation of this.db.prepare("SELECT * FROM relationships ORDER BY created_at").all()){
+        const pair=relationshipPairKey(relation);
+        if(!knownPairs.has(`${relation.guild_id}:${pair}`)) updateRelationshipDimensions(this,relation.guild_id,relation);
+      }
+    });
     this.db.exec("PRAGMA user_version=380;");
   }
 
   close() { this.db.close(); }
+
+  getSeedDocument(guildId,sourcePath){
+    return this.db.prepare("SELECT * FROM seed_documents WHERE guild_id=? AND source_path=?").get(guildId,sourcePath)||null;
+  }
+
+  insertSeedDocument(guildId,{sourcePath,sha256,encoding,body,visibility,characterId=null,actorId}){
+    if(visibility==="character"&&!characterId) throw new Error("Character content requires an explicit character boundary.");
+    if(characterId&&this.getCharacter(characterId)?.guild_id!==guildId) throw new Error("Character belongs to another campaign.");
+    this.db.prepare(`INSERT INTO seed_documents
+      (guild_id,source_path,sha256,encoding,body,visibility,subject_character_id,imported_by) VALUES(?,?,?,?,?,?,?,?)`)
+      .run(guildId,sourcePath,sha256,encoding,body,visibility,characterId,actorId);
+  }
+
+  listSeedDocuments(guildId,{includeGM=false,characterId=null}={}){
+    return this.db.prepare(`SELECT * FROM seed_documents WHERE guild_id=?
+      AND (?=1 OR visibility='party' OR (visibility='character' AND subject_character_id=?)) ORDER BY source_path`)
+      .all(guildId,includeGM?1:0,characterId);
+  }
+
+  insertSeedCatalog(guildId,{sourcePath,key,kind,data,visibility,characterId=null}){
+    const source=this.getSeedDocument(guildId,sourcePath);
+    if(!source||source.visibility!==visibility||source.subject_character_id!==characterId){
+      throw new Error("Catalog privacy must match its source document.");
+    }
+    this.db.prepare(`INSERT INTO seed_catalog
+      (guild_id,source_path,entry_key,kind,data_json,visibility,subject_character_id) VALUES(?,?,?,?,?,?,?)`)
+      .run(guildId,sourcePath,key,kind,JSON.stringify(data),visibility,characterId);
+  }
+
+  listSeedCatalog(guildId,{includeGM=false,characterId=null}={}){
+    return this.db.prepare(`SELECT * FROM seed_catalog WHERE guild_id=?
+      AND (?=1 OR visibility='party' OR (visibility='character' AND subject_character_id=?)) ORDER BY source_path,entry_key`)
+      .all(guildId,includeGM?1:0,characterId).map(row=>({...row,data:JSON.parse(row.data_json)}));
+  }
+
+  campaignCharacters(guildId){
+    return this.db.prepare("SELECT id,name FROM characters WHERE guild_id=? ORDER BY name").all(guildId);
+  }
+
+  getSimulationEntity(guildId,type,key){
+    const row=this.db.prepare("SELECT * FROM simulation_entities WHERE guild_id=? AND entity_type=? AND entity_key=?").get(guildId,type,key);
+    return row?{...row,state:JSON.parse(row.state_json)}:null;
+  }
+
+  setSimulationEntity(guildId,type,key,state){
+    this.db.prepare(`INSERT INTO simulation_entities(guild_id,entity_type,entity_key,state_json) VALUES(?,?,?,?)
+      ON CONFLICT(guild_id,entity_type,entity_key) DO UPDATE SET state_json=excluded.state_json`).run(guildId,type,key,JSON.stringify(state));
+    return this.getSimulationEntity(guildId,type,key);
+  }
+
+  listSimulationEntities(guildId,type=""){
+    return this.db.prepare("SELECT * FROM simulation_entities WHERE guild_id=? AND (?='' OR entity_type=?) ORDER BY entity_key")
+      .all(guildId,type,type).map(row=>({...row,state:JSON.parse(row.state_json)}));
+  }
+
+  putSimulationRecord(guildId,{id=randomUUID(),kind,entityKey="",status="active",dueTick=null,dueMinute=null,data={}}){
+    this.db.prepare(`INSERT INTO simulation_records(id,guild_id,kind,entity_key,status,due_tick,due_minute,data_json) VALUES(?,?,?,?,?,?,?,?)
+      ON CONFLICT(id) DO UPDATE SET status=excluded.status,due_tick=excluded.due_tick,due_minute=excluded.due_minute,data_json=excluded.data_json
+      WHERE simulation_records.guild_id=excluded.guild_id AND simulation_records.kind=excluded.kind`)
+      .run(id,guildId,kind,entityKey,status,dueTick,dueMinute,JSON.stringify(data));
+    const row=this.getSimulationRecord(guildId,id);
+    if(!row||row.kind!==kind) throw new Error("Simulation record identity belongs to another campaign or kind.");
+    return row;
+  }
+
+  getSimulationRecord(guildId,id){
+    const row=this.db.prepare("SELECT * FROM simulation_records WHERE guild_id=? AND id=?").get(guildId,id);
+    return row?{...row,data:JSON.parse(row.data_json)}:null;
+  }
+
+  listSimulationRecords(guildId,{kind="",status="",entityKey="",limit=100}={}){
+    return this.db.prepare(`SELECT * FROM simulation_records WHERE guild_id=? AND (?='' OR kind=?)
+      AND (?='' OR status=?) AND (?='' OR entity_key=?) ORDER BY rowid DESC LIMIT ?`)
+      .all(guildId,kind,kind,status,status,entityKey,entityKey,Math.max(1,Math.min(1000,Number(limit)||100)))
+      .map(row=>({...row,data:JSON.parse(row.data_json)}));
+  }
+
+  getSimulationClock(guildId){
+    return this.db.prepare("SELECT * FROM simulation_clock WHERE guild_id=?").get(guildId)||{guild_id:guildId,tick:0,minute:0};
+  }
+
+  listDueSimulationActions(guildId){
+    const clock=this.getSimulationClock(guildId);
+    return this.db.prepare(`SELECT * FROM simulation_records WHERE rowid IN (
+      SELECT MIN(rowid) FROM simulation_records WHERE guild_id=? AND kind='action' AND status='scheduled'
+      AND (due_tick IS NULL OR due_tick<=?) AND (due_minute IS NULL OR due_minute<=?) GROUP BY entity_key
+    ) ORDER BY rowid LIMIT 100`)
+      .all(guildId,clock.tick,clock.minute).map(row=>({...row,data:JSON.parse(row.data_json)}));
+  }
+
+  advanceSimulationClock(guildId,{ticks=0,minutes=0}={}){
+    if(!Number.isSafeInteger(ticks)||ticks<0||!Number.isSafeInteger(minutes)||minutes<0) throw new Error("Fictional time increments must be nonnegative integers.");
+    this.db.prepare(`INSERT INTO simulation_clock(guild_id,tick,minute) VALUES(?,?,?)
+      ON CONFLICT(guild_id) DO UPDATE SET tick=tick+excluded.tick,minute=minute+excluded.minute`).run(guildId,ticks,minutes);
+    return this.getSimulationClock(guildId);
+  }
+
+  annotateNpcMemory(guildId,id,{sessionId=null,scene="",tick=0,status="active",supersededBy=null}={}){
+    this.db.prepare(`UPDATE npc_memories SET source_session=?,source_scene=?,created_tick=?,status=?,superseded_by=?,updated_at=CURRENT_TIMESTAMP
+      WHERE guild_id=? AND id=?`).run(sessionId,scene,tick,status,supersededBy,guildId,id);
+    return this.getNpcMemory(id);
+  }
 
   transaction(fn){
     if(typeof fn!=="function") throw new TypeError("transaction requires a synchronous callback.");
@@ -778,7 +915,9 @@ export class VeiledDB {
       goals:this.db.prepare("SELECT COUNT(*) n FROM npc_goals WHERE guild_id=?").get(guildId).n,
       seed:this.getSeedRun(guildId,"npc_cognition_v1")
     };
-    return {schemaVersion:this.db.prepare("PRAGMA user_version").get().user_version,activeSession:active,presentWithoutCharacter,duplicateCanon,orphanCharacters,orphanAssignments,orphanHandouts,brokenProxies,absentControl,invalidVisibility,pendingDirector:pending,npcCognition};
+    const contentSeed={seed:this.getSeedRun(guildId,"seed_data_v1"),
+      documents:this.db.prepare("SELECT COUNT(*) n FROM seed_documents WHERE guild_id=?").get(guildId).n};
+    return {schemaVersion:this.db.prepare("PRAGMA user_version").get().user_version,activeSession:active,presentWithoutCharacter,duplicateCanon,orphanCharacters,orphanAssignments,orphanHandouts,brokenProxies,absentControl,invalidVisibility,pendingDirector:pending,npcCognition,contentSeed};
   }
 
   findGuestCharacter(guildId,name,userId) {
@@ -895,14 +1034,14 @@ export class VeiledDB {
     this.db.prepare(`
       INSERT INTO threads(id,guild_id,label,status,visibility,subject_user_id,subject_character_id,notes)
       VALUES(?,?,?,?,?,?,?,?)
-      ON CONFLICT(id) DO UPDATE SET label=excluded.label,status=excluded.status,
+      ON CONFLICT(guild_id,id) DO UPDATE SET label=excluded.label,status=excluded.status,
         visibility=excluded.visibility,subject_user_id=excluded.subject_user_id,
         subject_character_id=excluded.subject_character_id,notes=excluded.notes,updated_at=CURRENT_TIMESTAMP
     `).run(id,guildId,label,status,visibility,subjectUserId,subjectCharacterId,notes);
-    return this.db.prepare("SELECT * FROM threads WHERE id=?").get(id);
+    return this.getThread(guildId,id);
   }
 
-  getThread(id){ return this.db.prepare("SELECT * FROM threads WHERE id=?").get(id); }
+  getThread(guildId,id){ return this.db.prepare("SELECT * FROM threads WHERE guild_id=? AND id=?").get(guildId,id); }
 
   upsertReference(guildId,{kind,key,name,summary,visibility="party",subjectUserId=null,subjectCharacterId=null}){
     this.db.prepare(`
@@ -977,9 +1116,15 @@ export class VeiledDB {
     return r?{...r,tags:JSON.parse(r.tags_json||"[]")}:null;
   }
 
-  listNpcMemories(guildId,npcKey,{status="",limit=100}={}){
+  listNpcMemories(guildId,npcKey,{status="",limit=100,queryTokens=[]}={}){
     const cap=Math.max(1,Math.min(500,Number(limit)||100));
-    return this.db.prepare(`SELECT * FROM npc_memories WHERE guild_id=? AND npc_key=? AND (?='' OR status=?) ORDER BY importance DESC,created_at DESC LIMIT ?`).all(guildId,String(npcKey||"").toLowerCase(),status,status,cap).map(r=>({...r,tags:JSON.parse(r.tags_json||"[]")}));
+    const wanted=[...new Set(queryTokens.map(String))].slice(0,20);
+    const relevance=wanted.length?wanted.map(()=>"CASE WHEN instr(lower(content||' '||subject_key||' '||tags_json),?)>0 THEN 1 ELSE 0 END").join("+"):"0.0";
+    return this.db.prepare(`SELECT * FROM npc_memories WHERE guild_id=? AND npc_key=?
+      AND (?='' OR status=? OR (?='retrievable' AND status IN ('active','challenged')))
+      ORDER BY (${relevance}) DESC,importance DESC,created_at DESC LIMIT ?`)
+      .all(guildId,String(npcKey||"").toLowerCase(),status,status,status,...wanted.map(token=>token.toLowerCase()),cap)
+      .map(r=>({...r,tags:JSON.parse(r.tags_json||"[]")}));
   }
 
   markNpcMemoriesRecalled(ids=[]){
@@ -997,9 +1142,18 @@ export class VeiledDB {
     return this.db.prepare("SELECT * FROM npc_knowledge WHERE guild_id=? AND npc_key=? AND knowledge_key=?").get(guildId,key,kk);
   }
 
-  listNpcKnowledge(guildId,npcKey,{beliefState="",limit=100}={}){
+  listNpcKnowledge(guildId,npcKey,{beliefState="",limit=100,queryTokens=[]}={}){
     const cap=Math.max(1,Math.min(500,Number(limit)||100));
-    return this.db.prepare(`SELECT * FROM npc_knowledge WHERE guild_id=? AND npc_key=? AND (?='' OR belief_state=?) ORDER BY updated_at DESC LIMIT ?`).all(guildId,String(npcKey||"").toLowerCase(),beliefState,beliefState,cap);
+    const wanted=[...new Set(queryTokens.map(String))].slice(0,20);
+    const relevance=wanted.length?wanted.map(()=>"CASE WHEN instr(lower(content||' '||knowledge_key),?)>0 THEN 1 ELSE 0 END").join("+"):"0.0";
+    return this.db.prepare(`SELECT * FROM npc_knowledge WHERE guild_id=? AND npc_key=? AND (?='' OR belief_state=?)
+      ORDER BY (${relevance}) DESC,updated_at DESC LIMIT ?`)
+      .all(guildId,String(npcKey||"").toLowerCase(),beliefState,beliefState,...wanted.map(token=>token.toLowerCase()),cap);
+  }
+
+  getNpcKnowledge(guildId,npcKey,knowledgeKey){
+    return this.db.prepare("SELECT * FROM npc_knowledge WHERE guild_id=? AND npc_key=? AND knowledge_key=?")
+      .get(guildId,npcKey,String(knowledgeKey||"").trim().toLowerCase());
   }
 
   upsertNpcGoal(guildId,{npcKey,goalKey,title="",objective,horizon="near",priority=50,progress=0,status="active",dependencies=[],acceptableMethods=[],rationale="",source="gm"}={}){
@@ -1247,8 +1401,9 @@ export class VeiledDB {
   }
 
   upsertRelationship(guildId,{fromType,fromKey,fromLabel="",toType,toKey,toLabel="",relationshipType="contact",score=0,visibility="party",note="",source="gm",sourceCharacterId=null}={}){
+    return this.transaction(()=>{
     const allowedType=new Set(["character","npc","faction","location","entity","obligation"]);
-    const allowedRel=new Set(["trust","debt","fear","hostility","affection","authority","obligation","family","ally","rival","contact","important_person","home","suspicion","protective","other"]);
+    const allowedRel=new Set(["trust","debt","fear","hostility","affection","respect","authority","obligation","family","ally","rival","contact","important_person","home","suspicion","protective","other"]);
     if(!allowedType.has(fromType)||!allowedType.has(toType)) throw new Error("Invalid relationship entity type.");
     if(!allowedRel.has(relationshipType)) relationshipType="other";
     if(!new Set(["public","party","player","character","gm"]).has(visibility)) throw new Error("Invalid relationship visibility.");
@@ -1259,7 +1414,10 @@ export class VeiledDB {
       VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?) ON CONFLICT(guild_id,from_type,from_key,to_type,to_key,relationship_type) DO UPDATE SET
       from_label=excluded.from_label,to_label=excluded.to_label,score=excluded.score,visibility=excluded.visibility,note=excluded.note,source=excluded.source,source_character_id=COALESCE(excluded.source_character_id,relationships.source_character_id),updated_at=CURRENT_TIMESTAMP`)
       .run(id,guildId,fromType,fk,fromLabel||fk,toType,tk,toLabel||tk,relationshipType,Math.max(-5,Math.min(5,Number(score)||0)),visibility,note||"",source||"gm",sourceCharacterId||null);
-    return this.getRelationship(id);
+    const row=this.getRelationship(id);
+    updateRelationshipDimensions(this,guildId,row);
+    return row;
+    });
   }
 
   getRelationship(id){ return this.db.prepare("SELECT * FROM relationships WHERE id=?").get(id); }
@@ -1270,7 +1428,9 @@ export class VeiledDB {
   adjustRelationship(id,delta){
     const r=this.getRelationship(id); if(!r) throw new Error("Relationship not found.");
     const score=Math.max(-5,Math.min(5,Number(r.score||0)+(Number(delta)||0)));
-    this.db.prepare("UPDATE relationships SET score=?,updated_at=CURRENT_TIMESTAMP WHERE id=?").run(score,id); return this.getRelationship(id);
+    return this.upsertRelationship(r.guild_id,{fromType:r.from_type,fromKey:r.from_key,fromLabel:r.from_label,
+      toType:r.to_type,toKey:r.to_key,toLabel:r.to_label,relationshipType:r.relationship_type,score,
+      visibility:r.visibility,note:r.note,source:r.source,sourceCharacterId:r.source_character_id});
   }
 
   seedCharacterHookRelationships(character,{markImported=false,source="hook_import"}={}){
@@ -1526,6 +1686,7 @@ export class VeiledDB {
     const qmarks=sessionIds.length?sessionIds.map(()=>"?").join(","):"NULL";
     const directTables=["players","characters","sessions","facts","clocks","threads","reference_entries","published_messages","npc_proxies","encounters","encounter_combatants","character_drafts","levelup_drafts","canon_events","canon_conflicts","downtime_cycles","downtime_projects","rules_rulings","relationships","relationship_hook_imports","character_gm_hooks","canon_proposals","handouts","encounter_aftermath","character_narratives","npc_profiles","npc_memories","npc_knowledge","npc_goals","seed_runs"];
     const state={campaign:this.getCampaign(guildId),tables:{}};
+    directTables.push("simulation_entities","simulation_records","simulation_clock","seed_documents","seed_catalog");
     for(const table of directTables){
       try{state.tables[table]=this.db.prepare(`SELECT * FROM ${table} WHERE guild_id=?`).all(guildId);}catch{state.tables[table]=[];}
     }
@@ -1552,6 +1713,8 @@ export class VeiledDB {
     const state=snap.state;
     const delOrder=["encounter_aftermath","encounter_combatants","npc_proxies","session_characters","session_presence","levelup_drafts","downtime_projects","canon_conflicts","canon_events","relationships","relationship_hook_imports","canon_proposals","character_gm_hooks","character_narratives","npc_memories","npc_knowledge","npc_goals","npc_profiles","seed_runs","handouts","encounters","sessions","character_drafts","characters","players","facts","clocks","threads","reference_entries","published_messages","downtime_cycles","rules_rulings"];
     const insertOrder=["players","characters","sessions","session_presence","session_characters","facts","clocks","threads","reference_entries","published_messages","npc_proxies","encounters","encounter_combatants","character_drafts","levelup_drafts","canon_events","canon_conflicts","downtime_cycles","downtime_projects","rules_rulings","relationships","relationship_hook_imports","character_gm_hooks","canon_proposals","handouts","encounter_aftermath","character_narratives","npc_profiles","npc_memories","npc_knowledge","npc_goals","seed_runs"];
+    delOrder.unshift("seed_catalog","seed_documents","simulation_records","simulation_entities","simulation_clock");
+    insertOrder.push("simulation_entities","simulation_records","simulation_clock","seed_documents","seed_catalog");
     this.db.exec("BEGIN IMMEDIATE");
     try{
       for(const t of delOrder){

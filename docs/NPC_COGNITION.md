@@ -37,19 +37,19 @@ v3.8 stores these concepts as subjective relational/obligation cognition. The fu
 
 Memories can use `subject_type=veil` and `memory_type=impression` for threshold, anchor, resonance, haunting, or other supernatural impressions. These are perceptions, not automatic truth. The Veil never grants an NPC omniscience merely because Veil-related GM facts exist.
 
-## One-time seed
+## Content seed (v4.0.0)
 
-Run once after upgrading:
+Run after upgrading:
 
 ```text
-/vc-admin seed-npc-cognition
+/vc-admin seed-data
 ```
 
-The seed is guarded by the durable `npc_cognition_v1` seed marker. Re-running it is rejected.
+This replaces the old `seed-npc-cognition` command. Existing `npc_cognition_v1` seed markers are retained; existing profiles and live state are not overwritten. Re-running the new command imports newly found source paths and skips existing ones. See `CONTENT_SEEDING.md` for the full content import.
 
 It initializes cognition from:
 
-1. `GM_PRIVATE/NPCS/npcs.json` NPC dossiers;
+1. `GM_PRIVATE/NPCS/npcs.json` or `GM/NPCS/npcs.json` NPC dossiers;
 2. existing campaign NPC reference entries, including player-visible discoveries already promoted into structured campaign state;
 3. existing relationship graph entries involving NPCs.
 

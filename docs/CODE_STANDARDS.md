@@ -7,6 +7,8 @@
 - `publishing.js` and `src/discord/*` are non-authoritative Discord output/permission boundaries.
 - `gm.js` may propose structured results but must not bypass state/database authorization.
 - `command-definitions.js` owns slash-command declarations; `commands.js` owns runtime dispatch.
+- `simulation.js` owns bounded NPC/faction intent validation and mechanical resolution. It may never use wall-clock scheduling for fictional events or grant an actor knowledge from global GM facts.
+- `simulation-schema.js` owns strict simulation proposal schemas; `simulation-commands.js` owns GM-only inspection/configuration/review. Player-facing hooks pass through `publishing.js`.
 
 ## Comments and documentation
 
@@ -30,6 +32,9 @@ npm run check
 npm run test:offline
 npm run test:production
 npm run test:refactor
+npm run test:audit
+npm run test:simulation
+npm run test:seed
 npm run audit:prod
 ```
 

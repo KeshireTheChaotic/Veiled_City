@@ -1,6 +1,7 @@
 /** Authoritative AI/state mutation layer. Applies validated structured outputs while enforcing transaction and visibility invariants. */
 import { randomUUID } from "node:crypto";
 import { normalizeNpcKey } from "./npc-cognition.js";
+import { applySimulationUpdates } from "./simulation.js";
 
 export function summarizeRoster(rows){
   return rows.map(r=>({
@@ -131,7 +132,7 @@ export function applyGMEvents(db,guildId,sessionId,events=[],scope={mode:"party"
           const rawId=cleanKey(e.key)||randomUUID();
           const owner=scope.actorCharacterId||scope.actorUserId;
           const id=scope.mode==="private"?`private:${owner}:${rawId}`:rawId;
-          const before=db.getThread(id)||null;
+          const before=db.getThread(guildId,id)||null;
           const row=db.upsertThread(guildId,{
             id,
             label:String(e.value||rawId),
@@ -304,20 +305,31 @@ export function applyNpcCognitionDrafts(db,guildId,{memories=[],knowledge=[],goa
         npcKey:profile.npc_key,memoryType:draft.memory_type||"episodic",content:draft.content,
         subjectType:draft.subject_type||"entity",subjectKey:draft.subject_key||"",
         sentiment:draft.sentiment??0,importance:draft.importance??50,confidence:draft.confidence??100,
-        sourceType:draft.source_type||source,sourceRef,tags:draft.tags||[],dedupe:true
+        sourceType:draft.source_type||source,sourceRef:draft.source_ref||sourceRef,tags:draft.tags||[],dedupe:true
       });
+      if(!row.source_session) db.annotateNpcMemory(guildId,row.id,{sessionId:provenance.sessionId||null,
+        scene:provenance.scene||"",tick:db.getSimulationClock(guildId).tick});
       out.memories.push({ok:true,row,before:null,after:row,draft});
     }catch(err){out.memories.push({ok:false,error:String(err.message||err),draft});}
   }
   for(const draft of knowledge||[]){
     try{
       const profile=ensureProfile(draft);
-      const before=db.listNpcKnowledge(guildId,profile.npc_key,{limit:500}).find(x=>x.knowledge_key===String(draft.knowledge_key||"").trim().toLowerCase())||null;
+      const before=db.getNpcKnowledge(guildId,profile.npc_key,draft.knowledge_key)||null;
       const row=db.upsertNpcKnowledge(guildId,{
         npcKey:profile.npc_key,knowledgeKey:draft.knowledge_key,content:draft.content,
         beliefState:draft.belief_state||"known",confidence:draft.confidence??100,
-        sourceType:draft.source_type||source,sourceRef,isSecret:draft.is_secret??true
+        sourceType:draft.source_type||source,sourceRef:draft.source_ref||sourceRef,isSecret:draft.is_secret??true
       });
+      if(before&&(before.content!==row.content||before.belief_state!==row.belief_state)){
+        const oldMemory=db.addNpcMemory(guildId,{npcKey:profile.npc_key,memoryType:"semantic",
+          content:`Previously believed (${before.belief_state}): ${before.content}`,confidence:before.confidence,
+          sourceType:before.source_type,sourceRef:before.source_ref,tags:["belief-history",before.knowledge_key]});
+        const correction=db.addNpcMemory(guildId,{npcKey:profile.npc_key,memoryType:"semantic",
+          content:`Belief revised (${row.belief_state}): ${row.content}`,confidence:row.confidence,
+          sourceType:row.source_type,sourceRef:oldMemory.id,tags:["belief-revision",row.knowledge_key]});
+        db.annotateNpcMemory(guildId,oldMemory.id,{status:row.belief_state==="doubted"?"challenged":"superseded",supersededBy:correction.id});
+      }
       out.knowledge.push({ok:true,row,before,after:row,draft});
     }catch(err){out.knowledge.push({ok:false,error:String(err.message||err),draft});}
   }
@@ -357,20 +369,42 @@ export function assertMutationSuccess({events=[],relationships=[],handouts=[],np
  * Apply one authoritative AI mutation bundle transactionally. Either all valid
  * state changes commit together or the surrounding transaction rolls back.
  */
-export function applyAuthoritativeMutation(db,{guildId,sessionId=null,events=[],relationships=[],handouts=[],npcMemories=[],npcKnowledge=[],npcGoals=[],scope={mode:"party",actorUserId:null,actorCharacterId:null},source="ai_gm",provenance={}}){
+export function applyAuthoritativeMutation(db,{guildId,sessionId=null,events=[],relationships=[],handouts=[],npcMemories=[],npcKnowledge=[],npcGoals=[],
+  simulationUpdates=[],scope={mode:"party",actorUserId:null,actorCharacterId:null},source="ai_gm",provenance={}}){
   return db.transaction(()=>{
     const eventResults=applyGMEvents(db,guildId,sessionId,events,scope,provenance);
     const relationshipResults=applyRelationshipDrafts(db,guildId,relationships,scope,source);
     const handoutResults=applyHandoutDrafts(db,guildId,sessionId,handouts,scope,source);
-    const cognition=applyNpcCognitionDrafts(db,guildId,{memories:npcMemories,knowledge:npcKnowledge,goals:npcGoals},source,provenance);
+    const scene=sessionId?db.getDirectorState(sessionId).scene_label||"":"";
+    const cognition=applyNpcCognitionDrafts(db,guildId,{memories:npcMemories,knowledge:npcKnowledge,goals:npcGoals},source,{...provenance,sessionId,scene});
+    const simulation=applySimulationUpdates(db,guildId,simulationUpdates,{scope,provenance:{...provenance,sessionId,scene}});
     assertMutationSuccess({events:eventResults,relationships:relationshipResults,handouts:handoutResults,npcMemories:cognition.memories,npcKnowledge:cognition.knowledge,npcGoals:cognition.goals});
     const base={sessionId,actorType:provenance.actorType||"ai",actorId:provenance.actorId||scope.actorUserId||"veilkeeper",sourceLayer:source,sourceInteractionId:provenance.interactionId||null,sourceMessageId:provenance.messageId||null,confidence:provenance.confidence??100,rationale:provenance.rationale||"",triggerText:provenance.triggerText||""};
-    eventResults.filter(x=>x?.ok||x?.expectedConflict).forEach((result,index)=>db.recordMutation(guildId,{...base,mutationType:`event:${events[index]?.type||result.type||"unknown"}`,entityKey:events[index]?.key||result.key||result.id||"",visibility:events[index]?.visibility||result.visibility||"gm",before:result.before??{},after:result.after??result,payload:events[index]||{}}));
-    relationshipResults.filter(x=>x?.ok).forEach((result,index)=>db.recordMutation(guildId,{...base,mutationType:"relationship",entityKey:result.row?.id||"",visibility:result.row?.visibility||"gm",before:result.before??{},after:result.after??result.row??result,payload:relationships[index]||{}}));
-    handoutResults.filter(x=>x?.ok).forEach((result,index)=>db.recordMutation(guildId,{...base,mutationType:"handout",entityKey:result.row?.id||"",visibility:result.row?.visibility||"gm",after:result.row||result,payload:handouts[index]||{}}));
+    eventResults.forEach((result,index)=>{
+      if(!result?.ok&&!result?.expectedConflict) return;
+      db.recordMutation(guildId,{...base,
+        mutationType:`event:${events[index]?.type||result.type||"unknown"}`,
+        entityKey:events[index]?.key||result.key||result.id||"",
+        visibility:result.visibility||result.after?.visibility||events[index]?.visibility||"gm",
+        before:result.before??{},after:result.after??result,payload:events[index]||{}
+      });
+    });
+    relationshipResults.forEach((result,index)=>{
+      if(!result?.ok) return;
+      db.recordMutation(guildId,{...base,mutationType:"relationship",entityKey:result.row?.id||"",
+        visibility:result.row?.visibility||"gm",before:result.before??{},after:result.after??result.row??result,payload:relationships[index]||{}
+      });
+    });
+    handoutResults.forEach((result,index)=>{
+      if(!result?.ok) return;
+      db.recordMutation(guildId,{...base,mutationType:"handout",entityKey:result.row?.id||"",
+        visibility:result.row?.visibility||"gm",after:result.row||result,payload:handouts[index]||{}
+      });
+    });
     cognition.memories.filter(x=>x?.ok).forEach(result=>db.recordMutation(guildId,{...base,mutationType:"npc_memory",entityKey:`${result.row?.npc_key||""}:${result.row?.id||""}`,visibility:"gm",before:result.before??{},after:result.after??result.row,payload:result.draft||{}}));
     cognition.knowledge.filter(x=>x?.ok).forEach(result=>db.recordMutation(guildId,{...base,mutationType:"npc_knowledge",entityKey:`${result.row?.npc_key||""}:${result.row?.knowledge_key||""}`,visibility:"gm",before:result.before??{},after:result.after??result.row,payload:result.draft||{}}));
     cognition.goals.filter(x=>x?.ok).forEach(result=>db.recordMutation(guildId,{...base,mutationType:"npc_goal",entityKey:`${result.row?.npc_key||""}:${result.row?.goal_key||""}`,visibility:"gm",before:result.before??{},after:result.after??result.row,payload:result.draft||{}}));
-    return {events:eventResults,relationships:relationshipResults,handouts:handoutResults,npcMemories:cognition.memories,npcKnowledge:cognition.knowledge,npcGoals:cognition.goals};
+    return {events:eventResults,relationships:relationshipResults,handouts:handoutResults,
+      npcMemories:cognition.memories,npcKnowledge:cognition.knowledge,npcGoals:cognition.goals,simulation};
   });
 }
