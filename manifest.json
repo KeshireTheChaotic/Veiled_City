@@ -1,6 +1,6 @@
 {
   "package": "Veiled_City_Multiplayer_Discord",
-  "version": "8.3.0",
+  "version": "8.4.0",
   "generated": "2026-10-08",
   "content_normalization": "utf8-lf",
   "files": [
@@ -27,7 +27,7 @@
     {
       "path": "README.md",
       "size_bytes": 15436,
-      "sha256": "cc28ff779d1822fb7db855f09907c548323633795b340275722d34e31824de28"
+      "sha256": "839bb27ac4f02291d116e5a7f1352acf3d28bf04119c3aa8460e40c8babef30e"
     },
     {
       "path": "SUGGESTIONS-End-To-End.md",
@@ -52,7 +52,7 @@
     {
       "path": "bot/package.json",
       "size_bytes": 2601,
-      "sha256": "919a76149b5c0b3f732fccccd68200374b8d393e7f6479e71a392a6ceb8b796e"
+      "sha256": "d6aed3d4a2d7a313a8fad041a0cc196e664cf14b325a6c47fc705a38567527ca"
     },
     {
       "path": "bot/scripts/audit-regression-test.mjs",
@@ -225,6 +225,11 @@
       "sha256": "1cad9d5ec557920921493fe4f556f87d9559b7efceda7bd631600ada14784191"
     },
     {
+      "path": "bot/scripts/i-heard-you-4-test.mjs",
+      "size_bytes": 5596,
+      "sha256": "c6d5723b0421cd2cf24f4eb596100eeea24f52213ef951b6bc00a3dba34b2a30"
+    },
+    {
       "path": "bot/scripts/narrative-contract-test.mjs",
       "size_bytes": 7011,
       "sha256": "2d1aa32c93edf78c384c172f40da4f317030485c236207c8397b1ded1388b1d4"
@@ -356,8 +361,8 @@
     },
     {
       "path": "bot/scripts/validate-offline.mjs",
-      "size_bytes": 1888,
-      "sha256": "4eb5d1a2339308710a7c89c15804bedcfaec76c2a72ce51935bb87f0da35d092"
+      "size_bytes": 1909,
+      "sha256": "668a8acda0bb1cbacd323e91f837eb8732e8ba84cbbd927b3669de1b966547cb"
     },
     {
       "path": "bot/sql/schema.sql",
@@ -371,8 +376,8 @@
     },
     {
       "path": "bot/src/ai-intents.js",
-      "size_bytes": 34909,
-      "sha256": "edfa74972ae65e4f3a765675c0bd8a61e43c34c51cfce52bb159924f59025d40"
+      "size_bytes": 35059,
+      "sha256": "2bbfb4a76465105a1726bb01fa7ea676274280eb391a9e6fb8ce13b25b0a8b60"
     },
     {
       "path": "bot/src/ai-review.js",
@@ -446,8 +451,8 @@
     },
     {
       "path": "bot/src/command-definitions.js",
-      "size_bytes": 67111,
-      "sha256": "aac623354bb756240ec2449c793f34c3ec36b22e4456e7a05d71afdee97e6aac"
+      "size_bytes": 67118,
+      "sha256": "aadbe5ded99b53ad22f7f49b472d7c4bbc8034ee4366640feae6a13d16dc4c52"
     },
     {
       "path": "bot/src/command-schema.js",
@@ -456,8 +461,8 @@
     },
     {
       "path": "bot/src/commands.js",
-      "size_bytes": 142752,
-      "sha256": "47b252277a39c3dd0dc4f6a59d73670ff4a25ccf27d7f73742176b43ae5fa432"
+      "size_bytes": 143164,
+      "sha256": "11d3fb6f222bb27e26d326a230bd5865a255c270e3919a223e402da0f6245706"
     },
     {
       "path": "bot/src/concept-context.js",
@@ -468,6 +473,11 @@
       "path": "bot/src/config.js",
       "size_bytes": 4681,
       "sha256": "a7b948115f27d47687c8e2091c1167a5cf54c336e29078d6ae1965165d9f7186"
+    },
+    {
+      "path": "bot/src/consent-language.js",
+      "size_bytes": 6229,
+      "sha256": "28fec77d8d7f2656695bc5bba6b17fe9dc9bf223d81e5b579242295db1dc3119"
     },
     {
       "path": "bot/src/content.js",
@@ -481,8 +491,8 @@
     },
     {
       "path": "bot/src/continuity-routing.js",
-      "size_bytes": 3242,
-      "sha256": "8239f7d2b21e09f22a5d23ccfda5869e6950af507e9aa91f80daff1cd1eae2d1"
+      "size_bytes": 3700,
+      "sha256": "e135edb8c1533d921608bac025c84779920d855ad2d1e01542a05b2a959c0f69"
     },
     {
       "path": "bot/src/db.js",
@@ -561,8 +571,8 @@
     },
     {
       "path": "bot/src/index.js",
-      "size_bytes": 46140,
-      "sha256": "47cf8c20df561dce3acc5217a696620c70de33205e357bbccb807033de643c0c"
+      "size_bytes": 46673,
+      "sha256": "848d6b454aa484410ad360c07fb9e9a985d1f502df76c3e855b0b03475206a48"
     },
     {
       "path": "bot/src/logger.js",
@@ -621,8 +631,8 @@
     },
     {
       "path": "bot/src/personal-continuity.js",
-      "size_bytes": 11667,
-      "sha256": "1fb873b85e957c6d50b02c0380b7542863a076083fdb17706fe3f2e566a6a44c"
+      "size_bytes": 12407,
+      "sha256": "cc4f0f9671b16a8a6326dafa43f45fc92dc3ede394768d1d0499d7488f4db9cb"
     },
     {
       "path": "bot/src/player-language.js",
@@ -1306,13 +1316,13 @@
     },
     {
       "path": "docs/I_HEARD_YOU_GAP_ANALYSIS.md",
-      "size_bytes": 8376,
-      "sha256": "58deffd47398f75cc0665f11f9d06acc0d6efb9ee993c192d6ba2b68191ad217"
+      "size_bytes": 9236,
+      "sha256": "4411237ae44f48443a78194647f21cd8fc61b0a37e3c93180b981528a6d38351"
     },
     {
       "path": "docs/I_HEARD_YOU_IMPLEMENTATION.md",
-      "size_bytes": 13157,
-      "sha256": "a52b6947603130afce576692b8073959776d6adddc0bb7daac9439cbe6998fa3"
+      "size_bytes": 16423,
+      "sha256": "822790601763251a4f0cb5a9ef71c68a7e7720b7aa25dc192218e72a8014bbde"
     },
     {
       "path": "docs/LEVEL_UP.md",

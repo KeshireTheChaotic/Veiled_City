@@ -2,6 +2,8 @@
 import { discoverPersonal } from "./personal-continuity.js";
 export function discoveryQuestion(message){
   const text=String(message||"").replace(/<@!?\d+>/g,"").trim();
+  const caseQuery=/^(?:what do we have on|what do I know about the case|show my case notes(?: about)?|review my evidence(?: about)?)\s+(.+?)\??$/i.exec(text);
+  if(caseQuery) return {mode:"case",query:caseQuery[1].replace(/\?$/,"").trim().slice(0,300)};
   const extended=/^(?:what (evidence|commitments|organizations|organisations) do I (?:know|have|belong to)|(?:(?:show|list|remind me of) my|what are my) (known evidence|accepted commitments|commitments|organizations|organisations))(?:\s+(?:about|regarding))?\s*(.*?)\??$/i.exec(text);
   if(extended){
     const topic=(extended[1]||extended[2]).toLowerCase();
@@ -15,10 +17,11 @@ export function formatDiscovery(db,guild,user,packet){
   if(packet.unknown) return "Your current character has no matching recorded knowledge. No new discovery or world action occurred.";
   let preferences={};try{preferences=JSON.parse(db.getPlayer(guild,user)?.accessibility_json||"{}");}catch{/* Legacy malformed preferences use plain defaults. */}
   const rows=[
-    ...packet.facts.map(row=>`${row.content} (${row.confidence}% confidence; ${row.source||"recorded source"})`),
+    ...packet.facts.map(row=>`${row.content} (${row.category==="hypothesis"?"private hypothesis; not proof":`${row.confidence}% confidence`}; ${row.source||"recorded source"})`),
     ...packet.events.map(row=>`${row.title} (${row.truth_status}; minute ${row.minute})`),
     ...(packet.personal||[]).map(row=>`${row.data.statement||row.data.invitation||row.key} (${row.status}; personal continuity, not world truth)`),
-    ...(packet.evidence||[]).map(row=>`${row.title} (${row.authority} artifact): ${row.content}`),
+    ...(packet.evidence||[]).map(row=>`${row.title} (${row.authority} artifact; ${row.id}): ${row.content}`),
+    ...(packet.case_view?.evidence||[]).flatMap(row=>row.custody.map(item=>`${row.title}: ${item.state} (${item.authority})`)),
     ...(packet.organizations||[]).map(row=>`${row.name} (${row.role}; explicit participation, no inferred votes or funds)`),
     ...(packet.commitments||[]).map(row=>`${row.text} (${row.status})`)
   ];

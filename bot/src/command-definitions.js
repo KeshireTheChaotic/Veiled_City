@@ -401,7 +401,7 @@ export function buildCommands(){
         .addSubcommand(s=>s.setName("discover").setDescription("Read-only character-relative knowledge, changes, leads or arcs")
           .addStringOption(o=>o.setName("query").setDescription("Literal subject to look up; no world action").setMaxLength(300))
           .addStringOption(o=>o.setName("mode").setDescription("Recorded information to show").addChoices(
-            ...["know","leads","changed","witness","arcs","evidence","commitments","organizations"].map(value=>({name:value,value}))))
+            ...["know","leads","changed","witness","arcs","evidence","commitments","organizations","case"].map(value=>({name:value,value}))))
           .addStringOption(o=>o.setName("json").setDescription("Legacy optional literal query and mode")))
         .addSubcommand(s=>s.setName("recap").setDescription("Show the latest saved recap"))
         .addSubcommand(s=>s.setName("clues").setDescription("Show clues available to you"))

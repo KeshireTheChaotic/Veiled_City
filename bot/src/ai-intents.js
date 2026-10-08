@@ -152,6 +152,7 @@ export function intentContext(db,guild){
     personal_targets:["arc","arc_candidate"].flatMap(kind=>db.listCityRecords(guild,{kind,includeGM:true,limit:8})
       .map(row=>({...row,expected_revision:stateRevision(row)}))),
     organization_requests:db.listCityRecords(guild,{kind:"organization_request",includeGM:true,limit:8}).map(row=>({...row,expected_revision:stateRevision(row)})),
+    owner_replies:db.getCityCalendar(guild).flags.natural_language===true?db.listCityRecords(guild,{kind:"consent_reply",includeGM:true,limit:8}):[],
     setup_targets:db.getCityCalendar(guild).flags.narrative_setups===true?db.listCityRecords(guild,{kind:"story_setup",status:"open",includeGM:true,limit:8})
       .map(row=>({...row,expected_revision:stateRevision(row)})):[],
     reconciliation:reconcileHistory(db,guild),

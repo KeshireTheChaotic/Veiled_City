@@ -35,6 +35,7 @@ import { handleCityCommand } from "./city-commands.js";
 import { handleStoryCommand } from "./story-commands.js";
 import { recordCharacterArrival } from "./scene-continuity.js";
 import { personalArc, discoverPersonal, personalInbox } from "./personal-continuity.js";
+import { consentOffers } from "./consent-language.js";
 import { formatDiscovery } from "./continuity-routing.js";
 import { manageLongProject, projectPhaseRevision } from "./long-projects.js";
 import { stateRevision } from "./ai-intents.js";
@@ -377,8 +378,10 @@ async function executeCommand(interaction,{db,gm,voice=null}){
         files:[new AttachmentBuilder(Buffer.from(JSON.stringify(rows,null,2)),{name:"long-project-status.json"})]});return true;
     }
     if(group==="intel"&&sub==="continuity"){
-      const result=personalInbox(db,interaction.guildId,interaction.user.id);
-      await interaction.reply({ephemeral:true,content:"Private continuity inbox. Confirm/reject/defer candidates or accept/decline/defer invitations using /vc-intel arc and the current expected_revision.",
+      const result=personalInbox(db,interaction.guildId,interaction.user.id).concat(
+        db.getCityCalendar(interaction.guildId).flags.natural_language===true?consentOffers(db,interaction.guildId,interaction.user.id).map(row=>
+          ({kind:"owner_offer",key:row.record_key,expected_revision:row.revision,terms:row.terms,authority:"Nonbinding current proposal; respond freely. Exact revision/terms are necessary for consequential consent."})):[]);
+      await interaction.reply({ephemeral:true,content:"Private continuity inbox and current revision-bound terms. What do you want to say or clarify? Native commands remain available.",
         files:[new AttachmentBuilder(Buffer.from(JSON.stringify(result,null,2)),{name:"continuity-inbox.json"})]});return true;
     }
     if(group==="intel"&&["arc","discover"].includes(sub)){

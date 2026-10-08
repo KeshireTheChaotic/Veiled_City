@@ -15,6 +15,7 @@ import { captureDialogue } from "./dialogue-continuity.js";
 import { captureDeclaration } from "./player-language.js";
 import { publishRollRequests } from "./roll-requests.js";
 import { routeRollMessage } from "./roll-language.js";
+import { routeConsentMessage } from "./consent-language.js";
 import { publishEventResults, postGmLog, postStateError, deliverHandout, postPlayMessage } from "./publishing.js";
 import { VoiceNarrator } from "./voice.js";
 import { KeyedSerialQueue } from "./serial-queue.js";
@@ -292,6 +293,8 @@ async function processPrivateTurn(message,directMention){
   }
   const speaker=controlled?.name||message.member?.displayName||message.author.username;
   const vis=controlled?.character_id?"character":"player";
+  if(!controlled?.npc_proxy&&await routeConsentMessage({db,message,text:playerText,characterId:controlled?.character_id,
+    deliver:text=>sendPrivate(message.guild,message.author.id,text,session.id,controlled?.character_id)})) return;
   if(!controlled?.npc_proxy&&await routeRollMessage({db,message,text:playerText,characterId:controlled?.character_id,
     deliver:text=>sendPrivate(message.guild,message.author.id,text,session.id,controlled?.character_id),
     sendAmendment:(user,text,sid,char)=>sendPrivate(message.guild,user,text,sid,char)})) return;
@@ -376,6 +379,8 @@ async function processPartyTurn(message,directMention){
     return;
   }
   const speaker=controlled?.name||message.member?.displayName||message.author.username;
+  if(!controlled?.npc_proxy&&await routeConsentMessage({db,message,text:playerText,characterId:controlled?.character_id,
+    deliver:text=>sendPrivate(message.guild,message.author.id,text,session.id,controlled?.character_id)})) return;
   if(!controlled?.npc_proxy&&await routeRollMessage({db,message,text:playerText,characterId:controlled?.character_id,
     deliver:text=>sendPrivate(message.guild,message.author.id,text,session.id,controlled?.character_id),
     sendAmendment:(user,text,sid,char)=>sendPrivate(message.guild,user,text,sid,char)})) return;

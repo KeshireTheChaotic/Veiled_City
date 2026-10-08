@@ -42,6 +42,7 @@ bot/scripts/format-check.mjs
 bot/scripts/i-heard-you-1-test.mjs
 bot/scripts/i-heard-you-2-test.mjs
 bot/scripts/i-heard-you-3-test.mjs
+bot/scripts/i-heard-you-4-test.mjs
 bot/scripts/narrative-contract-test.mjs
 bot/scripts/negotiation-preview-test.mjs
 bot/scripts/npc-cognition-regression-test.mjs
@@ -91,6 +92,7 @@ bot/src/command-schema.js
 bot/src/commands.js
 bot/src/concept-context.js
 bot/src/config.js
+bot/src/consent-language.js
 bot/src/content.js
 bot/src/context-planner.js
 bot/src/continuity-routing.js

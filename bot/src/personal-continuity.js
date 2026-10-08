@@ -6,6 +6,7 @@ import { PermissionError, StateConflictError, UserInputError } from "./errors.js
 import { stateRevision } from "./ai-intents.js";
 import { handoutPlayerView } from "./handout.js";
 import { organizationInbox } from "./owned-community.js";
+import { evidenceView } from "./evidence-custody.js";
 export function personalCharacter(db,guild,userId,characterId){
   const session=db.getActiveSession(guild),assignment=session?db.activeAssignment(session.id,userId):null;
   const id=characterId||assignment?.character_id,character=id?db.getCharacter(id):null;
@@ -96,13 +97,13 @@ export function captureArcCandidate(db,guild,user,characterId,messageId,message)
 }
 export function personalInbox(db,guild,user){
   const character=personalCharacter(db,guild,user);
-  return ["arc_candidate","arc_beat","project_draft"].flatMap(kind=>db.characterContinuity(guild,character.id,{kind})
+  return ["arc_candidate","arc_beat","project_draft","consent_reply"].flatMap(kind=>db.characterContinuity(guild,character.id,{kind})
     .map(row=>({...row,expected_revision:stateRevision(row)})));
 }
 export function discoverPersonal(db,guild,userId,input={}){
   cityObject(input);if(db.getCityCalendar(guild).flags.discovery!==true) throw new StateConflictError("Discovery lookup is opt-in.");
   const character=personalCharacter(db,guild,userId,input.character_id),query=input.query||"",mode=input.mode||"know";
-  if(typeof query!=="string"||query.length>300||!["know","leads","changed","witness","arcs","evidence","commitments","organizations"].includes(mode)) throw new UserInputError("Bounded literal query and discovery mode required.");
+  if(typeof query!=="string"||query.length>300||!["know","leads","changed","witness","arcs","evidence","commitments","organizations","case"].includes(mode)) throw new UserInputError("Bounded literal query and discovery mode required.");
   if(input.since_minute!==undefined) cityInteger(input.since_minute,0,1000000000);
   const facts=["evidence","commitments","organizations"].includes(mode)?[]:db.contextFacts(guild,{scope:"character",characterId:character.id,userId,query,limit:50})
     .filter(row=>mode!=="leads"||["clue","lead"].includes(row.category)).map(row=>({id:row.id,key:row.fact_key,content:row.content,
@@ -111,7 +112,12 @@ export function discoverPersonal(db,guild,userId,input={}){
     .filter(row=>row.status==="active"&&row.minute>(input.since_minute??-1)).map(row=>({source:row.event_key,title:row.title,minute:row.minute,truth_status:row.truth_status})):[];
   const personal=mode==="arcs"?["arc","arc_beat"].flatMap(kind=>db.characterContinuity(guild,character.id,{kind,query}).map(row=>({key:row.record_key,
     kind,status:row.status,source:row.source_event,data:row.data}))):[];
-  const evidence=mode==="evidence"?db.listHandoutsFor(guild,userId,{characterId:character.id,query,limit:30}).map(handoutPlayerView):[];
+  const evidence=["evidence","case"].includes(mode)?db.listHandoutsFor(guild,userId,{characterId:character.id,query,limit:30}).map(handoutPlayerView):[];
+  const case_view=mode==="case"?{
+    evidence:evidence.map(row=>({...row,custody:evidenceView(db,guild,row.id,userId).history})),
+    hypotheses:facts.filter(row=>row.category==="hypothesis"),
+    claims:facts.filter(row=>row.category!=="hypothesis").map(row=>({...row,label:row.category==="clue"?"recorded clue; interpretation not proof":"recorded character knowledge/claim; not fixed global truth"})),
+    limits:"Literal matching within authorized records before limits; unknown is not disproven. No sealed holdings, hidden solution, private NPC beliefs or other PCs' findings. Creative inquiry needs separate adjudication."}:null;
   const organizations=mode==="organizations"?organizationInbox(db,guild,userId,query).communities:[];
   const commitments=mode==="commitments"?[
     ...db.characterContinuity(guild,character.id,{kind:"arc",query}).filter(row=>row.status==="active"&&row.data.type==="vow"&&row.data.established_by===userId)
@@ -119,7 +125,7 @@ export function discoverPersonal(db,guild,userId,input={}){
     ...db.characterContinuity(guild,character.id,{kind:"organization_request",query}).filter(row=>["consented","approved"].includes(row.status)&&row.data.confirmed_by===userId)
       .map(row=>({key:row.record_key,text:`${row.data.title}: ${row.data.terms}`,status:`${row.status} initiative; no automatic spending or binding`})),
     ...db.acceptedProjectContinuity(guild,character.id,userId,query).map(row=>({key:row.record_key,text:`${row.title}: ${row.phase}`,status:`${row.status}; explicitly accepted current project phase`}))]:[];
-  return {character_id:character.id,mode,query,facts,events,personal,evidence,organizations,commitments,
+  return {character_id:character.id,mode,query,facts,events,personal,evidence,organizations,commitments,case_view,
     unknown:![facts,events,personal,evidence,organizations,commitments].some(rows=>rows.length),
     authority:"Read-only recorded character knowledge; witness claims are not established truth; no alias expansion or discoveries."};
 }
