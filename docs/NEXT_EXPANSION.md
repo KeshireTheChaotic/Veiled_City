@@ -31,6 +31,36 @@ commit/publication-failure, restart, backup and migration coverage. All required
 suites run behind a network-denial preload. No schema migration is necessary.
 Upgrade: back up, stop the old bot, restart. Register commands when they change.
 
+## Phase B — 4.6.0
+
+Reuse: scoped facts, NPC cognition, reports, history, goals, contact actions,
+resources, relationships and channels. New ContextPlanner filters by actor and
+scope before ranking/budgeting, preserves source/status/confidence and explains
+omissions. No AI selection call. `/vc-story context json:{"actorType":"npc",
+"actorKey":"alice","query":"quay"}` is GM-only/read-only, as is `diagnose`
+(JSON result/scope). Context token counts are conservative estimates, not a
+provider tokenizer. Plans cap at 6000 estimated tokens; adaptive main-turn
+requests additionally refuse inputs over 120000 characters.
+
+Enable `/vc-city flags json:{"adaptive_context":true,"conversations":true}`.
+Both default off. Adaptive context replaces the main turn's unranked global-fact
+selection and adds an explainable source plan; immutable operating instructions,
+roster, encounter and existing bounded cognition remain separate prompt inputs.
+NPC packets never include global GM facts. No persistent second knowledge store.
+
+`/vc-story conversation` takes JSON key/source_event/from/to/from_goal/to_goal,
+opportunity (round/scene/downtime/manual), optional information_key or bounded lie.
+Two available non-proxied NPCs need active compatible goals and an established
+directed channel. One exchange per fictional tick; stable keys replay without
+cost. Existing deterministic contact mechanics/costs decide success and share
+only the sender's actual knowledge. Durable refusal policy stops contact without
+spending. Lies remain explicitly unverified speech, not new canon/knowledge.
+Positions and pre-contact packets are retained; no agreement is bound. Further
+commitments use the existing explicit-consent workflow. This is on-demand, not
+an always-running model conversation loop. No new schema; city records already
+participate in backups. Register commands after upgrade. Offline fixtures cover
+old clues beyond 120 records, role switching, contact/refusal and duplicate cost.
+
 ## OPTIONAL — MAY INCUR API COSTS
 
 A human may choose a disposable campaign and explicitly run a real narration,

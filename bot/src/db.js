@@ -99,6 +99,15 @@ export class VeiledDB {
 
   close() { this.db.close(); }
 
+  contextFacts(guildId,{scope,userId="",characterId="",query="",limit=20}){
+    return this.db.prepare(`SELECT * FROM facts WHERE guild_id=? AND archived=0 AND
+      (?='gm' OR visibility='public' OR (? IN ('party','player','character') AND visibility='party')
+      OR (? IN ('player','character') AND visibility='player' AND subject_user_id=?)
+      OR (?='character' AND visibility='character' AND subject_character_id=?))
+      AND (?='' OR instr(lower(content),lower(?))>0) ORDER BY created_at DESC,id LIMIT ?`)
+      .all(guildId,scope,scope,scope,userId,scope,characterId,query,query,Math.min(50,limit));
+  }
+
   getCityCalendar(guildId){
     const row=this.db.prepare("SELECT * FROM city_calendar WHERE guild_id=?").get(guildId);
     return row?{...row,flags:JSON.parse(row.flags_json)}:{guild_id:guildId,epoch:null,timezone:"UTC",flags:{}};

@@ -459,6 +459,14 @@ export function buildCommands(){
     .addSubcommand(s=>s.setName("minor-review").setDescription("Promote or discard a minor NPC draft")
       .addStringOption(o=>o.setName("json").setDescription("key, decision:promote|discard JSON").setRequired(true)))
     .toJSON());
+  full.options.push(new SlashCommandBuilder().setName("story").setDescription("GM: sourced context and bounded story operations")
+    .addSubcommand(s=>s.setName("context").setDescription("Read-only actor-relative context plan")
+      .addStringOption(o=>o.setName("json").setDescription("Actor/scope/query/budget JSON").setRequired(true)))
+    .addSubcommand(s=>s.setName("diagnose").setDescription("Read-only narration integrity diagnostic")
+      .addStringOption(o=>o.setName("json").setDescription("result and scope JSON").setRequired(true)))
+    .addSubcommand(s=>s.setName("conversation").setDescription("Resolve one explicit NPC contact opportunity")
+      .addStringOption(o=>o.setName("json").setDescription("Stable key, source, NPCs, goals, opportunity and known information JSON").setRequired(true)))
+    .toJSON());
   const splitMap={
     character:{
       "vc-character":["create","import","context-export","import-gm-hooks","narrative-import","narrative-export","list","select","sheet","export","export-gm","retire","death"],

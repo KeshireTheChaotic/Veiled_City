@@ -10,6 +10,7 @@ import { cityContext } from "./city-core.js";
 import { historyContext } from "./city-civic.js";
 import { minorNpcSchema } from "./city-depth.js";
 import { materialClaimSchema, NARRATIVE_CONTRACT, validateNarrativeClaims } from "./narrative-integrity.js";
+import { ContextPlanner } from "./context-planner.js";
 
 const routerSchema={
   type:"object",
@@ -385,7 +386,10 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
     const characterNarratives=narrativeContext(this.db,guildId,narrativeIds,{includeGM:true,maxChars:8000});
     const visibleHandouts=this.db.listHandoutsFor(guildId,actorUserId,{characterId:actorKnowledgeId,includeGM:false,limit:40}).map(h=>({id:h.id,title:h.title,kind:h.kind,authority:h.authority,visibility:h.visibility,case_key:h.case_key,npc_key:h.npc_key,location_key:h.location_key}));
     const npcCognition=retrieveNpcCognition(this.db,guildId,{query,actorAssignment,worldDirector,maxNpcs:worldDirector?6:4,recordRecall:true});
+    const contextPlan=this.db.getCityCalendar(guildId).flags.adaptive_context?new ContextPlanner(this.db).plan(guildId,
+      {operation:worldDirector?"director":"turn",actorType:"gm",scope:"gm",query:messageText,scene:session?this.db.getDirectorState(session.id).scene_label:""}):null;
     return {
+      context_plan:contextPlan,
       campaign,session,assembly,party_state:partyState,current_encounter:currentEncounter,current_combatants:currentCombatants,canon,rulings,actor_relationships:actorRelationships,gm_relationships:gmRelationships,gm_character_hooks:gmCharacterHooks,character_narratives:characterNarratives,visible_handouts:visibleHandouts,
       actor_assignment:actorAssignment?(actorAssignment.npc_proxy?{
         assignment_kind:"npc_proxy",controller_user_id:actorUserId,npc_proxy_id:actorAssignment.id,
@@ -396,7 +400,7 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
       roster:summarizeRoster(roster),
       recent:recent.map(m=>({speaker:m.speaker_name,user_id:m.discord_user_id,visibility:m.visibility,subject_user_id:m.subject_user_id,character_id:m.character_id,content:m.content})),
       actor_visible_facts:actorFacts,
-      gm_all_facts:gmFacts,
+      gm_all_facts:contextPlan?contextPlan.segments.filter(row=>row.source.startsWith("fact:")).map(row=>row.data):gmFacts,
       npc_cognition:npcCognition,
       clocks,
       reference_chunks:chunks.map(c=>({source:c.file,text:c.body})),
@@ -493,6 +497,10 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
       input,
       text:{format:{type:"json_schema",name:"veiled_city_gm_turn",strict:true,schema:gmSchema}}
     };
+    if(ctx.context_plan){
+      req.input+=`\nSOURCED CONTEXT PLAN (GM-only, never actor omniscience): ${JSON.stringify(ctx.context_plan)}`;
+      if(req.input.length>120000) throw new Error("Context input budget exceeded; narrow the scene/query before retrying.");
+    }
     if(this.config.reasoningEffort) req.reasoning={effort:this.config.reasoningEffort};
     const validateTurn=(result)=>{
       validatePostTurnStateReview(result);
