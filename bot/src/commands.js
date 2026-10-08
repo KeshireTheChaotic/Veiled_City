@@ -29,6 +29,7 @@ import { publishSimulationHooks } from "./publishing.js";
 import { handleSimulationCommand } from "./simulation-commands.js";
 import { handleCityCommand } from "./city-commands.js";
 import { handleStoryCommand } from "./story-commands.js";
+import { personalArc, discoverPersonal } from "./personal-continuity.js";
 
 const interactionQueue=new KeyedSerialQueue();
 
@@ -343,10 +344,16 @@ async function executeCommand(interaction,{db,gm,voice=null}){
     group=root==="level"?"character":root==="combat"?"encounter":root;
     sub=interaction.options.getSubcommand();
   }
-  if((group!=="story"&&!(group==="admin"&&sub==="seed-drafts"))||isMutatingCommand(group,sub)) await ensurePlayer(db,interaction);
+  if((group!=="story"&&!(group==="admin"&&sub==="seed-drafts")&&!(group==="intel"&&sub==="discover"))||isMutatingCommand(group,sub)) await ensurePlayer(db,interaction);
   if(await replayReceiptIfPresent({db,interaction,group,sub})) return true;
   const restoreReceiptCapture=installReceiptCapture({db,interaction,group,sub});
   try{
+    if(group==="intel"&&["arc","discover"].includes(sub)){
+      const input=JSON.parse(interaction.options.getString("json")||"{}");
+      const result=sub==="arc"?personalArc(db,interaction.guildId,interaction.user.id,input):discoverPersonal(db,interaction.guildId,interaction.user.id,input);
+      await interaction.reply({ephemeral:true,content:"Character-private continuity; recorded knowledge only.",
+        files:[new AttachmentBuilder(Buffer.from(JSON.stringify(result,null,2)),{name:"personal-continuity.json"})]});return true;
+    }
     if(group==="admin"&&["seed-drafts","seed-add","seed-edit","seed-remove","seed-approve","seed-reject"].includes(sub)){
       if(!isGM(db,interaction)) throw new PermissionError("GM/admin permission required.");
       return await handleSeedCommand(interaction,{db});
@@ -1662,7 +1669,7 @@ GM notes: ${a.draft.gm_notes}`:""}`.slice(0,1950):"No aftermath draft exists for
     }
   } catch(err){
     const msg=err.message||String(err);
-    if(!isExpectedError(err) && interaction.guild && !((group==="story"||group==="admin"&&sub==="seed-drafts")&&!isMutatingCommand(group,sub))){
+    if(!isExpectedError(err) && interaction.guild && !((group==="story"||group==="intel"&&sub==="discover"||group==="admin"&&sub==="seed-drafts")&&!isMutatingCommand(group,sub))){
       await postStateError({db,guild:interaction.guild,error:err,context:`command:/vc ${group||""} ${sub||""}`,sessionId:db.getActiveSession(interaction.guildId)?.id||null});
     }
     const payload={content:`⚠️ ${msg}`,ephemeral:true};

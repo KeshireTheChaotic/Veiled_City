@@ -105,3 +105,30 @@ resources, ended objectives or deadlines block execution with an audit reason.
 Inspect GM `/vc-city records kind:strategy` or `kind:group_transition`. Disable
 flags to stop new opportunities; already queued actions use their native review
 and cancellation controls. Backups and rollback follow the Phase A procedure.
+
+## 5.4.0 — Phase D: personal arcs and discovery
+
+Enable `/vc-city flags json:{"personal_arcs":true,"discovery":true}` (off by
+default). Present players with an active owned character may use
+`/vc-intel arc json:{"key":"promise","type":"vow","statement":"Find my brother without violence"}`.
+Types: dilemma, stake, relationship, vow, choice, desire. These are explicit
+player statements, not inferred PC feelings or established world truth. Repeating
+the key revises the statement with source/history; no mechanical changes occur.
+
+GM `/vc-story arc-beat` JSON:
+`{"character_id":"<id>","arc_key":"promise","key":"sibling-lead","source_event":"observed-lead","invitation":"Would you like to follow this lead?"}`.
+Only a present character with an established arc is eligible. The invitation is
+private and nonbinding. Player `/vc-intel arc` JSON
+`{"key":"sibling-lead","op":"respond","decision":"decline"}` (or accept)
+has no costs or automatic effects; acceptance does not choose a PC action.
+
+`/vc-intel discover json:{"mode":"know","query":"visitor"}` returns only
+recorded knowledge available to the active owned character. Other modes: leads,
+witness, changed, arcs. `changed` accepts `since_minute` (explicit fictional
+minute); it is a caller-supplied cursor, not a stored last-visit update. Results
+are bounded to 50 scoped facts/events; old literal clue searches still search
+before the limit. Claims retain uncertainty and source; unknown stays unknown.
+No hidden identity/alias joins, world advancement, generation, canon, receipts,
+player upserts or error-log writes occur. Character switching changes the private
+scope immediately; proxies do not gain private personal access. Full backups
+preserve these records; disable flags without deleting history. No live test.

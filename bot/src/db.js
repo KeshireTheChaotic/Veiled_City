@@ -113,6 +113,11 @@ export class VeiledDB {
     const row=this.db.prepare("SELECT * FROM city_calendar WHERE guild_id=?").get(guildId);
     return row?{...row,flags:JSON.parse(row.flags_json)}:{guild_id:guildId,epoch:null,timezone:"UTC",flags:{}};
   }
+  characterContinuity(guildId,characterId,{kind="arc",query="",limit=30}={}){
+    return this.db.prepare(`SELECT * FROM city_records WHERE guild_id=? AND visibility='character' AND subject_key=?
+      AND kind=? AND (?='' OR instr(lower(data_json),lower(?))>0) ORDER BY minute DESC,rowid DESC LIMIT ?`)
+      .all(guildId,characterId,kind,query,query,Math.max(1,Math.min(50,limit))).map(row=>({...row,data:JSON.parse(row.data_json)}));
+  }
   setCityCalendar(guildId,{epoch=null,timezone="UTC",flags={}}){
     this.db.prepare(`INSERT INTO city_calendar(guild_id,epoch,timezone,flags_json) VALUES(?,?,?,?)
       ON CONFLICT(guild_id) DO UPDATE SET epoch=excluded.epoch,timezone=excluded.timezone,flags_json=excluded.flags_json`)

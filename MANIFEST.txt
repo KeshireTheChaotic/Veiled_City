@@ -20,6 +20,7 @@ bot/scripts/endurance-test.mjs
 bot/scripts/expansion-a-test.mjs
 bot/scripts/expansion-b-test.mjs
 bot/scripts/expansion-c-test.mjs
+bot/scripts/expansion-d-test.mjs
 bot/scripts/export-campaign.mjs
 bot/scripts/format-check.mjs
 bot/scripts/narrative-contract-test.mjs
@@ -78,6 +79,7 @@ bot/src/npc-conversations.js
 bot/src/operations/diagnostics.js
 bot/src/operations/overview.js
 bot/src/outcome-preview.js
+bot/src/personal-continuity.js
 bot/src/portrayal.js
 bot/src/provenance.js
 bot/src/publishing.js

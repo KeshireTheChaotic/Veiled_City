@@ -27,6 +27,14 @@ export class ContextPlanner {
     }else{
       for(const term of terms.length?terms:[""]) for(const row of this.db.contextFacts(guildId,{scope:actorType==="gm"?scope:scope==="gm"?"character":scope,
         userId,characterId,query:term,limit:20})) add(`fact:${row.id}`,row,20);
+      if(this.db.getCityCalendar(guildId).flags.personal_arcs===true){
+        const session=this.db.getActiveSession(guildId);
+        const ids=actorType==="gm"&&scope==="gm"&&session?this.db.roster(session.id)
+          .filter(row=>["present","late","guest"].includes(row.presence)).map(row=>row.character_id).filter(Boolean).slice(0,8)
+          :actorType==="character"&&this.db.getCharacter(characterId)?.owner_user_id===userId?[characterId]:[];
+        for(const id of ids) for(const kind of ["arc","arc_beat"]) for(const row of this.db.characterContinuity(guildId,id,{kind,query,limit:8}))
+          if(kind==="arc"||row.status==="pending") add(`${kind}:${row.record_key}`,{...row.data,character_id:id,status:row.status,nonbinding:true},15);
+      }
       if(actorType==="gm"&&scope==="gm"){
         for(const term of terms) for(const row of this.db.listWorldEvents(guildId,{includeGM:true,query:term,limit:12})) add(`event:${row.event_key}`,row,10);
         for(const row of historyContext(this.db,guildId,`${scene} ${query}`)) add(`history:${row.sources.map(s=>s.event_key).join(",")}`,row,5);

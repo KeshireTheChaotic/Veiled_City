@@ -1,4 +1,4 @@
-# VEILED CITY MULTIPLAYER DISCORD ENGINE v5.3.0
+# VEILED CITY MULTIPLAYER DISCORD ENGINE v5.4.0
 
 Stateful Discord GM bot for the Veiled City multiplayer Daggerheart campaign.
 

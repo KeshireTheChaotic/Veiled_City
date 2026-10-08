@@ -38,7 +38,7 @@ the actual controlling owner and never accept an input JSON identity as authorit
 | A: P01–02 | dc80bf7 | 5.1.0 | EXTENDED; baseline and phase-specific zero-token gates pass |
 | B: P03 | ecfe238 | 5.2.0 | EXTENDED: occupancy and actor-relative access; offline gates pass |
 | C: P04–05 | 19b8864 | 5.3.0 | EXTENDED: voluntary community lifecycle and durable bounded plans; offline gates pass |
-| D: P06–07 | pending | next minor | Pending fresh audit |
+| D: P06–07 | 06c20e3 | 5.4.0 | EXTENDED: owner-established arcs and zero-write character-relative discovery; offline gates pass |
 | E: P08–09 | pending | next minor | Pending fresh audit |
 | F: P10–11 | pending | next minor | Pending fresh audit |
 | G: P12 | pending | next minor | Pending fresh audit |
@@ -103,3 +103,21 @@ steps; already executed steps reconcile costs rather than replaying them.
 Fixtures in `expansion-c-test.mjs` cover voluntary/dissenting membership, schisms,
 forged identities/evidence, cyclic dependencies, review, delays, cancellation,
 cost conservation, replay, privacy and snapshot/restart. No schema changes.
+
+### Phase D audit and extension
+
+Fresh 06c20e3 audit: character Markdown, scoped facts, roster assignments and
+ContextPlanner are reused. P06 EXTENDED in `personal-continuity.js`: owner-stated
+dilemmas/stakes/relationships/vows/choices/desires, source and revision history,
+GM-private/nonbinding callback invitations, explicit acceptance/decline with no
+PC mutation. Proxies and absent/switched characters cannot establish or retrieve
+these personal records. GM context includes only present-character arcs, marked
+nonbinding and player-stated rather than inferred emotions or world truth.
+P07 EXTENDED: literal scoped know/leads/changed/witness/arcs queries authorize
+before query/ranking; missing evidence stays unknown, aliases are not joined,
+witness claims preserve recorded confidence. Existing DB queries are reused;
+one typed character-continuity query filters subject before limits. Existing
+fact/lead classifications remain authoritative; no new inference establishes
+lead closure or truth. `expansion-d-test.mjs` checks two PCs, owner forgery,
+private clues/aliases, switching, attendance, penalty-free decline, context,
+real command snapshot equality/no receipt, and restart/restore. No schema change.
