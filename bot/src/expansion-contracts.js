@@ -1,5 +1,7 @@
 /** Shared release feature contract and read-only GM diagnostics; absent flags are disabled and records never imply PC authority. */
 export const EXPANSION_FEATURES=Object.freeze({
+  encounter_intelligence:{phase:"SP1",records:["encounter_actor","encounter_proposal","encounter_outcome"],command:"/vc-encounter world",authority:"Grounded GM-reviewed proposals; no automatic combat or arrival"},
+  decision_advisory:{phase:"SP1",records:[],command:"Normal GM turns",authority:"GM-private check/clarification advice; no new mechanics"},
   emergent_goals:{phase:"A",records:["goal_transition","goal_state"],command:"/vc-sim goal",authority:"Pending sourced actor goal transitions"},
   consequences:{phase:"A",records:["consequence_subscription","consequence"],command:"/vc-sim consequence",authority:"Typed subscribed effects with review and receipts"},
   scene_continuity:{phase:"B",records:["scene_presence","scene_residue"],command:"/vc-story scene",authority:"Descriptive physical continuity, not combat mechanics"},

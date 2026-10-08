@@ -17,9 +17,10 @@ import { applicationPrincipal } from "./application-authority.js";
 import { inspectNpcAction } from "./simulation.js";
 import { inspectInstitutionAction } from "./city-core.js";
 import { manageMemoryCluster, memoryMaintenanceCandidate } from "./memory-clusters.js";
+import { encounterProposalContext, proposeWorldEncounter } from "./encounter.js";
 const hash=value=>createHash("sha256").update(JSON.stringify(value)).digest("hex");
 const adapters=new Map();
-export const FEATURE_FLAGS={goal:"emergent_goals",consequence:"consequences",scene:"scene_continuity",group:"emergent_groups",
+export const FEATURE_FLAGS={encounter:"encounter_intelligence",goal:"emergent_goals",consequence:"consequences",scene:"scene_continuity",group:"emergent_groups",
   strategy:"strategies",arc:"personal_arcs",discovery:"discovery",project:"long_projects",mediation:"conflict_mediation",
   memory:"memory_consolidation",density:"activity_density"};
 export const stateRevision=row=>row?hash(row):"absent";
@@ -128,6 +129,8 @@ export function intentContext(db,guild){
       .map(row=>({...row,expected_revision:stateRevision(row)}))),
     personal_targets:["arc","arc_candidate"].flatMap(kind=>db.listCityRecords(guild,{kind,includeGM:true,limit:8})
       .map(row=>({...row,expected_revision:stateRevision(row)}))),
+    encounter_actors:encounterProposalContext(db,guild),
+    encounter_proposals:db.listCityRecords(guild,{kind:"encounter_proposal",status:"pending",includeGM:true,limit:8}),
     reviewed_templates:db.listCityRecords(guild,{kind:"seed_template",includeGM:true,limit:8}),
     project_targets:db.listCityRecords(guild,{kind:"long_project",includeGM:true,limit:8})
       .map(row=>({...row,expected_revision:stateRevision(row),phase_revision:projectPhaseRevision(row)})),
@@ -149,6 +152,11 @@ export function intentContext(db,guild){
   bounded.context_metrics={max_chars:24000,estimated_chars:chars,omissions,authority:"Whole scoped records omitted; permission fields are never stripped."};
   return bounded;
 }
+registerIntentAdapter("encounter",{
+  current:(db,guild,intent)=>db.getCityRecord(guild,"encounter_proposal",intent.target_key),
+  impact:()=>({cost:0,review:false,reason:"GM-private proposal only; explicit native encounter review required before planning or activation."}),
+  apply:(db,guild,intent,key,actor)=>proposeWorldEncounter(db,guild,{...intent.payload,key:intent.target_key||key},actor)
+});
 registerIntentAdapter("goal",{
   current:(db,guild,intent)=>intent.payload.actor_type==="npc"?db.getNpcGoal(guild,intent.payload.actor_key,intent.payload.goal_key)
     :db.listSimulationRecords(guild,{kind:"goal",entityKey:`${intent.payload.actor_type}:${intent.payload.actor_key}`,limit:1000})

@@ -1,0 +1,34 @@
+# Systems to players — behavioral gap audit
+
+Baseline: `6856e21bffff304352d5447e6099664f2537f8f5`, version 7.0.0, schema 440, clean worktree (2026-10-08). Source roadmap: `SUGGESTIONS-systems-to-players.md`. This is an implementation audit, not a claim of live deployment or natural-language correctness.
+
+Existing production paths: `index.js` → `GMService` → `commitGmTurn` → `applyAuthoritativeMutation`; director and downtime use the same native mutation services. `handleCommand` authenticates commands; `ai-intents.js` validates closed contracts, policy/revisions, native effects and durable receipts. SQLite snapshots already include city records, NPC memories, handouts and encounter history. `validate-offline.mjs` runs network-denied fixtures with dummy credentials.
+
+| ID | Baseline verdict | Behavioral evidence and remaining extension |
+| --- | --- | --- |
+| P01 | EXISTS + PARTIAL | `encounter.js`: `livePcRoster`, `recomputeBudget`, approved library; `commands.js`: build/start/end and `applyEncounterAftermath`; `combat.js`: deterministic combatants. Existing builder randomly fills budget, without world actor bindings. Need sourced proposals, occupancy revalidation and actual-result history. `production-regression-test.mjs` covers encounter mechanics. |
+| P02 | EXISTS + PARTIAL | `gm.js`: `buildContext`, saved rulings and `runTurn`; `story-continuity.js`: pacing silence and independent mystery routes; dice remain native. Need explicit bounded explainable roll/no-roll/clarification/provisional advisory in the normal turn. `narrative-contract-test.mjs`, `story-continuity-test.mjs`. |
+| P03 | EXISTS + PARTIAL | `npc-cognition.js`, `npc-conversations.js`, `state.js`: actor-owned memories/knowledge, source and scene observation checks; portrayal and memory clusters already exist. Need explicit authored speech provenance and interpretation-vs-quotation continuity. `npc-cognition-regression-test.mjs`, `context-conversation-test.mjs`. |
+| P04 | EXISTS + PARTIAL | Existing NPC memory, goals, `simulation-strategy.js`, native actions and combat history. Need observed tactical aftermath linked to recurring actors, without new stats or omniscience. `end-to-end-d-test.mjs`. |
+| P05 | EXISTS + PARTIAL | Handout authority/scoped access, case evidence reports, source events and metadata already persist and export safely. No verified unique-original custody lifecycle or replay-safe controller-authorized transfers. `operations-regression-test.mjs`, `city-core-regression-test.mjs`. |
+| P06 | EXISTS + PARTIAL | `city-civic.js`: `transmitCityBelief` validates knowledge/channel/capacity and divergent audiences; `city-core.js`: reports, jurisdiction, procedure and institutional review. Need persistent attempt/refusal/correction explanations and production fixtures. `city-civic-regression-test.mjs`, `end-to-end-b-test.mjs`. |
+| P07 | EXISTS + PARTIAL | Native property disputes, NPC communities, obligations, owner-accepted long projects and authenticated character ownership exist. Player-owned organization proposal/explicit confirmation/materialization lifecycle not verified. `long-projects.js`, `personal-continuity.js`, `expansion-e-test.mjs`. |
+| P08 | ABSENT | `provenance.js` explains sources; canon conflicts already queue human review. Material cross-record contradiction detection and reversible repair proposals absent; competing beliefs must not count as contradictions. |
+| P09 | EXISTS + PARTIAL | `story-continuity.js` has unresolved pacing cues and fixed mystery routes; personal arc callbacks exist. Need source-linked optional setup lifecycle and closed-beat replay handling. `story-continuity-test.mjs`, `end-to-end-e-test.mjs`. |
+| P10 | EXISTS + PARTIAL | Finite simulation resources and `city-civic.js` service dependencies/redundancy/repair already implemented. Need action availability tied to particular established supplies without PC economic penalties. `city-depth-regression-test.mjs`, `end-to-end-b-test.mjs`. |
+| P11 | EXISTS + PARTIAL | Network guard, golden fixtures, end-to-end A–I and seeded endurance already gate release. Need named judgment cases and false-positive/negative reporting for these extensions. No live-model semantic guarantee. |
+| P12 | EXISTS + PARTIAL | `continuity-routing.js` routes private read-only discovery before message persistence; `discoverPersonal` authenticates active ownership before retrieval; GM inbox/review exists. Need natural evidence/commitment/organization questions, concise previews and privacy/no-write fixtures. `end-to-end-e-test.mjs`, `end-to-end-i-test.mjs`. |
+
+## Authority and prohibited substitutes
+
+Inspected engine constitution, multiplayer core/rules, player campaign/quick reference and the roadmap's rules, combat, encounter, downtime, privacy, evidence, simulation, living-city and expansion documents. Local baseline is Daggerheart SRD 2.0; official reference: https://www.daggerheart.com/srd/. No rules-dependent mechanics are being replaced. Saved human rulings retain the Rules Desk's existing precedence; ambiguity is provisional human adjudication.
+
+Automatic PC consent, speech, spending, affiliation, movement, absent-PC harm, invented adversary features/dice, forced combat, passive world-time progression and automatic canon repair are **CONFLICTS WITH RULES** and excluded. A GM proposal, subjective report or rumor never establishes those effects. New behavior stays opt-in; no flags, live databases, deployment, command registration or remote branches are changed by implementation.
+
+## Phase audits and acceptance evidence
+
+Each release appends its starting SHA, concrete before/after contract, test IDs, limits and result here and in `SYSTEMS_TO_PLAYERS_IMPLEMENTATION.md`. Baseline verdicts above remain historical: only verified behavior may be promoted to complete. Mandatory gate: `cd bot; npm run validate` (network denied, zero paid API calls).
+
+### Phase 1 audit — starting 6856e21 / 7.0.0 / schema 440
+
+P01/P02 remain **EXISTS + PARTIAL** against the entire roadmap: source-driven planning, native approval/activation checks, private actual outcome history and bounded normal-turn decision advisory are now implemented, with `SP1` production-path evidence. Survivor/witness tactical memory is deferred to phase 2; free-form semantic judgment is explicitly not verified by deterministic validation. No duplicate encounter/rules resolver or new mechanical rule was introduced. New flags: `encounter_intelligence`, `decision_advisory` (default off). Schema remains 440, existing snapshots/exports are retained. See phase 1 operator contract for commands and limits.

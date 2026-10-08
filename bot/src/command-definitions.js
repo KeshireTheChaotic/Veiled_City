@@ -151,6 +151,8 @@ export function buildCommands(){
         .addSubcommand(s=>s.setName("packet").setDescription("Re-send your sanitized NPC control packet")
           .addStringOption(o=>o.setName("npc").setDescription("NPC/antagonist name").setRequired(true))))
       .addSubcommandGroup(g=>g.setName("encounter").setDescription("GM-only Daggerheart Battle Point encounter builder")
+        .addSubcommand(s=>s.setName("world").setDescription("Bind actors, propose or review a sourced non-coercive encounter")
+          .addStringOption(o=>o.setName("json").setDescription("op:bind|propose|accept|decline and sourced encounter fields").setRequired(true)))
         .addSubcommand(s=>s.setName("build").setDescription("Build a multiplayer encounter from the live session roster")
           .addStringOption(o=>o.setName("difficulty").setDescription("Encounter length/difficulty adjustment").addChoices(
             {name:"Easy / shorter (-1 BP)",value:"easy"},{name:"Standard",value:"standard"},{name:"Hard / longer (+2 BP)",value:"hard"}))
@@ -547,7 +549,7 @@ export function buildCommands(){
       "vc-level":["level-up","level-choose","level-confirm"]
     },
     encounter:{
-      "vc-encounter":["build","status","adjust","add","remove","start","end","aftermath-status","aftermath-confirm","aftermath-discard"],
+      "vc-encounter":["world","build","status","adjust","add","remove","start","end","aftermath-status","aftermath-confirm","aftermath-discard"],
       "vc-combat":["combatants","damage","heal","stress","condition","combatant-status"]
     }
   };

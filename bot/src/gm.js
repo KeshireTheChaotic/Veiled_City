@@ -15,6 +15,7 @@ import { pacingAdvice, validatePacing } from "./story-continuity.js";
 import { portrayalPacket } from "./portrayal.js";
 import { intentArraySchema, INTENT_PROMPT } from "./ai-intent-contracts.js";
 import { intentContext } from "./ai-intents.js";
+import { decisionAdvisorySchema, decisionContext, validateDecisionAdvisory } from "./decision-advisory.js";
 
 const routerSchema={
   type:"object",
@@ -252,6 +253,8 @@ const downtimeSchema={
 };
 
 for(const schema of [gmSchema,directorSchema,aftermathSchema,downtimeSchema]){
+  schema.properties.decision_advisory=decisionAdvisorySchema;
+  schema.required.push("decision_advisory");
   schema.properties.ai_intents=intentArraySchema;
   schema.required.push("ai_intents");
 }
@@ -403,6 +406,7 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
     const contextPlan=(contextFlags.adaptive_context||contextFlags.personal_arcs||contextFlags.memory_consolidation)?new ContextPlanner(this.db).plan(guildId,
       {operation:worldDirector?"director":"turn",actorType:"gm",scope:"gm",query:messageText,scene:session?this.db.getDirectorState(session.id).scene_label:""}):null;
     return {
+      decision_advisory:decisionContext(this.db,guildId,messageText),
       ai_management:intentContext(this.db,guildId),
       context_plan:contextPlan,
       campaign,session,assembly,party_state:partyState,current_encounter:currentEncounter,current_combatants:currentCombatants,canon,rulings,actor_relationships:actorRelationships,gm_relationships:gmRelationships,gm_character_hooks:gmCharacterHooks,character_narratives:characterNarratives,visible_handouts:visibleHandouts,
@@ -484,6 +488,7 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
     ].join("\n\n");
     const input=[
       `CAMPAIGN STATE:\n${JSON.stringify(ctx.campaign)}`,
+      `DECISION ADVISORY (GM-private; null when disabled): ${JSON.stringify(ctx.decision_advisory)}`,
       `AI MANAGEMENT (GM-private proposals, policy, revisions and receipts; never actor knowledge): ${JSON.stringify(ctx.ai_management)}`,
       `SESSION:\n${JSON.stringify(ctx.session)}`,
       `ASSEMBLY PLAN (GM-PRIVATE; protect per-character hooks):\n${JSON.stringify(ctx.assembly)}`,
@@ -537,11 +542,12 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
       return true;
     };
     let result=await this.requestStructured(req,{label:"GM turn"});
-    try{ validateTurn(result); return result; }
+    try{ validateTurn(result); validateDecisionAdvisory(this.db,guildId,result); return result; }
     catch(err){
       const retry={...req,input:`${input}\n\nSTRUCTURED TURN CORRECTION: The prior response failed required state/proposal consistency: ${String(err.message||err)}. Return a complete replacement response. Every state-review category must agree exactly with mutations. If this private player explicitly requested campaign canon, emit canon_proposals; do not claim application-side recording or notification in narration.`};
       result=await this.requestStructured(retry,{label:"GM turn state-review retry"});
       validateTurn(result);
+      validateDecisionAdvisory(this.db,guildId,result);
       return result;
     }
   }

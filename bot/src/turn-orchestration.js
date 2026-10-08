@@ -1,9 +1,12 @@
 /** Shared production turn commit boundary: native state, proposals and intent receipts commit before publication. */
 import { applyAuthoritativeMutation, applyCanonProposalDrafts } from "./state.js";
+import { validateDecisionAdvisory } from "./decision-advisory.js";
 export function commitGmTurn({db,guild,session,result,scope,speaker,label,meta={}}){
+  const decision_advisory=validateDecisionAdvisory(db,guild.id,result);
   const mutates=(result.ai_intents||[]).length||(result.events||[]).some(e=>e.type!=="log_only")||(result.relationships||[]).length||(result.handouts||[]).length||(result.npc_memories||[]).length||(result.npc_knowledge||[]).length||(result.npc_goals||[]).length||(result.simulation_updates||[]).length;
   if(mutates) db.snapshotCampaign(guild.id,{label,reason:`Automatic snapshot before eventful GM turn by ${speaker}`,createdBy:"veilkeeper"});
   return db.transaction(()=>{
+    if(decision_advisory) db.audit(guild.id,session.id,"ai",scope.actorUserId||"veilkeeper","gm_decision_advisory",decision_advisory);
     const mutation=applyAuthoritativeMutation(db,{
       guildId:guild.id,
       sessionId:session.id,
@@ -42,6 +45,6 @@ export function commitGmTurn({db,guild,session,result,scope,speaker,label,meta={
       const p=canonProposals.find(x=>x?.ok&&x.row?.canon_key===key&&x.row?.proposed_value===value);
       if(p){ r.proposal_id=p.row.id; r.proposal_status=p.row.status; }
     }
-    return {...mutation,canonProposals};
+    return {...mutation,canonProposals,decision_advisory};
   });
 }

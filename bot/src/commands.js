@@ -5,7 +5,7 @@ import {
 } from "discord.js";
 import { dualityRoll, parseDice } from "./dice.js";
 import { publishJournal, postJournalEntry, publishEventResults, postGmLog, postStateError, postPrivateRelay, syncConfiguredSurfaces, postPlayMessage, sendPlayerPrivate, deliverHandout } from "./publishing.js";
-import { EncounterLibrary, livePcRoster, partyTier, baseBattlePoints, DIFFICULTY_ADJUSTMENTS, autoBuildComposition, recomputeBudget, battlePointCost, HEAVY_ROLES, defaultObjective } from "./encounter.js";
+import { EncounterLibrary, livePcRoster, partyTier, baseBattlePoints, DIFFICULTY_ADJUSTMENTS, autoBuildComposition, recomputeBudget, battlePointCost, HEAVY_ROLES, defaultObjective, manageWorldEncounter, recordWorldEncounterOutcome, validateWorldEncounterActivation } from "./encounter.js";
 import { prepareLevelup, applyLevelupToData, legalAdvancements, tierAchievement } from "./character-system.js";
 import { buildCombatants, hpMarksForDamage, combatantLine } from "./combat.js";
 import { applyAuthoritativeMutation } from "./state.js";
@@ -285,6 +285,7 @@ function resolveEndpoint(db,guildId,type,value){
 function latestEncounterForSession(db,sessionId){return db.listEncounters(sessionId)[0]||null;}
 
 async function applyEncounterAftermath({db,guild,encounter,draft,actorId}){
+  if(db.getEncounterAftermath(encounter.id)?.status==="applied") return {events:[],relationships:[],handouts:[],outputErrors:[]};
   db.snapshotCampaign(guild.id,{label:`Pre-aftermath encounter ${encounter.encounter_number}`,reason:"Automatic snapshot before encounter aftermath",createdBy:actorId});
   const scope={mode:"party",actorUserId:null,actorCharacterId:null};
   const mutation=db.transaction(()=>{
@@ -981,6 +982,12 @@ Source file: ${a.name}${narrativeImported?`\nGM-private narrative: ${narrativeRe
       if(!isGM(db,interaction)) throw new Error("GM/admin permission required.");
       const session=requireSession(db,interaction.guildId);
       const lib=encounterLibrary(gm);
+      if(sub==="world"){
+        const input=JSON.parse(interaction.options.getString("json",true));
+        const result=manageWorldEncounter(db,interaction.guildId,input,interaction.user.id,lib);
+        await interaction.reply({ephemeral:true,content:`World encounter ${result.status}: ${result.record_key}. Combat is not forced.`,
+          files:[new AttachmentBuilder(Buffer.from(JSON.stringify(result,null,2)),{name:"world-encounter.json"})]});return true;
+      }
       if(sub==="build"){
         const roster=livePcRoster(db,session.id);
         if(roster.length<2) throw new Error("The multiplayer encounter builder requires at least two present player characters.");
@@ -1064,6 +1071,7 @@ Source file: ${a.name}${narrativeImported?`\nGM-private narrative: ${narrativeRe
       }
       if(sub==="start"){
         let e=db.getCurrentEncounter(session.id); if(!e||e.status!=="planned") throw new Error("No planned encounter is available to start.");
+        validateWorldEncounterActivation(db,interaction.guildId,e);
         db.snapshotCampaign(interaction.guildId,{label:`Pre-encounter ${e.encounter_number}`,reason:"Automatic snapshot before encounter start",createdBy:interaction.user.id});
         e=db.setEncounterStatus(e.id,"active");
         db.captureEncounterStartState(e.id);
@@ -1109,6 +1117,7 @@ Source file: ${a.name}${narrativeImported?`\nGM-private narrative: ${narrativeRe
         let e=db.getCurrentEncounter(session.id); if(!e) throw new Error("No planned or active encounter.");
         const mode=interaction.options.getString("aftermath")||gm.config.encounterAftermathMode||"auto";
         e=db.setEncounterStatus(e.id,"ended");
+        recordWorldEncounterOutcome(db,interaction.guildId,e);
         db.audit(interaction.guildId,session.id,"human_gm",interaction.user.id,"encounter_end",{encounter_id:e.id,aftermath_mode:mode});
         await postGmLog({db,guild:interaction.guild,sessionId:session.id,title:`Encounter #${e.encounter_number} ended`,details:`Final composition budget: ${e.spent_bp}/${e.budget_bp} BP.
 Aftermath mode: ${mode}`});

@@ -12,6 +12,8 @@ const action={anyOf:[object({type:text(),target_type:choice("npc","faction","loc
     "negotiate_request","publish_finding","relocate_staff","seek_warrant"),target_type:choice("npc","location","institution","district",""),
     target_key:text(),jurisdiction:text(),report_keys:list(text(),8),personnel_key:text(),reason:text(1000)})]};
 export const INTENT_PAYLOADS={
+  encounter:object({...source,op:choice("propose"),actors:list(text(),12),location_key:text(),
+    objective:choice("escape","protect_evidence","containment","negotiation"),environment:text()}),
   goal:object({...actor,...source,op:choice("propose","reprioritize","pause","resume","supersede","complete","abandon"),
     goal_key:text(),new_goal_key:text(),objective:text(1000),reason:text(1000),priority:integer(0,100),confidence:integer(0,100),
     horizon:choice("immediate","near","long"),dependencies:list(text()),acceptable_methods:list(text()),conflicts:list(text())}),
