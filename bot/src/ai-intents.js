@@ -20,9 +20,10 @@ import { manageMemoryCluster, memoryMaintenanceCandidate } from "./memory-cluste
 import { encounterProposalContext, proposeWorldEncounter } from "./encounter.js";
 import { interpretDialogue } from "./dialogue-continuity.js";
 import { manageEvidence } from "./evidence-custody.js";
+import { attemptCityInfluence } from "./city-civic.js";
 const hash=value=>createHash("sha256").update(JSON.stringify(value)).digest("hex");
 const adapters=new Map();
-export const FEATURE_FLAGS={evidence:"evidence_custody",dialogue:"dialogue_history",encounter:"encounter_intelligence",goal:"emergent_goals",consequence:"consequences",scene:"scene_continuity",group:"emergent_groups",
+export const FEATURE_FLAGS={influence:"audience_influence",evidence:"evidence_custody",dialogue:"dialogue_history",encounter:"encounter_intelligence",goal:"emergent_goals",consequence:"consequences",scene:"scene_continuity",group:"emergent_groups",
   strategy:"strategies",arc:"personal_arcs",discovery:"discovery",project:"long_projects",mediation:"conflict_mediation",
   memory:"memory_consolidation",density:"activity_density"};
 export const stateRevision=row=>row?hash(row):"absent";
@@ -137,6 +138,8 @@ export function intentContext(db,guild){
     personal_targets:["arc","arc_candidate"].flatMap(kind=>db.listCityRecords(guild,{kind,includeGM:true,limit:8})
       .map(row=>({...row,expected_revision:stateRevision(row)}))),
     encounter_actors:encounterProposalContext(db,guild),
+    influence_actions:db.getCityCalendar(guild).flags.audience_influence===true?db.listSimulationRecords(guild,{kind:"action",status:"completed",limit:12})
+      .filter(row=>row.data.result?.information_source&&["contact","negotiate","spread_rumor","suppress_rumor"].includes(row.data.type)):[],
     evidence_targets:db.getCityCalendar(guild).flags.evidence_custody===true?db.listHandoutsFor(guild,"",{includeGM:true,limit:12})
       .filter(row=>row.metadata.evidence).map(row=>({handout_id:row.id,title:row.title,evidence:row.metadata.evidence,expected_revision:stateRevision(row.metadata.evidence)})):[],
     encounter_proposals:db.listCityRecords(guild,{kind:"encounter_proposal",status:"pending",includeGM:true,limit:8}),
@@ -161,6 +164,11 @@ export function intentContext(db,guild){
   bounded.context_metrics={max_chars:24000,estimated_chars:chars,omissions,authority:"Whole scoped records omitted; permission fields are never stripped."};
   return bounded;
 }
+registerIntentAdapter("influence",{
+  current:(db,guild,intent)=>db.getCityRecord(guild,"transmission",intent.target_key),
+  impact:()=>({cost:0,review:true,reason:"Human-reviewed audience response to an already resolved native action; no inferred institutional assent."}),
+  apply:(db,guild,intent,key,actor)=>attemptCityInfluence(db,guild,{...intent.payload,key:intent.target_key||key},actor)
+});
 registerIntentAdapter("evidence",{
   current:(db,guild,intent)=>{const row=db.getHandout(intent.payload.handout_id);return row?.guild_id===guild?row.metadata.evidence:null;},
   impact:()=>({cost:0,review:true,reason:"Human review of actual sourced evidence analysis; cannot transfer custody or establish guilt."}),

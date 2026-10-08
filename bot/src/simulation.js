@@ -308,6 +308,13 @@ function validateAction(db,guildId,action){
   }
   if(action.type==="fulfill_obligation"&&!action.obligation_id) throw new Error("Fulfilling an obligation requires its ID.");
   if(action.target_type==="character") throw new Error("Autonomous actions cannot choose PC actions or resolve attacks against PCs.");
+  if(["institution","community","audience"].includes(action.target_type)){
+    if(db.getCityCalendar(guildId).flags.audience_influence!==true||action.actor_type!=="npc"||!["contact","negotiate"].includes(action.type)
+      ||!db.cityEdges(guildId,"channel").some(edge=>edge.from_key===`npc:${key}`&&edge.to_key===`${action.target_type}:${action.target_key}`))
+      throw new Error("Civic contact needs opt-in influence, a legitimate NPC and an established channel.");
+    if(action.target_type!=="audience"&&db.getCityRecord(guildId,action.target_type,action.target_key)?.status!=="active")
+      throw new Error("Active civic contact recipient required.");
+  }
   if(action.target_type===action.actor_type&&action.target_key===key) throw new Error("An opposed action cannot target its own actor.");
   if(action.target_type==="npc"&&!db.getNpcProfile(guildId,action.target_key)) throw new Error("Target NPC is missing.");
   if(action.target_type==="npc"&&actorState(db,guildId,"npc",action.target_key).removed) throw new Error("Target NPC has been removed from play.");
@@ -357,8 +364,14 @@ export function executeNpcAction(db,guildId,record,{approved=false,roll=()=>rand
     if(action.type==="hide"&&success) state.position=bounded(state.position+1,0,5);
     db.setSimulationEntity(guildId,action.actor_type,key,state);
     const result={success,attack_roll:attackRoll,defense_roll:defenseRoll,attack,defense,resource_cost:{[resource]:1}};
+    if(db.getCityCalendar(guildId).flags.audience_influence===true&&action.actor_type==="npc"&&action.information_key){
+      const known=db.getNpcKnowledge(guildId,key,action.information_key);
+      result.information_source=known?{source_ref:known.source_ref,content:known.content,belief_state:known.belief_state}:null;
+    }
     const content=`${action.type} ${action.target_key||action.location_key||""}: ${success?"succeeded":"did not succeed"}. ${action.rationale||""}`;
-    remember(db,guildId,action.actor_type,key,content,{sourceRef:current.id,subjectType:action.target_type||"entity",subjectKey:action.target_key||""});
+    const civicTarget=["institution","community","audience"].includes(action.target_type);
+    remember(db,guildId,action.actor_type,key,content,{sourceRef:current.id,subjectType:civicTarget?"entity":action.target_type||"entity",
+      subjectKey:civicTarget?`${action.target_type}:${action.target_key}`:action.target_key||""});
     if(target&&["attack","protect","threaten","negotiate","contact"].includes(action.type))
       remember(db,guildId,action.target_type,action.target_key,content,{sourceRef:current.id,subjectType:action.actor_type,subjectKey:key});
     if(success){
@@ -392,7 +405,8 @@ export function executeNpcAction(db,guildId,record,{approved=false,roll=()=>rand
 
 function applyActionConsequences(db,guildId,action,{key,state,target,goal,content,actionId}){
   const actor=keyOf(action.actor_type,key);
-  if(action.information_key&&action.target_key&&["contact","negotiate","request_favor"].includes(action.type))
+  if(action.information_key&&action.target_key&&["contact","negotiate","request_favor"].includes(action.type)
+    &&!["institution","community","audience"].includes(action.target_type))
     shareInformation(db,guildId,{fromType:action.actor_type,fromKey:key,toType:action.target_type,toKey:action.target_key,informationKey:action.information_key});
   if(target&&["attack","protect","threaten","negotiate","betray","contact"].includes(action.type)){
     if(action.type==="attack") target.resources.wounds=bounded(target.resources.wounds+1,0,100);

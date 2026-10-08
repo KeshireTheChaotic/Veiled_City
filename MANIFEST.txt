@@ -58,6 +58,7 @@ bot/scripts/sync-release.mjs
 bot/scripts/systems-to-players-1-test.mjs
 bot/scripts/systems-to-players-2-test.mjs
 bot/scripts/systems-to-players-3-test.mjs
+bot/scripts/systems-to-players-4-test.mjs
 bot/scripts/validate-command-schema.mjs
 bot/scripts/validate-offline.mjs
 bot/sql/schema.sql

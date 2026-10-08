@@ -1,0 +1,62 @@
+/** SP4 audience influence reuses native paid-resource actions, reports, transmissions and human review. */
+import assert from "node:assert/strict";
+import fs from "node:fs";
+import os from "node:os";
+import path from "node:path";
+import { VeiledDB } from "../src/db.js";
+import { configureCityFlags } from "../src/city-core.js";
+import { indexWorldEvent } from "../src/city-calendar.js";
+import { configureSimulationEntity, submitNpcAction } from "../src/simulation.js";
+import { connectCity, transmitCityBelief } from "../src/city-civic.js";
+import { configureDelegation, dispatchAiIntents, reviewAiIntent, stateRevision } from "../src/ai-intents.js";
+import { handleCityCommand } from "../src/city-commands.js";
+import { FakeResponses, fakeInteraction } from "./contract-fixtures.mjs";
+import { GMService } from "../src/gm.js";
+const temp=fs.mkdtempSync(path.join(os.tmpdir(),"vc-sp4-")),file=path.join(temp,"test.sqlite"),schema=path.resolve("sql/schema.sql");
+let db=new VeiledDB(file,schema);
+try{
+  const guild="contract";db.ensureCampaign(guild);db.ensureCampaign("other");
+  db.upsertNpcProfile(guild,{npcKey:"reporter",displayName:"Reporter"});configureSimulationEntity(db,guild,"npc","reporter",{resources:{influence:10}});
+  indexWorldEvent(db,guild,{key:"source",source_id:"gm",title:"Sourced allegation, not canon",visibility:"party"});
+  indexWorldEvent(db,guild,{key:"private",source_id:"gm",title:"SYNTHETIC_SEALED_SOURCE"});
+  db.upsertNpcKnowledge(guild,{npcKey:"reporter",knowledgeKey:"claim",content:"A disputed account",sourceRef:"source",beliefState:"rumor",confidence:65});
+  db.upsertNpcKnowledge(guild,{npcKey:"reporter",knowledgeKey:"secret",content:"SYNTHETIC_SEALED_SOURCE",sourceRef:"private",isSecret:true});
+  db.upsertNpcGoal(guild,{npcKey:"reporter",goalKey:"report",title:"Seek audience",objective:"Share owned account",acceptableMethods:["contact"]});
+  for(const audience of ["readers","skeptics"]) connectCity(db,guild,{kind:"channel",from:"npc:reporter",to:`audience:${audience}`,source_event:"source"},"gm");
+  const act=(target,information="claim",roll=20)=>submitNpcAction(db,guild,{actor_type:"npc",actor_key:"reporter",type:"contact",goal_key:"report",
+    target_type:"audience",target_key:target,information_key:information,significance:"routine",rationale:"Sourced audience opportunity"},{cycleKey:target,roll:()=>roll});
+  configureCityFlags(db,guild,{audience_influence:true});
+  const first=act("readers"),second=act("skeptics");
+  const input={op:"attempt",key:"readers-report",source_event:"source",from_key:"reporter",to_type:"audience",to_key:"readers",information_key:"claim",
+    mechanism:"media",action_id:first.id,response:"accept",interpretation:"Some readers find the account credible, not established fact.",prior_key:"",dissent:[]};
+  await assert.rejects(()=>handleCityCommand(fakeInteraction({gm:false,sub:"transmit",json:input}),{db}),/GM\/admin/);
+  const before=db.getSimulationEntity(guild,"npc","reporter").state.resources.influence;
+  configureDelegation(db,guild,{mode:"routine_delegated",allow:["influence.attempt"],max_operations:1,max_cost:0,expires_minute:100},"gm");
+  const intent={version:1,feature:"influence",target_key:input.key,expected_revision:"absent",policy_revision:1,source_prerequisites:[],payload:Object.fromEntries(Object.entries(input).filter(([key])=>key!=="key"))};
+  const fake=new FakeResponses([{ai_intents:[intent]}]),gm=new GMService({db,content:{},ai:fake,config:{}});
+  const parsed=await gm.requestStructured({input:"Synthetic audience response",text:{format:{schema:{properties:{ai_intents:{}}}}}});
+  const pending=dispatchAiIntents(db,guild,parsed.ai_intents,{origin:"report"})[0];assert.equal(pending.status,"pending");
+  reviewAiIntent(db,guild,{key:pending.record_key,expected_revision:stateRevision(pending),decision:"approve"},"gm");
+  const opposed=transmitCityBelief(db,guild,{...input,key:"skeptical-refusal",to_key:"skeptics",action_id:second.id,response:"refuse",interpretation:"This audience refuses an unverified claim."},"gm");
+  assert.equal(opposed.status,"refused");assert(!db.getCityRecord(guild,"message",opposed.record_key));
+  assert.equal(db.getCityRecord(guild,"message","readers-report").data.belief_state,"rumor");
+  assert.equal(db.getSimulationEntity(guild,"npc","reporter").state.resources.influence,before,"response must not charge the already resolved action twice");
+  assert.equal(transmitCityBelief(db,guild,input,"gm").record_key,input.key);
+  assert.throws(()=>transmitCityBelief(db,guild,{...input,key:"fresh-key-replay"},"gm"),/already been used/);
+  assert.throws(()=>transmitCityBelief(db,"other",input,"gm"),/opt-in/);
+  const hidden=act("readers","secret");assert.throws(()=>transmitCityBelief(db,guild,{...input,key:"leak",source_event:"private",information_key:"secret",action_id:hidden.id},"gm"),/hidden source/);
+  const correction=act("readers");
+  const corrected=transmitCityBelief(db,guild,{...input,key:"correction",action_id:correction.id,response:"correct",prior_key:"readers-report",interpretation:"Readers reconsider the same allegation; still unverified."},"gm");
+  assert.equal(corrected.data.prior_key,"readers-report");assert(db.getCityRecord(guild,"message","readers-report"),"correction must preserve original report");
+  const stale=act("readers");db.upsertNpcKnowledge(guild,{npcKey:"reporter",knowledgeKey:"claim",content:"A changed account",sourceRef:"source",beliefState:"rumor",confidence:60});
+  assert.throws(()=>transmitCityBelief(db,guild,{...input,key:"stale-evidence",action_id:stale.id},"gm"),/evidence changed/);
+  const failed=act("readers","claim",1);
+  assert.equal(transmitCityBelief(db,guild,{...input,key:"failed",action_id:failed.id},"gm").status,"failed");
+  const resources=db.getSimulationEntity(guild,"npc","reporter").state.resources.influence;
+  assert.throws(()=>act("unconnected"),/channel/);assert.equal(db.getSimulationEntity(guild,"npc","reporter").state.resources.influence,resources);
+  assert.equal(db.listCanon(guild,{includeGM:true}).length,0);assert.equal(fake.requests.length,1);
+  const snapshot=db.snapshotCampaign(guild,{label:"Influence",createdBy:"gm"});db.close();db=new VeiledDB(file,schema);db.restoreSnapshot(guild,snapshot.id,{actorId:"gm"});
+  assert.equal(db.getCityRecord(guild,"transmission","skeptical-refusal").status,"refused");
+  configureCityFlags(db,guild,{audience_influence:false});assert.throws(()=>transmitCityBelief(db,guild,{...input,key:"off"},"gm"),/opt-in/);
+  console.log("SP4 PASS: divergent audiences/refusal/correction, native cost conservation, human review, knowledge/channel/privacy/stale evidence/replay/restore; zero paid calls.");
+}finally{db.close();fs.rmSync(temp,{recursive:true,force:true});}

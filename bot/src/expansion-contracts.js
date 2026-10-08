@@ -1,5 +1,6 @@
 /** Shared release feature contract and read-only GM diagnostics; absent flags are disabled and records never imply PC authority. */
 export const EXPANSION_FEATURES=Object.freeze({
+  audience_influence:{phase:"SP4",records:["transmission","influence_action"],command:"/vc-city transmit",authority:"Native-cost sourced audience attempts, divergent responses, persistent refusal/correction and review"},
   evidence_custody:{phase:"SP3",records:["evidence_receipt","evidence_effect"],command:"/vc-handout custody / evidence",authority:"One physical original, explicit copies, controller transfers and human-reviewed analysis"},
   dialogue_history:{phase:"SP2",records:[],command:'Explicit say: "..." messages',authority:"Authored speech heard by actual listeners; subjective native memory only"},
   tactical_memory:{phase:"SP2",records:[],command:"Existing encounter end",authority:"Bound actual combatant history; no new features or PC vulnerability"},

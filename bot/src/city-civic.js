@@ -3,6 +3,7 @@ import { createHash } from "node:crypto";
 import { cityObject, cityKey, cityInteger, cityAudit, indexWorldEvent } from "./city-calendar.js";
 import { requireCitySource, requireCityRecord, cityStrings, INSTITUTION_ACTIONS } from "./city-core.js";
 import { activeCityProxy } from "./city-constraints.js";
+import { actorSource } from "./simulation-motivation.js";
 
 export const CIVIC_KINDS=["property","infrastructure","routine","community","identity","reputation","weather","personnel","history"];
 const location=(db,guildId,key)=>{
@@ -218,6 +219,7 @@ export function reviewCivicChange(db,guildId,input,actorId){
   });
 }
 export function transmitCityBelief(db,guildId,input,actorId){
+  if(input?.op==="attempt") return attemptCityInfluence(db,guildId,input,actorId);
   cityObject(input);requireCitySource(db,guildId,input.source_event);const key=cityKey(input.key);
   const prior=db.getCityRecord(guildId,"transmission",key);if(prior) return prior;
   const from=`${input.from_type}:${input.from_key}`,to=`${input.to_type}:${input.to_key}`;
@@ -245,6 +247,55 @@ export function transmitCityBelief(db,guildId,input,actorId){
       source_event:input.source_event,data});
     const after=db.saveCityRecord(guildId,{kind:"transmission",key,actor_key:from,source_event:input.source_event,data});
     cityAudit(db,guildId,"belief_transmission",key,null,after,actorId);return after;
+  });
+}
+/** Influence extends real transmissions after an already resolved native action; no second resource charge or truth promotion. */
+export function attemptCityInfluence(db,guild,input,actor){
+  cityObject(input);
+  if(db.getCityCalendar(guild).flags.audience_influence!==true) throw new Error("Audience influence is opt-in.");
+  if(Object.keys(input).some(key=>!["op","key","source_event","from_key","to_type","to_key","information_key","mechanism","action_id","response","interpretation","prior_key","dissent"].includes(key)))
+    throw new Error("Closed influence attempt required; no caller authority, PC penalties or canon fields.");
+  const key=cityKey(input.key),prior=db.getCityRecord(guild,"transmission",key);if(prior) return prior;
+  const owned=actorSource(db,guild,{actor_type:"npc",actor_key:input.from_key,information_key:input.information_key,source_event:input.source_event},{requireResources:false});
+  const action=db.getSimulationRecord(guild,input.action_id),target=`${input.to_type}:${input.to_key}`;
+  if(!action||action.kind!=="action"||!["completed","failed"].includes(action.status)||action.data.actor_type!=="npc"||action.data.actor_key!==input.from_key
+    ||action.data.target_type!==input.to_type
+    ||!["contact","negotiate","spread_rumor","suppress_rumor"].includes(action.data.type)||![input.to_key,target].includes(action.data.target_key)
+    ||action.data.information_key!==input.information_key||action.data.result?.resource_cost?.influence!==1)
+    throw new Error("Matching legitimately resolved native influence/contact action and its actual resource cost required.");
+  if(action.data.result.information_source?.source_ref!==owned.evidence.source_ref||action.data.result.information_source?.content!==owned.evidence.content)
+    throw new Error("Native action evidence changed or predates source capture; resolve a fresh legitimate opportunity.");
+  if(!["institution","community","audience"].includes(input.to_type)||!db.cityEdges(guild,"channel").some(edge=>edge.from_key===`npc:${input.from_key}`&&edge.to_key===target))
+    throw new Error("Established audience/institution access channel required.");
+  const recipient=input.to_type!=="audience"?requireCityRecord(db,guild,input.to_type,input.to_key):null;
+  if(input.to_type==="audience"&&(!["party","public"].includes(owned.event.visibility)||owned.evidence.is_secret))
+    throw new Error("Public-facing influence cannot disclose hidden source evidence.");
+  if(!["accept","refuse","correct"].includes(input.response)||typeof input.interpretation!=="string"||!input.interpretation.trim()||input.interpretation.length>600)
+    throw new Error("Human-reviewed bounded audience response required.");
+  const dissent=cityStrings(input.dissent||[],8);
+  for(const officer of dissent) if(input.to_type!=="institution"||requireCityRecord(db,guild,"personnel",officer).data.institution!==input.to_key)
+    throw new Error("Dissent must belong to actual personnel of this institution.");
+  if(input.response==="correct"){
+    const old=db.getCityRecord(guild,input.to_type==="institution"?"report":"message",input.prior_key);
+    if(!old||old.actor_key!==(input.to_type==="institution"?input.to_key:target)) throw new Error("Correction requires this audience's own prior report, not another audience's hidden knowledge.");
+  }
+  if(db.getCityRecord(guild,"influence_action",action.id)) throw new Error("This native influence action has already been used.");
+  cityKey(input.mechanism);
+  return db.transaction(()=>{
+    const capacityRefusal=recipient&&recipient.data.capacity<1;
+    const response=action.data.result.success?(capacityRefusal?"refuse":input.response):"failed";
+    const transmitted=["accept","correct"].includes(response)?transmitCityBelief(db,guild,{key,source_event:input.source_event,from_type:"npc",from_key:input.from_key,
+      to_type:input.to_type,to_key:input.to_key,information_key:input.information_key,mechanism:input.mechanism,authorized:true,distortion:0},actor):null;
+    const data={...(transmitted?.data||{}),action_id:action.id,from:`npc:${input.from_key}`,to:target,mechanism:input.mechanism,
+      response,interpretation:input.interpretation,dissent,prior_key:input.prior_key||null,subjective:true,truth_status:"unverified",
+      outcome_reason:capacityRefusal?"Recipient has no established capacity":action.data.result.success?"Explicit human-reviewed audience response":"Native attempt did not succeed",
+      credibility:owned.evidence.confidence,resources:"Already charged by native action; no additional spend.",authority:"Audience response is not canon, guilt or a PC modifier."};
+    const after=db.saveCityRecord(guild,{kind:"transmission",key,status:response==="refuse"?"refused":response==="failed"?"failed":"active",
+      source_event:input.source_event,actor_key:`npc:${input.from_key}`,data});
+    if(transmitted){const receiver=db.getCityRecord(guild,input.to_type==="institution"?"report":"message",key);
+      db.saveCityRecord(guild,{...receiver,key,data:{...receiver.data,interpretation:input.interpretation,dissent,prior_key:input.prior_key||null}});}
+    db.saveCityRecord(guild,{kind:"influence_action",key:action.id,source_event:input.source_event,data:{transmission:key}});
+    cityAudit(db,guild,"influence_response",key,null,after,actor);return after;
   });
 }
 export function historyContext(db,guildId,query){

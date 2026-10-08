@@ -6,12 +6,14 @@ const list=(items,maxItems=20)=>({type:"array",items,maxItems});
 const object=properties=>({type:"object",additionalProperties:false,properties,required:Object.keys(properties)});
 const actor={actor_type:choice("npc","faction","institution"),actor_key:text(),information_key:text()};
 const source={source_event:text()};
-const action={anyOf:[object({type:text(),target_type:choice("npc","faction","location","institution","district",""),
+const action={anyOf:[object({type:text(),target_type:choice("npc","faction","location","institution","community","audience","district",""),
   target_key:text(),location_key:text(),information_key:text(),reason:text(1000)}),
   object({type:choice("document_request","file_case","interview_request","inspect_request","issue_policy","allocate_resources",
     "negotiate_request","publish_finding","relocate_staff","seek_warrant"),target_type:choice("npc","location","institution","district",""),
     target_key:text(),jurisdiction:text(),report_keys:list(text(),8),personnel_key:text(),reason:text(1000)})]};
 export const INTENT_PAYLOADS={
+  influence:object({...source,op:choice("attempt"),from_key:text(),to_type:choice("institution","community","audience"),to_key:text(),
+    information_key:text(),mechanism:text(),action_id:text(),response:choice("accept","refuse","correct"),interpretation:text(600),prior_key:text(),dissent:list(text(),8)}),
   evidence:object({...source,op:choice("analyze"),handout_id:text(),interpretation:text(600)}),
   dialogue:object({...source,op:choice("interpret"),npc_key:text(),topic:choice("promise","offer","refusal","boundary","address","argument","joke","apology","disagreement"),interpretation:text(600),confidence:integer(0,70)}),
   encounter:object({...source,op:choice("propose"),actors:list(text(),12),location_key:text(),

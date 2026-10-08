@@ -1,6 +1,6 @@
 {
   "package": "Veiled_City_Multiplayer_Discord",
-  "version": "7.3.0",
+  "version": "7.4.0",
   "generated": "2026-10-08",
   "content_normalization": "utf8-lf",
   "files": [
@@ -27,7 +27,7 @@
     {
       "path": "README.md",
       "size_bytes": 15228,
-      "sha256": "79097cd2a1d864ab757663c5f3c604eee157c31eb4a1b9e5c6bd0d56b2765169"
+      "sha256": "56e12d08a7c75b2b16e2b63454debfffdaccdc1399cc5b081f295751d6f4581d"
     },
     {
       "path": "SUGGESTIONS-End-To-End.md",
@@ -52,7 +52,7 @@
     {
       "path": "bot/package.json",
       "size_bytes": 2601,
-      "sha256": "6622d2af3c61a7ac319fe954bdddad9ba5377521ae9fe451377d15ff87b8858d"
+      "sha256": "71999b88f61cbcd9f1a40be7327304547751f7187111ee0b0a75074f685d8312"
     },
     {
       "path": "bot/scripts/audit-regression-test.mjs",
@@ -305,14 +305,19 @@
       "sha256": "db834f14a87e15d7d13c1747c34c95764806defdf616916cc1dbf8a616968344"
     },
     {
+      "path": "bot/scripts/systems-to-players-4-test.mjs",
+      "size_bytes": 6740,
+      "sha256": "734f3d45fc283b76823733c08a979f8d145fd778cab33506e5388a1a90b648dd"
+    },
+    {
       "path": "bot/scripts/validate-command-schema.mjs",
       "size_bytes": 582,
       "sha256": "995a255982387edff58e5f14c8bb07b5508c3b28a19952882aa5716c28aafbe8"
     },
     {
       "path": "bot/scripts/validate-offline.mjs",
-      "size_bytes": 1685,
-      "sha256": "2f531049b2bd4306e6da1bfb4513d0993e2702cdc6890b92417b8ca7f9b34170"
+      "size_bytes": 1713,
+      "sha256": "a799ce7477c4b73d28e89c266effa1f2cd64d1670e4582203543bbd40ec551c4"
     },
     {
       "path": "bot/sql/schema.sql",
@@ -321,13 +326,13 @@
     },
     {
       "path": "bot/src/ai-intent-contracts.js",
-      "size_bytes": 7692,
-      "sha256": "ba88a7e2fbdffe8c12af4f796f3d17e69891f82d506b4ccc2506f57b8ce832c8"
+      "size_bytes": 8024,
+      "sha256": "4486b9bdb942d190bbf7e06983c03f7440bfad39245f6040c5cab655e62d04d6"
     },
     {
       "path": "bot/src/ai-intents.js",
-      "size_bytes": 30819,
-      "sha256": "0c53d402ea1102c09e555b112a558b306ce46ec4bc6799d0cf037e17e03c0540"
+      "size_bytes": 31602,
+      "sha256": "e195a7d721522fbe989148a4d108d41dc38ac77b0e4a3fefdc86b2d9e1a716a7"
     },
     {
       "path": "bot/src/ai-review.js",
@@ -361,8 +366,8 @@
     },
     {
       "path": "bot/src/city-civic.js",
-      "size_bytes": 21140,
-      "sha256": "9345e88d2ac76145057298161a86c05680a2a87619965acdc33692662c8dc369"
+      "size_bytes": 26595,
+      "sha256": "960010583dbf7d00dc4b8d87e9b8f1da4b7b7eab96a11e21e5ddb4aa0dd75ab0"
     },
     {
       "path": "bot/src/city-commands.js",
@@ -491,8 +496,8 @@
     },
     {
       "path": "bot/src/expansion-contracts.js",
-      "size_bytes": 3660,
-      "sha256": "c0bcd14014b68d0c5cc729dac7f494c20524e5fad7e8ef257960c0efacb7b660"
+      "size_bytes": 3881,
+      "sha256": "1c855188028c859fc6d35e32f5097fe6bf3384385369db5ec171b86babcc1d9f"
     },
     {
       "path": "bot/src/gm.js",
@@ -636,8 +641,8 @@
     },
     {
       "path": "bot/src/simulation-schema.js",
-      "size_bytes": 5074,
-      "sha256": "3b67e5f8c48a9b501f10fb11e19180c2e9edaf28ff2910ee17d3753d1cc246a2"
+      "size_bytes": 5111,
+      "sha256": "8cacaa518e4cae6962115d752191634d4df4f80b254568e71569daa3ef6334e5"
     },
     {
       "path": "bot/src/simulation-strategy.js",
@@ -646,8 +651,8 @@
     },
     {
       "path": "bot/src/simulation.js",
-      "size_bytes": 50920,
-      "sha256": "32de641ec745b5d68ffc595679e139a1530bbda8ca86d9fad6cfd80b36b2247b"
+      "size_bytes": 52162,
+      "sha256": "58981d2bb7b16460fbb074e83f9a5bd94750e7db1a722e02427bcf161c7adee3"
     },
     {
       "path": "bot/src/state.js",
@@ -1306,13 +1311,13 @@
     },
     {
       "path": "docs/SYSTEMS_TO_PLAYERS_GAP_ANALYSIS.md",
-      "size_bytes": 9213,
-      "sha256": "0fc619fc5a3295605a7af0a8700a4ff0b0b2b9f9d8471ba616228d3f6be983f8"
+      "size_bytes": 10305,
+      "sha256": "bac965d20cdf5f3f0b328efc3fdff544d188325203f4e75c48bd1162ac2c391b"
     },
     {
       "path": "docs/SYSTEMS_TO_PLAYERS_IMPLEMENTATION.md",
-      "size_bytes": 12229,
-      "sha256": "473fe7c03b6967df32444835063239016207d4555f30b5dacea66fd2e2c934f1"
+      "size_bytes": 15334,
+      "sha256": "5e135d853293293dcece7f248413d46b89a2cc95823ca68f4b9fadac1c140a28"
     },
     {
       "path": "docs/UPGRADE_3.0_TO_3.1.md",
