@@ -25,10 +25,11 @@ export function updateCityCore(db,guildId,input,actorId="human_gm"){
   cityObject(input);const kind=input.kind,key=cityKey(input.key),source=requireCitySource(db,guildId,input.source_event);
   const before=db.getCityRecord(guildId,kind,key),data={...before?.data,...cityObject(input.data)};
   if(kind==="institution"){
-    fields(data,["name","mandate","public_policy","private_objectives","jurisdictions","procedures","capacity","departments","personnel","queue"]);
+    fields(data,["name","mandate","public_policy","private_objectives","jurisdictions","procedures","capacity","departments","personnel","queue","known_targets"]);
     cityKey(data.name);cityKey(data.mandate);cityInteger(data.capacity,0,100);
     cityStrings(data.jurisdictions);cityStrings(data.procedures);cityStrings(data.private_objectives||[]);
     cityStrings(data.personnel||[]);
+    cityStrings(data.known_targets||[]);
     if(data.procedures.some(type=>!INSTITUTION_ACTIONS.includes(type))) throw new Error("Unsupported institution procedure.");
     for(const jurisdiction of data.jurisdictions){
       if(!db.getCityRecord(guildId,"district",jurisdiction)&&!db.getSimulationEntity(guildId,"location",jurisdiction))
@@ -121,6 +122,10 @@ function validateInstitutionAction(db,guildId,input){
   if(input.target_key){
     if(input.target_type==="location"&&!db.getSimulationEntity(guildId,"location",input.target_key)) throw new Error("Action target location not found.");
     if(["institution","district"].includes(input.target_type)) requireCityRecord(db,guildId,input.target_type,input.target_key);
+    const local=institution.data.jurisdictions.includes(input.target_key)||institution.data.jurisdictions.some(key=>
+      db.districtLocations(guildId,key).some(row=>row.location_key===input.target_key));
+    if(!local&&!(institution.data.known_targets||[]).includes(`${input.target_type}:${input.target_key}`))
+      throw new Error("Institution does not have established knowledge of this target.");
   }
   for(const key of cityStrings(input.report_keys||[])){
     if(requireCityRecord(db,guildId,"report",key).actor_key!==input.institution) throw new Error("Institution lacks cited knowledge.");
@@ -154,14 +159,15 @@ export function reviewInstitutionAction(db,guildId,input,actorId){
   const data={...before.data,...(input.decision==="modify"?cityObject(input.patch):{}),key:before.record_key};
   if(["approve","modify"].includes(input.decision)) validateInstitutionAction(db,guildId,data);
   return db.transaction(()=>{
-    const after=db.saveCityRecord(guildId,{...before,key:before.record_key,status:input.decision==="reject"?"rejected":input.decision==="defer"?"deferred":"proposed",
+    const after=db.saveCityRecord(guildId,{...before,key:before.record_key,source_event:data.source_event,actor_key:data.institution,district_key:data.jurisdiction,
+      status:input.decision==="reject"?"rejected":input.decision==="defer"?"deferred":"proposed",
       data:{...data,approved_by:["approve","modify"].includes(input.decision)?actorId:null,reviews:[...(before.data.reviews||[]),{decision:input.decision,actor:actorId}]}});
     cityAudit(db,guildId,"institution_review",input.key,before,after,actorId);return after;
   });
 }
 export function configureCityFlags(db,guildId,input,actorId){
   cityObject(input);
-  if(Object.keys(input).some(key=>!["institutions","opportunities"].includes(key)||typeof input[key]!=="boolean")) throw new Error("Unknown city feature flag.");
+  if(Object.keys(input).some(key=>!["institutions","opportunities","economy","minor_npcs"].includes(key)||typeof input[key]!=="boolean")) throw new Error("Unknown city feature flag.");
   return db.transaction(()=>{
     const before=db.getCityCalendar(guildId),after=db.setCityCalendar(guildId,{...before,flags:{...before.flags,...input}});
     cityAudit(db,guildId,"city_flags",guildId,before,after,actorId);return after;

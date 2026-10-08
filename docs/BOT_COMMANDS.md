@@ -1,4 +1,4 @@
-# Veilkeeper v3.5.0 Command Reference
+# Veilkeeper v4.4.0 Command Reference
 
 Veilkeeper uses split `vc-*` root commands to remain below Discord's per-command size limit.
 
@@ -15,6 +15,12 @@ review uses `review` with `kind:action`. Institutions/opportunities default off.
 Phase C adds `connect`, `service`, `transmit`, and `history`; `update` accepts
 property, infrastructure, routine, community, identity, reputation, weather,
 personnel and history. Consequential changes use `review` with `kind:change`.
+
+Phase D adds `upkeep`, `minor`, and `minor-review`. Enable explicitly with
+`flags json:{"economy":true,"minor_npcs":true}`; both default off. Upkeep
+records agreed obligations and explicit settlements without spending PC
+resources. Minor NPCs remain private drafts until GM promotion. See
+`LIVING_CITY.md` for required JSON fields, budgets and deployment checks.
 
 ## Campaign
 - `/vc-campaign setup` — configure play channel, GM role, response mode.

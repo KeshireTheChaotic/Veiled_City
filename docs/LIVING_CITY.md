@@ -299,3 +299,80 @@ dissent/capacity; retrieval past 100 unrelated historical summaries; cross-guild
 isolation and backup/restore. Full validation remains mandatory. Live deployment
 smoke tests should exercise private reports and a reviewed service repair in a
 disposable campaign. Live model/Discord coverage is not claimed.
+
+## Phase D: optional depth (4.4.0)
+
+Gap analysis: existing obligations, income downtime projects, NPC profiles and
+the structured model request path already cover the durable primitives. This
+phase adds opt-in upkeep links and demand-driven minor-NPC drafts, not a new
+wealth system or an autonomous population generator. It is internal simulation;
+no player-facing rule or canonical named NPC is replaced.
+
+All four flags default off: institutions, opportunities, economy, minor_npcs.
+Enable only the desired features using `/vc-city flags`, for example:
+
+```text
+/vc-city flags json:{"economy":true,"minor_npcs":true}
+```
+
+### Established upkeep
+
+`/vc-city upkeep` takes JSON with key, source_event, debtor, creditor, terms,
+cost_description, due_minute and agreed:true. Parties must already exist and use
+typed endpoints such as npc:key, institution:key, faction:key or character:id.
+PC debtors additionally require accepted_by matching their owner. Optional
+obligation_id must match an active obligation's parties and terms; income_project
+must belong to this campaign. Costs describe established fiction; this command
+creates no currency, inferred living expense, debit or mechanical penalty.
+
+The fictional deadline reuses the calendar's due-once processing. Settlement is
+explicit: send key, op:settle, source_event and resolution:paid/waived/disputed.
+A PC payment additionally requires owner confirmation. Paid/waived obligations
+close and cancel any future notice; disputed obligations stay active. Sources,
+settlement history and causal resolution links remain inspectable. Player
+resources are unchanged, including when a deadline passes without payment.
+
+### Demand-driven extras
+
+`/vc-city minor` takes JSON with a normalized minor-* key, source_event, role,
+location (an existing location key), and established_interaction:true or
+gm_authorized:true. Optional public_context is limited to 2000 characters; the
+operator must supply only scene-public material. The model receives that context,
+the role/location and a bounded list of reserved names, never the event graph,
+private PC facts or global NPC memories. Output is restricted to name,
+occupation, public_identity and portrayal, with at most 700 output tokens per
+request and the existing structured-request retry budget. There is no periodic
+generation or model call when a stable draft key already exists.
+
+Drafts are GM-private records, capped at forty outstanding drafts. Model errors,
+unknown fields, identity collisions and invalid sources fail without partial
+NPC creation. Canonical and saved names are rechecked on promotion.
+`/vc-city minor-review json:{"key":"minor-example","decision":"promote"}`
+is human-controlled; decision also accepts discard.
+Promotion creates a background profile at the established location with no
+invented knowledge, memories or goals. Discarded records retain provenance.
+
+### Upgrade and verification
+
+Schema 440 reuses the additive civic tables; all remain in logical backups,
+snapshots and GM-full exports, excluded from player exports. Back up the campaign
+before upgrading, stop the old bot, install dependencies if needed, restart on
+4.4.0, and run `npm run register` from bot/ to publish the final command schema.
+Use existing restore-preview/restore operations for recovery; do not downgrade
+a running database without restoring a compatible backup.
+
+`npm run validate` includes all four city fixtures and the existing regression
+suites. Phase D covers explicit upkeep/settlement without PC resource changes,
+bounded model input/output, draft replay/promotion, collision rejection, model
+failure atomicity, a failed publication followed by durable retry, and migration
+from a pre-city schema with private facts and NPC memory preserved. Final QA
+also rejects invalid calendar dates, preserves reviewed intent metadata and
+requires explicit known_targets for institutional targets outside their own
+jurisdiction/membership. All fixture model responses are simulated.
+
+Before production use, exercise command registration, ephemeral permissions,
+one real minor-NPC structured response, a rejected/promoted draft, a reviewed
+institutional action, a due notice with publication retry, and backup/restore in
+a disposable Discord campaign. Those live gates are pending, not implied by
+offline validation. No push, production deployment or live campaign mutation is
+part of these local release commits.

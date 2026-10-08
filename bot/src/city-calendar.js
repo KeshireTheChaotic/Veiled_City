@@ -26,6 +26,10 @@ export function cityAudit(db,guildId,type,key,before,after,actorId="human_gm"){
 function iso(value){
   if(typeof value!=="string"||!/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:00(?:\.000)?(?:Z|[+-]\d{2}:\d{2})$/.test(value)
     ||!Number.isFinite(Date.parse(value))) throw new Error("Use a minute-aligned ISO datetime with an explicit timezone offset.");
+  const year=Number(value.slice(0,4)),month=Number(value.slice(5,7)),day=Number(value.slice(8,10));
+  const days=[31,(year%4===0&&(year%100!==0||year%400===0))?29:28,31,30,31,30,31,31,30,31,30,31];
+  if(month<1||month>12||day<1||day>days[month-1]||Number(value.slice(11,13))>23||Number(value.slice(14,16))>59)
+    throw new Error("Invalid fictional calendar date/time.");
   return new Date(value).toISOString();
 }
 export function calendarStatus(db,guildId){
@@ -126,7 +130,7 @@ export function reviewCityEvent(db,guildId,input,actorId="human_gm"){
   if(!["approve","modify","defer","reject"].includes(input.decision)) throw new Error("Invalid review decision.");
   return db.transaction(()=>{
     let row=prior;
-    if(input.decision==="modify") row=scheduleCityEvent(db,guildId,{...cityObject(input.patch),key:prior.schedule_key,op:"reschedule"},actorId);
+    if(input.decision==="modify") row=scheduleCityEvent(db,guildId,{due_minute:prior.due_minute,...cityObject(input.patch),key:prior.schedule_key,op:"reschedule"},actorId);
     const after=db.saveCitySchedule(guildId,{...row,key:prior.schedule_key,
       status:input.decision==="reject"?"cancelled":"scheduled",review_status:input.decision==="defer"?"deferred":input.decision==="reject"?"rejected":"approved",
       data:{...row.data,reviews:[...(row.data.reviews||[]),{decision:input.decision,actor:actorId,tick:db.getSimulationClock(guildId).tick}]}});

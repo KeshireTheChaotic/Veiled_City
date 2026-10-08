@@ -345,7 +345,7 @@ async function executeCommand(interaction,{db,gm,voice=null}){
   if(await replayReceiptIfPresent({db,interaction,group,sub})) return true;
   const restoreReceiptCapture=installReceiptCapture({db,interaction,group,sub});
   try{
-    if(group==="city") return await handleCityCommand(interaction,{db});
+    if(group==="city") return await handleCityCommand(interaction,{db,gm});
     if(group==="sim") return await handleSimulationCommand(interaction,{db,isGm:isGM(db,interaction),sub});
     if(group==="director"){
       if(!isGM(db,interaction)) throw new PermissionError("GM/admin permission required.");

@@ -8,6 +8,7 @@ import { npcDirectorSchema, simulationUpdateSchema, SIMULATION_PROMPT } from "./
 import { simulationContext } from "./simulation.js";
 import { cityContext } from "./city-core.js";
 import { historyContext } from "./city-civic.js";
+import { minorNpcSchema } from "./city-depth.js";
 
 const routerSchema={
   type:"object",
@@ -289,6 +290,15 @@ export class GMService{
 
   searchContent(guildId,query,limit,{gm=true}={}){
     return this.content.search(query,limit,{gm,documents:this.db.listSeedDocuments(guildId,{includeGM:true})});
+  }
+  async planMinorNpc({role,location,publicContext,reservedNames}){
+    const input=["Draft exactly one relevant mundane supporting NPC, not a named canon character or hidden culprit.",
+      "Return name,occupation,public_identity,portrayal only. Each field must be a nonempty string of at most 160 characters.",
+      "No secrets, knowledge, memories, goals, mechanics, special authority or PC choices. The draft needs human promotion.",
+      `Requested role: ${role}`,`Established location: ${location}`,`Explicit public scene context: ${publicContext}`,
+      `Reserved names (do not reuse): ${JSON.stringify(reservedNames)}`].join("\n");
+    return this.requestStructured({model:this.config.routerModel||this.config.gmModel,input,max_output_tokens:700,
+      text:{format:{type:"json_schema",name:"minor_npc_draft",strict:true,schema:minorNpcSchema}}},{label:"minor NPC draft"});
   }
 
   async requestStructured(req,{label="structured response"}={}){

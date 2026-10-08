@@ -11,6 +11,7 @@ import path from "node:path";
 import { randomUUID } from "node:crypto";
 import { DatabaseSync } from "node:sqlite";
 import { processCityDue } from "./city-calendar.js";
+import { normalizeNpcKey } from "./npc-cognition.js";
 
 /** SQLite repository facade and transaction boundary for campaign state. */
 export class VeiledDB {
@@ -93,7 +94,7 @@ export class VeiledDB {
         if(!knownPairs.has(`${relation.guild_id}:${pair}`)) updateRelationshipDimensions(this,relation.guild_id,relation);
       }
     });
-    this.db.exec("PRAGMA user_version=430;");
+    this.db.exec("PRAGMA user_version=440;");
   }
 
   close() { this.db.close(); }
@@ -1932,6 +1933,14 @@ export class VeiledDB {
     return this.db.prepare("SELECT * FROM downtime_projects WHERE id=?").get(id);
   }
   listDowntimeProjects(cycleId){ return this.db.prepare("SELECT * FROM downtime_projects WHERE cycle_id=? ORDER BY created_at").all(cycleId); }
+  getCityIncomeProject(guildId,id){
+    return this.db.prepare("SELECT * FROM downtime_projects WHERE guild_id=? AND id=? AND project_type='income'").get(guildId,id)||null;
+  }
+  cityNpcNameInUse(guildId,name){
+    const normalized=normalizeNpcKey(name);
+    return this.db.prepare("SELECT npc_key,display_name FROM npc_profiles WHERE guild_id=?").all(guildId)
+      .some(row=>row.npc_key===normalized||normalizeNpcKey(row.display_name)===normalized);
+  }
   updateDowntimeProject(id,patch={}){
     const r=this.db.prepare("SELECT * FROM downtime_projects WHERE id=?").get(id); if(!r) throw new Error("Downtime project not found.");
     const n={...r,...patch};

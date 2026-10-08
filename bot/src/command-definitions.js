@@ -443,7 +443,7 @@ export function buildCommands(){
     .addSubcommand(s=>s.setName("commitment").setDescription("Establish an explicit consensual commitment or cancel one")
       .addStringOption(o=>o.setName("json").setDescription("Commitment terms/participants/interval JSON").setRequired(true)))
     .addSubcommand(s=>s.setName("flags").setDescription("Configure opt-in civic directors and opportunities")
-      .addStringOption(o=>o.setName("json").setDescription("Boolean institutions/opportunities flags").setRequired(true)))
+      .addStringOption(o=>o.setName("json").setDescription("Boolean institutions/opportunities/economy/minor_npcs flags").setRequired(true)))
     .addSubcommand(s=>s.setName("connect").setDescription("Establish verified service, travel, or communication edges")
       .addStringOption(o=>o.setName("json").setDescription("kind, from, to, source_event, optional duration JSON").setRequired(true)))
     .addSubcommand(s=>s.setName("service").setDescription("Propose a sourced infrastructure condition change")
@@ -452,6 +452,12 @@ export function buildCommands(){
       .addStringOption(o=>o.setName("json").setDescription("Source/recipient/mechanism/authorization JSON").setRequired(true)))
     .addSubcommand(s=>s.setName("history").setDescription("Find bounded summaries with original source events")
       .addStringOption(o=>o.setName("query").setDescription("Relevant historical incident/entity").setRequired(true)))
+    .addSubcommand(s=>s.setName("upkeep").setDescription("Record opt-in established upkeep or explicit settlement; never auto-spend")
+      .addStringOption(o=>o.setName("json").setDescription("Agreed parties/terms/due or settlement JSON").setRequired(true)))
+    .addSubcommand(s=>s.setName("minor").setDescription("Draft one relevant minor NPC without creating persistent agency")
+      .addStringOption(o=>o.setName("json").setDescription("minor-* key, source_event, role, location, established context JSON").setRequired(true)))
+    .addSubcommand(s=>s.setName("minor-review").setDescription("Promote or discard a minor NPC draft")
+      .addStringOption(o=>o.setName("json").setDescription("key, decision:promote|discard JSON").setRequired(true)))
     .toJSON());
   const splitMap={
     character:{

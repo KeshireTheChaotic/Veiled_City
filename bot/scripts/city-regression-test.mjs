@@ -20,6 +20,7 @@ try{
   const frozen=calendarStatus(db,guild);
   assert.equal(calendarStatus(db,guild).minute,frozen.minute,"reading/host uptime cannot advance time");
   assert.throws(()=>configureCalendar(db,guild,{epoch:"2031-01-01T00:00:00Z"}),/epoch/);
+  assert.throws(()=>configureCalendar(db,"city-b",{epoch:"2030-02-31T00:00:00Z"}),/Invalid/);
   scheduleCityEvent(db,guild,{key:"hearing",title:"Tuesday 09:00 hearing",due_at:"2030-01-01T09:00:00Z"});
   scheduleCityEvent(db,guild,{key:"hearing",title:"Ignored retry",due_minute:50});
   db.advanceSimulationClock(guild,{ticks:12});

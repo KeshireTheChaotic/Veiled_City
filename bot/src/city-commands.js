@@ -5,8 +5,9 @@ import { cityObject, calendarStatus, configureCalendar, indexWorldEvent, schedul
 import { updateCityCore, assignDistrictLocation, fileInstitutionReport, addWorldLink, submitInstitutionAction, reviewInstitutionAction,
   establishCommitment, configureCityFlags, proposeCityOpportunity, runInstitutionDirector } from "./city-core.js";
 import { CIVIC_KINDS, updateCityCivic, connectCity, changeCityService, reviewCivicChange, transmitCityBelief, historyContext } from "./city-civic.js";
+import { recordCityUpkeep, draftMinorNpc, reviewMinorNpc } from "./city-depth.js";
 
-export async function handleCityCommand(interaction,{db}){
+export async function handleCityCommand(interaction,{db,gm}){
   const guildId=interaction.guildId;
   if(!interaction.memberPermissions?.has(PermissionFlagsBits.ManageGuild)
     && !interaction.member?.roles?.cache?.has(db.getCampaign(guildId)?.gm_role_id)) throw new PermissionError("GM/admin permission required.");
@@ -26,6 +27,12 @@ export async function handleCityCommand(interaction,{db}){
   else if(sub==="service") result=changeCityService(db,guildId,input,interaction.user.id);
   else if(sub==="transmit") result=transmitCityBelief(db,guildId,input,interaction.user.id);
   else if(sub==="history") result=historyContext(db,guildId,interaction.options.getString("query")||"");
+  else if(sub==="upkeep") result=recordCityUpkeep(db,guildId,input,interaction.user.id);
+  else if(sub==="minor"){
+    await interaction.deferReply({ephemeral:true});
+    result=await draftMinorNpc({db,gm,content:gm.content,guildId,input,actorId:interaction.user.id});
+  }
+  else if(sub==="minor-review") result=reviewMinorNpc({db,content:gm.content,guildId,input,actorId:interaction.user.id});
   else if(sub==="membership") result=assignDistrictLocation(db,guildId,input,interaction.user.id);
   else if(sub==="report") result=fileInstitutionReport(db,guildId,input,interaction.user.id);
   else if(sub==="link") result=addWorldLink(db,guildId,input,interaction.user.id);
@@ -37,7 +44,9 @@ export async function handleCityCommand(interaction,{db}){
   else if(sub==="records") result=db.listCityRecords(guildId,{kind:interaction.options.getString("kind")||"",includeGM:true});
   else if(sub==="preview") result={clock:calendarStatus(db,guildId),due:db.dueCitySchedules(guildId),mutates:false};
   else throw new Error("Unknown city command.");
-  await interaction.reply({content:`City ${sub} complete. Civic records are GM-private; no PC actions or mechanics were applied.`,
-    files:[new AttachmentBuilder(Buffer.from(JSON.stringify(result,null,2)),{name:"city-state.json"})],ephemeral:true});
+  const payload={content:`City ${sub} complete. Civic records are GM-private; no PC actions or mechanics were applied.`,
+    files:[new AttachmentBuilder(Buffer.from(JSON.stringify(result,null,2)),{name:"city-state.json"})]};
+  if(interaction.deferred) await interaction.editReply(payload);
+  else await interaction.reply({...payload,ephemeral:true});
   return true;
 }
