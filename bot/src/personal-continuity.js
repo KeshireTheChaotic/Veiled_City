@@ -94,7 +94,7 @@ export function captureArcCandidate(db,guild,user,characterId,messageId,message)
 }
 export function personalInbox(db,guild,user){
   const character=personalCharacter(db,guild,user);
-  return ["arc_candidate","arc_beat"].flatMap(kind=>db.characterContinuity(guild,character.id,{kind})
+  return ["arc_candidate","arc_beat","project_draft"].flatMap(kind=>db.characterContinuity(guild,character.id,{kind})
     .map(row=>({...row,expected_revision:stateRevision(row)})));
 }
 export function discoverPersonal(db,guild,userId,input={}){

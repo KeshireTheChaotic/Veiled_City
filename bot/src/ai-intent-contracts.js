@@ -28,6 +28,7 @@ export const INTENT_PAYLOADS={
     statement:text(1500),invitation:text(1000)}),
   discovery:object({...source,op:choice("lookup"),mode:choice("know","leads","changed","witness","arcs"),query:text(300)}),
   project:object({...source,op:choice("propose","advance","pause","resume","abandon"),character_id:text(),title:text(),participants:list(text(),8),
+    result_ids:list(text(),8),npc_collaborators:list(object({npc_key:text(),information_key:text(),source_event:text(),commitment_key:text()}),8),
     phases:list(object({key:text(),title:text(),duration_minutes:integer(0,525600),requires:list(text(),8),prerequisites:list(text(),8)}),8)}),
   mediation:object({...source,op:choice("reconcile"),actor_type:choice("npc","institution"),actor_key:text(),action_key:text()}),
   memory:object({...source,op:choice("consolidate","revise","revert"),actor_type:choice("npc","faction","institution","campaign"),actor_key:text(),

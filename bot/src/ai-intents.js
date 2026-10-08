@@ -12,6 +12,10 @@ import { manageGroup } from "./city-groups.js";
 import { manageStrategy } from "./simulation-strategy.js";
 import { ContextPlanner } from "./context-planner.js";
 import { proposeArcBeat } from "./personal-continuity.js";
+import { manageLongProject, projectPhaseRevision, reconcileLongProject } from "./long-projects.js";
+import { applicationPrincipal } from "./application-authority.js";
+import { inspectNpcAction } from "./simulation.js";
+import { inspectInstitutionAction } from "./city-core.js";
 const hash=value=>createHash("sha256").update(JSON.stringify(value)).digest("hex");
 const adapters=new Map();
 export const FEATURE_FLAGS={goal:"emergent_goals",consequence:"consequences",scene:"scene_continuity",group:"emergent_groups",
@@ -114,6 +118,8 @@ export function intentContext(db,guild){
       .map(row=>({...row,expected_revision:stateRevision(row)}))),
     personal_targets:["arc","arc_candidate"].flatMap(kind=>db.listCityRecords(guild,{kind,includeGM:true,limit:8})
       .map(row=>({...row,expected_revision:stateRevision(row)}))),
+    project_targets:db.listCityRecords(guild,{kind:"long_project",includeGM:true,limit:8})
+      .map(row=>({...row,expected_revision:stateRevision(row),phase_revision:projectPhaseRevision(row)})),
     group_actor_packets:db.listCityRecords(guild,{kind:"group_transition",status:"pending",includeGM:true,limit:4})
       .flatMap(row=>row.data.members.slice(0,4).map(member=>({proposal:row.record_key,member,
         packet:new ContextPlanner(db).plan(guild,{actorType:"npc",actorKey:member,query:row.source_event,maxTokens:400})}))),
@@ -184,7 +190,7 @@ export function delegateConsequence(db,guild,row,budget={operations:0,cost:0}){
   return dispatchAiIntents(db,guild,[{version:1,feature:"consequence",target_key:row.record_key,expected_revision:stateRevision(row),
     policy_revision:delegationPolicy(db,guild).revision,source_prerequisites:[],payload:{source_event:row.source_event,op:"apply",handler:"service",
       entity_key:p.entity_key,event_kinds:p.event_kinds,location_key:p.location_key||"",delta:p.payload.delta}}],
-  {origin:`causal:${row.record_key}`,scope:{mode:"party"},budget})[0];
+  {origin:`causal:${row.record_key}:${db.getSimulationClock(guild).tick}`,scope:{mode:"party"},budget})[0];
 }
 registerIntentAdapter("group",{
   current:(db,guild,intent)=>intent.target_key?db.getCityRecord(guild,"group_transition",intent.target_key):null,
@@ -230,7 +236,7 @@ export function delegateStrategy(db,guild,row,budget={operations:0,cost:0}){
     policy_revision:delegationPolicy(db,guild).revision,source_prerequisites:[],payload:{actor_type:p.actor_type,actor_key:p.actor_key,
       information_key:p.information_key,source_event:row.source_event,op:"run",goal_key:p.goal_key,cost_ceiling:p.cost_ceiling,
       deadline_minute:p.deadline_minute??1000000000,steps:p.steps.map(({key,requires,action})=>({key,requires,action})),
-      alternatives:p.alternatives||[],assumptions:p.assumptions||[]}}],{origin:`strategy:${row.record_key}`,scope:{mode:"party"},budget})[0];
+      alternatives:p.alternatives||[],assumptions:p.assumptions||[]}}],{origin:`strategy:${row.record_key}:${db.getSimulationClock(guild).tick}`,scope:{mode:"party"},budget})[0];
 }
 registerIntentAdapter("arc",{
   current:(db,guild,intent)=>intent.payload.op==="invite"?db.getCityRecord(guild,"arc",`${intent.payload.character_id}:${intent.payload.arc_key}`)
@@ -248,5 +254,51 @@ registerIntentAdapter("arc",{
     if(!arc) throw new Error("Owner-confirmed arc required.");
     return proposeArcBeat(db,guild,{key,character_id:p.character_id,arc_key:p.arc_key,source_event:arc.source_event,
       invitation:`Would you like a nonbinding opportunity to revisit your statement: ${arc.data.statement.slice(0,800)}?`},principal);
+  }
+});
+registerIntentAdapter("project",{
+  current:(db,guild,intent)=>intent.target_key?db.getCityRecord(guild,intent.payload.op==="propose"?"project_draft":"long_project",intent.target_key):null,
+  impact:()=>({cost:0,review:false}),
+  apply:(db,guild,intent,key,principal,context)=>{
+    const p=intent.payload;
+    if(context.scope?.mode==="private"&&context.scope.actorCharacterId!==p.character_id) throw new Error("Private project belongs to this character only.");
+    if(p.op==="propose"){
+      const character=db.getCharacter(p.character_id),source=requireCitySource(db,guild,p.source_event);
+      if(character?.guild_id!==guild||!character.owner_user_id||!p.participants.includes(p.character_id)) throw new Error("Established owner and collaborators required.");
+      if(!["public","party"].includes(source.visibility)&&!(source.visibility==="character"&&source.subject_key===character.id&&p.participants.length===1))
+        throw new Error("Project sources must be known to collaborators.");
+      return db.saveCityRecord(guild,{kind:"project_draft",key,status:"pending",visibility:"character",subject_key:character.id,source_event:p.source_event,
+        data:{...p,costs:[],authority:"nonbinding_proposal_existing_downtime_rules",commitments:"Each owner must submit and consent to each phase; no automatic spending or success."}});
+    }
+    const before=db.getCityRecord(guild,"long_project",intent.target_key);
+    if(!before||before.source_event!==p.source_event) throw new Error("Existing project and original source required.");
+    return manageLongProject(db,guild,principal,{...p,key:intent.target_key},
+      {principal:applicationPrincipal(guild,`project.${p.op}`,principal)});
+  }
+});
+export function continueLongProjects(db,guild){
+  if(db.getCityCalendar(guild).flags.long_projects!==true||db.isDirectorPaused(guild)) return [];
+  const budget={operations:0,cost:0};
+  return db.listCityRecords(guild,{kind:"long_project",status:"active",includeGM:true,limit:4}).map(row=>{
+    const reconciled=reconcileLongProject(db,guild,row);if(reconciled.status!=="active") return reconciled;
+    const p=row.data,phase=p.phases[p.index];
+    return dispatchAiIntents(db,guild,[{version:1,feature:"project",target_key:row.record_key,expected_revision:stateRevision(row),
+      policy_revision:delegationPolicy(db,guild).revision,source_prerequisites:phase.prerequisites,payload:{source_event:row.source_event,op:"advance",
+        character_id:p.participants[0],title:p.title,participants:p.participants,phases:p.phases.map(({key,title,duration_minutes,requires,prerequisites})=>
+          ({key,title,duration_minutes,requires,prerequisites})),npc_collaborators:p.npc_collaborators||[],result_ids:p.participants.map(id=>phase.consents[id]?.project_id||"")}}],
+    {origin:`project-continuation:${row.record_key}:${db.getSimulationClock(guild).tick}:${db.getSimulationClock(guild).minute}`,scope:{mode:"party"},budget})[0];
+  });
+}
+registerIntentAdapter("mediation",{
+  current:(db,guild,intent)=>intent.payload.actor_type==="npc"?db.getSimulationRecord(guild,intent.payload.action_key)
+    :db.getCityRecord(guild,"action",intent.payload.action_key),
+  impact:()=>({cost:0,review:false}),
+  apply:(db,guild,intent)=>{
+    const p=intent.payload,row=p.actor_type==="npc"?db.getSimulationRecord(guild,p.action_key):db.getCityRecord(guild,"action",p.action_key);
+    if(!row||(p.actor_type==="npc"?row.entity_key!==`npc:${p.actor_key}`:row.actor_key!==p.actor_key)) throw new Error("Actor-owned action required.");
+    try{return {status:"clear",result:p.actor_type==="npc"?inspectNpcAction(db,guild,p.action_key):inspectInstitutionAction(db,guild,p.action_key),
+      alternatives:[],not_a_new_roll:true};}
+    catch{return {status:"blocked",reason:"Native physical, source, resource, chronology or delegation prerequisites are unmet.",
+      alternatives:["defer","replan_from_new_evidence","request_human_review"],not_a_new_roll:true,no_costs:true,claims_remain_contested:true};}
   }
 });

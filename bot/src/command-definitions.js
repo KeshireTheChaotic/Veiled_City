@@ -276,6 +276,7 @@ export function buildCommands(){
           .addStringOption(o=>o.setName("ruling").setDescription("Authoritative campaign ruling").setRequired(true)))
         .addSubcommand(s=>s.setName("rulings").setDescription("Show saved campaign rulings")))
       .addSubcommandGroup(g=>g.setName("downtime").setDescription("Formal between-session projects and world turns")
+        .addSubcommand(s=>s.setName("long-project-status").setDescription("Read-only owned project proposals, phases and consent revisions"))
         .addSubcommand(s=>s.setName("long-project").setDescription("Create, consent to or review phased downtime continuity")
           .addStringOption(o=>o.setName("json").setDescription("Project, phase, explicit choice or GM adjudication").setRequired(true)))
         .addSubcommand(s=>s.setName("open").setDescription("GM: open a between-session downtime cycle")

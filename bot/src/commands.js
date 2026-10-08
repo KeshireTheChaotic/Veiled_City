@@ -31,7 +31,8 @@ import { handleCityCommand } from "./city-commands.js";
 import { handleStoryCommand } from "./story-commands.js";
 import { recordCharacterArrival } from "./scene-continuity.js";
 import { personalArc, discoverPersonal, personalInbox } from "./personal-continuity.js";
-import { manageLongProject } from "./long-projects.js";
+import { manageLongProject, projectPhaseRevision } from "./long-projects.js";
+import { continueLongProjects, stateRevision } from "./ai-intents.js";
 
 const interactionQueue=new KeyedSerialQueue();
 
@@ -126,11 +127,6 @@ async function launchArrival({db,gm,guild,userId,character,reason}){
   const session=db.getActiveSession(guild.id);
   if(!session||session.assembly_mode==="manual"||session.assembly_mode==="already_together") return {planned:false};
   try{
-    if(group==="downtime"&&sub==="long-project"){
-      const result=manageLongProject(db,interaction.guildId,interaction.user.id,JSON.parse(interaction.options.getString("json",true)),{gm:isGM(db,interaction)});
-      await interaction.reply({ephemeral:true,content:"Private long-project continuity; no automatic PC costs or benefits.",
-        files:[new AttachmentBuilder(Buffer.from(JSON.stringify(result,null,2)),{name:"long-project.json"})]});return true;
-    }
     const entry=await gm.planArrival({guildId:guild.id,userId,characterId:character.id,reason});
     const privateText=entry.private_hook?.trim()
       ?`**Veilkeeper — entry hook for ${character.name}:**\n${entry.private_hook}`
@@ -351,10 +347,22 @@ async function executeCommand(interaction,{db,gm,voice=null}){
     group=root==="level"?"character":root==="combat"?"encounter":root;
     sub=interaction.options.getSubcommand();
   }
-  if((group!=="story"&&!(group==="admin"&&sub==="seed-drafts")&&!(group==="intel"&&["discover","continuity"].includes(sub)))||isMutatingCommand(group,sub)) await ensurePlayer(db,interaction);
+  if((group!=="story"&&!(group==="admin"&&sub==="seed-drafts")&&!(group==="intel"&&["discover","continuity"].includes(sub))
+    &&!(group==="downtime"&&sub==="long-project-status"))||isMutatingCommand(group,sub)) await ensurePlayer(db,interaction);
   if(await replayReceiptIfPresent({db,interaction,group,sub})) return true;
   const restoreReceiptCapture=installReceiptCapture({db,interaction,group,sub});
   try{
+    if(group==="downtime"&&sub==="long-project"){
+      const result=manageLongProject(db,interaction.guildId,interaction.user.id,JSON.parse(interaction.options.getString("json",true)),{gm:isGM(db,interaction)});
+      await interaction.reply({ephemeral:true,content:"Private long-project continuity; no automatic PC costs or benefits.",
+        files:[new AttachmentBuilder(Buffer.from(JSON.stringify(result,null,2)),{name:"long-project.json"})]});return true;
+    }
+    if(group==="downtime"&&sub==="long-project-status"){
+      const rows=db.longProjectInbox(interaction.guildId,interaction.user.id,{gm:isGM(db,interaction)})
+        .map(row=>({...row,expected_revision:stateRevision(row),phase_revision:row.kind==="long_project"?projectPhaseRevision(row):null}));
+      await interaction.reply({ephemeral:true,content:"Private project proposals and current phase revisions; accept-proposal and consent use /vc-downtime long-project.",
+        files:[new AttachmentBuilder(Buffer.from(JSON.stringify(rows,null,2)),{name:"long-project-status.json"})]});return true;
+    }
     if(group==="intel"&&sub==="continuity"){
       const result=personalInbox(db,interaction.guildId,interaction.user.id);
       await interaction.reply({ephemeral:true,content:"Private continuity inbox. Confirm/reject/defer candidates or accept/decline/defer invitations using /vc-intel arc and the current expected_revision.",
@@ -1384,6 +1392,7 @@ GM notes: ${a.draft.gm_notes}`:""}`.slice(0,1950):"No aftermath draft exists for
         const combinedSummary=[resolved.summary||"",director.act?director.gm_notes||"":""].filter(Boolean).join("\n\n");
         const done=db.resolveDowntimeCycle(cycle.id,combinedSummary);
         commitNpcDirector(db,npcPrepared);
+        continueLongProjects(db,interaction.guildId);
         return {projectMutation,directorMutation,done};
       });
       const {projectMutation,directorMutation,done}=committed;

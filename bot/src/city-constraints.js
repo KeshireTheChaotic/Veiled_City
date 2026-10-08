@@ -33,6 +33,7 @@ export function assertInstitutionDelegation(db,guildId,institution,input){
   if(!role||role.status!=="active"||role.data.institution!==institution.record_key||!role.data.actions.includes(input.type))
     throw new Error("No established personnel delegation authorizes this institutional action.");
   if(activeCityProxy(db,guildId,role.data.npc)) throw new Error("Delegated NPC is under human proxy control.");
+  assertNpcAvailability(db,guildId,role.data.npc,{type:input.type,location_key:input.location_key||input.jurisdiction});
   if(role.data.capacity<1) throw new Error("Delegated personnel have no operational capacity.");
   if(role.data.dissent_actions?.includes(input.type)) throw new Error("Established personnel dissent blocks this delegated procedure.");
 }

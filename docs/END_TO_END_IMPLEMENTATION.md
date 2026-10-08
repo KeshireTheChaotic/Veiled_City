@@ -93,8 +93,6 @@ Blocked/planned/actual outcomes enter subsequent planning context and GM inbox.
 Validation: `end-to-end-d-test.mjs` plus existing groups/strategy suites; independent
 dissent, actor exclusion, native execution and delegation revocation; no paid calls.
 
-## Remaining phases
-
 ## Phase E — 6.3.0: owner continuity and read-only conversation
 
 Explicit first-person vow/desire quotations create private unconfirmed candidates,
@@ -121,7 +119,37 @@ and fictional clock around the actual route, including unknown-secret queries.
 
 ## Remaining phases
 
-F: projects and mediation. G: memory maintenance and fairness.
+## Phase F — 6.4.0: projects and conflict feedback
+
+Typed AI project proposals disclose phases, fictional duration, prerequisites,
+collaborators and existing-downtime-only authority. They are private drafts, not
+consent or work. `/vc-downtime long-project-status` is an owner-scoped zero-write
+inbox, including between sessions. `accept-proposal` binds the draft fingerprint;
+each owner independently submits and consents using the current `phase_revision`.
+Acceptance binds owner, phase and immutable submission definition. No PC spending,
+automatic success, completed-result fabrication or group consent is introduced.
+
+Routine `project.advance` uses an opaque in-process application principal, never
+model-supplied `gm:true`. Existing resolved completed downtime result IDs, ownership,
+fictional work time and unused-result checks remain mandatory. The actual downtime
+commit invokes bounded continuation; restart/replay reuses native receipts. Source
+loss/unavailable participants or NPC collaborators pause while preserving evidence
+and excluding paused work time. NPC collaborators require their own legitimate
+evidence and existing active sourced commitments, outside PC owner consent paths.
+
+Typed mediation runs shared native NPC/institution validation without rerolling or
+spending; blocked results suggest only bounded deferral/replanning/human review.
+Institution personnel now recheck native availability/commitments at execution.
+Contested claims are never promoted into legal title. Actual commits still own
+resource/capacity consumption. Fixed the pre-existing misplaced long-project
+command branch in arrival planning; real command fixtures now exercise it.
+
+Validation: `end-to-end-f-test.mjs`, existing phase/chronological-conflict/native
+capacity suites, real command consent, two-day restart and single-use outcomes.
+
+## Remaining phases
+
+G: memory maintenance and fairness.
 H: seeds and complete review UX. I: cross-feature orchestration and rollout.
 
 Release policy: phase minors roll .9 to the next major .0. After Phase I, perform

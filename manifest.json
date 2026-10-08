@@ -1,6 +1,6 @@
 {
   "package": "Veiled_City_Multiplayer_Discord",
-  "version": "6.3.0",
+  "version": "6.4.0",
   "generated": "2026-10-08",
   "files": [
     {
@@ -26,7 +26,7 @@
     {
       "path": "README.md",
       "size_bytes": 14920,
-      "sha256": "2a4a91952480715379e42b596a4d5ebec68986546765b18b30b0ceb432031881"
+      "sha256": "9c9402365345f8039472a1a26c5c00d09988b73d3adccd93f7a332f5695dee81"
     },
     {
       "path": "SUGGESTIONS-End-To-End.md",
@@ -51,7 +51,7 @@
     {
       "path": "bot/package.json",
       "size_bytes": 2601,
-      "sha256": "020690ec6b8c9016158f0e2424e05ce73ce53b16d814768b4855b56fb102dd7a"
+      "sha256": "cae22405c8be0f390dce9e171a44965ac5971cc97ca02f83ed04a37479244df5"
     },
     {
       "path": "bot/scripts/audit-regression-test.mjs",
@@ -122,6 +122,11 @@
       "path": "bot/scripts/end-to-end-e-test.mjs",
       "size_bytes": 3771,
       "sha256": "71252e7704649ece4ff25471244af38bd4e3f1f936102b2178cfc28399b36bd6"
+    },
+    {
+      "path": "bot/scripts/end-to-end-f-test.mjs",
+      "size_bytes": 4682,
+      "sha256": "7d9523e5709d451f5433062b6574232598dabeb1fba845a0f396aa798902e830"
     },
     {
       "path": "bot/scripts/endurance-test.mjs",
@@ -270,8 +275,8 @@
     },
     {
       "path": "bot/scripts/validate-offline.mjs",
-      "size_bytes": 1521,
-      "sha256": "d87e9843a9e5d89d639ea96f76d3b4733e7e1ed5ac27d2e94f6a625119d3a544"
+      "size_bytes": 1541,
+      "sha256": "f88226e96ac13bc7177412b3e08995d32642a6608f747b954497cb131f8af24d"
     },
     {
       "path": "bot/sql/schema.sql",
@@ -280,13 +285,18 @@
     },
     {
       "path": "bot/src/ai-intent-contracts.js",
-      "size_bytes": 6401,
-      "sha256": "c7c83202cedc9bcf23d81d345eb247908cb3e578c7e97ac2d5f08896e9111fbb"
+      "size_bytes": 6548,
+      "sha256": "f5dcff312727d4748e401d725df5c85ac6fa9977dfaa42ea4fe4ecc5f86a1660"
     },
     {
       "path": "bot/src/ai-intents.js",
-      "size_bytes": 20517,
-      "sha256": "d41485128351eb886b8ca4274eaff9a78c01f55f5978867c7add466f19b5dad1"
+      "size_bytes": 25068,
+      "sha256": "0f1b82c439695ba1c0d99bc280c56daee0d5bed28a356a5381ae4688d317ae22"
+    },
+    {
+      "path": "bot/src/application-authority.js",
+      "size_bytes": 461,
+      "sha256": "58554e42ec04ca5908ca7ac6e96225b1690a8025a273d4d0e836df4bd4054901"
     },
     {
       "path": "bot/src/character-export.js",
@@ -325,13 +335,13 @@
     },
     {
       "path": "bot/src/city-constraints.js",
-      "size_bytes": 4011,
-      "sha256": "03941d1ece360dc25456366defab7014b630cd99992c2a52106b4c5d453471cf"
+      "size_bytes": 4132,
+      "sha256": "20bcaa395558e45277228371e5d3c1bab2373a1649632b078eb0d87f7d0b34ed"
     },
     {
       "path": "bot/src/city-core.js",
-      "size_bytes": 21175,
-      "sha256": "776d82de91cc36ad7407e0e04cd0d7cbfd4c3fc9b4f0fefee3bbf225c20fe379"
+      "size_bytes": 21544,
+      "sha256": "9548851d13ebd32c4b81d7fe826c2eb047b545c7d33a3fc47f343a0543cc09fc"
     },
     {
       "path": "bot/src/city-depth.js",
@@ -350,8 +360,8 @@
     },
     {
       "path": "bot/src/command-definitions.js",
-      "size_bytes": 64019,
-      "sha256": "d2a251b5ac3d87bee1b719f90fafd01e06f31170d8252550aea566f3fd8a6a81"
+      "size_bytes": 64161,
+      "sha256": "5e836d261e804a26b4db51d020466d7d7c110595f0f71227246da1b9f38f44c1"
     },
     {
       "path": "bot/src/command-schema.js",
@@ -360,8 +370,8 @@
     },
     {
       "path": "bot/src/commands.js",
-      "size_bytes": 136736,
-      "sha256": "80c48260a02c27fb34af2d08b6c40f8c8ed0eaa97bf6afd83ada576306adfeff"
+      "size_bytes": 137547,
+      "sha256": "99442e57ec46b01a3db349c5945a52d65744c9031cf1d293adffd2e72ea67a4b"
     },
     {
       "path": "bot/src/concept-context.js",
@@ -390,8 +400,8 @@
     },
     {
       "path": "bot/src/db.js",
-      "size_bytes": 138112,
-      "sha256": "ed4dba2cba3255ef5bae5a0646b7bb96d179af4a14b699fd5e6d750cff84edc6"
+      "size_bytes": 138653,
+      "sha256": "aa2649cbe10c3ea06d1c37f67b19277f226561f831af16bdf265ed7f4f12b003"
     },
     {
       "path": "bot/src/dice.js",
@@ -440,8 +450,8 @@
     },
     {
       "path": "bot/src/idempotency.js",
-      "size_bytes": 3527,
-      "sha256": "a7475d00efa1762511cfd5694e0ed2fbfd822f60d23bac8943bac07a815a82fa"
+      "size_bytes": 3558,
+      "sha256": "e79b89633bdbc9c87276abfee962580b4a62b85d4d64fef10d5082c549f8327a"
     },
     {
       "path": "bot/src/index.js",
@@ -455,8 +465,8 @@
     },
     {
       "path": "bot/src/long-projects.js",
-      "size_bytes": 8519,
-      "sha256": "19dacfd9544f03b3e53519d35b031cf265aa971e987f400b20e8768d40f596ab"
+      "size_bytes": 12707,
+      "sha256": "ded0337b9ffc24dc57c3e6f67424f3516884c0d37053f2377a7eed7d1c77ba72"
     },
     {
       "path": "bot/src/memory-clusters.js",
@@ -500,8 +510,8 @@
     },
     {
       "path": "bot/src/personal-continuity.js",
-      "size_bytes": 10199,
-      "sha256": "e5c3b43e5d44df330ca329491854b88295644ec533e4bf56f5eb31a01e002fee"
+      "size_bytes": 10215,
+      "sha256": "f4ac1346c3544b3ef3809c1a0f9dbbb78ca3f20a7ce2fc92c74c8fb28eb2c7de"
     },
     {
       "path": "bot/src/portrayal.js",
@@ -580,8 +590,8 @@
     },
     {
       "path": "bot/src/simulation.js",
-      "size_bytes": 45813,
-      "sha256": "c561344624b202b27ccb0151ad3dd9ae902242dfc690fbf8a54e48f967347cb2"
+      "size_bytes": 46329,
+      "sha256": "374fd188d4f61c87baeb230fac6b83eefce7ae8a47ff52f74c1d17ac9c011a11"
     },
     {
       "path": "bot/src/state.js",
@@ -1125,8 +1135,8 @@
     },
     {
       "path": "docs/END_TO_END_IMPLEMENTATION.md",
-      "size_bytes": 7754,
-      "sha256": "116fed080bdf20f019509986ba7a20bbf772bc18ac1c2f12bc421925c11bd7a1"
+      "size_bytes": 9568,
+      "sha256": "23d5e59651bde3ebfd67c806043e07784eaa889c568a9d9ca8012c22c1ce5dbb"
     },
     {
       "path": "docs/EXPANSION_ARCHITECTURE.md",

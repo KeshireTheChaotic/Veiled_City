@@ -142,6 +142,11 @@ function validateInstitutionAction(db,guildId,input){
   if(input.policy!==undefined){if(input.type!=="issue_policy") throw new Error("Policy change requires a policy action.");cityKey(input.policy);}
   return institution;
 }
+export function inspectInstitutionAction(db,guildId,key){
+  const row=requireCityRecord(db,guildId,"action",key),institution=validateInstitutionAction(db,guildId,row.data);
+  return {action_id:key,status:row.status,capacity:institution.data.capacity,review_required:row.data.major===true&&!row.data.approved_by,
+    authority:"diagnostic_only_no_capacity_spending"};
+}
 export function submitInstitutionAction(db,guildId,input,actorId="human_gm"){
   cityObject(input);const key=cityKey(input.key),prior=db.getCityRecord(guildId,"action",key);if(prior) return prior;
   validateInstitutionAction(db,guildId,input);

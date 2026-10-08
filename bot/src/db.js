@@ -239,6 +239,13 @@ export class VeiledDB {
       AND EXISTS (SELECT 1 FROM json_each(city_records.data_json,'$.participants') WHERE value=?) LIMIT 1`).get(guildId,end,start,actor);
     return row?{...row,data:JSON.parse(row.data_json)}:null;
   }
+  longProjectInbox(guildId,userId,{gm=false,limit=30}={}){
+    return this.db.prepare(`SELECT * FROM city_records WHERE guild_id=? AND kind IN ('long_project','project_draft')
+      AND (?=1 OR EXISTS(SELECT 1 FROM json_each(city_records.data_json,'$.participants') p
+      JOIN characters c ON c.id=p.value WHERE c.guild_id=city_records.guild_id AND c.owner_user_id=?))
+      ORDER BY minute DESC,rowid DESC LIMIT ?`).all(guildId,gm?1:0,userId,Math.max(1,Math.min(50,limit)))
+      .map(row=>({...row,data:JSON.parse(row.data_json)}));
+  }
 
   getSeedDocument(guildId,sourcePath){
     return this.db.prepare("SELECT * FROM seed_documents WHERE guild_id=? AND source_path=?").get(guildId,sourcePath)||null;
