@@ -144,3 +144,31 @@ Preview/export are zero-write reads, including command entry points. Import stag
 Public export additionally requires separate human `public_export:true` review at the exact current revision, exports only public definitions and their referenced citations, and blocks common personal/runtime identifiers and actual campaign PC names. Arbitrary prose cannot be proven secret/PII-free by a regex: human public review remains necessary and its limits are explicit. Private GM export requires explicit `public_only:false`; neither mode exports runtime sheets/resources/memories/rolls. Rules references are inert citations, never automatic homebrew. Package format: `veiled-city-content-package-v1`, name/version/license, sources `{id,title,url,license}`, entries `{kind,key,visibility,source_refs,definition}`, optional verified sha256. Maximum 12 entries/8 sources/24000 characters; Discord JSON inputs retain Discord's own text limits.
 
 IHY9 required real seed/reference/review/command tests prove inertness, existing NPC preservation/collision, source/hash/rights/revision/privacy/PII denial, replay, changed-content re-review and restart export equality. P12 COMPLETE for bounded inert portability, not automatic installation or semantic/legal certification. No new flags or AI delegation; explicit GM-only operations. Schema440 unchanged. Full offline gate before commit.
+
+## Final integration — 9.0.0 (starting HEAD 97b6dab)
+
+Private roll collaboration now requires the actual owner's authenticated disclosure, not a guessed request key or forged player-source metadata. “I share my pending attempt with NAME.” discloses only the attempt to a present communicating character; another PC's trait formula remains private. Native mutation-ledger provenance is checked for declarations, speech and owner authorizations. Helpers can retrieve their own paid die, not the owner's private subtotal.
+
+This supersedes the phase-4 meeting/negotiation/project-phase gap: current exact-revision/terms replies now authorize those native workflows. Meeting and negotiation authorization does not itself create obligations, spend costs or imply arrival: human native review and all actual participants remain required. A later question, counteroffer or refusal invalidates earlier authorization. Project-phase consent additionally identifies the player's own actual submitted project. Arbitrary prose interpretation remains PARTIAL; the exact grammar is optional mechanical authorization, not a story menu.
+
+Required `i-heard-you-integration-test.mjs` covers private disclosure/provenance, actual helper cost/dice/replay, counteroffer revocation, retracted consent, native meeting/negotiation/project paths, session rollover, logical backup, restart and restore. The required runner emits a 26-scenario acceptance matrix from `bot/scripts/fixtures/i-heard-you-acceptance.json`, retaining PARTIAL statuses instead of treating passing fixtures as universal coverage. All required suites must pass after final release synchronization before commit/push/deployment. Schema remains 440; no live flags, campaigns or paid services are changed by release validation.
+
+Release ledger: 8.1.0 `e24695b`; 8.2.0 `7139071`; 8.3.0 `aa4d6b2`; 8.4.0 `ee9e535`; 8.5.0 `16dce14`; 8.6.0 `451fc38`; 8.7.0 `67a386a`; 8.8.0 `52700aa`; 8.9.0 `97b6dab`. Each phase passed the full offline gate before its separate commit. Final integration rolls the completed series to 9.0.0.
+
+### Enablement (operator commands; not run automatically)
+
+Six new default-off flags are `natural_language`, `roll_requests`, `roll_collaboration`, `semantic_integrity`, `narrative_relevance` and `session_briefs`. Enable them with existing continuity/discovery/pacing dependencies:
+
+```text
+/vc-city flags json:{"natural_language":true,"roll_requests":true,"roll_collaboration":true,"semantic_integrity":true,"narrative_relevance":true,"session_briefs":true,"scene_continuity":true,"dialogue_history":true,"tactical_memory":true,"discovery":true,"pacing":true}
+```
+
+Domain-specific flows also require their existing flags (`personal_arcs`, `player_organizations`, `long_projects`, `negotiations`, `evidence_custody`), as applicable. Existing director/simulation gates remain in force. To delegate the new preparation/interpretation operations, merge these names into your existing policy; the command replaces the allowlist, so do not discard other desired operations:
+
+```text
+/vc-story delegation json:{"mode":"routine_delegated","allow":["roll.prepare","roll.adjudicate","dialogue.interpret"],"max_operations":4,"max_cost":0,"expires_minute":1000000000}
+```
+
+Set `expires_minute` to an intentional future fictional minute after checking `/vc-city status`. `roll.adjudicate` always requires human review even when allowlisted. Delegation never authorizes PC speech, consent, Hope spending, dice/outcome selection or automatic public package review. Package commands remain explicit GM-only operations with no new flag or delegation.
+
+Remaining limits: Group Action remains manual SRD adjudication, not disguised Help/Tag Team automation. Unsupported card exceptions and helper-plus-net-disadvantage require a saved human ruling; ambiguous combinations cannot spend Hope. Two golden paraphrases remain UNVERIFIED; unrestricted semantics, historical truth, arbitrary export privacy and legal rights are not certified. No bot restart or Discord command registration is performed by a Git pull; operators must use the normal registration/restart workflow to load new commands.

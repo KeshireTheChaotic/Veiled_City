@@ -3,6 +3,7 @@ import { cityObject, cityKey, cityInteger, cityAudit } from "./city-calendar.js"
 import { requireCitySource, requireCityRecord } from "./city-core.js";
 import { activeCityProxy, assertInstitutionDelegation } from "./city-constraints.js";
 import { actorState } from "./simulation.js";
+import { hasOwnerConsent } from "./owner-consent.js";
 function participants(db,guildId,list,terms){
   if(!Array.isArray(list)||list.length<2||list.length>6||new Set(list.map(p=>`${p.type}:${p.key}`)).size!==list.length) throw new Error("Two to six distinct established participants required.");
   for(const p of list){
@@ -65,6 +66,8 @@ export function negotiateAgreement(db,guildId,input,actorId){
     if(terms.major===true&&before.data.approved_revision!==before.data.revision) throw new Error("Major agreement requires review before any expense.");
     for(const p of list){
       const identity=p.type==="character"?db.getCharacter(p.key).owner_user_id:`${p.type}:${p.key}`;
+      if(p.type==="character"&&db.getCityCalendar(guildId).flags.natural_language===true&&!hasOwnerConsent(db,guildId,before,p.key,identity))
+        throw new Error("Exact current owner-authored negotiation consent receipt required; supplied acceptance IDs cannot impersonate a PC.");
       if(!identity||input.accepted_by?.[`${p.type}:${p.key}`]!==identity) throw new Error("Explicit acceptance by every authorized participant/PC owner required.");
     }
   }

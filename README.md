@@ -1,14 +1,20 @@
-# VEILED CITY MULTIPLAYER DISCORD ENGINE v8.9.0
+# VEILED CITY MULTIPLAYER DISCORD ENGINE v9.0.0
 
 ## Current Version
 
-**8.9.0** — Veilkeeper, a stateful Discord AI GM for multiplayer Veiled City
+**9.0.0** — Veilkeeper, a stateful Discord AI GM for multiplayer Veiled City
 campaigns using Daggerheart. The version is maintained in
 [bot/package.json](bot/package.json).
 
 This release provides governed AI proposals, scoped context, native state commits,
 review receipts and bounded fictional-time scheduling. Optional features default
 off; AI delegation defaults to manual.
+
+The I Heard You release adds owner-authored natural speech, private sourced roll
+requests, native Help/Tag Team collaboration, bounded narrative-integrity checks,
+listener corrections, witnessed tactics, exact owner-consent receipts, scoped case
+views, continuity diagnostics, relevance ranking, reconstructed briefs and inert
+reviewed content packages. [Release guide and limits](docs/I_HEARD_YOU_IMPLEMENTATION.md).
 
 ## Concept
 
@@ -144,10 +150,10 @@ AI scene generation incurs normal configured provider usage.
 
 ### 5. Enable optional features and AI management
 
-Enable all 21 optional city/story flags:
+Enable all 37 optional city/story flags only after reviewing their data and authority requirements:
 
 ```text
-/vc-city flags json:{"institutions":true,"opportunities":true,"economy":true,"minor_npcs":true,"adaptive_context":true,"conversations":true,"pacing":true,"negotiations":true,"voice_direction":true,"authoring":true,"emergent_goals":true,"consequences":true,"scene_continuity":true,"emergent_groups":true,"strategies":true,"personal_arcs":true,"discovery":true,"long_projects":true,"conflict_mediation":true,"memory_consolidation":true,"activity_density":true}
+/vc-city flags json:{"institutions":true,"opportunities":true,"economy":true,"minor_npcs":true,"adaptive_context":true,"conversations":true,"pacing":true,"negotiations":true,"voice_direction":true,"authoring":true,"emergent_goals":true,"consequences":true,"scene_continuity":true,"emergent_groups":true,"strategies":true,"personal_arcs":true,"discovery":true,"long_projects":true,"conflict_mediation":true,"memory_consolidation":true,"activity_density":true,"decision_advisory":true,"encounter_intelligence":true,"tactical_memory":true,"dialogue_history":true,"evidence_custody":true,"audience_influence":true,"player_organizations":true,"history_reconciliation":true,"narrative_setups":true,"supply_dependencies":true,"natural_language":true,"roll_requests":true,"roll_collaboration":true,"semantic_integrity":true,"narrative_relevance":true,"session_briefs":true}
 ```
 
 Flags do not authorize AI execution. Start with review-only proposals:
@@ -171,6 +177,20 @@ Limits bound delegated fictional work, not API spending. Broaden the allowlist
 deliberately using the [complete feature/delegation matrix and rollout
 guide](docs/END_TO_END_IMPLEMENTATION.md). Major review, native mechanics, source
 checks, ownership and consent remain binding. Discovery is read-only.
+
+For the new I Heard You proposal operations only (this **replaces** the policy;
+merge your existing desired allowlist if retaining it):
+
+```text
+/vc-story delegation json:{"mode":"routine_delegated","allow":["roll.prepare","roll.adjudicate","dialogue.interpret"],"max_operations":4,"max_cost":0,"expires_minute":1000000000}
+```
+
+Choose an appropriate expiry after the current fictional minute. `roll.adjudicate`
+still requires human feasibility/rules review. Owners alone authorize Hope,
+participation, selected results, exact consent and private disclosure. Missing
+card mechanics or Help with net disadvantage require a saved human ruling; no
+automatic guessed arithmetic. New slash commands require normal command
+registration after deployment; pulling files does not restart a running bot.
 
 Revoke delegation:
 
@@ -214,6 +234,9 @@ the relevant inbox. Player commands expose only authorized knowledge.
 | Absence / early departure | `/vc-session absent mode:offscreen`; `/vc-session leave mode:offscreen` |
 | Authorize a human PC proxy | `/vc-session absent mode:proxy proxy:@TrustedPlayer` |
 | Roll Duality Dice | `/vc-roll duality modifier:2` |
+| Inspect / resolve native pending requests | `/vc-roll pending`; `/vc-roll result request:<key>`; say “I roll.” after adjudication |
+| Read a private case / brief | `/vc-intel discover mode:case query:<subject>`; `/vc-intel brief` |
+| Authorize owned collaboration | Describe Help/Tag Team freely; `/vc-roll contribute json:<owned op, key, request, expected_revision, exact authorization>` is the optional mechanical path |
 | Ask about rules | `/vc-rules ask question:<question>` |
 | Review campaign knowledge | `/vc-intel recap`; `/vc-intel facts`; `/vc-intel clues`; `/vc-intel caseboard` |
 | Read continuity / leads | `/vc-intel continuity`; `/vc-intel discover json:{"mode":"leads","query":"visitor"}` |
@@ -231,6 +254,17 @@ registered private GM channel. With discovery enabled, “What do I know about t
 visitor?” uses a grounded, private, read-only route. Arc/project invitations are
 optional; an AI proposal is never your consent.
 
+Natural-language recognition is conservative, not unrestricted semantic proof.
+Authored speech such as `I say to witness: "Call me Doctor."` preserves exact words
+for actual listeners. Questions/counteroffers remain nonbinding. `/vc-intel continuity`
+shows current proposal keys, terms and revisions; an optional exact authorization
+uses `Regarding <key>@<revision>, I agree to: <exact terms>`. Project-phase consent
+also needs `using my submitted project <actual ID>`. Meetings and negotiations
+still await native human/all-participant review; no invitation forces arrival.
+For private attempts, “I share my pending attempt with NAME.” discloses only the
+attempt to a present character with established communication, not private stats.
+Raw Duality modifiers do not bypass a pending sourced request.
+
 ## Useful GM / Admin Commands
 
 GM operations require Discord Manage Server permission or the configured GM role.
@@ -244,6 +278,9 @@ Some commands below need additional required options selected in Discord.
 | Session lifecycle / roster | `/vc-session start`; `/vc-session assemble`; `/vc-session roster`; `/vc-session end` |
 | Dashboard / health | `/vc-gm overview`; `/vc-admin doctor` |
 | Seed content / inspect drafts | `/vc-admin seed-data`; `/vc-admin seed-drafts draft_id:<id>` (omit ID to list) |
+| Portable inert content packages | `/vc-admin seed-package-preview`; `/vc-admin seed-package-import`; `/vc-admin seed-package-review`; `/vc-admin seed-package-export` (each takes `json`; see implementation guide) |
+| Prepare / adjudicate sourced rolls | `/vc-roll request json:<native request>`; `/vc-roll adjudicate json:<saved human ruling and source proof>` |
+| Read-only GM preparation / reconciliation | `/vc-story brief`; `/vc-story why json:{"op":"reconcile"}` |
 | Add / edit seed drafts | `/vc-admin seed-add json:<typed draft>`; `/vc-admin seed-edit draft_id:<id> json:<replacement>` |
 | Approve / reject / remove drafts | `/vc-admin seed-approve draft_id:<id>`; `/vc-admin seed-reject draft_id:<id>`; `/vc-admin seed-remove draft_id:<id>` |
 | Inspect NPC cognition | `/vc-gm npc-state npc:<name>` |
@@ -273,6 +310,7 @@ Back up before significant changes and preview restores.
 
 ### Further Reading
 
+- [I-heard-you features, enablement, phase evidence and remaining limits](docs/I_HEARD_YOU_IMPLEMENTATION.md)
 - [Systems-to-players features, enablement commands, phase evidence and limits](docs/SYSTEMS_TO_PLAYERS_IMPLEMENTATION.md)
 - [Systems-to-players behavioral gap audit](docs/SYSTEMS_TO_PLAYERS_GAP_ANALYSIS.md)
 - [Current AI management, complete feature matrix, rollout and recovery](docs/END_TO_END_IMPLEMENTATION.md)

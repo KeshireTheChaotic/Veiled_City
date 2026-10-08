@@ -42,6 +42,7 @@ function live(db,guild,row){
       checkResources(other);
       if(participant.proof) requireCitySource(db,guild,participant.proof);
       if(participant.source_event) requireCitySource(db,guild,participant.source_event);
+      if(!mayKnowRoll(db,guild,row,participant.character)) fail("Private participation disclosure changed; preserve saved effects for human review.");
       if(participant.input&&JSON.stringify(rollBreakdown(db,guild,participant.input,other))!==JSON.stringify(participant.breakdown))
         fail("Partner's sheet/source changed; preserve saved dice for human review.");
     }
@@ -49,6 +50,7 @@ function live(db,guild,row){
   for(const helper of row.data.helpers||[]){
     requireCitySource(db,guild,helper.proof);
     personalCharacter(db,guild,helper.user,helper.character);
+    if(!mayKnowRoll(db,guild,row,helper.character)) fail("Private helper disclosure changed; human correction required without refund/reroll.");
     if(!sceneAccess(db,guild,{observer_type:"character",observer_key:helper.character,target_type:"character",target_key:pc.id,sense:"sound"}))
       fail("Confirmed helper no longer has scene access; human correction required without reroll/refund.");
   }
@@ -65,6 +67,7 @@ function spend(db,pc,amount){
   return db.updateCharacterData(pc.id,data=>{data.resources.hope-=amount;});
 }
 function proof(db,guild,row,pc,input,kind){
+  if(!mayKnowRoll(db,guild,row,pc.id)) fail("Private attempt requires the actual owner's explicit disclosure before another PC can contribute.");
   const event=requireCitySource(db,guild,input.proof),p=event.details.roll_participation;
   if(event.kind!=="roll_adjudication"||event.source_kind!=="gm"||event.details.human_reviewed!==true
     ||event.session_id!==row.data.session_id||event.scene!==row.data.scene||event.visibility!=="character"||event.subject_key!==pc.id||!p||p.request!==row.record_key
@@ -73,6 +76,15 @@ function proof(db,guild,row,pc,input,kind){
   if(pc.id!==row.subject_key&&!sceneAccess(db,guild,{observer_type:"character",observer_key:pc.id,target_type:"character",target_key:row.subject_key,sense:"sound"}))
     fail("No actual scene/communication access for this contribution.");
   return p;
+}
+export function mayKnowRoll(db,guild,row,character){
+  if(row.subject_key===character||db.getWorldEvent(guild,row.source_event)?.details.private_scene!==true) return true;
+  const disclosure=db.getCityRecord(guild,"roll_disclosure",`${row.record_key}:${character}`);
+  if(!disclosure) return false;
+  const source=db.getWorldEvent(guild,disclosure.source_event);
+  return source?.status==="active"&&source.kind==="roll_disclosure"&&source.source_id===`player:${row.data.owner_user_id}`
+    &&source.details.author===row.data.owner_user_id&&source.details.request===row.record_key&&source.subject_key===character
+    &&db.ownerAuthoredSource(guild,source.event_key,row.data.owner_user_id);
 }
 function resultStatus(data){
   const attack=data.breakdown.attack;
@@ -128,7 +140,20 @@ export function contributeRoll(db,guild,user,input,{rng=d}={}){
     const beforeResources=new Map(affected.map(id=>[id,structuredClone(db.getCharacter(id).data.resources)]));
     let data=structuredClone(row.data),status=row.status;
     const mine=pc.id===row.subject_key;
-    if(input.op==="help"){
+    if(input.op==="disclose"){
+      if(!mine||!["pending","awaiting_partner"].includes(row.status)) fail("Only the acting owner can disclose their unsettled attempt.");
+      const recipient=db.getCharacter(input.character_id);
+      if(recipient?.guild_id!==guild||recipient.id===pc.id) fail("A distinct actual campaign PC recipient is required.");
+      personalCharacter(db,guild,recipient.owner_user_id,recipient.id);
+      if(!sceneAccess(db,guild,{observer_type:"character",observer_key:recipient.id,target_type:"character",target_key:pc.id,sense:"sound"}))
+        fail("Actual established communication access is required for disclosure.");
+      const disclosureKey=`${key}:${recipient.id}`;
+      const source=indexWorldEvent(db,guild,{key:`disclosure:${operation}`,source_id:`player:${user}`,kind:"roll_disclosure",title:"Owner-disclosed pending attempt",
+        session_id:data.session_id,scene:data.scene,visibility:"character",subject_key:recipient.id,
+        details:{author:user,request:key,attempt:data.attempt,authority:"owner_disclosed_attempt_only_not_private_sheet_or_consent"}},user);
+      db.saveCityRecord(guild,{kind:"roll_disclosure",key:disclosureKey,source_event:source.event_key,visibility:"character",subject_key:recipient.id,data:{request:key,author:user}});
+      data.disclosures=[...(data.disclosures||[]).filter(item=>item.character!==recipient.id),{character:recipient.id,user:recipient.owner_user_id,source_event:source.event_key}];
+    }else if(input.op==="help"){
       if(mine||data.tag||data.kind!=="action"||row.status!=="pending") fail("Help requires another PC's unsettled action, not a reaction/group/Tag Team.");
       if((data.helpers||[]).some(helper=>helper.character===pc.id)) fail("This character has already helped; no second charge or die.");
       if(data.breakdown.disadvantage>data.breakdown.advantage) fail("Help with net disadvantage requires a saved GM ruling; no charge.");
@@ -149,6 +174,7 @@ export function contributeRoll(db,guild,user,input,{rng=d}={}){
       if(!mine||data.kind==="reaction"||data.tag||(data.helpers||[]).length||(data.experiences||[]).length||row.status!=="pending")
         fail("Tag Team initiation requires the actor's untouched unsettled action; paid prior amendments need human review.");
       const other=db.getCityRecord(guild,"roll_request",input.partner_request);
+      if(other&&!mayKnowRoll(db,guild,other,pc.id)) fail("The other owner has not disclosed their private attempt.");
       if(!other||other.subject_key===pc.id||other.status!=="pending"||other.data.kind!==data.kind||other.data.tag
         ||other.data.helpers?.length||other.data.experiences?.length) fail("A separate compatible pending request from the other PC is required.");
       live(db,guild,other);proof(db,guild,row,pc,input,"tag");
@@ -176,7 +202,7 @@ export function contributeRoll(db,guild,user,input,{rng=d}={}){
       db.saveCityRecord(guild,{kind:"tag_usage",key:usageKey,visibility:"character",subject_key:initiator.id,source_event:row.source_event,
         data:{request:key,user:data.owner_user_id,hope_spent:3,proof:data.tag.proof}});
       data.tag.participants.push({character:pc.id,user,name:pc.name,request:other.record_key,roll_id:null,proof:input.proof,
-        input:other.data.input,breakdown:other.data.breakdown,source_event:other.source_event});
+        input:other.data.input,breakdown:other.data.breakdown,source_event:other.source_event,attempt:other.data.attempt});
       save(db,guild,other,{...other.data,superseded_by:key},"superseded",user);status="pending";
     }else if(input.op==="roll"){
       if(row.status!=="pending") fail("Request is awaiting another authorization or adjudication.");

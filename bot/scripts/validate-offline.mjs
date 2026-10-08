@@ -1,6 +1,7 @@
 /** Required suites run in network-denied child processes with dummy credentials. */
 import { spawnSync } from "node:child_process";
-const suites=["quality-check","format-check","check-source","validate-command-schema","i-heard-you-1-test","i-heard-you-2-test","i-heard-you-3-test","i-heard-you-4-test","i-heard-you-5-test","i-heard-you-6-test","i-heard-you-7-test","i-heard-you-9-test","offline-smoke-test","production-regression-test",
+import fs from "node:fs";
+const suites=["quality-check","format-check","check-source","validate-command-schema","i-heard-you-1-test","i-heard-you-2-test","i-heard-you-3-test","i-heard-you-4-test","i-heard-you-5-test","i-heard-you-6-test","i-heard-you-7-test","i-heard-you-9-test","i-heard-you-integration-test","offline-smoke-test","production-regression-test",
   "refactor-regression-test","operations-regression-test","npc-cognition-regression-test","audit-regression-test","simulation-regression-test",
   "seed-data-regression-test","seed-drafts-regression-test","city-regression-test","city-core-regression-test","city-civic-regression-test","city-depth-regression-test","narrative-contract-test",
   "context-conversation-test","story-continuity-test","negotiation-preview-test","endurance-test","portrayal-authoring-test",
@@ -13,5 +14,9 @@ for(const suite of suites){
   report.suites.push({id:suite,status:result.error||result.status!==0?"failed":"passed",exit_code:result.status});
   if(result.error||result.status!==0){console.error(`VALIDATION_REPORT ${JSON.stringify(report)}`);if(result.error) throw result.error;process.exit(result.status||1);}
 }
+report.acceptance=JSON.parse(fs.readFileSync(new URL("./fixtures/i-heard-you-acceptance.json",import.meta.url),"utf8")).map(row=>({...row,
+  test_result:row.suites.every(id=>report.suites.some(suite=>suite.id===id&&suite.status==="passed"))?"passed":"missing_or_failed",
+  status:row.status||"bounded_fixture_verified"}));
+if(report.acceptance.some(row=>row.test_result!=="passed")){console.error(`VALIDATION_REPORT ${JSON.stringify(report)}`);process.exit(1);}
 console.log(`VALIDATION_REPORT ${JSON.stringify(report)}`);
 console.log("Required validation PASS: network denied; zero live API requests or billable tokens.");

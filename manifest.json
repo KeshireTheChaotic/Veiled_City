@@ -1,6 +1,6 @@
 {
   "package": "Veiled_City_Multiplayer_Discord",
-  "version": "8.9.0",
+  "version": "9.0.0",
   "generated": "2026-10-08",
   "content_normalization": "utf8-lf",
   "files": [
@@ -26,8 +26,8 @@
     },
     {
       "path": "README.md",
-      "size_bytes": 15436,
-      "sha256": "c96739a1a2527bc19c09449f83860b84ac2c348eda23215dfc60ed207f606a76"
+      "size_bytes": 18932,
+      "sha256": "a05bee4b582b016804d3101e7eb94689a6df6add5a5f75e43af77406088b3ae1"
     },
     {
       "path": "SUGGESTIONS-End-To-End.md",
@@ -52,7 +52,7 @@
     {
       "path": "bot/package.json",
       "size_bytes": 2601,
-      "sha256": "151004e0bf3ec33cfbd6f1fbb4722a5e6c22f80d2a408d0b677d32bef74622ba"
+      "sha256": "7bd1028f000d5f2fdaba40f349f95db2bcae6c1122d34c67d57696238eaeea20"
     },
     {
       "path": "bot/scripts/audit-regression-test.mjs",
@@ -200,6 +200,11 @@
       "sha256": "ddacd20a225e67147b2b12cfc992505a6efc2a194e2c553cd5fb9a672caaeebb"
     },
     {
+      "path": "bot/scripts/fixtures/i-heard-you-acceptance.json",
+      "size_bytes": 4305,
+      "sha256": "94b6bababc2baed286a357044a0ad1bbaeb5e593d04dd5a9e6b4f7e5c85e1348"
+    },
+    {
       "path": "bot/scripts/fixtures/i-heard-you-golden.json",
       "size_bytes": 2921,
       "sha256": "ca9327468a6174aac01d8765ea07e1a4b952f02273afd523347552c71b241b2d"
@@ -253,6 +258,11 @@
       "path": "bot/scripts/i-heard-you-9-test.mjs",
       "size_bytes": 5281,
       "sha256": "b5424bb14948f87eedc5b621f8dfc8343713aa32427ea26f992b61e693fc28c4"
+    },
+    {
+      "path": "bot/scripts/i-heard-you-integration-test.mjs",
+      "size_bytes": 10254,
+      "sha256": "13c2908543e8f096346086919ee7fbf898b6a96daab9d5526d7ca8b7e72de467"
     },
     {
       "path": "bot/scripts/narrative-contract-test.mjs",
@@ -386,8 +396,8 @@
     },
     {
       "path": "bot/scripts/validate-offline.mjs",
-      "size_bytes": 2518,
-      "sha256": "f2e58dd29850128c8464b759d6d49ad8028acc672d3f718659183513de027a61"
+      "size_bytes": 3037,
+      "sha256": "cb616042c008d0859e92a1f2fcd67f4c66602dc9ad0fbd42fd5bd595cc506216"
     },
     {
       "path": "bot/sql/schema.sql",
@@ -456,8 +466,8 @@
     },
     {
       "path": "bot/src/city-core.js",
-      "size_bytes": 21778,
-      "sha256": "b69b5618127863384b11b1bef9a9b6b139528aeaf2dba4ccba86b40e0eade419"
+      "size_bytes": 24558,
+      "sha256": "119bf8b85057834f8bd36baf0943d226e86844c81a24cbd86cf3efae5dbb0614"
     },
     {
       "path": "bot/src/city-depth.js",
@@ -486,8 +496,8 @@
     },
     {
       "path": "bot/src/commands.js",
-      "size_bytes": 143800,
-      "sha256": "d4c6c039e0d8a36c488a1df00bb70ce667e6006ea52c64718fe678ef31464ba7"
+      "size_bytes": 143743,
+      "sha256": "f38b139a4de7e9cf8f221c6f145d20c297bb1ff855d9c22a2a32af2712a719b2"
     },
     {
       "path": "bot/src/concept-context.js",
@@ -501,8 +511,8 @@
     },
     {
       "path": "bot/src/consent-language.js",
-      "size_bytes": 6229,
-      "sha256": "28fec77d8d7f2656695bc5bba6b17fe9dc9bf223d81e5b579242295db1dc3119"
+      "size_bytes": 7840,
+      "sha256": "e3704a1646a174536ef0c04756f6adfddb5f3b083f71339f71eceffdd0d83d9e"
     },
     {
       "path": "bot/src/content-packages.js",
@@ -526,8 +536,8 @@
     },
     {
       "path": "bot/src/db.js",
-      "size_bytes": 145096,
-      "sha256": "7df238c66abf29a309455867360b5e7696908bb469eaf3d731652b48901a56a2"
+      "size_bytes": 148394,
+      "sha256": "5a501d2553f555d5ad444ea354d524f88724767edbfda95db8d5076b4d2cb842"
     },
     {
       "path": "bot/src/decision-advisory.js",
@@ -536,8 +546,8 @@
     },
     {
       "path": "bot/src/dialogue-continuity.js",
-      "size_bytes": 4293,
-      "sha256": "7af42898fc2134cb62bf4158ec93f0d181aabc807f09c26126398c09fbcba817"
+      "size_bytes": 4410,
+      "sha256": "58a7dbcda7d95d110f1f0619a12e1d06c782f3137045af270f0a0a4b11489f53"
     },
     {
       "path": "bot/src/dice.js",
@@ -576,8 +586,8 @@
     },
     {
       "path": "bot/src/expansion-contracts.js",
-      "size_bytes": 5937,
-      "sha256": "a07e886b7111ab143a7344a796ff2e1ae80b249b2cb8918738476ea2d3c19a22"
+      "size_bytes": 6196,
+      "sha256": "b275192a1516b30c7fb66be10141177b28b3588e2c0958ff91d1bd4dcf6a03dd"
     },
     {
       "path": "bot/src/gm.js",
@@ -601,8 +611,8 @@
     },
     {
       "path": "bot/src/index.js",
-      "size_bytes": 46673,
-      "sha256": "848d6b454aa484410ad360c07fb9e9a985d1f502df76c3e855b0b03475206a48"
+      "size_bytes": 46693,
+      "sha256": "8580020a59f7878a22906155b3e313852fdae9bd3a50a95ad7fbd1b5a558401a"
     },
     {
       "path": "bot/src/logger.js",
@@ -626,8 +636,8 @@
     },
     {
       "path": "bot/src/negotiations.js",
-      "size_bytes": 7792,
-      "sha256": "08fbe061a7f71b0701d57d5235975128bbb8b862a60905f8f36075d73126ef8f"
+      "size_bytes": 8132,
+      "sha256": "a6f31cc6e3fabb6352046f7351da6e6bc671f7bc5843af9c427fa7fd51120509"
     },
     {
       "path": "bot/src/npc-cognition.js",
@@ -660,14 +670,19 @@
       "sha256": "526afeda8343ebf411f441336499734ba7d1c08453c64a7c1cc75415942fc650"
     },
     {
+      "path": "bot/src/owner-consent.js",
+      "size_bytes": 1071,
+      "sha256": "f291bbc85441f6a391df14596de5977eb30875fa34539cce032efcc1e6a00377"
+    },
+    {
       "path": "bot/src/personal-continuity.js",
       "size_bytes": 12407,
       "sha256": "cc4f0f9671b16a8a6326dafa43f45fc92dc3ede394768d1d0499d7488f4db9cb"
     },
     {
       "path": "bot/src/player-language.js",
-      "size_bytes": 2890,
-      "sha256": "9c746e8995472c584f211b05efc8828632ccddf1b482c54ae9b70fb6436c4ce7"
+      "size_bytes": 2941,
+      "sha256": "c6e6c9daa1abd37526eb2a82414a329307ba5abcd4db73bc1e3651486e90e6c4"
     },
     {
       "path": "bot/src/portrayal.js",
@@ -696,18 +711,18 @@
     },
     {
       "path": "bot/src/roll-collaboration.js",
-      "size_bytes": 20891,
-      "sha256": "23f86d28bec63fd129b59452f1c4cf00a4c473408961512746e51a2b5ec3d40f"
+      "size_bytes": 23649,
+      "sha256": "f015837608328e9c47fa89b98825d70a50aaf6905e660b228018515798e9b002"
     },
     {
       "path": "bot/src/roll-language.js",
-      "size_bytes": 7033,
-      "sha256": "014cf164b0f0363370584e24e1a15404b326be6c6428d78129ffff82709e9048"
+      "size_bytes": 8135,
+      "sha256": "18c196d03f5e8205c8f878488931539f01bd585fb897a80630cf19da11f883f7"
     },
     {
       "path": "bot/src/roll-requests.js",
-      "size_bytes": 13481,
-      "sha256": "572d04b7776f3a6d5670bc410a01ee5a77482f48b1b111767e018fd5895cffc2"
+      "size_bytes": 14929,
+      "sha256": "9d1faaece4872feca2e286249c625044d7bac6a637807353b522adcaf26d8b55"
     },
     {
       "path": "bot/src/roster.js",
@@ -1351,13 +1366,13 @@
     },
     {
       "path": "docs/I_HEARD_YOU_GAP_ANALYSIS.md",
-      "size_bytes": 12409,
-      "sha256": "d95e1f43dad9766a790552743a2d00a2639e257b39c4da942c37467b424d5483"
+      "size_bytes": 13444,
+      "sha256": "3ae557af527cd4f026e3060235ae75818b63a2018bc714718d5eeaa2d363c777"
     },
     {
       "path": "docs/I_HEARD_YOU_IMPLEMENTATION.md",
-      "size_bytes": 26755,
-      "sha256": "a9fa97750d68c84b03e850d276683b0b9e6262a35a46aa734afb1ffbf503c506"
+      "size_bytes": 30902,
+      "sha256": "6c827aac50ed5a67cc3f6fe8c83708198c0397b9175a190daf5b2e01cd219122"
     },
     {
       "path": "docs/LEVEL_UP.md",

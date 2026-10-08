@@ -298,7 +298,7 @@ async function processPrivateTurn(message,directMention){
   if(!controlled?.npc_proxy&&await routeRollMessage({db,message,text:playerText,characterId:controlled?.character_id,
     deliver:text=>sendPrivate(message.guild,message.author.id,text,session.id,controlled?.character_id),
     sendAmendment:(user,text,sid,char)=>sendPrivate(message.guild,user,text,sid,char)})) return;
-  captureDeclaration(db,message.guild.id,message.author.id,controlled?.npc_proxy?null:controlled?.character_id,message.id,playerText);
+  captureDeclaration(db,message.guild.id,message.author.id,controlled?.npc_proxy?null:controlled?.character_id,message.id,playerText,{privateScene:true});
   captureDialogue(db,message.guild.id,message.author.id,controlled?.npc_proxy?null:controlled?.character_id,message.id,playerText,{privateScene:true});
   captureArcCandidate(db,message.guild.id,message.author.id,controlled?.npc_proxy?null:controlled?.character_id,message.id,playerText);
   db.addMessage({guildId:message.guild.id,sessionId:session.id,messageId:message.id,userId:message.author.id,speakerName:speaker,characterId:controlled?.character_id||null,visibility:vis,subjectUserId:vis==="player"?message.author.id:null,subjectCharacterId:vis==="character"?controlled.character_id:null,content:playerText});

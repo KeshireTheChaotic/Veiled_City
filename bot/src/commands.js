@@ -1750,7 +1750,7 @@ GM notes: ${a.draft.gm_notes}`:""}`.slice(0,1950):"No aftermath draft exists for
     }
   } catch(err){
     const msg=err.message||String(err);
-    if(!isExpectedError(err) && interaction.guild && !((group==="story"||group==="intel"||group==="admin")&&!isMutatingCommand(group,sub))){
+    if(!isExpectedError(err) && interaction.guild && isMutatingCommand(group,sub)){
       await postStateError({db,guild:interaction.guild,error:err,context:`command:/vc ${group||""} ${sub||""}`,sessionId:db.getActiveSession(interaction.guildId)?.id||null});
     }
     const payload={content:`⚠️ ${msg}`,ephemeral:true};

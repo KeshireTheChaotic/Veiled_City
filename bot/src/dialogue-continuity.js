@@ -20,7 +20,7 @@ export function captureDialogue(db,guild,user,characterId,messageId,message,{pri
   if(!listeners.length) return null;
   return db.transaction(()=>{
     const source=indexWorldEvent(db,guild,{key,source_id:`player:${user}`,kind:"authored_speech",title:"Explicitly authored character speech",visibility:"gm",
-      scene:currentScene(db,guild).key,details:{character_id:pc.id,author:user,quote:speech.quote,listeners,
+      session_id:db.getActiveSession(guild).id,scene:currentScene(db,guild).key,details:{character_id:pc.id,author:user,quote:speech.quote,listeners,
         private_scene:privateScene,authority:"utterance_only_not_truth_or_consent"}},user);
     for(const npc of listeners) db.addNpcMemory(guild,{npcKey:npc,memoryType:"relational",content:`${pc.name} said: “${speech.quote}” (claim unverified; not consent or binding terms)`,
       subjectType:"character",subjectKey:pc.id,sourceType:"heard",sourceRef:key,confidence:100,importance:70,
@@ -32,7 +32,8 @@ export function interpretDialogue(db,guild,input){
   if(db.getCityCalendar(guild).flags.dialogue_history!==true) throw new Error("Dialogue history is opt-in.");
   const source=requireCitySource(db,guild,input.source_event),npc=input.npc_key;
   if(source.kind!=="authored_speech"||!source.source_id.startsWith("player:")||source.source_id!==`player:${source.details.author}`
-    ||!source.details.listeners?.includes(npc)||!db.getNpcProfile(guild,npc)||activeCityProxy(db,guild,npc))
+    ||!source.details.listeners?.includes(npc)||!db.getNpcProfile(guild,npc)||activeCityProxy(db,guild,npc)
+    ||!db.ownerAuthoredSource(guild,source.event_key,source.details.author))
     throw new Error("Only an actual listener can interpret authenticated speech.");
   if(typeof input.interpretation!=="string"||!input.interpretation.trim()||input.interpretation.length>600
     ||!Number.isInteger(input.confidence)||input.confidence<0||input.confidence>70

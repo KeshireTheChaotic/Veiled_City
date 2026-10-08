@@ -5,7 +5,7 @@ import { currentScene } from "./scene-continuity.js";
 import { indexWorldEvent } from "./city-calendar.js";
 import { requireCitySource } from "./city-core.js";
 import { rollRevision, pendingRollRequests, formatRollRequest, publishRollAmendment } from "./roll-requests.js";
-import { contributeRoll, adjudicateRollSource } from "./roll-collaboration.js";
+import { contributeRoll, adjudicateRollSource, mayKnowRoll } from "./roll-collaboration.js";
 import { StateConflictError } from "./errors.js";
 const hash=value=>createHash("sha256").update(JSON.stringify(value)).digest("hex").slice(0,40);
 export function rollDeclaration(text){
@@ -13,6 +13,8 @@ export function rollDeclaration(text){
   if(!exact||exact.length>2000||/^(?:ooc|\(\(|\/\/)|\b(?:if I|I might|I would|I could|hypothetically|suppose I)\b/i.test(exact)) return null;
   let match=/^I spend 1 Hope to help (.+?) by (.+)$/i.exec(exact);
   if(match) return {op:"help",target:match[1].trim(),description:exact,pay_hope:true};
+  match=/^I share my pending (?:roll|attempt) with (.+?)\.?$/i.exec(exact);
+  if(match) return {op:"disclose",target:match[1].trim()};
   match=/^I spend 1 Hope to use (?:my )?(.+?) Experience (?:on this roll )?by (.+)$/i.exec(exact);
   if(match) return {op:"experience",experience:match[1].trim(),description:exact,pay_hope:true};
   match=/^I spend 3 Hope to (?:initiate |start )?Tag Team with (.+?) by (.+)$/i.exec(exact);
@@ -32,7 +34,7 @@ export function reviewRollDeclaration(db,guild,input,reviewer,context={}){
   if(!reviewer||reviewer==="ai_policy") throw new StateConflictError("Human feasibility/rules review required.");
   const source=requireCitySource(db,guild,input.source_event),a=source.details.authorization;
   if(source.kind!=="roll_contribution"||source.source_id!==`player:${source.details.author}`||!a
-    ||source.visibility!=="character"||source.subject_key!==source.details.character_id)
+    ||source.visibility!=="character"||source.subject_key!==source.details.character_id||!db.ownerAuthoredSource(guild,source.event_key,source.details.author))
     throw new StateConflictError("An authenticated captured owner authorization is required.");
   const pc=personalCharacter(db,guild,source.details.author,source.subject_key);
   if(context.scope?.mode==="private"&&(context.scope.actorUserId!==pc.owner_user_id||context.scope.actorCharacterId!==pc.id))
@@ -51,8 +53,11 @@ export async function routeRollMessage({db,message,text=message.content,characte
   try{
     const pc=personalCharacter(db,guild,message.author.id,characterId),session=db.getActiveSession(guild);
     const own=pendingRollRequests(db,guild,message.author.id),scene=currentScene(db,guild).key;
+    if(["help","tag"].includes(parsed.op)&&db.currentRollRequests(guild,session.id,scene).length>100)
+      throw new StateConflictError("Too many pending attempts for unambiguous name matching; identify the exact request through native review.");
     let matches=own;
-    if(parsed.op==="help") matches=db.currentRollRequests(guild,session.id,scene).filter(item=>item.data.character_name.toLowerCase()===parsed.target.toLowerCase());
+    if(parsed.op==="disclose") matches=own.filter(item=>item.data.owner_user_id===message.author.id&&["pending","awaiting_partner"].includes(item.status));
+    if(parsed.op==="help") matches=db.currentRollRequests(guild,session.id,scene).filter(item=>item.data.character_name.toLowerCase()===parsed.target.toLowerCase()&&mayKnowRoll(db,guild,item,pc.id));
     if(parsed.op==="participate") matches=own.filter(item=>item.status==="awaiting_partner"&&item.data.tag?.partner_user===pc.owner_user_id);
     if(parsed.op==="roll") matches=own.filter(item=>item.status==="pending");
     if(parsed.op==="damage") matches=own.filter(item=>item.status==="awaiting_damage");
@@ -61,8 +66,13 @@ export async function routeRollMessage({db,message,text=message.content,characte
     if(matches.length!==1) throw new StateConflictError("Clarify the specific unresolved attempt in your own words; no dice or resources changed.");
     row=matches[0];const authorization={...parsed,request:row.record_key,expected_revision:rollRevision(row),key:`utterance:${hash([message.id,pc.id])}`};
     delete authorization.target;
+    if(parsed.op==="disclose"){
+      const recipients=db.roster(session.id).filter(item=>["present","late","guest"].includes(item.presence)&&item.name?.toLowerCase()===parsed.target.toLowerCase());
+      if(recipients.length!==1) throw new StateConflictError("Clarify the actual present character to whom you want to disclose your attempt.");
+      authorization.character_id=recipients[0].character_id;
+    }
     if(parsed.op==="tag"){
-      const partners=db.currentRollRequests(guild,session.id,scene).filter(item=>item.data.character_name.toLowerCase()===parsed.target.toLowerCase());
+      const partners=db.currentRollRequests(guild,session.id,scene).filter(item=>item.data.character_name.toLowerCase()===parsed.target.toLowerCase()&&mayKnowRoll(db,guild,item,pc.id));
       if(partners.length!==1) throw new StateConflictError("The other PC needs their own adjudicated pending attempt; participation is never inferred.");
       authorization.partner_request=partners[0].record_key;
     }

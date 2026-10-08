@@ -122,6 +122,34 @@ export class VeiledDB {
       AND kind=? AND (?='' OR instr(lower(data_json),lower(?))>0) ORDER BY minute DESC,rowid DESC LIMIT ?`)
       .all(guildId,characterId,kind,query,query,Math.max(1,Math.min(50,limit))).map(row=>({...row,data:JSON.parse(row.data_json)}));
   }
+  ownedExternalConsentOffers(guildId,character,user){
+    return this.db.prepare(`SELECT r.* FROM city_records r JOIN world_events w ON w.guild_id=r.guild_id AND w.event_key=r.source_event AND w.status='active'
+      WHERE r.guild_id=? AND r.status IN ('active','pending','offered','awaiting_consent')
+      AND (w.visibility IN ('public','party') OR w.visibility='character' AND w.subject_key=? OR w.visibility='player' AND w.subject_key=?)
+      AND ((r.kind='negotiation' AND EXISTS(SELECT 1 FROM json_each(r.data_json,'$.participants') WHERE json_extract(value,'$.type')='character' AND json_extract(value,'$.key')=?))
+        OR (r.kind='commitment_offer' AND EXISTS(SELECT 1 FROM json_each(r.data_json,'$.proposal.participants') WHERE value=?))
+        OR (r.kind='long_project' AND EXISTS(SELECT 1 FROM json_each(r.data_json,'$.participants') WHERE value=?)))
+      ORDER BY r.minute DESC,r.rowid DESC LIMIT 50`).all(guildId,character,user,character,`character:${character}`,character)
+      .map(row=>({...row,data:JSON.parse(row.data_json)}));
+  }
+  ownerAuthoredSource(guildId,key,user){
+    return !!this.db.prepare("SELECT 1 FROM mutation_ledger WHERE guild_id=? AND source_layer='city' AND mutation_type='world_event_index' AND entity_key=? AND actor_id=? LIMIT 1")
+      .get(guildId,key,user);
+  }
+  hasOwnerConsent(guildId,{proposal,revision,terms,character,user}){
+    const session=this.getActiveSession(guildId),pc=this.getCharacter(character);
+    if(!session||pc?.guild_id!==guildId||pc.owner_user_id!==user||this.activeAssignment(session.id,user)?.character_id!==character
+      ||!this.roster(session.id).some(row=>row.character_id===character&&["present","late","guest"].includes(row.presence))) return false;
+    return !!this.db.prepare(`SELECT 1 FROM city_records r JOIN world_events w ON w.guild_id=r.guild_id AND w.event_key=r.source_event AND w.status='active'
+      WHERE r.guild_id=? AND r.kind='consent_reply' AND r.visibility='character' AND r.subject_key=?
+      AND json_extract(r.data_json,'$.user')=? AND json_extract(r.data_json,'$.proposal')=? AND json_extract(r.data_json,'$.revision')=?
+      AND json_extract(r.data_json,'$.terms')=? AND json_extract(r.data_json,'$.accepted')=1
+      AND NOT EXISTS(SELECT 1 FROM city_records n WHERE n.guild_id=r.guild_id AND n.kind='consent_reply' AND n.subject_key=r.subject_key AND n.rowid>r.rowid
+        AND json_extract(n.data_json,'$.user')=json_extract(r.data_json,'$.user') AND json_extract(n.data_json,'$.proposal')=json_extract(r.data_json,'$.proposal'))
+      AND w.kind='owner_offer_reply' AND w.session_id=? AND w.source_id=? AND json_extract(w.details_json,'$.author')=?
+      AND EXISTS(SELECT 1 FROM mutation_ledger m WHERE m.guild_id=r.guild_id AND m.source_layer='city' AND m.mutation_type='world_event_index' AND m.entity_key=w.event_key AND m.actor_id=?) LIMIT 1`)
+      .get(guildId,character,user,proposal,revision,terms,session.id,`player:${user}`,user,user);
+  }
   setCityCalendar(guildId,{epoch=null,timezone="UTC",flags={}}){
     this.db.prepare(`INSERT INTO city_calendar(guild_id,epoch,timezone,flags_json) VALUES(?,?,?,?)
       ON CONFLICT(guild_id) DO UPDATE SET epoch=excluded.epoch,timezone=excluded.timezone,flags_json=excluded.flags_json`)
@@ -178,8 +206,10 @@ export class VeiledDB {
       AND status IN ('pending','needs_review','awaiting_partner','awaiting_selection','awaiting_damage','awaiting_damage_type')
       AND json_extract(data_json,'$.session_id')=?
       AND (subject_key=? OR json_extract(data_json,'$.tag.partner_user')=? OR EXISTS (SELECT 1 FROM json_each(data_json,'$.tag.participants') p
-        WHERE json_extract(p.value,'$.user')=? AND json_extract(p.value,'$.character')=?))
-      ORDER BY minute DESC,rowid DESC LIMIT 100`).all(guildId,this.getActiveSession(guildId)?.id||null,character,user,user,character)
+        WHERE json_extract(p.value,'$.user')=? AND json_extract(p.value,'$.character')=?) OR EXISTS(SELECT 1 FROM json_each(data_json,'$.disclosures') d
+        WHERE json_extract(d.value,'$.user')=? AND json_extract(d.value,'$.character')=?) OR EXISTS(SELECT 1 FROM json_each(data_json,'$.helpers') h
+        WHERE json_extract(h.value,'$.user')=? AND json_extract(h.value,'$.character')=?))
+      ORDER BY minute DESC,rowid DESC LIMIT 100`).all(guildId,this.getActiveSession(guildId)?.id||null,character,user,user,character,user,character,user,character)
       .map(row=>({...row,data:JSON.parse(row.data_json)}));
   }
   currentRollRequests(guildId,session,scene){

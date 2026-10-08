@@ -15,7 +15,7 @@ function sourceActor(db,guild,input){
   const source=requireCitySource(db,guild,input.source_event),session=db.getActiveSession(guild);
   if(source.kind!=="player_declaration"||source.visibility!=="character"||source.subject_key!==input.character_id
     ||source.details.character_id!==input.character_id||source.source_id!==`player:${source.details.author}`
-    ||!session||source.session_id!==session.id||source.scene!==currentScene(db,guild).key)
+    ||!session||source.session_id!==session.id||source.scene!==currentScene(db,guild).key||!db.ownerAuthoredSource(guild,source.event_key,source.details.author))
     throw new StateConflictError("A current authenticated owner declaration in this scene is required.");
   return {source,session,pc:personalCharacter(db,guild,source.details.author,input.character_id)};
 }
@@ -96,12 +96,15 @@ export function formatRollRequest(row,{user=null}={}){
   if(user&&data.owner_user_id!==user&&!participant){
     const helper=data.helpers?.find(item=>item.user===user);
     if(helper) return `Help recorded for request ${row.record_key}: ${helper.name} spent 1 Hope and rolled d6 ${helper.die}. Parent status: ${row.status}. Revision: ${rollRevision(row)}.`;
+    if(data.disclosures?.some(item=>item.user===user))
+      return `Owner-shared attempt by ${data.character_name}: ${data.attempt}. Request ${row.record_key}; status ${row.status}; revision ${rollRevision(row)}. No private sheet data or participation is implied.`;
     if(data.tag?.partner_user===user||data.withdrawn_tag?.partner_user===user)
       return `Nonbinding Tag Team proposal for your character; request ${row.record_key}. Status: ${row.status}. No participation is inferred. Revision: ${rollRevision(row)}. Describe your response freely.`;
     throw new StateConflictError("Request is not owned by this reader.");
   }
   return [`[Pending Daggerheart ${data.kind} roll — ${row.record_key}]`,
-    `Actor: ${participant?.name||data.character_name} (<@${user||data.owner_user_id}>)`, `Attempt: ${participant?.input?"Owner-authored linked contribution":data.attempt}`,
+    `Actor: ${participant?.name||data.character_name} (<@${user||data.owner_user_id}>)`,
+    `Attempt: ${participant?.attempt||(participant?.input?"Owner-authored linked contribution; original declaration retained":data.attempt)}`,
     `Trait: ${b.trait} ${b.trait_bonus===null?"PENDING":signed(b.trait_bonus)} [recorded character sheet at preparation]`,
     ...b.modifiers.map(mod=>`${mod.name}: ${mod.kind==="flat"?signed(mod.amount):mod.kind} [saved ruling ${mod.ruling_key}; ${mod.source}; included]`),
     ...(data.experiences?.length?data.experiences.map(item=>`Experience: ${item.name} ${signed(item.bonus)} [owner invoked; 1 Hope spent; ${item.proof}]`)
@@ -122,12 +125,18 @@ export function pendingRollRequests(db,guild,user){
   const pc=personalCharacter(db,guild,user),session=db.getActiveSession(guild);
   return db.ownedRollRequests(guild,user,pc.id)
     .filter(row=>row.data.session_id===session.id&&row.data.scene===currentScene(db,guild).key
-      &&["pending","needs_review","awaiting_partner","awaiting_selection","awaiting_damage","awaiting_damage_type"].includes(row.status));
+      &&["pending","needs_review","awaiting_partner","awaiting_selection","awaiting_damage","awaiting_damage_type"].includes(row.status))
+    .filter(row=>row.subject_key===pc.id||row.data.tag?.participants.some(item=>item.character===pc.id&&item.user===user)
+      ||row.data.helpers?.some(item=>item.character===pc.id&&item.user===user)
+      ||row.data.tag?.partner_user===user&&db.getCityRecord(guild,"roll_request",row.data.tag.partner_request)?.subject_key===pc.id
+      ||row.data.disclosures?.some(item=>item.character===pc.id&&item.user===user&&db.getWorldEvent(guild,item.source_event)?.status==="active"
+        &&db.ownerAuthoredSource(guild,item.source_event,row.data.owner_user_id)));
 }
 export function ownedRollRequest(db,guild,user,key){
   const pc=personalCharacter(db,guild,user),row=db.getCityRecord(guild,"roll_request",key);
   if(!row||!(row.subject_key===pc.id&&row.data.owner_user_id===user
-    ||row.data.tag?.participants.some(item=>item.user===user&&item.character===pc.id)))
+    ||row.data.tag?.participants.some(item=>item.user===user&&item.character===pc.id)
+    ||row.data.helpers?.some(item=>item.user===user&&item.character===pc.id)))
     throw new StateConflictError("No saved request is available to this current owned character.");
   return row;
 }
@@ -144,6 +153,11 @@ export async function publishRollRequests(db,guild,mutation,send){
 export async function publishRollAmendment(db,guild,row,send){
   const recipients=new Map([[row.data.owner_user_id,row.subject_key]]);
   for(const participant of row.data.tag?.participants||[]) recipients.set(participant.user,participant.character);
+  for(const disclosure of row.data.disclosures||[]) if(db.getWorldEvent(guild,disclosure.source_event)?.status==="active") recipients.set(disclosure.user,disclosure.character);
+  if(row.status==="awaiting_partner"&&row.data.tag?.partner_user){
+    const partner=db.getCityRecord(guild,"roll_request",row.data.tag.partner_request);
+    if(partner) recipients.set(row.data.tag.partner_user,partner.subject_key);
+  }
   for(const [user,character] of recipients){
     personalCharacter(db,guild,user,character);
     const key=`roll-pub:${hash([row.record_key,row.data.revision,user]).slice(0,48)}`;

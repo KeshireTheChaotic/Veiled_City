@@ -25,7 +25,7 @@ export function declarationContext(db,guild,user,character,message){
       authority:"Owner-authored text only. Attempts are not completed facts. Unclear/mixed meaning requires open clarification, never a menu or inferred assent."};
   }catch{return null;}
 }
-export function captureDeclaration(db,guild,user,character,messageId,message){
+export function captureDeclaration(db,guild,user,character,messageId,message,{privateScene=false}={}){
   if(!character||!messageId||db.getCityCalendar(guild).flags.roll_requests!==true) return null;
   let pc;try{pc=personalCharacter(db,guild,user,character);}catch{return null;}
   const parsed=interpretAuthoredText(message,{natural:true});
@@ -33,6 +33,6 @@ export function captureDeclaration(db,guild,user,character,messageId,message){
   const key=`declaration:${motivationKey([messageId,pc.id])}`,prior=db.getWorldEvent(guild,key);if(prior) return prior;
   return indexWorldEvent(db,guild,{key,kind:"player_declaration",source_id:`player:${user}`,title:"Authenticated declared attempt",
     session_id:db.getActiveSession(guild).id,scene:currentScene(db,guild).key,
-    visibility:"character",subject_key:pc.id,details:{author:user,character_id:pc.id,message_id:messageId,text:message,kind:parsed.kind,
+    visibility:"character",subject_key:pc.id,details:{author:user,character_id:pc.id,message_id:messageId,text:message,kind:parsed.kind,private_scene:privateScene,
       authority:"Declared attempt only; not movement, success, knowledge, spending or consent."}},user);
 }
