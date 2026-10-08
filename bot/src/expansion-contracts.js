@@ -1,5 +1,6 @@
 /** Shared release feature contract and read-only GM diagnostics; absent flags are disabled and records never imply PC authority. */
 export const EXPANSION_FEATURES=Object.freeze({
+  narrative_relevance:{phase:"IHY6",records:[],command:"Existing fictional director opportunities",authority:"Source-grounded legal ranking within native budgets; quiet/OOC exchanges permit zero work and no time advance"},
   semantic_integrity:{phase:"IHY2",records:[],command:"Normal GM commit validation",authority:"Bounded sourced material paraphrase checks; uncertain meaning requires correction, not state invention"},
   roll_collaboration:{phase:"IHY2",records:["roll_operation","tag_usage"],command:"/vc-roll contribute / adjudicate",authority:"Actual owner declarations, native costs/dice, reviewed feasibility and player-selected Tag Team outcomes"},
   natural_language:{phase:"IHY1",records:[],command:"Normal authenticated play messages",authority:"Exact authored declarations only; no inferred PC completion or assent"},

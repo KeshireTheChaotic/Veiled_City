@@ -44,6 +44,7 @@ bot/scripts/i-heard-you-2-test.mjs
 bot/scripts/i-heard-you-3-test.mjs
 bot/scripts/i-heard-you-4-test.mjs
 bot/scripts/i-heard-you-5-test.mjs
+bot/scripts/i-heard-you-6-test.mjs
 bot/scripts/narrative-contract-test.mjs
 bot/scripts/negotiation-preview-test.mjs
 bot/scripts/npc-cognition-regression-test.mjs

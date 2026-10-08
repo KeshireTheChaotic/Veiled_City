@@ -13,6 +13,7 @@ import { clusterContext } from "./memory-clusters.js";
 import { reconcileSceneArrival } from "./scene-continuity.js";
 import { indexWorldEvent } from "./city-calendar.js";
 import { delegateConsequence, maintainMemory, continueLongProjects, dispatchAiIntents } from "./ai-intents.js";
+import { pacingAdvice } from "./story-continuity.js";
 export { updateRelationshipDimensions } from "./relationship-state.js";
 
 export const ACTION_TYPES=["investigate","travel","contact","recruit","observe","prepare","hide","acquire","spend_resource",
@@ -551,8 +552,35 @@ export function inspectNpcAction(db,guildId,id){
 }
 
 /** Called only by fictional round/scene/downtime triggers, with a stable retry key. */
+function quietOpportunity(db,guild,query){
+  if(db.getCityCalendar(guild).flags.narrative_relevance!==true) return false;
+  const pacing=pacingAdvice(db,guild,query);
+  return pacing.suggested_mode==="silence"||pacing.cues?.pause_background===true;
+}
+/** Ranking is read-only; actual native validators and resources are checked again at execution. */
+export function rankDirectorActions(db,{guildId,candidates,proposed,query=""}){
+  const tokens=new Set(String(query).toLowerCase().match(/[a-z0-9]{3,}/g)||[]);
+  const recent=db.listSimulationRecords(guildId,{kind:"action",status:"completed",limit:32});
+  return (proposed.actions||[]).slice(0,32).flatMap((action,index)=>{
+    if(!candidates.some(row=>row.type===action.actor_type&&row.key===normalizeNpcKey(action.actor_key))) return [];
+    try{
+      const {state,goal}=validateAction(db,guildId,action);if(state.resources[COSTS[action.type]]<1) return [];
+      const knowledge=action.actor_type==="npc"?db.getNpcKnowledge(guildId,normalizeNpcKey(action.actor_key),action.information_key):null;
+      const source=knowledge?.source_ref?db.getWorldEvent(guildId,knowledge.source_ref):null;
+      if(source&&source.status!=="active") return [];
+      const grounding=`${goal.objective||goal.data?.objective||""} ${knowledge?.content||""}`.toLowerCase();
+      const overlap=[...tokens].filter(token=>grounding.includes(token)).length;
+      const repetition=recent.filter(row=>row.entity_key===keyOf(action.actor_type,normalizeNpcKey(action.actor_key))
+        &&row.data.type===action.type&&row.data.target_key===action.target_key&&row.data.information_key===action.information_key).length;
+      const sourceProximity=source&&source.session_id===db.getActiveSession(guildId)?.id?4:0;
+      const score=overlap*10+sourceProximity+Math.min(5,Number(goal.priority||0)/20)-repetition*8;
+      return [{action,score,index,reason:{known_source:source?.event_key||null,overlap,repetition,source_proximity:sourceProximity}}];
+    }catch{return [];}
+  }).sort((a,b)=>b.score-a.score||a.index-b.index);
+}
 export async function prepareNpcDirector({db,gm,guildId,layer,cycleKey,query="",minutes=0}={}){
   if(!["round","scene","downtime"].includes(layer)) throw new Error("NPC Director requires a fictional round, scene, or downtime trigger.");
+  if(quietOpportunity(db,guildId,query)) return {quiet:true,guildId};
   if(db.isDirectorPaused(guildId)) return {paused:true,guildId};
   const cycleId=`simulation:${guildId}:${cycleKey}`;
   const prior=db.getSimulationRecord(guildId,cycleId);
@@ -563,6 +591,8 @@ export async function prepareNpcDirector({db,gm,guildId,layer,cycleKey,query="",
 }
 
 export function commitNpcDirector(db,prepared,{roll}={}){
+  if(prepared.quiet||quietOpportunity(db,prepared.guildId,prepared.query)) return {quiet:true,actions:[],clock:db.getSimulationClock(prepared.guildId),
+    telemetry:{used:0,institution_count:0,reason:"Quiet/OOC is a valid no-move; no time, work or provider request."}};
   if(prepared.paused||prepared.replayed) return {...prepared,actions:[]};
   const {guildId,layer,cycleKey,minutes,cycleId,candidates,proposed}=prepared;
   return db.transaction(()=>{
@@ -572,7 +602,8 @@ export function commitNpcDirector(db,prepared,{roll}={}){
       db.snapshotCampaign(guildId,{label:"Pre-NPC Director",reason:`Before fictional ${layer} action cycle`,createdBy:"npc_director"});
     let budget=layer==="round"?1:layer==="scene"?3:4;
     db.advanceSimulationClock(guildId,{ticks:1,minutes});
-    if(db.getCityCalendar(guildId).flags.activity_density===true) return commitFairOpportunity(db,prepared,{roll,budget});
+    if(db.getCityCalendar(guildId).flags.activity_density===true||db.getCityCalendar(guildId).flags.narrative_relevance===true)
+      return commitFairOpportunity(db,prepared,{roll,budget});
     const delegatedBudget={operations:0,cost:0};
     const intents=dispatchAiIntents(db,guildId,(proposed.ai_intents||[]).slice(0,budget),
       {origin:`npc-director:${cycleKey}`,scope:{mode:"party"},budget:delegatedBudget});
@@ -620,13 +651,14 @@ export function commitNpcDirector(db,prepared,{roll}={}){
 }
 function commitFairOpportunity(db,prepared,{roll,budget}){
   const {guildId,layer,cycleKey,cycleId,candidates,proposed}=prepared,actions=[],seen=new Set(),work={};
+  const ranked=db.getCityCalendar(guildId).flags.narrative_relevance===true?rankDirectorActions(db,prepared):null;
   const delegatedBudget={operations:0,cost:0};
   const handlers={
     ordinary:()=>{
       const due=db.listDueSimulationActions(guildId).find(row=>!seen.has(row.entity_key));
       if(due){seen.add(due.entity_key);try{const row=executeNpcAction(db,guildId,due,{approved:due.data.approved===true,roll});actions.push(row);return [row];}
         catch(error){const row=saveRecord(db,guildId,due,{status:"failed",data:{...due.data,failure:error.message}});actions.push(row);return [row];}}
-      const action=(proposed.actions||[]).find(item=>{
+      const action=(ranked?ranked.map(item=>item.action):proposed.actions||[]).find(item=>{
         const actor=keyOf(item.actor_type,normalizeNpcKey(item.actor_key));
         return !seen.has(actor)&&candidates.some(candidate=>keyOf(candidate.type,candidate.key)===actor)
           &&!db.listCityRecords(guildId,{kind:"strategy",actor,status:"active",includeGM:true,limit:1}).length;
@@ -649,9 +681,12 @@ function commitFairOpportunity(db,prepared,{roll,budget}){
   if((proposed.ai_intents||[]).length) handlers.intents=()=>dispatchAiIntents(db,guildId,proposed.ai_intents.slice(0,1),
     {origin:`npc-director:${cycleKey}`,scope:{mode:"party"},budget:delegatedBudget});
   const names=Object.keys(handlers),start=db.getSimulationClock(guildId).tick%names.length;
+  const order=names.slice(start).concat(names.slice(0,start));
+  // Alternate relevance priority with the native rotating opportunity order; never starve other legal categories.
+  if(ranked?.[0]?.score>0&&db.getSimulationClock(guildId).tick%2===0){order.splice(order.indexOf("ordinary"),1);order.unshift("ordinary");}
   let used=0;
   for(let i=0;i<names.length;i++){
-    const name=names[(start+i)%names.length];
+    const name=order[i];
     if(used>=budget){work[name]={status:"deferred",reason:"fictional_opportunity_budget"};continue;}
     const rows=handlers[name]();used+=rows.length;work[name]={status:rows.length?"processed":"no_eligible_work",count:rows.length};
   }
@@ -659,6 +694,7 @@ function commitFairOpportunity(db,prepared,{roll,budget}){
     {origin:`npc-director:${cycleKey}`,scope:{mode:"party"},deferred:true});
   const institutions=runInstitutionDirector(db,guildId,cycleKey);
   const telemetry={layer,cycle_key:cycleKey,budget,used,work,institution_count:institutions.length,
+    relevance:ranked?.slice(0,8).map(item=>({actor:item.action.actor_key,score:item.score,...item.reason}))||[],
     actor_count:candidates.length,packet_chars:JSON.stringify(candidates).length,rotation:start};
   db.putSimulationRecord(guildId,{id:cycleId,kind:"cycle",status:"completed",data:{...telemetry,actions:actions.map(row=>row.id).filter(Boolean)}});
   proposeCityOpportunity(db,guildId,prepared.query||"","city_director");
