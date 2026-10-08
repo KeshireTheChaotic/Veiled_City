@@ -390,7 +390,10 @@ export function buildCommands(){
         .addSubcommand(s=>s.setName("organizations").setDescription("Read-only own requests and explicit community participation"))
         .addSubcommand(s=>s.setName("continuity").setDescription("Read-only private candidate and invitation inbox with revision-bound responses"))
         .addSubcommand(s=>s.setName("discover").setDescription("Read-only character-relative knowledge, changes, leads or arcs")
-          .addStringOption(o=>o.setName("json").setDescription("Optional literal query and mode")))
+          .addStringOption(o=>o.setName("query").setDescription("Literal subject to look up; no world action").setMaxLength(300))
+          .addStringOption(o=>o.setName("mode").setDescription("Recorded information to show").addChoices(
+            ...["know","leads","changed","witness","arcs","evidence","commitments","organizations"].map(value=>({name:value,value}))))
+          .addStringOption(o=>o.setName("json").setDescription("Legacy optional literal query and mode")))
         .addSubcommand(s=>s.setName("recap").setDescription("Show the latest saved recap"))
         .addSubcommand(s=>s.setName("clues").setDescription("Show clues available to you"))
         .addSubcommand(s=>s.setName("facts").setDescription("Show recorded facts available to you"))

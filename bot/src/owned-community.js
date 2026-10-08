@@ -112,10 +112,9 @@ export function reviewOrganization(db,guild,input,reviewer){
     cityAudit(db,guild,"organization_review",row.record_key,row,after,reviewer);return after;
   });
 }
-export function organizationInbox(db,guild,user){
+export function organizationInbox(db,guild,user,query=""){
   const pc=personalCharacter(db,guild,user);
-  return {character_id:pc.id,requests:db.characterContinuity(guild,pc.id,{kind:"organization_request",limit:50}).map(row=>({...row,expected_revision:stateRevision(row)})),
-    communities:db.characterContinuity(guild,pc.id,{kind:"community_membership",limit:50}).filter(row=>row.status==="active").map(row=>({
-      key:row.data.community_key,role:row.data.role,name:db.getCityRecord(guild,"community",row.data.community_key)?.data.name||"Historical community"})),
+  return {character_id:pc.id,requests:db.characterContinuity(guild,pc.id,{kind:"organization_request",query,limit:50}).map(row=>({...row,expected_revision:stateRevision(row)})),
+    communities:db.ownedCommunities(guild,pc.id,query),
     guidance:"No inferred joining, votes, contracts, NPC appointments, personal funds or retirement succession. GM adjudication and explicit owner decisions remain required."};
 }

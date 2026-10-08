@@ -128,6 +128,26 @@ export class VeiledDB {
       .run(guildId,epoch,timezone,JSON.stringify(flags));
     return this.getCityCalendar(guildId);
   }
+  acceptedProjectContinuity(guildId,characterId,userId,query=""){
+    return this.db.prepare(`SELECT r.record_key,r.status,json_extract(r.data_json,'$.title') title,
+      json_extract(r.data_json,'$.phases['||json_extract(r.data_json,'$.index')||'].title') phase
+      FROM city_records r JOIN world_events w ON w.guild_id=r.guild_id AND w.event_key=r.source_event AND w.status='active'
+      WHERE r.guild_id=? AND r.kind='long_project'
+      AND (w.visibility IN ('public','party') OR (w.visibility='character' AND w.subject_key=?) OR (w.visibility='player' AND w.subject_key=?))
+      AND EXISTS(SELECT 1 FROM json_each(r.data_json,'$.participants') WHERE value=?)
+      AND EXISTS(SELECT 1 FROM json_each(json_extract(r.data_json,'$.phases['||json_extract(r.data_json,'$.index')||'].consents'))
+        WHERE key=? AND json_extract(value,'$.decision')='accept' AND json_extract(value,'$.by')=?)
+      AND (?='' OR instr(lower(json_extract(r.data_json,'$.title')||' '||json_extract(r.data_json,'$.phases['||json_extract(r.data_json,'$.index')||'].title')),lower(?))>0)
+      ORDER BY r.minute DESC,r.rowid DESC LIMIT 30`).all(guildId,characterId,userId,characterId,characterId,userId,query,query);
+  }
+  ownedCommunities(guildId,characterId,query=""){
+    return this.db.prepare(`SELECT json_extract(m.data_json,'$.community_key') key,json_extract(m.data_json,'$.role') role,
+      COALESCE(json_extract(c.data_json,'$.name'),'Historical community') name FROM city_records m
+      LEFT JOIN city_records c ON c.guild_id=m.guild_id AND c.kind='community' AND c.record_key=json_extract(m.data_json,'$.community_key')
+      WHERE m.guild_id=? AND m.kind='community_membership' AND m.visibility='character' AND m.subject_key=? AND m.status='active'
+      AND (?='' OR instr(lower(COALESCE(json_extract(c.data_json,'$.name'),'')||' '||m.data_json),lower(?))>0)
+      ORDER BY m.minute DESC,m.rowid DESC LIMIT 50`).all(guildId,characterId,query,query);
+  }
   getWorldEvent(guildId,key){
     const row=this.db.prepare("SELECT * FROM world_events WHERE guild_id=? AND event_key=?").get(guildId,key);
     return row?{...row,details:JSON.parse(row.details_json)}:null;
@@ -1895,9 +1915,11 @@ export class VeiledDB {
   }
   getHandout(id){ const r=this.db.prepare("SELECT * FROM handouts WHERE id=?").get(id); return r?{...r,canonical_facts:JSON.parse(r.canonical_facts_json||"[]"),metadata:JSON.parse(r.metadata_json||"{}")} : null; }
   findHandout(guildId,query){ const rows=this.db.prepare("SELECT * FROM handouts WHERE guild_id=? AND status='active' ORDER BY created_at DESC").all(guildId); const q=String(query||"").trim().toLowerCase(); const r=rows.find(x=>x.id.toLowerCase().startsWith(q))||rows.find(x=>x.title.toLowerCase()===q)||rows.find(x=>x.title.toLowerCase().includes(q)); return r?this.getHandout(r.id):null; }
-  listHandoutsFor(guildId,userId,{characterId=null,includeGM=false,limit=100}={}){
-    const rows=this.db.prepare("SELECT * FROM handouts WHERE guild_id=? AND status='active' ORDER BY created_at DESC LIMIT ?").all(guildId,limit);
-    return rows.filter(r=>includeGM||["public","party"].includes(r.visibility)||(r.visibility==="player"&&r.subject_user_id===userId)||(r.visibility==="character"&&r.subject_character_id===characterId)).map(r=>this.getHandout(r.id));
+  listHandoutsFor(guildId,userId,{characterId=null,includeGM=false,limit=100,query=""}={}){
+    return this.db.prepare(`SELECT id FROM handouts WHERE guild_id=? AND status='active'
+      AND (?=1 OR visibility IN ('public','party') OR (visibility='player' AND subject_user_id=?) OR (visibility='character' AND subject_character_id=?))
+      AND (?='' OR instr(lower(title||' '||content),lower(?))>0) ORDER BY created_at DESC,rowid DESC LIMIT ?`)
+      .all(guildId,includeGM?1:0,userId,characterId,query,query,Math.max(1,Math.min(1000,limit))).map(row=>this.getHandout(row.id));
   }
   archiveHandout(id){ this.db.prepare("UPDATE handouts SET status='archived',updated_at=CURRENT_TIMESTAMP WHERE id=?").run(id); return this.getHandout(id); }
   setHandoutEvidence(guildId,id,evidence){

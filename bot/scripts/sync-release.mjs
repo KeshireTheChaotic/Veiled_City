@@ -9,7 +9,9 @@ const root=path.resolve(".."),packageFile=path.join(root,"bot/package.json");
 const pkg=JSON.parse(fs.readFileSync(packageFile,"utf8"));
 const version=phaseVersion(pkg.version,process.argv[2],{major:process.argv.includes("--major")});
 pkg.version=version;fs.writeFileSync(packageFile,JSON.stringify(pkg,null,2)+"\n");
-const readme=path.join(root,"README.md");fs.writeFileSync(readme,fs.readFileSync(readme,"utf8").replace(/ENGINE v\d+\.\d+\.\d+/,`ENGINE v${version}`));
+const readme=path.join(root,"README.md");
+fs.writeFileSync(readme,fs.readFileSync(readme,"utf8").replace(/ENGINE v\d+\.\d+\.\d+/,`ENGINE v${version}`)
+  .replace(/(## Current Version\s+\*\*)\d+\.\d+\.\d+(\*\*)/,(_match,start,end)=>`${start}${version}${end}`));
 const git=process.env.VEILED_GIT||"git";
 const files=[...new Set(execFileSync(git,["ls-files","--cached","--others","--exclude-standard","-z"],{cwd:root,encoding:"utf8"}).split("\0"))]
   .filter(file=>file&&!["manifest.json","MANIFEST.txt"].includes(file)&&fs.existsSync(path.join(root,file)))

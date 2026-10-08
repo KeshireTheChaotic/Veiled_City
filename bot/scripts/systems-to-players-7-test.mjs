@@ -4,7 +4,7 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import { VeiledDB } from "../src/db.js";
-import { configureCityFlags, updateCityCore } from "../src/city-core.js";
+import { configureCityFlags, updateCityCore, submitInstitutionAction } from "../src/city-core.js";
 import { indexWorldEvent } from "../src/city-calendar.js";
 import { updateCityCivic, changeCityService, connectCity } from "../src/city-civic.js";
 import { configureSimulationEntity, submitNpcAction, actorState, executeNpcAction } from "../src/simulation.js";
@@ -22,11 +22,12 @@ try{
   }
   db.upsertNpcKnowledge(guild,{npcKey:"giver",knowledgeKey:"delivery",content:"Reviewed delivery agreement",sourceRef:"source",beliefState:"known",confidence:100});
   db.upsertNpcGoal(guild,{npcKey:"giver",goalKey:"prepare",objective:"Prepare",acceptableMethods:["prepare"]});
-  updateCityCore(db,guild,{kind:"institution",key:"works",source_event:"source",data:{name:"Works",mandate:"Maintain power",capacity:5,jurisdictions:["station"],procedures:[]}},"gm");
+  updateCityCore(db,guild,{kind:"institution",key:"works",source_event:"source",data:{name:"Works",mandate:"Maintain power",capacity:5,jurisdictions:["station"],procedures:["inspect_request"]}},"gm");
   for(const key of ["power","lab","unrelated"]) updateCityCivic(db,guild,{kind:"infrastructure",key,source_event:"source",data:{name:key,service:key,native_condition:80,operator:"works",locations:["station"]}},"gm");
   connectCity(db,guild,{kind:"infrastructure",from:"power",to:"lab",source_event:"source"},"gm");
   const access={kind:"service_access",key:"lab-access",source_event:"source",data:{consumer_type:"npc",consumer_key:"giver",service_key:"lab",actions:["prepare"],threshold:50,access:true}};
   updateCityCivic(db,guild,access,"gm");
+  updateCityCivic(db,guild,{...access,key:"institution-access",data:{...access.data,consumer_type:"institution",consumer_key:"works",actions:["inspect_request"]}},"gm");
   assert.throws(()=>updateCityCivic(db,guild,{...access,key:"bad",data:{...access.data,consumer_type:"character"}},"gm"),/PCs/);
   configureCityFlags(db,guild,{supply_dependencies:true});
   changeCityService(db,guild,{key:"power",source_event:"source",condition:40},"gm");
@@ -36,6 +37,8 @@ try{
   const before=actorState(db,guild,"npc","giver").resources.materials;
   assert.throws(()=>submitNpcAction(db,guild,action,{roll:()=>20}),/before costs/);
   assert.equal(actorState(db,guild,"npc","giver").resources.materials,before);
+  assert.throws(()=>submitInstitutionAction(db,guild,{key:"blocked-inspection",institution:"works",source_event:"source",jurisdiction:"station",type:"inspect_request"},"gm"),/before costs/);
+  assert.equal(db.getCityRecord(guild,"institution","works").data.capacity,5);
   assertServiceAccess(db,"other",{actor_type:"npc",actor_key:"giver",type:"prepare"});
   changeCityService(db,guild,{key:"power",source_event:"source",condition:80},"gm");
   const resolved=submitNpcAction(db,guild,action,{roll:()=>20});executeNpcAction(db,guild,resolved,{roll:()=>20});

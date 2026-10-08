@@ -52,6 +52,7 @@ export async function handleStoryCommand(interaction,{db,gm}){
     try{result=validateNarrativeClaims(db,guild,input.result||{},input.scope||{mode:"party"});}
     catch(error){if(error.code!=="NARRATIVE_INTEGRITY") throw error;result={ok:false,...error.diagnostic};}
   }else throw new Error("Unknown story operation.");
-  await interaction.reply({ephemeral:true,content:`Story ${sub}: GM-private result.`,
+  const preview=sub==="ai-inbox"?result.items.slice(0,5).map(row=>`${row.record_key}: ${row.preview.operation} [${row.status}]\n${row.preview.player_consent}\n${row.preview.blocked_reason||row.preview.likely_effect}`).join("\n\n"):"";
+  await interaction.reply({ephemeral:true,allowedMentions:{parse:[]},content:(`Story ${sub}: GM-private result.${preview?`\n${preview}`:""}`).slice(0,1900),
     files:[new AttachmentBuilder(Buffer.from(JSON.stringify(result,null,2)),{name:"story-result.json"})]});
 }

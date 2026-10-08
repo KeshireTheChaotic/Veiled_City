@@ -8,11 +8,25 @@ import { manageStrategy } from "./simulation-strategy.js";
 import { cityAudit } from "./city-calendar.js";
 import { reviewOrganization } from "./owned-community.js";
 const REVIEW_KINDS=["ai_intent","goal_transition","consequence","group_transition","strategy","seed_draft","organization_request"];
+function reviewPreview(row){
+  const data=row.data,intent=data.intent,feature=intent?.feature||row.kind;
+  const effects={encounter:"Plan a grounded optional encounter; never start combat.",dialogue:"Add a subjective listener memory; not canon.",
+    evidence:"Apply human-reviewed analysis to existing evidence; no custody transfer.",influence:"Record a sourced audience response; never canon or a PC penalty.",
+    organization:"Send an optional owner invitation only; no membership, funds or vote.",setup:"Record an optional private payoff proposal; no guaranteed result.",
+    arc:"Nonbinding owner invitation; no inferred belief/choice.",project:"Propose/continue native project; explicit phase consent and resolved work remain required."};
+  return {operation:`${feature}.${intent?.payload?.op||data.request||"review"}`,target:intent?.target_key||data.target_key||row.record_key,
+    status:row.status,blocked_reason:String(data.diagnostic||data.reason||data.blocked_reason||"").slice(0,600),
+    player_consent:row.kind==="organization_request"?(data.confirmed_by?"Owner confirmed exact terms; GM review cannot expand them.":"WAITING for explicit authenticated owner confirmation; GM cannot supply it.")
+      :["project","arc","organization"].includes(feature)?"Owner confirmation required for voluntary PC effects; no AI/GM attestation.":"No authority to choose voluntary PC acts.",
+    likely_effect:row.kind==="organization_request"?"Human review may materialize the exact confirmed native initiative; no personal funds, title, voting or automatic project completion."
+      :effects[feature]||"Native reviewed domain change; inspect source, revisions and effect details before approval.",
+    budget:data.impact||null,authority:"Preview only; execution rechecks current source, scope, consent, rules and resources."};
+}
 export function reviewInbox(db,guild,{kind="ai_intent",page=1,status=""}={}){
   if(!REVIEW_KINDS.includes(kind)||!Number.isInteger(page)||page<1||page>10000) throw new Error("Known review kind and bounded page required.");
   const rows=db.listCityRecords(guild,{kind,status,includeGM:true,limit:21,offset:(page-1)*20});
   const policy=delegationPolicy(db,guild),flags=db.getCityCalendar(guild).flags;
-  return {visibility:"gm",kind,page,has_more:rows.length>20,items:rows.slice(0,20).map(row=>({...row,expected_revision:stateRevision(row),
+  return {visibility:"gm",kind,page,has_more:rows.length>20,items:rows.slice(0,20).map(row=>({...row,preview:reviewPreview(row),expected_revision:stateRevision(row),
     recovery:"Refresh stale sources/policy, defer/reject, or use native GM review. Republish this inbox to repair delivery; never retry effects."})),
     eligibility:Object.entries(FEATURE_FLAGS).map(([feature,flag])=>({feature,enabled:flags[flag]===true,delegation:policy.mode,
       paused:db.isDirectorPaused(guild),expired:policy.expires_minute!==null&&db.getSimulationClock(guild).minute>=policy.expires_minute,

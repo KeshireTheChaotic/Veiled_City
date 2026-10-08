@@ -10,9 +10,9 @@ Flags are explicit booleans through the existing authenticated `/vc-city flags j
 
 All new deterministic lookup/advisory work uses no provider call. Model proposals ride existing bounded requests. Structured contracts remain closed (`additionalProperties:false`, all properties required, nested `anyOf`) following [official OpenAI documentation](https://developers.openai.com/api/docs/guides/structured-outputs); application validation is still required. No API key or paid smoke test is needed for the offline gate.
 
-## Acceptance matrix
+## Acceptance evidence index
 
-Pending phase evidence will be added here with named tests, production entry points and explicit limitations. All P01–P12 remain partial or absent until their behavioral criteria are verified.
+The consolidated acceptance matrix follows phase 8 below; each phase documents its production entry points, operator workflow and explicit limits. Baseline and final bounded verdicts are in the gap audit.
 
 ## Phase 1 — 7.1.0 (P01/P02)
 
@@ -133,6 +133,28 @@ These cases test structural and known-scenario appropriateness, **not** independ
 | P09 | SP6 | Scoped sourced setups, optional actual-choice proposals, closed replay/fixed mystery; no guaranteed payoff |
 | P10 | SP7; city-civic; simulation | Native connected availability/repair, finite conserved delivery and replay; no universal economy |
 | P11 | J01–J15; expansion-quality; endurance; all SP suites | Named offline expectations, FP/FN/provenance, fake provider/Discord; unrestricted live semantics NOT VERIFIED |
-| P12 | Phase 9 pending | Existing discovery is read-only; evidence/commitment/organization conversational projection still to extend |
+| P12 | SP9; end-to-end-e; expansion-d/h | JSON-free/legacy private queries, accepted-only commitments, old scoped evidence, membership and GM previews; literal lookup, not semantic inference |
 
 All phases use schema 440 native/additive records and existing logical snapshots. No live campaign DB, flag activation, command registration, deployment or push is part of these releases. Migration/export, restore, guild isolation, bounded 1/3/4 NPC and two institutional opportunities remain covered by the existing gate; feature-specific negatives are listed above rather than claiming every possible narrative is tested.
+
+## Phase 9 — 7.9.0 (P12/integration)
+
+Starting HEAD: `e488dd0`. Existing `discovery` flag controls all new lookup modes; no new autonomy flag. Use `/vc-intel discover mode:evidence query:violet`, `mode:commitments`, `mode:organizations`, or existing know/leads/changed/witness/arcs. `json` remains supported; explicit mode/query options override corresponding legacy fields. No JSON is required. Natural private queries, routed before normal turn persistence/director work, include “Show my known evidence about violet?”, “List my accepted commitments?”, “What organizations do I belong to?”, and existing “What leads do I have?”. These are deterministic literal lookups, not paid semantic search or new discoveries.
+
+Evidence returns only authorized player artifact fields/authority, never hidden metadata/canonical facts/custody or GM analysis. SQL checks guild/scope/search before limits, so an old matching artifact is not hidden behind newer unrelated or private entries. Commitment output distinguishes owner-established vows (not adjudicated supernatural/legal binding), exact owner-confirmed initiatives (no automatic spending), and actual authenticated accepted **current** long-project phase consent. Proposed projects, unconfirmed quotes, declined invitations and inferred assent are excluded. Organization output is explicit current-character participation, not officers, treasury authority or secret member history. Character switching/retirement/absence cannot widen access; player-visible scopes remain native authority, never caller-supplied GM flags.
+
+Responses use plain lines, at most 1900 characters; compact preference uses five entries/900 characters. Query packets remain bounded (30 evidence/project records, up to 50 memberships); a truncated/bounded answer is not a claim that no other records exist. Query, failure and failed private delivery write no player record, clock, director receipt, consent or state. Slash replies are ephemeral with mentions disabled. Retained JSON attachments are sanitized projections for discovery. `/vc-story ai-inbox` shows up to five concise GM-only previews plus existing paginated attachment: operation/status, blocked reason, pending actual owner confirmation and conservative native effect preview. Approval still rechecks live prerequisites; a preview is not a forecast, permission or mechanical outcome.
+
+`SP9` verifies production natural and slash routes, owner/GM native preparation, old authorized evidence after 150 hidden artifacts, accepted-only commitments/project phases, own membership, metadata/privacy, no writes/receipts/clocks, delivery failure, guild/foreign/switch/absence, compact accessibility and restore. Existing SP7 now also verifies actual institution submission is blocked before capacity costs. The release synchronizer and integration test now check both README version locations against package/manifest, correcting the stale body version. No schema change or live migration.
+
+## Optional rollout after operator review
+
+Back up first. To enable the additions (does not itself delegate AI execution):
+
+```text
+/vc-city flags json:{"scene_continuity":true,"encounter_intelligence":true,"decision_advisory":true,"dialogue_history":true,"tactical_memory":true,"evidence_custody":true,"audience_influence":true,"player_organizations":true,"history_reconciliation":true,"narrative_setups":true,"supply_dependencies":true,"discovery":true,"personal_arcs":true,"long_projects":true}
+```
+
+Keep delegation manual for initial review. Optional typed proposal operations are `encounter.propose`, `dialogue.interpret`, `evidence.analyze`, `influence.attempt`, `organization.invite`, `setup.suggest`, plus existing native operations. Use existing `/vc-story delegation` policy workflow with a bounded allowlist, operation/cost budgets and fictional-minute expiry. Evidence analysis/influence always require human review. Organization invitations cannot establish consent; encounters cannot activate combat; setup proposals cannot resolve canon; supply delivery is human-only. Establish actual sources/templates/positions/channels/services before authorizing work. Flags do not seed fictional facts or provide actors with GM-only knowledge. Re-register changed slash definitions only during an explicitly authorized deployment.
+
+Final integration release is 8.0.0 after the 7.9.0 commit and a fresh zero-token gate. Known semantic limits remain as stated; no paid/live tests, deployment, push or activation accompany this major version.

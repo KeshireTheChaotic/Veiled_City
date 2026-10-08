@@ -33,6 +33,7 @@ import { handleCityCommand } from "./city-commands.js";
 import { handleStoryCommand } from "./story-commands.js";
 import { recordCharacterArrival } from "./scene-continuity.js";
 import { personalArc, discoverPersonal, personalInbox } from "./personal-continuity.js";
+import { formatDiscovery } from "./continuity-routing.js";
 import { manageLongProject, projectPhaseRevision } from "./long-projects.js";
 import { stateRevision } from "./ai-intents.js";
 
@@ -379,8 +380,9 @@ async function executeCommand(interaction,{db,gm,voice=null}){
     }
     if(group==="intel"&&["arc","discover"].includes(sub)){
       const input=JSON.parse(interaction.options.getString("json")||"{}");
+      if(sub==="discover") for(const key of ["query","mode"]){const value=interaction.options.getString(key);if(value!==null&&value!==undefined) input[key]=value;}
       const result=sub==="arc"?personalArc(db,interaction.guildId,interaction.user.id,input):discoverPersonal(db,interaction.guildId,interaction.user.id,input);
-      await interaction.reply({ephemeral:true,content:"Character-private continuity; recorded knowledge only.",
+      await interaction.reply({ephemeral:true,allowedMentions:{parse:[]},content:sub==="discover"?formatDiscovery(db,interaction.guildId,interaction.user.id,result):"Character-private continuity; recorded knowledge only.",
         files:[new AttachmentBuilder(Buffer.from(JSON.stringify(result,null,2)),{name:"personal-continuity.json"})]});return true;
     }
     if(group==="admin"&&["seed-drafts","seed-add","seed-edit","seed-remove","seed-approve","seed-reject"].includes(sub)){

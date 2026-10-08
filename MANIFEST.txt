@@ -63,6 +63,7 @@ bot/scripts/systems-to-players-4-test.mjs
 bot/scripts/systems-to-players-5-test.mjs
 bot/scripts/systems-to-players-6-test.mjs
 bot/scripts/systems-to-players-7-test.mjs
+bot/scripts/systems-to-players-9-test.mjs
 bot/scripts/validate-command-schema.mjs
 bot/scripts/validate-offline.mjs
 bot/sql/schema.sql

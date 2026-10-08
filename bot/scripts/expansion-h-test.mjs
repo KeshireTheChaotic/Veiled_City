@@ -72,6 +72,8 @@ try{
   assert.throws(()=>phaseVersion("5.9.0","5.10.0"),/next minor/);assert.throws(()=>phaseVersion("5.7.0","6.0.0"),/next minor/);
   const manifest=JSON.parse(fs.readFileSync("../manifest.json","utf8")),pkg=JSON.parse(fs.readFileSync("package.json","utf8"));
   assert.equal(manifest.version,pkg.version);
+  const readme=fs.readFileSync("../README.md","utf8");
+  assert(readme.includes(`ENGINE v${pkg.version}`));assert(readme.includes(`**${pkg.version}**`),"Current Version body must match package/manifest");
   assert.equal(nextMajorVersion("6.7.0"),"7.0.0");
   assert.equal(phaseVersion("6.7.0","7.0.0",{major:true}),"7.0.0");
   assert.throws(()=>phaseVersion("6.7.0","7.0.0"));
