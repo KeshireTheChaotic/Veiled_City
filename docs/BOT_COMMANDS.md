@@ -1,4 +1,4 @@
-# Veilkeeper v4.10.0 Command Reference
+# Veilkeeper v5.0.0 Command Reference
 
 Veilkeeper uses split `vc-*` root commands to remain below Discord's per-command size limit.
 
@@ -37,7 +37,7 @@ v4.8 adds `/vc-story negotiate` (opt-in reviewed bargaining) and `forecast`
 v4.9 adds `/vc-story why json:{"event_key":"..."}` (or mutation_id), a
 read-only provenance explanation with source/approval/ledger and recovery pointers.
 
-v4.10 adds `/vc-story portray`, `author`, and `author-review`, plus optional
+v5.0 adds `/vc-story portray`, `author`, and `author-review`, plus optional
 `npc` on `/vc-voice narrate`. All new runtime flags default off; see
 `NEXT_EXPANSION.md` for the complete enablement and upgrade guide.
 

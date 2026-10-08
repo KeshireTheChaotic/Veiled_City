@@ -1,8 +1,8 @@
-# VEILED CITY MULTIPLAYER DISCORD ENGINE v4.10.0
+# VEILED CITY MULTIPLAYER DISCORD ENGINE v5.0.0
 
 Stateful Discord GM bot for the Veiled City multiplayer Daggerheart campaign.
 
-v4.5–4.10 add local narration checks, sourced context, bounded NPC contact,
+v4.5–5.0 add local narration checks, sourced context, bounded NPC contact,
 descriptive pacing, fixed-truth clue routes, reviewed negotiations, hypothetical
 previews, provenance, offline endurance, portrayal and human-reviewed authoring.
 Required validation denies network access and uses zero billable tokens.

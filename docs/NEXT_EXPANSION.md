@@ -147,10 +147,10 @@ and fixed capped goal lookup: action validation now retrieves the requested
 goal/dependency directly before applying any budget; faction ownership is checked.
 No schema change or live-data rewrite. Register the added why command on upgrade.
 
-## Phase F — 4.10.0 (roadmap's proposed 5.0 feature slice)
+## Phase F — 5.0.0
 
-Version policy follows the user's explicit minor-release-per-phase instruction:
-4.9.0 -> 4.10.0, not a major release. Reuse: persistent NPC portrayal/voice,
+Version updated to 5.0.0 at the user's request, matching the roadmap's final
+release. Reuse: persistent NPC portrayal/voice,
 optional cost-capped VoiceNarrator, content-seeded identities, typed entity
 materializers, canon anchors and private draft/review conventions. No new schema.
 
