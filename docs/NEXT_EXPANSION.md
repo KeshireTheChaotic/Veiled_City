@@ -61,6 +61,40 @@ an always-running model conversation loop. No new schema; city records already
 participate in backups. Register commands after upgrade. Offline fixtures cover
 old clues beyond 120 records, role switching, contact/refusal and duplicate cost.
 
+## Phase C — 4.7.0
+
+Reuse: session/director scene, transcript/presence, fixed canon, facts and saved
+Duality rolls. New scene cues and mystery links use existing private city_records
+with source_event, transaction/ledger and backup support; no new schema or clock.
+`/vc-city flags json:{"pacing":true}` opts in to local dialogue silence, held
+background round passes, repetition/length guards and scene continuity cues.
+No initiative/action limit, combat insertion, mechanics or forced PC choice.
+`/vc-story pacing` JSON supplies source_event, stakes, dramatic_question,
+objective, pressure, unresolved_beats and optional allow_transition:false or
+pause_background:true. Without source_event it returns read-only advice (the
+combined command retains a command receipt; use context for strictly read-only
+diagnostics). Cues apply only to their saved scene. Recent speaker counts are
+descriptive, not a measure of actions or a mandatory spotlight queue.
+
+`/vc-story mystery` takes key/source_event/anchor_key/question/routes/hypotheses.
+Routes have key/method/fact_id and optional witness/information_key. At least
+three distinct facts and methods must already exist. Truth references existing
+canon and cannot be swapped by deductions; hypotheses stay unverified. No new
+evidence is invented or private fact promoted by this command.
+`/vc-story clues` is read-only with key/userId/characterId/optional gm; actor views
+omit hidden anchors and unrelated evidence. Existing fact authority/confidence
+is preserved. New investigation methods can be configured against established
+facts by the GM; newly authored evidence still needs normal human review.
+
+`/vc-story attempt` JSON: key/source_event/mystery/route/roll_id/character_id/
+difficulty. The human sets Difficulty under existing rules; the resolver reads
+an existing action roll, never generates/selects dice. Failure records a clarity/
+timing adjudication need, keeps all accessible routes viable, and never applies
+automatic costs or new modifiers. This assists adjudication, not a replacement
+for the Rules Desk or full semantic interpretation of every mystery. Register
+commands after upgrade. `test:continuity` covers silence, scene preservation,
+three routes, failed-roll reachability, fixed truth and unrelated-private refusal.
+
 ## OPTIONAL — MAY INCUR API COSTS
 
 A human may choose a disposable campaign and explicitly run a real narration,

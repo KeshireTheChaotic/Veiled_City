@@ -466,6 +466,14 @@ export function buildCommands(){
       .addStringOption(o=>o.setName("json").setDescription("result and scope JSON").setRequired(true)))
     .addSubcommand(s=>s.setName("conversation").setDescription("Resolve one explicit NPC contact opportunity")
       .addStringOption(o=>o.setName("json").setDescription("Stable key, source, NPCs, goals, opportunity and known information JSON").setRequired(true)))
+    .addSubcommand(s=>s.setName("pacing").setDescription("Inspect or configure non-mechanical scene cues")
+      .addStringOption(o=>o.setName("json").setDescription("Source and cues to configure; otherwise read-only advice JSON").setRequired(true)))
+    .addSubcommand(s=>s.setName("mystery").setDescription("Link three independent clue routes to fixed existing canon")
+      .addStringOption(o=>o.setName("json").setDescription("key/source/anchor_key/question/routes JSON").setRequired(true)))
+    .addSubcommand(s=>s.setName("clues").setDescription("Read-only scoped evidence paths; no automatic secret revelation")
+      .addStringOption(o=>o.setName("json").setDescription("key, userId, characterId, optional gm JSON").setRequired(true)))
+    .addSubcommand(s=>s.setName("attempt").setDescription("Record an existing action roll without locking essential clues")
+      .addStringOption(o=>o.setName("json").setDescription("key/source/mystery/route/roll_id/character_id/difficulty JSON").setRequired(true)))
     .toJSON());
   const splitMap={
     character:{

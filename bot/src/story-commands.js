@@ -5,6 +5,7 @@ import { cityObject } from "./city-calendar.js";
 import { ContextPlanner } from "./context-planner.js";
 import { resolveNpcConversation } from "./npc-conversations.js";
 import { validateNarrativeClaims } from "./narrative-integrity.js";
+import { setPacingCues, pacingAdvice, configureMystery, mysteryView, recordMysteryAttempt } from "./story-continuity.js";
 export async function handleStoryCommand(interaction,{db}){
   if(!interaction.memberPermissions?.has(PermissionFlagsBits.ManageGuild)&&
     !interaction.member?.roles?.cache?.has(db.getCampaign(interaction.guildId)?.gm_role_id)) throw new PermissionError("GM/admin permission required.");
@@ -12,6 +13,10 @@ export async function handleStoryCommand(interaction,{db}){
   let result;
   if(sub==="context") result=new ContextPlanner(db).plan(guild,input);
   else if(sub==="conversation") result=resolveNpcConversation(db,guild,input,interaction.user.id);
+  else if(sub==="pacing") result=input.source_event?setPacingCues(db,guild,input,interaction.user.id):pacingAdvice(db,guild,input.message||"");
+  else if(sub==="mystery") result=configureMystery(db,guild,input,interaction.user.id);
+  else if(sub==="clues") result=mysteryView(db,guild,input.key,input);
+  else if(sub==="attempt") result=recordMysteryAttempt(db,guild,input,interaction.user.id);
   else if(sub==="diagnose"){
     try{result=validateNarrativeClaims(db,guild,input.result||{},input.scope||{mode:"party"});}
     catch(error){if(error.code!=="NARRATIVE_INTEGRITY") throw error;result={ok:false,...error.diagnostic};}

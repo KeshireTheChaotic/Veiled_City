@@ -1,4 +1,4 @@
-# Veilkeeper v4.6.0 Command Reference
+# Veilkeeper v4.7.0 Command Reference
 
 Veilkeeper uses split `vc-*` root commands to remain below Discord's per-command size limit.
 
@@ -27,6 +27,9 @@ resources. Minor NPCs remain private drafts until GM promotion. See
 AI-GM expansion: `/vc-story context`, `diagnose` (read-only), and `conversation`
 (opt-in NPC contact). All take typed `json`, are GM-only and reply privately.
 See `NEXT_EXPANSION.md` for fields, limits and feature flags.
+
+v4.7 adds `/vc-story pacing`, `mystery`, `clues` (read-only scoped evidence),
+and `attempt` (existing saved action roll, no automatic mechanics).
 
 - `/vc-campaign setup` — configure play channel, GM role, response mode.
 - `/vc-campaign channels` — configure support/reference/log channels.

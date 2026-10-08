@@ -1357,6 +1357,11 @@ export class VeiledDB {
     return id;
   }
 
+  getSavedRoll(guildId,id){
+    const row=this.db.prepare("SELECT * FROM rolls WHERE guild_id=? AND id=?").get(guildId,id);
+    return row?{...row,payload:JSON.parse(row.payload_json)}:null;
+  }
+
   createEncounter(guildId,sessionId,data){
     const id=randomUUID();
     const n=this.db.prepare("SELECT COALESCE(MAX(encounter_number),0)+1 n FROM encounters WHERE session_id=?").get(sessionId).n;

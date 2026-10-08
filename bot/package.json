@@ -1,6 +1,6 @@
 {
   "name": "veiled-city-discord-gm",
-  "version": "4.6.0",
+  "version": "4.7.0",
   "private": true,
   "type": "module",
   "description": "Stateful multiplayer Discord GM bot for Veiled City / Daggerheart.",
@@ -20,6 +20,7 @@
     "validate": "node scripts/validate-offline.mjs",
     "test:contract": "node --import ./scripts/offline-guard.mjs scripts/narrative-contract-test.mjs",
     "test:context": "node --import ./scripts/offline-guard.mjs scripts/context-conversation-test.mjs",
+    "test:continuity": "node --import ./scripts/offline-guard.mjs scripts/story-continuity-test.mjs",
     "test:refactor": "node scripts/refactor-regression-test.mjs",
     "lint": "npm run quality",
     "format:check": "node scripts/format-check.mjs",

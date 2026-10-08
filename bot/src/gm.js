@@ -11,6 +11,7 @@ import { historyContext } from "./city-civic.js";
 import { minorNpcSchema } from "./city-depth.js";
 import { materialClaimSchema, NARRATIVE_CONTRACT, validateNarrativeClaims } from "./narrative-integrity.js";
 import { ContextPlanner } from "./context-planner.js";
+import { pacingAdvice, validatePacing } from "./story-continuity.js";
 
 const routerSchema={
   type:"object",
@@ -335,6 +336,7 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
 
   async shouldRespond({guildId,message,mode,directMention=false}){
     if(directMention) return true;
+    if(this.db.getCityCalendar(guildId).flags.pacing&&pacingAdvice(this.db,guildId,message.content).suggested_mode==="silence") return false;
     if(mode==="mention") return false;
     const text=message.content.trim();
     const actionish=/^(\*|>|i\b|we\b|my character\b|elias\b|\[[^\]]+\]\s*|[^:\n]{1,60}:\s+)|\?$|^\[[^\]]*gm[^\]]*\]/i.test(text);
@@ -416,6 +418,7 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
       ctx.multi,
       "\n# RUNTIME SECURITY",
       NARRATIVE_CONTRACT,
+      this.db.getCityCalendar(guildId).flags.pacing?JSON.stringify(pacingAdvice(this.db,guildId,messageText)):"",
       "GM-private facts/clocks/reference content may be used to simulate the world but MUST NOT appear in narration until legitimately discovered.",
       "PLAYER visibility applies only to target_user_id. CHARACTER visibility applies to target_character_id and persists with that character even if the human later changes PCs.",
       "Never choose voluntary actions, dialogue, beliefs, resource spends, or secrets for a player-controlled character.",
@@ -504,6 +507,7 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
     if(this.config.reasoningEffort) req.reasoning={effort:this.config.reasoningEffort};
     const validateTurn=(result)=>{
       validatePostTurnStateReview(result);
+      validatePacing(this.db,guildId,result);
       validateNarrativeClaims(this.db,guildId,result,{mode:scope,actorUserId,actorCharacterId:ctx.actor_assignment?.character_id});
       if(!privateMode&&result.state_review.scene.decision==="transition"&&
         !(result.simulation_updates||[]).some(update=>update.kind==="residue"))
@@ -529,6 +533,9 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
 
   async runWorldDirector({guildId,layer,trigger={},cycle=null,projects=[],actorAssignment=null}){
     if(!["round","scene","downtime","manual"].includes(layer)) throw new Error(`Unsupported world-director layer: ${layer}`);
+    if(layer==="round"&&this.db.getCityCalendar(guildId).flags.pacing&&pacingAdvice(this.db,guildId).cues?.pause_background)
+      return {act:false,public_narration:"",narrative_claims:[],private_messages:[],events:[],handouts:[],relationships:[],
+        npc_memories:[],npc_knowledge:[],npc_goals:[],simulation_updates:[],confidence:100,gm_notes:"GM scene cues hold background pressure; preserve PC dialogue."};
     const directorActor=trigger?.scope==="private"&&trigger?.actor_user_id?String(trigger.actor_user_id):"__world_director__";
     const ctx=this.buildContext(guildId,directorActor,`${layer} ${JSON.stringify(trigger)}`,actorAssignment,{worldDirector:true});
     const layerRules={
@@ -572,6 +579,7 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
     if(this.config.reasoningEffort) req.reasoning={effort:this.config.reasoningEffort};
     const result=await this.requestStructured(req,{label:`world director ${layer}`});
     validateNarrativeClaims(this.db,guildId,result,{mode:trigger.scope||"party",actorUserId:trigger.actor_user_id,actorCharacterId:trigger.actor_character_id});
+    validatePacing(this.db,guildId,result);
     return result;
   }
 
