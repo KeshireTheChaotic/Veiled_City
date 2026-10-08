@@ -588,3 +588,73 @@ CREATE TABLE IF NOT EXISTS character_narratives (
 );
 CREATE INDEX IF NOT EXISTS idx_character_narratives
   ON character_narratives(guild_id,character_id,scope,updated_at DESC);
+
+-- v3.7.0: durable command idempotency receipts
+CREATE TABLE IF NOT EXISTS operation_receipts (
+  guild_id TEXT NOT NULL,
+  interaction_id TEXT NOT NULL,
+  command_key TEXT NOT NULL,
+  actor_user_id TEXT NOT NULL,
+  status TEXT NOT NULL DEFAULT 'completed' CHECK(status IN ('completed','failed')),
+  response_text TEXT NOT NULL DEFAULT '',
+  payload_json TEXT NOT NULL DEFAULT '{}',
+  created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY(guild_id,interaction_id)
+);
+CREATE INDEX IF NOT EXISTS idx_operation_receipts_actor ON operation_receipts(guild_id,actor_user_id,created_at DESC);
+
+-- v3.7.0: structured authoritative mutation ledger / provenance
+CREATE TABLE IF NOT EXISTS mutation_ledger (
+  id TEXT PRIMARY KEY,
+  guild_id TEXT NOT NULL,
+  session_id TEXT,
+  actor_type TEXT NOT NULL,
+  actor_id TEXT,
+  source_layer TEXT NOT NULL,
+  source_interaction_id TEXT,
+  source_message_id TEXT,
+  mutation_type TEXT NOT NULL,
+  entity_key TEXT NOT NULL DEFAULT '',
+  visibility TEXT NOT NULL DEFAULT 'gm',
+  confidence INTEGER NOT NULL DEFAULT 100 CHECK(confidence BETWEEN 0 AND 100),
+  rationale TEXT NOT NULL DEFAULT '',
+  trigger_text TEXT NOT NULL DEFAULT '',
+  before_json TEXT NOT NULL DEFAULT '{}',
+  after_json TEXT NOT NULL DEFAULT '{}',
+  payload_json TEXT NOT NULL DEFAULT '{}',
+  created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (guild_id) REFERENCES campaigns(guild_id) ON DELETE CASCADE
+);
+CREATE INDEX IF NOT EXISTS idx_mutation_ledger_campaign ON mutation_ledger(guild_id,created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_mutation_ledger_source ON mutation_ledger(guild_id,source_layer,created_at DESC);
+
+-- v3.7.0: World Director history / operational controls
+CREATE TABLE IF NOT EXISTS director_history (
+  id TEXT PRIMARY KEY,
+  guild_id TEXT NOT NULL,
+  session_id TEXT,
+  layer TEXT NOT NULL CHECK(layer IN ('round','scene','downtime','manual')),
+  trigger_json TEXT NOT NULL DEFAULT '{}',
+  acted INTEGER NOT NULL DEFAULT 0,
+  rationale TEXT NOT NULL DEFAULT '',
+  public_narration TEXT NOT NULL DEFAULT '',
+  mutation_summary_json TEXT NOT NULL DEFAULT '{}',
+  status TEXT NOT NULL DEFAULT 'completed' CHECK(status IN ('completed','failed','skipped')),
+  error TEXT NOT NULL DEFAULT '',
+  created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (guild_id) REFERENCES campaigns(guild_id) ON DELETE CASCADE
+);
+CREATE INDEX IF NOT EXISTS idx_director_history_campaign ON director_history(guild_id,created_at DESC);
+
+-- v3.7.0: first-class logical campaign backups
+CREATE TABLE IF NOT EXISTS campaign_backups (
+  id TEXT PRIMARY KEY,
+  guild_id TEXT NOT NULL,
+  label TEXT NOT NULL,
+  reason TEXT NOT NULL DEFAULT '',
+  state_json TEXT NOT NULL,
+  created_by TEXT,
+  created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (guild_id) REFERENCES campaigns(guild_id) ON DELETE CASCADE
+);
+CREATE INDEX IF NOT EXISTS idx_campaign_backups_campaign ON campaign_backups(guild_id,created_at DESC);

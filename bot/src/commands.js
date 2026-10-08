@@ -9,6 +9,7 @@ import { EncounterLibrary, livePcRoster, partyTier, baseBattlePoints, DIFFICULTY
 import { prepareLevelup, applyLevelupToData, legalAdvancements, tierAchievement } from "./character-system.js";
 import { buildCombatants, hpMarksForDamage, combatantLine } from "./combat.js";
 import { applyAuthoritativeMutation } from "./state.js";
+import { normalizeDirectorConfidence } from "./director.js";
 import { createPlayerExportFiles, createGmExportFiles } from "./character-export.js";
 import { handoutFiles, handoutSummary } from "./handout.js";
 import { createConceptContextPackage } from "./concept-context.js";
@@ -17,6 +18,9 @@ import { buildSessionRosterReport, chunkRosterReport } from "./roster.js";
 import { chunkDiscordLines } from "./discord/chunking.js";
 import { assertGmOnlyChannel, assertPlayerPrivateChannel } from "./discord/privacy.js";
 import { isExpectedError, PermissionError, NotFoundError } from "./errors.js";
+import { replayReceiptIfPresent, installReceiptCapture } from "./idempotency.js";
+import { runCampaignDiagnostics, formatDiagnostics } from "./operations/diagnostics.js";
+import { buildGmOverview, formatGmOverview } from "./operations/overview.js";
 
 export { buildCommands } from "./command-definitions.js";
 
@@ -242,7 +246,7 @@ function factScopeLabel(row){
   if(row.visibility==="character") return row.subject_character_id?`CHARACTER ${row.subject_character_id.slice(0,8)}`:"CHARACTER";
   return String(row.visibility||"party").toUpperCase();
 }
-function gmFactLine(row){return `• **[${factScopeLabel(row)}] [${String(row.category||"fact").toUpperCase()}]** \`${row.fact_key}\` — ${row.content}`;}
+function gmFactLine(row){return `• **[${factScopeLabel(row)}] [${String(row.category||"fact").toUpperCase()}]** \`${row.fact_key}\` — ${row.content} _(${row.source||"unknown"}, ${row.confidence??100}% confidence)_`;}
 function playerFactLine(row){
   if(row.visibility==="gm") throw new Error("GM-only fact reached a player-safe fact formatter.");
   const scope=["player","character"].includes(row.visibility)?"PRIVATE":String(row.visibility||"party").toUpperCase();
@@ -322,7 +326,48 @@ export async function handleCommand(interaction,{db,gm,voice=null}){
     group=root==="level"?"character":root==="combat"?"encounter":root;
     sub=interaction.options.getSubcommand();
   }
+  if(await replayReceiptIfPresent({db,interaction,group,sub})) return true;
+  installReceiptCapture({db,interaction,group,sub});
   try{
+    if(group==="director"){
+      if(!isGM(db,interaction)) throw new PermissionError("GM/admin permission required.");
+      const session=db.getActiveSession(interaction.guildId);
+      if(sub==="status"){
+        const state=session?db.getDirectorState(session.id):null;
+        await interaction.reply({content:[
+          `**World Director** — ${db.isDirectorPaused(interaction.guildId)?"PAUSED":"active"}`,
+          session?`Session ${session.session_number} • Round cadence ${state.round_number} • Scene ${state.scene_number}${state.scene_label?` (${state.scene_label})`:""}`:"No active session.",
+          state?.pending_pass?`Pending: **${state.pending_pass.layer}** — ${state.pending_pass.reason||"no reason recorded"}`:"Pending: none",
+          state?`Completed passes: round ${state.pass_counts?.round||0}, scene ${state.pass_counts?.scene||0}, downtime ${state.pass_counts?.downtime||0}`:""
+        ].filter(Boolean).join("\n"),ephemeral:true}); return true;
+      }
+      if(sub==="history"){
+        const rows=db.listDirectorHistory(interaction.guildId,interaction.options.getInteger("limit")||15);
+        const chunks=chunkTextLines(rows.length?["**World Director History**",...rows.map(r=>`• \`${r.id.slice(0,8)}\` **${r.layer}** • ${r.status} • ${r.acted?"acted":"no move"} • ${r.created_at}\n  ${r.rationale||r.error||"No rationale recorded."}`)]:["No director history recorded yet."]);
+        await interaction.reply({content:chunks[0],ephemeral:true}); for(const c of chunks.slice(1)) await interaction.followUp({content:c,ephemeral:true}); return true;
+      }
+      if(sub==="pause"){ db.setDirectorPaused(interaction.guildId,true); await interaction.reply({content:"World Director automatic passes are **paused**. Player turns continue normally; pending director state is preserved.",ephemeral:true}); return true; }
+      if(sub==="resume"){ db.setDirectorPaused(interaction.guildId,false); await interaction.reply({content:"World Director automatic passes are **resumed**. Any durable pending pass will run on the next normal director opportunity.",ephemeral:true}); return true; }
+      if(sub==="run"){
+        if(!session) throw new NotFoundError("No active session.");
+        const reason=interaction.options.getString("reason")||"Manual GM-requested world review.";
+        await interaction.deferReply({ephemeral:true});
+        const result=normalizeDirectorConfidence(await gm.runWorldDirector({guildId:interaction.guildId,layer:"manual",trigger:{reason,requested_by:interaction.user.id}}));
+        let mutation={events:[],relationships:[],handouts:[]};
+        if(result.act){
+          db.snapshotCampaign(interaction.guildId,{label:"Pre-manual-director",reason,createdBy:interaction.user.id});
+          mutation=applyAuthoritativeMutation(db,{guildId:interaction.guildId,sessionId:session.id,events:result.events||[],relationships:result.relationships||[],handouts:result.handouts||[],scope:{mode:"party",actorUserId:null,actorCharacterId:null},source:"world_director_manual",provenance:{interactionId:interaction.id,actorId:interaction.user.id,triggerText:reason,rationale:result.gm_notes||"",confidence:result.confidence??100}});
+          await publishEventResults({db,guild:interaction.guild,results:mutation.events||[]});
+          for(const h of (mutation.handouts||[]).filter(x=>x.ok)) await deliverHandout({db,guild:interaction.guild,handout:h.row,format:"markdown"});
+          if(String(result.public_narration||"").trim()) await postPlayMessage({db,guild:interaction.guild,sessionId:session.id,content:result.public_narration});
+        }
+        db.recordDirectorHistory(interaction.guildId,{sessionId:session.id,layer:"manual",trigger:{reason,requested_by:interaction.user.id},acted:!!result.act,rationale:result.gm_notes||"",publicNarration:result.public_narration||"",mutationSummary:{events:mutation.events?.length||0,relationships:mutation.relationships?.length||0,handouts:mutation.handouts?.length||0}});
+        await postGmLog({db,guild:interaction.guild,sessionId:session.id,title:"World Director — manual",details:`Reason: ${reason}\n${result.gm_notes||"No GM note."}`});
+        await interaction.editReply(result.act?"Manual World Director pass completed and committed.":"Manual World Director pass completed; no world move was warranted.");
+        return true;
+      }
+    }
+
     if(group==="voice"){
       if(!voice) throw new Error("Voice subsystem is unavailable in this runtime.");
       if(sub==="status"){
@@ -1265,10 +1310,12 @@ GM notes: ${a.draft.gm_notes}`:""}`.slice(0,1950):"No aftermath draft exists for
 
       // Generate both layers before committing either one, so a model/API failure cannot leave a half-resolved downtime cycle.
       const resolved=await gm.resolveDowntime({guildId:interaction.guildId,cycle:{...cycle,status:"resolving"},projects});
-      const director=await gm.runWorldDirector({
-        guildId:interaction.guildId,layer:"downtime",cycle:{...cycle,status:"resolving"},projects,
-        trigger:{cycle_label:cycle.label,project_summary:resolved.summary||"",project_results:resolved.project_results||[]}
-      });
+      const director=db.isDirectorPaused(interaction.guildId)
+        ?{act:false,public_narration:"",private_messages:[],events:[],handouts:[],relationships:[],gm_notes:"World Director was paused by the GM; downtime world movement was intentionally skipped."}
+        :normalizeDirectorConfidence(await gm.runWorldDirector({
+          guildId:interaction.guildId,layer:"downtime",cycle:{...cycle,status:"resolving"},projects,
+          trigger:{cycle_label:cycle.label,project_summary:resolved.summary||"",project_results:resolved.project_results||[]}
+        }));
       const directorHasOutputs=(director.events||[]).length||(director.relationships||[]).length||(director.handouts||[]).length||(director.private_messages||[]).length||String(director.public_narration||"").trim();
       if(!director.act&&directorHasOutputs) throw new Error("Downtime world director returned act=false with non-empty outputs.");
 
@@ -1283,14 +1330,15 @@ GM notes: ${a.draft.gm_notes}`:""}`.slice(0,1950):"No aftermath draft exists for
           projectOutputs.push({project:updated,message:`**Downtime — ${p.title}**\n${r.result||"Resolved."}\nProgress: ${progress}/${p.max_progress} • ${status}`});
         }
         const dscope={mode:"party",actorUserId:null,actorCharacterId:null};
-        const projectMutation=applyAuthoritativeMutation(db,{guildId:interaction.guildId,sessionId:cycle.source_session_id||null,events:resolved.events||[],relationships:resolved.relationships||[],handouts:resolved.handouts||[],scope:dscope,source:"downtime_project"});
-        const directorMutation=director.act?applyAuthoritativeMutation(db,{guildId:interaction.guildId,sessionId:cycle.source_session_id||null,events:director.events||[],relationships:director.relationships||[],handouts:director.handouts||[],scope:dscope,source:"world_director_downtime"}):{events:[],relationships:[],handouts:[]};
+        const projectMutation=applyAuthoritativeMutation(db,{guildId:interaction.guildId,sessionId:cycle.source_session_id||null,events:resolved.events||[],relationships:resolved.relationships||[],handouts:resolved.handouts||[],scope:dscope,source:"downtime_project",provenance:{actorType:"ai",actorId:"downtime",interactionId:interaction.id,triggerText:cycle.label,rationale:resolved.summary||"",confidence:100}});
+        const directorMutation=director.act?applyAuthoritativeMutation(db,{guildId:interaction.guildId,sessionId:cycle.source_session_id||null,events:director.events||[],relationships:director.relationships||[],handouts:director.handouts||[],scope:dscope,source:"world_director_downtime",provenance:{actorType:"ai",actorId:"world_director",interactionId:interaction.id,triggerText:cycle.label,rationale:director.gm_notes||"",confidence:director.confidence??100}}):{events:[],relationships:[],handouts:[]};
         if(cycle.source_session_id) db.completeDirectorPass(cycle.source_session_id,"downtime");
         const combinedSummary=[resolved.summary||"",director.act?director.gm_notes||"":""].filter(Boolean).join("\n\n");
         const done=db.resolveDowntimeCycle(cycle.id,combinedSummary);
         return {projectMutation,directorMutation,done};
       });
       const {projectMutation,directorMutation,done}=committed;
+      db.recordDirectorHistory(interaction.guildId,{sessionId:cycle.source_session_id||null,layer:"downtime",trigger:{cycle_label:cycle.label,paused:db.isDirectorPaused(interaction.guildId)},acted:!!director.act,rationale:director.gm_notes||"",publicNarration:director.public_narration||"",mutationSummary:{events:(directorMutation.events||[]).filter(x=>x.ok).length,relationships:(directorMutation.relationships||[]).filter(x=>x.ok).length,handouts:(directorMutation.handouts||[]).filter(x=>x.ok).length},status:db.isDirectorPaused(interaction.guildId)?"skipped":"completed"});
       const eventResults=[...(projectMutation.events||[]),...(directorMutation.events||[])];
       const handoutResults=[...(projectMutation.handouts||[]),...(directorMutation.handouts||[])];
       const outputErrors=[];
@@ -1391,6 +1439,42 @@ GM notes: ${a.draft.gm_notes}`:""}`.slice(0,1950):"No aftermath draft exists for
       return true;
     }
 
+    if(group==="admin"&&["backup","backups","restore-preview","restore","doctor","ledger"].includes(sub)){
+      if(!isGM(db,interaction)) throw new PermissionError("GM/admin permission required.");
+      if(sub==="backup"){
+        const row=db.createBackup(interaction.guildId,{label:interaction.options.getString("label")||"Manual backup",reason:interaction.options.getString("reason")||"Manual GM backup",createdBy:interaction.user.id});
+        await interaction.reply({content:`Backup created: \`${row.id.slice(0,8)}\` **${row.label}**`,ephemeral:true}); return true;
+      }
+      if(sub==="backups"){
+        const rows=db.listBackups(interaction.guildId,20);
+        await interaction.reply({content:rows.length?`**Campaign Backups**\n${rows.map(r=>`• \`${r.id.slice(0,8)}\` **${r.label}** — ${r.created_at}${r.reason?` — ${r.reason}`:""}`).join("\n")}`.slice(0,1950):"No campaign backups yet.",ephemeral:true}); return true;
+      }
+      const backupId=interaction.options.getString("backup_id");
+      if(sub==="restore-preview"){
+        const row=byPrefix(db.listBackups(interaction.guildId,50),backupId); if(!row) throw new NotFoundError("Backup not found.");
+        const preview=db.backupPreview(interaction.guildId,row.id);
+        await interaction.reply({content:`**Restore Preview — ${row.label}**\nBackup: ${preview.counts.players} players • ${preview.counts.characters} characters • ${preview.counts.facts} facts • ${preview.counts.sessions} sessions\nCurrent: ${preview.current.players} players • ${preview.current.characters} characters • ${preview.current.facts}+ facts • ${preview.current.sessions} sessions\nRestore creates a pre-restore safety snapshot.`,ephemeral:true}); return true;
+      }
+      if(sub==="restore"){
+        const row=byPrefix(db.listBackups(interaction.guildId,50),backupId); if(!row) throw new NotFoundError("Backup not found.");
+        await interaction.deferReply({ephemeral:true});
+        db.restoreBackup(interaction.guildId,row.id,{actorId:interaction.user.id});
+        await syncConfiguredSurfaces({db,guild:interaction.guild});
+        await postGmLog({db,guild:interaction.guild,title:"Campaign backup restored",details:`Restored backup ${row.id.slice(0,8)} — ${row.label}. A safety snapshot was created first.`});
+        await interaction.editReply(`Restored backup \`${row.id.slice(0,8)}\` **${row.label}**. A pre-restore safety snapshot was created automatically.`); return true;
+      }
+      if(sub==="ledger"){
+        const rows=db.listMutationLedger(interaction.guildId,{limit:interaction.options.getInteger("limit")||30,sourceLayer:interaction.options.getString("layer")||""});
+        const chunks=chunkTextLines(rows.length?["**Authoritative Mutation Ledger**",...rows.map(r=>`• \`${r.id.slice(0,8)}\` **${r.mutation_type}** • ${r.source_layer} • confidence ${r.confidence}% • ${r.created_at}\n  ${r.rationale||r.entity_key||"No rationale recorded."}`)]:["No mutation-ledger entries recorded yet."]);
+        await interaction.reply({content:chunks[0],ephemeral:true}); for(const c of chunks.slice(1)) await interaction.followUp({content:c,ephemeral:true}); return true;
+      }
+      if(sub==="doctor"){
+        const report=await runCampaignDiagnostics({db,guild:interaction.guild});
+        const chunks=chunkTextLines(formatDiagnostics(report));
+        await interaction.reply({content:chunks[0],ephemeral:true}); for(const c of chunks.slice(1)) await interaction.followUp({content:c,ephemeral:true}); return true;
+      }
+    }
+
     if(group==="admin"&&sub==="snapshot"){
       if(!isGM(db,interaction)) throw new Error("GM/admin permission required.");
       const row=db.snapshotCampaign(interaction.guildId,{label:interaction.options.getString("label")||"Manual snapshot",reason:interaction.options.getString("reason")||"Manual GM snapshot",createdBy:interaction.user.id});
@@ -1447,6 +1531,32 @@ GM notes: ${a.draft.gm_notes}`:""}`.slice(0,1950):"No aftermath draft exists for
 
     if(group==="gm"){
       if(!isGM(db,interaction)) throw new PermissionError("GM/admin permission required.");
+      if(sub==="overview"){
+        const chunks=chunkTextLines(formatGmOverview(buildGmOverview(db,interaction.guildId),{formatFact:gmFactLine}));
+        await interaction.reply({content:chunks[0],ephemeral:true}); for(const c of chunks.slice(1)) await interaction.followUp({content:c,ephemeral:true}); return true;
+      }
+      if(sub==="fact-edit"||sub==="fact-archive"||sub==="fact-promote"){
+        const row=db.findFactForGM(interaction.guildId,interaction.options.getString("fact_id",true)); if(!row) throw new NotFoundError("Fact not found.");
+        if(sub==="fact-archive"){
+          db.archiveFact(interaction.guildId,row.id); db.recordMutation(interaction.guildId,{sessionId:row.session_id,actorType:"human_gm",actorId:interaction.user.id,sourceLayer:"command",sourceInteractionId:interaction.id,mutationType:"fact_archive",entityKey:row.id,rationale:"GM archived fact",before:row,after:{archived:true}});
+          await interaction.reply({content:`Archived fact \`${row.id.slice(0,8)}\` without deleting its provenance.`,ephemeral:true}); return true;
+        }
+        if(sub==="fact-edit"){
+          const vis=interaction.options.getString("visibility"); const target=interaction.options.getUser("player"); if(vis==="player"&&!target&&!row.subject_user_id) throw new Error("Player visibility requires a target player.");
+          const updated=db.updateFact(interaction.guildId,row.id,{content:interaction.options.getString("content")??row.content,visibility:vis??row.visibility,subjectUserId:vis==="player"?(target?.id||row.subject_user_id):(vis?null:undefined)});
+          db.recordMutation(interaction.guildId,{sessionId:row.session_id,actorType:"human_gm",actorId:interaction.user.id,sourceLayer:"command",sourceInteractionId:interaction.id,mutationType:"fact_edit",entityKey:row.id,visibility:updated.visibility,rationale:"GM edited fact",before:row,after:updated});
+          await interaction.reply({content:`Updated fact \`${row.id.slice(0,8)}\` (${updated.visibility}).`,ephemeral:true}); return true;
+        }
+        const target=interaction.options.getString("target",true);
+        if(target==="canon"){
+          const result=db.proposeCanon(interaction.guildId,{key:row.fact_key,value:row.content,visibility:"party",sessionId:row.session_id,sourceType:"human_gm",sourceId:row.id,provenance:`Promoted from fact ${row.id}`});
+          db.recordMutation(interaction.guildId,{sessionId:row.session_id,actorType:"human_gm",actorId:interaction.user.id,sourceLayer:"command",sourceInteractionId:interaction.id,mutationType:"fact_promote_canon",entityKey:row.fact_key,visibility:"party",rationale:"GM promoted fact to canon",before:row,after:result});
+          await interaction.reply({content:result.status==="conflict"?`Fact promotion created canon conflict \`${result.conflict.id.slice(0,8)}\` for **${row.fact_key}**.`:`Promoted fact \`${row.id.slice(0,8)}\` to campaign canon.`,ephemeral:true}); return true;
+        }
+        const updated=db.updateFact(interaction.guildId,row.id,{visibility:target,subjectUserId:null,subjectCharacterId:null});
+        db.recordMutation(interaction.guildId,{sessionId:row.session_id,actorType:"human_gm",actorId:interaction.user.id,sourceLayer:"command",sourceInteractionId:interaction.id,mutationType:"fact_promote",entityKey:row.id,visibility:target,rationale:`GM promoted fact visibility to ${target}`,before:row,after:updated});
+        await interaction.reply({content:`Promoted fact \`${row.id.slice(0,8)}\` to **${target}** visibility.`,ephemeral:true}); return true;
+      }
       if(sub==="fear"){
         const s=db.getActiveSession(interaction.guildId);
         const delta=interaction.options.getInteger("delta",true);
@@ -1460,7 +1570,7 @@ GM notes: ${a.draft.gm_notes}`:""}`.slice(0,1950):"No aftermath draft exists for
         const target=interaction.options.getUser("player");
         if(vis==="player"&&!target) throw new Error("Specific-player visibility requires a player.");
         const s=db.getActiveSession(interaction.guildId);
-        db.addFact(interaction.guildId,{category:"fact",key:`human-${Date.now()}`,content:interaction.options.getString("content",true),visibility:vis,subjectUserId:target?.id||null,sessionId:s?.id||null,source:"human_gm"});
+        db.addFact(interaction.guildId,{category:"fact",key:`human-${Date.now()}`,content:interaction.options.getString("content",true),visibility:vis,subjectUserId:target?.id||null,sessionId:s?.id||null,source:"human_gm",provenance:{interaction_id:interaction.id,actor_user_id:interaction.user.id,command:"/vc-gm fact-add"},confidence:100});
         await interaction.reply({content:`Fact recorded as **${vis}** visibility.`,ephemeral:true});
         return true;
       }

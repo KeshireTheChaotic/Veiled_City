@@ -51,8 +51,13 @@ export class VeiledDB {
       ["source_message_id","TEXT"]
     ]) add("canon_proposals",name,def);
     add("campaigns","fear","INTEGER NOT NULL DEFAULT 0");
+    add("campaigns","director_paused","INTEGER NOT NULL DEFAULT 0");
+    add("facts","archived","INTEGER NOT NULL DEFAULT 0");
+    add("facts","provenance_json","TEXT NOT NULL DEFAULT '{}'");
+    add("facts","confidence","INTEGER NOT NULL DEFAULT 100");
     add("encounters","combat_state_json",`TEXT NOT NULL DEFAULT '{"spotlight":{"counts":{},"last_character_id":null}}'`);
     add("encounters","pc_start_state_json",`TEXT NOT NULL DEFAULT '[]'`);
+    this.db.exec("PRAGMA user_version=370;");
   }
 
   close() { this.db.close(); }
@@ -609,20 +614,49 @@ export class VeiledDB {
     return this.setDirectorState(sessionId,patch);
   }
 
-  addFact(guildId,{category="fact",key,content,visibility="party",subjectUserId=null,subjectCharacterId=null,sessionId=null,source="gm"}) {
+  addFact(guildId,{category="fact",key,content,visibility="party",subjectUserId=null,subjectCharacterId=null,sessionId=null,source="gm",provenance={},confidence=100,dedupe=true}) {
+    const normalizedContent=String(content||"").trim();
+    const normalizedKey=String(key||"").trim();
+    if(dedupe){
+      const existing=this.db.prepare(`SELECT id FROM facts WHERE guild_id=? AND archived=0 AND category=? AND fact_key=? AND content=? AND visibility=? AND COALESCE(subject_user_id,'')=COALESCE(?,'') AND COALESCE(subject_character_id,'')=COALESCE(?,'') ORDER BY created_at DESC LIMIT 1`)
+        .get(guildId,category,normalizedKey,normalizedContent,visibility,subjectUserId,subjectCharacterId);
+      if(existing) return existing.id;
+    }
     const id=randomUUID();
+    const conf=Math.max(0,Math.min(100,Number(confidence)||0));
     this.db.prepare(`
-      INSERT INTO facts(id,guild_id,category,fact_key,content,visibility,subject_user_id,subject_character_id,session_id,source)
-      VALUES(?,?,?,?,?,?,?,?,?,?)
-    `).run(id,guildId,category,key,content,visibility,subjectUserId,subjectCharacterId,sessionId,source);
+      INSERT INTO facts(id,guild_id,category,fact_key,content,visibility,subject_user_id,subject_character_id,session_id,source,provenance_json,confidence)
+      VALUES(?,?,?,?,?,?,?,?,?,?,?,?)
+    `).run(id,guildId,category,normalizedKey,normalizedContent,visibility,subjectUserId,subjectCharacterId,sessionId,source,JSON.stringify(provenance||{}),conf);
     return id;
   }
 
+  getFact(guildId,id){ return this.db.prepare("SELECT * FROM facts WHERE guild_id=? AND id=?").get(guildId,id); }
+  findFactForGM(guildId,query){
+    const q=String(query||"").trim(); if(!q) return null;
+    return this.db.prepare(`SELECT * FROM facts WHERE guild_id=? AND archived=0 AND (id LIKE ? OR lower(fact_key)=lower(?)) ORDER BY created_at DESC LIMIT 1`).get(guildId,`${q}%`,q);
+  }
+
+  updateFact(guildId,id,patch={}){
+    const row=this.getFact(guildId,id); if(!row) throw new Error("Fact not found.");
+    const next={
+      content:patch.content??row.content,visibility:patch.visibility??row.visibility,category:patch.category??row.category,
+      subject_user_id:patch.subjectUserId===undefined?row.subject_user_id:patch.subjectUserId,
+      subject_character_id:patch.subjectCharacterId===undefined?row.subject_character_id:patch.subjectCharacterId,
+      archived:patch.archived===undefined?row.archived:(patch.archived?1:0)
+    };
+    this.db.prepare(`UPDATE facts SET content=?,visibility=?,category=?,subject_user_id=?,subject_character_id=?,archived=?,updated_at=CURRENT_TIMESTAMP WHERE guild_id=? AND id=?`)
+      .run(next.content,next.visibility,next.category,next.subject_user_id,next.subject_character_id,next.archived,guildId,id);
+    return this.getFact(guildId,id);
+  }
+
+  archiveFact(guildId,id){ return this.updateFact(guildId,id,{archived:true}); }
+
   factsFor(guildId,userId,{characterId=null,includeGM=false,limit=80}={}) {
     const sql=includeGM?`
-      SELECT * FROM facts WHERE guild_id=? ORDER BY created_at DESC LIMIT ?
+      SELECT * FROM facts WHERE guild_id=? AND archived=0 ORDER BY created_at DESC LIMIT ?
     `:`
-      SELECT * FROM facts WHERE guild_id=?
+      SELECT * FROM facts WHERE guild_id=? AND archived=0
        AND (
          visibility IN ('public','party')
          OR (visibility='player' AND subject_user_id=?)
@@ -639,7 +673,7 @@ export class VeiledDB {
     const capped=Math.max(1,Math.min(200,Number(limit)||80));
     const wanted=String(category||"").trim().toLowerCase();
     return this.db.prepare(`
-      SELECT * FROM facts WHERE guild_id=?
+      SELECT * FROM facts WHERE guild_id=? AND archived=0
        AND (
          visibility IN ('public','party')
          OR (visibility='player' AND subject_user_id=?)
@@ -659,7 +693,7 @@ export class VeiledDB {
     const q=String(search||"").trim().toLowerCase();
     return this.db.prepare(`
       SELECT rowid AS _rowid,* FROM facts
-      WHERE guild_id=?
+      WHERE guild_id=? AND archived=0
         AND (?='all' OR visibility=?)
         AND (?='' OR lower(category)=?)
         AND (?='' OR subject_user_id=?)
@@ -667,6 +701,77 @@ export class VeiledDB {
       ORDER BY created_at DESC,_rowid DESC
       LIMIT ?
     `).all(guildId,vis,vis,cat,cat,user,user,q,q,q,capped);
+  }
+
+  // v3.7 operational services -------------------------------------------------
+  getOperationReceipt(guildId,interactionId){ return this.db.prepare("SELECT * FROM operation_receipts WHERE guild_id=? AND interaction_id=?").get(guildId,interactionId); }
+  recordOperationReceipt(guildId,{interactionId,commandKey,actorUserId,responseText="",payload={},status="completed"}){
+    this.db.prepare(`INSERT INTO operation_receipts(guild_id,interaction_id,command_key,actor_user_id,status,response_text,payload_json) VALUES(?,?,?,?,?,?,?) ON CONFLICT(guild_id,interaction_id) DO UPDATE SET status=excluded.status,response_text=excluded.response_text,payload_json=excluded.payload_json`).run(guildId,interactionId,commandKey,actorUserId,status,String(responseText||""),JSON.stringify(payload||{}));
+    return this.getOperationReceipt(guildId,interactionId);
+  }
+
+  recordMutation(guildId,{sessionId=null,actorType="system",actorId=null,sourceLayer="unknown",sourceInteractionId=null,sourceMessageId=null,mutationType,entityKey="",visibility="gm",confidence=100,rationale="",triggerText="",before={},after={},payload={}}={}){
+    const id=randomUUID();
+    this.db.prepare(`INSERT INTO mutation_ledger(id,guild_id,session_id,actor_type,actor_id,source_layer,source_interaction_id,source_message_id,mutation_type,entity_key,visibility,confidence,rationale,trigger_text,before_json,after_json,payload_json) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`)
+      .run(id,guildId,sessionId,actorType,actorId,sourceLayer,sourceInteractionId,sourceMessageId,mutationType||"unknown",String(entityKey||""),visibility||"gm",Math.max(0,Math.min(100,Number(confidence)||0)),String(rationale||""),String(triggerText||""),JSON.stringify(before||{}),JSON.stringify(after||{}),JSON.stringify(payload||{}));
+    return this.db.prepare("SELECT * FROM mutation_ledger WHERE id=?").get(id);
+  }
+  listMutationLedger(guildId,{limit=40,sourceLayer="",mutationType=""}={}){
+    const cap=Math.max(1,Math.min(100,Number(limit)||40));
+    return this.db.prepare(`SELECT * FROM mutation_ledger WHERE guild_id=? AND (?='' OR source_layer=?) AND (?='' OR mutation_type=?) ORDER BY created_at DESC LIMIT ?`).all(guildId,sourceLayer,sourceLayer,mutationType,mutationType,cap);
+  }
+
+  setDirectorPaused(guildId,paused){ this.ensureCampaign(guildId); this.db.prepare("UPDATE campaigns SET director_paused=?,updated_at=CURRENT_TIMESTAMP WHERE guild_id=?").run(paused?1:0,guildId); return !!paused; }
+  isDirectorPaused(guildId){ return !!this.getCampaign(guildId)?.director_paused; }
+  recordDirectorHistory(guildId,{sessionId=null,layer="manual",trigger={},acted=false,rationale="",publicNarration="",mutationSummary={},status="completed",error=""}={}){
+    const id=randomUUID();
+    this.db.prepare(`INSERT INTO director_history(id,guild_id,session_id,layer,trigger_json,acted,rationale,public_narration,mutation_summary_json,status,error) VALUES(?,?,?,?,?,?,?,?,?,?,?)`).run(id,guildId,sessionId,layer,JSON.stringify(trigger||{}),acted?1:0,String(rationale||""),String(publicNarration||""),JSON.stringify(mutationSummary||{}),status,String(error||""));
+    return this.db.prepare("SELECT * FROM director_history WHERE id=?").get(id);
+  }
+  listDirectorHistory(guildId,limit=20){ return this.db.prepare("SELECT * FROM director_history WHERE guild_id=? ORDER BY created_at DESC LIMIT ?").all(guildId,Math.max(1,Math.min(50,Number(limit)||20))); }
+
+  createBackup(guildId,{label="Manual backup",reason="",createdBy=null}={}){
+    const snap=this.snapshotCampaign(guildId,{label:`Backup staging: ${label}`,reason:`Internal snapshot source for backup: ${reason}`,createdBy});
+    const id=randomUUID();
+    this.db.prepare("INSERT INTO campaign_backups(id,guild_id,label,reason,state_json,created_by) VALUES(?,?,?,?,?,?)").run(id,guildId,label,reason,JSON.stringify(snap.state),createdBy);
+    this.db.prepare("DELETE FROM campaign_snapshots WHERE id=?").run(snap.id);
+    return this.getBackup(id);
+  }
+  getBackup(id){ const r=this.db.prepare("SELECT * FROM campaign_backups WHERE id=?").get(id); return r?{...r,state:JSON.parse(r.state_json||"{}")} : null; }
+  listBackups(guildId,limit=20){ return this.db.prepare("SELECT id,label,reason,created_by,created_at FROM campaign_backups WHERE guild_id=? ORDER BY created_at DESC LIMIT ?").all(guildId,Math.max(1,Math.min(50,Number(limit)||20))); }
+  backupPreview(guildId,id){
+    const b=this.getBackup(id); if(!b||b.guild_id!==guildId) throw new Error("Backup not found.");
+    const current={players:this.listPlayers(guildId).length,characters:this.listGuildCharacters(guildId,{includeClosed:true}).length,facts:this.listFactsForGM(guildId,{limit:100}).length,sessions:this.db.prepare("SELECT count(*) n FROM sessions WHERE guild_id=?").get(guildId).n};
+    const tables=b.state?.tables||{};
+    const backup={players:(tables.players||[]).length,characters:(tables.characters||[]).length,facts:(tables.facts||[]).length,sessions:(tables.sessions||[]).length};
+    return {backup:b,current,counts:backup};
+  }
+  restoreBackup(guildId,id,{actorId=null}={}){
+    const b=this.getBackup(id); if(!b||b.guild_id!==guildId) throw new Error("Backup not found.");
+    const tempId=randomUUID();
+    this.db.prepare("INSERT INTO campaign_snapshots(id,guild_id,label,reason,state_json,created_by) VALUES(?,?,?,?,?,?)").run(tempId,guildId,`Restore source ${b.label}`,`Generated from backup ${id}`,JSON.stringify(b.state),actorId);
+    try{return this.restoreSnapshot(guildId,tempId,{actorId});}
+    finally{this.db.prepare("DELETE FROM campaign_snapshots WHERE id=?").run(tempId);}
+  }
+
+  doctorData(guildId){
+    const active=this.getActiveSession(guildId);
+    const presentWithoutCharacter=active?this.roster(active.id).filter(r=>["present","late","guest"].includes(r.presence)&&!r.character_id):[];
+    const duplicateCanon=this.db.prepare(`SELECT canon_key,count(*) n FROM canon_events WHERE guild_id=? AND status='current' GROUP BY canon_key HAVING count(*)>1`).all(guildId);
+    const orphanCharacters=this.db.prepare(`SELECT c.id,c.name FROM characters c LEFT JOIN players p ON p.guild_id=c.guild_id AND p.discord_user_id=c.owner_user_id WHERE c.guild_id=? AND c.owner_user_id IS NOT NULL AND p.discord_user_id IS NULL`).all(guildId);
+    const orphanAssignments=this.db.prepare(`SELECT sc.session_id,sc.discord_user_id,sc.character_id FROM session_characters sc JOIN sessions s ON s.id=sc.session_id LEFT JOIN characters c ON c.id=sc.character_id WHERE s.guild_id=? AND c.id IS NULL`).all(guildId);
+    const orphanHandouts=this.db.prepare(`SELECT h.id,h.title FROM handouts h LEFT JOIN characters c ON c.id=h.subject_character_id LEFT JOIN players p ON p.guild_id=h.guild_id AND p.discord_user_id=h.subject_user_id WHERE h.guild_id=? AND ((h.subject_character_id IS NOT NULL AND c.id IS NULL) OR (h.subject_user_id IS NOT NULL AND p.discord_user_id IS NULL))`).all(guildId);
+    const brokenProxies=active?this.db.prepare(`SELECT sp.discord_user_id,sp.absence_mode,sp.proxy_user_id FROM session_presence sp LEFT JOIN session_presence pp ON pp.session_id=sp.session_id AND pp.discord_user_id=sp.proxy_user_id WHERE sp.session_id=? AND sp.absence_mode='proxy' AND (sp.proxy_user_id IS NULL OR pp.discord_user_id IS NULL OR pp.presence NOT IN ('present','late','guest'))`).all(active.id):[];
+    const absentControl=active?this.db.prepare(`SELECT sp.discord_user_id,sc.character_id,sc.control_policy FROM session_presence sp JOIN session_characters sc ON sc.session_id=sp.session_id AND sc.discord_user_id=sp.discord_user_id AND sc.left_at IS NULL WHERE sp.session_id=? AND sp.presence='absent' AND sc.control_policy='player_only'`).all(active.id):[];
+    const invalidVisibility=[];
+    for(const table of ["facts","clocks","threads","reference_entries","relationships","handouts"]){
+      try{
+        const rows=this.db.prepare(`SELECT COUNT(*) n FROM ${table} WHERE guild_id=? AND visibility NOT IN ('public','party','player','character','gm')`).get(guildId);
+        if(rows?.n) invalidVisibility.push({table,count:rows.n});
+      }catch{}
+    }
+    const pending=active?this.getPendingDirectorPass(active.id):null;
+    return {schemaVersion:this.db.prepare("PRAGMA user_version").get().user_version,activeSession:active,presentWithoutCharacter,duplicateCanon,orphanCharacters,orphanAssignments,orphanHandouts,brokenProxies,absentControl,invalidVisibility,pendingDirector:pending};
   }
 
   findGuestCharacter(guildId,name,userId) {
@@ -703,7 +808,7 @@ export class VeiledDB {
     return this.db.prepare("SELECT * FROM threads WHERE guild_id=? AND visibility IN ('public','party') ORDER BY updated_at DESC").all(guildId);
   }
 
-  getRelationship(guildId,{fromType,fromKey,toType,toKey,relationshipType="other"}) {
+  findRelationship(guildId,{fromType,fromKey,toType,toKey,relationshipType="other"}) {
     return this.db.prepare(`SELECT * FROM relationships WHERE guild_id=? AND from_type=? AND from_key=? AND to_type=? AND to_key=? AND relationship_type=?`)
       .get(guildId,fromType,fromKey,toType,toKey,relationshipType);
   }
@@ -715,6 +820,8 @@ export class VeiledDB {
   listSessionPublicHandouts(guildId,sessionId) {
     return this.db.prepare("SELECT id,title,kind,authority,case_key,npc_key,location_key FROM handouts WHERE guild_id=? AND session_id=? AND status='active' AND visibility IN ('public','party') ORDER BY created_at").all(guildId,sessionId);
   }
+
+  getClock(guildId,key){ return this.db.prepare("SELECT * FROM clocks WHERE guild_id=? AND clock_key=?").get(guildId,key); }
 
   clocksFor(guildId,{includeGM=false}={}) {
     const sql=includeGM?"SELECT * FROM clocks WHERE guild_id=?":"SELECT * FROM clocks WHERE guild_id=? AND visibility!='gm'";

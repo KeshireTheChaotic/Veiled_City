@@ -46,7 +46,7 @@ function block(results,e,message){ results.push({type:e?.type||"unknown",ok:fals
 function cleanKey(value){ return String(value||"").trim(); }
 
 /** Apply structured GM events while enforcing private-scene scope boundaries. */
-export function applyGMEvents(db,guildId,sessionId,events=[],scope={mode:"party",actorUserId:null,actorCharacterId:null}){
+export function applyGMEvents(db,guildId,sessionId,events=[],scope={mode:"party",actorUserId:null,actorCharacterId:null},provenance={}){
   const results=[];
   for(const e of events||[]){
     try{
@@ -64,9 +64,11 @@ export function applyGMEvents(db,guildId,sessionId,events=[],scope={mode:"party"
             subjectUserId:vis.targetUserId,
             subjectCharacterId:vis.targetCharacterId,
             sessionId,
-            source:"ai_gm"
+            source:"ai_gm",
+            provenance:{...provenance,event:e},
+            confidence:provenance.confidence??100
           });
-          results.push({type:e.type,ok:true,id,visibility:vis.visibility});
+          results.push({type:e.type,ok:true,id,visibility:vis.visibility,before:null,after:db.getFact(guildId,id)});
           break;
         }
         case "clock_delta":{
@@ -80,16 +82,18 @@ export function applyGMEvents(db,guildId,sessionId,events=[],scope={mode:"party"
             if(scope.actorCharacterId){ visibility="character"; subjectCharacterId=scope.actorCharacterId; subjectUserId=null; }
             else { visibility="player"; subjectUserId=scope.actorUserId; subjectCharacterId=null; }
           }
+          const before=db.getClock(guildId,key)||null;
           const v=db.changeClock(guildId,key,Number(e.amount)||0,{
             label:e.value||rawKey,visibility,subjectUserId,subjectCharacterId
           });
-          results.push({type:e.type,ok:true,key,value:v,visibility});
+          results.push({type:e.type,ok:true,key,value:v,visibility,before,after:db.getClock(guildId,key)});
           break;
         }
         case "veil_exposure_delta":{
           if(scope.mode==="private"){ block(results,e,"Private AI turns may not directly alter global Veil Exposure; use a private clock/fact and let the GM promote global consequences."); break; }
+          const before={veil_exposure:db.getCampaign(guildId)?.veil_exposure??0};
           const v=db.changeVeilExposure(guildId,Number(e.amount)||0);
-          results.push({type:e.type,ok:true,value:v});
+          results.push({type:e.type,ok:true,value:v,before,after:{veil_exposure:v}});
           break;
         }
         case "resource_delta":{
@@ -108,6 +112,7 @@ export function applyGMEvents(db,guildId,sessionId,events=[],scope={mode:"party"
           if(!characterId) fail("resource_delta could not resolve a target character.");
           const ch=db.getCharacter(characterId);
           if(!ch || ch.guild_id!==guildId) fail("resource_delta target character is not in this campaign.");
+          const before=structuredClone(ch.data?.resources?.[e.key]??null);
           db.updateCharacterData(characterId,data=>{
             const res=data.resources??(data.resources={});
             if(e.key==="hope"){
@@ -117,13 +122,15 @@ export function applyGMEvents(db,guildId,sessionId,events=[],scope={mode:"party"
               obj.current=Math.max(0,Math.min(Number(obj.max)||999,(Number(obj.current)||0)+(Number(e.amount)||0)));
             }
           });
-          results.push({type:e.type,ok:true,key:e.key,target_character_id:characterId,target_user_id:e.target_user_id||null,amount:e.amount});
+          const afterCharacter=db.getCharacter(characterId);
+          results.push({type:e.type,ok:true,key:e.key,target_character_id:characterId,target_user_id:e.target_user_id||null,amount:e.amount,before,after:structuredClone(afterCharacter?.data?.resources?.[e.key]??null)});
           break;
         }
         case "thread":{
           const rawId=cleanKey(e.key)||randomUUID();
           const owner=scope.actorCharacterId||scope.actorUserId;
           const id=scope.mode==="private"?`private:${owner}:${rawId}`:rawId;
+          const before=db.getThread(id)||null;
           const row=db.upsertThread(guildId,{
             id,
             label:String(e.value||rawId),
@@ -133,7 +140,7 @@ export function applyGMEvents(db,guildId,sessionId,events=[],scope={mode:"party"
             subjectCharacterId:vis.targetCharacterId,
             notes:e.note||""
           });
-          results.push({type:e.type,ok:true,id,row,publish:vis.visibility==="party"||vis.visibility==="public"});
+          results.push({type:e.type,ok:true,id,row,before,after:row,publish:vis.visibility==="party"||vis.visibility==="public"});
           break;
         }
         case "npc_update":
@@ -143,11 +150,12 @@ export function applyGMEvents(db,guildId,sessionId,events=[],scope={mode:"party"
           const rawKey=e.key.trim().toLowerCase();
           const owner=scope.actorCharacterId||scope.actorUserId;
           const entityKey=scope.mode==="private"?`private:${owner}:${rawKey}`:rawKey;
+          const before=db.getReference(guildId,kind,entityKey)||null;
           const row=db.upsertReference(guildId,{
             kind,key:entityKey,name:e.key.trim(),summary:e.value.trim(),
             visibility:vis.visibility,subjectUserId:vis.targetUserId,subjectCharacterId:vis.targetCharacterId
           });
-          results.push({type:e.type,ok:true,kind,key:row.entity_key,row,publish:vis.visibility==="party"||vis.visibility==="public"});
+          results.push({type:e.type,ok:true,kind,key:row.entity_key,row,before,after:row,publish:vis.visibility==="party"||vis.visibility==="public"});
           break;
         }
         case "canon":{
@@ -155,8 +163,9 @@ export function applyGMEvents(db,guildId,sessionId,events=[],scope={mode:"party"
           if(!cleanKey(e.key)||!String(e.value||"").trim()) fail("canon event requires key and value.");
           const canonVisibility=String(e.visibility||"party").toLowerCase();
           if(!["public","party","gm"].includes(canonVisibility)) fail("Canon visibility must be public, party, or gm because canon ledger entries are campaign-global.");
+          const before=db.currentCanon(guildId,e.key)||null;
           const r=db.proposeCanon(guildId,{key:e.key,value:e.value,visibility:canonVisibility,sessionId,sourceType:"ai",sourceId:"gm",provenance:e.note||"AI GM turn"});
-          results.push({type:e.type,key:e.key,ok:r.status!=="conflict",status:r.status,conflict_id:r.conflict?.id||null,expectedConflict:r.status==="conflict"});
+          results.push({type:e.type,key:e.key,ok:r.status!=="conflict",status:r.status,conflict_id:r.conflict?.id||null,expectedConflict:r.status==="conflict",before,after:r.status==="conflict"?r.conflict:db.currentCanon(guildId,e.key)});
           break;
         }
         case "relationship":
@@ -201,10 +210,10 @@ export function applyRelationshipDrafts(db,guildId,relationships=[],scope={mode:
       }
       let visibility=r.visibility||"party";
       if(scope.mode==="private") visibility=scope.actorCharacterId?"character":"gm";
-      const existing=db.getRelationship(guildId,{fromType:r.from_type,fromKey:from.key,toType:r.to_type,toKey:to.key,relationshipType:r.relationship_type||"other"});
+      const existing=db.findRelationship(guildId,{fromType:r.from_type,fromKey:from.key,toType:r.to_type,toKey:to.key,relationshipType:r.relationship_type||"other"});
       const score=r.mode==="delta"?Math.max(-5,Math.min(5,Number(existing?.score||0)+Number(r.score||0))):Math.max(-5,Math.min(5,Number(r.score||0)));
       const row=db.upsertRelationship(guildId,{fromType:r.from_type,fromKey:from.key,fromLabel:from.label,toType:r.to_type,toKey:to.key,toLabel:to.label,relationshipType:r.relationship_type||"other",score,visibility,note:r.note||"",source,sourceCharacterId:scope.actorCharacterId||null});
-      out.push({ok:true,row});
+      out.push({ok:true,row,before:existing||null,after:row});
     }catch(err){out.push({ok:false,error:String(err.message||err),draft:r});}
   }
   return out;
@@ -284,12 +293,16 @@ export function assertMutationSuccess({events=[],relationships=[],handouts=[]}={
  * Apply one authoritative AI mutation bundle transactionally. Either all valid
  * state changes commit together or the surrounding transaction rolls back.
  */
-export function applyAuthoritativeMutation(db,{guildId,sessionId=null,events=[],relationships=[],handouts=[],scope={mode:"party",actorUserId:null,actorCharacterId:null},source="ai_gm"}){
+export function applyAuthoritativeMutation(db,{guildId,sessionId=null,events=[],relationships=[],handouts=[],scope={mode:"party",actorUserId:null,actorCharacterId:null},source="ai_gm",provenance={}}){
   return db.transaction(()=>{
-    const eventResults=applyGMEvents(db,guildId,sessionId,events,scope);
+    const eventResults=applyGMEvents(db,guildId,sessionId,events,scope,provenance);
     const relationshipResults=applyRelationshipDrafts(db,guildId,relationships,scope,source);
     const handoutResults=applyHandoutDrafts(db,guildId,sessionId,handouts,scope,source);
     assertMutationSuccess({events:eventResults,relationships:relationshipResults,handouts:handoutResults});
+    const base={sessionId,actorType:provenance.actorType||"ai",actorId:provenance.actorId||scope.actorUserId||"veilkeeper",sourceLayer:source,sourceInteractionId:provenance.interactionId||null,sourceMessageId:provenance.messageId||null,confidence:provenance.confidence??100,rationale:provenance.rationale||"",triggerText:provenance.triggerText||""};
+    eventResults.filter(x=>x?.ok||x?.expectedConflict).forEach((result,index)=>db.recordMutation(guildId,{...base,mutationType:`event:${events[index]?.type||result.type||"unknown"}`,entityKey:events[index]?.key||result.key||result.id||"",visibility:events[index]?.visibility||result.visibility||"gm",before:result.before??{},after:result.after??result,payload:events[index]||{}}));
+    relationshipResults.filter(x=>x?.ok).forEach((result,index)=>db.recordMutation(guildId,{...base,mutationType:"relationship",entityKey:result.row?.id||"",visibility:result.row?.visibility||"gm",before:result.before??{},after:result.after??result.row??result,payload:relationships[index]||{}}));
+    handoutResults.filter(x=>x?.ok).forEach((result,index)=>db.recordMutation(guildId,{...base,mutationType:"handout",entityKey:result.row?.id||"",visibility:result.row?.visibility||"gm",after:result.row||result,payload:handouts[index]||{}}));
     return {events:eventResults,relationships:relationshipResults,handouts:handoutResults};
   });
 }

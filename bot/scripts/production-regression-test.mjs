@@ -393,4 +393,4 @@ try{
 
 db.close();
 fs.rmSync(tmp,{recursive:true,force:true});
-console.log("Veilkeeper v3.6.0 production regression test: PASS");
+console.log("Veilkeeper v3.7.0 production regression test: PASS");

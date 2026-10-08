@@ -1,4 +1,4 @@
-# Autonomous World Director — v3.5.0
+# Autonomous World Director — v3.7.0
 
 Veilkeeper v3.5.0 adds an autonomous world-director layer that may advance the setting **between meaningful pieces of player-driven play**. It is not a real-time scheduler and it does not replace player agency, deterministic encounter controls, or human canon-conflict resolution.
 
@@ -42,7 +42,7 @@ Party round/scene passes are stored in session state before execution. If genera
 
 A pending pass does **not** use wall-clock time and there is no background scheduler. Veilkeeper can continue table operation rather than freezing play solely because a director API call failed.
 
-Use `/vc-campaign status` to see the current director round, party scene number/label, and whether a party director pass is pending.
+Use `/vc-campaign status` for the compact cadence view, or `/vc-director status` for the operational view. `/vc-director history` shows recent passes and their rationale. GMs may pause/resume automatic director passes or request a one-time manual review with `/vc-director run`. Pausing never advances the world through real-world time.
 
 ## Authority and safety boundaries
 
@@ -87,8 +87,13 @@ Every normal AI GM turn must explicitly review all of these categories before it
 - Veil Exposure
 - scene continuity
 
-Each state category must say `changed` or `no_change` with a reason. A category marked `changed` must have a matching structured mutation; a category with no matching mutation must be `no_change`. Scene continuity must say `continue` or `transition` and provide a scene label for transitions.
+Each state category must say `changed` or `no_change` with a reason and a confidence score from 0–100. A category marked `changed` must have a matching structured mutation; a category with no matching mutation must be `no_change`. Scene continuity must say `continue` or `transition` and provide a scene label for transitions.
 
 Veilkeeper cross-validates this review in application code. If the structured response is inconsistent, it gets one corrective structured-output retry. If the replacement remains inconsistent, the turn is rejected before authoritative state changes are committed.
 
 This prevents consequences such as Stress, relationship shifts, new clues, clocks, or canon changes from existing only in narration without a corresponding state decision.
+
+
+## Confidence and human review
+
+Authoritative AI state changes require at least 55% confidence. A proposed category below that floor must remain `no_change`; Veilkeeper posts the ambiguity to the GM log instead of committing speculative state. World Director moves use the same 55% floor: low-confidence passes become recorded no-move/history entries for human GM review.

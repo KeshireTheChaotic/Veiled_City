@@ -1,110 +1,95 @@
-# Veiled City Multiplayer Discord v3.6.0 — Refactor Validation Report
+# Veiled City Multiplayer Discord v3.7.0 — Production Validation Report
 
 Validation date: 2026-10-07
 
 ## Verdict
 
-**Application/refactor validation: PASS.**  
-**Dependency reproducibility gate: CONDITIONAL until a real registry-generated `package-lock.json` is retained on the connected deployment host.**
+**Application/package validation: PASS.**
 
-v3.6.0 is the maintainability/privacy refactor requested after the expanded v3.5.5 audit. No campaign schema or slash-command names/options changed.
+v3.7.0 implements the post-v3.6.0 operations roadmap except deployment CI/reproducible-build automation, which was explicitly deferred. The release adds command idempotency, a GM overview, World Director controls/history, fact lifecycle/provenance, backup/restore, an authoritative mutation ledger, AI confidence handling, incremental module decomposition, and campaign diagnostics.
 
-## Audit findings addressed
+## Implemented operations hardening
 
-### Discord chunking — FIXED
+### Duplicate-delivery protection
 
-All general Discord message splitting now uses `src/discord/chunking.js`. Splitting is lossless and prefers newline/space boundaries before hard cuts. Regression coverage reconstructs 1,901-, 3,800-, and 5,000-character newline-free inputs exactly.
+Mutating Discord slash interactions use the Discord interaction ID as an operation receipt. If Discord delivers the same interaction again, VeilKeeper returns the previously captured successful response rather than applying the mutation twice. Successful mutating commands are also represented in the mutation ledger.
 
-### GM/private Discord visibility — ENFORCED/VALIDATED
+This protects duplicate delivery of the same interaction. A human manually issuing the command again receives a new Discord interaction ID and is intentionally treated as a new operation.
 
-`src/discord/privacy.js` validates GM operational channels and registered player-private channels. `gm_log` and `state_errors` are rejected when readable by `@everyone` or ordinary roles; the configured GM role/admin roles are treated as privileged. Private-channel registration likewise rejects ordinary-role visibility. Publication re-validates configured sensitive channels rather than trusting stored IDs.
+### GM overview
 
-`/vc-gm` remains runtime authorization-protected rather than globally hidden. This is deliberate: Discord's default command permission flag cannot express Veilkeeper's configurable custom GM role without requiring that role to also hold Manage Server. Data/channel privacy remains enforced independently.
+`/vc-gm overview` aggregates current GM-facing campaign state, including scene/session context, roster attention, World Director state, clocks/threads, canon/proposals, encounter state, and other outstanding operational items.
 
-### GM fact filtering after 500 rows — FIXED
+### World Director observability and controls
 
-`VeiledDB.listFactsForGM()` now applies visibility/category/player/search predicates in parameterized SQL before the final `LIMIT`, with deterministic `created_at DESC, rowid DESC` ordering. Regression coverage verifies a matching fact older than 510 newer rows remains discoverable.
+`/vc-director` now provides `status`, `history`, `pause`, `resume`, and GM-triggered `run`. Automatic director passes retain durable history and rationale. Pausing the Director suppresses autonomous world movement without using real-world elapsed time to advance the campaign.
 
-### DB abstraction leakage — FIXED
+### Fact lifecycle and provenance
 
-Production source outside `db.js` no longer uses `db.db.prepare()`/`db.db.exec()`. Repository methods were added for guest lookup, published messages, session departures, latest ended sessions, visible threads, relationships, canon proposal lookup, public-party threads, and session handouts.
+Facts support edit, archive, and promotion workflows. Fact rows retain source/provenance metadata and confidence. Exact active duplicates are deduplicated. Existing player/GM visibility boundaries remain enforced.
 
-### Configuration validation / LOG_LEVEL — FIXED
+### Backup and restore
 
-General numeric/token-count settings now use the same finite/range/integer validation as voice settings. `ENCOUNTER_AFTERMATH_MODE` and `DEFAULT_RESPONSE_MODE` are enum-validated. `LOG_LEVEL` is now parsed and used by the runtime logger.
+`/vc-admin backup`, `backups`, `restore-preview`, and `restore` expose first-class campaign recovery. Restore creates a pre-restore safety snapshot and preserves operational audit/provenance records rather than erasing the evidence of administrative actions.
 
-### Error classification — REFACTORED
+### Authoritative mutation ledger
 
-`src/errors.js` provides stable typed application errors and centralized expected-error classification. Legacy message matching is confined to that compatibility boundary while older handlers are migrated incrementally.
+AI/World Director mutations and successful mutating slash commands are recorded in a persistent ledger with source/provenance and before/after state where available. `/vc-admin ledger` exposes the audit trail to authorized operators.
 
-### Command/module organization — IMPROVED
+### AI confidence handling
 
-Slash-command declarations moved from `commands.js` into `command-definitions.js`, reducing the runtime dispatcher by roughly 370 lines and separating schema review from command execution. Discord chunking/privacy and logging/error concerns are likewise separate modules.
+Mandatory post-turn review categories now include confidence. Proposed authoritative changes below the configured 55% review floor are not committed and can be surfaced for GM attention. World Director output is subject to the same low-confidence suppression rule.
 
-### Commenting / standards — IMPROVED
+### Campaign diagnostics
 
-All production source modules now have responsibility/trust-boundary headers. Security/stateful public interfaces received JSDoc/invariant comments. Historical release-number comments in source were replaced with domain headings. Intentionally swallowed exceptions now document the fallback reason where audited.
+`/vc-admin doctor` checks campaign/schema health, roster/orphan state, proxies, canon integrity, stale pending technical director passes, required runtime files, configured Discord channels, and privacy/permission problems.
 
-Current production-source documentation statistics:
+### Incremental module decomposition
 
-- 27 source modules
-- 6,940 source lines
-- 40 JSDoc/module documentation blocks (previous audit: 0)
-- 32 `//` invariant/fallback comments
-- 109 exported symbols
+New operational responsibilities are separated into dedicated modules for idempotency, diagnostics, and GM overview aggregation. Direct database implementation details remain behind the `VeiledDB` boundary established in v3.6.0.
 
-Dense legacy formatting remains and is tracked as a quality warning rather than being mass-reformatted in the same behavioral refactor.
+## Additional defect fixed
 
-## New quality gates
-
-- `npm run lint` / `npm run quality`
-- `npm run format:check`
-- `npm run check`
-- `npm run test:offline`
-- `npm run test:production`
-- `npm run test:refactor`
-- `npm run validate` (combined application gate)
-- `npm run audit:prod` (connected registry security gate)
-
-The dependency-free quality gate verifies module headers and prohibits direct SQLite access outside `VeiledDB`. The format gate verifies final newlines, no trailing whitespace, and space indentation. New source should remain under 240 characters per line; current legacy long lines are reported as warnings for incremental cleanup.
+The audit found two `VeiledDB` methods named `getRelationship`; the later ID-based method shadowed the tuple lookup used by AI relationship deltas. The tuple lookup is now explicitly `findRelationship(...)`, and the regression suite verifies AI relationship mutation uses the correct lookup.
 
 ## Validation results
 
-- JavaScript syntax: **PASS** — 36 source/script modules
-- Discord command schema: **PASS** — 20 root commands
+The combined application gate completed successfully:
+
+- Static quality boundary: **PASS** — 30 production source modules
+- Whitespace/format gate: **PASS** — 40 source/script modules
+- JavaScript syntax: **PASS** — 40 source/script modules
+- Discord command schema: **PASS** — 21 root commands
 - Offline campaign smoke suite: **PASS**
 - Production regression suite: **PASS**
 - Refactor regression suite: **PASS**
-- Static quality boundary check: **PASS**
-- Whitespace/format check: **PASS**
+- v3.7.0 operations regression suite: **PASS**
 - Content package validator: **PASS** — 84 domain cards / 53 Markdown / 10 JSON
-- Direct SQLite access outside `db.js`: **0 occurrences**
-- GM fact >500-row search regression: **PASS**
-- Lossless long-message chunking regression: **PASS**
-- GM/private channel privacy regression: **PASS**
-- Invalid numeric/enum configuration regression: **PASS**
+- Content manifest verification: **PASS** — 64/64
+- Direct SQLite access outside `db.js`: prohibited by the quality gate
+- Relationship lookup shadowing regression: **PASS**
+- Duplicate-interaction mutation regression: **PASS**
+- Backup/preview/restore regression: **PASS**
+- Director pause/history regression: **PASS**
+- Mutation provenance/ledger regression: **PASS**
+- Low-confidence state-review regression: **PASS**
 
-SDK-dependent tests were run against the same isolated Discord/OpenAI test doubles used by the prior audit because this execution environment could not perform a registry install. Test doubles are not included in the release tree.
+The quality checker reports 218 legacy long-line warnings. They remain non-blocking technical debt; newly added code is governed by the established code-quality boundary rather than mass-formatting legacy behavior in this feature release.
 
-## Remaining advisories
+## Database migration
 
-### Transitive dependency lockfile
+Migration is additive and automatic. Startup advances the SQLite schema to `PRAGMA user_version=370` and preserves existing campaign data.
 
-The audit environment cannot query npm registry metadata, so it cannot generate a trustworthy transitive `package-lock.json`. An attempted offline shrinkwrap correctly revealed only local audit-test stubs and was discarded rather than shipped. Direct dependency versions and security overrides remain exact.
+## Discord registration
 
-On the connected production host:
+**Run `npm run register` once after upgrading.** The slash-command schema changed with the new `/vc-director`, `/vc-admin`, and `/vc-gm` subcommands.
 
-```powershell
-npm install
-npm run audit:prod
-```
+## Dependency / deployment note
 
-Retain the real generated `package-lock.json` with the deployed source. Future Docker/CI deployment can then switch from `npm install` to `npm ci`.
+Deployment CI and reproducible-build automation were intentionally excluded from this release at the user's request. No GitHub Actions workflow was added. As in v3.6.0, this validation environment cannot produce a trustworthy npm registry-generated transitive lockfile. On a connected deployment host, run `npm install`, retain the resulting real `package-lock.json`, and run `npm run audit:prod`.
 
-### Manual slash-command retry ambiguity
+SDK-dependent application tests were executed against isolated local Discord/OpenAI test doubles because registry installation is unavailable in this environment. Those test doubles are removed before release packaging and are not included in the ZIP.
 
-The prior audit's medium-severity recommendation for generalized idempotency of every explicit mutating slash command remains a tracked hardening item. The authoritative AI/world-director path already has commit/publish separation; a future command-service refactor should give manual mutations the same operation-receipt/idempotency model. This is not newly introduced by v3.6.0.
+## Package hygiene gate
 
-### Incremental formatting/decomposition
-
-`commands.js`, `db.js`, and `gm.js` remain large legacy modules. v3.6.0 establishes enforceable boundaries and starts decomposition without combining a wholesale rewrite with security fixes. Further domain extraction can now occur incrementally under the new regression gates.
+Before release packaging the tree is checked to ensure it contains no production `.env`, SQLite database, log files, `node_modules`, or temporary test doubles. Root and content manifests are regenerated/verified and the finished ZIP is integrity-tested.

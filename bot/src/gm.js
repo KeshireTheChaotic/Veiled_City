@@ -44,7 +44,7 @@ const canonProposalDraftSchema={
   required:["key","value","visibility","reason"]
 };
 
-const reviewItemSchema={type:"object",additionalProperties:false,properties:{decision:{type:"string",enum:["changed","no_change"]},reason:{type:"string",minLength:1}},required:["decision","reason"]};
+const reviewItemSchema={type:"object",additionalProperties:false,properties:{decision:{type:"string",enum:["changed","no_change"]},reason:{type:"string",minLength:1},confidence:{type:"integer",minimum:0,maximum:100}},required:["decision","reason","confidence"]};
 const stateReviewSchema={
   type:"object",additionalProperties:false,
   properties:{
@@ -104,9 +104,10 @@ const directorSchema={
     events:gmSchema.properties.events,
     handouts:{type:"array",items:handoutDraftSchema},
     relationships:{type:"array",items:relationshipDraftSchema},
-    gm_notes:{type:"string"}
+    gm_notes:{type:"string"},
+    confidence:{type:"integer",minimum:0,maximum:100}
   },
-  required:["act","public_narration","private_messages","events","handouts","relationships","gm_notes"]
+  required:["act","public_narration","private_messages","events","handouts","relationships","gm_notes","confidence"]
 };
 
 const aftermathSchema={
@@ -387,7 +388,7 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
         ].join(" ")
         :"THIS IS A PARTY TABLE SCENE. Public narration is visible to all present players. Do not reveal another player's private knowledge unless it has been explicitly shared in play. private_messages may target only players on the current session roster. canon_proposals must be an empty array; the player canon-proposal workflow is reserved for private player→GM scenes.",
       "canon_proposals is a GM-review queue, not authoritative canon. Never use it for speculative ideas or ordinary discoveries; use it only for an explicit player request to propose a durable canon statement from a private scene.",
-      "MANDATORY POST-TURN STATE REVIEW: before returning, explicitly review facts/clues, PC resources, clocks, threads, references, relationships, handouts, canon, Veil Exposure, and scene continuity. Every category must be marked changed or no_change with a concrete reason. If marked changed, emit the matching structured mutation; if no mutation is emitted, mark no_change. A canon_proposals entry does not count as a canon change. Never hide a mechanical consequence only in prose.",
+      "MANDATORY POST-TURN STATE REVIEW: before returning, explicitly review facts/clues, PC resources, clocks, threads, references, relationships, handouts, canon, Veil Exposure, and scene continuity. Every category must be marked changed or no_change with a concrete reason and a confidence score from 0-100. If marked changed, emit the matching structured mutation; if no mutation is emitted, mark no_change. A canon_proposals entry does not count as a canon change. Never hide a mechanical consequence only in prose. Confidence below 55 means the proposed change is ambiguous enough that Veilkeeper should avoid committing it and instead preserve it in rationale/GM-visible context for review.",
       "For scene continuity, choose transition only when fictional location, objective, time frame, or dramatic scene boundary actually changes. Provide a short new-scene label when transitioning; otherwise use continue with an empty label.",
       "Keep narration suitable for Discord. Prefer 1-4 compact paragraphs unless a longer scene is genuinely needed."
     ].join("\n\n");
@@ -441,7 +442,7 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
   }
 
   async runWorldDirector({guildId,layer,trigger={},cycle=null,projects=[],actorAssignment=null}){
-    if(!["round","scene","downtime"].includes(layer)) throw new Error(`Unsupported world-director layer: ${layer}`);
+    if(!["round","scene","downtime","manual"].includes(layer)) throw new Error(`Unsupported world-director layer: ${layer}`);
     const directorActor=trigger?.scope==="private"&&trigger?.actor_user_id?String(trigger.actor_user_id):"__world_director__";
     const ctx=this.buildContext(guildId,directorActor,`${layer} ${JSON.stringify(trigger)}`,actorAssignment);
     const layerRules={
@@ -459,12 +460,18 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
         "EXTENDED IN-GAME MECHANICAL DOWNTIME DIRECTOR PASS. This is triggered only by an explicit fictional/mechanical downtime interval, never by real-world elapsed time.",
         "Advance factions, threats, obligations, investigations, and clocks proportionally to the fictional duration/opportunity represented by the downtime cycle.",
         "Do not punish players merely for taking downtime. Use established motives, clocks, canon, and opportunities. Return act=false if the world reasonably remains stable."
+      ],
+      manual:[
+        "MANUAL GM-REQUESTED WORLD DIRECTOR PASS. A human GM explicitly requested a one-time review of whether the world should move now.",
+        "Use the supplied reason as context, but do not manufacture change merely because the command was invoked.",
+        "Return act=false with empty outputs when no justified move follows from established campaign state."
       ]
     }[layer];
     const prompt=[
       ctx.constitution,ctx.multi,"# AUTONOMOUS WORLD DIRECTOR",...layerRules,
       "You may autonomously emit the same authoritative campaign events, relationships, handouts, private_messages, and player-facing narration available to the normal GM, subject to all security/canon/player-agency restrictions.",
       "Never invent dice results or alter deterministic encounter combat state. Never choose voluntary PC actions. Never contradict canon. Use private_messages only for information a specific current player legitimately perceives.",
+      "Return confidence 0-100 for the proposed world move as a whole. If confidence is below 55, return act=false with empty outputs and explain the ambiguity in gm_notes instead of committing a speculative world mutation.",
       trigger?.scope==="private"?"PRIVATE SCENE DIRECTOR: this scene transition is visible only to the acting player. Treat public_narration as a transport field that the application will deliver privately. Do not emit global canon or Veil Exposure changes; private-scope guards will block them and report the attempt.":"PARTY/WORLD DIRECTOR: public_narration may be posted to the party when there is a player-visible world consequence.",
       `Layer: ${layer}`,`Trigger: ${JSON.stringify(trigger)}`,`Campaign: ${JSON.stringify(ctx.campaign)}`,`Session: ${JSON.stringify(ctx.session)}`,`Director state: ${JSON.stringify(ctx.session?this.db.getDirectorState(ctx.session.id):null)}`,
       `Roster: ${JSON.stringify(ctx.roster)}`,`Recent party transcript: ${JSON.stringify(this.db.recentPartyMessages(guildId,{limit:50}))}`,`Actor-visible recent transcript (includes private context only when this is a private-scene director pass): ${JSON.stringify(ctx.recent)}`,`Actor-visible facts: ${JSON.stringify(ctx.actor_visible_facts)}`,`Facts (GM-private/all): ${JSON.stringify(ctx.gm_all_facts)}`,`Clocks: ${JSON.stringify(ctx.clocks)}`,`Canon: ${JSON.stringify(ctx.canon)}`,`Relationships: ${JSON.stringify(ctx.gm_relationships)}`,

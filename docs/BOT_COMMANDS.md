@@ -118,6 +118,12 @@ Combat-state controls:
 - `/vc-admin snapshot`
 - `/vc-admin snapshots`
 - `/vc-admin rollback`
+- `/vc-admin backup`
+- `/vc-admin backups`
+- `/vc-admin restore-preview`
+- `/vc-admin restore`
+- `/vc-admin doctor`
+- `/vc-admin ledger`
 
 ## Player / Intel
 - `/vc-player private-channel`
@@ -131,6 +137,17 @@ Combat-state controls:
 - `/vc-gm fear delta:<amount>`
 - `/vc-gm fact-add`
 - `/vc-gm fact-list`
+- `/vc-gm fact-edit`
+- `/vc-gm fact-archive`
+- `/vc-gm fact-promote`
+- `/vc-gm overview`
+
+World Director operations:
+- `/vc-director status`
+- `/vc-director history`
+- `/vc-director pause`
+- `/vc-director resume`
+- `/vc-director run`
 
 GM/admin commands require Manage Server or the configured GM role.
 

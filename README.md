@@ -1,411 +1,157 @@
-# Veiled City Multiplayer Discord
+# VEILED CITY MULTIPLAYER DISCORD ENGINE v3.7.0
 
-**VeilKeeper** is a stateful Discord GM bot for running **Veiled City**, a modern occult-noir campaign built on Daggerheart-style play. It combines Discord interaction, persistent SQLite campaign state, curated Veiled City setting content, and OpenAI-powered GM narration into a single self-hosted campaign engine.
+Stateful Discord GM bot for the Veiled City multiplayer Daggerheart campaign.
 
-Current release: **v3.6.0**
+## v3.7.0 — GM Operations, Recovery & Provenance
 
-## Purpose
+v3.7.0 adds the next operational layer for long-running campaigns: duplicate-delivery protection for mutating Discord interactions, a consolidated GM dashboard, first-class World Director controls/history, fact lifecycle/provenance, durable campaign backups with preview/restore, a structured authoritative mutation ledger, AI confidence handling, and `/vc-admin doctor` diagnostics.
 
-VeilKeeper is designed to let a Discord group run a long-lived Veiled City campaign without treating every AI response as disposable chat. The bot maintains authoritative campaign state between sessions and uses AI as a bounded GM layer around that state.
+New GM surfaces include `/vc-gm overview`, `/vc-director status|history|pause|resume|run`, `/vc-admin backup|backups|restore-preview|restore|doctor|ledger`, and `/vc-gm fact-edit|fact-archive|fact-promote`. Exact duplicate facts are deduplicated; facts retain source/session/provenance/confidence metadata. AI state reviews now include confidence, and changes below the 55% confidence floor are not committed as authoritative state; they are surfaced for human GM attention instead.
 
-The project supports:
+The authoritative mutation ledger records human command operations and AI/world-director mutations with actor/source context, interaction/message provenance, confidence, rationale, trigger text, and before/after state where available. World Director passes now have persistent operational history and can be paused without advancing the campaign through real-world time.
 
-- persistent characters, sessions, resources, relationships, facts, clues, clocks, canon, handouts, encounters, and campaign history;
-- public table play plus player-private scenes and GM-only information;
-- Daggerheart-oriented dice, damage, stress, Hope, Fear, advancement, encounters, and downtime workflows;
-- an autonomous **World Director** that reacts between player rounds, on scene transitions, and during extended **in-game** downtime;
-- durable canon proposals and conflict handling instead of allowing private AI narration to rewrite campaign truth;
-- guest characters and controlled NPC proxies for drop-in/drop-out multiplayer play;
-- player-safe and GM-private character narrative Markdown;
-- campaign exports, snapshots, rollback, and long-running continuity tools;
-- optional Discord voice narration using OpenAI text-to-speech.
+See:
+- `docs/GM_OPERATIONS.md`
+- `docs/WORLD_DIRECTOR.md`
+- `docs/UPGRADE_3.6.0_TO_3.7.0.md`
+- `docs/CHANGELOG_v3.7.0_DISCORD.md`
 
-Discord text and the SQLite database remain authoritative. Voice narration and AI prose are presentation/adjudication layers, not the source of record.
+## v3.6.0 — Production Refactor & Privacy Enforcement
 
-## Scope
+v3.6.0 is a behavior-preserving maintainability/security refactor based on the v3.5.5 expanded audit. Discord output chunking is centralized and lossless, GM/private channel registration is permission-validated, GM fact filtering occurs in SQL before limits, runtime configuration fails fast on invalid numeric/enum values, and direct SQLite access outside `VeiledDB` has been removed.
 
-VeilKeeper is intentionally opinionated. It is built for **Veiled City** rather than as a generic Discord RPG framework.
+The slash-command declaration tree is now separated from runtime command execution. A new dependency-free `npm run quality` gate enforces module responsibility headers and the DB abstraction boundary, while `npm run test:refactor` covers the audit regressions. `LOG_LEVEL` is now an active runtime setting.
 
-Its scope includes:
+Discord policy decision: `/vc-gm` remains discoverable when Discord exposes it because Veilkeeper supports a custom GM role that may not hold Discord's Manage Server permission. Execution remains strictly GM/admin-authorized. GM-only **data and configured channels** are enforced separately.
 
-- modern hidden-magic / urban occult campaign play;
-- Veiled City player and GM content packaged under `content/`;
-- multiplayer session continuity and privacy boundaries;
-- AI-assisted GM adjudication constrained by structured state mutations;
-- fictional-time world simulation.
+See:
+- `docs/CODE_STANDARDS.md`
+- `docs/UPGRADE_3.5.5_TO_3.6.0.md`
+- `docs/CHANGELOG_v3.6.0_DISCORD.md`
 
-A few important boundaries:
 
-- **Real-world elapsed time never advances the campaign.** World Director actions are triggered by play state, scene changes, player-round cadence, or explicit mechanical downtime.
-- Private scenes cannot directly modify global canon or unrelated player-private state.
-- GM-only facts are excluded from player-facing fact, clue, export, and AI-context queries at the database boundary.
-- Deterministic mechanics such as dice and tracked combat state are handled by application code rather than invented by the language model.
-- Human GMs retain authority over canon conflicts, administrative operations, rollback, encounter construction, and other protected actions.
+## v3.5.5 — Fact Listing & Visibility Hardening
 
-## Major Features
+v3.5.5 renames the GM fact write command to `/vc-gm fact-add`, adds GM-only `/vc-gm fact-list`, and adds player-safe `/vc-intel facts`. Player-facing fact queries now use a dedicated database boundary that cannot opt into GM-only visibility; `/vc-intel facts`, `/vc-intel clues`, player exports, and actor-visible AI context all use that boundary.
 
-### Stateful AI GM
+GM-only facts remain visible to `/vc-gm fact-list` but are deterministically excluded from player-role fact/clue listings.
 
-VeilKeeper uses the OpenAI Responses API for narration, NPC/world behavior, rules assistance, session assembly, encounter aftermath, handout generation, and other bounded GM tasks. Structured AI output is validated before authoritative mutations commit.
+Upgrade notes:
+- `docs/UPGRADE_3.5.4_TO_3.5.5.md`
+- `docs/CHANGELOG_v3.5.5_DISCORD.md`
 
-### Autonomous World Director
+## v3.5.4 — Private Player Canon Proposals
 
-The World Director has three distinct cadences:
+v3.5.4 makes explicit private player requests for campaign canon durable and reviewable. Veilkeeper now records the request in the existing canon-proposal queue, confirms privately that canon itself was not changed, and posts the proposal to the configured GM log. GM review continues through `/vc-canon proposals` and `/vc-canon proposal-resolve`.
 
-1. **Player-round director** — may move factions, NPCs, clocks, threats, or unresolved threads after all present player-controlled roles have acted.
-2. **Scene-transition director** — evaluates world reactions when play genuinely moves into a new scene.
-3. **Extended downtime director** — resolves wider world/faction movement after the GM explicitly resolves fictional downtime.
+Important: configure the GM log with `/vc-campaign channels gm_log:#your-gm-log`. If GM-log delivery is unavailable, the proposal remains safely queued and Veilkeeper records a state-error fallback reference.
 
-Failed director passes are durable and can be retried without silently disappearing.
+Upgrade notes:
+- `docs/UPGRADE_3.5.3_TO_3.5.4.md`
+- `docs/CHANGELOG_v3.5.4_DISCORD.md`
 
-### Mandatory Post-Turn Review
+## v3.5.3 — GM Session Roster
 
-Normal AI GM turns must account for all relevant state categories, including:
+v3.5.3 adds GM-only `/vc-session roster`, an ephemeral authoritative view of the active session's Discord player → character/control mapping. It includes primary and guest PCs, attendance/absence handling, PC proxies, active NPC proxies, pending NPC proxy offers, and warnings for present players without an active PC/guest assignment.
 
-- facts and clues;
-- player resources;
-- clocks;
-- investigation threads;
-- NPC and location references;
-- relationships;
-- handouts;
-- canon;
-- Veil Exposure;
-- scene continuity.
+See:
+- `docs/UPGRADE_3.5.2_TO_3.5.3.md`
+- `docs/CHANGELOG_v3.5.3_DISCORD.md`
 
-Narration and structured state changes must agree before the turn is accepted.
+## v3.5.2 — Production Test Teardown Fix
 
-### Privacy and Canon Boundaries
+v3.5.2 fixes `npm run test:production` printing `PASS` but remaining alive on some systems. The voice repeat regression could start a real `@discordjs/voice` AudioPlayer and leave its global audio-cycle timer active after assertions completed. The test now keeps repeat-queue validation deterministic without starting real playback, explicitly destroys all VoiceNarrator test instances, and yields one event-loop turn before completion.
 
-VeilKeeper distinguishes `public`, `party`, `player`, `character`, and `gm` visibility.
+This is a test-harness maintenance release. There are no database, slash-command, gameplay, GM/world-director, privacy, or production voice behavior changes.
 
-Player-facing fact access cannot opt into GM visibility. Private attempts to establish global canon create a **pending canon proposal** for human GM review instead of applying canon directly.
+See:
+- `docs/UPGRADE_3.5.1_TO_3.5.2.md`
+- `docs/CHANGELOG_v3.5.2_DISCORD.md`
 
-Configured GM/private channels are permission-validated in v3.6.0 so Discord channel permissions reinforce the database visibility model.
+## v3.5.1 — Dependency Security Maintenance
 
-### Optional Voice Narration
+v3.5.1 updates the Discord runtime dependency set after fresh npm installs of v3.5.0 began reporting known transitive security advisories. `discord.js` is updated from 14.22.1 to 14.27.0, and npm overrides pin the supported Node 22-compatible `undici` line to 6.29.0 and `ws` to 8.22.0. No campaign schema, command, GM/world-director, or gameplay behavior changes are introduced.
 
-VeilKeeper can join Discord voice and speak public GM narration through OpenAI text-to-speech.
+A new `npm run audit:prod` command checks production dependencies at `moderate` severity or higher. Existing v3.5.0 databases and `.env` files can be retained unchanged.
 
-Voice is optional and non-authoritative:
+See:
+- `docs/UPGRADE_3.5.0_TO_3.5.1.md`
+- `docs/CHANGELOG_v3.5.1_DISCORD.md`
 
-- private scenes are not auto-spoken;
-- GM-only state is not auto-spoken;
-- rules responses, errors, handouts, and hidden canon are excluded from automatic narration;
-- `/vc-voice repeat` replays cached audio without purchasing another TTS generation.
+## v3.5.0 — Autonomous World Director
 
-Native installs require **FFmpeg** in `PATH`. The included Docker image installs FFmpeg automatically.
+v3.5.0 adds a proactive **fictional-time** GM/world-director layer while keeping player agency and deterministic combat controls intact. Veilkeeper may now perform bounded world reactions after a completed player-round cadence, at actual scene transitions, and when a GM resolves extended in-game mechanical downtime. It never advances the world merely because real-world time passed.
 
-## Requirements
+Normal AI turns now require a schema-backed post-turn state review for facts/clues, resources, clocks, threads, references, relationships, handouts, canon, Veil Exposure, and scene continuity. State-review/mutation mismatches receive one corrective retry and are rejected before commit if still inconsistent. Forbidden scoped actions are blocked and disclosed privately to the acting player and in detail to the GM log.
 
-Choose either a direct Node.js install or Docker.
+See:
+- `docs/WORLD_DIRECTOR.md`
+- `docs/UPGRADE_3.4.1_TO_3.5.0.md`
+- `docs/CHANGELOG_v3.5.0_DISCORD.md`
 
-### Direct install
+## v3.4.1 — Production Hardening
 
-- **Node.js 22.16+**
-- npm
-- **FFmpeg** if voice narration will be used
-- a Discord server where you can install/manage the bot
-- an OpenAI API key with API billing enabled
+v3.4.1 serialized multiplayer GM turns, made AI state mutations atomic, separated authoritative state commits from fallible Discord publishing, tightened private-scene/canon isolation, and hardened voice queue ordering/access controls.
 
-### Docker
+See:
+- `docs/UPGRADE_3.4.0_TO_3.4.1.md`
+- `docs/CHANGELOG_v3.4.1_DISCORD.md`
 
-- Docker Engine / Docker Desktop
-- Docker Compose
-- a Discord server
-- an OpenAI API key
+## v3.4.0 — Discord Voice Narration
 
-The bot does **not** require a public HTTP interaction endpoint. It uses Discord's Gateway connection and slash commands.
+v3.4.0 adds optional AI-generated narration in Discord voice channels while keeping Discord text and SQLite as the authoritative campaign record. Public `#the-table` GM narration can be synthesized through OpenAI's speech endpoint and played through Discord using `/vc-voice`. Private scenes, GM-only material, rules answers, handouts, errors, and hidden canon are excluded from automatic voice output.
 
-## Discord Application Setup
+Voice is disabled by default. Native installs require **FFmpeg** in `PATH`; the Docker image installs FFmpeg automatically. After setting `VOICE_ENABLED=true`, join the desired voice channel and run `/vc-voice join`. Built-in OpenAI voices and eligible sample-based custom voice IDs are supported.
 
-Create a Discord application in the [Discord Developer Portal](https://discord.com/developers/applications), then create a bot user.
+See:
 
-Enable **Message Content Intent** under **Bot → Privileged Gateway Intents**. VeilKeeper needs ordinary message content for table play and registered private channels.
+- `docs/VOICE_NARRATION.md`
+- `docs/UPGRADE_3.3.3_TO_3.4.0.md`
+- `docs/CHANGELOG_v3.4.0_DISCORD.md`
 
-Invite the bot using **OAuth2 → URL Generator** with these scopes:
+## v3.3.3 — Character Narrative Markdown
 
-- `bot`
-- `applications.commands`
+v3.3.3 adds a dedicated freeform narrative layer for character information that should be available to Veilkeeper but does not fit the structured character JSON.
 
-Minimum bot permissions:
-
-- View Channels
-- Send Messages
-- Read Message History
-
-Recommended additional permissions:
-
-- Embed Links
-- Attach Files
-- Send Messages in Threads, if you use threads
-- Connect and Speak, if voice narration is enabled
-
-**Do not grant Administrator.**
-
-You will need:
-
-- `DISCORD_TOKEN` — Bot token
-- `DISCORD_CLIENT_ID` — Application ID
-- `DISCORD_GUILD_ID` — optional but recommended during setup/testing because guild command registration is immediate
-
-## Installation — Windows / Node.js
-
-Clone or extract the project, then open PowerShell in the `bot` directory.
-
-```powershell
-cd "path\to\Veiled_City_Multiplayer_Discord\bot"
-Copy-Item .env.example .env
-notepad .env
-```
-
-At minimum, set:
-
-```env
-DISCORD_TOKEN=your_discord_bot_token
-DISCORD_CLIENT_ID=your_application_id
-DISCORD_GUILD_ID=your_test_or_campaign_server_id
-OPENAI_API_KEY=your_openai_api_key
-```
-
-Then install and validate:
-
-```powershell
-npm install
-npm run audit:prod
-npm run validate
-npm run register
-npm start
-```
-
-`npm run register` publishes the slash-command schema to Discord. If `DISCORD_GUILD_ID` is set, commands are registered directly to that server; otherwise global command propagation can take longer.
-
-After the first registry-connected `npm install`, retain the generated `package-lock.json` so future deployments can use reproducible installs.
-
-## Installation — Linux / macOS / Node.js
-
-```bash
-cd /path/to/Veiled_City_Multiplayer_Discord/bot
-cp .env.example .env
-$EDITOR .env
-
-npm install
-npm run audit:prod
-npm run validate
-npm run register
-npm start
-```
-
-If voice narration is enabled, ensure `ffmpeg` is installed and available in `PATH`.
-
-## Installation — Docker
-
-Copy and configure the environment file first:
-
-```bash
-cp bot/.env.example bot/.env
-$EDITOR bot/.env
-```
-
-Then from the project root:
-
-```bash
-docker compose build
-docker compose run --rm veilkeeper npm run register
-docker compose up -d
-```
-
-Follow logs with:
-
-```bash
-docker compose logs -f veilkeeper
-```
-
-The Compose configuration persists the SQLite database under `bot/data/`.
-
-## Initial Campaign Configuration
-
-After VeilKeeper is online, configure the main play channel:
+Standard portable paths are:
 
 ```text
-/vc-campaign setup play_channel:#the-table mode:assisted
+PLAYER/PLAYERS/<Character_Name>.md
+GM_PRIVATE/PLAYERS/GM_PRIVATE_<Character_Name>.md
 ```
 
-You can optionally specify a human GM role through the `gm_role` option.
+Import/update them with `/vc-character narrative-import`, or attach them directly to `/vc-character import` and `/vc-character import-gm-hooks`. Export them with `/vc-character narrative-export`; the returned ZIP preserves the standard directory layout.
 
-Configure support channels as needed. At minimum, a GM log and state-error channel are strongly recommended:
+Runtime narrative is stored in SQLite and included in snapshots/rollback. Veilkeeper uses it as supplemental context during ordinary GM turns, party assembly, character arrivals, encounter aftermath, and relevant downtime. **Structured JSON remains authoritative for mechanics/resources; the canon ledger remains authoritative for durable world truth. GM-private Markdown is never player-visible by default.**
 
-```text
-/vc-campaign channels gm_log:#gm-log state_errors:#state-errors
-```
+The external `/vc-character context-export` package now instructs ChatGPT/other assistants to generate these Markdown files when useful alongside `CHARACTER_<Name>.json` and `GM_HOOKS_<Name>.json`.
 
-VeilKeeper validates GM/private channel permissions before accepting sensitive channel configuration.
+## v3.3.3 historical upgrade notes
 
-Each player should run the following **inside their own Discord-private channel**:
+Preserve:
 
 ```text
-/vc-player private-channel
-```
-
-Then verify campaign configuration:
-
-```text
-/vc-campaign status
-```
-
-## Response Modes
-
-VeilKeeper supports three table response modes:
-
-| Mode | Behavior |
-| --- | --- |
-| `mention` | Lowest API usage. Normal chat is ignored unless VeilKeeper is explicitly invoked. |
-| `assisted` | Recommended default. Obvious in-character actions/questions are routed; casual chatter is normally ignored. |
-| `active` | Every play-channel message is cheaply classified for possible GM response. |
-
-Configure the mode with `/vc-campaign setup`.
-
-## Useful Commands
-
-A few common commands:
-
-```text
-/vc-session start
-/vc-session roster
-/vc-character create
-/vc-character import
-/vc-intel facts
-/vc-intel clues
-/vc-gm fact-add
-/vc-gm fact-list
-/vc-canon proposals
-/vc-encounter build
-/vc-downtime resolve
-/vc-admin snapshot
-/vc-voice join
-```
-
-GM/admin commands require Discord **Manage Server** or the configured GM role.
-
-See [`docs/BOT_COMMANDS.md`](docs/BOT_COMMANDS.md) for the complete command reference.
-
-## Project Layout
-
-```text
-Veiled_City_Multiplayer_Discord/
-├── bot/
-│   ├── src/                 Discord, state, AI, persistence, and GM runtime
-│   ├── scripts/             Validation, regression tests, export utilities
-│   ├── data/                Runtime SQLite database location
-│   ├── .env.example         Environment template
-│   └── package.json
-├── content/
-│   ├── PLAYER/              Player-readable setting/rules material
-│   ├── GM_PRIVATE/          GM-only mysteries, NPCs, factions, adversaries, etc.
-│   ├── CARDS/               Custom domains/cards and related data
-│   ├── ENGINE/              AI-GM constitution, persistence/routing rules
-│   └── STATE/               Campaign-state templates
-├── docs/                    Deployment, commands, security, upgrades, design docs
-├── Dockerfile
-└── docker-compose.yml
-```
-
-## Persistent Data and Backups
-
-The default database is:
-
-```text
+bot/.env
 bot/data/veiled_city.sqlite
 ```
 
-Back it up regularly, especially before upgrading.
-
-For a simple file-level backup, stop VeilKeeper first because SQLite WAL mode may create active `-wal` and `-shm` files while the process is running.
-
-Never commit these to a public repository:
-
-- `bot/.env`
-- `DISCORD_TOKEN`
-- `OPENAI_API_KEY`
-- live campaign databases or backups containing private campaign information
-
-## Validation and Development Checks
-
-v3.6.0 includes dependency-free source-quality checks plus regression suites.
-
-Run the complete application validation set with:
+Then run:
 
 ```bash
 cd bot
-npm run validate
-```
-
-Individual checks are available as:
-
-```bash
-npm run lint
-npm run format:check
+npm install
 npm run check
 npm run test:offline
-npm run test:production
-npm run test:refactor
-npm run audit:prod
+npm run register
+npm start
 ```
 
-The refactor quality gate enforces module responsibility headers and prevents production modules from bypassing the database abstraction with direct SQLite access.
+`npm run register` is required because `/vc-character` gained two subcommands and new optional attachment fields. The database migration is additive and requires no manual conversion.
 
-## Updating
+See:
 
-Before upgrading:
-
-1. Stop VeilKeeper.
-2. Back up `bot/data/veiled_city.sqlite`.
-3. Preserve `bot/.env`.
-4. Replace the application/content files with the new release.
-5. Run `npm install` or rebuild the Docker image.
-6. Run `npm run validate`.
-7. Run `npm run register` **only when the release changes the Discord command schema**.
-8. Start VeilKeeper again.
-
-Release-specific instructions are in `docs/UPGRADE_*.md`.
-
-## OpenAI Configuration and Cost Control
-
-VeilKeeper uses the OpenAI API, which is billed separately from a ChatGPT subscription.
-
-The bot keeps token usage bounded by sending focused campaign context rather than the full campaign corpus on every turn. Separate model settings are available for GM narration, routing, summaries, rules, assembly, NPC proxy generation, downtime, handouts, aftermath, and optional voice.
-
-See [`docs/OPENAI_SETUP.md`](docs/OPENAI_SETUP.md) for model configuration and cost-control guidance.
-
-## Security and Privacy
-
-VeilKeeper treats Discord permissions and application-level visibility as complementary boundaries.
-
-Important practices:
-
-- keep GM log and state-error channels GM-only;
-- make each player's registered private channel invisible to other players;
-- do not grant the bot Administrator;
-- keep `.env` and live SQLite files out of Git;
-- use a dedicated OpenAI project/API key when practical;
-- rotate credentials immediately if exposed;
-- review [`docs/SECURITY_AND_PRIVACY.md`](docs/SECURITY_AND_PRIVACY.md) before hosting a live campaign.
-
-## Documentation
-
-Useful project documentation includes:
-
-- [`docs/BOT_COMMANDS.md`](docs/BOT_COMMANDS.md) — slash-command reference
-- [`docs/DISCORD_SETUP.md`](docs/DISCORD_SETUP.md) — Discord application/server setup
-- [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md) — Node and Docker deployment
-- [`docs/OPENAI_SETUP.md`](docs/OPENAI_SETUP.md) — API/model configuration
-- [`docs/SECURITY_AND_PRIVACY.md`](docs/SECURITY_AND_PRIVACY.md) — information boundaries and secrets
-- [`docs/WORLD_DIRECTOR.md`](docs/WORLD_DIRECTOR.md) — autonomous GM/world-director behavior
-- [`docs/VOICE_NARRATION.md`](docs/VOICE_NARRATION.md) — optional TTS narration
-- [`docs/CODE_STANDARDS.md`](docs/CODE_STANDARDS.md) — source organization and quality standards
-
-## Release Status
-
-**v3.6.0** is the production-refactor release. It centralizes Discord output handling, hardens sensitive-channel validation and fact visibility, moves fact filtering into SQL, standardizes runtime configuration validation, removes direct SQLite access outside the database abstraction, and adds source-quality/regression gates.
-
-See [`VALIDATION_REPORT.md`](VALIDATION_REPORT.md) for the release validation record.
+- `docs/CHARACTER_NARRATIVE_MARKDOWN.md`
+- `docs/CHARACTER_CONCEPT_CONTEXT.md`
+- `docs/CANON_LEDGER.md`
+- `docs/UPGRADE_3.3.2_TO_3.3.3.md`
+- `docs/BOT_COMMANDS.md`
