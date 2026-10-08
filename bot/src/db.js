@@ -167,6 +167,31 @@ export class VeiledDB {
       ORDER BY minute DESC,rowid DESC LIMIT ?`).all(guildId,includeGM?1:0,userId,characterId,query,query,Math.min(100,limit))
       .map(row=>({...row,details:JSON.parse(row.details_json)}));
   }
+  rollModifierSources(guildId,character,trait,kind){
+    return this.db.prepare(`SELECT * FROM world_events WHERE guild_id=? AND status='active' AND kind='roll_adjudication'
+      AND visibility='character' AND subject_key=? AND json_extract(details_json,'$.roll_modifier.trait')=?
+      AND json_extract(details_json,'$.roll_modifier.roll_kind')=? ORDER BY rowid LIMIT 101`)
+      .all(guildId,character,trait,kind).map(row=>({...row,details:JSON.parse(row.details_json)}));
+  }
+  ownedRollRequests(guildId,user,character){
+    return this.db.prepare(`SELECT * FROM city_records WHERE guild_id=? AND kind='roll_request' AND visibility='character'
+      AND status IN ('pending','needs_review','awaiting_partner','awaiting_selection','awaiting_damage','awaiting_damage_type')
+      AND json_extract(data_json,'$.session_id')=?
+      AND (subject_key=? OR json_extract(data_json,'$.tag.partner_user')=? OR EXISTS (SELECT 1 FROM json_each(data_json,'$.tag.participants') p
+        WHERE json_extract(p.value,'$.user')=? AND json_extract(p.value,'$.character')=?))
+      ORDER BY minute DESC,rowid DESC LIMIT 100`).all(guildId,this.getActiveSession(guildId)?.id||null,character,user,user,character)
+      .map(row=>({...row,data:JSON.parse(row.data_json)}));
+  }
+  currentRollRequests(guildId,session,scene){
+    return this.db.prepare(`SELECT * FROM city_records WHERE guild_id=? AND kind='roll_request' AND status='pending'
+      AND json_extract(data_json,'$.session_id')=? AND json_extract(data_json,'$.scene')=? ORDER BY rowid DESC LIMIT 101`)
+      .all(guildId,session,scene).map(row=>({...row,data:JSON.parse(row.data_json)}));
+  }
+  playerInitiatedTagTeam(guildId,session,user){
+    const prefix=`${session}:`;
+    return !!this.db.prepare(`SELECT 1 FROM city_records WHERE guild_id=? AND kind='tag_usage'
+      AND json_extract(data_json,'$.user')=? AND substr(record_key,1,length(?))=? LIMIT 1`).get(guildId,user,prefix,prefix);
+  }
   worldEventsAfter(guildId,{after=0,limit=50}={}){
     return this.db.prepare("SELECT rowid AS sequence,* FROM world_events WHERE guild_id=? AND rowid>? ORDER BY rowid LIMIT ?")
       .all(guildId,Math.max(0,after),Math.max(1,Math.min(50,limit))).map(row=>({...row,details:JSON.parse(row.details_json)}));
@@ -2124,6 +2149,7 @@ export class VeiledDB {
     return this.db.prepare("SELECT * FROM rules_rulings WHERE guild_id=? AND active=1 ORDER BY updated_at DESC").all(guildId)
       .filter(r=>!q||q.includes(r.ruling_key)||r.question.toLowerCase().split(/\\s+/).some(w=>w.length>4&&q.includes(w))).slice(0,8);
   }
+  getRulesRuling(guildId,key){return this.db.prepare("SELECT * FROM rules_rulings WHERE guild_id=? AND ruling_key=? AND active=1").get(guildId,key)||null;}
 
   audit(guildId,sessionId,actorType,actorId,action,payload={}) {
     this.db.prepare(`

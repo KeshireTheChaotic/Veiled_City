@@ -25,6 +25,7 @@ import { inviteOrganization } from "./owned-community.js";
 import { suggestSetupPayoff } from "./story-continuity.js";
 import { reconcileHistory } from "./history-reconciliation.js";
 import { prepareRollRequest } from "./roll-requests.js";
+import { reviewRollDeclaration } from "./roll-language.js";
 const hash=value=>createHash("sha256").update(JSON.stringify(value)).digest("hex");
 const adapters=new Map();
 export const FEATURE_FLAGS={roll:"roll_requests",setup:"narrative_setups",organization:"player_organizations",influence:"audience_influence",evidence:"evidence_custody",dialogue:"dialogue_history",encounter:"encounter_intelligence",goal:"emergent_goals",consequence:"consequences",scene:"scene_continuity",group:"emergent_groups",
@@ -135,7 +136,8 @@ export function intentContext(db,guild){
   const scene=db.getActiveSession(guild)&&db.getCityCalendar(guild).flags.scene_continuity===true?sceneView(db,guild,{gm:true}):null;
   const packet={policy:delegationPolicy(db,guild),flags:db.getCityCalendar(guild).flags,
     roll_declarations:db.getCityCalendar(guild).flags.roll_requests===true?db.listWorldEvents(guild,{includeGM:true,limit:100})
-      .filter(row=>row.kind==="player_declaration"&&row.status==="active"&&row.session_id===db.getActiveSession(guild)?.id).slice(0,12):[],
+      .filter(row=>["player_declaration","roll_contribution"].includes(row.kind)&&row.status==="active"&&row.session_id===db.getActiveSession(guild)?.id)
+      .slice(0,12).map(row=>({...row,expected_revision:stateRevision(row)})):[],
     roll_requests:db.getCityCalendar(guild).flags.roll_requests===true?db.listCityRecords(guild,{kind:"roll_request",includeGM:true,limit:12})
       .map(row=>({...row,expected_revision:stateRevision(row)})):[],
     scene:scene?{...scene,occupants:scene.occupants.slice(0,32),targets:scene.occupants.slice(0,32).map(row=>({
@@ -181,9 +183,13 @@ export function intentContext(db,guild){
   return bounded;
 }
 registerIntentAdapter("roll",{
-  current:(db,guild,intent)=>db.getCityRecord(guild,"roll_request",`roll:${intent.payload.source_event}`),
-  impact:()=>({cost:0,review:false,reason:"Private sheet-derived pending request only; never dice, PC spending or outcome."}),
-  apply:(db,guild,intent,key,actor,context)=>prepareRollRequest(db,guild,intent.payload,actor,context)
+  current:(db,guild,intent)=>intent.payload.op==="adjudicate"?db.getWorldEvent(guild,intent.payload.source_event)
+    :db.getCityRecord(guild,"roll_request",`roll:${intent.payload.source_event}`),
+  impact:(db,guild,intent)=>({cost:0,review:intent.payload.op==="adjudicate",reason:intent.payload.op==="adjudicate"
+    ?"Human feasibility/rules review of a captured exact owner preauthorization; no AI-supplied assent or auto spending."
+    :"Private sheet-derived pending request only; never dice, PC spending or outcome."}),
+  apply:(db,guild,intent,key,actor,context)=>intent.payload.op==="adjudicate"?reviewRollDeclaration(db,guild,intent.payload,actor,context)
+    :prepareRollRequest(db,guild,intent.payload,actor,context)
 });
 registerIntentAdapter("setup",{
   current:(db,guild,intent)=>db.getCityRecord(guild,"story_setup",intent.payload.setup_key),

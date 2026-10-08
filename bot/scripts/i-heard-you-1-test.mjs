@@ -48,7 +48,7 @@ try{
   assert.equal(captureDeclaration(db,guild,"intruder",pcs[0].id,"forged","I examine it."),null);
   const declarations=pcs.map((pc,i)=>captureDeclaration(db,guild,pc.owner_user_id,pc.id,`attempt-${i}`,"I try examining the terminal."));
   const payload=i=>({op:"prepare",source_event:declarations[i].event_key,character_id:pcs[i].id,trait:"Knowledge",kind:"action",
-    modifier_keys:[],difficulty_source:"",adjudication:"Examination of a compromised terminal has uncertain consequences."});
+    modifier_keys:[],difficulty_source:"",attack_source:"",adjudication:"Examination of a compromised terminal has uncertain consequences."});
   configureDelegation(db,guild,{mode:"routine_delegated",allow:["roll.prepare"],max_operations:4,max_cost:0,expires_minute:100},"gm");
   const review=Object.fromEntries(POST_TURN_REVIEW_CATEGORIES.map(key=>[key,{decision:"no_change",reason:"No legacy mutation",confidence:100}]));
   review.scene={decision:"continue",label:"",reason:"Same scene"};
@@ -68,9 +68,10 @@ try{
   const request=mutation.intents[0].data.result;
   assert.equal(request.data.breakdown.subtotal,2,"Proficiency is not an action bonus");
   assert.equal(commitGmTurn(commitArgs).intents[0].record_key,mutation.intents[0].record_key);
+  await assert.rejects(()=>publishRollRequests(db,guild,mutation,async()=>false),/Retrieve/);
   const delivered=[];await publishRollRequests(db,guild,mutation,async(...args)=>{delivered.push(args);return true;});
   assert.equal(delivered[0][0],"owner");assert(delivered[0][1].includes("Knowledge +2"));assert(!delivered[0][1].includes("second"));
-  await assert.rejects(()=>publishRollRequests(db,guild,mutation,async()=>false),/Retrieve/);
+  await publishRollRequests(db,guild,mutation,async()=>assert.fail("Already delivered request was reposted"));
   assert.equal(db.getCharacter(pcs[0].id).data.resources.hope,2);
   const second=prepareRollRequest(db,guild,payload(1),"gm");assert(formatRollRequest(second).includes("Knowledge -1"));
   const missing=prepareRollRequest(db,guild,payload(2),"gm");assert.equal(missing.status,"needs_review");assert.equal(missing.data.breakdown.subtotal,null);

@@ -40,6 +40,7 @@ bot/scripts/fixtures/expansion-quality-golden.json
 bot/scripts/fixtures/systems-judgment-golden.json
 bot/scripts/format-check.mjs
 bot/scripts/i-heard-you-1-test.mjs
+bot/scripts/i-heard-you-2-test.mjs
 bot/scripts/narrative-contract-test.mjs
 bot/scripts/negotiation-preview-test.mjs
 bot/scripts/npc-cognition-regression-test.mjs
@@ -126,6 +127,8 @@ bot/src/provenance.js
 bot/src/publishing.js
 bot/src/register-commands.js
 bot/src/relationship-state.js
+bot/src/roll-collaboration.js
+bot/src/roll-language.js
 bot/src/roll-requests.js
 bot/src/roster.js
 bot/src/scene-continuity.js

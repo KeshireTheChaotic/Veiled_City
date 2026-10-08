@@ -20,6 +20,8 @@ import { expansionStatus } from "./expansion-contracts.js";
 import { configureDelegation } from "./ai-intents.js";
 import { reviewInbox, reviewWorkflow } from "./ai-review.js";
 import { reconcileHistory } from "./history-reconciliation.js";
+import { publishRollRequests } from "./roll-requests.js";
+import { sendPlayerPrivate } from "./publishing.js";
 export async function handleStoryCommand(interaction,{db,gm}){
   if(!interaction.memberPermissions?.has(PermissionFlagsBits.ManageGuild)&&
     !interaction.member?.roles?.cache?.has(db.getCampaign(interaction.guildId)?.gm_role_id)) throw new PermissionError("GM/admin permission required.");
@@ -52,6 +54,9 @@ export async function handleStoryCommand(interaction,{db,gm}){
     try{result=validateNarrativeClaims(db,guild,input.result||{},input.scope||{mode:"party"});}
     catch(error){if(error.code!=="NARRATIVE_INTEGRITY") throw error;result={ok:false,...error.diagnostic};}
   }else throw new Error("Unknown story operation.");
+  if(sub==="ai-review"&&interaction.guild&&result.kind==="ai_intent")
+    await publishRollRequests(db,guild,{intents:[result]},async(userId,content,sessionId,characterId)=>
+      (await sendPlayerPrivate({db,guild:interaction.guild,userId,content,sessionId,characterId})).ok);
   const preview=sub==="ai-inbox"?result.items.slice(0,5).map(row=>`${row.record_key}: ${row.preview.operation} [${row.status}]\n${row.preview.player_consent}\n${row.preview.blocked_reason||row.preview.likely_effect}`).join("\n\n"):"";
   await interaction.reply({ephemeral:true,allowedMentions:{parse:[]},content:(`Story ${sub}: GM-private result.${preview?`\n${preview}`:""}`).slice(0,1900),
     files:[new AttachmentBuilder(Buffer.from(JSON.stringify(result,null,2)),{name:"story-result.json"})]});

@@ -12,8 +12,9 @@ const action={anyOf:[object({type:text(),target_type:choice("npc","faction","loc
     "negotiate_request","publish_finding","relocate_staff","seek_warrant"),target_type:choice("npc","location","institution","district",""),
     target_key:text(),jurisdiction:text(),report_keys:list(text(),8),personnel_key:text(),reason:text(1000)})]};
 export const INTENT_PAYLOADS={
-  roll:object({...source,op:choice("prepare"),character_id:text(),trait:choice("Agility","Strength","Finesse","Instinct","Presence","Knowledge"),
-    kind:choice("action","reaction","attack"),modifier_keys:list(text(),20),difficulty_source:text(),adjudication:text(600)}),
+  roll:{anyOf:[object({...source,op:choice("prepare"),character_id:text(),trait:choice("Agility","Strength","Finesse","Instinct","Presence","Knowledge"),
+    kind:choice("action","reaction","attack"),modifier_keys:list(text(),20),difficulty_source:text(),attack_source:text(),adjudication:text(600)}),
+    object({...source,op:choice("adjudicate"),ruling_key:text(),adjudication:text(600)})]},
   setup:object({...source,op:choice("suggest"),setup_key:text(),character_id:text(),choice_source:text(),suggestion:text(600)}),
   organization:object({...source,op:choice("invite"),character_id:text(),request:choice("found","join","property","staff","plan","project"),title:text(),terms:text(500),
     target_key:text(),community_key:text(),commitment_key:text(),information_key:text(),duration_minutes:integer(0,525600)}),
@@ -79,6 +80,8 @@ state fingerprints and policy revision. Never invent consent, reviewer identity,
 When roll_requests is enabled, roll.prepare is a pending request, not a roll or result. Use a current authenticated
 player_declaration source and adjudicate its trait explicitly; never supply numeric bonuses. Missing sheet values
 remain pending. Do not request dice in prose without a validated pending breakdown. Never offer narrative answer menus.
+roll.adjudicate may propose human review of an authenticated roll_contribution against an existing saved ruling.
+It cannot invent owner authorization or skip feasibility review. Help/Tag Team are not group or reaction rolls.
 For group responses use only that member's group_actor_packet, owned evidence and established preferences;
 GM-only planning context is not member knowledge. Dissent is valid and must not be overwritten.
 Dialogue interpretations require an existing authored_speech source and an actual recorded listener; quote exactly,

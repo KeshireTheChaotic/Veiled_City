@@ -14,6 +14,7 @@ import { captureArcCandidate } from "./personal-continuity.js";
 import { captureDialogue } from "./dialogue-continuity.js";
 import { captureDeclaration } from "./player-language.js";
 import { publishRollRequests } from "./roll-requests.js";
+import { routeRollMessage } from "./roll-language.js";
 import { publishEventResults, postGmLog, postStateError, deliverHandout, postPlayMessage } from "./publishing.js";
 import { VoiceNarrator } from "./voice.js";
 import { KeyedSerialQueue } from "./serial-queue.js";
@@ -291,6 +292,9 @@ async function processPrivateTurn(message,directMention){
   }
   const speaker=controlled?.name||message.member?.displayName||message.author.username;
   const vis=controlled?.character_id?"character":"player";
+  if(!controlled?.npc_proxy&&await routeRollMessage({db,message,text:playerText,characterId:controlled?.character_id,
+    deliver:text=>sendPrivate(message.guild,message.author.id,text,session.id,controlled?.character_id),
+    sendAmendment:(user,text,sid,char)=>sendPrivate(message.guild,user,text,sid,char)})) return;
   captureDeclaration(db,message.guild.id,message.author.id,controlled?.npc_proxy?null:controlled?.character_id,message.id,playerText);
   captureDialogue(db,message.guild.id,message.author.id,controlled?.npc_proxy?null:controlled?.character_id,message.id,playerText,{privateScene:true});
   captureArcCandidate(db,message.guild.id,message.author.id,controlled?.npc_proxy?null:controlled?.character_id,message.id,playerText);
@@ -365,7 +369,6 @@ async function processPartyTurn(message,directMention){
   const session=db.getActiveSession(message.guild.id);
   if(!session) return;
   const pendingAtTurnStart=db.getPendingDirectorPass(session.id);
-  if(pendingAtTurnStart) await runPendingDirectorPass(message.guild,session);
   const pendingTokenAtTurnStart=pendingAtTurnStart?`${pendingAtTurnStart.layer}:${pendingAtTurnStart.queued_at||""}:${pendingAtTurnStart.scene_label||""}:${pendingAtTurnStart.round_number||""}`:null;
   const {controlled,playerText,ambiguous,candidates}=resolveController(session,message);
   if(ambiguous){
@@ -373,6 +376,10 @@ async function processPartyTurn(message,directMention){
     return;
   }
   const speaker=controlled?.name||message.member?.displayName||message.author.username;
+  if(!controlled?.npc_proxy&&await routeRollMessage({db,message,text:playerText,characterId:controlled?.character_id,
+    deliver:text=>sendPrivate(message.guild,message.author.id,text,session.id,controlled?.character_id),
+    sendAmendment:(user,text,sid,char)=>sendPrivate(message.guild,user,text,sid,char)})) return;
+  if(pendingAtTurnStart) await runPendingDirectorPass(message.guild,session);
   captureArcCandidate(db,message.guild.id,message.author.id,controlled?.npc_proxy?null:controlled?.character_id,message.id,playerText);
   captureDeclaration(db,message.guild.id,message.author.id,controlled?.npc_proxy?null:controlled?.character_id,message.id,playerText);
   db.addMessage({guildId:message.guild.id,sessionId:session.id,messageId:message.id,userId:message.author.id,speakerName:speaker,characterId:controlled?.character_id||null,visibility:"party",content:playerText});

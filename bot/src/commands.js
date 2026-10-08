@@ -4,7 +4,8 @@ import {
   AttachmentBuilder
 } from "discord.js";
 import { dualityRoll, parseDice } from "./dice.js";
-import { prepareRollRequest, pendingRollRequests, formatRollRequest } from "./roll-requests.js";
+import { prepareRollRequest, pendingRollRequests, ownedRollRequest, formatRollRequest, publishRollAmendment } from "./roll-requests.js";
+import { contributeRoll, adjudicateRollSource, applyRollOutcome } from "./roll-collaboration.js";
 import { publishJournal, postJournalEntry, publishEventResults, postGmLog, postStateError, postPrivateRelay, syncConfiguredSurfaces, postPlayMessage, sendPlayerPrivate, deliverHandout } from "./publishing.js";
 import { EncounterLibrary, livePcRoster, partyTier, baseBattlePoints, DIFFICULTY_ADJUSTMENTS, autoBuildComposition, recomputeBudget, battlePointCost, HEAVY_ROLES, defaultObjective, manageWorldEncounter, recordWorldEncounterOutcome, validateWorldEncounterActivation, worldCombatantDrafts, bindWorldCombatants } from "./encounter.js";
 import { prepareLevelup, applyLevelupToData, legalAdvancements, tierAchievement } from "./character-system.js";
@@ -354,7 +355,7 @@ async function executeCommand(interaction,{db,gm,voice=null}){
   }
   if((group!=="story"&&!(group==="admin"&&sub==="seed-drafts")&&!(group==="intel"&&["discover","continuity","organizations"].includes(sub))
     &&!(group==="handout"&&sub==="evidence")&&!(group==="downtime"&&sub==="long-project-status")
-    &&!(group==="roll"&&sub==="pending"))||isMutatingCommand(group,sub)) await ensurePlayer(db,interaction);
+    &&!(group==="roll"&&["pending","result"].includes(sub)))||isMutatingCommand(group,sub)) await ensurePlayer(db,interaction);
   if(await replayReceiptIfPresent({db,interaction,group,sub})) return true;
   const restoreReceiptCapture=installReceiptCapture({db,interaction,group,sub});
   try{
@@ -1297,11 +1298,26 @@ GM notes: ${a.draft.gm_notes}`:""}`.slice(0,1950):"No aftermath draft exists for
       return true;
     }
 
-    if(group==="roll"&&sub==="pending"){
-      const rows=pendingRollRequests(db,interaction.guildId,interaction.user.id);
-      const chunks=chunkTextLines((rows.map(formatRollRequest).join("\n\n")||"No current pending roll requests.").split("\n"));
+    if(group==="roll"&&["pending","result"].includes(sub)){
+      const rows=sub==="result"?[ownedRollRequest(db,interaction.guildId,interaction.user.id,interaction.options.getString("request",true))]
+        :pendingRollRequests(db,interaction.guildId,interaction.user.id);
+      const chunks=chunkTextLines((rows.map(row=>formatRollRequest(row,{user:interaction.user.id})).join("\n\n")||"No current pending roll requests.").split("\n"));
       await interaction.reply({content:chunks[0],ephemeral:true});
       for(const content of chunks.slice(1)) await interaction.followUp({content,ephemeral:true});return true;
+    }
+    if(group==="roll"&&sub==="adjudicate"){
+      if(!isGM(db,interaction)) throw new PermissionError("GM/admin permission required to adjudicate rules and feasibility.");
+      const source=adjudicateRollSource(db,interaction.guildId,JSON.parse(interaction.options.getString("json",true)),interaction.user.id);
+      await interaction.reply({content:`Saved reviewed roll source ${source.event_key}. No PC resource or roll was changed.`,ephemeral:true});return true;
+    }
+    if(group==="roll"&&sub==="contribute"){
+      const row=contributeRoll(db,interaction.guildId,interaction.user.id,JSON.parse(interaction.options.getString("json",true)));
+      const chunks=chunkTextLines(formatRollRequest(row,{user:interaction.user.id}).split("\n"));
+      await interaction.reply({content:chunks[0],ephemeral:true});
+      for(const content of chunks.slice(1)) await interaction.followUp({content,ephemeral:true});
+      if(interaction.guild) await publishRollAmendment(db,interaction.guildId,row,async(user,content,sessionId,characterId)=>
+        (await sendPlayerPrivate({db,guild:interaction.guild,userId:user,content,sessionId,characterId})).ok);
+      return true;
     }
     if(group==="roll"&&sub==="request"){
       if(!isGM(db,interaction)) throw new PermissionError("GM/admin permission required to adjudicate requests.");
@@ -1323,24 +1339,13 @@ GM notes: ${a.draft.gm_notes}`:""}`.slice(0,1950):"No aftermath draft exists for
         advantage:interaction.options.getInteger("advantage")||0,
         disadvantage:interaction.options.getInteger("disadvantage")||0
       });
-      db.addRoll(interaction.guildId,s.id,interaction.user.id,a?.character_id||null,reaction?"reaction":"duality",{...r,reaction});
-      let resourceNote="";
-      if(!reaction){
-        if(a?.character_id && ["Hope","Critical"].includes(r.duality)){
-          const updated=db.updateCharacterData(a.character_id,data=>{
-            data.resources=data.resources||{}; data.resources.hope=Math.min(6,Number(data.resources.hope||0)+1);
-            if(r.duality==="Critical"){
-              data.resources.stress=data.resources.stress||{current:0,max:6};
-              data.resources.stress.current=Math.max(0,Number(data.resources.stress.current||0)-1);
-            }
-          });
-          resourceNote=` • Hope ${updated.data.resources.hope}/6${r.duality==="Critical"?"; cleared 1 Stress":""}`;
-        }else if(r.duality==="Fear"){
-          const fear=db.changeFear(interaction.guildId,1); resourceNote=` • GM Fear ${fear}/12`;
-        }
-        const e=db.getCurrentEncounter(s.id);
-        if(e?.status==="active"&&a?.character_id) db.recordSpotlight(e.id,a.character_id);
-      }
+      db.transaction(()=>{
+        db.addRoll(interaction.guildId,s.id,interaction.user.id,a?.character_id||null,reaction?"reaction":"duality",{...r,reaction});
+        applyRollOutcome(db,interaction.guildId,s.id,a?.character_id?[a.character_id]:[],r,{reaction});
+      });
+      const updated=a?.character_id?db.getCharacter(a.character_id):null;
+      const resourceNote=reaction?"":r.duality==="Fear"?` • GM Fear ${db.getCampaign(interaction.guildId).fear}/12`
+        :updated?` • Hope ${updated.data.resources.hope}/6${r.duality==="Critical"?"; cleared 1 Stress":""}`:"";
       const adv=r.adv_dice.length?` • d6 [${r.adv_dice.join(", ")}] = ${r.adv_net>=0?"+":""}${r.adv_net}`:"";
       await interaction.reply(`🎲 **${reaction?"Reaction":"Duality"}:** Hope **${r.hope}** / Fear **${r.fear}**${adv} • modifiers ${r.modifier+r.experience>=0?"+":""}${r.modifier+r.experience} → **${r.total} — ${r.duality}**${resourceNote}`);
       return true;

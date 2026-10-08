@@ -2,12 +2,13 @@
 import { sceneAccess } from "./scene-continuity.js";
 export const materialClaimSchema={type:"object",additionalProperties:false,properties:{
   actor:{type:"string"},entity_type:{type:"string",enum:["character","npc","combatant","world"]},entity:{type:"string"},
-  action:{type:"string",enum:["damage","movement","disclosure","obligation","status","canon","dice"]},
+  action:{type:"string",enum:["damage","movement","disclosure","obligation","status","canon","dice","possession"]},
   prior:{type:"string"},proposed:{type:"string"},visibility:{type:"string",enum:["public","party","player","character","gm"]},
   source_ref:{type:"string"},source_span:{type:"string"},mutation_index:{type:"integer"},
   certainty:{type:"string",enum:["committed","dialogue","rumor","uncertain","forecast","metaphor","intent"]}
 },required:["actor","entity_type","entity","action","prior","proposed","visibility","source_ref","source_span","mutation_index","certainty"]};
 export const NARRATIVE_CONTRACT="Return narrative_claims for EVERY consequential assertion in narration/private_messages: damage, movement, disclosure, obligations, status, canon, dice. "
+  +"Never supply predefined narrative choices, fixed acceptance/decline prompts, A/B/C story answers or scripted PC dialogue. Ask openly. "
   +"Use exact source_span and stable actor/entity IDs; prior/proposed are state values, source_ref identifies existing fact/knowledge/canon/obligation. "
   +"Uncertain observations, quoted lies, hallucinations, metaphors, forecasts and intentions must be explicitly framed as such in prose and tagged, not committed facts. "
   +"mutation_index is a matching events index or -1 for already established state. Never invent dice, PC consent or compensate for a rejected claim. Cosmetic prose needs no claim.";
@@ -21,10 +22,42 @@ function visible(row,scope){
   return ["public","party"].includes(row.visibility)||(scope.mode==="private"&&
     ((row.visibility==="player"&&row.subject_user_id===scope.actorUserId)||(row.visibility==="character"&&row.subject_character_id===scope.actorCharacterId)));
 }
+/** Bounded hand-authored paraphrases are review tripwires, not a claim of general semantic understanding. */
+export function materialParaphrases(text,names=[]){
+  const escaped=names.filter(Boolean).slice(0,100).map(name=>String(name).replace(/[.*+?^${}()|[\]\\]/g,"\\$&"));
+  const subject=`(?:you${escaped.length?`|${escaped.join("|")}`:""})`;
+  const patterns=[
+    ["status",`${subject} (?:is dead|are dead|lies? lifeless|has died|have died|breathes? (?:his|her|their|your) last)`],
+    ["damage",`${subject} (?:bleeds?|are bleeding|is bleeding|sustains? (?:an? )?(?:injury|wound)|suffers? (?:an? )?(?:injury|wound)|loses? \\d+ (?:HP|hit points?))`],
+    ["movement",`${subject} (?:arrives? at|has entered|have entered|reaches? the|has crossed into|have crossed into)`],
+    ["possession",`${subject} (?:pockets?|has acquired|have acquired|takes? possession of|now owns?)`],
+    ["obligation",`${subject} (?:is bound to|are bound to|has sworn|have sworn|owes? (?:a debt|allegiance))`],
+    ["disclosure",`${subject} (?:now knows?|has learned|have learned|discovers? the truth)`],
+    ["dice",`${subject} (?:rolled? a|rolled? an|scored? a|scored? an) \\d+`]
+  ];
+  const hits=[];
+  for(const sentence of String(text||"").split(/(?<=[.!?])\s+|\n/)){
+    const quotes=[...sentence.matchAll(/["“][^"”]*["”]/g)];
+    for(const [action,expression] of patterns) for(const match of sentence.matchAll(new RegExp(`\\b${expression}\\b`,"gi"))){
+      const prefix=sentence.slice(0,match.index).split(/[,;]/).at(-1);
+      if(/\b(?:might|may|could|perhaps|rumou?r|claims?|as if|imagines?|intends?|hypothes\w*|would|seems?|looks? like)\b/i.test(prefix)) continue;
+      if(quotes.some(quote=>match.index>quote.index&&match.index<quote.index+quote[0].length)&&/\b(?:says?|said|claims?)\b/i.test(sentence)) continue;
+      if(action==="status"&&/dead to (?:me|you|him|her|them)/i.test(sentence.slice(match.index))) continue;
+      if(action==="damage"&&/bleeds? (?:money|secrets|time)\b/i.test(sentence.slice(match.index))) continue;
+      hits.push({action,span:match[0]});
+    }
+  }
+  return hits;
+}
 export function validateNarrativeClaims(db,guildId,result,scope={mode:"party"}){
   const claims=result.narrative_claims||[];
   if(!Array.isArray(claims)||claims.length>32) deny("claim_budget");
-  const narration=[result.narration||result.public_narration||"",...(result.private_messages||[]).map(row=>row.content)].join("\n");
+  const narration=[result.narration||"",result.public_narration||"",result.player_summary||"",...(result.private_messages||[]).map(row=>row.content)].join("\n");
+  const flags=db.getCityCalendar(guildId).flags;
+  if(flags.natural_language===true||flags.semantic_integrity===true){
+    if(/\b(?:choose|pick|select) (?:one of|from the following|an option)|\b(?:reply|answer|respond) (?:with )?(?:yes or no|accept or decline)\b/i.test(narration)
+      ||/(?:^|\n)\s*A[).:].*\n\s*B[).:]/i.test(narration)) deny("predefined_narrative_choices");
+  }
   for(const c of claims){
     if(!c||Object.keys(c).some(key=>!materialClaimSchema.required.includes(key))||
       materialClaimSchema.required.some(key=>!(key in c))) deny("claim_shape",c);
@@ -44,8 +77,15 @@ export function validateNarrativeClaims(db,guildId,result,scope={mode:"party"}){
     if(c.actor&&["movement","status"].includes(c.action)&&db.getCityCalendar(guildId).flags.scene_continuity===true
       &&!sceneAccess(db,guildId,{observer_type:"npc",observer_key:c.actor,target_type:c.entity_type,target_key:c.entity,sense:"sight"}))
       deny("not_witnessed",c,"actual scene access");
-    if(c.certainty==="committed"&&((entity?.status&&["dead","retired"].includes(entity.status))||state.removed||["dead","removed"].includes(state.status))) deny("inactive_actor",c);
+    if(c.certainty==="committed"&&((entity?.status&&["dead","retired"].includes(entity.status))||state.removed||["dead","removed"].includes(state.status))
+      &&!(c.action==="status"&&[entity?.status,state.status].includes(c.proposed))) deny("inactive_actor",c);
     if(c.action==="dice") deny("model_dice",c);
+    if(c.action==="possession"){
+      const artifact=db.getHandout(c.source_ref);
+      if(!artifact||artifact.guild_id!==guildId||artifact.status!=="active"||!visible(artifact,scope)
+        ||artifact.metadata?.evidence?.original?.holder!==`character:${c.entity}`||c.proposed!==artifact.id)
+        deny("uncommitted_possession",c,"native artifact custody");
+    }
     if(c.action==="status"&&(!entity||entity.status!==c.proposed&&state.status!==c.proposed)) deny("actor_status",c,"saved lifecycle");
     if(c.entity_type==="npc"&&["dead","removed"].includes(state.status)&&c.proposed==="active") deny("actor_status",c);
     if(c.action==="movement"&&(!entity||String(state.location_key||entity.data?.location||"")!==c.proposed)) deny("uncommitted_movement",c,"saved position");
@@ -75,6 +115,12 @@ export function validateNarrativeClaims(db,guildId,result,scope={mode:"party"}){
   // Conservative local tripwires also catch omitted declarations of common high-risk assertions.
   const risk=/\b(?:you (?:take|suffer) \d+ (?:damage|HP)|(?:teleports?|is now dead|is now bound)|(?:roll(?:ed)? (?:a |an )?\d+))\b/gi;
   for(const match of narration.matchAll(risk)) if(!claims.some(c=>c.source_span.includes(match[0]))) deny("undeclared_material_assertion");
+  if(db.getCityCalendar(guildId).flags.semantic_integrity===true){
+    const names=[...db.listGuildCharacters(guildId).map(row=>row.name),...db.listNpcProfiles(guildId,{limit:100}).map(row=>row.display_name)];
+    for(const hit of materialParaphrases(narration,names))
+      if(!claims.some(c=>c.action===hit.action&&c.certainty==="committed"&&c.source_span.includes(hit.span)))
+        deny("unverified_material_paraphrase",null,hit.action);
+  }
   return {ok:true,claims:claims.length};
 }
 
