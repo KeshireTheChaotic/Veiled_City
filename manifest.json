@@ -1,6 +1,6 @@
 {
   "package": "Veiled_City_Multiplayer_Discord",
-  "version": "7.9.0",
+  "version": "8.0.0",
   "generated": "2026-10-08",
   "content_normalization": "utf8-lf",
   "files": [
@@ -27,7 +27,7 @@
     {
       "path": "README.md",
       "size_bytes": 15436,
-      "sha256": "8e4deda6ab1a549c947527c399179d541f181c497e6884d534e2f3c9e055883b"
+      "sha256": "ec49f08ad9ebeb9439b90cde90cd7e1f49af4e6b728a64407cd6e4ef1b1a2fb0"
     },
     {
       "path": "SUGGESTIONS-End-To-End.md",
@@ -52,7 +52,7 @@
     {
       "path": "bot/package.json",
       "size_bytes": 2601,
-      "sha256": "3ec36d0ed630f17b8ba80e956aec29f336590b2b6b00e9bd62d8d1542a72fd1e"
+      "sha256": "c1f4b8cf8dca0b6b6b48700c753a3e697222e5710dd22705e45cb76341879e22"
     },
     {
       "path": "bot/scripts/audit-regression-test.mjs",
@@ -1356,8 +1356,8 @@
     },
     {
       "path": "docs/SYSTEMS_TO_PLAYERS_IMPLEMENTATION.md",
-      "size_bytes": 33346,
-      "sha256": "d39dff85dec353bbad16471db063a700e3ab6e4026f7f2e574af02c981722fc3"
+      "size_bytes": 34951,
+      "sha256": "273754c9cc5ad0663beacd15cb1ae38ad511d8f4e0623779352045242e827306"
     },
     {
       "path": "docs/UPGRADE_3.0_TO_3.1.md",

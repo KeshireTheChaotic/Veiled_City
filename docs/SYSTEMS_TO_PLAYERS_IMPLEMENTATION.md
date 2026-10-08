@@ -158,3 +158,21 @@ Back up first. To enable the additions (does not itself delegate AI execution):
 Keep delegation manual for initial review. Optional typed proposal operations are `encounter.propose`, `dialogue.interpret`, `evidence.analyze`, `influence.attempt`, `organization.invite`, `setup.suggest`, plus existing native operations. Use existing `/vc-story delegation` policy workflow with a bounded allowlist, operation/cost budgets and fictional-minute expiry. Evidence analysis/influence always require human review. Organization invitations cannot establish consent; encounters cannot activate combat; setup proposals cannot resolve canon; supply delivery is human-only. Establish actual sources/templates/positions/channels/services before authorizing work. Flags do not seed fictional facts or provide actors with GM-only knowledge. Re-register changed slash definitions only during an explicitly authorized deployment.
 
 Final integration release is 8.0.0 after the 7.9.0 commit and a fresh zero-token gate. Known semantic limits remain as stated; no paid/live tests, deployment, push or activation accompany this major version.
+
+## Release ledger — final 8.0.0 integration
+
+All nine implementation phases were separately versioned and committed **after** their full `npm run validate` gate passed, before starting the next phase:
+
+| Phase | Version | Commit | Scope |
+| --- | --- | --- | --- |
+| 1 | 7.1.0 | `c92421b` | Grounded encounters and decision advisory |
+| 2 | 7.2.0 | `148c2ed` | Explicit dialogue and actual tactical result memory |
+| 3 | 7.3.0 | `c9771dd` | Evidence custody, consent and sanitized exports |
+| 4 | 7.4.0 | `02bae2e` | Native-cost audience influence/refusal/correction |
+| 5 | 7.5.0 | `a4bef1b` | Owner-confirmed reviewed organizations/property/projects |
+| 6 | 7.6.0 | `0008957` | Read-only reconciliation and optional sourced setups |
+| 7 | 7.7.0 | `717d1f6` | Native service constraints and conserved NPC deliveries |
+| 8 | 7.8.0 | `e488dd0` | Named zero-token judgment evaluations |
+| 9 | 7.9.0 | `ce77712` | Private conversational queries and review previews/integration |
+
+8.0.0 is the requested final major rollover, not an additional autonomous capability or live-deployment claim. Package, README header/current-version body and normalized manifests are synchronized; schema remains 440. Required gate includes all prior regression/endurance/compatibility suites, SP1–SP7/SP9 and J01–J15 in the existing quality harness. Validation blocks network access and uses dummy credentials; zero paid requests/tokens. Legacy source line-length warnings remain non-failing. Audit limitations and human/owner review boundaries above are part of the delivered contract, not waived by the major version.
