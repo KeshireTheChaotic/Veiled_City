@@ -209,3 +209,21 @@ endurance tests cover publication repair, 300 action consistency checks and
 optional live-model/Discord/paid voice validation remains separately authorized
 and was not performed. A failed assertion fails validation rather than masking
 the result in an aggregate success metric.
+
+## 5.8.0 — Phase H: integration and recovery
+
+GM `/vc-story expansion-status` reports all eleven safe-default expansion flags,
+schema, stored lifecycle counts, bounds and recovery guidance. GM `/vc-story why`
+now accepts `{"kind":"strategy","key":"clerk-plan"}` (also goal_transition,
+consequence and other existing city kinds), or
+`{"route":{"from":"home","to":"station"}}`, in addition to existing event/
+mutation lookup. Reasons, review and costs come from actual records/ledger;
+missing evidence stays unknown. Both commands are strictly read-only/private.
+
+All phases reuse schema 440. Synthetic legacy-shape and backup/restore tests pass;
+no live database was migrated. Dead/removed NPC checks are shared across native
+actions and group responses/reviews. Feature flags do not automatically cancel
+queued native actions or refund costs. See the complete [flag, lifecycle,
+authority and rollback matrix](EXPANSION_ARCHITECTURE.md) before enabling features.
+The release helper enforces per-phase minor increments and `.9` to the next
+major `.0`; this final release is 5.8.0 under the requested policy, not 6.0.0.

@@ -1,6 +1,7 @@
 /** Civic domain validation and institutional knowledge firewall. All descriptors are non-player simulation, never mechanical modifiers. */
 import { cityObject, cityKey, cityInteger, cityAudit, indexWorldEvent, scheduleCityEvent } from "./city-calendar.js";
 import { assertInstitutionDelegation, activeCityProxy } from "./city-constraints.js";
+import { EXPANSION_FEATURES } from "./expansion-contracts.js";
 
 export const INSTITUTION_ACTIONS=["document_request","file_case","interview_request","inspect_request","issue_policy",
   "allocate_resources","negotiate_request","publish_finding","relocate_staff","seek_warrant"];
@@ -168,8 +169,7 @@ export function reviewInstitutionAction(db,guildId,input,actorId){
 export function configureCityFlags(db,guildId,input,actorId){
   cityObject(input);
   const allowed=["institutions","opportunities","economy","minor_npcs","adaptive_context","conversations","pacing","negotiations","voice_direction","authoring",
-    "emergent_goals","consequences","scene_continuity","emergent_groups","strategies","personal_arcs","discovery","long_projects","conflict_mediation",
-    "memory_consolidation","activity_density"];
+    ...Object.keys(EXPANSION_FEATURES)];
   if(Object.keys(input).some(key=>!allowed.includes(key)||typeof input[key]!=="boolean")) throw new Error("Unknown city feature flag.");
   return db.transaction(()=>{
     const before=db.getCityCalendar(guildId),after=db.setCityCalendar(guildId,{...before,flags:{...before.flags,...input}});

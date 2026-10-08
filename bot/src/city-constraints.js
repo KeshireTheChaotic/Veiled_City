@@ -4,6 +4,8 @@ export function activeCityProxy(db,guildId,key){
   return session?db.listNpcProxies(session.id,{statuses:["active"]}).find(row=>row.npc_key===key):null;
 }
 export function assertNpcAvailability(db,guildId,key,action){
+  const lifecycle=db.getSimulationEntity(guildId,"npc",key)?.state||{};
+  if(lifecycle.removed||["dead","removed"].includes(lifecycle.status)) throw new Error("Dead or removed NPCs are unavailable.");
   if(activeCityProxy(db,guildId,key)) throw new Error("An active human NPC proxy retains voluntary control.");
   const clock=db.getSimulationClock(guildId);
   const commitment=db.overlappingCommitment(guildId,`npc:${key}`,clock.minute,clock.minute+1);

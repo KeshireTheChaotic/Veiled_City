@@ -1,0 +1,23 @@
+/** Shared release feature contract and read-only GM diagnostics; absent flags are disabled and records never imply PC authority. */
+export const EXPANSION_FEATURES=Object.freeze({
+  emergent_goals:{phase:"A",records:["goal_transition","goal_state"],command:"/vc-sim goal",authority:"Pending sourced actor goal transitions"},
+  consequences:{phase:"A",records:["consequence_subscription","consequence"],command:"/vc-sim consequence",authority:"Typed subscribed effects with review and receipts"},
+  scene_continuity:{phase:"B",records:["scene_presence","scene_residue"],command:"/vc-story scene",authority:"Descriptive physical continuity, not combat mechanics"},
+  emergent_groups:{phase:"C",records:["group_transition"],command:"/vc-story group",authority:"Voluntary reviewed community lifecycle"},
+  strategies:{phase:"C",records:["strategy"],command:"/vc-story strategy",authority:"Subjective plans through existing action resolvers"},
+  personal_arcs:{phase:"D",records:["arc","arc_beat"],command:"/vc-intel arc",authority:"Owner-established continuity and nonbinding GM invitations"},
+  discovery:{phase:"D",records:[],command:"/vc-intel discover",authority:"Read-only scoped recorded knowledge"},
+  long_projects:{phase:"E",records:["long_project"],command:"/vc-downtime long-project",authority:"Consent and existing authorized downtime adjudication"},
+  conflict_mediation:{phase:"E",records:[],command:"Existing action/strategy execution",authority:"Pre-cost physical/authority conflicts, not title adjudication"},
+  memory_consolidation:{phase:"F",records:["memory_cluster"],command:"/vc-story memory",authority:"Reversible actor evidence pointers, never canon"},
+  activity_density:{phase:"F",records:[],command:"Existing cognition/director retrieval",authority:"Bounded ephemeral eligibility, no extra provider calls"}
+});
+export function expansionStatus(db,guild){
+  const flags=db.getCityCalendar(guild).flags;
+  return {visibility:"gm",schema_version:db.schemaVersion(),features:Object.entries(EXPANSION_FEATURES).map(([flag,contract])=>({flag,
+    enabled:flags[flag]===true,default:false,...contract})),records:db.cityRecordCounts(guild),
+    bounds:{director_actions:{round:1,scene:3,downtime:4},institution_actions:2,materialized_density_candidates:32,density_packets:4,
+      density_packet_characters:12000,density_total_characters:24000,consequence_event_window:50,consequence_subscriptions:20},
+    recovery:"Disabling flags stops new extension opportunities, not already queued native actions. Review/cancel queued actions; preserve evidence. Backup before upgrades; explicit snapshots restore state.",
+    authority:"Recorded configuration/counts only, not proof of narrative quality or live deployment; no reads advance time."};
+}

@@ -99,6 +99,10 @@ export class VeiledDB {
   }
 
   close() { this.db.close(); }
+  schemaVersion(){ return this.db.prepare("PRAGMA user_version").get().user_version; }
+  cityRecordCounts(guildId){
+    return this.db.prepare("SELECT kind,status,COUNT(*) count FROM city_records WHERE guild_id=? GROUP BY kind,status ORDER BY kind,status LIMIT 200").all(guildId);
+  }
 
   contextFacts(guildId,{scope,userId="",characterId="",query="",limit=20}){
     return this.db.prepare(`SELECT * FROM facts WHERE guild_id=? AND archived=0 AND

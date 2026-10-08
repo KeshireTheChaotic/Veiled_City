@@ -491,6 +491,7 @@ export function buildCommands(){
       .addStringOption(o=>o.setName("json").setDescription("key, decision:promote|discard JSON").setRequired(true)))
     .toJSON());
   full.options.push(new SlashCommandBuilder().setName("story").setDescription("GM: sourced context and bounded story operations")
+    .addSubcommand(s=>s.setName("expansion-status").setDescription("Read-only expansion flags, lifecycle counts, bounds and recovery"))
     .addSubcommand(s=>s.setName("memory").setDescription("Consolidate, revise or revert actor-relative evidence clusters")
       .addStringOption(o=>o.setName("json").setDescription("Actor, source pointers and topic; no canon rewriting").setRequired(true)))
     .addSubcommand(s=>s.setName("arc-beat").setDescription("Propose a nonbinding private callback to a player-established arc")

@@ -2,7 +2,7 @@
 import { cityObject, cityKey, cityAudit } from "./city-calendar.js";
 import { requireCitySource } from "./city-core.js";
 import { updateCityCivic } from "./city-civic.js";
-import { activeCityProxy } from "./city-constraints.js";
+import { activeCityProxy, assertNpcAvailability } from "./city-constraints.js";
 import { motivationKey } from "./simulation-motivation.js";
 import { UserInputError, StateConflictError } from "./errors.js";
 export function manageGroup(db,guild,input,actorId){
@@ -14,6 +14,7 @@ export function manageGroup(db,guild,input,actorId){
     if(!["form","join","leave","dissolve","split","merge"].includes(operation)||!Array.isArray(members)
       ||members.length<1||members.length>20||new Set(members).size!==members.length) throw new UserInputError("Bounded group lifecycle/members required.");
     for(const npc of members) if(!db.getNpcProfile(guild,npc)||activeCityProxy(db,guild,npc)) throw new StateConflictError("Existing non-proxied NPC members required; no PCs.");
+    for(const npc of members) assertNpcAvailability(db,guild,npc,{});
     const group=db.getCityRecord(guild,"community",input.group_key);
     if(["join","leave","dissolve"].includes(operation)?group?.status!=="active":!!group) throw new StateConflictError("Group existence conflicts with the operation.");
     if(["leave","dissolve"].includes(operation)&&members.some(member=>!group.data.members.includes(member))) throw new StateConflictError("Departing NPC must already be a member.");
@@ -39,6 +40,7 @@ export function manageGroup(db,guild,input,actorId){
   if(before.status!=="pending") return before;
   requireCitySource(db,guild,before.source_event);
   if(op==="respond"){
+    assertNpcAvailability(db,guild,input.member,{});
     if(!before.data.members.includes(input.member)||activeCityProxy(db,guild,input.member)||!["accept","decline"].includes(input.decision))
       throw new StateConflictError("Explicit non-proxied candidate response required.");
     return db.transaction(()=>{
@@ -55,6 +57,7 @@ export function manageGroup(db,guild,input,actorId){
       for(const source of data.source_groups) if(JSON.stringify(db.getCityRecord(guild,"community",source.record_key))!==JSON.stringify(source))
         throw new StateConflictError("Source group changed; reconcile before approval.");
       if(data.members.some(member=>!data.responses[member]||activeCityProxy(db,guild,member))) throw new StateConflictError("Every candidate must explicitly respond; proxies retain control.");
+      for(const member of data.members) assertNpcAvailability(db,guild,member,{});
       const accepted=data.members.filter(member=>data.responses[member].decision==="accept");
       if(!accepted.length) throw new StateConflictError("No accepted members; reject the proposal instead.");
       if(["form","split","merge"].includes(data.operation)&&accepted.length<2) throw new StateConflictError("At least two consenting NPCs required for a group.");

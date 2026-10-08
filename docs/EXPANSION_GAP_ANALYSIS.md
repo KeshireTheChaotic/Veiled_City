@@ -6,7 +6,7 @@ Schema 440. No live campaign databases, GM rulings, production files or provider
 are accessed for implementation/testing. Applicable saved rulings remain runtime
 authority; new descriptors do not change SRD/house-rule mechanics.
 
-## Capability matrix
+## Initial capability matrix
 
 | Proposal | Existing implementation and observed evidence | Verdict / uncovered edge | Minimal extension and acceptance evidence planned |
 | --- | --- | --- | --- |
@@ -42,7 +42,7 @@ the actual controlling owner and never accept an input JSON identity as authorit
 | E: P08–09 | 42995fb | 5.5.0 | EXTENDED: phased continuity with existing adjudication and queued-action mediation; offline gates pass |
 | F: P10–11 | 79dbde8 | 5.6.0 | EXTENDED: reversible actor clusters and bounded relevance selection; offline gates pass |
 | G: P12 | 1132cb7 | 5.7.0 | EXTENDED: golden/mutation benchmark and cross-suite metrics; offline gates pass |
-| H: P13 | pending | next minor | Pending fresh audit |
+| H: P13 | 0737de9 | 5.8.0 | EXTENDED: shared feature contracts, ledger diagnostics, compatibility and recovery gates pass |
 
 Each accepted phase is validated and committed before starting the next. User
 version policy takes precedence over roadmap labels: bump one minor per accepted
@@ -179,3 +179,43 @@ Metrics report false positives, failures/regressions, real event-index throughpu
 source-to-consequence ledger trace and links to mandatory suites for clue paths,
 publication, review, consent, context and restore. No alternate toy validators,
 paid calls, production changes or claims of unrestricted model reliability.
+
+### Phase H audit and extension
+
+Fresh 0737de9 audit: existing schema 440, full backups/restores, actor availability,
+GM permission boundaries, ledger explanations and native cost/time resolvers are
+reused. P13 EXTENDED: shared `expansion-contracts.js` registry, GM-only zero-write
+status, record/route explanations from actual ledger/state, shared dead/removed
+NPC availability guards (including group response/review), per-phase version
+helper with .9 rollover, and architecture/flag/upgrade/rollback documentation.
+The cost estimator explicitly states packet scope and no added per-NPC call
+requirement; no model price claims were updated. Schema/backfill/reset: none.
+`expansion-h-test.mjs` covers representative synthetic legacy column/thread
+shapes, retained data, safe defaults, strict flags, record/route/cross-guild
+explanations, real read-only GM command writes/permissions, lifecycle guards,
+pre-expansion/expanded backup restoration, version rollover and release hashes.
+
+## Final proposal verdicts
+
+| Proposal | Verdict | Accepted evidence |
+| --- | --- | --- |
+| P01 dynamic motivations | EXTENDED | Phase A sourced three-actor transitions/history |
+| P02 consequences | EXTENDED | Phase A typed causal registry/review/receipts |
+| P03 scene presence | EXTENDED | Phase B occupancy/access/archival |
+| P04 groups | EXTENDED | Phase C voluntary reviewed community lifecycle |
+| P05 strategy | EXTENDED | Phase C durable bounded plans and native action costs |
+| P06 personal arcs | EXTENDED | Phase D owner-established private continuity/callbacks |
+| P07 discovery | EXTENDED | Phase D literal character-scoped zero-write lookup |
+| P08 long projects | EXTENDED | Phase E consent/time/adjudicated-result continuity |
+| P09 mediation | EXTENDED; native conservation/title behavior SATISFIED | Phase E queued physical/authority checks; existing transactions/claims retained |
+| P10 consolidation | EXTENDED | Phase F reversible actor-relative source clusters |
+| P11 density | EXTENDED | Phase F bounded materialization/packets and known-source wake |
+| P12 benchmark | EXTENDED | Phase G real-path golden/mutation metrics plus mandatory suites |
+| P13 integration | EXTENDED; native persistence foundation SATISFIED | Phase H contracts/diagnostics/legacy-shape/backup/version/hash gates |
+
+All mandatory gates passed per accepted phase with network denied and zero paid
+calls. No deployment, push, live provider/Discord/voice testing, live database
+migration or production edits. New flags remain off by default. Limits and
+unverified behavior are explicit in [release notes](EXPANSION_RELEASES.md) and
+[architecture/recovery contracts](EXPANSION_ARCHITECTURE.md). No rule-conflicting
+mechanics were added; no features required a duplicate generic manager or table.

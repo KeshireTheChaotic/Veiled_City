@@ -16,12 +16,14 @@ import { manageGroup } from "./city-groups.js";
 import { manageStrategy } from "./simulation-strategy.js";
 import { proposeArcBeat } from "./personal-continuity.js";
 import { manageMemoryCluster } from "./memory-clusters.js";
+import { expansionStatus } from "./expansion-contracts.js";
 export async function handleStoryCommand(interaction,{db,gm}){
   if(!interaction.memberPermissions?.has(PermissionFlagsBits.ManageGuild)&&
     !interaction.member?.roles?.cache?.has(db.getCampaign(interaction.guildId)?.gm_role_id)) throw new PermissionError("GM/admin permission required.");
   const sub=interaction.options.getSubcommand(),raw=interaction.options.getString("json"),input=cityObject(JSON.parse(raw||"{}")),guild=interaction.guildId;
   let result;
   if(sub==="context") result=new ContextPlanner(db).plan(guild,input);
+  else if(sub==="expansion-status") result=expansionStatus(db,guild);
   else if(sub==="scene") result=recordScenePresence(db,guild,input,interaction.user.id);
   else if(sub==="group") result=manageGroup(db,guild,input,interaction.user.id);
   else if(sub==="strategy") result=manageStrategy(db,guild,input,interaction.user.id);

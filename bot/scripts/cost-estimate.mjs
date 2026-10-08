@@ -17,3 +17,4 @@ for(const [name,p] of Object.entries(models)){
   console.log(`${name}: ~$${cost.toFixed(2)} for ${turns} GM turns at ${input} input / ${output} output tokens each`);
 }
 console.log("Router/classifier calls add a small amount and prompt caching can reduce repeated-input cost.");
+console.log("Living-world expansion flags require no extra per-NPC provider calls. Density caps only cognition/simulation packets, not the whole prompt; estimates are not billing guarantees.");
