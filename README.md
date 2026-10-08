@@ -1,233 +1,280 @@
 # VEILED CITY MULTIPLAYER DISCORD ENGINE v7.0.0
 
-Stateful Discord GM bot for the Veiled City multiplayer Daggerheart campaign.
+## Current Version
 
-v5.1–5.8 add sourced motivations/consequences, scene occupancy, voluntary groups,
-bounded strategies, private personal arcs/discovery, phased downtime, reversible
-memory, activity density, offline benchmarks and ledger-backed diagnostics.
-All new features default off. See [commands and enablement](docs/EXPANSION_RELEASES.md),
-[audit and acceptance evidence](docs/EXPANSION_GAP_ANALYSIS.md), and
-[feature contracts and upgrade/rollback](docs/EXPANSION_ARCHITECTURE.md).
+**7.0.0** — Veilkeeper, a stateful Discord AI GM for multiplayer Veiled City
+campaigns using Daggerheart. The version is maintained in
+[bot/package.json](bot/package.json).
 
-v4.5–5.0 add local narration checks, sourced context, bounded NPC contact,
-descriptive pacing, fixed-truth clue routes, reviewed negotiations, hypothetical
-previews, provenance, offline endurance, portrayal and human-reviewed authoring.
-Required validation denies network access and uses zero billable tokens.
-See [AI-GM expansion notes](docs/NEXT_EXPANSION.md) for flags, commands and limits.
+This release provides governed AI proposals, scoped context, native state commits,
+review receipts and bounded fictional-time scheduling. Optional features default
+off; AI delegation defaults to manual.
 
-## v4.4.0 — Living City Phase D
+## Concept
 
-Adds opt-in, explicitly agreed upkeep linked to existing obligations and fictional
-deadlines, without automatic PC spending. On-demand minor NPC generation creates
-GM drafts; explicit promotion checks named-canon collisions and grants no unearned
-knowledge or goals. See [Living City](docs/LIVING_CITY.md) for all four phases,
-upgrade steps, feature flags, limits and outstanding live deployment gates.
+Veilkeeper runs an ongoing occult-noir tabletop campaign through Discord.
+Players describe actions, speak to NPCs, investigate leads and make
+application-rolled checks. The AI GM interprets the fiction and proposes world
+reactions; the application validates and records what actually happens.
 
-## v4.3.0 — Living City Phase C
+SQLite preserves characters, attendance, discoveries, relationships, NPC memories,
+goals, clocks, canon and campaign history between sessions. NPC beliefs remain
+subjective: rumors, mistaken memories and incomplete evidence are not world truth.
+Human GMs retain oversight, review, pause and recovery controls.
 
-Adds sourced property/threshold claims, bounded infrastructure dependencies and
-repairs, route/commitment/proxy-aware NPC availability, communities, observer
-identities/reputations, fictional weather, personnel delegation, explicit belief
-transmission and source-linked history. See [Living City](docs/LIVING_CITY.md).
+## Scope
 
-## v4.2.0 — Living City Phase B
+- Multiplayer characters, advancement, guests, attendance and human-controlled proxies.
+- Public table play and private player-to-GM channels with player/character-scoped knowledge.
+- Native dice/resources, encounter/combat controls, evidence handouts, relationships, canon and downtime.
+- Persistent NPC/faction cognition, rumors, investigations and fictional-time world reactions.
+- Optional institutions, infrastructure, economy, conversations, pacing, negotiations and reviewed world authoring.
+- Optional sourced goals/consequences, scene continuity, voluntary groups, strategies, personal arcs, discovery, long projects, memory consolidation and fair scheduling.
+- Privacy-aware bulk seeding, inferred-draft review, audit receipts, snapshots and logical backups.
+- Optional public voice narration; Discord text and application state remain authoritative.
 
-Adds sourced districts, institutions with explicit report-based knowledge,
-audience beliefs, case/evidence records, causal links, consensual commitments
-and opt-in bounded institution opportunities. See [Living City](docs/LIVING_CITY.md).
-These systems do not change PC mechanics, Veil Exposure or established canon.
+The AI cannot invent dice results, authorize itself, silently overwrite canon,
+choose voluntary PC actions or override an active human proxy. Major/ambiguous
+changes require review. PC arc confirmation, project consent and private disclosure
+remain authenticated owner decisions. Background work uses fictional opportunities,
+not elapsed wall-clock time.
 
-## v4.1.0 — Living City Phase A
+Gameplay/model requests can incur provider charges; voice is a separate opt-in
+paid pathway. Offline validation uses dummy credentials and denies network access.
+Enabled features still require established data, sources, resources and consent.
 
-Adds a configurable fictional calendar, due-once civic schedules, sourced world
-event index and GM-only `/vc-city` commands. No player mechanics or canon changes.
-See [design, upgrade and deployment gates](docs/LIVING_CITY.md). Run
-`npm run register` after restarting on the additive schema migration.
+## Installation / Setup
 
-## v4.0.0 — Campaign simulation and audit fixes
+### Requirements
 
-Persistent NPC/faction agency now adds bounded background actions, fictional-time
-delays, finite resources, obligations, rumors, awareness, scene residue,
-relationship dimensions and GM review of consequential actions. The existing
-NPC cognition foundation is retained. New GM-only `/vc-sim` commands configure
-and inspect these systems; run `npm run register` after deployment.
+- Node.js **22.16.0 or newer**, npm, and Git for repository updates.
+- A Discord application/bot, bot token, application ID and target server.
+- An OpenAI API key with access to your configured models.
+- FFmpeg in `PATH` only for native voice playback.
+- Persistent writable storage for SQLite and campaign content.
 
-Queue rejection handling, cross-server thread isolation, reply-failure duplicate
-protection and mutation-ledger attribution are also corrected. See
-[`docs/NPC_SIMULATION.md`](docs/NPC_SIMULATION.md) for setup, command examples,
-mechanics, boundaries and coverage of the thirty suggestions.
+Use a development checkout for edits/tests. The existing production checkout is
+`D:\Library\Veiled City`; it is a deployment destination, not a development workspace.
 
-GM-only `/vc-admin seed-data` replaces `seed-npc-cognition`. It imports every
-file under `GM`, `GM_PRIVATE`, and `PLAYER` into privacy-scoped source/catalog
-tables, seeds recognized runtime entities and matched character narratives,
-and preserves existing campaign state. See [content seeding](docs/CONTENT_SEEDING.md).
+### 1. Install and configure
 
+From the repository root in PowerShell:
 
-## v3.8.0 — Persistent NPC Cognition
-
-v3.8.0 establishes Veilkeeper's first persistent NPC cognition layer. Significant NPCs now have durable **profiles, subjective memories, knowledge/beliefs, goals, and retrieval state** that remain distinct from objective campaign facts and canon. An NPC can therefore remember incorrectly, believe a rumor, lack information the GM knows, or revise an agenda without rewriting campaign truth.
-
-Veilkeeper retrieves only the NPC cognition relevant to the current scene/query rather than injecting every stored memory into each prompt. Retrieval weighs direct relevance, importance, confidence, recency, reinforcement, goals, activity tier, and active NPC-proxy context. The World Director receives a broader goal-aware packet for established active/supporting NPCs.
-
-The cognition model includes Veiled City-specific boundaries for **hospitality, obligation/contract custom, supernatural impressions, thresholds, anchors, and the Veil**. Hospitality or shelter can inform remembered debt or contractual expectation only when established custom, invitation, exchange, oath, Court/Concord practice, or explicit terms justify it; ordinary courtesy is not automatically binding. Supernatural/Veil impressions remain subjective evidence rather than omniscience or automatic canon.
-
-After upgrading, a GM should run `/vc-admin seed-data`. This includes the NPC cognition bootstrap and preserves already-seeded NPC state. It deliberately does not copy arbitrary global/player facts into every NPC's knowledge. Use `/vc-gm npc-state npc:<name>` to inspect the resulting GM-private profile, memories, beliefs, and goals.
-
-See:
-- `docs/NPC_COGNITION.md`
-- `docs/UPGRADE_3.7.0_TO_3.8.0.md`
-- `docs/CHANGELOG_v3.8.0_DISCORD.md`
-
-## v3.7.0 — GM Operations, Recovery & Provenance
-
-v3.7.0 adds the next operational layer for long-running campaigns: duplicate-delivery protection for mutating Discord interactions, a consolidated GM dashboard, first-class World Director controls/history, fact lifecycle/provenance, durable campaign backups with preview/restore, a structured authoritative mutation ledger, AI confidence handling, and `/vc-admin doctor` diagnostics.
-
-New GM surfaces include `/vc-gm overview`, `/vc-director status|history|pause|resume|run`, `/vc-admin backup|backups|restore-preview|restore|doctor|ledger`, and `/vc-gm fact-edit|fact-archive|fact-promote`. Exact duplicate facts are deduplicated; facts retain source/session/provenance/confidence metadata. AI state reviews now include confidence, and changes below the 55% confidence floor are not committed as authoritative state; they are surfaced for human GM attention instead.
-
-The authoritative mutation ledger records human command operations and AI/world-director mutations with actor/source context, interaction/message provenance, confidence, rationale, trigger text, and before/after state where available. World Director passes now have persistent operational history and can be paused without advancing the campaign through real-world time.
-
-See:
-- `docs/GM_OPERATIONS.md`
-- `docs/WORLD_DIRECTOR.md`
-- `docs/UPGRADE_3.6.0_TO_3.7.0.md`
-- `docs/CHANGELOG_v3.7.0_DISCORD.md`
-
-## v3.6.0 — Production Refactor & Privacy Enforcement
-
-v3.6.0 is a behavior-preserving maintainability/security refactor based on the v3.5.5 expanded audit. Discord output chunking is centralized and lossless, GM/private channel registration is permission-validated, GM fact filtering occurs in SQL before limits, runtime configuration fails fast on invalid numeric/enum values, and direct SQLite access outside `VeiledDB` has been removed.
-
-The slash-command declaration tree is now separated from runtime command execution. A new dependency-free `npm run quality` gate enforces module responsibility headers and the DB abstraction boundary, while `npm run test:refactor` covers the audit regressions. `LOG_LEVEL` is now an active runtime setting.
-
-Discord policy decision: `/vc-gm` remains discoverable when Discord exposes it because Veilkeeper supports a custom GM role that may not hold Discord's Manage Server permission. Execution remains strictly GM/admin-authorized. GM-only **data and configured channels** are enforced separately.
-
-See:
-- `docs/CODE_STANDARDS.md`
-- `docs/UPGRADE_3.5.5_TO_3.6.0.md`
-- `docs/CHANGELOG_v3.6.0_DISCORD.md`
-
-
-## v3.5.5 — Fact Listing & Visibility Hardening
-
-v3.5.5 renames the GM fact write command to `/vc-gm fact-add`, adds GM-only `/vc-gm fact-list`, and adds player-safe `/vc-intel facts`. Player-facing fact queries now use a dedicated database boundary that cannot opt into GM-only visibility; `/vc-intel facts`, `/vc-intel clues`, player exports, and actor-visible AI context all use that boundary.
-
-GM-only facts remain visible to `/vc-gm fact-list` but are deterministically excluded from player-role fact/clue listings.
-
-Upgrade notes:
-- `docs/UPGRADE_3.5.4_TO_3.5.5.md`
-- `docs/CHANGELOG_v3.5.5_DISCORD.md`
-
-## v3.5.4 — Private Player Canon Proposals
-
-v3.5.4 makes explicit private player requests for campaign canon durable and reviewable. Veilkeeper now records the request in the existing canon-proposal queue, confirms privately that canon itself was not changed, and posts the proposal to the configured GM log. GM review continues through `/vc-canon proposals` and `/vc-canon proposal-resolve`.
-
-Important: configure the GM log with `/vc-campaign channels gm_log:#your-gm-log`. If GM-log delivery is unavailable, the proposal remains safely queued and Veilkeeper records a state-error fallback reference.
-
-Upgrade notes:
-- `docs/UPGRADE_3.5.3_TO_3.5.4.md`
-- `docs/CHANGELOG_v3.5.4_DISCORD.md`
-
-## v3.5.3 — GM Session Roster
-
-v3.5.3 adds GM-only `/vc-session roster`, an ephemeral authoritative view of the active session's Discord player → character/control mapping. It includes primary and guest PCs, attendance/absence handling, PC proxies, active NPC proxies, pending NPC proxy offers, and warnings for present players without an active PC/guest assignment.
-
-See:
-- `docs/UPGRADE_3.5.2_TO_3.5.3.md`
-- `docs/CHANGELOG_v3.5.3_DISCORD.md`
-
-## v3.5.2 — Production Test Teardown Fix
-
-v3.5.2 fixes `npm run test:production` printing `PASS` but remaining alive on some systems. The voice repeat regression could start a real `@discordjs/voice` AudioPlayer and leave its global audio-cycle timer active after assertions completed. The test now keeps repeat-queue validation deterministic without starting real playback, explicitly destroys all VoiceNarrator test instances, and yields one event-loop turn before completion.
-
-This is a test-harness maintenance release. There are no database, slash-command, gameplay, GM/world-director, privacy, or production voice behavior changes.
-
-See:
-- `docs/UPGRADE_3.5.1_TO_3.5.2.md`
-- `docs/CHANGELOG_v3.5.2_DISCORD.md`
-
-## v3.5.1 — Dependency Security Maintenance
-
-v3.5.1 updates the Discord runtime dependency set after fresh npm installs of v3.5.0 began reporting known transitive security advisories. `discord.js` is updated from 14.22.1 to 14.27.0, and npm overrides pin the supported Node 22-compatible `undici` line to 6.29.0 and `ws` to 8.22.0. No campaign schema, command, GM/world-director, or gameplay behavior changes are introduced.
-
-A new `npm run audit:prod` command checks production dependencies at `moderate` severity or higher. Existing v3.5.0 databases and `.env` files can be retained unchanged.
-
-See:
-- `docs/UPGRADE_3.5.0_TO_3.5.1.md`
-- `docs/CHANGELOG_v3.5.1_DISCORD.md`
-
-## v3.5.0 — Autonomous World Director
-
-v3.5.0 adds a proactive **fictional-time** GM/world-director layer while keeping player agency and deterministic combat controls intact. Veilkeeper may now perform bounded world reactions after a completed player-round cadence, at actual scene transitions, and when a GM resolves extended in-game mechanical downtime. It never advances the world merely because real-world time passed.
-
-Normal AI turns now require a schema-backed post-turn state review for facts/clues, resources, clocks, threads, references, relationships, handouts, canon, Veil Exposure, and scene continuity. State-review/mutation mismatches receive one corrective retry and are rejected before commit if still inconsistent. Forbidden scoped actions are blocked and disclosed privately to the acting player and in detail to the GM log.
-
-See:
-- `docs/WORLD_DIRECTOR.md`
-- `docs/UPGRADE_3.4.1_TO_3.5.0.md`
-- `docs/CHANGELOG_v3.5.0_DISCORD.md`
-
-## v3.4.1 — Production Hardening
-
-v3.4.1 serialized multiplayer GM turns, made AI state mutations atomic, separated authoritative state commits from fallible Discord publishing, tightened private-scene/canon isolation, and hardened voice queue ordering/access controls.
-
-See:
-- `docs/UPGRADE_3.4.0_TO_3.4.1.md`
-- `docs/CHANGELOG_v3.4.1_DISCORD.md`
-
-## v3.4.0 — Discord Voice Narration
-
-v3.4.0 adds optional AI-generated narration in Discord voice channels while keeping Discord text and SQLite as the authoritative campaign record. Public `#the-table` GM narration can be synthesized through OpenAI's speech endpoint and played through Discord using `/vc-voice`. Private scenes, GM-only material, rules answers, handouts, errors, and hidden canon are excluded from automatic voice output.
-
-Voice is disabled by default. Native installs require **FFmpeg** in `PATH`; the Docker image installs FFmpeg automatically. After setting `VOICE_ENABLED=true`, join the desired voice channel and run `/vc-voice join`. Built-in OpenAI voices and eligible sample-based custom voice IDs are supported.
-
-See:
-
-- `docs/VOICE_NARRATION.md`
-- `docs/UPGRADE_3.3.3_TO_3.4.0.md`
-- `docs/CHANGELOG_v3.4.0_DISCORD.md`
-
-## v3.3.3 — Character Narrative Markdown
-
-v3.3.3 adds a dedicated freeform narrative layer for character information that should be available to Veilkeeper but does not fit the structured character JSON.
-
-Standard portable paths are:
-
-```text
-PLAYER/PLAYERS/<Character_Name>.md
-GM_PRIVATE/PLAYERS/GM_PRIVATE_<Character_Name>.md
-```
-
-Import/update them with `/vc-character narrative-import`, or attach them directly to `/vc-character import` and `/vc-character import-gm-hooks`. Export them with `/vc-character narrative-export`; the returned ZIP preserves the standard directory layout.
-
-Runtime narrative is stored in SQLite and included in snapshots/rollback. Veilkeeper uses it as supplemental context during ordinary GM turns, party assembly, character arrivals, encounter aftermath, and relevant downtime. **Structured JSON remains authoritative for mechanics/resources; the canon ledger remains authoritative for durable world truth. GM-private Markdown is never player-visible by default.**
-
-The external `/vc-character context-export` package now instructs ChatGPT/other assistants to generate these Markdown files when useful alongside `CHARACTER_<Name>.json` and `GM_HOOKS_<Name>.json`.
-
-## v3.3.3 historical upgrade notes
-
-Preserve:
-
-```text
-bot/.env
-bot/data/veiled_city.sqlite
-```
-
-Then run:
-
-```bash
-cd bot
+```powershell
+Set-Location .\bot
 npm install
-npm run check
-npm run test:offline
+if (!(Test-Path -LiteralPath .env)) { Copy-Item -LiteralPath .env.example -Destination .env }
+```
+
+Edit `bot/.env` locally:
+
+```dotenv
+DISCORD_TOKEN=your_bot_token
+DISCORD_CLIENT_ID=your_application_id
+DISCORD_GUILD_ID=your_server_id
+OPENAI_API_KEY=your_api_key
+DATABASE_PATH=./data/veiled_city.sqlite
+CONTENT_ROOT=../content
+DEFAULT_RESPONSE_MODE=assisted
+VOICE_ENABLED=false
+```
+
+The guild ID scopes registration to one server; omitting it registers global
+commands. Model names, reasoning/context/token limits, aftermath mode and voice
+settings are listed in [bot/.env.example](bot/.env.example). Configure models your
+account can use.
+
+Run npm commands from `bot` so relative paths resolve correctly. Never commit
+real credentials or runtime SQLite files. Preserve `bot/.env`,
+`bot/data/veiled_city.sqlite` and local campaign content during upgrades.
+
+### 2. Prepare Discord
+
+Enable **Message Content Intent** in the application's bot settings. Invite the bot
+with the `bot` and `applications.commands` scopes.
+
+Grant View Channels, Send Messages, Read Message History, Embed Links and Attach
+Files where needed; add Connect and Speak for voice. Do not grant Administrator
+merely to run Veilkeeper.
+
+Create a table channel, optional rules/reference channels, GM-only log/error
+channels and one private channel per player. Private channels must exclude other
+players; the application validates private delivery permissions.
+See [Discord setup](docs/DISCORD_SETUP.md) and
+[channel layout](docs/SERVER_CHANNEL_SETUP.md).
+
+### 3. Validate, register and start
+
+From `bot`:
+
+```powershell
+npm run validate
 npm run register
 npm start
 ```
 
-`npm run register` is required because `/vc-character` gained two subcommands and new optional attachment fields. The database migration is additive and requires no manual conversion.
+Validation is offline. Registration contacts Discord and replaces the command
+schema in the selected scope. Starting connects the bot to Discord; gameplay can
+then make paid model calls. Run one bot instance per production database.
+After updates, restart the existing instance rather than launching a second copy;
+re-register commands when their schema changes.
 
-See:
+### 4. Configure the campaign and seed content
 
-- `docs/CHARACTER_NARRATIVE_MARKDOWN.md`
-- `docs/CHARACTER_CONCEPT_CONTEXT.md`
-- `docs/CANON_LEDGER.md`
-- `docs/UPGRADE_3.3.2_TO_3.3.3.md`
-- `docs/BOT_COMMANDS.md`
+As a GM/admin in Discord, replace these channel/role selections with your own:
+
+```text
+/vc-campaign setup play_channel:#the-table gm_role:@GM mode:assisted
+/vc-campaign channels rules_channel:#rules-questions case_board:#case-board journal:#party-journal known_npcs:#known-npcs known_locations:#known-locations gm_log:#gm-log state_errors:#state-errors
+/vc-admin doctor
+/vc-admin seed-data
+```
+
+Seeding archives found files under `GM`, `GM_PRIVATE` and `PLAYER`, and
+materializes recognized data while preserving established state. Unmatched private
+character material remains GM-only. Templates/drafts do not establish live
+occupancy, membership, PC consent or AI authority. Inspect
+`/vc-admin seed-drafts` rather than approving everything blindly.
+See [content seeding](docs/CONTENT_SEEDING.md).
+
+Players create/import characters and register their private channels. Start a
+session with `/vc-session start title:Opening Night`. Players then check in using
+`/vc-session present`; the GM can run `/vc-session assemble`.
+AI scene generation incurs normal configured provider usage.
+
+### 5. Enable optional features and AI management
+
+Enable all 21 optional city/story flags:
+
+```text
+/vc-city flags json:{"institutions":true,"opportunities":true,"economy":true,"minor_npcs":true,"adaptive_context":true,"conversations":true,"pacing":true,"negotiations":true,"voice_direction":true,"authoring":true,"emergent_goals":true,"consequences":true,"scene_continuity":true,"emergent_groups":true,"strategies":true,"personal_arcs":true,"discovery":true,"long_projects":true,"conflict_mediation":true,"memory_consolidation":true,"activity_density":true}
+```
+
+Flags do not authorize AI execution. Start with review-only proposals:
+
+```text
+/vc-story delegation json:{"mode":"suggest_only","allow":[],"max_operations":1,"max_cost":0,"expires_minute":null}
+/vc-story expansion-status
+/vc-story ai-inbox
+```
+
+For delegated routine work, first inspect `/vc-city status`. Replace `1440`
+below with an expiry **after the current fictional minute**. This narrow example
+permits goal proposals and reversible memory maintenance:
+
+```text
+/vc-story delegation json:{"mode":"routine_delegated","allow":["goal.propose","memory.consolidate","memory.revise","memory.revert"],"max_operations":1,"max_cost":0,"expires_minute":1440}
+/vc-director resume
+```
+
+Limits bound delegated fictional work, not API spending. Broaden the allowlist
+deliberately using the [complete feature/delegation matrix and rollout
+guide](docs/END_TO_END_IMPLEMENTATION.md). Major review, native mechanics, source
+checks, ownership and consent remain binding. Discovery is read-only.
+
+Revoke delegation:
+
+```text
+/vc-story delegation json:{"mode":"manual","allow":[],"max_operations":1,"max_cost":0,"expires_minute":null}
+```
+
+`/vc-director pause` pauses automatic director passes. Turning off flags or
+revoking policy is not a blanket cancellation/refund of legacy human-approved work;
+inspect/cancel queued work through native review or strategy controls.
+
+### 6. Optional voice narration
+
+Set `VOICE_ENABLED=true` and `VOICE_MODE=narrative` in `bot/.env`, ensure
+FFmpeg is available, and restart. Join the desired Discord voice channel, then:
+
+```text
+/vc-voice configure mode:narrative
+/vc-voice join
+/vc-voice status
+```
+
+`voice_direction` enables approved delivery guidance, not TTS itself. Automatic
+voice excludes private scenes and GM-only material. Narration is skipped before
+synthesis when the bot has no voice connection. `/vc-voice repeat` replays cached
+audio without a new TTS request. See [voice narration](docs/VOICE_NARRATION.md).
+
+## Useful Player Commands
+
+Use Discord's option picker for attachments and character selections. Placeholders
+such as `<id>` must be replaced; JSON responses need current keys/revisions from
+the relevant inbox. Player commands expose only authorized knowledge.
+
+| Task | Command / example |
+| --- | --- |
+| Create / import a character | `/vc-character create name:Alex`; `/vc-character import file:<character.json>` |
+| Inspect / select / export | `/vc-character list`; `/vc-character sheet`; `/vc-character select character:Alex`; `/vc-character export format:all` |
+| Register your private channel | Run `/vc-player private-channel` inside that private channel |
+| Response preferences | `/vc-player accessibility length:compact mechanics:standard screen_reader:true` |
+| Check in / arrive late | `/vc-session present character:Alex`; `/vc-session arrive character:Alex` |
+| Absence / early departure | `/vc-session absent mode:offscreen`; `/vc-session leave mode:offscreen` |
+| Authorize a human PC proxy | `/vc-session absent mode:proxy proxy:@TrustedPlayer` |
+| Roll Duality Dice | `/vc-roll duality modifier:2` |
+| Ask about rules | `/vc-rules ask question:<question>` |
+| Review campaign knowledge | `/vc-intel recap`; `/vc-intel facts`; `/vc-intel clues`; `/vc-intel caseboard` |
+| Read continuity / leads | `/vc-intel continuity`; `/vc-intel discover json:{"mode":"leads","query":"visitor"}` |
+| Respond to an arc invitation/candidate | `/vc-intel arc json:<owned response with key/revision>` |
+| Retrieve evidence | `/vc-handout list`; `/vc-handout show id:<id>`; `/vc-handout export id:<id> format:all` |
+| Submit downtime work | `/vc-downtime project type:research title:Study objective:Trace the visitor` |
+| Inspect / consent to long projects | `/vc-downtime status`; `/vc-downtime long-project-status`; `/vc-downtime long-project json:<owned proposal or phase response>` |
+| Begin advancement | `/vc-level level-up character:Alex` (then `/vc-level level-choose` and `/vc-level level-confirm`) |
+| Accept / decline an NPC proxy offer | `/vc-npc claim npc:<name>`; `/vc-npc decline npc:<name>` |
+| Retrieve / release your NPC packet | `/vc-npc packet npc:<name>`; `/vc-npc release npc:<name>` |
+| Join voice / replay narration | `/vc-voice join`; `/vc-voice repeat` |
+
+During an active session, describe actions in the configured table channel or your
+registered private GM channel. With discovery enabled, “What do I know about the
+visitor?” uses a grounded, private, read-only route. Arc/project invitations are
+optional; an AI proposal is never your consent.
+
+## Useful GM / Admin Commands
+
+GM operations require Discord Manage Server permission or the configured GM role.
+JSON commands use typed native contracts, not arbitrary database patches.
+Some commands below need additional required options selected in Discord.
+
+| Task | Command / example |
+| --- | --- |
+| Campaign setup / status | `/vc-campaign setup`; `/vc-campaign status` |
+| Configure / republish channels | `/vc-campaign channels`; `/vc-campaign sync` |
+| Session lifecycle / roster | `/vc-session start`; `/vc-session assemble`; `/vc-session roster`; `/vc-session end` |
+| Dashboard / health | `/vc-gm overview`; `/vc-admin doctor` |
+| Seed content / inspect drafts | `/vc-admin seed-data`; `/vc-admin seed-drafts draft_id:<id>` (omit ID to list) |
+| Add / edit seed drafts | `/vc-admin seed-add json:<typed draft>`; `/vc-admin seed-edit draft_id:<id> json:<replacement>` |
+| Approve / reject / remove drafts | `/vc-admin seed-approve draft_id:<id>`; `/vc-admin seed-reject draft_id:<id>`; `/vc-admin seed-remove draft_id:<id>` |
+| Inspect NPC cognition | `/vc-gm npc-state npc:<name>` |
+| List / add facts | `/vc-gm fact-list`; `/vc-gm fact-add content:<text> visibility:gm` |
+| Establish / review canon | `/vc-canon set key:<key> value:<value>`; `/vc-canon conflicts`; `/vc-canon proposals` |
+| Encounters / combat | `/vc-encounter build`; `/vc-encounter start`; `/vc-combat combatants`; `/vc-combat damage` |
+| Generate / store evidence | `/vc-handout generate` (AI); `/vc-handout create` (no generation call) |
+| Open / resolve downtime | `/vc-downtime open`; `/vc-downtime resolve minutes:1440` (explicit fictional duration) |
+| Director status / history | `/vc-director status`; `/vc-director history` |
+| Pause / resume / request review | `/vc-director pause`; `/vc-director resume`; `/vc-director run reason:<fictional reason>` |
+| Simulation / queued-action review | `/vc-sim status`; `/vc-sim review action_id:<id> decision:reject` |
+| City clock / feature flags | `/vc-city status`; `/vc-city flags json:<boolean flags>` |
+| AI eligibility / receipts | `/vc-story expansion-status`; `/vc-story ai-inbox` |
+| Configure delegation | `/vc-story delegation json:<policy>` |
+| Approve / reject / modify / defer AI proposals | `/vc-story ai-review json:<key, decision, expected_revision>`; modify also needs `replacement_intent` |
+| Inspect scenes / manage plans | `/vc-story scene-view`; `/vc-story strategy json:<native operation>` |
+| Explain provenance | `/vc-story why json:{"event_key":"<event-key>"}` |
+| Durable backup / listing | `/vc-admin backup label:Before changes`; `/vc-admin backups` |
+| Preview / restore | `/vc-admin restore-preview backup_id:<id>`; `/vc-admin restore backup_id:<id>` |
+| Snapshot / audit ledger | `/vc-admin snapshot label:Checkpoint`; `/vc-admin ledger` |
+| Pause / disconnect voice | `/vc-voice pause`; `/vc-voice leave` |
+
+Refresh inboxes before review: stale revisions, revoked roles, changed sources or
+proxies, and expired delegation can invalidate approval. Reopen read-only inboxes
+to repair missing notices; do not replay successful mutations or costs.
+Back up before significant changes and preview restores.
+
+### Further Reading
+
+- [Current AI management, complete feature matrix, rollout and recovery](docs/END_TO_END_IMPLEMENTATION.md)
+- [Command reference](docs/BOT_COMMANDS.md) — includes historical sections; current slash options are defined in [command-definitions.js](bot/src/command-definitions.js)
+- [Content seeding](docs/CONTENT_SEEDING.md) and [NPC cognition](docs/NPC_COGNITION.md)
+- [NPC simulation](docs/NPC_SIMULATION.md), [World Director](docs/WORLD_DIRECTOR.md) and [Living City](docs/LIVING_CITY.md)
+- [GM operations](docs/GM_OPERATIONS.md), [optional story tools](docs/NEXT_EXPANSION.md) and [voice narration](docs/VOICE_NARRATION.md)
