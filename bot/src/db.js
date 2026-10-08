@@ -1984,6 +1984,16 @@ export class VeiledDB {
     return this.db.prepare("SELECT * FROM downtime_projects WHERE id=?").get(id);
   }
   listDowntimeProjects(cycleId){ return this.db.prepare("SELECT * FROM downtime_projects WHERE cycle_id=? ORDER BY created_at").all(cycleId); }
+  getDowntimeProject(guildId,id){ return this.db.prepare("SELECT * FROM downtime_projects WHERE guild_id=? AND id=?").get(guildId,id)||null; }
+  downtimeResultClaimed(guildId,id){
+    return !!this.db.prepare(`SELECT 1 FROM city_records,json_each(city_records.data_json,'$.phases') p,json_each(p.value,'$.result_ids') j
+      WHERE guild_id=? AND kind='long_project' AND j.type='text' AND j.value=? LIMIT 1`).get(guildId,id);
+  }
+  queuedActorActions(guildId,entity){
+    return this.db.prepare(`SELECT * FROM simulation_records WHERE guild_id=? AND entity_key=? AND kind='action'
+      AND status IN ('pending','deferred','scheduled','ready') ORDER BY rowid LIMIT 100`).all(guildId,entity)
+      .map(row=>({...row,data:JSON.parse(row.data_json)}));
+  }
   getCityIncomeProject(guildId,id){
     return this.db.prepare("SELECT * FROM downtime_projects WHERE guild_id=? AND id=? AND project_type='income'").get(guildId,id)||null;
   }

@@ -39,7 +39,7 @@ the actual controlling owner and never accept an input JSON identity as authorit
 | B: P03 | ecfe238 | 5.2.0 | EXTENDED: occupancy and actor-relative access; offline gates pass |
 | C: P04–05 | 19b8864 | 5.3.0 | EXTENDED: voluntary community lifecycle and durable bounded plans; offline gates pass |
 | D: P06–07 | 06c20e3 | 5.4.0 | EXTENDED: owner-established arcs and zero-write character-relative discovery; offline gates pass |
-| E: P08–09 | pending | next minor | Pending fresh audit |
+| E: P08–09 | 42995fb | 5.5.0 | EXTENDED: phased continuity with existing adjudication and queued-action mediation; offline gates pass |
 | F: P10–11 | pending | next minor | Pending fresh audit |
 | G: P12 | pending | next minor | Pending fresh audit |
 | H: P13 | pending | next minor | Pending fresh audit |
@@ -121,3 +121,21 @@ fact/lead classifications remain authoritative; no new inference establishes
 lead closure or truth. `expansion-d-test.mjs` checks two PCs, owner forgery,
 private clues/aliases, switching, attendance, penalty-free decline, context,
 real command snapshot equality/no receipt, and restart/restore. No schema change.
+
+### Phase E audit and extension
+
+Fresh 42995fb audit: existing downtime submissions/results, cycles, fictional
+clock, serial transactions, commitments and disputed property claims are reused.
+P08 EXTENDED in `long-projects.js`: bounded source prerequisites, ordered phases,
+per-collaborator/per-phase owner consent bound to an existing active submission,
+explicit fictional work duration excluding pauses, GM adjudication via completed
+resolved results, single result consumption, partial history and safe source-loss
+pause. No new mechanics, currency or automatic PC spending. Initial collaborators
+are PCs; NPC commitments remain the established sourced GM workflow rather than
+invented consent. Failed downtime evidence stays in its original result and does
+not remove clue routes. P09 EXTENDED in shared `city-constraints.js`: chronological
+queued travel exclusion and queued strategy-source/lifecycle checks before costs.
+Existing atomic finite-resource checks and explicit disputed title are SATISFIED,
+not replaced. `expansion-e-test.mjs` checks consent/authority/privacy, downtime
+result provenance, pauses/time, restart/restore, dependency loss, incompatible
+travel, last-unit/retry conservation, untouched PCs and contested title.

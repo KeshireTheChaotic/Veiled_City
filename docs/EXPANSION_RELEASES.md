@@ -132,3 +132,32 @@ No hidden identity/alias joins, world advancement, generation, canon, receipts,
 player upserts or error-log writes occur. Character switching changes the private
 scope immediately; proxies do not gain private personal access. Full backups
 preserve these records; disable flags without deleting history. No live test.
+
+## 5.5.0 — Phase E: long projects and conflict mediation
+
+Enable `/vc-city flags json:{"long_projects":true,"conflict_mediation":true}`.
+Player `/vc-downtime long-project` creation JSON:
+`{"key":"history-research","character_id":"<owned-id>","title":"Research history","source_event":"known-lead","participants":["<owned-id>"],"phases":[{"key":"collect","title":"Collect evidence","duration_minutes":1440,"requires":[],"prerequisites":["known-lead"]},{"key":"interpret","title":"Interpret evidence","duration_minutes":1440,"requires":["collect"],"prerequisites":["known-lead"]}]}`.
+Sources must be visible to all collaborators; no GM-secret lookup. This is private
+continuity, not a new crafting/research/healing/income system. Each phase uses
+existing `/vc-downtime project` submissions and existing authorized resolution.
+
+Each collaborator submits explicit consent:
+`{"key":"history-research","op":"consent","character_id":"<owned-id>","decision":"accept","project_id":"<own-active-downtime-project-id>"}`.
+Decline pauses without costs. GM transition JSON uses
+`{"key":"history-research","op":"advance","result_ids":["<adjudicated-id-per-collaborator>"]}`.
+Only completed results from resolved cycles, bound to those consented submissions,
+can satisfy a phase; they cannot be consumed by another phase/project. Actual
+costs/benefits remain solely in existing rules-authorized downtime adjudication.
+Each phase requires fresh consent and sufficient explicit fictional work time.
+GM pause/resume/abandon preserve evidence; source loss pauses when checked.
+Paused fictional time does not count as work. `op:status` retrieves project state
+for participating owners or GMs. No background time advance or provider call.
+
+Conflict mediation refuses later incompatible queued NPC travel/location actions
+before costs, and blocks queued strategy steps whose plan/source authority has
+ended. Existing commitments, routes, proxy guards, finite resources and major
+review still apply. Reconcile/cancel earlier actions or seek GM review; no new
+reservation currency. Disputed property claims remain disputed. Flags default
+off; disable to stop these extensions, preserve records, and use native action
+review/cancellation for queued work. Upgrade/backup/rollback as Phase A.

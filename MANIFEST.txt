@@ -21,6 +21,7 @@ bot/scripts/expansion-a-test.mjs
 bot/scripts/expansion-b-test.mjs
 bot/scripts/expansion-c-test.mjs
 bot/scripts/expansion-d-test.mjs
+bot/scripts/expansion-e-test.mjs
 bot/scripts/export-campaign.mjs
 bot/scripts/format-check.mjs
 bot/scripts/narrative-contract-test.mjs
@@ -72,6 +73,7 @@ bot/src/handout.js
 bot/src/idempotency.js
 bot/src/index.js
 bot/src/logger.js
+bot/src/long-projects.js
 bot/src/narrative-integrity.js
 bot/src/negotiations.js
 bot/src/npc-cognition.js

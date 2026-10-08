@@ -110,7 +110,8 @@ export function executeStrategyStep(db,guild,key,{actorId="strategy_opportunity"
         const action=data.actor_type==="institution"?submitInstitutionAction(db,guild,{...next.action,
           key:`step:${motivationKey([key,data.revision,next.key])}`,institution:data.actor_key,source_event:before.source_event},actorId)
           :submitNpcAction(db,guild,{...next.action,actor_type:data.actor_type,actor_key:data.actor_key,
-            goal_key:data.actor_type==="npc"?data.goal_key:goal.id},{cycleKey:`strategy:${key}:${data.revision}:${next.key}`,roll});
+            goal_key:data.actor_type==="npc"?data.goal_key:goal.id,information_key:data.information_key,strategy_key:key,strategy_revision:data.revision},
+            {cycleKey:`strategy:${key}:${data.revision}:${next.key}`,roll});
         next.action_id=data.actor_type==="institution"?action.record_key:action.id;
         next.status="submitted";
       }

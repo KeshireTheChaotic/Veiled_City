@@ -2,7 +2,7 @@
 import { randomInt, randomUUID } from "node:crypto";
 import { normalizeNpcKey, retrieveNpcCognition } from "./npc-cognition.js";
 import { submitInstitutionAction, runInstitutionDirector, proposeCityOpportunity } from "./city-core.js";
-import { assertNpcAvailability, npcAvailability, activeCityProxy } from "./city-constraints.js";
+import { assertNpcAvailability, npcAvailability, activeCityProxy, assertQueuedCompatibility } from "./city-constraints.js";
 import { applyNpcServiceOutcome } from "./city-civic.js";
 import { runMotivationCycle } from "./simulation-motivation.js";
 import { coordinateConsequences } from "./city-consequences.js";
@@ -318,6 +318,7 @@ export function executeNpcAction(db,guildId,record,{approved=false,roll=()=>rand
     if(["completed","failed","rejected"].includes(current.status)) return current;
     if(current.status==="pending"&&!approved) return current;
     const action=current.data;
+    assertQueuedCompatibility(db,guildId,current);
     const {key,state,goal}=validateAction(db,guildId,action);
     if(action.significance!=="routine"&&!approved) return saveRecord(db,guildId,current,{status:"pending"});
     const clock=db.getSimulationClock(guildId);

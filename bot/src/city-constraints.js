@@ -34,3 +34,21 @@ export function assertInstitutionDelegation(db,guildId,institution,input){
   if(role.data.capacity<1) throw new Error("Delegated personnel have no operational capacity.");
   if(role.data.dissent_actions?.includes(input.type)) throw new Error("Established personnel dissent blocks this delegated procedure.");
 }
+/** Chronological exclusion, not a new reservation/currency manager; physical travel never resolves contested title. */
+export function assertQueuedCompatibility(db,guildId,record){
+  if(db.getCityCalendar(guildId).flags.conflict_mediation!==true) return;
+  const action=record.data,queued=db.queuedActorActions(guildId,record.entity_key);
+  for(const other of queued){
+    if(other.id===record.id) break;
+    const peer=other.data;
+    if((action.type==="travel"||peer.type==="travel")
+      &&(action.location_key||action.target_key)!==(peer.location_key||peer.target_key))
+      throw new Error(`Earlier queued action ${other.id} has incompatible travel/location; cancel, defer or seek GM review.`);
+  }
+  if(action.strategy_key){
+    const plan=db.getCityRecord(guildId,"strategy",action.strategy_key);
+    if(!plan||plan.status!=="active"||plan.data.revision!==action.strategy_revision) throw new Error("Strategy no longer authorizes this queued step.");
+    const source=db.getWorldEvent(guildId,plan.source_event);
+    if(!source||source.status!=="active") throw new Error("Strategy source retracted; reconcile before spending.");
+  }
+}

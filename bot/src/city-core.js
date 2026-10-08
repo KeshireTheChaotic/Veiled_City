@@ -168,7 +168,7 @@ export function reviewInstitutionAction(db,guildId,input,actorId){
 export function configureCityFlags(db,guildId,input,actorId){
   cityObject(input);
   const allowed=["institutions","opportunities","economy","minor_npcs","adaptive_context","conversations","pacing","negotiations","voice_direction","authoring",
-    "emergent_goals","consequences","scene_continuity","emergent_groups","strategies","personal_arcs","discovery"];
+    "emergent_goals","consequences","scene_continuity","emergent_groups","strategies","personal_arcs","discovery","long_projects","conflict_mediation"];
   if(Object.keys(input).some(key=>!allowed.includes(key)||typeof input[key]!=="boolean")) throw new Error("Unknown city feature flag.");
   return db.transaction(()=>{
     const before=db.getCityCalendar(guildId),after=db.setCityCalendar(guildId,{...before,flags:{...before.flags,...input}});

@@ -30,6 +30,7 @@ import { handleSimulationCommand } from "./simulation-commands.js";
 import { handleCityCommand } from "./city-commands.js";
 import { handleStoryCommand } from "./story-commands.js";
 import { personalArc, discoverPersonal } from "./personal-continuity.js";
+import { manageLongProject } from "./long-projects.js";
 
 const interactionQueue=new KeyedSerialQueue();
 
@@ -124,6 +125,11 @@ async function launchArrival({db,gm,guild,userId,character,reason}){
   const session=db.getActiveSession(guild.id);
   if(!session||session.assembly_mode==="manual"||session.assembly_mode==="already_together") return {planned:false};
   try{
+    if(group==="downtime"&&sub==="long-project"){
+      const result=manageLongProject(db,interaction.guildId,interaction.user.id,JSON.parse(interaction.options.getString("json",true)),{gm:isGM(db,interaction)});
+      await interaction.reply({ephemeral:true,content:"Private long-project continuity; no automatic PC costs or benefits.",
+        files:[new AttachmentBuilder(Buffer.from(JSON.stringify(result,null,2)),{name:"long-project.json"})]});return true;
+    }
     const entry=await gm.planArrival({guildId:guild.id,userId,characterId:character.id,reason});
     const privateText=entry.private_hook?.trim()
       ?`**Veilkeeper — entry hook for ${character.name}:**\n${entry.private_hook}`
