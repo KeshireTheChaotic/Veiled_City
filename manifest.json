@@ -1,6 +1,6 @@
 {
   "package": "Veiled_City_Multiplayer_Discord",
-  "version": "9.0.0",
+  "version": "9.1.0",
   "generated": "2026-10-08",
   "content_normalization": "utf8-lf",
   "files": [
@@ -27,7 +27,7 @@
     {
       "path": "README.md",
       "size_bytes": 18932,
-      "sha256": "a05bee4b582b016804d3101e7eb94689a6df6add5a5f75e43af77406088b3ae1"
+      "sha256": "239106f506babda65949d6e47c57e5a3c8034f150f44a7a6248e6cb2b1da6453"
     },
     {
       "path": "SUGGESTIONS-End-To-End.md",
@@ -52,7 +52,7 @@
     {
       "path": "bot/package.json",
       "size_bytes": 2601,
-      "sha256": "7bd1028f000d5f2fdaba40f349f95db2bcae6c1122d34c67d57696238eaeea20"
+      "sha256": "af1e325e22c9ca751fbbb61684ae0f064c46f0adff9fc8f24d369d1d0d7e0954"
     },
     {
       "path": "bot/scripts/audit-regression-test.mjs",
@@ -305,6 +305,11 @@
       "sha256": "7582f4c54df5b7413919c2e36e345325b0f019057f37ff147f9089ac379ee6ca"
     },
     {
+      "path": "bot/scripts/prompt-budget-test.mjs",
+      "size_bytes": 5816,
+      "sha256": "6e1302235356dd42a10c5b9fe977f4c382a8e6706bb16b2d097eb68c53c53243"
+    },
+    {
       "path": "bot/scripts/quality-check.mjs",
       "size_bytes": 1469,
       "sha256": "2fbfb8f4775efed989826d268a9d9697dd4bde1bb20b6e09a47f1622756fa96e"
@@ -396,8 +401,8 @@
     },
     {
       "path": "bot/scripts/validate-offline.mjs",
-      "size_bytes": 3037,
-      "sha256": "cb616042c008d0859e92a1f2fcd67f4c66602dc9ad0fbd42fd5bd595cc506216"
+      "size_bytes": 3058,
+      "sha256": "3c47c8db41a0e956d63fec5672e727d0d78ef44e76623d4469f9cb51d942632b"
     },
     {
       "path": "bot/sql/schema.sql",
@@ -591,8 +596,8 @@
     },
     {
       "path": "bot/src/gm.js",
-      "size_bytes": 74491,
-      "sha256": "f34782a10a28ca16bc762fc005e3367bf4ddd8502f37a32ce66f8d8024f2498a"
+      "size_bytes": 76050,
+      "sha256": "d0aa80369c20153c376448bc2c99dca2501d6e32c83d0f63e55017b01621a3ff"
     },
     {
       "path": "bot/src/handout.js",
@@ -688,6 +693,11 @@
       "path": "bot/src/portrayal.js",
       "size_bytes": 1904,
       "sha256": "834336c2d8ca957490a3a9d1a1885a9e5b352c97680c4deb42877e2389da0ace"
+    },
+    {
+      "path": "bot/src/prompt-budget.js",
+      "size_bytes": 3442,
+      "sha256": "9c3e53fd5b9d07320978ad144181cbff4321a001877a4494c19bd13e85826c53"
     },
     {
       "path": "bot/src/provenance.js",
@@ -1308,6 +1318,11 @@
       "path": "docs/CONTENT_SEEDING.md",
       "size_bytes": 11226,
       "sha256": "7845c8c18bd58f80e7522af41cf9995e7587f4523a71f6e7e485264fdb427d65"
+    },
+    {
+      "path": "docs/CONTEXT_BUDGET_FIX.md",
+      "size_bytes": 3088,
+      "sha256": "2a332d78230461abf39d1757847bdedf18ff77f224d66293880dc5d81b4df540"
     },
     {
       "path": "docs/DEPLOYMENT.md",

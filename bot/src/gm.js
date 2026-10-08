@@ -17,6 +17,7 @@ import { intentArraySchema, INTENT_PROMPT } from "./ai-intent-contracts.js";
 import { intentContext } from "./ai-intents.js";
 import { decisionAdvisorySchema, decisionContext, validateDecisionAdvisory } from "./decision-advisory.js";
 import { declarationContext } from "./player-language.js";
+import { budgetTurnPrompt } from "./prompt-budget.js";
 
 const routerSchema={
   type:"object",
@@ -488,7 +489,7 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
       "For scene continuity, choose transition only when fictional location, objective, time frame, or dramatic scene boundary actually changes. Provide a short new-scene label when transitioning; otherwise use continue with an empty label.",
       "Keep narration suitable for Discord. Prefer 1-4 compact paragraphs unless a longer scene is genuinely needed."
     ].join("\n\n");
-    const input=[
+    const rawSections=[
       `CAMPAIGN STATE:\n${JSON.stringify(ctx.campaign)}`,
       `DECISION ADVISORY (GM-private; null when disabled): ${JSON.stringify(ctx.decision_advisory)}`,
       `AUTHENTICATED DECLARATION (attempts, not completed facts): ${JSON.stringify(ctx.player_declaration)}`,
@@ -516,17 +517,32 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
       `KNOWN HANDOUT/EVIDENCE INDEX VISIBLE TO ACTOR:\n${JSON.stringify(ctx.visible_handouts)}`,
       `RELEVANT VEILED CITY REFERENCE:\n${JSON.stringify(ctx.reference_chunks)}`,
       `CURRENT PLAYER INPUT:\nuser_id=${actorUserId}\nname=${actorName}\nscope=${scope}\n${messageText}`
-    ].join("\n\n---\n\n");
+    ];
+    // Fixed authority and authenticated input are never trimmed. Optional context is selected as whole records.
+    const requiredLabels=new Set(["CAMPAIGN STATE","AUTHENTICATED DECLARATION (attempts, not completed facts)",
+      "AI MANAGEMENT (GM-private proposals, policy, revisions and receipts; never actor knowledge)","SESSION",
+      "ASSEMBLY PLAN (GM-PRIVATE; protect per-character hooks)","ESTABLISHED PARTY STATE",
+      "CURRENT ENCOUNTER (GM-PRIVATE; do not expose BP math/composition unless learned in fiction)",
+      "ACTING CHARACTER/NPC ASSIGNMENT","ACTIVE HUMAN-CONTROLLED NPC PROXIES","ROSTER/PRESENCE","CLOCKS (MAY BE SECRET)","CURRENT PLAYER INPUT"]);
+    const sections=rawSections.map(text=>{
+      const split=text.indexOf(":");
+      if(split<0||text===SIMULATION_PROMPT) return {label:"SIMULATION RULES",value:text,required:true};
+      const label=text.slice(0,split),body=text.slice(split+1).trimStart();let value=body;
+      try{value=JSON.parse(body);}catch{ /* Preserve authored input and static instructions verbatim. */ }
+      return {label,value,required:requiredLabels.has(label),priority:label.startsWith("RECENT TRANSCRIPT")?30:
+        label.startsWith("NPC_COGNITION")||label.startsWith("FACTS VISIBLE")?20:0};
+    });
+    sections.push({label:"CANON LEDGER (authoritative; GM-private)",value:ctx.canon,required:true},
+      {label:"SAVED GM RULINGS (authoritative)",value:ctx.rulings,required:true},
+      {label:"CURRENT COMBATANTS (authoritative; GM-private)",value:ctx.current_combatants,required:true});
+    if(ctx.context_plan) sections.push({label:"SOURCED CONTEXT PLAN (GM-only, never actor omniscience)",value:ctx.context_plan,priority:10});
+    const {input}=budgetTurnPrompt(sections,{instructions,query:messageText});
     const req={
       model:this.config.gmModel,
       instructions,
       input,
       text:{format:{type:"json_schema",name:"veiled_city_gm_turn",strict:true,schema:gmSchema}}
     };
-    if(ctx.context_plan){
-      req.input+=`\nSOURCED CONTEXT PLAN (GM-only, never actor omniscience): ${JSON.stringify(ctx.context_plan)}`;
-      if(req.input.length>120000) throw new Error("Context input budget exceeded; narrow the scene/query before retrying.");
-    }
     if(this.config.reasoningEffort) req.reasoning={effort:this.config.reasoningEffort};
     const validateTurn=(result)=>{
       validatePostTurnStateReview(result);
@@ -547,7 +563,7 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
     let result=await this.requestStructured(req,{label:"GM turn"});
     try{ validateTurn(result); validateDecisionAdvisory(this.db,guildId,result); return result; }
     catch(err){
-      const retry={...req,input:`${input}\n\nSTRUCTURED TURN CORRECTION: The prior response failed required state/proposal consistency: ${String(err.message||err)}. Return a complete replacement response. Every state-review category must agree exactly with mutations. If this private player explicitly requested campaign canon, emit canon_proposals; do not claim application-side recording or notification in narration.`};
+      const retry={...req,input:`${req.input}\n\nSTRUCTURED TURN CORRECTION: The prior response failed required state/proposal consistency: ${String(err.message||err).slice(0,1200)}. Return a complete replacement response. Every state-review category must agree exactly with mutations. If this private player explicitly requested campaign canon, emit canon_proposals; do not claim application-side recording or notification in narration.`};
       result=await this.requestStructured(retry,{label:"GM turn state-review retry"});
       validateTurn(result);
       validateDecisionAdvisory(this.db,guildId,result);

@@ -1,8 +1,8 @@
-# VEILED CITY MULTIPLAYER DISCORD ENGINE v9.0.0
+# VEILED CITY MULTIPLAYER DISCORD ENGINE v9.1.0
 
 ## Current Version
 
-**9.0.0** — Veilkeeper, a stateful Discord AI GM for multiplayer Veiled City
+**9.1.0** — Veilkeeper, a stateful Discord AI GM for multiplayer Veiled City
 campaigns using Daggerheart. The version is maintained in
 [bot/package.json](bot/package.json).
 

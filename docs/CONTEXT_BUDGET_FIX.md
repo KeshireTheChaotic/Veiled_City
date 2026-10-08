@@ -1,0 +1,15 @@
+# Whole-turn context budget — 9.1.0
+
+The 9.0.0 party/private turn builder appended independent transcript, facts, narratives, simulation, civic, history and AI-management packets. Its 120000-character check only ran when an adaptive context plan existed; that plan bounded just part of the assembled prompt. Ordinary campaign growth could therefore stop a turn before generation, even though each subsystem respected its own limits.
+
+The fix budgets the combined instructions and turn input on every party/private turn, regardless of feature flags. It reserves 6000 characters for appended intent guidance and structured/state-review retries. This is a conservative application character budget, not a tokenizer estimate, provider context-window setting or API spending limit. Existing output-token settings are unchanged.
+
+Mandatory instructions, authenticated current input/declaration, campaign/session/assembly/party state, attendance/control/proxy scope, clocks, AI-management authority/targets and current encounter remain intact. Native canon, applicable saved human rulings and current combatants are now explicitly included as mandatory sections. If mandatory material alone cannot fit safely, generation still fails before a model request with an actionable human-review error; authority is never silently truncated.
+
+Optional context uses complete records, prioritizing literal current-query relevance, recent transcript and NPC/actor-visible facts. Retained records keep original ordering within each section and preserve their source/privacy/status fields. No sentence slicing, generated summary, extra provider request, campaign deletion or permission change is used. Oversized optional records can be omitted while smaller relevant records still fit. The GM-private prompt reports omitted sections/counts and warns that absence never establishes nonexistence, consent, permission or success. Records remain persisted for later retrieval.
+
+Structured parsing and state-review retries reuse the same budgeted prompt; state-review error text is bounded. This corrects the former retry path's separate construction. No new flags, delegation operations, environment settings, database schema or command registration are required.
+
+Required `prompt-budget-test.mjs` exercises whole-record selection/determinism, older relevant context, oversized individual records, mandatory overflow before calls, actual persisted oversized transcripts through `GMService.runTurn`, adaptive context on/off, party/private scope, foreign private-transcript exclusion, native canon/ruling retention, both retry paths and zero campaign writes. Full required offline validation remains the release gate. Synthetic provider doubles do not certify unrestricted model semantics.
+
+Deployment updates files through an authorized push and production fast-forward pull. It preserves production `.env`, ignored campaign data and unrelated untracked files. The running bot must be restarted by its operator to load the updated code; the Git deployment does not restart it or replay the failed player turn.

@@ -58,6 +58,7 @@ bot/scripts/offline-smoke-test.mjs
 bot/scripts/operations-regression-test.mjs
 bot/scripts/portrayal-authoring-test.mjs
 bot/scripts/production-regression-test.mjs
+bot/scripts/prompt-budget-test.mjs
 bot/scripts/quality-check.mjs
 bot/scripts/refactor-regression-test.mjs
 bot/scripts/release-files.mjs
@@ -135,6 +136,7 @@ bot/src/owner-consent.js
 bot/src/personal-continuity.js
 bot/src/player-language.js
 bot/src/portrayal.js
+bot/src/prompt-budget.js
 bot/src/provenance.js
 bot/src/publishing.js
 bot/src/register-commands.js
@@ -259,6 +261,7 @@ docs/CHARACTER_NARRATIVE_MARKDOWN.md
 docs/CODE_STANDARDS.md
 docs/COMBAT_STATE.md
 docs/CONTENT_SEEDING.md
+docs/CONTEXT_BUDGET_FIX.md
 docs/DEPLOYMENT.md
 docs/DISCORD_SETUP.md
 docs/DOWNTIME.md
