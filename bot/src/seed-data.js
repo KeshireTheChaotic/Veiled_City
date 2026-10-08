@@ -4,6 +4,7 @@ import path from "node:path";
 import { createHash } from "node:crypto";
 import { normalizeNpcKey, seedNpcCognition } from "./npc-cognition.js";
 import { configureSimulationEntity } from "./simulation.js";
+import { backfillSeedData } from "./seed-drafts.js";
 
 const TEXT_EXTENSIONS=new Set([".md",".txt",".json",".csv",".yaml",".yml",".html",".xml"]);
 const PRIVATE_LABELS=new Set(["gm","gm_private","private","player","character"]);
@@ -126,18 +127,10 @@ export function seedData({db,content,guildId,actorId="system"}){
         const kind=catalogKind(file);
         // Known structured lists use whole entries, not their individual object fields.
         const entries=["state","json"].includes(kind)?catalogEntries(file.json)
-          :Array.isArray(file.json)?catalogEntries(file.json):Object.entries(file.json);
+          :plain(file.json)&&typeof file.json.name==="string"?[[normalizeNpcKey(file.json.name),file.json]]:catalogEntries(file.json);
         for(const [key,data] of entries){
           db.insertSeedCatalog(guildId,{sourcePath:file.sourcePath,key,kind,data,...boundary});
           counts.catalog++;
-          if(boundary.visibility==="gm"&&file.sourcePath.split("/")[0]!=="PLAYER"){
-            seedRuntimeEntity(db,guildId,kind,data,counts);
-            if(kind==="npc"){
-              if(!plain(data)||typeof data.name!=="string"||(data.knows!==undefined&&!Array.isArray(data.knows))
-                ||(data.does_not!==undefined&&!Array.isArray(data.does_not))) throw new Error("Invalid NPC dossier in seed data.");
-              dossiers.push(data);
-            }
-          }
         }
       }
       if(boundary.characterId&&file.extension===".md"&&file.body.trim()){
@@ -149,10 +142,22 @@ export function seedData({db,content,guildId,actorId="system"}){
         }else counts.narrativeConflicts++;
       }
     }
+    // Backfill from the accepted archive, not changed disk files. Older seed receipts do not block new adapters.
+    for(const row of db.listSeedCatalog(guildId,{includeGM:true})){
+      if(row.visibility!=="gm"||row.source_path.split("/")[0]==="PLAYER") continue;
+      seedRuntimeEntity(db,guildId,row.kind,row.data,counts);
+      if(row.kind==="npc"){
+        const data=row.data;
+        if(!plain(data)||typeof data.name!=="string"||(data.knows!==undefined&&!Array.isArray(data.knows))
+          ||(data.does_not!==undefined&&!Array.isArray(data.does_not))) throw new Error("Invalid NPC dossier in seed data.");
+        if(!db.getNpcProfile(guildId,normalizeNpcKey(data.name))) dossiers.push(data);
+      }
+    }
     if(dossiers.length||!db.getSeedRun(guildId,"npc_cognition_v1")){
       counts.cognition=seedNpcCognition({db,guildId,actorId,incremental:true,
         content:{read:()=>JSON.stringify(dossiers)}});
     }
+    counts.bulk=backfillSeedData(db,guildId,actorId);
     if(!db.getSeedRun(guildId,"seed_data_v1")) db.recordSeedRun(guildId,"seed_data_v1",{actorId,summary:counts});
     db.recordMutation(guildId,{actorType:"human_gm",actorId,sourceLayer:"seed",mutationType:"content_seed",
       entityKey:"seed_data_v1",visibility:"gm",confidence:100,rationale:"Add-only folder import with explicit privacy boundaries.",after:counts});

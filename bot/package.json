@@ -31,7 +31,7 @@
     "test:cognition": "node scripts/npc-cognition-regression-test.mjs",
     "test:audit": "node scripts/audit-regression-test.mjs",
     "test:simulation": "node scripts/simulation-regression-test.mjs",
-    "test:seed": "node scripts/seed-data-regression-test.mjs",
+    "test:seed": "node --import ./scripts/offline-guard.mjs scripts/seed-data-regression-test.mjs && node --import ./scripts/offline-guard.mjs scripts/seed-drafts-regression-test.mjs",
     "test:city": "node scripts/city-regression-test.mjs && node scripts/city-core-regression-test.mjs && node scripts/city-civic-regression-test.mjs && node scripts/city-depth-regression-test.mjs"
   },
   "dependencies": {

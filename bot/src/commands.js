@@ -22,6 +22,7 @@ import { replayReceiptIfPresent, installReceiptCapture, isMutatingCommand } from
 import { runCampaignDiagnostics, formatDiagnostics } from "./operations/diagnostics.js";
 import { buildGmOverview, formatGmOverview } from "./operations/overview.js";
 import { seedData } from "./seed-data.js";
+import { handleSeedCommand } from "./seed-commands.js";
 import { KeyedSerialQueue } from "./serial-queue.js";
 import { prepareNpcDirector, commitNpcDirector } from "./simulation.js";
 import { publishSimulationHooks } from "./publishing.js";
@@ -342,10 +343,14 @@ async function executeCommand(interaction,{db,gm,voice=null}){
     group=root==="level"?"character":root==="combat"?"encounter":root;
     sub=interaction.options.getSubcommand();
   }
-  if(group!=="story"||isMutatingCommand(group,sub)) await ensurePlayer(db,interaction);
+  if((group!=="story"&&!(group==="admin"&&sub==="seed-drafts"))||isMutatingCommand(group,sub)) await ensurePlayer(db,interaction);
   if(await replayReceiptIfPresent({db,interaction,group,sub})) return true;
   const restoreReceiptCapture=installReceiptCapture({db,interaction,group,sub});
   try{
+    if(group==="admin"&&["seed-drafts","seed-add","seed-edit","seed-remove","seed-approve","seed-reject"].includes(sub)){
+      if(!isGM(db,interaction)) throw new PermissionError("GM/admin permission required.");
+      return await handleSeedCommand(interaction,{db});
+    }
     if(group==="city") return await handleCityCommand(interaction,{db,gm});
     if(group==="story") return await handleStoryCommand(interaction,{db,gm});
     if(group==="sim") return await handleSimulationCommand(interaction,{db,isGm:isGM(db,interaction),sub});
@@ -1496,6 +1501,9 @@ GM notes: ${a.draft.gm_notes}`:""}`.slice(0,1950):"No aftermath draft exists for
           `Files imported: **${counts.files}** (shared **${counts.party}**, character-only **${counts.character}**, GM-only **${counts.gm}**).`,
           `Structured entries: **${counts.catalog}**; runtime entities: **${counts.entities}**; references: **${counts.references}**; narratives: **${counts.narratives}**.`,
           `New NPC profiles: **${counts.cognition?.profiles||0}**; binary files archived: **${counts.binary}**.`,
+          `Bulk projections: **${counts.bulk.sources}** files / **${counts.bulk.entries}** entries; library entries: **${counts.bulk.library}**; review drafts: **${counts.bulk.drafts}**.`,
+          `Missing dossier fields backfilled: **${counts.bulk.fields}**.`,
+          "Review inferred/typed drafts with /vc-admin seed-drafts; use seed-edit, seed-add, seed-remove, seed-approve, or seed-reject.",
           `Existing files skipped: **${counts.skipped}**; changed sources requiring review: **${counts.changed}**.`,
           `Unmatched character files retained GM-only: **${counts.unmatched}**; narrative conflicts/oversize: **${counts.narrativeConflicts}**.`,
           "Existing campaign state is preserved. GM sources never become party knowledge or canon automatically."
@@ -1654,7 +1662,7 @@ GM notes: ${a.draft.gm_notes}`:""}`.slice(0,1950):"No aftermath draft exists for
     }
   } catch(err){
     const msg=err.message||String(err);
-    if(!isExpectedError(err) && interaction.guild && !(group==="story"&&!isMutatingCommand(group,sub))){
+    if(!isExpectedError(err) && interaction.guild && !((group==="story"||group==="admin"&&sub==="seed-drafts")&&!isMutatingCommand(group,sub))){
       await postStateError({db,guild:interaction.guild,error:err,context:`command:/vc ${group||""} ${sub||""}`,sessionId:db.getActiveSession(interaction.guildId)?.id||null});
     }
     const payload={content:`⚠️ ${msg}`,ephemeral:true};

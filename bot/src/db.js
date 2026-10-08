@@ -181,11 +181,12 @@ export class VeiledDB {
       .run(guildId,kind,key,actor_key,location_key,district_key,status,visibility,subject_key,source_event,clock.tick,clock.minute,JSON.stringify(data));
     return this.getCityRecord(guildId,kind,key);
   }
-  listCityRecords(guildId,{kind="",actor="",status="",query="",limit=30,includeGM=false}={}){
+  listCityRecords(guildId,{kind="",actor="",status="",query="",limit=30,offset=0,includeGM=false}={}){
     return this.db.prepare(`SELECT * FROM city_records WHERE guild_id=? AND (?=1 OR visibility IN ('public','party'))
       AND (?='' OR kind=?) AND (?='' OR actor_key=?) AND (?='' OR status=?)
       AND (?='' OR instr(lower(record_key||' '||location_key||' '||district_key||' '||data_json),lower(?))>0)
-      ORDER BY minute DESC,rowid DESC LIMIT ?`).all(guildId,includeGM?1:0,kind,kind,actor,actor,status,status,query,query,Math.min(100,limit))
+      ORDER BY minute DESC,rowid DESC LIMIT ? OFFSET ?`).all(guildId,includeGM?1:0,kind,kind,actor,actor,status,status,query,query,
+        Math.max(1,Math.min(100,limit)),Math.max(0,offset))
       .map(row=>({...row,data:JSON.parse(row.data_json)}));
   }
   saveWorldLink(guildId,{from,to,relation,asserted_by=""}){
