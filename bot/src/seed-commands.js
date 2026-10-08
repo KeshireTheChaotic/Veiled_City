@@ -2,12 +2,20 @@
 import { AttachmentBuilder } from "discord.js";
 import { cityObject } from "./city-calendar.js";
 import { addSeedDraft, editSeedDraft, reviewSeedDraft } from "./seed-drafts.js";
+import { previewContentPackage, importContentPackage, reviewContentPackage, exportContentPackage } from "./content-packages.js";
 
 export async function handleSeedCommand(interaction,{db}){
   const sub=interaction.options.getSubcommand(),guildId=interaction.guildId,actorId=interaction.user.id;
   const id=interaction.options.getString("draft_id");
   let result;
-  if(sub==="seed-drafts"){
+  if(sub.startsWith("seed-package-")){
+    const input=cityObject(JSON.parse(interaction.options.getString("json")||"{}"));
+    if(sub==="seed-package-preview") result=previewContentPackage(db,guildId,input);
+    else if(sub==="seed-package-import") result=importContentPackage(db,guildId,input.package,actorId,{rightsApproved:input.rights_approved});
+    else if(sub==="seed-package-review") result=reviewContentPackage(db,guildId,input,actorId);
+    else if(sub==="seed-package-export") result=exportContentPackage(db,guildId,input.id,{publicOnly:input.public_only!==false});
+    else throw new Error("Unknown package operation.");
+  }else if(sub==="seed-drafts"){
     if(id){
       result=db.getCityRecord(guildId,"seed_draft",id);
       if(!result) throw new Error("Seed draft not found in this campaign.");
@@ -23,7 +31,7 @@ export async function handleSeedCommand(interaction,{db}){
     reason:interaction.options.getString("reason")||"",publicVoice:interaction.options.getBoolean("public_voice")===true});
   else throw new Error("Unknown seed draft command.");
   const summary=result.drafts?result.drafts.map(row=>`${row.record_key} | ${row.data.proposal.kind} | ${row.data.proposal.key}`).join("\n")
-    :`${result.record_key} | ${result.status}`;
+    :`${result.record_key||result.name||"Validated package"} | ${result.status||"read-only definitions"}`;
   await interaction.reply({content:`${sub} complete (GM-only).\n${summary||"No matching drafts."}`.slice(0,1950),ephemeral:true,
     allowedMentions:{parse:[]},files:[new AttachmentBuilder(Buffer.from(JSON.stringify(result,null,2)),{name:"seed-drafts.json"})]});
   return true;

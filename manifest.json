@@ -1,6 +1,6 @@
 {
   "package": "Veiled_City_Multiplayer_Discord",
-  "version": "8.8.0",
+  "version": "8.9.0",
   "generated": "2026-10-08",
   "content_normalization": "utf8-lf",
   "files": [
@@ -27,7 +27,7 @@
     {
       "path": "README.md",
       "size_bytes": 15436,
-      "sha256": "fecbb05844d526c306ca970f70075b6fabeb739e957063cf5958636bc534cc2e"
+      "sha256": "c96739a1a2527bc19c09449f83860b84ac2c348eda23215dfc60ed207f606a76"
     },
     {
       "path": "SUGGESTIONS-End-To-End.md",
@@ -52,7 +52,7 @@
     {
       "path": "bot/package.json",
       "size_bytes": 2601,
-      "sha256": "cd71f14b36def669ff6d3616e495078d2ce11de8bd47c4b70f19994c6377d919"
+      "sha256": "151004e0bf3ec33cfbd6f1fbb4722a5e6c22f80d2a408d0b677d32bef74622ba"
     },
     {
       "path": "bot/scripts/audit-regression-test.mjs",
@@ -250,6 +250,11 @@
       "sha256": "829a9306ba72d5ab1e166bae3a6dd507800eaf1c552f720a16b1649681e42fec"
     },
     {
+      "path": "bot/scripts/i-heard-you-9-test.mjs",
+      "size_bytes": 5281,
+      "sha256": "b5424bb14948f87eedc5b621f8dfc8343713aa32427ea26f992b61e693fc28c4"
+    },
+    {
       "path": "bot/scripts/narrative-contract-test.mjs",
       "size_bytes": 7329,
       "sha256": "5537cffc2ba1f4911d70789561e12dc4ddf1587c097de1c9e7d00a03eb38427b"
@@ -381,8 +386,8 @@
     },
     {
       "path": "bot/scripts/validate-offline.mjs",
-      "size_bytes": 2497,
-      "sha256": "2d6f1e1a692cf2d24c2ce5d2d2d384e8ceb461822b48fdbe6b52ce2a38673ac3"
+      "size_bytes": 2518,
+      "sha256": "f2e58dd29850128c8464b759d6d49ad8028acc672d3f718659183513de027a61"
     },
     {
       "path": "bot/sql/schema.sql",
@@ -471,8 +476,8 @@
     },
     {
       "path": "bot/src/command-definitions.js",
-      "size_bytes": 67373,
-      "sha256": "7e0c2e60b5ef7cf122073ee4c7e972c460e93d5b5756064f644ebd91f9862f99"
+      "size_bytes": 68480,
+      "sha256": "e040f06c5b533a47535209a96f95ba21fe8efe25c5404de4287bb16d9a6bb17e"
     },
     {
       "path": "bot/src/command-schema.js",
@@ -481,8 +486,8 @@
     },
     {
       "path": "bot/src/commands.js",
-      "size_bytes": 143731,
-      "sha256": "b5537d298682619fa02717e7e53afb1ae1fb3128d24634b488d15dcccc6d32cc"
+      "size_bytes": 143800,
+      "sha256": "d4c6c039e0d8a36c488a1df00bb70ce667e6006ea52c64718fe678ef31464ba7"
     },
     {
       "path": "bot/src/concept-context.js",
@@ -498,6 +503,11 @@
       "path": "bot/src/consent-language.js",
       "size_bytes": 6229,
       "sha256": "28fec77d8d7f2656695bc5bba6b17fe9dc9bf223d81e5b579242295db1dc3119"
+    },
+    {
+      "path": "bot/src/content-packages.js",
+      "size_bytes": 8358,
+      "sha256": "55422a05f59fc5e97303b85c5098798c8469b836ccb0d93c6c17b0caa9a9823b"
     },
     {
       "path": "bot/src/content.js",
@@ -586,8 +596,8 @@
     },
     {
       "path": "bot/src/idempotency.js",
-      "size_bytes": 3662,
-      "sha256": "cf6a1fedc099288d79403358c7d2a3f790342c4f072ec20f7685ba743347c177"
+      "size_bytes": 3722,
+      "sha256": "5fa2ff598f0bb531d9f679f62153151b06c164fda42bef08749f455c4c8287da"
     },
     {
       "path": "bot/src/index.js",
@@ -711,8 +721,8 @@
     },
     {
       "path": "bot/src/seed-commands.js",
-      "size_bytes": 2103,
-      "sha256": "4ae851a4ea8daca339ab583622b4bd1c9342dbd4c382e5f625e9529ff4f4c605"
+      "size_bytes": 2931,
+      "sha256": "5f598e76b7c250ba3c62acd631813b7791455c6f5522702ecb1998d1da62d6f2"
     },
     {
       "path": "bot/src/seed-data.js",
@@ -1341,13 +1351,13 @@
     },
     {
       "path": "docs/I_HEARD_YOU_GAP_ANALYSIS.md",
-      "size_bytes": 11700,
-      "sha256": "f1b798a8ca42b0e3bcb769ff493e5a60f7df874de6bdd6e4b42987be392f022c"
+      "size_bytes": 12409,
+      "sha256": "d95e1f43dad9766a790552743a2d00a2639e257b39c4da942c37467b424d5483"
     },
     {
       "path": "docs/I_HEARD_YOU_IMPLEMENTATION.md",
-      "size_bytes": 23693,
-      "sha256": "1beba5386da7fc9d9807a277802c70c0353b5bd481a8849483f09ce7f9c399b9"
+      "size_bytes": 26755,
+      "sha256": "a9fa97750d68c84b03e850d276683b0b9e6262a35a46aa734afb1ffbf503c506"
     },
     {
       "path": "docs/LEVEL_UP.md",

@@ -125,3 +125,22 @@ P11 extends the existing `expansion-quality-test.mjs` production validator bench
 The required runner now emits `VALIDATION_REPORT` JSON with actual per-suite exit status, failures, zero live requests/billable tokens and limitations, including on failure. Reports are stdout artifacts, not campaign state. Offline guard now also denies UDP and marks a guarded process failed after any attempted outbound request, even when test/application code catches the error. Its intentional security probe runs in a child process whose required failing exit is asserted by the existing narrative-contract suite; no outbound request is transmitted. Tests use dummy credentials and synthetic provider/Discord doubles.
 
 Observed targeted evaluation: 23/23 asserted cases passed, zero false positives/negatives, two unknowns honestly UNVERIFIED. P11 COMPLETE for required reproducible offline evaluation and reporting; unrestricted model meaning/judgment remains UNVERIFIED. No runtime flags, AI delegation, schema or live state change. Full offline gate before commit.
+
+## Phase 9 — 8.9.0 (starting HEAD 52700aa)
+
+P12 audit reused `seed_draft`, `seed_reference`, native source events, reviewed add-only seed materializers and snapshots. New `content-packages.js` validates closed, bounded, canonical-SHA256 definitions for NPCs, places, factions, campaign mysteries, rules references and safe player material. Every definition has explicit GM/public privacy and named HTTPS source/license citations. Citation strings are not a legal rights verification: actual authenticated GM rights approval is mandatory. Unknown runtime/owner/resource fields, forged hashes, unsupported kinds, duplicate identities, public fixed truths/GM notes and credential/query-bearing source URLs are refused.
+
+GM commands (JSON inputs; all responses private):
+
+```text
+/vc-admin seed-package-preview json:<package document>
+/vc-admin seed-package-import json:{"package":<document>,"rights_approved":true}
+/vc-admin seed-package-review json:{"id":"package:<sha256>","expected_revision":"<current fingerprint>","decision":"approve","public_export":false}
+/vc-admin seed-package-export json:{"id":"package:<sha256>","public_only":true}
+```
+
+Preview/export are zero-write reads, including command entry points. Import stages an inert native reference draft; approval creates a native reference only, never an NPC, actor knowledge, live mystery truth or rule installation. Definitions can subsequently be proposed through existing `/vc-story author` and reviewed native authoring workflows, which retain identity/canon/mechanical validators. Import replay is content-addressed, including rejected tombstones. Edits after rights review require reimport and fresh review. Collisions are previewed, never overwritten. No new content/PC tables or parallel canon ledger.
+
+Public export additionally requires separate human `public_export:true` review at the exact current revision, exports only public definitions and their referenced citations, and blocks common personal/runtime identifiers and actual campaign PC names. Arbitrary prose cannot be proven secret/PII-free by a regex: human public review remains necessary and its limits are explicit. Private GM export requires explicit `public_only:false`; neither mode exports runtime sheets/resources/memories/rolls. Rules references are inert citations, never automatic homebrew. Package format: `veiled-city-content-package-v1`, name/version/license, sources `{id,title,url,license}`, entries `{kind,key,visibility,source_refs,definition}`, optional verified sha256. Maximum 12 entries/8 sources/24000 characters; Discord JSON inputs retain Discord's own text limits.
+
+IHY9 required real seed/reference/review/command tests prove inertness, existing NPC preservation/collision, source/hash/rights/revision/privacy/PII denial, replay, changed-content re-review and restart export equality. P12 COMPLETE for bounded inert portability, not automatic installation or semantic/legal certification. No new flags or AI delegation; explicit GM-only operations. Schema440 unchanged. Full offline gate before commit.

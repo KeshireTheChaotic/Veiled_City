@@ -1,6 +1,6 @@
 /** Required suites run in network-denied child processes with dummy credentials. */
 import { spawnSync } from "node:child_process";
-const suites=["quality-check","format-check","check-source","validate-command-schema","i-heard-you-1-test","i-heard-you-2-test","i-heard-you-3-test","i-heard-you-4-test","i-heard-you-5-test","i-heard-you-6-test","i-heard-you-7-test","offline-smoke-test","production-regression-test",
+const suites=["quality-check","format-check","check-source","validate-command-schema","i-heard-you-1-test","i-heard-you-2-test","i-heard-you-3-test","i-heard-you-4-test","i-heard-you-5-test","i-heard-you-6-test","i-heard-you-7-test","i-heard-you-9-test","offline-smoke-test","production-regression-test",
   "refactor-regression-test","operations-regression-test","npc-cognition-regression-test","audit-regression-test","simulation-regression-test",
   "seed-data-regression-test","seed-drafts-regression-test","city-regression-test","city-core-regression-test","city-civic-regression-test","city-depth-regression-test","narrative-contract-test",
   "context-conversation-test","story-continuity-test","negotiation-preview-test","endurance-test","portrayal-authoring-test",

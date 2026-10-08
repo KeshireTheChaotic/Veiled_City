@@ -355,7 +355,7 @@ async function executeCommand(interaction,{db,gm,voice=null}){
     group=root==="level"?"character":root==="combat"?"encounter":root;
     sub=interaction.options.getSubcommand();
   }
-  if((group!=="story"&&!(group==="admin"&&sub==="seed-drafts")&&!(group==="intel"&&["discover","continuity","organizations","brief","recap"].includes(sub))
+  if((group!=="story"&&!(group==="admin"&&["seed-drafts","seed-package-preview","seed-package-export"].includes(sub))&&!(group==="intel"&&["discover","continuity","organizations","brief","recap"].includes(sub))
     &&!(group==="handout"&&sub==="evidence")&&!(group==="downtime"&&sub==="long-project-status")
     &&!(group==="roll"&&["pending","result"].includes(sub)))||isMutatingCommand(group,sub)) await ensurePlayer(db,interaction);
   if(await replayReceiptIfPresent({db,interaction,group,sub})) return true;
@@ -392,7 +392,7 @@ async function executeCommand(interaction,{db,gm,voice=null}){
       await interaction.reply({ephemeral:true,allowedMentions:{parse:[]},content:sub==="discover"?formatDiscovery(db,interaction.guildId,interaction.user.id,result):"Character-private continuity; recorded knowledge only.",
         files:[new AttachmentBuilder(Buffer.from(JSON.stringify(result,null,2)),{name:"personal-continuity.json"})]});return true;
     }
-    if(group==="admin"&&["seed-drafts","seed-add","seed-edit","seed-remove","seed-approve","seed-reject"].includes(sub)){
+    if(group==="admin"&&(["seed-drafts","seed-add","seed-edit","seed-remove","seed-approve","seed-reject"].includes(sub)||sub.startsWith("seed-package-"))){
       if(!isGM(db,interaction)) throw new PermissionError("GM/admin permission required.");
       return await handleSeedCommand(interaction,{db});
     }
@@ -1750,7 +1750,7 @@ GM notes: ${a.draft.gm_notes}`:""}`.slice(0,1950):"No aftermath draft exists for
     }
   } catch(err){
     const msg=err.message||String(err);
-    if(!isExpectedError(err) && interaction.guild && !((group==="story"||group==="intel"||group==="admin"&&sub==="seed-drafts")&&!isMutatingCommand(group,sub))){
+    if(!isExpectedError(err) && interaction.guild && !((group==="story"||group==="intel"||group==="admin")&&!isMutatingCommand(group,sub))){
       await postStateError({db,guild:interaction.guild,error:err,context:`command:/vc ${group||""} ${sub||""}`,sessionId:db.getActiveSession(interaction.guildId)?.id||null});
     }
     const payload={content:`⚠️ ${msg}`,ephemeral:true};
