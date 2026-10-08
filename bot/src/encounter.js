@@ -118,15 +118,46 @@ export function manageWorldEncounter(db,guild,input,actorId,lib){
 }
 export function recordWorldEncounterOutcome(db,guild,encounter){
   if(db.getCityCalendar(guild).flags.encounter_intelligence!==true) return null;
+  const actualEncounter=db.getEncounter(encounter.id);
+  if(actualEncounter?.guild_id!==guild||actualEncounter.status!=="ended") throw new Error("An actually ended encounter in this campaign is required.");
   const binding=db.getCityRecord(guild,"encounter_binding",encounter.id);
   const proposal=binding&&db.getCityRecord(guild,"encounter_proposal",binding.data.proposal);
   if(!proposal) return null;
   const key=`encounter-outcome:${encounter.id}`,prior=db.getCityRecord(guild,"encounter_outcome",key);if(prior) return prior;
   const combatants=db.listCombatants(encounter.id,{includeRemoved:true});
+  return db.transaction(()=>{
   const source=indexWorldEvent(db,guild,{key,title:"Recorded encounter outcome",source_id:encounter.id,kind:"encounter_outcome",visibility:"gm",location_key:proposal.location_key,
     details:{encounter_id:encounter.id,results:combatants.map(row=>({id:row.id,template:row.base_name,hp:row.hp_current,status:row.status}))}},"encounter_resolver");
+  if(db.getCityCalendar(guild).flags.tactical_memory===true){
+    for(const bound of binding.data.combatants||[]){
+      const actual=combatants.find(row=>row.id===bound.id);if(!actual||!db.getNpcProfile(guild,bound.actor)) continue;
+      const observation=`Encounter ${encounter.encounter_number}: my tracked combatant status was ${actual.status}, HP ${actual.hp_current}/${actual.hp_max}. This does not establish death or any PC's hidden capabilities.`;
+      const report=indexWorldEvent(db,guild,{key:`combat-report:${encounter.id}:${bound.actor}`,source_id:actual.id,kind:"combat_report",title:"Actor's own combat result",
+        visibility:"gm",details:{npc_key:bound.actor,observation,encounter_id:encounter.id}},"encounter_resolver");
+      db.addNpcMemory(guild,{npcKey:bound.actor,memoryType:"episodic",content:observation,sourceType:"experienced",sourceRef:report.event_key,
+        importance:85,confidence:100,tags:["tactical_history","native_combat_result","nonlethal_possible"]});
+      db.upsertNpcKnowledge(guild,{npcKey:bound.actor,knowledgeKey:`combat:${encounter.id}`,content:observation,sourceType:"experienced",sourceRef:report.event_key,confidence:100,isSecret:true});
+    }
+  }
   return db.saveCityRecord(guild,{kind:"encounter_outcome",key,source_event:source.event_key,data:{proposal:proposal.record_key,encounter_id:encounter.id,
     results:source.details.results,guidance:"Native combat results only. Defeated is not dead; location, witness knowledge and faction responses require separately sourced reviewed actions."}});
+  });
+}
+export function worldCombatantDrafts(db,guild,encounter,rows){
+  const binding=db.getCityRecord(guild,"encounter_binding",encounter.id);if(!binding) return rows;
+  const proposal=db.getCityRecord(guild,"encounter_proposal",binding.data.proposal);
+  if(rows.length!==proposal.data.bindings.length) throw new Error("Explicit single-body world combatant mapping required.");
+  return rows.map((row,index)=>({...row,notes:`[world_actor:${proposal.data.bindings[index].key}]\n${row.notes}`}));
+}
+export function bindWorldCombatants(db,guild,encounter,rows){
+  const binding=db.getCityRecord(guild,"encounter_binding",encounter.id);if(!binding) return;
+  const proposal=db.getCityRecord(guild,"encounter_proposal",binding.data.proposal);
+  const combatants=proposal.data.bindings.map(actor=>{
+    const actual=rows.filter(row=>row.notes.startsWith(`[world_actor:${actor.key}]\n`));
+    if(actual.length!==1) throw new Error("Unique world actor/combatant mapping required.");
+    return {actor:actor.key,id:actual[0].id};
+  });
+  db.saveCityRecord(guild,{...binding,key:binding.record_key,data:{...binding.data,combatants}});
 }
 export function validateWorldEncounterActivation(db,guild,encounter){
   const binding=db.getCityRecord(guild,"encounter_binding",encounter.id);if(!binding) return;

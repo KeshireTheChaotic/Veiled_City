@@ -11,6 +11,7 @@ import { applyAuthoritativeMutation } from "./state.js";
 import { commitGmTurn } from "./turn-orchestration.js";
 import { routeDiscoveryMessage } from "./continuity-routing.js";
 import { captureArcCandidate } from "./personal-continuity.js";
+import { captureDialogue } from "./dialogue-continuity.js";
 import { publishEventResults, postGmLog, postStateError, deliverHandout, postPlayMessage } from "./publishing.js";
 import { VoiceNarrator } from "./voice.js";
 import { KeyedSerialQueue } from "./serial-queue.js";
@@ -288,6 +289,7 @@ async function processPrivateTurn(message,directMention){
   }
   const speaker=controlled?.name||message.member?.displayName||message.author.username;
   const vis=controlled?.character_id?"character":"player";
+  captureDialogue(db,message.guild.id,message.author.id,controlled?.npc_proxy?null:controlled?.character_id,message.id,playerText,{privateScene:true});
   captureArcCandidate(db,message.guild.id,message.author.id,controlled?.npc_proxy?null:controlled?.character_id,message.id,playerText);
   db.addMessage({guildId:message.guild.id,sessionId:session.id,messageId:message.id,userId:message.author.id,speakerName:speaker,characterId:controlled?.character_id||null,visibility:vis,subjectUserId:vis==="player"?message.author.id:null,subjectCharacterId:vis==="character"?controlled.character_id:null,content:playerText});
 
@@ -368,6 +370,7 @@ async function processPartyTurn(message,directMention){
   const speaker=controlled?.name||message.member?.displayName||message.author.username;
   captureArcCandidate(db,message.guild.id,message.author.id,controlled?.npc_proxy?null:controlled?.character_id,message.id,playerText);
   db.addMessage({guildId:message.guild.id,sessionId:session.id,messageId:message.id,userId:message.author.id,speakerName:speaker,characterId:controlled?.character_id||null,visibility:"party",content:playerText});
+  captureDialogue(db,message.guild.id,message.author.id,controlled?.npc_proxy?null:controlled?.character_id,message.id,playerText);
 
   let should=false;
   try{

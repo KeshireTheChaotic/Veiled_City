@@ -56,6 +56,7 @@ bot/scripts/simulation-regression-test.mjs
 bot/scripts/story-continuity-test.mjs
 bot/scripts/sync-release.mjs
 bot/scripts/systems-to-players-1-test.mjs
+bot/scripts/systems-to-players-2-test.mjs
 bot/scripts/validate-command-schema.mjs
 bot/scripts/validate-offline.mjs
 bot/sql/schema.sql
@@ -85,6 +86,7 @@ bot/src/context-planner.js
 bot/src/continuity-routing.js
 bot/src/db.js
 bot/src/decision-advisory.js
+bot/src/dialogue-continuity.js
 bot/src/dice.js
 bot/src/director.js
 bot/src/discord/chunking.js

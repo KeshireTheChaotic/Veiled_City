@@ -144,6 +144,7 @@ export function retrieveNpcCognition(db,guildId,{
       goals:goals.slice(0,Math.max(1,Math.min(10,Number(goalsPerNpc)||4))),
       knowledge,
       memories,
+      continuity_authority:"Dialogue quotations establish only what was said. Interpretations, promises, refusals and tactical history are actor-owned, not canon/consent, future decisions or new adversary features. De-escalation and retreat remain valid. Corrections must preserve original memories.",
       memory_clusters:clusterContext(db,guildId,"npc",profile.npc_key,query),
       scene_observations:scene?{...scene,occupants:scene.occupants.slice(0,16)}:null
     };

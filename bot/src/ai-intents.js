@@ -18,9 +18,10 @@ import { inspectNpcAction } from "./simulation.js";
 import { inspectInstitutionAction } from "./city-core.js";
 import { manageMemoryCluster, memoryMaintenanceCandidate } from "./memory-clusters.js";
 import { encounterProposalContext, proposeWorldEncounter } from "./encounter.js";
+import { interpretDialogue } from "./dialogue-continuity.js";
 const hash=value=>createHash("sha256").update(JSON.stringify(value)).digest("hex");
 const adapters=new Map();
-export const FEATURE_FLAGS={encounter:"encounter_intelligence",goal:"emergent_goals",consequence:"consequences",scene:"scene_continuity",group:"emergent_groups",
+export const FEATURE_FLAGS={dialogue:"dialogue_history",encounter:"encounter_intelligence",goal:"emergent_goals",consequence:"consequences",scene:"scene_continuity",group:"emergent_groups",
   strategy:"strategies",arc:"personal_arcs",discovery:"discovery",project:"long_projects",mediation:"conflict_mediation",
   memory:"memory_consolidation",density:"activity_density"};
 export const stateRevision=row=>row?hash(row):"absent";
@@ -47,7 +48,12 @@ export function configureDelegation(db,guild,input,reviewer){
 }
 function preflight(db,guild,intent,context){
   if(!validateIntent(intent)) throw new Error("Invalid closed versioned intent contract.");
-  if(context.scope?.mode==="private"&&!['arc','project','discovery'].includes(intent.feature)) throw new Error("Private scope cannot alter shared world state.");
+  if(context.scope?.mode==="private"&&!['arc','project','discovery','dialogue'].includes(intent.feature)) throw new Error("Private scope cannot alter shared world state.");
+  if(context.scope?.mode==="private"&&intent.feature==="dialogue"){
+    const source=requireCitySource(db,guild,intent.payload.source_event);
+    if(source.details.author!==context.scope.actorUserId||source.details.character_id!==context.scope.actorCharacterId)
+      throw new Error("Private dialogue must belong to this authenticated character.");
+  }
   if(db.getCityCalendar(guild).flags[FEATURE_FLAGS[intent.feature]]!==true) throw new Error("Feature is disabled.");
   if(db.isDirectorPaused(guild)) throw new Error("Director is paused.");
   for(const key of new Set([intent.payload.source_event,...intent.source_prerequisites])) requireCitySource(db,guild,key);
@@ -152,6 +158,11 @@ export function intentContext(db,guild){
   bounded.context_metrics={max_chars:24000,estimated_chars:chars,omissions,authority:"Whole scoped records omitted; permission fields are never stripped."};
   return bounded;
 }
+registerIntentAdapter("dialogue",{
+  current:()=>null,
+  impact:()=>({cost:0,review:false,reason:"Subjective listener memory only; never consent or canon."}),
+  apply:(db,guild,intent)=>interpretDialogue(db,guild,intent.payload)
+});
 registerIntentAdapter("encounter",{
   current:(db,guild,intent)=>db.getCityRecord(guild,"encounter_proposal",intent.target_key),
   impact:()=>({cost:0,review:false,reason:"GM-private proposal only; explicit native encounter review required before planning or activation."}),

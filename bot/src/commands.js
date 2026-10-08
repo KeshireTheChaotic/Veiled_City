@@ -5,7 +5,7 @@ import {
 } from "discord.js";
 import { dualityRoll, parseDice } from "./dice.js";
 import { publishJournal, postJournalEntry, publishEventResults, postGmLog, postStateError, postPrivateRelay, syncConfiguredSurfaces, postPlayMessage, sendPlayerPrivate, deliverHandout } from "./publishing.js";
-import { EncounterLibrary, livePcRoster, partyTier, baseBattlePoints, DIFFICULTY_ADJUSTMENTS, autoBuildComposition, recomputeBudget, battlePointCost, HEAVY_ROLES, defaultObjective, manageWorldEncounter, recordWorldEncounterOutcome, validateWorldEncounterActivation } from "./encounter.js";
+import { EncounterLibrary, livePcRoster, partyTier, baseBattlePoints, DIFFICULTY_ADJUSTMENTS, autoBuildComposition, recomputeBudget, battlePointCost, HEAVY_ROLES, defaultObjective, manageWorldEncounter, recordWorldEncounterOutcome, validateWorldEncounterActivation, worldCombatantDrafts, bindWorldCombatants } from "./encounter.js";
 import { prepareLevelup, applyLevelupToData, legalAdvancements, tierAchievement } from "./character-system.js";
 import { buildCombatants, hpMarksForDamage, combatantLine } from "./combat.js";
 import { applyAuthoritativeMutation } from "./state.js";
@@ -1073,10 +1073,13 @@ Source file: ${a.name}${narrativeImported?`\nGM-private narrative: ${narrativeRe
         let e=db.getCurrentEncounter(session.id); if(!e||e.status!=="planned") throw new Error("No planned encounter is available to start.");
         validateWorldEncounterActivation(db,interaction.guildId,e);
         db.snapshotCampaign(interaction.guildId,{label:`Pre-encounter ${e.encounter_number}`,reason:"Automatic snapshot before encounter start",createdBy:interaction.user.id});
-        e=db.setEncounterStatus(e.id,"active");
-        db.captureEncounterStartState(e.id);
-        e=db.getEncounter(e.id);
-        const combatants=db.initializeCombatants(e.id,buildCombatants(e,lib));
+        const combatants=db.transaction(()=>{
+          e=db.setEncounterStatus(e.id,"active");
+          db.captureEncounterStartState(e.id);
+          e=db.getEncounter(e.id);
+          const rows=db.initializeCombatants(e.id,worldCombatantDrafts(db,interaction.guildId,e,buildCombatants(e,lib)));
+          bindWorldCombatants(db,interaction.guildId,e,rows);return rows;
+        });
         db.audit(interaction.guildId,session.id,"human_gm",interaction.user.id,"encounter_start",{encounter_id:e.id,budget:e.budget_bp,spent:e.spent_bp,combatants:combatants.length});
         await postGmLog({db,guild:interaction.guild,sessionId:session.id,title:`Encounter #${e.encounter_number} started`,details:`${e.spent_bp}/${e.budget_bp} BP • ${e.objective}\nDeterministic combatants initialized: ${combatants.length}`});
         await interaction.reply({content:`Encounter #${e.encounter_number} is now **active** with **${combatants.length}** tracked adversary combatants. ${e.spent_bp>e.budget_bp?`⚠️ Composition is ${e.spent_bp-e.budget_bp} BP over budget.`:""}`,ephemeral:true}); return true;
