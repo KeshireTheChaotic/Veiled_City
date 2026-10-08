@@ -23,7 +23,7 @@ const log=createLogger(config.logLevel);
 const db=new VeiledDB(config.dbPath,path.resolve(process.cwd(),"./sql/schema.sql"));
 const content=new ContentIndex(config.contentRoot);
 const gm=new GMService({db,content,config});
-const voice=new VoiceNarrator(config);
+const voice=new VoiceNarrator(config,{db});
 const gmTurnQueue=new KeyedSerialQueue();
 
 const client=new Client({
@@ -236,6 +236,7 @@ function commitTurnMutation({guild,session,result,scope,speaker,label,meta={}}){
     const mutation=applyAuthoritativeMutation(db,{
       guildId:guild.id,
       sessionId:session.id,
+      narrative:result,
       events:result.events||[],
       relationships:result.relationships||[],
       handouts:result.handouts||[],

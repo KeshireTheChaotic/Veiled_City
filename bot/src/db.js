@@ -1969,6 +1969,17 @@ export class VeiledDB {
     return this.db.prepare("SELECT npc_key,display_name FROM npc_profiles WHERE guild_id=?").all(guildId)
       .some(row=>row.npc_key===normalized||normalizeNpcKey(row.display_name)===normalized);
   }
+
+  worldDraftNameInUse(guildId,kind,name,key=""){
+    if(kind==="npc"&&this.cityNpcNameInUse(guildId,name)) return true;
+    const draft=this.db.prepare(`SELECT 1 FROM city_records WHERE guild_id=? AND kind='world_draft' AND status='draft' AND record_key<>?
+      AND json_extract(data_json,'$.kind')=? AND lower(json_extract(data_json,'$.data.name'))=lower(?) LIMIT 1`).get(guildId,key,kind,name);
+    const entity=this.db.prepare(`SELECT 1 FROM simulation_entities WHERE guild_id=? AND entity_type=?
+      AND lower(json_extract(state_json,'$.name'))=lower(?) LIMIT 1`).get(guildId,kind,name);
+    const civic=this.db.prepare(`SELECT 1 FROM city_records WHERE guild_id=? AND kind=?
+      AND lower(json_extract(data_json,'$.name'))=lower(?) LIMIT 1`).get(guildId,kind,name);
+    return !!(draft||entity||civic);
+  }
   updateDowntimeProject(id,patch={}){
     const r=this.db.prepare("SELECT * FROM downtime_projects WHERE id=?").get(id); if(!r) throw new Error("Downtime project not found.");
     const n={...r,...patch};

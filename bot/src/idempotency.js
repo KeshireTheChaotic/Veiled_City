@@ -10,7 +10,7 @@ const READ_ONLY=new Set([
   "party:status","relationship:list","handout:list","player:accessibility","rules:ask","rules:rulings","downtime:status","canon:status","canon:conflicts","canon:proposals",
   "voice:status","admin:snapshots","admin:backups","admin:restore-preview","admin:doctor","admin:ledger","intel:recap","intel:clues","intel:facts","intel:caseboard",
   "gm:overview","gm:fact-list","gm:npc-state","director:status","director:history","sim:status","sim:records",
-  "city:status","city:events","city:preview","city:records","city:history","story:context","story:diagnose","story:clues","story:forecast","story:why"
+  "city:status","city:events","city:preview","city:records","city:history","story:context","story:diagnose","story:clues","story:forecast","story:why","story:pacing-status"
 ]);
 
 export function commandKey(group,sub){ return `${group||""}:${sub||""}`; }

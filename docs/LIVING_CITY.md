@@ -12,8 +12,9 @@ The AI constitution and Rules Desk retain their separately documented scopes.
 Phases are separate minor releases and commits: A 4.1.0 (foundation),
 B 4.2.0 (core civic actors), C 4.3.0 (interdependencies), D 4.4.0 (opt-in depth).
 Each phase must pass deterministic offline validation before its commit.
-Live Discord/model smoke tests remain a deployment gate, never inferred from
-offline results. No release is automatically deployed or pushed to origin.
+Required release gates run offline without paid API access. Live Discord/model
+smoke tests are optional and may incur costs, never inferred from offline results.
+No release is automatically deployed or pushed to origin.
 
 ## Phase A: core infrastructure
 
@@ -370,9 +371,9 @@ also rejects invalid calendar dates, preserves reviewed intent metadata and
 requires explicit known_targets for institutional targets outside their own
 jurisdiction/membership. All fixture model responses are simulated.
 
-Before production use, exercise command registration, ephemeral permissions,
+Optional operator smoke checklist: command registration, ephemeral permissions,
 one real minor-NPC structured response, a rejected/promoted draft, a reviewed
 institutional action, a due notice with publication retry, and backup/restore in
-a disposable Discord campaign. Those live gates are pending, not implied by
-offline validation. No push, production deployment or live campaign mutation is
+a disposable Discord campaign. These optional checks may incur API costs and are
+not release/acceptance gates or implied by offline validation. No push, production deployment or live campaign mutation is
 part of these local release commits.

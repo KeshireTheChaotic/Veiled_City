@@ -18,7 +18,7 @@ import { buildSessionRosterReport, chunkRosterReport } from "./roster.js";
 import { chunkDiscordLines } from "./discord/chunking.js";
 import { assertGmOnlyChannel, assertPlayerPrivateChannel } from "./discord/privacy.js";
 import { isExpectedError, PermissionError, NotFoundError } from "./errors.js";
-import { replayReceiptIfPresent, installReceiptCapture } from "./idempotency.js";
+import { replayReceiptIfPresent, installReceiptCapture, isMutatingCommand } from "./idempotency.js";
 import { runCampaignDiagnostics, formatDiagnostics } from "./operations/diagnostics.js";
 import { buildGmOverview, formatGmOverview } from "./operations/overview.js";
 import { seedData } from "./seed-data.js";
@@ -331,7 +331,6 @@ async function executeCommand(interaction,{db,gm,voice=null}){
   const commandName=interaction.commandName;
   if(commandName!=="vc"&&!commandName.startsWith("vc-")) return false;
   if(!interaction.guildId) { await interaction.reply({content:"Veiled City commands must be used in a server.",ephemeral:true}); return true; }
-  await ensurePlayer(db,interaction);
   let group;
   let sub;
   if(commandName==="vc"){
@@ -343,6 +342,7 @@ async function executeCommand(interaction,{db,gm,voice=null}){
     group=root==="level"?"character":root==="combat"?"encounter":root;
     sub=interaction.options.getSubcommand();
   }
+  if(group!=="story"||isMutatingCommand(group,sub)) await ensurePlayer(db,interaction);
   if(await replayReceiptIfPresent({db,interaction,group,sub})) return true;
   const restoreReceiptCapture=installReceiptCapture({db,interaction,group,sub});
   try{
@@ -435,7 +435,8 @@ async function executeCommand(interaction,{db,gm,voice=null}){
       }
       if(sub==="narrate"){
         await interaction.deferReply({ephemeral:true});
-        const r=await voice.narrate(interaction.guild,interaction.options.getString("text",true),{force:true});
+        const r=await voice.narrate(interaction.guild,interaction.options.getString("text",true),
+          {force:true,visibility:"party",npcKey:interaction.options.getString("npc")||null});
         if(!r.ok){
           const reason={not_connected:"Veilkeeper is not connected to voice. Use /vc-voice join first.",queue_full:"Voice narration queue is full. Wait for current narration to finish.",cancelled:"Voice narration was cancelled because the voice connection changed.",disabled:"Voice narration is disabled.",empty:"Narration text was empty after speech-safe cleanup."}[r.reason]||`Voice narration unavailable (${r.reason||"unknown"}).`;
           throw new Error(reason);
@@ -1653,7 +1654,7 @@ GM notes: ${a.draft.gm_notes}`:""}`.slice(0,1950):"No aftermath draft exists for
     }
   } catch(err){
     const msg=err.message||String(err);
-    if(!isExpectedError(err) && interaction.guild){
+    if(!isExpectedError(err) && interaction.guild && !(group==="story"&&!isMutatingCommand(group,sub))){
       await postStateError({db,guild:interaction.guild,error:err,context:`command:/vc ${group||""} ${sub||""}`,sessionId:db.getActiveSession(interaction.guildId)?.id||null});
     }
     const payload={content:`⚠️ ${msg}`,ephemeral:true};

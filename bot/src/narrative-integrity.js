@@ -29,7 +29,8 @@ export function validateNarrativeClaims(db,guildId,result,scope={mode:"party"}){
       materialClaimSchema.required.some(key=>!(key in c))) deny("claim_shape",c);
     if(materialClaimSchema.required.filter(key=>key!=="mutation_index").some(key=>typeof c[key]!=="string")) deny("claim_shape",c);
     if(!materialClaimSchema.properties.action.enum.includes(c.action)||!materialClaimSchema.properties.certainty.enum.includes(c.certainty)
-      ||!materialClaimSchema.properties.visibility.enum.includes(c.visibility)||!Number.isInteger(c.mutation_index)) deny("claim_shape",c);
+      ||!materialClaimSchema.properties.visibility.enum.includes(c.visibility)||!materialClaimSchema.properties.entity_type.enum.includes(c.entity_type)
+      ||!Number.isInteger(c.mutation_index)) deny("claim_shape",c);
     if(Object.values(c).some(value=>typeof value==="string"&&value.length>1000)||!c.source_span||!narration.includes(c.source_span)) deny("source_span",c);
     if(c.certainty!=="committed"){
       if(!/\b(says?|claims?|lies?|rumou?r|might|may|could|seems?|perhaps|imagines?|hallucinates?|like|as if|intends?|proposes?|would|hypothes\w*)\b/i.test(c.source_span)) deny("uncertainty_framing",c);
@@ -39,6 +40,7 @@ export function validateNarrativeClaims(db,guildId,result,scope={mode:"party"}){
     const entity=c.entity_type==="character"?db.getCharacter(c.entity):c.entity_type==="npc"?db.getSimulationEntity(guildId,"npc",c.entity):null;
     if(entity?.guild_id&&entity.guild_id!==guildId) deny("campaign_isolation",c);
     const state=entity?.state||{};
+    if(c.certainty==="committed"&&((entity?.status&&["dead","retired"].includes(entity.status))||state.removed||["dead","removed"].includes(state.status))) deny("inactive_actor",c);
     if(c.action==="dice") deny("model_dice",c);
     if(c.action==="status"&&(!entity||entity.status!==c.proposed&&state.status!==c.proposed)) deny("actor_status",c,"saved lifecycle");
     if(c.entity_type==="npc"&&["dead","removed"].includes(state.status)&&c.proposed==="active") deny("actor_status",c);
@@ -48,6 +50,7 @@ export function validateNarrativeClaims(db,guildId,result,scope={mode:"party"}){
       if(c.entity_type!=="character"||!entity||!event||event.type!=="resource_delta"||event.key!=="hp"
         ||event.target_character_id!==c.entity||String(event.amount)!==c.proposed
         ||(scope.mode==="private"&&scope.actorCharacterId!==c.entity)) deny("uncommitted_damage",c,"PC resource event");
+      if(String(entity.data?.resources?.hp?.current??"")!==c.prior) deny("stale_prior_state",c,"saved PC resources");
     }
     if(c.action==="disclosure"){
       const fact=db.getFact(guildId,c.source_ref);
@@ -69,4 +72,13 @@ export function validateNarrativeClaims(db,guildId,result,scope={mode:"party"}){
   const risk=/\b(?:you (?:take|suffer) \d+ (?:damage|HP)|(?:teleports?|is now dead|is now bound)|(?:roll(?:ed)? (?:a |an )?\d+))\b/gi;
   for(const match of narration.matchAll(risk)) if(!claims.some(c=>c.source_span.includes(match[0]))) deny("undeclared_material_assertion");
   return {ok:true,claims:claims.length};
+}
+
+export function assertNarrativeApplied(result,eventResults){
+  for(const claim of result.narrative_claims||[]){
+    if(claim.certainty!=="committed"||claim.action!=="damage") continue;
+    const row=eventResults[claim.mutation_index];
+    if(!row?.ok||row.blocked||Number(row.after?.current)-Number(row.before?.current)!==Number(claim.proposed))
+      deny("committed_result_mismatch",claim,"actual resource mutation");
+  }
 }

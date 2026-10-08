@@ -71,9 +71,8 @@ background round passes, repetition/length guards and scene continuity cues.
 No initiative/action limit, combat insertion, mechanics or forced PC choice.
 `/vc-story pacing` JSON supplies source_event, stakes, dramatic_question,
 objective, pressure, unresolved_beats and optional allow_transition:false or
-pause_background:true. Without source_event it returns read-only advice (the
-combined command retains a command receipt; use context for strictly read-only
-diagnostics). Cues apply only to their saved scene. Recent speaker counts are
+pause_background:true. `/vc-story pacing-status` returns strictly read-only
+advice. Cues apply only to their saved scene. Recent speaker counts are
 descriptive, not a measure of actions or a mandatory spotlight queue.
 
 `/vc-story mystery` takes key/source_event/anchor_key/question/routes/hypotheses.
@@ -147,6 +146,79 @@ covering proxy/travel/combat/consent/negotiation refusals. Long-run testing foun
 and fixed capped goal lookup: action validation now retrieves the requested
 goal/dependency directly before applying any budget; faction ownership is checked.
 No schema change or live-data rewrite. Register the added why command on upgrade.
+
+## Phase F — 4.10.0 (roadmap's proposed 5.0 feature slice)
+
+Version policy follows the user's explicit minor-release-per-phase instruction:
+4.9.0 -> 4.10.0, not a major release. Reuse: persistent NPC portrayal/voice,
+optional cost-capped VoiceNarrator, content-seeded identities, typed entity
+materializers, canon anchors and private draft/review conventions. No new schema.
+
+`/vc-story portray` JSON: npc/source_event/direction/public_voice_approved.
+Direction fields: address, formality, humor, verbal_habits, emotional_tone,
+pronunciation (each max 160 chars). Text-only GM guidance uses persistent
+portrayal by default. `/vc-city flags json:{"voice_direction":true}` additionally
+allows explicitly public-approved direction in `/vc-voice narrate text:... npc:key`.
+Voice still requires the existing VOICE_ENABLED/configured channel; enabling a
+city flag does not synthesize anything. One existing selected voice is reused,
+not one paid voice per NPC. Direction is captured per queued request, never
+drawn from private memories. Private scopes are refused before synthesis, even
+with force:true. Public prose must still be intentionally player-safe.
+
+`/vc-city flags json:{"authoring":true}` enables `/vc-story author` JSON
+key/kind/source_event/data. Kinds: npc, faction, location, institution, mystery,
+relationship. Drafts remain GM-private and do not alter canon or live entities.
+Validation uses existing production materializers within a rolled-back savepoint;
+temporary validation/audit writes do not survive. `/vc-story author-review`
+JSON key/decision:approve|reject revalidates before atomic materialization.
+Stable draft IDs/review replay do not duplicate state. Existing names/IDs and
+packaged NPC names cannot be overwritten. Seed packaged content first using
+`/vc-admin seed-data` to include all established faction/location identities.
+
+Guided typed data (human supplied, no extra generation call):
+
+| Kind | Required/allowed data |
+| --- | --- |
+| npc | name, occupation, public_identity, portrayal; no knowledge/goals |
+| faction | name, description, personality, activity_tier |
+| location | name, description, wards, entrances, hazards |
+| institution | Existing institution schema: name/mandate/capacity/procedures/jurisdictions |
+| mystery | anchor_key/question/routes; existing canon and three distinct sourced clues |
+| relationship | fromType/fromKey/toType/toKey/relationshipType/score/note; existing non-PC endpoints |
+
+This is an authoring/review workflow, not automatic campaign invention: no new
+rules, character options, culprit swaps, domain cards, legal authority or public
+discovery. Newly defined canon still uses the existing human canon/proposal
+workflow before a mystery references it. Invalid drafts/refusals leave state
+untouched; approved records remain in normal backup/restore and GM exports.
+`test:authoring` covers all six kinds, duplicate/canon/mechanics refusal, review
+idempotency, rolled-back validation, privacy and fake-TTS routing. Final hardening
+also checks narration against actual committed resource deltas transactionally,
+rejecting clamped/blocked changes rather than publishing unsupported injury.
+
+## New flags and upgrade summary
+
+All new runtime options default off. Use `/vc-city flags json:{"name":true}`
+to enable one; false disables it and unspecified options are preserved.
+Inspect `/vc-city status` attachment for the current server's flags.
+
+| Flag | Runtime effect |
+| --- | --- |
+| adaptive_context | Ranked source plan for main-turn GM facts; no selection AI call |
+| conversations | Explicit bounded NPC contact resolution |
+| pacing | Local dialogue/continuity/held-background controls |
+| negotiations | Reviewed offer/counteroffer/acceptance state machine |
+| voice_direction | Explicitly public-approved optional NPC TTS diction |
+| authoring | Typed private world drafts and human approval |
+
+Back up and stop the old process, update code, restart, then `cd bot` and
+`npm run register` to install story commands and the optional voice NPC argument.
+Schema stays 440: no table rewrite or synthetic migration bump was necessary.
+Restore uses existing safety snapshots/backups. Nothing auto-deploys, publishes
+to Discord, pushes git or changes live campaign databases. Required offline
+validation includes all previous suites and six new phase suites. The current
+limits are deliberately bounded and diagnostics do not imply full natural-
+language proof, universal legal simulation or live-provider certification.
 
 ## OPTIONAL — MAY INCUR API COSTS
 

@@ -3,6 +3,7 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import { spawnSync } from "node:child_process";
+import { portrayalPacket } from "./portrayal.js";
 import {
   AudioPlayerStatus,
   NoSubscriberBehavior,
@@ -54,8 +55,9 @@ function voiceParam(name){
 }
 
 export class VoiceNarrator {
-  constructor(config,{getConnection=getVoiceConnection}={}){
+  constructor(config,{getConnection=getVoiceConnection,db=null,synthesize=null}={}){
     this.config=config;
+    this.db=db;this.synthesize=synthesize;
     this.guilds=new Map();
     this.getConnection=getConnection;
     this.ffmpegAvailable=this.checkFfmpeg();
@@ -172,6 +174,7 @@ export class VoiceNarrator {
   }
 
   async _synthesize(text,state){
+    if(this.synthesize) return this.synthesize(text,{voice:state.voice,instructions:state.instructions,speed:state.speed});
     const body={
       model:this.config.voiceModel,
       voice:voiceParam(state.voice),
@@ -192,7 +195,8 @@ export class VoiceNarrator {
     return Buffer.from(await res.arrayBuffer());
   }
 
-  narrate(guild,text,{force=false}={}){
+  narrate(guild,text,{force=false,visibility="party",npcKey=null}={}){
+    if(!["party","public"].includes(visibility)) return Promise.resolve({ok:false,reason:"private_scope"});
     const state=this._state(guild.id);
     if(!this.config.voiceEnabled||(!force&&state.mode==="off")) return Promise.resolve({ok:false,reason:"disabled"});
     if(!this.getConnection(guild.id)) return Promise.resolve({ok:false,reason:"not_connected"});
@@ -204,6 +208,11 @@ export class VoiceNarrator {
 
     // Reserve capacity before any paid TTS call. The per-guild synthesis chain preserves invocation order.
     state.reserved+=parts.length;
+    const rendering={voice:state.voice,instructions:state.instructions,speed:state.speed};
+    if(npcKey&&this.db?.getCityCalendar(guild.id).flags.voice_direction===true){
+      const packet=portrayalPacket(this.db,guild.id,npcKey,{publicVoice:true});
+      if(packet) rendering.instructions=`${rendering.instructions||""}\nPublic NPC diction (presentation only): ${JSON.stringify(packet.direction)}`.slice(0,4096);
+    }
     const generation=state.generation;
     const job=async()=>{
       try{
@@ -217,7 +226,7 @@ export class VoiceNarrator {
             state.reserved=Math.max(0,state.reserved-parts.length);
             return {ok:false,reason:"cancelled"};
           }
-          buffers.push(await this._synthesize(part,state));
+          buffers.push(await this._synthesize(part,rendering));
         }
         state.reserved=Math.max(0,state.reserved-parts.length);
         if(generation!==state.generation||!this.getConnection(guild.id)) return {ok:false,reason:"cancelled"};

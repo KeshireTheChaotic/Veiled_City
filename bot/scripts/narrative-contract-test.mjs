@@ -10,6 +10,8 @@ import { POST_TURN_REVIEW_CATEGORIES } from "../src/director.js";
 import { validateNarrativeClaims } from "../src/narrative-integrity.js";
 import { handleCityCommand } from "../src/city-commands.js";
 import { KeyedSerialQueue } from "../src/serial-queue.js";
+import { handleCommand } from "../src/commands.js";
+import { applyAuthoritativeMutation } from "../src/state.js";
 import { FakeResponses, fakeInteraction } from "./contract-fixtures.mjs";
 const temp=fs.mkdtempSync(path.join(os.tmpdir(),"vc-contract-"));
 const db=new VeiledDB(path.join(temp,"test.sqlite"),path.resolve("sql/schema.sql"));
@@ -27,11 +29,18 @@ try{
     {...base,action:"obligation",source_ref:"forged",proposed:"You owe a favor",source_span:"You are now bound"},
     {...base,action:"dice",source_span:"You rolled a 20"}]) assert.throws(()=>check(c),/Narrative integrity/);
   db.setSimulationEntity(guild,"npc","witness",{status:"removed"});
-  assert.throws(()=>check({...base,entity_type:"npc",entity:"witness",action:"status",proposed:"active",source_span:"Witness returns active"}),/actor_status/);
+  assert.throws(()=>check({...base,entity_type:"npc",entity:"witness",action:"status",proposed:"active",source_span:"Witness returns active"}),/inactive_actor/);
   for(const [certainty,span] of [["dialogue","Witness says you owe a favor"],["uncertain","You hallucinate that the wall moves"],
     ["rumor","Rumor claims the bridge fell"],["forecast","The roof might collapse"],["metaphor","The fog is like a curtain"],
     ["intent","Witness intends to leave"]]) check({...base,action:"movement",certainty,source_span:span});
   assert.throws(()=>validateNarrativeClaims(db,guild,{narration:"You suffer 2 damage",narrative_claims:[]}),/undeclared/);
+  db.updateCharacterData(pc.id,data=>{data.resources.hp={current:6,max:6};});
+  const damageEvent={type:"resource_delta",key:"hp",amount:-2,target_character_id:pc.id,visibility:"party"};
+  const damage={narration:base.source_span,narrative_claims:[{...base,prior:"6",mutation_index:0}],events:[damageEvent]};
+  applyAuthoritativeMutation(db,{guildId:guild,events:damage.events,narrative:damage});assert.equal(db.getCharacter(pc.id).data.resources.hp.current,4);
+  const clamped={...damage,events:[{...damageEvent,amount:-20}],narrative_claims:[{...damage.narrative_claims[0],prior:"4",proposed:"-20"}]};
+  assert.throws(()=>applyAuthoritativeMutation(db,{guildId:guild,events:clamped.events,narrative:clamped}),/committed_result_mismatch/);
+  assert.equal(db.getCharacter(pc.id).data.resources.hp.current,4,"mismatched narration rolls back the whole mutation");
   let seed=450;for(let i=0;i<150;i++){
     seed=(Math.imul(seed,1664525)+1013904223)>>>0;
     const visibility=["public","party","gm","player","character"][seed%5];
@@ -53,6 +62,11 @@ try{
   await assert.rejects(()=>new GMService({db,content,ai:broken,config:{}}).requestStructured({input:"synthetic",max_output_tokens:20}),/after 2 attempts/);
   assert.equal(broken.requests.length,2);
   const interaction=fakeInteraction();await handleCityCommand(interaction,{db,gm});assert(interaction.deliveries[0].ephemeral);
+  const readonly=fakeInteraction({sub:"context",json:{actorType:"npc",actorKey:"witness"}});
+  Object.assign(readonly,{id:"synthetic-read-only",commandName:"vc-story",isChatInputCommand:()=>true});
+  const playerCount=db.listPlayers(guild).length,ledgerCount=db.listMutationLedger(guild,{limit:100}).length;
+  await handleCommand(readonly,{db,gm});assert.equal(db.listPlayers(guild).length,playerCount,"actual read-only dispatch does not upsert a player");
+  assert.equal(db.listMutationLedger(guild,{limit:100}).length,ledgerCount);assert(!db.getOperationReceipt(guild,readonly.id));
   await assert.rejects(()=>handleCityCommand(fakeInteraction({gm:false}),{db,gm}),/GM\/admin/);
   const queue=new KeyedSerialQueue(),order=[];
   await Promise.all([queue.enqueue(guild,async()=>{order.push(1);}),queue.enqueue(guild,()=>{order.push(2);})]);assert.deepEqual(order,[1,2]);

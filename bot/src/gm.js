@@ -12,6 +12,7 @@ import { minorNpcSchema } from "./city-depth.js";
 import { materialClaimSchema, NARRATIVE_CONTRACT, validateNarrativeClaims } from "./narrative-integrity.js";
 import { ContextPlanner } from "./context-planner.js";
 import { pacingAdvice, validatePacing } from "./story-continuity.js";
+import { portrayalPacket } from "./portrayal.js";
 
 const routerSchema={
   type:"object",
@@ -418,6 +419,7 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
       ctx.multi,
       "\n# RUNTIME SECURITY",
       NARRATIVE_CONTRACT,
+      `NPC diction guidance, not facts/PC emotions: ${JSON.stringify(ctx.npc_cognition.slice(0,4).map(row=>portrayalPacket(this.db,guildId,row.npc_key)))}`,
       this.db.getCityCalendar(guildId).flags.pacing?JSON.stringify(pacingAdvice(this.db,guildId,messageText)):"",
       "GM-private facts/clocks/reference content may be used to simulate the world but MUST NOT appear in narration until legitimately discovered.",
       "PLAYER visibility applies only to target_user_id. CHARACTER visibility applies to target_character_id and persists with that character even if the human later changes PCs.",

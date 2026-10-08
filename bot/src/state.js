@@ -2,6 +2,7 @@
 import { randomUUID } from "node:crypto";
 import { normalizeNpcKey } from "./npc-cognition.js";
 import { applySimulationUpdates } from "./simulation.js";
+import { validateNarrativeClaims, assertNarrativeApplied } from "./narrative-integrity.js";
 
 export function summarizeRoster(rows){
   return rows.map(r=>({
@@ -370,8 +371,9 @@ export function assertMutationSuccess({events=[],relationships=[],handouts=[],np
  * state changes commit together or the surrounding transaction rolls back.
  */
 export function applyAuthoritativeMutation(db,{guildId,sessionId=null,events=[],relationships=[],handouts=[],npcMemories=[],npcKnowledge=[],npcGoals=[],
-  simulationUpdates=[],scope={mode:"party",actorUserId:null,actorCharacterId:null},source="ai_gm",provenance={}}){
+  simulationUpdates=[],scope={mode:"party",actorUserId:null,actorCharacterId:null},source="ai_gm",provenance={},narrative=null}){
   return db.transaction(()=>{
+    if(narrative) validateNarrativeClaims(db,guildId,narrative,scope);
     const eventResults=applyGMEvents(db,guildId,sessionId,events,scope,provenance);
     const relationshipResults=applyRelationshipDrafts(db,guildId,relationships,scope,source);
     const handoutResults=applyHandoutDrafts(db,guildId,sessionId,handouts,scope,source);
@@ -379,6 +381,7 @@ export function applyAuthoritativeMutation(db,{guildId,sessionId=null,events=[],
     const cognition=applyNpcCognitionDrafts(db,guildId,{memories:npcMemories,knowledge:npcKnowledge,goals:npcGoals},source,{...provenance,sessionId,scene});
     const simulation=applySimulationUpdates(db,guildId,simulationUpdates,{scope,provenance:{...provenance,sessionId,scene}});
     assertMutationSuccess({events:eventResults,relationships:relationshipResults,handouts:handoutResults,npcMemories:cognition.memories,npcKnowledge:cognition.knowledge,npcGoals:cognition.goals});
+    if(narrative) assertNarrativeApplied(narrative,eventResults);
     const base={sessionId,actorType:provenance.actorType||"ai",actorId:provenance.actorId||scope.actorUserId||"veilkeeper",sourceLayer:source,sourceInteractionId:provenance.interactionId||null,sourceMessageId:provenance.messageId||null,confidence:provenance.confidence??100,rationale:provenance.rationale||"",triggerText:provenance.triggerText||""};
     eventResults.forEach((result,index)=>{
       if(!result?.ok&&!result?.expectedConflict) return;

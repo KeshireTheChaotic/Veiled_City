@@ -74,7 +74,7 @@ function reservedNames(db,content,guildId){
   }
   return [...new Set(names)];
 }
-function validateMinor(db,content,guildId,key,data){
+export function validateMinorIdentity(db,content,guildId,key,data){
   cityObject(data);
   if(Object.keys(data).some(field=>!minorNpcSchema.required.includes(field))) throw new Error("Minor NPC draft contains unsupported fields or unearned knowledge.");
   for(const field of minorNpcSchema.required) cityKey(data[field]);
@@ -95,7 +95,7 @@ export async function draftMinorNpc({db,gm,content,guildId,input,actorId}){
   if(db.getNpcProfile(guildId,key)) throw new Error("NPC key is already in use.");
   if(db.listCityRecords(guildId,{kind:"minor_draft",status:"draft",includeGM:true,limit:100}).length>=40) throw new Error("Minor NPC draft budget reached; review existing extras before expanding.");
   const data=await gm.planMinorNpc({role:input.role,location:input.location,publicContext:input.public_context||"",reservedNames:reservedNames(db,content,guildId).slice(0,80)});
-  validateMinor(db,content,guildId,key,data);
+  validateMinorIdentity(db,content,guildId,key,data);
   return db.transaction(()=>{
     const concurrent=db.getCityRecord(guildId,"minor_draft",key);if(concurrent) return concurrent;
     requireCitySource(db,guildId,input.source_event);
@@ -112,7 +112,7 @@ export function reviewMinorNpc({db,content,guildId,input,actorId}){
   return db.transaction(()=>{
     requireCitySource(db,guildId,before.source_event);
     if(input.decision==="promote"){
-      validateMinor(db,content,guildId,before.record_key,before.data.profile);
+      validateMinorIdentity(db,content,guildId,before.record_key,before.data.profile);
       db.upsertNpcProfile(guildId,{npcKey:before.record_key,displayName:before.data.profile.name,role:before.data.profile.occupation,
         publicIdentity:before.data.profile.public_identity,portrayal:before.data.profile.portrayal,activityTier:"background",
         decisionProfile:{},knowledgeBoundaries:["No campaign knowledge granted by generation."],source:"city_minor_npc"});
