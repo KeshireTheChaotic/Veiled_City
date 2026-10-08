@@ -83,7 +83,7 @@ export function reviewConsequence(db,guild,input,actorId){
   if(!["pending","blocked"].includes(before.status)) return before;
   if(!["approve","reject","defer"].includes(input.decision)) throw new UserInputError("Explicit consequence decision required.");
   try{return db.transaction(()=>{
-    requireCitySource(db,guild,before.source_event);
+    if(input.decision==="approve") requireCitySource(db,guild,before.source_event);
     const result=input.decision==="approve"?handlers[before.data.handler](db,guild,before,actorId):null;
     if(input.decision==="approve") indexWorldEvent(db,guild,{key:`effect:${motivationKey(before.record_key)}`,kind:"consequence_applied",
       title:"Native causal consequence completed",source_kind:"event",source_id:before.source_event,

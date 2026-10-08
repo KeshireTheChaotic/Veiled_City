@@ -90,12 +90,19 @@ export function dispatchAiIntents(db,guild,intents=[],context={}){
     }
   });
 }
-export function reviewAiIntent(db,guild,{key,decision:response,expected_revision},reviewer){
-  if(!reviewer||!["approve","reject"].includes(response)) throw new Error("Authenticated GM review required.");
+export function reviewAiIntent(db,guild,{key,decision:response,expected_revision,replacement_intent=null},reviewer){
+  if(!reviewer||!["approve","reject","defer","modify"].includes(response)) throw new Error("Authenticated GM review required.");
   const row=db.getCityRecord(guild,"ai_intent",key);
-  if(!row||!["pending","blocked"].includes(row.status)||!row.data.intent) throw new Error("Reviewable intent required.");
+  if(!row||!["pending","blocked","deferred"].includes(row.status)||response==="approve"&&!row.data.intent) throw new Error("Reviewable intent required.");
   if(stateRevision(row)!==expected_revision) throw new Error("Inbox item changed; refresh before reviewing.");
   return db.transaction(()=>{
+    if(response!=="approve"){
+      if(response==="modify"&&!validateIntent(replacement_intent)) throw new Error("A complete closed replacement intent is required.");
+      const after=db.saveCityRecord(guild,{...row,key,status:{reject:"rejected",defer:"deferred",modify:"pending"}[response],
+        data:{...row.data,intent:response==="modify"?replacement_intent:row.data.intent,reviewed_by:reviewer,
+          history:[...(row.data.history||[]).slice(-19),{decision:response,intent:row.data.intent,by:reviewer}]}});
+      cityAudit(db,guild,"ai_intent_review",key,row,after,reviewer);return after;
+    }
     const context={scope:row.data.scope,sessionId:row.data.session_id,origin:row.data.origin},intent=row.data.intent;
     const {adapter,before,impact}=preflight(db,guild,intent,context);
     if(intent.policy_revision!==delegationPolicy(db,guild).revision) throw new Error("Policy changed; request a fresh proposal.");
@@ -119,6 +126,7 @@ export function intentContext(db,guild){
       .map(row=>({...row,expected_revision:stateRevision(row)}))),
     personal_targets:["arc","arc_candidate"].flatMap(kind=>db.listCityRecords(guild,{kind,includeGM:true,limit:8})
       .map(row=>({...row,expected_revision:stateRevision(row)}))),
+    reviewed_templates:db.listCityRecords(guild,{kind:"seed_template",includeGM:true,limit:8}),
     project_targets:db.listCityRecords(guild,{kind:"long_project",includeGM:true,limit:8})
       .map(row=>({...row,expected_revision:stateRevision(row),phase_revision:projectPhaseRevision(row)})),
     group_actor_packets:db.listCityRecords(guild,{kind:"group_transition",status:"pending",includeGM:true,limit:4})

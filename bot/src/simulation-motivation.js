@@ -5,6 +5,13 @@ import { requireCitySource } from "./city-core.js";
 import { activeCityProxy, assertNpcAvailability } from "./city-constraints.js";
 import { UserInputError, StateConflictError } from "./errors.js";
 export const motivationKey=value=>createHash("sha256").update(JSON.stringify(value)).digest("hex").slice(0,32);
+export function ownedKnowledgeSource(db,guild,npc,known){
+  const direct=db.getWorldEvent(guild,known.source_ref);if(direct) return direct;
+  const link=db.getCityRecord(guild,"seed_knowledge_source",`source-link:${motivationKey([npc,known.knowledge_key])}`);
+  if(link?.actor_key===`npc:${npc}`&&link.data.original_source_ref===known.source_ref
+    &&link.data.content_hash===motivationKey([known.content,known.belief_state,known.source_ref])) return db.getWorldEvent(guild,link.source_event);
+  return null;
+}
 
 export function actorSource(db,guildId,{actor_type,actor_key,information_key,source_event},{requireResources=true}={}){
   const event=requireCitySource(db,guildId,source_event);cityKey(actor_key);cityKey(information_key);
@@ -26,7 +33,8 @@ export function actorSource(db,guildId,{actor_type,actor_key,information_key,sou
   }else throw new UserInputError("Only NPC, faction and institution motivations are supported; never PCs.");
   if(!state||state.removed||["dormant","dead","removed"].includes(state.activity_tier)||["dead","removed"].includes(state.status))
     throw new StateConflictError("Actor is unavailable.");
-  if(!evidence||evidence.belief_state==="unknown"||![event.event_key,event.source_id].includes(evidence.source_ref))
+  const mapped=actor_type==="npc"&&evidence?ownedKnowledgeSource(db,guildId,actor_key,evidence):null;
+  if(!evidence||evidence.belief_state==="unknown"||![event.event_key,event.source_id].includes(evidence.source_ref)&&mapped?.event_key!==event.event_key)
     throw new StateConflictError("Actor has no legitimately acquired evidence for this source event.");
   if(requireResources&&(state.resources?.information??2)<1) throw new StateConflictError("Actor lacks feasible investigative resources.");
   return {event,evidence,state};
@@ -124,7 +132,8 @@ export function runMotivationCycle(db,guildId,budget=1){
     for(const known of knowledge){
       if(results.length>=Math.min(4,budget)) break;
       if(known.belief_state==="unknown"||known.confidence<55) continue;
-      const event=db.getWorldEvent(guildId,known.source_ref);if(!event||event.status!=="active") continue;
+      const event=actor.type==="npc"?ownedKnowledgeSource(db,guildId,actor.key,known):db.getWorldEvent(guildId,known.source_ref);
+      if(!event||event.status!=="active") continue;
       const informationKey=known.knowledge_key||known.information_key;
       const key=`motivation:${motivationKey([actor.type,actor.key,informationKey,event.event_key])}`;
       if(db.getCityRecord(guildId,"goal_transition",key)) continue;

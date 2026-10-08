@@ -38,7 +38,7 @@ export function manageGroup(db,guild,input,actorId){
   }
   if(!before) throw new StateConflictError("Group proposal not found.");
   if(before.status!=="pending") return before;
-  requireCitySource(db,guild,before.source_event);
+  if(op!=="reject") requireCitySource(db,guild,before.source_event);
   if(op==="respond"){
     if(before.data.responses[input.member]) return before;
     assertNpcAvailability(db,guild,input.member,{});

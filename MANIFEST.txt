@@ -24,6 +24,7 @@ bot/scripts/end-to-end-d-test.mjs
 bot/scripts/end-to-end-e-test.mjs
 bot/scripts/end-to-end-f-test.mjs
 bot/scripts/end-to-end-g-test.mjs
+bot/scripts/end-to-end-h-test.mjs
 bot/scripts/endurance-test.mjs
 bot/scripts/expansion-a-test.mjs
 bot/scripts/expansion-b-test.mjs
@@ -57,6 +58,7 @@ bot/scripts/validate-offline.mjs
 bot/sql/schema.sql
 bot/src/ai-intent-contracts.js
 bot/src/ai-intents.js
+bot/src/ai-review.js
 bot/src/application-authority.js
 bot/src/character-export.js
 bot/src/character-narrative.js

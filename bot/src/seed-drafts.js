@@ -8,11 +8,15 @@ import { configurePortrayal } from "./portrayal.js";
 import { configureMystery } from "./story-continuity.js";
 import { configureSimulationEntity } from "./simulation.js";
 import { normalizeNpcKey } from "./npc-cognition.js";
+import { motivationKey } from "./simulation-motivation.js";
+import { validateIntent } from "./ai-intent-contracts.js";
 
 const plain=value=>value&&typeof value==="object"&&!Array.isArray(value);
 const hash=value=>createHash("sha256").update(value).digest("hex").slice(0,32);
 const CORE=["institution","district","belief","case"];
-export const SEED_DRAFT_KINDS=["portrayal","simulation","clock","relationship","mystery","reference",...CORE,...CIVIC_KINDS];
+export const SEED_TEMPLATE_FEATURES={consequence_template:"consequence",strategy_template:"strategy",scene_reference:"scene",
+  group_template:"group",project_template:"project",memory_candidate:"memory"};
+export const SEED_DRAFT_KINDS=["portrayal","simulation","clock","relationship","mystery","reference",...CORE,...CIVIC_KINDS,...Object.keys(SEED_TEMPLATE_FEATURES)];
 const directionFields=["address","formality","humor","verbal_habits","emotional_tone","pronunciation"];
 
 function sourceEvent(db,guildId,document,actorId){
@@ -67,6 +71,17 @@ function materialize(db,guildId,row,actorId,publicVoice){
   const {kind,key,data}=proposal(row.data.proposal),source_event=row.source_event;
   requireCitySource(db,guildId,source_event);
   if(publicVoice&&kind!=="portrayal") throw new Error("Public voice approval applies only to portrayal drafts.");
+  if(SEED_TEMPLATE_FEATURES[kind]){
+    const feature=SEED_TEMPLATE_FEATURES[kind],payload={...data,source_event};
+    if(!validateIntent({version:1,feature,target_key:"",expected_revision:"absent",policy_revision:0,source_prerequisites:[],payload}))
+      throw new Error("Template must match its closed typed feature payload; no authority or consent fields.");
+    const templateKey=`${kind}:${key}`;
+    if(db.getCityRecord(guildId,"seed_template",templateKey)) throw new Error("Reviewed seed template already exists.");
+    if(payload.actor_type==="npc"&&payload.actor_key&&!db.getNpcProfile(guildId,payload.actor_key)) throw new Error("Template actor must already exist.");
+    if(feature==="scene"&&payload.location_key&&!db.getSimulationEntity(guildId,"location",payload.location_key)) throw new Error("Template location must already exist.");
+    return db.saveCityRecord(guildId,{kind:"seed_template",key:templateKey,source_event,data:{feature,payload,reviewed_by:actorId,
+      authority:"reviewed_template_only_not_live_state_or_actor_knowledge",requires_runtime_validation:true,activates_flags:false,grants_consent:false}});
+  }
   if(kind==="portrayal"){
     const current=db.getSimulationEntity(guildId,"npc",key)?.state?.voice?.portrayal_direction||{};
     if(Object.keys(data).some(field=>Object.hasOwn(current,field))) throw new Error("Speaking-style field already exists; seed approval cannot overwrite GM edits.");
@@ -229,6 +244,18 @@ export function backfillSeedData(db,guildId,actorId){
     if(!key) continue;
     if(["npc","faction"].includes(entry.kind)) counts.fields+=fillDossierFields(db,guildId,entry,key,sourceFor(document),actorId);
     if(entry.kind==="npc"){
+      const expected=new Map((data.knows||[]).map((content,index)=>[`seed.known.${index+1}`,String(content)]));
+      if(data.secret) expected.set("seed.self_secret",String(data.secret));
+      for(const known of db.listNpcKnowledge(guildId,key,{limit:200})){
+        if(known.source_type!=="seed"||known.belief_state!=="known"||expected.get(known.knowledge_key)!==known.content
+          ||![entry.source_path,"GM_PRIVATE/NPCS/npcs.json"].includes(known.source_ref)) continue;
+        const linkKey=`source-link:${motivationKey([key,known.knowledge_key])}`;
+        if(db.getCityRecord(guildId,"seed_knowledge_source",linkKey)) continue;
+        const link=db.saveCityRecord(guildId,{kind:"seed_knowledge_source",key:linkKey,actor_key:`npc:${key}`,source_event:sourceFor(document),
+          data:{knowledge_key:known.knowledge_key,original_source_ref:known.source_ref,
+            content_hash:motivationKey([known.content,known.belief_state,known.source_ref]),authority:"same_existing_knowledge_additive_source_pointer"}});
+        cityAudit(db,guildId,"seed_knowledge_source",linkKey,null,link,actorId);
+      }
       const explicit=data.speaking_style||data.portrayal_direction;
       const direction=explicit||inferDirection(data.public);
       const current=db.getSimulationEntity(guildId,"npc",key)?.state?.voice?.portrayal_direction||{};

@@ -145,8 +145,6 @@ command branch in arrival planning; real command fixtures now exercise it.
 Validation: `end-to-end-f-test.mjs`, existing phase/chronological-conflict/native
 capacity suites, real command consent, two-day restart and single-use outcomes.
 
-## Remaining phases
-
 ## Phase G — 6.5.0: memory maintenance and fair density
 
 Deterministic source-pointer candidates cover NPCs, factions and institutions,
@@ -174,7 +172,36 @@ token retrieval and fair real director opportunities; existing 1000-actor and
 
 ## Remaining phases
 
-H: seeds and complete review UX. I: cross-feature orchestration and rollout.
+## Phase H — 6.6.0: seeds and review UX
+
+Existing `seed-data`/`seed-*` workflows now recognize `consequence_template`,
+`strategy_template`, `scene_reference`, `group_template`, `project_template` and
+`memory_candidate`. JSON envelopes use `{kind,key,data}` where data matches the
+feature's closed payload in `ai-intent-contracts.js`. Approval validates the
+contract/dependencies and stores a reviewed template only; native execution still
+requires a fresh scoped intent, runtime sources and delegation. No occupancy,
+membership, work, memory grant, PC arc/consent or policy activation is seeded.
+
+Accepted NPC dossier knowledge receives additive, content-bound source links from
+its original file pointer to the accepted seed event. Originals are unchanged;
+corrected/unknown knowledge is not granted a link. Source checks and deterministic
+motivation use these mappings. Reseeding remains add-only and preserves tombstones.
+
+`/vc-story ai-inbox` accepts optional `{kind,page,status}` for AI receipts, goals,
+consequences, groups, strategies and seed drafts. Actual flags, policy, expiry,
+pause, source/impact/before/after/ledger receipts explain eligibility; no invented
+retrospective explanation. `/vc-story ai-review` authenticates current GM role and
+revision for approve/reject/defer; AI proposals additionally support `modify` with
+a complete `replacement_intent`, followed by a separate approval. Native edits use
+existing native commands. PC drafts/consent cannot be approved by this GM workflow.
+Read-only inbox/owner commands republish notices without replaying effects.
+
+Validation: test H covers seed-to-owned-source-to-AI-proposal, inert template review,
+reseed idempotency, read-only repair, defer/reject receipts and forbidden GM consent.
+
+## Remaining phases
+
+I: cross-feature orchestration and rollout.
 
 Release policy: phase minors roll .9 to the next major .0. After Phase I, perform
 the requested final major release and deploy the clean, verified checkout while
