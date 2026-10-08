@@ -258,11 +258,12 @@ function validateAction(db,guildId,action){
   for(const field of ["delay_ticks","delay_minutes"]){
     if(!Number.isSafeInteger(action[field]??0)||(action[field]??0)<0||(action[field]??0)>525600) throw new Error("Invalid fictional delay.");
   }
-  const goals=goalsFor(db,guildId,action.actor_type,key);
-  const goal=goals.find(g=>g.goal_key===action.goal_key);
-  if(!goal) throw new Error("Autonomous action requires an active goal.");
+  const factionGoal=action.actor_type==="faction"?db.getSimulationRecord(guildId,action.goal_key):null;
+  const goal=action.actor_type==="npc"?db.getNpcGoal(guildId,key,action.goal_key):factionGoal?.kind==="goal"
+    &&factionGoal.entity_key===keyOf("faction",key)?{...factionGoal.data,goal_key:factionGoal.id,status:factionGoal.status}:null;
+  if(!goal||goal.status!=="active") throw new Error("Autonomous action requires an active goal.");
   const dependenciesComplete=(goal.dependencies||[]).every(dependency=>action.actor_type==="npc"
-    ?db.listNpcGoals(guildId,key,{limit:200}).some(g=>g.goal_key===dependency&&g.status==="completed")
+    ?db.getNpcGoal(guildId,key,dependency)?.status==="completed"
     :db.getSimulationRecord(guildId,dependency)?.status==="completed");
   if(!dependenciesComplete) throw new Error("Goal dependencies are not completed.");
   const methods=(goal.acceptable_methods||[]).filter(method=>ACTION_TYPES.includes(method));

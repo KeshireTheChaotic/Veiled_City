@@ -13,9 +13,9 @@ function participants(db,guildId,list,terms){
       if(p.type==="npc"&&(!db.getNpcProfile(guildId,p.key)||activeCityProxy(db,guildId,p.key))) throw new Error("Human-proxied or missing NPC cannot be committed.");
       const state=db.getSimulationEntity(guildId,p.type,p.key)?.state;
       if(!state||state.removed||["dead","removed"].includes(state.status)) throw new Error("Participant is unavailable.");
-      const goal=p.type==="npc"?db.listNpcGoals(guildId,p.key,{status:"active",limit:100}).find(g=>g.goal_key===p.goal_key)
+      const goal=p.type==="npc"?db.getNpcGoal(guildId,p.key,p.goal_key)
         :db.getSimulationRecord(guildId,p.goal_key);
-      if(!goal||p.type==="faction"&&(goal.kind!=="goal"||goal.status!=="active"||goal.entity_key!==`faction:${p.key}`)) throw new Error("Established bargaining goal required.");
+      if(!goal||goal.status!=="active"||p.type==="faction"&&(goal.kind!=="goal"||goal.entity_key!==`faction:${p.key}`)) throw new Error("Established bargaining goal required.");
       if(p.type==="npc"&&goal.acceptable_methods.length&&!goal.acceptable_methods.includes("negotiate")) throw new Error("Goal does not authorize negotiation.");
       for(const info of p.awareness_keys||[]) if(p.type!=="npc"||!db.getNpcKnowledge(guildId,p.key,info)) throw new Error("Participant lacks cited awareness.");
     }else if(p.type==="institution"){

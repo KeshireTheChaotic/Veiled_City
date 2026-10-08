@@ -158,6 +158,15 @@ export class VeiledDB {
     return this.db.prepare("SELECT * FROM mutation_ledger WHERE guild_id=? AND id=?").get(guildId,id)||null;
   }
 
+  mutationsForEntity(guildId,key,limit=8){
+    return this.db.prepare("SELECT * FROM mutation_ledger WHERE guild_id=? AND entity_key=? ORDER BY rowid DESC LIMIT ?")
+      .all(guildId,key,Math.min(20,limit));
+  }
+  cityRecordsBySource(guildId,source){
+    return this.db.prepare("SELECT * FROM city_records WHERE guild_id=? AND source_event=? ORDER BY rowid DESC LIMIT 12")
+      .all(guildId,source).map(row=>({...row,data:JSON.parse(row.data_json)}));
+  }
+
   getCityRecord(guildId,kind,key){
     const row=this.db.prepare("SELECT * FROM city_records WHERE guild_id=? AND kind=? AND record_key=?").get(guildId,kind,key);
     return row?{...row,data:JSON.parse(row.data_json)}:null;
@@ -1281,6 +1290,11 @@ export class VeiledDB {
   getNpcKnowledge(guildId,npcKey,knowledgeKey){
     return this.db.prepare("SELECT * FROM npc_knowledge WHERE guild_id=? AND npc_key=? AND knowledge_key=?")
       .get(guildId,npcKey,String(knowledgeKey||"").trim().toLowerCase());
+  }
+
+  getNpcGoal(guildId,npcKey,goalKey){
+    const row=this.db.prepare("SELECT * FROM npc_goals WHERE guild_id=? AND npc_key=? AND goal_key=?").get(guildId,npcKey,goalKey);
+    return row?{...row,dependencies:JSON.parse(row.dependencies_json||"[]"),acceptable_methods:JSON.parse(row.acceptable_methods_json||"[]")}:null;
   }
 
   upsertNpcGoal(guildId,{npcKey,goalKey,title="",objective,horizon="near",priority=50,progress=0,status="active",dependencies=[],acceptableMethods=[],rationale="",source="gm"}={}){

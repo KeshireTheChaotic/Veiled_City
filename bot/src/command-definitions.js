@@ -478,6 +478,8 @@ export function buildCommands(){
       .addStringOption(o=>o.setName("json").setDescription("key/step/source_event/op/participants/terms/accepted_by JSON").setRequired(true)))
     .addSubcommand(s=>s.setName("forecast").setDescription("Read-only hypothetical outcomes and mitigations; GM-only")
       .addStringOption(o=>o.setName("json").setDescription("query or event_key JSON").setRequired(true)))
+    .addSubcommand(s=>s.setName("why").setDescription("Read-only source, cause, approval and ledger explanation")
+      .addStringOption(o=>o.setName("json").setDescription("event_key or mutation_id JSON").setRequired(true)))
     .toJSON());
   const splitMap={
     character:{

@@ -16,8 +16,8 @@ export function resolveNpcConversation(db,guildId,input,actorId,{roll}={}){
     const state=actorState(db,guildId,"npc",npc);
     if(state.removed||["dormant"].includes(state.activity_tier)||["dead","removed"].includes(state.status)) throw new Error("NPC unavailable.");
     assertNpcAvailability(db,guildId,npc,{type:"contact",location_key:state.location_key});
-    const goal=db.listNpcGoals(guildId,npc,{status:"active",limit:100}).find(g=>g.goal_key===(npc===input.from?input.from_goal:input.to_goal));
-    if(!goal||goal.acceptable_methods.length&&!goal.acceptable_methods.some(m=>["contact","negotiate"].includes(m))) throw new Error("Both actors need a contact-compatible active goal.");
+    const goal=db.getNpcGoal(guildId,npc,npc===input.from?input.from_goal:input.to_goal);
+    if(!goal||goal.status!=="active"||goal.acceptable_methods.length&&!goal.acceptable_methods.some(m=>["contact","negotiate"].includes(m))) throw new Error("Both actors need a contact-compatible active goal.");
   }
   if(!db.cityEdges(guildId,"channel").some(edge=>edge.from_key===`npc:${input.from}`&&edge.to_key===`npc:${input.to}`)) throw new Error("Established directed contact channel required.");
   const tick=db.getSimulationClock(guildId).tick;

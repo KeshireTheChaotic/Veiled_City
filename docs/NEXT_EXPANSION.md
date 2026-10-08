@@ -127,6 +127,27 @@ No new schema; existing backup/restore covers records. Register commands after
 upgrade. `test:negotiation` covers revisions, pending/no-cost review, authority,
 consent, unavailable resources, retry conservation and snapshot/ledger equality.
 
+## Phase E — 4.9.0
+
+Reuse: sourced events, causal links, approvals/consents and mutation ledger. New
+`/vc-story why json:{"event_key":"schedule:day-100"}` (or mutation_id) is a
+GM-only, read-only explanation. It shows source lifecycle, bounded causal links,
+ledger IDs/changed fields, recorded resource/approval metadata, authority-source
+paths, non-established claims and existing inspection/recovery commands. Actor
+attribution remains interpretation; a source link is not independent proof.
+Missing validation detail stays unknown. No explanatory AI call or state writes.
+
+`npm run test:endurance` is mandatory through validate: seed 490, 100 fictional
+days, 300 NPC actions, multiple seeded factions/institutions, 100 deadline replays,
+100 clue-reachability checks, private actor isolation, unchanged absent PC/canon,
+resource conservation, bounded context, backup/restore/restart and failed publish
+repair. Metrics are deterministic counts, not paid benchmarks or evidence that
+arbitrary real-model language is perfect. The dedicated scenario suites continue
+covering proxy/travel/combat/consent/negotiation refusals. Long-run testing found
+and fixed capped goal lookup: action validation now retrieves the requested
+goal/dependency directly before applying any budget; faction ownership is checked.
+No schema change or live-data rewrite. Register the added why command on upgrade.
+
 ## OPTIONAL — MAY INCUR API COSTS
 
 A human may choose a disposable campaign and explicitly run a real narration,
