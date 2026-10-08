@@ -41,7 +41,7 @@ the actual controlling owner and never accept an input JSON identity as authorit
 | D: P06–07 | 06c20e3 | 5.4.0 | EXTENDED: owner-established arcs and zero-write character-relative discovery; offline gates pass |
 | E: P08–09 | 42995fb | 5.5.0 | EXTENDED: phased continuity with existing adjudication and queued-action mediation; offline gates pass |
 | F: P10–11 | 79dbde8 | 5.6.0 | EXTENDED: reversible actor clusters and bounded relevance selection; offline gates pass |
-| G: P12 | pending | next minor | Pending fresh audit |
+| G: P12 | 1132cb7 | 5.7.0 | EXTENDED: golden/mutation benchmark and cross-suite metrics; offline gates pass |
 | H: P13 | pending | next minor | Pending fresh audit |
 
 Each accepted phase is validated and committed before starting the next. User
@@ -163,3 +163,19 @@ SQLite size; this bounds application materialization, not constant-time SQL work
 revision/revert, original preservation, 650 newer memories/300 fictional days,
 1,000 seeded NPCs, packet/selection bounds, legitimate cold wake, affordability,
 privacy and restore. Measured fixture timing is not a production latency promise.
+
+### Phase G audit and extension
+
+Fresh 1132cb7 audit: network guard, fake Responses, real GMService narrative
+validation/commit paths, endurance/publication and expansion A–F fixtures are
+reused. P12 EXTENDED: checked-in hand-authored golden/mutation fixture plus
+`expansion-quality-test.mjs` benchmark, mandatory in validate and available via
+`npm run test:quality-fixtures`. Nine golden cases include unchanged v5.0-format
+turn compatibility and authorized private disclosure. 107 malicious cases cover
+unauthorized actor knowledge, hidden facts, model dice, impossible movement,
+forged obligations/canon and atomic resource rollback; ten action replays check
+single-cost conservation. A fixed seeded mutation sample is reproducible.
+Metrics report false positives, failures/regressions, real event-index throughput,
+source-to-consequence ledger trace and links to mandatory suites for clue paths,
+publication, review, consent, context and restore. No alternate toy validators,
+paid calls, production changes or claims of unrestricted model reliability.

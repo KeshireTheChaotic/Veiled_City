@@ -1,6 +1,6 @@
 {
   "package": "Veiled_City_Multiplayer_Discord",
-  "version": "5.6.0",
+  "version": "5.7.0",
   "generated": "2026-10-08",
   "files": [
     {
@@ -26,7 +26,7 @@
     {
       "path": "README.md",
       "size_bytes": 14446,
-      "sha256": "12de95dba5db0b60f21d39c4c5d10824f19782b63357292c01a94b419e166bf3"
+      "sha256": "aea8a6ad54398ab92eb5c92c2ac430e49d83ebd41e7d683850adfa2d3eb67ab8"
     },
     {
       "path": "bot/.env.example",
@@ -45,8 +45,8 @@
     },
     {
       "path": "bot/package.json",
-      "size_bytes": 2492,
-      "sha256": "c478906b9d60230c77f1b1275fc7f4a3d107d9404a0a491d41c1739e4f7a20f2"
+      "size_bytes": 2601,
+      "sha256": "31b5362f465ce706136715bdb305e71f41922c4df6ecafe8b3db313dfa2f11b9"
     },
     {
       "path": "bot/scripts/audit-regression-test.mjs",
@@ -129,9 +129,19 @@
       "sha256": "9a91289efb28a34af88d3fec6148b816632d8977e246a086a069fa10dbcca2d2"
     },
     {
+      "path": "bot/scripts/expansion-quality-test.mjs",
+      "size_bytes": 7891,
+      "sha256": "5e3f040d9595ce3afc63965aceff50dd7f27a208574dfde5b584683efa9dd46d"
+    },
+    {
       "path": "bot/scripts/export-campaign.mjs",
       "size_bytes": 6150,
       "sha256": "57034a98da76d5b85213a08fc09ff7a36a8b067725b9607b39f7b2e711e81aa1"
+    },
+    {
+      "path": "bot/scripts/fixtures/expansion-quality-golden.json",
+      "size_bytes": 1903,
+      "sha256": "ddacd20a225e67147b2b12cfc992505a6efc2a194e2c553cd5fb9a672caaeebb"
     },
     {
       "path": "bot/scripts/format-check.mjs",
@@ -220,8 +230,8 @@
     },
     {
       "path": "bot/scripts/validate-offline.mjs",
-      "size_bytes": 1374,
-      "sha256": "05ab65ca864c9928ba54656c8b45deb705302349ffc322b4f82caadf83e98e99"
+      "size_bytes": 1399,
+      "sha256": "fdca9c8fad9e3fa9d333bc8de5ec4d0ebf44190400475e9dff8857c7b4e50660"
     },
     {
       "path": "bot/sql/schema.sql",
@@ -1055,13 +1065,13 @@
     },
     {
       "path": "docs/EXPANSION_GAP_ANALYSIS.md",
-      "size_bytes": 15188,
-      "sha256": "f5b344adf905630a4a805aac4e7756f162c3b47228f5d6358e31801ec2e6a12a"
+      "size_bytes": 16302,
+      "sha256": "6bf64bba128b64d7d0c76cff9bc03d6a5d8d7805a2ffed10c22d6ea741b96a52"
     },
     {
       "path": "docs/EXPANSION_RELEASES.md",
-      "size_bytes": 13365,
-      "sha256": "d3ffe5aa0e1282c7c07be2347f576892f22be092e073a7e94879233b6d445a09"
+      "size_bytes": 14632,
+      "sha256": "a30489c3d73e191dabc3a77344ef333c633d323c08257234e0db88b27ecee7ad"
     },
     {
       "path": "docs/GM_OPERATIONS.md",

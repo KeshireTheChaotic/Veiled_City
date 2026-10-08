@@ -189,3 +189,23 @@ triggers remain binding, with no per-NPC paid calls. SQLite query work scales wi
 data size; bounds apply to materialized candidates and model packets, not all
 campaign context sections. Disable either flag to recover previous retrieval/
 selection behavior without deleting data. Backup/rollback as Phase A.
+
+## 5.7.0 — Phase G: repeatable offline quality benchmark
+
+Run `cd bot` then `npm run test:quality-fixtures`, or the full mandatory
+`npm run validate`. Network denial is mandatory; credentials are dummy and model
+outputs are synthetic. No feature flag, database migration, Discord registration
+or live-provider testing is required for this test-only release.
+
+Benchmark output is one JSON metrics line: fixture-only status, fixed seed,
+baseline failures, false positives, regression count, golden passes, malicious
+rejections/categories, event-index timing, source traceability and links to
+related mandatory suites. Accepted baseline: 9 golden cases, 107 rejected malicious
+cases, 10 replay conservation checks, 25 indexed events and one causal ledger
+trace; zero fixture false positives/regressions. Timing varies by machine.
+The v5.0-format compatibility response is unchanged by feature flags. Existing
+endurance tests cover publication repair, 300 action consistency checks and
+100 clue/replay cycles. These tests establish behavior only for their fixtures;
+optional live-model/Discord/paid voice validation remains separately authorized
+and was not performed. A failed assertion fails validation rather than masking
+the result in an aggregate success metric.

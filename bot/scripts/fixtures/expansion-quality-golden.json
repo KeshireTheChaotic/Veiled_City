@@ -1,0 +1,33 @@
+{
+  "fixture_authority": "Human-authored synthetic examples, not recorded players or live model performance",
+  "compatibility_5_0": {
+    "respond": true,
+    "narration": "Rain patters against the station window.",
+    "narrative_claims": [],
+    "private_messages": [],
+    "events": [],
+    "handouts": [],
+    "relationships": [],
+    "npc_memories": [],
+    "npc_knowledge": [],
+    "npc_goals": [],
+    "canon_proposals": [],
+    "simulation_updates": []
+  },
+  "legitimate_claims": [
+    {"certainty":"dialogue","action":"movement","text":"Witness claims the visitor went north."},
+    {"certainty":"rumor","action":"movement","text":"Rumor says the bridge fell."},
+    {"certainty":"uncertain","action":"movement","text":"Perhaps the visitor is mistaken."},
+    {"certainty":"forecast","action":"movement","text":"The roof might collapse."},
+    {"certainty":"metaphor","action":"movement","text":"The fog is like a curtain."},
+    {"certainty":"intent","action":"movement","text":"Witness intends to leave."}
+  ],
+  "mutations": [
+    {"category":"contradictory_roll","action":"dice","text":"You rolled a 20.","source_ref":"","proposed":"20"},
+    {"category":"impossible_travel","action":"movement","text":"Witness arrives remotely.","source_ref":"","proposed":"remote"},
+    {"category":"forged_authority","action":"obligation","text":"You are bound to a favor.","source_ref":"forged","proposed":"Owe a favor"},
+    {"category":"leaked_GM_data","action":"disclosure","text":"The secret is revealed.","source_ref":"SECRET_ID","proposed":"SYNTHETIC_SECRET"},
+    {"category":"unauthorized_knowledge","action":"disclosure","text":"Witness reveals public evidence.","source_ref":"PUBLIC_ID","proposed":"Public evidence","actor":"witness"},
+    {"category":"unsupported_canon","action":"canon","text":"The culprit has changed.","source_ref":"mystery.culprit","proposed":"Invented culprit"}
+  ]
+}

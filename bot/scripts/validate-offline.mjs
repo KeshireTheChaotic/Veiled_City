@@ -4,7 +4,7 @@ const suites=["quality-check","format-check","check-source","validate-command-sc
   "refactor-regression-test","operations-regression-test","npc-cognition-regression-test","audit-regression-test","simulation-regression-test",
   "seed-data-regression-test","seed-drafts-regression-test","city-regression-test","city-core-regression-test","city-civic-regression-test","city-depth-regression-test","narrative-contract-test",
   "context-conversation-test","story-continuity-test","negotiation-preview-test","endurance-test","portrayal-authoring-test",
-  "expansion-a-test","expansion-b-test","expansion-c-test","expansion-d-test","expansion-e-test","expansion-f-test"];
+  "expansion-a-test","expansion-b-test","expansion-c-test","expansion-d-test","expansion-e-test","expansion-f-test","expansion-quality-test"];
 for(const suite of suites){
   const result=spawnSync(process.execPath,["--import","./scripts/offline-guard.mjs",`scripts/${suite}.mjs`],{stdio:"inherit",
     env:{...process.env,OPENAI_API_KEY:"offline-dummy",DISCORD_TOKEN:"offline-dummy",NODE_OPTIONS:`--import=${new URL("./offline-guard.mjs",import.meta.url).href}`}});
