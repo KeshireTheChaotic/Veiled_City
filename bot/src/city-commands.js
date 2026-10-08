@@ -6,6 +6,7 @@ import { updateCityCore, assignDistrictLocation, fileInstitutionReport, addWorld
   establishCommitment, configureCityFlags, proposeCityOpportunity, runInstitutionDirector } from "./city-core.js";
 import { CIVIC_KINDS, updateCityCivic, connectCity, changeCityService, reviewCivicChange, transmitCityBelief, historyContext } from "./city-civic.js";
 import { recordCityUpkeep, draftMinorNpc, reviewMinorNpc } from "./city-depth.js";
+import { reviewOrganization } from "./owned-community.js";
 
 export async function handleCityCommand(interaction,{db,gm}){
   const guildId=interaction.guildId;
@@ -22,7 +23,8 @@ export async function handleCityCommand(interaction,{db,gm}){
   else if(sub==="schedule") result=scheduleCityEvent(db,guildId,input,interaction.user.id);
   else if(sub==="review") result=input?.kind==="change"?reviewCivicChange(db,guildId,input,interaction.user.id)
     :input?.kind==="action"?reviewInstitutionAction(db,guildId,input,interaction.user.id):reviewCityEvent(db,guildId,input,interaction.user.id);
-  else if(sub==="update") result=CIVIC_KINDS.includes(input?.kind)?updateCityCivic(db,guildId,input,interaction.user.id):updateCityCore(db,guildId,input,interaction.user.id);
+  else if(sub==="update") result=input?.kind==="organization_request"?reviewOrganization(db,guildId,input,interaction.user.id)
+    :CIVIC_KINDS.includes(input?.kind)?updateCityCivic(db,guildId,input,interaction.user.id):updateCityCore(db,guildId,input,interaction.user.id);
   else if(sub==="connect") result=connectCity(db,guildId,input,interaction.user.id);
   else if(sub==="service") result=changeCityService(db,guildId,input,interaction.user.id);
   else if(sub==="transmit") result=transmitCityBelief(db,guildId,input,interaction.user.id);

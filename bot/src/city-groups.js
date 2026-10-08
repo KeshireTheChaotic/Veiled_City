@@ -5,6 +5,12 @@ import { updateCityCivic } from "./city-civic.js";
 import { activeCityProxy, assertNpcAvailability } from "./city-constraints.js";
 import { motivationKey } from "./simulation-motivation.js";
 import { UserInputError, StateConflictError } from "./errors.js";
+const playerCommunity=(db,guild,key)=>db.listCityRecords(guild,{kind:"community_membership",actor:`community:${key}`,status:"active",includeGM:true,limit:1}).length>0;
+function protectPlayerCommunity(db,guild,data){
+  if(["join","dissolve"].includes(data.operation)&&playerCommunity(db,guild,data.group_key)
+    ||data.operation==="merge"&&(data.from_groups||[]).some(key=>playerCommunity(db,guild,key)))
+    throw new StateConflictError("Player-participating community changes require the explicit owner workflow; NPC votes cannot appoint staff or dissolve it.");
+}
 export function manageGroup(db,guild,input,actorId){
   cityObject(input);if(db.getCityCalendar(guild).flags.emergent_groups!==true) throw new StateConflictError("Emergent groups are opt-in.");
   const key=cityKey(input.key),before=db.getCityRecord(guild,"group_transition",key),op=input.op||"propose";
@@ -19,6 +25,7 @@ export function manageGroup(db,guild,input,actorId){
     if(["join","leave","dissolve"].includes(operation)?group?.status!=="active":!!group) throw new StateConflictError("Group existence conflicts with the operation.");
     if(["leave","dissolve"].includes(operation)&&members.some(member=>!group.data.members.includes(member))) throw new StateConflictError("Departing NPC must already be a member.");
     const sources=input.from_groups||[];
+    protectPlayerCommunity(db,guild,{operation,group_key:input.group_key,from_groups:sources});
     if(!Array.isArray(sources)||sources.length>4||sources.some(source=>db.getCityRecord(guild,"community",source)?.status!=="active"))
       throw new StateConflictError("Source groups must be established active communities.");
     if(["split","merge"].includes(operation)&&sources.length<(operation==="merge"?2:1)) throw new StateConflictError("Split/merge source groups required.");
@@ -54,6 +61,7 @@ export function manageGroup(db,guild,input,actorId){
   return db.transaction(()=>{
     if(op==="approve"){
       const data=before.data,current=db.getCityRecord(guild,"community",data.group_key);
+      protectPlayerCommunity(db,guild,data);
       if(JSON.stringify(current)!==JSON.stringify(data.before)) throw new StateConflictError("Group changed; propose a new transition.");
       for(const source of data.source_groups) if(JSON.stringify(db.getCityRecord(guild,"community",source.record_key))!==JSON.stringify(source))
         throw new StateConflictError("Source group changed; reconcile before approval.");
@@ -73,7 +81,7 @@ export function manageGroup(db,guild,input,actorId){
           data:current?{...current.data,members}:{name:data.name,capacity:0,members,priorities:[],shared_history:[]}},actorId);
         if(["split","merge"].includes(data.operation)) for(const source of data.source_groups){
           const remaining=source.data.members.filter(member=>!accepted.includes(member));
-          db.saveCityRecord(guild,{...source,key:source.record_key,status:remaining.length?"active":"dissolved",data:{...source.data,members:remaining}});
+          db.saveCityRecord(guild,{...source,key:source.record_key,status:remaining.length||playerCommunity(db,guild,source.record_key)?"active":"dissolved",data:{...source.data,members:remaining}});
         }
       }
     }

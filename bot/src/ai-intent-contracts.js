@@ -12,6 +12,8 @@ const action={anyOf:[object({type:text(),target_type:choice("npc","faction","loc
     "negotiate_request","publish_finding","relocate_staff","seek_warrant"),target_type:choice("npc","location","institution","district",""),
     target_key:text(),jurisdiction:text(),report_keys:list(text(),8),personnel_key:text(),reason:text(1000)})]};
 export const INTENT_PAYLOADS={
+  organization:object({...source,op:choice("invite"),character_id:text(),request:choice("found","join","property","staff","plan","project"),title:text(),terms:text(500),
+    target_key:text(),community_key:text(),commitment_key:text(),information_key:text(),duration_minutes:integer(0,525600)}),
   influence:object({...source,op:choice("attempt"),from_key:text(),to_type:choice("institution","community","audience"),to_key:text(),
     information_key:text(),mechanism:text(),action_id:text(),response:choice("accept","refuse","correct"),interpretation:text(600),prior_key:text(),dissent:list(text(),8)}),
   evidence:object({...source,op:choice("analyze"),handout_id:text(),interpretation:text(600)}),

@@ -59,6 +59,7 @@ bot/scripts/systems-to-players-1-test.mjs
 bot/scripts/systems-to-players-2-test.mjs
 bot/scripts/systems-to-players-3-test.mjs
 bot/scripts/systems-to-players-4-test.mjs
+bot/scripts/systems-to-players-5-test.mjs
 bot/scripts/validate-command-schema.mjs
 bot/scripts/validate-offline.mjs
 bot/sql/schema.sql
@@ -111,6 +112,7 @@ bot/src/npc-conversations.js
 bot/src/operations/diagnostics.js
 bot/src/operations/overview.js
 bot/src/outcome-preview.js
+bot/src/owned-community.js
 bot/src/personal-continuity.js
 bot/src/portrayal.js
 bot/src/provenance.js

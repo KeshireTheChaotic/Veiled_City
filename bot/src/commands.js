@@ -10,6 +10,7 @@ import { prepareLevelup, applyLevelupToData, legalAdvancements, tierAchievement 
 import { buildCombatants, hpMarksForDamage, combatantLine } from "./combat.js";
 import { applyAuthoritativeMutation } from "./state.js";
 import { manageEvidence, evidenceView } from "./evidence-custody.js";
+import { organizationRequest, organizationInbox } from "./owned-community.js";
 import { normalizeDirectorConfidence } from "./director.js";
 import { createPlayerExportFiles, createGmExportFiles } from "./character-export.js";
 import { handoutFiles, handoutSummary } from "./handout.js";
@@ -349,11 +350,17 @@ async function executeCommand(interaction,{db,gm,voice=null}){
     group=root==="level"?"character":root==="combat"?"encounter":root;
     sub=interaction.options.getSubcommand();
   }
-  if((group!=="story"&&!(group==="admin"&&sub==="seed-drafts")&&!(group==="intel"&&["discover","continuity"].includes(sub))
+  if((group!=="story"&&!(group==="admin"&&sub==="seed-drafts")&&!(group==="intel"&&["discover","continuity","organizations"].includes(sub))
     &&!(group==="handout"&&sub==="evidence")&&!(group==="downtime"&&sub==="long-project-status"))||isMutatingCommand(group,sub)) await ensurePlayer(db,interaction);
   if(await replayReceiptIfPresent({db,interaction,group,sub})) return true;
   const restoreReceiptCapture=installReceiptCapture({db,interaction,group,sub});
   try{
+    if(group==="intel"&&["organization","organizations"].includes(sub)){
+      const result=sub==="organization"?organizationRequest(db,interaction.guildId,interaction.user.id,JSON.parse(interaction.options.getString("json",true)))
+        :organizationInbox(db,interaction.guildId,interaction.user.id);
+      await interaction.reply({ephemeral:true,content:"Private owner proposals and explicit participation; no automatic funds, NPC appointments or world changes.",
+        files:[new AttachmentBuilder(Buffer.from(JSON.stringify(result,null,2)),{name:"organization-continuity.json"})]});return true;
+    }
     if(group==="downtime"&&sub==="long-project"){
       const result=manageLongProject(db,interaction.guildId,interaction.user.id,JSON.parse(interaction.options.getString("json",true)),{gm:isGM(db,interaction)});
       await interaction.reply({ephemeral:true,content:"Private long-project continuity; no automatic PC costs or benefits.",
