@@ -4,6 +4,7 @@ import { normalizeNpcKey } from "./npc-cognition.js";
 import { applySimulationUpdates } from "./simulation.js";
 import { validateNarrativeClaims, assertNarrativeApplied } from "./narrative-integrity.js";
 import { dispatchAiIntents } from "./ai-intents.js";
+import { assertNpcObservation } from "./scene-continuity.js";
 
 export function summarizeRoster(rows){
   return rows.map(r=>({
@@ -316,6 +317,8 @@ export function applyNpcCognitionDrafts(db,guildId,{memories=[],knowledge=[],goa
   }
   for(const draft of knowledge||[]){
     try{
+      assertNpcObservation(db,guildId,normalizeNpcKey(draft.npc_key),draft.source_ref||sourceRef,
+        {sourceType:draft.source_type||source,content:draft.content});
       const profile=ensureProfile(draft);
       const before=db.getNpcKnowledge(guildId,profile.npc_key,draft.knowledge_key)||null;
       const row=db.upsertNpcKnowledge(guildId,{

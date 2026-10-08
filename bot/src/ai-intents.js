@@ -4,6 +4,8 @@ import { validateIntent, INTENT_PAYLOADS } from "./ai-intent-contracts.js";
 import { requireCitySource } from "./city-core.js";
 import { cityObject, cityInteger, cityAudit, indexWorldEvent } from "./city-calendar.js";
 import { proposeGoalTransition, reviewGoalTransition } from "./simulation-motivation.js";
+import { recordScenePresence, scenePresence, sceneView } from "./scene-continuity.js";
+import { activeCityProxy } from "./city-constraints.js";
 const hash=value=>createHash("sha256").update(JSON.stringify(value)).digest("hex");
 const adapters=new Map();
 export const FEATURE_FLAGS={goal:"emergent_goals",consequence:"consequences",scene:"scene_continuity",group:"emergent_groups",
@@ -93,7 +95,10 @@ export function reviewAiIntent(db,guild,{key,decision:response,expected_revision
   });
 }
 export function intentContext(db,guild){
+  const scene=db.getActiveSession(guild)&&db.getCityCalendar(guild).flags.scene_continuity===true?sceneView(db,guild,{gm:true}):null;
   return {policy:delegationPolicy(db,guild),flags:db.getCityCalendar(guild).flags,
+    scene:scene?{...scene,occupants:scene.occupants.slice(0,32),targets:scene.occupants.slice(0,32).map(row=>({
+      entity_type:row.data.entity_type,entity_key:row.data.entity_key,expected_revision:stateRevision(row)}))}:null,
     goal_targets:db.listNpcProfiles(guild,{limit:32}).flatMap(npc=>db.listNpcGoals(guild,npc.npc_key,{limit:8})
       .map(row=>({actor_type:"npc",actor_key:npc.npc_key,goal_key:row.goal_key,expected_revision:stateRevision(row),state:row}))).slice(0,32),
     receipts:db.listCityRecords(guild,{kind:"ai_intent",includeGM:true,limit:12}).map(row=>({...row,expected_revision:stateRevision(row)})),
@@ -109,5 +114,30 @@ registerIntentAdapter("goal",{
   apply:(db,guild,intent,key,principal)=>{
     const row=proposeGoalTransition(db,guild,{...intent.payload,key},principal);
     return reviewGoalTransition(db,guild,{key:row.record_key,decision:"approve"},principal);
+  }
+});
+registerIntentAdapter("scene",{
+  current:(db,guild,intent)=>scenePresence(db,guild,intent.payload.entity_type,intent.payload.entity_key),
+  impact:(db,guild,intent)=>({cost:0,review:!["npc","character"].includes(intent.payload.entity_type)
+    &&requireCitySource(db,guild,intent.payload.source_event).details.entity_key!==intent.payload.entity_key,
+    reason:"New scene evidence and barriers need a matching committed observation or human review."}),
+  apply:(db,guild,intent,key,principal)=>{
+    const {op,...input}=intent.payload,event=requireCitySource(db,guild,input.source_event);
+    if(input.entity_type==="npc"&&activeCityProxy(db,guild,input.entity_key)) throw new Error("Proxy controls presence.");
+    if(input.known_to.some(observer=>!event.details.observers?.includes(observer))) throw new Error("Observer knowledge is not established by the source.");
+    const prior=scenePresence(db,guild,input.entity_type,input.entity_key);
+    if(["npc","character"].includes(input.entity_type)&&event.details.entity_key!==input.entity_key)
+      throw new Error("Actor-specific scene source required.");
+    if(prior&&prior.data.hidden!==input.hidden&&event.details.hidden!==input.hidden)
+      throw new Error("Concealment changes require committed source evidence.");
+    if(input.state==="actually_present"&&prior&&["uncertain","believed_present","departed"].includes(prior.data.state)
+      &&(!["arrival","travel"].includes(event.kind)||event.details.entity_key!==input.entity_key)) throw new Error("Actual arrival evidence required.");
+    if(input.entity_type==="character"){
+      const owner=db.getCharacter(input.entity_key)?.owner_user_id;
+      if(event.details.entity_key!==input.entity_key||event.details.owner_user_id!==owner||event.source_id!==`player:${owner}`)
+        throw new Error("Authenticated PC arrival source required.");
+      input.accepted_by=owner;
+    }
+    return recordScenePresence(db,guild,input,principal);
   }
 });

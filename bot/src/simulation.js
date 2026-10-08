@@ -9,6 +9,8 @@ import { coordinateConsequences } from "./city-consequences.js";
 import { runStrategyOpportunity } from "./simulation-strategy.js";
 import { proposeContactGroup } from "./city-groups.js";
 import { clusterContext } from "./memory-clusters.js";
+import { reconcileSceneArrival } from "./scene-continuity.js";
+import { indexWorldEvent } from "./city-calendar.js";
 export { updateRelationshipDimensions } from "./relationship-state.js";
 
 export const ACTION_TYPES=["investigate","travel","contact","recruit","observe","prepare","hide","acquire","spend_resource",
@@ -374,6 +376,13 @@ export function executeNpcAction(db,guildId,record,{approved=false,roll=()=>rand
     const mutation=db.recordMutation(guildId,{actorType:"ai",actorId:key,sourceLayer:"npc_director",mutationType:`npc_action:${action.type}`,
       entityKey:current.id,visibility:"gm",before:current,after:completed,rationale:content,payload:result});
     if(success) applyNpcServiceOutcome(db,guildId,action,mutation);
+    if(success&&action.type==="travel"&&action.actor_type==="npc"&&db.getCityCalendar(guildId).flags.scene_continuity===true
+      &&db.getActiveSession(guildId)){
+      const event=indexWorldEvent(db,guildId,{key:`travel:${current.id}`,kind:"travel",title:"Completed native NPC travel",
+        source_kind:"mutation",source_id:mutation.id,location_key:state.location_key,
+        details:{entity_type:"npc",entity_key:key}},"native_resolver");
+      reconcileSceneArrival(db,guildId,{type:"npc",key,source_event:event.event_key});
+    }
     return completed;
   });
 }

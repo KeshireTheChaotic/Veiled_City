@@ -41,7 +41,25 @@ forged authority, policy/target revisions, private scope and restart replay.
 
 ## Remaining audit gaps
 
-B: scene reconciliation and witness checks. C: durable consequences and richer
+## Phase B — 6.0.0: scene and witnesses
+
+Scene intents share delegation, revisions and native validation. Native successful
+NPC travel reconciles arrival atomically. Authenticated player check-in reconciles
+only an already established character location; missing locations remain unknown.
+No model-supplied owner or proxy consent is accepted. GM packets cap occupancy at
+32 and actor packets at 16 accessible entries. New AI knowledge must match an
+actual accessible source or preserve already acquired evidence. Remote/hidden/
+departed witnesses fail closed. Implicit physical conversations enforce sound;
+remote exceptions require an explicitly established communication mode. Native
+roster, route, combat and archived-scene state remain authoritative.
+
+Validation: `end-to-end-b-test.mjs` plus existing scene, narrative and offline
+suites. No real Discord/model/TTS calls. Automatic presence does not infer a
+location from an entry hook or invent arrival for an absent PC.
+
+## Remaining phases
+
+C: durable consequences and richer
 motivations. D: groups and strategies. E: owner confirmation and natural-language
 read-only discovery. F: projects and mediation. G: memory maintenance and fairness.
 H: seeds and complete review UX. I: cross-feature orchestration and rollout.

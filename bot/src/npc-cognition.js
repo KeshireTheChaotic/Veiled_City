@@ -8,6 +8,7 @@
  */
 
 import { clusterContext } from "./memory-clusters.js";
+import { sceneView } from "./scene-continuity.js";
 
 function words(value){
   return new Set(String(value||"").toLowerCase().match(/[a-z0-9']{3,}/g)||[]);
@@ -127,6 +128,8 @@ export function retrieveNpcCognition(db,guildId,{
       .sort((a,b)=>b._score-a._score||String(b.updated_at).localeCompare(String(a.updated_at)))
       .slice(0,Math.max(1,Math.min(20,Number(knowledgePerNpc)||8)))
       .map(({_score,...row})=>row);
+    const scene=db.getCityCalendar(guildId).flags.scene_continuity===true&&db.getActiveSession(guildId)
+      ?sceneView(db,guildId,{observer_type:"npc",observer_key:profile.npc_key}):null;
     return {
       npc_key:profile.npc_key,
       display_name:profile.display_name,
@@ -141,7 +144,8 @@ export function retrieveNpcCognition(db,guildId,{
       goals:goals.slice(0,Math.max(1,Math.min(10,Number(goalsPerNpc)||4))),
       knowledge,
       memories,
-      memory_clusters:clusterContext(db,guildId,"npc",profile.npc_key,query)
+      memory_clusters:clusterContext(db,guildId,"npc",profile.npc_key,query),
+      scene_observations:scene?{...scene,occupants:scene.occupants.slice(0,16)}:null
     };
   });
   let size=2;

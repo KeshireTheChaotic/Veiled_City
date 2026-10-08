@@ -12,7 +12,9 @@ export function resolveNpcConversation(db,guildId,input,actorId,{roll}={}){
   requireCitySource(db,guildId,input.source_event);
   if(!["round","scene","downtime","manual"].includes(input.opportunity)) throw new Error("Explicit fictional opportunity required.");
   if(input.from===input.to) throw new Error("Two different NPCs are required.");
-  if(input.mode==="in_person"&&(!sceneAccess(db,guildId,{observer_type:"npc",observer_key:input.from,target_type:"npc",target_key:input.to,sense:"sound"})
+  const channel=db.cityEdges(guildId,"channel").find(edge=>edge.from_key===`npc:${input.from}`&&edge.to_key===`npc:${input.to}`);
+  const physical=input.mode==="in_person"||db.getCityCalendar(guildId).flags.scene_continuity===true&&input.mode!=="remote";
+  if(physical&&(!sceneAccess(db,guildId,{observer_type:"npc",observer_key:input.from,target_type:"npc",target_key:input.to,sense:"sound"})
     ||!sceneAccess(db,guildId,{observer_type:"npc",observer_key:input.to,target_type:"npc",target_key:input.from,sense:"sound"})))
     throw new Error("In-person conversation requires actual scene presence and an unobstructed sound path.");
   for(const npc of [input.from,input.to]){
@@ -23,7 +25,9 @@ export function resolveNpcConversation(db,guildId,input,actorId,{roll}={}){
     const goal=db.getNpcGoal(guildId,npc,npc===input.from?input.from_goal:input.to_goal);
     if(!goal||goal.status!=="active"||goal.acceptable_methods.length&&!goal.acceptable_methods.some(m=>["contact","negotiate"].includes(m))) throw new Error("Both actors need a contact-compatible active goal.");
   }
-  if(!db.cityEdges(guildId,"channel").some(edge=>edge.from_key===`npc:${input.from}`&&edge.to_key===`npc:${input.to}`)) throw new Error("Established directed contact channel required.");
+  if(!channel) throw new Error("Established directed contact channel required.");
+  if(input.mode==="remote"&&db.getCityCalendar(guildId).flags.scene_continuity===true
+    &&!["telephone","radio","message","courier"].includes(channel.data?.mode)) throw new Error("Established remote communication mode required.");
   const tick=db.getSimulationClock(guildId).tick;
   if(db.listCityRecords(guildId,{kind:"conversation",includeGM:true,limit:100}).some(row=>row.tick===tick)) throw new Error("Conversation budget is one per fictional tick.");
   const profiles=[input.from,input.to].map(npc=>db.getNpcProfile(guildId,npc));

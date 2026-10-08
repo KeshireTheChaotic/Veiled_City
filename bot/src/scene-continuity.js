@@ -1,5 +1,5 @@
 /** Sourced descriptive scene occupancy. Actual combat/roster/travel state stays authoritative; observers never receive hidden GM metadata. */
-import { cityObject, cityKey, cityVisibility, cityAudit } from "./city-calendar.js";
+import { cityObject, cityKey, cityVisibility, cityAudit, indexWorldEvent } from "./city-calendar.js";
 import { requireCitySource } from "./city-core.js";
 import { activeCityProxy } from "./city-constraints.js";
 import { motivationKey } from "./simulation-motivation.js";
@@ -11,6 +11,45 @@ export function currentScene(db,guildId){
   return {key:`${session.id}:${director.scene_number}`,session_id:session.id,label:director.scene_label};
 }
 const presenceKey=(scene,type,key)=>`presence:${motivationKey([scene,type,key])}`;
+export function scenePresence(db,guild,type,key){
+  return db.getActiveSession(guild)?db.getCityRecord(guild,"scene_presence",presenceKey(currentScene(db,guild).key,type,key)):null;
+}
+export function reconcileSceneArrival(db,guild,{type,key,source_event,owner=null}){
+  if(db.getCityCalendar(guild).flags.scene_continuity!==true||!db.getActiveSession(guild)) return null;
+  const event=requireCitySource(db,guild,source_event);
+  if(!["arrival","travel"].includes(event.kind)||event.details.entity_type!==type||event.details.entity_key!==key)
+    throw new StateConflictError("Committed actor-specific arrival evidence required.");
+  if(type==="character"&&(event.details.owner_user_id!==owner||event.source_id!==`player:${owner}`))
+    throw new StateConflictError("Authenticated owner arrival required.");
+  if(type==="npc"&&activeCityProxy(db,guild,key)) return null;
+  const before=scenePresence(db,guild,type,key);
+  if(before?.source_event===source_event) return before;
+  return recordScenePresence(db,guild,{entity_type:type,entity_key:key,source_event,location_key:event.location_key,
+    zone:"scene",visibility:event.visibility,subject_key:event.subject_key,accepted_by:owner},"scene_reconciliation");
+}
+export function recordCharacterArrival(db,guild,character,user,interactionId){
+  if(db.getCityCalendar(guild).flags.scene_continuity!==true||!db.getSimulationEntity(guild,"location",character.data?.location)) return null;
+  return db.transaction(()=>{
+    const event=indexWorldEvent(db,guild,{key:`arrival:${motivationKey([interactionId,character.id])}`,kind:"arrival",title:"Owner-established arrival",
+      source_id:`player:${user}`,location_key:character.data.location,visibility:"party",
+      details:{entity_type:"character",entity_key:character.id,owner_user_id:user}},user);
+    return reconcileSceneArrival(db,guild,{type:"character",key:character.id,source_event:event.event_key,owner:user});
+  });
+}
+export function assertNpcObservation(db,guild,npc,sourceRef,{sourceType="",content=""}={}){
+  if(db.getCityCalendar(guild).flags.scene_continuity!==true) return true;
+  const existing=db.listNpcKnowledge(guild,npc,{limit:200}).find(row=>row.source_ref===sourceRef&&row.belief_state!=="unknown"&&row.content===content);
+  if(existing) return true;
+  const event=db.getWorldEvent(guild,sourceRef);
+  if(!event||event.status!=="active"||!db.getActiveSession(guild)) throw new StateConflictError("Unknown or unwitnessed source; no new actor knowledge.");
+  const targetType=event.details.entity_type,targetKey=event.details.entity_key;
+  const sense=["heard","overheard"].includes(sourceType)?"sound":"sight";
+  if(!targetType||!targetKey||!sceneAccess(db,guild,{observer_type:"npc",observer_key:npc,target_type:targetType,target_key:targetKey,sense}))
+    throw new StateConflictError("Source was not actually accessible to this witness.");
+  if(!["observed","witnessed","heard","overheard"].includes(sourceType)) throw new StateConflictError("Remote knowledge needs an established delivery, not scene inference.");
+  if(content!==event.title&&content!==event.details.observation) throw new StateConflictError("Observation must match its committed source, not invented content.");
+  return true;
+}
 function records(db,guildId,scene){
   const rows=[];
   for(let offset=0;offset<2000;offset+=100){
@@ -71,6 +110,14 @@ export function recordScenePresence(db,guildId,input,actorId){
 }
 function accessFromRows(db,guildId,rows,{observer_type,observer_key,target_type,target_key,sense="sight"}){
   if(!["npc","character"].includes(observer_type)||!['sight','sound'].includes(sense)) return false;
+  for(const [type,key] of [[observer_type,observer_key],[target_type,target_key]]){
+    if(type==="character"&&!db.roster(currentScene(db,guildId).session_id)
+      .some(row=>row.character_id===key&&["present","late","guest"].includes(row.presence))) return false;
+    if(type==="npc"){
+      const state=db.getSimulationEntity(guildId,"npc",key)?.state;
+      if(!state||state.removed||["dead","removed"].includes(state.status)) return false;
+    }
+  }
   const observer=rows.find(row=>row.actor_key===`${observer_type}:${observer_key}`),target=rows.find(row=>row.actor_key===`${target_type}:${target_key}`);
   if(!observer||!target||observer.data.state!=="actually_present"||target.data.state!=="actually_present"
     ||observer.location_key!==target.location_key) return false;

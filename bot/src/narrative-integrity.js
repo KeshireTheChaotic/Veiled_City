@@ -1,4 +1,5 @@
 /** Local, fail-closed material-claim checks. Claims propose no mutations and never supply dice. */
+import { sceneAccess } from "./scene-continuity.js";
 export const materialClaimSchema={type:"object",additionalProperties:false,properties:{
   actor:{type:"string"},entity_type:{type:"string",enum:["character","npc","combatant","world"]},entity:{type:"string"},
   action:{type:"string",enum:["damage","movement","disclosure","obligation","status","canon","dice"]},
@@ -40,6 +41,9 @@ export function validateNarrativeClaims(db,guildId,result,scope={mode:"party"}){
     const entity=c.entity_type==="character"?db.getCharacter(c.entity):c.entity_type==="npc"?db.getSimulationEntity(guildId,"npc",c.entity):null;
     if(entity?.guild_id&&entity.guild_id!==guildId) deny("campaign_isolation",c);
     const state=entity?.state||{};
+    if(c.actor&&["movement","status"].includes(c.action)&&db.getCityCalendar(guildId).flags.scene_continuity===true
+      &&!sceneAccess(db,guildId,{observer_type:"npc",observer_key:c.actor,target_type:c.entity_type,target_key:c.entity,sense:"sight"}))
+      deny("not_witnessed",c,"actual scene access");
     if(c.certainty==="committed"&&((entity?.status&&["dead","retired"].includes(entity.status))||state.removed||["dead","removed"].includes(state.status))) deny("inactive_actor",c);
     if(c.action==="dice") deny("model_dice",c);
     if(c.action==="status"&&(!entity||entity.status!==c.proposed&&state.status!==c.proposed)) deny("actor_status",c,"saved lifecycle");

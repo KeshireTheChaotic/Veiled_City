@@ -29,6 +29,7 @@ import { publishSimulationHooks } from "./publishing.js";
 import { handleSimulationCommand } from "./simulation-commands.js";
 import { handleCityCommand } from "./city-commands.js";
 import { handleStoryCommand } from "./story-commands.js";
+import { recordCharacterArrival } from "./scene-continuity.js";
 import { personalArc, discoverPersonal } from "./personal-continuity.js";
 import { manageLongProject } from "./long-projects.js";
 
@@ -606,6 +607,7 @@ Initial phase: ${s.assembly_phase}`});
       if(!c) throw new Error("No active owned character found. Create/import one or specify a character.");
       db.setPresence(s.id,interaction.user.id,sub==="arrive"?"late":"present","offscreen",null,sub==="arrive"?"Arrived during session.":"");
       db.assignCharacter(s.id,interaction.user.id,c.id,{role:"primary",controlPolicy:"player_only"});
+      recordCharacterArrival(db,interaction.guildId,c,interaction.user.id,interaction.id);
       let suffix="";
       const returning=db.partyHasCharacter(interaction.guildId,c.id);
       const shouldPlan=sub==="arrive" || (s.assembly_phase==="party" && !returning && s.assembly_mode!=="already_together");
