@@ -15,6 +15,7 @@ import { recordScenePresence, sceneView } from "./scene-continuity.js";
 import { manageGroup } from "./city-groups.js";
 import { manageStrategy } from "./simulation-strategy.js";
 import { proposeArcBeat } from "./personal-continuity.js";
+import { manageMemoryCluster } from "./memory-clusters.js";
 export async function handleStoryCommand(interaction,{db,gm}){
   if(!interaction.memberPermissions?.has(PermissionFlagsBits.ManageGuild)&&
     !interaction.member?.roles?.cache?.has(db.getCampaign(interaction.guildId)?.gm_role_id)) throw new PermissionError("GM/admin permission required.");
@@ -25,6 +26,7 @@ export async function handleStoryCommand(interaction,{db,gm}){
   else if(sub==="group") result=manageGroup(db,guild,input,interaction.user.id);
   else if(sub==="strategy") result=manageStrategy(db,guild,input,interaction.user.id);
   else if(sub==="arc-beat") result=proposeArcBeat(db,guild,input,interaction.user.id);
+  else if(sub==="memory") result=manageMemoryCluster(db,guild,input,interaction.user.id);
   else if(sub==="scene-view") result=sceneView(db,guild,{...input,gm:input.observer_type?false:true});
   else if(sub==="conversation") result=resolveNpcConversation(db,guild,input,interaction.user.id);
   else if(sub==="pacing") result=setPacingCues(db,guild,input,interaction.user.id);

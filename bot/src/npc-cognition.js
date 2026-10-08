@@ -7,6 +7,8 @@
  * campaigns provide only the memories/knowledge relevant to the current scene.
  */
 
+import { clusterContext } from "./memory-clusters.js";
+
 function words(value){
   return new Set(String(value||"").toLowerCase().match(/[a-z0-9']{3,}/g)||[]);
 }
@@ -87,7 +89,10 @@ export function retrieveNpcCognition(db,guildId,{
   goalsPerNpc=4,
   recordRecall=true
 }={}){
-  const profiles=db.listNpcProfiles(guildId,{limit:500}).filter(profile=>!npcKey||profile.npc_key===npcKey);
+  const density=db.getCityCalendar(guildId).flags.activity_density===true;
+  const profiles=npcKey?[db.getNpcProfile(guildId,npcKey)].filter(Boolean):density
+    ?db.densityActorSelection(guildId,query).filter(row=>row.type==="npc").map(row=>db.getNpcProfile(guildId,row.actor_key))
+    :db.listNpcProfiles(guildId,{limit:500});
   if(!profiles.length) return [];
   const queryTokens=words(query);
   const tick=db.getSimulationClock(guildId).tick;
@@ -113,10 +118,10 @@ export function retrieveNpcCognition(db,guildId,{
     const goalTokens=words(goals.map(goal=>goal.objective).join(" "));
     const memoryTokens=new Set([...queryTokens,...goalTokens]);
     const memories=db.listNpcMemories(guildId,profile.npc_key,{status:"retrievable",limit:160,queryTokens:[...memoryTokens]})
-      .map(row=>({...row,_score:memoryRank(row,memoryTokens,tick)}))
-      .sort((a,b)=>b._score-a._score||String(b.created_at).localeCompare(String(a.created_at)))
+      .map(row=>({...row,_query_match:density?overlapScore(queryTokens,words(`${row.content} ${row.subject_key}`)):0,_score:memoryRank(row,memoryTokens,tick)}))
+      .sort((a,b)=>b._query_match-a._query_match||b._score-a._score||String(b.created_at).localeCompare(String(a.created_at)))
       .slice(0,Math.max(1,Math.min(20,Number(memoriesPerNpc)||7)))
-      .map(row=>{const {_score,...clean}=row; recalled.push(clean.id); return clean;});
+      .map(row=>{const {_score,_query_match,...clean}=row; recalled.push(clean.id); return clean;});
     const knowledge=db.listNpcKnowledge(guildId,profile.npc_key,{limit:160,queryTokens:[...memoryTokens]})
       .map(row=>({...row,_score:knowledgeRank(row,queryTokens)}))
       .sort((a,b)=>b._score-a._score||String(b.updated_at).localeCompare(String(a.updated_at)))
@@ -135,11 +140,15 @@ export function retrieveNpcCognition(db,guildId,{
       persistent_state:db.getSimulationEntity(guildId,"npc",profile.npc_key)?.state||{},
       goals:goals.slice(0,Math.max(1,Math.min(10,Number(goalsPerNpc)||4))),
       knowledge,
-      memories
+      memories,
+      memory_clusters:clusterContext(db,guildId,"npc",profile.npc_key,query)
     };
   });
-  if(recordRecall&&recalled.length) db.markNpcMemoriesRecalled(recalled);
-  return packets;
+  let size=2;
+  const bounded=density?packets.filter(packet=>{const length=JSON.stringify(packet).length+1;
+    if(length>12000||size+length>24000) return false;size+=length;return true;}).slice(0,4):packets;
+  if(recordRecall&&recalled.length) db.markNpcMemoriesRecalled(bounded.flatMap(packet=>packet.memories.map(memory=>memory.id)));
+  return bounded;
 }
 
 /**

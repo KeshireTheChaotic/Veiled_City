@@ -389,7 +389,8 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
     const characterNarratives=narrativeContext(this.db,guildId,narrativeIds,{includeGM:true,maxChars:8000});
     const visibleHandouts=this.db.listHandoutsFor(guildId,actorUserId,{characterId:actorKnowledgeId,includeGM:false,limit:40}).map(h=>({id:h.id,title:h.title,kind:h.kind,authority:h.authority,visibility:h.visibility,case_key:h.case_key,npc_key:h.npc_key,location_key:h.location_key}));
     const npcCognition=retrieveNpcCognition(this.db,guildId,{query,actorAssignment,worldDirector,maxNpcs:worldDirector?6:4,recordRecall:true});
-    const contextPlan=this.db.getCityCalendar(guildId).flags.adaptive_context?new ContextPlanner(this.db).plan(guildId,
+    const contextFlags=this.db.getCityCalendar(guildId).flags;
+    const contextPlan=(contextFlags.adaptive_context||contextFlags.personal_arcs||contextFlags.memory_consolidation)?new ContextPlanner(this.db).plan(guildId,
       {operation:worldDirector?"director":"turn",actorType:"gm",scope:"gm",query:messageText,scene:session?this.db.getDirectorState(session.id).scene_label:""}):null;
     return {
       context_plan:contextPlan,

@@ -1,5 +1,6 @@
 /** Deterministic sourced context; authorization precedes ranking and budgeting. No recall writes or AI calls. */
 import { historyContext } from "./city-civic.js";
+import { clusterContext } from "./memory-clusters.js";
 const tokens=value=>String(value||"").toLowerCase().match(/[a-z0-9-]{3,}/g)||[];
 export class ContextPlanner {
   constructor(db){this.db=db;}
@@ -14,12 +15,14 @@ export class ContextPlanner {
       candidates.set(source,{source,data,priority:score,estimated_tokens:Math.ceil((text.length+source.length+80)/3)});
     };
     if(actorType==="npc"){
+      for(const row of clusterContext(this.db,guildId,"npc",actorKey,query)) add(`cluster:${row.key}`,row,15);
       for(const term of terms.length?terms:[""]) for(const row of this.db.listNpcKnowledge(guildId,actorKey,{queryTokens:tokens(term),limit:30}))
         if(row.belief_state!=="unknown") add(`npc_knowledge:${actorKey}:${row.knowledge_key}`,row,20);
       for(const row of this.db.listNpcGoals(guildId,actorKey,{status:"active",limit:8})) add(`npc_goal:${actorKey}:${row.goal_key}`,row,30);
       for(const row of this.db.listNpcMemories(guildId,actorKey,{status:"retrievable",queryTokens:terms,limit:12})) add(`npc_memory:${row.id}`,row,10);
       withheld.push("Global facts, other actor knowledge, canon secrets and civic event graphs excluded before ranking.");
     }else if(actorType==="institution"){
+      for(const row of clusterContext(this.db,guildId,"institution",actorKey,query)) add(`cluster:${row.key}`,row,15);
       if(!this.db.getCityRecord(guildId,"institution",actorKey)) throw new Error("Institution not found.");
       for(const term of terms.length?terms:[""]) for(const row of this.db.listCityRecords(guildId,{kind:"report",actor:actorKey,query:term,includeGM:true,limit:20}))
         add(`institution_report:${row.record_key}`,row,20);
@@ -36,6 +39,7 @@ export class ContextPlanner {
           if(kind==="arc"||row.status==="pending") add(`${kind}:${row.record_key}`,{...row.data,character_id:id,status:row.status,nonbinding:true},15);
       }
       if(actorType==="gm"&&scope==="gm"){
+        for(const row of clusterContext(this.db,guildId,"campaign",guildId,query)) add(`cluster:${row.key}`,row,5);
         for(const term of terms) for(const row of this.db.listWorldEvents(guildId,{includeGM:true,query:term,limit:12})) add(`event:${row.event_key}`,row,10);
         for(const row of historyContext(this.db,guildId,`${scene} ${query}`)) add(`history:${row.sources.map(s=>s.event_key).join(",")}`,row,5);
         for(const row of this.db.searchRulesRulings(guildId,query)) add(`ruling:${row.id||row.ruling_key}`,row,50);

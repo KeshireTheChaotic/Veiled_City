@@ -8,6 +8,7 @@ import { runMotivationCycle } from "./simulation-motivation.js";
 import { coordinateConsequences } from "./city-consequences.js";
 import { runStrategyOpportunity } from "./simulation-strategy.js";
 import { proposeContactGroup } from "./city-groups.js";
+import { clusterContext } from "./memory-clusters.js";
 export { updateRelationshipDimensions } from "./relationship-state.js";
 
 export const ACTION_TYPES=["investigate","travel","contact","recruit","observe","prepare","hide","acquire","spend_resource",
@@ -81,9 +82,12 @@ function goalsFor(db,guildId,type,key){
 
 /** Build bounded, actor-specific knowledge packets. Objective hidden facts are never injected here. */
 export function simulationCandidates(db,guildId,{layer,query=""}={}){
-  const npcs=db.listNpcProfiles(guildId,{limit:500}).map(profile=>({type:"npc",key:profile.npc_key,profile}));
-  const factions=db.listSimulationEntities(guildId,"faction").map(row=>({type:"faction",key:row.entity_key,profile:row.state}));
-  return [...npcs,...factions].map(actor=>{
+  const density=db.getCityCalendar(guildId).flags.activity_density===true,selection=density?db.densityActorSelection(guildId,query):[];
+  const npcs=(density?selection.filter(row=>row.type==="npc").map(row=>db.getNpcProfile(guildId,row.actor_key)):db.listNpcProfiles(guildId,{limit:500}))
+    .map(profile=>({type:"npc",key:profile.npc_key,profile,wake:selection.some(row=>row.type==="npc"&&row.actor_key===profile.npc_key&&row.wake)}));
+  const factions=(density?selection.filter(row=>row.type==="faction").map(row=>db.getSimulationEntity(guildId,"faction",row.actor_key))
+    :db.listSimulationEntities(guildId,"faction")).map(row=>({type:"faction",key:row.entity_key,profile:row.state}));
+  const packets=[...npcs,...factions].map(actor=>{
     const configured=db.getSimulationEntity(guildId,actor.type,actor.key)?.state;
     const state=actorState(db,guildId,actor.type,actor.key);
     state.activity_tier=configured?.activity_tier||actor.profile.activity_tier||state.activity_tier;
@@ -95,8 +99,10 @@ export function simulationCandidates(db,guildId,{layer,query=""}={}){
         :db.getSimulationRecord(guildId,dependency)?.status==="completed");
     });
     const relevant=intersects(query,JSON.stringify([actor.key,goals,state.location_key]));
-    const eligible=!(actor.type==="npc"&&activeCityProxy(db,guildId,actor.key))&&!state.removed&&state.activity_tier!=="dormant"&&goals.length&&
-      (state.activity_tier==="active"||(state.activity_tier==="supporting"&&relevant)||layer==="downtime");
+    const affordable=!density||goals.some(goal=>Object.entries(COSTS).some(([method,resource])=>state.resources[resource]>0
+      &&(!(goal.acceptable_methods||[]).length||goal.acceptable_methods.includes(method))));
+    const eligible=!(actor.type==="npc"&&activeCityProxy(db,guildId,actor.key))&&!state.removed&&(state.activity_tier!=="dormant"||actor.wake)&&goals.length&&affordable&&
+      (actor.wake||state.activity_tier==="active"||(state.activity_tier==="supporting"&&relevant)||layer==="downtime");
     return {...actor,state,goals,eligible};
   }).filter(actor=>actor.eligible).sort((a,b)=>Number(b.goals[0]?.priority||0)-Number(a.goals[0]?.priority||0)).slice(0,8).map(actor=>{
     const {state,goals}=actor;
@@ -105,11 +111,15 @@ export function simulationCandidates(db,guildId,{layer,query=""}={}){
     const obligations=db.listSimulationRecords(guildId,{kind:"obligation",status:"active",limit:100})
       .filter(row=>[row.data.debtor,row.data.creditor].includes(keyOf(actor.type,actor.key)));
     return {...actor,state,goals,knowledge,awareness,obligations,memories:actorMemories(db,guildId,actor,query),
+      memory_clusters:clusterContext(db,guildId,actor.type,actor.key,query),
       availability:actor.type==="npc"?npcAvailability(db,guildId,actor.key):null,
       location:db.getSimulationEntity(guildId,"location",state.location_key)?.state||{},
-      relationships:db.listSimulationEntities(guildId,"relationship").filter(row=>
+      relationships:density?db.actorSimulationRelations(guildId,keyOf(actor.type,actor.key)):db.listSimulationEntities(guildId,"relationship").filter(row=>
         [row.state.from,row.state.to].includes(keyOf(actor.type,actor.key))).map(row=>row.state)};
   });
+  if(!density) return packets;
+  let size=2;
+  return packets.filter(packet=>{const length=JSON.stringify(packet).length+1;if(length>12000||size+length>24000) return false;size+=length;return true;}).slice(0,4);
 }
 
 function remember(db,guildId,type,key,content,{source="witnessed",confidence=90,importance=60,subjectType="entity",subjectKey="",sourceRef=""}={}){

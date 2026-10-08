@@ -40,7 +40,7 @@ the actual controlling owner and never accept an input JSON identity as authorit
 | C: P04–05 | 19b8864 | 5.3.0 | EXTENDED: voluntary community lifecycle and durable bounded plans; offline gates pass |
 | D: P06–07 | 06c20e3 | 5.4.0 | EXTENDED: owner-established arcs and zero-write character-relative discovery; offline gates pass |
 | E: P08–09 | 42995fb | 5.5.0 | EXTENDED: phased continuity with existing adjudication and queued-action mediation; offline gates pass |
-| F: P10–11 | pending | next minor | Pending fresh audit |
+| F: P10–11 | 79dbde8 | 5.6.0 | EXTENDED: reversible actor clusters and bounded relevance selection; offline gates pass |
 | G: P12 | pending | next minor | Pending fresh audit |
 | H: P13 | pending | next minor | Pending fresh audit |
 
@@ -139,3 +139,27 @@ Existing atomic finite-resource checks and explicit disputed title are SATISFIED
 not replaced. `expansion-e-test.mjs` checks consent/authority/privacy, downtime
 result provenance, pauses/time, restart/restore, dependency loss, incompatible
 travel, last-unit/retry conservation, untouched PCs and contested title.
+
+### Phase F audit and extension
+
+Fresh 79dbde8 audit: NPC memory query-before-limit already preserved old records,
+but low-importance literal matches could lose final ranking to unrelated memories.
+P10 EXTENDED: `memory-clusters.js` stores reversible/revisable source pointers and
+compact independent excerpts, confidence, disagreement and revision history.
+NPC/faction/institution/campaign ownership is checked per pointer both at write
+and recall. Originals remain unchanged; invalidated evidence suppresses clusters.
+GM/NPC context reuses the existing planner/cognition packet, not a new store.
+P11 EXTENDED: opt-in DB preselection limits materialized candidates to 32,
+prioritizes established goals/location relevance, excludes unaffordable actors,
+and permits an ephemeral dormant-NPC wake only for relevant own known active
+sources. Full actor records/tier history remain unchanged. Packet generation caps
+4 packets, 12,000 characters each, 24,000 total; oversized actors are omitted,
+not silently stripped of safety constraints. Relationships are scoped/limited
+before materialization. Direct NPC retrieval no longer misses profiles beyond
+500; opted-in literal matches precede generic salience. Existing director proposal
+budgets remain 1/3/4 and no provider fan-out is added. DB scans still depend on
+SQLite size; this bounds application materialization, not constant-time SQL work.
+`expansion-f-test.mjs` checks contradictory low-confidence sources, wrong actors,
+revision/revert, original preservation, 650 newer memories/300 fictional days,
+1,000 seeded NPCs, packet/selection bounds, legitimate cold wake, affordability,
+privacy and restore. Measured fixture timing is not a production latency promise.

@@ -281,6 +281,33 @@ export class VeiledDB {
     return this.db.prepare("SELECT * FROM simulation_entities WHERE guild_id=? AND (?='' OR entity_type=?) ORDER BY entity_key")
       .all(guildId,type,type).map(row=>({...row,state:JSON.parse(row.state_json)}));
   }
+  densityActorSelection(guildId,query=""){
+    const npcs=this.db.prepare(`WITH candidates AS (
+      SELECT p.npc_key AS actor_key,COALESCE(json_extract(e.state_json,'$.activity_tier'),p.activity_tier) tier,
+      COALESCE(json_extract(e.state_json,'$.removed'),0) removed,
+      EXISTS(SELECT 1 FROM npc_knowledge n JOIN world_events w ON w.guild_id=n.guild_id AND w.event_key=n.source_ref
+        WHERE n.guild_id=p.guild_id AND n.npc_key=p.npc_key AND n.belief_state!='unknown' AND w.status='active'
+        AND ?!='' AND instr(lower(n.content),lower(?))>0) wake,
+      COALESCE((SELECT MAX(g.priority) FROM npc_goals g LEFT JOIN city_records m ON m.guild_id=g.guild_id AND m.kind='goal_state'
+        AND m.record_key=json_array('npc',g.npc_key,g.goal_key) WHERE g.guild_id=p.guild_id AND g.npc_key=p.npc_key
+        AND COALESCE(json_extract(m.data_json,'$.status'),g.status)='active'),0)
+      +CASE WHEN ?!='' AND (instr(lower(?),lower(p.npc_key))>0 OR instr(lower(?),lower(COALESCE(json_extract(e.state_json,'$.location_key'),'@none')))>0)
+        THEN 100 ELSE 0 END AS score
+      FROM npc_profiles p LEFT JOIN simulation_entities e ON e.guild_id=p.guild_id AND e.entity_type='npc' AND e.entity_key=p.npc_key WHERE p.guild_id=?
+    ) SELECT actor_key,wake,score FROM candidates WHERE removed=0 AND (tier!='dormant' OR wake=1) ORDER BY score DESC,actor_key LIMIT 32`)
+      .all(query,query,query,query,query,guildId).map(row=>({...row,type:"npc"}));
+    const factions=this.db.prepare(`SELECT entity_key actor_key,0 wake,COALESCE((SELECT MAX(CAST(json_extract(r.data_json,'$.priority') AS INTEGER))
+      FROM simulation_records r WHERE r.guild_id=e.guild_id AND r.entity_key='faction:'||e.entity_key AND r.kind='goal' AND r.status='active'),0) score
+      FROM simulation_entities e WHERE guild_id=? AND entity_type='faction' AND COALESCE(json_extract(state_json,'$.removed'),0)=0
+      AND COALESCE(json_extract(state_json,'$.activity_tier'),'background')!='dormant' ORDER BY score DESC,entity_key LIMIT 16`)
+      .all(guildId).map(row=>({...row,type:"faction"}));
+    return [...npcs,...factions].sort((a,b)=>b.score-a.score||`${a.type}:${a.actor_key}`.localeCompare(`${b.type}:${b.actor_key}`)).slice(0,32);
+  }
+  actorSimulationRelations(guildId,entity){
+    return this.db.prepare(`SELECT state_json FROM simulation_entities WHERE guild_id=? AND entity_type='relationship'
+      AND (json_extract(state_json,'$.from')=? OR json_extract(state_json,'$.to')=?) ORDER BY entity_key LIMIT 16`)
+      .all(guildId,entity,entity).map(row=>JSON.parse(row.state_json));
+  }
 
   putSimulationRecord(guildId,{id=randomUUID(),kind,entityKey="",status="active",dueTick=null,dueMinute=null,data={}}){
     this.db.prepare(`INSERT INTO simulation_records(id,guild_id,kind,entity_key,status,due_tick,due_minute,data_json) VALUES(?,?,?,?,?,?,?,?)

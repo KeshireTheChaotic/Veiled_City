@@ -161,3 +161,31 @@ review still apply. Reconcile/cancel earlier actions or seek GM review; no new
 reservation currency. Disputed property claims remain disputed. Flags default
 off; disable to stop these extensions, preserve records, and use native action
 review/cancellation for queued work. Upgrade/backup/rollback as Phase A.
+
+## 5.6.0 — Phase F: memory and activity density
+
+Enable `/vc-city flags json:{"memory_consolidation":true,"activity_density":true}`.
+GM `/vc-story memory` JSON:
+`{"key":"witness-history","actor_type":"npc","actor_key":"clerk","topic":"Contradictory testimony","source_event":"review-observed","sources":[{"kind":"npc_memory","key":"<memory-id>"}]}`.
+Other actor/pointer pairs: faction/memory (simulation memory ID),
+institution/report (report key), campaign/event (actor_key is the guild ID).
+Pointers must belong to that actor/campaign. Compact independent excerpts retain
+confidence/status and explicitly do not resolve contradictions or establish canon.
+
+Use `op:revise` with the same owner and a corrected source list/topic to keep
+revision history; `{"key":"witness-history","op":"revert"}` stops recall.
+Original memories/events are never erased or rewritten. Each recall revalidates
+evidence and source status. Four clusters of at most twenty pointers are eligible
+per scoped lookup. Literal old-clue searches still retrieve originals separately.
+
+Activity density caps materialized candidates at 32 and returned cognition/
+simulation packets at 4, 12,000 characters each and 24,000 total. Oversized packets
+are omitted rather than dropping authority constraints. Goals, known location
+relevance and affordable existing actions determine eligibility. Dormant NPCs
+only wake ephemerally for matching own knowledge linked to an active source;
+unaware NPCs and proxies do not wake from global GM facts. No permanent tier change
+or history deletion. Existing round/scene/downtime budgets and fictional-time
+triggers remain binding, with no per-NPC paid calls. SQLite query work scales with
+data size; bounds apply to materialized candidates and model packets, not all
+campaign context sections. Disable either flag to recover previous retrieval/
+selection behavior without deleting data. Backup/rollback as Phase A.
