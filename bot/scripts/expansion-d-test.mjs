@@ -9,6 +9,7 @@ import { indexWorldEvent } from "../src/city-calendar.js";
 import { personalArc, proposeArcBeat, discoverPersonal } from "../src/personal-continuity.js";
 import { ContextPlanner } from "../src/context-planner.js";
 import { handleCommand } from "../src/commands.js";
+import { stateRevision } from "../src/ai-intents.js";
 const root=fs.mkdtempSync(path.join(os.tmpdir(),"vc-expansion-d-")),file=path.join(root,"fixture.sqlite"),schema=path.resolve("sql/schema.sql");
 let db=new VeiledDB(file,schema);
 try{
@@ -25,7 +26,8 @@ try{
   indexWorldEvent(db,guild,{key:"invitation",source_kind:"gm",source_id:"human",title:"Opportunity"});
   proposeArcBeat(db,guild,{character_id:one.id,arc_key:"promise",key:"callback",source_event:"invitation",invitation:"Would you like to follow the sibling lead?"},"gm");
   const characterBefore=db.getCharacter(one.id);
-  personalArc(db,guild,"one",{key:"callback",op:"respond",decision:"decline"});
+  personalArc(db,guild,"one",{key:"callback",op:"respond",decision:"decline",
+    expected_revision:stateRevision(db.getCityRecord(guild,"arc_beat",`${one.id}:callback`))});
   assert.deepEqual(db.getCharacter(one.id),characterBefore,"decline has no mechanical penalty");
   db.addFact(guild,{key:"own",content:"Witness claims the masked visitor went north",category:"clue",visibility:"character",subjectCharacterId:one.id,source:"witness:statement",confidence:40});
   db.addFact(guild,{key:"other",content:"The visitor went south",category:"clue",visibility:"character",subjectCharacterId:two.id});

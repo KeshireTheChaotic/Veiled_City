@@ -3,6 +3,7 @@ import { cityObject, cityKey, cityInteger, cityAudit, indexWorldEvent } from "./
 import { requireCitySource } from "./city-core.js";
 import { motivationKey } from "./simulation-motivation.js";
 import { PermissionError, StateConflictError, UserInputError } from "./errors.js";
+import { stateRevision } from "./ai-intents.js";
 export function personalCharacter(db,guild,userId,characterId){
   const session=db.getActiveSession(guild),assignment=session?db.activeAssignment(session.id,userId):null;
   const id=characterId||assignment?.character_id,character=id?db.getCharacter(id):null;
@@ -14,13 +15,30 @@ export function personalCharacter(db,guild,userId,characterId){
 }
 export function personalArc(db,guild,userId,input){
   cityObject(input);if(db.getCityCalendar(guild).flags.personal_arcs!==true) throw new StateConflictError("Personal arcs are opt-in.");
-  const character=personalCharacter(db,guild,userId,input.character_id),key=`${character.id}:${cityKey(input.key)}`,op=input.op||"state";
+  const character=personalCharacter(db,guild,userId,input.character_id),rawKey=cityKey(input.key),
+    key=rawKey.startsWith(`${character.id}:`)?rawKey:`${character.id}:${rawKey}`,op=input.op||"state";
+  if(["confirm","reject","defer"].includes(op)){
+    const candidate=db.getCityRecord(guild,"arc_candidate",key);
+    if(!candidate||candidate.subject_key!==character.id||candidate.status!=="pending"||stateRevision(candidate)!==input.expected_revision
+      ||db.getSimulationClock(guild).minute>=candidate.data.expires_minute) throw new StateConflictError("Current owned candidate and revision required.");
+    requireCitySource(db,guild,candidate.source_event);
+    return db.transaction(()=>{
+      const arc=op==="confirm"?personalArc(db,guild,userId,{key:input.arc_key||input.key,type:candidate.data.type,statement:candidate.data.statement}):null;
+      const after=db.saveCityRecord(guild,{...candidate,key,status:{confirm:"confirmed",reject:"rejected",defer:"deferred"}[op],
+        data:{...candidate.data,responded_by:userId,arc_key:arc?.record_key||null}});
+      cityAudit(db,guild,"arc_candidate_response",key,candidate,after,userId);return after;
+    });
+  }
   if(op==="respond"){
     const beat=db.getCityRecord(guild,"arc_beat",key);
-    if(!beat||beat.subject_key!==character.id||!["accept","decline"].includes(input.decision)) throw new UserInputError("Your own proposed beat and explicit decision required.");
+    if(!beat||beat.subject_key!==character.id||!["accept","decline","defer"].includes(input.decision)) throw new UserInputError("Your own proposed beat and explicit decision required.");
     if(beat.status!=="pending") return beat;
+    if(beat.data.arc_revision!==undefined&&(db.getCityRecord(guild,"arc",beat.data.arc_key)?.data.revision!==beat.data.arc_revision
+      ||db.getSimulationClock(guild).minute>=beat.data.expires_minute||input.expected_revision!==stateRevision(beat)))
+      throw new StateConflictError("Invitation expired or changed; refresh your private continuity inbox.");
+    requireCitySource(db,guild,beat.source_event);
     return db.transaction(()=>{
-      const after=db.saveCityRecord(guild,{...beat,key,status:input.decision==="accept"?"accepted":"declined",data:{...beat.data,response_by:userId}});
+      const after=db.saveCityRecord(guild,{...beat,key,status:{accept:"accepted",decline:"declined",defer:"deferred"}[input.decision],data:{...beat.data,response_by:userId}});
       cityAudit(db,guild,"arc_response",key,beat,after,userId);return after;
     });
   }
@@ -31,7 +49,8 @@ export function personalArc(db,guild,userId,input){
   if(before?.data.statement===input.statement&&before.data.type===input.type) return before;
   return db.transaction(()=>{
     const source=indexWorldEvent(db,guild,{key:`arc:${motivationKey([key,revision,input.statement])}`,source_kind:"gm",source_id:`player:${userId}`,
-      title:"Owner-established personal statement",kind:"player_statement",details:{authority:"player_established_not_world_truth"}},userId);
+      title:"Owner-established personal statement",kind:"player_statement",visibility:"character",subject_key:character.id,
+      details:{authority:"player_established_not_world_truth"}},userId);
     const after=db.saveCityRecord(guild,{kind:"arc",key,visibility:"character",subject_key:character.id,source_event:source.event_key,
       data:{type:input.type,statement:input.statement,established_by:userId,revision,authority:"player_stated",
         history:[...(before?.data.history||[]),...(before?[{revision:before.data.revision,statement:before.data.statement,source_event:before.source_event}]:[])].slice(-20)}});
@@ -48,11 +67,35 @@ export function proposeArcBeat(db,guild,input,actorId){
   requireCitySource(db,guild,input.source_event);
   if(typeof input.invitation!=="string"||!input.invitation.trim()||input.invitation.length>1000) throw new UserInputError("Bounded nonbinding invitation required.");
   const key=`${character.id}:${cityKey(input.key)}`,prior=db.getCityRecord(guild,"arc_beat",key);if(prior) return prior;
+  if(db.characterContinuity(guild,character.id,{kind:"arc_beat"}).some(row=>row.data.arc_key===arc.record_key
+    &&db.getSimulationClock(guild).minute-row.minute<1440)) throw new StateConflictError("Callback cooldown preserves decline/defer and prevents repeated invitations.");
   return db.transaction(()=>{
     const after=db.saveCityRecord(guild,{kind:"arc_beat",key,status:"pending",visibility:"character",subject_key:character.id,source_event:input.source_event,
-      data:{arc_key:arc.record_key,invitation:input.invitation,authority:"GM_opportunity_not_PC_choice",nonbinding:true,costs:[],proposed_by:actorId}});
+      data:{arc_key:arc.record_key,arc_revision:arc.data.revision,expires_minute:db.getSimulationClock(guild).minute+1440,
+        invitation:input.invitation,authority:"GM_opportunity_not_PC_choice",nonbinding:true,costs:[],proposed_by:actorId}});
     cityAudit(db,guild,"arc_invitation",key,null,after,actorId);return after;
   });
+}
+export function captureArcCandidate(db,guild,user,characterId,messageId,message){
+  if(db.getCityCalendar(guild).flags.personal_arcs!==true||!characterId||!messageId) return null;
+  if(typeof message!=="string"||message.length>4000) return null;
+  const match=/\bI (vow|swear|want|wish|choose|promise)\b[^\n.!?]{1,1400}[.!?]?/i.exec(message);if(!match) return null;
+  const character=personalCharacter(db,guild,user,characterId),key=`${character.id}:candidate-${motivationKey(messageId)}`;
+  const prior=db.getCityRecord(guild,"arc_candidate",key);if(prior) return prior;
+  return db.transaction(()=>{
+    const source=indexWorldEvent(db,guild,{key:`owner-message:${motivationKey([guild,messageId])}`,title:"Explicit owner statement candidate",
+      kind:"player_statement_candidate",source_id:`player:${user}`,visibility:"character",subject_key:character.id,
+      details:{statement:match[0],character_id:character.id,owner_user_id:user,not_consent:true}},user);
+    const row=db.saveCityRecord(guild,{kind:"arc_candidate",key,status:"pending",source_event:source.event_key,visibility:"character",subject_key:character.id,
+      data:{statement:match[0],type:["vow","swear","promise"].includes(match[1].toLowerCase())?"vow":"desire",created_by:user,
+        expires_minute:db.getSimulationClock(guild).minute+1440,authority:"unconfirmed_owner_quote_not_belief_or_consent"}});
+    cityAudit(db,guild,"arc_candidate",key,null,row,user);return row;
+  });
+}
+export function personalInbox(db,guild,user){
+  const character=personalCharacter(db,guild,user);
+  return ["arc_candidate","arc_beat"].flatMap(kind=>db.characterContinuity(guild,character.id,{kind})
+    .map(row=>({...row,expected_revision:stateRevision(row)})));
 }
 export function discoverPersonal(db,guild,userId,input={}){
   cityObject(input);if(db.getCityCalendar(guild).flags.discovery!==true) throw new StateConflictError("Discovery lookup is opt-in.");

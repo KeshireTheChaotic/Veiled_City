@@ -11,6 +11,7 @@ import { actorSource } from "./simulation-motivation.js";
 import { manageGroup } from "./city-groups.js";
 import { manageStrategy } from "./simulation-strategy.js";
 import { ContextPlanner } from "./context-planner.js";
+import { proposeArcBeat } from "./personal-continuity.js";
 const hash=value=>createHash("sha256").update(JSON.stringify(value)).digest("hex");
 const adapters=new Map();
 export const FEATURE_FLAGS={goal:"emergent_goals",consequence:"consequences",scene:"scene_continuity",group:"emergent_groups",
@@ -110,6 +111,8 @@ export function intentContext(db,guild){
     causal_targets:["consequence","consequence_subscription"].flatMap(kind=>db.listCityRecords(guild,{kind,includeGM:true,limit:8})
       .map(row=>({...row,expected_revision:stateRevision(row)}))),
     planning_targets:["group_transition","strategy"].flatMap(kind=>db.listCityRecords(guild,{kind,includeGM:true,limit:8})
+      .map(row=>({...row,expected_revision:stateRevision(row)}))),
+    personal_targets:["arc","arc_candidate"].flatMap(kind=>db.listCityRecords(guild,{kind,includeGM:true,limit:8})
       .map(row=>({...row,expected_revision:stateRevision(row)}))),
     group_actor_packets:db.listCityRecords(guild,{kind:"group_transition",status:"pending",includeGM:true,limit:4})
       .flatMap(row=>row.data.members.slice(0,4).map(member=>({proposal:row.record_key,member,
@@ -229,3 +232,21 @@ export function delegateStrategy(db,guild,row,budget={operations:0,cost:0}){
       deadline_minute:p.deadline_minute??1000000000,steps:p.steps.map(({key,requires,action})=>({key,requires,action})),
       alternatives:p.alternatives||[],assumptions:p.assumptions||[]}}],{origin:`strategy:${row.record_key}`,scope:{mode:"party"},budget})[0];
 }
+registerIntentAdapter("arc",{
+  current:(db,guild,intent)=>intent.payload.op==="invite"?db.getCityRecord(guild,"arc",`${intent.payload.character_id}:${intent.payload.arc_key}`)
+    :db.getCityRecord(guild,"arc_candidate",intent.target_key),
+  impact:()=>({cost:0,review:false}),
+  apply:(db,guild,intent,key,principal,context)=>{
+    const p=intent.payload;
+    if(context.scope?.mode==="private"&&context.scope.actorCharacterId!==p.character_id) throw new Error("Private continuity belongs to this character only.");
+    if(p.op==="candidate"){
+      const row=db.getCityRecord(guild,"arc_candidate",intent.target_key),source=requireCitySource(db,guild,p.source_event);
+      if(row?.subject_key!==p.character_id||source.details.statement!==p.statement||row.data.statement!==p.statement)
+        throw new Error("Only an exact authenticated owner quote can be offered for confirmation.");return row;
+    }
+    const arc=db.getCityRecord(guild,"arc",`${p.character_id}:${p.arc_key}`);
+    if(!arc) throw new Error("Owner-confirmed arc required.");
+    return proposeArcBeat(db,guild,{key,character_id:p.character_id,arc_key:p.arc_key,source_event:arc.source_event,
+      invitation:`Would you like a nonbinding opportunity to revisit your statement: ${arc.data.statement.slice(0,800)}?`},principal);
+  }
+});

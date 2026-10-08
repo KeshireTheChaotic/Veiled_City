@@ -8,6 +8,8 @@ import { ContentIndex } from "./content.js";
 import { GMService } from "./gm.js";
 import { handleCommand } from "./commands.js";
 import { applyAuthoritativeMutation, applyCanonProposalDrafts } from "./state.js";
+import { routeDiscoveryMessage } from "./continuity-routing.js";
+import { captureArcCandidate } from "./personal-continuity.js";
 import { publishEventResults, postGmLog, postStateError, deliverHandout, postPlayMessage } from "./publishing.js";
 import { VoiceNarrator } from "./voice.js";
 import { KeyedSerialQueue } from "./serial-queue.js";
@@ -329,6 +331,7 @@ async function processPrivateTurn(message,directMention){
   }
   const speaker=controlled?.name||message.member?.displayName||message.author.username;
   const vis=controlled?.character_id?"character":"player";
+  captureArcCandidate(db,message.guild.id,message.author.id,controlled?.npc_proxy?null:controlled?.character_id,message.id,playerText);
   db.addMessage({guildId:message.guild.id,sessionId:session.id,messageId:message.id,userId:message.author.id,speakerName:speaker,characterId:controlled?.character_id||null,visibility:vis,subjectUserId:vis==="player"?message.author.id:null,subjectCharacterId:vis==="character"?controlled.character_id:null,content:playerText});
 
   let result;
@@ -406,6 +409,7 @@ async function processPartyTurn(message,directMention){
     return;
   }
   const speaker=controlled?.name||message.member?.displayName||message.author.username;
+  captureArcCandidate(db,message.guild.id,message.author.id,controlled?.npc_proxy?null:controlled?.character_id,message.id,playerText);
   db.addMessage({guildId:message.guild.id,sessionId:session.id,messageId:message.id,userId:message.author.id,speakerName:speaker,characterId:controlled?.character_id||null,visibility:"party",content:playerText});
 
   let should=false;
@@ -508,6 +512,12 @@ client.on("messageCreate",async message=>{
   const campaign=db.getCampaign(message.guild.id);
   if(!campaign) return;
   const directMention=message.mentions.has(client.user);
+  const continuityOwner=db.getPlayerByPrivateChannel(message.guild.id,message.channel.id);
+  if(message.channel.id===campaign.play_channel_id||continuityOwner?.discord_user_id===message.author.id){
+    if(await routeDiscoveryMessage({db,message,deliver:async text=>{
+      try{await message.author.send(text);}catch{await message.reply("Private knowledge delivery failed. Use /vc-intel discover; no campaign state was changed.");}
+    }})) return;
+  }
 
   // Low-cost rules desk is read-only with respect to campaign state and does not need the GM turn queue.
   if(campaign.rules_channel_id && message.channel.id===campaign.rules_channel_id){

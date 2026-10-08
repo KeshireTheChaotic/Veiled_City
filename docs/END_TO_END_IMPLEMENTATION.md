@@ -95,8 +95,33 @@ dissent, actor exclusion, native execution and delegation revocation; no paid ca
 
 ## Remaining phases
 
-E: owner confirmation and natural-language
-read-only discovery. F: projects and mediation. G: memory maintenance and fairness.
+## Phase E — 6.3.0: owner continuity and read-only conversation
+
+Explicit first-person vow/desire quotations create private unconfirmed candidates,
+never inferred feelings or established arcs. `/vc-intel continuity` reads the
+owner inbox without writes; `/vc-intel arc` confirms/rejects/defers a candidate by
+current `expected_revision`, with attendance/ownership/source/expiry rechecked.
+Example: `{"op":"confirm","key":"<candidate record_key>","arc_key":"vow",
+"expected_revision":"<inbox fingerprint>"}`. AI candidates may only reference
+authenticated exact quotes. Only an owner response establishes the arc.
+
+Delegated `arc.invite` produces a private, nonbinding callback grounded in the
+existing owner statement (not unrestricted model prose). Invitation responses
+bind arc revision, expiry, current ownership/attendance and receipt fingerprint;
+accept/decline/defer never spend PC resources. A fictional-day cooldown prevents
+repeated callbacks after refusal/defer. Private sources remain private.
+
+Supported natural-language discovery questions (e.g. “What do I know about X?”,
+“What leads do I have about X?”, “What has changed for me?”) route before message
+storage, player upserts, model generation or queued directors. Deterministic,
+literal, authorized lookup renders recorded evidence privately, with uncertainty;
+there is no extra model call, alias expansion, discovery grant or campaign write.
+Other phrasings can use `/vc-intel discover`. Test E measures `total_changes()`
+and fictional clock around the actual route, including unknown-secret queries.
+
+## Remaining phases
+
+F: projects and mediation. G: memory maintenance and fairness.
 H: seeds and complete review UX. I: cross-feature orchestration and rollout.
 
 Release policy: phase minors roll .9 to the next major .0. After Phase I, perform

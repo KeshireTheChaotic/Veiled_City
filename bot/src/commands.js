@@ -30,7 +30,7 @@ import { handleSimulationCommand } from "./simulation-commands.js";
 import { handleCityCommand } from "./city-commands.js";
 import { handleStoryCommand } from "./story-commands.js";
 import { recordCharacterArrival } from "./scene-continuity.js";
-import { personalArc, discoverPersonal } from "./personal-continuity.js";
+import { personalArc, discoverPersonal, personalInbox } from "./personal-continuity.js";
 import { manageLongProject } from "./long-projects.js";
 
 const interactionQueue=new KeyedSerialQueue();
@@ -351,10 +351,15 @@ async function executeCommand(interaction,{db,gm,voice=null}){
     group=root==="level"?"character":root==="combat"?"encounter":root;
     sub=interaction.options.getSubcommand();
   }
-  if((group!=="story"&&!(group==="admin"&&sub==="seed-drafts")&&!(group==="intel"&&sub==="discover"))||isMutatingCommand(group,sub)) await ensurePlayer(db,interaction);
+  if((group!=="story"&&!(group==="admin"&&sub==="seed-drafts")&&!(group==="intel"&&["discover","continuity"].includes(sub)))||isMutatingCommand(group,sub)) await ensurePlayer(db,interaction);
   if(await replayReceiptIfPresent({db,interaction,group,sub})) return true;
   const restoreReceiptCapture=installReceiptCapture({db,interaction,group,sub});
   try{
+    if(group==="intel"&&sub==="continuity"){
+      const result=personalInbox(db,interaction.guildId,interaction.user.id);
+      await interaction.reply({ephemeral:true,content:"Private continuity inbox. Confirm/reject/defer candidates or accept/decline/defer invitations using /vc-intel arc and the current expected_revision.",
+        files:[new AttachmentBuilder(Buffer.from(JSON.stringify(result,null,2)),{name:"continuity-inbox.json"})]});return true;
+    }
     if(group==="intel"&&["arc","discover"].includes(sub)){
       const input=JSON.parse(interaction.options.getString("json")||"{}");
       const result=sub==="arc"?personalArc(db,interaction.guildId,interaction.user.id,input):discoverPersonal(db,interaction.guildId,interaction.user.id,input);

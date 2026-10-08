@@ -378,6 +378,7 @@ export function buildCommands(){
       .addSubcommandGroup(g=>g.setName("intel").setDescription("Player-safe campaign information")
         .addSubcommand(s=>s.setName("arc").setDescription("Record your character's private player-established continuity")
           .addStringOption(o=>o.setName("json").setDescription("Statement or nonbinding beat response").setRequired(true)))
+        .addSubcommand(s=>s.setName("continuity").setDescription("Read-only private candidate and invitation inbox with revision-bound responses"))
         .addSubcommand(s=>s.setName("discover").setDescription("Read-only character-relative knowledge, changes, leads or arcs")
           .addStringOption(o=>o.setName("json").setDescription("Optional literal query and mode")))
         .addSubcommand(s=>s.setName("recap").setDescription("Show the latest saved recap"))
