@@ -117,8 +117,6 @@ there is no extra model call, alias expansion, discovery grant or campaign write
 Other phrasings can use `/vc-intel discover`. Test E measures `total_changes()`
 and fictional clock around the actual route, including unknown-secret queries.
 
-## Remaining phases
-
 ## Phase F — 6.4.0: projects and conflict feedback
 
 Typed AI project proposals disclose phases, fictional duration, prerequisites,
@@ -149,7 +147,33 @@ capacity suites, real command consent, two-day restart and single-use outcomes.
 
 ## Remaining phases
 
-G: memory maintenance and fairness.
+## Phase G — 6.5.0: memory maintenance and fair density
+
+Deterministic source-pointer candidates cover NPCs, factions and institutions,
+with eight actors/sources inspected per maintenance opportunity. Delegated memory
+consolidate/revise/revert operations preserve originals, uncertainty and revision
+history. Corrected/challenged sources revise indices; retracted/unavailable sources
+are excluded at recall and can automatically revert an affected index. Retrieval
+matches bounded tokens instead of requiring a whole-query substring. No embeddings
+or additional provider requests. Reverted indices are not automatically resurrected.
+
+Activity density rotates ordinary actions, motivations, consequences, strategies,
+groups, memory and project work within existing round/scene/downtime budgets 1/3/4.
+Only eligible work consumes a slot; omitted categories get explicit deferral
+telemetry. Institutions retain their separate two-operation native workflow.
+Cycle receipts record category status, budget usage, actor/packet sizes and rotation.
+Existing source-aware NPC/faction/location relevance remains the candidate firewall;
+queued AI plan execution now rechecks flag, policy revision, expiry and delegation
+even when conflict mediation is disabled. No wall-clock scheduling is introduced.
+
+AI management context caps whole scoped records at 24,000 characters and reports
+omissions; authority metadata is never cut off to fit a partial record.
+Validation: test G covers source correction/retraction, original preservation,
+token retrieval and fair real director opportunities; existing 1000-actor and
+100-day offline fixtures remain mandatory.
+
+## Remaining phases
+
 H: seeds and complete review UX. I: cross-feature orchestration and rollout.
 
 Release policy: phase minors roll .9 to the next major .0. After Phase I, perform

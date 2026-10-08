@@ -16,6 +16,7 @@ import { manageLongProject, projectPhaseRevision, reconcileLongProject } from ".
 import { applicationPrincipal } from "./application-authority.js";
 import { inspectNpcAction } from "./simulation.js";
 import { inspectInstitutionAction } from "./city-core.js";
+import { manageMemoryCluster, memoryMaintenanceCandidate } from "./memory-clusters.js";
 const hash=value=>createHash("sha256").update(JSON.stringify(value)).digest("hex");
 const adapters=new Map();
 export const FEATURE_FLAGS={goal:"emergent_goals",consequence:"consequences",scene:"scene_continuity",group:"emergent_groups",
@@ -106,7 +107,7 @@ export function reviewAiIntent(db,guild,{key,decision:response,expected_revision
 }
 export function intentContext(db,guild){
   const scene=db.getActiveSession(guild)&&db.getCityCalendar(guild).flags.scene_continuity===true?sceneView(db,guild,{gm:true}):null;
-  return {policy:delegationPolicy(db,guild),flags:db.getCityCalendar(guild).flags,
+  const packet={policy:delegationPolicy(db,guild),flags:db.getCityCalendar(guild).flags,
     scene:scene?{...scene,occupants:scene.occupants.slice(0,32),targets:scene.occupants.slice(0,32).map(row=>({
       entity_type:row.data.entity_type,entity_key:row.data.entity_key,expected_revision:stateRevision(row)}))}:null,
     goal_targets:db.listNpcProfiles(guild,{limit:32}).flatMap(npc=>db.listNpcGoals(guild,npc.npc_key,{limit:8})
@@ -124,6 +125,19 @@ export function intentContext(db,guild){
       .flatMap(row=>row.data.members.slice(0,4).map(member=>({proposal:row.record_key,member,
         packet:new ContextPlanner(db).plan(guild,{actorType:"npc",actorKey:member,query:row.source_event,maxTokens:400})}))),
     target_revision_rule:"Use the supplied state fingerprint; absent for a new target. Proposals are not effects."};
+  const bounded={policy:packet.policy,flags:packet.flags,target_revision_rule:packet.target_revision_rule},omissions={};
+  let chars=JSON.stringify(bounded).length;
+  for(const [field,value] of Object.entries(packet)){
+    if(field in bounded) continue;
+    if(Array.isArray(value)){
+      bounded[field]=[];
+      for(const row of value){const size=JSON.stringify(row).length+1;if(chars+size>23500){omissions[field]=(omissions[field]||0)+1;continue;}
+        bounded[field].push(row);chars+=size;}
+    }else if(chars+JSON.stringify(value).length<23500){bounded[field]=value;chars+=JSON.stringify(value).length;}
+    else omissions[field]=1;
+  }
+  bounded.context_metrics={max_chars:24000,estimated_chars:chars,omissions,authority:"Whole scoped records omitted; permission fields are never stripped."};
+  return bounded;
 }
 registerIntentAdapter("goal",{
   current:(db,guild,intent)=>intent.payload.actor_type==="npc"?db.getNpcGoal(guild,intent.payload.actor_key,intent.payload.goal_key)
@@ -226,7 +240,7 @@ registerIntentAdapter("strategy",{
   apply:(db,guild,intent,key,principal)=>{
     const p=intent.payload,before=intent.target_key?db.getCityRecord(guild,"strategy",intent.target_key):null;
     if(before&&(p.actor_type!==before.data.actor_type||p.actor_key!==before.data.actor_key||p.goal_key!==before.data.goal_key)) throw new Error("Plan owner/objective cannot be substituted.");
-    const result=manageStrategy(db,guild,{...p,key:intent.target_key||key},principal);
+    const result=manageStrategy(db,guild,{...p,delegation_revision:intent.policy_revision,key:intent.target_key||key},principal);
     return ["propose","replan"].includes(p.op)?manageStrategy(db,guild,{key:result.record_key,op:"approve"},principal):result;
   }
 });
@@ -276,10 +290,10 @@ registerIntentAdapter("project",{
       {principal:applicationPrincipal(guild,`project.${p.op}`,principal)});
   }
 });
-export function continueLongProjects(db,guild){
+export function continueLongProjects(db,guild,{limit=4}={}){
   if(db.getCityCalendar(guild).flags.long_projects!==true||db.isDirectorPaused(guild)) return [];
   const budget={operations:0,cost:0};
-  return db.listCityRecords(guild,{kind:"long_project",status:"active",includeGM:true,limit:4}).map(row=>{
+  return db.listCityRecords(guild,{kind:"long_project",status:"active",includeGM:true,limit:Math.max(1,Math.min(4,limit))}).map(row=>{
     const reconciled=reconcileLongProject(db,guild,row);if(reconciled.status!=="active") return reconciled;
     const p=row.data,phase=p.phases[p.index];
     return dispatchAiIntents(db,guild,[{version:1,feature:"project",target_key:row.record_key,expected_revision:stateRevision(row),
@@ -301,4 +315,22 @@ registerIntentAdapter("mediation",{
     catch{return {status:"blocked",reason:"Native physical, source, resource, chronology or delegation prerequisites are unmet.",
       alternatives:["defer","replan_from_new_evidence","request_human_review"],not_a_new_roll:true,no_costs:true,claims_remain_contested:true};}
   }
+});
+registerIntentAdapter("memory",{
+  current:(db,guild,intent)=>intent.target_key?db.getCityRecord(guild,"memory_cluster",intent.target_key):null,
+  impact:()=>({cost:0,review:false}),
+  apply:(db,guild,intent,key,principal)=>manageMemoryCluster(db,guild,{...intent.payload,key:intent.target_key||key},principal)
+});
+export function maintainMemory(db,guild){
+  if(delegationPolicy(db,guild).mode!=="routine_delegated") return [];
+  const candidate=memoryMaintenanceCandidate(db,guild);if(!candidate) return [];
+  const p=candidate.payload;
+  return dispatchAiIntents(db,guild,[{version:1,feature:"memory",target_key:candidate.target_key,expected_revision:stateRevision(candidate.expected),
+    policy_revision:delegationPolicy(db,guild).revision,source_prerequisites:[],payload:{op:p.op,source_event:p.source_event,actor_type:p.actor_type,
+      actor_key:p.actor_key,topic:p.topic,sources:p.sources}}],{origin:`memory-maintenance:${db.getSimulationClock(guild).tick}`,scope:{mode:"party"}});
+}
+registerIntentAdapter("density",{
+  current:()=>null,impact:()=>({cost:0,review:false}),
+  apply:(db,guild)=>({clock:db.getSimulationClock(guild),recent_cycles:db.listSimulationRecords(guild,{kind:"cycle",limit:4}),
+    authority:"bounded_scheduler_diagnostics_not_actor_knowledge",npc_budgets:{round:1,scene:3,downtime:4},institution_budget:2})
 });

@@ -5,7 +5,8 @@ import { StateConflictError, UserInputError } from "./errors.js";
 function evidence(db,guild,type,actor,ref){
   if(ref.kind==="npc_memory"&&type==="npc"){
     const row=db.getNpcMemory(ref.key);
-    if(row?.guild_id===guild&&row.npc_key===actor&&["active","challenged"].includes(row.status))
+    const source=row?.source_ref?db.getWorldEvent(guild,row.source_ref):null;
+    if(row?.guild_id===guild&&row.npc_key===actor&&["active","challenged"].includes(row.status)&&(!source||source.status==="active"))
       return {kind:ref.kind,key:row.id,content:row.content,confidence:row.confidence,status:row.status,source_ref:row.source_ref};
   }
   if(ref.kind==="memory"&&type==="faction"){
@@ -51,7 +52,9 @@ export function manageMemoryCluster(db,guild,input,actorId){
 }
 export function clusterContext(db,guild,type,actor,query=""){
   if(db.getCityCalendar(guild).flags.memory_consolidation!==true) return [];
-  return db.listCityRecords(guild,{kind:"memory_cluster",actor:`${type}:${actor}`,status:"active",query,includeGM:true,limit:4}).flatMap(row=>{
+  const terms=[...new Set(String(query).toLowerCase().match(/[a-z0-9]{3,}/g)||[])].slice(0,8);
+  return db.listCityRecords(guild,{kind:"memory_cluster",actor:`${type}:${actor}`,status:"active",includeGM:true,limit:32})
+    .filter(row=>!terms.length||terms.some(term=>JSON.stringify(row.data).toLowerCase().includes(term))).slice(0,4).flatMap(row=>{
     try{
       requireCitySource(db,guild,row.source_event);
       const sources=row.data.sources.map(ref=>evidence(db,guild,type,actor,ref));
@@ -60,4 +63,37 @@ export function clusterContext(db,guild,type,actor,query=""){
           content:String(item.content||"").slice(0,180)})),uncertainty:row.data.uncertainty,authority:"memory_not_canon"}];
     }catch{return [];}
   });
+}
+export function memoryMaintenanceCandidate(db,guild){
+  if(db.getCityCalendar(guild).flags.memory_consolidation!==true) return null;
+  const source=db.listWorldEvents(guild,{includeGM:true,limit:8}).find(row=>row.status==="active");if(!source) return null;
+  const clusterCursor=db.getCityRecord(guild,"memory_cursor","clusters"),afterCluster=clusterCursor?.data.after||0;
+  let clusters=db.memoryMaintenanceClusters(guild,afterCluster);
+  if(!clusters.length&&afterCluster) clusters=db.memoryMaintenanceClusters(guild,0);
+  for(const row of clusters){
+    db.saveCityRecord(guild,{kind:"memory_cursor",key:"clusters",source_event:source.event_key,data:{after:row.sequence}});
+    const {sequence,...original}=row;
+    try{
+      requireCitySource(db,guild,row.source_event);
+      const current=row.data.sources.map(ref=>evidence(db,guild,row.data.actor_type,row.data.actor_key,ref));
+      if(current.every((item,i)=>String(item.content||"").slice(0,180)===row.data.excerpts[i]?.content
+        &&(item.confidence??50)===row.data.excerpts[i]?.confidence&&(item.status||item.belief_state||"claimed")===row.data.excerpts[i]?.status)) continue;
+      return {target_key:row.record_key,expected:original,payload:{...row.data,op:"revise",source_event:source.event_key}};
+    }catch{return {target_key:row.record_key,expected:original,payload:{...row.data,op:"revert",source_event:source.event_key}};}
+  }
+  const cursor=db.getCityRecord(guild,"memory_cursor","actors"),after=cursor?.data.after||"";
+  const actors=db.memoryCandidateActors(guild,after);if(!actors.length&&after){
+    db.saveCityRecord(guild,{kind:"memory_cursor",key:"actors",source_event:source.event_key,data:{after:""}});return null;
+  }
+  for(const actor of actors){
+    db.saveCityRecord(guild,{kind:"memory_cursor",key:"actors",source_event:source.event_key,data:{after:actor.actor}});
+    const [type,...parts]=actor.actor.split(":"),key=parts.join(":"),cluster=`auto-memory:${type}:${key}`;
+    if(db.getCityRecord(guild,"memory_cluster",cluster)) continue;
+    const refs=type==="npc"?db.lowPriorityNpcMemories(guild,key).map(row=>({kind:"npc_memory",key:row.id}))
+      :type==="faction"?db.listSimulationRecords(guild,{kind:"memory",entityKey:actor.actor,status:"active",limit:8}).map(row=>({kind:"memory",key:row.id}))
+      :db.listCityRecords(guild,{kind:"report",actor:key,status:"active",includeGM:true,limit:8}).map(row=>({kind:"report",key:row.record_key}));
+    if(refs.length<2) continue;
+    return {target_key:cluster,expected:null,payload:{op:"consolidate",source_event:source.event_key,actor_type:type,actor_key:key,topic:"Recorded source index",sources:refs}};
+  }
+  return null;
 }

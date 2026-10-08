@@ -1,6 +1,6 @@
 {
   "package": "Veiled_City_Multiplayer_Discord",
-  "version": "6.4.0",
+  "version": "6.5.0",
   "generated": "2026-10-08",
   "files": [
     {
@@ -26,7 +26,7 @@
     {
       "path": "README.md",
       "size_bytes": 14920,
-      "sha256": "9c9402365345f8039472a1a26c5c00d09988b73d3adccd93f7a332f5695dee81"
+      "sha256": "b5cbd5d27ed3aaa27b4ee7e7ec686af3322b8639d540287c95dd0295fcc4c30a"
     },
     {
       "path": "SUGGESTIONS-End-To-End.md",
@@ -51,7 +51,7 @@
     {
       "path": "bot/package.json",
       "size_bytes": 2601,
-      "sha256": "cae22405c8be0f390dce9e171a44965ac5971cc97ca02f83ed04a37479244df5"
+      "sha256": "b2f381d4829e26f236dbeb319625d653622b7b17d29e7ed10e49656fe6ce0f3f"
     },
     {
       "path": "bot/scripts/audit-regression-test.mjs",
@@ -127,6 +127,11 @@
       "path": "bot/scripts/end-to-end-f-test.mjs",
       "size_bytes": 4682,
       "sha256": "7d9523e5709d451f5433062b6574232598dabeb1fba845a0f396aa798902e830"
+    },
+    {
+      "path": "bot/scripts/end-to-end-g-test.mjs",
+      "size_bytes": 3328,
+      "sha256": "81bdc6741ea0423525ffe65ab9811662b7528ba95dfd8b03d7f9f2d6c06286a8"
     },
     {
       "path": "bot/scripts/endurance-test.mjs",
@@ -275,8 +280,8 @@
     },
     {
       "path": "bot/scripts/validate-offline.mjs",
-      "size_bytes": 1541,
-      "sha256": "f88226e96ac13bc7177412b3e08995d32642a6608f747b954497cb131f8af24d"
+      "size_bytes": 1561,
+      "sha256": "c2ce7e3eb97ed35505d256611f14094b5b5913cef6ae197719c69524f4cdb508"
     },
     {
       "path": "bot/sql/schema.sql",
@@ -290,8 +295,8 @@
     },
     {
       "path": "bot/src/ai-intents.js",
-      "size_bytes": 25068,
-      "sha256": "0f1b82c439695ba1c0d99bc280c56daee0d5bed28a356a5381ae4688d317ae22"
+      "size_bytes": 27410,
+      "sha256": "a24f5a85601261444244decd3fe95f546170e39137c5c2acf1b1d5912da7c357"
     },
     {
       "path": "bot/src/application-authority.js",
@@ -335,8 +340,8 @@
     },
     {
       "path": "bot/src/city-constraints.js",
-      "size_bytes": 4132,
-      "sha256": "20bcaa395558e45277228371e5d3c1bab2373a1649632b078eb0d87f7d0b34ed"
+      "size_bytes": 5097,
+      "sha256": "c4535ce711ba4c10a826f6c9aea17210ebfe482ddb532c6928c6a484a705584b"
     },
     {
       "path": "bot/src/city-core.js",
@@ -370,8 +375,8 @@
     },
     {
       "path": "bot/src/commands.js",
-      "size_bytes": 137547,
-      "sha256": "99442e57ec46b01a3db349c5945a52d65744c9031cf1d293adffd2e72ea67a4b"
+      "size_bytes": 137471,
+      "sha256": "a259c968972262be6c464b3e9d26b461a2de1378422f8176f230215abf0b177f"
     },
     {
       "path": "bot/src/concept-context.js",
@@ -400,8 +405,8 @@
     },
     {
       "path": "bot/src/db.js",
-      "size_bytes": 138653,
-      "sha256": "aa2649cbe10c3ea06d1c37f67b19277f226561f831af16bdf265ed7f4f12b003"
+      "size_bytes": 139887,
+      "sha256": "2ec9d9ed7ad5419a2ff78b3e475dd2daf7abaebeb14da79305df0e8914659188"
     },
     {
       "path": "bot/src/dice.js",
@@ -470,8 +475,8 @@
     },
     {
       "path": "bot/src/memory-clusters.js",
-      "size_bytes": 5073,
-      "sha256": "368eebe6f17ea144a4f628349073a4571bc8f7bbc47c2c0ce87e7f11bf99ea32"
+      "size_bytes": 8064,
+      "sha256": "9f41f6249135ffe74d4dc5e038989b2c0fb79277b2938b29557d975c22e1d0e0"
     },
     {
       "path": "bot/src/narrative-integrity.js",
@@ -590,8 +595,8 @@
     },
     {
       "path": "bot/src/simulation.js",
-      "size_bytes": 46329,
-      "sha256": "374fd188d4f61c87baeb230fac6b83eefce7ae8a47ff52f74c1d17ac9c011a11"
+      "size_bytes": 49655,
+      "sha256": "c40450cb517fd21c66d847e2c9ad02466073a8dc4b8d49e1e99ec804f1467e71"
     },
     {
       "path": "bot/src/state.js",
@@ -1135,8 +1140,8 @@
     },
     {
       "path": "docs/END_TO_END_IMPLEMENTATION.md",
-      "size_bytes": 9568,
-      "sha256": "23d5e59651bde3ebfd67c806043e07784eaa889c568a9d9ca8012c22c1ce5dbb"
+      "size_bytes": 11179,
+      "sha256": "d20cb0277d3218d4c0cbe6c34ffac79cda10a487b6ae9cbd41012ea90d6b9142"
     },
     {
       "path": "docs/EXPANSION_ARCHITECTURE.md",

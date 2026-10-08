@@ -32,7 +32,7 @@ import { handleStoryCommand } from "./story-commands.js";
 import { recordCharacterArrival } from "./scene-continuity.js";
 import { personalArc, discoverPersonal, personalInbox } from "./personal-continuity.js";
 import { manageLongProject, projectPhaseRevision } from "./long-projects.js";
-import { continueLongProjects, stateRevision } from "./ai-intents.js";
+import { stateRevision } from "./ai-intents.js";
 
 const interactionQueue=new KeyedSerialQueue();
 
@@ -1392,7 +1392,6 @@ GM notes: ${a.draft.gm_notes}`:""}`.slice(0,1950):"No aftermath draft exists for
         const combinedSummary=[resolved.summary||"",director.act?director.gm_notes||"":""].filter(Boolean).join("\n\n");
         const done=db.resolveDowntimeCycle(cycle.id,combinedSummary);
         commitNpcDirector(db,npcPrepared);
-        continueLongProjects(db,interaction.guildId);
         return {projectMutation,directorMutation,done};
       });
       const {projectMutation,directorMutation,done}=committed;

@@ -1,4 +1,5 @@
 /** Shared availability/delegation guards; preferences never move NPCs or override a human-controlled proxy. */
+import { delegationPolicy } from "./ai-intents.js";
 export function activeCityProxy(db,guildId,key){
   const session=db.getActiveSession(guildId);
   return session?db.listNpcProxies(session.id,{statuses:["active"]}).find(row=>row.npc_key===key):null;
@@ -39,6 +40,17 @@ export function assertInstitutionDelegation(db,guildId,institution,input){
 }
 /** Chronological exclusion, not a new reservation/currency manager; physical travel never resolves contested title. */
 export function assertQueuedCompatibility(db,guildId,record){
+  if(record.data.strategy_key){
+    const plan=db.getCityRecord(guildId,"strategy",record.data.strategy_key);
+    if(plan?.data.reviewed_by==="ai_policy"){
+      const policy=delegationPolicy(db,guildId);
+      if(db.getCityCalendar(guildId).flags.strategies!==true||policy.mode!=="routine_delegated"||!policy.allow.includes("strategy.run")
+        ||policy.revision!==plan.data.delegation_revision||policy.expires_minute===null||db.getSimulationClock(guildId).minute>=policy.expires_minute)
+        throw new Error("Queued AI plan no longer has execution delegation; review or cancel explicitly.");
+    }
+    if(!plan||plan.status!=="active"||plan.data.revision!==record.data.strategy_revision) throw new Error("Strategy no longer authorizes this queued step.");
+    if(db.getWorldEvent(guildId,plan.source_event)?.status!=="active") throw new Error("Strategy source retracted; reconcile before spending.");
+  }
   if(db.getCityCalendar(guildId).flags.conflict_mediation!==true) return;
   const action=record.data,queued=db.queuedActorActions(guildId,record.entity_key);
   for(const other of queued){

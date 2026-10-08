@@ -23,6 +23,7 @@ bot/scripts/end-to-end-c-test.mjs
 bot/scripts/end-to-end-d-test.mjs
 bot/scripts/end-to-end-e-test.mjs
 bot/scripts/end-to-end-f-test.mjs
+bot/scripts/end-to-end-g-test.mjs
 bot/scripts/endurance-test.mjs
 bot/scripts/expansion-a-test.mjs
 bot/scripts/expansion-b-test.mjs

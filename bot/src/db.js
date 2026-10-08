@@ -246,6 +246,21 @@ export class VeiledDB {
       ORDER BY minute DESC,rowid DESC LIMIT ?`).all(guildId,gm?1:0,userId,Math.max(1,Math.min(50,limit)))
       .map(row=>({...row,data:JSON.parse(row.data_json)}));
   }
+  memoryCandidateActors(guildId,after=""){
+    return this.db.prepare(`SELECT actor FROM (
+      SELECT 'npc:'||npc_key actor FROM npc_memories WHERE guild_id=? AND status IN ('active','challenged') AND importance<80 GROUP BY npc_key HAVING count(*)>=2
+      UNION SELECT entity_key actor FROM simulation_records WHERE guild_id=? AND kind='memory' AND status='active' AND entity_key LIKE 'faction:%' GROUP BY entity_key HAVING count(*)>=2
+      UNION SELECT 'institution:'||actor_key actor FROM city_records WHERE guild_id=? AND kind='report' AND status='active' GROUP BY actor_key HAVING count(*)>=2
+      ) WHERE actor>? ORDER BY actor LIMIT 8`).all(guildId,guildId,guildId,after);
+  }
+  memoryMaintenanceClusters(guildId,after=0){
+    return this.db.prepare("SELECT rowid AS sequence,* FROM city_records WHERE guild_id=? AND kind='memory_cluster' AND status='active' AND rowid>? ORDER BY rowid LIMIT 8")
+      .all(guildId,after).map(row=>({...row,data:JSON.parse(row.data_json)}));
+  }
+  lowPriorityNpcMemories(guildId,npc){
+    return this.db.prepare("SELECT id FROM npc_memories WHERE guild_id=? AND npc_key=? AND status IN ('active','challenged') AND importance<80 ORDER BY created_at,id LIMIT 8")
+      .all(guildId,npc);
+  }
 
   getSeedDocument(guildId,sourcePath){
     return this.db.prepare("SELECT * FROM seed_documents WHERE guild_id=? AND source_path=?").get(guildId,sourcePath)||null;
