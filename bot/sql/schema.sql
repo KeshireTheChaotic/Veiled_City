@@ -823,3 +823,42 @@ CREATE TABLE IF NOT EXISTS simulation_clock (
   minute INTEGER NOT NULL DEFAULT 0 CHECK(minute>=0),
   FOREIGN KEY(guild_id) REFERENCES campaigns(guild_id) ON DELETE CASCADE
 );
+
+CREATE TABLE IF NOT EXISTS city_calendar (
+  guild_id TEXT PRIMARY KEY REFERENCES campaigns(guild_id) ON DELETE CASCADE,
+  epoch TEXT,
+  timezone TEXT NOT NULL DEFAULT 'UTC',
+  flags_json TEXT NOT NULL DEFAULT '{}'
+);
+CREATE TABLE IF NOT EXISTS world_events (
+  guild_id TEXT NOT NULL REFERENCES campaigns(guild_id) ON DELETE CASCADE,
+  event_key TEXT NOT NULL,
+  kind TEXT NOT NULL,
+  title TEXT NOT NULL,
+  status TEXT NOT NULL DEFAULT 'active' CHECK(status IN ('active','retracted','superseded')),
+  truth_status TEXT NOT NULL DEFAULT 'asserted' CHECK(truth_status IN ('asserted','observed','established')),
+  visibility TEXT NOT NULL DEFAULT 'gm' CHECK(visibility IN ('public','party','player','character','gm')),
+  subject_key TEXT,
+  location_key TEXT NOT NULL DEFAULT '',
+  source_kind TEXT NOT NULL,
+  source_id TEXT NOT NULL,
+  session_id TEXT,
+  scene TEXT NOT NULL DEFAULT '',
+  tick INTEGER NOT NULL,
+  minute INTEGER NOT NULL,
+  details_json TEXT NOT NULL DEFAULT '{}',
+  PRIMARY KEY(guild_id,event_key)
+);
+CREATE INDEX IF NOT EXISTS idx_world_events_scope ON world_events(guild_id,visibility,status,minute);
+CREATE INDEX IF NOT EXISTS idx_world_events_source ON world_events(guild_id,source_kind,source_id);
+CREATE TABLE IF NOT EXISTS city_schedule (
+  guild_id TEXT NOT NULL REFERENCES campaigns(guild_id) ON DELETE CASCADE,
+  schedule_key TEXT NOT NULL,
+  due_minute INTEGER NOT NULL CHECK(due_minute>=0),
+  due_tick INTEGER NOT NULL DEFAULT 0 CHECK(due_tick>=0),
+  status TEXT NOT NULL DEFAULT 'scheduled' CHECK(status IN ('scheduled','fired','cancelled')),
+  review_status TEXT NOT NULL DEFAULT 'approved' CHECK(review_status IN ('pending','approved','deferred','rejected')),
+  data_json TEXT NOT NULL,
+  PRIMARY KEY(guild_id,schedule_key)
+);
+CREATE INDEX IF NOT EXISTS idx_city_schedule_due ON city_schedule(guild_id,status,review_status,due_minute,due_tick);

@@ -17,7 +17,7 @@ const character=db.createCharacter(guild,user,"Operator",{resources:{hp:{current
 const session=db.startSession(guild,"Ops","already_together");
 db.setPresence(session.id,user,"present");
 db.assignCharacter(session.id,user,character.id);
-assert.equal(db.doctorData(guild).schemaVersion,380);
+assert(db.doctorData(guild).schemaVersion>=410);
 
 // New command surfaces exist.
 const commands=buildCommands();

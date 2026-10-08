@@ -26,6 +26,7 @@ import { KeyedSerialQueue } from "./serial-queue.js";
 import { prepareNpcDirector, commitNpcDirector } from "./simulation.js";
 import { publishSimulationHooks } from "./publishing.js";
 import { handleSimulationCommand } from "./simulation-commands.js";
+import { handleCityCommand } from "./city-commands.js";
 
 const interactionQueue=new KeyedSerialQueue();
 
@@ -344,6 +345,7 @@ async function executeCommand(interaction,{db,gm,voice=null}){
   if(await replayReceiptIfPresent({db,interaction,group,sub})) return true;
   const restoreReceiptCapture=installReceiptCapture({db,interaction,group,sub});
   try{
+    if(group==="city") return await handleCityCommand(interaction,{db});
     if(group==="sim") return await handleSimulationCommand(interaction,{db,isGm:isGM(db,interaction),sub});
     if(group==="director"){
       if(!isGM(db,interaction)) throw new PermissionError("GM/admin permission required.");

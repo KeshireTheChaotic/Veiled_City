@@ -2,6 +2,12 @@
 
 Veilkeeper uses split `vc-*` root commands to remain below Discord's per-command size limit.
 
+## Living City (GM-only, v4.1.0+)
+
+`/vc-city status`, `calendar`, `events`, `event`, `schedule`, `review`, and
+`preview` provide the fictional calendar and sourced event index. Mutations use
+typed JSON; reads return ephemeral GM-only attachments. See `LIVING_CITY.md`.
+
 ## Campaign
 - `/vc-campaign setup` — configure play channel, GM role, response mode.
 - `/vc-campaign channels` — configure support/reference/log channels.

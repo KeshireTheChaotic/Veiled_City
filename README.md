@@ -1,6 +1,13 @@
-# VEILED CITY MULTIPLAYER DISCORD ENGINE v4.0.0
+# VEILED CITY MULTIPLAYER DISCORD ENGINE v4.1.0
 
 Stateful Discord GM bot for the Veiled City multiplayer Daggerheart campaign.
+
+## v4.1.0 — Living City Phase A
+
+Adds a configurable fictional calendar, due-once civic schedules, sourced world
+event index and GM-only `/vc-city` commands. No player mechanics or canon changes.
+See [design, upgrade and deployment gates](docs/LIVING_CITY.md). Run
+`npm run register` after restarting on the additive schema migration.
 
 ## v4.0.0 — Campaign simulation and audit fixes
 

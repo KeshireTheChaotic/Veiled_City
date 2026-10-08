@@ -14,7 +14,7 @@ export async function runCampaignDiagnostics({db,guild}){
   const campaign=db.getCampaign(guild.id);
   const issues=[];
   const passed=[];
-  if(data.schemaVersion<380) issues.push(`Database schema version ${data.schemaVersion}; expected 380+.`);
+  if(data.schemaVersion<410) issues.push(`Database schema version ${data.schemaVersion}; expected 410+.`);
   else passed.push(`Database schema v${data.schemaVersion}`);
   if(data.presentWithoutCharacter.length) issues.push(`${data.presentWithoutCharacter.length} present roster entr${data.presentWithoutCharacter.length===1?"y has":"ies have"} no active character.`);
   if(data.duplicateCanon.length) issues.push(`${data.duplicateCanon.length} canon key(s) have multiple current entries.`);

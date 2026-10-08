@@ -412,6 +412,20 @@ export function buildCommands(){
       .addStringOption(o=>o.setName("json").setDescription("fromType,fromKey,toType,toKey,informationKey,source JSON").setRequired(true)))
     .addSubcommand(s=>s.setName("publish").setDescription("Retry delivery of queued player-facing NPC hooks"))
     .toJSON());
+  full.options.push(new SlashCommandBuilder().setName("city").setDescription("GM: living city state and fictional calendar")
+    .addSubcommand(s=>s.setName("status").setDescription("Inspect fictional calendar and due civic events"))
+    .addSubcommand(s=>s.setName("calendar").setDescription("Inspect or configure the fictional epoch and timezone")
+      .addStringOption(o=>o.setName("json").setDescription("Optional epoch/timezone JSON")))
+    .addSubcommand(s=>s.setName("events").setDescription("Inspect the GM-only semantic event index")
+      .addStringOption(o=>o.setName("query").setDescription("Optional event search")))
+    .addSubcommand(s=>s.setName("event").setDescription("Index or reconcile a sourced world event")
+      .addStringOption(o=>o.setName("json").setDescription("World event JSON; see LIVING_CITY.md").setRequired(true)))
+    .addSubcommand(s=>s.setName("schedule").setDescription("Schedule, cancel, or reschedule a fictional civic event")
+      .addStringOption(o=>o.setName("json").setDescription("Schedule JSON; see LIVING_CITY.md").setRequired(true)))
+    .addSubcommand(s=>s.setName("review").setDescription("Approve, modify, defer, or reject a civic schedule")
+      .addStringOption(o=>o.setName("json").setDescription("key, decision, optional patch JSON").setRequired(true)))
+    .addSubcommand(s=>s.setName("preview").setDescription("Nonmutating preview of currently due civic events"))
+    .toJSON());
   const splitMap={
     character:{
       "vc-character":["create","import","context-export","import-gm-hooks","narrative-import","narrative-export","list","select","sheet","export","export-gm","retire","death"],

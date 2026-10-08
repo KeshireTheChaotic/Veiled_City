@@ -10,6 +10,7 @@ import { updateRelationshipDimensions, relationshipPairKey } from "./relationshi
 import path from "node:path";
 import { randomUUID } from "node:crypto";
 import { DatabaseSync } from "node:sqlite";
+import { processCityDue } from "./city-calendar.js";
 
 /** SQLite repository facade and transaction boundary for campaign state. */
 export class VeiledDB {
@@ -92,10 +93,60 @@ export class VeiledDB {
         if(!knownPairs.has(`${relation.guild_id}:${pair}`)) updateRelationshipDimensions(this,relation.guild_id,relation);
       }
     });
-    this.db.exec("PRAGMA user_version=380;");
+    this.db.exec("PRAGMA user_version=410;");
   }
 
   close() { this.db.close(); }
+
+  getCityCalendar(guildId){
+    const row=this.db.prepare("SELECT * FROM city_calendar WHERE guild_id=?").get(guildId);
+    return row?{...row,flags:JSON.parse(row.flags_json)}:{guild_id:guildId,epoch:null,timezone:"UTC",flags:{}};
+  }
+  setCityCalendar(guildId,{epoch=null,timezone="UTC",flags={}}){
+    this.db.prepare(`INSERT INTO city_calendar(guild_id,epoch,timezone,flags_json) VALUES(?,?,?,?)
+      ON CONFLICT(guild_id) DO UPDATE SET epoch=excluded.epoch,timezone=excluded.timezone,flags_json=excluded.flags_json`)
+      .run(guildId,epoch,timezone,JSON.stringify(flags));
+    return this.getCityCalendar(guildId);
+  }
+  getWorldEvent(guildId,key){
+    const row=this.db.prepare("SELECT * FROM world_events WHERE guild_id=? AND event_key=?").get(guildId,key);
+    return row?{...row,details:JSON.parse(row.details_json)}:null;
+  }
+  saveWorldEvent(guildId,row){
+    this.db.prepare(`INSERT INTO world_events(guild_id,event_key,kind,title,status,truth_status,visibility,subject_key,
+      location_key,source_kind,source_id,session_id,scene,tick,minute,details_json) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+      ON CONFLICT(guild_id,event_key) DO UPDATE SET status=excluded.status,details_json=excluded.details_json`)
+      .run(guildId,row.key,row.kind,row.title,row.status,row.truth_status,row.visibility,row.subject_key||null,
+        row.location_key||"",row.source_kind,row.source_id,row.session_id||null,row.scene||"",row.tick,row.minute,JSON.stringify(row.details||{}));
+    return this.getWorldEvent(guildId,row.key);
+  }
+  listWorldEvents(guildId,{includeGM=false,userId=null,characterId=null,query="",limit=50}={}){
+    return this.db.prepare(`SELECT * FROM world_events WHERE guild_id=? AND
+      (?=1 OR visibility IN ('public','party') OR (visibility='player' AND subject_key=?) OR (visibility='character' AND subject_key=?))
+      AND (?='' OR instr(lower(title||' '||location_key||' '||details_json),lower(?))>0)
+      ORDER BY minute DESC,rowid DESC LIMIT ?`).all(guildId,includeGM?1:0,userId,characterId,query,query,Math.min(100,limit))
+      .map(row=>({...row,details:JSON.parse(row.details_json)}));
+  }
+  getCitySchedule(guildId,key){
+    const row=this.db.prepare("SELECT * FROM city_schedule WHERE guild_id=? AND schedule_key=?").get(guildId,key);
+    return row?{...row,data:JSON.parse(row.data_json)}:null;
+  }
+  saveCitySchedule(guildId,row){
+    this.db.prepare(`INSERT INTO city_schedule(guild_id,schedule_key,due_minute,due_tick,status,review_status,data_json) VALUES(?,?,?,?,?,?,?)
+      ON CONFLICT(guild_id,schedule_key) DO UPDATE SET due_minute=excluded.due_minute,due_tick=excluded.due_tick,
+        status=excluded.status,review_status=excluded.review_status,data_json=excluded.data_json`)
+      .run(guildId,row.key,row.due_minute,row.due_tick,row.status,row.review_status,JSON.stringify(row.data));
+    return this.getCitySchedule(guildId,row.key);
+  }
+  dueCitySchedules(guildId,limit=20){
+    const clock=this.getSimulationClock(guildId);
+    return this.db.prepare(`SELECT * FROM city_schedule WHERE guild_id=? AND status='scheduled' AND review_status='approved'
+      AND due_minute<=? AND due_tick<=? ORDER BY due_minute,schedule_key LIMIT ?`).all(guildId,clock.minute,clock.tick,limit)
+      .map(row=>({...row,data:JSON.parse(row.data_json)}));
+  }
+  getMutation(guildId,id){
+    return this.db.prepare("SELECT * FROM mutation_ledger WHERE guild_id=? AND id=?").get(guildId,id)||null;
+  }
 
   getSeedDocument(guildId,sourcePath){
     return this.db.prepare("SELECT * FROM seed_documents WHERE guild_id=? AND source_path=?").get(guildId,sourcePath)||null;
@@ -188,9 +239,14 @@ export class VeiledDB {
 
   advanceSimulationClock(guildId,{ticks=0,minutes=0}={}){
     if(!Number.isSafeInteger(ticks)||ticks<0||!Number.isSafeInteger(minutes)||minutes<0) throw new Error("Fictional time increments must be nonnegative integers.");
-    this.db.prepare(`INSERT INTO simulation_clock(guild_id,tick,minute) VALUES(?,?,?)
-      ON CONFLICT(guild_id) DO UPDATE SET tick=tick+excluded.tick,minute=minute+excluded.minute`).run(guildId,ticks,minutes);
-    return this.getSimulationClock(guildId);
+    const prior=this.getSimulationClock(guildId);
+    if(!Number.isSafeInteger(prior.minute+minutes)||!Number.isSafeInteger(prior.tick+ticks)) throw new Error("Fictional clock overflow.");
+    return this.transaction(()=>{
+      this.db.prepare(`INSERT INTO simulation_clock(guild_id,tick,minute) VALUES(?,?,?)
+        ON CONFLICT(guild_id) DO UPDATE SET tick=tick+excluded.tick,minute=minute+excluded.minute`).run(guildId,ticks,minutes);
+      processCityDue(this,guildId);
+      return this.getSimulationClock(guildId);
+    });
   }
 
   annotateNpcMemory(guildId,id,{sessionId=null,scene="",tick=0,status="active",supersededBy=null}={}){
@@ -851,7 +907,14 @@ export class VeiledDB {
     const id=randomUUID();
     this.db.prepare(`INSERT INTO mutation_ledger(id,guild_id,session_id,actor_type,actor_id,source_layer,source_interaction_id,source_message_id,mutation_type,entity_key,visibility,confidence,rationale,trigger_text,before_json,after_json,payload_json) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`)
       .run(id,guildId,sessionId,actorType,actorId,sourceLayer,sourceInteractionId,sourceMessageId,mutationType||"unknown",String(entityKey||""),visibility||"gm",Math.max(0,Math.min(100,Number(confidence)||0)),String(rationale||""),String(triggerText||""),JSON.stringify(before||{}),JSON.stringify(after||{}),JSON.stringify(payload||{}));
-    return this.db.prepare("SELECT * FROM mutation_ledger WHERE id=?").get(id);
+    const row=this.db.prepare("SELECT * FROM mutation_ledger WHERE id=?").get(id);
+    if(["simulation","npc_director"].includes(sourceLayer)){
+      const clock=this.getSimulationClock(guildId);
+      this.saveWorldEvent(guildId,{key:`mutation:${id}`,kind:mutationType||"simulation",title:String(rationale||mutationType||"Simulation event").slice(0,160),
+        status:"active",truth_status:"asserted",visibility:"gm",source_kind:"mutation",source_id:id,
+        session_id:sessionId,tick:clock.tick,minute:clock.minute,details:{entity_key:entityKey}});
+    }
+    return row;
   }
   listMutationLedger(guildId,{limit=40,sourceLayer="",mutationType=""}={}){
     const cap=Math.max(1,Math.min(100,Number(limit)||40));
@@ -1686,7 +1749,8 @@ export class VeiledDB {
     const qmarks=sessionIds.length?sessionIds.map(()=>"?").join(","):"NULL";
     const directTables=["players","characters","sessions","facts","clocks","threads","reference_entries","published_messages","npc_proxies","encounters","encounter_combatants","character_drafts","levelup_drafts","canon_events","canon_conflicts","downtime_cycles","downtime_projects","rules_rulings","relationships","relationship_hook_imports","character_gm_hooks","canon_proposals","handouts","encounter_aftermath","character_narratives","npc_profiles","npc_memories","npc_knowledge","npc_goals","seed_runs"];
     const state={campaign:this.getCampaign(guildId),tables:{}};
-    directTables.push("simulation_entities","simulation_records","simulation_clock","seed_documents","seed_catalog");
+    directTables.push("simulation_entities","simulation_records","simulation_clock","seed_documents","seed_catalog",
+      "city_calendar","world_events","city_schedule");
     for(const table of directTables){
       try{state.tables[table]=this.db.prepare(`SELECT * FROM ${table} WHERE guild_id=?`).all(guildId);}catch{state.tables[table]=[];}
     }
@@ -1713,8 +1777,8 @@ export class VeiledDB {
     const state=snap.state;
     const delOrder=["encounter_aftermath","encounter_combatants","npc_proxies","session_characters","session_presence","levelup_drafts","downtime_projects","canon_conflicts","canon_events","relationships","relationship_hook_imports","canon_proposals","character_gm_hooks","character_narratives","npc_memories","npc_knowledge","npc_goals","npc_profiles","seed_runs","handouts","encounters","sessions","character_drafts","characters","players","facts","clocks","threads","reference_entries","published_messages","downtime_cycles","rules_rulings"];
     const insertOrder=["players","characters","sessions","session_presence","session_characters","facts","clocks","threads","reference_entries","published_messages","npc_proxies","encounters","encounter_combatants","character_drafts","levelup_drafts","canon_events","canon_conflicts","downtime_cycles","downtime_projects","rules_rulings","relationships","relationship_hook_imports","character_gm_hooks","canon_proposals","handouts","encounter_aftermath","character_narratives","npc_profiles","npc_memories","npc_knowledge","npc_goals","seed_runs"];
-    delOrder.unshift("seed_catalog","seed_documents","simulation_records","simulation_entities","simulation_clock");
-    insertOrder.push("simulation_entities","simulation_records","simulation_clock","seed_documents","seed_catalog");
+    delOrder.unshift("city_schedule","world_events","city_calendar","seed_catalog","seed_documents","simulation_records","simulation_entities","simulation_clock");
+    insertOrder.push("simulation_entities","simulation_records","simulation_clock","seed_documents","seed_catalog","city_calendar","world_events","city_schedule");
     this.db.exec("BEGIN IMMEDIATE");
     try{
       for(const t of delOrder){

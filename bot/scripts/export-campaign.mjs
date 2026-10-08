@@ -20,7 +20,7 @@ const sessions=mode==="player"
 const sessionIds=sessions.map(x=>x.id);
 const placeholders=sessionIds.length?sessionIds.map(()=>"?").join(","):"''";
 const exportObj={
-  export_version:"4.0.0",
+  export_version:JSON.parse(fs.readFileSync(new URL("../package.json",import.meta.url),"utf8")).version,
   visibility:mode==="player"?"player_safe":"gm_private_full",
   exported_at:new Date().toISOString(),
   campaign:one("SELECT * FROM campaigns WHERE guild_id=?",guildId),
@@ -65,6 +65,7 @@ const exportObj={
   simulation_clock:mode!=="player" ? all("SELECT * FROM simulation_clock WHERE guild_id=?",guildId) : []
 };
 if(mode!=="player") {
+  for(const table of ["city_calendar","world_events","city_schedule"]) exportObj[table]=all(`SELECT * FROM ${table} WHERE guild_id=?`,guildId);
   exportObj.audit_log=all("SELECT * FROM audit_log WHERE guild_id=?",guildId);
   exportObj.canon_conflicts=all("SELECT * FROM canon_conflicts WHERE guild_id=?",guildId);
   exportObj.character_drafts=all("SELECT * FROM character_drafts WHERE guild_id=?",guildId);

@@ -85,7 +85,7 @@ assert((snap.state.tables.npc_knowledge||[]).length>0);
 assert((snap.state.tables.npc_goals||[]).length>0);
 assert((snap.state.tables.seed_runs||[]).length===1);
 
-assert.equal(db.doctorData(guild).schemaVersion,380);
+assert(db.doctorData(guild).schemaVersion>=410);
 db.close();
 fs.rmSync(tmp,{recursive:true,force:true});
 console.log("Veilkeeper v4.0.0 NPC cognition regression test: PASS");

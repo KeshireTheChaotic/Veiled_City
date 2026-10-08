@@ -1,6 +1,6 @@
 {
   "name": "veiled-city-discord-gm",
-  "version": "4.0.0",
+  "version": "4.1.0",
   "private": true,
   "type": "module",
   "description": "Stateful multiplayer Discord GM bot for Veiled City / Daggerheart.",
@@ -17,7 +17,7 @@
     "test:production": "node scripts/production-regression-test.mjs",
     "audit:prod": "npm audit --omit=dev --audit-level=moderate",
     "quality": "node scripts/quality-check.mjs",
-    "validate": "npm run lint && npm run format:check && npm run check && npm run test:offline && npm run test:production && npm run test:refactor && npm run test:operations && npm run test:cognition && npm run test:audit && npm run test:simulation && npm run test:seed",
+    "validate": "npm run lint && npm run format:check && npm run check && npm run test:offline && npm run test:production && npm run test:refactor && npm run test:operations && npm run test:cognition && npm run test:audit && npm run test:simulation && npm run test:seed && npm run test:city",
     "test:refactor": "node scripts/refactor-regression-test.mjs",
     "lint": "npm run quality",
     "format:check": "node scripts/format-check.mjs",
@@ -25,7 +25,8 @@
     "test:cognition": "node scripts/npc-cognition-regression-test.mjs",
     "test:audit": "node scripts/audit-regression-test.mjs",
     "test:simulation": "node scripts/simulation-regression-test.mjs",
-    "test:seed": "node scripts/seed-data-regression-test.mjs"
+    "test:seed": "node scripts/seed-data-regression-test.mjs",
+    "test:city": "node scripts/city-regression-test.mjs"
   },
   "dependencies": {
     "discord.js": "14.27.0",
