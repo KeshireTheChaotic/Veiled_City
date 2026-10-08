@@ -1,7 +1,8 @@
 {
   "package": "Veiled_City_Multiplayer_Discord",
-  "version": "6.7.0",
+  "version": "7.0.0",
   "generated": "2026-10-08",
+  "content_normalization": "utf8-lf",
   "files": [
     {
       "path": ".editorconfig",
@@ -20,13 +21,13 @@
     },
     {
       "path": "LICENSE",
-      "size_bytes": 35802,
-      "sha256": "6852c5660e8b1091694e5350f2cbb7fff8f0e067d5fb1581982d5c78f90a655c"
+      "size_bytes": 35129,
+      "sha256": "605e9047a563c5c8396ffb18232aa4304ec56586aee537c45064c6fb425e44ad"
     },
     {
       "path": "README.md",
       "size_bytes": 14920,
-      "sha256": "85c147a9c7b781e3d6aadbe90a6bd46217154edec9f2423eea5bf597232ca16f"
+      "sha256": "cc816398aff05787869ef3ed79db187f3a05874e38f5dde7e33bdb0f7ab7212f"
     },
     {
       "path": "SUGGESTIONS-End-To-End.md",
@@ -51,7 +52,7 @@
     {
       "path": "bot/package.json",
       "size_bytes": 2601,
-      "sha256": "2ad59c8f298471f80ee9308eed644e6f5058308a2f4f63efc1e26c3ba008e1a6"
+      "sha256": "2f8a7ca847bcd87576d2cfd74116d1b7142f583df00a7cffcfbf778621261eeb"
     },
     {
       "path": "bot/scripts/audit-regression-test.mjs",
@@ -180,8 +181,8 @@
     },
     {
       "path": "bot/scripts/expansion-h-test.mjs",
-      "size_bytes": 6978,
-      "sha256": "38a658e65b3ec0816c3f90f09157d6bcad1bdd8abcf782e8742ae129f88e25a7"
+      "size_bytes": 7483,
+      "sha256": "6f26c8d942f6de453088efb1b54c20345dfa7b04d480e23f6f2ad3733d0cdbd4"
     },
     {
       "path": "bot/scripts/expansion-quality-test.mjs",
@@ -254,9 +255,14 @@
       "sha256": "17d49fc346d00cbf6f96e40a9d97faef916b4775e9edfa7def0d5ef02cca30f2"
     },
     {
+      "path": "bot/scripts/release-files.mjs",
+      "size_bytes": 341,
+      "sha256": "d05d8a36b56187ebd243d835909d34a45f10c187a43f62568a8b18925a58373f"
+    },
+    {
       "path": "bot/scripts/release-version.mjs",
-      "size_bytes": 660,
-      "sha256": "fc73267e66e14f09ca5fe385934b2f31841970056c26419b6abb6fb3d3bf004c"
+      "size_bytes": 917,
+      "sha256": "859e66b6853ebec3f165e03bd76bd3f37c47ae8814436cfae702c57afe99e040"
     },
     {
       "path": "bot/scripts/seed-data-regression-test.mjs",
@@ -280,8 +286,8 @@
     },
     {
       "path": "bot/scripts/sync-release.mjs",
-      "size_bytes": 1727,
-      "sha256": "aa31e7f2c6811988b8a7ed14fabee12595339b63cb467e73d4e8910fc09a3af6"
+      "size_bytes": 1868,
+      "sha256": "f6509294e51ad75b7d53e8e10aac5039a98ef5bc1fc0828be3182b5262cf27a5"
     },
     {
       "path": "bot/scripts/validate-command-schema.mjs",
@@ -1160,8 +1166,8 @@
     },
     {
       "path": "docs/END_TO_END_IMPLEMENTATION.md",
-      "size_bytes": 21234,
-      "sha256": "c3083c95bc3a2ea0922d6e0f49c0c7631e8987b587b0cca06d3c83ed9d306074"
+      "size_bytes": 22058,
+      "sha256": "3c1f98c59cbf5e015415b1b8d4646f4131b5d9208977c152179ba83e845d2205"
     },
     {
       "path": "docs/EXPANSION_ARCHITECTURE.md",

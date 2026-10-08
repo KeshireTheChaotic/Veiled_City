@@ -307,7 +307,20 @@ phase adds a database engine, parallel review manager or mandatory paid request.
 | F | `e4c548a` | 6.4.0 / `24f2a11` | Long projects, downtime results, opaque application principal |
 | G | `24f2a11` | 6.5.0 / `7c5bd3a` | Memory clusters, native scheduler, bounded context and telemetry |
 | H | `7c5bd3a` | 6.6.0 / `83da52c` | Seed archives/drafts, additive owned evidence, native review inbox |
-| I | `83da52c` | 6.7.0 | Real prompt/commit/publication/restore loop and rollout documentation |
+| I | `83da52c` | 6.7.0 / `3cf55a7` | Real prompt/commit/publication/restore loop and rollout documentation |
+
+## Completion release — 7.0.0
+
+All nine phase releases are complete. The final requested major bump uses explicit
+`sync-release.mjs 7.0.0 --major`; normal phase minor validation remains strict.
+Manifest hashes/sizes now describe canonical UTF-8 LF text bytes (binary bytes
+unchanged), so Windows Git checkout conversion cannot invalidate a clean deploy.
+The full network-denied validator remains the release gate. Deployment updates
+only the production checkout by local fast-forward; configuration, runtime DB and
+untracked local content are preserved. Restart the running bot and register the
+updated slash schema during the operator's activation window; neither live bot
+execution nor Discord API registration is an offline test. Review rollout above
+before enabling feature flags and explicit delegation.
 
 Release policy: phase minors roll .9 to the next major .0. After Phase I, perform
 the requested final major release and deploy the clean, verified checkout while

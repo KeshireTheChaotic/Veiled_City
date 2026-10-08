@@ -12,7 +12,8 @@ import { EXPANSION_FEATURES, expansionStatus } from "../src/expansion-contracts.
 import { explainWhy } from "../src/provenance.js";
 import { handleCommand } from "../src/commands.js";
 import { fakeInteraction } from "./contract-fixtures.mjs";
-import { nextMinorVersion, phaseVersion } from "./release-version.mjs";
+import { nextMinorVersion, phaseVersion, nextMajorVersion } from "./release-version.mjs";
+import { manifestBytes } from "./release-files.mjs";
 import { configureSimulationEntity, submitNpcAction } from "../src/simulation.js";
 import { manageGroup } from "../src/city-groups.js";
 const root=fs.mkdtempSync(path.join(os.tmpdir(),"vc-expansion-h-")),schema=path.resolve("sql/schema.sql");
@@ -71,7 +72,13 @@ try{
   assert.throws(()=>phaseVersion("5.9.0","5.10.0"),/next minor/);assert.throws(()=>phaseVersion("5.7.0","6.0.0"),/next minor/);
   const manifest=JSON.parse(fs.readFileSync("../manifest.json","utf8")),pkg=JSON.parse(fs.readFileSync("package.json","utf8"));
   assert.equal(manifest.version,pkg.version);
-  for(const entry of manifest.files){const bytes=fs.readFileSync(path.resolve("..",entry.path));
+  assert.equal(nextMajorVersion("6.7.0"),"7.0.0");
+  assert.equal(phaseVersion("6.7.0","7.0.0",{major:true}),"7.0.0");
+  assert.throws(()=>phaseVersion("6.7.0","7.0.0"));
+  assert.deepEqual(manifestBytes(Buffer.from("one\r\ntwo\r\n")),Buffer.from("one\ntwo\n"));
+  const binary=Buffer.from([0,13,10,255]);assert.deepEqual(manifestBytes(binary),binary);
+  for(const entry of manifest.files){const raw=fs.readFileSync(path.resolve("..",entry.path));
+    const bytes=manifest.content_normalization==="utf8-lf"?manifestBytes(raw):raw;
     assert.equal(bytes.length,entry.size_bytes,entry.path);assert.equal(createHash("sha256").update(bytes).digest("hex"),entry.sha256,entry.path);}
   console.log("Expansion H PASS: synthetic 3.3/3.8/5.0 shapes, schema440, all safe flags, zero-write GM diagnostics, backup/rollback, lifecycle guards, .9 rollover and manifest hashes; no deployment.");
 }finally{if(db) db.close();fs.rmSync(root,{recursive:true,force:true});}
