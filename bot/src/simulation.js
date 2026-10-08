@@ -11,6 +11,7 @@ import { proposeContactGroup } from "./city-groups.js";
 import { clusterContext } from "./memory-clusters.js";
 import { reconcileSceneArrival } from "./scene-continuity.js";
 import { indexWorldEvent } from "./city-calendar.js";
+import { delegateConsequence } from "./ai-intents.js";
 export { updateRelationshipDimensions } from "./relationship-state.js";
 
 export const ACTION_TYPES=["investigate","travel","contact","recruit","observe","prepare","hide","acquire","spend_resource",
@@ -571,7 +572,9 @@ export function commitNpcDirector(db,prepared,{roll}={}){
       actions:actions.map(row=>row.id).filter(Boolean),blocked:actions.filter(row=>row.status==="blocked")}});
     runInstitutionDirector(db,guildId,cycleKey);
     const motivations=runMotivationCycle(db,guildId,Math.max(0,budget-actions.length));
-    const consequences=coordinateConsequences(db,guildId,Math.max(0,budget-actions.length-motivations.length));
+    const consequenceBudget={operations:0,cost:0};
+    const consequences=coordinateConsequences(db,guildId,Math.max(0,budget-actions.length-motivations.length),
+      {onProposed:row=>delegateConsequence(db,guildId,row,consequenceBudget)});
     const strategies=runStrategyOpportunity(db,guildId,Math.max(0,budget-actions.length-motivations.length-consequences.length));
     if(actions.length+motivations.length+consequences.length+strategies.length<budget) proposeContactGroup(db,guildId);
     proposeCityOpportunity(db,guildId,prepared.query||"","city_director");

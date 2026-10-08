@@ -1,5 +1,5 @@
 /** Typed subscriptions to committed world sources; pending effects never spend, disclose, or fan out without review. */
-import { cityObject, cityKey, cityInteger, cityAudit } from "./city-calendar.js";
+import { cityObject, cityKey, cityInteger, cityAudit, indexWorldEvent } from "./city-calendar.js";
 import { requireCitySource } from "./city-core.js";
 import { changeCityService, transmitCityBelief } from "./city-civic.js";
 import { actorSource, proposeGoalTransition, motivationKey } from "./simulation-motivation.js";
@@ -49,21 +49,29 @@ export function subscribeConsequence(db,guild,input,actorId){
     cityAudit(db,guild,"consequence_subscription",key,null,after,actorId);return after;
   });
 }
-export function coordinateConsequences(db,guild,budget=2){
+export function coordinateConsequences(db,guild,budget=2,{onProposed=null}={}){
   if(db.isDirectorPaused(guild)||db.getCityCalendar(guild).flags.consequences!==true) return [];
+  if(budget<=0) return [];
   const results=[];
   return db.transaction(()=>{
     for(const subscription of db.listCityRecords(guild,{kind:"consequence_subscription",status:"active",includeGM:true,limit:20})){
-      for(const event of db.listWorldEvents(guild,{includeGM:true,limit:50})){
+      const cursor=db.getCityRecord(guild,"consequence_cursor",subscription.record_key);
+      for(const event of db.worldEventsAfter(guild,{after:cursor?.data.after||0,limit:50})){
         if(results.length>=Math.min(4,budget)) return results;
+        db.saveCityRecord(guild,{kind:"consequence_cursor",key:subscription.record_key,source_event:subscription.source_event,
+          data:{after:event.sequence,subscription:subscription.record_key}});
         if(event.status!=="active"||!subscription.data.event_kinds.includes(event.kind)
           ||subscription.data.location_key&&subscription.data.location_key!==event.location_key) continue;
+        const path=event.details.causal_path||[];
+        if(!Array.isArray(path)||path.length>=4||path.includes(subscription.record_key)||db.consequenceSourceCount(guild,event.event_key)>=4) continue;
         const key=`consequence:${motivationKey([guild,event.event_key,subscription.data.handler,subscription.data.entity_key,subscription.record_key,1])}`;
         if(db.getCityRecord(guild,"consequence",key)) continue;
         const after=db.saveCityRecord(guild,{kind:"consequence",key,status:"pending",source_event:event.event_key,
-          data:{...subscription.data,subscription:subscription.record_key,causal_path:[event.event_key,subscription.record_key],
+          data:{...subscription.data,subscription:subscription.record_key,causal_path:[...path,subscription.record_key],
             review_class:"human_gm",privacy:"gm",not_actor_knowledge:true}});
-        cityAudit(db,guild,"consequence_proposed",key,null,after,"consequence_coordinator");results.push(after);
+        cityAudit(db,guild,"consequence_proposed",key,null,after,"consequence_coordinator");
+        if(onProposed) onProposed(after);
+        results.push(db.getCityRecord(guild,"consequence",key));
       }
     }
     return results;
@@ -77,6 +85,10 @@ export function reviewConsequence(db,guild,input,actorId){
   try{return db.transaction(()=>{
     requireCitySource(db,guild,before.source_event);
     const result=input.decision==="approve"?handlers[before.data.handler](db,guild,before,actorId):null;
+    if(input.decision==="approve") indexWorldEvent(db,guild,{key:`effect:${motivationKey(before.record_key)}`,kind:"consequence_applied",
+      title:"Native causal consequence completed",source_kind:"event",source_id:before.source_event,
+      location_key:db.getWorldEvent(guild,before.source_event).location_key,details:{causal_path:before.data.causal_path||[],
+        consequence:before.record_key,root_source:before.source_event}},actorId);
     const after=db.saveCityRecord(guild,{...before,key:before.record_key,status:{approve:"completed",reject:"rejected",defer:"pending"}[input.decision],
       data:{...before.data,result,reviewed_by:actorId}});
     cityAudit(db,guild,"consequence_review",before.record_key,before,after,actorId);return after;

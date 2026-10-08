@@ -12,7 +12,7 @@ export const INTENT_PAYLOADS={
   goal:object({...actor,...source,op:choice("propose","reprioritize","pause","resume","supersede","complete","abandon"),
     goal_key:text(),new_goal_key:text(),objective:text(1000),reason:text(1000),priority:integer(0,100),confidence:integer(0,100),
     horizon:choice("immediate","near","long"),dependencies:list(text()),acceptable_methods:list(text()),conflicts:list(text())}),
-  consequence:object({...source,op:choice("subscribe","unsubscribe"),handler:choice("service"),entity_key:text(),
+  consequence:object({...source,op:choice("subscribe","unsubscribe","apply"),handler:choice("service"),entity_key:text(),
     event_kinds:list(text(),8),location_key:text(),delta:integer(-10,10)}),
   scene:object({...source,op:choice("record"),entity_type:choice("npc","character","adversary","evidence","hazard","entrance","barrier"),
     entity_key:text(),location_key:text(),zone:text(),to_zone:text(),range:choice("Melee","Very Close","Close","Far","Very Far",""),
@@ -34,6 +34,13 @@ export const INTENT_PAYLOADS={
     topic:text(),sources:list(object({kind:choice("npc_memory","memory","report","event"),key:text()}),20)}),
   density:object({...source,op:choice("inspect"),location_key:text()})
 };
+const causalBase={...source,op:choice("subscribe","unsubscribe","apply"),entity_key:text(),event_kinds:list(text(),8),location_key:text()};
+INTENT_PAYLOADS.consequence={anyOf:[INTENT_PAYLOADS.consequence,
+  object({...causalBase,handler:choice("goal"),goal:INTENT_PAYLOADS.goal}),
+  object({...causalBase,handler:choice("transmit"),transmission:object({from_type:choice("npc","institution","community","audience"),
+    from_key:text(),to_type:choice("npc","institution","community","audience"),to_key:text(),information_key:text(),mechanism:text(),distortion:integer(0,20)})})]};
+export const intentOperations=feature=>(INTENT_PAYLOADS[feature]?.anyOf||[INTENT_PAYLOADS[feature]])
+  .flatMap(schema=>schema?.properties.op.enum||[]);
 export const intentArraySchema={type:"array",maxItems:4,items:{anyOf:Object.entries(INTENT_PAYLOADS).map(([feature,payload])=>object({
   version:integer(1,1),feature:choice(feature),target_key:text(),expected_revision:text(64),policy_revision:integer(0,1000000000),
   source_prerequisites:list(text(),8),payload

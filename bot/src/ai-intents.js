@@ -1,11 +1,12 @@
 /** Shared governed intent pipeline: bound authority, closed contracts, atomic receipts and native domain adapters. */
 import { createHash } from "node:crypto";
-import { validateIntent, INTENT_PAYLOADS } from "./ai-intent-contracts.js";
+import { validateIntent, INTENT_PAYLOADS, intentOperations } from "./ai-intent-contracts.js";
 import { requireCitySource } from "./city-core.js";
 import { cityObject, cityInteger, cityAudit, indexWorldEvent } from "./city-calendar.js";
 import { proposeGoalTransition, reviewGoalTransition } from "./simulation-motivation.js";
 import { recordScenePresence, scenePresence, sceneView } from "./scene-continuity.js";
 import { activeCityProxy } from "./city-constraints.js";
+import { subscribeConsequence, reviewConsequence } from "./city-consequences.js";
 const hash=value=>createHash("sha256").update(JSON.stringify(value)).digest("hex");
 const adapters=new Map();
 export const FEATURE_FLAGS={goal:"emergent_goals",consequence:"consequences",scene:"scene_continuity",group:"emergent_groups",
@@ -21,7 +22,7 @@ export function configureDelegation(db,guild,input,reviewer){
   if(!reviewer||Object.keys(input).some(key=>!["mode","allow","max_operations","max_cost","expires_minute"].includes(key))) throw new Error("Invalid delegation configuration.");
   if(!["manual","suggest_only","routine_delegated"].includes(input.mode)||!Array.isArray(input.allow)||input.allow.length>40
     ||input.allow.some(op=>!Object.keys(INTENT_PAYLOADS).some(feature=>op.startsWith(`${feature}.`)
-      &&INTENT_PAYLOADS[feature].properties.op.enum.includes(op.slice(feature.length+1))))) throw new Error("Explicit typed operation allowlist required.");
+      &&intentOperations(feature).includes(op.slice(feature.length+1))))) throw new Error("Explicit typed operation allowlist required.");
   cityInteger(input.max_operations,1,4);cityInteger(input.max_cost,0,20);
   if(input.expires_minute!==null) cityInteger(input.expires_minute,db.getSimulationClock(guild).minute+1,1000000000);
   if(input.mode==="routine_delegated"&&input.expires_minute===null) throw new Error("Delegation requires an explicit fictional-time expiry.");
@@ -45,14 +46,14 @@ function preflight(db,guild,intent,context){
   const impact=adapter.impact(db,guild,intent,before,context);
   return {adapter,before,impact};
 }
-function decision(db,guild,intent,impact,used){
+function decision(db,guild,intent,impact,budget){
   const policy=delegationPolicy(db,guild),minute=db.getSimulationClock(guild).minute;
   if(policy.revision!==intent.policy_revision) return {status:"blocked",reason:"Delegation policy changed."};
   if(policy.mode==="manual") return {status:"blocked",reason:"AI execution is not delegated."};
   if(policy.mode==="suggest_only"||impact.review||!policy.allow.includes(`${intent.feature}.${intent.payload.op}`))
     return {status:"pending",reason:impact.reason||"Human review or explicit delegation required."};
   if(policy.expires_minute===null||minute>=policy.expires_minute) return {status:"blocked",reason:"Delegation expired."};
-  if(used>=policy.max_operations||impact.cost>policy.max_cost) return {status:"blocked",reason:"Delegated budget exhausted."};
+  if(budget.operations>=policy.max_operations||budget.cost+impact.cost>policy.max_cost) return {status:"blocked",reason:"Delegated budget exhausted."};
   return {status:"accepted",reason:"Routine operation explicitly delegated."};
 }
 function saveReceipt(db,guild,key,intent,status,reason,context,extra={}){
@@ -64,14 +65,14 @@ function saveReceipt(db,guild,key,intent,status,reason,context,extra={}){
 }
 export function dispatchAiIntents(db,guild,intents=[],context={}){
   if(!Array.isArray(intents)||intents.length>4) throw new Error("At most four AI intents per opportunity.");
-  let used=0;
+  const budget=context.budget||{operations:0,cost:0};
   return intents.map(intent=>{
     const key=`intent:${hash([guild,context.sessionId||null,context.origin||"",intent]).slice(0,48)}`;
     const previous=db.getCityRecord(guild,"ai_intent",key);if(previous) return previous;
     try{return db.transaction(()=>{
-      const {adapter,before,impact}=preflight(db,guild,intent,context),verdict=decision(db,guild,intent,impact,used);
+      const {adapter,before,impact}=preflight(db,guild,intent,context),verdict=decision(db,guild,intent,impact,budget);
       const result=verdict.status==="accepted"?adapter.apply(db,guild,intent,key,"ai_policy",context):null;
-      if(verdict.status==="accepted") used++;
+      if(verdict.status==="accepted"){budget.operations++;budget.cost+=impact.cost;}
       return saveReceipt(db,guild,key,intent,verdict.status,verdict.reason,context,{before,impact,result,policy_revision:delegationPolicy(db,guild).revision});
     });}catch(error){
       return saveReceipt(db,guild,key,validateIntent(intent)?intent:null,"blocked","Intent validation or domain prerequisites failed.",context,
@@ -102,6 +103,8 @@ export function intentContext(db,guild){
     goal_targets:db.listNpcProfiles(guild,{limit:32}).flatMap(npc=>db.listNpcGoals(guild,npc.npc_key,{limit:8})
       .map(row=>({actor_type:"npc",actor_key:npc.npc_key,goal_key:row.goal_key,expected_revision:stateRevision(row),state:row}))).slice(0,32),
     receipts:db.listCityRecords(guild,{kind:"ai_intent",includeGM:true,limit:12}).map(row=>({...row,expected_revision:stateRevision(row)})),
+    causal_targets:["consequence","consequence_subscription"].flatMap(kind=>db.listCityRecords(guild,{kind,includeGM:true,limit:8})
+      .map(row=>({...row,expected_revision:stateRevision(row)}))),
     target_revision_rule:"Use the supplied state fingerprint; absent for a new target. Proposals are not effects."};
 }
 registerIntentAdapter("goal",{
@@ -141,3 +144,33 @@ registerIntentAdapter("scene",{
     return recordScenePresence(db,guild,input,principal);
   }
 });
+registerIntentAdapter("consequence",{
+  current:(db,guild,intent)=>intent.target_key?db.getCityRecord(guild,intent.payload.op==="apply"?"consequence":"consequence_subscription",intent.target_key):null,
+  impact:(db,guild,intent,before)=>({cost:intent.payload.op==="apply"?Math.abs(before?.data.payload?.delta||0):0,
+    review:intent.payload.handler!=="service"||intent.payload.op==="apply"&&before?.data.handler!=="service",reason:"Non-service consequences require human review."}),
+  apply:(db,guild,intent,key,principal)=>{
+    const p=intent.payload;
+    if(p.op==="apply"){
+      const before=db.getCityRecord(guild,"consequence",intent.target_key);
+      if(before?.source_event!==p.source_event) throw new Error("Consequence source mismatch.");
+      const result=reviewConsequence(db,guild,{key:intent.target_key,decision:"approve"},principal);
+      if(result.status!=="completed") throw new Error("Consequence blocked by native resolver.");return result;
+    }
+    if(p.op==="subscribe"&&p.handler==="service"&&(!p.event_kinds.length||p.event_kinds.some(kind=>!["infrastructure_damage","infrastructure_repair"].includes(kind))))
+      throw new Error("Routine subscriptions require known physical event classes.");
+    if(p.op==="subscribe"&&p.handler==="service"){
+      const service=db.getCityRecord(guild,"infrastructure",p.entity_key);
+      if(service?.status!=="active"||!p.location_key||!service.data.locations.includes(p.location_key)) throw new Error("Established service causal location required.");
+    }
+    const payload=p.handler==="service"?{delta:p.delta}:p.handler==="goal"?p.goal:{...p.transmission,authorized:true};
+    return subscribeConsequence(db,guild,{...p,key:p.op==="unsubscribe"?intent.target_key:key,payload},principal);
+  }
+});
+export function delegateConsequence(db,guild,row,budget={operations:0,cost:0}){
+  const p=row.data;
+  if(p.handler!=="service") return null;
+  return dispatchAiIntents(db,guild,[{version:1,feature:"consequence",target_key:row.record_key,expected_revision:stateRevision(row),
+    policy_revision:delegationPolicy(db,guild).revision,source_prerequisites:[],payload:{source_event:row.source_event,op:"apply",handler:"service",
+      entity_key:p.entity_key,event_kinds:p.event_kinds,location_key:p.location_key||"",delta:p.payload.delta}}],
+  {origin:`causal:${row.record_key}`,scope:{mode:"party"},budget})[0];
+}

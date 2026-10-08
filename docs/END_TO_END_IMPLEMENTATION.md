@@ -39,8 +39,6 @@ Validation: required offline suite includes `end-to-end-a-test.mjs`, synthetic
 Responses output through actual authoritative commit, suggest-only/no effect,
 forged authority, policy/target revisions, private scope and restart replay.
 
-## Remaining audit gaps
-
 ## Phase B — 6.0.0: scene and witnesses
 
 Scene intents share delegation, revisions and native validation. Native successful
@@ -59,8 +57,27 @@ location from an entry hook or invent arrival for an absent PC.
 
 ## Remaining phases
 
-C: durable consequences and richer
-motivations. D: groups and strategies. E: owner confirmation and natural-language
+## Phase C — 6.1.0: motivations and durable consequences
+
+All seven goal transitions use owned evidence and native goal history; contested
+conclusions/non-routine methods require review. AI planning context carries owned
+goals, source packets, state fingerprints and receipts. The existing request can
+propose objectives beyond the deterministic investigation fallback without extra
+actor requests. Typed physical service subscriptions validate established service
+locations and native event classes. `consequence.apply` optionally delegates
+routine effects, with cumulative operation/cost ceilings per opportunity.
+
+Each subscription has an atomic row-sequence cursor (50 inspected events per
+drain, four generated effects, twenty subscriptions); old sources are no longer
+lost behind the latest-50 window. Native consequence receipts prevent duplicate
+effects. Generated effect events carry bounded causal lineage: depth four,
+fan-out four and no repeated subscription. Retracted sources block execution.
+Other native consequence handlers remain human-reviewed; no disclosure authority
+is granted by a subscription. Mandatory tests cover a 65-event backlog/restart.
+
+## Remaining phases
+
+D: groups and strategies. E: owner confirmation and natural-language
 read-only discovery. F: projects and mediation. G: memory maintenance and fairness.
 H: seeds and complete review UX. I: cross-feature orchestration and rollout.
 

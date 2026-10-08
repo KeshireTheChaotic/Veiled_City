@@ -147,6 +147,14 @@ export class VeiledDB {
       ORDER BY minute DESC,rowid DESC LIMIT ?`).all(guildId,includeGM?1:0,userId,characterId,query,query,Math.min(100,limit))
       .map(row=>({...row,details:JSON.parse(row.details_json)}));
   }
+  worldEventsAfter(guildId,{after=0,limit=50}={}){
+    return this.db.prepare("SELECT rowid AS sequence,* FROM world_events WHERE guild_id=? AND rowid>? ORDER BY rowid LIMIT ?")
+      .all(guildId,Math.max(0,after),Math.max(1,Math.min(50,limit))).map(row=>({...row,details:JSON.parse(row.details_json)}));
+  }
+  consequenceSourceCount(guildId,source){
+    return this.db.prepare("SELECT count(*) n FROM city_records WHERE guild_id=? AND kind='consequence' AND source_event=?")
+      .get(guildId,source).n;
+  }
   getCitySchedule(guildId,key){
     const row=this.db.prepare("SELECT * FROM city_schedule WHERE guild_id=? AND schedule_key=?").get(guildId,key);
     return row?{...row,data:JSON.parse(row.data_json)}:null;
