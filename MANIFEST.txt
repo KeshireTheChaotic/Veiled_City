@@ -18,6 +18,7 @@ bot/scripts/contract-fixtures.mjs
 bot/scripts/cost-estimate.mjs
 bot/scripts/endurance-test.mjs
 bot/scripts/expansion-a-test.mjs
+bot/scripts/expansion-b-test.mjs
 bot/scripts/export-campaign.mjs
 bot/scripts/format-check.mjs
 bot/scripts/narrative-contract-test.mjs
@@ -81,6 +82,7 @@ bot/src/publishing.js
 bot/src/register-commands.js
 bot/src/relationship-state.js
 bot/src/roster.js
+bot/src/scene-continuity.js
 bot/src/seed-commands.js
 bot/src/seed-data.js
 bot/src/seed-drafts.js

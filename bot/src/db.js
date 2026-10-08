@@ -12,6 +12,7 @@ import { randomUUID } from "node:crypto";
 import { DatabaseSync } from "node:sqlite";
 import { processCityDue } from "./city-calendar.js";
 import { normalizeNpcKey } from "./npc-cognition.js";
+import { archiveScenePresence } from "./scene-continuity.js";
 
 /** SQLite repository facade and transaction boundary for campaign state. */
 export class VeiledDB {
@@ -839,10 +840,15 @@ export class VeiledDB {
   }
 
   setDirectorState(sessionId,state){
+    return this.transaction(()=>{
     const current=this.getDirectorState(sessionId);
     const next={...current,...state,acted_user_ids:Array.isArray(state?.acted_user_ids)?state.acted_user_ids:current.acted_user_ids,pass_counts:{...current.pass_counts,...(state?.pass_counts||{})}};
+    if(next.scene_number!==current.scene_number){
+      const session=this.getSession(sessionId);if(session) archiveScenePresence(this,session.guild_id,sessionId);
+    }
     this.db.prepare("UPDATE sessions SET director_state_json=? WHERE id=?").run(JSON.stringify(next),sessionId);
     return next;
+    });
   }
 
   resetDirectorRound(sessionId,{sceneLabel=null,advanceScene=false}={}){
@@ -873,12 +879,16 @@ export class VeiledDB {
   getPendingDirectorPass(sessionId){ return this.getDirectorState(sessionId).pending_pass||null; }
 
   completeDirectorPass(sessionId,layer,{sceneLabel=null}={}){
+    return this.transaction(()=>{
     const current=this.getDirectorState(sessionId);
     const counts={...current.pass_counts,[layer]:Number(current.pass_counts?.[layer]||0)+1};
     const patch={pass_counts:counts,pending_pass:null};
     if(layer==="round"){patch.round_number=Math.max(1,Number(current.round_number||1))+1;patch.acted_user_ids=[];}
-    if(layer==="scene"){patch.scene_number=Math.max(1,Number(current.scene_number||1))+1;patch.scene_label=String(sceneLabel||current.scene_label||"");patch.acted_user_ids=[];}
+    if(layer==="scene"){
+      patch.scene_number=Math.max(1,Number(current.scene_number||1))+1;patch.scene_label=String(sceneLabel||current.scene_label||"");patch.acted_user_ids=[];
+    }
     return this.setDirectorState(sessionId,patch);
+    });
   }
 
   addFact(guildId,{category="fact",key,content,visibility="party",subjectUserId=null,subjectCharacterId=null,sessionId=null,source="gm",provenance={},confidence=100,dedupe=true}) {

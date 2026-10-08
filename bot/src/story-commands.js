@@ -11,12 +11,15 @@ import { previewOutcomes } from "./outcome-preview.js";
 import { explainWhy } from "./provenance.js";
 import { configurePortrayal } from "./portrayal.js";
 import { authorWorldDraft, reviewWorldDraft } from "./world-authoring.js";
+import { recordScenePresence, sceneView } from "./scene-continuity.js";
 export async function handleStoryCommand(interaction,{db,gm}){
   if(!interaction.memberPermissions?.has(PermissionFlagsBits.ManageGuild)&&
     !interaction.member?.roles?.cache?.has(db.getCampaign(interaction.guildId)?.gm_role_id)) throw new PermissionError("GM/admin permission required.");
   const sub=interaction.options.getSubcommand(),raw=interaction.options.getString("json"),input=cityObject(JSON.parse(raw||"{}")),guild=interaction.guildId;
   let result;
   if(sub==="context") result=new ContextPlanner(db).plan(guild,input);
+  else if(sub==="scene") result=recordScenePresence(db,guild,input,interaction.user.id);
+  else if(sub==="scene-view") result=sceneView(db,guild,{...input,gm:input.observer_type?false:true});
   else if(sub==="conversation") result=resolveNpcConversation(db,guild,input,interaction.user.id);
   else if(sub==="pacing") result=setPacingCues(db,guild,input,interaction.user.id);
   else if(sub==="pacing-status") result=pacingAdvice(db,guild,input.message||"");

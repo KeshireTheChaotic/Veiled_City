@@ -45,3 +45,32 @@ restart. New records reuse existing schema 440 tables and are included in full
 backups/restores and excluded from player exports. Disable flags to stop new
 autonomous proposals; preserve records/history. Roll back state only via an
 explicit GM snapshot/backup review, and code via a known release checkout.
+
+## 5.2.0 — Phase B: scene-local continuity
+
+Enable `/vc-city flags json:{"scene_continuity":true}` (default off).
+`/vc-story scene` accepts source-backed descriptive occupancy JSON:
+`{"entity_type":"npc","entity_key":"clerk","source_event":"arrival-observed","location_key":"station","zone":"desk","range":"Close","visibility":"party"}`.
+The source must establish the location and appropriate disclosure boundary.
+NPCs must already have arrived through existing movement/travel state. PCs need
+active roster presence and explicit owner-established fiction (`accepted_by`),
+and proxy choices remain protected. No PC or combat record is mutated.
+
+`state` is actually_present, believed_present, uncertain or departed. Hidden
+occupants are always GM-private; `known_to` contains explicitly authorized
+observer identities (`npc:key` / `character:id`). Barriers use entity_type barrier,
+two zones (`zone`, `to_zone`) and `blocks:["sight","sound"]`. Descriptive range
+bands are Melee, Very Close, Close, Far and Very Far; no distances, speeds or
+mechanical costs are added. Actual encounter state always overrides descriptors.
+
+`/vc-story scene-view` is GM-only/read-only. Optional JSON
+`{"observer_type":"npc","observer_key":"clerk"}` limits results to genuinely
+accessible presence and strips private history/other observers. A departed or
+remote witness cannot overhear. Explicit in-person NPC conversations use
+`mode:"in_person"` and require reciprocal sound access; existing directed remote
+contact channels remain valid and do not imply third-party overhearing.
+
+Completing a director scene transition archives presence as private scene residue
+atomically with the transition. Historical residue is not current occupancy or
+actor knowledge. Reappearance requires a new arrival/travel source. Backup and
+rollback reuse existing tables and snapshots; no manual migration or reset.

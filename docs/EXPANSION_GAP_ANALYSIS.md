@@ -36,7 +36,7 @@ the actual controlling owner and never accept an input JSON identity as authorit
 | Phase | Fresh audit HEAD | Version | Status |
 | --- | --- | --- | --- |
 | A: P01–02 | dc80bf7 | 5.1.0 | EXTENDED; baseline and phase-specific zero-token gates pass |
-| B: P03 | pending | next minor | Pending fresh audit |
+| B: P03 | ecfe238 | 5.2.0 | EXTENDED: occupancy and actor-relative access; offline gates pass |
 | C: P04–05 | pending | next minor | Pending fresh audit |
 | D: P06–07 | pending | next minor | Pending fresh audit |
 | E: P08–09 | pending | next minor | Pending fresh audit |
@@ -74,3 +74,15 @@ pending/replay/restart/restore and unchanged canon. Existing network-denied suit
 cover NPC proxies, absence, resource costs, publishing, migration and exports.
 No live-model/provider/Discord behavior was tested or claimed. Detailed commands
 and rollback are in `EXPANSION_RELEASES.md`.
+
+### Phase B audit and extension
+
+Fresh ecfe238 audit: `assertNpcAvailability` still guards established travel and
+commitments; `combat.js`, encounter combatants, roster and NPC positions remain
+authoritative. Phase A motivation/causal records are reused, not replaced.
+P03 EXTENDED in `scene-continuity.js`, with `setDirectorState` atomic archive
+integration and optional in-person checks in existing NPC conversations.
+`expansion-b-test.mjs` checks unknown/remote/hidden witnesses, sound barriers,
+private source disclosure refusal, absent PC agency, zero-write views, player
+export, scene transition, restart and restore. Source/visibility/subject metadata
+use existing city tables, so no new schema or parallel physical/combat engine.

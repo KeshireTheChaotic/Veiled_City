@@ -4,6 +4,7 @@ import { requireCitySource } from "./city-core.js";
 import { activeCityProxy, assertNpcAvailability } from "./city-constraints.js";
 import { actorState, submitNpcAction } from "./simulation.js";
 import { ContextPlanner } from "./context-planner.js";
+import { sceneAccess } from "./scene-continuity.js";
 export function resolveNpcConversation(db,guildId,input,actorId,{roll}={}){
   cityObject(input);
   if(db.getCityCalendar(guildId).flags.conversations!==true) throw new Error("NPC conversations are opt-in.");
@@ -11,6 +12,9 @@ export function resolveNpcConversation(db,guildId,input,actorId,{roll}={}){
   requireCitySource(db,guildId,input.source_event);
   if(!["round","scene","downtime","manual"].includes(input.opportunity)) throw new Error("Explicit fictional opportunity required.");
   if(input.from===input.to) throw new Error("Two different NPCs are required.");
+  if(input.mode==="in_person"&&(!sceneAccess(db,guildId,{observer_type:"npc",observer_key:input.from,target_type:"npc",target_key:input.to,sense:"sound"})
+    ||!sceneAccess(db,guildId,{observer_type:"npc",observer_key:input.to,target_type:"npc",target_key:input.from,sense:"sound"})))
+    throw new Error("In-person conversation requires actual scene presence and an unobstructed sound path.");
   for(const npc of [input.from,input.to]){
     if(!db.getNpcProfile(guildId,npc)||activeCityProxy(db,guildId,npc)) throw new Error("Existing non-proxied NPC required.");
     const state=actorState(db,guildId,"npc",npc);
