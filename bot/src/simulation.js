@@ -4,6 +4,8 @@ import { normalizeNpcKey, retrieveNpcCognition } from "./npc-cognition.js";
 import { submitInstitutionAction, runInstitutionDirector, proposeCityOpportunity } from "./city-core.js";
 import { assertNpcAvailability, npcAvailability, activeCityProxy } from "./city-constraints.js";
 import { applyNpcServiceOutcome } from "./city-civic.js";
+import { runMotivationCycle } from "./simulation-motivation.js";
+import { coordinateConsequences } from "./city-consequences.js";
 export { updateRelationshipDimensions } from "./relationship-state.js";
 
 export const ACTION_TYPES=["investigate","travel","contact","recruit","observe","prepare","hide","acquire","spend_resource",
@@ -545,6 +547,8 @@ export function commitNpcDirector(db,prepared,{roll}={}){
     db.putSimulationRecord(guildId,{id:cycleId,kind:"cycle",status:"completed",data:{layer,cycle_key:cycleKey,
       actions:actions.map(row=>row.id).filter(Boolean),blocked:actions.filter(row=>row.status==="blocked")}});
     runInstitutionDirector(db,guildId,cycleKey);
+    const motivations=runMotivationCycle(db,guildId,Math.max(0,budget-actions.length));
+    coordinateConsequences(db,guildId,Math.max(0,budget-actions.length-motivations.length));
     proposeCityOpportunity(db,guildId,prepared.query||"","city_director");
     return {clock:db.getSimulationClock(guildId),actions};
   });

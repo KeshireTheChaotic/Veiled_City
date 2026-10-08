@@ -1295,7 +1295,8 @@ export class VeiledDB {
 
   getNpcGoal(guildId,npcKey,goalKey){
     const row=this.db.prepare("SELECT * FROM npc_goals WHERE guild_id=? AND npc_key=? AND goal_key=?").get(guildId,npcKey,goalKey);
-    return row?{...row,dependencies:JSON.parse(row.dependencies_json||"[]"),acceptable_methods:JSON.parse(row.acceptable_methods_json||"[]")}:null;
+    const lifecycle=this.getCityRecord(guildId,"goal_state",JSON.stringify(["npc",npcKey,goalKey]));
+    return row?{...row,status:lifecycle?.data.status||row.status,dependencies:JSON.parse(row.dependencies_json||"[]"),acceptable_methods:JSON.parse(row.acceptable_methods_json||"[]")}:null;
   }
 
   upsertNpcGoal(guildId,{npcKey,goalKey,title="",objective,horizon="near",priority=50,progress=0,status="active",dependencies=[],acceptableMethods=[],rationale="",source="gm"}={}){
@@ -1305,13 +1306,19 @@ export class VeiledDB {
     this.db.prepare(`INSERT INTO npc_goals(guild_id,npc_key,goal_key,title,objective,horizon,priority,progress,status,dependencies_json,acceptable_methods_json,rationale,source) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)
       ON CONFLICT(guild_id,npc_key,goal_key) DO UPDATE SET title=excluded.title,objective=excluded.objective,horizon=excluded.horizon,priority=excluded.priority,progress=excluded.progress,status=excluded.status,dependencies_json=excluded.dependencies_json,acceptable_methods_json=excluded.acceptable_methods_json,rationale=excluded.rationale,source=excluded.source,updated_at=CURRENT_TIMESTAMP`)
       .run(guildId,key,gk,String(title||""),text,horizon,Math.max(0,Math.min(100,Number(priority)||0)),Math.max(0,Math.min(100,Number(progress)||0)),status,JSON.stringify(dependencies||[]),JSON.stringify(acceptableMethods||[]),String(rationale||""),String(source||"gm"));
+    const lifecycle=this.getCityRecord(guildId,"goal_state",JSON.stringify(["npc",key,gk]));
+    if(lifecycle) this.saveCityRecord(guildId,{...lifecycle,key:lifecycle.record_key,data:{...lifecycle.data,status}});
     const r=this.db.prepare("SELECT * FROM npc_goals WHERE guild_id=? AND npc_key=? AND goal_key=?").get(guildId,key,gk);
     return {...r,dependencies:JSON.parse(r.dependencies_json||"[]"),acceptable_methods:JSON.parse(r.acceptable_methods_json||"[]")};
   }
 
   listNpcGoals(guildId,npcKey,{status="",limit=50}={}){
     const cap=Math.max(1,Math.min(200,Number(limit)||50));
-    return this.db.prepare(`SELECT * FROM npc_goals WHERE guild_id=? AND npc_key=? AND (?='' OR status=?) ORDER BY priority DESC,updated_at DESC LIMIT ?`).all(guildId,String(npcKey||"").toLowerCase(),status,status,cap).map(r=>({...r,dependencies:JSON.parse(r.dependencies_json||"[]"),acceptable_methods:JSON.parse(r.acceptable_methods_json||"[]")}));
+    return this.db.prepare(`SELECT g.*,COALESCE(json_extract(s.data_json,'$.status'),g.status) AS status FROM npc_goals g
+      LEFT JOIN city_records s ON s.guild_id=g.guild_id AND s.kind='goal_state' AND s.record_key=json_array('npc',g.npc_key,g.goal_key)
+      WHERE g.guild_id=? AND g.npc_key=? AND (?='' OR COALESCE(json_extract(s.data_json,'$.status'),g.status)=?)
+      ORDER BY g.priority DESC,g.updated_at DESC LIMIT ?`).all(guildId,String(npcKey||"").toLowerCase(),status,status,cap)
+      .map(r=>({...r,dependencies:JSON.parse(r.dependencies_json||"[]"),acceptable_methods:JSON.parse(r.acceptable_methods_json||"[]")}));
   }
 
   getSeedRun(guildId,seedKey){

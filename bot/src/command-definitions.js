@@ -431,6 +431,10 @@ export function buildCommands(){
       .addIntegerOption(o=>o.setName("minutes").setDescription("In-fiction minutes, never wall-clock time").setRequired(true).setMinValue(1).setMaxValue(525600)))
     .addSubcommand(s=>s.setName("share").setDescription("Transfer already-known information between actors with provenance")
       .addStringOption(o=>o.setName("json").setDescription("fromType,fromKey,toType,toKey,informationKey,source JSON").setRequired(true)))
+    .addSubcommand(s=>s.setName("goal").setDescription("Propose or review a sourced actor goal transition")
+      .addStringOption(o=>o.setName("json").setDescription("Actor/source/goal/op or key/decision JSON").setRequired(true)))
+    .addSubcommand(s=>s.setName("consequence").setDescription("Subscribe, preview or review bounded causal consequences")
+      .addStringOption(o=>o.setName("json").setDescription("op:subscribe|run or key/decision JSON").setRequired(true)))
     .addSubcommand(s=>s.setName("publish").setDescription("Retry delivery of queued player-facing NPC hooks"))
     .toJSON());
   full.options.push(new SlashCommandBuilder().setName("city").setDescription("GM: living city state and fictional calendar")

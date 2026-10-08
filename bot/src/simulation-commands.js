@@ -5,6 +5,8 @@ import { applySimulationUpdates, configureSimulationEntity, simulationOverview, 
   resolveNpcAction, shareInformation, processSimulationEvents } from "./simulation.js";
 import { publishSimulationHooks } from "./publishing.js";
 import { normalizeNpcKey } from "./npc-cognition.js";
+import { proposeGoalTransition, reviewGoalTransition, runMotivationCycle } from "./simulation-motivation.js";
+import { subscribeConsequence, coordinateConsequences, reviewConsequence } from "./city-consequences.js";
 
 function objectInput(interaction,name="json"){
   const value=JSON.parse(interaction.options.getString(name,true));
@@ -17,6 +19,15 @@ export async function handleSimulationCommand(interaction,{db,isGm,sub}){
   const guildId=interaction.guildId;
   let result,summary="Simulation state",publish=false;
   if(sub==="status") result=simulationOverview(db,guildId);
+  else if(sub==="goal"){
+    const input=objectInput(interaction);
+    result=input.decision?reviewGoalTransition(db,guildId,input,interaction.user.id):proposeGoalTransition(db,guildId,input,interaction.user.id);
+  }else if(sub==="consequence"){
+    const input=objectInput(interaction);
+    result=["subscribe","unsubscribe"].includes(input.op)?subscribeConsequence(db,guildId,input,interaction.user.id)
+      :input.op==="run"?db.transaction(()=>({goals:runMotivationCycle(db,guildId,1),consequences:coordinateConsequences(db,guildId,1)}))
+      :reviewConsequence(db,guildId,input,interaction.user.id);
+  }
   else if(sub==="records") result=db.listSimulationRecords(guildId,{
     kind:interaction.options.getString("kind")||"",status:interaction.options.getString("status")||"",limit:100});
   else if(sub==="entity"){
