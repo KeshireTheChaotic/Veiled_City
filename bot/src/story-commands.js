@@ -22,12 +22,14 @@ import { reviewInbox, reviewWorkflow } from "./ai-review.js";
 import { reconcileHistory } from "./history-reconciliation.js";
 import { publishRollRequests } from "./roll-requests.js";
 import { sendPlayerPrivate } from "./publishing.js";
+import { sessionBrief } from "./session-briefs.js";
 export async function handleStoryCommand(interaction,{db,gm}){
   if(!interaction.memberPermissions?.has(PermissionFlagsBits.ManageGuild)&&
     !interaction.member?.roles?.cache?.has(db.getCampaign(interaction.guildId)?.gm_role_id)) throw new PermissionError("GM/admin permission required.");
   const sub=interaction.options.getSubcommand(),raw=interaction.options.getString("json"),input=cityObject(JSON.parse(raw||"{}")),guild=interaction.guildId;
   let result;
-  if(sub==="delegation") result=configureDelegation(db,guild,input,interaction.user.id);
+  if(sub==="brief") result=sessionBrief(db,guild,{mode:"gm",gm:true});
+  else if(sub==="delegation") result=configureDelegation(db,guild,input,interaction.user.id);
   else if(sub==="ai-inbox") result=reviewInbox(db,guild,input);
   else if(sub==="ai-review") result=reviewWorkflow(db,guild,input,interaction.user.id);
   else if(sub==="context") result=new ContextPlanner(db).plan(guild,input);

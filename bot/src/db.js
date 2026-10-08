@@ -217,6 +217,10 @@ export class VeiledDB {
       AND due_minute<=? AND due_tick<=? ORDER BY due_minute,schedule_key LIMIT ?`).all(guildId,clock.minute,clock.tick,limit)
       .map(row=>({...row,data:JSON.parse(row.data_json)}));
   }
+  upcomingCitySchedules(guildId,limit=20){
+    return this.db.prepare("SELECT * FROM city_schedule WHERE guild_id=? AND status='scheduled' ORDER BY due_minute,due_tick,schedule_key LIMIT ?")
+      .all(guildId,Math.max(1,Math.min(50,limit))).map(row=>({...row,data:JSON.parse(row.data_json)}));
+  }
   getMutation(guildId,id){
     return this.db.prepare("SELECT * FROM mutation_ledger WHERE guild_id=? AND id=?").get(guildId,id)||null;
   }

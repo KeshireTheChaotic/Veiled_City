@@ -36,6 +36,7 @@ import { handleStoryCommand } from "./story-commands.js";
 import { recordCharacterArrival } from "./scene-continuity.js";
 import { personalArc, discoverPersonal, personalInbox } from "./personal-continuity.js";
 import { consentOffers } from "./consent-language.js";
+import { sessionBrief, formatSessionBrief } from "./session-briefs.js";
 import { formatDiscovery } from "./continuity-routing.js";
 import { manageLongProject, projectPhaseRevision } from "./long-projects.js";
 import { stateRevision } from "./ai-intents.js";
@@ -354,7 +355,7 @@ async function executeCommand(interaction,{db,gm,voice=null}){
     group=root==="level"?"character":root==="combat"?"encounter":root;
     sub=interaction.options.getSubcommand();
   }
-  if((group!=="story"&&!(group==="admin"&&sub==="seed-drafts")&&!(group==="intel"&&["discover","continuity","organizations"].includes(sub))
+  if((group!=="story"&&!(group==="admin"&&sub==="seed-drafts")&&!(group==="intel"&&["discover","continuity","organizations","brief","recap"].includes(sub))
     &&!(group==="handout"&&sub==="evidence")&&!(group==="downtime"&&sub==="long-project-status")
     &&!(group==="roll"&&["pending","result"].includes(sub)))||isMutatingCommand(group,sub)) await ensurePlayer(db,interaction);
   if(await replayReceiptIfPresent({db,interaction,group,sub})) return true;
@@ -1631,6 +1632,11 @@ GM notes: ${a.draft.gm_notes}`:""}`.slice(0,1950):"No aftermath draft exists for
       return true;
     }
 
+    if(group==="intel"&&(sub==="brief"||sub==="recap"&&db.getCityCalendar(interaction.guildId).flags.session_briefs===true)){
+      const packet=sessionBrief(db,interaction.guildId,{mode:sub==="brief"?"character":"shared",user:interaction.user.id});
+      await interaction.reply({content:formatSessionBrief(packet),ephemeral:true,allowedMentions:{parse:[]},
+        files:[new AttachmentBuilder(Buffer.from(JSON.stringify(packet,null,2)),{name:"scoped-session-brief.json"})]});return true;
+    }
     if(group==="intel"&&sub==="recap"){
       const row=db.latestEndedSession(interaction.guildId);
       await interaction.reply({content:row?.recap||"No completed-session recap yet.",ephemeral:true});
@@ -1744,7 +1750,7 @@ GM notes: ${a.draft.gm_notes}`:""}`.slice(0,1950):"No aftermath draft exists for
     }
   } catch(err){
     const msg=err.message||String(err);
-    if(!isExpectedError(err) && interaction.guild && !((group==="story"||group==="intel"&&sub==="discover"||group==="admin"&&sub==="seed-drafts")&&!isMutatingCommand(group,sub))){
+    if(!isExpectedError(err) && interaction.guild && !((group==="story"||group==="intel"||group==="admin"&&sub==="seed-drafts")&&!isMutatingCommand(group,sub))){
       await postStateError({db,guild:interaction.guild,error:err,context:`command:/vc ${group||""} ${sub||""}`,sessionId:db.getActiveSession(interaction.guildId)?.id||null});
     }
     const payload={content:`⚠️ ${msg}`,ephemeral:true};

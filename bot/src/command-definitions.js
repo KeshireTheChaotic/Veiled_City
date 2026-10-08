@@ -404,6 +404,7 @@ export function buildCommands(){
             ...["know","leads","changed","witness","arcs","evidence","commitments","organizations","case"].map(value=>({name:value,value}))))
           .addStringOption(o=>o.setName("json").setDescription("Legacy optional literal query and mode")))
         .addSubcommand(s=>s.setName("recap").setDescription("Show the latest saved recap"))
+        .addSubcommand(s=>s.setName("brief").setDescription("Read-only current character's sourced continuity brief"))
         .addSubcommand(s=>s.setName("clues").setDescription("Show clues available to you"))
         .addSubcommand(s=>s.setName("facts").setDescription("Show recorded facts available to you"))
         .addSubcommand(s=>s.setName("caseboard").setDescription("Show active player-visible threads")))
@@ -514,6 +515,7 @@ export function buildCommands(){
       .addStringOption(o=>o.setName("json").setDescription("key, decision:promote|discard JSON").setRequired(true)))
     .toJSON());
   full.options.push(new SlashCommandBuilder().setName("story").setDescription("GM: sourced context and bounded story operations")
+    .addSubcommand(s=>s.setName("brief").setDescription("Read-only GM preparation, reviews, motives, sources and fictional schedules"))
     .addSubcommand(s=>s.setName("delegation").setDescription("Explicitly configure or revoke bounded AI delegation")
       .addStringOption(o=>o.setName("json").setDescription("mode, allow, max_operations, max_cost, expires_minute JSON").setRequired(true)))
     .addSubcommand(s=>s.setName("ai-inbox").setDescription("Read-only GM-private AI proposals, receipts and delegation")

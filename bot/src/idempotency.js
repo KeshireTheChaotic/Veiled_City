@@ -6,6 +6,7 @@
  * receipt key so the same delivery cannot apply campaign state twice.
  */
 const READ_ONLY=new Set([
+  "intel:brief","story:brief",
   "roll:pending","roll:result",
   "campaign:status","session:assembly-status","session:roster","character:list","character:sheet","encounter:status","encounter:combatants",
   "party:status","relationship:list","handout:list","handout:evidence","player:accessibility","rules:ask","rules:rulings","downtime:status","downtime:long-project-status","canon:status","canon:conflicts","canon:proposals",

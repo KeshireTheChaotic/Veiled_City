@@ -45,6 +45,7 @@ bot/scripts/i-heard-you-3-test.mjs
 bot/scripts/i-heard-you-4-test.mjs
 bot/scripts/i-heard-you-5-test.mjs
 bot/scripts/i-heard-you-6-test.mjs
+bot/scripts/i-heard-you-7-test.mjs
 bot/scripts/narrative-contract-test.mjs
 bot/scripts/negotiation-preview-test.mjs
 bot/scripts/npc-cognition-regression-test.mjs
@@ -141,6 +142,7 @@ bot/src/seed-commands.js
 bot/src/seed-data.js
 bot/src/seed-drafts.js
 bot/src/serial-queue.js
+bot/src/session-briefs.js
 bot/src/simulation-commands.js
 bot/src/simulation-motivation.js
 bot/src/simulation-schema.js
