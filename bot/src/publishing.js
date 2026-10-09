@@ -5,6 +5,7 @@ import { randomUUID } from "node:crypto";
 import { splitDiscordText } from "./discord/chunking.js";
 import { assertGmOnlyChannel, assertPlayerPrivateChannel } from "./discord/privacy.js";
 import { simulationOverview, acknowledgeSimulationHook } from "./simulation.js";
+import { deliverTurnOutbox, outboxSummary } from "./publication-outbox.js";
 
 /** Hooks remain queued on failed delivery and never publish internal action packets. */
 export async function publishSimulationHooks({db,guild,sessionId=null}){
@@ -172,6 +173,30 @@ export async function postPlayMessage({db,guild,content,sessionId=null}){
     if(sessionId) db.addMessage({guildId:guild.id,sessionId,userId:null,speakerName:"Veilkeeper",visibility:"party",content:part});
   }
   return last;
+}
+
+/** Deliver committed narration without re-entering GM generation or native mechanics. */
+export async function deliverQueuedTurn({db,guild,turnId,forceUncertain=false}){
+  const attempt=db.getTurnAttempt(turnId);if(!attempt||attempt.guild_id!==guild.id)throw new Error("Turn receipt not found for this campaign.");
+  const results=await deliverTurnOutbox(db,guild.id,turnId,async row=>{
+    if(row.target_user_id){
+      const delivered=await sendPlayerPrivate({db,guild,userId:row.target_user_id,content:row.payload,
+        sessionId:attempt.session_id,characterId:row.target_character_id||null});
+      if(!delivered.ok)throw new Error(`Private delivery unavailable (${delivered.via}).`);
+      return {messageId:null,channelId:row.channel_id};
+    }
+    const ch=await textChannel(guild,row.channel_id||db.getCampaign(guild.id)?.play_channel_id);
+    if(!ch)throw new Error("Configured publication channel is unavailable.");
+    const message=await ch.send(row.payload);
+    db.addMessage({guildId:guild.id,sessionId:attempt.session_id,userId:null,speakerName:"Veilkeeper",
+      visibility:row.visibility,subjectUserId:row.visibility==="player"?row.target_user_id:null,
+      subjectCharacterId:row.visibility==="character"?row.target_character_id:null,content:row.payload});
+    return {messageId:message.id,channelId:ch.id};
+  },{forceUncertain});
+  const pending=db.listTurnPublications(guild.id,turnId).filter(row=>row.status!=="delivered");
+  db.updateTurnAttempt(turnId,{stage:pending.length?"needs_recovery":"delivered",
+    terminalCode:pending.length?"PUBLICATION_PENDING":null,errorRef:pending[0]?.last_failure||null});
+  return {turn:db.getTurnAttempt(turnId),results:results.map(item=>({...item,row:outboxSummary(item.row)})),pending:pending.map(outboxSummary)};
 }
 
 export async function sendPlayerPrivate({db,guild,userId,content,sessionId=null,characterId=null}){

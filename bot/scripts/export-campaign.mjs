@@ -72,6 +72,8 @@ if(mode!=="player") {
   exportObj.canon_conflicts=all("SELECT * FROM canon_conflicts WHERE guild_id=?",guildId);
   exportObj.character_drafts=all("SELECT * FROM character_drafts WHERE guild_id=?",guildId);
   exportObj.levelup_drafts=all("SELECT * FROM levelup_drafts WHERE guild_id=?",guildId);
+  exportObj.turn_attempts=all("SELECT * FROM turn_attempts WHERE guild_id=?",guildId);
+  exportObj.publication_outbox=all("SELECT * FROM publication_outbox WHERE guild_id=?",guildId);
   exportObj.snapshots=all("SELECT id,guild_id,label,reason,created_by,created_at FROM campaign_snapshots WHERE guild_id=? ORDER BY created_at",guildId);
 }
 if(mode==="player") exportObj.handouts=exportObj.handouts.map(handoutPlayerView);

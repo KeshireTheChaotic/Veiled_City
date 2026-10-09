@@ -1,6 +1,6 @@
 {
   "name": "veiled-city-discord-gm",
-  "version": "9.6.0",
+  "version": "9.7.0",
   "private": true,
   "type": "module",
   "description": "Stateful multiplayer Discord GM bot for Veiled City / Daggerheart.",

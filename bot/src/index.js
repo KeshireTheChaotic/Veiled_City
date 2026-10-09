@@ -22,7 +22,7 @@ import { routeSceneEntryMessage } from "./scene-entry.js";
 import { captureWorldInput } from "./autonomous-world.js";
 import { hasCharacterInvitation } from "./player-language.js";
 import { interactionResponseExpired } from "./discord/interaction-lifecycle.js";
-import { publishEventResults, postGmLog, postStateError, deliverHandout, postPlayMessage } from "./publishing.js";
+import { publishEventResults, postGmLog, postStateError, deliverHandout, postPlayMessage, deliverQueuedTurn } from "./publishing.js";
 import { VoiceNarrator } from "./voice.js";
 import { KeyedSerialQueue } from "./serial-queue.js";
 import { queueDirectorAfterPartyTurn, blockedMutationRows, describeBlockedAction, lowConfidenceReviewItems, normalizeDirectorConfidence } from "./director.js";
@@ -388,14 +388,6 @@ async function processPrivateTurn(message,directMention,attempt=null){
   if(canonProposals.some(x=>x.ok)) await outputStep(outputErrors,{guild:message.guild,sessionId:session.id,context:"private-canon-proposal"},()=>notifyCanonProposals({guild:message.guild,session,message,actorUserId:message.author.id,actorCharacterId:controlled?.character_id||null,speaker,rows:canonProposals}));
   for(const h of handApplied.filter(x=>x.ok)) await outputStep(outputErrors,{guild:message.guild,sessionId:session.id,context:`private-handout:${h.row.id}`},()=>deliverHandout({db,guild:message.guild,handout:h.row,format:"markdown"}));
   for(const r of applied.filter(x=>x.type==="canon"&&x.status==="conflict")) await outputStep(outputErrors,{guild:message.guild,sessionId:session.id,context:"canon-conflict-private"},()=>postStateError({db,guild:message.guild,error:new Error(`Canon conflict ${r.conflict_id} requires GM resolution`),context:"canon-conflict-private",sessionId:session.id}));
-  if(result.narration?.trim()){
-    const sent=await outputStep(outputErrors,{guild:message.guild,sessionId:session.id,context:"private-narration"},async()=>{
-      for(const c of splitDiscordText(result.narration)) await message.channel.send(c);
-      db.addMessage({guildId:message.guild.id,sessionId:session.id,userId:client.user.id,speakerName:"Veilkeeper",visibility:vis,subjectUserId:vis==="player"?message.author.id:null,subjectCharacterId:vis==="character"?conversationId:null,content:result.narration});
-      return true;
-    });
-    if(!sent) console.warn("Private narration delivery failed after state commit.");
-  }
   const privateMessages=allowedPrivateMessages(session,result.private_messages,scope);
   if(privateMessages.blocked.length){
     await outputStep(outputErrors,{guild:message.guild,sessionId:session.id,context:"private-message-scope-block"},async()=>{
@@ -403,12 +395,11 @@ async function processPrivateTurn(message,directMention,attempt=null){
       await notifyBlockedActions({guild:message.guild,session,actorUserId:message.author.id,actorCharacterId:controlled?.character_id||null,rows:privateMessages.blocked.map(x=>({type:"private_message",error:"Private GM output attempted to target a different player from a private scene."})),context:"private message scope"});
     });
   }
-  for(const pm of privateMessages.deliver){
-    const targetA=db.activeAssignment(session.id,pm.discord_user_id);
-    const targetNpc=db.npcProxyAssignments(session.id,pm.discord_user_id);
-    const privateKnowledgeId=pm.discord_user_id===message.author.id?conversationId:targetA?.character_id||(targetNpc.length===1?targetNpc[0].knowledge_id:null);
-    await outputStep(outputErrors,{guild:message.guild,sessionId:session.id,context:`private-message:${pm.discord_user_id}`},()=>sendPrivate(message.guild,pm.discord_user_id,`**Veilkeeper — private:**\n${pm.content}`,session.id,privateKnowledgeId));
-  }
+  await outputStep(outputErrors,{guild:message.guild,sessionId:session.id,context:"private-turn-outbox"},async()=>{
+    const delivery=await deliverQueuedTurn({db,guild:message.guild,turnId:attempt.turn_id});
+    if(delivery.pending.length)throw new Error(`${delivery.pending.length} committed private publication part(s) remain pending.`);
+    return delivery;
+  });
   await outputStep(outputErrors,{guild:message.guild,sessionId:session.id,context:"private-turn-audit"},async()=>db.audit(message.guild.id,session.id,"ai","gm","private_turn",{actor:message.author.id,events:result.events,state_review:result.state_review}));
   const lowConfidence=lowConfidenceReviewItems(result);
   if(lowConfidence.length) await outputStep(outputErrors,{guild:message.guild,sessionId:session.id,context:"private-low-confidence-review"},()=>postGmLog({db,guild:message.guild,sessionId:session.id,title:"Private AI state review — GM attention",details:`Actor: ${speaker}\nPossible consequences deliberately **not committed** because confidence was below 55%:\n${lowConfidence.map(x=>`• ${x.category} (${x.confidence}%): ${x.reason}`).join("\n")}`}));
@@ -498,18 +489,6 @@ async function processPartyTurn(message,directMention,attempt=null){
   await outputStep(outputErrors,{guild:message.guild,sessionId:session.id,context:"party-event-publish"},()=>publishEventResults({db,guild:message.guild,results:applied}));
   for(const h of handApplied.filter(x=>x.ok)) await outputStep(outputErrors,{guild:message.guild,sessionId:session.id,context:`party-handout:${h.row.id}`},()=>deliverHandout({db,guild:message.guild,handout:h.row,format:"markdown"}));
   for(const r of applied.filter(x=>x.type==="canon"&&x.status==="conflict")) await outputStep(outputErrors,{guild:message.guild,sessionId:session.id,context:"canon-conflict-party"},()=>postStateError({db,guild:message.guild,error:new Error(`Canon conflict ${r.conflict_id} requires GM resolution`),context:"canon-conflict-party",sessionId:session.id}));
-  if(result.narration?.trim()){
-    await outputStep(outputErrors,{guild:message.guild,sessionId:session.id,context:"party-narration"},async()=>{
-      for(const c of splitDiscordText(result.narration)) await message.channel.send(c);
-      db.addMessage({guildId:message.guild.id,sessionId:session.id,userId:client.user.id,speakerName:"Veilkeeper",visibility:"party",content:result.narration});
-    });
-    voice.narrate(message.guild,result.narration).then(r=>{
-      if(!r.ok&&r.reason==="queue_full") console.warn(`Voice narration queue full in guild ${message.guild.id}; narration was not synthesized.`);
-    }).catch(async err=>{
-      console.error("Voice narration failed",err);
-      await safeStateError({guild:message.guild,error:err,context:"voice-narration",sessionId:session.id});
-    });
-  }
   const privateMessages=allowedPrivateMessages(session,result.private_messages,scope);
   if(privateMessages.blocked.length){
     await outputStep(outputErrors,{guild:message.guild,sessionId:session.id,context:"party-private-message-scope-block"},async()=>{
@@ -517,11 +496,18 @@ async function processPartyTurn(message,directMention,attempt=null){
       await notifyBlockedActions({guild:message.guild,session,actorUserId:message.author.id,actorCharacterId:controlled?.character_id||null,rows:privateMessages.blocked.map(x=>({type:"private_message",error:"Party-turn private output targeted a user outside the active session roster."})),context:"party private-message scope"});
     });
   }
-  for(const pm of privateMessages.deliver){
-    const targetA=db.activeAssignment(session.id,pm.discord_user_id);
-    const targetNpc=db.npcProxyAssignments(session.id,pm.discord_user_id);
-    const privateKnowledgeId=targetA?.character_id||(targetNpc.length===1?targetNpc[0].knowledge_id:null);
-    await outputStep(outputErrors,{guild:message.guild,sessionId:session.id,context:`party-private-message:${pm.discord_user_id}`},()=>sendPrivate(message.guild,pm.discord_user_id,`**Veilkeeper — private:**\n${pm.content}`,session.id,privateKnowledgeId));
+  const outboxDelivery=await outputStep(outputErrors,{guild:message.guild,sessionId:session.id,context:"party-turn-outbox"},async()=>{
+    const delivery=await deliverQueuedTurn({db,guild:message.guild,turnId:attempt.turn_id});
+    if(delivery.pending.length)throw new Error(`${delivery.pending.length} committed publication part(s) remain pending.`);
+    return delivery;
+  });
+  if(outboxDelivery&&result.narration?.trim()){
+    voice.narrate(message.guild,result.narration).then(r=>{
+      if(!r.ok&&r.reason==="queue_full") console.warn(`Voice narration queue full in guild ${message.guild.id}; narration was not synthesized.`);
+    }).catch(async err=>{
+      console.error("Voice narration failed",err);
+      await safeStateError({guild:message.guild,error:err,context:"voice-narration",sessionId:session.id});
+    });
   }
   await outputStep(outputErrors,{guild:message.guild,sessionId:session.id,context:"party-turn-audit"},async()=>db.audit(message.guild.id,session.id,"ai","gm","turn",{actor:message.author.id,events:result.events,state_review:result.state_review}));
   const lowConfidence=lowConfidenceReviewItems(result);
@@ -537,6 +523,7 @@ async function processPartyTurn(message,directMention,attempt=null){
 }
 
 client.once("ready",()=>{
+  db.markAllInterruptedPublicationsUncertain();
   console.log(`Veilkeeper v3.5.5 logged in as ${client.user.tag}`);
   console.log(`Voice narration: ${config.voiceEnabled?`enabled (${config.voiceName}/${config.voiceModel})`:"disabled"}.`);
   console.log(`Indexed ${content.chunks.length} Veiled City content chunks.`);

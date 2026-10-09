@@ -8,7 +8,7 @@ import { establishFact } from "./epistemic.js";
 import { indexWorldEvent } from "./city-calendar.js";
 import { prepareRollRequest, pendingRollRequests, ownedRollRequest, formatRollRequest, publishRollAmendment } from "./roll-requests.js";
 import { contributeRoll, adjudicateRollSource, applyRollOutcome } from "./roll-collaboration.js";
-import { publishJournal, postJournalEntry, publishEventResults, postGmLog, postStateError, postPrivateRelay, syncConfiguredSurfaces, postPlayMessage, sendPlayerPrivate, deliverHandout } from "./publishing.js";
+import { publishJournal, postJournalEntry, publishEventResults, postGmLog, postStateError, postPrivateRelay, syncConfiguredSurfaces, postPlayMessage, sendPlayerPrivate, deliverHandout, deliverQueuedTurn } from "./publishing.js";
 import { EncounterLibrary, livePcRoster, partyTier, baseBattlePoints, DIFFICULTY_ADJUSTMENTS, autoBuildComposition, recomputeBudget, battlePointCost, HEAVY_ROLES, defaultObjective, manageWorldEncounter, recordWorldEncounterOutcome, validateWorldEncounterActivation, worldCombatantDrafts, bindWorldCombatants } from "./encounter.js";
 import { prepareLevelup, applyLevelupToData, legalAdvancements, tierAchievement } from "./character-system.js";
 import { buildCombatants, hpMarksForDamage, combatantLine } from "./combat.js";
@@ -1692,6 +1692,23 @@ GM notes: ${a.draft.gm_notes}`:""}`.slice(0,1950):"No aftermath draft exists for
       if(sub==="overview"){
         const chunks=chunkTextLines(formatGmOverview(buildGmOverview(db,interaction.guildId),{formatFact:gmFactLine}));
         await interaction.reply({content:chunks[0],ephemeral:true}); for(const c of chunks.slice(1)) await interaction.followUp({content:c,ephemeral:true}); return true;
+      }
+      if(sub==="delivery-status"){
+        const rows=db.listPendingPublications(interaction.guildId,{limit:interaction.options.getInteger("limit")||30});
+        const lines=rows.length?["**Pending/uncertain turn delivery**",...rows.map(row=>
+          `• turn \`${row.turn_id.slice(0,8)}\` part ${row.ordinal+1} · ${row.surface} · **${row.status}** · attempts ${row.attempt_count}${row.last_failure?` · ${row.last_failure.slice(0,160)}`:""}`)]:["No pending turn delivery rows."];
+        const chunks=chunkTextLines(lines);await interaction.reply({content:chunks[0],ephemeral:true});
+        for(const chunk of chunks.slice(1))await interaction.followUp({content:chunk,ephemeral:true});return true;
+      }
+      if(sub==="delivery-resend"){
+        const key=interaction.options.getString("turn",true).toLowerCase();
+        const attempts=db.listRecoverableTurns(interaction.guildId,{limit:100}).filter(row=>row.turn_id.toLowerCase().startsWith(key));
+        if(attempts.length!==1)throw new StateConflictError("Provide one unique pending turn ID prefix.");
+        const result=await deliverQueuedTurn({db,guild:interaction.guild,turnId:attempts[0].turn_id,
+          forceUncertain:interaction.options.getBoolean("force_uncertain")===true});
+        await interaction.reply({content:result.pending.length?
+          `Delivery retry completed with ${result.pending.length} part(s) still pending or uncertain. No mechanics or GM generation reran.`:
+          "Committed narration delivery completed. No mechanics or GM generation reran.",ephemeral:true});return true;
       }
       if(sub==="npc-state"){
         const profile=db.findNpcProfile(interaction.guildId,interaction.options.getString("npc",true));

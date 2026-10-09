@@ -84,6 +84,9 @@ replaces all diagnostic logs, Discord messages or operational receipts.
 - Message-turn recovery: `turn_attempts` stores operational stage, source-span
   receipts, commit tri-state and recovery references. It is idempotency and delivery
   metadata, not fictional truth or permission to infer a consequence.
+- Transactional delivery: `publication_outbox` stores visibility-scoped narration
+  chunks, hashes, Discord receipts, attempts, and explicit uncertain-send status.
+  It repairs publication only; it never replays a roll, spend, model turn, or world mutation.
 - Retrieval/maintenance: `narrative_context`, `authored_candidate`, `scene_entry`
   candidates, `memory_cluster`, `memory_cursor`, activity/relevance selection and
   source indexes. These persist interpretation or processing position, not new truth.

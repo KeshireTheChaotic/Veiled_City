@@ -100,7 +100,7 @@ export class VeiledDB {
         if(!knownPairs.has(`${relation.guild_id}:${pair}`)) updateRelationshipDimensions(this,relation.guild_id,relation);
       }
     });
-    this.db.exec("PRAGMA user_version=450;");
+    this.db.exec("PRAGMA user_version=460;");
   }
 
   close() { this.db.close(); }
@@ -1214,6 +1214,36 @@ export class VeiledDB {
     return this.db.prepare(`SELECT * FROM turn_attempts WHERE guild_id=? AND stage IN ('committed','publishing','needs_recovery')
       ORDER BY updated_at LIMIT ?`).all(guildId,Math.max(1,Math.min(100,Number(limit)||30)));
   }
+  enqueuePublication(guildId,{turnId,surface,ordinal,visibility="party",targetUserId=null,targetCharacterId=null,channelId=null,payload,payloadHash}){
+    const id=randomUUID();
+    this.db.prepare(`INSERT INTO publication_outbox(id,guild_id,turn_id,surface,ordinal,visibility,target_user_id,target_character_id,
+      channel_id,payload,payload_hash) VALUES(?,?,?,?,?,?,?,?,?,?,?) ON CONFLICT(turn_id,surface,ordinal) DO NOTHING`)
+      .run(id,guildId,turnId,surface,ordinal,visibility,targetUserId,targetCharacterId,channelId,String(payload||""),payloadHash);
+    return this.db.prepare("SELECT * FROM publication_outbox WHERE turn_id=? AND surface=? AND ordinal=?").get(turnId,surface,ordinal);
+  }
+  listTurnPublications(guildId,turnId){
+    return this.db.prepare("SELECT * FROM publication_outbox WHERE guild_id=? AND turn_id=? ORDER BY ordinal").all(guildId,turnId);
+  }
+  listPendingPublications(guildId,{limit=50}={}){
+    return this.db.prepare(`SELECT id,guild_id,turn_id,surface,ordinal,visibility,target_user_id,target_character_id,channel_id,
+      payload_hash,status,discord_message_id,attempt_count,last_failure,created_at,updated_at FROM publication_outbox
+      WHERE guild_id=? AND status!='delivered' ORDER BY created_at,ordinal LIMIT ?`).all(guildId,Math.max(1,Math.min(100,Number(limit)||50)));
+  }
+  updatePublication(id,{status,discordMessageId,channelId,attemptCount,lastFailure}={}){
+    const prior=this.db.prepare("SELECT * FROM publication_outbox WHERE id=?").get(id);if(!prior)return null;
+    this.db.prepare(`UPDATE publication_outbox SET status=?,discord_message_id=?,channel_id=?,attempt_count=?,last_failure=?,
+      updated_at=CURRENT_TIMESTAMP WHERE id=?`).run(status??prior.status,discordMessageId===undefined?prior.discord_message_id:discordMessageId,
+      channelId===undefined?prior.channel_id:channelId,attemptCount??prior.attempt_count,lastFailure===undefined?prior.last_failure:lastFailure,id);
+    return this.db.prepare("SELECT * FROM publication_outbox WHERE id=?").get(id);
+  }
+  markInterruptedPublicationsUncertain(guildId,turnId=null){
+    this.db.prepare(`UPDATE publication_outbox SET status='uncertain',last_failure='Process stopped after send began; reconcile before force resend.',
+      updated_at=CURRENT_TIMESTAMP WHERE guild_id=? AND (? IS NULL OR turn_id=?) AND status='delivering'`).run(guildId,turnId,turnId);
+  }
+  markAllInterruptedPublicationsUncertain(){
+    this.db.prepare(`UPDATE publication_outbox SET status='uncertain',last_failure='Process restarted after send began; reconcile before force resend.',
+      updated_at=CURRENT_TIMESTAMP WHERE status='delivering'`).run();
+  }
   listMutationLedger(guildId,{limit=40,sourceLayer="",mutationType=""}={}){
     const cap=Math.max(1,Math.min(100,Number(limit)||40));
     return this.db.prepare(`SELECT * FROM mutation_ledger WHERE guild_id=? AND (?='' OR source_layer=?) AND (?='' OR mutation_type=?) ORDER BY created_at DESC LIMIT ?`).all(guildId,sourceLayer,sourceLayer,mutationType,mutationType,cap);
@@ -2078,7 +2108,7 @@ export class VeiledDB {
     const id=randomUUID();
     const sessionIds=this.db.prepare("SELECT id FROM sessions WHERE guild_id=?").all(guildId).map(x=>x.id);
     const qmarks=sessionIds.length?sessionIds.map(()=>"?").join(","):"NULL";
-    const directTables=["players","characters","sessions","facts","clocks","threads","reference_entries","published_messages","npc_proxies","encounters","encounter_combatants","character_drafts","levelup_drafts","canon_events","canon_conflicts","downtime_cycles","downtime_projects","rules_rulings","relationships","relationship_hook_imports","character_gm_hooks","canon_proposals","handouts","encounter_aftermath","character_narratives","npc_profiles","npc_memories","npc_knowledge","npc_goals","seed_runs"];
+    const directTables=["players","characters","sessions","facts","clocks","threads","reference_entries","published_messages","npc_proxies","encounters","encounter_combatants","character_drafts","levelup_drafts","canon_events","canon_conflicts","downtime_cycles","downtime_projects","rules_rulings","relationships","relationship_hook_imports","character_gm_hooks","canon_proposals","handouts","encounter_aftermath","character_narratives","npc_profiles","npc_memories","npc_knowledge","npc_goals","seed_runs","turn_attempts","publication_outbox"];
     const state={campaign:this.getCampaign(guildId),tables:{}};
     directTables.push("simulation_entities","simulation_records","simulation_clock","seed_documents","seed_catalog",
       "city_calendar","world_events","city_schedule","city_records","world_event_links","district_locations","city_edges");
@@ -2106,8 +2136,8 @@ export class VeiledDB {
     const snap=this.getSnapshot(snapshotId); if(!snap||snap.guild_id!==guildId) throw new Error("Snapshot not found for this campaign.");
     this.snapshotCampaign(guildId,{label:"Pre-rollback safety",reason:`Before rollback to ${snapshotId}`,createdBy:actorId});
     const state=snap.state;
-    const delOrder=["encounter_aftermath","encounter_combatants","npc_proxies","session_characters","session_presence","levelup_drafts","downtime_projects","canon_conflicts","canon_events","relationships","relationship_hook_imports","canon_proposals","character_gm_hooks","character_narratives","npc_memories","npc_knowledge","npc_goals","npc_profiles","seed_runs","handouts","encounters","sessions","character_drafts","characters","players","facts","clocks","threads","reference_entries","published_messages","downtime_cycles","rules_rulings"];
-    const insertOrder=["players","characters","sessions","session_presence","session_characters","facts","clocks","threads","reference_entries","published_messages","npc_proxies","encounters","encounter_combatants","character_drafts","levelup_drafts","canon_events","canon_conflicts","downtime_cycles","downtime_projects","rules_rulings","relationships","relationship_hook_imports","character_gm_hooks","canon_proposals","handouts","encounter_aftermath","character_narratives","npc_profiles","npc_memories","npc_knowledge","npc_goals","seed_runs"];
+    const delOrder=["publication_outbox","turn_attempts","encounter_aftermath","encounter_combatants","npc_proxies","session_characters","session_presence","levelup_drafts","downtime_projects","canon_conflicts","canon_events","relationships","relationship_hook_imports","canon_proposals","character_gm_hooks","character_narratives","npc_memories","npc_knowledge","npc_goals","npc_profiles","seed_runs","handouts","encounters","sessions","character_drafts","characters","players","facts","clocks","threads","reference_entries","published_messages","downtime_cycles","rules_rulings"];
+    const insertOrder=["players","characters","sessions","session_presence","session_characters","facts","clocks","threads","reference_entries","published_messages","npc_proxies","encounters","encounter_combatants","character_drafts","levelup_drafts","canon_events","canon_conflicts","downtime_cycles","downtime_projects","rules_rulings","relationships","relationship_hook_imports","character_gm_hooks","canon_proposals","handouts","encounter_aftermath","character_narratives","npc_profiles","npc_memories","npc_knowledge","npc_goals","seed_runs","turn_attempts","publication_outbox"];
     delOrder.unshift("city_edges","district_locations","world_event_links","city_records","city_schedule","world_events","city_calendar",
       "seed_catalog","seed_documents","simulation_records","simulation_entities","simulation_clock");
     insertOrder.push("simulation_entities","simulation_records","simulation_clock","seed_documents","seed_catalog","city_calendar",

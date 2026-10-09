@@ -52,6 +52,7 @@ bot/scripts/i-heard-you-7-test.mjs
 bot/scripts/i-heard-you-9-test.mjs
 bot/scripts/i-heard-you-integration-test.mjs
 bot/scripts/implementation-phase-a-test.mjs
+bot/scripts/implementation-phase-b-test.mjs
 bot/scripts/interaction-lifecycle-test.mjs
 bot/scripts/narrative-contract-test.mjs
 bot/scripts/narrative-inference-test.mjs
@@ -157,6 +158,7 @@ bot/src/portrayal.js
 bot/src/presentation-evidence.js
 bot/src/prompt-budget.js
 bot/src/provenance.js
+bot/src/publication-outbox.js
 bot/src/publishing.js
 bot/src/register-commands.js
 bot/src/relationship-state.js

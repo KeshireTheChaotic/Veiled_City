@@ -34,7 +34,7 @@ try{
     raw.exec(`PRAGMA user_version=${legacy}`);raw.close();
     db=new VeiledDB(file,schema);
     assert.equal(db.getCharacter(pc.id).name,"Legacy character");assert.equal(db.getFact("contract",fact).content,"Legacy preserved fact");
-    assert.equal(db.listNpcMemories("contract","legacy")[0].content,"Original source memory");assert.equal(db.schemaVersion(),450);
+    assert.equal(db.listNpcMemories("contract","legacy")[0].content,"Original source memory");assert.equal(db.schemaVersion(),460);
     assert(expansionStatus(db,"contract").features.every(feature=>feature.default===false&&feature.enabled===false));
     if(legacy===440){
       db.ensureCampaign("other");const baseline=db.createBackup("contract",{label:"legacy baseline"});
@@ -82,5 +82,5 @@ try{
   for(const entry of manifest.files){const raw=fs.readFileSync(path.resolve("..",entry.path));
     const bytes=manifest.content_normalization==="utf8-lf"?manifestBytes(raw):raw;
     assert.equal(bytes.length,entry.size_bytes,entry.path);assert.equal(createHash("sha256").update(bytes).digest("hex"),entry.sha256,entry.path);}
-  console.log("Expansion H PASS: synthetic 3.3/3.8/5.0 shapes, schema450, all safe flags, zero-write GM diagnostics, backup/rollback, lifecycle guards, .9 rollover and manifest hashes; no deployment.");
+  console.log("Expansion H PASS: synthetic 3.3/3.8/5.0 shapes, schema460, all safe flags, zero-write GM diagnostics, backup/rollback, lifecycle guards, .9 rollover and manifest hashes; no deployment.");
 }finally{if(db) db.close();fs.rmSync(root,{recursive:true,force:true});}

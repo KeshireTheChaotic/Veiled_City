@@ -1,6 +1,7 @@
 /** Shared production turn commit boundary: native state, proposals and intent receipts commit before publication. */
 import { applyAuthoritativeMutation, applyCanonProposalDrafts } from "./state.js";
 import { validateDecisionAdvisory } from "./decision-advisory.js";
+import { queueTurnPublications } from "./publication-outbox.js";
 export function commitGmTurn({db,guild,session,result,scope,speaker,label,meta={},content=null}){
   const decision_advisory=validateDecisionAdvisory(db,guild.id,result);
   const mutates=(result.ai_intents||[]).length||(result.events||[]).some(e=>e.type!=="log_only")||(result.relationships||[]).length||(result.handouts||[]).length||(result.npc_memories||[]).length||(result.npc_knowledge||[]).length||(result.npc_goals||[]).length||(result.simulation_updates||[]).length;
@@ -47,7 +48,10 @@ export function commitGmTurn({db,guild,session,result,scope,speaker,label,meta={
       const p=canonProposals.find(x=>x?.ok&&x.row?.canon_key===key&&x.row?.proposed_value===value);
       if(p){ r.proposal_id=p.row.id; r.proposal_status=p.row.status; }
     }
-    if(meta.turnId)db.updateTurnAttempt(meta.turnId,{stage:"committed",committed:"yes",nativeCommitId:`turn:${meta.turnId}`});
+    if(meta.turnId){
+      db.updateTurnAttempt(meta.turnId,{stage:"committed",committed:"yes",nativeCommitId:`turn:${meta.turnId}`});
+      queueTurnPublications(db,{guild,session,result,scope,turnId:meta.turnId,channelId:meta.channelId||null});
+    }
     return {...mutation,canonProposals,decision_advisory};
   });
 }

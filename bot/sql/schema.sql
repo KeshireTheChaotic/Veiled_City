@@ -938,3 +938,25 @@ CREATE TABLE IF NOT EXISTS turn_attempts (
   UNIQUE(guild_id,discord_message_id,actor_principal,session_id)
 );
 CREATE INDEX IF NOT EXISTS idx_turn_attempts_recovery ON turn_attempts(guild_id,stage,updated_at);
+
+CREATE TABLE IF NOT EXISTS publication_outbox (
+  id TEXT PRIMARY KEY,
+  guild_id TEXT NOT NULL REFERENCES campaigns(guild_id) ON DELETE CASCADE,
+  turn_id TEXT NOT NULL REFERENCES turn_attempts(turn_id) ON DELETE CASCADE,
+  surface TEXT NOT NULL,
+  ordinal INTEGER NOT NULL CHECK(ordinal>=0),
+  visibility TEXT NOT NULL CHECK(visibility IN ('public','party','player','character','gm')),
+  target_user_id TEXT,
+  target_character_id TEXT,
+  channel_id TEXT,
+  payload TEXT NOT NULL,
+  payload_hash TEXT NOT NULL,
+  status TEXT NOT NULL DEFAULT 'pending' CHECK(status IN ('pending','delivering','delivered','failed','uncertain')),
+  discord_message_id TEXT,
+  attempt_count INTEGER NOT NULL DEFAULT 0 CHECK(attempt_count>=0),
+  last_failure TEXT NOT NULL DEFAULT '',
+  created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  UNIQUE(turn_id,surface,ordinal)
+);
+CREATE INDEX IF NOT EXISTS idx_publication_outbox_pending ON publication_outbox(guild_id,status,created_at);
