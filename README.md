@@ -1,8 +1,8 @@
-# VEILED CITY MULTIPLAYER DISCORD ENGINE v9.1.0
+# VEILED CITY MULTIPLAYER DISCORD ENGINE v9.2.0
 
 ## Current Version
 
-**9.1.0** — Veilkeeper, a stateful Discord AI GM for multiplayer Veiled City
+**9.2.0** — Veilkeeper, a stateful Discord AI GM for multiplayer Veiled City
 campaigns using Daggerheart. The version is maintained in
 [bot/package.json](bot/package.json).
 
@@ -264,6 +264,11 @@ still await native human/all-participant review; no invitation forces arrival.
 For private attempts, “I share my pending attempt with NAME.” discloses only the
 attempt to a present character with established communication, not private stats.
 Raw Duality modifiers do not bypass a pending sourced request.
+
+Entry prose such as “I walk into the diner” remains provisional if the location
+or access is not established. It cannot create a place or put a named NPC there.
+GM entry review uses `/vc-story scene-view json:{"op":"entries"}` and the existing
+`/vc-story scene` command; see [scene entry and narrative checks](docs/SCENE_ENTRY_FIX.md).
 
 ## Useful GM / Admin Commands
 

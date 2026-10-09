@@ -16,6 +16,7 @@ import { captureDeclaration } from "./player-language.js";
 import { publishRollRequests } from "./roll-requests.js";
 import { routeRollMessage } from "./roll-language.js";
 import { routeConsentMessage } from "./consent-language.js";
+import { routeSceneEntryMessage } from "./scene-entry.js";
 import { publishEventResults, postGmLog, postStateError, deliverHandout, postPlayMessage } from "./publishing.js";
 import { VoiceNarrator } from "./voice.js";
 import { KeyedSerialQueue } from "./serial-queue.js";
@@ -302,6 +303,8 @@ async function processPrivateTurn(message,directMention){
   captureDialogue(db,message.guild.id,message.author.id,controlled?.npc_proxy?null:controlled?.character_id,message.id,playerText,{privateScene:true});
   captureArcCandidate(db,message.guild.id,message.author.id,controlled?.npc_proxy?null:controlled?.character_id,message.id,playerText);
   db.addMessage({guildId:message.guild.id,sessionId:session.id,messageId:message.id,userId:message.author.id,speakerName:speaker,characterId:controlled?.character_id||null,visibility:vis,subjectUserId:vis==="player"?message.author.id:null,subjectCharacterId:vis==="character"?controlled.character_id:null,content:playerText});
+  if(!controlled?.npc_proxy&&await routeSceneEntryMessage({db,message,characterId:controlled?.character_id,text:playerText,privateScene:true,
+    deliver:text=>sendPrivate(message.guild,message.author.id,text,session.id,controlled?.character_id)})) return;
 
   let result;
   try{
@@ -389,6 +392,8 @@ async function processPartyTurn(message,directMention){
   captureDeclaration(db,message.guild.id,message.author.id,controlled?.npc_proxy?null:controlled?.character_id,message.id,playerText);
   db.addMessage({guildId:message.guild.id,sessionId:session.id,messageId:message.id,userId:message.author.id,speakerName:speaker,characterId:controlled?.character_id||null,visibility:"party",content:playerText});
   captureDialogue(db,message.guild.id,message.author.id,controlled?.npc_proxy?null:controlled?.character_id,message.id,playerText);
+  if(!controlled?.npc_proxy&&await routeSceneEntryMessage({db,message,characterId:controlled?.character_id,text:playerText,
+    deliver:text=>sendPrivate(message.guild,message.author.id,text,session.id,controlled?.character_id)})) return;
 
   let should=false;
   try{

@@ -1054,6 +1054,10 @@ export class VeiledDB {
   }
 
   getFact(guildId,id){ return this.db.prepare("SELECT * FROM facts WHERE guild_id=? AND id=?").get(guildId,id); }
+  npcKnowledgeForFact(guildId,npcKey,factId){
+    return this.db.prepare("SELECT * FROM npc_knowledge WHERE guild_id=? AND npc_key=? AND (knowledge_key=? OR source_ref=?)")
+      .all(guildId,npcKey,factId,factId);
+  }
   findFactForGM(guildId,query){
     const q=String(query||"").trim(); if(!q) return null;
     return this.db.prepare(`SELECT * FROM facts WHERE guild_id=? AND archived=0 AND (id LIKE ? OR lower(fact_key)=lower(?)) ORDER BY created_at DESC LIMIT 1`).get(guildId,`${q}%`,q);

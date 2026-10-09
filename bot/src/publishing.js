@@ -108,7 +108,9 @@ export async function postGmLog({db,guild,sessionId=null,title="GM Log",details=
 export async function postStateError({db,guild,error,context="runtime",sessionId=null}){
   const ref=randomUUID().slice(0,8);
   try{
-    db.audit(guild.id,sessionId,"system","veilkeeper","state_error",{ref,context,error:String(error?.message||error)});
+    const diagnostic=error?.code==="NARRATIVE_INTEGRITY"&&error.diagnostic?Object.fromEntries(
+      ["category","actor","entity","action","source","source_ref","source_span","recovery"].map(key=>[key,String(error.diagnostic[key]||"").slice(0,1000)])):null;
+    db.audit(guild.id,sessionId,"system","veilkeeper","state_error",{ref,context,error:String(error?.message||error),...(diagnostic?{diagnostic}:{})});
   }catch{
     // Audit logging must never prevent the primary error from being reported to Discord.
   }

@@ -563,7 +563,8 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
     let result=await this.requestStructured(req,{label:"GM turn"});
     try{ validateTurn(result); validateDecisionAdvisory(this.db,guildId,result); return result; }
     catch(err){
-      const retry={...req,input:`${req.input}\n\nSTRUCTURED TURN CORRECTION: The prior response failed required state/proposal consistency: ${String(err.message||err).slice(0,1200)}. Return a complete replacement response. Every state-review category must agree exactly with mutations. If this private player explicitly requested campaign canon, emit canon_proposals; do not claim application-side recording or notification in narration.`};
+      const detail=JSON.stringify(err.code==="NARRATIVE_INTEGRITY"?err.diagnostic||{}:{}).slice(0,800);
+      const retry={...req,input:`${req.input}\n\nSTRUCTURED TURN CORRECTION: ${String(err.message||err).slice(0,600)} Diagnostic: ${detail}. Return a complete replacement response. Do not invent missing witnesses, arrivals or knowledge. Use an empty actor for narrator claims; character:<id> for a PC observer. Ask openly about missing scene information. Every state-review category must agree with mutations. If this private player explicitly requested campaign canon, emit canon_proposals; do not claim application-side recording or notification in narration.`};
       result=await this.requestStructured(retry,{label:"GM turn state-review retry"});
       validateTurn(result);
       validateDecisionAdvisory(this.db,guildId,result);

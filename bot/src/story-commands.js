@@ -17,12 +17,13 @@ import { manageStrategy } from "./simulation-strategy.js";
 import { proposeArcBeat } from "./personal-continuity.js";
 import { manageMemoryCluster } from "./memory-clusters.js";
 import { expansionStatus } from "./expansion-contracts.js";
-import { configureDelegation } from "./ai-intents.js";
+import { configureDelegation, stateRevision } from "./ai-intents.js";
 import { reviewInbox, reviewWorkflow } from "./ai-review.js";
 import { reconcileHistory } from "./history-reconciliation.js";
 import { publishRollRequests } from "./roll-requests.js";
 import { sendPlayerPrivate } from "./publishing.js";
 import { sessionBrief } from "./session-briefs.js";
+import { reviewSceneEntry } from "./scene-entry.js";
 export async function handleStoryCommand(interaction,{db,gm}){
   if(!interaction.memberPermissions?.has(PermissionFlagsBits.ManageGuild)&&
     !interaction.member?.roles?.cache?.has(db.getCampaign(interaction.guildId)?.gm_role_id)) throw new PermissionError("GM/admin permission required.");
@@ -34,12 +35,13 @@ export async function handleStoryCommand(interaction,{db,gm}){
   else if(sub==="ai-review") result=reviewWorkflow(db,guild,input,interaction.user.id);
   else if(sub==="context") result=new ContextPlanner(db).plan(guild,input);
   else if(sub==="expansion-status") result=expansionStatus(db,guild);
-  else if(sub==="scene") result=recordScenePresence(db,guild,input,interaction.user.id);
+  else if(sub==="scene") result=input.op==="review-entry"?reviewSceneEntry(db,guild,input,interaction.user.id):recordScenePresence(db,guild,input,interaction.user.id);
   else if(sub==="group") result=manageGroup(db,guild,input,interaction.user.id);
   else if(sub==="strategy") result=manageStrategy(db,guild,input,interaction.user.id);
   else if(sub==="arc-beat") result=proposeArcBeat(db,guild,input,interaction.user.id);
   else if(sub==="memory") result=manageMemoryCluster(db,guild,input,interaction.user.id);
-  else if(sub==="scene-view") result=sceneView(db,guild,{...input,gm:input.observer_type?false:true});
+  else if(sub==="scene-view") result=input.op==="entries"?db.listCityRecords(guild,{kind:"scene_entry",status:"pending",includeGM:true,limit:12})
+    .map(row=>({...row,expected_revision:stateRevision(row)})):sceneView(db,guild,{...input,gm:input.observer_type?false:true});
   else if(sub==="conversation") result=resolveNpcConversation(db,guild,input,interaction.user.id);
   else if(sub==="pacing") result=setPacingCues(db,guild,input,interaction.user.id);
   else if(sub==="pacing-status") result=pacingAdvice(db,guild,input.message||"");

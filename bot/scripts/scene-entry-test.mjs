@@ -1,0 +1,101 @@
+/** Native entry routing/review and actor-relative claims; no live Discord/provider calls or production data. */
+import assert from "node:assert/strict";
+import fs from "node:fs";
+import os from "node:os";
+import path from "node:path";
+import { VeiledDB } from "../src/db.js";
+import { configureCityFlags } from "../src/city-core.js";
+import { indexWorldEvent } from "../src/city-calendar.js";
+import { entryTarget, prepareSceneEntry, routeSceneEntryMessage, reviewSceneEntry } from "../src/scene-entry.js";
+import { interpretAuthoredText } from "../src/player-language.js";
+import { scenePresence, recordScenePresence } from "../src/scene-continuity.js";
+import { stateRevision } from "../src/ai-intents.js";
+import { validateNarrativeClaims } from "../src/narrative-integrity.js";
+import { handleStoryCommand } from "../src/story-commands.js";
+import { postStateError } from "../src/publishing.js";
+import { fakeInteraction } from "./contract-fixtures.mjs";
+import { GMService } from "../src/gm.js";
+import { ContentIndex } from "../src/content.js";
+import { FakeResponses } from "./contract-fixtures.mjs";
+import { POST_TURN_REVIEW_CATEGORIES } from "../src/director.js";
+const temp=fs.mkdtempSync(path.join(os.tmpdir(),"vc-scene-entry-")),file=path.join(temp,"fixture.sqlite");
+let db=new VeiledDB(file,path.resolve("sql/schema.sql"));
+try{
+  const guild="contract";db.ensureCampaign(guild);db.ensureCampaign("other");const session=db.startSession(guild,"Entry");
+  configureCityFlags(db,guild,{natural_language:true,scene_continuity:true,roll_requests:false,session_briefs:true});
+  db.upsertPlayer(guild,"owner","Owner");db.upsertPlayer(guild,"second","Second");
+  const pc=db.createCharacter(guild,"owner","Detective",{}),other=db.createCharacter(guild,"second","Other PC",{});
+  for(const [user,character] of [["owner",pc],["second",other]]){db.assignCharacter(session.id,user,character.id);db.setPresence(session.id,user,"present");}
+  const text="<@12345> I walk into the diner and scan the place for anyone named Lena Park. Who all is here?";
+  assert.equal(interpretAuthoredText(text,{natural:true}).kind,"attempt");assert.equal(entryTarget(text),"the diner");
+  for(const bad of ['If I enter the diner, who is there?','OOC: I enter the diner.','I might enter the diner.','Someone says: "I enter the diner."']) assert.equal(entryTarget(bad),null);
+  const message={guild:{id:guild},author:{id:"owner"},id:"entry-1"},delivered=[];
+  assert.equal(await routeSceneEntryMessage({db,message,characterId:pc.id,text,deliver:async text=>delivered.push(text)}),true);
+  assert(delivered[0].includes("Which exact place"));assert(!delivered[0].includes("Lena is"));
+  assert.equal(db.getCharacter(pc.id).data.location,undefined);assert.equal(scenePresence(db,guild,"character",pc.id),null);
+  assert.equal(db.getNpcProfile(guild,"lena-park"),null);assert.equal(db.getSimulationEntity(guild,"location","diner"),null);
+  const row=prepareSceneEntry(db,guild,"owner",pc.id,"entry-1",text);
+  assert.equal(row.status,"pending");assert.equal(db.listCityRecords(guild,{kind:"scene_entry",includeGM:true}).length,1);
+  const review={op:"review-entry",key:row.record_key,expected_revision:stateRevision(row),location_key:"diner",adjudication:"Established mundane entrance is accessible; no obstacle, cost or travel time."};
+  assert.throws(()=>reviewSceneEntry(db,guild,review,"gm"),/Establish/);
+  db.setSimulationEntity(guild,"location","diner",{name:"Diner"});
+  await assert.rejects(()=>handleStoryCommand(fakeInteraction({gm:false,sub:"scene",json:review}),{db}),/GM\/admin/);
+  assert.throws(()=>reviewSceneEntry(db,guild,{...review,expected_revision:"old"},"gm"),/revision/);
+  const human=fakeInteraction({sub:"scene",json:review});await handleStoryCommand(human,{db});assert(human.deliveries[0].ephemeral);
+  assert.equal(db.getCharacter(pc.id).data.location,"diner");assert.equal(scenePresence(db,guild,"character",pc.id).location_key,"diner");
+  assert.throws(()=>reviewSceneEntry(db,guild,review,"gm"),/revision/);
+  assert.equal(await routeSceneEntryMessage({db,message:{...message,id:"entry-2"},characterId:pc.id,text,deliver:async()=>assert.fail("Already-saved location should reconcile")}),false);
+  assert.throws(()=>prepareSceneEntry(db,guild,"second",pc.id,"forged",text),/owned/);
+  db.setSimulationEntity(guild,"location","remote",{name:"Remote"});
+  const privateEntry=prepareSceneEntry(db,guild,"owner",pc.id,"private","I enter Remote.",{privateScene:true});
+  const privateInput={...review,key:privateEntry.record_key,expected_revision:stateRevision(privateEntry),location_key:"remote"};
+  reviewSceneEntry(db,guild,privateInput,"gm");assert.equal(scenePresence(db,guild,"character",pc.id).visibility,"character");
+  const stale=prepareSceneEntry(db,guild,"owner",pc.id,"stale","I enter the diner.");
+  indexWorldEvent(db,guild,{key:stale.source_event,status:"retracted"});
+  assert.throws(()=>reviewSceneEntry(db,guild,{...review,key:stale.record_key,expected_revision:stateRevision(stale)},"gm"),/source/);
+  const claim={actor:`character:${pc.id}`,entity_type:"character",entity:pc.id,action:"movement",prior:"",proposed:"remote",visibility:"party",
+    source_ref:"",source_span:"You have entered Remote.",mutation_index:-1,certainty:"committed"};
+  const check=(c,scope={mode:"party"})=>validateNarrativeClaims(db,guild,{narration:c.source_span,narrative_claims:[c]},scope);
+  const privateScope={mode:"private",actorUserId:"owner",actorCharacterId:pc.id};
+  check(claim,privateScope);check({...claim,actor:pc.id},privateScope);check({...claim,actor:""},privateScope);
+  assert.throws(()=>check(claim),/scoped_movement/);
+  assert.throws(()=>check({...claim,proposed:"diner"}),/uncommitted_movement/);
+  db.upsertNpcProfile(guild,{npcKey:"witness",displayName:"Witness"});db.setSimulationEntity(guild,"npc","witness",{location_key:"remote"});
+  assert.throws(()=>check({...claim,actor:"npc:witness"}),/not_witnessed/);
+  const fact=db.addFact(guild,{content:"A public fact",visibility:"party"}),secret=db.addFact(guild,{content:"A hidden fact",visibility:"gm"});
+  const own=db.addFact(guild,{content:"Owner private fact",visibility:"character",subjectCharacterId:pc.id});
+  const disclosure={...claim,action:"disclosure",source_ref:fact,proposed:"A public fact",source_span:"A public fact"};
+  check(disclosure);check({...disclosure,actor:"narrator"});
+  assert.throws(()=>check({...disclosure,actor:"npc:witness"}),/actor_knowledge/);
+  db.upsertNpcKnowledge(guild,{npcKey:"witness",knowledgeKey:"independent-key",sourceRef:fact,content:"A public fact"});
+  check({...disclosure,actor:"npc:witness"});
+  db.upsertNpcKnowledge(guild,{npcKey:"witness",knowledgeKey:"independent-key",sourceRef:fact,content:"A public fact",beliefState:"unknown"});
+  assert.throws(()=>check({...disclosure,actor:"npc:witness"}),/actor_knowledge/);
+  assert.throws(()=>check({...disclosure,actor:"",source_ref:secret,proposed:"A hidden fact"}),/scoped_disclosure/);
+  const ownClaim={...disclosure,source_ref:own,proposed:"Owner private fact",source_span:"Owner private fact"};
+  check(ownClaim,{mode:"private",actorUserId:"owner",actorCharacterId:pc.id});
+  assert.throws(()=>check({...ownClaim,actor:`character:${other.id}`},{mode:"private",actorUserId:"owner",actorCharacterId:pc.id}),/actor_knowledge/);
+  validateNarrativeClaims(db,guild,{narration:"",private_messages:[{discord_user_id:"owner",content:ownClaim.source_span}],narrative_claims:[ownClaim]},{mode:"party"});
+  assert.throws(()=>validateNarrativeClaims(db,guild,{narration:ownClaim.source_span,private_messages:[{discord_user_id:"owner",content:ownClaim.source_span}],
+    narrative_claims:[ownClaim]},{mode:"party"}),/scoped_disclosure/);
+  assert.throws(()=>validateNarrativeClaims(db,guild,{narration:"Owner",private_messages:[{discord_user_id:"owner",content:"private fact"}],
+    narrative_claims:[{...ownClaim,source_span:"Owner\nprivate fact"}]},{mode:"party"}),/source_span/);
+  let error;try{check({...claim,actor:"npc:witness"});}catch(caught){error=caught;}
+  const ref=await postStateError({db,guild:{id:guild},error,context:"fixture",sessionId:session.id});
+  const logged=db.db.prepare("SELECT payload_json FROM audit_log WHERE json_extract(payload_json,'$.ref')=?").get(ref);
+  assert.equal(JSON.parse(logged.payload_json).diagnostic.actor,"npc:witness");
+  assert.equal(JSON.parse(logged.payload_json).diagnostic.source_span,claim.source_span);
+  const categories=Object.fromEntries(POST_TURN_REVIEW_CATEGORIES.map(key=>[key,{decision:"no_change",reason:"No mutation",confidence:100}]));
+  categories.scene={decision:"continue",label:"",reason:"Same scene"};
+  const base={respond:true,narration:claim.source_span,narrative_claims:[{...claim,actor:"npc:witness"}],private_messages:[],events:[],handouts:[],relationships:[],
+    npc_memories:[],npc_knowledge:[],npc_goals:[],canon_proposals:[],simulation_updates:[],ai_intents:[],state_review:categories};
+  const fake=new FakeResponses([base,{...base,narrative_claims:[claim]}]);
+  const gm=new GMService({db,content:new ContentIndex(path.resolve("../content")),config:{gmModel:"offline",maxRecentMessages:8,maxContentChunks:2},ai:fake});
+  await gm.runTurn({guildId:guild,actorUserId:"owner",actorName:"Detective",messageText:"I look around.",scope:"private"});
+  assert.equal(fake.requests.length,2);assert(fake.requests[1].input.includes('"actor":"npc:witness"'));
+  const snapshot=db.snapshotCampaign(guild,{label:"Entry",createdBy:"gm"});
+  db.close();db=new VeiledDB(file,path.resolve("sql/schema.sql"));
+  assert.equal(db.getCityRecord(guild,"scene_entry",row.record_key).status,"approved");
+  db.restoreSnapshot(guild,snapshot.id);assert.equal(scenePresence(db,guild,"character",pc.id).visibility,"character");
+  console.log("Scene entry PASS: actual diner declaration, provisional routing, native human review/owner/source/stale/privacy/replay/restart/restore; narrator/PC/NPC knowledge/witness isolation; bounded diagnostic retry/logging; zero live calls.");
+}finally{db.close();fs.rmSync(temp,{recursive:true,force:true});}

@@ -1,5 +1,5 @@
 /** Local, fail-closed material-claim checks. Claims propose no mutations and never supply dice. */
-import { sceneAccess } from "./scene-continuity.js";
+import { sceneAccess, scenePresence } from "./scene-continuity.js";
 export const materialClaimSchema={type:"object",additionalProperties:false,properties:{
   actor:{type:"string"},entity_type:{type:"string",enum:["character","npc","combatant","world"]},entity:{type:"string"},
   action:{type:"string",enum:["damage","movement","disclosure","obligation","status","canon","dice","possession"]},
@@ -10,17 +10,43 @@ export const materialClaimSchema={type:"object",additionalProperties:false,prope
 export const NARRATIVE_CONTRACT="Return narrative_claims for EVERY consequential assertion in narration/private_messages: damage, movement, disclosure, obligations, status, canon, dice. "
   +"Never supply predefined narrative choices, fixed acceptance/decline prompts, A/B/C story answers or scripted PC dialogue. Ask openly. "
   +"Use exact source_span and stable actor/entity IDs; prior/proposed are state values, source_ref identifies existing fact/knowledge/canon/obligation. "
+  +"actor identifies the observer/speaker: npc:<key>, character:<id>, or empty for GM narration, not an invented NPC. "
+  +"A character observing their own saved position needs no NPC witness. An entry declaration is not arrival evidence. Unknown places/occupants require clarification, not invented attendance. "
+  +"Disclosure requires an existing audience-visible fact. Narrator/PC knowledge is not NPC knowledge; an NPC additionally needs its own sourced knowledge of that fact. "
   +"Uncertain observations, quoted lies, hallucinations, metaphors, forecasts and intentions must be explicitly framed as such in prose and tagged, not committed facts. "
   +"mutation_index is a matching events index or -1 for already established state. Never invent dice, PC consent or compensate for a rejected claim. Cosmetic prose needs no claim.";
 function deny(category,claim,source=""){
   const error=new Error(`Narrative integrity rejected ${category}; revise to an explicitly uncommitted intent/uncertainty or use established authorized state.`);
   error.code="NARRATIVE_INTEGRITY";
-  error.diagnostic={category,entity:claim?.entity||"",source,source_ref:claim?.source_ref||"",recovery:"Inspect authoritative state and ledger; correct the proposal without inventing changes."};
+  error.diagnostic={category,actor:claim?.actor||"",entity:claim?.entity||"",action:claim?.action||"",source,source_ref:claim?.source_ref||"",
+    source_span:claim?.source_span||"",recovery:"Inspect authoritative state and ledger; correct the proposal without inventing changes."};
   throw error;
 }
 function visible(row,scope){
   return ["public","party"].includes(row.visibility)||(scope.mode==="private"&&
     ((row.visibility==="player"&&row.subject_user_id===scope.actorUserId)||(row.visibility==="character"&&row.subject_character_id===scope.actorCharacterId)));
+}
+function claimActor(db,guild,claim){
+  const raw=claim.actor;
+  if(!raw||raw==="narrator"||raw==="world") return {type:"world",key:""};
+  const pc=db.getCharacter(raw.startsWith("character:")?raw.slice(10):raw);
+  if(pc&&(!raw.includes(":")||raw.startsWith("character:"))){
+    if(pc.guild_id!==guild) deny("campaign_isolation",claim);
+    return {type:"character",key:pc.id,owner:pc.owner_user_id};
+  }
+  const key=raw.startsWith("npc:")?raw.slice(4):raw;
+  if(db.getNpcProfile(guild,key)) return {type:"npc",key};
+  deny("actor_knowledge",claim,"Unknown observer/speaker; use stable character/NPC identity or empty narrator actor.");
+}
+function claimAudiences(db,guild,result,claim,scope){
+  const publicText=[result.narration||"",result.public_narration||"",result.player_summary||""];
+  const audiences=publicText.some(text=>text.includes(claim.source_span))?[scope]:[];
+  for(const message of result.private_messages||[]) if(String(message.content||"").includes(claim.source_span)){
+    if(typeof message.discord_user_id!=="string"||!message.discord_user_id) deny("scoped_disclosure",claim,"Actual private-message recipient required.");
+    const session=db.getActiveSession(guild),assignment=session?db.activeAssignment(session.id,message.discord_user_id):null;
+    audiences.push({mode:"private",actorUserId:message.discord_user_id,actorCharacterId:assignment?.character_id||null});
+  }
+  return audiences;
 }
 /** Bounded hand-authored paraphrases are review tripwires, not a claim of general semantic understanding. */
 export function materialParaphrases(text,names=[]){
@@ -66,6 +92,8 @@ export function validateNarrativeClaims(db,guildId,result,scope={mode:"party"}){
       ||!materialClaimSchema.properties.visibility.enum.includes(c.visibility)||!materialClaimSchema.properties.entity_type.enum.includes(c.entity_type)
       ||!Number.isInteger(c.mutation_index)) deny("claim_shape",c);
     if(Object.values(c).some(value=>typeof value==="string"&&value.length>1000)||!c.source_span||!narration.includes(c.source_span)) deny("source_span",c);
+    const audiences=claimAudiences(db,guildId,result,c,scope);
+    if(!audiences.length) deny("source_span",c,"A claim span must occur wholly within an actual output surface.");
     if(c.certainty!=="committed"){
       if(!/\b(says?|claims?|lies?|rumou?r|might|may|could|seems?|perhaps|imagines?|hallucinates?|like|as if|intends?|proposes?|would|hypothes\w*)\b/i.test(c.source_span)) deny("uncertainty_framing",c);
       // Non-factual framing does not authorize disclosure of a real secret.
@@ -74,8 +102,10 @@ export function validateNarrativeClaims(db,guildId,result,scope={mode:"party"}){
     const entity=c.entity_type==="character"?db.getCharacter(c.entity):c.entity_type==="npc"?db.getSimulationEntity(guildId,"npc",c.entity):null;
     if(entity?.guild_id&&entity.guild_id!==guildId) deny("campaign_isolation",c);
     const state=entity?.state||{};
-    if(c.actor&&["movement","status"].includes(c.action)&&db.getCityCalendar(guildId).flags.scene_continuity===true
-      &&!sceneAccess(db,guildId,{observer_type:"npc",observer_key:c.actor,target_type:c.entity_type,target_key:c.entity,sense:"sight"}))
+    const actor=claimActor(db,guildId,c);
+    const self=actor.type==="character"&&c.entity_type==="character"&&actor.key===c.entity;
+    if(actor.type!=="world"&&!self&&["movement","status"].includes(c.action)&&flags.scene_continuity===true
+      &&!sceneAccess(db,guildId,{observer_type:actor.type,observer_key:actor.key,target_type:c.entity_type,target_key:c.entity,sense:"sight"}))
       deny("not_witnessed",c,"actual scene access");
     if(c.certainty==="committed"&&((entity?.status&&["dead","retired"].includes(entity.status))||state.removed||["dead","removed"].includes(state.status))
       &&!(c.action==="status"&&[entity?.status,state.status].includes(c.proposed))) deny("inactive_actor",c);
@@ -89,6 +119,13 @@ export function validateNarrativeClaims(db,guildId,result,scope={mode:"party"}){
     if(c.action==="status"&&(!entity||entity.status!==c.proposed&&state.status!==c.proposed)) deny("actor_status",c,"saved lifecycle");
     if(c.entity_type==="npc"&&["dead","removed"].includes(state.status)&&c.proposed==="active") deny("actor_status",c);
     if(c.action==="movement"&&(!entity||String(state.location_key||entity.data?.location||"")!==c.proposed)) deny("uncommitted_movement",c,"saved position");
+    if(c.action==="movement"&&flags.scene_continuity===true){
+      const presence=scenePresence(db,guildId,c.entity_type,c.entity);
+      if(presence&&!audiences.every(audience=>["public","party"].includes(presence.visibility)
+        ||audience.mode==="private"&&(presence.visibility==="character"&&presence.subject_key===audience.actorCharacterId
+          ||presence.visibility==="player"&&presence.subject_key===audience.actorUserId)))
+        deny("scoped_movement",c,"Private scene presence cannot be disclosed to another audience.");
+    }
     if(c.action==="damage"){
       const event=result.events?.[c.mutation_index];
       if(c.entity_type!=="character"||!entity||!event||event.type!=="resource_delta"||event.key!=="hp"
@@ -98,10 +135,17 @@ export function validateNarrativeClaims(db,guildId,result,scope={mode:"party"}){
     }
     if(c.action==="disclosure"){
       const fact=db.getFact(guildId,c.source_ref);
-      const knowledge=c.actor?db.getNpcKnowledge(guildId,c.actor,c.source_ref):null;
-      if(c.actor&&!knowledge) deny("actor_knowledge",c,"NPC knowledge");
-      if(!fact||!visible(fact,scope)||fact.archived||c.proposed!==fact.content) deny("scoped_disclosure",c,"scoped fact");
-      if(knowledge&&knowledge.content!==c.proposed) deny("actor_knowledge",c);
+      if(!fact||fact.archived||c.proposed!==fact.content||!audiences.every(audience=>visible(fact,audience)))
+        deny("scoped_disclosure",c,"scoped fact");
+      if(actor.type==="character"&&!visible(fact,{mode:"private",actorUserId:actor.owner,actorCharacterId:actor.key}))
+        deny("actor_knowledge",c,"Character-scoped fact");
+      if(actor.type==="npc"){
+        const knowledge=db.npcKnowledgeForFact(guildId,actor.key,c.source_ref).find(row=>row.content===c.proposed
+          &&row.belief_state!=="unknown"&&(c.certainty!=="committed"||row.belief_state==="known"));
+        if(!knowledge) deny("actor_knowledge",c,"NPC's own fact key/source reference");
+        const source=db.getWorldEvent(guildId,knowledge.source_ref);
+        if(source&&source.status!=="active") deny("actor_knowledge",c,"Retracted NPC knowledge source");
+      }
     }
     if(c.action==="obligation"){
       const row=db.getSimulationRecord(guildId,c.source_ref);

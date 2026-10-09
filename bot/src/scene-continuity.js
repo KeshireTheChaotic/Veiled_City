@@ -28,10 +28,12 @@ export function reconcileSceneArrival(db,guild,{type,key,source_event,owner=null
     zone:"scene",visibility:event.visibility,subject_key:event.subject_key,accepted_by:owner},"scene_reconciliation");
 }
 export function recordCharacterArrival(db,guild,character,user,interactionId){
-  if(db.getCityCalendar(guild).flags.scene_continuity!==true||!db.getSimulationEntity(guild,"location",character.data?.location)) return null;
+  const location=character.data?.location;
+  if(db.getCityCalendar(guild).flags.scene_continuity!==true||typeof location!=="string"||!location.trim()
+    ||!db.getSimulationEntity(guild,"location",location)) return null;
   return db.transaction(()=>{
     const event=indexWorldEvent(db,guild,{key:`arrival:${motivationKey([interactionId,character.id])}`,kind:"arrival",title:"Owner-established arrival",
-      source_id:`player:${user}`,location_key:character.data.location,visibility:"party",
+      source_id:`player:${user}`,location_key:location,visibility:"party",
       details:{entity_type:"character",entity_key:character.id,owner_user_id:user}},user);
     return reconcileSceneArrival(db,guild,{type:"character",key:character.id,source_event:event.event_key,owner:user});
   });

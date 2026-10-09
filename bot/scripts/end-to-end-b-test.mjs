@@ -8,13 +8,29 @@ import { configureCityFlags } from "../src/city-core.js";
 import { indexWorldEvent } from "../src/city-calendar.js";
 import { configureDelegation, stateRevision } from "../src/ai-intents.js";
 import { applyAuthoritativeMutation } from "../src/state.js";
-import { scenePresence, sceneAccess, reconcileSceneArrival, recordScenePresence, assertNpcObservation } from "../src/scene-continuity.js";
+import { scenePresence, sceneAccess, reconcileSceneArrival, recordScenePresence, recordCharacterArrival, assertNpcObservation } from "../src/scene-continuity.js";
 import { retrieveNpcCognition } from "../src/npc-cognition.js";
 const temp=fs.mkdtempSync(path.join(os.tmpdir(),"vc-end-to-end-b-")),db=new VeiledDB(path.join(temp,"test.sqlite"),path.resolve("sql/schema.sql"));
 try{
   const guild="b";db.ensureCampaign(guild);db.startSession(guild,"Room");
   configureCityFlags(db,guild,{scene_continuity:true});
   for(const key of ["room","remote"]) db.setSimulationEntity(guild,"location",key,{});
+  db.upsertPlayer(guild,"owner","Owner");
+  const pc=db.createCharacter(guild,"owner","Transferred PC",{}),session=db.getActiveSession(guild);
+  db.setPresence(session.id,"owner","present");db.assignCharacter(session.id,"owner",pc.id);
+  const eventsBefore=db.db.prepare("SELECT count(*) AS count FROM world_events").get().count;
+  assert.equal(recordCharacterArrival(db,guild,pc,"owner","missing-location"),null);
+  for(const location of [null,"","   ",{},[],42,"unestablished"]){
+    assert.equal(recordCharacterArrival(db,guild,{...pc,data:{...pc.data,location}},"owner","invalid-location"),null);
+  }
+  assert.equal(db.db.prepare("SELECT count(*) AS count FROM world_events").get().count,eventsBefore,
+    "Missing or invalid locations must not invent arrival evidence");
+  assert.equal(scenePresence(db,guild,"character",pc.id),null);
+  const arrival=recordCharacterArrival(db,guild,{...pc,data:{...pc.data,location:"room"}},"owner","valid-location");
+  assert.equal(arrival.location_key,"room");
+  assert.equal(scenePresence(db,guild,"character",pc.id).record_key,arrival.record_key);
+  assert.equal(recordCharacterArrival(db,guild,{...pc,data:{...pc.data,location:"room"}},"owner","valid-location").record_key,
+    arrival.record_key,"Arrival retries remain idempotent");
   for(const key of ["witness","other","remote"]){db.upsertNpcProfile(guild,{npcKey:key,displayName:key});
     db.setSimulationEntity(guild,"npc",key,{location_key:key==="remote"?"remote":"room"});}
   indexWorldEvent(db,guild,{key:"arrival",title:"Other entered the room",kind:"arrival",source_id:"gm",location_key:"room",visibility:"party",

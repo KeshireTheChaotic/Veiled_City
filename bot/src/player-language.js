@@ -4,7 +4,7 @@ import { indexWorldEvent } from "./city-calendar.js";
 import { motivationKey } from "./simulation-motivation.js";
 import { currentScene } from "./scene-continuity.js";
 export function interpretAuthoredText(message,{natural=false}={}){
-  const text=String(message||"").trim();
+  const text=String(message||"").replace(/^(?:\s*<@!?\d+>\s*)+/,"").trim();
   if(!text||text.length>4000) return {kind:"unclear",speech:null};
   if(/^(?:ooc\b|\(\(|\/\/)|\b(?:hypothetically|for example|if I|I might|I would|I could|imagine I|suppose I|planning to)\b/i.test(text))
     return {kind:"planning_or_ooc",speech:null};
@@ -12,7 +12,7 @@ export function interpretAuthoredText(message,{natural=false}={}){
   const free=natural?/^I (?:say|tell|ask|reply|whisper)(?: to)?(?: ([a-z0-9-]{1,160}))?\s*[:,]\s*["“]([^\n]{1,1000}?)["”](?:\s*[,.]?\s*(.*))?$/i.exec(text):null;
   const match=legacy||free;
   if(match) return {kind:free?.[3]?"mixed":"speech",speech:{target:match[1]||"",quote:match[2]},attempt:free?.[3]||""};
-  if(natural&&/^I\s+(?:try|attempt|examine|search|open|lift|attack|look|read|move|investigate|ask)\b/i.test(text))
+  if(natural&&/^I\s+(?:try|attempt|examine|search|open|lift|attack|look|read|move|walk|enter|step|go|investigate|ask)\b/i.test(text))
     return {kind:"attempt",speech:null,attempt:text};
   if(/\?\s*$/.test(text)) return {kind:"inquiry",speech:null};
   return {kind:"unclear",speech:null};
@@ -25,8 +25,9 @@ export function declarationContext(db,guild,user,character,message){
       authority:"Owner-authored text only. Attempts are not completed facts. Unclear/mixed meaning requires open clarification, never a menu or inferred assent."};
   }catch{return null;}
 }
-export function captureDeclaration(db,guild,user,character,messageId,message,{privateScene=false}={}){
-  if(!character||!messageId||db.getCityCalendar(guild).flags.roll_requests!==true) return null;
+export function captureDeclaration(db,guild,user,character,messageId,message,{privateScene=false,sceneEntry=false}={}){
+  const flags=db.getCityCalendar(guild).flags;
+  if(!character||!messageId||flags.roll_requests!==true&&!(sceneEntry&&flags.natural_language===true&&flags.scene_continuity===true)) return null;
   let pc;try{pc=personalCharacter(db,guild,user,character);}catch{return null;}
   const parsed=interpretAuthoredText(message,{natural:true});
   if(!["attempt","mixed"].includes(parsed.kind)) return null;
