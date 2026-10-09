@@ -1054,6 +1054,12 @@ export class VeiledDB {
   }
 
   getFact(guildId,id){ return this.db.prepare("SELECT * FROM facts WHERE guild_id=? AND id=?").get(guildId,id); }
+  updateFactProvenance(guildId,id,provenance){
+    if(!this.getFact(guildId,id))throw new Error("Fact not found in campaign.");
+    this.db.prepare("UPDATE facts SET provenance_json=?,updated_at=CURRENT_TIMESTAMP WHERE guild_id=? AND id=?")
+      .run(JSON.stringify(provenance),guildId,id);
+    return this.getFact(guildId,id);
+  }
   npcKnowledgeForFact(guildId,npcKey,factId){
     return this.db.prepare("SELECT * FROM npc_knowledge WHERE guild_id=? AND npc_key=? AND (knowledge_key=? OR source_ref=?)")
       .all(guildId,npcKey,factId,factId);

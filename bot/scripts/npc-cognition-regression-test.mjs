@@ -46,6 +46,8 @@ assert.equal(db.listNpcKnowledge(guild,mara.npc_key,{limit:50}).find(k=>k.knowle
 assert.match(db.listFactsForGM(guild,{search:"Nathan did not",limit:10})[0].content,/did not betray/);
 
 // Authoritative AI mutation can persist memory, knowledge and goal changes atomically.
+db.upsertNpcKnowledge(guild,{npcKey:mara.npc_key,knowledgeKey:"prior-witness",content:"Elias accepted Mara's shelter but explicitly declined any reciprocal supernatural bargain.",
+  beliefState:"known",sourceType:"seed_gm",sourceRef:"msg-380"});
 const mutation=applyAuthoritativeMutation(db,{
   guildId:guild,source:"ai_gm",provenance:{actorType:"ai",actorId:"veilkeeper",messageId:"msg-380",confidence:92,rationale:"Mara directly witnessed the exchange."},
   npcMemories:[{npc_key:mara.npc_key,memory_type:"episodic",content:"Elias accepted Mara's shelter but explicitly declined any reciprocal supernatural bargain.",subject_type:"character",subject_key:"elias-mercer",sentiment:1,importance:72,confidence:95,source_type:"witnessed",tags:["hospitality","boundary"]}],

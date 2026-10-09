@@ -159,7 +159,7 @@ try{
 
   // Contradictions retain the old belief instead of silently erasing history.
   db.upsertNpcKnowledge(guild,{npcKey:"mara",knowledgeKey:"suspect",content:"Nathan betrayed Mercer",beliefState:"rumor"});
-  applyAuthoritativeMutation(db,{guildId:guild,npcKnowledge:[{npc_key:"mara",knowledge_key:"suspect",content:"Nathan did not betray Mercer",belief_state:"known"}]});
+  applyAuthoritativeMutation(db,{guildId:guild,source:"human_gm",npcKnowledge:[{npc_key:"mara",knowledge_key:"suspect",content:"Nathan did not betray Mercer",belief_state:"known"}]});
   assert(db.listNpcMemories(guild,"mara").some(memory=>memory.status==="superseded"&&memory.content.includes("Nathan betrayed")));
   const memory=db.addNpcMemory(guild,{npcKey:"mara",content:"The ward was intact"});
   applySimulationUpdates(db,guild,[update("reconcile_memory",{key:memory.id,status:"challenged",content:"The footage shows a crack"})]);

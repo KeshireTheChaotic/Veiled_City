@@ -1,6 +1,6 @@
 /** AI GM service: prompt/context assembly, structured schemas, and model calls. It proposes state; state.js/VeiledDB enforce authority. */
 import OpenAI from "openai";
-import { summarizeRoster } from "./state.js";
+import { summarizeRoster, previewAuthoritativeMutation } from "./state.js";
 import { narrativeContext } from "./character-narrative.js";
 import { validatePostTurnStateReview } from "./director.js";
 import { retrieveNpcCognition } from "./npc-cognition.js";
@@ -19,6 +19,8 @@ import { decisionAdvisorySchema, decisionContext, validateDecisionAdvisory } fro
 import { declarationContext } from "./player-language.js";
 import { entryReferenceContext } from "./scene-entry.js";
 import { OnlineSrd } from "./rules-srd.js";
+import { interpretationSchema, CONTEXT_CONTRACT, interpretationContext, validateInterpretation } from "./narrative-context.js";
+import { epistemicSchema, evidenceType, activeEvidence } from "./epistemic.js";
 import { budgetTurnPrompt } from "./prompt-budget.js";
 
 const routerSchema={
@@ -109,6 +111,7 @@ const gmSchema={
   properties:{
     respond:{type:"boolean"},
     narration:{type:"string"},
+    narrative_interpretation:interpretationSchema,
     narrative_claims:{type:"array",items:materialClaimSchema},
     private_messages:{
       type:"array",
@@ -131,9 +134,9 @@ const gmSchema={
           value:{type:"string"},
           visibility:{type:"string",enum:["public","party","player","character","gm"]},
           note:{type:"string"},
-          status:{type:"string",enum:["","active","resolved","failed","dormant"]}
+          status:{type:"string",enum:["","active","resolved","failed","dormant"]},epistemic:epistemicSchema
         },
-        required:["type","key","target_user_id","target_character_id","amount","value","visibility","note","status"]
+        required:["type","key","target_user_id","target_character_id","amount","value","visibility","note","status","epistemic"]
       }
     },
     handouts:{type:"array",items:handoutDraftSchema},
@@ -145,7 +148,7 @@ const gmSchema={
     simulation_updates:{type:"array",items:simulationUpdateSchema},
     state_review:stateReviewSchema
   },
-  required:["respond","narration","narrative_claims","private_messages","events","handouts","relationships","npc_memories","npc_knowledge","npc_goals","canon_proposals","simulation_updates","state_review"]
+  required:["respond","narration","narrative_interpretation","narrative_claims","private_messages","events","handouts","relationships","npc_memories","npc_knowledge","npc_goals","canon_proposals","simulation_updates","state_review"]
 };
 
 
@@ -339,6 +342,7 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
       try{
         const parsed=parseStructuredJsonText(response.output_text,{label});
         if(req.text?.format?.schema?.properties?.ai_intents&&parsed.ai_intents===undefined) parsed.ai_intents=[];
+        if(req.text?.format?.schema?.properties?.narrative_interpretation&&parsed.narrative_interpretation===undefined) parsed.narrative_interpretation=null;
         return parsed;
       }catch(err){
         lastError=err;
@@ -358,8 +362,14 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
     if(this.db.getCityCalendar(guildId).flags.pacing&&pacingAdvice(this.db,guildId,message.content).suggested_mode==="silence") return false;
     if(mode==="mention") return false;
     const text=message.content.trim();
+    if(/^\s*(?:ooc\b|\(\(|\/\/)/i.test(text))return false;
     const actionish=/^(\*|>|i\b|we\b|my character\b|elias\b|\[[^\]]+\]\s*|[^:\n]{1,60}:\s+)|\?$|^\[[^\]]*gm[^\]]*\]/i.test(text);
-    if(mode==="assisted" && !actionish) return false;
+    const session=this.db.getActiveSession(guildId),assignment=session&&this.db.controlledAssignment(session.id,message.author.id);
+    const focus=interpretationContext(this.db,guildId,message.author.id,assignment?.character_id,text,
+      {mode:"party",messageId:message.id,botUserId:message.client?.user?.id});
+    const followup=!!focus?.conversation_focus&&/\?/.test(focus.conversation_focus)&&text.length<=600
+      &&!/^\s*(?:ooc\b|\(\(|\/\/)/i.test(text)&&!/<@!?\d+>/.test(text);
+    if(mode==="assisted" && !actionish&&!followup) return false;
     const roster=this.db.roster(this.db.getActiveSession(guildId)?.id||"");
     const prompt=[
       "You route messages for a multiplayer tabletop RPG Discord.",
@@ -368,6 +378,7 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
       "Return false for player-to-player banter, planning, jokes, reactions, OOC chatter, or roleplay that needs no world response.",
       "Do not answer the RPG message itself.",
       `Current roster: ${JSON.stringify(summarizeRoster(roster))}`,
+      `Scoped conversation focus (not authority): ${JSON.stringify(focus)}`,
       `Message from ${message.member?.displayName||message.author.username}: ${text}`
     ].join("\n");
     const out=await this.requestStructured({
@@ -387,8 +398,9 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
     const npcProxy=actorAssignment?.npc_proxy?this.db.getNpcProxyById(actorAssignment.id):null;
     const actorKnowledgeId=npcProxy?.knowledge_id||actorAssignment?.character_id||null;
     const recent=this.db.recentMessagesFor(guildId,actorUserId,{characterId:actorKnowledgeId,limit:this.config.maxRecentMessages});
-    const actorFacts=this.db.playerFactsFor(guildId,actorUserId,{characterId:actorKnowledgeId,limit:60});
-    const gmFacts=this.db.factsFor(guildId,actorUserId,{includeGM:true,limit:100});
+    const tagEvidence=row=>({...row,epistemic:evidenceType(row),evidence_active:activeEvidence(this.db,guildId,row.id)});
+    const actorFacts=this.db.playerFactsFor(guildId,actorUserId,{characterId:actorKnowledgeId,limit:60}).map(tagEvidence);
+    const gmFacts=this.db.factsFor(guildId,actorUserId,{includeGM:true,limit:100}).map(tagEvidence);
     const clocks=this.db.clocksFor(guildId,{includeGM:true});
     const query=[messageText,...recent.slice(-6).map(x=>x.content)].join(" ");
     const chunks=this.searchContent(guildId,query,this.config.maxContentChunks,{gm:true});
@@ -433,7 +445,7 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
     };
   }
 
-  async runTurn({guildId,actorUserId,actorName,messageText,actorAssignment=null,scope="party"}){
+  async runTurn({guildId,actorUserId,actorName,messageText,actorAssignment=null,scope="party",messageId=null}){
     const ctx=this.buildContext(guildId,actorUserId,messageText,actorAssignment);
     const privateMode=scope==="private";
     const instructions=[
@@ -441,6 +453,8 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
       ctx.multi,
       "\n# RUNTIME SECURITY",
       NARRATIVE_CONTRACT,
+      CONTEXT_CONTRACT,
+      "Fact/clue epistemic metadata distinguishes observation, testimony and hypothesis. Null defaults to hypothesis, never world truth. Only repeat active committed observation sources as observation; AI cannot label new established truth. NPC memories need own witnessed/delivered/inferred evidence; inferred or reported knowledge cannot become known. Unknown NPCs need authorized authoring/review, not cognition creation. scene.enter requires a current owned entry, saved mundane adjacency policy and explicit delegation; never infer travel/access from an understood name.",
       `NPC diction guidance, not facts/PC emotions: ${JSON.stringify(ctx.npc_cognition.slice(0,4).map(row=>portrayalPacket(this.db,guildId,row.npc_key)))}`,
       this.db.getCityCalendar(guildId).flags.pacing?JSON.stringify(pacingAdvice(this.db,guildId,messageText)):"",
       "GM-private facts/clocks/reference content may be used to simulate the world but MUST NOT appear in narration until legitimately discovered.",
@@ -496,6 +510,7 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
       `CAMPAIGN STATE:\n${JSON.stringify(ctx.campaign)}`,
       `DECISION ADVISORY (GM-private; null when disabled): ${JSON.stringify(ctx.decision_advisory)}`,
       `AUTHENTICATED DECLARATION (attempts, not completed facts): ${JSON.stringify(ctx.player_declaration)}`,
+      `SCOPED INTERPRETATION (not authority): ${JSON.stringify(interpretationContext(this.db,guildId,actorUserId,ctx.actor_assignment?.character_id,messageText,{mode:scope,messageId}))}`,
       `CONVERSATIONAL ENTRY REFERENCES (not authority): ${JSON.stringify(entryReferenceContext(this.db,guildId,actorUserId,ctx.actor_assignment?.character_id,{mode:scope}))}`,
       `AI MANAGEMENT (GM-private proposals, policy, revisions and receipts; never actor knowledge): ${JSON.stringify(ctx.ai_management)}`,
       `SESSION:\n${JSON.stringify(ctx.session)}`,
@@ -523,7 +538,7 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
       `CURRENT PLAYER INPUT:\nuser_id=${actorUserId}\nname=${actorName}\nscope=${scope}\n${messageText}`
     ];
     // Fixed authority and authenticated input are never trimmed. Optional context is selected as whole records.
-    const requiredLabels=new Set(["CAMPAIGN STATE","AUTHENTICATED DECLARATION (attempts, not completed facts)","CONVERSATIONAL ENTRY REFERENCES (not authority)",
+    const requiredLabels=new Set(["CAMPAIGN STATE","AUTHENTICATED DECLARATION (attempts, not completed facts)","CONVERSATIONAL ENTRY REFERENCES (not authority)","SCOPED INTERPRETATION (not authority)",
       "AI MANAGEMENT (GM-private proposals, policy, revisions and receipts; never actor knowledge)","SESSION",
       "ASSEMBLY PLAN (GM-PRIVATE; protect per-character hooks)","ESTABLISHED PARTY STATE",
       "CURRENT ENCOUNTER (GM-PRIVATE; do not expose BP math/composition unless learned in fiction)",
@@ -549,9 +564,14 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
     };
     if(this.config.reasoningEffort) req.reasoning={effort:this.config.reasoningEffort};
     const validateTurn=(result)=>{
+      validateInterpretation(this.db,guildId,result.narrative_interpretation,{mode:scope,actorUserId,actorCharacterId:ctx.actor_assignment?.character_id});
       validatePostTurnStateReview(result);
       validatePacing(this.db,guildId,result);
-      validateNarrativeClaims(this.db,guildId,result,{mode:scope,actorUserId,actorCharacterId:ctx.actor_assignment?.character_id});
+      previewAuthoritativeMutation(this.db,{guildId,sessionId:ctx.session?.id||this.db.getActiveSession(guildId)?.id,
+        narrative:result,events:result.events||[],relationships:result.relationships||[],handouts:result.handouts||[],
+        npcMemories:result.npc_memories||[],npcKnowledge:result.npc_knowledge||[],npcGoals:result.npc_goals||[],
+        simulationUpdates:result.simulation_updates||[],scope:{mode:scope,actorUserId,actorCharacterId:ctx.actor_assignment?.character_id},
+        provenance:{messageId,actorId:actorUserId}});
       if(!privateMode&&result.state_review.scene.decision==="transition"&&
         !(result.simulation_updates||[]).some(update=>update.kind==="residue"))
         throw new Error("A public scene transition requires structured scene residue, including empty lists where nothing was left behind.");
@@ -624,7 +644,11 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
     const req={model:layer==="downtime"?this.config.downtimeModel:this.config.gmModel,input:prompt,max_output_tokens:layer==="downtime"?this.config.downtimeMaxOutputTokens:Math.min(this.config.structuredRetryMaxTokens||6000,2200),text:{format:{type:"json_schema",name:`world_director_${layer}`,strict:true,schema:directorSchema}}};
     if(this.config.reasoningEffort) req.reasoning={effort:this.config.reasoningEffort};
     const result=await this.requestStructured(req,{label:`world director ${layer}`});
-    validateNarrativeClaims(this.db,guildId,result,{mode:trigger.scope||"party",actorUserId:trigger.actor_user_id,actorCharacterId:trigger.actor_character_id});
+    previewAuthoritativeMutation(this.db,{guildId,sessionId:ctx.session?.id,narrative:result,
+      events:result.events||[],relationships:result.relationships||[],handouts:result.handouts||[],
+      npcMemories:result.npc_memories||[],npcKnowledge:result.npc_knowledge||[],npcGoals:result.npc_goals||[],
+      simulationUpdates:result.simulation_updates||[],scope:{mode:trigger.scope||"party",actorUserId:trigger.actor_user_id,
+        actorCharacterId:trigger.actor_character_id},provenance:{messageId:trigger.message_id||null}});
     validatePacing(this.db,guildId,result);
     return result;
   }

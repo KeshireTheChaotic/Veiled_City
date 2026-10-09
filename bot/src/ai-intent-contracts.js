@@ -31,10 +31,10 @@ export const INTENT_PAYLOADS={
     horizon:choice("immediate","near","long"),dependencies:list(text()),acceptable_methods:list(text()),conflicts:list(text())}),
   consequence:object({...source,op:choice("subscribe","unsubscribe","apply"),handler:choice("service"),entity_key:text(),
     event_kinds:list(text(),8),location_key:text(),delta:integer(-10,10)}),
-  scene:object({...source,op:choice("record"),entity_type:choice("npc","character","adversary","evidence","hazard","entrance","barrier"),
+  scene:{anyOf:[object({...source,op:choice("enter"),entry_key:text(),location_key:text()}),object({...source,op:choice("record"),entity_type:choice("npc","character","adversary","evidence","hazard","entrance","barrier"),
     entity_key:text(),location_key:text(),zone:text(),to_zone:text(),range:choice("Melee","Very Close","Close","Far","Very Far",""),
     state:choice("actually_present","believed_present","uncertain","departed"),hidden:{type:"boolean"},
-    known_to:list(text(180),30),visibility:choice("gm","party","public","character","player"),subject_key:text(),blocks:list(choice("sight","sound"),2)}),
+    known_to:list(text(180),30),visibility:choice("gm","party","public","character","player"),subject_key:text(),blocks:list(choice("sight","sound"),2)})]},
   group:object({...source,op:choice("propose","respond"),operation:choice("form","join","leave","split","merge","dissolve"),
     group_key:text(),name:text(),members:list(text()),from_groups:list(text(),4),shared_projects:list(text(),8),
     member:text(),decision:choice("accept","decline",""),information_key:text(),reason:text(1000)}),
@@ -79,6 +79,9 @@ export function validateIntent(value){
 }
 export const INTENT_PROMPT=`Optional ai_intents are version-1 proposals, never completed effects. Use only supplied source IDs,
 state fingerprints and policy revision. Never invent consent, reviewer identity, permission, rolls or movement.
+scene.enter uses only a supplied current owned scene_entry and existing resolved location. It requires saved
+GM zero-cost adjacency and explicit scene.enter delegation. Refresh the entry fingerprint after referent
+clarification. Travel, locked/restricted/contested/hazardous access and encounter movement require native/human review.
 When roll_requests is enabled, roll.prepare is a pending request, not a roll or result. Use a current authenticated
 player_declaration source and adjudicate its trait explicitly; never supply numeric bonuses. Missing sheet values
 remain pending. Do not request dice in prose without a validated pending breakdown. Never offer narrative answer menus.

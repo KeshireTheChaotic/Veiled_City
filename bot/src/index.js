@@ -13,6 +13,7 @@ import { routeDiscoveryMessage } from "./continuity-routing.js";
 import { captureArcCandidate } from "./personal-continuity.js";
 import { captureDialogue } from "./dialogue-continuity.js";
 import { captureDeclaration } from "./player-language.js";
+import { captureContextSource } from "./narrative-context.js";
 import { publishRollRequests } from "./roll-requests.js";
 import { routeRollMessage } from "./roll-language.js";
 import { routeConsentMessage } from "./consent-language.js";
@@ -301,6 +302,7 @@ async function processPrivateTurn(message,directMention){
     deliver:text=>sendPrivate(message.guild,message.author.id,text,session.id,controlled?.character_id),
     sendAmendment:(user,text,sid,char)=>sendPrivate(message.guild,user,text,sid,char)})) return;
   captureDeclaration(db,message.guild.id,message.author.id,controlled?.npc_proxy?null:controlled?.character_id,message.id,playerText,{privateScene:true});
+  captureContextSource(db,message.guild.id,message.author.id,controlled?.npc_proxy?null:controlled?.character_id,message.id,playerText,{privateScene:true});
   captureDialogue(db,message.guild.id,message.author.id,controlled?.npc_proxy?null:controlled?.character_id,message.id,playerText,{privateScene:true});
   captureArcCandidate(db,message.guild.id,message.author.id,controlled?.npc_proxy?null:controlled?.character_id,message.id,playerText);
   db.addMessage({guildId:message.guild.id,sessionId:session.id,messageId:message.id,userId:message.author.id,speakerName:speaker,characterId:controlled?.character_id||null,visibility:vis,subjectUserId:vis==="player"?message.author.id:null,subjectCharacterId:vis==="character"?controlled.character_id:null,content:playerText});
@@ -311,7 +313,7 @@ async function processPrivateTurn(message,directMention){
   try{
     await message.channel.sendTyping();
     const cleaned=playerText.replaceAll(`<@${client.user.id}>`,"").replaceAll(`<@!${client.user.id}>`,"").trim();
-    result=await gm.runTurn({guildId:message.guild.id,actorUserId:message.author.id,actorName:speaker,actorAssignment:controlled,messageText:cleaned||playerText,scope:"private"});
+    result=await gm.runTurn({guildId:message.guild.id,actorUserId:message.author.id,actorName:speaker,actorAssignment:controlled,messageText:cleaned||playerText,scope:"private",messageId:message.id});
     if(!result.respond) return;
   }catch(err){
     console.error("Private GM generation failed",err);
@@ -391,6 +393,7 @@ async function processPartyTurn(message,directMention){
   if(pendingAtTurnStart) await runPendingDirectorPass(message.guild,session);
   captureArcCandidate(db,message.guild.id,message.author.id,controlled?.npc_proxy?null:controlled?.character_id,message.id,playerText);
   captureDeclaration(db,message.guild.id,message.author.id,controlled?.npc_proxy?null:controlled?.character_id,message.id,playerText);
+  captureContextSource(db,message.guild.id,message.author.id,controlled?.npc_proxy?null:controlled?.character_id,message.id,playerText);
   db.addMessage({guildId:message.guild.id,sessionId:session.id,messageId:message.id,userId:message.author.id,speakerName:speaker,characterId:controlled?.character_id||null,visibility:"party",content:playerText});
   captureDialogue(db,message.guild.id,message.author.id,controlled?.npc_proxy?null:controlled?.character_id,message.id,playerText);
   if(!controlled?.npc_proxy&&await routeSceneEntryMessage({db,message,characterId:controlled?.character_id,text:playerText,
@@ -408,7 +411,7 @@ async function processPartyTurn(message,directMention){
   try{
     await message.channel.sendTyping();
     const cleaned=playerText.replaceAll(`<@${client.user.id}>`,"").replaceAll(`<@!${client.user.id}>`,"").trim();
-    result=await gm.runTurn({guildId:message.guild.id,actorUserId:message.author.id,actorName:speaker,actorAssignment:controlled,messageText:cleaned||playerText,scope:"party"});
+    result=await gm.runTurn({guildId:message.guild.id,actorUserId:message.author.id,actorName:speaker,actorAssignment:controlled,messageText:cleaned||playerText,scope:"party",messageId:message.id});
     if(!result.respond) return;
   }catch(err){
     console.error("GM turn generation failed",err);

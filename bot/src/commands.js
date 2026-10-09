@@ -4,6 +4,7 @@ import {
   AttachmentBuilder
 } from "discord.js";
 import { dualityRoll, parseDice } from "./dice.js";
+import { establishFact } from "./epistemic.js";
 import { prepareRollRequest, pendingRollRequests, ownedRollRequest, formatRollRequest, publishRollAmendment } from "./roll-requests.js";
 import { contributeRoll, adjudicateRollSource, applyRollOutcome } from "./roll-collaboration.js";
 import { publishJournal, postJournalEntry, publishEventResults, postGmLog, postStateError, postPrivateRelay, syncConfiguredSurfaces, postPlayMessage, sendPlayerPrivate, deliverHandout } from "./publishing.js";
@@ -1716,6 +1717,10 @@ GM notes: ${a.draft.gm_notes}`:""}`.slice(0,1950):"No aftermath draft exists for
           await interaction.reply({content:`Updated fact \`${row.id.slice(0,8)}\` (${updated.visibility}).`,ephemeral:true}); return true;
         }
         const target=interaction.options.getString("target",true);
+        if(target==="established"){
+          establishFact(db,interaction.guildId,row.id,interaction.user.id);
+          await interaction.reply({content:`Established fact \`${row.id.slice(0,8)}\` by saved GM ruling; visibility unchanged.`,ephemeral:true});return true;
+        }
         if(target==="canon"){
           const result=db.proposeCanon(interaction.guildId,{key:row.fact_key,value:row.content,visibility:"party",sessionId:row.session_id,sourceType:"human_gm",sourceId:row.id,provenance:`Promoted from fact ${row.id}`});
           db.recordMutation(interaction.guildId,{sessionId:row.session_id,actorType:"human_gm",actorId:interaction.user.id,sourceLayer:"command",sourceInteractionId:interaction.id,mutationType:"fact_promote_canon",entityKey:row.fact_key,visibility:"party",rationale:"GM promoted fact to canon",before:row,after:result});

@@ -1,8 +1,8 @@
-# VEILED CITY MULTIPLAYER DISCORD ENGINE v9.3.0
+# VEILED CITY MULTIPLAYER DISCORD ENGINE v9.4.0
 
 ## Current Version
 
-**9.3.0** — Veilkeeper, a stateful Discord AI GM for multiplayer Veiled City
+**9.4.0** — Veilkeeper, a stateful Discord AI GM for multiplayer Veiled City
 campaigns using Daggerheart. The version is maintained in
 [bot/package.json](bot/package.json).
 
@@ -149,6 +149,11 @@ session with `/vc-session start title:Opening Night`. Players then check in usin
 AI scene generation incurs normal configured provider usage.
 
 ### 5. Enable optional features and AI management
+
+The 9.4.0 narrative-inference changes, mundane-entry policy and GM fact-establishment
+commands are documented in [the inference audit](docs/NARRATIVE_INFERENCE_AUDIT.md).
+Remaining natural-language scope gaps are tracked in
+[the follow-up review](docs/NATURAL_LANGUAGE_SCOPE_DRIFT.md).
 
 Enable all 37 optional city/story flags only after reviewing their data and authority requirements:
 

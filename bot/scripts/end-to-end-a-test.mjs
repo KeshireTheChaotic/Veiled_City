@@ -27,7 +27,7 @@ try{
   const commit=(value,origin="message")=>{
     const narrative={narration:"The witness intends to inspect the cable.",narrative_claims:[],ai_intents:[value]};
     const result=applyAuthoritativeMutation(db,{guildId:guild,narrative,provenance:{messageId:origin}});
-    assert(!narrative.narration.includes("intends"));return result.intents[0];
+    assert.equal(narrative.narration,"The witness intends to inspect the cable.","Nonbinding prose is retained; actual effects are checked separately");return result.intents[0];
   };
   assert.equal(commit(intent).status,"blocked");assert.equal(db.listNpcGoals(guild,"witness").length,0);
   configureCityFlags(db,guild,{emergent_goals:true});

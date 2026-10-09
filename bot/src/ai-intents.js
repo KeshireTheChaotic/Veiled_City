@@ -26,6 +26,7 @@ import { suggestSetupPayoff } from "./story-continuity.js";
 import { reconcileHistory } from "./history-reconciliation.js";
 import { prepareRollRequest } from "./roll-requests.js";
 import { reviewRollDeclaration } from "./roll-language.js";
+import { mundaneEntryImpact, resolveMundaneEntry } from "./scene-entry.js";
 const hash=value=>createHash("sha256").update(JSON.stringify(value)).digest("hex");
 const adapters=new Map();
 export const FEATURE_FLAGS={roll:"roll_requests",setup:"narrative_setups",organization:"player_organizations",influence:"audience_influence",evidence:"evidence_custody",dialogue:"dialogue_history",encounter:"encounter_intelligence",goal:"emergent_goals",consequence:"consequences",scene:"scene_continuity",group:"emergent_groups",
@@ -55,7 +56,8 @@ export function configureDelegation(db,guild,input,reviewer){
 }
 function preflight(db,guild,intent,context){
   if(!validateIntent(intent)) throw new Error("Invalid closed versioned intent contract.");
-  if(context.scope?.mode==="private"&&!['arc','project','discovery','dialogue','organization','setup','roll'].includes(intent.feature)) throw new Error("Private scope cannot alter shared world state.");
+  if(context.scope?.mode==="private"&&!['arc','project','discovery','dialogue','organization','setup','roll'].includes(intent.feature)
+    &&!(intent.feature==="scene"&&intent.payload.op==="enter")) throw new Error("Private scope cannot alter shared world state.");
   if(context.scope?.mode==="private"&&intent.feature==="setup"&&intent.payload.character_id!==context.scope.actorCharacterId)
     throw new Error("Private setup invitation belongs to this character only.");
   if(context.scope?.mode==="private"&&intent.feature==="organization"&&intent.payload.character_id!==context.scope.actorCharacterId)
@@ -237,11 +239,12 @@ registerIntentAdapter("goal",{
   }
 });
 registerIntentAdapter("scene",{
-  current:(db,guild,intent)=>scenePresence(db,guild,intent.payload.entity_type,intent.payload.entity_key),
-  impact:(db,guild,intent)=>({cost:0,review:!["npc","character"].includes(intent.payload.entity_type)
+  current:(db,guild,intent)=>intent.payload.op==="enter"?db.getCityRecord(guild,"scene_entry",intent.payload.entry_key):scenePresence(db,guild,intent.payload.entity_type,intent.payload.entity_key),
+  impact:(db,guild,intent,before)=>intent.payload.op==="enter"?mundaneEntryImpact(db,guild,before,intent.payload.location_key):({cost:0,review:!["npc","character"].includes(intent.payload.entity_type)
     &&requireCitySource(db,guild,intent.payload.source_event).details.entity_key!==intent.payload.entity_key,
     reason:"New scene evidence and barriers need a matching committed observation or human review."}),
-  apply:(db,guild,intent,key,principal)=>{
+  apply:(db,guild,intent,key,principal,context)=>{
+    if(intent.payload.op==="enter")return resolveMundaneEntry(db,guild,intent,principal,context.scope);
     const {op,...input}=intent.payload,event=requireCitySource(db,guild,input.source_event);
     if(input.entity_type==="npc"&&activeCityProxy(db,guild,input.entity_key)) throw new Error("Proxy controls presence.");
     if(input.known_to.some(observer=>!event.details.observers?.includes(observer))) throw new Error("Observer knowledge is not established by the source.");

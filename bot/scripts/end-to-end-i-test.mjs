@@ -54,7 +54,7 @@ try{
     const mutation=commitGmTurn({db,guild,session,result,scope:{mode:scope,actorUserId:"owner",actorCharacterId:pc.id},speaker:"Owner",
       label:"Whole loop",meta:{messageId:origin}}),receipt=mutation.intents[0];
     assert.equal(receipt.status,status,receipt.data.diagnostic||receipt.data.reason);previous=receipt.record_key;
-    assert.equal(result.narration,"The scene continues; no additional narrated outcome is established here.");
+    assert.equal(result.narration,"Rain patters against the window.","Native validation retains safe narration instead of replacing every intent turn");
     if(scope==="party") await postPlayMessage({db,guild,sessionId:session.id,content:result.narration});
     counts[intent.feature]=(counts[intent.feature]||0)+1;return receipt;
   }

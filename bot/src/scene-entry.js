@@ -4,6 +4,7 @@ import { captureDeclaration, interpretAuthoredText } from "./player-language.js"
 import { recordCharacterArrival, currentScene, recordScenePresence } from "./scene-continuity.js";
 import { stateRevision } from "./ai-intents.js";
 import { indexWorldEvent, cityAudit } from "./city-calendar.js";
+import { randomUUID } from "node:crypto";
 const normalized=value=>String(value||"").toLowerCase().replace(/^the\s+/,"").replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
 export function entryTarget(text){
   if(interpretAuthoredText(text,{natural:true}).kind!=="attempt") return null;
@@ -11,7 +12,7 @@ export function entryTarget(text){
   const match=/^I\s+(?:walk\s+(?:into|inside)|step\s+(?:into|inside)|go\s+(?:into|inside)|enter)\s+(.+?)(?=\s+and\s+|[,.!?;\n]|$)/i.exec(clean);
   return match&&match[1].length<=160?match[1].trim():null;
 }
-function locationMatches(row,target){
+export function locationMatches(row,target){
   return [row.entity_key,row.state?.name,row.state?.title,row.state?.display_name].filter(Boolean).some(value=>normalized(value)===normalized(target));
 }
 export function prepareSceneEntry(db,guild,user,character,messageId,text,{privateScene=false}={}){
@@ -73,7 +74,10 @@ export function reviewSceneEntry(db,guild,input,reviewer){
     ||row.data.session_id!==db.getActiveSession(guild).id||row.data.scene!==currentScene(db,guild).key
     ||(pc.data.location??null)!==row.data.prior_location) throw new Error("Entry owner/source/session/scene/location changed; request a fresh declaration.");
   const location=typeof input.location_key==="string"?db.getSimulationEntity(guild,"location",input.location_key):null;
-  if(!location||!locationMatches(location,row.data.target)) throw new Error("Establish the explicitly named location first; do not redirect the owner's entry.");
+  const candidate=(row.data.candidates||[]).find(candidate=>candidate.location_key===input.location_key
+    &&candidate.sources.every(key=>{const event=db.getWorldEvent(guild,key);return event?.status==="active"
+      &&event.details.author===pc.owner_user_id&&event.details.character_id===pc.id&&db.ownerAuthoredSource(guild,key,pc.owner_user_id);}));
+  if(!location||!locationMatches(location,row.data.target)&&!candidate) throw new Error("Establish the explicitly named location first; do not redirect the owner's entry.");
   const encounter=db.getCurrentEncounter(row.data.session_id);
   if(encounter?.status==="active") throw new Error("Resolve encounter movement through native combat/travel review first.");
   return db.transaction(()=>{
@@ -89,4 +93,44 @@ export function reviewSceneEntry(db,guild,input,reviewer){
     const after=db.saveCityRecord(guild,{...row,key:row.record_key,status:"approved",data:{...row.data,reviewed_by:reviewer,arrival:event.event_key,presence:presence.record_key}});
     cityAudit(db,guild,"scene_entry_review",row.record_key,row,after,reviewer);return after;
   });
+}
+
+/** A human-established zero-cost adjacency policy, distinct from inferred names. */
+export function configureEntryPolicy(db,guild,input,reviewer){
+  if(!reviewer||Object.keys(input).sort().join()!=="from_locations,location_key,op"||input.op!=="entry-policy"
+    ||typeof input.location_key!=="string"||!Array.isArray(input.from_locations)||!input.from_locations.length||input.from_locations.length>20
+    ||[input.location_key,...input.from_locations].some(key=>typeof key!=="string"||!db.getSimulationEntity(guild,"location",key)))
+    throw new Error("Entry policy requires established destination and adjacent source locations.");
+  return db.transaction(()=>{
+    const before=db.getCityRecord(guild,"entry_policy",input.location_key);
+    const source=indexWorldEvent(db,guild,{key:`entry-policy:${randomUUID()}`,kind:"entry_policy",title:"GM-approved mundane accessible adjacency",source_id:reviewer},reviewer);
+    const after=db.saveCityRecord(guild,{kind:"entry_policy",key:input.location_key,source_event:source.event_key,
+      data:{from_locations:input.from_locations,configured_by:reviewer,session_id:db.getActiveSession(guild).id,scene:currentScene(db,guild).key,
+        destination_revision:stateRevision(db.getSimulationEntity(guild,"location",input.location_key)),
+        from_revisions:Object.fromEntries(input.from_locations.map(key=>[key,stateRevision(db.getSimulationEntity(guild,"location",key))]))}});
+    cityAudit(db,guild,"entry_policy",input.location_key,before,after,reviewer);return after;
+  });
+}
+export function mundaneEntryImpact(db,guild,entry,locationKey){
+  const policy=db.getCityRecord(guild,"entry_policy",locationKey),location=db.getSimulationEntity(guild,"location",locationKey);
+  const state=location?.state||{};
+  const safe=entry?.status==="pending"&&policy?.status==="active"&&db.getWorldEvent(guild,policy.source_event)?.status==="active"
+    &&policy.data.session_id===db.getActiveSession(guild)?.id&&policy.data.scene===currentScene(db,guild).key
+    &&policy.data.from_locations.includes(entry.data.prior_location)
+    &&policy.data.destination_revision===stateRevision(location)
+    &&policy.data.from_revisions?.[entry.data.prior_location]===stateRevision(db.getSimulationEntity(guild,"location",entry.data.prior_location))
+    &&(locationMatches(location,entry.data.target)||(entry.data.candidates||[]).length===1)
+    &&!["restricted","locked","contested","hazard","travel_required","removed"].some(key=>state[key])
+    &&!state.hazards?.length&&!state.wards?.length
+    &&!(Number(state.travel_cost)||Number(state.travel_minutes))&&db.getCurrentEncounter(entry.data.session_id)?.status!=="active";
+  return {cost:0,review:!safe,reason:safe?"Explicit GM-approved zero-cost mundane adjacency.":"Travel, access, encounter or missing adjacency policy requires native/human resolution."};
+}
+export function resolveMundaneEntry(db,guild,intent,principal,scope={}){
+  const entry=db.getCityRecord(guild,"scene_entry",intent.payload.entry_key);
+  if(!entry||intent.target_key!==entry.record_key||intent.payload.source_event!==entry.source_event
+    ||scope.actorUserId!==entry.data.user||scope.actorCharacterId!==entry.data.character
+    ||scope.mode!=="private"&&entry.data.private_scene)throw new Error("Mundane entry belongs to this authenticated actor and audience.");
+  if(mundaneEntryImpact(db,guild,entry,intent.payload.location_key).review)throw new Error("Only approved mundane movement may use scene.enter; use native travel/access review otherwise.");
+  return reviewSceneEntry(db,guild,{op:"review-entry",key:entry.record_key,expected_revision:intent.expected_revision,
+    location_key:intent.payload.location_key,adjudication:"Native zero-cost entry under saved GM adjacency and explicit scene.enter delegation."},principal);
 }

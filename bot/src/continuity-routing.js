@@ -17,7 +17,7 @@ export function formatDiscovery(db,guild,user,packet){
   if(packet.unknown) return "Your current character has no matching recorded knowledge. No new discovery or world action occurred.";
   let preferences={};try{preferences=JSON.parse(db.getPlayer(guild,user)?.accessibility_json||"{}");}catch{/* Legacy malformed preferences use plain defaults. */}
   const rows=[
-    ...packet.facts.map(row=>`${row.content} (${row.category==="hypothesis"?"private hypothesis; not proof":`${row.confidence}% confidence`}; ${row.source||"recorded source"})`),
+    ...packet.facts.map(row=>`${row.content} (${row.epistemic?.kind==="hypothesis"?"private hypothesis; not proof":row.epistemic?.kind||`${row.confidence}% confidence`}; ${row.evidence_active===false?"source retracted; historical only":row.source||"recorded source"})`),
     ...packet.events.map(row=>`${row.title} (${row.truth_status}; minute ${row.minute})`),
     ...(packet.personal||[]).map(row=>`${row.data.statement||row.data.invitation||row.key} (${row.status}; personal continuity, not world truth)`),
     ...(packet.evidence||[]).map(row=>`${row.title} (${row.authority} artifact; ${row.id}): ${row.content}`),

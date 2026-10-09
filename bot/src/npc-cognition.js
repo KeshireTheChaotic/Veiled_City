@@ -8,7 +8,7 @@
  */
 
 import { clusterContext } from "./memory-clusters.js";
-import { sceneView } from "./scene-continuity.js";
+import { sceneView, npcEvidenceActive } from "./scene-continuity.js";
 
 function words(value){
   return new Set(String(value||"").toLowerCase().match(/[a-z0-9']{3,}/g)||[]);
@@ -126,12 +126,12 @@ export function retrieveNpcCognition(db,guildId,{
         const source=db.getWorldEvent(guildId,clean.source_ref);
         const corrections=db.npcMemoryCorrections(guildId,profile.npc_key,clean.id).map(item=>({id:item.id,content:item.content,
           source_ref:item.source_ref,source_status:db.getWorldEvent(guildId,item.source_ref)?.status||"unverified"}));
-        return {...clean,source_status:source?.status||"unverified",corrections};});
+        return {...clean,source_status:source?.status||"unverified",evidence_active:npcEvidenceActive(db,guildId,profile.npc_key,clean.source_ref),corrections};});
     const knowledge=db.listNpcKnowledge(guildId,profile.npc_key,{limit:160,queryTokens:[...memoryTokens]})
       .map(row=>({...row,_score:knowledgeRank(row,queryTokens)}))
       .sort((a,b)=>b._score-a._score||String(b.updated_at).localeCompare(String(a.updated_at)))
       .slice(0,Math.max(1,Math.min(20,Number(knowledgePerNpc)||8)))
-      .map(({_score,...row})=>row);
+      .map(({_score,...row})=>({...row,evidence_active:npcEvidenceActive(db,guildId,profile.npc_key,row.knowledge_key)}));
     const scene=db.getCityCalendar(guildId).flags.scene_continuity===true&&db.getActiveSession(guildId)
       ?sceneView(db,guildId,{observer_type:"npc",observer_key:profile.npc_key}):null;
     return {

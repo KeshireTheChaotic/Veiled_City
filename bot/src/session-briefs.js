@@ -1,13 +1,15 @@
 /** Read-only reconstructed brief views. Public text never inherits GM planning, private thoughts or raw event details. */
 import { personalCharacter, personalInbox } from "./personal-continuity.js";
 import { reconcileHistory } from "./history-reconciliation.js";
+import { evidenceType, activeEvidence } from "./epistemic.js";
 export function sessionBrief(db,guild,{mode="shared",user="",gm=false}={}){
   if(db.getCityCalendar(guild).flags.session_briefs!==true) throw new Error("Session briefs are opt-in.");
   if(!["shared","character","gm"].includes(mode)||mode==="gm"&&!gm) throw new Error("Authenticated GM preparation access required.");
   const pc=mode==="character"?personalCharacter(db,guild,user):null,scope=mode==="gm"?"gm":pc?"character":"party";
   const facts=db.contextFacts(guild,{scope,userId:pc?user:"",characterId:pc?.id||"",limit:30}).map(row=>
     ({id:row.id,key:row.fact_key,text:row.content,confidence:row.confidence,source:row.source,category:row.category,
-      authority:row.category==="hypothesis"?"owner hypothesis; not proof":"recorded scoped assertion; confidence is not objective truth"}));
+      epistemic:evidenceType(row),evidence_active:activeEvidence(db,guild,row.id),
+      authority:evidenceType(row).kind==="hypothesis"?"owner hypothesis; not proof":"recorded scoped assertion; confidence is not objective truth"}));
   const events=db.listWorldEvents(guild,{includeGM:mode==="gm",userId:pc?user:null,characterId:pc?.id||null,limit:30}).map(row=>
     ({source:row.event_key,title:row.title,status:row.status,truth_status:row.truth_status,minute:row.minute,
       authority:row.status==="active"?"scoped indexed event; details not disclosed":"historical source, not authority for new effects"}));
@@ -34,6 +36,6 @@ export function sessionBrief(db,guild,{mode="shared",user="",gm=false}={}){
 }
 export function formatSessionBrief(packet){
   return [`${packet.mode} brief — recorded continuity, not a new ruling.`,packet.saved_recap?.text||"No completed-session recap is saved.",
-    ...packet.facts.slice(0,8).map(row=>`${row.text} (${row.category}; ${row.confidence}%; source ${row.source||row.id})`),
+    ...packet.facts.slice(0,8).map(row=>`${row.text} (${row.epistemic.kind}; ${row.confidence}%; ${row.evidence_active?"active evidence":"historical/retracted source"}; source ${row.source||row.id})`),
     ...packet.events.slice(0,5).map(row=>`${row.title} (${row.status}; source ${row.source})`),packet.limits].join("\n").slice(0,1900);
 }

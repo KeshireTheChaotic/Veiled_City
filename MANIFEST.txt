@@ -52,6 +52,7 @@ bot/scripts/i-heard-you-9-test.mjs
 bot/scripts/i-heard-you-integration-test.mjs
 bot/scripts/interaction-lifecycle-test.mjs
 bot/scripts/narrative-contract-test.mjs
+bot/scripts/narrative-inference-test.mjs
 bot/scripts/narrative-understanding-test.mjs
 bot/scripts/negotiation-preview-test.mjs
 bot/scripts/npc-cognition-regression-test.mjs
@@ -118,6 +119,7 @@ bot/src/discord/chunking.js
 bot/src/discord/interaction-lifecycle.js
 bot/src/discord/privacy.js
 bot/src/encounter.js
+bot/src/epistemic.js
 bot/src/errors.js
 bot/src/evidence-custody.js
 bot/src/expansion-contracts.js
@@ -129,6 +131,7 @@ bot/src/index.js
 bot/src/logger.js
 bot/src/long-projects.js
 bot/src/memory-clusters.js
+bot/src/narrative-context.js
 bot/src/narrative-integrity.js
 bot/src/negotiations.js
 bot/src/npc-cognition.js
@@ -287,6 +290,7 @@ docs/LEVEL_UP.md
 docs/LIVING_CITY.md
 docs/NARRATIVE_INFERENCE_AUDIT.md
 docs/NARRATIVE_UNDERSTANDING.md
+docs/NATURAL_LANGUAGE_SCOPE_DRIFT.md
 docs/NEXT_EXPANSION.md
 docs/NPC_COGNITION.md
 docs/NPC_PROXY_CONTROL.md

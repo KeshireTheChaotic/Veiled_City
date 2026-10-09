@@ -1,6 +1,7 @@
 /** Deterministic sourced context; authorization precedes ranking and budgeting. No recall writes or AI calls. */
 import { historyContext } from "./city-civic.js";
 import { clusterContext } from "./memory-clusters.js";
+import { evidenceType, activeEvidence } from "./epistemic.js";
 const tokens=value=>String(value||"").toLowerCase().match(/[a-z0-9-]{3,}/g)||[];
 export class ContextPlanner {
   constructor(db){this.db=db;}
@@ -29,7 +30,7 @@ export class ContextPlanner {
       withheld.push("Employee memories and global facts excluded; only filed institution reports included.");
     }else{
       for(const term of terms.length?terms:[""]) for(const row of this.db.contextFacts(guildId,{scope:actorType==="gm"?scope:scope==="gm"?"character":scope,
-        userId,characterId,query:term,limit:20})) add(`fact:${row.id}`,row,20);
+        userId,characterId,query:term,limit:20})) add(`fact:${row.id}`,{...row,epistemic:evidenceType(row),evidence_active:activeEvidence(this.db,guildId,row.id)},20);
       if(this.db.getCityCalendar(guildId).flags.personal_arcs===true){
         const session=this.db.getActiveSession(guildId);
         const ids=actorType==="gm"&&scope==="gm"&&session?this.db.roster(session.id)

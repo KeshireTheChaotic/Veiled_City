@@ -5,6 +5,8 @@ import { applySimulationUpdates } from "./simulation.js";
 import { validateNarrativeClaims, assertNarrativeApplied } from "./narrative-integrity.js";
 import { dispatchAiIntents } from "./ai-intents.js";
 import { assertNpcObservation } from "./scene-continuity.js";
+import { persistInterpretation } from "./narrative-context.js";
+import { typedEvidence } from "./epistemic.js";
 
 export function summarizeRoster(rows){
   return rows.map(r=>({
@@ -70,7 +72,7 @@ export function applyGMEvents(db,guildId,sessionId,events=[],scope={mode:"party"
             subjectCharacterId:vis.targetCharacterId,
             sessionId,
             source:"ai_gm",
-            provenance:{...provenance,event:e},
+            provenance:{...provenance,event:e,epistemic:typedEvidence(db,guildId,e,scope)},
             confidence:provenance.confidence??100
           });
           results.push({type:e.type,ok:true,id,visibility:vis.visibility,before:null,after:db.getFact(guildId,id)});
@@ -169,6 +171,10 @@ export function applyGMEvents(db,guildId,sessionId,events=[],scope={mode:"party"
           const canonVisibility=String(e.visibility||"party").toLowerCase();
           if(!["public","party","gm"].includes(canonVisibility)) fail("Canon visibility must be public, party, or gm because canon ledger entries are campaign-global.");
           const before=db.currentCanon(guildId,e.key)||null;
+          if(!before){
+            if(e.epistemic?.kind!=="observation")fail("New AI canon needs committed observation ancestry or explicit human GM promotion; inference is not truth.");
+            typedEvidence(db,guildId,e,scope);
+          }
           const r=db.proposeCanon(guildId,{key:e.key,value:e.value,visibility:canonVisibility,sessionId,sourceType:"ai",sourceId:"gm",provenance:e.note||"AI GM turn"});
           results.push({type:e.type,key:e.key,ok:r.status!=="conflict",status:r.status,conflict_id:r.conflict?.id||null,expectedConflict:r.status==="conflict",before,after:r.status==="conflict"?r.conflict:db.currentCanon(guildId,e.key)});
           break;
@@ -287,6 +293,8 @@ export function applyNpcCognitionDrafts(db,guildId,{memories=[],knowledge=[],goa
     if(!key) throw new Error("NPC cognition draft requires npc_key.");
     let profile=db.getNpcProfile(guildId,key);
     if(!profile){
+      if(source!=="human_gm")
+        throw new Error("Unknown NPC requires authorized world authoring/review; cognition cannot create actors.");
       const ref=db.listReferences(guildId,"npc",{publicOnly:false}).find(r=>normalizeNpcKey(r.display_name||r.entity_key)===key);
       profile=db.upsertNpcProfile(guildId,{
         npcKey:key,
@@ -303,6 +311,8 @@ export function applyNpcCognitionDrafts(db,guildId,{memories=[],knowledge=[],goa
 
   for(const draft of memories||[]){
     try{
+      if(source!=="human_gm")assertNpcObservation(db,guildId,normalizeNpcKey(draft.npc_key),draft.source_ref||sourceRef,
+        {sourceType:draft.source_type||source,content:draft.content,strict:true});
       const profile=ensureProfile(draft);
       const row=db.addNpcMemory(guildId,{
         npcKey:profile.npc_key,memoryType:draft.memory_type||"episodic",content:draft.content,
@@ -317,13 +327,14 @@ export function applyNpcCognitionDrafts(db,guildId,{memories=[],knowledge=[],goa
   }
   for(const draft of knowledge||[]){
     try{
-      assertNpcObservation(db,guildId,normalizeNpcKey(draft.npc_key),draft.source_ref||sourceRef,
-        {sourceType:draft.source_type||source,content:draft.content});
+      if(source!=="human_gm")assertNpcObservation(db,guildId,normalizeNpcKey(draft.npc_key),draft.source_ref||sourceRef,
+        {sourceType:draft.source_type||source,content:draft.content,strict:true});
       const profile=ensureProfile(draft);
       const before=db.getNpcKnowledge(guildId,profile.npc_key,draft.knowledge_key)||null;
       const row=db.upsertNpcKnowledge(guildId,{
         npcKey:profile.npc_key,knowledgeKey:draft.knowledge_key,content:draft.content,
-        beliefState:draft.belief_state||"known",confidence:draft.confidence??100,
+        beliefState:["inferred","rumor","supernatural_impression","told","told_by_npc","faction_report","document"].includes(draft.source_type)
+          ?(draft.belief_state==="known"||!draft.belief_state?"suspected":draft.belief_state):draft.belief_state||"known",confidence:draft.confidence??100,
         sourceType:draft.source_type||source,sourceRef:draft.source_ref||sourceRef,isSecret:draft.is_secret??true
       });
       if(before&&(before.content!==row.content||before.belief_state!==row.belief_state)){
@@ -379,13 +390,14 @@ export function assertMutationSuccess({events=[],relationships=[],handouts=[],np
 export function applyAuthoritativeMutation(db,{guildId,sessionId=null,events=[],relationships=[],handouts=[],npcMemories=[],npcKnowledge=[],npcGoals=[],
   simulationUpdates=[],scope={mode:"party",actorUserId:null,actorCharacterId:null},source="ai_gm",provenance={},narrative=null,aiIntents=narrative?.ai_intents||[]}){
   return db.transaction(()=>{
-    if(narrative) validateNarrativeClaims(db,guildId,narrative,scope);
+    if(narrative?.narrative_interpretation)persistInterpretation(db,guildId,narrative.narrative_interpretation,scope,provenance);
     const eventResults=applyGMEvents(db,guildId,sessionId,events,scope,provenance);
     const relationshipResults=applyRelationshipDrafts(db,guildId,relationships,scope,source);
     const handoutResults=applyHandoutDrafts(db,guildId,sessionId,handouts,scope,source);
     const scene=sessionId?db.getDirectorState(sessionId).scene_label||"":"";
     const cognition=applyNpcCognitionDrafts(db,guildId,{memories:npcMemories,knowledge:npcKnowledge,goals:npcGoals},source,{...provenance,sessionId,scene});
-    const simulation=applySimulationUpdates(db,guildId,simulationUpdates,{scope,provenance:{...provenance,sessionId,scene}});
+    const simulation=applySimulationUpdates(db,guildId,simulationUpdates,{scope,
+      provenance:{...provenance,actorType:provenance.actorType||(source==="human_gm"?"human_gm":"ai"),sessionId,scene}});
     assertMutationSuccess({events:eventResults,relationships:relationshipResults,handouts:handoutResults,npcMemories:cognition.memories,npcKnowledge:cognition.knowledge,npcGoals:cognition.goals});
     if(narrative) assertNarrativeApplied(narrative,eventResults);
     const base={sessionId,actorType:provenance.actorType||"ai",actorId:provenance.actorId||scope.actorUserId||"veilkeeper",sourceLayer:source,sourceInteractionId:provenance.interactionId||null,sourceMessageId:provenance.messageId||null,confidence:provenance.confidence??100,rationale:provenance.rationale||"",triggerText:provenance.triggerText||""};
@@ -415,13 +427,18 @@ export function applyAuthoritativeMutation(db,{guildId,sessionId=null,events=[],
     cognition.goals.filter(x=>x?.ok).forEach(result=>db.recordMutation(guildId,{...base,mutationType:"npc_goal",entityKey:`${result.row?.npc_key||""}:${result.row?.goal_key||""}`,visibility:"gm",before:result.before??{},after:result.after??result.row,payload:result.draft||{}}));
     const intents=dispatchAiIntents(db,guildId,aiIntents,{scope,sessionId,
       origin:provenance.messageId||provenance.interactionId||source});
-    if(narrative&&intents.length){
-      // First-pass prose cannot guarantee effects that are resolved only at commit.
-      for(const field of ["narration","public_narration","player_summary","summary"]) if(field in narrative)
-        narrative[field]="The scene continues; no additional narrated outcome is established here.";
-      if(narrative.private_messages) narrative.private_messages=[];
-    }
+    // Validate against native operations staged in this transaction, not the old
+    // state or model-described effects. Any failure rolls back the entire bundle.
+    if(narrative) validateNarrativeClaims(db,guildId,narrative,scope,{staged:true,eventResults});
     return {events:eventResults,relationships:relationshipResults,handouts:handoutResults,
       npcMemories:cognition.memories,npcKnowledge:cognition.knowledge,npcGoals:cognition.goals,simulation,intents};
   });
+}
+
+/** Native preview shares the commit resolver and always rolls back; no delivery or paid calls. */
+export function previewAuthoritativeMutation(db,input){
+  const rollback={};let result;
+  try{db.transaction(()=>{result=applyAuthoritativeMutation(db,input);throw rollback;});}
+  catch(error){if(error!==rollback)throw error;}
+  return result;
 }

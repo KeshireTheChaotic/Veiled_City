@@ -80,6 +80,7 @@ export async function routeConsentMessage({db,message,characterId,text=message.c
     if(!offer) return false;
     const row=respondConsent(db,message.guild.id,message.author.id,{characterId,messageId:message.id,text,proposal:offer.record_key,
       revision:match[2]||offer.revision,authorize:!!match[2]});
+    if(!["applied","authorized"].includes(row.status)) return false;
     committed=true;
     await deliver(["applied","authorized"].includes(row.status)?"Your exact response was recorded by the native owner-consent service. It does not spend resources, force attendance or bypass GM review.":
       "Your reply is preserved without agreement or changing the terms. What needs to be clarified or changed?");

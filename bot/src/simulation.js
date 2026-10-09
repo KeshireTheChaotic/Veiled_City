@@ -214,6 +214,7 @@ export function applySimulationUpdates(db,guildId,updates=[],{scope={mode:"party
         break;
       }
       case "obligation":{
+        if(provenance.actorType==="ai")throw new Error("Binding obligations require native negotiated/owner-consented resolution, not an AI simulation patch.");
         const existing=update.key?db.getSimulationRecord(guildId,update.key):null;
         const status=update.status||"active";
         if(!["active","fulfilled","violated","transferred","called_in","forgiven"].includes(status)) throw new Error("Invalid obligation lifecycle.");

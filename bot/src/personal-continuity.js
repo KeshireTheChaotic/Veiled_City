@@ -7,6 +7,7 @@ import { stateRevision } from "./ai-intents.js";
 import { handoutPlayerView } from "./handout.js";
 import { organizationInbox } from "./owned-community.js";
 import { evidenceView } from "./evidence-custody.js";
+import { evidenceType, activeEvidence } from "./epistemic.js";
 export function personalCharacter(db,guild,userId,characterId){
   const session=db.getActiveSession(guild),assignment=session?db.activeAssignment(session.id,userId):null;
   const id=characterId||assignment?.character_id,character=id?db.getCharacter(id):null;
@@ -107,7 +108,8 @@ export function discoverPersonal(db,guild,userId,input={}){
   if(input.since_minute!==undefined) cityInteger(input.since_minute,0,1000000000);
   const facts=["evidence","commitments","organizations"].includes(mode)?[]:db.contextFacts(guild,{scope:"character",characterId:character.id,userId,query,limit:50})
     .filter(row=>mode!=="leads"||["clue","lead"].includes(row.category)).map(row=>({id:row.id,key:row.fact_key,content:row.content,
-      category:row.category,confidence:row.confidence,source:row.source,last_recorded:row.created_at,authority:"recorded_knowledge_not_global_truth"}));
+      category:row.category,epistemic:evidenceType(row),evidence_active:activeEvidence(db,guild,row.id),
+      confidence:row.confidence,source:row.source,last_recorded:row.created_at,authority:"recorded_knowledge_not_global_truth"}));
   const events=mode==="changed"?db.listWorldEvents(guild,{characterId:character.id,userId,query,limit:50})
     .filter(row=>row.status==="active"&&row.minute>(input.since_minute??-1)).map(row=>({source:row.event_key,title:row.title,minute:row.minute,truth_status:row.truth_status})):[];
   const personal=mode==="arcs"?["arc","arc_beat"].flatMap(kind=>db.characterContinuity(guild,character.id,{kind,query}).map(row=>({key:row.record_key,
@@ -115,8 +117,8 @@ export function discoverPersonal(db,guild,userId,input={}){
   const evidence=["evidence","case"].includes(mode)?db.listHandoutsFor(guild,userId,{characterId:character.id,query,limit:30}).map(handoutPlayerView):[];
   const case_view=mode==="case"?{
     evidence:evidence.map(row=>({...row,custody:evidenceView(db,guild,row.id,userId).history})),
-    hypotheses:facts.filter(row=>row.category==="hypothesis"),
-    claims:facts.filter(row=>row.category!=="hypothesis").map(row=>({...row,label:row.category==="clue"?"recorded clue; interpretation not proof":"recorded character knowledge/claim; not fixed global truth"})),
+    hypotheses:facts.filter(row=>row.epistemic.kind==="hypothesis"),
+    claims:facts.filter(row=>row.epistemic.kind!=="hypothesis").map(row=>({...row,label:`${row.epistemic.kind}; recorded claim, not automatic global truth`})),
     limits:"Literal matching within authorized records before limits; unknown is not disproven. No sealed holdings, hidden solution, private NPC beliefs or other PCs' findings. Creative inquiry needs separate adjudication."}:null;
   const organizations=mode==="organizations"?organizationInbox(db,guild,userId,query).communities:[];
   const commitments=mode==="commitments"?[

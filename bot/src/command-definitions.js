@@ -436,7 +436,7 @@ export function buildCommands(){
           .addStringOption(o=>o.setName("fact_id").setDescription("Fact ID/prefix").setRequired(true)))
         .addSubcommand(s=>s.setName("fact-promote").setDescription("Promote a fact to party/public/canon visibility")
           .addStringOption(o=>o.setName("fact_id").setDescription("Fact ID/prefix").setRequired(true))
-          .addStringOption(o=>o.setName("target").setDescription("Promotion target").setRequired(true).addChoices({name:"Party fact",value:"party"},{name:"Public fact",value:"public"},{name:"Campaign canon",value:"canon"})))
+          .addStringOption(o=>o.setName("target").setDescription("Promotion target").setRequired(true).addChoices({name:"Party fact",value:"party"},{name:"Public fact",value:"public"},{name:"Campaign canon",value:"canon"},{name:"Establish truth (GM ruling)",value:"established"})))
         .addSubcommand(s=>s.setName("fact-list").setDescription("List recorded campaign facts")
           .addStringOption(o=>o.setName("visibility").setDescription("Filter by visibility").addChoices(
             {name:"All",value:"all"},{name:"Public",value:"public"},{name:"Party",value:"party"},{name:"Specific player",value:"player"},{name:"Character",value:"character"},{name:"GM only",value:"gm"}))

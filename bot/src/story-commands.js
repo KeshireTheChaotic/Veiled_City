@@ -23,7 +23,7 @@ import { reconcileHistory } from "./history-reconciliation.js";
 import { publishRollRequests } from "./roll-requests.js";
 import { sendPlayerPrivate } from "./publishing.js";
 import { sessionBrief } from "./session-briefs.js";
-import { reviewSceneEntry } from "./scene-entry.js";
+import { reviewSceneEntry, configureEntryPolicy } from "./scene-entry.js";
 export async function handleStoryCommand(interaction,{db,gm}){
   if(!interaction.memberPermissions?.has(PermissionFlagsBits.ManageGuild)&&
     !interaction.member?.roles?.cache?.has(db.getCampaign(interaction.guildId)?.gm_role_id)) throw new PermissionError("GM/admin permission required.");
@@ -35,7 +35,7 @@ export async function handleStoryCommand(interaction,{db,gm}){
   else if(sub==="ai-review") result=reviewWorkflow(db,guild,input,interaction.user.id);
   else if(sub==="context") result=new ContextPlanner(db).plan(guild,input);
   else if(sub==="expansion-status") result=expansionStatus(db,guild);
-  else if(sub==="scene") result=input.op==="review-entry"?reviewSceneEntry(db,guild,input,interaction.user.id):recordScenePresence(db,guild,input,interaction.user.id);
+  else if(sub==="scene") result=input.op==="entry-policy"?configureEntryPolicy(db,guild,input,interaction.user.id):input.op==="review-entry"?reviewSceneEntry(db,guild,input,interaction.user.id):recordScenePresence(db,guild,input,interaction.user.id);
   else if(sub==="group") result=manageGroup(db,guild,input,interaction.user.id);
   else if(sub==="strategy") result=manageStrategy(db,guild,input,interaction.user.id);
   else if(sub==="arc-beat") result=proposeArcBeat(db,guild,input,interaction.user.id);

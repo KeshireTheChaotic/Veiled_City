@@ -29,7 +29,8 @@ try{
   assert.throws(()=>respondConsent(db,guild,"other",{characterId:pcs.other.id,messageId:"forged",text:`I agree to: ${terms}`,proposal,revision}),/owned/);
   assert.throws(()=>response(`I agree to: ${terms}`,"stale",{revision:"old"}),/revision/);
   const delivered=[],message={guild:{id:guild},author:{id:"owner"},id:"bare",content:`Regarding ${proposal}, I agree to: ${terms}`};
-  assert(await routeConsentMessage({db,message,characterId:pcs.owner.id,deliver:async text=>delivered.push(text)}));
+  assert.equal(await routeConsentMessage({db,message,characterId:pcs.owner.id,deliver:async text=>delivered.push(text)}),false);
+  assert.equal(delivered.length,0,"Nonbinding discussion continues to the GM without forced clarification");
   assert.equal(db.getCityRecord(guild,"organization_request",proposal).status,"pending","Bare key is not exact revision authorization");
   message.id="exact";message.content=`Regarding ${proposal}@${revision}, I agree to: ${terms}`;
   assert(await routeConsentMessage({db,message,characterId:pcs.owner.id,deliver:async text=>delivered.push(text)}));

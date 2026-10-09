@@ -5,9 +5,72 @@ conversation, but validate consequential persistent changes separately. Understa
 what a player means is not evidence that their proposed action succeeded. This is
 an implementation audit, not a claim of unrestricted model language understanding.
 
-Scope: development worktree, including the pending narrative-understanding change.
-The findings below are recommendations, not changes implemented by this audit.
+Scope: development worktree. Original findings below are retained as the historical
+audit; implementation status and remaining limits are recorded here for 9.4.0.
 Online rules retrieval is implemented separately in `RULES_ONLINE_SRD.md`.
+
+## Implementation — 9.4.0
+
+The ten recommendations have bounded native implementations and regression coverage,
+not a certification of unrestricted language understanding. No live feature flags,
+delegation policy, campaign records or Discord registrations are changed by this release.
+
+| Finding | Implementation |
+| --- | --- |
+| 1 | Nullable closed `narrative_interpretation` separates references, intent, acknowledgements and material questions from consequential claims. Authenticated message sources and owner-private interpretation records carry no world authority. |
+| 2 | Source-backed named clarifications attach candidate locations to the original pending attempt, preserving its text and owner. Native review checks the new revision, active clarification ancestry, session, scene and prior position. Older interpretation retrieval uses scoped keyword searches plus recent context, bounded to 6,000 characters of whole records. |
+| 3 | `scene.enter` resolves only a current owned attempt under explicit delegation and a saved GM-approved zero-cost adjacency policy for this session/scene. Locked, restricted, contested, hazardous, unknown, travel-cost/time and encounter movement cannot use this resolver. Conflicting nonliteral candidates require review. |
+| 4 | Gameplay and world-director generation preview the same native resolver inside an always-rolled-back transaction. Commit stages operations and receipts, then checks consequential claims against staged position/access/status/custody/obligation/disclosure/canon. Damage checks actual before/delta receipts. Rejection rolls back before publication. Safe prose is no longer universally erased whenever an intent exists. |
+| 5 | AI fact/clue proposals persist typed hypothesis/testimony/observation metadata, perspective and source ancestry. Missing metadata defaults to hypothesis. Observations must repeat committed observations; AI cannot establish truth. Human establishment creates an independent GM ruling. Retrieval, briefs and discovery preserve evidence type and source activity. |
+| 6 | AI memories and knowledge both require witnessed, recipient-delivered or actor-owned inferred evidence, even when optional language flags are off. Inferences and reports cannot become `known`. Unknown profiles require authorized authoring/review; cognition cannot create them. Retracted ancestry blocks fresh authority; historical subjective records remain. |
+| 7 | Assisted routing considers bounded audience-scoped conversation focus when answering the GM's latest question, excluding the current incoming transcript row. Mention-only mode, OOC and player-to-player silence remain. No additional interpretation provider call. |
+| 8 | Nonbinding consent discussion is recorded without consent/spending and continues to ordinary GM handling, without a mandatory clarification response. Exact terms/revision/owner authorization still governs binding operations. |
+| 9 | Advisory `uncertainty` means unresolved mechanical outcome. Separate `referent_uncertainty` and `fictional_uncertainty` permit ordinary narration while a consequential action stays pending. |
+| 10 | Required `narrative-inference-test.mjs` exercises paraphrases, private/foreign scope, source-backed aliases, stale revisions, real GM generation/production commit, rollback, replay/restart, locked/encounter entry, compound uncertainty, hypotheses, delivery/inference and scoped routing. Existing end-to-end publication/restore/consent suites remain required. |
+
+### Operator enablement
+
+No new flag is introduced. Context capture/routing uses `natural_language`;
+entry resolution also uses `scene_continuity`; advisory guidance uses
+`decision_advisory`. Consequential commit/evidence protections are not optional.
+
+```text
+/vc-city flags json:{"natural_language":true,"scene_continuity":true,"decision_advisory":true}
+/vc-story scene json:{"op":"entry-policy","location_key":"silver-moon","from_locations":["diner-frontage"]}
+/vc-story delegation json:{"mode":"routine_delegated","allow":["scene.enter"],"max_operations":1,"max_cost":0,"expires_minute":1440}
+/vc-gm fact-promote fact_id:<fact ID> target:established
+```
+
+Both locations must already exist. Configure adjacency only after reviewing actual
+access: this explicitly declares a zero-cost mundane connection, not a city travel
+route. Policies are session/scene-specific; create a fresh policy when the scene
+changes. Delegation replaces the campaign allowlist: merge other desired operations
+and choose an expiry after the current fictional minute. Human entry review remains
+`/vc-story scene` with `op:review-entry` and the current review fingerprint.
+`fact-promote target:established` preserves visibility; public promotion is separate.
+New AI canon likewise needs committed observation ancestry; unsupported inference
+must use explicit human promotion. Legacy AI obligation patches are rejected:
+binding terms must use native negotiated/owner-consented workflows.
+Register the updated slash schema to expose the new `established` choice; JSON scene
+operations use the existing command. Restart the bot to load changed runtime code.
+
+### Explicit limits
+
+Interpretation records are nonbinding contextual annotations, not proof of a correct
+model interpretation. Native initial attempt/speech capture and discovery fast paths
+still have conservative syntax; ordinary GM understanding is not limited to that
+syntax. Alias auto-resolution only accepts source-backed named existing locations,
+not arbitrary model-created places. Newly resolved aliases change the pending
+fingerprint, so a subsequent native proposal must use the refreshed revision.
+Existing untyped AI facts are treated conservatively as hypotheses when read; they
+are not silently rewritten or promoted. Seeded legacy knowledge retains explicit
+native seed trust. Historical summaries are not automatically rewritten.
+
+Prose omission/framing tripwires are bounded, not a universal semantic verifier.
+The compound-clause test closes the measured laundering case, not every possible
+paraphrase. Synthetic passing fixtures measure these specific cases, not live-model
+false-positive/negative rates. No paid evaluation was run. Further scope drift and
+proposed follow-up phases are documented in `NATURAL_LANGUAGE_SCOPE_DRIFT.md`.
 
 ## Findings and required changes
 
