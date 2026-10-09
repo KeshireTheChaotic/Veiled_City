@@ -28,6 +28,20 @@ export function hasCharacterInvitation(value){
   if(interpretAuthoredText(text,{natural:true}).kind==="planning_or_ooc")return false;
   return /\bI\s+(?:need|want|wish|wonder|hope|am looking for|can't afford|cannot afford)\b|\bI'm\s+(?:looking for|worried|hungry|lost|broke)\b/i.test(text);
 }
+/** Read-only routing obligation; it never supplies consent, action success, movement or state authority. */
+export function responseObligation(value,{authenticated=false,directMention=false,conversationFocus=""}={}){
+  const text=authoredSceneText(value).replace(/^(?:\s*<@!?\d+>\s*)+/,"").trim();
+  if(!authenticated||!text||/^(?:ooc\b|\(\(|\/\/)/i.test(text))return {needed:false,reason:"intentional_silence"};
+  if(directMention)return {needed:true,reason:"direct_address"};
+  const parsed=interpretAuthoredText(text,{natural:true});
+  if(["attempt","mixed","inquiry","speech"].includes(parsed.kind))return {needed:true,reason:`in_world_${parsed.kind}`};
+  if(hasCharacterInvitation(text))return {needed:true,reason:"character_need"};
+  if(/["“][^"”]{2,}["”]/.test(text)||/^(?:he|she|they|[A-Z][a-z]+)\s+(?:looks?|glances?|turns?|sighs?|asks?|says?|tells?|searches?|moves?)\b/.test(text))
+    return {needed:true,reason:"scene_reaction"};
+  if(conversationFocus&&/\b(?:again|there|that|them|him|her|it|this)\b/i.test(text))return {needed:true,reason:"continuing_exchange"};
+  if(/\b(?:empty|quiet|rain|work|hungry|lost|broke|worried)\b/i.test(text)&&/[.!…]$/.test(text))return {needed:true,reason:"reflective_scene_cue"};
+  return {needed:false,reason:"table_chatter_or_no_world_reaction"};
+}
 export function interpretAuthoredText(message,{natural=false}={}){
   const text=authoredSceneText(message).replace(/^(?:\s*<@!?\d+>\s*)+/,"").trim();
   if(!text||text.length>4000) return {kind:"unclear",speech:null};

@@ -81,6 +81,9 @@ replaces all diagnostic logs, Discord messages or operational receipts.
 - Delivery/replay: `roll_publication`, AI intent receipts, scheduler/work-slot
   bookkeeping and counters. Publication failure does not roll back committed
   mechanics or authorize retrying the same consequence.
+- Message-turn recovery: `turn_attempts` stores operational stage, source-span
+  receipts, commit tri-state and recovery references. It is idempotency and delivery
+  metadata, not fictional truth or permission to infer a consequence.
 - Retrieval/maintenance: `narrative_context`, `authored_candidate`, `scene_entry`
   candidates, `memory_cluster`, `memory_cursor`, activity/relevance selection and
   source indexes. These persist interpretation or processing position, not new truth.

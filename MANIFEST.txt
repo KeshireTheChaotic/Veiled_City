@@ -51,6 +51,7 @@ bot/scripts/i-heard-you-6-test.mjs
 bot/scripts/i-heard-you-7-test.mjs
 bot/scripts/i-heard-you-9-test.mjs
 bot/scripts/i-heard-you-integration-test.mjs
+bot/scripts/implementation-phase-a-test.mjs
 bot/scripts/interaction-lifecycle-test.mjs
 bot/scripts/narrative-contract-test.mjs
 bot/scripts/narrative-inference-test.mjs
@@ -139,6 +140,7 @@ bot/src/location-language.js
 bot/src/logger.js
 bot/src/long-projects.js
 bot/src/memory-clusters.js
+bot/src/message-span-ledger.js
 bot/src/narrative-context.js
 bot/src/narrative-integrity.js
 bot/src/negotiations.js
@@ -180,6 +182,7 @@ bot/src/state.js
 bot/src/story-commands.js
 bot/src/story-continuity.js
 bot/src/supply-dependencies.js
+bot/src/turn-attempts.js
 bot/src/turn-orchestration.js
 bot/src/voice.js
 bot/src/world-authoring.js
@@ -295,6 +298,7 @@ docs/EXPANSION_GAP_ANALYSIS.md
 docs/EXPANSION_RELEASES.md
 docs/GM_OPERATIONS.md
 docs/HANDOUTS_AND_EVIDENCE.md
+docs/IMPLEMENTATION_PLAN_EXECUTION.md
 docs/INTERACTION_LIFETIME_FIX.md
 docs/I_HEARD_YOU_GAP_ANALYSIS.md
 docs/I_HEARD_YOU_IMPLEMENTATION.md

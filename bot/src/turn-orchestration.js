@@ -47,6 +47,7 @@ export function commitGmTurn({db,guild,session,result,scope,speaker,label,meta={
       const p=canonProposals.find(x=>x?.ok&&x.row?.canon_key===key&&x.row?.proposed_value===value);
       if(p){ r.proposal_id=p.row.id; r.proposal_status=p.row.status; }
     }
+    if(meta.turnId)db.updateTurnAttempt(meta.turnId,{stage:"committed",committed:"yes",nativeCommitId:`turn:${meta.turnId}`});
     return {...mutation,canonProposals,decision_advisory};
   });
 }

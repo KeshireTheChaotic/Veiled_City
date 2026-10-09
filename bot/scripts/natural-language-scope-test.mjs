@@ -118,12 +118,12 @@ try{
   assert.equal(db.getWorldEvent(guild,projection.source_event).visibility,"party");
   assert(!JSON.stringify(db.listWorldEvents(guild)).includes("A courier requested help"));
   // D6/D7: indirect world actions and banter both reach ONE existing classifier, hard gates stay free.
-  const fake=new FakeResponses([{respond:true,reason:"Environmental reaction"},{respond:false,reason:"Banter"}]);
+  const fake=new FakeResponses([{respond:false,reason:"Banter"}]);
   const gm=new GMService({db,content:new ContentIndex(path.resolve("../content")),config:{routerModel:"offline",maxRecentMessages:20,maxContentChunks:2},ai:fake});
   for(const [content,expected] of [["Heading inside.",true],["Nice hat, fellow player.",false],["OOC: nice hat",false]])
     assert.equal(await gm.shouldRespond({guildId:guild,message:{content,author:{id:"owner",username:"owner"}},mode:"assisted"}),expected);
   assert.equal(await gm.shouldRespond({guildId:guild,message:{content:"Heading inside.",author:{id:"owner"}},mode:"mention"}),false);
-  assert.equal(fake.requests.length,2);assert(gm.buildContext(guild,"owner","diner").constitution.includes(AUTHORITY_POLICY));
+  assert.equal(fake.requests.length,1);assert(gm.buildContext(guild,"owner","diner").constitution.includes(AUTHORITY_POLICY));
   assert(fake.requests.every(request=>request.instructions.includes(AUTHORITY_POLICY)),"Actual assembled model requests use the shared policy");
   assert(!gm.buildContext(guild,"owner","diner").constitution.includes("If the model must generate dice itself"));
   // D8: scores cannot become PC feelings/debt; artifacts retain original presentation without new truth.

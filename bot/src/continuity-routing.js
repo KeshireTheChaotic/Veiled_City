@@ -34,14 +34,14 @@ export function formatDiscovery(db,guild,user,packet){
   const coverage=`\nSearch/display limits: ${rows.length-selected.length} additional returned rows; ${(packet.omissions||[]).length} retrieval limit notices. Unknown is not disproven.`;
   return `Your current character's recorded knowledge, not global truth:\n${selected.join("\n")}`.slice(0,limit-coverage.length)+coverage;
 }
-export async function routeDiscoveryMessage({db,message,deliver}){
-  if(db.getCityCalendar(message.guild.id).flags.discovery!==true) return false;
-  const question=discoveryQuestion(message.content);if(!question) return false;
-  let text;
+export async function routeDiscoveryMessage({db,message,text=message.content,deliver,detailed=false}){
+  if(db.getCityCalendar(message.guild.id).flags.discovery!==true) return detailed?null:false;
+  const question=discoveryQuestion(text);if(!question) return detailed?null:false;
+  let output;
   try{
     const packet=discoverPersonal(db,message.guild.id,message.author.id,question);
-    text=formatDiscovery(db,message.guild.id,message.author.id,packet);
-  }catch{text="Select and attend with an authenticated controlled role. Owner-only personal workflows still require ownership. No world action occurred.";}
-  try{await deliver(text.slice(0,1900));}catch{/* Delivery failure must never turn a read-only query into a mutating turn. */}
-  return true;
+    output=formatDiscovery(db,message.guild.id,message.author.id,packet);
+  }catch{output="Select and attend with an authenticated controlled role. Owner-only personal workflows still require ownership. No world action occurred.";}
+  let delivered=true;try{await deliver(output.slice(0,1900));}catch{delivered=false;/* Read-only delivery failure never becomes a mutating turn. */}
+  return detailed?{handled:true,committed:false,operation:"discovery",query:question,delivery_status:delivered?"delivered":"failed"}:true;
 }

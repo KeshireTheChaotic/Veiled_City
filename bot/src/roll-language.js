@@ -45,11 +45,11 @@ export function reviewRollDeclaration(db,guild,input,reviewer,context={}){
   return contributeRoll(db,guild,pc.owner_user_id,{...a,proof:proof.event_key});
   });
 }
-export async function routeRollMessage({db,message,text=message.content,characterId,deliver,sendAmendment}){
+export async function routeRollMessage({db,message,text=message.content,characterId,deliver,sendAmendment,detailed=false}){
   const guild=message.guild.id,flags=db.getCityCalendar(guild).flags;
-  if(flags.natural_language!==true||flags.roll_collaboration!==true||!characterId||!message.id||message.author.bot) return false;
-  const parsed=rollDeclaration(text);if(!parsed) return false;
-  let row,committed=false;
+  if(flags.natural_language!==true||flags.roll_collaboration!==true||!characterId||!message.id||message.author.bot) return detailed?null:false;
+  const parsed=rollDeclaration(text);if(!parsed) return detailed?null:false;
+  let row,committed=false,failure="";
   try{
     const pc=personalCharacter(db,guild,message.author.id,characterId),session=db.getActiveSession(guild);
     const own=pendingRollRequests(db,guild,message.author.id),scene=currentScene(db,guild).key;
@@ -86,12 +86,12 @@ export async function routeRollMessage({db,message,text=message.content,characte
         title:"Owner-authored proposed roll contribution",session_id:session.id,scene,visibility:"character",subject_key:pc.id,
         details:{author:message.author.id,character_id:pc.id,exact_text:String(text),authorization}},message.author.id);
       // Continue through the existing GM request so it can propose a reviewed adjudication. No extra provider request is added here.
-      return false;
+      return detailed?null:false;
     }
     const after=contributeRoll(db,guild,message.author.id,authorization);
     committed=true;
     await deliver(formatRollRequest(after,{user:message.author.id}));
     if(sendAmendment) await publishRollAmendment(db,guild,after,sendAmendment);
-  }catch(error){await deliver(`${committed?"Roll was committed; private delivery needs recovery. Do not repeat the roll; retrieve /vc-roll pending.":"Roll declaration remains uncommitted or needs review:"} ${error.message}`).catch(()=>{});}
-  return true;
+  }catch(error){failure=String(error.message||error);await deliver(`${committed?"Roll was committed; private delivery needs recovery. Do not repeat the roll; retrieve /vc-roll pending.":"Roll declaration remains uncommitted or needs review:"} ${failure}`).catch(()=>{});}
+  return detailed?{handled:true,committed,operation:parsed.op,record_key:row?.record_key||null,error:failure||null}:true;
 }

@@ -916,3 +916,25 @@ CREATE TABLE IF NOT EXISTS city_edges (
   FOREIGN KEY(guild_id,source_event) REFERENCES world_events(guild_id,event_key)
 );
 CREATE INDEX IF NOT EXISTS idx_city_edges_from ON city_edges(guild_id,kind,from_key);
+
+-- v9.6.0: durable Discord message-turn lifecycle and source-span receipts.
+CREATE TABLE IF NOT EXISTS turn_attempts (
+  turn_id TEXT PRIMARY KEY,
+  guild_id TEXT NOT NULL REFERENCES campaigns(guild_id) ON DELETE CASCADE,
+  discord_message_id TEXT NOT NULL,
+  actor_principal TEXT NOT NULL,
+  session_id TEXT NOT NULL,
+  audience TEXT NOT NULL CHECK(audience IN ('party','private')),
+  stage TEXT NOT NULL DEFAULT 'received',
+  committed TEXT NOT NULL DEFAULT 'no' CHECK(committed IN ('no','yes','unknown')),
+  source_capture_json TEXT NOT NULL DEFAULT '{}',
+  model_attempts INTEGER NOT NULL DEFAULT 0 CHECK(model_attempts>=0),
+  native_commit_id TEXT,
+  publication_id TEXT,
+  terminal_code TEXT,
+  error_ref TEXT,
+  created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  UNIQUE(guild_id,discord_message_id,actor_principal,session_id)
+);
+CREATE INDEX IF NOT EXISTS idx_turn_attempts_recovery ON turn_attempts(guild_id,stage,updated_at);

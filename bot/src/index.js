@@ -31,6 +31,8 @@ import { assertPlayerPrivateChannel } from "./discord/privacy.js";
 import { createLogger } from "./logger.js";
 import { runNpcDirector } from "./simulation.js";
 import { publishSimulationHooks } from "./publishing.js";
+import { routeMessageSpans, serializeSpanLedger } from "./message-span-ledger.js";
+import { beginTurnAttempt, advanceTurnAttempt, turnFailureNotice, isTurnReplay } from "./turn-attempts.js";
 
 const config=loadConfig();
 const log=createLogger(config.logLevel);
@@ -121,6 +123,27 @@ async function outputStep(errors,{guild,sessionId,context},fn){
     errors.push({context,ref,error:err});
     return null;
   }
+}
+
+async function routeNativeSpans({message,text,session,controlled}){
+  const privateDeliver=value=>sendPrivate(message.guild,message.author.id,value,session.id,controlled?.character_id);
+  return routeMessageSpans(text,[
+    {kind:"consent",route:span=>controlled?.npc_proxy?null:routeConsentMessage({db,message,text:span.text,
+      characterId:controlled?.character_id,deliver:privateDeliver,detailed:true})},
+    {kind:"roll",route:span=>controlled?.npc_proxy?null:routeRollMessage({db,message,text:span.text,
+      characterId:controlled?.character_id,deliver:privateDeliver,
+      sendAmendment:(user,value,sid,char)=>sendPrivate(message.guild,user,value,sid,char),detailed:true})},
+    {kind:"recall",route:span=>routeDiscoveryMessage({db,message,text:span.text,deliver:async value=>{
+      try{await message.author.send(value);}catch{await message.reply("Private knowledge delivery failed. Use /vc-intel discover; no world action occurred.");}
+    },detailed:true})}
+  ]);
+}
+
+function recordSpanLedger(attempt,ledger){
+  if(!attempt)return;
+  const nativeCommit=ledger.native_receipts.some(row=>row.committed===true);
+  advanceTurnAttempt(db,attempt.turn_id,"routed",{sourceCapture:serializeSpanLedger(ledger),
+    ...(nativeCommit?{committed:"yes",nativeCommitId:`native:${attempt.turn_id}`}:{})});
 }
 
 function allowedPrivateMessages(session,resultMessages,scope){
@@ -298,13 +321,13 @@ async function notifyCanonProposals({guild,session,message,actorUserId,actorChar
   return {count:proposals.length,gmFailures};
 }
 
-async function processPrivateTurn(message,directMention){
+async function processPrivateTurn(message,directMention,attempt=null){
   const session=db.getActiveSession(message.guild.id);
   if(!session){
     if(directMention) await message.reply("No session is active. Private scene messages are processed during an active session.");
     return;
   }
-  const {controlled,playerText,ambiguous,candidates}=resolveController(session,message);
+  const resolved=resolveController(session,message);let {controlled,playerText}=resolved;const {ambiguous,candidates}=resolved;
   if(ambiguous){
     await message.reply(`You control multiple roles this session (${candidates.map(x=>x.name).join(", ")}). Prefix the message with the intended name, e.g. \`[${candidates[0].name}] ...\`.`);
     return;
@@ -313,46 +336,50 @@ async function processPrivateTurn(message,directMention){
   const vis=controlled?.character_id?"character":"player";
   let conversationId=controlled?.character_id||null;
   try{conversationId=conversationPrincipal(db,message.guild.id,message.author.id,conversationId).context_id;}catch{/* No authenticated role context. */}
-  if(!controlled?.npc_proxy&&await routeConsentMessage({db,message,text:playerText,characterId:controlled?.character_id,
-    deliver:text=>sendPrivate(message.guild,message.author.id,text,session.id,controlled?.character_id)})) return;
-  if(!controlled?.npc_proxy&&await routeRollMessage({db,message,text:playerText,characterId:controlled?.character_id,
-    deliver:text=>sendPrivate(message.guild,message.author.id,text,session.id,controlled?.character_id),
-    sendAmendment:(user,text,sid,char)=>sendPrivate(message.guild,user,text,sid,char)})) return;
+  const nativeLedger=await routeNativeSpans({message,text:playerText,session,controlled});
+  recordSpanLedger(attempt,nativeLedger);playerText=nativeLedger.remaining_text;
+  if(!playerText){if(attempt)advanceTurnAttempt(db,attempt.turn_id,"delivered");return;}
   captureDeclaration(db,message.guild.id,message.author.id,controlled?.npc_proxy?null:controlled?.character_id,message.id,playerText,{privateScene:true});
   captureContextSource(db,message.guild.id,message.author.id,controlled?.character_id,message.id,playerText,{privateScene:true});
   captureWorldInput(db,message.guild.id,message.author.id,controlled?.character_id,message.id,playerText,{privateScene:true});
   captureDialogue(db,message.guild.id,message.author.id,controlled?.npc_proxy?null:controlled?.character_id,message.id,playerText,{privateScene:true});
   captureArcCandidate(db,message.guild.id,message.author.id,controlled?.npc_proxy?null:controlled?.character_id,message.id,playerText);
   db.addMessage({guildId:message.guild.id,sessionId:session.id,messageId:message.id,userId:message.author.id,speakerName:speaker,characterId:controlled?.character_id||null,visibility:vis,subjectUserId:vis==="player"?message.author.id:null,subjectCharacterId:vis==="character"?conversationId:null,content:playerText});
+  if(attempt)advanceTurnAttempt(db,attempt.turn_id,"captured");
   if(!controlled?.npc_proxy&&await routeSceneEntryMessage({db,message,characterId:controlled?.character_id,text:playerText,privateScene:true,
     deliver:text=>sendPrivate(message.guild,message.author.id,text,session.id,controlled?.character_id)})) return;
 
   let result;
   const stopFeedback=beginGenerationFeedback(message);
   try{
+    if(attempt)advanceTurnAttempt(db,attempt.turn_id,"generating",{modelAttempts:Number(db.getTurnAttempt(attempt.turn_id)?.model_attempts||0)+1});
     const cleaned=playerText.replaceAll(`<@${client.user.id}>`,"").replaceAll(`<@!${client.user.id}>`,"").trim();
     result=await gm.runTurn({guildId:message.guild.id,actorUserId:message.author.id,actorName:speaker,actorAssignment:controlled,messageText:cleaned||playerText,scope:"private",messageId:message.id});
-    if(!result.respond) return;
+    if(!result.respond){if(attempt)advanceTurnAttempt(db,attempt.turn_id,"delivered");return;}
+    if(attempt)advanceTurnAttempt(db,attempt.turn_id,"validated");
   }catch(err){
     console.error("Private GM generation failed",err);
     const ref=await safeStateError({guild:message.guild,error:err,context:`private-turn-generation:${message.author.id}`,sessionId:session.id});
     const reason=err.code==="AI_GENERATION_DEADLINE"?"The private GM generation deadline expired":"Private GM engine error";
-    await message.reply(`⚠️ ${reason} (${ref}). Your message was saved and no campaign state was committed; retrying is safe.`).catch(()=>{});
+    if(attempt)advanceTurnAttempt(db,attempt.turn_id,db.getTurnAttempt(attempt.turn_id)?.committed==="yes"?"needs_recovery":"failed",{terminalCode:err.code||"GENERATION_FAILED",errorRef:ref});
+    await message.reply(attempt?turnFailureNotice(db.getTurnAttempt(attempt.turn_id),ref):`⚠️ ${reason} (${ref}).`).catch(()=>{});
     return;
   }finally{stopFeedback();}
 
   const scope={mode:"private",actorUserId:message.author.id,actorCharacterId:controlled?.character_id||null};
   let mutation;
   try{
-    mutation=commitTurnMutation({guild:message.guild,session,result,scope,speaker,label:"Pre-private GM mutation",meta:{channelId:message.channel.id,messageId:message.id,triggerText:playerText}});
+    mutation=commitTurnMutation({guild:message.guild,session,result,scope,speaker,label:"Pre-private GM mutation",meta:{channelId:message.channel.id,messageId:message.id,triggerText:playerText,turnId:attempt?.turn_id}});
   }catch(err){
     console.error("Private GM state mutation rolled back",err);
     const ref=await safeStateError({guild:message.guild,error:err,context:`private-turn-state:${message.author.id}`,sessionId:session.id});
-    await message.reply(`⚠️ Private GM state update was rejected and rolled back (${ref}). Your message is saved; no generated consequences were committed, so retrying is safe.`).catch(()=>{});
+    if(attempt)advanceTurnAttempt(db,attempt.turn_id,"failed",{terminalCode:err.code||"MUTATION_ROLLED_BACK",errorRef:ref});
+    await message.reply(attempt?turnFailureNotice(db.getTurnAttempt(attempt.turn_id),ref):`⚠️ Private GM state update rolled back (${ref}).`).catch(()=>{});
     return;
   }
 
   const {events:applied,relationships:relApplied,handouts:handApplied,canonProposals=[]}=mutation;
+  if(attempt)advanceTurnAttempt(db,attempt.turn_id,"publishing");
   const outputErrors=[];
   await outputStep(outputErrors,{guild:message.guild,sessionId:session.id,context:"private-roll-requests"},()=>
     publishRollRequests(db,message.guild.id,mutation,(user,text,sid,char)=>sendPrivate(message.guild,user,text,sid,char)));
@@ -388,9 +415,10 @@ async function processPrivateTurn(message,directMention){
   if(applied.length||relApplied.length||handApplied.length) await outputStep(outputErrors,{guild:message.guild,sessionId:session.id,context:"private-gm-log"},()=>postGmLog({db,guild:message.guild,sessionId:session.id,title:"Private GM state update",details:`Actor: ${speaker}\nEvents: ${applied.filter(x=>x.ok).map(x=>x.type).join(", ")||"none"}\nRelationships: ${relApplied.filter(x=>x.ok).length}\nHandouts: ${handApplied.filter(x=>x.ok).length}\nCanon proposals: ${canonProposals.filter(x=>x.ok).length}\nScene: ${result.state_review.scene.decision}${result.state_review.scene.label?` → ${result.state_review.scene.label}`:""}`}));
   if(result.state_review.scene.decision==="transition") await runPrivateSceneDirector({guild:message.guild,session,actorUserId:message.author.id,actorCharacterId:controlled?.character_id||null,actorAssignment:controlled,sceneReview:result.state_review.scene});
   if(outputErrors.length) await message.reply(`⚠️ This private turn's campaign state **was committed**, but ${outputErrors.length} Discord delivery/logging step(s) failed. Do not retry the turn to repair delivery; ask a GM to resend or resync the affected output. References: ${outputErrors.map(x=>x.ref).join(", ")}`).catch(()=>{});
+  if(attempt)advanceTurnAttempt(db,attempt.turn_id,outputErrors.length?"needs_recovery":"delivered",outputErrors.length?{terminalCode:"PUBLICATION_FAILED",errorRef:outputErrors[0].ref}:{});
 }
 
-async function processPartyTurn(message,directMention){
+async function processPartyTurn(message,directMention,attempt=null){
   const campaign=db.getCampaign(message.guild.id);
   if(!campaign?.play_channel_id||message.channel.id!==campaign.play_channel_id) return;
   db.upsertPlayer(message.guild.id,message.author.id,message.member?.displayName||message.author.username);
@@ -398,23 +426,27 @@ async function processPartyTurn(message,directMention){
   if(!session) return;
   const pendingAtTurnStart=db.getPendingDirectorPass(session.id);
   const pendingTokenAtTurnStart=pendingAtTurnStart?`${pendingAtTurnStart.layer}:${pendingAtTurnStart.queued_at||""}:${pendingAtTurnStart.scene_label||""}:${pendingAtTurnStart.round_number||""}`:null;
-  const {controlled,playerText,ambiguous,candidates}=resolveController(session,message);
+  const resolved=resolveController(session,message);let {controlled,playerText}=resolved;const {ambiguous,candidates}=resolved;
   if(ambiguous){
     await message.reply(`You control multiple roles this session (${candidates.map(x=>x.name).join(", ")}). Prefix the message with the intended name, e.g. \`[${candidates[0].name}] ...\`.`);
     return;
   }
   const speaker=controlled?.name||message.member?.displayName||message.author.username;
-  if(!controlled?.npc_proxy&&await routeConsentMessage({db,message,text:playerText,characterId:controlled?.character_id,
-    deliver:text=>sendPrivate(message.guild,message.author.id,text,session.id,controlled?.character_id)})) return;
-  if(!controlled?.npc_proxy&&await routeRollMessage({db,message,text:playerText,characterId:controlled?.character_id,
-    deliver:text=>sendPrivate(message.guild,message.author.id,text,session.id,controlled?.character_id),
-    sendAmendment:(user,text,sid,char)=>sendPrivate(message.guild,user,text,sid,char)})) return;
-  if(pendingAtTurnStart) await runPendingDirectorPass(message.guild,session);
+  const nativeLedger=await routeNativeSpans({message,text:playerText,session,controlled});
+  recordSpanLedger(attempt,nativeLedger);playerText=nativeLedger.remaining_text;
+  if(!playerText){if(attempt)advanceTurnAttempt(db,attempt.turn_id,"delivered");return;}
+  if(pendingAtTurnStart){
+    if(attempt)advanceTurnAttempt(db,attempt.turn_id,"pre_director",{committed:"unknown"});
+    const director=await runPendingDirectorPass(message.guild,session);
+    if(attempt)advanceTurnAttempt(db,attempt.turn_id,"routed",director?.ran&&director?.ok?
+      {committed:"yes",nativeCommitId:`director:${attempt.turn_id}`}:{committed:"no"});
+  }
   captureArcCandidate(db,message.guild.id,message.author.id,controlled?.npc_proxy?null:controlled?.character_id,message.id,playerText);
   captureDeclaration(db,message.guild.id,message.author.id,controlled?.npc_proxy?null:controlled?.character_id,message.id,playerText);
   captureContextSource(db,message.guild.id,message.author.id,controlled?.character_id,message.id,playerText);
   captureWorldInput(db,message.guild.id,message.author.id,controlled?.character_id,message.id,playerText);
   db.addMessage({guildId:message.guild.id,sessionId:session.id,messageId:message.id,userId:message.author.id,speakerName:speaker,characterId:controlled?.character_id||null,visibility:"party",content:playerText});
+  if(attempt)advanceTurnAttempt(db,attempt.turn_id,"captured");
   captureDialogue(db,message.guild.id,message.author.id,controlled?.npc_proxy?null:controlled?.character_id,message.id,playerText);
   if(!controlled?.npc_proxy&&await routeSceneEntryMessage({db,message,characterId:controlled?.character_id,text:playerText,
     deliver:text=>sendPrivate(message.guild,message.author.id,text,session.id,controlled?.character_id)})) return;
@@ -430,29 +462,34 @@ async function processPartyTurn(message,directMention){
   let result;
   const stopFeedback=beginGenerationFeedback(message);
   try{
+    if(attempt)advanceTurnAttempt(db,attempt.turn_id,"generating",{modelAttempts:Number(db.getTurnAttempt(attempt.turn_id)?.model_attempts||0)+1});
     const cleaned=playerText.replaceAll(`<@${client.user.id}>`,"").replaceAll(`<@!${client.user.id}>`,"").trim();
     result=await gm.runTurn({guildId:message.guild.id,actorUserId:message.author.id,actorName:speaker,actorAssignment:controlled,messageText:cleaned||playerText,scope:"party",messageId:message.id});
-    if(!result.respond) return;
+    if(!result.respond){if(attempt)advanceTurnAttempt(db,attempt.turn_id,"delivered");return;}
+    if(attempt)advanceTurnAttempt(db,attempt.turn_id,"validated");
   }catch(err){
     console.error("GM turn generation failed",err);
     const ref=await safeStateError({guild:message.guild,error:err,context:`party-turn-generation:${message.author.id}`,sessionId:session.id});
     const reason=err.code==="AI_GENERATION_DEADLINE"?"The GM generation deadline expired":"The GM engine hit an API/runtime error";
-    await message.reply(`⚠️ ${reason} (${ref}). Your message was saved and no generated campaign state was committed; retrying is safe.`).catch(()=>{});
+    if(attempt)advanceTurnAttempt(db,attempt.turn_id,db.getTurnAttempt(attempt.turn_id)?.committed==="yes"?"needs_recovery":"failed",{terminalCode:err.code||"GENERATION_FAILED",errorRef:ref});
+    await message.reply(attempt?turnFailureNotice(db.getTurnAttempt(attempt.turn_id),ref):`⚠️ ${reason} (${ref}).`).catch(()=>{});
     return;
   }finally{stopFeedback();}
 
   const scope={mode:"party",actorUserId:message.author.id,actorCharacterId:controlled?.character_id||null};
   let mutation;
   try{
-    mutation=commitTurnMutation({guild:message.guild,session,result,scope,speaker,label:"Pre-GM mutation",meta:{messageId:message.id,triggerText:playerText}});
+    mutation=commitTurnMutation({guild:message.guild,session,result,scope,speaker,label:"Pre-GM mutation",meta:{messageId:message.id,triggerText:playerText,turnId:attempt?.turn_id}});
   }catch(err){
     console.error("GM state mutation rolled back",err);
     const ref=await safeStateError({guild:message.guild,error:err,context:`party-turn-state:${message.author.id}`,sessionId:session.id});
-    await message.reply(`⚠️ The generated GM state update was rejected and rolled back (${ref}). Your message is saved; no generated consequences were committed, so retrying is safe.`).catch(()=>{});
+    if(attempt)advanceTurnAttempt(db,attempt.turn_id,"failed",{terminalCode:err.code||"MUTATION_ROLLED_BACK",errorRef:ref});
+    await message.reply(attempt?turnFailureNotice(db.getTurnAttempt(attempt.turn_id),ref):`⚠️ Generated GM state update rolled back (${ref}).`).catch(()=>{});
     return;
   }
 
   const {events:applied,relationships:relApplied,handouts:handApplied}=mutation;
+  if(attempt)advanceTurnAttempt(db,attempt.turn_id,"publishing");
   const outputErrors=[];
   await outputStep(outputErrors,{guild:message.guild,sessionId:session.id,context:"party-roll-requests"},()=>
     publishRollRequests(db,message.guild.id,mutation,(user,text,sid,char)=>sendPrivate(message.guild,user,text,sid,char)));
@@ -496,6 +533,7 @@ async function processPartyTurn(message,directMention){
   // A newly queued/replaced pass still runs immediately; a failed pre-existing pass remains durable for a later turn.
   if(queued&&queuedToken!==pendingTokenAtTurnStart) await runPendingDirectorPass(message.guild,session);
   if(outputErrors.length) await message.reply(`⚠️ This turn's campaign state **was committed**, but ${outputErrors.length} Discord delivery/logging step(s) failed. Do not retry the turn to repair delivery; ask a GM to resend or run the relevant sync. References: ${outputErrors.map(x=>x.ref).join(", ")}`).catch(()=>{});
+  if(attempt)advanceTurnAttempt(db,attempt.turn_id,outputErrors.length?"needs_recovery":"delivered",outputErrors.length?{terminalCode:"PUBLICATION_FAILED",errorRef:outputErrors[0].ref}:{});
 }
 
 client.once("ready",()=>{
@@ -517,18 +555,32 @@ client.on("interactionCreate",async interaction=>{
   }
 });
 
+async function processTurnEnvelope(message,directMention,audience,processor){
+  const session=db.getActiveSession(message.guild.id);
+  if(!session)return processor(message,directMention,null);
+  const attempt=beginTurnAttempt(db,{guildId:message.guild.id,messageId:message.id,
+    actorPrincipal:`discord:${message.author.id}`,sessionId:session.id,audience});
+  if(isTurnReplay(attempt)||["delivered","failed"].includes(attempt.stage))return attempt;
+  try{
+    await processor(message,directMention,attempt);
+    const after=db.getTurnAttempt(attempt.turn_id);
+    if(after&&!["delivered","failed","needs_recovery"].includes(after.stage))advanceTurnAttempt(db,attempt.turn_id,"delivered");
+    return db.getTurnAttempt(attempt.turn_id);
+  }catch(error){
+    log.error(`${audience} turn envelope failed`,error);
+    const ref=await safeStateError({guild:message.guild,error,context:`${audience}-turn-envelope`,sessionId:session.id});
+    const current=db.getTurnAttempt(attempt.turn_id),stage=current?.committed==="no"?"failed":"needs_recovery";
+    advanceTurnAttempt(db,attempt.turn_id,stage,{terminalCode:error.code||"TURN_ENVELOPE_FAILED",errorRef:ref});
+    await message.reply(turnFailureNotice(db.getTurnAttempt(attempt.turn_id),ref)).catch(()=>{});
+    return db.getTurnAttempt(attempt.turn_id);
+  }
+}
+
 client.on("messageCreate",async message=>{
   if(!message.guild||message.author.bot) return;
   const campaign=db.getCampaign(message.guild.id);
   if(!campaign) return;
   const directMention=message.mentions.has(client.user);
-  const continuityOwner=db.getPlayerByPrivateChannel(message.guild.id,message.channel.id);
-  if(message.channel.id===campaign.play_channel_id||continuityOwner?.discord_user_id===message.author.id){
-    if(await routeDiscoveryMessage({db,message,deliver:async text=>{
-      try{await message.author.send(text);}catch{await message.reply("Private knowledge delivery failed. Use /vc-intel discover; no campaign state was changed.");}
-    }})) return;
-  }
-
   // Low-cost rules desk is read-only with respect to campaign state and does not need the GM turn queue.
   if(campaign.rules_channel_id && message.channel.id===campaign.rules_channel_id){
     if(!looksLikeRulesQuestion(message.content,directMention)) return;
@@ -552,7 +604,7 @@ client.on("messageCreate",async message=>{
 
   const privateOwner=db.getPlayerByPrivateChannel(message.guild.id,message.channel.id);
   if(privateOwner && privateOwner.discord_user_id===message.author.id){
-    await gmTurnQueue.enqueue(`guild:${message.guild.id}`,()=>processPrivateTurn(message,directMention)).catch(async error=>{
+    await gmTurnQueue.enqueue(`guild:${message.guild.id}`,()=>processTurnEnvelope(message,directMention,"private",processPrivateTurn)).catch(async error=>{
       log.error("Private turn failed",error);
       await safeStateError({guild:message.guild,error,context:"private-turn"});
     });
@@ -560,7 +612,7 @@ client.on("messageCreate",async message=>{
   }
 
   if(campaign.play_channel_id&&message.channel.id===campaign.play_channel_id){
-    await gmTurnQueue.enqueue(`guild:${message.guild.id}`,()=>processPartyTurn(message,directMention)).catch(async error=>{
+    await gmTurnQueue.enqueue(`guild:${message.guild.id}`,()=>processTurnEnvelope(message,directMention,"party",processPartyTurn)).catch(async error=>{
       log.error("Party turn failed",error);
       await safeStateError({guild:message.guild,error,context:"party-turn"});
     });

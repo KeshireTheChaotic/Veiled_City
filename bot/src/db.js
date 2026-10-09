@@ -100,7 +100,7 @@ export class VeiledDB {
         if(!knownPairs.has(`${relation.guild_id}:${pair}`)) updateRelationshipDimensions(this,relation.guild_id,relation);
       }
     });
-    this.db.exec("PRAGMA user_version=440;");
+    this.db.exec("PRAGMA user_version=450;");
   }
 
   close() { this.db.close(); }
@@ -1189,6 +1189,30 @@ export class VeiledDB {
         session_id:sessionId,tick:clock.tick,minute:clock.minute,details:{entity_key:entityKey}});
     }
     return row;
+  }
+
+  // Durable message-turn lifecycle -------------------------------------------
+  beginTurnAttempt({guildId,messageId,actorPrincipal,sessionId,audience}){
+    const id=randomUUID();
+    this.db.prepare(`INSERT INTO turn_attempts(turn_id,guild_id,discord_message_id,actor_principal,session_id,audience)
+      VALUES(?,?,?,?,?,?) ON CONFLICT(guild_id,discord_message_id,actor_principal,session_id) DO NOTHING`)
+      .run(id,guildId,messageId,actorPrincipal,sessionId,audience);
+    return this.db.prepare(`SELECT * FROM turn_attempts WHERE guild_id=? AND discord_message_id=? AND actor_principal=? AND session_id=?`)
+      .get(guildId,messageId,actorPrincipal,sessionId);
+  }
+  getTurnAttempt(id){return this.db.prepare("SELECT * FROM turn_attempts WHERE turn_id=?").get(id);}
+  updateTurnAttempt(id,{stage,committed,sourceCapture,modelAttempts,nativeCommitId,publicationId,terminalCode,errorRef}={}){
+    const prior=this.getTurnAttempt(id);if(!prior)return null;
+    this.db.prepare(`UPDATE turn_attempts SET stage=?,committed=?,source_capture_json=?,model_attempts=?,native_commit_id=?,publication_id=?,
+      terminal_code=?,error_ref=?,updated_at=CURRENT_TIMESTAMP WHERE turn_id=?`).run(stage??prior.stage,committed??prior.committed,
+      sourceCapture===undefined?prior.source_capture_json:JSON.stringify(sourceCapture||{}),modelAttempts??prior.model_attempts,
+      nativeCommitId===undefined?prior.native_commit_id:nativeCommitId,publicationId===undefined?prior.publication_id:publicationId,
+      terminalCode===undefined?prior.terminal_code:terminalCode,errorRef===undefined?prior.error_ref:errorRef,id);
+    return this.getTurnAttempt(id);
+  }
+  listRecoverableTurns(guildId,{limit=30}={}){
+    return this.db.prepare(`SELECT * FROM turn_attempts WHERE guild_id=? AND stage IN ('committed','publishing','needs_recovery')
+      ORDER BY updated_at LIMIT ?`).all(guildId,Math.max(1,Math.min(100,Number(limit)||30)));
   }
   listMutationLedger(guildId,{limit=40,sourceLayer="",mutationType=""}={}){
     const cap=Math.max(1,Math.min(100,Number(limit)||40));

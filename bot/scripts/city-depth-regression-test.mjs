@@ -93,7 +93,7 @@ try{
   old.exec("DROP TABLE city_edges; DROP TABLE district_locations; DROP TABLE world_event_links; DROP TABLE city_records; DROP TABLE city_schedule; DROP TABLE world_events; DROP TABLE city_calendar; PRAGMA user_version=380;");old.close();
   const migrated=new VeiledDB(legacyPath,schema);
   try{
-    assert.equal(migrated.doctorData("legacy").schemaVersion,440);
+    assert.equal(migrated.doctorData("legacy").schemaVersion,450);
     assert.equal(migrated.listNpcMemories("legacy","legacy-witness").length,1);
     assert.equal(migrated.playerFactsFor("legacy","player").length,0);
     assert.equal(migrated.getCityCalendar("legacy").epoch,null,"migration invents no past dates");

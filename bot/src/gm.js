@@ -20,7 +20,7 @@ import { portrayalPacket } from "./portrayal.js";
 import { intentArraySchema, INTENT_PROMPT } from "./ai-intent-contracts.js";
 import { intentContext } from "./ai-intents.js";
 import { decisionAdvisorySchema, decisionContext, validateDecisionAdvisory } from "./decision-advisory.js";
-import { declarationContext, hasCharacterInvitation } from "./player-language.js";
+import { declarationContext, hasCharacterInvitation, responseObligation } from "./player-language.js";
 import { worldAdditionsSchema, sceneActionsSchema, worldConflictsSchema, AUTONOMOUS_WORLD_PROMPT, autonomousWorldContext, worldAuthority } from "./autonomous-world.js";
 import { entryReferenceContext } from "./scene-entry.js";
 import { OnlineSrd } from "./rules-srd.js";
@@ -390,6 +390,8 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
     if(assignment&&hasCharacterInvitation(text))return true;
     const focus=interpretationContext(this.db,guildId,message.author.id,assignment?.character_id,text,
       {mode:"party",messageId:message.id,botUserId:message.client?.user?.id});
+    const obligation=responseObligation(text,{authenticated:!!assignment,directMention,conversationFocus:focus?.conversation_focus||""});
+    if(obligation.needed)return true;
     const followup=!!focus?.conversation_focus&&/\?/.test(focus.conversation_focus)&&text.length<=600
       &&!/^\s*(?:ooc\b|\(\(|\/\/)/i.test(text)&&!/<@!?\d+>/.test(text);
     // The existing router, not an English action regex, decides addressee/reaction.
@@ -601,8 +603,10 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
       if(worldAuthority(this.db,guildId).gm_authority_mode==="autonomous"&&!(result.world_conflicts||[]).length
         &&/\b(?:(?:I|we) need (?:a |the |human )?GM to|(?:the |human )GM (?:needs|must|has) to) (?:establish|create|approve|promote|describe)\b[^.!?\n]{0,140}\b(?:surroundings|location|place|NPC|person|diner|street|scene)\b/i.test(prose))
         throw new Error("Missing ordinary world data is AI-GM work, not a human approval prerequisite. Create/reuse ordinary fiction via native world additions/actions and keep the scene moving.");
-      if(ctx.actor_assignment&&hasCharacterInvitation(messageText)&&(!result.respond||!String(result.narration||"").trim()))
-        throw new Error("An in-character need invites GM engagement: acknowledge it and ask an open contextual question without choosing a PC decision.");
+      const obligation=responseObligation(messageText,{authenticated:!!ctx.actor_assignment});
+      if(obligation.needed&&(!result.respond||!String(result.narration||"").trim()))
+        throw Object.assign(new Error("An authenticated in-character turn requires meaningful GM engagement without choosing a PC decision."),
+          {code:"RESPONSE_OBLIGATION",diagnostic:obligation});
       validateInterpretation(this.db,guildId,result.narrative_interpretation,{mode:scope,actorUserId,actorCharacterId:ctx.actor_assignment?.character_id});
       validatePostTurnStateReview(result);
       validatePacing(this.db,guildId,result);
@@ -626,7 +630,7 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
     let result=await this.requestStructured(req,{label:"GM turn",signal:turnSignal});
     try{ validateTurn(result); validateDecisionAdvisory(this.db,guildId,result); return result; }
     catch(err){
-      const detail=JSON.stringify(["NARRATIVE_INTEGRITY","NARRATIVE_CONTEXT","POST_TURN_REVIEW"].includes(err.code)?err.diagnostic||{}:{}).slice(0,800);
+      const detail=JSON.stringify(["NARRATIVE_INTEGRITY","NARRATIVE_CONTEXT","POST_TURN_REVIEW","RESPONSE_OBLIGATION"].includes(err.code)?err.diagnostic||{}:{}).slice(0,800);
       const correction=[
         `STRUCTURED TURN CORRECTION: ${String(err.message||err).slice(0,600)} Diagnostic: ${detail}.`,
         "Return a complete replacement response.",
