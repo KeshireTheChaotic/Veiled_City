@@ -13,7 +13,7 @@ export function budgetTurnPrompt(sections,{instructions="",query="",maxChars=120
   const terms=[...new Set(query.toLowerCase().match(/[a-z0-9-]{3,}/g)||[])].slice(0,24);
   const selected=new Map(optional.map(section=>[section,[]]));
   const noticeFor=omissions=>`\n\nCONTEXT BUDGET (GM-private): ${JSON.stringify({omissions,
-    authority:"Only complete optional records omitted. Absence is not evidence of nonexistence, permission, consent or success. Do not invent missing state; seek clarification or review when it is necessary."})}`;
+    authority:"Only complete optional records omitted. Omission is not evidence of nonexistence, consent or success. Check relevant existing authority before native effects. Ordinary new fiction may use autonomous world additions; missing descriptions alone never require human review."})}`;
   const metadataReserve=noticeFor(optional.map(section=>({section:section.label,
     records:Array.isArray(section.value)?section.value.length:1}))).length;
   const candidates=optional.flatMap((section,sectionIndex)=>{

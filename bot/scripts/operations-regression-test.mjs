@@ -114,16 +114,16 @@ assert.equal(aiEntry.confidence,91);
 assert.match(aiEntry.trigger_text,/inspect the sigil/i);
 assert.match(aiEntry.rationale,/plainly visible/i);
 
-// Low-confidence mechanical changes must not be committed as authoritative output.
+// Confidence alone is not authority: review shape is accepted; native state/rules validators gate effects.
 const categories=["facts_clues","resources","clocks","threads","references","relationships","handouts","canon","veil_exposure","npc_cognition"];
 const review={};
 for(const c of categories) review[c]={decision:"no_change",reason:"No justified change.",confidence:100};
 review.scene={decision:"continue",label:"",reason:"Same scene."};
 review.clocks={decision:"changed",reason:"Maybe the threat advances.",confidence:40};
-assert.throws(()=>validatePostTurnStateReview({events:[{type:"clock_delta"}],relationships:[],handouts:[],state_review:review}),/below 55%/i);
+assert.equal(validatePostTurnStateReview({events:[{type:"clock_delta"}],relationships:[],handouts:[],state_review:review}),true);
 review.clocks={decision:"no_change",reason:"Possible advance is ambiguous; leave for GM review.",confidence:40};
 assert.equal(validatePostTurnStateReview({events:[],relationships:[],handouts:[],state_review:review}),true);
-assert.equal(lowConfidenceReviewItems({state_review:review})[0].category,"clocks");
+assert.deepEqual(lowConfidenceReviewItems({state_review:review}),[]);
 
 // Relationship lookup is tuple-based for AI deltas (regression for duplicate method-name shadowing).
 const r1=db.upsertRelationship(guild,{fromType:"character",fromKey:character.id,fromLabel:"Operator",toType:"npc",toKey:"npc:test",toLabel:"Test NPC",relationshipType:"trust",score:1,visibility:"party"});

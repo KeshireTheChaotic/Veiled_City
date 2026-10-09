@@ -1,10 +1,11 @@
 /** Shared production turn commit boundary: native state, proposals and intent receipts commit before publication. */
 import { applyAuthoritativeMutation, applyCanonProposalDrafts } from "./state.js";
 import { validateDecisionAdvisory } from "./decision-advisory.js";
-export function commitGmTurn({db,guild,session,result,scope,speaker,label,meta={}}){
+export function commitGmTurn({db,guild,session,result,scope,speaker,label,meta={},content=null}){
   const decision_advisory=validateDecisionAdvisory(db,guild.id,result);
   const mutates=(result.ai_intents||[]).length||(result.events||[]).some(e=>e.type!=="log_only")||(result.relationships||[]).length||(result.handouts||[]).length||(result.npc_memories||[]).length||(result.npc_knowledge||[]).length||(result.npc_goals||[]).length||(result.simulation_updates||[]).length;
-  if(mutates) db.snapshotCampaign(guild.id,{label,reason:`Automatic snapshot before eventful GM turn by ${speaker}`,createdBy:"veilkeeper"});
+  if(mutates||(result.world_additions||[]).length||(result.scene_actions||[]).length||(result.world_conflicts||[]).length)
+    db.snapshotCampaign(guild.id,{label,reason:`Automatic snapshot before eventful GM turn by ${speaker}`,createdBy:"veilkeeper"});
   return db.transaction(()=>{
     if(decision_advisory) db.audit(guild.id,session.id,"ai",scope.actorUserId||"veilkeeper","gm_decision_advisory",decision_advisory);
     const mutation=applyAuthoritativeMutation(db,{
@@ -19,6 +20,7 @@ export function commitGmTurn({db,guild,session,result,scope,speaker,label,meta={
       npcGoals:result.npc_goals||[],simulationUpdates:result.simulation_updates||[],
       scope,
       source:"ai_gm",
+      content,
       provenance:{actorType:"ai",actorId:scope.actorUserId||"veilkeeper",messageId:meta.messageId||null,triggerText:meta.triggerText||"",rationale:Object.values(result.state_review||{}).filter(x=>x&&x.reason).map(x=>x.reason).join(" | "),confidence:Math.min(...Object.values(result.state_review||{}).filter(x=>x&&Number.isFinite(Number(x.confidence))).map(x=>Number(x.confidence)),100)}
     });
     const proposalMap=new Map();

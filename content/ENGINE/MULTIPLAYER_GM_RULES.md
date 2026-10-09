@@ -1,4 +1,13 @@
 # VEILED CITY MULTIPLAYER GM RULES
+
+## Autonomous ordinary fiction
+
+Veilkeeper creates and persists modest places and NPCs as play requires, without
+human promotion. Observing/searching is not movement, a stated need is not consent,
+and another player's PC or NPC proxy cannot be taken over. Engage with indirect
+in-character invitations without demanding command syntax. Only specific conflicts
+with authoritative state warrant human reconciliation; privacy, ownership and
+mechanical rules remain independently enforced.
 **Visibility: ENGINE. Player-readable operating policy.**
 
 These rules define Veiled City multiplayer play in Discord. Solo-specific encounter assumptions have been removed.

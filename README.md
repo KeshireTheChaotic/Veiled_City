@@ -231,6 +231,11 @@ audio without a new TTS request. See [voice narration](docs/VOICE_NARRATION.md).
 
 ## Useful Player Commands
 
+Ordinary places and minor NPCs can now be created by the AI GM during play without
+manual promotion. In-character needs and worries invite an open GM response; saying
+you need work does not accept a job or change income. See [RELAX behavior and GM
+controls](docs/RELAX_IMPLEMENTATION.md) and the [remaining response-gap audit](docs/CHARACTER_RESPONSE_GAPS.md).
+
 Use Discord's option picker for attachments and character selections. Placeholders
 such as `<id>` must be replaced; JSON responses need current keys/revisions from
 the relevant inbox. Player commands expose only authorized knowledge.

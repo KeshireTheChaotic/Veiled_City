@@ -12,7 +12,7 @@ export const NARRATIVE_CONTRACT="Return narrative_claims for EVERY consequential
   +"Never supply predefined narrative choices, fixed acceptance/decline prompts, A/B/C story answers or scripted PC dialogue. Ask openly. "
   +"Use exact source_span and stable actor/entity IDs; prior/proposed are state values, source_ref identifies existing fact/knowledge/canon/obligation. "
   +"actor identifies the observer/speaker: npc:<key>, character:<id>, or empty for GM narration, not an invented NPC. "
-  +"A character observing their own saved position needs no NPC witness. An entry declaration is not arrival evidence. Never invent unknown places or occupants. "
+  +"A character observing their own saved position needs no NPC witness. An entry declaration alone is not arrival evidence. Create ordinary places/people via world_additions, and arrival/presence via scene_actions before asserting material claims. Atmospheric details need no entity per noun. "
   +"Separate conversational understanding from authority: resolve ordinary contextual names, pronouns and references using scoped conversation. "
   +"Acknowledging an earlier attempt or clarified destination is not a material state change and needs no movement claim. "
   +"Do not demand a clarification solely because a place is not yet authorized. Ask only when unresolved ambiguity materially affects an action. "

@@ -26,7 +26,6 @@ export function validatePostTurnStateReview(result){
       throw new Error(`Post-turn state review is incomplete for ${category}.`);
     }
     if(item.confidence!==undefined && (!Number.isFinite(Number(item.confidence))||Number(item.confidence)<0||Number(item.confidence)>100)) throw new Error(`Post-turn state review confidence is invalid for ${category}.`);
-    if(item.decision==="changed" && Number(item.confidence??100)<55) throw new Error(`Post-turn review marked ${category} changed at confidence ${item.confidence}%; ambiguous changes below 55% must remain no_change for human GM review.`);
     const hasOutput=CATEGORY_OUTPUTS[category](result);
     if(hasOutput&&item.decision!=="changed") throw new Error(`Post-turn review says ${category}=no_change but emitted a corresponding state mutation.`);
     if(!hasOutput&&item.decision!=="no_change") throw new Error(`Post-turn review says ${category}=changed but emitted no corresponding state mutation.`);
@@ -120,20 +119,12 @@ export function blockedMutationRows(mutation){
   ];
 }
 
-/** Return ambiguous review notes that were deliberately left uncommitted for human GM review. */
+/** Confidence alone is not a human review gate; native conflicts have their own evidence-backed review. */
 export function lowConfidenceReviewItems(result,threshold=55){
-  const review=result?.state_review||{};
-  return POST_TURN_REVIEW_CATEGORIES.flatMap(category=>{
-    const item=review[category];
-    return item&&item.decision==="no_change"&&Number(item.confidence??100)<threshold?[{category,confidence:Number(item.confidence),reason:String(item.reason||"")}]:[];
-  });
+  return [];
 }
 
-/** Suppress speculative director mutations and surface them as GM-review notes. */
+/** Confidence is advisory. Real native mechanics, scope and canon validators still gate every effect. */
 export function normalizeDirectorConfidence(result,threshold=55){
-  const confidence=Number(result?.confidence??100);
-  if(result?.act && Number.isFinite(confidence) && confidence<threshold){
-    return {...result,act:false,public_narration:"",private_messages:[],events:[],handouts:[],relationships:[],npc_memories:[],npc_knowledge:[],npc_goals:[],simulation_updates:[],review_required:true,gm_notes:`${String(result.gm_notes||"").trim()}${result.gm_notes?"\n":""}LOW-CONFIDENCE REVIEW: Proposed world move (${confidence}%) was not committed; human GM review required.`};
-  }
   return {...result,review_required:false};
 }

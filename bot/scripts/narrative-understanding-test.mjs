@@ -72,7 +72,7 @@ try{
   assert.equal(JSON.stringify(db.getCharacter(pc.id).data),before);
   assert.equal(scenePresence(db,guild,"character",pc.id),null);
   assert.equal(db.getNpcProfile(guild,"hidden-occupant"),null);
-  assert.equal(db.getCityRecord(guild,"scene_entry",entry.record_key).status,"pending");
+  assert.equal(db.getCityRecord(guild,"scene_entry",entry.record_key).status,"awaiting_adjudication");
 
   const review={op:"review-entry",key:entry.record_key,expected_revision:stateRevision(entry),location_key:"diner",adjudication:"Human access ruling"};
   assert.throws(()=>reviewSceneEntry(db,guild,review,"gm"),/Establish/);

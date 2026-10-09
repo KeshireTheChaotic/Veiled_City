@@ -24,6 +24,7 @@ import { publishRollRequests } from "./roll-requests.js";
 import { sendPlayerPrivate } from "./publishing.js";
 import { sessionBrief } from "./session-briefs.js";
 import { reviewSceneEntry, configureEntryPolicy } from "./scene-entry.js";
+import { configureWorldAuthority, worldAuthority, retconAutonomousEntity } from "./autonomous-world.js";
 import { reviewPresentation, presentationView } from "./presentation-evidence.js";
 export async function handleStoryCommand(interaction,{db,gm}){
   if(!interaction.memberPermissions?.has(PermissionFlagsBits.ManageGuild)&&
@@ -41,7 +42,12 @@ export async function handleStoryCommand(interaction,{db,gm}){
   else if(sub==="strategy") result=manageStrategy(db,guild,input,interaction.user.id);
   else if(sub==="arc-beat") result=proposeArcBeat(db,guild,input,interaction.user.id);
   else if(sub==="memory") result=input.op==="review-presentation"?reviewPresentation(db,guild,input,interaction.user.id):manageMemoryCluster(db,guild,input,interaction.user.id);
-  else if(sub==="scene-view") result=input.op==="presentations"?presentationView(db,guild,input):input.op==="entries"?db.listCityRecords(guild,{kind:"scene_entry",status:"pending",includeGM:true,limit:12})
+  else if(sub==="scene-view"&&input.op==="autonomous") result={authority:worldAuthority(db,guild),
+    entities:db.listCityRecords(guild,{kind:"autonomous_entity",includeGM:true,limit:100}).filter(r=>!input.session_id||r.data.session_id===input.session_id)
+      .map(r=>({...r,expected_revision:stateRevision(r)})),
+    conflicts:db.listCityRecords(guild,{kind:"world_conflict",status:"conflict_pending",includeGM:true,limit:100})};
+  else if(sub==="scene-view") result=input.op==="presentations"?presentationView(db,guild,input):input.op==="entries"?db.listCityRecords(guild,{kind:"scene_entry",includeGM:true,limit:30})
+    .filter(row=>["pending","awaiting_adjudication"].includes(row.status)).slice(0,12)
     .map(row=>({...row,expected_revision:stateRevision(row)})):sceneView(db,guild,{...input,gm:input.observer_type?false:true});
   else if(sub==="conversation") result=resolveNpcConversation(db,guild,input,interaction.user.id);
   else if(sub==="pacing") result=setPacingCues(db,guild,input,interaction.user.id);
@@ -53,6 +59,8 @@ export async function handleStoryCommand(interaction,{db,gm}){
   else if(sub==="forecast") result=previewOutcomes(db,guild,input);
   else if(sub==="why") result=input.op==="reconcile"?reconcileHistory(db,guild,input):explainWhy(db,guild,input);
   else if(sub==="portray") result=configurePortrayal(db,guild,input,interaction.user.id);
+  else if(sub==="author"&&input.op==="authority") { const {op,...settings}=input; result=configureWorldAuthority(db,guild,settings,interaction.user.id); }
+  else if(sub==="author"&&input.op==="retcon") result=retconAutonomousEntity(db,guild,input,interaction.user.id);
   else if(sub==="author") result=authorWorldDraft(db,gm.content,guild,input,interaction.user.id);
   else if(sub==="author-review") result=reviewWorldDraft(db,gm.content,guild,input,interaction.user.id);
   else if(sub==="diagnose"){

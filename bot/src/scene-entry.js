@@ -1,4 +1,4 @@
-/** Authenticated entry declarations stage native review; unknown locations never become canon or automatic travel. */
+/** Authenticated entry declarations preserve intended destinations; native autonomous actions adjudicate ordinary travel separately. */
 import { personalCharacter } from "./personal-continuity.js";
 import { captureDeclaration, interpretAuthoredText } from "./player-language.js";
 import { recordCharacterArrival, currentScene, recordScenePresence } from "./scene-continuity.js";
@@ -29,10 +29,11 @@ export function prepareSceneEntry(db,guild,user,character,messageId,text,{privat
     if(presence) return {status:"established",record_key:key,data:{location_key:location.entity_key}};
   }
   return db.transaction(()=>{
-    const after=db.saveCityRecord(guild,{kind:"scene_entry",key,status:"pending",source_event:source.event_key,
+    const manual=db.getCityRecord(guild,"gm_authority","campaign")?.data.gm_authority_mode==="manual";
+    const after=db.saveCityRecord(guild,{kind:"scene_entry",key,status:manual?"pending":"awaiting_adjudication",source_event:source.event_key,
       visibility:"character",subject_key:pc.id,data:{user,character:pc.id,target,session_id:db.getActiveSession(guild).id,
         scene:currentScene(db,guild).key,prior_location:pc.data.location??null,private_scene:privateScene,
-        authority:"Owner-authored entry attempt only; human review of established location/access required. No travel, cost, occupants or knowledge inferred."}});
+        authority:"Owner-authored entry attempt only; AI-GM native adjudication or explicit manual review resolves access. No completed travel, costs, occupants or knowledge inferred."}});
     cityAudit(db,guild,"scene_entry",key,null,after,user);return after;
   });
 }
@@ -51,23 +52,23 @@ export function entryReferenceContext(db,guild,user,character,{mode="private"}={
   const scene=currentScene(db,guild).key;
   const attempts=db.characterContinuity(guild,pc.id,{kind:"scene_entry",limit:30}).filter(row=>{
     const source=db.getWorldEvent(guild,row.source_event);
-    return row.status==="pending"&&row.data.user===user&&row.data.session_id===session.id&&row.data.scene===scene
+    return ["pending","awaiting_adjudication"].includes(row.status)&&row.data.user===user&&row.data.session_id===session.id&&row.data.scene===scene
       &&(mode==="private"||row.data.private_scene===false)
       &&source?.status==="active"&&source.kind==="player_declaration"&&source.details.author===user
       &&source.details.character_id===pc.id&&db.ownerAuthoredSource(guild,source.event_key,user);
   }).slice(0,8).map(row=>({target:row.data.target,source_ref:row.source_event,review_key:row.record_key,
-    review_revision:stateRevision(row),status:"pending",private_scene:row.data.private_scene}));
+    review_revision:stateRevision(row),status:row.status,private_scene:row.data.private_scene}));
   return {saved_location:pc.data.location??null,attempts,
     authority:"Conversational referents only. Resolve ordinary names, pronouns and follow-up clarifications from owner-visible context. "
       +"Understanding a destination is NOT arrival, access, an encounter, presence, NPC knowledge or consent. "
       +"Ask only when ambiguity materially affects an action; do not repeatedly ask for an already understood name. "
-      +"Pending entry remains subject to native human review and travel/encounter/access rules. Review keys and revisions are GM metadata, not dialogue."};
+      +"Use autonomous world additions/actions for ordinary local creation and entry; keep native travel/encounter/access rules. Review keys and revisions are GM metadata, not dialogue."};
 }
 export function reviewSceneEntry(db,guild,input,reviewer){
   if(Object.keys(input).some(key=>!["op","key","expected_revision","location_key","adjudication"].includes(key))||input.op!=="review-entry"
     ||!reviewer||typeof input.adjudication!=="string"||!input.adjudication.trim()||input.adjudication.length>600) throw new Error("Closed human entry review and adjudication required.");
   const row=db.getCityRecord(guild,"scene_entry",input.key);
-  if(!row||row.status!=="pending"||stateRevision(row)!==input.expected_revision) throw new Error("Current pending entry revision required.");
+  if(!row||!["pending","awaiting_adjudication"].includes(row.status)||stateRevision(row)!==input.expected_revision) throw new Error("Current pending entry revision required.");
   const pc=personalCharacter(db,guild,row.data.user,row.data.character),source=db.getWorldEvent(guild,row.source_event);
   if(!source||source.status!=="active"||source.kind!=="player_declaration"||source.details.author!==pc.owner_user_id
     ||source.details.character_id!==pc.id||!db.ownerAuthoredSource(guild,source.event_key,pc.owner_user_id)
@@ -114,7 +115,7 @@ export function configureEntryPolicy(db,guild,input,reviewer){
 export function mundaneEntryImpact(db,guild,entry,locationKey){
   const policy=db.getCityRecord(guild,"entry_policy",locationKey),location=db.getSimulationEntity(guild,"location",locationKey);
   const state=location?.state||{};
-  const safe=entry?.status==="pending"&&policy?.status==="active"&&db.getWorldEvent(guild,policy.source_event)?.status==="active"
+  const safe=["pending","awaiting_adjudication"].includes(entry?.status)&&policy?.status==="active"&&db.getWorldEvent(guild,policy.source_event)?.status==="active"
     &&policy.data.session_id===db.getActiveSession(guild)?.id&&policy.data.scene===currentScene(db,guild).key
     &&policy.data.from_locations.includes(entry.data.prior_location)
     &&policy.data.destination_revision===stateRevision(location)

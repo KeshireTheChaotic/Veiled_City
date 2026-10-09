@@ -4,6 +4,7 @@ import { indexWorldEvent } from "./city-calendar.js";
 import { normalizeNpcKey } from "./npc-cognition.js";
 import { applySimulationUpdates } from "./simulation.js";
 import { validateNarrativeClaims, assertNarrativeApplied } from "./narrative-integrity.js";
+import { applyAutonomousWorld } from "./autonomous-world.js";
 import { dispatchAiIntents } from "./ai-intents.js";
 import { assertNpcObservation } from "./scene-continuity.js";
 import { persistInterpretation } from "./narrative-context.js";
@@ -402,10 +403,11 @@ export function assertMutationSuccess({events=[],relationships=[],handouts=[],np
  * state changes commit together or the surrounding transaction rolls back.
  */
 export function applyAuthoritativeMutation(db,{guildId,sessionId=null,events=[],relationships=[],handouts=[],npcMemories=[],npcKnowledge=[],npcGoals=[],
-  simulationUpdates=[],scope={mode:"party",actorUserId:null,actorCharacterId:null},source="ai_gm",provenance={},narrative=null,aiIntents=narrative?.ai_intents||[]}){
+  simulationUpdates=[],scope={mode:"party",actorUserId:null,actorCharacterId:null},source="ai_gm",provenance={},narrative=null,aiIntents=narrative?.ai_intents||[],content=null}){
   return db.transaction(()=>{
     if(narrative?.narrative_interpretation)persistInterpretation(db,guildId,narrative.narrative_interpretation,scope,provenance);
     persistAuthoredCandidates(db,guildId,narrative?.authored_candidates,scope,provenance);
+    const world=applyAutonomousWorld(db,guildId,narrative,scope,provenance,content);
     const eventResults=applyGMEvents(db,guildId,sessionId,events,scope,provenance);
     const relationshipResults=applyRelationshipDrafts(db,guildId,relationships,scope,source);
     const handoutResults=applyHandoutDrafts(db,guildId,sessionId,handouts,scope,source);
@@ -446,7 +448,7 @@ export function applyAuthoritativeMutation(db,{guildId,sessionId=null,events=[],
     // state or model-described effects. Any failure rolls back the entire bundle.
     if(narrative) validateNarrativeClaims(db,guildId,narrative,scope,{staged:true,eventResults});
     return {events:eventResults,relationships:relationshipResults,handouts:handoutResults,
-      npcMemories:cognition.memories,npcKnowledge:cognition.knowledge,npcGoals:cognition.goals,simulation,intents};
+      npcMemories:cognition.memories,npcKnowledge:cognition.knowledge,npcGoals:cognition.goals,simulation,intents,world};
   });
 }
 

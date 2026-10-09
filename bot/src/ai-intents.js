@@ -180,7 +180,8 @@ export function reviewAiIntent(db,guild,{key,decision:response,expected_revision
 export function intentContext(db,guild){
   const scene=db.getActiveSession(guild)&&db.getCityCalendar(guild).flags.scene_continuity===true?sceneView(db,guild,{gm:true}):null;
   const packet={policy:delegationPolicy(db,guild),flags:db.getCityCalendar(guild).flags,
-    scene_entries:db.listCityRecords(guild,{kind:"scene_entry",status:"pending",includeGM:true,limit:8}).map(row=>({...row,expected_revision:stateRevision(row)})),
+    scene_entries:db.listCityRecords(guild,{kind:"scene_entry",includeGM:true,limit:30})
+      .filter(row=>["pending","awaiting_adjudication"].includes(row.status)).slice(0,8).map(row=>({...row,expected_revision:stateRevision(row)})),
     roll_declarations:db.getCityCalendar(guild).flags.roll_requests===true?db.listWorldEvents(guild,{includeGM:true,limit:100})
       .filter(row=>["player_declaration","roll_contribution"].includes(row.kind)&&row.status==="active"&&row.session_id===db.getActiveSession(guild)?.id)
       .slice(0,12).map(row=>({...row,expected_revision:stateRevision(row)})):[],

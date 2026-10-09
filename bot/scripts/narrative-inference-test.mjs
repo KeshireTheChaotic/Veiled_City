@@ -61,7 +61,7 @@ try{
   assert.throws(()=>validateNarrativeClaims(db,guild,narrative,scope),/uncommitted_movement/);
   assert.equal(previewAuthoritativeMutation(db,input).intents[0].status,"accepted");
   assert.equal(db.getCharacter(pc.id).data.location,"street","Preview rolls back native entry");
-  assert.equal(db.getCityRecord(guild,"scene_entry",entry.record_key).status,"pending");
+  assert.equal(db.getCityRecord(guild,"scene_entry",entry.record_key).status,"awaiting_adjudication");
   const review=Object.fromEntries(POST_TURN_REVIEW_CATEGORIES.map(key=>[key,{decision:"no_change",reason:"No legacy mutation",confidence:100}]));
   review.scene={decision:"continue",label:"",reason:"No scene transition"};
   const provider=new FakeResponses([{...narrative,respond:true,private_messages:[],events:[],handouts:[],relationships:[],

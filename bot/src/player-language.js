@@ -3,8 +3,33 @@ import { personalCharacter } from "./personal-continuity.js";
 import { indexWorldEvent } from "./city-calendar.js";
 import { motivationKey } from "./simulation-motivation.js";
 import { currentScene } from "./scene-continuity.js";
+export function authoredSceneText(value){
+  return String(value||"").trim().replace(/^(?:\*\*|\*|_)([\s\S]*?)(?:\*\*|\*|_)$/,"$1").trim();
+}
+/** Conservative lexical hints; freeform GM interpretation remains primary and cannot supply consent. */
+export function worldRequirements(value){
+  const text=authoredSceneText(value).replace(/^(?:\s*<@!?\d+>\s*)+/,"").trim();
+  const base={kind:"observe",movement:"none",target:"",location_constraints:[],exclude_locations:[]};
+  if(/^(?:ooc\b|\(\(|\/\/|hypothetically\b|if\b|I (?:might|would|could)\b)/i.test(text))return {...base,kind:"planning_or_ooc"};
+  const local=/^I\s+(?:go|head|walk|step|move)\s+(upstairs|downstairs|up the stairs|down the stairs)\b/i.exec(text);
+  if(local)return {...base,kind:"local_zone",movement:"attempt",target:local[1]};
+  const movement=/^I\s+(?:walk\s+(?:into|inside|to)|step\s+(?:into|inside)|go\s+(?:into|inside|to)|head\s+(?:into|inside|to|back to)|return to|enter)\s+(.+?)(?=\s+and\s+|[,.!?;\n]|$)/i.exec(text);
+  if(movement)return {...base,kind:"move",movement:"attempt",target:movement[1].trim().replace(/^the\s+/i,"")};
+  if(/\b(?:look|search|seek|find)\b/i.test(text)){
+    const constraints=[...text.matchAll(/\b(?:public|open|shaded|sheltered|quiet|nearby|out of the light)\b/gi)].map(m=>m[0]);
+    const exclusions=[...text.matchAll(/\b(?:not|away from|avoiding)\s+([^,.!?;\n]+)/gi)].map(m=>m[1].trim());
+    return {...base,kind:"find_place",location_constraints:constraints,exclude_locations:exclusions};
+  }
+  return base;
+}
+/** Routing hint only: acknowledging a need never commits a job, income, travel, debt or personal arc. */
+export function hasCharacterInvitation(value){
+  const text=authoredSceneText(value);
+  if(interpretAuthoredText(text,{natural:true}).kind==="planning_or_ooc")return false;
+  return /\bI\s+(?:need|want|wish|wonder|hope|am looking for|can't afford|cannot afford)\b|\bI'm\s+(?:looking for|worried|hungry|lost|broke)\b/i.test(text);
+}
 export function interpretAuthoredText(message,{natural=false}={}){
-  const text=String(message||"").replace(/^(?:\s*<@!?\d+>\s*)+/,"").trim();
+  const text=authoredSceneText(message).replace(/^(?:\s*<@!?\d+>\s*)+/,"").trim();
   if(!text||text.length>4000) return {kind:"unclear",speech:null};
   if(/^(?:ooc\b|\(\(|\/\/|hypothetically\b|for example\b|if I\b|I (?:might|would|could)\b|imagine I\b|suppose I\b|planning to\b)/i.test(text))
     return {kind:"planning_or_ooc",speech:null};

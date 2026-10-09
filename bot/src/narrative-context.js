@@ -114,7 +114,7 @@ export function persistInterpretation(db,guild,value,scope,provenance={}){
     data:{interpretation:value,authority:"Nonbinding contextual meaning only",user:scope.actorUserId}});
   cityAudit(db,guild,"narrative_context",key,null,row,scope.actorUserId);
   for(const entry of principal.kind==="owner"?db.characterContinuity(guild,scope.actorCharacterId,{kind:"scene_entry",limit:30}):[]){
-    if(entry.status!=="pending"||entry.data.user!==scope.actorUserId||entry.data.session_id!==source.session_id
+    if(!["pending","awaiting_adjudication"].includes(entry.status)||entry.data.user!==scope.actorUserId||entry.data.session_id!==source.session_id
       ||scope.mode!=="private"&&entry.data.private_scene)continue;
     const candidates=value.references.filter(ref=>ref.status==="resolved"&&ref.entity_type==="location"
       &&ref.source_refs.map(eventKey).includes(entry.source_event)&&String(source.details.text).includes(ref.phrase))

@@ -20,7 +20,8 @@ import { portrayalPacket } from "./portrayal.js";
 import { intentArraySchema, INTENT_PROMPT } from "./ai-intent-contracts.js";
 import { intentContext } from "./ai-intents.js";
 import { decisionAdvisorySchema, decisionContext, validateDecisionAdvisory } from "./decision-advisory.js";
-import { declarationContext } from "./player-language.js";
+import { declarationContext, hasCharacterInvitation } from "./player-language.js";
+import { worldAdditionsSchema, sceneActionsSchema, worldConflictsSchema, AUTONOMOUS_WORLD_PROMPT, autonomousWorldContext, worldAuthority } from "./autonomous-world.js";
 import { entryReferenceContext } from "./scene-entry.js";
 import { OnlineSrd } from "./rules-srd.js";
 import { interpretationSchema, CONTEXT_CONTRACT, interpretationContext, validateInterpretation } from "./narrative-context.js";
@@ -115,6 +116,9 @@ const gmSchema={
   properties:{
     respond:{type:"boolean"},
     narration:{type:"string"},
+    world_additions:worldAdditionsSchema,
+    scene_actions:sceneActionsSchema,
+    world_conflicts:worldConflictsSchema,
     narrative_interpretation:interpretationSchema,
     authored_candidates:authoredCandidatesSchema,
     narrative_claims:{type:"array",items:materialClaimSchema},
@@ -153,7 +157,7 @@ const gmSchema={
     simulation_updates:{type:"array",items:simulationUpdateSchema},
     state_review:stateReviewSchema
   },
-  required:["respond","narration","narrative_interpretation","authored_candidates","narrative_claims","private_messages","events","handouts","relationships","npc_memories","npc_knowledge","npc_goals","canon_proposals","simulation_updates","state_review"]
+  required:["respond","narration","world_additions","scene_actions","world_conflicts","narrative_interpretation","authored_candidates","narrative_claims","private_messages","events","handouts","relationships","npc_memories","npc_knowledge","npc_goals","canon_proposals","simulation_updates","state_review"]
 };
 
 
@@ -371,6 +375,8 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
     const actionish=/^(\*|>|i\b|we\b|my character\b|elias\b|\[[^\]]+\]\s*|[^:\n]{1,60}:\s+)|\?$|^\[[^\]]*gm[^\]]*\]/i.test(text);
     const session=this.db.getActiveSession(guildId),npcRoles=session?this.db.npcProxyAssignments(session.id,message.author.id):[];
     const assignment=actorAssignment??(session&&this.db.controlledAssignment(session.id,message.author.id))??(npcRoles.length===1?npcRoles[0]:null);
+    // Explicit in-character needs invite an open GM question even without a question mark or command verb.
+    if(assignment&&hasCharacterInvitation(text))return true;
     const focus=interpretationContext(this.db,guildId,message.author.id,assignment?.character_id,text,
       {mode:"party",messageId:message.id,botUserId:message.client?.user?.id});
     const followup=!!focus?.conversation_focus&&/\?/.test(focus.conversation_focus)&&text.length<=600
@@ -384,6 +390,7 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
       "Return respond=true only when the AI GM should act: a player takes an in-world action requiring world reaction, directly addresses an NPC/GM, asks about the environment, makes a consequential roll request, or the world clearly needs to answer.",
       "Rules-only questions belong in the configured rules channel and should not normally interrupt the scene unless they directly affect an action happening now.",
       "Return false for player-to-player banter, planning, jokes, reactions, OOC chatter, or roleplay that needs no world response.",
+      "In-character needs, concerns, ambitions, reflective speech and indirect requests invite GM engagement even without a question mark. For 'I need work, PantryQueue is not pulling in enough money', respond=true: ask about seeking work or offer an observable lead; do not infer acceptance, payment or a binding goal. Formatting with asterisks or mixed action/quoted speech does not make a message OOC.",
       "Do not answer the RPG message itself.",
       `Current roster: ${JSON.stringify(summarizeRoster(roster))}`,
       `Scoped conversation focus (not authority): ${JSON.stringify(focus)}`,
@@ -465,8 +472,9 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
       NARRATIVE_CONTRACT,
       CONTEXT_CONTRACT,
       AUTHORED_CANDIDATES_PROMPT,
+      AUTONOMOUS_WORLD_PROMPT,
       "Relationship and artifact epistemic source_refs must preserve active perspective/ancestry. PC-outgoing attitudes and debt/obligation changes are nonbinding interpretation drafts, never PC feelings or binding terms. Artifact canonical_facts need matching independently authorized sources; unsupported detail stays illustrative presentation. Legacy recaps are narrator summaries, not observations or new rulings.",
-      "Fact/clue epistemic metadata distinguishes observation, testimony and hypothesis. Null defaults to hypothesis, never world truth. Only repeat active committed observation sources as observation; AI cannot label new established truth. NPC memories need own witnessed/delivered/inferred evidence; inferred or reported knowledge cannot become known. Unknown NPCs need authorized authoring/review, not cognition creation. scene.enter requires a current owned entry, saved mundane adjacency policy and explicit delegation; never infer travel/access from an understood name.",
+      "Fact/clue epistemic metadata distinguishes observation, testimony and hypothesis. Null defaults to hypothesis, never world truth. NPC memories need own witnessed/delivered/inferred evidence; inferred or reported knowledge cannot become known. Use world_additions to establish ordinary places/NPCs and scene_actions for ordinary owner-authorized local travel, independently of optional delegation. Use scene.enter only for the older saved policy workflow. Never infer access or consent from an understood name.",
       `NPC diction guidance, not facts/PC emotions: ${JSON.stringify(ctx.npc_cognition.slice(0,4).map(row=>portrayalPacket(this.db,guildId,row.npc_key)))}`,
       this.db.getCityCalendar(guildId).flags.pacing?JSON.stringify(pacingAdvice(this.db,guildId,messageText)):"",
       "GM-private facts/clocks/reference content may be used to simulate the world but MUST NOT appear in narration until legitimately discovered.",
@@ -514,7 +522,7 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
       "After a meaningful NPC interaction, update npc_memories only for NPCs who actually witnessed, experienced, were told about, inferred, read, or supernaturally perceived the event. Do not create a memory just because an NPC exists. Use npc_knowledge for durable beliefs/knowledge and preserve uncertainty with suspected/rumor/doubted states instead of converting subjective belief into objective fact.",
       "NPC goals and personality constrain behavior. Do not rewrite stable personality every turn. Goals may change when fiction clearly advances, completes, fails, or redirects an established agenda.",
       "Veiled City setting lens: hospitality can create supernatural/social obligations only when established custom, invitation, shelter, exchange, oath, Court/Concord practice, or explicit terms support it; ordinary politeness is not automatically a binding contract. Record remembered hospitality/debt as relational memory/knowledge, not global canon. Veil/threshold/anchor effects may shape supernatural impressions, but never give an NPC omniscience through the Veil.",
-      "MANDATORY POST-TURN STATE REVIEW: before returning, explicitly review facts/clues, PC resources, clocks, threads, references, relationships, NPC cognition, handouts, canon, Veil Exposure, and scene continuity. Every category must be marked changed or no_change with a concrete reason and a confidence score from 0-100. If marked changed, emit the matching structured mutation; if no mutation is emitted, mark no_change. A canon_proposals entry does not count as a canon change. Never hide a mechanical consequence only in prose. Confidence below 55 means the proposed change is ambiguous enough that Veilkeeper should avoid committing it and instead preserve it in rationale/GM-visible context for review.",
+      "MANDATORY POST-TURN STATE REVIEW: explicitly review facts/clues, PC resources, clocks, threads, references, relationships, NPC cognition, handouts, canon, Veil Exposure and scene continuity. Match changed/no_change to structured category mutations, with a reason and confidence 0-100. World additions/actions have their own native receipt, not legacy category events. A canon_proposals entry is not a canon change. Low confidence alone never requires a human: simplify ordinary fiction, safely retry or ask a material player question. Never hide mechanics in prose; native validators remain mandatory.",
       "For scene continuity, choose transition only when fictional location, objective, time frame, or dramatic scene boundary actually changes. Provide a short new-scene label when transitioning; otherwise use continue with an empty label.",
       "Keep narration suitable for Discord. Prefer 1-4 compact paragraphs unless a longer scene is genuinely needed."
     ].join("\n\n");
@@ -522,6 +530,7 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
       `CAMPAIGN STATE:\n${JSON.stringify(ctx.campaign)}`,
       `DECISION ADVISORY (GM-private; null when disabled): ${JSON.stringify(ctx.decision_advisory)}`,
       `AUTHENTICATED DECLARATION (attempts, not completed facts): ${JSON.stringify(ctx.player_declaration)}`,
+      `AUTONOMOUS WORLD (GM-private native creation/action context): ${JSON.stringify(autonomousWorldContext(this.db,guildId,{mode:scope,actorUserId,actorCharacterId:ctx.actor_assignment?.character_id},messageId))}`,
       `SCOPED INTERPRETATION (not authority): ${JSON.stringify(interpretationContext(this.db,guildId,actorUserId,ctx.actor_assignment?.character_id,messageText,{mode:scope,messageId}))}`,
       `CONVERSATIONAL ENTRY REFERENCES (not authority): ${JSON.stringify(entryReferenceContext(this.db,guildId,actorUserId,ctx.actor_assignment?.character_id,{mode:scope}))}`,
       `AI MANAGEMENT (GM-private proposals, policy, revisions and receipts; never actor knowledge): ${JSON.stringify(ctx.ai_management)}`,
@@ -576,6 +585,12 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
     };
     if(this.config.reasoningEffort) req.reasoning={effort:this.config.reasoningEffort};
     const validateTurn=(result)=>{
+      const prose=[result.narration||"",...(result.private_messages||[]).map(row=>row.content)].join("\n");
+      if(worldAuthority(this.db,guildId).gm_authority_mode==="autonomous"&&!(result.world_conflicts||[]).length
+        &&/\b(?:(?:I|we) need (?:a |the |human )?GM to|(?:the |human )GM (?:needs|must|has) to) (?:establish|create|approve|promote|describe)\b[^.!?\n]{0,140}\b(?:surroundings|location|place|NPC|person|diner|street|scene)\b/i.test(prose))
+        throw new Error("Missing ordinary world data is AI-GM work, not a human approval prerequisite. Create/reuse ordinary fiction via native world additions/actions and keep the scene moving.");
+      if(ctx.actor_assignment&&hasCharacterInvitation(messageText)&&(!result.respond||!String(result.narration||"").trim()))
+        throw new Error("An in-character need invites GM engagement: acknowledge it and ask an open contextual question without choosing a PC decision.");
       validateInterpretation(this.db,guildId,result.narrative_interpretation,{mode:scope,actorUserId,actorCharacterId:ctx.actor_assignment?.character_id});
       validatePostTurnStateReview(result);
       validatePacing(this.db,guildId,result);
@@ -583,7 +598,7 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
         narrative:result,events:result.events||[],relationships:result.relationships||[],handouts:result.handouts||[],
         npcMemories:result.npc_memories||[],npcKnowledge:result.npc_knowledge||[],npcGoals:result.npc_goals||[],
         simulationUpdates:result.simulation_updates||[],scope:{mode:scope,actorUserId,actorCharacterId:ctx.actor_assignment?.character_id},
-        provenance:{messageId,actorId:actorUserId}});
+        provenance:{messageId,actorId:actorUserId},content:this.content});
       if(!privateMode&&result.state_review.scene.decision==="transition"&&
         !(result.simulation_updates||[]).some(update=>update.kind==="residue"))
         throw new Error("A public scene transition requires structured scene residue, including empty lists where nothing was left behind.");
@@ -647,7 +662,7 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
       "NPC COGNITION IS SUBJECTIVE. Use the retrieved NPC cognition packet to constrain what an NPC remembers, believes, wants, and is willing to do. GM facts outside that packet are not automatically known by the NPC.",
       "When a director consequence meaningfully changes what an involved NPC remembers, believes, or pursues, emit npc_memories/npc_knowledge/npc_goals. Do not update uninvolved NPCs merely because the director pass fired.",
       "Veiled City setting lens: hospitality, shelter, invitations, gifts, formal introductions, Court/Concord custom, oaths, and explicit bargains can create remembered debt or contractual expectation when established fiction supports it; ordinary courtesy alone does not. Veil/threshold/anchor phenomena can produce supernatural impressions, but those impressions are subjective evidence rather than omniscience or automatic canon.",
-      "Return confidence 0-100 for the proposed world move as a whole. If confidence is below 55, return act=false with empty outputs and explain the ambiguity in gm_notes instead of committing a speculative world mutation.",
+      "Return confidence 0-100 as advisory metadata. Low confidence alone is not a human-review gate: prefer conservative ordinary fiction or simplify the move. Native mechanics, canon, secrecy and player control remain mandatory.",
       trigger?.scope==="private"?"PRIVATE SCENE DIRECTOR: this scene transition is visible only to the acting player. Treat public_narration as a transport field that the application will deliver privately. Do not emit global canon or Veil Exposure changes; private-scope guards will block them and report the attempt.":"PARTY/WORLD DIRECTOR: public_narration may be posted to the party when there is a player-visible world consequence.",
       `Layer: ${layer}`,`Trigger: ${JSON.stringify(trigger)}`,`Campaign: ${JSON.stringify(ctx.campaign)}`,`Session: ${JSON.stringify(ctx.session)}`,`Director state: ${JSON.stringify(ctx.session?this.db.getDirectorState(ctx.session.id):null)}`,
       `Roster: ${JSON.stringify(ctx.roster)}`,`Recent party transcript: ${JSON.stringify(this.db.recentPartyMessages(guildId,{limit:50}))}`,`Actor-visible recent transcript (includes private context only when this is a private-scene director pass): ${JSON.stringify(ctx.recent)}`,`Actor-visible facts: ${JSON.stringify(ctx.actor_visible_facts)}`,`Facts (GM-private/all; objective context, not automatic NPC knowledge): ${JSON.stringify(ctx.gm_all_facts)}`,`NPC cognition (subjective GM-private state): ${JSON.stringify(ctx.npc_cognition)}`,`Clocks: ${JSON.stringify(ctx.clocks)}`,`Canon: ${JSON.stringify(ctx.canon)}`,`Relationships: ${JSON.stringify(ctx.gm_relationships)}`,

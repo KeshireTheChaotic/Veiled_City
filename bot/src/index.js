@@ -19,6 +19,8 @@ import { publishRollRequests } from "./roll-requests.js";
 import { routeRollMessage } from "./roll-language.js";
 import { routeConsentMessage } from "./consent-language.js";
 import { routeSceneEntryMessage } from "./scene-entry.js";
+import { captureWorldInput } from "./autonomous-world.js";
+import { hasCharacterInvitation } from "./player-language.js";
 import { interactionResponseExpired } from "./discord/interaction-lifecycle.js";
 import { publishEventResults, postGmLog, postStateError, deliverHandout, postPlayMessage } from "./publishing.js";
 import { VoiceNarrator } from "./voice.js";
@@ -241,7 +243,7 @@ async function runPrivateSceneDirector({guild,session,actorUserId,actorCharacter
   return {ran:true,ok:true};
 }
 
-function commitTurnMutation(args){ return commitGmTurn({db,...args}); }
+function commitTurnMutation(args){ return commitGmTurn({db,content,...args}); }
 
 async function notifyCanonProposals({guild,session,message,actorUserId,actorCharacterId,speaker,rows=[]}){
   const proposals=[...new Map((rows||[]).filter(x=>x?.ok&&x.row).map(x=>[x.row.id,x])).values()];
@@ -306,6 +308,7 @@ async function processPrivateTurn(message,directMention){
     sendAmendment:(user,text,sid,char)=>sendPrivate(message.guild,user,text,sid,char)})) return;
   captureDeclaration(db,message.guild.id,message.author.id,controlled?.npc_proxy?null:controlled?.character_id,message.id,playerText,{privateScene:true});
   captureContextSource(db,message.guild.id,message.author.id,controlled?.character_id,message.id,playerText,{privateScene:true});
+  captureWorldInput(db,message.guild.id,message.author.id,controlled?.character_id,message.id,playerText,{privateScene:true});
   captureDialogue(db,message.guild.id,message.author.id,controlled?.npc_proxy?null:controlled?.character_id,message.id,playerText,{privateScene:true});
   captureArcCandidate(db,message.guild.id,message.author.id,controlled?.npc_proxy?null:controlled?.character_id,message.id,playerText);
   db.addMessage({guildId:message.guild.id,sessionId:session.id,messageId:message.id,userId:message.author.id,speakerName:speaker,characterId:controlled?.character_id||null,visibility:vis,subjectUserId:vis==="player"?message.author.id:null,subjectCharacterId:vis==="character"?conversationId:null,content:playerText});
@@ -397,6 +400,7 @@ async function processPartyTurn(message,directMention){
   captureArcCandidate(db,message.guild.id,message.author.id,controlled?.npc_proxy?null:controlled?.character_id,message.id,playerText);
   captureDeclaration(db,message.guild.id,message.author.id,controlled?.npc_proxy?null:controlled?.character_id,message.id,playerText);
   captureContextSource(db,message.guild.id,message.author.id,controlled?.character_id,message.id,playerText);
+  captureWorldInput(db,message.guild.id,message.author.id,controlled?.character_id,message.id,playerText);
   db.addMessage({guildId:message.guild.id,sessionId:session.id,messageId:message.id,userId:message.author.id,speakerName:speaker,characterId:controlled?.character_id||null,visibility:"party",content:playerText});
   captureDialogue(db,message.guild.id,message.author.id,controlled?.npc_proxy?null:controlled?.character_id,message.id,playerText);
   if(!controlled?.npc_proxy&&await routeSceneEntryMessage({db,message,characterId:controlled?.character_id,text:playerText,
@@ -406,7 +410,7 @@ async function processPartyTurn(message,directMention){
   try{
     should=await gm.shouldRespond({guildId:message.guild.id,message,messageText:playerText,actorAssignment:controlled,mode:campaign.response_mode||config.defaultResponseMode,directMention});
   }catch(err){
-    console.error("router",err); should=directMention;
+    console.error("router",err); should=directMention||!!controlled&&hasCharacterInvitation(playerText);
   }
   if(!should) return;
 
@@ -419,7 +423,7 @@ async function processPartyTurn(message,directMention){
   }catch(err){
     console.error("GM turn generation failed",err);
     const ref=await safeStateError({guild:message.guild,error:err,context:`party-turn-generation:${message.author.id}`,sessionId:session.id});
-    if(directMention) await message.reply(`⚠️ The GM engine hit an API/runtime error (${ref}). Your message was saved and no generated campaign state was committed; retrying is safe.`).catch(()=>{});
+    await message.reply(`⚠️ The GM engine hit an API/runtime error (${ref}). Your message was saved and no generated campaign state was committed; retrying is safe.`).catch(()=>{});
     return;
   }
 
@@ -430,7 +434,7 @@ async function processPartyTurn(message,directMention){
   }catch(err){
     console.error("GM state mutation rolled back",err);
     const ref=await safeStateError({guild:message.guild,error:err,context:`party-turn-state:${message.author.id}`,sessionId:session.id});
-    if(directMention) await message.reply(`⚠️ The generated GM state update was rejected and rolled back (${ref}). Your message is saved; no generated consequences were committed, so retrying is safe.`).catch(()=>{});
+    await message.reply(`⚠️ The generated GM state update was rejected and rolled back (${ref}). Your message is saved; no generated consequences were committed, so retrying is safe.`).catch(()=>{});
     return;
   }
 

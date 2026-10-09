@@ -22,8 +22,8 @@ export function sessionBrief(db,guild,{mode="shared",user="",gm=false}={}){
   if(mode==="gm") Object.assign(packet,{
     motives:db.listNpcProfiles(guild,{limit:12}).map(npc=>({npc:npc.npc_key,goals:db.listNpcGoals(guild,npc.npc_key,{status:"active",limit:3}),
       authority:"actor-owned motive, not guaranteed future action or global truth"})),
-    reviews:["ai_intent","world_draft","strategy","organization_request","scene_entry"].flatMap(kind=>db.listCityRecords(guild,{kind,includeGM:true,limit:12})
-      .filter(row=>["pending","draft","consented","blocked"].includes(row.status)).map(row=>({kind,key:row.record_key,status:row.status,source:row.source_event}))),
+    reviews:["ai_intent","world_draft","strategy","organization_request","scene_entry","world_conflict"].flatMap(kind=>db.listCityRecords(guild,{kind,includeGM:true,limit:12})
+      .filter(row=>["pending","draft","consented","blocked","conflict_pending"].includes(row.status)).map(row=>({kind,key:row.record_key,status:row.status,source:row.source_event}))),
     upcoming:db.upcomingCitySchedules(guild,20).map(row=>({key:row.schedule_key,due_minute:row.due_minute,review_status:row.review_status,
       authority:"fictional schedule; not attendance, acceptance or executed consequence"})),
     continuity:reconcileHistory(db,guild)

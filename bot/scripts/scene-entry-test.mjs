@@ -35,7 +35,7 @@ try{
   assert.equal(db.getCharacter(pc.id).data.location,undefined);assert.equal(scenePresence(db,guild,"character",pc.id),null);
   assert.equal(db.getNpcProfile(guild,"lena-park"),null);assert.equal(db.getSimulationEntity(guild,"location","diner"),null);
   const row=prepareSceneEntry(db,guild,"owner",pc.id,"entry-1",text);
-  assert.equal(row.status,"pending");assert.equal(db.listCityRecords(guild,{kind:"scene_entry",includeGM:true}).length,1);
+  assert.equal(row.status,"awaiting_adjudication");assert.equal(db.listCityRecords(guild,{kind:"scene_entry",includeGM:true}).length,1);
   const review={op:"review-entry",key:row.record_key,expected_revision:stateRevision(row),location_key:"diner",adjudication:"Established mundane entrance is accessible; no obstacle, cost or travel time."};
   assert.throws(()=>reviewSceneEntry(db,guild,review,"gm"),/Establish/);
   db.setSimulationEntity(guild,"location","diner",{name:"Diner"});

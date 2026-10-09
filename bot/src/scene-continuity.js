@@ -97,8 +97,13 @@ function records(db,guildId,scene){
 }
 export function recordScenePresence(db,guildId,input,actorId){
   cityObject(input);
-  if(db.getCityCalendar(guildId).flags.scene_continuity!==true) throw new StateConflictError("Scene continuity is opt-in.");
   const scene=currentScene(db,guildId),source=requireCitySource(db,guildId,input.source_event),type=input.entity_type;
+  const inputSource=source.details.input_source&&db.getWorldEvent(guildId,source.details.input_source);
+  const autonomous=source.kind==="arrival"&&inputSource?.kind==="ai_gm_input"&&inputSource.status==="active"
+    &&inputSource.session_id===scene.session_id&&inputSource.scene===scene.key
+    &&db.ownerAuthoredSource(guildId,inputSource.event_key,inputSource.details.author);
+  if(db.getCityCalendar(guildId).flags.scene_continuity!==true&&!autonomous)
+    throw new StateConflictError("Scene continuity is opt-in outside authenticated AI-GM arrivals.");
   const allowed=["source_event","entity_type","entity_key","location_key","zone","to_zone","range","state","hidden","known_to","visibility","subject_key","accepted_by","proxy_consent_by","blocks"];
   if(Object.keys(input).some(field=>!allowed.includes(field))) throw new UserInputError("Descriptive occupancy fields only; never combat mechanics.");
   if(!["npc","character","adversary","evidence","hazard","entrance","barrier"].includes(type)) throw new UserInputError("Unsupported scene entity type.");
