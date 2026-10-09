@@ -24,3 +24,50 @@ export function resolvePlaceReference(db,guild,character,phrase,{mode="party",us
   return unique.length===1?{status:"resolved_existing",location:unique[0]}:
     {status:unique.length?"needs_player_clarification":"unknown",candidates:unique.map(row=>row.entity_key)};
 }
+
+/** Bounded GM-side identity/canon preflight; protected collisions return no secret details. */
+export function preflightPlaceIdentity(db,guild,{key,name,scope}){
+  const wanted=new Set([normalized(key),normalized(name)]),visible=[],protectedMatches=[];
+  for(const row of db.listSimulationEntities(guild,"location")){
+    const aliases=[row.entity_key,row.state.name,row.state.title,row.state.display_name,...(row.state.aliases||[])].map(normalized);
+    if(!aliases.some(alias=>wanted.has(alias)))continue;
+    const reference=db.getReference(guild,"location",row.entity_key),allowed=!reference||["public","party"].includes(reference.visibility)
+      ||scope.mode==="private"&&reference.visibility==="character"&&reference.subject_character_id===scope.actorCharacterId;
+    (allowed?visible:protectedMatches).push(row);
+  }
+  const canonCollision=db.listCanon(guild,{includeGM:true,limit:500}).some(row=>{
+    const canonNames=[row.canon_key.split(".").at(-1),row.value].map(normalized);return canonNames.some(value=>wanted.has(value));
+  });
+  if(protectedMatches.length||canonCollision)return {status:"protected_collision",matches:[]};
+  if(visible.length===1)return {status:"reuse",matches:visible};
+  if(visible.length>1)return {status:"ambiguous",matches:visible};
+  return {status:"clear",matches:[]};
+}
+
+/** NPC equivalent of place preflight, including aliases and protected references. */
+export function preflightNpcIdentity(db,guild,{key,name,scope}){
+  const wanted=new Set([normalized(key),normalized(name)]),visible=[],protectedMatches=[];
+  const profiles=new Map(db.listNpcProfiles(guild,{limit:500}).map(row=>[row.npc_key,row]));
+  for(const row of db.listSimulationEntities(guild,"npc")){
+    const profile=profiles.get(row.entity_key),aliases=[row.entity_key,row.state.name,row.state.display_name,
+      profile?.display_name,...(row.state.aliases||[])].map(normalized);
+    if(!aliases.some(alias=>wanted.has(alias)))continue;
+    const reference=db.getReference(guild,"npc",row.entity_key),allowed=!reference||["public","party"].includes(reference.visibility)
+      ||scope.mode==="private"&&reference.visibility==="character"&&reference.subject_character_id===scope.actorCharacterId;
+    (allowed?visible:protectedMatches).push({...row,npc_key:row.entity_key});
+  }
+  for(const reference of db.listReferences(guild,"npc",{publicOnly:false})){
+    if(!wanted.has(normalized(reference.display_name))&&!wanted.has(normalized(reference.entity_key)))continue;
+    const allowed=["public","party"].includes(reference.visibility)
+      ||scope.mode==="private"&&reference.visibility==="character"&&reference.subject_character_id===scope.actorCharacterId;
+    const bucket=allowed?visible:protectedMatches;
+    if(!bucket.some(row=>(row.entity_key||row.npc_key)===reference.entity_key))bucket.push({npc_key:reference.entity_key,entity_key:reference.entity_key});
+  }
+  const canonCollision=db.listCanon(guild,{includeGM:true,limit:500}).some(row=>
+    [row.canon_key.split(".").at(-1),row.value].map(normalized).some(value=>wanted.has(value)));
+  if(protectedMatches.length||canonCollision)return {status:"protected_collision",matches:[]};
+  const unique=[...new Map(visible.map(row=>[row.entity_key||row.npc_key,row])).values()];
+  if(unique.length===1)return {status:"reuse",matches:unique};
+  if(unique.length>1)return {status:"ambiguous",matches:unique};
+  return {status:"clear",matches:[]};
+}

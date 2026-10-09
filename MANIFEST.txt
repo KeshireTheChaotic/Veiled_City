@@ -53,6 +53,7 @@ bot/scripts/i-heard-you-9-test.mjs
 bot/scripts/i-heard-you-integration-test.mjs
 bot/scripts/implementation-phase-a-test.mjs
 bot/scripts/implementation-phase-b-test.mjs
+bot/scripts/implementation-phase-c-test.mjs
 bot/scripts/interaction-lifecycle-test.mjs
 bot/scripts/narrative-contract-test.mjs
 bot/scripts/narrative-inference-test.mjs
@@ -142,6 +143,7 @@ bot/src/logger.js
 bot/src/long-projects.js
 bot/src/memory-clusters.js
 bot/src/message-span-ledger.js
+bot/src/movement-language.js
 bot/src/narrative-context.js
 bot/src/narrative-integrity.js
 bot/src/negotiations.js
@@ -166,6 +168,7 @@ bot/src/roll-collaboration.js
 bot/src/roll-language.js
 bot/src/roll-requests.js
 bot/src/roster.js
+bot/src/rules-arbitration.js
 bot/src/rules-srd.js
 bot/src/scene-continuity.js
 bot/src/scene-entry.js

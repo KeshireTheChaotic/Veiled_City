@@ -19,3 +19,11 @@ Deterministic acceptance is in `implementation-phase-a-test.mjs`, with existing 
 Rows are marked `delivering` before network I/O. A restart converts interrupted rows to `uncertain`, because Discord provides no application idempotency key for proving whether an unrecorded send succeeded. Normal retries deliver only pending/failed parts; uncertain parts require an explicit GM force option that warns of possible duplication. Full GM exports and logical snapshots include turn/outbox recovery state; player exports do not expose it.
 
 GM operators can inspect `/vc-gm delivery-status` and use `/vc-gm delivery-resend turn:<id> [force_uncertain:true]`. Both are permission-scoped; resend operates only on committed delivery records.
+
+## Phase C — 9.8.0
+
+The contextual interpreter may now identify exact authored movement spans and referents, including a candidate identity for an ordinary place that is proposed in the same turn. Those records are explicitly non-authoritative. Arrival occurs only after native ownership, current source/session/scene, location revision, local geography, visibility, access, encounter, and destination-match checks succeed. Conditional, hypothetical, quoted, remote, inaccessible, and active-encounter movement remains uncommitted.
+
+Each accepted movement emits an explainable native adjudication envelope with its input source, rule basis, proposed mutation, and verified arrival receipt. The reusable envelope rejects invented native resolution and refuses to classify uncertain consequential actions as roll-required without a native roll request. Observation remains a no-roll, no-cost decision.
+
+Location and NPC creation now preflight a bounded alias and canon index. A single audience-visible identity is reused; ambiguity is rejected; protected identity or canon collisions are reported opaquely so generation can choose another mundane detail without leaking secrets. Autonomous entities carry an explicit `established` epistemic label and newly created NPCs retain empty secret knowledge.

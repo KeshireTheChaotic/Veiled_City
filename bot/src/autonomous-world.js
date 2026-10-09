@@ -10,7 +10,9 @@ import { validateMinorIdentity } from "./city-depth.js";
 import { normalizeNpcKey } from "./npc-cognition.js";
 import { stateRevision } from "./ai-intents.js";
 import { interpretAuthoredText, worldRequirements } from "./player-language.js";
-import { resolvePlaceReference } from "./location-language.js";
+import { resolvePlaceReference, preflightPlaceIdentity, preflightNpcIdentity } from "./location-language.js";
+import { currentMovementCandidate } from "./movement-language.js";
+import { movementAdjudication } from "./rules-arbitration.js";
 const hash=value=>createHash("sha256").update(JSON.stringify(value)).digest("hex").slice(0,40);
 export const AUTONOMOUS_WORLD_VERSION=1;
 const object=properties=>({type:"object",additionalProperties:false,properties,required:Object.keys(properties)});
@@ -193,6 +195,16 @@ function applyWorld(db,guild,narrative,scope,provenance,content){
     if(a.kind==="location"&&requirements.exclude_locations.some(excluded=>
       normalizeNpcKey(excluded)===normalizeNpcKey(a.name)||normalizeNpcKey(excluded)===a.key))fail("Explicitly excluded locations cannot answer the owner's search.");
     if(!config[a.kind==="location"?"auto_create_locations":"auto_create_npcs"])fail("World creation is explicitly disabled for this entity type.");
+    {
+      const preflight=a.kind==="location"?preflightPlaceIdentity(db,guild,{key:a.key,name:a.name,scope})
+        :preflightNpcIdentity(db,guild,{key:a.key,name:a.name,scope});
+      if(preflight.status==="protected_collision")fail(`Proposed ordinary ${a.kind} conflicts with protected existing identity or canon; choose another mundane detail without exposing it.`);
+      if(preflight.status==="ambiguous")fail(`${a.kind} aliases are materially ambiguous; use a specific visible existing key.`);
+      if(preflight.status==="reuse"){
+        const existingKey=preflight.matches[0].entity_key||preflight.matches[0].npc_key;refs.set(a.key,existingKey);
+        results.push({status:"resolved_existing",kind:a.kind,key:existingKey});continue;
+      }
+    }
     const rows=a.kind==="location"?db.listSimulationEntities(guild,"location"):db.listNpcProfiles(guild,{limit:10000});
     const exact=rows.filter(row=>(row.entity_key||row.npc_key)===a.key||match(row,a.name));
     if(exact.length>1)fail("Identity is materially ambiguous; reuse a specific existing key or ask the player.");
@@ -223,7 +235,8 @@ function applyWorld(db,guild,narrative,scope,provenance,content){
     }
     const created=event(`create:${a.kind}:${a.key}`,"ai_gm_world_create",location,{entity_type:a.kind,entity_key:a.key},{visibility,subject_key:subject});
     const record=db.saveCityRecord(guild,{kind:"autonomous_entity",key:`${a.kind}:${a.key}`,source_event:created.event_key,
-      location_key:location,visibility,subject_key:subject,data:{kind:a.kind,key:a.key,name:a.name,summary:a.summary,session_id:session.id}});
+      location_key:location,visibility,subject_key:subject,data:{kind:a.kind,key:a.key,name:a.name,summary:a.summary,
+        epistemic_label:"established",session_id:session.id}});
     if(visibility!=="gm")db.upsertReference(guild,{kind:a.kind,key:a.key,name:a.name,summary:a.summary,visibility,subjectCharacterId:subject});
     cityAudit(db,guild,"ai_gm_world_create",a.key,null,record,"ai_gm");
     refs.set(a.key,a.key);results.push({status:"created",kind:a.kind,key:a.key,source_event:created.event_key});
@@ -252,19 +265,25 @@ function applyWorld(db,guild,narrative,scope,provenance,content){
     const latest=db.getCharacter(pc.id);
     if(action.kind==="move"){
       const requirements=worldRequirements(action.source_span);
-      if(requirements.movement!=="attempt"||requirements.kind!=="move")fail("Search, speech and context are not authorization to move a PC.");
+      const semantic=currentMovementCandidate(db,guild,latest,action.source_span,target,scope);
+      if((requirements.movement!=="attempt"||requirements.kind!=="move")&&!semantic)
+        fail("Search, speech and context are not authorization to move a PC; a current exact-span semantic candidate is required.");
       const location=db.getSimulationEntity(guild,"location",target);
       if(!location||!visible(db,guild,"location",target,scope)||!localAccess(db,guild,latest,target))fail("Movement requires accessible local geography; adjudicate real travel/access obstacles without inventing an arrival.");
       if(db.getCurrentEncounter(session.id)?.status==="active")fail("Active encounter movement requires native combat rules.");
       // The named target must match; deictic travel needs a source-backed candidate, not model redirection.
-      const resolved=resolvePlaceReference(db,guild,pc.id,requirements.target,{mode:scope.mode,user:scope.actorUserId});
-      if(resolved.status!=="resolved_existing"||resolved.location.entity_key!==target)
+      const phrase=semantic?.data.target_description||requirements.target;
+      const resolved=resolvePlaceReference(db,guild,pc.id,phrase,{mode:scope.mode,user:scope.actorUserId});
+      if((resolved.status!=="resolved_existing"||resolved.location.entity_key!==target)&&semantic?.data.target_ref!==target)
         fail("Arrival destination must match the owner's explicit declaration.");
       db.updateCharacterData(pc.id,data=>{data.location=target;});
       const arrival=event(`action:${index}`,"arrival",target,{entity_type:"character",entity_key:pc.id,owner_user_id:pc.owner_user_id,declaration:actionSource.event_key});
       recordScenePresence(db,guild,{entity_type:"character",entity_key:pc.id,location_key:target,
         source_event:arrival.event_key,zone:"scene",...boundary,accepted_by:pc.owner_user_id},"ai_gm");
-      results.push({status:"arrived",key:target,source_event:arrival.event_key});
+      results.push({status:"arrived",key:target,source_event:arrival.event_key,
+        adjudication:movementAdjudication({sourceRef:actionSource.event_key,sourceSpan:action.source_span,receipt:arrival.event_key})});
+      if(semantic)db.saveCityRecord(guild,{...semantic,key:semantic.record_key,status:"resolved",
+        data:{...semantic.data,arrival:arrival.event_key,adjudication:"native_resolved"}});
       if(entrySource)db.saveCityRecord(guild,{...entrySource,key:entrySource.record_key,status:"resolved",data:{...entrySource.data,arrival:arrival.event_key,resolved_by:"ai_gm"}});
       for(const entry of db.listCityRecords(guild,{kind:"scene_entry",includeGM:true,limit:100}).filter(e=>["pending","awaiting_adjudication"].includes(e.status))){
         const declaration=db.getWorldEvent(guild,entry.source_event);
@@ -291,17 +310,21 @@ function applyWorld(db,guild,narrative,scope,provenance,content){
         const after=db.saveCityRecord(guild,{...identity,key:identity.record_key,data:{...identity.data,appearances}});
         cityAudit(db,guild,"ai_gm_npc_continuity",target,identity,after,"ai_gm");
       }
-      results.push({status:"introduced",key:target,source_event:arrival.event_key});
+      results.push({status:"introduced",key:target,source_event:arrival.event_key,
+        adjudication:movementAdjudication({sourceRef:actionSource.event_key,sourceSpan:action.source_span,receipt:arrival.event_key})});
     }else if(action.kind==="local_zone"){
       if(target!==latest.data.location||!action.zone.trim()||worldRequirements(action.source_span).kind!=="local_zone")fail("Only owner-authored local-zone movement is allowed.");
       if(db.getCurrentEncounter(session.id)?.status==="active")fail("Combat movement requires native encounter resolution.");
       const arrival=event(`action:${index}`,"arrival",target,{entity_type:"character",entity_key:pc.id,owner_user_id:pc.owner_user_id});
       recordScenePresence(db,guild,{entity_type:"character",entity_key:pc.id,
         location_key:target,zone:action.zone,source_event:arrival.event_key,...boundary,accepted_by:pc.owner_user_id},"ai_gm");
-      results.push({status:"local_zone",key:target,zone:action.zone});
+      results.push({status:"local_zone",key:target,zone:action.zone,
+        adjudication:movementAdjudication({sourceRef:actionSource.event_key,sourceSpan:action.source_span,receipt:arrival.event_key})});
     }else{
       if(!visible(db,guild,"location",target,scope)||!localAccess(db,guild,latest,target))fail("Nearby discovery must be local and visibility-safe.");
-      results.push({status:"revealed",key:target});
+      results.push({status:"revealed",key:target,adjudication:{intent:"observation",source_refs:[actionSource.event_key],mode:"no_roll",
+        rule_basis:{kind:"none",refs:[]},risk:"none",stakes:"none",native_mechanic:null,required_consent:[],participants:[pc.id],
+        proposed_mutations:[],verified_receipts:[],source_span:action.source_span}});
     }
   }
   db.saveCityRecord(guild,{kind:"autonomous_turn",key,source_event:source.event_key,...boundary,

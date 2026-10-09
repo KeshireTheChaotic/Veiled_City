@@ -1,6 +1,6 @@
 {
   "package": "Veiled_City_Multiplayer_Discord",
-  "version": "9.7.0",
+  "version": "9.8.0",
   "generated": "2026-10-09",
   "content_normalization": "utf8-lf",
   "files": [
@@ -27,7 +27,7 @@
     {
       "path": "README.md",
       "size_bytes": 20706,
-      "sha256": "013b27ae2ad23926da6200bcc88adf9c68415538cb40843f18a2e361f175bab0"
+      "sha256": "780fa1437f78884683e62bd5fd1b871aca9bbd62f573eb3c2c6be4d250832b60"
     },
     {
       "path": "SUGGESTIONS-End-To-End.md",
@@ -52,7 +52,7 @@
     {
       "path": "bot/package.json",
       "size_bytes": 2630,
-      "sha256": "bee0a9d1d2ad808254e7d5d82ac4516801553982e833eae24e59e2a4a1072728"
+      "sha256": "ab491649d1be5fe344408b366c414302aaa6634e82662cf2a9fa10434ec61b49"
     },
     {
       "path": "bot/scripts/audit-regression-test.mjs",
@@ -280,6 +280,11 @@
       "sha256": "0a103509637ccf63dca146a666b496b8608ada90b70a7c0017ff809b34581aa3"
     },
     {
+      "path": "bot/scripts/implementation-phase-c-test.mjs",
+      "size_bytes": 4391,
+      "sha256": "274acc5a7611fdd30f8ebf345184dcff3a87eb585f158ce49b36fe1e22ec7b4e"
+    },
+    {
       "path": "bot/scripts/interaction-lifecycle-test.mjs",
       "size_bytes": 6740,
       "sha256": "c205e0a4fd127221290e4ab76f09e4f2cb737969017ab31bb85bb6679511bdba"
@@ -451,8 +456,8 @@
     },
     {
       "path": "bot/scripts/validate-offline.mjs",
-      "size_bytes": 3319,
-      "sha256": "138e7a3f1a2c02c3068013b97c7747d28b1732d3f93121bf56cb94c9e7cdcc46"
+      "size_bytes": 3349,
+      "sha256": "8aeedf95de0457256da0cff26f73a83cabe6aebf44a024129b0c71a0731f4c50"
     },
     {
       "path": "bot/sql/schema.sql",
@@ -491,8 +496,8 @@
     },
     {
       "path": "bot/src/autonomous-world.js",
-      "size_bytes": 29247,
-      "sha256": "15b3615717b474a4c0f19bef09df8fd239ccc84908bef746db105aacd0e7136e"
+      "size_bytes": 31390,
+      "sha256": "8a9a10dfd3668a6de05cf04119e4336711f62dae62e9c7a9f248bdcf3b86c982"
     },
     {
       "path": "bot/src/character-export.js",
@@ -701,8 +706,8 @@
     },
     {
       "path": "bot/src/location-language.js",
-      "size_bytes": 1884,
-      "sha256": "0d79bc72d79eac10a90f1ddef0f293b1526e9b7f021136858f8467aee8d80646"
+      "size_bytes": 5300,
+      "sha256": "0ddaf72e9126c719c9928a39f4577b17dc2cd733b1eaf14c9d0b9510f77cdc6e"
     },
     {
       "path": "bot/src/logger.js",
@@ -725,9 +730,14 @@
       "sha256": "f92a183b85c9bcace5456dda1c72d6fd304e61bd8039cbc6aef5ee3cee7dbacd"
     },
     {
+      "path": "bot/src/movement-language.js",
+      "size_bytes": 3261,
+      "sha256": "ce0315a1df2b8aa2377911cd22215a95b7db31c5b811daa93627a70a72a1ba66"
+    },
+    {
       "path": "bot/src/narrative-context.js",
-      "size_bytes": 12075,
-      "sha256": "d3e91863f7d2bb8a902901c692f3b8a4f096c1d6e9d130837639fdf64b718494"
+      "size_bytes": 12283,
+      "sha256": "a5219ef5c55a228fba5fe93fc4951a910b1b1e74a446bc40ca269646021690c2"
     },
     {
       "path": "bot/src/narrative-integrity.js",
@@ -781,8 +791,8 @@
     },
     {
       "path": "bot/src/player-language.js",
-      "size_bytes": 6697,
-      "sha256": "6542b2c1acbe94db6dcdd43bc2bf1f01bfbd25bbe3f37d64198e0c71b5660d7c"
+      "size_bytes": 6763,
+      "sha256": "4d67bbeee898f1d16850a9fb398b7755de0d3f0cce6912612d95b94a9a351e39"
     },
     {
       "path": "bot/src/portrayal.js",
@@ -843,6 +853,11 @@
       "path": "bot/src/roster.js",
       "size_bytes": 4315,
       "sha256": "0330c38d8ab651780f3e44efff39602258006caf418666faf1a8ec6ec1637b49"
+    },
+    {
+      "path": "bot/src/rules-arbitration.js",
+      "size_bytes": 1858,
+      "sha256": "d87bb352e920ab7c3b8ec7663c0e9428576401092f3082afe02fdde2d2e180c9"
     },
     {
       "path": "bot/src/rules-srd.js",
@@ -1516,8 +1531,8 @@
     },
     {
       "path": "docs/IMPLEMENTATION_PLAN_EXECUTION.md",
-      "size_bytes": 2680,
-      "sha256": "d78a3f773486ffdc8124b7fe170c8f5e977ac665a7188c263e639056f4cb4bbb"
+      "size_bytes": 3982,
+      "sha256": "f24d2852e2c18d2d225bd4103dc2c615b03c3705f492945f888afdf31abb3af0"
     },
     {
       "path": "docs/INTERACTION_LIFETIME_FIX.md",

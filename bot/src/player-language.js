@@ -13,7 +13,7 @@ export function worldRequirements(value){
   if(/^(?:ooc\b|\(\(|\/\/|hypothetically\b|if\b|I (?:might|would|could)\b)/i.test(text))return {...base,kind:"planning_or_ooc"};
   const local=/^I\s+(?:go|head|walk|step|move)\s+(upstairs|downstairs|up the stairs|down the stairs)\b/i.exec(text);
   if(local)return {...base,kind:"local_zone",movement:"attempt",target:local[1]};
-  const movement=/^I\s+(?:walk\s+(?:into|inside|to)|step\s+(?:into|inside)|go\s+(?:into|inside|to)|head\s+(?:into|inside|to|back to)|return to|enter)\s+(.+?)(?=\s+and\s+|[,.!?;\n]|$)/i.exec(text);
+  const movement=/^I\s+(?:walk\s+(?:into|inside|to)|step\s+(?:into|inside)|go\s+(?:into|inside|to|back to)|head\s+(?:into|inside|to|for|back to)|return\s+to|duck\s+into|slip\s+into|cut\s+(?:into|through)|take|enter)\s+(.+?)(?=\s+and\s+|[,.!?;\n]|$)/i.exec(text);
   if(movement)return {...base,kind:"move",movement:"attempt",target:movement[1].trim().replace(/^the\s+/i,"")};
   if(/\b(?:look|search|seek|find)\b/i.test(text)){
     const constraints=[...text.matchAll(/\b(?:public|open|shaded|sheltered|quiet|nearby|out of the light)\b/gi)].map(m=>m[0]);

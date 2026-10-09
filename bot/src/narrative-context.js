@@ -5,6 +5,7 @@ import { conversationPrincipal } from "./conversation-principal.js";
 import { scopedQueryPlan, queryScopedFacts } from "./scoped-query.js";
 import { indexWorldEvent, cityAudit } from "./city-calendar.js";
 import { locationMatches } from "./scene-entry.js";
+import { persistMovementCandidates } from "./movement-language.js";
 const text=maxLength=>({type:"string",maxLength});
 const list=(items,maxItems=12)=>({type:"array",items,maxItems});
 const object=properties=>({type:"object",additionalProperties:false,properties,required:Object.keys(properties)});
@@ -18,7 +19,7 @@ export const CONTEXT_CONTRACT="narrative_interpretation is optional read-only me
   +"Set it to null unless SCOPED INTERPRETATION supplies input_source. Its source_ref must exactly equal input_source. "
   +"Reference source_refs must be copied only from audience-visible source_ref values supplied in scoped context; unknown entities stay candidate/unresolved. "
   +"Acknowledgements do not need movement/material claims. Never put completed movement, access, possession, status, disclosure or obligations in acknowledgements. "
-  +"Only unresolved questions that materially affect an action should block that action; continue ordinary conversation. "
+  +"Copy intended_actions as exact authored source spans; do not paraphrase them. Only unresolved questions that materially affect an action should block that action; continue ordinary conversation. "
   +"Interpretation cannot authorize travel, presence, access, NPC knowledge, spending, consent or canon. State changes require separate native proposals.";
 export const contextSourceKey=(messageId,character)=>`context:${createHash("sha256").update(JSON.stringify([messageId,character])).digest("hex").slice(0,40)}`;
 export function captureContextSource(db,guild,user,character,messageId,content,{privateScene=false}={}){
@@ -116,6 +117,7 @@ export function persistInterpretation(db,guild,value,scope,provenance={}){
   const row=db.saveCityRecord(guild,{kind:"narrative_context",key,source_event:source.event_key,visibility:"character",subject_key:principal.context_id,
     data:{interpretation:value,authority:"Nonbinding contextual meaning only",user:scope.actorUserId}});
   cityAudit(db,guild,"narrative_context",key,null,row,scope.actorUserId);
+  persistMovementCandidates(db,guild,value,scope,provenance);
   for(const entry of principal.kind==="owner"?db.characterContinuity(guild,scope.actorCharacterId,{kind:"scene_entry",limit:30}):[]){
     if(!["pending","awaiting_adjudication"].includes(entry.status)||entry.data.user!==scope.actorUserId||entry.data.session_id!==source.session_id
       ||scope.mode!=="private"&&entry.data.private_scene)continue;
