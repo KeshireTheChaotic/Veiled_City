@@ -123,6 +123,11 @@ review.clocks={decision:"changed",reason:"Maybe the threat advances.",confidence
 assert.equal(validatePostTurnStateReview({events:[{type:"clock_delta"}],relationships:[],handouts:[],state_review:review}),true);
 review.clocks={decision:"no_change",reason:"Possible advance is ambiguous; leave for GM review.",confidence:40};
 assert.equal(validatePostTurnStateReview({events:[],relationships:[],handouts:[],state_review:review}),true);
+const referenceMismatch=structuredClone(review);
+referenceMismatch.references={decision:"changed",reason:"A native nearby place was proposed.",confidence:90};
+assert.throws(()=>validatePostTurnStateReview({events:[],world_additions:[{kind:"location"}],relationships:[],handouts:[],
+  state_review:referenceMismatch}),error=>error.code==="POST_TURN_REVIEW"&&error.diagnostic.category==="references"
+  &&error.diagnostic.expected==="no_change");
 assert.deepEqual(lowConfidenceReviewItems({state_review:review}),[]);
 
 // Relationship lookup is tuple-based for AI deltas (regression for duplicate method-name shadowing).

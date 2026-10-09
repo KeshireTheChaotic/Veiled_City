@@ -45,6 +45,16 @@ try{
   const discovered=await gm.runTurn({guildId:guild,actorUserId:"owner",actorName:"Tyrell",actorAssignment:assignment,messageText:search,messageId:"search"});
   assert.equal(gm.ai.requests.length,2,"R01: obsolete human worldbuilding deferral is corrected with a native discovery");
   assert.equal(discovered.world_additions[0].key,"laundromat");assert.equal(db.getCharacter(pc.id).data.location,undefined);
+  const badReferenceReview=structuredClone(finding);
+  badReferenceReview.state_review.references={decision:"changed",reason:"The nearby location becomes known.",confidence:95};
+  captureWorldInput(db,guild,"owner",pc.id,"search-review",search);
+  gm.ai=new FakeResponses([badReferenceReview,badReferenceReview,finding]);
+  const reviewRecovered=await gm.runTurn({guildId:guild,actorUserId:"owner",actorName:"Tyrell",actorAssignment:assignment,
+    messageText:search,messageId:"search-review"});
+  assert.equal(reviewRecovered.state_review.references.decision,"no_change");
+  assert.equal(reviewRecovered.world_additions[0].key,"laundromat","Review recovery preserves independently valid native worldbuilding");
+  assert.equal(gm.ai.requests.length,3,"Repeated reference-review mismatch gets one bounded recovery instead of dropping the turn");
+  assert(gm.ai.requests[2].input.includes("POST-TURN REVIEW RECOVERY"));
   const invalidInterpretation={...empty,narrative_interpretation:{source_ref:"event:missing",references:[],intended_actions:[],acknowledgements:[],unresolved:[]}};
   gm.ai=new FakeResponses([invalidInterpretation,invalidInterpretation,empty]);
   const recovered=await gm.runTurn({guildId:guild,actorUserId:"owner",actorName:"Tyrell",actorAssignment:assignment,

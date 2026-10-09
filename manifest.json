@@ -316,8 +316,8 @@
     },
     {
       "path": "bot/scripts/operations-regression-test.mjs",
-      "size_bytes": 9079,
-      "sha256": "7c20d9156d5ed501725837ffd4dabc959d9cef8b4b7346f171025017ef208eb5"
+      "size_bytes": 9523,
+      "sha256": "c77dcc4d490bd0d431b68fcdd30a3963533a2c8eeca6010b2128cab15660c334"
     },
     {
       "path": "bot/scripts/portrayal-authoring-test.mjs",
@@ -346,8 +346,8 @@
     },
     {
       "path": "bot/scripts/relax-end-to-end-test.mjs",
-      "size_bytes": 7537,
-      "sha256": "77ce837841aa6420230b6f2ec7c4d80054854c62024e838109d3319aa3ef676e"
+      "size_bytes": 8456,
+      "sha256": "8c1208d204e6972b56d5835d26381f0a3a6d385cc488690153ad5789b98d3712"
     },
     {
       "path": "bot/scripts/release-files.mjs",
@@ -621,8 +621,8 @@
     },
     {
       "path": "bot/src/director.js",
-      "size_bytes": 7679,
-      "sha256": "b18d45ff8007db43643e32b3c438387b6eec3a8f52e01d4ee4f2ec3c1f1c3cfb"
+      "size_bytes": 8128,
+      "sha256": "37e6a80358d7637ddf6a9bac1f88c73f218723748a0fa755610c8c4d16b74c93"
     },
     {
       "path": "bot/src/discord/chunking.js",
@@ -666,8 +666,8 @@
     },
     {
       "path": "bot/src/gm.js",
-      "size_bytes": 88870,
-      "sha256": "50245aa25c7b34e614cb037ffcb12d05275e1a953ff88dbc4c24a039eae2b428"
+      "size_bytes": 89931,
+      "sha256": "269567aaea931a1d412279a2ada52fd76bff21ca1f45c43c4cbbfdd72f756946"
     },
     {
       "path": "bot/src/handout.js",

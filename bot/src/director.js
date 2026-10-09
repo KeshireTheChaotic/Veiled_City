@@ -15,26 +15,35 @@ const CATEGORY_OUTPUTS={
   veil_exposure:r=>(r.events||[]).some(e=>e.type==="veil_exposure_delta"),
   npc_cognition:r=>(r.npc_memories||[]).length>0||(r.npc_knowledge||[]).length>0||(r.npc_goals||[]).length>0
 };
+function reviewFailure(message,diagnostic={}){
+  throw Object.assign(new Error(message),{code:"POST_TURN_REVIEW",diagnostic});
+}
 
 /** Validate that narrated state changes and structured mutations agree. */
 export function validatePostTurnStateReview(result){
   const review=result?.state_review;
-  if(!review||typeof review!=="object") throw new Error("GM turn is missing the mandatory post-turn state review.");
+  if(!review||typeof review!=="object")reviewFailure("GM turn is missing the mandatory post-turn state review.",{reason:"missing_review"});
   for(const category of POST_TURN_REVIEW_CATEGORIES){
     const item=review[category];
     if(!item||!["changed","no_change"].includes(item.decision)||!String(item.reason||"").trim()){
-      throw new Error(`Post-turn state review is incomplete for ${category}.`);
+      reviewFailure(`Post-turn state review is incomplete for ${category}.`,{reason:"incomplete",category});
     }
-    if(item.confidence!==undefined && (!Number.isFinite(Number(item.confidence))||Number(item.confidence)<0||Number(item.confidence)>100)) throw new Error(`Post-turn state review confidence is invalid for ${category}.`);
+    if(item.confidence!==undefined&&(!Number.isFinite(Number(item.confidence))||Number(item.confidence)<0||Number(item.confidence)>100))
+      reviewFailure(`Post-turn state review confidence is invalid for ${category}.`,{reason:"confidence",category});
     const hasOutput=CATEGORY_OUTPUTS[category](result);
-    if(hasOutput&&item.decision!=="changed") throw new Error(`Post-turn review says ${category}=no_change but emitted a corresponding state mutation.`);
-    if(!hasOutput&&item.decision!=="no_change") throw new Error(`Post-turn review says ${category}=changed but emitted no corresponding state mutation.`);
+    if(hasOutput&&item.decision!=="changed")reviewFailure(
+      `Post-turn review says ${category}=no_change but emitted a corresponding state mutation.`,
+      {reason:"mutation_without_review",category,expected:"changed"});
+    if(!hasOutput&&item.decision!=="no_change")reviewFailure(
+      `Post-turn review says ${category}=changed but emitted no corresponding state mutation.`,
+      {reason:"review_without_mutation",category,expected:"no_change"});
   }
   const scene=review.scene;
   if(!scene||!["continue","transition"].includes(scene.decision)||!String(scene.reason||"").trim()){
-    throw new Error("Post-turn state review is incomplete for scene continuity.");
+    reviewFailure("Post-turn state review is incomplete for scene continuity.",{reason:"scene_incomplete",category:"scene"});
   }
-  if(scene.decision==="transition"&&!String(scene.label||"").trim()) throw new Error("Scene transition review requires a new scene label.");
+  if(scene.decision==="transition"&&!String(scene.label||"").trim())
+    reviewFailure("Scene transition review requires a new scene label.",{reason:"scene_label",category:"scene"});
   return true;
 }
 

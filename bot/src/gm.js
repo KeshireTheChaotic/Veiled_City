@@ -626,7 +626,7 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
     let result=await this.requestStructured(req,{label:"GM turn",signal:turnSignal});
     try{ validateTurn(result); validateDecisionAdvisory(this.db,guildId,result); return result; }
     catch(err){
-      const detail=JSON.stringify(["NARRATIVE_INTEGRITY","NARRATIVE_CONTEXT"].includes(err.code)?err.diagnostic||{}:{}).slice(0,800);
+      const detail=JSON.stringify(["NARRATIVE_INTEGRITY","NARRATIVE_CONTEXT","POST_TURN_REVIEW"].includes(err.code)?err.diagnostic||{}:{}).slice(0,800);
       const correction=[
         `STRUCTURED TURN CORRECTION: ${String(err.message||err).slice(0,600)} Diagnostic: ${detail}.`,
         "Return a complete replacement response.",
@@ -637,6 +637,7 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
         "Do not invent witnesses, arrivals or knowledge. A clarified referent acknowledgement is conversational, not movement; omit material claims for it.",
         "Understand scoped context without repeating resolved questions. Ask only for missing information needed to authorize an action.",
         "Use empty actor for narrator claims; character:<id> for a PC observer. State review must agree with mutations.",
+        "In particular, references=changed only when events contains npc_update or location_update; native world_additions and scene_actions use their own receipt and do not count as reference review mutations.",
         "Explicit private canon requests use canon_proposals; never narrate application recording or notification."
       ].join(" ");
       const retry={...req,input:`${req.input}\n\n${correction}`};
@@ -646,10 +647,16 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
         validateDecisionAdvisory(this.db,guildId,result);
         return result;
       }catch(retryError){
-        if(!["AUTONOMOUS_WORLD","NARRATIVE_CONTEXT"].includes(retryError.code))throw retryError;
-        // Optional malformed interpretation/worldbuilding must not make the conversational turn disappear.
-        // Regenerate under the same turn deadline without relying on rejected context or world changes.
-        const safeRecovery=[
+        if(!["AUTONOMOUS_WORLD","NARRATIVE_CONTEXT","POST_TURN_REVIEW"].includes(retryError.code))throw retryError;
+        // Repeated optional context/world/review defects must not make the conversational turn disappear.
+        // Regenerate under the same turn deadline with a defect-specific fail-closed contract.
+        const safeRecovery=retryError.code==="POST_TURN_REVIEW"?[
+          `POST-TURN REVIEW RECOVERY: ${String(retryError.message||retryError).slice(0,500)} Diagnostic: ${JSON.stringify(retryError.diagnostic||{})}.`,
+          "Return a complete replacement turn. Keep only justified structured mutations; never add a mutation merely to make the review say changed.",
+          "For each state_review category, use changed exactly when its corresponding structured output is non-empty, otherwise use no_change.",
+          "References correspond only to npc_update or location_update events. world_additions and scene_actions have separate native receipts and do not make references=changed.",
+          "Preserve valid ordinary world additions/actions and responsive narration when they independently pass their native validators."
+        ].join(" "):[
           `SAFE CONTEXT RECOVERY: The prior replacement still contained rejected optional context or world data: ${String(retryError.message||retryError).slice(0,500)}.`,
           "Return a complete replacement turn with narrative_interpretation set to null and world_additions, scene_actions and world_conflicts set to empty arrays.",
           "Base narration only on the current player input and audience-visible facts.",
@@ -658,7 +665,7 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
           "Preserve ordinary in-character conversational engagement; ask a natural follow-up when useful."
         ].join(" ");
         const recovery={...req,input:`${req.input}\n\n${safeRecovery}`};
-        result=await this.requestStructured(recovery,{label:"GM turn safe context recovery",signal:turnSignal});
+        result=await this.requestStructured(recovery,{label:"GM turn safe recovery",signal:turnSignal});
         validateTurn(result);
         validateDecisionAdvisory(this.db,guildId,result);
         return result;
