@@ -27,6 +27,8 @@ import { OnlineSrd } from "./rules-srd.js";
 import { interpretationSchema, CONTEXT_CONTRACT, interpretationContext, validateInterpretation } from "./narrative-context.js";
 import { epistemicSchema, evidenceType, activeEvidence } from "./epistemic.js";
 import { budgetTurnPrompt } from "./prompt-budget.js";
+import { recoverOptionalTurnFields } from "./turn-recovery.js";
+import { projectAuthorityRecords } from "./authority-projection.js";
 
 const routerSchema={
   type:"object",
@@ -457,7 +459,9 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
       player_declaration:declarationContext(this.db,guildId,actorUserId,actorKnowledgeId,messageText),
       ai_management:intentContext(this.db,guildId),
       context_plan:contextPlan,
-      campaign,session,assembly,party_state:partyState,current_encounter:currentEncounter,current_combatants:currentCombatants,canon,rulings,actor_relationships:actorRelationships,gm_relationships:gmRelationships,gm_character_hooks:gmCharacterHooks,character_narratives:characterNarratives,visible_handouts:visibleHandouts,
+      campaign,session,assembly,party_state:partyState,current_encounter:currentEncounter,current_combatants:currentCombatants,canon,rulings,
+      authority_index:{canon:projectAuthorityRecords("canon",canon),rulings:projectAuthorityRecords("rulings",rulings)},
+      actor_relationships:actorRelationships,gm_relationships:gmRelationships,gm_character_hooks:gmCharacterHooks,character_narratives:characterNarratives,visible_handouts:visibleHandouts,
       actor_assignment:actorAssignment?(actorAssignment.npc_proxy?{
         assignment_kind:"npc_proxy",controller_user_id:actorUserId,npc_proxy_id:actorAssignment.id,character_id:actorKnowledgeId,
         npc_name:actorAssignment.npc_name,knowledge_id:actorAssignment.knowledge_id,control_level:actorAssignment.control_level,
@@ -588,6 +592,7 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
     });
     sections.push({label:"CANON LEDGER (authoritative; GM-private)",value:ctx.canon,required:true},
       {label:"SAVED GM RULINGS (authoritative)",value:ctx.rulings,required:true},
+      {label:"AUTHORITY PAGE INDEX (identity/source/revision; request scoped detail by locator)",value:ctx.authority_index,required:true},
       {label:"CURRENT COMBATANTS (authoritative; GM-private)",value:ctx.current_combatants,required:true});
     if(ctx.context_plan) sections.push({label:"SOURCED CONTEXT PLAN (GM-only, never actor omniscience)",value:ctx.context_plan,priority:10});
     const {input}=budgetTurnPrompt(sections,{instructions,query:messageText});
@@ -630,6 +635,13 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
     let result=await this.requestStructured(req,{label:"GM turn",signal:turnSignal});
     try{ validateTurn(result); validateDecisionAdvisory(this.db,guildId,result); return result; }
     catch(err){
+      const recovered=recoverOptionalTurnFields(result,err);
+      if(recovered){
+        try{
+          validateTurn(recovered.result);validateDecisionAdvisory(this.db,guildId,recovered.result);
+          recovered.result.recovery={kind:"optional_field_quarantine",fields:recovered.quarantined};return recovered.result;
+        }catch{/* Narration-dependent or consequential failures continue through bounded correction. */}
+      }
       const detail=JSON.stringify(["NARRATIVE_INTEGRITY","NARRATIVE_CONTEXT","POST_TURN_REVIEW","RESPONSE_OBLIGATION"].includes(err.code)?err.diagnostic||{}:{}).slice(0,800);
       const correction=[
         `STRUCTURED TURN CORRECTION: ${String(err.message||err).slice(0,600)} Diagnostic: ${detail}.`,

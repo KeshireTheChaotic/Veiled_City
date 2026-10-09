@@ -33,6 +33,7 @@ import { runNpcDirector } from "./simulation.js";
 import { publishSimulationHooks } from "./publishing.js";
 import { routeMessageSpans, serializeSpanLedger } from "./message-span-ledger.js";
 import { beginTurnAttempt, advanceTurnAttempt, turnFailureNotice, isTurnReplay } from "./turn-attempts.js";
+import { validateChannelRouting, shouldSendInactiveSessionNotice } from "./routing-diagnostics.js";
 
 const config=loadConfig();
 const log=createLogger(config.logLevel);
@@ -324,7 +325,8 @@ async function notifyCanonProposals({guild,session,message,actorUserId,actorChar
 async function processPrivateTurn(message,directMention,attempt=null){
   const session=db.getActiveSession(message.guild.id);
   if(!session){
-    if(directMention) await message.reply("No session is active. Private scene messages are processed during an active session.");
+    if((directMention||message.content.trim())&&shouldSendInactiveSessionNotice(message.guild.id,message.author.id))
+      await message.reply("No session is active. Your message was not treated as an in-world turn; a GM can start a session with `/vc-session start`.");
     return;
   }
   const resolved=resolveController(session,message);let {controlled,playerText}=resolved;const {ambiguous,candidates}=resolved;
@@ -414,7 +416,11 @@ async function processPartyTurn(message,directMention,attempt=null){
   if(!campaign?.play_channel_id||message.channel.id!==campaign.play_channel_id) return;
   db.upsertPlayer(message.guild.id,message.author.id,message.member?.displayName||message.author.username);
   const session=db.getActiveSession(message.guild.id);
-  if(!session) return;
+  if(!session){
+    if(shouldSendInactiveSessionNotice(message.guild.id,message.author.id))
+      await message.reply("No session is active, so no in-world turn was created. A GM can start one with `/vc-session start`.").catch(()=>{});
+    return;
+  }
   const pendingAtTurnStart=db.getPendingDirectorPass(session.id);
   const pendingTokenAtTurnStart=pendingAtTurnStart?`${pendingAtTurnStart.layer}:${pendingAtTurnStart.queued_at||""}:${pendingAtTurnStart.scene_label||""}:${pendingAtTurnStart.round_number||""}`:null;
   const resolved=resolveController(session,message);let {controlled,playerText}=resolved;const {ambiguous,candidates}=resolved;
@@ -567,6 +573,13 @@ client.on("messageCreate",async message=>{
   if(!message.guild||message.author.bot) return;
   const campaign=db.getCampaign(message.guild.id);
   if(!campaign) return;
+  const routing=validateChannelRouting(campaign);
+  if(!routing.ok){
+    if(routing.conflicts.some(row=>row.channel_id===message.channel.id)
+      &&shouldSendInactiveSessionNotice(message.guild.id,`routing:${message.channel.id}`,{cooldownMs:300000}))
+      await message.reply("Veilkeeper channel routing is misconfigured: this channel has multiple roles. A GM must assign distinct play, rules, publication, and private-log channels before messages here can be processed.").catch(()=>{});
+    return;
+  }
   const directMention=message.mentions.has(client.user);
   // Low-cost rules desk is read-only with respect to campaign state and does not need the GM turn queue.
   if(campaign.rules_channel_id && message.channel.id===campaign.rules_channel_id){

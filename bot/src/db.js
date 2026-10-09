@@ -15,6 +15,7 @@ import { normalizeNpcKey } from "./npc-cognition.js";
 import { archiveScenePresence } from "./scene-continuity.js";
 import { relationshipEvidence } from "./presentation-evidence.js";
 import { activeEvidence, evidenceType } from "./epistemic.js";
+import { validateChannelRouting } from "./routing-diagnostics.js";
 
 /** SQLite repository facade and transaction boundary for campaign state. */
 export class VeiledDB {
@@ -546,6 +547,8 @@ export class VeiledDB {
 
   configureCampaign(guildId, {playChannelId, gmRoleId, responseMode}) {
     this.ensureCampaign(guildId);
+    const routing=validateChannelRouting(this.getCampaign(guildId),{playChannelId});
+    if(!routing.ok)throw new Error(`Channel routing conflict: ${routing.conflicts.map(row=>row.roles.join("/")).join(", ")}. Configure distinct channels.`);
     this.db.prepare(`
       UPDATE campaigns
       SET play_channel_id=COALESCE(?,play_channel_id),
@@ -559,6 +562,8 @@ export class VeiledDB {
 
   configureChannels(guildId, patch={}){
     this.ensureCampaign(guildId);
+    const routing=validateChannelRouting(this.getCampaign(guildId),patch);
+    if(!routing.ok)throw new Error(`Channel routing conflict: ${routing.conflicts.map(row=>row.roles.join("/")).join(", ")}. Configure distinct channels.`);
     const map={
       rulesChannelId:"rules_channel_id",
       caseBoardChannelId:"case_board_channel_id",
@@ -2120,7 +2125,16 @@ export class VeiledDB {
     }
     this.db.prepare("INSERT INTO campaign_snapshots(id,guild_id,label,reason,state_json,created_by) VALUES(?,?,?,?,?,?)")
       .run(id,guildId,label,reason,JSON.stringify(state),createdBy);
+    this.pruneSnapshots(guildId,50);
     return this.getSnapshot(id);
+  }
+
+  pruneSnapshots(guildId,retain=50){
+    const keep=Math.max(5,Math.min(500,Number(retain)||50));
+    const stale=this.db.prepare("SELECT id FROM campaign_snapshots WHERE guild_id=? ORDER BY created_at DESC,rowid DESC LIMIT -1 OFFSET ?")
+      .all(guildId,keep);
+    for(const row of stale)this.db.prepare("DELETE FROM campaign_snapshots WHERE guild_id=? AND id=?").run(guildId,row.id);
+    return stale.length;
   }
 
   getSnapshot(id){

@@ -27,3 +27,9 @@ Veilkeeper creates snapshots around major mutations, including:
 Rollback creates a **Pre-rollback safety** snapshot first, restores the selected authoritative state, and resynchronizes configured case/NPC/location surfaces. Bot-managed published-message identities are included in snapshot state.
 
 Transcripts, roll history, and audit logs are intentionally not rewritten by rollback; they remain an audit trail of what occurred operationally.
+
+## Retention and restore drill
+
+The application retains the newest 50 logical snapshots per campaign. Creating snapshot 51 removes only the oldest snapshot for that campaign. Store independent encrypted backups outside the bot host before upgrades; logical snapshots are not a substitute for host-level backup.
+
+Before a release, create a disposable campaign fixture, snapshot it, mutate state and create a pending publication, restart the database connection, restore the snapshot, and run `PRAGMA foreign_key_check`. Verify the pre-rollback safety snapshot exists and that native receipts/outbox rows were restored without rerunning mechanics or Discord delivery.

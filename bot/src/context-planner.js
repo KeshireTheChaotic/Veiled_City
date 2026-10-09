@@ -2,6 +2,7 @@
 import { historyContext } from "./city-civic.js";
 import { clusterContext } from "./memory-clusters.js";
 import { evidenceType, activeEvidence } from "./epistemic.js";
+import { projectAuthorityRecords, authorityRecordPage } from "./authority-projection.js";
 const tokens=value=>String(value||"").toLowerCase().match(/[a-z0-9-]{3,}/g)||[];
 export class ContextPlanner {
   constructor(db){this.db=db;}
@@ -53,5 +54,13 @@ export class ContextPlanner {
     }
     return {operation,actor:{type:actorType,key:actorKey},scope,segments,omissions,withheld,estimated_tokens:used,budget,
       authority:actorType==="gm"?"GM context does not grant actor knowledge":"Actor-relative subjective knowledge, not canon"};
+  }
+  authorityIndex(guildId,kind,{pageSize=25}={}){
+    const rows=kind==="canon"?this.db.listCanon(guildId,{includeGM:true,limit:500}):kind==="rulings"?this.db.searchRulesRulings(guildId,""):[];
+    return projectAuthorityRecords(kind,rows,{pageSize});
+  }
+  authorityPage(guildId,kind,{page=0,pageSize=25}={}){
+    const rows=kind==="canon"?this.db.listCanon(guildId,{includeGM:true,limit:500}):kind==="rulings"?this.db.searchRulesRulings(guildId,""):[];
+    return authorityRecordPage(kind,rows,{page,pageSize});
   }
 }

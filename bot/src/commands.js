@@ -43,6 +43,7 @@ import { formatDiscovery } from "./continuity-routing.js";
 import { manageLongProject, projectPhaseRevision } from "./long-projects.js";
 import { stateRevision } from "./ai-intents.js";
 import { beginInteraction, acknowledgeRules, interactionFailure, interactionResponseExpired, replyOrEdit } from "./discord/interaction-lifecycle.js";
+import { validateChannelRouting } from "./routing-diagnostics.js";
 
 const interactionQueue=new KeyedSerialQueue();
 
@@ -518,6 +519,7 @@ async function executeCommand(interaction,{db,gm,voice=null}){
     if(group==="campaign"&&sub==="status"){
       const c=db.ensureCampaign(interaction.guildId);
       const s=db.getActiveSession(interaction.guildId);
+      const routing=validateChannelRouting(c);
       const ch=(id)=>id?`<#${id}>`:"—";
       await interaction.reply({content:[
         `**${c.name}**`,
@@ -528,7 +530,8 @@ async function executeCommand(interaction,{db,gm,voice=null}){
         `Veil Exposure: ${c.veil_exposure}/6 • Fear: ${c.fear??0}/12`,
         `Session: ${s?`#${s.session_number} ${s.title||""} • ${s.assembly_phase||"assembly"}`:"none active"}`,
         ...(s?(()=>{ const d=db.getDirectorState(s.id); return [`World Director: round ${d.round_number||1} • scene ${d.scene_number||1}${d.scene_label?` (${d.scene_label})`:""} • pending **${d.pending_pass?.layer||"none"}**`]; })():[]),
-        `Party: ${db.getPartyState(interaction.guildId).established?"established":"not established"}`
+        `Party: ${db.getPartyState(interaction.guildId).established?"established":"not established"}`,
+        `Channel routing: ${routing.ok?"valid":`INVALID (${routing.conflicts.map(row=>row.roles.join("/")).join(", ")})`}`
       ].join("\n"),ephemeral:true});
       return true;
     }

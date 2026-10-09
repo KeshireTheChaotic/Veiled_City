@@ -257,7 +257,7 @@ assert.equal(pending.layer,"round");
 db.completeDirectorPass(session.id,"round");
 assert.equal(db.getDirectorState(session.id).round_number,2);
 
-// 5) GM turn handling retries an inconsistent mandatory post-turn review and private director context sees private transcript.
+// 5) GM turn handling repairs an optional inconsistent review without a paid retry; private director context sees private transcript.
 const noChangeReview={
   facts_clues:{decision:"no_change",reason:"none"},resources:{decision:"no_change",reason:"none"},clocks:{decision:"no_change",reason:"none"},threads:{decision:"no_change",reason:"none"},references:{decision:"no_change",reason:"none"},relationships:{decision:"no_change",reason:"none"},npc_cognition:{decision:"no_change",reason:"none"},handouts:{decision:"no_change",reason:"none"},canon:{decision:"no_change",reason:"none"},veil_exposure:{decision:"no_change",reason:"none"},scene:{decision:"continue",label:"",reason:"same scene"}
 };
@@ -272,7 +272,8 @@ const fakeContent={read:()=>"",search:()=>[]};
 const gmConfig={openaiKey:"x",gmModel:"test",routerModel:"test",maxRecentMessages:20,maxContentChunks:4,structuredRetryMaxTokens:3000,reasoningEffort:"",downtimeModel:"test",downtimeMaxOutputTokens:1200};
 const gmSvc=new GMService({db,content:fakeContent,config:gmConfig,ai:fakeTurnAI});
 const reviewed=await gmSvc.runTurn({guildId:guild,actorUserId:u1,actorName:"One",actorAssignment:db.activeAssignment(session.id,u1),messageText:"I inspect the door.",scope:"party"});
-assert.equal(turnCalls,2,"inconsistent post-turn review did not trigger corrective retry");
+assert.equal(turnCalls,1,"optional post-turn review mismatch should be quarantined and revalidated without a paid retry");
+assert.equal(reviewed.state_review.clocks.decision,"no_change");
 assert.equal(reviewed.state_review.scene.decision,"continue");
 
 let proposalTurnCalls=0;

@@ -1,5 +1,6 @@
 .editorconfig
 .gitattributes
+.github/workflows/offline-validation.yml
 Dockerfile
 LICENSE
 README.md
@@ -7,6 +8,7 @@ SUGGESTIONS-End-To-End.md
 bot/.env.example
 bot/.gitignore
 bot/data/.gitkeep
+bot/package-lock.json
 bot/package.json
 bot/scripts/audit-regression-test.mjs
 bot/scripts/autonomous-world-test.mjs
@@ -54,6 +56,7 @@ bot/scripts/i-heard-you-integration-test.mjs
 bot/scripts/implementation-phase-a-test.mjs
 bot/scripts/implementation-phase-b-test.mjs
 bot/scripts/implementation-phase-c-test.mjs
+bot/scripts/implementation-phase-d-test.mjs
 bot/scripts/interaction-lifecycle-test.mjs
 bot/scripts/narrative-contract-test.mjs
 bot/scripts/narrative-inference-test.mjs
@@ -96,6 +99,7 @@ bot/src/ai-review.js
 bot/src/application-authority.js
 bot/src/authored-candidates.js
 bot/src/authority-policy.js
+bot/src/authority-projection.js
 bot/src/autonomous-world.js
 bot/src/character-export.js
 bot/src/character-narrative.js
@@ -168,6 +172,7 @@ bot/src/roll-collaboration.js
 bot/src/roll-language.js
 bot/src/roll-requests.js
 bot/src/roster.js
+bot/src/routing-diagnostics.js
 bot/src/rules-arbitration.js
 bot/src/rules-srd.js
 bot/src/scene-continuity.js
@@ -189,6 +194,7 @@ bot/src/story-continuity.js
 bot/src/supply-dependencies.js
 bot/src/turn-attempts.js
 bot/src/turn-orchestration.js
+bot/src/turn-recovery.js
 bot/src/voice.js
 bot/src/world-authoring.js
 content/CARDS/ANCESTRIES_AND_COMMUNITIES.md

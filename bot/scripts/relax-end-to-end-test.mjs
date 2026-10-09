@@ -53,15 +53,13 @@ try{
     messageText:search,messageId:"search-review"});
   assert.equal(reviewRecovered.state_review.references.decision,"no_change");
   assert.equal(reviewRecovered.world_additions[0].key,"laundromat","Review recovery preserves independently valid native worldbuilding");
-  assert.equal(gm.ai.requests.length,3,"Repeated reference-review mismatch gets one bounded recovery instead of dropping the turn");
-  assert(gm.ai.requests[2].input.includes("POST-TURN REVIEW RECOVERY"));
+  assert.equal(gm.ai.requests.length,1,"Optional reference-review mismatch is repaired and revalidated without another model call");
   const invalidInterpretation={...empty,narrative_interpretation:{source_ref:"event:missing",references:[],intended_actions:[],acknowledgements:[],unresolved:[]}};
   gm.ai=new FakeResponses([invalidInterpretation,invalidInterpretation,empty]);
   const recovered=await gm.runTurn({guildId:guild,actorUserId:"owner",actorName:"Tyrell",actorAssignment:assignment,
     messageText:"That diner sounds familiar.",messageId:"context-recovery"});
   assert.equal(recovered.narrative_interpretation,null);
-  assert.equal(gm.ai.requests.length,3,"Repeated invalid interpretation gets one safe bounded recovery instead of dropping the turn");
-  assert(gm.ai.requests[2].input.includes("SAFE CONTEXT RECOVERY"));
+  assert.equal(gm.ai.requests.length,1,"Optional invalid interpretation is quarantined and revalidated without another model call");
   const hanging={responses:{create:(_request,{signal})=>new Promise((resolve,reject)=>{
     signal.addEventListener("abort",()=>reject(signal.reason),{once:true});
   })}};

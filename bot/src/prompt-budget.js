@@ -3,11 +3,13 @@ const separator="\n\n---\n\n";
 const encode=value=>typeof value==="string"?value:JSON.stringify(value)??"null";
 const render=(section,value=section.value)=>`${section.label}:\n${encode(value)}`;
 export function budgetTurnPrompt(sections,{instructions="",query="",maxChars=120000,reserveChars=6000}={}){
+  const overflow=(message,diagnostic)=>{throw Object.assign(new Error(message),{code:"CONTEXT_OVERFLOW",diagnostic});};
   const limit=maxChars-instructions.length-reserveChars;
   const required=sections.filter(section=>section.required);
   const optional=sections.filter(section=>!section.required);
   const core=required.map(section=>render(section)).join(separator);
-  if(limit<2000||core.length+2000>limit) throw new Error("Mandatory turn context exceeds the safe input budget; GM review of oversized authoritative records is required.");
+  if(limit<2000||core.length+2000>limit)overflow("Mandatory turn context exceeds the safe input budget; retry with a narrower scene or query.",
+    {stage:"mandatory_authority",required_chars:core.length,limit,retryable:true,committed:false});
   const complete=sections.map(section=>render(section)).join(separator);
   if(complete.length<=limit) return {input:complete,metrics:{compacted:false,input_chars:complete.length,limit,omissions:[]}};
   const terms=[...new Set(query.toLowerCase().match(/[a-z0-9-]{3,}/g)||[])].slice(0,24);
@@ -42,6 +44,7 @@ export function budgetTurnPrompt(sections,{instructions="",query="",maxChars=120
     return rows.length?[render(section,rows[0].value)]:[];
   }).join(separator);
   const notice=noticeFor(omissions);
-  if(input.length+notice.length>limit) throw new Error("Turn context budget metadata exceeds the safe input budget.");
+  if(input.length+notice.length>limit)overflow("Turn context budget metadata exceeds the safe input budget.",
+    {stage:"budget_metadata",required_chars:input.length+notice.length,limit,retryable:true,committed:false});
   return {input:input+notice,metrics:{compacted:true,input_chars:input.length+notice.length,limit,omissions}};
 }
