@@ -1,5 +1,6 @@
 /** Authoritative AI/state mutation layer. Applies validated structured outputs while enforcing transaction and visibility invariants. */
-import { randomUUID } from "node:crypto";
+import { randomUUID, createHash } from "node:crypto";
+import { indexWorldEvent } from "./city-calendar.js";
 import { normalizeNpcKey } from "./npc-cognition.js";
 import { applySimulationUpdates } from "./simulation.js";
 import { validateNarrativeClaims, assertNarrativeApplied } from "./narrative-integrity.js";
@@ -7,6 +8,8 @@ import { dispatchAiIntents } from "./ai-intents.js";
 import { assertNpcObservation } from "./scene-continuity.js";
 import { persistInterpretation } from "./narrative-context.js";
 import { typedEvidence } from "./epistemic.js";
+import { persistAuthoredCandidates } from "./authored-candidates.js";
+import { relationshipProvenance, artifactProvenance, inferredSource } from "./presentation-evidence.js";
 
 export function summarizeRoster(rows){
   return rows.map(r=>({
@@ -222,8 +225,17 @@ export function applyRelationshipDrafts(db,guildId,relationships=[],scope={mode:
       let visibility=r.visibility||"party";
       if(scope.mode==="private") visibility=scope.actorCharacterId?"character":"gm";
       const existing=db.findRelationship(guildId,{fromType:r.from_type,fromKey:from.key,toType:r.to_type,toKey:to.key,relationshipType:r.relationship_type||"other"});
+      const provenance=inferredSource(source)?relationshipProvenance(db,guildId,r,scope,existing):null;
+      if(provenance&&(r.from_type==="character"||["debt","obligation"].includes(r.relationship_type))){
+        const key=`relationship-interpretation:${createHash("sha256").update(JSON.stringify([db.getActiveSession(guildId)?.id,scope,r])).digest("hex").slice(0,40)}`;
+        const cause=indexWorldEvent(db,guildId,{key,source_id:source,kind:"relationship_interpretation",title:"Nonbinding directional relationship interpretation",
+          visibility,subject_key:scope.actorCharacterId||undefined,details:{epistemic:provenance.epistemic,authority:"Interpretation only; not PC feelings, debt or agreement"}},source);
+        const proposal=db.getCityRecord(guildId,"relationship_interpretation",key)||db.saveCityRecord(guildId,{kind:"relationship_interpretation",key,status:"pending",source_event:cause.event_key,visibility,subject_key:scope.actorCharacterId||undefined,
+          data:{draft:r,provenance,authority:"Nonbinding interpretation only; no PC feelings, debt, consent or authoritative score"}});
+        out.push({ok:true,row:{...proposal,id:proposal.record_key},before:existing||null,after:proposal,interpretation_only:true});continue;
+      }
       const score=r.mode==="delta"?Math.max(-5,Math.min(5,Number(existing?.score||0)+Number(r.score||0))):Math.max(-5,Math.min(5,Number(r.score||0)));
-      const row=db.upsertRelationship(guildId,{fromType:r.from_type,fromKey:from.key,fromLabel:from.label,toType:r.to_type,toKey:to.key,toLabel:to.label,relationshipType:r.relationship_type||"other",score,visibility,note:r.note||"",source,sourceCharacterId:scope.actorCharacterId||null});
+      const row=db.upsertRelationship(guildId,{fromType:r.from_type,fromKey:from.key,fromLabel:from.label,toType:r.to_type,toKey:to.key,toLabel:to.label,relationshipType:r.relationship_type||"other",score,visibility,note:r.note||"",source,sourceCharacterId:scope.actorCharacterId||null,provenance});
       out.push({ok:true,row,before:existing||null,after:row});
     }catch(err){out.push({ok:false,error:String(err.message||err),draft:r});}
   }
@@ -244,7 +256,9 @@ export function applyHandoutDrafts(db,guildId,sessionId,handouts=[],scope={mode:
       if(visibility==="player"&&!userId) userId=scope.actorUserId||null;
       if(visibility==="character"&&!characterId) throw new Error("Character-visible handout has no target character.");
       if(visibility==="player"&&!userId) throw new Error("Player-visible handout has no target user.");
-      const row=db.createHandout(guildId,{sessionId,title:h.title,kind:h.kind||"document",authority:h.authority||"canonical",visibility,subjectUserId:userId,subjectCharacterId:characterId,content:h.player_visible_text||"",canonicalFacts:h.canonical_facts||[],caseKey:h.case_key||"",npcKey:h.npc_key||"",locationKey:h.location_key||"",source,metadata:{generated:true}});
+      const evidence=inferredSource(source)?artifactProvenance(db,guildId,h,visibility,characterId||userId,scope):null;
+      const authority=evidence?.metadata.unsupported_count&&h.authority==="canonical"?"illustrative":h.authority||"illustrative";
+      const row=db.createHandout(guildId,{sessionId,title:h.title,kind:h.kind||"document",authority,visibility,subjectUserId:userId,subjectCharacterId:characterId,content:h.player_visible_text||"",canonicalFacts:evidence?.accepted||h.canonical_facts||[],caseKey:h.case_key||"",npcKey:h.npc_key||"",locationKey:h.location_key||"",source,metadata:evidence?.metadata||{generated:true}});
       out.push({ok:true,row});
     }catch(err){out.push({ok:false,error:String(err.message||err),draft:h});}
   }
@@ -391,6 +405,7 @@ export function applyAuthoritativeMutation(db,{guildId,sessionId=null,events=[],
   simulationUpdates=[],scope={mode:"party",actorUserId:null,actorCharacterId:null},source="ai_gm",provenance={},narrative=null,aiIntents=narrative?.ai_intents||[]}){
   return db.transaction(()=>{
     if(narrative?.narrative_interpretation)persistInterpretation(db,guildId,narrative.narrative_interpretation,scope,provenance);
+    persistAuthoredCandidates(db,guildId,narrative?.authored_candidates,scope,provenance);
     const eventResults=applyGMEvents(db,guildId,sessionId,events,scope,provenance);
     const relationshipResults=applyRelationshipDrafts(db,guildId,relationships,scope,source);
     const handoutResults=applyHandoutDrafts(db,guildId,sessionId,handouts,scope,source);

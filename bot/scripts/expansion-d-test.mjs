@@ -45,7 +45,7 @@ try{
   assert(JSON.stringify(new ContextPlanner(db).plan(guild,{actorType:"character",characterId:one.id,userId:"one",scope:"character"})).includes("without violence"));
   db.assignCharacter(session.id,"one",alt.id);
   assert(!JSON.stringify(discoverPersonal(db,guild,"one",{mode:"arcs"})).includes("brother"));
-  assert.throws(()=>discoverPersonal(db,guild,"one",{character_id:one.id}),/owned/);
+  assert.throws(()=>discoverPersonal(db,guild,"one",{character_id:one.id}),/controlled role/);
   db.assignCharacter(session.id,"one",one.id);db.setPresence(session.id,"one","absent");
   assert.throws(()=>proposeArcBeat(db,guild,{character_id:one.id,arc_key:"promise",key:"absent",source_event:"invitation",invitation:"Forced?"},"gm"),/attendance/);
   db.setPresence(session.id,"one","present");const snap=db.snapshotCampaign(guild,{label:"restore"});db.close();db=new VeiledDB(file,schema);db.restoreSnapshot(guild,snap.id);

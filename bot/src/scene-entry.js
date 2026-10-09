@@ -15,11 +15,11 @@ export function entryTarget(text){
 export function locationMatches(row,target){
   return [row.entity_key,row.state?.name,row.state?.title,row.state?.display_name].filter(Boolean).some(value=>normalized(value)===normalized(target));
 }
-export function prepareSceneEntry(db,guild,user,character,messageId,text,{privateScene=false}={}){
-  const flags=db.getCityCalendar(guild).flags,target=entryTarget(text);
+export function prepareSceneEntry(db,guild,user,character,messageId,text,{privateScene=false,candidate=null}={}){
+  const flags=db.getCityCalendar(guild).flags,target=candidate?.target||entryTarget(text);
   if(!target||!character||flags.natural_language!==true||flags.scene_continuity!==true) return null;
   const pc=personalCharacter(db,guild,user,character);
-  const source=captureDeclaration(db,guild,user,pc.id,messageId,text,{privateScene,sceneEntry:true});if(!source) return null;
+  const source=captureDeclaration(db,guild,user,pc.id,messageId,text,{privateScene,sceneEntry:true,candidate});if(!source) return null;
   const key=`entry:${source.event_key}`,prior=db.getCityRecord(guild,"scene_entry",key);
   if(prior) return prior;
   const location=typeof pc.data.location==="string"?db.getSimulationEntity(guild,"location",pc.data.location):null;

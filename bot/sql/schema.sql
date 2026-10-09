@@ -123,6 +123,7 @@ CREATE TABLE IF NOT EXISTS session_characters (
     CHECK(assignment_role IN ('primary','guest','proxy')),
   control_policy TEXT NOT NULL DEFAULT 'player_only'
     CHECK(control_policy IN ('player_only','background_safe','proxy')),
+  control_revision TEXT NOT NULL DEFAULT '',
   proxy_user_id TEXT,
   joined_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
   left_at TEXT,
@@ -246,6 +247,7 @@ CREATE TABLE IF NOT EXISTS audit_log (
 );
 
 CREATE TABLE IF NOT EXISTS npc_proxies (
+  control_revision TEXT NOT NULL DEFAULT '',
   id TEXT PRIMARY KEY,
   guild_id TEXT NOT NULL,
   session_id TEXT NOT NULL,
@@ -480,6 +482,7 @@ CREATE TABLE IF NOT EXISTS relationships (
   score INTEGER NOT NULL DEFAULT 0 CHECK(score BETWEEN -5 AND 5),
   visibility TEXT NOT NULL DEFAULT 'party' CHECK(visibility IN ('public','party','player','character','gm')),
   note TEXT NOT NULL DEFAULT '',
+  provenance_json TEXT NOT NULL DEFAULT '{}',
   source TEXT NOT NULL DEFAULT 'gm',
   source_character_id TEXT,
   created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,

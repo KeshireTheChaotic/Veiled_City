@@ -6,15 +6,19 @@ import { requireCitySource } from "./city-core.js";
 import { motivationKey } from "./simulation-motivation.js";
 import { activeCityProxy } from "./city-constraints.js";
 import { interpretAuthoredText } from "./player-language.js";
-export function captureDialogue(db,guild,user,characterId,messageId,message,{privateScene=false}={}){
+export function captureDialogue(db,guild,user,characterId,messageId,message,{privateScene=false,candidate=null}={}){
   const flags=db.getCityCalendar(guild).flags;
   if(flags.dialogue_history!==true||flags.scene_continuity!==true||!characterId||!messageId||typeof message!=="string") return null;
   let pc;try{pc=personalCharacter(db,guild,user,characterId);}catch{return null;}
-  const speech=interpretAuthoredText(message,{natural:flags.natural_language===true}).speech;
+  const speech=candidate?{target:candidate.target,quote:candidate.quote}:interpretAuthoredText(message,{natural:flags.natural_language===true}).speech;
   if(!speech||privateScene&&!speech.target) return null;
   const key=`speech:${motivationKey([messageId,pc.id])}`;
   const prior=db.getWorldEvent(guild,key);if(prior) return prior;
-  const listeners=sceneView(db,guild,{gm:true}).occupants.filter(row=>row.data.entity_type==="npc"&&(!speech.target||row.data.entity_key===speech.target))
+  const occupants=sceneView(db,guild,{gm:true}).occupants.filter(row=>row.data.entity_type==="npc");
+  const addressed=speech.target?occupants.filter(row=>[row.data.entity_key,db.getNpcProfile(guild,row.data.entity_key)?.display_name,
+    db.getNpcProfile(guild,row.data.entity_key)?.name].filter(Boolean).some(name=>name.toLowerCase()===speech.target.toLowerCase())):occupants;
+  if(speech.target&&addressed.length!==1)return null;
+  const listeners=addressed
     .filter(row=>!activeCityProxy(db,guild,row.data.entity_key)&&sceneAccess(db,guild,{observer_type:"npc",observer_key:row.data.entity_key,
       target_type:"character",target_key:pc.id,sense:"sound"})).slice(0,12).map(row=>row.data.entity_key);
   if(!listeners.length) return null;

@@ -7,7 +7,7 @@ export const epistemicSchema={anyOf:[{type:"null"},{type:"object",additionalProp
   required:["kind","source_refs","perspective"]}]};
 export function evidenceType(fact){
   let data;try{data=JSON.parse(fact?.provenance_json||"{}");}catch{data={};}
-  return data.epistemic||{kind:fact?.source==="ai_gm"||fact?.category==="hypothesis"?"hypothesis"
+  return data.epistemic||{kind:fact?.source==="ai_gm"||["hypothesis","recap"].includes(fact?.category)?"hypothesis"
     :["rumor","testimony"].includes(fact?.category)?"testimony":"established",source_refs:[],perspective:"legacy"};
 }
 export function activeEvidence(db,guild,key,seen=new Set()){

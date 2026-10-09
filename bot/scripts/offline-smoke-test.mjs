@@ -184,7 +184,7 @@ db.db.prepare("DELETE FROM relationships WHERE source_character_id=?").run(legac
 db.db.prepare("DELETE FROM relationship_hook_imports WHERE character_id=?").run(legacy.id);
 const backfill=db.importExistingHookRelationships(guild,{characterId:legacy.id});
 if(backfill.created<3||db.importExistingHookRelationships(guild,{characterId:legacy.id}).skipped!==1) throw new Error("One-time hook relationship backfill failed.");
-const relDrafts=applyRelationshipDrafts(db,guild,[{from_type:"character",from_key:char.id,from_label:char.name,to_type:"npc",to_key:"Mara Voss",to_label:"Mara Voss",relationship_type:"trust",mode:"set",score:2,visibility:"party",note:"Earned trust."}],{mode:"party",actorCharacterId:char.id},"test");
+const relDrafts=applyRelationshipDrafts(db,guild,[{from_type:"character",from_key:char.id,from_label:char.name,to_type:"npc",to_key:"Mara Voss",to_label:"Mara Voss",relationship_type:"trust",mode:"set",score:2,visibility:"party",note:"Earned trust."}],{mode:"party",actorCharacterId:char.id},"human_gm");
 if(!relDrafts[0].ok||!db.listRelationships(guild,{includeGM:true}).some(r=>r.relationship_type==="trust"&&r.score===2)) throw new Error("Relationship graph apply failed.");
 
 // v3.3.0 handout/evidence persistence and local export.

@@ -19,11 +19,11 @@ function characterSummary(c){
     experiences:(d.experiences||[]).map(x=>typeof x==="string"?x:{name:x.name||"Experience",modifier:x.modifier??null})
   };
 }
-function sessionView(s){return {session_number:s.session_number,title:s.title||"",ended_at:s.ended_at,recap:clip(s.recap||"",5500)};}
+function sessionView(s){return {session_number:s.session_number,title:s.title||"",ended_at:s.ended_at,recap:clip(s.recap||"",5500),authority:"Narrator synthesis; not independent observation, PC feelings or new truth"};}
 function threadView(r){return {id:r.id,label:r.label,status:r.status,notes:clip(r.notes||"",1200),updated_at:r.updated_at};}
 function refView(r){return {key:r.entity_key,name:r.display_name,summary:clip(r.summary||"",1600),updated_at:r.updated_at};}
-function relationshipView(r){return {from_type:r.from_type,from_label:r.from_label||r.from_key,to_type:r.to_type,to_label:r.to_label||r.to_key,relationship_type:r.relationship_type,score:r.score,note:clip(r.note||"",900),updated_at:r.updated_at};}
-function handoutView(h){return {id:h.id,title:h.title,kind:h.kind,authority:h.authority,case_key:h.case_key,npc_key:h.npc_key,location_key:h.location_key,canonical_facts:h.canonical_facts||[],content_excerpt:clip(h.content||"",1400),created_at:h.created_at};}
+function relationshipView(r){return {from_type:r.from_type,from_label:r.from_label||r.from_key,to_type:r.to_type,to_label:r.to_label||r.to_key,relationship_type:r.relationship_type,score:r.score,note:clip(r.note||"",900),epistemic:r.epistemic,evidence_active:r.evidence_active,authority:"Directional perspective; not PC feelings, consent or debt",updated_at:r.updated_at};}
+function handoutView(h){return {id:h.id,title:h.title,kind:h.kind,authority:h.authority,epistemic:h.metadata?.epistemic||{kind:"testimony",perspective:"legacy artifact",source_refs:[]},interpretation_limits:"Presentation does not establish truth",case_key:h.case_key,npc_key:h.npc_key,location_key:h.location_key,canonical_facts:h.canonical_facts||[],content_excerpt:clip(h.content||"",1400),created_at:h.created_at};}
 
 export function buildConceptCampaignContext({db,guildId,userId,historySessions=10}){
   const campaign=db.ensureCampaign(guildId);

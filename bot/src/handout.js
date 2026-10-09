@@ -5,7 +5,10 @@ import { markdownToDocx } from "./character-export.js";
 function safe(v){return v==null?"":String(v);}
 function stem(v){return safe(v).normalize("NFKD").replace(/[^A-Za-z0-9]+/g,"_").replace(/^_+|_+$/g,"")||"Handout";}
 function formats(format){return format==="all"?["json","markdown","docx"]:[format||"markdown"];}
-export function handoutPlayerView(h){return {id:h.id,title:h.title,kind:h.kind,authority:h.authority,visibility:h.visibility,content:h.content,case_key:h.case_key||"",npc_key:h.npc_key||"",location_key:h.location_key||"",created_at:h.created_at};}
+export function handoutPlayerView(h){return {id:h.id,title:h.title,kind:h.kind,authority:h.authority,visibility:h.visibility,content:h.content,
+  epistemic:h.metadata?.epistemic||{kind:"testimony",perspective:"legacy artifact; reliability is not truth",source_refs:[]},
+  interpretation_limits:"Presentation is not canon. PC feelings, agreement and obligations require independent authority.",
+  case_key:h.case_key||"",npc_key:h.npc_key||"",location_key:h.location_key||"",created_at:h.created_at};}
 
 export function handoutMarkdown(h){
   const facts=h.canonical_facts||[];
@@ -24,7 +27,7 @@ export function handoutMarkdown(h){
     h.content||"(No player-facing text.)",
     ``,
     `## Evidence Authority`,
-    h.authority==="canonical"?"Deliberately presented details are campaign facts.":
+    h.authority==="canonical"?"Only independently established source facts are canonical; decorative presentation does not create campaign truth.":
       h.authority==="partial"?"The artifact is genuine, but its meaning or completeness is uncertain.":
       h.authority==="unreliable"?"The source may be mistaken, altered, forged, corrupted, or supernatural.":
       "This is an illustrative aid; incidental details are not automatically canon.",

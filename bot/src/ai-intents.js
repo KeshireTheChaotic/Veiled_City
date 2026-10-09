@@ -27,6 +27,7 @@ import { reconcileHistory } from "./history-reconciliation.js";
 import { prepareRollRequest } from "./roll-requests.js";
 import { reviewRollDeclaration } from "./roll-language.js";
 import { mundaneEntryImpact, resolveMundaneEntry } from "./scene-entry.js";
+import { conversationPrincipal } from "./conversation-principal.js";
 const hash=value=>createHash("sha256").update(JSON.stringify(value)).digest("hex");
 const adapters=new Map();
 export const FEATURE_FLAGS={roll:"roll_requests",setup:"narrative_setups",organization:"player_organizations",influence:"audience_influence",evidence:"evidence_custody",dialogue:"dialogue_history",encounter:"encounter_intelligence",goal:"emergent_goals",consequence:"consequences",scene:"scene_continuity",group:"emergent_groups",
@@ -39,11 +40,14 @@ export function delegationPolicy(db,guild){
 }
 export function configureDelegation(db,guild,input,reviewer){
   cityObject(input);
-  if(!reviewer||Object.keys(input).some(key=>!["mode","allow","max_operations","max_cost","expires_minute"].includes(key))) throw new Error("Invalid delegation configuration.");
+  if(!reviewer||Object.keys(input).some(key=>!["mode","allow","private_allow","max_operations","max_cost","expires_minute"].includes(key))) throw new Error("Invalid delegation configuration.");
   if(!["manual","suggest_only","routine_delegated"].includes(input.mode)||!Array.isArray(input.allow)||input.allow.length>40
     ||input.allow.some(op=>!Object.keys(INTENT_PAYLOADS).some(feature=>op.startsWith(`${feature}.`)
       &&intentOperations(feature).includes(op.slice(feature.length+1))))) throw new Error("Explicit typed operation allowlist required.");
   cityInteger(input.max_operations,1,4);cityInteger(input.max_cost,0,20);
+  if(input.private_allow!==undefined&&(!Array.isArray(input.private_allow)||input.private_allow.length>40
+    ||input.private_allow.some(op=>!input.allow.includes(op)||!['goal','consequence','scene','group','strategy','encounter'].includes(op.split('.')[0]))))
+    throw new Error("Private world delegation must explicitly name audited native operations already allowed by the main policy.");
   if(input.expires_minute!==null) cityInteger(input.expires_minute,db.getSimulationClock(guild).minute+1,1000000000);
   if(input.mode==="routine_delegated"&&input.expires_minute===null) throw new Error("Delegation requires an explicit fictional-time expiry.");
   return db.transaction(()=>{
@@ -56,8 +60,17 @@ export function configureDelegation(db,guild,input,reviewer){
 }
 function preflight(db,guild,intent,context){
   if(!validateIntent(intent)) throw new Error("Invalid closed versioned intent contract.");
-  if(context.scope?.mode==="private"&&!['arc','project','discovery','dialogue','organization','setup','roll'].includes(intent.feature)
-    &&!(intent.feature==="scene"&&intent.payload.op==="enter")) throw new Error("Private scope cannot alter shared world state.");
+  const privateWorld=context.scope?.mode==="private"&&!['arc','project','discovery','dialogue','organization','setup','roll'].includes(intent.feature)
+    &&!(intent.feature==="scene"&&intent.payload.op==="enter");
+  if(privateWorld){
+    conversationPrincipal(db,guild,context.scope.actorUserId,context.scope.actorCharacterId);
+    if(!delegationPolicy(db,guild).private_allow?.includes(`${intent.feature}.${intent.payload.op}`))
+      throw new Error("Private world operation needs explicit private_allow delegation.");
+    if(intent.payload.actor_type==="character"||intent.payload.actor_type==="npc"&&activeCityProxy(db,guild,intent.payload.actor_key))
+      throw new Error("Private world authority does not take over PCs or proxied NPCs.");
+    if(intent.feature==="scene"&&!["gm","character","player"].includes(intent.payload.visibility))
+      throw new Error("Private scene evidence cannot publish party presence.");
+  }
   if(context.scope?.mode==="private"&&intent.feature==="setup"&&intent.payload.character_id!==context.scope.actorCharacterId)
     throw new Error("Private setup invitation belongs to this character only.");
   if(context.scope?.mode==="private"&&intent.feature==="organization"&&intent.payload.character_id!==context.scope.actorCharacterId)
@@ -72,9 +85,39 @@ function preflight(db,guild,intent,context){
   for(const key of new Set([intent.payload.source_event,...intent.source_prerequisites])) requireCitySource(db,guild,key);
   const adapter=adapters.get(intent.feature);if(!adapter) throw new Error("Domain adapter is not available yet.");
   const before=adapter.current(db,guild,intent);
+  if(privateWorld&&before&&["public","party"].includes(before.visibility))throw new Error("Public target needs a separately reviewed projection; do not overwrite its private causal history.");
   if(stateRevision(before)!==intent.expected_revision) throw new Error("Stale target revision; propose again from current state.");
   const impact=adapter.impact(db,guild,intent,before,context);
-  return {adapter,before,impact};
+  return {adapter,before,impact,privateWorld};
+}
+function applyNative(db,guild,intent,key,actor,context,adapter,privateWorld){
+  if(!privateWorld)return adapter.apply(db,guild,intent,key,actor,context);
+  // Causal annotations remain GM-private. Native world state may change, but this
+  // turn is never relabelled party and public observations require separate review.
+  const marker=db.privateCausalMarker(guild);
+  const result=adapter.apply(db,guild,intent,key,actor,context);
+  db.retainPrivateCausality(guild,marker);
+  return result;
+}
+export function projectPrivateEffect(db,guild,input,reviewer){
+  if(!reviewer||Object.keys(input).sort().join()!=="expected_revision,key,observation,op,projection_key"||input.op!=="project-effect"
+    ||typeof input.observation!=="string"||!input.observation.trim()||input.observation.length>1500)throw new Error("Closed authenticated GM observation review required.");
+  const receipt=db.getCityRecord(guild,"ai_intent",input.key);
+  if(!receipt||receipt.status!=="accepted"||receipt.data.scope?.mode!=="private"||stateRevision(receipt)!==input.expected_revision)
+    throw new Error("Current accepted private causal receipt required.");
+  requireCitySource(db,guild,receipt.source_event);
+  return db.transaction(()=>{
+    const key=`projection:${input.projection_key}`,prior=db.getCityRecord(guild,"effect_projection",key);
+    if(prior){if(prior.data.receipt!==input.key||prior.data.observation!==input.observation)throw new Error("Projection key already used.");return prior;}
+    // The GM independently establishes what can be observed; private cause/details
+    // are not copied to the public event or its public source graph.
+    const event=indexWorldEvent(db,guild,{key,kind:"observation",title:"GM-reviewed observable world effect",source_id:reviewer,
+      visibility:"party",truth_status:"observed",session_id:db.getActiveSession(guild)?.id,
+      details:{observation:input.observation,reviewed_by:reviewer}},reviewer);
+    const row=db.saveCityRecord(guild,{kind:"effect_projection",key,source_event:event.event_key,
+      data:{receipt:input.key,observation:input.observation,reviewed_by:reviewer,authority:"Independent public observation; private cause retained separately"}});
+    cityAudit(db,guild,"effect_projection",key,null,row,reviewer);return row;
+  });
 }
 function decision(db,guild,intent,impact,budget){
   const policy=delegationPolicy(db,guild),minute=db.getSimulationClock(guild).minute;
@@ -100,10 +143,10 @@ export function dispatchAiIntents(db,guild,intents=[],context={}){
     const key=`intent:${hash([guild,context.sessionId||null,context.origin||"",intent]).slice(0,48)}`;
     const previous=db.getCityRecord(guild,"ai_intent",key);if(previous) return previous;
     try{return db.transaction(()=>{
-      const {adapter,before,impact}=preflight(db,guild,intent,context);
+      const {adapter,before,impact,privateWorld}=preflight(db,guild,intent,context);
       let verdict=decision(db,guild,intent,impact,budget);
       if(context.deferred===true&&verdict.status==="accepted") verdict={status:"deferred",reason:"Fictional work slot exhausted; refresh or review later."};
-      const result=verdict.status==="accepted"?adapter.apply(db,guild,intent,key,"ai_policy",context):null;
+      const result=verdict.status==="accepted"?applyNative(db,guild,intent,key,"ai_policy",context,adapter,privateWorld):null;
       if(verdict.status==="accepted"){budget.operations++;budget.cost+=impact.cost;}
       return saveReceipt(db,guild,key,intent,verdict.status,verdict.reason,context,{before,impact,result,policy_revision:delegationPolicy(db,guild).revision});
     });}catch(error){
@@ -126,9 +169,9 @@ export function reviewAiIntent(db,guild,{key,decision:response,expected_revision
       cityAudit(db,guild,"ai_intent_review",key,row,after,reviewer);return after;
     }
     const context={scope:row.data.scope,sessionId:row.data.session_id,origin:row.data.origin},intent=row.data.intent;
-    const {adapter,before,impact}=preflight(db,guild,intent,context);
+    const {adapter,before,impact,privateWorld}=preflight(db,guild,intent,context);
     if(intent.policy_revision!==delegationPolicy(db,guild).revision) throw new Error("Policy changed; request a fresh proposal.");
-    const result=response==="approve"?adapter.apply(db,guild,intent,key,reviewer,context):null;
+    const result=response==="approve"?applyNative(db,guild,intent,key,reviewer,context,adapter,privateWorld):null;
     const after=db.saveCityRecord(guild,{...row,key,status:response==="approve"?"accepted":"rejected",
       data:{...row.data,before,impact,result,reviewed_by:reviewer}});
     cityAudit(db,guild,"ai_intent_review",key,row,after,reviewer);return after;

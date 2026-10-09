@@ -1,10 +1,16 @@
 /** Persistent directional relationship dimensions and milestone history shared by all mutation paths. */
 function endpointKey(type,key){return String(key).replace(new RegExp(`^${type}:`),"");}
+export function relationshipProjection(state){
+  return {...state,epistemic:state.epistemic||{kind:"hypothesis",perspective:state.from||"legacy relationship projection",source_refs:[]},
+    authority:"Directional continuity only; milestones/scores are not PC feelings, consent or binding debt"};
+}
 export function relationshipPairKey(row){
   return JSON.stringify([row.from_type,endpointKey(row.from_type,row.from_key),row.to_type,endpointKey(row.to_type,row.to_key)]);
 }
 
 export function updateRelationshipDimensions(db,guildId,row){
+  if((row.epistemic?.kind==="hypothesis"||/ai|director|downtime_project/.test(row.source||""))
+    &&(row.from_type==="character"||["debt","obligation"].includes(row.relationship_type)))return null;
   const pairKey=relationshipPairKey(row);
   const previous=db.getSimulationEntity(guildId,"relationship",pairKey)?.state||{};
   const dimensions={trust:0,affection:0,fear:0,respect:0,debt:0,suspicion:0,...previous.dimensions};
@@ -15,6 +21,8 @@ export function updateRelationshipDimensions(db,guildId,row){
       row.relationship_type==="hostility"&&row.score>=3?"enemy":"acquaintance";
   const state={...previous,from:`${row.from_type}:${endpointKey(row.from_type,row.from_key)}`,
     to:`${row.to_type}:${endpointKey(row.to_type,row.to_key)}`,dimensions,milestone,
+    epistemic:row.epistemic||{kind:"testimony",perspective:`${row.from_type}:${row.from_key}`,source_refs:[]},
+    authority:"Directional continuity only; milestones/scores are not PC feelings, consent or binding debt",
     aggregate_score:Object.values(dimensions).reduce((sum,value)=>sum+value,0)/Object.keys(dimensions).length};
   db.setSimulationEntity(guildId,"relationship",pairKey,state);
   if(previous.milestone!==milestone) db.putSimulationRecord(guildId,{kind:"memory",entityKey:`relationship:${pairKey}`,

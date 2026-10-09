@@ -54,6 +54,7 @@ bot/scripts/interaction-lifecycle-test.mjs
 bot/scripts/narrative-contract-test.mjs
 bot/scripts/narrative-inference-test.mjs
 bot/scripts/narrative-understanding-test.mjs
+bot/scripts/natural-language-scope-test.mjs
 bot/scripts/negotiation-preview-test.mjs
 bot/scripts/npc-cognition-regression-test.mjs
 bot/scripts/offline-guard.mjs
@@ -88,6 +89,8 @@ bot/src/ai-intent-contracts.js
 bot/src/ai-intents.js
 bot/src/ai-review.js
 bot/src/application-authority.js
+bot/src/authored-candidates.js
+bot/src/authority-policy.js
 bot/src/character-export.js
 bot/src/character-narrative.js
 bot/src/character-system.js
@@ -110,6 +113,7 @@ bot/src/content-packages.js
 bot/src/content.js
 bot/src/context-planner.js
 bot/src/continuity-routing.js
+bot/src/conversation-principal.js
 bot/src/db.js
 bot/src/decision-advisory.js
 bot/src/dialogue-continuity.js
@@ -144,6 +148,7 @@ bot/src/owner-consent.js
 bot/src/personal-continuity.js
 bot/src/player-language.js
 bot/src/portrayal.js
+bot/src/presentation-evidence.js
 bot/src/prompt-budget.js
 bot/src/provenance.js
 bot/src/publishing.js
@@ -156,6 +161,7 @@ bot/src/roster.js
 bot/src/rules-srd.js
 bot/src/scene-continuity.js
 bot/src/scene-entry.js
+bot/src/scoped-query.js
 bot/src/seed-commands.js
 bot/src/seed-data.js
 bot/src/seed-drafts.js
@@ -272,6 +278,7 @@ docs/CODE_STANDARDS.md
 docs/COMBAT_STATE.md
 docs/CONTENT_SEEDING.md
 docs/CONTEXT_BUDGET_FIX.md
+docs/DATABASE_USAGE_AUDIT.md
 docs/DEPLOYMENT.md
 docs/DISCORD_SETUP.md
 docs/DOWNTIME.md

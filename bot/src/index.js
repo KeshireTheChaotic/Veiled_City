@@ -14,6 +14,7 @@ import { captureArcCandidate } from "./personal-continuity.js";
 import { captureDialogue } from "./dialogue-continuity.js";
 import { captureDeclaration } from "./player-language.js";
 import { captureContextSource } from "./narrative-context.js";
+import { conversationPrincipal } from "./conversation-principal.js";
 import { publishRollRequests } from "./roll-requests.js";
 import { routeRollMessage } from "./roll-language.js";
 import { routeConsentMessage } from "./consent-language.js";
@@ -296,16 +297,18 @@ async function processPrivateTurn(message,directMention){
   }
   const speaker=controlled?.name||message.member?.displayName||message.author.username;
   const vis=controlled?.character_id?"character":"player";
+  let conversationId=controlled?.character_id||null;
+  try{conversationId=conversationPrincipal(db,message.guild.id,message.author.id,conversationId).context_id;}catch{/* No authenticated role context. */}
   if(!controlled?.npc_proxy&&await routeConsentMessage({db,message,text:playerText,characterId:controlled?.character_id,
     deliver:text=>sendPrivate(message.guild,message.author.id,text,session.id,controlled?.character_id)})) return;
   if(!controlled?.npc_proxy&&await routeRollMessage({db,message,text:playerText,characterId:controlled?.character_id,
     deliver:text=>sendPrivate(message.guild,message.author.id,text,session.id,controlled?.character_id),
     sendAmendment:(user,text,sid,char)=>sendPrivate(message.guild,user,text,sid,char)})) return;
   captureDeclaration(db,message.guild.id,message.author.id,controlled?.npc_proxy?null:controlled?.character_id,message.id,playerText,{privateScene:true});
-  captureContextSource(db,message.guild.id,message.author.id,controlled?.npc_proxy?null:controlled?.character_id,message.id,playerText,{privateScene:true});
+  captureContextSource(db,message.guild.id,message.author.id,controlled?.character_id,message.id,playerText,{privateScene:true});
   captureDialogue(db,message.guild.id,message.author.id,controlled?.npc_proxy?null:controlled?.character_id,message.id,playerText,{privateScene:true});
   captureArcCandidate(db,message.guild.id,message.author.id,controlled?.npc_proxy?null:controlled?.character_id,message.id,playerText);
-  db.addMessage({guildId:message.guild.id,sessionId:session.id,messageId:message.id,userId:message.author.id,speakerName:speaker,characterId:controlled?.character_id||null,visibility:vis,subjectUserId:vis==="player"?message.author.id:null,subjectCharacterId:vis==="character"?controlled.character_id:null,content:playerText});
+  db.addMessage({guildId:message.guild.id,sessionId:session.id,messageId:message.id,userId:message.author.id,speakerName:speaker,characterId:controlled?.character_id||null,visibility:vis,subjectUserId:vis==="player"?message.author.id:null,subjectCharacterId:vis==="character"?conversationId:null,content:playerText});
   if(!controlled?.npc_proxy&&await routeSceneEntryMessage({db,message,characterId:controlled?.character_id,text:playerText,privateScene:true,
     deliver:text=>sendPrivate(message.guild,message.author.id,text,session.id,controlled?.character_id)})) return;
 
@@ -345,7 +348,7 @@ async function processPrivateTurn(message,directMention){
   if(result.narration?.trim()){
     const sent=await outputStep(outputErrors,{guild:message.guild,sessionId:session.id,context:"private-narration"},async()=>{
       for(const c of splitDiscordText(result.narration)) await message.channel.send(c);
-      db.addMessage({guildId:message.guild.id,sessionId:session.id,userId:client.user.id,speakerName:"Veilkeeper",visibility:vis,subjectUserId:vis==="player"?message.author.id:null,subjectCharacterId:vis==="character"?controlled.character_id:null,content:result.narration});
+      db.addMessage({guildId:message.guild.id,sessionId:session.id,userId:client.user.id,speakerName:"Veilkeeper",visibility:vis,subjectUserId:vis==="player"?message.author.id:null,subjectCharacterId:vis==="character"?conversationId:null,content:result.narration});
       return true;
     });
     if(!sent) console.warn("Private narration delivery failed after state commit.");
@@ -360,7 +363,7 @@ async function processPrivateTurn(message,directMention){
   for(const pm of privateMessages.deliver){
     const targetA=db.activeAssignment(session.id,pm.discord_user_id);
     const targetNpc=db.npcProxyAssignments(session.id,pm.discord_user_id);
-    const privateKnowledgeId=targetA?.character_id||(targetNpc.length===1?targetNpc[0].knowledge_id:null);
+    const privateKnowledgeId=pm.discord_user_id===message.author.id?conversationId:targetA?.character_id||(targetNpc.length===1?targetNpc[0].knowledge_id:null);
     await outputStep(outputErrors,{guild:message.guild,sessionId:session.id,context:`private-message:${pm.discord_user_id}`},()=>sendPrivate(message.guild,pm.discord_user_id,`**Veilkeeper — private:**\n${pm.content}`,session.id,privateKnowledgeId));
   }
   await outputStep(outputErrors,{guild:message.guild,sessionId:session.id,context:"private-turn-audit"},async()=>db.audit(message.guild.id,session.id,"ai","gm","private_turn",{actor:message.author.id,events:result.events,state_review:result.state_review}));
@@ -393,7 +396,7 @@ async function processPartyTurn(message,directMention){
   if(pendingAtTurnStart) await runPendingDirectorPass(message.guild,session);
   captureArcCandidate(db,message.guild.id,message.author.id,controlled?.npc_proxy?null:controlled?.character_id,message.id,playerText);
   captureDeclaration(db,message.guild.id,message.author.id,controlled?.npc_proxy?null:controlled?.character_id,message.id,playerText);
-  captureContextSource(db,message.guild.id,message.author.id,controlled?.npc_proxy?null:controlled?.character_id,message.id,playerText);
+  captureContextSource(db,message.guild.id,message.author.id,controlled?.character_id,message.id,playerText);
   db.addMessage({guildId:message.guild.id,sessionId:session.id,messageId:message.id,userId:message.author.id,speakerName:speaker,characterId:controlled?.character_id||null,visibility:"party",content:playerText});
   captureDialogue(db,message.guild.id,message.author.id,controlled?.npc_proxy?null:controlled?.character_id,message.id,playerText);
   if(!controlled?.npc_proxy&&await routeSceneEntryMessage({db,message,characterId:controlled?.character_id,text:playerText,
@@ -401,7 +404,7 @@ async function processPartyTurn(message,directMention){
 
   let should=false;
   try{
-    should=await gm.shouldRespond({guildId:message.guild.id,message,mode:campaign.response_mode||config.defaultResponseMode,directMention});
+    should=await gm.shouldRespond({guildId:message.guild.id,message,messageText:playerText,actorAssignment:controlled,mode:campaign.response_mode||config.defaultResponseMode,directMention});
   }catch(err){
     console.error("router",err); should=directMention;
   }

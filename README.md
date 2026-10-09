@@ -1,8 +1,8 @@
-# VEILED CITY MULTIPLAYER DISCORD ENGINE v9.4.0
+# VEILED CITY MULTIPLAYER DISCORD ENGINE v9.5.0
 
 ## Current Version
 
-**9.4.0** — Veilkeeper, a stateful Discord AI GM for multiplayer Veiled City
+**9.5.0** — Veilkeeper, a stateful Discord AI GM for multiplayer Veiled City
 campaigns using Daggerheart. The version is maintained in
 [bot/package.json](bot/package.json).
 
@@ -27,6 +27,12 @@ SQLite preserves characters, attendance, discoveries, relationships, NPC memorie
 goals, clocks, canon and campaign history between sessions. NPC beliefs remain
 subjective: rumors, mistaken memories and incomplete evidence are not world truth.
 Human GMs retain oversight, review, pause and recovery controls.
+
+Ordinary fictional understanding is separate from native consequential state changes.
+[Scope-drift fixes and operating commands](docs/NATURAL_LANGUAGE_SCOPE_DRIFT.md)
+document that boundary; [database usage audit](docs/DATABASE_USAGE_AUDIT.md)
+also inventories mechanics, identity, configuration, workflows and operational data
+stored alongside campaign memory.
 
 ## Scope
 

@@ -16,7 +16,7 @@ export function sessionBrief(db,guild,{mode="shared",user="",gm=false}={}){
   const ended=db.latestEndedSession(guild),session=db.getActiveSession(guild);
   const packet={mode,visibility:mode==="gm"?"gm":pc?"character":"party",character_id:pc?.id||null,
     session_id:session?.id||ended?.id||null,read_only:true,fictional_minute:db.getSimulationClock(guild).minute,
-    saved_recap:ended?.recap?{session_id:ended.id,text:ended.recap,authority:"previously saved player-safe recap, not a new ruling"}:null,
+    saved_recap:ended?.recap?{session_id:ended.id,text:ended.recap,epistemic:{kind:"testimony",perspective:"narrator summary; legacy originals preserved",source_refs:[]},authority:"previously saved player-safe recap, not a new ruling or independent evidence"}:null,
     facts,events,personal:pc?personalInbox(db,guild,user):[],
     limits:"Bounded persisted records only; omissions are not absence. No new facts, invented quotes, PC intentions, time advance, resources or provider requests."};
   if(mode==="gm") Object.assign(packet,{

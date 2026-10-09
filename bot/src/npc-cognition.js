@@ -284,6 +284,9 @@ export function seedNpcCognition({db,content,guildId,actorId="system",incrementa
     }
 
     for(const rel of db.listRelationships(guildId,{includeGM:true})){
+      // Bulk import must not launder an old model interpretation into a new NPC
+      // profile or trusted seeded memory. Preserve the original for GM review.
+      if(rel.epistemic?.kind==="hypothesis"||rel.evidence_active===false)continue;
       for(const side of ["from","to"]){
         if(rel[`${side}_type`]!=="npc") continue;
         const raw=rel[`${side}_label`]||rel[`${side}_key`];

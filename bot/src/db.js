@@ -6,13 +6,15 @@
  * one reviewable layer.
  */
 import fs from "node:fs";
-import { updateRelationshipDimensions, relationshipPairKey } from "./relationship-state.js";
+import { updateRelationshipDimensions, relationshipPairKey, relationshipProjection } from "./relationship-state.js";
 import path from "node:path";
 import { randomUUID } from "node:crypto";
 import { DatabaseSync } from "node:sqlite";
 import { processCityDue } from "./city-calendar.js";
 import { normalizeNpcKey } from "./npc-cognition.js";
 import { archiveScenePresence } from "./scene-continuity.js";
+import { relationshipEvidence } from "./presentation-evidence.js";
+import { activeEvidence, evidenceType } from "./epistemic.js";
 
 /** SQLite repository facade and transaction boundary for campaign state. */
 export class VeiledDB {
@@ -58,6 +60,9 @@ export class VeiledDB {
     add("campaigns","director_paused","INTEGER NOT NULL DEFAULT 0");
     add("facts","archived","INTEGER NOT NULL DEFAULT 0");
     add("facts","provenance_json","TEXT NOT NULL DEFAULT '{}'");
+    add("relationships","provenance_json","TEXT NOT NULL DEFAULT '{}'");
+    add("session_characters","control_revision","TEXT NOT NULL DEFAULT ''");
+    add("npc_proxies","control_revision","TEXT NOT NULL DEFAULT ''");
     add("facts","confidence","INTEGER NOT NULL DEFAULT 100");
     add("encounters","combat_state_json",`TEXT NOT NULL DEFAULT '{"spotlight":{"counts":{},"last_character_id":null}}'`);
     add("encounters","pc_start_state_json",`TEXT NOT NULL DEFAULT '[]'`);
@@ -100,6 +105,31 @@ export class VeiledDB {
 
   close() { this.db.close(); }
   schemaVersion(){ return this.db.prepare("PRAGMA user_version").get().user_version; }
+  scopedFactSearch(guild,user,character,plan,{limit=50}={}){
+    const tests=plan.terms.map(()=>"instr(lower(content||' '||COALESCE(fact_key,'')),?)>0");
+    const where=tests.length?`AND (${tests.join(" OR ")})`:"";
+    const base=`FROM facts WHERE guild_id=? AND archived=0 AND
+      (visibility IN ('public','party') OR visibility='player' AND subject_user_id=? OR visibility='character' AND subject_character_id=?) ${where}`;
+    const args=[guild,user,plan.owner?character:plan.contextId,...plan.terms];
+    const total=this.db.prepare(`SELECT COUNT(*) count ${base}`).get(...args).count;
+    const rows=this.db.prepare(`SELECT * ${base} ORDER BY created_at DESC,id LIMIT ?`).all(...args,Math.min(50,limit));
+    return {rows,omitted:Math.max(0,total-rows.length)};
+  }
+  privateCausalMarker(guild){
+    const tables=["world_events","city_records","mutation_ledger"];
+    return {markers:Object.fromEntries(tables.map(table=>[table,this.db.prepare(`SELECT COALESCE(MAX(rowid),0) n FROM ${table}`).get().n])),
+      publicBefore:Object.fromEntries(tables.slice(0,2).map(table=>[table,JSON.stringify(this.db.prepare(
+        `SELECT rowid,* FROM ${table} WHERE guild_id=? AND visibility IN ('public','party') ORDER BY rowid`).all(guild))]))};
+  }
+  retainPrivateCausality(guild,{markers,publicBefore}){
+    for(const table of ["world_events","city_records"]){
+      const existing=this.db.prepare(`SELECT rowid,* FROM ${table} WHERE guild_id=? AND rowid<=? AND visibility IN ('public','party') ORDER BY rowid`).all(guild,markers[table]);
+      if(JSON.stringify(existing)!==publicBefore[table])throw new Error("Private causal operation cannot rewrite existing public annotations.");
+      this.db.prepare(`UPDATE ${table} SET visibility='gm',subject_key=NULL WHERE guild_id=? AND rowid>? AND visibility IN ('public','party')`).run(guild,markers[table]);
+    }
+    this.db.prepare("UPDATE mutation_ledger SET visibility='gm' WHERE guild_id=? AND rowid>?").run(guild,markers.mutation_ledger);
+  }
+  presentationSession(guild,id){return this.db.prepare("SELECT * FROM sessions WHERE id=? AND guild_id=?").get(id,guild);}
   cityRecordCounts(guildId){
     return this.db.prepare("SELECT kind,status,COUNT(*) count FROM city_records WHERE guild_id=? GROUP BY kind,status ORDER BY kind,status LIMIT 200").all(guildId);
   }
@@ -381,7 +411,7 @@ export class VeiledDB {
 
   getSimulationEntity(guildId,type,key){
     const row=this.db.prepare("SELECT * FROM simulation_entities WHERE guild_id=? AND entity_type=? AND entity_key=?").get(guildId,type,key);
-    return row?{...row,state:JSON.parse(row.state_json)}:null;
+    return row?{...row,state:type==="relationship"?relationshipProjection(JSON.parse(row.state_json)):JSON.parse(row.state_json)}:null;
   }
 
   setSimulationEntity(guildId,type,key,state){
@@ -392,7 +422,7 @@ export class VeiledDB {
 
   listSimulationEntities(guildId,type=""){
     return this.db.prepare("SELECT * FROM simulation_entities WHERE guild_id=? AND (?='' OR entity_type=?) ORDER BY entity_key")
-      .all(guildId,type,type).map(row=>({...row,state:JSON.parse(row.state_json)}));
+      .all(guildId,type,type).map(row=>({...row,state:row.entity_type==="relationship"?relationshipProjection(JSON.parse(row.state_json)):JSON.parse(row.state_json)}));
   }
   densityActorSelection(guildId,query=""){
     const npcs=this.db.prepare(`WITH candidates AS (
@@ -419,7 +449,7 @@ export class VeiledDB {
   actorSimulationRelations(guildId,entity){
     return this.db.prepare(`SELECT state_json FROM simulation_entities WHERE guild_id=? AND entity_type='relationship'
       AND (json_extract(state_json,'$.from')=? OR json_extract(state_json,'$.to')=?) ORDER BY entity_key LIMIT 16`)
-      .all(guildId,entity,entity).map(row=>JSON.parse(row.state_json));
+      .all(guildId,entity,entity).map(row=>relationshipProjection(JSON.parse(row.state_json)));
   }
 
   putSimulationRecord(guildId,{id=randomUUID(),kind,entityKey="",status="active",dueTick=null,dueMinute=null,data={}}){
@@ -838,6 +868,8 @@ export class VeiledDB {
       DO UPDATE SET assignment_role=excluded.assignment_role,control_policy=excluded.control_policy,
         proxy_user_id=excluded.proxy_user_id,joined_at=CURRENT_TIMESTAMP,left_at=NULL
     `).run(sessionId,userId,characterId,role,controlPolicy,proxyUserId);
+    this.db.prepare("UPDATE session_characters SET control_revision=? WHERE session_id=? AND discord_user_id=? AND character_id=?")
+      .run(randomUUID(),sessionId,userId,characterId);
   }
 
   activeAssignment(sessionId,userId) {
@@ -894,6 +926,7 @@ export class VeiledDB {
         activated_at=CASE WHEN excluded.status='active' THEN CURRENT_TIMESTAMP ELSE npc_proxies.activated_at END,
         released_at=NULL,updated_at=CURRENT_TIMESTAMP
     `).run(id,guildId,sessionId,npcKey,name,userId,controlLevel,status,JSON.stringify(playerPacket||{}),gmNote||"",status);
+    this.db.prepare("UPDATE npc_proxies SET control_revision=? WHERE id=?").run(randomUUID(),id);
     return this.getNpcProxyById(id) || this.db.prepare("SELECT * FROM npc_proxies WHERE session_id=? AND npc_key=?").get(sessionId,npcKey);
   }
 
@@ -923,7 +956,8 @@ export class VeiledDB {
     if(!r) throw new Error("NPC proxy assignment not found.");
     if(userId && r.discord_user_id!==userId) throw new Error("This NPC proxy was offered to another player.");
     if(!["offered","active"].includes(r.status)) throw new Error(`NPC proxy cannot be activated from status ${r.status}.`);
-    this.db.prepare("UPDATE npc_proxies SET status='active',activated_at=COALESCE(activated_at,CURRENT_TIMESTAMP),released_at=NULL,updated_at=CURRENT_TIMESTAMP WHERE id=?").run(id);
+    if(r.status==="active")return r;
+    this.db.prepare("UPDATE npc_proxies SET status='active',control_revision=?,activated_at=COALESCE(activated_at,CURRENT_TIMESTAMP),released_at=NULL,updated_at=CURRENT_TIMESTAMP WHERE id=?").run(randomUUID(),id);
     return this.getNpcProxyById(id);
   }
 
@@ -1096,7 +1130,8 @@ export class VeiledDB {
        )
        ORDER BY created_at DESC LIMIT ?
     `;
-    return includeGM?this.db.prepare(sql).all(guildId,limit):this.db.prepare(sql).all(guildId,userId,characterId||"",limit);
+    const rows=includeGM?this.db.prepare(sql).all(guildId,limit):this.db.prepare(sql).all(guildId,userId,characterId||"",limit);
+    return rows.map(row=>({...row,epistemic:evidenceType(row),evidence_active:activeEvidence(this,guildId,row.id)}));
   }
 
   // Hard player-safe fact boundary. This method intentionally has no includeGM
@@ -1725,7 +1760,7 @@ export class VeiledDB {
     return `${type}:${slug}`;
   }
 
-  upsertRelationship(guildId,{fromType,fromKey,fromLabel="",toType,toKey,toLabel="",relationshipType="contact",score=0,visibility="party",note="",source="gm",sourceCharacterId=null}={}){
+  upsertRelationship(guildId,{fromType,fromKey,fromLabel="",toType,toKey,toLabel="",relationshipType="contact",score=0,visibility="party",note="",source="gm",sourceCharacterId=null,provenance=null}={}){
     return this.transaction(()=>{
     const allowedType=new Set(["character","npc","faction","location","entity","obligation"]);
     const allowedRel=new Set(["trust","debt","fear","hostility","affection","respect","authority","obligation","family","ally","rival","contact","important_person","home","suspicion","protective","other"]);
@@ -1739,16 +1774,19 @@ export class VeiledDB {
       VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?) ON CONFLICT(guild_id,from_type,from_key,to_type,to_key,relationship_type) DO UPDATE SET
       from_label=excluded.from_label,to_label=excluded.to_label,score=excluded.score,visibility=excluded.visibility,note=excluded.note,source=excluded.source,source_character_id=COALESCE(excluded.source_character_id,relationships.source_character_id),updated_at=CURRENT_TIMESTAMP`)
       .run(id,guildId,fromType,fk,fromLabel||fk,toType,tk,toLabel||tk,relationshipType,Math.max(-5,Math.min(5,Number(score)||0)),visibility,note||"",source||"gm",sourceCharacterId||null);
+    if(provenance)this.db.prepare("UPDATE relationships SET provenance_json=? WHERE id=?").run(JSON.stringify(provenance),id);
     const row=this.getRelationship(id);
     updateRelationshipDimensions(this,guildId,row);
     return row;
     });
   }
 
-  getRelationship(id){ return this.db.prepare("SELECT * FROM relationships WHERE id=?").get(id); }
+  getRelationship(id){ const row=this.db.prepare("SELECT * FROM relationships WHERE id=?").get(id);return row?{...row,epistemic:relationshipEvidence(row),
+    evidence_active:relationshipEvidence(row).source_refs.every(ref=>activeEvidence(this,row.guild_id,ref))}:row; }
   listRelationships(guildId,{includeGM=false,characterId=null,userId=null}={}){
     const rows=this.db.prepare("SELECT * FROM relationships WHERE guild_id=? ORDER BY updated_at DESC").all(guildId);
-    return rows.filter(r=>includeGM||["public","party"].includes(r.visibility)||(r.visibility==="character"&&characterId&&(r.from_key===characterId||r.to_key===characterId||r.source_character_id===characterId))||(r.visibility==="player"&&userId&&r.note.includes(`player:${userId}`)));
+    return rows.filter(r=>includeGM||["public","party"].includes(r.visibility)||(r.visibility==="character"&&characterId&&(r.from_key===characterId||r.to_key===characterId||r.source_character_id===characterId))||(r.visibility==="player"&&userId&&r.note.includes(`player:${userId}`)))
+      .map(row=>this.getRelationship(row.id));
   }
   adjustRelationship(id,delta){
     const r=this.getRelationship(id); if(!r) throw new Error("Relationship not found.");

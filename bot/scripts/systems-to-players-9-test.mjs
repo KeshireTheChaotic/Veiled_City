@@ -62,8 +62,8 @@ try{
   await assert.rejects(()=>handleStoryCommand(fakeInteraction({gm:false,sub:"ai-inbox"}),{db}),/GM\/admin/);
   assert.equal(db.db.prepare("SELECT total_changes() n").get().n,writes);assert.deepEqual(db.getSimulationClock(guild),clock);
   assert(!db.getOperationReceipt(guild,modern.id));
-  assert.throws(()=>discoverPersonal(db,guild,"owner",{mode:"evidence",character_id:foreign.id}),/owned/);
-  assert.throws(()=>discoverPersonal(db,"other","owner",{mode:"evidence"}),/owned/);
+  assert.throws(()=>discoverPersonal(db,guild,"owner",{mode:"evidence",character_id:foreign.id}),/controlled role/);
+  assert.throws(()=>discoverPersonal(db,"other","owner",{mode:"evidence"}),/Active session|controlled role/);
   db.assignCharacter(session.id,"owner",alt.id);
   for(const mode of ["evidence","commitments","organizations"]) assert(discoverPersonal(db,guild,"owner",{mode}).unknown);
   db.assignCharacter(session.id,"owner",pc.id);db.setPresence(session.id,"owner","absent");assert.throws(()=>discoverPersonal(db,guild,"owner",{mode:"evidence"}),/attendance/);

@@ -5,6 +5,7 @@ import {
 } from "discord.js";
 import { dualityRoll, parseDice } from "./dice.js";
 import { establishFact } from "./epistemic.js";
+import { indexWorldEvent } from "./city-calendar.js";
 import { prepareRollRequest, pendingRollRequests, ownedRollRequest, formatRollRequest, publishRollAmendment } from "./roll-requests.js";
 import { contributeRoll, adjudicateRollSource, applyRollOutcome } from "./roll-collaboration.js";
 import { publishJournal, postJournalEntry, publishEventResults, postGmLog, postStateError, postPrivateRelay, syncConfiguredSurfaces, postPlayMessage, sendPlayerPrivate, deliverHandout } from "./publishing.js";
@@ -633,7 +634,8 @@ Initial phase: ${s.assembly_phase}`});
       db.snapshotCampaign(interaction.guildId,{label:`Pre-end Session ${activeBefore?.session_number||""}`.trim(),reason:"Automatic snapshot before session end",createdBy:interaction.user.id});
       const recap=await gm.summarizeSession(interaction.guildId);
       const s=db.endSession(interaction.guildId,recap);
-      db.addFact(interaction.guildId,{category:"recap",key:`session-${s.session_number}-recap`,content:recap,visibility:"party",sessionId:s.id,source:"system"});
+      db.addFact(interaction.guildId,{category:"recap",key:`session-${s.session_number}-recap`,content:recap,visibility:"party",sessionId:s.id,source:"system",
+        provenance:{epistemic:{kind:"testimony",perspective:"narrator recap; consult original sources, not new truth",source_refs:[]},session_id:s.id,authority:"Non-authoritative synthesis; original messages/facts retained"}});
       await publishJournal({db,guild:interaction.guild,session:s,recap});
       await postGmLog({db,guild:interaction.guild,sessionId:s.id,title:`Session ${s.session_number} ended`,details:"Player-safe recap generated and campaign state closed."});
       db.snapshotCampaign(interaction.guildId,{label:`Post-session ${s.session_number}`,reason:"Automatic snapshot after session end",createdBy:interaction.user.id});
@@ -1253,7 +1255,17 @@ GM notes: ${a.draft.gm_notes}`:""}`.slice(0,1950):"No aftermath draft exists for
         }else{
           await interaction.deferReply({ephemeral:true});
           const draft=await gm.generateHandout({guildId:interaction.guildId,userId:targetUser,characterId:targetChar?.id||null,title,kind:interaction.options.getString("kind",true),facts:factList(interaction.options.getString("facts",true)),authority,visibility,caseKey:interaction.options.getString("case")||"",npcKey:interaction.options.getString("npc")||"",locationKey:interaction.options.getString("location")||""});
-          row=db.createHandout(interaction.guildId,{sessionId:db.getActiveSession(interaction.guildId)?.id||null,title:draft.title,kind:draft.kind,authority:draft.authority,visibility:draft.visibility,subjectUserId:draft.target_user_id||null,subjectCharacterId:draft.target_character_id||null,content:draft.player_visible_text,canonicalFacts:draft.canonical_facts,caseKey:draft.case_key,npcKey:draft.npc_key,locationKey:draft.location_key,source:"ai_handout",metadata:{generated:true}});
+          row=db.transaction(()=>{
+            const source=indexWorldEvent(db,interaction.guildId,{key:`gm-artifact-input:${interaction.id}`,kind:"gm_artifact_source",
+              title:"Authenticated GM-supplied artifact facts; generated presentation is not truth",source_id:interaction.user.id,
+              visibility,subject_key:targetChar?.id||targetUser||undefined,details:{canonical_facts:draft.canonical_facts,declared_by:interaction.user.id}},interaction.user.id);
+            return db.createHandout(interaction.guildId,{sessionId:db.getActiveSession(interaction.guildId)?.id||null,title:draft.title,
+              kind:draft.kind,authority:draft.authority,visibility:draft.visibility,subjectUserId:draft.target_user_id||null,
+              subjectCharacterId:draft.target_character_id||null,content:draft.player_visible_text,canonicalFacts:draft.canonical_facts,
+              caseKey:draft.case_key,npcKey:draft.npc_key,locationKey:draft.location_key,source:"ai_handout",
+              metadata:{generated:true,epistemic:{kind:"testimony",source_refs:[source.event_key],perspective:`gm:${interaction.user.id}`},
+                authority:"Only exact human-supplied canonical_facts authorized; generated presentation is not additional truth"}});
+          });
         }
         const delivery=await deliverHandout({db,guild:interaction.guild,handout:row,format:"markdown"});
         const msg=`Created **${row.title}** (\`${row.id.slice(0,8)}\`) and ${delivery.ok?`delivered via ${delivery.via}`:"stored it; delivery was unavailable"}.`;

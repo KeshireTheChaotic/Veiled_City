@@ -1,7 +1,100 @@
 # Natural-language scope drift — follow-up review
 
-Reviewed after the narrative-inference implementation, 2026-10-09. This is an
-evidence-backed backlog, not additional features implemented by this document.
+Reviewed after the narrative-inference implementation, 2026-10-09. The original
+findings below are retained as the rationale. The follow-up implementation and its
+bounded acceptance criteria are recorded here; this is not a claim of unrestricted
+live-model language reliability.
+
+## Follow-up implementation (9.5.0)
+
+| Finding | Implemented boundary | Verification |
+| --- | --- | --- |
+| D1 | Existing gameplay response can extract exact source-span-backed action, entry and speech candidates. Fragments and multiword/unquoted dialogue no longer require the legacy parser. Native listeners and owned entry policy still decide durable consequences. | Fragment entry stages the same native record; preview rolls back; native entry commits once; actual listener hears exact words; OOC, hypothetical, quoted/report and invented-span negatives. |
+| D2 | Read-only scoped query planning expands ordinary retrieval vocabulary and authenticated visible aliases; SQL authorizes before matching/limits. Recall variants use the no-model/no-director path. Facts, events and artifacts retain source/coverage information. | Older diner clue found by cafe question behind 170 hidden records; hidden solution excluded; SQLite total_changes unchanged. |
+| D3 | Revalidated session/control principal separates owner, PC proxy and NPC proxy. Proxy conversation uses a controller/role-specific context namespace, not owner character-private memory. Role selection reaches the router; private transcript storage uses that namespace. | PC and NPC proxy interpretation, owner-private exclusion, revoked/released role denial. Owner-only consent/personal workflows remain owner-only. |
+| D4 | Separate `private_allow` grants audited native world operations. Private turn audience stays private; causal annotations and receipts remain GM-private. Native actor/source/revision/budget/lifecycle checks still run. | Explicit private NPC-goal reaction, replay once, undelegated denial; separately reviewed public observation excludes private cause. |
+| D5 | Source-linked typed referents are queried by matching terms before limits, with recent focus as a fallback. A second-stage scoped fact query follows selected aliases/referents inside a separate whole-record 4,000-character budget. | Older implied-place retrieval, scoped references, source retraction, explicit omissions and existing prompt-budget tests. |
+| D6 | An attended controlled actor's indirect messages reach the existing addressee/world-reaction router instead of being rejected by action grammar or pacing lexicon. No second interpretation call. Mention-only and OOC silence stay native gates. | Synthetic indirect action=true / player banter=false / OOC=false / mention=false matrix; exactly two router requests for the two eligible inputs. |
+| D7 | Versioned application policy is projected into every structured request's instructions and the recap request. Constitution and Rules Desk agree on saved rulings and rules hierarchy; model dice permission removed. | Actual assembled request instructions and constitution checked; native RNG/regression suites retained. |
+| D8 | Relationship/artifact drafts carry typed perspective and ancestry. PC-outgoing feelings and any debt/obligation score change become nonbinding interpretation records, not authoritative graph changes. Unsupported canonical artifact facts remain proposed metadata and presentation is illustrative. Recaps are non-authoritative synthesis. | Nonbinding PC score, source-backed and unsupported artifact cases, original-preserving review, restart/retraction, recap not objective evidence; exports/context retain epistemic labels. |
+
+Implementation: `authored-candidates.js`, `conversation-principal.js`,
+`scoped-query.js`, `authority-policy.js`, `presentation-evidence.js`, and the existing
+GM/state/native domain boundaries. Acceptance: `bot/scripts/natural-language-scope-test.mjs`
+plus the required offline regression gate. Tests use temporary SQLite databases and
+fake model responses; no Discord or paid provider requests.
+
+### Operations and compatibility
+
+Existing flags remain opt-in. Natural interpretation needs `natural_language`;
+durable speech also needs `dialogue_history` and `scene_continuity`; recall needs
+`discovery`; native entry needs `scene_continuity`, a saved adjacency policy and
+explicit `scene.enter` delegation. No live campaign flags were changed by this work.
+
+`/vc-story delegation json:` retains the existing fields and accepts optional
+`private_allow`, a subset of `allow`. Audited private world domains are `goal`,
+`consequence`, `scene`, `group`, `strategy`, and `encounter`. Other domains retain
+their existing private owner-safe operations or review requirements. Example:
+
+```text
+/vc-story delegation json:{"mode":"routine_delegated","allow":["goal.reprioritize"],"private_allow":["goal.reprioritize"],"max_operations":2,"max_cost":0,"expires_minute":1000}
+```
+
+Use a fictional expiry later than the campaign's current minute. This replaces the
+saved policy, not merges with it: include other operations you intend to retain.
+Existing policies have no newly delegated private world authority by default.
+Private operations cannot rewrite existing public annotations. World state can
+change while its private causal history remains private. A GM can independently
+establish an observable party projection, without copying private causal text:
+
+```text
+/vc-story scene json:{"op":"project-effect","key":"<accepted private intent receipt>","expected_revision":"<current receipt fingerprint>","projection_key":"unique-observation","observation":"An independently reviewed observable effect."}
+```
+
+This writes an observation and GM-only causal linkage; it does not itself send a
+Discord message. Normal later narration/discovery still validates audience knowledge.
+
+Original-preserving presentation reviews use the existing GM-only memory command:
+
+First inspect the target and obtain its current fingerprint through the read-only
+existing scene-view command (GM-private JSON attachment):
+
+```text
+/vc-story scene-view json:{"op":"presentations","kind":"handout","key":"<full ID>"}
+```
+
+Omit `key` to list up to 12 recent targets. The same presentation kinds work for
+inspection and review. Inspection writes no receipts or campaign data.
+
+```text
+/vc-story memory json:{"op":"review-presentation","kind":"handout","key":"<full ID>","expected_revision":"<current target fingerprint>","decision":"reject","reason":"Decorative inference is not proof.","source_refs":[]}
+```
+
+Kinds: `handout`, `relationship`, `relationship_interpretation`, `recap` (session ID).
+Decisions: `approve` / `reject`. Reviews are additive annotations, not content rewrites,
+canon promotion, owner consent or a PC-emotion override. GM context includes review
+history and pending relationship interpretations. Existing originals remain intact.
+The relationship provenance column is added idempotently on DB startup; legacy
+AI records receive conservative read-time labels, not a silent historical rewrite.
+Control grants also gain durable revision nonces, so revocation and regrant within
+the same second cannot revive an old proxy context. Inferred/retracted relationship
+records are excluded from trusted NPC cognition bootstrap.
+
+### Deliberate limits, not unresolved command gates
+
+Semantic candidates and router judgments still depend on the model; exact source
+spans prove authorship, not universally correct semantic classification. Native
+guardrails and bounded quotation/hypothetical negatives are not a universal parser.
+Ambiguous entry targets remain understood context until separately resolved; they
+do not become movement. Proxies do not gain owner-private sheets/memories or owner
+consent merely by gaining interpretation. Search is bounded alias/vocabulary
+expansion, not embeddings or an exhaustive semantic index; omissions are explicit.
+Public projection remains a human-reviewed observation, not an automatic disclosure.
+No paid live quality evaluation was authorized. Measure unnecessary clarification
+separately from false-authority acceptance before claiming live-model quality.
+
+See [database usage audit](DATABASE_USAGE_AUDIT.md) for non-memory persistence and
+remaining adjacent interpretation/authority risks.
 
 ## Baseline and interpretation
 
@@ -19,7 +112,7 @@ Consent, dice, access, source checks and ownership are intentional safety bounda
 not restrictions to remove. Understanding a request and authorizing it must remain
 different operations.
 
-## Remaining instances
+## Original findings (retained; addressed above)
 
 ### D1 — Durable speech/actions still depend on command-shaped language (P1)
 
@@ -126,7 +219,7 @@ debt and agreement must not follow from a score or NPC interpretation. Canonical
 artifact details need authorized sources; presentation can remain creative without
 creating secret truth. Preserve originals and use reviewed corrections, not rewrites.
 
-## Proposed follow-up phases
+## Original follow-up phases (completed as bounded native changes)
 
 1. Align policy instructions (D7) and add source-span action/speech candidates (D1).
 2. Improve read-only scoped discovery, old references and silence routing (D2/D5/D6).
@@ -136,5 +229,5 @@ creating secret truth. Preserve originals and use reviewed corrections, not rewr
 
 In every phase, measure unnecessary clarification separately from false authority
 acceptance. Require synthetic integration, restart/retraction/stale/replay and atomic
-publication tests. These follow-ups are documented only; they were not silently
-implemented or enabled in a live campaign.
+publication tests. Implementation is described above. No optional feature or new
+delegation was silently enabled in a live campaign.
