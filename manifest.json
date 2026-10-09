@@ -61,8 +61,8 @@
     },
     {
       "path": "bot/scripts/autonomous-world-test.mjs",
-      "size_bytes": 12628,
-      "sha256": "3ef4cd8dfaaf8064195abf54cd215ccbaf385c7ba76c3d72dc7c6c31a3a81cb0"
+      "size_bytes": 13209,
+      "sha256": "2bc0c241a2963fdd9cca407c9bc27288ecbb6e2b996758350364af399d48c266"
     },
     {
       "path": "bot/scripts/check-source.mjs",
@@ -481,8 +481,8 @@
     },
     {
       "path": "bot/src/autonomous-world.js",
-      "size_bytes": 28895,
-      "sha256": "00a466a15ca10ec8e49eda00bf7f200c9b20ece217cf09b8b892cd472bf24c67"
+      "size_bytes": 29247,
+      "sha256": "15b3615717b474a4c0f19bef09df8fd239ccc84908bef746db105aacd0e7136e"
     },
     {
       "path": "bot/src/character-export.js",
@@ -666,8 +666,8 @@
     },
     {
       "path": "bot/src/gm.js",
-      "size_bytes": 85848,
-      "sha256": "b4525d40c0fc97e5034cc7cf056f5ff3dc2dbd3400091124fdaddcf6d1a43508"
+      "size_bytes": 87180,
+      "sha256": "2076e3bf3f6e987a31f7700e8eea0418ae08620fad6433b13ee603c6d592ec63"
     },
     {
       "path": "bot/src/handout.js",

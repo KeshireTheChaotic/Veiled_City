@@ -99,6 +99,13 @@ try{
   assert.throws(()=>applyAutonomousWorld(db,guild,{world_additions:[location("absent")]},scope,{messageId:"absent"}),/attendance/);db.setPresence(session.id,"owner","present");
   const wrongShape=input("schema","I look around.",{world_additions:[{...location("bad-schema","Bad Schema","quiet-shop"),money:100}]});
   assert.throws(()=>applyAuthoritativeMutation(db,wrongShape),/Closed bounded/);assert.equal(db.getSimulationEntity(guild,"location","bad-schema"),null,"R16");
+  for(const [id,addition] of [["blank-name",location("blank-name","","quiet-shop")],
+    ["blank-summary",{...location("blank-summary","Blank Summary","quiet-shop"),summary:""}],
+    ["non-normalized-key",location("not normalized","Not Normalized","quiet-shop")]]){
+    assert.throws(()=>applyAuthoritativeMutation(db,input(id,"I look around.",{world_additions:[addition]})),/Closed bounded/,
+      "Malformed optional world additions are rejected at the closed schema boundary before any write.");
+    assert.equal(db.getSimulationEntity(guild,"location",addition.key),null);
+  }
   const unsourced=input("atomic","I look around.",{world_additions:[location("rollback","Rollback","quiet-shop")],
     scene_actions:[action("move","rollback","I look around.")]});
   assert.throws(()=>applyAuthoritativeMutation(db,unsourced),/not authorization/);assert.equal(db.getSimulationEntity(guild,"location","rollback"),null,"Atomic rollback");

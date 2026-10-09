@@ -15,7 +15,8 @@ const hash=value=>createHash("sha256").update(JSON.stringify(value)).digest("hex
 export const AUTONOMOUS_WORLD_VERSION=1;
 const object=properties=>({type:"object",additionalProperties:false,properties,required:Object.keys(properties)});
 const text=maxLength=>({type:"string",maxLength});
-const common={key:text(100),name:text(160),summary:text(600),visibility:{type:"string",enum:["party","character","gm"]}};
+const nonEmptyText=maxLength=>({type:"string",minLength:1,maxLength});
+const common={key:{...nonEmptyText(100),pattern:"^[a-z0-9]+(?:-[a-z0-9]+)*$"},name:nonEmptyText(160),summary:nonEmptyText(600),visibility:{type:"string",enum:["party","character","gm"]}};
 export const worldAdditionsSchema={type:"array",maxItems:4,items:{anyOf:[
   object({kind:{type:"string",enum:["location"]},...common,parent_location_key:text(160)}),
   object({kind:{type:"string",enum:["npc"]},...common,location_key:text(160),occupation:text(160),public_identity:text(160),portrayal:text(160)})
@@ -128,7 +129,8 @@ function fail(message){throw Object.assign(new Error(message),{code:"AUTONOMOUS_
 function closed(schema,value){
   if(schema.anyOf)return schema.anyOf.some(s=>closed(s,value));
   if(schema.enum)return schema.enum.includes(value);
-  if(schema.type==="string")return typeof value==="string"&&value.length<=schema.maxLength;
+  if(schema.type==="string")return typeof value==="string"&&value.length>=(schema.minLength||0)&&value.length<=schema.maxLength
+    &&(!schema.pattern||new RegExp(schema.pattern).test(value));
   if(schema.type==="array")return Array.isArray(value)&&value.length<=schema.maxItems&&value.every(v=>closed(schema.items,v));
   return value&&typeof value==="object"&&!Array.isArray(value)&&Object.keys(value).length===schema.required.length
     &&schema.required.every(k=>Object.hasOwn(value,k)&&closed(schema.properties[k],value[k]));
@@ -186,7 +188,7 @@ function applyWorld(db,guild,narrative,scope,provenance,content){
     source_id:kind==="arrival"?`player:${pc.owner_user_id}`:"ai_gm",session_id:session.id,scene:scene.key,location_key:location,
     ...eventBoundary,details:{...details,input_source:source.event_key}},"ai_gm");
   for(const a of [...additions].sort((a,b)=>Number(a.kind==="npc")-Number(b.kind==="npc"))){
-    if(!a.name.trim()||!a.summary.trim()||normalizeNpcKey(a.key)!==a.key||!a.key)fail("Normalized stable identity, name and summary required.");
+    if(!a.name.trim()||!a.summary.trim()||normalizeNpcKey(a.key)!==a.key||!a.key)fail("A world addition needs a non-empty name and summary plus a normalized stable key (lowercase words separated by single hyphens); omit it if you cannot provide all three.");
     if(scope.mode==="private"&&a.visibility==="party")fail("Private world creation cannot publish party knowledge.");
     if(a.kind==="location"&&requirements.exclude_locations.some(excluded=>
       normalizeNpcKey(excluded)===normalizeNpcKey(a.name)||normalizeNpcKey(excluded)===a.key))fail("Explicitly excluded locations cannot answer the owner's search.");

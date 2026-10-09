@@ -615,11 +615,22 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
     try{ validateTurn(result); validateDecisionAdvisory(this.db,guildId,result); return result; }
     catch(err){
       const detail=JSON.stringify(err.code==="NARRATIVE_INTEGRITY"?err.diagnostic||{}:{}).slice(0,800);
-      const retry={...req,input:`${req.input}\n\nSTRUCTURED TURN CORRECTION: ${String(err.message||err).slice(0,600)} Diagnostic: ${detail}. Return a complete replacement response. Do not invent witnesses, arrivals or knowledge. An acknowledgement of a clarified referent is conversational, not movement; omit material claims for such acknowledgements. Understand scoped context without repeating resolved questions. Ask only about missing information needed to authorize an action. Use empty actor for narrator claims; character:<id> for a PC observer. State review must agree with mutations. Explicit private canon requests use canon_proposals; never narrate application recording/notification.`};
+      const retry={...req,input:`${req.input}\n\nSTRUCTURED TURN CORRECTION: ${String(err.message||err).slice(0,600)} Diagnostic: ${detail}. Return a complete replacement response. For every world_additions item, key must be a non-empty normalized lowercase stable key, and name and summary must be non-empty; omit an addition if any field is uncertain or unavailable. Do not invent witnesses, arrivals or knowledge. An acknowledgement of a clarified referent is conversational, not movement; omit material claims for such acknowledgements. Understand scoped context without repeating resolved questions. Ask only about missing information needed to authorize an action. Use empty actor for narrator claims; character:<id> for a PC observer. State review must agree with mutations. Explicit private canon requests use canon_proposals; never narrate application recording/notification.`};
       result=await this.requestStructured(retry,{label:"GM turn state-review retry"});
-      validateTurn(result);
-      validateDecisionAdvisory(this.db,guildId,result);
-      return result;
+      try{
+        validateTurn(result);
+        validateDecisionAdvisory(this.db,guildId,result);
+        return result;
+      }catch(retryError){
+        if(retryError.code!=="AUTONOMOUS_WORLD")throw retryError;
+        // A malformed optional world addition must not make the entire GM turn fail.
+        // Regenerate a complete, internally consistent turn without attempting world changes.
+        const recovery={...req,input:`${req.input}\n\nWORLD-ADDITION RECOVERY: The prior replacement still contained an invalid world addition or action: ${String(retryError.message||retryError).slice(0,500)}. Return a complete replacement turn that keeps the conversation responsive but sets world_additions, scene_actions and world_conflicts to empty arrays. Do not narrate any uncommitted new place, NPC, movement, or access as established. Reassess all state_review categories so they agree with the remaining structured mutations. Preserve ordinary in-character conversational engagement; ask a natural follow-up when useful.`};
+        result=await this.requestStructured(recovery,{label:"GM turn safe worldbuilding recovery"});
+        validateTurn(result);
+        validateDecisionAdvisory(this.db,guildId,result);
+        return result;
+      }
     }
   }
 
