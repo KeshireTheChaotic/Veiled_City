@@ -51,7 +51,7 @@ export function interpretAuthoredText(message,{natural=false}={}){
   const free=natural?/^I (?:say|tell|ask|reply|whisper)(?: to)?(?: ([a-z0-9-]{1,160}))?\s*[:,]\s*["“]([^\n]{1,1000}?)["”](?:\s*[,.]?\s*(.*))?$/i.exec(text):null;
   const match=legacy||free;
   if(match) return {kind:free?.[3]?"mixed":"speech",speech:{target:match[1]||"",quote:match[2]},attempt:free?.[3]||""};
-  if(natural&&/^(?:I\s+(?:try|attempt|examine|search|open|lift|attack|look|read|move|walk|enter|step|go|investigate|ask)|(?:heading|stepping|walking|going)\s+(?:inside|into))\b/i.test(text))
+  if(natural&&/^(?:I\s+(?:try|attempt|examine|search|open|lift|attack|look|read|move|walk|enter|step|go|head|return|duck|slip|cut|take|investigate|ask)|(?:heading|stepping|walking|going)\s+(?:inside|into))\b/i.test(text))
     return {kind:"attempt",speech:null,attempt:text};
   if(/\?\s*$/.test(text)) return {kind:"inquiry",speech:null};
   return {kind:"unclear",speech:null};

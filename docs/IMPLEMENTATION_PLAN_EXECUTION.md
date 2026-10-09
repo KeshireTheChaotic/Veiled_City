@@ -35,3 +35,11 @@ Validation now distinguishes optional structured-field defects from consequentia
 Authority context has compact identity/source/revision/hash indexes plus complete paged record retrieval. Prompt overflow reports `CONTEXT_OVERFLOW` with a retryable, uncommitted diagnostic instead of escalating an engineering limit into fictional human approval. Channel roles are exclusive at configuration and runtime, inactive-session notices are useful and rate-limited, and campaign status exposes routing health.
 
 Logical snapshot retention is bounded to 50 per campaign and the deterministic release test performs a mutate/restore/foreign-key drill. The repository now carries an npm lockfile, Docker uses `npm ci` with a tracked Node version, and GitHub CI runs the same network-denied validation gate.
+
+## Phase E — 10.0.0
+
+The release now includes a longitudinal fixture pack spanning 12 turns, three linked scenes, and five injected lifecycle failures. It measures response obligations, semantic movement routing, stage boundaries, and the hard safety gates without network access. The report always states its sample size, repository target, provenance, and limits; fixture success is not presented as live-model certification.
+
+In-memory observability records aggregate stage counts, failures, error-code counts, retries, provider-reported tokens, and p50/p95/p99 latency. Prompts, narration, campaign text, source records, Discord IDs, and character IDs are never retained. `/vc-admin doctor` includes routing health and a privacy-described metric snapshot for operational inspection.
+
+A thin dependency-injected `TurnPipeline` makes capture, generation, validation, commit, and publication boundaries independently fault-testable while leaving all domain authority in the existing native validators, transaction service, and outbox. The runtime envelope and provider request path now use the same metrics primitive. No live provider/test-guild run was performed because that remains a separately authorized rollout action.

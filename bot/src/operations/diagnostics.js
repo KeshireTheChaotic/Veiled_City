@@ -8,12 +8,17 @@
 import fs from "node:fs";
 import path from "node:path";
 import { assertGmOnlyChannel, assertPlayerPrivateChannel } from "../discord/privacy.js";
+import { validateChannelRouting } from "../routing-diagnostics.js";
+import { operationalMetrics } from "../operational-metrics.js";
 
 export async function runCampaignDiagnostics({db,guild}){
   const data=db.doctorData(guild.id);
   const campaign=db.getCampaign(guild.id);
   const issues=[];
   const passed=[];
+  const routing=validateChannelRouting(campaign);
+  if(!routing.ok)issues.push(`Channel routing conflicts: ${routing.conflicts.map(row=>row.roles.join("/")).join(", ")}.`);
+  else passed.push("Channel routing roles are exclusive");
   if(data.schemaVersion<410) issues.push(`Database schema version ${data.schemaVersion}; expected 410+.`);
   else passed.push(`Database schema v${data.schemaVersion}`);
   if(data.presentWithoutCharacter.length) issues.push(`${data.presentWithoutCharacter.length} present roster entr${data.presentWithoutCharacter.length===1?"y has":"ies have"} no active character.`);
@@ -68,7 +73,7 @@ export async function runCampaignDiagnostics({db,guild}){
       assertPlayerPrivateChannel({guild,channel,userId:player.discord_user_id,gmRoleId:campaign?.gm_role_id||null});
     }catch(err){ issues.push(`Private channel for ${player.display_name}: ${err.message||err}`); }
   }
-  return {data,campaign,issues,passed};
+  return {data,campaign,issues,passed,operational_metrics:operationalMetrics.snapshot()};
 }
 
 export function formatDiagnostics({issues,passed}){

@@ -1,0 +1,24 @@
+{
+  "provenance": "Hand-authored synthetic implementation-plan fixtures, 2026-10-09; no live model or Discord traffic.",
+  "turns": [
+    {"id":"E01","scene":"rain-diner","input":"I duck into the nearest open shop, out of the light.","obligation":true,"movement":"move"},
+    {"id":"E02","scene":"rain-diner","input":"I need work. This shift is not paying enough.","obligation":true,"movement":"observe"},
+    {"id":"E03","scene":"rain-diner","input":"I ask the clerk who owns the diner?","obligation":true,"movement":"observe"},
+    {"id":"E04","scene":"rain-diner","input":"OOC: should we stop here?","obligation":false,"movement":"planning_or_ooc"},
+    {"id":"E05","scene":"alley","input":"I take the alley.","obligation":true,"movement":"move"},
+    {"id":"E06","scene":"alley","input":"I'd go back there if I had time.","obligation":false,"movement":"observe"},
+    {"id":"E07","scene":"alley","input":"I search for somewhere public but not near Hollow Street.","obligation":true,"movement":"find_place"},
+    {"id":"E08","scene":"office","input":"I go back to the diner.","obligation":true,"movement":"move"},
+    {"id":"E09","scene":"office","input":"The room has gone quiet.","obligation":true,"movement":"observe"},
+    {"id":"E10","scene":"office","input":"// table break","obligation":false,"movement":"planning_or_ooc"},
+    {"id":"E11","scene":"office","input":"I go upstairs.","obligation":true,"movement":"local_zone"},
+    {"id":"E12","scene":"office","input":"What did the clerk tell me?","obligation":true,"movement":"observe"}
+  ],
+  "faults": [
+    {"stage":"capture","committed":false,"recovery":"retry_saved_turn"},
+    {"stage":"generate","committed":false,"recovery":"retry_saved_turn"},
+    {"stage":"validate","committed":false,"recovery":"correct_or_retry"},
+    {"stage":"commit","committed":false,"recovery":"rollback_then_retry"},
+    {"stage":"publish","committed":true,"recovery":"outbox_only"}
+  ]
+}

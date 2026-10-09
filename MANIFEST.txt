@@ -42,6 +42,7 @@ bot/scripts/export-campaign.mjs
 bot/scripts/fixtures/expansion-quality-golden.json
 bot/scripts/fixtures/i-heard-you-acceptance.json
 bot/scripts/fixtures/i-heard-you-golden.json
+bot/scripts/fixtures/implementation-evaluation.json
 bot/scripts/fixtures/systems-judgment-golden.json
 bot/scripts/format-check.mjs
 bot/scripts/i-heard-you-1-test.mjs
@@ -53,10 +54,12 @@ bot/scripts/i-heard-you-6-test.mjs
 bot/scripts/i-heard-you-7-test.mjs
 bot/scripts/i-heard-you-9-test.mjs
 bot/scripts/i-heard-you-integration-test.mjs
+bot/scripts/implementation-evaluation.mjs
 bot/scripts/implementation-phase-a-test.mjs
 bot/scripts/implementation-phase-b-test.mjs
 bot/scripts/implementation-phase-c-test.mjs
 bot/scripts/implementation-phase-d-test.mjs
+bot/scripts/implementation-phase-e-test.mjs
 bot/scripts/interaction-lifecycle-test.mjs
 bot/scripts/narrative-contract-test.mjs
 bot/scripts/narrative-inference-test.mjs
@@ -135,6 +138,7 @@ bot/src/discord/privacy.js
 bot/src/encounter.js
 bot/src/epistemic.js
 bot/src/errors.js
+bot/src/evaluation-harness.js
 bot/src/evidence-custody.js
 bot/src/expansion-contracts.js
 bot/src/gm.js
@@ -153,6 +157,7 @@ bot/src/narrative-integrity.js
 bot/src/negotiations.js
 bot/src/npc-cognition.js
 bot/src/npc-conversations.js
+bot/src/operational-metrics.js
 bot/src/operations/diagnostics.js
 bot/src/operations/overview.js
 bot/src/outcome-preview.js
@@ -194,6 +199,7 @@ bot/src/story-continuity.js
 bot/src/supply-dependencies.js
 bot/src/turn-attempts.js
 bot/src/turn-orchestration.js
+bot/src/turn-pipeline.js
 bot/src/turn-recovery.js
 bot/src/voice.js
 bot/src/world-authoring.js
@@ -309,6 +315,7 @@ docs/EXPANSION_GAP_ANALYSIS.md
 docs/EXPANSION_RELEASES.md
 docs/GM_OPERATIONS.md
 docs/HANDOUTS_AND_EVIDENCE.md
+docs/IMPLEMENTATION_EVALUATION.md
 docs/IMPLEMENTATION_PLAN_EXECUTION.md
 docs/INTERACTION_LIFETIME_FIX.md
 docs/I_HEARD_YOU_GAP_ANALYSIS.md

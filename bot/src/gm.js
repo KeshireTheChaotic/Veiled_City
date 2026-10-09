@@ -29,6 +29,7 @@ import { epistemicSchema, evidenceType, activeEvidence } from "./epistemic.js";
 import { budgetTurnPrompt } from "./prompt-budget.js";
 import { recoverOptionalTurnFields } from "./turn-recovery.js";
 import { projectAuthorityRecords } from "./authority-projection.js";
+import { operationalMetrics } from "./operational-metrics.js";
 
 const routerSchema={
   type:"object",
@@ -352,8 +353,11 @@ export class GMService{
 STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Return one COMPLETE JSON object matching the schema. Be concise. Do not use Markdown fences or commentary. Preserve quotation marks and other punctuation from user-provided text as ordinary JSON string content.`;
       }
       let response;
+      const metricStart=performance.now();
       try{response=await this.ai.responses.create(request,{signal:operationSignal});}
       catch(err){
+        operationalMetrics.record("model_request",{durationMs:performance.now()-metricStart,status:"error",
+          errorCode:operationSignal.aborted?"AI_GENERATION_DEADLINE":err?.code||"PROVIDER_ERROR",inputChars:String(request.input||"").length,retries:attempt-1});
         if(operationSignal.aborted){
           const timeout=Object.assign(new Error(`${label} exceeded its bounded generation deadline; no generated state was committed.`),
             {code:"AI_GENERATION_DEADLINE",cause:err});
@@ -361,6 +365,8 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
         }
         throw err;
       }
+      operationalMetrics.record("model_request",{durationMs:performance.now()-metricStart,inputChars:String(request.input||"").length,
+        inputTokens:response?.usage?.input_tokens||0,outputTokens:response?.usage?.output_tokens||0,retries:attempt-1});
       try{
         const parsed=parseStructuredJsonText(response.output_text,{label});
         if(req.text?.format?.schema?.properties?.ai_intents&&parsed.ai_intents===undefined) parsed.ai_intents=[];
