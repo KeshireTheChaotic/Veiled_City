@@ -22,7 +22,8 @@ export function declarationContext(db,guild,user,character,message){
   try{
     const pc=personalCharacter(db,guild,user,character),interpretation=interpretAuthoredText(message,{natural:true});
     return {character_id:pc.id,exact_text:String(message).slice(0,4000),...interpretation,
-      authority:"Owner-authored text only. Attempts are not completed facts. Unclear/mixed meaning requires open clarification, never a menu or inferred assent."};
+      authority:"Owner-authored text only. Attempts are not completed facts. Understand ordinary contextual references from scoped conversation. "
+        +"The coarse kind classifier is not a demand for clarification. Ask openly only when unresolved ambiguity materially affects an action; never infer assent."};
   }catch{return null;}
 }
 export function captureDeclaration(db,guild,user,character,messageId,message,{privateScene=false,sceneEntry=false}={}){

@@ -1,6 +1,6 @@
 {
   "name": "veiled-city-discord-gm",
-  "version": "9.2.0",
+  "version": "9.3.0",
   "private": true,
   "type": "module",
   "description": "Stateful multiplayer Discord GM bot for Veiled City / Daggerheart.",
@@ -36,6 +36,7 @@
     "test:city": "node scripts/city-regression-test.mjs && node scripts/city-core-regression-test.mjs && node scripts/city-civic-regression-test.mjs && node scripts/city-depth-regression-test.mjs"
   },
   "dependencies": {
+    "pdfjs-dist": "6.4.299",
     "discord.js": "14.27.0",
     "dotenv": "17.2.3",
     "openai": "6.6.0",

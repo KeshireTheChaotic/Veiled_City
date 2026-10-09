@@ -30,8 +30,8 @@ try{
   assert.equal(interpretAuthoredText(text,{natural:true}).kind,"attempt");assert.equal(entryTarget(text),"the diner");
   for(const bad of ['If I enter the diner, who is there?','OOC: I enter the diner.','I might enter the diner.','Someone says: "I enter the diner."']) assert.equal(entryTarget(bad),null);
   const message={guild:{id:guild},author:{id:"owner"},id:"entry-1"},delivered=[];
-  assert.equal(await routeSceneEntryMessage({db,message,characterId:pc.id,text,deliver:async text=>delivered.push(text)}),true);
-  assert(delivered[0].includes("Which exact place"));assert(!delivered[0].includes("Lena is"));
+  assert.equal(await routeSceneEntryMessage({db,message,characterId:pc.id,text,deliver:async text=>delivered.push(text)}),false);
+  assert.equal(delivered.length,0,"Staging an entry must not force clarification or block the GM conversation");
   assert.equal(db.getCharacter(pc.id).data.location,undefined);assert.equal(scenePresence(db,guild,"character",pc.id),null);
   assert.equal(db.getNpcProfile(guild,"lena-park"),null);assert.equal(db.getSimulationEntity(guild,"location","diner"),null);
   const row=prepareSceneEntry(db,guild,"owner",pc.id,"entry-1",text);

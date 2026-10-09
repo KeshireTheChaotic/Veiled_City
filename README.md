@@ -1,8 +1,8 @@
-# VEILED CITY MULTIPLAYER DISCORD ENGINE v9.2.0
+# VEILED CITY MULTIPLAYER DISCORD ENGINE v9.3.0
 
 ## Current Version
 
-**9.2.0** — Veilkeeper, a stateful Discord AI GM for multiplayer Veiled City
+**9.3.0** — Veilkeeper, a stateful Discord AI GM for multiplayer Veiled City
 campaigns using Daggerheart. The version is maintained in
 [bot/package.json](bot/package.json).
 
@@ -248,6 +248,12 @@ the relevant inbox. Player commands expose only authorized knowledge.
 | Accept / decline an NPC proxy offer | `/vc-npc claim npc:<name>`; `/vc-npc decline npc:<name>` |
 | Retrieve / release your NPC packet | `/vc-npc packet npc:<name>`; `/vc-npc release npc:<name>` |
 | Join voice / replay narration | `/vc-voice join`; `/vc-voice repeat` |
+
+Rules questions can consult the [official Daggerheart SRD](https://www.daggerheart.com/srd/)
+with PDF page citations. Saved campaign GM rulings retain precedence. Online lookup
+is enabled by default; set `RULES_ONLINE_SRD=false` in `bot/.env` for local-only
+answers. Install updated dependencies with `npm install` before restarting after
+deployment. See [lookup limits and fallback behavior](docs/RULES_ONLINE_SRD.md).
 
 During an active session, describe actions in the configured table channel or your
 registered private GM channel. With discovery enabled, “What do I know about the

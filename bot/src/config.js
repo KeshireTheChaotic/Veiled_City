@@ -50,6 +50,7 @@ export function loadConfig(){
     maxRecentMessages:numberEnv("MAX_RECENT_MESSAGES",28,{min:1,max:500,integer:true}),
     maxContentChunks:numberEnv("MAX_CONTENT_CHUNKS",8,{min:1,max:100,integer:true}),
     maxRulesChunks:numberEnv("MAX_RULES_CHUNKS",6,{min:1,max:100,integer:true}),
+    rulesOnlineSrd:enumEnv("RULES_ONLINE_SRD","true",["true","false"])==="true",
     rulesMaxOutputTokens:numberEnv("RULES_MAX_OUTPUT_TOKENS",500,{min:64,max:32000,integer:true}),
     assemblyMaxOutputTokens:numberEnv("ASSEMBLY_MAX_OUTPUT_TOKENS",1200,{min:64,max:32000,integer:true}),
     npcProxyMaxOutputTokens:numberEnv("NPC_PROXY_MAX_OUTPUT_TOKENS",1200,{min:64,max:32000,integer:true}),

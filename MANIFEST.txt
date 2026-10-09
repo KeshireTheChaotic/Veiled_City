@@ -52,6 +52,7 @@ bot/scripts/i-heard-you-9-test.mjs
 bot/scripts/i-heard-you-integration-test.mjs
 bot/scripts/interaction-lifecycle-test.mjs
 bot/scripts/narrative-contract-test.mjs
+bot/scripts/narrative-understanding-test.mjs
 bot/scripts/negotiation-preview-test.mjs
 bot/scripts/npc-cognition-regression-test.mjs
 bot/scripts/offline-guard.mjs
@@ -64,6 +65,7 @@ bot/scripts/quality-check.mjs
 bot/scripts/refactor-regression-test.mjs
 bot/scripts/release-files.mjs
 bot/scripts/release-version.mjs
+bot/scripts/rules-srd-test.mjs
 bot/scripts/scene-entry-test.mjs
 bot/scripts/seed-data-regression-test.mjs
 bot/scripts/seed-drafts-regression-test.mjs
@@ -148,6 +150,7 @@ bot/src/roll-collaboration.js
 bot/src/roll-language.js
 bot/src/roll-requests.js
 bot/src/roster.js
+bot/src/rules-srd.js
 bot/src/scene-continuity.js
 bot/src/scene-entry.js
 bot/src/seed-commands.js
@@ -282,6 +285,8 @@ docs/I_HEARD_YOU_GAP_ANALYSIS.md
 docs/I_HEARD_YOU_IMPLEMENTATION.md
 docs/LEVEL_UP.md
 docs/LIVING_CITY.md
+docs/NARRATIVE_INFERENCE_AUDIT.md
+docs/NARRATIVE_UNDERSTANDING.md
 docs/NEXT_EXPANSION.md
 docs/NPC_COGNITION.md
 docs/NPC_PROXY_CONTROL.md
@@ -293,6 +298,7 @@ docs/README_HOTFIX.md
 docs/RELATIONSHIP_GRAPH.md
 docs/RULES_DESK.md
 docs/RULES_GROUNDING.md
+docs/RULES_ONLINE_SRD.md
 docs/SCENE_ENTRY_FIX.md
 docs/SECURITY_AND_PRIVACY.md
 docs/SERVER_CHANNEL_SETUP.md

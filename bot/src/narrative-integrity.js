@@ -11,7 +11,11 @@ export const NARRATIVE_CONTRACT="Return narrative_claims for EVERY consequential
   +"Never supply predefined narrative choices, fixed acceptance/decline prompts, A/B/C story answers or scripted PC dialogue. Ask openly. "
   +"Use exact source_span and stable actor/entity IDs; prior/proposed are state values, source_ref identifies existing fact/knowledge/canon/obligation. "
   +"actor identifies the observer/speaker: npc:<key>, character:<id>, or empty for GM narration, not an invented NPC. "
-  +"A character observing their own saved position needs no NPC witness. An entry declaration is not arrival evidence. Unknown places/occupants require clarification, not invented attendance. "
+  +"A character observing their own saved position needs no NPC witness. An entry declaration is not arrival evidence. Never invent unknown places or occupants. "
+  +"Separate conversational understanding from authority: resolve ordinary contextual names, pronouns and references using scoped conversation. "
+  +"Acknowledging an earlier attempt or clarified destination is not a material state change and needs no movement claim. "
+  +"Do not demand a clarification solely because a place is not yet authorized. Ask only when unresolved ambiguity materially affects an action. "
+  +"Never infer travel completion, restricted access, encounter resolution, character presence or NPC knowledge from understood intent. "
   +"Disclosure requires an existing audience-visible fact. Narrator/PC knowledge is not NPC knowledge; an NPC additionally needs its own sourced knowledge of that fact. "
   +"Uncertain observations, quoted lies, hallucinations, metaphors, forecasts and intentions must be explicitly framed as such in prose and tagged, not committed facts. "
   +"mutation_index is a matching events index or -1 for already established state. Never invent dice, PC consent or compensate for a rejected claim. Cosmetic prose needs no claim.";
@@ -25,6 +29,18 @@ function deny(category,claim,source=""){
 function visible(row,scope){
   return ["public","party"].includes(row.visibility)||(scope.mode==="private"&&
     ((row.visibility==="player"&&row.subject_user_id===scope.actorUserId)||(row.visibility==="character"&&row.subject_character_id===scope.actorCharacterId)));
+}
+/** Narrow compatibility for redundant claims on non-material acknowledgements, not an uncertainty bypass. */
+function contextualEntryAcknowledgement(db,guild,claim,audiences){
+  if(claim.action!=="movement"||claim.entity_type!=="character"||claim.certainty!=="intent"||claim.actor
+    ||claim.mutation_index!==-1||!/^That clarifies (?:the destination of your earlier entry attempt|where you intend to go)\.$/i.test(claim.source_span)) return false;
+  const key=claim.source_ref.replace(/^event:/,"");
+  const source=db.getWorldEvent(guild,key),pc=db.getCharacter(claim.entity),session=db.getActiveSession(guild);
+  return !!(session&&pc?.guild_id===guild&&source?.status==="active"&&source.kind==="player_declaration"
+    &&source.session_id===session.id&&source.details.character_id===pc.id&&source.details.author===pc.owner_user_id
+    &&db.ownerAuthoredSource(guild,key,pc.owner_user_id)
+    &&audiences.every(audience=>visible({visibility:source.visibility,subject_user_id:source.subject_key,
+      subject_character_id:source.subject_key},audience)));
 }
 function claimActor(db,guild,claim){
   const raw=claim.actor;
@@ -95,7 +111,8 @@ export function validateNarrativeClaims(db,guildId,result,scope={mode:"party"}){
     const audiences=claimAudiences(db,guildId,result,c,scope);
     if(!audiences.length) deny("source_span",c,"A claim span must occur wholly within an actual output surface.");
     if(c.certainty!=="committed"){
-      if(!/\b(says?|claims?|lies?|rumou?r|might|may|could|seems?|perhaps|imagines?|hallucinates?|like|as if|intends?|proposes?|would|hypothes\w*)\b/i.test(c.source_span)) deny("uncertainty_framing",c);
+      if(!/\b(says?|claims?|lies?|rumou?r|might|may|could|seems?|perhaps|imagines?|hallucinates?|like|as if|intends?|proposes?|would|hypothes\w*)\b/i.test(c.source_span)
+        &&!contextualEntryAcknowledgement(db,guildId,c,audiences)) deny("uncertainty_framing",c);
       // Non-factual framing does not authorize disclosure of a real secret.
       if(c.action!=="disclosure") continue;
     }

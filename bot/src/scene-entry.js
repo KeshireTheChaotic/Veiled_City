@@ -35,12 +35,32 @@ export function prepareSceneEntry(db,guild,user,character,messageId,text,{privat
     cityAudit(db,guild,"scene_entry",key,null,after,user);return after;
   });
 }
-export async function routeSceneEntryMessage({db,message,characterId,text,privateScene=false,deliver}){
-  const row=prepareSceneEntry(db,message.guild.id,message.author.id,characterId,message.id,text,{privateScene});
-  if(!row||row.status==="established"||row.status==="approved") return false;
-  await deliver(`Your entry and search remain uncommitted until the place and access are established. Which exact place do you mean by “${row.data.target}”? `+
-    `The GM can review the entry without assuming anyone is there. Review key: ${row.record_key}; revision: ${stateRevision(row)}.`);
-  return true;
+export async function routeSceneEntryMessage({db,message,characterId,text,privateScene=false}){
+  prepareSceneEntry(db,message.guild.id,message.author.id,characterId,message.id,text,{privateScene});
+  // Stage the authority review without intercepting ordinary conversation. The GM
+  // may understand the intended destination without declaring arrival or access.
+  return false;
+}
+/** Owner-scoped conversational referents, never travel authorization or NPC knowledge. */
+export function entryReferenceContext(db,guild,user,character,{mode="private"}={}){
+  const session=db.getActiveSession(guild);
+  if(!session||!character||db.getCityCalendar(guild).flags.natural_language!==true
+    ||db.getCityCalendar(guild).flags.scene_continuity!==true) return null;
+  let pc;try{pc=personalCharacter(db,guild,user,character);}catch{return null;}
+  const scene=currentScene(db,guild).key;
+  const attempts=db.characterContinuity(guild,pc.id,{kind:"scene_entry",limit:30}).filter(row=>{
+    const source=db.getWorldEvent(guild,row.source_event);
+    return row.status==="pending"&&row.data.user===user&&row.data.session_id===session.id&&row.data.scene===scene
+      &&(mode==="private"||row.data.private_scene===false)
+      &&source?.status==="active"&&source.kind==="player_declaration"&&source.details.author===user
+      &&source.details.character_id===pc.id&&db.ownerAuthoredSource(guild,source.event_key,user);
+  }).slice(0,8).map(row=>({target:row.data.target,source_ref:row.source_event,review_key:row.record_key,
+    review_revision:stateRevision(row),status:"pending",private_scene:row.data.private_scene}));
+  return {saved_location:pc.data.location??null,attempts,
+    authority:"Conversational referents only. Resolve ordinary names, pronouns and follow-up clarifications from owner-visible context. "
+      +"Understanding a destination is NOT arrival, access, an encounter, presence, NPC knowledge or consent. "
+      +"Ask only when ambiguity materially affects an action; do not repeatedly ask for an already understood name. "
+      +"Pending entry remains subject to native human review and travel/encounter/access rules. Review keys and revisions are GM metadata, not dialogue."};
 }
 export function reviewSceneEntry(db,guild,input,reviewer){
   if(Object.keys(input).some(key=>!["op","key","expected_revision","location_key","adjudication"].includes(key))||input.op!=="review-entry"
