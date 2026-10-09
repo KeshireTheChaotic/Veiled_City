@@ -15,7 +15,8 @@ export const interpretationSchema={anyOf:[{type:"null"},object({source_ref:text(
   unresolved:list(object({question:text(300),blocks_action:{type:"boolean"}}),6)})]};
 export const CONTEXT_CONTRACT="narrative_interpretation is optional read-only meaning, not a mutation proposal. "
   +"Resolve ordinary names, pronouns and implied referents from audience-visible context without exact-phrase requirements. "
-  +"Use supplied owner input source_ref, existing entity keys and visible source_refs; unknown entities stay candidate/unresolved. "
+  +"Set it to null unless SCOPED INTERPRETATION supplies input_source. Its source_ref must exactly equal input_source. "
+  +"Reference source_refs must be copied only from audience-visible source_ref values supplied in scoped context; unknown entities stay candidate/unresolved. "
   +"Acknowledgements do not need movement/material claims. Never put completed movement, access, possession, status, disclosure or obligations in acknowledgements. "
   +"Only unresolved questions that materially affect an action should block that action; continue ordinary conversation. "
   +"Interpretation cannot authorize travel, presence, access, NPC knowledge, spending, consent or canon. State changes require separate native proposals.";
@@ -54,21 +55,23 @@ export function validateInterpretation(db,guild,value,scope){
     return !!input&&typeof input==="object"&&!Array.isArray(input)&&Object.keys(input).length===schema.required.length
       &&schema.required.every(key=>Object.hasOwn(input,key)&&check(schema.properties[key],input[key]));
   }
-  const fail=()=>{throw Object.assign(new Error("Interpretation needs bounded audience-visible sources; it never authorizes consequences."),{code:"NARRATIVE_CONTEXT"});};
-  if(!check(interpretationSchema,value))fail();
+  const fail=reason=>{throw Object.assign(new Error("Interpretation needs bounded audience-visible sources; it never authorizes consequences."),
+    {code:"NARRATIVE_CONTEXT",diagnostic:{reason}});};
+  if(!check(interpretationSchema,value))fail("closed_schema");
   const principal=conversationPrincipal(db,guild,scope.actorUserId,scope.actorCharacterId);
   scope={...scope,contextId:principal.context_id};
   const source=db.getWorldEvent(guild,eventKey(value.source_ref)),session=db.getActiveSession(guild);
   if(!source||source.kind!=="owner_context"||source.session_id!==session?.id||source.details.author!==scope.actorUserId
     ||source.details.character_id!==scope.actorCharacterId||!contextSourceVisible(source,scope)
     ||!db.ownerAuthoredSource(guild,source.event_key,scope.actorUserId)
-    ||(source.details.principal?source.details.principal.revision!==principal.revision:principal.kind!=="owner"))fail();
+    ||(source.details.principal?source.details.principal.revision!==principal.revision:principal.kind!=="owner"))fail("current_input_source");
   for(const ref of value.references){
-    if(!ref.source_refs.length||ref.source_refs.some(key=>!contextSourceVisible(db.getWorldEvent(guild,eventKey(key)),scope)))fail();
+    if(!ref.source_refs.length)fail("reference_source_required");
+    if(ref.source_refs.some(key=>!contextSourceVisible(db.getWorldEvent(guild,eventKey(key)),scope)))fail("reference_source_visibility");
     if(ref.status==="resolved"){
       const entity=ref.entity_type==="character"?db.getCharacter(ref.entity_key):ref.entity_type==="npc"?db.getNpcProfile(guild,ref.entity_key)
         :ref.entity_type==="location"?db.getSimulationEntity(guild,"location",ref.entity_key):null;
-      if(!entity||entity.guild_id!==guild)fail();
+      if(!entity||entity.guild_id!==guild)fail("resolved_entity");
     }
   }
   return value;

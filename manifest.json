@@ -36,8 +36,8 @@
     },
     {
       "path": "bot/.env.example",
-      "size_bytes": 2742,
-      "sha256": "4a4fda153af7605d1c7e195c04785bb166189ceb6cde70c3f7b6c3aac4022e1a"
+      "size_bytes": 3154,
+      "sha256": "9e94d55c6d375cd1b3a2b917f44b041b8d3f3e9b2deba7b610143499c7bc2c57"
     },
     {
       "path": "bot/.gitignore",
@@ -346,8 +346,8 @@
     },
     {
       "path": "bot/scripts/relax-end-to-end-test.mjs",
-      "size_bytes": 6035,
-      "sha256": "16ccc6ce141c04562b60abef3481f07957d703a166fa085f8bed0cb468e0aca9"
+      "size_bytes": 7537,
+      "sha256": "77ce837841aa6420230b6f2ec7c4d80054854c62024e838109d3319aa3ef676e"
     },
     {
       "path": "bot/scripts/release-files.mjs",
@@ -566,8 +566,8 @@
     },
     {
       "path": "bot/src/config.js",
-      "size_bytes": 4762,
-      "sha256": "59d0eac08badd310f6223e83c9f367cfe006f68f5117828a5204f8c778a26f2e"
+      "size_bytes": 5548,
+      "sha256": "2bc386e0125d7f1c7334bc0ec51b33676449b4fe3b2ad7d57593c6b1333bfc02"
     },
     {
       "path": "bot/src/consent-language.js",
@@ -666,8 +666,8 @@
     },
     {
       "path": "bot/src/gm.js",
-      "size_bytes": 87180,
-      "sha256": "2076e3bf3f6e987a31f7700e8eea0418ae08620fad6433b13ee603c6d592ec63"
+      "size_bytes": 88870,
+      "sha256": "50245aa25c7b34e614cb037ffcb12d05275e1a953ff88dbc4c24a039eae2b428"
     },
     {
       "path": "bot/src/handout.js",
@@ -686,8 +686,8 @@
     },
     {
       "path": "bot/src/index.js",
-      "size_bytes": 48459,
-      "sha256": "99e9f1cf2b505a4b5bb44017aa592a8eb3677ee2d926b486e166cdeeeb7a7d96"
+      "size_bytes": 49372,
+      "sha256": "d6984def64665000a01d6bee67f76e18677de95c3944328913dfd7ec2d116856"
     },
     {
       "path": "bot/src/location-language.js",
@@ -711,8 +711,8 @@
     },
     {
       "path": "bot/src/narrative-context.js",
-      "size_bytes": 11774,
-      "sha256": "b7952837712864ce3977d9fe3956243c5e931f9e8573ca05d6e699d6a471e036"
+      "size_bytes": 12075,
+      "sha256": "d3e91863f7d2bb8a902901c692f3b8a4f096c1d6e9d130837639fdf64b718494"
     },
     {
       "path": "bot/src/narrative-integrity.js",
@@ -1551,8 +1551,8 @@
     },
     {
       "path": "docs/OPENAI_SETUP.md",
-      "size_bytes": 2795,
-      "sha256": "87464b385fc1f35028e5da217ca954d0c31d8d92d264e4aff7a39cfed51f6b7b"
+      "size_bytes": 3580,
+      "sha256": "5a8e014cb268c377b02d32dc8bcaa2af7ab728a62fe6ad1ecfc4d457037087b0"
     },
     {
       "path": "docs/PARTY_ASSEMBLY.md",

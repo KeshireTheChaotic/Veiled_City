@@ -317,7 +317,8 @@ export function looksLikeExplicitCanonProposalRequest(text){
 export class GMService{
   constructor({db,content,config,ai=null,srd=null}){
     this.db=db; this.content=content; this.config=config;
-    this.ai=ai||new OpenAI({apiKey:config.openaiKey});
+    this.ai=ai||new OpenAI({apiKey:config.openaiKey,timeout:Number(config.openaiRequestTimeoutMs||60000),
+      maxRetries:Number.isInteger(config.openaiMaxRetries)?config.openaiMaxRetries:1});
     this.srd=srd||new OnlineSrd();
   }
 
@@ -334,7 +335,8 @@ export class GMService{
       text:{format:{type:"json_schema",name:"minor_npc_draft",strict:true,schema:minorNpcSchema}}},{label:"minor NPC draft"});
   }
 
-  async requestStructured(req,{label="structured response"}={}){
+  async requestStructured(req,{label="structured response",signal=null,deadlineMs=null}={}){
+    const operationSignal=signal||AbortSignal.timeout(Number(deadlineMs||this.config.aiOperationDeadlineMs||120000));
     let lastError=null;
     for(let attempt=1;attempt<=2;attempt++){
       const request={...req,instructions:`${AUTHORITY_POLICY}\n${req.instructions||""}`};
@@ -347,7 +349,16 @@ export class GMService{
 
 STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Return one COMPLETE JSON object matching the schema. Be concise. Do not use Markdown fences or commentary. Preserve quotation marks and other punctuation from user-provided text as ordinary JSON string content.`;
       }
-      const response=await this.ai.responses.create(request);
+      let response;
+      try{response=await this.ai.responses.create(request,{signal:operationSignal});}
+      catch(err){
+        if(operationSignal.aborted){
+          const timeout=Object.assign(new Error(`${label} exceeded its bounded generation deadline; no generated state was committed.`),
+            {code:"AI_GENERATION_DEADLINE",cause:err});
+          throw timeout;
+        }
+        throw err;
+      }
       try{
         const parsed=parseStructuredJsonText(response.output_text,{label});
         if(req.text?.format?.schema?.properties?.ai_intents&&parsed.ai_intents===undefined) parsed.ai_intents=[];
@@ -367,7 +378,7 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
     throw lastError||new Error(`${label}: structured response failed.`);
   }
 
-  async shouldRespond({guildId,message,mode,directMention=false,messageText=null,actorAssignment=null}){
+  async shouldRespond({guildId,message,mode,directMention=false,messageText=null,actorAssignment=null,signal=null}){
     if(directMention) return true;
     if(mode==="mention") return false;
     const text=(messageText??message.content).trim();
@@ -401,7 +412,7 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
       input:prompt,
       max_output_tokens:200,
       text:{format:{type:"json_schema",name:"route",strict:true,schema:routerSchema}}
-    },{label:"message router"});
+    },{label:"message router",signal,deadlineMs:this.config.routerDeadlineMs||20000});
     return out.respond;
   }
 
@@ -462,7 +473,8 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
     };
   }
 
-  async runTurn({guildId,actorUserId,actorName,messageText,actorAssignment=null,scope="party",messageId=null}){
+  async runTurn({guildId,actorUserId,actorName,messageText,actorAssignment=null,scope="party",messageId=null,signal=null}){
+    const turnSignal=signal||AbortSignal.timeout(Number(this.config.gmTurnDeadlineMs||120000));
     const ctx=this.buildContext(guildId,actorUserId,messageText,actorAssignment);
     const privateMode=scope==="private";
     const instructions=[
@@ -578,7 +590,7 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
     if(ctx.context_plan) sections.push({label:"SOURCED CONTEXT PLAN (GM-only, never actor omniscience)",value:ctx.context_plan,priority:10});
     const {input}=budgetTurnPrompt(sections,{instructions,query:messageText});
     const req={
-      model:this.config.gmModel,
+      model:this.config.routineGmModel||this.config.gmModel,
       instructions,
       input,
       text:{format:{type:"json_schema",name:"veiled_city_gm_turn",strict:true,schema:gmSchema}}
@@ -611,22 +623,42 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
       if(!privateMode && proposals.length) throw new Error("Party-table GM turns may not emit player canon_proposals.");
       return true;
     };
-    let result=await this.requestStructured(req,{label:"GM turn"});
+    let result=await this.requestStructured(req,{label:"GM turn",signal:turnSignal});
     try{ validateTurn(result); validateDecisionAdvisory(this.db,guildId,result); return result; }
     catch(err){
-      const detail=JSON.stringify(err.code==="NARRATIVE_INTEGRITY"?err.diagnostic||{}:{}).slice(0,800);
-      const retry={...req,input:`${req.input}\n\nSTRUCTURED TURN CORRECTION: ${String(err.message||err).slice(0,600)} Diagnostic: ${detail}. Return a complete replacement response. For every world_additions item, key must be a non-empty normalized lowercase stable key, and name and summary must be non-empty; omit an addition if any field is uncertain or unavailable. Do not invent witnesses, arrivals or knowledge. An acknowledgement of a clarified referent is conversational, not movement; omit material claims for such acknowledgements. Understand scoped context without repeating resolved questions. Ask only about missing information needed to authorize an action. Use empty actor for narrator claims; character:<id> for a PC observer. State review must agree with mutations. Explicit private canon requests use canon_proposals; never narrate application recording/notification.`};
-      result=await this.requestStructured(retry,{label:"GM turn state-review retry"});
+      const detail=JSON.stringify(["NARRATIVE_INTEGRITY","NARRATIVE_CONTEXT"].includes(err.code)?err.diagnostic||{}:{}).slice(0,800);
+      const correction=[
+        `STRUCTURED TURN CORRECTION: ${String(err.message||err).slice(0,600)} Diagnostic: ${detail}.`,
+        "Return a complete replacement response.",
+        "Set narrative_interpretation to null unless SCOPED INTERPRETATION supplies a non-null input_source.",
+        "If used, source_ref must exactly equal that input_source and references[].source_refs may contain only audience-visible source_ref values explicitly supplied in scoped context.",
+        "Interpretation never authorizes narration or consequences.",
+        "Every world_additions item needs a non-empty normalized lowercase stable key plus non-empty name and summary; omit an uncertain or incomplete addition.",
+        "Do not invent witnesses, arrivals or knowledge. A clarified referent acknowledgement is conversational, not movement; omit material claims for it.",
+        "Understand scoped context without repeating resolved questions. Ask only for missing information needed to authorize an action.",
+        "Use empty actor for narrator claims; character:<id> for a PC observer. State review must agree with mutations.",
+        "Explicit private canon requests use canon_proposals; never narrate application recording or notification."
+      ].join(" ");
+      const retry={...req,input:`${req.input}\n\n${correction}`};
+      result=await this.requestStructured(retry,{label:"GM turn state-review retry",signal:turnSignal});
       try{
         validateTurn(result);
         validateDecisionAdvisory(this.db,guildId,result);
         return result;
       }catch(retryError){
-        if(retryError.code!=="AUTONOMOUS_WORLD")throw retryError;
-        // A malformed optional world addition must not make the entire GM turn fail.
-        // Regenerate a complete, internally consistent turn without attempting world changes.
-        const recovery={...req,input:`${req.input}\n\nWORLD-ADDITION RECOVERY: The prior replacement still contained an invalid world addition or action: ${String(retryError.message||retryError).slice(0,500)}. Return a complete replacement turn that keeps the conversation responsive but sets world_additions, scene_actions and world_conflicts to empty arrays. Do not narrate any uncommitted new place, NPC, movement, or access as established. Reassess all state_review categories so they agree with the remaining structured mutations. Preserve ordinary in-character conversational engagement; ask a natural follow-up when useful.`};
-        result=await this.requestStructured(recovery,{label:"GM turn safe worldbuilding recovery"});
+        if(!["AUTONOMOUS_WORLD","NARRATIVE_CONTEXT"].includes(retryError.code))throw retryError;
+        // Optional malformed interpretation/worldbuilding must not make the conversational turn disappear.
+        // Regenerate under the same turn deadline without relying on rejected context or world changes.
+        const safeRecovery=[
+          `SAFE CONTEXT RECOVERY: The prior replacement still contained rejected optional context or world data: ${String(retryError.message||retryError).slice(0,500)}.`,
+          "Return a complete replacement turn with narrative_interpretation set to null and world_additions, scene_actions and world_conflicts set to empty arrays.",
+          "Base narration only on the current player input and audience-visible facts.",
+          "Do not narrate any uncommitted new place, NPC, movement, access, knowledge, possession, obligation or status as established.",
+          "Reassess all state_review categories so they agree with the remaining structured mutations.",
+          "Preserve ordinary in-character conversational engagement; ask a natural follow-up when useful."
+        ].join(" ");
+        const recovery={...req,input:`${req.input}\n\n${safeRecovery}`};
+        result=await this.requestStructured(recovery,{label:"GM turn safe context recovery",signal:turnSignal});
         validateTurn(result);
         validateDecisionAdvisory(this.db,guildId,result);
         return result;

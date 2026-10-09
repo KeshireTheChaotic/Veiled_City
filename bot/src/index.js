@@ -40,6 +40,18 @@ const gm=new GMService({db,content,config});
 const voice=new VoiceNarrator(config,{db});
 const gmTurnQueue=new KeyedSerialQueue();
 
+function beginGenerationFeedback(message){
+  let stopped=false;
+  const typing=()=>message.channel.sendTyping().catch(()=>{});
+  void typing();
+  const typingTimer=setInterval(()=>{if(!stopped)void typing();},Number(config.typingRefreshMs||8000));
+  const progressTimer=setTimeout(()=>{
+    if(!stopped)void message.reply("⏳ Veilkeeper is still working on this turn. No generated campaign state has been committed yet.").catch(()=>{});
+  },Number(config.gmProgressAfterMs||20000));
+  typingTimer.unref?.();progressTimer.unref?.();
+  return ()=>{stopped=true;clearInterval(typingTimer);clearTimeout(progressTimer);};
+}
+
 const client=new Client({
   intents:[GatewayIntentBits.Guilds,GatewayIntentBits.GuildMessages,GatewayIntentBits.MessageContent,GatewayIntentBits.DirectMessages,GatewayIntentBits.GuildVoiceStates],
   partials:[Partials.Channel]
@@ -316,17 +328,18 @@ async function processPrivateTurn(message,directMention){
     deliver:text=>sendPrivate(message.guild,message.author.id,text,session.id,controlled?.character_id)})) return;
 
   let result;
+  const stopFeedback=beginGenerationFeedback(message);
   try{
-    await message.channel.sendTyping();
     const cleaned=playerText.replaceAll(`<@${client.user.id}>`,"").replaceAll(`<@!${client.user.id}>`,"").trim();
     result=await gm.runTurn({guildId:message.guild.id,actorUserId:message.author.id,actorName:speaker,actorAssignment:controlled,messageText:cleaned||playerText,scope:"private",messageId:message.id});
     if(!result.respond) return;
   }catch(err){
     console.error("Private GM generation failed",err);
     const ref=await safeStateError({guild:message.guild,error:err,context:`private-turn-generation:${message.author.id}`,sessionId:session.id});
-    await message.reply(`⚠️ Private GM engine error (${ref}). Your message was saved and no campaign state was committed; retrying is safe.`).catch(()=>{});
+    const reason=err.code==="AI_GENERATION_DEADLINE"?"The private GM generation deadline expired":"Private GM engine error";
+    await message.reply(`⚠️ ${reason} (${ref}). Your message was saved and no campaign state was committed; retrying is safe.`).catch(()=>{});
     return;
-  }
+  }finally{stopFeedback();}
 
   const scope={mode:"private",actorUserId:message.author.id,actorCharacterId:controlled?.character_id||null};
   let mutation;
@@ -415,17 +428,18 @@ async function processPartyTurn(message,directMention){
   if(!should) return;
 
   let result;
+  const stopFeedback=beginGenerationFeedback(message);
   try{
-    await message.channel.sendTyping();
     const cleaned=playerText.replaceAll(`<@${client.user.id}>`,"").replaceAll(`<@!${client.user.id}>`,"").trim();
     result=await gm.runTurn({guildId:message.guild.id,actorUserId:message.author.id,actorName:speaker,actorAssignment:controlled,messageText:cleaned||playerText,scope:"party",messageId:message.id});
     if(!result.respond) return;
   }catch(err){
     console.error("GM turn generation failed",err);
     const ref=await safeStateError({guild:message.guild,error:err,context:`party-turn-generation:${message.author.id}`,sessionId:session.id});
-    await message.reply(`⚠️ The GM engine hit an API/runtime error (${ref}). Your message was saved and no generated campaign state was committed; retrying is safe.`).catch(()=>{});
+    const reason=err.code==="AI_GENERATION_DEADLINE"?"The GM generation deadline expired":"The GM engine hit an API/runtime error";
+    await message.reply(`⚠️ ${reason} (${ref}). Your message was saved and no generated campaign state was committed; retrying is safe.`).catch(()=>{});
     return;
-  }
+  }finally{stopFeedback();}
 
   const scope={mode:"party",actorUserId:message.author.id,actorCharacterId:controlled?.character_id||null};
   let mutation;

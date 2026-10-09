@@ -17,7 +17,8 @@ try{
   const pc=db.createCharacter(guild,"owner","Tyrell",{});db.assignCharacter(session.id,"owner",pc.id);db.setPresence(session.id,"owner","present");
   const content=new ContentIndex(path.resolve("../content"));
   const gm=new GMService({db,content,config:{openaiApiKey:"offline-dummy",maxRecentMessages:20,maxContentChunks:2,
-    gmModel:"fixture",routerModel:"fixture",maxOutputTokens:5000,structuredRetryMaxTokens:6000,contextInputBudget:100000}});
+    gmModel:"fixture-strong",routineGmModel:"fixture-fast",routerModel:"fixture",maxOutputTokens:5000,
+    structuredRetryMaxTokens:6000,contextInputBudget:100000,gmTurnDeadlineMs:2000,aiOperationDeadlineMs:2000},ai:new FakeResponses([])});
   const assignment=db.controlledAssignment(session.id,"owner"),message={id:"work",author:{id:"owner"},content:'**I look up at the rain and sigh, "I need work, PantryQueue isn\'t pulling in enough money..."**'};
   gm.ai=new FakeResponses([]);
   assert.equal(await gm.shouldRespond({guildId:guild,message,actorAssignment:assignment,mode:"assisted"}),true);
@@ -32,6 +33,7 @@ try{
   captureWorldInput(db,guild,"owner",pc.id,message.id,message.content);
   const response=await gm.runTurn({guildId:guild,actorUserId:"owner",actorName:"Tyrell",actorAssignment:assignment,messageText:message.content,messageId:message.id});
   assert.equal(gm.ai.requests.length,2,"Suppressed character invitation gets a bounded native retry");
+  assert(gm.ai.requests.every(request=>request.model==="fixture-fast"),"Routine turns use the configured low-latency model");
   assert(response.narration.includes("work"));assert(gm.ai.requests[0].instructions.includes("Veilkeeper IS the GM"));
   assert(gm.ai.requests[0].text.format.schema.properties.world_additions);
   const search="I look for an open public place, keeping out of the light, not Hollow Street.";
@@ -43,6 +45,20 @@ try{
   const discovered=await gm.runTurn({guildId:guild,actorUserId:"owner",actorName:"Tyrell",actorAssignment:assignment,messageText:search,messageId:"search"});
   assert.equal(gm.ai.requests.length,2,"R01: obsolete human worldbuilding deferral is corrected with a native discovery");
   assert.equal(discovered.world_additions[0].key,"laundromat");assert.equal(db.getCharacter(pc.id).data.location,undefined);
+  const invalidInterpretation={...empty,narrative_interpretation:{source_ref:"event:missing",references:[],intended_actions:[],acknowledgements:[],unresolved:[]}};
+  gm.ai=new FakeResponses([invalidInterpretation,invalidInterpretation,empty]);
+  const recovered=await gm.runTurn({guildId:guild,actorUserId:"owner",actorName:"Tyrell",actorAssignment:assignment,
+    messageText:"That diner sounds familiar.",messageId:"context-recovery"});
+  assert.equal(recovered.narrative_interpretation,null);
+  assert.equal(gm.ai.requests.length,3,"Repeated invalid interpretation gets one safe bounded recovery instead of dropping the turn");
+  assert(gm.ai.requests[2].input.includes("SAFE CONTEXT RECOVERY"));
+  const hanging={responses:{create:(_request,{signal})=>new Promise((resolve,reject)=>{
+    signal.addEventListener("abort",()=>reject(signal.reason),{once:true});
+  })}};
+  const bounded=new GMService({db,content,config:{aiOperationDeadlineMs:20},ai:hanging});
+  const keepAlive=setTimeout(()=>{},1000);
+  try{await assert.rejects(()=>bounded.requestStructured({model:"fixture",input:"wait",text:{format:{schema:{type:"object",properties:{}}}}},
+    {label:"fixture deadline"}),error=>error.code==="AI_GENERATION_DEADLINE");}finally{clearTimeout(keepAlive);}
   assert.equal(normalizeDirectorConfidence({act:true,confidence:40}).act,true,"R17 confidence alone isn't human review");
   const enter="I enter the diner.",result={...empty,narration:"You arrive at the diner.",
     world_additions:[{kind:"location",key:"diner",name:"Diner",summary:"A modest open diner.",parent_location_key:"",visibility:"party"}],
