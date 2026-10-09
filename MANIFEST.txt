@@ -50,6 +50,7 @@ bot/scripts/i-heard-you-6-test.mjs
 bot/scripts/i-heard-you-7-test.mjs
 bot/scripts/i-heard-you-9-test.mjs
 bot/scripts/i-heard-you-integration-test.mjs
+bot/scripts/interaction-lifecycle-test.mjs
 bot/scripts/narrative-contract-test.mjs
 bot/scripts/negotiation-preview-test.mjs
 bot/scripts/npc-cognition-regression-test.mjs
@@ -112,6 +113,7 @@ bot/src/dialogue-continuity.js
 bot/src/dice.js
 bot/src/director.js
 bot/src/discord/chunking.js
+bot/src/discord/interaction-lifecycle.js
 bot/src/discord/privacy.js
 bot/src/encounter.js
 bot/src/errors.js
@@ -275,6 +277,7 @@ docs/EXPANSION_GAP_ANALYSIS.md
 docs/EXPANSION_RELEASES.md
 docs/GM_OPERATIONS.md
 docs/HANDOUTS_AND_EVIDENCE.md
+docs/INTERACTION_LIFETIME_FIX.md
 docs/I_HEARD_YOU_GAP_ANALYSIS.md
 docs/I_HEARD_YOU_IMPLEMENTATION.md
 docs/LEVEL_UP.md

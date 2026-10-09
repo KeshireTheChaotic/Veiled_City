@@ -110,7 +110,9 @@ export async function postStateError({db,guild,error,context="runtime",sessionId
   try{
     const diagnostic=error?.code==="NARRATIVE_INTEGRITY"&&error.diagnostic?Object.fromEntries(
       ["category","actor","entity","action","source","source_ref","source_span","recovery"].map(key=>[key,String(error.diagnostic[key]||"").slice(0,1000)])):null;
-    db.audit(guild.id,sessionId,"system","veilkeeper","state_error",{ref,context,error:String(error?.message||error),...(diagnostic?{diagnostic}:{})});
+    const lifetime=error?.interaction_diagnostic?JSON.parse(JSON.stringify(error.interaction_diagnostic)):null;
+    db.audit(guild.id,sessionId,"system","veilkeeper","state_error",{ref,context,error:String(error?.message||error),
+      ...(diagnostic?{diagnostic}:{}),...(lifetime?{interaction:lifetime}:{})});
   }catch{
     // Audit logging must never prevent the primary error from being reported to Discord.
   }

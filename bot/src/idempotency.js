@@ -25,7 +25,9 @@ export async function replayReceiptIfPresent({db,interaction,group,sub}){
   const prior=db.getOperationReceipt(interaction.guildId,interaction.id);
   if(!prior||prior.status!=="completed") return false;
   const text=prior.response_text||`Operation \`${prior.command_key}\` was already applied.`;
-  await interaction.reply({content:`↩️ **Already applied** — ${text}`,ephemeral:true});
+  const content=`↩️ **Already applied** — ${text}`;
+  if(interaction.deferred||interaction.replied) await interaction.editReply({content});
+  else await interaction.reply({content,ephemeral:true});
   return true;
 }
 

@@ -40,6 +40,7 @@ import { sessionBrief, formatSessionBrief } from "./session-briefs.js";
 import { formatDiscovery } from "./continuity-routing.js";
 import { manageLongProject, projectPhaseRevision } from "./long-projects.js";
 import { stateRevision } from "./ai-intents.js";
+import { beginInteraction, acknowledgeRules, interactionFailure, interactionResponseExpired, replyOrEdit } from "./discord/interaction-lifecycle.js";
 
 const interactionQueue=new KeyedSerialQueue();
 
@@ -332,11 +333,18 @@ ${draft.gm_notes||""}`}));
  * @returns {Promise<boolean>} True when the interaction was handled.
  */
 export async function handleCommand(interaction,{db,gm,voice=null}){
+  beginInteraction(interaction);
+  // Acknowledge rules before queued work, SQLite, snapshots, permissions or model requests.
+  const rules=interaction.isChatInputCommand()&&(interaction.commandName==="vc-rules"
+    ||interaction.commandName==="vc"&&interaction.options.getSubcommandGroup()==="rules");
+  if(rules&&interaction.guildId) await acknowledgeRules(interaction,interaction.options.getSubcommand());
   // A duplicate that arrives during an awaited response must see the first
   // delivery's receipt before it can execute the command body.
-  if(!interaction?.id) return executeCommand(interaction,{db,gm,voice});
-  return interactionQueue.enqueue(`${interaction.guildId}:${interaction.id}`,
-    ()=>executeCommand(interaction,{db,gm,voice}));
+  try{
+    if(!interaction?.id) return await executeCommand(interaction,{db,gm,voice});
+    return await interactionQueue.enqueue(`${interaction.guildId}:${interaction.id}`,
+      ()=>executeCommand(interaction,{db,gm,voice}));
+  }catch(error){throw interactionFailure(interaction,error);}
 }
 
 async function executeCommand(interaction,{db,gm,voice=null}){
@@ -1366,7 +1374,7 @@ GM notes: ${a.draft.gm_notes}`:""}`.slice(0,1950):"No aftermath draft exists for
     if(group==="rules"&&sub==="ask"){
       const s=db.getActiveSession(interaction.guildId);
       const a=s?db.controlledAssignment(s.id,interaction.user.id):null;
-      await interaction.deferReply();
+      if(!interaction.deferred&&!interaction.replied) await acknowledgeRules(interaction,sub);
       const r=await gm.answerRulesQuestion({
         guildId:interaction.guildId,userId:interaction.user.id,userName:interaction.member?.displayName||interaction.user.username,
         question:interaction.options.getString("question",true),characterId:a?.character_id||null
@@ -1380,12 +1388,12 @@ GM notes: ${a.draft.gm_notes}`:""}`.slice(0,1950):"No aftermath draft exists for
       if(!isGM(db,interaction)) throw new Error("GM/admin permission required.");
       db.snapshotCampaign(interaction.guildId,{label:"Pre-rules ruling",reason:"Automatic snapshot before changing authoritative GM rules rulings",createdBy:interaction.user.id});
       const row=db.upsertRulesRuling(interaction.guildId,{key:interaction.options.getString("key",true),question:interaction.options.getString("question",true),ruling:interaction.options.getString("ruling",true),createdBy:interaction.user.id});
-      await interaction.reply({content:`Saved **GM_RULING** \`${row.ruling_key}\`: ${row.ruling}`,ephemeral:true});
+      await replyOrEdit(interaction,{content:`Saved **GM_RULING** \`${row.ruling_key}\`: ${row.ruling}`,ephemeral:true});
       return true;
     }
     if(group==="rules"&&sub==="rulings"){
       const rows=db.searchRulesRulings(interaction.guildId,"");
-      await interaction.reply({content:rows.length?`**Campaign GM Rulings**\n${rows.map(r=>`• \`${r.ruling_key}\` — ${r.question}: **${r.ruling}**`).join("\n")}`.slice(0,1950):"No saved GM rulings.",ephemeral:true});
+      await replyOrEdit(interaction,{content:rows.length?`**Campaign GM Rulings**\n${rows.map(r=>`• \`${r.ruling_key}\` — ${r.question}: **${r.ruling}**`).join("\n")}`.slice(0,1950):"No saved GM rulings.",ephemeral:true});
       return true;
     }
 
@@ -1749,13 +1757,14 @@ GM notes: ${a.draft.gm_notes}`:""}`.slice(0,1950):"No aftermath draft exists for
       }
     }
   } catch(err){
+    if(interactionResponseExpired(interaction,err)) throw interactionFailure(interaction,err);
     const msg=err.message||String(err);
     if(!isExpectedError(err) && interaction.guild && isMutatingCommand(group,sub)){
       await postStateError({db,guild:interaction.guild,error:err,context:`command:/vc ${group||""} ${sub||""}`,sessionId:db.getActiveSession(interaction.guildId)?.id||null});
     }
     const payload={content:`⚠️ ${msg}`,ephemeral:true};
-    if(interaction.deferred||interaction.replied) await interaction.editReply(payload.content);
-    else await interaction.reply(payload);
+    try{await replyOrEdit(interaction,payload);}
+    catch(responseError){throw interactionFailure(interaction,err,{phase:"error-response",responseError});}
     return true;
   } finally {
     restoreReceiptCapture();

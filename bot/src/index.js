@@ -17,6 +17,7 @@ import { publishRollRequests } from "./roll-requests.js";
 import { routeRollMessage } from "./roll-language.js";
 import { routeConsentMessage } from "./consent-language.js";
 import { routeSceneEntryMessage } from "./scene-entry.js";
+import { interactionResponseExpired } from "./discord/interaction-lifecycle.js";
 import { publishEventResults, postGmLog, postStateError, deliverHandout, postPlayMessage } from "./publishing.js";
 import { VoiceNarrator } from "./voice.js";
 import { KeyedSerialQueue } from "./serial-queue.js";
@@ -485,7 +486,7 @@ client.on("interactionCreate",async interaction=>{
   }catch(err){
     console.error(err);
     if(interaction.guild) await safeStateError({guild:interaction.guild,error:err,context:`interaction:${interaction.commandName||"unknown"}`,sessionId:db.getActiveSession(interaction.guildId)?.id||null});
-    if(interaction.isRepliable()){
+    if(!interactionResponseExpired(interaction,err)&&interaction.isRepliable()){
       if(interaction.deferred||interaction.replied) await interaction.editReply("An internal error occurred.").catch(()=>{});
       else await interaction.reply({content:"An internal error occurred.",ephemeral:true}).catch(()=>{});
     }
