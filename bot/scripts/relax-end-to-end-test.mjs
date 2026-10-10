@@ -26,10 +26,13 @@ try{
   assert.equal(await gm.shouldRespond({guildId:guild,message,actorAssignment:assignment,mode:"mention"}),false,"Explicit mention-only preference retained");
   const review=Object.fromEntries(POST_TURN_REVIEW_CATEGORIES.map(k=>[k,{decision:"no_change",reason:"No persistent effects.",confidence:40}]));
   review.scene={decision:"continue",label:"",reason:"Same rain-soaked street."};
+  const intent=(source_span,type="other",patch={})=>({type,source_span,target_name:"",target_key:"",destination:"unspecified",
+    operation:"",utterance:"",excluded_targets:[],framing:"immediate",resolution:"conversational",reason:"",...patch});
   const empty={respond:true,narration:"What sort of work would you look for, and where would you start?",world_additions:[],scene_actions:[],world_conflicts:[],
-    narrative_interpretation:null,authored_candidates:null,narrative_claims:[],private_messages:[],events:[],handouts:[],relationships:[],npc_memories:[],npc_knowledge:[],
+    narrative_interpretation:null,context_memories:[],authored_candidates:null,narrative_claims:[],private_messages:[],events:[],handouts:[],relationships:[],npc_memories:[],npc_knowledge:[],
     npc_goals:[],canon_proposals:[],simulation_updates:[],ai_intents:[],decision_advisory:null,state_review:review};
-  gm.ai=new FakeResponses([{...empty,respond:false,narration:""},empty]);
+  const invitationIntent=[intent(message.content)];
+  gm.ai=new FakeResponses([{...empty,respond:false,narration:"",player_intents:invitationIntent},{...empty,player_intents:invitationIntent}]);
   captureWorldInput(db,guild,"owner",pc.id,message.id,message.content);
   const response=await gm.runTurn({guildId:guild,actorUserId:"owner",actorName:"Tyrell",actorAssignment:assignment,messageText:message.content,messageId:message.id});
   assert.equal(gm.ai.requests.length,2,"Suppressed character invitation gets a bounded native retry");
@@ -37,11 +40,13 @@ try{
   assert(response.narration.includes("work"));assert(gm.ai.requests[0].instructions.includes("Veilkeeper IS the GM"));
   assert(gm.ai.requests[0].text.format.schema.properties.world_additions);
   const search="I look for an open public place, keeping out of the light, not Hollow Street.";
+  const searchIntent=intent(search,"search",{target_name:"an open public place",operation:"find",excluded_targets:["Hollow Street"],resolution:"auto"});
   const finding={...empty,narration:"An open laundromat's deep awning offers shelter away from Hollow Street. What do you do?",
+    player_intents:[searchIntent],
     world_additions:[{kind:"location",key:"laundromat",name:"All-Night Laundromat",summary:"An open public laundromat with a shaded awning.",parent_location_key:"",visibility:"party"}],
     scene_actions:[{kind:"reveal_nearby_place",entity_ref:"laundromat",source_span:search,zone:""}]};
   captureWorldInput(db,guild,"owner",pc.id,"search",search);
-  gm.ai=new FakeResponses([{...empty,narration:"I need the GM to establish the nearby surroundings before resolving what you find."},finding]);
+  gm.ai=new FakeResponses([{...empty,player_intents:[searchIntent],narration:"I need the GM to establish the nearby surroundings before resolving what you find."},finding]);
   const discovered=await gm.runTurn({guildId:guild,actorUserId:"owner",actorName:"Tyrell",actorAssignment:assignment,messageText:search,messageId:"search"});
   assert.equal(gm.ai.requests.length,2,"R01: obsolete human worldbuilding deferral is corrected with a native discovery");
   assert.equal(discovered.world_additions[0].key,"laundromat");assert.equal(db.getCharacter(pc.id).data.location,undefined);
@@ -54,7 +59,9 @@ try{
   assert.equal(reviewRecovered.state_review.references.decision,"no_change");
   assert.equal(reviewRecovered.world_additions[0].key,"laundromat","Review recovery preserves independently valid native worldbuilding");
   assert.equal(gm.ai.requests.length,1,"Optional reference-review mismatch is repaired and revalidated without another model call");
-  const invalidInterpretation={...empty,narrative_interpretation:{source_ref:"event:missing",references:[],intended_actions:[],acknowledgements:[],unresolved:[]}};
+  const invalidInterpretation={...empty,player_intents:[intent("That diner sounds familiar.")],
+    narrative_interpretation:{source_ref:"event:missing",references:[],intended_actions:[],acknowledgements:[],unresolved:[]}};
+  captureWorldInput(db,guild,"owner",pc.id,"context-recovery","That diner sounds familiar.");
   gm.ai=new FakeResponses([invalidInterpretation,invalidInterpretation,empty]);
   const recovered=await gm.runTurn({guildId:guild,actorUserId:"owner",actorName:"Tyrell",actorAssignment:assignment,
     messageText:"That diner sounds familiar.",messageId:"context-recovery"});
@@ -69,8 +76,9 @@ try{
     {label:"fixture deadline"}),error=>error.code==="AI_GENERATION_DEADLINE");}finally{clearTimeout(keepAlive);}
   assert.equal(normalizeDirectorConfidence({act:true,confidence:40}).act,true,"R17 confidence alone isn't human review");
   const enter="I enter the diner.",result={...empty,narration:"You arrive at the diner.",
+    player_intents:[intent(enter,"move",{target_name:"Diner",target_key:"diner",destination:"interior",resolution:"auto"})],
     world_additions:[{kind:"location",key:"diner",name:"Diner",summary:"A modest open diner.",parent_location_key:"",visibility:"party"}],
-    scene_actions:[{kind:"move",entity_ref:"diner",source_span:enter,zone:""}],
+    scene_actions:[{kind:"move",entity_ref:"diner",source_span:enter,zone:"interior"}],
     narrative_claims:[{actor:"",entity_type:"character",entity:pc.id,action:"movement",prior:"",proposed:"diner",visibility:"party",source_ref:"",source_span:"You arrive at the diner.",mutation_index:-1,certainty:"committed"}]};
   captureWorldInput(db,guild,"owner",pc.id,"enter",enter);gm.ai=new FakeResponses([result]);
   const generated=await gm.runTurn({guildId:guild,actorUserId:"owner",actorName:"Tyrell",actorAssignment:assignment,messageText:enter,messageId:"enter"});

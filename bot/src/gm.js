@@ -618,20 +618,16 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
     };
     if(this.config.reasoningEffort) req.reasoning={effort:this.config.reasoningEffort};
     const validateTurn=(result)=>{
-      // Offline fixture compatibility; OpenAI strict schema requires player_intents in live turns.
       const providedIntents=Array.isArray(result.player_intents);
-      // Existing offline fixtures predate the strict new JSON schema; preserve them without lexical parsing.
-      if(!providedIntents)result.player_intents=(result.scene_actions||[]).filter(a=>a.kind==='move'&&messageText.includes(a.source_span))
-        .map(a=>({type:'move',source_span:a.source_span,target_name:a.entity_ref,target_key:a.entity_ref,
-          destination:a.zone==='exterior'?'exterior':a.zone==='interior'?'interior':'unspecified',operation:'',utterance:'',
-          excluded_targets:[],framing:'immediate',resolution:'auto',reason:'Migrated historical structured move fixture.'}));
-      result.player_intents??=[];
+      // Old non-authoritative fixtures may omit this strict-schema field, but omission never synthesizes action authority.
+      if(!providedIntents&&(result.scene_actions||[]).some(action=>action.kind==='move'))
+        throw Object.assign(new Error('Movement output omitted required typed intent authorization.'),{code:'PLAYER_INTENT'});
       result.context_memories??=[];
       const owned=ctx.actor_assignment?.character_id&&this.db.getCharacter(ctx.actor_assignment.character_id)?.owner_user_id===actorUserId;
       if(providedIntents&&owned&&result.respond&&!result.player_intents.length)
         throw Object.assign(new Error('An authenticated roleplay turn requires typed interpretation; use type=other for non-action roleplay.'),{code:'PLAYER_INTENT'});
       const typedScope={mode:scope,actorUserId,actorCharacterId:ctx.actor_assignment?.character_id||null};
-      validatePlayerIntents(result.player_intents,messageText,typedScope);
+      validatePlayerIntents(providedIntents?result.player_intents:[],messageText,typedScope);
       // An optional expansion must not veto the always-on semantic GM pipeline.
       if(this.db.getCityCalendar(guildId).flags.natural_language!==true) result.authored_candidates=null;
       // Named and consequential context persists; incidental description stays in transcript only.

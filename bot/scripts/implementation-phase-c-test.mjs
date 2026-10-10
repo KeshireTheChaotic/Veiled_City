@@ -24,13 +24,16 @@ try{
   captureWorldInput(db,guild,"owner",pc.id,messageId,text);
   const narrative={narrative_interpretation:{source_ref:context.event_key,references:[{phrase:"the nearest open shop",entity_type:"location",
     entity_key:"night-shop",source_refs:[context.event_key],status:"candidate"}],intended_actions:[text],acknowledgements:[],unresolved:[]},
+    player_intents:[{type:"move",source_span:text,target_name:"Night Shop",target_key:"night-shop",destination:"interior",
+      operation:"",utterance:"",excluded_targets:[],framing:"immediate",resolution:"auto",reason:"Current typed movement fixture."}],
     world_additions:[{kind:"location",key:"night-shop",name:"Night Shop",summary:"A modest open corner shop.",parent_location_key:"",visibility:"party"}],
-    scene_actions:[{kind:"move",entity_ref:"night-shop",source_span:text,zone:""}]};
+    scene_actions:[{kind:"move",entity_ref:"night-shop",source_span:text,zone:"interior"}]};
   const result=applyAuthoritativeMutation(db,{guildId:guild,sessionId:session.id,narrative,scope,provenance:{messageId}});
   assert.equal(db.getCharacter(pc.id).data.location,"night-shop","NL-01: semantic candidate may resolve through native local/access checks");
   const arrival=result.world.find(row=>row.status==="arrived");
   assert.equal(arrival.adjudication.mode,"native_resolved");assert.ok(arrival.adjudication.verified_receipts.length);
-  assert.equal(db.listCityRecords(guild,{kind:"movement_candidate",includeGM:true}).at(-1).status,"resolved");
+  assert.equal(db.listCityRecords(guild,{kind:"typed_intent",includeGM:true}).at(-1).status,"resolved",
+    "current source-backed typed movement record carries the native arrival receipt");
 
   const conditional="I'd go back there if I had time.";
   const conditionalId="conditional",conditionalContext=captureContextSource(db,guild,"owner",pc.id,conditionalId,conditional);

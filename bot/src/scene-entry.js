@@ -5,6 +5,7 @@ import { recordCharacterArrival, currentScene, recordScenePresence } from "./sce
 import { stateRevision } from "./ai-intents.js";
 import { indexWorldEvent, cityAudit } from "./city-calendar.js";
 import { randomUUID } from "node:crypto";
+import { conversationPrincipal } from "./conversation-principal.js";
 const normalized=value=>String(value||"").toLowerCase().replace(/^the\s+/,"").replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
 export function entryTarget(text){
   if(interpretAuthoredText(text,{natural:true}).kind!=="attempt") return null;
@@ -19,6 +20,7 @@ export function prepareSceneEntry(db,guild,user,character,messageId,text,{privat
   const flags=db.getCityCalendar(guild).flags,target=candidate?.target||entryTarget(text);
   if(!target||!character||flags.natural_language!==true||flags.scene_continuity!==true) return null;
   const pc=personalCharacter(db,guild,user,character);
+  const principal=conversationPrincipal(db,guild,user,pc.id);
   const source=captureDeclaration(db,guild,user,pc.id,messageId,text,{privateScene,sceneEntry:true,candidate});if(!source) return null;
   const key=`entry:${source.event_key}`,prior=db.getCityRecord(guild,"scene_entry",key);
   if(prior) return prior;
@@ -32,7 +34,7 @@ export function prepareSceneEntry(db,guild,user,character,messageId,text,{privat
     const manual=db.getCityRecord(guild,"gm_authority","campaign")?.data.gm_authority_mode==="manual";
     const after=db.saveCityRecord(guild,{kind:"scene_entry",key,status:manual?"pending":"awaiting_adjudication",source_event:source.event_key,
       visibility:"character",subject_key:pc.id,data:{user,character:pc.id,target,session_id:db.getActiveSession(guild).id,
-        scene:currentScene(db,guild).key,prior_location:pc.data.location??null,private_scene:privateScene,
+        scene:currentScene(db,guild).key,prior_location:pc.data.location??null,private_scene:privateScene,principal_revision:principal.revision,
         authority:"Owner-authored entry attempt only; AI-GM native adjudication or explicit manual review resolves access. No completed travel, costs, occupants or knowledge inferred."}});
     cityAudit(db,guild,"scene_entry",key,null,after,user);return after;
   });

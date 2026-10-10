@@ -23,7 +23,12 @@ const location=(key,name=key,parent="",visibility="party")=>({kind:"location",ke
 const action=(kind,entity_ref,source_span,zone="")=>({kind,entity_ref,source_span,zone});
 const input=(id,text,result,sc=scope)=>{
   captureWorldInput(db,guild,sc.actorUserId,sc.actorCharacterId,id,text,{privateScene:sc.mode==="private"});
-  return {guildId:guild,sessionId:session.id,narrative:result,scope:sc,provenance:{messageId:id}};
+  const player_intents=Object.hasOwn(result,"player_intents")?result.player_intents:(result.scene_actions||[])
+    .filter(row=>row.kind==="move"&&text.includes(row.source_span)).map(row=>({type:"move",source_span:row.source_span,
+      target_name:row.entity_ref,target_key:row.entity_ref,destination:row.zone==="interior"?"interior":row.zone==="exterior"?"exterior":"unspecified",
+      operation:"",utterance:"",excluded_targets:[],framing:"immediate",resolution:"auto",reason:"Current typed movement fixture."}));
+  const narrative=Object.hasOwn(result,"player_intents")||player_intents.length?{...result,player_intents}:result;
+  return {guildId:guild,sessionId:session.id,narrative,scope:sc,provenance:{messageId:id}};
 };
 try{
   const search="I look for an open public place, keeping out of the light, not Hollow Street.";
@@ -107,8 +112,8 @@ try{
     assert.equal(db.getSimulationEntity(guild,"location",addition.key),null);
   }
   const unsourced=input("atomic","I look around.",{world_additions:[location("rollback","Rollback","quiet-shop")],
-    scene_actions:[action("move","rollback","I look around.")]});
-  assert.throws(()=>applyAuthoritativeMutation(db,unsourced),/not authorization/);assert.equal(db.getSimulationEntity(guild,"location","rollback"),null,"Atomic rollback");
+    scene_actions:[action("move","rollback","I look around.")],player_intents:[]});
+  assert.throws(()=>applyAuthoritativeMutation(db,unsourced),/typed intent authorization/);assert.equal(db.getSimulationEntity(guild,"location","rollback"),null,"Atomic rollback");
   const hypothetical='Someone says: "I enter the Diner."';
   assert.throws(()=>applyAuthoritativeMutation(db,input("quoted",hypothetical,{scene_actions:[action("move","diner","I enter the Diner.")]})),/Quoted/);
   assert.equal(hasCharacterInvitation('**I look up at the rain and sigh, "I need work, PantryQueue isn\'t pulling in enough money..."**'),true);

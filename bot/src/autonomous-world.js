@@ -128,6 +128,11 @@ function visible(db,guild,type,key,scope){
     &&boundary.visibility==="character"&&(boundary.subject_key||boundary.subject_character_id)===scope.actorCharacterId);
 }
 function match(row,name){return normalizeNpcKey(row.state?.name||row.display_name||"")===normalizeNpcKey(name);}
+function locationIdentityMatches(row,name){
+  const normalize=value=>normalizeNpcKey(String(value||"").replace(/^the\s+/i,""));
+  const expected=normalize(name),values=[row?.entity_key,row?.state?.name,row?.state?.title,row?.state?.display_name];
+  return !!expected&&values.filter(Boolean).some(value=>normalize(value)===expected);
+}
 function fail(message){throw Object.assign(new Error(message),{code:"AUTONOMOUS_WORLD"});}
 function closed(schema,value){
   if(schema.anyOf)return schema.anyOf.some(s=>closed(s,value));
@@ -251,11 +256,16 @@ function applyWorld(db,guild,narrative,scope,provenance,content){
       const entries=db.characterContinuity(guild,pc.id,{kind:"scene_entry",limit:50}).filter(entry=>
         ["pending","awaiting_adjudication"].includes(entry.status)&&entry.data.user===pc.owner_user_id
         &&entry.data.session_id===session.id&&entry.data.scene===scene.key&&(entry.data.prior_location??null)===(pc.data.location??null)
-        &&(scope.mode==="private"||!entry.data.private_scene));
+        &&entry.visibility==="character"&&entry.subject_key===pc.id
+        &&entry.data.private_scene===(scope.mode==="private"));
       const matching=entries.filter(entry=>{
         const declaration=db.getWorldEvent(guild,entry.source_event);
-        return declaration?.status==="active"&&declaration.details.author===pc.owner_user_id
-          &&declaration.details.character_id===pc.id&&declaration.details.text.includes(action.source_span)
+        return declaration?.status==="active"&&declaration.kind==="player_declaration"
+          &&declaration.visibility==="character"&&declaration.subject_key===pc.id
+          &&declaration.session_id===session.id&&declaration.scene===scene.key
+          &&declaration.details.author===pc.owner_user_id&&declaration.details.character_id===pc.id
+          &&declaration.details.private_scene===(scope.mode==="private")&&declaration.details.text.includes(action.source_span)
+          &&(!entry.data.principal_revision||entry.data.principal_revision===principal.revision)
           &&db.ownerAuthoredSource(guild,declaration.event_key,pc.owner_user_id);
       });
       if(matching.length!==1)fail("Older entry needs a unique current owner/source/scene/location-bound declaration.");
@@ -267,23 +277,40 @@ function applyWorld(db,guild,narrative,scope,provenance,content){
       fail("Quoted, conditional or hypothetical spans cannot authorize native scene actions.");
     const latest=db.getCharacter(pc.id);
     if(action.kind==="move"){
-      const semantic=currentTypedMovement(db,guild,latest,action.source_span,target,scope);
-      if(!semantic&&Array.isArray(narrative?.player_intents))
-        fail("Movement requires a current typed immediate owner intent with exact authored source, not a movement-verb phrase.");
-      // Legacy programmatic fixtures without player_intents retain exact-source native adjudication.
+      const semantic=currentTypedMovement(db,guild,latest,action.source_span,target,scope,source.event_key);
+      if(!semantic&&!entrySource)
+        fail("Movement requires current verified typed intent authorization or an explicit revalidated legacy scene entry.");
       const location=db.getSimulationEntity(guild,"location",target);
       if(!location||!visible(db,guild,"location",target,scope)||!localAccess(db,guild,latest,target))fail("Movement requires accessible local geography; adjudicate real travel/access obstacles without inventing an arrival.");
       if(db.getCurrentEncounter(session.id)?.status==="active")fail("Active encounter movement requires native combat rules.");
-      // The named target must match; deictic travel needs a source-backed candidate, not model redirection.
-      const phrase=semantic?.data.target_name||semantic?.data.target_key||target;
-      const resolved=resolvePlaceReference(db,guild,pc.id,phrase,{mode:scope.mode,user:scope.actorUserId});
-      if((resolved.status!=="resolved_existing"||resolved.location.entity_key!==target)&&semantic?.data.target_key!==target)
-        fail("Arrival destination must match the owner's explicit declaration.");
+      if(semantic){
+        const phrase=semantic.data.target_name||semantic.data.target_key;
+        const resolved=resolvePlaceReference(db,guild,pc.id,phrase,{mode:scope.mode,user:scope.actorUserId});
+        if(semantic.data.target_key&&semantic.data.target_key!==target||resolved.status!=="resolved_existing"||resolved.location.entity_key!==target)
+          fail("Arrival destination must match the current typed owner's explicit target.");
+        if(semantic.data.destination==="exterior"&&action.zone!=="exterior"||semantic.data.destination!=="interior"&&action.zone==="interior"
+          ||semantic.data.destination==="interior"&&action.zone!=="interior")
+          fail("Movement destination scope cannot broaden approach/exterior into interior entry.");
+      }else if(!locationIdentityMatches(location,entrySource.data.target)){
+        fail("Legacy scene entry destination must match the persisted owner-authored target.");
+      }
+      let adapter=null;
+      if(entrySource){
+        const adapterKey=`legacy-entry-adapter:${hash([entrySource.record_key,actionSource.event_key,target,pc.data.location??null])}`;
+        adapter=db.getCityRecord(guild,"legacy_scene_entry_adapter",adapterKey)||db.saveCityRecord(guild,{
+          kind:"legacy_scene_entry_adapter",key:adapterKey,status:"authorized",source_event:actionSource.event_key,
+          visibility:"character",subject_key:pc.id,
+          data:{entry_key:entrySource.record_key,character_id:pc.id,owner_user_id:pc.owner_user_id,target_key:target,
+            session_id:session.id,scene:scene.key,prior_location:pc.data.location??null,source_span:action.source_span,
+            principal_revision:principal.revision,revision_basis:entrySource.data.principal_revision?"exact":"historical_owner_source",
+            authority:"Revalidated legacy owner entry authorizes native adjudication only; this record is not an outcome."}});
+      }
       db.updateCharacterData(pc.id,data=>{data.location=target;});
       const arrival=event(`action:${index}`,"arrival",target,{entity_type:"character",entity_key:pc.id,owner_user_id:pc.owner_user_id,declaration:actionSource.event_key});
       recordScenePresence(db,guild,{entity_type:"character",entity_key:pc.id,location_key:target,
         source_event:arrival.event_key,zone:action.zone||"scene",...boundary,accepted_by:pc.owner_user_id},"ai_gm");
       results.push({status:"arrived",key:target,source_event:arrival.event_key,
+        ...(adapter?{authorization:{kind:"legacy_scene_entry",receipt:adapter.record_key,source_event:adapter.source_event}}:{}),
         adjudication:movementAdjudication({sourceRef:actionSource.event_key,sourceSpan:action.source_span,receipt:arrival.event_key})});
       if(semantic)db.saveCityRecord(guild,{...semantic,key:semantic.record_key,status:"resolved",
         data:{...semantic.data,arrival:arrival.event_key,adjudication:"native_resolved"}});

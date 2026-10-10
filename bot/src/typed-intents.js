@@ -124,10 +124,11 @@ export function persistTypedDialogue(db,guild,intents,scope={},provenance={}){
 }
 
 /** Match typed semantic intent against exact source, actor, scene and current position. */
-export function currentTypedMovement(db,guild,pc,sourceSpan,target,scope={}){
+export function currentTypedMovement(db,guild,pc,sourceSpan,target,scope={},sourceEvent=""){
   const scene=currentScene(db,guild);
   const candidates=db.listCityRecords(guild,{kind:'typed_intent',includeGM:true,limit:120}).filter(row=>
-    row.status==='interpreted'&&row.data.type==='move'&&row.data.framing==='immediate'
+    row.status==='interpreted'&&row.source_event===sourceEvent&&row.data.type==='move'&&row.data.framing==='immediate'
+    &&row.data.resolution==='auto'
     &&row.data.source_span===sourceSpan&&row.data.actor===pc.id
     &&row.data.session_id===scene.session_id&&row.data.scene===scene.key
     &&(row.data.from_ref||null)===(pc.data.location||null)
@@ -176,6 +177,9 @@ export function validateIntentResolutions(result){
     if(intent.type==='move'){
       if(intent.resolution==='auto'&&!matches.some(a=>a.kind==='move'))
         throw error('Automatic movement must include an executable native move.',{source_span:intent.source_span});
+      if(intent.resolution!=='auto'&&matches.some(a=>a.kind==='move'))
+        throw error('Blocked, pending, conditional, or conversational movement cannot include an executable native move.',
+          {source_span:intent.source_span,resolution:intent.resolution});
       if(intent.resolution==='conversational')
         throw error('Player movement cannot end as conversational acknowledgement.',{source_span:intent.source_span});
     }

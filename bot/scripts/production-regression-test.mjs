@@ -11,6 +11,7 @@ import { GMService } from "../src/gm.js";
 import { validatePostTurnStateReview, queueDirectorAfterPartyTurn, describeBlockedAction } from "../src/director.js";
 import { buildSessionRosterReport, chunkRosterReport } from "../src/roster.js";
 import { buildCommands, handleCommand } from "../src/commands.js";
+import { captureWorldInput } from "../src/autonomous-world.js";
 
 const tmp=fs.mkdtempSync(path.join(os.tmpdir(),"vc-prod-test-"));
 const db=new VeiledDB(path.join(tmp,"test.sqlite"),path.resolve("./sql/schema.sql"));
@@ -262,16 +263,23 @@ const noChangeReview={
   facts_clues:{decision:"no_change",reason:"none"},resources:{decision:"no_change",reason:"none"},clocks:{decision:"no_change",reason:"none"},threads:{decision:"no_change",reason:"none"},references:{decision:"no_change",reason:"none"},relationships:{decision:"no_change",reason:"none"},npc_cognition:{decision:"no_change",reason:"none"},handouts:{decision:"no_change",reason:"none"},canon:{decision:"no_change",reason:"none"},veil_exposure:{decision:"no_change",reason:"none"},scene:{decision:"continue",label:"",reason:"same scene"}
 };
 let turnCalls=0;
+const fixtureIntent=(source_span,type="other")=>({type,source_span,target_name:"",target_key:"",destination:"unspecified",
+  operation:type==="observe"?"inspect":"",utterance:"",excluded_targets:[],framing:"immediate",resolution:"conversational",reason:""});
 const fakeTurnAI={responses:{create:async(req)=>{
   turnCalls++;
   const bad=structuredClone(noChangeReview);
   if(turnCalls===1) bad.clocks={decision:"changed",reason:"claimed without mutation"};
-  return {output_text:JSON.stringify({respond:true,narration:"Test narration.",private_messages:[],events:[],handouts:[],relationships:[],npc_memories:[],npc_knowledge:[],npc_goals:[],canon_proposals:[],state_review:bad})};
+  return {output_text:JSON.stringify({respond:true,narration:"Test narration.",world_additions:[],scene_actions:[],world_conflicts:[],
+    narrative_interpretation:null,player_intents:[fixtureIntent("I inspect the door.","observe")],context_memories:[],authored_candidates:null,
+    narrative_claims:[],private_messages:[],events:[],handouts:[],relationships:[],npc_memories:[],npc_knowledge:[],npc_goals:[],
+    canon_proposals:[],simulation_updates:[],ai_intents:[],decision_advisory:null,state_review:bad})};
 }}};
 const fakeContent={read:()=>"",search:()=>[]};
 const gmConfig={openaiKey:"x",gmModel:"test",routerModel:"test",maxRecentMessages:20,maxContentChunks:4,structuredRetryMaxTokens:3000,reasoningEffort:"",downtimeModel:"test",downtimeMaxOutputTokens:1200};
 const gmSvc=new GMService({db,content:fakeContent,config:gmConfig,ai:fakeTurnAI});
-const reviewed=await gmSvc.runTurn({guildId:guild,actorUserId:u1,actorName:"One",actorAssignment:db.activeAssignment(session.id,u1),messageText:"I inspect the door.",scope:"party"});
+captureWorldInput(db,guild,u1,c1.id,"review-fixture","I inspect the door.");
+const reviewed=await gmSvc.runTurn({guildId:guild,actorUserId:u1,actorName:"One",actorAssignment:db.activeAssignment(session.id,u1),
+  messageText:"I inspect the door.",messageId:"review-fixture",scope:"party"});
 assert.equal(turnCalls,1,"optional post-turn review mismatch should be quarantined and revalidated without a paid retry");
 assert.equal(reviewed.state_review.clocks.decision,"no_change");
 assert.equal(reviewed.state_review.scene.decision,"continue");
@@ -280,10 +288,15 @@ let proposalTurnCalls=0;
 const fakeProposalAI={responses:{create:async(req)=>{
   proposalTurnCalls++;
   const proposals=proposalTurnCalls===1?[]:[{key:"character.two.species",value:"Two is literally a frog.",visibility:"party",reason:"Explicit player request for campaign canon."}];
-  return {output_text:JSON.stringify({respond:true,narration:"I will leave canon approval to the GM.",private_messages:[],events:[],handouts:[],relationships:[],npc_memories:[],npc_knowledge:[],npc_goals:[],canon_proposals:proposals,state_review:noChangeReview})};
+  return {output_text:JSON.stringify({respond:true,narration:"I will leave canon approval to the GM.",world_additions:[],scene_actions:[],world_conflicts:[],
+    narrative_interpretation:null,player_intents:[fixtureIntent("Two is literally a frog as campaign canon. Inform the GM.")],context_memories:[],
+    authored_candidates:null,narrative_claims:[],private_messages:[],events:[],handouts:[],relationships:[],npc_memories:[],npc_knowledge:[],
+    npc_goals:[],canon_proposals:proposals,simulation_updates:[],ai_intents:[],decision_advisory:null,state_review:noChangeReview})};
 }}};
 const proposalSvc=new GMService({db,content:fakeContent,config:gmConfig,ai:fakeProposalAI});
-const proposalTurn=await proposalSvc.runTurn({guildId:guild,actorUserId:u1,actorName:"One",actorAssignment:db.activeAssignment(session.id,u1),messageText:"Two is literally a frog as campaign canon. Inform the GM.",scope:"private"});
+captureWorldInput(db,guild,u1,c1.id,"proposal-fixture","Two is literally a frog as campaign canon. Inform the GM.",{privateScene:true});
+const proposalTurn=await proposalSvc.runTurn({guildId:guild,actorUserId:u1,actorName:"One",actorAssignment:db.activeAssignment(session.id,u1),
+  messageText:"Two is literally a frog as campaign canon. Inform the GM.",messageId:"proposal-fixture",scope:"private"});
 assert.equal(proposalTurnCalls,2,"explicit private canon request without a proposal did not trigger structured corrective retry");
 assert.equal(proposalTurn.canon_proposals.length,1);
 assert.equal(proposalTurn.state_review.canon.decision,"no_change","canon proposal incorrectly counted as an authoritative canon mutation");

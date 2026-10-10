@@ -1,9 +1,13 @@
 .editorconfig
 .gitattributes
 .github/workflows/offline-validation.yml
+CODEX_INTENT_REFINEMENT_PLAN.md
+CODEX_TYPED_INTENT_BRANCH_PLAN_v3.md
 Dockerfile
 LICENSE
 README.md
+SOURCE_BUILD_MANIFEST.json
+SOURCE_BUILD_NOTES.md
 SUGGESTIONS-End-To-End.md
 bot/.env.example
 bot/.gitignore
@@ -45,6 +49,7 @@ bot/scripts/fixtures/i-heard-you-golden.json
 bot/scripts/fixtures/implementation-evaluation.json
 bot/scripts/fixtures/systems-judgment-golden.json
 bot/scripts/format-check.mjs
+bot/scripts/gm-recovery-regression-test.mjs
 bot/scripts/i-heard-you-1-test.mjs
 bot/scripts/i-heard-you-2-test.mjs
 bot/scripts/i-heard-you-3-test.mjs
@@ -61,6 +66,8 @@ bot/scripts/implementation-phase-c-test.mjs
 bot/scripts/implementation-phase-d-test.mjs
 bot/scripts/implementation-phase-e-test.mjs
 bot/scripts/interaction-lifecycle-test.mjs
+bot/scripts/memory-audience-isolation-test.mjs
+bot/scripts/movement-authorization-regression-test.mjs
 bot/scripts/narrative-contract-test.mjs
 bot/scripts/narrative-inference-test.mjs
 bot/scripts/narrative-understanding-test.mjs
@@ -93,6 +100,7 @@ bot/scripts/systems-to-players-5-test.mjs
 bot/scripts/systems-to-players-6-test.mjs
 bot/scripts/systems-to-players-7-test.mjs
 bot/scripts/systems-to-players-9-test.mjs
+bot/scripts/typed-intents-regression-test.mjs
 bot/scripts/validate-command-schema.mjs
 bot/scripts/validate-offline.mjs
 bot/sql/schema.sql
@@ -124,6 +132,7 @@ bot/src/config.js
 bot/src/consent-language.js
 bot/src/content-packages.js
 bot/src/content.js
+bot/src/context-memory.js
 bot/src/context-planner.js
 bot/src/continuity-routing.js
 bot/src/conversation-principal.js
@@ -136,12 +145,14 @@ bot/src/discord/chunking.js
 bot/src/discord/interaction-lifecycle.js
 bot/src/discord/privacy.js
 bot/src/encounter.js
+bot/src/entity-memory.js
 bot/src/epistemic.js
 bot/src/errors.js
 bot/src/evaluation-harness.js
 bot/src/evidence-custody.js
 bot/src/expansion-contracts.js
 bot/src/gm.js
+bot/src/gm.js.20261009-144611.bak
 bot/src/handout.js
 bot/src/history-reconciliation.js
 bot/src/idempotency.js
@@ -154,6 +165,7 @@ bot/src/message-span-ledger.js
 bot/src/movement-language.js
 bot/src/narrative-context.js
 bot/src/narrative-integrity.js
+bot/src/narrative-integrity.js.20261009-144611.bak
 bot/src/negotiations.js
 bot/src/npc-cognition.js
 bot/src/npc-conversations.js
@@ -201,6 +213,8 @@ bot/src/turn-attempts.js
 bot/src/turn-orchestration.js
 bot/src/turn-pipeline.js
 bot/src/turn-recovery.js
+bot/src/typed-intents.js
+bot/src/typed-mechanics.js
 bot/src/voice.js
 bot/src/world-authoring.js
 content/CARDS/ANCESTRIES_AND_COMMUNITIES.md
@@ -344,6 +358,9 @@ docs/SERVER_CHANNEL_SETUP.md
 docs/SNAPSHOTS_AND_ROLLBACK.md
 docs/SYSTEMS_TO_PLAYERS_GAP_ANALYSIS.md
 docs/SYSTEMS_TO_PLAYERS_IMPLEMENTATION.md
+docs/TYPED_INTENT_BASELINE.md
+docs/TYPED_INTENT_CONTRACTS.md
+docs/TYPED_INTENT_PROGRESS.md
 docs/UPGRADE_3.0_TO_3.1.md
 docs/UPGRADE_3.1.1_TO_3.1.2.md
 docs/UPGRADE_3.1.2_TO_3.1.3.md
