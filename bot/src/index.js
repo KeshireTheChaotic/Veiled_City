@@ -11,14 +11,9 @@ import { applyAuthoritativeMutation } from "./state.js";
 import { commitGmTurn } from "./turn-orchestration.js";
 import { routeDiscoveryMessage } from "./continuity-routing.js";
 import { captureArcCandidate } from "./personal-continuity.js";
-import { captureDialogue } from "./dialogue-continuity.js";
-import { captureDeclaration } from "./player-language.js";
 import { captureContextSource } from "./narrative-context.js";
 import { conversationPrincipal } from "./conversation-principal.js";
 import { publishRollRequests } from "./roll-requests.js";
-import { routeRollMessage } from "./roll-language.js";
-import { routeConsentMessage } from "./consent-language.js";
-import { routeSceneEntryMessage } from "./scene-entry.js";
 import { captureWorldInput } from "./autonomous-world.js";
 import { hasCharacterInvitation } from "./player-language.js";
 import { interactionResponseExpired } from "./discord/interaction-lifecycle.js";
@@ -129,12 +124,9 @@ async function outputStep(errors,{guild,sessionId,context},fn){
 
 async function routeNativeSpans({message,text,session,controlled}){
   const privateDeliver=value=>sendPrivate(message.guild,message.author.id,value,session.id,controlled?.character_id);
+  // Model-semantic GM processing owns freeform mechanical and consent intent classification.
+  // Explicit native slash commands remain available; legacy phrase handlers are no longer intake gates.
   return routeMessageSpans(text,[
-    {kind:"consent",route:span=>controlled?.npc_proxy?null:routeConsentMessage({db,message,text:span.text,
-      characterId:controlled?.character_id,deliver:privateDeliver,detailed:true})},
-    {kind:"roll",route:span=>controlled?.npc_proxy?null:routeRollMessage({db,message,text:span.text,
-      characterId:controlled?.character_id,deliver:privateDeliver,
-      sendAmendment:(user,value,sid,char)=>sendPrivate(message.guild,user,value,sid,char),detailed:true})},
     {kind:"recall",route:span=>routeDiscoveryMessage({db,message,text:span.text,deliver:async value=>{
       try{await message.author.send(value);}catch{await message.reply("Private knowledge delivery failed. Use /vc-intel discover; no world action occurred.");}
     },detailed:true})}
@@ -342,15 +334,14 @@ async function processPrivateTurn(message,directMention,attempt=null){
   const nativeLedger=await routeNativeSpans({message,text:playerText,session,controlled});
   recordSpanLedger(attempt,nativeLedger);playerText=nativeLedger.remaining_text;
   if(!playerText){if(attempt)advanceTurnAttempt(db,attempt.turn_id,"delivered");return;}
-  captureDeclaration(db,message.guild.id,message.author.id,controlled?.npc_proxy?null:controlled?.character_id,message.id,playerText,{privateScene:true});
+  // Typed source-backed action intents replace pre-GM lexical declaration capture.
   captureContextSource(db,message.guild.id,message.author.id,controlled?.character_id,message.id,playerText,{privateScene:true});
   captureWorldInput(db,message.guild.id,message.author.id,controlled?.character_id,message.id,playerText,{privateScene:true});
-  captureDialogue(db,message.guild.id,message.author.id,controlled?.npc_proxy?null:controlled?.character_id,message.id,playerText,{privateScene:true});
+  // Typed speech is verified and captured after native scene movement and NPC presence.
   captureArcCandidate(db,message.guild.id,message.author.id,controlled?.npc_proxy?null:controlled?.character_id,message.id,playerText);
   db.addMessage({guildId:message.guild.id,sessionId:session.id,messageId:message.id,userId:message.author.id,speakerName:speaker,characterId:controlled?.character_id||null,visibility:vis,subjectUserId:vis==="player"?message.author.id:null,subjectCharacterId:vis==="character"?conversationId:null,content:playerText});
   if(attempt)advanceTurnAttempt(db,attempt.turn_id,"captured");
-  if(!controlled?.npc_proxy&&await routeSceneEntryMessage({db,message,characterId:controlled?.character_id,text:playerText,privateScene:true,
-    deliver:text=>sendPrivate(message.guild,message.author.id,text,session.id,controlled?.character_id)})) return;
+  // Only model-typed entry intents reach native scene actions; no lexical staging gate.
 
   let result;
   const stopFeedback=beginGenerationFeedback(message);
@@ -440,14 +431,13 @@ async function processPartyTurn(message,directMention,attempt=null){
       {committed:"yes",nativeCommitId:`director:${attempt.turn_id}`}:{committed:"no"});
   }
   captureArcCandidate(db,message.guild.id,message.author.id,controlled?.npc_proxy?null:controlled?.character_id,message.id,playerText);
-  captureDeclaration(db,message.guild.id,message.author.id,controlled?.npc_proxy?null:controlled?.character_id,message.id,playerText);
+  // Typed source-backed action intents replace pre-GM lexical declaration capture.
   captureContextSource(db,message.guild.id,message.author.id,controlled?.character_id,message.id,playerText);
   captureWorldInput(db,message.guild.id,message.author.id,controlled?.character_id,message.id,playerText);
   db.addMessage({guildId:message.guild.id,sessionId:session.id,messageId:message.id,userId:message.author.id,speakerName:speaker,characterId:controlled?.character_id||null,visibility:"party",content:playerText});
   if(attempt)advanceTurnAttempt(db,attempt.turn_id,"captured");
-  captureDialogue(db,message.guild.id,message.author.id,controlled?.npc_proxy?null:controlled?.character_id,message.id,playerText);
-  if(!controlled?.npc_proxy&&await routeSceneEntryMessage({db,message,characterId:controlled?.character_id,text:playerText,
-    deliver:text=>sendPrivate(message.guild,message.author.id,text,session.id,controlled?.character_id)})) return;
+  // Typed speech is verified and captured after native scene movement and NPC presence.
+  // Only model-typed entry intents reach native scene actions; no lexical staging gate.
 
   let should=false;
   try{

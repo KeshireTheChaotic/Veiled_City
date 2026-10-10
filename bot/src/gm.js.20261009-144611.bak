@@ -3,9 +3,6 @@ import OpenAI from "openai";
 import { AUTHORITY_POLICY } from "./authority-policy.js";
 import { conversationPrincipal } from "./conversation-principal.js";
 import { authoredCandidatesSchema, AUTHORED_CANDIDATES_PROMPT } from "./authored-candidates.js";
-import { playerIntentSchema, PLAYER_INTENT_PROMPT, validatePlayerIntents, autoCompleteOrdinaryMovements, validateIntentResolutions } from "./typed-intents.js";
-import { tierWorldAdditions } from "./entity-memory.js";
-import { contextMemorySchema, CONTEXT_MEMORY_PROMPT } from "./context-memory.js";
 import { presentationContext } from "./presentation-evidence.js";
 import { summarizeRoster, previewAuthoritativeMutation } from "./state.js";
 import { narrativeContext } from "./character-narrative.js";
@@ -126,8 +123,6 @@ const gmSchema={
     scene_actions:sceneActionsSchema,
     world_conflicts:worldConflictsSchema,
     narrative_interpretation:interpretationSchema,
-    player_intents:playerIntentSchema,
-    context_memories:contextMemorySchema,
     authored_candidates:authoredCandidatesSchema,
     narrative_claims:{type:"array",items:materialClaimSchema},
     private_messages:{
@@ -165,7 +160,7 @@ const gmSchema={
     simulation_updates:{type:"array",items:simulationUpdateSchema},
     state_review:stateReviewSchema
   },
-  required:["respond","narration","world_additions","scene_actions","world_conflicts","narrative_interpretation","player_intents","context_memories","authored_candidates","narrative_claims","private_messages","events","handouts","relationships","npc_memories","npc_knowledge","npc_goals","canon_proposals","simulation_updates","state_review"]
+  required:["respond","narration","world_additions","scene_actions","world_conflicts","narrative_interpretation","authored_candidates","narrative_claims","private_messages","events","handouts","relationships","npc_memories","npc_knowledge","npc_goals","canon_proposals","simulation_updates","state_review"]
 };
 
 
@@ -501,10 +496,7 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
       NARRATIVE_CONTRACT,
       CONTEXT_CONTRACT,
       AUTHORED_CANDIDATES_PROMPT,
-      PLAYER_INTENT_PROMPT,
-      CONTEXT_MEMORY_PROMPT,
       AUTONOMOUS_WORLD_PROMPT,
-      "Ordinary storefronts, hiring signs, streets, and minor NPC introductions use world_additions, scene_actions and context_memories, NOT action=canon claims. A committed canon claim needs the exact existing canon-ledger key and matching value; event:<index> is not a canon key.",
       "Relationship and artifact epistemic source_refs must preserve active perspective/ancestry. PC-outgoing attitudes and debt/obligation changes are nonbinding interpretation drafts, never PC feelings or binding terms. Artifact canonical_facts need matching independently authorized sources; unsupported detail stays illustrative presentation. Legacy recaps are narrator summaries, not observations or new rulings.",
       "Fact/clue epistemic metadata distinguishes observation, testimony and hypothesis. Null defaults to hypothesis, never world truth. NPC memories need own witnessed/delivered/inferred evidence; inferred or reported knowledge cannot become known. Use world_additions to establish ordinary places/NPCs and scene_actions for ordinary owner-authorized local travel, independently of optional delegation. Use scene.enter only for the older saved policy workflow. Never infer access or consent from an understood name.",
       `NPC diction guidance, not facts/PC emotions: ${JSON.stringify(ctx.npc_cognition.slice(0,4).map(row=>portrayalPacket(this.db,guildId,row.npc_key)))}`,
@@ -618,26 +610,6 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
     };
     if(this.config.reasoningEffort) req.reasoning={effort:this.config.reasoningEffort};
     const validateTurn=(result)=>{
-      // Offline fixture compatibility; OpenAI strict schema requires player_intents in live turns.
-      const providedIntents=Array.isArray(result.player_intents);
-      // Existing offline fixtures predate the strict new JSON schema; preserve them without lexical parsing.
-      if(!providedIntents)result.player_intents=(result.scene_actions||[]).filter(a=>a.kind==='move'&&messageText.includes(a.source_span))
-        .map(a=>({type:'move',source_span:a.source_span,target_name:a.entity_ref,target_key:a.entity_ref,
-          destination:a.zone==='exterior'?'exterior':a.zone==='interior'?'interior':'unspecified',operation:'',utterance:'',
-          excluded_targets:[],framing:'immediate',resolution:'auto',reason:'Migrated historical structured move fixture.'}));
-      result.player_intents??=[];
-      result.context_memories??=[];
-      const owned=ctx.actor_assignment?.character_id&&this.db.getCharacter(ctx.actor_assignment.character_id)?.owner_user_id===actorUserId;
-      if(providedIntents&&owned&&result.respond&&!result.player_intents.length)
-        throw Object.assign(new Error('An authenticated roleplay turn requires typed interpretation; use type=other for non-action roleplay.'),{code:'PLAYER_INTENT'});
-      const typedScope={mode:scope,actorUserId,actorCharacterId:ctx.actor_assignment?.character_id||null};
-      validatePlayerIntents(result.player_intents,messageText,typedScope);
-      // An optional expansion must not veto the always-on semantic GM pipeline.
-      if(this.db.getCityCalendar(guildId).flags.natural_language!==true) result.authored_candidates=null;
-      // Named and consequential context persists; incidental description stays in transcript only.
-      tierWorldAdditions(result,messageText);
-      autoCompleteOrdinaryMovements(this.db,guildId,result,typedScope);
-      validateIntentResolutions(result);
       const prose=[result.narration||"",...(result.private_messages||[]).map(row=>row.content)].join("\n");
       if(worldAuthority(this.db,guildId).gm_authority_mode==="autonomous"&&!(result.world_conflicts||[]).length
         &&/\b(?:(?:I|we) need (?:a |the |human )?GM to|(?:the |human )GM (?:needs|must|has) to) (?:establish|create|approve|promote|describe)\b[^.!?\n]{0,140}\b(?:surroundings|location|place|NPC|person|diner|street|scene)\b/i.test(prose))
@@ -684,9 +656,6 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
         "If used, source_ref must exactly equal that input_source and references[].source_refs may contain only audience-visible source_ref values explicitly supplied in scoped context.",
         "Interpretation never authorizes narration or consequences.",
         "Every world_additions item needs a non-empty normalized lowercase stable key plus non-empty name and summary; omit an uncertain or incomplete addition.",
-        "Use player_intents with verbatim current source_span and explicit type/framing/target to drive automatic mundane movement. If movement is auto, emit scene_actions.move or a matching new location; never repeat only the declaration.",
-        "New names are ordinary typed world entities, not canon ledger claims. Keep unimportant incidental prose out of world_additions.",
-        "When canon validation fails for an ordinary new business, place, hiring sign or incidental scenery, remove the unsupported canon claim, NOT the ordinary world creation; preserve any valid world_additions, scene_actions and player_intents.",
         "Do not invent witnesses, arrivals or knowledge. A clarified referent acknowledgement is conversational, not movement; omit material claims for it.",
         "Understand scoped context without repeating resolved questions. Ask only for missing information needed to authorize an action.",
         "Use empty actor for narrator claims; character:<id> for a PC observer. State review must agree with mutations.",
@@ -700,22 +669,10 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
         validateDecisionAdvisory(this.db,guildId,result);
         return result;
       }catch(retryError){
-        if(!["AUTONOMOUS_WORLD","NARRATIVE_CONTEXT","POST_TURN_REVIEW","PLAYER_INTENT"].includes(retryError.code)
-          &&!(retryError.code==="NARRATIVE_INTEGRITY"&&retryError.diagnostic?.category==="canon"))throw retryError;
+        if(!["AUTONOMOUS_WORLD","NARRATIVE_CONTEXT","POST_TURN_REVIEW"].includes(retryError.code))throw retryError;
         // Repeated optional context/world/review defects must not make the conversational turn disappear.
         // Regenerate under the same turn deadline with a defect-specific fail-closed contract.
-        const safeRecovery=retryError.code==="NARRATIVE_INTEGRITY"&&retryError.diagnostic?.category==="canon"?[
-          `CANON CLAIM RECOVERY: ${String(retryError.message||retryError).slice(0,500)}. A staged event:<index> is not an established canon key.`,
-          "Return a complete replacement turn with the original source-backed player_intents; preserve independently valid mundane location/NPC creation, scene_actions and responsive narration.",
-          "Remove invalid action=canon annotations and canon events for ordinary storefronts, signs, streets and background NPCs. Only established exact ledger keys and matching values qualify as committed canon.",
-          "If a place cannot be created because of actual authoritative conflict, keep that outcome uncommitted and explain only the real obstacle; never invent dice, resources, access or PC choices.",
-          "Keep authored_candidates null when natural_language extraction is disabled. Recheck state_review against actual structured mutations."
-        ].join(" "):retryError.code==="PLAYER_INTENT"?[
-          `SEMANTIC INTENT RECOVERY: ${String(retryError.message||retryError).slice(0,500)}.`,
-          "Return verbatim player_intents from this player's current message, with accurate framing and typed targets.",
-          "For ordinary auto movement, create/reuse the local location and emit scene_actions.move. Otherwise give a specific authentic obstacle or roll requirement.",
-          "Never silently substitute uncommitted movement for an outcome. Keep valid unrelated actions and dialogue."
-        ].join(" "):retryError.code==="POST_TURN_REVIEW"?[
+        const safeRecovery=retryError.code==="POST_TURN_REVIEW"?[
           `POST-TURN REVIEW RECOVERY: ${String(retryError.message||retryError).slice(0,500)} Diagnostic: ${JSON.stringify(retryError.diagnostic||{})}.`,
           "Return a complete replacement turn. Keep only justified structured mutations; never add a mutation merely to make the review say changed.",
           "For each state_review category, use changed exactly when its corresponding structured output is non-empty, otherwise use no_change.",

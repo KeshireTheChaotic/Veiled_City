@@ -2,10 +2,11 @@
 import { applyAuthoritativeMutation, applyCanonProposalDrafts } from "./state.js";
 import { validateDecisionAdvisory } from "./decision-advisory.js";
 import { queueTurnPublications } from "./publication-outbox.js";
+import { resolveTypedNativeRolls } from "./typed-mechanics.js";
 export function commitGmTurn({db,guild,session,result,scope,speaker,label,meta={},content=null}){
   const decision_advisory=validateDecisionAdvisory(db,guild.id,result);
   const mutates=(result.ai_intents||[]).length||(result.events||[]).some(e=>e.type!=="log_only")||(result.relationships||[]).length||(result.handouts||[]).length||(result.npc_memories||[]).length||(result.npc_knowledge||[]).length||(result.npc_goals||[]).length||(result.simulation_updates||[]).length;
-  if(mutates||(result.world_additions||[]).length||(result.scene_actions||[]).length||(result.world_conflicts||[]).length)
+  if(mutates||(result.context_memories||[]).some(x=>x.retention==="durable")||(result.world_additions||[]).length||(result.scene_actions||[]).length||(result.world_conflicts||[]).length)
     db.snapshotCampaign(guild.id,{label,reason:`Automatic snapshot before eventful GM turn by ${speaker}`,createdBy:"veilkeeper"});
   return db.transaction(()=>{
     if(decision_advisory) db.audit(guild.id,session.id,"ai",scope.actorUserId||"veilkeeper","gm_decision_advisory",decision_advisory);
@@ -24,6 +25,9 @@ export function commitGmTurn({db,guild,session,result,scope,speaker,label,meta={
       content,
       provenance:{actorType:"ai",actorId:scope.actorUserId||"veilkeeper",messageId:meta.messageId||null,triggerText:meta.triggerText||"",rationale:Object.values(result.state_review||{}).filter(x=>x&&x.reason).map(x=>x.reason).join(" | "),confidence:Math.min(...Object.values(result.state_review||{}).filter(x=>x&&Number.isFinite(Number(x.confidence))).map(x=>Number(x.confidence)),100)}
     });
+    // Dice RNG occurs only in final commit. Preview never samples dice and cannot accidentally reroll.
+    const nativeRolls=resolveTypedNativeRolls(db,guild.id,scope,result.player_intents||[],meta.messageId||'');
+    mutation.intents=[...(mutation.intents||[]),...nativeRolls];
     const proposalMap=new Map();
     const addProposal=(d)=>{
       const key=String(d?.key||"").trim().toLowerCase();

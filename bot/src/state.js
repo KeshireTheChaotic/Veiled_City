@@ -10,6 +10,8 @@ import { assertNpcObservation } from "./scene-continuity.js";
 import { persistInterpretation } from "./narrative-context.js";
 import { typedEvidence } from "./epistemic.js";
 import { persistAuthoredCandidates } from "./authored-candidates.js";
+import { persistPlayerIntents, persistTypedDialogue } from "./typed-intents.js";
+import { saveContextMemories } from "./context-memory.js";
 import { relationshipProvenance, artifactProvenance, inferredSource } from "./presentation-evidence.js";
 
 export function summarizeRoster(rows){
@@ -407,7 +409,10 @@ export function applyAuthoritativeMutation(db,{guildId,sessionId=null,events=[],
   return db.transaction(()=>{
     if(narrative?.narrative_interpretation)persistInterpretation(db,guildId,narrative.narrative_interpretation,scope,provenance);
     persistAuthoredCandidates(db,guildId,narrative?.authored_candidates,scope,provenance);
+    const typedIntents=persistPlayerIntents(db,guildId,narrative?.player_intents||[],scope,provenance);
     const world=applyAutonomousWorld(db,guildId,narrative,scope,provenance,content);
+    const typedDialogue=persistTypedDialogue(db,guildId,narrative?.player_intents||[],scope,provenance);
+    const contextMemories=saveContextMemories(db,guildId,narrative,scope,provenance);
     const eventResults=applyGMEvents(db,guildId,sessionId,events,scope,provenance);
     const relationshipResults=applyRelationshipDrafts(db,guildId,relationships,scope,source);
     const handoutResults=applyHandoutDrafts(db,guildId,sessionId,handouts,scope,source);
@@ -448,7 +453,7 @@ export function applyAuthoritativeMutation(db,{guildId,sessionId=null,events=[],
     // state or model-described effects. Any failure rolls back the entire bundle.
     if(narrative) validateNarrativeClaims(db,guildId,narrative,scope,{staged:true,eventResults});
     return {events:eventResults,relationships:relationshipResults,handouts:handoutResults,
-      npcMemories:cognition.memories,npcKnowledge:cognition.knowledge,npcGoals:cognition.goals,simulation,intents,world};
+      npcMemories:cognition.memories,npcKnowledge:cognition.knowledge,npcGoals:cognition.goals,simulation,intents,world,typedIntents,typedDialogue,contextMemories};
   });
 }
 

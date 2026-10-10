@@ -11,7 +11,7 @@ import { normalizeNpcKey } from "./npc-cognition.js";
 import { stateRevision } from "./ai-intents.js";
 import { interpretAuthoredText, worldRequirements } from "./player-language.js";
 import { resolvePlaceReference, preflightPlaceIdentity, preflightNpcIdentity } from "./location-language.js";
-import { currentMovementCandidate } from "./movement-language.js";
+import { currentTypedMovement } from "./typed-intents.js";
 import { movementAdjudication } from "./rules-arbitration.js";
 const hash=value=>createHash("sha256").update(JSON.stringify(value)).digest("hex").slice(0,40);
 export const AUTONOMOUS_WORLD_VERSION=1;
@@ -172,7 +172,9 @@ function applyWorld(db,guild,narrative,scope,provenance,content){
   if(prior)return prior.data.results;
   const boundary={visibility:scope.mode==="private"?"character":"party",subject_key:scope.mode==="private"?pc.id:null};
   const results=[],refs=new Map();
-  const requirements=worldRequirements(source.details.text);
+  const exclusions=(Array.isArray(narrative?.player_intents)
+    ?narrative.player_intents.filter(i=>i.framing==='immediate'&&i.type==='search').flatMap(i=>i.excluded_targets||[])
+    :worldRequirements(source.details.text).exclude_locations).map(normalizeNpcKey);
   for(const conflict of conflicts){
     const current=db.currentCanon(guild,conflict.canon_key);
     if(!current||current.id!==conflict.current_event_id||!conflict.proposed_value.trim()
@@ -192,7 +194,7 @@ function applyWorld(db,guild,narrative,scope,provenance,content){
   for(const a of [...additions].sort((a,b)=>Number(a.kind==="npc")-Number(b.kind==="npc"))){
     if(!a.name.trim()||!a.summary.trim()||normalizeNpcKey(a.key)!==a.key||!a.key)fail("A world addition needs a non-empty name and summary plus a normalized stable key (lowercase words separated by single hyphens); omit it if you cannot provide all three.");
     if(scope.mode==="private"&&a.visibility==="party")fail("Private world creation cannot publish party knowledge.");
-    if(a.kind==="location"&&requirements.exclude_locations.some(excluded=>
+    if(a.kind==="location"&&exclusions.some(excluded=>
       normalizeNpcKey(excluded)===normalizeNpcKey(a.name)||normalizeNpcKey(excluded)===a.key))fail("Explicitly excluded locations cannot answer the owner's search.");
     if(!config[a.kind==="location"?"auto_create_locations":"auto_create_npcs"])fail("World creation is explicitly disabled for this entity type.");
     {
@@ -264,22 +266,22 @@ function applyWorld(db,guild,narrative,scope,provenance,content){
       fail("Quoted, conditional or hypothetical spans cannot authorize native scene actions.");
     const latest=db.getCharacter(pc.id);
     if(action.kind==="move"){
-      const requirements=worldRequirements(action.source_span);
-      const semantic=currentMovementCandidate(db,guild,latest,action.source_span,target,scope);
-      if((requirements.movement!=="attempt"||requirements.kind!=="move")&&!semantic)
-        fail("Search, speech and context are not authorization to move a PC; a current exact-span semantic candidate is required.");
+      const semantic=currentTypedMovement(db,guild,latest,action.source_span,target,scope);
+      if(!semantic&&Array.isArray(narrative?.player_intents))
+        fail("Movement requires a current typed immediate owner intent with exact authored source, not a movement-verb phrase.");
+      // Legacy programmatic fixtures without player_intents retain exact-source native adjudication.
       const location=db.getSimulationEntity(guild,"location",target);
       if(!location||!visible(db,guild,"location",target,scope)||!localAccess(db,guild,latest,target))fail("Movement requires accessible local geography; adjudicate real travel/access obstacles without inventing an arrival.");
       if(db.getCurrentEncounter(session.id)?.status==="active")fail("Active encounter movement requires native combat rules.");
       // The named target must match; deictic travel needs a source-backed candidate, not model redirection.
-      const phrase=semantic?.data.target_description||requirements.target;
+      const phrase=semantic?.data.target_name||semantic?.data.target_key||target;
       const resolved=resolvePlaceReference(db,guild,pc.id,phrase,{mode:scope.mode,user:scope.actorUserId});
-      if((resolved.status!=="resolved_existing"||resolved.location.entity_key!==target)&&semantic?.data.target_ref!==target)
+      if((resolved.status!=="resolved_existing"||resolved.location.entity_key!==target)&&semantic?.data.target_key!==target)
         fail("Arrival destination must match the owner's explicit declaration.");
       db.updateCharacterData(pc.id,data=>{data.location=target;});
       const arrival=event(`action:${index}`,"arrival",target,{entity_type:"character",entity_key:pc.id,owner_user_id:pc.owner_user_id,declaration:actionSource.event_key});
       recordScenePresence(db,guild,{entity_type:"character",entity_key:pc.id,location_key:target,
-        source_event:arrival.event_key,zone:"scene",...boundary,accepted_by:pc.owner_user_id},"ai_gm");
+        source_event:arrival.event_key,zone:action.zone||"scene",...boundary,accepted_by:pc.owner_user_id},"ai_gm");
       results.push({status:"arrived",key:target,source_event:arrival.event_key,
         adjudication:movementAdjudication({sourceRef:actionSource.event_key,sourceSpan:action.source_span,receipt:arrival.event_key})});
       if(semantic)db.saveCityRecord(guild,{...semantic,key:semantic.record_key,status:"resolved",
@@ -313,7 +315,11 @@ function applyWorld(db,guild,narrative,scope,provenance,content){
       results.push({status:"introduced",key:target,source_event:arrival.event_key,
         adjudication:movementAdjudication({sourceRef:actionSource.event_key,sourceSpan:action.source_span,receipt:arrival.event_key})});
     }else if(action.kind==="local_zone"){
-      if(target!==latest.data.location||!action.zone.trim()||worldRequirements(action.source_span).kind!=="local_zone")fail("Only owner-authored local-zone movement is allowed.");
+      const zoneIntent=(narrative?.player_intents||[]).find(i=>i.type==='local_zone'&&i.framing==='immediate'
+        &&i.source_span===action.source_span);
+      if(target!==latest.data.location||!action.zone.trim()||(!zoneIntent&&
+        (Array.isArray(narrative?.player_intents)||worldRequirements(action.source_span).kind!=='local_zone')))
+        fail("Only authenticated typed local-zone movement is allowed.");
       if(db.getCurrentEncounter(session.id)?.status==="active")fail("Combat movement requires native encounter resolution.");
       const arrival=event(`action:${index}`,"arrival",target,{entity_type:"character",entity_key:pc.id,owner_user_id:pc.owner_user_id});
       recordScenePresence(db,guild,{entity_type:"character",entity_key:pc.id,
@@ -334,8 +340,11 @@ function applyWorld(db,guild,narrative,scope,provenance,content){
 
 export function autonomousWorldContext(db,guild,scope,messageId){
   const pc=scope.actorCharacterId?db.getCharacter(scope.actorCharacterId):null,source=pc&&db.getWorldEvent(guild,worldInputKey(messageId,pc.id));
-  return {authority:worldAuthority(db,guild),input_source:source?.event_key||null,requirements:worldRequirements(source?.details.text||""),
+  return {authority:worldAuthority(db,guild),input_source:source?.event_key||null,requirements:{kind:"semantic_intents",note:"Interpret intent via player_intents, not lexical patterns."},
     saved_location:pc?.guild_id===guild?pc.data.location||null:null,
+    memories:db.listCityRecords(guild,{kind:"context_memory",includeGM:true,limit:40})
+      .filter(r=>["public","party"].includes(r.visibility)||scope.mode==="private"&&r.visibility==="character"&&r.subject_key===pc?.id)
+      .map(r=>({kind:r.data.kind,key:r.record_key,name:r.data.name,summary:r.data.summary,authority:"descriptive_only_not_canon"})),
     locations:db.listSimulationEntities(guild,"location").slice(0,80).map(r=>({key:r.entity_key,state:r.state,may_reveal:!!visible(db,guild,"location",r.entity_key,scope)})),
     instruction:"GM-only context; may_reveal=false records are not new player knowledge. Missing records are not contradictions."};
 }

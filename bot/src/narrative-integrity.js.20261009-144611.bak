@@ -20,7 +20,6 @@ export const NARRATIVE_CONTRACT="Return narrative_claims for EVERY consequential
   +"Disclosure requires an existing audience-visible fact. Narrator/PC knowledge is not NPC knowledge; an NPC additionally needs its own sourced knowledge of that fact. "
   +"Uncertain observations, quoted lies, hallucinations, metaphors, forecasts and intentions must be explicitly framed as such in prose and tagged, not committed facts. "
   +"mutation_index is a matching events index or -1 for already established state. A newly staged fact/clue uses source_ref event:<index>; native receipts supply its actual ID. "
-  +"Ordinary new businesses, streets, signs and NPCs are NOT canon-ledger claims. Only existing exact canon keys/values support action=canon; event:<index> is never a canon key. World additions need no human approval absent an authoritative contradiction. "
   +"Never invent dice, PC consent or compensate for a rejected claim. Cosmetic prose needs no claim.";
 function deny(category,claim,source=""){
   const error=new Error(`Narrative integrity rejected ${category}; revise to an explicitly uncommitted intent/uncertainty or use established authorized state.`);
@@ -192,10 +191,7 @@ export function validateNarrativeClaims(db,guildId,result,scope={mode:"party"},{
     }
     if(c.action==="canon"){
       const row=db.currentCanon(guildId,c.source_ref);
-      if(!row||row.value!==c.proposed||!audiences.every(audience=>visible(row,audience)))
-        deny("canon",c,/^event:\d+$/.test(c.source_ref)
-          ?"event:<index> is a staged event, not an existing canon-ledger key; use ordinary world additions"
-          :"canon ledger requires an existing exact audience-visible key and matching value");
+      if(!row||row.value!==c.proposed||!audiences.every(audience=>visible(row,audience))) deny("canon",c,"canon ledger");
     }
   }
   // Conservative local tripwires also catch omitted declarations of common high-risk assertions.

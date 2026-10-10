@@ -5,7 +5,7 @@ import { conversationPrincipal } from "./conversation-principal.js";
 import { scopedQueryPlan, queryScopedFacts } from "./scoped-query.js";
 import { indexWorldEvent, cityAudit } from "./city-calendar.js";
 import { locationMatches } from "./scene-entry.js";
-import { persistMovementCandidates } from "./movement-language.js";
+// Typed movement now comes from the main GM player_intents contract.
 const text=maxLength=>({type:"string",maxLength});
 const list=(items,maxItems=12)=>({type:"array",items,maxItems});
 const object=properties=>({type:"object",additionalProperties:false,properties,required:Object.keys(properties)});
@@ -117,7 +117,7 @@ export function persistInterpretation(db,guild,value,scope,provenance={}){
   const row=db.saveCityRecord(guild,{kind:"narrative_context",key,source_event:source.event_key,visibility:"character",subject_key:principal.context_id,
     data:{interpretation:value,authority:"Nonbinding contextual meaning only",user:scope.actorUserId}});
   cityAudit(db,guild,"narrative_context",key,null,row,scope.actorUserId);
-  persistMovementCandidates(db,guild,value,scope,provenance);
+  // Historical intended_actions remain conversational metadata, never a native movement gate.
   for(const entry of principal.kind==="owner"?db.characterContinuity(guild,scope.actorCharacterId,{kind:"scene_entry",limit:30}):[]){
     if(!["pending","awaiting_adjudication"].includes(entry.status)||entry.data.user!==scope.actorUserId||entry.data.session_id!==source.session_id
       ||scope.mode!=="private"&&entry.data.private_scene)continue;

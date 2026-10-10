@@ -12,7 +12,8 @@ export function captureDialogue(db,guild,user,characterId,messageId,message,{pri
   let pc;try{pc=personalCharacter(db,guild,user,characterId);}catch{return null;}
   const speech=candidate?{target:candidate.target,quote:candidate.quote}:interpretAuthoredText(message,{natural:flags.natural_language===true}).speech;
   if(!speech||privateScene&&!speech.target) return null;
-  const key=`speech:${motivationKey([messageId,pc.id])}`;
+  if(candidate&&(!candidate.source_span||!message.includes(candidate.source_span)||!candidate.source_span.includes(candidate.quote)))return null;
+  const key=`speech:${motivationKey(candidate?[messageId,pc.id,candidate.source_span]:[messageId,pc.id])}`;
   const prior=db.getWorldEvent(guild,key);if(prior) return prior;
   const occupants=sceneView(db,guild,{gm:true}).occupants.filter(row=>row.data.entity_type==="npc");
   const addressed=speech.target?occupants.filter(row=>[row.data.entity_key,db.getNpcProfile(guild,row.data.entity_key)?.display_name,
