@@ -455,6 +455,11 @@
       "sha256": "1a8acf0cfd9dae169ecf54fbfc2e626c040665cdef9b2c63c8e3b7e414c53f56"
     },
     {
+      "path": "bot/scripts/scene-action-window-test.mjs",
+      "size_bytes": 8520,
+      "sha256": "547a6e5336556fffaadfb6a90317bdbbdf78b7fb89fb2220175441ee420ed1af"
+    },
+    {
       "path": "bot/scripts/scene-entry-test.mjs",
       "size_bytes": 10104,
       "sha256": "f10beba8f55f2a6967b372061dc898cc5a95458a8b65bb5b901d66a6cead3e00"
@@ -546,8 +551,8 @@
     },
     {
       "path": "bot/scripts/validate-offline.mjs",
-      "size_bytes": 3683,
-      "sha256": "7ba6986bfc90306d45806ac9c3288f75bead366cf75bf2c3229a0ef617e0df8c"
+      "size_bytes": 3710,
+      "sha256": "c57c1c8d6fa51f52dd5487c08b16f44f26cbb54aa25b4bf9b59b369b37fa3a70"
     },
     {
       "path": "bot/sql/schema.sql",
@@ -1003,6 +1008,11 @@
       "path": "bot/src/rules-srd.js",
       "size_bytes": 6095,
       "sha256": "406537d0549082a06e24b0a12fe57c8f1d2727b711c8acddd02ec19c56a3c5cd"
+    },
+    {
+      "path": "bot/src/scene-action-window.js",
+      "size_bytes": 8602,
+      "sha256": "792cf000bc7e50aaccd70a43dd431045123dd07368ce90ab187862d8ad4213c3"
     },
     {
       "path": "bot/src/scene-continuity.js",
@@ -1851,13 +1861,13 @@
     },
     {
       "path": "docs/TYPED_INTENT_CONTRACTS.md",
-      "size_bytes": 8435,
-      "sha256": "dabba8d7e39aa5c8a2685f5bba7827e8a9f3ec2a52300c7a315715c73d58c7f6"
+      "size_bytes": 9797,
+      "sha256": "7e11af386d6d0c4c80581fd09f83b60118c014f079e8e93d6a38b9d5c66ac3ed"
     },
     {
       "path": "docs/TYPED_INTENT_PROGRESS.md",
-      "size_bytes": 16014,
-      "sha256": "3331604c3241465e5c0b622022f3a3bac0370ee4af34f7af3345fd19ec8e30b9"
+      "size_bytes": 17612,
+      "sha256": "6a632dd02114a1879d4bc5cad4fe27c34291aaad4c7feda6ecb6335c3ddc572e"
     },
     {
       "path": "docs/UPGRADE_3.0_TO_3.1.md",

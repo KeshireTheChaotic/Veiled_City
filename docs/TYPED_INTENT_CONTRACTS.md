@@ -17,6 +17,14 @@ Accepted typed intents are canonical adjudication inputs; human declarations own
 - A pending prerequisite suspends only its dependents. A failed/blocked/clarification prerequisite blocks its causal descendants, while an independent ready action remains executable and can receive its own native receipt.
 - State application omits suspended/pending scene actions and rejects scene effects attached to blocked nodes. Terminal compare-and-set transitions require a native receipt and replay only when that same receipt already owns the result.
 
+## T04.1 shared-scene action windows
+
+- A scene action window is optional and opens only for combat spotlight, cooperative/contested work, a scarce resource, a reaction opportunity, direct PC conflict or a GM-declared fictional beat. A beat is the bounded fictional opportunity in which those actions can materially overlap; ordinary conversation never opens a window or waits for unrelated players.
+- Each participant supplies a separate current accepted intent plus resolved read/write resource identities. Native overlap classification distinguishes independent, sequential, cooperative, scarce-resource, opposed and testimony cases; string similarity is not an identity.
+- Private/different-location participants cannot be placed in one conflict. Direct PC conflict and Help/Tag Team/Group Action require separately persisted affirmative owner consent; refusal or missing consent creates no forced roll, spend or outcome.
+- Lock and resolution use optimistic scene-window revisions. A stale completion rebases instead of overwriting, exclusive writes cannot have two winners, and every outcome must cite an existing native receipt.
+- Closed windows reject late attempts. A deliberately opened reaction opportunity is explicit, never inferred from wall-clock delay. Duplicate resolution returns the same stored result and cannot reroll or respent resources.
+
 ## T02 language-routing boundary
 
 - `currentAcceptedIntent()` is the ordinary roleplay routing boundary. Autonomous reveal, local-zone and NPC-introduction actions must match a current accepted source occurrence, actor, structural type and resolved target; wording is not reparsed for authority.

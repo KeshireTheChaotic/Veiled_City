@@ -134,6 +134,21 @@ Status: complete on 2026-10-10. Package version remains `10.0.0`.
 
 T04.1 is next: shared-scene multi-actor action windows and conflict orchestration.
 
+## T04.1 - shared-scene multi-actor orchestration
+
+Status: complete on 2026-10-10. Package version remains `10.0.0`.
+
+- Red first: `scene-action-window-test.mjs` failed with `ERR_MODULE_NOT_FOUND` before the scene-window service existed.
+- Added optional scene-scoped windows for explicit combat spotlight, cooperation, contested resources, reactions, direct PC conflict and GM-declared beats. Ordinary Discord posts do not open a window or wait for unrelated players.
+- Participants require separate current accepted intents and resolved read/write identities. Native classification separates independent, sequential, cooperative, scarce-resource, opposed and attributed-testimony cases.
+- Audience and location boundaries prevent private/different-scene conflicts. Direct PC conflict and Help/Tag Team/Group Action require separate persisted affirmative owner consent; missing or declined consent cannot create a roll.
+- Lock/resolve uses optimistic revisions and existing native receipts. Exclusive writes allow at most one winning outcome; independent actions keep separate receipts. Closed beats reject late claims, while explicitly opened reaction opportunities are preserved without wall-clock forfeiture.
+- Focused T04.1, native collaboration and consent suites passed. `npm run check` passed 203 modules/scripts and 24 commands.
+- `npm run validate` passed 81/81 suites with network denied, `live_requests=0`, and `billable_tokens=0`.
+- No live bot, production database, deployment, merge or paid model was used.
+
+T05b is next: general memory identity, epistemic lifecycle and retrieval.
+
 ## Deferred findings
 
 T04 through T08, including T04.1 and the general T05b lifecycle, have not started. The next phase is T04: ordered compound actions and causal dependencies.
