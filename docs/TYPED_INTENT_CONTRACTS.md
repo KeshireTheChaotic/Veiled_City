@@ -55,6 +55,15 @@ Accepted typed intents are canonical adjudication inputs; human declarations own
 - Publication starts only from a committed native request referenced by `mutation.nativeAdjudications` (or the bounded legacy receipt adapter). It re-reads that record and uses request/revision/recipient delivery receipts; model prose cannot publish, roll or spend anything.
 - Unsupported risky adjudication creates neither a difficulty event nor a roll request. Actual native dice, resource costs, consent and outcomes remain owned by their existing transactional services.
 
+## D02 private roll-option arbitration
+
+- Candidate discovery first authenticates the request owner and reads that character's current sheet plus current reviewed roll sources. It never accepts a model-supplied option name as evidence of ownership, bonus value, relevance or availability.
+- Structured applicability is matched against the accepted operation, prepared trait and roll kind. Prose card text and names are not converted into mechanics. Missing applicability or a missing native application path requires additional authorization; invalid or inactive sources are blocked.
+- Candidate states are `available`, `requires_owner_choice`, `requires_additional_authorization`, `blocked` and `applied`. Existing reviewed modifiers and the prepared trait are applied; optional choices remain inert until a later authenticated native operation.
+- Costs, mutual-exclusion groups and frequency limits are disclosure metadata, not mutations. Discovery and rejection cannot spend Hope/Stress, select a bonus, amend a request, roll dice or authorize another player.
+- Help and Tag Team expose only generic rule requirements. Other characters' sheet options remain private. Net-disadvantage Help remains blocked unless an exact request-bound human-GM exception is separately established.
+- A persisted `roll_option_registry` is character-private, source-bound and fingerprinted. It is reconstructable advisory state; native operation receipts remain the sole authority for applied options and costs.
+
 ## T04 compound-action dependencies
 
 - An enriched intent may identify only unique earlier action indices as prerequisites. Acceptance converts those indices to stable proposal identities tied to exact source occurrences; missing dependencies, forward references and cycles are rejected.

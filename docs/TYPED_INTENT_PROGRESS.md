@@ -110,6 +110,22 @@ Status: complete. Starting HEAD: `1ef0483095cfd5ff008766a4565749fd45182e44`.
 
 Next phase: D02 source-grounded private bonus and feature arbitration.
 
+## D02 v8 - source-grounded private bonus and feature arbitration
+
+Status: complete. Starting HEAD: `5c6e39dbd3f5cb368aa6ba80fe8c054ce9799471`.
+
+- Red first: `d02-roll-options-test.mjs` began with the missing owner-private registry module, then asserted authoritative ownership, operation/trait/roll-kind relevance, explicit cost and exclusivity, foreign-option rejection and zero resource/request mutation.
+- Added deterministic candidate discovery for the prepared trait, already reviewed modifier events, Experiences, equipped/active domain features, assets, conditions, Help and Tag Team. Numeric effects are accepted only from bounded structured sheet metadata or existing reviewed modifier sources; names and prose are never parsed into bonuses.
+- Explicit `applies_to` metadata filters unrelated options. Missing applicability, inactive equipment and mechanics without a native reviewed application path are visibly `requires_additional_authorization` or `blocked`, rather than guessed or silently stacked.
+- Applicable reviewed Experiences are `requires_owner_choice`, retain the separate 1 Hope cost and do not spend during discovery. Mutually exclusive groups and frequency limits are retained for later owner interaction.
+- Net-disadvantage Help is explicitly blocked pending an exact saved GM ruling for that combination. Other Help and Tag Team entries disclose their separate participant consent, review, cost and session requirements without exposing another character's sheet.
+- Model-proposed keys not found on the authenticated owner's applicable registry are rejected with a generic reason; foreign option values are never returned. Rejection leaves the native request pending and unchanged.
+- Focused D02 and existing I Heard You collaboration tests passed. `npm run check` passed with 225 modules/scripts and 24 commands; `npm run validate` passed 94/94 suites after manifest synchronization, with network denied, `live_requests=0` and `billable_tokens=0`.
+- The `roll_option_registry` is an additive character-private city record tied to the source request and sheet/request fingerprints. It grants no application, spending, consent, dice or outcome authority and requires no SQL migration.
+- No production data, live bot, Discord registration, deployment or paid provider call was used.
+
+Next phase: D03 interactive private Discord roll menus.
+
 ## T00 — reproducible baseline
 
 Status: implementation inventory complete; baseline captured at `6c3167dbbf015739e1723272121552d60b9f2ec8`.
