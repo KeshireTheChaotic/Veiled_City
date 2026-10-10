@@ -13,6 +13,7 @@ import { interpretAuthoredText, worldRequirements } from "./player-language.js";
 import { resolvePlaceReference, preflightPlaceIdentity, preflightNpcIdentity } from "./location-language.js";
 import { currentTypedMovement } from "./typed-intents.js";
 import { movementAdjudication } from "./rules-arbitration.js";
+import { contextMemoriesForScope } from "./context-memory.js";
 const hash=value=>createHash("sha256").update(JSON.stringify(value)).digest("hex").slice(0,40);
 export const AUTONOMOUS_WORLD_VERSION=1;
 const object=properties=>({type:"object",additionalProperties:false,properties,required:Object.keys(properties)});
@@ -342,9 +343,7 @@ export function autonomousWorldContext(db,guild,scope,messageId){
   const pc=scope.actorCharacterId?db.getCharacter(scope.actorCharacterId):null,source=pc&&db.getWorldEvent(guild,worldInputKey(messageId,pc.id));
   return {authority:worldAuthority(db,guild),input_source:source?.event_key||null,requirements:{kind:"semantic_intents",note:"Interpret intent via player_intents, not lexical patterns."},
     saved_location:pc?.guild_id===guild?pc.data.location||null:null,
-    memories:db.listCityRecords(guild,{kind:"context_memory",includeGM:true,limit:40})
-      .filter(r=>["public","party"].includes(r.visibility)||scope.mode==="private"&&r.visibility==="character"&&r.subject_key===pc?.id)
-      .map(r=>({kind:r.data.kind,key:r.record_key,name:r.data.name,summary:r.data.summary,authority:"descriptive_only_not_canon"})),
+    memories:contextMemoriesForScope(db,guild,scope),
     locations:db.listSimulationEntities(guild,"location").slice(0,80).map(r=>({key:r.entity_key,state:r.state,may_reveal:!!visible(db,guild,"location",r.entity_key,scope)})),
     instruction:"GM-only context; may_reveal=false records are not new player knowledge. Missing records are not contradictions."};
 }
