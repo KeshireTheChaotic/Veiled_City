@@ -53,6 +53,19 @@ export function discoverRollOptions(db,guild,user,request){
   for(const mod of row.data.breakdown.modifiers||[])options.push(option({key:`modifier:${mod.source}`,type:"modifier",label:mod.name,state:"applied",
     effect:{kind:mod.kind,amount:mod.amount},source:{kind:"reviewed_modifier",event:mod.source,ruling_key:mod.ruling_key},
     reason:"Already included by a current human-reviewed scoped modifier."}));
+  for(const event of db.listWorldEvents(guild,{includeGM:true,limit:200})){
+    const choice=event.details?.roll_alternate_trait;
+    if(event.status!=="active"||event.kind!=="roll_adjudication"||event.source_kind!=="gm"||event.details.human_reviewed!==true
+      ||event.session_id!==row.data.session_id||event.scene!==row.data.scene||event.visibility!=="character"||event.subject_key!==pc.id
+      ||choice?.request!==row.record_key||choice.from_trait!==ctx.trait||!choice.reason?.trim()
+      ||!db.getRulesRuling(guild,event.details.ruling_key||choice.ruling_key))continue;
+    const value=pc.data.traits?.[choice.to_trait];
+    if(!Number.isSafeInteger(value))continue;
+    options.push(option({key:`alternate_trait:${choice.to_trait}`,type:"alternate_trait",label:choice.to_trait,
+      state:"requires_owner_choice",effect:{kind:"alternate_trait",amount:value,trait:choice.to_trait},
+      source:{kind:"reviewed_alternate_trait",event:event.event_key,ruling_key:event.details.ruling_key||choice.ruling_key},
+      reason:choice.reason}));
+  }
   if(row.data.kind==="action"){
     const net=(row.data.breakdown.advantage||0)-(row.data.breakdown.disadvantage||0);
     options.push(option({key:"party_aid:help",type:"party_aid",label:"Help from an ally",

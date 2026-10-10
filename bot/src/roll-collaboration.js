@@ -13,10 +13,11 @@ function fail(message){throw new StateConflictError(message);}
 export function adjudicateRollSource(db,guild,input,reviewer){
   cityObject(input);const session=db.getActiveSession(guild),pc=db.getCharacter(input.character_id);
   if(!session||pc?.guild_id!==guild||!reviewer) fail("Current campaign character, session and authenticated GM review required.");
-  if(!["participation","modifier","difficulty","attack"].includes(input.kind)) throw new UserInputError("Unsupported adjudication kind.");
+  if(!["participation","modifier","difficulty","attack","alternate_trait"].includes(input.kind)) throw new UserInputError("Unsupported adjudication kind.");
   if(Object.keys(input).some(key=>!["key","character_id","kind","data","ruling_key"].includes(key))) throw new UserInputError("Closed GM adjudication required.");
   if(!db.getRulesRuling(guild,input.ruling_key)) fail("Save the actual human GM ruling first.");
-  const field={participation:"roll_participation",modifier:"roll_modifier",difficulty:"roll_difficulty",attack:"roll_attack"}[input.kind];
+  const field={participation:"roll_participation",modifier:"roll_modifier",difficulty:"roll_difficulty",attack:"roll_attack",
+    alternate_trait:"roll_alternate_trait"}[input.kind];
   return indexWorldEvent(db,guild,{key:cityKey(input.key),kind:"roll_adjudication",source_id:reviewer,title:"Human-reviewed roll adjudication",
     session_id:session.id,scene:currentScene(db,guild).key,visibility:"character",subject_key:pc.id,
     details:{human_reviewed:true,reviewed_by:reviewer,ruling_key:input.ruling_key,[field]:{...cityObject(input.data),ruling_key:input.ruling_key}}},reviewer);
@@ -134,13 +135,25 @@ export function contributeRoll(db,guild,user,input,{rng=d}={}){
   if(prior){if(prior.data.user!==user||prior.data.request!==key) throw new PermissionError("Receipt does not belong to this request owner.");return row;}
   if(rollRevision(row)!==input.expected_revision) fail("Request changed; read the current revision before authorizing a contribution.");
   return db.transaction(()=>{
-    if(["resolved","superseded","cancelled"].includes(row.status)) fail("Committed/closed rolls cannot be reopened; use human saved-result review.");
+    if(["resolved","superseded","cancelled"].includes(row.status)&&input.op!=="share")
+      fail("Committed/closed rolls cannot be reopened; use human saved-result review.");
     live(db,guild,row);
     const affected=[...new Set([pc.id,row.subject_key,...(row.data.tag?.participants||[]).map(item=>item.character)])];
     const beforeResources=new Map(affected.map(id=>[id,structuredClone(db.getCharacter(id).data.resources)]));
     let data=structuredClone(row.data),status=row.status;
     const mine=pc.id===row.subject_key;
-    if(input.op==="disclose"){
+    if(input.op==="share"){
+      if(!mine||input.scope!=="party"||input.confirm!==true||!data.result||!["resolved","awaiting_damage","awaiting_damage_type"].includes(row.status))
+        fail("Only the acting owner may affirmatively share an actual saved result with the party.");
+      const disclosureKey=`${key}:party`;
+      const source=indexWorldEvent(db,guild,{key:`party-roll-disclosure:${operation}`,source_id:`player:${user}`,
+        kind:"roll_disclosure",title:"Owner-shared roll result",session_id:data.session_id,scene:data.scene,visibility:"party",
+        details:{author:user,request:key,character_id:pc.id,attempt:data.attempt,status:row.status,
+          result:{total:data.result.total,duality:data.result.duality},authority:"owner_shared_redacted_native_result_only"}},user);
+      db.saveCityRecord(guild,{kind:"roll_disclosure",key:disclosureKey,status:"shared",source_event:source.event_key,
+        visibility:"party",data:{request:key,author:user,character_id:pc.id,source_event:source.event_key}});
+      data.party_disclosure={source_event:source.event_key,shared_by:user,scope:"party"};
+    }else if(input.op==="disclose"){
       if(!mine||!["pending","awaiting_partner"].includes(row.status)) fail("Only the acting owner can disclose their unsettled attempt.");
       const recipient=db.getCharacter(input.character_id);
       if(recipient?.guild_id!==guild||recipient.id===pc.id) fail("A distinct actual campaign PC recipient is required.");
@@ -161,6 +174,19 @@ export function contributeRoll(db,guild,user,input,{rng=d}={}){
       spend(db,pc,1);const die=rng(6);if(!Number.isInteger(die)||die<1||die>6) fail("Native helper die out of range.");
       const rollId=db.addRoll(guild,data.session_id,user,pc.id,"help",{die,request:key,proof:input.proof,hope_spent:1});
       data.helpers=[...(data.helpers||[]),{character:pc.id,name:pc.name,user,die,roll_id:rollId,proof:input.proof,description:input.description}];
+    }else if(input.op==="alternate-trait"){
+      if(!mine||data.tag||row.status!=="pending"||(data.experiences||[]).length)
+        fail("Alternate trait choice requires the acting owner's unrolled request before paid options.");
+      const event=requireCitySource(db,guild,input.proof),choice=event.details.roll_alternate_trait;
+      if(event.kind!=="roll_adjudication"||event.source_kind!=="gm"||event.details.human_reviewed!==true
+        ||event.session_id!==data.session_id||event.scene!==data.scene||event.visibility!=="character"||event.subject_key!==pc.id
+        ||!choice||choice.request!==row.record_key||choice.from_trait!==data.breakdown.trait||choice.to_trait!==input.trait
+        ||!choice.reason?.trim()||!db.getRulesRuling(guild,event.details.ruling_key||choice.ruling_key))
+        fail("Alternate trait requires an exact current human-adjudicated source for this request.");
+      const nextInput={...data.input,trait:input.trait},breakdown=rollBreakdown(db,guild,nextInput,pc);
+      if(breakdown.unresolved.length)fail("Alternate trait remains unresolved; seek human review.");
+      data.input=nextInput;data.breakdown=breakdown;data.alternate_trait={from:choice.from_trait,to:choice.to_trait,
+        proof:event.event_key,ruling_key:event.details.ruling_key||choice.ruling_key,reason:choice.reason};
     }else if(input.op==="experience"){
       if(!mine||data.tag||row.status!=="pending") fail("Only the acting owner may amend their unrolled single-PC request.");
       const p=proof(db,guild,row,pc,input,"experience");

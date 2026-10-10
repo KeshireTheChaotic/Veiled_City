@@ -73,6 +73,15 @@ Accepted typed intents are canonical adjudication inputs; human declarations own
 - Closing a menu does not cancel the request or refund/reverse an already committed effect. Additional-authority features, alternate traits and multiplayer invitations stay inert until their dedicated native prerequisites are satisfied.
 - `/vc-roll contribute` remains the explicit JSON/accessibility fallback; buttons are convenience controls, not required player phrasing or independent mechanics.
 
+## D04 alternate traits and sharing
+
+- An alternate trait is offered only by an active human-reviewed request/character/scene source backed by a saved campaign ruling. Choosing it recomputes the native breakdown against the current sheet and current modifier sources; it never silently chooses the highest trait or changes Difficulty/stakes.
+- Alternate trait selection precedes paid options. A fresh private menu exposes only Experiences whose structured applicability matches the recalculated trait/operation/roll kind.
+- Experience application remains an explicit owner operation with exact reviewed relevance and a transactional 1 Hope receipt. Preview, trait choice, rejection and menu refresh do not spend Hope.
+- Roll attempts and results remain private by default. Party sharing is a distinct affirmative owner operation against an actual saved result and produces an audience-scoped disclosure source.
+- The party projection is redacted to character name, authored attempt, native total/duality and request status. It never includes undisclosed traits, cards, Experiences, other sheet options or GM-only facts.
+- Party publication has its own stable delivery receipt. Retry cannot reroll, duplicate a cost or retract an already published result; private aid and participant consent continue to use their existing native gates.
+
 ## T04 compound-action dependencies
 
 - An enriched intent may identify only unique earlier action indices as prerequisites. Acceptance converts those indices to stable proposal identities tied to exact source occurrences; missing dependencies, forward references and cycles are rejected.

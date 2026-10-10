@@ -25,7 +25,7 @@ function render(db,guild,tokenRow){
   const lines=[`**Private Daggerheart roll menu — ${row.data.character_name}**`,`Request: \`${row.record_key}\``,
     `Attempt: ${row.data.attempt}`,`Base subtotal: ${base===null?"review required":base>=0?`+${base}`:base}`,
     `Applied Experience: ${experience>=0?`+${experience}`:experience}`,
-    ...choices.map(item=>`${selected.has(item.key)?"☑":"☐"} **${item.label}** ${item.effect?.amount>=0?`+${item.effect.amount}`:item.effect?.amount||""} — ${costText(item.cost)}${item.exclusive_group?` — choose one: ${item.exclusive_group}`:""}`),
+    ...choices.map(item=>`${selected.has(item.key)?"☑":"☐"} **${item.label}** ${item.type==="alternate_trait"?`trait (subtotal ${item.effect.amount>=0?"+":""}${item.effect.amount})`:item.effect?.amount>=0?`+${item.effect.amount}`:item.effect?.amount||""} — ${costText(item.cost)}${item.exclusive_group?` — choose one: ${item.exclusive_group}`:""}`),
     ...options.filter(item=>["blocked","requires_additional_authorization"].includes(item.state)).slice(0,8)
       .map(item=>`• ${item.label}: ${item.state.replaceAll("_"," ")} — ${item.reason}`),
     `Status: **${row.status}** • request revision \`${rollRevision(row).slice(0,12)}\``,'Nothing is spent until you press **Confirm**. `/vc-roll contribute` remains the accessible fallback.'];
@@ -33,7 +33,7 @@ function render(db,guild,tokenRow){
   if(shown.length)components.push(new ActionRowBuilder().addComponents(new StringSelectMenuBuilder()
     .setCustomId(custom(tokenRow.record_key,"s","options")).setPlaceholder("Select optional Experiences")
     .setMinValues(0).setMaxValues(shown.length).addOptions(shown.map((item,index)=>({label:short(item.label,100),
-      description:short(`${item.effect?.amount>=0?"+":""}${item.effect?.amount||0}; ${costText(item.cost)}`,100),
+      description:short(`${item.type==="alternate_trait"?"alternate trait; ":`${item.effect?.amount>=0?"+":""}${item.effect?.amount||0}; `}${costText(item.cost)}`,100),
       value:`o${page*20+index}`,default:selected.has(item.key)})))));
   components.push(new ActionRowBuilder().addComponents(
     new ButtonBuilder().setCustomId(custom(tokenRow.record_key,"b","confirm")).setLabel("Confirm").setStyle(ButtonStyle.Success).setDisabled(!selected.size),
@@ -97,15 +97,20 @@ export async function handleRollMenuInteraction(db,interaction,{rng}={}){
   if(id.action==="confirm"){
     const fresh=discoverRollOptions(db,interaction.guildId,interaction.user.id,row.record_key),byKey=new Map(fresh.options.map(item=>[item.key,item]));
     const selected=(token.data.selected_keys||[]).map(key=>byKey.get(key));
-    if(!selected.length||selected.some(item=>!item||item.state!=="requires_owner_choice"||item.type!=="experience"||!item.source.proof))
+    if(!selected.length||selected.some(item=>!item||item.state!=="requires_owner_choice"
+      ||item.type==="experience"&&!item.source.proof||!["experience","alternate_trait"].includes(item.type)))
       throw new StateConflictError("Selected options are no longer current or need additional authorization.");
+    if(selected.some(item=>item.type==="alternate_trait")&&selected.length>1)
+      throw new StateConflictError("Choose an alternate trait first, then review recalculated Experience options on a fresh menu.");
     const groups=selected.map(item=>item.exclusive_group).filter(Boolean);
     if(new Set(groups).size!==groups.length)throw new StateConflictError("Mutually exclusive options cannot be confirmed together.");
     row=db.transaction(()=>{
       saveToken(db,interaction.guildId,token,{},"applying");let amended=row;
-      for(const item of selected)amended=contributeRoll(db,interaction.guildId,interaction.user.id,{op:"experience",
-        request:row.record_key,expected_revision:rollRevision(amended),key:`menu-${token.record_key}-${item.key}`,
-        experience:item.label,pay_hope:true,proof:item.source.proof,description:item.source.proof_description},{rng});
+      for(const item of selected)amended=contributeRoll(db,interaction.guildId,interaction.user.id,item.type==="alternate_trait"?{
+        op:"alternate-trait",request:row.record_key,expected_revision:rollRevision(amended),key:`menu-${token.record_key}-${item.key}`,
+        trait:item.effect.trait,proof:item.source.event}:{op:"experience",request:row.record_key,expected_revision:rollRevision(amended),
+        key:`menu-${token.record_key}-${item.key}`,experience:item.label,pay_hope:true,proof:item.source.proof,
+        description:item.source.proof_description},{rng});
       saveToken(db,interaction.guildId,token,{applied_keys:selected.map(item=>item.key)},"used");return amended;
     });
     await interaction.update({content:`Selections applied once.\n\n${formatRollRequest(row,{user:interaction.user.id})}`.slice(0,1900),components:[]});return true;

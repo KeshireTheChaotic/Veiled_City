@@ -47,6 +47,7 @@ import { stateRevision } from "./ai-intents.js";
 import { beginInteraction, acknowledgeRules, interactionFailure, interactionResponseExpired, replyOrEdit } from "./discord/interaction-lifecycle.js";
 import { validateChannelRouting } from "./routing-diagnostics.js";
 import { handleRollMenuInteraction, isRollMenuInteraction, openRollMenu } from "./roll-menu.js";
+import { publishRollPartyDisclosure } from "./roll-sharing.js";
 
 const interactionQueue=new KeyedSerialQueue();
 
@@ -1364,6 +1365,8 @@ GM notes: ${a.draft.gm_notes}`:""}`.slice(0,1950):"No aftermath draft exists for
       for(const content of chunks.slice(1)) await interaction.followUp({content,ephemeral:true});
       if(interaction.guild) await publishRollAmendment(db,interaction.guildId,row,async(user,content,sessionId,characterId)=>
         (await sendPlayerPrivate({db,guild:interaction.guild,userId:user,content,sessionId,characterId})).ok);
+      if(interaction.guild) await publishRollPartyDisclosure(db,interaction.guildId,row,async(content,sessionId)=>
+        (await postPlayMessage({db,guild:interaction.guild,content,sessionId})).ok);
       return true;
     }
     if(group==="roll"&&sub==="request"){

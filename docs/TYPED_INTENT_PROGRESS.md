@@ -142,6 +142,22 @@ Status: complete. Starting HEAD: `1558583f274bb189fd7ea31a6cbe1adc5d4f86c3`.
 
 Next phase: D04 alternate traits, Experiences and owner-controlled sharing.
 
+## D04 v8 - alternate traits, Experiences and owner-controlled sharing
+
+Status: complete. Starting HEAD: `7adf98db84f0dcb1db2b9e225b9c626f3e3f1e14`.
+
+- Red first: `d04-trait-sharing-test.mjs` specified an exact request-bound reviewed alternate trait, rejection of a fabricated proof, recalculated native breakdown, exact Experience spend, private-by-default results and explicit redacted party publication.
+- Human GM adjudication now supports `alternate_trait` sources tied to one request, current scene, character, from/to traits, reason and saved ruling. Discovery offers only recorded traits with that active proof; arbitrary model or owner trait substitution remains invalid.
+- Owner confirmation updates the prepared input and recomputes the existing native `rollBreakdown`. It cannot run after paid options, with Tag Team, after rolling, with unresolved mechanics or with stale proof. Trait choice itself has no inferred cost.
+- Private menus can confirm one alternate trait, then require a fresh recalculated view before Experience choices. Existing Experience operations still require exact reviewed relevance, explicit owner confirmation and one transactional Hope spend per choice.
+- Added affirmative `share` to the native roll operation. Only the acting owner can share an actual saved result; default remains private. The party projection includes character, authored attempt, saved total/duality and status, but omits traits, Experiences, cards and private option state.
+- Party delivery uses a stable disclosure source and publication receipt. Retry cannot repost, reroll or respent; a foreign/denied share creates neither disclosure nor cost.
+- Focused D04, D03 and I Heard You collaboration tests passed. `npm run check` passed with 229 modules/scripts and 24 commands; `npm run validate` passed 96/96 suites after manifest synchronization, with network denied, `live_requests=0` and `billable_tokens=0`.
+- Persistence is additive in existing roll request/operation records plus party-scoped `roll_disclosure` and `roll_party_publication`; no SQL migration. Native roll/cost receipts remain authoritative.
+- No production data, live bot, Discord registration, deployment or paid provider call was used.
+
+Next phase: D05 multiplayer action windows, contests and consent.
+
 ## T00 — reproducible baseline
 
 Status: implementation inventory complete; baseline captured at `6c3167dbbf015739e1723272121552d60b9f2ec8`.

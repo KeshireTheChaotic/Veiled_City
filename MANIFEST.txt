@@ -34,6 +34,7 @@ bot/scripts/cost-estimate.mjs
 bot/scripts/d01-roll-lifecycle-test.mjs
 bot/scripts/d02-roll-options-test.mjs
 bot/scripts/d03-roll-menu-test.mjs
+bot/scripts/d04-trait-sharing-test.mjs
 bot/scripts/end-to-end-a-test.mjs
 bot/scripts/end-to-end-b-test.mjs
 bot/scripts/end-to-end-c-test.mjs
@@ -223,6 +224,7 @@ bot/src/roll-language.js
 bot/src/roll-menu.js
 bot/src/roll-options.js
 bot/src/roll-requests.js
+bot/src/roll-sharing.js
 bot/src/roster.js
 bot/src/routing-diagnostics.js
 bot/src/rule-reference-catalog.js
