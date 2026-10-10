@@ -270,6 +270,8 @@ export function buildCommands(){
         .addSubcommand(s=>s.setName("adjudicate").setDescription("GM: save exact sourced rules, feasibility or active attack adjudication")
           .addStringOption(o=>o.setName("json").setDescription("Key, character, saved ruling, kind and exact adjudicated data").setRequired(true)))
         .addSubcommand(s=>s.setName("pending").setDescription("Privately read your current sheet-derived pending roll requests"))
+        .addSubcommand(s=>s.setName("menu").setDescription("Open private controls for an owned pending roll request")
+          .addStringOption(o=>o.setName("request").setDescription("Exact saved request key").setRequired(true)))
         .addSubcommand(s=>s.setName("result").setDescription("Privately retrieve a saved owned request/result without rolling or spending")
           .addStringOption(o=>o.setName("request").setDescription("Exact saved request key").setRequired(true)))
         .addSubcommand(s=>s.setName("request").setDescription("GM: adjudicate a source-verified pending roll without rolling or spending")

@@ -64,6 +64,15 @@ Accepted typed intents are canonical adjudication inputs; human declarations own
 - Help and Tag Team expose only generic rule requirements. Other characters' sheet options remain private. Net-disadvantage Help remains blocked unless an exact request-bound human-GM exception is separately established.
 - A persisted `roll_option_registry` is character-private, source-bound and fingerprinted. It is reconstructable advisory state; native operation receipts remain the sole authority for applied options and costs.
 
+## D03 private interactive controls
+
+- A roll-menu token is opaque and bound to one guild, active session, owner user, character, request, source registry and exact request revision. A custom ID carries no sheet data and cannot be transferred to another user or request.
+- Menu rendering is ephemeral and owner-private. Select options contain only that owner's applicable choices; foreign users fail authorization before labels, values or state are returned.
+- Selection is a zero-cost preview. Confirm revalidates the current registry and performs supported choices through existing native operations in one transaction. `applying`/`used` token states and native operation receipts prevent double-click costs or dice.
+- Request revision is compare-and-set authority. GM stakes changes, sheet changes, another contribution or an old control make the menu stale; the player must open a fresh view. Restart reconstruction creates a new token from persisted native state.
+- Closing a menu does not cancel the request or refund/reverse an already committed effect. Additional-authority features, alternate traits and multiplayer invitations stay inert until their dedicated native prerequisites are satisfied.
+- `/vc-roll contribute` remains the explicit JSON/accessibility fallback; buttons are convenience controls, not required player phrasing or independent mechanics.
+
 ## T04 compound-action dependencies
 
 - An enriched intent may identify only unique earlier action indices as prerequisites. Acceptance converts those indices to stable proposal identities tied to exact source occurrences; missing dependencies, forward references and cycles are rejected.

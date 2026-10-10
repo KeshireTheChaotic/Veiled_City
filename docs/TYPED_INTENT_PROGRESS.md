@@ -126,6 +126,22 @@ Status: complete. Starting HEAD: `5c6e39dbd3f5cb368aa6ba80fe8c054ce9799471`.
 
 Next phase: D03 interactive private Discord roll menus.
 
+## D03 v8 - interactive private Discord roll menus
+
+Status: complete. Starting HEAD: `1558583f274bb189fd7ea31a6cbe1adc5d4f86c3`.
+
+- Red first: `d03-roll-menu-test.mjs` began with the missing menu service and specified owner binding, private payloads, preview-before-spend, stale revision rejection, exactly-once confirmation and restart reconstruction.
+- Added `/vc-roll menu request:<key>` as an ephemeral accessible entry point. It renders bounded owner-only formula, applicable Experience choices, costs, exclusivity, review blockers and status; `/vc-roll contribute` remains the non-component fallback.
+- Opaque `roll_menu_token` records bind guild, active session, user, character, request, source, registry and exact request revision. Discord custom IDs expose only a short token and action, never character sheet details.
+- Select menus preview/deselect choices without spending. Confirm revalidates current ownership, source proof, option state, exclusivity and request revision, then invokes the existing native Experience operation transactionally. Roll uses the existing native roll operation.
+- Tokens move through `active` to `applying` and `used` (or `cancelled`). A stale, foreign, closed or repeated control cannot spend, roll or disclose options; rollback returns an interrupted synchronous operation to its prior state.
+- Menus paginate at 20 choices, include refresh/close controls and can be reconstructed after restart from current native request state. Additional-authority Help/Tag Team/feature paths remain visibly inert until their existing consent/review prerequisites are satisfied.
+- Focused D03, D02, I Heard You collaboration and interaction-lifecycle tests passed. `npm run check` passed with 227 modules/scripts and 24 commands; `npm run validate` passed 95/95 suites after manifest synchronization, with network denied, `live_requests=0` and `billable_tokens=0`.
+- Persistence is additive in character-private `roll_menu_token` and `roll_option_registry` city records; no SQL migration. Tokens grant UI authorization only, while native operation receipts remain outcome/cost authority.
+- No production data, live bot, Discord registration, deployment or paid provider call was used.
+
+Next phase: D04 alternate traits, Experiences and owner-controlled sharing.
+
 ## T00 — reproducible baseline
 
 Status: implementation inventory complete; baseline captured at `6c3167dbbf015739e1723272121552d60b9f2ec8`.

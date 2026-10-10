@@ -71,11 +71,13 @@ export function discoverRollOptions(db,guild,user,request){
     const applies=applicability(typeof item==="object"?item.applies_to:null,ctx);
     if(applies==="irrelevant")continue;
     const proof=participationProof(db,guild,row,name),valid=Number.isSafeInteger(bonus)&&bonus>=0&&bonus<=20;
-    const state=!valid||applies==="invalid"?"blocked":proof&&applies==="applicable"?"requires_owner_choice":"requires_additional_authorization";
+    const applied=(row.data.experiences||[]).some(value=>value.name===name);
+    const state=applied?"applied":!valid||applies==="invalid"?"blocked":proof&&applies==="applicable"?"requires_owner_choice":"requires_additional_authorization";
     options.push(option({key:`experience:${name}`,type:"experience",label:name,state,effect:valid?{kind:"flat",amount:bonus}:null,
       cost:{resource:"hope",amount:1},exclusive_group:typeof item==="object"&&typeof item.exclusive_group==="string"?item.exclusive_group:"",
       source:{kind:"character_sheet",character_id:pc.id,path:`experiences.${name}`,proof:proof?.event_key||null,
-        ruling_key:proof?.details.ruling_key||null},reason:state==="requires_owner_choice"?"Applicable reviewed Experience; owner choice and Hope authorization remain required.":
+        proof_description:proof?.details.roll_participation?.description||null,ruling_key:proof?.details.ruling_key||null},
+      reason:state==="requires_owner_choice"?"Applicable reviewed Experience; owner choice and Hope authorization remain required.":
         state==="blocked"?"The recorded Experience mechanic is invalid.":"Applicability needs an exact reviewed source before owner selection."}));
   }
   const addSheetOptions=(items,type,prefix)=>{

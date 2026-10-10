@@ -180,6 +180,11 @@
       "sha256": "3ecbd7015594e3681803c4b3e9c9fa442c947c1da6fbf7e81a5ff4297893bc21"
     },
     {
+      "path": "bot/scripts/d03-roll-menu-test.mjs",
+      "size_bytes": 5729,
+      "sha256": "2fc8bd4d70134a451f7f4d80db81a5d8750a0f02e2d6f176c9bc992dfd7139be"
+    },
+    {
       "path": "bot/scripts/end-to-end-a-test.mjs",
       "size_bytes": 5018,
       "sha256": "68393cf5f3e9fec29e781196997d5c468f7515091ba9118e4fbfbab4f2b70f69"
@@ -651,8 +656,8 @@
     },
     {
       "path": "bot/scripts/validate-offline.mjs",
-      "size_bytes": 4090,
-      "sha256": "0c71dd27cc5cde209c688390e8857da3fb209d0f911e34346d80bc414c5b9901"
+      "size_bytes": 4111,
+      "sha256": "7e4bf062836d9dc9c9fa7413980843c6e62ff7887999f92a6c11a93d52f9377d"
     },
     {
       "path": "bot/sql/schema.sql",
@@ -776,8 +781,8 @@
     },
     {
       "path": "bot/src/command-definitions.js",
-      "size_bytes": 69187,
-      "sha256": "44960c4ade4abe04feb64248e639deb3597128df97eb3665e8d2f8bc2ae32673"
+      "size_bytes": 69418,
+      "sha256": "ea94abec83f922de9db88cc33b6dd66838a9ade8590a284515f9c64223219a58"
     },
     {
       "path": "bot/src/command-schema.js",
@@ -786,8 +791,8 @@
     },
     {
       "path": "bot/src/commands.js",
-      "size_bytes": 148776,
-      "sha256": "495097b363b610ed99433584f3db54aba70390fd68183d061bb9b15c52fccb8a"
+      "size_bytes": 149347,
+      "sha256": "fa898ecc5ca6ab3f24ba67a1b2815ea7392f28c638a12b0db2e67ede3b42833d"
     },
     {
       "path": "bot/src/concept-context.js",
@@ -1110,9 +1115,14 @@
       "sha256": "f5edee788c9aa5b59b6ec48555dd35a67db3a33cd2122ef1510299b9dcd05c01"
     },
     {
+      "path": "bot/src/roll-menu.js",
+      "size_bytes": 9932,
+      "sha256": "7da36c2a9312dc6f9a09bba4aadfb6f34ec0d55099ffcd0199f55a63e45daff1"
+    },
+    {
       "path": "bot/src/roll-options.js",
-      "size_bytes": 8879,
-      "sha256": "8b42626f0b2d9ee7c93ad5d51b0f7aebed8cb235346c3ad58e11f8ece0ebf169"
+      "size_bytes": 9052,
+      "sha256": "183888bd198e5fff19540e258f66976daf19a2e11df994c87bb2032f5e0949e2"
     },
     {
       "path": "bot/src/roll-requests.js",
@@ -2001,8 +2011,8 @@
     },
     {
       "path": "docs/TYPED_INTENT_CONTRACTS.md",
-      "size_bytes": 19807,
-      "sha256": "886ae6ed490bdd7eba6e55ed37deca25845c820a79ba81f7ba2075e5d8b7e323"
+      "size_bytes": 21177,
+      "sha256": "65d58a29afa8200b290787b7ef66cbd41e4c4d9029240767dda91ca66821f759"
     },
     {
       "path": "docs/TYPED_INTENT_DELTA_AUDIT.md",
@@ -2016,8 +2026,8 @@
     },
     {
       "path": "docs/TYPED_INTENT_PROGRESS.md",
-      "size_bytes": 39679,
-      "sha256": "59f56dbdbcc29f5fa0aeb65d0b90600560ccc0e1e723a52a073a2160f66700de"
+      "size_bytes": 41973,
+      "sha256": "d50e6c5a8b4df90418d2d4132115a6b08ea37ddc1e3785fa632fe1d9ac024f1f"
     },
     {
       "path": "docs/TYPED_INTENT_RELEASE_10.0.0.md",

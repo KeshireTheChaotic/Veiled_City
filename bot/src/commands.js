@@ -46,6 +46,7 @@ import { manageLongProject, projectPhaseRevision } from "./long-projects.js";
 import { stateRevision } from "./ai-intents.js";
 import { beginInteraction, acknowledgeRules, interactionFailure, interactionResponseExpired, replyOrEdit } from "./discord/interaction-lifecycle.js";
 import { validateChannelRouting } from "./routing-diagnostics.js";
+import { handleRollMenuInteraction, isRollMenuInteraction, openRollMenu } from "./roll-menu.js";
 
 const interactionQueue=new KeyedSerialQueue();
 
@@ -353,6 +354,9 @@ export async function handleCommand(interaction,{db,gm,voice=null}){
 }
 
 async function executeCommand(interaction,{db,gm,voice=null}){
+  if((typeof interaction.isButton==="function"&&interaction.isButton()
+    ||typeof interaction.isStringSelectMenu==="function"&&interaction.isStringSelectMenu())&&isRollMenuInteraction(interaction))
+    return handleRollMenuInteraction(db,interaction);
   if(!interaction.isChatInputCommand()) return false;
   const commandName=interaction.commandName;
   if(commandName!=="vc"&&!commandName.startsWith("vc-")) return false;
@@ -1343,6 +1347,10 @@ GM notes: ${a.draft.gm_notes}`:""}`.slice(0,1950):"No aftermath draft exists for
       const chunks=chunkTextLines((rows.map(row=>formatRollRequest(row,{user:interaction.user.id})).join("\n\n")||"No current pending roll requests.").split("\n"));
       await interaction.reply({content:chunks[0],ephemeral:true});
       for(const content of chunks.slice(1)) await interaction.followUp({content,ephemeral:true});return true;
+    }
+    if(group==="roll"&&sub==="menu"){
+      const payload=openRollMenu(db,interaction.guildId,interaction.user.id,interaction.options.getString("request",true));
+      await interaction.reply(payload);return true;
     }
     if(group==="roll"&&sub==="adjudicate"){
       if(!isGM(db,interaction)) throw new PermissionError("GM/admin permission required to adjudicate rules and feasibility.");
