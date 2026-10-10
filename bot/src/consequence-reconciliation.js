@@ -25,10 +25,11 @@ export function reconcileConsequences(db,guild,{intents=[],narration="",private_
     const adjudication=actionAdjudication(db,guild,row.record_key),receipt=outcomeReceipt(db,guild,row);
     let disposition="unresolved",refs=[];
     if(receipt?.status==="resolved"){disposition="resolved";refs=[receipt.ref];}
-    else if(adjudication?.data.disposition==="roll_pending"){
+    else if(["roll_pending","needs_review"].includes(adjudication?.data.disposition)){
       const request=db.getCityRecord(guild,"roll_request",adjudication.data.roll_request_ref);
-      if(!request||request.status!=="pending")fail("Roll-pending narration requires an actual current pending request.");
-      disposition="roll_pending";refs=[request.record_key];
+      const expected=adjudication.data.disposition==="needs_review"?"needs_review":"pending";
+      if(!request||request.status!==expected)fail("Roll-pending narration requires an actual current pending or review request.");
+      disposition=adjudication.data.disposition;refs=[request.record_key];
     }else if(["blocked","needs_clarification"].includes(row.data.resolution))disposition=row.data.resolution;
     else if(["speak","observe","other"].includes(row.data.type))disposition="acknowledged_nonconsequential";
     else if(strict)fail("Immediate actionable intent has no native resolved, pending, blocked or clarification state.");

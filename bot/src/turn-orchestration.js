@@ -30,7 +30,7 @@ export function commitGmTurn({db,guild,session,result,scope,speaker,label,meta={
     const nativeRolls=resolveTypedNativeRolls(db,guild.id,scope,result.player_intents||[],meta.messageId||'');
     mutation.intents=[...(mutation.intents||[]),...nativeRolls];
     if(mutation.typedIntents?.length)mutation.reconciliation=reconcileConsequences(db,guild.id,{
-      intents:mutation.typedIntents,narration:result.narration||"",private_messages:result.private_messages||[],scope,strict:false});
+      intents:mutation.typedIntents,narration:result.narration||"",private_messages:result.private_messages||[],scope,strict:true});
     const proposalMap=new Map();
     const addProposal=(d)=>{
       const key=String(d?.key||"").trim().toLowerCase();

@@ -174,6 +174,21 @@ Status: complete. Starting HEAD: `ac3494c41d55df1ff77eaf39e04fce62447d66f8`.
 
 Next phase: D06 compound continuation and strict consequence reconciliation.
 
+## D06 v8 - compound continuation and strict consequence reconciliation
+
+Status: complete. Starting HEAD: `c7e76a9469eddcea3832db6d86c5d911e36b0623`.
+
+- Red first: `d06-continuation-test.mjs` began with the missing typed-roll outcome bridge and specified receipt creation, selective descendant resume, replay and strict live reconciliation.
+- A terminal typed native roll now creates one stable `action_outcome_receipt` from the accepted action, request and saved roll ID. Success/failure is derived from actual total, Critical state and stored Difficulty; no model-provided result is used.
+- Finalization marks the accepted intent and native adjudication resolved, attaches the exact receipt, then resolves or fails only its compound node and recomputes the same-source DAG. Successful prerequisites make eligible descendants ready; failed prerequisites block only causal descendants; independent nodes remain ready.
+- Replay returns the same receipt and cannot reroll, respent or transition a terminal node differently. Attack actions wait through damage/type phases and finalize only when the native request becomes resolved.
+- `needs_review` is now a first-class reconciled disposition with an actual matching review request. Production `commitGmTurn` calls consequence reconciliation with `strict:true`; an immediate consequential action lacking resolved, pending, review, blocked or clarification authority aborts the transaction.
+- Focused D06, T06 reconciliation, T04 compound and T03 rules tests passed. `npm run check` passed with 232 modules/scripts and 24 commands. The pre-manifest run passed every behavioral gate and stopped only at the expected stale hash; after synchronization, `npm run validate` passed 98/98 suites with network denied, `live_requests=0` and `billable_tokens=0`.
+- Persistence is additive in existing accepted intent, native adjudication, outcome receipt and compound records; no SQL migration. All updates share the native roll transaction and roll back together.
+- No production data, live bot, Discord registration, deployment or paid provider call was used.
+
+Next phase: D07 scoped memory, lore and referent integration.
+
 ## T00 — reproducible baseline
 
 Status: implementation inventory complete; baseline captured at `6c3167dbbf015739e1723272121552d60b9f2ec8`.

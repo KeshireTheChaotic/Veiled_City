@@ -91,6 +91,15 @@ Accepted typed intents are canonical adjudication inputs; human declarations own
 - Window revision compare-and-set, explicit reaction state, exclusive-winner rules and native outcome receipts remain mandatory. Late arrivals cannot undo a closed result, and Discord timestamps never establish precedence.
 - Coordination updates compound dependency state before autonomous scene effects are filtered, so a pending contested node cannot leak a model-described consequence while unrelated ready nodes continue.
 
+## D06 terminal receipts and continuation
+
+- A typed request becomes an action outcome only when the native roll request reaches a terminal resolved state with a saved roll ID and result. The stable action receipt records that native roll, actual total/duality, stored Difficulty and derived success/failure.
+- Accepted intent, native adjudication, outcome receipt and compound transition update in the same transaction. Preview never draws dice, and replay reuses the same receipt without repeating a cost or transition.
+- Resolution/failure changes only the completed node. Rebuilding its same-source dependency graph resumes newly authorized descendants, blocks causal descendants of failure and retains independent ready work without rerunning completed ancestors.
+- Attack actions remain pending through damage and damage-type phases. A pending/review request is not an outcome and cannot resume consequence-dependent work.
+- Production consequence reconciliation is strict. Every immediate consequential accepted action must cite an actual resolved receipt/request/review or explicit native blocked/clarification state; model narration and player-authored success claims cannot fill a missing state.
+- Party and private projections retain their original scope and stable reconciliation record. Delivery retry reuses the committed projection and never reopens mechanics.
+
 ## T04 compound-action dependencies
 
 - An enriched intent may identify only unique earlier action indices as prerequisites. Acceptance converts those indices to stable proposal identities tied to exact source occurrences; missing dependencies, forward references and cycles are rejected.

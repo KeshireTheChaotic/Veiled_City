@@ -8,6 +8,7 @@ import { dualityRoll, parseDice, d } from "./dice.js";
 import { hpMarksForDamage } from "./combat.js";
 import { recordObservedAttack } from "./encounter.js";
 import { StateConflictError, PermissionError, UserInputError } from "./errors.js";
+import { finalizeTypedRollAction } from "./typed-roll-outcomes.js";
 function fail(message){throw new StateConflictError(message);}
 /** Called only by the authenticated GM command/review boundary, never by model-supplied identity. */
 export function adjudicateRollSource(db,guild,input,reviewer){
@@ -290,6 +291,7 @@ export function contributeRoll(db,guild,user,input,{rng=d}={}){
       }
     }else throw new UserInputError("Unsupported mechanical contribution. Describe your intent freely; no narrative response menu is required.");
     const after=save(db,guild,row,data,status,user);
+    if(after.status==="resolved"&&after.data.input?.accepted_intent)finalizeTypedRollAction(db,guild,after);
     recordObservedAttack(db,guild,after);
     const resource_deltas=affected.map(id=>{
       const before=beforeResources.get(id),current=db.getCharacter(id).data.resources;
