@@ -87,9 +87,26 @@ Status: complete on 2026-10-10. Implementation commit: `7941bab95a3850ee9de375d9
 
 T02 is the next phase. Accepted typed intents are canonical adjudication inputs; human declarations own intent; native receipts own outcomes.
 
+## T02 - typed routing replaces general phrase authority
+
+Status: complete on 2026-10-10. Implementation commit: `bc593e813ac884dce3fa18b5e4c5dfc0fb3ce7d1`; starting HEAD: `12fe17d`. Package version remains `10.0.0`.
+
+- Red first: `typed-routing-authority-test.mjs` failed because no accepted-intent routing lookup existed.
+- Added `currentAcceptedIntent()` and changed autonomous reveal, local-zone movement and NPC introduction to require current accepted structural type/source/actor/target records. Removed `worldRequirements()` and `interpretAuthoredText()` from that authoritative path.
+- Nonstandard fragment, passive and address syntax now routes identically when its authenticated semantic proposal is accepted. Exact wording remains contextual evidence, not a verb whitelist.
+- Model-authored candidates remain compatibility-only pending review inputs; they cannot execute movement, consent, spending or rolls. Historical scene-entry review remains source/target/revision gated.
+- Exact owner roll/Help/Tag Team and consent adapters were deliberately retained. Polite requests, questions, reported agreement and inferred participation remain nonbinding and spend nothing.
+- Updated autonomous and recovery fixtures to supply current structured search/interact/local-zone intents instead of relying on lexical fallback.
+- No SQL migration or new mechanical effect. Rollback is a revert of the T02 commits; T01 proposal and acceptance rows remain readable.
+- Focused T02, autonomous-world, natural-language-scope, native roll collaboration and native consent suites passed.
+- `npm run check` passed (198 modules/scripts, 24 commands); `npm run validate` passed 78/78 suites with network denied, `live_requests=0`, and `billable_tokens=0`.
+- T00.1 movement authorization and T05a privacy remained green; no production/live/paid access occurred.
+
+T03 is next: grounded rules arbitration and native pending/resolved receipts.
+
 ## Deferred findings
 
-T02 through T08, including the general T05b lifecycle, have not started. The next phase is T02: remove general phrase matching as authorization while preserving explicit native consent and spend gates.
+T03 through T08, including the general T05b lifecycle, have not started. The next phase is T03: grounded rules arbitration and native pending/resolved receipts.
 
 Legacy `context_memory` rows without the new native audience/provenance marker are deliberately omitted from player-turn retrieval. A reviewed migration or deletion policy belongs to T05b; silently blessing their historical scope would recreate the leak. Broader salience, expiry, correction/supersession, aliasing, and semantic retrieval also remain T05b work.
 

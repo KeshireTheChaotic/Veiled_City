@@ -1841,8 +1841,8 @@
     },
     {
       "path": "docs/TYPED_INTENT_PROGRESS.md",
-      "size_bytes": 10581,
-      "sha256": "a18cae4cc91bd77efe84693842e3b1227aa1758e6f8322f5cfcc87017d7f36d9"
+      "size_bytes": 12472,
+      "sha256": "636a8fd994be96700a1978cbaf197116f1445f9f83ee938022a5a2656de61c64"
     },
     {
       "path": "docs/UPGRADE_3.0_TO_3.1.md",
