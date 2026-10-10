@@ -192,6 +192,20 @@ Status: complete on 2026-10-10. Package version remains `10.0.0`.
 
 T08 is next: aggregate qualification, hardening and release readiness.
 
+## T08 - release qualification and hardening
+
+Status: complete on 2026-10-10. Package version remains `10.0.0`.
+
+- Red first: `typed-intent-qualification-test.mjs` failed with `ERR_MODULE_NOT_FOUND` before the aggregate qualification policy existed.
+- Added deterministic release blocking for false success, mis-scoped NPC knowledge, unnecessary/missing rolls, duplicate receipts, invalid cross-player conflicts, secret leaks, unauthorized effects and skipped security suites. Semantic omission, overreach and false refusal remain separately measured.
+- Registered every phase-owned suite in the default network-denied validator and retained the existing GitHub Actions `npm ci --ignore-scripts` plus `npm run validate` gate.
+- Added release notes covering authority changes, additive persistence, migration/rollback, bounded limitations and safe production pull without starting the bot.
+- `npm ci` passed: 37 packages installed, 38 audited, 0 vulnerabilities. `npm run check` passed 211 modules/scripts and 24 commands. Manifest integrity and `git diff --check` passed.
+- `npm run validate` passed 85/85 suites, preserving all 76 baseline suites and adding nine phase-owned gates. Network was denied; `live_requests=0` and `billable_tokens=0`. Optional live-model evaluation was not run because paid/model calls were prohibited.
+- Diff versus `main` was reviewed for the typed-intent branch scope. No SQL schema migration was added; production campaign data was not accessed during qualification.
+
+All planned phases are complete. Accepted typed intents are canonical adjudication inputs; human declarations own intent; native receipts own outcomes.
+
 ## Deferred findings
 
 T04 through T08, including T04.1 and the general T05b lifecycle, have not started. The next phase is T04: ordered compound actions and causal dependencies.

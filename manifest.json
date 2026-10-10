@@ -550,6 +550,11 @@
       "sha256": "9ccc469d43603612a6f16075e12b4eb5ba00ba81ee5ee23c3c572094b09dcae3"
     },
     {
+      "path": "bot/scripts/typed-intent-qualification-test.mjs",
+      "size_bytes": 1826,
+      "sha256": "67911a6e67162a6fb6c6856886d9257303b9148f33d75dbe740d408b1fd72dcf"
+    },
+    {
       "path": "bot/scripts/typed-intents-regression-test.mjs",
       "size_bytes": 5277,
       "sha256": "7d6980b301e5df57f9618f32920108aa03eab462a0a416feab3c125ab3d407cc"
@@ -566,8 +571,8 @@
     },
     {
       "path": "bot/scripts/validate-offline.mjs",
-      "size_bytes": 3802,
-      "sha256": "e3c9a1b38a8bcae7742e4e1cd4cd9fd66f3a5953da1275b9440b5c5d72b85387"
+      "size_bytes": 3836,
+      "sha256": "6e2aab30da03ba793bd574ac9554da9f012332b22d6ac6b360dc8a07a1a25419"
     },
     {
       "path": "bot/sql/schema.sql",
@@ -1150,6 +1155,11 @@
       "sha256": "4cef4c7850f81c703b8de6a0e81bf6ffd237a6b9c4ff19d31b30d1c9cb8a3918"
     },
     {
+      "path": "bot/src/typed-intent-qualification.js",
+      "size_bytes": 1434,
+      "sha256": "364ea02121916b48f0d1f54bfd0f0647d7af1adb3844c6799ce390beb1f9888f"
+    },
+    {
       "path": "bot/src/typed-intents.js",
       "size_bytes": 29839,
       "sha256": "139e642ec5d5b1303ee24b991547ca4b4bf8f1703ccf97892e893ad2b0d33d34"
@@ -1656,8 +1666,8 @@
     },
     {
       "path": "docs/CODEX_TYPED_INTENT_REFINEMENT_PLAN_v5.md",
-      "size_bytes": 51823,
-      "sha256": "f55583f03424f7d46fd8f2d42aef6f1f1297d9cca70834a049eded1c8298c757"
+      "size_bytes": 51822,
+      "sha256": "405de74448e4f74d15173655aba90c9d2e8ef9a672a390e92e724386fde1fe70"
     },
     {
       "path": "docs/CODE_STANDARDS.md",
@@ -1901,8 +1911,13 @@
     },
     {
       "path": "docs/TYPED_INTENT_PROGRESS.md",
-      "size_bytes": 21829,
-      "sha256": "d1e7618ca2495ff1fc2d53d36d39045afb31c989fff0d18ef2e9269c0b2e9e3a"
+      "size_bytes": 23482,
+      "sha256": "0b3e4154aa1f3dbbbc0b9e7828f6ff8f4e500686b0945c7ffd4532b6bb1ce8ee"
+    },
+    {
+      "path": "docs/TYPED_INTENT_RELEASE_10.0.0.md",
+      "size_bytes": 3748,
+      "sha256": "19767016f01475bb528608b581797a386afac0a9f9516d5a0e38c55aff5ee07b"
     },
     {
       "path": "docs/UPGRADE_3.0_TO_3.1.md",

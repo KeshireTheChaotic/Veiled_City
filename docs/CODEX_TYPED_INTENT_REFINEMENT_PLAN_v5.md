@@ -455,4 +455,3 @@ Every case should assert: exact authored source; accepted typed intent or justif
 **Expansion rule:** These 75+ cases are a floor, not a claim of live-model coverage. Add negative cases whenever a code path discovers an additional authority-bearing assumption. Offline mocks test deterministic policy; separately measure model interpretation with authorized staging before release.
 
 ---
-
