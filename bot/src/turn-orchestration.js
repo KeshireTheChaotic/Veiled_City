@@ -3,6 +3,7 @@ import { applyAuthoritativeMutation, applyCanonProposalDrafts } from "./state.js
 import { validateDecisionAdvisory } from "./decision-advisory.js";
 import { queueTurnPublications } from "./publication-outbox.js";
 import { resolveTypedNativeRolls } from "./typed-mechanics.js";
+import { reconcileConsequences } from "./consequence-reconciliation.js";
 export function commitGmTurn({db,guild,session,result,scope,speaker,label,meta={},content=null}){
   const decision_advisory=validateDecisionAdvisory(db,guild.id,result);
   const mutates=(result.ai_intents||[]).length||(result.events||[]).some(e=>e.type!=="log_only")||(result.relationships||[]).length||(result.handouts||[]).length||(result.npc_memories||[]).length||(result.npc_knowledge||[]).length||(result.npc_goals||[]).length||(result.simulation_updates||[]).length;
@@ -28,6 +29,8 @@ export function commitGmTurn({db,guild,session,result,scope,speaker,label,meta={
     // Dice RNG occurs only in final commit. Preview never samples dice and cannot accidentally reroll.
     const nativeRolls=resolveTypedNativeRolls(db,guild.id,scope,result.player_intents||[],meta.messageId||'');
     mutation.intents=[...(mutation.intents||[]),...nativeRolls];
+    if(mutation.typedIntents?.length)mutation.reconciliation=reconcileConsequences(db,guild.id,{
+      intents:mutation.typedIntents,narration:result.narration||"",private_messages:result.private_messages||[],scope,strict:false});
     const proposalMap=new Map();
     const addProposal=(d)=>{
       const key=String(d?.key||"").trim().toLowerCase();

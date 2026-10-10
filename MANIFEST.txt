@@ -22,6 +22,7 @@ bot/scripts/city-core-regression-test.mjs
 bot/scripts/city-depth-regression-test.mjs
 bot/scripts/city-regression-test.mjs
 bot/scripts/compound-action-test.mjs
+bot/scripts/consequence-reconciliation-test.mjs
 bot/scripts/context-conversation-test.mjs
 bot/scripts/contract-fixtures.mjs
 bot/scripts/cost-estimate.mjs
@@ -138,6 +139,7 @@ bot/src/commands.js
 bot/src/concept-context.js
 bot/src/config.js
 bot/src/consent-language.js
+bot/src/consequence-reconciliation.js
 bot/src/content-packages.js
 bot/src/content.js
 bot/src/context-memory.js

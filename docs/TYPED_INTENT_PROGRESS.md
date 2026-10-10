@@ -164,6 +164,20 @@ Status: complete on 2026-10-10. Package version remains `10.0.0`.
 
 T06 is next: receipt-reconciled consequences and audience-safe narration.
 
+## T06 - verified consequences and narration reconciliation
+
+Status: complete on 2026-10-10. Package version remains `10.0.0`.
+
+- Red first: `consequence-reconciliation-test.mjs` failed with `ERR_MODULE_NOT_FOUND` before the reconciliation boundary existed.
+- Added post-commit/pre-publication reconciliation that re-reads accepted intents and binds narration to native outcome receipts, active arrival/travel receipts, actual pending roll requests, verified block/clarification states or nonconsequential acknowledgement.
+- Unverified player-authored success cannot be narrated as accomplished while pending. Pending narration may state stakes/uncertainty; resolved narration reuses the stable native receipt.
+- Stored projections inherit party versus private character/player boundaries. Publication continues through the transactional outbox, so retry and restart do not rerun mechanics or alter outcomes.
+- Focused T06, outbox/recovery, source-backed movement and production regression suites passed. `npm run check` passed 207 modules/scripts and 24 commands.
+- `npm run validate` passed 83/83 suites with network denied, `live_requests=0`, and `billable_tokens=0`.
+- No live bot, production database, deployment, merge or paid model was used.
+
+T07 is next: retire obsolete lexical authority while preserving reviewed adapters.
+
 ## Deferred findings
 
 T04 through T08, including T04.1 and the general T05b lifecycle, have not started. The next phase is T04: ordered compound actions and causal dependencies.

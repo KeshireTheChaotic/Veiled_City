@@ -125,6 +125,11 @@
       "sha256": "de4d21875ab8d2f7314c0cbd5d82b54c9e6870e2465722a0970a9767e694be20"
     },
     {
+      "path": "bot/scripts/consequence-reconciliation-test.mjs",
+      "size_bytes": 3695,
+      "sha256": "1cbc8b0dae017ea1f28d06b7bd62eebbd3076938626c5d0b3273795f1c0f0f95"
+    },
+    {
       "path": "bot/scripts/context-conversation-test.mjs",
       "size_bytes": 4653,
       "sha256": "72c1244616857501bd896ae155fefceaa3e51382318f51fa9fd24a83dec7a25c"
@@ -556,8 +561,8 @@
     },
     {
       "path": "bot/scripts/validate-offline.mjs",
-      "size_bytes": 3734,
-      "sha256": "b77547502981c666d52294afe9bb4c74ac1811ba804f152d80f52d3521cb65c2"
+      "size_bytes": 3768,
+      "sha256": "8bec0c55ad0faf5d8f1a785318a9c5813afbd8319a28fa5aff191ab0954672ae"
     },
     {
       "path": "bot/sql/schema.sql",
@@ -703,6 +708,11 @@
       "path": "bot/src/consent-language.js",
       "size_bytes": 8146,
       "sha256": "5ad46e209b8bfab645d34994dc879378fd40eccf6886d225dfea51554b78fe9f"
+    },
+    {
+      "path": "bot/src/consequence-reconciliation.js",
+      "size_bytes": 3917,
+      "sha256": "eb3303ff271c180df1843e5cc7bbc911b44a4c70adb830975940a03b24b16fa3"
     },
     {
       "path": "bot/src/content-packages.js",
@@ -1116,8 +1126,8 @@
     },
     {
       "path": "bot/src/turn-orchestration.js",
-      "size_bytes": 4192,
-      "sha256": "f6f509dec2b6380a949250d86aa07405eeffd2e9e07d106de442d44141792960"
+      "size_bytes": 4496,
+      "sha256": "dae8e50ec9e4f87337df12148d9497daba204ea57d6ff63a7ab4d3cae843af45"
     },
     {
       "path": "bot/src/turn-pipeline.js",
@@ -1871,13 +1881,13 @@
     },
     {
       "path": "docs/TYPED_INTENT_CONTRACTS.md",
-      "size_bytes": 11052,
-      "sha256": "825169cbdea0dc8236db0aac538d84bcf07aaba11426227b60b6eedc2bffddb7"
+      "size_bytes": 11867,
+      "sha256": "8753e233a79b4e42410e7bf2a8b2a53c4d9e1d8bb411feadc64d067f562f643b"
     },
     {
       "path": "docs/TYPED_INTENT_PROGRESS.md",
-      "size_bytes": 19191,
-      "sha256": "41409b28b56ab5b78049e3694558ca62579e3a710402af669b3881bfdc38f6e7"
+      "size_bytes": 20525,
+      "sha256": "151d5ab0c2d4a9be20d2fa22573f0385b0b279ddcc743a454d6cc8aa318ded11"
     },
     {
       "path": "docs/UPGRADE_3.0_TO_3.1.md",

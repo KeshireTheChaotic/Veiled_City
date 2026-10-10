@@ -33,6 +33,12 @@ Accepted typed intents are canonical adjudication inputs; human declarations own
 - Retrieval is bounded and independently enforces record audience, active identity, active source and expiry. Party retrieval cannot see character/player/GM revisions, and character-private memory never crosses characters even when one human controls both.
 - Existing fail-closed `context_memory` records remain supported. Newly saved audience-bound context also creates the scoped identity/revision representation; unsafe legacy rows are not blessed by migration.
 
+## T06 consequence reconciliation
+
+- After native state commit and before publication enqueue, accepted actions are re-read from storage and reconciled to committed outcome receipts, active arrival/travel receipts, actual pending roll requests, verified blocks/clarifications or explicitly nonconsequential acknowledgement.
+- An owner-attributed success claim stays `unverified` until a matching native receipt exists. Pending narration may describe stakes and uncertainty but cannot restate the claim as accomplished; resolved narration cites the same stable receipt on retry.
+- Reconciliation stores one audience-scoped projection record. Party and private/character surfaces remain distinct, and Discord publication retry uses the existing outbox without rerunning mechanics or changing the reconciled outcome.
+
 ## T02 language-routing boundary
 
 - `currentAcceptedIntent()` is the ordinary roleplay routing boundary. Autonomous reveal, local-zone and NPC-introduction actions must match a current accepted source occurrence, actor, structural type and resolved target; wording is not reparsed for authority.
