@@ -12,6 +12,7 @@ import { typedEvidence } from "./epistemic.js";
 import { persistAuthoredCandidates } from "./authored-candidates.js";
 import { persistPlayerIntents, persistTypedDialogue } from "./typed-intents.js";
 import { adjudicateAcceptedIntent } from "./rules-arbitration.js";
+import { buildActionPlan, executableActionSpans } from "./action-dependency.js";
 import { saveContextMemories } from "./context-memory.js";
 import { relationshipProvenance, artifactProvenance, inferredSource } from "./presentation-evidence.js";
 
@@ -422,7 +423,16 @@ export function applyAuthoritativeMutation(db,{guildId,sessionId=null,events=[],
         explanation:adjudication.explanation
       },provenance.actorId||"ai_gm",{scope});
     });
-    const world=applyAutonomousWorld(db,guildId,narrative,scope,provenance,content);
+    const actionPlan=buildActionPlan(db,guildId,typedIntents);
+    const executableSpans=new Set(executableActionSpans(actionPlan));
+    const deniedSpans=new Set(actionPlan.filter(row=>["blocked","clarification","failed"].includes(row.data.status))
+      .map(row=>row.data.source_span));
+    if((narrative?.scene_actions||[]).some(action=>deniedSpans.has(action.source_span)))
+      throw new Error("Blocked or unresolved typed intent cannot propose an authoritative scene action.");
+    const plannedNarrative=typedIntents.length?{...narrative,
+      scene_actions:(narrative?.scene_actions||[]).filter(action=>!typedIntents.some(row=>row.data.source_span===action.source_span)
+        ||executableSpans.has(action.source_span))}:narrative;
+    const world=applyAutonomousWorld(db,guildId,plannedNarrative,scope,provenance,content);
     const typedDialogue=persistTypedDialogue(db,guildId,narrative?.player_intents||[],scope,provenance);
     const contextMemories=saveContextMemories(db,guildId,narrative,scope,provenance);
     const eventResults=applyGMEvents(db,guildId,sessionId,events,scope,provenance);
@@ -465,7 +475,8 @@ export function applyAuthoritativeMutation(db,{guildId,sessionId=null,events=[],
     // state or model-described effects. Any failure rolls back the entire bundle.
     if(narrative) validateNarrativeClaims(db,guildId,narrative,scope,{staged:true,eventResults});
     return {events:eventResults,relationships:relationshipResults,handouts:handoutResults,
-      npcMemories:cognition.memories,npcKnowledge:cognition.knowledge,npcGoals:cognition.goals,simulation,intents,world,typedIntents,nativeAdjudications,typedDialogue,contextMemories};
+      npcMemories:cognition.memories,npcKnowledge:cognition.knowledge,npcGoals:cognition.goals,simulation,intents,world,typedIntents,
+      nativeAdjudications,actionPlan,typedDialogue,contextMemories};
   });
 }
 

@@ -120,6 +120,11 @@
       "sha256": "8f1dc7aca09a017711ec11de93b77c6e1e519aad541925003d79574facf57e3a"
     },
     {
+      "path": "bot/scripts/compound-action-test.mjs",
+      "size_bytes": 2954,
+      "sha256": "de4d21875ab8d2f7314c0cbd5d82b54c9e6870e2465722a0970a9767e694be20"
+    },
+    {
       "path": "bot/scripts/context-conversation-test.mjs",
       "size_bytes": 4653,
       "sha256": "72c1244616857501bd896ae155fefceaa3e51382318f51fa9fd24a83dec7a25c"
@@ -541,13 +546,18 @@
     },
     {
       "path": "bot/scripts/validate-offline.mjs",
-      "size_bytes": 3660,
-      "sha256": "eb2bdb66f30abc39dabfeaad973640638a25f51058cea8d2eba7cbfccfc41077"
+      "size_bytes": 3683,
+      "sha256": "7ba6986bfc90306d45806ac9c3288f75bead366cf75bf2c3229a0ef617e0df8c"
     },
     {
       "path": "bot/sql/schema.sql",
       "size_bytes": 40842,
       "sha256": "d3a69c4c55a876b087556ab7f291265a684c4287233b1651b1692be34781e374"
+    },
+    {
+      "path": "bot/src/action-dependency.js",
+      "size_bytes": 4641,
+      "sha256": "c19c1a46eb6f84a97e860d874a6f59b599bc8f37abbd02656b919b16619d287b"
     },
     {
       "path": "bot/src/ai-intent-contracts.js",
@@ -1061,8 +1071,8 @@
     },
     {
       "path": "bot/src/state.js",
-      "size_bytes": 30483,
-      "sha256": "45318f96b25063f013dfa30463b1e00da834a674a967e81c8b86a50519309ef8"
+      "size_bytes": 31333,
+      "sha256": "c3654a12794ec8d262658166513778df7861b7b3ac3998cbe5adc1b3c96f9c0e"
     },
     {
       "path": "bot/src/story-commands.js",
@@ -1101,8 +1111,8 @@
     },
     {
       "path": "bot/src/typed-intents.js",
-      "size_bytes": 28969,
-      "sha256": "3ad1653b9fe5f029e8592d43f35bafe05af15fc5441af5f7f8adcf1924227c45"
+      "size_bytes": 29839,
+      "sha256": "139e642ec5d5b1303ee24b991547ca4b4bf8f1703ccf97892e893ad2b0d33d34"
     },
     {
       "path": "bot/src/typed-mechanics.js",
@@ -1841,13 +1851,13 @@
     },
     {
       "path": "docs/TYPED_INTENT_CONTRACTS.md",
-      "size_bytes": 7469,
-      "sha256": "42c0ad65d1ffbd401e6aa0dbce83990a95b2b18f34c0940c1413324c5eda2bed"
+      "size_bytes": 8435,
+      "sha256": "dabba8d7e39aa5c8a2685f5bba7827e8a9f3ec2a52300c7a315715c73d58c7f6"
     },
     {
       "path": "docs/TYPED_INTENT_PROGRESS.md",
-      "size_bytes": 14372,
-      "sha256": "b3ecc965a732ed7d57b84a2b1d1e4fbc32ceaf19b3d5068600580efb47e4e5f3"
+      "size_bytes": 16014,
+      "sha256": "3331604c3241465e5c0b622022f3a3bac0370ee4af34f7af3345fd19ec8e30b9"
     },
     {
       "path": "docs/UPGRADE_3.0_TO_3.1.md",

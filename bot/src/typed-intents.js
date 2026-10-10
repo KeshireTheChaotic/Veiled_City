@@ -31,8 +31,11 @@ const nativeAdjudicationSchema=obj({trait:{type:'string',enum:['Agility','Streng
   override_refs:{type:'array',maxItems:8,items:text(200)},raw_refs:{type:'array',maxItems:8,items:text(200)},
   house_refs:{type:'array',maxItems:8,items:text(200)},homebrew_refs:{type:'array',maxItems:8,items:text(200)},
   modifier_keys:{type:'array',maxItems:20,items:text(200)},attack_source:text(200)});
+const dependencyIndices={type:'array',maxItems:12,items:{type:'integer',minimum:0,maximum:11}};
 export const playerIntentSchema={type:'array',maxItems:12,items:{anyOf:[obj(playerIntentProperties),
-  obj({...playerIntentProperties,native_adjudication:nativeAdjudicationSchema})]}};
+  obj({...playerIntentProperties,depends_on:dependencyIndices}),
+  obj({...playerIntentProperties,native_adjudication:nativeAdjudicationSchema}),
+  obj({...playerIntentProperties,depends_on:dependencyIndices,native_adjudication:nativeAdjudicationSchema})]}};
 
 export const PLAYER_INTENT_PROMPT=[
   'Extract player_intents semantically from the authenticated CURRENT PLAYER INPUT, regardless of verbs, grammar, idiom, tense or narrative style.',
@@ -182,7 +185,7 @@ export function currentAcceptedIntent(db,guild,{sourceEvent,actor,type,sourceSpa
 
 function legacyProposals(intents,envelope){
   const cursor=new Map();
-  return intents.map((intent,index)=>{
+  const proposals=intents.map((intent,index)=>{
     let start=cursor.get(intent.source_span)||0;
     start=envelope.raw_text.indexOf(intent.source_span,start);
     if(start<0)throw error('Intent span must occur in the immutable authored message.',{index});
@@ -195,6 +198,8 @@ function legacyProposals(intents,envelope){
       framing:intent.framing,destination_scope:intent.destination==='unspecified'?'none':intent.destination,
       attempted_action:intent.source_span,desired_outcome:null,authored_outcome_claim:null,temporal_relation:'sequential'};
   });
+  const ids=proposals.map(proposal=>proposalIdentity(proposal));
+  return proposals.map((proposal,index)=>({...proposal,dependencies:(intents[index].depends_on||[]).map(dep=>ids[dep])}));
 }
 
 export function validatePlayerIntents(intents,source,scope={}){
@@ -203,12 +208,17 @@ export function validatePlayerIntents(intents,source,scope={}){
   const seen=new Set();
   for(const [i,intent] of intents.entries()){
     const keys=Object.keys(intent||{}).sort().join(','),legacy='destination,excluded_targets,framing,operation,reason,resolution,source_span,target_key,target_name,type,utterance';
-    if(!intent||![legacy,`${legacy},native_adjudication`.split(',').sort().join(',')].includes(keys))
+    const forms=[legacy,`${legacy},depends_on`,`${legacy},native_adjudication`,`${legacy},depends_on,native_adjudication`]
+      .map(value=>value.split(',').sort().join(','));
+    if(!intent||!forms.includes(keys))
       throw error('Closed semantic intent schema required.',{index:i});
     for(const [field,max] of [['source_span',1200],['target_key',160],['target_name',160],['operation',100],['utterance',1000],['reason',400]])
       if(typeof intent[field]!=='string'||intent[field].length>max)throw error('Bounded semantic intent fields required.',{index:i,field});
     if(!Array.isArray(intent.excluded_targets)||intent.excluded_targets.length>8||intent.excluded_targets.some(x=>typeof x!=='string'||x.length>160))
       throw error('Invalid excluded destination constraints.',{index:i});
+    if(intent.depends_on&&(!Array.isArray(intent.depends_on)||new Set(intent.depends_on).size!==intent.depends_on.length
+      ||intent.depends_on.some(dep=>!Number.isSafeInteger(dep)||dep<0||dep>=i)))
+      throw error('Dependencies must name unique earlier action indices.',{index:i});
     for(const [field,allowed] of [['type',['move','local_zone','observe','search','interact','speak','roll','consent','other']],
       ['framing',['immediate','hypothetical','conditional','quoted','reported']],
       ['resolution',['auto','roll_required','blocked','needs_clarification','conversational']],

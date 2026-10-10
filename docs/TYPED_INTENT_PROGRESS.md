@@ -119,6 +119,21 @@ Status: complete on 2026-10-10. Package version remains `10.0.0`.
 
 T04 is next: ordered compound actions and causal dependencies.
 
+## T04 - compound actions and causal dependencies
+
+Status: complete on 2026-10-10. Package version remains `10.0.0`.
+
+- Red first: `compound-action-test.mjs` failed with `ERR_MODULE_NOT_FOUND` before the action dependency resolver existed.
+- Added stable ordered compound-action records derived from accepted source occurrences. Enriched structured intents may name unique earlier indices; they are converted to stable proposal dependencies, while missing, forward, duplicate and cyclic dependencies are rejected.
+- Pending prerequisites suspend only their descendants. Failure, block or clarification propagates only along causal edges, and independent ready actions remain executable with separate receipts.
+- State application now builds the plan before autonomous effects, omits pending/suspended scene actions and rejects effects attached to blocked nodes. Terminal transitions use compare-and-set status plus a native receipt and replay only the identical receipt.
+- The existing transaction remains the publication boundary: proposed world changes and dependency records roll back together on failure. No player authority, proxy control, travel/access, consent or native mechanics gate was relaxed.
+- Focused T04, autonomous-world, movement-authorization, T01 lifecycle and T03 adjudication suites passed. `npm run check` passed 201 modules/scripts and 24 commands.
+- `npm run validate` passed 80/80 suites with network denied, `live_requests=0`, and `billable_tokens=0`.
+- No live bot, production database, deployment, merge or paid model was used.
+
+T04.1 is next: shared-scene multi-actor action windows and conflict orchestration.
+
 ## Deferred findings
 
 T04 through T08, including T04.1 and the general T05b lifecycle, have not started. The next phase is T04: ordered compound actions and causal dependencies.

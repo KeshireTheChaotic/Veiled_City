@@ -21,6 +21,7 @@ bot/scripts/city-civic-regression-test.mjs
 bot/scripts/city-core-regression-test.mjs
 bot/scripts/city-depth-regression-test.mjs
 bot/scripts/city-regression-test.mjs
+bot/scripts/compound-action-test.mjs
 bot/scripts/context-conversation-test.mjs
 bot/scripts/contract-fixtures.mjs
 bot/scripts/cost-estimate.mjs
@@ -107,6 +108,7 @@ bot/scripts/typed-routing-authority-test.mjs
 bot/scripts/validate-command-schema.mjs
 bot/scripts/validate-offline.mjs
 bot/sql/schema.sql
+bot/src/action-dependency.js
 bot/src/ai-intent-contracts.js
 bot/src/ai-intents.js
 bot/src/ai-review.js
