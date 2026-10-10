@@ -31,6 +31,14 @@ Accepted typed intents are canonical adjudication inputs; human declarations own
 - Input evidence proves only what a player declared or attempted. Completed movement and access additionally require an active matching native arrival/travel receipt; possession, damage, disclosure and obligation retain their native custody/event/fact/commitment gates.
 - Unsupported committed prose remains a recoverable narrative-integrity failure. The validator never fabricates a receipt, movement, witness, NPC knowledge, player dialogue or authoritative state to make an annotation pass.
 
+## H05 Discord delivery
+
+- All potentially long text uses the shared 1,900-code-unit chunk policy. It avoids split UTF-16 surrogate pairs and Discord mentions, and closes/reopens Markdown code fences so each individual message is renderable and remains below Discord's 2,000-character limit.
+- A slash command sends exactly one initial reply/edit and uses follow-ups for remaining parts. Session assembly status and session-end recap follow this contract; private channels and DM fallback use the same chunker.
+- Assembly plan generation is reused after it is saved. Public opening and per-player private hooks have stable payload-hashed part identities and durable `delivery_state` in the existing session plan JSON.
+- Each assembly part is marked `delivering` before Discord I/O and `delivered` afterward. An interrupted or ambiguous send becomes `uncertain` and is not automatically duplicated; a later resync must inspect Discord before forcing that part.
+- Discord output failure never rolls back committed campaign state or reruns model generation, native mechanics, dice, costs or consent.
+
 ## T03 rules-grounded adjudication
 
 - Native arbitration accepts only a current accepted typed intent whose authenticated source, owner principal revision, active session and scene still match.

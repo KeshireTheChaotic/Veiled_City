@@ -62,6 +62,7 @@ bot/scripts/h01-source-recovery-test.mjs
 bot/scripts/h02-referent-movement-test.mjs
 bot/scripts/h03-post-turn-review-test.mjs
 bot/scripts/h04-narrative-claim-evidence-test.mjs
+bot/scripts/h05-discord-delivery-test.mjs
 bot/scripts/i-heard-you-1-test.mjs
 bot/scripts/i-heard-you-2-test.mjs
 bot/scripts/i-heard-you-3-test.mjs
@@ -131,6 +132,7 @@ bot/src/ai-intent-contracts.js
 bot/src/ai-intents.js
 bot/src/ai-review.js
 bot/src/application-authority.js
+bot/src/assembly-delivery.js
 bot/src/authored-candidates.js
 bot/src/authored-turn-envelope.js
 bot/src/authority-policy.js
@@ -167,6 +169,7 @@ bot/src/dialogue-continuity.js
 bot/src/dice.js
 bot/src/director.js
 bot/src/discord/chunking.js
+bot/src/discord/delivery.js
 bot/src/discord/interaction-lifecycle.js
 bot/src/discord/privacy.js
 bot/src/encounter.js

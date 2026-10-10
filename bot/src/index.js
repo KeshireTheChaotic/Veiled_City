@@ -75,7 +75,7 @@ async function sendPrivate(guild,userId,text,sessionId=null,characterId=null){
   }
   try{
     const member=await guild.members.fetch(userId);
-    await member.send(text);
+    for(const part of splitDiscordText(text))await member.send(part);
     db.addMessage({guildId:guild.id,sessionId,userId:client.user.id,speakerName:"Veilkeeper",visibility:characterId?"character":"player",subjectUserId:characterId?null:userId,subjectCharacterId:characterId,content:text});
     return true;
   }catch{

@@ -78,6 +78,22 @@ Status: complete. Starting HEAD: `985e5843edac5c7cd24ee6e5bff34a389d14c1d3`.
 
 Next phase: H05 Discord payload limits and reliable assembly delivery.
 
+## H05 v8 - Discord payload limits and reliable assembly delivery
+
+Status: complete. Starting HEAD: `1ec4061d238300844ad543ffd20893b6cf670792`.
+
+- Red first: `session2-message-contract-test.mjs` reproduced the 2,029-character assembly response, unbounded session-end `editReply`, and unbounded direct-message fallback. `h05-discord-delivery-test.mjs` initially failed because the interaction and assembly-part delivery services did not exist.
+- Extended the shared chunker to keep every message at or below 1,900 UTF-16 code units, avoid half-surrogate and mention splits, and balance Markdown code fences across individual Discord messages.
+- Added one-initial-response plus follow-up interaction delivery and applied it to assembly launch/status and session-end recaps. GM logs and the runtime DM fallback now use the same chunk boundary.
+- Assembly delivery reuses the saved plan and records stable per-chunk public/private delivery states. State is marked before Discord I/O; an ambiguous interruption becomes `uncertain` and is not automatically resent or regenerated.
+- Existing interaction receipts still prevent same-interaction mutation replay. Assembly launch audit/logging is recorded once in the saved plan, so a response failure cannot duplicate the public opening or private hooks.
+- Focused H05, Session 2 message contract, interaction lifecycle, refactor and operations suites passed.
+- `npm run check` passed with 221 modules/scripts and 24 commands. `npm run validate` passed 92/92 suites with H05 and the Session 2 message boundary gate registered, network denied, `live_requests=0`, and `billable_tokens=0`.
+- No SQL migration was required; assembly part state is additive inside existing `assembly_plan_json`. Rollback is a source revert; saved delivery states remain inert metadata.
+- No production data, live bot, Discord registration, deployment or paid provider call was used.
+
+Next phase: D01 unique roll identity, rules grounding and pending lifecycle.
+
 ## T00 — reproducible baseline
 
 Status: implementation inventory complete; baseline captured at `6c3167dbbf015739e1723272121552d60b9f2ec8`.

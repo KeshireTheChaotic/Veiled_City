@@ -21,29 +21,48 @@ export function splitDiscordText(value, limit = 1900) {
   }
   if (text.length <= limit) return [text];
 
-  const chunks = [];
+  const fenced = text.includes("```");
+  const payloadLimit = fenced ? Math.max(1, limit - 48) : limit;
+  const rawChunks = [];
   let offset = 0;
   while (offset < text.length) {
     const remaining = text.length - offset;
-    if (remaining <= limit) {
-      chunks.push(text.slice(offset));
+    if (remaining <= payloadLimit) {
+      rawChunks.push(text.slice(offset));
       break;
     }
 
-    const window = text.slice(offset, offset + limit);
+    const window = text.slice(offset, offset + payloadLimit);
     let cut = window.lastIndexOf("\n");
-    if (cut >= Math.floor(limit * 0.5)) {
+    if (cut >= Math.floor(payloadLimit * 0.5)) {
       cut += 1; // Preserve the newline in the preceding chunk.
     } else {
       cut = window.lastIndexOf(" ");
-      if (cut >= Math.floor(limit * 0.5)) cut += 1;
-      else cut = limit;
+      if (cut >= Math.floor(payloadLimit * 0.5)) cut += 1;
+      else cut = payloadLimit;
     }
+    const candidate=text.slice(offset,offset+cut),openMention=candidate.lastIndexOf("<"),closedMention=candidate.lastIndexOf(">");
+    if(openMention>closedMention&&/^<[@#&!]?[0-9]+>/.test(text.slice(offset+openMention))&&openMention>0)cut=openMention;
+    const last=text.charCodeAt(offset+cut-1);
+    if(last>=0xd800&&last<=0xdbff)cut--;
 
-    chunks.push(text.slice(offset, offset + cut));
+    rawChunks.push(text.slice(offset, offset + cut));
     offset += cut;
   }
-  return chunks;
+  if(!fenced)return rawChunks;
+  let openLanguage=null;
+  return rawChunks.map(raw=>{
+    const prefix=openLanguage===null?"":`\`\`\`${openLanguage}\n`;
+    const markers=[...raw.matchAll(/```([^\n`]*)/g)];
+    for(const marker of markers){
+      if(openLanguage===null)openLanguage=String(marker[1]||"").trim().slice(0,32);
+      else openLanguage=null;
+    }
+    const suffix=openLanguage===null?"":"\n```";
+    const chunk=prefix+raw+suffix;
+    if(chunk.length>limit)throw new RangeError("Markdown-safe Discord chunk exceeded its configured limit.");
+    return chunk;
+  });
 }
 
 /**

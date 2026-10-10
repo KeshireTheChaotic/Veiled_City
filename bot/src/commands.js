@@ -22,6 +22,8 @@ import { createConceptContextPackage } from "./concept-context.js";
 import { normalizeNarrativeMarkdown, narrativeRelativePath, createNarrativeExportPackage } from "./character-narrative.js";
 import { buildSessionRosterReport, chunkRosterReport } from "./roster.js";
 import { chunkDiscordLines } from "./discord/chunking.js";
+import { deliverInteractionText } from "./discord/delivery.js";
+import { deliverAssemblyParts } from "./assembly-delivery.js";
 import { assertGmOnlyChannel, assertPlayerPrivateChannel } from "./discord/privacy.js";
 import { isExpectedError, PermissionError, NotFoundError, StateConflictError } from "./errors.js";
 import { replayReceiptIfPresent, installReceiptCapture, isMutatingCommand } from "./idempotency.js";
@@ -131,7 +133,7 @@ function compactAssemblyStatus(db,guildId,session){
   if(plan.convergence_goal) lines.push(`Convergence goal: ${plan.convergence_goal}`);
   if(plan.bonds?.length) lines.push(`Proposed practical links:\n${plan.bonds.slice(0,6).map(b=>`• ${b.from_character} → ${b.to_character}: ${b.reason}`).join("\n")}`);
   if(plan.gm_notes) lines.push(`GM notes: ${plan.gm_notes}`);
-  return lines.join("\n").slice(0,1900);
+  return lines.join("\n");
 }
 
 async function launchArrival({db,gm,guild,userId,character,reason}){
@@ -586,29 +588,38 @@ Initial phase: ${s.assembly_phase}`});
       if(s.assembly_mode==="manual") throw new Error("This session is set to manual assembly.");
       if(s.assembly_phase==="party") throw new Error("The session is already in established-party phase.");
       await interaction.deferReply({ephemeral:true});
-      const plan=await gm.planAssembly({guildId:interaction.guildId,mode:s.assembly_mode});
-      db.setAssemblyPlan(s.id,plan);
-      const delivery=[];
-      for(const e of plan.character_entries||[]){
-        const row=presentRoster(db,s.id).find(r=>r.discord_user_id===e.discord_user_id);
-        if(!row) continue;
-        const d=await sendPlayerPrivate({
-          db,guild:interaction.guild,userId:e.discord_user_id,
-          content:`**Veilkeeper — private opening hook for ${e.character_name}:**\n${e.private_hook}`,
-          sessionId:s.id,characterId:row.character_id
-        });
-        delivery.push(`${e.character_name}: ${d.ok?d.via:"FAILED"}`);
+      let plan=db.getAssemblyPlan(s.id)||{};
+      if(!plan.public_opening&&!plan.character_entries?.length){
+        plan=await gm.planAssembly({guildId:interaction.guildId,mode:s.assembly_mode});
+        db.setAssemblyPlan(s.id,plan);
       }
-      if(plan.public_opening?.trim()) await postPlayMessage({db,guild:interaction.guild,content:plan.public_opening,sessionId:s.id});
-      db.audit(interaction.guildId,s.id,"ai","assembly","assembly_plan",{mode:s.assembly_mode,delivery,bonds:plan.bonds});
-      await postGmLog({db,guild:interaction.guild,sessionId:s.id,title:"Party convergence launched",details:`Mode: ${s.assembly_mode}\n${plan.gm_notes||""}\nPrivate delivery: ${delivery.join(", ")||"none"}`});
-      await interaction.editReply(`Convergence scene launched in the play channel.\n\n${compactAssemblyStatus(db,interaction.guildId,db.getSession(s.id))}\n\nPrivate hook delivery: ${delivery.join(", ")||"none"}`);
+      const roster=presentRoster(db,s.id);
+      const deliveryResult=await deliverAssemblyParts({plan,savePlan:next=>db.setAssemblyPlan(s.id,next),
+        sendPrivate:(userId,content)=>sendPlayerPrivate({db,guild:interaction.guild,userId,content,sessionId:s.id,
+          characterId:roster.find(row=>row.discord_user_id===userId)?.character_id||null}),
+        sendPublic:content=>postPlayMessage({db,guild:interaction.guild,content,sessionId:s.id})});
+      plan=deliveryResult.plan;
+      const delivery=(plan.character_entries||[]).map(entry=>{
+        const states=Object.entries(plan.delivery_state||{}).filter(([key])=>key.startsWith(`private:${entry.discord_user_id}:`))
+          .map(([,value])=>value.status);
+        return `${entry.character_name}: ${states.length&&states.every(status=>status==="delivered")?"delivered":
+          states.includes("uncertain")?"UNCERTAIN":"FAILED"}`;
+      });
+      if(!plan.launch_recorded){
+        db.audit(interaction.guildId,s.id,"ai","assembly","assembly_plan",{mode:s.assembly_mode,delivery,bonds:plan.bonds});
+        await postGmLog({db,guild:interaction.guild,sessionId:s.id,title:"Party convergence launched",
+          details:`Mode: ${s.assembly_mode}\n${plan.gm_notes||""}\nPrivate delivery: ${delivery.join(", ")||"none"}`});
+        plan={...plan,launch_recorded:true};db.setAssemblyPlan(s.id,plan);
+      }
+      const warning=deliveryResult.failed.length?"\n\n⚠️ A delivery part failed and remains retryable without regenerating the plan.":
+        deliveryResult.uncertain.length?"\n\n⚠️ An interrupted part is marked uncertain and was not duplicated; resync it after checking Discord.":"";
+      await deliverInteractionText(interaction,`Convergence scene launched in the play channel.\n\n${compactAssemblyStatus(db,interaction.guildId,db.getSession(s.id))}\n\nPrivate hook delivery: ${delivery.join(", ")||"none"}${warning}`,{ephemeral:true});
       return true;
     }
     if(group==="session"&&sub==="assembly-status"){
       if(!isGM(db,interaction)) throw new Error("Only a GM/admin may view the private assembly plan.");
       const s=requireSession(db,interaction.guildId);
-      await interaction.reply({content:compactAssemblyStatus(db,interaction.guildId,s),ephemeral:true});
+      await deliverInteractionText(interaction,compactAssemblyStatus(db,interaction.guildId,s),{ephemeral:true});
       return true;
     }
     if(group==="session"&&sub==="roster"){
@@ -642,7 +653,7 @@ Initial phase: ${s.assembly_phase}`});
       await publishJournal({db,guild:interaction.guild,session:s,recap});
       await postGmLog({db,guild:interaction.guild,sessionId:s.id,title:`Session ${s.session_number} ended`,details:"Player-safe recap generated and campaign state closed."});
       db.snapshotCampaign(interaction.guildId,{label:`Post-session ${s.session_number}`,reason:"Automatic snapshot after session end",createdBy:interaction.user.id});
-      await interaction.editReply(`**Session ${s.session_number} ended.**\n\n${recap}`);
+      await deliverInteractionText(interaction,`**Session ${s.session_number} ended.**\n\n${recap}`,{ephemeral:false});
       return true;
     }
     if(group==="session"&&["present","arrive"].includes(sub)){
