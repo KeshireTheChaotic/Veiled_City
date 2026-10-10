@@ -15,6 +15,21 @@ Status: complete. Starting HEAD: `2dc347a77e1fd4988856b8e578e5c148fe82cb24`.
 
 Next phase: H01 exact source-span identity and recoverable parsing.
 
+## H01 v8 - exact source-span identity and recoverable parsing
+
+Status: complete. Starting HEAD: `30257fb12420dcf158212fe1a56e2134863ca4df`.
+
+- Red first: D00 `session2-replay-test.mjs` reproduced whole-list `PLAYER_INTENT` failure when an optional secondary proposal had invalid offsets. The focused H01 test was added before runtime changes.
+- Added exact UTF-16 occurrence accounting for repeated phrases, overlap rejection, bounded offset-only diagnostics and dependency-safe partial recovery.
+- The live GM path now quarantines malformed optional clauses, retains independently valid interpretations and adds a scoped non-authoritative clarification. State preview/commit persists diagnostic receipts without model-fabricated text.
+- Existing fatal gates remain for actor/principal mismatch, stale source, consumed spans and target redirection. Diagnostics cannot be accepted for adjudication and authorize no effect.
+- Focused commands: `node scripts/h01-source-recovery-test.mjs`, `node scripts/typed-intent-lifecycle-test.mjs`, and `node scripts/session2-replay-test.mjs`. H01 cases pass; the aggregate replay remains intentionally red only for H02 and H03 cases.
+- `npm run check` passed with 215 modules/scripts and 24 commands. `npm run validate` passed 86/86 suites with the new H01 gate registered, network denied, `live_requests=0`, and `billable_tokens=0`.
+- Persistence is additive in existing city records (`semantic_intent_diagnostic`); no schema migration. Rollback is a source revert; retained diagnostic rows are inert.
+- No production data, live bot, Discord registration, deployment, network provider or paid model was used.
+
+Next phase: H02 contextual referents, movement and clarification.
+
 ## T00 — reproducible baseline
 
 Status: implementation inventory complete; baseline captured at `6c3167dbbf015739e1723272121552d60b9f2ec8`.

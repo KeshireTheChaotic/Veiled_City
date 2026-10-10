@@ -3,7 +3,7 @@ import OpenAI from "openai";
 import { AUTHORITY_POLICY } from "./authority-policy.js";
 import { conversationPrincipal } from "./conversation-principal.js";
 import { authoredCandidatesSchema, AUTHORED_CANDIDATES_PROMPT } from "./authored-candidates.js";
-import { playerIntentSchema, PLAYER_INTENT_PROMPT, validatePlayerIntents, autoCompleteOrdinaryMovements, validateIntentResolutions } from "./typed-intents.js";
+import { playerIntentSchema, PLAYER_INTENT_PROMPT, recoverPlayerIntents, autoCompleteOrdinaryMovements, validateIntentResolutions } from "./typed-intents.js";
 import { tierWorldAdditions } from "./entity-memory.js";
 import { contextMemorySchema, CONTEXT_MEMORY_PROMPT } from "./context-memory.js";
 import { presentationContext } from "./presentation-evidence.js";
@@ -632,7 +632,13 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
       if(providedIntents&&owned&&result.respond&&!result.player_intents.length)
         throw Object.assign(new Error('An authenticated roleplay turn requires typed interpretation; use type=other for non-action roleplay.'),{code:'PLAYER_INTENT'});
       const typedScope={mode:scope,actorUserId,actorCharacterId:ctx.actor_assignment?.character_id||null};
-      validatePlayerIntents(providedIntents?result.player_intents:[],authenticatedSource,typedScope);
+      const intentReview=recoverPlayerIntents(providedIntents?result.player_intents:[],authenticatedSource,typedScope);
+      result.player_intents=intentReview.intents;
+      result.player_intent_diagnostics=intentReview.diagnostics;
+      if(intentReview.diagnostics.length&&result.respond){
+        const note="One interpreted clause could not be grounded in your exact message, so that clause was left unapplied.";
+        if(!String(result.narration||"").includes(note))result.narration=`${result.narration||""}\n\n${note}`.trim();
+      }
       // An optional expansion must not veto the always-on semantic GM pipeline.
       if(this.db.getCityCalendar(guildId).flags.natural_language!==true) result.authored_candidates=null;
       // Named and consequential context persists; incidental description stays in transcript only.

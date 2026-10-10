@@ -62,6 +62,14 @@ function error(message,diagnostic={}){
   return Object.assign(new Error(message),{code:'PLAYER_INTENT',diagnostic});
 }
 
+function occurrenceOffsets(source,span){
+  const rows=[];
+  if(typeof span!=='string'||!span)return rows;
+  for(let start=source.indexOf(span);start>=0;start=source.indexOf(span,start+Math.max(1,span.length)))
+    rows.push({start,end:start+span.length});
+  return rows;
+}
+
 const proposalFields=['actor_character_id','attempted_action','authored_outcome_claim','dependencies','desired_outcome',
   'destination_scope','end','framing','operation','proposal_id','sequence_index','source_event','source_span','start',
   'target','temporal_relation','type','version'];
@@ -84,7 +92,10 @@ export function validateProposal(value,envelope,scope={}){
     ||scope.actorUserId!==envelope.user_id)throw error('Proposal actor does not match the authenticated principal.');
   if(!Number.isSafeInteger(value.start)||!Number.isSafeInteger(value.end)||value.start<0||value.end<=value.start
     ||value.end>envelope.raw_text.length||envelope.raw_text.slice(value.start,value.end)!==value.source_span)
-    throw error('Proposal offsets and span must exactly match the immutable source.');
+    throw error('Proposal offsets and span must exactly match the immutable source.',{
+      category:'unmatched_source_span',index:value.sequence_index,
+      nearby_offsets:{start:Math.max(0,Math.min(Number(value.start)||0,envelope.raw_text.length)),end:envelope.raw_text.length}
+    });
   if(typeof value.source_span!=='string'||!value.source_span||value.source_span.length>1200
     ||typeof value.attempted_action!=='string'||!value.attempted_action||value.attempted_action.length>1200)
     throw error('Proposal needs bounded source and attempted action text.');
@@ -115,11 +126,32 @@ export function proposeIntents(db,guild,values,scope={},provenance={}){
   if(!Array.isArray(values)||values.length>12)throw error('Bounded semantic proposal list required.');
   const envelope=authoredTurnEnvelope(db,guild,provenance.messageId,scope.actorCharacterId);
   if(!envelope)throw error('Current authored turn envelope required before semantic proposal.');
-  const seen=new Set();
-  return values.map(value=>{
-    const proposal=validateProposal(value,envelope,scope);
+  const seen=new Set(),ranges=[];
+  return values.map((value,index)=>{
+    let proposal;
+    try{proposal=validateProposal(value,envelope,scope);}
+    catch(cause){
+      if(cause.code!=='PLAYER_INTENT'||cause.diagnostic?.category!=='unmatched_source_span')throw cause;
+      const key=`diagnostic:${digest([envelope.source_event,index,'unmatched_source_span'])}`;
+      return db.getCityRecord(guild,'semantic_intent_diagnostic',key)||db.saveCityRecord(guild,{
+        kind:'semantic_intent_diagnostic',key,status:'unmatched_source_span',source_event:envelope.source_event,
+        visibility:envelope.visibility,subject_key:envelope.subject_key,data:{version:1,index,category:'unmatched_source_span',
+          nearby_offsets:cause.diagnostic.nearby_offsets,source_hash:envelope.raw_hash,
+          authority:'Rejected interpretation only; never action or outcome authority.'}
+      });
+    }
+    if(ranges.some(range=>proposal.start<range.end&&proposal.end>range.start)){
+      const key=`diagnostic:${digest([envelope.source_event,index,'overlapping_source_span'])}`;
+      return db.getCityRecord(guild,'semantic_intent_diagnostic',key)||db.saveCityRecord(guild,{
+        kind:'semantic_intent_diagnostic',key,status:'overlapping_source_span',source_event:envelope.source_event,
+        visibility:envelope.visibility,subject_key:envelope.subject_key,data:{version:1,index,category:'overlapping_source_span',
+          nearby_offsets:{start:proposal.start,end:proposal.end},source_hash:envelope.raw_hash,
+          authority:'Rejected interpretation only; never action or outcome authority.'}
+      });
+    }
     if(seen.has(proposal.proposal_id))throw error('One source occurrence cannot be proposed twice.');
     seen.add(proposal.proposal_id);
+    ranges.push({start:proposal.start,end:proposal.end});
     const prior=db.getCityRecord(guild,'semantic_intent_proposal',proposal.proposal_id);
     if(prior)return prior;
     return db.saveCityRecord(guild,{kind:'semantic_intent_proposal',key:proposal.proposal_id,status:'proposed',
@@ -188,8 +220,7 @@ function legacyProposals(intents,envelope){
   const proposals=intents.map((intent,index)=>{
     let start=cursor.get(intent.source_span)||0;
     start=envelope.raw_text.indexOf(intent.source_span,start);
-    if(start<0)throw error('Intent span must occur in the immutable authored message.',{index});
-    cursor.set(intent.source_span,start+intent.source_span.length);
+    cursor.set(intent.source_span,start<0?envelope.raw_text.length:start+intent.source_span.length);
     return {version:2,proposal_id:'',source_event:envelope.source_event,start,end:start+intent.source_span.length,
       source_span:intent.source_span,actor_character_id:envelope.character_id,sequence_index:index,dependencies:[],
       type:intent.type,operation:intent.operation||intent.type,
@@ -205,7 +236,7 @@ function legacyProposals(intents,envelope){
 export function validatePlayerIntents(intents,source,scope={}){
   if(!Array.isArray(intents)||intents.length>12)throw error('Bounded model-derived intent list required.');
   if(typeof source!=='string'||source.length>4000)throw error('Current authenticated message required.');
-  const seen=new Set();
+  const seen=new Set(),occurrenceCursor=new Map();
   for(const [i,intent] of intents.entries()){
     const keys=Object.keys(intent||{}).sort().join(','),legacy='destination,excluded_targets,framing,operation,reason,resolution,source_span,target_key,target_name,type,utterance';
     const forms=[legacy,`${legacy},depends_on`,`${legacy},native_adjudication`,`${legacy},depends_on,native_adjudication`]
@@ -224,10 +255,15 @@ export function validatePlayerIntents(intents,source,scope={}){
       ['resolution',['auto','roll_required','blocked','needs_clarification','conversational']],
       ['destination',['exterior','interior','zone','unspecified']]])
       if(!allowed.includes(intent[field]))throw error('Unknown semantic intent enumeration.',{index:i,field});
-    if(!intent.source_span||!source.includes(intent.source_span))throw error('Intent span must occur in the current authored message.',{index:i});
+    const occurrences=occurrenceOffsets(source,intent.source_span),ordinal=occurrenceCursor.get(intent.source_span)||0;
+    const occurrence=occurrences[ordinal];
+    if(!occurrence)throw error('Intent span must occur in the current authored message.',{
+      index:i,category:'unmatched_source_span',nearby_offsets:{start:0,end:source.length}
+    });
+    occurrenceCursor.set(intent.source_span,ordinal+1);
     if(intent.type==='speak'&&(!intent.utterance||!intent.source_span.includes(intent.utterance)))
       throw error('A spoken utterance must be authored verbatim in its own source span.',{index:i});
-    const id=`${intent.type}:${intent.source_span}`;
+    const id=`${intent.type}:${occurrence.start}:${occurrence.end}`;
     if(seen.has(id))throw error('An action cannot be applied twice from the same source span.',{index:i});
     seen.add(id);
     // The model identifies quotation/agency, but native refuses execution on any non-immediate framing.
@@ -244,6 +280,59 @@ export function validatePlayerIntents(intents,source,scope={}){
     if(scope.mode==='private'&&scope.actorCharacterId==null)throw error('Private typed intent requires a controlled character.',{index:i});
   }
   return intents;
+}
+
+/** Quarantine malformed optional clauses while retaining only independently source-valid intents. */
+export function recoverPlayerIntents(intents,source,scope={}){
+  if(!Array.isArray(intents)||intents.length>12)throw error('Bounded model-derived intent list required.');
+  const cursor=new Map(),preliminary=[],diagnostics=[];
+  for(const [index,intent] of intents.entries()){
+    try{
+      const standalone={...intent};delete standalone.depends_on;
+      validatePlayerIntents([standalone],source,scope);
+      const offsets=occurrenceOffsets(source,intent.source_span),ordinal=cursor.get(intent.source_span)||0;
+      const occurrence=offsets[ordinal];cursor.set(intent.source_span,ordinal+1);
+      if(!occurrence)throw error('Intent span must occur in the current authored message.',{
+        index,category:'unmatched_source_span',nearby_offsets:{start:0,end:source.length}
+      });
+      if(preliminary.some(row=>occurrence.start<row.end&&occurrence.end>row.start)){
+        diagnostics.push({index,category:'overlapping_source_span',nearby_offsets:occurrence});continue;
+      }
+      preliminary.push({index,intent,start:occurrence.start,end:occurrence.end});
+    }catch(cause){
+      if(cause.code!=='PLAYER_INTENT')throw cause;
+      diagnostics.push({index,category:cause.diagnostic?.category||'invalid_optional_proposal',
+        nearby_offsets:cause.diagnostic?.nearby_offsets||{start:0,end:source.length}});
+    }
+  }
+  const accepted=[],indexMap=new Map();
+  for(const row of preliminary){
+    const dependencies=row.intent.depends_on||[];
+    if(dependencies.some(dep=>!indexMap.has(dep))){
+      diagnostics.push({index:row.index,category:'dependency_unavailable',nearby_offsets:{start:row.start,end:row.end}});continue;
+    }
+    indexMap.set(row.index,accepted.length);
+    accepted.push(dependencies.length?{...row.intent,depends_on:dependencies.map(dep=>indexMap.get(dep))}:{...row.intent});
+  }
+  return {intents:accepted,diagnostics};
+}
+
+/** Persist fail-closed clause diagnostics without retaining fabricated model text. */
+export function persistPlayerIntentDiagnostics(db,guild,diagnostics,scope={},provenance={}){
+  if(!diagnostics?.length)return [];
+  const envelope=authoredTurnEnvelope(db,guild,provenance.messageId,scope.actorCharacterId);
+  if(!envelope||envelope.user_id!==scope.actorUserId)throw error('Current authored envelope required for intent diagnostics.');
+  return diagnostics.map(item=>{
+    const allowed=['unmatched_source_span','overlapping_source_span','dependency_unavailable','invalid_optional_proposal'];
+    const category=allowed.includes(item.category)?item.category:'invalid_optional_proposal';
+    const key=`diagnostic:${digest([envelope.source_event,item.index,category])}`;
+    return db.getCityRecord(guild,'semantic_intent_diagnostic',key)||db.saveCityRecord(guild,{
+      kind:'semantic_intent_diagnostic',key,status:category,source_event:envelope.source_event,
+      visibility:envelope.visibility,subject_key:envelope.subject_key,data:{version:1,index:item.index,category,
+        nearby_offsets:item.nearby_offsets,source_hash:envelope.raw_hash,
+        authority:'Rejected interpretation only; never action or outcome authority.'}
+    });
+  });
 }
 
 /** Store the meaning with the owner's actual source; typed intent is never an execution receipt. */
@@ -268,6 +357,7 @@ export function persistPlayerIntents(db,guild,intents,scope={},provenance={}){
   const proposals=proposeIntents(db,guild,legacyProposals(intents,envelope),scope,provenance),accepted=[];
   for(const [index,row] of proposals.entries()){
     const intent=intents[index];
+    if(row.kind==='semantic_intent_diagnostic')continue;
     if(intent.framing!=='immediate')continue;
     const acceptedRow=acceptIntentForAdjudication(db,guild,row,scope,{resolvedTargetKey:intent.target_key||null});
     // Retain the existing action fields and native pre-state for T00.1/T03 compatibility.

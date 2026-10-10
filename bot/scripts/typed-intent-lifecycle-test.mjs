@@ -69,7 +69,8 @@ try{
   assert.throws(()=>acceptIntentForAdjudication(db,guild,consumed[0],scope,{resolvedTargetKey:"night-market"}),/consumed/i,
     "a native-consumed span cannot execute again through the GM");
 
-  assert.throws(()=>proposeIntents(db,guild,[proposal(envelope,span,first+1)],scope,{messageId:"message-1"}),/offset|span/i);
+  assert.equal(proposeIntents(db,guild,[proposal(envelope,span,first+1)],scope,{messageId:"message-1"})[0].status,
+    "unmatched_source_span","malformed optional offsets are quarantined without action authority");
   assert.throws(()=>proposeIntents(db,guild,[proposal(envelope,span,second,{actor_character_id:"other"})],scope,
     {messageId:"message-1"}),/actor|principal/i);
   const redirected=proposeIntents(db,guild,[proposal(envelope,span,second,{sequence_index:7})],scope,{messageId:"message-1"})[0];

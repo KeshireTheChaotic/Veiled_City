@@ -2,6 +2,13 @@
 
 Accepted typed intents are canonical adjudication inputs; human declarations own intent; native receipts own outcomes.
 
+## H01 exact occurrence recovery
+
+- Model intent text is rebound only to exact UTF-16 occurrences in the immutable authenticated message. Repeated identical phrases retain distinct start/end identities.
+- Missing or overlapping optional clauses become character/party-scoped `semantic_intent_diagnostic` records containing only category, index, bounded offsets and source hash. Fabricated model text is not persisted, accepted or executed.
+- A malformed independent clause cannot discard a separately valid clause. A dependent clause is quarantined when its prerequisite was rejected; dependencies are remapped only across retained source-valid clauses.
+- Actor/principal forgery, stale source ancestry and native-consumed span reuse remain fatal authority failures. Recovery is not fuzzy matching and never creates consent, movement, dice, spending or outcome authority.
+
 ## T03 rules-grounded adjudication
 
 - Native arbitration accepts only a current accepted typed intent whose authenticated source, owner principal revision, active session and scene still match.
