@@ -35,6 +35,7 @@ bot/scripts/d01-roll-lifecycle-test.mjs
 bot/scripts/d02-roll-options-test.mjs
 bot/scripts/d03-roll-menu-test.mjs
 bot/scripts/d04-trait-sharing-test.mjs
+bot/scripts/d05-live-window-test.mjs
 bot/scripts/end-to-end-a-test.mjs
 bot/scripts/end-to-end-b-test.mjs
 bot/scripts/end-to-end-c-test.mjs

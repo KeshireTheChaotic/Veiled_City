@@ -190,6 +190,11 @@
       "sha256": "4ef9127df46545e96d310d6f79d8f0bbd83c08a82febd3c1ea43ca8eded868ce"
     },
     {
+      "path": "bot/scripts/d05-live-window-test.mjs",
+      "size_bytes": 4186,
+      "sha256": "fd54d07510d0b862b88ec72ba7bd5cbd5478beee8fbe1647d0907577e571d5fd"
+    },
+    {
       "path": "bot/scripts/end-to-end-a-test.mjs",
       "size_bytes": 5018,
       "sha256": "68393cf5f3e9fec29e781196997d5c468f7515091ba9118e4fbfbab4f2b70f69"
@@ -661,8 +666,8 @@
     },
     {
       "path": "bot/scripts/validate-offline.mjs",
-      "size_bytes": 4136,
-      "sha256": "1c50885bc9b89a90afa975052bf2b0ce1cae0e880e200aef23a976d58bbb7008"
+      "size_bytes": 4159,
+      "sha256": "80cbb0a34507abdef4008f1dc52b92fc3a99b20bbd1727ef4f8bc45210dcefad"
     },
     {
       "path": "bot/sql/schema.sql",
@@ -1166,8 +1171,8 @@
     },
     {
       "path": "bot/src/scene-action-window.js",
-      "size_bytes": 8602,
-      "sha256": "792cf000bc7e50aaccd70a43dd431045123dd07368ce90ab187862d8ad4213c3"
+      "size_bytes": 11147,
+      "sha256": "1f290ca9f2d2201318bc2d2d1d35a3b53307fd4b58e7eb5429f355813efa6f98"
     },
     {
       "path": "bot/src/scene-continuity.js",
@@ -1236,8 +1241,8 @@
     },
     {
       "path": "bot/src/state.js",
-      "size_bytes": 32305,
-      "sha256": "5db4ec98cf21fa527e8a9441cea3129c8b04f090fb2bf463dafad44c221154eb"
+      "size_bytes": 32600,
+      "sha256": "a18654e6e6c57aa21cd59130206de5219349c4e8a6be6c6c356fa752fff94e96"
     },
     {
       "path": "bot/src/story-commands.js",
@@ -1281,8 +1286,8 @@
     },
     {
       "path": "bot/src/typed-intents.js",
-      "size_bytes": 40277,
-      "sha256": "b2c85484b84044806b0de6ab94aec146b2dedd78219cbe3be62eb0cd19119016"
+      "size_bytes": 42791,
+      "sha256": "3f1113b82c97f52c0b38f39eedb002f0c8b1041b75a75cece8a22b5371fc6eb3"
     },
     {
       "path": "bot/src/typed-mechanics.js",
@@ -2021,8 +2026,8 @@
     },
     {
       "path": "docs/TYPED_INTENT_CONTRACTS.md",
-      "size_bytes": 22514,
-      "sha256": "d79bd8868bed51e63392829e5f9ae08e9afc888faba4fa2b790606127ca012dd"
+      "size_bytes": 23952,
+      "sha256": "aa176fd0a8fde98eee2118dd7c5e3be590dcc3d16164a6be93633cf082398d5e"
     },
     {
       "path": "docs/TYPED_INTENT_DELTA_AUDIT.md",
@@ -2036,8 +2041,8 @@
     },
     {
       "path": "docs/TYPED_INTENT_PROGRESS.md",
-      "size_bytes": 44262,
-      "sha256": "6f966602df42fc775793dbc901f2129b9cc79825ca6f76e1a1224a04845c0aef"
+      "size_bytes": 46534,
+      "sha256": "a3687c5100e7d3da0c3afbf276b7f4a277233456d2a0c531a708724e870cd08d"
     },
     {
       "path": "docs/TYPED_INTENT_RELEASE_10.0.0.md",

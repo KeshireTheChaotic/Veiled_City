@@ -12,6 +12,7 @@ import { typedEvidence } from "./epistemic.js";
 import { persistAuthoredCandidates } from "./authored-candidates.js";
 import { persistPlayerIntents, persistPlayerIntentDiagnostics, persistTypedDialogue } from "./typed-intents.js";
 import { adjudicateAcceptedIntent } from "./rules-arbitration.js";
+import { coordinateTypedActionWindows } from "./scene-action-window.js";
 import { buildActionPlan, executableActionSpans } from "./action-dependency.js";
 import { saveContextMemories } from "./context-memory.js";
 import { relationshipProvenance, artifactProvenance, inferredSource } from "./presentation-evidence.js";
@@ -424,7 +425,9 @@ export function applyAuthoritativeMutation(db,{guildId,sessionId=null,events=[],
         explanation:adjudication.explanation
       },provenance.actorId||"ai_gm",{scope});
     });
-    const actionPlan=buildActionPlan(db,guildId,typedIntents);
+    let actionPlan=buildActionPlan(db,guildId,typedIntents);
+    const actionWindows=coordinateTypedActionWindows(db,guildId,typedIntents,actionPlan);
+    if(actionWindows.length)actionPlan=actionPlan.map(row=>db.getCityRecord(guildId,"compound_action",row.record_key));
     const executableSpans=new Set(executableActionSpans(actionPlan));
     const deniedSpans=new Set(actionPlan.filter(row=>["blocked","clarification","failed"].includes(row.data.status))
       .map(row=>row.data.source_span));
@@ -487,7 +490,7 @@ export function applyAuthoritativeMutation(db,{guildId,sessionId=null,events=[],
     if(narrative) validateNarrativeClaims(db,guildId,narrative,scope,{staged:true,eventResults});
     return {events:eventResults,relationships:relationshipResults,handouts:handoutResults,
       npcMemories:cognition.memories,npcKnowledge:cognition.knowledge,npcGoals:cognition.goals,simulation,intents,world,typedIntents,
-      intentDiagnostics,nativeAdjudications,actionPlan,typedDialogue,contextMemories,reviewAudit};
+      intentDiagnostics,nativeAdjudications,actionPlan,actionWindows,typedDialogue,contextMemories,reviewAudit};
   });
 }
 

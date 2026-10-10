@@ -31,11 +31,19 @@ const nativeAdjudicationSchema=obj({trait:{type:'string',enum:['Agility','Streng
   override_refs:{type:'array',maxItems:8,items:text(200)},raw_refs:{type:'array',maxItems:8,items:text(200)},
   house_refs:{type:'array',maxItems:8,items:text(200)},homebrew_refs:{type:'array',maxItems:8,items:text(200)},
   modifier_keys:{type:'array',maxItems:20,items:text(200)},attack_source:text(200)});
+const coordinationSchema=obj({reason:{type:'string',enum:['combat_spotlight','cooperative_operation','contested_resource','reaction_opportunity','direct_pc_conflict','gm_declared_beat']},
+  beat_key:text(160),reads:{type:'array',maxItems:32,items:text(200)},writes:{type:'array',maxItems:32,items:text(200)},
+  location_key:text(160),operation:text(100),required_participants:{type:'array',maxItems:12,items:text(160)},
+  consent_refs:{type:'array',maxItems:12,items:text(160)}});
 const dependencyIndices={type:'array',maxItems:12,items:{type:'integer',minimum:0,maximum:11}};
 export const playerIntentSchema={type:'array',maxItems:12,items:{anyOf:[obj(playerIntentProperties),
   obj({...playerIntentProperties,depends_on:dependencyIndices}),
   obj({...playerIntentProperties,native_adjudication:nativeAdjudicationSchema}),
-  obj({...playerIntentProperties,depends_on:dependencyIndices,native_adjudication:nativeAdjudicationSchema})]}};
+  obj({...playerIntentProperties,depends_on:dependencyIndices,native_adjudication:nativeAdjudicationSchema}),
+  obj({...playerIntentProperties,coordination:coordinationSchema}),
+  obj({...playerIntentProperties,depends_on:dependencyIndices,coordination:coordinationSchema}),
+  obj({...playerIntentProperties,native_adjudication:nativeAdjudicationSchema,coordination:coordinationSchema}),
+  obj({...playerIntentProperties,depends_on:dependencyIndices,native_adjudication:nativeAdjudicationSchema,coordination:coordinationSchema})]}};
 
 export const PLAYER_INTENT_PROMPT=[
   'Extract player_intents semantically from the authenticated CURRENT PLAYER INPUT, regardless of verbs, grammar, idiom, tense or narrative style.',
@@ -49,6 +57,7 @@ export const PLAYER_INTENT_PROMPT=[
   'Classify merely imagined, conditional, OOC and reported acts honestly: they cannot trigger native effects.',
   'For unobstructed mundane movement, use resolution=auto, scene_actions.move and truthful arrival narration; do not say the attempt is still pending.',
   'Use roll_required only where stakes/uncertainty need native rolls. Supply native_adjudication with a grounded Difficulty, trait, risk, stakes and verified rule-reference namespaces; an unsourced provisional decision cannot create a roll. Consent or spending requires an independently authenticated native authorization, not your interpretation.',
+  'Include coordination only for an actual shared beat: scarce-resource contention, explicit cooperation, reaction opportunity, direct PC conflict, combat spotlight or a GM-declared beat. Resolve exact read/write resource IDs and current location. Ordinary nearby movement, dialogue and independent activity must omit coordination. Consent refs are hints only and are natively revalidated.',
   'No inference of voluntary actions, feelings or binding choices for another PC. An NPC proxy controlled by a human remains under that person\'s authority.',
   'Ordinary untracked scene props may be handled descriptively, but never grant permanent inventory custody or a canon possession claim without a verified native handout receipt.',
   'A local NPC receiving the player\'s dialogue must exist and actually share the scene: reuse/create it through world_additions and scene_actions.introduce_npc; give the NPC a natural response when free to speak.',
@@ -285,7 +294,9 @@ export function validatePlayerIntents(intents,source,scope={}){
   const seen=new Set(),occurrenceCursor=new Map();
   for(const [i,intent] of intents.entries()){
     const keys=Object.keys(intent||{}).sort().join(','),legacy='destination,excluded_targets,framing,operation,reason,resolution,source_span,target_key,target_name,type,utterance';
-    const forms=[legacy,`${legacy},depends_on`,`${legacy},native_adjudication`,`${legacy},depends_on,native_adjudication`]
+    const forms=[legacy,`${legacy},depends_on`,`${legacy},native_adjudication`,`${legacy},depends_on,native_adjudication`,
+      `${legacy},coordination`,`${legacy},depends_on,coordination`,`${legacy},native_adjudication,coordination`,
+      `${legacy},depends_on,native_adjudication,coordination`]
       .map(value=>value.split(',').sort().join(','));
     if(!intent||!forms.includes(keys))
       throw error('Closed semantic intent schema required.',{index:i});
@@ -323,6 +334,16 @@ export function validatePlayerIntents(intents,source,scope={}){
         ||!Number.isSafeInteger(a.difficulty)||a.difficulty<0||a.difficulty>100||!a.risk?.trim()||!a.stakes?.trim()
         ||!a.explanation?.trim())throw error('Roll-required intent needs a complete grounded native adjudication.',{index:i});
     }else if(intent.native_adjudication)throw error('Native roll adjudication belongs only to roll-required intent.',{index:i});
+    if(intent.coordination){
+      const c=intent.coordination,fields=['beat_key','consent_refs','location_key','operation','reads','reason','required_participants','writes'];
+      if(Object.keys(c).sort().join(',')!==fields.sort().join(',')||!c.beat_key.trim()||!c.location_key.trim()||!c.operation.trim()
+        ||!['combat_spotlight','cooperative_operation','contested_resource','reaction_opportunity','direct_pc_conflict','gm_declared_beat'].includes(c.reason)
+        ||![c.reads,c.writes].every(values=>Array.isArray(values)&&values.length<=32&&new Set(values).size===values.length
+          &&values.every(value=>/^[a-z][a-z0-9_-]*:[^\s]{1,180}$/i.test(value)))
+        ||![c.required_participants,c.consent_refs].every(values=>Array.isArray(values)&&values.length<=12
+          &&new Set(values).size===values.length&&values.every(value=>typeof value==='string'&&value.length>0&&value.length<=160)))
+        throw error('Coordination needs a bounded explicit shared beat, resources, location and consent references.',{index:i});
+    }
     if(scope.mode==='private'&&scope.actorCharacterId==null)throw error('Private typed intent requires a controlled character.',{index:i});
   }
   return intents;

@@ -110,3 +110,35 @@ export function resolveActionWindow(db,guild,key,{expected_revision,outcomes}){
     visibility:row.visibility,subject_key:row.subject_key,data:{window:key,outcomes,expected_revision,
       authority:"Coordinated projection of existing native receipts; no mechanics are inferred here."}});
 }
+
+/** Production bridge: only explicit structured overlap metadata can suspend an otherwise ready action. */
+export function coordinateTypedActionWindows(db,guild,typedIntents=[],actionPlan=[]){
+  const plans=new Map(actionPlan.map(row=>[row.data.action_id,row])),results=[];
+  for(const accepted of typedIntents){
+    const input=accepted.data.coordination;if(!input)continue;
+    const plan=plans.get(accepted.record_key);if(!plan||plan.data.status!=="ready")continue;
+    const pc=db.getCharacter(accepted.data.actor);
+    if(!pc||pc.guild_id!==guild||pc.data.location!==input.location_key)
+      fail("Action-window location must match the acting character's authoritative current location.");
+    const window=openActionWindow(db,guild,{key:input.beat_key,source_event:accepted.source_event,reason:input.reason});
+    try{
+      const participant=joinActionWindow(db,guild,window.record_key,{accepted_intent:accepted.record_key,
+        reads:input.reads,writes:input.writes,location_key:input.location_key,operation:input.operation,
+        participation:"voluntary",required_participants:input.required_participants,consent_refs:input.consent_refs});
+      db.saveCityRecord(guild,{...plan,key:plan.record_key,status:"pending",data:{...plan.data,status:"pending",
+        coordination:{window:window.record_key,participant:participant.record_key,classification:participant.data.classification}}});
+      results.push({status:"joined",window,participant,action:accepted.record_key});
+    }catch(error){
+      if(error.code!=="SCENE_ACTION_WINDOW"||!/consent/i.test(error.message))throw error;
+      const pending=db.saveCityRecord(guild,{kind:"scene_action_pending",key:`pending:${digest([window.record_key,accepted.record_key])}`,
+        status:"awaiting_consent",source_event:accepted.source_event,visibility:accepted.visibility,subject_key:accepted.subject_key,
+        actor_key:accepted.data.actor,location_key:input.location_key,data:{window:window.record_key,accepted_intent:accepted.record_key,
+          required_participants:input.required_participants,consent_refs:input.consent_refs,
+          authority:"Attempt only; no target participation, roll, damage, movement or response is inferred."}});
+      db.saveCityRecord(guild,{...plan,key:plan.record_key,status:"pending",data:{...plan.data,status:"pending",
+        coordination:{window:window.record_key,pending:pending.record_key}}});
+      results.push({status:"awaiting_consent",window,participant:null,pending,action:accepted.record_key});
+    }
+  }
+  return results;
+}

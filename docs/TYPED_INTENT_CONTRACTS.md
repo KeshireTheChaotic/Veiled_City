@@ -82,6 +82,15 @@ Accepted typed intents are canonical adjudication inputs; human declarations own
 - The party projection is redacted to character name, authored attempt, native total/duality and request status. It never includes undisclosed traits, cards, Experiences, other sheet options or GM-only facts.
 - Party publication has its own stable delivery receipt. Retry cannot reroll, duplicate a cost or retract an already published result; private aid and participant consent continue to use their existing native gates.
 
+## D05 live multiplayer coordination
+
+- Coordination is an optional closed typed-intent envelope, not inferred from Discord timing or word matching. It is valid only for an explicit meaningful shared beat and exact bounded read/write resource identities at the actor's authoritative current location.
+- Ordinary movement near another PC, dialogue and independent actions omit coordination and execute normally. Scarce-resource contention, explicit cooperation, reaction opportunities, combat spotlight, direct PC conflict and GM-declared beats may open a window.
+- Joining revalidates the current accepted intent, source/session/scene, audience/location, voluntary participation and native consent receipts. Model-supplied participant or consent identifiers grant no authority.
+- Missing direct-conflict or cooperative consent produces an `awaiting_consent` attempt-only record and suspends only that action. It cannot choose the target's response, roll, spend, move, damage or narrate a completed consequence.
+- Window revision compare-and-set, explicit reaction state, exclusive-winner rules and native outcome receipts remain mandatory. Late arrivals cannot undo a closed result, and Discord timestamps never establish precedence.
+- Coordination updates compound dependency state before autonomous scene effects are filtered, so a pending contested node cannot leak a model-described consequence while unrelated ready nodes continue.
+
 ## T04 compound-action dependencies
 
 - An enriched intent may identify only unique earlier action indices as prerequisites. Acceptance converts those indices to stable proposal identities tied to exact source occurrences; missing dependencies, forward references and cycles are rejected.

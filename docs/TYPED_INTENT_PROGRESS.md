@@ -158,6 +158,22 @@ Status: complete. Starting HEAD: `7adf98db84f0dcb1db2b9e225b9c626f3e3f1e14`.
 
 Next phase: D05 multiplayer action windows, contests and consent.
 
+## D05 v8 - multiplayer action windows, contests and consent
+
+Status: complete. Starting HEAD: `ac3494c41d55df1ff77eaf39e04fce62447d66f8`.
+
+- Red first: `d05-live-window-test.mjs` failed on the missing production coordinator and specified ordinary independence, two-message scarce-resource overlap, consent-pending direct PC conflict and live `state.js` integration.
+- Added a closed optional `coordination` envelope to typed intent output: explicit reason/beat, bounded resolved reads/writes, authoritative current location, operation, affected participants and consent references. Prompt guidance requires omission for ordinary nearby movement/dialogue/independent work.
+- The authoritative mutation transaction now passes accepted typed intents and dependency nodes through `coordinateTypedActionWindows` before filtering scene actions. Coordinated nodes alone become pending; uncoordinated nodes retain normal ready execution.
+- Production coordination rechecks the acting character's saved location, active source/session/scene, audience, exact accepted intent, resource syntax and native consent records before joining the existing window service.
+- A direct PC conflict or cooperative action without all required current consents creates a scoped `scene_action_pending/awaiting_consent` record and suspends only that compound node. It records an attempt but authorizes no target participation, response, roll, movement, damage or result.
+- Existing optimistic window revisions, explicit reaction windows, exclusive winner enforcement, native receipt requirements, replay and late-action refusal remain unchanged and green.
+- Focused D05, T04.1 window, typed lifecycle/regression tests passed. `npm run check` passed with 230 modules/scripts and 24 commands; `npm run validate` passed 97/97 suites after manifest synchronization, with network denied, `live_requests=0` and `billable_tokens=0`.
+- Persistence is additive in existing scene-window records plus `scene_action_pending`; no SQL migration. Rollback is transactional and no model coordination metadata is itself outcome authority.
+- No production data, live bot, Discord registration, deployment or paid provider call was used.
+
+Next phase: D06 compound continuation and strict consequence reconciliation.
+
 ## T00 — reproducible baseline
 
 Status: implementation inventory complete; baseline captured at `6c3167dbbf015739e1723272121552d60b9f2ec8`.
