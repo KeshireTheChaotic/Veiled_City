@@ -100,6 +100,7 @@ bot/scripts/systems-to-players-5-test.mjs
 bot/scripts/systems-to-players-6-test.mjs
 bot/scripts/systems-to-players-7-test.mjs
 bot/scripts/systems-to-players-9-test.mjs
+bot/scripts/typed-intent-lifecycle-test.mjs
 bot/scripts/typed-intents-regression-test.mjs
 bot/scripts/validate-command-schema.mjs
 bot/scripts/validate-offline.mjs
@@ -109,6 +110,7 @@ bot/src/ai-intents.js
 bot/src/ai-review.js
 bot/src/application-authority.js
 bot/src/authored-candidates.js
+bot/src/authored-turn-envelope.js
 bot/src/authority-policy.js
 bot/src/authority-projection.js
 bot/src/autonomous-world.js
@@ -313,6 +315,8 @@ docs/CHARACTER_CONCEPT_WIZARD.md
 docs/CHARACTER_EXPORT.md
 docs/CHARACTER_NARRATIVE_MARKDOWN.md
 docs/CHARACTER_RESPONSE_GAPS.md
+docs/CODEX_TYPED_INTENT_MASTER_KICKOFF_v5.md
+docs/CODEX_TYPED_INTENT_REFINEMENT_PLAN_v5.md
 docs/CODE_STANDARDS.md
 docs/COMBAT_STATE.md
 docs/CONTENT_SEEDING.md

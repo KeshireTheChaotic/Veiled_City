@@ -6,6 +6,11 @@ import { worldInputKey } from './autonomous-world.js';
 import { stateRevision } from './ai-intents.js';
 import { resolvePlaceReference } from './location-language.js';
 import { captureDialogue } from './dialogue-continuity.js';
+import {
+  authoredTurnEnvelope,
+  captureAuthoredTurnEnvelope,
+  overlapsConsumedSpan
+} from './authored-turn-envelope.js';
 
 const text = length => ({type:'string',maxLength:length});
 const obj = properties => ({type:'object',additionalProperties:false,properties,required:Object.keys(properties)});
@@ -44,6 +49,132 @@ export const PLAYER_INTENT_PROMPT=[
 
 function error(message,diagnostic={}){
   return Object.assign(new Error(message),{code:'PLAYER_INTENT',diagnostic});
+}
+
+const proposalFields=['actor_character_id','attempted_action','authored_outcome_claim','dependencies','desired_outcome',
+  'destination_scope','end','framing','operation','proposal_id','sequence_index','source_event','source_span','start',
+  'target','temporal_relation','type','version'];
+const targetFields=['grounding','key','kind','phrase'];
+const framings=['immediate','conditional','hypothetical','quoted','reported','ooc'];
+const temporalRelations=['sequential','parallel','reaction','unspecified'];
+
+function exactFields(value,fields){return value&&Object.keys(value).sort().join(',')===fields.slice().sort().join(',');}
+function sourceHash(value){return createHash('sha256').update(String(value)).digest('hex');}
+function proposalIdentity(value){
+  return `proposal:${digest([value.source_event,value.start,value.end,value.actor_character_id,value.type,value.operation])}`;
+}
+
+/** Validate a model proposal against the immutable authenticated source. No outcome is accepted here. */
+export function validateProposal(value,envelope,scope={}){
+  if(!exactFields(value,proposalFields)||value.version!==2)throw error('Closed version-2 semantic proposal required.');
+  if(!envelope||value.source_event!==envelope.source_event||envelope.raw_hash!==sourceHash(envelope.raw_text))
+    throw error('Proposal requires the immutable current authored source.');
+  if(value.actor_character_id!==envelope.character_id||scope.actorCharacterId!==envelope.character_id
+    ||scope.actorUserId!==envelope.user_id)throw error('Proposal actor does not match the authenticated principal.');
+  if(!Number.isSafeInteger(value.start)||!Number.isSafeInteger(value.end)||value.start<0||value.end<=value.start
+    ||value.end>envelope.raw_text.length||envelope.raw_text.slice(value.start,value.end)!==value.source_span)
+    throw error('Proposal offsets and span must exactly match the immutable source.');
+  if(typeof value.source_span!=='string'||!value.source_span||value.source_span.length>1200
+    ||typeof value.attempted_action!=='string'||!value.attempted_action||value.attempted_action.length>1200)
+    throw error('Proposal needs bounded source and attempted action text.');
+  if(!Number.isSafeInteger(value.sequence_index)||value.sequence_index<0||value.sequence_index>11
+    ||!Array.isArray(value.dependencies)||value.dependencies.length>12||value.dependencies.some(x=>typeof x!=='string'||x.length>100))
+    throw error('Proposal ordering and dependencies must be bounded.');
+  if(!exactFields(value.target,targetFields)||!['known','candidate','ambiguous','unknown'].includes(value.target.grounding)
+    ||!['location','npc','character','object','operation','unknown',''].includes(value.target.kind)
+    ||typeof value.target.key!=='string'&&value.target.key!==null||typeof value.target.phrase!=='string')
+    throw error('Proposal target must use the closed grounding contract.');
+  if(!framings.includes(value.framing)||!temporalRelations.includes(value.temporal_relation)
+    ||!['approach','exterior','interior','zone','none'].includes(value.destination_scope))
+    throw error('Proposal framing, timing or destination scope is invalid.');
+  if(value.desired_outcome!==null&&typeof value.desired_outcome!=='string')throw error('Desired outcome must be text or null.');
+  if(value.authored_outcome_claim!==null){
+    const claim=value.authored_outcome_claim;
+    if(!exactFields(claim,['claimed_by','status','text'])||claim.claimed_by!==envelope.user_id
+      ||claim.status!=='unverified'||typeof claim.text!=='string'||!claim.text.trim())
+      throw error('Authored outcome claims begin as attributed unverified claims.');
+  }
+  const expected=proposalIdentity(value);
+  if(value.proposal_id&&value.proposal_id!==expected)throw error('Proposal identity must be derived from authenticated offsets.');
+  return {...value,proposal_id:expected};
+}
+
+/** Persist fallible semantic proposals separately from native acceptance. */
+export function proposeIntents(db,guild,values,scope={},provenance={}){
+  if(!Array.isArray(values)||values.length>12)throw error('Bounded semantic proposal list required.');
+  const envelope=authoredTurnEnvelope(db,guild,provenance.messageId,scope.actorCharacterId);
+  if(!envelope)throw error('Current authored turn envelope required before semantic proposal.');
+  const seen=new Set();
+  return values.map(value=>{
+    const proposal=validateProposal(value,envelope,scope);
+    if(seen.has(proposal.proposal_id))throw error('One source occurrence cannot be proposed twice.');
+    seen.add(proposal.proposal_id);
+    const prior=db.getCityRecord(guild,'semantic_intent_proposal',proposal.proposal_id);
+    if(prior)return prior;
+    return db.saveCityRecord(guild,{kind:'semantic_intent_proposal',key:proposal.proposal_id,status:'proposed',
+      source_event:envelope.source_event,visibility:envelope.visibility,subject_key:envelope.subject_key,
+      data:{...proposal,source_hash:envelope.raw_hash,authority:'Fallible meaning proposal only; no action or outcome authority.'}});
+  });
+}
+
+/** Native acceptance grounds source, actor, framing and referent; it still does not resolve the action. */
+export function acceptIntentForAdjudication(db,guild,proposalRow,scope={},resolved={}){
+  if(proposalRow?.kind!=='semantic_intent_proposal'||proposalRow.status!=='proposed')
+    throw error('A persisted proposed intent is required for acceptance.');
+  const proposal=Object.fromEntries(proposalFields.map(field=>[field,proposalRow.data[field]]));
+  // Proposal rows are keyed by their immutable authored event; locate the envelope without trusting model fields.
+  const event=db.getWorldEvent(guild,proposalRow.source_event);
+  const annotation=db.listCityRecords(guild,{kind:'authored_turn_envelope',includeGM:true,limit:100})
+    .find(row=>row.source_event===proposalRow.source_event);
+  const currentEnvelope=event&&{version:1,source_event:event.event_key,discord_message_id:event.details.discord_message_id,
+    guild_id:guild,session_id:event.details.session_id,scene_id:event.details.scene_id,user_id:event.details.author,
+    character_id:event.details.character_id,control_role:event.details.control_role,principal_revision:event.details.principal_revision,
+    visibility:event.visibility,subject_key:event.subject_key||null,raw_text:event.details.raw_text,raw_hash:event.details.raw_hash,
+    native_consumed_spans:annotation?.data.native_consumed_spans||[]};
+  if(!currentEnvelope||event.status!=='active'||!db.ownerAuthoredSource(guild,event.event_key,scope.actorUserId))
+    throw error('Accepted intent requires an active owner-authored source.');
+  validateProposal({...proposal,proposal_id:proposal.proposal_id},currentEnvelope,scope);
+  const principal=conversationPrincipal(db,guild,scope.actorUserId,scope.actorCharacterId),scene=currentScene(db,guild);
+  if(principal.kind!=='owner'||principal.revision!==currentEnvelope.principal_revision
+    ||scene.session_id!==currentEnvelope.session_id||scene.key!==currentEnvelope.scene_id)
+    throw error('Accepted intent principal or scene is stale.');
+  if(proposal.framing!=='immediate')throw error('Only immediate framing can be accepted for adjudication.');
+  if(overlapsConsumedSpan(currentEnvelope,proposal.start,proposal.end))
+    throw error('A native-consumed source span cannot be accepted or executed again.');
+  const targetKey=resolved.resolvedTargetKey??proposal.target.key;
+  const requiresGroundedTarget=['move','local_zone'].includes(proposal.type);
+  if(proposal.target.grounding==='ambiguous'||requiresGroundedTarget&&proposal.target.grounding!=='known'
+    ||proposal.target.grounding==='unknown'&&(proposal.target.key||proposal.target.phrase))
+    throw error('Material target ambiguity requires clarification, not acceptance.');
+  if(proposal.target.key&&targetKey!==proposal.target.key)throw error('Resolved target redirection is not authorized.');
+  if(proposal.destination_scope==='interior'&&proposal.operation==='approach')
+    throw error('Approach cannot be accepted as interior entry.');
+  const key=`accepted:${proposal.proposal_id}`,prior=db.getCityRecord(guild,'typed_intent',key);
+  if(prior)return prior;
+  return db.saveCityRecord(guild,{kind:'typed_intent',key,status:'accepted_for_adjudication',
+    source_event:proposalRow.source_event,visibility:currentEnvelope.visibility,subject_key:currentEnvelope.subject_key,
+    data:{...proposal,actor:principal.character_id,owner_user_id:principal.user,actor_principal_revision:principal.revision,
+      target_key:targetKey||'',target_name:proposal.target.phrase,destination:proposal.destination_scope==='approach'?'exterior':proposal.destination_scope,
+      excluded_targets:[],utterance:'',resolution:'accepted',reason:'',session_id:scene.session_id,scene:scene.key,
+      source_hash:currentEnvelope.raw_hash,accepted_scope:`${proposal.type}:${proposal.operation}:${proposal.destination_scope}`,
+      outcome_receipt:null,authority:'Canonical adjudication input only; human declaration owns intent; native receipts own outcomes.'}});
+}
+
+function legacyProposals(intents,envelope){
+  const cursor=new Map();
+  return intents.map((intent,index)=>{
+    let start=cursor.get(intent.source_span)||0;
+    start=envelope.raw_text.indexOf(intent.source_span,start);
+    if(start<0)throw error('Intent span must occur in the immutable authored message.',{index});
+    cursor.set(intent.source_span,start+intent.source_span.length);
+    return {version:2,proposal_id:'',source_event:envelope.source_event,start,end:start+intent.source_span.length,
+      source_span:intent.source_span,actor_character_id:envelope.character_id,sequence_index:index,dependencies:[],
+      type:intent.type,operation:intent.operation||intent.type,
+      target:{kind:intent.type==='speak'?'npc':intent.type==='move'||intent.type==='local_zone'?'location':'unknown',
+        key:intent.target_key||null,phrase:intent.target_name||'',grounding:intent.target_key?'known':intent.target_name?'candidate':'unknown'},
+      framing:intent.framing,destination_scope:intent.destination==='unspecified'?'none':intent.destination,
+      attempted_action:intent.source_span,desired_outcome:null,authored_outcome_claim:null,temporal_relation:'sequential'};
+  });
 }
 
 export function validatePlayerIntents(intents,source,scope={}){
@@ -92,18 +223,24 @@ export function persistPlayerIntents(db,guild,intents,scope={},provenance={}){
     throw error('Current verified player origin/session/scene is required.');
   validatePlayerIntents(intents,source.details.text,scope);
   const pc=db.getCharacter(principal.character_id);
-  return intents.map((intent,index)=>{
-    const key=`typed-intent:${digest([source.event_key,index])}`;
-    const prior=db.getCityRecord(guild,'typed_intent',key);
-    if(prior)return prior;
-    const row=db.saveCityRecord(guild,{kind:'typed_intent',key,status:'interpreted',source_event:source.event_key,
-      visibility:scope.mode==='private'?'character':'party',subject_key:scope.mode==='private'?pc.id:null,
-      data:{...intent,actor:pc.id,owner_user_id:principal.user,session_id:session.id,scene:scene.key,
+  let envelope=authoredTurnEnvelope(db,guild,provenance.messageId,principal.character_id);
+  // Additive compatibility for old fixture/direct callers. Production intake captures this before native routing.
+  if(!envelope)envelope=captureAuthoredTurnEnvelope(db,guild,principal.user,principal.character_id,
+    provenance.messageId,source.details.text,{privateScene:scope.mode==='private'});
+  const proposals=proposeIntents(db,guild,legacyProposals(intents,envelope),scope,provenance),accepted=[];
+  for(const [index,row] of proposals.entries()){
+    const intent=intents[index];
+    if(intent.framing!=='immediate')continue;
+    const acceptedRow=acceptIntentForAdjudication(db,guild,row,scope,{resolvedTargetKey:intent.target_key||null});
+    // Retain the existing action fields and native pre-state for T00.1/T03 compatibility.
+    accepted.push(db.saveCityRecord(guild,{...acceptedRow,key:acceptedRow.record_key,source_event:acceptedRow.source_event,
+      data:{...acceptedRow.data,...intent,proposal_id:row.data.proposal_id,world_source_event:source.event_key,
+        actor:pc.id,owner_user_id:principal.user,session_id:session.id,scene:scene.key,
         from_ref:pc.data.location||null,from_revision:pc.data.location?
           stateRevision(db.getSimulationEntity(guild,'location',pc.data.location)):'absent',
-        authority:'Source-backed interpretation, not completion, roll, resource spending or consent.'}});
-    return row;
-  });
+        authority:'Canonical adjudication input only; human declaration owns intent; native receipts own outcomes.'}}));
+  }
+  return accepted;
 }
 
 /** After native movement/NPC presence is committed, let real listeners remember the exact authored speech. */
@@ -127,7 +264,9 @@ export function persistTypedDialogue(db,guild,intents,scope={},provenance={}){
 export function currentTypedMovement(db,guild,pc,sourceSpan,target,scope={},sourceEvent=""){
   const scene=currentScene(db,guild);
   const candidates=db.listCityRecords(guild,{kind:'typed_intent',includeGM:true,limit:120}).filter(row=>
-    row.status==='interpreted'&&row.source_event===sourceEvent&&row.data.type==='move'&&row.data.framing==='immediate'
+    ['interpreted','accepted_for_adjudication'].includes(row.status)
+    &&(row.source_event===sourceEvent||row.data.world_source_event===sourceEvent)
+    &&row.data.type==='move'&&row.data.framing==='immediate'
     &&row.data.resolution==='auto'
     &&row.data.source_span===sourceSpan&&row.data.actor===pc.id
     &&row.data.session_id===scene.session_id&&row.data.scene===scene.key

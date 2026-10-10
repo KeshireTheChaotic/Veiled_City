@@ -490,7 +490,8 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
     };
   }
 
-  async runTurn({guildId,actorUserId,actorName,messageText,actorAssignment=null,scope="party",messageId=null,signal=null}){
+  async runTurn({guildId,actorUserId,actorName,messageText,sourceText=null,nativeLedger=null,actorAssignment=null,scope="party",messageId=null,signal=null}){
+    const authenticatedSource=String(sourceText??messageText);
     const turnSignal=signal||AbortSignal.timeout(Number(this.config.gmTurnDeadlineMs||120000));
     const ctx=this.buildContext(guildId,actorUserId,messageText,actorAssignment);
     const privateMode=scope==="private";
@@ -588,14 +589,18 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
       `FREEFORM CHARACTER NARRATIVES (PLAYER + GM_PRIVATE; PROTECT GM_PRIVATE):\n${JSON.stringify(ctx.character_narratives)}`,
       `KNOWN HANDOUT/EVIDENCE INDEX VISIBLE TO ACTOR:\n${JSON.stringify(ctx.visible_handouts)}`,
       `RELEVANT VEILED CITY REFERENCE:\n${JSON.stringify(ctx.reference_chunks)}`,
-      `CURRENT PLAYER INPUT:\nuser_id=${actorUserId}\nname=${actorName}\nscope=${scope}\n${messageText}`
+      `AUTHENTICATED RAW PLAYER SOURCE (immutable; native-consumed spans are context only):\n${authenticatedSource}`,
+      `NATIVE SOURCE-SPAN LEDGER (receipts prevent re-execution):\n${JSON.stringify(nativeLedger||{handled_spans:[],native_receipts:[],unresolved_spans:[]})}`,
+      `CURRENT UNCONSUMED PLAYER INPUT:\nuser_id=${actorUserId}\nname=${actorName}\nscope=${scope}\n${messageText}`
     ];
     // Fixed authority and authenticated input are never trimmed. Optional context is selected as whole records.
     const requiredLabels=new Set(["CAMPAIGN STATE","AUTHENTICATED DECLARATION (attempts, not completed facts)","CONVERSATIONAL ENTRY REFERENCES (not authority)","SCOPED INTERPRETATION (not authority)",
       "AI MANAGEMENT (GM-private proposals, policy, revisions and receipts; never actor knowledge)","SESSION",
       "ASSEMBLY PLAN (GM-PRIVATE; protect per-character hooks)","ESTABLISHED PARTY STATE",
       "CURRENT ENCOUNTER (GM-PRIVATE; do not expose BP math/composition unless learned in fiction)",
-      "ACTING CHARACTER/NPC ASSIGNMENT","ACTIVE HUMAN-CONTROLLED NPC PROXIES","ROSTER/PRESENCE","CLOCKS (MAY BE SECRET)","CURRENT PLAYER INPUT"]);
+      "ACTING CHARACTER/NPC ASSIGNMENT","ACTIVE HUMAN-CONTROLLED NPC PROXIES","ROSTER/PRESENCE","CLOCKS (MAY BE SECRET)",
+      "AUTHENTICATED RAW PLAYER SOURCE (immutable; native-consumed spans are context only)",
+      "NATIVE SOURCE-SPAN LEDGER (receipts prevent re-execution)","CURRENT UNCONSUMED PLAYER INPUT"]);
     const sections=rawSections.map(text=>{
       const split=text.indexOf(":");
       if(split<0||text===SIMULATION_PROMPT) return {label:"SIMULATION RULES",value:text,required:true};
@@ -627,11 +632,11 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
       if(providedIntents&&owned&&result.respond&&!result.player_intents.length)
         throw Object.assign(new Error('An authenticated roleplay turn requires typed interpretation; use type=other for non-action roleplay.'),{code:'PLAYER_INTENT'});
       const typedScope={mode:scope,actorUserId,actorCharacterId:ctx.actor_assignment?.character_id||null};
-      validatePlayerIntents(providedIntents?result.player_intents:[],messageText,typedScope);
+      validatePlayerIntents(providedIntents?result.player_intents:[],authenticatedSource,typedScope);
       // An optional expansion must not veto the always-on semantic GM pipeline.
       if(this.db.getCityCalendar(guildId).flags.natural_language!==true) result.authored_candidates=null;
       // Named and consequential context persists; incidental description stays in transcript only.
-      tierWorldAdditions(result,messageText);
+      tierWorldAdditions(result,authenticatedSource);
       autoCompleteOrdinaryMovements(this.db,guildId,result,typedScope);
       validateIntentResolutions(result);
       const prose=[result.narration||"",...(result.private_messages||[]).map(row=>row.content)].join("\n");

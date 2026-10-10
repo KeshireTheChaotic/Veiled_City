@@ -27,6 +27,7 @@ import { createLogger } from "./logger.js";
 import { runNpcDirector } from "./simulation.js";
 import { publishSimulationHooks } from "./publishing.js";
 import { routeMessageSpans, serializeSpanLedger } from "./message-span-ledger.js";
+import { captureAuthoredTurnEnvelope, recordNativeConsumedSpans } from "./authored-turn-envelope.js";
 import { beginTurnAttempt, advanceTurnAttempt, turnFailureNotice, isTurnReplay } from "./turn-attempts.js";
 import { validateChannelRouting, shouldSendInactiveSessionNotice } from "./routing-diagnostics.js";
 import { operationalMetrics, measureStage } from "./operational-metrics.js";
@@ -331,15 +332,20 @@ async function processPrivateTurn(message,directMention,attempt=null){
   const vis=controlled?.character_id?"character":"player";
   let conversationId=controlled?.character_id||null;
   try{conversationId=conversationPrincipal(db,message.guild.id,message.author.id,conversationId).context_id;}catch{/* No authenticated role context. */}
-  const nativeLedger=await routeNativeSpans({message,text:playerText,session,controlled});
+  const authoredText=playerText;
+  if(controlled?.character_id)captureAuthoredTurnEnvelope(db,message.guild.id,message.author.id,controlled.character_id,
+    message.id,authoredText,{privateScene:true});
+  const nativeLedger=await routeNativeSpans({message,text:authoredText,session,controlled});
+  if(controlled?.character_id)recordNativeConsumedSpans(db,message.guild.id,message.author.id,controlled.character_id,message.id,
+    nativeLedger.handled_spans.map(span=>({start:span.start,end:span.end,receipt_ref:`native-route:${message.id}:${span.id}`})));
   recordSpanLedger(attempt,nativeLedger);playerText=nativeLedger.remaining_text;
   if(!playerText){if(attempt)advanceTurnAttempt(db,attempt.turn_id,"delivered");return;}
   // Typed source-backed action intents replace pre-GM lexical declaration capture.
-  captureContextSource(db,message.guild.id,message.author.id,controlled?.character_id,message.id,playerText,{privateScene:true});
-  captureWorldInput(db,message.guild.id,message.author.id,controlled?.character_id,message.id,playerText,{privateScene:true});
+  captureContextSource(db,message.guild.id,message.author.id,controlled?.character_id,message.id,authoredText,{privateScene:true});
+  captureWorldInput(db,message.guild.id,message.author.id,controlled?.character_id,message.id,authoredText,{privateScene:true});
   // Typed speech is verified and captured after native scene movement and NPC presence.
   captureArcCandidate(db,message.guild.id,message.author.id,controlled?.npc_proxy?null:controlled?.character_id,message.id,playerText);
-  db.addMessage({guildId:message.guild.id,sessionId:session.id,messageId:message.id,userId:message.author.id,speakerName:speaker,characterId:controlled?.character_id||null,visibility:vis,subjectUserId:vis==="player"?message.author.id:null,subjectCharacterId:vis==="character"?conversationId:null,content:playerText});
+  db.addMessage({guildId:message.guild.id,sessionId:session.id,messageId:message.id,userId:message.author.id,speakerName:speaker,characterId:controlled?.character_id||null,visibility:vis,subjectUserId:vis==="player"?message.author.id:null,subjectCharacterId:vis==="character"?conversationId:null,content:authoredText});
   if(attempt)advanceTurnAttempt(db,attempt.turn_id,"captured");
   // Only model-typed entry intents reach native scene actions; no lexical staging gate.
 
@@ -348,7 +354,8 @@ async function processPrivateTurn(message,directMention,attempt=null){
   try{
     if(attempt)advanceTurnAttempt(db,attempt.turn_id,"generating",{modelAttempts:Number(db.getTurnAttempt(attempt.turn_id)?.model_attempts||0)+1});
     const cleaned=playerText.replaceAll(`<@${client.user.id}>`,"").replaceAll(`<@!${client.user.id}>`,"").trim();
-    result=await gm.runTurn({guildId:message.guild.id,actorUserId:message.author.id,actorName:speaker,actorAssignment:controlled,messageText:cleaned||playerText,scope:"private",messageId:message.id});
+    result=await gm.runTurn({guildId:message.guild.id,actorUserId:message.author.id,actorName:speaker,actorAssignment:controlled,
+      messageText:cleaned||playerText,sourceText:authoredText,nativeLedger:serializeSpanLedger(nativeLedger),scope:"private",messageId:message.id});
     if(!result.respond){if(attempt)advanceTurnAttempt(db,attempt.turn_id,"delivered");return;}
     if(attempt)advanceTurnAttempt(db,attempt.turn_id,"validated");
   }catch(err){
@@ -421,7 +428,12 @@ async function processPartyTurn(message,directMention,attempt=null){
     return;
   }
   const speaker=controlled?.name||message.member?.displayName||message.author.username;
-  const nativeLedger=await routeNativeSpans({message,text:playerText,session,controlled});
+  const authoredText=playerText;
+  if(controlled?.character_id)captureAuthoredTurnEnvelope(db,message.guild.id,message.author.id,controlled.character_id,
+    message.id,authoredText);
+  const nativeLedger=await routeNativeSpans({message,text:authoredText,session,controlled});
+  if(controlled?.character_id)recordNativeConsumedSpans(db,message.guild.id,message.author.id,controlled.character_id,message.id,
+    nativeLedger.handled_spans.map(span=>({start:span.start,end:span.end,receipt_ref:`native-route:${message.id}:${span.id}`})));
   recordSpanLedger(attempt,nativeLedger);playerText=nativeLedger.remaining_text;
   if(!playerText){if(attempt)advanceTurnAttempt(db,attempt.turn_id,"delivered");return;}
   if(pendingAtTurnStart){
@@ -432,9 +444,9 @@ async function processPartyTurn(message,directMention,attempt=null){
   }
   captureArcCandidate(db,message.guild.id,message.author.id,controlled?.npc_proxy?null:controlled?.character_id,message.id,playerText);
   // Typed source-backed action intents replace pre-GM lexical declaration capture.
-  captureContextSource(db,message.guild.id,message.author.id,controlled?.character_id,message.id,playerText);
-  captureWorldInput(db,message.guild.id,message.author.id,controlled?.character_id,message.id,playerText);
-  db.addMessage({guildId:message.guild.id,sessionId:session.id,messageId:message.id,userId:message.author.id,speakerName:speaker,characterId:controlled?.character_id||null,visibility:"party",content:playerText});
+  captureContextSource(db,message.guild.id,message.author.id,controlled?.character_id,message.id,authoredText);
+  captureWorldInput(db,message.guild.id,message.author.id,controlled?.character_id,message.id,authoredText);
+  db.addMessage({guildId:message.guild.id,sessionId:session.id,messageId:message.id,userId:message.author.id,speakerName:speaker,characterId:controlled?.character_id||null,visibility:"party",content:authoredText});
   if(attempt)advanceTurnAttempt(db,attempt.turn_id,"captured");
   // Typed speech is verified and captured after native scene movement and NPC presence.
   // Only model-typed entry intents reach native scene actions; no lexical staging gate.
@@ -452,7 +464,8 @@ async function processPartyTurn(message,directMention,attempt=null){
   try{
     if(attempt)advanceTurnAttempt(db,attempt.turn_id,"generating",{modelAttempts:Number(db.getTurnAttempt(attempt.turn_id)?.model_attempts||0)+1});
     const cleaned=playerText.replaceAll(`<@${client.user.id}>`,"").replaceAll(`<@!${client.user.id}>`,"").trim();
-    result=await gm.runTurn({guildId:message.guild.id,actorUserId:message.author.id,actorName:speaker,actorAssignment:controlled,messageText:cleaned||playerText,scope:"party",messageId:message.id});
+    result=await gm.runTurn({guildId:message.guild.id,actorUserId:message.author.id,actorName:speaker,actorAssignment:controlled,
+      messageText:cleaned||playerText,sourceText:authoredText,nativeLedger:serializeSpanLedger(nativeLedger),scope:"party",messageId:message.id});
     if(!result.respond){if(attempt)advanceTurnAttempt(db,attempt.turn_id,"delivered");return;}
     if(attempt)advanceTurnAttempt(db,attempt.turn_id,"validated");
   }catch(err){
