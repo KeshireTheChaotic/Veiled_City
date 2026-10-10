@@ -178,6 +178,20 @@ Status: complete on 2026-10-10. Package version remains `10.0.0`.
 
 T07 is next: retire obsolete lexical authority while preserving reviewed adapters.
 
+## T07 - legacy language authority retirement
+
+Status: complete on 2026-10-10. Package version remains `10.0.0`.
+
+- Red first: `legacy-authority-migration-test.mjs` failed with `ERR_MODULE_NOT_FOUND` before the executable authority inventory existed.
+- Added a source-call-graph audit proving production message intake does not invoke legacy free-form roll/consent routing and autonomous effects do not call lexical player-action classifiers.
+- Documented all retained uses: response/invitation hints, verbatim dialogue continuity, inert candidate/OOC filtering, referent resolution, reviewed historical scene-entry adaptation, exact current owner roll authorization and exact proposal/revision consent.
+- Historical records remain readable but old prose cannot fall through into fresh movement, consent, spending, dice or outcomes. No SQL migration or destructive record rewrite was introduced.
+- Focused T07, typed routing, scene entry, native collaboration and consent suites passed. `npm run check` passed 209 modules/scripts and 24 commands.
+- `npm run validate` passed 84/84 suites with network denied, `live_requests=0`, and `billable_tokens=0`.
+- No live bot, production database, deployment, merge or paid model was used.
+
+T08 is next: aggregate qualification, hardening and release readiness.
+
 ## Deferred findings
 
 T04 through T08, including T04.1 and the general T05b lifecycle, have not started. The next phase is T04: ordered compound actions and causal dependencies.

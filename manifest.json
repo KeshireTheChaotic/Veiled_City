@@ -355,6 +355,11 @@
       "sha256": "c205e0a4fd127221290e4ab76f09e4f2cb737969017ab31bb85bb6679511bdba"
     },
     {
+      "path": "bot/scripts/legacy-authority-migration-test.mjs",
+      "size_bytes": 1642,
+      "sha256": "2bfef212afb797e11c06a258fb165c097ef7899a93f2a5fdd5bea2ad9794c54d"
+    },
+    {
       "path": "bot/scripts/memory-audience-isolation-test.mjs",
       "size_bytes": 5689,
       "sha256": "1e19b26cc0995f564111f682dcfef1550881bd934ac2c734b513a9f2cc8b3a7d"
@@ -561,8 +566,8 @@
     },
     {
       "path": "bot/scripts/validate-offline.mjs",
-      "size_bytes": 3768,
-      "sha256": "8bec0c55ad0faf5d8f1a785318a9c5813afbd8319a28fa5aff191ab0954672ae"
+      "size_bytes": 3802,
+      "sha256": "e3c9a1b38a8bcae7742e4e1cd4cd9fd66f3a5953da1275b9440b5c5d72b85387"
     },
     {
       "path": "bot/sql/schema.sql",
@@ -848,6 +853,11 @@
       "path": "bot/src/index.js",
       "size_bytes": 53221,
       "sha256": "ad5ef25069b5215e748e8c1a9366f8164e23047a7b63a4dbb86f9a664f3d0da6"
+    },
+    {
+      "path": "bot/src/legacy-authority.js",
+      "size_bytes": 1766,
+      "sha256": "b8535ae13d67d8eb1f5ca0fa28e4a97fe565df603c4f3b45ca44f017dd0931b5"
     },
     {
       "path": "bot/src/location-language.js",
@@ -1885,9 +1895,14 @@
       "sha256": "8753e233a79b4e42410e7bf2a8b2a53c4d9e1d8bb411feadc64d067f562f643b"
     },
     {
+      "path": "docs/TYPED_INTENT_MIGRATION.md",
+      "size_bytes": 2460,
+      "sha256": "103c1dc81dbfdc200dcb8917d909cbc87e480ecb58c28a9fbacbe35a60b3ff2b"
+    },
+    {
       "path": "docs/TYPED_INTENT_PROGRESS.md",
-      "size_bytes": 20525,
-      "sha256": "151d5ab0c2d4a9be20d2fa22573f0385b0b279ddcc743a454d6cc8aa318ded11"
+      "size_bytes": 21829,
+      "sha256": "d1e7618ca2495ff1fc2d53d36d39045afb31c989fff0d18ef2e9269c0b2e9e3a"
     },
     {
       "path": "docs/UPGRADE_3.0_TO_3.1.md",
