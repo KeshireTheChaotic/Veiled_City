@@ -9,6 +9,14 @@ Accepted typed intents are canonical adjudication inputs; human declarations own
 - A malformed independent clause cannot discard a separately valid clause. A dependent clause is quarantined when its prerequisite was rejected; dependencies are remapped only across retained source-valid clauses.
 - Actor/principal forgery, stale source ancestry and native-consumed span reuse remain fatal authority failures. Recovery is not fuzzy matching and never creates consent, movement, dice, spending or outcome authority.
 
+## H02 referent and clarification lifecycle
+
+- Ambiguous, candidate or unknown material movement targets persist as `awaiting_referent`; they are not accepted typed intents and cannot produce scene actions.
+- Clarification candidates are bounded audience-visible native identities. Grounding a name never grants entry, bypasses a lock/ward, changes an exterior receipt into interior presence, or resolves encounter movement.
+- A clarification must be a new authenticated owner source in the same active session, scene and principal revision. The selected target must be one of the saved candidates; replay or redirection fails closed.
+- Resolution creates a new accepted typed intent owned by the clarification source and links it to the clarified proposal. The old proposal becomes `clarified`, preserving provenance without retroactive mutation.
+- Replaying one source occurrence with a changed target or semantic payload is rejected instead of silently returning the earlier interpretation.
+
 ## T03 rules-grounded adjudication
 
 - Native arbitration accepts only a current accepted typed intent whose authenticated source, owner principal revision, active session and scene still match.

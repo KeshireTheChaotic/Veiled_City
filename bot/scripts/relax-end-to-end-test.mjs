@@ -40,7 +40,7 @@ try{
   assert(response.narration.includes("work"));assert(gm.ai.requests[0].instructions.includes("Veilkeeper IS the GM"));
   assert(gm.ai.requests[0].text.format.schema.properties.world_additions);
   const search="I look for an open public place, keeping out of the light, not Hollow Street.";
-  const searchIntent=intent(search,"search",{target_name:"an open public place",operation:"find",excluded_targets:["Hollow Street"],resolution:"auto"});
+  const searchIntent=intent(search,"search",{target_name:"an open public place",target_key:"laundromat",operation:"find",excluded_targets:["Hollow Street"],resolution:"auto"});
   const finding={...empty,narration:"An open laundromat's deep awning offers shelter away from Hollow Street. What do you do?",
     player_intents:[searchIntent],
     world_additions:[{kind:"location",key:"laundromat",name:"All-Night Laundromat",summary:"An open public laundromat with a shaded awning.",parent_location_key:"",visibility:"party"}],

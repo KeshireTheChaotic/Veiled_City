@@ -65,7 +65,7 @@ try{
 
   recordNativeConsumedSpans(db,guild,"owner",pc.id,"message-1",[{start:first,end:first+span.length,receipt_ref:"native:1"}]);
   assert.equal(authoredTurnEnvelope(db,guild,"message-1",pc.id).native_consumed_spans.length,1);
-  const consumed=proposeIntents(db,guild,[proposal(envelope,span,first,{sequence_index:4})],scope,{messageId:"message-1"});
+  const consumed=proposeIntents(db,guild,[proposal(envelope,span,first,{sequence_index:0})],scope,{messageId:"message-1"});
   assert.throws(()=>acceptIntentForAdjudication(db,guild,consumed[0],scope,{resolvedTargetKey:"night-market"}),/consumed/i,
     "a native-consumed span cannot execute again through the GM");
 
@@ -73,7 +73,8 @@ try{
     "unmatched_source_span","malformed optional offsets are quarantined without action authority");
   assert.throws(()=>proposeIntents(db,guild,[proposal(envelope,span,second,{actor_character_id:"other"})],scope,
     {messageId:"message-1"}),/actor|principal/i);
-  const redirected=proposeIntents(db,guild,[proposal(envelope,span,second,{sequence_index:7})],scope,{messageId:"message-1"})[0];
+  const redirected=proposeIntents(db,guild,[proposal(envelope,span,second,{sequence_index:1,desired_outcome:"arrive unnoticed",
+    authored_outcome_claim:{text:"I arrived unnoticed",claimed_by:"owner",status:"unverified"}})],scope,{messageId:"message-1"})[0];
   assert.throws(()=>acceptIntentForAdjudication(db,guild,redirected,scope,{resolvedTargetKey:"other-place"}),/target|redirect/i);
 
   const quotedStart=raw.indexOf("I enter the vault.");

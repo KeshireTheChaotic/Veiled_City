@@ -40,10 +40,12 @@ try{
     assert.equal(rows.filter(row=>row.status==="unmatched_source_span").length,1);
   });
   check("S2-17-ambiguity-becomes-persisted-clarification",()=>{
-    const start=text.indexOf(approach);
-    const row=proposeIntents(db,guild,[{...base,start,end:start+approach.length,source_span:approach,sequence_index:2,
+    const ambiguousText='I enter the store.';
+    const ambiguousEnvelope=captureAuthoredTurnEnvelope(db,guild,"owner-jaxon",pc.id,"s2-ambiguous",ambiguousText);
+    const row=proposeIntents(db,guild,[{...base,source_event:ambiguousEnvelope.source_event,start:0,end:ambiguousText.length,
+      source_span:ambiguousText,sequence_index:0,
       type:"move",operation:"approach",target:{kind:"location",key:null,phrase:"the store",grounding:"ambiguous"},
-      attempted_action:approach}],scope,{messageId:"s2-jaxon-conflict"})[0];
+      attempted_action:ambiguousText}],scope,{messageId:"s2-ambiguous"})[0];
     const accepted=acceptIntentForAdjudication(db,guild,row,scope,{targetCandidates:["store-a","store-b"]});
     assert.equal(accepted.status,"awaiting_referent");
   });

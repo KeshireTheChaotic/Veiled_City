@@ -59,6 +59,7 @@ bot/scripts/fixtures/systems-judgment-golden.json
 bot/scripts/format-check.mjs
 bot/scripts/gm-recovery-regression-test.mjs
 bot/scripts/h01-source-recovery-test.mjs
+bot/scripts/h02-referent-movement-test.mjs
 bot/scripts/i-heard-you-1-test.mjs
 bot/scripts/i-heard-you-2-test.mjs
 bot/scripts/i-heard-you-3-test.mjs

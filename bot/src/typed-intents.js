@@ -82,6 +82,9 @@ function sourceHash(value){return createHash('sha256').update(String(value)).dig
 function proposalIdentity(value){
   return `proposal:${digest([value.source_event,value.start,value.end,value.actor_character_id,value.type,value.operation])}`;
 }
+function sameProposal(row,proposal){
+  return proposalFields.every(field=>JSON.stringify(row?.data?.[field])===JSON.stringify(proposal[field]));
+}
 
 /** Validate a model proposal against the immutable authenticated source. No outcome is accepted here. */
 export function validateProposal(value,envelope,scope={}){
@@ -153,7 +156,12 @@ export function proposeIntents(db,guild,values,scope={},provenance={}){
     seen.add(proposal.proposal_id);
     ranges.push({start:proposal.start,end:proposal.end});
     const prior=db.getCityRecord(guild,'semantic_intent_proposal',proposal.proposal_id);
-    if(prior)return prior;
+    if(prior){
+      if(!sameProposal(prior,proposal))throw error('A source occurrence cannot be replayed with altered interpretation.',{
+        category:'incompatible_proposal_replay',index
+      });
+      return prior;
+    }
     return db.saveCityRecord(guild,{kind:'semantic_intent_proposal',key:proposal.proposal_id,status:'proposed',
       source_event:envelope.source_event,visibility:envelope.visibility,subject_key:envelope.subject_key,
       data:{...proposal,source_hash:envelope.raw_hash,authority:'Fallible meaning proposal only; no action or outcome authority.'}});
@@ -162,7 +170,7 @@ export function proposeIntents(db,guild,values,scope={},provenance={}){
 
 /** Native acceptance grounds source, actor, framing and referent; it still does not resolve the action. */
 export function acceptIntentForAdjudication(db,guild,proposalRow,scope={},resolved={}){
-  if(proposalRow?.kind!=='semantic_intent_proposal'||proposalRow.status!=='proposed')
+  if(proposalRow?.kind!=='semantic_intent_proposal'||!['proposed','awaiting_referent'].includes(proposalRow.status))
     throw error('A persisted proposed intent is required for acceptance.');
   const proposal=Object.fromEntries(proposalFields.map(field=>[field,proposalRow.data[field]]));
   // Proposal rows are keyed by their immutable authored event; locate the envelope without trusting model fields.
@@ -186,9 +194,18 @@ export function acceptIntentForAdjudication(db,guild,proposalRow,scope={},resolv
     throw error('A native-consumed source span cannot be accepted or executed again.');
   const targetKey=resolved.resolvedTargetKey??proposal.target.key;
   const requiresGroundedTarget=['move','local_zone'].includes(proposal.type);
-  if(proposal.target.grounding==='ambiguous'||requiresGroundedTarget&&proposal.target.grounding!=='known'
-    ||proposal.target.grounding==='unknown'&&(proposal.target.key||proposal.target.phrase))
-    throw error('Material target ambiguity requires clarification, not acceptance.');
+  const nativeGrounded=resolved.nativeGrounded===true&&typeof targetKey==='string'&&targetKey;
+  if(proposal.target.grounding==='ambiguous'||requiresGroundedTarget&&proposal.target.grounding!=='known'&&!nativeGrounded
+    ||proposal.target.grounding==='candidate'&&!nativeGrounded
+    ||proposal.target.grounding==='unknown'&&(proposal.target.key||proposal.target.phrase)){
+    const candidates=[...new Set(resolved.targetCandidates||[])].filter(key=>typeof key==='string'&&key).slice(0,8);
+    const awaiting=db.saveCityRecord(guild,{...proposalRow,key:proposalRow.record_key,status:'awaiting_referent',
+      data:{...proposalRow.data,target_candidates:candidates,session_id:scene.session_id,scene:scene.key,
+        owner_user_id:principal.user,actor_principal_revision:principal.revision,
+        clarification:'Which specific current-scene target did you mean?',
+        authority:'Pending referent only; never action, access or outcome authority.'}});
+    return awaiting;
+  }
   if(proposal.target.key&&targetKey!==proposal.target.key)throw error('Resolved target redirection is not authorized.');
   if(proposal.destination_scope==='interior'&&proposal.operation==='approach')
     throw error('Approach cannot be accepted as interior entry.');
@@ -201,6 +218,35 @@ export function acceptIntentForAdjudication(db,guild,proposalRow,scope={},resolv
       excluded_targets:[],utterance:'',resolution:'accepted',reason:'',session_id:scene.session_id,scene:scene.key,
       source_hash:currentEnvelope.raw_hash,accepted_scope:`${proposal.type}:${proposal.operation}:${proposal.destination_scope}`,
       outcome_receipt:null,authority:'Canonical adjudication input only; human declaration owns intent; native receipts own outcomes.'}});
+}
+
+/** Bind an owner clarification to a still-current pending referent using a new authenticated source. */
+export function resolvePendingReferent(db,guild,pendingKey,targetKey,scope={},provenance={},currentProposal=null){
+  const pending=db.getCityRecord(guild,'semantic_intent_proposal',pendingKey);
+  if(!pending||pending.status!=='awaiting_referent')throw error('A current pending referent is required.');
+  const principal=conversationPrincipal(db,guild,scope.actorUserId,scope.actorCharacterId),scene=currentScene(db,guild);
+  if(principal.kind!=='owner'||pending.data.owner_user_id!==principal.user
+    ||pending.data.actor_character_id!==principal.character_id||pending.data.actor_principal_revision!==principal.revision
+    ||pending.data.session_id!==scene.session_id||pending.data.scene!==scene.key)
+    throw error('Pending referent principal or scene is stale.');
+  if(!pending.data.target_candidates?.includes(targetKey))throw error('Clarification target is not one of the bounded candidates.');
+  const envelope=authoredTurnEnvelope(db,guild,provenance.messageId,principal.character_id);
+  if(!envelope||envelope.user_id!==principal.user||envelope.session_id!==scene.session_id||envelope.scene_id!==scene.key)
+    throw error('Clarification requires a new current authenticated owner source.');
+  const value=currentProposal?null:{version:2,proposal_id:'',source_event:envelope.source_event,start:0,end:envelope.raw_text.length,
+    source_span:envelope.raw_text,actor_character_id:principal.character_id,sequence_index:0,dependencies:[],
+    type:pending.data.type,operation:pending.data.operation,target:{...pending.data.target,key:targetKey,grounding:'known'},
+    framing:'immediate',destination_scope:pending.data.destination_scope,attempted_action:pending.data.attempted_action,
+    desired_outcome:pending.data.desired_outcome,authored_outcome_claim:pending.data.authored_outcome_claim,
+    temporal_relation:pending.data.temporal_relation};
+  const proposal=currentProposal||proposeIntents(db,guild,[value],scope,provenance)[0];
+  if(proposal.source_event!==envelope.source_event||proposal.data.target.key!==targetKey)
+    throw error('Current clarification proposal does not bind the selected target.');
+  const accepted=acceptIntentForAdjudication(db,guild,proposal,scope,{resolvedTargetKey:targetKey});
+  db.saveCityRecord(guild,{...pending,key:pending.record_key,status:'clarified',data:{...pending.data,
+    clarified_by:envelope.source_event,resolved_target_key:targetKey}});
+  return db.saveCityRecord(guild,{...accepted,key:accepted.record_key,data:{...accepted.data,
+    clarified_from:pending.record_key,clarification_source:envelope.source_event}});
 }
 
 /** Resolve only an already accepted structural route; authored wording is not reparsed here. */
@@ -359,7 +405,22 @@ export function persistPlayerIntents(db,guild,intents,scope={},provenance={}){
     const intent=intents[index];
     if(row.kind==='semantic_intent_diagnostic')continue;
     if(intent.framing!=='immediate')continue;
-    const acceptedRow=acceptIntentForAdjudication(db,guild,row,scope,{resolvedTargetKey:intent.target_key||null});
+    let resolvedTargetKey=intent.target_key||null,targetCandidates=[],nativeGrounded=false;
+    if(['move','local_zone'].includes(intent.type)&&intent.target_name){
+      const reference=resolvePlaceReference(db,guild,principal.character_id,intent.target_name,
+        {mode:scope.mode,user:principal.user});
+      if(reference.status==='resolved_existing'){
+        resolvedTargetKey=reference.location.entity_key;nativeGrounded=true;
+      }else targetCandidates=reference.candidates||[];
+    }
+    const pending=resolvedTargetKey&&db.listCityRecords(guild,{kind:'semantic_intent_proposal',includeGM:true,limit:100})
+      .find(candidate=>candidate.status==='awaiting_referent'&&candidate.data.owner_user_id===principal.user
+        &&candidate.data.actor_character_id===principal.character_id&&candidate.data.session_id===session.id
+        &&candidate.data.scene===scene.key&&candidate.data.target_candidates?.includes(resolvedTargetKey));
+    const acceptedRow=pending
+      ?resolvePendingReferent(db,guild,pending.record_key,resolvedTargetKey,scope,provenance,row)
+      :acceptIntentForAdjudication(db,guild,row,scope,{resolvedTargetKey,targetCandidates,nativeGrounded});
+    if(acceptedRow.status==='awaiting_referent')continue;
     // Retain the existing action fields and native pre-state for T00.1/T03 compatibility.
     accepted.push(db.saveCityRecord(guild,{...acceptedRow,key:acceptedRow.record_key,source_event:acceptedRow.source_event,
       data:{...acceptedRow.data,...intent,proposal_id:row.data.proposal_id,world_source_event:source.event_key,

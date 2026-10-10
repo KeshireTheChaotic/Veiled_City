@@ -30,6 +30,23 @@ Status: complete. Starting HEAD: `30257fb12420dcf158212fe1a56e2134863ca4df`.
 
 Next phase: H02 contextual referents, movement and clarification.
 
+## H02 v8 - contextual referents, movement and clarification
+
+Status: complete. Starting HEAD: `bb3be0df653528678ea3a729c3961afe6519f58c`.
+
+- Red first: the D00 S2-17 case showed that an altered ambiguous interpretation could reuse an earlier proposal identity and be returned as accepted. The dedicated H02 test captured pending referent and new-source behavior before integration.
+- Proposal replay now verifies the complete immutable proposal payload. Changed targets, ordering or meaning for the same source occurrence fail closed.
+- Material ambiguity persists as `awaiting_referent`, with bounded candidates and no typed acceptance or scene effect. Unique native place resolution may ground a candidate but still does not grant access.
+- Added new authenticated-source resolution for a still-current owner/session/scene/principal. The accepted record points to the clarification source and the prior proposal becomes `clarified`.
+- The normal persistence path uses native place resolution, resumes matching pending referents, preserves interior/exterior route semantics and leaves locks, wards, contested paths and encounter movement to existing native access checks.
+- Focused tests: `h02-referent-movement-test.mjs`, `session2-replay-test.mjs`, `typed-intent-lifecycle-test.mjs`, scene-entry, narrative-inference and movement-authorization suites. S2-17 is green; the aggregate remains red only for H03.
+- Updated the pre-existing RELAX discovery fixture to name its same-turn `laundromat` target key, matching the structured contract instead of relying on an ungrounded generic referent. Its original bounded-retry and native-worldbuilding assertions remain unchanged.
+- `npm run check` passed with 216 modules/scripts and 24 commands. `npm run validate` passed 87/87 suites after synchronizing release metadata, with network denied, `live_requests=0`, and `billable_tokens=0`.
+- Persistence is additive in existing semantic proposal/typed-intent records; no schema migration. Rollback is a source revert and leaves pending/clarified audit records inert.
+- No production data, live bot, Discord registration, deployment or paid provider call was used.
+
+Next phase: H03 deterministic post-turn state review.
+
 ## T00 — reproducible baseline
 
 Status: implementation inventory complete; baseline captured at `6c3167dbbf015739e1723272121552d60b9f2ec8`.
