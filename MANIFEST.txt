@@ -85,6 +85,7 @@ bot/scripts/refactor-regression-test.mjs
 bot/scripts/relax-end-to-end-test.mjs
 bot/scripts/release-files.mjs
 bot/scripts/release-version.mjs
+bot/scripts/rules-adjudication-test.mjs
 bot/scripts/rules-srd-test.mjs
 bot/scripts/scene-entry-test.mjs
 bot/scripts/seed-data-regression-test.mjs

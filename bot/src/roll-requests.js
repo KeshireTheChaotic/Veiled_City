@@ -13,8 +13,12 @@ export const rollRevision=hash;
 function sourceActor(db,guild,input){
   if(db.getCityCalendar(guild).flags.roll_requests!==true) throw new StateConflictError("Roll requests are opt-in.");
   const source=requireCitySource(db,guild,input.source_event),session=db.getActiveSession(guild);
-  if(source.kind!=="player_declaration"||source.visibility!=="character"||source.subject_key!==input.character_id
-    ||source.details.character_id!==input.character_id||source.source_id!==`player:${source.details.author}`
+  const legacy=source.kind==="player_declaration"&&source.visibility==="character"&&source.subject_key===input.character_id;
+  const accepted=input.accepted_intent?db.getCityRecord(guild,"typed_intent",input.accepted_intent):null;
+  const typed=source.kind==="authored_turn"&&accepted?.status==="accepted_for_adjudication"
+    &&accepted.source_event===source.event_key&&accepted.data.actor===input.character_id
+    &&accepted.data.owner_user_id===source.details.author;
+  if(!legacy&&!typed||source.details.character_id!==input.character_id||source.source_id!==`player:${source.details.author}`
     ||!session||source.session_id!==session.id||source.scene!==currentScene(db,guild).key||!db.ownerAuthoredSource(guild,source.event_key,source.details.author))
     throw new StateConflictError("A current authenticated owner declaration in this scene is required.");
   return {source,session,pc:personalCharacter(db,guild,source.details.author,input.character_id)};
@@ -46,7 +50,9 @@ export function rollBreakdown(db,guild,input,pc){
   let difficulty=null;
   if(input.difficulty_source){
     const event=requireCitySource(db,guild,input.difficulty_source),data=event.details.roll_difficulty;
-    if(event.kind!=="roll_adjudication"||event.source_kind!=="gm"||!event.details.human_reviewed||!data
+    if(event.kind!=="roll_adjudication"||!data
+      ||!(event.source_kind==="gm"&&event.details.human_reviewed||event.details.native_grounded===true
+        &&event.details.accepted_intent===input.accepted_intent)
       ||data.declaration!==input.source_event||!Number.isSafeInteger(data.value)||data.value<0||data.value>100
       ||event.visibility!=="character"||event.subject_key!==pc.id)
       throw new StateConflictError("Player-visible Difficulty requires an exact human-adjudicated scoped source.");
@@ -85,7 +91,7 @@ export function prepareRollRequest(db,guild,input,actor,context={}){
     const after=db.saveCityRecord(guild,{kind:"roll_request",key,actor_key:pc.id,visibility:"character",subject_key:pc.id,
       source_event:source.event_key,status:values.unresolved.length?"needs_review":"pending",
       data:{session_id:session.id,scene:source.scene,character_id:pc.id,owner_user_id:pc.owner_user_id,character_name:pc.name,
-        attempt:source.details.text,kind:input.kind,adjudication:input.adjudication,breakdown:values,input,
+        attempt:source.details.text||source.details.raw_text,kind:input.kind,adjudication:input.adjudication,breakdown:values,input,
         sheet_fingerprint:hash(pc.data),revision:1,history:[],authority:"Pending only; no dice, expenditure or outcome."}});
     cityAudit(db,guild,"roll_request_prepared",key,null,after,actor);return after;
   });

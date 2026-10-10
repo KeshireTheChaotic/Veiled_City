@@ -16,7 +16,7 @@ const text = length => ({type:'string',maxLength:length});
 const obj = properties => ({type:'object',additionalProperties:false,properties,required:Object.keys(properties)});
 const digest = v => createHash('sha256').update(JSON.stringify(v)).digest('hex').slice(0,32);
 
-export const playerIntentSchema={type:'array',maxItems:12,items:obj({
+const playerIntentProperties={
   type:{type:'string',enum:['move','local_zone','observe','search','interact','speak','roll','consent','other']},
   source_span:text(1200),target_name:text(160),target_key:text(160),
   destination:{type:'string',enum:['exterior','interior','zone','unspecified']},
@@ -24,7 +24,15 @@ export const playerIntentSchema={type:'array',maxItems:12,items:obj({
   framing:{type:'string',enum:['immediate','hypothetical','conditional','quoted','reported']},
   resolution:{type:'string',enum:['auto','roll_required','blocked','needs_clarification','conversational']},
   reason:text(400)
-})};
+};
+const nativeAdjudicationSchema=obj({trait:{type:'string',enum:['Agility','Strength','Finesse','Instinct','Presence','Knowledge']},
+  kind:{type:'string',enum:['action','reaction','attack']},difficulty:{type:'integer',minimum:0,maximum:100},
+  risk:text(300),stakes:text(600),explanation:text(600),saved_ruling_key:text(160),
+  override_refs:{type:'array',maxItems:8,items:text(200)},raw_refs:{type:'array',maxItems:8,items:text(200)},
+  house_refs:{type:'array',maxItems:8,items:text(200)},homebrew_refs:{type:'array',maxItems:8,items:text(200)},
+  modifier_keys:{type:'array',maxItems:20,items:text(200)},attack_source:text(200)});
+export const playerIntentSchema={type:'array',maxItems:12,items:{anyOf:[obj(playerIntentProperties),
+  obj({...playerIntentProperties,native_adjudication:nativeAdjudicationSchema})]}};
 
 export const PLAYER_INTENT_PROMPT=[
   'Extract player_intents semantically from the authenticated CURRENT PLAYER INPUT, regardless of verbs, grammar, idiom, tense or narrative style.',
@@ -37,7 +45,7 @@ export const PLAYER_INTENT_PROMPT=[
   'For constrained searches, put explicitly excluded destinations in excluded_targets, even when the sentence is not in a predefined format.',
   'Classify merely imagined, conditional, OOC and reported acts honestly: they cannot trigger native effects.',
   'For unobstructed mundane movement, use resolution=auto, scene_actions.move and truthful arrival narration; do not say the attempt is still pending.',
-  'Use roll_required only where stakes/uncertainty need native rolls; consent or spending requires an independently authenticated native authorization, not your interpretation.',
+  'Use roll_required only where stakes/uncertainty need native rolls. Supply native_adjudication with a grounded Difficulty, trait, risk, stakes and verified rule-reference namespaces; an unsourced provisional decision cannot create a roll. Consent or spending requires an independently authenticated native authorization, not your interpretation.',
   'No inference of voluntary actions, feelings or binding choices for another PC. An NPC proxy controlled by a human remains under that person\'s authority.',
   'Ordinary untracked scene props may be handled descriptively, but never grant permanent inventory custody or a canon possession claim without a verified native handout receipt.',
   'A local NPC receiving the player\'s dialogue must exist and actually share the scene: reuse/create it through world_additions and scene_actions.introduce_npc; give the NPC a natural response when free to speak.',
@@ -194,7 +202,8 @@ export function validatePlayerIntents(intents,source,scope={}){
   if(typeof source!=='string'||source.length>4000)throw error('Current authenticated message required.');
   const seen=new Set();
   for(const [i,intent] of intents.entries()){
-    if(!intent||Object.keys(intent).sort().join(',')!=='destination,excluded_targets,framing,operation,reason,resolution,source_span,target_key,target_name,type,utterance')
+    const keys=Object.keys(intent||{}).sort().join(','),legacy='destination,excluded_targets,framing,operation,reason,resolution,source_span,target_key,target_name,type,utterance';
+    if(!intent||![legacy,`${legacy},native_adjudication`.split(',').sort().join(',')].includes(keys))
       throw error('Closed semantic intent schema required.',{index:i});
     for(const [field,max] of [['source_span',1200],['target_key',160],['target_name',160],['operation',100],['utterance',1000],['reason',400]])
       if(typeof intent[field]!=='string'||intent[field].length>max)throw error('Bounded semantic intent fields required.',{index:i,field});
@@ -215,6 +224,13 @@ export function validatePlayerIntents(intents,source,scope={}){
     if(intent.framing!=='immediate'&&intent.resolution==='auto')throw error('Non-immediate intent cannot authorize an automatic effect.',{index:i});
     if(['roll','consent'].includes(intent.type)&&intent.resolution==='auto')
       throw error('Model interpretation cannot authorize dice, spending or binding consent.',{index:i});
+    if(intent.resolution==='roll_required'){
+      const a=intent.native_adjudication;
+      if(!a||Object.keys(a).sort().join(',')!==['attack_source','difficulty','explanation','homebrew_refs','house_refs','kind',
+        'modifier_keys','override_refs','raw_refs','risk','saved_ruling_key','stakes','trait'].sort().join(',')
+        ||!Number.isSafeInteger(a.difficulty)||a.difficulty<0||a.difficulty>100||!a.risk?.trim()||!a.stakes?.trim()
+        ||!a.explanation?.trim())throw error('Roll-required intent needs a complete grounded native adjudication.',{index:i});
+    }else if(intent.native_adjudication)throw error('Native roll adjudication belongs only to roll-required intent.',{index:i});
     if(scope.mode==='private'&&scope.actorCharacterId==null)throw error('Private typed intent requires a controlled character.',{index:i});
   }
   return intents;

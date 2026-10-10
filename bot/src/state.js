@@ -11,6 +11,7 @@ import { persistInterpretation } from "./narrative-context.js";
 import { typedEvidence } from "./epistemic.js";
 import { persistAuthoredCandidates } from "./authored-candidates.js";
 import { persistPlayerIntents, persistTypedDialogue } from "./typed-intents.js";
+import { adjudicateAcceptedIntent } from "./rules-arbitration.js";
 import { saveContextMemories } from "./context-memory.js";
 import { relationshipProvenance, artifactProvenance, inferredSource } from "./presentation-evidence.js";
 
@@ -410,6 +411,17 @@ export function applyAuthoritativeMutation(db,{guildId,sessionId=null,events=[],
     if(narrative?.narrative_interpretation)persistInterpretation(db,guildId,narrative.narrative_interpretation,scope,provenance);
     persistAuthoredCandidates(db,guildId,narrative?.authored_candidates,scope,provenance);
     const typedIntents=persistPlayerIntents(db,guildId,narrative?.player_intents||[],scope,provenance);
+    const nativeAdjudications=typedIntents.filter(row=>row?.data?.resolution==="roll_required").map(row=>{
+      const adjudication=row.data.native_adjudication;
+      return adjudicateAcceptedIntent(db,guildId,{
+        acceptedIntent:row.record_key,mode:"roll_required",risk:adjudication.risk,stakes:adjudication.stakes,
+        savedRulingKey:adjudication.saved_ruling_key,overrideRefs:adjudication.override_refs,
+        rawRefs:adjudication.raw_refs,houseRefs:adjudication.house_refs,homebrewRefs:adjudication.homebrew_refs,
+        trait:adjudication.trait,kind:adjudication.kind,difficulty:adjudication.difficulty,
+        modifierKeys:adjudication.modifier_keys,attackSource:adjudication.attack_source,
+        explanation:adjudication.explanation
+      },provenance.actorId||"ai_gm",{scope});
+    });
     const world=applyAutonomousWorld(db,guildId,narrative,scope,provenance,content);
     const typedDialogue=persistTypedDialogue(db,guildId,narrative?.player_intents||[],scope,provenance);
     const contextMemories=saveContextMemories(db,guildId,narrative,scope,provenance);
@@ -453,7 +465,7 @@ export function applyAuthoritativeMutation(db,{guildId,sessionId=null,events=[],
     // state or model-described effects. Any failure rolls back the entire bundle.
     if(narrative) validateNarrativeClaims(db,guildId,narrative,scope,{staged:true,eventResults});
     return {events:eventResults,relationships:relationshipResults,handouts:handoutResults,
-      npcMemories:cognition.memories,npcKnowledge:cognition.knowledge,npcGoals:cognition.goals,simulation,intents,world,typedIntents,typedDialogue,contextMemories};
+      npcMemories:cognition.memories,npcKnowledge:cognition.knowledge,npcGoals:cognition.goals,simulation,intents,world,typedIntents,nativeAdjudications,typedDialogue,contextMemories};
   });
 }
 

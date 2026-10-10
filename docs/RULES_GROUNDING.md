@@ -10,7 +10,9 @@ The rules channel and `/vc-rules ask` now return an explicit authority label:
 
 Authority order is:
 
-**Saved GM ruling → RAW-derived rules → Veiled City house rule → Veiled City homebrew text → provisional ruling.**
+**Applicable saved GM ruling → exact explicit campaign override → verified RAW-derived rules → compatible Veiled City house/homebrew extension → identified provisional ruling.**
+
+This is a conflict-resolution order, not permission to weaken an existing native gate. A manually reviewed roll source, player-owned consent, cost authorization, or committed native receipt remains required wherever its native service requires one. Explicit overrides must use a verified `override:` reference; ordinary house text does not silently displace RAW.
 
 The rules model cannot mutate campaign state.
 

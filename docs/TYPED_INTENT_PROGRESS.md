@@ -102,11 +102,26 @@ Status: complete on 2026-10-10. Implementation commit: `bc593e813ac884dce3fa18b5
 - `npm run check` passed (198 modules/scripts, 24 commands); `npm run validate` passed 78/78 suites with network denied, `live_requests=0`, and `billable_tokens=0`.
 - T00.1 movement authorization and T05a privacy remained green; no production/live/paid access occurred.
 
-T03 is next: grounded rules arbitration and native pending/resolved receipts.
+T03 is complete: grounded rules arbitration and native pending/resolved receipts.
+
+## T03 - rules-grounded adjudication and native receipts
+
+Status: complete on 2026-10-10. Package version remains `10.0.0`.
+
+- Red first: `rules-adjudication-test.mjs` initially failed because `adjudicateAcceptedIntent()` and `selectRuleBasis()` did not exist.
+- Added one tested conflict algorithm: applicable saved ruling, exact campaign override, verified SRD RAW, compatible house/homebrew extension, then explicit provisional handling. Reference namespaces and bounds are native-validated; existing manually reviewed roll, consent and cost gates remain stronger.
+- A current accepted intent can now produce either an idempotent no-roll outcome receipt or a real native pending roll request. State application converts every model `roll_required` disposition through that path inside the surrounding transaction; a label or narrated result alone is insufficient.
+- Roll-required structured output now includes bounded Difficulty, trait, kind, risks, stakes, explanation, modifier/attack inputs and namespaced rule references. Provisional risky proposals stop for reviewed grounding rather than inventing RAW.
+- Player-authored success remains an unverified claim. Replays reuse stable adjudication/request/receipt identities and do not draw dice twice; the existing native roll collaboration path remains authoritative for Daggerheart faces, Hope/Fear, resources, reactions and damage.
+- Focused tests passed for T03, I Heard You native mechanics/collaboration, T00.1 movement, implementation phase C, and T01/T02 lifecycle/routing. `npm run check` passed 199 modules/scripts and 24 commands.
+- `npm run validate` passed 79/79 suites after the release manifest was synchronized, with the network guard active, `live_requests=0`, and `billable_tokens=0`.
+- No live bot, production database, deployment, merge or paid model was used.
+
+T04 is next: ordered compound actions and causal dependencies.
 
 ## Deferred findings
 
-T03 through T08, including the general T05b lifecycle, have not started. The next phase is T03: grounded rules arbitration and native pending/resolved receipts.
+T04 through T08, including T04.1 and the general T05b lifecycle, have not started. The next phase is T04: ordered compound actions and causal dependencies.
 
 Legacy `context_memory` rows without the new native audience/provenance marker are deliberately omitted from player-turn retrieval. A reviewed migration or deletion policy belongs to T05b; silently blessing their historical scope would recreate the leak. Broader salience, expiry, correction/supersession, aliasing, and semantic retrieval also remain T05b work.
 
