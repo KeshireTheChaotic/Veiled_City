@@ -70,9 +70,26 @@ Validation evidence:
 
 All T00.1 acceptance criteria are satisfied. T01 is the single recommended next phase and has not started. Accepted typed intents are canonical adjudication inputs; human declarations own intent; native receipts own outcomes.
 
+## T01 - authenticated source envelopes and semantic acceptance
+
+Status: complete on 2026-10-10. Implementation commit: `7941bab95a3850ee9de375d9b18bdd5a404b6e8a`; starting HEAD: `0e770f6c60de2546a561340dd16149a6b0e9df3c`. Package version remains `10.0.0`.
+
+- Red first: `node scripts/typed-intent-lifecycle-test.mjs` failed with `ERR_MODULE_NOT_FOUND` for the not-yet-created authenticated-envelope contract.
+- Added immutable `authored_turn` events captured before native routing, plus additive `authored_turn_envelope` consumed-span annotations bound to receipt references.
+- Added version-2 `semantic_intent_proposal` records with exact occurrence offsets, stable IDs, ordered dependencies, framing, target grounding, desired outcome and separately attributed unverified outcome claims.
+- Added `acceptIntentForAdjudication()`. It revalidates active owner ancestry, principal and scene revision, exact raw hash/span occurrence, audience, framing, consumed spans and resolved target. Accepted records use `accepted_for_adjudication` and contain no outcome receipt.
+- Preserved the pre-T01 flat model contract through a versioned adapter and retained reads of historical `interpreted` movement and `legacy_scene_entry_adapter` records. No new mechanical effect was introduced.
+- Production intake now preserves raw text for context while supplying the GM a separate unconsumed view and receipt-linked span ledger. Native-consumed clauses cannot execute again.
+- Persistence is additive; there is no SQL schema migration. Rollback is a revert of the T01 commits. New proposal/envelope rows are inert audit inputs if reverted.
+- Focused tests passed: T01 lifecycle, typed intents, T00.1 movement authorization, implementation phase C, production recovery, RELAX and T05a memory isolation.
+- `npm ci` passed (37 packages, 38 audited, 0 vulnerabilities); `npm run check` passed (197 modules/scripts, 24 commands); `npm run validate` passed 77/77 suites with network denied, `live_requests=0`, and `billable_tokens=0`.
+- No bot, production database, Discord registration, deployment or paid model was used.
+
+T02 is the next phase. Accepted typed intents are canonical adjudication inputs; human declarations own intent; native receipts own outcomes.
+
 ## Deferred findings
 
-T01 through T08, including the general T05b lifecycle, have not started. The next authorized ticket after review is T01: stable source envelopes, separate proposal/acceptance APIs, and typed coverage without native-effect changes.
+T02 through T08, including the general T05b lifecycle, have not started. The next phase is T02: remove general phrase matching as authorization while preserving explicit native consent and spend gates.
 
 Legacy `context_memory` rows without the new native audience/provenance marker are deliberately omitted from player-turn retrieval. A reviewed migration or deletion policy belongs to T05b; silently blessing their historical scope would recreate the leak. Broader salience, expiry, correction/supersession, aliasing, and semantic retrieval also remain T05b work.
 
