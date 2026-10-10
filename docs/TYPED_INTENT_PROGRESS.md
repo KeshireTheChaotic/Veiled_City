@@ -1,5 +1,20 @@
 # Typed Intent Refinement Progress
 
+## D00 v8 - rebaseline and Session 2 reproduction
+
+Status: complete. Starting HEAD: `2dc347a77e1fd4988856b8e578e5c148fe82cb24`.
+
+- Reconciled the full v8 package and the available original v7 ZIP against the actual branch. Existing T00-T08 functionality is retained; delta gaps are not being rebuilt under historical ticket names.
+- Baseline commands actually run: `npm ci --ignore-scripts` (37 packages, 38 audited, zero vulnerabilities), `npm run check` (211 modules/scripts; 24 commands), and `npm run validate` (85/85 suites).
+- Offline validation denied network access and reported `live_requests=0`, `billable_tokens=0`.
+- Added sanitized Session 2 evidence plus three red-first, non-default reproduction scripts. They cover malformed secondary spans, recoverable target ambiguity, deterministic review normalization, input/output claim-span separation, Discord 2,000-character limits, unbounded DM fallback, source-only roll collisions, missing typed-request publication, missing component dispatch, unwired scene windows and permissive reconciliation.
+- The reproduction scripts fail for the expected owning-phase reasons. They are not yet default green gates; H01-H05 and D01-D06 must turn them green before registration.
+- Actual red results: semantic replay failed S2-06 with `PLAYER_INTENT` exact-offset rejection, S2-17 because ambiguity was accepted instead of persisted, and S2-21 with `POST_TURN_REVIEW`; the claim-span negative correctly reproduced `NARRATIVE_INTEGRITY/source_span`. Message-contract reproduction measured a 2,029-character assembly reply and found unbounded session-end and DM sends. The v7 structural audit found all five expected F08/F10-F13 gaps.
+- Changed files: `bot/scripts/fixtures/session2-sanitized.json`, `bot/scripts/session2-replay-test.mjs`, `bot/scripts/session2-message-contract-test.mjs`, `bot/scripts/v7-delta-baseline-test.mjs`, `docs/TYPED_INTENT_DELTA_AUDIT.md`, and this ledger.
+- D00 changes no runtime, persistence, authority, privacy or rollback behavior. No bot, production database, Discord registration, deployment or paid provider was used.
+
+Next phase: H01 exact source-span identity and recoverable parsing.
+
 ## T00 — reproducible baseline
 
 Status: implementation inventory complete; baseline captured at `6c3167dbbf015739e1723272121552d60b9f2ec8`.

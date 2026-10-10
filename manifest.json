@@ -30,6 +30,16 @@
       "sha256": "29950a91e70c194f066ba41264d49ef515507e0901c90bba84bcdd211890647c"
     },
     {
+      "path": "CODEX_TYPED_INTENT_DELTA_KICKOFF_v8.md",
+      "size_bytes": 3808,
+      "sha256": "40b626b1669fadab3dc11b3af4542709be418fd5c925aef4bdb41ae8bd542f96"
+    },
+    {
+      "path": "CODEX_TYPED_INTENT_DELTA_PLAN_v8.md",
+      "size_bytes": 29700,
+      "sha256": "354215e92d3f66b55d16ac64d8a134cef369f04983773cbdf34bbf34693a844d"
+    },
+    {
       "path": "Dockerfile",
       "size_bytes": 400,
       "sha256": "37f53728408f447ea3657693d4e178fd7a5153bf9d2368e285c571ff1327e08b"
@@ -45,6 +55,16 @@
       "sha256": "9952dd905ff48ad4d085e0ba956b38fdf0c177acc791a8e53f163adc7fa52d85"
     },
     {
+      "path": "SESSION2_REGRESSION_MATRIX_v8.md",
+      "size_bytes": 9178,
+      "sha256": "edc4b23438a3b5df888f4c554b92933d266542fc30f7c699dfd4e1ccf539d51d"
+    },
+    {
+      "path": "SOURCE_AUDIT_v8.md",
+      "size_bytes": 4481,
+      "sha256": "97895d1342267b5bd42bd1aea4efa889fcc45c80f1db74e1cc3adc41b101e953"
+    },
+    {
       "path": "SOURCE_BUILD_MANIFEST.json",
       "size_bytes": 41706,
       "sha256": "7225b32f30183fad7ce38f26c50a60d98f2e24d28c708bb486cb5825030fd29c"
@@ -58,6 +78,11 @@
       "path": "SUGGESTIONS-End-To-End.md",
       "size_bytes": 33260,
       "sha256": "c0bc6a24794bbdbccacd8808945575537d5e67c7d1751977096b65aaaad75223"
+    },
+    {
+      "path": "V7_V8_DELTA_MATRIX.csv",
+      "size_bytes": 3518,
+      "sha256": "d536bad83f06d88268303ec5599abd802ea7c459cbe138025505dd55d1c76fa9"
     },
     {
       "path": "bot/.env.example",
@@ -258,6 +283,11 @@
       "path": "bot/scripts/fixtures/implementation-evaluation.json",
       "size_bytes": 1934,
       "sha256": "3843b9a5b5dc7406a487b92899c4f19b6d2f24af47593aa7f51396e4e874a2f6"
+    },
+    {
+      "path": "bot/scripts/fixtures/session2-sanitized.json",
+      "size_bytes": 1556,
+      "sha256": "aa6371ae524f2486b7d9d89e5bcb63836c952b67dfa37818f0d87ce710c3d564"
     },
     {
       "path": "bot/scripts/fixtures/systems-judgment-golden.json",
@@ -490,6 +520,16 @@
       "sha256": "3de4cac80b0a836c493a9bb84aa2c8d7436b1d1fa5726c19177c59df0848bdbf"
     },
     {
+      "path": "bot/scripts/session2-message-contract-test.mjs",
+      "size_bytes": 1362,
+      "sha256": "34cdcc485101cc2ed170551d2d6578cea581a2fb620ae8ba8b2df6295a234386"
+    },
+    {
+      "path": "bot/scripts/session2-replay-test.mjs",
+      "size_bytes": 4519,
+      "sha256": "58aecfd83b8f458b0c62c8732f09b3e9a844a2cf95e9a61ab5b383cc6531404d"
+    },
+    {
       "path": "bot/scripts/simulation-regression-test.mjs",
       "size_bytes": 18107,
       "sha256": "f4d9c64bff0c60305e76c578d793bdfceb710e7c3e49dbc26fdf7970579f76fc"
@@ -563,6 +603,11 @@
       "path": "bot/scripts/typed-routing-authority-test.mjs",
       "size_bytes": 2873,
       "sha256": "0115a0fc13a9abcf9a58dafdd1215c4431af452ab1503c8764608912003f2287"
+    },
+    {
+      "path": "bot/scripts/v7-delta-baseline-test.mjs",
+      "size_bytes": 1588,
+      "sha256": "b79158166b128a6d162ca57442b36863aed1c07e227c689402b355643c0fffde"
     },
     {
       "path": "bot/scripts/validate-command-schema.mjs",
@@ -1905,14 +1950,19 @@
       "sha256": "8753e233a79b4e42410e7bf2a8b2a53c4d9e1d8bb411feadc64d067f562f643b"
     },
     {
+      "path": "docs/TYPED_INTENT_DELTA_AUDIT.md",
+      "size_bytes": 1807,
+      "sha256": "e66360f8f3bd12dc09c7f3cd09124deb1a6779f1d4e8970687cf0644892c28b5"
+    },
+    {
       "path": "docs/TYPED_INTENT_MIGRATION.md",
       "size_bytes": 2460,
       "sha256": "103c1dc81dbfdc200dcb8917d909cbc87e480ecb58c28a9fbacbe35a60b3ff2b"
     },
     {
       "path": "docs/TYPED_INTENT_PROGRESS.md",
-      "size_bytes": 23482,
-      "sha256": "0b3e4154aa1f3dbbbc0b9e7828f6ff8f4e500686b0945c7ffd4532b6bb1ce8ee"
+      "size_bytes": 25656,
+      "sha256": "cbc987f78a8abdfb0114aa95b6404190f4a68122296a5dd8f4e9c6bb5d5f7603"
     },
     {
       "path": "docs/TYPED_INTENT_RELEASE_10.0.0.md",

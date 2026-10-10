@@ -1,0 +1,53 @@
+{
+  "provenance": "Sanitized from the v8 Session 2 plan; no production database or private character packet was accessed.",
+  "actors": {
+    "jaxon": "pc-jaxon",
+    "choso": "pc-choso",
+    "tyrell": "pc-tyrell",
+    "billy": "pc-billy"
+  },
+  "messages": [
+    {
+      "id": "s2-jaxon-conflict",
+      "actor": "jaxon",
+      "text": "I walk over to Choso and kick him in the shin"
+    },
+    {
+      "id": "s2-jaxon-window",
+      "actor": "jaxon",
+      "text": "I walk into the store using the window"
+    },
+    {
+      "id": "s2-jaxon-door",
+      "actor": "jaxon",
+      "text": "I enter the store using the front door as I hear Tyrell ask Choso the question"
+    },
+    {
+      "id": "s2-jaxon-explicit",
+      "actor": "jaxon",
+      "text": "Yes, I enter the laundromat and approach Tyrell"
+    },
+    {
+      "id": "s2-choso-dialogue",
+      "actor": "choso",
+      "text": "Why should the door remain closed?"
+    },
+    {
+      "id": "s2-choso-parcel",
+      "actor": "choso",
+      "text": "I walk toward the leaking parcel"
+    },
+    {
+      "id": "s2-billy-terminal",
+      "actor": "billy",
+      "text": "I leave the door alone and troubleshoot the frozen shipping terminal"
+    }
+  ],
+  "recorded_errors": [
+    "PLAYER_INTENT: unmatched immutable/current authored source span",
+    "PLAYER_INTENT: material target ambiguity",
+    "NARRATIVE_INTEGRITY: input text used as output source_span",
+    "POST_TURN_REVIEW: references changed without a reference mutation",
+    "Discord 50035: content must be 2000 or fewer characters"
+  ]
+}

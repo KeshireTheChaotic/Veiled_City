@@ -3,12 +3,17 @@
 .github/workflows/offline-validation.yml
 CODEX_INTENT_REFINEMENT_PLAN.md
 CODEX_TYPED_INTENT_BRANCH_PLAN_v3.md
+CODEX_TYPED_INTENT_DELTA_KICKOFF_v8.md
+CODEX_TYPED_INTENT_DELTA_PLAN_v8.md
 Dockerfile
 LICENSE
 README.md
+SESSION2_REGRESSION_MATRIX_v8.md
+SOURCE_AUDIT_v8.md
 SOURCE_BUILD_MANIFEST.json
 SOURCE_BUILD_NOTES.md
 SUGGESTIONS-End-To-End.md
+V7_V8_DELTA_MATRIX.csv
 bot/.env.example
 bot/.gitignore
 bot/data/.gitkeep
@@ -49,6 +54,7 @@ bot/scripts/fixtures/expansion-quality-golden.json
 bot/scripts/fixtures/i-heard-you-acceptance.json
 bot/scripts/fixtures/i-heard-you-golden.json
 bot/scripts/fixtures/implementation-evaluation.json
+bot/scripts/fixtures/session2-sanitized.json
 bot/scripts/fixtures/systems-judgment-golden.json
 bot/scripts/format-check.mjs
 bot/scripts/gm-recovery-regression-test.mjs
@@ -95,6 +101,8 @@ bot/scripts/scene-action-window-test.mjs
 bot/scripts/scene-entry-test.mjs
 bot/scripts/seed-data-regression-test.mjs
 bot/scripts/seed-drafts-regression-test.mjs
+bot/scripts/session2-message-contract-test.mjs
+bot/scripts/session2-replay-test.mjs
 bot/scripts/simulation-regression-test.mjs
 bot/scripts/story-continuity-test.mjs
 bot/scripts/sync-release.mjs
@@ -110,6 +118,7 @@ bot/scripts/typed-intent-lifecycle-test.mjs
 bot/scripts/typed-intent-qualification-test.mjs
 bot/scripts/typed-intents-regression-test.mjs
 bot/scripts/typed-routing-authority-test.mjs
+bot/scripts/v7-delta-baseline-test.mjs
 bot/scripts/validate-command-schema.mjs
 bot/scripts/validate-offline.mjs
 bot/sql/schema.sql
@@ -378,6 +387,7 @@ docs/SYSTEMS_TO_PLAYERS_GAP_ANALYSIS.md
 docs/SYSTEMS_TO_PLAYERS_IMPLEMENTATION.md
 docs/TYPED_INTENT_BASELINE.md
 docs/TYPED_INTENT_CONTRACTS.md
+docs/TYPED_INTENT_DELTA_AUDIT.md
 docs/TYPED_INTENT_MIGRATION.md
 docs/TYPED_INTENT_PROGRESS.md
 docs/TYPED_INTENT_RELEASE_10.0.0.md
