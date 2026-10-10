@@ -6,7 +6,7 @@ import path from "node:path";
 import { VeiledDB } from "../src/db.js";
 import { captureAuthoredTurnEnvelope } from "../src/authored-turn-envelope.js";
 import { proposeIntents, acceptIntentForAdjudication } from "../src/typed-intents.js";
-import { validatePostTurnStateReview } from "../src/director.js";
+import { POST_TURN_REVIEW_CATEGORIES, validatePostTurnStateReview } from "../src/director.js";
 import { validateNarrativeClaims } from "../src/narrative-integrity.js";
 
 const fixture=JSON.parse(fs.readFileSync(new URL("./fixtures/session2-sanitized.json",import.meta.url),"utf8"));
@@ -50,7 +50,10 @@ try{
     assert.equal(accepted.status,"awaiting_referent");
   });
   check("S2-21-post-review-normalizes-derived-reference-state",()=>{
-    const review={references:{decision:"changed",confidence:90,reason:"Model metadata only."}};
+    const review=Object.fromEntries(POST_TURN_REVIEW_CATEGORIES.map(category=>[
+      category,{decision:category==="references"?"changed":"no_change",confidence:90,reason:"Model metadata only."}
+    ]));
+    review.scene={decision:"continue",label:"",reason:"Same scene."};
     const normalized=validatePostTurnStateReview({events:[],relationships:[],handouts:[],state_review:review});
     assert.equal(normalized.review.references.decision,"no_change");
     assert.equal(normalized.normalized,true);

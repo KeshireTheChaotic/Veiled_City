@@ -232,7 +232,8 @@ const reviewBase={
   facts_clues:{decision:"no_change",reason:"No new fact."},resources:{decision:"no_change",reason:"No resource consequence."},clocks:{decision:"no_change",reason:"No clock changed."},threads:{decision:"no_change",reason:"No thread changed."},references:{decision:"no_change",reason:"No reference changed."},relationships:{decision:"no_change",reason:"No relationship changed."},npc_cognition:{decision:"no_change",reason:"No NPC cognition changed."},handouts:{decision:"no_change",reason:"No handout."},canon:{decision:"no_change",reason:"No canon."},veil_exposure:{decision:"no_change",reason:"No exposure change."},scene:{decision:"continue",label:"",reason:"Same scene."}
 };
 validatePostTurnStateReview({events:[],relationships:[],handouts:[],state_review:reviewBase});
-assert.throws(()=>validatePostTurnStateReview({events:[{type:"clock_delta"}],relationships:[],handouts:[],state_review:reviewBase}),/clocks=no_change/);
+assert.equal(validatePostTurnStateReview({events:[{type:"clock_delta"}],relationships:[],handouts:[],state_review:reviewBase})
+  .review.clocks.decision,"changed");
 const changedReview=structuredClone(reviewBase); changedReview.clocks={decision:"changed",reason:"Pressure advanced."};
 validatePostTurnStateReview({events:[{type:"clock_delta"}],relationships:[],handouts:[],state_review:changedReview});
 

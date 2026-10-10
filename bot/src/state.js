@@ -4,7 +4,7 @@ import { indexWorldEvent } from "./city-calendar.js";
 import { normalizeNpcKey } from "./npc-cognition.js";
 import { applySimulationUpdates } from "./simulation.js";
 import { validateNarrativeClaims, assertNarrativeApplied } from "./narrative-integrity.js";
-import { applyAutonomousWorld } from "./autonomous-world.js";
+import { applyAutonomousWorld, worldInputKey } from "./autonomous-world.js";
 import { dispatchAiIntents } from "./ai-intents.js";
 import { assertNpcObservation } from "./scene-continuity.js";
 import { persistInterpretation } from "./narrative-context.js";
@@ -443,6 +443,16 @@ export function applyAuthoritativeMutation(db,{guildId,sessionId=null,events=[],
     const cognition=applyNpcCognitionDrafts(db,guildId,{memories:npcMemories,knowledge:npcKnowledge,goals:npcGoals},source,{...provenance,sessionId,scene});
     const simulation=applySimulationUpdates(db,guildId,simulationUpdates,{scope,
       provenance:{...provenance,actorType:provenance.actorType||(source==="human_gm"?"human_gm":"ai"),sessionId,scene}});
+    const reviewNormalization=narrative?.state_review_normalization;
+    const reviewSource=provenance.messageId&&scope.actorCharacterId
+      ?worldInputKey(provenance.messageId,scope.actorCharacterId):null;
+    const reviewAudit=reviewNormalization?.normalized&&reviewSource&&db.getWorldEvent(guildId,reviewSource)?db.saveCityRecord(guildId,{
+      kind:"post_turn_review_audit",key:`review:${provenance.messageId||provenance.interactionId||"unknown"}`,
+      status:"normalized",visibility:"gm",subject_key:null,
+      source_event:reviewSource,data:{version:1,session_id:sessionId,
+        corrections:reviewNormalization.corrections||[],
+        authority:"Private audit of deterministic review metadata normalization; no world-state authority."}
+    }):null;
     assertMutationSuccess({events:eventResults,relationships:relationshipResults,handouts:handoutResults,npcMemories:cognition.memories,npcKnowledge:cognition.knowledge,npcGoals:cognition.goals});
     if(narrative) assertNarrativeApplied(narrative,eventResults);
     const base={sessionId,actorType:provenance.actorType||"ai",actorId:provenance.actorId||scope.actorUserId||"veilkeeper",sourceLayer:source,sourceInteractionId:provenance.interactionId||null,sourceMessageId:provenance.messageId||null,confidence:provenance.confidence??100,rationale:provenance.rationale||"",triggerText:provenance.triggerText||""};
@@ -477,7 +487,7 @@ export function applyAuthoritativeMutation(db,{guildId,sessionId=null,events=[],
     if(narrative) validateNarrativeClaims(db,guildId,narrative,scope,{staged:true,eventResults});
     return {events:eventResults,relationships:relationshipResults,handouts:handoutResults,
       npcMemories:cognition.memories,npcKnowledge:cognition.knowledge,npcGoals:cognition.goals,simulation,intents,world,typedIntents,
-      intentDiagnostics,nativeAdjudications,actionPlan,typedDialogue,contextMemories};
+      intentDiagnostics,nativeAdjudications,actionPlan,typedDialogue,contextMemories,reviewAudit};
   });
 }
 

@@ -47,6 +47,21 @@ Status: complete. Starting HEAD: `bb3be0df653528678ea3a729c3961afe6519f58c`.
 
 Next phase: H03 deterministic post-turn state review.
 
+## H03 v8 - deterministic post-turn state review
+
+Status: complete. Starting HEAD: `d809cc9451575c86b56120b22bcaee767df0e0ec`.
+
+- Red first: `h03-post-turn-review-test.mjs` reproduced the Session 2 `references=changed` / no reference mutation failure as `POST_TURN_REVIEW/review_without_mutation`.
+- Review reasons, confidence bounds and scene-transition shape remain mandatory. Category decisions are now computed from structured events, relationships, handouts and NPC-cognition drafts instead of trusting model metadata.
+- Mismatched flags are normalized before native preview. No synthetic `npc_update`, `location_update` or other mutation is created to satisfy the review, and world additions/movement remain governed by their own native services.
+- A normalized committed player turn writes an idempotent GM-private `post_turn_review_audit` tied to its authenticated world-input source. Preview rolls the audit back; it grants no consequence authority and contains no player text.
+- Focused H03, Session 2 replay, operations, production, NPC cognition and RELAX suites passed. The Session 2 review mismatch no longer consumes a correction-model call.
+- `npm run check` passed with 217 modules/scripts and 24 commands. `npm run validate` passed 88/88 suites with network denied, `live_requests=0`, and `billable_tokens=0`.
+- Persistence is additive in existing city records; no schema migration. Reverting the phase leaves inert private audit records that authorize nothing.
+- No production data, live bot, Discord registration, deployment or paid provider call was used.
+
+Next phase: H04 narrative claim evidence and consequence reconciliation.
+
 ## T00 — reproducible baseline
 
 Status: implementation inventory complete; baseline captured at `6c3167dbbf015739e1723272121552d60b9f2ec8`.

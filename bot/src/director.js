@@ -19,7 +19,7 @@ function reviewFailure(message,diagnostic={}){
   throw Object.assign(new Error(message),{code:"POST_TURN_REVIEW",diagnostic});
 }
 
-/** Validate that narrated state changes and structured mutations agree. */
+/** Validate review shape, then derive change flags from the structured mutation bundle. */
 export function validatePostTurnStateReview(result){
   const review=result?.state_review;
   if(!review||typeof review!=="object")reviewFailure("GM turn is missing the mandatory post-turn state review.",{reason:"missing_review"});
@@ -30,13 +30,6 @@ export function validatePostTurnStateReview(result){
     }
     if(item.confidence!==undefined&&(!Number.isFinite(Number(item.confidence))||Number(item.confidence)<0||Number(item.confidence)>100))
       reviewFailure(`Post-turn state review confidence is invalid for ${category}.`,{reason:"confidence",category});
-    const hasOutput=CATEGORY_OUTPUTS[category](result);
-    if(hasOutput&&item.decision!=="changed")reviewFailure(
-      `Post-turn review says ${category}=no_change but emitted a corresponding state mutation.`,
-      {reason:"mutation_without_review",category,expected:"changed"});
-    if(!hasOutput&&item.decision!=="no_change")reviewFailure(
-      `Post-turn review says ${category}=changed but emitted no corresponding state mutation.`,
-      {reason:"review_without_mutation",category,expected:"no_change"});
   }
   const scene=review.scene;
   if(!scene||!["continue","transition"].includes(scene.decision)||!String(scene.reason||"").trim()){
@@ -44,7 +37,18 @@ export function validatePostTurnStateReview(result){
   }
   if(scene.decision==="transition"&&!String(scene.label||"").trim())
     reviewFailure("Scene transition review requires a new scene label.",{reason:"scene_label",category:"scene"});
-  return true;
+  const corrections=[];
+  const normalized={...review};
+  for(const category of POST_TURN_REVIEW_CATEGORIES){
+    const expected=CATEGORY_OUTPUTS[category](result)?"changed":"no_change";
+    const item=review[category];
+    if(item.decision!==expected)corrections.push({category,from:item.decision,to:expected});
+    normalized[category]={...item,decision:expected};
+  }
+  result.state_review=normalized;
+  result.state_review_normalization={version:1,normalized:corrections.length>0,corrections,
+    authority:"Derived structured-output review only; never mutation or consequence authority."};
+  return {ok:true,review:normalized,normalized:corrections.length>0,corrections};
 }
 
 export function eligibleRoundUsers(db,sessionId){

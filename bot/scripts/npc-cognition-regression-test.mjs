@@ -76,8 +76,9 @@ for(const category of ["facts_clues","resources","clocks","threads","references"
 review.scene={decision:"continue",label:"",reason:"Same scene."};
 const cognitionOutput={events:[],relationships:[],handouts:[],npc_memories:[{npc_key:mara.npc_key}],npc_knowledge:[],npc_goals:[],state_review:structuredClone(review)};
 cognitionOutput.state_review.npc_cognition={decision:"changed",reason:"Mara directly witnessed a meaningful boundary.",confidence:92};
-assert.equal(validatePostTurnStateReview(cognitionOutput),true);
-assert.throws(()=>validatePostTurnStateReview({...cognitionOutput,npc_memories:[]}),/npc_cognition=changed/i);
+assert.equal(validatePostTurnStateReview(cognitionOutput).ok,true);
+const noCognition=validatePostTurnStateReview({...cognitionOutput,npc_memories:[],state_review:structuredClone(cognitionOutput.state_review)});
+assert.equal(noCognition.review.npc_cognition.decision,"no_change");
 
 // Cognition tables participate in logical snapshots/backups.
 const snap=db.snapshotCampaign(guild,{label:"Cognition snapshot",reason:"test"});

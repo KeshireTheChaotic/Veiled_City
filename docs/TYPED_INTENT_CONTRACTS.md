@@ -17,6 +17,13 @@ Accepted typed intents are canonical adjudication inputs; human declarations own
 - Resolution creates a new accepted typed intent owned by the clarification source and links it to the clarified proposal. The old proposal becomes `clarified`, preserving provenance without retroactive mutation.
 - Replaying one source occurrence with a changed target or semantic payload is rejected instead of silently returning the earlier interpretation.
 
+## H03 deterministic post-turn review
+
+- `state_review` supplies a bounded reason and confidence explanation; its `changed`/`no_change` flag is not mutation authority.
+- Review flags are deterministically derived from the validated structured event, relationship, handout and NPC-cognition collections. `references` changes only for `npc_update` or `location_update`; world additions and scene actions retain their separate native receipts.
+- A mismatched model flag is normalized in place before preview, so it cannot trigger regeneration or cause a valid independent response to disappear. Invalid review shape, missing reasons, invalid confidence and malformed scene transitions still fail closed.
+- A committed normalized player turn stores one idempotent GM-private `post_turn_review_audit` record tied to the authenticated source event. Preview rolls it back; it has no world-state or consequence authority.
+
 ## T03 rules-grounded adjudication
 
 - Native arbitration accepts only a current accepted typed intent whose authenticated source, owner principal revision, active session and scene still match.
