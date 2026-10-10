@@ -47,6 +47,14 @@ Accepted typed intents are canonical adjudication inputs; human declarations own
 - Straightforward no-roll completion produces an idempotent `action_outcome_receipt`. Risky resolution produces no outcome receipt until the existing native roll/encounter services commit it. Player-authored success claims remain unverified and never substitute for either receipt.
 - Replay uses stable adjudication/request/receipt keys. Preview follows the same transaction path and rolls back without drawing dice. Existing native Daggerheart dice, Hope/Fear, critical, collaboration, reaction, damage, consent and resource checks remain the only outcome authority.
 
+## D01 request identity, rule sources and lifecycle
+
+- A typed roll request is identified by its authenticated source event, accepted proposal occurrence, action type, roll kind and stable accepted-source revision. Two occurrences in one Discord message cannot alias; replay of one accepted occurrence returns its existing request. Source-only keys remain a legacy-read shape and are not used for new typed requests.
+- A namespace is classification, not evidence. `srd:` references must exist in the versioned local SRD catalog and apply to the requested roll kind. `override:`, `house:` and `homebrew:` references must resolve to an active exact-campaign saved ruling; unrepresented scene scope and unknown references fail to provisional review.
+- `pending` means a request is actionable. `needs_review` means its trait, feature or other provenance remains unresolved and the owner receives a private, explicitly non-actionable explanation. `awaiting_selection` and later native outcome/reconciliation states remain separate persisted lifecycle stages.
+- Publication starts only from a committed native request referenced by `mutation.nativeAdjudications` (or the bounded legacy receipt adapter). It re-reads that record and uses request/revision/recipient delivery receipts; model prose cannot publish, roll or spend anything.
+- Unsupported risky adjudication creates neither a difficulty event nor a roll request. Actual native dice, resource costs, consent and outcomes remain owned by their existing transactional services.
+
 ## T04 compound-action dependencies
 
 - An enriched intent may identify only unique earlier action indices as prerequisites. Acceptance converts those indices to stable proposal identities tied to exact source occurrences; missing dependencies, forward references and cycles are rejected.

@@ -36,6 +36,7 @@ try{
   db.setPresence(session.id,"owner","present");
   scope={mode:"party",actorUserId:"owner",actorCharacterId:pc.id};
   db.upsertRulesRuling(guild,{key:"bench",question:"Sitting on an open bench",ruling:"No roll when unobstructed.",createdBy:"gm"});
+  db.upsertRulesRuling(guild,{key:"night",question:"Night operations",ruling:"Campaign night procedure.",createdBy:"gm"});
 
   assert.equal(selectRuleBasis(db,guild,{savedRulingKey:"bench",rawRefs:["srd:action-rolls"]}).kind,"saved_ruling");
   assert.equal(selectRuleBasis(db,guild,{rawRefs:["srd:action-rolls"],houseRefs:["house:night"]}).kind,"RAW");

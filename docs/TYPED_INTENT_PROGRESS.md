@@ -94,6 +94,22 @@ Status: complete. Starting HEAD: `1ec4061d238300844ad543ffd20893b6cf670792`.
 
 Next phase: D01 unique roll identity, rules grounding and pending lifecycle.
 
+## D01 v8 - unique roll identity, rules grounding and pending lifecycle
+
+Status: complete. Starting HEAD: `1ef0483095cfd5ff008766a4565749fd45182e44`.
+
+- Red first: `d01-roll-lifecycle-test.mjs` reproduced acceptance of fabricated `srd:` and `house:` references, then exposed the same-source roll-key alias, missing `nativeAdjudications` publication and actionable-looking `needs_review` lifecycle.
+- Typed request identity now hashes the authenticated source event, accepted proposal occurrence, action type, roll kind and stable accepted-source revision. Legacy declaration requests retain their historical source-only identity; new typed occurrences cannot collide.
+- Added a versioned Daggerheart SRD reference catalog with roll-kind applicability. Campaign override, house and homebrew references must resolve to an active ruling in the exact campaign; unsupported or scene-qualified references become provisional and create no fake roll request.
+- Native adjudication records now distinguish `roll_pending` from `needs_review`, save bounded review reasons and owner/character audience, and render review requests as explicitly non-actionable.
+- Post-commit publication scans committed `mutation.nativeAdjudications` as well as the legacy receipt shape, re-reads the native request, limits delivery to recognized live lifecycle states and reuses per-owner request/revision publication receipts.
+- Focused D01 and T03 arbitration tests passed, including two roll-required occurrences in one Discord message, stable replay, two private deliveries and delivery replay suppression.
+- Commands actually run: `npm run check` passed with 223 modules/scripts and 24 commands; `npm run validate` passed 93/93 suites after release-manifest synchronization, with network denied, `live_requests=0` and `billable_tokens=0`.
+- Persistence remains additive in existing `roll_request`, `native_adjudication` and `roll_publication` city records; no SQL migration. Revert leaves committed historical requests readable and does not reroll or reverse native receipts.
+- No production data, live bot, Discord registration, deployment or paid provider call was used.
+
+Next phase: D02 source-grounded private bonus and feature arbitration.
+
 ## T00 — reproducible baseline
 
 Status: implementation inventory complete; baseline captured at `6c3167dbbf015739e1723272121552d60b9f2ec8`.

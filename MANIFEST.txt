@@ -31,6 +31,7 @@ bot/scripts/consequence-reconciliation-test.mjs
 bot/scripts/context-conversation-test.mjs
 bot/scripts/contract-fixtures.mjs
 bot/scripts/cost-estimate.mjs
+bot/scripts/d01-roll-lifecycle-test.mjs
 bot/scripts/end-to-end-a-test.mjs
 bot/scripts/end-to-end-b-test.mjs
 bot/scripts/end-to-end-c-test.mjs
@@ -220,6 +221,7 @@ bot/src/roll-language.js
 bot/src/roll-requests.js
 bot/src/roster.js
 bot/src/routing-diagnostics.js
+bot/src/rule-reference-catalog.js
 bot/src/rules-arbitration.js
 bot/src/rules-srd.js
 bot/src/scene-action-window.js

@@ -4,6 +4,7 @@ import { indexWorldEvent, cityKey } from "./city-calendar.js";
 import { prepareRollRequest } from "./roll-requests.js";
 import { conversationPrincipal } from "./conversation-principal.js";
 import { currentScene } from "./scene-continuity.js";
+import { resolveRuleReferences } from "./rule-reference-catalog.js";
 
 const modes=new Set(["no_roll","roll_required","native_resolved","human_exception","blocked"]);
 const hash=value=>createHash("sha256").update(JSON.stringify(value)).digest("hex").slice(0,40);
@@ -22,19 +23,19 @@ export function adjudicationEnvelope(input){
 }
 
 /** Explicit precedence: saved scoped ruling, campaign override, RAW, compatible extensions, provisional. */
-export function selectRuleBasis(db,guild,{savedRulingKey="",overrideRefs=[],rawRefs=[],houseRefs=[],homebrewRefs=[]}={}){
+export function selectRuleBasis(db,guild,{savedRulingKey="",overrideRefs=[],rawRefs=[],houseRefs=[],homebrewRefs=[],kind=""}={},context={}){
   if(savedRulingKey){
     const row=db.getRulesRuling(guild,savedRulingKey);
-    if(row)return {kind:"saved_ruling",refs:[`ruling:${row.ruling_key}`]};
+    if(row)return {kind:"saved_ruling",refs:[`ruling:${row.ruling_key}`],version:String(row.updated_at||row.created_at||"saved"),
+      scope:`campaign:${guild}`,sources:[{ruling_key:row.ruling_key,title:row.question}]};
   }
-  const bounded=(values,prefix)=>Array.isArray(values)&&values.length<=8&&values.every(ref=>
-    typeof ref==="string"&&ref.length<=200&&ref.startsWith(prefix));
-  if(!bounded(overrideRefs,"override:")||!bounded(rawRefs,"srd:")||!bounded(houseRefs,"house:")
-    ||!bounded(homebrewRefs,"homebrew:"))throw new Error("Rule references must use bounded verified authority namespaces.");
-  if(overrideRefs.length)return {kind:"campaign_override",refs:overrideRefs};
-  if(rawRefs.length)return {kind:"RAW",refs:rawRefs};
-  if(houseRefs.length)return {kind:"house_rule",refs:houseRefs};
-  if(homebrewRefs.length)return {kind:"homebrew",refs:homebrewRefs};
+  const rollKind=context.rollKind||kind;
+  for(const [basis,refs] of [["campaign_override",overrideRefs],["RAW",rawRefs],["house_rule",houseRefs],["homebrew",homebrewRefs]]){
+    if(!refs.length)continue;
+    const sources=resolveRuleReferences(db,guild,basis,refs,{...context,rollKind});
+    if(sources)return {kind:basis,refs:[...refs],version:sources.map(row=>row.version).join(","),scope:sources[0].scope,sources};
+    return {kind:"provisional",refs:[],rejected_refs:[...refs],reason:"Rule reference does not exist or apply in this campaign context."};
+  }
   return {kind:"provisional",refs:[]};
 }
 
@@ -84,11 +85,13 @@ export function adjudicateAcceptedIntent(db,guild,input,actor,context={}){
   const request=prepareRollRequest(db,guild,{source_event:source.event_key,accepted_intent:actionId,
     character_id:principal.character_id,trait:input.trait,kind:input.kind,modifier_keys:input.modifierKeys||[],
     difficulty_source:difficulty.event_key,attack_source:input.attackSource||"",adjudication:input.explanation},actor,context);
+  const disposition=request.status==="needs_review"?"needs_review":"roll_pending";
   const data={action_id:actionId,source_refs:[source.event_key],rule_basis_refs:rule_basis.refs,rule_basis,
-    disposition:"roll_pending",difficulty:input.difficulty,modifier_refs:input.modifierKeys||[],stakes:input.stakes,
+    disposition,difficulty:input.difficulty,modifier_refs:input.modifierKeys||[],stakes:input.stakes,
     roll_request_ref:request.record_key,receipts:[],explanation:input.explanation,
+    review_reasons:request.data.breakdown.unresolved||[],owner_user_id:principal.user,audience:"character",
     expected_revisions:{scene:scene.key,request:String(request.data.revision)}};
-  db.saveCityRecord(guild,{kind:"native_adjudication",key,status:"roll_pending",source_event:source.event_key,
+  db.saveCityRecord(guild,{kind:"native_adjudication",key,status:disposition,source_event:source.event_key,
     visibility:"character",subject_key:principal.character_id,data});
   return data;
 }

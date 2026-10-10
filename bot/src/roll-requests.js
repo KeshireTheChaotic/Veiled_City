@@ -21,7 +21,7 @@ function sourceActor(db,guild,input){
   if(!legacy&&!typed||source.details.character_id!==input.character_id||source.source_id!==`player:${source.details.author}`
     ||!session||source.session_id!==session.id||source.scene!==currentScene(db,guild).key||!db.ownerAuthoredSource(guild,source.event_key,source.details.author))
     throw new StateConflictError("A current authenticated owner declaration in this scene is required.");
-  return {source,session,pc:personalCharacter(db,guild,source.details.author,input.character_id)};
+  return {source,accepted,session,pc:personalCharacter(db,guild,source.details.author,input.character_id)};
 }
 export function rollBreakdown(db,guild,input,pc){
   if(!TRAITS.includes(input.trait)||!["action","reaction","attack"].includes(input.kind)
@@ -81,10 +81,13 @@ export function rollBreakdown(db,guild,input,pc){
     disadvantage:modifiers.filter(row=>row.kind==="disadvantage").length,difficulty,attack,unresolved};
 }
 export function prepareRollRequest(db,guild,input,actor,context={}){
-  const {source,pc,session}=sourceActor(db,guild,input);
+  const {source,accepted,pc,session}=sourceActor(db,guild,input);
   if(context.scope?.mode==="private"&&(context.scope.actorUserId!==pc.owner_user_id||context.scope.actorCharacterId!==pc.id))
     throw new StateConflictError("Private requests belong only to the current authenticated actor.");
-  const values=rollBreakdown(db,guild,input,pc),key=cityKey(`roll:${source.event_key}`);
+  const values=rollBreakdown(db,guild,input,pc),key=input.accepted_intent
+    ?cityKey(`roll:${hash([source.event_key,accepted.record_key,accepted.data.type,input.kind,
+      accepted.data.source_hash||accepted.data.actor_principal_revision||"v1"]).slice(0,48)}`)
+    :cityKey(`roll:${source.event_key}`);
   return db.transaction(()=>{
     const prior=db.getCityRecord(guild,"roll_request",key);
     if(prior) return prior;
@@ -108,7 +111,8 @@ export function formatRollRequest(row,{user=null}={}){
       return `Nonbinding Tag Team proposal for your character; request ${row.record_key}. Status: ${row.status}. No participation is inferred. Revision: ${rollRevision(row)}. Describe your response freely.`;
     throw new StateConflictError("Request is not owned by this reader.");
   }
-  return [`[Pending Daggerheart ${data.kind} roll — ${row.record_key}]`,
+  const review=row.status==="needs_review";
+  return [`[${review?"Review required":"Pending"} Daggerheart ${data.kind} roll — ${row.record_key}]`,
     `Actor: ${participant?.name||data.character_name} (<@${user||data.owner_user_id}>)`,
     `Attempt: ${participant?.attempt||(participant?.input?"Owner-authored linked contribution; original declaration retained":data.attempt)}`,
     `Trait: ${b.trait} ${b.trait_bonus===null?"PENDING":signed(b.trait_bonus)} [recorded character sheet at preparation]`,
@@ -123,6 +127,7 @@ export function formatRollRequest(row,{user=null}={}){
     `Formula: Hope d12 + Fear d12 ${subtotal===null?"+ pending values":signed(subtotal)}${net===0?"":net>0?" + one d6":" - one d6"}${data.helpers?.length?"; use highest applicable helper/own advantage d6, never their sum":""}.`,
     `Difficulty: ${b.difficulty===null?"not disclosed / awaiting GM adjudication":b.difficulty}`,
     ...b.unresolved.map(reason=>`Pending clarification: ${reason}`),
+    ...(review?["Not actionable: a human GM must resolve the listed provenance or sheet issue before dice can be finalized."]:[]),
     `Status: ${row.status}; ${data.roll_id?`saved result ${data.roll_id}, total ${data.result.total}, ${data.result.duality}`:"acting dice not finalized"}. Revision: ${rollRevision(row)}`,
     ...(data.damage_result?[`Combined damage: ${data.damage_result.total} ${data.damage_result.type}; ${data.damage_result.marks} HP marked once.`]:[]),
     "Describe any clarification or intended contribution in your own words."].join("\n");
@@ -148,10 +153,14 @@ export function ownedRollRequest(db,guild,user,key){
 }
 /** Retries reuse stored requests; failed private delivery is recoverable through the read-only pending command. */
 export async function publishRollRequests(db,guild,mutation,send){
+  const keys=new Set((mutation.nativeAdjudications||[]).map(row=>row?.roll_request_ref).filter(Boolean));
   for(const receipt of mutation.intents||[]){
     if(receipt.status!=="accepted"||receipt.data.intent?.feature!=="roll"||!receipt.data.result) continue;
-    const row=db.getCityRecord(guild,"roll_request",receipt.data.result.record_key);
-    if(!row) continue;
+    keys.add(receipt.data.result.record_key);
+  }
+  for(const key of keys){
+    const row=db.getCityRecord(guild,"roll_request",key);
+    if(!row||!["pending","needs_review","awaiting_selection","awaiting_partner","awaiting_damage","awaiting_damage_type"].includes(row.status)) continue;
     await publishRollAmendment(db,guild,row,send);
   }
 }
