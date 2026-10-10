@@ -160,6 +160,18 @@ export function acceptIntentForAdjudication(db,guild,proposalRow,scope={},resolv
       outcome_receipt:null,authority:'Canonical adjudication input only; human declaration owns intent; native receipts own outcomes.'}});
 }
 
+/** Resolve only an already accepted structural route; authored wording is not reparsed here. */
+export function currentAcceptedIntent(db,guild,{sourceEvent,actor,type,sourceSpan,targetKey=null,scope=null}={}){
+  const rows=db.listCityRecords(guild,{kind:'typed_intent',includeGM:true,limit:120}).filter(row=>
+    row.status==='accepted_for_adjudication'
+    &&(row.source_event===sourceEvent||row.data.world_source_event===sourceEvent)
+    &&row.data.actor===actor&&row.data.type===type&&row.data.source_span===sourceSpan
+    &&(targetKey===null||!row.data.target_key||row.data.target_key===targetKey)
+    &&(!scope||['public','party'].includes(row.visibility)
+      ||scope.mode==='private'&&row.visibility==='character'&&row.subject_key===scope.actorCharacterId));
+  return rows.length===1?rows[0]:null;
+}
+
 function legacyProposals(intents,envelope){
   const cursor=new Map();
   return intents.map((intent,index)=>{

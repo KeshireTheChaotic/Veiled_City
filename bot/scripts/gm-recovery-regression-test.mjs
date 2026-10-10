@@ -58,6 +58,8 @@ try {
   const narration = 'Billy spots Relay Night Staffing, a small storefront with an OPEN hiring placard.';
   const located = {
     ...empty, narration,
+    player_intents:[{type:'search',source_span:search,target_name:'Relay Night Staffing',target_key:'relay-night-staffing',
+      destination:'unspecified',operation:'search',utterance:'',excluded_targets:[],framing:'immediate',resolution:'auto',reason:''}],
     world_additions:[{kind:'location', key:'relay-night-staffing', name:'Relay Night Staffing',
       summary:'An ordinary public overnight staffing storefront with an open hiring notice.',
       parent_location_key:'', visibility:'party'}],

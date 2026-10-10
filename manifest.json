@@ -91,8 +91,8 @@
     },
     {
       "path": "bot/scripts/autonomous-world-test.mjs",
-      "size_bytes": 13862,
-      "sha256": "1db3d386564781c609b4f251aa339ee1ba3bfa0d10ddd7a6313cb3191b01a835"
+      "size_bytes": 14229,
+      "sha256": "146915c465d856d7316d02b2ba1a0c9830417702c6695f40df570dbbfe458f2d"
     },
     {
       "path": "bot/scripts/check-source.mjs",
@@ -261,8 +261,8 @@
     },
     {
       "path": "bot/scripts/gm-recovery-regression-test.mjs",
-      "size_bytes": 5836,
-      "sha256": "014defce8c6bb3ad8ca572e3e62f9271520d64bc2e7763ca1013211df051b746"
+      "size_bytes": 6095,
+      "sha256": "1be4631dce3502c08ad3c0b92bfc7ce2a3294a2b25e3693a11a448d683c64544"
     },
     {
       "path": "bot/scripts/i-heard-you-1-test.mjs",
@@ -525,14 +525,19 @@
       "sha256": "7d6980b301e5df57f9618f32920108aa03eab462a0a416feab3c125ab3d407cc"
     },
     {
+      "path": "bot/scripts/typed-routing-authority-test.mjs",
+      "size_bytes": 2873,
+      "sha256": "0115a0fc13a9abcf9a58dafdd1215c4431af452ab1503c8764608912003f2287"
+    },
+    {
       "path": "bot/scripts/validate-command-schema.mjs",
       "size_bytes": 582,
       "sha256": "995a255982387edff58e5f14c8bb07b5508c3b28a19952882aa5716c28aafbe8"
     },
     {
       "path": "bot/scripts/validate-offline.mjs",
-      "size_bytes": 3603,
-      "sha256": "7a99d65b16382514acda4bb7e08008e201d8afa24bc7546899ce8be356568ceb"
+      "size_bytes": 3634,
+      "sha256": "6edb4414d5fe087985f9152873f27fd1f47952be62e1151b65b8441501e006cd"
     },
     {
       "path": "bot/sql/schema.sql",
@@ -561,8 +566,8 @@
     },
     {
       "path": "bot/src/authored-candidates.js",
-      "size_bytes": 5560,
-      "sha256": "f0e354785c3aca5c6eb259fee5457ec34f01dacc53742a7f329ecf4ef90d515c"
+      "size_bytes": 5670,
+      "sha256": "e097e5e549d45c20062b8d28b6dd56b623cffbb03ae0c5dd379405567393aef9"
     },
     {
       "path": "bot/src/authored-turn-envelope.js",
@@ -581,8 +586,8 @@
     },
     {
       "path": "bot/src/autonomous-world.js",
-      "size_bytes": 34194,
-      "sha256": "b6bdbb8199d612cfdb1ebc4667fac1fdbe7776ca3d3a02ee0513c8eb4c05869c"
+      "size_bytes": 34439,
+      "sha256": "706e010f62c9ccd8002fa70309fff18056485980375feab05a40ad8c7494865b"
     },
     {
       "path": "bot/src/character-export.js",
@@ -1091,8 +1096,8 @@
     },
     {
       "path": "bot/src/typed-intents.js",
-      "size_bytes": 26402,
-      "sha256": "5b1cd192b84a0ec6ba8ef0380901dba7841ab2747789e4c5be17714fddf2cc85"
+      "size_bytes": 27212,
+      "sha256": "9ca64d368de4803944d7809ba32952ca5d9b678eb7fcb6a9875e4e00a2cc263b"
     },
     {
       "path": "bot/src/typed-mechanics.js",
@@ -1831,8 +1836,8 @@
     },
     {
       "path": "docs/TYPED_INTENT_CONTRACTS.md",
-      "size_bytes": 5218,
-      "sha256": "1178b0e09cb6b37c9b1d696bd83de37c5e3c06e2b8db0c676c3aee76fed08b30"
+      "size_bytes": 6170,
+      "sha256": "b7dc8706984c318194bdc8bb550bce700b7436b6b000ef3ed82fa98017f7a8c1"
     },
     {
       "path": "docs/TYPED_INTENT_PROGRESS.md",

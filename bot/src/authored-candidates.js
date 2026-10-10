@@ -39,7 +39,8 @@ export function persistAuthoredCandidates(db,guild,candidates,scope,provenance={
     const key=`candidate:${source.event_key}:${index}`,prior=db.getCityRecord(guild,"authored_candidate",key);if(prior)return prior;
     const row=db.saveCityRecord(guild,{kind:"authored_candidate",key,status:"pending",source_event:source.event_key,
       visibility:"character",subject_key:principal.context_id,data:{...candidate,principal:principal.revision,authority:"Authored interpretation; not consent or completed consequences"}});
-    // Proxies get contextual understanding, not owner-only mechanical/consent workflows.
+    // Compatibility candidates may stage pending, source-backed review records. They never execute movement,
+    // consent, spending or rolls; accepted typed intents own the normal immediate route.
     if(principal.kind==="owner"){
       if(candidate.kind==="entry")prepareSceneEntry(db,guild,principal.user,principal.character_id,provenance.messageId,authored,
         {privateScene:scope.mode==="private",candidate});

@@ -102,6 +102,7 @@ bot/scripts/systems-to-players-7-test.mjs
 bot/scripts/systems-to-players-9-test.mjs
 bot/scripts/typed-intent-lifecycle-test.mjs
 bot/scripts/typed-intents-regression-test.mjs
+bot/scripts/typed-routing-authority-test.mjs
 bot/scripts/validate-command-schema.mjs
 bot/scripts/validate-offline.mjs
 bot/sql/schema.sql

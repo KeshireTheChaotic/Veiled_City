@@ -24,9 +24,11 @@ const action=(kind,entity_ref,source_span,zone="")=>({kind,entity_ref,source_spa
 const input=(id,text,result,sc=scope)=>{
   captureWorldInput(db,guild,sc.actorUserId,sc.actorCharacterId,id,text,{privateScene:sc.mode==="private"});
   const player_intents=Object.hasOwn(result,"player_intents")?result.player_intents:(result.scene_actions||[])
-    .filter(row=>row.kind==="move"&&text.includes(row.source_span)).map(row=>({type:"move",source_span:row.source_span,
-      target_name:row.entity_ref,target_key:row.entity_ref,destination:row.zone==="interior"?"interior":row.zone==="exterior"?"exterior":"unspecified",
-      operation:"",utterance:"",excluded_targets:[],framing:"immediate",resolution:"auto",reason:"Current typed movement fixture."}));
+    .filter(row=>text.includes(row.source_span)).map(row=>({type:row.kind==="move"?"move":row.kind==="local_zone"?"local_zone":
+      row.kind==="introduce_npc"?"interact":"search",source_span:row.source_span,
+      target_name:row.entity_ref,target_key:row.entity_ref,destination:row.kind==="local_zone"?"zone":
+        row.zone==="interior"?"interior":row.zone==="exterior"?"exterior":"unspecified",
+      operation:row.kind,utterance:"",excluded_targets:[],framing:"immediate",resolution:"auto",reason:"Current typed routing fixture."}));
   const narrative=Object.hasOwn(result,"player_intents")||player_intents.length?{...result,player_intents}:result;
   return {guildId:guild,sessionId:session.id,narrative,scope:sc,provenance:{messageId:id}};
 };
@@ -39,7 +41,9 @@ try{
   previewAuthoritativeMutation(db,findInput);assert.equal(db.getSimulationEntity(guild,"location","laundromat"),null);
   applyAuthoritativeMutation(db,findInput);assert.equal(db.getCharacter(pc.id).data.location,undefined,"R01/R02: search never moves the PC");
   assert.equal(db.listCityRecords(guild,{kind:"world_conflict",includeGM:true}).length,0);
-  const badExcluded=input("exclude",search,{world_additions:[location("hollow-street","Hollow Street")]});
+  const badExcluded=input("exclude",search,{world_additions:[location("hollow-street","Hollow Street")],player_intents:[{
+    type:"search",source_span:search,target_name:"",target_key:"",destination:"unspecified",operation:"search",utterance:"",
+    excluded_targets:["Hollow Street"],framing:"immediate",resolution:"auto",reason:""}]});
   assert.throws(()=>applyAuthoritativeMutation(db,badExcluded),/excluded/);
   assert.equal(db.getSimulationEntity(guild,"location","hollow-street"),null);
   const enter="I enter the diner.";

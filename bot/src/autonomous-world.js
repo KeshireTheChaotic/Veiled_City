@@ -9,9 +9,8 @@ import { configureSimulationEntity } from "./simulation.js";
 import { validateMinorIdentity } from "./city-depth.js";
 import { normalizeNpcKey } from "./npc-cognition.js";
 import { stateRevision } from "./ai-intents.js";
-import { interpretAuthoredText, worldRequirements } from "./player-language.js";
 import { resolvePlaceReference, preflightPlaceIdentity, preflightNpcIdentity } from "./location-language.js";
-import { currentTypedMovement } from "./typed-intents.js";
+import { currentAcceptedIntent, currentTypedMovement } from "./typed-intents.js";
 import { movementAdjudication } from "./rules-arbitration.js";
 import { contextMemoriesForScope } from "./context-memory.js";
 const hash=value=>createHash("sha256").update(JSON.stringify(value)).digest("hex").slice(0,40);
@@ -173,14 +172,12 @@ function applyWorld(db,guild,narrative,scope,provenance,content){
   if(!source||source.status!=="active"||source.session_id!==session.id||source.scene!==scene.key
     ||source.details.author!==scope.actorUserId||source.details.revision!==principal.revision
     ||source.details.private_scene!==(scope.mode==="private")||!db.ownerAuthoredSource(guild,source.event_key,scope.actorUserId))fail("Current owner/source/session/scene/audience required.");
-  if(interpretAuthoredText(source.details.text,{natural:true}).kind==="planning_or_ooc")fail("OOC/planning cannot authorize world actions.");
   const key=`world-turn:${hash([session.id,provenance.messageId,pc.id])}`,prior=db.getCityRecord(guild,"autonomous_turn",key);
   if(prior)return prior.data.results;
   const boundary={visibility:scope.mode==="private"?"character":"party",subject_key:scope.mode==="private"?pc.id:null};
   const results=[],refs=new Map();
-  const exclusions=(Array.isArray(narrative?.player_intents)
-    ?narrative.player_intents.filter(i=>i.framing==='immediate'&&i.type==='search').flatMap(i=>i.excluded_targets||[])
-    :worldRequirements(source.details.text).exclude_locations).map(normalizeNpcKey);
+  const exclusions=(narrative?.player_intents||[]).filter(i=>i.framing==='immediate'&&i.type==='search')
+    .flatMap(i=>i.excluded_targets||[]).map(normalizeNpcKey);
   for(const conflict of conflicts){
     const current=db.currentCanon(guild,conflict.canon_key);
     if(!current||current.id!==conflict.current_event_id||!conflict.proposed_value.trim()
@@ -321,6 +318,9 @@ function applyWorld(db,guild,narrative,scope,provenance,content){
           db.saveCityRecord(guild,{...entry,key:entry.record_key,status:"resolved",data:{...entry.data,arrival:arrival.event_key,resolved_by:"ai_gm"}});
       }
     }else if(action.kind==="introduce_npc"){
+      const accepted=['speak','interact'].map(type=>currentAcceptedIntent(db,guild,{sourceEvent:source.event_key,
+        actor:pc.id,type,sourceSpan:action.source_span,targetKey:target,scope})).find(Boolean);
+      if(!accepted)fail("NPC introduction requires a current accepted typed interaction, not phrase matching.");
       const npc=db.getSimulationEntity(guild,"npc",target),location=npc?.state.location_key;
       if(!npc||activeCityProxy(db,guild,target)||npc.state.removed||['dead','removed'].includes(npc.state.status))fail("Existing living unproxied NPC required; AI cannot override NPC control/status.");
       if(location!==latest.data.location||!visible(db,guild,"npc",target,scope))fail("NPC must actually share the actor's scene and be audience-appropriate.");
@@ -343,10 +343,9 @@ function applyWorld(db,guild,narrative,scope,provenance,content){
       results.push({status:"introduced",key:target,source_event:arrival.event_key,
         adjudication:movementAdjudication({sourceRef:actionSource.event_key,sourceSpan:action.source_span,receipt:arrival.event_key})});
     }else if(action.kind==="local_zone"){
-      const zoneIntent=(narrative?.player_intents||[]).find(i=>i.type==='local_zone'&&i.framing==='immediate'
-        &&i.source_span===action.source_span);
-      if(target!==latest.data.location||!action.zone.trim()||(!zoneIntent&&
-        (Array.isArray(narrative?.player_intents)||worldRequirements(action.source_span).kind!=='local_zone')))
+      const zoneIntent=currentAcceptedIntent(db,guild,{sourceEvent:source.event_key,actor:pc.id,type:'local_zone',
+        sourceSpan:action.source_span,targetKey:target,scope});
+      if(target!==latest.data.location||!action.zone.trim()||!zoneIntent)
         fail("Only authenticated typed local-zone movement is allowed.");
       if(db.getCurrentEncounter(session.id)?.status==="active")fail("Combat movement requires native encounter resolution.");
       const arrival=event(`action:${index}`,"arrival",target,{entity_type:"character",entity_key:pc.id,owner_user_id:pc.owner_user_id});
@@ -355,6 +354,9 @@ function applyWorld(db,guild,narrative,scope,provenance,content){
       results.push({status:"local_zone",key:target,zone:action.zone,
         adjudication:movementAdjudication({sourceRef:actionSource.event_key,sourceSpan:action.source_span,receipt:arrival.event_key})});
     }else{
+      const accepted=['observe','search'].map(type=>currentAcceptedIntent(db,guild,{sourceEvent:source.event_key,
+        actor:pc.id,type,sourceSpan:action.source_span,targetKey:target,scope})).find(Boolean);
+      if(!accepted)fail("Nearby discovery requires a current accepted typed observation or search.");
       if(!visible(db,guild,"location",target,scope)||!localAccess(db,guild,latest,target))fail("Nearby discovery must be local and visibility-safe.");
       results.push({status:"revealed",key:target,adjudication:{intent:"observation",source_refs:[actionSource.event_key],mode:"no_roll",
         rule_basis:{kind:"none",refs:[]},risk:"none",stakes:"none",native_mechanic:null,required_consent:[],participants:[pc.id],
