@@ -77,7 +77,7 @@ try{
   assert.throws(()=>check({...ownClaim,actor:`character:${other.id}`},{mode:"private",actorUserId:"owner",actorCharacterId:pc.id}),/actor_knowledge/);
   validateNarrativeClaims(db,guild,{narration:"",private_messages:[{discord_user_id:"owner",content:ownClaim.source_span}],narrative_claims:[ownClaim]},{mode:"party"});
   assert.throws(()=>validateNarrativeClaims(db,guild,{narration:ownClaim.source_span,private_messages:[{discord_user_id:"owner",content:ownClaim.source_span}],
-    narrative_claims:[ownClaim]},{mode:"party"}),/scoped_disclosure/);
+    narrative_claims:[ownClaim]},{mode:"party"}),/output_claim_surface/);
   assert.throws(()=>validateNarrativeClaims(db,guild,{narration:"Owner",private_messages:[{discord_user_id:"owner",content:"private fact"}],
     narrative_claims:[{...ownClaim,source_span:"Owner\nprivate fact"}]},{mode:"party"}),/source_span/);
   let error;try{check({...claim,actor:"npc:witness"});}catch(caught){error=caught;}

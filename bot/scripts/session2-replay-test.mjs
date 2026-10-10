@@ -1,4 +1,4 @@
-/** D00 red-first Session 2 semantic recovery reproductions. Not in the default gate until owning phases turn it green. */
+/** D00-H04 sanitized Session 2 semantic recovery regressions. */
 import assert from "node:assert/strict";
 import fs from "node:fs";
 import os from "node:os";
@@ -58,13 +58,15 @@ try{
     assert.equal(normalized.review.references.decision,"no_change");
     assert.equal(normalized.normalized,true);
   });
-  check("S2-24-input-span-is-not-output-claim-evidence",()=>{
-    const result={narration:"Jaxon reaches for the handle; entry remains unresolved.",private_messages:[],narrative_claims:[{
+  check("S2-24-authored-and-output-claim-evidence-are-separated",()=>{
+    const claimEnvelope=captureAuthoredTurnEnvelope(db,guild,"owner-jaxon",pc.id,"s2-claim","I enter the store.");
+    const output="Jaxon intends to enter the store; entry remains unresolved.";
+    const result={narration:output,private_messages:[],narrative_claims:[{
       actor:"",entity_type:"character",entity:pc.id,action:"movement",prior:"outside",proposed:"inside",visibility:"party",
-      source_ref:envelope.source_event,source_span:"I enter the store.",mutation_index:-1,certainty:"committed"
+      source_ref:claimEnvelope.source_event,authored_source_span:"I enter the store.",output_claim_span:output,
+      mutation_index:-1,certainty:"intent"
     }]};
-    assert.throws(()=>validateNarrativeClaims(db,guild,result,scope),error=>error.code==="NARRATIVE_INTEGRITY"
-      &&error.diagnostic?.category==="source_span");
+    assert.equal(validateNarrativeClaims(db,guild,result,scope).ok,true);
   });
 }finally{db.close();fs.rmSync(dir,{recursive:true,force:true});}
 if(failures.length){console.error(`SESSION2_RED ${JSON.stringify(failures)}`);process.exit(1);}

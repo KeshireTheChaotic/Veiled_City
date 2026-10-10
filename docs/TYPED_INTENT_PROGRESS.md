@@ -62,6 +62,22 @@ Status: complete. Starting HEAD: `d809cc9451575c86b56120b22bcaee767df0e0ec`.
 
 Next phase: H04 narrative claim evidence and consequence reconciliation.
 
+## H04 v8 - narrative claim evidence and consequence reconciliation
+
+Status: complete. Starting HEAD: `985e5843edac5c7cd24ee6e5bff34a389d14c1d3`.
+
+- Red first: `h04-narrative-claim-evidence-test.mjs` failed with `NARRATIVE_INTEGRITY/claim_shape` because input and output evidence had no distinct contract.
+- Added a closed separated claim shape with `authored_source_span` and `output_claim_span`. The closed legacy shape remains readable, but its `source_span` is output evidence only.
+- Authored evidence is checked against active owner-authored source ancestry. Output evidence must occur exactly once on exactly one actual publication surface; duplicate party/private attachment and cross-surface spans fail closed.
+- Completed movement now requires a matching active native arrival/travel receipt in addition to saved position. Existing access, possession, damage, disclosure, obligation, canon, witness and epistemic gates remain intact.
+- Updated privacy regressions to assert the earlier output-surface rejection where a private claim is attached to party prose. Session 2 S2-24 now succeeds with separated unresolved intent evidence and cannot assert completed entry.
+- Focused H04, Session 2 replay, narrative contracts/understanding/inference, scene-entry and RELAX suites passed.
+- `npm run check` passed with 218 modules/scripts and 24 commands. `npm run validate` passed 90/90 suites with H04 and the aggregate Session 2 replay registered, network denied, `live_requests=0`, and `billable_tokens=0`.
+- Persistence and schema storage are unchanged; this is a structured-output compatibility extension plus stricter validation. Rollback remains the existing authoritative transaction.
+- No production data, live bot, Discord registration, deployment or paid provider call was used.
+
+Next phase: H05 Discord payload limits and reliable assembly delivery.
+
 ## T00 — reproducible baseline
 
 Status: implementation inventory complete; baseline captured at `6c3167dbbf015739e1723272121552d60b9f2ec8`.

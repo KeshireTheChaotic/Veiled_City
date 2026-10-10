@@ -24,6 +24,13 @@ Accepted typed intents are canonical adjudication inputs; human declarations own
 - A mismatched model flag is normalized in place before preview, so it cannot trigger regeneration or cause a valid independent response to disappear. Invalid review shape, missing reasons, invalid confidence and malformed scene transitions still fail closed.
 - A committed normalized player turn stores one idempotent GM-private `post_turn_review_audit` record tied to the authenticated source event. Preview rolls it back; it has no world-state or consequence authority.
 
+## H04 narrative claim evidence
+
+- New claim annotations separate exact `authored_source_span` input evidence from exact `output_claim_span` published prose. A legacy `source_span` remains output evidence only and is never reinterpreted as a player declaration.
+- An authored span must exist in active owner-authored source ancestry for the current principal. An output span must occur exactly once on exactly one narration, public-summary or recipient-bound private surface; private claim visibility cannot be attached to party output.
+- Input evidence proves only what a player declared or attempted. Completed movement and access additionally require an active matching native arrival/travel receipt; possession, damage, disclosure and obligation retain their native custody/event/fact/commitment gates.
+- Unsupported committed prose remains a recoverable narrative-integrity failure. The validator never fabricates a receipt, movement, witness, NPC knowledge, player dialogue or authoritative state to make an annotation pass.
+
 ## T03 rules-grounded adjudication
 
 - Native arbitration accepts only a current accepted typed intent whose authenticated source, owner principal revision, active session and scene still match.

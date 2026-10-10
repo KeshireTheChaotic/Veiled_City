@@ -44,7 +44,7 @@ try{
   const check=(c,audience=scope)=>validateNarrativeClaims(db,guild,{narration:c.source_span,narrative_claims:[c]},audience);
   check(claim);
   assert.equal(db.getCharacter(pc.id).data.location,undefined);assert.equal(scenePresence(db,guild,"character",pc.id),null);
-  assert.throws(()=>check(claim,{mode:"party"}),/uncertainty_framing/);
+  assert.throws(()=>check(claim,{mode:"party"}),/output_claim_surface/);
   assert.throws(()=>check({...claim,entity:other.id}),/uncertainty_framing/);
   assert.throws(()=>check({...claim,source_ref:"event:missing"}),/uncertainty_framing/);
   assert.throws(()=>check({...claim,source_span:span+" You have entered the diner."}),/uncertainty_framing/);

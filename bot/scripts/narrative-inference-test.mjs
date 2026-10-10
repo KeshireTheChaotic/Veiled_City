@@ -91,7 +91,7 @@ try{
   assert.equal(commitGmTurn({db,guild:{id:guild},session,result:generated,scope,speaker:"Doctor",label:"Native inference",meta:{messageId:"move"}}).intents[0].status,"accepted");
   assert.equal(db.getCharacter(pc.id).data.location,"moon");
   validateNarrativeClaims(db,guild,{narration:"Access is established.",narrative_claims:[{...claim,action:"access",source_span:"Access is established."}]},scope);
-  assert.throws(()=>validateNarrativeClaims(db,guild,{narration:"Access is established.",narrative_claims:[{...claim,action:"access",source_span:"Access is established."}]},{mode:"party"}),/scoped_movement/);
+  assert.throws(()=>validateNarrativeClaims(db,guild,{narration:"Access is established.",narrative_claims:[{...claim,action:"access",source_span:"Access is established."}]},{mode:"party"}),/output_claim_surface/);
   assert.equal(applyAuthoritativeMutation(db,input).intents[0].status,"accepted","Replay uses existing receipt");
   assert.equal(db.listWorldEvents(guild,{includeGM:true,limit:100}).filter(row=>row.event_key===`arrival:${entry.record_key}`).length,1);
   assert.throws(()=>validateNarrativeClaims(db,guild,{narration:"Perhaps it rains and you have entered the vault.",
@@ -118,7 +118,7 @@ try{
   validateNarrativeClaims(db,guild,{narration:bound.source_span,narrative_claims:[bound]},scope);
   assert.throws(()=>validateNarrativeClaims(db,guild,{narration:bound.source_span,narrative_claims:[{...bound,entity:other.id}]},scope),
     error=>error.diagnostic?.source==="Obligation belongs to a different debtor.");
-  assert.throws(()=>validateNarrativeClaims(db,guild,{narration:bound.source_span,narrative_claims:[bound]},{mode:"party"}),/scoped_obligation/);
+  assert.throws(()=>validateNarrativeClaims(db,guild,{narration:bound.source_span,narrative_claims:[bound]},{mode:"party"}),/output_claim_surface/);
   assert.equal(evidenceType(db.getFact(guild,factId)).kind,"hypothesis");assert.equal(objectiveEvidence(db,guild,db.getFact(guild,factId)),false);
   const disclosure={...claim,action:"disclosure",source_ref:factId,proposed:"Perhaps she is upstairs",source_span:"Perhaps she is upstairs"};
   assert.throws(()=>validateNarrativeClaims(db,guild,{narration:disclosure.source_span,narrative_claims:[disclosure]},scope),/epistemic_authority/);

@@ -1,16 +1,22 @@
 /** Local, fail-closed material-claim checks. Claims propose no mutations and never supply dice. */
 import { sceneAccess, scenePresence, npcEvidenceActive } from "./scene-continuity.js";
 import { objectiveEvidence, activeEvidence, evidenceType } from "./epistemic.js";
-export const materialClaimSchema={type:"object",additionalProperties:false,properties:{
+const claimProperties={
   actor:{type:"string"},entity_type:{type:"string",enum:["character","npc","combatant","world"]},entity:{type:"string"},
   action:{type:"string",enum:["damage","movement","access","disclosure","obligation","status","canon","dice","possession"]},
   prior:{type:"string"},proposed:{type:"string"},visibility:{type:"string",enum:["public","party","player","character","gm"]},
-  source_ref:{type:"string"},source_span:{type:"string"},mutation_index:{type:"integer"},
+  source_ref:{type:"string"},mutation_index:{type:"integer"},
   certainty:{type:"string",enum:["committed","dialogue","rumor","uncertain","forecast","metaphor","intent"]}
-},required:["actor","entity_type","entity","action","prior","proposed","visibility","source_ref","source_span","mutation_index","certainty"]};
+};
+const claimFields=Object.keys(claimProperties);
+const closedClaim=extra=>({type:"object",additionalProperties:false,properties:{...claimProperties,...extra},
+  required:[...claimFields,...Object.keys(extra)]});
+const separatedClaimSchema=closedClaim({authored_source_span:{type:"string"},output_claim_span:{type:"string",minLength:1}});
+const legacyClaimSchema=closedClaim({source_span:{type:"string",minLength:1}});
+export const materialClaimSchema={anyOf:[separatedClaimSchema,legacyClaimSchema]};
 export const NARRATIVE_CONTRACT="Return narrative_claims for EVERY consequential assertion in narration/private_messages: damage, movement, disclosure, obligations, status, canon, dice. "
   +"Never supply predefined narrative choices, fixed acceptance/decline prompts, A/B/C story answers or scripted PC dialogue. Ask openly. "
-  +"Use exact source_span and stable actor/entity IDs; prior/proposed are state values, source_ref identifies existing fact/knowledge/canon/obligation. "
+  +"Use authored_source_span only for exact player-input evidence and output_claim_span only for the exact claim text on one output surface. Use empty authored_source_span when no human declaration supports the claim. Legacy source_span means output_claim_span only. Stable actor/entity IDs and source_ref identify existing fact/knowledge/canon/obligation evidence. "
   +"actor identifies the observer/speaker: npc:<key>, character:<id>, or empty for GM narration, not an invented NPC. "
   +"A character observing their own saved position needs no NPC witness. An entry declaration alone is not arrival evidence. Create ordinary places/people via world_additions, and arrival/presence via scene_actions before asserting material claims. Atmospheric details need no entity per noun. "
   +"Separate conversational understanding from authority: resolve ordinary contextual names, pronouns and references using scoped conversation. "
@@ -26,7 +32,8 @@ function deny(category,claim,source=""){
   const error=new Error(`Narrative integrity rejected ${category}; revise to an explicitly uncommitted intent/uncertainty or use established authorized state.`);
   error.code="NARRATIVE_INTEGRITY";
   error.diagnostic={category,actor:claim?.actor||"",entity:claim?.entity||"",action:claim?.action||"",source,source_ref:claim?.source_ref||"",
-    source_span:claim?.source_span||"",recovery:"Inspect authoritative state and ledger; correct the proposal without inventing changes."};
+    source_span:claim?.output_claim_span||claim?.source_span||"",authored_source_span:claim?.authored_source_span||"",
+    recovery:"Inspect authoritative state and ledger; correct the proposal without inventing changes."};
   throw error;
 }
 function visible(row,scope){
@@ -57,15 +64,47 @@ function claimActor(db,guild,claim){
   if(db.getNpcProfile(guild,key)) return {type:"npc",key};
   deny("actor_knowledge",claim,"Unknown observer/speaker; use stable character/NPC identity or empty narrator actor.");
 }
+function occurrenceCount(text,span){
+  let count=0;
+  for(let at=String(text||"").indexOf(span);at>=0;at=String(text||"").indexOf(span,at+Math.max(1,span.length)))count++;
+  return count;
+}
 function claimAudiences(db,guild,result,claim,scope){
-  const publicText=[result.narration||"",result.public_narration||"",result.player_summary||""];
-  const audiences=publicText.some(text=>text.includes(claim.source_span))?[scope]:[];
-  for(const message of result.private_messages||[]) if(String(message.content||"").includes(claim.source_span)){
+  const span=claim.source_span,surfaces=[];
+  for(const [kind,text,audience] of [
+    ["narration",result.narration||"",scope],
+    ["public_narration",result.public_narration||"",{mode:"party"}],
+    ["player_summary",result.player_summary||"",scope]
+  ]) if(occurrenceCount(text,span))surfaces.push({kind,text,audience,count:occurrenceCount(text,span)});
+  for(const [index,message] of (result.private_messages||[]).entries()) if(occurrenceCount(message.content,span)){
     if(typeof message.discord_user_id!=="string"||!message.discord_user_id) deny("scoped_disclosure",claim,"Actual private-message recipient required.");
     const session=db.getActiveSession(guild),assignment=session?db.activeAssignment(session.id,message.discord_user_id):null;
-    audiences.push({mode:"private",actorUserId:message.discord_user_id,actorCharacterId:assignment?.character_id||null});
+    surfaces.push({kind:`private:${index}`,text:message.content,count:occurrenceCount(message.content,span),
+      audience:{mode:"private",actorUserId:message.discord_user_id,actorCharacterId:assignment?.character_id||null}});
   }
-  return audiences;
+  if(surfaces.length!==1||surfaces[0].count!==1)deny("output_claim_surface",claim,
+    "A claim span must occur exactly once on exactly one published surface.");
+  const surface=surfaces[0],privateClaim=["player","character","gm"].includes(claim.visibility);
+  if(surface.audience.mode!=="private"&&privateClaim)deny("output_claim_surface",claim,
+    "Private claim visibility cannot be attached to a public or party output surface.");
+  return [surface.audience];
+}
+function validClaimShape(value){
+  if(!value||typeof value!=="object")return false;
+  const fields=Object.keys(value).sort().join(","),legacy=[...claimFields,"source_span"].sort().join(","),
+    separated=[...claimFields,"authored_source_span","output_claim_span"].sort().join(",");
+  return fields===legacy||fields===separated;
+}
+function authoredSpanActive(db,guild,claim,scope){
+  if(!claim.authored_source_span)return true;
+  const key=String(claim.source_ref||"").replace(/^event:/,""),direct=db.getWorldEvent(guild,key);
+  const events=direct?[direct]:db.listCityRecords(guild,{kind:"typed_intent",includeGM:true,limit:500})
+    .filter(row=>row.data.source_span===claim.authored_source_span).map(row=>db.getWorldEvent(guild,row.source_event)).filter(Boolean);
+  return events.some(event=>event.status==="active"&&["player_declaration","authored_turn","ai_gm_input"].includes(event.kind)
+    &&String(event.details.raw_text||event.details.text||"").includes(claim.authored_source_span)
+    &&(!scope.actorUserId||event.details.author===scope.actorUserId)
+    &&(!scope.actorCharacterId||event.details.character_id===scope.actorCharacterId)
+    &&db.ownerAuthoredSource(guild,event.event_key,event.details.author));
 }
 /** Bounded hand-authored paraphrases are review tripwires, not a claim of general semantic understanding. */
 export function materialParaphrases(text,names=[]){
@@ -105,14 +144,17 @@ export function validateNarrativeClaims(db,guildId,result,scope={mode:"party"},{
     if(/\b(?:choose|pick|select) (?:one of|from the following|an option)|\b(?:reply|answer|respond) (?:with )?(?:yes or no|accept or decline)\b/i.test(narration)
       ||/(?:^|\n)\s*A[).:].*\n\s*B[).:]/i.test(narration)) deny("predefined_narrative_choices");
   }
-  for(const c of claims){
-    if(!c||Object.keys(c).some(key=>!materialClaimSchema.required.includes(key))||
-      materialClaimSchema.required.some(key=>!(key in c))) deny("claim_shape",c);
-    if(materialClaimSchema.required.filter(key=>key!=="mutation_index").some(key=>typeof c[key]!=="string")) deny("claim_shape",c);
-    if(!materialClaimSchema.properties.action.enum.includes(c.action)||!materialClaimSchema.properties.certainty.enum.includes(c.certainty)
-      ||!materialClaimSchema.properties.visibility.enum.includes(c.visibility)||!materialClaimSchema.properties.entity_type.enum.includes(c.entity_type)
+  for(const raw of claims){
+    if(!validClaimShape(raw))deny("claim_shape",raw);
+    const outputSpan=raw.output_claim_span??raw.source_span,c={...raw,source_span:outputSpan};
+    if(claimFields.filter(key=>key!=="mutation_index").some(key=>typeof c[key]!=="string")
+      ||raw.authored_source_span!==undefined&&typeof raw.authored_source_span!=="string")deny("claim_shape",c);
+    if(!claimProperties.action.enum.includes(c.action)||!claimProperties.certainty.enum.includes(c.certainty)
+      ||!claimProperties.visibility.enum.includes(c.visibility)||!claimProperties.entity_type.enum.includes(c.entity_type)
       ||!Number.isInteger(c.mutation_index)) deny("claim_shape",c);
-    if(Object.values(c).some(value=>typeof value==="string"&&value.length>1000)||!c.source_span||!narration.includes(c.source_span)) deny("source_span",c);
+    if(Object.values(c).some(value=>typeof value==="string"&&value.length>1000)||!c.source_span||!narration.includes(c.source_span))
+      deny(raw.output_claim_span!==undefined?"output_claim_span":"source_span",c);
+    if(raw.authored_source_span!==undefined&&!authoredSpanActive(db,guildId,raw,scope))deny("authored_source_span",c);
     const audiences=claimAudiences(db,guildId,result,c,scope);
     if(!audiences.length) deny("source_span",c,"A claim span must occur wholly within an actual output surface.");
     if(c.certainty!=="committed"){
@@ -141,7 +183,12 @@ export function validateNarrativeClaims(db,guildId,result,scope={mode:"party"},{
     }
     if(c.action==="status"&&(!entity||entity.status!==c.proposed&&state.status!==c.proposed)) deny("actor_status",c,"saved lifecycle");
     if(c.entity_type==="npc"&&["dead","removed"].includes(state.status)&&c.proposed==="active") deny("actor_status",c);
-    if(c.action==="movement"&&(!entity||String(state.location_key||entity.data?.location||"")!==c.proposed)) deny("uncommitted_movement",c,"saved position");
+    if(c.action==="movement"){
+      const presence=scenePresence(db,guildId,c.entity_type,c.entity),source=presence&&db.getWorldEvent(guildId,presence.source_event);
+      if(!entity||String(state.location_key||entity.data?.location||"")!==c.proposed||presence?.location_key!==c.proposed
+        ||!source||source.status!=="active"||!["arrival","travel"].includes(source.kind))
+        deny("uncommitted_movement",c,"Native arrival/travel receipt required.");
+    }
     if(c.action==="access"){
       const presence=scenePresence(db,guildId,c.entity_type,c.entity),source=presence&&db.getWorldEvent(guildId,presence.source_event);
       if(!entity||String(state.location_key||entity.data?.location||"")!==c.proposed||presence?.location_key!==c.proposed
@@ -200,10 +247,10 @@ export function validateNarrativeClaims(db,guildId,result,scope={mode:"party"},{
   }
   // Conservative local tripwires also catch omitted declarations of common high-risk assertions.
   const risk=/\b(?:you (?:take|suffer) \d+ (?:damage|HP)|(?:teleports?|is now dead|is now bound)|(?:roll(?:ed)? (?:a |an )?\d+))\b/gi;
-  for(const match of narration.matchAll(risk)) if(!claims.some(c=>c.source_span.includes(match[0]))) deny("undeclared_material_assertion");
+  for(const match of narration.matchAll(risk)) if(!claims.some(c=>(c.output_claim_span||c.source_span||"").includes(match[0]))) deny("undeclared_material_assertion");
   if(db.getCityCalendar(guildId).flags.semantic_integrity===true){
     for(const hit of materialParaphrases(narration,names))
-      if(!claims.some(c=>c.action===hit.action&&c.certainty==="committed"&&c.source_span.includes(hit.span)))
+      if(!claims.some(c=>c.action===hit.action&&c.certainty==="committed"&&(c.output_claim_span||c.source_span||"").includes(hit.span)))
         deny("unverified_material_paraphrase",null,hit.action);
   }
   return {ok:true,claims:claims.length};
