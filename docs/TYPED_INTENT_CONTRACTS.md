@@ -25,6 +25,14 @@ Accepted typed intents are canonical adjudication inputs; human declarations own
 - Lock and resolution use optimistic scene-window revisions. A stale completion rebases instead of overwriting, exclusive writes cannot have two winners, and every outcome must cite an existing native receipt.
 - Closed windows reject late attempts. A deliberately opened reaction opportunity is explicit, never inferred from wall-clock delay. Duplicate resolution returns the same stored result and cannot reroll or respent resources.
 
+## T05b memory lifecycle
+
+- Durable identities are keyed by entity kind, explicit parent/location, audience and source-backed name. Same-name objects under different parents remain distinct; a rename preserves aliases and increments an identity revision without asserting cross-scope equivalence.
+- Every revision is labelled as observation, testimony, inference, attempt, claimed result or native fact. Only `native_fact` can carry consequence authority, and it requires an existing committed native receipt.
+- Corrections supersede rather than overwrite prior evidence. Retractions and inactive source ancestry remove a revision from retrieval. Expiration uses fictional campaign ticks, never wall-clock time; a causally pending action reference protects an otherwise expiring identity.
+- Retrieval is bounded and independently enforces record audience, active identity, active source and expiry. Party retrieval cannot see character/player/GM revisions, and character-private memory never crosses characters even when one human controls both.
+- Existing fail-closed `context_memory` records remain supported. Newly saved audience-bound context also creates the scoped identity/revision representation; unsafe legacy rows are not blessed by migration.
+
 ## T02 language-routing boundary
 
 - `currentAcceptedIntent()` is the ordinary roleplay routing boundary. Autonomous reveal, local-zone and NPC-introduction actions must match a current accepted source occurrence, actor, structural type and resolved target; wording is not reparsed for authority.

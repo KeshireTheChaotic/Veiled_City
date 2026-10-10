@@ -68,6 +68,7 @@ bot/scripts/implementation-phase-d-test.mjs
 bot/scripts/implementation-phase-e-test.mjs
 bot/scripts/interaction-lifecycle-test.mjs
 bot/scripts/memory-audience-isolation-test.mjs
+bot/scripts/memory-lifecycle-test.mjs
 bot/scripts/movement-authorization-regression-test.mjs
 bot/scripts/narrative-contract-test.mjs
 bot/scripts/narrative-inference-test.mjs
@@ -168,6 +169,7 @@ bot/src/location-language.js
 bot/src/logger.js
 bot/src/long-projects.js
 bot/src/memory-clusters.js
+bot/src/memory-lifecycle.js
 bot/src/message-span-ledger.js
 bot/src/movement-language.js
 bot/src/narrative-context.js

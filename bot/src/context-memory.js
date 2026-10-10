@@ -1,5 +1,6 @@
 /** Audience-bound descriptive memory; never canon, possession, or NPC knowledge. */
 import { createHash } from "node:crypto";
+import { rememberEntity } from "./memory-lifecycle.js";
 
 const text=n=>({type:"string",maxLength:n});
 const object=properties=>({type:"object",additionalProperties:false,properties,required:Object.keys(properties)});
@@ -125,12 +126,16 @@ export function saveContextMemories(db,guild,result,scope,provenance){
       const key=`context:${row.kind}:${identity}:${surface.visibility}:${surface.subjectKey||"shared"}`;
       const prior=db.getCityRecord(guild,"context_memory",key);
       if(prior){saved.push(prior);continue;}
-      saved.push(db.saveCityRecord(guild,{kind:"context_memory",key,source_event:source.event_key,status:"active",
+      const context=db.saveCityRecord(guild,{kind:"context_memory",key,source_event:source.event_key,status:"active",
         visibility:surface.visibility,subject_key:surface.subjectKey||null,location_key:pc.data.location||"",
         data:{kind:row.kind,key:identity,name:row.name,summary:excerpt,retention:"durable",
           provenance:"audience_bound_gm_descriptive_context_not_canon_inventory_or_knowledge",
           audience_contract:AUDIENCE_CONTRACT,origin_surface:surface.kind,origin_visibility:surface.visibility,
-          origin_subject:surface.subjectKey||null,owner_source:source.event_key}}));
+          origin_subject:surface.subjectKey||null,owner_source:source.event_key}});
+      rememberEntity(db,guild,{kind:row.kind,name:row.name,parent_key:pc.data.location?`location:${pc.data.location}`:`scene:${source.scene}`,
+        aliases:[],source_event:source.event_key,visibility:surface.visibility,subject_key:surface.subjectKey||null,
+        epistemic:row.kind==="rumor"?"testimony":"observation",summary:excerpt});
+      saved.push(context);
     }
   }
   return saved;

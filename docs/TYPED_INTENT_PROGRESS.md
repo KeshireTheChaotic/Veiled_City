@@ -149,6 +149,21 @@ Status: complete on 2026-10-10. Package version remains `10.0.0`.
 
 T05b is next: general memory identity, epistemic lifecycle and retrieval.
 
+## T05b - memory identity, epistemics and lifecycle
+
+Status: complete on 2026-10-10. Package version remains `10.0.0`.
+
+- Red first: `memory-lifecycle-test.mjs` failed with `ERR_MODULE_NOT_FOUND` before the lifecycle service existed.
+- Added source-backed memory identities scoped by entity kind, explicit parent/location and audience. Same-name objects in different places stay distinct; supported renames retain aliases and increment identity revision.
+- Added explicit observation, testimony, inference, attempt, claimed-result and native-fact revisions. Native facts require committed receipts, so rumors, private prose and claimed custody/success cannot become objective state by retention.
+- Corrections supersede prior revisions, retractions and inactive ancestry fail closed, and bounded retrieval checks active identity/source plus exact audience. Expiration is based on fictional campaign ticks; pending action references preserve needed objects.
+- New audience-bound context memories also write the lifecycle representation while retaining the existing fail-closed `context_memory` compatibility rows. No unsafe legacy record was promoted.
+- Focused T05b, unchanged T05a audience isolation, context conversation and autonomous-world suites passed. `npm run check` passed 205 modules/scripts and 24 commands.
+- `npm run validate` passed 82/82 suites with network denied, `live_requests=0`, and `billable_tokens=0`.
+- No live bot, production database, deployment, merge or paid model was used.
+
+T06 is next: receipt-reconciled consequences and audience-safe narration.
+
 ## Deferred findings
 
 T04 through T08, including T04.1 and the general T05b lifecycle, have not started. The next phase is T04: ordered compound actions and causal dependencies.
