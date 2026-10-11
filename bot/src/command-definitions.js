@@ -272,7 +272,7 @@ export function buildCommands(){
           .addStringOption(o=>o.setName("json").setDescription("op: inbox, request, respond, close, custody or GM cancel; exact window and revision")))
         .addSubcommand(s=>s.setName("effect").setDescription("Privately review native feature effects or incoming NPC attack defenses")
           .addStringOption(o=>o.setName("json").setDescription("Native effect operation and exact source/authority JSON").setRequired(true)))
-        .addSubcommand(s=>s.setName("pvp").setDescription("Privately negotiate narrative or separate source-bound damage-profile PC consent")
+        .addSubcommand(s=>s.setName("pvp").setDescription("Privately negotiate PC consent and source-bound attack/defense reviews and dice")
           .addStringOption(o=>o.setName("json").setDescription("PvP terms/rolls; narrate templates, draft/draft-review/ratify/scope-review, share; exact revision")))
         .addSubcommand(s=>s.setName("contribute").setDescription("Authorize your own request-bound contribution, dice or selected result")
           .addStringOption(o=>o.setName("json").setDescription("Request, current revision, unique key and explicit owned mechanical declaration").setRequired(true)))

@@ -59,6 +59,8 @@ import { fearInbox, establishFearContext, selectFearMove, applyFearMove, reconci
 import { archivePvpHistory, quarantineSessionRecap, certifiedSessionRecap, scopedSessionRecap } from "./pvp-output.js";
 import { pendingPvpFear } from "./pvp-fear-gate.js";
 import { proposeDamagePvp, reviewDamagePvp, respondDamagePvp, reviseDamagePvp, damagePvpInbox } from "./pvp-profiles.js";
+import { preparePvpAttack, reviewPvpAttack, authorizePvpAttack, rollPvpAttack } from "./pvp-attacks.js";
+import { preparePvpReaction, reviewPvpReaction, rollPvpReaction } from "./pvp-reactions.js";
 import { reviewFeatureEffect, reviewPcEffect, approvePcEffect, applyPcEffect } from "./pc-effects.js";
 import { prepareIncomingAttack, reviewIncomingAttack, confirmIncomingDefense, rollIncomingAttack, resolveIncomingDamage } from "./pc-incoming.js";
 import { queueDirectorPublications } from "./publication-outbox.js";
@@ -444,6 +446,39 @@ async function executeCommand(interaction,{db,gm,voice=null}){
           if(op==="damage-review"&&(Object.keys(input).length!==1||!key))throw new StateConflictError("Exact private contract reference required.");
           text=reviewDamagePvp(db,guild,user,key).text;
         }
+      }
+      else if(["attack-prepare","attack-review","attack-authorize","attack-roll"].includes(op)){
+        const user=interaction.user.id,guild=interaction.guildId,native={interactionId:interaction.id};let result;
+        if(op==="attack-prepare"){
+          if(!isGM(db,interaction))throw new PermissionError("GM/admin mechanics review required.");
+          const row=preparePvpAttack(db,guild,user,input,{...native,gm:true});
+          result={attack:row.record_key,status:row.status,instruction:"Each affected owner must use attack-review then attack-authorize privately."};
+        }else if(op==="attack-review"){
+          if(Object.keys(input).length!==1||!input.attack)throw new StateConflictError("Exact private attack reference required.");
+          result=reviewPvpAttack(db,guild,user,input.attack);
+        }else if(op==="attack-authorize"){
+          const row=authorizePvpAttack(db,guild,user,input,native);result={attack:row.record_key,status:row.status};
+        }else{
+          const row=rollPvpAttack(db,guild,user,input),r=row.data.result;
+          result={attack:row.data.attack,result:{hope:r.hope,fear:r.fear,total:r.total,duality:r.duality,hit:r.hit},
+            instruction:"Saved native attack only. Target statistics stay private; HP requires its separate damage and owner Armor workflow."};
+        }
+        text=JSON.stringify(result,null,2);
+      }
+      else if(["reaction-prepare","reaction-review","reaction-roll"].includes(op)){
+        const user=interaction.user.id,guild=interaction.guildId,native={interactionId:interaction.id};let result;
+        if(op==="reaction-prepare"){
+          if(!isGM(db,interaction))throw new PermissionError("GM/admin source-triggered rules review required.");
+          const row=preparePvpReaction(db,guild,user,input,{...native,gm:true});result={offer:row.record_key,status:row.status};
+        }else if(op==="reaction-review"){
+          if(Object.keys(input).length!==1||!input.offer)throw new StateConflictError("Exact private reaction offer required.");
+          result=reviewPvpReaction(db,guild,user,input.offer);
+        }else{
+          const row=rollPvpReaction(db,guild,user,input,native),r=row.data.result;
+          result={offer:input.offer,outcome:row.data.outcome,result:{hope:r.hope,fear:r.fear,total:r.total,duality:r.duality},
+            instruction:row.data.effect_authority};
+        }
+        text=JSON.stringify(result,null,2);
       }
       else if(["fear-inbox","fear-context","fear-select","fear-apply","fear-reconcile"].includes(op)){
         if(!isGM(db,interaction))throw new PermissionError("GM/admin permission required.");

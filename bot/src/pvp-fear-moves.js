@@ -9,6 +9,7 @@ import { settlePvpWindow } from "./pvp-terminal.js";
 import { configureSimulationEntity, submitNpcAction } from "./simulation.js";
 import { assertNpcAvailability } from "./city-constraints.js";
 import { validateWorldEncounterActivation } from "./encounter.js";
+import { validatePvpAttackRoll } from "./pvp-attacks.js";
 
 export const fearRevision=v=>createHash("sha256").update(JSON.stringify(v)??"undefined").digest("hex");
 const hash=fearRevision;
@@ -69,7 +70,9 @@ export function establishFearContext(db,guild,user,input,{gm=false,interactionId
   });
 }
 function triggerProof(db,guild,key,{allowResolved=false}={}){
-  const t=db.getCityRecord(guild,"pvp_fear_trigger",key),p=t&&db.getCityRecord(guild,"pvp_proposal",t.data.proposal);
+  const t=db.getCityRecord(guild,"pvp_fear_trigger",key);
+  if(t?.data.version===2)return attackTriggerProof(db,guild,t,{allowResolved});
+  const p=t&&db.getCityRecord(guild,"pvp_proposal",t.data.proposal);
   if(!t||!p||t.data.terms_hash!==p.data.terms_hash||currentScene(db,guild).key!==t.data.scene
     ||t.data.session!==db.getActiveSession(guild)?.id)fail("Current scene/source-bound Fear trigger required.");
   for(const who of p.data.participants)pvpOwnerContext(db,guild,who.user,p.record_key);
@@ -87,6 +90,21 @@ function triggerProof(db,guild,key,{allowResolved=false}={}){
     const next=gate.data.expected_fear_trigger_ids.find(id=>db.getCityRecord(guild,"pvp_fear_trigger",id)?.status!=="resolved");
     if(next!==key)fail("Resolve immediate Fear obligations in locked participant order.");
   }
+  return {t,p,gate,round};
+}
+function attackTriggerProof(db,guild,t,{allowResolved}){
+  const {receipt:round,offer,contract:p}=validatePvpAttackRoll(db,guild,t.data.attack_receipt),d=t.data;
+  const expected=`pvp-fear:${hash([p.record_key,p.data.terms_hash,round.data.attack,round.record_key]).slice(0,40)}`;
+  const gate=db.getCityRecord(guild,"pvp_exchange_gate",fearGateKey(p,round.data.attack)),g=gate?.data;
+  if(t.record_key!==expected||d.proposal!==p.record_key||d.terms_hash!==offer.terms_hash||d.session!==offer.session||d.scene!==offer.scene
+    ||d.roll_id!==round.data.roll_id||d.roller_character!==offer.actor||d.roller_principal_revision!==offer.snapshot.actor_principal
+    ||d.source_event!==round.source_event||t.source_event!==round.source_event||d.duality!=="Fear"||round.data.result.duality!=="Fear"
+    ||d.round!==round.data.attack||d.paired_comparison_ref!==round.record_key||d.trigger_ordinal!==0
+    ||t.visibility!=="gm"||g?.version!==2||g.proposal!==p.record_key||g.terms_hash!==offer.terms_hash
+    ||g.round!==round.data.attack||g.pair_ref!==round.record_key||gate.source_event!==p.source_event||gate.visibility!=="gm"
+    ||hash(g.expected_fear_trigger_ids)!==hash([expected])||hash(g.resolved_effect_ids)!==hash(t.status==="resolved"?[t.data.effect]:[])
+    ||gate.status!==(t.status==="resolved"?"ready":"pending_fear"))fail("Exact immediate damage-action Fear roll/gate required.");
+  if(!allowResolved&&t.status==="resolved")fail("Fear move already resolved; replay native effect only.");
   return {t,p,gate,round};
 }
 /** Reconstruct obligation membership from saved dice, not mutable gate pointers or model labels. */

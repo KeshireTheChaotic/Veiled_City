@@ -1663,6 +1663,13 @@ export class VeiledDB {
     return row?{...row,payload:JSON.parse(row.payload_json)}:null;
   }
 
+  /** Native result identity survives presentation labels being removed. Never trust a caller's roll_type. */
+  savedRollsForResult(guildId,resultId){
+    if(typeof resultId!=="string"||!resultId||resultId.length>100)return [];
+    return this.db.prepare("SELECT * FROM rolls WHERE guild_id=? AND json_extract(payload_json,'$.id')=? LIMIT 2")
+      .all(guildId,resultId).map(row=>({...row,payload:JSON.parse(row.payload_json)}));
+  }
+
   createEncounter(guildId,sessionId,data){
     const id=randomUUID();
     const n=this.db.prepare("SELECT COALESCE(MAX(encounter_number),0)+1 n FROM encounters WHERE session_id=?").get(sessionId).n;

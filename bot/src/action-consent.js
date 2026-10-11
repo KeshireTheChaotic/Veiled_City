@@ -15,8 +15,22 @@ const resources=value=>Array.isArray(value)&&value.length<=32&&new Set(value).si
 
 /** Re-read the current owner, exact immutable source and accepted occurrence before consent can be used. */
 export function consentAction(db,guild,key){
+  return inspectActionSource(db,guild,key,false);
+}
+/** Read-only native terminal ancestry; never returns a currently accepted action or grants new participation. */
+export function completedActionSource(db,guild,key){
+  const proof=inspectActionSource(db,guild,key,true),d=proof.row.data,receipt=db.getCityRecord(guild,"action_outcome_receipt",d.outcome_receipt);
+  const request=receipt&&db.getCityRecord(guild,"roll_request",receipt.data.request),roll=request&&db.getSavedRoll(guild,request.data.roll_id);
+  if(receipt?.status!=="resolved"||receipt.source_event!==proof.row.source_event||receipt.data.action_id!==key
+    ||request?.status!=="resolved"||request.source_event!==proof.row.source_event||request.subject_key!==d.actor
+    ||request.data.input?.accepted_intent!==key||roll?.character_id!==d.actor||roll.discord_user_id!==d.owner_user_id
+    ||roll.session_id!==d.session_id||roll.payload.request!==request.record_key
+    ||receipt.data.native_roll_refs.length!==1||receipt.data.native_roll_refs[0]!==roll.id)fail("Exact native terminal action receipt required for read-only history.");
+  return proof;
+}
+function inspectActionSource(db,guild,key,completed){
   const row=db.getCityRecord(guild,"typed_intent",key),scene=currentScene(db,guild);
-  if(!row||row.status!=="accepted_for_adjudication")fail("Consent needs a current accepted action.");
+  if(!row||row.status!==(completed?"resolved":"accepted_for_adjudication"))fail("Consent needs a current accepted action; history cannot authorize new effects.");
   const source=db.getWorldEvent(guild,row.source_event),d=row.data;
   const principal=conversationPrincipal(db,guild,d.owner_user_id,d.actor);
   if(principal.kind!=="owner"||principal.revision!==d.actor_principal_revision

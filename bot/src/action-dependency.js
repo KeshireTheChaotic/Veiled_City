@@ -56,8 +56,14 @@ export function buildActionPlan(db,guild,acceptedRows=[]){
         ||(prior?.data.interrupt_refs||[]).some(ref=>db.getCityRecord(guild,"action_interrupt_receipt",ref)?.status!=="resolved")
         ?"pending":initialStatus(row);
     }
+    const outcome=row.data.outcome_receipt&&db.getCityRecord(guild,"action_outcome_receipt",row.data.outcome_receipt);
+    const privateExecution=outcome?.status==="resolved"&&outcome.visibility==="character"&&outcome.subject_key===row.data.actor
+      &&outcome.data.action_id===row.record_key&&outcome.source_event===row.source_event
+      ||prior?.visibility==="character"&&prior.subject_key===row.data.actor
+      ||dependencies.get(row.record_key).some(dep=>calculated.get(dep)?.visibility==="character");
     const saved=db.saveCityRecord(guild,{kind:"compound_action",key,status,source_event:row.source_event,
-      visibility:row.visibility,subject_key:row.subject_key,data:{...prior?.data,action_id:row.record_key,proposal_id:row.data.proposal_id,
+      visibility:privateExecution?"character":row.visibility,subject_key:privateExecution?row.data.actor:row.subject_key,
+      data:{...prior?.data,action_id:row.record_key,proposal_id:row.data.proposal_id,
         sequence_index:row.data.sequence_index,dependencies:dependencies.get(row.record_key),source_span:row.data.source_span,
         actor:row.data.actor,session_id:row.data.session_id,scene:row.data.scene,status,
         memory_identity_refs:[...new Set(row.data.memory_identity_refs||[])].filter(value=>typeof value==="string"&&value.startsWith("memory-id:")).slice(0,12),

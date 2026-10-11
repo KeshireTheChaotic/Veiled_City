@@ -10,6 +10,7 @@ import { recordObservedAttack } from "./encounter.js";
 import { StateConflictError, PermissionError, UserInputError } from "./errors.js";
 import { finalizeTypedRollAction } from "./typed-roll-outcomes.js";
 import { assertNonPvpCombatant } from "./pvp-authority.js";
+import { validatePvpAttackRoll } from "./pvp-attacks.js";
 function fail(message){throw new StateConflictError(message);}
 /** Called only by the authenticated GM command/review boundary, never by model-supplied identity. */
 export function adjudicateRollSource(db,guild,input,reviewer){
@@ -114,6 +115,23 @@ function finishDamage(db,guild,row,data){
 }
 /** Same native action/reaction metacurrency semantics used by raw and request-bound rolls. */
 export function applyRollOutcome(db,guild,session,characterIds,result,{reaction=false}={}){
+  const identities=db.savedRollsForResult(guild,result.id),protectedRoll=identities.find(r=>["damage_pvp_attack","narrative_pvp","reaction"].includes(r.roll_type));
+  if(protectedRoll){
+    if(identities.length!==1||Object.keys(result).some(k=>JSON.stringify(result[k])!==JSON.stringify(protectedRoll.payload[k])))
+      fail("Unverified relabeling of native PvP dice cannot authorize resources.");
+    result=protectedRoll.payload;
+    if(protectedRoll.roll_type==="reaction"){
+      if(protectedRoll.session_id!==session||characterIds.length!==1||characterIds[0]!==protectedRoll.character_id)
+        fail("Native reaction identity cannot authorize another character's resources.");
+      return; // SRD reactions never grant metacurrency or Critical Stress, irrespective of caller labels.
+    }
+  }
+  if(result.roll_type==="damage_pvp_attack"){
+    const {receipt,offer}=validatePvpAttackRoll(db,guild,`${result.attack}:roll`);
+    if(offer.session!==session||characterIds.length!==1||characterIds[0]!==offer.actor||JSON.stringify(receipt.data.result)!==JSON.stringify(result))
+      fail("Unverified native damage-PvP result cannot grant generic resources.");
+    return;
+  }
   if(result.proposal||result.terms_hash||result.choice||result.roll_type==="narrative_pvp"){
     // A caller cannot reclassify custom opposed dice as an ordinary action/Critical resource grant.
     let found=false;

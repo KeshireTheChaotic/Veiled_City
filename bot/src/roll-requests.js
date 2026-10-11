@@ -25,7 +25,8 @@ function sourceActor(db,guild,input){
     throw new StateConflictError("A current authenticated owner declaration in this scene is required.");
   return {source,accepted,session,pc:personalCharacter(db,guild,source.details.author,input.character_id)};
 }
-export function rollBreakdown(db,guild,input,pc){
+/** Pure shared trait/modifier validation. This supplies no target, dice, costs or execution permission. */
+export function rollTraitBreakdown(db,guild,input,pc){
   if(!TRAITS.includes(input.trait)||!["action","reaction","attack"].includes(input.kind)
     ||typeof input.adjudication!=="string"||!input.adjudication.trim()||input.adjudication.length>600)
     throw new UserInputError("Adjudicate the relevant trait and roll kind, with a factual reason.");
@@ -49,6 +50,14 @@ export function rollBreakdown(db,guild,input,pc){
     if(mod.kind!=="flat"&&mod.amount!==1) throw new UserInputError("Each advantage/disadvantage source contributes one source.");
     return {source:id,name:mod.name,kind:mod.kind,amount:mod.amount,ruling_key:mod.ruling_key};
   });
+  const flat=modifiers.filter(row=>row.kind==="flat").reduce((sum,row)=>sum+row.amount,0);
+  return {trait:input.trait,trait_bonus:trait,modifiers,subtotal:trait===null?null:trait+flat,
+    advantage:modifiers.filter(row=>row.kind==="advantage").length,
+    disadvantage:modifiers.filter(row=>row.kind==="disadvantage").length,
+    unresolved:trait===null?["Relevant trait is missing from the sheet."]:[]};
+}
+export function rollBreakdown(db,guild,input,pc){
+  const base=rollTraitBreakdown(db,guild,input,pc);
   let difficulty=null;
   if(input.difficulty_source){
     const event=requireCitySource(db,guild,input.difficulty_source),data=event.details.roll_difficulty;
@@ -76,12 +85,10 @@ export function rollBreakdown(db,guild,input,pc){
     diceSpec(a.damage);
     attack={weapon:a.weapon,damage:a.damage,damage_type:a.damage_type,target_id:target.id,encounter_id:encounter.id,difficulty:target.difficulty};
   }
-  const unresolved=[...(trait===null?["Relevant trait is missing from the sheet."]:[]),
+  const unresolved=[...base.unresolved,
     ...(input.kind==="attack"&&!attack?["Active weapon/feature attack provenance requires native adjudication before resolution."]:[])];
-  const flat=modifiers.filter(row=>row.kind==="flat").reduce((sum,row)=>sum+row.amount,0);
-  return {trait:input.trait,trait_bonus:trait,modifiers,subtotal:trait===null?null:trait+flat,
-    advantage:modifiers.filter(row=>row.kind==="advantage").length,
-    disadvantage:modifiers.filter(row=>row.kind==="disadvantage").length,difficulty,attack,unresolved};
+  const {unresolved:baseUnresolved,...values}=base; // Preserve persisted breakdown key order/revision hashes.
+  return {...values,difficulty,attack,unresolved};
 }
 export function prepareRollRequest(db,guild,input,actor,context={}){
   const {source,accepted,pc,session}=sourceActor(db,guild,input);

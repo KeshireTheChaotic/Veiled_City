@@ -1,10 +1,29 @@
 /** Immediate PvP consequence obligations, separate from saved scores and campaign Fear currency. */
 import { createHash } from "node:crypto";
 import { validateFearEffect } from "./pvp-fear-moves.js";
+import { validatePvpAttackRoll } from "./pvp-attacks.js";
 const hash=v=>createHash("sha256").update(JSON.stringify(v)).digest("hex").slice(0,40);
 const triggerKey=(p,r)=>`pvp-fear:${hash([p.record_key,p.data.terms_hash,r.data.round,r.record_key])}`;
 export function fearGateKey(p,round){return `pvp-exchange:${hash([p.record_key,p.data.terms_hash,round])}`;}
 function fail(){throw Object.assign(new Error("Exact current native Fear roll/terms/gate required."),{code:"NARRATIVE_PVP",expected:true});}
+/** A damage action is not a sealed paired contest. Fear is due immediately, even on a miss. */
+export function captureAttackFear(db,guild,p,receipt){
+  const proof=validatePvpAttackRoll(db,guild,receipt.record_key),r=proof.receipt;
+  if(proof.contract.record_key!==p.record_key)fail();
+  if(r.data.result.duality!=="Fear")return null;
+  const key=triggerKey(p,{...r,data:{...r.data,round:r.data.attack}}),prior=db.getCityRecord(guild,"pvp_fear_trigger",key);
+  if(prior)return prior;
+  const s=db.getWorldEvent(guild,r.source_event),round=r.data.attack;
+  const t=db.saveCityRecord(guild,{kind:"pvp_fear_trigger",key,status:"awaiting_move",visibility:"gm",source_event:r.source_event,
+    data:{version:2,trigger_id:key,guild,session:p.data.session_id,scene:p.data.scene,proposal:p.record_key,terms_hash:p.data.terms_hash,
+      round,attack_receipt:r.record_key,roll_id:r.data.roll_id,roller_character:r.subject_key,
+      roller_principal_revision:proof.offer.snapshot.actor_principal,source_event:s.event_key,duality:"Fear",paired_comparison_ref:r.record_key,
+      trigger_ordinal:0,revision:1}});
+  db.saveCityRecord(guild,{kind:"pvp_exchange_gate",key:fearGateKey(p,round),status:"pending_fear",visibility:"gm",source_event:p.source_event,
+    data:{version:2,proposal:p.record_key,terms_hash:p.data.terms_hash,round,pair_ref:r.record_key,
+      expected_fear_trigger_ids:[key],resolved_effect_ids:[],partial:false,revision:1}});
+  return t;
+}
 export function capturePvpFear(db,guild,p,receipt){
   if(receipt.data.result.duality!=="Fear")return null;
   const native=db.getSavedRoll(guild,receipt.data.roll_id),s=db.getWorldEvent(guild,receipt.source_event);
