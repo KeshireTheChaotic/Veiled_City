@@ -1,6 +1,7 @@
 /** Optional scene-scoped action windows for real overlap; ordinary posts never wait on this module. */
 import { createHash } from "node:crypto";
 import { currentScene } from "./scene-continuity.js";
+import { validateActionConsent } from "./action-consent.js";
 
 const reasons=new Set(["combat_spotlight","cooperative_operation","contested_resource","reaction_opportunity","direct_pc_conflict","gm_declared_beat"]);
 const terminal=new Set(["resolved","failed","blocked","declined"]);
@@ -31,16 +32,6 @@ export function classifyResourceOverlap(a,b){
   if(["help","tag_team","group_action"].includes(a.operation)||["help","tag_team","group_action"].includes(b.operation))return "cooperative";
   return "independent";
 }
-function consent(db,guild,refs,participants){
-  if(!Array.isArray(refs))return false;
-  const covered=new Set();
-  for(const ref of refs){
-    const row=ref&&db.getCityRecord(guild,"action_consent",ref);
-    if(!row||row.status!=="accepted"||!participants.includes(row.subject_key)||row.data.decision!=="accept")return false;
-    covered.add(row.subject_key);
-  }
-  return participants.every(value=>covered.has(value));
-}
 
 export function joinActionWindow(db,guild,windowKey,input){
   const window=db.getCityRecord(guild,"scene_action_window",windowKey),scene=currentScene(db,guild);
@@ -52,15 +43,15 @@ export function joinActionWindow(db,guild,windowKey,input){
   if(!boundedResources(input.reads)||!boundedResources(input.writes)||!input.operation||input.participation!=="voluntary")
     fail("Participation needs bounded resolved resources and a voluntary operation.");
   const participants=window.data.participants.map(key=>db.getCityRecord(guild,"scene_action_participant",key));
-  if(participants.some(row=>row.data.accepted_intent===accepted.record_key))return participants.find(row=>row.data.accepted_intent===accepted.record_key);
   if(participants.some(row=>row.location_key!==input.location_key
     ||row.visibility!==accepted.visibility||row.subject_key!==accepted.subject_key)
     &&(!["public","party"].includes(accepted.visibility)||participants.some(row=>!["public","party"].includes(row.visibility))))
     fail("Different audience or location scopes cannot be treated as a shared conflict.");
   const required=input.required_participants||[];
   if((window.data.reason==="direct_pc_conflict"||["help","tag_team","group_action"].includes(input.operation))
-    &&(!required.length||!consent(db,guild,input.consent_refs||[],required)))
+    &&(!required.length||!validateActionConsent(db,guild,input.consent_refs||[],{window,accepted,input})))
     fail("Direct PC conflict and cooperative participation require each affected owner's native consent.");
+  if(participants.some(row=>row.data.accepted_intent===accepted.record_key))return participants.find(row=>row.data.accepted_intent===accepted.record_key);
   const candidate={reads:input.reads,writes:input.writes,operation:input.operation};
   const classifications=participants.map(row=>classifyResourceOverlap(row.data,candidate));
   const classification=classifications.find(value=>value!=="independent")||"independent";

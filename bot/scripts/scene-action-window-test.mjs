@@ -69,9 +69,10 @@ try{
   const consentB=db.saveCityRecord(guild,{kind:"action_consent",key:"group-b",status:"accepted",source_event:source.event_key,
     visibility:"character",subject_key:pcB.id,data:{decision:"accept"}});
   const group=openActionWindow(db,guild,{key:"group",source_event:source.event_key,reason:"cooperative_operation"});
-  joinActionWindow(db,guild,group.record_key,{accepted_intent:accepted("group-a-intent",pcA.id).record_key,reads:["task:lift"],
+  assert.throws(()=>joinActionWindow(db,guild,group.record_key,{accepted_intent:accepted("group-a-intent",pcA.id).record_key,reads:["task:lift"],
     writes:["task:lift:progress"],location_key:"archive",operation:"group_action",participation:"voluntary",
-    required_participants:[pcA.id,pcB.id],consent_refs:[consentA.record_key,consentB.record_key]});
+    required_participants:[pcA.id,pcB.id],consent_refs:[consentA.record_key,consentB.record_key]}),/consent/i,
+    "legacy unscoped accepted flags are not native owner approval; positive current approval is covered by V9-01");
 
   const privateWindow=openActionWindow(db,guild,{key:"private",source_event:source.event_key,reason:"contested_resource"});
   joinActionWindow(db,guild,privateWindow.record_key,{accepted_intent:accepted("private-a","pc-a","character",pcA.id).record_key,

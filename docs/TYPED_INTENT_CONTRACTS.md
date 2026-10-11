@@ -2,6 +2,14 @@
 
 Accepted typed intents are canonical adjudication inputs; human declarations own intent; native receipts own outcomes.
 
+## V9-01 action-bound consent
+
+- Version-1 `action_consent_request` is a closed immutable digest of exact accepted source occurrence/hash, actor, resources, operation, location, required current owners/principals, session/scene, audience, consequences, window revision and fictional expiry. It authorizes no result or cost.
+- Version-1 `action_consent` is a character-private native response. Only the current affected owner can explicitly accept, decline or revoke through an authenticated adapter; model text and legacy `accepted` flags cannot create approval.
+- Use-time validation re-reads source status, exact text/hash/offsets, active assignment/principal, accepted action, source audience, current window, expiry and separate reply provenance. Identical retries preserve the signature; revocation cannot be bypassed by participant replay or a new interaction ID.
+- Generic cooperation consent **never** qualifies for PvP. Direct PC conflict fails closed until the distinct V9-PVP-A immutable bilateral narrative agreement is locked and verified; no consent-to-damage adapter is provided.
+- Requests are GM-private coordination metadata; individual decisions are character-private. They do not copy the raw declaration or permit cross-character memory retrieval. No SQL migration is required; legacy unsafe consents remain readable historical data but inert for new participation.
+
 ## H01 exact occurrence recovery
 
 - Model intent text is rebound only to exact UTF-16 occurrences in the immutable authenticated message. Repeated identical phrases retain distinct start/end identities.
