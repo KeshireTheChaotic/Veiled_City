@@ -9,6 +9,7 @@ import { hpMarksForDamage } from "./combat.js";
 import { recordObservedAttack } from "./encounter.js";
 import { StateConflictError, PermissionError, UserInputError } from "./errors.js";
 import { finalizeTypedRollAction } from "./typed-roll-outcomes.js";
+import { assertNonPvpCombatant } from "./pvp-authority.js";
 function fail(message){throw new StateConflictError(message);}
 /** Called only by the authenticated GM command/review boundary, never by model-supplied identity. */
 export function adjudicateRollSource(db,guild,input,reviewer){
@@ -103,6 +104,7 @@ function finishDamage(db,guild,row,data){
   const attack=data.breakdown.attack,encounter=db.getCurrentEncounter(data.session_id);
   if(encounter?.id!==attack.encounter_id||encounter.status!=="active") fail("Attack encounter changed; human correction required.");
   const target=db.listCombatants(encounter.id).find(item=>item.id===attack.target_id);
+  assertNonPvpCombatant(db,guild,target);
   if(!target||target.status!=="active") fail("Target is no longer active; do not apply a second consequence.");
   const total=participants.reduce((sum,item)=>sum+item.damage.total,0),marks=hpMarksForDamage(target,total);
   const hp=Math.max(0,target.hp_current-marks);

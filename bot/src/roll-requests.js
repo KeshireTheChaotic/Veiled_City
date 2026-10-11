@@ -7,6 +7,7 @@ import { cityAudit, cityKey } from "./city-calendar.js";
 import { TRAITS } from "./character-system.js";
 import { StateConflictError, UserInputError } from "./errors.js";
 import { diceSpec } from "./dice.js";
+import { isPvpIntent, assertNonPvpCombatant } from "./pvp-authority.js";
 const hash=value=>createHash("sha256").update(JSON.stringify(value)).digest("hex");
 const signed=value=>`${value>=0?"+":""}${value}`;
 export const rollRevision=hash;
@@ -18,6 +19,7 @@ function sourceActor(db,guild,input){
   const typed=source.kind==="authored_turn"&&accepted?.status==="accepted_for_adjudication"
     &&accepted.source_event===source.event_key&&accepted.data.actor===input.character_id
     &&accepted.data.owner_user_id===source.details.author;
+  if(accepted&&isPvpIntent(db,guild,accepted))throw new StateConflictError("PC conflict requires the separately locked narrative PvP service.");
   if(!legacy&&!typed||source.details.character_id!==input.character_id||source.source_id!==`player:${source.details.author}`
     ||!session||source.session_id!==session.id||source.scene!==currentScene(db,guild).key||!db.ownerAuthoredSource(guild,source.event_key,source.details.author))
     throw new StateConflictError("A current authenticated owner declaration in this scene is required.");
@@ -63,6 +65,7 @@ export function rollBreakdown(db,guild,input,pc){
     const event=requireCitySource(db,guild,input.attack_source),a=event.details.roll_attack,session=db.getActiveSession(guild);
     const encounter=session?db.getCurrentEncounter(session.id):null;
     const target=encounter?db.listCombatants(encounter.id).find(row=>row.id===a?.target_id):null;
+    if(target)assertNonPvpCombatant(db,guild,target);
     const weapon=(pc.data.inventory||[]).find(item=>(typeof item==="string"?item:item.name)===a?.weapon);
     if(event.kind!=="roll_adjudication"||event.details.human_reviewed!==true||event.source_kind!=="gm"
       ||event.subject_key!==pc.id||event.visibility!=="character"||event.session_id!==session?.id||event.scene!==currentScene(db,guild).key

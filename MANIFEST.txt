@@ -125,7 +125,10 @@ bot/scripts/typed-routing-authority-test.mjs
 bot/scripts/v7-delta-baseline-test.mjs
 bot/scripts/v9-action-consent-test.mjs
 bot/scripts/v9-baseline-regressions-test.mjs
+bot/scripts/v9-fixtures.mjs
+bot/scripts/v9-pvp-agreement-test.mjs
 bot/scripts/v9-pvp-contract-test.mjs
+bot/scripts/v9-pvp-typed-roll-test.mjs
 bot/scripts/validate-command-schema.mjs
 bot/scripts/validate-offline.mjs
 bot/sql/schema.sql
@@ -200,6 +203,7 @@ bot/src/movement-language.js
 bot/src/narrative-context.js
 bot/src/narrative-integrity.js
 bot/src/narrative-integrity.js.20261009-144611.bak
+bot/src/narrative-pvp.js
 bot/src/negotiations.js
 bot/src/npc-cognition.js
 bot/src/npc-conversations.js
@@ -217,6 +221,7 @@ bot/src/prompt-budget.js
 bot/src/provenance.js
 bot/src/publication-outbox.js
 bot/src/publishing.js
+bot/src/pvp-authority.js
 bot/src/register-commands.js
 bot/src/relationship-state.js
 bot/src/roll-collaboration.js

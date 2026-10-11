@@ -10,6 +10,15 @@ Accepted typed intents are canonical adjudication inputs; human declarations own
 - Generic cooperation consent **never** qualifies for PvP. Direct PC conflict fails closed until the distinct V9-PVP-A immutable bilateral narrative agreement is locked and verified; no consent-to-damage adapter is provided.
 - Requests are GM-private coordination metadata; individual decisions are character-private. They do not copy the raw declaration or permit cross-character memory retrieval. No SQL migration is required; legacy unsafe consents remain readable historical data but inert for new participation.
 
+## V9-PVP-A immutable narrative agreements
+
+- Direct PC targeting is resolved from actual campaign character identity, independent of model `coordination.reason` or `interact`/attack labels. The state boundary stages the attempt before ordinary roll preparation; no opponent response, success, HP/Armor/Stress or cost follows from an attempt.
+- `pvp_terms_revision` hashes a closed version-1 snapshot: source occurrence/hash, exact two current owners/principals, scene/session/location, both best/worst/tie stakes, all seven mandatory hard boundaries, mode, explicitly allowed owned traits, option policy, Hope/Fear, audience, authorship, tie/withdrawal/stall policies and fictional expiry. Prose stakes cannot execute mechanical effects.
+- `pvp_terms_review` is a private review surface, not consent. Each owner must explicitly approve the same digest through the native response boundary. A foreign/GM/proxy user cannot review/sign for another owner. Changing any terms before dice supersedes the old agreement and clears both approvals; after native dice, retroactive edits are forbidden.
+- A `pvp_agreement` locks only from two distinct live character-scoped `pvp_consent` replies. Every use re-reads current owner assignments, principal revisions, active original/counteroffer/reply source ancestry, position, scene, expiry and immutable digest. Participation consent never qualifies for standard attack damage.
+- Refusal/withdrawal yields a neutral `pvp_resolution_receipt` with no winner or rolls. Mechanical adjudication and narrative authorship are deliberately separate; no response is fabricated. PvP dice/strike completion is V9-PVP-B work, not enabled by this phase.
+- `/vc-roll pvp` provides private `inbox`, `review`, `propose`, `revise`, `respond` operations. Full plain-language terms use bounded ephemeral follow-ups without truncation. Native adapters override interaction identity; no model input can impersonate a decision. Other owners review in their own inbox; nothing is broadcast publicly.
+
 ## H01 exact occurrence recovery
 
 - Model intent text is rebound only to exact UTF-16 occurrences in the immutable authenticated message. Repeated identical phrases retain distinct start/end identities.

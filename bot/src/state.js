@@ -15,6 +15,7 @@ import { adjudicateAcceptedIntent } from "./rules-arbitration.js";
 import { coordinateTypedActionWindows } from "./scene-action-window.js";
 import { buildActionPlan, executableActionSpans } from "./action-dependency.js";
 import { saveContextMemories } from "./context-memory.js";
+import { stagePvpAttempts } from "./narrative-pvp.js";
 import { relationshipProvenance, artifactProvenance, inferredSource } from "./presentation-evidence.js";
 
 export function summarizeRoster(rows){
@@ -128,6 +129,12 @@ export function applyGMEvents(db,guildId,sessionId,events=[],scope={mode:"party"
           if(!characterId) fail("resource_delta could not resolve a target character.");
           const ch=db.getCharacter(characterId);
           if(!ch || ch.guild_id!==guildId) fail("resource_delta target character is not in this campaign.");
+          const harmful=["hp","stress"].includes(e.key)&&Number(e.amount)>0
+            ||e.key==="armor"&&Number(e.amount)!==0||e.key==="hope"&&Number(e.amount)<0;
+          if(provenance.pvp_action_ids?.length||harmful&&scope.actorUserId&&scope.actorCharacterId
+            &&characterId!==scope.actorCharacterId&&provenance.actorType!=="human_gm"){
+            block(results,e,"Player-originated PC harm requires narrative PvP; generic resource_delta grants no damage or costs.");break;
+          }
           const before=structuredClone(ch.data?.resources?.[e.key]??null);
           db.updateCharacterData(characterId,data=>{
             const res=data.resources??(data.resources={});
@@ -414,7 +421,11 @@ export function applyAuthoritativeMutation(db,{guildId,sessionId=null,events=[],
     persistAuthoredCandidates(db,guildId,narrative?.authored_candidates,scope,provenance);
     const intentDiagnostics=persistPlayerIntentDiagnostics(db,guildId,narrative?.player_intent_diagnostics||[],scope,provenance);
     const typedIntents=persistPlayerIntents(db,guildId,narrative?.player_intents||[],scope,provenance);
-    const nativeAdjudications=typedIntents.filter(row=>row?.data?.resolution==="roll_required").map(row=>{
+    let actionPlan=buildActionPlan(db,guildId,typedIntents);
+    const pvpAttempts=stagePvpAttempts(db,guildId,typedIntents,actionPlan);
+    const pvpIds=new Set(pvpAttempts.map(row=>row.data.accepted_intent));
+    if(pvpAttempts.length)actionPlan=actionPlan.map(row=>db.getCityRecord(guildId,"compound_action",row.record_key));
+    const nativeAdjudications=typedIntents.filter(row=>row?.data?.resolution==="roll_required"&&!pvpIds.has(row.record_key)).map(row=>{
       const adjudication=row.data.native_adjudication;
       return adjudicateAcceptedIntent(db,guildId,{
         acceptedIntent:row.record_key,mode:"roll_required",risk:adjudication.risk,stakes:adjudication.stakes,
@@ -425,7 +436,6 @@ export function applyAuthoritativeMutation(db,{guildId,sessionId=null,events=[],
         explanation:adjudication.explanation
       },provenance.actorId||"ai_gm",{scope});
     });
-    let actionPlan=buildActionPlan(db,guildId,typedIntents);
     const actionWindows=coordinateTypedActionWindows(db,guildId,typedIntents,actionPlan);
     if(actionWindows.length)actionPlan=actionPlan.map(row=>db.getCityRecord(guildId,"compound_action",row.record_key));
     const executableSpans=new Set(executableActionSpans(actionPlan));
@@ -439,7 +449,7 @@ export function applyAuthoritativeMutation(db,{guildId,sessionId=null,events=[],
     const world=applyAutonomousWorld(db,guildId,plannedNarrative,scope,provenance,content);
     const typedDialogue=persistTypedDialogue(db,guildId,narrative?.player_intents||[],scope,provenance);
     const contextMemories=saveContextMemories(db,guildId,narrative,scope,provenance);
-    const eventResults=applyGMEvents(db,guildId,sessionId,events,scope,provenance);
+    const eventResults=applyGMEvents(db,guildId,sessionId,events,scope,{...provenance,pvp_action_ids:[...pvpIds]});
     const relationshipResults=applyRelationshipDrafts(db,guildId,relationships,scope,source);
     const handoutResults=applyHandoutDrafts(db,guildId,sessionId,handouts,scope,source);
     const scene=sessionId?db.getDirectorState(sessionId).scene_label||"":"";
@@ -490,7 +500,7 @@ export function applyAuthoritativeMutation(db,{guildId,sessionId=null,events=[],
     if(narrative) validateNarrativeClaims(db,guildId,narrative,scope,{staged:true,eventResults});
     return {events:eventResults,relationships:relationshipResults,handouts:handoutResults,
       npcMemories:cognition.memories,npcKnowledge:cognition.knowledge,npcGoals:cognition.goals,simulation,intents,world,typedIntents,
-      intentDiagnostics,nativeAdjudications,actionPlan,actionWindows,typedDialogue,contextMemories,reviewAudit};
+      intentDiagnostics,nativeAdjudications,actionPlan,actionWindows,pvpAttempts,typedDialogue,contextMemories,reviewAudit};
   });
 }
 

@@ -2,6 +2,7 @@
 import { createHash } from 'node:crypto';
 import { pendingRollRequests, rollRevision } from './roll-requests.js';
 import { contributeRoll } from './roll-collaboration.js';
+import { isPvpIntent } from './pvp-authority.js';
 
 const hash=s=>createHash('sha256').update(JSON.stringify(s)).digest('hex').slice(0,32);
 
@@ -13,6 +14,10 @@ export function resolveTypedNativeRolls(db,guild,scope,intents=[],messageId=''){
     // Interpretation does not authorize spending, assistance, sharing, consent, or rolling for others.
     if(intent?.type!=='roll'||intent.framing!=='immediate'||!['roll','damage'].includes(intent.operation))continue;
     if(!['roll_required','conversational'].includes(intent.resolution))continue;
+    if(isPvpIntent(db,guild,{data:{...intent,actor:scope.actorCharacterId}})){
+      results.push({status:'needs_consent',operation:intent.operation,reason:'PC conflict requires locked bilateral narrative PvP.'});
+      continue;
+    }
     const pending=pendingRollRequests(db,guild,scope.actorUserId).filter(row=>row.subject_key===scope.actorCharacterId
       &&row.status===(intent.operation==='roll'?'pending':'awaiting_damage'));
     if(pending.length!==1){

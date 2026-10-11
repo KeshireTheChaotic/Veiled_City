@@ -640,9 +640,24 @@
       "sha256": "4d6b6396468ccd255a526bebda528b94eba65fcdefe3d87b11f37b3b97d0bf8f"
     },
     {
+      "path": "bot/scripts/v9-fixtures.mjs",
+      "size_bytes": 3427,
+      "sha256": "d99baec07601c66e1590201e90c9e36a44bca4b392369240ba5071559eea2454"
+    },
+    {
+      "path": "bot/scripts/v9-pvp-agreement-test.mjs",
+      "size_bytes": 9859,
+      "sha256": "53421b37d002b3c6f1b0cb4941b0b0b76afa5f4807014abd51084df76083f993"
+    },
+    {
       "path": "bot/scripts/v9-pvp-contract-test.mjs",
       "size_bytes": 1007,
       "sha256": "355c37f735260d0d748e335181300d640ef8a1143c42b965c0a72e36641df83f"
+    },
+    {
+      "path": "bot/scripts/v9-pvp-typed-roll-test.mjs",
+      "size_bytes": 1680,
+      "sha256": "97bc12de385e6700bc53a8ab270e3667543256464be38251fb36f3842e9028da"
     },
     {
       "path": "bot/scripts/validate-command-schema.mjs",
@@ -651,8 +666,8 @@
     },
     {
       "path": "bot/scripts/validate-offline.mjs",
-      "size_bytes": 4274,
-      "sha256": "0714264bb4a98ada7f69969404f649f40f219a5822559f94a1c99c451236e651"
+      "size_bytes": 4323,
+      "sha256": "8f38e2ae7dd07f132f2aaffccda80af1745784a8619568a0b1af03e55c46b2b4"
     },
     {
       "path": "bot/sql/schema.sql",
@@ -781,8 +796,8 @@
     },
     {
       "path": "bot/src/command-definitions.js",
-      "size_bytes": 69418,
-      "sha256": "ea94abec83f922de9db88cc33b6dd66838a9ade8590a284515f9c64223219a58"
+      "size_bytes": 69706,
+      "sha256": "ab6ea40aa268213ccfcfdf55bbeb69a78968088297b13337e124510b02830323"
     },
     {
       "path": "bot/src/command-schema.js",
@@ -791,8 +806,8 @@
     },
     {
       "path": "bot/src/commands.js",
-      "size_bytes": 149611,
-      "sha256": "f26e066ad95b210765736e84a446ba1b7fffa8cd40cc52ad58e8f415f2914a58"
+      "size_bytes": 150931,
+      "sha256": "f5919f4a95d5e0a61cec0aeea6d7e972b68178023dc2d63f2cd4133f95f0ae45"
     },
     {
       "path": "bot/src/concept-context.js",
@@ -811,8 +826,8 @@
     },
     {
       "path": "bot/src/consequence-reconciliation.js",
-      "size_bytes": 4060,
-      "sha256": "83b863728096d749030275ef7f77bc8d99e12e13c3a0ecc695b6e80fe4f1f8e6"
+      "size_bytes": 4301,
+      "sha256": "9b0d197b31ddf25e91303d13bd6ea3d7d1fc97ec590b1038e76d9889ba4cfac9"
     },
     {
       "path": "bot/src/content-packages.js",
@@ -1015,6 +1030,11 @@
       "sha256": "b4b66002ec584b2bad4ce5483a91ee2b4592361d2e217806cce016ae237749be"
     },
     {
+      "path": "bot/src/narrative-pvp.js",
+      "size_bytes": 19815,
+      "sha256": "2d430f99e8521f92220e285290f3faecb18c66d4b3b58d6a51b52164e75e7916"
+    },
+    {
       "path": "bot/src/negotiations.js",
       "size_bytes": 8132,
       "sha256": "a6f31cc6e3fabb6352046f7351da6e6bc671f7bc5843af9c427fa7fd51120509"
@@ -1100,6 +1120,11 @@
       "sha256": "f089b0b7e9ae34128199895ee8d5c71f94e0632bea3d62e91b9029e4601b277e"
     },
     {
+      "path": "bot/src/pvp-authority.js",
+      "size_bytes": 1296,
+      "sha256": "8adcb9437039dba11672127b022f8a9798ad854acc1b6443d8201ba5c30db64c"
+    },
+    {
       "path": "bot/src/register-commands.js",
       "size_bytes": 943,
       "sha256": "6e34a7d12efbafaf1fcdeb7c905180eeeaba75f3d0b087c98f6d9b7f8514996d"
@@ -1111,8 +1136,8 @@
     },
     {
       "path": "bot/src/roll-collaboration.js",
-      "size_bytes": 26366,
-      "sha256": "1341d721f439bb053f35cfb0c516cb68ecb3f38dc603e0fe98533bfc826ac0a0"
+      "size_bytes": 26468,
+      "sha256": "501dfb61afd4493a10c3b4eaff9ae8851350ef5128bc2eb77c7360228d52cbfe"
     },
     {
       "path": "bot/src/roll-language.js",
@@ -1131,8 +1156,8 @@
     },
     {
       "path": "bot/src/roll-requests.js",
-      "size_bytes": 16164,
-      "sha256": "afff62ca9e1bcbc141a02460757ab9a168c6c526d45e43ccca8506fb6c61fdde"
+      "size_bytes": 16436,
+      "sha256": "ca8e06658dbd22cd1b972a5ce3714433e458b10735d922e19b438d3ea31e5fc6"
     },
     {
       "path": "bot/src/roll-sharing.js",
@@ -1156,8 +1181,8 @@
     },
     {
       "path": "bot/src/rules-arbitration.js",
-      "size_bytes": 8567,
-      "sha256": "14e935d2c828c2385089b527638d1c35ad62f8c578035becf8fa5824f7aceff3"
+      "size_bytes": 8765,
+      "sha256": "6f56446669e7f6cde6eea1188a49940d2393fd435dc92dd7c793895c9aee99c7"
     },
     {
       "path": "bot/src/rules-srd.js",
@@ -1241,8 +1266,8 @@
     },
     {
       "path": "bot/src/state.js",
-      "size_bytes": 32600,
-      "sha256": "a18654e6e6c57aa21cd59130206de5219349c4e8a6be6c6c356fa752fff94e96"
+      "size_bytes": 33498,
+      "sha256": "d1e4eb10e51805bdbd132f41534ca6f313b92792635799a0c6e461ec49cee9f8"
     },
     {
       "path": "bot/src/story-commands.js",
@@ -1291,8 +1316,8 @@
     },
     {
       "path": "bot/src/typed-mechanics.js",
-      "size_bytes": 1826,
-      "sha256": "f94e7b0df497895242fe0897b806e70f315a968f4ca5353feeb76a608d246be1"
+      "size_bytes": 2112,
+      "sha256": "1533474aa06019ca97da5a8b5278807f7a55d875613e27a3667b8ce9abad0252"
     },
     {
       "path": "bot/src/typed-roll-outcomes.js",
@@ -2081,8 +2106,8 @@
     },
     {
       "path": "docs/TYPED_INTENT_CONTRACTS.md",
-      "size_bytes": 28192,
-      "sha256": "7e063d2420b3572f277101bc943e33dd0c7b522a5873861ff1d72fa2cca617ae"
+      "size_bytes": 30209,
+      "sha256": "e923e1a01a60d148b8c4bbf32fb6bddb052e25ce1e864e991bb4cc80e656bbff"
     },
     {
       "path": "docs/TYPED_INTENT_DELTA_AUDIT.md",
@@ -2096,8 +2121,8 @@
     },
     {
       "path": "docs/TYPED_INTENT_PROGRESS.md",
-      "size_bytes": 63932,
-      "sha256": "3d07977a40073bc31f8a096a045078878e721112686270604a0c7edf82c0f2be"
+      "size_bytes": 68726,
+      "sha256": "b6219deb9d3f1983120ef0d7930983aea9bdc9ee11241a34db9c5d2aa26b51be"
     },
     {
       "path": "docs/TYPED_INTENT_RELEASE_10.0.0.md",

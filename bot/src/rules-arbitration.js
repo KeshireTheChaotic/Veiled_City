@@ -5,6 +5,7 @@ import { prepareRollRequest } from "./roll-requests.js";
 import { conversationPrincipal } from "./conversation-principal.js";
 import { currentScene } from "./scene-continuity.js";
 import { resolveRuleReferences } from "./rule-reference-catalog.js";
+import { isPvpIntent } from "./pvp-authority.js";
 
 const modes=new Set(["no_roll","roll_required","native_resolved","human_exception","blocked"]);
 const hash=value=>createHash("sha256").update(JSON.stringify(value)).digest("hex").slice(0,40);
@@ -43,6 +44,7 @@ export function selectRuleBasis(db,guild,{savedRulingKey="",overrideRefs=[],rawR
 export function adjudicateAcceptedIntent(db,guild,input,actor,context={}){
   const scope=context.scope||{},accepted=db.getCityRecord(guild,"typed_intent",cityKey(input.acceptedIntent));
   if(!accepted)throw new Error("Current accepted typed intent required.");
+  if(isPvpIntent(db,guild,accepted))throw new Error("PC conflict requires bilateral narrative PvP, never ordinary action or attack adjudication.");
   const replayKey=`adjudication:${hash([accepted.record_key,input.mode])}`;
   const replay=db.getCityRecord(guild,"native_adjudication",replayKey);
   if(replay)return replay.data;

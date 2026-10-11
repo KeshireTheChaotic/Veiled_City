@@ -1,5 +1,6 @@
 /** Receipt-first action/narration reconciliation; prose projects outcomes but never creates them. */
 import { createHash } from "node:crypto";
+import { pvpAttemptKey } from "./pvp-authority.js";
 
 const digest=value=>createHash("sha256").update(JSON.stringify(value)).digest("hex").slice(0,40);
 function fail(message){throw Object.assign(new Error(message),{code:"CONSEQUENCE_RECONCILIATION"});}
@@ -24,7 +25,9 @@ export function reconcileConsequences(db,guild,{intents=[],narration="",private_
     const row=db.getCityRecord(guild,"typed_intent",original.record_key)||original;
     const adjudication=actionAdjudication(db,guild,row.record_key),receipt=outcomeReceipt(db,guild,row);
     let disposition="unresolved",refs=[];
-    if(receipt?.status==="resolved"){disposition="resolved";refs=[receipt.ref];}
+    const pvp=db.getCityRecord(guild,"pvp_attempt",pvpAttemptKey(guild,row.record_key));
+    if(pvp?.status==="awaiting_stakes"){disposition="pvp_attempt_only";refs=[pvp.record_key];}
+    else if(receipt?.status==="resolved"){disposition="resolved";refs=[receipt.ref];}
     else if(["roll_pending","needs_review"].includes(adjudication?.data.disposition)){
       const request=db.getCityRecord(guild,"roll_request",adjudication.data.roll_request_ref);
       const expected=adjudication.data.disposition==="needs_review"?"needs_review":"pending";

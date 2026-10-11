@@ -265,6 +265,8 @@ export function buildCommands(){
             {name:"Full",value:"full"},{name:"Standard",value:"standard"},{name:"Narrative only",value:"narrative"}))
           .addBooleanOption(o=>o.setName("screen_reader").setDescription("Prefer screen-reader-friendly formatting"))))
       .addSubcommandGroup(g=>g.setName("roll").setDescription("Deterministic dice")
+        .addSubcommand(s=>s.setName("pvp").setDescription("Privately review or negotiate bilateral story-first PC conflict; never damage")
+          .addStringOption(o=>o.setName("json").setDescription("op: inbox, review, propose, revise or respond; exact proposal and terms revision")))
         .addSubcommand(s=>s.setName("contribute").setDescription("Authorize your own request-bound contribution, dice or selected result")
           .addStringOption(o=>o.setName("json").setDescription("Request, current revision, unique key and explicit owned mechanical declaration").setRequired(true)))
         .addSubcommand(s=>s.setName("adjudicate").setDescription("GM: save exact sourced rules, feasibility or active attack adjudication")

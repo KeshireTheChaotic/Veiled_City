@@ -48,6 +48,7 @@ import { beginInteraction, acknowledgeRules, interactionFailure, interactionResp
 import { validateChannelRouting } from "./routing-diagnostics.js";
 import { handleRollMenuInteraction, isRollMenuInteraction, openRollMenu } from "./roll-menu.js";
 import { publishRollPartyDisclosure } from "./roll-sharing.js";
+import { proposePvp, reviewPvp, revisePvp, respondPvp, pvpInbox } from "./narrative-pvp.js";
 
 const interactionQueue=new KeyedSerialQueue();
 
@@ -379,6 +380,23 @@ async function executeCommand(interaction,{db,gm,voice=null}){
   if(await replayReceiptIfPresent({db,interaction,group,sub})) return true;
   const restoreReceiptCapture=installReceiptCapture({db,interaction,group,sub});
   try{
+    if(group==="roll"&&sub==="pvp"){
+      const {op="inbox",...input}=JSON.parse(interaction.options.getString("json")||"{}");
+      let text;
+      if(op==="inbox")text=JSON.stringify(pvpInbox(db,interaction.guildId,interaction.user.id),null,2);
+      else{
+        let key=input.proposal;
+        if(op==="propose")key=proposePvp(db,interaction.guildId,interaction.user.id,input).record_key;
+        else if(op==="revise")key=revisePvp(db,interaction.guildId,interaction.user.id,{...input,interaction_id:interaction.id}).record_key;
+        else if(op==="respond")key=respondPvp(db,interaction.guildId,interaction.user.id,{...input,interaction_id:interaction.id}).record_key;
+        else if(op!=="review")throw new StateConflictError("Use inbox, review, propose, revise or respond for narrative PvP.");
+        text=reviewPvp(db,interaction.guildId,interaction.user.id,key).text;
+      }
+      const chunks=chunkTextLines(text.split("\n"));
+      await interaction.reply({content:chunks[0]||"No current narrative PvP proposals.",ephemeral:true,allowedMentions:{parse:[]}});
+      for(const content of chunks.slice(1))await interaction.followUp({content,ephemeral:true,allowedMentions:{parse:[]}});
+      return true;
+    }
     if(group==="intel"&&["organization","organizations"].includes(sub)){
       const result=sub==="organization"?organizationRequest(db,interaction.guildId,interaction.user.id,JSON.parse(interaction.options.getString("json",true)))
         :organizationInbox(db,interaction.guildId,interaction.user.id);
