@@ -52,6 +52,9 @@ import { proposePvp, reviewPvp, revisePvp, respondPvp, pvpInbox, choosePvp, roll
   authorPvpNarrative, reviewPvpNarrative, sharePvpNarrative, pvpComplication } from "./narrative-pvp.js";
 import { synchronizePvpWindow, windowOperation } from "./window-coordinator.js";
 import { draftPvpNarrative, ratifyPvpClause, reviewPvpScope, reviewPvpDraft, pvpNarrationInbox } from "./pvp-authorship.js";
+import { captureAuthoredTurnEnvelope } from "./authored-turn-envelope.js";
+import { saveVisibleCharacterFacts } from "./character-observation.js";
+import { queueDirectorPublications } from "./publication-outbox.js";
 
 const interactionQueue=new KeyedSerialQueue();
 
@@ -497,7 +500,9 @@ async function executeCommand(interaction,{db,gm,voice=null}){
           mutation=applyAuthoritativeMutation(db,{narrative:result,guildId:interaction.guildId,sessionId:session.id,events:result.events||[],relationships:result.relationships||[],handouts:result.handouts||[],npcMemories:result.npc_memories||[],npcKnowledge:result.npc_knowledge||[],npcGoals:result.npc_goals||[],simulationUpdates:result.simulation_updates||[],scope:{mode:"party",actorUserId:null,actorCharacterId:null},source:"world_director_manual",provenance:{interactionId:interaction.id,actorId:interaction.user.id,triggerText:reason,rationale:result.gm_notes||"",confidence:result.confidence??100}});
           await publishEventResults({db,guild:interaction.guild,results:mutation.events||[]});
           for(const h of (mutation.handouts||[]).filter(x=>x.ok)) await deliverHandout({db,guild:interaction.guild,handout:h.row,format:"markdown"});
-          if(String(result.public_narration||"").trim()) await postPlayMessage({db,guild:interaction.guild,sessionId:session.id,content:result.public_narration});
+          const turnId=queueDirectorPublications(db,{guild:interaction.guild,session,result,
+            scope:{mode:"party",actorUserId:null,actorCharacterId:null},key:`manual:${interaction.id}`});
+          await deliverQueuedTurn({db,guild:interaction.guild,turnId});
         }
         db.recordDirectorHistory(interaction.guildId,{sessionId:session.id,layer:"manual",trigger:{reason,requested_by:interaction.user.id},acted:!!result.act,rationale:result.gm_notes||"",publicNarration:result.public_narration||"",mutationSummary:{events:mutation.events?.length||0,relationships:mutation.relationships?.length||0,handouts:mutation.handouts?.length||0}});
         await postGmLog({db,guild:interaction.guild,sessionId:session.id,title:"World Director — manual",details:`Reason: ${reason}\n${result.gm_notes||"No GM note."}`});
@@ -753,6 +758,20 @@ Initial phase: ${s.assembly_phase}`});
       return true;
     }
 
+    if(group==="character"&&sub==="describe"){
+      const session=db.getActiveSession(interaction.guildId);
+      const assignment=session&&db.activeAssignment(session.id,interaction.user.id);
+      if(!assignment)throw new NotFoundError("Select your character in an active session first.");
+      const input=JSON.parse(interaction.options.getString("json",true));
+      if(Object.keys(input).sort().join(",")!=="facts,observers,text,visibility"||typeof input.text!=="string")
+        throw new UserInputError("Provide only text, facts, observers and visibility.");
+      const envelope=captureAuthoredTurnEnvelope(db,interaction.guildId,interaction.user.id,assignment.character_id,
+        `description:${interaction.id}`,input.text,{privateScene:true});
+      const saved=saveVisibleCharacterFacts(db,interaction.guildId,interaction.user.id,assignment.character_id,
+        {...input,source_event:envelope.source_event});
+      await interaction.reply({content:`Saved ${saved.length} explicit description field(s) with ${input.visibility} visibility.`,ephemeral:true});
+      return true;
+    }
     if(group==="character"&&sub==="create"){
       const name=interaction.options.getString("name",true);
       const data={

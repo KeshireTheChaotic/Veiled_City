@@ -19,6 +19,8 @@ import { hasCharacterInvitation } from "./player-language.js";
 import { interactionResponseExpired } from "./discord/interaction-lifecycle.js";
 import { publishEventResults, postGmLog, postStateError, deliverHandout, postPlayMessage, deliverQueuedTurn } from "./publishing.js";
 import { VoiceNarrator } from "./voice.js";
+import { deliveredPartyOutput } from "./pvp-output.js";
+import { queueDirectorPublications } from "./publication-outbox.js";
 import { KeyedSerialQueue } from "./serial-queue.js";
 import { queueDirectorAfterPartyTurn, blockedMutationRows, describeBlockedAction, lowConfidenceReviewItems, normalizeDirectorConfidence } from "./director.js";
 import { splitDiscordText } from "./discord/chunking.js";
@@ -213,12 +215,12 @@ async function runPendingDirectorPass(guild,session){
   await outputStep(outputErrors,{guild,sessionId:session.id,context:`world-director-${pending.layer}-publish`},()=>publishEventResults({db,guild,results:mutation.events||[]}));
   for(const r of (mutation.events||[]).filter(x=>x.type==="canon"&&x.status==="conflict")) await outputStep(outputErrors,{guild,sessionId:session.id,context:`world-director-${pending.layer}-canon-conflict`},()=>postStateError({db,guild,error:new Error(`Canon conflict ${r.conflict_id} requires GM resolution`),context:`world-director-${pending.layer}-canon-conflict`,sessionId:session.id}));
   for(const h of (mutation.handouts||[]).filter(x=>x.ok)) await outputStep(outputErrors,{guild,sessionId:session.id,context:`world-director-${pending.layer}-handout:${h.row.id}`},()=>deliverHandout({db,guild,handout:h.row,format:"markdown"}));
-  if(String(result.public_narration||"").trim()) await outputStep(outputErrors,{guild,sessionId:session.id,context:`world-director-${pending.layer}-narration`},()=>postPlayMessage({db,guild,sessionId:session.id,content:result.public_narration}));
+  await outputStep(outputErrors,{guild,sessionId:session.id,context:`world-director-${pending.layer}-narration`},async()=>{
+    const turnId=queueDirectorPublications(db,{guild,session,result,scope:{mode:"party",actorUserId:null,actorCharacterId:null},
+      key:`${session.id}:${pending.layer}:${pending.queued_at||pending.round_number||pending.scene_label}`});
+    return deliverQueuedTurn({db,guild,turnId});
+  });
   const pms=allowedPrivateMessages(session,result.private_messages||[],{mode:"party"});
-  for(const pm of pms.deliver){
-    const a=db.activeAssignment(session.id,pm.discord_user_id);
-    await outputStep(outputErrors,{guild,sessionId:session.id,context:`world-director-${pending.layer}-private:${pm.discord_user_id}`},()=>sendPrivate(guild,pm.discord_user_id,`**Veilkeeper — private world movement:**\n${pm.content}`,session.id,a?.character_id||null));
-  }
   if(pms.blocked.length){
     await outputStep(outputErrors,{guild,sessionId:session.id,context:`world-director-${pending.layer}-private-blocked`},()=>notifyBlockedActions({guild,session,rows:pms.blocked.map(x=>({type:"private_message",error:"World-director private message targeted a user outside the active session roster."})),context:`world director/${pending.layer}`}));
   }
@@ -263,10 +265,13 @@ async function runPrivateSceneDirector({guild,session,actorUserId,actorCharacter
   const blocked=blockedMutationRows(mutation);
   if(blocked.length) await outputStep(outputErrors,{guild,sessionId:session.id,context:"private-scene-director-blocked"},()=>notifyBlockedActions({guild,session,actorUserId,actorCharacterId,rows:blocked,context:"private scene director"}));
   for(const h of (mutation.handouts||[]).filter(x=>x.ok)) await outputStep(outputErrors,{guild,sessionId:session.id,context:`private-scene-director-handout:${h.row.id}`},()=>deliverHandout({db,guild,handout:h.row,format:"markdown"}));
-  if(String(result.public_narration||"").trim()) await outputStep(outputErrors,{guild,sessionId:session.id,context:"private-scene-director-narration"},()=>sendPrivate(guild,actorUserId,`**Veilkeeper — scene transition:**\n${result.public_narration}`,session.id,actorCharacterId||null));
+  await outputStep(outputErrors,{guild,sessionId:session.id,context:"private-scene-director-narration"},async()=>{
+    const turnId=queueDirectorPublications(db,{guild,session,result,scope,
+      key:`private:${session.id}:${actorUserId}:${sceneReview.label}:${db.getSimulationClock(guild.id).minute}`});
+    return deliverQueuedTurn({db,guild,turnId});
+  });
   const pms=allowedPrivateMessages(session,result.private_messages||[],scope);
   if(pms.blocked.length) await outputStep(outputErrors,{guild,sessionId:session.id,context:"private-scene-director-message-blocked"},()=>notifyBlockedActions({guild,session,actorUserId,actorCharacterId,rows:pms.blocked.map(()=>({type:"private_message",error:"Private scene director attempted to message another player."})),context:"private scene director message scope"}));
-  for(const pm of pms.deliver) await outputStep(outputErrors,{guild,sessionId:session.id,context:"private-scene-director-private"},()=>sendPrivate(guild,pm.discord_user_id,`**Veilkeeper — private world movement:**\n${pm.content}`,session.id,actorCharacterId||null));
   await outputStep(outputErrors,{guild,sessionId:session.id,context:"private-scene-director-gm-log"},()=>postGmLog({db,guild,sessionId:session.id,title:"World Director — private scene transition",details:`Scene: ${sceneReview.label}\n${result.gm_notes||"No GM note."}\nEvents: ${(mutation.events||[]).filter(x=>x.ok).map(x=>x.type).join(", ")||"none"}`}));
   db.recordDirectorHistory(guild.id,{sessionId:session.id,layer:"scene",trigger:{scope:"private",actor_user_id:actorUserId,scene_label:sceneReview.label,reason:sceneReview.reason},acted:!!result.act,rationale:result.gm_notes||"",publicNarration:result.public_narration||"",mutationSummary:{events:(mutation.events||[]).filter(x=>x.ok).length,relationships:(mutation.relationships||[]).filter(x=>x.ok).length,handouts:(mutation.handouts||[]).filter(x=>x.ok).length,npc_memories:(mutation.npcMemories||[]).filter(x=>x.ok).length,npc_knowledge:(mutation.npcKnowledge||[]).filter(x=>x.ok).length,npc_goals:(mutation.npcGoals||[]).filter(x=>x.ok).length},status:"completed"});
   db.audit(guild.id,session.id,"ai","world_director","director_scene_private",{actor:actorUserId,scene:sceneReview,result:{act:result.act,gm_notes:result.gm_notes}});
@@ -511,8 +516,9 @@ async function processPartyTurn(message,directMention,attempt=null){
     if(delivery.pending.length)throw new Error(`${delivery.pending.length} committed publication part(s) remain pending.`);
     return delivery;
   });
-  if(outboxDelivery&&result.narration?.trim()){
-    voice.narrate(message.guild,result.narration).then(r=>{
+  const approvedSpeech=outboxDelivery?deliveredPartyOutput(db,message.guild.id,attempt.turn_id):"";
+  if(approvedSpeech.trim()){
+    voice.narrate(message.guild,approvedSpeech,{turnId:attempt.turn_id}).then(r=>{
       if(!r.ok&&r.reason==="queue_full") console.warn(`Voice narration queue full in guild ${message.guild.id}; narration was not synthesized.`);
     }).catch(async err=>{
       console.error("Voice narration failed",err);

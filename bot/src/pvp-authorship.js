@@ -2,7 +2,7 @@
 import { createHash } from "node:crypto";
 import { pvpOwnerContext } from "./narrative-pvp.js";
 import { indexWorldEvent } from "./city-calendar.js";
-import { currentScene } from "./scene-continuity.js";
+export { assertPvpOutput } from "./pvp-output.js";
 
 const hash=value=>createHash("sha256").update(JSON.stringify(value)).digest("hex");
 const key=(kind,value)=>`${kind}:${hash(value).slice(0,40)}`;
@@ -275,22 +275,4 @@ export function reviewPvpScope(db,guild,user,input,{gm=false}={}){
     return db.saveCityRecord(guild,{kind:"pvp_narrative_scope_review",key:k,status:input.decision,source_event:d.source_event,
       visibility:"character",subject_key:d.subject_key,data:{...data,audit_ref:typeof audit==="string"?audit:audit?.id||null}});
   });
-}
-/** Strict PvP output surface: arbitrary generated connective text cannot prove character agency. */
-export function assertPvpOutput(db,guild,result,scope={mode:"party"}){
-  if(!db.getActiveSession(guild))return;
-  const scene=currentScene(db,guild),proposals=db.listCityRecords(guild,{kind:"pvp_proposal",includeGM:true,limit:500})
-    .filter(p=>p.data.scene===scene.key&&p.data.session_id===scene.session_id
-      &&(!scope.actorUserId||p.data.participants.some(w=>w.user===scope.actorUserId)));
-  if(!proposals.length)return;
-  const outputs=[result.narration,result.public_narration,result.player_summary,...(result.private_messages||[]).map(m=>m.content)]
-    .filter(v=>String(v||"").trim());
-  for(const text of outputs){
-    if(text==="The agreed contest is complete. Each player controls their own response."
-      &&proposals.every(p=>!!p.data.resolution_receipt))continue;
-    const projection=db.listCityRecords(guild,{kind:"pvp_public_projection",includeGM:true,limit:500})
-      .find(p=>p.data.text===text&&proposals.some(v=>v.record_key===p.data.proposal));
-    if(!projection)fail("PvP narration needs independently verified clauses; generated prose requires private scope review.");
-    pvpProjection(db,guild,projection.record_key);
-  }
 }

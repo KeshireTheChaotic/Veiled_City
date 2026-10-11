@@ -1,20 +1,21 @@
-# Veiled City — Typed-Intent v9.2 Resume / PvP Authorship Safety Addendum
+# Veiled City — v9.3.1 pre-implementation amendment
 
-Prepared 2026-10-11 for `KeshireTheChaotic/Veiled_City`, branch `codex/typed-intent-refinement`.
+**Revises v9.3 BEFORE implementation starts.** Source checkpoint retained: `codex/typed-intent-refinement` GitHub `bf6b592d2ea1e44c9c666770b533e0800176c102` (2026-10-11). Completed V9-00, V9-01, V9-PVP-A and V9-02 remain untouched. **V9-PVP-B and D08 remain BLOCKED; V9-03–V9-08 remain unstarted.** Recorded baseline, not freshly tested: `npm run check` PASS; `npm run validate` 105 passing suites / 1 failing (two cross-actor assertions). Local dirty state must be checked by Codex.
 
-**Latest remotely reviewed HEAD:** `55b006ece3ab3cf4508c1531fee0e153cf0519eb`. This is a **work-in-progress checkpoint**, NOT a passing V9-PVP-B phase commit. Completed phase baselines: V9-00 `c4e08d78f347ffafc8c7e64cff825fdce868bc29`, V9-01 `697f088fe3c6c576472718c5ec34f903ccb1e2bd`, V9-PVP-A `2b8d807d11cfe15e47b8eeed2d17ac912203091f`, V9-02 `1149dc908636d78177e3e38a3e850c2de0215500`. `docs/TYPED_INTENT_PROGRESS.md` records reported full offline status **104 passed, 1 failing suite** (`v9-pvp-rounds-test`, PVP30). These historical suite reports were read, not rerun for this package. D08 remains BLOCKED.
+## What changed
 
-## Policy decision
+The prior cross-actor PvP publication fix still applies. **New binding requirement:** Players may ask questions about another PC's appearance, current visible condition, witnessed actions/dialogue, whereabouts or background without obtaining new consent merely to ask. The GM may answer from actual observer-visible, owner-authored or native-established evidence. **Missing or partial appearance is an ordinary information gap, never a turn-failing security error**. Give a truthful partial/unknown answer; optionally ask the character's owner privately to describe themselves, without requiring a reply or revealing secrets. No free pass for inventing speech, emotional reactions, permanent physical traits, injuries or private activities.
 
-**Separately source-verified per-player clauses are required for authoritative and party-facing PvP narration.** Ambiguous or unverifiable text goes to a nonauthoritative pending-review state. A human GM may ask for clarification or review permitted environmental phrasing, but cannot impersonate an affected player, approve their reaction, or expand locked stakes. Affected owners must independently author or ratify their own character's material clause. Merely labeling a sentence as the winner's statement or obtaining bilateral permission to *publish* it is not sufficient.
+The output-authority composer gains a trusted `observation_answer` pathway and optional owner-private description invitation. This prevents a broad PvP guard from freezing ordinary roleplay. Preserves PVP30 and both Billy/PVP30q blockers unchanged. The new `OBS01–OBS22` test set makes this behavior mandatory.
 
-## Files
+## Package contents and use
 
-- `V9_2_IMPLEMENTATION_PLAN.md` — phase reconciliation, V9-PVP-B repair sequence and remaining V9-03–V9-08 scope.
-- `V9_2_PVP_AUTHORSHIP_CONTRACT.md` — exact source/effect/audience model and fail-closed text treatment.
-- `V9_2_SOURCE_AUDIT.md` — pinned GitHub source findings, tested vs untested boundaries.
-- `V9_2_REGRESSION_MATRIX.csv` — inherited v9.1 scenario inventory plus 20 new authorship/boundary cases.
-- `V9_2_CODEX_RESUME.md` — targeted resume instructions, preserve checkpoint and commit only after all gates green.
-- `V9_1_NARRATIVE_PVP_CONTRACT_REFERENCE.md` — prior unchanged gameplay contract for full context.
+1. **`V9_3_IMPLEMENTATION_PLAN.md`** — amended B.1–B.6, later carry-forward phases and acceptance.
+2. **`V9_3_OUTPUT_AUTHORITY_CONTRACT.md`** — amended publication policy with observation compatibility.
+3. **`V9_3_1_OBSERVATION_CONTRACT.md`** — normative evidence, perception, unknown-answer and owner invitation requirements.
+4. **`V9_3_REGRESSION_MATRIX.csv`** — original 115 tests + 22 new tests = **137 cases**, all IDs unique.
+5. **`V9_3_CODEX_RESUME.md`** — updated copy/paste continuation from current P0 stop, including observation cases.
+6. **`V9_3_SOURCE_AUDIT.md`** — carried-forward source audit with clearly labeled *new requirement*, not fabricated finding.
+7. **`REFERENCE_V9_2_AUTHORSHIP_CONTRACT.md`** — unchanged prior normative source reference.
 
-**Audit only:** no source modifications, tests, production DB access, bot startup, command registration or paid model calls are claimed by this planning package. The developer's *local* uncommitted work is not visible through GitHub; reconcile working tree before touching files.
+No repository edits, local Codex test execution, bot startup, production DB access, or paid APIs were performed. This ZIP only revises the source audit and implementation instructions.

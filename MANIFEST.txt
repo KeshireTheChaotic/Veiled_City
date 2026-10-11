@@ -126,6 +126,7 @@ bot/scripts/v7-delta-baseline-test.mjs
 bot/scripts/v9-action-consent-test.mjs
 bot/scripts/v9-baseline-regressions-test.mjs
 bot/scripts/v9-fixtures.mjs
+bot/scripts/v9-observation-compatibility-test.mjs
 bot/scripts/v9-pvp-agreement-test.mjs
 bot/scripts/v9-pvp-authorship-test.mjs
 bot/scripts/v9-pvp-contract-test.mjs
@@ -149,6 +150,7 @@ bot/src/authority-projection.js
 bot/src/autonomous-world.js
 bot/src/character-export.js
 bot/src/character-narrative.js
+bot/src/character-observation.js
 bot/src/character-system.js
 bot/src/city-calendar.js
 bot/src/city-civic.js
@@ -226,6 +228,7 @@ bot/src/publication-outbox.js
 bot/src/publishing.js
 bot/src/pvp-authority.js
 bot/src/pvp-authorship.js
+bot/src/pvp-output.js
 bot/src/pvp-rounds.js
 bot/src/pvp-terminal.js
 bot/src/register-commands.js
@@ -408,6 +411,7 @@ docs/PARTY_ASSEMBLY.md
 docs/PLAYER_LIFECYCLE.md
 docs/README.md
 docs/README_HOTFIX.md
+docs/REFERENCE_V9_2_AUTHORSHIP_CONTRACT.md
 docs/RELATIONSHIP_GRAPH.md
 docs/RELAX_IMPLEMENTATION.md
 docs/RULES_DESK.md
@@ -461,6 +465,12 @@ docs/V9_2_IMPLEMENTATION_PLAN.md
 docs/V9_2_PVP_AUTHORSHIP_CONTRACT.md
 docs/V9_2_REGRESSION_MATRIX.csv
 docs/V9_2_SOURCE_AUDIT.md
+docs/V9_3_1_OBSERVATION_CONTRACT.md
+docs/V9_3_CODEX_RESUME.md
+docs/V9_3_IMPLEMENTATION_PLAN.md
+docs/V9_3_OUTPUT_AUTHORITY_CONTRACT.md
+docs/V9_3_REGRESSION_MATRIX.csv
+docs/V9_3_SOURCE_AUDIT.md
 docs/V9_CODEX_KICKOFF.md
 docs/V9_IMPLEMENTATION_PLAN.md
 docs/V9_NARRATIVE_PVP_CONTRACT.md

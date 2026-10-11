@@ -211,3 +211,23 @@ The base matrix records T00/T05a boundaries. The following sections record the i
 The authenticated raw source remains available to contextual reasoning even when native handlers consume a clause. The GM receives a separate unconsumed-input view and span ledger; a consumed source occurrence cannot be accepted or executed again. Identical text at distinct offsets is distinct intent, while replay of the same occurrence returns the same proposal and acceptance records.
 
 Accepted typed intents are canonical adjudication inputs; human declarations own intent; native receipts own outcomes.
+
+## V9.3.1 output and observation draft — NOT phase-qualified
+
+The following boundaries describe the current uncommitted V9-PVP-B draft, not a release approval. The mandatory NPC/scenery compatibility gate is red; see the latest progress entry. V9-03–08 and D08 release qualification are not complete.
+
+| Evidence / interface | May authorize | Does not authorize |
+|---|---|---|
+| Native PvP agreement, scene/participants and actual destination audience | Relevant protected output scope, independent of triggering poster | Excluding another participant because Billy triggered generation; a blanket campaign freeze |
+| Saved current clause + independent affected-owner ratification + disclosure | Exactly its independently source-verified clause for the approved audience | A raw paragraph, extra response, private stake publication, or GM speaking for a PC |
+| Current native arrival receipt with source/principal proof | Safe acknowledgement of that committed arrival | A new move, a forced opponent reaction, or unobserved private destination disclosure |
+| Authenticated PC observation request | Read-side inquiry and truthful known/partial/unknown answer | A new appearance, injury, reaction, remote perception or private sheet access |
+| Explicit owner-selected appearance fields and opted disclosure | Those bounded visible attributes for entitled observers | Promoting the rest of the private submission, hidden identity or unseen equipment |
+| Source-bound native witness receipt | Exact legitimately heard speech / last witnessed activity | Truth of a quoted claim, OOC/private speech, unseen current whereabouts |
+| Prepared output parts, outbox binding and use-time revalidation | Only the exact source-, owner-, terms- and audience-valid rendered payload | Model `safe/verified/prepared` flags; stale source or legacy prose; a second mechanical outcome |
+| Private scope review / quarantine | Noncanonical review and rewrite/ratification requests | PC consent, objective memory, public cognition, canon, or automatic later model reuse |
+| Delivered audience-correct saved output with current source proof | Protected TTS and cached replay of that same output | Raw generated shadow narration or revoked cached audio |
+
+State authorization and publication authorization are separate. Quarantining a generated paragraph does not undo an independently authorized native action; an unsupported parallel state mutation still fails transactionally. Missing PC appearance is a successful nonblocking answer, not a roll or consent failure. Questions and referent resolution never create evidence for their answers.
+
+Current limitation: native NPC/environment projection and remaining sink/compatibility tests are incomplete. Do not treat the conservative generic fallback as acceptable normal GM narration, relax the security checks, or mark this draft green until those requirements pass their actual production-path tests. No SQL migration or historical narrative blessing is implied.

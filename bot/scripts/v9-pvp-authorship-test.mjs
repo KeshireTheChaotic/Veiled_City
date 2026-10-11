@@ -170,3 +170,134 @@ test("PVP30q actual outbox cannot enqueue cross-actor unverified apology",()=>na
   assert.throws(()=>queueTurnPublications(f.db,{guild:{id:f.guild},session:f.session,result,scope,turnId:turn.turn_id}),/PvP|clause/i);
   assert.equal(f.db.listTurnPublications(f.guild,turn.turn_id).length,0);
 }));
+
+test("PVP30w high-level Billy movement survives quarantined cross-actor paragraph",()=>nativeFixture(async f=>{
+  const {captureWorldInput}=await import("../src/autonomous-world.js");
+  const {commitGmTurn}=await import("../src/turn-orchestration.js");
+  resolved(f);const source="I enter the annex.",scope={mode:"party",actorUserId:f.pcs[2].owner_user_id,actorCharacterId:f.pcs[2].id};
+  f.db.setSimulationEntity(f.guild,"location","terminal",{name:"Terminal"});
+  f.db.setSimulationEntity(f.guild,"location","annex",{name:"Annex",parent_location_key:"terminal"});
+  f.db.saveCityRecord(f.guild,{kind:"autonomous_entity",key:"location:annex",visibility:"party",
+    source_event:rows(f,"pvp_proposal")[0].source_event,status:"active",data:{kind:"location",key:"annex",name:"Annex"}});
+  captureWorldInput(f.db,f.guild,scope.actorUserId,scope.actorCharacterId,"mixed-move",source);
+  const turn=f.db.beginTurnAttempt({guildId:f.guild,messageId:"mixed-move",actorPrincipal:scope.actorUserId,
+    sessionId:f.session.id,audience:"party"});
+  const result={respond:true,narration:"Billy enters. Choso apologizes for losing.",narrative_claims:[],
+    player_summary:"Choso apologizes for losing.",context_memories:[],
+    player_intents:[{type:"move",source_span:source,target_name:"Annex",target_key:"annex",destination:"interior",
+      operation:"",utterance:"",excluded_targets:[],framing:"immediate",resolution:"auto",reason:"Open local entry."}],
+    scene_actions:[{kind:"move",entity_ref:"annex",source_span:source,zone:"interior"}]};
+  const before=f.db.getCityRecord(f.guild,"pvp_resolution_receipt",f.db.getCityRecord(f.guild,"pvp_proposal",
+    rows(f,"pvp_proposal")[0].record_key).data.resolution_receipt);
+  const committed=commitGmTurn({db:f.db,guild:{id:f.guild},session:f.session,result,scope,speaker:"Billy",label:"mixed",
+    meta:{messageId:"mixed-move",turnId:turn.turn_id,triggerText:source}});
+  assert(committed.world.some(r=>r.status==="arrived"));assert.equal(f.db.getCharacter(f.pcs[2].id).data.location,"annex");
+  const publications=f.db.listTurnPublications(f.guild,turn.turn_id);
+  assert(publications.some(r=>/annex/i.test(r.payload)));assert(!JSON.stringify(publications).includes("apologizes"));
+  assert(!result.player_summary.includes("apologizes"));assert(rows(f,"pvp_output_quarantine").length);
+  assert.deepEqual(f.db.getCityRecord(f.guild,"pvp_resolution_receipt",before.record_key),before);
+}));
+
+test("PVP30ad forged prepared flag is not an output capability",()=>nativeFixture(f=>{
+  resolved(f);const scope={mode:"party",actorUserId:f.pcs[2].owner_user_id,actorCharacterId:f.pcs[2].id};
+  assert.throws(()=>validateNarrativeClaims(f.db,f.guild,{narration:"Choso apologizes for losing.",narrative_claims:[],
+    approved:true,prepared:true,approved_parts:[{kind:"owner_clause",verified:true}]},scope),/PvP|clause/i);
+}));
+
+test("PVP30ai restart source revocation holds saved output before transport",()=>nativeFixture(async f=>{
+  const {prepareAuthorizedTurnOutput}=await import("../src/pvp-output.js");
+  const {deliverTurnOutbox}=await import("../src/publication-outbox.js");
+  const {captureWorldInput}=await import("../src/autonomous-world.js");
+  resolved(f);const scope={mode:"party",actorUserId:f.pcs[2].owner_user_id,actorCharacterId:f.pcs[2].id};
+  const source=captureWorldInput(f.db,f.guild,scope.actorUserId,scope.actorCharacterId,"revoked-output","I wait.");
+  const result={narration:"Choso apologizes for losing.",narrative_claims:[]};
+  prepareAuthorizedTurnOutput(f.db,f.guild,result,scope,{sourceRef:source.event_key});
+  const turn=f.db.beginTurnAttempt({guildId:f.guild,messageId:"revoked-output",actorPrincipal:scope.actorUserId,
+    sessionId:f.session.id,audience:"party"});
+  queueTurnPublications(f.db,{guild:{id:f.guild},session:f.session,result,scope,turnId:turn.turn_id});
+  indexWorldEvent(f.db,f.guild,{key:source.event_key,status:"retracted"},scope.actorUserId);f.restart();
+  let sends=0;const out=await deliverTurnOutbox(f.db,f.guild,turn.turn_id,async()=>{sends++;return {messageId:"sent"};});
+  assert.equal(sends,0);assert.equal(out[0].ok,false);
+}));
+
+test("PVP30ab unsupported model facts cannot become shared state behind safe output",()=>nativeFixture(async f=>{
+  const {commitGmTurn}=await import("../src/turn-orchestration.js");
+  resolved(f);const scope={mode:"party",actorUserId:f.pcs[2].owner_user_id,actorCharacterId:f.pcs[2].id};
+  const result={respond:true,narration:"Choso apologizes for losing.",narrative_claims:[],
+    events:[{type:"fact",key:"forged-apology",value:"Choso apologizes for losing.",visibility:"party"}]};
+  assert.throws(()=>commitGmTurn({db:f.db,guild:{id:f.guild},session:f.session,result,scope,speaker:"Billy",label:"bad fact"}),
+    /PvP|source|authoriz|proof/i);
+  assert(!JSON.stringify(f.db.contextFacts(f.guild,{scope:"gm",limit:100})).includes("apologizes"));
+}));
+
+for(const mode of ["party","private"])test(`PVP30y/PVP30z actual ${mode} director output is prepared and delivered only through saved parts`,
+()=>nativeFixture(async f=>{
+  const {GMService}=await import("../src/gm.js"),{ContentIndex}=await import("../src/content.js");
+  const {FakeResponses}=await import("./contract-fixtures.mjs"),{applyAuthoritativeMutation}=await import("../src/state.js");
+  const {queueDirectorPublications,deliverTurnOutbox}=await import("../src/publication-outbox.js");
+  const path=await import("node:path");resolved(f);
+  const scope={mode,actorUserId:mode==="private"?f.pcs[2].owner_user_id:null,actorCharacterId:mode==="private"?f.pcs[2].id:null};
+  const ai=new FakeResponses([{act:true,public_narration:"Choso apologizes for losing.",narrative_claims:[],
+    private_messages:[{discord_user_id:f.pcs[2].owner_user_id,content:"Choso apologizes for losing."}],events:[],
+    relationships:[],handouts:[],npc_memories:[],npc_knowledge:[],npc_goals:[],simulation_updates:[],ai_intents:[],confidence:100,gm_notes:""}]);
+  const gm=new GMService({db:f.db,content:new ContentIndex(path.resolve("../content")),ai,config:{gmModel:"fixture",maxRecentMessages:5,maxContentChunks:1}});
+  const result=await gm.runWorldDirector({guildId:f.guild,layer:"manual",trigger:{scope:mode,
+    actor_user_id:scope.actorUserId,actor_character_id:scope.actorCharacterId}});
+  applyAuthoritativeMutation(f.db,{guildId:f.guild,sessionId:f.session.id,narrative:result,scope});
+  const turnId=queueDirectorPublications(f.db,{guild:{id:f.guild},session:f.session,result,scope,key:`test:${mode}`});
+  const sent=[];await deliverTurnOutbox(f.db,f.guild,turnId,async row=>{sent.push(row);return {messageId:`sent-${sent.length}`};});
+  assert(sent.length);assert(sent.every(r=>!r.payload.includes("apologizes")));
+  if(mode==="private")assert(sent.every(r=>r.target_user_id===scope.actorUserId));
+  assert.equal(ai.requests.length,1);
+}));
+
+test("PVP30aa voice refuses raw cross-actor narration before any synthesis",()=>nativeFixture(async f=>{
+  const {VoiceNarrator}=await import("../src/voice.js");resolved(f);let calls=0;
+  const voice=new VoiceNarrator({voiceEnabled:true},{db:f.db,getConnection:()=>({}),synthesize:async()=>{calls++;return Buffer.alloc(0);}});
+  const result=await voice.narrate({id:f.guild},"Choso apologizes for losing.",{force:true});
+  assert.equal(result.reason,"unverified_output");assert.equal(calls,0);
+}));
+
+test("PVP30ag unrelated native scene retains ordinary narration",()=>nativeFixture(f=>{
+  resolved(f);const director=f.db.getDirectorState(f.session.id);
+  f.db.setDirectorState(f.session.id,{scene_number:director.scene_number+1});
+  assert.doesNotThrow(()=>validateNarrativeClaims(f.db,f.guild,{narration:"Rain falls on the pavement.",narrative_claims:[]},
+    {mode:"party",actorUserId:f.pcs[2].owner_user_id,actorCharacterId:f.pcs[2].id}));
+}));
+
+test("PVP30ai voice repeat must revalidate revoked owner clause before replaying cached audio",()=>nativeFixture(async f=>{
+  const {VoiceNarrator}=await import("../src/voice.js"),{prepareAuthorizedTurnOutput,deliveredPartyOutput}=await import("../src/pvp-output.js");
+  const {deliverTurnOutbox}=await import("../src/publication-outbox.js");
+  const {base}=resolved(f),n=authorPvpNarrative(f.db,f.guild,f.pcs[0].owner_user_id,base);published(f,n,base);
+  const scope={mode:"party",actorUserId:f.pcs[2].owner_user_id,actorCharacterId:f.pcs[2].id},result={narration:"untrusted draft"};
+  prepareAuthorizedTurnOutput(f.db,f.guild,result,scope);
+  const turn=f.db.beginTurnAttempt({guildId:f.guild,messageId:"voice-replay",actorPrincipal:scope.actorUserId,
+    sessionId:f.session.id,audience:"party"});
+  queueTurnPublications(f.db,{guild:{id:f.guild},session:f.session,result,scope,turnId:turn.turn_id});
+  await deliverTurnOutbox(f.db,f.guild,turn.turn_id,async()=>({messageId:"offline-voice-publication"}));
+  const text=deliveredPartyOutput(f.db,f.guild,turn.turn_id);
+  const voice=new VoiceNarrator({voiceEnabled:true,voiceMode:"on",voiceMaxCharsPerTurn:4000,voiceMaxQueue:5},
+    {db:f.db,getConnection:()=>({}),synthesize:async()=>Buffer.from("offline-fake-audio")});
+  voice.ffmpegAvailable=true;voice._enqueueReserved=()=>{};let replays=0;voice._enqueue=()=>{replays++;return true;};
+  assert.equal((await voice.narrate({id:f.guild},text,{force:true,turnId:turn.turn_id})).ok,true);
+  indexWorldEvent(f.db,f.guild,{key:n.source_event,status:"retracted"},f.pcs[0].owner_user_id);
+  assert.throws(()=>voice.repeat(f.guild),/source|clause|proof|authoriz|revok/i);
+  assert.equal(replays,0);
+}));
+
+test("OBS21 native NPC description inquiry must not be swallowed by unrelated PC PvP protection",()=>nativeFixture(async f=>{
+  const {captureWorldInput}=await import("../src/autonomous-world.js"),{commitGmTurn}=await import("../src/turn-orchestration.js");
+  resolved(f);f.db.upsertNpcProfile(f.guild,{npcKey:"station-attendant",displayName:"Station Attendant",
+    publicIdentity:"The station attendant wears a blue coat.",portrayal:"An ordinary station attendant.",source:"gm"});
+  f.db.setSimulationEntity(f.guild,"npc","station-attendant",{name:"Station Attendant",location_key:"terminal"});
+  const pc=f.pcs[2],text="What does the station attendant look like?",scope={mode:"party",actorUserId:pc.owner_user_id,actorCharacterId:pc.id};
+  captureWorldInput(f.db,f.guild,pc.owner_user_id,pc.id,"npc-description-question",text);
+  const result={respond:true,narration:"The station attendant wears a blue coat.",narrative_claims:[],player_intents:[{
+    type:"observe",source_span:text,target_name:"Station Attendant",target_key:"station-attendant",destination:"unspecified",
+    operation:"appearance",utterance:"",excluded_targets:[],framing:"immediate",resolution:"conversational",reason:"NPC description inquiry."}]};
+  commitGmTurn({db:f.db,guild:{id:f.guild},session:f.session,result,scope,speaker:pc.name,label:"NPC inquiry",
+    meta:{messageId:"npc-description-question",triggerText:text}});
+  assert.match(result.narration,/station attendant/i);
+  assert.match(result.narration,/blue coat/i);
+  assert(!result.narration.includes("apologizes"));
+}));

@@ -64,6 +64,9 @@ export function buildCommands(){
             {name:"Human proxy controls PC",value:"proxy"}))
           .addUserOption(o=>o.setName("proxy").setDescription("Required for proxy mode"))))
       .addSubcommandGroup(g=>g.setName("character").setDescription("Character lifecycle")
+        .addSubcommand(s=>s.setName("describe").setDescription("Privately save explicit owner-authored visible description fields")
+          .addStringOption(o=>o.setName("json").setDescription("text, facts[{field,value,start,end}], visibility party|character, observers[]")
+            .setRequired(true)))
         .addSubcommand(s=>s.setName("create").setDescription("Create a basic character record")
           .addStringOption(o=>o.setName("name").setDescription("Character name").setRequired(true))
           .addStringOption(o=>o.setName("class").setDescription("Daggerheart class"))
@@ -585,7 +588,7 @@ export function buildCommands(){
     .toJSON());
   const splitMap={
     character:{
-      "vc-character":["create","import","context-export","import-gm-hooks","narrative-import","narrative-export","list","select","sheet","export","export-gm","retire","death"],
+      "vc-character":["describe","create","import","context-export","import-gm-hooks","narrative-import","narrative-export","list","select","sheet","export","export-gm","retire","death"],
       "vc-level":["level-up","level-choose","level-confirm"]
     },
     encounter:{

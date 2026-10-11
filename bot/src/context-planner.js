@@ -13,7 +13,8 @@ export class ContextPlanner {
     const budget=Math.max(100,Math.min(6000,Number(maxTokens)||4000)),terms=[...new Set(tokens(`${query} ${scene}`))].slice(0,8);
     const candidates=new Map(),withheld=[];
     const add=(source,data,priority=0)=>{
-      if(data?.kind?.startsWith("pvp_"))return; // Dedicated native projections own disclosure, not general GM retrieval.
+      if(data?.kind?.startsWith("pvp_")||["character_visible_fact","character_perception_receipt"].includes(data?.kind))return;
+      if(data?.kind==="authored_turn"&&data.details?.discord_message_id?.startsWith("description:"))return;
       const text=JSON.stringify(data);const score=terms.reduce((n,word)=>n+(text.toLowerCase().includes(word)?10:0),priority);
       candidates.set(source,{source,data,priority:score,estimated_tokens:Math.ceil((text.length+source.length+80)/3)});
     };

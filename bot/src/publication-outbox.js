@@ -2,6 +2,7 @@
 import { createHash } from "node:crypto";
 import { splitDiscordText } from "./discord/chunking.js";
 import { assertPvpOutput } from "./pvp-authorship.js";
+import { bindOutputPublication, revalidateOutputPublication } from "./pvp-output.js";
 
 const digest=value=>createHash("sha256").update(String(value)).digest("hex");
 
@@ -17,9 +18,12 @@ export function queueTurnPublications(db,{guild,session,result,scope,turnId,chan
   if(!turnId)return [];
   const rows=[];let ordinal=0;
   const add=(surface,payload,options={})=>{
-    for(const part of splitDiscordText(payload))rows.push(db.enqueuePublication(guild.id,{turnId,surface,ordinal:ordinal++,
+    for(const part of splitDiscordText(payload)){
+      const row=db.enqueuePublication(guild.id,{turnId,surface,ordinal:ordinal++,
       visibility:options.visibility||"party",targetUserId:options.targetUserId||null,
-      targetCharacterId:options.targetCharacterId||null,channelId:options.channelId||null,payload:part,payloadHash:digest(part)}));
+      targetCharacterId:options.targetCharacterId||null,channelId:options.channelId||null,payload:part,payloadHash:digest(part)});
+      bindOutputPublication(db,guild.id,result,row,part);rows.push(row);
+    }
   };
   if(String(result.narration||"").trim())add(scope.mode==="private"?"private_scene":"party",result.narration,{
     visibility:scope.mode==="private"?(scope.actorCharacterId?"character":"player"):"party",
@@ -37,6 +41,20 @@ export function queueTurnPublications(db,{guild,session,result,scope,turnId,chan
   return rows;
 }
 
+/** Direct director adapters use the same persisted, revalidated publication path as ordinary turns. */
+export function queueDirectorPublications(db,{guild,session,result,scope,key}){
+  if(!key)throw new Error("Stable native director cycle/interaction key required.");
+  return db.transaction(()=>{
+    assertPvpOutput(db,guild.id,result,scope);
+    if(!result.narration&&result.public_narration)result.narration=result.public_narration;
+    const turn=db.beginTurnAttempt({guildId:guild.id,sessionId:session.id,messageId:`director:${digest(key)}`,
+      actorPrincipal:scope.actorUserId||"__world_director__",audience:scope.mode});
+    queueTurnPublications(db,{guild,session,result,scope,turnId:turn.turn_id});
+    db.updateTurnAttempt(turn.turn_id,{stage:"committed",committed:"yes",nativeCommitId:`director:${key}`});
+    return turn.turn_id;
+  });
+}
+
 export function outboxSummary(row){
   return {id:row.id,turn_id:row.turn_id,surface:row.surface,ordinal:row.ordinal,visibility:row.visibility,
     status:row.status,attempts:row.attempt_count,discord_message_id:row.discord_message_id||null,
@@ -52,12 +70,14 @@ export async function deliverTurnOutbox(db,guildId,turnId,transport,{forceUncert
   for(const row of rows){
     db.updatePublication(row.id,{status:"delivering",attemptCount:row.attempt_count+1,lastFailure:""});
     try{
+      revalidateOutputPublication(db,guildId,row);
       const receipt=await transport(row);
       const delivered=db.updatePublication(row.id,{status:"delivered",discordMessageId:receipt?.messageId||null,
         channelId:receipt?.channelId||row.channel_id,lastFailure:""});
       results.push({ok:true,row:delivered});
     }catch(error){
-      const failed=db.updatePublication(row.id,{status:"failed",lastFailure:String(error?.message||error).slice(0,1000)});
+      const failed=db.updatePublication(row.id,{status:["NARRATIVE_PVP","CHARACTER_OBSERVATION"].includes(error.code)?"uncertain":"failed",
+        lastFailure:String(error?.message||error).slice(0,1000)});
       results.push({ok:false,row:failed,error});break;
     }
   }

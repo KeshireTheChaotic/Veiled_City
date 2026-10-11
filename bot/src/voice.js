@@ -4,6 +4,7 @@ import os from "node:os";
 import path from "node:path";
 import { spawnSync } from "node:child_process";
 import { portrayalPacket } from "./portrayal.js";
+import { deliveredPartyOutput, protectedPvpScope } from "./pvp-output.js";
 import {
   AudioPlayerStatus,
   NoSubscriberBehavior,
@@ -58,6 +59,7 @@ export class VoiceNarrator {
   constructor(config,{getConnection=getVoiceConnection,db=null,synthesize=null}={}){
     this.config=config;
     this.db=db;this.synthesize=synthesize;
+    this.audioProofs=new WeakMap();
     this.guilds=new Map();
     this.getConnection=getConnection;
     this.ffmpegAvailable=this.checkFfmpeg();
@@ -195,8 +197,13 @@ export class VoiceNarrator {
     return Buffer.from(await res.arrayBuffer());
   }
 
-  narrate(guild,text,{force=false,visibility="party",npcKey=null}={}){
+  narrate(guild,text,{force=false,visibility="party",npcKey=null,turnId=null}={}){
     if(!["party","public"].includes(visibility)) return Promise.resolve({ok:false,reason:"private_scope"});
+    if(this.db&&protectedPvpScope(this.db,guild.id).length){
+      if(!turnId)return Promise.resolve({ok:false,reason:"unverified_output"});
+      const saved=deliveredPartyOutput(this.db,guild.id,turnId);
+      if(!saved||saved!==text)return Promise.resolve({ok:false,reason:"unverified_output"});
+    }
     const state=this._state(guild.id);
     if(!this.config.voiceEnabled||(!force&&state.mode==="off")) return Promise.resolve({ok:false,reason:"disabled"});
     if(!this.getConnection(guild.id)) return Promise.resolve({ok:false,reason:"not_connected"});
@@ -214,6 +221,7 @@ export class VoiceNarrator {
       if(packet) rendering.instructions=`${rendering.instructions||""}\nPublic NPC diction (presentation only): ${JSON.stringify(packet.direction)}`.slice(0,4096);
     }
     const generation=state.generation;
+    const proof=turnId?{turnId,text,guildId:guild.id}:null;
     const job=async()=>{
       try{
         if(generation!==state.generation||!this.getConnection(guild.id)){
@@ -226,10 +234,14 @@ export class VoiceNarrator {
             state.reserved=Math.max(0,state.reserved-parts.length);
             return {ok:false,reason:"cancelled"};
           }
-          buffers.push(await this._synthesize(part,rendering));
+          this._checkAudioProof(guild.id,proof);
+          const buffer=await this._synthesize(part,rendering);
+          if(proof)this.audioProofs.set(buffer,proof);
+          buffers.push(buffer);
         }
         state.reserved=Math.max(0,state.reserved-parts.length);
         if(generation!==state.generation||!this.getConnection(guild.id)) return {ok:false,reason:"cancelled"};
+        this._checkAudioProof(guild.id,proof);
         state.lastBuffers=buffers;
         state.lastText=clean;
         state.lastAt=new Date().toISOString();
@@ -253,6 +265,7 @@ export class VoiceNarrator {
     if(requesterUserId&&!requesterChannelId) throw new Error("Join Veilkeeper's current voice channel before using repeat.");
     if(requesterChannelId&&activeChannel&&requesterChannelId!==activeChannel) throw new Error("Join Veilkeeper's current voice channel before using repeat.");
     if(!state.lastBuffers.length) throw new Error("There is no previously narrated line to repeat.");
+    for(const buffer of state.lastBuffers)this._checkAudioProof(guildId,this.audioProofs.get(buffer));
     const now=Date.now();
     if(requesterUserId){
       const prior=state.repeatUsers.get(requesterUserId)||0;
@@ -267,7 +280,7 @@ export class VoiceNarrator {
 
   _enqueueReserved(guildId,buffers){
     const state=this._state(guildId);
-    for(const b of buffers) state.queue.push(Buffer.from(b));
+    for(const b of buffers){const copy=Buffer.from(b);if(this.audioProofs.has(b))this.audioProofs.set(copy,this.audioProofs.get(b));state.queue.push(copy);}
     if(!state.playing) this._advance(guildId);
   }
 
@@ -275,7 +288,7 @@ export class VoiceNarrator {
     const state=this._state(guildId);
     const room=this._availableSlots(state);
     if(buffers.length>room) return false;
-    for(const b of buffers) state.queue.push(Buffer.from(b));
+    for(const b of buffers){const copy=Buffer.from(b);if(this.audioProofs.has(b))this.audioProofs.set(copy,this.audioProofs.get(b));state.queue.push(copy);}
     if(!state.playing) this._advance(guildId);
     return true;
   }
@@ -288,6 +301,8 @@ export class VoiceNarrator {
     }
     const next=state.queue.shift();
     if(!next){ state.playing=false; return; }
+    try{this._checkAudioProof(guildId,this.audioProofs.get(next));}
+    catch{state.lastFailure="Narration source authorization changed; cached audio held.";this._advance(guildId);return;}
     state.playing=true;
     const dir=path.join(os.tmpdir(),"veiled-city-voice");
     fs.mkdirSync(dir,{recursive:true});
@@ -304,6 +319,14 @@ export class VoiceNarrator {
 
   destroy(){
     for(const guildId of this.guilds.keys()) this.leave(guildId);
+  }
+
+  _checkAudioProof(guildId,proof){
+    if(!this.db)return;
+    if(proof){
+      if(proof.guildId!==guildId||deliveredPartyOutput(this.db,guildId,proof.turnId)!==proof.text)
+        throw new Error("Narration source authorization changed; cached audio cannot replay.");
+    }else if(protectedPvpScope(this.db,guildId).length)throw new Error("Cached audio has no current source proof.");
   }
 }
 

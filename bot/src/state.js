@@ -4,6 +4,8 @@ import { indexWorldEvent } from "./city-calendar.js";
 import { normalizeNpcKey } from "./npc-cognition.js";
 import { applySimulationUpdates } from "./simulation.js";
 import { validateNarrativeClaims, assertNarrativeApplied } from "./narrative-integrity.js";
+import { prepareAuthorizedTurnOutput, assertProtectedModelEvents } from "./pvp-output.js";
+import { recordCharacterPerceptions } from "./character-observation.js";
 import { applyAutonomousWorld, worldInputKey } from "./autonomous-world.js";
 import { dispatchAiIntents } from "./ai-intents.js";
 import { assertNpcObservation } from "./scene-continuity.js";
@@ -64,6 +66,7 @@ function cleanKey(value){ return String(value||"").trim(); }
 
 /** Apply structured GM events while enforcing private-scene scope boundaries. */
 export function applyGMEvents(db,guildId,sessionId,events=[],scope={mode:"party",actorUserId:null,actorCharacterId:null},provenance={}){
+  assertProtectedModelEvents(db,guildId,events,scope);
   const results=[];
   for(const e of events||[]){
     try{
@@ -417,6 +420,13 @@ export function assertMutationSuccess({events=[],relationships=[],handouts=[],np
 export function applyAuthoritativeMutation(db,{guildId,sessionId=null,events=[],relationships=[],handouts=[],npcMemories=[],npcKnowledge=[],npcGoals=[],
   simulationUpdates=[],scope={mode:"party",actorUserId:null,actorCharacterId:null},source="ai_gm",provenance={},narrative=null,aiIntents=narrative?.ai_intents||[],content=null}){
   return db.transaction(()=>{
+    const outputSource=provenance.messageId&&scope.actorCharacterId?worldInputKey(provenance.messageId,scope.actorCharacterId):null;
+    if(narrative){
+      prepareAuthorizedTurnOutput(db,guildId,narrative,scope,{
+        sourceRef:outputSource&&db.getWorldEvent(guildId,outputSource)?outputSource:null,origin:source});
+      handouts=narrative.handouts||handouts; npcMemories=narrative.npc_memories||npcMemories;
+      npcKnowledge=narrative.npc_knowledge||npcKnowledge; npcGoals=narrative.npc_goals||npcGoals;
+    }
     if(narrative?.narrative_interpretation)persistInterpretation(db,guildId,narrative.narrative_interpretation,scope,provenance);
     persistAuthoredCandidates(db,guildId,narrative?.authored_candidates,scope,provenance);
     const intentDiagnostics=persistPlayerIntentDiagnostics(db,guildId,narrative?.player_intent_diagnostics||[],scope,provenance);
@@ -448,6 +458,9 @@ export function applyAuthoritativeMutation(db,{guildId,sessionId=null,events=[],
       scene_actions:(narrative?.scene_actions||[]).filter(action=>!typedIntents.some(row=>row.data.source_span===action.source_span)
         ||executableSpans.has(action.source_span))}:narrative;
     const world=applyAutonomousWorld(db,guildId,plannedNarrative,scope,provenance,content);
+    recordCharacterPerceptions(db,guildId,{world,intents:typedIntents,scope,sourceRef:outputSource});
+    if(narrative)prepareAuthorizedTurnOutput(db,guildId,narrative,scope,{
+      sourceRef:outputSource&&db.getWorldEvent(guildId,outputSource)?outputSource:null,world,origin:source});
     const typedDialogue=persistTypedDialogue(db,guildId,narrative?.player_intents||[],scope,provenance);
     const contextMemories=saveContextMemories(db,guildId,narrative,scope,provenance);
     const eventResults=applyGMEvents(db,guildId,sessionId,events,scope,{...provenance,pvp_action_ids:[...pvpIds]});
