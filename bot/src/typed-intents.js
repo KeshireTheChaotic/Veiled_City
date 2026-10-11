@@ -6,6 +6,7 @@ import { worldInputKey } from './autonomous-world.js';
 import { stateRevision } from './ai-intents.js';
 import { resolvePlaceReference } from './location-language.js';
 import { captureDialogue } from './dialogue-continuity.js';
+import { resolveScopedMemoryReference } from './scoped-memory.js';
 import {
   authoredTurnEnvelope,
   captureAuthoredTurnEnvelope,
@@ -426,12 +427,19 @@ export function persistPlayerIntents(db,guild,intents,scope={},provenance={}){
     const intent=intents[index];
     if(row.kind==='semantic_intent_diagnostic')continue;
     if(intent.framing!=='immediate')continue;
-    let resolvedTargetKey=intent.target_key||null,targetCandidates=[],nativeGrounded=false;
+    let resolvedTargetKey=intent.target_key||null,targetCandidates=[],nativeGrounded=false,memoryIdentityRefs=[];
     if(['move','local_zone'].includes(intent.type)&&intent.target_name){
       const reference=resolvePlaceReference(db,guild,principal.character_id,intent.target_name,
         {mode:scope.mode,user:principal.user});
       if(reference.status==='resolved_existing'){
         resolvedTargetKey=reference.location.entity_key;nativeGrounded=true;
+      }else targetCandidates=reference.candidates||[];
+    }else if(!resolvedTargetKey&&intent.target_name){
+      const reference=resolveScopedMemoryReference(db,guild,scope,intent.target_name,
+        {currentLocation:pc.data.location||'',sourceEvent:source.event_key});
+      if(reference.status==='resolved'){
+        resolvedTargetKey=reference.entity_key;nativeGrounded=true;
+        if(reference.identity)memoryIdentityRefs=[reference.identity];
       }else targetCandidates=reference.candidates||[];
     }
     const pending=resolvedTargetKey&&db.listCityRecords(guild,{kind:'semantic_intent_proposal',includeGM:true,limit:100})
@@ -444,7 +452,8 @@ export function persistPlayerIntents(db,guild,intents,scope={},provenance={}){
     if(acceptedRow.status==='awaiting_referent')continue;
     // Retain the existing action fields and native pre-state for T00.1/T03 compatibility.
     accepted.push(db.saveCityRecord(guild,{...acceptedRow,key:acceptedRow.record_key,source_event:acceptedRow.source_event,
-      data:{...acceptedRow.data,...intent,proposal_id:row.data.proposal_id,world_source_event:source.event_key,
+      data:{...acceptedRow.data,...intent,target_key:resolvedTargetKey||acceptedRow.data.target_key||'',
+        memory_identity_refs:memoryIdentityRefs,proposal_id:row.data.proposal_id,world_source_event:source.event_key,
         actor:pc.id,owner_user_id:principal.user,session_id:session.id,scene:scene.key,
         from_ref:pc.data.location||null,from_revision:pc.data.location?
           stateRevision(db.getSimulationEntity(guild,'location',pc.data.location)):'absent',

@@ -37,6 +37,7 @@ bot/scripts/d03-roll-menu-test.mjs
 bot/scripts/d04-trait-sharing-test.mjs
 bot/scripts/d05-live-window-test.mjs
 bot/scripts/d06-continuation-test.mjs
+bot/scripts/d07-scoped-memory-test.mjs
 bot/scripts/end-to-end-a-test.mjs
 bot/scripts/end-to-end-b-test.mjs
 bot/scripts/end-to-end-c-test.mjs
@@ -235,6 +236,7 @@ bot/src/rules-srd.js
 bot/src/scene-action-window.js
 bot/src/scene-continuity.js
 bot/src/scene-entry.js
+bot/src/scoped-memory.js
 bot/src/scoped-query.js
 bot/src/seed-commands.js
 bot/src/seed-data.js

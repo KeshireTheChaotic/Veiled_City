@@ -129,6 +129,15 @@ Accepted typed intents are canonical adjudication inputs; human declarations own
 - An owner-attributed success claim stays `unverified` until a matching native receipt exists. Pending narration may describe stakes and uncertainty but cannot restate the claim as accomplished; resolved narration cites the same stable receipt on retry.
 - Reconciliation stores one audience-scoped projection record. Party and private/character surfaces remain distinct, and Discord publication retry uses the existing outbox without rerunning mechanics or changing the reconciled outcome.
 
+## D07 live scoped-memory integration
+
+- `scopedSceneMemory()` is the only live GM projection of lifecycle and compatibility context memories. It is bounded, checks the current audience again, retains each lifecycle epistemic label and supplies only active source-backed evidence.
+- Current-location parent identity, current source, pending causal references and query relevance determine ordering. Alias matching never merges same-name identities under different parents; an unresolved tie remains ambiguous.
+- Current accepted non-movement targets may use one audience-visible memory identity or one native co-located position as referent grounding. This identifies the adjudication subject only; it never grants access, presence, consent, knowledge, canon or an outcome.
+- Compound-action nodes persist bounded `memory_identity_refs`. Pending, suspended, clarification, selection and review records protect those identities from fictional-tick expiry until the causal action is terminal.
+- Native character location and active party/public scene-presence receipts may identify Tyrell, Choso or another current target. Narration alone cannot create a position, and the projection never chooses or authorizes an action for another PC.
+- Party projections cannot retrieve character-, player- or GM-private revisions. Character-private evidence remains attached to that character across controller character changes. GM prompt visibility never creates NPC witnessed/told/inferred evidence.
+
 ## T02 language-routing boundary
 
 - `currentAcceptedIntent()` is the ordinary roleplay routing boundary. Autonomous reveal, local-zone and NPC-introduction actions must match a current accepted source occurrence, actor, structural type and resolved target; wording is not reparsed for authority.
@@ -156,7 +165,7 @@ Accepted typed intents are canonical adjudication inputs; human declarations own
 - Retrieval must enforce both record audience and active source ancestry. Character-private continuity follows that character and must not leak to another character controlled by the same or another user.
 - Narration and model-selected memory relevance never grant NPC witness status or knowledge.
 
-The base matrix records T00/T05a boundaries. The following section records the implemented T01 lifecycle; the broader T05b memory model remains future work.
+The base matrix records T00/T05a boundaries. The following sections record the implemented authenticated-intent and scoped-memory lifecycles.
 
 ## T01 authenticated-source and acceptance contracts
 

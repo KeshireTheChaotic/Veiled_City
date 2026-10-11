@@ -58,6 +58,7 @@ export function buildActionPlan(db,guild,acceptedRows=[]){
       visibility:row.visibility,subject_key:row.subject_key,data:{action_id:row.record_key,proposal_id:row.data.proposal_id,
         sequence_index:row.data.sequence_index,dependencies:dependencies.get(row.record_key),source_span:row.data.source_span,
         actor:row.data.actor,session_id:row.data.session_id,scene:row.data.scene,status,
+        memory_identity_refs:[...new Set(row.data.memory_identity_refs||[])].filter(value=>typeof value==="string"&&value.startsWith("memory-id:")).slice(0,12),
         receipt:prior?.data.receipt||null,expected_actor_revision:row.data.actor_principal_revision??null,
         authority:"Dependency status only; native receipts own outcomes."}});
     calculated.set(row.record_key,saved);result.push(saved);

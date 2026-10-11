@@ -33,6 +33,7 @@ import { budgetTurnPrompt } from "./prompt-budget.js";
 import { recoverOptionalTurnFields } from "./turn-recovery.js";
 import { projectAuthorityRecords } from "./authority-projection.js";
 import { operationalMetrics } from "./operational-metrics.js";
+import { scopedSceneMemory } from "./scoped-memory.js";
 
 const routerSchema={
   type:"object",
@@ -431,7 +432,7 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
     return out.respond;
   }
 
-  buildContext(guildId,actorUserId,messageText,actorAssignmentOverride=null,{worldDirector=false}={}){
+  buildContext(guildId,actorUserId,messageText,actorAssignmentOverride=null,{worldDirector=false,scope="party"}={}){
     const campaign=this.db.getCampaign(guildId);
     const session=this.db.getActiveSession(guildId);
     const roster=session?this.db.roster(session.id):[];
@@ -463,6 +464,10 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
     const visibleHandouts=this.db.listHandoutsFor(guildId,actorUserId,{characterId:memoryId,includeGM:false,limit:40}).map(h=>({id:h.id,title:h.title,kind:h.kind,authority:h.authority,visibility:h.visibility,case_key:h.case_key,npc_key:h.npc_key,location_key:h.location_key,epistemic:h.metadata.epistemic||{kind:"testimony",perspective:"legacy artifact; presentation is not truth",source_refs:[]}}));
     const npcCognition=retrieveNpcCognition(this.db,guildId,{query,actorAssignment,worldDirector,maxNpcs:worldDirector?6:4,recordRecall:true});
     const contextFlags=this.db.getCityCalendar(guildId).flags;
+    const actorCharacter=actorKnowledgeId?this.db.getCharacter(actorKnowledgeId):null;
+    const memoryScope={mode:scope,actorUserId,actorCharacterId:actorKnowledgeId};
+    const scopedMemory=scopedSceneMemory(this.db,guildId,memoryScope,{query:messageText,
+      currentLocation:actorCharacter?.data?.location||"",limit:20});
     const contextPlan=(contextFlags.adaptive_context||contextFlags.personal_arcs||contextFlags.memory_consolidation)?new ContextPlanner(this.db).plan(guildId,
       {operation:worldDirector?"director":"turn",actorType:"gm",scope:"gm",query:messageText,scene:session?this.db.getDirectorState(session.id).scene_label:""}):null;
     return {
@@ -484,6 +489,7 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
       actor_visible_facts:actorFacts,
       gm_all_facts:contextPlan?contextPlan.segments.filter(row=>row.source.startsWith("fact:")).map(row=>row.data):gmFacts,
       npc_cognition:npcCognition,
+      scoped_memory:scopedMemory,
       clocks,
       reference_chunks:chunks.map(c=>({source:c.file,text:c.body})),
       constitution:`${constitution}\n${AUTHORITY_POLICY}`,multi
@@ -493,7 +499,7 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
   async runTurn({guildId,actorUserId,actorName,messageText,sourceText=null,nativeLedger=null,actorAssignment=null,scope="party",messageId=null,signal=null}){
     const authenticatedSource=String(sourceText??messageText);
     const turnSignal=signal||AbortSignal.timeout(Number(this.config.gmTurnDeadlineMs||120000));
-    const ctx=this.buildContext(guildId,actorUserId,messageText,actorAssignment);
+    const ctx=this.buildContext(guildId,actorUserId,messageText,actorAssignment,{scope});
     const privateMode=scope==="private";
     const instructions=[
       ctx.constitution,
@@ -578,6 +584,7 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
       `FACTS VISIBLE TO ACTING PLAYER:\n${JSON.stringify(ctx.actor_visible_facts)}`,
       `GM-PRIVATE + ALL KNOWN FACTS (OBJECTIVE CAMPAIGN CONTEXT; DO NOT ASSUME NPCS KNOW THESE):\n${JSON.stringify(ctx.gm_all_facts)}`,
       `NPC_COGNITION (SUBJECTIVE MEMORY/KNOWLEDGE/GOALS; GM-PRIVATE):\n${JSON.stringify(ctx.npc_cognition)}`,
+      `SCOPED MEMORY AND NATIVE POSITIONS (audience-visible evidence only; never consequence authority):\n${JSON.stringify(ctx.scoped_memory)}`,
       SIMULATION_PROMPT,
       `SIMULATION (GM-private; never copy wholesale to player narration): ${JSON.stringify(simulationContext(this.db,guildId,messageText))}`,
       `CIVIC CONTEXT (GM-only reference, not actor knowledge or canon): ${JSON.stringify(cityContext(this.db,guildId,messageText))}`,
@@ -599,6 +606,7 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
       "ASSEMBLY PLAN (GM-PRIVATE; protect per-character hooks)","ESTABLISHED PARTY STATE",
       "CURRENT ENCOUNTER (GM-PRIVATE; do not expose BP math/composition unless learned in fiction)",
       "ACTING CHARACTER/NPC ASSIGNMENT","ACTIVE HUMAN-CONTROLLED NPC PROXIES","ROSTER/PRESENCE","CLOCKS (MAY BE SECRET)",
+      "SCOPED MEMORY AND NATIVE POSITIONS (audience-visible evidence only; never consequence authority)",
       "AUTHENTICATED RAW PLAYER SOURCE (immutable; native-consumed spans are context only)",
       "NATIVE SOURCE-SPAN LEDGER (receipts prevent re-execution)","CURRENT UNCONSUMED PLAYER INPUT"]);
     const sections=rawSections.map(text=>{

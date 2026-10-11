@@ -402,3 +402,20 @@ T04 through T08, including T04.1 and the general T05b lifecycle, have not starte
 Legacy `context_memory` rows without the new native audience/provenance marker are deliberately omitted from player-turn retrieval. A reviewed migration or deletion policy belongs to T05b; silently blessing their historical scope would recreate the leak. Broader salience, expiry, correction/supersession, aliasing, and semantic retrieval also remain T05b work.
 
 Accepted typed intents are canonical adjudication inputs; human declarations own intent; native receipts own outcomes.
+
+## D07 - scoped memory, lore and referent integration
+
+Status: complete on 2026-10-10. Starting HEAD: `1e390a7c015787b984ed43c2f44c6c8454d3a6e2`. Package version remains `10.0.0`.
+
+- Red first: `node --import ./scripts/offline-guard.mjs scripts/d07-scoped-memory-test.mjs` failed with `ERR_MODULE_NOT_FOUND` before the scoped live-memory service existed.
+- Added a bounded `scopedSceneMemory()` projection combining the T05b lifecycle with fail-closed T05a compatibility memories. It prioritizes current-location parent identity, active current source, pending causal identity and query relevance while preserving observation/testimony/inference/attempt/claimed-result/native-fact labels.
+- Live `GMService.buildContext()` and the actual budgeted turn prompt now receive the audience-scoped memory and native-position packet. Party turns cannot retrieve character/player/GM-private memory; a same-user character switch does not transfer a character-private clue.
+- Added location-aware alias resolution. Same-named `Night Owl`/front-door identities under different parents remain ambiguous without current location and resolve only within the current parent when location is known. Native co-located character/scene-presence records ground names such as Tyrell and Choso without granting control, access, consent or consequences.
+- Non-movement typed targets may bind one audience-visible memory/native-position identity. Accepted intent remains an adjudication input only. Compound-action records retain bounded `memory_identity_refs`, and pending causal references protect an otherwise expired memory using fictional campaign ticks.
+- NPC cognition was not broadened: prompt visibility is not witness evidence, and existing witnessed/told/inferred validators remain authoritative. Repeated testimony such as a cursed-parcel rumor stays testimony and cannot become canon or a native fact through retrieval.
+- Persistence is additive and uses existing city records; there is no SQL migration. Rollback is a revert of the D07 commit. Existing identity/revision records remain readable and inert if the live projection is reverted.
+- Focused D07, T05a, T05b, H02 and D06 suites passed. `npm run check` passed 234 modules/scripts and 24 commands.
+- The first full validation reached the integrity gate after all earlier functional suites passed, then correctly failed because the newly registered validator changed the manifest. After `node scripts/sync-release.mjs 10.0.0`, `npm run validate` passed 99/99 suites with network denied, `live_requests=0`, and `billable_tokens=0`.
+- No live bot, production database, deployment, merge, Discord registration or paid model was used.
+
+D08 is next: aggregate Session 2 qualification, privacy-safe observability and release documentation. Accepted typed intents are canonical adjudication inputs; human declarations own intent; native receipts own outcomes.
