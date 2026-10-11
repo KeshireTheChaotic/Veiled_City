@@ -21,13 +21,14 @@ function records(db,guild,kind){
   }
   fail(); // No silent truncation of a security boundary.
 }
+function protectedAgreements(db,guild){return [...records(db,guild,"pvp_proposal"),...records(db,guild,"pvp_encounter_contract")];}
 /** Actual scene and recipient/control scope, not membership of the player who happened to post. */
 export function protectedPvpScope(db,guild,scope={mode:"party"}){
   const session=db.getActiveSession(guild);if(!session)return [];
   const scene=currentScene(db,guild),roster=db.roster(session.id);
   let character=scope.actorCharacterId;
   if(scope.recipientUserId)character=db.activeAssignment(session.id,scope.recipientUserId)?.character_id;
-  return records(db,guild,"pvp_proposal").filter(p=>p.data.session_id===session.id&&p.data.scene===scene.key
+  return protectedAgreements(db,guild).filter(p=>p.data.session_id===session.id&&p.data.scene===scene.key
     &&(scope.mode!=="private"?p.data.participants.some(w=>roster.some(r=>r.character_id===w.character))
       :!character||p.data.participants.some(w=>w.character===character)
         ||db.getCharacter(character)?.data.location===p.data.location_key));
@@ -331,12 +332,12 @@ export function quarantineSimulationHook(db,guild,hook){
 }
 export function protectedHookSource(db,guild,hook){
   const context=hook.data.source_context;
-  return records(db,guild,"pvp_proposal").some(p=>!context||p.data.session_id===context.session&&p.data.scene===context.scene);
+  return protectedAgreements(db,guild).some(p=>!context||p.data.session_id===context.session&&p.data.scene===context.scene);
 }
 /** Archives can refer to earlier scenes/ended sessions. Current-trigger scope alone is not an archive authorization. */
 export function archivePvpHistory(db,guild,sessionId=null){
   const session=sessionId||db.getActiveSession(guild)?.id;
-  return records(db,guild,"pvp_proposal").filter(p=>!session||p.data.session_id===session);
+  return protectedAgreements(db,guild).filter(p=>!session||p.data.session_id===session);
 }
 export function assertArchiveOutput(db,guild,text,{sessionId=null}={}){
   if(!String(text||"").trim()||!archivePvpHistory(db,guild,sessionId).length)return;

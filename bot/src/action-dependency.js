@@ -52,7 +52,7 @@ export function buildActionPlan(db,guild,acceptedRows=[]){
       const depStates=dependencies.get(row.record_key).map(dep=>calculated.get(dep)?.data.status);
       if(depStates.some(value=>["failed","blocked","clarification"].includes(value)))status="blocked";
       else if(depStates.some(value=>value!=="resolved"))status="suspended";
-      else status=prior?.data.coordination||prior?.data.pvp_attempt
+      else status=prior?.data.coordination||prior?.data.pvp_attempt||prior?.data.pvp_attack
         ||(prior?.data.interrupt_refs||[]).some(ref=>db.getCityRecord(guild,"action_interrupt_receipt",ref)?.status!=="resolved")
         ?"pending":initialStatus(row);
     }

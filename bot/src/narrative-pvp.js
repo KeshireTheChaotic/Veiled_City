@@ -8,6 +8,7 @@ import { TRAITS } from "./character-system.js";
 import { isPvpIntent, pvpTarget, pvpAttemptKey } from "./pvp-authority.js";
 import { settlePvpWindow } from "./pvp-terminal.js";
 import { closePartialFearGate } from "./pvp-fear-gate.js";
+import { stageDamagePvp } from "./pvp-profiles.js";
 export { choosePvp, rollPvp, progressPvp, continuePvp, authorPvpNarrative, reviewPvpNarrative, sharePvpNarrative, pvpComplication } from "./pvp-rounds.js";
 
 const hash=value=>createHash("sha256").update(JSON.stringify(value)).digest("hex");
@@ -255,6 +256,13 @@ export function stagePvpAttempts(db,guild,intents,plans){
   const rows=[];
   for(const action of intents.filter(value=>isPvpIntent(db,guild,value))){
     consentAction(db,guild,action.record_key);
+    const damage=stageDamagePvp(db,guild,action);
+    if(damage){
+      const plan=plans.find(value=>value.data.action_id===action.record_key);
+      if(plan&&!["resolved","failed","blocked","clarification"].includes(plan.data.status))
+        db.saveCityRecord(guild,{...plan,key:plan.record_key,status:"pending",data:{...plan.data,status:"pending",pvp_attack:damage.record_key}});
+      rows.push(damage);continue;
+    }
     const key=pvpAttemptKey(guild,action.record_key);
     const row=db.getCityRecord(guild,"pvp_attempt",key)||db.saveCityRecord(guild,{kind:"pvp_attempt",key,status:"awaiting_stakes",
       source_event:action.source_event,visibility:"character",subject_key:action.data.actor,actor_key:action.data.actor,

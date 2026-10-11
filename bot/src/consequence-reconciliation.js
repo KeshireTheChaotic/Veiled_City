@@ -1,6 +1,7 @@
 /** Receipt-first action/narration reconciliation; prose projects outcomes but never creates them. */
 import { createHash } from "node:crypto";
 import { pvpAttemptKey } from "./pvp-authority.js";
+import { validateDamageAttackIntent } from "./pvp-profiles.js";
 
 const digest=value=>createHash("sha256").update(JSON.stringify(value)).digest("hex").slice(0,40);
 function fail(message){throw Object.assign(new Error(message),{code:"CONSEQUENCE_RECONCILIATION"});}
@@ -28,7 +29,12 @@ export function reconcileConsequences(db,guild,{intents=[],narration="",private_
     const pvp=db.getCityRecord(guild,"pvp_attempt",pvpAttemptKey(guild,row.record_key));
     const planKey=`action:${createHash("sha256").update(String(row.record_key)).digest("hex").slice(0,32)}`;
     const plan=db.getCityRecord(guild,"compound_action",planKey);
-    if(pvp?.status==="awaiting_stakes"){disposition="pvp_attempt_only";refs=[pvp.record_key];}
+    if(plan?.data.pvp_attack&&plan.data.status==="pending"){
+      const native=validateDamageAttackIntent(db,guild,plan.data.pvp_attack);
+      if(native.accepted.record_key!==row.record_key)fail("Damage pending state needs its exact accepted action.");
+      disposition="pvp_native_attack_pending";refs=[native.row.record_key];
+    }
+    else if(pvp?.status==="awaiting_stakes"){disposition="pvp_attempt_only";refs=[pvp.record_key];}
     else if(pvp?.status==="resolved"){
       const receipt=db.getCityRecord(guild,"pvp_resolution_receipt",pvp.data.resolution_receipt);
       const proposal=receipt&&db.getCityRecord(guild,"pvp_proposal",receipt.data.proposal);

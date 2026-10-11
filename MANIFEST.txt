@@ -136,6 +136,7 @@ bot/scripts/v9-pvp-rounds-test.mjs
 bot/scripts/v9-pvp-typed-roll-test.mjs
 bot/scripts/v9-window-lifecycle-test.mjs
 bot/scripts/v94-pc-effect-authority-test.mjs
+bot/scripts/v94-pvp-profile-test.mjs
 bot/scripts/validate-command-schema.mjs
 bot/scripts/validate-offline.mjs
 bot/sql/schema.sql
@@ -236,6 +237,7 @@ bot/src/pvp-authorship.js
 bot/src/pvp-fear-gate.js
 bot/src/pvp-fear-moves.js
 bot/src/pvp-output.js
+bot/src/pvp-profiles.js
 bot/src/pvp-rounds.js
 bot/src/pvp-terminal.js
 bot/src/register-commands.js

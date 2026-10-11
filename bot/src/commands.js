@@ -58,6 +58,7 @@ import { establishWorldDescription } from "./world-observation.js";
 import { fearInbox, establishFearContext, selectFearMove, applyFearMove, reconcileFearMove } from "./pvp-fear-moves.js";
 import { archivePvpHistory, quarantineSessionRecap, certifiedSessionRecap, scopedSessionRecap } from "./pvp-output.js";
 import { pendingPvpFear } from "./pvp-fear-gate.js";
+import { proposeDamagePvp, reviewDamagePvp, respondDamagePvp, reviseDamagePvp, damagePvpInbox } from "./pvp-profiles.js";
 import { reviewFeatureEffect, reviewPcEffect, approvePcEffect, applyPcEffect } from "./pc-effects.js";
 import { prepareIncomingAttack, reviewIncomingAttack, confirmIncomingDefense, rollIncomingAttack, resolveIncomingDamage } from "./pc-incoming.js";
 import { queueDirectorPublications } from "./publication-outbox.js";
@@ -432,7 +433,19 @@ async function executeCommand(interaction,{db,gm,voice=null}){
     if(group==="roll"&&sub==="pvp"){
       const {op="inbox",...input}=JSON.parse(interaction.options.getString("json")||"{}");
       let text;
-      if(["fear-inbox","fear-context","fear-select","fear-apply","fear-reconcile"].includes(op)){
+      if(["damage-inbox","damage-propose","damage-review","damage-respond","damage-revise"].includes(op)){
+        const native={interactionId:interaction.id},user=interaction.user.id,guild=interaction.guildId;
+        if(op==="damage-inbox")text=JSON.stringify(damagePvpInbox(db,guild,user),null,2);
+        else{
+          let key=input.contract;
+          if(op==="damage-propose")key=proposeDamagePvp(db,guild,user,input,native).record_key;
+          if(op==="damage-revise")key=reviseDamagePvp(db,guild,user,input,native).record_key;
+          if(op==="damage-respond")key=respondDamagePvp(db,guild,user,input,native).record_key;
+          if(op==="damage-review"&&(Object.keys(input).length!==1||!key))throw new StateConflictError("Exact private contract reference required.");
+          text=reviewDamagePvp(db,guild,user,key).text;
+        }
+      }
+      else if(["fear-inbox","fear-context","fear-select","fear-apply","fear-reconcile"].includes(op)){
         if(!isGM(db,interaction))throw new PermissionError("GM/admin permission required.");
         const native={gm:true,interactionId:interaction.id};
         const result=op==="fear-inbox"?fearInbox(db,interaction.guildId,interaction.user.id,native)
