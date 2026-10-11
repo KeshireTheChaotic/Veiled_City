@@ -205,6 +205,16 @@
       "sha256": "419807ca10e18c032e0cd15f9203e4323eba5f503d200d9ef4e84481b5cda9a7"
     },
     {
+      "path": "bot/scripts/d08-observability-test.mjs",
+      "size_bytes": 1271,
+      "sha256": "42b438adb525d07742e944f222816d2f1d304033b1086041b0e67dbbea6c8763"
+    },
+    {
+      "path": "bot/scripts/d08-window-security-test.mjs",
+      "size_bytes": 2401,
+      "sha256": "353d6bc75082d6a0c407007390443862d110b31bbb42053429f994fb22477731"
+    },
+    {
       "path": "bot/scripts/end-to-end-a-test.mjs",
       "size_bytes": 5018,
       "sha256": "68393cf5f3e9fec29e781196997d5c468f7515091ba9118e4fbfbab4f2b70f69"
@@ -945,6 +955,11 @@
       "sha256": "b275192a1516b30c7fb66be10141177b28b3588e2c0958ff91d1bd4dcf6a03dd"
     },
     {
+      "path": "bot/src/failure-trace.js",
+      "size_bytes": 1191,
+      "sha256": "c99bc99229c18df938a75becfbd1a6f5541b7eb532d644576abe9d78272e60c7"
+    },
+    {
       "path": "bot/src/gm.js",
       "size_bytes": 97975,
       "sha256": "bf701a1e7351c987e4b6bd5166d36c34bd35f7feeb19c5bf09a51864448be5cb"
@@ -971,8 +986,8 @@
     },
     {
       "path": "bot/src/index.js",
-      "size_bytes": 53262,
-      "sha256": "35181694e5c4a456a64f2f0d1cc19542b7738549ce1e9a8eb39c87218e64cfea"
+      "size_bytes": 53363,
+      "sha256": "2495677465013b57971f76ae1abd2fa9dd939de61b9ebf95e5d8ff9db7f62525"
     },
     {
       "path": "bot/src/legacy-authority.js",
@@ -1111,8 +1126,8 @@
     },
     {
       "path": "bot/src/publishing.js",
-      "size_bytes": 13538,
-      "sha256": "0f3ed799c93d1d2ba117a6ceb177c3a9f2f75d8dee790429370175d722b486a4"
+      "size_bytes": 13640,
+      "sha256": "f089b0b7e9ae34128199895ee8d5c71f94e0632bea3d62e91b9029e4601b277e"
     },
     {
       "path": "bot/src/register-commands.js",
@@ -2061,8 +2076,8 @@
     },
     {
       "path": "docs/TYPED_INTENT_PROGRESS.md",
-      "size_bytes": 51595,
-      "sha256": "769579e836e7dac3802feb53a584b38efed524086bcb7a4933e238fde6f71fea"
+      "size_bytes": 56249,
+      "sha256": "7db626299bc3b50bc1a4f05ffa14975b47f81847326c89e1bffd691456df6970"
     },
     {
       "path": "docs/TYPED_INTENT_RELEASE_10.0.0.md",

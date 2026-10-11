@@ -108,8 +108,8 @@ function resolveController(session,message){
   return {controlled,playerText,ambiguous:!controlled&&candidates.length>1,candidates,explicitlySelected};
 }
 
-async function safeStateError({guild,error,context,sessionId}){
-  try{return await postStateError({db,guild,error,context,sessionId});}
+async function safeStateError({guild,error,context,sessionId,attempt=null}){
+  try{return await postStateError({db,guild,error,context,sessionId,attempt:attempt?db.getTurnAttempt(attempt.turn_id):null});}
   catch(logErr){log.error("Could not post state error",logErr); return "unlogged";}
 }
 
@@ -360,7 +360,7 @@ async function processPrivateTurn(message,directMention,attempt=null){
     if(attempt)advanceTurnAttempt(db,attempt.turn_id,"validated");
   }catch(err){
     console.error("Private GM generation failed",err);
-    const ref=await safeStateError({guild:message.guild,error:err,context:`private-turn-generation:${message.author.id}`,sessionId:session.id});
+    const ref=await safeStateError({guild:message.guild,error:err,context:`private-turn-generation:${message.author.id}`,sessionId:session.id,attempt});
     const reason=err.code==="AI_GENERATION_DEADLINE"?"The private GM generation deadline expired":"Private GM engine error";
     if(attempt)advanceTurnAttempt(db,attempt.turn_id,db.getTurnAttempt(attempt.turn_id)?.committed==="yes"?"needs_recovery":"failed",{terminalCode:err.code||"GENERATION_FAILED",errorRef:ref});
     await message.reply(attempt?turnFailureNotice(db.getTurnAttempt(attempt.turn_id),ref):`⚠️ ${reason} (${ref}).`).catch(()=>{});
@@ -373,7 +373,7 @@ async function processPrivateTurn(message,directMention,attempt=null){
     mutation=commitTurnMutation({guild:message.guild,session,result,scope,speaker,label:"Pre-private GM mutation",meta:{channelId:message.channel.id,messageId:message.id,triggerText:playerText,turnId:attempt?.turn_id}});
   }catch(err){
     console.error("Private GM state mutation rolled back",err);
-    const ref=await safeStateError({guild:message.guild,error:err,context:`private-turn-state:${message.author.id}`,sessionId:session.id});
+    const ref=await safeStateError({guild:message.guild,error:err,context:`private-turn-state:${message.author.id}`,sessionId:session.id,attempt});
     if(attempt)advanceTurnAttempt(db,attempt.turn_id,"failed",{terminalCode:err.code||"MUTATION_ROLLED_BACK",errorRef:ref});
     await message.reply(attempt?turnFailureNotice(db.getTurnAttempt(attempt.turn_id),ref):`⚠️ Private GM state update rolled back (${ref}).`).catch(()=>{});
     return;
@@ -470,7 +470,7 @@ async function processPartyTurn(message,directMention,attempt=null){
     if(attempt)advanceTurnAttempt(db,attempt.turn_id,"validated");
   }catch(err){
     console.error("GM turn generation failed",err);
-    const ref=await safeStateError({guild:message.guild,error:err,context:`party-turn-generation:${message.author.id}`,sessionId:session.id});
+    const ref=await safeStateError({guild:message.guild,error:err,context:`party-turn-generation:${message.author.id}`,sessionId:session.id,attempt});
     const reason=err.code==="AI_GENERATION_DEADLINE"?"The GM generation deadline expired":"The GM engine hit an API/runtime error";
     if(attempt)advanceTurnAttempt(db,attempt.turn_id,db.getTurnAttempt(attempt.turn_id)?.committed==="yes"?"needs_recovery":"failed",{terminalCode:err.code||"GENERATION_FAILED",errorRef:ref});
     await message.reply(attempt?turnFailureNotice(db.getTurnAttempt(attempt.turn_id),ref):`⚠️ ${reason} (${ref}).`).catch(()=>{});
@@ -483,7 +483,7 @@ async function processPartyTurn(message,directMention,attempt=null){
     mutation=commitTurnMutation({guild:message.guild,session,result,scope,speaker,label:"Pre-GM mutation",meta:{messageId:message.id,triggerText:playerText,turnId:attempt?.turn_id}});
   }catch(err){
     console.error("GM state mutation rolled back",err);
-    const ref=await safeStateError({guild:message.guild,error:err,context:`party-turn-state:${message.author.id}`,sessionId:session.id});
+    const ref=await safeStateError({guild:message.guild,error:err,context:`party-turn-state:${message.author.id}`,sessionId:session.id,attempt});
     if(attempt)advanceTurnAttempt(db,attempt.turn_id,"failed",{terminalCode:err.code||"MUTATION_ROLLED_BACK",errorRef:ref});
     await message.reply(attempt?turnFailureNotice(db.getTurnAttempt(attempt.turn_id),ref):`⚠️ Generated GM state update rolled back (${ref}).`).catch(()=>{});
     return;

@@ -6,6 +6,7 @@ import { splitDiscordText } from "./discord/chunking.js";
 import { assertGmOnlyChannel, assertPlayerPrivateChannel } from "./discord/privacy.js";
 import { simulationOverview, acknowledgeSimulationHook } from "./simulation.js";
 import { deliverTurnOutbox, outboxSummary } from "./publication-outbox.js";
+import { failureTrace } from "./failure-trace.js";
 
 /** Hooks remain queued on failed delivery and never publish internal action packets. */
 export async function publishSimulationHooks({db,guild,sessionId=null}){
@@ -106,14 +107,14 @@ export async function postGmLog({db,guild,sessionId=null,title="GM Log",details=
   return true;
 }
 
-export async function postStateError({db,guild,error,context="runtime",sessionId=null}){
+export async function postStateError({db,guild,error,context="runtime",sessionId=null,attempt=null}){
   const ref=randomUUID().slice(0,8);
   try{
     const diagnostic=error?.code==="NARRATIVE_INTEGRITY"&&error.diagnostic?Object.fromEntries(
       ["category","actor","entity","action","source","source_ref","source_span","recovery"].map(key=>[key,String(error.diagnostic[key]||"").slice(0,1000)])):null;
     const lifetime=error?.interaction_diagnostic?JSON.parse(JSON.stringify(error.interaction_diagnostic)):null;
     db.audit(guild.id,sessionId,"system","veilkeeper","state_error",{ref,context,error:String(error?.message||error),
-      ...(diagnostic?{diagnostic}:{}),...(lifetime?{interaction:lifetime}:{})});
+      trace:failureTrace(error,attempt||{}),...(diagnostic?{diagnostic}:{}),...(lifetime?{interaction:lifetime}:{})});
   }catch{
     // Audit logging must never prevent the primary error from being reported to Discord.
   }

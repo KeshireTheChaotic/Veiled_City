@@ -38,6 +38,8 @@ bot/scripts/d04-trait-sharing-test.mjs
 bot/scripts/d05-live-window-test.mjs
 bot/scripts/d06-continuation-test.mjs
 bot/scripts/d07-scoped-memory-test.mjs
+bot/scripts/d08-observability-test.mjs
+bot/scripts/d08-window-security-test.mjs
 bot/scripts/end-to-end-a-test.mjs
 bot/scripts/end-to-end-b-test.mjs
 bot/scripts/end-to-end-c-test.mjs
@@ -186,6 +188,7 @@ bot/src/errors.js
 bot/src/evaluation-harness.js
 bot/src/evidence-custody.js
 bot/src/expansion-contracts.js
+bot/src/failure-trace.js
 bot/src/gm.js
 bot/src/gm.js.20261009-144611.bak
 bot/src/handout.js
