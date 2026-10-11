@@ -426,6 +426,8 @@ export function buildCommands(){
         .addSubcommand(s=>s.setName("facts").setDescription("Show recorded facts available to you"))
         .addSubcommand(s=>s.setName("caseboard").setDescription("Show active player-visible threads")))
       .addSubcommandGroup(g=>g.setName("gm").setDescription("Human GM/admin tools")
+        .addSubcommand(s=>s.setName("scene-description").setDescription("Establish selected visible NPC/scenery fields, never PC agency")
+          .addStringOption(o=>o.setName("json").setDescription("entity_type/entity_key/location_key/visibility/facts JSON").setRequired(true)))
         .addSubcommand(s=>s.setName("overview").setDescription("Show the GM campaign dashboard and items needing attention"))
         .addSubcommand(s=>s.setName("delivery-status").setDescription("List committed narration awaiting delivery or reconciliation")
           .addIntegerOption(o=>o.setName("limit").setDescription("Maximum rows").setMinValue(1).setMaxValue(100)))

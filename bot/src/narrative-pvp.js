@@ -7,6 +7,7 @@ import { indexWorldEvent } from "./city-calendar.js";
 import { TRAITS } from "./character-system.js";
 import { isPvpIntent, pvpTarget, pvpAttemptKey } from "./pvp-authority.js";
 import { settlePvpWindow } from "./pvp-terminal.js";
+import { closePartialFearGate } from "./pvp-fear-gate.js";
 export { choosePvp, rollPvp, progressPvp, continuePvp, authorPvpNarrative, reviewPvpNarrative, sharePvpNarrative, pvpComplication } from "./pvp-rounds.js";
 
 const hash=value=>createHash("sha256").update(JSON.stringify(value)).digest("hex");
@@ -27,7 +28,7 @@ function owner(db,guild,user,character){
 function checkTerms(db,guild,input,participants){
   closed(input,["version","objective","mode","stakes","boundaries","traits","option_policy","hope_policy","fear_policy",
     "authorship","audience","tie_policy","stop_policy","stall_policy","expires_minute"]);
-  if(input.version!==1||!boundedText(input.objective)||!["single_roll_duel","three_strikes"].includes(input.mode)
+  if(input.version!==2||!boundedText(input.objective)||!["single_roll_duel","three_strikes"].includes(input.mode)
     ||!Array.isArray(input.boundaries)||input.boundaries.length!==boundaries.length
     ||boundaries.some(value=>!input.boundaries.includes(value)))fail("PvP mode or mandatory hard boundaries invalid.");
   if(!Array.isArray(input.stakes)||input.stakes.length!==2||!Array.isArray(input.traits)||input.traits.length!==2)
@@ -48,7 +49,7 @@ function checkTerms(db,guild,input,participants){
     return {character:p.character,allowed:[...policy.allowed].sort()};
   });
   if(!["base_trait_only","native_review_required"].includes(input.option_policy)
-    ||!["roller","opponent","flavor_only"].includes(input.hope_policy)||!["environment_only","flavor_only"].includes(input.fear_policy)
+    ||input.hope_policy!=="no_pvp_hope_generation"||input.fear_policy!=="immediate_contextual_fear"
     ||input.authorship!=="winner_own_success_loser_own_response"||!["private","bilateral_author_projection"].includes(input.audience)
     ||!["stalemate","mutual_reroll"].includes(input.tie_policy)||input.stop_policy!=="neutral_withdrawal"
     ||input.stall_policy!=="wait_no_forfeit"||!Number.isSafeInteger(input.expires_minute)
@@ -191,6 +192,7 @@ function validSignature(db,guild,p,ref){
 }
 export function validatePvpAgreement(db,guild,key){
   const {proposal:p,terms}=liveProposal(db,guild,key),agreement=p.data.agreement&&db.getCityRecord(guild,"pvp_agreement",p.data.agreement);
+  checkTerms(db,guild,terms.data.snapshot.terms,p.data.participants);
   if(p.status!=="locked"||!agreement||agreement.status!=="locked"||agreement.data.terms_hash!==p.data.terms_hash
     ||agreement.data.proposal!==p.record_key||p.data.approvals.length!==2
     ||new Set(p.data.approvals).size!==2||p.data.approvals.some(ref=>!validSignature(db,guild,p,ref))
@@ -202,9 +204,11 @@ export function validatePvpAgreement(db,guild,key){
 
 export function respondPvp(db,guild,user,input){
   closed(input,["proposal","expected_revision","decision","interaction_id"]);
-  const {proposal:p,who}=currentOwner(db,guild,user,input.proposal);
+  const {proposal:p,who,terms}=currentOwner(db,guild,user,input.proposal);
   if(p.data.terms_hash!==input.expected_revision)fail("PvP terms revision changed; review and approve the new revision.");
   if(!["accept","decline","withdraw"].includes(input.decision)||!boundedText(input.interaction_id,100))fail("Explicit owner decision required.");
+  // Historical v1 is readable/declinable, never freshly signed under a superseded policy.
+  if(input.decision==="accept")checkTerms(db,guild,terms.data.snapshot.terms,p.data.participants);
   const review=db.getCityRecord(guild,"pvp_terms_review",`${p.record_key}:${who.character}`);
   if(input.decision==="accept"&&review?.data.terms_hash!==p.data.terms_hash)fail("Review the complete private terms before approval.");
   const key=`pvp-consent:${hash([p.record_key,p.data.terms_hash,who.character]).slice(0,40)}`;
@@ -224,7 +228,9 @@ export function respondPvp(db,guild,user,input){
       const status=input.decision==="decline"?"declined":"withdrawn",receiptKey=`pvp-resolution:${hash([p.record_key,p.data.terms_hash,status]).slice(0,40)}`;
       db.saveCityRecord(guild,{kind:"pvp_resolution_receipt",key:receiptKey,status:"resolved",source_event:source.event_key,visibility:"gm",
         data:{version:1,proposal:p.record_key,terms_hash:p.data.terms_hash,outcome:status,winner:null,roll_refs:[],decision_ref:signature.record_key}});
-      settlePvpWindow(db,guild,p,db.getCityRecord(guild,"pvp_resolution_receipt",receiptKey));
+      const receipt=db.getCityRecord(guild,"pvp_resolution_receipt",receiptKey);
+      closePartialFearGate(db,guild,p,receipt);
+      settlePvpWindow(db,guild,p,receipt);
       if(p.data.agreement){
         const agreement=db.getCityRecord(guild,"pvp_agreement",p.data.agreement);
         db.saveCityRecord(guild,{...agreement,key:agreement.record_key,status});

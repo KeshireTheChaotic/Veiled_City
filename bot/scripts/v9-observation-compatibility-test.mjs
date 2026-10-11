@@ -81,6 +81,42 @@ test("OBS10 actual owner speech is heard, private speech is not, source retracti
   const absent=await question(f,{text:"What did Jaxon say?",operation:"dialogue",id:"retracted-speech-question"});
   assert(!absent.result.narration.includes("Hello."));assert.match(absent.result.narration,/No established heard response/);
 }));
+
+test("OBS10 private authored speech never becomes another PC's heard dialogue",()=>nativeFixture(async f=>{
+  const pc=f.pcs[0],text='I say "A private secret."',scope={mode:"private",actorUserId:pc.owner_user_id,actorCharacterId:pc.id};
+  captureWorldInput(f.db,f.guild,pc.owner_user_id,pc.id,"private-speech",text,{privateScene:true});
+  commitGmTurn({db:f.db,guild:{id:f.guild},session:f.session,result:{respond:true,narration:"Private speech.",narrative_claims:[],player_intents:[{
+    type:"speak",source_span:text,target_name:"",target_key:"",destination:"unspecified",operation:"",utterance:"A private secret.",
+    excluded_targets:[],framing:"immediate",resolution:"conversational",reason:"Private speech."}]},scope,speaker:pc.name,label:"private speech",
+    meta:{messageId:"private-speech",triggerText:text,privateScene:true}});
+  assert(!((await question(f,{operation:"dialogue",text:"What did Jaxon say?"})).result.narration.includes("private secret")));
+}));
+
+test("OBS08 actual movement saves departure witnesses, not later visitors or remote whereabouts",()=>nativeFixture(async f=>{
+  const pc=f.pcs[0],text="I enter the annex.",scope={mode:"party",actorUserId:pc.owner_user_id,actorCharacterId:pc.id};
+  f.db.updateCharacterData(f.pcs[2].id,d=>{d.location="elsewhere";});
+  f.db.setSimulationEntity(f.guild,"location","terminal",{name:"Terminal"});
+  f.db.setSimulationEntity(f.guild,"location","annex",{name:"Annex",parent_location_key:"terminal"});
+  const source=captureWorldInput(f.db,f.guild,pc.owner_user_id,pc.id,"departure",text);
+  f.db.saveCityRecord(f.guild,{kind:"autonomous_entity",key:"location:annex",visibility:"party",source_event:source.event_key,
+    status:"active",data:{kind:"location",key:"annex",name:"Annex"}});
+  commitGmTurn({db:f.db,guild:{id:f.guild},session:f.session,result:{respond:true,narration:"Jaxon leaves.",narrative_claims:[],
+    player_intents:[{type:"move",source_span:text,target_name:"Annex",target_key:"annex",destination:"interior",operation:"",
+      utterance:"",excluded_targets:[],framing:"immediate",resolution:"auto",reason:"Open local entry."}],
+    scene_actions:[{kind:"move",entity_ref:"annex",source_span:text,zone:"interior"}]},scope,speaker:pc.name,label:"departure",
+    meta:{messageId:"departure",triggerText:text}});
+  const observed=await question(f,{text:"Where did Jaxon go?",operation:"location",id:"witness"});
+  assert.match(observed.result.narration,/witnessed.*depart.*terminal/i);
+  assert(!observed.result.narration.includes("annex"));
+  f.db.updateCharacterData(f.pcs[2].id,d=>{d.location="terminal";});
+  const late=await question(f,{text:"Where did Jaxon go?",operation:"location",actor:2,id:"late"});
+  assert.match(late.result.narration,/not known/);assert(!late.result.narration.includes("annex"));
+}));
+
+test("OBS05 observer lists cannot manufacture a remote prior witness",()=>nativeFixture(f=>{
+  f.db.updateCharacterData(f.pcs[1].id,d=>{d.location="elsewhere";});
+  assert.throws(()=>describe(f,{observers:[f.pcs[1].id]}),/visible|witness|owner|source/i);
+}));
 test("OBS13 actual owner Discord adapter establishes only explicit description fields",()=>nativeFixture(async f=>{
   const sent=[],input={text:"black private-secret",facts:[{field:"hair",value:"black",start:0,end:5}],visibility:"party",observers:[]};
   const interaction={id:"description-adapter",guildId:f.guild,guild:{id:f.guild},user:{id:f.pcs[0].owner_user_id,username:"Jaxon"},

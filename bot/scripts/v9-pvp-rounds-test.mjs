@@ -49,7 +49,7 @@ test("PVP25/PVP28 Fear scenery cannot grant damage, secrets, meter or player rea
   const op={proposal:p.record_key,round_receipt:r.record_key,kind:"lights_flicker"};
   assert.throws(()=>pvpComplication(f.db,f.guild,"gm",{...op,kind:"permanent_wound"},{gm:true}),/Fear|environment|harm/i);
   assert.throws(()=>pvpComplication(f.db,f.guild,"gm",{...op,secret:"hidden"},{gm:true}),/closed/i);
-  const before=untouched(f);assert(pvpComplication(f.db,f.guild,"gm",op,{gm:true}).text.includes("No mechanical effect"));
+  const before=untouched(f);assert.throws(()=>pvpComplication(f.db,f.guild,"gm",op,{gm:true}),/Fear|consequen|cosmetic|move/i);
   assert.deepEqual(untouched(f),before);
 }));
 test("PVP31 both authors review exact bounded public text; one approval never projects",()=>nativeFixture(f=>{
@@ -122,11 +122,11 @@ test("PVP20/PVP21/PVP23 three strikes persists 3-2 with a tied exchange and no d
   assert.equal(f.db.listCityRecords(f.guild,{kind:"pvp_strike_receipt",includeGM:true,limit:100}).length,6);
   assert.deepEqual(untouched(f),before);
 }));
-for(const policy of ["roller","opponent","flavor_only"])test(`PVP26/PVP27/PVP28 Hope policy ${policy} is cap-safe and once only`,()=>nativeFixture(f=>{
-  const p=lock(f,{hope_policy:policy});f.db.updateCharacterData(f.pcs[1].id,d=>{d.resources.hope=6;});
+for(const policy of ["roller","opponent","flavor_only"])test(`PVP26/PVP27/PVP28 superseded ${policy}: fixed policy generates no Hope`,()=>nativeFixture(f=>{
+  const p=lock(f);f.db.updateCharacterData(f.pcs[1].id,d=>{d.resources.hope=6;});
   choose(f,p,0);choose(f,p,1);const once=roll(f,p,0,[10,3]);
   const after=f.pcs.map(pc=>f.db.getCharacter(pc.id).data.resources.hope);
-  assert.equal(after[0],policy==="roller"?3:2);assert.equal(after[1],6);
+  assert.equal(after[0],2);assert.equal(after[1],6);
   assert.equal(roll(f,p,0,[12,1]).own.roll_id,once.own.roll_id);
   assert.deepEqual(f.pcs.map(pc=>f.db.getCharacter(pc.id).data.resources.hope),after);
 }));

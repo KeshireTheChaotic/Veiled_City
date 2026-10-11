@@ -114,6 +114,22 @@ function finishDamage(db,guild,row,data){
 }
 /** Same native action/reaction metacurrency semantics used by raw and request-bound rolls. */
 export function applyRollOutcome(db,guild,session,characterIds,result,{reaction=false}={}){
+  if(result.proposal||result.terms_hash||result.choice||result.roll_type==="narrative_pvp"){
+    // A caller cannot reclassify custom opposed dice as an ordinary action/Critical resource grant.
+    let found=false;
+    for(let offset=0;offset<10000&&!found;offset+=100){
+      const page=db.listCityRecords(guild,{kind:"pvp_round_receipt",includeGM:true,limit:100,offset});
+      found=page.some(r=>{
+        const native=db.getSavedRoll(guild,r.data.roll_id);
+        return r.status==="resolved"&&native?.roll_type==="narrative_pvp"&&native.session_id===session
+          &&characterIds.length===1&&native.character_id===characterIds[0]
+          &&JSON.stringify(native.payload)===JSON.stringify(result)&&JSON.stringify(r.data.result)===JSON.stringify(result);
+      });
+      if(page.length<100)break;
+    }
+    if(!found)fail("Unverified PvP-shaped result cannot enter generic resource resolution.");
+    return;
+  }
   if(reaction) return;
   if(["Hope","Critical"].includes(result.duality)){
     for(const id of characterIds) db.updateCharacterData(id,data=>{

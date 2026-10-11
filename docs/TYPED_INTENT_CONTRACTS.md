@@ -231,3 +231,22 @@ The following boundaries describe the current uncommitted V9-PVP-B draft, not a 
 State authorization and publication authorization are separate. Quarantining a generated paragraph does not undo an independently authorized native action; an unsupported parallel state mutation still fails transactionally. Missing PC appearance is a successful nonblocking answer, not a roll or consent failure. Questions and referent resolution never create evidence for their answers.
 
 Current limitation: native NPC/environment projection and remaining sink/compatibility tests are incomplete. Do not treat the conservative generic fallback as acceptable normal GM narration, relax the security checks, or mark this draft green until those requirements pass their actual production-path tests. No SQL migration or historical narrative blessing is implied.
+
+## V9.3.2 development amendment — NOT phase-qualified
+
+The preceding V9.3.1 red OBS21 note is historical. The selected-field NPC/environment adapter now passes OBS21, but **V9-PVP-B remains blocked by the unreceipted PC-resource effect tests** recorded in progress. This amendment is not release approval.
+
+| Evidence / interface | May authorize | Does not authorize |
+|---|---|---|
+| V2 bilateral fixed policies | Native opposed totals/strikes, zero generated PvP Hope, immediate Fear obligations | Reusing old policy approvals, Critical Hope/Stress clearing, banked Fear or future spotlight |
+| Committed native Fear die + exact saved paired comparison | One trigger per qualifying roll, stable participant order and consequence gate | A model roll label, mutable resolved label, invented pair pointer or skipping the second obligation |
+| Authenticated GM-selected live countdown/access/NPC context + CAS decision | The supported bounded native route and an actual effect receipt | PC reaction/control, PvP HP/Armor/Stress, arbitrary catastrophe, cosmetic discharge or private-source promotion |
+| `fear-reconcile` with current owner/source/roll proof | Audited supersession/reselection of a stale decision | Waiving real Fear, restoring retracted consent, changing saved winner/score, rerunning a committed effect |
+| Explicit GM-selected `world_visible_fact` | Selected NPC attire/hair or location weather under live visibility | Arbitrary NPC profile paragraphs, proxy voluntary action or embedded PC apology |
+| Pre-movement native witness capture | Remembered departure from a visible origin | Destination omniscience, a later visitor's invented witness history or unseen private speech |
+| Archive source guard and private recap quarantine | Withholding unsupported synthesis without promoting it to shared memory | Session closure certifying raw recap prose or GM review ratifying another PC |
+| **Generic model `resource_delta` — unresolved P0** | No new native attack/damage authority is granted by this draft | Safe rendered prose, no-actor director scope or self-target private scope substituting for a consequential receipt |
+
+Current safe recap behavior is conservative: sessions with PvP history hold generated recap prose privately and report the hold; source-certified full archived recap rendering remains unqualified. Original session messages, characters and native receipts are retained. Native incoming NPC attack/reaction/damage eligibility must be integrated before closing the resource gate, while independently authorized native actions and ordinary non-PvP resources remain intact. Do not call broad resource-event suppression, a model cause label, fabricated receipt or an empty claim list a solution.
+
+Accepted typed intents are canonical adjudication inputs; human declarations own intent; native receipts own outcomes.

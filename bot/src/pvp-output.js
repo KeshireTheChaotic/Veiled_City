@@ -5,6 +5,8 @@ import { conversationPrincipal } from "./conversation-principal.js";
 import { pvpProjection } from "./pvp-authorship.js";
 import { observationQueries, renderObservation } from "./character-observation.js";
 import { activeEvidence, objectiveEvidence } from "./epistemic.js";
+import { renderFearEffect } from "./pvp-fear-moves.js";
+import { indexWorldEvent } from "./city-calendar.js";
 
 const hash=v=>createHash("sha256").update(JSON.stringify(v)).digest("hex");
 const prepared=new WeakMap();
@@ -68,6 +70,7 @@ function renderPart(db,guild,part){
     return projection.data.text;
   }
   if(kind==="observation_answer")return renderObservation(db,guild,part.query,scope).text;
+  if(kind==="pvp_fear_publication_part")return renderFearEffect(db,guild,ref,scope);
   if(kind==="verified_action"){
     const arrival=db.getWorldEvent(guild,ref),source=arrival&&db.getWorldEvent(guild,arrival.details.input_source);
     const pc=arrival&&db.getCharacter(arrival.details.entity_key);
@@ -112,6 +115,19 @@ export function prepareAuthorizedTurnOutput(db,guild,result,scope,{sourceRef=nul
   for(const query of queries)parts.push(savePart(db,guild,{...common,kind:"observation_answer",query}));
   for(const action of world.filter(r=>r.status==="arrived"&&r.source_event))
     parts.push(savePart(db,guild,{...common,kind:"verified_action",ref:action.source_event}));
+  for(const row of records(db,guild,"pvp_fear_effect_receipt")){
+    if(row.data.scene!==scene.key||row.visibility!=="party"
+      &&!(scope.mode==="private"&&row.visibility==="character"&&row.subject_key===scope.actorCharacterId))continue;
+    try{parts.push(savePart(db,guild,{...common,kind:"pvp_fear_publication_part",ref:row.record_key}));}
+    catch(error){
+      if(error.code!=="NARRATIVE_PVP")throw error;
+      // Hold this stale read-side projection only. Do not reexecute/revoke its saved effect or abort independent native actions.
+      const key=`pvp-fear-publication-hold:${hash([row.record_key,sourceRef,origin,error.message])}`;
+      if(!db.getCityRecord(guild,"pvp_fear_publication_hold",key))db.saveCityRecord(guild,{
+        kind:"pvp_fear_publication_hold",key,status:"needs_review",visibility:"gm",source_event:row.source_event,
+        data:{version:1,effect:row.record_key,scene:scene.key,reason:error.message,canonical:false,source_ref:sourceRef}});
+    }
+  }
   // Projection rows are independently revalidated; unapproved drafts are never candidates for rendering.
   for(const row of records(db,guild,"pvp_public_projection")){
     if(!proposals.some(p=>p.record_key===row.data.proposal)||row.data.version!==2)continue;
@@ -169,4 +185,28 @@ export function revalidateOutputPublication(db,guild,row){
 export function deliveredPartyOutput(db,guild,turnId){
   return db.listTurnPublications(guild,turnId).filter(r=>r.status==="delivered"&&r.visibility==="party")
     .map(r=>revalidateOutputPublication(db,guild,r).payload).join("\n");
+}
+/** Archives can refer to earlier scenes/ended sessions. Current-trigger scope alone is not an archive authorization. */
+export function archivePvpHistory(db,guild,sessionId=null){
+  const session=sessionId||db.getActiveSession(guild)?.id;
+  return records(db,guild,"pvp_proposal").filter(p=>!session||p.data.session_id===session);
+}
+export function assertArchiveOutput(db,guild,text,{sessionId=null}={}){
+  if(!String(text||"").trim()||!archivePvpHistory(db,guild,sessionId).length)return;
+  const part=records(db,guild,"pvp_output_part").find(r=>r.visibility==="party"&&r.status==="verified"&&r.data.text===text);
+  if(part){validateOutputPart(db,guild,part.record_key);return;}
+  const projection=records(db,guild,"pvp_public_projection").find(r=>r.visibility==="party"&&r.data.text===text);
+  if(projection){pvpProjection(db,guild,projection.record_key);return;}
+  fail();
+}
+/** Ending a session does not certify the model's synthesis. Hold it outside shared facts, recaps and retrieval. */
+export function quarantineSessionRecap(db,guild,session,text){
+  const key=`pvp-quarantine:${hash([session.id,"session-recap",text])}`;
+  const source=indexWorldEvent(db,guild,{key:`${key}:review`,kind:"pvp_archive_review",source_id:"native:recap-review",
+    title:"Unverified archive held for source review",visibility:"gm",session_id:session.id,
+    details:{session:session.id,content_hash:hash(String(text||"")),canonical:false}},"native_output_guard");
+  return db.getCityRecord(guild,"pvp_output_quarantine",key)||db.saveCityRecord(guild,{
+    kind:"pvp_output_quarantine",key,status:"needs_scope_review",visibility:"gm",source_event:source.event_key,
+    data:{version:1,session:session.id,origin:"session-recap",raw:{narration:String(text||"")},canonical:false,
+      reason:"Unverified archive synthesis; session closure supplies no PC authorship or disclosure authority."}});
 }

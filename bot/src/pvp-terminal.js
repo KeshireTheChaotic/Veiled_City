@@ -2,10 +2,12 @@
 import { createHash } from "node:crypto";
 import { pvpAttemptKey } from "./pvp-authority.js";
 import { transitionAction } from "./action-dependency.js";
+import { pendingPvpFear } from "./pvp-fear-gate.js";
 const hash=value=>createHash("sha256").update(JSON.stringify(value)).digest("hex").slice(0,40);
 export function settlePvpWindow(db,guild,proposal,receipt){
   if(receipt?.status!=="resolved"||receipt.kind!=="pvp_resolution_receipt"||receipt.data.proposal!==proposal.record_key
     ||receipt.data.terms_hash!==proposal.data.terms_hash)throw new Error("Exact native PvP terminal receipt required.");
+  if(pendingPvpFear(db,guild,proposal).length)return {status:"consequence_pending",receipt:receipt.record_key};
   const key=`pvp-window:${hash([proposal.record_key,proposal.data.terms_hash])}`;
   const window=db.getCityRecord(guild,"scene_action_window",key);
   if(window&&window.status!=="closed"){

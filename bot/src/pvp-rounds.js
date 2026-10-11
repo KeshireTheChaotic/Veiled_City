@@ -5,6 +5,7 @@ import { indexWorldEvent } from "./city-calendar.js";
 import { pvpOwnerContext, validatePvpAgreement } from "./narrative-pvp.js";
 import { synchronizePvpWindow } from "./window-coordinator.js";
 import { settlePvpWindow } from "./pvp-terminal.js";
+import { capturePvpFear, gatePvpExchange, fearGateKey, pendingPvpFear } from "./pvp-fear-gate.js";
 export { authorPvpNarrative, reviewPvpNarrative, sharePvpNarrative } from "./pvp-authorship.js";
 
 const hash=value=>createHash("sha256").update(JSON.stringify(value)).digest("hex").slice(0,40);
@@ -72,18 +73,6 @@ export function choosePvp(db,guild,user,input){
     saveWindow(db,guild,w,{});return {status:"sealed",round:input.round};
   });
 }
-function award(db,guild,p,t,who,receipt,result){
-  const recipient=t.hope_policy==="opponent"?p.data.participants.find(v=>v.character!==who.character):who;
-  const pc=db.getCharacter(recipient.character),before=pc.data.resources?.hope;
-  if(!Number.isSafeInteger(before)||before<0||before>6)fail("Verified current Hope within cap required.");
-  const amount=result.duality==="Hope"&&t.hope_policy!=="flavor_only"?Math.min(1,6-before):0;
-  if(amount)db.updateCharacterData(pc.id,data=>{data.resources.hope+=amount;});
-  db.saveCityRecord(guild,{kind:"pvp_resource_receipt",key:`pvp-hope:${receipt.record_key}`,status:"resolved",
-    source_event:receipt.source_event,visibility:"character",subject_key:pc.id,
-    data:{version:1,proposal:p.record_key,round_receipt:receipt.record_key,resource:"hope",recipient:pc.id,
-      before,after:before+amount,delta:amount,policy:t.hope_policy,duality:result.duality,
-      authority:"Single native PvP award, not spending and never generic Dice metacurrency."}});
-}
 function resultFor(db,guild,p,round,who){
   const row=db.getCityRecord(guild,"pvp_round_receipt",key(p,round,who.character));if(!row)return null;
   const saved=db.getSavedRoll(guild,row.data.roll_id),choice=seal(db,guild,p,round,who),authorization=db.getWorldEvent(guild,row.source_event);
@@ -97,6 +86,15 @@ function resultFor(db,guild,p,round,who){
     ||JSON.stringify(saved.payload)!==JSON.stringify(row.data.result))fail("Saved native PvP dice/choice ancestry is invalid.");
   return row;
 }
+/** Read-only exact receipt validation reused by immediate GM consequences, including neutral withdrawal. */
+export function validatePvpRoundReceipt(db,guild,p,receipt){
+  const native=db.getCityRecord(guild,"pvp_proposal",p.record_key);
+  const who=native?.data.participants.find(w=>w.character===receipt?.data.character);
+  if(!native||!receipt||!who)fail("Exact native PvP participant/receipt required.");
+  const row=resultFor(db,guild,native,receipt.data.round,who);
+  if(row?.record_key!==receipt.record_key)fail("Exact native PvP receipt required.");
+  return row;
+}
 function compare(db,guild,p,t,w,rows){
   const k=`pvp-pair:${hash([p.record_key,p.data.terms_hash,w.data.round])}`;
   const prior=db.getCityRecord(guild,"pvp_strike_receipt",k);if(prior)return prior;
@@ -106,6 +104,7 @@ function compare(db,guild,p,t,w,rows){
     data:{version:1,proposal:p.record_key,terms_hash:p.data.terms_hash,round:w.data.round,mode:t.mode,
       round_refs:rows.map(r=>r.record_key),roll_refs:rows.map(r=>r.data.roll_id),totals,winner,
       strike:t.mode==="three_strikes"&&winner?1:0,scores,comparison:"higher_final_total; Critical is flavor, not priority"}});
+  gatePvpExchange(db,guild,p,w.data.round,rows,pair.record_key);
   const done=t.mode==="single_roll_duel"?(winner||t.tie_policy==="stalemate"):(winner&&scores[winner]===3);
   const updated=saveWindow(db,guild,w,{scores,round_state:done?"complete":"awaiting_continuation",comparison:pair.record_key});
   if(done){
@@ -136,7 +135,8 @@ export function rollPvp(db,guild,user,input,{rng=d}={}){
     const receipt=db.saveCityRecord(guild,{kind:"pvp_round_receipt",key:key(p,input.round,who.character),status:"resolved",
       source_event:s.event_key,visibility:"character",subject_key:who.character,data:{version:1,proposal:p.record_key,
         terms_hash:p.data.terms_hash,round:input.round,character:who.character,choice:chosen.record_key,roll_id:id,result}});
-    award(db,guild,p,t,who,receipt,result);
+    // House rule: dice are saved unchanged; neither Hope/Critical nor Fear mutates a metacurrency pool.
+    capturePvpFear(db,guild,p,receipt);
     const rows=p.data.participants.map(who=>resultFor(db,guild,p,input.round,who));
     if(rows.every(Boolean))compare(db,guild,p,t,w,rows);else saveWindow(db,guild,w,{});
     return progressPvp(db,guild,user,p.record_key);
@@ -146,6 +146,7 @@ export function continuePvp(db,guild,user,input){
   fields(input,operationFields);
   return db.transaction(()=>{
     const {p,w,who}=current(db,guild,user,input);
+    if(pendingPvpFear(db,guild,p).length)fail("Immediate Fear consequence gate remains pending; no next exchange.");
     if(w.data.round_state!=="awaiting_continuation")fail("Both continuation decisions require a completed paired exchange.");
     const k=`pvp-continue:${hash([p.record_key,p.data.terms_hash,input.round,who.character])}`;
     if(db.getCityRecord(guild,"pvp_round_continuation",k))return progressPvp(db,guild,user,p.record_key);
@@ -166,9 +167,11 @@ export function progressPvp(db,guild,user,proposal){
   const {proposal:p,who}=pvpOwnerContext(db,guild,user,proposal),w=windowFor(db,guild,p);
   const own=db.getCityRecord(guild,"pvp_round_receipt",key(p,w?.data.round||1,who.character));
   const resolution=p.data.resolution_receipt&&db.getCityRecord(guild,"pvp_resolution_receipt",p.data.resolution_receipt);
+  const gate=db.getCityRecord(guild,"pvp_exchange_gate",fearGateKey(p,w?.data.round||1));
   return {proposal:p.record_key,terms_hash:p.data.terms_hash,status:resolution?p.status:w?.data.round_state==="awaiting_continuation"?"awaiting_continuation":p.status,
     round:w?.data.round||1,window_revision:w?.data.revision||1,scores:w?.data.scores||Object.fromEntries(p.data.participants.map(w=>[w.character,0])),
     own:own?{roll_id:own.data.roll_id,total:own.data.result.total,duality:own.data.result.duality,hope:own.data.result.hope,fear:own.data.result.fear}:null,
+    ...(gate?{consequence_status:gate.status}:{}),
     ...(resolution?{resolution:{receipt:resolution.record_key,outcome:resolution.data.outcome,winner:resolution.data.winner,
       stake:resolution.data.allowed_stake||null,narration:"Each player authors or withholds their own material separately."}}:{})};
 }
@@ -177,10 +180,5 @@ export function progressPvp(db,guild,user,proposal){
 export function pvpComplication(db,guild,user,input,{gm=false}={}){
   fields(input,["proposal","round_receipt","kind"]);
   if(!gm)fail("Only authenticated GM may frame bounded environmental flavor.");
-  const p=db.getCityRecord(guild,"pvp_proposal",input.proposal),r=db.getCityRecord(guild,"pvp_round_receipt",input.round_receipt);
-  const t=p&&db.getCityRecord(guild,"pvp_terms_revision",p.data.terms_revision)?.data.snapshot.terms;
-  if(!p||r?.data.proposal!==p.record_key||r.data.terms_hash!==p.data.terms_hash||r.data.result.duality!=="Fear"
-    ||t.fear_policy!=="environment_only"||input.kind!=="lights_flicker")fail("Fear allows only bounded environmental flavor, never PC harm, forced response or secret disclosure.");
-  return {text:"A nearby light flickers. No mechanical effect or character reaction is implied.",receipt:r.record_key,
-    visibility:"recipient_private",authority:"Cosmetic proposal only; no HP, Armor, Stress, custody, movement, knowledge or GM Fear mutation."};
+  fail("Fear requires an immediate consequential native GM move; cosmetic proposals cannot discharge it.");
 }

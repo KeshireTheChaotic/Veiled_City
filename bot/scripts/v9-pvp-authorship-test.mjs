@@ -11,6 +11,8 @@ import { handleCommand } from "../src/commands.js";
 import { indexWorldEvent } from "../src/city-calendar.js";
 import { validateNarrativeClaims } from "../src/narrative-integrity.js";
 import { queueTurnPublications } from "../src/publication-outbox.js";
+import { publishJournal, postJournalEntry } from "../src/publishing.js";
+import { fakeInteraction } from "./contract-fixtures.mjs";
 
 function resolved(f,mode="single_roll_duel"){
   const p=proposePvp(f.db,f.guild,f.pcs[0].owner_user_id,{accepted_intent:f.accepted().record_key,
@@ -31,6 +33,57 @@ function resolved(f,mode="single_roll_duel"){
   return {p,base,result};
 }
 const rows=(f,kind)=>f.db.listCityRecords(f.guild,{kind,includeGM:true,limit:100});
+function journalFixture(f){
+  const sends=[];
+  f.db.configureChannels(f.guild,{journalChannelId:"journal"});
+  const channel={id:"journal",isTextBased:()=>true,send:async text=>{sends.push(text);return {id:"sent"};}};
+  return {sends,guild:{id:f.guild,channels:{fetch:async()=>channel}}};
+}
+test("PVP30aa journal cannot launder raw cross-actor prose during or after session",()=>nativeFixture(async f=>{
+  resolved(f);const {sends,guild}=journalFixture(f),raw="Choso apologizes for losing.";
+  await assert.rejects(()=>publishJournal({db:f.db,guild,session:f.session,recap:raw}),/PvP|clause|source/i);
+  await assert.rejects(()=>postJournalEntry({db:f.db,guild,content:raw}),/PvP|clause|source/i);
+  const ended=f.db.endSession(f.guild,"");
+  await assert.rejects(()=>publishJournal({db:f.db,guild,session:ended,recap:raw}),/PvP|clause|source/i);
+  await assert.rejects(()=>postJournalEntry({db:f.db,guild,content:raw}),/PvP|clause|source/i);
+  assert.deepEqual(sends,[]);
+}));
+test("PVP30aa session end quarantines unsupported recap, not shared campaign memory",()=>nativeFixture(async f=>{
+  resolved(f);const {sends,guild}=journalFixture(f),interaction=fakeInteraction({sub:"end"});
+  Object.assign(interaction,{id:"end-source-review",guildId:f.guild,guild,commandName:"vc-session",isChatInputCommand:()=>true});
+  interaction.user.username="GM";
+  await handleCommand(interaction,{db:f.db,gm:{summarizeSession:async()=>"Choso apologizes for losing."}});
+  assert(!f.db.getActiveSession(f.guild));
+  assert(!JSON.stringify(f.db.factsFor(f.guild,"",{includeGM:false,limit:100})).includes("apologizes"));
+  assert(!JSON.stringify(f.db.getSession(f.session.id)).includes("apologizes"));
+  assert(!JSON.stringify(sends).includes("apologizes"));
+  assert(!JSON.stringify(interaction.deliveries).includes("apologizes"));
+  assert.equal(rows(f,"pvp_output_quarantine").filter(r=>r.data.origin==="session-recap").length,1);
+}));
+test("FH40 P0 actual manual World Director cannot invent participant injury through generic events",()=>nativeFixture(async f=>{
+  resolved(f);const {guild}=journalFixture(f),pc=f.pcs[1],before=structuredClone(f.db.getCharacter(pc.id).data.resources);
+  const interaction=fakeInteraction({sub:"run"});
+  Object.assign(interaction,{id:"director-unreceipted-harm",guildId:f.guild,guild,commandName:"vc-director",isChatInputCommand:()=>true});
+  interaction.user.username="GM";
+  await handleCommand(interaction,{db:f.db,gm:{runWorldDirector:async()=>({act:true,confidence:100,
+    public_narration:"Choso's shin is bruised.",narrative_claims:[],private_messages:[],
+    events:[{type:"resource_delta",key:"hp",amount:1,target_character_id:pc.id}],
+    relationships:[],handouts:[],npc_memories:[],npc_knowledge:[],npc_goals:[],simulation_updates:[],gm_notes:""})}});
+  assert.deepEqual(f.db.getCharacter(pc.id).data.resources,before,"No native incoming attack/reaction/damage receipt exists; safe prose is not native effect authority.");
+}));
+test("FH40 P0 private self-target GM turn cannot invent injury behind safe output",()=>nativeFixture(async f=>{
+  const {captureWorldInput}=await import("../src/autonomous-world.js"),{commitGmTurn}=await import("../src/turn-orchestration.js");
+  resolved(f);const pc=f.pcs[1],before=structuredClone(f.db.getCharacter(pc.id).data.resources),text="I wait.";
+  const scope={mode:"private",actorUserId:pc.owner_user_id,actorCharacterId:pc.id};
+  captureWorldInput(f.db,f.guild,pc.owner_user_id,pc.id,"private-unreceipted-harm",text,{privateScene:true});
+  const turn=f.db.beginTurnAttempt({guildId:f.guild,messageId:"private-unreceipted-harm",actorPrincipal:pc.owner_user_id,
+    sessionId:f.session.id,audience:"private"});
+  try{commitGmTurn({db:f.db,guild:{id:f.guild},session:f.session,result:{respond:true,narration:"Choso's shin is bruised.",
+    narrative_claims:[],events:[{type:"resource_delta",key:"hp",amount:1,target_character_id:pc.id}]},scope,speaker:pc.name,label:"private injury",
+    meta:{messageId:"private-unreceipted-harm",turnId:turn.turn_id,triggerText:text,privateScene:true}});}
+  catch(error){assert(["NARRATIVE_PVP","STATE_MUTATION_REJECTED","NARRATIVE_INTEGRITY"].includes(error.code),error.message);}
+  assert.deepEqual(f.db.getCharacter(pc.id).data.resources,before,"A current owner's wait declaration does not authorize an injury.");
+}));
 function draft(f,base,text,reviewers=[]){return draftPvpNarrative(f.db,f.guild,f.pcs[0].owner_user_id,
   {...base,template:undefined,text,reviewers,interaction_id:`draft:${text}`});}
 function published(f,n,base){
@@ -290,6 +343,13 @@ test("OBS21 native NPC description inquiry must not be swallowed by unrelated PC
   resolved(f);f.db.upsertNpcProfile(f.guild,{npcKey:"station-attendant",displayName:"Station Attendant",
     publicIdentity:"The station attendant wears a blue coat.",portrayal:"An ordinary station attendant.",source:"gm"});
   f.db.setSimulationEntity(f.guild,"npc","station-attendant",{name:"Station Attendant",location_key:"terminal"});
+  // v9.3.2: establish selected fields through the authenticated GM command, not profile prose.
+  const {fakeInteraction}=await import("./contract-fixtures.mjs");
+  const description=fakeInteraction({sub:"scene-description",json:{entity_type:"npc",entity_key:"station-attendant",
+    location_key:"terminal",visibility:"party",facts:{coat:"blue"}}});
+  Object.assign(description,{guildId:f.guild,id:"obs21-gm-description",commandName:"vc-gm",isChatInputCommand:()=>true});
+  description.user.username="Synthetic GM";
+  await handleCommand(description,{db:f.db,gm:{}});
   const pc=f.pcs[2],text="What does the station attendant look like?",scope={mode:"party",actorUserId:pc.owner_user_id,actorCharacterId:pc.id};
   captureWorldInput(f.db,f.guild,pc.owner_user_id,pc.id,"npc-description-question",text);
   const result={respond:true,narration:"The station attendant wears a blue coat.",narrative_claims:[],player_intents:[{

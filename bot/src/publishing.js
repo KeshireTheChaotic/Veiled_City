@@ -7,6 +7,7 @@ import { assertGmOnlyChannel, assertPlayerPrivateChannel } from "./discord/priva
 import { simulationOverview, acknowledgeSimulationHook } from "./simulation.js";
 import { deliverTurnOutbox, outboxSummary } from "./publication-outbox.js";
 import { failureTrace } from "./failure-trace.js";
+import { assertArchiveOutput, archivePvpHistory } from "./pvp-output.js";
 
 /** Hooks remain queued on failed delivery and never publish internal action packets. */
 export async function publishSimulationHooks({db,guild,sessionId=null}){
@@ -79,16 +80,21 @@ export async function publishEventResults({db,guild,results=[]}){
 }
 
 export async function publishJournal({db,guild,session,recap}){
+  assertArchiveOutput(db,guild.id,recap,{sessionId:session.id});
   const c=db.getCampaign(guild.id);
   const ch=await textChannel(guild,c?.journal_channel_id);
   if(!ch) return false;
-  const head=`## Session ${session.session_number}${session.title?` — ${session.title}`:""}`;
+  const protectedArchive=archivePvpHistory(db,guild.id,session.id).length;
+  const head=`## Session ${session.session_number}${!protectedArchive&&session.title?` — ${session.title}`:""}`;
   const parts=chunks(`${head}\n\n${recap}`);
   for(const p of parts) await ch.send(p);
   return true;
 }
 
 export async function postJournalEntry({db,guild,title="Campaign Update",content=""}){
+  assertArchiveOutput(db,guild.id,content);
+  if(archivePvpHistory(db,guild.id).length&&title!=="Campaign Update")
+    throw Object.assign(new Error("PvP archive title requires a native source-bound projection."),{code:"NARRATIVE_PVP"});
   const c=db.getCampaign(guild.id);
   const ch=await textChannel(guild,c?.journal_channel_id);
   if(!ch) return false;

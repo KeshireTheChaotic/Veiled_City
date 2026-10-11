@@ -3,6 +3,7 @@ import { createHash } from "node:crypto";
 import { conversationPrincipal } from "./conversation-principal.js";
 import { currentScene, sceneAccess, scenePresence } from "./scene-continuity.js";
 import { indexWorldEvent } from "./city-calendar.js";
+import { renderWorldObservation } from "./world-observation.js";
 
 const hash=v=>createHash("sha256").update(JSON.stringify(v)).digest("hex");
 const vocabulary={
@@ -26,7 +27,7 @@ export function saveVisibleCharacterFacts(db,guild,user,character,input){
   if(!["party","character"].includes(input.visibility)
     ||!Array.isArray(input.facts)||!input.facts.length||input.facts.length>8
     ||!Array.isArray(input.observers)||input.observers.length>30)fail();
-  if(input.observers.some(id=>db.getCharacter(id)?.guild_id!==guild))fail();
+  if(input.observers.some(id=>db.getCharacter(id)?.guild_id!==guild||!visible(db,guild,id,character)))fail();
   return db.transaction(()=>input.facts.map(f=>{
     if(!vocabulary[f.field]?.includes(f.value)||!Number.isSafeInteger(f.start)||!Number.isSafeInteger(f.end)
       ||f.start<0||f.end<=f.start||s.details.raw_text.slice(f.start,f.end)!==f.value)fail();
@@ -71,6 +72,13 @@ function visible(db,guild,observer,target){
 function audienceAllows(row,scope){
   return row.visibility==="party"||scope.mode==="private"&&row.data.character===scope.actorCharacterId;
 }
+/** Called by the native movement transaction BEFORE location/presence changes. Never model-authored witnesses. */
+export function captureDepartureWitnesses(db,guild,character,visibility){
+  const session=db.getActiveSession(guild),pc=db.getCharacter(character);
+  if(!session||!pc?.data.location)return null;
+  return {location:pc.data.location,observers:visibility==="party"?db.roster(session.id).filter(r=>r.character_id
+    &&visible(db,guild,r.character_id,character)).map(r=>r.character_id):[character]};
+}
 /** Capture only actual native arrivals and exact owner utterances, with witnesses at commit time. */
 export function recordCharacterPerceptions(db,guild,{world=[],intents=[],scope,sourceRef}){
   const session=db.getActiveSession(guild),source=sourceRef&&db.getWorldEvent(guild,sourceRef);
@@ -78,8 +86,13 @@ export function recordCharacterPerceptions(db,guild,{world=[],intents=[],scope,s
   const candidates=[];
   for(const action of world.filter(r=>r.status==="arrived")){
     const arrival=db.getWorldEvent(guild,action.source_event);
-    if(arrival?.kind==="arrival"&&arrival.details.entity_type==="character")
+    if(arrival?.kind==="arrival"&&arrival.details.entity_type==="character"){
       candidates.push({kind:"arrival",actor:arrival.details.entity_key,ref:arrival.event_key,location:arrival.location_key});
+      const departed=arrival.details.departure;
+      if(departed?.location&&Array.isArray(departed.observers)&&departed.location!==arrival.location_key)
+        candidates.push({kind:"departure",actor:arrival.details.entity_key,ref:arrival.event_key,location:departed.location,
+          observers:departed.observers});
+    }
   }
   for(const row of intents.filter(i=>i.data.type==="speak"&&i.data.utterance&&i.data.source_span.includes(i.data.utterance)))
     candidates.push({kind:"dialogue",actor:row.data.actor,ref:row.data.world_source_event,quote:row.data.utterance});
@@ -88,8 +101,8 @@ export function recordCharacterPerceptions(db,guild,{world=[],intents=[],scope,s
     const native=db.getWorldEvent(guild,candidate.ref),pc=db.getCharacter(candidate.actor);
     if(!native||native.status!=="active"||source.details.character_id!==pc?.id
       ||!db.ownerAuthoredSource(guild,source.event_key,pc.owner_user_id))continue;
-    const observers=source.visibility==="party"?db.roster(session.id).filter(r=>r.character_id
-      &&visible(db,guild,r.character_id,pc.id)).map(r=>r.character_id):[pc.id];
+    const observers=source.visibility==="party"?(candidate.kind==="departure"?candidate.observers
+      :db.roster(session.id).filter(r=>r.character_id&&visible(db,guild,r.character_id,pc.id)).map(r=>r.character_id)):[pc.id];
     const data={version:1,...candidate,source_ref:source.event_key,source_hash:hash(source.details),native_hash:hash(native.details),
       actor_owner:pc.owner_user_id,principal_revision:conversationPrincipal(db,guild,pc.owner_user_id,pc.id).revision,
       observers,visibility:source.visibility,scene:currentScene(db,guild).key};
@@ -113,6 +126,9 @@ function perception(db,guild,query,scope){
       text:`You previously heard ${db.getCharacter(query.target).name} say: “${d.quote}” (authored speech, not proof of its claims).`};
     if(query.operation==="location"&&d.kind==="arrival"&&n.kind==="arrival")return {ref:row.record_key,
       text:`Your last witnessed arrival of ${db.getCharacter(query.target).name} was at ${d.location}; this does not establish their current whereabouts.`};
+    if(["location","activity"].includes(query.operation)&&d.kind==="departure"&&n.kind==="arrival"
+      &&n.details.departure?.location===d.location&&hash(n.details.departure.observers)===hash(d.observers))return {ref:row.record_key,
+      text:`You witnessed ${db.getCharacter(query.target).name} depart from ${d.location}; their current whereabouts are not established by that observation.`};
   }
   return null;
 }
@@ -126,8 +142,10 @@ export function observationQueries(db,guild,intents,scope,sourceRef){
   const raw=s.details.text??s.details.raw_text??"",scene=currentScene(db,guild);
   if(s.scene!==scene.key||s.session_id!==scene.session_id)return [];
   return (intents||[]).filter(i=>i.type==="observe"&&i.framing==="immediate"&&i.source_span
-    &&raw.includes(i.source_span)&&db.getCharacter(i.target_key)?.guild_id===guild).map(i=>({
+    &&raw.includes(i.source_span)&&(db.getCharacter(i.target_key)?.guild_id===guild
+      ||db.getNpcProfile(guild,i.target_key)||db.getSimulationEntity(guild,"location",i.target_key))).map(i=>({
     version:1,observer:pc.id,user:scope.actorUserId,target:i.target_key,operation:i.operation||"appearance",
+    target_type:db.getCharacter(i.target_key)?"character":db.getNpcProfile(guild,i.target_key)?"npc":"location",
     source_ref:sourceRef,source_hash:hash(s.details),source_span:i.source_span,
     principal_revision:conversationPrincipal(db,guild,scope.actorUserId,pc.id).revision,scene:scene.key,session:scene.session_id
   }));
@@ -138,6 +156,7 @@ export function renderObservation(db,guild,query,scope){
   if(s?.status!=="active"||hash(s.details)!==query.source_hash||principal.kind!=="owner"
     ||principal.revision!==query.principal_revision||scope.actorCharacterId!==query.observer
     ||currentScene(db,guild).key!==query.scene)fail();
+  if(query.target_type&&query.target_type!=="character")return renderWorldObservation(db,guild,query,scope);
   const target=db.getCharacter(query.target);if(target?.guild_id!==guild)fail();
   const canSee=visible(db,guild,query.observer,query.target),facts=[];
   for(const row of db.listCityRecords(guild,{kind:"character_visible_fact",includeGM:true,limit:500})){

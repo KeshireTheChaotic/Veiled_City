@@ -13,6 +13,7 @@ import { resolvePlaceReference, preflightPlaceIdentity, preflightNpcIdentity } f
 import { currentAcceptedIntent, currentTypedMovement } from "./typed-intents.js";
 import { movementAdjudication } from "./rules-arbitration.js";
 import { contextMemoriesForScope } from "./context-memory.js";
+import { captureDepartureWitnesses } from "./character-observation.js";
 const hash=value=>createHash("sha256").update(JSON.stringify(value)).digest("hex").slice(0,40);
 export const AUTONOMOUS_WORLD_VERSION=1;
 const object=properties=>({type:"object",additionalProperties:false,properties,required:Object.keys(properties)});
@@ -302,8 +303,9 @@ function applyWorld(db,guild,narrative,scope,provenance,content){
             principal_revision:principal.revision,revision_basis:entrySource.data.principal_revision?"exact":"historical_owner_source",
             authority:"Revalidated legacy owner entry authorizes native adjudication only; this record is not an outcome."}});
       }
+      const departure=captureDepartureWitnesses(db,guild,pc.id,boundary.visibility);
       db.updateCharacterData(pc.id,data=>{data.location=target;});
-      const arrival=event(`action:${index}`,"arrival",target,{entity_type:"character",entity_key:pc.id,owner_user_id:pc.owner_user_id,declaration:actionSource.event_key});
+      const arrival=event(`action:${index}`,"arrival",target,{entity_type:"character",entity_key:pc.id,owner_user_id:pc.owner_user_id,declaration:actionSource.event_key,departure});
       recordScenePresence(db,guild,{entity_type:"character",entity_key:pc.id,location_key:target,
         source_event:arrival.event_key,zone:action.zone||"scene",...boundary,accepted_by:pc.owner_user_id},"ai_gm");
       results.push({status:"arrived",key:target,source_event:arrival.event_key,

@@ -126,10 +126,12 @@ bot/scripts/v7-delta-baseline-test.mjs
 bot/scripts/v9-action-consent-test.mjs
 bot/scripts/v9-baseline-regressions-test.mjs
 bot/scripts/v9-fixtures.mjs
+bot/scripts/v9-npc-observation-test.mjs
 bot/scripts/v9-observation-compatibility-test.mjs
 bot/scripts/v9-pvp-agreement-test.mjs
 bot/scripts/v9-pvp-authorship-test.mjs
 bot/scripts/v9-pvp-contract-test.mjs
+bot/scripts/v9-pvp-hope-fear-test.mjs
 bot/scripts/v9-pvp-rounds-test.mjs
 bot/scripts/v9-pvp-typed-roll-test.mjs
 bot/scripts/v9-window-lifecycle-test.mjs
@@ -228,6 +230,8 @@ bot/src/publication-outbox.js
 bot/src/publishing.js
 bot/src/pvp-authority.js
 bot/src/pvp-authorship.js
+bot/src/pvp-fear-gate.js
+bot/src/pvp-fear-moves.js
 bot/src/pvp-output.js
 bot/src/pvp-rounds.js
 bot/src/pvp-terminal.js
@@ -274,6 +278,7 @@ bot/src/typed-roll-outcomes.js
 bot/src/voice.js
 bot/src/window-coordinator.js
 bot/src/world-authoring.js
+bot/src/world-observation.js
 content/CARDS/ANCESTRIES_AND_COMMUNITIES.md
 content/CARDS/CUSTOM_DOMAINS.md
 content/CARDS/DOMAINS/HEX.md
@@ -412,6 +417,8 @@ docs/PLAYER_LIFECYCLE.md
 docs/README.md
 docs/README_HOTFIX.md
 docs/REFERENCE_V9_2_AUTHORSHIP_CONTRACT.md
+docs/REFERENCE_V9_3_1_OBSERVATION_CONTRACT.md
+docs/REFERENCE_V9_3_OUTPUT_AUTHORITY_CONTRACT.md
 docs/RELATIONSHIP_GRAPH.md
 docs/RELAX_IMPLEMENTATION.md
 docs/RULES_DESK.md
@@ -428,6 +435,7 @@ docs/SOURCE_BUILD_NOTES.md
 docs/SUGGESTIONS-End-To-End.md
 docs/SYSTEMS_TO_PLAYERS_GAP_ANALYSIS.md
 docs/SYSTEMS_TO_PLAYERS_IMPLEMENTATION.md
+docs/TEST_MATRIX_COUNTS.txt
 docs/TYPED_INTENT_BASELINE.md
 docs/TYPED_INTENT_CONTRACTS.md
 docs/TYPED_INTENT_DELTA_AUDIT.md
@@ -466,6 +474,11 @@ docs/V9_2_PVP_AUTHORSHIP_CONTRACT.md
 docs/V9_2_REGRESSION_MATRIX.csv
 docs/V9_2_SOURCE_AUDIT.md
 docs/V9_3_1_OBSERVATION_CONTRACT.md
+docs/V9_3_2_CODEX_RESUME.md
+docs/V9_3_2_IMPLEMENTATION_PLAN.md
+docs/V9_3_2_PVP_HOPE_FEAR_CONTRACT.md
+docs/V9_3_2_REGRESSION_MATRIX.csv
+docs/V9_3_2_SOURCE_AUDIT.md
 docs/V9_3_CODEX_RESUME.md
 docs/V9_3_IMPLEMENTATION_PLAN.md
 docs/V9_3_OUTPUT_AUTHORITY_CONTRACT.md

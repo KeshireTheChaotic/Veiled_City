@@ -52,7 +52,9 @@ export function buildActionPlan(db,guild,acceptedRows=[]){
       const depStates=dependencies.get(row.record_key).map(dep=>calculated.get(dep)?.data.status);
       if(depStates.some(value=>["failed","blocked","clarification"].includes(value)))status="blocked";
       else if(depStates.some(value=>value!=="resolved"))status="suspended";
-      else status=prior?.data.coordination||prior?.data.pvp_attempt?"pending":initialStatus(row);
+      else status=prior?.data.coordination||prior?.data.pvp_attempt
+        ||(prior?.data.interrupt_refs||[]).some(ref=>db.getCityRecord(guild,"action_interrupt_receipt",ref)?.status!=="resolved")
+        ?"pending":initialStatus(row);
     }
     const saved=db.saveCityRecord(guild,{kind:"compound_action",key,status,source_event:row.source_event,
       visibility:row.visibility,subject_key:row.subject_key,data:{...prior?.data,action_id:row.record_key,proposal_id:row.data.proposal_id,
@@ -74,6 +76,8 @@ export function executableActionSpans(plan=[]){
 export function transitionAction(db,guild,key,{expected_status,status,receipt}){
   const row=db.getCityRecord(guild,"compound_action",key);
   if(!row||!terminal.has(status)||typeof receipt!=="string"||!receipt.trim())fail("Native action transition needs a terminal status and receipt.");
+  if((row.data.interrupt_refs||[]).some(ref=>db.getCityRecord(guild,"action_interrupt_receipt",ref)?.status!=="resolved"))
+    fail("Interrupted action needs native contextual revalidation before continuation.");
   if(row.data.status===status&&row.data.receipt===receipt)return row;
   if(row.data.status!==expected_status)fail("Compound action is stale or already has a different receipt.");
   return db.saveCityRecord(guild,{...row,key:row.record_key,status,data:{...row.data,status,receipt}});

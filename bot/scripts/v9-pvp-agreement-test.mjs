@@ -28,7 +28,7 @@ test("PVP01 unconsented attempt has native pending status and no forced effects"
 test("PVP02 both owners privately review both asymmetric stakes, all policies and same hash",()=>nativeFixture(f=>{
   const p=offer(f),a=reviewPvp(f.db,f.guild,f.pcs[0].owner_user_id,p.record_key),b=reviewPvp(f.db,f.guild,f.pcs[1].owner_user_id,p.record_key);
   assert.equal(a.text,b.text);assert(a.text.includes("Jaxon")&&a.text.includes("Choso"));
-  assert(a.text.includes("no_HP_armor_stress_damage")&&a.text.includes("roller"));
+  assert(a.text.includes("no_HP_armor_stress_damage")&&a.text.includes("no_pvp_hope_generation"));
   assert.equal(a.terms_hash,b.terms_hash);assert.equal(a.visibility,"character");
 }));
 test("PVP03 mandatory boundaries and closed terms cannot smuggle HP/item/forced speech effects",()=>nativeFixture(f=>{
@@ -47,7 +47,7 @@ test("PVP04 declined proposal closes neutrally with no dice or winner",()=>nativ
   assert.equal(receipt.data.winner,null);assert.deepEqual(receipt.data.roll_refs,[]);
 }));
 for(const [id,patch] of [["PVP05",{objective:"A different harmless objective."}],["PVP06",{mode:"three_strikes"}],
-  ["PVP11",{audience:"bilateral_author_projection",hope_policy:"opponent"}]])
+  ["PVP11",{audience:"bilateral_author_projection"}]])
   test(`${id} changed terms invalidate both approvals, even across restart reconstruction`,()=>nativeFixture(f=>{
     const p=offer(f);respond(f,p,0);f.restart();
     const revised=revisePvp(f.db,f.guild,f.pcs[1].owner_user_id,{proposal:p.record_key,expected_revision:p.data.terms_hash,

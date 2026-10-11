@@ -54,6 +54,10 @@ import { synchronizePvpWindow, windowOperation } from "./window-coordinator.js";
 import { draftPvpNarrative, ratifyPvpClause, reviewPvpScope, reviewPvpDraft, pvpNarrationInbox } from "./pvp-authorship.js";
 import { captureAuthoredTurnEnvelope } from "./authored-turn-envelope.js";
 import { saveVisibleCharacterFacts } from "./character-observation.js";
+import { establishWorldDescription } from "./world-observation.js";
+import { fearInbox, establishFearContext, selectFearMove, applyFearMove, reconcileFearMove } from "./pvp-fear-moves.js";
+import { archivePvpHistory, quarantineSessionRecap } from "./pvp-output.js";
+import { pendingPvpFear } from "./pvp-fear-gate.js";
 import { queueDirectorPublications } from "./publication-outbox.js";
 
 const interactionQueue=new KeyedSerialQueue();
@@ -398,7 +402,17 @@ async function executeCommand(interaction,{db,gm,voice=null}){
     if(group==="roll"&&sub==="pvp"){
       const {op="inbox",...input}=JSON.parse(interaction.options.getString("json")||"{}");
       let text;
-      if(op==="inbox")text=JSON.stringify(pvpInbox(db,interaction.guildId,interaction.user.id),null,2);
+      if(["fear-inbox","fear-context","fear-select","fear-apply","fear-reconcile"].includes(op)){
+        if(!isGM(db,interaction))throw new PermissionError("GM/admin permission required.");
+        const native={gm:true,interactionId:interaction.id};
+        const result=op==="fear-inbox"?fearInbox(db,interaction.guildId,interaction.user.id,native)
+          :op==="fear-context"?establishFearContext(db,interaction.guildId,interaction.user.id,input,native)
+            :op==="fear-select"?selectFearMove(db,interaction.guildId,interaction.user.id,input,native)
+              :op==="fear-reconcile"?reconcileFearMove(db,interaction.guildId,interaction.user.id,input,native)
+                :applyFearMove(db,interaction.guildId,interaction.user.id,input,native);
+        text=JSON.stringify(result,null,2);
+      }
+      else if(op==="inbox")text=JSON.stringify(pvpInbox(db,interaction.guildId,interaction.user.id),null,2);
       else if(["choose","roll","continue","progress","narrate","narrative-review","share","complication",
         "draft","ratify","scope-review","draft-review","narration-inbox"].includes(op)){
         let result;
@@ -705,15 +719,24 @@ Initial phase: ${s.assembly_phase}`});
       if(!isGM(db,interaction)) throw new Error("Only a GM/admin may end sessions.");
       await interaction.deferReply();
       const activeBefore=db.getActiveSession(interaction.guildId);
+      const pvpHistory=archivePvpHistory(db,interaction.guildId,activeBefore?.id);
+      if(pvpHistory.some(p=>pendingPvpFear(db,interaction.guildId,p).length))
+        throw new StateConflictError("Resolve or review outstanding immediate PvP Fear obligations before ending this session.");
       db.snapshotCampaign(interaction.guildId,{label:`Pre-end Session ${activeBefore?.session_number||""}`.trim(),reason:"Automatic snapshot before session end",createdBy:interaction.user.id});
-      const recap=await gm.summarizeSession(interaction.guildId);
+      const proposedRecap=await gm.summarizeSession(interaction.guildId);
+      // A whole freeform recap cannot be source-certified by closing the session. Preserve it privately, not as party memory.
+      const held=pvpHistory.length>0;
+      if(held)quarantineSessionRecap(db,interaction.guildId,activeBefore,proposedRecap);
+      const recap=held?"":proposedRecap;
       const s=db.endSession(interaction.guildId,recap);
-      db.addFact(interaction.guildId,{category:"recap",key:`session-${s.session_number}-recap`,content:recap,visibility:"party",sessionId:s.id,source:"system",
+      if(!held)db.addFact(interaction.guildId,{category:"recap",key:`session-${s.session_number}-recap`,content:recap,visibility:"party",sessionId:s.id,source:"system",
         provenance:{epistemic:{kind:"testimony",perspective:"narrator recap; consult original sources, not new truth",source_refs:[]},session_id:s.id,authority:"Non-authoritative synthesis; original messages/facts retained"}});
-      await publishJournal({db,guild:interaction.guild,session:s,recap});
-      await postGmLog({db,guild:interaction.guild,sessionId:s.id,title:`Session ${s.session_number} ended`,details:"Player-safe recap generated and campaign state closed."});
+      if(!held)await publishJournal({db,guild:interaction.guild,session:s,recap});
+      await postGmLog({db,guild:interaction.guild,sessionId:s.id,title:`Session ${s.session_number} ended`,details:held
+        ?"Session closed. Generated recap withheld in GM-private source review; no shared recap fact or journal publication."
+        :"Player-safe recap generated and campaign state closed."});
       db.snapshotCampaign(interaction.guildId,{label:`Post-session ${s.session_number}`,reason:"Automatic snapshot after session end",createdBy:interaction.user.id});
-      await deliverInteractionText(interaction,`**Session ${s.session_number} ended.**\n\n${recap}`,{ephemeral:false});
+      await deliverInteractionText(interaction,`**Session ${s.session_number} ended.**\n\n${held?"The generated recap is withheld pending source review; original records are preserved.":recap}`,{ephemeral:false});
       return true;
     }
     if(group==="session"&&["present","arrive"].includes(sub)){
@@ -1783,6 +1806,12 @@ GM notes: ${a.draft.gm_notes}`:""}`.slice(0,1950):"No aftermath draft exists for
 
     if(group==="gm"){
       if(!isGM(db,interaction)) throw new PermissionError("GM/admin permission required.");
+      if(sub==="scene-description"){
+        const result=establishWorldDescription(db,interaction.guildId,interaction.user.id,
+          JSON.parse(interaction.options.getString("json",true)),{gm:true,interactionId:interaction.id});
+        await interaction.reply({content:`Selected native description saved: ${result.record_key}`,ephemeral:true,
+          allowedMentions:{parse:[]}});return true;
+      }
       if(sub==="overview"){
         const chunks=chunkTextLines(formatGmOverview(buildGmOverview(db,interaction.guildId),{formatFact:gmFactLine}));
         await interaction.reply({content:chunks[0],ephemeral:true}); for(const c of chunks.slice(1)) await interaction.followUp({content:c,ephemeral:true}); return true;
