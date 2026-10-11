@@ -13,6 +13,8 @@ import { handleCityCommand } from "../src/city-commands.js";
 import { KeyedSerialQueue } from "../src/serial-queue.js";
 import { handleCommand } from "../src/commands.js";
 import { applyAuthoritativeMutation } from "../src/state.js";
+import { captureWorldInput } from "../src/autonomous-world.js";
+import { reviewFeatureEffect, reviewPcEffect, approvePcEffect } from "../src/pc-effects.js";
 import { FakeResponses, fakeInteraction } from "./contract-fixtures.mjs";
 const temp=fs.mkdtempSync(path.join(os.tmpdir(),"vc-contract-"));
 const db=new VeiledDB(path.join(temp,"test.sqlite"),path.resolve("sql/schema.sql"));
@@ -36,12 +38,23 @@ try{
     ["intent","Witness intends to leave"]]) check({...base,action:"movement",certainty,source_span:span});
   assert.throws(()=>validateNarrativeClaims(db,guild,{narration:"You suffer 2 damage",narrative_claims:[]}),/undeclared/);
   db.updateCharacterData(pc.id,data=>{data.resources.hp={current:6,max:6};});
-  const damageEvent={type:"resource_delta",key:"hp",amount:-2,target_character_id:pc.id,visibility:"party"};
-  const damage={narration:base.source_span,narrative_claims:[{...base,prior:"6",mutation_index:0}],events:[damageEvent]};
-  applyAuthoritativeMutation(db,{guildId:guild,events:damage.events,narrative:damage});assert.equal(db.getCharacter(pc.id).data.resources.hp.current,4);
+  // Negative marked HP is healing, not damage. Bind it to native reviewed mechanics and current owner choice.
+  const nativeSession=db.startSession(guild,"Native healing");db.assignCharacter(nativeSession.id,"owner",pc.id);db.setPresence(nativeSession.id,"owner","present");
+  db.updateCharacterData(pc.id,data=>{data.domain_cards=["Synthetic Mend"];});
+  db.upsertRulesRuling(guild,{key:"synthetic-mend",ruling:"Synthetic Mend clears two HP.",createdBy:"gm"});
+  const healSource=captureWorldInput(db,guild,"owner",pc.id,"native-heal","I use Synthetic Mend.");
+  const healAuthority=reviewFeatureEffect(db,guild,"gm",{character:pc.id,feature:"Synthetic Mend",ruling:"synthetic-mend",
+    source:healSource.event_key,resource:"hp",amount:-2},{gm:true,interactionId:"native-heal-review"});
+  reviewPcEffect(db,guild,"owner",healAuthority.record_key);
+  approvePcEffect(db,guild,"owner",healAuthority.record_key,{interactionId:"native-heal-approve"});
+  const damageEvent={type:"resource_delta",key:"hp",amount:-2,target_character_id:pc.id,visibility:"party",cause_receipt:healAuthority.record_key};
+  const damage={narration:"You clear 2 marked HP",narrative_claims:[{...base,source_span:"You clear 2 marked HP",prior:"6",mutation_index:0,visibility:"character"}],events:[damageEvent]};
+  applyAuthoritativeMutation(db,{guildId:guild,sessionId:nativeSession.id,events:damage.events,narrative:damage,
+    scope:{mode:"private",actorUserId:"owner",actorCharacterId:pc.id}});assert.equal(db.getCharacter(pc.id).data.resources.hp.current,4);
   const clamped={...damage,events:[{...damageEvent,amount:-20}],narrative_claims:[{...damage.narrative_claims[0],prior:"4",proposed:"-20"}]};
   assert.throws(()=>applyAuthoritativeMutation(db,{guildId:guild,events:clamped.events,narrative:clamped}),/committed_result_mismatch/);
   assert.equal(db.getCharacter(pc.id).data.resources.hp.current,4,"mismatched narration rolls back the whole mutation");
+  db.endSession(guild,""); // Restore the original no-session fixture for the unrelated router contracts below.
   let seed=450;for(let i=0;i<150;i++){
     seed=(Math.imul(seed,1664525)+1013904223)>>>0;
     const visibility=["public","party","gm","player","character"][seed%5];

@@ -135,6 +135,7 @@ bot/scripts/v9-pvp-hope-fear-test.mjs
 bot/scripts/v9-pvp-rounds-test.mjs
 bot/scripts/v9-pvp-typed-roll-test.mjs
 bot/scripts/v9-window-lifecycle-test.mjs
+bot/scripts/v94-pc-effect-authority-test.mjs
 bot/scripts/validate-command-schema.mjs
 bot/scripts/validate-offline.mjs
 bot/sql/schema.sql
@@ -220,6 +221,8 @@ bot/src/operations/overview.js
 bot/src/outcome-preview.js
 bot/src/owned-community.js
 bot/src/owner-consent.js
+bot/src/pc-effects.js
+bot/src/pc-incoming.js
 bot/src/personal-continuity.js
 bot/src/player-language.js
 bot/src/portrayal.js
@@ -418,6 +421,8 @@ docs/README.md
 docs/README_HOTFIX.md
 docs/REFERENCE_V9_2_AUTHORSHIP_CONTRACT.md
 docs/REFERENCE_V9_3_1_OBSERVATION_CONTRACT.md
+docs/REFERENCE_V9_3_2_IMPLEMENTATION_PLAN.md
+docs/REFERENCE_V9_3_2_PVP_HOPE_FEAR_CONTRACT.md
 docs/REFERENCE_V9_3_OUTPUT_AUTHORITY_CONTRACT.md
 docs/RELATIONSHIP_GRAPH.md
 docs/RELAX_IMPLEMENTATION.md
@@ -484,6 +489,12 @@ docs/V9_3_IMPLEMENTATION_PLAN.md
 docs/V9_3_OUTPUT_AUTHORITY_CONTRACT.md
 docs/V9_3_REGRESSION_MATRIX.csv
 docs/V9_3_SOURCE_AUDIT.md
+docs/V9_4_CODEX_RESUME.md
+docs/V9_4_IMPLEMENTATION_PLAN.md
+docs/V9_4_PVP_PROFILE_AND_RECEIPT_CONTRACT.md
+docs/V9_4_REGRESSION_MATRIX.csv
+docs/V9_4_RULES_AND_COMMUNITY_RESEARCH.md
+docs/V9_4_SOURCE_AUDIT.md
 docs/V9_CODEX_KICKOFF.md
 docs/V9_IMPLEMENTATION_PLAN.md
 docs/V9_NARRATIVE_PVP_CONTRACT.md

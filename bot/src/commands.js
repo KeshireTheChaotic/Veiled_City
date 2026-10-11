@@ -38,7 +38,7 @@ import { handleSimulationCommand } from "./simulation-commands.js";
 import { handleCityCommand } from "./city-commands.js";
 import { handleStoryCommand } from "./story-commands.js";
 import { recordCharacterArrival } from "./scene-continuity.js";
-import { personalArc, discoverPersonal, personalInbox } from "./personal-continuity.js";
+import { personalCharacter, personalArc, discoverPersonal, personalInbox } from "./personal-continuity.js";
 import { consentOffers } from "./consent-language.js";
 import { sessionBrief, formatSessionBrief } from "./session-briefs.js";
 import { formatDiscovery } from "./continuity-routing.js";
@@ -58,6 +58,8 @@ import { establishWorldDescription } from "./world-observation.js";
 import { fearInbox, establishFearContext, selectFearMove, applyFearMove, reconcileFearMove } from "./pvp-fear-moves.js";
 import { archivePvpHistory, quarantineSessionRecap } from "./pvp-output.js";
 import { pendingPvpFear } from "./pvp-fear-gate.js";
+import { reviewFeatureEffect, reviewPcEffect, approvePcEffect, applyPcEffect } from "./pc-effects.js";
+import { prepareIncomingAttack, reviewIncomingAttack, confirmIncomingDefense, rollIncomingAttack, resolveIncomingDamage } from "./pc-incoming.js";
 import { queueDirectorPublications } from "./publication-outbox.js";
 
 const interactionQueue=new KeyedSerialQueue();
@@ -390,6 +392,34 @@ async function executeCommand(interaction,{db,gm,voice=null}){
   if(await replayReceiptIfPresent({db,interaction,group,sub})) return true;
   const restoreReceiptCapture=installReceiptCapture({db,interaction,group,sub});
   try{
+    if(group==="roll"&&sub==="effect"){
+      const {op,...input}=JSON.parse(interaction.options.getString("json",true));
+      const user=interaction.user.id,native={gm:isGM(db,interaction),interactionId:interaction.id};
+      let row;
+      if(op==="inbox"){
+        if(Object.keys(input).length)throw new UserInputError("Inbox takes no additional fields.");
+        const pc=personalCharacter(db,interaction.guildId,user);
+        row={pending:["pc_effect_authority","pc_incoming_attack"].flatMap(kind=>db.listCityRecords(interaction.guildId,{kind,includeGM:true,limit:200})
+          .filter(r=>r.subject_key===pc.id&&!["applied","resolved","missed"].includes(r.status)).map(r=>({kind,key:r.record_key,status:r.status})))};
+      }else if(op==="review"){
+        if(Object.keys(input).some(k=>!["authority","attack"].includes(k))||!!input.authority===!!input.attack)throw new UserInputError("Review one exact authority or attack key.");
+        row=input.authority?reviewPcEffect(db,interaction.guildId,user,input.authority):reviewIncomingAttack(db,interaction.guildId,user,input.attack,{library:encounterLibrary(gm)});
+      }else if(op==="review-feature")row=reviewFeatureEffect(db,interaction.guildId,user,input,native);
+      else if(op==="approve"){
+        if(Object.keys(input).some(k=>k!=="authority"))throw new UserInputError("Exact native authority key only.");
+        row=db.transaction(()=>{approvePcEffect(db,interaction.guildId,user,input.authority,native);return applyPcEffect(db,interaction.guildId,input.authority);});
+      }else if(op==="incoming-prepare")row=prepareIncomingAttack(db,interaction.guildId,user,input,{...native,library:encounterLibrary(gm)});
+      else if(["incoming-defense","incoming-roll","incoming-armor"].includes(op)){
+        if(Object.keys(input).some(k=>!["attack",...(op==="incoming-armor"?["armor"]:[])].includes(k)))throw new UserInputError("Exact incoming attack and own Armor choice only.");
+        row=op==="incoming-defense"?confirmIncomingDefense(db,interaction.guildId,user,input.attack)
+          :op==="incoming-roll"?rollIncomingAttack(db,interaction.guildId,user,input.attack,{...native,library:encounterLibrary(gm)})
+            :resolveIncomingDamage(db,interaction.guildId,user,input.attack,{armor:input.armor,library:encounterLibrary(gm)});
+      }else throw new UserInputError("Choose a native feature review/approval or incoming attack operation.");
+      const chunks=chunkTextLines(JSON.stringify(row.record_key?{key:row.record_key,status:row.status}:row,null,2).split("\n"));
+      await interaction.reply({content:chunks[0],ephemeral:true,allowedMentions:{parse:[]}});
+      for(const content of chunks.slice(1))await interaction.followUp({content,ephemeral:true,allowedMentions:{parse:[]}});
+      return true;
+    }
     if(group==="roll"&&sub==="window"){
       const input=JSON.parse(interaction.options.getString("json")||'{"op":"inbox"}');
       if(["respond","cancel"].includes(input.op))input.interaction_id=interaction.id;

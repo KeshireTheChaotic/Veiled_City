@@ -270,6 +270,8 @@ export function buildCommands(){
       .addSubcommandGroup(g=>g.setName("roll").setDescription("Deterministic dice")
         .addSubcommand(s=>s.setName("window").setDescription("Private native coordination inbox, consent and explicit GM recovery")
           .addStringOption(o=>o.setName("json").setDescription("op: inbox, request, respond, close, custody or GM cancel; exact window and revision")))
+        .addSubcommand(s=>s.setName("effect").setDescription("Privately review native feature effects or incoming NPC attack defenses")
+          .addStringOption(o=>o.setName("json").setDescription("Native effect operation and exact source/authority JSON").setRequired(true)))
         .addSubcommand(s=>s.setName("pvp").setDescription("Privately review or negotiate bilateral story-first PC conflict; never damage")
           .addStringOption(o=>o.setName("json").setDescription("PvP terms/rolls; narrate templates, draft/draft-review/ratify/scope-review, share; exact revision")))
         .addSubcommand(s=>s.setName("contribute").setDescription("Authorize your own request-bound contribution, dice or selected result")

@@ -12,6 +12,7 @@ import { validatePostTurnStateReview, queueDirectorAfterPartyTurn, describeBlock
 import { buildSessionRosterReport, chunkRosterReport } from "../src/roster.js";
 import { buildCommands, handleCommand } from "../src/commands.js";
 import { captureWorldInput } from "../src/autonomous-world.js";
+import { reviewFeatureEffect, reviewPcEffect, approvePcEffect } from "../src/pc-effects.js";
 
 const tmp=fs.mkdtempSync(path.join(os.tmpdir(),"vc-prod-test-"));
 const db=new VeiledDB(path.join(tmp,"test.sqlite"),path.resolve("./sql/schema.sql"));
@@ -135,11 +136,19 @@ assert.throws(()=>applyAuthoritativeMutation(db,{
 assert.equal(db.db.prepare("SELECT COUNT(*) n FROM facts WHERE guild_id=?").get(guild).n,factsBefore,"atomic rollback left a fact behind");
 
 // 2) Private clocks are namespaced and character-scoped; private resource changes can only hit the actor.
+// Exact reviewed native cost replaces the legacy unsourced model delta; private-scope assertions remain unchanged.
+db.updateCharacterData(c1.id,d=>{d.domain_cards=["Synthetic Private Focus"];});
+db.upsertRulesRuling(guild,{key:"private-focus",ruling:"Synthetic Private Focus marks one Stress.",createdBy:"gm"});
+const focusSource=captureWorldInput(db,guild,u1,c1.id,"native-private-focus","I use Synthetic Private Focus.",{privateScene:true});
+const focusAuthority=reviewFeatureEffect(db,guild,"gm",{character:c1.id,feature:"Synthetic Private Focus",ruling:"private-focus",
+  source:focusSource.event_key,resource:"stress",amount:1},{gm:true,interactionId:"review-private-focus"});
+reviewPcEffect(db,guild,u1,focusAuthority.record_key);
+approvePcEffect(db,guild,u1,focusAuthority.record_key,{interactionId:"approve-private-focus"});
 const privateResult=applyAuthoritativeMutation(db,{
   guildId:guild,sessionId:session.id,scope:{mode:"private",actorUserId:u1,actorCharacterId:c1.id},
   events:[
     {type:"clock_delta",key:"danger",amount:1,value:"Private danger",visibility:"party",target_user_id:u2,target_character_id:c2.id,note:"",status:""},
-    {type:"resource_delta",key:"stress",amount:1,value:"",visibility:"character",target_user_id:u1,target_character_id:c1.id,note:"",status:""}
+    {type:"resource_delta",key:"stress",amount:1,value:"",visibility:"character",target_user_id:u1,target_character_id:c1.id,note:"",status:"",cause_receipt:focusAuthority.record_key}
   ]
 });
 assert.equal(privateResult.events.length,2);

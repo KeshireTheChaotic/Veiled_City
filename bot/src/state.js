@@ -18,6 +18,7 @@ import { coordinateTypedActionWindows } from "./scene-action-window.js";
 import { buildActionPlan, executableActionSpans } from "./action-dependency.js";
 import { saveContextMemories } from "./context-memory.js";
 import { stagePvpAttempts } from "./narrative-pvp.js";
+import { applyGeneratedPcEffect } from "./pc-effects.js";
 import { relationshipProvenance, artifactProvenance, inferredSource } from "./presentation-evidence.js";
 
 export function summarizeRoster(rows){
@@ -139,17 +140,15 @@ export function applyGMEvents(db,guildId,sessionId,events=[],scope={mode:"party"
             block(results,e,"Player-originated PC harm requires narrative PvP; generic resource_delta grants no damage or costs.");break;
           }
           const before=structuredClone(ch.data?.resources?.[e.key]??null);
-          db.updateCharacterData(characterId,data=>{
-            const res=data.resources??(data.resources={});
-            if(e.key==="hope"){
-              res.hope=Math.max(0,(Number(res.hope)||0)+(Number(e.amount)||0));
-            } else {
-              const obj=res[e.key]??(res[e.key]={current:0,max:0});
-              obj.current=Math.max(0,Math.min(Number(obj.max)||999,(Number(obj.current)||0)+(Number(e.amount)||0)));
-            }
-          });
+          let effect;
+          try{effect=applyGeneratedPcEffect(db,guildId,sessionId,e,characterId,scope);}
+          catch(error){
+            if(error.code!=="PC_EFFECT_AUTHORITY")throw error;
+            block(results,e,`needs_native_cause: ${error.message}`);break;
+          }
           const afterCharacter=db.getCharacter(characterId);
-          results.push({type:e.type,ok:true,key:e.key,target_character_id:characterId,target_user_id:e.target_user_id||null,amount:e.amount,before,after:structuredClone(afterCharacter?.data?.resources?.[e.key]??null)});
+          results.push({type:e.type,ok:true,key:e.key,target_character_id:characterId,target_user_id:e.target_user_id||null,amount:effect.data.amount,
+            cause_receipt:effect.record_key,before,after:structuredClone(afterCharacter?.data?.resources?.[e.key]??null)});
           break;
         }
         case "thread":{

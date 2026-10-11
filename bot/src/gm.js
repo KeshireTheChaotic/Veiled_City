@@ -149,12 +149,13 @@ const gmSchema={
           target_user_id:{type:"string"},
           target_character_id:{type:"string"},
           amount:{type:"integer"},
+          cause_receipt:{type:"string"},
           value:{type:"string"},
           visibility:{type:"string",enum:["public","party","player","character","gm"]},
           note:{type:"string"},
           status:{type:"string",enum:["","active","resolved","failed","dormant"]},epistemic:epistemicSchema
         },
-        required:["type","key","target_user_id","target_character_id","amount","value","visibility","note","status","epistemic"]
+        required:["type","key","target_user_id","target_character_id","amount","cause_receipt","value","visibility","note","status","epistemic"]
       }
     },
     handouts:{type:"array",items:handoutDraftSchema},
@@ -523,7 +524,7 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
       "An active NPC proxy is a human-controlled NPC. Do not choose that NPC's voluntary dialogue, tactics, bargains, movement, or decisions while the proxy is active. React to the proxy player's declared actions as GM and adjudicate consequences normally.",
       "NPC proxy knowledge is LIMITED to the sanitized player_packet, NPC-scoped facts visible in ACTING PLAYER facts, and information the NPC legitimately observes during play. Never reveal additional GM-private motives, mystery answers, faction plans, clocks, or abilities merely because the human controls an antagonist.",
       "Control levels: portrayal = dialogue/personality only unless the GM invites more; tactical = dialogue plus movement, listed abilities and tactical choices; full_npc = all voluntary decisions of that NPC only. None grants co-GM authority or omniscience.",
-      "Never use resource_delta to represent damage/resources on an NPC proxy. PC resource_delta remains valid when an NPC's action affects a player character; NPC consequences should be narrated or logged through GM state.",
+      "Never use resource_delta to invent PC or NPC proxy damage, healing, spending or rewards. PC effects require exact separately authorized native cause receipts; an NPC action label, your narration and the triggering player's identity grant no resource authority. Unsupported effects remain pending native adjudication.",
       "The application, not you, rolls dice. Never invent a dice result. Ask for a roll narratively when required.",
       "If CURRENT ENCOUNTER is active, its objective, environment, tier, adversary composition, COMBATANT STATE, and spotlight counts are authoritative GM state. Do not silently change HP, Stress, conditions, status, or add full adversaries outside deterministic state. Ask/use bot mechanics to update them. Never reveal Battle Point totals, hidden composition, or unused budget to players.",
       "Daggerheart final/SRD 2.0 has no mandatory action tracker or initiative. Spotlight counts are a fairness aid only; never enforce them as turns. Campaign Fear in CAMPAIGN STATE is authoritative and capped at 12.",
