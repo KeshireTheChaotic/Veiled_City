@@ -6,6 +6,8 @@ import { currentScene } from "./scene-continuity.js";
 import { indexWorldEvent } from "./city-calendar.js";
 import { TRAITS } from "./character-system.js";
 import { isPvpIntent, pvpTarget, pvpAttemptKey } from "./pvp-authority.js";
+import { settlePvpWindow } from "./pvp-terminal.js";
+export { choosePvp, rollPvp, progressPvp, continuePvp, authorPvpNarrative, reviewPvpNarrative, sharePvpNarrative, pvpComplication } from "./pvp-rounds.js";
 
 const hash=value=>createHash("sha256").update(JSON.stringify(value)).digest("hex");
 const boundaries=["no_death","no_permanent_maiming","no_involuntary_item_loss","no_HP_armor_stress_damage",
@@ -87,6 +89,8 @@ function currentOwner(db,guild,user,key,options){
   if(current.principal_revision!==who.principal_revision)fail("PvP owner principal is stale.");
   return {...liveProposal(db,guild,key,options),who};
 }
+/** Internal current owner/terms boundary reused by sealed native rounds and post-result authorship. */
+export function pvpOwnerContext(db,guild,user,key){return currentOwner(db,guild,user,key,{allowTerminal:true});}
 function newTerms(db,guild,p,input,user,interaction){
   const terms=checkTerms(db,guild,input,p.data.participants),revision=(p.data.revision||0)+1;
   const snapshot={guild,proposal:p.record_key,revision,accepted_intent:p.data.accepted_intent,source_event:p.source_event,
@@ -220,6 +224,7 @@ export function respondPvp(db,guild,user,input){
       const status=input.decision==="decline"?"declined":"withdrawn",receiptKey=`pvp-resolution:${hash([p.record_key,p.data.terms_hash,status]).slice(0,40)}`;
       db.saveCityRecord(guild,{kind:"pvp_resolution_receipt",key:receiptKey,status:"resolved",source_event:source.event_key,visibility:"gm",
         data:{version:1,proposal:p.record_key,terms_hash:p.data.terms_hash,outcome:status,winner:null,roll_refs:[],decision_ref:signature.record_key}});
+      settlePvpWindow(db,guild,p,db.getCityRecord(guild,"pvp_resolution_receipt",receiptKey));
       if(p.data.agreement){
         const agreement=db.getCityRecord(guild,"pvp_agreement",p.data.agreement);
         db.saveCityRecord(guild,{...agreement,key:agreement.record_key,status});
@@ -250,7 +255,8 @@ export function stagePvpAttempts(db,guild,intents,plans){
       data:{version:1,accepted_intent:action.record_key,opponent:pvpTarget(db,guild,action).id,
         authority:"Attempt only; await bilateral story stakes. No forced reaction, dice or PC damage."}});
     const plan=plans.find(value=>value.data.action_id===action.record_key);
-    if(plan)db.saveCityRecord(guild,{...plan,key:plan.record_key,status:"pending",data:{...plan.data,status:"pending",pvp_attempt:row.record_key}});
+    if(plan&&!["resolved","failed","blocked","clarification"].includes(plan.data.status))
+      db.saveCityRecord(guild,{...plan,key:plan.record_key,status:"pending",data:{...plan.data,status:"pending",pvp_attempt:row.record_key}});
     rows.push(row);
   }
   return rows;

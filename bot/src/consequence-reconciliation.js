@@ -29,6 +29,14 @@ export function reconcileConsequences(db,guild,{intents=[],narration="",private_
     const planKey=`action:${createHash("sha256").update(String(row.record_key)).digest("hex").slice(0,32)}`;
     const plan=db.getCityRecord(guild,"compound_action",planKey);
     if(pvp?.status==="awaiting_stakes"){disposition="pvp_attempt_only";refs=[pvp.record_key];}
+    else if(pvp?.status==="resolved"){
+      const receipt=db.getCityRecord(guild,"pvp_resolution_receipt",pvp.data.resolution_receipt);
+      const proposal=receipt&&db.getCityRecord(guild,"pvp_proposal",receipt.data.proposal);
+      if(receipt?.status!=="resolved"||proposal?.data.accepted_intent!==row.record_key
+        ||proposal.data.resolution_receipt!==receipt.record_key||proposal.data.terms_hash!==receipt.data.terms_hash)
+        fail("PvP projection requires its exact native story-stakes or neutral terminal receipt.");
+      disposition=receipt.data.winner?"pvp_story_stake_resolved":"pvp_neutral_closure";refs=[receipt.record_key];
+    }
     else if(plan?.data.coordination&&plan.data.status==="pending"){
       disposition="coordination_pending";refs=[plan.data.coordination.window];
     }else if(plan?.data.coordination&&["resolved","blocked","failed","clarification"].includes(plan.data.status)){

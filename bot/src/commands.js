@@ -48,7 +48,8 @@ import { beginInteraction, acknowledgeRules, interactionFailure, interactionResp
 import { validateChannelRouting } from "./routing-diagnostics.js";
 import { handleRollMenuInteraction, isRollMenuInteraction, openRollMenu } from "./roll-menu.js";
 import { publishRollPartyDisclosure } from "./roll-sharing.js";
-import { proposePvp, reviewPvp, revisePvp, respondPvp, pvpInbox } from "./narrative-pvp.js";
+import { proposePvp, reviewPvp, revisePvp, respondPvp, pvpInbox, choosePvp, rollPvp, continuePvp, progressPvp,
+  authorPvpNarrative, reviewPvpNarrative, sharePvpNarrative, pvpComplication } from "./narrative-pvp.js";
 import { synchronizePvpWindow, windowOperation } from "./window-coordinator.js";
 
 const interactionQueue=new KeyedSerialQueue();
@@ -394,12 +395,25 @@ async function executeCommand(interaction,{db,gm,voice=null}){
       const {op="inbox",...input}=JSON.parse(interaction.options.getString("json")||"{}");
       let text;
       if(op==="inbox")text=JSON.stringify(pvpInbox(db,interaction.guildId,interaction.user.id),null,2);
+      else if(["choose","roll","continue","progress","narrate","narrative-review","share","complication"].includes(op)){
+        let result;
+        const native={...input,interaction_id:interaction.id};
+        if(op==="choose")result=choosePvp(db,interaction.guildId,interaction.user.id,native);
+        else if(op==="roll")result=rollPvp(db,interaction.guildId,interaction.user.id,native);
+        else if(op==="continue")result=continuePvp(db,interaction.guildId,interaction.user.id,native);
+        else if(op==="progress")result=progressPvp(db,interaction.guildId,interaction.user.id,input.proposal);
+        else if(op==="narrate")result=authorPvpNarrative(db,interaction.guildId,interaction.user.id,native);
+        else if(op==="narrative-review")result=reviewPvpNarrative(db,interaction.guildId,interaction.user.id,input);
+        else if(op==="share")result=sharePvpNarrative(db,interaction.guildId,interaction.user.id,native);
+        else result=pvpComplication(db,interaction.guildId,interaction.user.id,input,{gm:isGM(db,interaction)});
+        text=JSON.stringify(result,null,2);
+      }
       else{
         let key=input.proposal;
         if(op==="propose")key=proposePvp(db,interaction.guildId,interaction.user.id,input).record_key;
         else if(op==="revise")key=revisePvp(db,interaction.guildId,interaction.user.id,{...input,interaction_id:interaction.id}).record_key;
         else if(op==="respond")key=respondPvp(db,interaction.guildId,interaction.user.id,{...input,interaction_id:interaction.id}).record_key;
-        else if(op!=="review")throw new StateConflictError("Use inbox, review, propose, revise or respond for narrative PvP.");
+        else if(op!=="review")throw new StateConflictError("Use native PvP inbox/review/propose/revise/respond, choose/roll/progress/continue, or scoped narration.");
         text=reviewPvp(db,interaction.guildId,interaction.user.id,key).text;
         if(db.getCityRecord(interaction.guildId,"pvp_proposal",key)?.status==="locked")synchronizePvpWindow(db,interaction.guildId,key);
       }
