@@ -1,0 +1,77 @@
+phase,priority,id,scenario,arrange_act,expected_outcome
+V9-01,P0,A01,stale_retracted_consent,Known red d08-window-security: retracted unrelated foreign old consent,Reject without accepted participant or effects
+V9-01,P0,A02,wrong_owner,Accepted source belongs to a user who does not control target character,Reject; no native consent
+V9-01,P0,A03,wrong_terms,"Valid previous acceptance references different action, resources, or opponent",Reject; request precise fresh terms
+V9-01,P0,A04,changed_scene,Consent was granted in previous scene or session,Reject and preserve original historical record
+V9-01,P0,A05,principal_revision_changed,Owner switched roles/assignment between request and use,Reject; need current player approval
+V9-01,P0,A06,revoked_expired,Formerly valid approval now revoked or expired,Reject with no cost or participation
+V9-01,P0,A07,full_explicit_acceptance,Every required current owner separately approves identical terms,Accept once only; no additional effects yet
+V9-02,P0,W01,complete_conflict,Two owner-authored opposed actions with current consents,Live coordinator locks and resolves via matching native receipts
+V9-02,P0,W02,missing_consent,Direct PC conflict without target approval,Only offending node pending; independent node ready
+V9-02,P0,W03,same_resource_two_posts,Separate messages with same scarce item but different inferred beat labels,Native overlap joins consistent collision boundary
+V9-02,P1,W04,repeated_beat_key,"Closed previous window, new genuine beat same scene/name","Create distinct current window, keep old immutable"
+V9-02,P0,W05,exclusive_custody,Two claims to one scarce parcel,At most one committed custody recipient
+V9-02,P0,W06,restart_lock,Restart after lock and before resolution,Resume deterministic native terminal path once
+V9-02,P0,W07,late_reaction,Third PC joins locked/closed window,Reject without participation or hidden information
+V9-02,P0,W08,false_receipt,Model claims a win but native receipt absent,Reject window resolution
+V9-03,P1,C01,unlock_then_enter,First uncertain unlock succeeds; next movement depends on it,Execute authorized dependent movement or explicit scoped pending result
+V9-03,P1,C02,unlock_fails,First uncertain unlock fails; dependent movement,Block dependent only; independent observation remains
+V9-03,P1,C03,changed_position,Actor location changed while waiting,Do not apply stale route; issue clarification
+V9-03,P1,C04,continuation_replay,Same terminal native receipt delivered repeatedly,One dependent transition/effect/notification
+V9-03,P1,C05,restart_before_continuation,Crash after native receipt and before dependent execution,Recover from durable continuation queue once
+V9-04,P1,R01,null_difficulty,Terminal typed roll without verified Difficulty,Never classify as success by default
+V9-04,P1,R02,failure,Native total below grounded Difficulty,"Record failure, no fabricated success"
+V9-04,P1,R03,natural_matching_dice,Natural Hope/Fear d12 match even when modifiers low,Critical classification follows Daggerheart SRD
+V9-04,P1,R04,wrong_pending_roll,One other pending roll but new attempt unrelated,Do not consume unrelated native request
+V9-04,P1,R05,multiple_pending_rolls,Two pending requests and player authorizes one,Resolve chosen exact request only
+V9-04,P1,R06,attack_damage_gate,Successful attack awaiting damage and target armor/HP,No final action success receipt prematurely; one damage application
+V9-05,P1,P01,party_send_contract,postPlayMessage resolves to Discord Message object,"Record true success, not access .ok on Message"
+V9-05,P1,P02,crash_after_private_send,Private roll notification delivered; crash before marking delivered,Uncertain state; no blind duplicate on replay
+V9-05,P1,P03,crash_after_party_share,Shared result posted; receipt update fails,Uncertain state; reconcile without a second post
+V9-05,P1,P04,partial_chunks,Second of four private chunks fails,Track per-chunk delivery; avoid duplicating first
+V9-05,P1,P05,replay_no_reroll,Request delivery retried repeatedly,"Stable roll ID, Hope and stress, zero extra dice"
+V9-06,P1,U01,component_publish,Roll via button rather than slash command,Native saved result and authorized notices match slash path
+V9-06,P1,U02,compound_private_share,Private authored source has unrelated second secret clause,Party sees only approved roll span/outcome
+V9-06,P1,U03,long_menu,"Overlong optional bonus list, mixed blockers and costs",All significant costs/reasons accessible via pages
+V9-06,P1,U04,stale_token,Request revision changes before confirm,"Reject without Hope spend, dice or leakage"
+V9-06,P1,U05,helper_private_audience,Helper and owner have different private mechanical details,Only scoped recipients receive permitted projections
+V9-07,P2,D01,no_active_session,/vc-roll pending after session ends,Read-only explicit no-session response; no exception
+V9-07,P2,D02,long_discovery_dm,Discovery route sends >2000 UTF-16 units,Chunk or report recoverable delivery failure
+V9-07,P2,D03,unicode_fences,Long emoji/multiline code/mentions,UTF-16 safe chunks with well-formed messages
+V9-07,P2,D04,private_channel_unavailable,Private channel invalid and DM disabled,"No public fallback, error receipt retained"
+V9-08,P0,Q01,registered_security_gates,All new and two D08 scripts are in default validator,Red D08 must block validation until repaired
+V9-08,P0,Q02,session2_four_player,Sanitized Jaxon/Choso/Billy + fourth PC play through actual adapters,"No regressions, no false PC participation"
+V9-08,P0,Q03,full_offline_validation,Normal network-denied npm check and validate,All required suites green and actual count recorded
+V9-08,P0,Q04,safe_release,"Review consent legacy rows, delivery uncertain states, rollout flags","Explicit go/no-go and rollback plan, no automatic deploy"
+V9-PVP-A,P0,PVP01,unconsented_shin_kick,Jaxon approaches and attempts a kick against Choso; Choso never consents,"Mundane independent approach may commit; kick only pending; no hit, injury or reaction"
+V9-PVP-A,P0,PVP02,asymmetric_best_worst,Proposal gives different stakes to each PC,Both owners see their own and opponent winning/losing stake in exact terms
+V9-PVP-A,P0,PVP03,hard_boundaries,"Offer forbids death, maiming, loss of item, HP/Armor/Stress harm and forced speech",No effect route may apply forbidden outcomes
+V9-PVP-A,P0,PVP04,declined_pvp,Choso declines before terms lock,"Neutral declined receipt; no forced dodge, roll, cost or hit"
+V9-PVP-A,P0,PVP05,terms_counteroffer,First owner accepts then second changes stakes,Previous signatures invalid; both approve new terms digest
+V9-PVP-A,P0,PVP06,mode_change,One participant changes single_roll_duel to three_strikes,Both consents invalidated; no dice until fresh lock
+V9-PVP-A,P0,PVP07,foreign_owner_consent,Consent signed by user who does not own target PC,Reject without audience disclosure or effect
+V9-PVP-A,P0,PVP08,stale_source_agreement,Agreement references retracted or old-session owner source,Reject and retain inert audit
+V9-PVP-A,P0,PVP09,same_user_two_characters,One Discord user owns two PCs but only one current controlled principal,Cannot sign for non-controlled PC or assume two approvals
+V9-PVP-A,P0,PVP10,revoke_before_roll,A participant revokes locked permission before any dice are recorded,Abort pending conflict without harm or costs
+V9-PVP-A,P0,PVP11,changed_disclosure_terms,Party-publication scope changes after agreement,"Require fresh both-owner consent, not assumed from fight participation"
+V9-PVP-A,P0,PVP12,nonpvp_action_fallback,Model labels PC attack as interact and omits coordination,PC-target hostility still blocked from normal damage and roll
+V9-PVP-B,P0,PVP13,single_duel_higher_total,Two verified opposed native rolls with totals 18 and 15,18 wins only agreed stake; no PC resource damage
+V9-PVP-B,P0,PVP14,critical_lower_total,One natural matching d12 pair but lower summed total than rival,Critical labeled; higher total still wins as locked custom rule
+V9-PVP-B,P0,PVP15,critical_both,Both rolls are natural critical with different final totals,Higher total wins; no automatic hit/damage
+V9-PVP-B,P0,PVP16,single_duel_tie,Both verified totals equal,Stalemate; no winner until both affirm reroll or accept draw
+V9-PVP-B,P0,PVP17,replay_duplicate_roll,Retry roll button or message after first native roll saved,"Same roll IDs, totals and Hope receipts; no dice or score duplication"
+V9-PVP-B,P0,PVP18,sealed_choices,Attacker chooses trait first while defender still choosing,No opponent-private trait/total leak before both committed
+V9-PVP-B,P0,PVP19,invalid_trait,Model chooses strongest trait without owner choosing,Reject unauthorized choice without native dice
+V9-PVP-B,P0,PVP20,three_strikes_three_to_two,Six or more verified paired exchanges produce 3-2,First reaching 3 wins only the agreed story stake
+V9-PVP-B,P0,PVP21,strike_tie,Exchange has tied scores,No strike; no inferred winner or arbitrary timestamp tie break
+V9-PVP-B,P0,PVP22,half_round_restart,Crash after first participant rolled but before second,Recover first sealed roll; do not reroll or forfeit absent player
+V9-PVP-B,P0,PVP23,strike_replay,Repeated scoring event for same pair of native roll IDs,One strike receipt only; monotonic score
+V9-PVP-B,P0,PVP24,missing_second_participant,Only one player describes action or rolls this exchange,No comparison or forced NPC/AI response
+V9-PVP-B,P0,PVP25,fear_boundary,Fear result GM proposes permanent wound or forced secret disclosure,Reject complication outside signed boundaries
+V9-PVP-B,P0,PVP26,hope_award_default,Hope result in metacurrency-enabled agreement,At most one cap-bounded Hope gain to roller; no duplicate native grant
+V9-PVP-B,P0,PVP27,hope_award_redirect,Both explicitly agreed to give Hope award to opponent,Single award transferred not spent; recipient cap honored
+V9-PVP-B,P0,PVP28,fear_flavor_only,Fear result with narrative-only agreement,Environmental flavor within bounds; no automatic HP/Stress/Armor or GM Fear
+V9-PVP-B,P0,PVP29,resource_delta_bypass,AI injects party resource_delta targeting rival after attempted PvP,Denied without correct non-PvP provenance; no HP/Stress/Armor effects
+V9-PVP-B,P0,PVP30,winner_loser_narrative_control,Winner writes own victory but attempts to script loser apology,Reject forced loser dialogue; loser retains own reaction authority
+V9-PVP-B,P0,PVP31,private_publication_gate,One owner withholds party disclosure after duel,"No unauthorized private traits, roll details, texts or hidden PC identity exposed"
+V9-PVP-B,P0,PVP32,pvp_vs_npc_nonregression,PC attacks ordinary NPC adversary in a separate authorized encounter,Existing ordinary encounter damage mechanics unaffected by narrative PvP

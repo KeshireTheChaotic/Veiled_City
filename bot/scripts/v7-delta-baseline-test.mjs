@@ -1,12 +1,15 @@
 /** D00 red-first structural integration audit for the retained v7 delta. */
 import assert from "node:assert/strict";
 import fs from "node:fs";
+import { spawnSync } from "node:child_process";
 
 const failures=[];
 const read=name=>fs.readFileSync(new URL(`../src/${name}`,import.meta.url),"utf8");
 function check(id,fn){try{fn();console.log(`${id} PASS`);}catch(error){failures.push({id,error:error.message});}}
 check("F08-roll-request-identity-includes-accepted-action",()=>{
-  assert(!read("roll-requests.js").includes("cityKey(`roll:${source.event_key}`)"),"request identity aliases every action in one source");
+  assert(/input.accepted_intent\s*\?cityKey/.test(read("roll-requests.js")),"typed identity must precede the explicit legacy adapter");
+  const result=spawnSync(process.execPath,["--import","./scripts/offline-guard.mjs","scripts/d01-roll-lifecycle-test.mjs"],{stdio:"inherit"});
+  assert.equal(result.status,0,"two accepted occurrences must produce distinct requests and replay stable IDs");
 });
 check("F10-publisher-consumes-native-adjudications",()=>{
   assert(/mutation\.nativeAdjudications/.test(read("roll-requests.js")),"publisher only scans legacy mutation intents");
@@ -17,7 +20,9 @@ check("F11-component-interactions-dispatched",()=>{
 });
 check("F12-scene-windows-wired-to-live-orchestration",()=>{
   const live=read("turn-orchestration.js")+read("state.js")+read("index.js");
-  assert(/openActionWindow|joinActionWindow/.test(live),"scene window service is not called by live orchestration");
+  assert(/coordinateTypedActionWindows\(db,guildId,typedIntents,actionPlan\)/.test(live),"live state must call the coordination bridge");
+  const result=spawnSync(process.execPath,["--import","./scripts/offline-guard.mjs","scripts/d05-live-window-test.mjs"],{stdio:"inherit"});
+  assert.equal(result.status,0,"bridge must suspend actual coordinated nodes without forcing PC participation");
 });
 check("F13-consequence-reconciliation-is-strict",()=>{
   assert(/reconcileConsequences\([^;]+strict:true/s.test(read("turn-orchestration.js")),"production reconciliation remains permissive");

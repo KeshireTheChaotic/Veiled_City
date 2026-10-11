@@ -439,3 +439,28 @@ Qualification uncovered substantive safety and production-integration gaps in th
 Resume by repairing the reopened D05 consent and completion boundary against the red D08 security fixture, adding real production-path completion/restart tests, then finishing D08 and registering all qualification suites. The owner-requested checkpoint is a work-in-progress commit, not a D08 completion commit. Production pull authorization does not authorize bot startup or campaign database changes. Accepted typed intents are canonical adjudication inputs; human declarations own intent; native receipts own outcomes.
 
 Checkpoint validation after the owner's commit/push/pull request: focused `d08-observability-test.mjs` passed; `npm run check` passed (237 modules/scripts, 24 commands); `npm run validate` passed the existing 99/99 registered suites with network denied and zero live requests/billable tokens. The separate D08 security regression remains red and excluded from that registered count; these successful baseline results do not qualify D08. Release manifests were synchronized at version `10.0.0`.
+
+## V9-00 — Narrative PvP rebaseline (2026-10-10)
+
+Starting branch: `codex/typed-intent-refinement`; pinned SHA: `26e4d6e8f0c3335a250e81952ac9c092c38450b2` (matches the v9 audit).
+This is v9.1, not a rerun of v8. D00–H05 and D01–D07 remain baseline implementations, D05's authority/completion claim is reopened, and D08 remains **BLOCKED**.
+The five v9.1 inputs, existing progress/contracts/audit/release notes and offline validator were read and reconciled with the current source.
+Inspected authority paths include typed acceptance, principal/envelope, state-before-coordination adjudication, action windows, native roll preparation/collaboration/finalization, private menu/sharing, command and message adapters.
+The local multiplayer/SRD reference catalog and existing native-mechanics tests remain authoritative for ordinary mechanics; the explicit PvP contract overrides only PC-versus-PC outcomes.
+
+Preexisting working-tree changes: ten root documents were relocated into `docs/`; `docs/README.md` and the five v9.1 inputs were untracked. Their contents/layout are preserved. They are included as baseline documentation inputs rather than silently restoring obsolete root copies. No preexisting runtime edits were present.
+
+Actual initial runs:
+
+- `npm run check`: PASS, 237 modules/scripts, 24 commands.
+- `npm run validate`: FAIL at `expansion-h-test.mjs` (missing root `CODEX_INTENT_REFINEMENT_PLAN.md` in stale manifest), after earlier functional suites passed. This is a layout/inventory failure, not a changed runtime baseline.
+- `node --import ./scripts/offline-guard.mjs scripts/d08-window-security-test.mjs`: FAIL, `Missing expected exception: stale unrelated consent must not authorize a new PC conflict`. Stale/foreign/retracted tea consent authorizes the current kick.
+- `node --import ./scripts/offline-guard.mjs scripts/d08-observability-test.mjs`: PASS, private-text-free source/attempt correlation and recovery.
+- Original `v7-delta-baseline-test.mjs`: FAIL F08/F12. Corrected checks recognize the explicit legacy identity adapter and the actual state coordination bridge, and execute the D01/D05 behavioral suites. Corrected run: PASS F08/F10/F11/F12/F13. This proves opening/suspension, NOT terminal window completion.
+- `node --import ./scripts/offline-guard.mjs --test scripts/v9-baseline-regressions-test.mjs scripts/v9-pvp-contract-test.mjs`: 42 tests, 0 passed, 42 failed, none skipped. Ten known-red checks reproduce G03–G11/G14; seven exercise native services, three are explicitly labeled source-adapter checks pending stronger Discord integration fixtures. All 32 PvP scenario IDs have availability fixtures that fail because the service is absent; these are NOT 32 behavioral scenario qualifications. The owning phases must implement their scenario-specific behavioral tests before claiming acceptance.
+
+Red ledger: G04 continuation is not scheduled; G05 missing Difficulty becomes success; G06/G14 delivery is pending during external I/O; G07 whole composite source is shared; G08 closed identity is reused; G10 no-session lookup throws. G03 Message `.ok`, G09 menu publication parity and G11 unbounded discovery were confirmed in source, with adapter-level red checks. G12/G13 remain source-confirmed, not independently reproduced in this phase. PvP is absent. Existing T05a memory isolation remains unchanged.
+
+No runtime behavior, SQL schema, campaign state, credentials or live services changed. No production access, paid calls, bot launch or deployment occurred. No flags were changed: configured production flags were deliberately not inspected; synthetic tests configure only temporary fixtures. Rollback is a file-level revert of this phase; preserve the user's document moves.
+
+Final V9-00 validation: `npm run check` PASS (239 modules/scripts, 24 commands); `npm run validate` PASS, **99/99** registered suites, network denied, `live_requests=0`, `billable_tokens=0`, after `node scripts/sync-release.mjs 10.0.0` reconciled the preserved document layout. `git diff --check` PASS. The 42 forward-phase red checks and separate D08 security failure remain explicitly excluded and unresolved, not waived. V9-00 is complete; its commit is the commit containing this section (full SHA recorded in the next phase). V9-01 is next only after that commit. Accepted typed intents are canonical adjudication inputs; human declarations own intent; native receipts own outcomes.
