@@ -7,12 +7,33 @@ import { assertGmOnlyChannel, assertPlayerPrivateChannel } from "./discord/priva
 import { simulationOverview, acknowledgeSimulationHook } from "./simulation.js";
 import { deliverTurnOutbox, outboxSummary } from "./publication-outbox.js";
 import { failureTrace } from "./failure-trace.js";
-import { assertArchiveOutput, archivePvpHistory } from "./pvp-output.js";
+import { assertArchiveOutput, archivePvpHistory, assertPvpOutput, protectedPvpScope, protectedHookSource, prepareStoredOutput, quarantineSimulationHook, revalidateOutputPublication } from "./pvp-output.js";
+import { queueDirectorPublications } from "./publication-outbox.js";
 
 /** Hooks remain queued on failed delivery and never publish internal action packets. */
 export async function publishSimulationHooks({db,guild,sessionId=null}){
   let delivered=0;
   for(const hook of simulationOverview(db,guild.id).hooks){
+    const session=db.getActiveSession(guild.id),recipient=hook.data.target_user_id,
+      scope=recipient?{mode:"private",actorUserId:recipient,actorCharacterId:session&&db.activeAssignment(session.id,recipient)?.character_id}
+        :{mode:"party",actorUserId:null,actorCharacterId:null};
+    if(protectedHookSource(db,guild.id,hook)||protectedPvpScope(db,guild.id,scope).length||!session&&archivePvpHistory(db,guild.id).length){
+      let result;
+      try{
+        if(!session||recipient&&!db.roster(session.id).some(r=>r.discord_user_id===recipient&&["present","late","guest"].includes(r.presence)))
+          throw Object.assign(new Error("Current hook audience required."),{code:"NARRATIVE_PVP"});
+        result=prepareStoredOutput(db,guild.id,hook.data.content,scope);
+      }catch(error){
+        if(!["NARRATIVE_PVP","CHARACTER_OBSERVATION","WORLD_OBSERVATION"].includes(error.code))throw error;
+        quarantineSimulationHook(db,guild.id,hook);continue;
+      }
+      const turnId=queueDirectorPublications(db,{guild,session,result,scope,key:`simulation-hook:${hook.id}`});
+      const delivery=await deliverQueuedTurn({db,guild,turnId});
+      // A transport failure may have happened after send. Never blindly repeat the hook on the next cycle.
+      for(const item of delivery.results.filter(r=>!r.ok))db.updatePublication(item.row.id,{status:"uncertain",lastFailure:item.row.last_failure});
+      if(delivery.pending.length)continue;
+      acknowledgeSimulationHook(db,guild.id,hook.id);delivered++;continue;
+    }
     if(hook.data.target_user_id){
       if(!db.getPlayer(guild.id,hook.data.target_user_id)) continue;
       const result=await sendPlayerPrivate({db,guild,userId:hook.data.target_user_id,content:hook.data.content,sessionId});
@@ -87,18 +108,20 @@ export async function publishJournal({db,guild,session,recap}){
   const protectedArchive=archivePvpHistory(db,guild.id,session.id).length;
   const head=`## Session ${session.session_number}${!protectedArchive&&session.title?` — ${session.title}`:""}`;
   const parts=chunks(`${head}\n\n${recap}`);
-  for(const p of parts) await ch.send(p);
+  for(const p of parts){assertArchiveOutput(db,guild.id,recap,{sessionId:session.id});await ch.send(p);}
   return true;
 }
 
-export async function postJournalEntry({db,guild,title="Campaign Update",content=""}){
+export async function postJournalEntry({db,guild,title="Campaign Update",content="",nativeEncounterId=null}){
   assertArchiveOutput(db,guild.id,content);
-  if(archivePvpHistory(db,guild.id).length&&title!=="Campaign Update")
+  const encounter=nativeEncounterId&&db.getEncounter(nativeEncounterId);
+  if(archivePvpHistory(db,guild.id).length&&title!=="Campaign Update"
+    &&!(encounter?.guild_id===guild.id&&title===`Encounter ${encounter.encounter_number} Aftermath`))
     throw Object.assign(new Error("PvP archive title requires a native source-bound projection."),{code:"NARRATIVE_PVP"});
   const c=db.getCampaign(guild.id);
   const ch=await textChannel(guild,c?.journal_channel_id);
   if(!ch) return false;
-  for(const p of chunks(`## ${title}\n\n${content}`)) await ch.send(p);
+  for(const p of chunks(`## ${title}\n\n${content}`)){assertArchiveOutput(db,guild.id,content);await ch.send(p);}
   return true;
 }
 
@@ -170,12 +193,23 @@ export async function syncConfiguredSurfaces({db,guild}){
 }
 
 
-export async function postPlayMessage({db,guild,content,sessionId=null}){
+export async function postPlayMessage({db,guild,content,sessionId=null,authority=null}){
+  const scope={mode:"party",actorUserId:null,actorCharacterId:null},needsProof=protectedPvpScope(db,guild.id,scope).length>0;
+  const check=()=>{
+    if(authority){
+      const {result,scope:sourceScope}=authority;
+      if(sourceScope?.mode!=="party"||content!==result.narration&&content!==`**Encounter Aftermath**\n${result.player_summary}`)
+        throw Object.assign(new Error("Exact native output body required."),{code:"NARRATIVE_PVP"});
+      assertPvpOutput(db,guild.id,result,sourceScope);
+    }else if(needsProof)prepareStoredOutput(db,guild.id,content,scope);
+  };
+  check();
   const c=db.getCampaign(guild.id);
   const ch=await textChannel(guild,c?.play_channel_id);
   if(!ch) return null;
   let last=null;
   for(const part of chunks(content)){
+    check();
     last=await ch.send(part);
     if(sessionId) db.addMessage({guildId:guild.id,sessionId,userId:null,speakerName:"Veilkeeper",visibility:"party",content:part});
   }
@@ -188,12 +222,13 @@ export async function deliverQueuedTurn({db,guild,turnId,forceUncertain=false}){
   const results=await deliverTurnOutbox(db,guild.id,turnId,async row=>{
     if(row.target_user_id){
       const delivered=await sendPlayerPrivate({db,guild,userId:row.target_user_id,content:row.payload,
-        sessionId:attempt.session_id,characterId:row.target_character_id||null});
+        sessionId:attempt.session_id,characterId:row.target_character_id||null,beforeSend:()=>revalidateOutputPublication(db,guild.id,row)});
       if(!delivered.ok)throw new Error(`Private delivery unavailable (${delivered.via}).`);
       return {messageId:null,channelId:row.channel_id};
     }
     const ch=await textChannel(guild,row.channel_id||db.getCampaign(guild.id)?.play_channel_id);
     if(!ch)throw new Error("Configured publication channel is unavailable.");
+    revalidateOutputPublication(db,guild.id,row);
     const message=await ch.send(row.payload);
     db.addMessage({guildId:guild.id,sessionId:attempt.session_id,userId:null,speakerName:"Veilkeeper",
       visibility:row.visibility,subjectUserId:row.visibility==="player"?row.target_user_id:null,
@@ -206,7 +241,7 @@ export async function deliverQueuedTurn({db,guild,turnId,forceUncertain=false}){
   return {turn:db.getTurnAttempt(turnId),results:results.map(item=>({...item,row:outboxSummary(item.row)})),pending:pending.map(outboxSummary)};
 }
 
-export async function sendPlayerPrivate({db,guild,userId,content,sessionId=null,characterId=null}){
+export async function sendPlayerPrivate({db,guild,userId,content,sessionId=null,characterId=null,beforeSend=null}){
   const p=db.getPlayer(guild.id,userId);
   if(p?.private_channel_id){
     try{
@@ -214,20 +249,22 @@ export async function sendPlayerPrivate({db,guild,userId,content,sessionId=null,
       if(ch){
         const campaign=db.getCampaign(guild.id);
         assertPlayerPrivateChannel({guild,channel:ch,userId,gmRoleId:campaign?.gm_role_id||null});
-        for(const part of chunks(content)) await ch.send(part);
+        for(const part of chunks(content)){beforeSend?.();await ch.send(part);}
         if(sessionId) db.addMessage({guildId:guild.id,sessionId,userId:null,speakerName:"Veilkeeper",visibility:characterId?"character":"player",subjectUserId:characterId?null:userId,subjectCharacterId:characterId,content});
         return {ok:true,via:"private_channel"};
       }
-    }catch{
+    }catch(error){
+      if(["NARRATIVE_PVP","CHARACTER_OBSERVATION","WORLD_OBSERVATION"].includes(error.code))throw error;
       // Fall through to DM when a configured private channel was deleted or is no longer writable.
     }
   }
   try{
     const member=await guild.members.fetch(userId);
-    for(const part of chunks(content)) await member.send(part);
+    for(const part of chunks(content)){beforeSend?.();await member.send(part);}
     if(sessionId) db.addMessage({guildId:guild.id,sessionId,userId:null,speakerName:"Veilkeeper",visibility:characterId?"character":"player",subjectUserId:characterId?null:userId,subjectCharacterId:characterId,content});
     return {ok:true,via:"dm"};
-  }catch{
+  }catch(error){
+    if(["NARRATIVE_PVP","CHARACTER_OBSERVATION","WORLD_OBSERVATION"].includes(error.code))throw error;
     return {ok:false,via:"unavailable"};
   }
 }

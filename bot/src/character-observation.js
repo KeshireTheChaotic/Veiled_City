@@ -4,12 +4,13 @@ import { conversationPrincipal } from "./conversation-principal.js";
 import { currentScene, sceneAccess, scenePresence } from "./scene-continuity.js";
 import { indexWorldEvent } from "./city-calendar.js";
 import { renderWorldObservation } from "./world-observation.js";
+import { visibleIncomingInjury } from "./pc-incoming.js";
 
 const hash=v=>createHash("sha256").update(JSON.stringify(v)).digest("hex");
 const vocabulary={
   hair:["black","brown","blond","red","gray","white","blue","green","purple","bald"],
   coat:["black","brown","gray","white","blue","green","red","yellow"],
-  disguise:["hooded","masked"]
+  disguise:["hooded","masked"],visible_condition:["injured"]
 };
 function fail(){throw Object.assign(new Error("Current owner, exact source and explicit visible fields required."),{code:"CHARACTER_OBSERVATION"});}
 function sourceProof(db,guild,character,user,ref){
@@ -31,6 +32,10 @@ export function saveVisibleCharacterFacts(db,guild,user,character,input){
   return db.transaction(()=>input.facts.map(f=>{
     if(!vocabulary[f.field]?.includes(f.value)||!Number.isSafeInteger(f.start)||!Number.isSafeInteger(f.end)
       ||f.start<0||f.end<=f.start||s.details.raw_text.slice(f.start,f.end)!==f.value)fail();
+    let condition=null;
+    if(f.field==="visible_condition"){
+      try{condition=visibleIncomingInjury(db,guild,f.cause_receipt,character);}catch(error){if(error.code!=="PC_EFFECT_AUTHORITY")throw error;fail();}
+    }else if(f.cause_receipt)fail();
     const disclosure=input.visibility==="party"?indexWorldEvent(db,guild,{
       key:`description-disclosure:${hash([s.event_key,f,principal.revision])}`,kind:"character_description_disclosure",
       title:"Owner-selected visible description field",source_id:`player:${user}`,visibility:"party",session_id:s.session_id,
@@ -39,7 +44,8 @@ export function saveVisibleCharacterFacts(db,guild,user,character,input){
     const data={version:1,character,user,principal_revision:principal.revision,source_hash:hash(s.details),
       source_event:s.event_key,field:f.field,value:f.value,start:f.start,end:f.end,
       visibility:input.visibility,observers:[...new Set(input.observers)],location:db.getCharacter(character).data.location||null,
-      disclosure_ref:disclosure?.event_key||null,disclosure_hash:disclosure?hash(disclosure.details):null};
+      disclosure_ref:disclosure?.event_key||null,disclosure_hash:disclosure?hash(disclosure.details):null,
+      ...(condition?{cause_receipt:condition.record_key,cause_hash:hash(condition.data)}:{})};
     const key=`visible-fact:${hash(data)}`;
     return db.getCityRecord(guild,"character_visible_fact",key)||db.saveCityRecord(guild,{
       kind:"character_visible_fact",key,source_event:s.event_key,status:"active",visibility:input.visibility,
@@ -52,6 +58,10 @@ function factProof(db,guild,row){
     ||d.version!==1||row.visibility!==d.visibility||row.subject_key!==d.character||row.source_event!==s.event_key
     ||hash(s.details)!==d.source_hash||d.principal_revision!==principal.revision
     ||!vocabulary[d.field]?.includes(d.value)||s.details.raw_text.slice(d.start,d.end)!==d.value)fail();
+  if(d.field==="visible_condition"){
+    try{if(hash(visibleIncomingInjury(db,guild,d.cause_receipt,d.character).data)!==d.cause_hash)fail();}
+    catch(error){if(error.code!=="PC_EFFECT_AUTHORITY")throw error;fail();}
+  }
   if(d.visibility==="party"){
     const disclosure=db.getWorldEvent(guild,d.disclosure_ref);
     if(disclosure?.status!=="active"||disclosure.kind!=="character_description_disclosure"||disclosure.visibility!=="party"
@@ -150,6 +160,22 @@ export function observationQueries(db,guild,intents,scope,sourceRef){
     principal_revision:conversationPrincipal(db,guild,scope.actorUserId,pc.id).revision,scene:scene.key,session:scene.session_id
   }));
 }
+/** Native environment/GM NPC selection is descriptive authority, not a player action or a PC response. */
+export function ambientWorldQueries(db,guild,scope,sourceRef){
+  const source=sourceRef&&db.getWorldEvent(guild,sourceRef),raw=source?.details.text??source?.details.raw_text;
+  if(!raw||!scope.actorCharacterId)return [];
+  const location=db.getCharacter(scope.actorCharacterId)?.data.location;
+  const candidates=db.listCityRecords(guild,{kind:"world_visible_fact",includeGM:true,limit:500})
+    .filter(r=>r.data.location_key===location&&(r.data.facts.weather||r.data.facts.greeting));
+  const queries=[],seen=new Set();
+  for(const row of candidates){
+    const key=`${row.data.entity_type}:${row.data.entity_key}`;if(seen.has(key))continue;seen.add(key);
+    const query=observationQueries(db,guild,[{type:"observe",framing:"immediate",source_span:raw,
+      target_key:row.data.entity_key,operation:"activity"}],scope,sourceRef)[0];
+    if(query&&renderWorldObservation(db,guild,query,scope).proof_refs.length)queries.push(query);
+  }
+  return queries;
+}
 /** Render deterministic known/partial/unknown. Never reads arbitrary sheet text, GM hooks or private logs. */
 export function renderObservation(db,guild,query,scope){
   const s=db.getWorldEvent(guild,query.source_ref),principal=conversationPrincipal(db,guild,query.user,query.observer);
@@ -158,11 +184,16 @@ export function renderObservation(db,guild,query,scope){
     ||currentScene(db,guild).key!==query.scene)fail();
   if(query.target_type&&query.target_type!=="character")return renderWorldObservation(db,guild,query,scope);
   const target=db.getCharacter(query.target);if(target?.guild_id!==guild)fail();
-  const canSee=visible(db,guild,query.observer,query.target),facts=[];
-  for(const row of db.listCityRecords(guild,{kind:"character_visible_fact",includeGM:true,limit:500})){
-    if(row.data.character!==target.id||!audienceAllows(row,scope))continue;
+  const canSee=visible(db,guild,query.observer,query.target),facts=[],selectedFields=new Set();
+  for(const row of db.visibleCharacterFacts(guild,target.id)){
+    if(row.data.character!==target.id)continue;
     try{factProof(db,guild,row);}catch(e){if(e.code==="CHARACTER_OBSERVATION")continue;throw e;}
-    if(!canSee&&!row.data.observers.includes(query.observer))continue;
+    if(canSee){
+      if(selectedFields.has(row.data.field))continue;selectedFields.add(row.data.field);
+    }
+    if(!audienceAllows(row,scope))continue;
+    if(!canSee&&(row.data.field==="visible_condition"||!row.data.observers.includes(query.observer)))continue;
+    if(!canSee){if(selectedFields.has(row.data.field))continue;selectedFields.add(row.data.field);}
     facts.push(row);
   }
   const name=target.name,proof_refs=[];
@@ -175,7 +206,16 @@ export function renderObservation(db,guild,query,scope){
       const descriptions=selected.map(row=>{
         proof_refs.push(row.record_key);
         if(row.data.field==="hair")return row.data.value==="bald"?"a bald head":`${row.data.value} hair`;
-        if(row.data.field==="coat")return `a ${row.data.value} coat`;
+        if(row.data.field==="coat"){
+          const location=db.getCharacter(query.target)?.data.location;
+          if(canSee&&location&&db.getSimulationEntity(guild,"location",location)){
+            const weather=renderWorldObservation(db,guild,{...query,target_type:"location",target:location,operation:"appearance"},scope);
+            if(weather.canSee&&weather.facts.weather==="rain"&&weather.facts.exposure==="outdoors"){
+              proof_refs.push(...weather.proof_refs);return `a rain-wet ${row.data.value} coat`;
+            }
+          }
+          return `a ${row.data.value} coat`;
+        }
         if(row.data.field==="disguise")return `a ${row.data.value} appearance`;
         return `an established ${row.data.value} visible condition`;
       });

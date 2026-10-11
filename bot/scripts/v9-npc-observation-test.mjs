@@ -68,3 +68,10 @@ test("NPC absent/GM-only description remains unknown instead of remote or privat
   f.db.setSimulationEntity(f.guild,"npc","station-attendant",{location_key:"elsewhere"});
   assert.match(query(f,"station-attendant","appearance","absent-question").result.narration,/cannot currently/i);
 }));
+
+test("OBS06 hidden NPC fallback does not disclose GM-only identity through a guessed native referent",()=>nativeFixture(f=>{
+  f.db.upsertNpcProfile(f.guild,{npcKey:"station-attendant",displayName:"CLASSIFIED-NPC-IDENTITY",publicIdentity:"Private undiscovered identity."});
+  f.db.setSimulationEntity(f.guild,"npc","station-attendant",{location_key:"terminal",visibility:"gm",hidden:true});
+  const {result}=query(f);assert.match(result.narration,/cannot currently see/);
+  assert(!result.narration.includes("CLASSIFIED-NPC-IDENTITY"));assert(!result.narration.includes("Private undiscovered"));
+}));

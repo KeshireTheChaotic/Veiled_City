@@ -56,7 +56,7 @@ import { captureAuthoredTurnEnvelope } from "./authored-turn-envelope.js";
 import { saveVisibleCharacterFacts } from "./character-observation.js";
 import { establishWorldDescription } from "./world-observation.js";
 import { fearInbox, establishFearContext, selectFearMove, applyFearMove, reconcileFearMove } from "./pvp-fear-moves.js";
-import { archivePvpHistory, quarantineSessionRecap } from "./pvp-output.js";
+import { archivePvpHistory, quarantineSessionRecap, certifiedSessionRecap, scopedSessionRecap } from "./pvp-output.js";
 import { pendingPvpFear } from "./pvp-fear-gate.js";
 import { reviewFeatureEffect, reviewPcEffect, approvePcEffect, applyPcEffect } from "./pc-effects.js";
 import { prepareIncomingAttack, reviewIncomingAttack, confirmIncomingDefense, rollIncomingAttack, resolveIncomingDamage } from "./pc-incoming.js";
@@ -336,8 +336,8 @@ async function applyEncounterAftermath({db,guild,encounter,draft,actorId}){
   for(const r of events.filter(x=>x.type==="canon"&&x.status==="conflict")) await out("encounter-aftermath-canon",()=>postStateError({db,guild,error:new Error(`Canon conflict ${r.conflict_id} requires GM resolution`),context:"encounter-aftermath-canon",sessionId:encounter.session_id}));
   if(draft.player_summary?.trim()){
     await out("encounter-aftermath-play",()=>postPlayMessage({db,guild,content:`**Encounter Aftermath**
-${draft.player_summary}`,sessionId:encounter.session_id}));
-    await out("encounter-aftermath-journal",()=>postJournalEntry({db,guild,title:`Encounter ${encounter.encounter_number} Aftermath`,content:draft.player_summary}));
+${draft.player_summary}`,sessionId:encounter.session_id,authority:{result:draft,scope}}));
+    await out("encounter-aftermath-journal",()=>postJournalEntry({db,guild,title:`Encounter ${encounter.encounter_number} Aftermath`,content:draft.player_summary,nativeEncounterId:encounter.id}));
   }
   await out("encounter-aftermath-gm-log",()=>postGmLog({db,guild,sessionId:encounter.session_id,title:`Encounter #${encounter.encounter_number} aftermath applied`,details:`Events: ${events.length}
 Relationships: ${relationships.filter(x=>x.ok).length}
@@ -759,14 +759,15 @@ Initial phase: ${s.assembly_phase}`});
       if(held)quarantineSessionRecap(db,interaction.guildId,activeBefore,proposedRecap);
       const recap=held?"":proposedRecap;
       const s=db.endSession(interaction.guildId,recap);
+      const certified=held?certifiedSessionRecap(db,interaction.guildId,s.id):"";
       if(!held)db.addFact(interaction.guildId,{category:"recap",key:`session-${s.session_number}-recap`,content:recap,visibility:"party",sessionId:s.id,source:"system",
         provenance:{epistemic:{kind:"testimony",perspective:"narrator recap; consult original sources, not new truth",source_refs:[]},session_id:s.id,authority:"Non-authoritative synthesis; original messages/facts retained"}});
-      if(!held)await publishJournal({db,guild:interaction.guild,session:s,recap});
+      if(!held||certified)await publishJournal({db,guild:interaction.guild,session:s,recap:certified||recap});
       await postGmLog({db,guild:interaction.guild,sessionId:s.id,title:`Session ${s.session_number} ended`,details:held
-        ?"Session closed. Generated recap withheld in GM-private source review; no shared recap fact or journal publication."
+        ?`Session closed. Generated recap withheld in GM-private source review; no shared recap fact. ${certified?"Only verified delivered excerpts published.":"No certified excerpts available for journal publication."}`
         :"Player-safe recap generated and campaign state closed."});
       db.snapshotCampaign(interaction.guildId,{label:`Post-session ${s.session_number}`,reason:"Automatic snapshot after session end",createdBy:interaction.user.id});
-      await deliverInteractionText(interaction,`**Session ${s.session_number} ended.**\n\n${held?"The generated recap is withheld pending source review; original records are preserved.":recap}`,{ephemeral:false});
+      await deliverInteractionText(interaction,`**Session ${s.session_number} ended.**\n\n${held?certified||"The generated recap is withheld pending source review; original records are preserved.":recap}`,{ephemeral:false});
       return true;
     }
     if(group==="session"&&["present","arrive"].includes(sub)){
@@ -1807,7 +1808,7 @@ GM notes: ${a.draft.gm_notes}`:""}`.slice(0,1950):"No aftermath draft exists for
     }
     if(group==="intel"&&sub==="recap"){
       const row=db.latestEndedSession(interaction.guildId);
-      await interaction.reply({content:row?.recap||"No completed-session recap yet.",ephemeral:true});
+      await deliverInteractionText(interaction,scopedSessionRecap(db,interaction.guildId,row)||"No completed-session recap yet.",{ephemeral:true});
       return true;
     }
     if(group==="intel"&&sub==="clues"){

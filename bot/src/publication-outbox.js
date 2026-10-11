@@ -2,7 +2,7 @@
 import { createHash } from "node:crypto";
 import { splitDiscordText } from "./discord/chunking.js";
 import { assertPvpOutput } from "./pvp-authorship.js";
-import { bindOutputPublication, revalidateOutputPublication } from "./pvp-output.js";
+import { bindOutputPublication, revalidateOutputPublication, captureOutputArchive, recordOutputArchive } from "./pvp-output.js";
 
 const digest=value=>createHash("sha256").update(String(value)).digest("hex");
 
@@ -71,9 +71,11 @@ export async function deliverTurnOutbox(db,guildId,turnId,transport,{forceUncert
     db.updatePublication(row.id,{status:"delivering",attemptCount:row.attempt_count+1,lastFailure:""});
     try{
       revalidateOutputPublication(db,guildId,row);
+      const archive=captureOutputArchive(db,guildId,row);
       const receipt=await transport(row);
       const delivered=db.updatePublication(row.id,{status:"delivered",discordMessageId:receipt?.messageId||null,
         channelId:receipt?.channelId||row.channel_id,lastFailure:""});
+      recordOutputArchive(db,guildId,delivered,archive);
       results.push({ok:true,row:delivered});
     }catch(error){
       const failed=db.updatePublication(row.id,{status:["NARRATIVE_PVP","CHARACTER_OBSERVATION"].includes(error.code)?"uncertain":"failed",

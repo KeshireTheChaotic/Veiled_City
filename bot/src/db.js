@@ -1229,6 +1229,20 @@ export class VeiledDB {
   listTurnPublications(guildId,turnId){
     return this.db.prepare("SELECT * FROM publication_outbox WHERE guild_id=? AND turn_id=? ORDER BY ordinal").all(guildId,turnId);
   }
+  getPublication(guildId,id){
+    return this.db.prepare("SELECT * FROM publication_outbox WHERE guild_id=? AND id=?").get(guildId,id)||null;
+  }
+  latestPcHpEffect(guildId,characterId){
+    const row=this.db.prepare(`SELECT * FROM city_records WHERE guild_id=? AND kind='pc_effect_receipt'
+      AND subject_key=? AND status='resolved' AND (json_extract(data_json,'$.resource')='hp'
+      OR json_extract(data_json,'$.hp_marks')>0) ORDER BY rowid DESC LIMIT 1`).get(guildId,characterId);
+    return row?{...row,data:JSON.parse(row.data_json)}:null;
+  }
+  visibleCharacterFacts(guildId,characterId){
+    return this.db.prepare(`SELECT * FROM city_records WHERE guild_id=? AND kind='character_visible_fact'
+      AND subject_key=? ORDER BY rowid DESC LIMIT 1000`).all(guildId,characterId)
+      .map(row=>({...row,data:JSON.parse(row.data_json)}));
+  }
   listPendingPublications(guildId,{limit=50}={}){
     return this.db.prepare(`SELECT id,guild_id,turn_id,surface,ordinal,visibility,target_user_id,target_character_id,channel_id,
       payload_hash,status,discord_message_id,attempt_count,last_failure,created_at,updated_at FROM publication_outbox

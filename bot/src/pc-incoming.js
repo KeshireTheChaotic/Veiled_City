@@ -153,3 +153,25 @@ export function resolveIncomingDamage(db,guild,user,key,{armor=false,library}={}
     db.saveCityRecord(guild,{...row,key,status:"resolved"});return receipt;
   });
 }
+
+/** Read-only injury evidence. No reroll, effect application, or public disclosure is implied. */
+export function visibleIncomingInjury(db,guild,id,character){
+  const receipt=typeof id==="string"&&db.getCityRecord(guild,"pc_effect_receipt",id),d=receipt?.data;
+  const row=d&&db.getCityRecord(guild,"pc_incoming_attack",d.roll?.replace(/:roll$/u,""));
+  const source=row&&db.getWorldEvent(guild,row.source_event),o=row?.data.offer,pc=db.getCharacter(character),scene=currentScene(db,guild);
+  if(receipt?.status!=="resolved"||receipt.subject_key!==character||d.character!==character||d.cause_type!=="verified_npc_attack"
+    ||row?.status!=="resolved"||id!==`${row.record_key}:damage`||receipt.source_event!==row.source_event
+    ||source?.status!=="active"||source.kind!=="native_npc_attack_offer"||hash(source.details)!==hash(o)
+    ||db.getWorldEvent(guild,o.input.source)?.status!=="active"||d.session!==scene.session_id||d.scene!==scene.key
+    ||pc?.guild_id!==guild||pc.owner_user_id!==d.owner||d.owner!==o.snapshot.owner
+    ||conversationPrincipal(db,guild,d.owner,character).revision!==o.snapshot.principal
+    ||!Number.isSafeInteger(d.hp_marks)||d.hp_marks<=0||d.after.hp.current-d.before.hp.current!==d.hp_marks
+    ||pc.data.resources?.hp?.current!==d.after.hp.current||pc.data.resources.hp.current<=0)
+    fail("Current native injury receipt required; sheet marks and prose are not visible condition evidence.");
+  defenseProof(db,guild,row);const roll=verifyRoll(db,guild,row);
+  if(roll.record_key!==d.roll||!roll.data.hit)fail("Native injury roll ancestry required.");
+  // HP counts can return to an old value after healing and a different private injury. That is not fresh disclosure.
+  const latest=db.latestPcHpEffect(guild,character);
+  if(latest?.record_key!==id)fail("Visible injury disclosure is superseded by a later native HP effect.");
+  return receipt;
+}

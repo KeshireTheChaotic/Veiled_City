@@ -10,7 +10,7 @@ import { coordinateConsequences } from "./city-consequences.js";
 import { runStrategyOpportunity } from "./simulation-strategy.js";
 import { proposeContactGroup } from "./city-groups.js";
 import { clusterContext } from "./memory-clusters.js";
-import { reconcileSceneArrival } from "./scene-continuity.js";
+import { reconcileSceneArrival, currentScene } from "./scene-continuity.js";
 import { indexWorldEvent } from "./city-calendar.js";
 import { delegateConsequence, maintainMemory, continueLongProjects, dispatchAiIntents } from "./ai-intents.js";
 import { pacingAdvice } from "./story-continuity.js";
@@ -389,8 +389,12 @@ export function executeNpcAction(db,guildId,record,{approved=false,roll=()=>rand
         saveRecord(db,guildId,old,{status:Number(goal.progress||0)>=90?"completed":"active",data:{...old.data,progress:bounded(Number(goal.progress||0)+10,0,100)}});
       }
       // A durable hook is delivered only through the normal publishing boundary.
-      if(action.public_hook) db.putSimulationRecord(guildId,{kind:"hook",entityKey:current.id,status:"ready",
-        data:{content:action.public_hook,target_user_id:action.private_user_id||"",visibility:action.private_user_id?"player":"party",action_id:current.id}});
+      if(action.public_hook){
+        const scene=db.getActiveSession(guildId)?currentScene(db,guildId):null;
+        db.putSimulationRecord(guildId,{kind:"hook",entityKey:current.id,status:"ready",
+          data:{content:action.public_hook,target_user_id:action.private_user_id||"",visibility:action.private_user_id?"player":"party",action_id:current.id,
+            source_context:scene?{session:scene.session_id,scene:scene.key}:null}});
+      }
     }
     const completed=saveRecord(db,guildId,current,{status:"completed",data:{...action,result}});
     const mutation=db.recordMutation(guildId,{actorType:"ai",actorId:key,sourceLayer:"npc_director",mutationType:`npc_action:${action.type}`,

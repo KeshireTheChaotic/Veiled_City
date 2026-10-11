@@ -2,6 +2,7 @@
 import { personalCharacter, personalInbox } from "./personal-continuity.js";
 import { reconcileHistory } from "./history-reconciliation.js";
 import { evidenceType, activeEvidence } from "./epistemic.js";
+import { scopedSessionRecap } from "./pvp-output.js";
 export function sessionBrief(db,guild,{mode="shared",user="",gm=false}={}){
   if(db.getCityCalendar(guild).flags.session_briefs!==true) throw new Error("Session briefs are opt-in.");
   if(!["shared","character","gm"].includes(mode)||mode==="gm"&&!gm) throw new Error("Authenticated GM preparation access required.");
@@ -14,9 +15,10 @@ export function sessionBrief(db,guild,{mode="shared",user="",gm=false}={}){
     ({source:row.event_key,title:row.title,status:row.status,truth_status:row.truth_status,minute:row.minute,
       authority:row.status==="active"?"scoped indexed event; details not disclosed":"historical source, not authority for new effects"}));
   const ended=db.latestEndedSession(guild),session=db.getActiveSession(guild);
+  const recap=scopedSessionRecap(db,guild,ended);
   const packet={mode,visibility:mode==="gm"?"gm":pc?"character":"party",character_id:pc?.id||null,
     session_id:session?.id||ended?.id||null,read_only:true,fictional_minute:db.getSimulationClock(guild).minute,
-    saved_recap:ended?.recap?{session_id:ended.id,text:ended.recap,epistemic:{kind:"testimony",perspective:"narrator summary; legacy originals preserved",source_refs:[]},authority:"previously saved player-safe recap, not a new ruling or independent evidence"}:null,
+    saved_recap:recap?{session_id:ended.id,text:recap,epistemic:{kind:"testimony",perspective:"narrator summary or verified historical excerpt; originals preserved",source_refs:[]},authority:"previously saved player-safe recap, not a new ruling or independent evidence"}:null,
     facts,events,personal:pc?personalInbox(db,guild,user):[],
     limits:"Bounded persisted records only; omissions are not absence. No new facts, invented quotes, PC intentions, time advance, resources or provider requests."};
   if(mode==="gm") Object.assign(packet,{

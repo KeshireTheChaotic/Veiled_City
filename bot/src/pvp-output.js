@@ -2,14 +2,15 @@
 import { createHash } from "node:crypto";
 import { currentScene } from "./scene-continuity.js";
 import { conversationPrincipal } from "./conversation-principal.js";
-import { pvpProjection } from "./pvp-authorship.js";
-import { observationQueries, renderObservation } from "./character-observation.js";
+import { pvpProjection, validatePvpClause } from "./pvp-authorship.js";
+import { observationQueries, ambientWorldQueries, renderObservation } from "./character-observation.js";
 import { activeEvidence, objectiveEvidence } from "./epistemic.js";
 import { renderFearEffect } from "./pvp-fear-moves.js";
 import { indexWorldEvent } from "./city-calendar.js";
 
 const hash=v=>createHash("sha256").update(JSON.stringify(v)).digest("hex");
 const prepared=new WeakMap();
+const archiveCaptures=new WeakMap();
 const neutral="No additional character response has been established. Independently authorized actions remain in effect.";
 function fail(){throw Object.assign(new Error("PvP output needs current independently verified clauses and audience proof."),{code:"NARRATIVE_PVP"});}
 function records(db,guild,kind){
@@ -64,12 +65,22 @@ function renderPart(db,guild,part){
     if(!assignment||assignment.character_id!==scope.actorCharacterId)fail();
   }
   if(kind==="neutral")return neutral;
+  if(kind==="private_owner_clause"){
+    const clause=validatePvpClause(db,guild,ref);
+    if(scope.mode!=="private"||clause.subject_key!==scope.actorCharacterId
+      ||clause.data.owning_user!==scope.actorUserId)fail();
+    return clause.data.source_span;
+  }
   if(kind==="owner_clause"){
     const projection=pvpProjection(db,guild,ref);
     if(scope.mode==="private"&&!protectedPvpScope(db,guild,scope).some(p=>p.record_key===projection.data.proposal))fail();
     return projection.data.text;
   }
-  if(kind==="observation_answer")return renderObservation(db,guild,part.query,scope).text;
+  if(kind==="observation_answer"){
+    const answer=renderObservation(db,guild,part.query,scope);
+    if(part.evidence_refs&&hash(answer.proof_refs)!==hash(part.evidence_refs))fail();
+    return answer.text;
+  }
   if(kind==="pvp_fear_publication_part")return renderFearEffect(db,guild,ref,scope);
   if(kind==="verified_action"){
     const arrival=db.getWorldEvent(guild,ref),source=arrival&&db.getWorldEvent(guild,arrival.details.input_source);
@@ -86,6 +97,7 @@ function renderPart(db,guild,part){
   fail();
 }
 function savePart(db,guild,part){
+  if(part.kind==="observation_answer")part={...part,evidence_refs:renderObservation(db,guild,part.query,part.scope).proof_refs};
   const text=renderPart(db,guild,part),data={version:1,...part,text,content_hash:hash(text)},key=`pvp-output:${hash(data)}`;
   return db.getCityRecord(guild,"pvp_output_part",key)||db.saveCityRecord(guild,{kind:"pvp_output_part",key,
     status:"verified",visibility:part.scope.mode==="private"?"character":"party",subject_key:part.scope.actorCharacterId||null,
@@ -104,6 +116,7 @@ export function prepareAuthorizedTurnOutput(db,guild,result,scope,{sourceRef=nul
     .map(field=>[field,result[field]||[]]));
   const proposals=protectedPvpScope(db,guild,scope);
   const queries=observationQueries(db,guild,result.player_intents||[],scope,sourceRef);
+  if(proposals.length)queries.push(...ambientWorldQueries(db,guild,scope,sourceRef));
   if(!proposals.length&&!queries.length)return result;
   if(result.act===false&&!surfaces(result).some(([,text])=>text.trim()))return result;
   const scene=currentScene(db,guild),parts=[];
@@ -142,12 +155,30 @@ export function prepareAuthorizedTurnOutput(db,guild,result,scope,{sourceRef=nul
   result.narration=text;
   if("public_narration" in result)result.public_narration=text;
   result.player_summary=text;result.private_messages=[];
+  const privateParts={};
+  // A proposed private message is only a lookup, never evidence. Preserve exact independently owner-authorized clauses.
+  for(const [surface,content] of Object.entries(raw).filter(([s])=>s.startsWith("private:"))){
+    const user=surface.slice(8),assignment=db.activeAssignment(scene.session_id,user);
+    if(!assignment?.character_id||scope.mode==="private"&&user!==scope.actorUserId
+      ||!db.roster(scene.session_id).some(r=>r.discord_user_id===user&&["present","late","guest"].includes(r.presence)))continue;
+    for(const clause of records(db,guild,"pvp_narrative_clause")){
+      if(clause.data.source_span!==content||clause.subject_key!==assignment.character_id||clause.data.owning_user!==user)continue;
+      try{
+        const privateScope={mode:"private",actorUserId:user,actorCharacterId:assignment.character_id};
+        const source=db.getWorldEvent(guild,clause.source_event);
+        const part=savePart(db,guild,{...common,scope:privateScope,kind:"private_owner_clause",ref:clause.record_key,
+          source_ref:source?.event_key,source_hash:hash(source?.details),
+          principal_revision:conversationPrincipal(db,guild,user,assignment.character_id).revision});
+        privateParts[user]=[part.record_key];result.private_messages.push({discord_user_id:user,content:part.data.text});break;
+      }catch(error){if(error.code!=="NARRATIVE_PVP")throw error;}
+    }
+  }
   if("gm_notes" in result)result.gm_notes="Unverified generated prose is held in private scope review; native receipts are unchanged.";
   // Claims annotated against the quarantined paragraph are not claims about the renderer's output.
   result.narrative_claims=[];
   for(const field of ["context_memories","handouts","npc_memories","npc_knowledge","npc_goals"])
     if(result[field]?.length)result[field]=[];
-  prepared.set(result,{raw,drafts,parts:parts.map(p=>p.record_key),scope:hash(scope),fingerprint:fingerprint(result)});
+  prepared.set(result,{raw,drafts,parts:parts.map(p=>p.record_key),privateParts,scope:hash(scope),fingerprint:fingerprint(result)});
   return result;
 }
 /** Direct unprepared boundaries reject. High-level callers deliberately prepare before entering them. */
@@ -156,6 +187,7 @@ export function assertPvpOutput(db,guild,result,scope={mode:"party"}){
   if(proof){
     if(proof.scope!==hash(scope)||proof.fingerprint!==fingerprint(result))fail();
     for(const id of proof.parts)validateOutputPart(db,guild,id);
+    for(const ids of Object.values(proof.privateParts||{}))for(const id of ids)validateOutputPart(db,guild,id);
     return;
   }
   for(const [surface,text] of surfaces(result)){
@@ -167,9 +199,11 @@ export function assertPvpOutput(db,guild,result,scope={mode:"party"}){
 }
 export function bindOutputPublication(db,guild,result,publication,payload){
   const proof=prepared.get(result);if(!proof)return;
+  const parts=publication.surface.startsWith("private_user:")?proof.privateParts?.[publication.target_user_id]:proof.parts;
+  if(!parts?.length)fail();
   db.saveCityRecord(guild,{kind:"pvp_output_publication",key:publication.id,status:"verified",visibility:"gm",
-    source_event:validateOutputPart(db,guild,proof.parts[0]).source_event,
-    data:{version:1,parts:proof.parts,payload_hash:hash(payload),surface:publication.surface,recipient:publication.target_user_id||null,
+    source_event:validateOutputPart(db,guild,parts[0]).source_event,
+    data:{version:1,parts,payload_hash:hash(payload),surface:publication.surface,recipient:publication.target_user_id||null,
       visibility:publication.visibility,character:publication.target_character_id||null}});
 }
 export function revalidateOutputPublication(db,guild,row){
@@ -178,13 +212,126 @@ export function revalidateOutputPublication(db,guild,row){
     if(record.status!=="verified"||record.data.payload_hash!==hash(row.payload)||record.data.surface!==row.surface
       ||record.data.recipient!==(row.target_user_id||null)||record.data.visibility!==row.visibility
       ||record.data.character!==(row.target_character_id||null))fail();
-    for(const id of record.data.parts)validateOutputPart(db,guild,id);
+    for(const id of record.data.parts){
+      const part=validateOutputPart(db,guild,id);
+      if(part.visibility==="character"&&(row.visibility!=="character"||row.target_character_id!==part.subject_key
+        ||row.target_user_id!==part.data.scope.actorUserId))fail();
+      if(part.data.kind==="observation_answer"&&row.visibility!=="party"
+        &&(row.target_character_id!==part.data.query.observer||row.target_user_id!==part.data.query.user))fail();
+    }
   }else if(protectedPvpScope(db,guild,{mode:row.visibility==="party"?"party":"private",recipientUserId:row.target_user_id}).length)fail();
   return row;
 }
 export function deliveredPartyOutput(db,guild,turnId){
   return db.listTurnPublications(guild,turnId).filter(r=>r.status==="delivered"&&r.visibility==="party")
     .map(r=>revalidateOutputPublication(db,guild,r).payload).join("\n");
+}
+
+const archiveRowHash=row=>hash({kind:row.kind,key:row.record_key,status:row.status,visibility:row.visibility,
+  subject:row.subject_key,source:row.source_event,data:row.data});
+/** Snapshot a live-validated public dependency closure, not raw text or a GM approval. Hashes stay GM-private. */
+export function captureOutputArchive(db,guild,publication){
+  const proof=db.getCityRecord(guild,"pvp_output_publication",publication.id);
+  if(!proof||publication.visibility!=="party")return null;
+  revalidateOutputPublication(db,guild,publication);
+  const inventory=records(db,guild,""),byKey=new Map(),refs=[],seen=new Set(),owners=new Map();
+  for(const row of inventory){const list=byKey.get(row.record_key)||[];list.push(row);byKey.set(row.record_key,list);}
+  function scan(value,field=""){
+    if(seen.size>1000)fail();
+    if(Array.isArray(value)){for(const item of value)scan(item,field);return;}
+    if(value&&typeof value==="object"){
+      for(const who of Array.isArray(value.participants)?value.participants:[])if(who.character&&who.user)owners.set(who.character,who.user);
+      if(value.actorCharacterId&&value.actorUserId)owners.set(value.actorCharacterId,value.actorUserId);
+      if(value.subject_character&&value.owning_user)owners.set(value.subject_character,value.owning_user);
+      if(value.character&&value.user&&db.getCharacter(value.character))owners.set(value.character,value.user);
+      for(const [k,v] of Object.entries(value))scan(v,k);return;
+    }
+    if(typeof value!=="string"&&!(Number.isSafeInteger(value)&&["roll_id","roll_refs"].includes(field)))return;
+    if(["roll_id","roll_refs"].includes(field)){
+      const roll=db.getSavedRoll(guild,value),key=`roll:${value}`;
+      if(roll&&!seen.has(key)){seen.add(key);refs.push({type:"roll",key:value,digest:hash(roll)});}return;
+    }
+    const event=db.getWorldEvent(guild,value),eventKey=`event:${value}`;
+    if(event&&!seen.has(eventKey)){
+      if(event.status!=="active")fail();seen.add(eventKey);refs.push({type:"event",key:value,digest:hash(event)});scan(event.details);
+    }
+    for(const row of byKey.get(value)||[]){
+      const key=`${row.kind}:${value}`;if(seen.has(key))continue;seen.add(key);
+      refs.push({type:"record",kind:row.kind,key:value,digest:archiveRowHash(row)});scan(row.source_event);scan(row.data);
+      if(row.kind==="npc_attack_roll_receipt")scan(row.data.roll,"roll_id");
+      // Party disclosure proofs are separate from content-authority clauses.
+      if(row.kind==="pvp_authored_narrative")for(const share of inventory.filter(r=>r.kind==="pvp_narration_disclosure"&&r.data.narrative===value))scan(share.record_key);
+    }
+  }
+  for(const id of proof.data.parts)scan(id);
+  const attempt=db.getTurnAttempt(publication.turn_id);
+  const capture={version:1,publication:publication.id,session:attempt.session_id,payload_hash:hash(publication.payload),
+    refs,owners:[...owners].map(([character,user])=>({character,user})),authority:"Previously verified delivered output only; no new outcome or current observation."};
+  archiveCaptures.set(capture,hash(capture));return capture;
+}
+function archiveEvidence(db,guild,data){
+  for(const ref of data.refs){
+    const row=ref.type==="record"?db.getCityRecord(guild,ref.kind,ref.key):ref.type==="event"?db.getWorldEvent(guild,ref.key):db.getSavedRoll(guild,ref.key);
+    if(!row||(ref.type==="record"?archiveRowHash(row):hash(row))!==ref.digest||ref.type==="event"&&row.status!=="active")fail();
+  }
+  for(const owner of data.owners)if(db.getCharacter(owner.character)?.owner_user_id!==owner.user)fail();
+}
+export function recordOutputArchive(db,guild,publication,data){
+  if(!data)return;
+  if(archiveCaptures.get(data)!==hash(data)||publication.status!=="delivered"||data.publication!==publication.id
+    ||data.payload_hash!==hash(publication.payload))fail();
+  archiveEvidence(db,guild,data);
+  db.saveCityRecord(guild,{kind:"pvp_delivered_archive",key:publication.id,status:"verified",visibility:"gm",
+    source_event:db.getCityRecord(guild,"pvp_output_publication",publication.id).source_event,
+    data:{...data,digest:hash(data)}});
+}
+function archivedPublication(db,guild,row,sessionId){
+  const certificate=db.getCityRecord(guild,"pvp_delivered_archive",row.id),{digest,...data}=certificate?.data||{};
+  if(row?.status!=="delivered"||row.visibility!=="party"||certificate?.status!=="verified"||digest!==hash(data)
+    ||data.publication!==row.id||data.payload_hash!==hash(row.payload)||sessionId&&data.session!==sessionId)fail();
+  archiveEvidence(db,guild,data);return row.payload;
+}
+/** Receipt-rendered transcript excerpt, explicitly historical; no model synthesis enters shared archives. */
+export function certifiedSessionRecap(db,guild,sessionId){
+  const parts=[];
+  for(const certificate of records(db,guild,"pvp_delivered_archive").reverse()){
+    if(certificate.data.session!==sessionId)continue;
+    const row=db.getPublication(guild,certificate.record_key);
+    try{parts.push(archivedPublication(db,guild,row,sessionId));}catch(error){if(error.code!=="NARRATIVE_PVP")throw error;}
+  }
+  return parts.length?`Previously delivered, source-verified session excerpts (not new or current observations):\n\n${parts.join("\n\n")}`:"";
+}
+export function scopedSessionRecap(db,guild,session){
+  return !session?"":archivePvpHistory(db,guild,session.id).length?certifiedSessionRecap(db,guild,session.id):session.recap||"";
+}
+/** Reuse only a current native-rendered part at an exactly compatible audience. Raw hooks confer no claim authority. */
+export function prepareStoredOutput(db,guild,text,scope){
+  const parts=records(db,guild,"pvp_output_part").filter(row=>row.data.text===text&&row.status==="verified"
+    &&(scope.mode!=="private"?row.visibility==="party"&&row.data.scope.mode!=="private"
+      :row.visibility==="party"||row.visibility==="character"&&row.subject_key===scope.actorCharacterId
+        &&row.data.scope.actorUserId===scope.actorUserId))
+    .filter(row=>scope.mode!=="private"||row.data.kind!=="observation_answer"
+      ||row.data.query.observer===scope.actorCharacterId&&row.data.query.user===scope.actorUserId).filter(row=>{
+    try{validateOutputPart(db,guild,row.record_key);return true;}catch(error){
+      if(!["NARRATIVE_PVP","CHARACTER_OBSERVATION","WORLD_OBSERVATION"].includes(error.code))throw error;return false;
+    }
+  });
+  if(!parts.length)fail();
+  const result={narration:text,player_summary:text,narrative_claims:[],private_messages:[]};
+  prepared.set(result,{raw:{},drafts:{},parts:[parts[0].record_key],scope:hash(scope),fingerprint:fingerprint(result)});
+  return result;
+}
+export function quarantineSimulationHook(db,guild,hook){
+  const key=`pvp-hook-review:${hash([hook.id,hook.data])}`;
+  const source=indexWorldEvent(db,guild,{key,kind:"pvp_hook_review",title:"Unsupported hook held for source review",
+    source_id:"native:hook-review",visibility:"gm",details:{hook:hook.id,canonical:false}},"native_output_guard");
+  db.saveCityRecord(guild,{kind:"pvp_output_quarantine",key,status:"needs_scope_review",visibility:"gm",source_event:source.event_key,
+    data:{version:1,origin:"simulation-hook",hook:hook.id,raw:{narration:hook.data.content},canonical:false}});
+  return db.putSimulationRecord(guild,{...hook,id:hook.id,entityKey:hook.entity_key,status:"needs_scope_review",data:hook.data});
+}
+export function protectedHookSource(db,guild,hook){
+  const context=hook.data.source_context;
+  return records(db,guild,"pvp_proposal").some(p=>!context||p.data.session_id===context.session&&p.data.scene===context.scene);
 }
 /** Archives can refer to earlier scenes/ended sessions. Current-trigger scope alone is not an archive authorization. */
 export function archivePvpHistory(db,guild,sessionId=null){
@@ -193,6 +340,12 @@ export function archivePvpHistory(db,guild,sessionId=null){
 }
 export function assertArchiveOutput(db,guild,text,{sessionId=null}={}){
   if(!String(text||"").trim()||!archivePvpHistory(db,guild,sessionId).length)return;
+  for(const certificate of records(db,guild,"pvp_delivered_archive")){
+    const row=db.getPublication(guild,certificate.record_key);
+    if(row?.payload===text){archivedPublication(db,guild,row,sessionId);return;}
+  }
+  if(sessionId&&text===certifiedSessionRecap(db,guild,sessionId))return;
+  if(!db.getActiveSession(guild))fail();
   const part=records(db,guild,"pvp_output_part").find(r=>r.visibility==="party"&&r.status==="verified"&&r.data.text===text);
   if(part){validateOutputPart(db,guild,part.record_key);return;}
   const projection=records(db,guild,"pvp_public_projection").find(r=>r.visibility==="party"&&r.data.text===text);

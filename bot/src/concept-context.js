@@ -3,6 +3,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { Buffer } from "node:buffer";
 import { zipStore } from "./character-export.js";
+import { scopedSessionRecap } from "./pvp-output.js";
 
 function clip(v,n=5000){
   const s=String(v??"");
@@ -40,7 +41,7 @@ export function buildConceptCampaignContext({db,guildId,userId,historySessions=1
     campaign:{name:campaign.name||"Veiled City",veil_exposure:campaign.veil_exposure??0,party_established:Boolean(party.established),party_name:party.name||"",current_session:active?{number:active.session_number,title:active.title||"",assembly_phase:active.assembly_phase||""}:null},
     established_party:members,
     current_session_roster:liveRoster,
-    recent_sessions:db.recentSessions(guildId,{limit:historySessions}).map(sessionView),
+    recent_sessions:db.recentSessions(guildId,{limit:historySessions}).map(s=>sessionView({...s,recap:scopedSessionRecap(db,guildId,s)})),
     recent_table_context:db.recentPartyMessages(guildId,{limit:40}).map(m=>({session_id:m.session_id,speaker:m.speaker_name,content:clip(m.content,1400),created_at:m.created_at})),
     active_and_historical_threads:db.playerSafeThreads(guildId,{limit:160}).map(threadView),
     known_npcs:db.listReferences(guildId,"npc",{publicOnly:true}).map(refView),

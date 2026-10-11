@@ -2,17 +2,19 @@
 import { createHash } from "node:crypto";
 import { indexWorldEvent } from "./city-calendar.js";
 import { currentScene, scenePresence, sceneAccess } from "./scene-continuity.js";
+import { activeCityProxy } from "./city-constraints.js";
 
 const hash=v=>createHash("sha256").update(JSON.stringify(v)).digest("hex");
 const vocabulary={coat:["blue","black","brown","gray","white","green","red","yellow"],
-  hair:["black","brown","blond","red","gray","white","bald"],weather:["rain","snow","clear","fog"]};
+  hair:["black","brown","blond","red","gray","white","bald"],weather:["rain","snow","clear","fog"],
+  exposure:["outdoors","sheltered"],greeting:["hello"]};
 function fail(){throw Object.assign(new Error("Native GM description source, selected fields and current audience proof required."),
   {code:"WORLD_OBSERVATION",expected:true});}
 function fields(input,type){
   if(!input||Object.keys(input).some(k=>!["entity_type","entity_key","location_key","visibility","subject_key","facts"].includes(k))
     ||!input.facts||Array.isArray(input.facts)||!Object.keys(input.facts).length||Object.keys(input.facts).length>3)fail();
   for(const [field,value] of Object.entries(input.facts))
-    if(!(type==="npc"?["coat","hair"]:["weather"]).includes(field)||!vocabulary[field]?.includes(value))fail();
+    if(!(type==="npc"?["coat","hair","greeting"]:["weather","exposure"]).includes(field)||!vocabulary[field]?.includes(value))fail();
 }
 /** Native command boundary passes the permission result; model/JSON flags are not accepted. */
 export function establishWorldDescription(db,guild,user,input,{gm=false,interactionId}={}){
@@ -25,6 +27,7 @@ export function establishWorldDescription(db,guild,user,input,{gm=false,interact
   if(input.visibility==="character"&&db.getCharacter(input.subject_key)?.guild_id!==guild)fail();
   if(input.visibility!=="character"&&input.subject_key)fail();
   const entity=db.getSimulationEntity(guild,type,input.entity_key);
+  if(type==="npc"&&input.facts.greeting&&activeCityProxy(db,guild,input.entity_key))fail();
   if(!entity||type==="npc"&&(!db.getNpcProfile(guild,input.entity_key)||entity.state.location_key!==input.location_key)
     ||type==="location"&&input.entity_key!==input.location_key)fail();
   return db.transaction(()=>{
@@ -71,10 +74,13 @@ export function renderWorldObservation(db,guild,query,scope){
     proof_refs.push(row.record_key);
   }
   const selected=[...values].filter(([field])=>query.operation==="clothing"?field==="coat":["appearance","activity"].includes(query.operation));
-  const descriptions=selected.map(([field,value])=>field==="coat"?`a ${value} coat`
+  if(type==="npc"&&activeCityProxy(db,guild,query.target))values.delete("greeting");
+  const descriptions=selected.filter(([field])=>!["greeting","exposure"].includes(field)).map(([field,value])=>field==="coat"?`a ${value} coat`
     :field==="hair"?value==="bald"?"a bald head":`${value} hair`:value==="clear"?"clear weather":value);
+  const greeting=canSee&&type==="npc"&&query.operation==="activity"&&values.get("greeting")==="hello"?`${name} says: “Hello.”`:null;
   return {kind:type==="npc"?"npc_observation_answer":"scene_environment",proof_refs,
-    text:!canSee?`You cannot currently see ${name}; no remote observation is available.`
-      :descriptions.length?`Visible established details of ${name}: ${descriptions.join(", ")}.`
-        :`${name} is nearby, but those visible details are not established in enough detail to report reliably.`};
+    facts:canSee?Object.fromEntries(values):{},canSee,
+    text:!canSee?"You cannot currently see that subject; no remote observation is available."
+      :greeting||descriptions.length&&`Visible established details of ${name}: ${descriptions.join(", ")}.`
+        ||`${name} is nearby, but those visible details are not established in enough detail to report reliably.`};
 }

@@ -361,3 +361,299 @@ test("OBS21 native NPC description inquiry must not be swallowed by unrelated PC
   assert.match(result.narration,/blue coat/i);
   assert(!result.narration.includes("apologizes"));
 }));
+
+test("PVP30ab native simulation hook cannot publish an unowned Choso reaction",()=>nativeFixture(async f=>{
+  const {configureSimulationEntity,submitNpcAction}=await import("../src/simulation.js");
+  const {publishSimulationHooks}=await import("../src/publishing.js");
+  resolved(f);f.db.upsertNpcProfile(f.guild,{npcKey:"guard",displayName:"Guard"});
+  f.db.upsertNpcGoal(f.guild,{npcKey:"guard",goalKey:"watch",objective:"Watch the terminal",status:"active"});
+  configureSimulationEntity(f.db,f.guild,"npc","guard",{location_key:"terminal",resources:{materials:3}});
+  const action=submitNpcAction(f.db,f.guild,{actor_type:"npc",actor_key:"guard",type:"prepare",goal_key:"watch",
+    target_type:"",target_key:"",location_key:"terminal",rationale:"The guard prepares to watch.",information_key:"",
+    significance:"routine",public_hook:"Choso apologizes for losing.",private_user_id:""},{roll:()=>20});
+  assert.equal(action.status,"completed");
+  const sends=[];f.db.configureCampaign(f.guild,{playChannelId:"table"});
+  const guild={id:f.guild,channels:{fetch:async()=>({id:"table",isTextBased:()=>true,send:async text=>{sends.push(text);return{id:"sent"};}})}};
+  await publishSimulationHooks({db:f.db,guild,sessionId:f.session.id});
+  assert(!JSON.stringify(sends).includes("Choso apologizes for losing."));
+  assert(!JSON.stringify(f.db.recentMessages(f.session.id,50)).includes("Choso apologizes for losing."));
+  assert.equal(f.db.getSimulationRecord(f.guild,action.id).status,"completed","Output filtering must not undo the valid native NPC preparation.");
+}));
+
+test("PVP30af actual party commit preserves an independently verified private owner clause",()=>nativeFixture(async f=>{
+  const {commitGmTurn}=await import("../src/turn-orchestration.js");
+  const {captureWorldInput}=await import("../src/autonomous-world.js");
+  const {deliverTurnOutbox}=await import("../src/publication-outbox.js");
+  const {base}=resolved(f),n=authorPvpNarrative(f.db,f.guild,f.pcs[0].owner_user_id,base);
+  const pc=f.pcs[2],scope={mode:"party",actorUserId:pc.owner_user_id,actorCharacterId:pc.id};
+  const text="I enter the annex.";
+  f.db.setSimulationEntity(f.guild,"location","terminal",{name:"Terminal"});
+  f.db.setSimulationEntity(f.guild,"location","annex",{name:"Annex",parent_location_key:"terminal"});
+  const source=captureWorldInput(f.db,f.guild,pc.owner_user_id,pc.id,"mixed-surfaces",text);
+  f.db.saveCityRecord(f.guild,{kind:"autonomous_entity",key:"location:annex",visibility:"party",source_event:source.event_key,
+    status:"active",data:{kind:"location",key:"annex",name:"Annex"}});
+  const turn=f.db.beginTurnAttempt({guildId:f.guild,messageId:"mixed-surfaces",actorPrincipal:pc.owner_user_id,
+    sessionId:f.session.id,audience:"party"});
+  const result={respond:true,narration:"Choso apologizes for losing.",narrative_claims:[],
+    player_intents:[{type:"move",source_span:text,target_name:"Annex",target_key:"annex",destination:"interior",operation:"",
+      utterance:"",excluded_targets:[],framing:"immediate",resolution:"auto",reason:"Open local entry."}],
+    scene_actions:[{kind:"move",entity_ref:"annex",source_span:text,zone:"interior"}],private_messages:[
+    {discord_user_id:f.pcs[0].owner_user_id,content:n.data.text},
+    {discord_user_id:f.pcs[1].owner_user_id,content:n.data.text}]};
+  commitGmTurn({db:f.db,guild:{id:f.guild},session:f.session,result,scope,speaker:pc.name,label:"mixed output",
+    meta:{messageId:"mixed-surfaces",turnId:turn.turn_id,triggerText:text}});
+  const sends=[];await deliverTurnOutbox(f.db,f.guild,turn.turn_id,async row=>{sends.push(row);return {messageId:String(sends.length)};});
+  assert(sends.some(r=>r.target_user_id===f.pcs[0].owner_user_id&&r.payload.includes(n.data.text)));
+  assert(sends.every(r=>r.target_user_id===f.pcs[0].owner_user_id||!r.payload.includes(n.data.text)),"No foreign/private-to-party promotion.");
+  assert(sends.some(r=>r.visibility==="party"&&r.payload.includes("Billy has arrived at annex.")),"Independent native movement survives alongside private output.");
+  assert.equal(f.db.getCharacter(pc.id).data.location,"annex");
+  assert(!JSON.stringify(sends).includes("apologizes"));
+  const publications=f.db.listTurnPublications(f.guild,turn.turn_id);
+  const publicProof=f.db.getCityRecord(f.guild,"pvp_output_publication",publications.find(r=>r.visibility==="party").id);
+  assert(publicProof.data.parts.every(id=>f.db.getCityRecord(f.guild,"pvp_output_part",id).visibility==="party"));
+}));
+
+for(const revoked of [false,true])test(`PVP30af private clause ${revoked?"revoked":"current"} at delivery never poisons party sibling`,()=>nativeFixture(async f=>{
+  const {prepareAuthorizedTurnOutput}=await import("../src/pvp-output.js");
+  const {deliverTurnOutbox}=await import("../src/publication-outbox.js");
+  const {base}=resolved(f),n=authorPvpNarrative(f.db,f.guild,f.pcs[0].owner_user_id,base);
+  const scope={mode:"party",actorUserId:f.pcs[2].owner_user_id,actorCharacterId:f.pcs[2].id};
+  const result={narration:"raw",private_messages:[{discord_user_id:f.pcs[0].owner_user_id,content:n.data.text}]};
+  prepareAuthorizedTurnOutput(f.db,f.guild,result,scope);
+  const turn=f.db.beginTurnAttempt({guildId:f.guild,messageId:`mixed-revoke:${revoked}`,actorPrincipal:scope.actorUserId,
+    sessionId:f.session.id,audience:"party"});
+  queueTurnPublications(f.db,{guild:{id:f.guild},session:f.session,result,scope,turnId:turn.turn_id});
+  if(revoked)indexWorldEvent(f.db,f.guild,{key:n.source_event,status:"retracted"},f.pcs[0].owner_user_id);
+  f.restart();const sends=[];await deliverTurnOutbox(f.db,f.guild,turn.turn_id,async row=>{sends.push(row);return {messageId:String(sends.length)};});
+  assert(sends.some(r=>r.visibility==="party"));assert.equal(sends.filter(r=>r.target_user_id).length,revoked?0:1);
+}));
+
+for(const uncertain of [false,true])test(`PVP30ab sourced simulation hook ${uncertain?"uncertain delivery holds":"delivers once"}`,()=>nativeFixture(async f=>{
+  const {configureSimulationEntity,submitNpcAction}=await import("../src/simulation.js");
+  const {publishSimulationHooks}=await import("../src/publishing.js");
+  const {prepareAuthorizedTurnOutput}=await import("../src/pvp-output.js");
+  const {base}=resolved(f),n=authorPvpNarrative(f.db,f.guild,f.pcs[0].owner_user_id,base);published(f,n,base);
+  prepareAuthorizedTurnOutput(f.db,f.guild,{narration:"raw"},{mode:"party",actorUserId:null,actorCharacterId:null});
+  f.db.upsertNpcProfile(f.guild,{npcKey:"guard",displayName:"Guard"});
+  f.db.upsertNpcGoal(f.guild,{npcKey:"guard",goalKey:"watch",objective:"Watch the terminal",status:"active"});
+  configureSimulationEntity(f.db,f.guild,"npc","guard",{location_key:"terminal",resources:{materials:3}});
+  const action=submitNpcAction(f.db,f.guild,{actor_type:"npc",actor_key:"guard",type:"prepare",goal_key:"watch",
+    target_type:"",target_key:"",location_key:"terminal",rationale:"Watch preparation.",information_key:"",
+    significance:"routine",public_hook:n.data.text,private_user_id:""},{roll:()=>20});
+  let sends=0;f.db.configureCampaign(f.guild,{playChannelId:"table"});
+  const guild={id:f.guild,channels:{fetch:async()=>({id:"table",isTextBased:()=>true,send:async()=>{
+    sends++;if(uncertain)throw new Error("Send may have reached Discord");return{id:"sent"};}})}};
+  assert.equal(await publishSimulationHooks({db:f.db,guild,sessionId:f.session.id}),uncertain?0:1);
+  f.restart();assert.equal(await publishSimulationHooks({db:f.db,guild,sessionId:f.session.id}),0);
+  assert.equal(sends,1);assert.equal(f.db.getSimulationRecord(f.guild,action.id).status,"completed");
+  assert.equal(rows(f,"pvp_round_receipt").length,2,"No re-roll or mechanical replay.");
+}));
+
+test("PVP30aa source-certified delivered owner clause remains publishable as history after session ends",()=>nativeFixture(async f=>{
+  const {prepareAuthorizedTurnOutput}=await import("../src/pvp-output.js"),{deliverTurnOutbox}=await import("../src/publication-outbox.js");
+  const {base}=resolved(f),n=authorPvpNarrative(f.db,f.guild,f.pcs[0].owner_user_id,base);published(f,n,base);
+  const scope={mode:"party",actorUserId:f.pcs[2].owner_user_id,actorCharacterId:f.pcs[2].id},result={narration:"raw"};
+  prepareAuthorizedTurnOutput(f.db,f.guild,result,scope);
+  const turn=f.db.beginTurnAttempt({guildId:f.guild,messageId:"historical-output",actorPrincipal:scope.actorUserId,sessionId:f.session.id,audience:"party"});
+  queueTurnPublications(f.db,{guild:{id:f.guild},session:f.session,result,scope,turnId:turn.turn_id});
+  const delivered=await deliverTurnOutbox(f.db,f.guild,turn.turn_id,async()=>({messageId:"historical-delivered"}));
+  assert(delivered.every(r=>r.ok),delivered.map(r=>r.error?.stack||"").join("\n"));
+  const session=f.db.endSession(f.guild,"");f.restart();const {sends,guild}=journalFixture(f);
+  assert.equal(await publishJournal({db:f.db,guild,session,recap:result.narration}),true);
+  assert(sends.some(s=>s.includes(n.data.text)));
+  indexWorldEvent(f.db,f.guild,{key:n.source_event,status:"retracted"},f.pcs[0].owner_user_id);
+  await assert.rejects(()=>publishJournal({db:f.db,guild,session,recap:result.narration}),/proof|source|clause|PvP/i);
+  await assert.rejects(()=>publishJournal({db:f.db,guild,session,recap:"Choso apologizes for losing."}),/proof|source|clause|PvP/i);
+}));
+
+test("PVP30aa actual session end publishes certified excerpts, not the generated recap or private clause",()=>nativeFixture(async f=>{
+  const {prepareAuthorizedTurnOutput}=await import("../src/pvp-output.js"),{deliverTurnOutbox}=await import("../src/publication-outbox.js");
+  const {sessionBrief}=await import("../src/session-briefs.js");
+  const {base}=resolved(f),n=authorPvpNarrative(f.db,f.guild,f.pcs[0].owner_user_id,base);published(f,n,base);
+  const scope={mode:"party",actorUserId:f.pcs[2].owner_user_id,actorCharacterId:f.pcs[2].id},result={narration:"raw"};
+  prepareAuthorizedTurnOutput(f.db,f.guild,result,scope);
+  const turn=f.db.beginTurnAttempt({guildId:f.guild,messageId:"session-excerpts",actorPrincipal:scope.actorUserId,sessionId:f.session.id,audience:"party"});
+  queueTurnPublications(f.db,{guild:{id:f.guild},session:f.session,result,scope,turnId:turn.turn_id});
+  await deliverTurnOutbox(f.db,f.guild,turn.turn_id,async()=>({messageId:"excerpt"}));
+  const {sends,guild}=journalFixture(f),interaction=fakeInteraction({sub:"end"});
+  Object.assign(interaction,{id:"end-with-excerpts",guildId:f.guild,guild,commandName:"vc-session",isChatInputCommand:()=>true});
+  interaction.user.username="GM";
+  await handleCommand(interaction,{db:f.db,gm:{summarizeSession:async()=>"Choso apologizes for losing."}});
+  assert(sends.some(s=>s.includes(n.data.text)));assert(!JSON.stringify(sends).includes("apologizes"));
+  f.db.setCityCalendar(f.guild,{flags:{...f.db.getCityCalendar(f.guild).flags,session_briefs:true}});
+  assert(sessionBrief(f.db,f.guild).saved_recap?.text.includes(n.data.text));
+  indexWorldEvent(f.db,f.guild,{key:n.source_event,status:"retracted"},f.pcs[0].owner_user_id);
+  assert(!sessionBrief(f.db,f.guild).saved_recap?.text.includes(n.data.text));
+}));
+
+test("PVP30ad forged archive certificate cannot certify an otherwise unverified delivered payload",()=>nativeFixture(async f=>{
+  const {recordOutputArchive}=await import("../src/pvp-output.js"),{createHash}=await import("node:crypto");resolved(f);
+  const turn=f.db.beginTurnAttempt({guildId:f.guild,messageId:"forged-archive",actorPrincipal:"__world_director__",sessionId:f.session.id,audience:"party"});
+  const payload="Choso apologizes for losing.",row=f.db.enqueuePublication(f.guild,{turnId:turn.turn_id,surface:"party",ordinal:0,payload,payloadHash:"forged"});
+  f.db.saveCityRecord(f.guild,{kind:"pvp_output_publication",key:row.id,status:"unverified",source_event:rows(f,"pvp_proposal")[0].source_event,data:{}});
+  f.db.updatePublication(row.id,{status:"delivered"});const delivered=f.db.getPublication(f.guild,row.id);
+  assert.throws(()=>recordOutputArchive(f.db,f.guild,delivered,{version:1,publication:row.id,session:f.session.id,
+    payload_hash:createHash("sha256").update(JSON.stringify(payload)).digest("hex"),refs:[],owners:[]}),error=>error.code==="NARRATIVE_PVP");
+  assert.equal(rows(f,"pvp_delivered_archive").length,0);
+}));
+
+test("OBS22 four-PC adapters answer unknown/known/private inquiries while saved PvP and withheld response remain unchanged",()=>nativeFixture(async f=>{
+  const {captureWorldInput}=await import("../src/autonomous-world.js"),{commitGmTurn}=await import("../src/turn-orchestration.js");
+  const {deliverTurnOutbox}=await import("../src/publication-outbox.js");
+  const {result:duel,base}=resolved(f),saved=structuredClone(f.db.getCityRecord(f.guild,"pvp_resolution_receipt",duel.resolution.receipt));
+  authorPvpNarrative(f.db,f.guild,f.pcs[1].owner_user_id,{...base,role:"withhold",subject_character:f.pcs[1].id,
+    text:"",template:"withhold",interaction_id:"choso-withholds"});
+  const resources=f.pcs.map(pc=>f.db.getCharacter(pc.id).data.resources),sent=[];
+  async function inquiry(actor,operation,mode,id){
+    const pc=f.pcs[actor],text=operation==="location"?"Where is Jaxon?":"What does Jaxon look like?";
+    const scope={mode,actorUserId:pc.owner_user_id,actorCharacterId:pc.id};
+    captureWorldInput(f.db,f.guild,pc.owner_user_id,pc.id,id,text,{privateScene:mode==="private"});
+    const turn=f.db.beginTurnAttempt({guildId:f.guild,messageId:id,actorPrincipal:pc.owner_user_id,sessionId:f.session.id,audience:mode});
+    const result={respond:true,narration:"Choso apologizes for losing.",narrative_claims:[],player_intents:[{
+      type:"observe",source_span:text,target_name:"Jaxon",target_key:f.pcs[0].id,destination:"unspecified",operation,utterance:"",
+      excluded_targets:[],framing:"immediate",resolution:"conversational",reason:"An ordinary inquiry."}]};
+    commitGmTurn({db:f.db,guild:{id:f.guild},session:f.session,result,scope,speaker:pc.name,label:id,
+      meta:{messageId:id,turnId:turn.turn_id,triggerText:text,privateScene:mode==="private"}});
+    const delivery=await deliverTurnOutbox(f.db,f.guild,turn.turn_id,async row=>{sent.push(row);return {messageId:id};});
+    assert(delivery.every(r=>r.ok));return result.narration;
+  }
+  assert.match(await inquiry(1,"appearance","party","choso-unknown"),/not.*established/);
+  const input={text:"black private-secret",facts:[{field:"hair",value:"black",start:0,end:5}],visibility:"party",observers:[f.pcs[1].id]};
+  const description=fakeInteraction({gm:false,sub:"describe",json:input});
+  Object.assign(description,{guildId:f.guild,id:"jaxon-description",commandName:"vc-character",isChatInputCommand:()=>true});
+  description.user={id:f.pcs[0].owner_user_id,username:"Jaxon"};await handleCommand(description,{db:f.db,gm:{}});
+  assert.match(await inquiry(1,"appearance","party","choso-known"),/black hair/);
+  assert.match(await inquiry(2,"location","private","billy-private"),/currently see Jaxon here/);
+  assert.match(await inquiry(3,"appearance","party","tyrell-known"),/black hair/);
+  assert(!JSON.stringify(sent).includes("apologizes"));assert(!JSON.stringify(sent).includes("private-secret"));
+  assert(sent.filter(r=>r.surface==="private_scene").every(r=>r.target_user_id===f.pcs[2].owner_user_id&&r.visibility==="character"));
+  assert.deepEqual(f.db.getCityRecord(f.guild,"pvp_resolution_receipt",duel.resolution.receipt),saved);
+  assert.deepEqual(f.pcs.map(pc=>f.db.getCharacter(pc.id).data.resources),resources);
+}));
+
+for(const recipient of [null,0,1])test(`PVP30af simulation private part audience ${recipient??"party"} is independently checked`,()=>nativeFixture(async f=>{
+  const {prepareAuthorizedTurnOutput}=await import("../src/pvp-output.js"),{publishSimulationHooks}=await import("../src/publishing.js");
+  const {configureSimulationEntity,submitNpcAction}=await import("../src/simulation.js");
+  const {base}=resolved(f),n=authorPvpNarrative(f.db,f.guild,f.pcs[0].owner_user_id,base);
+  prepareAuthorizedTurnOutput(f.db,f.guild,{narration:"raw",private_messages:[{discord_user_id:f.pcs[0].owner_user_id,content:n.data.text}]},
+    {mode:"party",actorUserId:f.pcs[2].owner_user_id,actorCharacterId:f.pcs[2].id});
+  f.db.upsertNpcProfile(f.guild,{npcKey:"guard",displayName:"Guard"});
+  f.db.upsertNpcGoal(f.guild,{npcKey:"guard",goalKey:"watch",objective:"Watch the terminal",status:"active"});
+  configureSimulationEntity(f.db,f.guild,"npc","guard",{location_key:"terminal",resources:{materials:3}});
+  const action=submitNpcAction(f.db,f.guild,{actor_type:"npc",actor_key:"guard",type:"prepare",goal_key:"watch",
+    target_type:"",target_key:"",location_key:"terminal",rationale:"Watch preparation.",information_key:"",
+    significance:"routine",public_hook:n.data.text,private_user_id:recipient===null?"":f.pcs[recipient].owner_user_id},{roll:()=>20});
+  const sends=[];f.db.configureCampaign(f.guild,{playChannelId:"table"});
+  const guild={id:f.guild,channels:{fetch:async()=>({id:"table",isTextBased:()=>true,send:async text=>{sends.push({party:true,text});return{id:"sent"};}})},
+    members:{fetch:async user=>({send:async text=>{sends.push({user,text});return{id:"dm"};}})}};
+  assert.equal(await publishSimulationHooks({db:f.db,guild,sessionId:f.session.id}),recipient===0?1:0);
+  assert.equal(sends.length,recipient===0?1:0);assert(sends.every(r=>r.user===f.pcs[0].owner_user_id));
+  assert.equal(f.db.getSimulationRecord(f.guild,action.id).status,"completed");
+}));
+
+for(const escape of ["later_scene","remote_recipient"])test(`PVP30am hook source cannot escape protected authority via ${escape}`,()=>nativeFixture(async f=>{
+  const {configureSimulationEntity,submitNpcAction}=await import("../src/simulation.js"),{publishSimulationHooks}=await import("../src/publishing.js");
+  resolved(f);f.db.upsertNpcProfile(f.guild,{npcKey:"guard",displayName:"Guard"});
+  f.db.upsertNpcGoal(f.guild,{npcKey:"guard",goalKey:"watch",objective:"Watch the terminal",status:"active"});
+  configureSimulationEntity(f.db,f.guild,"npc","guard",{location_key:"terminal",resources:{materials:3}});
+  submitNpcAction(f.db,f.guild,{actor_type:"npc",actor_key:"guard",type:"prepare",goal_key:"watch",target_type:"",target_key:"",
+    location_key:"terminal",rationale:"Watch preparation.",information_key:"",significance:"routine",
+    public_hook:"Choso apologizes for losing.",private_user_id:escape==="remote_recipient"?f.pcs[3].owner_user_id:""},{roll:()=>20});
+  if(escape==="later_scene")f.db.setDirectorState(f.session.id,{scene_number:f.db.getDirectorState(f.session.id).scene_number+1});
+  else f.db.updateCharacterData(f.pcs[3].id,d=>{d.location="elsewhere";});
+  const sends=[];f.db.configureCampaign(f.guild,{playChannelId:"table"});
+  const guild={id:f.guild,channels:{fetch:async()=>({id:"table",isTextBased:()=>true,send:async text=>{sends.push(text);return{id:"sent"};}})},
+    members:{fetch:async()=>({send:async text=>{sends.push(text);return{id:"dm"};}})}};
+  await publishSimulationHooks({db:f.db,guild,sessionId:f.session.id});
+  assert(!JSON.stringify(sends).includes("Choso apologizes for losing."));
+}));
+
+test("PVP30ag newly sourced unrelated-scene NPC hook is not globally frozen by earlier PvP",()=>nativeFixture(async f=>{
+  const {configureSimulationEntity,submitNpcAction}=await import("../src/simulation.js"),{publishSimulationHooks}=await import("../src/publishing.js");
+  resolved(f);f.db.setDirectorState(f.session.id,{scene_number:f.db.getDirectorState(f.session.id).scene_number+1});
+  f.db.upsertNpcProfile(f.guild,{npcKey:"guard",displayName:"Guard"});
+  f.db.upsertNpcGoal(f.guild,{npcKey:"guard",goalKey:"watch",objective:"Watch the terminal",status:"active"});
+  configureSimulationEntity(f.db,f.guild,"npc","guard",{location_key:"terminal",resources:{materials:3}});
+  submitNpcAction(f.db,f.guild,{actor_type:"npc",actor_key:"guard",type:"prepare",goal_key:"watch",target_type:"",target_key:"",
+    location_key:"terminal",rationale:"Watch preparation.",information_key:"",significance:"routine",
+    public_hook:"The guard prepares to watch the terminal.",private_user_id:""},{roll:()=>20});
+  const sends=[];f.db.configureCampaign(f.guild,{playChannelId:"table"});
+  const guild={id:f.guild,channels:{fetch:async()=>({id:"table",isTextBased:()=>true,send:async text=>{sends.push(text);return{id:"sent"};}})}};
+  assert.equal(await publishSimulationHooks({db:f.db,guild,sessionId:f.session.id}),1);
+  assert.deepEqual(sends,["The guard prepares to watch the terminal."]);
+}));
+
+test("OBS09 private hook cannot relabel Billy's party perception as remote Tyrell's own sight",()=>nativeFixture(async f=>{
+  const {captureWorldInput}=await import("../src/autonomous-world.js"),{commitGmTurn}=await import("../src/turn-orchestration.js");
+  const {configureSimulationEntity,submitNpcAction}=await import("../src/simulation.js"),{publishSimulationHooks}=await import("../src/publishing.js");
+  resolved(f);const pc=f.pcs[2],text="Where is Jaxon?",scope={mode:"party",actorUserId:pc.owner_user_id,actorCharacterId:pc.id};
+  captureWorldInput(f.db,f.guild,pc.owner_user_id,pc.id,"billy-sight",text);
+  const result={respond:true,narration:"raw",narrative_claims:[],player_intents:[{type:"observe",source_span:text,target_name:"Jaxon",
+    target_key:f.pcs[0].id,destination:"unspecified",operation:"location",utterance:"",excluded_targets:[],framing:"immediate",resolution:"conversational",reason:"Inquiry."}]};
+  commitGmTurn({db:f.db,guild:{id:f.guild},session:f.session,result,scope,speaker:pc.name,label:"Billy observes",meta:{messageId:"billy-sight",triggerText:text}});
+  assert.match(result.narration,/currently see Jaxon here/);
+  f.db.updateCharacterData(f.pcs[3].id,d=>{d.location="elsewhere";});
+  f.db.upsertNpcProfile(f.guild,{npcKey:"guard",displayName:"Guard"});
+  f.db.upsertNpcGoal(f.guild,{npcKey:"guard",goalKey:"watch",objective:"Watch the terminal",status:"active"});
+  configureSimulationEntity(f.db,f.guild,"npc","guard",{location_key:"terminal",resources:{materials:3}});
+  submitNpcAction(f.db,f.guild,{actor_type:"npc",actor_key:"guard",type:"prepare",goal_key:"watch",target_type:"",target_key:"",
+    location_key:"terminal",rationale:"Watch preparation.",information_key:"",significance:"routine",
+    public_hook:result.narration,private_user_id:f.pcs[3].owner_user_id},{roll:()=>20});
+  const sends=[],guild={id:f.guild,members:{fetch:async user=>({send:async text=>{sends.push({user,text});return{id:"dm"};}})}};
+  assert.equal(await publishSimulationHooks({db:f.db,guild,sessionId:f.session.id}),0);
+  assert.deepEqual(sends,[]);
+}));
+
+for(const mode of ["party","private"])test(`PVP30ai ${mode} Discord adapter rechecks revocation after destination fetch`,()=>nativeFixture(async f=>{
+  const {prepareAuthorizedTurnOutput}=await import("../src/pvp-output.js"),{deliverQueuedTurn}=await import("../src/publishing.js");
+  const {base}=resolved(f),n=authorPvpNarrative(f.db,f.guild,f.pcs[0].owner_user_id,base);
+  if(mode==="party")published(f,n,base);
+  const scope={mode:"party",actorUserId:f.pcs[2].owner_user_id,actorCharacterId:f.pcs[2].id};
+  const result={narration:"raw",private_messages:mode==="private"?[{discord_user_id:f.pcs[0].owner_user_id,content:n.data.text}]:[]};
+  prepareAuthorizedTurnOutput(f.db,f.guild,result,scope);
+  const turn=f.db.beginTurnAttempt({guildId:f.guild,messageId:`fetch-revocation:${mode}`,actorPrincipal:scope.actorUserId,sessionId:f.session.id,audience:"party"});
+  queueTurnPublications(f.db,{guild:{id:f.guild},session:f.session,result,scope,turnId:turn.turn_id,channelId:"table"});
+  const sends=[];
+  const revoke=()=>indexWorldEvent(f.db,f.guild,{key:n.source_event,status:"retracted"},f.pcs[0].owner_user_id);
+  const guild={id:f.guild,channels:{fetch:async()=>{if(mode==="party")revoke();return{id:"table",isTextBased:()=>true,send:async text=>{sends.push(text);return{id:"sent"};}};}},
+    members:{fetch:async()=>{revoke();return{send:async text=>{sends.push(text);return{id:"dm"};}};}}};
+  await deliverQueuedTurn({db:f.db,guild,turnId:turn.turn_id});
+  assert(sends.every(text=>!text.includes(n.data.text)),"Revoked source cannot be sent after an awaited channel/member lookup.");
+}));
+
+test("PVP30aa direct play publisher rejects raw cross-actor prose in protected scene",()=>nativeFixture(async f=>{
+  const {postPlayMessage}=await import("../src/publishing.js");resolved(f);f.db.configureCampaign(f.guild,{playChannelId:"table"});
+  const sends=[],guild={id:f.guild,channels:{fetch:async()=>({isTextBased:()=>true,send:async text=>{sends.push(text);return{id:"sent"};}})}};
+  await assert.rejects(()=>postPlayMessage({db:f.db,guild,sessionId:f.session.id,content:"Choso apologizes for losing."}),error=>error.code==="NARRATIVE_PVP");
+  assert.deepEqual(sends,[]);
+}));
+
+for(const revoked of [false,true])test(`PVP30ai actual aftermath confirmation ${revoked?"holds revoked clause":"publishes current certified clause"} without changing native effects`,()=>nativeFixture(async f=>{
+  const {base}=resolved(f),n=authorPvpNarrative(f.db,f.guild,f.pcs[0].owner_user_id,base);published(f,n,base);
+  const encounter=f.db.createEncounter(f.guild,f.session.id,{status:"ended",tier:1,pc_count:4,base_bp:14,budget_bp:14,composition:[]});
+  f.db.createEncounterAftermath(encounter.id,f.guild,f.session.id,{player_summary:"Choso apologizes for losing.",gm_notes:"",
+    events:[],relationships:[],handouts:[]});f.db.configureCampaign(f.guild,{playChannelId:"table"});
+  f.db.configureChannels(f.guild,{journalChannelId:"journal"});
+  const sends=[],guild={id:f.guild,channels:{fetch:async id=>{
+    if(revoked)indexWorldEvent(f.db,f.guild,{key:n.source_event,status:"retracted"},f.pcs[0].owner_user_id);
+    return{id,isTextBased:()=>true,send:async text=>{sends.push({id,text});return{id:"sent"};}};
+  }}};
+  const interaction=fakeInteraction({sub:"aftermath-confirm"});Object.assign(interaction,{guildId:f.guild,guild,id:"aftermath-revoke",commandName:"vc-encounter",isChatInputCommand:()=>true});
+  interaction.user.username="GM";await handleCommand(interaction,{db:f.db,gm:{content:{root:"../content"}}});
+  assert.equal(f.db.getEncounterAftermath(encounter.id).status,"applied");
+  assert(sends.every(row=>!row.text.includes("apologizes")));
+  if(revoked)assert(sends.every(row=>!row.text.includes(n.data.text)));
+  else for(const id of ["table","journal"])assert(sends.some(row=>row.id===id&&row.text.includes(n.data.text)));
+}));
+
+test("PVP30af direct play authority cannot promote an otherwise valid private part",()=>nativeFixture(async f=>{
+  const {prepareAuthorizedTurnOutput,prepareStoredOutput}=await import("../src/pvp-output.js"),{postPlayMessage}=await import("../src/publishing.js");
+  const {base}=resolved(f),n=authorPvpNarrative(f.db,f.guild,f.pcs[0].owner_user_id,base);
+  prepareAuthorizedTurnOutput(f.db,f.guild,{narration:"raw",private_messages:[{discord_user_id:f.pcs[0].owner_user_id,content:n.data.text}]},
+    {mode:"party",actorUserId:f.pcs[2].owner_user_id,actorCharacterId:f.pcs[2].id});
+  const scope={mode:"private",actorUserId:f.pcs[0].owner_user_id,actorCharacterId:f.pcs[0].id};
+  const result=prepareStoredOutput(f.db,f.guild,n.data.text,scope);f.db.configureCampaign(f.guild,{playChannelId:"table"});
+  const sends=[],guild={id:f.guild,channels:{fetch:async()=>({isTextBased:()=>true,send:async text=>{sends.push(text);return{id:"sent"};}})}};
+  await assert.rejects(()=>postPlayMessage({db:f.db,guild,sessionId:f.session.id,content:result.narration,authority:{result,scope}}),error=>error.code==="NARRATIVE_PVP");
+  assert.deepEqual(sends,[]);
+}));
