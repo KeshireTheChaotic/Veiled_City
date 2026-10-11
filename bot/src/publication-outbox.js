@@ -1,6 +1,7 @@
 /** Transactional narration outbox; Discord delivery is retryable and never reruns reasoning or mechanics. */
 import { createHash } from "node:crypto";
 import { splitDiscordText } from "./discord/chunking.js";
+import { assertPvpOutput } from "./pvp-authorship.js";
 
 const digest=value=>createHash("sha256").update(String(value)).digest("hex");
 
@@ -12,6 +13,7 @@ function allowedPrivateTargets(db,session,scope){
 
 /** Called inside the authoritative commit transaction. */
 export function queueTurnPublications(db,{guild,session,result,scope,turnId,channelId=null}){
+  assertPvpOutput(db,guild.id,result,scope);
   if(!turnId)return [];
   const rows=[];let ordinal=0;
   const add=(surface,payload,options={})=>{

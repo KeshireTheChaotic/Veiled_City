@@ -292,7 +292,7 @@ export function cityContext(db,guildId,query){
   for(const term of terms.slice(0,6)) for(const row of db.listCityRecords(guildId,{query:term,includeGM:true,limit:4})) found.set(`${row.kind}:${row.record_key}`,row);
   const records=[];let budget=0;
   for(const row of found.values()){
-    if(row.kind.startsWith("pvp_")&&row.kind!=="pvp_public_projection")continue; // Sealed protocol state is never generic GM/model context.
+    if(row.kind.startsWith("pvp_"))continue; // Only a dedicated use-time validated projection may disclose PvP material.
     const temporal=row.kind==="weather"?{...row,temporal_state:db.getSimulationClock(guildId).minute<row.data.start?"forecast"
       :db.getSimulationClock(guildId).minute<row.data.end?"active":"past"}:row;
     const size=JSON.stringify(temporal).length;if(records.length>=8||budget+size>10000) break;records.push(temporal);budget+=size;

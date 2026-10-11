@@ -127,6 +127,7 @@ bot/scripts/v9-action-consent-test.mjs
 bot/scripts/v9-baseline-regressions-test.mjs
 bot/scripts/v9-fixtures.mjs
 bot/scripts/v9-pvp-agreement-test.mjs
+bot/scripts/v9-pvp-authorship-test.mjs
 bot/scripts/v9-pvp-contract-test.mjs
 bot/scripts/v9-pvp-rounds-test.mjs
 bot/scripts/v9-pvp-typed-roll-test.mjs
@@ -224,6 +225,7 @@ bot/src/provenance.js
 bot/src/publication-outbox.js
 bot/src/publishing.js
 bot/src/pvp-authority.js
+bot/src/pvp-authorship.js
 bot/src/pvp-rounds.js
 bot/src/pvp-terminal.js
 bot/src/register-commands.js
@@ -453,6 +455,12 @@ docs/UPGRADE_3.5.5_TO_3.6.0.md
 docs/UPGRADE_3.6.0_TO_3.7.0.md
 docs/UPGRADE_3.7.0_TO_3.8.0.md
 docs/V7_V8_DELTA_MATRIX.csv
+docs/V9_1_NARRATIVE_PVP_CONTRACT_REFERENCE.md
+docs/V9_2_CODEX_RESUME.md
+docs/V9_2_IMPLEMENTATION_PLAN.md
+docs/V9_2_PVP_AUTHORSHIP_CONTRACT.md
+docs/V9_2_REGRESSION_MATRIX.csv
+docs/V9_2_SOURCE_AUDIT.md
 docs/V9_CODEX_KICKOFF.md
 docs/V9_IMPLEMENTATION_PLAN.md
 docs/V9_NARRATIVE_PVP_CONTRACT.md

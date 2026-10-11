@@ -1,6 +1,7 @@
 /** Local, fail-closed material-claim checks. Claims propose no mutations and never supply dice. */
 import { sceneAccess, scenePresence, npcEvidenceActive } from "./scene-continuity.js";
 import { objectiveEvidence, activeEvidence, evidenceType } from "./epistemic.js";
+import { assertPvpOutput } from "./pvp-authorship.js";
 const claimProperties={
   actor:{type:"string"},entity_type:{type:"string",enum:["character","npc","combatant","world"]},entity:{type:"string"},
   action:{type:"string",enum:["damage","movement","access","disclosure","obligation","status","canon","dice","possession"]},
@@ -134,6 +135,7 @@ export function materialParaphrases(text,names=[]){
   return hits;
 }
 export function validateNarrativeClaims(db,guildId,result,scope={mode:"party"},{staged=false,eventResults=[]}={}){
+  assertPvpOutput(db,guildId,result,scope);
   const claims=result.narrative_claims||[];
   if(!Array.isArray(claims)||claims.length>32) deny("claim_budget");
   const narration=[result.narration||"",result.public_narration||"",result.player_summary||"",...(result.private_messages||[]).map(row=>row.content)].join("\n");

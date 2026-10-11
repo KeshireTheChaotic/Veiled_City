@@ -5,6 +5,7 @@ import { indexWorldEvent } from "./city-calendar.js";
 import { pvpOwnerContext, validatePvpAgreement } from "./narrative-pvp.js";
 import { synchronizePvpWindow } from "./window-coordinator.js";
 import { settlePvpWindow } from "./pvp-terminal.js";
+export { authorPvpNarrative, reviewPvpNarrative, sharePvpNarrative } from "./pvp-authorship.js";
 
 const hash=value=>createHash("sha256").update(JSON.stringify(value)).digest("hex").slice(0,40);
 const key=(p,round,character)=>`pvp-round:${hash([p.record_key,p.data.terms_hash,round,character])}`;
@@ -170,74 +171,6 @@ export function progressPvp(db,guild,user,proposal){
     own:own?{roll_id:own.data.roll_id,total:own.data.result.total,duality:own.data.result.duality,hope:own.data.result.hope,fear:own.data.result.fear}:null,
     ...(resolution?{resolution:{receipt:resolution.record_key,outcome:resolution.data.outcome,winner:resolution.data.winner,
       stake:resolution.data.allowed_stake||null,narration:"Each player authors or withholds their own material separately."}}:{})};
-}
-
-/** Authored text is a private attributed account, never a mutation or authority over another PC. */
-export function authorPvpNarrative(db,guild,user,input){
-  fields(input,["proposal","expected_revision","resolution","role","subject_character","text","interaction_id"]);
-  return db.transaction(()=>{
-    const {proposal:p,who}=pvpOwnerContext(db,guild,user,input.proposal),r=db.getCityRecord(guild,"pvp_resolution_receipt",input.resolution);
-    if(input.expected_revision!==p.data.terms_hash||p.data.resolution_receipt!==r?.record_key||r.status!=="resolved")fail("Exact terminal PvP result required.");
-    if(input.subject_character!==who.character)fail("Only your own subject/reaction may be authored; another PC remains theirs.");
-    if(!["success","reaction","withhold"].includes(input.role)||input.role==="success"&&r.data.winner!==who.character)
-      fail("Only the verified winner may author their own success; others retain only their own reaction.");
-    if(typeof input.text!=="string"||input.text.length>1200||input.role!=="withhold"&&!input.text.trim()
-      ||input.role==="withhold"&&input.text)fail("Bounded own narration or intentional omission required.");
-    const s=source(db,guild,p,who,input,"pvp_authored_narrative",{resolution:r.record_key,role:input.role,text:input.text});
-    const k=`pvp-narrative:${hash([p.record_key,r.record_key,who.character,input.role,input.text])}`;
-    return db.getCityRecord(guild,"pvp_authored_narrative",k)||db.saveCityRecord(guild,{kind:"pvp_authored_narrative",key:k,
-      status:input.role==="withhold"?"withheld":"private_account",source_event:s.event_key,visibility:"character",subject_key:who.character,
-      data:{version:1,proposal:p.record_key,terms_hash:p.data.terms_hash,resolution:r.record_key,author:user,character:who.character,
-        role:input.role,text:input.text,authority:"Attributed owner account only, bounded by signed stakes. Not a forced reaction or new state fact."}});
-  });
-}
-export function sharePvpNarrative(db,guild,user,input){
-  fields(input,["proposal","narrative","expected_revision","interaction_id"]);
-  return db.transaction(()=>{
-    const {proposal:p,terms,who}=pvpOwnerContext(db,guild,user,input.proposal);
-    if(terms.data.snapshot.terms.audience!=="bilateral_author_projection")fail("PvP audience remains private; no party projection authorized.");
-    if(input.expected_revision!==p.data.terms_hash)fail("PvP disclosure revision changed.");
-    const row=db.getCityRecord(guild,"pvp_authored_narrative",input.narrative),s=row&&db.getWorldEvent(guild,row.source_event);
-    if(!row||row.status!=="private_account"||row.data.proposal!==p.record_key||row.data.resolution!==p.data.resolution_receipt
-      ||s?.status!=="active"||!db.ownerAuthoredSource(guild,s.event_key,row.data.author))fail("Exact current author-owned account required.");
-    const review=db.getCityRecord(guild,"pvp_narrative_review",`${row.record_key}:${who.character}`);
-    if(review?.data.text_hash!==hash(row.data.text)||review.data.terms_hash!==p.data.terms_hash)fail("Review the exact bounded private account before disclosure approval.");
-    const approval=source(db,guild,p,who,input,"pvp_narration_disclosure",{narrative:row.record_key,text_hash:hash(row.data.text)});
-    const approvalKey=`pvp-share:${hash([row.record_key,who.character])}`;
-    db.saveCityRecord(guild,{kind:"pvp_narration_disclosure",key:approvalKey,status:"accepted",source_event:approval.event_key,
-      visibility:"character",subject_key:who.character,data:{narrative:row.record_key,text_hash:hash(row.data.text)}});
-    const both=p.data.participants.every(who=>{
-      const a=db.getCityRecord(guild,"pvp_narration_disclosure",`pvp-share:${hash([row.record_key,who.character])}`),src=a&&db.getWorldEvent(guild,a.source_event);
-      return a?.status==="accepted"&&src?.status==="active"&&src.details.author===who.user&&src.details.principal_revision===who.principal_revision
-        &&src.details.narrative===row.record_key&&src.details.text_hash===hash(row.data.text);
-    });
-    if(!both)return {status:"awaiting_bilateral_disclosure",narrative:row.record_key};
-    const k=`pvp-projection:${hash([row.record_key,p.data.terms_hash])}`;
-    return db.getCityRecord(guild,"pvp_public_projection",k)||db.saveCityRecord(guild,{kind:"pvp_public_projection",key:k,status:"approved",
-      source_event:row.source_event,visibility:"party",data:{proposal:p.record_key,resolution:p.data.resolution_receipt,narrative:row.record_key,
-        text:`${db.getCharacter(row.subject_key).name}'s own account (only the signed stake is authoritative):\n> ${row.data.text.replaceAll("\n","\n> ")}`,
-        authority:"Bilateral bounded author projection, no opposing private text, traits, dice or forced response."}});
-  });
-}
-
-export function reviewPvpNarrative(db,guild,user,input){
-  fields(input,["proposal","narrative","expected_revision"]);
-  const {proposal:p,terms,who}=pvpOwnerContext(db,guild,user,input.proposal);
-  const row=db.getCityRecord(guild,"pvp_authored_narrative",input.narrative),src=row&&db.getWorldEvent(guild,row.source_event);
-  if(input.expected_revision!==p.data.terms_hash||!row||row.status!=="private_account"||row.data.proposal!==p.record_key
-    ||row.data.terms_hash!==p.data.terms_hash||row.data.resolution!==p.data.resolution_receipt||src?.status!=="active")
-    fail("Current private authored narration required.");
-  if(row.subject_key!==who.character){
-    const invitation=db.getCityRecord(guild,"pvp_narration_disclosure",`pvp-share:${hash([row.record_key,row.subject_key])}`);
-    const s=invitation&&db.getWorldEvent(guild,invitation.source_event);
-    if(terms.data.snapshot.terms.audience!=="bilateral_author_projection"||s?.status!=="active"
-      ||s.details.author!==row.data.author||s.details.text_hash!==hash(row.data.text))fail("Author's explicit private review invitation required.");
-  }
-  db.saveCityRecord(guild,{kind:"pvp_narrative_review",key:`${row.record_key}:${who.character}`,status:"reviewed",
-    source_event:src.event_key,visibility:"character",subject_key:who.character,
-    data:{text_hash:hash(row.data.text),terms_hash:p.data.terms_hash,user}});
-  return {narrative:row.record_key,text:row.data.text,role:row.data.role,author_character:row.subject_key,
-    authority:"Attributed own account only, never authority over another PC. Approve only this exact bounded projection."};
 }
 
 /** Fear scenery is bounded cosmetic proposal only, with no meter/resource/evidence effect. */

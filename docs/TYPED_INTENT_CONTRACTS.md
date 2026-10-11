@@ -9,6 +9,15 @@
 
 Accepted typed intents are canonical adjudication inputs; human declarations own intent; native receipts own outcomes.
 
+## V9.2 PvP authorship contract — draft integration, NOT release-qualified
+
+- The owner's v9.2 ruling replaces the WIP whole-paragraph `private_account` authority model. Only immutable native story-stake receipts plus independently authenticated per-player material clauses may be authoritative. Disclosure approval and preview access never authorize another PC's reaction.
+- Draft `pvp-authorship.js` accepts closed `stake_success`, `reaction_apology`, `reaction_glare` and `withhold` templates. The generic success template grants only the unchanged native stake, never arbitrary success wording or additional effects. Unverified freeform text is retained privately as `pvp_narrative_draft/needs_scope_review`; an attributed quote is not proof.
+- A version-1 `pvp_narrative_clause` binds exact UTF-16 source occurrence, immutable source details hash, active current owner/principal, proposal, result receipt/hash, terms, effect, role and audience. A version-2 narrative bundle/projection is rendered only from those clauses. Legacy raw `private_account` and versionless public projections are inert to the new services.
+- Cross-owner suggestions require the actual affected owner to ratify the exact invited draft span using a closed own-reaction template and a separate authenticated source. GM review is author-invited and audited but never authorizing; GM cannot impersonate the affected owner, alter stakes, or reroll. Withholding does not reopen a native result.
+- **Unresolved P0:** the draft AI/output guard uses the triggering actor's proposal membership. An unrelated player's party turn can still emit the affected PC's unverified reaction through `validateNarrativeClaims` and the real `queueTurnPublications` boundary. Blocking every generated sentence for the whole scene instead would strand independent roleplay; this is not an acceptable repair. Keep the new cross-actor PVP30q regressions mandatory and red until output-surface/content ownership is proved independently from triggering principal, with recoverable private quarantine and independent native actions preserved.
+- This section documents the current draft and binding target, NOT a V9-PVP-B completion claim. D08 remains BLOCKED. Do not use the draft live.
+
 ## V9-01 action-bound consent
 
 - Version-1 `action_consent_request` is a closed immutable digest of exact accepted source occurrence/hash, actor, resources, operation, location, required current owners/principals, session/scene, audience, consequences, window revision and fictional expiry. It authorizes no result or cost.

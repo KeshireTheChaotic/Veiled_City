@@ -403,6 +403,10 @@ Legacy `context_memory` rows without the new native audience/provenance marker a
 
 Accepted typed intents are canonical adjudication inputs; human declarations own intent; native receipts own outcomes.
 
+### Owner-requested v9.2 blocked checkpoint publication (2026-10-11)
+
+Following the P0 stop report, the owner explicitly requested committing, pushing to origin and pulling to production. This new instruction authorizes Git publication of the current blocked draft only, superseding the earlier success-conditioned publication restriction for this checkpoint. It does not complete V9-PVP-B, waive either cross-actor regression, qualify D08, or authorize bot startup. Final source validation remains 105 suites passed / 1 failed (20/22 authorship tests); no runtime behavior is changed by this publication step. The owner's preserved planning inputs are included with the draft. Rollback is a reviewed revert of the dedicated checkpoint commit, retaining known-red regression coverage and completed native phase history. Production local changes must be preserved through a nonoverlapping fast-forward-only pull; no production database or credentials are accessed. Actual Git publication outcome and SHA are reported in the handoff.
+
 ## D07 - scoped memory, lore and referent integration
 
 Status: complete on 2026-10-10. Starting HEAD: `1e390a7c015787b984ed43c2f44c6c8454d3a6e2`. Package version remains `10.0.0`.
@@ -529,5 +533,48 @@ Starting HEAD / completed V9-02 commit: `1149dc908636d78177e3e38a3e850c2de021550
 ### Owner-requested Git publication checkpoint (2026-10-11)
 
 The owner explicitly requested committing, pushing to origin and pulling to the production checkout after the blocker report. This authorizes Git publication only; it does not resolve PVP30, qualify V9-PVP-B/D08, approve ambiguous narrative authorship, or authorize bot startup. The checkpoint retains the mandatory failing regression. The production checkout has an existing modified `bot/package-lock.json` and untracked campaign files; these must be preserved, with a fast-forward-only pull permitted only when incoming paths do not overlap. No production campaign database, WAL/SHM or `.env` is to be accessed. Publication outcomes and the checkpoint SHA are reported in the handoff, not guessed in advance.
+
+## V9.2 resume — V9-PVP-B still BLOCKED on cross-actor output authority (2026-10-11)
+
+Starting HEAD and fetched origin: `55b006ece3ab3cf4508c1531fee0e153cf0519eb`, branch `codex/typed-intent-refinement`. Previous completed phase remains V9-02 `1149dc908636d78177e3e38a3e850c2de0215500`. No completed phase was reimplemented. Preexisting local changes were the updated `docs/README.md` and six new v9.2/reference planning files; they are preserved. The v9.2 contract, implementation plan, source audit, augmented matrix/resume/reference, existing authority contracts/release notes and implicated source/command/test paths were read and reconciled. No unpublished runtime edits were present.
+
+The owner's ruling is binding: independently source-verified per-player clauses; ambiguous prose stays private `needs_scope_review`; GM review is nonauthorizing. Accepted typed intents are canonical adjudication inputs; human declarations own intent; native receipts own outcomes.
+
+### Actual baseline and red-first results
+
+- `node --import ./scripts/offline-guard.mjs --test --test-name-pattern='PVP30' scripts/v9-pvp-rounds-test.mjs`: FAIL, exact original `Choso apologizes for losing.` reached `Missing expected exception`; 0/1 passed. The sentence and rejection assertion were retained.
+- `npm run check`: PASS, 251 modules/scripts and 24 root commands. First `npm run validate` failed manifest integrity at `expansion-h-test` because the owner's planning package changed the inventory. After `node scripts/sync-release.mjs 10.0.0`, the source-behavior baseline was reproduced: 104 suites passed, 1 failed (`v9-pvp-rounds-test`, 15/16 tests), exit 1; network denied, zero live requests/billable tokens.
+- Added `v9-pvp-authorship-test.mjs` BEFORE changing runtime behavior. First run failed with `ERR_MODULE_NOT_FOUND` for the new authority service. This is an availability red; the original PVP30 above is the separately demonstrated behavioral defect.
+
+### Draft implementation and verified scope
+
+- Added `pvp-authorship.js`: closed native material templates; immutable owner/source/UTF-16 occurrence proof; exact receipt/terms/stake binding; separately invited affected-owner exact ratification; owner-private noncanonical drafts; author-invited nonauthorizing audited GM scope review; use-time validated per-clause review/disclosure/projection; draft review and owner narration inbox. No arbitrary English classification, blacklist, quote disclaimer or whole-paragraph semantic approval is trusted.
+- `pvp-rounds.js` delegates narration to the clause service; duel, strikes, native RNG/receipts and Hope/window flows are reused. `/vc-roll pvp` adds draft, draft-review, narration-inbox, ratify and scope-review alongside hardened narrate/review/share. Adapter derives user, interaction and GM authority, never accepting a caller's GM flag. All replies remain private/chunked.
+- Generic civic context now excludes all raw PvP protocol/projection records; only dedicated validated projection APIs may expose content. ContextPlanner's sealed-protocol exclusion is retained. Added candidate guard calls to narrative integrity and the turn outbox; GM does not regenerate an entire turn to override a `NARRATIVE_PVP` denial. **Those guard integrations are incomplete, as the P0 below demonstrates.**
+- Positive round fixtures now submit explicit source-bound templates instead of assuming first-person prose proves ownership. The original negative sentence/assertion is unchanged. The corrected own-clause positive uses a fresh interaction ID after rejection: immutable source replay cannot repurpose the rejected submission's ID.
+- Intermediate fixture mistakes (missing source FK for synthetic legacy/forged records) were corrected without changing authority assertions. Focused round suite PASS 16/16; original filtered PVP30 PASS 1/1; PVP30a–t suite initially PASS 20/20. Agreement PASS 15/15; window lifecycle PASS 5/5; original D08 window-security command exit 0. An intermediate full `npm run validate` PASS 106/106, with check PASS 253 modules/scripts, 24 commands. This predates the additional adversarial gate and is NOT the final release determination.
+
+### Mandatory P0 discovered in final adapter audit — STOP
+
+`assertPvpOutput()` filters proposals by **triggering** `scope.actorUserId`. Therefore, an AI output during Billy's otherwise unrelated party turn can still state `Choso apologizes for losing.` without any Choso source/ratification. Billy need not participate in the Jaxon/Choso duel. Two independent actual-path regressions now demonstrate this:
+
+1. `validateNarrativeClaims()` accepts the unsupported cross-PC reaction (empty model claims do not save the boundary).
+2. `queueTurnPublications()` with a real synthetic `beginTurnAttempt` enqueues the unsupported party prose instead of refusing it.
+
+`node --import ./scripts/offline-guard.mjs --test --test-name-pattern='cross-actor' scripts/v9-pvp-authorship-test.mjs`: FAIL, 0 passed / 2 failed, both `Missing expected exception`. Full focused authorship suite: **20 passed / 2 failed**, none skipped/cancelled. The suite remains registered in default validation. Do not silently restrict the threat to the initiating two owners.
+
+The candidate guard is also overbroad within an initiating owner's scene: it rejects all unconstrained prose, rather than quarantining only unsupported material while preserving independent authorized actions. Simply dropping the actor filter and blocking every player's entire scene is not a safe/playable substitute. The required next repair is output-surface/content authority independent of triggering principal, with source-verified clause rendering and recoverable private quarantine of unsupported spans; preserve native terminal results and independently authorized sibling actions. Existing generic narrative claims cannot certify arbitrary PvP meaning. Do not use a keyword detector, suppress either test, quote the raw paragraph, or fabricate a native receipt.
+
+Implementation stopped at this P0 gate as instructed. V9-PVP-B remains incomplete; V9-03 through V9-08 are NOT started; D08 remains BLOCKED. No phase completion commit, push or production pull is authorized by the success-conditioned final publication request while this gate is red. HEAD remains the WIP checkpoint; new code/tests/docs remain uncommitted for review.
+
+### Persistence, privacy, rollback and next validation
+
+Draft persistence is additive city/world-event records only: narrative clauses/drafts, source authorization/ratification, reviews and v2 bundles/projections. No SQL schema migration, no rewrite of existing native resolution receipts or negotiated stakes. Existing raw narratives/projections must remain inert; no automatic migration to verified content. GM review never supplies PC consent. Tests use temporary fixture SQLite only; no production DB, WAL/SHM, `.env`, Discord, registered commands, paid model endpoint, bot startup or deployment was accessed.
+
+Rollback is a reviewed selective reversal of this uncommitted runtime draft, preserving the owner's planning files, all four completed phase commits and the checkpoint; do not hard-reset or discard the known-red tests. Completed native rolls/costs/scores are not undone by a narrative draft. Further required work includes safe cross-actor output projection, independently authorized own-success expressiveness beyond the generic stake template, final positive ratified-reaction publication/adapters and complete four-player release qualification; these are not claimed as passed merely from a unit helper.
+
+Latest check PASS (253 modules/scripts, 24 commands). A validation run started before the second cross-actor fixture was added failed at manifest integrity because that file changed during the run; it is not reported as a functional gate result. Final exact-tree check/validation will be run after this documentation and manifest synchronization; actual results will be appended below. `git diff --check` has passed on the draft to this point.
+
+Actual post-documentation exact-source result: `node scripts/sync-release.mjs 10.0.0` synchronized 471 non-runtime files; `npm run check` PASS, exit 0 (253 modules/scripts, 24 root commands); `npm run validate` FAIL, exit 1, **105 suites passed / 1 suite failed**. The only failed suite is mandatory `v9-pvp-authorship-test` (**20 tests passed / 2 failed**, neither skipped nor cancelled), on the two cross-actor PVP30q assertions. `v9-pvp-rounds-test` PASS 16/16, including the original exact PVP30 negative; agreement PASS 15/15, window PASS 5/5 and original D08 consent PASS. The validator reported network denied, zero live requests and zero billable tokens. `git diff --check` PASS. The same full commands are repeated after synchronizing this result-only documentation change so the handed-off manifest/tree is also tested. No V9-PVP-B completion, commit, push or deployment is claimed; the next work remains the documented P0 output-surface ownership gate.
 
 Accepted typed intents are canonical adjudication inputs; human declarations own intent; native receipts own outcomes.

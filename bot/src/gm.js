@@ -684,6 +684,8 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
     let result=await this.requestStructured(req,{label:"GM turn",signal:turnSignal});
     try{ validateTurn(result); validateDecisionAdvisory(this.db,guildId,result); return result; }
     catch(err){
+      // A failed PvP ownership proof is a scoped native review, never a whole-turn model rewrite/semantic waiver.
+      if(err.code==="NARRATIVE_PVP")throw err;
       const recovered=recoverOptionalTurnFields(result,err);
       if(recovered){
         try{

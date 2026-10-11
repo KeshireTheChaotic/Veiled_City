@@ -55,7 +55,8 @@ test("PVP25/PVP28 Fear scenery cannot grant damage, secrets, meter or player rea
 test("PVP31 both authors review exact bounded public text; one approval never projects",()=>nativeFixture(f=>{
   const p=lock(f,{audience:"bilateral_author_projection"}),r=pair(f,p,[9,7],[3,2]);
   const n=authorPvpNarrative(f.db,f.guild,f.pcs[0].owner_user_id,{proposal:p.record_key,expected_revision:p.data.terms_hash,
-    resolution:r.resolution.receipt,role:"success",subject_character:f.pcs[0].id,text:"I land my harmless tap.",interaction_id:"success"});
+    resolution:r.resolution.receipt,role:"success",subject_character:f.pcs[0].id,text:"I achieve only my agreed success.",
+    template:"stake_success",interaction_id:"success"});
   const op={proposal:p.record_key,narrative:n.record_key,expected_revision:p.data.terms_hash};
   assert.throws(()=>reviewPvpNarrative(f.db,f.guild,f.pcs[1].owner_user_id,op),/author|private|invitation/i);
   reviewPvpNarrative(f.db,f.guild,f.pcs[0].owner_user_id,op);
@@ -140,13 +141,13 @@ test("PVP10/PVP24 withdrawal after one sealed roll never forfeits or fabricates 
 test("PVP30/PVP31 only actual author owns success/reaction and private-by-default projection",()=>nativeFixture(f=>{
   const p=lock(f),r=pair(f,p,[9,7],[3,2]);
   const base={proposal:p.record_key,expected_revision:p.data.terms_hash,resolution:r.resolution.receipt,role:"success",
-    subject_character:f.pcs[0].id,text:"I land my own harmless tap.",interaction_id:"own-success"};
+    subject_character:f.pcs[0].id,text:"I achieve only my agreed success.",template:"stake_success",interaction_id:"own-success"};
   assert.throws(()=>authorPvpNarrative(f.db,f.guild,f.pcs[0].owner_user_id,{...base,subject_character:f.pcs[1].id,text:"Choso apologizes."}),/own|subject|reaction/i);
   assert.throws(()=>authorPvpNarrative(f.db,f.guild,f.pcs[1].owner_user_id,base),/own|winner|subject/i);
   assert.throws(()=>authorPvpNarrative(f.db,f.guild,f.pcs[0].owner_user_id,{...base,text:"Choso apologizes for losing."}),/reaction|own|boundary/i);
-  const own=authorPvpNarrative(f.db,f.guild,f.pcs[0].owner_user_id,base);
+  const own=authorPvpNarrative(f.db,f.guild,f.pcs[0].owner_user_id,{...base,interaction_id:"corrected-own-success"});
   assert.throws(()=>sharePvpNarrative(f.db,f.guild,f.pcs[0].owner_user_id,{proposal:p.record_key,narrative:own.record_key,
     expected_revision:p.data.terms_hash,interaction_id:"share"}),/private|audience/i);
-  const withheld=authorPvpNarrative(f.db,f.guild,f.pcs[1].owner_user_id,{...base,role:"withhold",subject_character:f.pcs[1].id,text:"",interaction_id:"no-reaction"});
+  const withheld=authorPvpNarrative(f.db,f.guild,f.pcs[1].owner_user_id,{...base,template:"withhold",role:"withhold",subject_character:f.pcs[1].id,text:"",interaction_id:"no-reaction"});
   assert.equal(withheld.status,"withheld");assert(!f.db.listCityRecords(f.guild,{kind:"pvp_public_projection",includeGM:true,limit:10}).length);
 }));

@@ -51,6 +51,7 @@ import { publishRollPartyDisclosure } from "./roll-sharing.js";
 import { proposePvp, reviewPvp, revisePvp, respondPvp, pvpInbox, choosePvp, rollPvp, continuePvp, progressPvp,
   authorPvpNarrative, reviewPvpNarrative, sharePvpNarrative, pvpComplication } from "./narrative-pvp.js";
 import { synchronizePvpWindow, windowOperation } from "./window-coordinator.js";
+import { draftPvpNarrative, ratifyPvpClause, reviewPvpScope, reviewPvpDraft, pvpNarrationInbox } from "./pvp-authorship.js";
 
 const interactionQueue=new KeyedSerialQueue();
 
@@ -395,7 +396,8 @@ async function executeCommand(interaction,{db,gm,voice=null}){
       const {op="inbox",...input}=JSON.parse(interaction.options.getString("json")||"{}");
       let text;
       if(op==="inbox")text=JSON.stringify(pvpInbox(db,interaction.guildId,interaction.user.id),null,2);
-      else if(["choose","roll","continue","progress","narrate","narrative-review","share","complication"].includes(op)){
+      else if(["choose","roll","continue","progress","narrate","narrative-review","share","complication",
+        "draft","ratify","scope-review","draft-review","narration-inbox"].includes(op)){
         let result;
         const native={...input,interaction_id:interaction.id};
         if(op==="choose")result=choosePvp(db,interaction.guildId,interaction.user.id,native);
@@ -403,6 +405,11 @@ async function executeCommand(interaction,{db,gm,voice=null}){
         else if(op==="continue")result=continuePvp(db,interaction.guildId,interaction.user.id,native);
         else if(op==="progress")result=progressPvp(db,interaction.guildId,interaction.user.id,input.proposal);
         else if(op==="narrate")result=authorPvpNarrative(db,interaction.guildId,interaction.user.id,native);
+        else if(op==="draft")result=draftPvpNarrative(db,interaction.guildId,interaction.user.id,native);
+        else if(op==="ratify")result=ratifyPvpClause(db,interaction.guildId,interaction.user.id,native);
+        else if(op==="scope-review")result=reviewPvpScope(db,interaction.guildId,interaction.user.id,native,{gm:isGM(db,interaction)});
+        else if(op==="draft-review")result=reviewPvpDraft(db,interaction.guildId,interaction.user.id,input,{gm:isGM(db,interaction)});
+        else if(op==="narration-inbox")result=pvpNarrationInbox(db,interaction.guildId,interaction.user.id,input.proposal);
         else if(op==="narrative-review")result=reviewPvpNarrative(db,interaction.guildId,interaction.user.id,input);
         else if(op==="share")result=sharePvpNarrative(db,interaction.guildId,interaction.user.id,native);
         else result=pvpComplication(db,interaction.guildId,interaction.user.id,input,{gm:isGM(db,interaction)});

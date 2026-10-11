@@ -1,20 +1,20 @@
-# Veiled City — Typed Intent v9.1 Gap Closure + Narrative PvP
+# Veiled City — Typed-Intent v9.2 Resume / PvP Authorship Safety Addendum
 
-Updated 2026-10-10 (America/Chicago). **Implementation planning only** — no source changes, deployments, API calls or live tests were performed by creating this package.
+Prepared 2026-10-11 for `KeshireTheChaotic/Veiled_City`, branch `codex/typed-intent-refinement`.
 
-- Repository: `KeshireTheChaotic/Veiled_City` / branch `codex/typed-intent-refinement`
-- Source reviewed in predecessor v9 audit: `26e4d6e8f0c3335a250e81952ac9c092c38450b2`
-- Existing D08: **BLOCKED** on unsafe consent and uncompleted scene-window coordination. The reported 99/99 suites exclude the known-red D08 security test; that test must become mandatory and green.
-- **New user decision:** PC versus PC uses **bilaterally consented, narrative-only PvP**, with pre-agreed best/worst stakes and hard limits; no standard PC HP/Armor/Stress damage. Two supported modes: single higher-total opposed Duality roll, or first to three higher-total paired exchanges. Winner and loser each own their character's narration. Native Hope/Fear faces and criticals are preserved as defined in the attached contract.
-- **Delta from original v9:** two new independently committed phases `V9-PVP-A` (agreement) and `V9-PVP-B` (resolution) inserted without renumbering existing repair phases. Total **11** phase commits expected if all pass. Original v9 defect repairs remain intact.
-- Regression matrix: **76 scenarios** (44 original + 32 new PvP cases).
+**Latest remotely reviewed HEAD:** `55b006ece3ab3cf4508c1531fee0e153cf0519eb`. This is a **work-in-progress checkpoint**, NOT a passing V9-PVP-B phase commit. Completed phase baselines: V9-00 `c4e08d78f347ffafc8c7e64cff825fdce868bc29`, V9-01 `697f088fe3c6c576472718c5ec34f903ccb1e2bd`, V9-PVP-A `2b8d807d11cfe15e47b8eeed2d17ac912203091f`, V9-02 `1149dc908636d78177e3e38a3e850c2de0215500`. `docs/TYPED_INTENT_PROGRESS.md` records reported full offline status **104 passed, 1 failing suite** (`v9-pvp-rounds-test`, PVP30). These historical suite reports were read, not rerun for this package. D08 remains BLOCKED.
 
-Read in order:
+## Policy decision
 
-1. `V9_NARRATIVE_PVP_CONTRACT.md` — complete agreed house-rule algorithm, consent, security, publicity, recovery and story authority.
-2. `V9_SOURCE_AUDIT.md` — original source evidence plus new PvP integration hazards.
-3. `V9_IMPLEMENTATION_PLAN.md` — 11 phase work packages with commits and acceptance.
-4. `V9_REGRESSION_MATRIX.csv` — tests for existing gaps and 32 PvP cases.
-5. `V9_CODEX_KICKOFF.md` — ready-to-copy autonomous Codex kickoff prompt.
+**Separately source-verified per-player clauses are required for authoritative and party-facing PvP narration.** Ambiguous or unverifiable text goes to a nonauthoritative pending-review state. A human GM may ask for clarification or review permitted environmental phrasing, but cannot impersonate an affected player, approve their reaction, or expand locked stakes. Affected owners must independently author or ratify their own character's material clause. Merely labeling a sentence as the winner's statement or obtaining bilateral permission to *publish* it is not sufficient.
 
-The prior v8 phases should not be blindly repeated. Codex must reconcile against its actual **latest** checked-out HEAD and reproduce confirmed failures with red-first tests. User-approved new PvP mechanics are **house rules**, not claims of official Daggerheart PvP mechanics or already-running functionality.
+## Files
+
+- `V9_2_IMPLEMENTATION_PLAN.md` — phase reconciliation, V9-PVP-B repair sequence and remaining V9-03–V9-08 scope.
+- `V9_2_PVP_AUTHORSHIP_CONTRACT.md` — exact source/effect/audience model and fail-closed text treatment.
+- `V9_2_SOURCE_AUDIT.md` — pinned GitHub source findings, tested vs untested boundaries.
+- `V9_2_REGRESSION_MATRIX.csv` — inherited v9.1 scenario inventory plus 20 new authorship/boundary cases.
+- `V9_2_CODEX_RESUME.md` — targeted resume instructions, preserve checkpoint and commit only after all gates green.
+- `V9_1_NARRATIVE_PVP_CONTRACT_REFERENCE.md` — prior unchanged gameplay contract for full context.
+
+**Audit only:** no source modifications, tests, production DB access, bot startup, command registration or paid model calls are claimed by this planning package. The developer's *local* uncommitted work is not visible through GitHub; reconcile working tree before touching files.

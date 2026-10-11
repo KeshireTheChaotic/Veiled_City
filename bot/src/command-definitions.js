@@ -268,7 +268,7 @@ export function buildCommands(){
         .addSubcommand(s=>s.setName("window").setDescription("Private native coordination inbox, consent and explicit GM recovery")
           .addStringOption(o=>o.setName("json").setDescription("op: inbox, request, respond, close, custody or GM cancel; exact window and revision")))
         .addSubcommand(s=>s.setName("pvp").setDescription("Privately review or negotiate bilateral story-first PC conflict; never damage")
-          .addStringOption(o=>o.setName("json").setDescription("PvP terms, choose/roll/continue/progress, narrate/narrative-review/share; exact proposal/revision")))
+          .addStringOption(o=>o.setName("json").setDescription("PvP terms/rolls; narrate templates, draft/draft-review/ratify/scope-review, share; exact revision")))
         .addSubcommand(s=>s.setName("contribute").setDescription("Authorize your own request-bound contribution, dice or selected result")
           .addStringOption(o=>o.setName("json").setDescription("Request, current revision, unique key and explicit owned mechanical declaration").setRequired(true)))
         .addSubcommand(s=>s.setName("adjudicate").setDescription("GM: save exact sourced rules, feasibility or active attack adjudication")
