@@ -1,5 +1,12 @@
 # Typed Intent Authority Contracts
 
+## V9-02 native coordination lifecycle
+
+- Native scene/location/resource identity, not model beat text, groups source-bound occurrences. Private scopes do not merge. Closed occurrences reject late participation; genuinely new source occurrences can open a later beat.
+- Explicit GM completion or complete current native participation consent closes entry. No deadline grants absent-player authority. Consent may be revoked after lock, with neutral closure, never invented fictional punishment.
+- A scarce-resource win requires the matching native physical custody receipt, exact accepted source, reviewed resource provenance and actual current holder. Other claims receive truthful blocked-attempt receipts. No second item or fabricated success.
+- PvP staging records bilateral consent separately from typed action declarations. Actual story-stakes winners require the V9-PVP-B opposed-total receipt; ordinary attack/damage is never a substitute. Native lifecycle logs/CAS and GM-only neutral cancellation provide recovery without erasing imported characters or history.
+
 Accepted typed intents are canonical adjudication inputs; human declarations own intent; native receipts own outcomes.
 
 ## V9-01 action-bound consent

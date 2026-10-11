@@ -425,7 +425,10 @@ export function applyAuthoritativeMutation(db,{guildId,sessionId=null,events=[],
     const pvpAttempts=stagePvpAttempts(db,guildId,typedIntents,actionPlan);
     const pvpIds=new Set(pvpAttempts.map(row=>row.data.accepted_intent));
     if(pvpAttempts.length)actionPlan=actionPlan.map(row=>db.getCityRecord(guildId,"compound_action",row.record_key));
-    const nativeAdjudications=typedIntents.filter(row=>row?.data?.resolution==="roll_required"&&!pvpIds.has(row.record_key)).map(row=>{
+    const actionWindows=coordinateTypedActionWindows(db,guildId,typedIntents,actionPlan);
+    if(actionWindows.length)actionPlan=actionPlan.map(row=>db.getCityRecord(guildId,"compound_action",row.record_key));
+    const coordinatedIds=new Set(actionWindows.map(row=>row.action));
+    const nativeAdjudications=typedIntents.filter(row=>row?.data?.resolution==="roll_required"&&!pvpIds.has(row.record_key)&&!coordinatedIds.has(row.record_key)).map(row=>{
       const adjudication=row.data.native_adjudication;
       return adjudicateAcceptedIntent(db,guildId,{
         acceptedIntent:row.record_key,mode:"roll_required",risk:adjudication.risk,stakes:adjudication.stakes,
@@ -436,8 +439,6 @@ export function applyAuthoritativeMutation(db,{guildId,sessionId=null,events=[],
         explanation:adjudication.explanation
       },provenance.actorId||"ai_gm",{scope});
     });
-    const actionWindows=coordinateTypedActionWindows(db,guildId,typedIntents,actionPlan);
-    if(actionWindows.length)actionPlan=actionPlan.map(row=>db.getCityRecord(guildId,"compound_action",row.record_key));
     const executableSpans=new Set(executableActionSpans(actionPlan));
     const deniedSpans=new Set(actionPlan.filter(row=>["blocked","clarification","failed"].includes(row.data.status))
       .map(row=>row.data.source_span));

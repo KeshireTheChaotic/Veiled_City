@@ -49,6 +49,7 @@ import { validateChannelRouting } from "./routing-diagnostics.js";
 import { handleRollMenuInteraction, isRollMenuInteraction, openRollMenu } from "./roll-menu.js";
 import { publishRollPartyDisclosure } from "./roll-sharing.js";
 import { proposePvp, reviewPvp, revisePvp, respondPvp, pvpInbox } from "./narrative-pvp.js";
+import { synchronizePvpWindow, windowOperation } from "./window-coordinator.js";
 
 const interactionQueue=new KeyedSerialQueue();
 
@@ -380,6 +381,15 @@ async function executeCommand(interaction,{db,gm,voice=null}){
   if(await replayReceiptIfPresent({db,interaction,group,sub})) return true;
   const restoreReceiptCapture=installReceiptCapture({db,interaction,group,sub});
   try{
+    if(group==="roll"&&sub==="window"){
+      const input=JSON.parse(interaction.options.getString("json")||'{"op":"inbox"}');
+      if(["respond","cancel"].includes(input.op))input.interaction_id=interaction.id;
+      const result=windowOperation(db,interaction.guildId,interaction.user.id,input,{gm:isGM(db,interaction)});
+      const chunks=chunkTextLines(JSON.stringify(result,null,2).split("\n"));
+      await interaction.reply({content:chunks[0]||"No pending windows.",ephemeral:true,allowedMentions:{parse:[]}});
+      for(const content of chunks.slice(1))await interaction.followUp({content,ephemeral:true,allowedMentions:{parse:[]}});
+      return true;
+    }
     if(group==="roll"&&sub==="pvp"){
       const {op="inbox",...input}=JSON.parse(interaction.options.getString("json")||"{}");
       let text;
@@ -391,6 +401,7 @@ async function executeCommand(interaction,{db,gm,voice=null}){
         else if(op==="respond")key=respondPvp(db,interaction.guildId,interaction.user.id,{...input,interaction_id:interaction.id}).record_key;
         else if(op!=="review")throw new StateConflictError("Use inbox, review, propose, revise or respond for narrative PvP.");
         text=reviewPvp(db,interaction.guildId,interaction.user.id,key).text;
+        if(db.getCityRecord(interaction.guildId,"pvp_proposal",key)?.status==="locked")synchronizePvpWindow(db,interaction.guildId,key);
       }
       const chunks=chunkTextLines(text.split("\n"));
       await interaction.reply({content:chunks[0]||"No current narrative PvP proposals.",ephemeral:true,allowedMentions:{parse:[]}});

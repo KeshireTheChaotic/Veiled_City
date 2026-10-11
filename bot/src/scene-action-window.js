@@ -1,7 +1,7 @@
 /** Optional scene-scoped action windows for real overlap; ordinary posts never wait on this module. */
 import { createHash } from "node:crypto";
 import { currentScene } from "./scene-continuity.js";
-import { validateActionConsent } from "./action-consent.js";
+import { consentAction, validateActionConsent } from "./action-consent.js";
 
 const reasons=new Set(["combat_spotlight","cooperative_operation","contested_resource","reaction_opportunity","direct_pc_conflict","gm_declared_beat"]);
 const terminal=new Set(["resolved","failed","blocked","declined"]);
@@ -16,10 +16,32 @@ export function openActionWindow(db,guild,input){
   const scene=currentScene(db,guild),source=db.getWorldEvent(guild,input.source_event);
   if(!source||source.status!=="active"||source.session_id!==scene.session_id||source.scene!==scene.key)
     fail("Action window needs a current scene-scoped source.");
-  const key=`window:${digest([scene.key,input.key])}`,prior=db.getCityRecord(guild,"scene_action_window",key);
+  let identity=[input.key,source.event_key];
+  if(input.resources){
+    if(!boundedResources(input.resources)||!input.resources.length||!input.location_key)fail("Native windows require grounded resource keys and location.");
+    const occurrence=`window-occurrence:${digest([scene.key,source.event_key,input.resources.slice().sort(),input.location_key])}`;
+    const mapped=db.getCityRecord(guild,"scene_window_occurrence",occurrence);
+    if(mapped)return db.getCityRecord(guild,"scene_action_window",mapped.data.window);
+    let active;
+    for(let offset=0;!active;offset+=100){
+      const page=db.listCityRecords(guild,{kind:"scene_action_window",includeGM:true,limit:100,offset});
+      active=page.find(row=>["open","locked"].includes(row.status)&&row.data.scene===scene.key
+        &&row.location_key===input.location_key&&row.visibility===source.visibility
+        &&(row.subject_key||null)===(source.subject_key||null)&&row.data.reason===input.reason
+        &&row.data.resources?.some(key=>input.resources.includes(key)));
+      if(page.length<100)break;
+    }
+    identity=active?.data.native_beat||occurrence;
+    const key=active?.record_key||`window:${digest([scene.key,identity])}`;
+    db.saveCityRecord(guild,{kind:"scene_window_occurrence",key:occurrence,source_event:source.event_key,
+      visibility:source.visibility,subject_key:source.subject_key,data:{window:key}});
+    if(active)return active;
+  }
+  const key=`window:${digest([scene.key,identity])}`,prior=db.getCityRecord(guild,"scene_action_window",key);
   if(prior)return prior;
   return db.saveCityRecord(guild,{kind:"scene_action_window",key,status:"open",source_event:source.event_key,
-    visibility:source.visibility,subject_key:source.subject_key||null,data:{scene:scene.key,session_id:scene.session_id,
+    visibility:source.visibility,subject_key:source.subject_key||null,location_key:input.location_key||"",data:{scene:scene.key,session_id:scene.session_id,
+      native_beat:input.resources?identity:null,resources:input.resources||[],
       reason:input.reason,revision:1,participants:[],reaction_open:input.reason==="reaction_opportunity",
       authority:"Coordination boundary only; participant declarations and native receipts own outcomes."}});
 }
@@ -37,15 +59,16 @@ export function joinActionWindow(db,guild,windowKey,input){
   const window=db.getCityRecord(guild,"scene_action_window",windowKey),scene=currentScene(db,guild);
   if(!window||window.status!=="open"||window.data.scene!==scene.key)fail("Only the current open action window can accept participation.");
   const accepted=db.getCityRecord(guild,"typed_intent",input.accepted_intent);
+  if(window.data.native_beat)consentAction(db,guild,input.accepted_intent);
   if(!accepted||accepted.status!=="accepted_for_adjudication"||accepted.data.scene!==scene.key
     ||accepted.data.session_id!==scene.session_id||db.getWorldEvent(guild,accepted.source_event)?.status!=="active")
     fail("Participation needs a current separately accepted player intent.");
   if(!boundedResources(input.reads)||!boundedResources(input.writes)||!input.operation||input.participation!=="voluntary")
     fail("Participation needs bounded resolved resources and a voluntary operation.");
   const participants=window.data.participants.map(key=>db.getCityRecord(guild,"scene_action_participant",key));
-  if(participants.some(row=>row.location_key!==input.location_key
-    ||row.visibility!==accepted.visibility||row.subject_key!==accepted.subject_key)
-    &&(!["public","party"].includes(accepted.visibility)||participants.some(row=>!["public","party"].includes(row.visibility))))
+  if(participants.some(row=>row.location_key!==input.location_key)
+    ||participants.some(row=>(row.visibility!==accepted.visibility||row.subject_key!==accepted.subject_key)
+      &&(!["public","party"].includes(accepted.visibility)||!["public","party"].includes(row.visibility))))
     fail("Different audience or location scopes cannot be treated as a shared conflict.");
   const required=input.required_participants||[];
   if((window.data.reason==="direct_pc_conflict"||["help","tag_team","group_action"].includes(input.operation))
@@ -107,11 +130,25 @@ export function coordinateTypedActionWindows(db,guild,typedIntents=[],actionPlan
   const plans=new Map(actionPlan.map(row=>[row.data.action_id,row])),results=[];
   for(const accepted of typedIntents){
     const input=accepted.data.coordination;if(!input)continue;
-    const plan=plans.get(accepted.record_key);if(!plan||plan.data.status!=="ready")continue;
+    const plan=plans.get(accepted.record_key);if(!plan||!["ready","pending"].includes(plan.data.status)||plan.data.pvp_attempt)continue;
+    if(plan.data.coordination){results.push({status:"pending",action:accepted.record_key,
+      window:db.getCityRecord(guild,"scene_action_window",plan.data.coordination.window)});continue;}
+    consentAction(db,guild,accepted.record_key);
     const pc=db.getCharacter(accepted.data.actor);
     if(!pc||pc.guild_id!==guild||pc.data.location!==input.location_key)
       fail("Action-window location must match the acting character's authoritative current location.");
-    const window=openActionWindow(db,guild,{key:input.beat_key,source_event:accepted.source_event,reason:input.reason});
+    const resources=[...new Set([...(input.reads||[]),...(input.writes||[])])];
+    const window=openActionWindow(db,guild,{key:input.beat_key,source_event:accepted.source_event,reason:input.reason,
+      resources,location_key:input.location_key});
+    if(window.status!=="open"){
+      const receipt=db.saveCityRecord(guild,{kind:"window_action_receipt",key:`late:${digest([window.record_key,accepted.record_key])}`,
+        status:"resolved",source_event:accepted.source_event,visibility:accepted.visibility,subject_key:accepted.subject_key,
+        data:{window:window.record_key,action_id:accepted.record_key,outcome:"clarification",
+          reason:"Entry already closed. No reaction or participation occurred; declare a new beat or ask GM recovery."}});
+      db.saveCityRecord(guild,{...plan,key:plan.record_key,status:"clarification",data:{...plan.data,status:"clarification",
+        receipt:receipt.record_key,coordination:{window:window.record_key}}});
+      results.push({status:"entry_closed",window,action:accepted.record_key,receipt});continue;
+    }
     try{
       const participant=joinActionWindow(db,guild,window.record_key,{accepted_intent:accepted.record_key,
         reads:input.reads,writes:input.writes,location_key:input.location_key,operation:input.operation,

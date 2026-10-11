@@ -74,7 +74,7 @@ function liveOffer(db,guild,offer,{allowJoined=false}={}){
   if(!offer||offer.status!=="pending"||offer.data.version!==1||offer.data.guild!==guild)fail("Current native consent request required.");
   const {row:accepted,scene}=consentAction(db,guild,offer.data.terms.accepted_intent);
   const window=db.getCityRecord(guild,"scene_action_window",offer.data.terms.window);
-  if(!window||window.status!=="open"||window.data.scene!==scene.key||db.getWorldEvent(guild,window.source_event)?.status!=="active"
+  if(!window||!(allowJoined?["open","locked"]:["open"]).includes(window.status)||window.data.scene!==scene.key||db.getWorldEvent(guild,window.source_event)?.status!=="active"
     ||!allowJoined&&window.data.revision!==offer.data.terms.window_revision
     ||db.getSimulationClock(guild).minute>=offer.data.expires_minute)fail("Consent expired or its window revision is stale.");
   const {terms_hash,...unsigned}=offer.data;

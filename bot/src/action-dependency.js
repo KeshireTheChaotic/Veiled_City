@@ -52,10 +52,10 @@ export function buildActionPlan(db,guild,acceptedRows=[]){
       const depStates=dependencies.get(row.record_key).map(dep=>calculated.get(dep)?.data.status);
       if(depStates.some(value=>["failed","blocked","clarification"].includes(value)))status="blocked";
       else if(depStates.some(value=>value!=="resolved"))status="suspended";
-      else status=initialStatus(row);
+      else status=prior?.data.coordination||prior?.data.pvp_attempt?"pending":initialStatus(row);
     }
     const saved=db.saveCityRecord(guild,{kind:"compound_action",key,status,source_event:row.source_event,
-      visibility:row.visibility,subject_key:row.subject_key,data:{action_id:row.record_key,proposal_id:row.data.proposal_id,
+      visibility:row.visibility,subject_key:row.subject_key,data:{...prior?.data,action_id:row.record_key,proposal_id:row.data.proposal_id,
         sequence_index:row.data.sequence_index,dependencies:dependencies.get(row.record_key),source_span:row.data.source_span,
         actor:row.data.actor,session_id:row.data.session_id,scene:row.data.scene,status,
         memory_identity_refs:[...new Set(row.data.memory_identity_refs||[])].filter(value=>typeof value==="string"&&value.startsWith("memory-id:")).slice(0,12),

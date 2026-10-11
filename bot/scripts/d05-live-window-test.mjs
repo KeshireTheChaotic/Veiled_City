@@ -7,6 +7,8 @@ import { VeiledDB } from "../src/db.js";
 import { indexWorldEvent } from "../src/city-calendar.js";
 import { currentScene } from "../src/scene-continuity.js";
 import { coordinateTypedActionWindows } from "../src/scene-action-window.js";
+import { captureAuthoredTurnEnvelope } from "../src/authored-turn-envelope.js";
+import { proposeIntents, acceptIntentForAdjudication } from "../src/typed-intents.js";
 
 const dir=fs.mkdtempSync(path.join(os.tmpdir(),"vc-d05-")),db=new VeiledDB(path.join(dir,"fixture.sqlite"),path.resolve("sql/schema.sql"));
 const guild="d05-fixture";
@@ -17,12 +19,15 @@ try{
   db.updateCharacterData(pcA.id,data=>{data.location="terminal";});db.updateCharacterData(pcB.id,data=>{data.location="terminal";});
   for(const [user,pc] of [["owner-a",pcA],["owner-b",pcB]]){db.assignCharacter(session.id,user,pc.id);db.setPresence(session.id,user,"present");}
   const accepted=(id,actor,coordination=null)=>{
-    const source=indexWorldEvent(db,guild,{key:`source:${id}`,kind:"authored_turn",title:id,source_id:`player:${actor}`,
-      session_id:session.id,scene:scene.key,visibility:"party",details:{author:actor}},actor);
-    const row=db.saveCityRecord(guild,{kind:"typed_intent",key:`accepted:${id}`,status:"accepted_for_adjudication",
-      source_event:source.event_key,visibility:"party",actor_key:actor,data:{proposal_id:`proposal:${id}`,sequence_index:0,
-        dependencies:[],source_span:id,actor,session_id:session.id,scene:scene.key,resolution:"auto",coordination}});
-    const plan=db.saveCityRecord(guild,{kind:"compound_action",key:`action:${id}`,status:"ready",source_event:source.event_key,
+    const user=db.getCharacter(actor).owner_user_id,scope={mode:"party",actorUserId:user,actorCharacterId:actor};
+    const source=captureAuthoredTurnEnvelope(db,guild,user,actor,id,id);
+    const proposed=proposeIntents(db,guild,[{version:2,proposal_id:"",source_event:source.source_event,start:0,end:id.length,
+      source_span:id,actor_character_id:actor,sequence_index:0,dependencies:[],type:"interact",operation:"inspect",
+      target:{kind:"object",key:"parcel",phrase:"parcel",grounding:"known"},framing:"immediate",destination_scope:"none",
+      attempted_action:id,desired_outcome:null,authored_outcome_claim:null,temporal_relation:"sequential"}],scope,{messageId:id})[0];
+    let row=acceptIntentForAdjudication(db,guild,proposed,scope);
+    row=db.saveCityRecord(guild,{...row,key:row.record_key,data:{...row.data,coordination}});
+    const plan=db.saveCityRecord(guild,{kind:"compound_action",key:`action:${id}`,status:"ready",source_event:source.source_event,
       visibility:"party",data:{action_id:row.record_key,status:"ready",source_span:id}});
     return {row,plan};
   };

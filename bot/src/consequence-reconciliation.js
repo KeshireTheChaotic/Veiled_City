@@ -26,7 +26,16 @@ export function reconcileConsequences(db,guild,{intents=[],narration="",private_
     const adjudication=actionAdjudication(db,guild,row.record_key),receipt=outcomeReceipt(db,guild,row);
     let disposition="unresolved",refs=[];
     const pvp=db.getCityRecord(guild,"pvp_attempt",pvpAttemptKey(guild,row.record_key));
+    const planKey=`action:${createHash("sha256").update(String(row.record_key)).digest("hex").slice(0,32)}`;
+    const plan=db.getCityRecord(guild,"compound_action",planKey);
     if(pvp?.status==="awaiting_stakes"){disposition="pvp_attempt_only";refs=[pvp.record_key];}
+    else if(plan?.data.coordination&&plan.data.status==="pending"){
+      disposition="coordination_pending";refs=[plan.data.coordination.window];
+    }else if(plan?.data.coordination&&["resolved","blocked","failed","clarification"].includes(plan.data.status)){
+      const native=db.getCityRecord(guild,"window_action_receipt",plan.data.receipt);
+      if(!native||native.data.action_id!==row.record_key)fail("Window disposition needs its exact native action receipt.");
+      disposition=plan.data.status;refs=[native.record_key];
+    }
     else if(receipt?.status==="resolved"){disposition="resolved";refs=[receipt.ref];}
     else if(["roll_pending","needs_review"].includes(adjudication?.data.disposition)){
       const request=db.getCityRecord(guild,"roll_request",adjudication.data.roll_request_ref);

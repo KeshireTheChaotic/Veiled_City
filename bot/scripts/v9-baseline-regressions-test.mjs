@@ -62,7 +62,7 @@ test("G08/W04 closed beat permits a genuinely new occurrence",()=>fixture(({db,g
   const p=joinActionWindow(db,guild,window.record_key,{accepted_intent:accepted.record_key,reads:[],writes:["item:parcel:custody"],
     location_key:"terminal",operation:"claim",participation:"voluntary"});
   const locked=lockActionWindow(db,guild,window.record_key,{expected_revision:p.data.window_revision});
-  const receipt=db.saveCityRecord(guild,{kind:"action_outcome_receipt",key:"receipt",status:"resolved",data:{}});
+  const receipt=db.saveCityRecord(guild,{kind:"action_outcome_receipt",key:"receipt",source_event:source.event_key,status:"resolved",data:{}});
   resolveActionWindow(db,guild,window.record_key,{expected_revision:locked.data.revision,
     outcomes:[{participant:p.record_key,status:"resolved",receipt:{kind:receipt.kind,key:receipt.record_key}}]});
   const next=indexWorldEvent(db,guild,{key:"next-source",kind:"authored_turn",title:"New attempt",session_id:session.id,
