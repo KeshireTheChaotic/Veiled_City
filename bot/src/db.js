@@ -1252,6 +1252,13 @@ export class VeiledDB {
       payload_hash,status,discord_message_id,attempt_count,last_failure,created_at,updated_at FROM publication_outbox
       WHERE guild_id=? AND status!='delivered' ORDER BY created_at,ordinal LIMIT ?`).all(guildId,Math.max(1,Math.min(100,Number(limit)||50)));
   }
+  pendingContinuationTurns(guildId,userId,{limit=20}={}){
+    return this.db.prepare(`SELECT DISTINCT t.turn_id FROM turn_attempts t
+      JOIN publication_outbox p ON p.turn_id=t.turn_id AND p.guild_id=t.guild_id
+      WHERE t.guild_id=? AND t.actor_principal=? AND t.committed='yes'
+      AND t.discord_message_id LIKE 'continuation:%' AND p.status='pending'
+      ORDER BY t.rowid LIMIT ?`).all(guildId,userId,Math.max(1,Math.min(50,Number(limit)||20)));
+  }
   updatePublication(id,{status,discordMessageId,channelId,attemptCount,lastFailure}={}){
     const prior=this.db.prepare("SELECT * FROM publication_outbox WHERE id=?").get(id);if(!prior)return null;
     this.db.prepare(`UPDATE publication_outbox SET status=?,discord_message_id=?,channel_id=?,attempt_count=?,last_failure=?,

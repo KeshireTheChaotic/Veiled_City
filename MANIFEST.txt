@@ -125,6 +125,7 @@ bot/scripts/typed-routing-authority-test.mjs
 bot/scripts/v7-delta-baseline-test.mjs
 bot/scripts/v9-action-consent-test.mjs
 bot/scripts/v9-baseline-regressions-test.mjs
+bot/scripts/v9-continuation-test.mjs
 bot/scripts/v9-fixtures.mjs
 bot/scripts/v9-npc-observation-test.mjs
 bot/scripts/v9-observation-compatibility-test.mjs
@@ -151,6 +152,7 @@ bot/scripts/validate-command-schema.mjs
 bot/scripts/validate-offline.mjs
 bot/sql/schema.sql
 bot/src/action-consent.js
+bot/src/action-continuation.js
 bot/src/action-dependency.js
 bot/src/ai-intent-contracts.js
 bot/src/ai-intents.js

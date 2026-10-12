@@ -52,7 +52,7 @@ export function buildActionPlan(db,guild,acceptedRows=[]){
       const depStates=dependencies.get(row.record_key).map(dep=>calculated.get(dep)?.data.status);
       if(depStates.some(value=>["failed","blocked","clarification"].includes(value)))status="blocked";
       else if(depStates.some(value=>value!=="resolved"))status="suspended";
-      else status=prior?.data.coordination||prior?.data.pvp_attempt||prior?.data.pvp_attack
+      else status=prior?.data.coordination||prior?.data.pvp_attempt||prior?.data.pvp_attack||prior?.data.continuation
         ||(prior?.data.interrupt_refs||[]).some(ref=>db.getCityRecord(guild,"action_interrupt_receipt",ref)?.status!=="resolved")
         ?"pending":initialStatus(row);
     }
@@ -86,5 +86,23 @@ export function transitionAction(db,guild,key,{expected_status,status,receipt}){
     fail("Interrupted action needs native contextual revalidation before continuation.");
   if(row.data.status===status&&row.data.receipt===receipt)return row;
   if(row.data.status!==expected_status)fail("Compound action is stale or already has a different receipt.");
-  return db.saveCityRecord(guild,{...row,key:row.record_key,status,data:{...row.data,status,receipt}});
+  const saved=db.saveCityRecord(guild,{...row,key:row.record_key,status,data:{...row.data,status,receipt}});
+  signalActionContinuation(db,guild,saved);return saved;
+}
+
+/** Durable wake-up only, NEVER execution authority. Native consumers independently verify receipts. */
+export function signalActionContinuation(db,guild,node){
+  const children=[];
+  for(let offset=0;offset<10000;offset+=100){
+    const page=db.listCityRecords(guild,{kind:"compound_action",includeGM:true,limit:100,offset});
+    children.push(...page.filter(n=>n.source_event===node.source_event&&n.data.dependencies?.includes(node.data.action_id)));
+    if(page.length<100)break;
+    if(offset===9900)fail("Continuation inventory exceeds bounded recovery; no silent truncation.");
+  }
+  if(!children.length||!terminal.has(node.data.status)||!node.data.receipt)return null;
+  const key=`continuation-signal:${hash(JSON.stringify([node.record_key,node.data.receipt,node.data.status]))}`;
+  return db.getCityRecord(guild,"action_continuation_signal",key)||db.saveCityRecord(guild,{
+    kind:"action_continuation_signal",key,status:"pending",source_event:node.source_event,visibility:"gm",
+    data:{version:1,action:node.data.action_id,node:node.record_key,receipt:node.data.receipt,status:node.data.status,
+      authority:"Wake-up only; independently validated native receipts own dependency outcomes."}});
 }

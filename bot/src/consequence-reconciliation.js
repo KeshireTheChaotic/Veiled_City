@@ -50,6 +50,15 @@ export function reconcileConsequences(db,guild,{intents=[],narration="",private_
       if(!native||native.data.action_id!==row.record_key)fail("Window disposition needs its exact native action receipt.");
       disposition=plan.data.status;refs=[native.record_key];
     }
+    else if(plan?.data.dependencies?.length&&["suspended","pending","blocked"].includes(plan.data.status)){
+      if(plan.source_event!==row.source_event||plan.data.action_id!==row.record_key
+        ||plan.data.actor!==row.data.actor||plan.data.session_id!==row.data.session_id||plan.data.scene!==row.data.scene
+        ||plan.data.dependencies.some(id=>{const parent=db.getCityRecord(guild,"typed_intent",id);
+          return !parent||parent.source_event!==row.source_event||parent.data.actor!==row.data.actor
+            ||parent.data.session_id!==row.data.session_id||parent.data.scene!==row.data.scene;}))
+        fail("Suspended dependency requires its exact accepted source and predecessor identities.");
+      disposition=plan.data.status==="blocked"?"dependency_blocked":"dependency_pending";refs=[plan.record_key];
+    }
     else if(receipt?.status==="resolved"){disposition="resolved";refs=[receipt.ref];}
     else if(["roll_pending","needs_review"].includes(adjudication?.data.disposition)){
       const request=db.getCityRecord(guild,"roll_request",adjudication.data.roll_request_ref);

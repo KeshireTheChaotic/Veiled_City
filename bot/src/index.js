@@ -14,6 +14,7 @@ import { captureArcCandidate } from "./personal-continuity.js";
 import { captureContextSource } from "./narrative-context.js";
 import { conversationPrincipal } from "./conversation-principal.js";
 import { publishRollRequests } from "./roll-requests.js";
+import {publishContinuationNotices} from "./publishing.js";
 import { captureWorldInput } from "./autonomous-world.js";
 import { hasCharacterInvitation } from "./player-language.js";
 import { interactionResponseExpired } from "./discord/interaction-lifecycle.js";
@@ -389,6 +390,8 @@ async function processPrivateTurn(message,directMention,attempt=null){
   const outputErrors=[];
   await outputStep(outputErrors,{guild:message.guild,sessionId:session.id,context:"private-roll-requests"},()=>
     publishRollRequests(db,message.guild.id,mutation,(user,text,sid,char)=>sendPrivate(message.guild,user,text,sid,char)));
+  await outputStep(outputErrors,{guild:message.guild,sessionId:session.id,context:"private-continuation-notices"},()=>
+    publishContinuationNotices({db,guild:message.guild,userId:message.author.id}));
   const blockedState=blockedMutationRows(mutation);
   if(blockedState.length) await outputStep(outputErrors,{guild:message.guild,sessionId:session.id,context:"private-blocked-state"},()=>notifyBlockedActions({guild:message.guild,session,actorUserId:message.author.id,actorCharacterId:controlled?.character_id||null,rows:blockedState,context:"private turn"}));
   if(canonProposals.some(x=>x.ok)) await outputStep(outputErrors,{guild:message.guild,sessionId:session.id,context:"private-canon-proposal"},()=>notifyCanonProposals({guild:message.guild,session,message,actorUserId:message.author.id,actorCharacterId:controlled?.character_id||null,speaker,rows:canonProposals}));
@@ -499,6 +502,8 @@ async function processPartyTurn(message,directMention,attempt=null){
   const outputErrors=[];
   await outputStep(outputErrors,{guild:message.guild,sessionId:session.id,context:"party-roll-requests"},()=>
     publishRollRequests(db,message.guild.id,mutation,(user,text,sid,char)=>sendPrivate(message.guild,user,text,sid,char)));
+  await outputStep(outputErrors,{guild:message.guild,sessionId:session.id,context:"party-continuation-notices"},()=>
+    publishContinuationNotices({db,guild:message.guild,userId:message.author.id}));
   const blockedState=blockedMutationRows(mutation);
   if(blockedState.length) await outputStep(outputErrors,{guild:message.guild,sessionId:session.id,context:"party-blocked-state"},()=>notifyBlockedActions({guild:message.guild,session,actorUserId:message.author.id,actorCharacterId:controlled?.character_id||null,rows:blockedState,context:"party turn"}));
   await outputStep(outputErrors,{guild:message.guild,sessionId:session.id,context:"party-event-publish"},()=>publishEventResults({db,guild:message.guild,results:applied}));

@@ -15,6 +15,7 @@ import { movementAdjudication } from "./rules-arbitration.js";
 import { contextMemoriesForScope } from "./context-memory.js";
 import { captureDepartureWitnesses } from "./character-observation.js";
 import {assertPcCanAct} from "./pc-native-eligibility.js";
+import {continuationAuthorization} from "./action-continuation.js";
 const hash=value=>createHash("sha256").update(JSON.stringify(value)).digest("hex").slice(0,40);
 export const AUTONOMOUS_WORLD_VERSION=1;
 const object=properties=>({type:"object",additionalProperties:false,properties,required:Object.keys(properties)});
@@ -174,9 +175,14 @@ function applyWorld(db,guild,narrative,scope,provenance,content){
   if(!source||source.status!=="active"||source.session_id!==session.id||source.scene!==scene.key
     ||source.details.author!==scope.actorUserId||source.details.revision!==principal.revision
     ||source.details.private_scene!==(scope.mode==="private")||!db.ownerAuthoredSource(guild,source.event_key,scope.actorUserId))fail("Current owner/source/session/scene/audience required.");
-  const key=`world-turn:${hash([session.id,provenance.messageId,pc.id])}`,prior=db.getCityRecord(guild,"autonomous_turn",key);
+  const continuation=provenance.continuationKey?continuationAuthorization(db,guild,provenance.continuationKey):null;
+  if(continuation&&(continuation.action.data.actor!==pc.id||continuation.proof.source.details.discord_message_id!==provenance.messageId
+    ||additions.length||conflicts.length||actions.length!==1||actions[0].kind!=="move"
+    ||actions[0].source_span!==continuation.action.data.source_span||actions[0].entity_ref!==continuation.action.data.target_key))
+    fail("Continuation can execute only its one exact independently revalidated accepted move.");
+  const key=`world-turn:${hash([session.id,provenance.messageId,pc.id,...(continuation?[continuation.task.record_key]:[])])}`,prior=db.getCityRecord(guild,"autonomous_turn",key);
   if(prior)return prior.data.results;
-  const boundary={visibility:scope.mode==="private"?"character":"party",subject_key:scope.mode==="private"?pc.id:null};
+  const boundary={visibility:continuation||scope.mode==="private"?"character":"party",subject_key:continuation||scope.mode==="private"?pc.id:null};
   const results=[],refs=new Map();
   const exclusions=(narrative?.player_intents||[]).filter(i=>i.framing==='immediate'&&i.type==='search')
     .flatMap(i=>i.excluded_targets||[]).map(normalizeNpcKey);

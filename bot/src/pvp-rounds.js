@@ -6,6 +6,7 @@ import { pvpOwnerContext, validatePvpAgreement } from "./narrative-pvp.js";
 import { synchronizePvpWindow } from "./window-coordinator.js";
 import { settlePvpWindow } from "./pvp-terminal.js";
 import { capturePvpFear, gatePvpExchange, fearGateKey, pendingPvpFear } from "./pvp-fear-gate.js";
+import {drainActionContinuations} from "./action-continuation.js";
 export { authorPvpNarrative, reviewPvpNarrative, sharePvpNarrative } from "./pvp-authorship.js";
 
 const hash=value=>createHash("sha256").update(JSON.stringify(value)).digest("hex").slice(0,40);
@@ -95,6 +96,40 @@ export function validatePvpRoundReceipt(db,guild,p,receipt){
   if(row?.record_key!==receipt.record_key)fail("Exact native PvP receipt required.");
   return row;
 }
+/** Read-only terminal dependency proof: exact native pair history, never narration or generic Difficulty. */
+export function validatePvpResolutionReceipt(db,guild,proposal,receipt){
+  const p=proposal&&db.getCityRecord(guild,"pvp_proposal",proposal.record_key),r=receipt&&db.getCityRecord(guild,"pvp_resolution_receipt",receipt.record_key);
+  if(!p||r?.status!=="resolved"||p.data.resolution_receipt!==r.record_key||r.data.proposal!==p.record_key||r.data.terms_hash!==p.data.terms_hash)
+    fail("Exact current terminal PvP receipt required for continuation.");
+  const {terms}=pvpOwnerContext(db,guild,p.data.participants[0].user,p.record_key),t=terms.data.snapshot.terms;
+  if(["declined","withdrawn"].includes(r.data.outcome)){
+    const c=db.getCityRecord(guild,"pvp_consent",r.data.decision_ref),s=c&&db.getWorldEvent(guild,c.source_event);
+    if(r.data.winner!==null||r.data.roll_refs.length||s?.status!=="active"||s.kind!=="pvp_consent_reply"||s.event_key!==r.source_event
+      ||s.details.proposal!==p.record_key||s.details.terms_hash!==p.data.terms_hash||c.data.terms_hash!==p.data.terms_hash
+      ||s.details.decision!==(r.data.outcome==="declined"?"decline":"withdraw")||!p.data.participants.some(w=>w.user===s.details.author
+        &&w.character===c.subject_key&&db.ownerAuthoredSource(guild,s.event_key,w.user)))fail("Exact owner neutral closure required; never a victory.");
+    return r;
+  }
+  const last=db.getCityRecord(guild,"pvp_strike_receipt",r.data.comparison),scores=Object.fromEntries(p.data.participants.map(w=>[w.character,0]));
+  if(!last||!Number.isSafeInteger(last.data.round)||last.data.round<1||last.data.round>100)fail("Bounded native paired history required.");
+  for(let round=1;round<=last.data.round;round++){
+    const pair=db.getCityRecord(guild,"pvp_strike_receipt",`pvp-pair:${hash([p.record_key,p.data.terms_hash,round])}`);
+    const rows=p.data.participants.map(w=>resultFor(db,guild,p,round,w));
+    if(rows.some(row=>!row))fail("Two actual owner rolls required for every pair.");
+    const totals=rows.map(row=>row.data.result.total),winner=totals[0]===totals[1]?null:p.data.participants[totals[0]>totals[1]?0:1].character;
+    if(winner&&t.mode==="three_strikes")scores[winner]++;
+    if(pair?.status!=="resolved"||pair.source_event!==p.source_event||pair.data.terms_hash!==p.data.terms_hash||pair.data.winner!==winner
+      ||JSON.stringify(pair.data.round_refs)!==JSON.stringify(rows.map(row=>row.record_key))
+      ||JSON.stringify(pair.data.roll_refs)!==JSON.stringify(rows.map(row=>row.data.roll_id))
+      ||JSON.stringify(pair.data.totals)!==JSON.stringify(totals)||JSON.stringify(pair.data.scores)!==JSON.stringify(scores))fail("Exact native paired verdict/score required.");
+  }
+  if(r.source_event!==p.source_event||r.data.mode!==t.mode||r.data.winner!==last.data.winner||JSON.stringify(r.data.scores)!==JSON.stringify(scores)
+    ||JSON.stringify(r.data.roll_refs)!==JSON.stringify(last.data.roll_refs)
+    ||r.data.outcome!==(r.data.winner?"agreed_story_stake":"stalemate")
+    ||r.data.winner&&r.data.allowed_stake!==t.stakes.find(s=>s.character===r.data.winner)?.best
+    ||t.mode==="three_strikes"&&scores[r.data.winner]!==3)fail("Native terminal stake/score must be unchanged.");
+  return r;
+}
 function compare(db,guild,p,t,w,rows){
   const k=`pvp-pair:${hash([p.record_key,p.data.terms_hash,w.data.round])}`;
   const prior=db.getCityRecord(guild,"pvp_strike_receipt",k);if(prior)return prior;
@@ -139,7 +174,10 @@ export function rollPvp(db,guild,user,input,{rng=d}={}){
     capturePvpFear(db,guild,p,receipt);
     const rows=p.data.participants.map(who=>resultFor(db,guild,p,input.round,who));
     if(rows.every(Boolean))compare(db,guild,p,t,w,rows);else saveWindow(db,guild,w,{});
-    return progressPvp(db,guild,user,p.record_key);
+    // Capture the verified terminal projection before a separately source-authorized descendant may relocate its actor.
+    const view=progressPvp(db,guild,user,p.record_key);
+    drainActionContinuations(db,guild);
+    return view;
   });
 }
 export function continuePvp(db,guild,user,input){

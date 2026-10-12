@@ -9,6 +9,19 @@ import { deliverTurnOutbox, outboxSummary } from "./publication-outbox.js";
 import { failureTrace } from "./failure-trace.js";
 import { assertArchiveOutput, archivePvpHistory, assertPvpOutput, protectedPvpScope, protectedHookSource, prepareStoredOutput, quarantineSimulationHook, revalidateOutputPublication } from "./pvp-output.js";
 import { queueDirectorPublications } from "./publication-outbox.js";
+import {KeyedSerialQueue} from "./serial-queue.js";
+const continuationDeliveryQueue=new KeyedSerialQueue();
+
+/** Only never-attempted owner notices auto-deliver. Failed/uncertain delivery stays in reviewed recovery. */
+export function publishContinuationNotices({db,guild,userId}){
+  if(!guild||!userId)return Promise.resolve([]);
+  return continuationDeliveryQueue.enqueue(`${guild.id}:${userId}`,async()=>{
+    const results=[];
+    for(const row of db.pendingContinuationTurns(guild.id,userId))
+      results.push(await deliverQueuedTurn({db,guild,turnId:row.turn_id}));
+    return results;
+  });
+}
 
 /** Hooks remain queued on failed delivery and never publish internal action packets. */
 export async function publishSimulationHooks({db,guild,sessionId=null}){

@@ -31,7 +31,8 @@ try{
   assert.equal(completed.outcome,"success");
   plan=[unlock,enter,warn].map(row=>db.listCityRecords(guild,{kind:"compound_action",includeGM:true,limit:20})
     .find(node=>node.data.action_id===row.record_key));
-  assert.deepEqual(plan.map(row=>row.data.status),["resolved","ready","ready"],"only the successful dependent resumes");
+  assert.deepEqual(plan.map(row=>row.data.status),["resolved","pending","ready"],"unverified legacy authority must remain explicitly pending; independent speech survives");
+  assert.equal(db.listCityRecords(guild,{kind:"action_continuation",includeGM:true})[0].status,"needs_adjudication");
   assert.equal(finalizeTypedRollAction(db,guild,request).receipt,completed.receipt,"completion replay is idempotent");
   assert.equal(db.getCityRecord(guild,"typed_intent",unlock.record_key).data.outcome_receipt,completed.receipt);
   assert.equal(reconcileConsequences(db,guild,{intents:[unlock],narration:"The lock opens.",scope:{mode:"party"},strict:true})

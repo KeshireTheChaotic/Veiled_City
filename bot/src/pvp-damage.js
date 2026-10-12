@@ -10,6 +10,7 @@ import {buildActionPlan,transitionAction} from "./action-dependency.js";
 import {completeBlazeAction,validatePcDeathOutcome} from "./pc-death.js";
 import {assertPcAttackable} from "./pc-native-eligibility.js";
 import {assertBrawlDamageSources,releaseBrawlLocks} from "./pvp-brawl.js";
+import {drainActionContinuations} from "./action-continuation.js";
 const hash=v=>createHash("sha256").update(JSON.stringify(v)).digest("hex");
 function fail(message){throw Object.assign(new Error(message),{code:"PC_EFFECT_AUTHORITY",expected:true});}
 function closed(v,keys){if(!v||Array.isArray(v)||Object.keys(v).length!==keys.length||keys.some(k=>!(k in v)))fail("Closed native damage fields required.");}
@@ -214,5 +215,5 @@ export function settlePvpDamageAction(db,guild,key){
   if(node)transitionAction(db,guild,node.record_key,{expected_status:node.data.status,status:"resolved",receipt:receipt.record_key});
   const related=nodes.filter(n=>n.source_event===action.source_event).map(n=>db.getCityRecord(guild,"typed_intent",n.data.action_id));if(related.length)buildActionPlan(db,guild,related);
   db.saveCityRecord(guild,{...request,key,status:"resolved",data:{...request.data,terminal:terminal.record_key}});
-  releaseBrawlLocks(db,guild,key);return terminal;
+  releaseBrawlLocks(db,guild,key);drainActionContinuations(db,guild,{sourceEvent:action.source_event});return terminal;
 }

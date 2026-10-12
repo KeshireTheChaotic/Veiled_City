@@ -8,6 +8,7 @@ import { validatePvpAgreement } from "./narrative-pvp.js";
 import { adjudicateAcceptedIntent } from "./rules-arbitration.js";
 import { transitionAction } from "./action-dependency.js";
 import { indexWorldEvent } from "./city-calendar.js";
+import {drainActionContinuations,continuationInbox} from "./action-continuation.js";
 
 const hash=value=>createHash("sha256").update(JSON.stringify(value)).digest("hex").slice(0,40);
 function fail(message){throw Object.assign(new Error(message),{code:"SCENE_ACTION_WINDOW",expected:true});}
@@ -58,7 +59,7 @@ function neutralClosure(db,guild,window,source,reason){
       data:{window:window.record_key,outcomes,reason,neutral:true}});
     const closed=db.saveCityRecord(guild,{...window,key:window.record_key,status:"closed",
       data:{...window.data,resolution,revision:window.data.revision+1}});
-    log(db,guild,closed,"neutral_closure","native");return closed;
+    log(db,guild,closed,"neutral_closure","native");drainActionContinuations(db,guild);return closed;
   });
 }
 
@@ -123,7 +124,7 @@ export function reconcileWindowCustody(db,guild,key,evidenceKey){
     });
     const result=resolveActionWindow(db,guild,key,{expected_revision:window.data.revision,outcomes});
     const saved=db.saveCityRecord(guild,{...result,key:result.record_key,data:{...result.data,evidence_receipt:evidenceKey}});
-    log(db,guild,db.getCityRecord(guild,"scene_action_window",key),"custody_resolved","native");return saved;
+    log(db,guild,db.getCityRecord(guild,"scene_action_window",key),"custody_resolved","native");drainActionContinuations(db,guild);return saved;
   });
 }
 
@@ -147,6 +148,18 @@ export function windowOperation(db,guild,user,input,{gm=false}={}){
 }
 function operateWindow(db,guild,user,input,{gm=false}={}){
   const {op,...args}=input;
+  if(op==="continuation-inbox"){
+    if(Object.keys(args).length)fail("Continuation inbox takes no foreign scope.");
+    return continuationInbox(db,guild,user,{gm});
+  }
+  if(op==="continuation-resume"){
+    if(Object.keys(args).some(k=>k!=="task")||typeof args.task!=="string")fail("Exact continuation task required.");
+    const task=db.getCityRecord(guild,"action_continuation",args.task),a=task&&db.getCityRecord(guild,"typed_intent",task.data.action);
+    if(!task||!gm&&(a?.data.owner_user_id!==user||db.getCharacter(a.data.actor)?.owner_user_id!==user
+      ||db.activeAssignment(a.data.session_id,user)?.character_id!==a.data.actor))fail("Only the current owner or authenticated GM can retry this private continuation.");
+    drainActionContinuations(db,guild,{retry:args.task});
+    return continuationInbox(db,guild,user,{gm}).filter(t=>t.task===args.task);
+  }
   if(op==="cancel"){
     if(!gm)fail("Stale window recovery requires explicit GM cancellation, never an inferred winner.");
     if(Object.keys(args).some(key=>!["window","expected_revision","interaction_id"].includes(key))||!args.interaction_id)

@@ -437,7 +437,8 @@ export function applyAuthoritativeMutation(db,{guildId,sessionId=null,events=[],
     const actionWindows=coordinateTypedActionWindows(db,guildId,typedIntents,actionPlan);
     if(actionWindows.length)actionPlan=actionPlan.map(row=>db.getCityRecord(guildId,"compound_action",row.record_key));
     const coordinatedIds=new Set(actionWindows.map(row=>row.action));
-    const nativeAdjudications=typedIntents.filter(row=>row?.data?.resolution==="roll_required"&&!pvpIds.has(row.record_key)&&!coordinatedIds.has(row.record_key)).map(row=>{
+    const nativeAdjudications=typedIntents.filter(row=>row?.data?.resolution==="roll_required"&&!pvpIds.has(row.record_key)&&!coordinatedIds.has(row.record_key)
+      &&!actionPlan.some(n=>n.data.action_id===row.record_key&&["suspended","blocked"].includes(n.data.status))).map(row=>{
       const adjudication=row.data.native_adjudication;
       return adjudicateAcceptedIntent(db,guildId,{
         acceptedIntent:row.record_key,mode:"roll_required",risk:adjudication.risk,stakes:adjudication.stakes,

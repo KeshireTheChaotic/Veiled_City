@@ -146,8 +146,8 @@
     },
     {
       "path": "bot/scripts/d06-continuation-test.mjs",
-      "size_bytes": 3488,
-      "sha256": "6374e49eac84e4647aa1b38c985e1eec6fe7a677dee5b77ace20c36b3976884d"
+      "size_bytes": 3658,
+      "sha256": "22ac768b8a48449bfedaf2bab1c55eeff804445393cf386b608b8fb641b26f99"
     },
     {
       "path": "bot/scripts/d07-scoped-memory-test.mjs",
@@ -640,6 +640,11 @@
       "sha256": "d9e30736e98d989dafcff39edfa7f7a9048cbe4db4d503c96401516c3b79ef8c"
     },
     {
+      "path": "bot/scripts/v9-continuation-test.mjs",
+      "size_bytes": 30734,
+      "sha256": "0fdb42b16411d042ddbe816e5d99006ad1176651d9a158cb7a9af4e96b99436c"
+    },
+    {
       "path": "bot/scripts/v9-fixtures.mjs",
       "size_bytes": 3478,
       "sha256": "2680b27ab41184dbe54339a99d4e036735e86106ef3eac8710996bdf594053a7"
@@ -756,8 +761,8 @@
     },
     {
       "path": "bot/scripts/validate-offline.mjs",
-      "size_bytes": 4706,
-      "sha256": "7ee062ad9bc2062f02edafd04de8ccd2393948fe0f9115a33bc6bcef59ed0628"
+      "size_bytes": 4729,
+      "sha256": "b595d35a8f74c04b854d315c99e96c6c3952392da8e05a9e82dc1e99f4abac5f"
     },
     {
       "path": "bot/sql/schema.sql",
@@ -770,9 +775,14 @@
       "sha256": "29c09f9a543525d50ae17999a5aa921683e03469744ff282e44764a5905f33d5"
     },
     {
+      "path": "bot/src/action-continuation.js",
+      "size_bytes": 18720,
+      "sha256": "2e66a50c65ae436cb5bc46185239ac0e7650621b8528bdc2abdec00a43b36049"
+    },
+    {
       "path": "bot/src/action-dependency.js",
-      "size_bytes": 5832,
-      "sha256": "6bf3ff87bdac78e870035857e393b53399f3fd6758d5ccc2eedd2548db406ec0"
+      "size_bytes": 7132,
+      "sha256": "cb10bc375bc02c961f58dd32cebb2577fc4571faec56c0aa43f1385f3043c65b"
     },
     {
       "path": "bot/src/ai-intent-contracts.js",
@@ -821,8 +831,8 @@
     },
     {
       "path": "bot/src/autonomous-world.js",
-      "size_bytes": 34743,
-      "sha256": "f0e9dad0010b4a91c405c40bffe4fcf70d3abe4b86410977d39b4ab1a3d046dc"
+      "size_bytes": 35460,
+      "sha256": "5c4aeed277077247340dcc788f8cf9af52adb31dab81ce343f645c3e07ad2833"
     },
     {
       "path": "bot/src/character-export.js",
@@ -871,8 +881,8 @@
     },
     {
       "path": "bot/src/city-core.js",
-      "size_bytes": 24702,
-      "sha256": "921d9b8eb497c2306134838c5d8093f987afc0d1527aff821b074beca015149d"
+      "size_bytes": 24858,
+      "sha256": "53db83c545bf777005798dea175f0a50183616bf03bd27cd7d46fccdd7463b10"
     },
     {
       "path": "bot/src/city-depth.js",
@@ -901,8 +911,8 @@
     },
     {
       "path": "bot/src/commands.js",
-      "size_bytes": 168074,
-      "sha256": "15b305974788554616c5962975c3346394f4badf9d4d459650c782a2eeee2b46"
+      "size_bytes": 168287,
+      "sha256": "135faee9c80571771e661a3baedb573c0d3cf784658fd92d1839f5078fb80787"
     },
     {
       "path": "bot/src/concept-context.js",
@@ -921,8 +931,8 @@
     },
     {
       "path": "bot/src/consequence-reconciliation.js",
-      "size_bytes": 6074,
-      "sha256": "845c3710768160232f2dc1f4b9beb67759dc94f8e5ee72bcbed06f8c3afe9f0d"
+      "size_bytes": 6906,
+      "sha256": "4256978b6a9cc95ab1d97d8b7aecf207050c6b8832cf972e9ff9f0eff14b736a"
     },
     {
       "path": "bot/src/content-packages.js",
@@ -956,8 +966,8 @@
     },
     {
       "path": "bot/src/db.js",
-      "size_bytes": 159691,
-      "sha256": "6b83a8bbc91dbdbe42be88b5609e42c8a6bd1e6b8e4957398f6dc0234a582d98"
+      "size_bytes": 160153,
+      "sha256": "7b6ae02e6328c4fb45a26efb5459c4e7d46c030ab305e5d5222e769c3bd90c48"
     },
     {
       "path": "bot/src/decision-advisory.js",
@@ -1041,8 +1051,8 @@
     },
     {
       "path": "bot/src/gm.js",
-      "size_bytes": 98294,
-      "sha256": "9e9e81cc91ab22a19c430a5fcea8f31df06c053a1a21851a66eabfb5e7e9d244"
+      "size_bytes": 98503,
+      "sha256": "8443c812c4819aead4eeaf5294409d969bdf0eee69d336d3548389b80a79dd7e"
     },
     {
       "path": "bot/src/gm.js.20261009-144611.bak",
@@ -1066,8 +1076,8 @@
     },
     {
       "path": "bot/src/index.js",
-      "size_bytes": 53193,
-      "sha256": "ee59b9a9f6bc4cf3b44ba472ac4d29a094082dc61133d36efe7301d5be8760e9"
+      "size_bytes": 53657,
+      "sha256": "05b1300ae5492f6b2b5b599a18b2ed70426adfeb7209e6723bf2f261bf828675"
     },
     {
       "path": "bot/src/legacy-authority.js",
@@ -1126,8 +1136,8 @@
     },
     {
       "path": "bot/src/narrative-pvp.js",
-      "size_bytes": 21261,
-      "sha256": "2ecea2d3ecfd4e52ae2b642270cc71263221db4b1ebf8543c157750243fdf99d"
+      "size_bytes": 21390,
+      "sha256": "20d05a86e15ad6badb2a77a52c443f01cc41ec02a246f595ea531a860cf045c9"
     },
     {
       "path": "bot/src/negotiations.js",
@@ -1231,8 +1241,8 @@
     },
     {
       "path": "bot/src/publishing.js",
-      "size_bytes": 17144,
-      "sha256": "3ece5ce7d4e19a5797ddccb441fe0988d8f31f5f85053850de0ca3569bed50cf"
+      "size_bytes": 17746,
+      "sha256": "bcc3bf68671a2184d4987719f5b4731a764226a84d35238801ff87baafb1c2b9"
     },
     {
       "path": "bot/src/pvp-attacks.js",
@@ -1256,8 +1266,8 @@
     },
     {
       "path": "bot/src/pvp-damage.js",
-      "size_bytes": 23380,
-      "sha256": "fce7284a5945a58df37a553d047bdbf9774b7ff46294c39065f0958de9e0e315"
+      "size_bytes": 23516,
+      "sha256": "e109c3bfe5b5d4d9461842beeae3bf94e92c04d1bb0e606f54d1dd5b4dcc153e"
     },
     {
       "path": "bot/src/pvp-fear-gate.js",
@@ -1266,13 +1276,13 @@
     },
     {
       "path": "bot/src/pvp-fear-moves.js",
-      "size_bytes": 36588,
-      "sha256": "12804c820868c648704658b2bf04d2a4610ae3c7a093e4b175f557a61e167838"
+      "size_bytes": 36690,
+      "sha256": "2174a6cb0a55b2a35429706854a3c547265c19c11852e2f3cc49e33d90ba42b8"
     },
     {
       "path": "bot/src/pvp-output.js",
-      "size_bytes": 25387,
-      "sha256": "8ced139ab3d6a050fe0b4884e66701d451955190c1a7e2acc65d189be7610270"
+      "size_bytes": 26413,
+      "sha256": "885e14b500a4f6fe4d5a8e477058f1fe11af6cd88b2fd0d98f616d2b24582c8c"
     },
     {
       "path": "bot/src/pvp-profiles.js",
@@ -1286,8 +1296,8 @@
     },
     {
       "path": "bot/src/pvp-rounds.js",
-      "size_bytes": 14928,
-      "sha256": "45b3d74f2955c1cc2707d696a4bc5e6a3e0df686fdff1d341b14068158f5b9f6"
+      "size_bytes": 18438,
+      "sha256": "1694ea502945610fa05791c06a7cd6d10f685fd11cadb7d978e8ccac758caf3b"
     },
     {
       "path": "bot/src/pvp-terminal.js",
@@ -1436,8 +1446,8 @@
     },
     {
       "path": "bot/src/state.js",
-      "size_bytes": 34568,
-      "sha256": "a1fa629e6bdc74af127d0c998587033f48b73f50052e1e26b4d55bb4599a51d0"
+      "size_bytes": 34680,
+      "sha256": "01bae80ed3711c5385ff188b66689f88a95dd9a22292d1eb2987c2f6a2678985"
     },
     {
       "path": "bot/src/story-commands.js",
@@ -1461,8 +1471,8 @@
     },
     {
       "path": "bot/src/turn-orchestration.js",
-      "size_bytes": 4495,
-      "sha256": "5ec97bec5c5c849ff1d8fc841c585f22f902ab67c4ee8b77c80d0fbd4fe988f6"
+      "size_bytes": 4632,
+      "sha256": "5473f5646fda276a669ce129d20d80091b5cd9e9e05927c902721cf0f194ece5"
     },
     {
       "path": "bot/src/turn-pipeline.js",
@@ -1491,8 +1501,8 @@
     },
     {
       "path": "bot/src/typed-roll-outcomes.js",
-      "size_bytes": 3736,
-      "sha256": "6439a3552bcf04d3b175a35bf31b9fe9e3276b96c856ddba9d35e7b7c293c27f"
+      "size_bytes": 4026,
+      "sha256": "ab0447eaadf542a22ab13d0d2337660e6a63b4cfcb50f4df4d61f42d8591966b"
     },
     {
       "path": "bot/src/voice.js",
@@ -1501,8 +1511,8 @@
     },
     {
       "path": "bot/src/window-coordinator.js",
-      "size_bytes": 15361,
-      "sha256": "c5d54bc13607073d4328644b5ca67d03a5d719cae171ee2366934da86ad1b58b"
+      "size_bytes": 16389,
+      "sha256": "6873c7cdb09d31b5af51831f3a18dae5b7d7ca782694fb10c5ca3f87a663fd49"
     },
     {
       "path": "bot/src/world-authoring.js",
@@ -2316,8 +2326,8 @@
     },
     {
       "path": "docs/TYPED_INTENT_CONTRACTS.md",
-      "size_bytes": 66069,
-      "sha256": "861f27d03c38861b1007983bf6971c04ef064808cc93f271f5255bc2f0cfbaa7"
+      "size_bytes": 69030,
+      "sha256": "a7c6770e943af359fe5f327a4c86f2d03c56833e84d2dfe9091f4fd5c1fec473"
     },
     {
       "path": "docs/TYPED_INTENT_DELTA_AUDIT.md",
@@ -2331,8 +2341,8 @@
     },
     {
       "path": "docs/TYPED_INTENT_PROGRESS.md",
-      "size_bytes": 189460,
-      "sha256": "7cb4f47a73a3108f69dc827397cd828d9284d9233ea7201bde1d21e98e238199"
+      "size_bytes": 198724,
+      "sha256": "41a6b3e900386db340dd96fb7d0d2bae940b320a1117404dae60b2067cb39271"
     },
     {
       "path": "docs/TYPED_INTENT_RELEASE_10.0.0.md",

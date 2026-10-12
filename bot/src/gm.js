@@ -2,6 +2,7 @@
 import OpenAI from "openai";
 import { AUTHORITY_POLICY } from "./authority-policy.js";
 import { conversationPrincipal } from "./conversation-principal.js";
+import {continuationInbox} from "./action-continuation.js";
 import { authoredCandidatesSchema, AUTHORED_CANDIDATES_PROMPT } from "./authored-candidates.js";
 import { playerIntentSchema, PLAYER_INTENT_PROMPT, recoverPlayerIntents, autoCompleteOrdinaryMovements, validateIntentResolutions } from "./typed-intents.js";
 import { tierWorldAdditions } from "./entity-memory.js";
@@ -472,6 +473,7 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
     const contextPlan=(contextFlags.adaptive_context||contextFlags.personal_arcs||contextFlags.memory_consolidation)?new ContextPlanner(this.db).plan(guildId,
       {operation:worldDirector?"director":"turn",actorType:"gm",scope:"gm",query:messageText,scene:session?this.db.getDirectorState(session.id).scene_label:""}):null;
     return {
+      pending_native_continuations:continuationInbox(this.db,guildId,actorUserId).filter(t=>!["resolved","blocked"].includes(t.status)).slice(0,12),
       decision_advisory:decisionContext(this.db,guildId,messageText),
       player_declaration:declarationContext(this.db,guildId,actorUserId,actorKnowledgeId,messageText),
       ai_management:intentContext(this.db,guildId),

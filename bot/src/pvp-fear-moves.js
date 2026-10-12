@@ -13,6 +13,7 @@ import { validatePvpAttackRoll } from "./pvp-attacks.js";
 import {settlePvpDamageAction} from "./pvp-damage.js";
 import {assertBrawlFearOrder} from "./pvp-brawl.js";
 import {incomingAttackEvidence} from "./pc-incoming.js";
+import {drainActionContinuations} from "./action-continuation.js";
 
 export const fearRevision=v=>createHash("sha256").update(JSON.stringify(v)??"undefined").digest("hex");
 const hash=fearRevision;
@@ -332,7 +333,7 @@ function applyMove(db,guild,user,input,{gm=false,rng}={}){
         for(const key of w.data.pvp_brawl.requests)if(key!==gate.data.round)settlePvpDamageAction(db,guild,key);
       }
     }
-    return effect;
+    drainActionContinuations(db,guild);return effect;
   });
 }
 export function validateFearEffect(db,guild,key){

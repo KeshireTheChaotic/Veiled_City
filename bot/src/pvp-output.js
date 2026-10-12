@@ -7,6 +7,7 @@ import { observationQueries, ambientWorldQueries, renderObservation } from "./ch
 import { activeEvidence, objectiveEvidence } from "./epistemic.js";
 import { renderFearEffect } from "./pvp-fear-moves.js";
 import { indexWorldEvent } from "./city-calendar.js";
+import {renderContinuationNotice} from "./action-continuation.js";
 
 const hash=v=>createHash("sha256").update(JSON.stringify(v)).digest("hex");
 const prepared=new WeakMap();
@@ -66,6 +67,7 @@ function renderPart(db,guild,part){
     if(!assignment||assignment.character_id!==scope.actorCharacterId)fail();
   }
   if(kind==="neutral")return neutral;
+  if(kind==="action_continuation_notice")return renderContinuationNotice(db,guild,ref,scope);
   if(kind==="private_owner_clause"){
     const clause=validatePvpClause(db,guild,ref);
     if(scope.mode!=="private"||clause.subject_key!==scope.actorCharacterId
@@ -103,6 +105,15 @@ function savePart(db,guild,part){
   return db.getCityRecord(guild,"pvp_output_part",key)||db.saveCityRecord(guild,{kind:"pvp_output_part",key,
     status:"verified",visibility:part.scope.mode==="private"?"character":"party",subject_key:part.scope.actorCharacterId||null,
     source_event:part.source_ref,data});
+}
+/** Native continuation status only; private source/owner proof revalidates at every output sink. */
+export function prepareContinuationOutput(db,guild,task,scope){
+  const source=db.getWorldEvent(guild,task.source_event),scene=currentScene(db,guild);
+  const part=savePart(db,guild,{render_version:1,scene:scene.key,session:scene.session_id,scope:{...scope},origin:"native_continuation",
+    kind:"action_continuation_notice",ref:task.record_key,source_ref:source?.event_key,source_hash:hash(source?.details),
+    principal_revision:conversationPrincipal(db,guild,scope.actorUserId,scope.actorCharacterId).revision});
+  const result={narration:part.data.text,player_summary:part.data.text,private_messages:[],narrative_claims:[]};
+  prepared.set(result,{raw:{},drafts:{},parts:[part.record_key],scope:hash(scope),fingerprint:fingerprint(result)});return result;
 }
 export function validateOutputPart(db,guild,id){
   const row=db.getCityRecord(guild,"pvp_output_part",id),d=row?.data;

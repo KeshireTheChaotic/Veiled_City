@@ -68,6 +68,7 @@ import { preparePvpReaction, reviewPvpReaction, rollPvpReaction } from "./pvp-re
 import { reviewFeatureEffect, reviewPcEffect, approvePcEffect, applyPcEffect,reviewHealingSource,authorizeHealingSource } from "./pc-effects.js";
 import { prepareIncomingAttack, reviewIncomingAttack, confirmIncomingDefense, rollIncomingAttack, resolveIncomingDamage } from "./pc-incoming.js";
 import { queueDirectorPublications } from "./publication-outbox.js";
+import {publishContinuationNotices} from "./publishing.js";
 
 const interactionQueue=new KeyedSerialQueue();
 
@@ -368,9 +369,14 @@ export async function handleCommand(interaction,{db,gm,voice=null}){
   // A duplicate that arrives during an awaited response must see the first
   // delivery's receipt before it can execute the command body.
   try{
-    if(!interaction?.id) return await executeCommand(interaction,{db,gm,voice});
+    const execute=async()=>{
+      const result=await executeCommand(interaction,{db,gm,voice});
+      await publishContinuationNotices({db,guild:interaction.guild,userId:interaction.user?.id});
+      return result;
+    };
+    if(!interaction?.id) return await execute();
     return await interactionQueue.enqueue(`${interaction.guildId}:${interaction.id}`,
-      ()=>executeCommand(interaction,{db,gm,voice}));
+      execute);
   }catch(error){throw interactionFailure(interaction,error);}
 }
 

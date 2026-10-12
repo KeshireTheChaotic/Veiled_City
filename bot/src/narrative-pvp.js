@@ -7,6 +7,7 @@ import { indexWorldEvent } from "./city-calendar.js";
 import { TRAITS } from "./character-system.js";
 import { isPvpIntent, pvpTarget, pvpAttemptKey } from "./pvp-authority.js";
 import { settlePvpWindow } from "./pvp-terminal.js";
+import {drainActionContinuations} from "./action-continuation.js";
 import { closePartialFearGate } from "./pvp-fear-gate.js";
 import { stageDamagePvp } from "./pvp-profiles.js";
 export { choosePvp, rollPvp, progressPvp, continuePvp, authorPvpNarrative, reviewPvpNarrative, sharePvpNarrative, pvpComplication } from "./pvp-rounds.js";
@@ -236,7 +237,8 @@ export function respondPvp(db,guild,user,input){
         const agreement=db.getCityRecord(guild,"pvp_agreement",p.data.agreement);
         db.saveCityRecord(guild,{...agreement,key:agreement.record_key,status});
       }
-      return db.saveCityRecord(guild,{...p,key:p.record_key,status,data:{...p.data,resolution_receipt:receiptKey,state_revision:p.data.state_revision+1}});
+      const closed=db.saveCityRecord(guild,{...p,key:p.record_key,status,data:{...p.data,resolution_receipt:receiptKey,state_revision:p.data.state_revision+1}});
+      drainActionContinuations(db,guild);return closed;
     }
     const approvals=[...p.data.approvals.filter(ref=>db.getCityRecord(guild,"pvp_consent",ref)?.subject_key!==who.character),signature.record_key];
     const both=approvals.length===2&&approvals.every(ref=>validSignature(db,guild,p,ref));

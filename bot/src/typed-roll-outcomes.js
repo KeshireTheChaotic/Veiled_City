@@ -2,6 +2,7 @@
 import { createHash } from "node:crypto";
 import { buildActionPlan, transitionAction } from "./action-dependency.js";
 import { StateConflictError } from "./errors.js";
+import {drainActionContinuations} from "./action-continuation.js";
 
 const hash=value=>createHash("sha256").update(JSON.stringify(value)).digest("hex").slice(0,40);
 export function finalizeTypedRollAction(db,guild,request){
@@ -36,6 +37,8 @@ export function finalizeTypedRollAction(db,guild,request){
   if(node&&!(["resolved","failed"].includes(node.data.status)&&node.data.receipt===receipt.record_key))
     transitionAction(db,guild,node.record_key,{expected_status:node.data.status,status:success?"resolved":"failed",receipt:receipt.record_key});
   const related=nodes.filter(row=>row.source_event===accepted.source_event).map(row=>db.getCityRecord(guild,"typed_intent",row.data.action_id)).filter(Boolean);
-  const plan=related.length?buildActionPlan(db,guild,related):[];
+  if(related.length)buildActionPlan(db,guild,related);
+  drainActionContinuations(db,guild,{sourceEvent:accepted.source_event});
+  const plan=related.map(a=>db.getCityRecord(guild,"compound_action",`action:${createHash("sha256").update(String(a.record_key)).digest("hex").slice(0,32)}`));
   return {receipt:receipt.record_key,outcome:success?"success":"failure",plan};
 }
