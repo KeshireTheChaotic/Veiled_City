@@ -137,6 +137,7 @@ bot/scripts/v9-pvp-contract-test.mjs
 bot/scripts/v9-pvp-hope-fear-test.mjs
 bot/scripts/v9-pvp-rounds-test.mjs
 bot/scripts/v9-pvp-typed-roll-test.mjs
+bot/scripts/v9-release-qualification-test.mjs
 bot/scripts/v9-roll-truth-test.mjs
 bot/scripts/v9-roll-ux-test.mjs
 bot/scripts/v9-window-lifecycle-test.mjs
@@ -524,6 +525,7 @@ docs/V9_4_PVP_EXAMPLES.md
 docs/V9_4_PVP_PROFILE_AND_RECEIPT_CONTRACT.md
 docs/V9_4_QUALIFICATION.md
 docs/V9_4_REGRESSION_MATRIX.csv
+docs/V9_4_RELEASE_QUALIFICATION.md
 docs/V9_4_RULES_AND_COMMUNITY_RESEARCH.md
 docs/V9_4_SOURCE_AUDIT.md
 docs/V9_CODEX_KICKOFF.md

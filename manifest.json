@@ -636,8 +636,8 @@
     },
     {
       "path": "bot/scripts/v9-baseline-regressions-test.mjs",
-      "size_bytes": 7312,
-      "sha256": "d9e30736e98d989dafcff39edfa7f7a9048cbe4db4d503c96401516c3b79ef8c"
+      "size_bytes": 8971,
+      "sha256": "3da4320e1dd68087e177b9c0e0bc1bac3ffd70c6e1a5a853d46b291d1ab25b85"
     },
     {
       "path": "bot/scripts/v9-continuation-test.mjs",
@@ -698,6 +698,11 @@
       "path": "bot/scripts/v9-pvp-typed-roll-test.mjs",
       "size_bytes": 1680,
       "sha256": "97bc12de385e6700bc53a8ab270e3667543256464be38251fb36f3842e9028da"
+    },
+    {
+      "path": "bot/scripts/v9-release-qualification-test.mjs",
+      "size_bytes": 16225,
+      "sha256": "a6d1c6bf8c20fae615eddf0bbb288e2094b9988504f67924a7866c9dfcc04fc9"
     },
     {
       "path": "bot/scripts/v9-roll-truth-test.mjs",
@@ -781,8 +786,8 @@
     },
     {
       "path": "bot/scripts/validate-offline.mjs",
-      "size_bytes": 4818,
-      "sha256": "377ca7a6564f23dad852ed37408a7371e2fd582ac632bd5aa8e5789a695cd253"
+      "size_bytes": 4909,
+      "sha256": "e41266609caf7d5b5d12a1730a1568ad35ffb822212fb45c6668831d82fbdd33"
     },
     {
       "path": "bot/sql/schema.sql",
@@ -2386,13 +2391,13 @@
     },
     {
       "path": "docs/TYPED_INTENT_PROGRESS.md",
-      "size_bytes": 233971,
-      "sha256": "64b38580f461a389f6e4176d903fcc11ebe3c7ebab04d007003dd97427fd8fb4"
+      "size_bytes": 242577,
+      "sha256": "46b7a29606049e64976ea75902146fae542622338b59ebb6adc0f21467e68c45"
     },
     {
       "path": "docs/TYPED_INTENT_RELEASE_10.0.0.md",
-      "size_bytes": 4147,
-      "sha256": "f30d74efeaee5bd1998b35cb01fa9ab2c1f2e654b8a3b5ef92b6ebe473b57e03"
+      "size_bytes": 4173,
+      "sha256": "2af124b548b48e1979f2b7c3089c3de603454fe1f4b09ed10c54c06937c18d47"
     },
     {
       "path": "docs/UPGRADE_3.0_TO_3.1.md",
@@ -2626,13 +2631,18 @@
     },
     {
       "path": "docs/V9_4_QUALIFICATION.md",
-      "size_bytes": 12801,
-      "sha256": "e1e75626f57d3d26724c9a59f2626f5921429b7a5c23505896500bf9ec530976"
+      "size_bytes": 13603,
+      "sha256": "a92b510f859ae44a6ecf5f1d5304d7554d162ae0dd6ee04e99ade5e1b6b08f31"
     },
     {
       "path": "docs/V9_4_REGRESSION_MATRIX.csv",
       "size_bytes": 41647,
       "sha256": "162b1e26ea0b8fc2aaaacd40f7c6577f9bf5f87b9e5ffaae5065bf956b4c5868"
+    },
+    {
+      "path": "docs/V9_4_RELEASE_QUALIFICATION.md",
+      "size_bytes": 13572,
+      "sha256": "a386b6b1c458bbd20aec1a578c76312d21ba6b8ef318ab2f236c7f8e30698f1c"
     },
     {
       "path": "docs/V9_4_RULES_AND_COMMUNITY_RESEARCH.md",

@@ -1,6 +1,6 @@
 # Typed Intent Refinement Release Qualification — 10.0.0
 
-> Historical T00–T08 qualification only. This document does not qualify the later v9/v9.4 repair work, even though its package version remains 10.0.0. Current phase evidence is in `TYPED_INTENT_PROGRESS.md` and `V9_4_QUALIFICATION.md`. D08 release remains BLOCKED until V9-03–V9-08 complete their mandatory same-source gates. No production operation is authorized by this historical checklist.
+> Historical T00–T08 qualification only. This document does not qualify the later v9/v9.4 repair work, even though its package version remains 10.0.0. Current phase evidence is in `TYPED_INTENT_PROGRESS.md`; the current D08 determination and complete phase ledger are in `V9_4_RELEASE_QUALIFICATION.md`. `V9_4_QUALIFICATION.md` retains B-phase evidence. No production operation is authorized by this historical checklist.
 
 ## Outcome
 
