@@ -37,7 +37,8 @@ try{
     ["rumor","Rumor claims the bridge fell"],["forecast","The roof might collapse"],["metaphor","The fog is like a curtain"],
     ["intent","Witness intends to leave"]]) check({...base,action:"movement",certainty,source_span:span});
   assert.throws(()=>validateNarrativeClaims(db,guild,{narration:"You suffer 2 damage",narrative_claims:[]}),/undeclared/);
-  db.updateCharacterData(pc.id,data=>{data.resources.hp={current:6,max:6};});
+  // Wounded but standing; all-marked HP would require the separate native owner death workflow.
+  db.updateCharacterData(pc.id,data=>{data.resources.hp={current:6,max:7};});
   // Negative marked HP is healing, not damage. Bind it to native reviewed mechanics and current owner choice.
   const nativeSession=db.startSession(guild,"Native healing");db.assignCharacter(nativeSession.id,"owner",pc.id);db.setPresence(nativeSession.id,"owner","present");
   db.updateCharacterData(pc.id,data=>{data.domain_cards=["Synthetic Mend"];});

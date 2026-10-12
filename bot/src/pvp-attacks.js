@@ -7,6 +7,8 @@ import {indexWorldEvent} from "./city-calendar.js";
 import {rollTraitBreakdown} from "./roll-requests.js";
 import {d,dualityRoll} from "./dice.js";
 import {captureAttackFear,pendingPvpFear} from "./pvp-fear-gate.js";
+import {assertPcCanAct,assertPcAttackable} from "./pc-native-eligibility.js";
+import {blazeActionAuthorization,blazeCriticalResult,validateBlazeSavedRoll} from "./pc-death.js";
 const hash=v=>createHash("sha256").update(JSON.stringify(v)).digest("hex");
 function fail(message){throw Object.assign(new Error(message),{code:"NARRATIVE_PVP",expected:true});}
 function closed(input,keys){if(!input||Array.isArray(input)||Object.keys(input).length!==keys.length||keys.some(k=>!(k in input)))fail("Closed native PC attack fields required.");}
@@ -14,6 +16,8 @@ function mechanics(db,guild,input){
   const ctx=validateDamageAttackIntent(db,guild,input.attack),{row,contract}=ctx;
   if(ctx.terms.interaction_scope!=="duel")fail("Group attacks await native spotlight/target locks; consent alone is not execution authority.");
   const pc=db.getCharacter(row.data.actor),target=db.getCharacter(row.data.target),ruling=db.getRulesRuling(guild,input.ruling);
+  if(!blazeActionAuthorization(db,guild,pc.id,ctx.accepted.record_key))assertPcCanAct(pc,db,guild);
+  assertPcAttackable(target,db,guild);
   if(!ruling?.created_by)fail("Save exact human-reviewed weapon/unarmed rules before attack preparation.");
   const actorPresence=scenePresence(db,guild,"character",pc.id),targetPresence=scenePresence(db,guild,"character",target.id);
   for(const presence of [actorPresence,targetPresence])if(presence?.data.state!=="actually_present"||presence.location_key!==contract.data.location_key
@@ -80,7 +84,8 @@ export function preparePvpAttack(db,guild,user,input,{gm=false,interactionId}={}
     const c=mechanics(db,guild,input),key=`pvp-attack:${hash([guild,input.attack])}`,prior=db.getCityRecord(guild,"pvp_attack_request",key);
     if(prior){live(db,guild,key);if(hash(prior.data.offer.input)!==hash(input))fail("Native attack replay cannot change mechanics.");return prior;}
     if(pendingPvpFear(db,guild,c.contract).length)fail("Immediate Fear consequence pending; no next attack.");
-    if(inventory(db,guild).some(r=>r.data.offer?.contract===c.contract.record_key&&!["missed","resolved","cancelled"].includes(r.status)))
+    if(!blazeActionAuthorization(db,guild,c.pc.id,c.accepted.record_key)
+      &&inventory(db,guild).some(r=>r.data.offer?.contract===c.contract.record_key&&!["missed","resolved","cancelled"].includes(r.status)))
       fail("An unfinished attack must reach its native terminal path before another elective attack.");
     const offer={version:1,input,reviewer:user,actor:c.pc.id,target:c.target.id,contract:c.contract.record_key,terms_hash:c.contract.data.terms_hash,
       session:c.row.data.session_id,scene:c.row.data.scene,snapshot:c.snapshot,trait:input.trait,damage:c.damage,damage_type:c.damage_type,
@@ -143,6 +148,8 @@ export function validatePvpAttackRoll(db,guild,key){
     fail("Native attack must have committed before signed consent expiry; history cannot authorize late dice.");
   choice(db,guild,request,o.actor);choice(db,guild,request,o.target);
   const saved=db.getSavedRoll(guild,d.roll_id),defense=db.getCityRecord(guild,"pvp_defense_option_receipt",`${d.attack}:defense`);
+  if(saved?.payload.auto_critical){const blaze=validateBlazeSavedRoll(db,guild,saved.id),staged=db.getCityRecord(guild,"pvp_attack_intent",o.input.attack);
+    if(blaze.data.action!==staged.data.accepted_intent)fail("Blaze Critical belongs to a different native attack.");}
   if(saved?.roll_type!=="damage_pvp_attack"||saved.session_id!==o.session||saved.character_id!==o.actor||saved.discord_user_id!==o.snapshot.actor_owner
     ||hash(saved.payload)!==hash(d.result)||defense?.status!=="confirmed"||defense.subject_key!==o.target
     ||hash(defense.data)!==hash({version:1,attack:d.attack,offer_hash:request.data.offer_hash,evasion:o.evasion,owner:o.snapshot.target_owner,mode:"base_evasion_no_extra_roll"})
@@ -160,7 +167,8 @@ export function rollPvpAttack(db,guild,user,input,{rng=d}={}){
     const c=live(db,guild,input.attack);
     if(row.status!=="ready"||![o.actor,o.target].every(character=>choice(db,guild,row,character)))fail("Independent owner attack/defense approvals required; attack not ready.");
     if(pendingPvpFear(db,guild,c.contract).length)fail("Immediate Fear pending; no dice.");
-    const result={...dualityRoll({modifier:o.breakdown.subtotal,advantage:o.breakdown.advantage,disadvantage:o.breakdown.disadvantage},rng),
+    const result={...(blazeCriticalResult(db,guild,o.actor,c.accepted.record_key)
+      ||dualityRoll({modifier:o.breakdown.subtotal,advantage:o.breakdown.advantage,disadvantage:o.breakdown.disadvantage},rng)),
       roll_type:"damage_pvp_attack",attack:input.attack,terms_hash:o.terms_hash,character_id:o.actor,target_character_id:o.target,evasion:o.evasion};
     result.hit=result.duality==="Critical"||result.total>=o.evasion;
     const rollId=db.addRoll(guild,o.session,user,o.actor,"damage_pvp_attack",result),authorization=choice(db,guild,row,o.actor);

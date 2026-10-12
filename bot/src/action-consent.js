@@ -1,6 +1,6 @@
 /** Exact action-bound native consent. Interaction identity is supplied only by authenticated adapters, never model output. */
 import { createHash } from "node:crypto";
-import { conversationPrincipal } from "./conversation-principal.js";
+import { conversationPrincipal, historicalOwnerPrincipal } from "./conversation-principal.js";
 import { currentScene } from "./scene-continuity.js";
 import { indexWorldEvent } from "./city-calendar.js";
 
@@ -17,6 +17,10 @@ const resources=value=>Array.isArray(value)&&value.length<=32&&new Set(value).si
 export function consentAction(db,guild,key){
   return inspectActionSource(db,guild,key,false);
 }
+/** Only inspect immutable accepted declaration ancestry. Cannot accept, consent to or execute an action. */
+export function historicalActionSource(db,guild,key,{resolved=false}={}){
+  return inspectActionSource(db,guild,key,resolved,true);
+}
 /** Read-only native terminal ancestry; never returns a currently accepted action or grants new participation. */
 export function completedActionSource(db,guild,key){
   const proof=inspectActionSource(db,guild,key,true),d=proof.row.data,receipt=db.getCityRecord(guild,"action_outcome_receipt",d.outcome_receipt);
@@ -28,12 +32,12 @@ export function completedActionSource(db,guild,key){
     ||receipt.data.native_roll_refs.length!==1||receipt.data.native_roll_refs[0]!==roll.id)fail("Exact native terminal action receipt required for read-only history.");
   return proof;
 }
-function inspectActionSource(db,guild,key,completed){
+function inspectActionSource(db,guild,key,completed,historical=false){
   const row=db.getCityRecord(guild,"typed_intent",key),scene=currentScene(db,guild);
   if(!row||row.status!==(completed?"resolved":"accepted_for_adjudication"))fail("Consent needs a current accepted action; history cannot authorize new effects.");
   const source=db.getWorldEvent(guild,row.source_event),d=row.data;
-  const principal=conversationPrincipal(db,guild,d.owner_user_id,d.actor);
-  if(principal.kind!=="owner"||principal.revision!==d.actor_principal_revision
+  const principal=historical?historicalOwnerPrincipal(db,guild,d.owner_user_id,d.actor):conversationPrincipal(db,guild,d.owner_user_id,d.actor);
+  if(principal.kind!==(historical?"historical_owner":"owner")||principal.revision!==d.actor_principal_revision
     ||d.session_id!==scene.session_id||d.scene!==scene.key||!source||source.status!=="active"
     ||source.kind!=="authored_turn"||source.details.author!==principal.user||source.details.character_id!==d.actor
     ||source.details.principal_revision!==principal.revision||source.session_id!==scene.session_id||source.scene!==scene.key

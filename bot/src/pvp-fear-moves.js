@@ -10,6 +10,7 @@ import { configureSimulationEntity, submitNpcAction } from "./simulation.js";
 import { assertNpcAvailability } from "./city-constraints.js";
 import { validateWorldEncounterActivation } from "./encounter.js";
 import { validatePvpAttackRoll } from "./pvp-attacks.js";
+import {settlePvpDamageAction} from "./pvp-damage.js";
 
 export const fearRevision=v=>createHash("sha256").update(JSON.stringify(v)??"undefined").digest("hex");
 const hash=fearRevision;
@@ -272,6 +273,7 @@ function applyMove(db,guild,user,input,{gm=false,rng}={}){
       data:{...gate.data,resolved_effect_ids:refs,revision:gate.data.revision+1}});
     if(ready&&!pendingPvpFear(db,guild,p).length&&p.data.resolution_receipt)
       settlePvpWindow(db,guild,p,db.getCityRecord(guild,"pvp_resolution_receipt",p.data.resolution_receipt));
+    if(ready&&gate.data.version===2)settlePvpDamageAction(db,guild,gate.data.round);
     return effect;
   });
 }

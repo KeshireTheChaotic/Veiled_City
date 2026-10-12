@@ -6,6 +6,7 @@ import { stateRevision } from "./ai-intents.js";
 import { indexWorldEvent, cityAudit } from "./city-calendar.js";
 import { randomUUID } from "node:crypto";
 import { conversationPrincipal } from "./conversation-principal.js";
+import {assertPcCanAct} from "./pc-native-eligibility.js";
 const normalized=value=>String(value||"").toLowerCase().replace(/^the\s+/,"").replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
 export function entryTarget(text){
   if(interpretAuthoredText(text,{natural:true}).kind!=="attempt") return null;
@@ -72,6 +73,7 @@ export function reviewSceneEntry(db,guild,input,reviewer){
   const row=db.getCityRecord(guild,"scene_entry",input.key);
   if(!row||!["pending","awaiting_adjudication"].includes(row.status)||stateRevision(row)!==input.expected_revision) throw new Error("Current pending entry revision required.");
   const pc=personalCharacter(db,guild,row.data.user,row.data.character),source=db.getWorldEvent(guild,row.source_event);
+  assertPcCanAct(pc,db,guild);
   if(!source||source.status!=="active"||source.kind!=="player_declaration"||source.details.author!==pc.owner_user_id
     ||source.details.character_id!==pc.id||!db.ownerAuthoredSource(guild,source.event_key,pc.owner_user_id)
     ||row.data.session_id!==db.getActiveSession(guild).id||row.data.scene!==currentScene(db,guild).key

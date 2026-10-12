@@ -135,9 +135,14 @@ bot/scripts/v9-pvp-hope-fear-test.mjs
 bot/scripts/v9-pvp-rounds-test.mjs
 bot/scripts/v9-pvp-typed-roll-test.mjs
 bot/scripts/v9-window-lifecycle-test.mjs
+bot/scripts/v94-death-fixtures.mjs
+bot/scripts/v94-incoming-fixtures.mjs
+bot/scripts/v94-pc-death-test.mjs
 bot/scripts/v94-pc-effect-authority-test.mjs
+bot/scripts/v94-pc-recovery-test.mjs
 bot/scripts/v94-pvp-attack-fixtures.mjs
 bot/scripts/v94-pvp-attack-test.mjs
+bot/scripts/v94-pvp-damage-test.mjs
 bot/scripts/v94-pvp-profile-test.mjs
 bot/scripts/v94-pvp-reaction-test.mjs
 bot/scripts/validate-command-schema.mjs
@@ -225,8 +230,10 @@ bot/src/operations/overview.js
 bot/src/outcome-preview.js
 bot/src/owned-community.js
 bot/src/owner-consent.js
+bot/src/pc-death.js
 bot/src/pc-effects.js
 bot/src/pc-incoming.js
+bot/src/pc-native-eligibility.js
 bot/src/personal-continuity.js
 bot/src/player-language.js
 bot/src/portrayal.js
@@ -238,6 +245,7 @@ bot/src/publishing.js
 bot/src/pvp-attacks.js
 bot/src/pvp-authority.js
 bot/src/pvp-authorship.js
+bot/src/pvp-damage.js
 bot/src/pvp-fear-gate.js
 bot/src/pvp-fear-moves.js
 bot/src/pvp-output.js

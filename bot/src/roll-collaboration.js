@@ -11,6 +11,9 @@ import { StateConflictError, PermissionError, UserInputError } from "./errors.js
 import { finalizeTypedRollAction } from "./typed-roll-outcomes.js";
 import { assertNonPvpCombatant } from "./pvp-authority.js";
 import { validatePvpAttackRoll } from "./pvp-attacks.js";
+import { validatePvpDamageRoll } from "./pvp-damage.js";
+import { validatePcDeathOutcome,blazeActionAuthorization,blazeCriticalResult,completeBlazeAction,validateBlazeSavedRoll } from "./pc-death.js";
+import {assertPcCanAct,hopeCap} from "./pc-native-eligibility.js";
 function fail(message){throw new StateConflictError(message);}
 /** Called only by the authenticated GM command/review boundary, never by model-supplied identity. */
 export function adjudicateRollSource(db,guild,input,reviewer){
@@ -32,7 +35,8 @@ function live(db,guild,row){
   const pc=personalCharacter(db,guild,row.data.owner_user_id,row.subject_key);
   const checkResources=character=>{
     const r=character.data.resources;
-    if(!Number.isSafeInteger(r?.hope)||r.hope<0||r.hope>6||!Number.isSafeInteger(r.stress?.current)
+    if(character.id!==row.subject_key||!blazeActionAuthorization(db,guild,character.id,row.data.input?.accepted_intent))assertPcCanAct(character,db,guild);
+    if(!Number.isSafeInteger(r?.hope)||r.hope<0||r.hope>hopeCap(character.data)||!Number.isSafeInteger(r.stress?.current)
       ||!Number.isSafeInteger(r.stress?.max)||r.stress.current<0||r.stress.current>r.stress.max)
       fail("Current Hope/Stress values are unverified; seek human correction before dice or spending.");
   };
@@ -67,7 +71,8 @@ function save(db,guild,before,data,status,actor){
 }
 function spend(db,pc,amount){
   const hope=pc.data.resources?.hope;
-  if(!Number.isSafeInteger(hope)||hope<amount||hope>6) fail("Insufficient verified Hope; no charge or dice.");
+  assertPcCanAct(pc,db,pc.guild_id);
+  if(!Number.isSafeInteger(hope)||hope<amount||hope>hopeCap(pc.data)) fail("Insufficient verified Hope; no charge or dice.");
   return db.updateCharacterData(pc.id,data=>{data.resources.hope-=amount;});
 }
 function proof(db,guild,row,pc,input,kind){
@@ -115,11 +120,24 @@ function finishDamage(db,guild,row,data){
 }
 /** Same native action/reaction metacurrency semantics used by raw and request-bound rolls. */
 export function applyRollOutcome(db,guild,session,characterIds,result,{reaction=false}={}){
-  const identities=db.savedRollsForResult(guild,result.id),protectedRoll=identities.find(r=>["damage_pvp_attack","narrative_pvp","reaction"].includes(r.roll_type));
+  const identities=db.savedRollsForResult(guild,result.id),protectedRoll=identities.find(r=>["damage_pvp_attack","damage_pvp_damage","pc_death","blaze_final_action","narrative_pvp","reaction"].includes(r.roll_type));
   if(protectedRoll){
     if(identities.length!==1||Object.keys(result).some(k=>JSON.stringify(result[k])!==JSON.stringify(protectedRoll.payload[k])))
       fail("Unverified relabeling of native PvP dice cannot authorize resources.");
     result=protectedRoll.payload;
+    if(protectedRoll.roll_type==="blaze_final_action"){
+      validateBlazeSavedRoll(db,guild,protectedRoll.id);
+      if(protectedRoll.session_id!==session||characterIds.length!==1||characterIds[0]!==protectedRoll.character_id)fail("Native final action cannot authorize another PC's resources.");
+      return;
+    }
+    if(["pc_death","damage_pvp_damage"].includes(protectedRoll.roll_type)){
+      const receipt=protectedRoll.roll_type==="pc_death"?validatePcDeathOutcome(db,guild,`${result.request}:outcome`)
+        :validatePvpDamageRoll(db,guild,`${result.attack_receipt}:damage`).receipt;
+      const id=protectedRoll.roll_type==="pc_death"?receipt.data.roll:receipt.data.roll_id;
+      if(id!==protectedRoll.id||protectedRoll.session_id!==session||characterIds.length!==1||characterIds[0]!==protectedRoll.character_id)
+        fail("Exact native death/damage identity required; no generic metacurrency.");
+      return;
+    }
     if(protectedRoll.roll_type==="reaction"){
       if(protectedRoll.session_id!==session||characterIds.length!==1||characterIds[0]!==protectedRoll.character_id)
         fail("Native reaction identity cannot authorize another character's resources.");
@@ -132,6 +150,7 @@ export function applyRollOutcome(db,guild,session,characterIds,result,{reaction=
       fail("Unverified native damage-PvP result cannot grant generic resources.");
     return;
   }
+  if(result.auto_critical||["pc_death","damage_pvp_damage","blaze_final_action"].includes(result.roll_type))fail("Native death/damage dice require saved identity; no generic resources.");
   if(result.proposal||result.terms_hash||result.choice||result.roll_type==="narrative_pvp"){
     // A caller cannot reclassify custom opposed dice as an ordinary action/Critical resource grant.
     let found=false;
@@ -151,7 +170,7 @@ export function applyRollOutcome(db,guild,session,characterIds,result,{reaction=
   if(reaction) return;
   if(["Hope","Critical"].includes(result.duality)){
     for(const id of characterIds) db.updateCharacterData(id,data=>{
-      data.resources=data.resources||{};data.resources.hope=Math.min(6,Number(data.resources.hope||0)+1);
+      data.resources=data.resources||{};data.resources.hope=Math.min(hopeCap(data),Number(data.resources.hope||0)+1);
       if(result.duality==="Critical"){
         data.resources.stress=data.resources.stress||{current:0,max:6};
         data.resources.stress.current=Math.max(0,Number(data.resources.stress.current||0)-1);
@@ -284,11 +303,13 @@ export function contributeRoll(db,guild,user,input,{rng=d}={}){
         const current=pc.data.experiences.find(e=>(typeof e==="string"?e:e.name)===item.name);
         if((typeof current==="string"?2:current?.modifier)!==item.bonus) fail("Invoked Experience changed; human correction required.");
       }
-      const rolled=dualityRoll({modifier:b.subtotal,experience:(data.experiences||[]).reduce((n,item)=>n+item.bonus,0),
+      const blaze=blazeCriticalResult(db,guild,pc.id,data.input?.accepted_intent);
+      if(blaze&&(data.tag||data.helpers?.length||data.experiences?.length))fail("Final action optional features need separate native reviewed mapping; no generic group or paid bonus.");
+      const rolled=blaze||dualityRoll({modifier:b.subtotal,experience:(data.experiences||[]).reduce((n,item)=>n+item.bonus,0),
         advantage:b.advantage,disadvantage:b.disadvantage,helperDice:(data.helpers||[]).map(helper=>helper.die)},rng);
-      const id=db.addRoll(guild,data.session_id,user,pc.id,data.tag?"tag_team_action":data.kind,{...rolled,request:key,revision:input.expected_revision});
+      const id=db.addRoll(guild,data.session_id,user,pc.id,blaze?"blaze_final_action":data.tag?"tag_team_action":data.kind,{...rolled,request:key,revision:input.expected_revision});
       if(data.tag){target.roll_id=id;target.result=rolled;status=data.tag.participants.every(item=>item.roll_id)?"awaiting_selection":"pending";}
-      else{data.roll_id=id;data.result=rolled;status=resultStatus(data);applyRollOutcome(db,guild,data.session_id,[pc.id],rolled,{reaction:data.kind==="reaction"});}
+      else{data.roll_id=id;data.result=rolled;status=resultStatus(data);if(!blaze)applyRollOutcome(db,guild,data.session_id,[pc.id],rolled,{reaction:data.kind==="reaction"});}
     }else if(input.op==="select"){
       const tag=data.tag;
       if(!tag||row.status!=="awaiting_selection"||!tag.participants.some(item=>item.user===user&&item.character===pc.id)
@@ -328,6 +349,7 @@ export function contributeRoll(db,guild,user,input,{rng=d}={}){
     }else throw new UserInputError("Unsupported mechanical contribution. Describe your intent freely; no narrative response menu is required.");
     const after=save(db,guild,row,data,status,user);
     if(after.status==="resolved"&&after.data.input?.accepted_intent)finalizeTypedRollAction(db,guild,after);
+    if(after.status==="resolved"&&after.data.result?.auto_critical)completeBlazeAction(db,guild,pc.id,after.data.input.accepted_intent,{request:after.record_key,roll:after.data.roll_id});
     recordObservedAttack(db,guild,after);
     const resource_deltas=affected.map(id=>{
       const before=beforeResources.get(id),current=db.getCharacter(id).data.resources;

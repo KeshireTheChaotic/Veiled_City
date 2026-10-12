@@ -1,7 +1,7 @@
 /** V3 damage/group consent. Accepted intent is input; these agreements never mint dice or effects. */
 import {createHash} from "node:crypto";
-import {consentAction} from "./action-consent.js";
-import {conversationPrincipal} from "./conversation-principal.js";
+import {consentAction,historicalActionSource} from "./action-consent.js";
+import {conversationPrincipal,historicalOwnerPrincipal} from "./conversation-principal.js";
 import {currentScene} from "./scene-continuity.js";
 import {indexWorldEvent} from "./city-calendar.js";
 import {isPvpIntent,pvpTarget} from "./pvp-authority.js";
@@ -13,16 +13,16 @@ function closed(v,keys){
 }
 const text=(v,max=600)=>typeof v==="string"&&!!v.trim()&&v.length<=max;
 function nativeId(interactionId){if(!text(interactionId,100))fail("Authenticated PvP interaction required.");return interactionId;}
-function controlledOwner(db,guild,character){
+function controlledOwner(db,guild,character,historical=false){
   const pc=db.getCharacter(character);
   if(pc?.guild_id!==guild||!pc.owner_user_id)fail("Current campaign PC owner required.");
   let principal;
-  try{principal=conversationPrincipal(db,guild,pc.owner_user_id,character);}
+  try{principal=historical?historicalOwnerPrincipal(db,guild,pc.owner_user_id,character):conversationPrincipal(db,guild,pc.owner_user_id,character);}
   catch(error){
     if(!/Active session|attendance|controlled role|campaign character/i.test(error.message))throw error;
     fail("Current controlled owner principal/attendance required.");
   }
-  if(principal.kind!=="owner")fail("Current controlled owner required, never proxy consent.");
+  if(principal.kind!==(historical?"historical_owner":"owner"))fail("Current controlled owner required, never proxy consent.");
   return {character,user:pc.owner_user_id,principal_revision:principal.revision};
 }
 function checkTerms(db,guild,input,{historical=false}={}){
@@ -35,7 +35,7 @@ function checkTerms(db,guild,input,{historical=false}={}){
   if(!text(input.objective)||!Array.isArray(input.participants)||input.participants.length<2||input.participants.length>12
     ||!Array.isArray(input.stakes)||input.stakes.length!==input.participants.length)fail("Bounded independent participants and per-owner stakes required.");
   const participants=input.participants.map(p=>{
-    closed(p,["character","team"]);controlledOwner(db,guild,p.character);
+    closed(p,["character","team"]);controlledOwner(db,guild,p.character,historical);
     if(p.team!==null&&!text(p.team,40))fail("Explicit bounded team or null required.");return {...p};
   });
   if(new Set(participants.map(p=>p.character)).size!==participants.length
@@ -113,10 +113,10 @@ function live(db,guild,key,{terminal=false,committed=false}={}){
     ||source.details.digest!==p.data.terms_hash||hash(source.details.snapshot)!==p.data.terms_hash
     ||source.scene!==s.scene||source.session_id!==s.session_id||!s.participants.some(w=>w.user===source.details.author&&w.character===source.subject_key)
     ||source.source_id!==`player:${source.details.author}`||!db.ownerAuthoredSource(guild,source.event_key,source.details.author))fail("PvP terms source retracted, stale or changed.");
-  try{consentAction(db,guild,s.accepted_intent);}catch(error){if(error.code!=="SCENE_ACTION_WINDOW")throw error;fail("Original PvP declaration source/owner is stale or retracted.");}
+  try{(committed?historicalActionSource:consentAction)(db,guild,s.accepted_intent);}catch(error){if(error.code!=="SCENE_ACTION_WINDOW")throw error;fail("Original PvP declaration source/owner is stale or retracted.");}
   checkTerms(db,guild,s.terms,{historical:committed});
   for(const w of s.participants){
-    if(controlledOwner(db,guild,w.character).principal_revision!==w.principal_revision)fail("PvP current owner principal changed.");
+    if(controlledOwner(db,guild,w.character,committed).principal_revision!==w.principal_revision)fail("PvP current owner principal changed.");
     if(db.getCharacter(w.character).data.location!==s.location_key)fail("PvP participant location changed; scope review required.");
   }
   return p;
@@ -253,7 +253,7 @@ export function validateDamageAttackIntent(db,guild,key,{committed=false}={}){
   const row=db.getCityRecord(guild,"pvp_attack_intent",key),d=row?.data;
   if(!row||d.version!==3||row.status!=="awaiting_native_attack"||row.visibility!=="character"||row.subject_key!==d.actor
     ||key!==`pvp-attack-intent:${hash([guild,d.accepted_intent,d.contract,d.terms_hash])}`)fail("Exact native pending attack input required.");
-  const {row:accepted}=consentAction(db,guild,d.accepted_intent),ctx=validateDamagePvp(db,guild,d.contract,{committed});
+  const {row:accepted}=(committed?historicalActionSource:consentAction)(db,guild,d.accepted_intent),ctx=validateDamagePvp(db,guild,d.contract,{committed});
   if(accepted.source_event!==row.source_event||accepted.data.source_hash!==d.source_hash||accepted.data.actor!==d.actor
     ||accepted.data.operation!=="attack"||pvpTarget(db,guild,accepted)?.id!==d.target
     ||ctx.contract.data.terms_hash!==d.terms_hash||d.scene!==ctx.contract.data.scene||d.session_id!==ctx.contract.data.session_id

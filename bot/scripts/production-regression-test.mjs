@@ -21,8 +21,9 @@ const u1="1001", u2="1002";
 db.ensureCampaign(guild);
 db.upsertPlayer(guild,u1,"Player One");
 db.upsertPlayer(guild,u2,"Player Two");
-const c1=db.createCharacter(guild,u1,"One",{resources:{hp:{current:3,max:3},stress:{current:0,max:6},hope:2,armor:{current:0,max:0}}});
-const c2=db.createCharacter(guild,u2,"Two",{resources:{hp:{current:3,max:3},stress:{current:0,max:6},hope:2,armor:{current:0,max:0}}});
+// Marked HP, not remaining health: these ordinary authority/privacy actors are healthy.
+const c1=db.createCharacter(guild,u1,"One",{resources:{hp:{current:0,max:3},stress:{current:0,max:6},hope:2,armor:{current:0,max:0}}});
+const c2=db.createCharacter(guild,u2,"Two",{resources:{hp:{current:0,max:3},stress:{current:0,max:6},hope:2,armor:{current:0,max:0}}});
 const session=db.startSession(guild,"Production Test","already_together");
 db.setPresence(session.id,u1,"present");
 db.setPresence(session.id,u2,"present");

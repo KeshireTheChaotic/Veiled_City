@@ -14,6 +14,7 @@ import { currentAcceptedIntent, currentTypedMovement } from "./typed-intents.js"
 import { movementAdjudication } from "./rules-arbitration.js";
 import { contextMemoriesForScope } from "./context-memory.js";
 import { captureDepartureWitnesses } from "./character-observation.js";
+import {assertPcCanAct} from "./pc-native-eligibility.js";
 const hash=value=>createHash("sha256").update(JSON.stringify(value)).digest("hex").slice(0,40);
 export const AUTONOMOUS_WORLD_VERSION=1;
 const object=properties=>({type:"object",additionalProperties:false,properties,required:Object.keys(properties)});
@@ -275,6 +276,7 @@ function applyWorld(db,guild,narrative,scope,provenance,content){
       fail("Quoted, conditional or hypothetical spans cannot authorize native scene actions.");
     const latest=db.getCharacter(pc.id);
     if(action.kind==="move"){
+      assertPcCanAct(latest,db,guild);
       const semantic=currentTypedMovement(db,guild,latest,action.source_span,target,scope,source.event_key);
       if(!semantic&&!entrySource)
         fail("Movement requires current verified typed intent authorization or an explicit revalidated legacy scene entry.");
@@ -345,6 +347,7 @@ function applyWorld(db,guild,narrative,scope,provenance,content){
       results.push({status:"introduced",key:target,source_event:arrival.event_key,
         adjudication:movementAdjudication({sourceRef:actionSource.event_key,sourceSpan:action.source_span,receipt:arrival.event_key})});
     }else if(action.kind==="local_zone"){
+      assertPcCanAct(latest,db,guild);
       const zoneIntent=currentAcceptedIntent(db,guild,{sourceEvent:source.event_key,actor:pc.id,type:'local_zone',
         sourceSpan:action.source_span,targetKey:target,scope});
       if(target!==latest.data.location||!action.zone.trim()||!zoneIntent)

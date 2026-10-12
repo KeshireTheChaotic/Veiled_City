@@ -5,8 +5,9 @@ import { indexWorldEvent } from "./city-calendar.js";
 import { currentScene, scenePresence, sceneAccess, RANGE_BANDS } from "./scene-continuity.js";
 import { activeCityProxy } from "./city-constraints.js";
 import { personalCharacter } from "./personal-continuity.js";
-import { conversationPrincipal } from "./conversation-principal.js";
+import { conversationPrincipal,historicalOwnerPrincipal } from "./conversation-principal.js";
 import { assertNonPvpCombatant } from "./pvp-authority.js";
+import {assertPcAttackable} from "./pc-native-eligibility.js";
 
 const hash=v=>createHash("sha256").update(JSON.stringify(v)).digest("hex");
 function fail(message){throw Object.assign(new Error(message),{code:"PC_EFFECT_AUTHORITY",expected:true});}
@@ -29,6 +30,7 @@ function facts(db,guild,input,library){
     fail("Current native encounter, NPC binding, unproxied presence, source and target legality required.");
   for(const presence of [npc,target])if(db.getWorldEvent(guild,presence.source_event)?.status!=="active")fail("Native presence source retracted.");
   personalCharacter(db,guild,pc.owner_user_id,pc.id);
+  assertPcAttackable(pc,db,guild);
   const standard=/^(.+?)\s*[—–]\s*(Melee|Very Close|Close|Far|Very Far)\s*[—–]\s*(\d+d\d+(?:[+-]\d+)?)\s+(physical|magic)$/u.exec(template.standard);
   const evasion=pc.data.evasion,{major,severe}=pc.data.thresholds||{};
   const defenses=input.defenses;
@@ -131,27 +133,73 @@ function verifyRoll(db,guild,row){
 }
 export function resolveIncomingDamage(db,guild,user,key,{armor=false,library}={}){
   return db.transaction(()=>{
-    const prior=db.getCityRecord(guild,"pc_effect_receipt",`${key}:damage`),c=context(db,guild,key,library,{applied:!!prior}),{row,pc}=c;
+    const prior=db.getCityRecord(guild,"pc_effect_receipt",`${key}:damage`);
+    if(prior?.data.version===2){const receipt=validateIncomingDamageApplication(db,guild,prior.record_key);
+      if(receipt.data.owner!==user||receipt.data.armor!==armor)fail("Native damage receipt owner/decision replay differs.");return receipt;}
+    const c=context(db,guild,key,library,{applied:!!prior}),{row,pc}=c;
     personalCharacter(db,guild,user,pc.id);defenseProof(db,guild,row);const roll=verifyRoll(db,guild,row);
     if(prior){if(prior.data.roll!==roll.record_key||prior.data.armor!==armor)fail("Native damage receipt replay differs.");return prior;}
     if(!roll.data.hit||row.status!=="awaiting_armor"||typeof armor!=="boolean")fail("Actual hit and affected owner Armor decision required.");
     const resources=pc.data.resources,hp=resources.hp,slots=resources.armor;
-    if(![hp?.current,hp?.max,slots?.current,slots?.max].every(Number.isSafeInteger)||hp.current<0||hp.current>=hp.max
+    if(![hp?.current,hp?.max,slots?.current,slots?.max].every(Number.isSafeInteger)||hp.current<0||hp.current>hp.max||hp.max<1||hp.max>12
       ||slots.current<0||slots.current>slots.max||armor&&slots.current===slots.max)fail("Verified available HP and owner-selected Armor Slot required.");
     if(armor&&!c.defenses.armor_allowed)fail("Armor is not applicable to this reviewed damage source.");
     const damage=c.defenses.resistance==="immune"?0:c.defenses.resistance==="half"?Math.ceil(roll.data.damage.total/2):roll.data.damage.total;
     const base=damage<=0?0:damage>=c.severe?3:damage>=c.major?2:1,marks=Math.max(0,base-(armor?c.defenses.armor_reduction:0));
     if(armor&&!base)fail("No positive damage to reduce with Armor.");
-    db.updateCharacterData(pc.id,data=>{data.resources.hp.current=Math.min(hp.max,hp.current+marks);if(armor)data.resources.armor.current++;});
+    const choice=indexWorldEvent(db,guild,{key:`${key}:armor`,kind:"incoming_armor_owner_choice",title:"Affected owner chooses native incoming Armor",
+      source_id:`player:${user}`,session_id:c.snapshot.session,scene:c.snapshot.scene,visibility:"character",subject_key:pc.id,
+      details:{author:user,attack:key,offer_hash:hash(row.data.offer),armor,principal:c.snapshot.principal}},user);
+    if(choice.status!=="active")fail("Native Armor owner source revoked.");
+    db.updateCharacterData(pc.id,data=>{data.resources.hp.current=Math.min(hp.max,hp.current+marks);if(armor)data.resources.armor.current++;
+      if(hp.current+marks>=hp.max&&marks>0)data.death_state={request:`${key}:death`,status:"pending_choice"};});
+    const after=db.getCharacter(pc.id).data.resources;
+    const mutation=db.recordMutation(guild,{sessionId:c.snapshot.session,actorType:"player",actorId:user,sourceLayer:"pc_incoming",mutationType:"verified_npc_attack",
+      entityKey:pc.id,visibility:"character",before:resources,after,rationale:"Native NPC standard attack with target-owned Armor.",payload:{attack:key,effect:`${key}:damage`}});
+    const material={version:2,cause_type:"verified_npc_attack",roll:roll.record_key,character:pc.id,
+      hp_marks:Math.min(marks,hp.max-hp.current),armor,defenses:c.defenses,damage_after_resistance:damage,before:resources,after,
+      session:c.snapshot.session,scene:c.snapshot.scene,owner:user,principal:c.snapshot.principal,owner_choice:choice.event_key,mutation:mutation.id};
     const receipt=db.saveCityRecord(guild,{kind:"pc_effect_receipt",key:`${key}:damage`,status:"resolved",source_event:row.source_event,
-      visibility:"character",subject_key:pc.id,data:{version:1,cause_type:"verified_npc_attack",roll:roll.record_key,character:pc.id,
-        hp_marks:Math.min(marks,hp.max-hp.current),armor,defenses:c.defenses,damage_after_resistance:damage,before:resources,after:db.getCharacter(pc.id).data.resources,
-        session:c.snapshot.session,scene:c.snapshot.scene,owner:user}});
-    if(hp.current+marks>=hp.max)db.saveCityRecord(guild,{kind:"pc_death_move_request",key:`${key}:death`,status:"awaiting_owner",
-      source_event:row.source_event,visibility:"character",subject_key:pc.id,data:{version:1,character:pc.id,cause:receipt.record_key,owner:user,
-        authority:"Only the affected owner may select their native SRD death move; no death or narration is automatically chosen."}});
+      visibility:"character",subject_key:pc.id,data:{...material,effect_digest:hash(material)}});
+    if(hp.current+marks>=hp.max&&marks>0){const data={version:2,character:pc.id,cause:receipt.record_key,owner:user,principal:c.snapshot.principal,scene:c.snapshot.scene,session:c.snapshot.session,
+      authority:"Only the affected owner may select their native SRD death move; no death or narration is automatically chosen."};
+      db.saveCityRecord(guild,{kind:"pc_death_move_request",key:`${key}:death`,status:"awaiting_owner",
+        source_event:row.source_event,visibility:"character",subject_key:pc.id,data:{...data,digest:hash(data)}});}
     db.saveCityRecord(guild,{...row,key,status:"resolved"});return receipt;
   });
+}
+
+/** Current-source, read-only native injury ancestry. Does not require the injured PC still to be alive or unhealed. */
+export function validateIncomingDamageApplication(db,guild,key){
+  const receipt=db.getCityRecord(guild,"pc_effect_receipt",key),{effect_digest,...v}=receipt?.data||{},pc=v.character&&db.getCharacter(v.character);
+  const row=v.roll&&db.getCityRecord(guild,"pc_incoming_attack",v.roll.replace(/:roll$/u,"")),o=row?.data.offer;
+  const source=row&&db.getWorldEvent(guild,row.source_event),original=o&&db.getWorldEvent(guild,o.input.source),scene=currentScene(db,guild);
+  if(receipt?.status!=="resolved"||v.version!==2||v.cause_type!=="verified_npc_attack"||hash(v)!==effect_digest||row?.status!=="resolved"
+    ||key!==`${row.record_key}:damage`||receipt.visibility!=="character"||receipt.subject_key!==v.character||receipt.source_event!==row.source_event
+    ||pc?.guild_id!==guild||pc.owner_user_id!==v.owner||v.owner!==o.snapshot.owner||v.principal!==o.snapshot.principal
+    ||historicalOwnerPrincipal(db,guild,v.owner,v.character).revision!==v.principal||v.scene!==scene.key||v.session!==scene.session_id
+    ||source?.status!=="active"||source.kind!=="native_npc_attack_offer"||source.source_id!==`gm:${o.gm}`||hash(source.details)!==hash(o)
+    ||!db.ownerAuthoredSource(guild,source.event_key,o.gm)||original?.status!=="active"||hash(original)!==o.snapshot.source)
+    fail("Exact current native incoming effect/source/owner ancestry required.");
+  defenseProof(db,guild,row);const roll=verifyRoll(db,guild,row),r=roll.data,spec=diceSpec(o.damage),specDamage=r.damage;
+  const expectedHit=r.face===20||r.face+o.bonus>=o.evasion;
+  if(!Number.isSafeInteger(r.face)||r.face<1||r.face>20||r.bonus!==o.bonus||r.evasion!==o.evasion||r.total!==r.face+o.bonus
+    ||r.hit!==expectedHit||!r.hit||r.type!==o.damage_type||specDamage?.expression!==o.damage||specDamage.modifier!==spec.mod
+    ||specDamage.dice.length!==spec.count||specDamage.dice.some(n=>!Number.isSafeInteger(n)||n<1||n>spec.sides)
+    ||specDamage.total!==specDamage.dice.reduce((a,b)=>a+b,0)+spec.mod+(r.face===20?spec.count*spec.sides:0))fail("Native incoming attack/damage dice arithmetic required.");
+  const damage=o.input.defenses.resistance==="immune"?0:o.input.defenses.resistance==="half"?Math.ceil(specDamage.total/2):specDamage.total;
+  const severity=damage<=0?0:damage>=o.severe?3:damage>=o.major?2:1;
+  const marks=Math.min(Math.max(0,severity-(v.armor?o.input.defenses.armor_reduction:0)),v.before.hp.max-v.before.hp.current),after=structuredClone(v.before);
+  after.hp.current+=marks;if(v.armor)after.armor.current++;
+  const choice=db.getWorldEvent(guild,v.owner_choice),mutation=db.getMutation(guild,v.mutation);
+  if(typeof v.armor!=="boolean"||v.armor&&(!o.input.defenses.armor_allowed||severity===0||v.before.armor.current>=v.before.armor.max)
+    ||v.hp_marks!==marks||v.damage_after_resistance!==damage||hash(v.defenses)!==hash(o.input.defenses)||hash(v.after)!==hash(after)
+    ||choice?.status!=="active"||choice.kind!=="incoming_armor_owner_choice"||choice.source_id!==`player:${v.owner}`||choice.visibility!=="character"
+    ||choice.subject_key!==v.character||choice.details.author!==v.owner||choice.details.principal!==v.principal||choice.details.attack!==row.record_key
+    ||choice.details.offer_hash!==hash(o)||choice.details.armor!==v.armor||!db.ownerAuthoredSource(guild,choice.event_key,v.owner)
+    ||mutation?.source_layer!=="pc_incoming"||mutation.entity_key!==v.character||hash(JSON.parse(mutation.before_json))!==hash(v.before)
+    ||hash(JSON.parse(mutation.after_json))!==hash(v.after))fail("Exact incoming Armor owner choice and atomic native damage mutation required.");
+  return receipt;
 }
 
 /** Read-only injury evidence. No reroll, effect application, or public disclosure is implied. */

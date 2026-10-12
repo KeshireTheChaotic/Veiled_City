@@ -25,7 +25,8 @@ try{
   const guild="inference";db.ensureCampaign(guild);const session=db.startSession(guild,"Context lab");
   configureCityFlags(db,guild,{natural_language:true,scene_continuity:true,semantic_integrity:true});
   for(const key of ["street","moon","locked"])db.setSimulationEntity(guild,"location",key,{name:key==="moon"?"Silver Moon diner":key,locked:key==="locked"});
-  db.upsertPlayer(guild,"owner","Owner");const pc=db.createCharacter(guild,"owner","Doctor",{location:"street",resources:{hp:{current:5,max:5}}});
+  // HP current counts marked slots, not remaining health. This inference/travel fixture is healthy, not a pending death move.
+  db.upsertPlayer(guild,"owner","Owner");const pc=db.createCharacter(guild,"owner","Doctor",{location:"street",resources:{hp:{current:0,max:5}}});
   db.assignCharacter(session.id,"owner",pc.id);db.setPresence(session.id,"owner","present");
   db.updateCharacterData(pc.id,data=>{data.location="street";});
   db.upsertPlayer(guild,"other","Other");const other=db.createCharacter(guild,"other","Other",{});

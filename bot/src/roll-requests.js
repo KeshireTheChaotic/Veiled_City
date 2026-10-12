@@ -8,6 +8,8 @@ import { TRAITS } from "./character-system.js";
 import { StateConflictError, UserInputError } from "./errors.js";
 import { diceSpec } from "./dice.js";
 import { isPvpIntent, assertNonPvpCombatant } from "./pvp-authority.js";
+import {assertPcCanAct} from "./pc-native-eligibility.js";
+import {blazeActionAuthorization} from "./pc-death.js";
 const hash=value=>createHash("sha256").update(JSON.stringify(value)).digest("hex");
 const signed=value=>`${value>=0?"+":""}${value}`;
 export const rollRevision=hash;
@@ -23,7 +25,9 @@ function sourceActor(db,guild,input){
   if(!legacy&&!typed||source.details.character_id!==input.character_id||source.source_id!==`player:${source.details.author}`
     ||!session||source.session_id!==session.id||source.scene!==currentScene(db,guild).key||!db.ownerAuthoredSource(guild,source.event_key,source.details.author))
     throw new StateConflictError("A current authenticated owner declaration in this scene is required.");
-  return {source,accepted,session,pc:personalCharacter(db,guild,source.details.author,input.character_id)};
+  const pc=personalCharacter(db,guild,source.details.author,input.character_id);
+  if(!blazeActionAuthorization(db,guild,pc.id,accepted?.record_key))assertPcCanAct(pc,db,guild);
+  return {source,accepted,session,pc};
 }
 /** Pure shared trait/modifier validation. This supplies no target, dice, costs or execution permission. */
 export function rollTraitBreakdown(db,guild,input,pc){
@@ -92,6 +96,7 @@ export function rollBreakdown(db,guild,input,pc){
 }
 export function prepareRollRequest(db,guild,input,actor,context={}){
   const {source,accepted,pc,session}=sourceActor(db,guild,input);
+  if(blazeActionAuthorization(db,guild,pc.id,accepted?.record_key))input={...input,private_result:true};
   if(context.scope?.mode==="private"&&(context.scope.actorUserId!==pc.owner_user_id||context.scope.actorCharacterId!==pc.id))
     throw new StateConflictError("Private requests belong only to the current authenticated actor.");
   const values=rollBreakdown(db,guild,input,pc),key=input.accepted_intent

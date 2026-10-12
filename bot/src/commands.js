@@ -25,7 +25,7 @@ import { chunkDiscordLines } from "./discord/chunking.js";
 import { deliverInteractionText } from "./discord/delivery.js";
 import { deliverAssemblyParts } from "./assembly-delivery.js";
 import { assertGmOnlyChannel, assertPlayerPrivateChannel } from "./discord/privacy.js";
-import { isExpectedError, PermissionError, NotFoundError, StateConflictError } from "./errors.js";
+import { isExpectedError, PermissionError, NotFoundError, StateConflictError, UserInputError } from "./errors.js";
 import { replayReceiptIfPresent, installReceiptCapture, isMutatingCommand } from "./idempotency.js";
 import { runCampaignDiagnostics, formatDiagnostics } from "./operations/diagnostics.js";
 import { buildGmOverview, formatGmOverview } from "./operations/overview.js";
@@ -60,8 +60,11 @@ import { archivePvpHistory, quarantineSessionRecap, certifiedSessionRecap, scope
 import { pendingPvpFear } from "./pvp-fear-gate.js";
 import { proposeDamagePvp, reviewDamagePvp, respondDamagePvp, reviseDamagePvp, damagePvpInbox } from "./pvp-profiles.js";
 import { preparePvpAttack, reviewPvpAttack, authorizePvpAttack, rollPvpAttack } from "./pvp-attacks.js";
+import {rollPvpDamage,preparePvpDamage,reviewPvpDamage,resolvePvpDamage} from "./pvp-damage.js";
+import {reviewPcDeathMove,choosePcDeathMove,allocatePcDeathRecovery,approveBlazeAction} from "./pc-death.js";
+import {hopeCap,assertPcCanAct} from "./pc-native-eligibility.js";
 import { preparePvpReaction, reviewPvpReaction, rollPvpReaction } from "./pvp-reactions.js";
-import { reviewFeatureEffect, reviewPcEffect, approvePcEffect, applyPcEffect } from "./pc-effects.js";
+import { reviewFeatureEffect, reviewPcEffect, approvePcEffect, applyPcEffect,reviewHealingSource,authorizeHealingSource } from "./pc-effects.js";
 import { prepareIncomingAttack, reviewIncomingAttack, confirmIncomingDefense, rollIncomingAttack, resolveIncomingDamage } from "./pc-incoming.js";
 import { queueDirectorPublications } from "./publication-outbox.js";
 
@@ -402,9 +405,19 @@ async function executeCommand(interaction,{db,gm,voice=null}){
       if(op==="inbox"){
         if(Object.keys(input).length)throw new UserInputError("Inbox takes no additional fields.");
         const pc=personalCharacter(db,interaction.guildId,user);
-        row={pending:["pc_effect_authority","pc_incoming_attack"].flatMap(kind=>db.listCityRecords(interaction.guildId,{kind,includeGM:true,limit:200})
+        row={pending:["pc_effect_authority","pc_incoming_attack","pc_death_move_request"].flatMap(kind=>db.listCityRecords(interaction.guildId,{kind,includeGM:true,limit:200})
           .filter(r=>r.subject_key===pc.id&&!["applied","resolved","missed"].includes(r.status)).map(r=>({kind,key:r.record_key,status:r.status})))};
-      }else if(op==="review"){
+      }else if(op==="death-review"){
+        if(Object.keys(input).length!==1||!input.request)throw new UserInputError("Exact private death request reference required.");
+        row=reviewPcDeathMove(db,interaction.guildId,user,input.request);
+      }else if(op==="death-choose")row=choosePcDeathMove(db,interaction.guildId,user,input,native);
+      else if(op==="death-allocate")row=allocatePcDeathRecovery(db,interaction.guildId,user,input,native);
+      else if(op==="blaze-approve")row=approveBlazeAction(db,interaction.guildId,user,input,native);
+      else if(op==="healer-review"){
+        if(Object.keys(input).join()!=="authority")throw new UserInputError("Exact private healing authority reference required.");
+        row=reviewHealingSource(db,interaction.guildId,user,input.authority);
+      }else if(op==="healer-authorize")row=authorizeHealingSource(db,interaction.guildId,user,input,native);
+      else if(op==="review"){
         if(Object.keys(input).some(k=>!["authority","attack"].includes(k))||!!input.authority===!!input.attack)throw new UserInputError("Review one exact authority or attack key.");
         row=input.authority?reviewPcEffect(db,interaction.guildId,user,input.authority):reviewIncomingAttack(db,interaction.guildId,user,input.attack,{library:encounterLibrary(gm)});
       }else if(op==="review-feature")row=reviewFeatureEffect(db,interaction.guildId,user,input,native);
@@ -463,6 +476,20 @@ async function executeCommand(interaction,{db,gm,voice=null}){
           result={attack:row.data.attack,result:{hope:r.hope,fear:r.fear,total:r.total,duality:r.duality,hit:r.hit},
             instruction:"Saved native attack only. Target statistics stay private; HP requires its separate damage and owner Armor workflow."};
         }
+        text=JSON.stringify(result,null,2);
+      }
+      else if(["damage-roll","damage-prepare","armor-review","armor-choose"].includes(op)){
+        const user=interaction.user.id,guild=interaction.guildId,native={interactionId:interaction.id};let result;
+        if(op==="damage-roll"){
+          const row=rollPvpDamage(db,guild,user,input);result={damage_roll:row.record_key,total:row.data.result.total,type:row.data.result.type,
+            instruction:"Saved damage only; native GM applicability review and target-owned Armor decision still required."};
+        }else if(op==="damage-prepare"){
+          const row=preparePvpDamage(db,guild,user,input,{...native,gm:isGM(db,interaction)});result={damage:row.record_key,status:row.status};
+        }else if(op==="armor-review"){
+          if(Object.keys(input).length!==1||!input.damage)throw new UserInputError("Exact private damage reference required.");
+          result=reviewPvpDamage(db,guild,user,input.damage);
+        }else {const row=resolvePvpDamage(db,guild,user,input,native);result={effect:row.record_key,status:row.status,
+          instruction:"Native damage committed once. Check /vc-roll effect inbox for YOUR final-HP death move if required. No public injury or reaction is implied."};}
         text=JSON.stringify(result,null,2);
       }
       else if(["reaction-prepare","reaction-review","reaction-roll"].includes(op)){
@@ -1550,6 +1577,7 @@ GM notes: ${a.draft.gm_notes}`:""}`.slice(0,1950):"No aftermath draft exists for
     if(group==="roll"&&sub==="duality"){
       const s=requireSession(db,interaction.guildId);
       const a=db.controlledAssignment(s.id,interaction.user.id);
+      if(a?.character_id)assertPcCanAct(db.getCharacter(a.character_id),db,interaction.guildId);
       const reaction=interaction.options.getBoolean("reaction")||false;
       if(a?.character_id&&db.getCityCalendar(interaction.guildId).flags.roll_requests===true
         &&pendingRollRequests(db,interaction.guildId,interaction.user.id).length)
@@ -1566,7 +1594,7 @@ GM notes: ${a.draft.gm_notes}`:""}`.slice(0,1950):"No aftermath draft exists for
       });
       const updated=a?.character_id?db.getCharacter(a.character_id):null;
       const resourceNote=reaction?"":r.duality==="Fear"?` • GM Fear ${db.getCampaign(interaction.guildId).fear}/12`
-        :updated?` • Hope ${updated.data.resources.hope}/6${r.duality==="Critical"?"; cleared 1 Stress":""}`:"";
+        :updated?` • Hope ${updated.data.resources.hope}/${hopeCap(updated.data)}${r.duality==="Critical"?"; cleared 1 Stress":""}`:"";
       const adv=r.adv_dice.length?` • d6 [${r.adv_dice.join(", ")}] = ${r.adv_net>=0?"+":""}${r.adv_net}`:"";
       await interaction.reply(`🎲 **${reaction?"Reaction":"Duality"}:** Hope **${r.hope}** / Fear **${r.fear}**${adv} • modifiers ${r.modifier+r.experience>=0?"+":""}${r.modifier+r.experience} → **${r.total} — ${r.duality}**${resourceNote}`);
       return true;

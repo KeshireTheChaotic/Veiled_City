@@ -299,6 +299,10 @@ export class VeiledDB {
     const row=this.db.prepare("SELECT * FROM city_records WHERE guild_id=? AND kind=? AND record_key=?").get(guildId,kind,key);
     return row?{...row,data:JSON.parse(row.data_json)}:null;
   }
+  hasNativePvpSource(guildId,source){
+    return !!this.db.prepare(`SELECT 1 FROM city_records WHERE guild_id=? AND source_event=?
+      AND kind IN ('pvp_attack_intent','pvp_attempt','pvp_proposal','pvp_roll_choice') LIMIT 1`).get(guildId,source);
+  }
   saveCityRecord(guildId,{kind,key,actor_key="",location_key="",district_key="",status="active",source_event,data,visibility="gm",subject_key=null}){
     const clock=this.getSimulationClock(guildId);
     this.db.prepare(`INSERT INTO city_records(guild_id,kind,record_key,actor_key,location_key,district_key,status,visibility,
