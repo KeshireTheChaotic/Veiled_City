@@ -137,6 +137,7 @@ bot/scripts/v9-pvp-hope-fear-test.mjs
 bot/scripts/v9-pvp-rounds-test.mjs
 bot/scripts/v9-pvp-typed-roll-test.mjs
 bot/scripts/v9-roll-truth-test.mjs
+bot/scripts/v9-roll-ux-test.mjs
 bot/scripts/v9-window-lifecycle-test.mjs
 bot/scripts/v94-death-fixtures.mjs
 bot/scripts/v94-incoming-fixtures.mjs
@@ -267,6 +268,7 @@ bot/src/relationship-state.js
 bot/src/roll-collaboration.js
 bot/src/roll-language.js
 bot/src/roll-menu.js
+bot/src/roll-operation-publications.js
 bot/src/roll-options.js
 bot/src/roll-requests.js
 bot/src/roll-sharing.js
@@ -442,6 +444,7 @@ docs/NPC_SIMULATION.md
 docs/OPENAI_SETUP.md
 docs/PARTY_ASSEMBLY.md
 docs/PLAYER_LIFECYCLE.md
+docs/PRIVATE_ROLL_GUIDE.md
 docs/README.md
 docs/README_HOTFIX.md
 docs/REFERENCE_V9_2_AUTHORSHIP_CONTRACT.md

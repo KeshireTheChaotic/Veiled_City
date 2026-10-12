@@ -6,7 +6,7 @@ import {
 import { dualityRoll, parseDice } from "./dice.js";
 import { establishFact } from "./epistemic.js";
 import { indexWorldEvent } from "./city-calendar.js";
-import { prepareRollRequest, pendingRollRequests, ownedRollRequest, formatRollRequest, publishRollAmendment,queueRollAmendment } from "./roll-requests.js";
+import { prepareRollRequest, pendingRollRequests, ownedRollRequest, formatRollRequest, publishRollAmendment } from "./roll-requests.js";
 import { contributeRoll, adjudicateRollSource, applyRollOutcome } from "./roll-collaboration.js";
 import {reviewTypedRollOutcome} from "./typed-roll-outcomes.js";
 import { publishJournal, postJournalEntry, publishEventResults, postGmLog, postStateError, postPrivateRelay, syncConfiguredSurfaces, postPlayMessage, sendPlayerPrivate, deliverHandout, deliverQueuedTurn } from "./publishing.js";
@@ -48,7 +48,6 @@ import { stateRevision } from "./ai-intents.js";
 import { beginInteraction, acknowledgeRules, interactionFailure, interactionResponseExpired, replyOrEdit } from "./discord/interaction-lifecycle.js";
 import { validateChannelRouting } from "./routing-diagnostics.js";
 import { handleRollMenuInteraction, isRollMenuInteraction, openRollMenu } from "./roll-menu.js";
-import { publishRollPartyDisclosure } from "./roll-sharing.js";
 import { proposePvp, reviewPvp, revisePvp, respondPvp, pvpInbox, choosePvp, rollPvp, continuePvp, progressPvp,
   authorPvpNarrative, reviewPvpNarrative, sharePvpNarrative, pvpComplication } from "./narrative-pvp.js";
 import { synchronizePvpWindow, windowOperation } from "./window-coordinator.js";
@@ -72,6 +71,8 @@ import { queueDirectorPublications } from "./publication-outbox.js";
 import {publishContinuationNotices} from "./publishing.js";
 import {publishPvpNotices,materializeNativeNotices,resyncNativeNotice} from "./native-publications.js";
 import {reconcilePublication} from "./publication-outbox.js";
+import {finishRollOperation} from './roll-operation-publications.js';
+import {createRollSharePreview} from './roll-sharing.js';
 
 const interactionQueue=new KeyedSerialQueue();
 
@@ -1592,15 +1593,17 @@ GM notes: ${a.draft.gm_notes}`:""}`.slice(0,1950):"No aftermath draft exists for
       await interaction.reply({content:`Saved reviewed roll source ${source.event_key}. No PC resource or roll was changed.`,ephemeral:true});return true;
     }
     if(group==="roll"&&sub==="contribute"){
-      const row=contributeRoll(db,interaction.guildId,interaction.user.id,JSON.parse(interaction.options.getString("json",true)));
-      queueRollAmendment(db,interaction.guildId,row);
+      const input=JSON.parse(interaction.options.getString("json",true));
+      if(input.op==='share-preview'){
+        const p=createRollSharePreview(db,interaction.guildId,interaction.user.id,input.request);
+        await interaction.reply({ephemeral:true,allowedMentions:{parse:[]},content:`**Exact private share preview**\n${p.data.text}\n\nApprove only this attributed attempt with op:share, preview:${p.record_key}, scope:party, confirm:true and the current request revision. It does not establish outcomes or another PC's reaction.`});return true;
+      }
+      const row=contributeRoll(db,interaction.guildId,interaction.user.id,input);
       const chunks=chunkTextLines(formatRollRequest(row,{user:interaction.user.id}).split("\n"));
-      await interaction.reply({content:chunks[0],ephemeral:true});
-      for(const content of chunks.slice(1)) await interaction.followUp({content,ephemeral:true});
-      if(interaction.guild) await publishRollAmendment(db,interaction.guildId,row,(user,content,sessionId,characterId,meta)=>
-        sendPlayerPrivate({db,guild:interaction.guild,userId:user,content,sessionId,characterId,...meta}));
-      if(interaction.guild) await publishRollPartyDisclosure(db,interaction.guildId,row,(content,sessionId,meta)=>
-        postPlayMessage({db,guild:interaction.guild,content,sessionId,...meta}));
+      await finishRollOperation(db,interaction,row,async()=>{
+        await interaction.reply({content:chunks[0],ephemeral:true});
+        for(const content of chunks.slice(1))await interaction.followUp({content,ephemeral:true});
+      });
       return true;
     }
     if(group==="roll"&&sub==="request"){

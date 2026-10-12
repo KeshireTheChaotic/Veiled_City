@@ -47,7 +47,9 @@ function option(value){
 }
 
 export function discoverRollOptions(db,guild,user,request){
-  const row=ownedRollRequest(db,guild,user,request),pc=db.getCharacter(row.subject_key),ctx=context(db,guild,row),options=[];
+  const row=ownedRollRequest(db,guild,user,request);
+  if(row.data.owner_user_id!==user)throw new StateConflictError('Only the acting owner may inspect the full private option registry. Other participants retain scoped native contribution commands.');
+  const pc=db.getCharacter(row.subject_key),ctx=context(db,guild,row),options=[];
   options.push(option({key:`trait:${ctx.trait}`,type:"trait",label:ctx.trait,state:"applied",effect:{kind:"flat",amount:row.data.breakdown.trait_bonus},
     source:{kind:"character_sheet",character_id:pc.id,path:`traits.${ctx.trait}`},reason:"Recorded trait used by the prepared request."}));
   for(const mod of row.data.breakdown.modifiers||[])options.push(option({key:`modifier:${mod.source}`,type:"modifier",label:mod.name,state:"applied",

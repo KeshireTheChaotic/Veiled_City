@@ -2,7 +2,7 @@
 import {createHash} from 'node:crypto';
 import {personalCharacter} from './personal-continuity.js';
 import {formatRollRequest} from './roll-requests.js';
-import {formatSharedRoll} from './roll-sharing.js';
+import {formatSharedRoll,validateRollSharePreview,sourceConfirmedRollAttempt} from './roll-sharing.js';
 import {pvpOwnerContext} from './narrative-pvp.js';
 import {progressPvp,validatePvpRoundReceipt,validatePvpResolutionReceipt} from './pvp-rounds.js';
 import {pvpProjection} from './pvp-authorship.js';
@@ -33,6 +33,10 @@ export function renderNativeNotice(db,guild,d){
         ||db.getCharacter(character)?.owner_user_id!==owner||noticeHash(savedResult)!==noticeHash(declaredResult)
         ||resultRequest!==undefined&&resultRequest!==request||resultRevision!==undefined&&resultRevision!==revision)fail();
       if(r.data.input?.accepted_intent)typedRollProof(db,guild,r);
+      if(r.data.party_disclosure.preview){
+        const preview=validateRollSharePreview(db,guild,r,r.data.party_disclosure.preview);
+        if(s.details.preview!==preview.record_key||r.data.party_disclosure.context!==preview.data.text)fail();
+      }else if(r.data.party_disclosure.context)fail();
       return formatSharedRoll(r);
     }
     const own=r.data.owner_user_id===d.user&&r.subject_key===d.character;
@@ -47,6 +51,7 @@ export function renderNativeNotice(db,guild,d){
     const partner=r.status==='awaiting_partner'&&r.data.tag?.partner_user===d.user
       &&db.getCityRecord(guild,'roll_request',r.data.tag.partner_request)?.subject_key===d.character;
     if(!own&&!participant&&!helper&&!shared&&!partner)fail();
+    if(shared&&disclosure.context&&(ds.details.attempt!==disclosure.context||sourceConfirmedRollAttempt(db,guild,r)!==disclosure.context))fail();
     return formatRollRequest(r,{user:d.user});
   }
   if(d.kind==='pvp_projection'){

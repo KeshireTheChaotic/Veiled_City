@@ -42,7 +42,7 @@ try{
   const outputs=[],message={guild:{id:guild},author:{id:"owner"},id:"share",content:"I share my pending attempt with helper."};
   assert(await routeRollMessage({db,message,characterId:pcs.owner.id,deliver:async text=>outputs.push(text),sendAmendment:async(user,text)=>{outputs.push({user,text});return {ok:true,messageId:`notice-${outputs.length}`,channelId:`private-${user}`};}}));
   assert(mayKnowRoll(db,guild,get(),pcs.helper.id));assert.equal(pendingRollRequests(db,guild,"helper").length,1);
-  const notice=outputs.find(item=>item.user==="helper").text;assert(notice.includes("secret gate"));assert(!notice.includes("Trait:")&&!notice.includes("Subtotal"));
+  const notice=outputs.find(item=>item.user==="helper").text;assert(notice.includes("Context not shared"));assert(!notice.includes("secret gate"));assert(!notice.includes("Trait:")&&!notice.includes("Subtotal"));
   const helpInput=help();contributeRoll(db,guild,"helper",helpInput,{rng:()=>4});contributeRoll(db,guild,"helper",helpInput,{rng:()=>assert.fail("Replay drew dice")});
   assert.equal(db.getCharacter(pcs.helper.id).data.resources.hope,5);
   const values=[10,2];const resolved=contributeRoll(db,guild,"owner",{key:"resolve",request:row.record_key,op:"roll",expected_revision:rollRevision(get())},{rng:()=>values.shift()});

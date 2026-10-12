@@ -122,8 +122,9 @@ export function formatRollRequest(row,{user=null}={}){
   if(user&&data.owner_user_id!==user&&!participant){
     const helper=data.helpers?.find(item=>item.user===user);
     if(helper) return `Help recorded for request ${row.record_key}: ${helper.name} spent 1 Hope and rolled d6 ${helper.die}. Parent status: ${row.status}. Revision: ${rollRevision(row)}.`;
-    if(data.disclosures?.some(item=>item.user===user))
-      return `Owner-shared attempt by ${data.character_name}: ${data.attempt}. Request ${row.record_key}; status ${row.status}; revision ${rollRevision(row)}. No private sheet data or participation is implied.`;
+    const disclosure=data.disclosures?.find(item=>item.user===user);
+    if(disclosure)
+      return `Owner-shared attempt by ${data.character_name}: ${disclosure.context||'Context not shared: no source-confirmed accepted occurrence is available; ask the owner for bounded context.'} Request ${row.record_key}; status ${row.status}; revision ${rollRevision(row)}. No private sheet data, outcome or participation is implied.`;
     if(data.tag?.partner_user===user||data.withdrawn_tag?.partner_user===user)
       return `Nonbinding Tag Team proposal for your character; request ${row.record_key}. Status: ${row.status}. No participation is inferred. Revision: ${rollRevision(row)}. Describe your response freely.`;
     throw new StateConflictError("Request is not owned by this reader.");
@@ -191,6 +192,7 @@ export async function publishRollRequests(db,guild,mutation,send){
 function amendmentSpecs(db,guild,row,{checkOwners=true}={}){
   const recipients=new Map([[row.data.owner_user_id,row.subject_key]]);
   for(const participant of row.data.tag?.participants||[]) recipients.set(participant.user,participant.character);
+  for(const helper of row.data.helpers||[])recipients.set(helper.user,helper.character);
   for(const disclosure of row.data.disclosures||[]) if(db.getWorldEvent(guild,disclosure.source_event)?.status==="active") recipients.set(disclosure.user,disclosure.character);
   if(row.status==="awaiting_partner"&&row.data.tag?.partner_user){
     const partner=db.getCityRecord(guild,"roll_request",row.data.tag.partner_request);

@@ -4,7 +4,7 @@ import { currentScene, sceneAccess } from "./scene-continuity.js";
 import { requireCitySource } from "./city-core.js";
 import { cityAudit, cityKey, cityObject, indexWorldEvent } from "./city-calendar.js";
 import { rollRevision, rollBreakdown, reserveRollAmendment } from "./roll-requests.js";
-import {reserveRollPartyDisclosure} from "./roll-sharing.js";
+import {reserveRollPartyDisclosure,validateRollSharePreview,sourceConfirmedRollAttempt} from "./roll-sharing.js";
 import { dualityRoll, parseDice, d } from "./dice.js";
 import { hpMarksForDamage } from "./combat.js";
 import { recordObservedAttack } from "./encounter.js";
@@ -210,14 +210,15 @@ export function contributeRoll(db,guild,user,input,{rng=d}={}){
     if(input.op==="share"){
       if(!mine||input.scope!=="party"||input.confirm!==true||!data.result||!["resolved","awaiting_damage","awaiting_damage_type"].includes(row.status))
         fail("Only the acting owner may affirmatively share an actual saved result with the party.");
+      const preview=input.preview?validateRollSharePreview(db,guild,row,input.preview):null;
       const disclosureKey=`${key}:party`;
       const source=indexWorldEvent(db,guild,{key:`party-roll-disclosure:${operation}`,source_id:`player:${user}`,
         kind:"roll_disclosure",title:"Owner-shared roll result",session_id:data.session_id,scene:data.scene,visibility:"party",
-        details:{author:user,request:key,character_id:pc.id,status:row.status,
+        details:{author:user,request:key,character_id:pc.id,status:row.status,preview:preview?.record_key||null,
           result:{total:data.result.total,duality:data.result.duality},authority:"owner_shared_redacted_native_result_only"}},user);
       db.saveCityRecord(guild,{kind:"roll_disclosure",key:disclosureKey,status:"shared",source_event:source.event_key,
         visibility:"party",data:{request:key,author:user,character_id:pc.id,source_event:source.event_key}});
-      data.party_disclosure={source_event:source.event_key,shared_by:user,scope:"party"};
+      data.party_disclosure={source_event:source.event_key,shared_by:user,scope:"party",...(preview?{preview:preview.record_key,context:preview.data.text}:{})};
     }else if(input.op==="disclose"){
       if(!mine||!["pending","awaiting_partner"].includes(row.status)) fail("Only the acting owner can disclose their unsettled attempt.");
       const recipient=db.getCharacter(input.character_id);
@@ -226,11 +227,12 @@ export function contributeRoll(db,guild,user,input,{rng=d}={}){
       if(!sceneAccess(db,guild,{observer_type:"character",observer_key:recipient.id,target_type:"character",target_key:pc.id,sense:"sound"}))
         fail("Actual established communication access is required for disclosure.");
       const disclosureKey=`${key}:${recipient.id}`;
+      const context=sourceConfirmedRollAttempt(db,guild,row);
       const source=indexWorldEvent(db,guild,{key:`disclosure:${operation}`,source_id:`player:${user}`,kind:"roll_disclosure",title:"Owner-disclosed pending attempt",
         session_id:data.session_id,scene:data.scene,visibility:"character",subject_key:recipient.id,
-        details:{author:user,request:key,attempt:data.attempt,authority:"owner_disclosed_attempt_only_not_private_sheet_or_consent"}},user);
+        details:{author:user,request:key,attempt:context,authority:"owner_disclosed_accepted_attempt_only_not_private_sheet_or_consent"}},user);
       db.saveCityRecord(guild,{kind:"roll_disclosure",key:disclosureKey,source_event:source.event_key,visibility:"character",subject_key:recipient.id,data:{request:key,author:user}});
-      data.disclosures=[...(data.disclosures||[]).filter(item=>item.character!==recipient.id),{character:recipient.id,user:recipient.owner_user_id,source_event:source.event_key}];
+      data.disclosures=[...(data.disclosures||[]).filter(item=>item.character!==recipient.id),{character:recipient.id,user:recipient.owner_user_id,source_event:source.event_key,context}];
     }else if(input.op==="help"){
       if(mine||data.tag||data.kind!=="action"||row.status!=="pending") fail("Help requires another PC's unsettled action, not a reaction/group/Tag Team.");
       if((data.helpers||[]).some(helper=>helper.character===pc.id)) fail("This character has already helped; no second charge or die.");
