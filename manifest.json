@@ -780,6 +780,11 @@
       "sha256": "bb8a15ef53061b7460d95034a0d942eb12c0ccb4713d0945150e877b212e5667"
     },
     {
+      "path": "bot/scripts/v95-inventory.mjs",
+      "size_bytes": 4312,
+      "sha256": "9002981a4a4b1d42c148a2a365a0bc4dc62915147da6802ef8667ef391dbb80d"
+    },
+    {
       "path": "bot/scripts/validate-command-schema.mjs",
       "size_bytes": 582,
       "sha256": "995a255982387edff58e5f14c8bb07b5508c3b28a19952882aa5716c28aafbe8"
@@ -2235,6 +2240,11 @@
       "sha256": "5a8e014cb268c377b02d32dc8bcaa2af7ab728a62fe6ad1ecfc4d457037087b0"
     },
     {
+      "path": "docs/PACKAGE_COUNTS.json",
+      "size_bytes": 176,
+      "sha256": "cce8a20ad27e35b4814fea07a5866099f925cf76ddde1a66f55d894f144cd718"
+    },
+    {
       "path": "docs/PARTY_ASSEMBLY.md",
       "size_bytes": 4684,
       "sha256": "07043508321fe543fe570bfd1806338646d89d886a7e6c4dff1a3b377433a618"
@@ -2251,8 +2261,8 @@
     },
     {
       "path": "docs/README.md",
-      "size_bytes": 2634,
-      "sha256": "f27bb8fc1378e7f5a703ac4b7a848af5d9e09d66e904ec6de0cd857a51a392a2"
+      "size_bytes": 1500,
+      "sha256": "09438248f357751fd65f6e4c6e363c4a6a5f955d4ddf2c7d19df6de409f3e03c"
     },
     {
       "path": "docs/README_HOTFIX.md",
@@ -2391,8 +2401,8 @@
     },
     {
       "path": "docs/TYPED_INTENT_PROGRESS.md",
-      "size_bytes": 242577,
-      "sha256": "46b7a29606049e64976ea75902146fae542622338b59ebb6adc0f21467e68c45"
+      "size_bytes": 245858,
+      "sha256": "f2d64a455871f1423d5ac4dca73287e6b26a25ae02248713c015dc5598840911"
     },
     {
       "path": "docs/TYPED_INTENT_RELEASE_10.0.0.md",
@@ -2653,6 +2663,51 @@
       "path": "docs/V9_4_SOURCE_AUDIT.md",
       "size_bytes": 5115,
       "sha256": "215d930fa94acb3959f25b6b81be725e629ef63e258f0845bd2c6bb08cfd159d"
+    },
+    {
+      "path": "docs/V9_5_CODEX_KICKOFF.md",
+      "size_bytes": 6214,
+      "sha256": "080cf9b6c5f074414e9e44ce3f3da5d105ae89d0a4d9b9a260e07a07b872aced"
+    },
+    {
+      "path": "docs/V9_5_COVERAGE_CROSSWALK.csv",
+      "size_bytes": 223355,
+      "sha256": "dbea3dd4f778fe2bd4a9804d070c9f68eb95df7ffc3f42e275f72cd93f3824ec"
+    },
+    {
+      "path": "docs/V9_5_DEPRECATION_REGISTER.csv",
+      "size_bytes": 4475,
+      "sha256": "3e1c19b7569b63a4e504a11c96349f86327d33050058d4ef31663b219b28425f"
+    },
+    {
+      "path": "docs/V9_5_DEPRECATION_REGISTER.md",
+      "size_bytes": 4980,
+      "sha256": "32c3e69de2f6534b35674318e301748d066b0926a9534ef45f020e5df5926590"
+    },
+    {
+      "path": "docs/V9_5_IMPLEMENTATION_PLAN.md",
+      "size_bytes": 31967,
+      "sha256": "02af2447a0e40cc80075835cd7fd8c42ccb05b22068cefb2953e6472de9dbc8e"
+    },
+    {
+      "path": "docs/V9_5_LIVE_PILOT_PROTOCOL.md",
+      "size_bytes": 4769,
+      "sha256": "85ab78252ceee8f95f30f7a64984fe8ad93a9379451fb7b3afdce32cfa7e123c"
+    },
+    {
+      "path": "docs/V9_5_REGRESSION_MATRIX.csv",
+      "size_bytes": 16051,
+      "sha256": "2e5d9b0970e10e68e7512410ce5f33a35aac6a4c8094ef7c2cec4ebc35623727"
+    },
+    {
+      "path": "docs/V9_5_SOURCE_AUDIT.md",
+      "size_bytes": 8907,
+      "sha256": "e93fe59d615c0de9ec1c89d53e0af05d4a8ee71cfbb4842545668d0776eac4cd"
+    },
+    {
+      "path": "docs/V9_5_SOURCE_INVENTORY.json",
+      "size_bytes": 238403,
+      "sha256": "80855e298bb830f963aad4003ee499d28b476df5daddc7650798d05061518fc8"
     },
     {
       "path": "docs/V9_CODEX_KICKOFF.md",

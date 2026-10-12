@@ -1,0 +1,12 @@
+{
+  "new_regression_scenarios": 90,
+  "counts": {
+    "NAR": 18,
+    "FEA": 20,
+    "UX": 16,
+    "MET": 12,
+    "DEP": 12,
+    "PIL": 12
+  },
+  "deprecation_candidates": 17
+}

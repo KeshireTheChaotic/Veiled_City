@@ -153,6 +153,7 @@ bot/scripts/v94-pvp-multiplayer-test.mjs
 bot/scripts/v94-pvp-profile-test.mjs
 bot/scripts/v94-pvp-qualification-test.mjs
 bot/scripts/v94-pvp-reaction-test.mjs
+bot/scripts/v95-inventory.mjs
 bot/scripts/validate-command-schema.mjs
 bot/scripts/validate-offline.mjs
 bot/sql/schema.sql
@@ -444,6 +445,7 @@ docs/NPC_COGNITION.md
 docs/NPC_PROXY_CONTROL.md
 docs/NPC_SIMULATION.md
 docs/OPENAI_SETUP.md
+docs/PACKAGE_COUNTS.json
 docs/PARTY_ASSEMBLY.md
 docs/PLAYER_LIFECYCLE.md
 docs/PRIVATE_ROLL_GUIDE.md
@@ -528,6 +530,15 @@ docs/V9_4_REGRESSION_MATRIX.csv
 docs/V9_4_RELEASE_QUALIFICATION.md
 docs/V9_4_RULES_AND_COMMUNITY_RESEARCH.md
 docs/V9_4_SOURCE_AUDIT.md
+docs/V9_5_CODEX_KICKOFF.md
+docs/V9_5_COVERAGE_CROSSWALK.csv
+docs/V9_5_DEPRECATION_REGISTER.csv
+docs/V9_5_DEPRECATION_REGISTER.md
+docs/V9_5_IMPLEMENTATION_PLAN.md
+docs/V9_5_LIVE_PILOT_PROTOCOL.md
+docs/V9_5_REGRESSION_MATRIX.csv
+docs/V9_5_SOURCE_AUDIT.md
+docs/V9_5_SOURCE_INVENTORY.json
 docs/V9_CODEX_KICKOFF.md
 docs/V9_IMPLEMENTATION_PLAN.md
 docs/V9_NARRATIVE_PVP_CONTRACT.md
