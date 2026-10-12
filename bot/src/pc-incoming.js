@@ -8,6 +8,7 @@ import { personalCharacter } from "./personal-continuity.js";
 import { conversationPrincipal,historicalOwnerPrincipal } from "./conversation-principal.js";
 import { assertNonPvpCombatant } from "./pvp-authority.js";
 import {assertPcAttackable} from "./pc-native-eligibility.js";
+import {assertFearIncomingExecution} from "./pvp-fear-moves.js";
 
 const hash=v=>createHash("sha256").update(JSON.stringify(v)).digest("hex");
 function fail(message){throw Object.assign(new Error(message),{code:"PC_EFFECT_AUTHORITY",expected:true});}
@@ -114,6 +115,7 @@ export function rollIncomingAttack(db,guild,user,key,options={}){
     const c=context(db,guild,key,options.library),{row}=c;defenseProof(db,guild,row);
     if(row.data.roll)return verifyRoll(db,guild,row);
     if(row.status!=="ready")fail("Native attack is not ready.");
+    assertFearIncomingExecution(db,guild,row);
     const rng=options.rng||d,face=rng(20);if(!Number.isInteger(face)||face<1||face>20)fail("Native d20 out of range.");
     const hit=face===20||face+c.bonus>=c.evasion,damage=hit?parseDice(c.damage,rng):null;
     if(damage&&face===20){const spec=diceSpec(c.damage);damage.total+=spec.count*spec.sides;}
@@ -131,6 +133,26 @@ function verifyRoll(db,guild,row){
     ||hash(roll.payload)!==hash(payload)||payload.offer_hash!==hash(row.data.offer)||payload.attack!==row.record_key)fail("Saved native attack/damage roll ancestry required.");
   return r;
 }
+/** Read-only immutable offer/outcome proof for a selected immediate GM move; never executes mechanics. */
+export function incomingAttackEvidence(db,guild,key,{terminal=false}={}){
+  const row=db.getCityRecord(guild,"pc_incoming_attack",key),o=row?.data.offer,source=row&&db.getWorldEvent(guild,row.source_event);
+  const original=o&&db.getWorldEvent(guild,o.input.source),scene=currentScene(db,guild),pc=o&&db.getCharacter(o.input.character);
+  if(row?.data.version!==1||row.visibility!=="character"||row.subject_key!==o?.input.character||o?.version!==1
+    ||source?.status!=="active"||source.kind!=="native_npc_attack_offer"||source.source_id!==`gm:${o.gm}`||hash(source.details)!==hash(o)
+    ||!db.ownerAuthoredSource(guild,source.event_key,o.gm)||original?.status!=="active"||hash(original)!==o.snapshot.source
+    ||o.snapshot.session!==scene.session_id||o.snapshot.scene!==scene.key||pc?.guild_id!==guild||pc.owner_user_id!==o.snapshot.owner
+    ||historicalOwnerPrincipal(db,guild,o.snapshot.owner,pc.id).revision!==o.snapshot.principal)
+    fail("Exact current native incoming offer/source/owner evidence required.");
+  if(!terminal)return {row,offer:o};
+  if(!["resolved","missed"].includes(row.status)||!row.data.roll)
+    throw Object.assign(new Error("Immediate NPC move awaits its native defense, attack or owner Armor workflow."),{code:"NATIVE_EFFECT_PENDING",expected:true});
+  defenseProof(db,guild,row);const roll=verifyRoll(db,guild,row),r=roll.data;
+  if(!Number.isSafeInteger(r.face)||r.face<1||r.face>20||r.bonus!==o.bonus||r.evasion!==o.evasion||r.total!==r.face+o.bonus
+    ||r.hit!==(r.face===20||r.total>=o.evasion)||r.type!==o.damage_type||roll.visibility!=="character")fail("Exact native NPC attack arithmetic/audience required.");
+  const effect=r.hit?validateIncomingDamageApplication(db,guild,`${key}:damage`):null;
+  if(!r.hit&&(row.status!=="missed"||r.damage!==null)||r.hit&&row.status!=="resolved")fail("Native incoming terminal outcome mismatch.");
+  return {row,offer:o,roll,effect};
+}
 export function resolveIncomingDamage(db,guild,user,key,{armor=false,library}={}){
   return db.transaction(()=>{
     const prior=db.getCityRecord(guild,"pc_effect_receipt",`${key}:damage`);
@@ -140,6 +162,7 @@ export function resolveIncomingDamage(db,guild,user,key,{armor=false,library}={}
     personalCharacter(db,guild,user,pc.id);defenseProof(db,guild,row);const roll=verifyRoll(db,guild,row);
     if(prior){if(prior.data.roll!==roll.record_key||prior.data.armor!==armor)fail("Native damage receipt replay differs.");return prior;}
     if(!roll.data.hit||row.status!=="awaiting_armor"||typeof armor!=="boolean")fail("Actual hit and affected owner Armor decision required.");
+    assertFearIncomingExecution(db,guild,row,{committedRoll:true});
     const resources=pc.data.resources,hp=resources.hp,slots=resources.armor;
     if(![hp?.current,hp?.max,slots?.current,slots?.max].every(Number.isSafeInteger)||hp.current<0||hp.current>hp.max||hp.max<1||hp.max>12
       ||slots.current<0||slots.current>slots.max||armor&&slots.current===slots.max)fail("Verified available HP and owner-selected Armor Slot required.");

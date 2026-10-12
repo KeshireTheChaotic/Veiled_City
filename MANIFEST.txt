@@ -145,6 +145,7 @@ bot/scripts/v94-pvp-attack-test.mjs
 bot/scripts/v94-pvp-damage-test.mjs
 bot/scripts/v94-pvp-multiplayer-test.mjs
 bot/scripts/v94-pvp-profile-test.mjs
+bot/scripts/v94-pvp-qualification-test.mjs
 bot/scripts/v94-pvp-reaction-test.mjs
 bot/scripts/validate-command-schema.mjs
 bot/scripts/validate-offline.mjs
@@ -509,6 +510,7 @@ docs/V9_3_SOURCE_AUDIT.md
 docs/V9_4_CODEX_RESUME.md
 docs/V9_4_IMPLEMENTATION_PLAN.md
 docs/V9_4_PVP_PROFILE_AND_RECEIPT_CONTRACT.md
+docs/V9_4_QUALIFICATION.md
 docs/V9_4_REGRESSION_MATRIX.csv
 docs/V9_4_RULES_AND_COMMUNITY_RESEARCH.md
 docs/V9_4_SOURCE_AUDIT.md

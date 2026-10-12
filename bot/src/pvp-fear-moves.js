@@ -12,6 +12,7 @@ import { validateWorldEncounterActivation } from "./encounter.js";
 import { validatePvpAttackRoll } from "./pvp-attacks.js";
 import {settlePvpDamageAction} from "./pvp-damage.js";
 import {assertBrawlFearOrder} from "./pvp-brawl.js";
+import {incomingAttackEvidence} from "./pc-incoming.js";
 
 export const fearRevision=v=>createHash("sha256").update(JSON.stringify(v)??"undefined").digest("hex");
 const hash=fearRevision;
@@ -28,25 +29,38 @@ function all(db,guild,kind){
   }
   fail("Native Fear history exceeds safe coverage; reviewed recovery required.");
 }
+function incomingEvidence(db,guild,key,options){
+  try{return incomingAttackEvidence(db,guild,key,options);}
+  catch(error){
+    // Keep the exact failed native proof fatal to this part, but classify it at the Fear authority
+    // boundary so the existing composer can quarantine it without discarding independent actions.
+    if(error.code==="PC_EFFECT_AUTHORITY")fail(error.message);
+    throw error;
+  }
+}
 function target(db,guild,context){
   const d=context.data;
   if(d.move_kind==="clock_advance")return db.getClock(guild,d.target_key);
   if(d.move_kind==="access_obstacle")return db.getSimulationEntity(guild,"location",d.target_key);
   if(d.move_kind==="npc_prepare")return db.getSimulationEntity(guild,"npc",d.target_key);
+  if(d.move_kind==="npc_attack"){const {row,offer}=incomingEvidence(db,guild,d.target_key);return {key:row.record_key,source_event:row.source_event,offer};}
   fail("Unsupported native Fear route remains pending review.");
 }
 function contextProof(db,guild,key){
   const row=db.getCityRecord(guild,"pvp_fear_context",key),d=row?.data,s=row&&db.getWorldEvent(guild,row.source_event);
+  const {source_hash,...material}=d||{},scene=currentScene(db,guild);
   if(!row||row.status!=="active"||d.version!==1||row.record_key!==`pvp-fear-context:${hash(d)}`
-    ||s?.status!=="active"||s.kind!=="pvp_fear_context_established"||hash(s.details)!==d.source_hash
+    ||s?.status!=="active"||s.kind!=="pvp_fear_context_established"||hash(s.details)!==source_hash||hash(material)!==source_hash
     ||s.source_id!==`gm:${d.gm}`||s.visibility!==d.visibility||s.subject_key!==(d.subject_key||null)
-    ||currentScene(db,guild).key!==d.scene||!target(db,guild,row))fail("Current grounded GM context/source required.");
+    ||!db.ownerAuthoredSource(guild,s.event_key,d.gm)||s.scene!==d.scene||s.session_id!==d.session||s.location_key!==d.location_key
+    ||row.visibility!==d.visibility||row.subject_key!==(d.subject_key||null)||row.location_key!==d.location_key
+    ||scene.key!==d.scene||scene.session_id!==d.session||!target(db,guild,row))fail("Current grounded GM context/source required.");
   return row;
 }
 /** Explicit GM establishes a bounded connection to an existing scene obstacle/countdown, not a model recommendation. */
 export function establishFearContext(db,guild,user,input,{gm=false,interactionId}={}){
   gmOnly(gm,user);closed(input,["move_kind","target_key","location_key","visibility","subject_key"]);
-  if(!["clock_advance","access_obstacle","npc_prepare"].includes(input.move_kind)||!["party","character","gm"].includes(input.visibility)
+  if(!["clock_advance","access_obstacle","npc_prepare","npc_attack"].includes(input.move_kind)||!["party","character","gm"].includes(input.visibility)
     ||!interactionId||typeof input.target_key!=="string"||input.target_key.length>160)fail("Supported bounded native Fear context required.");
   const scene=currentScene(db,guild),location=db.getSimulationEntity(guild,"location",input.location_key);
   if(!location||input.visibility==="character"&&db.getCharacter(input.subject_key)?.guild_id!==guild
@@ -55,12 +69,16 @@ export function establishFearContext(db,guild,user,input,{gm=false,interactionId
   if(input.move_kind==="clock_advance"){
     if(input.visibility!==original.visibility||input.subject_key!==(original.subject_character_id||null)
       ||original.subject_user_id)fail("Fear context cannot promote private countdown state.");
+  }else if(input.move_kind==="npc_attack"){
+    const {row,offer}=incomingEvidence(db,guild,input.target_key);
+    if(input.visibility!=="character"||input.subject_key!==row.subject_key||db.getCharacter(row.subject_key)?.data.location!==input.location_key
+      ||offer.snapshot.scene!==scene.key)fail("Native NPC attack context must stay private to its current affected owner and location.");
   }else if(input.move_kind==="npc_prepare")npcPreparation(db,guild,input.target_key,input.location_key,input.visibility);
   else if(input.target_key!==input.location_key||!["party","public"].includes(original.state.visibility||"party")
     &&input.visibility==="party")fail("Native access obstacle must be local and audience-safe.");
   return db.transaction(()=>{
     const details={version:1,...input,gm:user,scene:scene.key,session:scene.session_id,severity:1,
-      native_route:input.move_kind==="clock_advance"?"changeClock":input.move_kind==="npc_prepare"?"submitNpcAction":"configureSimulationEntity"};
+      native_route:input.move_kind==="clock_advance"?"changeClock":input.move_kind==="npc_prepare"?"submitNpcAction":input.move_kind==="npc_attack"?"pc_incoming":"configureSimulationEntity"};
     const s=indexWorldEvent(db,guild,{key:`pvp-fear-context-source:${hash([guild,user,interactionId])}`,
       kind:"pvp_fear_context_established",title:"GM-established immediate scene consequence context",source_id:`gm:${user}`,
       scene:scene.key,session_id:scene.session_id,location_key:input.location_key,visibility:input.visibility,
@@ -149,7 +167,8 @@ function applicable(db,guild,p,context,before){
   if(context.data.scene!==p.data.scene||context.location_key!==p.data.location_key)fail("Fear consequence must be contextual to this exchange.");
   if(context.data.move_kind==="clock_advance"){
     if(!Number.isSafeInteger(before.value)||before.value>=before.max_value)fail("Completed countdown cannot receive a cosmetic/no-op advance.");
-  }else if(context.data.move_kind==="npc_prepare")npcPreparation(db,guild,context.data.target_key,context.location_key,context.visibility);
+  }else if(context.data.move_kind==="npc_attack")return;
+  else if(context.data.move_kind==="npc_prepare")npcPreparation(db,guild,context.data.target_key,context.location_key,context.visibility);
   else if(before.state.locked||before.state.sealed||before.state.removed||before.state.blocks_exit||before.state.locked_exit)
     fail("Access obstacle already applied or would trap characters; choose a new legal scene move.");
 }
@@ -169,6 +188,31 @@ function npcPreparation(db,guild,key,location,visibility){
   if(!profile||!actual||npc?.state.location_key!==location||npc.state.resources?.manpower<1||npc.state.preparation>=5
     ||goals.length!==1)fail("Current bound adversary, capacity and unique established preparation goal required.");
   return {encounter,binding,combatant:actual,goal:goals[0],presence};
+}
+function incomingMoveProof(db,guild,t,context,{terminal=false,selecting=false,allowPending=false}={}){
+  let evidence;
+  try{evidence=incomingEvidence(db,guild,context.data.target_key,{terminal});}
+  catch(error){if(error.code==="NATIVE_EFFECT_PENDING"&&!allowPending)fail("Saved Fear effect has lost its native terminal outcome; retain proof hold.");throw error;}
+  const {row,offer}=evidence;
+  const contract=db.getCityRecord(guild,"pvp_encounter_contract",t.data.proposal);
+  if(t.data.version!==2||contract?.data.snapshot.terms.profile!=="damage_enabled"||offer.input.source!==t.source_event
+    ||offer.snapshot.scene!==t.data.scene||offer.snapshot.session!==t.data.session||context.visibility!=="character"
+    ||context.subject_key!==row.subject_key||!contract.data.participants.some(w=>w.character===row.subject_key)
+    ||selecting&&(row.data.roll||!["awaiting_defense","ready"].includes(row.status)))
+    fail("Immediate NPC Fear attack requires the exact fresh native source, damage profile and affected-owner scope; no old result adoption.");
+  return evidence;
+}
+/** Only an actually selected contextual native request can spend this immediate opportunity. */
+export function assertFearIncomingExecution(db,guild,row,{committedRoll=false}={}){
+  const source=db.getWorldEvent(guild,row.data.offer.input.source);
+  if(!source?.kind.startsWith("pvp_")&&!source?.kind.startsWith("native_pvp_")&&!db.hasNativePvpSource(guild,source?.event_key))return;
+  const matches=all(db,guild,"pvp_fear_trigger").filter(t=>t.source_event===source.event_key);
+  if(matches.length!==1||matches[0].status!=="move_selected")fail("Exact current immediate Fear selection required before NPC attack dice.");
+  const {t,gate}=triggerProof(db,guild,matches[0].record_key),decision=decisionProof(db,guild,t,t.data.decision),c=contextProof(db,guild,decision.data.context);
+  if(c.data.move_kind!=="npc_attack"||c.data.target_key!==row.record_key||decision.data.context_hash!==hash(c)
+    ||decision.data.expected_target_revision!==hash(target(db,guild,c))||decision.data.gate_revision!==gate.data.revision)
+    fail("Native NPC request is not the exact selected immediate Fear context.");
+  incomingMoveProof(db,guild,t,c,{selecting:!committedRoll});
 }
 function holdTargets(db,guild,p,actions){
   if(!Array.isArray(actions)||actions.length>8||new Set(actions).size!==actions.length)fail("Bounded independent pending action targets required.");
@@ -190,6 +234,7 @@ function selectMove(db,guild,user,input,{gm=false,interactionId}={}){
   return db.transaction(()=>{
     const {t,p,gate}=triggerProof(db,guild,input.trigger),context=contextProof(db,guild,input.context),before=target(db,guild,context);
     if(t.data.revision!==input.expected_revision||hash(before)!==input.expected_target_revision)fail("Fear trigger/target revision changed; refresh selection.");
+    if(context.data.move_kind==="npc_attack")incomingMoveProof(db,guild,t,context,{selecting:true});
     applicable(db,guild,p,context,before);const holds=holdTargets(db,guild,p,input.affected_actions);
     const details={version:1,trigger:t.record_key,context:context.record_key,context_hash:hash(context),
       native_context_hash:context.data.move_kind==="npc_prepare"
@@ -209,9 +254,12 @@ function selectMove(db,guild,user,input,{gm=false,interactionId}={}){
 }
 function decisionProof(db,guild,t,key){
   const row=db.getCityRecord(guild,"pvp_fear_move_decision",key),d=row?.data,s=row&&db.getWorldEvent(guild,row.source_event);
+  const {source_hash,...material}=d||{};
   if(!row||row.status!=="selected"||row.record_key!==`pvp-fear-decision:${hash(d)}`||d.trigger!==t.record_key
     ||t.data.decision!==key||d.terms_hash!==t.data.terms_hash||s?.status!=="active"||s.kind!=="pvp_fear_selection"
-    ||s.source_id!==`gm:${d.selector}`||hash(s.details)!==d.source_hash)fail("Exact authenticated GM move decision/source required.");
+    ||s.source_id!==`gm:${d.selector}`||hash(s.details)!==source_hash||hash(material)!==source_hash
+    ||!db.ownerAuthoredSource(guild,s.event_key,d.selector)||s.visibility!=="gm"||row.visibility!=="gm"
+    ||s.scene!==t.data.scene||s.session_id!==t.data.session||d.scene!==t.data.scene)fail("Exact authenticated GM move decision/source required.");
   return row;
 }
 export function applyFearMove(db,guild,user,input,options={}){
@@ -236,7 +284,7 @@ function applyMove(db,guild,user,input,{gm=false,rng}={}){
     if(holds.some((r,i)=>hash(r)!==decision.data.affected_actions[i].revision))fail("Interrupted action revision changed; do not overwrite progress.");
     db.saveCityRecord(guild,{...t,key:t.record_key,status:"executing",data:{...t.data,revision:t.data.revision+1}});
     const d=context.data;
-    let npcAction=null;
+    let npcAction=null,incoming=null;
     if(d.move_kind==="clock_advance")db.changeClock(guild,d.target_key,1,{label:before.label,visibility:before.visibility,
       subjectUserId:before.subject_user_id,subjectCharacterId:before.subject_character_id,max:before.max_value});
     else if(d.move_kind==="npc_prepare"){
@@ -245,12 +293,13 @@ function applyMove(db,guild,user,input,{gm=false,rng}={}){
         type:"prepare",location_key:d.location_key,significance:"routine",rationale:"Current encounter preparation, immediate GM move."},
       {approved:true,cycleKey:`pvp-fear:${t.record_key}`,roll:rng});
       if(npcAction.status!=="completed")fail("Immediate NPC action has no completed native consequence; retain Fear obligation.");
-    }else configureSimulationEntity(db,guild,"location",d.target_key,{locked:true});
-    const after=target(db,guild,context);
+    }else if(d.move_kind==="npc_attack")incoming=incomingMoveProof(db,guild,t,context,{terminal:true,allowPending:true});
+    else configureSimulationEntity(db,guild,"location",d.target_key,{locked:true});
+    const after=incoming?{...before,native_outcome:{roll:incoming.roll.record_key,effect:incoming.effect?.record_key||null}}:target(db,guild,context);
     if(hash(after)===hash(before))fail("Fear consequence did not apply a meaningful native effect.");
     const mutation=db.recordMutation(guild,{sessionId:p.data.session_id,actorType:"human_gm",actorId:user,sourceLayer:"pvp_fear",
       mutationType:d.move_kind,entityKey:d.target_key,visibility:d.visibility,before,after,
-      rationale:"Immediate native scene consequence; no PC reaction, resources, movement or banked Fear.",payload:{trigger:t.record_key,decision:decision.record_key}});
+      rationale:"Immediate native consequence accounting; PC effects require their distinct native receipt, never reapplication or banked Fear.",payload:{trigger:t.record_key,decision:decision.record_key}});
     const effectKey=`pvp-fear-effect:${t.record_key}`,holdRefs=[];
     for(const node of holds){
       const key=`pvp-interrupt:${hash([effectKey,node.record_key])}`;holdRefs.push(key);
@@ -266,6 +315,7 @@ function applyMove(db,guild,user,input,{gm=false,rng}={}){
       source_hash:context.data.source_hash,scene:p.data.scene,session:p.data.session_id,proposal:p.record_key,terms_hash:p.data.terms_hash,
       move_kind:d.move_kind,target:d.target_key,native_mutation_refs:[mutation.id],before,after,hold_refs:holdRefs,
       npc_action_ref:npcAction?.id||null,npc_action_hash:npcAction?hash(npcAction):null,npc_mutation_ref:npcMutation?.id||null,
+      ...(incoming?{incoming_attack_ref:incoming.row.record_key,incoming_roll_ref:incoming.roll.record_key,incoming_effect_ref:incoming.effect?.record_key||null}:{}),
       visibility:d.visibility,subject_key:d.subject_key,applied_by:user,idempotency_key:effectKey};
     const effect=db.saveCityRecord(guild,{kind:"pvp_fear_effect_receipt",key:effectKey,status:"resolved",source_event:context.source_event,
       visibility:d.visibility,subject_key:d.subject_key,data:{...data,effect_digest:hash(data)}});
@@ -291,13 +341,19 @@ export function validateFearEffect(db,guild,key){
   const {effect_digest,...material}=d;
   if(hash(material)!==effect_digest||key!==`pvp-fear-effect:${d.trigger}`||row.visibility!==d.visibility
     ||row.subject_key!==d.subject_key||row.source_event!==d.source_event)fail("Fear effect receipt integrity/audience changed.");
-  const {t}=triggerProof(db,guild,d.trigger,{allowResolved:true});
+  const {t,p}=triggerProof(db,guild,d.trigger,{allowResolved:true});
   if(t.status!=="resolved"||t.data.effect!==key||t.data.decision!==d.decision)fail("Fear trigger/effect ancestry changed.");
-  decisionProof(db,guild,t,d.decision);contextProof(db,guild,d.context);
+  const decision=decisionProof(db,guild,t,d.decision),context=contextProof(db,guild,d.context);
+  if(d.context!==decision.data.context||hash(context)!==decision.data.context_hash||hash(d.before)!==decision.data.expected_target_revision
+    ||d.move_kind!==context.data.move_kind||d.target!==context.data.target_key||d.source_event!==context.source_event
+    ||d.visibility!==context.visibility||d.subject_key!==context.subject_key||d.scene!==t.data.scene||d.session!==t.data.session
+    ||d.proposal!==p.record_key||d.terms_hash!==p.data.terms_hash||!Array.isArray(d.native_mutation_refs)||d.native_mutation_refs.length!==1)
+    fail("Native Fear effect must retain its exact selected context, kind, source, scene and audience proof.");
   const s=db.getWorldEvent(guild,d.source_event);
   if(s?.status!=="active"||hash(s.details)!==d.source_hash)fail("Fear scene source revoked.");
   for(const ref of d.native_mutation_refs){const m=db.getMutation(guild,ref);
-    if(!m||m.source_layer!=="pvp_fear"||hash(JSON.parse(m.before_json))!==hash(d.before)||hash(JSON.parse(m.after_json))!==hash(d.after)
+    if(!m||m.source_layer!=="pvp_fear"||m.mutation_type!==d.move_kind||m.entity_key!==d.target||m.visibility!==d.visibility
+      ||m.actor_id!==d.applied_by||m.session_id!==d.session||hash(JSON.parse(m.before_json))!==hash(d.before)||hash(JSON.parse(m.after_json))!==hash(d.after)
       ||JSON.parse(m.payload_json).trigger!==d.trigger||JSON.parse(m.payload_json).decision!==d.decision)
       fail("Exact native Fear mutation receipt required.");}
   if(d.move_kind==="npc_prepare"){
@@ -308,6 +364,13 @@ export function validateFearEffect(db,guild,key){
       ||m.mutation_type!=="npc_action:prepare"||hash(JSON.parse(m.after_json))!==hash(action))
       fail("Exact native NPC action/receipt ancestry required.");
   }
+  if(d.move_kind==="npc_attack"){
+    const e=incomingMoveProof(db,guild,t,context,{terminal:true}),before=target(db,guild,context);
+    if(d.target!==e.row.record_key||d.incoming_attack_ref!==e.row.record_key||d.incoming_roll_ref!==e.roll.record_key
+      ||d.incoming_effect_ref!==(e.effect?.record_key||null)||hash(d.before)!==hash(before)
+      ||hash(d.after)!==hash({...before,native_outcome:{roll:e.roll.record_key,effect:e.effect?.record_key||null}}))
+      fail("Exact separate native NPC effect required; Fear accounting never substitutes for PC damage.");
+  }
   return row;
 }
 export function renderFearEffect(db,guild,key,scope){
@@ -315,6 +378,7 @@ export function renderFearEffect(db,guild,key,scope){
   if(row.visibility!=="party"&&!(row.visibility==="character"&&scope.mode==="private"&&row.subject_key===scope.actorCharacterId))
     fail("Fear consequence is not authorized for this output audience.");
   return d.move_kind==="clock_advance"?`An established scene countdown advanced by one step (${d.after.value}/${d.after.max_value}).`
+    :d.move_kind==="npc_attack"?"An established adversary's immediate standard attack has a saved native outcome. No character reaction or disclosure is implied."
     :d.move_kind==="npc_prepare"?"An established adversary has taken an immediate native preparation action. No PC response or damage is implied."
       :"An established local entrance is now locked. No character action or reaction is implied.";
 }
