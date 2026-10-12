@@ -8,6 +8,7 @@ import {progressPvp,validatePvpRoundReceipt,validatePvpResolutionReceipt} from '
 import {pvpProjection} from './pvp-authorship.js';
 import {currentScene} from './scene-continuity.js';
 import {typedRollProof} from './typed-roll-proof.js';
+import {renderFearEffect,validateFearEffect} from './pvp-fear-moves.js';
 export const noticeHash=value=>createHash('sha256').update(JSON.stringify(value)).digest('hex');
 function fail(){throw Object.assign(new Error('Native notice source, revision, owner or audience is stale.'),{code:'NATIVE_NOTICE'});}
 export function renderNativeNotice(db,guild,d){
@@ -70,6 +71,15 @@ export function renderNativeNotice(db,guild,d){
       `Boundaries: ${t.boundaries.join('; ')}; audience: ${t.audience}; ownership: ${t.authorship}`,
       `Hope: ${t.hope_policy}; Fear: ${t.fear_policy}; stop: ${t.stop_policy}`,
       JSON.stringify(progress)].join('\n');
+  }
+  if(d.kind==='pvp_fear_effect'){
+    const effect=validateFearEffect(db,guild,d.ref),trigger=db.getCityRecord(guild,'pvp_fear_trigger',effect.data.trigger);
+    if(effect.data.proposal!==d.proposal||effect.data.terms_hash!==d.terms_hash
+      ||effect.visibility!==d.visibility||effect.subject_key!==(d.character||null)
+      ||d.user&&db.getCharacter(d.character)?.owner_user_id!==d.user
+        ||!d.user&&effect.visibility!=='party'||trigger?.status!=='resolved')fail();
+    return renderFearEffect(db,guild,effect.record_key,d.user?{mode:'private',actorUserId:d.user,actorCharacterId:d.character}:
+      {mode:'party',actorUserId:null,actorCharacterId:null});
   }
   fail();
 }

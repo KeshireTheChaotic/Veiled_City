@@ -153,13 +153,19 @@ export function brawlBatchMayFinish(db,guild,row,triggers){
 }
 export function assertBrawlFearOrder(db,guild,request,trigger){
   if(!request.data.offer.brawl)return;
+  const pending=orderedBrawlFear(db,guild,request);
+  if(pending[0]?.record_key!==trigger.record_key)fail("Resolve simultaneous immediate Fear moves in native reservation order.");
+}
+/** Source-verified recovery order, shared by the executor and the bounded restart coordinator. */
+export function orderedBrawlFear(db,guild,request){
+  if(!request.data.offer.brawl)return [];
   const {w}=proof(db,guild,request),members=windowMembers(db,guild,w),order=new Map(members.map(m=>[m.data.attack,m.data.ordinal]));
   const pending=inventory(db,guild,"pvp_fear_trigger").filter(t=>t.data.version===2&&t.status!=="resolved"&&order.has(t.data.round));
   for(const t of pending){const actual=validatePvpAttackRoll(db,guild,t.data.attack_receipt);
     if(actual.receipt.data.result.duality!=="Fear"||actual.request.record_key!==t.data.round||actual.offer.contract!==request.data.offer.contract)
       fail("Exact native simultaneous Fear source required.");}
   pending.sort((a,b)=>order.get(a.data.round)-order.get(b.data.round));
-  if(pending[0]?.record_key!==trigger.record_key)fail("Resolve simultaneous immediate Fear moves in native reservation order.");
+  return pending;
 }
 export function assertBrawlDamageSources(db,guild,rows,{committed=false}={}){
   const grouped=rows.filter(r=>r.offer.brawl);if(!grouped.length)return;

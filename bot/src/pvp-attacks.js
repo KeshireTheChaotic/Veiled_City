@@ -10,6 +10,7 @@ import {captureAttackFear,pendingPvpFear} from "./pvp-fear-gate.js";
 import {assertPcCanAct,assertPcAttackable} from "./pc-native-eligibility.js";
 import {blazeActionAuthorization,blazeCriticalResult,validateBlazeSavedRoll} from "./pc-death.js";
 import {brawlAdmission,reserveBrawlAttack,verifyBrawlAttack,consumeBrawlAttack,brawlBatchMayFinish} from "./pvp-brawl.js";
+import {resolveAutonomousPvpFear} from "./pvp-fear-moves.js";
 const hash=v=>createHash("sha256").update(JSON.stringify(v)).digest("hex");
 function fail(message){throw Object.assign(new Error(message),{code:"NARRATIVE_PVP",expected:true});}
 function closed(input,keys){if(!input||Array.isArray(input)||Object.keys(input).length!==keys.length||keys.some(k=>!(k in input)))fail("Closed native PC attack fields required.");}
@@ -162,7 +163,7 @@ export function validatePvpAttackRoll(db,guild,key){
 }
 export function rollPvpAttack(db,guild,user,input,{rng=d}={}){
   closed(input,["attack","expected_revision"]);
-  return db.transaction(()=>{
+  const receipt=db.transaction(()=>{
     const proof=sourceProof(db,guild,input.attack,{committed:true}),row=proof.row,o=proof.o;
     if(user!==o.snapshot.actor_owner)fail("Only the authenticated current attacker owner may roll.");
     personalCharacter(db,guild,user,o.actor);
@@ -184,4 +185,10 @@ export function rollPvpAttack(db,guild,user,input,{rng=d}={}){
     captureAttackFear(db,guild,c.contract,receipt);
     return receipt;
   });
+  if(db.getCityCalendar(guild).flags.autonomous_pvp_fear!==false){
+    const fear=db.listCityRecords(guild,{kind:"pvp_fear_trigger",includeGM:true,limit:100})
+      .find(t=>t.data.version===2&&t.data.attack_receipt===receipt.record_key&&t.status==="awaiting_move");
+    if(fear)resolveAutonomousPvpFear(db,guild,fear.record_key);
+  }
+  return receipt;
 }

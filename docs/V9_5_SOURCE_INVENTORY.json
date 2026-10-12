@@ -1921,7 +1921,7 @@
     },
     {
       "file": "bot/scripts/v9-fixtures.mjs",
-      "sha256": "2680b27ab41184dbe54339a99d4e036735e86106ef3eac8710996bdf594053a7",
+      "sha256": "137ba162687c4bc8e64fb07e4effc00fa0b156de35e5497f86ae55c112252446",
       "imports": [
         "bot/src/db.js",
         "bot/src/authored-turn-envelope.js",
@@ -1955,6 +1955,7 @@
         "bot/scripts/v94-pvp-profile-test.mjs",
         "bot/scripts/v94-pvp-qualification-test.mjs",
         "bot/scripts/v94-pvp-reaction-test.mjs",
+        "bot/scripts/v95-autonomous-fear-test.mjs",
         "bot/scripts/v95-protected-narrative-test.mjs"
       ],
       "classification": "fixture-or-tool:KEEP"
@@ -2193,7 +2194,7 @@
     },
     {
       "file": "bot/scripts/v9-release-qualification-test.mjs",
-      "sha256": "1b01a1bfd1cf3c17e520caf223291bacdabee28d7d2cf038a692ab3e25126755",
+      "sha256": "1948024a86e745aec706cf9b59d40b65bf0f6630ba0a033c6c661ea347461e70",
       "imports": [
         "bot/scripts/v9-fixtures.mjs",
         "bot/src/commands.js",
@@ -2417,7 +2418,8 @@
         "bot/scripts/v94-pvp-damage-test.mjs",
         "bot/scripts/v94-pvp-multiplayer-test.mjs",
         "bot/scripts/v94-pvp-qualification-test.mjs",
-        "bot/scripts/v94-pvp-reaction-test.mjs"
+        "bot/scripts/v94-pvp-reaction-test.mjs",
+        "bot/scripts/v95-autonomous-fear-test.mjs"
       ],
       "classification": "fixture-or-tool:KEEP"
     },
@@ -2470,7 +2472,7 @@
     },
     {
       "file": "bot/scripts/v94-pvp-multiplayer-test.mjs",
-      "sha256": "66236d1b76fc92500177e7d056ac345832e246cffe02550aa4fc4b446593ed90",
+      "sha256": "cc62d388b9602fedf6fd503f9dcb6e5494aa6b8443eb3fe91e7d53f82f587b70",
       "imports": [
         "bot/scripts/v9-fixtures.mjs",
         "bot/scripts/v94-pvp-attack-fixtures.mjs",
@@ -2483,6 +2485,7 @@
         "bot/scripts/contract-fixtures.mjs",
         "bot/src/commands.js",
         "bot/src/pvp-fear-moves.js",
+        "bot/src/city-core.js",
         "bot/src/roll-requests.js",
         "bot/src/roll-collaboration.js",
         "bot/src/narrative-pvp.js",
@@ -2517,7 +2520,7 @@
     },
     {
       "file": "bot/scripts/v94-pvp-qualification-test.mjs",
-      "sha256": "098168c2138ad748d3f229730d2b2e7e150402a8aed29fb0ce8550f66cfbe497",
+      "sha256": "8690f17315647bc04a48cee7f7cfa8119fd42327a88a5c4ae894103aebe53c3a",
       "imports": [
         "bot/scripts/v9-fixtures.mjs",
         "bot/scripts/contract-fixtures.mjs",
@@ -2531,6 +2534,8 @@
         "bot/src/pvp-damage.js",
         "bot/src/pc-incoming.js",
         "bot/src/pvp-fear-moves.js",
+        "bot/src/city-core.js",
+        "bot/src/native-publications.js",
         "bot/src/encounter.js",
         "bot/src/combat.js",
         "bot/src/city-calendar.js",
@@ -2557,6 +2562,42 @@
         "bot/src/authored-turn-envelope.js",
         "bot/src/typed-intents.js",
         "bot/src/pvp-reactions.js"
+      ],
+      "nonliteral_dynamic_import": false,
+      "registered": true,
+      "callers": [],
+      "classification": "mandatory-suite:KEEP"
+    },
+    {
+      "file": "bot/scripts/v95-autonomous-fear-test.mjs",
+      "sha256": "6b071974ccf64e42ff5367d917e8fb8d85620d61367e9b61c5e1172243165d7a",
+      "imports": [
+        "bot/scripts/v9-fixtures.mjs",
+        "bot/src/narrative-pvp.js",
+        "bot/src/city-core.js",
+        "bot/src/pvp-fear-moves.js",
+        "bot/src/native-publications.js",
+        "bot/scripts/v94-pvp-attack-fixtures.mjs",
+        "bot/src/pvp-attacks.js",
+        "bot/src/pvp-reactions.js",
+        "bot/src/city-calendar.js",
+        "bot/src/encounter.js",
+        "bot/src/combat.js",
+        "bot/src/encounter.js",
+        "bot/src/scene-continuity.js",
+        "bot/src/simulation.js",
+        "bot/src/autonomous-world.js",
+        "bot/src/autonomous-world.js",
+        "bot/src/typed-intents.js",
+        "bot/src/action-dependency.js",
+        "bot/src/rules-arbitration.js",
+        "bot/src/roll-requests.js",
+        "bot/src/roll-collaboration.js",
+        "bot/src/action-continuation.js",
+        "bot/src/publication-outbox.js",
+        "bot/src/pvp-output.js",
+        "bot/src/publishing.js",
+        "bot/src/voice.js"
       ],
       "nonliteral_dynamic_import": false,
       "registered": true,
@@ -2615,7 +2656,7 @@
     },
     {
       "file": "bot/scripts/validate-offline.mjs",
-      "sha256": "8804f9b62cf831c6256bdfb2a7985e19c70c23b8f30471f4407f4e5d1ed1d149",
+      "sha256": "44516126296632ca5ac91cb9e9d6f7b29615a4886ecf7bffb39ac0695fda83a7",
       "imports": [],
       "nonliteral_dynamic_import": false,
       "registered": false,
@@ -2640,6 +2681,7 @@
         "bot/src/narrative-pvp.js",
         "bot/src/pc-death.js",
         "bot/src/pc-effects.js",
+        "bot/src/pvp-fear-moves.js",
         "bot/src/pvp-profiles.js",
         "bot/src/pvp-reactions.js",
         "bot/src/roll-collaboration.js",
@@ -2671,6 +2713,7 @@
       "registered": false,
       "callers": [
         "bot/scripts/v9-continuation-test.mjs",
+        "bot/scripts/v95-autonomous-fear-test.mjs",
         "bot/src/autonomous-world.js",
         "bot/src/gm.js",
         "bot/src/narrative-pvp.js",
@@ -2703,6 +2746,7 @@
         "bot/scripts/v9-window-lifecycle-test.mjs",
         "bot/scripts/v94-pvp-profile-test.mjs",
         "bot/scripts/v94-pvp-reaction-test.mjs",
+        "bot/scripts/v95-autonomous-fear-test.mjs",
         "bot/src/action-continuation.js",
         "bot/src/pvp-damage.js",
         "bot/src/pvp-terminal.js",
@@ -2994,11 +3038,13 @@
         "bot/scripts/v94-pc-effect-authority-test.mjs",
         "bot/scripts/v94-pvp-profile-test.mjs",
         "bot/scripts/v94-pvp-qualification-test.mjs",
+        "bot/scripts/v95-autonomous-fear-test.mjs",
         "bot/scripts/v95-protected-narrative-test.mjs",
         "bot/src/action-continuation.js",
         "bot/src/gm.js",
         "bot/src/gm.js.20261009-144611.bak",
         "bot/src/index.js",
+        "bot/src/pvp-fear-moves.js",
         "bot/src/state.js",
         "bot/src/story-commands.js",
         "bot/src/typed-intents.js"
@@ -3154,6 +3200,7 @@
         "bot/scripts/v94-pvp-profile-test.mjs",
         "bot/scripts/v94-pvp-qualification-test.mjs",
         "bot/scripts/v94-pvp-reaction-test.mjs",
+        "bot/scripts/v95-autonomous-fear-test.mjs",
         "bot/scripts/v95-protected-narrative-test.mjs",
         "bot/src/action-consent.js",
         "bot/src/ai-intents.js",
@@ -3331,7 +3378,7 @@
     },
     {
       "file": "bot/src/city-core.js",
-      "sha256": "03dec0ccd6376cee18b07d7c9ceef42b6931feb51c84f5389645dd39f730a2a4",
+      "sha256": "e54098aa2c641ed3a74ef114bd51ec14fc30ee23ce80092976a2d9e1d0ee9cef",
       "imports": [
         "bot/src/city-calendar.js",
         "bot/src/city-constraints.js",
@@ -3410,6 +3457,9 @@
         "bot/scripts/v9-roll-truth-test.mjs",
         "bot/scripts/v9-roll-ux-test.mjs",
         "bot/scripts/v9-window-lifecycle-test.mjs",
+        "bot/scripts/v94-pvp-multiplayer-test.mjs",
+        "bot/scripts/v94-pvp-qualification-test.mjs",
+        "bot/scripts/v95-autonomous-fear-test.mjs",
         "bot/src/ai-intents.js",
         "bot/src/city-civic.js",
         "bot/src/city-commands.js",
@@ -3460,6 +3510,7 @@
         "bot/src/city-commands.js",
         "bot/src/gm.js",
         "bot/src/gm.js.20261009-144611.bak",
+        "bot/src/pvp-fear-moves.js",
         "bot/src/world-authoring.js"
       ],
       "classification": "runtime:KEEP"
@@ -3503,6 +3554,7 @@
         "bot/scripts/v94-incoming-fixtures.mjs",
         "bot/scripts/v94-pc-effect-authority-test.mjs",
         "bot/scripts/v94-pvp-qualification-test.mjs",
+        "bot/scripts/v95-autonomous-fear-test.mjs",
         "bot/src/commands.js",
         "bot/src/roll-collaboration.js"
       ],
@@ -3533,7 +3585,7 @@
     },
     {
       "file": "bot/src/commands.js",
-      "sha256": "241a157189ce19ea82a61a7d7fce1e4d78a1a446580469758033d81b59726597",
+      "sha256": "a60966280244817e9afb022fbedd15e9bf0bfdf15cdf0f95c86262e64508bfee",
       "imports": [
         "bot/src/dice.js",
         "bot/src/epistemic.js",
@@ -3879,7 +3931,7 @@
     },
     {
       "file": "bot/src/db.js",
-      "sha256": "21e9130dbb5a9b86fd0124e98a0fe300a63beffc85e6425d415365d588b95500",
+      "sha256": "3c0f09fad7d471ad880f36ee501096b2f17760c5235d1c3d40a9b14b8907b9a5",
       "imports": [
         "bot/src/relationship-state.js",
         "bot/src/errors.js",
@@ -4167,6 +4219,7 @@
         "bot/scripts/v94-incoming-fixtures.mjs",
         "bot/scripts/v94-pc-effect-authority-test.mjs",
         "bot/scripts/v94-pvp-qualification-test.mjs",
+        "bot/scripts/v95-autonomous-fear-test.mjs",
         "bot/src/ai-intents.js",
         "bot/src/commands.js",
         "bot/src/pvp-fear-moves.js",
@@ -4493,7 +4546,7 @@
     },
     {
       "file": "bot/src/index.js",
-      "sha256": "b505ce8d8f8c83723701b66aaf01e017b142e025f282f3c4c380e8bec2bc3b67",
+      "sha256": "6da1d9f2af4852e57fb105ad24c219f4070c0c66118343457ddf3dd4e1257e6c",
       "imports": [
         "bot/src/config.js",
         "bot/src/db.js",
@@ -4526,7 +4579,8 @@
         "bot/src/authored-turn-envelope.js",
         "bot/src/turn-attempts.js",
         "bot/src/routing-diagnostics.js",
-        "bot/src/operational-metrics.js"
+        "bot/src/operational-metrics.js",
+        "bot/src/pvp-fear-moves.js"
       ],
       "nonliteral_dynamic_import": false,
       "registered": false,
@@ -4556,6 +4610,7 @@
         "bot/scripts/autonomous-world-test.mjs",
         "bot/scripts/implementation-phase-c-test.mjs",
         "bot/src/autonomous-world.js",
+        "bot/src/pvp-fear-moves.js",
         "bot/src/typed-intents.js"
       ],
       "classification": "runtime:KEEP"
@@ -4754,6 +4809,7 @@
         "bot/scripts/v94-pvp-multiplayer-test.mjs",
         "bot/scripts/v94-pvp-profile-test.mjs",
         "bot/scripts/v94-pvp-qualification-test.mjs",
+        "bot/scripts/v95-autonomous-fear-test.mjs",
         "bot/scripts/v95-protected-narrative-test.mjs",
         "bot/src/commands.js",
         "bot/src/native-notice.js",
@@ -4767,7 +4823,7 @@
     },
     {
       "file": "bot/src/native-notice.js",
-      "sha256": "3badc50ea819015a9d7b5fb28ed2c527f16a809c6ee46d04fcd828ecc5e40cc4",
+      "sha256": "3cb08000741b65dcae5e94d3d5626539dbdb81a4edc029b88c71e282159961cf",
       "imports": [
         "bot/src/personal-continuity.js",
         "bot/src/roll-requests.js",
@@ -4776,7 +4832,8 @@
         "bot/src/pvp-rounds.js",
         "bot/src/pvp-authorship.js",
         "bot/src/scene-continuity.js",
-        "bot/src/typed-roll-proof.js"
+        "bot/src/typed-roll-proof.js",
+        "bot/src/pvp-fear-moves.js"
       ],
       "nonliteral_dynamic_import": false,
       "registered": false,
@@ -4791,7 +4848,7 @@
     },
     {
       "file": "bot/src/native-publications.js",
-      "sha256": "8e31b1fc5a2c59d9b56c44df8454e054d82ffdad4e20003c7c6a8f228deb3a27",
+      "sha256": "345e63f2da61a1d31b60d9b5b0893ce9a6abcb289b1fb33df73f966cf18796c7",
       "imports": [
         "bot/src/native-notice.js",
         "bot/src/pvp-output.js",
@@ -4799,12 +4856,15 @@
         "bot/src/serial-queue.js",
         "bot/src/scene-continuity.js",
         "bot/src/pvp-rounds.js",
+        "bot/src/pvp-fear-moves.js",
         "bot/src/errors.js"
       ],
       "nonliteral_dynamic_import": false,
       "registered": false,
       "callers": [
         "bot/scripts/v9-publication-test.mjs",
+        "bot/scripts/v94-pvp-qualification-test.mjs",
+        "bot/scripts/v95-autonomous-fear-test.mjs",
         "bot/src/commands.js",
         "bot/src/narrative-pvp.js",
         "bot/src/pvp-authorship.js",
@@ -5046,7 +5106,7 @@
     },
     {
       "file": "bot/src/pc-incoming.js",
-      "sha256": "7437527da35f40f7fcc62d69696a7051fdaecf1bf648736048d8813282454d97",
+      "sha256": "b78325edc32e124a24077d4923e7ba3495628465b2164cf63bcbdcf5eb1fede3",
       "imports": [
         "bot/src/dice.js",
         "bot/src/city-calendar.js",
@@ -5276,6 +5336,7 @@
         "bot/scripts/v9-release-qualification-test.mjs",
         "bot/scripts/v94-pvp-profile-test.mjs",
         "bot/scripts/v94-pvp-qualification-test.mjs",
+        "bot/scripts/v95-autonomous-fear-test.mjs",
         "bot/scripts/v95-protected-narrative-test.mjs",
         "bot/src/action-continuation.js",
         "bot/src/commands.js",
@@ -5312,6 +5373,7 @@
         "bot/scripts/v9-observation-compatibility-test.mjs",
         "bot/scripts/v9-publication-test.mjs",
         "bot/scripts/v9-pvp-authorship-test.mjs",
+        "bot/scripts/v95-autonomous-fear-test.mjs",
         "bot/scripts/v95-protected-narrative-test.mjs",
         "bot/src/commands.js",
         "bot/src/continuity-routing.js",
@@ -5324,7 +5386,7 @@
     },
     {
       "file": "bot/src/pvp-attacks.js",
-      "sha256": "f3e597c9b7f3cc7d698e841248e160f07bd36f540b0b62b9b202b2b3639fd573",
+      "sha256": "a68e163434728267facc5d05f6342368236edbe11ec0d793b0d571b74255203c",
       "imports": [
         "bot/src/pvp-profiles.js",
         "bot/src/personal-continuity.js",
@@ -5335,7 +5397,8 @@
         "bot/src/pvp-fear-gate.js",
         "bot/src/pc-native-eligibility.js",
         "bot/src/pc-death.js",
-        "bot/src/pvp-brawl.js"
+        "bot/src/pvp-brawl.js",
+        "bot/src/pvp-fear-moves.js"
       ],
       "nonliteral_dynamic_import": false,
       "registered": false,
@@ -5347,6 +5410,7 @@
         "bot/scripts/v94-pvp-multiplayer-test.mjs",
         "bot/scripts/v94-pvp-qualification-test.mjs",
         "bot/scripts/v94-pvp-reaction-test.mjs",
+        "bot/scripts/v95-autonomous-fear-test.mjs",
         "bot/src/commands.js",
         "bot/src/pvp-brawl.js",
         "bot/src/pvp-damage.js",
@@ -5400,7 +5464,7 @@
     },
     {
       "file": "bot/src/pvp-brawl.js",
-      "sha256": "f90212a20aca1085e6ad4b057dedb54d2dd6359cb577605258a14f59c7ce3bfb",
+      "sha256": "e29119c04b52aaeda99c7e548404e7bb7bca28e5541634c952a6391e4d335629",
       "imports": [
         "bot/src/scene-action-window.js",
         "bot/src/city-calendar.js",
@@ -5476,7 +5540,7 @@
     },
     {
       "file": "bot/src/pvp-fear-moves.js",
-      "sha256": "2174a6cb0a55b2a35429706854a3c547265c19c11852e2f3cc49e33d90ba42b8",
+      "sha256": "f1db59efe875b1691988675a35d435f09b85eb527b8bd2218bc21dc682c33101",
       "imports": [
         "bot/src/city-calendar.js",
         "bot/src/scene-continuity.js",
@@ -5491,7 +5555,11 @@
         "bot/src/pvp-damage.js",
         "bot/src/pvp-brawl.js",
         "bot/src/pc-incoming.js",
-        "bot/src/action-continuation.js"
+        "bot/src/action-continuation.js",
+        "bot/src/city-depth.js",
+        "bot/src/location-language.js",
+        "bot/src/autonomous-world.js",
+        "bot/src/action-consent.js"
       ],
       "nonliteral_dynamic_import": false,
       "registered": false,
@@ -5503,10 +5571,16 @@
         "bot/scripts/v94-pvp-damage-test.mjs",
         "bot/scripts/v94-pvp-multiplayer-test.mjs",
         "bot/scripts/v94-pvp-qualification-test.mjs",
+        "bot/scripts/v95-autonomous-fear-test.mjs",
         "bot/src/commands.js",
+        "bot/src/index.js",
+        "bot/src/native-notice.js",
+        "bot/src/native-publications.js",
         "bot/src/pc-incoming.js",
+        "bot/src/pvp-attacks.js",
         "bot/src/pvp-fear-gate.js",
-        "bot/src/pvp-output.js"
+        "bot/src/pvp-output.js",
+        "bot/src/pvp-rounds.js"
       ],
       "classification": "runtime:KEEP"
     },
@@ -5531,6 +5605,7 @@
         "bot/scripts/v9-npc-observation-test.mjs",
         "bot/scripts/v9-pvp-authorship-test.mjs",
         "bot/scripts/v94-pvp-profile-test.mjs",
+        "bot/scripts/v95-autonomous-fear-test.mjs",
         "bot/scripts/v95-protected-narrative-test.mjs",
         "bot/src/action-continuation.js",
         "bot/src/commands.js",
@@ -5592,13 +5667,14 @@
       "callers": [
         "bot/scripts/v94-pvp-multiplayer-test.mjs",
         "bot/scripts/v94-pvp-reaction-test.mjs",
+        "bot/scripts/v95-autonomous-fear-test.mjs",
         "bot/src/commands.js"
       ],
       "classification": "runtime:KEEP"
     },
     {
       "file": "bot/src/pvp-rounds.js",
-      "sha256": "136f9a3a0d94cb316f4d7c7b3b745e7c10cc0758a5b68bda788f6f43fb8148df",
+      "sha256": "bded123e5da0c93a5689ba6bf002ce001e4de21475bd307ed9669665c48db84c",
       "imports": [
         "bot/src/dice.js",
         "bot/src/city-calendar.js",
@@ -5608,6 +5684,7 @@
         "bot/src/pvp-fear-gate.js",
         "bot/src/action-continuation.js",
         "bot/src/native-publications.js",
+        "bot/src/pvp-fear-moves.js",
         "bot/src/pvp-authorship.js"
       ],
       "nonliteral_dynamic_import": false,
@@ -5705,6 +5782,7 @@
         "bot/scripts/v94-pvp-attack-test.mjs",
         "bot/scripts/v94-pvp-multiplayer-test.mjs",
         "bot/scripts/v94-pvp-reaction-test.mjs",
+        "bot/scripts/v95-autonomous-fear-test.mjs",
         "bot/src/commands.js",
         "bot/src/pvp-reactions.js",
         "bot/src/roll-language.js",
@@ -5831,6 +5909,7 @@
         "bot/scripts/v94-pvp-attack-test.mjs",
         "bot/scripts/v94-pvp-multiplayer-test.mjs",
         "bot/scripts/v94-pvp-reaction-test.mjs",
+        "bot/scripts/v95-autonomous-fear-test.mjs",
         "bot/src/ai-intents.js",
         "bot/src/commands.js",
         "bot/src/index.js",
@@ -5932,6 +6011,7 @@
         "bot/scripts/implementation-phase-c-test.mjs",
         "bot/scripts/rules-adjudication-test.mjs",
         "bot/scripts/v9-continuation-test.mjs",
+        "bot/scripts/v95-autonomous-fear-test.mjs",
         "bot/src/autonomous-world.js",
         "bot/src/state.js",
         "bot/src/window-coordinator.js"
@@ -6024,6 +6104,7 @@
         "bot/scripts/v94-pvp-damage-test.mjs",
         "bot/scripts/v94-pvp-multiplayer-test.mjs",
         "bot/scripts/v94-pvp-qualification-test.mjs",
+        "bot/scripts/v95-autonomous-fear-test.mjs",
         "bot/src/action-consent.js",
         "bot/src/action-continuation.js",
         "bot/src/ai-intents.js",
@@ -6364,6 +6445,7 @@
         "bot/scripts/v9-continuation-test.mjs",
         "bot/scripts/v9-pvp-authorship-test.mjs",
         "bot/scripts/v9-pvp-hope-fear-test.mjs",
+        "bot/scripts/v95-autonomous-fear-test.mjs",
         "bot/src/ai-intents.js",
         "bot/src/autonomous-world.js",
         "bot/src/commands.js",
@@ -6659,6 +6741,7 @@
         "bot/scripts/v9-roll-ux-test.mjs",
         "bot/scripts/v94-pvp-damage-test.mjs",
         "bot/scripts/v94-pvp-reaction-test.mjs",
+        "bot/scripts/v95-autonomous-fear-test.mjs",
         "bot/src/autonomous-world.js",
         "bot/src/gm.js",
         "bot/src/state.js"
@@ -6737,6 +6820,7 @@
         "bot/scripts/portrayal-authoring-test.mjs",
         "bot/scripts/production-regression-test.mjs",
         "bot/scripts/v9-pvp-authorship-test.mjs",
+        "bot/scripts/v95-autonomous-fear-test.mjs",
         "bot/scripts/v95-protected-narrative-test.mjs",
         "bot/src/index.js"
       ],

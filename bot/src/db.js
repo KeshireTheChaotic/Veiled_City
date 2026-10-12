@@ -1256,7 +1256,7 @@ export class VeiledDB {
   }
   heldNativeNotices(guildId){
     return this.db.prepare(`SELECT kind,record_key,status FROM city_records WHERE guild_id=?
-      AND kind IN ('roll_publication','roll_party_publication','pvp_status_publication','pvp_projection_publication')
+      AND kind IN ('roll_publication','roll_party_publication','pvp_status_publication','pvp_projection_publication','pvp_fear_publication')
       AND status!='delivered' AND json_extract(data_json,'$.turn_id') IS NULL ORDER BY rowid LIMIT 100`).all(guildId);
   }
   latestPcHpEffect(guildId,characterId){

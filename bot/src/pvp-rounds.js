@@ -8,6 +8,7 @@ import { settlePvpWindow } from "./pvp-terminal.js";
 import { capturePvpFear, gatePvpExchange, fearGateKey, pendingPvpFear } from "./pvp-fear-gate.js";
 import {drainActionContinuations} from "./action-continuation.js";
 import {reservePvpNotices} from "./native-publications.js";
+import {resolveAutonomousPvpFear} from "./pvp-fear-moves.js";
 export { authorPvpNarrative, reviewPvpNarrative, sharePvpNarrative } from "./pvp-authorship.js";
 
 const hash=value=>createHash("sha256").update(JSON.stringify(value)).digest("hex").slice(0,40);
@@ -156,7 +157,7 @@ function compare(db,guild,p,t,w,rows){
 }
 export function rollPvp(db,guild,user,input,{rng=d}={}){
   fields(input,operationFields);
-  return db.transaction(()=>{
+  const saved=db.transaction(()=>{
     const {p,w,t,who}=current(db,guild,user,input);
     const prior=resultFor(db,guild,p,input.round,who);
     if(prior)return progressPvp(db,guild,user,p.record_key);
@@ -179,8 +180,17 @@ export function rollPvp(db,guild,user,input,{rng=d}={}){
     const view=progressPvp(db,guild,user,p.record_key);
     reservePvpNotices(db,guild,p.record_key);
     drainActionContinuations(db,guild);
-    return view;
+    return {view,proposal:p.record_key};
   });
+  if(db.getCityCalendar(guild).flags.autonomous_pvp_fear!==false){
+    const proposal=saved?.proposal||input.proposal;
+    const triggers=db.listCityRecords(guild,{kind:"pvp_fear_trigger",includeGM:true,limit:100})
+      .filter(t=>t.data.proposal===proposal&&t.status==="awaiting_move")
+      .sort((a,b)=>a.data.trigger_ordinal-b.data.trigger_ordinal||a.record_key.localeCompare(b.record_key));
+    for(const trigger of triggers)resolveAutonomousPvpFear(db,guild,trigger.record_key);
+    return progressPvp(db,guild,user,proposal);
+  }
+  return saved?.view||saved;
 }
 export function continuePvp(db,guild,user,input){
   fields(input,operationFields);

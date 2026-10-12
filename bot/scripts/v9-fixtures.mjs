@@ -11,7 +11,7 @@ export async function nativeFixture(run){
   let db=new VeiledDB(path.join(dir,"fixture.sqlite"),path.resolve("sql/schema.sql"));
   const guild="v9-synthetic";
   try{
-    db.ensureCampaign(guild);const session=db.startSession(guild,"Four players at terminal");
+    db.ensureCampaign(guild);db.setCityCalendar(guild,{flags:{autonomous_pvp_fear:false}});const session=db.startSession(guild,"Four players at terminal");
     const pcs=["Jaxon","Choso","Billy","Tyrell"].map((name,i)=>{
       const user=`player-${i}`;db.upsertPlayer(guild,user,name);
       const pc=db.createCharacter(guild,user,name,{traits:{Agility:2,Strength:1,Finesse:3,Instinct:1,Presence:0,Knowledge:2},

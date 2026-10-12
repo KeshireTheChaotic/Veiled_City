@@ -55,7 +55,7 @@ import { draftPvpNarrative, ratifyPvpClause, reviewPvpScope, reviewPvpDraft, pvp
 import { captureAuthoredTurnEnvelope } from "./authored-turn-envelope.js";
 import { saveVisibleCharacterFacts } from "./character-observation.js";
 import { establishWorldDescription } from "./world-observation.js";
-import { fearInbox, establishFearContext, selectFearMove, applyFearMove, reconcileFearMove } from "./pvp-fear-moves.js";
+import { fearInbox, establishFearContext, selectFearMove, applyFearMove, reconcileFearMove, resumeAutonomousPvpFear } from "./pvp-fear-moves.js";
 import { archivePvpHistory, quarantineSessionRecap, certifiedSessionRecap, scopedSessionRecap,revalidateOutputPublication } from "./pvp-output.js";
 import { pendingPvpFear } from "./pvp-fear-gate.js";
 import { proposeDamagePvp, reviewDamagePvp, respondDamagePvp, reviseDamagePvp, damagePvpInbox } from "./pvp-profiles.js";
@@ -458,6 +458,7 @@ async function executeCommand(interaction,{db,gm,voice=null}){
         row=op==="incoming-defense"?confirmIncomingDefense(db,interaction.guildId,user,input.attack)
           :op==="incoming-roll"?rollIncomingAttack(db,interaction.guildId,user,input.attack,{...native,library:encounterLibrary(gm)})
             :resolveIncomingDamage(db,interaction.guildId,user,input.attack,{armor:input.armor,library:encounterLibrary(gm)});
+        if(op!=="incoming-roll")resumeAutonomousPvpFear(db,interaction.guildId,{library:encounterLibrary(gm)});
       }else throw new UserInputError("Choose a native feature review/approval or incoming attack operation.");
       const chunks=chunkTextLines(JSON.stringify(row.record_key?{key:row.record_key,status:row.status}:row,null,2).split("\n"));
       await interaction.reply({content:chunks[0],ephemeral:true,allowedMentions:{parse:[]}});
@@ -501,6 +502,8 @@ async function executeCommand(interaction,{db,gm,voice=null}){
           const row=authorizePvpAttack(db,guild,user,input,native);result={attack:row.record_key,status:row.status};
         }else{
           const row=rollPvpAttack(db,guild,user,input),r=row.data.result;
+          const attack=db.getCityRecord(guild,"pvp_attack_request",row.data.attack);
+          if(attack?.data.contract)noticeProposal=attack.data.contract;
           result={attack:row.data.attack,result:{hope:r.hope,fear:r.fear,total:r.total,duality:r.duality,hit:r.hit},
             instruction:"Saved native attack only. Target statistics stay private; HP requires its separate damage and owner Armor workflow."};
         }

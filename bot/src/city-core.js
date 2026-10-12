@@ -177,6 +177,7 @@ export function reviewInstitutionAction(db,guildId,input,actorId){
 export function configureCityFlags(db,guildId,input,actorId){
   cityObject(input);
   const allowed=["institutions","opportunities","economy","minor_npcs","adaptive_context","conversations","pacing","negotiations","voice_direction","authoring",
+    "autonomous_pvp_fear",
     ...Object.keys(EXPANSION_FEATURES)];
   if(Object.keys(input).some(key=>!allowed.includes(key)||typeof input[key]!=="boolean")) throw new Error("Unknown city feature flag.");
   return db.transaction(()=>{

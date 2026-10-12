@@ -5,6 +5,7 @@ import {queueTurnPublications,deliverTurnOutbox} from './publication-outbox.js';
 import {KeyedSerialQueue} from './serial-queue.js';
 import {currentScene} from './scene-continuity.js';
 import {progressPvp} from './pvp-rounds.js';
+import {validateFearEffect} from './pvp-fear-moves.js';
 import {StateConflictError} from './errors.js';
 const queues=new WeakMap();
 /** Native transaction checkpoint only. It is a wake-up pointer, never publication/consent authority. */
@@ -56,19 +57,30 @@ export function publishNativeNotice(db,guild,{kind,key,source,notice},send){
   });
 }
 function pvpSpecs(db,guild,proposal){
-  const p=db.getCityRecord(guild,'pvp_proposal',proposal);if(!p)throw new Error('Exact native proposal required.');
-  return p.data.participants.map(who=>{
+  const p=db.getCityRecord(guild,'pvp_proposal',proposal)||db.getCityRecord(guild,'pvp_encounter_contract',proposal);
+  if(!p)throw new Error('Exact native proposal or PvP contract required.');
+  const specs=p.kind==='pvp_proposal'?p.data.participants.map(who=>{
     const revision=noticeHash([p.status,p.data,progressPvp(db,guild,who.user,proposal)]);
     return {kind:'pvp_status_publication',key:`pvp-status:${noticeHash([proposal,who.user,revision])}`,source:p.source_event,
       notice:{kind:'pvp_status',ref:proposal,revision,user:who.user,character:who.character}};
-  });
+  }):[];
+  const triggers=db.listCityRecords(guild,{kind:'pvp_fear_trigger',includeGM:true,limit:500}).filter(t=>t.data.proposal===proposal&&t.status==='resolved');
+  for(const trigger of triggers){
+    const effect=validateFearEffect(db,guild,trigger.data.effect),who=p.data.participants.find(row=>row.character===effect.subject_key);
+    if(effect.visibility!=='party'&&!who)continue;
+    const party=effect.visibility==='party',notice={kind:'pvp_fear_effect',ref:effect.record_key,proposal,terms_hash:p.data.terms_hash,
+      visibility:effect.visibility,...(party?{}:{user:who.user,character:who.character})};
+    specs.push({kind:'pvp_fear_publication',key:`pvp-fear-publication:${noticeHash([effect.record_key,party?'party':who.user])}`,
+      source:effect.source_event,notice});
+  }
+  return specs;
 }
 export function reservePvpNotices(db,guild,proposal){return pvpSpecs(db,guild,proposal).map(s=>reserveNativeNotice(db,guild,s));}
 export function reservePvpProjection(db,guild,row){return reserveNativeNotice(db,guild,{kind:'pvp_projection_publication',
   key:`pvp-share:${row.record_key}`,source:row.source_event,notice:{kind:'pvp_projection',ref:row.record_key}});}
 /** Reconstruct only native reference jobs; stale jobs are held, never converted into new effects. */
 export function materializeNativeNotices(db,guild){
-  const kinds=['roll_publication','roll_party_publication','pvp_status_publication','pvp_projection_publication'];
+  const kinds=['roll_publication','roll_party_publication','pvp_status_publication','pvp_projection_publication','pvp_fear_publication'];
   const jobs=db.reservedNativeNotices(guild,kinds);
   for(const r of jobs){
     const {reservation_version,reservation_hash,...notice}=r.data;
@@ -83,7 +95,7 @@ export function materializeNativeNotices(db,guild){
 }
 export function resyncNativeNotice(db,guild,kind,key,{gm=false,actor=null}={}){
   if(!gm||!actor)throw new StateConflictError('Authenticated GM resynchronization required.');
-  if(!['roll_publication','roll_party_publication','pvp_status_publication','pvp_projection_publication'].includes(kind))throw new StateConflictError('Native publication kind required.');
+  if(!['roll_publication','roll_party_publication','pvp_status_publication','pvp_projection_publication','pvp_fear_publication'].includes(kind))throw new StateConflictError('Native publication kind required.');
   const r=db.getCityRecord(guild,kind,key);if(!r)throw new StateConflictError('Exact native notice identity required.');
   if(r.data.turn_id)return r;
   const {reservation_version,reservation_hash,hold_code,...notice}=r.data;
@@ -100,7 +112,9 @@ export async function publishPvpNotices(db,guild,proposal,sendPrivate,sendParty,
   const p=db.getCityRecord(guild,'pvp_proposal',proposal);if(!p)throw new Error('Exact native proposal required.');
   const jobs=[];
   for(const spec of pvpSpecs(db,guild,proposal)){
-    jobs.push(publishNativeNotice(db,guild,spec,
+    if(spec.notice.kind==='pvp_fear_effect'&&!spec.notice.user)
+      jobs.push(publishNativeNotice(db,guild,spec,row=>sendParty(row.payload,p.data.session_id,{publication:row})));
+    else jobs.push(publishNativeNotice(db,guild,spec,
       row=>sendPrivate(spec.notice.user,row.payload,p.data.session_id,spec.notice.character,{publication:row})));
   }
   if(projection)jobs.push(publishNativeNotice(db,guild,{kind:'pvp_projection_publication',key:`pvp-share:${projection}`,

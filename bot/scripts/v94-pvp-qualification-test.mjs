@@ -14,7 +14,9 @@ import {attackFixture} from "./v94-pvp-attack-fixtures.mjs";
 import {preparePvpAttack,reviewPvpAttack,authorizePvpAttack,rollPvpAttack} from "../src/pvp-attacks.js";
 import {rollPvpDamage,preparePvpDamage,reviewPvpDamage,resolvePvpDamage} from "../src/pvp-damage.js";
 import {prepareIncomingAttack,reviewIncomingAttack,confirmIncomingDefense,rollIncomingAttack,resolveIncomingDamage} from "../src/pc-incoming.js";
-import {establishFearContext,selectFearMove,applyFearMove,fearRevision,validateFearEffect,renderFearEffect} from "../src/pvp-fear-moves.js";
+import {establishFearContext,selectFearMove,applyFearMove,fearRevision,validateFearEffect,renderFearEffect,resumeAutonomousPvpFear} from "../src/pvp-fear-moves.js";
+import {configureCityFlags} from "../src/city-core.js";
+import {materializeNativeNotices} from "../src/native-publications.js";
 import {EncounterLibrary} from "../src/encounter.js";
 import {buildCombatants} from "../src/combat.js";
 import {indexWorldEvent} from "../src/city-calendar.js";
@@ -50,6 +52,36 @@ function context(f,a){return establishFearContext(f.db,f.guild,"gm",{move_kind:"
 const target=a=>({key:a.record_key,source_event:a.source_event,offer:a.data.offer});
 function select(f,t,c,a){return selectFearMove(f.db,f.guild,"gm",{trigger:t.record_key,expected_revision:t.data.revision,context:c.record_key,
   expected_target_revision:fearRevision(target(a)),affected_actions:[]},{gm:true,interactionId:"qualification-fear-select"});}
+
+test("FEA05 trusted autonomous selector resumes an exact native NPC offer through owner defense and Armor",()=>nativeFixture(async f=>{
+  const x=await attackFear(f),{a,pc,library}=incoming(f,x.trigger),c=context(f,a),savedRoll=structuredClone(x.roll),before=f.db.getCharacter(pc.id).data.resources;
+  configureCityFlags(f.db,f.guild,{autonomous_pvp_fear:true},"synthetic-test");
+  let diceCalls=0;const rng=()=>{diceCalls++;return diceCalls===1?15:8;};
+  const run=()=>resumeAutonomousPvpFear(f.db,f.guild,{library,rng});
+  assert.equal(run()[0].status,"awaiting_owner");assert.equal(diceCalls,0);
+  const trigger=f.db.getCityRecord(f.guild,"pvp_fear_trigger",x.trigger.record_key),decision=f.db.getCityRecord(f.guild,"pvp_fear_move_decision",trigger.data.decision);
+  assert.equal(trigger.status,"move_selected");assert.equal(decision.data.authority,"autonomous_v1");assert.equal(decision.data.context,c.record_key);
+  assert.equal(f.db.getWorldEvent(f.guild,decision.source_event).source_id,"native:autonomous_pvp_fear");
+  assert.throws(()=>confirmIncomingDefense(f.db,f.guild,f.pcs[2].owner_user_id,a.record_key));
+  reviewIncomingAttack(f.db,f.guild,pc.owner_user_id,a.record_key,{library});confirmIncomingDefense(f.db,f.guild,pc.owner_user_id,a.record_key);
+  assert.equal(run()[0].status,"awaiting_owner");assert.equal(diceCalls,2);
+  assert.deepEqual(f.db.getCharacter(pc.id).data.resources,before);assert.equal(f.db.getCityRecord(f.guild,"pc_incoming_attack",a.record_key).status,"awaiting_armor");
+  f.restart();assert.equal(run()[0].status,"awaiting_owner");assert.equal(diceCalls,2);
+  const damage=resolveIncomingDamage(f.db,f.guild,pc.owner_user_id,a.record_key,{armor:true,library}),effect=run()[0];
+  assert.equal(effect.data.incoming_effect_ref,damage.record_key);assert.equal(effect.data.incoming_attack_ref,a.record_key);
+  assert.equal(effect.data.authority,"autonomous_v1");assert.equal(damage.data.hp_marks,1);
+  assert.equal(f.db.getCharacter(pc.id).data.resources.hp.current,before.hp.current+1);
+  assert.equal(f.db.getCharacter(pc.id).data.resources.armor.current,before.armor.current+1);
+  assert.deepEqual(f.db.getCityRecord(f.guild,"pvp_attack_roll_receipt",savedRoll.record_key),savedRoll);
+  assert.equal(f.db.getCampaign(f.guild).fear,0);assert.equal(f.db.getCharacter(pc.id).data.resources.hope,before.hope);
+  assert.deepEqual(run(),[]);assert.equal(diceCalls,2);validateFearEffect(f.db,f.guild,effect.record_key);
+  const notice=f.db.listCityRecords(f.guild,{kind:"pvp_fear_publication",includeGM:true})[0];
+  assert.equal(notice.data.user,pc.owner_user_id,"The NPC's defender, not the triggering roller, owns the private incoming result.");
+  materializeNativeNotices(f.db,f.guild);const ready=f.db.getCityRecord(f.guild,"pvp_fear_publication",notice.record_key);
+  assert.equal(ready.status,"pending");const sent=[];
+  await deliverTurnOutbox(f.db,f.guild,ready.data.turn_id,async row=>{sent.push(row);return {messageId:"native-defender",channelId:`dm-${pc.owner_user_id}`};});
+  assert(sent.length>0);assert(sent.every(row=>row.target_user_id===pc.owner_user_id&&row.visibility==="character"));
+}));
 
 test("PVE03/PVE07 actual NPC Fear attack remains pending through private defense and Armor, then settles once without repeating PC damage",()=>nativeFixture(async f=>{
   const x=await attackFear(f),{a,pc,library}=incoming(f,x.trigger),c=context(f,a),decision=select(f,x.trigger,c,a);
@@ -173,6 +205,41 @@ test("PVE07 actual private Discord defense, GM NPC dice, owner Armor and Fear co
   assert.equal(f.db.getCharacter(pc.id).data.resources.hp.current,2);assert.equal(f.db.listCityRecords(f.guild,{kind:"npc_attack_roll_receipt",includeGM:true}).length,1);
   assert.equal(f.db.listCityRecords(f.guild,{kind:"pvp_fear_effect_receipt",includeGM:true}).length,1);
   assert.equal(f.db.getCampaign(f.guild).fear,0);
+}));
+
+test("FEA05 actual private Discord defense wakes the trusted selector, owner Armor completes it without a GM impersonation or reroll",()=>nativeFixture(async f=>{
+  const x=await attackFear(f),{a,pc}=incoming(f,x.trigger);context(f,a);
+  configureCityFlags(f.db,f.guild,{autonomous_pvp_fear:true},"synthetic-test");
+  const call=adapter(f,{content:{root:"../content"}});
+  assert.equal(resumeAutonomousPvpFear(f.db,f.guild)[0].status,"awaiting_owner");
+  await call(0,"review",{attack:a.record_key},"effect");assert.equal(f.db.getCityRecord(f.guild,"pc_incoming_review",`${a.record_key}:review`),null);
+  await call(1,"review",{attack:a.record_key},"effect");
+  await call(1,"incoming-defense",{attack:a.record_key},"effect",[15,8]);
+  assert.equal(f.db.getCityRecord(f.guild,"pc_incoming_attack",a.record_key).status,"awaiting_armor");
+  const native=f.db.listCityRecords(f.guild,{kind:"npc_attack_roll_receipt",includeGM:true})[0],saved=f.db.getSavedRoll(f.guild,native.data.roll);
+  assert.equal(saved.discord_user_id,"autonomous_pvp_fear");
+  await call(0,"incoming-armor",{attack:a.record_key,armor:true},"effect");assert.equal(f.db.getCharacter(pc.id).data.resources.hp.current,1);
+  await call(1,"incoming-armor",{attack:a.record_key,armor:true},"effect");
+  const effect=f.db.listCityRecords(f.guild,{kind:"pvp_fear_effect_receipt",includeGM:true})[0];assert(effect);
+  assert.equal(effect.data.authority,"autonomous_v1");assert.equal(effect.data.incoming_roll_ref,native.record_key);
+  f.restart();await call(1,"incoming-armor",{attack:a.record_key,armor:true},"effect");
+  assert.equal(f.db.getCharacter(pc.id).data.resources.hp.current,2);assert.equal(f.db.getCharacter(pc.id).data.resources.armor.current,1);
+  assert.equal(f.db.listCityRecords(f.guild,{kind:"npc_attack_roll_receipt",includeGM:true}).length,1);
+  assert.equal(f.db.listCityRecords(f.guild,{kind:"pvp_fear_effect_receipt",includeGM:true}).length,1);
+}));
+
+test("FEA05/FEA14 changed NPC native template holds autonomous execution for private review before RNG",()=>nativeFixture(async f=>{
+  const x=await attackFear(f),{a,pc,library}=incoming(f,x.trigger);context(f,a);
+  configureCityFlags(f.db,f.guild,{autonomous_pvp_fear:true},"synthetic-test");
+  assert.equal(resumeAutonomousPvpFear(f.db,f.guild)[0].status,"awaiting_owner");
+  reviewIncomingAttack(f.db,f.guild,pc.owner_user_id,a.record_key,{library});confirmIncomingDefense(f.db,f.guild,pc.owner_user_id,a.record_key);
+  const template=library.findAdversary("Aster Vale Contractor"),changed={...library,findAdversary:()=>({...template,attack:Number(template.attack)+1})};
+  let calls=0;const result=resumeAutonomousPvpFear(f.db,f.guild,{library:changed,rng:()=>{calls++;return 15;}});
+  assert.equal(result[0].status,"needs_review");assert.equal(calls,0);
+  assert.equal(f.db.getCityRecord(f.guild,"pvp_fear_trigger",x.trigger.record_key).status,"needs_review");
+  assert.equal(f.db.listCityRecords(f.guild,{kind:"npc_attack_roll_receipt",includeGM:true}).length,0);
+  assert.equal(f.db.listCityRecords(f.guild,{kind:"pvp_fear_effect_receipt",includeGM:true}).length,0);
+  assert.equal(f.db.getCharacter(pc.id).data.resources.hp.current,1);assert.deepEqual(resumeAutonomousPvpFear(f.db,f.guild,{library}),[]);
 }));
 function observedTurn(f,actor,target,name,text,id,mode="party"){
   const pc=f.pcs[actor],scope={mode,actorUserId:pc.owner_user_id,actorCharacterId:pc.id};

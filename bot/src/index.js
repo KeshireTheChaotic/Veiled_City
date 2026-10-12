@@ -34,11 +34,13 @@ import { captureAuthoredTurnEnvelope, recordNativeConsumedSpans } from "./author
 import { beginTurnAttempt, advanceTurnAttempt, turnFailureNotice, isTurnReplay } from "./turn-attempts.js";
 import { validateChannelRouting, shouldSendInactiveSessionNotice } from "./routing-diagnostics.js";
 import { operationalMetrics, measureStage } from "./operational-metrics.js";
+import { resumeAutonomousPvpFear, setPvpFearContentIndex } from "./pvp-fear-moves.js";
 
 const config=loadConfig();
 const log=createLogger(config.logLevel);
 const db=new VeiledDB(config.dbPath,path.resolve(process.cwd(),"./sql/schema.sql"));
 const content=new ContentIndex(config.contentRoot);
+setPvpFearContentIndex(content);
 const gm=new GMService({db,content,config});
 const voice=new VoiceNarrator(config,{db});
 const gmTurnQueue=new KeyedSerialQueue();
@@ -520,6 +522,10 @@ async function processPartyTurn(message,directMention,attempt=null){
 
 client.once("ready",()=>{
   db.markAllInterruptedPublicationsUncertain();
+  for(const guild of client.guilds.cache.values()){
+    try{resumeAutonomousPvpFear(db,guild.id,{limit:12});}
+    catch(error){log.error("Autonomous immediate Fear recovery requires review",error);}
+  }
   console.log(`Veilkeeper v3.5.5 logged in as ${client.user.tag}`);
   console.log(`Voice narration: ${config.voiceEnabled?`enabled (${config.voiceName}/${config.voiceModel})`:"disabled"}.`);
   console.log(`Indexed ${content.chunks.length} Veiled City content chunks.`);

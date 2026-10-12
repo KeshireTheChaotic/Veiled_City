@@ -153,6 +153,7 @@ bot/scripts/v94-pvp-multiplayer-test.mjs
 bot/scripts/v94-pvp-profile-test.mjs
 bot/scripts/v94-pvp-qualification-test.mjs
 bot/scripts/v94-pvp-reaction-test.mjs
+bot/scripts/v95-autonomous-fear-test.mjs
 bot/scripts/v95-inventory.mjs
 bot/scripts/v95-protected-narrative-test.mjs
 bot/scripts/validate-command-schema.mjs
@@ -506,6 +507,7 @@ docs/UPGRADE_3.5.5_TO_3.6.0.md
 docs/UPGRADE_3.6.0_TO_3.7.0.md
 docs/UPGRADE_3.7.0_TO_3.8.0.md
 docs/V7_V8_DELTA_MATRIX.csv
+docs/V95_02_FINAL_INTEGRATION_COVERAGE.md
 docs/V9_1_NARRATIVE_PVP_CONTRACT_REFERENCE.md
 docs/V9_2_CODEX_RESUME.md
 docs/V9_2_IMPLEMENTATION_PLAN.md
@@ -532,6 +534,7 @@ docs/V9_4_REGRESSION_MATRIX.csv
 docs/V9_4_RELEASE_QUALIFICATION.md
 docs/V9_4_RULES_AND_COMMUNITY_RESEARCH.md
 docs/V9_4_SOURCE_AUDIT.md
+docs/V9_5_AUTONOMOUS_FEAR.md
 docs/V9_5_CODEX_KICKOFF.md
 docs/V9_5_COVERAGE_CROSSWALK.csv
 docs/V9_5_DEPRECATION_REGISTER.csv

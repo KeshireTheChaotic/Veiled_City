@@ -11,7 +11,8 @@ import {indexWorldEvent} from "../src/city-calendar.js";
 import {lockActionWindow} from "../src/scene-action-window.js";
 import {fakeInteraction} from "./contract-fixtures.mjs";
 import {handleCommand} from "../src/commands.js";
-import {establishFearContext,selectFearMove,applyFearMove,fearRevision} from "../src/pvp-fear-moves.js";
+import {establishFearContext,selectFearMove,applyFearMove,fearRevision,resumeAutonomousPvpFear,resolveAutonomousPvpFear} from "../src/pvp-fear-moves.js";
+import {configureCityFlags} from "../src/city-core.js";
 import {prepareRollRequest,rollRevision} from "../src/roll-requests.js";
 import {contributeRoll} from "../src/roll-collaboration.js";
 import {proposePvp,reviewPvp,respondPvp,progressPvp,choosePvp,rollPvp} from "../src/narrative-pvp.js";
@@ -167,6 +168,41 @@ test("PVM04 a pre-reserved simultaneous batch saves two Fear attacks, resolves o
   for(const r of [a,b])assert.equal(f.db.getCityRecord(f.guild,"pvp_attack_request",r.record_key).status,"resolved");
   assert.equal(f.db.getCharacter(f.pcs[1].id).data.resources.hp.current,2);
   assert(prepare(f,x,1,0));
+}));
+
+test("FEA12 actual four-owner services keep two Fear attack obligations in reservation order across restart without changing aggregate damage",()=>nativeFixture(async f=>{
+  const x=await attackFixture(f,{count:3}),a=approve(f,prepare(f,x,0,1)),b=approve(f,prepare(f,x,2,1));
+  const rb=roll(f,b,[3,6]),ra=roll(f,a,[3,6]),o=offer(f,[damage(f,a),damage(f,b)]),damageEffect=apply(f,o);
+  const ts=f.db.listCityRecords(f.guild,{kind:"pvp_fear_trigger",includeGM:true}),first=ts.find(t=>t.data.round===a.record_key),second=ts.find(t=>t.data.round===b.record_key);
+  assert.equal(ts.length,2);assert.throws(()=>prepare(f,x,1,0),/Fear|pending/i);
+  const pc=f.pcs[3],independent=f.accepted(3,"I investigate the independent terminal panel.","terminal",{type:"search",operation:"search",
+    target:{kind:"location",key:"terminal",phrase:"terminal",grounding:"known"}});
+  const request=prepareRollRequest(f.db,f.guild,{accepted_intent:independent.record_key,source_event:independent.source_event,character_id:pc.id,
+    trait:"Knowledge",kind:"action",adjudication:"Independent terminal panel",modifier_keys:[]},"gm");let n=0;
+  contributeRoll(f.db,f.guild,pc.owner_user_id,{op:"roll",request:request.record_key,expected_revision:rollRevision(request),key:"fear-bystander"},{rng:()=>[9,2][n++]});
+  assert.equal(f.db.getCityRecord(f.guild,"roll_request",request.record_key).status,"resolved");
+  // Private profile: distinct entitled-owner clocks, not an implicit disclosure to the whole party.
+  for(const t of [first,second]){
+    const key=`brawl-closing:${t.data.roller_character}`;
+    f.db.changeClock(f.guild,key,0,{max:6,visibility:"character",subjectCharacterId:t.data.roller_character});
+    establishFearContext(f.db,f.guild,"gm",{move_kind:"clock_advance",target_key:key,location_key:"terminal",visibility:"character",subject_key:t.data.roller_character},
+      {gm:true,interactionId:`auto-group-fear-context:${t.record_key}`});
+  }
+  configureCityFlags(f.db,f.guild,{autonomous_pvp_fear:true},"synthetic-test");
+  assert.equal(resolveAutonomousPvpFear(f.db,f.guild,second.record_key).status,"awaiting_prior_fear");
+  assert.equal(f.db.getCityRecord(f.guild,"pvp_fear_trigger",second.record_key).status,"awaiting_move");
+  f.restart();const effects=resumeAutonomousPvpFear(f.db,f.guild);
+  assert(effects.every(e=>e.status==="resolved"),JSON.stringify(effects.map(e=>({status:e.status,reason:e.reason}))));
+  assert.deepEqual(effects.map(e=>e.data.trigger),[first.record_key,second.record_key]);assert.equal(new Set(effects.map(e=>e.record_key)).size,2);
+  for(const t of [first,second])assert.equal(f.db.getClock(f.guild,`brawl-closing:${t.data.roller_character}`).value,1);
+  assert.equal(f.db.getCampaign(f.guild).fear,0);
+  assert.deepEqual(f.db.getCityRecord(f.guild,"pvp_attack_roll_receipt",ra.record_key),ra);
+  assert.deepEqual(f.db.getCityRecord(f.guild,"pvp_attack_roll_receipt",rb.record_key),rb);
+  assert.deepEqual(f.db.getCityRecord(f.guild,"pc_effect_receipt",damageEffect.record_key),damageEffect);
+  assert.equal(f.db.getCharacter(f.pcs[1].id).data.resources.hp.current,2);
+  assert.equal(f.db.getCharacter(f.pcs[0].id).data.resources.hope,2);assert.equal(f.db.getCharacter(f.pcs[2].id).data.resources.hope,2);
+  for(const r of [a,b])assert.equal(f.db.getCityRecord(f.guild,"pvp_attack_request",r.record_key).status,"resolved");
+  assert.deepEqual(resumeAutonomousPvpFear(f.db,f.guild),[]);assert(prepare(f,x,1,0));
 }));
 
 test("PVM08 a declined proposed expansion never conscripts the fourth PC or blocks their ordinary native investigation",()=>nativeFixture(async f=>{

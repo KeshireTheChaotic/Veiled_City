@@ -11,6 +11,7 @@ import {assertPcAttackable} from "./pc-native-eligibility.js";
 import {assertFearIncomingExecution} from "./pvp-fear-moves.js";
 
 const hash=v=>createHash("sha256").update(JSON.stringify(v)).digest("hex");
+const AUTONOMOUS_FEAR_ATTACK=Symbol("native-autonomous-fear-attack");
 function fail(message){throw Object.assign(new Error(message),{code:"PC_EFFECT_AUTHORITY",expected:true});}
 function gmOnly(user,options){if(!options.gm||!user)fail("Authenticated GM native attack required.");}
 function facts(db,guild,input,library){
@@ -115,7 +116,7 @@ export function rollIncomingAttack(db,guild,user,key,options={}){
     const c=context(db,guild,key,options.library),{row}=c;defenseProof(db,guild,row);
     if(row.data.roll)return verifyRoll(db,guild,row);
     if(row.status!=="ready")fail("Native attack is not ready.");
-    assertFearIncomingExecution(db,guild,row);
+    assertFearIncomingExecution(db,guild,row,{autonomous:options.gm===AUTONOMOUS_FEAR_ATTACK});
     const rng=options.rng||d,face=rng(20);if(!Number.isInteger(face)||face<1||face>20)fail("Native d20 out of range.");
     const hit=face===20||face+c.bonus>=c.evasion,damage=hit?parseDice(c.damage,rng):null;
     if(damage&&face===20){const spec=diceSpec(c.damage);damage.total+=spec.count*spec.sides;}
@@ -125,6 +126,12 @@ export function rollIncomingAttack(db,guild,user,key,options={}){
       visibility:"character",subject_key:c.pc.id,data:{...payload,roll}});
     db.saveCityRecord(guild,{...row,key,status:hit?"awaiting_armor":"missed",data:{...row.data,roll:receipt.record_key}});return receipt;
   });
+}
+/** Internal automation verifies the exact selected Fear decision; a caller flag is never authority. */
+export function rollAutonomousFearIncomingAttack(db,guild,key,{library,rng}={}){
+  const row=db.getCityRecord(guild,"pc_incoming_attack",key);
+  assertFearIncomingExecution(db,guild,row,{autonomous:true,committedRoll:!!row?.data.roll});
+  return rollIncomingAttack(db,guild,"autonomous_pvp_fear",key,{gm:AUTONOMOUS_FEAR_ATTACK,library,rng});
 }
 function verifyRoll(db,guild,row){
   const r=db.getCityRecord(guild,"npc_attack_roll_receipt",row.data.roll),roll=r&&db.getSavedRoll(guild,r.data.roll),{roll:ignored,...payload}=r?.data||{};
