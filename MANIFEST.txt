@@ -135,6 +135,7 @@ bot/scripts/v9-pvp-contract-test.mjs
 bot/scripts/v9-pvp-hope-fear-test.mjs
 bot/scripts/v9-pvp-rounds-test.mjs
 bot/scripts/v9-pvp-typed-roll-test.mjs
+bot/scripts/v9-roll-truth-test.mjs
 bot/scripts/v9-window-lifecycle-test.mjs
 bot/scripts/v94-death-fixtures.mjs
 bot/scripts/v94-incoming-fixtures.mjs
@@ -298,6 +299,7 @@ bot/src/typed-intent-qualification.js
 bot/src/typed-intents.js
 bot/src/typed-mechanics.js
 bot/src/typed-roll-outcomes.js
+bot/src/typed-roll-proof.js
 bot/src/voice.js
 bot/src/window-coordinator.js
 bot/src/world-authoring.js

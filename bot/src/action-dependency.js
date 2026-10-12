@@ -52,12 +52,12 @@ export function buildActionPlan(db,guild,acceptedRows=[]){
       const depStates=dependencies.get(row.record_key).map(dep=>calculated.get(dep)?.data.status);
       if(depStates.some(value=>["failed","blocked","clarification"].includes(value)))status="blocked";
       else if(depStates.some(value=>value!=="resolved"))status="suspended";
-      else status=prior?.data.coordination||prior?.data.pvp_attempt||prior?.data.pvp_attack||prior?.data.continuation
+      else status=prior?.data.coordination||prior?.data.pvp_attempt||prior?.data.pvp_attack||prior?.data.continuation||prior?.data.roll_review
         ||(prior?.data.interrupt_refs||[]).some(ref=>db.getCityRecord(guild,"action_interrupt_receipt",ref)?.status!=="resolved")
         ?"pending":initialStatus(row);
     }
     const outcome=row.data.outcome_receipt&&db.getCityRecord(guild,"action_outcome_receipt",row.data.outcome_receipt);
-    const privateExecution=outcome?.status==="resolved"&&outcome.visibility==="character"&&outcome.subject_key===row.data.actor
+    const privateExecution=["resolved","needs_review"].includes(outcome?.status)&&outcome.visibility==="character"&&outcome.subject_key===row.data.actor
       &&outcome.data.action_id===row.record_key&&outcome.source_event===row.source_event
       ||prior?.visibility==="character"&&prior.subject_key===row.data.actor
       ||dependencies.get(row.record_key).some(dep=>calculated.get(dep)?.visibility==="character");

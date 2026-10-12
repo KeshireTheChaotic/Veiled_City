@@ -14,6 +14,7 @@ import { validatePvpAttackRoll } from "./pvp-attacks.js";
 import { validatePvpDamageRoll } from "./pvp-damage.js";
 import { validatePcDeathOutcome,blazeActionAuthorization,blazeCriticalResult,completeBlazeAction,validateBlazeSavedRoll } from "./pc-death.js";
 import {assertPcCanAct,hopeCap} from "./pc-native-eligibility.js";
+import {consentAction,historicalActionSource} from "./action-consent.js";
 function fail(message){throw new StateConflictError(message);}
 /** Called only by the authenticated GM command/review boundary, never by model-supplied identity. */
 export function adjudicateRollSource(db,guild,input,reviewer){
@@ -33,6 +34,13 @@ function live(db,guild,row){
   if(!session||row.data.session_id!==session.id||row.data.scene!==currentScene(db,guild).key) fail("Request belongs to another session or scene.");
   requireCitySource(db,guild,row.source_event);
   const pc=personalCharacter(db,guild,row.data.owner_user_id,row.subject_key);
+  if(row.data.input?.accepted_intent){
+    const a=db.getCityRecord(guild,"typed_intent",row.data.input.accepted_intent);
+    if(row.status==="resolved")historicalActionSource(db,guild,a?.record_key,{resolved:a?.status==="resolved"});
+    else consentAction(db,guild,row.data.input.accepted_intent);
+    if(a.source_event!==row.source_event||a.data.actor!==pc.id||a.data.owner_user_id!==row.data.owner_user_id)
+      fail("Exact accepted request source and rolling owner required before dice or costs.");
+  }
   const checkResources=character=>{
     const r=character.data.resources;
     if(character.id!==row.subject_key||!blazeActionAuthorization(db,guild,character.id,row.data.input?.accepted_intent))assertPcCanAct(character,db,guild);

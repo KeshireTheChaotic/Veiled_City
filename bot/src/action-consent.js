@@ -3,6 +3,7 @@ import { createHash } from "node:crypto";
 import { conversationPrincipal, historicalOwnerPrincipal } from "./conversation-principal.js";
 import { currentScene } from "./scene-continuity.js";
 import { indexWorldEvent } from "./city-calendar.js";
+import {typedRollProof} from "./typed-roll-proof.js";
 
 export const consentHash=value=>createHash("sha256").update(JSON.stringify(value)).digest("hex");
 function fail(message){throw Object.assign(new Error(message),{code:"SCENE_ACTION_WINDOW"});}
@@ -27,9 +28,11 @@ export function completedActionSource(db,guild,key){
   const request=receipt&&db.getCityRecord(guild,"roll_request",receipt.data.request),roll=request&&db.getSavedRoll(guild,request.data.roll_id);
   if(receipt?.status!=="resolved"||receipt.source_event!==proof.row.source_event||receipt.data.action_id!==key
     ||request?.status!=="resolved"||request.source_event!==proof.row.source_event||request.subject_key!==d.actor
-    ||request.data.input?.accepted_intent!==key||roll?.character_id!==d.actor||roll.discord_user_id!==d.owner_user_id
+    ||request.data.input?.accepted_intent!==key||!roll
     ||roll.session_id!==d.session_id||roll.payload.request!==request.record_key
     ||receipt.data.native_roll_refs.length!==1||receipt.data.native_roll_refs[0]!==roll.id)fail("Exact native terminal action receipt required for read-only history.");
+  const native=typedRollProof(db,guild,request);
+  if(native.outcome==="needs_review"||receipt.data.outcome!==native.outcome)fail("Exact native verdict required for terminal history.");
   return proof;
 }
 function inspectActionSource(db,guild,key,completed,historical=false){

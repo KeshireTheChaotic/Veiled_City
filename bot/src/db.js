@@ -234,7 +234,10 @@ export class VeiledDB {
   }
   ownedRollRequests(guildId,user,character){
     return this.db.prepare(`SELECT * FROM city_records WHERE guild_id=? AND kind='roll_request' AND visibility='character'
-      AND status IN ('pending','needs_review','awaiting_partner','awaiting_selection','awaiting_damage','awaiting_damage_type')
+      AND (status IN ('pending','needs_review','awaiting_partner','awaiting_selection','awaiting_damage','awaiting_damage_type')
+        OR status='resolved' AND EXISTS (SELECT 1 FROM city_records a WHERE a.guild_id=city_records.guild_id AND a.kind='typed_intent'
+          AND a.record_key=json_extract(city_records.data_json,'$.input.accepted_intent') AND a.status='accepted_for_adjudication'
+          AND json_extract(a.data_json,'$.native_disposition')='roll_result_needs_review'))
       AND json_extract(data_json,'$.session_id')=?
       AND (subject_key=? OR json_extract(data_json,'$.tag.partner_user')=? OR EXISTS (SELECT 1 FROM json_each(data_json,'$.tag.participants') p
         WHERE json_extract(p.value,'$.user')=? AND json_extract(p.value,'$.character')=?) OR EXISTS(SELECT 1 FROM json_each(data_json,'$.disclosures') d

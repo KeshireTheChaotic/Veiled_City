@@ -126,7 +126,8 @@ export function formatRollRequest(row,{user=null}={}){
       return `Nonbinding Tag Team proposal for your character; request ${row.record_key}. Status: ${row.status}. No participation is inferred. Revision: ${rollRevision(row)}. Describe your response freely.`;
     throw new StateConflictError("Request is not owned by this reader.");
   }
-  const review=row.status==="needs_review";
+  const outcomeReview=data.input?.accepted_intent&&row.status==="resolved"&&b.difficulty==null&&!b.attack&&data.result?.duality!=="Critical";
+  const review=row.status==="needs_review"||outcomeReview;
   return [`[${review?"Review required":"Pending"} Daggerheart ${data.kind} roll — ${row.record_key}]`,
     `Actor: ${participant?.name||data.character_name} (<@${user||data.owner_user_id}>)`,
     `Attempt: ${participant?.attempt||(participant?.input?"Owner-authored linked contribution; original declaration retained":data.attempt)}`,
@@ -141,8 +142,11 @@ export function formatRollRequest(row,{user=null}={}){
     `Subtotal: ${subtotal===null?"PENDING":signed(subtotal)}`,
     `Formula: Hope d12 + Fear d12 ${subtotal===null?"+ pending values":signed(subtotal)}${net===0?"":net>0?" + one d6":" - one d6"}${data.helpers?.length?"; use highest applicable helper/own advantage d6, never their sum":""}.`,
     `Difficulty: ${b.difficulty===null?"not disclosed / awaiting GM adjudication":b.difficulty}`,
+    ...(outcomeReview
+      ?["Saved dice require GM outcome review: no success/failure is authorized without grounded Difficulty. Do not reroll."]:[]),
     ...b.unresolved.map(reason=>`Pending clarification: ${reason}`),
-    ...(review?["Not actionable: a human GM must resolve the listed provenance or sheet issue before dice can be finalized."]:[]),
+    ...(review?[outcomeReview?"Dice are already saved. A human GM may review the missing Difficulty; no reroll or repeated cost."
+      :"Not actionable: a human GM must resolve the listed provenance or sheet issue before dice can be finalized."]:[]),
     `Status: ${row.status}; ${data.roll_id?`saved result ${data.roll_id}, total ${data.result.total}, ${data.result.duality}`:"acting dice not finalized"}. Revision: ${rollRevision(row)}`,
     ...(data.damage_result?[`Combined damage: ${data.damage_result.total} ${data.damage_result.type}; ${data.damage_result.marks} HP marked once.`]:[]),
     "Describe any clarification or intended contribution in your own words."].join("\n");
@@ -151,7 +155,9 @@ export function pendingRollRequests(db,guild,user){
   const pc=personalCharacter(db,guild,user),session=db.getActiveSession(guild);
   return db.ownedRollRequests(guild,user,pc.id)
     .filter(row=>row.data.session_id===session.id&&row.data.scene===currentScene(db,guild).key
-      &&["pending","needs_review","awaiting_partner","awaiting_selection","awaiting_damage","awaiting_damage_type"].includes(row.status))
+      &&(["pending","needs_review","awaiting_partner","awaiting_selection","awaiting_damage","awaiting_damage_type"].includes(row.status)
+        ||row.status==="resolved"&&(()=>{const a=db.getCityRecord(guild,"typed_intent",row.data.input?.accepted_intent);
+          return a?.status==="accepted_for_adjudication"&&db.getCityRecord(guild,"action_outcome_receipt",a.data.outcome_receipt)?.status==="needs_review";})()))
     .filter(row=>row.subject_key===pc.id||row.data.tag?.participants.some(item=>item.character===pc.id&&item.user===user)
       ||row.data.helpers?.some(item=>item.character===pc.id&&item.user===user)
       ||row.data.tag?.partner_user===user&&db.getCityRecord(guild,"roll_request",row.data.tag.partner_request)?.subject_key===pc.id

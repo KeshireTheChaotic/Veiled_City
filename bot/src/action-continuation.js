@@ -10,6 +10,7 @@ import {pendingPvpFear} from "./pvp-fear-gate.js";
 import {validatePvpDamageApplication} from "./pvp-damage.js";
 import {prepareContinuationOutput} from "./pvp-output.js";
 import {queueTurnPublications} from "./publication-outbox.js";
+import {typedRollProof} from "./typed-roll-proof.js";
 const hash=v=>createHash("sha256").update(JSON.stringify(v)).digest("hex");
 function acceptedInputHash(row){
   const data={...row.data};
@@ -17,7 +18,7 @@ function acceptedInputHash(row){
   return hash({key:row.record_key,source:row.source_event,visibility:row.visibility,subject:row.subject_key,data});
 }
 const terminal=new Set(["resolved","failed","blocked","clarification"]);
-const expected=new Set(["CONTINUATION_PRECONDITION","SCENE_ACTION_WINDOW","NARRATIVE_PVP","AUTONOMOUS_WORLD","PC_NATIVE_ELIGIBILITY","PC_EFFECT_AUTHORITY"]);
+const expected=new Set(["CONTINUATION_PRECONDITION","SCENE_ACTION_WINDOW","NARRATIVE_PVP","AUTONOMOUS_WORLD","PC_NATIVE_ELIGIBILITY","PC_EFFECT_AUTHORITY","TYPED_ROLL_PROOF"]);
 function hold(message){throw Object.assign(new Error(message),{code:"CONTINUATION_PRECONDITION",expected:true});}
 function records(db,guild,kind){const rows=[];for(let offset=0;offset<10000;offset+=100){
   const page=db.listCityRecords(guild,{kind,includeGM:true,limit:100,offset});rows.push(...page);if(page.length<100)return rows;
@@ -40,11 +41,9 @@ function cause(db,guild,node){
       live(db,guild,a);const t=db.getCityRecord(guild,"pvp_action_terminal_receipt",r.data.terminal),e=t&&validatePvpDamageApplication(db,guild,t.data.effect);
       if(t?.status!=="resolved"||t.data.action!==a.record_key||e.record_key!==r.data.state_mutations?.[0])hold("Exact native PvP damage terminal required.");
     }else if(r.data.request){
-      live(db,guild,a,{completed:true});const q=db.getCityRecord(guild,"roll_request",r.data.request),s=db.getSavedRoll(guild,q.data.roll_id),v=q.data.result,d=q.data.breakdown?.difficulty;
-      const nativeResult=Object.fromEntries(Object.keys(v).map(k=>[k,s.payload[k]]));
-      if(s.roll_type!=="action"&&s.roll_type!=="reaction"||hash(nativeResult)!==hash(v)||s.payload.request!==q.record_key
-        ||!(Number.isSafeInteger(d)&&d>=0&&d<=100)||!Number.isSafeInteger(v.total))hold("Grounded native result/Difficulty required before dependency success.");
-      const win=v.duality==="Critical"||v.total>=d;
+      live(db,guild,a,{completed:true});const q=db.getCityRecord(guild,"roll_request",r.data.request),proof=typedRollProof(db,guild,q);
+      if(proof.outcome==="needs_review")hold("Grounded native result/Difficulty required before dependency success.");
+      const win=proof.outcome==="success";
       if(r.data.outcome!==(win?"success":"failure")||node.data.status!==(win?"resolved":"failed"))hold("Native predecessor verdict changed.");
     }else if(r.data.outcome==="resolved_no_roll"){
       historicalActionSource(db,guild,a.record_key,{resolved:true});

@@ -2,6 +2,7 @@
 import { createHash } from "node:crypto";
 import { pvpAttemptKey } from "./pvp-authority.js";
 import { validateDamageAttackIntent } from "./pvp-profiles.js";
+import {typedRollProof} from "./typed-roll-proof.js";
 
 const digest=value=>createHash("sha256").update(JSON.stringify(value)).digest("hex").slice(0,40);
 function fail(message){throw Object.assign(new Error(message),{code:"CONSEQUENCE_RECONCILIATION"});}
@@ -58,6 +59,11 @@ export function reconcileConsequences(db,guild,{intents=[],narration="",private_
             ||parent.data.session_id!==row.data.session_id||parent.data.scene!==row.data.scene;}))
         fail("Suspended dependency requires its exact accepted source and predecessor identities.");
       disposition=plan.data.status==="blocked"?"dependency_blocked":"dependency_pending";refs=[plan.record_key];
+    }
+    else if(receipt?.status==="needs_review"){
+      const r=db.getCityRecord(guild,"action_outcome_receipt",receipt.ref),q=db.getCityRecord(guild,"roll_request",r.data.request);
+      if(typedRollProof(db,guild,q).outcome!=="needs_review"||r.data.outcome!=="needs_review")fail("Exact saved native neutral review receipt required.");
+      disposition="needs_review";refs=[receipt.ref];
     }
     else if(receipt?.status==="resolved"){disposition="resolved";refs=[receipt.ref];}
     else if(["roll_pending","needs_review"].includes(adjudication?.data.disposition)){

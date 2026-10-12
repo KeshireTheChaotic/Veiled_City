@@ -8,6 +8,7 @@ import { establishFact } from "./epistemic.js";
 import { indexWorldEvent } from "./city-calendar.js";
 import { prepareRollRequest, pendingRollRequests, ownedRollRequest, formatRollRequest, publishRollAmendment } from "./roll-requests.js";
 import { contributeRoll, adjudicateRollSource, applyRollOutcome } from "./roll-collaboration.js";
+import {reviewTypedRollOutcome} from "./typed-roll-outcomes.js";
 import { publishJournal, postJournalEntry, publishEventResults, postGmLog, postStateError, postPrivateRelay, syncConfiguredSurfaces, postPlayMessage, sendPlayerPrivate, deliverHandout, deliverQueuedTurn } from "./publishing.js";
 import { EncounterLibrary, livePcRoster, partyTier, baseBattlePoints, DIFFICULTY_ADJUSTMENTS, autoBuildComposition, recomputeBudget, battlePointCost, HEAVY_ROLES, defaultObjective, manageWorldEncounter, recordWorldEncounterOutcome, validateWorldEncounterActivation, worldCombatantDrafts, bindWorldCombatants } from "./encounter.js";
 import { prepareLevelup, applyLevelupToData, legalAdvancements, tierAchievement } from "./character-system.js";
@@ -1568,7 +1569,12 @@ GM notes: ${a.draft.gm_notes}`:""}`.slice(0,1950):"No aftermath draft exists for
     }
     if(group==="roll"&&sub==="adjudicate"){
       if(!isGM(db,interaction)) throw new PermissionError("GM/admin permission required to adjudicate rules and feasibility.");
-      const source=adjudicateRollSource(db,interaction.guildId,JSON.parse(interaction.options.getString("json",true)),interaction.user.id);
+      const input=JSON.parse(interaction.options.getString("json",true));
+      if(input.op==="resolve-outcome"){
+        const result=reviewTypedRollOutcome(db,interaction.guildId,input,interaction.user.id,{gm:true});
+        await interaction.reply({content:`Saved native outcome review ${result.receipt}: ${result.outcome}. Original dice and costs retained.`,ephemeral:true});return true;
+      }
+      const source=adjudicateRollSource(db,interaction.guildId,input,interaction.user.id);
       await interaction.reply({content:`Saved reviewed roll source ${source.event_key}. No PC resource or roll was changed.`,ephemeral:true});return true;
     }
     if(group==="roll"&&sub==="contribute"){

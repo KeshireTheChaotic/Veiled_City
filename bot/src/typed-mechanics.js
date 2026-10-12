@@ -3,6 +3,8 @@ import { createHash } from 'node:crypto';
 import { pendingRollRequests, rollRevision } from './roll-requests.js';
 import { contributeRoll } from './roll-collaboration.js';
 import { isPvpIntent } from './pvp-authority.js';
+import {authoredTurnEnvelope} from './authored-turn-envelope.js';
+import {consentAction,historicalActionSource} from './action-consent.js';
 
 const hash=s=>createHash('sha256').update(JSON.stringify(s)).digest('hex').slice(0,32);
 
@@ -20,14 +22,53 @@ export function resolveTypedNativeRolls(db,guild,scope,intents=[],messageId=''){
     }
     const pending=pendingRollRequests(db,guild,scope.actorUserId).filter(row=>row.subject_key===scope.actorCharacterId
       &&row.status===(intent.operation==='roll'?'pending':'awaiting_damage'));
-    if(pending.length!==1){
-      results.push({status:'needs_clarification',operation:intent.operation,reason:'No unique current owned pending native roll.'});
+    const envelope=authoredTurnEnvelope(db,guild,messageId,scope.actorCharacterId);
+    const accepted=envelope&&db.listCityRecords(guild,{kind:'typed_intent',includeGM:true,limit:500}).filter(a=>
+      a.source_event===envelope.source_event&&a.data.actor===scope.actorCharacterId&&a.data.owner_user_id===scope.actorUserId
+      &&a.data.type==='roll'&&a.data.operation===intent.operation&&a.data.source_span===intent.source_span&&a.data.framing==='immediate');
+    const declaration=accepted?.length===1?accepted[0]:null;
+    const operationKey=`typed-roll:${hash([guild,messageId,scope.actorCharacterId,index])}`;
+    const prior=declaration&&db.getCityRecord(guild,'roll_operation',`${operationKey}:${scope.actorCharacterId}`);
+    if(prior){
+      historicalActionSource(db,guild,declaration.record_key,{resolved:declaration.status==='resolved'});
+      const q=db.getCityRecord(guild,'roll_request',prior.data.request);
+      if(prior.data.user!==scope.actorUserId||prior.data.op!==intent.operation||prior.data.authorization.accepted_intent!==declaration.record_key
+        ||prior.data.authorization.key!==operationKey||!q||prior.data.result.record_key!==q.record_key
+        ||q.subject_key!==scope.actorCharacterId||q.data.owner_user_id!==scope.actorUserId
+        ||(scope.mode==='private'?declaration.visibility!=='character':declaration.visibility!=='party'))
+        throw new Error('Exact native operation replay source, actor and audience required; no effects repeated.');
+      results.push({status:'accepted',data:{intent:{feature:'roll',operation:intent.operation},result:{record_key:q.record_key}},source_span:intent.source_span});
       continue;
     }
-    const row=pending[0];
+    let verified=false;
+    if(declaration){consentAction(db,guild,declaration.record_key);verified=envelope.user_id===scope.actorUserId
+      &&(scope.mode==='private'?declaration.visibility==='character'&&declaration.subject_key===scope.actorCharacterId
+        :declaration.visibility==='party');}
+    // Explicit native identities are exact source tokens, not a model target/name guess or a sole-request heuristic.
+    const selected=verified?pending.filter(row=>row.data.input?.accepted_intent===declaration.record_key
+      ||intent.target_key===row.record_key&&declaration.data.target_key===row.record_key
+        &&intent.source_span.split(/\s|[.,;!?()[\]{}"'`]/).includes(row.record_key)):[];
+    if(selected.length!==1){
+      if(verified)db.saveCityRecord(guild,{...declaration,key:declaration.record_key,data:{...declaration.data,
+        resolution:'needs_clarification',native_disposition:'exact_request_selection_required'}});
+      results.push({status:'needs_clarification',operation:intent.operation,reason:'Select an exact owned request, or use its current accepted roll declaration; no unrelated request was consumed.'});
+      continue;
+    }
+    const row=selected[0];
     const result=contributeRoll(db,guild,scope.actorUserId,{
       op:intent.operation,request:row.record_key,expected_revision:rollRevision(row),
-      key:`typed-roll:${hash([guild,messageId,scope.actorCharacterId,index])}`});
+      key:operationKey,accepted_intent:declaration.record_key});
+    if(result.data.input?.accepted_intent!==declaration.record_key){
+      const key=`roll-contribution:${hash([declaration.record_key,row.record_key,result.data.revision])}`;
+      db.saveCityRecord(guild,{kind:'action_outcome_receipt',key,status:'resolved',source_event:declaration.source_event,
+        visibility:'character',subject_key:scope.actorCharacterId,data:{action_id:declaration.record_key,source_event:declaration.source_event,
+          actor_ref:scope.actorCharacterId,outcome:'native_roll_contribution',request:row.record_key,
+          authorization_source:declaration.source_event,operation:`${operationKey}:${scope.actorCharacterId}`,
+          native_roll_refs:result.data.roll_id?[result.data.roll_id]:[],state_mutations:[],
+          audience:'character',authority:'Exact owner-authorized native operation only; underlying request receipts own game success.'}});
+      db.saveCityRecord(guild,{...declaration,key:declaration.record_key,status:'resolved',data:{...declaration.data,
+        outcome_receipt:key,native_disposition:'native_roll_contribution'}});
+    }
     results.push({status:'accepted',data:{intent:{feature:'roll',operation:intent.operation},
       result:{record_key:result.record_key}},source_span:intent.source_span});
   }
