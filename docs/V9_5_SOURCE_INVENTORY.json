@@ -226,7 +226,8 @@
         "bot/scripts/v94-pvp-damage-test.mjs",
         "bot/scripts/v94-pvp-multiplayer-test.mjs",
         "bot/scripts/v94-pvp-qualification-test.mjs",
-        "bot/scripts/v94-pvp-reaction-test.mjs"
+        "bot/scripts/v94-pvp-reaction-test.mjs",
+        "bot/scripts/v95-protected-narrative-test.mjs"
       ],
       "classification": "fixture-or-tool:KEEP"
     },
@@ -1953,7 +1954,8 @@
         "bot/scripts/v94-pvp-multiplayer-test.mjs",
         "bot/scripts/v94-pvp-profile-test.mjs",
         "bot/scripts/v94-pvp-qualification-test.mjs",
-        "bot/scripts/v94-pvp-reaction-test.mjs"
+        "bot/scripts/v94-pvp-reaction-test.mjs",
+        "bot/scripts/v95-protected-narrative-test.mjs"
       ],
       "classification": "fixture-or-tool:KEEP"
     },
@@ -2191,7 +2193,7 @@
     },
     {
       "file": "bot/scripts/v9-release-qualification-test.mjs",
-      "sha256": "a6d1c6bf8c20fae615eddf0bbb288e2094b9988504f67924a7866c9dfcc04fc9",
+      "sha256": "1b01a1bfd1cf3c17e520caf223291bacdabee28d7d2cf038a692ab3e25126755",
       "imports": [
         "bot/scripts/v9-fixtures.mjs",
         "bot/src/commands.js",
@@ -2571,6 +2573,35 @@
       "classification": "unregistered:review callers outside module graph"
     },
     {
+      "file": "bot/scripts/v95-protected-narrative-test.mjs",
+      "sha256": "e0c1fca38c1bb2cb87609498c5c212453d9d74b4b02d0dce3af5617d5fe6f304",
+      "imports": [
+        "bot/scripts/v9-fixtures.mjs",
+        "bot/src/narrative-pvp.js",
+        "bot/src/autonomous-world.js",
+        "bot/src/turn-orchestration.js",
+        "bot/src/publication-outbox.js",
+        "bot/src/city-calendar.js",
+        "bot/src/pvp-output.js",
+        "bot/src/turn-recovery.js",
+        "bot/src/authored-turn-envelope.js",
+        "bot/src/character-observation.js",
+        "bot/scripts/contract-fixtures.mjs",
+        "bot/src/gm.js",
+        "bot/src/content.js",
+        "bot/src/director.js",
+        "bot/src/state.js",
+        "bot/src/publication-outbox.js",
+        "bot/src/voice.js",
+        "bot/src/publishing.js",
+        "bot/src/state.js"
+      ],
+      "nonliteral_dynamic_import": false,
+      "registered": true,
+      "callers": [],
+      "classification": "mandatory-suite:KEEP"
+    },
+    {
       "file": "bot/scripts/validate-command-schema.mjs",
       "sha256": "995a255982387edff58e5f14c8bb07b5508c3b28a19952882aa5716c28aafbe8",
       "imports": [
@@ -2584,7 +2615,7 @@
     },
     {
       "file": "bot/scripts/validate-offline.mjs",
-      "sha256": "e41266609caf7d5b5d12a1730a1568ad35ffb822212fb45c6668831d82fbdd33",
+      "sha256": "8804f9b62cf831c6256bdfb2a7985e19c70c23b8f30471f4407f4e5d1ed1d149",
       "imports": [],
       "nonliteral_dynamic_import": false,
       "registered": false,
@@ -2881,6 +2912,7 @@
         "bot/scripts/v9-roll-ux-test.mjs",
         "bot/scripts/v94-pvp-damage-test.mjs",
         "bot/scripts/v94-pvp-reaction-test.mjs",
+        "bot/scripts/v95-protected-narrative-test.mjs",
         "bot/src/commands.js",
         "bot/src/index.js",
         "bot/src/typed-intents.js",
@@ -2962,6 +2994,7 @@
         "bot/scripts/v94-pc-effect-authority-test.mjs",
         "bot/scripts/v94-pvp-profile-test.mjs",
         "bot/scripts/v94-pvp-qualification-test.mjs",
+        "bot/scripts/v95-protected-narrative-test.mjs",
         "bot/src/action-continuation.js",
         "bot/src/gm.js",
         "bot/src/gm.js.20261009-144611.bak",
@@ -3017,6 +3050,7 @@
       "registered": false,
       "callers": [
         "bot/scripts/v9-observation-compatibility-test.mjs",
+        "bot/scripts/v95-protected-narrative-test.mjs",
         "bot/src/autonomous-world.js",
         "bot/src/commands.js",
         "bot/src/pvp-output.js",
@@ -3120,6 +3154,7 @@
         "bot/scripts/v94-pvp-profile-test.mjs",
         "bot/scripts/v94-pvp-qualification-test.mjs",
         "bot/scripts/v94-pvp-reaction-test.mjs",
+        "bot/scripts/v95-protected-narrative-test.mjs",
         "bot/src/action-consent.js",
         "bot/src/ai-intents.js",
         "bot/src/ai-review.js",
@@ -3140,6 +3175,7 @@
         "bot/src/encounter.js",
         "bot/src/epistemic.js",
         "bot/src/evidence-custody.js",
+        "bot/src/gm-world-narrative.js",
         "bot/src/long-projects.js",
         "bot/src/memory-clusters.js",
         "bot/src/narrative-context.js",
@@ -3280,6 +3316,7 @@
         "bot/src/city-groups.js",
         "bot/src/dialogue-continuity.js",
         "bot/src/encounter.js",
+        "bot/src/gm-world-narrative.js",
         "bot/src/negotiations.js",
         "bot/src/npc-conversations.js",
         "bot/src/pc-incoming.js",
@@ -3734,6 +3771,7 @@
         "bot/scripts/typed-intents-regression-test.mjs",
         "bot/scripts/v9-observation-compatibility-test.mjs",
         "bot/scripts/v9-pvp-authorship-test.mjs",
+        "bot/scripts/v95-protected-narrative-test.mjs",
         "bot/src/index.js"
       ],
       "classification": "runtime:KEEP"
@@ -3819,6 +3857,7 @@
         "bot/src/autonomous-world.js",
         "bot/src/character-observation.js",
         "bot/src/continuity-routing.js",
+        "bot/src/gm-world-narrative.js",
         "bot/src/gm.js",
         "bot/src/gm.js.20261009-144611.bak",
         "bot/src/index.js",
@@ -4034,6 +4073,7 @@
         "bot/scripts/systems-to-players-1-test.mjs",
         "bot/scripts/typed-intents-regression-test.mjs",
         "bot/scripts/v9-observation-compatibility-test.mjs",
+        "bot/scripts/v95-protected-narrative-test.mjs",
         "bot/src/commands.js",
         "bot/src/gm.js",
         "bot/src/gm.js.20261009-144611.bak",
@@ -4270,8 +4310,25 @@
       "classification": "runtime:KEEP"
     },
     {
+      "file": "bot/src/gm-world-narrative.js",
+      "sha256": "740f72583671f27078f7dc3d93e7d25f986e285940dc99962111c518d6e70123",
+      "imports": [
+        "bot/src/scene-continuity.js",
+        "bot/src/conversation-principal.js",
+        "bot/src/city-constraints.js",
+        "bot/src/city-calendar.js"
+      ],
+      "nonliteral_dynamic_import": false,
+      "registered": false,
+      "callers": [
+        "bot/src/gm.js",
+        "bot/src/pvp-output.js"
+      ],
+      "classification": "runtime:KEEP"
+    },
+    {
       "file": "bot/src/gm.js",
-      "sha256": "8443c812c4819aead4eeaf5294409d969bdf0eee69d336d3548389b80a79dd7e",
+      "sha256": "2b9178d6190853218b308f0e605a174988cd76087a512c52503e6a0a649782a0",
       "imports": [
         "bot/src/authority-policy.js",
         "bot/src/conversation-principal.js",
@@ -4307,7 +4364,8 @@
         "bot/src/turn-recovery.js",
         "bot/src/authority-projection.js",
         "bot/src/operational-metrics.js",
-        "bot/src/scoped-memory.js"
+        "bot/src/scoped-memory.js",
+        "bot/src/gm-world-narrative.js"
       ],
       "nonliteral_dynamic_import": false,
       "registered": false,
@@ -4340,6 +4398,7 @@
         "bot/scripts/typed-intents-regression-test.mjs",
         "bot/scripts/v9-observation-compatibility-test.mjs",
         "bot/scripts/v9-pvp-authorship-test.mjs",
+        "bot/scripts/v95-protected-narrative-test.mjs",
         "bot/src/index.js"
       ],
       "classification": "runtime:KEEP"
@@ -4695,6 +4754,7 @@
         "bot/scripts/v94-pvp-multiplayer-test.mjs",
         "bot/scripts/v94-pvp-profile-test.mjs",
         "bot/scripts/v94-pvp-qualification-test.mjs",
+        "bot/scripts/v95-protected-narrative-test.mjs",
         "bot/src/commands.js",
         "bot/src/native-notice.js",
         "bot/src/pvp-authorship.js",
@@ -5216,6 +5276,7 @@
         "bot/scripts/v9-release-qualification-test.mjs",
         "bot/scripts/v94-pvp-profile-test.mjs",
         "bot/scripts/v94-pvp-qualification-test.mjs",
+        "bot/scripts/v95-protected-narrative-test.mjs",
         "bot/src/action-continuation.js",
         "bot/src/commands.js",
         "bot/src/index.js",
@@ -5251,6 +5312,7 @@
         "bot/scripts/v9-observation-compatibility-test.mjs",
         "bot/scripts/v9-publication-test.mjs",
         "bot/scripts/v9-pvp-authorship-test.mjs",
+        "bot/scripts/v95-protected-narrative-test.mjs",
         "bot/src/commands.js",
         "bot/src/continuity-routing.js",
         "bot/src/index.js",
@@ -5450,7 +5512,7 @@
     },
     {
       "file": "bot/src/pvp-output.js",
-      "sha256": "c8c73d23a38b0889b50dd094799ebd4b0c5a1cd9046bb63a72146610fdaca658",
+      "sha256": "3ab21bab934a7fce8f86b33fa115c62b392d873dd1ecaf9371ea8aa8a2f5150b",
       "imports": [
         "bot/src/scene-continuity.js",
         "bot/src/conversation-principal.js",
@@ -5460,7 +5522,8 @@
         "bot/src/pvp-fear-moves.js",
         "bot/src/city-calendar.js",
         "bot/src/action-continuation.js",
-        "bot/src/native-notice.js"
+        "bot/src/native-notice.js",
+        "bot/src/gm-world-narrative.js"
       ],
       "nonliteral_dynamic_import": false,
       "registered": false,
@@ -5468,6 +5531,7 @@
         "bot/scripts/v9-npc-observation-test.mjs",
         "bot/scripts/v9-pvp-authorship-test.mjs",
         "bot/scripts/v94-pvp-profile-test.mjs",
+        "bot/scripts/v95-protected-narrative-test.mjs",
         "bot/src/action-continuation.js",
         "bot/src/commands.js",
         "bot/src/concept-context.js",
@@ -5479,6 +5543,7 @@
         "bot/src/roll-sharing.js",
         "bot/src/session-briefs.js",
         "bot/src/state.js",
+        "bot/src/turn-recovery.js",
         "bot/src/voice.js"
       ],
       "classification": "runtime:KEEP"
@@ -5970,6 +6035,7 @@
         "bot/src/dialogue-continuity.js",
         "bot/src/encounter.js",
         "bot/src/evidence-custody.js",
+        "bot/src/gm-world-narrative.js",
         "bot/src/history-reconciliation.js",
         "bot/src/movement-language.js",
         "bot/src/narrative-integrity.js",
@@ -6371,6 +6437,7 @@
         "bot/scripts/v9-pvp-agreement-test.mjs",
         "bot/scripts/v9-pvp-authorship-test.mjs",
         "bot/scripts/v94-pc-effect-authority-test.mjs",
+        "bot/scripts/v95-protected-narrative-test.mjs",
         "bot/src/commands.js",
         "bot/src/gm.js",
         "bot/src/gm.js.20261009-144611.bak",
@@ -6513,6 +6580,7 @@
         "bot/scripts/v94-pc-effect-authority-test.mjs",
         "bot/scripts/v94-pvp-profile-test.mjs",
         "bot/scripts/v94-pvp-qualification-test.mjs",
+        "bot/scripts/v95-protected-narrative-test.mjs",
         "bot/src/index.js"
       ],
       "classification": "runtime:KEEP"
@@ -6532,14 +6600,16 @@
     },
     {
       "file": "bot/src/turn-recovery.js",
-      "sha256": "4cef4c7850f81c703b8de6a0e81bf6ffd237a6b9c4ff19d31b30d1c9cb8a3918",
+      "sha256": "e5b5a065506f0843e58a95ee04962a3ffd39dbeb48ebf61addcae20fb3b36107",
       "imports": [
-        "bot/src/director.js"
+        "bot/src/director.js",
+        "bot/src/pvp-output.js"
       ],
       "nonliteral_dynamic_import": false,
       "registered": false,
       "callers": [
         "bot/scripts/implementation-phase-d-test.mjs",
+        "bot/scripts/v95-protected-narrative-test.mjs",
         "bot/src/gm.js",
         "bot/src/gm.js.20261009-144611.bak"
       ],
@@ -6667,6 +6737,7 @@
         "bot/scripts/portrayal-authoring-test.mjs",
         "bot/scripts/production-regression-test.mjs",
         "bot/scripts/v9-pvp-authorship-test.mjs",
+        "bot/scripts/v95-protected-narrative-test.mjs",
         "bot/src/index.js"
       ],
       "classification": "runtime:KEEP"

@@ -9,11 +9,18 @@ import { renderFearEffect } from "./pvp-fear-moves.js";
 import { indexWorldEvent } from "./city-calendar.js";
 import {renderContinuationNotice} from "./action-continuation.js";
 import {renderNativeNotice} from "./native-notice.js";
+import {establishGmWorldPart,renderGmWorldPart} from "./gm-world-narrative.js";
 
 const hash=v=>createHash("sha256").update(JSON.stringify(v)).digest("hex");
 const prepared=new WeakMap();
 const archiveCaptures=new WeakMap();
 const neutral="No additional character response has been established. Independently authorized actions remain in effect.";
+/** Optional-field recovery may carry only untrusted candidate data; every renderer still needs fresh native proof. */
+export function restoreGmWorldCandidates(original,recovered){
+  const proposals=prepared.get(original)?.drafts?.gm_world_parts;
+  if(Array.isArray(proposals))recovered.gm_world_parts=structuredClone(proposals);
+  return recovered;
+}
 function fail(){throw Object.assign(new Error("PvP output needs current independently verified clauses and audience proof."),{code:"NARRATIVE_PVP"});}
 function records(db,guild,kind){
   const out=[];
@@ -68,6 +75,7 @@ function renderPart(db,guild,part){
     if(!assignment||assignment.character_id!==scope.actorCharacterId)fail();
   }
   if(kind==="neutral")return neutral;
+  if(kind==="gm_world_narrative")return renderGmWorldPart(db,guild,ref,scope);
   if(kind==="action_continuation_notice")return renderContinuationNotice(db,guild,ref,scope);
   if(kind==="native_notice"){
     const n=db.getCityRecord(guild,"native_notice",ref);
@@ -139,12 +147,13 @@ export function validateOutputPart(db,guild,id){
 /** Trusted orchestration only; a model cannot manufacture the in-process capability or native proofs. */
 export function prepareAuthorizedTurnOutput(db,guild,result,scope,{sourceRef=null,world=[],origin="turn"}={}){
   const prior=prepared.get(result),raw=prior?.raw||Object.fromEntries(surfaces(result));
-  const drafts=prior?.drafts||Object.fromEntries(["context_memories","handouts","npc_memories","npc_knowledge","npc_goals"]
+  const drafts=prior?.drafts||Object.fromEntries(["context_memories","handouts","npc_memories","npc_knowledge","npc_goals","gm_world_parts"]
     .map(field=>[field,result[field]||[]]));
   const proposals=protectedPvpScope(db,guild,scope);
   const queries=observationQueries(db,guild,result.player_intents||[],scope,sourceRef);
   if(proposals.length)queries.push(...ambientWorldQueries(db,guild,scope,sourceRef));
-  if(!proposals.length&&!queries.length)return result;
+  const worldParts=Array.isArray(drafts.gm_world_parts)?drafts.gm_world_parts:[];
+  if(!proposals.length&&!queries.length&&!worldParts.length)return result;
   if(result.act===false&&!surfaces(result).some(([,text])=>text.trim()))return result;
   const scene=currentScene(db,guild),parts=[];
   const nativeSource=sourceRef||proposals[0]?.source_event;
@@ -152,6 +161,21 @@ export function prepareAuthorizedTurnOutput(db,guild,result,scope,{sourceRef=nul
     source_ref:nativeSource,source_hash:hash(db.getWorldEvent(guild,nativeSource)?.details),
     principal_revision:scope.actorUserId&&scope.actorCharacterId
       ?conversationPrincipal(db,guild,scope.actorUserId,scope.actorCharacterId).revision:null};
+  for(const proposal of worldParts.slice(0,4)){
+    try{
+      const row=establishGmWorldPart(db,guild,proposal,scope,{sourceRef,origin});
+      const event=db.getWorldEvent(guild,row.source_event);
+      parts.push(savePart(db,guild,{...common,kind:"gm_world_narrative",ref:row.record_key,
+        source_ref:event.event_key,source_hash:hash(event.details)}));
+    }catch(error){
+      if(error.code!=="GM_WORLD_NARRATIVE")throw error;
+      // Unsupported parts stay in the private draft quarantine. Independent native work is preserved.
+    }
+  }
+  if(!sourceRef&&parts.length){
+    const source=db.getWorldEvent(guild,parts[0].source_event);
+    common.source_ref=source.event_key;common.source_hash=hash(source.details);
+  }
   for(const query of queries)parts.push(savePart(db,guild,{...common,kind:"observation_answer",query}));
   for(const action of world.filter(r=>r.status==="arrived"&&r.source_event))
     parts.push(savePart(db,guild,{...common,kind:"verified_action",ref:action.source_event}));
@@ -205,6 +229,7 @@ export function prepareAuthorizedTurnOutput(db,guild,result,scope,{sourceRef=nul
   result.narrative_claims=[];
   for(const field of ["context_memories","handouts","npc_memories","npc_knowledge","npc_goals"])
     if(result[field]?.length)result[field]=[];
+  if("gm_world_parts" in result)result.gm_world_parts=[];
   prepared.set(result,{raw,drafts,parts:parts.map(p=>p.record_key),privateParts,scope:hash(scope),fingerprint:fingerprint(result)});
   return result;
 }

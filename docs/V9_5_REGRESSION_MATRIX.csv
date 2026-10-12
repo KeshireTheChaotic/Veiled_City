@@ -1,22 +1,22 @@
 id,phase,severity,scenario,required_proof,proposed_suite,status
-NAR01,V95-01,P0,Active duel; Billy asks bartender an ordinary question,Meaningful native NPC speech published; no Choso/Jaxon action or secret inferred,v95-protected-narrative-test.mjs,PLANNED / NOT EXECUTED
-NAR02,V95-01,P0,Resolved duel; same participants still present,Ordinary GM NPC dialogue and scenery publish despite historical author hazard,v95-protected-narrative-test.mjs,PLANNED / NOT EXECUTED
-NAR03,V95-01,P0,Declined duel; same scene,Ordinary generated response is not forced neutral solely from terminal agreement,v95-protected-narrative-test.mjs,PLANNED / NOT EXECUTED
-NAR04,V95-01,P0,Withdrawn duel; same scene,Narrative continuation unaffected; signed source history remains a PC claim guard,v95-protected-narrative-test.mjs,PLANNED / NOT EXECUTED
-NAR05,V95-01,P0,New mundane NPC legitimately introduced,Native world-authoring source + current presence qualify dialogue,v95-protected-narrative-test.mjs,PLANNED / NOT EXECUTED
-NAR06,V95-01,P0,Novel safe NPC dialogue with source-backed speaker,New utterance can be established and projected without prewritten coat/phrase,v95-protected-narrative-test.mjs,PLANNED / NOT EXECUTED
-NAR07,V95-01,P0,NPC quotes PC apology not owner-authorized,Rejected/quarantined; no full-paragraph passage via NPC wrapper,v95-protected-narrative-test.mjs,PLANNED / NOT EXECUTED
-NAR08,V95-01,P0,NPC reveals private source/GM-only fact,Denied outside explicitly authorized audience and native knowledge,v95-protected-narrative-test.mjs,PLANNED / NOT EXECUTED
-NAR09,V95-01,P0,PC first appearance unknown,"Useful nonblocking unknown, no invented fixed features",v95-protected-narrative-test.mjs,PLANNED / NOT EXECUTED
-NAR10,V95-01,P0,PC owner discloses only partial visible appearance,Only current observer-visible selected fields returned,v95-protected-narrative-test.mjs,PLANNED / NOT EXECUTED
-NAR11,V95-01,P0,Billy asks about Choso private activity,No private leak; can state not known to observer,v95-protected-narrative-test.mjs,PLANNED / NOT EXECUTED
-NAR12,V95-01,P0,Scene atmosphere invented without mechanical effect,GM world atmosphere native-part render allowed; no fact/canon shortcut,v95-protected-narrative-test.mjs,PLANNED / NOT EXECUTED
-NAR13,V95-01,P0,Environment access/locked door asserted in prose only,Not published as committed access without actual native effect,v95-protected-narrative-test.mjs,PLANNED / NOT EXECUTED
-NAR14,V95-01,P0,Mixed authorized Billy movement and unsupported Choso apology,Independent movement committed; apology withheld across every output sink,v95-protected-narrative-test.mjs,PLANNED / NOT EXECUTED
-NAR15,V95-01,P0,Raw narrative_claims empty and fabricated safe:true,No certification of whole raw generated paragraph,v95-protected-narrative-test.mjs,PLANNED / NOT EXECUTED
-NAR16,V95-01,P0,Changed NPC/scene source after prepare before send,Output part revalidated; stale source held; old delivered history intact,v95-protected-narrative-test.mjs,PLANNED / NOT EXECUTED
-NAR17,V95-01,P0,Archived journal/recap/voice/private replay,Only closed native verified parts survive; no orphaned raw claims,v95-protected-narrative-test.mjs,PLANNED / NOT EXECUTED
-NAR18,V95-01,P0,GM-owned world dialogue with current owner NPC proxy,"Live role assignment/proxy scope enforced, no unauthorized controller voice",v95-protected-narrative-test.mjs,PLANNED / NOT EXECUTED
+NAR01,V95-01,P0,Active duel; Billy asks bartender an ordinary question,Meaningful native NPC speech published; no Choso/Jaxon action or secret inferred,v95-protected-narrative-test.mjs,PASS: 27/27 suite plus focused 500/500
+NAR02,V95-01,P0,Resolved duel; same participants still present,Ordinary GM NPC dialogue and scenery publish despite historical author hazard,v95-protected-narrative-test.mjs,PASS: 27/27 suite plus focused 500/500
+NAR03,V95-01,P0,Declined duel; same scene,Ordinary generated response is not forced neutral solely from terminal agreement,v95-protected-narrative-test.mjs,PASS: 27/27 suite plus focused 500/500
+NAR04,V95-01,P0,Withdrawn duel; same scene,Narrative continuation unaffected; signed source history remains a PC claim guard,v95-protected-narrative-test.mjs,PASS: 27/27 suite plus focused 500/500
+NAR05,V95-01,P0,New mundane NPC legitimately introduced,Native world-authoring source + current presence qualify dialogue,v95-protected-narrative-test.mjs,PASS: 27/27 suite plus focused 500/500
+NAR06,V95-01,P0,Novel safe NPC dialogue with source-backed speaker,New utterance can be established and projected without prewritten coat/phrase,v95-protected-narrative-test.mjs,PASS: 27/27 suite plus focused 500/500
+NAR07,V95-01,P0,NPC quotes PC apology not owner-authorized,Rejected/quarantined; no full-paragraph passage via NPC wrapper,v95-protected-narrative-test.mjs,PASS: 27/27 suite plus focused 500/500
+NAR08,V95-01,P0,NPC reveals private source/GM-only fact,Denied outside explicitly authorized audience and native knowledge,v95-protected-narrative-test.mjs,PASS: 27/27 suite plus focused 500/500
+NAR09,V95-01,P0,PC first appearance unknown,"Useful nonblocking unknown, no invented fixed features",v95-protected-narrative-test.mjs,PASS: 27/27 suite plus focused 500/500
+NAR10,V95-01,P0,PC owner discloses only partial visible appearance,Only current observer-visible selected fields returned,v95-protected-narrative-test.mjs,PASS: 27/27 suite plus focused 500/500
+NAR11,V95-01,P0,Billy asks about Choso private activity,No private leak; can state not known to observer,v95-protected-narrative-test.mjs,PASS: 27/27 suite plus focused 500/500
+NAR12,V95-01,P0,Scene atmosphere invented without mechanical effect,GM world atmosphere native-part render allowed; no fact/canon shortcut,v95-protected-narrative-test.mjs,PASS: 27/27 suite plus focused 500/500
+NAR13,V95-01,P0,Environment access/locked door asserted in prose only,Not published as committed access without actual native effect,v95-protected-narrative-test.mjs,PASS: 27/27 suite plus focused 500/500
+NAR14,V95-01,P0,Mixed authorized Billy movement and unsupported Choso apology,Independent movement committed; apology withheld across every output sink,v95-protected-narrative-test.mjs,PASS: 27/27 suite plus focused 500/500
+NAR15,V95-01,P0,Raw narrative_claims empty and fabricated safe:true,No certification of whole raw generated paragraph,v95-protected-narrative-test.mjs,PASS: 27/27 suite plus focused 500/500
+NAR16,V95-01,P0,Changed NPC/scene source after prepare before send,Output part revalidated; stale source held; old delivered history intact,v95-protected-narrative-test.mjs,PASS: 27/27 suite plus focused 500/500
+NAR17,V95-01,P0,Archived journal/recap/voice/private replay,Only closed native verified parts survive; no orphaned raw claims,v95-protected-narrative-test.mjs,PASS: 27/27 suite plus focused 500/500
+NAR18,V95-01,P0,GM-owned world dialogue with current owner NPC proxy,"Live role assignment/proxy scope enforced, no unauthorized controller voice",v95-protected-narrative-test.mjs,PASS: 27/27 suite plus focused 500/500
 FEA01,V95-02,P0,PvP action Fear with existing clock,Single immediate authentic clock effect; no campaign Fear,v95-autonomous-fear-test.mjs,PLANNED / NOT EXECUTED
 FEA02,V95-02,P0,PvP action Fear with no preexisting clock/NPC/obstacle,"Native created new contextual problem + effect receipts, bounded once",v95-autonomous-fear-test.mjs,PLANNED / NOT EXECUTED
 FEA03,V95-02,P0,Novel NPC threat introduced in safe empty scene,"Native GM world authoring establishes current threat, no invented PC harm",v95-autonomous-fear-test.mjs,PLANNED / NOT EXECUTED

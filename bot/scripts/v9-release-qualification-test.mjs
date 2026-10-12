@@ -24,7 +24,7 @@ test('REL01 all release security, observability and historical reproduction gate
     'v94-pc-effect-authority-test','v94-pvp-profile-test','v94-pvp-attack-test','v94-pvp-reaction-test',
     'v94-pvp-damage-test','v94-pc-death-test','v94-pc-recovery-test','v94-pvp-multiplayer-test','v94-pvp-qualification-test',
     'v9-continuation-test','v9-roll-truth-test','v9-publication-test','v9-roll-ux-test','v9-discord-hardening-test',
-    'v9-release-qualification-test'])assert(source.includes(`"${suite}"`),`${suite} must not be an optional/skipped release gate`);
+    'v9-release-qualification-test','v95-protected-narrative-test'])assert(source.includes(`"${suite}"`),`${suite} must not be an optional/skipped release gate`);
 });
 
 async function entropy(faces,run){const original=crypto.randomInt;let n=0;

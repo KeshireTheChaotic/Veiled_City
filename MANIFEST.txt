@@ -154,6 +154,7 @@ bot/scripts/v94-pvp-profile-test.mjs
 bot/scripts/v94-pvp-qualification-test.mjs
 bot/scripts/v94-pvp-reaction-test.mjs
 bot/scripts/v95-inventory.mjs
+bot/scripts/v95-protected-narrative-test.mjs
 bot/scripts/validate-command-schema.mjs
 bot/scripts/validate-offline.mjs
 bot/sql/schema.sql
@@ -213,6 +214,7 @@ bot/src/evaluation-harness.js
 bot/src/evidence-custody.js
 bot/src/expansion-contracts.js
 bot/src/failure-trace.js
+bot/src/gm-world-narrative.js
 bot/src/gm.js
 bot/src/gm.js.20261009-144611.bak
 bot/src/handout.js

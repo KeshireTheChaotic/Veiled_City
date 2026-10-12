@@ -701,8 +701,8 @@
     },
     {
       "path": "bot/scripts/v9-release-qualification-test.mjs",
-      "size_bytes": 16225,
-      "sha256": "a6d1c6bf8c20fae615eddf0bbb288e2094b9988504f67924a7866c9dfcc04fc9"
+      "size_bytes": 16256,
+      "sha256": "1b01a1bfd1cf3c17e520caf223291bacdabee28d7d2cf038a692ab3e25126755"
     },
     {
       "path": "bot/scripts/v9-roll-truth-test.mjs",
@@ -785,14 +785,19 @@
       "sha256": "9002981a4a4b1d42c148a2a365a0bc4dc62915147da6802ef8667ef391dbb80d"
     },
     {
+      "path": "bot/scripts/v95-protected-narrative-test.mjs",
+      "size_bytes": 19592,
+      "sha256": "e0c1fca38c1bb2cb87609498c5c212453d9d74b4b02d0dce3af5617d5fe6f304"
+    },
+    {
       "path": "bot/scripts/validate-command-schema.mjs",
       "size_bytes": 582,
       "sha256": "995a255982387edff58e5f14c8bb07b5508c3b28a19952882aa5716c28aafbe8"
     },
     {
       "path": "bot/scripts/validate-offline.mjs",
-      "size_bytes": 4909,
-      "sha256": "e41266609caf7d5b5d12a1730a1568ad35ffb822212fb45c6668831d82fbdd33"
+      "size_bytes": 4940,
+      "sha256": "8804f9b62cf831c6256bdfb2a7985e19c70c23b8f30471f4407f4e5d1ed1d149"
     },
     {
       "path": "bot/sql/schema.sql",
@@ -1080,9 +1085,14 @@
       "sha256": "c99bc99229c18df938a75becfbd1a6f5541b7eb532d644576abe9d78272e60c7"
     },
     {
+      "path": "bot/src/gm-world-narrative.js",
+      "size_bytes": 10154,
+      "sha256": "740f72583671f27078f7dc3d93e7d25f986e285940dc99962111c518d6e70123"
+    },
+    {
       "path": "bot/src/gm.js",
-      "size_bytes": 98503,
-      "sha256": "8443c812c4819aead4eeaf5294409d969bdf0eee69d336d3548389b80a79dd7e"
+      "size_bytes": 98799,
+      "sha256": "2b9178d6190853218b308f0e605a174988cd76087a512c52503e6a0a649782a0"
     },
     {
       "path": "bot/src/gm.js.20261009-144611.bak",
@@ -1321,8 +1331,8 @@
     },
     {
       "path": "bot/src/pvp-output.js",
-      "size_bytes": 27570,
-      "sha256": "c8c73d23a38b0889b50dd094799ebd4b0c5a1cd9046bb63a72146610fdaca658"
+      "size_bytes": 28988,
+      "sha256": "3ab21bab934a7fce8f86b33fa115c62b392d873dd1ecaf9371ea8aa8a2f5150b"
     },
     {
       "path": "bot/src/pvp-profiles.js",
@@ -1526,8 +1536,8 @@
     },
     {
       "path": "bot/src/turn-recovery.js",
-      "size_bytes": 2120,
-      "sha256": "4cef4c7850f81c703b8de6a0e81bf6ffd237a6b9c4ff19d31b30d1c9cb8a3918"
+      "size_bytes": 2211,
+      "sha256": "e5b5a065506f0843e58a95ee04962a3ffd39dbeb48ebf61addcae20fb3b36107"
     },
     {
       "path": "bot/src/typed-intent-qualification.js",
@@ -2401,8 +2411,8 @@
     },
     {
       "path": "docs/TYPED_INTENT_PROGRESS.md",
-      "size_bytes": 245858,
-      "sha256": "f2d64a455871f1423d5ac4dca73287e6b26a25ae02248713c015dc5598840911"
+      "size_bytes": 250481,
+      "sha256": "025ac1eb00d0fc6c3c31785a8958b83df2212d5c1cd81db838cabb3b10df544c"
     },
     {
       "path": "docs/TYPED_INTENT_RELEASE_10.0.0.md",
@@ -2671,8 +2681,8 @@
     },
     {
       "path": "docs/V9_5_COVERAGE_CROSSWALK.csv",
-      "size_bytes": 223355,
-      "sha256": "dbea3dd4f778fe2bd4a9804d070c9f68eb95df7ffc3f42e275f72cd93f3824ec"
+      "size_bytes": 223397,
+      "sha256": "049d54a0199cd15b33da510774f5476082a4145d004292582c6d28cbf92a8081"
     },
     {
       "path": "docs/V9_5_DEPRECATION_REGISTER.csv",
@@ -2696,8 +2706,8 @@
     },
     {
       "path": "docs/V9_5_REGRESSION_MATRIX.csv",
-      "size_bytes": 16051,
-      "sha256": "2e5d9b0970e10e68e7512410ce5f33a35aac6a4c8094ef7c2cec4ebc35623727"
+      "size_bytes": 16339,
+      "sha256": "18a159ee9380c74907884bfe3c5a8cb2c949561bd211d7b0ad06248e3b47c1bc"
     },
     {
       "path": "docs/V9_5_SOURCE_AUDIT.md",
@@ -2706,8 +2716,8 @@
     },
     {
       "path": "docs/V9_5_SOURCE_INVENTORY.json",
-      "size_bytes": 238403,
-      "sha256": "80855e298bb830f963aad4003ee499d28b476df5daddc7650798d05061518fc8"
+      "size_bytes": 241194,
+      "sha256": "f14971a451f087500aa75fa887a27daa5980b085eb9a4bfc432a63af3acb1cf6"
     },
     {
       "path": "docs/V9_CODEX_KICKOFF.md",

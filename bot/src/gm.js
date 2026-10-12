@@ -35,6 +35,7 @@ import { recoverOptionalTurnFields } from "./turn-recovery.js";
 import { projectAuthorityRecords } from "./authority-projection.js";
 import { operationalMetrics } from "./operational-metrics.js";
 import { scopedSceneMemory } from "./scoped-memory.js";
+import {gmWorldPartsSchema,GM_WORLD_NARRATIVE_PROMPT} from "./gm-world-narrative.js";
 
 const routerSchema={
   type:"object",
@@ -280,6 +281,8 @@ const downtimeSchema={
 };
 
 for(const schema of [gmSchema,directorSchema,aftermathSchema,downtimeSchema]){
+  schema.properties.gm_world_parts=gmWorldPartsSchema;
+  schema.required.push("gm_world_parts");
   schema.properties.decision_advisory=decisionAdvisorySchema;
   schema.required.push("decision_advisory");
   schema.properties.ai_intents=intentArraySchema;
@@ -352,6 +355,7 @@ export class GMService{
     for(let attempt=1;attempt<=2;attempt++){
       const request={...req,instructions:`${AUTHORITY_POLICY}\n${req.instructions||""}`};
       if(req.text?.format?.schema?.properties?.ai_intents) request.input=`${req.input}\n\n${INTENT_PROMPT}`;
+      if(req.text?.format?.schema?.properties?.gm_world_parts)request.input+=`\n\n${GM_WORLD_NARRATIVE_PROMPT}`;
       if(attempt===2){
         const base=Number(req.max_output_tokens||0);
         const retryCap=Number(this.config.structuredRetryMaxTokens||6000);

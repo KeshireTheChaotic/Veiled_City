@@ -1,5 +1,6 @@
 /** Field-level recovery keeps safe conversation while consequential invariants remain atomic. */
 import { POST_TURN_REVIEW_CATEGORIES } from "./director.js";
+import {restoreGmWorldCandidates} from "./pvp-output.js";
 
 const outputs={facts_clues:r=>(r.events||[]).some(e=>["fact","clue"].includes(e.type)),resources:r=>(r.events||[]).some(e=>e.type==="resource_delta"),
   clocks:r=>(r.events||[]).some(e=>e.type==="clock_delta"),threads:r=>(r.events||[]).some(e=>e.type==="thread"),
@@ -10,7 +11,7 @@ const outputs={facts_clues:r=>(r.events||[]).some(e=>["fact","clue"].includes(e.
 
 export function recoverOptionalTurnFields(result,error){
   if(!result||!["NARRATIVE_CONTEXT","AUTONOMOUS_WORLD","POST_TURN_REVIEW"].includes(error?.code))return null;
-  const copy=structuredClone(result),quarantined=[];
+  const copy=restoreGmWorldCandidates(result,structuredClone(result)),quarantined=[];
   if(error.code==="NARRATIVE_CONTEXT"){copy.narrative_interpretation=null;quarantined.push("narrative_interpretation");}
   if(error.code==="AUTONOMOUS_WORLD"){
     // A world proposal is optional only when no committed material claim depends on it.
