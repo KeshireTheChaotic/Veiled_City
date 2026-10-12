@@ -18,7 +18,7 @@ import {publishContinuationNotices} from "./publishing.js";
 import { captureWorldInput } from "./autonomous-world.js";
 import { hasCharacterInvitation } from "./player-language.js";
 import { interactionResponseExpired } from "./discord/interaction-lifecycle.js";
-import { publishEventResults, postGmLog, postStateError, deliverHandout, postPlayMessage, deliverQueuedTurn } from "./publishing.js";
+import { publishEventResults, postGmLog, postStateError, deliverHandout, postPlayMessage, deliverQueuedTurn, sendPlayerPrivate } from "./publishing.js";
 import { VoiceNarrator } from "./voice.js";
 import { deliveredPartyOutput } from "./pvp-output.js";
 import { queueDirectorPublications } from "./publication-outbox.js";
@@ -61,30 +61,7 @@ const client=new Client({
 });
 
 async function sendPrivate(guild,userId,text,sessionId=null,characterId=null){
-  const p=db.getPlayer(guild.id,userId);
-  if(p?.private_channel_id){
-    try{
-      const ch=await guild.channels.fetch(p.private_channel_id);
-      if(ch?.isTextBased()){
-        const campaign=db.getCampaign(guild.id);
-        assertPlayerPrivateChannel({guild,channel:ch,userId,gmRoleId:campaign?.gm_role_id||null});
-        for(const part of splitDiscordText(text)) await ch.send(part);
-        db.addMessage({guildId:guild.id,sessionId,userId:client.user.id,speakerName:"Veilkeeper",visibility:characterId?"character":"player",subjectUserId:characterId?null:userId,subjectCharacterId:characterId,content:text});
-        return true;
-      }
-    }catch{
-      // Missing or unsafe registered channels fall back to direct-message delivery.
-    }
-  }
-  try{
-    const member=await guild.members.fetch(userId);
-    for(const part of splitDiscordText(text))await member.send(part);
-    db.addMessage({guildId:guild.id,sessionId,userId:client.user.id,speakerName:"Veilkeeper",visibility:characterId?"character":"player",subjectUserId:characterId?null:userId,subjectCharacterId:characterId,content:text});
-    return true;
-  }catch{
-    log.warn(`Could not deliver private GM message to ${userId}.`);
-    return false;
-  }
+  return (await sendPlayerPrivate({db,guild,userId,content:text,sessionId,characterId})).ok;
 }
 
 
@@ -389,7 +366,7 @@ async function processPrivateTurn(message,directMention,attempt=null){
   if(attempt)advanceTurnAttempt(db,attempt.turn_id,"publishing");
   const outputErrors=[];
   await outputStep(outputErrors,{guild:message.guild,sessionId:session.id,context:"private-roll-requests"},()=>
-    publishRollRequests(db,message.guild.id,mutation,(user,text,sid,char)=>sendPrivate(message.guild,user,text,sid,char)));
+    publishRollRequests(db,message.guild.id,mutation,(user,text,sid,char,meta)=>sendPlayerPrivate({db,guild:message.guild,userId:user,content:text,sessionId:sid,characterId:char,...meta})));
   await outputStep(outputErrors,{guild:message.guild,sessionId:session.id,context:"private-continuation-notices"},()=>
     publishContinuationNotices({db,guild:message.guild,userId:message.author.id}));
   const blockedState=blockedMutationRows(mutation);
@@ -501,7 +478,7 @@ async function processPartyTurn(message,directMention,attempt=null){
   if(attempt)advanceTurnAttempt(db,attempt.turn_id,"publishing");
   const outputErrors=[];
   await outputStep(outputErrors,{guild:message.guild,sessionId:session.id,context:"party-roll-requests"},()=>
-    publishRollRequests(db,message.guild.id,mutation,(user,text,sid,char)=>sendPrivate(message.guild,user,text,sid,char)));
+    publishRollRequests(db,message.guild.id,mutation,(user,text,sid,char,meta)=>sendPlayerPrivate({db,guild:message.guild,userId:user,content:text,sessionId:sid,characterId:char,...meta})));
   await outputStep(outputErrors,{guild:message.guild,sessionId:session.id,context:"party-continuation-notices"},()=>
     publishContinuationNotices({db,guild:message.guild,userId:message.author.id}));
   const blockedState=blockedMutationRows(mutation);

@@ -40,7 +40,7 @@ try{
   db.saveCityRecord(guild,{kind:"roll_disclosure",key:`${row.record_key}:${pcs.helper.id}`,source_event:fake.event_key,visibility:"character",subject_key:pcs.helper.id,data:{}});
   assert.equal(mayKnowRoll(db,guild,get(),pcs.helper.id),false,"GM-supplied player identity does not establish an authored disclosure");
   const outputs=[],message={guild:{id:guild},author:{id:"owner"},id:"share",content:"I share my pending attempt with helper."};
-  assert(await routeRollMessage({db,message,characterId:pcs.owner.id,deliver:async text=>outputs.push(text),sendAmendment:async(user,text)=>{outputs.push({user,text});return true;}}));
+  assert(await routeRollMessage({db,message,characterId:pcs.owner.id,deliver:async text=>outputs.push(text),sendAmendment:async(user,text)=>{outputs.push({user,text});return {ok:true,messageId:`notice-${outputs.length}`,channelId:`private-${user}`};}}));
   assert(mayKnowRoll(db,guild,get(),pcs.helper.id));assert.equal(pendingRollRequests(db,guild,"helper").length,1);
   const notice=outputs.find(item=>item.user==="helper").text;assert(notice.includes("secret gate"));assert(!notice.includes("Trait:")&&!notice.includes("Subtotal"));
   const helpInput=help();contributeRoll(db,guild,"helper",helpInput,{rng:()=>4});contributeRoll(db,guild,"helper",helpInput,{rng:()=>assert.fail("Replay drew dice")});

@@ -5,7 +5,7 @@ import { randomUUID } from "node:crypto";
 import { splitDiscordText } from "./discord/chunking.js";
 import { assertGmOnlyChannel, assertPlayerPrivateChannel } from "./discord/privacy.js";
 import { simulationOverview, acknowledgeSimulationHook } from "./simulation.js";
-import { deliverTurnOutbox, outboxSummary } from "./publication-outbox.js";
+import { deliverTurnOutbox, outboxSummary, notSent } from "./publication-outbox.js";
 import { failureTrace } from "./failure-trace.js";
 import { assertArchiveOutput, archivePvpHistory, assertPvpOutput, protectedPvpScope, protectedHookSource, prepareStoredOutput, quarantineSimulationHook, revalidateOutputPublication } from "./pvp-output.js";
 import { queueDirectorPublications } from "./publication-outbox.js";
@@ -53,7 +53,7 @@ export async function publishSimulationHooks({db,guild,sessionId=null}){
       if(!result.ok) continue;
     }else{
       const message=await postPlayMessage({db,guild,sessionId,content:hook.data.content});
-      if(!message) continue;
+      if(!message.ok) continue;
     }
     acknowledgeSimulationHook(db,guild.id,hook.id);
     delivered++;
@@ -206,10 +206,13 @@ export async function syncConfiguredSurfaces({db,guild}){
 }
 
 
-export async function postPlayMessage({db,guild,content,sessionId=null,authority=null}){
+export async function postPlayMessage({db,guild,content,sessionId=null,authority=null,publication=null}){
   const scope={mode:"party",actorUserId:null,actorCharacterId:null},needsProof=protectedPvpScope(db,guild.id,scope).length>0;
   const check=()=>{
-    if(authority){
+    if(publication){
+      if(publication.visibility!=="party"||publication.target_user_id||content!==publication.payload)throw notSent("Exact party publication required.");
+      revalidateOutputPublication(db,guild.id,publication);
+    }else if(authority){
       const {result,scope:sourceScope}=authority;
       if(sourceScope?.mode!=="party"||content!==result.narration&&content!==`**Encounter Aftermath**\n${result.player_summary}`)
         throw Object.assign(new Error("Exact native output body required."),{code:"NARRATIVE_PVP"});
@@ -219,14 +222,15 @@ export async function postPlayMessage({db,guild,content,sessionId=null,authority
   check();
   const c=db.getCampaign(guild.id);
   const ch=await textChannel(guild,c?.play_channel_id);
-  if(!ch) return null;
-  let last=null;
+  if(!ch)return {ok:false,via:"unavailable",certainty:"not_sent",messages:[]};
+  const messages=[];
   for(const part of chunks(content)){
     check();
-    last=await ch.send(part);
+    const sent=await ch.send(part);
+    messages.push({messageId:sent.id,channelId:sent.channelId||ch.id});
     if(sessionId) db.addMessage({guildId:guild.id,sessionId,userId:null,speakerName:"Veilkeeper",visibility:"party",content:part});
   }
-  return last;
+  return {ok:true,via:"play_channel",certainty:"acknowledged",messages,...messages.at(-1)};
 }
 
 /** Deliver committed narration without re-entering GM generation or native mechanics. */
@@ -236,11 +240,11 @@ export async function deliverQueuedTurn({db,guild,turnId,forceUncertain=false}){
     if(row.target_user_id){
       const delivered=await sendPlayerPrivate({db,guild,userId:row.target_user_id,content:row.payload,
         sessionId:attempt.session_id,characterId:row.target_character_id||null,beforeSend:()=>revalidateOutputPublication(db,guild.id,row)});
-      if(!delivered.ok)throw new Error(`Private delivery unavailable (${delivered.via}).`);
-      return {messageId:null,channelId:row.channel_id};
+      if(!delivered.ok)throw Object.assign(new Error(`Private delivery unavailable (${delivered.via}).`),{deliveryCertainty:delivered.certainty});
+      return delivered;
     }
     const ch=await textChannel(guild,row.channel_id||db.getCampaign(guild.id)?.play_channel_id);
-    if(!ch)throw new Error("Configured publication channel is unavailable.");
+    if(!ch)throw notSent("Configured publication channel is unavailable.");
     revalidateOutputPublication(db,guild.id,row);
     const message=await ch.send(row.payload);
     db.addMessage({guildId:guild.id,sessionId:attempt.session_id,userId:null,speakerName:"Veilkeeper",
@@ -254,7 +258,28 @@ export async function deliverQueuedTurn({db,guild,turnId,forceUncertain=false}){
   return {turn:db.getTurnAttempt(turnId),results:results.map(item=>({...item,row:outboxSummary(item.row)})),pending:pending.map(outboxSummary)};
 }
 
-export async function sendPlayerPrivate({db,guild,userId,content,sessionId=null,characterId=null,beforeSend=null}){
+export async function sendPlayerPrivate({db,guild,userId,content,sessionId=null,characterId=null,beforeSend=null,publication=null}){
+  const messages=[];let attempted=false,via="unavailable";
+  const check=()=>{
+    if(publication){
+      if(publication.target_user_id!==userId||publication.target_character_id!==(characterId||null)||content!==publication.payload)
+        throw notSent("Exact private publication recipient/body required.");
+      revalidateOutputPublication(db,guild.id,publication);
+    }
+    beforeSend?.();
+  };
+  const send=async(target,route)=>{
+    via=route;
+    for(const part of chunks(content)){
+      // Permission changes during an awaited send must not expose later private chunks.
+      if(route==="private_channel")assertPlayerPrivateChannel({guild,channel:target,userId,gmRoleId:db.getCampaign(guild.id)?.gm_role_id||null});
+      check();attempted=true;
+      const sent=await target.send(part);messages.push({messageId:sent.id,channelId:sent.channelId||(route==="private_channel"?target.id:null)});
+    }
+    if(sessionId)db.addMessage({guildId:guild.id,sessionId,userId:null,speakerName:"Veilkeeper",visibility:characterId?"character":"player",
+      subjectUserId:characterId?null:userId,subjectCharacterId:characterId,content});
+    return {ok:true,via,certainty:"acknowledged",messages,...messages.at(-1)};
+  };
   const p=db.getPlayer(guild.id,userId);
   if(p?.private_channel_id){
     try{
@@ -262,23 +287,20 @@ export async function sendPlayerPrivate({db,guild,userId,content,sessionId=null,
       if(ch){
         const campaign=db.getCampaign(guild.id);
         assertPlayerPrivateChannel({guild,channel:ch,userId,gmRoleId:campaign?.gm_role_id||null});
-        for(const part of chunks(content)){beforeSend?.();await ch.send(part);}
-        if(sessionId) db.addMessage({guildId:guild.id,sessionId,userId:null,speakerName:"Veilkeeper",visibility:characterId?"character":"player",subjectUserId:characterId?null:userId,subjectCharacterId:characterId,content});
-        return {ok:true,via:"private_channel"};
+        return await send(ch,"private_channel");
       }
     }catch(error){
       if(["NARRATIVE_PVP","CHARACTER_OBSERVATION","WORLD_OBSERVATION"].includes(error.code))throw error;
-      // Fall through to DM when a configured private channel was deleted or is no longer writable.
+      if(attempted)return {ok:false,via,certainty:"uncertain",messages,error:String(error?.message||error)};
+      // Fallback is safe only before any send has been attempted, never after partial/ambiguous I/O.
     }
   }
   try{
     const member=await guild.members.fetch(userId);
-    for(const part of chunks(content)){beforeSend?.();await member.send(part);}
-    if(sessionId) db.addMessage({guildId:guild.id,sessionId,userId:null,speakerName:"Veilkeeper",visibility:characterId?"character":"player",subjectUserId:characterId?null:userId,subjectCharacterId:characterId,content});
-    return {ok:true,via:"dm"};
+    return await send(member,"dm");
   }catch(error){
     if(["NARRATIVE_PVP","CHARACTER_OBSERVATION","WORLD_OBSERVATION"].includes(error.code))throw error;
-    return {ok:false,via:"unavailable"};
+    return {ok:false,via,certainty:attempted?"uncertain":"not_sent",messages,error:String(error?.message||error)};
   }
 }
 

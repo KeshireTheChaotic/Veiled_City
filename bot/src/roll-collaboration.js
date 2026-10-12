@@ -3,7 +3,8 @@ import { personalCharacter } from "./personal-continuity.js";
 import { currentScene, sceneAccess } from "./scene-continuity.js";
 import { requireCitySource } from "./city-core.js";
 import { cityAudit, cityKey, cityObject, indexWorldEvent } from "./city-calendar.js";
-import { rollRevision, rollBreakdown } from "./roll-requests.js";
+import { rollRevision, rollBreakdown, reserveRollAmendment } from "./roll-requests.js";
+import {reserveRollPartyDisclosure} from "./roll-sharing.js";
 import { dualityRoll, parseDice, d } from "./dice.js";
 import { hpMarksForDamage } from "./combat.js";
 import { recordObservedAttack } from "./encounter.js";
@@ -212,7 +213,7 @@ export function contributeRoll(db,guild,user,input,{rng=d}={}){
       const disclosureKey=`${key}:party`;
       const source=indexWorldEvent(db,guild,{key:`party-roll-disclosure:${operation}`,source_id:`player:${user}`,
         kind:"roll_disclosure",title:"Owner-shared roll result",session_id:data.session_id,scene:data.scene,visibility:"party",
-        details:{author:user,request:key,character_id:pc.id,attempt:data.attempt,status:row.status,
+        details:{author:user,request:key,character_id:pc.id,status:row.status,
           result:{total:data.result.total,duality:data.result.duality},authority:"owner_shared_redacted_native_result_only"}},user);
       db.saveCityRecord(guild,{kind:"roll_disclosure",key:disclosureKey,status:"shared",source_event:source.event_key,
         visibility:"party",data:{request:key,author:user,character_id:pc.id,source_event:source.event_key}});
@@ -366,6 +367,8 @@ export function contributeRoll(db,guild,user,input,{rng=d}={}){
     });
     db.saveCityRecord(guild,{kind:"roll_operation",key:receiptKey,visibility:"character",subject_key:pc.id,source_event:row.source_event,
       data:{user,request:key,op:input.op,authorization:input,resource_deltas,result:after}});
+    reserveRollAmendment(db,guild,after);
+    if(input.op==="share")reserveRollPartyDisclosure(db,guild,after);
     return after;
   });
 }

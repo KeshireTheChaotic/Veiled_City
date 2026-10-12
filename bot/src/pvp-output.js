@@ -8,6 +8,7 @@ import { activeEvidence, objectiveEvidence } from "./epistemic.js";
 import { renderFearEffect } from "./pvp-fear-moves.js";
 import { indexWorldEvent } from "./city-calendar.js";
 import {renderContinuationNotice} from "./action-continuation.js";
+import {renderNativeNotice} from "./native-notice.js";
 
 const hash=v=>createHash("sha256").update(JSON.stringify(v)).digest("hex");
 const prepared=new WeakMap();
@@ -68,6 +69,12 @@ function renderPart(db,guild,part){
   }
   if(kind==="neutral")return neutral;
   if(kind==="action_continuation_notice")return renderContinuationNotice(db,guild,ref,scope);
+  if(kind==="native_notice"){
+    const n=db.getCityRecord(guild,"native_notice",ref);
+    if(n?.status!=="verified"||scope.mode==="private"&&(n.data.user!==scope.actorUserId||n.data.character!==scope.actorCharacterId)
+      ||scope.mode!=="private"&&n.data.user)fail();
+    return renderNativeNotice(db,guild,n.data);
+  }
   if(kind==="private_owner_clause"){
     const clause=validatePvpClause(db,guild,ref);
     if(scope.mode!=="private"||clause.subject_key!==scope.actorCharacterId
@@ -112,6 +119,14 @@ export function prepareContinuationOutput(db,guild,task,scope){
   const part=savePart(db,guild,{render_version:1,scene:scene.key,session:scene.session_id,scope:{...scope},origin:"native_continuation",
     kind:"action_continuation_notice",ref:task.record_key,source_ref:source?.event_key,source_hash:hash(source?.details),
     principal_revision:conversationPrincipal(db,guild,scope.actorUserId,scope.actorCharacterId).revision});
+  const result={narration:part.data.text,player_summary:part.data.text,private_messages:[],narrative_claims:[]};
+  prepared.set(result,{raw:{},drafts:{},parts:[part.record_key],scope:hash(scope),fingerprint:fingerprint(result)});return result;
+}
+export function prepareNativeNoticeOutput(db,guild,notice,scope){
+  const source=db.getWorldEvent(guild,notice.source_event),scene=currentScene(db,guild);
+  const part=savePart(db,guild,{render_version:1,scene:scene.key,session:scene.session_id,scope:{...scope},origin:"native_notice",
+    kind:"native_notice",ref:notice.record_key,source_ref:source?.event_key,source_hash:hash(source?.details),
+    principal_revision:scope.mode==="private"?conversationPrincipal(db,guild,scope.actorUserId,scope.actorCharacterId).revision:null});
   const result={narration:part.data.text,player_summary:part.data.text,private_messages:[],narrative_claims:[]};
   prepared.set(result,{raw:{},drafts:{},parts:[part.record_key],scope:hash(scope),fingerprint:fingerprint(result)});return result;
 }

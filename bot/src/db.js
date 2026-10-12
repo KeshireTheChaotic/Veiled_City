@@ -10,6 +10,7 @@ import { updateRelationshipDimensions, relationshipPairKey, relationshipProjecti
 import path from "node:path";
 import { randomUUID } from "node:crypto";
 import { DatabaseSync } from "node:sqlite";
+import {StateConflictError} from "./errors.js";
 import { processCityDue } from "./city-calendar.js";
 import { normalizeNpcKey } from "./npc-cognition.js";
 import { archiveScenePresence } from "./scene-continuity.js";
@@ -1231,13 +1232,32 @@ export class VeiledDB {
     this.db.prepare(`INSERT INTO publication_outbox(id,guild_id,turn_id,surface,ordinal,visibility,target_user_id,target_character_id,
       channel_id,payload,payload_hash) VALUES(?,?,?,?,?,?,?,?,?,?,?) ON CONFLICT(turn_id,surface,ordinal) DO NOTHING`)
       .run(id,guildId,turnId,surface,ordinal,visibility,targetUserId,targetCharacterId,channelId,String(payload||""),payloadHash);
-    return this.db.prepare("SELECT * FROM publication_outbox WHERE turn_id=? AND surface=? AND ordinal=?").get(turnId,surface,ordinal);
+    const row=this.db.prepare("SELECT * FROM publication_outbox WHERE turn_id=? AND surface=? AND ordinal=?").get(turnId,surface,ordinal);
+    if(row.guild_id!==guildId||row.payload!==String(payload||"")||row.payload_hash!==payloadHash||row.visibility!==visibility
+      ||row.target_user_id!==(targetUserId||null)||row.target_character_id!==(targetCharacterId||null))
+      throw new StateConflictError("Immutable publication identity/payload mismatch.");
+    return row;
   }
   listTurnPublications(guildId,turnId){
     return this.db.prepare("SELECT * FROM publication_outbox WHERE guild_id=? AND turn_id=? ORDER BY ordinal").all(guildId,turnId);
   }
   getPublication(guildId,id){
     return this.db.prepare("SELECT * FROM publication_outbox WHERE guild_id=? AND id=?").get(guildId,id)||null;
+  }
+  reservedNativeNotices(guildId,kinds){
+    return this.db.prepare(`SELECT * FROM city_records WHERE guild_id=? AND status='queued'
+      AND kind IN (${kinds.map(()=>"?").join(",")}) ORDER BY rowid LIMIT 100`).all(guildId,...kinds)
+      .map(row=>({...row,data:JSON.parse(row.data_json)}));
+  }
+  pvpRoundForRoll(guildId,proposal,character,roll){
+    const row=this.db.prepare(`SELECT * FROM city_records WHERE guild_id=? AND kind='pvp_round_receipt' AND subject_key=?
+      AND json_extract(data_json,'$.proposal')=? AND json_extract(data_json,'$.roll_id')=?`).get(guildId,character,proposal,roll);
+    return row?{...row,data:JSON.parse(row.data_json)}:null;
+  }
+  heldNativeNotices(guildId){
+    return this.db.prepare(`SELECT kind,record_key,status FROM city_records WHERE guild_id=?
+      AND kind IN ('roll_publication','roll_party_publication','pvp_status_publication','pvp_projection_publication')
+      AND status!='delivered' AND json_extract(data_json,'$.turn_id') IS NULL ORDER BY rowid LIMIT 100`).all(guildId);
   }
   latestPcHpEffect(guildId,characterId){
     const row=this.db.prepare(`SELECT * FROM city_records WHERE guild_id=? AND kind='pc_effect_receipt'

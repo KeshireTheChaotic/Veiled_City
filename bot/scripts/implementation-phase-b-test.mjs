@@ -5,7 +5,7 @@ import os from "node:os";
 import path from "node:path";
 import { VeiledDB } from "../src/db.js";
 import { beginTurnAttempt } from "../src/turn-attempts.js";
-import { queueTurnPublications, deliverTurnOutbox } from "../src/publication-outbox.js";
+import { queueTurnPublications, deliverTurnOutbox, notSent, reconcilePublication } from "../src/publication-outbox.js";
 
 const root=fs.mkdtempSync(path.join(os.tmpdir(),"vc-phase-b-"));
 const file=path.join(root,"test.sqlite");let db=new VeiledDB(file,path.resolve("sql/schema.sql"));
@@ -20,7 +20,7 @@ try{
   const rows=db.listTurnPublications("guild",attempt.turn_id);assert.equal(rows.length,2);assert.equal(rows[0].status,"pending");
   const sent=[];
   const first=await deliverTurnOutbox(db,"guild",attempt.turn_id,async row=>{
-    sent.push(row.ordinal);if(row.ordinal===1)throw new Error("injected Discord failure");return {messageId:`discord-${row.ordinal}`,channelId:"play"};
+    sent.push(row.ordinal);if(row.ordinal===1)throw notSent("injected failure before network I/O");return {messageId:`discord-${row.ordinal}`,channelId:"play"};
   });
   assert.deepEqual(sent,[0,1]);assert.equal(first[0].ok,true);assert.equal(first[1].ok,false);
   assert.deepEqual(db.listTurnPublications("guild",attempt.turn_id).map(row=>row.status),["delivered","failed"]);
@@ -30,7 +30,9 @@ try{
   db.updatePublication(rows[0].id,{status:"delivering"});db.close();db=new VeiledDB(file,path.resolve("sql/schema.sql"));
   db.markAllInterruptedPublicationsUncertain();assert.equal(db.listTurnPublications("guild",attempt.turn_id)[0].status,"uncertain");
   sent.length=0;await deliverTurnOutbox(db,"guild",attempt.turn_id,async row=>{sent.push(row.ordinal);return {};});assert.deepEqual(sent,[]);
-  await deliverTurnOutbox(db,"guild",attempt.turn_id,async row=>{sent.push(row.ordinal);return {};},{forceUncertain:true});assert.deepEqual(sent,[0]);
+  await assert.rejects(async()=>deliverTurnOutbox(db,"guild",attempt.turn_id,async()=>assert.fail("blind force"),{forceUncertain:true}),/Reconcile/);
+  await reconcilePublication(db,"guild",rows[0].id,{actor:"gm",gm:true,decision:"confirmed_not_sent",reason:"Reviewed exact chunk and confirmed absence in the offline transport."});
+  await deliverTurnOutbox(db,"guild",attempt.turn_id,async row=>{sent.push(row.ordinal);return {messageId:"confirmed-new",channelId:"play"};});assert.deepEqual(sent,[0]);
   const snapshot=db.snapshotCampaign("guild",{label:"with delivery"});db.updatePublication(rows[0].id,{status:"failed"});
   db.restoreSnapshot("guild",snapshot.id,{actorId:"gm"});assert.equal(db.listTurnPublications("guild",attempt.turn_id)[0].status,"delivered");
   console.log("Implementation Phase B PASS: atomic ordered outbox, partial retry, uncertain restart and snapshot restore; zero live calls.");

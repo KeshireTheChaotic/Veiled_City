@@ -60,7 +60,7 @@ try{
   const delivered=[];
   const mutation={nativeAdjudications:adjudications,intents:[]};
   await publishRollRequests(db,guild,mutation,async(user,text,sessionId,characterId)=>{
-    delivered.push({user,text,sessionId,characterId}); return true;
+    delivered.push({user,text,sessionId,characterId}); return {ok:true,messageId:`private-${delivered.length}`,channelId:"dm"};
   });
   assert.equal(delivered.length,2,"each committed typed native adjudication is privately published");
   assert(delivered.every(row=>row.user==="owner"&&row.characterId===pc.id&&row.sessionId===session.id));

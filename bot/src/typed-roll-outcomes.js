@@ -4,7 +4,7 @@ import { buildActionPlan, transitionAction } from "./action-dependency.js";
 import { StateConflictError } from "./errors.js";
 import {drainActionContinuations} from "./action-continuation.js";
 import {typedRollProof} from "./typed-roll-proof.js";
-import {rollBreakdown,rollRevision} from "./roll-requests.js";
+import {rollBreakdown,rollRevision,reserveRollAmendment} from "./roll-requests.js";
 
 const hash=value=>createHash("sha256").update(JSON.stringify(value)).digest("hex").slice(0,40);
 export function finalizeTypedRollAction(db,guild,request){
@@ -68,6 +68,7 @@ export function reviewTypedRollOutcome(db,guild,input,reviewer,{gm=false}={}){
     const current=db.saveCityRecord(guild,{...q,key:q.record_key,data:{...q.data,input:nextInput,breakdown,revision:q.data.revision+1,
       outcome_review:{source:e.event_key,reviewer,previous_revision:input.expected_revision,previous_receipt:proof.accepted.data.outcome_receipt}}});
     const result=finalizeTypedRollAction(db,guild,current);
+    reserveRollAmendment(db,guild,current);
     db.audit(guild,q.data.session_id,"gm",reviewer,"typed_roll_outcome_review",{request:q.record_key,roll:q.data.roll_id,...result});
     return result;
   });

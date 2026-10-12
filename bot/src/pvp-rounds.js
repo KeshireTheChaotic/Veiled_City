@@ -7,6 +7,7 @@ import { synchronizePvpWindow } from "./window-coordinator.js";
 import { settlePvpWindow } from "./pvp-terminal.js";
 import { capturePvpFear, gatePvpExchange, fearGateKey, pendingPvpFear } from "./pvp-fear-gate.js";
 import {drainActionContinuations} from "./action-continuation.js";
+import {reservePvpNotices} from "./native-publications.js";
 export { authorPvpNarrative, reviewPvpNarrative, sharePvpNarrative } from "./pvp-authorship.js";
 
 const hash=value=>createHash("sha256").update(JSON.stringify(value)).digest("hex").slice(0,40);
@@ -71,7 +72,7 @@ export function choosePvp(db,guild,user,input){
     db.saveCityRecord(guild,{kind:"pvp_round_choice",key:k,status:"sealed",source_event:s.event_key,visibility:"character",subject_key:who.character,
       data:{version:1,proposal:p.record_key,terms_hash:p.data.terms_hash,round:input.round,character:who.character,user,
         principal_revision:who.principal_revision,attempt:input.attempt,trait:input.trait,modifier}});
-    saveWindow(db,guild,w,{});return {status:"sealed",round:input.round};
+    saveWindow(db,guild,w,{});reservePvpNotices(db,guild,p.record_key);return {status:"sealed",round:input.round};
   });
 }
 function resultFor(db,guild,p,round,who){
@@ -176,6 +177,7 @@ export function rollPvp(db,guild,user,input,{rng=d}={}){
     if(rows.every(Boolean))compare(db,guild,p,t,w,rows);else saveWindow(db,guild,w,{});
     // Capture the verified terminal projection before a separately source-authorized descendant may relocate its actor.
     const view=progressPvp(db,guild,user,p.record_key);
+    reservePvpNotices(db,guild,p.record_key);
     drainActionContinuations(db,guild);
     return view;
   });
@@ -198,6 +200,7 @@ export function continuePvp(db,guild,user,input){
         &&src.details.author===who.user&&src.details.principal_revision===who.principal_revision;
     });
     saveWindow(db,guild,w,both?{round:w.data.round+1,round_state:"choosing"}:{});
+    reservePvpNotices(db,guild,p.record_key);
     return progressPvp(db,guild,user,p.record_key);
   });
 }

@@ -293,7 +293,7 @@ export function cityContext(db,guildId,query){
   const records=[];let budget=0;
   for(const row of found.values()){
     if(row.kind.startsWith("pvp_")||["character_visible_fact","character_perception_receipt","world_visible_fact"].includes(row.kind))continue;
-    if(["action_continuation","action_continuation_signal"].includes(row.kind)
+    if(["action_continuation","action_continuation_signal","native_notice","roll_publication","roll_party_publication","publication_reconciliation"].includes(row.kind)
       ||row.kind==="compound_action"&&row.visibility==="character")continue;
     const temporal=row.kind==="weather"?{...row,temporal_state:db.getSimulationClock(guildId).minute<row.data.start?"forecast"
       :db.getSimulationClock(guildId).minute<row.data.end?"active":"past"}:row;

@@ -68,8 +68,8 @@ try{
   const request=mutation.intents[0].data.result;
   assert.equal(request.data.breakdown.subtotal,2,"Proficiency is not an action bonus");
   assert.equal(commitGmTurn(commitArgs).intents[0].record_key,mutation.intents[0].record_key);
-  await assert.rejects(()=>publishRollRequests(db,guild,mutation,async()=>false),/Retrieve/);
-  const delivered=[];await publishRollRequests(db,guild,mutation,async(...args)=>{delivered.push(args);return true;});
+  await assert.rejects(()=>publishRollRequests(db,guild,mutation,async()=>({ok:false,certainty:"not_sent"})),/Retrieve/);
+  const delivered=[];await publishRollRequests(db,guild,mutation,async(...args)=>{delivered.push(args);return {ok:true,messageId:`private-${delivered.length}`,channelId:"dm"};});
   assert.equal(delivered[0][0],"owner");assert(delivered[0][1].includes("Knowledge +2"));assert(!delivered[0][1].includes("second"));
   await publishRollRequests(db,guild,mutation,async()=>assert.fail("Already delivered request was reposted"));
   assert.equal(db.getCharacter(pcs[0].id).data.resources.hope,2);

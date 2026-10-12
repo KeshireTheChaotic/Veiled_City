@@ -226,7 +226,7 @@ test("PVE14 four-player actual Discord/turn replay: both narrative modes, withhe
   Object.assign(description,{guildId:f.guild,id:"qualification-description",commandName:"vc-gm",isChatInputCommand:()=>true});description.user.username="Synthetic GM";
   await handleCommand(description,{db:f.db,gm:{}});
   const npc=observedTurn(f,3,"station-attendant","Station Attendant","What does the station attendant look like?","qualification-npc");assert.match(npc.result.narration,/blue coat/i);
-  for(const turn of [unknown,npc]){const sent=[];await deliverTurnOutbox(f.db,f.guild,turn.attempt.turn_id,async row=>{sent.push(row.content);return {messageId:"synthetic-delivery"};});assert(!JSON.stringify(sent).includes("apologizes"));}
+  for(const turn of [unknown,npc]){const sent=[];const delivery=await deliverTurnOutbox(f.db,f.guild,turn.attempt.turn_id,async row=>{sent.push(row.payload);return {messageId:"synthetic-delivery",channelId:"table"};});assert(delivery.every(r=>r.ok));assert(!JSON.stringify(sent).includes("apologizes"));}
   await call("gm","attack-prepare",x.input);const request=f.db.listCityRecords(f.guild,{kind:"pvp_attack_request",includeGM:true})[0];assert(request);
   for(const i of [0,1]){await call(i,"attack-review",{attack:request.record_key});await call(i,"attack-authorize",{attack:request.record_key,expected_revision:request.data.offer_hash});}
   const rollInput={attack:request.record_key,expected_revision:request.data.offer_hash};await call(0,"attack-roll",rollInput,"pvp",[6,3]);

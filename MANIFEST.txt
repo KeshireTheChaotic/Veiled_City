@@ -129,6 +129,7 @@ bot/scripts/v9-continuation-test.mjs
 bot/scripts/v9-fixtures.mjs
 bot/scripts/v9-npc-observation-test.mjs
 bot/scripts/v9-observation-compatibility-test.mjs
+bot/scripts/v9-publication-test.mjs
 bot/scripts/v9-pvp-agreement-test.mjs
 bot/scripts/v9-pvp-authorship-test.mjs
 bot/scripts/v9-pvp-contract-test.mjs
@@ -226,6 +227,8 @@ bot/src/narrative-context.js
 bot/src/narrative-integrity.js
 bot/src/narrative-integrity.js.20261009-144611.bak
 bot/src/narrative-pvp.js
+bot/src/native-notice.js
+bot/src/native-publications.js
 bot/src/negotiations.js
 bot/src/npc-cognition.js
 bot/src/npc-conversations.js

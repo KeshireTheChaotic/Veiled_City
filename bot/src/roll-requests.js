@@ -10,6 +10,8 @@ import { diceSpec } from "./dice.js";
 import { isPvpIntent, assertNonPvpCombatant } from "./pvp-authority.js";
 import {assertPcCanAct} from "./pc-native-eligibility.js";
 import {blazeActionAuthorization} from "./pc-death.js";
+import {publishNativeNotice,queueNativeNotice,reserveNativeNotice} from "./native-publications.js";
+import {noticeHash} from "./native-notice.js";
 const hash=value=>createHash("sha256").update(JSON.stringify(value)).digest("hex");
 const signed=value=>`${value>=0?"+":""}${value}`;
 export const rollRevision=hash;
@@ -111,7 +113,7 @@ export function prepareRollRequest(db,guild,input,actor,context={}){
       data:{session_id:session.id,scene:source.scene,character_id:pc.id,owner_user_id:pc.owner_user_id,character_name:pc.name,
         attempt:source.details.text||source.details.raw_text,kind:input.kind,adjudication:input.adjudication,breakdown:values,input,
         sheet_fingerprint:hash(pc.data),revision:1,history:[],authority:"Pending only; no dice, expenditure or outcome."}});
-    cityAudit(db,guild,"roll_request_prepared",key,null,after,actor);return after;
+    cityAudit(db,guild,"roll_request_prepared",key,null,after,actor);reserveRollAmendment(db,guild,after);return after;
   });
 }
 export function formatRollRequest(row,{user=null}={}){
@@ -186,7 +188,7 @@ export async function publishRollRequests(db,guild,mutation,send){
   }
 }
 /** Receipt-backed post-commit delivery. Discord failures never redo mechanics; unsent receipts can be retried. */
-export async function publishRollAmendment(db,guild,row,send){
+function amendmentSpecs(db,guild,row,{checkOwners=true}={}){
   const recipients=new Map([[row.data.owner_user_id,row.subject_key]]);
   for(const participant of row.data.tag?.participants||[]) recipients.set(participant.user,participant.character);
   for(const disclosure of row.data.disclosures||[]) if(db.getWorldEvent(guild,disclosure.source_event)?.status==="active") recipients.set(disclosure.user,disclosure.character);
@@ -194,15 +196,19 @@ export async function publishRollAmendment(db,guild,row,send){
     const partner=db.getCityRecord(guild,"roll_request",row.data.tag.partner_request);
     if(partner) recipients.set(row.data.tag.partner_user,partner.subject_key);
   }
-  for(const [user,character] of recipients){
-    personalCharacter(db,guild,user,character);
+  return [...recipients].map(([user,character])=>{
+    if(checkOwners)personalCharacter(db,guild,user,character);
     const key=`roll-pub:${hash([row.record_key,row.data.revision,user]).slice(0,48)}`;
-    let receipt=db.getCityRecord(guild,"roll_publication",key);
-    if(receipt?.status==="delivered") continue;
-    receipt=receipt||db.saveCityRecord(guild,{kind:"roll_publication",key,status:"pending",visibility:"character",subject_key:character,
-      source_event:row.source_event,data:{request:row.record_key,revision:row.data.revision,user}});
-    if(await send(user,formatRollRequest(row,{user}),row.data.session_id,character)!==true)
-      throw new StateConflictError("Request committed; private delivery failed. Retrieve /vc-roll pending; do not repeat the turn.");
-    db.saveCityRecord(guild,{...receipt,key,status:"delivered"});
-  }
+    return {kind:"roll_publication",key,source:row.source_event,
+      notice:{kind:"roll_private",ref:row.record_key,request:row.record_key,revision:noticeHash([row.status,row.data]),user,character}};
+  });
+}
+export function queueRollAmendment(db,guild,row){return db.transaction(()=>amendmentSpecs(db,guild,row).map(spec=>queueNativeNotice(db,guild,spec)));}
+export function reserveRollAmendment(db,guild,row){return amendmentSpecs(db,guild,row,{checkOwners:false}).map(spec=>reserveNativeNotice(db,guild,spec));}
+export async function publishRollAmendment(db,guild,row,send){
+  const specs=amendmentSpecs(db,guild,row);
+  for(const spec of specs)queueNativeNotice(db,guild,spec);
+  const results=await Promise.allSettled(specs.map(spec=>publishNativeNotice(db,guild,spec,
+    publication=>send(spec.notice.user,publication.payload,row.data.session_id,spec.notice.character,{publication}))));
+  const error=results.find(r=>r.status==="rejected");if(error)throw error.reason;
 }

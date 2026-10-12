@@ -1,5 +1,6 @@
 /** Bilateral story-stakes PvP. Native agreements never authorize HP/Armor/Stress damage or another player's narration. */
 import { createHash } from "node:crypto";
+import {reservePvpNotices} from "./native-publications.js";
 import { consentAction } from "./action-consent.js";
 import { conversationPrincipal } from "./conversation-principal.js";
 import { currentScene } from "./scene-continuity.js";
@@ -106,8 +107,9 @@ function newTerms(db,guild,p,input,user,interaction){
   if(db.getCityRecord(guild,"pvp_terms_revision",key))fail("PvP terms revisions are immutable.");
   db.saveCityRecord(guild,{kind:"pvp_terms_revision",key,status:"proposed",source_event:source.event_key,visibility:"gm",
     data:{version:1,proposal:p.record_key,digest,snapshot}});
-  return db.saveCityRecord(guild,{...p,key:p.record_key,status:revision===1?"proposed":"negotiating",data:{...p.data,
+  const after=db.saveCityRecord(guild,{...p,key:p.record_key,status:revision===1?"proposed":"negotiating",data:{...p.data,
     revision,terms_revision:key,terms_hash:digest,approvals:[],agreement:null,state_revision:(p.data.state_revision||0)+1}});
+  reservePvpNotices(db,guild,after.record_key);return after;
 }
 
 export function proposePvp(db,guild,user,input){
@@ -238,7 +240,7 @@ export function respondPvp(db,guild,user,input){
         db.saveCityRecord(guild,{...agreement,key:agreement.record_key,status});
       }
       const closed=db.saveCityRecord(guild,{...p,key:p.record_key,status,data:{...p.data,resolution_receipt:receiptKey,state_revision:p.data.state_revision+1}});
-      drainActionContinuations(db,guild);return closed;
+      reservePvpNotices(db,guild,closed.record_key);drainActionContinuations(db,guild);return closed;
     }
     const approvals=[...p.data.approvals.filter(ref=>db.getCityRecord(guild,"pvp_consent",ref)?.subject_key!==who.character),signature.record_key];
     const both=approvals.length===2&&approvals.every(ref=>validSignature(db,guild,p,ref));
@@ -248,8 +250,9 @@ export function respondPvp(db,guild,user,input){
       db.saveCityRecord(guild,{kind:"pvp_agreement",key:agreement,status:"locked",source_event:p.source_event,visibility:"gm",
         data:{version:1,proposal:p.record_key,terms_hash:p.data.terms_hash,terms_revision:p.data.terms_revision,approvals,participants:p.data.participants}});
     }
-    return db.saveCityRecord(guild,{...p,key:p.record_key,status:both?"locked":"awaiting_mutual_consent",
+    const after=db.saveCityRecord(guild,{...p,key:p.record_key,status:both?"locked":"awaiting_mutual_consent",
       data:{...p.data,approvals,agreement,state_revision:p.data.state_revision+1}});
+    reservePvpNotices(db,guild,after.record_key);return after;
   });
 }
 

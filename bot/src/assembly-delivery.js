@@ -33,9 +33,9 @@ export async function deliverAssemblyParts({plan,savePlan,sendPublic,sendPrivate
     plan={...plan,delivery_state:state};savePlan(plan);
     try{
       const result=part.surface==="public"?await sendPublic(part.content):await sendPrivate(part.userId,part.content,part);
-      if(part.surface==="private"&&result?.ok===false)throw new Error(`Private delivery unavailable (${result.via||"unknown"}).`);
+      if(!result||result.ok===false)throw new Error(`Delivery unavailable (${result?.via||"unknown"}).`);
       state[part.key]={...state[part.key],status:"delivered",via:result?.via||part.surface,
-        discord_message_id:result?.id||null};
+        discord_message_id:result?.messageId||result?.id||null,channel_id:result?.channelId||null};
       delivered.push(part.key);
     }catch(error){
       state[part.key]={...state[part.key],status:"uncertain",error:String(error?.message||error).slice(0,500)};

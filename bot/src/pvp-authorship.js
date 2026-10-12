@@ -1,5 +1,6 @@
 /** Clause-level PvP agency. Closed native templates authorize material; free prose stays private and noncanonical. */
 import { createHash } from "node:crypto";
+import {reservePvpProjection} from "./native-publications.js";
 import { pvpOwnerContext } from "./narrative-pvp.js";
 import { indexWorldEvent } from "./city-calendar.js";
 export { assertPvpOutput } from "./pvp-output.js";
@@ -235,9 +236,10 @@ export function sharePvpNarrative(db,guild,user,input){
       return {status:"awaiting_bilateral_disclosure",narrative:n.record_key};
     const k=key("pvp-projection",[n.record_key,p.data.terms_hash]);
     if(db.getCityRecord(guild,"pvp_public_projection",k))return pvpProjection(db,guild,k);
-    return db.saveCityRecord(guild,{kind:"pvp_public_projection",key:k,status:"approved",visibility:"party",source_event:n.source_event,
+    const projection=db.saveCityRecord(guild,{kind:"pvp_public_projection",key:k,status:"approved",visibility:"party",source_event:n.source_event,
       data:{version:2,proposal:p.record_key,resolution:p.data.resolution_receipt,narrative:n.record_key,clauses:n.data.clauses,text,
         authority:"Verified per-player clauses only. No raw draft, opposing sealed choice or additional effect."}});
+    reservePvpProjection(db,guild,projection);return projection;
   });
 }
 export function pvpProjection(db,guild,id){

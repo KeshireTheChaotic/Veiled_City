@@ -6,7 +6,7 @@ import {
 import { dualityRoll, parseDice } from "./dice.js";
 import { establishFact } from "./epistemic.js";
 import { indexWorldEvent } from "./city-calendar.js";
-import { prepareRollRequest, pendingRollRequests, ownedRollRequest, formatRollRequest, publishRollAmendment } from "./roll-requests.js";
+import { prepareRollRequest, pendingRollRequests, ownedRollRequest, formatRollRequest, publishRollAmendment,queueRollAmendment } from "./roll-requests.js";
 import { contributeRoll, adjudicateRollSource, applyRollOutcome } from "./roll-collaboration.js";
 import {reviewTypedRollOutcome} from "./typed-roll-outcomes.js";
 import { publishJournal, postJournalEntry, publishEventResults, postGmLog, postStateError, postPrivateRelay, syncConfiguredSurfaces, postPlayMessage, sendPlayerPrivate, deliverHandout, deliverQueuedTurn } from "./publishing.js";
@@ -57,7 +57,7 @@ import { captureAuthoredTurnEnvelope } from "./authored-turn-envelope.js";
 import { saveVisibleCharacterFacts } from "./character-observation.js";
 import { establishWorldDescription } from "./world-observation.js";
 import { fearInbox, establishFearContext, selectFearMove, applyFearMove, reconcileFearMove } from "./pvp-fear-moves.js";
-import { archivePvpHistory, quarantineSessionRecap, certifiedSessionRecap, scopedSessionRecap } from "./pvp-output.js";
+import { archivePvpHistory, quarantineSessionRecap, certifiedSessionRecap, scopedSessionRecap,revalidateOutputPublication } from "./pvp-output.js";
 import { pendingPvpFear } from "./pvp-fear-gate.js";
 import { proposeDamagePvp, reviewDamagePvp, respondDamagePvp, reviseDamagePvp, damagePvpInbox } from "./pvp-profiles.js";
 import { preparePvpAttack, reviewPvpAttack, authorizePvpAttack, rollPvpAttack } from "./pvp-attacks.js";
@@ -70,6 +70,8 @@ import { reviewFeatureEffect, reviewPcEffect, approvePcEffect, applyPcEffect,rev
 import { prepareIncomingAttack, reviewIncomingAttack, confirmIncomingDefense, rollIncomingAttack, resolveIncomingDamage } from "./pc-incoming.js";
 import { queueDirectorPublications } from "./publication-outbox.js";
 import {publishContinuationNotices} from "./publishing.js";
+import {publishPvpNotices,materializeNativeNotices,resyncNativeNotice} from "./native-publications.js";
+import {reconcilePublication} from "./publication-outbox.js";
 
 const interactionQueue=new KeyedSerialQueue();
 
@@ -455,7 +457,7 @@ async function executeCommand(interaction,{db,gm,voice=null}){
     }
     if(group==="roll"&&sub==="pvp"){
       const {op="inbox",...input}=JSON.parse(interaction.options.getString("json")||"{}");
-      let text;
+      let text,noticeProposal=null,noticeProjection=null;
       if(["damage-inbox","damage-propose","damage-review","damage-respond","damage-revise"].includes(op)){
         const native={interactionId:interaction.id},user=interaction.user.id,guild=interaction.guildId;
         if(op==="damage-inbox")text=JSON.stringify(damagePvpInbox(db,guild,user),null,2);
@@ -552,6 +554,8 @@ async function executeCommand(interaction,{db,gm,voice=null}){
         else if(op==="share")result=sharePvpNarrative(db,interaction.guildId,interaction.user.id,native);
         else result=pvpComplication(db,interaction.guildId,interaction.user.id,input,{gm:isGM(db,interaction)});
         text=JSON.stringify(result,null,2);
+        if(["choose","roll","continue","share"].includes(op))noticeProposal=input.proposal;
+        if(op==="share"&&result.kind==="pvp_public_projection"&&result.status==="approved")noticeProjection=result.record_key;
       }
       else{
         let key=input.proposal;
@@ -560,8 +564,12 @@ async function executeCommand(interaction,{db,gm,voice=null}){
         else if(op==="respond")key=respondPvp(db,interaction.guildId,interaction.user.id,{...input,interaction_id:interaction.id}).record_key;
         else if(op!=="review")throw new StateConflictError("Use native PvP inbox/review/propose/revise/respond, choose/roll/progress/continue, or scoped narration.");
         text=reviewPvp(db,interaction.guildId,interaction.user.id,key).text;
+        if(op!=="review")noticeProposal=key;
         if(db.getCityRecord(interaction.guildId,"pvp_proposal",key)?.status==="locked")synchronizePvpWindow(db,interaction.guildId,key);
       }
+      if(noticeProposal&&interaction.guild)await publishPvpNotices(db,interaction.guildId,noticeProposal,
+        (userId,content,sessionId,characterId,meta)=>sendPlayerPrivate({db,guild:interaction.guild,userId,content,sessionId,characterId,...meta}),
+        (content,sessionId,meta)=>postPlayMessage({db,guild:interaction.guild,content,sessionId,...meta}),{projection:noticeProjection});
       const chunks=chunkTextLines(text.split("\n"));
       await interaction.reply({content:chunks[0]||"No current narrative PvP proposals.",ephemeral:true,allowedMentions:{parse:[]}});
       for(const content of chunks.slice(1))await interaction.followUp({content,ephemeral:true,allowedMentions:{parse:[]}});
@@ -1572,6 +1580,12 @@ GM notes: ${a.draft.gm_notes}`:""}`.slice(0,1950):"No aftermath draft exists for
       const input=JSON.parse(interaction.options.getString("json",true));
       if(input.op==="resolve-outcome"){
         const result=reviewTypedRollOutcome(db,interaction.guildId,input,interaction.user.id,{gm:true});
+        const reviewed=db.getCityRecord(interaction.guildId,"roll_request",input.request);
+        if(interaction.guild){
+          await publishRollAmendment(db,interaction.guildId,reviewed,(userId,content,sessionId,characterId,meta)=>
+            sendPlayerPrivate({db,guild:interaction.guild,userId,content,sessionId,characterId,...meta}));
+          await publishContinuationNotices({db,guild:interaction.guild,userId:reviewed.data.owner_user_id});
+        }
         await interaction.reply({content:`Saved native outcome review ${result.receipt}: ${result.outcome}. Original dice and costs retained.`,ephemeral:true});return true;
       }
       const source=adjudicateRollSource(db,interaction.guildId,input,interaction.user.id);
@@ -1579,13 +1593,14 @@ GM notes: ${a.draft.gm_notes}`:""}`.slice(0,1950):"No aftermath draft exists for
     }
     if(group==="roll"&&sub==="contribute"){
       const row=contributeRoll(db,interaction.guildId,interaction.user.id,JSON.parse(interaction.options.getString("json",true)));
+      queueRollAmendment(db,interaction.guildId,row);
       const chunks=chunkTextLines(formatRollRequest(row,{user:interaction.user.id}).split("\n"));
       await interaction.reply({content:chunks[0],ephemeral:true});
       for(const content of chunks.slice(1)) await interaction.followUp({content,ephemeral:true});
-      if(interaction.guild) await publishRollAmendment(db,interaction.guildId,row,async(user,content,sessionId,characterId)=>
-        (await sendPlayerPrivate({db,guild:interaction.guild,userId:user,content,sessionId,characterId})).ok);
-      if(interaction.guild) await publishRollPartyDisclosure(db,interaction.guildId,row,async(content,sessionId)=>
-        (await postPlayMessage({db,guild:interaction.guild,content,sessionId})).ok);
+      if(interaction.guild) await publishRollAmendment(db,interaction.guildId,row,(user,content,sessionId,characterId,meta)=>
+        sendPlayerPrivate({db,guild:interaction.guild,userId:user,content,sessionId,characterId,...meta}));
+      if(interaction.guild) await publishRollPartyDisclosure(db,interaction.guildId,row,(content,sessionId,meta)=>
+        postPlayMessage({db,guild:interaction.guild,content,sessionId,...meta}));
       return true;
     }
     if(group==="roll"&&sub==="request"){
@@ -1945,11 +1960,17 @@ GM notes: ${a.draft.gm_notes}`:""}`.slice(0,1950):"No aftermath draft exists for
         await interaction.reply({content:chunks[0],ephemeral:true}); for(const c of chunks.slice(1)) await interaction.followUp({content:c,ephemeral:true}); return true;
       }
       if(sub==="delivery-status"){
+        materializeNativeNotices(db,interaction.guildId);
         const rows=db.listPendingPublications(interaction.guildId,{limit:interaction.options.getInteger("limit")||30});
         const lines=rows.length?["**Pending/uncertain turn delivery**",...rows.map(row=>
-          `• turn \`${row.turn_id.slice(0,8)}\` part ${row.ordinal+1} · ${row.surface} · **${row.status}** · attempts ${row.attempt_count}${row.last_failure?` · ${row.last_failure.slice(0,160)}`:""}`)]:["No pending turn delivery rows."];
+          `• turn \`${row.turn_id.slice(0,8)}\` part \`${row.id}\` (${row.ordinal+1}) · ${row.surface} · **${row.status}** · attempts ${row.attempt_count}${row.last_failure?` · ${row.last_failure.slice(0,160)}`:""}`)]:["No pending turn delivery rows."];
+        lines.push(...db.heldNativeNotices(interaction.guildId).map(r=>`Native notice ${r.kind} \`${r.record_key}\`: **${r.status}**; no send performed. Current source/audience proof required.`));
         const chunks=chunkTextLines(lines);await interaction.reply({content:chunks[0],ephemeral:true});
         for(const chunk of chunks.slice(1))await interaction.followUp({content:chunk,ephemeral:true});return true;
+      }
+      if(sub==="delivery-resync"){
+        const r=resyncNativeNotice(db,interaction.guildId,interaction.options.getString("kind",true),interaction.options.getString("notice",true),{gm:isGM(db,interaction),actor:interaction.user.id});
+        await interaction.reply({content:`Native notice uses turn ${r.data.turn_id}. Use delivery-resend only for proven unsent parts; no mechanics rerun.`,ephemeral:true});return true;
       }
       if(sub==="delivery-resend"){
         const key=interaction.options.getString("turn",true).toLowerCase();
@@ -1960,6 +1981,36 @@ GM notes: ${a.draft.gm_notes}`:""}`.slice(0,1950):"No aftermath draft exists for
         await interaction.reply({content:result.pending.length?
           `Delivery retry completed with ${result.pending.length} part(s) still pending or uncertain. No mechanics or GM generation reran.`:
           "Committed narration delivery completed. No mechanics or GM generation reran.",ephemeral:true});return true;
+      }
+      if(sub==="delivery-reconcile"){
+        const id=interaction.options.getString("part",true),decision=interaction.options.getString("decision",true);
+        const row=db.getPublication(interaction.guildId,id);if(!row)throw new NotFoundError("Exact saved publication part required.");
+        revalidateOutputPublication(db,interaction.guildId,row);
+        let message=null;
+        if(decision==="delivered"){
+          const channelId=interaction.options.getString("channel",true),messageId=interaction.options.getString("message",true);
+          let channel;
+          if(row.target_user_id){
+            const player=db.getPlayer(interaction.guildId,row.target_user_id);
+            if(channelId===player?.private_channel_id){
+              channel=await interaction.guild.channels.fetch(channelId);
+              assertPlayerPrivateChannel({guild:interaction.guild,channel,userId:row.target_user_id,gmRoleId:db.getCampaign(interaction.guildId)?.gm_role_id});
+            }else{
+              const member=await interaction.guild.members.fetch(row.target_user_id);
+              channel=await member.user.createDM();
+              if(channel.id!==channelId||channel.recipient?.id!==row.target_user_id)throw new PermissionError("Exact owner DM required.");
+            }
+          }else{
+            if(channelId!==row.channel_id)throw new PermissionError("Exact original publication channel required.");
+            channel=await interaction.guild.channels.fetch(channelId);
+          }
+          const actual=await channel.messages.fetch(messageId);
+          message={id:actual.id,channelId:channel.id,content:actual.content,author:{id:actual.author.id,bot:actual.author.bot},
+            verifiedBotId:interaction.guild.members.me?.id||interaction.guild.client.user.id,verifiedRecipient:row.target_user_id||null};
+        }
+        const after=await reconcilePublication(db,interaction.guildId,id,{actor:interaction.user.id,gm:isGM(db,interaction),decision,
+          reason:interaction.options.getString("reason",true),message});
+        await interaction.reply({content:`Publication part ${id}: ${after.status}. Delivery only; no mechanics rerun.`,ephemeral:true});return true;
       }
       if(sub==="npc-state"){
         const profile=db.findNpcProfile(interaction.guildId,interaction.options.getString("npc",true));

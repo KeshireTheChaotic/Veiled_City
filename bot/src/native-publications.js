@@ -1,0 +1,111 @@
+/** Native disclosures share the transactional turn outbox, not a parallel best-effort sender. */
+import {noticeHash,renderNativeNotice} from './native-notice.js';
+import {prepareNativeNoticeOutput} from './pvp-output.js';
+import {queueTurnPublications,deliverTurnOutbox} from './publication-outbox.js';
+import {KeyedSerialQueue} from './serial-queue.js';
+import {currentScene} from './scene-continuity.js';
+import {progressPvp} from './pvp-rounds.js';
+import {StateConflictError} from './errors.js';
+const queues=new WeakMap();
+/** Native transaction checkpoint only. It is a wake-up pointer, never publication/consent authority. */
+export function reserveNativeNotice(db,guild,spec){
+  const {kind,key,source,notice}=spec,prior=db.getCityRecord(guild,kind,key);
+  return prior||db.saveCityRecord(guild,{kind,key,source_event:source,status:'queued',visibility:notice.user?'character':'party',
+    subject_key:notice.character||null,data:{...notice,reservation_version:2,reservation_hash:noticeHash([kind,key,source,notice])}});
+}
+/** Synchronous enqueue before any fallible interaction response; no network and no mechanical work. */
+export function queueNativeNotice(db,guild,{kind,key,source,notice}){
+  const receipt=db.getCityRecord(guild,kind,key);
+  if(receipt&&!(receipt.status==='queued'&&receipt.data.reservation_version===2&&!receipt.data.turn_id))return receipt;
+  if(receipt&&receipt.data.reservation_hash!==noticeHash([kind,key,source,notice]))throw new StateConflictError('Reserved native notice identity changed.');
+  return db.transaction(()=>{
+    const scene=currentScene(db,guild),d={...notice,session:scene.session_id,scene:scene.key};
+    renderNativeNotice(db,guild,d);
+    const noticeKey=`native-notice:${noticeHash([kind,key,d])}`;
+    const n=db.saveCityRecord(guild,{kind:'native_notice',key:noticeKey,status:'verified',source_event:source,
+      visibility:d.user?'character':'party',subject_key:d.character||null,data:d});
+    const scope=d.user?{mode:'private',actorUserId:d.user,actorCharacterId:d.character}:{mode:'party',actorUserId:null,actorCharacterId:null};
+    const result=prepareNativeNoticeOutput(db,guild,n,scope);
+    const turn=db.beginTurnAttempt({guildId:guild,sessionId:scene.session_id,messageId:`native-publication:${kind}:${key}`,
+      actorPrincipal:d.user||'__native_publication__',audience:scope.mode});
+    queueTurnPublications(db,{guild:{id:guild},session:{id:scene.session_id},result,scope,turnId:turn.turn_id});
+    db.updateTurnAttempt(turn.turn_id,{stage:'committed',committed:'yes',nativeCommitId:noticeKey});
+    return db.saveCityRecord(guild,{kind,key,status:'pending',source_event:source,visibility:n.visibility,subject_key:n.subject_key,
+      data:{...notice,notice:noticeKey,turn_id:turn.turn_id}});
+  });
+}
+export function publishNativeNotice(db,guild,{kind,key,source,notice},send){
+  queueNativeNotice(db,guild,{kind,key,source,notice});
+  if(!queues.has(db))queues.set(db,new KeyedSerialQueue());
+  return queues.get(db).enqueue(`${guild}:${kind}:${key}`,async()=>{
+    let receipt=db.getCityRecord(guild,kind,key);
+    // Legacy acknowledged history remains history. Ambiguous old pending history is held, not upgraded/resubmitted.
+    if(receipt?.status==='delivered')return false;
+    if(receipt&&!receipt.data.turn_id)throw new StateConflictError('Legacy publication has no chunk receipts; GM reconciliation required. Retrieve /vc-roll pending.');
+    const turn=receipt.data.turn_id;
+    await deliverTurnOutbox(db,guild,turn,async row=>{
+      db.saveCityRecord(guild,{...receipt,key,status:'delivering'});
+      return send(row,receipt);
+    });
+    const parts=db.listTurnPublications(guild,turn),pending=parts.filter(p=>p.status!=='delivered');
+    const status=pending.some(p=>p.status==='uncertain')?'uncertain':pending.length?'failed':'delivered';
+    db.saveCityRecord(guild,{...receipt,key,status});
+    db.updateTurnAttempt(turn,{stage:pending.length?'needs_recovery':'delivered',terminalCode:pending.length?'PUBLICATION_PENDING':null});
+    if(pending.length)throw new StateConflictError('Native result remains committed; delivery needs reviewed recovery. Retrieve /vc-roll pending; do not reroll.');
+    return true;
+  });
+}
+function pvpSpecs(db,guild,proposal){
+  const p=db.getCityRecord(guild,'pvp_proposal',proposal);if(!p)throw new Error('Exact native proposal required.');
+  return p.data.participants.map(who=>{
+    const revision=noticeHash([p.status,p.data,progressPvp(db,guild,who.user,proposal)]);
+    return {kind:'pvp_status_publication',key:`pvp-status:${noticeHash([proposal,who.user,revision])}`,source:p.source_event,
+      notice:{kind:'pvp_status',ref:proposal,revision,user:who.user,character:who.character}};
+  });
+}
+export function reservePvpNotices(db,guild,proposal){return pvpSpecs(db,guild,proposal).map(s=>reserveNativeNotice(db,guild,s));}
+export function reservePvpProjection(db,guild,row){return reserveNativeNotice(db,guild,{kind:'pvp_projection_publication',
+  key:`pvp-share:${row.record_key}`,source:row.source_event,notice:{kind:'pvp_projection',ref:row.record_key}});}
+/** Reconstruct only native reference jobs; stale jobs are held, never converted into new effects. */
+export function materializeNativeNotices(db,guild){
+  const kinds=['roll_publication','roll_party_publication','pvp_status_publication','pvp_projection_publication'];
+  const jobs=db.reservedNativeNotices(guild,kinds);
+  for(const r of jobs){
+    const {reservation_version,reservation_hash,...notice}=r.data;
+    if(reservation_version!==2)continue;
+    try{queueNativeNotice(db,guild,{kind:r.kind,key:r.record_key,source:r.source_event,notice});}
+    catch(error){
+      if(!['NATIVE_NOTICE','NARRATIVE_PVP','STATE_CONFLICT','CHARACTER_OBSERVATION','WORLD_OBSERVATION'].includes(error.code))throw error;
+      db.saveCityRecord(guild,{...r,key:r.record_key,status:'needs_review',data:{...r.data,hold_code:error.code}});
+    }
+  }
+  return jobs.length;
+}
+export function resyncNativeNotice(db,guild,kind,key,{gm=false,actor=null}={}){
+  if(!gm||!actor)throw new StateConflictError('Authenticated GM resynchronization required.');
+  if(!['roll_publication','roll_party_publication','pvp_status_publication','pvp_projection_publication'].includes(kind))throw new StateConflictError('Native publication kind required.');
+  const r=db.getCityRecord(guild,kind,key);if(!r)throw new StateConflictError('Exact native notice identity required.');
+  if(r.data.turn_id)return r;
+  const {reservation_version,reservation_hash,hold_code,...notice}=r.data;
+  if(reservation_version!==2||reservation_hash!==noticeHash([kind,key,r.source_event,notice]))
+    throw new StateConflictError('Legacy notice has no verifiable reservation. Inspect read-only native results, never fabricate delivery.');
+  // Renderer must pass before any status reset; a GM cannot waive stale intent/audience or alter native references.
+  const scene=currentScene(db,guild);renderNativeNotice(db,guild,{...notice,session:scene.session_id,scene:scene.key});
+  return db.transaction(()=>{
+    db.saveCityRecord(guild,{...r,key,status:'queued',data:{...notice,reservation_version,reservation_hash}});
+    return queueNativeNotice(db,guild,{kind,key,source:r.source_event,notice});
+  });
+}
+export async function publishPvpNotices(db,guild,proposal,sendPrivate,sendParty,{projection=null}={}){
+  const p=db.getCityRecord(guild,'pvp_proposal',proposal);if(!p)throw new Error('Exact native proposal required.');
+  const jobs=[];
+  for(const spec of pvpSpecs(db,guild,proposal)){
+    jobs.push(publishNativeNotice(db,guild,spec,
+      row=>sendPrivate(spec.notice.user,row.payload,p.data.session_id,spec.notice.character,{publication:row})));
+  }
+  if(projection)jobs.push(publishNativeNotice(db,guild,{kind:'pvp_projection_publication',key:`pvp-share:${projection}`,
+    source:db.getCityRecord(guild,'pvp_public_projection',projection)?.source_event,
+    notice:{kind:'pvp_projection',ref:projection}},row=>sendParty(row.payload,p.data.session_id,{publication:row})));
+  const results=await Promise.allSettled(jobs),errors=results.filter(r=>r.status==='rejected');
+  if(errors.length)throw new StateConflictError(`${errors.length} native PvP notice(s) need reviewed delivery recovery; mechanics and owner choices remain saved.`,{cause:errors[0].reason});
+}

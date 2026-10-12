@@ -251,7 +251,7 @@ test("OBS20 historical observation archive revalidates the description source, n
   const {proposePvp}=await import("../src/narrative-pvp.js"),{publishJournal}=await import("../src/publishing.js");
   proposePvp(f.db,f.guild,f.pcs[0].owner_user_id,{accepted_intent:f.accepted().record_key,opponent:f.pcs[1].id,terms:pvpTerms(f.pcs)});
   const fact=describe(f)[0],out=await question(f);
-  const delivered=await deliverTurnOutbox(f.db,f.guild,out.turn.turn_id,async()=>({messageId:"observed"}));
+  const delivered=await deliverTurnOutbox(f.db,f.guild,out.turn.turn_id,async()=>({messageId:"observed",channelId:"table"}));
   assert(delivered.every(r=>r.ok));const session=f.db.endSession(f.guild,"");
   f.db.configureChannels(f.guild,{journalChannelId:"journal"});const sends=[];
   const guild={id:f.guild,channels:{fetch:async()=>({isTextBased:()=>true,send:async s=>{sends.push(s);return{id:"archive"};}})}};

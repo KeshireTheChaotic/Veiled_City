@@ -49,8 +49,8 @@ try{
     expected_revision:rollRevision(row),key:"foreign-share",scope:"party",confirm:true}),/owner|owned/i);
   const shared=contributeRoll(db,guild,"owner",{op:"share",request:row.record_key,expected_revision:rollRevision(row),
     key:"owner-share",scope:"party",confirm:true});
-  const sent=[];await publishRollPartyDisclosure(db,guild,shared,async text=>{sent.push(text);return true;});
-  assert.equal(sent.length,1);assert.match(sent[0],/Billy.*shipping terminal/s);assert.match(sent[0],/total/i);
+  const sent=[];await publishRollPartyDisclosure(db,guild,shared,async text=>{sent.push(text);return {ok:true,messageId:"party-share",channelId:"play"};});
+  assert.equal(sent.length,1);assert.match(sent[0],/Billy.*Native total/s);assert(!sent[0].includes("shipping terminal"),"unreviewed raw declaration is not the public outcome");
   assert(!/Dockworker|Private Card|Instinct|Knowledge/.test(sent[0]),"party projection contains no private option or trait detail");
   await publishRollPartyDisclosure(db,guild,shared,async()=>assert.fail("party disclosure duplicated"));
   contributeRoll(db,guild,"owner",{op:"share",request:row.record_key,expected_revision:rollRevision(row),

@@ -269,7 +269,7 @@ test("PVP30ai restart source revocation holds saved output before transport",()=
     sessionId:f.session.id,audience:"party"});
   queueTurnPublications(f.db,{guild:{id:f.guild},session:f.session,result,scope,turnId:turn.turn_id});
   indexWorldEvent(f.db,f.guild,{key:source.event_key,status:"retracted"},scope.actorUserId);f.restart();
-  let sends=0;const out=await deliverTurnOutbox(f.db,f.guild,turn.turn_id,async()=>{sends++;return {messageId:"sent"};});
+  let sends=0;const out=await deliverTurnOutbox(f.db,f.guild,turn.turn_id,async()=>{sends++;return {messageId:"sent",channelId:"table"};});
   assert.equal(sends,0);assert.equal(out[0].ok,false);
 }));
 
@@ -298,7 +298,7 @@ for(const mode of ["party","private"])test(`PVP30y/PVP30z actual ${mode} directo
     actor_user_id:scope.actorUserId,actor_character_id:scope.actorCharacterId}});
   applyAuthoritativeMutation(f.db,{guildId:f.guild,sessionId:f.session.id,narrative:result,scope});
   const turnId=queueDirectorPublications(f.db,{guild:{id:f.guild},session:f.session,result,scope,key:`test:${mode}`});
-  const sent=[];await deliverTurnOutbox(f.db,f.guild,turnId,async row=>{sent.push(row);return {messageId:`sent-${sent.length}`};});
+  const sent=[];await deliverTurnOutbox(f.db,f.guild,turnId,async row=>{sent.push(row);return {messageId:`sent-${sent.length}`,channelId:row.target_user_id?`dm-${row.target_user_id}`:"table"};});
   assert(sent.length);assert(sent.every(r=>!r.payload.includes("apologizes")));
   if(mode==="private")assert(sent.every(r=>r.target_user_id===scope.actorUserId));
   assert.equal(ai.requests.length,1);
@@ -327,7 +327,7 @@ test("PVP30ai voice repeat must revalidate revoked owner clause before replaying
   const turn=f.db.beginTurnAttempt({guildId:f.guild,messageId:"voice-replay",actorPrincipal:scope.actorUserId,
     sessionId:f.session.id,audience:"party"});
   queueTurnPublications(f.db,{guild:{id:f.guild},session:f.session,result,scope,turnId:turn.turn_id});
-  await deliverTurnOutbox(f.db,f.guild,turn.turn_id,async()=>({messageId:"offline-voice-publication"}));
+  await deliverTurnOutbox(f.db,f.guild,turn.turn_id,async()=>({messageId:"offline-voice-publication",channelId:"table"}));
   const text=deliveredPartyOutput(f.db,f.guild,turn.turn_id);
   const voice=new VoiceNarrator({voiceEnabled:true,voiceMode:"on",voiceMaxCharsPerTurn:4000,voiceMaxQueue:5},
     {db:f.db,getConnection:()=>({}),synthesize:async()=>Buffer.from("offline-fake-audio")});
@@ -402,7 +402,7 @@ test("PVP30af actual party commit preserves an independently verified private ow
     {discord_user_id:f.pcs[1].owner_user_id,content:n.data.text}]};
   commitGmTurn({db:f.db,guild:{id:f.guild},session:f.session,result,scope,speaker:pc.name,label:"mixed output",
     meta:{messageId:"mixed-surfaces",turnId:turn.turn_id,triggerText:text}});
-  const sends=[];await deliverTurnOutbox(f.db,f.guild,turn.turn_id,async row=>{sends.push(row);return {messageId:String(sends.length)};});
+  const sends=[];await deliverTurnOutbox(f.db,f.guild,turn.turn_id,async row=>{sends.push(row);return {messageId:String(sends.length),channelId:row.target_user_id?`dm-${row.target_user_id}`:"table"};});
   assert(sends.some(r=>r.target_user_id===f.pcs[0].owner_user_id&&r.payload.includes(n.data.text)));
   assert(sends.every(r=>r.target_user_id===f.pcs[0].owner_user_id||!r.payload.includes(n.data.text)),"No foreign/private-to-party promotion.");
   assert(sends.some(r=>r.visibility==="party"&&r.payload.includes("Billy has arrived at annex.")),"Independent native movement survives alongside private output.");
@@ -424,7 +424,7 @@ for(const revoked of [false,true])test(`PVP30af private clause ${revoked?"revoke
     sessionId:f.session.id,audience:"party"});
   queueTurnPublications(f.db,{guild:{id:f.guild},session:f.session,result,scope,turnId:turn.turn_id});
   if(revoked)indexWorldEvent(f.db,f.guild,{key:n.source_event,status:"retracted"},f.pcs[0].owner_user_id);
-  f.restart();const sends=[];await deliverTurnOutbox(f.db,f.guild,turn.turn_id,async row=>{sends.push(row);return {messageId:String(sends.length)};});
+  f.restart();const sends=[];await deliverTurnOutbox(f.db,f.guild,turn.turn_id,async row=>{sends.push(row);return {messageId:String(sends.length),channelId:row.target_user_id?`dm-${row.target_user_id}`:"table"};});
   assert(sends.some(r=>r.visibility==="party"));assert.equal(sends.filter(r=>r.target_user_id).length,revoked?0:1);
 }));
 
@@ -456,7 +456,7 @@ test("PVP30aa source-certified delivered owner clause remains publishable as his
   prepareAuthorizedTurnOutput(f.db,f.guild,result,scope);
   const turn=f.db.beginTurnAttempt({guildId:f.guild,messageId:"historical-output",actorPrincipal:scope.actorUserId,sessionId:f.session.id,audience:"party"});
   queueTurnPublications(f.db,{guild:{id:f.guild},session:f.session,result,scope,turnId:turn.turn_id});
-  const delivered=await deliverTurnOutbox(f.db,f.guild,turn.turn_id,async()=>({messageId:"historical-delivered"}));
+  const delivered=await deliverTurnOutbox(f.db,f.guild,turn.turn_id,async()=>({messageId:"historical-delivered",channelId:"table"}));
   assert(delivered.every(r=>r.ok),delivered.map(r=>r.error?.stack||"").join("\n"));
   const session=f.db.endSession(f.guild,"");f.restart();const {sends,guild}=journalFixture(f);
   assert.equal(await publishJournal({db:f.db,guild,session,recap:result.narration}),true);
@@ -474,7 +474,7 @@ test("PVP30aa actual session end publishes certified excerpts, not the generated
   prepareAuthorizedTurnOutput(f.db,f.guild,result,scope);
   const turn=f.db.beginTurnAttempt({guildId:f.guild,messageId:"session-excerpts",actorPrincipal:scope.actorUserId,sessionId:f.session.id,audience:"party"});
   queueTurnPublications(f.db,{guild:{id:f.guild},session:f.session,result,scope,turnId:turn.turn_id});
-  await deliverTurnOutbox(f.db,f.guild,turn.turn_id,async()=>({messageId:"excerpt"}));
+  await deliverTurnOutbox(f.db,f.guild,turn.turn_id,async()=>({messageId:"excerpt",channelId:"table"}));
   const {sends,guild}=journalFixture(f),interaction=fakeInteraction({sub:"end"});
   Object.assign(interaction,{id:"end-with-excerpts",guildId:f.guild,guild,commandName:"vc-session",isChatInputCommand:()=>true});
   interaction.user.username="GM";
@@ -514,7 +514,7 @@ test("OBS22 four-PC adapters answer unknown/known/private inquiries while saved 
       excluded_targets:[],framing:"immediate",resolution:"conversational",reason:"An ordinary inquiry."}]};
     commitGmTurn({db:f.db,guild:{id:f.guild},session:f.session,result,scope,speaker:pc.name,label:id,
       meta:{messageId:id,turnId:turn.turn_id,triggerText:text,privateScene:mode==="private"}});
-    const delivery=await deliverTurnOutbox(f.db,f.guild,turn.turn_id,async row=>{sent.push(row);return {messageId:id};});
+    const delivery=await deliverTurnOutbox(f.db,f.guild,turn.turn_id,async row=>{sent.push(row);return {messageId:id,channelId:mode==="private"?`dm-${pc.owner_user_id}`:"table"};});
     assert(delivery.every(r=>r.ok));return result.narration;
   }
   assert.match(await inquiry(1,"appearance","party","choso-unknown"),/not.*established/);
@@ -545,7 +545,7 @@ for(const recipient of [null,0,1])test(`PVP30af simulation private part audience
     significance:"routine",public_hook:n.data.text,private_user_id:recipient===null?"":f.pcs[recipient].owner_user_id},{roll:()=>20});
   const sends=[];f.db.configureCampaign(f.guild,{playChannelId:"table"});
   const guild={id:f.guild,channels:{fetch:async()=>({id:"table",isTextBased:()=>true,send:async text=>{sends.push({party:true,text});return{id:"sent"};}})},
-    members:{fetch:async user=>({send:async text=>{sends.push({user,text});return{id:"dm"};}})}};
+    members:{fetch:async user=>({send:async text=>{sends.push({user,text});return{id:"dm",channelId:`dm-${user}`};}})}};
   assert.equal(await publishSimulationHooks({db:f.db,guild,sessionId:f.session.id}),recipient===0?1:0);
   assert.equal(sends.length,recipient===0?1:0);assert(sends.every(r=>r.user===f.pcs[0].owner_user_id));
   assert.equal(f.db.getSimulationRecord(f.guild,action.id).status,"completed");
