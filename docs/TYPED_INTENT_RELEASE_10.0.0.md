@@ -1,5 +1,7 @@
 # Typed Intent Refinement Release Qualification — 10.0.0
 
+> Historical T00–T08 qualification only. This document does not qualify the later v9/v9.4 repair work, even though its package version remains 10.0.0. Current phase evidence is in `TYPED_INTENT_PROGRESS.md` and `V9_4_QUALIFICATION.md`. D08 release remains BLOCKED until V9-03–V9-08 complete their mandatory same-source gates. No production operation is authorized by this historical checklist.
+
 ## Outcome
 
 T00/T00.1, T01, T02, T03, T04, T04.1, T05a/T05b, T06, T07 and T08 pass the default offline validation gate. Accepted typed intents are canonical adjudication inputs; human declarations own intent; native receipts own outcomes.

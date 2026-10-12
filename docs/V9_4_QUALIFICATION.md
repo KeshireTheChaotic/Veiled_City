@@ -44,3 +44,26 @@ The official [Daggerheart SRD 2.0](https://www.daggerheart.com/wp-content/upload
 Actual executed counts, exits and commit SHAs belong in `TYPED_INTENT_PROGRESS.md`; this document does not infer a pass from coverage names. No production access, bot, command registration, model endpoint or deployment is authorized.
 
 Additional negative qualification mutates only temporary records: rehashed Fear audience/kind and mismatched source scene metadata. Complete source material, authenticated indexed author, context/decision revision, selected audience and exact mutation ancestry must agree. The metadata fixture directly updates its temporary SQLite row because the normal event upsert intentionally preserves immutable scene metadata; it asserts the corruption is present before testing denial. No production record is accessed or repaired by this test.
+
+## B.8 completion and operational compatibility
+
+B.7 completion: `f81354607050bfa0dfe22829d63109db1c3bc9a2`. Its final documented-tree repeat actually passed 343 focused tests and 118 mandatory offline suites, syntax (282 modules/scripts), 24 command schemas, standalone D08 security and diff-check, all exit 0. B.8 makes documentation-only qualification changes; it does not duplicate the earlier runtime services, alter accepted intent/native outcomes, or invent a new positive behavior to obtain an artificial red test. Red-first evidence remains the unchanged original FH40/PVP30/PVP30q/OBS21 negatives and the phase-owned failures recorded in progress. B.8 still requires its own same-tree focused/full/security/syntax/manifest gates before its separate completion commit. That commit closes V9-PVP-B only, not D08 or V9-03–08.
+
+Before any separately authorized staging/deployment, the operator must inventory on an authorized **copy**, never overwrite the live store:
+
+| Saved state | Required handling |
+|---|---|
+| Old wildcard/action consent, unresolved old PC attack | Inert, not a signature for new action. Preserve history; obtain current exact owner intent, scoped consent and native request. Never turn old attack dice into a narrative victory or new injury. |
+| v1 narrative offer, no saved rounds | Review exact new v2 terms with `revise`, then both owners separately review/accept the new hash. Existing approvals do not carry forward. |
+| v1 offer with saved rounds/resources | Preserve old faces, score and resource history. No automatic Hope clawback or new round. Requires explicit reviewed disposition/new current offer; never edit old terms or sign for an owner. |
+| Legacy group without signed fairness policy, or changed participants | Held for new current fully signed v3 contract. Completed effects stay; joining does not enlarge old target permissions. |
+| Genuine pending Fear | `fear-inbox` → supported current context → `fear-select` → native effect → `fear-apply`. A selection awaiting defense/Armor is still due, not banked currency. `fear-reconcile` can reset a provably unapplied selection, never waive Fear or undo a committed effect. Revoked source/changed principal/scene stays held for reviewed recovery. |
+| Existing native damage/death | Keep HP/Armor and exact effect/owner death choice. Resolve the current owner's native death request; never select it as GM. No campaign/session clear is needed. |
+| Saved effect, missing or uncertain delivery | Publication-only recovery after current proof/audience revalidation. Do not reroll, reapply or blindly repost. General uncertain-send tools are qualified in V9-05, not promised here. |
+| Raw/freeform draft or old unproved paragraph | Private scope review only. GM review/publication approval cannot certify another PC's response. Only exact owner clauses plus separately approved disclosure can publish. |
+
+The inventory must name proposal/window/receipt identifiers, policy version, status, source validity and required owner action, **not** export private prose into party logs. Compare before/after on that authorized copy; expected changes are explicit new approvals or supported native resolutions, never character deletion, source rewriting, retroactive signing or mass record cleanup. No production inventory was performed during implementation.
+
+Rollback is code-level to a previously validated compatible checkpoint, with additive records preserved and unfamiliar profiles disabled/held. Do not roll back to a known-red authority checkpoint for live use. Never restore an old database over newly committed dice/effects, truncate tables, erase imported characters, or manually mark overdue Fear/delivery complete. New private data remains private on rollback; older code must not execute unfamiliar native records. Live startup, backup/pull/deploy and smoke tests each require separate authorization. Unsupported feature mappings, retracted/principal-changed recovery and V9-03–08 qualification remain explicit limits, not source-authority exceptions.
+
+See `V9_4_PVP_EXAMPLES.md` for illustrative player views, not generated outcomes or mechanical receipts.
