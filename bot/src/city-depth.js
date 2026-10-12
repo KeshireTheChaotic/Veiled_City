@@ -94,7 +94,7 @@ export async function draftMinorNpc({db,gm,content,guildId,input,actorId}){
   if(input.public_context!==undefined&&(typeof input.public_context!=="string"||input.public_context.length>2000)) throw new Error("Public scene context exceeds its budget.");
   if(db.getNpcProfile(guildId,key)) throw new Error("NPC key is already in use.");
   if(db.listCityRecords(guildId,{kind:"minor_draft",status:"draft",includeGM:true,limit:100}).length>=40) throw new Error("Minor NPC draft budget reached; review existing extras before expanding.");
-  const data=await gm.planMinorNpc({role:input.role,location:input.location,publicContext:input.public_context||"",reservedNames:reservedNames(db,content,guildId).slice(0,80)});
+  const data=await gm.planMinorNpc({guildId,role:input.role,location:input.location,publicContext:input.public_context||"",reservedNames:reservedNames(db,content,guildId).slice(0,80)});
   validateMinorIdentity(db,content,guildId,key,data);
   return db.transaction(()=>{
     const concurrent=db.getCityRecord(guildId,"minor_draft",key);if(concurrent) return concurrent;

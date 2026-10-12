@@ -1,5 +1,6 @@
 /** Runtime configuration loader with fail-fast type/range validation. */
 import path from "node:path";
+import {parseModelPricing} from './operational-metrics.js';
 
 const BUILTIN_VOICES=new Set(["alloy","ash","ballad","coral","echo","fable","nova","onyx","sage","shimmer","verse","marin","cedar"]);
 
@@ -35,6 +36,7 @@ export function loadConfig(){
     discordToken:need("DISCORD_TOKEN"),
     discordClientId:need("DISCORD_CLIENT_ID"),
     openaiKey:need("OPENAI_API_KEY"),
+    modelPricing:parseModelPricing(process.env.MODEL_PRICING_JSON||'{}'),
     gmModel:process.env.OPENAI_GM_MODEL||"gpt-6.1-sol",
     routerModel:process.env.OPENAI_ROUTER_MODEL||"gpt-6-luna",
     routineGmModel:process.env.OPENAI_ROUTINE_GM_MODEL||process.env.OPENAI_ROUTER_MODEL||"gpt-6-luna",

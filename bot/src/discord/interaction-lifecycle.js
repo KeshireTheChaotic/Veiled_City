@@ -1,4 +1,5 @@
 /** Interaction acknowledgement timing and terminal response failures. No tokens, command arguments or campaign writes. */
+import {operationalMetrics} from '../operational-metrics.js';
 const states=new WeakMap();
 export function beginInteraction(interaction){
   if(!states.has(interaction)) states.set(interaction,{started:Date.now(),created:Number.isFinite(interaction.createdTimestamp)?interaction.createdTimestamp:Date.now()});
@@ -13,6 +14,13 @@ export function interactionResponseExpired(interaction,error){
 export function interactionFailure(interaction,error,{phase="command",responseError=null}={}){
   const state=beginInteraction(interaction),original=error instanceof Error?error:new Error(String(error));
   if(terminalInteractionError(original)||terminalInteractionError(responseError)) state.terminal=true;
+  state.measuredFailures??=new WeakSet();
+  if(!state.measuredFailures.has(original)){
+    state.measuredFailures.add(original);
+    const code=state.terminal?'DISCORD_EXPIRED':'DISCORD_ERROR',guildId=interaction.guildId;
+    operationalMetrics.record('interaction_failure',{guildId,status:'error',errorCode:code,durationMs:Date.now()-state.started});
+    operationalMetrics.incident('interaction',{guildId,reference:interaction.id,code});
+  }
   original.interaction_diagnostic={command:String(interaction.commandName||""),subcommand:state.subcommand||"",phase,
     age_ms:Math.max(0,Date.now()-state.created),handler_elapsed_ms:Math.max(0,Date.now()-state.started),
     acknowledged:!!(interaction.deferred||interaction.replied),ack_started_age_ms:state.ack_started_age_ms??null,
@@ -36,6 +44,7 @@ async function acknowledge(interaction,subcommand,ephemeral){
     try{
       await interaction.deferReply({ephemeral});
       state.ack_completed_age_ms=Math.max(0,Date.now()-state.created);
+      operationalMetrics.record('interaction_ack',{guildId:interaction.guildId,durationMs:state.ack_completed_age_ms});
     }catch(error){throw interactionFailure(interaction,error,{phase:"acknowledgement"});}
   })();
   return state.acknowledgement;

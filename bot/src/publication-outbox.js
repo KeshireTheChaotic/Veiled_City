@@ -4,6 +4,7 @@ import { splitDiscordText } from "./discord/chunking.js";
 import { assertPvpOutput } from "./pvp-authorship.js";
 import { bindOutputPublication, revalidateOutputPublication, captureOutputArchive, recordOutputArchive } from "./pvp-output.js";
 import {KeyedSerialQueue} from "./serial-queue.js";
+import {operationalMetrics} from './operational-metrics.js';
 const deliveryQueues=new WeakMap();
 function serialized(db,key,job){
   if(!deliveryQueues.has(db))deliveryQueues.set(db,new KeyedSerialQueue());
@@ -83,6 +84,7 @@ export function deliverTurnOutbox(db,guildId,turnId,transport,{forceUncertain=fa
     }
     if(!["pending","failed"].includes(row.status))break;
     db.updatePublication(row.id,{status:"delivering",attemptCount:row.attempt_count+1,lastFailure:""});
+    const metricStart=performance.now();
     let attempted=false;
     try{
       revalidateOutputPublication(db,guildId,row);
@@ -95,11 +97,14 @@ export function deliverTurnOutbox(db,guildId,turnId,transport,{forceUncertain=fa
       const delivered=db.updatePublication(row.id,{status:"delivered",discordMessageId:receipt?.messageId||null,
         channelId:receipt?.channelId||row.channel_id,lastFailure:""});
       recordOutputArchive(db,guildId,delivered,archive);
+      operationalMetrics.record('discord',{guildId,durationMs:performance.now()-metricStart});
       results.push({ok:true,row:delivered});
     }catch(error){
       const safe=!attempted||error.deliveryCertainty==="not_sent";
       const failed=db.updatePublication(row.id,{status:safe?"failed":"uncertain",
         lastFailure:`${safe?"NOT_SENT: ":""}${String(error?.message||error)}`.slice(0,1000)});
+      operationalMetrics.record('discord',{guildId,durationMs:performance.now()-metricStart,status:'error',errorCode:safe?'NOT_SENT':'UNCERTAIN'});
+      operationalMetrics.incident('publication',{guildId,reference:row.id,code:safe?'NOT_SENT':'UNCERTAIN'});
       results.push({ok:false,row:failed,error});break;
     }
   }

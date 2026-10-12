@@ -29,6 +29,8 @@ import { assertGmOnlyChannel, assertPlayerPrivateChannel } from "./discord/priva
 import { isExpectedError, PermissionError, NotFoundError, StateConflictError, UserInputError } from "./errors.js";
 import { replayReceiptIfPresent, installReceiptCapture, isMutatingCommand } from "./idempotency.js";
 import { runCampaignDiagnostics, formatDiagnostics } from "./operations/diagnostics.js";
+import {operationalReport} from './operations/health.js';
+import {operationalMetrics} from './operational-metrics.js';
 import { buildGmOverview, formatGmOverview } from "./operations/overview.js";
 import { seedData } from "./seed-data.js";
 import { handleSeedCommand } from "./seed-commands.js";
@@ -367,6 +369,19 @@ ${draft.gm_notes||""}`}));
  */
 export async function handleCommand(interaction,{db,gm,voice=null}){
   beginInteraction(interaction);
+  // Read-only ops bypass player upserts, receipt capture and continuation/publication execution entirely.
+  if(interaction.isChatInputCommand()&&interaction.guildId&&interaction.commandName==='vc-admin'
+    &&interaction.options.getSubcommand()==='ops'){
+    if(!isGM(db,interaction))throw new PermissionError('GM/admin permission required.');
+    try{
+      await acknowledgeNative(interaction,'ops');
+      const report=operationalReport(db,interaction.guildId,{authorized:true,reference:interaction.options.getString('incident')});
+      const data=Buffer.from(JSON.stringify(report,null,2));
+      await interaction.editReply({content:'Read-only GM operational report. Cost estimates are NOT billed charges; no recovery was executed.',
+        files:[new AttachmentBuilder(data,{name:'veilkeeper-operations.json'})],allowedMentions:{parse:[]}});
+    }catch(error){throw interactionFailure(interaction,error);}
+    return true;
+  }
   if(isPvpMenuInteraction(interaction))return handlePvpMenuInteraction(db,interaction,{library:gm?.content?.root?encounterLibrary(gm):undefined,
     publish:interaction.guild?(proposal,projection)=>publishPvpNotices(db,interaction.guildId,proposal,
       (userId,content,sessionId,characterId,meta)=>sendPlayerPrivate({db,guild:interaction.guild,userId,content,sessionId,characterId,...meta}),
@@ -428,7 +443,9 @@ async function executeCommand(interaction,{db,gm,voice=null}){
   if((group!=="story"&&!(group==="admin"&&["seed-drafts","seed-package-preview","seed-package-export"].includes(sub))&&!(group==="intel"&&["discover","continuity","organizations","brief","recap","caseboard"].includes(sub))
     &&!(group==="handout"&&sub==="evidence")&&!(group==="downtime"&&sub==="long-project-status")
     &&!(group==="roll"&&["pending","result"].includes(sub)))||isMutatingCommand(group,sub)) await ensurePlayer(db,interaction);
-  if(await replayReceiptIfPresent({db,interaction,group,sub})) return true;
+  if(await replayReceiptIfPresent({db,interaction,group,sub})){
+    operationalMetrics.record('native_replay',{guildId:interaction.guildId});return true;
+  }
   const restoreReceiptCapture=installReceiptCapture({db,interaction,group,sub});
   try{
     if(group==='roll'&&sub==='pvp-menu'){

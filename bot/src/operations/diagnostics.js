@@ -73,7 +73,7 @@ export async function runCampaignDiagnostics({db,guild}){
       assertPlayerPrivateChannel({guild,channel,userId:player.discord_user_id,gmRoleId:campaign?.gm_role_id||null});
     }catch(err){ issues.push(`Private channel for ${player.display_name}: ${err.message||err}`); }
   }
-  return {data,campaign,issues,passed,operational_metrics:operationalMetrics.snapshot()};
+  return {data,campaign,issues,passed,operational_metrics:operationalMetrics.snapshot(guild.id)};
 }
 
 export function formatDiagnostics({issues,passed}){

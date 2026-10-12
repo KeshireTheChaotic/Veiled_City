@@ -5,6 +5,7 @@ import path from "node:path";
 import { spawnSync } from "node:child_process";
 import { portrayalPacket } from "./portrayal.js";
 import { deliveredPartyOutput, protectedPvpScope } from "./pvp-output.js";
+import {operationalMetrics} from './operational-metrics.js';
 import {
   AudioPlayerStatus,
   NoSubscriberBehavior,
@@ -175,7 +176,18 @@ export class VoiceNarrator {
     };
   }
 
-  async _synthesize(text,state){
+  async _synthesize(text,state,guildId){
+    const started=performance.now();
+    try{
+      const buffer=await this._speechRequest(text,state);
+      operationalMetrics.record('model_request',{guildId,durationMs:performance.now()-started,model:this.config.voiceModel});
+      return buffer; // Speech endpoint reports no token usage; never estimate tokens from text length.
+    }catch(error){
+      operationalMetrics.record('model_request',{guildId,durationMs:performance.now()-started,status:'error',errorCode:'PROVIDER_ERROR'});
+      throw error;
+    }
+  }
+  async _speechRequest(text,state){
     if(this.synthesize) return this.synthesize(text,{voice:state.voice,instructions:state.instructions,speed:state.speed});
     const body={
       model:this.config.voiceModel,
@@ -235,7 +247,7 @@ export class VoiceNarrator {
             return {ok:false,reason:"cancelled"};
           }
           this._checkAudioProof(guild.id,proof);
-          const buffer=await this._synthesize(part,rendering);
+          const buffer=await this._synthesize(part,rendering,guild.id);
           if(proof)this.audioProofs.set(buffer,proof);
           buffers.push(buffer);
         }

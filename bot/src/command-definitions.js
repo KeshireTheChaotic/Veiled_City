@@ -372,6 +372,8 @@ export function buildCommands(){
         .addSubcommand(s=>s.setName("restore").setDescription("Restore a campaign backup after creating a safety snapshot")
           .addStringOption(o=>o.setName("backup_id").setDescription("Backup ID/prefix").setRequired(true)))
         .addSubcommand(s=>s.setName("doctor").setDescription("Run campaign/database/Discord configuration diagnostics"))
+        .addSubcommand(s=>s.setName('ops').setDescription('GM: read-only privacy-safe usage, Fear and delivery health')
+          .addStringOption(o=>o.setName('incident').setDescription('Opaque incident reference from this guild operational report')))
         .addSubcommand(s=>s.setName("seed-data").setDescription("GM: seed all GM/PLAYER files with privacy boundaries, preserving existing state"))
         .addSubcommand(s=>s.setName("seed-package-preview").setDescription("GM: read-only validate inert definitions, citations, privacy and collisions")
           .addStringOption(o=>o.setName("json").setDescription("Content package document JSON").setRequired(true)))

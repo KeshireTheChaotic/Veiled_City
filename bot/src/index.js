@@ -549,9 +549,11 @@ async function processTurnEnvelope(message,directMention,audience,processor){
   if(!session)return processor(message,directMention,null);
   const attempt=beginTurnAttempt(db,{guildId:message.guild.id,messageId:message.id,
     actorPrincipal:`discord:${message.author.id}`,sessionId:session.id,audience});
-  if(isTurnReplay(attempt)||["delivered","failed"].includes(attempt.stage))return attempt;
+  if(isTurnReplay(attempt)||["delivered","failed"].includes(attempt.stage)){
+    operationalMetrics.record('native_replay',{guildId:message.guild.id});return attempt;
+  }
   try{
-    await measureStage(operationalMetrics,`${audience}_turn_envelope`,()=>processor(message,directMention,attempt));
+    await measureStage(operationalMetrics,`${audience}_turn_envelope`,()=>processor(message,directMention,attempt),{guildId:message.guild.id});
     const after=db.getTurnAttempt(attempt.turn_id);
     if(after&&!["delivered","failed","needs_recovery"].includes(after.stage))advanceTurnAttempt(db,attempt.turn_id,"delivered");
     return db.getTurnAttempt(attempt.turn_id);

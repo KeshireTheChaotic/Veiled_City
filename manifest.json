@@ -701,8 +701,8 @@
     },
     {
       "path": "bot/scripts/v9-release-qualification-test.mjs",
-      "size_bytes": 16301,
-      "sha256": "716997449c250db9ec48315808e8806c577b452c7aaf8472bb7056a24c7c187d"
+      "size_bytes": 16337,
+      "sha256": "3e805563d90a83ec8b03ded790f329862818a77e11260478557ee1b854a3eecc"
     },
     {
       "path": "bot/scripts/v9-roll-truth-test.mjs",
@@ -790,6 +790,11 @@
       "sha256": "9002981a4a4b1d42c148a2a365a0bc4dc62915147da6802ef8667ef391dbb80d"
     },
     {
+      "path": "bot/scripts/v95-operational-metrics-test.mjs",
+      "size_bytes": 19386,
+      "sha256": "3aff9110d466c20c48e59f7dc321df2a0dbb24932dfc57811bda3a985891ff31"
+    },
+    {
       "path": "bot/scripts/v95-protected-narrative-test.mjs",
       "size_bytes": 19592,
       "sha256": "e0c1fca38c1bb2cb87609498c5c212453d9d74b4b02d0dce3af5617d5fe6f304"
@@ -806,8 +811,8 @@
     },
     {
       "path": "bot/scripts/validate-offline.mjs",
-      "size_bytes": 4985,
-      "sha256": "36a99768ca8cb7490114a673ae1af18e048bfdc0b08272ba59ef1a13409f0868"
+      "size_bytes": 5016,
+      "sha256": "a959bc727bd90538e311586692ee690a2c20be641003255850c1e6bc180389fa"
     },
     {
       "path": "bot/sql/schema.sql",
@@ -931,8 +936,8 @@
     },
     {
       "path": "bot/src/city-depth.js",
-      "size_bytes": 10636,
-      "sha256": "62d4dba434e1130ccf27fc0ea3c5cf77bd5bc425556d811b79a7e439dead3480"
+      "size_bytes": 10644,
+      "sha256": "730d6b84e47585fd56238ec6c5f35abae56a122c4b66838c029c07cfc787e9ee"
     },
     {
       "path": "bot/src/city-groups.js",
@@ -946,8 +951,8 @@
     },
     {
       "path": "bot/src/command-definitions.js",
-      "size_bytes": 72681,
-      "sha256": "5652cb1b49cd6f90cd98230dd432f1fd2f3d3cfec90a9b534db993c18fa4ac53"
+      "size_bytes": 72934,
+      "sha256": "2a35c737243544d4522f421161050a95a920070a48d511cf26d4548775fc2704"
     },
     {
       "path": "bot/src/command-schema.js",
@@ -956,8 +961,8 @@
     },
     {
       "path": "bot/src/commands.js",
-      "size_bytes": 175776,
-      "sha256": "10dbb0c09d4a2eb067b4387f59de31c15936f65696e79dd841ef9fafe381fd56"
+      "size_bytes": 176913,
+      "sha256": "552274ab6c2142818e86f2a21712c0d68c67a436ac135a9f11688c5d8f47c801"
     },
     {
       "path": "bot/src/concept-context.js",
@@ -966,8 +971,8 @@
     },
     {
       "path": "bot/src/config.js",
-      "size_bytes": 5548,
-      "sha256": "2bc386e0125d7f1c7334bc0ec51b33676449b4fe3b2ad7d57593c6b1333bfc02"
+      "size_bytes": 5682,
+      "sha256": "c85889874151412ffdb7b659684ef39077a8939495d5bac1a0bb7519076eaf10"
     },
     {
       "path": "bot/src/consent-language.js",
@@ -1011,8 +1016,8 @@
     },
     {
       "path": "bot/src/db.js",
-      "size_bytes": 161951,
-      "sha256": "3c0f09fad7d471ad880f36ee501096b2f17760c5235d1c3d40a9b14b8907b9a5"
+      "size_bytes": 164745,
+      "sha256": "400dcb6b62e1b44b04185b3681b87975d0dd1acd261c36785c733207d8f572b4"
     },
     {
       "path": "bot/src/decision-advisory.js",
@@ -1046,8 +1051,8 @@
     },
     {
       "path": "bot/src/discord/interaction-lifecycle.js",
-      "size_bytes": 2730,
-      "sha256": "3aaa105c389911a6344ad90860690e5e385b146e73bb69e122bd4c874995b831"
+      "size_bytes": 3356,
+      "sha256": "69bc1133e824cd782239cee8abc0c1cb04f0fe72005189b6aa2af3c3247c3251"
     },
     {
       "path": "bot/src/discord/privacy.js",
@@ -1101,8 +1106,8 @@
     },
     {
       "path": "bot/src/gm.js",
-      "size_bytes": 98799,
-      "sha256": "2b9178d6190853218b308f0e605a174988cd76087a512c52503e6a0a649782a0"
+      "size_bytes": 100888,
+      "sha256": "5f62ce7366c3999ccf6c1dbc191241217151047011a70079307c391e763d7e1c"
     },
     {
       "path": "bot/src/gm.js.20261009-144611.bak",
@@ -1126,8 +1131,8 @@
     },
     {
       "path": "bot/src/index.js",
-      "size_bytes": 52806,
-      "sha256": "6da1d9f2af4852e57fb105ad24c219f4070c0c66118343457ddf3dd4e1257e6c"
+      "size_bytes": 52913,
+      "sha256": "8215d9216bc8c9104fc757c3bae716188b0e5cc1db150024a8d4329f8cec663c"
     },
     {
       "path": "bot/src/legacy-authority.js",
@@ -1216,13 +1221,18 @@
     },
     {
       "path": "bot/src/operational-metrics.js",
-      "size_bytes": 1938,
-      "sha256": "71dabdc1696128231366e16e77c500602ec68e6c57b1fd79c037304c2a22b1b8"
+      "size_bytes": 8169,
+      "sha256": "6127d207787498ec9ee6c9fc6985409544dac1860174ccda91f1a74e0274b378"
     },
     {
       "path": "bot/src/operations/diagnostics.js",
-      "size_bytes": 5673,
-      "sha256": "30e28ce30cdc3070d80eaf202d5f478ba48765229aeb64fbc838f253479a103d"
+      "size_bytes": 5681,
+      "sha256": "543464d4f364ad1a814d55ec01b4ffd68ecf45dfa903757be1510e08f587c26d"
+    },
+    {
+      "path": "bot/src/operations/health.js",
+      "size_bytes": 4278,
+      "sha256": "0b2f994761a6b65f995b82fb1c73a3c99f1ab6bcaf50bb8b1e2ed311df177886"
     },
     {
       "path": "bot/src/operations/overview.js",
@@ -1296,13 +1306,13 @@
     },
     {
       "path": "bot/src/publication-outbox.js",
-      "size_bytes": 8220,
-      "sha256": "c12edbedb189cc79c18f237571f57d560cfefcdef52400391c646ff260f60001"
+      "size_bytes": 8675,
+      "sha256": "8430b80877840fef121e5c19d54b7cb376b58b4b4fa54b8acc08c7246f15d1e2"
     },
     {
       "path": "bot/src/publishing.js",
-      "size_bytes": 19174,
-      "sha256": "3a9fe6782316d70cd8cb0dfd5bc4b9da6234a5926cd2ee52eed80eaaffc81ce3"
+      "size_bytes": 19431,
+      "sha256": "44e612172f5bfb7a84f9b4aa1e639391d39592bd77363385c901f0a7e3da1ad6"
     },
     {
       "path": "bot/src/pvp-attacks.js",
@@ -1346,8 +1356,8 @@
     },
     {
       "path": "bot/src/pvp-output.js",
-      "size_bytes": 28988,
-      "sha256": "3ab21bab934a7fce8f86b33fa115c62b392d873dd1ecaf9371ea8aa8a2f5150b"
+      "size_bytes": 29489,
+      "sha256": "bdeea67d883d8f7a7eacae934848a8c560466be5c1e31f32704f09edbf7afb0a"
     },
     {
       "path": "bot/src/pvp-profiles.js",
@@ -1541,8 +1551,8 @@
     },
     {
       "path": "bot/src/turn-orchestration.js",
-      "size_bytes": 4632,
-      "sha256": "5473f5646fda276a669ce129d20d80091b5cd9e9e05927c902721cf0f194ece5"
+      "size_bytes": 4725,
+      "sha256": "44a2db3b460716b89fa08872b39102e2efe95405f09497259bf8bf7fa1bb613c"
     },
     {
       "path": "bot/src/turn-pipeline.js",
@@ -1581,8 +1591,8 @@
     },
     {
       "path": "bot/src/voice.js",
-      "size_bytes": 14024,
-      "sha256": "2edda23ee5b8dd54447b69e07ac54c5950813d4848cfd0ebb537c9ebfc825a52"
+      "size_bytes": 14659,
+      "sha256": "32d593e8424d653eba94fb0c758536f60ede781719f0954c49135d5d6c3f5ccf"
     },
     {
       "path": "bot/src/window-coordinator.js",
@@ -2411,8 +2421,8 @@
     },
     {
       "path": "docs/TYPED_INTENT_CONTRACTS.md",
-      "size_bytes": 82755,
-      "sha256": "9d6439dffb8a9ba6b74dad0f8766efff0fc1d14fd3af80a8eef2ee5c7285dc3a"
+      "size_bytes": 83708,
+      "sha256": "5ac9ff66f03d5f1fe75752c2baf669b2422f16b9fd153f20a6369c6e5511d8de"
     },
     {
       "path": "docs/TYPED_INTENT_DELTA_AUDIT.md",
@@ -2426,8 +2436,8 @@
     },
     {
       "path": "docs/TYPED_INTENT_PROGRESS.md",
-      "size_bytes": 283181,
-      "sha256": "001d535e5b66ec1ca8a667d161bf887e97b0dc2a77e7959c07e94063ff5eb1bd"
+      "size_bytes": 293091,
+      "sha256": "01fb539850e13cb5a9dae68c7ba7f7606508479f954629a71609865b40915e7e"
     },
     {
       "path": "docs/TYPED_INTENT_RELEASE_10.0.0.md",
@@ -2568,6 +2578,11 @@
       "path": "docs/V95_03_PRIVATE_PVP_CONTROLS.md",
       "size_bytes": 11440,
       "sha256": "342c6fa6e4fffe46894f7618a5597ac1964038a8c2b2ea2d9ba5337a769bee52"
+    },
+    {
+      "path": "docs/V95_04_OPERATIONAL_METRICS.md",
+      "size_bytes": 9845,
+      "sha256": "b135c99bd1feaad80684253e656b971656078f8554ff6cf84a5f5bc8bea2f587"
     },
     {
       "path": "docs/V9_1_NARRATIVE_PVP_CONTRACT_REFERENCE.md",
@@ -2716,8 +2731,8 @@
     },
     {
       "path": "docs/V9_5_COVERAGE_CROSSWALK.csv",
-      "size_bytes": 223481,
-      "sha256": "931c97408c8fef617b4f37e4155b3191bcd92535883ed589f6217e09d8dddf38"
+      "size_bytes": 223428,
+      "sha256": "1352181a4d3da36bd9177fb42e8965977485b441b4377b1486beb861bc19e2c6"
     },
     {
       "path": "docs/V9_5_DEPRECATION_REGISTER.csv",
@@ -2756,8 +2771,8 @@
     },
     {
       "path": "docs/V9_5_SOURCE_INVENTORY.json",
-      "size_bytes": 247936,
-      "sha256": "1de528152e23592119ff30c424692acfdd352aef7de1da7a6ff69f3b7506c973"
+      "size_bytes": 250662,
+      "sha256": "39d62510a67ef5ed7c490eef5afcfa6d4be88f481286287190b64e97475de7bf"
     },
     {
       "path": "docs/V9_CODEX_KICKOFF.md",

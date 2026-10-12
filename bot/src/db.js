@@ -1275,6 +1275,39 @@ export class VeiledDB {
       payload_hash,status,discord_message_id,attempt_count,last_failure,created_at,updated_at FROM publication_outbox
       WHERE guild_id=? AND status!='delivered' ORDER BY created_at,ordinal LIMIT ?`).all(guildId,Math.max(1,Math.min(100,Number(limit)||50)));
   }
+  /** Read-only operational projection: never select prose, subjects, owners, credentials or JSON payloads. */
+  operationalHealthData(guildId){
+    const kinds=['pvp_fear_trigger','pvp_output_quarantine','action_continuation','pc_incoming_attack',
+      'pvp_consent','pvp_damage_consent','pvp_fear_move_decision','pvp_fear_effect_receipt','pvp_ui_delivery',
+      'roll_publication','roll_party_publication','pvp_status_publication','pvp_projection_publication','pvp_fear_publication'];
+    const marks=kinds.map(()=>'?').join(',');
+    const groups=this.db.prepare(`SELECT kind,status,COUNT(*) AS count FROM city_records
+      WHERE guild_id=? AND kind IN (${marks}) GROUP BY kind,status LIMIT 256`).all(guildId,...kinds);
+    const incidents=[];
+    for(const kind of ['pvp_fear_trigger','pvp_output_quarantine','action_continuation','pc_incoming_attack','pvp_ui_delivery']){
+      incidents.push(...this.db.prepare(`SELECT r.kind,r.record_key,r.status,w.status AS source_status,
+        CASE WHEN roll.created_at IS NULL THEN NULL ELSE MAX(0,unixepoch('now')-unixepoch(roll.created_at)) END AS age_seconds
+        FROM city_records r LEFT JOIN world_events w ON w.guild_id=r.guild_id AND w.event_key=r.source_event
+        LEFT JOIN rolls roll ON roll.guild_id=r.guild_id AND roll.id=json_extract(r.data_json,'$.roll_id')
+        WHERE r.guild_id=? AND r.kind=? AND r.status NOT IN ('resolved','delivered','complete','cancelled')
+        ORDER BY r.rowid LIMIT 20`).all(guildId,kind));
+    }
+    const publications=this.db.prepare(`SELECT status,COUNT(*) AS count FROM publication_outbox
+      WHERE guild_id=? GROUP BY status`).all(guildId);
+    const delivery=this.db.prepare(`SELECT id AS record_key,'publication' AS kind,status,
+      MAX(0,unixepoch('now')-unixepoch(created_at)) AS age_seconds FROM publication_outbox
+      WHERE guild_id=? AND status!='delivered' ORDER BY created_at,ordinal LIMIT 20`).all(guildId);
+    const turns=this.db.prepare(`SELECT stage AS status,COUNT(*) AS count FROM turn_attempts
+      WHERE guild_id=? GROUP BY stage`).all(guildId);
+    const recovery=this.db.prepare(`SELECT turn_id AS record_key,'turn' AS kind,stage AS status,
+      MAX(0,unixepoch('now')-unixepoch(updated_at)) AS age_seconds FROM turn_attempts
+      WHERE guild_id=? AND stage NOT IN ('delivered','failed') ORDER BY updated_at LIMIT 20`).all(guildId);
+    const manual=this.db.prepare(`SELECT COUNT(*) AS count FROM mutation_ledger
+      WHERE guild_id=? AND actor_type IN ('human','human_gm')`).get(guildId).count;
+    const reviews=this.db.prepare(`SELECT COUNT(*) AS count FROM audit_log
+      WHERE guild_id=? AND action='pvp_fear_needs_review'`).get(guildId).count;
+    return {groups,publications,turns,manual,reviews,incidents:[...incidents,...delivery,...recovery]};
+  }
   pendingContinuationTurns(guildId,userId,{limit=20}={}){
     return this.db.prepare(`SELECT DISTINCT t.turn_id FROM turn_attempts t
       JOIN publication_outbox p ON p.turn_id=t.turn_id AND p.guild_id=t.guild_id

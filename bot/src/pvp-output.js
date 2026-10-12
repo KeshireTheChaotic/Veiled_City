@@ -10,6 +10,7 @@ import { indexWorldEvent } from "./city-calendar.js";
 import {renderContinuationNotice} from "./action-continuation.js";
 import {renderNativeNotice} from "./native-notice.js";
 import {establishGmWorldPart,renderGmWorldPart} from "./gm-world-narrative.js";
+import {operationalMetrics} from './operational-metrics.js';
 
 const hash=v=>createHash("sha256").update(JSON.stringify(v)).digest("hex");
 const prepared=new WeakMap();
@@ -155,6 +156,7 @@ export function prepareAuthorizedTurnOutput(db,guild,result,scope,{sourceRef=nul
   const worldParts=Array.isArray(drafts.gm_world_parts)?drafts.gm_world_parts:[];
   if(!proposals.length&&!queries.length&&!worldParts.length)return result;
   if(result.act===false&&!surfaces(result).some(([,text])=>text.trim()))return result;
+  operationalMetrics.record('narrative_projection',{guildId:guild});
   const scene=currentScene(db,guild),parts=[];
   const nativeSource=sourceRef||proposals[0]?.source_event;
   const common={render_version:1,scene:scene.key,session:scene.session_id,scope:{...scope},origin,
@@ -199,6 +201,7 @@ export function prepareAuthorizedTurnOutput(db,guild,result,scope,{sourceRef=nul
     catch(e){if(e.code!=="NARRATIVE_PVP")throw e;} // Stale records stay inert; raw prose is not a fallback.
   }
   if(!parts.length)parts.push(savePart(db,guild,{...common,kind:"neutral"}));
+  if(parts.some(p=>p.data.kind==='neutral'))operationalMetrics.record('neutral_fallback',{guildId:guild});
   const text=parts.map(p=>p.data.text).join("\n"),quarantineKey=`pvp-quarantine:${hash([scene.key,origin,sourceRef,raw])}`;
   if(!db.getCityRecord(guild,"pvp_output_quarantine",quarantineKey))db.saveCityRecord(guild,{
     kind:"pvp_output_quarantine",key:quarantineKey,status:"needs_scope_review",visibility:"gm",source_event:common.source_ref,
@@ -230,6 +233,10 @@ export function prepareAuthorizedTurnOutput(db,guild,result,scope,{sourceRef=nul
   for(const field of ["context_memories","handouts","npc_memories","npc_knowledge","npc_goals"])
     if(result[field]?.length)result[field]=[];
   if("gm_world_parts" in result)result.gm_world_parts=[];
+  if(JSON.stringify(raw)!==JSON.stringify(Object.fromEntries(surfaces(result)))){
+    operationalMetrics.record('narrative_quarantine',{guildId:guild});
+    operationalMetrics.incident('narrative',{guildId:guild,reference:quarantineKey,code:'NARRATIVE_PVP'});
+  }
   prepared.set(result,{raw,drafts,parts:parts.map(p=>p.record_key),privateParts,scope:hash(scope),fingerprint:fingerprint(result)});
   return result;
 }

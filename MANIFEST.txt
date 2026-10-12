@@ -155,6 +155,7 @@ bot/scripts/v94-pvp-qualification-test.mjs
 bot/scripts/v94-pvp-reaction-test.mjs
 bot/scripts/v95-autonomous-fear-test.mjs
 bot/scripts/v95-inventory.mjs
+bot/scripts/v95-operational-metrics-test.mjs
 bot/scripts/v95-protected-narrative-test.mjs
 bot/scripts/v95-pvp-ux-test.mjs
 bot/scripts/validate-command-schema.mjs
@@ -242,6 +243,7 @@ bot/src/npc-cognition.js
 bot/src/npc-conversations.js
 bot/src/operational-metrics.js
 bot/src/operations/diagnostics.js
+bot/src/operations/health.js
 bot/src/operations/overview.js
 bot/src/outcome-preview.js
 bot/src/owned-community.js
@@ -511,6 +513,7 @@ docs/UPGRADE_3.7.0_TO_3.8.0.md
 docs/V7_V8_DELTA_MATRIX.csv
 docs/V95_02_FINAL_INTEGRATION_COVERAGE.md
 docs/V95_03_PRIVATE_PVP_CONTROLS.md
+docs/V95_04_OPERATIONAL_METRICS.md
 docs/V9_1_NARRATIVE_PVP_CONTRACT_REFERENCE.md
 docs/V9_2_CODEX_RESUME.md
 docs/V9_2_IMPLEMENTATION_PLAN.md

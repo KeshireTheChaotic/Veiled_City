@@ -7,6 +7,7 @@ import { assertGmOnlyChannel, assertPlayerPrivateChannel } from "./discord/priva
 import { simulationOverview, acknowledgeSimulationHook } from "./simulation.js";
 import { deliverTurnOutbox, outboxSummary, notSent } from "./publication-outbox.js";
 import { failureTrace } from "./failure-trace.js";
+import {operationalMetrics} from './operational-metrics.js';
 import { assertArchiveOutput, archivePvpHistory, assertPvpOutput, protectedPvpScope, protectedHookSource, prepareStoredOutput, quarantineSimulationHook, revalidateOutputPublication } from "./pvp-output.js";
 import { queueDirectorPublications } from "./publication-outbox.js";
 import {KeyedSerialQueue} from "./serial-queue.js";
@@ -151,6 +152,8 @@ export async function postGmLog({db,guild,sessionId=null,title="GM Log",details=
 
 export async function postStateError({db,guild,error,context="runtime",sessionId=null,attempt=null}){
   const ref=randomUUID().slice(0,8);
+  operationalMetrics.record('runtime_failure',{guildId:guild.id,status:'error',errorCode:error?.code});
+  operationalMetrics.incident('runtime',{guildId:guild.id,reference:ref,code:error?.code});
   try{
     const diagnostic=error?.code==="NARRATIVE_INTEGRITY"&&error.diagnostic?Object.fromEntries(
       ["category","actor","entity","action","source","source_ref","source_span","recovery"].map(key=>[key,String(error.diagnostic[key]||"").slice(0,1000)])):null;

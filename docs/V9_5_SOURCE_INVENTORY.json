@@ -1956,6 +1956,7 @@
         "bot/scripts/v94-pvp-qualification-test.mjs",
         "bot/scripts/v94-pvp-reaction-test.mjs",
         "bot/scripts/v95-autonomous-fear-test.mjs",
+        "bot/scripts/v95-operational-metrics-test.mjs",
         "bot/scripts/v95-protected-narrative-test.mjs",
         "bot/scripts/v95-pvp-ux-test.mjs"
       ],
@@ -2195,7 +2196,7 @@
     },
     {
       "file": "bot/scripts/v9-release-qualification-test.mjs",
-      "sha256": "716997449c250db9ec48315808e8806c577b452c7aaf8472bb7056a24c7c187d",
+      "sha256": "3e805563d90a83ec8b03ded790f329862818a77e11260478557ee1b854a3eecc",
       "imports": [
         "bot/scripts/v9-fixtures.mjs",
         "bot/src/commands.js",
@@ -2618,6 +2619,30 @@
       "classification": "unregistered:review callers outside module graph"
     },
     {
+      "file": "bot/scripts/v95-operational-metrics-test.mjs",
+      "sha256": "3aff9110d466c20c48e59f7dc321df2a0dbb24932dfc57811bda3a985891ff31",
+      "imports": [
+        "bot/src/operational-metrics.js",
+        "bot/src/gm.js",
+        "bot/scripts/v9-fixtures.mjs",
+        "bot/src/operations/health.js",
+        "bot/src/commands.js",
+        "bot/src/command-definitions.js",
+        "bot/src/narrative-pvp.js",
+        "bot/src/pvp-output.js",
+        "bot/src/publication-outbox.js",
+        "bot/src/discord/interaction-lifecycle.js",
+        "bot/src/voice.js",
+        "bot/src/pvp-fear-moves.js",
+        "bot/src/autonomous-world.js",
+        "bot/src/turn-orchestration.js"
+      ],
+      "nonliteral_dynamic_import": false,
+      "registered": true,
+      "callers": [],
+      "classification": "mandatory-suite:KEEP"
+    },
+    {
       "file": "bot/scripts/v95-protected-narrative-test.mjs",
       "sha256": "e0c1fca38c1bb2cb87609498c5c212453d9d74b4b02d0dce3af5617d5fe6f304",
       "imports": [
@@ -2685,7 +2710,7 @@
     },
     {
       "file": "bot/scripts/validate-offline.mjs",
-      "sha256": "36a99768ca8cb7490114a673ae1af18e048bfdc0b08272ba59ef1a13409f0868",
+      "sha256": "a959bc727bd90538e311586692ee690a2c20be641003255850c1e6bc180389fa",
       "imports": [],
       "nonliteral_dynamic_import": false,
       "registered": false,
@@ -3069,6 +3094,7 @@
         "bot/scripts/v94-pvp-profile-test.mjs",
         "bot/scripts/v94-pvp-qualification-test.mjs",
         "bot/scripts/v95-autonomous-fear-test.mjs",
+        "bot/scripts/v95-operational-metrics-test.mjs",
         "bot/scripts/v95-protected-narrative-test.mjs",
         "bot/src/action-continuation.js",
         "bot/src/gm.js",
@@ -3530,7 +3556,7 @@
     },
     {
       "file": "bot/src/city-depth.js",
-      "sha256": "62d4dba434e1130ccf27fc0ea3c5cf77bd5bc425556d811b79a7e439dead3480",
+      "sha256": "730d6b84e47585fd56238ec6c5f35abae56a122c4b66838c029c07cfc787e9ee",
       "imports": [
         "bot/src/city-calendar.js",
         "bot/src/city-core.js",
@@ -3596,11 +3622,12 @@
     },
     {
       "file": "bot/src/command-definitions.js",
-      "sha256": "5652cb1b49cd6f90cd98230dd432f1fd2f3d3cfec90a9b534db993c18fa4ac53",
+      "sha256": "2a35c737243544d4522f421161050a95a920070a48d511cf26d4548775fc2704",
       "imports": [],
       "nonliteral_dynamic_import": false,
       "registered": false,
       "callers": [
+        "bot/scripts/v95-operational-metrics-test.mjs",
         "bot/scripts/v95-pvp-ux-test.mjs",
         "bot/src/commands.js"
       ],
@@ -3620,7 +3647,7 @@
     },
     {
       "file": "bot/src/commands.js",
-      "sha256": "10dbb0c09d4a2eb067b4387f59de31c15936f65696e79dd841ef9fafe381fd56",
+      "sha256": "552274ab6c2142818e86f2a21712c0d68c67a436ac135a9f11688c5d8f47c801",
       "imports": [
         "bot/src/dice.js",
         "bot/src/epistemic.js",
@@ -3648,6 +3675,8 @@
         "bot/src/errors.js",
         "bot/src/idempotency.js",
         "bot/src/operations/diagnostics.js",
+        "bot/src/operations/health.js",
+        "bot/src/operational-metrics.js",
         "bot/src/operations/overview.js",
         "bot/src/seed-data.js",
         "bot/src/seed-commands.js",
@@ -3737,6 +3766,7 @@
         "bot/scripts/v94-pvp-profile-test.mjs",
         "bot/scripts/v94-pvp-qualification-test.mjs",
         "bot/scripts/v94-pvp-reaction-test.mjs",
+        "bot/scripts/v95-operational-metrics-test.mjs",
         "bot/scripts/v95-pvp-ux-test.mjs",
         "bot/scripts/validate-command-schema.mjs",
         "bot/src/index.js",
@@ -3761,8 +3791,10 @@
     },
     {
       "file": "bot/src/config.js",
-      "sha256": "2bc386e0125d7f1c7334bc0ec51b33676449b4fe3b2ad7d57593c6b1333bfc02",
-      "imports": [],
+      "sha256": "c85889874151412ffdb7b659684ef39077a8939495d5bac1a0bb7519076eaf10",
+      "imports": [
+        "bot/src/operational-metrics.js"
+      ],
       "nonliteral_dynamic_import": false,
       "registered": false,
       "callers": [
@@ -3969,7 +4001,7 @@
     },
     {
       "file": "bot/src/db.js",
-      "sha256": "3c0f09fad7d471ad880f36ee501096b2f17760c5235d1c3d40a9b14b8907b9a5",
+      "sha256": "400dcb6b62e1b44b04185b3681b87975d0dd1acd261c36785c733207d8f572b4",
       "imports": [
         "bot/src/relationship-state.js",
         "bot/src/errors.js",
@@ -4209,12 +4241,15 @@
     },
     {
       "file": "bot/src/discord/interaction-lifecycle.js",
-      "sha256": "3aaa105c389911a6344ad90860690e5e385b146e73bb69e122bd4c874995b831",
-      "imports": [],
+      "sha256": "69bc1133e824cd782239cee8abc0c1cb04f0fe72005189b6aa2af3c3247c3251",
+      "imports": [
+        "bot/src/operational-metrics.js"
+      ],
       "nonliteral_dynamic_import": false,
       "registered": false,
       "callers": [
         "bot/scripts/interaction-lifecycle-test.mjs",
+        "bot/scripts/v95-operational-metrics-test.mjs",
         "bot/src/commands.js",
         "bot/src/index.js"
       ],
@@ -4421,7 +4456,7 @@
     },
     {
       "file": "bot/src/gm.js",
-      "sha256": "2b9178d6190853218b308f0e605a174988cd76087a512c52503e6a0a649782a0",
+      "sha256": "5f62ce7366c3999ccf6c1dbc191241217151047011a70079307c391e763d7e1c",
       "imports": [
         "bot/src/authority-policy.js",
         "bot/src/conversation-principal.js",
@@ -4491,6 +4526,7 @@
         "bot/scripts/typed-intents-regression-test.mjs",
         "bot/scripts/v9-observation-compatibility-test.mjs",
         "bot/scripts/v9-pvp-authorship-test.mjs",
+        "bot/scripts/v95-operational-metrics-test.mjs",
         "bot/scripts/v95-protected-narrative-test.mjs",
         "bot/src/index.js"
       ],
@@ -4586,7 +4622,7 @@
     },
     {
       "file": "bot/src/index.js",
-      "sha256": "6da1d9f2af4852e57fb105ad24c219f4070c0c66118343457ddf3dd4e1257e6c",
+      "sha256": "8215d9216bc8c9104fc757c3bae716188b0e5cc1db150024a8d4329f8cec663c",
       "imports": [
         "bot/src/config.js",
         "bot/src/db.js",
@@ -4850,6 +4886,7 @@
         "bot/scripts/v94-pvp-profile-test.mjs",
         "bot/scripts/v94-pvp-qualification-test.mjs",
         "bot/scripts/v95-autonomous-fear-test.mjs",
+        "bot/scripts/v95-operational-metrics-test.mjs",
         "bot/scripts/v95-protected-narrative-test.mjs",
         "bot/scripts/v95-pvp-ux-test.mjs",
         "bot/src/commands.js",
@@ -4992,23 +5029,33 @@
     },
     {
       "file": "bot/src/operational-metrics.js",
-      "sha256": "71dabdc1696128231366e16e77c500602ec68e6c57b1fd79c037304c2a22b1b8",
+      "sha256": "6127d207787498ec9ee6c9fc6985409544dac1860174ccda91f1a74e0274b378",
       "imports": [],
       "nonliteral_dynamic_import": false,
       "registered": false,
       "callers": [
         "bot/scripts/implementation-phase-e-test.mjs",
+        "bot/scripts/v95-operational-metrics-test.mjs",
+        "bot/src/commands.js",
+        "bot/src/config.js",
+        "bot/src/discord/interaction-lifecycle.js",
         "bot/src/gm.js",
         "bot/src/gm.js.20261009-144611.bak",
         "bot/src/index.js",
         "bot/src/operations/diagnostics.js",
-        "bot/src/turn-pipeline.js"
+        "bot/src/operations/health.js",
+        "bot/src/publication-outbox.js",
+        "bot/src/publishing.js",
+        "bot/src/pvp-output.js",
+        "bot/src/turn-orchestration.js",
+        "bot/src/turn-pipeline.js",
+        "bot/src/voice.js"
       ],
       "classification": "runtime:KEEP"
     },
     {
       "file": "bot/src/operations/diagnostics.js",
-      "sha256": "30e28ce30cdc3070d80eaf202d5f478ba48765229aeb64fbc838f253479a103d",
+      "sha256": "543464d4f364ad1a814d55ec01b4ffd68ecf45dfa903757be1510e08f587c26d",
       "imports": [
         "bot/src/discord/privacy.js",
         "bot/src/routing-diagnostics.js",
@@ -5017,6 +5064,20 @@
       "nonliteral_dynamic_import": false,
       "registered": false,
       "callers": [
+        "bot/src/commands.js"
+      ],
+      "classification": "runtime:KEEP"
+    },
+    {
+      "file": "bot/src/operations/health.js",
+      "sha256": "0b2f994761a6b65f995b82fb1c73a3c99f1ab6bcaf50bb8b1e2ed311df177886",
+      "imports": [
+        "bot/src/operational-metrics.js"
+      ],
+      "nonliteral_dynamic_import": false,
+      "registered": false,
+      "callers": [
+        "bot/scripts/v95-operational-metrics-test.mjs",
         "bot/src/commands.js"
       ],
       "classification": "runtime:KEEP"
@@ -5366,12 +5427,13 @@
     },
     {
       "file": "bot/src/publication-outbox.js",
-      "sha256": "c12edbedb189cc79c18f237571f57d560cfefcdef52400391c646ff260f60001",
+      "sha256": "8430b80877840fef121e5c19d54b7cb376b58b4b4fa54b8acc08c7246f15d1e2",
       "imports": [
         "bot/src/discord/chunking.js",
         "bot/src/pvp-authorship.js",
         "bot/src/pvp-output.js",
-        "bot/src/serial-queue.js"
+        "bot/src/serial-queue.js",
+        "bot/src/operational-metrics.js"
       ],
       "nonliteral_dynamic_import": false,
       "registered": false,
@@ -5385,6 +5447,7 @@
         "bot/scripts/v94-pvp-profile-test.mjs",
         "bot/scripts/v94-pvp-qualification-test.mjs",
         "bot/scripts/v95-autonomous-fear-test.mjs",
+        "bot/scripts/v95-operational-metrics-test.mjs",
         "bot/scripts/v95-protected-narrative-test.mjs",
         "bot/src/action-continuation.js",
         "bot/src/commands.js",
@@ -5397,7 +5460,7 @@
     },
     {
       "file": "bot/src/publishing.js",
-      "sha256": "3a9fe6782316d70cd8cb0dfd5bc4b9da6234a5926cd2ee52eed80eaaffc81ce3",
+      "sha256": "44e612172f5bfb7a84f9b4aa1e639391d39592bd77363385c901f0a7e3da1ad6",
       "imports": [
         "bot/src/handout.js",
         "bot/src/discord/chunking.js",
@@ -5405,6 +5468,7 @@
         "bot/src/simulation.js",
         "bot/src/publication-outbox.js",
         "bot/src/failure-trace.js",
+        "bot/src/operational-metrics.js",
         "bot/src/pvp-output.js",
         "bot/src/publication-outbox.js",
         "bot/src/serial-queue.js"
@@ -5628,6 +5692,7 @@
         "bot/scripts/v94-pvp-multiplayer-test.mjs",
         "bot/scripts/v94-pvp-qualification-test.mjs",
         "bot/scripts/v95-autonomous-fear-test.mjs",
+        "bot/scripts/v95-operational-metrics-test.mjs",
         "bot/src/commands.js",
         "bot/src/index.js",
         "bot/src/native-notice.js",
@@ -5675,7 +5740,7 @@
     },
     {
       "file": "bot/src/pvp-output.js",
-      "sha256": "3ab21bab934a7fce8f86b33fa115c62b392d873dd1ecaf9371ea8aa8a2f5150b",
+      "sha256": "bdeea67d883d8f7a7eacae934848a8c560466be5c1e31f32704f09edbf7afb0a",
       "imports": [
         "bot/src/scene-continuity.js",
         "bot/src/conversation-principal.js",
@@ -5686,7 +5751,8 @@
         "bot/src/city-calendar.js",
         "bot/src/action-continuation.js",
         "bot/src/native-notice.js",
-        "bot/src/gm-world-narrative.js"
+        "bot/src/gm-world-narrative.js",
+        "bot/src/operational-metrics.js"
       ],
       "nonliteral_dynamic_import": false,
       "registered": false,
@@ -5695,6 +5761,7 @@
         "bot/scripts/v9-pvp-authorship-test.mjs",
         "bot/scripts/v94-pvp-profile-test.mjs",
         "bot/scripts/v95-autonomous-fear-test.mjs",
+        "bot/scripts/v95-operational-metrics-test.mjs",
         "bot/scripts/v95-protected-narrative-test.mjs",
         "bot/src/action-continuation.js",
         "bot/src/commands.js",
@@ -6729,14 +6796,15 @@
     },
     {
       "file": "bot/src/turn-orchestration.js",
-      "sha256": "5473f5646fda276a669ce129d20d80091b5cd9e9e05927c902721cf0f194ece5",
+      "sha256": "44a2db3b460716b89fa08872b39102e2efe95405f09497259bf8bf7fa1bb613c",
       "imports": [
         "bot/src/state.js",
         "bot/src/decision-advisory.js",
         "bot/src/publication-outbox.js",
         "bot/src/typed-mechanics.js",
         "bot/src/consequence-reconciliation.js",
-        "bot/src/action-continuation.js"
+        "bot/src/action-continuation.js",
+        "bot/src/operational-metrics.js"
       ],
       "nonliteral_dynamic_import": false,
       "registered": false,
@@ -6757,6 +6825,7 @@
         "bot/scripts/v94-pc-effect-authority-test.mjs",
         "bot/scripts/v94-pvp-profile-test.mjs",
         "bot/scripts/v94-pvp-qualification-test.mjs",
+        "bot/scripts/v95-operational-metrics-test.mjs",
         "bot/scripts/v95-protected-narrative-test.mjs",
         "bot/src/index.js"
       ],
@@ -6904,10 +6973,11 @@
     },
     {
       "file": "bot/src/voice.js",
-      "sha256": "2edda23ee5b8dd54447b69e07ac54c5950813d4848cfd0ebb537c9ebfc825a52",
+      "sha256": "32d593e8424d653eba94fb0c758536f60ede781719f0954c49135d5d6c3f5ccf",
       "imports": [
         "bot/src/portrayal.js",
-        "bot/src/pvp-output.js"
+        "bot/src/pvp-output.js",
+        "bot/src/operational-metrics.js"
       ],
       "nonliteral_dynamic_import": false,
       "registered": false,
@@ -6916,6 +6986,7 @@
         "bot/scripts/production-regression-test.mjs",
         "bot/scripts/v9-pvp-authorship-test.mjs",
         "bot/scripts/v95-autonomous-fear-test.mjs",
+        "bot/scripts/v95-operational-metrics-test.mjs",
         "bot/scripts/v95-protected-narrative-test.mjs",
         "bot/src/index.js"
       ],
