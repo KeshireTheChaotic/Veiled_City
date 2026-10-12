@@ -155,7 +155,8 @@ export function formatRollRequest(row,{user=null}={}){
     "Describe any clarification or intended contribution in your own words."].join("\n");
 }
 export function pendingRollRequests(db,guild,user){
-  const pc=personalCharacter(db,guild,user),session=db.getActiveSession(guild);
+  const session=db.getActiveSession(guild);if(!session)return [];
+  const pc=personalCharacter(db,guild,user);
   return db.ownedRollRequests(guild,user,pc.id)
     .filter(row=>row.data.session_id===session.id&&row.data.scene===currentScene(db,guild).key
       &&(["pending","needs_review","awaiting_partner","awaiting_selection","awaiting_damage","awaiting_damage_type"].includes(row.status)

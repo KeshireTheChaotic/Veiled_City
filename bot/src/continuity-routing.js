@@ -1,5 +1,7 @@
 /** Read-only natural-language discovery runs before ordinary message persistence or director work. No model calls or campaign writes. */
 import { discoverPersonal } from "./personal-continuity.js";
+import {conversationPrincipal} from './conversation-principal.js';
+import {sendPlayerPrivate} from './publishing.js';
 export function discoveryQuestion(message){
   const text=String(message||"").replace(/<@!?\d+>/g,"").trim();
   if(/^(?:ooc\b|\(\(|\/\/)|\b(?:if I|hypothetically|for example)\b/i.test(text))return null;
@@ -29,19 +31,35 @@ export function formatDiscovery(db,guild,user,packet){
     ...(packet.commitments||[]).map(row=>`${row.text} (${row.status})`)
   ];
   // Plain lines are screen-reader friendly; do not render grids, icons, spoilers or buttons implying consent.
-  const limit=preferences.response_length==="compact"?900:1900;
   const selected=rows.slice(0,preferences.response_length==="compact"?5:12);
   const coverage=`\nSearch/display limits: ${rows.length-selected.length} additional returned rows; ${(packet.omissions||[]).length} retrieval limit notices. Unknown is not disproven.`;
-  return `Your current character's recorded knowledge, not global truth:\n${selected.join("\n")}`.slice(0,limit-coverage.length)+coverage;
+  return `Your current character's recorded knowledge, not global truth:\n${selected.join("\n")}`+coverage;
+}
+/** Revalidate the same authenticated read scope and selected evidence before every awaited send. */
+export function discoveryDeliveryProof(db,guild,user,query,packet){
+  const principal=conversationPrincipal(db,guild,user,packet.character_id),snapshot=JSON.stringify(packet);
+  return ()=>{
+    const current=conversationPrincipal(db,guild,user,query.character_id);
+    if(current.revision!==principal.revision||current.character_id!==principal.character_id||current.kind!==principal.kind
+      ||JSON.stringify(discoverPersonal(db,guild,user,query))!==snapshot)throw new Error('Discovery source or current controlled role changed; request a fresh private lookup.');
+  };
+}
+export async function deliverDiscoveryMessage({db,message,text,proof}){
+  return sendPlayerPrivate({db,guild:message.guild,userId:message.author.id,content:text,beforeSend:proof,
+    recordMessage:false,allowedMentions:{parse:[]}});
 }
 export async function routeDiscoveryMessage({db,message,text=message.content,deliver,detailed=false}){
   if(db.getCityCalendar(message.guild.id).flags.discovery!==true) return detailed?null:false;
   const question=discoveryQuestion(text);if(!question) return detailed?null:false;
-  let output;
+  let output,proof;
   try{
     const packet=discoverPersonal(db,message.guild.id,message.author.id,question);
     output=formatDiscovery(db,message.guild.id,message.author.id,packet);
+    proof=discoveryDeliveryProof(db,message.guild.id,message.author.id,question,packet);
   }catch{output="Select and attend with an authenticated controlled role. Owner-only personal workflows still require ownership. No world action occurred.";}
-  let delivered=true;try{await deliver(output.slice(0,1900));}catch{delivered=false;/* Read-only delivery failure never becomes a mutating turn. */}
-  return detailed?{handled:true,committed:false,operation:"discovery",query:question,delivery_status:delivered?"delivered":"failed"}:true;
+  let delivery;
+  try{delivery=await deliver(output,proof);}
+  catch{delivery={ok:false,certainty:'uncertain',messages:[]};/* Read-only delivery failure never becomes a mutating turn. */}
+  const status=delivery?.ok===true?'delivered':delivery?.certainty==='not_sent'?'not_sent':delivery?.certainty==='uncertain'?'uncertain':'failed';
+  return detailed?{handled:true,committed:false,operation:"discovery",query:question,delivery_status:status,delivery}:true;
 }

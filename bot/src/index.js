@@ -9,7 +9,7 @@ import { GMService } from "./gm.js";
 import { handleCommand } from "./commands.js";
 import { applyAuthoritativeMutation } from "./state.js";
 import { commitGmTurn } from "./turn-orchestration.js";
-import { routeDiscoveryMessage } from "./continuity-routing.js";
+import { routeDiscoveryMessage,deliverDiscoveryMessage } from "./continuity-routing.js";
 import { captureArcCandidate } from "./personal-continuity.js";
 import { captureContextSource } from "./narrative-context.js";
 import { conversationPrincipal } from "./conversation-principal.js";
@@ -104,13 +104,11 @@ async function outputStep(errors,{guild,sessionId,context},fn){
 }
 
 async function routeNativeSpans({message,text,session,controlled}){
-  const privateDeliver=value=>sendPrivate(message.guild,message.author.id,value,session.id,controlled?.character_id);
   // Model-semantic GM processing owns freeform mechanical and consent intent classification.
   // Explicit native slash commands remain available; legacy phrase handlers are no longer intake gates.
   return routeMessageSpans(text,[
-    {kind:"recall",route:span=>routeDiscoveryMessage({db,message,text:span.text,deliver:async value=>{
-      try{await message.author.send(value);}catch{await message.reply("Private knowledge delivery failed. Use /vc-intel discover; no world action occurred.");}
-    },detailed:true})}
+    {kind:"recall",route:span=>routeDiscoveryMessage({db,message,text:span.text,
+      deliver:(value,proof)=>deliverDiscoveryMessage({db,message,text:value,proof}),detailed:true})}
   ]);
 }
 

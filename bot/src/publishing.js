@@ -258,7 +258,7 @@ export async function deliverQueuedTurn({db,guild,turnId,forceUncertain=false}){
   return {turn:db.getTurnAttempt(turnId),results:results.map(item=>({...item,row:outboxSummary(item.row)})),pending:pending.map(outboxSummary)};
 }
 
-export async function sendPlayerPrivate({db,guild,userId,content,sessionId=null,characterId=null,beforeSend=null,publication=null}){
+export async function sendPlayerPrivate({db,guild,userId,content,sessionId=null,characterId=null,beforeSend=null,publication=null,recordMessage=true,allowedMentions=null}){
   const messages=[];let attempted=false,via="unavailable";
   const check=()=>{
     if(publication){
@@ -274,9 +274,9 @@ export async function sendPlayerPrivate({db,guild,userId,content,sessionId=null,
       // Permission changes during an awaited send must not expose later private chunks.
       if(route==="private_channel")assertPlayerPrivateChannel({guild,channel:target,userId,gmRoleId:db.getCampaign(guild.id)?.gm_role_id||null});
       check();attempted=true;
-      const sent=await target.send(part);messages.push({messageId:sent.id,channelId:sent.channelId||(route==="private_channel"?target.id:null)});
+      const sent=await target.send(allowedMentions?{content:part,allowedMentions}:part);messages.push({messageId:sent.id,channelId:sent.channelId||(route==="private_channel"?target.id:null)});
     }
-    if(sessionId)db.addMessage({guildId:guild.id,sessionId,userId:null,speakerName:"Veilkeeper",visibility:characterId?"character":"player",
+    if(sessionId&&recordMessage)db.addMessage({guildId:guild.id,sessionId,userId:null,speakerName:"Veilkeeper",visibility:characterId?"character":"player",
       subjectUserId:characterId?null:userId,subjectCharacterId:characterId,content});
     return {ok:true,via,certainty:"acknowledged",messages,...messages.at(-1)};
   };

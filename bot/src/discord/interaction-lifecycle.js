@@ -22,13 +22,19 @@ export function interactionFailure(interaction,error,{phase="command",responseEr
   return original;
 }
 export async function acknowledgeRules(interaction,subcommand){
+  return acknowledge(interaction,subcommand,subcommand!=="ask");
+}
+export async function acknowledgeNative(interaction,subcommand){
+  return acknowledge(interaction,subcommand,true);
+}
+async function acknowledge(interaction,subcommand,ephemeral){
   const state=beginInteraction(interaction);state.subcommand=subcommand;
   if(interaction.deferred||interaction.replied) return;
   if(state.acknowledgement) return state.acknowledgement;
   state.ack_started_age_ms=Math.max(0,Date.now()-state.created);
   state.acknowledgement=(async()=>{
     try{
-      await interaction.deferReply({ephemeral:subcommand!=="ask"});
+      await interaction.deferReply({ephemeral});
       state.ack_completed_age_ms=Math.max(0,Date.now()-state.created);
     }catch(error){throw interactionFailure(interaction,error,{phase:"acknowledgement"});}
   })();

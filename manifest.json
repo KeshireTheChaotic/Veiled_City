@@ -645,6 +645,11 @@
       "sha256": "0fdb42b16411d042ddbe816e5d99006ad1176651d9a158cb7a9af4e96b99436c"
     },
     {
+      "path": "bot/scripts/v9-discord-hardening-test.mjs",
+      "size_bytes": 10133,
+      "sha256": "d4d5c09958780f5dbcf83b97360c1e76bda395b20fd17a4b2fb8cbb62cdafdbd"
+    },
+    {
       "path": "bot/scripts/v9-fixtures.mjs",
       "size_bytes": 3478,
       "sha256": "2680b27ab41184dbe54339a99d4e036735e86106ef3eac8710996bdf594053a7"
@@ -776,8 +781,8 @@
     },
     {
       "path": "bot/scripts/validate-offline.mjs",
-      "size_bytes": 4790,
-      "sha256": "11fcda5953a7bf64001529c80a552be1503a74c1cfc17e4246f56fffc26ee95d"
+      "size_bytes": 4818,
+      "sha256": "377ca7a6564f23dad852ed37408a7371e2fd582ac632bd5aa8e5789a695cd253"
     },
     {
       "path": "bot/sql/schema.sql",
@@ -926,8 +931,8 @@
     },
     {
       "path": "bot/src/commands.js",
-      "size_bytes": 173175,
-      "sha256": "ab0e820e6bea9d03492ccb5ce6859d4f0a203b3393a7b45ff25dba0f3e5e2627"
+      "size_bytes": 174664,
+      "sha256": "241a157189ce19ea82a61a7d7fce1e4d78a1a446580469758033d81b59726597"
     },
     {
       "path": "bot/src/concept-context.js",
@@ -971,8 +976,8 @@
     },
     {
       "path": "bot/src/continuity-routing.js",
-      "size_bytes": 4801,
-      "sha256": "1c2d800e47a86ae3b8d317dadbd156ff43dc90df91dc1a553b021391c6249577"
+      "size_bytes": 6000,
+      "sha256": "01cb606a31370b3b63623eec1887c85ef28bec6190c81b9e399ba536e3e5e1ac"
     },
     {
       "path": "bot/src/conversation-principal.js",
@@ -1011,13 +1016,13 @@
     },
     {
       "path": "bot/src/discord/delivery.js",
-      "size_bytes": 581,
-      "sha256": "eecb57928929412a1d56ee6e2d9ce889e3d9891098a1e2ed1d4ce1c6cc6a5e65"
+      "size_bytes": 751,
+      "sha256": "777d15f3d3b2b9184f282181fc2b5d9e78c23f1799915f89e64bda21bef64cf2"
     },
     {
       "path": "bot/src/discord/interaction-lifecycle.js",
-      "size_bytes": 2502,
-      "sha256": "e80709e44f4ce27d449ce542f4417d7ef931eec949f75d6694bfec33f4a8fef2"
+      "size_bytes": 2730,
+      "sha256": "3aaa105c389911a6344ad90860690e5e385b146e73bb69e122bd4c874995b831"
     },
     {
       "path": "bot/src/discord/privacy.js",
@@ -1091,8 +1096,8 @@
     },
     {
       "path": "bot/src/index.js",
-      "size_bytes": 52681,
-      "sha256": "87421f663a61d7aa0e4c21fa8048ba91dca3c2762386ec88c11c04319f132f51"
+      "size_bytes": 52483,
+      "sha256": "b505ce8d8f8c83723701b66aaf01e017b142e025f282f3c4c380e8bec2bc3b67"
     },
     {
       "path": "bot/src/legacy-authority.js",
@@ -1266,8 +1271,8 @@
     },
     {
       "path": "bot/src/publishing.js",
-      "size_bytes": 19072,
-      "sha256": "ef089ca5962e0d5d995c5d6077ffbae34c452b4b1f300890e4403a9cf128fd2b"
+      "size_bytes": 19174,
+      "sha256": "3a9fe6782316d70cd8cb0dfd5bc4b9da6234a5926cd2ee52eed80eaaffc81ce3"
     },
     {
       "path": "bot/src/pvp-attacks.js",
@@ -1366,8 +1371,8 @@
     },
     {
       "path": "bot/src/roll-requests.js",
-      "size_bytes": 18641,
-      "sha256": "b5ce608d26d0d236678f013f548a31e2d57fe8585b857ecc9b909360c3475db3"
+      "size_bytes": 18672,
+      "sha256": "e70815ed9a1d85065ebb45b071221277b1f7ec32a77f9aa59b8973e4144cbc51"
     },
     {
       "path": "bot/src/roll-sharing.js",
@@ -2366,8 +2371,8 @@
     },
     {
       "path": "docs/TYPED_INTENT_CONTRACTS.md",
-      "size_bytes": 76390,
-      "sha256": "5dc294cf8162ab06916bea613427212087ab255caa00911adb54d89352bf9dc9"
+      "size_bytes": 77773,
+      "sha256": "97727a0aed95c6f7aa752a1a99e7ead9e291d78ada6da2ad6231a163356e7bd3"
     },
     {
       "path": "docs/TYPED_INTENT_DELTA_AUDIT.md",
@@ -2381,8 +2386,8 @@
     },
     {
       "path": "docs/TYPED_INTENT_PROGRESS.md",
-      "size_bytes": 229203,
-      "sha256": "33e01fef27cffd14503b77fd47cfbe8f083c1524c51a1fceca3b0d41edf3d891"
+      "size_bytes": 233971,
+      "sha256": "64b38580f461a389f6e4176d903fcc11ebe3c7ebab04d007003dd97427fd8fb4"
     },
     {
       "path": "docs/TYPED_INTENT_RELEASE_10.0.0.md",

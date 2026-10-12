@@ -42,10 +42,10 @@ import { recordCharacterArrival } from "./scene-continuity.js";
 import { personalCharacter, personalArc, discoverPersonal, personalInbox } from "./personal-continuity.js";
 import { consentOffers } from "./consent-language.js";
 import { sessionBrief, formatSessionBrief } from "./session-briefs.js";
-import { formatDiscovery } from "./continuity-routing.js";
+import { formatDiscovery,discoveryDeliveryProof } from "./continuity-routing.js";
 import { manageLongProject, projectPhaseRevision } from "./long-projects.js";
 import { stateRevision } from "./ai-intents.js";
-import { beginInteraction, acknowledgeRules, interactionFailure, interactionResponseExpired, replyOrEdit } from "./discord/interaction-lifecycle.js";
+import { beginInteraction, acknowledgeRules, acknowledgeNative, interactionFailure, interactionResponseExpired, replyOrEdit } from "./discord/interaction-lifecycle.js";
 import { validateChannelRouting } from "./routing-diagnostics.js";
 import { handleRollMenuInteraction, isRollMenuInteraction, openRollMenu } from "./roll-menu.js";
 import { proposePvp, reviewPvp, revisePvp, respondPvp, pvpInbox, choosePvp, rollPvp, continuePvp, progressPvp,
@@ -370,18 +370,35 @@ export async function handleCommand(interaction,{db,gm,voice=null}){
   const rules=interaction.isChatInputCommand()&&(interaction.commandName==="vc-rules"
     ||interaction.commandName==="vc"&&interaction.options.getSubcommandGroup()==="rules");
   if(rules&&interaction.guildId) await acknowledgeRules(interaction,interaction.options.getSubcommand());
+  const group=interaction.isChatInputCommand()?(interaction.commandName==='vc'?interaction.options.getSubcommandGroup():interaction.commandName.slice(3)):null,
+    sub=interaction.isChatInputCommand()?interaction.options.getSubcommand():null;
+  const native=interaction.guildId&&typeof interaction.deferReply==='function'
+    &&(group==='roll'&&['pending','result','menu','contribute','adjudicate','pvp','effect'].includes(sub)
+      ||group==='intel'&&['discover','caseboard'].includes(sub));
+  let restoreNativeReply=()=>{};
+  if(native){
+    await acknowledgeNative(interaction,sub);
+    const original=interaction.reply;
+    interaction.reply=payload=>{
+      if(!interaction.deferred&&!interaction.replied)return original.call(interaction,payload);
+      if(typeof payload==='string')return interaction.editReply(payload);
+      const {ephemeral:_,...body}=payload;return interaction.editReply(body);
+    };
+    restoreNativeReply=()=>{interaction.reply=original;};
+  }
   // A duplicate that arrives during an awaited response must see the first
   // delivery's receipt before it can execute the command body.
   try{
     const execute=async()=>{
       const result=await executeCommand(interaction,{db,gm,voice});
-      await publishContinuationNotices({db,guild:interaction.guild,userId:interaction.user?.id});
+      if(!(group==='roll'&&['pending','result'].includes(sub)||group==='intel'&&['discover','caseboard'].includes(sub)))
+        await publishContinuationNotices({db,guild:interaction.guild,userId:interaction.user?.id});
       return result;
     };
     if(!interaction?.id) return await execute();
     return await interactionQueue.enqueue(`${interaction.guildId}:${interaction.id}`,
       execute);
-  }catch(error){throw interactionFailure(interaction,error);}
+  }catch(error){throw interactionFailure(interaction,error);}finally{restoreNativeReply();}
 }
 
 async function executeCommand(interaction,{db,gm,voice=null}){
@@ -403,7 +420,7 @@ async function executeCommand(interaction,{db,gm,voice=null}){
     group=root==="level"?"character":root==="combat"?"encounter":root;
     sub=interaction.options.getSubcommand();
   }
-  if((group!=="story"&&!(group==="admin"&&["seed-drafts","seed-package-preview","seed-package-export"].includes(sub))&&!(group==="intel"&&["discover","continuity","organizations","brief","recap"].includes(sub))
+  if((group!=="story"&&!(group==="admin"&&["seed-drafts","seed-package-preview","seed-package-export"].includes(sub))&&!(group==="intel"&&["discover","continuity","organizations","brief","recap","caseboard"].includes(sub))
     &&!(group==="handout"&&sub==="evidence")&&!(group==="downtime"&&sub==="long-project-status")
     &&!(group==="roll"&&["pending","result"].includes(sub)))||isMutatingCommand(group,sub)) await ensurePlayer(db,interaction);
   if(await replayReceiptIfPresent({db,interaction,group,sub})) return true;
@@ -604,8 +621,9 @@ async function executeCommand(interaction,{db,gm,voice=null}){
       const input=JSON.parse(interaction.options.getString("json")||"{}");
       if(sub==="discover") for(const key of ["query","mode"]){const value=interaction.options.getString(key);if(value!==null&&value!==undefined) input[key]=value;}
       const result=sub==="arc"?personalArc(db,interaction.guildId,interaction.user.id,input):discoverPersonal(db,interaction.guildId,interaction.user.id,input);
-      await interaction.reply({ephemeral:true,allowedMentions:{parse:[]},content:sub==="discover"?formatDiscovery(db,interaction.guildId,interaction.user.id,result):"Character-private continuity; recorded knowledge only.",
-        files:[new AttachmentBuilder(Buffer.from(JSON.stringify(result,null,2)),{name:"personal-continuity.json"})]});return true;
+      await deliverInteractionText(interaction,sub==="discover"?formatDiscovery(db,interaction.guildId,interaction.user.id,result):"Character-private continuity; recorded knowledge only.",
+        {files:[new AttachmentBuilder(Buffer.from(JSON.stringify(result,null,2)),{name:"personal-continuity.json"})],
+          beforeSend:sub==='discover'?discoveryDeliveryProof(db,interaction.guildId,interaction.user.id,input,result):null});return true;
     }
     if(group==="admin"&&(["seed-drafts","seed-add","seed-edit","seed-remove","seed-approve","seed-reject"].includes(sub)||sub.startsWith("seed-package-"))){
       if(!isGM(db,interaction)) throw new PermissionError("GM/admin permission required.");
@@ -1566,6 +1584,9 @@ GM notes: ${a.draft.gm_notes}`:""}`.slice(0,1950):"No aftermath draft exists for
     }
 
     if(group==="roll"&&["pending","result"].includes(sub)){
+      if(!db.getActiveSession(interaction.guildId)){
+        await interaction.reply({content:"No active session. Historical roll results remain saved; no action or roll was performed.",ephemeral:true});return true;
+      }
       const rows=sub==="result"?[ownedRollRequest(db,interaction.guildId,interaction.user.id,interaction.options.getString("request",true))]
         :pendingRollRequests(db,interaction.guildId,interaction.user.id);
       const chunks=chunkTextLines((rows.map(row=>formatRollRequest(row,{user:interaction.user.id})).join("\n\n")||"No current pending roll requests.").split("\n"));
@@ -1946,7 +1967,7 @@ GM notes: ${a.draft.gm_notes}`:""}`.slice(0,1950):"No aftermath draft exists for
     }
     if(group==="intel"&&sub==="caseboard"){
       const rows=db.listVisibleActiveThreads(interaction.guildId,interaction.user.id);
-      await interaction.reply({content:rows.length?rows.map(x=>`• **${x.label}**${x.notes?`: ${x.notes}`:""}`).join("\n"):"No active recorded threads.",ephemeral:true});
+      await deliverInteractionText(interaction,rows.length?rows.map(x=>`• **${x.label}**${x.notes?`: ${x.notes}`:""}`).join("\n"):"No active recorded threads.");
       return true;
     }
 
