@@ -9,12 +9,12 @@ import {d,dualityRoll} from "./dice.js";
 import {captureAttackFear,pendingPvpFear} from "./pvp-fear-gate.js";
 import {assertPcCanAct,assertPcAttackable} from "./pc-native-eligibility.js";
 import {blazeActionAuthorization,blazeCriticalResult,validateBlazeSavedRoll} from "./pc-death.js";
+import {brawlAdmission,reserveBrawlAttack,verifyBrawlAttack,consumeBrawlAttack,brawlBatchMayFinish} from "./pvp-brawl.js";
 const hash=v=>createHash("sha256").update(JSON.stringify(v)).digest("hex");
 function fail(message){throw Object.assign(new Error(message),{code:"NARRATIVE_PVP",expected:true});}
 function closed(input,keys){if(!input||Array.isArray(input)||Object.keys(input).length!==keys.length||keys.some(k=>!(k in input)))fail("Closed native PC attack fields required.");}
 function mechanics(db,guild,input){
   const ctx=validateDamageAttackIntent(db,guild,input.attack),{row,contract}=ctx;
-  if(ctx.terms.interaction_scope!=="duel")fail("Group attacks await native spotlight/target locks; consent alone is not execution authority.");
   const pc=db.getCharacter(row.data.actor),target=db.getCharacter(row.data.target),ruling=db.getRulesRuling(guild,input.ruling);
   if(!blazeActionAuthorization(db,guild,pc.id,ctx.accepted.record_key))assertPcCanAct(pc,db,guild);
   assertPcAttackable(target,db,guild);
@@ -64,10 +64,12 @@ function sourceProof(db,guild,key,{committed=false}={}){
   const ctx=validateDamageAttackIntent(db,guild,o.input.attack,{committed});
   if(o.actor!==ctx.row.data.actor||o.target!==ctx.row.data.target||o.terms_hash!==ctx.contract.data.terms_hash
     ||o.session!==ctx.row.data.session_id||o.scene!==ctx.row.data.scene||row.source_event!==`${key}:source`)fail("Attack source/target/terms changed.");
+  verifyBrawlAttack(db,guild,row,{committed:!!row.data.roll});
   return {...ctx,row,o,attackIntent:ctx.row};
 }
 function live(db,guild,key){
   const proof=sourceProof(db,guild,key),actual=mechanics(db,guild,proof.o.input);
+  brawlAdmission(db,guild,actual,key);
   if(hash(actual.snapshot)!==hash(proof.o.snapshot)||actual.damage!==proof.o.damage||actual.evasion!==proof.o.evasion)
     fail("Attack equipment, target Evasion, source or sheet compare-and-set is stale; refresh review without dice/cost.");
   return {...actual,request:proof.row,o:proof.o};
@@ -84,17 +86,19 @@ export function preparePvpAttack(db,guild,user,input,{gm=false,interactionId}={}
     const c=mechanics(db,guild,input),key=`pvp-attack:${hash([guild,input.attack])}`,prior=db.getCityRecord(guild,"pvp_attack_request",key);
     if(prior){live(db,guild,key);if(hash(prior.data.offer.input)!==hash(input))fail("Native attack replay cannot change mechanics.");return prior;}
     if(pendingPvpFear(db,guild,c.contract).length)fail("Immediate Fear consequence pending; no next attack.");
-    if(!blazeActionAuthorization(db,guild,c.pc.id,c.accepted.record_key)
+    const brawl=brawlAdmission(db,guild,c,key);
+    if(c.terms.interaction_scope==="duel"&&!blazeActionAuthorization(db,guild,c.pc.id,c.accepted.record_key)
       &&inventory(db,guild).some(r=>r.data.offer?.contract===c.contract.record_key&&!["missed","resolved","cancelled"].includes(r.status)))
       fail("An unfinished attack must reach its native terminal path before another elective attack.");
     const offer={version:1,input,reviewer:user,actor:c.pc.id,target:c.target.id,contract:c.contract.record_key,terms_hash:c.contract.data.terms_hash,
       session:c.row.data.session_id,scene:c.row.data.scene,snapshot:c.snapshot,trait:input.trait,damage:c.damage,damage_type:c.damage_type,
-      range:c.range,evasion:c.evasion,breakdown:c.breakdown};
+      range:c.range,evasion:c.evasion,breakdown:c.breakdown,...(brawl?{brawl}:{})};
     const s=indexWorldEvent(db,guild,{key:`${key}:source`,kind:"pvp_attack_mechanics_review",title:"Native PC attack awaiting independent owner review",
       source_id:`gm:${user}`,session_id:offer.session,scene:offer.scene,visibility:"gm",subject_key:offer.actor,details:offer},user);
     if(s.status!=="active"||hash(s.details)!==hash(offer))fail("Attack review source changed.");
-    return db.saveCityRecord(guild,{kind:"pvp_attack_request",key,status:"awaiting_players",source_event:s.event_key,visibility:"gm",subject_key:offer.actor,
+    const row=db.saveCityRecord(guild,{kind:"pvp_attack_request",key,status:"awaiting_players",source_event:s.event_key,visibility:"gm",subject_key:offer.actor,
       data:{version:1,offer,offer_hash:hash(offer)}});
+    return reserveBrawlAttack(db,guild,c,row);
   });
 }
 export function reviewPvpAttack(db,guild,user,key){
@@ -166,7 +170,8 @@ export function rollPvpAttack(db,guild,user,input,{rng=d}={}){
     if(row.data.roll)return validatePvpAttackRoll(db,guild,row.data.roll).receipt;
     const c=live(db,guild,input.attack);
     if(row.status!=="ready"||![o.actor,o.target].every(character=>choice(db,guild,row,character)))fail("Independent owner attack/defense approvals required; attack not ready.");
-    if(pendingPvpFear(db,guild,c.contract).length)fail("Immediate Fear pending; no dice.");
+    const due=pendingPvpFear(db,guild,c.contract);
+    if(due.length&&!brawlBatchMayFinish(db,guild,row,due))fail("Immediate Fear pending; no dice outside the exact pre-reserved simultaneous batch.");
     const result={...(blazeCriticalResult(db,guild,o.actor,c.accepted.record_key)
       ||dualityRoll({modifier:o.breakdown.subtotal,advantage:o.breakdown.advantage,disadvantage:o.breakdown.disadvantage},rng)),
       roll_type:"damage_pvp_attack",attack:input.attack,terms_hash:o.terms_hash,character_id:o.actor,target_character_id:o.target,evasion:o.evasion};
@@ -175,6 +180,7 @@ export function rollPvpAttack(db,guild,user,input,{rng=d}={}){
     const receipt=db.saveCityRecord(guild,{kind:"pvp_attack_roll_receipt",key:`${input.attack}:roll`,status:"resolved",source_event:authorization.event_key,
       visibility:"gm",subject_key:o.actor,data:{version:1,attack:input.attack,roll_id:rollId,result}});
     db.saveCityRecord(guild,{...row,key:row.record_key,status:result.hit?"awaiting_damage":"missed",data:{...row.data,roll:receipt.record_key}});
+    consumeBrawlAttack(db,guild,row,receipt);
     captureAttackFear(db,guild,c.contract,receipt);
     return receipt;
   });

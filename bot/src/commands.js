@@ -60,6 +60,7 @@ import { archivePvpHistory, quarantineSessionRecap, certifiedSessionRecap, scope
 import { pendingPvpFear } from "./pvp-fear-gate.js";
 import { proposeDamagePvp, reviewDamagePvp, respondDamagePvp, reviseDamagePvp, damagePvpInbox } from "./pvp-profiles.js";
 import { preparePvpAttack, reviewPvpAttack, authorizePvpAttack, rollPvpAttack } from "./pvp-attacks.js";
+import {reviewBrawlOpportunity,passBrawlOpportunity} from "./pvp-brawl.js";
 import {rollPvpDamage,preparePvpDamage,reviewPvpDamage,resolvePvpDamage} from "./pvp-damage.js";
 import {reviewPcDeathMove,choosePcDeathMove,allocatePcDeathRecovery,approveBlazeAction} from "./pc-death.js";
 import {hopeCap,assertPcCanAct} from "./pc-native-eligibility.js";
@@ -476,6 +477,14 @@ async function executeCommand(interaction,{db,gm,voice=null}){
           result={attack:row.data.attack,result:{hope:r.hope,fear:r.fear,total:r.total,duality:r.duality,hit:r.hit},
             instruction:"Saved native attack only. Target statistics stay private; HP requires its separate damage and owner Armor workflow."};
         }
+        text=JSON.stringify(result,null,2);
+      }
+      else if(["spotlight-review","spotlight-pass"].includes(op)){
+        let result;
+        if(op==="spotlight-review"){
+          if(Object.keys(input).length!==1||!input.contract)throw new UserInputError("Exact private multiplayer contract reference required.");
+          result=reviewBrawlOpportunity(db,interaction.guildId,interaction.user.id,input.contract);
+        }else {const row=passBrawlOpportunity(db,interaction.guildId,interaction.user.id,input,{interactionId:interaction.id});result={key:row.record_key,status:row.status};}
         text=JSON.stringify(result,null,2);
       }
       else if(["damage-roll","damage-prepare","armor-review","armor-choose"].includes(op)){

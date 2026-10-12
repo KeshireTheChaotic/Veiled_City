@@ -2,7 +2,7 @@
 import {proposeDamagePvp,reviewDamagePvp,respondDamagePvp,stageDamagePvp} from "../src/pvp-profiles.js";
 import {currentScene,recordScenePresence} from "../src/scene-continuity.js";
 import {indexWorldEvent} from "../src/city-calendar.js";
-export async function attackFixture(f,{count=2,kind="weapon"}={}){
+export async function attackFixture(f,{count=2,kind="weapon",configureTerms=()=>{},initialTarget=1}={}){
   const pcs=f.pcs.slice(0,count),scene=currentScene(f.db,f.guild);
   f.db.setCityCalendar(f.guild,{flags:{...f.db.getCityCalendar(f.guild).flags,scene_continuity:true,roll_requests:true,roll_collaboration:true}});
   f.db.setSimulationEntity(f.guild,"location","terminal",{name:"Terminal"});
@@ -14,14 +14,16 @@ export async function attackFixture(f,{count=2,kind="weapon"}={}){
     recordScenePresence(f.db,f.guild,{source_event:source.event_key,entity_type:"character",entity_key:pc.id,
       location_key:"terminal",zone:"floor",range:"Melee",visibility:"party",accepted_by:pc.owner_user_id},"gm");
   }
-  const accepted=f.accepted(0,"I attempt to strike Choso.",pcs[1].id,{operation:"attack"}),terms={
+  const accepted=f.accepted(0,`I attempt to strike ${pcs[initialTarget].name}.`,pcs[initialTarget].id,{operation:"attack"}),terms={
     version:3,profile:"damage_enabled",objective:"Voluntary arms test with real death risk.",participants:pcs.map(pc=>({character:pc.id,team:null})),
     interaction_scope:count===2?"duel":"free_for_all",target_permissions:pcs.flatMap(a=>pcs.filter(t=>t.id!==a.id).map(t=>({actor:a.id,target:t.id,effect_class:"attack_damage",max_risk:"lethal"}))),
+    ...(count>2?{spotlight_policy:"fair_opportunities_native_target_locks"}:{}),
     stakes:pcs.map(pc=>({character:pc.id,best:"My own permitted success.",worst:"Real damage and my own death move may follow."})),
     boundaries:["no_forced_player_dialogue","no_private_information_disclosure","no_forced_player_control","no_involuntary_item_loss","no_authored_permanent_scar"],
     allow_damage:true,lethality:"lethal",last_hp_policy:"owner_selected_srd_death_move",critical_stress_policy:"disabled",
     hope_policy:"no_pvp_hope_generation",fear_policy:"immediate_contextual_fear",scoring_policy:"none",features:[],
     resource_spending:"owner_native_only",audience:"private",stop_policy:"neutral_withdrawal_preserve_committed_effects",expires_minute:1000};
+  configureTerms(terms);
   let p=proposeDamagePvp(f.db,f.guild,pcs[0].owner_user_id,{accepted_intent:accepted.record_key,terms},{interactionId:"attack-offer"});
   for(const pc of pcs){reviewDamagePvp(f.db,f.guild,pc.owner_user_id,p.record_key);p=respondDamagePvp(f.db,f.guild,pc.owner_user_id,
     {contract:p.record_key,expected_revision:p.data.terms_hash,decision:"accept"},{interactionId:`attack-sign:${pc.id}`});}

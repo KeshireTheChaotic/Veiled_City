@@ -17,6 +17,7 @@ function* records(db,guild,kind){
 }
 function current(db,guild,key){
   const row=db.getCityRecord(guild,"scene_action_window",key),scene=currentScene(db,guild);
+  if(row?.data.pvp_brawl)fail("Native multiplayer PvP target windows belong to their consent/spotlight service.");
   if(!row||row.data.scene!==scene.key||row.data.session_id!==scene.session_id
     ||db.getWorldEvent(guild,row.source_event)?.status!=="active")fail("Window scene/source is stale; GM recovery must cancel, not adjudicate it.");
   return row;

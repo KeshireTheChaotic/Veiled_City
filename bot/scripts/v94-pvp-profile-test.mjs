@@ -12,6 +12,7 @@ function terms(f,count=2,patch={}){
   const pcs=f.pcs.slice(0,count);
   return {version:3,profile:"damage_enabled",objective:"A voluntary test of arms with real death risk.",
     participants:pcs.map(pc=>({character:pc.id,team:null})),interaction_scope:count===2?"duel":"free_for_all",
+    ...(count>2?{spotlight_policy:"fair_opportunities_native_target_locks"}:{}),
     target_permissions:pcs.flatMap(actor=>pcs.filter(target=>target.id!==actor.id).map(target=>({actor:actor.id,target:target.id,effect_class:"attack_damage",max_risk:"lethal"}))),
     stakes:pcs.map(pc=>({character:pc.id,best:"Achieve my objective within native outcomes.",worst:"Native damage may lead to my own death-move decision."})),
     boundaries,allow_damage:true,lethality:"lethal",last_hp_policy:"owner_selected_srd_death_move",

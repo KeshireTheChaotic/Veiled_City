@@ -57,6 +57,7 @@ export function classifyResourceOverlap(a,b){
 
 export function joinActionWindow(db,guild,windowKey,input){
   const window=db.getCityRecord(guild,"scene_action_window",windowKey),scene=currentScene(db,guild);
+  if(window?.data.pvp_brawl)fail("Native PvP target locks use their consent/spotlight service, not generic window participation.");
   if(!window||window.status!=="open"||window.data.scene!==scene.key)fail("Only the current open action window can accept participation.");
   const accepted=db.getCityRecord(guild,"typed_intent",input.accepted_intent);
   if(window.data.native_beat)consentAction(db,guild,input.accepted_intent);
@@ -89,6 +90,7 @@ export function joinActionWindow(db,guild,windowKey,input){
 
 export function lockActionWindow(db,guild,key,{expected_revision}){
   const row=db.getCityRecord(guild,"scene_action_window",key);
+  if(row?.data.pvp_brawl)fail("Native PvP target locks cannot close through generic window adapters.");
   if(!row||row.status!=="open")fail("Only an open action window can lock.");
   if(row.data.revision!==expected_revision)fail("Action window revision is stale; rebase before locking.");
   if(row.data.participants.length<1)fail("An empty action window cannot lock.");
@@ -97,6 +99,7 @@ export function lockActionWindow(db,guild,key,{expected_revision}){
 
 export function resolveActionWindow(db,guild,key,{expected_revision,outcomes}){
   const row=db.getCityRecord(guild,"scene_action_window",key);
+  if(row?.data.pvp_brawl)fail("Native PvP results require target-owned effect receipts, not generic outcomes.");
   if(!row)fail("Action window not found.");
   const resolutionKey=`resolution:${digest([key,outcomes])}`,prior=db.getCityRecord(guild,"scene_action_resolution",resolutionKey);
   if(prior)return prior;

@@ -13,7 +13,7 @@ const fail=message=>{throw Object.assign(new Error(message),{code:"PC_EFFECT_AUT
 const owned=(pc,name)=>[...(pc.data.domain_cards||[]),...(pc.data.inventory||[])].some(v=>(typeof v==="string"?v:v.name)===name);
 function pvpHopeGuard(db,guild,source,resource,amount,input){
   if(resource!=="hope"||amount<=0)return;
-  if(source.kind.startsWith("pvp_")||["pc_death_owner_choice","pc_death_recovery_allocation"].includes(source.kind))
+  if(source.kind.startsWith("pvp_")||source.kind.startsWith("native_pvp_")||["pc_death_owner_choice","pc_death_recovery_allocation"].includes(source.kind))
     fail("PvP generates zero Hope, including feature/Armor/death Critical paths.");
   if(db.hasNativePvpSource(guild,source.event_key)){
     const a=input.accepted_intent&&consentAction(db,guild,input.accepted_intent).row;

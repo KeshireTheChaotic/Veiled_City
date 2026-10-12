@@ -130,9 +130,12 @@ test("PVD invalid RNG rolls back dice, authorizations remain available and no co
   assert.equal(f.db.getCityRecord(f.guild,"pvp_attack_request",row.record_key).status,"ready");
   assert.equal(f.db.listCityRecords(f.guild,{kind:"pvp_attack_roll_receipt",includeGM:true}).length,0);noEffects(f);
 }));
-test("PVD group consent cannot execute before native multiplayer lock/spotlight lifecycle",()=>nativeFixture(async f=>{
-  const a=await api(),x=await attackFixture(f,{count:3});assert.throws(()=>a.preparePvpAttack(f.db,f.guild,"gm",x.input,
-    {gm:true,interactionId:"premature-group"}),/Group|spotlight|locks/i);noEffects(f);
+test("PVD group consent cannot roll without the native multiplayer lock/spotlight reservation",()=>nativeFixture(async f=>{
+  const a=await api(),x=await attackFixture(f,{count:3}),row=a.preparePvpAttack(f.db,f.guild,"gm",x.input,{gm:true,interactionId:"native-group"});
+  const opp=f.db.getCityRecord(f.guild,"pvp_spotlight_opportunity",`${row.record_key}:opportunity`);assert(opp);
+  f.db.saveCityRecord(f.guild,{...opp,key:opp.record_key,data:{...opp.data,window:"forged-window"}});
+  assert.throws(()=>a.rollPvpAttack(f.db,f.guild,f.pcs[0].owner_user_id,{attack:row.record_key,expected_revision:row.data.offer_hash},
+    {rng:()=>assert.fail("No group dice without native reservation and independent owner authorization")}),/native|spotlight|lock/i);noEffects(f);
 }));
 test("PVD attack/roll internal receipts never expose the opponent's confidential Evasion through scoped retrieval",()=>nativeFixture(async f=>{
   const {a,row}=await ready(f),r=a.rollPvpAttack(f.db,f.guild,f.pcs[0].owner_user_id,{attack:row.record_key,expected_revision:row.data.offer_hash},{rng:rng([5,4])});

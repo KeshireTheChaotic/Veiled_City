@@ -1,7 +1,7 @@
 {
   "package": "Veiled_City_Multiplayer_Discord",
   "version": "10.0.0",
-  "generated": "2026-10-11",
+  "generated": "2026-10-12",
   "content_normalization": "utf8-lf",
   "files": [
     {
@@ -716,13 +716,13 @@
     },
     {
       "path": "bot/scripts/v94-pvp-attack-fixtures.mjs",
-      "size_bytes": 3467,
-      "sha256": "b2b0a131c71dfb50705ac66fded1a14e3d99fd9ab3084cc3c4777ea977e44dc7"
+      "size_bytes": 3644,
+      "sha256": "1f13438ab3ef14e7bcb405771669debcf1a447157050171196111cb8ec5eab61"
     },
     {
       "path": "bot/scripts/v94-pvp-attack-test.mjs",
-      "size_bytes": 16713,
-      "sha256": "ac20056c7b23f359eaa8369d6e996e4e182ac18f3edc5c4d599e2e7a4887dd09"
+      "size_bytes": 17153,
+      "sha256": "5228ecad2dc1d9925c31d76bb3109d73d5fe8b1878d1ef74cab35a2c3ecec7fc"
     },
     {
       "path": "bot/scripts/v94-pvp-damage-test.mjs",
@@ -730,9 +730,14 @@
       "sha256": "38ecf9614ff943d3c116076c48a12a55bb399a91e7fa4ea655774244ddafee63"
     },
     {
+      "path": "bot/scripts/v94-pvp-multiplayer-test.mjs",
+      "size_bytes": 28901,
+      "sha256": "66236d1b76fc92500177e7d056ac345832e246cffe02550aa4fc4b446593ed90"
+    },
+    {
       "path": "bot/scripts/v94-pvp-profile-test.mjs",
-      "size_bytes": 18347,
-      "sha256": "d64c6916e248ada132bdcfd85c91643fc1314466032e6fcb589d65d229d44c1f"
+      "size_bytes": 18428,
+      "sha256": "45cf90b723e8d8f5c6497a94f9dbb31707939c442a9836aebbff06419f78ae7f"
     },
     {
       "path": "bot/scripts/v94-pvp-reaction-test.mjs",
@@ -746,8 +751,8 @@
     },
     {
       "path": "bot/scripts/validate-offline.mjs",
-      "size_bytes": 4650,
-      "sha256": "d3687db2bd3c0c06838f8152d4af2c057ebc5da703515e83142196b8c5c0a7a3"
+      "size_bytes": 4677,
+      "sha256": "b26d32765dd4413f4f2785b199f3975dc36358b8e9758c4909323a358664ca0c"
     },
     {
       "path": "bot/sql/schema.sql",
@@ -891,8 +896,8 @@
     },
     {
       "path": "bot/src/commands.js",
-      "size_bytes": 167403,
-      "sha256": "65e368f4aab4a07088fa720e16f33ba38f86e26a312653302807215b0ddc46ed"
+      "size_bytes": 168074,
+      "sha256": "15b305974788554616c5962975c3346394f4badf9d4d459650c782a2eeee2b46"
     },
     {
       "path": "bot/src/concept-context.js",
@@ -1171,8 +1176,8 @@
     },
     {
       "path": "bot/src/pc-effects.js",
-      "size_bytes": 20039,
-      "sha256": "39de0e48495efff11edbec5920e34929ec8db7ccdb7e929b0c1d8a365d4de56d"
+      "size_bytes": 20078,
+      "sha256": "e5a90c863479d4c00bb135003d15b8585531697caa7ff9eceb459c45650e1f39"
     },
     {
       "path": "bot/src/pc-incoming.js",
@@ -1226,8 +1231,8 @@
     },
     {
       "path": "bot/src/pvp-attacks.js",
-      "size_bytes": 17077,
-      "sha256": "afb40d1edf75d6e8c741bc7abc959cc400e2c60d17a8b4aa772b30d8e646b7d1"
+      "size_bytes": 17469,
+      "sha256": "f3e597c9b7f3cc7d698e841248e160f07bd36f540b0b62b9b202b2b3639fd573"
     },
     {
       "path": "bot/src/pvp-authority.js",
@@ -1240,9 +1245,14 @@
       "sha256": "526c26d894c0036c61c34dcbe697a3eebfb2ed90ab9f47c7da7ffe80885637e0"
     },
     {
+      "path": "bot/src/pvp-brawl.js",
+      "size_bytes": 21271,
+      "sha256": "f90212a20aca1085e6ad4b057dedb54d2dd6359cb577605258a14f59c7ce3bfb"
+    },
+    {
       "path": "bot/src/pvp-damage.js",
-      "size_bytes": 23215,
-      "sha256": "b046b5ca60ec483038f1a8fb0350a68684c05cd7440802bc258934f5e3960c89"
+      "size_bytes": 23380,
+      "sha256": "fce7284a5945a58df37a553d047bdbf9774b7ff46294c39065f0958de9e0e315"
     },
     {
       "path": "bot/src/pvp-fear-gate.js",
@@ -1251,8 +1261,8 @@
     },
     {
       "path": "bot/src/pvp-fear-moves.js",
-      "size_bytes": 29980,
-      "sha256": "4b2fc7b2b5147074f24f8ca15b061b3d0a147e94cdba98fd8a4e29f2ab6d3f92"
+      "size_bytes": 30508,
+      "sha256": "cfd1953aed7bbd418203528cd2e7688c6feb20c68f84c95298e986dddb10477f"
     },
     {
       "path": "bot/src/pvp-output.js",
@@ -1261,8 +1271,8 @@
     },
     {
       "path": "bot/src/pvp-profiles.js",
-      "size_bytes": 25101,
-      "sha256": "db28da829d4fc46631effb7c133748a452478bda3006adaa5ec63d247a99b990"
+      "size_bytes": 27028,
+      "sha256": "bd18f3ee68dbdde952d6d5f830124ff9e112dca4e097313fa56d85675a0978b0"
     },
     {
       "path": "bot/src/pvp-reactions.js",
@@ -1346,8 +1356,8 @@
     },
     {
       "path": "bot/src/scene-action-window.js",
-      "size_bytes": 13681,
-      "sha256": "fb0c4a24242ee8dafc7369ebdbeade43c1d81b16fa36b903f695f4ef7174dc4a"
+      "size_bytes": 14030,
+      "sha256": "ffb5f6b20e8337ec99a02144fd6c356adc7ea92a55a880552289146624e7d55a"
     },
     {
       "path": "bot/src/scene-continuity.js",
@@ -1486,8 +1496,8 @@
     },
     {
       "path": "bot/src/window-coordinator.js",
-      "size_bytes": 15246,
-      "sha256": "59b072e5857e0630326c74977baf1e34e321f3081cb2461747f59f7a0f60ffa7"
+      "size_bytes": 15361,
+      "sha256": "c5d54bc13607073d4328644b5ca67d03a5d719cae171ee2366934da86ad1b58b"
     },
     {
       "path": "bot/src/world-authoring.js",
@@ -2301,8 +2311,8 @@
     },
     {
       "path": "docs/TYPED_INTENT_CONTRACTS.md",
-      "size_bytes": 59307,
-      "sha256": "d21ab716bc8ba14adbbe3e8804f2b63978031764accd9f84a27c5862a9ed7d10"
+      "size_bytes": 63796,
+      "sha256": "0f5823986372aa23c232bc88c3a8f8437bfaa0882a019564f92a4e38a1b2c0df"
     },
     {
       "path": "docs/TYPED_INTENT_DELTA_AUDIT.md",
@@ -2316,8 +2326,8 @@
     },
     {
       "path": "docs/TYPED_INTENT_PROGRESS.md",
-      "size_bytes": 170922,
-      "sha256": "c1e88525b025e68361fc7159b903cc41e1833936a1845b903a454e0633e1fc61"
+      "size_bytes": 179001,
+      "sha256": "ad3ba9c2fbff839e35ebbb4dfd188e356d7c69b511e4a2c9ac606f1ca02b1762"
     },
     {
       "path": "docs/TYPED_INTENT_RELEASE_10.0.0.md",

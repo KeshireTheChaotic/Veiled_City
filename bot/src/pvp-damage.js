@@ -9,6 +9,7 @@ import {pendingPvpFear} from "./pvp-fear-gate.js";
 import {buildActionPlan,transitionAction} from "./action-dependency.js";
 import {completeBlazeAction,validatePcDeathOutcome} from "./pc-death.js";
 import {assertPcAttackable} from "./pc-native-eligibility.js";
+import {assertBrawlDamageSources,releaseBrawlLocks} from "./pvp-brawl.js";
 const hash=v=>createHash("sha256").update(JSON.stringify(v)).digest("hex");
 function fail(message){throw Object.assign(new Error(message),{code:"PC_EFFECT_AUTHORITY",expected:true});}
 function closed(v,keys){if(!v||Array.isArray(v)||Object.keys(v).length!==keys.length||keys.some(k=>!(k in v)))fail("Closed native damage fields required.");}
@@ -69,6 +70,7 @@ function facts(db,guild,input,{committed=false}={}){
   if(!Array.isArray(input.damage_receipts)||!input.damage_receipts.length||input.damage_receipts.length>12
     ||new Set(input.damage_receipts).size!==input.damage_receipts.length)fail("Distinct bounded native simultaneous damage sources required.");
   const rows=input.damage_receipts.map(key=>validatePvpDamageRoll(db,guild,key)),first=rows[0],pc=db.getCharacter(first.offer.target),ruling=db.getRulesRuling(guild,input.ruling);
+  assertBrawlDamageSources(db,guild,rows,{committed});
   if(rows.some(p=>p.offer.target!==pc.id||p.offer.scene!==first.offer.scene||p.offer.session!==first.offer.session))fail("Simultaneous source group must share actual target/session/scene.");
   if(!committed){assertPcAttackable(pc,db,guild);for(const p of rows){validateDamagePvp(db,guild,p.offer.contract);
     if(p.request.status!=="awaiting_armor")fail("Damage source is already consumed or not awaiting Armor.");}defenses(pc,input.defenses,ruling,rows.map(p=>p.receipt.data.result.type));}
@@ -211,5 +213,6 @@ export function settlePvpDamageAction(db,guild,key){
   const nodes=db.listCityRecords(guild,{kind:"compound_action",includeGM:true,limit:500}),node=nodes.find(n=>n.data.action_id===action.record_key);
   if(node)transitionAction(db,guild,node.record_key,{expected_status:node.data.status,status:"resolved",receipt:receipt.record_key});
   const related=nodes.filter(n=>n.source_event===action.source_event).map(n=>db.getCityRecord(guild,"typed_intent",n.data.action_id));if(related.length)buildActionPlan(db,guild,related);
-  db.saveCityRecord(guild,{...request,key,status:"resolved",data:{...request.data,terminal:terminal.record_key}});return terminal;
+  db.saveCityRecord(guild,{...request,key,status:"resolved",data:{...request.data,terminal:terminal.record_key}});
+  releaseBrawlLocks(db,guild,key);return terminal;
 }

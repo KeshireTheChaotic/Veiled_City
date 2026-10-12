@@ -5,6 +5,7 @@ import {conversationPrincipal,historicalOwnerPrincipal} from "./conversation-pri
 import {currentScene} from "./scene-continuity.js";
 import {indexWorldEvent} from "./city-calendar.js";
 import {isPvpIntent,pvpTarget} from "./pvp-authority.js";
+import {cancelBrawlForWithdrawal} from "./pvp-brawl.js";
 const hash=v=>createHash("sha256").update(JSON.stringify(v)).digest("hex");
 const boundaryTerms=["no_forced_player_dialogue","no_private_information_disclosure","no_forced_player_control","no_involuntary_item_loss","no_authored_permanent_scar"];
 function fail(message){throw Object.assign(new Error(message),{code:"NARRATIVE_PVP",expected:true});}
@@ -28,7 +29,7 @@ function controlledOwner(db,guild,character,historical=false){
 function checkTerms(db,guild,input,{historical=false}={}){
   closed(input,["version","profile","objective","participants","interaction_scope","target_permissions","stakes","boundaries",
     "allow_damage","lethality","last_hp_policy","critical_stress_policy","hope_policy","fear_policy","scoring_policy",
-    "features","resource_spending","audience","stop_policy","expires_minute"]);
+    "features","resource_spending","audience","stop_policy","expires_minute",...(input?.spotlight_policy!==undefined?["spotlight_policy"]:[])]);
   if(input.version!==3||input.profile!=="damage_enabled"||input.allow_damage!==true)fail("Separate v3 damage-enabled profile required; narrative scores never authorize HP.");
   if(input.lethality!=="lethal"||input.last_hp_policy!=="owner_selected_srd_death_move")
     fail("Vanilla lethal damage/death risk only; guaranteed-nonlethal damage tiers are disabled by owner ruling.");
@@ -46,6 +47,8 @@ function checkTerms(db,guild,input,{historical=false}={}){
     ||input.interaction_scope!=="teams"&&participants.some(p=>p.team!==null)
     ||input.interaction_scope==="teams"&&(participants.some(p=>!p.team)||new Set(participants.map(p=>p.team)).size<2))
     fail("Explicit duel, FFA or team scope required.");
+  if(input.spotlight_policy!==undefined&&(input.interaction_scope==="duel"||input.spotlight_policy!=="fair_opportunities_native_target_locks"))
+    fail("Fixed explicit native group spotlight policy required; no authored initiative or effects.");
   const stakes=participants.map(p=>{
     const rows=input.stakes.filter(s=>s.character===p.character),s=rows[0];closed(s,["character","best","worst"]);
     if(rows.length!==1||!text(s.best)||!text(s.worst))fail("Exact per-participant bounded stakes required.");return {...s};
@@ -76,6 +79,8 @@ function inventory(db,guild,kind){
 }
 function writeTerms(db,guild,old,user,input,interactionId){
   const terms=checkTerms(db,guild,input),revision=(old.data.revision||0)+1;
+  if(terms.interaction_scope!=="duel"&&terms.spotlight_policy!=="fair_opportunities_native_target_locks")
+    fail("New group offers require explicit fair spotlight/target-lock policy and every current owner's fresh approval; legacy consent is not upgraded.");
   const {row:accepted,scene}=consentAction(db,guild,old.data.accepted_intent),location=db.getCharacter(accepted.data.actor).data.location;
   const participants=terms.participants.map(p=>({...controlledOwner(db,guild,p.character),team:p.team}));
   if(!participants.some(p=>p.user===user)||!participants.some(p=>p.character===accepted.data.actor)
@@ -113,11 +118,16 @@ function live(db,guild,key,{terminal=false,committed=false}={}){
     ||source.details.digest!==p.data.terms_hash||hash(source.details.snapshot)!==p.data.terms_hash
     ||source.scene!==s.scene||source.session_id!==s.session_id||!s.participants.some(w=>w.user===source.details.author&&w.character===source.subject_key)
     ||source.source_id!==`player:${source.details.author}`||!db.ownerAuthoredSource(guild,source.event_key,source.details.author))fail("PvP terms source retracted, stale or changed.");
-  try{(committed?historicalActionSource:consentAction)(db,guild,s.accepted_intent);}catch(error){if(error.code!=="SCENE_ACTION_WINDOW")throw error;fail("Original PvP declaration source/owner is stale or retracted.");}
-  checkTerms(db,guild,s.terms,{historical:committed});
+  // Group terms remain immutable ancestry when a participant dies or withdraws. Only current living,
+  // unwithdrawn actors/targets below can receive fresh execution authority; history never re-enrolls anyone.
+  const group=s.terms.interaction_scope!=="duel",ancestry=committed||group;
+  try{(ancestry?historicalActionSource:consentAction)(db,guild,s.accepted_intent);}catch(error){if(error.code!=="SCENE_ACTION_WINDOW")throw error;fail("Original PvP declaration source/owner is stale or retracted.");}
+  checkTerms(db,guild,s.terms,{historical:ancestry});
+  const withdrawn=new Set(p.data.withdrawals.map(ref=>signature(db,guild,p,ref,"withdraw").character));
   for(const w of s.participants){
-    if(controlledOwner(db,guild,w.character,committed).principal_revision!==w.principal_revision)fail("PvP current owner principal changed.");
-    if(db.getCharacter(w.character).data.location!==s.location_key)fail("PvP participant location changed; scope review required.");
+    if(controlledOwner(db,guild,w.character,ancestry).principal_revision!==w.principal_revision)fail("PvP current owner principal changed.");
+    const pc=db.getCharacter(w.character),inactive=group&&(withdrawn.has(w.character)||!["active","reserve","guest"].includes(pc.status));
+    if(!inactive&&pc.data.location!==s.location_key)fail("PvP participant location changed; scope review required.");
   }
   return p;
 }
@@ -136,6 +146,9 @@ export function reviewDamagePvp(db,guild,user,key){
   const raw=db.getCityRecord(guild,"pvp_encounter_contract",key),who=participant(db,guild,user,raw),p=live(db,guild,key,{terminal:true}),t=p.data.snapshot.terms;
   const text=[`Damage-enabled PvP — ${key}`,`Revision ${p.data.revision}; digest ${p.data.terms_hash}; status ${p.status}`,
     `Objective: ${t.objective}`,`Scope: ${t.interaction_scope}; lethality: lethal. Real damage may mark final HP and require YOUR SRD death-move choice.`,
+    ...(t.interaction_scope!=="duel"?[t.spotlight_policy==="fair_opportunities_native_target_locks"
+      ?"Group policy: fair elective opportunities, no fixed initiative; owner may privately pass. Native simultaneous target locks close after dice; only real source-grouped hits use one target Armor choice. GM Fear moves and separately approved final death actions are not extra elective attacks."
+      :"Legacy group terms omit the native spotlight policy. Read-only/inert: issue fresh terms and obtain every affected owner's approval before execution."]:[]),
     "Blaze of Glory, Avoid Death or Risk It All: affected owner chooses under native rules; no GM/attacker choice. Death and scar risks are not guaranteed preventable.",
     "Guaranteed-nonlethal damage tiers, automatic last-HP caps and nonlethal fall substitutions are disabled.",
     ...t.stakes.map(s=>`${db.getCharacter(s.character).name}: best ${s.best}; worst ${s.worst}`),
@@ -163,7 +176,8 @@ export function validateDamagePvp(db,guild,key,{committed=false}={}){
   if(!(p.status==="locked"||committed&&p.status==="withdrawn")||p.data.approvals.length!==p.data.participants.length||new Set(p.data.approvals).size!==p.data.approvals.length)fail("All current affected owners must lock identical consent.");
   const signed=p.data.approvals.map(ref=>signature(db,guild,p,ref,"accept"));
   if(new Set(signed.map(w=>w.character)).size!==p.data.participants.length)fail("Independent participant signatures required.");
-  const withdrawn=p.data.withdrawals.map(ref=>signature(db,guild,p,ref,"withdraw").character),participants=committed?signed:signed.filter(w=>!withdrawn.includes(w.character));
+  const withdrawn=p.data.withdrawals.map(ref=>signature(db,guild,p,ref,"withdraw").character),participants=committed?signed:signed.filter(w=>!withdrawn.includes(w.character)
+    &&["active","reserve","guest"].includes(db.getCharacter(w.character).status));
   if(participants.length<2)fail("Damage PvP withdrawn; no future conflict.");
   for(const edge of p.data.snapshot.terms.target_permissions){
     const key=`pvp-edge:${hash([p.record_key,p.data.terms_hash,edge])}`,proof=db.getCityRecord(guild,"pvp_target_edge_consent",key);
@@ -206,7 +220,9 @@ export function respondDamagePvp(db,guild,user,input,{interactionId}={}){
     if(complete)for(const edge of p.data.snapshot.terms.target_permissions)db.saveCityRecord(guild,{
       kind:"pvp_target_edge_consent",key:`pvp-edge:${hash([p.record_key,p.data.terms_hash,edge])}`,status:"locked",source_event:p.source_event,visibility:"gm",
       data:{version:3,contract:p.record_key,terms_hash:p.data.terms_hash,edge,source_ref:p.source_event,approvals}});
-    return db.saveCityRecord(guild,{...p,key:p.record_key,status,data:{...p.data,approvals,withdrawals,state_revision:p.data.state_revision+1}});
+    const result=db.saveCityRecord(guild,{...p,key:p.record_key,status,data:{...p.data,approvals,withdrawals,state_revision:p.data.state_revision+1}});
+    if(input.decision==="withdraw")cancelBrawlForWithdrawal(db,guild,p.record_key,who.character,source.event_key);
+    return result;
   });
   });
 }

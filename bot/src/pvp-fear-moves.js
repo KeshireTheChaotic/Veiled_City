@@ -11,6 +11,7 @@ import { assertNpcAvailability } from "./city-constraints.js";
 import { validateWorldEncounterActivation } from "./encounter.js";
 import { validatePvpAttackRoll } from "./pvp-attacks.js";
 import {settlePvpDamageAction} from "./pvp-damage.js";
+import {assertBrawlFearOrder} from "./pvp-brawl.js";
 
 export const fearRevision=v=>createHash("sha256").update(JSON.stringify(v)??"undefined").digest("hex");
 const hash=fearRevision;
@@ -106,6 +107,7 @@ function attackTriggerProof(db,guild,t,{allowResolved}){
     ||hash(g.expected_fear_trigger_ids)!==hash([expected])||hash(g.resolved_effect_ids)!==hash(t.status==="resolved"?[t.data.effect]:[])
     ||gate.status!==(t.status==="resolved"?"ready":"pending_fear"))fail("Exact immediate damage-action Fear roll/gate required.");
   if(!allowResolved&&t.status==="resolved")fail("Fear move already resolved; replay native effect only.");
+  if(!allowResolved)assertBrawlFearOrder(db,guild,db.getCityRecord(guild,"pvp_attack_request",round.data.attack),t);
   return {t,p,gate,round};
 }
 /** Reconstruct obligation membership from saved dice, not mutable gate pointers or model labels. */
@@ -273,7 +275,13 @@ function applyMove(db,guild,user,input,{gm=false,rng}={}){
       data:{...gate.data,resolved_effect_ids:refs,revision:gate.data.revision+1}});
     if(ready&&!pendingPvpFear(db,guild,p).length&&p.data.resolution_receipt)
       settlePvpWindow(db,guild,p,db.getCityRecord(guild,"pvp_resolution_receipt",p.data.resolution_receipt));
-    if(ready&&gate.data.version===2)settlePvpDamageAction(db,guild,gate.data.round);
+    if(ready&&gate.data.version===2){
+      settlePvpDamageAction(db,guild,gate.data.round);
+      const opp=db.getCityRecord(guild,"pvp_spotlight_opportunity",`${gate.data.round}:opportunity`);
+      if(opp&&!pendingPvpFear(db,guild,p).length){const w=db.getCityRecord(guild,"scene_action_window",opp.data.window);
+        for(const key of w.data.pvp_brawl.requests)if(key!==gate.data.round)settlePvpDamageAction(db,guild,key);
+      }
+    }
     return effect;
   });
 }
