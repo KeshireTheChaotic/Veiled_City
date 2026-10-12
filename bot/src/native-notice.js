@@ -9,6 +9,7 @@ import {pvpProjection} from './pvp-authorship.js';
 import {currentScene} from './scene-continuity.js';
 import {typedRollProof} from './typed-roll-proof.js';
 import {renderFearEffect,validateFearEffect} from './pvp-fear-moves.js';
+import {damagePvpOwnerContext} from './pvp-profiles.js';
 export const noticeHash=value=>createHash('sha256').update(JSON.stringify(value)).digest('hex');
 function fail(){throw Object.assign(new Error('Native notice source, revision, owner or audience is stale.'),{code:'NATIVE_NOTICE'});}
 export function renderNativeNotice(db,guild,d){
@@ -58,6 +59,16 @@ export function renderNativeNotice(db,guild,d){
   if(d.kind==='pvp_projection'){
     if(d.user)fail();return pvpProjection(db,guild,d.ref).data.text;
   }
+  if(d.kind==='pvp_damage_status'){
+    const {contract:p,who}=damagePvpOwnerContext(db,guild,d.user,d.ref);
+    if(who.character!==d.character||noticeHash([p.status,p.data])!==d.revision)fail();
+    return [`**Private DAMAGE PvP offer/status — ${p.record_key}**`,
+      `Revision: ${p.data.terms_hash}; status: ${p.status}. Real lethal risk; YOUR native SRD death-move choice.`,
+      'Notification is not Review, consent, a reaction, dice or damage. No PvP Hope or Critical Stress award.',
+      'Review all exact stakes, boundaries and target-specific edges before independently accepting.',
+      db.getCityCalendar(guild).flags.pvp_private_ui===true?`/vc-roll pvp-menu reference:${p.record_key}`:'/vc-roll pvp JSON: damage-review',
+      'Stop: neutral withdrawal preserves committed effects. Immediate action Fear is never banked.'].join('\n');
+  }
   if(d.kind==='pvp_status'){
     const {proposal:p,terms}=pvpOwnerContext(db,guild,d.user,d.ref),progress=progressPvp(db,guild,d.user,d.ref);
     if(noticeHash([p.status,p.data,progress])!==d.revision)fail();
@@ -70,6 +81,7 @@ export function renderNativeNotice(db,guild,d){
       ...t.stakes.map(s=>`${db.getCharacter(s.character).name}: best ${s.best}; worst ${s.worst}; tie ${s.tie}`),
       `Boundaries: ${t.boundaries.join('; ')}; audience: ${t.audience}; ownership: ${t.authorship}`,
       `Hope: ${t.hope_policy}; Fear: ${t.fear_policy}; stop: ${t.stop_policy}`,
+      ...(db.getCityCalendar(guild).flags.pvp_private_ui===true?[`/vc-roll pvp-menu reference:${p.record_key}`]:[]),
       JSON.stringify(progress)].join('\n');
   }
   if(d.kind==='pvp_fear_effect'){

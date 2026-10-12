@@ -163,6 +163,11 @@ export function reviewDamagePvp(db,guild,user,key){
   return {contract:key,terms_hash:p.data.terms_hash,status:p.status,text,visibility:"character",character_id:who.character};
   });
 }
+/** Read-only current owner/source proof for private status. Receiving a notice is NOT a terms review or signature. */
+export function damagePvpOwnerContext(db,guild,user,key){
+  const raw=db.getCityRecord(guild,'pvp_encounter_contract',key),who=participant(db,guild,user,raw);
+  return {contract:live(db,guild,key,{terminal:true}),who};
+}
 function signature(db,guild,p,ref,decision){
   const r=db.getCityRecord(guild,"pvp_damage_consent",ref),d=r?.data,source=r&&db.getWorldEvent(guild,r.source_event),w=p.data.participants.find(x=>x.character===r?.subject_key&&x.user===d?.user);
   if(!w||r.visibility!=="character"||r.status!==({accept:"accepted",decline:"declined",withdraw:"withdrawn"}[decision])

@@ -1,6 +1,6 @@
 # V9.5 — audited source map and live-play gaps
 
-**Repo:** https://github.com/KeshireTheChaotic/Veiled_City/tree/codex/typed-intent-refinement
+**Repo:** https://github.com/KeshireTheChaotic/Veiled_City/tree/codex/typed-intent-refinement<br>
 **Inspected HEAD:** `e88a4414401b719bf17826b568fcfefac5eeabd4` (2026-10-12). This document is a source inspection, **not** a runtime repro. Local Codex uncommitted changes (if any) must be compared afresh.
 
 ## Baseline

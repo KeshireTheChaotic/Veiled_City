@@ -1,5 +1,7 @@
 # Veiled City — V9.5 implementation and safe-deprecation plan
 
+> **Execution amendment (2026-10-12):** V95-00/01 completed per user checkpoint at `1b36ee1` / `e729a10`; V95-02 completed locally at `708d0bd687f6810037ff0829a2ee19f654c79c8a` with 364/364 focused and 128/128 mandatory network-denied offline suites. This plan's original PROPOSED status and `e88a441` HEAD are historical baseline, **not current local status**. For V95-03 onward, **`V9_5_LEAN_VALIDATION_POLICY.md` supersedes older repeated full-validation/redundant-test instructions**. Full mandatory security checks remain required once before each phase commit. Verify local HEAD; no V95-03 work claimed here.
+
 **Status:** PROPOSED / NOT IMPLEMENTED. **Source reviewed:** `KeshireTheChaotic/Veiled_City`, branch `codex/typed-intent-refinement`, HEAD `e88a4414401b719bf17826b568fcfefac5eeabd4` (2026-10-12). **Base:** v9.4/V9-08 offline-qualified, not live-qualified. **Do not rewrite v9.4 history or re-open passed P0 issues without new evidence.**
 
 ## 0. Mission, boundaries, authority
@@ -116,6 +118,9 @@ Use the `V9_5_REGRESSION_MATRIX.csv` for individual NAR01–18, FEA01–20, UX01
 - Docs: append phase results in `docs/TYPED_INTENT_PROGRESS.md`; new `docs/V9_5_IMPLEMENTATION_PLAN.md`, `V9_5_SOURCE_AUDIT.md`, `V9_5_DEPRECATION_REGISTER.md`, `V9_5_QUALIFICATION.md`, `V9_5_LIVE_PILOT.md`. Do not overwrite prior v9.4 qualification ledger.
 
 ## 4. Validation, commit and push protocol (Codex execution only)
+
+**Superseded procedural cadence:** Read `V9_5_LEAN_VALIDATION_POLICY.md` first. The original checklist below documents the historical conservative gate; it no longer instructs repeating full 128-suite validation after every edit or solely after a results-only ledger update. The mandatory *content* of the gate is unchanged.
+
 
 1. Per phase: retain a narrow red-first behavior fixture and its initial failure; make smallest native-authority-preserving code change; run focused tests, baseline P0 fixtures, full offline check, manifest update, `git diff --check`; repeat on exact documented tree after progress log changes.
 2. Review staged diff and hidden/private file exposure; stage only intended phase files. **Separate semantic commits** named in Section 1; retain the prior HEAD SHA and resulting SHA. No chat-originated commit.

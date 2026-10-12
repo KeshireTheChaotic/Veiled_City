@@ -1,3 +1,9 @@
+# v9.5 — Lean validation amendment (current)
+
+V95-03 execution evidence and user guide: [private PvP controls](V95_03_PRIVATE_PVP_CONTROLS.md); actual qualification status is recorded in [progress](TYPED_INTENT_PROGRESS.md). Historical planning/checkpoint statements below are preserved.
+
+**Use first:** `V9_5_LEAN_VALIDATION_POLICY.md` for tiered testing and output budget; `V9_5_CODEX_RESUME_V95_03.md` to resume the next phase. The original plan and all v9.5 regression/deprecation documents are retained, but older instructions calling for multiple full validations are superseded. V95-02 local completion SHA (user-reported): `708d0bd687f6810037ff0829a2ee19f654c79c8a`. No local code changed or tested by this package.
+
 # Veiled City V9.5 — live-play hardening and deprecation package
 
 Planning-only package audited against remote `codex/typed-intent-refinement` at `e88a4414401b719bf17826b568fcfefac5eeabd4` (2026-10-12).

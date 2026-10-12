@@ -268,6 +268,8 @@ export function buildCommands(){
             {name:"Full",value:"full"},{name:"Standard",value:"standard"},{name:"Narrative only",value:"narrative"}))
           .addBooleanOption(o=>o.setName("screen_reader").setDescription("Prefer screen-reader-friendly formatting"))))
       .addSubcommandGroup(g=>g.setName("roll").setDescription("Deterministic dice")
+        .addSubcommand(s=>s.setName('pvp-menu').setDescription('Open your private native PvP consent, mechanics and recovery controls')
+          .addStringOption(o=>o.setName('reference').setDescription('Exact proposal, contract, accepted intent, attack, damage, reaction or death request; omit for inbox')))
         .addSubcommand(s=>s.setName("window").setDescription("Private native coordination inbox, consent and explicit GM recovery")
           .addStringOption(o=>o.setName("json").setDescription("op: inbox, request, respond, close, custody or GM cancel; exact window and revision")))
         .addSubcommand(s=>s.setName("effect").setDescription("Privately review native feature effects or incoming NPC attack defenses")

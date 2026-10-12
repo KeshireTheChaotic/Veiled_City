@@ -156,6 +156,7 @@ bot/scripts/v94-pvp-reaction-test.mjs
 bot/scripts/v95-autonomous-fear-test.mjs
 bot/scripts/v95-inventory.mjs
 bot/scripts/v95-protected-narrative-test.mjs
+bot/scripts/v95-pvp-ux-test.mjs
 bot/scripts/validate-command-schema.mjs
 bot/scripts/validate-offline.mjs
 bot/sql/schema.sql
@@ -264,6 +265,7 @@ bot/src/pvp-brawl.js
 bot/src/pvp-damage.js
 bot/src/pvp-fear-gate.js
 bot/src/pvp-fear-moves.js
+bot/src/pvp-menu.js
 bot/src/pvp-output.js
 bot/src/pvp-profiles.js
 bot/src/pvp-reactions.js
@@ -508,6 +510,7 @@ docs/UPGRADE_3.6.0_TO_3.7.0.md
 docs/UPGRADE_3.7.0_TO_3.8.0.md
 docs/V7_V8_DELTA_MATRIX.csv
 docs/V95_02_FINAL_INTEGRATION_COVERAGE.md
+docs/V95_03_PRIVATE_PVP_CONTROLS.md
 docs/V9_1_NARRATIVE_PVP_CONTRACT_REFERENCE.md
 docs/V9_2_CODEX_RESUME.md
 docs/V9_2_IMPLEMENTATION_PLAN.md
@@ -536,10 +539,12 @@ docs/V9_4_RULES_AND_COMMUNITY_RESEARCH.md
 docs/V9_4_SOURCE_AUDIT.md
 docs/V9_5_AUTONOMOUS_FEAR.md
 docs/V9_5_CODEX_KICKOFF.md
+docs/V9_5_CODEX_RESUME_V95_03.md
 docs/V9_5_COVERAGE_CROSSWALK.csv
 docs/V9_5_DEPRECATION_REGISTER.csv
 docs/V9_5_DEPRECATION_REGISTER.md
 docs/V9_5_IMPLEMENTATION_PLAN.md
+docs/V9_5_LEAN_VALIDATION_POLICY.md
 docs/V9_5_LIVE_PILOT_PROTOCOL.md
 docs/V9_5_REGRESSION_MATRIX.csv
 docs/V9_5_SOURCE_AUDIT.md

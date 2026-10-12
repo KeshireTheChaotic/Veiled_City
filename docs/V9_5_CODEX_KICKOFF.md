@@ -1,3 +1,5 @@
+> **Current local checkpoint update:** V95-02 completed in local Codex at `708d0bd687f6810037ff0829a2ee19f654c79c8a` (user-reported). Resume **V95-03**, do not restart earlier phases. Follow `V9_5_LEAN_VALIDATION_POLICY.md` and `V9_5_CODEX_RESUME_V95_03.md` instead of the historical repeatedly executed full-gate cadence below. All mandatory default tests remain required at the final phase boundary.
+
 # Codex kickoff — Veiled City V9.5
 
 Extract the supplied v9.5 package into the Codex development checkout, read the included `V9_5_IMPLEMENTATION_PLAN.md`, source audit, deprecation register and regression matrix, and copy the plan/audit/coverage documents into `docs/` under their v9.5 names as part of the initial documentation commit. Do not overwrite existing v9.5 files without diffing them. Review and implement **V9.5** against these documents. **Never treat the planning archive or this prompt as implemented code or passed tests.**

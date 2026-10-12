@@ -48,6 +48,7 @@ import { stateRevision } from "./ai-intents.js";
 import { beginInteraction, acknowledgeRules, acknowledgeNative, interactionFailure, interactionResponseExpired, replyOrEdit } from "./discord/interaction-lifecycle.js";
 import { validateChannelRouting } from "./routing-diagnostics.js";
 import { handleRollMenuInteraction, isRollMenuInteraction, openRollMenu } from "./roll-menu.js";
+import {handlePvpMenuInteraction,isPvpMenuInteraction,openPvpMenu} from './pvp-menu.js';
 import { proposePvp, reviewPvp, revisePvp, respondPvp, pvpInbox, choosePvp, rollPvp, continuePvp, progressPvp,
   authorPvpNarrative, reviewPvpNarrative, sharePvpNarrative, pvpComplication } from "./narrative-pvp.js";
 import { synchronizePvpWindow, windowOperation } from "./window-coordinator.js";
@@ -366,6 +367,10 @@ ${draft.gm_notes||""}`}));
  */
 export async function handleCommand(interaction,{db,gm,voice=null}){
   beginInteraction(interaction);
+  if(isPvpMenuInteraction(interaction))return handlePvpMenuInteraction(db,interaction,{library:gm?.content?.root?encounterLibrary(gm):undefined,
+    publish:interaction.guild?(proposal,projection)=>publishPvpNotices(db,interaction.guildId,proposal,
+      (userId,content,sessionId,characterId,meta)=>sendPlayerPrivate({db,guild:interaction.guild,userId,content,sessionId,characterId,...meta}),
+      (content,sessionId,meta)=>postPlayMessage({db,guild:interaction.guild,content,sessionId,...meta}),{projection}):null});
   // Acknowledge rules before queued work, SQLite, snapshots, permissions or model requests.
   const rules=interaction.isChatInputCommand()&&(interaction.commandName==="vc-rules"
     ||interaction.commandName==="vc"&&interaction.options.getSubcommandGroup()==="rules");
@@ -373,7 +378,7 @@ export async function handleCommand(interaction,{db,gm,voice=null}){
   const group=interaction.isChatInputCommand()?(interaction.commandName==='vc'?interaction.options.getSubcommandGroup():interaction.commandName.slice(3)):null,
     sub=interaction.isChatInputCommand()?interaction.options.getSubcommand():null;
   const native=interaction.guildId&&typeof interaction.deferReply==='function'
-    &&(group==='roll'&&['pending','result','menu','contribute','adjudicate','pvp','effect'].includes(sub)
+    &&(group==='roll'&&['pending','result','menu','pvp-menu','contribute','adjudicate','pvp','effect'].includes(sub)
       ||group==='intel'&&['discover','caseboard'].includes(sub));
   let restoreNativeReply=()=>{};
   if(native){
@@ -426,6 +431,10 @@ async function executeCommand(interaction,{db,gm,voice=null}){
   if(await replayReceiptIfPresent({db,interaction,group,sub})) return true;
   const restoreReceiptCapture=installReceiptCapture({db,interaction,group,sub});
   try{
+    if(group==='roll'&&sub==='pvp-menu'){
+      await interaction.reply(openPvpMenu(db,interaction.guildId,interaction.user.id,interaction.options.getString('reference')));
+      return true;
+    }
     if(group==="roll"&&sub==="effect"){
       const {op,...input}=JSON.parse(interaction.options.getString("json",true));
       const user=interaction.user.id,native={gm:isGM(db,interaction),interactionId:interaction.id};

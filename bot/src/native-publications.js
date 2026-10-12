@@ -59,11 +59,11 @@ export function publishNativeNotice(db,guild,{kind,key,source,notice},send){
 function pvpSpecs(db,guild,proposal){
   const p=db.getCityRecord(guild,'pvp_proposal',proposal)||db.getCityRecord(guild,'pvp_encounter_contract',proposal);
   if(!p)throw new Error('Exact native proposal or PvP contract required.');
-  const specs=p.kind==='pvp_proposal'?p.data.participants.map(who=>{
-    const revision=noticeHash([p.status,p.data,progressPvp(db,guild,who.user,proposal)]);
+  const specs=p.data.participants.map(who=>{
+    const revision=noticeHash(p.kind==='pvp_proposal'?[p.status,p.data,progressPvp(db,guild,who.user,proposal)]:[p.status,p.data]);
     return {kind:'pvp_status_publication',key:`pvp-status:${noticeHash([proposal,who.user,revision])}`,source:p.source_event,
-      notice:{kind:'pvp_status',ref:proposal,revision,user:who.user,character:who.character}};
-  }):[];
+      notice:{kind:p.kind==='pvp_proposal'?'pvp_status':'pvp_damage_status',ref:proposal,revision,user:who.user,character:who.character}};
+  });
   const triggers=db.listCityRecords(guild,{kind:'pvp_fear_trigger',includeGM:true,limit:500}).filter(t=>t.data.proposal===proposal&&t.status==='resolved');
   for(const trigger of triggers){
     const effect=validateFearEffect(db,guild,trigger.data.effect),who=p.data.participants.find(row=>row.character===effect.subject_key);
@@ -109,7 +109,8 @@ export function resyncNativeNotice(db,guild,kind,key,{gm=false,actor=null}={}){
   });
 }
 export async function publishPvpNotices(db,guild,proposal,sendPrivate,sendParty,{projection=null}={}){
-  const p=db.getCityRecord(guild,'pvp_proposal',proposal);if(!p)throw new Error('Exact native proposal required.');
+  const p=db.getCityRecord(guild,'pvp_proposal',proposal)||db.getCityRecord(guild,'pvp_encounter_contract',proposal);
+  if(!p)throw new Error('Exact native proposal or contract required.');
   const jobs=[];
   for(const spec of pvpSpecs(db,guild,proposal)){
     if(spec.notice.kind==='pvp_fear_effect'&&!spec.notice.user)

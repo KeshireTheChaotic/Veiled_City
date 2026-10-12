@@ -178,6 +178,7 @@ export function configureCityFlags(db,guildId,input,actorId){
   cityObject(input);
   const allowed=["institutions","opportunities","economy","minor_npcs","adaptive_context","conversations","pacing","negotiations","voice_direction","authoring",
     "autonomous_pvp_fear",
+    "pvp_private_ui",
     ...Object.keys(EXPANSION_FEATURES)];
   if(Object.keys(input).some(key=>!allowed.includes(key)||typeof input[key]!=="boolean")) throw new Error("Unknown city feature flag.");
   return db.transaction(()=>{
@@ -294,7 +295,7 @@ export function cityContext(db,guildId,query){
   const records=[];let budget=0;
   for(const row of found.values()){
     if(row.kind.startsWith("pvp_")||["character_visible_fact","character_perception_receipt","world_visible_fact"].includes(row.kind))continue;
-    if(["action_continuation","action_continuation_signal","native_notice","roll_publication","roll_party_publication","publication_reconciliation","roll_share_preview","roll_menu_token","roll_option_registry"].includes(row.kind)
+    if(["action_continuation","action_continuation_signal","native_notice","roll_publication","roll_party_publication","publication_reconciliation","roll_share_preview","roll_menu_token","roll_option_registry","pvp_ui_token","pvp_ui_delivery"].includes(row.kind)
       ||row.kind==="compound_action"&&row.visibility==="character")continue;
     const temporal=row.kind==="weather"?{...row,temporal_state:db.getSimulationClock(guildId).minute<row.data.start?"forecast"
       :db.getSimulationClock(guildId).minute<row.data.end?"active":"past"}:row;
