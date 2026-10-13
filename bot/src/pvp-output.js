@@ -208,7 +208,7 @@ export function validateOutputPart(db,guild,id){
   return row;
 }
 /** Trusted orchestration only; a model cannot manufacture the in-process capability or native proofs. */
-export function prepareAuthorizedTurnOutput(db,guild,result,scope,{sourceRef=null,world=[],nativeEntries=[],origin="turn"}={}){
+export function prepareAuthorizedTurnOutput(db,guild,result,scope,{sourceRef=null,world=[],nativeEntries=[],nativeEffects=[],origin="turn"}={}){
   const prior=prepared.get(result),raw=prior?.raw||Object.fromEntries(surfaces(result));
   const candidate=candidateNarrative(result);
   const drafts=prior?.drafts||Object.fromEntries(["context_memories","handouts","npc_memories","npc_knowledge","npc_goals","gm_world_parts"]
@@ -224,7 +224,12 @@ export function prepareAuthorizedTurnOutput(db,guild,result,scope,{sourceRef=nul
   const queries=observationQueries(db,guild,result.player_intents||[],scope,sourceRef);
   if(proposals.length)queries.push(...ambientWorldQueries(db,guild,scope,sourceRef));
   const worldParts=[...(Array.isArray(drafts.gm_world_parts)?drafts.gm_world_parts:[]).slice(0,4),
-    ...nativeEntries.map(ref=>({version:4,kind:'native_outcome',receipt_kind:'scene_entry',ref}))];
+    ...nativeEntries.map(ref=>({version:4,kind:'native_outcome',receipt_kind:'scene_entry',ref})),
+    ...nativeEffects.filter(ref=>{
+      const visibility=db.getCityRecord(guild,'ordinary_effect_receipt',ref)?.visibility;
+      return visibility==='party'||scope.mode==='private'&&visibility==='character';
+    })
+      .map(ref=>({version:4,kind:'native_outcome',receipt_kind:'ordinary_effect_receipt',ref}))];
   if(result.act===false&&!surfaces(result).some(([,text])=>text.trim()))return result;
   operationalMetrics.record('narrative_projection',{guildId:guild});
   const scene=currentScene(db,guild),parts=[];
@@ -321,6 +326,19 @@ export function prepareAuthorizedTurnOutput(db,guild,result,scope,{sourceRef=nul
         privateParts[user]=[part.record_key];result.private_messages.push({discord_user_id:user,content:part.data.text});break;
       }catch(error){if(error.code!=="NARRATIVE_PVP")throw error;}
     }
+  }
+  if(scope.mode==='party')for(const ref of nativeEffects){
+    const receipt=db.getCityRecord(guild,'ordinary_effect_receipt',ref);
+    if(receipt?.visibility!=='character')continue;
+    const privateScope={mode:'private',actorUserId:receipt.data.owner,actorCharacterId:receipt.data.actor};
+    const input={version:4,kind:'native_outcome',receipt_kind:'ordinary_effect_receipt',ref};
+    const outcome=nativeOutcomeProjection(db,guild,input,privateScope);
+    const part=savePart(db,guild,{...common,scope:privateScope,kind:'native_outcome',input,outcome_revision:outcome.revision,
+      source_ref:outcome.source.event_key,source_hash:hash(outcome.source.details)});
+    privateParts[privateScope.actorUserId]=[...(privateParts[privateScope.actorUserId]||[]),part.record_key];
+    const message=result.private_messages.find(m=>m.discord_user_id===privateScope.actorUserId);
+    if(message)message.content+=`\n${part.data.text}`;
+    else result.private_messages.push({discord_user_id:privateScope.actorUserId,content:part.data.text});
   }
   if("gm_notes" in result)result.gm_notes="Unverified generated prose is held in private scope review; native receipts are unchanged.";
   // Claims annotated against the quarantined paragraph are not claims about the renderer's output.

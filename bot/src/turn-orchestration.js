@@ -9,7 +9,7 @@ import {measureNative} from './operational-metrics.js';
 export function commitGmTurn({db,guild,session,result,scope,speaker,label,meta={},content=null}){
   const decision_advisory=validateDecisionAdvisory(db,guild.id,result);
   const mutates=(result.ai_intents||[]).length||(result.events||[]).some(e=>e.type!=="log_only")||(result.relationships||[]).length||(result.handouts||[]).length||(result.npc_memories||[]).length||(result.npc_knowledge||[]).length||(result.npc_goals||[]).length||(result.simulation_updates||[]).length;
-  if(mutates||(result.context_memories||[]).some(x=>x.retention==="durable")||(result.world_additions||[]).length||(result.scene_actions||[]).length||(result.world_conflicts||[]).length)
+  if(mutates||(result.ordinary_effect_proposals||[]).length||(result.context_memories||[]).some(x=>x.retention==="durable")||(result.world_additions||[]).length||(result.scene_actions||[]).length||(result.world_conflicts||[]).length)
     db.snapshotCampaign(guild.id,{label,reason:`Automatic snapshot before eventful GM turn by ${speaker}`,createdBy:"veilkeeper"});
   return measureNative('commit',guild.id,()=>db.transaction(()=>{
     if(decision_advisory) db.audit(guild.id,session.id,"ai",scope.actorUserId||"veilkeeper","gm_decision_advisory",decision_advisory);

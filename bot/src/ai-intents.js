@@ -28,6 +28,7 @@ import { prepareRollRequest } from "./roll-requests.js";
 import { reviewRollDeclaration } from "./roll-language.js";
 import { mundaneEntryImpact, resolveMundaneEntry } from "./scene-entry.js";
 import {assertSemanticCandidateProof} from './semantic-candidate-source.js';
+import {assertOrdinaryBinding} from './ordinary-effect-proof.js';
 import { conversationPrincipal } from "./conversation-principal.js";
 const hash=value=>createHash("sha256").update(JSON.stringify(value)).digest("hex");
 const adapters=new Map();
@@ -61,6 +62,7 @@ export function configureDelegation(db,guild,input,reviewer){
 }
 function preflight(db,guild,intent,context){
   if(!validateIntent(intent)) throw new Error("Invalid closed versioned intent contract.");
+  assertOrdinaryBinding(db,guild,context.ordinaryEffect,intent,context.origin);
   const privateWorld=context.scope?.mode==="private"&&!['arc','project','discovery','dialogue','organization','setup','roll'].includes(intent.feature)
     &&!(intent.feature==="scene"&&intent.payload.op==="enter");
   if(privateWorld){
@@ -134,7 +136,8 @@ function saveReceipt(db,guild,key,intent,status,reason,context,extra={}){
   const source=validateIntent(intent)&&db.getWorldEvent(guild,intent.payload.source_event)?intent.payload.source_event
     :indexWorldEvent(db,guild,{key:`receipt:${hash(key).slice(0,32)}`,title:"Rejected AI proposal",source_id:context.origin||"ai_policy"},"ai_policy").event_key;
   const row=db.saveCityRecord(guild,{kind:"ai_intent",key,status,source_event:source,
-    data:{intent,reason,scope:context.scope||{mode:"party"},origin:context.origin||"",session_id:context.sessionId||null,...extra}});
+    data:{intent,reason,scope:context.scope||{mode:"party"},origin:context.origin||"",session_id:context.sessionId||null,
+      ...(context.ordinaryEffect?{ordinary_effect:context.ordinaryEffect}:{}),...extra}});
   cityAudit(db,guild,"ai_intent",key,null,row,"ai_policy");return row;
 }
 export function dispatchAiIntents(db,guild,intents=[],context={}){
@@ -163,13 +166,15 @@ export function reviewAiIntent(db,guild,{key,decision:response,expected_revision
   if(stateRevision(row)!==expected_revision) throw new Error("Inbox item changed; refresh before reviewing.");
   return db.transaction(()=>{
     if(response!=="approve"){
+      if(response==='modify'&&(row.data.ordinary_effect||String(row.data.origin||'').startsWith('ordinary-effect:')))
+        throw new Error('Bound ordinary follow-through needs a fresh proposal; no substituted native child.');
       if(response==="modify"&&!validateIntent(replacement_intent)) throw new Error("A complete closed replacement intent is required.");
       const after=db.saveCityRecord(guild,{...row,key,status:{reject:"rejected",defer:"deferred",modify:"pending"}[response],
         data:{...row.data,intent:response==="modify"?replacement_intent:row.data.intent,reviewed_by:reviewer,
           history:[...(row.data.history||[]).slice(-19),{decision:response,intent:row.data.intent,by:reviewer}]}});
       cityAudit(db,guild,"ai_intent_review",key,row,after,reviewer);return after;
     }
-    const context={scope:row.data.scope,sessionId:row.data.session_id,origin:row.data.origin},intent=row.data.intent;
+    const context={scope:row.data.scope,sessionId:row.data.session_id,origin:row.data.origin,ordinaryEffect:row.data.ordinary_effect},intent=row.data.intent;
     const {adapter,before,impact,privateWorld}=preflight(db,guild,intent,context);
     if(intent.policy_revision!==delegationPolicy(db,guild).revision) throw new Error("Policy changed; request a fresh proposal.");
     const result=response==="approve"?applyNative(db,guild,intent,key,reviewer,context,adapter,privateWorld):null;

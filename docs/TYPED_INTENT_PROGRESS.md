@@ -1,5 +1,9 @@
 # Typed Intent Refinement Progress
 
+## Current resume pointer — V96-05E (2026-10-13)
+
+V96-05S commit `9fe57ac09fa3d8fb1e3b7fe4ede23fd23be05ff3` remains the deployed source; 05E is **QUALIFIED OFFLINE**, local completion commit `feat(v9.6-effects): compose verified ordinary consequences`. Closed source-bound follow-through reuses native observation, NPC intention, exact scene and matched service adapters; unsupported effects stay private review, hidden NPC goals stay GM-only, and deferred native child review cannot bypass original authority. Final T0 **30/30**; T2 **142/142** mandatory suites, **0 failed / 0 not-run**, **26/26** acceptance mappings, **343,159 ms**, both D08/check/manifest integrity passing. Network denied, live/billable zero. [Actual evidence, prior failures, limits and rollback](V96_PROGRESS.md), [contract and native review commands](V96_05E_CONSEQUENCE_BRIDGE.md). No push, production/live/paid operation or V96-06 optimization in this step. V96-06 is next, not started.
+
 ## Current resume pointer — V96-05S (2026-10-13)
 
 Starting local commit `0abfc87eaee1753988a3322708b90a79f0f587ec`, clean branch `codex/typed-intent-refinement`, app 10.0.0. **QUALIFIED OFFLINE**: final T2 **141/141** mandatory suites, **0 failed / 0 not-run**, **26/26** acceptance mappings, **391,100 ms**, both D08 gates/check/manifest integrity passing. Final semantic/native/security T1 **150/150** before the explicit schema correction; its three impacted suites **62/62** after correction, then all passed in T2. SEM04/05/07 use current authenticated typed inputs and explicit bounded dossier traits; original SEM06/PVP30ag and native/privacy protections remain. [Current ledger](V96_PROGRESS.md), [contracts/reachability/assertion crosswalk/limits](V96_05S_SEMANTIC_CONTRACT.md). Owner now authorizes qualified commit/push/source deployment then 05E; no bot start or live/billable/DB operation. V95-06 BYPASSED.

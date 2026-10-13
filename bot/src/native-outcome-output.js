@@ -7,6 +7,7 @@ import {validatedPcEffectProjection} from './pc-effects.js';
 import {visibleIncomingInjury} from './pc-incoming.js';
 import {renderNativeNotice,noticeHash} from './native-notice.js';
 import {nativeOutcomeKinds as kinds} from './gm-fiction-schema.js';
+import {ordinaryEffectProjection} from './ordinary-effect-proof.js';
 export {nativeOutcomeSchema} from './gm-fiction-schema.js';
 const hash=v=>createHash('sha256').update(JSON.stringify(v)).digest('hex');
 function fail(){throw Object.assign(new Error('Native output needs the exact committed outcome, current owner and audience.'),{code:'NARRATIVE_PVP'});}
@@ -15,6 +16,12 @@ function visible(source,scope){return ['party','public'].includes(source.visibil
 export function nativeOutcomeProjection(db,guild,input,scope){
   if(!input||Object.keys(input).sort().join(',')!=='kind,receipt_kind,ref,version'||input.version!==4
     ||input.kind!=='native_outcome'||!kinds.includes(input.receipt_kind)||typeof input.ref!=='string'||!input.ref||input.ref.length>200)fail();
+  if(input.receipt_kind==='ordinary_effect_receipt'){
+    try{return ordinaryEffectProjection(db,guild,input.ref,scope);}catch(error){
+      if(!['ORDINARY_EFFECT','SCENE_ACTION_WINDOW','TYPED_ROLL_PROOF'].includes(error.code))throw error;
+      fail(); // Invalid read-side proposals are quarantined by the common composer, not treated as native outcomes.
+    }
+  }
   const row=db.getCityRecord(guild,input.receipt_kind,input.ref),d=row?.data,source=row&&db.getWorldEvent(guild,row.source_event),scene=currentScene(db,guild);
   if(!row||!source||source.status!=='active')fail();
   let text;

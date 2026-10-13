@@ -155,6 +155,12 @@ export class VeiledDB {
       AND kind=? AND (?='' OR instr(lower(data_json),lower(?))>0) ORDER BY minute DESC,rowid DESC LIMIT ?`)
       .all(guildId,characterId,kind,query,query,Math.max(1,Math.min(50,limit))).map(row=>({...row,data:JSON.parse(row.data_json)}));
   }
+  /** Read-only bounded locators; consumers must independently verify current native intent/source authority. */
+  ownedTypedActionLocators(guildId,characterId,userId){
+    return this.db.prepare(`SELECT * FROM city_records WHERE guild_id=? AND kind='typed_intent'
+      AND json_extract(data_json,'$.actor')=? AND json_extract(data_json,'$.owner_user_id')=?
+      ORDER BY rowid DESC LIMIT 20`).all(guildId,characterId,userId).map(row=>({...row,data:JSON.parse(row.data_json)}));
+  }
   ownedExternalConsentOffers(guildId,character,user){
     return this.db.prepare(`SELECT r.* FROM city_records r JOIN world_events w ON w.guild_id=r.guild_id AND w.event_key=r.source_event AND w.status='active'
       WHERE r.guild_id=? AND r.status IN ('active','pending','offered','awaiting_consent')

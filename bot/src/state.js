@@ -23,6 +23,7 @@ import { applyGeneratedPcEffect } from "./pc-effects.js";
 import { relationshipProvenance, artifactProvenance, inferredSource } from "./presentation-evidence.js";
 import {captureArcCandidate} from './personal-continuity.js';
 import {ownerSemanticSource,semanticCandidateHash} from './semantic-candidate-source.js';
+import {applyOrdinaryEffects} from './ordinary-effects.js';
 
 export function summarizeRoster(rows){
   return rows.map(r=>({
@@ -552,19 +553,23 @@ export function applyAuthoritativeMutation(db,{guildId,sessionId=null,events=[],
     cognition.memories.filter(x=>x?.ok).forEach(result=>db.recordMutation(guildId,{...base,mutationType:"npc_memory",entityKey:`${result.row?.npc_key||""}:${result.row?.id||""}`,visibility:"gm",before:result.before??{},after:result.after??result.row,payload:result.draft||{}}));
     cognition.knowledge.filter(x=>x?.ok).forEach(result=>db.recordMutation(guildId,{...base,mutationType:"npc_knowledge",entityKey:`${result.row?.npc_key||""}:${result.row?.knowledge_key||""}`,visibility:"gm",before:result.before??{},after:result.after??result.row,payload:result.draft||{}}));
     cognition.goals.filter(x=>x?.ok).forEach(result=>db.recordMutation(guildId,{...base,mutationType:"npc_goal",entityKey:`${result.row?.npc_key||""}:${result.row?.goal_key||""}`,visibility:"gm",before:result.before??{},after:result.after??result.row,payload:result.draft||{}}));
-    const intents=dispatchAiIntents(db,guildId,aiIntents,{scope,sessionId,
+    const opportunityBudget={operations:0,cost:0};
+    const intents=dispatchAiIntents(db,guildId,aiIntents,{scope,sessionId,budget:opportunityBudget,
       origin:provenance.messageId||provenance.interactionId||source});
+    const ordinaryEffects=applyOrdinaryEffects(db,guildId,narrative?.ordinary_effect_proposals||[],scope,
+      {typedIntents,budget:opportunityBudget,provenance});
     if(originalNarrative)validateCandidateClaims(db,guildId,originalNarrative,scope,eventResults);
     const nativeEntries=intents.filter(row=>row.status==='accepted'&&row.data.intent?.feature==='scene'
       &&row.data.intent.payload?.op==='enter'&&row.data.result?.status==='approved').map(row=>row.data.result.record_key);
-    if(nativeEntries.length&&narrative)prepareAuthorizedTurnOutput(db,guildId,narrative,scope,{
-      sourceRef:outputSource&&db.getWorldEvent(guildId,outputSource)?outputSource:null,world,nativeEntries,origin:source});
+    if((nativeEntries.length||ordinaryEffects.some(row=>row.status==='applied'))&&narrative)prepareAuthorizedTurnOutput(db,guildId,narrative,scope,{
+      sourceRef:outputSource&&db.getWorldEvent(guildId,outputSource)?outputSource:null,world,nativeEntries,
+      nativeEffects:ordinaryEffects.filter(row=>row.status==='applied').map(row=>row.record_key),origin:source});
     // Validate against native operations staged in this transaction, not the old
     // state or model-described effects. Any failure rolls back the entire bundle.
     if(narrative) validateNarrativeClaims(db,guildId,narrative,scope,{staged:true,eventResults});
     return {events:eventResults,relationships:relationshipResults,handouts:handoutResults,
       npcMemories:cognition.memories,npcKnowledge:cognition.knowledge,npcGoals:cognition.goals,simulation,intents,world,typedIntents,
-      intentDiagnostics,nativeAdjudications,gmRulings,actionPlan,actionWindows,pvpAttempts,typedDialogue,contextMemories,reviewAudit,personalCandidates};
+      intentDiagnostics,nativeAdjudications,gmRulings,actionPlan,actionWindows,pvpAttempts,typedDialogue,contextMemories,reviewAudit,personalCandidates,ordinaryEffects};
   });
 }
 

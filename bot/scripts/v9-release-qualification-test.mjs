@@ -63,6 +63,11 @@ test('REL01 V96 semantic proposal/lexical-retirement gate is mandatory',()=>{
   assert(source.includes('"v96-semantic-proposals-test"'));
 });
 
+test('REL01 V96 ordinary native follow-through gate is mandatory',()=>{
+  const source=fs.readFileSync('scripts/validate-offline.mjs','utf8');
+  assert(source.includes('"v96-ordinary-effects-test"'));
+});
+
 test('REL01 V96 semantic material-output P0 gate is mandatory',()=>{
   const source=fs.readFileSync('scripts/validate-offline.mjs','utf8');
   assert(source.includes('"v96-semantic-output-p0-test"'));

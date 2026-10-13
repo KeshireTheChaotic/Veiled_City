@@ -12,6 +12,6 @@ export const freshNpcFocuses=['conversation','work','help','warning','offer','ru
 export const freshNpcRequestSchema=closed({version:{type:'integer',enum:[3]},kind:{type:'string',enum:['npc_fresh_request']},
   entity_key:str(160),focus:{type:'string',enum:freshNpcFocuses},source_refs:{type:'array',maxItems:6,items:str(200)}});
 export const freshNpcResponseSchema=closed({utterance:str(1400)});
-export const nativeOutcomeKinds=['pc_effect_receipt','roll_request','evidence_receipt','commitment','scene_entry'];
+export const nativeOutcomeKinds=['pc_effect_receipt','roll_request','evidence_receipt','commitment','scene_entry','ordinary_effect_receipt'];
 export const nativeOutcomeSchema=closed({version:{type:'integer',enum:[4]},kind:{type:'string',enum:['native_outcome']},
   receipt_kind:{type:'string',enum:nativeOutcomeKinds},ref:str(200)});

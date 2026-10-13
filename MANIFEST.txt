@@ -168,6 +168,7 @@ bot/scripts/v96-baseline-test.mjs
 bot/scripts/v96-corpus.mjs
 bot/scripts/v96-fresh-authoring-test.mjs
 bot/scripts/v96-native-actions-test.mjs
+bot/scripts/v96-ordinary-effects-test.mjs
 bot/scripts/v96-rules-discretion-test.mjs
 bot/scripts/v96-semantic-intake-test.mjs
 bot/scripts/v96-semantic-output-p0-test.mjs
@@ -267,6 +268,9 @@ bot/src/operational-metrics.js
 bot/src/operations/diagnostics.js
 bot/src/operations/health.js
 bot/src/operations/overview.js
+bot/src/ordinary-effect-proof.js
+bot/src/ordinary-effect-schema.js
+bot/src/ordinary-effects.js
 bot/src/outcome-preview.js
 bot/src/owned-community.js
 bot/src/owner-action-terminal.js
@@ -542,6 +546,7 @@ docs/V95_05_CODEX_KICKOFF.md
 docs/V95_05_DEPRECATION.md
 docs/V95_05_DEPRECATION_EVIDENCE.json
 docs/V95_VALIDATION_REPORTER_README.md
+docs/V96_05E_CONSEQUENCE_BRIDGE.md
 docs/V96_05R_OUTPUT_BOUNDARY_EXPERIMENT.md
 docs/V96_05R_OUTPUT_CONTRACT.md
 docs/V96_05S_SEMANTIC_CONTRACT.md
