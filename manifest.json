@@ -1,7 +1,7 @@
 {
   "package": "Veiled_City_Multiplayer_Discord",
   "version": "10.0.0",
-  "generated": "2026-10-12",
+  "generated": "2026-10-13",
   "content_normalization": "utf8-lf",
   "files": [
     {
@@ -41,8 +41,8 @@
     },
     {
       "path": "bot/.gitignore",
-      "size_bytes": 55,
-      "sha256": "0fce93aa90f39fc5e9d32533aa12061c48241f0994da819282c5bdc5161f8da2"
+      "size_bytes": 65,
+      "sha256": "97752bf31702d2155e23114888bf6aa9f0a30a9062c7237411ba0d1e828b1626"
     },
     {
       "path": "bot/data/.gitkeep",
@@ -680,11 +680,6 @@
       "sha256": "981b84621ae93f01f34070f3ed654949394941955a7d2397b6ed96010e009cae"
     },
     {
-      "path": "bot/scripts/v9-pvp-contract-test.mjs",
-      "size_bytes": 1007,
-      "sha256": "355c37f735260d0d748e335181300d640ef8a1143c42b965c0a72e36641df83f"
-    },
-    {
       "path": "bot/scripts/v9-pvp-hope-fear-test.mjs",
       "size_bytes": 26299,
       "sha256": "479d5d0de76eccb6072b463acc2eebeed9096a7e9f1a4d318abf50c4088bff4a"
@@ -701,8 +696,8 @@
     },
     {
       "path": "bot/scripts/v9-release-qualification-test.mjs",
-      "size_bytes": 16337,
-      "sha256": "3e805563d90a83ec8b03ded790f329862818a77e11260478557ee1b854a3eecc"
+      "size_bytes": 16622,
+      "sha256": "ca1f56c2b3bfe2823eb8addb9939e366480a9425c716371f03a602158a73dbf2"
     },
     {
       "path": "bot/scripts/v9-roll-truth-test.mjs",
@@ -785,6 +780,16 @@
       "sha256": "6b071974ccf64e42ff5367d917e8fb8d85620d61367e9b61c5e1172243165d7a"
     },
     {
+      "path": "bot/scripts/v95-deprecation-audit.mjs",
+      "size_bytes": 2218,
+      "sha256": "bc45e0d9141bd019d8dcfbcda099723df0555bb2b1ff811c67e7b57ac18d70fd"
+    },
+    {
+      "path": "bot/scripts/v95-deprecation-coverage-test.mjs",
+      "size_bytes": 3850,
+      "sha256": "a3c87da0e03c2c520369d0f1506db550337d5ebb777b0f175a4c675a0ade050b"
+    },
+    {
       "path": "bot/scripts/v95-inventory.mjs",
       "size_bytes": 4312,
       "sha256": "9002981a4a4b1d42c148a2a365a0bc4dc62915147da6802ef8667ef391dbb80d"
@@ -805,14 +810,19 @@
       "sha256": "bfb09797ef63307a99adc335317fcbaaef5bbab8e65e73b756862216637d4639"
     },
     {
+      "path": "bot/scripts/v95-validation-reporter-test.mjs",
+      "size_bytes": 3631,
+      "sha256": "3b505a780c7b83ea48f0f65de651c70de0e8f7c317ab7e3ec3819f5d2a6518ce"
+    },
+    {
       "path": "bot/scripts/validate-command-schema.mjs",
       "size_bytes": 582,
       "sha256": "995a255982387edff58e5f14c8bb07b5508c3b28a19952882aa5716c28aafbe8"
     },
     {
       "path": "bot/scripts/validate-offline.mjs",
-      "size_bytes": 5016,
-      "sha256": "a959bc727bd90538e311586692ee690a2c20be641003255850c1e6bc180389fa"
+      "size_bytes": 7798,
+      "sha256": "1300eb58af4c2885ac50c46ccfe6a976c0e9268d893886332a8ae7429c5956cc"
     },
     {
       "path": "bot/sql/schema.sql",
@@ -1110,11 +1120,6 @@
       "sha256": "5f62ce7366c3999ccf6c1dbc191241217151047011a70079307c391e763d7e1c"
     },
     {
-      "path": "bot/src/gm.js.20261009-144611.bak",
-      "size_bytes": 91721,
-      "sha256": "6b0ad7080d67422b3c48d6eda7fb6d69b688b091cf3b3e42d6c80689025c6e8b"
-    },
-    {
       "path": "bot/src/handout.js",
       "size_bytes": 2972,
       "sha256": "70b3f7d024e1dc35cd3ecdc6408ddca92626caec8c5e5045820fd9e084827fdb"
@@ -1183,11 +1188,6 @@
       "path": "bot/src/narrative-integrity.js",
       "size_bytes": 22333,
       "sha256": "773d625093b8c90a34e3e91331c512eab6eda9bd4f756b78dc63ec35d6976395"
-    },
-    {
-      "path": "bot/src/narrative-integrity.js.20261009-144611.bak",
-      "size_bytes": 18503,
-      "sha256": "b4b66002ec584b2bad4ce5483a91ee2b4592361d2e217806cce016ae237749be"
     },
     {
       "path": "bot/src/narrative-pvp.js",
@@ -2296,8 +2296,8 @@
     },
     {
       "path": "docs/README.md",
-      "size_bytes": 2227,
-      "sha256": "bd94ba5493ae69e42f742f03ee489f891c9dcd0ae8a194c583eead08c5674a41"
+      "size_bytes": 4537,
+      "sha256": "f4517e8aeaed23fee0605ded3fd12c4566eac25fae5db296ab3c100bb2e3b1cb"
     },
     {
       "path": "docs/README_HOTFIX.md",
@@ -2436,8 +2436,8 @@
     },
     {
       "path": "docs/TYPED_INTENT_PROGRESS.md",
-      "size_bytes": 293091,
-      "sha256": "01fb539850e13cb5a9dae68c7ba7f7606508479f954629a71609865b40915e7e"
+      "size_bytes": 297878,
+      "sha256": "4a9acaacdb3ad2ec96542bdb7b728b3f96fd8bbb65d4fe31a06ea70d530bdb88"
     },
     {
       "path": "docs/TYPED_INTENT_RELEASE_10.0.0.md",
@@ -2583,6 +2583,21 @@
       "path": "docs/V95_04_OPERATIONAL_METRICS.md",
       "size_bytes": 9845,
       "sha256": "b135c99bd1feaad80684253e656b971656078f8554ff6cf84a5f5bc8bea2f587"
+    },
+    {
+      "path": "docs/V95_05_CODEX_KICKOFF.md",
+      "size_bytes": 3433,
+      "sha256": "7ae1ec14a1dd1395721f97583becb89337d86ed9f2a62fd7a6a7f13b60141082"
+    },
+    {
+      "path": "docs/V95_05_DEPRECATION.md",
+      "size_bytes": 7120,
+      "sha256": "ee04c968241f300814b8a504f5fe83a319a619ed6bfb7e26f2d111f159a19189"
+    },
+    {
+      "path": "docs/V95_05_DEPRECATION_EVIDENCE.json",
+      "size_bytes": 910025,
+      "sha256": "8d7226d472c693ca2abaa430a29998692cffa4f01f6334bc167736c0ee4153f0"
     },
     {
       "path": "docs/V9_1_NARRATIVE_PVP_CONTRACT_REFERENCE.md",
@@ -2731,8 +2746,8 @@
     },
     {
       "path": "docs/V9_5_COVERAGE_CROSSWALK.csv",
-      "size_bytes": 223428,
-      "sha256": "1352181a4d3da36bd9177fb42e8965977485b441b4377b1486beb861bc19e2c6"
+      "size_bytes": 223367,
+      "sha256": "01cc2c5cbc18ecf0d1a19e58c8f37ee895614c4a6d85a20c00c3f67550f82afd"
     },
     {
       "path": "docs/V9_5_DEPRECATION_REGISTER.csv",
@@ -2771,8 +2786,8 @@
     },
     {
       "path": "docs/V9_5_SOURCE_INVENTORY.json",
-      "size_bytes": 250662,
-      "sha256": "39d62510a67ef5ed7c490eef5afcfa6d4be88f481286287190b64e97475de7bf"
+      "size_bytes": 247961,
+      "sha256": "34f7f2d30e0733039c8c645306c2ba61928a944473f932e8c769f0e55dfa01f6"
     },
     {
       "path": "docs/V9_CODEX_KICKOFF.md",
@@ -2813,6 +2828,16 @@
       "path": "docs/WORLD_DIRECTOR.md",
       "size_bytes": 7088,
       "sha256": "03b93af0d26ddd930f782ff9bb85accfda10ffe8579e279af16fe3c1f7afd1bb"
+    },
+    {
+      "path": "docs/apply_validation_reporter.py",
+      "size_bytes": 6972,
+      "sha256": "a21210cc717c51b9a28ea3f9e436caa201e1881eaa236d2cd0209f70966e3faf"
+    },
+    {
+      "path": "docs/self_test_reporter.py",
+      "size_bytes": 3458,
+      "sha256": "33c620647f02d0e9aa7599634f008f4120529e340bcae29cb09c59c8ade91562"
     }
   ]
 }

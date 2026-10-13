@@ -28,6 +28,11 @@ test('REL01 all release security, observability and historical reproduction gate
     'v95-operational-metrics-test'])assert(source.includes(`"${suite}"`),`${suite} must not be an optional/skipped release gate`);
 });
 
+test('REL01 V95 reporter and deprecation gates remain mandatory',()=>{
+  const source=fs.readFileSync(new URL('./validate-offline.mjs',import.meta.url),'utf8');
+  for(const id of ['v95-validation-reporter-test','v95-deprecation-coverage-test'])assert(source.includes(`"${id}"`));
+});
+
 async function entropy(faces,run){const original=crypto.randomInt;let n=0;
   crypto.randomInt=(min,max)=>{const v=faces[n++];assert(Number.isInteger(v)&&v>=min&&v<max,'offline native entropy exhausted');return v;};syncBuiltinESMExports();
   try{return await run();}finally{crypto.randomInt=original;syncBuiltinESMExports();assert.equal(n,faces.length);}}

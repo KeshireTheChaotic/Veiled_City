@@ -133,7 +133,6 @@ bot/scripts/v9-observation-compatibility-test.mjs
 bot/scripts/v9-publication-test.mjs
 bot/scripts/v9-pvp-agreement-test.mjs
 bot/scripts/v9-pvp-authorship-test.mjs
-bot/scripts/v9-pvp-contract-test.mjs
 bot/scripts/v9-pvp-hope-fear-test.mjs
 bot/scripts/v9-pvp-rounds-test.mjs
 bot/scripts/v9-pvp-typed-roll-test.mjs
@@ -154,10 +153,13 @@ bot/scripts/v94-pvp-profile-test.mjs
 bot/scripts/v94-pvp-qualification-test.mjs
 bot/scripts/v94-pvp-reaction-test.mjs
 bot/scripts/v95-autonomous-fear-test.mjs
+bot/scripts/v95-deprecation-audit.mjs
+bot/scripts/v95-deprecation-coverage-test.mjs
 bot/scripts/v95-inventory.mjs
 bot/scripts/v95-operational-metrics-test.mjs
 bot/scripts/v95-protected-narrative-test.mjs
 bot/scripts/v95-pvp-ux-test.mjs
+bot/scripts/v95-validation-reporter-test.mjs
 bot/scripts/validate-command-schema.mjs
 bot/scripts/validate-offline.mjs
 bot/sql/schema.sql
@@ -219,7 +221,6 @@ bot/src/expansion-contracts.js
 bot/src/failure-trace.js
 bot/src/gm-world-narrative.js
 bot/src/gm.js
-bot/src/gm.js.20261009-144611.bak
 bot/src/handout.js
 bot/src/history-reconciliation.js
 bot/src/idempotency.js
@@ -234,7 +235,6 @@ bot/src/message-span-ledger.js
 bot/src/movement-language.js
 bot/src/narrative-context.js
 bot/src/narrative-integrity.js
-bot/src/narrative-integrity.js.20261009-144611.bak
 bot/src/narrative-pvp.js
 bot/src/native-notice.js
 bot/src/native-publications.js
@@ -514,6 +514,9 @@ docs/V7_V8_DELTA_MATRIX.csv
 docs/V95_02_FINAL_INTEGRATION_COVERAGE.md
 docs/V95_03_PRIVATE_PVP_CONTROLS.md
 docs/V95_04_OPERATIONAL_METRICS.md
+docs/V95_05_CODEX_KICKOFF.md
+docs/V95_05_DEPRECATION.md
+docs/V95_05_DEPRECATION_EVIDENCE.json
 docs/V9_1_NARRATIVE_PVP_CONTRACT_REFERENCE.md
 docs/V9_2_CODEX_RESUME.md
 docs/V9_2_IMPLEMENTATION_PLAN.md
@@ -560,3 +563,5 @@ docs/V9_SOURCE_AUDIT.md
 docs/VALIDATION_REPORT.md
 docs/VOICE_NARRATION.md
 docs/WORLD_DIRECTOR.md
+docs/apply_validation_reporter.py
+docs/self_test_reporter.py
