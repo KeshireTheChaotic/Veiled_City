@@ -167,6 +167,7 @@ bot/scripts/v96-corpus.mjs
 bot/scripts/v96-native-actions-test.mjs
 bot/scripts/v96-rules-discretion-test.mjs
 bot/scripts/v96-semantic-intake-test.mjs
+bot/scripts/v96-semantic-output-p0-test.mjs
 bot/scripts/validate-command-schema.mjs
 bot/scripts/validate-offline.mjs
 bot/sql/schema.sql
@@ -535,6 +536,7 @@ docs/V96_CODEX_KICKOFF.md
 docs/V96_IMPLEMENTATION_PLAN.md
 docs/V96_INTENT_AUTHORITY_AUDIT.md
 docs/V96_NATIVE_ACTIONS.md
+docs/V96_OUTPUT_AUTHORITY_BLOCKER.md
 docs/V96_PRE_IMPLEMENTATION_PLAN.md
 docs/V96_PROGRESS.md
 docs/V96_RULE_DISCRETION_CONTRACT.md

@@ -696,8 +696,8 @@
     },
     {
       "path": "bot/scripts/v9-release-qualification-test.mjs",
-      "size_bytes": 17628,
-      "sha256": "07c3e6c02fc08e3efa03017e7726690204cba5714b14f2dd69621712e4391c2d"
+      "size_bytes": 17833,
+      "sha256": "35afe5b337932957f0f6f459d83e7f0404b3d1fca640cde47ae773161d34bd51"
     },
     {
       "path": "bot/scripts/v9-roll-truth-test.mjs",
@@ -850,14 +850,19 @@
       "sha256": "6f068c4fc63f41610cac5ac1936cec508f36bf66bf563ac4e0b401092e2781d8"
     },
     {
+      "path": "bot/scripts/v96-semantic-output-p0-test.mjs",
+      "size_bytes": 6100,
+      "sha256": "d6c7a76f4ffebef9489afb28c304f1d27b9ae399fb24d04a203daf98040ed9da"
+    },
+    {
       "path": "bot/scripts/validate-command-schema.mjs",
       "size_bytes": 582,
       "sha256": "995a255982387edff58e5f14c8bb07b5508c3b28a19952882aa5716c28aafbe8"
     },
     {
       "path": "bot/scripts/validate-offline.mjs",
-      "size_bytes": 7994,
-      "sha256": "51cb9613c43844c8391e68e4d2c47aaf3953c42d7d00c70c76441c9547695d5d"
+      "size_bytes": 8038,
+      "sha256": "a6ac7d4a5fb53cb6a1f79924e1496079125973280f700396f6d82d5a12035ce1"
     },
     {
       "path": "bot/sql/schema.sql",
@@ -2491,8 +2496,8 @@
     },
     {
       "path": "docs/TYPED_INTENT_PROGRESS.md",
-      "size_bytes": 316278,
-      "sha256": "16f2a23aaeb26ddb3dcb4ebb9db39ec8eeeee27ff3e4186b91488c1b8e05256d"
+      "size_bytes": 322259,
+      "sha256": "90c3c8d3a6ec202811818e50042be22116520e3f368152672aafccf49ebf29f8"
     },
     {
       "path": "docs/TYPED_INTENT_RELEASE_10.0.0.md",
@@ -2690,19 +2695,24 @@
       "sha256": "e9c35004320b17607b1427a5cf7d050d2feacdd3558888e032f8d227d9553678"
     },
     {
+      "path": "docs/V96_OUTPUT_AUTHORITY_BLOCKER.md",
+      "size_bytes": 14006,
+      "sha256": "dad34f9e0df133a23cbc619918eaef4f81820ea9b15f0d8679dcd833c1ae3c35"
+    },
+    {
       "path": "docs/V96_PRE_IMPLEMENTATION_PLAN.md",
       "size_bytes": 11139,
       "sha256": "3616a5661d7c00cc429005e02fbb6805d4ba36f7daddbe688f8f72b5c76184dd"
     },
     {
       "path": "docs/V96_PROGRESS.md",
-      "size_bytes": 12093,
-      "sha256": "005a77240f163ac8cfd2d6039a0ebd917631a5ef631e2e7e4e8bc82deaf02f26"
+      "size_bytes": 12856,
+      "sha256": "4c211ecc04f9f900748dca224c7e9ebb55e6281250fab8ba3b2bb4002c555bf2"
     },
     {
       "path": "docs/V96_RULE_DISCRETION_CONTRACT.md",
-      "size_bytes": 9583,
-      "sha256": "2704a4c0cdd699fc103ea2436c523433d5ae7b19808af1aaed35cf9867b7a74b"
+      "size_bytes": 11137,
+      "sha256": "c49275deeec3063ec2f2dfbbdbf7d4c8a037842ed0438ffe0cfb0cf3de16a427"
     },
     {
       "path": "docs/V96_SEMANTIC_INTAKE.md",

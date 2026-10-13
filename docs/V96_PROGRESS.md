@@ -18,11 +18,13 @@ Accepted typed intents are canonical adjudication inputs; human declarations own
 | V96-01 ordinary GM discretion | RULE01–04 | COMPLETED `c1e36e495bae7c21fb7fdf1fc319664ee6228c3e` |
 | V96-02 native resolution/options | ROLL01–04 | COMPLETED `8b3ab34d559249ad2f35357d58e8cd832d8cd0b6` |
 | V96-03 scoped review/continuation | HOLD01–03 | COMPLETED `2ad3ab9f3c98e81330976f925da9d341443ae696` |
-| V96-04 semantic response/intake | SEM01–03 | QUALIFIED — 137/137 offline suites; independent commit follows |
-| V96-05 lexical/claim cleanup | SEM04–07 | NOT STARTED |
+| V96-04 semantic response/intake | SEM01–03 | COMPLETED `de0c949533960cfe7c0866ee0e0f6ff9a5fb2a25` |
+| V96-05 lexical/claim cleanup | SEM04–07 | P0 BLOCKED — SEM06 focused 2 pass / 4 fail; uncommitted; see `V96_OUTPUT_AUTHORITY_BLOCKER.md` |
 | V96-06 context/token optimization | TOK01–04 | NOT STARTED |
 | V96-07 routing/retry/Director | TOK05–07 | NOT STARTED |
 | V96-08 integrated qualification | QUAL01–03 | NOT STARTED |
+
+2026-10-13 resume: local HEAD remains `de0c949`; six original P0 cases rerun unchanged, **2 pass / 4 fail / 0 skipped**, exit 1. Instrumented in-memory diagnostic snapshots confirm both unsafe paragraphs are pending party payloads without native output proof; no original assertions changed. Owner's ordinary-scene authority policy is recorded, but the native freeform coverage/meaning verification tradeoff remains unresolved. See the appended resume matrix and two concrete decision options in `V96_OUTPUT_AUTHORITY_BLOCKER.md`. No runtime changes, phase commit, full qualification or later-phase work. Current registered 138-suite tree remains known red; 137/137 refers only to V96-04.
 
 Execution runbook: [V96_PRE_IMPLEMENTATION_PLAN.md](V96_PRE_IMPLEMENTATION_PLAN.md). The preceding planning record is historical; the owner subsequently authorized “Begin V96”. No document alone is implementation proof. Execution remains sequential with one validated local commit per phase; no push/live/production authorization.
 
