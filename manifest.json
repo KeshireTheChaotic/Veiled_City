@@ -696,8 +696,8 @@
     },
     {
       "path": "bot/scripts/v9-release-qualification-test.mjs",
-      "size_bytes": 17027,
-      "sha256": "e6ac556cb14c33113e178e2a657a5dffa57149325a74a6f179664694562b8f0c"
+      "size_bytes": 17233,
+      "sha256": "184e62b6e0f1d10b1a78613b0a9d56f50806be615f6721fef3ef64426b9a46d4"
     },
     {
       "path": "bot/scripts/v9-roll-truth-test.mjs",
@@ -815,6 +815,11 @@
       "sha256": "3b505a780c7b83ea48f0f65de651c70de0e8f7c317ab7e3ec3819f5d2a6518ce"
     },
     {
+      "path": "bot/scripts/v96-action-fixture.mjs",
+      "size_bytes": 2593,
+      "sha256": "4fc0c28c54ef2c131d445068e59f268bbd617c6867da91e4df8e71652e7d1f03"
+    },
+    {
       "path": "bot/scripts/v96-baseline-test.mjs",
       "size_bytes": 6249,
       "sha256": "94c6fed6939c74a204e7a8afc6f9a27c78f17754f3ea9bd7d6db0ec99b5d3dd3"
@@ -823,6 +828,11 @@
       "path": "bot/scripts/v96-corpus.mjs",
       "size_bytes": 3881,
       "sha256": "c436452e024138e62ee4a6d6ccc73a953c268473774171c9e418faed9a8ef831"
+    },
+    {
+      "path": "bot/scripts/v96-native-actions-test.mjs",
+      "size_bytes": 9553,
+      "sha256": "503d34f083f1a99fa7902b7c70808e299b6969258541cca2eaa301820a3045c7"
     },
     {
       "path": "bot/scripts/v96-rules-discretion-test.mjs",
@@ -836,8 +846,8 @@
     },
     {
       "path": "bot/scripts/validate-offline.mjs",
-      "size_bytes": 7874,
-      "sha256": "9083f8fae2d059dd4be4613487264af01e8a42d2805c17877b3d93424d302858"
+      "size_bytes": 7914,
+      "sha256": "d6ee92c05eeb37fd9c8a1ef4ab43e8d2de0321dd020ea8c173c84ff0d0a3cc13"
     },
     {
       "path": "bot/sql/schema.sql",
@@ -986,8 +996,8 @@
     },
     {
       "path": "bot/src/commands.js",
-      "size_bytes": 176913,
-      "sha256": "552274ab6c2142818e86f2a21712c0d68c67a436ac135a9f11688c5d8f47c801"
+      "size_bytes": 177002,
+      "sha256": "409e80e14c575b609f2271ad4f780632674097a22fd1efdb9243067679fd0395"
     },
     {
       "path": "bot/src/concept-context.js",
@@ -1126,8 +1136,8 @@
     },
     {
       "path": "bot/src/gm-action-ruling.js",
-      "size_bytes": 14216,
-      "sha256": "a1512bad91222905f28c6e13651672668624d1621b6b3939db0ac540bcca8e04"
+      "size_bytes": 15595,
+      "sha256": "4067ba95db96f34ab3ea89081ab5b44836b4a12c7fd2442e79a17b409022b9c2"
     },
     {
       "path": "bot/src/gm-world-narrative.js",
@@ -1216,8 +1226,8 @@
     },
     {
       "path": "bot/src/native-notice.js",
-      "size_bytes": 7430,
-      "sha256": "ab8bfdca72d56757d2e895204b38a4f5e6cb75bae291a615c06f74231a36be21"
+      "size_bytes": 7622,
+      "sha256": "ca0ad4f534fa93e2929ee51543809c39347fc53010cdc0371094ae797ad977de"
     },
     {
       "path": "bot/src/native-publications.js",
@@ -1421,8 +1431,8 @@
     },
     {
       "path": "bot/src/roll-menu.js",
-      "size_bytes": 13863,
-      "sha256": "43c7f4afb4bc5e5fd38f00044564d313ecec5839d9dcd81b3b6fbe89eb301174"
+      "size_bytes": 14338,
+      "sha256": "0170399d991361805172e38413346ce8f329482c0811815f97ce19ab076ef0e6"
     },
     {
       "path": "bot/src/roll-operation-publications.js",
@@ -1436,8 +1446,8 @@
     },
     {
       "path": "bot/src/roll-requests.js",
-      "size_bytes": 18672,
-      "sha256": "e70815ed9a1d85065ebb45b071221277b1f7ec32a77f9aa59b8973e4144cbc51"
+      "size_bytes": 18967,
+      "sha256": "db7c8b1378a6237231f5b4b55cec0b0fdd4ea7e306e64157f8d47c8559545724"
     },
     {
       "path": "bot/src/roll-sharing.js",
@@ -1461,8 +1471,8 @@
     },
     {
       "path": "bot/src/rules-arbitration.js",
-      "size_bytes": 8830,
-      "sha256": "68cd0a99f132fdf08137a021d7f493028d74ec4c55109eb3ef70dc38464fe527"
+      "size_bytes": 8850,
+      "sha256": "d65d19861990a732e02ababe52d23b585d4ee3cfb7df90a5bccc25aaff058677"
     },
     {
       "path": "bot/src/rules-srd.js",
@@ -2441,8 +2451,8 @@
     },
     {
       "path": "docs/TYPED_INTENT_CONTRACTS.md",
-      "size_bytes": 85648,
-      "sha256": "4091585d08402bcf07a3cc9545128ced327193cf968da09bbecd194932aa8474"
+      "size_bytes": 86157,
+      "sha256": "fa7cd563c6d62a5315a003928cb6d22ecc9f7e83c7df0341d78d68df0bfaa6d8"
     },
     {
       "path": "docs/TYPED_INTENT_DELTA_AUDIT.md",
@@ -2456,8 +2466,8 @@
     },
     {
       "path": "docs/TYPED_INTENT_PROGRESS.md",
-      "size_bytes": 306759,
-      "sha256": "b2fa7929abed0b50cd3bb595a1a78e2dee7bd074a3c67a611dddb6671c8a1c13"
+      "size_bytes": 308948,
+      "sha256": "7170546a479666c41fef4411f733d68d126c3d745f4d3dd2468ea0de2db3b8b2"
     },
     {
       "path": "docs/TYPED_INTENT_RELEASE_10.0.0.md",
@@ -2645,19 +2655,24 @@
       "sha256": "f9fc6abe2bfac4b80b6ca52815b3fe5d21cd5c5fd87463a72f5dd7b9fdd53c3b"
     },
     {
+      "path": "docs/V96_NATIVE_ACTIONS.md",
+      "size_bytes": 4890,
+      "sha256": "e9c35004320b17607b1427a5cf7d050d2feacdd3558888e032f8d227d9553678"
+    },
+    {
       "path": "docs/V96_PRE_IMPLEMENTATION_PLAN.md",
       "size_bytes": 11139,
       "sha256": "3616a5661d7c00cc429005e02fbb6805d4ba36f7daddbe688f8f72b5c76184dd"
     },
     {
       "path": "docs/V96_PROGRESS.md",
-      "size_bytes": 10871,
-      "sha256": "5f2785b57d8db185549d1211ccd27b4487ce43d3f1dcb872d5113ea920d43513"
+      "size_bytes": 11584,
+      "sha256": "0a3530936cbb7ebb23cf8c216975ed9867768d7dc318cb0e205b0c64433a8410"
     },
     {
       "path": "docs/V96_RULE_DISCRETION_CONTRACT.md",
-      "size_bytes": 8961,
-      "sha256": "bf8ae1f06b00085f9a9be3476c377407262468fbbc7506375bdb080e1513cabe"
+      "size_bytes": 9583,
+      "sha256": "2704a4c0cdd699fc103ea2436c523433d5ae7b19808af1aaed35cf9867b7a74b"
     },
     {
       "path": "docs/V96_TOKEN_PERFORMANCE_REPORT.md",

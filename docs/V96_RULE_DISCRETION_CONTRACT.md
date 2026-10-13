@@ -43,6 +43,8 @@ Rule revisions bind actual current saved-row content as well as catalog metadata
 
 ## Review, compatibility and rollback
 
+V96-02 private execution: saved terms are owner-private proposals, not facts or effect permission. Pending presentation/delivery revalidates the exact ruling/request and current source, owner, scene, evidence and rules; native operations independently recheck before costs/RNG. New discretionary requests narrow outcome receipts to the character. Explicit redacted owner-sharing remains separate; old receipts are not migrated. Alternate traits/Experiences retain native applicability proof and explicit owner selection/payment. Generic success/Critical grants no ability, access, custody, HP effect or hidden knowledge.
+
 Distinguish epistemic uncertainty (ordinary GM fiction), rule ambiguity, missing character capability and missing native effect adapter. Only the latter actual authority gaps need scoped review; an unfamiliar verb is not an authority gap. A review record is non-actionable, source-bound and private; it cannot provide consent or unlock dependent effects. Independent sibling/other-owner actions must proceed. Revocation invalidates permission/publication, not immutable already-committed mechanics.
 
 V96-00 adds fixtures/contracts only: no runtime change, SQL migration or historical receipt rewrite. Later additive versions must hold unknown/unverifiable records rather than upgrade old consent. Rollback is code/flag scoped, never database restoration over newer dice, imported character deletion, rerolls or blind uncertain reposts. Existing manual/native services remain authoritative throughout.

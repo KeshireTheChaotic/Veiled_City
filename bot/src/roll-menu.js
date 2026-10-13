@@ -8,6 +8,7 @@ import { formatRollRequest, ownedRollRequest, rollRevision } from "./roll-reques
 import { PermissionError, StateConflictError, UserInputError } from "./errors.js";
 import {finishRollOperation} from './roll-operation-publications.js';
 import {splitDiscordText} from './discord/chunking.js';
+import {gmRulingDetails} from './gm-action-ruling.js';
 
 const prefix="vcr";
 const custom=(token,type,action)=>`${prefix}:${token}:${type}:${action}`;
@@ -18,8 +19,8 @@ const parse=id=>{
 const short=(value,max)=>String(value||"").slice(0,max);
 const costText=cost=>cost?`${cost.amount} ${cost.resource==='hope'?'Hope':cost.resource.replace("_"," ")}`:"no resource cost";
 const registryHash=data=>createHash('sha256').update(JSON.stringify(data)).digest('hex');
-function completedPayload(row,user,prefix='Saved native operation once.'){
-  const text=`${prefix}\n\n${formatRollRequest(row,{user})}`;
+function completedPayload(db,guild,row,user,prefix='Saved native operation once.'){
+  const text=`${prefix}\n\n${formatRollRequest(row,{user,db,guild})}`;
   return {content:text.length<=1900?text:`${prefix}\nRequest: ${row.record_key}; status: ${row.status}. Complete private receipt attached; /vc-roll result remains available.`,
     components:[],allowedMentions:{parse:[]},...(text.length>1900?{files:[new AttachmentBuilder(Buffer.from(text),{name:'private-native-roll.txt'})]}:{})};
 }
@@ -34,6 +35,8 @@ function render(db,guild,tokenRow){
   const lines=[`**Private Daggerheart roll menu — ${row.data.character_name}**`,`Request: \`${row.record_key}\``,
     `Attempt: ${row.data.attempt}`,`Base subtotal: ${base===null?"review required":base>=0?`+${base}`:base}`,
     `Applied Experience: ${experience>=0?`+${experience}`:experience}`,
+    ...(row.data.input?.gm_ruling?[`Difficulty: ${row.data.breakdown.difficulty===null?'not disclosed / awaiting adjudication':row.data.breakdown.difficulty}`,
+      ...gmRulingDetails(db,guild,row,data.owner_user_id)]:[]),
     ...options.map(item=>`${selected.has(item.key)?"☑":"☐"} **${item.label}** ${item.type==="alternate_trait"?`trait (subtotal ${item.effect.amount>=0?"+":""}${item.effect.amount})`:item.effect?.amount>=0?`+${item.effect.amount}`:item.effect?.amount||""} — ${costText(item.cost)}${item.exclusive_group?` — choose one: ${item.exclusive_group}`:""} — ${item.state.replaceAll('_',' ')} — ${item.reason}${item.frequency?` — ${item.frequency}`:''}`),
     `Status: **${row.status}** • request revision \`${rollRevision(row).slice(0,12)}\``,'Nothing is spent until you press **Confirm**. `/vc-roll contribute` remains the accessible fallback.'];
   const components=[];
@@ -62,6 +65,7 @@ export function openRollMenu(db,guild,user,request){
   const row=ownedRollRequest(db,guild,user,request);
   if(row.data.owner_user_id!==user)throw new PermissionError('Only the acting owner may open full private roll choices; helpers and partners use their scoped native contribution commands.');
   if(!["pending","needs_review","awaiting_selection"].includes(row.status))throw new StateConflictError("A current unsettled owned request is required.");
+  gmRulingDetails(db,guild,row,user); // Validate before creating registry/UI records; presentation grants no execution permission.
   const registry=arbitrateRollOptions(db,guild,user,{request:row.record_key,proposed_keys:[]});
   const token=randomUUID().replaceAll("-","").slice(0,24);
   const saved=db.saveCityRecord(guild,{kind:"roll_menu_token",key:token,status:"active",source_event:row.source_event,
@@ -139,7 +143,7 @@ export async function handleRollMenuInteraction(db,interaction,{rng}={}){
         description:item.source.proof_description},{rng});
       saveToken(db,interaction.guildId,token,{applied_keys:selected.map(item=>item.key)},"used");return amended;
     });
-    await finishRollOperation(db,interaction,row,()=>interaction.update(completedPayload(row,interaction.user.id,'Selections applied once.')));return true;
+    await finishRollOperation(db,interaction,row,()=>interaction.update(completedPayload(db,interaction.guildId,row,interaction.user.id,'Selections applied once.')));return true;
   }
   if(id.action==="roll"){
     row=db.transaction(()=>{
@@ -148,7 +152,7 @@ export async function handleRollMenuInteraction(db,interaction,{rng}={}){
         expected_revision:rollRevision(row),key:`menu-${token.record_key}-roll`},{rng});
       saveToken(db,interaction.guildId,token,{},"used");return result;
     });
-    await finishRollOperation(db,interaction,row,()=>interaction.update(completedPayload(row,interaction.user.id)));return true;
+    await finishRollOperation(db,interaction,row,()=>interaction.update(completedPayload(db,interaction.guildId,row,interaction.user.id)));return true;
   }
   return false;
 }

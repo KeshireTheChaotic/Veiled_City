@@ -15,8 +15,8 @@ Accepted typed intents are canonical adjudication inputs; human declarations own
 | Phase | Cases | Status |
 |---|---|---|
 | V96-00 baseline/contracts | BASE01–02 | COMPLETED `884541f4bfd6c9b61bfa95bd679df9ed85ec6523` |
-| V96-01 ordinary GM discretion | RULE01–04 | QUALIFIED — 134/134 offline suites; independent commit follows |
-| V96-02 native resolution/options | ROLL01–04 | NOT STARTED |
+| V96-01 ordinary GM discretion | RULE01–04 | COMPLETED `c1e36e495bae7c21fb7fdf1fc319664ee6228c3e` |
+| V96-02 native resolution/options | ROLL01–04 | QUALIFIED — 135/135 offline suites; independent commit follows |
 | V96-03 scoped review/continuation | HOLD01–03 | NOT STARTED |
 | V96-04 semantic response/intake | SEM01–03 | NOT STARTED |
 | V96-05 lexical/claim cleanup | SEM04–07 | NOT STARTED |
@@ -27,6 +27,8 @@ Accepted typed intents are canonical adjudication inputs; human declarations own
 Execution runbook: [V96_PRE_IMPLEMENTATION_PLAN.md](V96_PRE_IMPLEMENTATION_PLAN.md). The preceding planning record is historical; the owner subsequently authorized “Begin V96”. No document alone is implementation proof. Execution remains sequential with one validated local commit per phase; no push/live/production authorization.
 
 ## V96-00 — baseline and contracts (2026-10-12)
+
+Latest V96-02 evidence and receipt/rollback crosswalk: [V96_NATIVE_ACTIONS.md](V96_NATIVE_ACTIONS.md). Starting SHA `c1e36e495bae7c21fb7fdf1fc319664ee6228c3e`; clean tree verified. Focused 7/7, T1 116/116 test-runner cases across eight impacted suites, exit 0/no skips (D04 and D08 are assertion scripts wrapped as one case each). Final T2 **135/135**, exit 0, **372,434 ms**, zero failed/not-run, both D08/static/acceptance checks passed; manifest sync **585** files and separate `npm run check` exit 0. Network denied, live/billable 0. Historical entries below retain chronology. Result-only docs/resync/integrity do not alter executable inputs; no redundant full run.
 
 Starting HEAD `25f6d8013d0a6b07fca1e023d32d16de3e1eea25`; branch verified. Preserved dirty supplied V96 planning files, V95 bypass/qualification/pilot documents, README/progress and generated manifests. These documentation-only predecessors are intentionally included in the baseline handoff, not discarded or represented as V95-06 completion. No runtime code/configuration changed.
 

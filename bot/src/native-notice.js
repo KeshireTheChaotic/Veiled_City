@@ -10,6 +10,7 @@ import {currentScene} from './scene-continuity.js';
 import {typedRollProof} from './typed-roll-proof.js';
 import {renderFearEffect,validateFearEffect} from './pvp-fear-moves.js';
 import {damagePvpOwnerContext} from './pvp-profiles.js';
+import {assertGmRulingRequest} from './gm-action-ruling.js';
 export const noticeHash=value=>createHash('sha256').update(JSON.stringify(value)).digest('hex');
 function fail(){throw Object.assign(new Error('Native notice source, revision, owner or audience is stale.'),{code:'NATIVE_NOTICE'});}
 export function renderNativeNotice(db,guild,d){
@@ -54,7 +55,10 @@ export function renderNativeNotice(db,guild,d){
       &&db.getCityRecord(guild,'roll_request',r.data.tag.partner_request)?.subject_key===d.character;
     if(!own&&!participant&&!helper&&!shared&&!partner)fail();
     if(shared&&disclosure.context&&(ds.details.attempt!==disclosure.context||sourceConfirmedRollAttempt(db,guild,r)!==disclosure.context))fail();
-    return formatRollRequest(r,{user:d.user});
+    if(r.data.input?.gm_ruling&&r.status!=='resolved'){
+      try{assertGmRulingRequest(db,guild,r);}catch{fail();}
+    }
+    return formatRollRequest(r,{user:d.user,db,guild});
   }
   if(d.kind==='pvp_projection'){
     if(d.user)fail();return pvpProjection(db,guild,d.ref).data.text;

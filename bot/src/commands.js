@@ -1618,7 +1618,7 @@ GM notes: ${a.draft.gm_notes}`:""}`.slice(0,1950):"No aftermath draft exists for
       }
       const rows=sub==="result"?[ownedRollRequest(db,interaction.guildId,interaction.user.id,interaction.options.getString("request",true))]
         :pendingRollRequests(db,interaction.guildId,interaction.user.id);
-      const chunks=chunkTextLines((rows.map(row=>formatRollRequest(row,{user:interaction.user.id})).join("\n\n")||"No current pending roll requests.").split("\n"));
+      const chunks=chunkTextLines((rows.map(row=>formatRollRequest(row,{user:interaction.user.id,db,guild:interaction.guildId})).join("\n\n")||"No current pending roll requests.").split("\n"));
       await interaction.reply({content:chunks[0],ephemeral:true});
       for(const content of chunks.slice(1)) await interaction.followUp({content,ephemeral:true});return true;
     }
@@ -1649,7 +1649,7 @@ GM notes: ${a.draft.gm_notes}`:""}`.slice(0,1950):"No aftermath draft exists for
         await interaction.reply({ephemeral:true,allowedMentions:{parse:[]},content:`**Exact private share preview**\n${p.data.text}\n\nApprove only this attributed attempt with op:share, preview:${p.record_key}, scope:party, confirm:true and the current request revision. It does not establish outcomes or another PC's reaction.`});return true;
       }
       const row=contributeRoll(db,interaction.guildId,interaction.user.id,input);
-      const chunks=chunkTextLines(formatRollRequest(row,{user:interaction.user.id}).split("\n"));
+      const chunks=chunkTextLines(formatRollRequest(row,{user:interaction.user.id,db,guild:interaction.guildId}).split("\n"));
       await finishRollOperation(db,interaction,row,async()=>{
         await interaction.reply({content:chunks[0],ephemeral:true});
         for(const content of chunks.slice(1))await interaction.followUp({content,ephemeral:true});
@@ -1659,7 +1659,7 @@ GM notes: ${a.draft.gm_notes}`:""}`.slice(0,1950):"No aftermath draft exists for
     if(group==="roll"&&sub==="request"){
       if(!isGM(db,interaction)) throw new PermissionError("GM/admin permission required to adjudicate requests.");
       const row=prepareRollRequest(db,interaction.guildId,JSON.parse(interaction.options.getString("json",true)),interaction.user.id);
-      const chunks=chunkTextLines(formatRollRequest(row).split("\n"));
+      const chunks=chunkTextLines(formatRollRequest(row,{db,guild:interaction.guildId}).split("\n"));
       await interaction.reply({content:chunks[0],ephemeral:true});
       for(const content of chunks.slice(1)) await interaction.followUp({content,ephemeral:true});return true;
     }

@@ -15,6 +15,7 @@ suites.push("v94-pc-effect-authority-test","v94-pvp-profile-test","v94-pvp-attac
 suites.push("v95-validation-reporter-test","v95-deprecation-coverage-test");
 suites.push("v96-baseline-test");
 suites.push("v96-rules-discretion-test");
+suites.push("v96-native-actions-test");
 const report={fixture_only:true,network:"denied",billable_tokens:0,live_requests:0,suites:[],limits:["Synthetic fixtures do not establish unrestricted live-model semantics.","Consult I_HEARD_YOU_EVALUATION for measured false positives/negatives and unresolved ambiguities."]};
 
 // VC_VALIDATION_REPORT_V1: compact, atomic, local-only suite diagnostics.

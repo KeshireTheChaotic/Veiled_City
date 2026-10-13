@@ -12,6 +12,7 @@ import {assertPcCanAct} from "./pc-native-eligibility.js";
 import {blazeActionAuthorization} from "./pc-death.js";
 import {publishNativeNotice,queueNativeNotice,reserveNativeNotice} from "./native-publications.js";
 import {noticeHash} from "./native-notice.js";
+import {gmRulingDetails} from "./gm-action-ruling.js";
 const hash=value=>createHash("sha256").update(JSON.stringify(value)).digest("hex");
 const signed=value=>`${value>=0?"+":""}${value}`;
 export const rollRevision=hash;
@@ -116,7 +117,7 @@ export function prepareRollRequest(db,guild,input,actor,context={}){
     cityAudit(db,guild,"roll_request_prepared",key,null,after,actor);reserveRollAmendment(db,guild,after);return after;
   });
 }
-export function formatRollRequest(row,{user=null}={}){
+export function formatRollRequest(row,{user=null,db=null,guild=null}={}){
   const data=row.data,participant=data.tag?.participants.find(item=>item.user===user),b=participant?.breakdown||data.breakdown,net=b.advantage-b.disadvantage;
   const subtotal=b.subtotal===null?null:b.subtotal+(data.experiences||[]).reduce((sum,item)=>sum+item.bonus,0);
   if(user&&data.owner_user_id!==user&&!participant){
@@ -145,6 +146,7 @@ export function formatRollRequest(row,{user=null}={}){
     `Subtotal: ${subtotal===null?"PENDING":signed(subtotal)}`,
     `Formula: Hope d12 + Fear d12 ${subtotal===null?"+ pending values":signed(subtotal)}${net===0?"":net>0?" + one d6":" - one d6"}${data.helpers?.length?"; use highest applicable helper/own advantage d6, never their sum":""}.`,
     `Difficulty: ${b.difficulty===null?"not disclosed / awaiting GM adjudication":b.difficulty}`,
+    ...(db?gmRulingDetails(db,guild,row,user||data.owner_user_id):[]),
     ...(outcomeReview
       ?["Saved dice require GM outcome review: no success/failure is authorized without grounded Difficulty. Do not reroll."]:[]),
     ...b.unresolved.map(reason=>`Pending clarification: ${reason}`),
@@ -179,6 +181,8 @@ export function ownedRollRequest(db,guild,user,key){
 /** Retries reuse stored requests; failed private delivery is recoverable through the read-only pending command. */
 export async function publishRollRequests(db,guild,mutation,send){
   const keys=new Set((mutation.nativeAdjudications||[]).map(row=>row?.roll_request_ref).filter(Boolean));
+  for(const ruling of mutation.gmRulings||[])if(ruling.data?.adjudication?.roll_request_ref)
+    keys.add(ruling.data.adjudication.roll_request_ref);
   for(const receipt of mutation.intents||[]){
     if(receipt.status!=="accepted"||receipt.data.intent?.feature!=="roll"||!receipt.data.result) continue;
     keys.add(receipt.data.result.record_key);

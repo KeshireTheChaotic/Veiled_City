@@ -153,6 +153,25 @@ export function assertGmRulingRequest(db,guild,request){
   return row;
 }
 
+/** Owner-only pre-roll terms. These describe a proposed attempt, never certify world facts or material effects. */
+export function gmRulingDetails(db,guild,request,user){
+  if(!request.data.input?.gm_ruling||user!==request.data.owner_user_id)return [];
+  const row=db.getCityRecord(guild,"gm_action_ruling",request.data.input.gm_ruling);
+  if(!row||row.source_event!==request.source_event||row.data.actor!==request.subject_key
+    ||row.data.adjudication?.roll_request_ref!==request.record_key
+    ||row.data.accepted_intent!==request.data.input.accepted_intent
+    ||hash(validateGmRulingProposal(row.data.proposal))!==row.data.proposal_hash)
+    throw new Error("Exact saved ruling terms required for private presentation.");
+  if(request.status!=="resolved")assertGmRulingRequest(db,guild,request);
+  const p=row.data.proposal;
+  return [`Suggested trait: ${p.trait}; ${p.explanation}`,
+    `Risk (proposed, not an established outcome): ${p.risk}`,
+    `Success/failure stakes: ${p.stakes}`,`Difficulty rationale: ${p.difficulty_reason}`,
+    `Rule basis: ${row.data.rule_basis.refs.join(", ")}`,
+    "Success or Critical settles this attempt only. Access, knowledge, custody, damage and abilities require separate native authority.",
+    "You may propose a different trait or Experience; applicability needs current native verification. No optional spend is inferred."];
+}
+
 export const GM_RULING_PROMPT=[
   "When GM ACTION RULING CONTEXT is enabled, ordinary creative actions may include gm_ruling version 1 in their existing player_intent.",
   "Use narrative_no_roll only for costless, uncontested observation/ordinary attempts; standard_action_roll for meaningful uncertainty.",

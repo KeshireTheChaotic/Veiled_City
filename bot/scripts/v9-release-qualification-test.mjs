@@ -43,6 +43,11 @@ test('REL01 V96 rule-discretion gate is mandatory',()=>{
   assert(source.includes('"v96-rules-discretion-test"'));
 });
 
+test('REL01 V96 native-action gate is mandatory',()=>{
+  const source=fs.readFileSync(new URL('./validate-offline.mjs',import.meta.url),'utf8');
+  assert(source.includes('"v96-native-actions-test"'));
+});
+
 async function entropy(faces,run){const original=crypto.randomInt;let n=0;
   crypto.randomInt=(min,max)=>{const v=faces[n++];assert(Number.isInteger(v)&&v>=min&&v<max,'offline native entropy exhausted');return v;};syncBuiltinESMExports();
   try{return await run();}finally{crypto.randomInt=original;syncBuiltinESMExports();assert.equal(n,faces.length);}}
