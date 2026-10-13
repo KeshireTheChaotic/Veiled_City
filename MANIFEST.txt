@@ -160,6 +160,8 @@ bot/scripts/v95-operational-metrics-test.mjs
 bot/scripts/v95-protected-narrative-test.mjs
 bot/scripts/v95-pvp-ux-test.mjs
 bot/scripts/v95-validation-reporter-test.mjs
+bot/scripts/v96-baseline-test.mjs
+bot/scripts/v96-corpus.mjs
 bot/scripts/validate-command-schema.mjs
 bot/scripts/validate-offline.mjs
 bot/sql/schema.sql
@@ -517,6 +519,15 @@ docs/V95_04_OPERATIONAL_METRICS.md
 docs/V95_05_CODEX_KICKOFF.md
 docs/V95_05_DEPRECATION.md
 docs/V95_05_DEPRECATION_EVIDENCE.json
+docs/V95_VALIDATION_REPORTER_README.md
+docs/V96_ACCEPTANCE_CROSSWALK.csv
+docs/V96_CODEX_KICKOFF.md
+docs/V96_IMPLEMENTATION_PLAN.md
+docs/V96_INTENT_AUTHORITY_AUDIT.md
+docs/V96_PRE_IMPLEMENTATION_PLAN.md
+docs/V96_PROGRESS.md
+docs/V96_RULE_DISCRETION_CONTRACT.md
+docs/V96_TOKEN_PERFORMANCE_REPORT.md
 docs/V9_1_NARRATIVE_PVP_CONTRACT_REFERENCE.md
 docs/V9_2_CODEX_RESUME.md
 docs/V9_2_IMPLEMENTATION_PLAN.md
@@ -551,7 +562,9 @@ docs/V9_5_DEPRECATION_REGISTER.csv
 docs/V9_5_DEPRECATION_REGISTER.md
 docs/V9_5_IMPLEMENTATION_PLAN.md
 docs/V9_5_LEAN_VALIDATION_POLICY.md
+docs/V9_5_LIVE_PILOT.md
 docs/V9_5_LIVE_PILOT_PROTOCOL.md
+docs/V9_5_QUALIFICATION.md
 docs/V9_5_REGRESSION_MATRIX.csv
 docs/V9_5_SOURCE_AUDIT.md
 docs/V9_5_SOURCE_INVENTORY.json

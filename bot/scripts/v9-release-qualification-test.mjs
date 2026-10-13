@@ -33,6 +33,11 @@ test('REL01 V95 reporter and deprecation gates remain mandatory',()=>{
   for(const id of ['v95-validation-reporter-test','v95-deprecation-coverage-test'])assert(source.includes(`"${id}"`));
 });
 
+test('REL01 V96 baseline gate is mandatory',()=>{
+  const source=fs.readFileSync(new URL('./validate-offline.mjs',import.meta.url),'utf8');
+  assert(source.includes('"v96-baseline-test"'));
+});
+
 async function entropy(faces,run){const original=crypto.randomInt;let n=0;
   crypto.randomInt=(min,max)=>{const v=faces[n++];assert(Number.isInteger(v)&&v>=min&&v<max,'offline native entropy exhausted');return v;};syncBuiltinESMExports();
   try{return await run();}finally{crypto.randomInt=original;syncBuiltinESMExports();assert.equal(n,faces.length);}}

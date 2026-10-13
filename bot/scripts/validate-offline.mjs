@@ -13,6 +13,7 @@ suites.push("v94-pc-effect-authority-test","v94-pvp-profile-test","v94-pvp-attac
   "v9-pvp-rounds-test","v9-pvp-authorship-test","v9-observation-compatibility-test","v9-npc-observation-test","v9-pvp-hope-fear-test","v94-pvp-qualification-test","v9-continuation-test","v9-roll-truth-test","v9-publication-test","v9-roll-ux-test","v9-discord-hardening-test",
   "d08-observability-test","v9-baseline-regressions-test","v9-release-qualification-test","v95-protected-narrative-test","v95-autonomous-fear-test","v95-pvp-ux-test","v95-operational-metrics-test");
 suites.push("v95-validation-reporter-test","v95-deprecation-coverage-test");
+suites.push("v96-baseline-test");
 const report={fixture_only:true,network:"denied",billable_tokens:0,live_requests:0,suites:[],limits:["Synthetic fixtures do not establish unrestricted live-model semantics.","Consult I_HEARD_YOU_EVALUATION for measured false positives/negatives and unresolved ambiguities."]};
 
 // VC_VALIDATION_REPORT_V1: compact, atomic, local-only suite diagnostics.

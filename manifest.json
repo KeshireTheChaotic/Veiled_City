@@ -696,8 +696,8 @@
     },
     {
       "path": "bot/scripts/v9-release-qualification-test.mjs",
-      "size_bytes": 16622,
-      "sha256": "ca1f56c2b3bfe2823eb8addb9939e366480a9425c716371f03a602158a73dbf2"
+      "size_bytes": 16817,
+      "sha256": "d421728ee3d1cd1af5f0c74440312daf7eace1cdfbc780157378614e984c3573"
     },
     {
       "path": "bot/scripts/v9-roll-truth-test.mjs",
@@ -815,14 +815,24 @@
       "sha256": "3b505a780c7b83ea48f0f65de651c70de0e8f7c317ab7e3ec3819f5d2a6518ce"
     },
     {
+      "path": "bot/scripts/v96-baseline-test.mjs",
+      "size_bytes": 6249,
+      "sha256": "94c6fed6939c74a204e7a8afc6f9a27c78f17754f3ea9bd7d6db0ec99b5d3dd3"
+    },
+    {
+      "path": "bot/scripts/v96-corpus.mjs",
+      "size_bytes": 3881,
+      "sha256": "c436452e024138e62ee4a6d6ccc73a953c268473774171c9e418faed9a8ef831"
+    },
+    {
       "path": "bot/scripts/validate-command-schema.mjs",
       "size_bytes": 582,
       "sha256": "995a255982387edff58e5f14c8bb07b5508c3b28a19952882aa5716c28aafbe8"
     },
     {
       "path": "bot/scripts/validate-offline.mjs",
-      "size_bytes": 7798,
-      "sha256": "1300eb58af4c2885ac50c46ccfe6a976c0e9268d893886332a8ae7429c5956cc"
+      "size_bytes": 7832,
+      "sha256": "0d165d25954094326cc5883df0feb6de37680037f5966983544db9dab83af0b3"
     },
     {
       "path": "bot/sql/schema.sql",
@@ -2296,8 +2306,8 @@
     },
     {
       "path": "docs/README.md",
-      "size_bytes": 4537,
-      "sha256": "f4517e8aeaed23fee0605ded3fd12c4566eac25fae5db296ab3c100bb2e3b1cb"
+      "size_bytes": 1890,
+      "sha256": "9d811fa4bb0def479d0b8a3596e148d2770130972d660a66ed4276369b8d417b"
     },
     {
       "path": "docs/README_HOTFIX.md",
@@ -2421,8 +2431,8 @@
     },
     {
       "path": "docs/TYPED_INTENT_CONTRACTS.md",
-      "size_bytes": 83708,
-      "sha256": "5ac9ff66f03d5f1fe75752c2baf669b2422f16b9fd153f20a6369c6e5511d8de"
+      "size_bytes": 84548,
+      "sha256": "c91bde28386231107f050470a53f75ec39c1bfff9a9b44e47d297357468dbbff"
     },
     {
       "path": "docs/TYPED_INTENT_DELTA_AUDIT.md",
@@ -2436,8 +2446,8 @@
     },
     {
       "path": "docs/TYPED_INTENT_PROGRESS.md",
-      "size_bytes": 297878,
-      "sha256": "4a9acaacdb3ad2ec96542bdb7b728b3f96fd8bbb65d4fe31a06ea70d530bdb88"
+      "size_bytes": 303501,
+      "sha256": "8a4025fa9c2565fbd924412f28a812be0dc2a48bf038df69752894dc10bfd81b"
     },
     {
       "path": "docs/TYPED_INTENT_RELEASE_10.0.0.md",
@@ -2598,6 +2608,51 @@
       "path": "docs/V95_05_DEPRECATION_EVIDENCE.json",
       "size_bytes": 910025,
       "sha256": "8d7226d472c693ca2abaa430a29998692cffa4f01f6334bc167736c0ee4153f0"
+    },
+    {
+      "path": "docs/V95_VALIDATION_REPORTER_README.md",
+      "size_bytes": 4537,
+      "sha256": "f4517e8aeaed23fee0605ded3fd12c4566eac25fae5db296ab3c100bb2e3b1cb"
+    },
+    {
+      "path": "docs/V96_ACCEPTANCE_CROSSWALK.csv",
+      "size_bytes": 4847,
+      "sha256": "afc7521a1c77a54fcb956cbb714dcdd59c521103d35edec7e5e0163000d6efdb"
+    },
+    {
+      "path": "docs/V96_CODEX_KICKOFF.md",
+      "size_bytes": 4567,
+      "sha256": "f9f9bd3a091676bfca7942ff1faecc27f61392a5c8ee207e1e8f0504383d742a"
+    },
+    {
+      "path": "docs/V96_IMPLEMENTATION_PLAN.md",
+      "size_bytes": 37045,
+      "sha256": "0ef440c7131da2fbe97fc4cbe25c289b4382452a4ddf7f91d942aa403bcd4f92"
+    },
+    {
+      "path": "docs/V96_INTENT_AUTHORITY_AUDIT.md",
+      "size_bytes": 7224,
+      "sha256": "39b40ab3cc4eb0c617e4e28e67fbe83b6c74d2c43531da1587899df40b637e2c"
+    },
+    {
+      "path": "docs/V96_PRE_IMPLEMENTATION_PLAN.md",
+      "size_bytes": 11139,
+      "sha256": "3616a5661d7c00cc429005e02fbb6805d4ba36f7daddbe688f8f72b5c76184dd"
+    },
+    {
+      "path": "docs/V96_PROGRESS.md",
+      "size_bytes": 6018,
+      "sha256": "04188da9bf1a028adcc0b3210a2492f5a482cbe15ba705e0188dc1cdddea04a3"
+    },
+    {
+      "path": "docs/V96_RULE_DISCRETION_CONTRACT.md",
+      "size_bytes": 5996,
+      "sha256": "2db6b80443b881a770fbbcf7188b252eea09dad9196502f7211f7cca5b71077a"
+    },
+    {
+      "path": "docs/V96_TOKEN_PERFORMANCE_REPORT.md",
+      "size_bytes": 4863,
+      "sha256": "a429cd5959fbc570e36d4dddb9ec225a4cf4c37dab63504292efc27b48ab382f"
     },
     {
       "path": "docs/V9_1_NARRATIVE_PVP_CONTRACT_REFERENCE.md",
@@ -2770,9 +2825,19 @@
       "sha256": "e14bf7e7980e15ab5531bfc10b67b917a7ce8fd4842b9ec1f32af4f2f6be546e"
     },
     {
+      "path": "docs/V9_5_LIVE_PILOT.md",
+      "size_bytes": 5548,
+      "sha256": "e02b5f8e776851f3c456174f794be1900f3c0cde0048c6e1978c58ccc8bb6c4c"
+    },
+    {
       "path": "docs/V9_5_LIVE_PILOT_PROTOCOL.md",
       "size_bytes": 4769,
       "sha256": "85ab78252ceee8f95f30f7a64984fe8ad93a9379451fb7b3afdce32cfa7e123c"
+    },
+    {
+      "path": "docs/V9_5_QUALIFICATION.md",
+      "size_bytes": 8079,
+      "sha256": "bbd78970ea2718d0f09ecb7b9acbe34a49cf915500e8416967987c5016e36854"
     },
     {
       "path": "docs/V9_5_REGRESSION_MATRIX.csv",

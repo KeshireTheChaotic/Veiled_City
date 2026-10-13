@@ -437,3 +437,9 @@ UI checkpoints/tokens/delivery rows are noncanonical operational coordination, n
 Accepted typed intents are canonical adjudication inputs; human declarations own intent; native receipts own outcomes.
 
 GM-only `/vc-admin ops` bypasses player upserts, command receipts and continuation/publication execution. Its native health projection is SELECT-only; no validators with effects, models, RNG, recovery, source changes or live guild inspection. It returns ephemeral attachments, with closed statuses/codes and guild-scoped salted opaque references, never private prose, raw identifiers, payloads or secrets. In-memory aggregates are bounded and process-lifetime, not campaign memory or billing records. Native pending/uncertain status is not authority to advance an exchange or retry delivery. Missing usage/age stays unknown; configured model costs are explicitly estimates, never charges. See [V95-04 measurement and recovery contract](V95_04_OPERATIONAL_METRICS.md).
+
+## V96-00 baseline authority
+
+Accepted typed intents are canonical adjudication inputs; human declarations own intent; native receipts own outcomes.
+
+The [V96 discretion contract](V96_RULE_DISCRETION_CONTRACT.md) formalizes the current source and future bounded generic-action proposal boundary; it does not yet enable new mechanics or flags. Existing generic SRD rolls/no-roll receipts remain native; absence of a bespoke verb is not absence of a rule. Generic dice can never grant missing capabilities, costs, access, knowledge, PC damage or another owner's agency. V95-06 is owner-BYPASSED; live validation remains unknown and optional, not V96 authority. See [source/case audit](V96_INTENT_AUTHORITY_AUDIT.md) and [measurements](V96_TOKEN_PERFORMANCE_REPORT.md). No source/output/privacy/native guard or original assertion is retired.

@@ -1,0 +1,31 @@
+phase,id,area,required_positive_and_negative_evidence,source_touchpoints_hint,authority_receipt_or_gate
+V96-00,BASE01,Baseline,Local post-V95-06 SHA/suite ledger confirmed; metrics categories/report states measured or unknown,none,none
+V96-00,BASE02,Corpus,Small reused mixed-intent/offline/agency corpus and rubric including prior four-owner fixtures,none,none
+V96-01,RULE01,Narrative no-roll,"Authorized mundane act requires no die, zero-cost native source/receipt, observed facts only",rules-arbitration;typed-intents,native outcome receipt
+V96-01,RULE02,Creative standard roll,"Open phrasing and improvised tactic ground generic SRD roll, trait/Difficulty/stakes before dice",rules-arbitration;rule-reference-catalog,roll request
+V96-01,RULE03,Capability boundary,Shadow Tell or high roll cannot create remote scouting spell/power absent legitimate character feature,rules-arbitration;character sheet,needs_review
+V96-01,RULE04,Provisional rule,Absent/invalid special-rule reference held for review; no fake rule citation or Difficulty,rules-arbitration;rule-reference-catalog,review
+V96-02,ROLL01,Owner options,Private suggested trait/Experience cost alternatives verified before any Hope/Stress spend,roll-options;roll-requests,source-bound choices
+V96-02,ROLL02,Duality critical,Native Duality success/Fear/Critical and replay exactly once; no model-generated dice,typed-mechanics;native dice,roll receipt
+V96-02,ROLL03,Mutation proof,Roll success does not create forbidden item/access/PC HP/special spell; requires separate native effect,narrative-integrity;state,effect boundary
+V96-02,ROLL04,PvP rules,"PvP no Hope, immediate qualifying Fear, owner defense/Armor, no defender-reaction GM Fear",pvp-fear;pc-incoming,P0 parity
+V96-03,HOLD01,Unsupported effect,Genuinely unsupported mechanics preserved as scoped non-actionable needs_review,action-continuation;ai-review,review receipt
+V96-03,HOLD02,Mixed-player continuity,One action held while two independent PC actions and NPC conversation proceed,action-dependency;turn-orchestration,continuation receipts
+V96-03,HOLD03,Revocation/restart,Scene/source/owner changes prevent stale completion; no duplicate roll/send/cost,turn-orchestration;outbox,CAS/idempotency
+V96-04,SEM01,Routing false negative,Idiomatic player action and reflective/indirect need reach GM semantic adjudication,gm.shouldRespond;player-language,response evidence
+V96-04,SEM02,Compound source,Mixed recall+action+speech not eaten by lexical span router,index;message-span-ledger,source ledger
+V96-04,SEM03,Idle table chatter,Ordinary player chatter not universally turned into paid GM responses,gm.shouldRespond,routing quality
+V96-05,SEM04,Vows/quotes,Quoted/conditional desire cannot auto-create personal arc; authentic goal can become nonbinding candidate,personal-continuity,typed owner candidate
+V96-05,SEM05,Canon proposal,Ordinary mention of canon does not force approval workflow; explicit private proposal does,gm;canon,source+review
+V96-05,SEM06,Narrative paraphrases,Unverified PC injury/choice/custody not published even with novel wording; harmless idioms pass,narrative-integrity;consequence-reconciliation,P0 effect guard
+V96-05,SEM07,NPC dossier,Court/ghost descriptive word collision does not grant unearned awareness/personality mechanics,npc-cognition;seed-drafts,source profile
+V96-06,TOK01,Context dedup,Same source not serialized redundantly; required authority and salient lore remain,context-planner;prompt-budget,budget+fidelity
+V96-06,TOK02,Omission recovery,Unresolved thread/important obscure clue retrievable after relevance selection,context-planner;memory,retrieval proof
+V96-06,TOK03,Cache boundary,Stable-prefix reuse but guild/audience/revision changes invalidate; no private leakage,gm prompt cache/config,privacy
+V96-06,TOK04,Output budget,"Short ordinary, long compound turns produce complete required schema with no increased truncation",gm;prompt-budget,structured output
+V96-07,TOK05,Call path,Native-only zero provider calls; direct GM normally one; optional router+GM two; no per-clause extra,gm;index,provider counts
+V96-07,TOK06,Retry reliability,No hidden/after-commit provider retries; only bounded repair and explainable response,gm;operational-metrics,timeout+idempotency
+V96-07,TOK07,Director cadence,Cadence-driven GM world simulation retains NPC agendas; no per-NPC paid fan-out,director;gm,narrative continuity
+V96-08,QUAL01,Native authority,FH40 PVP30/PVP30q OBS21 D08 native damage/death/privacy/outbox all retained,validate-offline,release gate
+V96-08,QUAL02,Performance quality,Before/after aggregate tokens/cost/retries/p50/p95 plus human-readable fiction continuity evaluation,operational-metrics,offline comparison
+V96-08,QUAL03,Live boundary,Offline PASS distinct from separately owner-authorized paid Discord real-model stage,pilot protocol,authorization
