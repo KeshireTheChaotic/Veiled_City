@@ -50,7 +50,7 @@ export function commitGmTurn({db,guild,session,result,scope,speaker,label,meta={
         }
       }
     }
-    const canonProposals=applyCanonProposalDrafts(db,guild.id,session.id,[...proposalMap.values()],scope,meta);
+    const canonProposals=applyCanonProposalDrafts(db,guild.id,session.id,[...proposalMap.values()],scope,{...meta,typedIntents:mutation.typedIntents});
     for(const r of mutation.events||[]){
       if(!(r?.blocked&&r.type==="canon"&&r.event?.key)) continue;
       const key=String(r.event.key||"").trim().toLowerCase();

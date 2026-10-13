@@ -58,6 +58,11 @@ test('REL01 V96 semantic intake gate is mandatory',()=>{
   assert(source.includes('"v96-semantic-intake-test"'));
 });
 
+test('REL01 V96 semantic proposal/lexical-retirement gate is mandatory',()=>{
+  const source=fs.readFileSync('scripts/validate-offline.mjs','utf8');
+  assert(source.includes('"v96-semantic-proposals-test"'));
+});
+
 test('REL01 V96 semantic material-output P0 gate is mandatory',()=>{
   const source=fs.readFileSync('scripts/validate-offline.mjs','utf8');
   assert(source.includes('"v96-semantic-output-p0-test"'));

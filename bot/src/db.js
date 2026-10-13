@@ -17,6 +17,7 @@ import { archiveScenePresence } from "./scene-continuity.js";
 import { relationshipEvidence } from "./presentation-evidence.js";
 import { activeEvidence, evidenceType } from "./epistemic.js";
 import { validateChannelRouting } from "./routing-diagnostics.js";
+import {assertCanonProposalProof} from './semantic-candidate-source.js';
 
 /** SQLite repository facade and transaction boundary for campaign state. */
 export class VeiledDB {
@@ -2110,6 +2111,7 @@ export class VeiledDB {
     const proposal=this.getCanonProposal(guildId,id); if(!proposal) throw new Error("Canon proposal not found.");
     if(["accepted","rejected"].includes(proposal.status)) throw new Error(`Canon proposal is already ${proposal.status}.`);
     if(!["accept","reject","custom"].includes(resolution)) throw new Error("Invalid canon proposal resolution.");
+    if(resolution!=='reject')assertCanonProposalProof(this,guildId,proposal,visibility);
     if(resolution==="custom"&&!String(customValue||"").trim()) throw new Error("A custom proposal resolution requires a value.");
 
     // A proposal already linked to a pending canon conflict is resolved through that conflict,
@@ -2300,6 +2302,8 @@ export class VeiledDB {
   resolveCanonConflict(guildId,id,{resolution="existing",customValue="",actorId=null}={}){
     const c=this.db.prepare("SELECT * FROM canon_conflicts WHERE id=? AND guild_id=? AND status='pending'").get(id,guildId); if(!c) throw new Error("Pending canon conflict not found.");
     const existing=c.existing_event_id?this.db.prepare("SELECT * FROM canon_events WHERE id=?").get(c.existing_event_id):null;
+    if(resolution!=='existing'&&c.source_type==='canon_proposal'&&c.source_id)
+      assertCanonProposalProof(this,guildId,this.getCanonProposal(guildId,c.source_id),c.proposed_visibility);
     if(resolution==="existing"){
       this.db.prepare("UPDATE canon_conflicts SET status='resolved_existing',resolved_value=?,resolved_by=?,resolved_at=CURRENT_TIMESTAMP WHERE id=?").run(existing?.value||"",actorId,id);
       if(c.source_type==="canon_proposal"&&c.source_id){

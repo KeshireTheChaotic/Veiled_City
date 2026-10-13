@@ -39,6 +39,16 @@ const publicationFixtureMigrations=[{suite:'v9-publication-test',
   {suite:'end-to-end-i-test',
     old:'assert.equal(result.narration,"Rain patters against the window.","Native validation retains safe narration instead of replacing every intent turn");',
     current:'assert.equal(result.narration,"A low, uneven hum hangs in the room. The scent of coffee drifts through the air.","Native validation retains safe narration instead of replacing every intent turn");'}];
+// V96-05S deliberately removes inferred traits; explicit dossier/history contrasts preserve the positive authority lane.
+const semanticFixtureMigrations=[{suite:'npc-cognition-regression-test',
+  old:'assert(Number(eliasWren.decision_profile.contract_honor)>50,"contract-specialist profile did not receive contract lens");',
+  current:'assert.equal(eliasWren.decision_profile.contract_honor,50,"Unstructured dossier wording is not a contract score.");'},
+  {suite:'npc-cognition-regression-test',old:'assert(Number(eliasWren.decision_profile.hospitality_reciprocity)>50,"hospitality/contract reciprocity lens missing");',
+    current:'assert.equal(eliasWren.decision_profile.hospitality_reciprocity,50,"Unstructured dossier wording is not a reciprocity score.");'},
+  {suite:'npc-cognition-regression-test',old:'assert.equal(eliasWren.decision_profile.veil_awareness,"aware");',
+    current:'assert.equal(eliasWren.decision_profile.veil_awareness,"limited");'},
+  {suite:'production-regression-test',old:'assert.equal(playerProposalResults[0].row.source,"player_private_scene");',
+    current:'assert.equal(playerProposalResults[0].row.source,"typed_private_proposal_v2");'}];
 test("DEP01/02/04 retired artifacts are absent; historical hashes and all mandatory suites remain",()=>{
   for(const row of evidence.retired){assert(!fs.existsSync(path.join(root,row.file)),row.file);assert.match(row.sha256,/^[a-f0-9]{64}$/);
     assert.match(row.last_change,/^[a-f0-9]{40}$/);}
@@ -47,7 +57,7 @@ test("DEP01/02/04 retired artifacts are absent; historical hashes and all mandat
   for(const id of evidence.mandatory_suites)assert(runner.includes(`"${id}"`),`${id} cannot be removed without proof`);
   for(const row of evidence.assertions){
     const source=fs.readFileSync(`scripts/${row.old_suite}.mjs`,"utf8");
-    assert(source.includes(row.assertion)||publicationFixtureMigrations.some(migration=>row.old_suite===migration.suite
+    assert(source.includes(row.assertion)||[...publicationFixtureMigrations,...semanticFixtureMigrations].some(migration=>row.old_suite===migration.suite
       &&row.assertion===migration.old&&source.includes(migration.current)),`${row.old_suite}:${row.line} historical assertion cannot be silently dropped`);
   }
 });

@@ -1,5 +1,9 @@
 # Typed Intent Authority Contracts
 
+## V96-05S optional semantic proposals (qualified offline: 141/141)
+
+Accepted typed intents are canonical adjudication inputs; authenticated human declarations own intent; native receipts own outcomes. Existing combined GM `other` conversational operations may propose a personal candidate or an explicit private canon submission. Native source/offset/owner/current-scene/audience/consumption/withdrawal proof is mandatory; model words, `gm` flags and lexical cues cannot replace it. Personal candidates remain private optional `desire` records until their owner confirms exact source-bound terms; never automatic vows, feelings, arcs or consent. New versioned canon rows need exact authored value and current proof before native human-GM promotion/direct conflict resolution; stale rejection remains possible, missing v2 proof fails closed, historical legitimate outcomes are not erased. Explicit bounded dossier attributes or conservative defaults replace court/ghost/veil trait inference; existing profiles/history stay unchanged. [Complete source and compatibility contract](V96_05S_SEMANTIC_CONTRACT.md). 05R publication rules remain authoritative; semantic candidate classification is not universal meaning verification.
+
 ## V96-05R common output authority (qualified offline)
 
 Accepted typed intents are canonical adjudication inputs; authenticated human declarations own intent; native services and receipts own outcomes. Narration is a projection, not an effect executor. The common ordinary/private/Director/publication boundary requires exact native rendered parts and persistent final-payload/source/audience proof; an empty claim array, model approval, arbitrary text hash or accepted unresolved intent cannot supply it. Revocation holds future output, never rewinds committed mechanics. Versioned historical readers fail closed on missing proof.

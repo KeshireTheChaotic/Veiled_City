@@ -105,6 +105,7 @@ bot/scripts/scene-action-window-test.mjs
 bot/scripts/scene-entry-test.mjs
 bot/scripts/seed-data-regression-test.mjs
 bot/scripts/seed-drafts-regression-test.mjs
+bot/scripts/semantic-proposal-fixtures.mjs
 bot/scripts/session2-message-contract-test.mjs
 bot/scripts/session2-replay-test.mjs
 bot/scripts/simulation-regression-test.mjs
@@ -170,6 +171,7 @@ bot/scripts/v96-native-actions-test.mjs
 bot/scripts/v96-rules-discretion-test.mjs
 bot/scripts/v96-semantic-intake-test.mjs
 bot/scripts/v96-semantic-output-p0-test.mjs
+bot/scripts/v96-semantic-proposals-test.mjs
 bot/scripts/validate-command-schema.mjs
 bot/scripts/validate-offline.mjs
 bot/sql/schema.sql
@@ -316,6 +318,7 @@ bot/src/scoped-query.js
 bot/src/seed-commands.js
 bot/src/seed-data.js
 bot/src/seed-drafts.js
+bot/src/semantic-candidate-source.js
 bot/src/serial-queue.js
 bot/src/session-briefs.js
 bot/src/simulation-commands.js
@@ -541,6 +544,7 @@ docs/V95_05_DEPRECATION_EVIDENCE.json
 docs/V95_VALIDATION_REPORTER_README.md
 docs/V96_05R_OUTPUT_BOUNDARY_EXPERIMENT.md
 docs/V96_05R_OUTPUT_CONTRACT.md
+docs/V96_05S_SEMANTIC_CONTRACT.md
 docs/V96_ACCEPTANCE_CROSSWALK.csv
 docs/V96_ACTION_REVIEW.md
 docs/V96_CODEX_KICKOFF.md

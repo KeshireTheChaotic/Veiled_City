@@ -21,6 +21,8 @@ import { saveContextMemories } from "./context-memory.js";
 import { stagePvpAttempts } from "./narrative-pvp.js";
 import { applyGeneratedPcEffect } from "./pc-effects.js";
 import { relationshipProvenance, artifactProvenance, inferredSource } from "./presentation-evidence.js";
+import {captureArcCandidate} from './personal-continuity.js';
+import {ownerSemanticSource,semanticCandidateHash} from './semantic-candidate-source.js';
 
 export function summarizeRoster(rows){
   return rows.map(r=>({
@@ -297,17 +299,29 @@ export function applyCanonProposalDrafts(db,guildId,sessionId,drafts=[],scope={m
     const value=String(d?.value||"").trim();
     if(!key||!value) throw new Error("Canon proposal draft requires key and value.");
     const visibility=["public","party","gm"].includes(String(d?.visibility||"").toLowerCase())?String(d.visibility).toLowerCase():"party";
+    let verified;
+    for(const intent of meta.typedIntents||[]){
+      if(intent.data?.operation!=='proposal_campaign_canon')continue;
+      try{
+        const candidate=ownerSemanticSource(db,guildId,intent.record_key,scope,'proposal_campaign_canon',meta.messageId);
+        if(candidate.statement.includes(value)){verified=candidate;break;}
+      }catch(error){if(error.code!=='SEMANTIC_PROPOSAL')throw error;}
+    }
+    if(!verified){out.push({ok:false,blocked:true,error:'Canon draft lacks its current typed private owner request and exact authored value.',draft:d});continue;}
     const before=db.findCanonProposalByCharacterValue(scope.actorCharacterId,key,value);
     const row=db.upsertCanonProposal(guildId,scope.actorCharacterId,null,{
       key,value,visibility,reason:String(d?.reason||"").trim()
     },{
-      source:"player_private_scene",
+      source:"typed_private_proposal_v2",
       proposedByUserId:scope.actorUserId,
       proposedByCharacterId:scope.actorCharacterId,
       sessionId:sessionId||null,
       channelId:meta.channelId||null,
       messageId:meta.messageId||null
     });
+    if(!['accepted','rejected'].includes(row.status))db.saveCityRecord(guildId,{kind:'canon_proposal_source',key:row.id,
+      status:'verified',visibility:'gm',source_event:verified.source.event_key,data:{version:1,proof:verified.proof,
+        terms_hash:semanticCandidateHash([row.character_id,row.proposed_by_user_id,row.canon_key,row.proposed_value,row.proposed_visibility])}});
     out.push({ok:true,row,created:!before,source:"player_private_scene"});
   }
   return out;
@@ -436,6 +450,19 @@ export function applyAuthoritativeMutation(db,{guildId,sessionId=null,events=[],
     persistAuthoredCandidates(db,guildId,narrative?.authored_candidates,scope,provenance);
     const intentDiagnostics=persistPlayerIntentDiagnostics(db,guildId,narrative?.player_intent_diagnostics||[],scope,provenance);
     const typedIntents=persistPlayerIntents(db,guildId,narrative?.player_intents||[],scope,provenance);
+    const personalCandidates=[];
+    for(const intent of typedIntents.filter(row=>row.data.operation==='personal_commitment_candidate')){
+      try{
+        const authored=db.getWorldEvent(guildId,intent.source_event);
+        const candidate=captureArcCandidate(db,guildId,scope.actorUserId,scope.actorCharacterId,provenance.messageId,
+          authored.details.raw_text,{acceptedIntent:intent.record_key});
+        if(candidate)personalCandidates.push(candidate);
+      }catch(error){
+        if(error.code!=='SEMANTIC_PROPOSAL')throw error;
+        db.saveCityRecord(guildId,{kind:'semantic_candidate_review',key:intent.record_key,status:'needs_review',visibility:'gm',
+          source_event:intent.source_event,data:{version:1,reason:'Owner source/framing needs review; no personal arc or consent created.'}});
+      }
+    }
     let actionPlan=buildActionPlan(db,guildId,typedIntents);
     const pvpAttempts=stagePvpAttempts(db,guildId,typedIntents,actionPlan);
     const pvpIds=new Set(pvpAttempts.map(row=>row.data.accepted_intent));
@@ -537,7 +564,7 @@ export function applyAuthoritativeMutation(db,{guildId,sessionId=null,events=[],
     if(narrative) validateNarrativeClaims(db,guildId,narrative,scope,{staged:true,eventResults});
     return {events:eventResults,relationships:relationshipResults,handouts:handoutResults,
       npcMemories:cognition.memories,npcKnowledge:cognition.knowledge,npcGoals:cognition.goals,simulation,intents,world,typedIntents,
-      intentDiagnostics,nativeAdjudications,gmRulings,actionPlan,actionWindows,pvpAttempts,typedDialogue,contextMemories,reviewAudit};
+      intentDiagnostics,nativeAdjudications,gmRulings,actionPlan,actionWindows,pvpAttempts,typedDialogue,contextMemories,reviewAudit,personalCandidates};
   });
 }
 

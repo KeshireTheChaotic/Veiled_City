@@ -10,6 +10,7 @@ import { evidenceView } from "./evidence-custody.js";
 import { evidenceType, activeEvidence } from "./epistemic.js";
 import { conversationPrincipal } from "./conversation-principal.js";
 import { scopedQueryPlan, queryScopedFacts } from "./scoped-query.js";
+import {ownerSemanticSource,assertSemanticCandidateProof} from './semantic-candidate-source.js';
 export function personalCharacter(db,guild,userId,characterId){
   const session=db.getActiveSession(guild),assignment=session?db.activeAssignment(session.id,userId):null;
   const id=characterId||assignment?.character_id,character=id?db.getCharacter(id):null;
@@ -25,9 +26,20 @@ export function personalArc(db,guild,userId,input){
     key=rawKey.startsWith(`${character.id}:`)?rawKey:`${character.id}:${rawKey}`,op=input.op||"state";
   if(["confirm","reject","defer"].includes(op)){
     const candidate=db.getCityRecord(guild,"arc_candidate",key);
-    if(!candidate||candidate.subject_key!==character.id||candidate.status!=="pending"||stateRevision(candidate)!==input.expected_revision
-      ||db.getSimulationClock(guild).minute>=candidate.data.expires_minute) throw new StateConflictError("Current owned candidate and revision required.");
-    requireCitySource(db,guild,candidate.source_event);
+    if(!candidate||candidate.subject_key!==character.id||candidate.status!=="pending"||stateRevision(candidate)!==input.expected_revision)
+      throw new StateConflictError("Current owned candidate and revision required.");
+    const establishing=op==='confirm'||candidate.data.version!==2;
+    if(establishing){
+      if(db.getSimulationClock(guild).minute>=candidate.data.expires_minute)throw new StateConflictError("Current owned candidate and revision required.");
+      requireCitySource(db,guild,candidate.source_event);
+    }
+    if(candidate.data.created_by!==userId)throw new PermissionError('Candidate belongs to its original owner.');
+    if(candidate.data.version===2&&op==='confirm'){
+      const verified=assertSemanticCandidateProof(db,guild,candidate.data.proof);
+      if(candidate.data.statement!==verified.statement||candidate.data.type!=='desire'||candidate.data.nonbinding!==true
+        ||candidate.source_event!==verified.source.event_key||candidate.subject_key!==verified.row.data.actor)
+        throw new StateConflictError('Candidate terms must match their immutable owner source.');
+    }
     return db.transaction(()=>{
       const arc=op==="confirm"?personalArc(db,guild,userId,{key:input.arc_key||input.key,type:candidate.data.type,statement:candidate.data.statement}):null;
       const after=db.saveCityRecord(guild,{...candidate,key,status:{confirm:"confirmed",reject:"rejected",defer:"deferred"}[op],
@@ -82,19 +94,20 @@ export function proposeArcBeat(db,guild,input,actorId){
     cityAudit(db,guild,"arc_invitation",key,null,after,actorId);return after;
   });
 }
-export function captureArcCandidate(db,guild,user,characterId,messageId,message){
+export function captureArcCandidate(db,guild,user,characterId,messageId,message,{acceptedIntent=null}={}){
   if(db.getCityCalendar(guild).flags.personal_arcs!==true||!characterId||!messageId) return null;
-  if(typeof message!=="string"||message.length>4000) return null;
-  const match=/\bI (vow|swear|want|wish|choose|promise)\b[^\n.!?]{1,1400}[.!?]?/i.exec(message);if(!match) return null;
-  const character=personalCharacter(db,guild,user,characterId),key=`${character.id}:candidate-${motivationKey(messageId)}`;
+  if(!acceptedIntent||typeof message!=="string"||message.length>4000)return null;
+  const accepted=db.getCityRecord(guild,'typed_intent',acceptedIntent),authored=accepted&&db.getWorldEvent(guild,accepted.source_event);
+  const scope={mode:authored?.details.private_scene?'private':'party',
+    actorUserId:user,actorCharacterId:characterId};
+  const verified=ownerSemanticSource(db,guild,acceptedIntent,scope,'personal_commitment_candidate',messageId);
+  if(verified.source.details.raw_text!==message)throw new UserInputError('Immutable full owner source required.');
+  const character=personalCharacter(db,guild,user,characterId),key=`${character.id}:candidate-${motivationKey([messageId,verified.row.data.start,verified.row.data.end])}`;
   const prior=db.getCityRecord(guild,"arc_candidate",key);if(prior) return prior;
   return db.transaction(()=>{
-    const source=indexWorldEvent(db,guild,{key:`owner-message:${motivationKey([guild,messageId])}`,title:"Explicit owner statement candidate",
-      kind:"player_statement_candidate",source_id:`player:${user}`,visibility:"character",subject_key:character.id,
-      details:{statement:match[0],character_id:character.id,owner_user_id:user,not_consent:true}},user);
-    const row=db.saveCityRecord(guild,{kind:"arc_candidate",key,status:"pending",source_event:source.event_key,visibility:"character",subject_key:character.id,
-      data:{statement:match[0],type:["vow","swear","promise"].includes(match[1].toLowerCase())?"vow":"desire",created_by:user,
-        expires_minute:db.getSimulationClock(guild).minute+1440,authority:"unconfirmed_owner_quote_not_belief_or_consent"}});
+    const row=db.saveCityRecord(guild,{kind:"arc_candidate",key,status:"pending",source_event:verified.source.event_key,visibility:"character",subject_key:character.id,
+      data:{version:2,statement:verified.statement,type:'desire',created_by:user,proof:verified.proof,nonbinding:true,
+        expires_minute:db.getSimulationClock(guild).minute+1440,authority:"typed_optional_candidate_not_belief_commitment_or_consent"}});
     cityAudit(db,guild,"arc_candidate",key,null,row,user);return row;
   });
 }

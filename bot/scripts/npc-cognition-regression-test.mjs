@@ -28,9 +28,9 @@ assert.throws(()=>seedNpcCognition({db,content,guildId:guild,actorId:"gm-1"}),/o
 
 const eliasWren=db.findNpcProfile(guild,"Elias Wren");
 assert(eliasWren,"Elias Wren profile missing");
-assert(Number(eliasWren.decision_profile.contract_honor)>50,"contract-specialist profile did not receive contract lens");
-assert(Number(eliasWren.decision_profile.hospitality_reciprocity)>50,"hospitality/contract reciprocity lens missing");
-assert.equal(eliasWren.decision_profile.veil_awareness,"aware");
+assert.equal(eliasWren.decision_profile.contract_honor,50,"Unstructured dossier wording is not a contract score.");
+assert.equal(eliasWren.decision_profile.hospitality_reciprocity,50,"Unstructured dossier wording is not a reciprocity score.");
+assert.equal(eliasWren.decision_profile.veil_awareness,"limited");
 
 const mara=db.findNpcProfile(guild,"Mara Voss");
 assert(mara,"Mara profile missing");

@@ -1,5 +1,11 @@
 # V96 current-source authority and acceptance audit
 
+## V96-05S delta (2026-10-13, qualified offline: 141/141)
+
+Current phase starts at `0abfc87eaee1753988a3322708b90a79f0f587ec`, not the historical audit anchor below. Three reachable lexical decision paths reproduced red and were replaced: pre-GM personal candidate capture, canon keyword-driven correction, and dossier-word trait inference. [Current source/consumer classification, exact four-line historical assertion crosswalk, isolated negative mutations, compatibility and rollback](V96_05S_SEMANTIC_CONTRACT.md). Existing native effect/source/owner/audience and 05R publication gates remain; read-only heuristics, exact syntax, historical readers and security tripwires are not broadly deleted. Final actual phase results belong in [V96_PROGRESS.md](V96_PROGRESS.md).
+
+## Earlier source audit (historical)
+
 Audited local starting SHA: `25f6d8013d0a6b07fca1e023d32d16de3e1eea25`. Source, not the older public V95-04 package snapshot, is the baseline. Completed V95-00–05 remain intact; V95-06 is owner-BYPASSED. See `V96_RULE_DISCRETION_CONTRACT.md` for authority and `V96_TOKEN_PERFORMANCE_REPORT.md` for measurement limits.
 
 Accepted typed intents are canonical adjudication inputs; human declarations own intent; native receipts own outcomes.

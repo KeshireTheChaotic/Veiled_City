@@ -13,6 +13,7 @@ import { buildSessionRosterReport, chunkRosterReport } from "../src/roster.js";
 import { buildCommands, handleCommand } from "../src/commands.js";
 import { captureWorldInput } from "../src/autonomous-world.js";
 import { reviewFeatureEffect, reviewPcEffect, approvePcEffect } from "../src/pc-effects.js";
+import {typedProposalInputs} from './semantic-proposal-fixtures.mjs';
 
 const tmp=fs.mkdtempSync(path.join(os.tmpdir(),"vc-prod-test-"));
 const db=new VeiledDB(path.join(tmp,"test.sqlite"),path.resolve("./sql/schema.sql"));
@@ -195,13 +196,14 @@ assert(db.factsFor(guild,u1,{characterId:c1.id}).some(f=>f.fact_key.includes("pr
 assert.equal(db.currentCanon(guild,"private.blocked.canon"),undefined);
 
 // Explicit private player canon requests are durable proposals, not canon-ledger writes.
+const privateProposalIntents=typedProposalInputs(db,guild,u1,c1.id,'private-msg-1','Please submit Two is literally a frog. as canon.','proposal_campaign_canon');
 const playerProposalResults=applyCanonProposalDrafts(db,guild,session.id,[{
   key:"character.two.species",value:"Two is literally a frog.",visibility:"party",reason:"Player explicitly requested this as campaign canon."
-}],{mode:"private",actorUserId:u1,actorCharacterId:c1.id},{channelId:"private-chan-1",messageId:"private-msg-1"});
+}],{mode:"private",actorUserId:u1,actorCharacterId:c1.id},{channelId:"private-chan-1",messageId:"private-msg-1",typedIntents:privateProposalIntents});
 assert.equal(playerProposalResults.length,1);
 assert.equal(playerProposalResults[0].ok,true);
 assert.equal(playerProposalResults[0].row.status,"pending");
-assert.equal(playerProposalResults[0].row.source,"player_private_scene");
+assert.equal(playerProposalResults[0].row.source,"typed_private_proposal_v2");
 assert.equal(playerProposalResults[0].row.proposed_by_user_id,u1);
 assert.equal(playerProposalResults[0].row.proposed_by_character_id,c1.id);
 assert.equal(playerProposalResults[0].row.source_channel_id,"private-chan-1");
@@ -210,7 +212,8 @@ assert.equal(db.currentCanon(guild,"character.two.species"),undefined,"player pr
 const queuedPlayerProposal=db.listCanonProposals(guild,{status:"pending",characterId:c1.id,limit:20}).find(r=>r.id===playerProposalResults[0].row.id);
 assert(queuedPlayerProposal,"private player canon proposal did not appear in /vc-canon proposals backing queue");
 assert.equal(queuedPlayerProposal.proposer_display_name,"Player One");
-const duplicateProposal=applyCanonProposalDrafts(db,guild,session.id,[{key:"character.two.species",value:"Two is literally a frog.",visibility:"party",reason:"Repeated request."}],{mode:"private",actorUserId:u1,actorCharacterId:c1.id},{channelId:"private-chan-1",messageId:"private-msg-2"});
+const repeatProposalIntents=typedProposalInputs(db,guild,u1,c1.id,'private-msg-2','Please submit Two is literally a frog. as canon.','proposal_campaign_canon');
+const duplicateProposal=applyCanonProposalDrafts(db,guild,session.id,[{key:"character.two.species",value:"Two is literally a frog.",visibility:"party",reason:"Repeated request."}],{mode:"private",actorUserId:u1,actorCharacterId:c1.id},{channelId:"private-chan-1",messageId:"private-msg-2",typedIntents:repeatProposalIntents});
 assert.equal(duplicateProposal[0].row.id,playerProposalResults[0].row.id,"exact repeated player proposal created a duplicate queue row");
 
 assert.throws(()=>applyAuthoritativeMutation(db,{
@@ -300,7 +303,7 @@ const fakeProposalAI={responses:{create:async(req)=>{
   proposalTurnCalls++;
   const proposals=proposalTurnCalls===1?[]:[{key:"character.two.species",value:"Two is literally a frog.",visibility:"party",reason:"Explicit player request for campaign canon."}];
   return {output_text:JSON.stringify({respond:true,narration:"I will leave canon approval to the GM.",world_additions:[],scene_actions:[],world_conflicts:[],
-    narrative_interpretation:null,player_intents:[fixtureIntent("Two is literally a frog as campaign canon. Inform the GM.")],context_memories:[],
+    narrative_interpretation:null,player_intents:[{...fixtureIntent("Two is literally a frog as campaign canon. Inform the GM."),operation:'proposal_campaign_canon'}],context_memories:[],
     authored_candidates:null,narrative_claims:[],private_messages:[],events:[],handouts:[],relationships:[],npc_memories:[],npc_knowledge:[],
     npc_goals:[],canon_proposals:proposals,simulation_updates:[],ai_intents:[],decision_advisory:null,state_review:noChangeReview})};
 }}};

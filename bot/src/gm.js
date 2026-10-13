@@ -326,14 +326,6 @@ export function parseStructuredJsonText(text,{label="structured response"}={}){
   }
 }
 
-export function looksLikeExplicitCanonProposalRequest(text){
-  const t=String(text||"").trim();
-  if(!/\bcanon(?:ical)?\b/i.test(t)) return false;
-  return /\b(?:make|set|establish|declare|record|add|submit|propose|treat|mark)\b[\s\S]{0,100}\b(?:campaign\s+)?canon(?:ical)?\b/i.test(t)
-    || /\b(?:as|into)\s+(?:campaign\s+)?canon\b/i.test(t)
-    || /\b(?:campaign\s+)?canon\b[\s\S]{0,100}\b(?:inform|tell|notify)\s+(?:the\s+)?gm\b/i.test(t);
-}
-
 export class GMService{
   constructor({db,content,config,ai=null,srd=null,metrics=operationalMetrics}){
     this.db=db; this.content=content; this.config=config;
@@ -713,7 +705,8 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
         throw new Error("A public scene transition requires structured scene residue, including empty lists where nothing was left behind.");
       const proposals=Array.isArray(result?.canon_proposals)?result.canon_proposals:[];
       const attemptedCanon=(result?.events||[]).some(e=>e?.type==="canon");
-      if(privateMode && looksLikeExplicitCanonProposalRequest(messageText)){
+      if(privateMode && result.player_intents.some(intent=>intent.type==='other'
+        &&intent.operation==='proposal_campaign_canon'&&intent.framing==='immediate'&&intent.resolution==='conversational')){
         if(!result?.respond) throw new Error("The player explicitly requested a campaign-canon proposal, but the GM turn was marked respond=false.");
         if(!proposals.length && !attemptedCanon) throw new Error("The player explicitly requested a campaign-canon proposal, but no canon_proposals entry or canon attempt was emitted.");
       }

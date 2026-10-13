@@ -160,6 +160,23 @@ export function retrieveNpcCognition(db,guildId,{
   return bounded;
 }
 
+/** Explicit GM-dossier traits only. Descriptive vocabulary supplies no personality score or privileged awareness. */
+export function dossierDecisionProfile(input){
+  const defaults={risk_tolerance:50,violence_threshold:50,honesty:50,loyalty:50,patience:50,ambition:50,compassion:50,
+    lawfulness:50,collateral_aversion:75,contract_honor:50,hospitality_reciprocity:50,veil_awareness:'limited',supernatural_ethics:'unspecified'};
+  if(input===undefined)return defaults;
+  if(!input||typeof input!=='object'||Array.isArray(input)||Object.keys(input).some(key=>!Object.hasOwn(defaults,key)))
+    throw new Error('Closed explicit dossier decision_profile required; no inferred mechanics or knowledge.');
+  for(const [key,value] of Object.entries(input)){
+    if(key==='veil_awareness'){
+      if(!['limited','aware'].includes(value))throw new Error('Explicit dossier veil awareness must be limited or aware.');
+    }else if(key==='supernatural_ethics'){
+      if(typeof value!=='string'||value.length>160)throw new Error('Bounded explicit supernatural ethics required.');
+    }else if(!Number.isSafeInteger(value)||value<0||value>100)throw new Error('Explicit dossier scores must be integers from 0 to 100.');
+  }
+  return {...defaults,...input};
+}
+
 /**
  * One-time deterministic bootstrap from packaged GM NPC dossiers plus campaign
  * reference/relationship state. It deliberately does not infer knowledge from
@@ -183,10 +200,7 @@ export function seedNpcCognition({db,content,guildId,actorId="system",incrementa
     for(const npc of dossiers){
       const key=normalizeNpcKey(npc.name);
       if(!key) continue;
-      if(incremental&&db.getNpcProfile(guildId,key)) continue;
-      const lensText=[npc.role,npc.public,npc.want,npc.secret,...(npc.knows||[]),...(npc.does_not||[])].join(" ").toLowerCase();
-      const contractAware=/contract|concord|court|hospitality|oath|compact|covenant/.test(lensText);
-      const veilAware=/veil|anchor|threshold|occult|supernatural|spirit|ghost|choir|court|green/.test(lensText);
+      if(db.getNpcProfile(guildId,key)) continue; // Existing authored/historical profiles are never silently rewritten.
       db.upsertNpcProfile(guildId,{
         npcKey:key,
         displayName:npc.name,
@@ -194,21 +208,7 @@ export function seedNpcCognition({db,content,guildId,actorId="system",incrementa
         publicIdentity:npc.public||"",
         portrayal:npc.public||"",
         activityTier:"supporting",
-        decisionProfile:{
-          risk_tolerance:50,
-          violence_threshold:50,
-          honesty:50,
-          loyalty:50,
-          patience:50,
-          ambition:50,
-          compassion:50,
-          lawfulness:50,
-          collateral_aversion:75,
-          contract_honor:contractAware?75:50,
-          hospitality_reciprocity:contractAware?75:50,
-          veil_awareness:veilAware?"aware":"limited",
-          supernatural_ethics:"unspecified"
-        },
+        decisionProfile:dossierDecisionProfile(npc.decision_profile),
         knowledgeBoundaries:npc.does_not||[],
         capabilities:npc.leverage?[npc.leverage]:[],
         source:"gm_dossier"
@@ -257,7 +257,7 @@ export function seedNpcCognition({db,content,guildId,actorId="system",incrementa
       const key=normalizeNpcKey(ref.display_name||ref.entity_key);
       if(!key) continue;
       const existingProfile=db.getNpcProfile(guildId,key);
-      if(incremental&&existingProfile) continue;
+      if(existingProfile) continue;
       if(!existingProfile){
         db.upsertNpcProfile(guildId,{
           npcKey:key,displayName:ref.display_name||ref.entity_key,role:"",
@@ -265,13 +265,6 @@ export function seedNpcCognition({db,content,guildId,actorId="system",incrementa
           decisionProfile:{},knowledgeBoundaries:[],capabilities:[],source:"campaign_reference"
         });
         counts.profiles++;
-      } else {
-        db.upsertNpcProfile(guildId,{
-          npcKey:key,displayName:existingProfile.display_name,role:existingProfile.role,
-          publicIdentity:existingProfile.public_identity||ref.summary||"",portrayal:existingProfile.portrayal||ref.summary||"",activityTier:"active",
-          decisionProfile:existingProfile.decision_profile,knowledgeBoundaries:existingProfile.knowledge_boundaries,
-          capabilities:existingProfile.capabilities,source:existingProfile.source
-        });
       }
       if(String(ref.summary||"").trim()){
         db.addNpcMemory(guildId,{

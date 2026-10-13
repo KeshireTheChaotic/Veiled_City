@@ -27,6 +27,7 @@ import { reconcileHistory } from "./history-reconciliation.js";
 import { prepareRollRequest } from "./roll-requests.js";
 import { reviewRollDeclaration } from "./roll-language.js";
 import { mundaneEntryImpact, resolveMundaneEntry } from "./scene-entry.js";
+import {assertSemanticCandidateProof} from './semantic-candidate-source.js';
 import { conversationPrincipal } from "./conversation-principal.js";
 const hash=value=>createHash("sha256").update(JSON.stringify(value)).digest("hex");
 const adapters=new Map();
@@ -394,7 +395,12 @@ registerIntentAdapter("arc",{
     if(context.scope?.mode==="private"&&context.scope.actorCharacterId!==p.character_id) throw new Error("Private continuity belongs to this character only.");
     if(p.op==="candidate"){
       const row=db.getCityRecord(guild,"arc_candidate",intent.target_key),source=requireCitySource(db,guild,p.source_event);
-      if(row?.subject_key!==p.character_id||source.details.statement!==p.statement||row.data.statement!==p.statement)
+      if(row?.data.version===2){
+        const verified=assertSemanticCandidateProof(db,guild,row.data.proof);
+        if(row.data.statement!==verified.statement||row.data.type!=='desire'||row.source_event!==verified.source.event_key)
+          throw new Error('Candidate terms differ from the immutable owner source.');
+      }
+      if(row?.subject_key!==p.character_id||(row.data.version!==2&&source.details.statement!==p.statement)||row.data.statement!==p.statement)
         throw new Error("Only an exact authenticated owner quote can be offered for confirmation.");return row;
     }
     const arc=db.getCityRecord(guild,"arc",`${p.character_id}:${p.arc_key}`);

@@ -9,7 +9,6 @@ import { GMService } from "./gm.js";
 import { handleCommand } from "./commands.js";
 import { applyAuthoritativeMutation } from "./state.js";
 import { commitGmTurn } from "./turn-orchestration.js";
-import { captureArcCandidate } from "./personal-continuity.js";
 import { captureContextSource } from "./narrative-context.js";
 import { conversationPrincipal } from "./conversation-principal.js";
 import { publishRollRequests } from "./roll-requests.js";
@@ -317,7 +316,6 @@ async function processPrivateTurn(message,directMention,attempt=null){
   captureContextSource(db,message.guild.id,message.author.id,controlled?.character_id,message.id,authoredText,{privateScene:true});
   captureWorldInput(db,message.guild.id,message.author.id,controlled?.character_id,message.id,authoredText,{privateScene:true});
   // Typed speech is verified and captured after native scene movement and NPC presence.
-  captureArcCandidate(db,message.guild.id,message.author.id,controlled?.npc_proxy?null:controlled?.character_id,message.id,playerText);
   db.addMessage({guildId:message.guild.id,sessionId:session.id,messageId:message.id,userId:message.author.id,speakerName:speaker,characterId:controlled?.character_id||null,visibility:vis,subjectUserId:vis==="player"?message.author.id:null,subjectCharacterId:vis==="character"?conversationId:null,content:authoredText});
   if(attempt)advanceTurnAttempt(db,attempt.turn_id,"captured");
   // Only model-typed entry intents reach native scene actions; no lexical staging gate.
@@ -417,7 +415,6 @@ async function processPartyTurn(message,directMention,attempt=null){
     if(attempt)advanceTurnAttempt(db,attempt.turn_id,"routed",director?.ran&&director?.ok?
       {committed:"yes",nativeCommitId:`director:${attempt.turn_id}`}:{committed:"no"});
   }
-  captureArcCandidate(db,message.guild.id,message.author.id,controlled?.npc_proxy?null:controlled?.character_id,message.id,playerText);
   // Typed source-backed action intents replace pre-GM lexical declaration capture.
   captureContextSource(db,message.guild.id,message.author.id,controlled?.character_id,message.id,authoredText);
   captureWorldInput(db,message.guild.id,message.author.id,controlled?.character_id,message.id,authoredText);

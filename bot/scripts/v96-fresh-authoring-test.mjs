@@ -68,6 +68,25 @@ async function run(f,request,outputs,{id='fresh',mode='party',actor=0,beforeWrit
   return {ai,result,attempt};
 }
 
+function assertStructuredSchemaTypes(schema,at='$'){
+  assert(schema&&typeof schema==='object',`${at}: schema required`);
+  if(!schema.$ref&&!schema.anyOf)assert(Object.hasOwn(schema,'type'),`${at}: schema must have a type key`);
+  for(const [key,property] of Object.entries(schema.properties||{}))assertStructuredSchemaTypes(property,`${at}.properties.${key}`);
+  if(schema.items)assertStructuredSchemaTypes(schema.items,`${at}.items`);
+  for(const [index,branch] of (schema.anyOf||[]).entries())assertStructuredSchemaTypes(branch,`${at}.anyOf.${index}`);
+  for(const [key,definition] of Object.entries(schema.$defs||{}))assertStructuredSchemaTypes(definition,`${at}.$defs.${key}`);
+}
+
+test('OUT03 outgoing GM and isolated authoring schemas declare types for all nested enum/discriminator fields',()=>nativeFixture(async f=>{
+  const {request}=setup(f),out=await run(f,request,[{utterance:'What kind of night work interests you?'}]);
+  assert.equal(out.ai.requests.length,2);
+  assert.equal(out.ai.requests[0].text.format.name,'veiled_city_gm_turn');
+  for(const req of out.ai.requests){
+    assert.equal(req.text.format.strict,true);
+    assertStructuredSchemaTypes(req.text.format.schema);
+  }
+}));
+
 test('OUT03 fresh contextual NPC words survive real GM/commit/outbox without sharing GM-private prompt',()=>nativeFixture(async f=>{
   const {request,source}=setup(f),before=f.pcs.map(pc=>f.db.getCharacter(pc.id).data.resources);
   const words='Night shifts are an acquired taste. Couriers keep us alive after midnight—what sort of work suits you?';
