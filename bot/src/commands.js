@@ -175,7 +175,7 @@ async function launchArrival({db,gm,guild,userId,character,reason}){
       ?`**Veilkeeper — entry hook for ${character.name}:**\n${entry.private_hook}`
       :"";
     let privateDelivery={ok:true,via:"none"};
-    if(privateText) privateDelivery=await sendPlayerPrivate({db,guild,userId,content:privateText,sessionId:session.id,characterId:character.id});
+    if(privateText) privateDelivery=await sendPlayerPrivate({db,guild,userId,content:privateText,sessionId:session.id,characterId:character.id,generated:true});
     if(entry.public_entry?.trim()) await postPlayMessage({db,guild,content:entry.public_entry,sessionId:session.id});
     db.audit(guild.id,session.id,"ai","assembly","arrival_plan",{userId,characterId:character.id,reason,connection_reason:entry.connection_reason,private_delivery:privateDelivery.via});
     return {planned:true,entry,privateDelivery};
@@ -237,7 +237,8 @@ function formatNpcProxyPacket(proxy,{offered=false}={}){
 
 async function deliverNpcProxyPacket({db,guild,proxy,offered=false}){
   const content=formatNpcProxyPacket(proxy,{offered});
-  const delivery=await sendPlayerPrivate({db,guild,userId:proxy.discord_user_id,content,sessionId:proxy.session_id,characterId:proxy.knowledge_id});
+  const delivery=await sendPlayerPrivate({db,guild,userId:proxy.discord_user_id,content,sessionId:proxy.session_id,
+    characterId:proxy.knowledge_id,generated:true});
   if(delivery.ok) return delivery;
   const relay=await postPrivateRelay({
     db,guild,userId:proxy.discord_user_id,sessionId:proxy.session_id,
@@ -847,7 +848,7 @@ Initial phase: ${s.assembly_phase}`});
       const roster=presentRoster(db,s.id);
       const deliveryResult=await deliverAssemblyParts({plan,savePlan:next=>db.setAssemblyPlan(s.id,next),
         sendPrivate:(userId,content)=>sendPlayerPrivate({db,guild:interaction.guild,userId,content,sessionId:s.id,
-          characterId:roster.find(row=>row.discord_user_id===userId)?.character_id||null}),
+          characterId:roster.find(row=>row.discord_user_id===userId)?.character_id||null,generated:true}),
         sendPublic:content=>postPlayMessage({db,guild:interaction.guild,content,sessionId:s.id})});
       plan=deliveryResult.plan;
       const delivery=(plan.character_entries||[]).map(entry=>{
@@ -902,7 +903,7 @@ Initial phase: ${s.assembly_phase}`});
       db.snapshotCampaign(interaction.guildId,{label:`Pre-end Session ${activeBefore?.session_number||""}`.trim(),reason:"Automatic snapshot before session end",createdBy:interaction.user.id});
       const proposedRecap=await gm.summarizeSession(interaction.guildId);
       // A whole freeform recap cannot be source-certified by closing the session. Preserve it privately, not as party memory.
-      const held=pvpHistory.length>0;
+      const held=true; // Closing any scene/session supplies no missing prose, PC or disclosure authority.
       if(held)quarantineSessionRecap(db,interaction.guildId,activeBefore,proposedRecap);
       const recap=held?"":proposedRecap;
       const s=db.endSession(interaction.guildId,recap);
@@ -1794,7 +1795,7 @@ GM notes: ${a.draft.gm_notes}`:""}`.slice(0,1950):"No aftermath draft exists for
       };
       for(const item of projectOutputs){
         if(item.project.visibility==="party") await out(`downtime-project:${item.project.id}`,()=>postJournalEntry({db,guild:interaction.guild,title:`Downtime: ${item.project.title}`,content:item.message}));
-        else await out(`downtime-project-private:${item.project.id}`,()=>sendPlayerPrivate({db,guild:interaction.guild,userId:item.project.discord_user_id,content:item.message,sessionId:null,characterId:item.project.visibility==="character"?item.project.character_id:null}));
+        else await out(`downtime-project-private:${item.project.id}`,()=>sendPlayerPrivate({db,guild:interaction.guild,userId:item.project.discord_user_id,content:item.message,sessionId:null,characterId:item.project.visibility==="character"?item.project.character_id:null,generated:true}));
       }
       await out("downtime-event-publish",()=>publishEventResults({db,guild:interaction.guild,results:eventResults}));
       await out("downtime-npc-hooks",()=>publishSimulationHooks({db,guild:interaction.guild}));
@@ -1808,7 +1809,7 @@ GM notes: ${a.draft.gm_notes}`:""}`.slice(0,1950):"No aftermath draft exists for
           continue;
         }
         const ch=db.findOwnedCharacter(interaction.guildId,pm.discord_user_id,"");
-        await out(`downtime-director-private:${pm.discord_user_id}`,()=>sendPlayerPrivate({db,guild:interaction.guild,userId:pm.discord_user_id,content:`**Veilkeeper — private world movement:**\n${pm.content}`,sessionId:null,characterId:ch?.id||null}));
+        await out(`downtime-director-private:${pm.discord_user_id}`,()=>sendPlayerPrivate({db,guild:interaction.guild,userId:pm.discord_user_id,content:`**Veilkeeper — private world movement:**\n${pm.content}`,sessionId:null,characterId:ch?.id||null,generated:true}));
       }
       await out("downtime-gm-log",()=>postGmLog({db,guild:interaction.guild,sessionId:cycle.source_session_id||null,title:`Downtime resolved — ${done.label}`,details:`Project layer: ${resolved.summary||"none"}\nWorld Director: ${director.act?(director.gm_notes||"acted"):"no autonomous world move warranted"}`}));
       await out("downtime-post-snapshot",async()=>db.snapshotCampaign(interaction.guildId,{label:`Post-downtime ${done.label}`,reason:"Automatic snapshot after downtime project + world-director resolution",createdBy:interaction.user.id}));

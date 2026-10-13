@@ -21,19 +21,41 @@ import {currentScene,recordScenePresence} from '../src/scene-continuity.js';
 import {indexWorldEvent} from '../src/city-calendar.js';
 import {proposePvp,reviewPvp,respondPvp,choosePvp,rollPvp,progressPvp,authorPvpNarrative,reviewPvpNarrative,sharePvpNarrative} from '../src/narrative-pvp.js';
 import {handleCommand} from '../src/commands.js';
+import {prepareAuthorizedTurnOutput} from '../src/pvp-output.js';
 
 function fixture(t,text='Native receipt notice'){
   const dir=fs.mkdtempSync(path.join(os.tmpdir(),'vc-v9-publish-'));
   const db=new VeiledDB(path.join(dir,'test.sqlite'),path.resolve('sql/schema.sql'));
   t.after(()=>{db.close();fs.rmSync(dir,{recursive:true,force:true});});
   db.ensureCampaign('g');db.configureCampaign('g',{playChannelId:'play'});
-  const turn=db.beginTurnAttempt({guildId:'g',sessionId:'s',messageId:'m',actorPrincipal:'u',audience:'party'});
-  queueTurnPublications(db,{guild:{id:'g'},session:{id:'s'},scope:{mode:'party'},turnId:turn.turn_id,result:{narration:text}});
-  return {db,turn:turn.turn_id};
+  const session=db.startSession('g','Transport fixture');db.upsertPlayer('g','observer','Observer');
+  const pc=db.createCharacter('g','observer','Observer',{location:'terminal'});
+  db.updateCharacterData(pc.id,data=>{data.location='terminal';});
+  db.assignCharacter(session.id,'observer',pc.id);db.setPresence(session.id,'observer','present');
+  db.setSimulationEntity('g','location','terminal',{name:'Terminal'});
+  db.upsertNpcProfile('g',{npcKey:'announcer',displayName:'Announcer'});
+  db.setSimulationEntity('g','npc','announcer',{location_key:'terminal',visibility:'party'});
+  const nativeResult=body=>{
+    const scene=currentScene(db,'g'),beats=[];
+    for(let offset=0;offset<body.length;offset+=1200){
+      const quote=body.slice(offset,offset+1200),key=`transport-${offset}-${Buffer.from(body).toString('hex').slice(0,40)}-${body.length}`;
+      const source=indexWorldEvent(db,'g',{key,kind:'observation',source_id:'human_gm',title:'Synthetic publicly recorded NPC words',
+        visibility:'party',truth_status:'observed',session_id:session.id,scene:scene.key,location_key:'terminal',
+        details:{npc_key:'announcer',quote}},'offline-gm');
+      db.upsertNpcKnowledge('g',{npcKey:'announcer',knowledgeKey:key,content:quote,sourceRef:source.event_key,beliefState:'known'});
+      beats.push({op:'quote',source_ref:source.event_key,knowledge_key:key,source_span:quote});
+    }
+    const result={narration:'Unverified fixture draft',gm_world_parts:[{version:2,kind:'npc_composition',entity_key:'announcer',tone:'plain',beats}]};
+    prepareAuthorizedTurnOutput(db,'g',result,{mode:'party'});return result;
+  };
+  const turn=db.beginTurnAttempt({guildId:'g',sessionId:session.id,messageId:'m',actorPrincipal:'u',audience:'party'});
+  queueTurnPublications(db,{guild:{id:'g'},session,scope:{mode:'party'},turnId:turn.turn_id,result:nativeResult(text)});
+  return {db,turn:turn.turn_id,session,nativeResult};
 }
 test('P01 successful party send returns explicit acknowledged IDs',async t=>{
-  const {db}=fixture(t);const guild={id:'g',channels:{fetch:async()=>({id:'play',isTextBased:()=>true,send:async()=>({id:'msg',channelId:'play'})})}};
-  const r=await postPlayMessage({db,guild,content:'notice'});
+  const {db,turn}=fixture(t);const guild={id:'g',channels:{fetch:async()=>({id:'play',isTextBased:()=>true,send:async()=>({id:'msg',channelId:'play'})})}};
+  const publication=db.listTurnPublications('g',turn)[0];
+  const r=await postPlayMessage({db,guild,content:publication.payload,publication});
   assert.equal(r.ok,true);assert.equal(r.messageId,'msg');assert.equal(r.channelId,'play');
 });
 test('P02 ambiguous send never automatically retries or advances dependent chunks',async t=>{
@@ -60,8 +82,8 @@ test('P04 partial private DM records acknowledged chunks and uncertainty',async 
   assert.equal(r.ok,false);assert.equal(r.certainty,'uncertain');assert.equal(r.messages[0].messageId,'first');assert.equal(calls,2);
 });
 test('P05 retry cannot silently change payload under a saved identity',t=>{
-  const {db,turn}=fixture(t);
-  assert.throws(()=>queueTurnPublications(db,{guild:{id:'g'},session:{id:'s'},scope:{mode:'party'},turnId:turn,result:{narration:'different'}}),/immutable|identity|payload/i);
+  const {db,turn,session,nativeResult}=fixture(t);
+  assert.throws(()=>queueTurnPublications(db,{guild:{id:'g'},session,scope:{mode:'party'},turnId:turn,result:nativeResult('different')}),/immutable|identity|payload/i);
 });
 test('P06 acknowledged send with lost receipt persistence is uncertain, never resent',async t=>{
   const {db,turn}=fixture(t);const update=db.updatePublication.bind(db);let lost=true,calls=0;
@@ -72,7 +94,7 @@ test('P06 acknowledged send with lost receipt persistence is uncertain, never re
 });
 function requestFixture(t,{long=false}={}){
   const f=fixture(t),{db}=f;configureCityFlags(db,'g',{roll_requests:true,roll_collaboration:true},'gm');
-  const s=db.startSession('g','delivery');db.upsertPlayer('g','u','Owner');
+  const s=db.getActiveSession('g');db.upsertPlayer('g','u','Owner');
   const pc=db.createCharacter('g','u','Billy',{traits:{Knowledge:2},resources:{hope:3}});
   db.assignCharacter(s.id,'u',pc.id);db.setPresence(s.id,'u','present');
   const source=captureDeclaration(db,'g','u',pc.id,'roll-source','I try inspecting the terminal.'+(long?' Additional context.'.repeat(190):''));

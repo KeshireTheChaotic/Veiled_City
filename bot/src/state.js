@@ -3,8 +3,8 @@ import { randomUUID, createHash } from "node:crypto";
 import { indexWorldEvent } from "./city-calendar.js";
 import { normalizeNpcKey } from "./npc-cognition.js";
 import { applySimulationUpdates } from "./simulation.js";
-import { validateNarrativeClaims, assertNarrativeApplied } from "./narrative-integrity.js";
-import { prepareAuthorizedTurnOutput, assertProtectedModelEvents } from "./pvp-output.js";
+import { validateNarrativeClaims, validateCanonAnnotations, validateCandidateClaims, assertNarrativeApplied } from "./narrative-integrity.js";
+import { prepareAuthorizedTurnOutput, candidateNarrative, assertProtectedModelEvents } from "./pvp-output.js";
 import { recordCharacterPerceptions } from "./character-observation.js";
 import { applyAutonomousWorld, worldInputKey } from "./autonomous-world.js";
 import { dispatchAiIntents } from "./ai-intents.js";
@@ -421,7 +421,12 @@ export function applyAuthoritativeMutation(db,{guildId,sessionId=null,events=[],
   simulationUpdates=[],scope={mode:"party",actorUserId:null,actorCharacterId:null},source="ai_gm",provenance={},narrative=null,aiIntents=narrative?.ai_intents||[],content=null}){
   return db.transaction(()=>{
     const outputSource=provenance.messageId&&scope.actorCharacterId?worldInputKey(provenance.messageId,scope.actorCharacterId):null;
+    const originalNarrative=narrative&&candidateNarrative(narrative);
+    // Projection cannot erase the existing prohibition on bypassing governed native goal adapters.
+    if(npcGoals.length&&source!=='human_gm'&&db.getCityCalendar(guildId).flags.emergent_goals===true)
+      assertMutationSuccess({npcGoals:applyNpcCognitionDrafts(db,guildId,{goals:npcGoals},source,provenance).goals});
     if(narrative){
+      validateCanonAnnotations(db,guildId,originalNarrative,scope);
       prepareAuthorizedTurnOutput(db,guildId,narrative,scope,{
         sourceRef:outputSource&&db.getWorldEvent(guildId,outputSource)?outputSource:null,origin:source});
       handouts=narrative.handouts||handouts; npcMemories=narrative.npc_memories||npcMemories;
@@ -494,7 +499,7 @@ export function applyAuthoritativeMutation(db,{guildId,sessionId=null,events=[],
         authority:"Private audit of deterministic review metadata normalization; no world-state authority."}
     }):null;
     assertMutationSuccess({events:eventResults,relationships:relationshipResults,handouts:handoutResults,npcMemories:cognition.memories,npcKnowledge:cognition.knowledge,npcGoals:cognition.goals});
-    if(narrative) assertNarrativeApplied(narrative,eventResults);
+    if(originalNarrative) assertNarrativeApplied(originalNarrative,eventResults);
     const base={sessionId,actorType:provenance.actorType||"ai",actorId:provenance.actorId||scope.actorUserId||"veilkeeper",sourceLayer:source,sourceInteractionId:provenance.interactionId||null,sourceMessageId:provenance.messageId||null,confidence:provenance.confidence??100,rationale:provenance.rationale||"",triggerText:provenance.triggerText||""};
     eventResults.forEach((result,index)=>{
       if(!result?.ok&&!result?.expectedConflict) return;
@@ -522,6 +527,11 @@ export function applyAuthoritativeMutation(db,{guildId,sessionId=null,events=[],
     cognition.goals.filter(x=>x?.ok).forEach(result=>db.recordMutation(guildId,{...base,mutationType:"npc_goal",entityKey:`${result.row?.npc_key||""}:${result.row?.goal_key||""}`,visibility:"gm",before:result.before??{},after:result.after??result.row,payload:result.draft||{}}));
     const intents=dispatchAiIntents(db,guildId,aiIntents,{scope,sessionId,
       origin:provenance.messageId||provenance.interactionId||source});
+    if(originalNarrative)validateCandidateClaims(db,guildId,originalNarrative,scope,eventResults);
+    const nativeEntries=intents.filter(row=>row.status==='accepted'&&row.data.intent?.feature==='scene'
+      &&row.data.intent.payload?.op==='enter'&&row.data.result?.status==='approved').map(row=>row.data.result.record_key);
+    if(nativeEntries.length&&narrative)prepareAuthorizedTurnOutput(db,guildId,narrative,scope,{
+      sourceRef:outputSource&&db.getWorldEvent(guildId,outputSource)?outputSource:null,world,nativeEntries,origin:source});
     // Validate against native operations staged in this transaction, not the old
     // state or model-described effects. Any failure rolls back the entire bundle.
     if(narrative) validateNarrativeClaims(db,guildId,narrative,scope,{staged:true,eventResults});

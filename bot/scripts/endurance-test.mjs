@@ -10,6 +10,7 @@ import { explainWhy } from "../src/provenance.js";
 import { indexWorldEvent, scheduleCityEvent } from "../src/city-calendar.js";
 import { configureSimulationEntity, submitNpcAction } from "../src/simulation.js";
 import { publishSimulationHooks } from "../src/publishing.js";
+import {notSent} from '../src/publication-outbox.js';
 import { configureMystery, mysteryView } from "../src/story-continuity.js";
 const temp=fs.mkdtempSync(path.join(os.tmpdir(),"vc-endurance-")),schema=path.resolve("sql/schema.sql"),file=path.join(temp,"test.sqlite");
 let db=new VeiledDB(file,schema),seed=490;
@@ -57,12 +58,17 @@ try{
   const why=explainWhy(db,guildId,{event_key:"schedule:day-100"});assert.equal(why.visibility,"gm");
   assert.deepEqual(db.snapshotCampaign(guildId).state,state);assert.equal(db.listMutationLedger(guildId,{limit:100}).length,ledger);
   assert.throws(()=>explainWhy(db,"other",{event_key:"origin"}),/not found/);
-  const hook=db.putSimulationRecord(guildId,{kind:"hook",status:"ready",data:{content:"A synthetic messenger waits",visibility:"party"}});
-  const guild={id:guildId,channels:{fetch:async()=>({isTextBased:()=>true,send:async()=>{throw new Error("Synthetic delivery failure");}})}};
+  // V96-05R: recover a real native deadline notice, not an unbound arbitrary narration string.
+  db.startSession(guildId,'Native delivery recovery');
+  scheduleCityEvent(db,guildId,{key:'delivery-recovery',title:'Delivery recovery',due_minute:db.getSimulationClock(guildId).minute,
+    visibility:'party',hook:'A synthetic messenger waits'});db.advanceSimulationClock(guildId,{minutes:0});
+  const hook=db.getSimulationRecord(guildId,`city-hook:${guildId}:delivery-recovery`);
+  const guild={id:guildId,channels:{fetch:async()=>({id:'play',isTextBased:()=>true,send:async()=>{throw notSent("Synthetic delivery failure");}})}};
   db.configureCampaign(guildId,{playChannelId:"play"});
-  await assert.rejects(()=>publishSimulationHooks({db,guild}),/delivery failure/);
+  assert.equal(await publishSimulationHooks({db,guild}),0);
+  assert.match(db.listPendingPublications(guildId)[0].last_failure,/^NOT_SENT:.*delivery failure/);
   assert.equal(db.getSimulationRecord(guildId,hook.id).status,"ready");metrics.publish_failures++;
-  guild.channels.fetch=async()=>({isTextBased:()=>true,send:async()=>({id:"delivered"})});
+  guild.channels.fetch=async()=>({id:'play',isTextBased:()=>true,send:async()=>({id:"delivered"})});
   await publishSimulationHooks({db,guild});assert.equal(db.getSimulationRecord(guildId,hook.id).status,"delivered");metrics.publish_repairs++;
   metrics.invalid_proposal_rate=metrics.invalid_proposals/(metrics.actions+metrics.invalid_proposals);
   console.log(`Endurance PASS ${JSON.stringify(metrics)}`);

@@ -1,5 +1,9 @@
 # Typed Intent Refinement Progress
 
+## Current resume pointer — V96-05R (2026-10-13)
+
+V96-05R **QUALIFIED offline**, starting anchor `aeffb8e3b5ec2a9bfee18af7081fea0ab49e181d`; separate local completion commit `fix(v9.6-output): certify ordinary-scene narrative projections`. Final same-executable-tree T2 **140/140**, **0 failed / 0 not-run**, **26/26** acceptance mappings, **418,894 ms**; check **324** modules/scripts and **24** commands passed. Both D08 gates passed in full validation. Impacted T1 **206/206** plus final affected legacy/deprecation/original-SEM06 group **13/13**, no skips; failed intermediate full runs are preserved in the ledger, not claimed green. Original SEM06/PVP30ag and historical assertion evidence unchanged; exact twelve-line fixture/API crosswalk records legitimate source-bound replacements. Conditional audience-isolated NPC authoring certifies attributed speech, not semantic truth; no catalog exception/unconditional second call. [Contract/residual risk/review-only compatibility limits](V96_05R_OUTPUT_CONTRACT.md), [full results/rollback ledger](V96_PROGRESS.md). Network denied, live/billable **0**; no push/production/deployment. 05S/05E and later phases remain unstarted; V95-06 BYPASSED. Earlier history is retained.
+
 ## D00 v8 - rebaseline and Session 2 reproduction
 
 Status: complete. Starting HEAD: `2dc347a77e1fd4988856b8e578e5c148fe82cb24`.

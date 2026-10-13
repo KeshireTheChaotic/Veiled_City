@@ -22,7 +22,7 @@ function allowedPrivateTargets(db,session,scope){
 
 /** Called inside the authoritative commit transaction. */
 export function queueTurnPublications(db,{guild,session,result,scope,turnId,channelId=null}){
-  assertPvpOutput(db,guild.id,result,scope);
+  assertPvpOutput(db,guild.id,result,scope,{publication:true});
   if(!turnId)return [];
   const rows=[];let ordinal=0;
   const add=(surface,payload,options={})=>{

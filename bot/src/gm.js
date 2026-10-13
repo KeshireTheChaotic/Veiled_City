@@ -40,6 +40,8 @@ import { operationalMetrics, measureStage, measureNative } from "./operational-m
 import { scopedSceneMemory } from "./scoped-memory.js";
 import {gmWorldPartsSchema,GM_WORLD_NARRATIVE_PROMPT} from "./gm-world-narrative.js";
 import {gmRulingContext,GM_RULING_PROMPT} from "./gm-action-ruling.js";
+import {authorFreshNpcRequests,hasFreshNpcResponse,FRESH_NPC_INSTRUCTIONS,freshNpcResponseSchema} from './fresh-npc-authoring.js';
+import {worldInputKey} from './autonomous-world.js';
 
 const routerSchema={
   type:"object",
@@ -694,7 +696,8 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
         &&/\b(?:(?:I|we) need (?:a |the |human )?GM to|(?:the |human )GM (?:needs|must|has) to) (?:establish|create|approve|promote|describe)\b[^.!?\n]{0,140}\b(?:surroundings|location|place|NPC|person|diner|street|scene)\b/i.test(prose))
         throw new Error("Missing ordinary world data is AI-GM work, not a human approval prerequisite. Create/reuse ordinary fiction via native world additions/actions and keep the scene moving.");
       const obligation=semanticResponseObligation(authenticatedSource,result.player_intents,{authenticated:!!ctx.actor_assignment});
-      if(obligation.needed&&(!result.respond||!String(result.narration||"").trim()))
+      if(obligation.needed&&(!result.respond||!String(result.narration||"").trim()
+        &&!hasFreshNpcResponse(this.db,guildId,result,typedScope,messageId&&typedScope.actorCharacterId?worldInputKey(messageId,typedScope.actorCharacterId):null)))
         throw Object.assign(new Error("An authenticated in-character turn requires meaningful GM engagement without choosing a PC decision."),
           {code:"RESPONSE_OBLIGATION",diagnostic:obligation});
       validateInterpretation(this.db,guildId,result.narrative_interpretation,{mode:scope,actorUserId,actorCharacterId:ctx.actor_assignment?.character_id});
@@ -718,7 +721,13 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
       return true;
     };
     const validateTurn=result=>measureNative('validate',guildId,()=>validateCore(result),this.metrics);
-    let result=await this.requestStructured(req,{guildId,label:"GM turn",signal:turnSignal});
+    const authoringBudget={used:false};
+    const author=async candidate=>{
+      await this.authorFreshNpcs(guildId,candidate,{mode:scope,actorUserId,actorCharacterId:ctx.actor_assignment?.character_id},
+        messageId&&ctx.actor_assignment?.character_id?worldInputKey(messageId,ctx.actor_assignment.character_id):null,authoringBudget,turnSignal,req.model);
+      return candidate;
+    };
+    let result=await author(await this.requestStructured(req,{guildId,label:"GM turn",signal:turnSignal}));
     try{ validateTurn(result); validateDecisionAdvisory(this.db,guildId,result); return result; }
     catch(err){
       // A failed PvP ownership proof is a scoped native review, never a whole-turn model rewrite/semantic waiver.
@@ -750,7 +759,7 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
       ].join(" ");
       const retry={...req,input:`${req.input}\n\n${correction}`};
       this.metrics.record('validation_retry',{guildId});
-      result=await this.requestStructured(retry,{guildId,label:"GM turn state-review retry",signal:turnSignal,retry:true});
+      result=await author(await this.requestStructured(retry,{guildId,label:"GM turn state-review retry",signal:turnSignal,retry:true}));
       try{
         validateTurn(result);
         validateDecisionAdvisory(this.db,guildId,result);
@@ -787,7 +796,7 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
         ].join(" ");
         const recovery={...req,input:`${req.input}\n\n${safeRecovery}`};
         this.metrics.record('validation_retry',{guildId});
-        result=await this.requestStructured(recovery,{guildId,label:"GM turn safe recovery",signal:turnSignal,retry:true});
+        result=await author(await this.requestStructured(recovery,{guildId,label:"GM turn safe recovery",signal:turnSignal,retry:true}));
         validateTurn(result);
         validateDecisionAdvisory(this.db,guildId,result);
         this.metrics.record('safe_recovery',{guildId});
@@ -796,7 +805,21 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
     }
   }
 
+  async authorFreshNpcs(guildId,result,scope,sourceRef,budget,signal,model=this.config.gmModel){
+    await authorFreshNpcRequests({db:this.db,guild:guildId,result,scope,sourceRef,budget,generate:async packet=>{
+      let response;
+      try{response=await this.requestModel({model,
+        instructions:FRESH_NPC_INSTRUCTIONS,input:JSON.stringify(packet),max_output_tokens:700,
+        text:{format:{type:'json_schema',name:'audience_scoped_npc_utterance',strict:true,schema:freshNpcResponseSchema}}},
+        {guildId,signal});signal?.throwIfAborted();}
+      catch(error){throw Object.assign(new Error('Isolated NPC writer unavailable; scope review retained.'),{code:'NPC_AUTHORING_PROVIDER',cause:error});}
+      try{return parseStructuredJsonText(response.output_text,{label:'isolated NPC authoring'});}
+      catch(error){throw Object.assign(new Error('Isolated NPC writer returned malformed output.'),{code:'NPC_AUTHORING_PARSE',cause:error});}
+    }});
+  }
+
   async runWorldDirector({guildId,layer,trigger={},cycle=null,projects=[],actorAssignment=null}){
+    const directorSignal=AbortSignal.timeout(Number(this.config.gmTurnDeadlineMs||120000));
     if(!["round","scene","downtime","manual"].includes(layer)) throw new Error(`Unsupported world-director layer: ${layer}`);
     if(layer==="round"&&this.db.getCityCalendar(guildId).flags.pacing&&pacingAdvice(this.db,guildId).cues?.pause_background)
       return {act:false,public_narration:"",narrative_claims:[],private_messages:[],events:[],handouts:[],relationships:[],
@@ -843,7 +866,9 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
     ].join("\n\n");
     const req={model:layer==="downtime"?this.config.downtimeModel:this.config.gmModel,input:prompt,max_output_tokens:layer==="downtime"?this.config.downtimeMaxOutputTokens:Math.min(this.config.structuredRetryMaxTokens||6000,2200),text:{format:{type:"json_schema",name:`world_director_${layer}`,strict:true,schema:directorSchema}}};
     if(this.config.reasoningEffort) req.reasoning={effort:this.config.reasoningEffort};
-    const result=await this.requestStructured(req,{guildId,label:`world director ${layer}`});
+    const result=await this.requestStructured(req,{guildId,label:`world director ${layer}`,signal:directorSignal});
+    await this.authorFreshNpcs(guildId,result,{mode:trigger.scope||'party',actorUserId:trigger.actor_user_id,
+      actorCharacterId:trigger.actor_character_id},null,{used:false},directorSignal,req.model);
     previewAuthoritativeMutation(this.db,{guildId,sessionId:ctx.session?.id,narrative:result,
       events:result.events||[],relationships:result.relationships||[],handouts:result.handouts||[],
       npcMemories:result.npc_memories||[],npcKnowledge:result.npc_knowledge||[],npcGoals:result.npc_goals||[],

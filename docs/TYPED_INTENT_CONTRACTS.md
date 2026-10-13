@@ -1,5 +1,13 @@
 # Typed Intent Authority Contracts
 
+## V96-05R common output authority (qualified offline)
+
+Accepted typed intents are canonical adjudication inputs; authenticated human declarations own intent; native services and receipts own outcomes. Narration is a projection, not an effect executor. The common ordinary/private/Director/publication boundary requires exact native rendered parts and persistent final-payload/source/audience proof; an empty claim array, model approval, arbitrary text hash or accepted unresolved intent cannot supply it. Revocation holds future output, never rewinds committed mechanics. Versioned historical readers fail closed on missing proof.
+
+Owner-approved fresh NPC authoring certifies **attributed nonbinding utterances**, not their semantic truth or a PC outcome. Its one conditional isolated request receives only current entitled NPC observations and explicitly public voice direction, never the combined GM prompt's secrets/other-owner context. No unconditional second call, native effect adapter or paid test is added. Immutable attempt/cache/source records, current owner/proxy/scene checks and per-sink revalidation protect retries and restart. Residual semantic risk and review-only legacy output restrictions are explicit in [V96_05R_OUTPUT_CONTRACT.md](V96_05R_OUTPUT_CONTRACT.md); it does not claim unrestricted semantics or live qualification. Existing PvP, resource, consent, custody, death and private-disclosure authorities are unchanged.
+
+Original candidate annotations remain private native validation inputs after projection: canon, witness/knowledge, lifecycle, resource-result and governed-goal gates are not waived by clearing publication claims. Receipt-rendered payloads are checked through native parts, not model labels. Offline evidence is 140/140 mandatory suites, including both D08 gates; this is not universal semantic or live-play qualification. See [current ledger](V96_PROGRESS.md).
+
 ## V9-02 native coordination lifecycle
 
 - Native scene/location/resource identity, not model beat text, groups source-bound occurrences. Private scopes do not merge. Closed occurrences reject late participation; genuinely new source occurrences can open a later beat.

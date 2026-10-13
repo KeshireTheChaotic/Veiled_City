@@ -15,6 +15,21 @@ import {VoiceNarrator} from '../src/voice.js';
 import {applyFearMove} from '../src/pvp-fear-moves.js';
 import {captureWorldInput} from '../src/autonomous-world.js';
 import {commitGmTurn} from '../src/turn-orchestration.js';
+import {indexWorldEvent} from '../src/city-calendar.js';
+import {currentScene} from '../src/scene-continuity.js';
+
+function nativeMetricsOutput(f,quote){
+  const key='operational-announcer',scene=currentScene(f.db,f.guild);
+  f.db.upsertNpcProfile(f.guild,{npcKey:key,displayName:'Operational announcer'});
+  f.db.setSimulationEntity(f.guild,'npc',key,{location_key:'terminal',visibility:'party'});
+  const source=indexWorldEvent(f.db,f.guild,{key:`metrics-quote:${quote}`,kind:'observation',source_id:'human_gm',
+    title:'Synthetic public quotation for telemetry redaction',visibility:'party',truth_status:'observed',session_id:scene.session_id,
+    scene:scene.key,location_key:'terminal',details:{npc_key:key,quote}},'offline-gm');
+  f.db.upsertNpcKnowledge(f.guild,{npcKey:key,knowledgeKey:quote,content:quote,sourceRef:source.event_key,beliefState:'known',isSecret:false});
+  const result={narration:'Unverified metric fixture candidate',gm_world_parts:[{version:2,kind:'npc_composition',entity_key:key,tone:'plain',
+    beats:[{op:'quote',source_ref:source.event_key,knowledge_key:quote,source_span:quote}]}]};
+  return prepareAuthorizedTurnOutput(f.db,f.guild,result,{mode:'party'});
+}
 
 test('MET01/09/11 real reported usage, bounded samples and closed telemetry fields',()=>{
   const metrics=new OperationalMetrics({sampleLimit:3,guildLimit:2});
@@ -185,18 +200,20 @@ test('MET04/11 unsupported consequence stays due in GM reference-only review; in
 test('MET08/10/11/12 uncertain Discord delivery stays uncertain across queries/restart; successful sends are distinct',()=>nativeFixture(async f=>{
   const turn=f.db.beginTurnAttempt({guildId:f.guild,sessionId:f.session.id,messageId:'metrics-delivery',actorPrincipal:'offline',audience:'party'});
   queueTurnPublications(f.db,{guild:{id:f.guild},session:f.session,scope:{mode:'party'},turnId:turn.turn_id,
-    result:{narration:'PRIVATE_MARKER'}});
+    result:nativeMetricsOutput(f,'PRIVATE_MARKER')});
+  assert(f.db.listTurnPublications(f.guild,turn.turn_id)[0].payload.replaceAll('\\','').includes('PRIVATE_MARKER'));
   let calls=0;const before=operationalMetrics.snapshot(f.guild).stages.discord?.count||0;
   await deliverTurnOutbox(f.db,f.guild,turn.turn_id,async()=>{calls++;throw new Error('SECRET_KEY');});
   const n=changes(f.db),report=operationalReport(f.db,f.guild,{authorized:true});
   assert.equal(changes(f.db),n);assert.equal(report.native.publications.find(r=>r.status==='uncertain').count,1);
   assert.match(report.incidents.find(r=>r.kind==='publication').recovery,/Never blindly retry/);
   assert.doesNotMatch(JSON.stringify(report),/PRIVATE_MARKER|SECRET_KEY/);
+  assert.doesNotMatch(JSON.stringify(report).replaceAll('\\',''),/PRIVATE_MARKER|SECRET_KEY/);
   f.restart();assert.equal(operationalReport(f.db,f.guild,{authorized:true}).native.publications.find(r=>r.status==='uncertain').count,1);
   await deliverTurnOutbox(f.db,f.guild,turn.turn_id,async()=>{calls++;});assert.equal(calls,1);
   assert.equal(operationalMetrics.snapshot(f.guild).stages.discord.count-before,1);
   const done=f.db.beginTurnAttempt({guildId:f.guild,sessionId:f.session.id,messageId:'metrics-delivered',actorPrincipal:'offline',audience:'party'});
-  queueTurnPublications(f.db,{guild:{id:f.guild},session:f.session,scope:{mode:'party'},turnId:done.turn_id,result:{narration:'Safe output'}});
+  queueTurnPublications(f.db,{guild:{id:f.guild},session:f.session,scope:{mode:'party'},turnId:done.turn_id,result:nativeMetricsOutput(f,'Safe output')});
   await deliverTurnOutbox(f.db,f.guild,done.turn_id,async()=>({ok:true,messageId:'acknowledged',channelId:'table'}));
   assert.equal(operationalReport(f.db,f.guild,{authorized:true}).native.publications.find(r=>r.status==='delivered').count,1);
 }));

@@ -9,6 +9,7 @@ import { GMService } from "../src/gm.js";
 import { ContentIndex } from "../src/content.js";
 import { POST_TURN_REVIEW_CATEGORIES } from "../src/director.js";
 import { validateNarrativeClaims } from "../src/narrative-integrity.js";
+import {candidateNarrative} from '../src/pvp-output.js';
 import { applyAuthoritativeMutation } from "../src/state.js";
 import { configureSimulationEntity, submitNpcAction, executeNpcAction, actorState } from "../src/simulation.js";
 import { indexWorldEvent } from "../src/city-calendar.js";
@@ -67,8 +68,10 @@ try{
   review.scene={decision:"continue",label:"",reason:"Same scene"};
   const fake=new FakeResponses([{...fixtures.compatibility_5_0,state_review:review}]);
   const gm=new GMService({db,content:new ContentIndex(path.resolve("../content")),ai:fake,config:{gmModel:"offline",maxRecentMessages:8,maxContentChunks:2}});
-  assert.equal((await gm.runTurn({guildId:guild,actorUserId:"owner",actorName:"Detective",messageText:"Describe the station window"})).narration,
-    fixtures.compatibility_5_0.narration);assert.equal(fake.requests.length,1);metrics.golden_passes++;metrics.compatibility_5_0="unchanged fixture accepted";
+  const legacy=await gm.runTurn({guildId:guild,actorUserId:"owner",actorName:"Detective",messageText:"Describe the station window"});
+  assert.equal(candidateNarrative(legacy).narration,fixtures.compatibility_5_0.narration);
+  assert.equal(legacy.narration,'','No active session supplies publication proof for this parsed legacy candidate.');
+  assert.equal(fake.requests.length,1);metrics.golden_passes++;metrics.compatibility_5_0="unchanged candidate parsed; no-session publication held";
   configureCityFlags(db,guild,{decision_advisory:true,discovery:true});
   metrics.judgment_provenance=judgments.provenance;metrics.judgment_cases=[];
   for(const fixture of judgments.valid){
@@ -99,7 +102,7 @@ try{
   for(const fixture of heard.cases){
     let actual="accept";
     try{validateNarrativeClaims(db,guild,fixture.surface==="private"?{narration:"Rain falls.",private_messages:[{content:fixture.text}]}:{narration:fixture.text});}
-    catch(error){if(error.code!=="NARRATIVE_INTEGRITY") throw error;actual="reject";}
+    catch(error){if(!['NARRATIVE_INTEGRITY','NARRATIVE_PVP'].includes(error.code)) throw error;actual="reject";}
     const unknown=fixture.expected==="unverified";
     metrics.i_heard_you.cases.push({id:fixture.id,expected:fixture.expected,validator_result:actual,semantic_status:unknown?"UNVERIFIED":"bounded_fixture_verified"});
     if(unknown){metrics.i_heard_you.unresolved_ambiguities++;continue;}

@@ -13,6 +13,7 @@ import { recordCityUpkeep, draftMinorNpc, reviewMinorNpc } from "../src/city-dep
 import { indexWorldEvent, scheduleCityEvent } from "../src/city-calendar.js";
 import { configureSimulationEntity } from "../src/simulation.js";
 import { publishSimulationHooks } from "../src/publishing.js";
+import {notSent} from '../src/publication-outbox.js';
 
 const temp=fs.mkdtempSync(path.join(os.tmpdir(),"vc-city-depth-"));
 const schema=path.resolve("sql/schema.sql"),db=new VeiledDB(path.join(temp,"test.sqlite"),schema);
@@ -69,14 +70,17 @@ try{
   assert.equal(db.listCityRecords("other",{kind:"minor_draft",includeGM:true}).length,0);
 
   // A real failed publication leaves a committed due event and retryable outbox, with no duplicated mutation.
+  const noticeSession=db.startSession(guild,'Native deadline notice');
+  db.assignCharacter(noticeSession.id,'owner',pc.id);db.setPresence(noticeSession.id,'owner','present');
   db.configureCampaign(guild,{playChannelId:"play"});
   scheduleCityEvent(db,guild,{key:"known-notice",title:"Known due event",due_minute:1440,visibility:"party",hook:"The agreed appointment is due."});
   db.advanceSimulationClock(guild,{minutes:0});const event=db.getWorldEvent(guild,"schedule:known-notice");
   let fail=true,sends=0;
-  const discordGuild={id:guild,channels:{fetch:async()=>({isTextBased:()=>true,send:async()=>{
-    if(fail) throw new Error("Injected Discord delivery failure");sends++;return {id:"published"};
+  const discordGuild={id:guild,channels:{fetch:async()=>({id:'play',isTextBased:()=>true,send:async()=>{
+    if(fail) throw notSent("Injected Discord delivery failure");sends++;return {id:"published"};
   }})}};
-  await assert.rejects(()=>publishSimulationHooks({db,guild:discordGuild}),/delivery failure/);
+  assert.equal(await publishSimulationHooks({db,guild:discordGuild}),0);
+  assert.match(db.listPendingPublications(guild)[0].last_failure,/^NOT_SENT:.*delivery failure/);
   assert.equal(db.getSimulationRecord(guild,`city-hook:${guild}:known-notice`).status,"ready");
   fail=false;assert.equal(await publishSimulationHooks({db,guild:discordGuild}),1);
   assert.equal(await publishSimulationHooks({db,guild:discordGuild}),0);assert.equal(sends,1);

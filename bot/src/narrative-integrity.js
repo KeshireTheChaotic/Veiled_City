@@ -134,8 +134,35 @@ export function materialParaphrases(text,names=[]){
   }
   return hits;
 }
+function canonEvidence(db,guild,claim,audiences){
+  const row=db.currentCanon(guild,claim.source_ref);
+  if(!row||row.value!==claim.proposed||!audiences.every(audience=>visible(row,audience)))
+    deny('canon',claim,/^event:\d+$/.test(claim.source_ref)
+      ?'event:<index> is a staged event, not an existing canon-ledger key; use ordinary world additions'
+      :'canon ledger requires an existing exact audience-visible key and matching value');
+}
+/** Canon annotations retain their native ledger gate even if other candidate prose will be quarantined. */
+export function validateCanonAnnotations(db,guild,result,scope){
+  const claims=result.narrative_claims||[];
+  if(!Array.isArray(claims)||claims.length>32)deny('claim_budget');
+  for(const raw of claims){
+    if(!validClaimShape(raw))deny('claim_shape',raw);
+    if(raw?.action!=='canon'||raw.certainty!=='committed')continue;
+    if(!validClaimShape(raw))deny('claim_shape',raw);
+    const claim={...raw,source_span:raw.output_claim_span??raw.source_span};
+    canonEvidence(db,guild,claim,claimAudiences(db,guild,result,claim,scope));
+  }
+}
 export function validateNarrativeClaims(db,guildId,result,scope={mode:"party"},{staged=false,eventResults=[]}={}){
-  assertPvpOutput(db,guildId,result,scope);
+  return validateClaims(db,guildId,result,scope,{staged,eventResults},true);
+}
+/** Private candidate audit only. It validates annotations against native state, never grants publication authority. */
+export function validateCandidateClaims(db,guildId,result,scope,eventResults){
+  if(!(result.narrative_claims||[]).length)return;
+  return validateClaims(db,guildId,result,scope,{staged:true,eventResults},false);
+}
+function validateClaims(db,guildId,result,scope,{staged=false,eventResults=[]},checkOutput){
+  const outputAuthority=checkOutput?assertPvpOutput(db,guildId,result,scope):null;
   const claims=result.narrative_claims||[];
   if(!Array.isArray(claims)||claims.length>32) deny("claim_budget");
   const narration=[result.narration||"",result.public_narration||"",result.player_summary||"",...(result.private_messages||[]).map(row=>row.content)].join("\n");
@@ -240,14 +267,13 @@ export function validateNarrativeClaims(db,guildId,result,scope={mode:"party"},{
           &&row.data.accepted_by?.includes(audience.actorUserId)))deny("scoped_obligation",c,"Audience-visible commitment or this owner's native accepted terms required.");
     }
     if(c.action==="canon"){
-      const row=db.currentCanon(guildId,c.source_ref);
-      if(!row||row.value!==c.proposed||!audiences.every(audience=>visible(row,audience)))
-        deny("canon",c,/^event:\d+$/.test(c.source_ref)
-          ?"event:<index> is a staged event, not an existing canon-ledger key; use ordinary world additions"
-          :"canon ledger requires an existing exact audience-visible key and matching value");
+      canonEvidence(db,guildId,c,audiences);
     }
   }
-  // Conservative local tripwires also catch omitted declarations of common high-risk assertions.
+  // Independently reconstructed native parts have already checked their complete payload and receipt/audience chain.
+  // Their receipt-backed wording need not carry a model annotation; candidate annotations were audited separately.
+  if(outputAuthority?.publicationAuthorized===true&&!claims.length)return {ok:true,claims:0,publication_authorized:true};
+  // Conservative local tripwires also catch omitted declarations of common high-risk assertions in unprepared candidates.
   const risk=/\b(?:you (?:take|suffer) \d+ (?:damage|HP)|(?:teleports?|is now dead|is now bound)|(?:roll(?:ed)? (?:a |an )?\d+))\b/gi;
   for(const match of narration.matchAll(risk)) if(!claims.some(c=>(c.output_claim_span||c.source_span||"").includes(match[0]))) deny("undeclared_material_assertion");
   if(db.getCityCalendar(guildId).flags.semantic_integrity===true){
@@ -255,7 +281,7 @@ export function validateNarrativeClaims(db,guildId,result,scope={mode:"party"},{
       if(!claims.some(c=>c.action===hit.action&&c.certainty==="committed"&&(c.output_claim_span||c.source_span||"").includes(hit.span)))
         deny("unverified_material_paraphrase",null,hit.action);
   }
-  return {ok:true,claims:claims.length};
+  return {ok:true,claims:claims.length,publication_authorized:outputAuthority?.publicationAuthorized===true};
 }
 
 export function assertNarrativeApplied(result,eventResults){

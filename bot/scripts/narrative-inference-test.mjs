@@ -74,7 +74,8 @@ try{
   assert.equal(db.getCharacter(pc.id).data.location,"street","Generation previews but cannot commit movement");
   let published=false;
   assert.throws(()=>{
-    applyAuthoritativeMutation(db,{...input,narrative:{...narrative,narration:span+" You are dead.",
+    // Do not duplicate the prior native projection on a second surface in this distinct lifecycle-claim fixture.
+    applyAuthoritativeMutation(db,{...input,narrative:{...narrative,player_summary:'',narration:span+" You are dead.",
       narrative_claims:[claim,{...claim,action:"status",proposed:"dead",source_span:"You are dead."}]}});published=true;
   },/actor_status/);
   assert.equal(published,false);assert.equal(db.getCharacter(pc.id).data.location,"street");

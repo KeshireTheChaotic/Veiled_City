@@ -11,8 +11,14 @@ import {renderContinuationNotice} from "./action-continuation.js";
 import {renderNativeNotice} from "./native-notice.js";
 import {establishGmWorldPart,renderGmWorldPart} from "./gm-world-narrative.js";
 import {operationalMetrics} from './operational-metrics.js';
+import {decodeNonmaterialGrammar,establishGrammarScope,renderNonmaterialGrammar,grammarHash} from './nonmaterial-grammar.js';
+import {splitDiscordText} from './discord/chunking.js';
+import {findFreshNpcPart,renderFreshNpcPart,hasPcReference} from './fresh-npc-authoring.js';
+import {nativeHookProjection} from './native-hook-output.js';
+import {nativeOutcomeProjection} from './native-outcome-output.js';
+import {validatePostTurnStateReview} from './director.js';
 
-const hash=v=>createHash("sha256").update(JSON.stringify(v)).digest("hex");
+const hash=v=>createHash("sha256").update(JSON.stringify(v??null)).digest("hex");
 const prepared=new WeakMap();
 const archiveCaptures=new WeakMap();
 const neutral="No additional character response has been established. Independently authorized actions remain in effect.";
@@ -61,13 +67,20 @@ function surfaces(result){
     .concat((result.private_messages||[]).map(m=>[`private:${m.discord_user_id}`,String(m.content||"")]));
 }
 function fingerprint(result){return hash(surfaces(result));}
+/** Original annotations are validation inputs, not publication authority. Never reconstruct them from projected prose. */
+export function candidateNarrative(result){
+  const proof=prepared.get(result);
+  if(proof&&proof.fingerprint!==fingerprint(result))fail();
+  return structuredClone(proof?.candidate||{narration:result.narration||'',public_narration:result.public_narration||'',
+    player_summary:result.player_summary||'',private_messages:result.private_messages||[],narrative_claims:result.narrative_claims||[],events:result.events||[]});
+}
 function audienceScope(scope,surface){
   if(!surface.startsWith("private:"))return scope;
   return {...scope,mode:"private",recipientUserId:surface.slice(8)};
 }
 function renderPart(db,guild,part){
   const {scope,scene,session,kind,ref}=part;
-  if(currentScene(db,guild).key!==scene||db.getActiveSession(guild)?.id!==session)fail();
+  if(!db.getActiveSession(guild)||currentScene(db,guild).key!==scene||db.getActiveSession(guild)?.id!==session)fail();
   const source=db.getWorldEvent(guild,part.source_ref);
   if(!source||source.status!=="active"||hash(source.details)!==part.source_hash)fail();
   if(part.principal_revision&&conversationPrincipal(db,guild,scope.actorUserId,scope.actorCharacterId).revision!==part.principal_revision)fail();
@@ -76,7 +89,20 @@ function renderPart(db,guild,part){
     if(!assignment||assignment.character_id!==scope.actorCharacterId)fail();
   }
   if(kind==="neutral")return neutral;
+  if(kind==='native_simulation_hook'){
+    const hook=nativeHookProjection(db,guild,ref,scope);if(hook.revision!==part.hook_revision)fail();return hook.text;
+  }
+  if(kind==='native_outcome'){
+    const outcome=nativeOutcomeProjection(db,guild,part.input,scope);if(outcome.revision!==part.outcome_revision)fail();return outcome.text;
+  }
+  if(kind==="nonmaterial_grammar")return renderNonmaterialGrammar(db,guild,part);
   if(kind==="gm_world_narrative")return renderGmWorldPart(db,guild,ref,scope);
+  if(kind==='gm_fresh_npc'){
+    try{return renderFreshNpcPart(db,guild,ref,scope);}catch(error){
+      if(!['GM_WORLD_NARRATIVE','NPC_AUTHORING_SCOPE','NPC_AUTHORING_WORDS'].includes(error.code))throw error;
+      fail();
+    }
+  }
   if(kind==="action_continuation_notice")return renderContinuationNotice(db,guild,ref,scope);
   if(kind==="native_notice"){
     const n=db.getCityRecord(guild,"native_notice",ref);
@@ -122,6 +148,34 @@ function savePart(db,guild,part){
     status:"verified",visibility:part.scope.mode==="private"?"character":"party",subject_key:part.scope.actorCharacterId||null,
     source_event:part.source_ref,data});
 }
+function saveOutputGroup(db,guild,parts){
+  const data={version:1,parts:parts.map(p=>p.record_key),text:parts.map(p=>p.data.text).join('\n')};
+  const key=`output-group:${hash(data)}`;
+  if(!db.getCityRecord(guild,'pvp_output_group',key))db.saveCityRecord(guild,{kind:'pvp_output_group',key,
+    status:'verified',visibility:'gm',source_event:parts[0].source_event,data});
+}
+function reusableParts(db,guild,text,scope){
+  if(scope.mode==='private'){
+    const session=db.getActiveSession(guild),assignment=session&&db.activeAssignment(session.id,scope.actorUserId);
+    if(!assignment||assignment.character_id!==scope.actorCharacterId||db.getCharacter(scope.actorCharacterId)?.owner_user_id!==scope.actorUserId)fail();
+  }
+  const candidates=records(db,guild,'pvp_output_part').filter(p=>p.data.text===text).map(p=>[p.record_key]);
+  for(const group of records(db,guild,'pvp_output_group')){
+    if(group.status==='verified'&&group.record_key===`output-group:${hash(group.data)}`&&group.data.text===text)
+      candidates.push(group.data.parts);
+  }
+  for(const ids of candidates){
+    try{
+      const parts=ids.map(id=>validateOutputPart(db,guild,id));
+      if(!parts.length||parts.map(p=>p.data.text).join('\n')!==text)continue;
+      if(parts.some(p=>scope.mode!=='private'?p.visibility!=='party'||p.data.scope.mode==='private'
+        :p.visibility!=='party'&&(p.visibility!=='character'||p.subject_key!==scope.actorCharacterId||p.data.scope.actorUserId!==scope.actorUserId)
+          ||p.data.kind==='observation_answer'&&(p.data.query.observer!==scope.actorCharacterId||p.data.query.user!==scope.actorUserId)))continue;
+      return ids;
+    }catch(error){if(!['NARRATIVE_PVP','CHARACTER_OBSERVATION','WORLD_OBSERVATION'].includes(error.code))throw error;}
+  }
+  fail();
+}
 /** Native continuation status only; private source/owner proof revalidates at every output sink. */
 export function prepareContinuationOutput(db,guild,task,scope){
   const source=db.getWorldEvent(guild,task.source_event),scene=currentScene(db,guild);
@@ -139,6 +193,14 @@ export function prepareNativeNoticeOutput(db,guild,notice,scope){
   const result={narration:part.data.text,player_summary:part.data.text,private_messages:[],narrative_claims:[]};
   prepared.set(result,{raw:{},drafts:{},parts:[part.record_key],scope:hash(scope),fingerprint:fingerprint(result)});return result;
 }
+export function prepareNativeHookOutput(db,guild,hook,scope){
+  const projection=nativeHookProjection(db,guild,hook.id,scope),scene=currentScene(db,guild);
+  const part=savePart(db,guild,{render_version:1,scene:scene.key,session:scene.session_id,scope:{...scope},origin:'native_hook',
+    kind:'native_simulation_hook',ref:hook.id,hook_revision:projection.revision,
+    source_ref:projection.source.event_key,source_hash:hash(projection.source.details)});
+  const result={narration:part.data.text,player_summary:part.data.text,narrative_claims:[],private_messages:[]};
+  prepared.set(result,{raw:{},drafts:{},parts:[part.record_key],scope:hash(scope),fingerprint:fingerprint(result)});return result;
+}
 export function validateOutputPart(db,guild,id){
   const row=db.getCityRecord(guild,"pvp_output_part",id),d=row?.data;
   if(!row||row.status!=="verified"||d.version!==1||id!==`pvp-output:${hash(d)}`
@@ -146,31 +208,53 @@ export function validateOutputPart(db,guild,id){
   return row;
 }
 /** Trusted orchestration only; a model cannot manufacture the in-process capability or native proofs. */
-export function prepareAuthorizedTurnOutput(db,guild,result,scope,{sourceRef=null,world=[],origin="turn"}={}){
+export function prepareAuthorizedTurnOutput(db,guild,result,scope,{sourceRef=null,world=[],nativeEntries=[],origin="turn"}={}){
   const prior=prepared.get(result),raw=prior?.raw||Object.fromEntries(surfaces(result));
+  const candidate=candidateNarrative(result);
   const drafts=prior?.drafts||Object.fromEntries(["context_memories","handouts","npc_memories","npc_knowledge","npc_goals","gm_world_parts"]
     .map(field=>[field,result[field]||[]]));
+  if(!db.getActiveSession(guild)){
+    quarantineGeneratedOutput(db,guild,'no-active-scene',{raw,drafts,candidate,producer:origin});
+    for(const field of ['narration','public_narration','player_summary'])if(field in result)result[field]='';
+    for(const field of ['private_messages','narrative_claims',...Object.keys(drafts)])if(field in result)result[field]=[];
+    prepared.set(result,{raw,drafts,candidate,parts:[],privateParts:{},scope:hash(scope),fingerprint:fingerprint(result),draftOnly:true});
+    return result; // No fictional scene is fabricated. Independent native events still execute.
+  }
   const proposals=protectedPvpScope(db,guild,scope);
   const queries=observationQueries(db,guild,result.player_intents||[],scope,sourceRef);
   if(proposals.length)queries.push(...ambientWorldQueries(db,guild,scope,sourceRef));
-  const worldParts=Array.isArray(drafts.gm_world_parts)?drafts.gm_world_parts:[];
-  if(!proposals.length&&!queries.length&&!worldParts.length)return result;
+  const worldParts=[...(Array.isArray(drafts.gm_world_parts)?drafts.gm_world_parts:[]).slice(0,4),
+    ...nativeEntries.map(ref=>({version:4,kind:'native_outcome',receipt_kind:'scene_entry',ref}))];
   if(result.act===false&&!surfaces(result).some(([,text])=>text.trim()))return result;
   operationalMetrics.record('narrative_projection',{guildId:guild});
   const scene=currentScene(db,guild),parts=[];
-  const nativeSource=sourceRef||proposals[0]?.source_event;
+  const nativeSource=sourceRef||proposals[0]?.source_event||null;
   const common={render_version:1,scene:scene.key,session:scene.session_id,scope:{...scope},origin,
     source_ref:nativeSource,source_hash:hash(db.getWorldEvent(guild,nativeSource)?.details),
     principal_revision:scope.actorUserId&&scope.actorCharacterId
       ?conversationPrincipal(db,guild,scope.actorUserId,scope.actorCharacterId).revision:null};
-  for(const proposal of worldParts.slice(0,4)){
+  if(!proposals.length){
+    const grammar=decodeNonmaterialGrammar(db,guild,raw.narration||raw.public_narration||'',scope);
+    if(grammar){
+      const source=sourceRef?db.getWorldEvent(guild,sourceRef):establishGrammarScope(db,guild,grammar,scope);
+      parts.push(savePart(db,guild,{...common,kind:'nonmaterial_grammar',input_text:grammar.text,
+        grammar_hash:grammarHash(grammar),source_ref:source.event_key,source_hash:hash(source.details)}));
+    }
+  }
+  for(const proposal of worldParts){
     try{
-      const row=establishGmWorldPart(db,guild,proposal,scope,{sourceRef,origin});
+      if(proposal?.version===4){
+        const outcome=nativeOutcomeProjection(db,guild,proposal,scope);
+        parts.push(savePart(db,guild,{...common,kind:'native_outcome',input:proposal,outcome_revision:outcome.revision,
+          source_ref:outcome.source.event_key,source_hash:hash(outcome.source.details)}));continue;
+      }
+      const fresh=proposal?.version===3;
+      const row=fresh?findFreshNpcPart(db,guild,proposal,scope,sourceRef):establishGmWorldPart(db,guild,proposal,scope,{sourceRef,origin});
       const event=db.getWorldEvent(guild,row.source_event);
-      parts.push(savePart(db,guild,{...common,kind:"gm_world_narrative",ref:row.record_key,
+      parts.push(savePart(db,guild,{...common,kind:fresh?'gm_fresh_npc':"gm_world_narrative",ref:row.record_key,
         source_ref:event.event_key,source_hash:hash(event.details)}));
     }catch(error){
-      if(error.code!=="GM_WORLD_NARRATIVE")throw error;
+      if(!['GM_WORLD_NARRATIVE','NPC_AUTHORING_SCOPE','NPC_AUTHORING_WORDS','NARRATIVE_PVP','PC_EFFECT_AUTHORITY','NATIVE_NOTICE'].includes(error.code))throw error;
       // Unsupported parts stay in the private draft quarantine. Independent native work is preserved.
     }
   }
@@ -200,12 +284,23 @@ export function prepareAuthorizedTurnOutput(db,guild,result,scope,{sourceRef=nul
     try{parts.push(savePart(db,guild,{...common,kind:"owner_clause",ref:row.record_key}));}
     catch(e){if(e.code!=="NARRATIVE_PVP")throw e;} // Stale records stay inert; raw prose is not a fallback.
   }
-  if(!parts.length)parts.push(savePart(db,guild,{...common,kind:"neutral"}));
+  if(!parts.length){
+    if(!common.source_ref){
+      const details={version:1,issuer:'native:output-review',session:scene.session_id,scene:scene.key,
+        scope:{...scope},origin,principal_revision:common.principal_revision};
+      const source=indexWorldEvent(db,guild,{key:`output-review-scope:${hash(details)}`,kind:'native_output_review_scope',
+        title:'Unresolved output review scope; no fictional outcome',source_id:details.issuer,visibility:'gm',
+        session_id:scene.session_id,scene:scene.key,details},details.issuer);
+      common.source_ref=source.event_key;common.source_hash=hash(source.details);
+    }
+    parts.push(savePart(db,guild,{...common,kind:"neutral"}));
+  }
   if(parts.some(p=>p.data.kind==='neutral'))operationalMetrics.record('neutral_fallback',{guildId:guild});
   const text=parts.map(p=>p.data.text).join("\n"),quarantineKey=`pvp-quarantine:${hash([scene.key,origin,sourceRef,raw])}`;
   if(!db.getCityRecord(guild,"pvp_output_quarantine",quarantineKey))db.saveCityRecord(guild,{
     kind:"pvp_output_quarantine",key:quarantineKey,status:"needs_scope_review",visibility:"gm",source_event:common.source_ref,
-    data:{version:1,scene:scene.key,session:scene.session_id,origin,source_ref:sourceRef,raw,drafts,hash:hash([raw,drafts]),canonical:false}});
+    data:{version:1,scene:scene.key,session:scene.session_id,origin,source_ref:sourceRef,raw,drafts,candidate,
+      hash:hash([raw,drafts,candidate]),canonical:false}});
   result.narration=text;
   if("public_narration" in result)result.public_narration=text;
   result.player_summary=text;result.private_messages=[];
@@ -230,47 +325,101 @@ export function prepareAuthorizedTurnOutput(db,guild,result,scope,{sourceRef=nul
   if("gm_notes" in result)result.gm_notes="Unverified generated prose is held in private scope review; native receipts are unchanged.";
   // Claims annotated against the quarantined paragraph are not claims about the renderer's output.
   result.narrative_claims=[];
-  for(const field of ["context_memories","handouts","npc_memories","npc_knowledge","npc_goals"])
+  // Preserve source-owned descriptive referents, not the model's alleged facts or suppressed narration.
+  // saveContextMemories takes the exact audience-bound source excerpt and ignores each proposed summary.
+  const inputSource=sourceRef&&db.getWorldEvent(guild,sourceRef),inputText=inputSource?.details?.text||'';
+  result.context_memories=inputSource?.status==='active'&&scope.actorUserId&&db.ownerAuthoredSource(guild,sourceRef,scope.actorUserId)
+    ?(drafts.context_memories||[]).filter(row=>typeof row.name==='string'&&row.name&&inputText.toLocaleLowerCase().includes(row.name.toLocaleLowerCase())):[];
+  for(const field of ["handouts","npc_memories","npc_knowledge","npc_goals"])
     if(result[field]?.length)result[field]=[];
+  if(result.state_review_normalization?.version===1){
+    const priorCorrections=result.state_review_normalization.corrections||[];
+    validatePostTurnStateReview(result);
+    const corrections=[...new Map([...priorCorrections,...result.state_review_normalization.corrections]
+      .map(c=>[JSON.stringify(c),c])).values()];
+    result.state_review_normalization={...result.state_review_normalization,normalized:corrections.length>0,corrections};
+  }
   if("gm_world_parts" in result)result.gm_world_parts=[];
   if(JSON.stringify(raw)!==JSON.stringify(Object.fromEntries(surfaces(result)))){
     operationalMetrics.record('narrative_quarantine',{guildId:guild});
     operationalMetrics.incident('narrative',{guildId:guild,reference:quarantineKey,code:'NARRATIVE_PVP'});
   }
-  prepared.set(result,{raw,drafts,parts:parts.map(p=>p.record_key),privateParts,scope:hash(scope),fingerprint:fingerprint(result)});
+  saveOutputGroup(db,guild,parts);
+  prepared.set(result,{raw,drafts,candidate,parts:parts.map(p=>p.record_key),privateParts,scope:hash(scope),fingerprint:fingerprint(result)});
   return result;
 }
 /** Direct unprepared boundaries reject. High-level callers deliberately prepare before entering them. */
-export function assertPvpOutput(db,guild,result,scope={mode:"party"}){
+export function assertPvpOutput(db,guild,result,scope={mode:"party"},{publication=false}={}){
   const proof=prepared.get(result);
   if(proof){
     if(proof.scope!==hash(scope)||proof.fingerprint!==fingerprint(result))fail();
+    if(proof.draftOnly){if(publication)fail();return {publicationAuthorized:false};}
     for(const id of proof.parts)validateOutputPart(db,guild,id);
     for(const ids of Object.values(proof.privateParts||{}))for(const id of ids)validateOutputPart(db,guild,id);
-    return;
+    return {publicationAuthorized:true};
   }
+  if(publication)fail();
   for(const [surface,text] of surfaces(result)){
     if(!text.trim())continue;
-    const proposals=protectedPvpScope(db,guild,audienceScope(scope,surface));if(!proposals.length)continue;
+    const proposals=protectedPvpScope(db,guild,audienceScope(scope,surface));
+    if(!proposals.length){
+      if((result.narrative_claims||[]).length)continue; // Declared claims are still checked by their native validator; never queue authority.
+      if(db.getActiveSession(guild)&&decodeNonmaterialGrammar(db,guild,text,audienceScope(scope,surface)))continue;
+      if(hasPcReference(db,guild,text))fail();
+      // Legacy validation can provisionally accept unowned scene prose, but never grants queue/send authority.
+      // Identity scoping is conservative, NOT a semantic detector. Even accepted prose needs native preparation to publish.
+      continue;
+    }
     const row=records(db,guild,"pvp_public_projection").find(p=>p.data.text===text&&proposals.some(v=>v.record_key===p.data.proposal));
     if(!row)fail();pvpProjection(db,guild,row.record_key);
   }
+  return {publicationAuthorized:false};
+}
+function publicationChunk(db,guild,publication,ids){
+  if(!Array.isArray(ids)||!ids.length||new Set(ids).size!==ids.length)fail();
+  const parts=ids.map(id=>validateOutputPart(db,guild,id));
+  const privateUser=publication.surface.startsWith('private_user:');
+  if(!['party','private_scene'].includes(publication.surface)&&!privateUser)fail();
+  for(const part of parts){
+    const scope=part.data.scope;
+    if(publication.surface==='party'){
+      if(scope.mode==='private'||publication.visibility!=='party'||publication.target_user_id)fail();
+    }else{
+      const user=publication.target_user_id,character=publication.target_character_id,assignment=db.activeAssignment(part.data.session,user);
+      if(publication.visibility!=='character'||!assignment||assignment.character_id!==character
+        ||db.getCharacter(character)?.owner_user_id!==user||privateUser&&publication.surface!==`private_user:${user}`
+        ||scope.mode==='private'&&(user!==scope.actorUserId||character!==scope.actorCharacterId)
+        ||part.data.kind==='observation_answer'&&(character!==part.data.query.observer||user!==part.data.query.user))fail();
+    }
+  }
+  const text=(privateUser?'**Veilkeeper — private:**\n':'')+parts.map(part=>part.data.text).join('\n');
+  const chunks=splitDiscordText(text),siblings=db.listTurnPublications(guild,publication.turn_id)
+    .filter(row=>row.surface===publication.surface);
+  const index=siblings.findIndex(row=>row.id===publication.id);
+  if(index<0||chunks[index]!==publication.payload)fail();
+  return {text_hash:hash(text),chunk_index:index,chunk_count:chunks.length};
 }
 export function bindOutputPublication(db,guild,result,publication,payload){
-  const proof=prepared.get(result);if(!proof)return;
+  const proof=prepared.get(result);if(!proof||proof.fingerprint!==fingerprint(result))fail();
   const parts=publication.surface.startsWith("private_user:")?proof.privateParts?.[publication.target_user_id]:proof.parts;
-  if(!parts?.length)fail();
+  if(!parts?.length||payload!==publication.payload)fail();
+  const chunk=publicationChunk(db,guild,publication,parts);
   db.saveCityRecord(guild,{kind:"pvp_output_publication",key:publication.id,status:"verified",visibility:"gm",
     source_event:validateOutputPart(db,guild,parts[0]).source_event,
-    data:{version:1,parts,payload_hash:hash(payload),surface:publication.surface,recipient:publication.target_user_id||null,
+    data:{version:2,parts,...chunk,turn:publication.turn_id,ordinal:publication.ordinal,
+      payload_hash:hash(payload),surface:publication.surface,recipient:publication.target_user_id||null,
       visibility:publication.visibility,character:publication.target_character_id||null}});
 }
 export function revalidateOutputPublication(db,guild,row){
   const record=db.getCityRecord(guild,"pvp_output_publication",row.id);
   if(record){
-    if(record.status!=="verified"||record.data.payload_hash!==hash(row.payload)||record.data.surface!==row.surface
+    if(record.status!=="verified"||![1,2].includes(record.data.version)
+      ||record.data.payload_hash!==hash(row.payload)||record.data.surface!==row.surface
       ||record.data.recipient!==(row.target_user_id||null)||record.data.visibility!==row.visibility
       ||record.data.character!==(row.target_character_id||null))fail();
+    const chunk=publicationChunk(db,guild,row,record.data.parts);
+    if(record.data.version===2&&(record.data.turn!==row.turn_id||record.data.ordinal!==row.ordinal
+      ||['text_hash','chunk_index','chunk_count'].some(key=>record.data[key]!==chunk[key])))fail();
     for(const id of record.data.parts){
       const part=validateOutputPart(db,guild,id);
       if(part.visibility==="character"&&(row.visibility!=="character"||row.target_character_id!==part.subject_key
@@ -278,7 +427,7 @@ export function revalidateOutputPublication(db,guild,row){
       if(part.data.kind==="observation_answer"&&row.visibility!=="party"
         &&(row.target_character_id!==part.data.query.observer||row.target_user_id!==part.data.query.user))fail();
     }
-  }else if(protectedPvpScope(db,guild,{mode:row.visibility==="party"?"party":"private",recipientUserId:row.target_user_id}).length)fail();
+  }else fail();
   return row;
 }
 export function deliveredPartyOutput(db,guild,turnId){
@@ -361,23 +510,13 @@ export function certifiedSessionRecap(db,guild,sessionId){
   return parts.length?`Previously delivered, source-verified session excerpts (not new or current observations):\n\n${parts.join("\n\n")}`:"";
 }
 export function scopedSessionRecap(db,guild,session){
-  return !session?"":archivePvpHistory(db,guild,session.id).length?certifiedSessionRecap(db,guild,session.id):session.recap||"";
+  return !session?'':certifiedSessionRecap(db,guild,session.id);
 }
 /** Reuse only a current native-rendered part at an exactly compatible audience. Raw hooks confer no claim authority. */
 export function prepareStoredOutput(db,guild,text,scope){
-  const parts=records(db,guild,"pvp_output_part").filter(row=>row.data.text===text&&row.status==="verified"
-    &&(scope.mode!=="private"?row.visibility==="party"&&row.data.scope.mode!=="private"
-      :row.visibility==="party"||row.visibility==="character"&&row.subject_key===scope.actorCharacterId
-        &&row.data.scope.actorUserId===scope.actorUserId))
-    .filter(row=>scope.mode!=="private"||row.data.kind!=="observation_answer"
-      ||row.data.query.observer===scope.actorCharacterId&&row.data.query.user===scope.actorUserId).filter(row=>{
-    try{validateOutputPart(db,guild,row.record_key);return true;}catch(error){
-      if(!["NARRATIVE_PVP","CHARACTER_OBSERVATION","WORLD_OBSERVATION"].includes(error.code))throw error;return false;
-    }
-  });
-  if(!parts.length)fail();
+  const parts=reusableParts(db,guild,text,scope);
   const result={narration:text,player_summary:text,narrative_claims:[],private_messages:[]};
-  prepared.set(result,{raw:{},drafts:{},parts:[parts[0].record_key],scope:hash(scope),fingerprint:fingerprint(result)});
+  prepared.set(result,{raw:{},drafts:{},parts,scope:hash(scope),fingerprint:fingerprint(result)});
   return result;
 }
 export function quarantineSimulationHook(db,guild,hook){
@@ -387,6 +526,14 @@ export function quarantineSimulationHook(db,guild,hook){
   db.saveCityRecord(guild,{kind:"pvp_output_quarantine",key,status:"needs_scope_review",visibility:"gm",source_event:source.event_key,
     data:{version:1,origin:"simulation-hook",hook:hook.id,raw:{narration:hook.data.content},canonical:false}});
   return db.putSimulationRecord(guild,{...hook,id:hook.id,entityKey:hook.entity_key,status:"needs_scope_review",data:hook.data});
+}
+/** Missing output proof is a GM-private review, not a new fact, player choice or effect receipt. */
+export function quarantineGeneratedOutput(db,guild,origin,raw,sessionId=null){
+  const data={version:1,origin,session:sessionId,raw,canonical:false},key=`output-review:${hash(data)}`;
+  const source=indexWorldEvent(db,guild,{key:`${key}:source`,kind:'native_output_review',source_id:'native:output-review',
+    title:'Generated output held for source review',visibility:'gm',session_id:sessionId,details:{origin,canonical:false}},'native:output-review');
+  return db.getCityRecord(guild,'pvp_output_quarantine',key)||db.saveCityRecord(guild,{kind:'pvp_output_quarantine',key,
+    status:'needs_scope_review',visibility:'gm',source_event:source.event_key,data});
 }
 export function protectedHookSource(db,guild,hook){
   const context=hook.data.source_context;
@@ -398,15 +545,14 @@ export function archivePvpHistory(db,guild,sessionId=null){
   return protectedAgreements(db,guild).filter(p=>!session||p.data.session_id===session);
 }
 export function assertArchiveOutput(db,guild,text,{sessionId=null}={}){
-  if(!String(text||"").trim()||!archivePvpHistory(db,guild,sessionId).length)return;
+  if(!String(text||"").trim())return;
   for(const certificate of records(db,guild,"pvp_delivered_archive")){
     const row=db.getPublication(guild,certificate.record_key);
     if(row?.payload===text){archivedPublication(db,guild,row,sessionId);return;}
   }
   if(sessionId&&text===certifiedSessionRecap(db,guild,sessionId))return;
   if(!db.getActiveSession(guild))fail();
-  const part=records(db,guild,"pvp_output_part").find(r=>r.visibility==="party"&&r.status==="verified"&&r.data.text===text);
-  if(part){validateOutputPart(db,guild,part.record_key);return;}
+  try{reusableParts(db,guild,text,{mode:'party'});return;}catch(error){if(error.code!=='NARRATIVE_PVP')throw error;}
   const projection=records(db,guild,"pvp_public_projection").find(r=>r.visibility==="party"&&r.data.text===text);
   if(projection){pvpProjection(db,guild,projection.record_key);return;}
   fail();

@@ -187,15 +187,19 @@ try{
   assert(privateMutation.simulation[0].blocked);
 
   // Hooks retry failed delivery and expose only the player-facing text.
+  // V96-05R: transport fixture now has a real current native audience and an exact preparation outcome.
+  const hookSession=db.startSession(guild,'Native preparation hook');
+  db.assignCharacter(hookSession.id,'player',pc.id);db.setPresence(hookSession.id,'player','present');
+  db.updateCharacterData(pc.id,data=>{data.location='hollow-street';});
   configureSimulationEntity(db,guild,"npc","mara",{resources:{materials:3}});
-  submitNpcAction(db,guild,action("mara","prepare",{public_hook:"A courier knocks at Mercer Investigations."}),{roll:succeeds});
+  submitNpcAction(db,guild,action("mara","prepare",{public_hook:"The mara prepares to investigate the ward breach at Hollow Street."}),{roll:succeeds});
   assert(simulationOverview(db,guild).hooks.length);
   await publishSimulationHooks({db,guild:{id:guild,channels:{fetch:async()=>null}}});
   assert(simulationOverview(db,guild).hooks.length);
   db.configureCampaign(guild,{playChannelId:"table"});
   const sent=[];
-  await publishSimulationHooks({db,guild:{id:guild,channels:{fetch:async()=>({isTextBased:()=>true,send:async content=>{sent.push(content);return {id:"message"};}})}}});
-  assert.deepEqual(sent,["A courier knocks at Mercer Investigations."]);
+  await publishSimulationHooks({db,guild:{id:guild,channels:{fetch:async()=>({id:'table',isTextBased:()=>true,send:async content=>{sent.push(content);return {id:"message"};}})}}});
+  assert.deepEqual(sent,["The mara prepares to investigate the ward breach at Hollow Street."]);
   assert.equal(simulationOverview(db,guild).hooks.length,0);
 
   // Logical backup/restore includes simulation and leaves other guilds untouched.

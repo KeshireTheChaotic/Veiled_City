@@ -7,6 +7,7 @@ import { VeiledDB } from "../src/db.js";
 import { GMService } from "../src/gm.js";
 import { FakeResponses, fakeInteraction } from "./contract-fixtures.mjs";
 import { applyAuthoritativeMutation } from "../src/state.js";
+import {candidateNarrative} from '../src/pvp-output.js';
 import { configureCityFlags } from "../src/city-core.js";
 import { indexWorldEvent } from "../src/city-calendar.js";
 import { configureDelegation, delegationPolicy, stateRevision, reviewAiIntent } from "../src/ai-intents.js";
@@ -27,7 +28,8 @@ try{
   const commit=(value,origin="message")=>{
     const narrative={narration:"The witness intends to inspect the cable.",narrative_claims:[],ai_intents:[value]};
     const result=applyAuthoritativeMutation(db,{guildId:guild,narrative,provenance:{messageId:origin}});
-    assert.equal(narrative.narration,"The witness intends to inspect the cable.","Nonbinding prose is retained; actual effects are checked separately");return result.intents[0];
+    assert.equal(candidateNarrative(narrative).narration,"The witness intends to inspect the cable.","Nonbinding draft is retained; actual effects are checked separately");
+    assert.equal(narrative.narration,'','No-session prose is a candidate, not certified publication.');return result.intents[0];
   };
   assert.equal(commit(intent).status,"blocked");assert.equal(db.listNpcGoals(guild,"witness").length,0);
   configureCityFlags(db,guild,{emergent_goals:true});

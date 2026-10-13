@@ -13,6 +13,7 @@ import { handleCityCommand } from "../src/city-commands.js";
 import { KeyedSerialQueue } from "../src/serial-queue.js";
 import { handleCommand } from "../src/commands.js";
 import { applyAuthoritativeMutation } from "../src/state.js";
+import {candidateNarrative} from '../src/pvp-output.js';
 import { captureWorldInput } from "../src/autonomous-world.js";
 import { reviewFeatureEffect, reviewPcEffect, approvePcEffect } from "../src/pc-effects.js";
 import { FakeResponses, fakeInteraction } from "./contract-fixtures.mjs";
@@ -50,9 +51,10 @@ try{
   approvePcEffect(db,guild,"owner",healAuthority.record_key,{interactionId:"native-heal-approve"});
   const damageEvent={type:"resource_delta",key:"hp",amount:-2,target_character_id:pc.id,visibility:"party",cause_receipt:healAuthority.record_key};
   const damage={narration:"You clear 2 marked HP",narrative_claims:[{...base,source_span:"You clear 2 marked HP",prior:"6",mutation_index:0,visibility:"character"}],events:[damageEvent]};
+  const originalDamageClaim=structuredClone(damage.narrative_claims[0]); // Output preparation is separate from this immutable candidate.
   applyAuthoritativeMutation(db,{guildId:guild,sessionId:nativeSession.id,events:damage.events,narrative:damage,
     scope:{mode:"private",actorUserId:"owner",actorCharacterId:pc.id}});assert.equal(db.getCharacter(pc.id).data.resources.hp.current,4);
-  const clamped={...damage,events:[{...damageEvent,amount:-20}],narrative_claims:[{...damage.narrative_claims[0],prior:"4",proposed:"-20"}]};
+  const clamped={...damage,events:[{...damageEvent,amount:-20}],narrative_claims:[{...originalDamageClaim,prior:"4",proposed:"-20"}]};
   assert.throws(()=>applyAuthoritativeMutation(db,{guildId:guild,events:clamped.events,narrative:clamped}),/committed_result_mismatch/);
   assert.equal(db.getCharacter(pc.id).data.resources.hp.current,4,"mismatched narration rolls back the whole mutation");
   db.endSession(guild,""); // Restore the original no-session fixture for the unrelated router contracts below.
@@ -70,7 +72,9 @@ try{
     npc_memories:[],npc_knowledge:[],npc_goals:[],canon_proposals:[],simulation_updates:[],state_review:review};
   const fake=new FakeResponses(["{",turn,{respond:false,reason:"Player-to-player dialogue"}]);
   const gm=new GMService({db,content,ai:fake,config:{gmModel:"offline",routerModel:"offline",maxRecentMessages:8,maxContentChunks:2}});
-  assert.equal((await gm.runTurn({guildId:guild,actorUserId:"owner",actorName:"Tester",messageText:"What is outside?"})).narration,turn.narration);
+  const repaired=await gm.runTurn({guildId:guild,actorUserId:"owner",actorName:"Tester",messageText:"What is outside?"});
+  assert.equal(candidateNarrative(repaired).narration,turn.narration);
+  assert.equal(repaired.narration,'','A no-session raw candidate is not a publication payload.');
   assert.equal(fake.requests.length,2);assert(fake.requests[0].text.format.schema.required.includes("narrative_claims"));
   assert.equal(await gm.shouldRespond({guildId:guild,mode:"active",message:{content:"We discuss our plan",author:{username:"Tester"}}}),false);
   const broken=new FakeResponses(["{","{"]);

@@ -28,6 +28,10 @@ assert(escaped.input.length<=11000,"Array string escaping counts toward the actu
 
 const temp=fs.mkdtempSync(path.join(os.tmpdir(),"vc-prompt-budget-"));
 const db=new VeiledDB(path.join(temp,"test.sqlite"),path.resolve("sql/schema.sql"));
+// total_changes() includes rolled-back preview writes; compare every committed fixture table instead.
+const committedState=()=>JSON.stringify(db.db.prepare("SELECT name FROM sqlite_schema WHERE type='table' ORDER BY name").all()
+  .map(({name})=>[name,db.db.prepare(`SELECT * FROM "${name.replaceAll('"','""')}"`).all()
+    .map(row=>JSON.stringify(row)).sort()]));
 try{
   const guild="budget";db.ensureCampaign(guild);const session=db.startSession(guild,"Lighthouse");
   db.upsertPlayer(guild,"owner","Owner");db.upsertPlayer(guild,"other","Other");
@@ -48,7 +52,7 @@ try{
     const fake=new FakeResponses(["{malformed",{...base,state_review:{}},base]);
     const gm=new GMService({db,content:new ContentIndex(path.resolve("../content")),ai:fake,
       config:{gmModel:"offline",maxRecentMessages:200,maxContentChunks:8}});
-    const before=db.db.prepare("SELECT total_changes() n").get().n;
+    const before=committedState();
     const text="I examine the lighthouse. AUTHORED_INPUT_PRESERVED";
     await gm.runTurn({guildId:guild,actorUserId:"owner",actorName:"Owner",messageText:text,scope});
     assert.equal(fake.requests.length,3,"Both structured parsing and state-review retries exercised");
@@ -59,7 +63,7 @@ try{
       assert(req.input.includes("CONTEXT BUDGET"));assert(!req.input.includes("FOREIGN_PRIVATE_TRANSCRIPT"));
       assert(req.input.includes(`scope=${scope}`));
     }
-    assert.equal(db.db.prepare("SELECT total_changes() n").get().n,before,"Compaction/retries do not mutate campaign state");
+    assert.equal(committedState(),before,"Compaction/retries do not mutate campaign state");
     const failing=new FakeResponses([]);gm.ai=failing;
     await assert.rejects(()=>gm.runTurn({guildId:guild,actorUserId:"owner",actorName:"Owner",messageText:"x".repeat(130000),scope}),/Mandatory turn context/);
     assert.equal(failing.requests.length,0,"Oversized mandatory input fails before provider calls");

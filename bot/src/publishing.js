@@ -1,14 +1,15 @@
 /** Discord publication boundary. Authoritative state is committed before these non-authoritative output operations run. */
 import { AttachmentBuilder } from "discord.js";
 import { handoutFiles, handoutSummary } from "./handout.js";
-import { randomUUID } from "node:crypto";
+import { randomUUID,createHash } from "node:crypto";
 import { splitDiscordText } from "./discord/chunking.js";
 import { assertGmOnlyChannel, assertPlayerPrivateChannel } from "./discord/privacy.js";
 import { simulationOverview, acknowledgeSimulationHook } from "./simulation.js";
 import { deliverTurnOutbox, outboxSummary, notSent } from "./publication-outbox.js";
 import { failureTrace } from "./failure-trace.js";
 import {operationalMetrics} from './operational-metrics.js';
-import { assertArchiveOutput, archivePvpHistory, assertPvpOutput, protectedPvpScope, protectedHookSource, prepareStoredOutput, quarantineSimulationHook, revalidateOutputPublication } from "./pvp-output.js";
+import { assertArchiveOutput, archivePvpHistory, assertPvpOutput, prepareStoredOutput, prepareNativeHookOutput,
+  quarantineSimulationHook, quarantineGeneratedOutput, revalidateOutputPublication } from "./pvp-output.js";
 import { queueDirectorPublications } from "./publication-outbox.js";
 import {KeyedSerialQueue} from "./serial-queue.js";
 const continuationDeliveryQueue=new KeyedSerialQueue();
@@ -31,33 +32,25 @@ export async function publishSimulationHooks({db,guild,sessionId=null}){
     const session=db.getActiveSession(guild.id),recipient=hook.data.target_user_id,
       scope=recipient?{mode:"private",actorUserId:recipient,actorCharacterId:session&&db.activeAssignment(session.id,recipient)?.character_id}
         :{mode:"party",actorUserId:null,actorCharacterId:null};
-    if(protectedHookSource(db,guild.id,hook)||protectedPvpScope(db,guild.id,scope).length||!session&&archivePvpHistory(db,guild.id).length){
+    {
       let result;
       try{
         if(!session||recipient&&!db.roster(session.id).some(r=>r.discord_user_id===recipient&&["present","late","guest"].includes(r.presence)))
           throw Object.assign(new Error("Current hook audience required."),{code:"NARRATIVE_PVP"});
-        result=prepareStoredOutput(db,guild.id,hook.data.content,scope);
+        try{result=prepareStoredOutput(db,guild.id,hook.data.content,scope);}catch(error){
+          if(error.code!=='NARRATIVE_PVP')throw error;
+          result=prepareNativeHookOutput(db,guild.id,hook,scope);
+        }
       }catch(error){
         if(!["NARRATIVE_PVP","CHARACTER_OBSERVATION","WORLD_OBSERVATION"].includes(error.code))throw error;
         quarantineSimulationHook(db,guild.id,hook);continue;
       }
       const turnId=queueDirectorPublications(db,{guild,session,result,scope,key:`simulation-hook:${hook.id}`});
       const delivery=await deliverQueuedTurn({db,guild,turnId});
-      // A transport failure may have happened after send. Never blindly repeat the hook on the next cycle.
-      for(const item of delivery.results.filter(r=>!r.ok))db.updatePublication(item.row.id,{status:"uncertain",lastFailure:item.row.last_failure});
+      // The outbox distinguishes proven non-send from uncertainty. Never erase that receipt or blindly retry uncertainty.
       if(delivery.pending.length)continue;
       acknowledgeSimulationHook(db,guild.id,hook.id);delivered++;continue;
     }
-    if(hook.data.target_user_id){
-      if(!db.getPlayer(guild.id,hook.data.target_user_id)) continue;
-      const result=await sendPlayerPrivate({db,guild,userId:hook.data.target_user_id,content:hook.data.content,sessionId});
-      if(!result.ok) continue;
-    }else{
-      const message=await postPlayMessage({db,guild,sessionId,content:hook.data.content});
-      if(!message.ok) continue;
-    }
-    acknowledgeSimulationHook(db,guild.id,hook.id);
-    delivered++;
   }
   return delivered;
 }
@@ -72,32 +65,49 @@ async function textChannel(guild,id){
   }catch{return null;}
 }
 
-async function upsertBotMessage({db,guild,channelId,surface,key,content}){
+async function upsertBotMessage({db,guild,channelId,surface,key,content,beforeWrite}){
   const ch=await textChannel(guild,channelId);
   if(!ch) return null;
   const existing=db.getPublished(guild.id,surface,key);
   if(existing?.message_id && existing.channel_id===channelId){
+    let message;
     try{
-      const m=await ch.messages.fetch(existing.message_id);
-      await m.edit(content.slice(0,1990));
-      return m;
-    }catch{
-      // The previously published Discord message may have been deleted; create a replacement below.
+      message=await ch.messages.fetch(existing.message_id);
+    }catch(error){
+      if(error.code!==10008&&error.status!==404)throw error; // Only confirmed absence permits replacement.
+    }
+    if(message){
+      beforeWrite?.();await message.edit(content.slice(0,1990));return message; // Uncertain edit never falls through to send.
     }
   }
+  beforeWrite?.();
   const m=await ch.send(content.slice(0,1990));
   db.setPublished(guild.id,surface,key,channelId,m.id);
   return m;
 }
 
-function threadText(row){
-  const icon={active:"🟡",resolved:"✅",failed:"❌",dormant:"⚪"}[row.status]||"•";
-  return [`**${icon} CASE THREAD — ${row.label}**`,`Status: **${row.status}**`,row.notes||"No additional notes recorded."].join("\n");
+function recordText(db,guild,kind,row){
+  const ref=createHash('sha256').update(JSON.stringify([kind,row.id||row.entity_key])).digest('hex').slice(0,16);
+  const candidate=kind==='thread'?row.notes:row.summary,scope={mode:'party',actorUserId:null,actorCharacterId:null};
+  let body='Description pending source review.';
+  if(candidate){
+    try{prepareStoredOutput(db,guild,candidate,scope);body=candidate;}
+    catch(error){
+      if(error.code!=='NARRATIVE_PVP')throw error;
+      quarantineGeneratedOutput(db,guild,'reference-publication',{kind,ref,candidate,label:row.label||row.display_name});
+    }
+  }
+  const status=kind==='thread'&&['active','resolved','failed','dormant'].includes(row.status)?`\nRecord status: ${row.status}`:'';
+  // Native record metadata is UI, not fiction or proof of any PC outcome. Unproven labels are not safe headings.
+  return `**${kind==='thread'?'CASE THREAD':kind==='npc'?'NPC':'LOCATION'} RECORD — ${ref}**${status}\n${body}`;
 }
-
-function referenceText(kind,row){
-  const label=kind==="npc"?"NPC":"LOCATION";
-  return [`**${label} — ${row.display_name}**`,row.summary||"No player-safe summary recorded."].join("\n");
+function publishRecord({db,guild,channelId,surface,key,kind,row}){
+  const content=recordText(db,guild.id,kind,row),beforeWrite=()=>{
+    const current=kind==='thread'?db.getThread(guild.id,row.id):db.getReference(guild.id,kind,row.entity_key);
+    if(!current||!['public','party'].includes(current.visibility)||recordText(db,guild.id,kind,current)!==content)
+      throw Object.assign(new Error('Current source-bound reference output required.'),{code:'NARRATIVE_PVP'});
+  };
+  return upsertBotMessage({db,guild,channelId,surface,key,content,beforeWrite});
 }
 
 export async function publishEventResults({db,guild,results=[]}){
@@ -105,11 +115,11 @@ export async function publishEventResults({db,guild,results=[]}){
   for(const r of results){
     if(!r?.publish||!r.row) continue;
     if(r.type==="thread" && c?.case_board_channel_id){
-      await upsertBotMessage({db,guild,channelId:c.case_board_channel_id,surface:"caseboard",key:r.row.id,content:threadText(r.row)});
+      await publishRecord({db,guild,channelId:c.case_board_channel_id,surface:"caseboard",key:r.row.id,kind:'thread',row:r.row});
     } else if(r.kind==="npc" && c?.known_npcs_channel_id){
-      await upsertBotMessage({db,guild,channelId:c.known_npcs_channel_id,surface:"npc",key:r.row.entity_key,content:referenceText("npc",r.row)});
+      await publishRecord({db,guild,channelId:c.known_npcs_channel_id,surface:"npc",key:r.row.entity_key,kind:'npc',row:r.row});
     } else if(r.kind==="location" && c?.known_locations_channel_id){
-      await upsertBotMessage({db,guild,channelId:c.known_locations_channel_id,surface:"location",key:r.row.entity_key,content:referenceText("location",r.row)});
+      await publishRecord({db,guild,channelId:c.known_locations_channel_id,surface:"location",key:r.row.entity_key,kind:'location',row:r.row});
     }
   }
 }
@@ -119,8 +129,7 @@ export async function publishJournal({db,guild,session,recap}){
   const c=db.getCampaign(guild.id);
   const ch=await textChannel(guild,c?.journal_channel_id);
   if(!ch) return false;
-  const protectedArchive=archivePvpHistory(db,guild.id,session.id).length;
-  const head=`## Session ${session.session_number}${!protectedArchive&&session.title?` — ${session.title}`:""}`;
+  const head=`## Session ${session.session_number}`;
   const parts=chunks(`${head}\n\n${recap}`);
   for(const p of parts){assertArchiveOutput(db,guild.id,recap,{sessionId:session.id});await ch.send(p);}
   return true;
@@ -129,7 +138,7 @@ export async function publishJournal({db,guild,session,recap}){
 export async function postJournalEntry({db,guild,title="Campaign Update",content="",nativeEncounterId=null}){
   assertArchiveOutput(db,guild.id,content);
   const encounter=nativeEncounterId&&db.getEncounter(nativeEncounterId);
-  if(archivePvpHistory(db,guild.id).length&&title!=="Campaign Update"
+  if(title!=="Campaign Update"
     &&!(encounter?.guild_id===guild.id&&title===`Encounter ${encounter.encounter_number} Aftermath`))
     throw Object.assign(new Error("PvP archive title requires a native source-bound projection."),{code:"NARRATIVE_PVP"});
   const c=db.getCampaign(guild.id);
@@ -198,19 +207,19 @@ export async function syncConfiguredSurfaces({db,guild}){
   const c=db.getCampaign(guild.id);
   if(c?.case_board_channel_id){
     const rows=db.listPublicPartyThreads(guild.id);
-    for(const row of rows) await upsertBotMessage({db,guild,channelId:c.case_board_channel_id,surface:"caseboard",key:row.id,content:threadText(row)});
+    for(const row of rows) await publishRecord({db,guild,channelId:c.case_board_channel_id,surface:"caseboard",key:row.id,kind:'thread',row});
   }
   for(const [kind,col] of [["npc","known_npcs_channel_id"],["location","known_locations_channel_id"]]){
     if(!c?.[col]) continue;
     for(const row of db.listReferences(guild.id,kind,{publicOnly:true})){
-      await upsertBotMessage({db,guild,channelId:c[col],surface:kind,key:row.entity_key,content:referenceText(kind,row)});
+      await publishRecord({db,guild,channelId:c[col],surface:kind,key:row.entity_key,kind,row});
     }
   }
 }
 
 
 export async function postPlayMessage({db,guild,content,sessionId=null,authority=null,publication=null}){
-  const scope={mode:"party",actorUserId:null,actorCharacterId:null},needsProof=protectedPvpScope(db,guild.id,scope).length>0;
+  const scope={mode:"party",actorUserId:null,actorCharacterId:null},needsProof=!!db.getActiveSession(guild.id);
   const check=()=>{
     if(publication){
       if(publication.visibility!=="party"||publication.target_user_id||content!==publication.payload)throw notSent("Exact party publication required.");
@@ -219,7 +228,7 @@ export async function postPlayMessage({db,guild,content,sessionId=null,authority
       const {result,scope:sourceScope}=authority;
       if(sourceScope?.mode!=="party"||content!==result.narration&&content!==`**Encounter Aftermath**\n${result.player_summary}`)
         throw Object.assign(new Error("Exact native output body required."),{code:"NARRATIVE_PVP"});
-      assertPvpOutput(db,guild.id,result,sourceScope);
+      assertPvpOutput(db,guild.id,result,sourceScope,{publication:true});
     }else if(needsProof)prepareStoredOutput(db,guild.id,content,scope);
   };
   check();
@@ -261,9 +270,17 @@ export async function deliverQueuedTurn({db,guild,turnId,forceUncertain=false}){
   return {turn:db.getTurnAttempt(turnId),results:results.map(item=>({...item,row:outboxSummary(item.row)})),pending:pending.map(outboxSummary)};
 }
 
-export async function sendPlayerPrivate({db,guild,userId,content,sessionId=null,characterId=null,beforeSend=null,publication=null,recordMessage=true,allowedMentions=null}){
+export async function sendPlayerPrivate({db,guild,userId,content,sessionId=null,characterId=null,beforeSend=null,publication=null,
+  recordMessage=true,allowedMentions=null,generated=false}){
   const messages=[];let attempted=false,via="unavailable";
   const check=()=>{
+    if(generated){
+      try{prepareStoredOutput(db,guild.id,content,{mode:'private',actorUserId:userId,actorCharacterId:characterId});}
+      catch(error){
+        if(error.code!=='NARRATIVE_PVP')throw error;
+        quarantineGeneratedOutput(db,guild.id,'direct-generated-private',{userId,characterId,content},sessionId);throw error;
+      }
+    }
     if(publication){
       if(publication.target_user_id!==userId||publication.target_character_id!==(characterId||null)||content!==publication.payload)
         throw notSent("Exact private publication recipient/body required.");
@@ -271,6 +288,7 @@ export async function sendPlayerPrivate({db,guild,userId,content,sessionId=null,
     }
     beforeSend?.();
   };
+  check(); // Generated candidates fail before any transport lookup, including between sessions.
   const send=async(target,route)=>{
     via=route;
     for(const part of chunks(content)){

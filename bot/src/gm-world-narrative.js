@@ -1,9 +1,10 @@
 /** Closed nonmechanical GM fiction. Model text, NPC profiles and safety labels never certify PC material clauses. */
 import {createHash} from "node:crypto";
-import {currentScene,scenePresence,sceneAccess} from "./scene-continuity.js";
-import {conversationPrincipal} from "./conversation-principal.js";
-import {activeCityProxy,assertNpcAvailability} from "./city-constraints.js";
+import {gmOwnedScope} from './gm-world-scope.js';
+export {gmWorldScope} from './gm-world-scope.js';
 import {indexWorldEvent} from "./city-calendar.js";
+import {validateCompositionShape,compositionEvidence,projectComposition} from "./gm-fiction-composition.js";
+import {npcCompositionSchema,freshNpcRequestSchema,nativeOutcomeSchema} from './gm-fiction-schema.js';
 
 const hash=v=>createHash("sha256").update(JSON.stringify(v)).digest("hex");
 const dialogue={
@@ -25,14 +26,22 @@ export const gmWorldPartsSchema={type:"array",maxItems:4,items:{type:"object",ad
   properties:{version:{type:"integer",enum:[1]},kind:{type:"string",enum:["npc_dialogue","scene_atmosphere"]},
     entity_key:{type:"string",maxLength:160},acts:{type:"array",minItems:1,maxItems:3,items:{type:"string",enum:acts}},
     tone:{type:"string",enum:Object.keys(tones)}},required:["version","kind","entity_key","acts","tone"]}};
-export const GM_WORLD_NARRATIVE_PROMPT="In protected PvP scenes, use gm_world_parts for meaningful GM-owned conversation and atmosphere. "
+gmWorldPartsSchema.items={anyOf:[gmWorldPartsSchema.items,npcCompositionSchema,freshNpcRequestSchema,nativeOutcomeSchema]};
+export const GM_WORLD_NARRATIVE_PROMPT="In ordinary, private and protected PvP scenes, use gm_world_parts for meaningful GM-owned conversation and atmosphere. "
   +"Choose current native NPC/location entity_key and compose up to three speech acts with a tone. ask_work + ask_skills invites a natural work discussion. "
   +"These parts authorize only the NPC's own closed utterance or harmless ephemeral atmosphere: never a PC response, secrets, promises, new access or mechanics. "
   +"Free text remains quarantined; do not encode extra facts in entity_key. Unsupported exposition needs separate native evidence/review. "
-  +"Use [] when no suitable GM-owned fiction is needed. Never use an active human NPC proxy.";
+  +"Use [] when no suitable GM-owned fiction is needed. Never use an active human NPC proxy. "
+  +"For fresh source-grounded NPC conversation in any scene, request version=3 kind=npc_fresh_request with current entity_key, "
+  +"focus (conversation/work/help/warning/offer/rumor/greeting/farewell), and source_refs of current audience-visible NPC observations. "
+  +"No utterance/text/safety flag is accepted from this combined GM prompt: a native audience-isolated authoring stage supplies words. "
+  +"Use at most one such request; it authorizes no PC effect, revelation, reaction, spending or factual assertion about a PC. "
+  +"Project an existing committed receipt using version=4 kind=native_outcome receipt_kind (pc_effect_receipt/roll_request/evidence_receipt/commitment) and ref. "
+  +"This is read-only, audience-checked rendering, never permission to apply a receipt or disclose private resources.";
 function fail(){throw Object.assign(new Error("Current native GM-owned output scope and closed nonmechanical projection required."),
   {code:"GM_WORLD_NARRATIVE",expected:true});}
 function closed(input){
+  if(input?.version===2){validateCompositionShape(input);return;}
   const keys=["version","kind","entity_key","acts","tone"];
   if(!input||Array.isArray(input)||Object.keys(input).some(k=>!keys.includes(k))||keys.some(k=>!(k in input))
     ||input.version!==1||!["npc_dialogue","scene_atmosphere"].includes(input.kind)
@@ -42,45 +51,19 @@ function closed(input){
   const catalog=input.kind==="npc_dialogue"?dialogue:atmosphere;
   if(input.acts.some(act=>!Object.hasOwn(catalog,act))||input.kind==="scene_atmosphere"&&input.tone!=="plain")fail();
 }
-function audience(db,guild,scope){
-  const scene=currentScene(db,guild),roster=db.roster(scene.session_id).filter(r=>["present","late","guest"].includes(r.presence));
-  if(scope.mode==="private"){
-    const principal=conversationPrincipal(db,guild,scope.actorUserId,scope.actorCharacterId);
-    if(principal.kind!=="owner"||!roster.some(r=>r.character_id===scope.actorCharacterId&&r.discord_user_id===scope.actorUserId))fail();
-    return {characters:[scope.actorCharacterId],principal:principal.revision};
-  }
-  return {characters:roster.map(r=>r.character_id).filter(Boolean),principal:null};
-}
 function snapshot(db,guild,input,scope){
-  closed(input);const scene=currentScene(db,guild),allowed=audience(db,guild,scope);
-  const type=input.kind==="npc_dialogue"?"npc":"location",entity=db.getSimulationEntity(guild,type,input.entity_key);
-  const authored=db.getCityRecord(guild,"autonomous_entity",`${type}:${input.entity_key}`);
-  const source=authored&&db.getWorldEvent(guild,authored.source_event),visibility=authored?.visibility||entity?.state.visibility||"party";
-  if(!entity||source&&source.status!=="active"||authored&&!source||entity.state.hidden||entity.state.removed
-    ||["dead","removed","dormant"].includes(entity.state.status)
-    ||!["public","party"].includes(visibility)&&!(scope.mode==="private"&&visibility==="character"
-      &&authored?.subject_key===scope.actorCharacterId))fail();
-  const location=type==="location"?input.entity_key:entity.state.location_key;
-  const observers=allowed.characters.filter(id=>db.getCharacter(id)?.data.location===location);
-  if(!observers.length)fail();
-  let profile=null;
-  if(type==="npc"){
-    profile=db.getNpcProfile(guild,input.entity_key);
-    if(!profile||db.getCharacter(input.entity_key)||activeCityProxy(db,guild,input.entity_key))fail();
-    if(profile.activity_tier==="dormant"||profile.decision_profile?.conversation_policy==="refuse"
-      &&input.acts.some(act=>act!=="decline"))fail();
-    const clock=db.getSimulationClock(guild),commitment=db.overlappingCommitment(guild,`npc:${input.entity_key}`,clock.minute,clock.minute+1);
-    if(commitment?.location_key&&commitment.location_key!==location)fail();
-    assertNpcAvailability(db,guild,input.entity_key,{type:"contact",location_key:location});
-    const presence=scenePresence(db,guild,"npc",input.entity_key);
-    if(presence&&!observers.some(id=>sceneAccess(db,guild,{observer_type:"character",observer_key:id,
-      target_type:"npc",target_key:input.entity_key,sense:"sound"})))fail();
+  if(input?.version===2){
+    closed(input);
+    const base=snapshot(db,guild,{version:1,kind:"npc_dialogue",entity_key:input.entity_key,acts:["acknowledge"],tone:input.tone},scope);
+    return {...base,composition:compositionEvidence(db,guild,input,scope,base)};
   }
-  return {scene:scene.key,session:scene.session_id,location,entity:hash(entity),profile:hash(profile),
-    authored:authored?hash(authored):null,principal:allowed.principal,visibility:scope.mode==="private"?"character":"party"};
+  closed(input);
+  return gmOwnedScope(db,guild,input.kind==='npc_dialogue'?'npc':'location',input.entity_key,scope,
+    {declineOnly:input.acts.every(act=>act==='decline')});
 }
 function project(input){
   closed(input);
+  if(input.version===2)return tones[input.tone]+projectComposition(input);
   // Deliberately no arbitrary name/profile/fact/prose interpolation. The native NPC ID remains in the private proof.
   return input.kind==="npc_dialogue"?`${tones[input.tone]}A nearby NPC says: “${input.acts.map(act=>dialogue[act]).join(" ")}”`
     :input.acts.map(act=>atmosphere[act]).join(" ");
@@ -101,7 +84,7 @@ export function establishGmWorldPart(db,guild,input,scope,{sourceRef,origin}){
   if(!source||source.status!=="active"||source.session_id!==state.session||source.scene!==state.scene)fail();
   if(!["party","public"].includes(source.visibility)&&!(scope.mode==="private"&&source.visibility==="character"
     &&source.subject_key===scope.actorCharacterId))fail();
-  const material={version:1,renderer:1,authority:"native:gm-world-narrative",input,scope:{...scope},state,
+  const material={version:1,renderer:input.version,authority:"native:gm-world-narrative",input,scope:{...scope},state,
     parent_source:source.event_key,parent_hash:hash(source),origin,text:project(input)};
   const key=`gm-world-narrative:${hash(material)}`;
   return db.transaction(()=>{
@@ -117,7 +100,7 @@ export function establishGmWorldPart(db,guild,input,scope,{sourceRef,origin}){
 export function renderGmWorldPart(db,guild,key,scope){
   const row=db.getCityRecord(guild,"gm_world_narrative",key),d=row?.data,s=row&&db.getWorldEvent(guild,row.source_event);
   const parent=d&&db.getWorldEvent(guild,d.parent_source);
-  if(row?.status!=="verified"||d.version!==1||d.renderer!==1||key!==`gm-world-narrative:${hash(d)}`
+  if(row?.status!=="verified"||d.version!==1||d.renderer!==d.input?.version||key!==`gm-world-narrative:${hash(d)}`
     ||d.authority!=="native:gm-world-narrative"||s?.status!=="active"||s.kind!=="native_gm_world_narrative"
     ||s.source_id!==d.authority||hash(s.details)!==hash(d)||hash(parent)!==d.parent_hash||parent?.status!=="active"
     ||hash(scope)!==hash(d.scope)||hash(snapshot(db,guild,d.input,scope))!==hash(d.state)

@@ -25,6 +25,7 @@ try{
   const session=db.startSession(id,"Whole loop");db.upsertPlayer(id,"owner","Owner");
   const pc=db.createCharacter(id,"owner","Owner",{});db.assignCharacter(session.id,"owner",pc.id);db.setPresence(session.id,"owner","present");
   db.setSimulationEntity(id,"location","room",{});
+  db.updateCharacterData(pc.id,data=>{data.location='room';});
   for(const key of ["first","second"]){db.upsertNpcProfile(id,{npcKey:key,displayName:key});db.setSimulationEntity(id,"npc",key,{location_key:"room"});
     db.upsertNpcKnowledge(id,{npcKey:key,knowledgeKey:"lead",content:"Recorded cable damage",sourceRef:"source",confidence:90});}
   indexWorldEvent(db,id,{key:"source",kind:"infrastructure_damage",title:"Recorded cable damage",source_id:"gm",location_key:"room",visibility:"party"});
@@ -39,6 +40,7 @@ try{
   const review=Object.fromEntries(POST_TURN_REVIEW_CATEGORIES.map(key=>[key,{decision:"no_change",reason:"No legacy mutation",confidence:100}]));
   review.scene={decision:"continue",label:"",reason:"Same scene"};
   const base={respond:true,narration:"Rain patters against the window.",narrative_claims:[],private_messages:[],events:[],handouts:[],relationships:[],
+    gm_world_parts:[{version:1,kind:'scene_atmosphere',entity_key:'room',acts:['room_hum','coffee_aroma'],tone:'plain'}],
     npc_memories:[],npc_knowledge:[],npc_goals:[],canon_proposals:[],simulation_updates:[],state_review:review};
   let requests=0,previous=null;const counts={};
   const make=(feature,payload,before=null,target_key="")=>({version:1,feature,payload,target_key,expected_revision:stateRevision(before),policy_revision:1,source_prerequisites:[]});
@@ -54,7 +56,8 @@ try{
     const mutation=commitGmTurn({db,guild,session,result,scope:{mode:scope,actorUserId:"owner",actorCharacterId:pc.id},speaker:"Owner",
       label:"Whole loop",meta:{messageId:origin}}),receipt=mutation.intents[0];
     assert.equal(receipt.status,status,receipt.data.diagnostic||receipt.data.reason);previous=receipt.record_key;
-    assert.equal(result.narration,"Rain patters against the window.","Native validation retains safe narration instead of replacing every intent turn");
+    assert.equal(result.narration,"A low, uneven hum hangs in the room. The scent of coffee drifts through the air.","Native validation retains safe narration instead of replacing every intent turn");
+    assert(!result.narration.includes('No additional character response'),'Independent native atmosphere is not replaced by a neutral fallback.');
     if(scope==="party") await postPlayMessage({db,guild,sessionId:session.id,content:result.narration});
     counts[intent.feature]=(counts[intent.feature]||0)+1;return receipt;
   }

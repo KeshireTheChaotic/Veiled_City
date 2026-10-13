@@ -4,7 +4,7 @@ import os from "node:os";
 import path from "node:path";
 import { spawnSync } from "node:child_process";
 import { portrayalPacket } from "./portrayal.js";
-import { deliveredPartyOutput, protectedPvpScope } from "./pvp-output.js";
+import { deliveredPartyOutput } from "./pvp-output.js";
 import {operationalMetrics} from './operational-metrics.js';
 import {
   AudioPlayerStatus,
@@ -211,9 +211,13 @@ export class VoiceNarrator {
 
   narrate(guild,text,{force=false,visibility="party",npcKey=null,turnId=null}={}){
     if(!["party","public"].includes(visibility)) return Promise.resolve({ok:false,reason:"private_scope"});
-    if(this.db&&protectedPvpScope(this.db,guild.id).length){
+    if(this.db){
       if(!turnId)return Promise.resolve({ok:false,reason:"unverified_output"});
-      const saved=deliveredPartyOutput(this.db,guild.id,turnId);
+      let saved;
+      try{saved=deliveredPartyOutput(this.db,guild.id,turnId);}catch(error){
+        if(error.code!=='NARRATIVE_PVP')throw error;
+        return Promise.resolve({ok:false,reason:'unverified_output'});
+      }
       if(!saved||saved!==text)return Promise.resolve({ok:false,reason:"unverified_output"});
     }
     const state=this._state(guild.id);
@@ -338,7 +342,7 @@ export class VoiceNarrator {
     if(proof){
       if(proof.guildId!==guildId||deliveredPartyOutput(this.db,guildId,proof.turnId)!==proof.text)
         throw new Error("Narration source authorization changed; cached audio cannot replay.");
-    }else if(protectedPvpScope(this.db,guildId).length)throw new Error("Cached audio has no current source proof.");
+    }else throw new Error("Cached audio has no current source proof.");
   }
 }
 

@@ -62,6 +62,11 @@ test('REL01 V96 semantic material-output P0 gate is mandatory',()=>{
   const source=fs.readFileSync('scripts/validate-offline.mjs','utf8');
   assert(source.includes('"v96-semantic-output-p0-test"'));
 });
+test('REL01 V96 common publication and fresh NPC authoring gates are mandatory',()=>{
+  const source=fs.readFileSync('scripts/validate-offline.mjs','utf8');
+  assert(source.includes('"v96-05r-fiction-test"'));
+  assert(source.includes('"v96-fresh-authoring-test"'));
+});
 
 async function entropy(faces,run){const original=crypto.randomInt;let n=0;
   crypto.randomInt=(min,max)=>{const v=faces[n++];assert(Number.isInteger(v)&&v>=min&&v<max,'offline native entropy exhausted');return v;};syncBuiltinESMExports();

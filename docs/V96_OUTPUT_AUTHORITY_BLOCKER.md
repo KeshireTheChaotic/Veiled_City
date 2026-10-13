@@ -1,5 +1,7 @@
 # V96-05 / SEM06 — ordinary-scene material output P0
 
+**Current status (2026-10-13): V96-05R QUALIFIED offline; reproduced P0 closed at the common certified boundary.** Starting anchor `aeffb8e3b5ec2a9bfee18af7081fea0ab49e181d`. Final validator **140/140**, zero failed/not-run, both D08 gates/check passed. Six original SEM06 assertions and original PVP30ag positives remain unchanged. Owner-approved audience-isolated fresh NPC authoring preserves expressive attributed speech; no sentence exception, whole-profile pass-through or self-certified safety flag. Native canon/witness/knowledge/resource-result/goal audits remain independent of quarantine. The constrained qualification does not certify arbitrary English meaning or unrestricted legacy output: [contract/risk/compatibility limits](V96_05R_OUTPUT_CONTRACT.md), [actual results and local completion commit](V96_PROGRESS.md). No push, deployment or later phase. The older blocked experiment and chronology below are historical, not current results.
+
 Starting HEAD: `de0c949533960cfe7c0866ee0e0f6ff9a5fb2a25` (qualified V96-04). This finding is **not** a V96-05 completion or release qualification. No production/runtime implementation changed during this probe.
 
 Accepted typed intents are canonical adjudication inputs; human declarations own intent; native receipts own outcomes.

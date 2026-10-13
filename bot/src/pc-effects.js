@@ -207,3 +207,24 @@ export function applyGeneratedPcEffect(db,guild,session,event,character,scope){
     fail("needs_native_cause: exact separately authorized native PC effect receipt required.");
   return applyPcEffect(db,guild,row.record_key);
 }
+/** Publication-only proof of an already applied feature effect. Never invokes application, payment or RNG. */
+export function validatedPcEffectProjection(db,guild,key){
+  const receipt=db.getCityRecord(guild,'pc_effect_receipt',key),r=receipt?.data,
+    authority=r&&db.getCityRecord(guild,'pc_effect_authority',r.authority),d=authority?.data;
+  if(receipt?.status!=='resolved'||!d||key!==`pc-effect:${hash(authority.record_key)}`||authority.status!=='applied'
+    ||receipt.source_event!==authority.source_event||r.authority_hash!==hash(d)||r.character!==d.character
+    ||r.resource!==d.resource||r.requested!==d.amount)fail('Applied native feature receipt required.');
+  const pc=verify(db,guild,authority),choice=db.getWorldEvent(guild,r.owner_choice),mutation=db.getMutation(guild,r.mutation);
+  if(choice?.status!=='active'||choice.kind!=='pc_effect_owner_choice'||choice.details.authority!==authority.record_key
+    ||choice.details.author!==d.owner||choice.details.authority_hash!==hash(d)||!db.ownerAuthoredSource(guild,choice.event_key,d.owner)
+    ||mutation?.source_layer!=='pc_feature'||mutation.entity_key!==pc.id)fail('Native owner choice and applied mutation required.');
+  const before=JSON.parse(mutation.before_json),after=JSON.parse(mutation.after_json),expected=structuredClone(before),
+    b=d.resource==='hope'?before.resources.hope:before.resources[d.resource].current,
+    a=d.resource==='hope'?after.resources.hope:after.resources[d.resource].current,
+    current=d.resource==='hope'?pc.data.resources.hope:pc.data.resources[d.resource].current;
+  if(d.resource==='hope')expected.resources.hope=a;else expected.resources[d.resource].current=a;
+  if(hash(expected)!==hash(after)||r.before!==b||r.after!==a||r.amount!==a-b||current!==a)
+    fail('Exact immutable applied resource outcome required.');
+  if(d.healer)validateAllyHealingApplication(db,guild,key);
+  return receipt;
+}

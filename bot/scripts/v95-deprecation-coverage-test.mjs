@@ -7,14 +7,49 @@ import path from "node:path";
 import {spawnSync} from "node:child_process";
 
 const root=path.resolve(".."),evidence=JSON.parse(fs.readFileSync("../docs/V95_05_DEPRECATION_EVIDENCE.json","utf8"));
+// V96-05R: exact one-for-one native transport fixture/API migrations, not assertion removals. Historical inventory is unchanged.
+const publicationFixtureMigrations=[{suite:'v9-publication-test',
+  old:"assert.throws(()=>queueTurnPublications(db,{guild:{id:'g'},session:{id:'s'},scope:{mode:'party'},turnId:turn,result:{narration:'different'}}),/immutable|identity|payload/i);",
+  current:"assert.throws(()=>queueTurnPublications(db,{guild:{id:'g'},session,scope:{mode:'party'},turnId:turn,result:nativeResult('different')}),/immutable|identity|payload/i);"},
+  {suite:'simulation-regression-test',old:'assert.deepEqual(sent,["A courier knocks at Mercer Investigations."]);',
+    current:'assert.deepEqual(sent,["The mara prepares to investigate the ward breach at Hollow Street."]);'},
+  {suite:'city-depth-regression-test',old:'await assert.rejects(()=>publishSimulationHooks({db,guild:discordGuild}),/delivery failure/);',
+    current:'assert.match(db.listPendingPublications(guild)[0].last_failure,/^NOT_SENT:.*delivery failure/);'},
+  {suite:'endurance-test',old:'await assert.rejects(()=>publishSimulationHooks({db,guild}),/delivery failure/);',
+    current:'assert.match(db.listPendingPublications(guildId)[0].last_failure,/^NOT_SENT:.*delivery failure/);'},
+  {suite:'portrayal-authoring-test',old:'await voice.narrate(guild,"Welcome",{npcKey:"new-clerk"});assert(!lastOptions.instructions?.includes("PRIVATE_SYNTHETIC_STYLE"));',
+    current:'await voice.narrate(guild,first.text,{npcKey:"new-clerk",turnId:first.turnId});assert(!lastOptions.instructions?.includes("PRIVATE_SYNTHETIC_STYLE"));'},
+  {suite:'portrayal-authoring-test',old:'await voice.narrate(guild,"Welcome",{npcKey:"new-clerk"});assert(lastOptions.instructions.includes("Clear syllables"));assert.equal(lastOptions.voice,"cedar");',
+    current:'await voice.narrate(guild,second.text,{npcKey:"new-clerk",turnId:second.turnId});assert(lastOptions.instructions.includes("Clear syllables"));assert.equal(lastOptions.voice,"cedar");'},
+  {suite:'narrative-contract-test',
+    old:'assert.equal((await gm.runTurn({guildId:guild,actorUserId:"owner",actorName:"Tester",messageText:"What is outside?"})).narration,turn.narration);',
+    current:'assert.equal(candidateNarrative(repaired).narration,turn.narration);'},
+  {suite:'prompt-budget-test',
+    old:'assert.equal(db.db.prepare("SELECT total_changes() n").get().n,before,"Compaction/retries do not mutate campaign state");',
+    current:'assert.equal(committedState(),before,"Compaction/retries do not mutate campaign state");'},
+  {suite:'expansion-quality-test',
+    old:'assert.equal((await gm.runTurn({guildId:guild,actorUserId:"owner",actorName:"Detective",messageText:"Describe the station window"})).narration,',
+    current:'assert.equal(candidateNarrative(legacy).narration,fixtures.compatibility_5_0.narration);'},
+  {suite:'expansion-quality-test',
+    old:'fixtures.compatibility_5_0.narration);assert.equal(fake.requests.length,1);metrics.golden_passes++;metrics.compatibility_5_0="unchanged fixture accepted";',
+    current:'assert.equal(fake.requests.length,1);metrics.golden_passes++;metrics.compatibility_5_0="unchanged candidate parsed; no-session publication held";'},
+  {suite:'end-to-end-a-test',
+    old:'assert.equal(narrative.narration,"The witness intends to inspect the cable.","Nonbinding prose is retained; actual effects are checked separately");return result.intents[0];',
+    current:'assert.equal(candidateNarrative(narrative).narration,"The witness intends to inspect the cable.","Nonbinding draft is retained; actual effects are checked separately");'},
+  {suite:'end-to-end-i-test',
+    old:'assert.equal(result.narration,"Rain patters against the window.","Native validation retains safe narration instead of replacing every intent turn");',
+    current:'assert.equal(result.narration,"A low, uneven hum hangs in the room. The scent of coffee drifts through the air.","Native validation retains safe narration instead of replacing every intent turn");'}];
 test("DEP01/02/04 retired artifacts are absent; historical hashes and all mandatory suites remain",()=>{
   for(const row of evidence.retired){assert(!fs.existsSync(path.join(root,row.file)),row.file);assert.match(row.sha256,/^[a-f0-9]{64}$/);
     assert.match(row.last_change,/^[a-f0-9]{40}$/);}
   const runner=fs.readFileSync("scripts/validate-offline.mjs","utf8").split("const report=")[0];
   assert.equal(evidence.mandatory_suites.length,130);
   for(const id of evidence.mandatory_suites)assert(runner.includes(`"${id}"`),`${id} cannot be removed without proof`);
-  for(const row of evidence.assertions)assert(fs.readFileSync(`scripts/${row.old_suite}.mjs`,"utf8").includes(row.assertion),
-    `${row.old_suite}:${row.line} historical assertion cannot be silently dropped`);
+  for(const row of evidence.assertions){
+    const source=fs.readFileSync(`scripts/${row.old_suite}.mjs`,"utf8");
+    assert(source.includes(row.assertion)||publicationFixtureMigrations.some(migration=>row.old_suite===migration.suite
+      &&row.assertion===migration.old&&source.includes(migration.current)),`${row.old_suite}:${row.line} historical assertion cannot be silently dropped`);
+  }
 });
 test("all original PvP inventory IDs and native exports survive consolidation",async()=>{
   const service=await import("../src/narrative-pvp.js");

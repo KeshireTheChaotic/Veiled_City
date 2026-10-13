@@ -10,6 +10,8 @@ import { configurePortrayal, portrayalPacket } from "../src/portrayal.js";
 import { authorWorldDraft, reviewWorldDraft } from "../src/world-authoring.js";
 import { configureCityFlags } from "../src/city-core.js";
 import { indexWorldEvent } from "../src/city-calendar.js";
+import {applyAuthoritativeMutation} from '../src/state.js';
+import {queueDirectorPublications,deliverTurnOutbox} from '../src/publication-outbox.js';
 const temp=fs.mkdtempSync(path.join(os.tmpdir(),"vc-author-"));
 const db=new VeiledDB(path.join(temp,"test.sqlite"),path.resolve("sql/schema.sql")),content=new ContentIndex(path.resolve("../content"));
 try{
@@ -48,10 +50,25 @@ try{
     {db,getConnection:()=>({}),synthesize:async(text,options)=>{calls++;lastOptions=options;return Buffer.from("FAKE_AUDIO");}});
   voice.ffmpegAvailable=true;voice._enqueueReserved=()=>{};
   const guild={id:guildId};
+  // V96-05R: fake TTS consumes genuinely delivered native output, never an arbitrary raw string.
+  const voiceSession=db.startSession(guildId,'Source-bound voice fixture');db.upsertPlayer(guildId,'observer','Observer');
+  const observer=db.createCharacter(guildId,'observer','Observer',{location:'new-location'});
+  db.assignCharacter(voiceSession.id,'observer',observer.id);db.setPresence(voiceSession.id,'observer','present');
+  db.setSimulationEntity(guildId,'npc','new-clerk',{location_key:'new-location',visibility:'party'});
+  const utterance=async key=>{
+    const scope={mode:'party',actorUserId:null,actorCharacterId:null},result={narration:'Unverified voice fixture candidate.',
+      gm_world_parts:[{version:1,kind:'npc_dialogue',entity_key:'new-clerk',tone:'plain',acts:['welcome']}]};
+    applyAuthoritativeMutation(db,{guildId,sessionId:voiceSession.id,narrative:result,scope});
+    const turnId=queueDirectorPublications(db,{guild,session:voiceSession,result,scope,key});
+    const delivery=await deliverTurnOutbox(db,guildId,turnId,async()=>({messageId:key,channelId:'offline-voice'}));
+    assert(delivery.length&&delivery.every(item=>item.ok));return {text:result.narration,turnId};
+  };
   assert.equal((await voice.narrate(guild,"Hidden discovery",{visibility:"character",npcKey:"new-clerk"})).reason,"private_scope");assert.equal(calls,0);
-  await voice.narrate(guild,"Welcome",{npcKey:"new-clerk"});assert(!lastOptions.instructions?.includes("PRIVATE_SYNTHETIC_STYLE"));
+  const first=await utterance('private-style');
+  await voice.narrate(guild,first.text,{npcKey:"new-clerk",turnId:first.turnId});assert(!lastOptions.instructions?.includes("PRIVATE_SYNTHETIC_STYLE"));
   configurePortrayal(db,guildId,{npc:"new-clerk",source_event:"source",direction:{address:"Visitor",pronunciation:"Clear syllables"},public_voice_approved:true},"gm");
-  await voice.narrate(guild,"Welcome",{npcKey:"new-clerk"});assert(lastOptions.instructions.includes("Clear syllables"));assert.equal(lastOptions.voice,"cedar");
+  const second=await utterance('public-style');
+  await voice.narrate(guild,second.text,{npcKey:"new-clerk",turnId:second.turnId});assert(lastOptions.instructions.includes("Clear syllables"));assert.equal(lastOptions.voice,"cedar");
   assert.equal(db.getNpcProfile("other","new-clerk"),null);
   const backup=db.createBackup(guildId);db.restoreBackup(guildId,backup.id);assert.equal(db.getCityRecord(guildId,"world_draft","new-clerk").status,"approved");
   console.log("Portrayal/authoring PASS: six typed drafts, human review, canon/duplicate refusal, private voice blocked, fake TTS only.");

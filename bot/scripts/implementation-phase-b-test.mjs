@@ -6,16 +6,34 @@ import path from "node:path";
 import { VeiledDB } from "../src/db.js";
 import { beginTurnAttempt } from "../src/turn-attempts.js";
 import { queueTurnPublications, deliverTurnOutbox, notSent, reconcilePublication } from "../src/publication-outbox.js";
+import {prepareAuthorizedTurnOutput} from '../src/pvp-output.js';
+import {currentScene} from '../src/scene-continuity.js';
+import {indexWorldEvent} from '../src/city-calendar.js';
 
 const root=fs.mkdtempSync(path.join(os.tmpdir(),"vc-phase-b-"));
 const file=path.join(root,"test.sqlite");let db=new VeiledDB(file,path.resolve("sql/schema.sql"));
 try{
   db.ensureCampaign("guild");
-  const attempt=beginTurnAttempt(db,{guildId:"guild",messageId:"message",actorPrincipal:"discord:owner",sessionId:"session",audience:"party"});
+  const session=db.startSession('guild','Offline ordered transport');
+  db.upsertPlayer('guild','owner','Owner');const pc=db.createCharacter('guild','owner','Scope PC',{location:'room'});
+  db.updateCharacterData(pc.id,data=>{data.location='room';});
+  db.assignCharacter(session.id,'owner',pc.id);db.setPresence(session.id,'owner','present');
+  db.setSimulationEntity('guild','location','room',{name:'Room'});
+  db.upsertNpcProfile('guild',{npcKey:'speaker',displayName:'Speaker'});
+  db.setSimulationEntity('guild','npc','speaker',{location_key:'room',visibility:'party'});
+  const beats=['a','b'].map((letter,index)=>{
+    const quote=letter.repeat(1100),ref=`transport-quote:${index}`;
+    indexWorldEvent(db,'guild',{key:ref,title:'Offline transport quotation',kind:'observation',source_id:'human_gm',truth_status:'observed',visibility:'party',
+      session_id:session.id,scene:currentScene(db,'guild').key,location_key:'room',details:{npc_key:'speaker',quote}},'offline-gm');
+    db.upsertNpcKnowledge('guild',{npcKey:'speaker',knowledgeKey:ref,sourceRef:ref,content:quote,beliefState:'known',isSecret:false});
+    return {op:'quote',source_ref:ref,knowledge_key:ref,source_span:quote};
+  });
+  const output=prepareAuthorizedTurnOutput(db,'guild',{gm_world_parts:[{version:2,kind:'npc_composition',entity_key:'speaker',tone:'plain',beats}]},{mode:'party'});
+  const attempt=beginTurnAttempt(db,{guildId:"guild",messageId:"message",actorPrincipal:"discord:owner",sessionId:session.id,audience:"party"});
   db.transaction(()=>{
     db.updateTurnAttempt(attempt.turn_id,{stage:"committed",committed:"yes",nativeCommitId:"commit"});
-    queueTurnPublications(db,{guild:{id:"guild"},session:{id:"session"},scope:{mode:"party"},turnId:attempt.turn_id,
-      channelId:"play",result:{narration:`${"a".repeat(1800)}\n${"b".repeat(1800)}`,private_messages:[]}});
+    queueTurnPublications(db,{guild:{id:"guild"},session,scope:{mode:"party"},turnId:attempt.turn_id,
+      channelId:"play",result:output});
   });
   const rows=db.listTurnPublications("guild",attempt.turn_id);assert.equal(rows.length,2);assert.equal(rows[0].status,"pending");
   const sent=[];
