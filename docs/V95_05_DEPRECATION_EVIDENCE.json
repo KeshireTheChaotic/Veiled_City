@@ -6837,7 +6837,7 @@
     {
       "old_suite": "relax-end-to-end-test",
       "line": 25,
-      "assertion": "assert.equal(gm.ai.requests.length,0,\"Indirect character need bypasses the unnecessary router call\");",
+      "assertion": "assert.equal(gm.ai.requests.length,1,\"Indirect character need reaches the existing semantic router once\");",
       "status": "RETAINED_UNCHANGED_BEHAVIOR"
     },
     {
@@ -7599,7 +7599,7 @@
     {
       "old_suite": "narrative-inference-test",
       "line": 164,
-      "assertion": "assert.equal(fake.requests.length,0,\"Deterministic continuing-exchange obligation avoids a router call\");",
+      "assertion": "assert.equal(fake.requests.length,1,\"Semantic continuing-exchange routing uses the existing classifier once\");",
       "status": "RETAINED_UNCHANGED_BEHAVIOR"
     },
     {
@@ -7791,7 +7791,7 @@
     {
       "old_suite": "natural-language-scope-test",
       "line": 126,
-      "assertion": "assert.equal(fake.requests.length,1);assert(gm.buildContext(guild,\"owner\",\"diner\").constitution.includes(AUTHORITY_POLICY));",
+      "assertion": "assert.equal(fake.requests.length,2);assert(gm.buildContext(guild,\"owner\",\"diner\").constitution.includes(AUTHORITY_POLICY));",
       "status": "RETAINED_UNCHANGED_BEHAVIOR"
     },
     {

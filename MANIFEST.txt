@@ -166,6 +166,7 @@ bot/scripts/v96-baseline-test.mjs
 bot/scripts/v96-corpus.mjs
 bot/scripts/v96-native-actions-test.mjs
 bot/scripts/v96-rules-discretion-test.mjs
+bot/scripts/v96-semantic-intake-test.mjs
 bot/scripts/validate-command-schema.mjs
 bot/scripts/validate-offline.mjs
 bot/sql/schema.sql
@@ -225,6 +226,7 @@ bot/src/evaluation-harness.js
 bot/src/evidence-custody.js
 bot/src/expansion-contracts.js
 bot/src/failure-trace.js
+bot/src/gameplay-intake.js
 bot/src/gm-action-review.js
 bot/src/gm-action-ruling.js
 bot/src/gm-world-narrative.js
@@ -536,6 +538,7 @@ docs/V96_NATIVE_ACTIONS.md
 docs/V96_PRE_IMPLEMENTATION_PLAN.md
 docs/V96_PROGRESS.md
 docs/V96_RULE_DISCRETION_CONTRACT.md
+docs/V96_SEMANTIC_INTAKE.md
 docs/V96_TOKEN_PERFORMANCE_REPORT.md
 docs/V9_1_NARRATIVE_PVP_CONTRACT_REFERENCE.md
 docs/V9_2_CODEX_RESUME.md

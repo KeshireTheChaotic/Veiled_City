@@ -17,8 +17,8 @@ Accepted typed intents are canonical adjudication inputs; human declarations own
 | V96-00 baseline/contracts | BASE01–02 | COMPLETED `884541f4bfd6c9b61bfa95bd679df9ed85ec6523` |
 | V96-01 ordinary GM discretion | RULE01–04 | COMPLETED `c1e36e495bae7c21fb7fdf1fc319664ee6228c3e` |
 | V96-02 native resolution/options | ROLL01–04 | COMPLETED `8b3ab34d559249ad2f35357d58e8cd832d8cd0b6` |
-| V96-03 scoped review/continuation | HOLD01–03 | QUALIFIED — 136/136 offline suites; independent commit follows |
-| V96-04 semantic response/intake | SEM01–03 | NOT STARTED |
+| V96-03 scoped review/continuation | HOLD01–03 | COMPLETED `2ad3ab9f3c98e81330976f925da9d341443ae696` |
+| V96-04 semantic response/intake | SEM01–03 | QUALIFIED — 137/137 offline suites; independent commit follows |
 | V96-05 lexical/claim cleanup | SEM04–07 | NOT STARTED |
 | V96-06 context/token optimization | TOK01–04 | NOT STARTED |
 | V96-07 routing/retry/Director | TOK05–07 | NOT STARTED |

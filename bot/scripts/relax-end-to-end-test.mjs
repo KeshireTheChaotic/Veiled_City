@@ -20,9 +20,9 @@ try{
     gmModel:"fixture-strong",routineGmModel:"fixture-fast",routerModel:"fixture",maxOutputTokens:5000,
     structuredRetryMaxTokens:6000,contextInputBudget:100000,gmTurnDeadlineMs:2000,aiOperationDeadlineMs:2000},ai:new FakeResponses([])});
   const assignment=db.controlledAssignment(session.id,"owner"),message={id:"work",author:{id:"owner"},content:'**I look up at the rain and sigh, "I need work, PantryQueue isn\'t pulling in enough money..."**'};
-  gm.ai=new FakeResponses([]);
+  gm.ai=new FakeResponses([{respond:true,reason:"Contextual character need"}]);
   assert.equal(await gm.shouldRespond({guildId:guild,message,actorAssignment:assignment,mode:"assisted"}),true);
-  assert.equal(gm.ai.requests.length,0,"Indirect character need bypasses the unnecessary router call");
+  assert.equal(gm.ai.requests.length,1,"Indirect character need reaches the existing semantic router once");
   assert.equal(await gm.shouldRespond({guildId:guild,message,actorAssignment:assignment,mode:"mention"}),false,"Explicit mention-only preference retained");
   const review=Object.fromEntries(POST_TURN_REVIEW_CATEGORIES.map(k=>[k,{decision:"no_change",reason:"No persistent effects.",confidence:40}]));
   review.scene={decision:"continue",label:"",reason:"Same rain-soaked street."};

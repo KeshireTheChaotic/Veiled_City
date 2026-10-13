@@ -161,6 +161,6 @@ try{
   assert.equal(await gm.shouldRespond({guildId:guild,message,mode:"assisted"}),true);
   assert.equal(await gm.shouldRespond({guildId:guild,message:{...message,content:"OOC: dinner time"},mode:"assisted"}),false);
   assert.equal(await gm.shouldRespond({guildId:guild,message,mode:"mention"}),false);
-  assert.equal(fake.requests.length,0,"Deterministic continuing-exchange obligation avoids a router call");
+  assert.equal(fake.requests.length,1,"Semantic continuing-exchange routing uses the existing classifier once");
   console.log("Narrative inference PASS: paraphrases, privacy, referents, staged movement/rollback/replay, locked/encounter/owner guards, epistemic restart/retraction, cognition, advisory and contextual routing; zero live calls.");
 }finally{db.close();fs.rmSync(temp,{recursive:true,force:true});}

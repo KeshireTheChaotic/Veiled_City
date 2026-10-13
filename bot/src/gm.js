@@ -26,7 +26,8 @@ import { portrayalPacket } from "./portrayal.js";
 import { intentArraySchema, INTENT_PROMPT } from "./ai-intent-contracts.js";
 import { intentContext } from "./ai-intents.js";
 import { decisionAdvisorySchema, decisionContext, validateDecisionAdvisory } from "./decision-advisory.js";
-import { declarationContext, hasCharacterInvitation, responseObligation } from "./player-language.js";
+import { declarationContext } from "./player-language.js";
+import {explicitSilence,semanticResponseObligation} from "./gameplay-intake.js";
 import { worldAdditionsSchema, sceneActionsSchema, worldConflictsSchema, AUTONOMOUS_WORLD_PROMPT, autonomousWorldContext, worldAuthority } from "./autonomous-world.js";
 import { entryReferenceContext } from "./scene-entry.js";
 import { OnlineSrd } from "./rules-srd.js";
@@ -426,30 +427,24 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
     throw lastError||new Error(`${label}: structured response failed.`);
   }
 
-  async shouldRespond({guildId,message,mode,directMention=false,messageText=null,actorAssignment=null,signal=null}){
+  async shouldRespond({guildId,message,mode,directMention=false,messageText=null,actorAssignment=null,signal=null,channelScope="party"}){
     if(directMention) return true;
     if(mode==="mention") return false;
     const text=(messageText??message.content).trim();
-    if(/^\s*(?:ooc\b|\(\(|\/\/)/i.test(text))return false;
-    const actionish=/^(\*|>|i\b|we\b|my character\b|elias\b|\[[^\]]+\]\s*|[^:\n]{1,60}:\s+)|\?$|^\[[^\]]*gm[^\]]*\]/i.test(text);
+    if(explicitSilence(text))return false;
     const session=this.db.getActiveSession(guildId),npcRoles=session?this.db.npcProxyAssignments(session.id,message.author.id):[];
     const assignment=actorAssignment??(session&&this.db.controlledAssignment(session.id,message.author.id))??(npcRoles.length===1?npcRoles[0]:null);
-    // Explicit in-character needs invite an open GM question even without a question mark or command verb.
-    if(assignment&&hasCharacterInvitation(text))return true;
     const focus=interpretationContext(this.db,guildId,message.author.id,assignment?.character_id,text,
       {mode:"party",messageId:message.id,botUserId:message.client?.user?.id});
-    const obligation=responseObligation(text,{authenticated:!!assignment,directMention,conversationFocus:focus?.conversation_focus||""});
-    if(obligation.needed)return true;
-    const followup=!!focus?.conversation_focus&&/\?/.test(focus.conversation_focus)&&text.length<=600
-      &&!/^\s*(?:ooc\b|\(\(|\/\/)/i.test(text)&&!/<@!?\d+>/.test(text);
-    // The existing router, not an English action regex, decides addressee/reaction.
-    // Lexical OOC and mention-only gates remain free; never add a second model call.
-    if(mode==="assisted" && !assignment&&!actionish&&!followup) return false;
+    // One existing semantic router decides addressee, including owned idioms and table chatter.
+    // Its decision is engagement only; current source and native validators still own authority.
+    if(mode==="assisted"&&!assignment&&!focus?.conversation_focus)return false;
     const roster=this.db.roster(this.db.getActiveSession(guildId)?.id||"");
     const prompt=[
       "You route messages for a multiplayer tabletop RPG Discord.",
+      channelScope==="rules"?"This is the configured read-only RULES DESK, not a scene. Respond to genuine rules/mechanics questions or requests even without English question words or punctuation. Ignore table chatter. No gameplay actions are executed here.":"This is a gameplay conversation, not the rules desk.",
       "Return respond=true only when the AI GM should act: a player takes an in-world action requiring world reaction, directly addresses an NPC/GM, asks about the environment, makes a consequential roll request, or the world clearly needs to answer.",
-      "Rules-only questions belong in the configured rules channel and should not normally interrupt the scene unless they directly affect an action happening now.",
+      "In a gameplay scene, rules-only questions should not normally interrupt unless they directly affect an action happening now. At the RULES DESK answer rules requests instead.",
       "Return false for player-to-player banter, planning, jokes, reactions, OOC chatter, or roleplay that needs no world response.",
       "In-character needs, concerns, ambitions, reflective speech and indirect requests invite GM engagement even without a question mark. For 'I need work, PantryQueue is not pulling in enough money', respond=true: ask about seeking work or offer an observable lead; do not infer acceptance, payment or a binding goal. Formatting with asterisks or mixed action/quoted speech does not make a message OOC.",
       "Do not answer the RPG message itself.",
@@ -698,7 +693,7 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
       if(worldAuthority(this.db,guildId).gm_authority_mode==="autonomous"&&!(result.world_conflicts||[]).length
         &&/\b(?:(?:I|we) need (?:a |the |human )?GM to|(?:the |human )GM (?:needs|must|has) to) (?:establish|create|approve|promote|describe)\b[^.!?\n]{0,140}\b(?:surroundings|location|place|NPC|person|diner|street|scene)\b/i.test(prose))
         throw new Error("Missing ordinary world data is AI-GM work, not a human approval prerequisite. Create/reuse ordinary fiction via native world additions/actions and keep the scene moving.");
-      const obligation=responseObligation(messageText,{authenticated:!!ctx.actor_assignment});
+      const obligation=semanticResponseObligation(authenticatedSource,result.player_intents,{authenticated:!!ctx.actor_assignment});
       if(obligation.needed&&(!result.respond||!String(result.narration||"").trim()))
         throw Object.assign(new Error("An authenticated in-character turn requires meaningful GM engagement without choosing a PC decision."),
           {code:"RESPONSE_OBLIGATION",diagnostic:obligation});

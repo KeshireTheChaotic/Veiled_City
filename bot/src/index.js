@@ -9,14 +9,13 @@ import { GMService } from "./gm.js";
 import { handleCommand } from "./commands.js";
 import { applyAuthoritativeMutation } from "./state.js";
 import { commitGmTurn } from "./turn-orchestration.js";
-import { routeDiscoveryMessage,deliverDiscoveryMessage } from "./continuity-routing.js";
 import { captureArcCandidate } from "./personal-continuity.js";
 import { captureContextSource } from "./narrative-context.js";
 import { conversationPrincipal } from "./conversation-principal.js";
 import { publishRollRequests } from "./roll-requests.js";
 import {publishContinuationNotices} from "./publishing.js";
 import { captureWorldInput } from "./autonomous-world.js";
-import { hasCharacterInvitation } from "./player-language.js";
+import {routeGameplayIntake,routerFailureEngagement} from "./gameplay-intake.js";
 import { interactionResponseExpired } from "./discord/interaction-lifecycle.js";
 import { publishEventResults, postGmLog, postStateError, deliverHandout, postPlayMessage, deliverQueuedTurn, sendPlayerPrivate } from "./publishing.js";
 import { VoiceNarrator } from "./voice.js";
@@ -29,7 +28,7 @@ import { assertPlayerPrivateChannel } from "./discord/privacy.js";
 import { createLogger } from "./logger.js";
 import { runNpcDirector } from "./simulation.js";
 import { publishSimulationHooks } from "./publishing.js";
-import { routeMessageSpans, serializeSpanLedger } from "./message-span-ledger.js";
+import { serializeSpanLedger } from "./message-span-ledger.js";
 import { captureAuthoredTurnEnvelope, recordNativeConsumedSpans } from "./authored-turn-envelope.js";
 import { beginTurnAttempt, advanceTurnAttempt, turnFailureNotice, isTurnReplay } from "./turn-attempts.js";
 import { validateChannelRouting, shouldSendInactiveSessionNotice } from "./routing-diagnostics.js";
@@ -67,12 +66,6 @@ async function sendPrivate(guild,userId,text,sessionId=null,characterId=null){
 }
 
 
-function looksLikeRulesQuestion(text,directMention=false){
-  if(directMention) return true;
-  const t=String(text||"").trim();
-  return /\?$/.test(t) || /^(how|what|when|where|why|can|could|do|does|did|is|are|would|should|which|who)\b/i.test(t) || /\b(rule|rules|mechanic|roll|hope|fear|stress|armor|domain|card|daggerheart)\b/i.test(t);
-}
-
 function resolveController(session,message){
   const own=db.activeAssignment(session.id,message.author.id);
   const proxies=db.proxyAssignments(session.id,message.author.id);
@@ -108,10 +101,7 @@ async function outputStep(errors,{guild,sessionId,context},fn){
 async function routeNativeSpans({message,text,session,controlled}){
   // Model-semantic GM processing owns freeform mechanical and consent intent classification.
   // Explicit native slash commands remain available; legacy phrase handlers are no longer intake gates.
-  return routeMessageSpans(text,[
-    {kind:"recall",route:span=>routeDiscoveryMessage({db,message,text:span.text,
-      deliver:(value,proof)=>deliverDiscoveryMessage({db,message,text:value,proof}),detailed:true})}
-  ]);
+  return routeGameplayIntake(text);
 }
 
 function recordSpanLedger(attempt,ledger){
@@ -440,7 +430,8 @@ async function processPartyTurn(message,directMention,attempt=null){
   try{
     should=await gm.shouldRespond({guildId:message.guild.id,message,messageText:playerText,actorAssignment:controlled,mode:campaign.response_mode||config.defaultResponseMode,directMention});
   }catch(err){
-    console.error("router",err); should=directMention||!!controlled&&hasCharacterInvitation(playerText);
+    console.error("router",err); should=routerFailureEngagement(playerText,{authenticated:!!controlled,directMention,
+      mode:campaign.response_mode||config.defaultResponseMode});
   }
   if(!should) return;
 
@@ -581,8 +572,8 @@ client.on("messageCreate",async message=>{
   const directMention=message.mentions.has(client.user);
   // Low-cost rules desk is read-only with respect to campaign state and does not need the GM turn queue.
   if(campaign.rules_channel_id && message.channel.id===campaign.rules_channel_id){
-    if(!looksLikeRulesQuestion(message.content,directMention)) return;
     try{
+      if(!await gm.shouldRespond({guildId:message.guild.id,message,mode:"active",directMention,channelScope:"rules"}))return;
       await message.channel.sendTyping();
       const s=db.getActiveSession(message.guild.id);
       const a=s?db.controlledAssignment(s.id,message.author.id):null;
