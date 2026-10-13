@@ -4,6 +4,7 @@ import { conversationPrincipal, historicalOwnerPrincipal } from "./conversation-
 import { currentScene } from "./scene-continuity.js";
 import { indexWorldEvent } from "./city-calendar.js";
 import {typedRollProof} from "./typed-roll-proof.js";
+import {overlapsOwnerActionTerminal} from "./owner-action-terminal.js";
 
 export const consentHash=value=>createHash("sha256").update(JSON.stringify(value)).digest("hex");
 function fail(message){throw Object.assign(new Error(message),{code:"SCENE_ACTION_WINDOW"});}
@@ -39,6 +40,8 @@ function inspectActionSource(db,guild,key,completed,historical=false){
   const row=db.getCityRecord(guild,"typed_intent",key),scene=currentScene(db,guild);
   if(!row||row.status!==(completed?"resolved":"accepted_for_adjudication"))fail("Consent needs a current accepted action; history cannot authorize new effects.");
   const source=db.getWorldEvent(guild,row.source_event),d=row.data;
+  if(!historical&&(d.gm_review_terminal||overlapsOwnerActionTerminal(db,guild,row.source_event,d.start,d.end)))
+    fail("The owner withdrew/replaced this original source range; a new declaration is required.");
   const principal=historical?historicalOwnerPrincipal(db,guild,d.owner_user_id,d.actor):conversationPrincipal(db,guild,d.owner_user_id,d.actor);
   if(principal.kind!==(historical?"historical_owner":"owner")||principal.revision!==d.actor_principal_revision
     ||d.session_id!==scene.session_id||d.scene!==scene.key||!source||source.status!=="active"

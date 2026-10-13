@@ -26,6 +26,7 @@ function graph(rows){
 }
 
 function initialStatus(row){
+  if(row.data.gm_review_terminal)return "blocked";
   if(row.status==="resolved")return "resolved";
   if(row.data.resolution==="roll_required")return "pending";
   if(row.data.resolution==="blocked")return "blocked";

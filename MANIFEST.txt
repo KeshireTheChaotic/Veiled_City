@@ -161,6 +161,7 @@ bot/scripts/v95-protected-narrative-test.mjs
 bot/scripts/v95-pvp-ux-test.mjs
 bot/scripts/v95-validation-reporter-test.mjs
 bot/scripts/v96-action-fixture.mjs
+bot/scripts/v96-action-review-test.mjs
 bot/scripts/v96-baseline-test.mjs
 bot/scripts/v96-corpus.mjs
 bot/scripts/v96-native-actions-test.mjs
@@ -224,6 +225,7 @@ bot/src/evaluation-harness.js
 bot/src/evidence-custody.js
 bot/src/expansion-contracts.js
 bot/src/failure-trace.js
+bot/src/gm-action-review.js
 bot/src/gm-action-ruling.js
 bot/src/gm-world-narrative.js
 bot/src/gm.js
@@ -253,6 +255,7 @@ bot/src/operations/health.js
 bot/src/operations/overview.js
 bot/src/outcome-preview.js
 bot/src/owned-community.js
+bot/src/owner-action-terminal.js
 bot/src/owner-consent.js
 bot/src/pc-death.js
 bot/src/pc-effects.js
@@ -525,6 +528,7 @@ docs/V95_05_DEPRECATION.md
 docs/V95_05_DEPRECATION_EVIDENCE.json
 docs/V95_VALIDATION_REPORTER_README.md
 docs/V96_ACCEPTANCE_CROSSWALK.csv
+docs/V96_ACTION_REVIEW.md
 docs/V96_CODEX_KICKOFF.md
 docs/V96_IMPLEMENTATION_PLAN.md
 docs/V96_INTENT_AUTHORITY_AUDIT.md

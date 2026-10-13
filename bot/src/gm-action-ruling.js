@@ -68,11 +68,27 @@ function proof(db,guild,accepted,scope){
   return {...value,pc};
 }
 /** Validate before replay or preparation. Native receipts alone authorize subsequent outcomes; no RNG/effect lives here. */
-export function adjudicateGmRuling(db,guild,acceptedKey,proposal,scope){
+export function adjudicateGmRuling(db,guild,acceptedKey,proposal,scope,recovery={}){
   validateGmRulingProposal(proposal);
   return db.transaction(()=>{
     const accepted=db.getCityRecord(guild,"typed_intent",acceptedKey),p=proof(db,guild,accepted,scope);
     const key=`gm-ruling:${hash([acceptedKey,1])}`,prior=db.getCityRecord(guild,"gm_action_ruling",key),proposalHash=hash(proposal);
+    const reviewKey=`unsupported-action:${hash([acceptedKey,key])}`,oldReview=db.getCityRecord(guild,"unsupported_action",reviewKey);
+    let authorizedRecovery=false;
+    if(recovery.reviewRef){
+      const e=db.getWorldEvent(guild,recovery.reviewRef),r=db.getRulesRuling(guild,proposal.saved_ruling_key),
+        authorization=db.getCityRecord(guild,"gm_action_review_receipt",recovery.reviewRef);
+      if(Object.keys(recovery).length!==1||prior?.data.review_reason!=="RULE_UNVERIFIED"
+        ||oldReview?.status!=="needs_review"||oldReview.data.original_resolution!=="roll_required"
+        ||proposal.disposition!=="standard_action_roll"||!r||e?.status!=="active"||e.kind!=="gm_action_review"
+        ||e.source_kind!=="gm"||e.details.human_reviewed!==true||e.details.review!==reviewKey
+        ||e.details.proposal_hash!==proposalHash||e.details.previous_hash!==hash(prior)
+        ||e.details.rule_hash!==hash(r)||authorization?.source_event!==e.event_key||authorization.visibility!=="gm"
+        ||authorization.data.event_hash!==hash(e)||authorization.data.review!==reviewKey
+        ||e.session_id!==p.scene.session_id||e.scene!==p.scene.key)
+        throw new Error("Exact authenticated saved-rule recovery required; it grants no capability or effect.");
+      authorizedRecovery=true;
+    }else if(Object.keys(recovery).length)throw new Error("Closed native recovery context required.");
     if(accepted.status==="resolved"&&!prior)throw new Error("Historical completion cannot authorize a new ruling interpretation.");
     if(prior&&prior.data.proposal_hash!==proposalHash)throw new Error("Ruling terms changed; explicit revision/review is required.");
     const evidence=proposal.context_refs.map(ref=>db.getWorldEvent(guild,ref));
@@ -109,18 +125,36 @@ export function adjudicateGmRuling(db,guild,acceptedKey,proposal,scope){
       ||proposal.modifier_keys.length))review="NO_ROLL_PERMISSION_UNVERIFIED";
     if(!review&&!noRoll&&(proposal.difficulty===null||proposal.trait===null||!proposal.risk.trim()||proposal.risk==="none"
       ||!proposal.stakes.trim()||proposal.stakes==="none"||!proposal.difficulty_reason.trim()))review="ROLL_GROUNDING_REQUIRED";
-    if(!review&&["blocked","needs_clarification"].includes(accepted.data.resolution))review="DECLARED_REVIEW";
+    if(!review&&["blocked","needs_clarification"].includes(accepted.data.resolution)&&!authorizedRecovery)review="DECLARED_REVIEW";
     // A review is never a completion, roll request, provisional override or approved capability.
     const hold=row=>{
+      if(oldReview&&["withdrawn","superseded"].includes(oldReview.status))return row;
+      const reason=row.data.review_reason;
+      const category=reason==="CAPABILITY_ADAPTER_REQUIRED"?"feature_permission":reason==="NATIVE_EFFECT_ADAPTER_REQUIRED"
+        ?"native_adapter_absence":reason==="CONTEXT_UNVERIFIED"?"world_epistemic":reason==="RULE_UNVERIFIED"
+        ?"rules_ambiguity":"authorization_or_clarification";
+      if(!oldReview)db.saveCityRecord(guild,{kind:"unsupported_action",key:reviewKey,status:"needs_review",
+        source_event:accepted.source_event,visibility:"gm",data:{version:1,action:acceptedKey,ruling:key,category,
+          reason_code:row.data.review_reason,owner:accepted.data.owner_user_id,actor:accepted.data.actor,
+          source_hash:accepted.data.source_hash,principal_revision:accepted.data.actor_principal_revision,
+          scene:p.scene.key,session:p.scene.session_id,original_resolution:accepted.data.resolution,
+          original_proposal_hash:proposalHash,context_hash:contextHash,rule_hash:ruleHash,
+          alternative:"Clarify, revise or withdraw; a different tactic needs your own new declaration. Nothing is substituted.",
+          authority:"Non-actionable review only; no dice, cost, capability, success or native effect."}});
       db.saveCityRecord(guild,{...accepted,key:accepted.record_key,data:{...accepted.data,resolution:"blocked",
         native_disposition:"needs_review",gm_ruling_ref:key,reason:"Scoped native review required; no effect applied."}});
       return row;
     };
     if(prior){
-      if(prior.status==="needs_review"&&prior.data.review_reason)return hold(prior);
+      if(prior.status==="needs_review"&&prior.data.review_reason&&!authorizedRecovery)return hold(prior);
+      if(authorizedRecovery){
+        if(review)throw new Error("Saved rule does not close the current native authority gap.");
+        db.saveCityRecord(guild,{...accepted,key:acceptedKey,data:{...accepted.data,resolution:oldReview.data.original_resolution}});
+      }else{
       if(prior.data.rule_hash!==ruleHash)throw new Error("Ruling rule revision changed; saved mechanics remain immutable.");
       if(review)throw new Error("Ruling execution permission changed; saved mechanics remain immutable.");
       return prior;
+      }
     }
     const adjudication=review?null:adjudicateAcceptedIntent(db,guild,{...basisInput,acceptedIntent:acceptedKey,
       mode:noRoll?"no_roll":"roll_required",risk:proposal.risk,stakes:proposal.stakes,trait:proposal.trait,kind:"action",
@@ -134,8 +168,11 @@ export function adjudicateGmRuling(db,guild,acceptedKey,proposal,scope){
         location:p.pc.data.location||null,source_hash:accepted.data.source_hash,principal_revision:accepted.data.actor_principal_revision,
         proposal:structuredClone(proposal),proposal_hash:proposalHash,context_hash:contextHash,review_reason:review,
         context_refs:[...proposal.context_refs],rule_basis:ruleBasis,rule_hash:ruleHash,adjudication,
-        history:["proposed",review?"needs_review":"validated",...(review?[]:[adjudication.disposition])],
+        history:[...(prior?.data.history||["proposed"]),review?"needs_review":"validated",...(review?[]:[adjudication.disposition])],
+        ...(authorizedRecovery?{review_source:recovery.reviewRef}:{}),
         authority:"Native ordinary attempt adjudication only; no capability, cost, consent or material effect authority."}});
+    if(authorizedRecovery)db.saveCityRecord(guild,{...oldReview,key:reviewKey,status:"reconciled",
+      data:{...oldReview.data,review_source:recovery.reviewRef,native_request:adjudication.roll_request_ref}});
     return review?hold(row):row;
   });
 }
@@ -181,5 +218,6 @@ export const GM_RULING_PROMPT=[
   "Shadow Tell is expression, not remote scouting. Generic rolls cannot grant magic, resources, PC reactions, damage, custody or access.",
   "Use effect_class observation or attempt_only for ordinary rulings; material effects require a separate supported native adapter.",
   "standard_action_roll uses resolution roll_required; narrative_no_roll uses auto; needs_review uses blocked with a useful safe explanation.",
-  "Do not also supply native_adjudication, costs, gm:true or claimed receipts. Owner privately chooses optional traits/Experiences before dice."
+  "Do not also supply native_adjudication, costs, gm:true or claimed receipts. Owner privately chooses optional traits/Experiences before dice.",
+  "Pending action reviews are non-actionable status, not approved powers or outcomes. A changed tactic requires the owner's new declaration; never substitute it."
 ].join(" ");

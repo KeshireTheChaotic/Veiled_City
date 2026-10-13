@@ -438,7 +438,7 @@ export function applyAuthoritativeMutation(db,{guildId,sessionId=null,events=[],
     const actionWindows=coordinateTypedActionWindows(db,guildId,typedIntents,actionPlan);
     if(actionWindows.length)actionPlan=actionPlan.map(row=>db.getCityRecord(guildId,"compound_action",row.record_key));
     const coordinatedIds=new Set(actionWindows.map(row=>row.action));
-    const gmRulings=typedIntents.filter(row=>row.data.gm_ruling&&!pvpIds.has(row.record_key)&&!coordinatedIds.has(row.record_key)
+    const gmRulings=typedIntents.filter(row=>row.data.gm_ruling&&!row.data.gm_review_terminal&&!pvpIds.has(row.record_key)&&!coordinatedIds.has(row.record_key)
       &&!actionPlan.some(node=>node.data.action_id===row.record_key&&node.data.status==="suspended"))
       .map(row=>adjudicateGmRuling(db,guildId,row.record_key,row.data.gm_ruling,scope));
     if(gmRulings.length){
@@ -467,8 +467,8 @@ export function applyAuthoritativeMutation(db,{guildId,sessionId=null,events=[],
       .map(row=>row.data.source_span));
     if((narrative?.scene_actions||[]).some(action=>deniedSpans.has(action.source_span)))
       throw new Error("Blocked or unresolved typed intent cannot propose an authoritative scene action.");
-    const plannedNarrative=typedIntents.length?{...narrative,
-      scene_actions:(narrative?.scene_actions||[]).filter(action=>!typedIntents.some(row=>row.data.source_span===action.source_span)
+    const plannedNarrative=narrative?.player_intents?.length?{...narrative,
+      scene_actions:(narrative?.scene_actions||[]).filter(action=>!narrative.player_intents.some(row=>row.framing==="immediate"&&row.source_span===action.source_span)
         ||executableSpans.has(action.source_span))}:narrative;
     const world=applyAutonomousWorld(db,guildId,plannedNarrative,scope,provenance,content);
     recordCharacterPerceptions(db,guildId,{world,intents:typedIntents,scope,sourceRef:outputSource});

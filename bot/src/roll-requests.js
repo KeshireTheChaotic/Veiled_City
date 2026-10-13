@@ -13,6 +13,7 @@ import {blazeActionAuthorization} from "./pc-death.js";
 import {publishNativeNotice,queueNativeNotice,reserveNativeNotice} from "./native-publications.js";
 import {noticeHash} from "./native-notice.js";
 import {gmRulingDetails} from "./gm-action-ruling.js";
+import {overlapsOwnerActionTerminal} from "./owner-action-terminal.js";
 const hash=value=>createHash("sha256").update(JSON.stringify(value)).digest("hex");
 const signed=value=>`${value>=0?"+":""}${value}`;
 export const rollRevision=hash;
@@ -21,6 +22,8 @@ function sourceActor(db,guild,input){
   const source=requireCitySource(db,guild,input.source_event),session=db.getActiveSession(guild);
   const legacy=source.kind==="player_declaration"&&source.visibility==="character"&&source.subject_key===input.character_id;
   const accepted=input.accepted_intent?db.getCityRecord(guild,"typed_intent",input.accepted_intent):null;
+  if(accepted&&overlapsOwnerActionTerminal(db,guild,accepted.source_event,accepted.data.start,accepted.data.end))
+    throw new StateConflictError("The owner withdrew this source range; no new native preparation.");
   const typed=source.kind==="authored_turn"&&accepted?.status==="accepted_for_adjudication"
     &&accepted.source_event===source.event_key&&accepted.data.actor===input.character_id
     &&accepted.data.owner_user_id===source.details.author;
@@ -99,6 +102,9 @@ export function rollBreakdown(db,guild,input,pc){
 }
 export function prepareRollRequest(db,guild,input,actor,context={}){
   const {source,accepted,pc,session}=sourceActor(db,guild,input);
+  if(accepted?.data.gm_review_terminal||accepted?.data.gm_ruling
+    &&(!context.gmRulingRef||context.gmRulingRef!==input.gm_ruling))
+    throw new StateConflictError("Scoped ruling/review must be validated before native preparation; it cannot be bypassed manually.");
   if(blazeActionAuthorization(db,guild,pc.id,accepted?.record_key))input={...input,private_result:true};
   if(context.scope?.mode==="private"&&(context.scope.actorUserId!==pc.owner_user_id||context.scope.actorCharacterId!==pc.id))
     throw new StateConflictError("Private requests belong only to the current authenticated actor.");

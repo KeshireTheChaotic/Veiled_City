@@ -9,6 +9,7 @@ import { adjudicateAcceptedIntent } from "./rules-arbitration.js";
 import { transitionAction } from "./action-dependency.js";
 import { indexWorldEvent } from "./city-calendar.js";
 import {drainActionContinuations,continuationInbox} from "./action-continuation.js";
+import {actionReviewOperation} from "./gm-action-review.js";
 
 const hash=value=>createHash("sha256").update(JSON.stringify(value)).digest("hex").slice(0,40);
 function fail(message){throw Object.assign(new Error(message),{code:"SCENE_ACTION_WINDOW",expected:true});}
@@ -147,6 +148,7 @@ export function windowOperation(db,guild,user,input,{gm=false}={}){
   return db.transaction(()=>operateWindow(db,guild,user,input,{gm}));
 }
 function operateWindow(db,guild,user,input,{gm=false}={}){
+  if(input?.op?.startsWith("action-review-"))return actionReviewOperation(db,guild,user,input,{gm});
   const {op,...args}=input;
   if(op==="continuation-inbox"){
     if(Object.keys(args).length)fail("Continuation inbox takes no foreign scope.");

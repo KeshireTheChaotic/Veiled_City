@@ -4,6 +4,7 @@ import {randomUUID} from 'node:crypto';
 import { AUTHORITY_POLICY } from "./authority-policy.js";
 import { conversationPrincipal } from "./conversation-principal.js";
 import {continuationInbox} from "./action-continuation.js";
+import {actionReviewInbox} from "./gm-action-review.js";
 import { authoredCandidatesSchema, AUTHORED_CANDIDATES_PROMPT } from "./authored-candidates.js";
 import { playerIntentSchema, PLAYER_INTENT_PROMPT, recoverPlayerIntents, autoCompleteOrdinaryMovements, validateIntentResolutions } from "./typed-intents.js";
 import { tierWorldAdditions } from "./entity-memory.js";
@@ -505,6 +506,8 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
       {operation:worldDirector?"director":"turn",actorType:"gm",scope:"gm",query:messageText,scene:session?this.db.getDirectorState(session.id).scene_label:""}):null;
     return {
       pending_native_continuations:continuationInbox(this.db,guildId,actorUserId).filter(t=>!["resolved","blocked"].includes(t.status)).slice(0,12),
+      pending_native_action_reviews:actionReviewInbox(this.db,guildId,actorUserId).filter(t=>t.status==="needs_review").slice(0,12)
+        .map(({attempt,...status})=>status), // Owner inbox keeps full source; model context already has scoped messages/references.
       decision_advisory:decisionContext(this.db,guildId,messageText),
       player_declaration:declarationContext(this.db,guildId,actorUserId,actorKnowledgeId,messageText),
       ai_management:intentContext(this.db,guildId),

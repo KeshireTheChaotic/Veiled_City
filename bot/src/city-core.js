@@ -295,7 +295,7 @@ export function cityContext(db,guildId,query){
   for(const term of terms.slice(0,6)) for(const row of db.listCityRecords(guildId,{query:term,includeGM:true,limit:4})) found.set(`${row.kind}:${row.record_key}`,row);
   const records=[];let budget=0;
   for(const row of found.values()){
-    if(row.kind.startsWith("pvp_")||["character_visible_fact","character_perception_receipt","world_visible_fact"].includes(row.kind))continue;
+    if(row.kind.startsWith("pvp_")||["character_visible_fact","character_perception_receipt","world_visible_fact","unsupported_action","gm_action_ruling","gm_action_review_receipt","owner_action_terminal"].includes(row.kind))continue;
     if(["action_continuation","action_continuation_signal","native_notice","roll_publication","roll_party_publication","publication_reconciliation","roll_share_preview","roll_menu_token","roll_option_registry","pvp_ui_token","pvp_ui_delivery"].includes(row.kind)
       ||row.kind==="compound_action"&&row.visibility==="character")continue;
     const temporal=row.kind==="weather"?{...row,temporal_state:db.getSimulationClock(guildId).minute<row.data.start?"forecast"

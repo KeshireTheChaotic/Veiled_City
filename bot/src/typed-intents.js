@@ -8,6 +8,7 @@ import { resolvePlaceReference } from './location-language.js';
 import { captureDialogue } from './dialogue-continuity.js';
 import { resolveScopedMemoryReference } from './scoped-memory.js';
 import {gmRulingSchema,validateGmRulingProposal} from './gm-action-ruling.js';
+import {overlapsOwnerActionTerminal} from './owner-action-terminal.js';
 import {
   authoredTurnEnvelope,
   captureAuthoredTurnEnvelope,
@@ -143,7 +144,7 @@ export function proposeIntents(db,guild,values,scope={},provenance={}){
   if(!Array.isArray(values)||values.length>12)throw error('Bounded semantic proposal list required.');
   const envelope=authoredTurnEnvelope(db,guild,provenance.messageId,scope.actorCharacterId);
   if(!envelope)throw error('Current authored turn envelope required before semantic proposal.');
-  const seen=new Set(),ranges=[];
+  const seen=new Set(),ranges=[],withdrawn=new Set();
   return values.map((value,index)=>{
     let proposal;
     try{proposal=validateProposal(value,envelope,scope);}
@@ -156,6 +157,22 @@ export function proposeIntents(db,guild,values,scope={},provenance={}){
           nearby_offsets:cause.diagnostic.nearby_offsets,source_hash:envelope.raw_hash,
           authority:'Rejected interpretation only; never action or outcome authority.'}
       });
+    }
+    if(overlapsOwnerActionTerminal(db,guild,envelope.source_event,proposal.start,proposal.end)){
+      withdrawn.add(proposal.proposal_id);
+      const key=`diagnostic:${digest([envelope.source_event,index,'withdrawn_source_span'])}`;
+      return db.getCityRecord(guild,'semantic_intent_diagnostic',key)||db.saveCityRecord(guild,{
+        kind:'semantic_intent_diagnostic',key,status:'withdrawn_source_span',source_event:envelope.source_event,
+        visibility:'character',subject_key:envelope.character_id,data:{version:1,index,category:'withdrawn_source_span',
+          source_hash:envelope.raw_hash,authority:'Owner withdrew this source range; a model cannot resegment it into new permission.'}});
+    }
+    if(proposal.dependencies.some(ref=>withdrawn.has(ref))){
+      withdrawn.add(proposal.proposal_id);
+      const key=`diagnostic:${digest([envelope.source_event,index,'dependency_unavailable'])}`;
+      return db.getCityRecord(guild,'semantic_intent_diagnostic',key)||db.saveCityRecord(guild,{
+        kind:'semantic_intent_diagnostic',key,status:'dependency_unavailable',source_event:envelope.source_event,
+        visibility:'character',subject_key:envelope.character_id,data:{version:1,index,category:'dependency_unavailable',
+          source_hash:envelope.raw_hash,authority:'Withdrawn prerequisite supplies no permission; independent source spans remain available.'}});
     }
     if(ranges.some(range=>proposal.start<range.end&&proposal.end>range.start)){
       const key=`diagnostic:${digest([envelope.source_event,index,'overlapping_source_span'])}`;
@@ -206,6 +223,8 @@ export function acceptIntentForAdjudication(db,guild,proposalRow,scope={},resolv
   if(proposal.framing!=='immediate')throw error('Only immediate framing can be accepted for adjudication.');
   if(overlapsConsumedSpan(currentEnvelope,proposal.start,proposal.end))
     throw error('A native-consumed source span cannot be accepted or executed again.');
+  if(overlapsOwnerActionTerminal(db,guild,event.event_key,proposal.start,proposal.end))
+    throw error('The owner withdrew this original source range; a new owner declaration is required.');
   const targetKey=resolved.resolvedTargetKey??proposal.target.key;
   const requiresGroundedTarget=['move','local_zone'].includes(proposal.type);
   const nativeGrounded=resolved.nativeGrounded===true&&typeof targetKey==='string'&&targetKey;
@@ -432,10 +451,19 @@ export function persistPlayerIntents(db,guild,intents,scope={},provenance={}){
   // Additive compatibility for old fixture/direct callers. Production intake captures this before native routing.
   if(!envelope)envelope=captureAuthoredTurnEnvelope(db,guild,principal.user,principal.character_id,
     provenance.messageId,source.details.text,{privateScene:scope.mode==='private'});
-  const proposals=proposeIntents(db,guild,legacyProposals(intents,envelope),scope,provenance),accepted=[];
+  const candidates=legacyProposals(intents,envelope),proposals=proposeIntents(db,guild,candidates,scope,provenance),accepted=[];
+  const unavailable=new Set(proposals.flatMap((row,i)=>row.kind==='semantic_intent_diagnostic'?[proposalIdentity(candidates[i])]:[]));
   for(const [index,row] of proposals.entries()){
     const intent=intents[index];
     if(row.kind==='semantic_intent_diagnostic')continue;
+    if(row.data.dependencies.some(ref=>unavailable.has(ref))){
+      unavailable.add(row.record_key);
+      db.saveCityRecord(guild,{kind:'semantic_intent_diagnostic',key:`diagnostic:${digest([envelope.source_event,index,'dependency_unavailable'])}`,
+        status:'dependency_unavailable',source_event:envelope.source_event,visibility:'character',subject_key:principal.character_id,
+        data:{version:1,index,category:'dependency_unavailable',source_hash:envelope.raw_hash,
+          authority:'Only this descendant is held; rejected/withdrawn interpretation supplies no prerequisite.'}});
+      continue;
+    }
     if(intent.framing!=='immediate')continue;
     let resolvedTargetKey=intent.target_key||null,targetCandidates=[],nativeGrounded=false,memoryIdentityRefs=[];
     if(['move','local_zone'].includes(intent.type)&&intent.target_name){
@@ -493,7 +521,8 @@ export function persistTypedDialogue(db,guild,intents,scope={},provenance={}){
 export function currentTypedMovement(db,guild,pc,sourceSpan,target,scope={},sourceEvent=""){
   const scene=currentScene(db,guild);
   const candidates=db.listCityRecords(guild,{kind:'typed_intent',includeGM:true,limit:120}).filter(row=>
-    ['interpreted','accepted_for_adjudication'].includes(row.status)
+    ['interpreted','accepted_for_adjudication'].includes(row.status)&&!row.data.gm_review_terminal
+    &&!overlapsOwnerActionTerminal(db,guild,row.source_event,row.data.start,row.data.end)
     &&(row.source_event===sourceEvent||row.data.world_source_event===sourceEvent)
     &&row.data.type==='move'&&row.data.framing==='immediate'
     &&row.data.resolution==='auto'
