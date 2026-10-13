@@ -7,6 +7,7 @@ import { stateRevision } from './ai-intents.js';
 import { resolvePlaceReference } from './location-language.js';
 import { captureDialogue } from './dialogue-continuity.js';
 import { resolveScopedMemoryReference } from './scoped-memory.js';
+import {gmRulingSchema,validateGmRulingProposal} from './gm-action-ruling.js';
 import {
   authoredTurnEnvelope,
   captureAuthoredTurnEnvelope,
@@ -45,6 +46,9 @@ export const playerIntentSchema={type:'array',maxItems:12,items:{anyOf:[obj(play
   obj({...playerIntentProperties,depends_on:dependencyIndices,coordination:coordinationSchema}),
   obj({...playerIntentProperties,native_adjudication:nativeAdjudicationSchema,coordination:coordinationSchema}),
   obj({...playerIntentProperties,depends_on:dependencyIndices,native_adjudication:nativeAdjudicationSchema,coordination:coordinationSchema})]}};
+// Additive versioned candidates preserve every historical closed form; no mandatory field is relaxed.
+playerIntentSchema.items.anyOf.push(...playerIntentSchema.items.anyOf
+  .filter(form=>!form.properties.native_adjudication).map(form=>obj({...form.properties,gm_ruling:gmRulingSchema})));
 
 export const PLAYER_INTENT_PROMPT=[
   'Extract player_intents semantically from the authenticated CURRENT PLAYER INPUT, regardless of verbs, grammar, idiom, tense or narrative style.',
@@ -298,7 +302,7 @@ export function validatePlayerIntents(intents,source,scope={}){
     const forms=[legacy,`${legacy},depends_on`,`${legacy},native_adjudication`,`${legacy},depends_on,native_adjudication`,
       `${legacy},coordination`,`${legacy},depends_on,coordination`,`${legacy},native_adjudication,coordination`,
       `${legacy},depends_on,native_adjudication,coordination`]
-      .map(value=>value.split(',').sort().join(','));
+      .flatMap(value=>[value,`${value},gm_ruling`]).map(value=>value.split(',').sort().join(','));
     if(!intent||!forms.includes(keys))
       throw error('Closed semantic intent schema required.',{index:i});
     for(const [field,max] of [['source_span',1200],['target_key',160],['target_name',160],['operation',100],['utterance',1000],['reason',400]])
@@ -328,7 +332,13 @@ export function validatePlayerIntents(intents,source,scope={}){
     if(intent.framing!=='immediate'&&intent.resolution==='auto')throw error('Non-immediate intent cannot authorize an automatic effect.',{index:i});
     if(['roll','consent'].includes(intent.type)&&intent.resolution==='auto')
       throw error('Model interpretation cannot authorize dice, spending or binding consent.',{index:i});
-    if(intent.resolution==='roll_required'){
+    if(intent.gm_ruling){
+      validateGmRulingProposal(intent.gm_ruling);
+      if(intent.native_adjudication||intent.framing!=='immediate'
+        ||intent.resolution==='auto'&&intent.gm_ruling.disposition!=='narrative_no_roll'
+        ||intent.resolution==='roll_required'&&intent.gm_ruling.disposition!=='standard_action_roll'
+        ||intent.resolution==='conversational')throw error('GM ruling must match a single immediate disposition.',{index:i});
+    }else if(intent.resolution==='roll_required'){
       const a=intent.native_adjudication;
       if(!a||Object.keys(a).sort().join(',')!==['attack_source','difficulty','explanation','homebrew_refs','house_refs','kind',
         'modifier_keys','override_refs','raw_refs','risk','saved_ruling_key','stakes','trait'].sort().join(',')

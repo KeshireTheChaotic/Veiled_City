@@ -14,8 +14,9 @@ import { typedEvidence } from "./epistemic.js";
 import { persistAuthoredCandidates } from "./authored-candidates.js";
 import { persistPlayerIntents, persistPlayerIntentDiagnostics, persistTypedDialogue } from "./typed-intents.js";
 import { adjudicateAcceptedIntent } from "./rules-arbitration.js";
+import {adjudicateGmRuling} from "./gm-action-ruling.js";
 import { coordinateTypedActionWindows } from "./scene-action-window.js";
-import { buildActionPlan, executableActionSpans } from "./action-dependency.js";
+import { buildActionPlan, executableActionSpans, transitionAction } from "./action-dependency.js";
 import { saveContextMemories } from "./context-memory.js";
 import { stagePvpAttempts } from "./narrative-pvp.js";
 import { applyGeneratedPcEffect } from "./pc-effects.js";
@@ -437,7 +438,19 @@ export function applyAuthoritativeMutation(db,{guildId,sessionId=null,events=[],
     const actionWindows=coordinateTypedActionWindows(db,guildId,typedIntents,actionPlan);
     if(actionWindows.length)actionPlan=actionPlan.map(row=>db.getCityRecord(guildId,"compound_action",row.record_key));
     const coordinatedIds=new Set(actionWindows.map(row=>row.action));
-    const nativeAdjudications=typedIntents.filter(row=>row?.data?.resolution==="roll_required"&&!pvpIds.has(row.record_key)&&!coordinatedIds.has(row.record_key)
+    const gmRulings=typedIntents.filter(row=>row.data.gm_ruling&&!pvpIds.has(row.record_key)&&!coordinatedIds.has(row.record_key)
+      &&!actionPlan.some(node=>node.data.action_id===row.record_key&&node.data.status==="suspended"))
+      .map(row=>adjudicateGmRuling(db,guildId,row.record_key,row.data.gm_ruling,scope));
+    if(gmRulings.length){
+      for(const ruling of gmRulings){
+        const receipt=ruling.data.adjudication?.receipts?.[0],node=actionPlan.find(n=>n.data.action_id===ruling.data.accepted_intent);
+        if(receipt&&node&&node.data.status!=="resolved")transitionAction(db,guildId,node.record_key,
+          {expected_status:node.data.status,status:"resolved",receipt});
+      }
+      typedIntents.forEach((row,index)=>{typedIntents[index]=db.getCityRecord(guildId,"typed_intent",row.record_key);});
+      actionPlan=buildActionPlan(db,guildId,typedIntents);
+    }
+    const nativeAdjudications=typedIntents.filter(row=>!row.data.gm_ruling&&row?.data?.resolution==="roll_required"&&!pvpIds.has(row.record_key)&&!coordinatedIds.has(row.record_key)
       &&!actionPlan.some(n=>n.data.action_id===row.record_key&&["suspended","blocked"].includes(n.data.status))).map(row=>{
       const adjudication=row.data.native_adjudication;
       return adjudicateAcceptedIntent(db,guildId,{
@@ -514,7 +527,7 @@ export function applyAuthoritativeMutation(db,{guildId,sessionId=null,events=[],
     if(narrative) validateNarrativeClaims(db,guildId,narrative,scope,{staged:true,eventResults});
     return {events:eventResults,relationships:relationshipResults,handouts:handoutResults,
       npcMemories:cognition.memories,npcKnowledge:cognition.knowledge,npcGoals:cognition.goals,simulation,intents,world,typedIntents,
-      intentDiagnostics,nativeAdjudications,actionPlan,actionWindows,pvpAttempts,typedDialogue,contextMemories,reviewAudit};
+      intentDiagnostics,nativeAdjudications,gmRulings,actionPlan,actionWindows,pvpAttempts,typedDialogue,contextMemories,reviewAudit};
   });
 }
 

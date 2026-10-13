@@ -16,6 +16,7 @@ import { validatePvpDamageRoll } from "./pvp-damage.js";
 import { validatePcDeathOutcome,blazeActionAuthorization,blazeCriticalResult,completeBlazeAction,validateBlazeSavedRoll } from "./pc-death.js";
 import {assertPcCanAct,hopeCap} from "./pc-native-eligibility.js";
 import {consentAction,historicalActionSource} from "./action-consent.js";
+import {assertGmRulingRequest} from "./gm-action-ruling.js";
 function fail(message){throw new StateConflictError(message);}
 /** Called only by the authenticated GM command/review boundary, never by model-supplied identity. */
 export function adjudicateRollSource(db,guild,input,reviewer){
@@ -41,6 +42,7 @@ function live(db,guild,row){
     else consentAction(db,guild,row.data.input.accepted_intent);
     if(a.source_event!==row.source_event||a.data.actor!==pc.id||a.data.owner_user_id!==row.data.owner_user_id)
       fail("Exact accepted request source and rolling owner required before dice or costs.");
+    if(row.status!=="resolved"&&row.data.input.gm_ruling)assertGmRulingRequest(db,guild,row);
   }
   const checkResources=character=>{
     const r=character.data.resources;

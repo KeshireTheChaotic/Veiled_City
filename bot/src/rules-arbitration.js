@@ -85,6 +85,7 @@ export function adjudicateAcceptedIntent(db,guild,input,actor,context={}){
     scene:scene.key,visibility:"character",subject_key:principal.character_id,
     details:{native_grounded:true,accepted_intent:actionId,rule_basis,roll_difficulty:{declaration:source.event_key,value:input.difficulty}}},actor);
   const request=prepareRollRequest(db,guild,{source_event:source.event_key,accepted_intent:actionId,
+    ...(context.gmRulingRef?{gm_ruling:context.gmRulingRef}:{}),
     character_id:principal.character_id,trait:input.trait,kind:input.kind,modifier_keys:input.modifierKeys||[],
     difficulty_source:difficulty.event_key,attack_source:input.attackSource||"",adjudication:input.explanation},actor,context);
   const disposition=request.status==="needs_review"?"needs_review":"roll_pending";

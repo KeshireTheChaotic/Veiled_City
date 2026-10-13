@@ -31,8 +31,8 @@
     },
     {
       "path": "README.md",
-      "size_bytes": 21004,
-      "sha256": "48a301e6febce0333176c60bfce1a5ff4fe5d7026583d29c42766a6614681372"
+      "size_bytes": 21311,
+      "sha256": "204d3b6c8a19c0799866840237e66eb965698c29555badd15c80d263e5ab02e4"
     },
     {
       "path": "bot/.env.example",
@@ -696,8 +696,8 @@
     },
     {
       "path": "bot/scripts/v9-release-qualification-test.mjs",
-      "size_bytes": 16817,
-      "sha256": "d421728ee3d1cd1af5f0c74440312daf7eace1cdfbc780157378614e984c3573"
+      "size_bytes": 17027,
+      "sha256": "e6ac556cb14c33113e178e2a657a5dffa57149325a74a6f179664694562b8f0c"
     },
     {
       "path": "bot/scripts/v9-roll-truth-test.mjs",
@@ -825,14 +825,19 @@
       "sha256": "c436452e024138e62ee4a6d6ccc73a953c268473774171c9e418faed9a8ef831"
     },
     {
+      "path": "bot/scripts/v96-rules-discretion-test.mjs",
+      "size_bytes": 18214,
+      "sha256": "de89adc637b299186cab6f91419e8ca889b1157fd3ea329e9c6598a6ecf0f2ee"
+    },
+    {
       "path": "bot/scripts/validate-command-schema.mjs",
       "size_bytes": 582,
       "sha256": "995a255982387edff58e5f14c8bb07b5508c3b28a19952882aa5716c28aafbe8"
     },
     {
       "path": "bot/scripts/validate-offline.mjs",
-      "size_bytes": 7832,
-      "sha256": "0d165d25954094326cc5883df0feb6de37680037f5966983544db9dab83af0b3"
+      "size_bytes": 7874,
+      "sha256": "9083f8fae2d059dd4be4613487264af01e8a42d2805c17877b3d93424d302858"
     },
     {
       "path": "bot/sql/schema.sql",
@@ -951,8 +956,8 @@
     },
     {
       "path": "bot/src/city-core.js",
-      "size_bytes": 25091,
-      "sha256": "7f12c70c0ce67f037c8a3ac9efca11cd0d5b94eed9f2d070119190e77ab320e7"
+      "size_bytes": 25112,
+      "sha256": "86b1a8d389a4b03c7f633b59d17507dbd567126369432ccd0a5d6b9a142cb0a3"
     },
     {
       "path": "bot/src/city-depth.js",
@@ -1120,14 +1125,19 @@
       "sha256": "c99bc99229c18df938a75becfbd1a6f5541b7eb532d644576abe9d78272e60c7"
     },
     {
+      "path": "bot/src/gm-action-ruling.js",
+      "size_bytes": 14216,
+      "sha256": "a1512bad91222905f28c6e13651672668624d1621b6b3939db0ac540bcca8e04"
+    },
+    {
       "path": "bot/src/gm-world-narrative.js",
       "size_bytes": 10154,
       "sha256": "740f72583671f27078f7dc3d93e7d25f986e285940dc99962111c518d6e70123"
     },
     {
       "path": "bot/src/gm.js",
-      "size_bytes": 100888,
-      "sha256": "5f62ce7366c3999ccf6c1dbc191241217151047011a70079307c391e763d7e1c"
+      "size_bytes": 101365,
+      "sha256": "68a284ffa3da9e70439df8be1fec9ddf9771f7b7aec95d434b3b7e34c814219f"
     },
     {
       "path": "bot/src/handout.js",
@@ -1401,8 +1411,8 @@
     },
     {
       "path": "bot/src/roll-collaboration.js",
-      "size_bytes": 31895,
-      "sha256": "28f5a4eac113875de14c1332ae3c3cc066408607460fc127508fa322caca15c9"
+      "size_bytes": 32050,
+      "sha256": "18f9c0aefe07c7bc21c859dc4b5278a01082334534f9a00052804781c1c34c2d"
     },
     {
       "path": "bot/src/roll-language.js",
@@ -1451,8 +1461,8 @@
     },
     {
       "path": "bot/src/rules-arbitration.js",
-      "size_bytes": 8765,
-      "sha256": "6f56446669e7f6cde6eea1188a49940d2393fd435dc92dd7c793895c9aee99c7"
+      "size_bytes": 8830,
+      "sha256": "68cd0a99f132fdf08137a021d7f493028d74ec4c55109eb3ef70dc38464fe527"
     },
     {
       "path": "bot/src/rules-srd.js",
@@ -1536,8 +1546,8 @@
     },
     {
       "path": "bot/src/state.js",
-      "size_bytes": 34680,
-      "sha256": "01bae80ed3711c5385ff188b66689f88a95dd9a22292d1eb2987c2f6a2678985"
+      "size_bytes": 35675,
+      "sha256": "2fbc23f2f0a1c644510ba72ec79c017fcea0520b77a1e762dd32865d350cd4b3"
     },
     {
       "path": "bot/src/story-commands.js",
@@ -1581,8 +1591,8 @@
     },
     {
       "path": "bot/src/typed-intents.js",
-      "size_bytes": 43444,
-      "sha256": "de0b7cc88be4f711c0b143009b34810f032adbddcbf72df7954766e45680132b"
+      "size_bytes": 44323,
+      "sha256": "cee9657e0d496bd1ae215577bf2b2f30c23cf85df8983d1ee2d4a8534fece6ff"
     },
     {
       "path": "bot/src/typed-mechanics.js",
@@ -2431,8 +2441,8 @@
     },
     {
       "path": "docs/TYPED_INTENT_CONTRACTS.md",
-      "size_bytes": 84548,
-      "sha256": "c91bde28386231107f050470a53f75ec39c1bfff9a9b44e47d297357468dbbff"
+      "size_bytes": 85648,
+      "sha256": "4091585d08402bcf07a3cc9545128ced327193cf968da09bbecd194932aa8474"
     },
     {
       "path": "docs/TYPED_INTENT_DELTA_AUDIT.md",
@@ -2446,8 +2456,8 @@
     },
     {
       "path": "docs/TYPED_INTENT_PROGRESS.md",
-      "size_bytes": 303501,
-      "sha256": "8a4025fa9c2565fbd924412f28a812be0dc2a48bf038df69752894dc10bfd81b"
+      "size_bytes": 306759,
+      "sha256": "b2fa7929abed0b50cd3bb595a1a78e2dee7bd074a3c67a611dddb6671c8a1c13"
     },
     {
       "path": "docs/TYPED_INTENT_RELEASE_10.0.0.md",
@@ -2631,8 +2641,8 @@
     },
     {
       "path": "docs/V96_INTENT_AUTHORITY_AUDIT.md",
-      "size_bytes": 7224,
-      "sha256": "39b40ab3cc4eb0c617e4e28e67fbe83b6c74d2c43531da1587899df40b637e2c"
+      "size_bytes": 8495,
+      "sha256": "f9fc6abe2bfac4b80b6ca52815b3fe5d21cd5c5fd87463a72f5dd7b9fdd53c3b"
     },
     {
       "path": "docs/V96_PRE_IMPLEMENTATION_PLAN.md",
@@ -2641,13 +2651,13 @@
     },
     {
       "path": "docs/V96_PROGRESS.md",
-      "size_bytes": 6018,
-      "sha256": "04188da9bf1a028adcc0b3210a2492f5a482cbe15ba705e0188dc1cdddea04a3"
+      "size_bytes": 10871,
+      "sha256": "5f2785b57d8db185549d1211ccd27b4487ce43d3f1dcb872d5113ea920d43513"
     },
     {
       "path": "docs/V96_RULE_DISCRETION_CONTRACT.md",
-      "size_bytes": 5996,
-      "sha256": "2db6b80443b881a770fbbcf7188b252eea09dad9196502f7211f7cca5b71077a"
+      "size_bytes": 8961,
+      "sha256": "bf8ae1f06b00085f9a9be3476c377407262468fbbc7506375bdb080e1513cabe"
     },
     {
       "path": "docs/V96_TOKEN_PERFORMANCE_REPORT.md",

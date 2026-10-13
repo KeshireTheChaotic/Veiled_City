@@ -37,6 +37,7 @@ import { projectAuthorityRecords } from "./authority-projection.js";
 import { operationalMetrics, measureStage, measureNative } from "./operational-metrics.js";
 import { scopedSceneMemory } from "./scoped-memory.js";
 import {gmWorldPartsSchema,GM_WORLD_NARRATIVE_PROMPT} from "./gm-world-narrative.js";
+import {gmRulingContext,GM_RULING_PROMPT} from "./gm-action-ruling.js";
 
 const routerSchema={
   type:"object",
@@ -542,6 +543,7 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
       CONTEXT_CONTRACT,
       AUTHORED_CANDIDATES_PROMPT,
       PLAYER_INTENT_PROMPT,
+      this.db.getCityCalendar(guildId).flags.gm_discretion===true?GM_RULING_PROMPT:"GM ruling proposals are disabled; use existing native services.",
       CONTEXT_MEMORY_PROMPT,
       AUTONOMOUS_WORLD_PROMPT,
       "Ordinary storefronts, hiring signs, streets, and minor NPC introductions use world_additions, scene_actions and context_memories, NOT action=canon claims. A committed canon claim needs the exact existing canon-ledger key and matching value; event:<index> is not a canon key.",
@@ -602,6 +604,8 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
       `CAMPAIGN STATE:\n${JSON.stringify(ctx.campaign)}`,
       `DECISION ADVISORY (GM-private; null when disabled): ${JSON.stringify(ctx.decision_advisory)}`,
       `AUTHENTICATED DECLARATION (attempts, not completed facts): ${JSON.stringify(ctx.player_declaration)}`,
+      `GM ACTION RULING CONTEXT (native proposals only): ${JSON.stringify(gmRulingContext(this.db,guildId,
+        {mode:scope,actorUserId,actorCharacterId:ctx.actor_assignment?.character_id}))}`,
       `AUTONOMOUS WORLD (GM-private native creation/action context): ${JSON.stringify(autonomousWorldContext(this.db,guildId,{mode:scope,actorUserId,actorCharacterId:ctx.actor_assignment?.character_id},messageId))}`,
       `SCOPED INTERPRETATION (not authority): ${JSON.stringify(interpretationContext(this.db,guildId,actorUserId,ctx.actor_assignment?.character_id,messageText,{mode:scope,messageId}))}`,
       `CONVERSATIONAL ENTRY REFERENCES (not authority): ${JSON.stringify(entryReferenceContext(this.db,guildId,actorUserId,ctx.actor_assignment?.character_id,{mode:scope}))}`,
@@ -640,6 +644,7 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
       "CURRENT ENCOUNTER (GM-PRIVATE; do not expose BP math/composition unless learned in fiction)",
       "ACTING CHARACTER/NPC ASSIGNMENT","ACTIVE HUMAN-CONTROLLED NPC PROXIES","ROSTER/PRESENCE","CLOCKS (MAY BE SECRET)",
       "SCOPED MEMORY AND NATIVE POSITIONS (audience-visible evidence only; never consequence authority)",
+      "GM ACTION RULING CONTEXT (native proposals only)",
       "AUTHENTICATED RAW PLAYER SOURCE (immutable; native-consumed spans are context only)",
       "NATIVE SOURCE-SPAN LEDGER (receipts prevent re-execution)","CURRENT UNCONSUMED PLAYER INPUT"]);
     const sections=rawSections.map(text=>{

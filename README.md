@@ -308,6 +308,7 @@ Some commands below need additional required options selected in Discord.
 | Portable inert content packages | `/vc-admin seed-package-preview`; `/vc-admin seed-package-import`; `/vc-admin seed-package-review`; `/vc-admin seed-package-export` (each takes `json`; see implementation guide) |
 | Prepare / adjudicate sourced rolls | `/vc-roll request json:<native request>`; `/vc-roll adjudicate json:<saved human ruling and source proof>` |
 | Guided private PvP | `/vc-roll pvp-menu` (optional `reference:<native reference>`); requires GM opt-in `/vc-city flags json:{"pvp_private_ui":true}`. Review and consent are separate; no automatic damage, reaction or disclosure. See [guided PvP controls](docs/V95_03_PRIVATE_PVP_CONTROLS.md). |
+| Bounded ordinary GM rulings | GM opt-in `/vc-city flags json:{"gm_discretion":true}`; native rolls retain existing roll flags/private owner choices. Generic rolls grant no new abilities or material effects; manual GM authority still wins. See [authority contract](docs/V96_RULE_DISCRETION_CONTRACT.md). |
 | Read-only GM preparation / reconciliation | `/vc-story brief`; `/vc-story why json:{"op":"reconcile"}` |
 | Add / edit seed drafts | `/vc-admin seed-add json:<typed draft>`; `/vc-admin seed-edit draft_id:<id> json:<replacement>` |
 | Approve / reject / remove drafts | `/vc-admin seed-approve draft_id:<id>`; `/vc-admin seed-reject draft_id:<id>`; `/vc-admin seed-remove draft_id:<id>` |
