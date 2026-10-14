@@ -1,5 +1,24 @@
 # V96 token / performance baseline
 
+## V96-06 paired synthetic checkpoint (unqualified)
+
+Starting HEAD `9421b6e3dceeb0c1f5f86aa7f3c347b644833b25`. Same `MEASURE` fixture, twenty-four native facts, party/private combined turns; initial run before production edits, final focused run after scoped changes. Logs live outside the repository in TEMP (`veiled-v96-06-red.log`, `veiled-v96-06-final-focus.log`). Each measurement made **two synthetic requests total**, one per turn, **zero retry/repair**, **two unknown usage reports** and **no prompt-budget omissions**. Input/output/cached provider tokens are **unknown**, not reported zeros. Actual output-token/cost/live latency savings remain unknown.
+
+| Observed local synthetic metric | Before | Checkpoint after |
+| --- | --- | --- |
+| Input characters, party/private | 55,660 / 55,662 | 49,602 / 49,604 |
+| Instruction characters, party/private | 41,903 / 42,599 | 42,186 / 42,882 |
+| Local full-turn milliseconds, party/private | 43.215 / 22.247 | 44.8389 / 22.6141 |
+| Nearest-rank local full-turn p50/p95, n=2 | 22.247 / 43.215 | 22.6141 / 44.8389 |
+| Injected model-stage p50/p95, n=2 | 0.6931 / 1.7764 ms | 0.5475 / 1.2628 ms |
+| Local structured-stage p50/p95, n=2 | 0.7767 / 2.3383 ms | 0.6269 / 2.0810 ms |
+
+These n=2 CPU/double timings are not useful real-model distributions and prove **no latency gain**. Input-character reduction is an observed fixture result, not tokens or billed savings. Instruction byte counts changed during the shared working-tree interval; external concurrent authority edits are unresolved, so this is a **provisional comparison**, not a controlled qualified performance claim. New reported-cache telemetry is tested using explicitly synthetic usage; actual provider cache utilization remains unknown.
+
+Quality evidence is deterministic: exact source/scope conflicts, full detail retention after compaction, obscure clue/contradiction expansion, actual NPC goals, pending native context, owner/privacy/archive revalidation, scope/rule invalidation and complete real-schema compound repair. No qualitative real-model prose rating is claimed. No new lower normal-turn output ceiling is imposed without reported-usage/completeness evidence. See [phase contract and qualification hold](V96_06_CONTEXT_CONTRACT.md); previous historical baseline below is unchanged.
+
+Final merged-tree V96-06 qualification passed **145/145** mandatory suites, both D08, zero failed/not-run, live/billable **0**, **398,802 ms**. This qualifies deterministic compatibility/authority, not real-model performance. Origin `d670fcd` is integrated; its original nine candidate tests and six separate supplemental cases are preserved. The provisional local before/after character/timing measurements above remain labeled synthetic and are not retroactively reclassified as controlled live evidence. Exact report digest and rollback are in the phase ledger.
+
 Source: local `25f6d8013d0a6b07fca1e023d32d16de3e1eea25`; 2026-10-12. No production, credentials or real provider inspected. V96-00 does not optimize context or change models. Version 10.0.0.
 
 ## Call-path inventory

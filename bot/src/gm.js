@@ -33,7 +33,7 @@ import { entryReferenceContext } from "./scene-entry.js";
 import { OnlineSrd } from "./rules-srd.js";
 import { interpretationSchema, CONTEXT_CONTRACT, interpretationContext, validateInterpretation } from "./narrative-context.js";
 import { epistemicSchema, evidenceType, activeEvidence } from "./epistemic.js";
-import { budgetTurnPrompt } from "./prompt-budget.js";
+import { budgetTurnPrompt, referenceContextPlan } from "./prompt-budget.js";
 import { recoverOptionalTurnFields } from "./turn-recovery.js";
 import { projectAuthorityRecords } from "./authority-projection.js";
 import { operationalMetrics, measureStage, measureNative } from "./operational-metrics.js";
@@ -391,7 +391,10 @@ export class GMService{
       if(attempt===2){
         const base=Number(req.max_output_tokens||0);
         const retryCap=Number(this.config.structuredRetryMaxTokens||6000);
-        request.max_output_tokens=Math.min(retryCap,Math.max(base?base*2:3000,3000));
+        // Never shrink an explicit complete-output allowance during repair. Combined GM turns
+        // currently have no measured safe ceiling; do not invent a smaller one on malformed JSON.
+        if(base||!req.text?.format?.schema?.properties?.gm_world_parts)
+          request.max_output_tokens=Math.max(base,Math.min(retryCap,Math.max(base?base*2:3000,3000)));
         request.input=`${String(request.input||"")}
 
 STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Return one COMPLETE JSON object matching the schema. Be concise. Do not use Markdown fences or commentary. Preserve quotation marks and other punctuation from user-provided text as ordinary JSON string content.`;
@@ -546,8 +549,6 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
       "Ordinary storefronts, hiring signs, streets, and minor NPC introductions use world_additions, scene_actions and context_memories, NOT action=canon claims. A committed canon claim needs the exact existing canon-ledger key and matching value; event:<index> is not a canon key.",
       "Relationship and artifact epistemic source_refs must preserve active perspective/ancestry. PC-outgoing attitudes and debt/obligation changes are nonbinding interpretation drafts, never PC feelings or binding terms. Artifact canonical_facts need matching independently authorized sources; unsupported detail stays illustrative presentation. Legacy recaps are narrator summaries, not observations or new rulings.",
       "Fact/clue epistemic metadata distinguishes observation, testimony and hypothesis. Null defaults to hypothesis, never world truth. NPC memories need own witnessed/delivered/inferred evidence; inferred or reported knowledge cannot become known. Use world_additions to establish ordinary places/NPCs and scene_actions for ordinary owner-authorized local travel, independently of optional delegation. Use scene.enter only for the older saved policy workflow. Never infer access or consent from an understood name.",
-      `NPC diction guidance, not facts/PC emotions: ${JSON.stringify(ctx.npc_cognition.slice(0,4).map(row=>portrayalPacket(this.db,guildId,row.npc_key)))}`,
-      this.db.getCityCalendar(guildId).flags.pacing?JSON.stringify(pacingAdvice(this.db,guildId,messageText)):"",
       "GM-private facts/clocks/reference content may be used to simulate the world but MUST NOT appear in narration until legitimately discovered.",
       "PLAYER visibility applies only to target_user_id. CHARACTER visibility applies to target_character_id and persists with that character even if the human later changes PCs.",
       "Never choose voluntary actions, dialogue, beliefs, resource spends, or secrets for a player-controlled character.",
@@ -598,6 +599,12 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
       "Keep narration suitable for Discord. Prefer 1-4 compact paragraphs unless a longer scene is genuinely needed."
     ].join("\n\n");
     const rawSections=[
+      `NPC DICTION GUIDANCE (GM-private; not facts or PC emotions): ${JSON.stringify(ctx.npc_cognition.slice(0,4)
+        .map(row=>portrayalPacket(this.db,guildId,row.npc_key)))}`,
+      `PACING GUIDANCE (GM-private; not authority): ${JSON.stringify(this.db.getCityCalendar(guildId).flags.pacing
+        ?pacingAdvice(this.db,guildId,messageText):null)}`,
+      `PENDING NATIVE CONTINUATIONS (owner-scoped; receipts remain authoritative): ${JSON.stringify(ctx.pending_native_continuations)}`,
+      `PENDING NATIVE ACTION REVIEWS (owner-scoped; not resolved effects): ${JSON.stringify(ctx.pending_native_action_reviews)}`,
       `CAMPAIGN STATE:\n${JSON.stringify(ctx.campaign)}`,
       `DECISION ADVISORY (GM-private; null when disabled): ${JSON.stringify(ctx.decision_advisory)}`,
       `AUTHENTICATED DECLARATION (attempts, not completed facts): ${JSON.stringify(ctx.player_declaration)}`,
@@ -645,6 +652,10 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
       "SCOPED MEMORY AND NATIVE POSITIONS (audience-visible evidence only; never consequence authority)",
       "GM ACTION RULING CONTEXT (native proposals only)",
       "ORDINARY EFFECT CONTEXT (owner-scoped native locators, not authority)",
+      "PENDING NATIVE CONTINUATIONS (owner-scoped; receipts remain authoritative)",
+      "PENDING NATIVE ACTION REVIEWS (owner-scoped; not resolved effects)",
+      "NPC DICTION GUIDANCE (GM-private; not facts or PC emotions)","PACING GUIDANCE (GM-private; not authority)",
+      "NPC_COGNITION (SUBJECTIVE MEMORY/KNOWLEDGE/GOALS; GM-PRIVATE)",
       "AUTHENTICATED RAW PLAYER SOURCE (immutable; native-consumed spans are context only)",
       "NATIVE SOURCE-SPAN LEDGER (receipts prevent re-execution)","CURRENT UNCONSUMED PLAYER INPUT"]);
     const sections=rawSections.map(text=>{
@@ -659,7 +670,12 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
       {label:"SAVED GM RULINGS (authoritative)",value:ctx.rulings,required:true},
       {label:"AUTHORITY PAGE INDEX (identity/source/revision; request scoped detail by locator)",value:ctx.authority_index,required:true},
       {label:"CURRENT COMBATANTS (authoritative; GM-private)",value:ctx.current_combatants,required:true});
-    if(ctx.context_plan) sections.push({label:"SOURCED CONTEXT PLAN (GM-only, never actor omniscience)",value:ctx.context_plan,priority:10});
+    if(ctx.context_plan){
+      // A compact detail reference is safe only if its complete destination cannot be evicted.
+      sections.find(section=>section.label.startsWith("GM-PRIVATE + ALL KNOWN FACTS")).required=true;
+      sections.push({label:"SOURCED CONTEXT PLAN (GM-only, never actor omniscience)",
+        value:referenceContextPlan(ctx.context_plan,ctx.gm_all_facts),required:true});
+    }
     const {input}=budgetTurnPrompt(sections,{instructions,query:messageText});
     const req={
       model:this.config.routineGmModel||this.config.gmModel,

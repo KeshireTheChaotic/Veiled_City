@@ -48,7 +48,8 @@ export class OperationalMetrics{
     if(!stages.has(stage))return;
     const {guildId,durationMs,status='ok',errorCode,inputTokens,outputTokens,cachedInputTokens,retries=0,model}=fields;
     const tenant=this.tenant(guildId,true),row=tenant.stages.get(stage)||{count:0,failures:0,retries:0,
-      input_tokens:0,output_tokens:0,usage_reported:0,usage_unknown:0,durations:[],error_codes:{},
+      input_tokens:0,output_tokens:0,usage_reported:0,usage_unknown:0,cached_input_tokens:0,
+      cache_usage_reported:0,cache_usage_unknown:0,durations:[],error_codes:{},
       cost_estimate_usd:0,unpriced_requests:0,models:Object.create(null)};
     row.count++;row.failures+=status==='ok'?0:1;row.retries+=count(retries)??0;
     const ms=duration(durationMs);if(ms!==null){row.durations.push(ms);if(row.durations.length>this.sampleLimit)row.durations.shift();}
@@ -58,9 +59,14 @@ export class OperationalMetrics{
       const rate=Object.hasOwn(this.pricing,model)?this.pricing[model]:null;
       const modelSlots=Object.keys(row.models).filter(key=>key!=='@unpriced').length;
       const key=rate&&(Object.hasOwn(row.models,model)||modelSlots<32)?model:'@unpriced';
-      const bucket=row.models[key]||{requests:0,input_tokens:0,output_tokens:0,usage_unknown:0,cost_estimate_usd:0};
+      const bucket=row.models[key]||{requests:0,input_tokens:0,output_tokens:0,usage_unknown:0,cost_estimate_usd:0,
+        cached_input_tokens:0,cache_usage_reported:0,cache_usage_unknown:0};
       bucket.requests++;bucket.input_tokens+=input??0;bucket.output_tokens+=output??0;
       row.input_tokens+=input??0;row.output_tokens+=output??0;
+      if(input!==null&&cached!==null&&cached<=input){
+        row.cached_input_tokens+=cached;bucket.cached_input_tokens+=cached;
+        row.cache_usage_reported++;bucket.cache_usage_reported++;
+      }else{row.cache_usage_unknown++;bucket.cache_usage_unknown++;}
       if(input!==null&&output!==null){
         row.usage_reported++;
         if(rate){const cache=rate.cached_input!==undefined&&cached!==null&&cached<=input?cached:0;

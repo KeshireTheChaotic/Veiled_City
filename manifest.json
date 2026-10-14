@@ -706,8 +706,8 @@
     },
     {
       "path": "bot/scripts/v9-release-qualification-test.mjs",
-      "size_bytes": 18524,
-      "sha256": "5bce13429fe7c206395912a357096899b62c14f6ac68679c492a4cc2aac9e804"
+      "size_bytes": 18828,
+      "sha256": "931d9bcaca8689fbdc8983815f8921c4c5e277978abe4d8a3179dbf9c3caad0a"
     },
     {
       "path": "bot/scripts/v9-roll-truth-test.mjs",
@@ -845,6 +845,16 @@
       "sha256": "94c6fed6939c74a204e7a8afc6f9a27c78f17754f3ea9bd7d6db0ec99b5d3dd3"
     },
     {
+      "path": "bot/scripts/v96-candidate-audit-test.mjs",
+      "size_bytes": 5881,
+      "sha256": "631f3207ec83049a42f53b0e8d75bf41a70d07e71a8ad9fe6b771572eb686618"
+    },
+    {
+      "path": "bot/scripts/v96-context-efficiency-test.mjs",
+      "size_bytes": 12578,
+      "sha256": "911e5370fd0639367dd8846e2b71acf9a4e10b12f5f22b8dbec10fbcaf13ded6"
+    },
+    {
       "path": "bot/scripts/v96-corpus.mjs",
       "size_bytes": 3881,
       "sha256": "c436452e024138e62ee4a6d6ccc73a953c268473774171c9e418faed9a8ef831"
@@ -891,8 +901,8 @@
     },
     {
       "path": "bot/scripts/validate-offline.mjs",
-      "size_bytes": 8236,
-      "sha256": "f409c47c593460238acc6568aa87d34d586d253b01c250021904f77b519496e0"
+      "size_bytes": 8307,
+      "sha256": "e2e731feadd89669949d8abac3a07b72798e957aaa3a4d62ba1f2eb23083beba"
     },
     {
       "path": "bot/sql/schema.sql",
@@ -1081,8 +1091,8 @@
     },
     {
       "path": "bot/src/context-planner.js",
-      "size_bytes": 6139,
-      "sha256": "0e79dbbbcb167a353bc47d060901a2ff583ecaf22001d9b5f00565510175e9f6"
+      "size_bytes": 8085,
+      "sha256": "7d6cecbe45c43341b01ee440ac3fcd3cd94c7cbb5c0e57bad521451d3f64d5b8"
     },
     {
       "path": "bot/src/continuity-routing.js",
@@ -1096,8 +1106,8 @@
     },
     {
       "path": "bot/src/db.js",
-      "size_bytes": 165582,
-      "sha256": "1bcd622f586ec2ad832b84d3052107a86dc40154bcfd99e68fc5332029b32e3b"
+      "size_bytes": 165969,
+      "sha256": "c8cccc435d18a071252ab91108ca5332ecf435af2f66db0e846611f987475e92"
     },
     {
       "path": "bot/src/decision-advisory.js",
@@ -1221,8 +1231,8 @@
     },
     {
       "path": "bot/src/gm.js",
-      "size_bytes": 103877,
-      "sha256": "0eb2a0d64ac4ff94c454b837689f0d8fb3ee79321ba4203d7067c01473a82bb7"
+      "size_bytes": 105142,
+      "sha256": "ae02d3fa693ce8fadb165b4651317fb52f9c6b011136e21c3def1dafef1f0525"
     },
     {
       "path": "bot/src/handout.js",
@@ -1341,8 +1351,8 @@
     },
     {
       "path": "bot/src/operational-metrics.js",
-      "size_bytes": 8169,
-      "sha256": "6127d207787498ec9ee6c9fc6985409544dac1860174ccda91f1a74e0274b378"
+      "size_bytes": 8584,
+      "sha256": "5818aaf907693445be4284f740c3c93476240f9cf4b4497db97997330e65f53a"
     },
     {
       "path": "bot/src/operations/diagnostics.js",
@@ -1436,8 +1446,8 @@
     },
     {
       "path": "bot/src/prompt-budget.js",
-      "size_bytes": 3813,
-      "sha256": "4d24ff0cecff5300fa19d92cde1c9889b115d3dd88951e246794ad96f314855c"
+      "size_bytes": 4521,
+      "sha256": "f0c455940eba42ab0c27984ac7461ba3449be6b7119c36ae7046b78209fe283d"
     },
     {
       "path": "bot/src/provenance.js",
@@ -2586,8 +2596,8 @@
     },
     {
       "path": "docs/TYPED_INTENT_PROGRESS.md",
-      "size_bytes": 325380,
-      "sha256": "873fe9485dab29fbf793afc3dc8679ac0c7b0a9da21d5f37b91a94da0d1296a0"
+      "size_bytes": 326271,
+      "sha256": "6677f19c0d701d8b1afbdb66f8076c3a58d346b462af5b2f1a0a1ac1cc31fc0b"
     },
     {
       "path": "docs/TYPED_INTENT_RELEASE_10.0.0.md",
@@ -2775,6 +2785,11 @@
       "sha256": "1f9cdf7d52b7679841670641f64000ef411de9f61a0c0c246217d1704eb2c641"
     },
     {
+      "path": "docs/V96_06_CONTEXT_CONTRACT.md",
+      "size_bytes": 8440,
+      "sha256": "a0600f84998eb74a5671d99875ce19eb1050c31334de1b4e9a82dc0d6d476cb9"
+    },
+    {
       "path": "docs/V96_ACCEPTANCE_CROSSWALK.csv",
       "size_bytes": 4847,
       "sha256": "afc7521a1c77a54fcb956cbb714dcdd59c521103d35edec7e5e0163000d6efdb"
@@ -2816,8 +2831,8 @@
     },
     {
       "path": "docs/V96_PROGRESS.md",
-      "size_bytes": 53971,
-      "sha256": "4f840f72e7efb0b1c822b8ac7605e17a96004f94dfbf52c1045ed8ca0ddc1d3a"
+      "size_bytes": 61377,
+      "sha256": "5d14a108ae1472b7d03872444593d4f9cf48d27ae87e0f334fa2f15998da32d6"
     },
     {
       "path": "docs/V96_RULE_DISCRETION_CONTRACT.md",
@@ -2831,8 +2846,8 @@
     },
     {
       "path": "docs/V96_TOKEN_PERFORMANCE_REPORT.md",
-      "size_bytes": 4863,
-      "sha256": "a429cd5959fbc570e36d4dddb9ec225a4cf4c37dab63504292efc27b48ab382f"
+      "size_bytes": 7742,
+      "sha256": "85e690234428b183ec621a9ebf1a7fc1b6bc834464bfc9d91f00e384c3e34819"
     },
     {
       "path": "docs/V9_1_NARRATIVE_PVP_CONTRACT_REFERENCE.md",

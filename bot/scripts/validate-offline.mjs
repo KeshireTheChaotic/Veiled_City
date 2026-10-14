@@ -22,7 +22,8 @@ suites.push("v96-semantic-output-p0-test");
 suites.push("v96-05r-fiction-test","v96-fresh-authoring-test");
 suites.push("v96-semantic-proposals-test");
 suites.push("v96-ordinary-effects-test");
-suites.push("candidate-claim-quarantine-test");
+suites.push("v96-context-efficiency-test");
+suites.push("candidate-claim-quarantine-test","v96-candidate-audit-test");
 const report={fixture_only:true,network:"denied",billable_tokens:0,live_requests:0,suites:[],limits:["Synthetic fixtures do not establish unrestricted live-model semantics.","Consult I_HEARD_YOU_EVALUATION for measured false positives/negatives and unresolved ambiguities."]};
 
 // VC_VALIDATION_REPORT_V1: compact, atomic, local-only suite diagnostics.

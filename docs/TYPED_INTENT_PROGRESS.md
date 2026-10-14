@@ -1,5 +1,9 @@
 # Typed Intent Refinement Progress
 
+## Current resume pointer — V96-06 (2026-10-13)
+
+**QUALIFIED OFFLINE**, starting `9421b6e3dceeb0c1f5f86aa7f3c347b644833b25`, origin integrated at `d670fcd9d6c2963c00f208c11d3c35dd2edf9742`. TOK01–04 plus upstream candidate hotfix and separately retained supplemental regressions pass final **145/145** mandatory suites, **0 failed / 0 not-run**, **26/26** acceptance mappings, **398,802 ms**, both D08/check/manifest/diff integrity. All **365** frozen non-document inputs unchanged; **621** manifest files. Local commit `perf(v9.6-context): reduce redundant context with continuity safeguards`; SHA follows in next-phase start/Git history. No push/deployment/live operation. [Exact evidence, failed and pre-merge runs](V96_PROGRESS.md), [implementation/limits/rollback](V96_06_CONTEXT_CONTRACT.md). No real-model token, cache, latency or quality claim. V96-07 begins after this commit.
+
 ## Current resume pointer — V96-05E (2026-10-13)
 
 V96-05S commit `9fe57ac09fa3d8fb1e3b7fe4ede23fd23be05ff3` remains the deployed source; 05E is **QUALIFIED OFFLINE**, local completion commit `feat(v9.6-effects): compose verified ordinary consequences`. Closed source-bound follow-through reuses native observation, NPC intention, exact scene and matched service adapters; unsupported effects stay private review, hidden NPC goals stay GM-only, and deferred native child review cannot bypass original authority. Final T0 **30/30**; T2 **142/142** mandatory suites, **0 failed / 0 not-run**, **26/26** acceptance mappings, **343,159 ms**, both D08/check/manifest integrity passing. Network denied, live/billable zero. [Actual evidence, prior failures, limits and rollback](V96_PROGRESS.md), [contract and native review commands](V96_05E_CONSEQUENCE_BRIDGE.md). No push, production/live/paid operation or V96-06 optimization in this step. V96-06 is next, not started.

@@ -6,12 +6,21 @@ import { projectAuthorityRecords, authorityRecordPage } from "./authority-projec
 const tokens=value=>String(value||"").toLowerCase().match(/[a-z0-9-]{3,}/g)||[];
 export class ContextPlanner {
   constructor(db){this.db=db;}
-  plan(guildId,{operation="turn",scene="",actorType="gm",actorKey="",userId="",characterId="",query="",scope="gm",maxTokens=4000}={}){
+  plan(guildId,{operation="turn",scene="",actorType="gm",actorKey="",userId="",characterId="",query="",scope="gm",maxTokens=4000,
+    sourceRefs=[],factPage=0}={}){
     if(!["gm","npc","institution","character","player"].includes(actorType)||!['gm','public','party','player','character'].includes(scope)) throw new Error("Explicit context actor/scope required.");
     if(actorType==="character"&&this.db.getCharacter(characterId)?.guild_id!==guildId) throw new Error("Context character is not in this campaign.");
+    if(actorType==="character"&&this.db.getCharacter(characterId)?.owner_user_id!==userId)
+      throw new Error("Character context requires the current owner; GM context is a separate explicit scope.");
+    if(actorType==="player"&&characterId&&["character","gm"].includes(scope)
+      &&(this.db.getCharacter(characterId)?.guild_id!==guildId||this.db.getCharacter(characterId)?.owner_user_id!==userId))
+      throw new Error("Character-private player context requires the current owner.");
     if(actorType==="npc"&&!this.db.getNpcProfile(guildId,actorKey)) throw new Error("Context NPC not found.");
+    if(!Array.isArray(sourceRefs)||sourceRefs.length>12||sourceRefs.some(ref=>typeof ref!=="string"||!/^fact:[^\s]{1,160}$/.test(ref)))
+      throw new Error("Context expansion requires bounded exact fact source references (at most 12).");
+    if(!Number.isSafeInteger(factPage)||factPage<0||factPage>2000)throw new Error("Context fact page must be bounded.");
     const budget=Math.max(100,Math.min(6000,Number(maxTokens)||4000)),terms=[...new Set(tokens(`${query} ${scene}`))].slice(0,8);
-    const candidates=new Map(),withheld=[];
+    const candidates=new Map(),withheld=[];let fact_page=null;
     const add=(source,data,priority=0)=>{
       if(data?.kind?.startsWith("pvp_")||["character_visible_fact","character_perception_receipt","world_visible_fact"].includes(data?.kind))return;
       if(data?.kind==="authored_turn"&&data.details?.discord_message_id?.startsWith("description:"))return;
@@ -32,8 +41,17 @@ export class ContextPlanner {
         add(`institution_report:${row.record_key}`,row,20);
       withheld.push("Employee memories and global facts excluded; only filed institution reports included.");
     }else{
+      // Lexical matches are ranking candidates, not the only retrieval gateway. Native exact-source
+      // expansion and bounded nonlexical pages use the identical entitlement predicate on every read.
+      const factScope={scope:actorType==="gm"?scope:scope==="gm"?"character":scope,userId,characterId};
+      const page=this.db.contextFacts(guildId,{...factScope,limit:50,offset:factPage*50});
+      for(const row of page)add(`fact:${row.id}`,{...row,epistemic:evidenceType(row),evidence_active:activeEvidence(this.db,guildId,row.id)},5);
+      fact_page={page:factPage,next_page:page.length===50?factPage+1:null,
+        sources:page.map(row=>`fact:${row.id}`),expansion:'sourceRefs: at most 12 exact fact locators; same current entitlement, no authority grant'};
       for(const term of terms.length?terms:[""]) for(const row of this.db.contextFacts(guildId,{scope:actorType==="gm"?scope:scope==="gm"?"character":scope,
         userId,characterId,query:term,limit:20})) add(`fact:${row.id}`,{...row,epistemic:evidenceType(row),evidence_active:activeEvidence(this.db,guildId,row.id)},20);
+      if(sourceRefs.length)for(const row of this.db.contextFacts(guildId,{...factScope,ids:sourceRefs.map(ref=>ref.slice(5)),limit:12}))
+        add(`fact:${row.id}`,{...row,epistemic:evidenceType(row),evidence_active:activeEvidence(this.db,guildId,row.id)},100);
       if(this.db.getCityCalendar(guildId).flags.personal_arcs===true){
         const session=this.db.getActiveSession(guildId);
         const ids=actorType==="gm"&&scope==="gm"&&session?this.db.roster(session.id)
@@ -54,7 +72,7 @@ export class ContextPlanner {
       if(used+row.estimated_tokens>budget){omissions.push({source:row.source,reason:"token_budget"});continue;}
       segments.push(row);used+=row.estimated_tokens;
     }
-    return {operation,actor:{type:actorType,key:actorKey},scope,segments,omissions,withheld,estimated_tokens:used,budget,
+    return {operation,actor:{type:actorType,key:actorKey},scope,segments,omissions,withheld,estimated_tokens:used,budget,fact_page,
       authority:actorType==="gm"?"GM context does not grant actor knowledge":"Actor-relative subjective knowledge, not canon"};
   }
   authorityIndex(guildId,kind,{pageSize=25}={}){

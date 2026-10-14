@@ -166,6 +166,8 @@ bot/scripts/v96-05r-fiction-test.mjs
 bot/scripts/v96-action-fixture.mjs
 bot/scripts/v96-action-review-test.mjs
 bot/scripts/v96-baseline-test.mjs
+bot/scripts/v96-candidate-audit-test.mjs
+bot/scripts/v96-context-efficiency-test.mjs
 bot/scripts/v96-corpus.mjs
 bot/scripts/v96-fresh-authoring-test.mjs
 bot/scripts/v96-native-actions-test.mjs
@@ -552,6 +554,7 @@ docs/V96_05E_CONSEQUENCE_BRIDGE.md
 docs/V96_05R_OUTPUT_BOUNDARY_EXPERIMENT.md
 docs/V96_05R_OUTPUT_CONTRACT.md
 docs/V96_05S_SEMANTIC_CONTRACT.md
+docs/V96_06_CONTEXT_CONTRACT.md
 docs/V96_ACCEPTANCE_CROSSWALK.csv
 docs/V96_ACTION_REVIEW.md
 docs/V96_CODEX_KICKOFF.md

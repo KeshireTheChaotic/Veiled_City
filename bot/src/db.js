@@ -137,13 +137,17 @@ export class VeiledDB {
     return this.db.prepare("SELECT kind,status,COUNT(*) count FROM city_records WHERE guild_id=? GROUP BY kind,status ORDER BY kind,status LIMIT 200").all(guildId);
   }
 
-  contextFacts(guildId,{scope,userId="",characterId="",query="",limit=20}){
+  contextFacts(guildId,{scope,userId="",characterId="",query="",limit=20,offset=0,ids=[]}){
+    if(!Array.isArray(ids)||ids.length>12||ids.some(id=>typeof id!=="string"||id.length>160))
+      throw new Error("Context fact expansion needs bounded native IDs.");
     return this.db.prepare(`SELECT * FROM facts WHERE guild_id=? AND archived=0 AND
       (?='gm' OR visibility='public' OR (? IN ('party','player','character') AND visibility='party')
       OR (? IN ('player','character') AND visibility='player' AND subject_user_id=?)
       OR (?='character' AND visibility='character' AND subject_character_id=?))
-      AND (?='' OR instr(lower(content),lower(?))>0) ORDER BY created_at DESC,id LIMIT ?`)
-      .all(guildId,scope,scope,scope,userId,scope,characterId,query,query,Math.min(50,limit));
+      AND (?='' OR instr(lower(content),lower(?))>0)
+      AND (?='[]' OR id IN (SELECT value FROM json_each(?))) ORDER BY created_at DESC,id LIMIT ? OFFSET ?`)
+      .all(guildId,scope,scope,scope,userId,scope,characterId,query,query,JSON.stringify(ids),JSON.stringify(ids),
+        Math.max(1,Math.min(50,Number(limit)||20)),Math.max(0,Math.min(100000,Math.floor(Number(offset)||0))));
   }
 
   getCityCalendar(guildId){

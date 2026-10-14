@@ -2,6 +2,18 @@
 const separator="\n\n---\n\n";
 const encode=value=>typeof value==="string"?value:JSON.stringify(value)??"null";
 const render=(section,value=section.value)=>`${section.label}:\n${encode(value)}`;
+/** Only identical native fact records in this same scoped plan may reference an already rendered detail section.
+ * No text similarity, cross-plan cache, source-only replacement or merging of conflicting revisions. */
+export function referenceContextPlan(plan,facts){
+  const details=new Map(facts.filter(row=>row?.id&&row.guild_id&&row.visibility)
+    .map(row=>[`fact:${row.id}`,JSON.stringify(row)]));
+  return {...plan,segments:plan.segments.map(row=>{
+    if(details.get(row.source)!==JSON.stringify(row.data))return row;
+    const {data,...reference}=row;
+    return {...reference,detail_ref:row.source,detail_section:'GM-PRIVATE + ALL KNOWN FACTS',
+      scope:plan.scope,actor:plan.actor};
+  })};
+}
 export function budgetTurnPrompt(sections,{instructions="",query="",maxChars=120000,reserveChars=6000}={}){
   const overflow=(message,diagnostic)=>{throw Object.assign(new Error(message),{code:"CONTEXT_OVERFLOW",diagnostic});};
   const limit=maxChars-instructions.length-reserveChars;

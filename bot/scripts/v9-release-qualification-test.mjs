@@ -67,6 +67,10 @@ test('REL01 V96 ordinary native follow-through gate is mandatory',()=>{
   const source=fs.readFileSync('scripts/validate-offline.mjs','utf8');
   assert(source.includes('"v96-ordinary-effects-test"'));
 });
+test('REL01 V96 scoped context and candidate audit gates are mandatory',()=>{
+  const source=fs.readFileSync('scripts/validate-offline.mjs','utf8');
+  for(const gate of ['v96-context-efficiency-test','candidate-claim-quarantine-test','v96-candidate-audit-test'])assert(source.includes(`"${gate}"`));
+});
 
 test('REL01 V96 semantic material-output P0 gate is mandatory',()=>{
   const source=fs.readFileSync('scripts/validate-offline.mjs','utf8');
