@@ -559,14 +559,14 @@ export function substantivePublication(db,guild,row){
   for(let i=0;i<=index;i++){start=text.indexOf(chunks[i],cursor);if(start<0)fail();cursor=start+chunks[i].length;}
   let at=prefix.length;
   for(const part of parts){const end=at+part.data.text.length;
-    if(part.data.kind!=='neutral'&&start<end&&cursor>at)return true;at=end+1;
+    if(!['neutral','scene_fiction_review'].includes(part.data.kind)&&start<end&&cursor>at)return true;at=end+1;
   }
   return false;
 }
 /** Conservative direct-delivery metric: mixed neutral groups are not counted here (outbox has exact chunk accounting). */
 export function substantivePreparedOutput(db,guild,result,scope){
   assertPvpOutput(db,guild,result,scope,{publication:true});
-  const proof=prepared.get(result);return proof.parts.length>0&&proof.parts.every(ref=>validateOutputPart(db,guild,ref).data.kind!=='neutral');
+  const proof=prepared.get(result);return proof.parts.length>0&&proof.parts.every(ref=>!['neutral','scene_fiction_review'].includes(validateOutputPart(db,guild,ref).data.kind));
 }
 export function deliveredPartyOutput(db,guild,turnId){
   return db.listTurnPublications(guild,turnId).filter(r=>r.status==="delivered"&&r.visibility==="party")

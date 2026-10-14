@@ -1,7 +1,7 @@
 /** Bounded aggregate receive-to-authorized-publication timing. Synthetic clocks do not establish live performance. */
 import {randomUUID} from 'node:crypto';
 import {operationalMetrics} from './operational-metrics.js';
-const stages=new Set(['turn_capture','pre_director','router','context','gm','validate','commit','discord','native_span','npc_writer']);
+const stages=new Set(['turn_capture','pre_director','router','context','gm','validate','commit','discord','native_span','npc_writer','scene_writer']);
 const categories=new Set(['unknown','observation','mechanical','assembly','transition','conversation']);
 const quantile=(values,p)=>values.length?values[Math.ceil(values.length*p)-1]:null;
 export class TurnLatency{
@@ -19,7 +19,7 @@ export class TurnLatency{
       sqlRead(ms){this.sql_reads++;this.sql_read_ms+=Math.max(0,ms);},
       model(usage,{purpose='other',model='other',ms=0,retry=false,error=null}={}){this.calls++;if(!usage)this.usage_unknown++;
         if(retry)this.retries.provider++;
-        const safePurpose=['router','gm','npc_writer','director','assembly','decisions','other'].includes(purpose)?purpose:'other';
+        const safePurpose=['router','gm','npc_writer','scene_writer','director','assembly','decisions','other'].includes(purpose)?purpose:'other';
         const safeModel=['gpt-6-luna','gpt-6.1-sol','gpt-5.6-sol'].includes(model)?model:'other';
         if(this.requests.length<32)this.requests.push({purpose:safePurpose,model:safeModel,ms:Math.max(0,ms),failed:!!error});
         if(error){const code=['PROVIDER_ERROR','AI_GENERATION_DEADLINE'].includes(error)?error:'OTHER';this.errors[code]=(this.errors[code]||0)+1;}

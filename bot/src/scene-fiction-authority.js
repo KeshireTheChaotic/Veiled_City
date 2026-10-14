@@ -3,6 +3,7 @@ import {buildSceneFictionContext,sceneFictionHash as hash,sceneFictionFailure as
 import {indexWorldEvent} from './city-calendar.js';
 import {hasPcReference} from './fresh-npc-authoring.js';
 import {materialParaphrases} from './narrative-integrity.js';
+import {operationalMetrics} from './operational-metrics.js';
 export {sceneFictionResponseSchema} from './gm-fiction-schema.js';
 const issuer='native:scene-fiction';
 export const SCENE_FICTION_INSTRUCTIONS='Write expressive, specific, playable LOCAL surroundings using ONLY this audience-isolated packet. '
@@ -45,6 +46,7 @@ function viewFor(db,guild,input,scope,sourceRef,excludeFictionKey){
 }
 export function holdSceneFiction(db,guild,input,scope,sourceRef,reason){
   if(!sourceRef||!db.getWorldEvent(guild,sourceRef))return;
+  operationalMetrics.record('scene_fiction_hold',{guildId:guild});
   return db.saveCityRecord(guild,{kind:'scene_fiction_hold',key:`scene-fiction-hold:${hash([input,scope,sourceRef])}`,
     status:'needs_scope_review',visibility:'gm',source_event:sourceRef,data:{version:1,reason,scope,canonical:false}});
 }

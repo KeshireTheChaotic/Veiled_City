@@ -5,7 +5,7 @@ const stages=new Set(['model_request','structured_retry','validation_retry','rou
   'narrative_projection','narrative_quarantine','neutral_fallback','answerless_projection','optional_quarantine','safe_recovery',
   'interaction_failure','interaction_ack','native_replay','runtime_failure',
   'party_turn_envelope','private_turn_envelope','turn_capture','turn_generate','turn_validate','turn_commit','turn_publish',
-  'context','npc_writer','native_span','pre_director','router_shadow_match','router_shadow_disagree','router_shadow_unavailable','router_shadow_uncertain']);
+  'context','npc_writer','scene_writer','scene_observation_route','scene_fiction_hold','native_span','pre_director','router_shadow_match','router_shadow_disagree','router_shadow_unavailable','router_shadow_uncertain']);
 const codes=new Set(['AI_GENERATION_DEADLINE','PROVIDER_ERROR','STRUCTURED_JSON_RETRY_FAILED','NARRATIVE_PVP',
   'NARRATIVE_INTEGRITY','STATE_CONFLICT','DISCORD_EXPIRED','DISCORD_ERROR','NOT_SENT','UNCERTAIN','UNCLASSIFIED']);
 const categories=new Set(['model','interaction','publication','narrative','runtime']);

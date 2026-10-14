@@ -45,9 +45,9 @@ function fixture(f,{mode='party',text=prompts[0],location='spin',placeType='laun
   captureWorldInput(f.db,f.guild,pc.owner_user_id,pc.id,messageId,text,{privateScene:mode==='private'});
   return {pc,messageId,text,scope:{mode,actorUserId:pc.owner_user_id,actorCharacterId:pc.id},sourceRef:worldInputKey(messageId,pc.id)};
 }
-async function run(f,x,answers=[candidate(x.text),fiction]){
+async function run(f,x,answers=[candidate(x.text),fiction],fastPath=false){
   const ai=new FakeResponses(answers),gm=new GMService({db:f.db,content:new ContentIndex(path.resolve('../content')),ai,
-    config:{gmModel:'offline',maxRecentMessages:10,maxContentChunks:2}});
+    config:{gmModel:'offline',maxRecentMessages:10,maxContentChunks:2,playableObservationFastPath:fastPath}});
   const result=await gm.runTurn({guildId:f.guild,actorUserId:x.pc.owner_user_id,actorName:x.pc.name,
     messageText:x.text,messageId:x.messageId,scope:x.scope.mode});
   const attempt=f.db.beginTurnAttempt({guildId:f.guild,sessionId:f.session.id,messageId:x.messageId,actorPrincipal:x.pc.owner_user_id,audience:x.scope.mode});
@@ -170,3 +170,28 @@ test('PLAY11 real assembly delivers an opening and owner-scoped views once; unce
   await deliverVerifiedAssembly({db:f.db,guild:{id:f.guild},session:f.db.getActiveSession(f.guild),gm,deliver});
   assert.equal(sent.length,count);assert.equal(ai.requests.length,2);
 }));
+
+test('PLAY12 read-only observation uses one isolated provider call and the same native commit/outbox gates',()=>nativeFixture(async f=>{
+  const x=fixture(f,{location:'observatory',placeType:'observatory',text:'What does the observatory look like inside?'});
+  f.db.setCityCalendar(f.guild,{flags:{...f.db.getCityCalendar(f.guild).flags,decision_advisory:true}});
+  const answer={description:'A brass telescope rises above a circular gallery. Tall windows catch the silver evening light.',
+    details:[{id:'telescope',category:'nonmechanical_prop',text:'A brass telescope rises above a circular gallery.'},
+      {id:'windows',category:'layout',text:'Tall windows catch the silver evening light.'}],evidence_refs:[]};
+  const out=await run(f,x,[answer],true);assert.equal(out.ai.requests.length,1);
+  assert.equal(out.ai.requests[0].text.format.name,'audience_scoped_scene_fiction');
+  assert(out.rows.some(r=>r.payload.includes('brass telescope')));assert.equal(out.mutation.typedIntents[0].data.type,'other');
+  assert.equal(out.mutation.world.length,0);assert.equal(out.mutation.ordinaryEffects.length,0);
+  for(const row of out.rows)revalidateOutputPublication(f.db,f.guild,row);
+  assert(await out.gm.shouldRespond({guildId:f.guild,message:{id:x.messageId,author:{id:x.pc.owner_user_id},content:x.text},mode:'active'}));
+  assert.equal(out.ai.requests.length,1,'real intake engagement has zero router calls for this admitted observation');
+}));
+
+test('PLAY13 mixed/action/quoted requests never use observation admission; malformed writer holds with no extra call',async()=>{
+  const {sceneObservationOperation}=await import('../src/scene-observation-route.js');
+  for(const text of ['Describe the scene; I open the locked door.','I head inside Twenty-Four Spin','I examine the frozen terminal',
+    '"Describe the scene"','What does it look like? I attack Choso.','Describe the scene\nI surrender.'])assert.equal(sceneObservationOperation(text),null);
+  await nativeFixture(async f=>{const x=fixture(f),out=await run(f,x,[{description:'bad shape'}],true);
+    assert.equal(out.ai.requests.length,1);assert(out.rows.every(r=>!r.payload.includes('bad shape')));
+    assert(out.rows.some(r=>r.payload.includes('held for review')));assert.equal(out.mutation.world.length,0);
+  });
+});

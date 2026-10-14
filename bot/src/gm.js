@@ -13,7 +13,7 @@ import { contextMemorySchema, CONTEXT_MEMORY_PROMPT } from "./context-memory.js"
 import { presentationContext } from "./presentation-evidence.js";
 import { summarizeRoster, previewAuthoritativeMutation } from "./state.js";
 import { narrativeContext } from "./character-narrative.js";
-import { validatePostTurnStateReview } from "./director.js";
+import { validatePostTurnStateReview,POST_TURN_REVIEW_CATEGORIES } from "./director.js";
 import { retrieveNpcCognition } from "./npc-cognition.js";
 import { npcDirectorSchema, simulationUpdateSchema, SIMULATION_PROMPT } from "./simulation-schema.js";
 import { simulationContext } from "./simulation.js";
@@ -51,6 +51,7 @@ import {authorFreshSceneRequests,hasFreshSceneResponse,FRESH_SCENE_INSTRUCTIONS,
 import {authorSceneFictionRequests,SCENE_FICTION_INSTRUCTIONS,sceneFictionResponseSchema} from './scene-fiction-authority.js';
 import {sceneFictionFailure,buildSceneFictionContext} from './scene-fiction-context.js';
 import {assemblyNarrativeCandidate} from './pvp-output.js';
+import {sceneObservationOperation} from './scene-observation-route.js';
 
 const routerSchema={
   type:"object",
@@ -459,6 +460,15 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
     if(explicitSilence(text))return false;
     const session=this.db.getActiveSession(guildId),npcRoles=session?this.db.npcProxyAssignments(session.id,message.author.id):[];
     const assignment=actorAssignment??(session&&this.db.controlledAssignment(session.id,message.author.id))??(npcRoles.length===1?npcRoles[0]:null);
+    if(channelScope==='party'&&this.db.getCityCalendar(guildId).flags.playable_narration===true&&this.config.playableObservationFastPath!==false
+      &&assignment?.character_id&&message.id){
+      const pc=this.db.getCharacter(assignment.character_id),place=pc?.data.location&&this.db.getSimulationEntity(guildId,'location',pc.data.location),
+        operation=sceneObservationOperation(text,place?.state.name,place?.state.place_type||place?.state.location_type),sourceRef=pc?.id&&worldInputKey(message.id,pc.id);
+      if(operation&&pc?.id&&this.db.getWorldEvent(guildId,sourceRef)?.details.text===text){
+        try{buildSceneFictionContext(this.db,guildId,{mode:'party',actorUserId:message.author.id,actorCharacterId:pc.id},sourceRef,{operation});return true;}
+        catch(error){if(error.code!=='SCENE_FICTION')throw error;}
+      }
+    }
     const focus=interpretationContext(this.db,guildId,message.author.id,assignment?.character_id,text,
       {mode:"party",messageId:message.id,botUserId:message.client?.user?.id});
     // One existing semantic router decides addressee, including owned idioms and table chatter.
@@ -576,6 +586,20 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
   async runTurn({guildId,actorUserId,actorName,messageText,sourceText=null,nativeLedger=null,actorAssignment=null,scope="party",messageId=null,signal=null}){
     const authenticatedSource=String(sourceText??messageText);
     const turnSignal=signal||AbortSignal.timeout(Number(this.config.gmTurnDeadlineMs||120000));
+    if(this.db.getCityCalendar(guildId).flags.playable_narration===true&&this.config.playableObservationFastPath!==false
+      &&authenticatedSource===messageText&&messageId){
+      const assignment=actorAssignment||this.db.controlledAssignment(this.db.getActiveSession(guildId)?.id,actorUserId),pc=assignment?.character_id&&this.db.getCharacter(assignment.character_id),
+        location=pc?.data.location&&this.db.getSimulationEntity(guildId,'location',pc.data.location);
+      const operation=sceneObservationOperation(authenticatedSource,location?.state.name,location?.state.place_type||location?.state.location_type);
+      if(operation&&pc?.id&&pc.owner_user_id===actorUserId){
+        const directScope={mode:scope,actorUserId,actorCharacterId:pc?.id},sourceRef=pc?.id&&worldInputKey(messageId,pc.id);
+        let eligible=false;
+        try{buildSceneFictionContext(this.db,guildId,directScope,sourceRef,{operation});eligible=true;}
+        catch(error){if(error.code!=='SCENE_FICTION'&&error.code!=='ASSEMBLY_SOURCE')throw error;}
+        // Pre-admission scope rejection uses the existing path. Never invoke a second provider after a direct writer hold/error.
+        if(eligible)return this.runSceneObservation({guildId,scope:directScope,sourceRef,messageId,text:authenticatedSource,operation,signal:turnSignal});
+      }
+    }
     const ctx=this.buildContext(guildId,actorUserId,messageText,actorAssignment,{scope});
     const privateMode=scope==="private";
     const instructions=[
@@ -908,10 +932,31 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
   }
 
   async generateSceneFiction(guildId,packet,signal,model=this.config.gmModel){
-    try{const response=await this.requestModel({model,instructions:SCENE_FICTION_INSTRUCTIONS,input:JSON.stringify(packet),
+    return measureStage(this.metrics,'scene_writer',async()=>{try{const response=await this.requestModel({model,instructions:SCENE_FICTION_INSTRUCTIONS,input:JSON.stringify(packet),
       max_output_tokens:1000,text:{format:{type:'json_schema',name:'audience_scoped_scene_fiction',strict:true,schema:sceneFictionResponseSchema}}},
       {guildId,signal,purpose:'scene_writer'});signal.throwIfAborted();return parseStructuredJsonText(response.output_text);}
-    catch{throw sceneFictionFailure('writer_unavailable');}
+    catch{throw sceneFictionFailure('writer_unavailable');}},{guildId});
+  }
+  async runSceneObservation({guildId,scope,sourceRef,messageId,text,operation,signal}){
+    // This path creates only an exact source-bound other/observation input. It has no effect proposal surface.
+    const view=buildSceneFictionContext(this.db,guildId,scope,sourceRef,{operation});
+    if(view.source.details.text!==text)throw sceneFictionFailure('exact_request');
+    this.metrics.record('scene_observation_route',{guildId});const trace=turnTraceFor(guildId);if(trace)trace.category='observation';
+    const state_review=Object.fromEntries(POST_TURN_REVIEW_CATEGORIES.map(k=>[k,{decision:'no_change',reason:'Read-only observation.',confidence:100}]));
+    state_review.scene={decision:'continue',label:'',reason:'Existing native scene.',confidence:100};
+    const result={respond:true,narration:'',player_summary:'',narrative_claims:[],private_messages:[],
+      gm_world_parts:[{version:7,kind:'scene_fiction_request',operation,source_refs:[]}],
+      player_intents:[{type:'other',source_span:text,target_name:'',target_key:'',destination:'unspecified',operation,utterance:'',excluded_targets:[],
+        framing:'immediate',resolution:'conversational',reason:'Complete read-only observation request; no action adjudication.'}],
+      ordinary_effect_proposals:[],narrative_interpretation:null,authored_candidates:null,world_additions:[],scene_actions:[],world_conflicts:[],context_memories:[],
+      events:[],relationships:[],handouts:[],npc_memories:[],npc_knowledge:[],npc_goals:[],canon_proposals:[],simulation_updates:[],ai_intents:[],state_review,
+      decision_advisory:this.db.getCityCalendar(guildId).flags.decision_advisory===true?{mode:'narrate',check:'',reason:'Read-only native-scoped observation, not a resolved action.',
+        uncertainty:'',consequence:'',referent_uncertainty:'',fictional_uncertainty:''}:null};
+    await authorSceneFictionRequests({db:this.db,guild:guildId,result,scope,sourceRef,budget:{used:false},generate:packet=>this.generateSceneFiction(guildId,packet,signal)});
+    validateIntentResolutions(result);validatePostTurnStateReview(result);validatePacing(this.db,guildId,result);validateDecisionAdvisory(this.db,guildId,result);
+    measureNative('validate',guildId,()=>previewAuthoritativeMutation(this.db,{guildId,sessionId:view.state.session,narrative:result,scope,
+      provenance:{messageId,actorId:scope.actorUserId},content:this.content}),this.metrics);
+    return result;
   }
   async authorAssemblyScene(guildId,sessionId,scope){
     const {candidate,source}=assemblyNarrativeCandidate(this.db,guildId,sessionId,scope),signal=AbortSignal.timeout(Number(this.config.gmTurnDeadlineMs||120000));
