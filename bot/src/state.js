@@ -433,7 +433,7 @@ export function assertMutationSuccess({events=[],relationships=[],handouts=[],np
  * state changes commit together or the surrounding transaction rolls back.
  */
 export function applyAuthoritativeMutation(db,{guildId,sessionId=null,events=[],relationships=[],handouts=[],npcMemories=[],npcKnowledge=[],npcGoals=[],
-  simulationUpdates=[],scope={mode:"party",actorUserId:null,actorCharacterId:null},source="ai_gm",provenance={},narrative=null,aiIntents=narrative?.ai_intents||[],content=null}){
+  simulationUpdates=[],scope={mode:"party",actorUserId:null,actorCharacterId:null},source="ai_gm",provenance={},narrative=null,aiIntents=narrative?.ai_intents||[],content=null,inspectStaged=null}){
   return db.transaction(()=>{
     const outputSource=provenance.messageId&&scope.actorCharacterId?worldInputKey(provenance.messageId,scope.actorCharacterId):null;
     const originalNarrative=narrative&&candidateNarrative(narrative);
@@ -573,6 +573,9 @@ export function applyAuthoritativeMutation(db,{guildId,sessionId=null,events=[],
     // Validate against native operations staged in this transaction, not the old
     // state or model-described effects. Any failure rolls back the entire bundle.
     if(narrative) validateNarrativeClaims(db,guildId,narrative,scope,{staged:true,eventResults});
+    // Trusted in-process observer only. Used to capture a scoped destination AFTER native movement validation;
+    // preview still rolls back everything and never calls a provider inside this transaction.
+    if(inspectStaged)inspectStaged({world,nativeEntries});
     return {events:eventResults,relationships:relationshipResults,handouts:handoutResults,
       npcMemories:cognition.memories,npcKnowledge:cognition.knowledge,npcGoals:cognition.goals,simulation,intents,world,typedIntents,
       intentDiagnostics,nativeAdjudications,gmRulings,actionPlan,actionWindows,pvpAttempts,typedDialogue,contextMemories,reviewAudit,personalCandidates,ordinaryEffects};

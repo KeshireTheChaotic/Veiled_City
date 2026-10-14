@@ -49,7 +49,8 @@ import {worldInputKey} from './autonomous-world.js';
 import {shadowEngagement} from './engagement-shadow.js';
 import {authorFreshSceneRequests,hasFreshSceneResponse,FRESH_SCENE_INSTRUCTIONS,freshSceneResponseSchema} from './fresh-scene-authoring.js';
 import {authorSceneFictionRequests,SCENE_FICTION_INSTRUCTIONS,sceneFictionResponseSchema} from './scene-fiction-authority.js';
-import {sceneFictionFailure} from './scene-fiction-context.js';
+import {sceneFictionFailure,buildSceneFictionContext} from './scene-fiction-context.js';
+import {assemblyNarrativeCandidate} from './pvp-output.js';
 
 const routerSchema={
   type:"object",
@@ -739,7 +740,7 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
       text:{format:{type:"json_schema",name:"veiled_city_gm_turn",strict:true,schema:turnSchema}}
     };
     if(this.config.reasoningEffort) req.reasoning={effort:this.config.reasoningEffort};
-    const validateCore=(result)=>{
+    const validateCore=(result,inspectStaged=null)=>{
       const providedIntents=Array.isArray(result.player_intents);
       // Old non-authoritative fixtures may omit this strict-schema field, but omission never synthesizes action authority.
       if(!providedIntents&&(result.scene_actions||[]).some(action=>action.kind==='move'))
@@ -780,7 +781,7 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
         narrative:result,events:result.events||[],relationships:result.relationships||[],handouts:result.handouts||[],
         npcMemories:result.npc_memories||[],npcKnowledge:result.npc_knowledge||[],npcGoals:result.npc_goals||[],
         simulationUpdates:result.simulation_updates||[],scope:{mode:scope,actorUserId,actorCharacterId:ctx.actor_assignment?.character_id},
-        provenance:{messageId,actorId:actorUserId},content:this.content});
+        provenance:{messageId,actorId:actorUserId},content:this.content,inspectStaged});
       if(!privateMode&&result.state_review.scene.decision==="transition"&&
         !(result.simulation_updates||[]).some(update=>update.kind==="residue"))
         throw new Error("A public scene transition requires structured scene residue, including empty lists where nothing was left behind.");
@@ -794,18 +795,26 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
       if(!privateMode && proposals.length) throw new Error("Party-table GM turns may not emit player canon_proposals.");
       return true;
     };
-    const validateTurn=result=>measureNative('validate',guildId,()=>validateCore(result),this.metrics);
+    const validateTurn=(result,inspectStaged=null)=>measureNative('validate',guildId,()=>validateCore(result,inspectStaged),this.metrics);
     const authoringBudget={used:false};
     const author=async candidate=>{
+      const fictionScope={mode:scope,actorUserId,actorCharacterId:ctx.actor_assignment?.character_id},
+        fictionSource=messageId&&fictionScope.actorCharacterId?worldInputKey(messageId,fictionScope.actorCharacterId):null;
+      const movement=(candidate.player_intents||[]).some(i=>i.type==='move'&&i.resolution==='auto'&&i.framing==='immediate')
+        ||(candidate.scene_actions||[]).some(a=>a.kind==='move');
+      if(this.db.getCityCalendar(guildId).flags.playable_narration===true&&movement&&!(candidate.gm_world_parts||[]).some(p=>p.version===7))
+        candidate.gm_world_parts=[...(candidate.gm_world_parts||[]).slice(0,3),{version:7,kind:'scene_fiction_request',operation:'describe_scene',source_refs:[]}];
+      let stagedView=null,stagedError=null;
+      if(movement&&this.db.getCityCalendar(guildId).flags.playable_narration===true){
+        try{validateTurn(structuredClone(candidate),({world,nativeEntries})=>{
+          if(!world.some(r=>r.status==='arrived')&&!nativeEntries.length)throw sceneFictionFailure('arrival_not_resolved');
+          stagedView=buildSceneFictionContext(this.db,guildId,fictionScope,fictionSource);
+        });}catch(error){stagedError=error;}
+      }
       await authorSceneFictionRequests({db:this.db,guild:guildId,result:candidate,
-        scope:{mode:scope,actorUserId,actorCharacterId:ctx.actor_assignment?.character_id},
-        sourceRef:messageId&&ctx.actor_assignment?.character_id?worldInputKey(messageId,ctx.actor_assignment.character_id):null,
-        budget:authoringBudget,generate:async packet=>{
-          try{const response=await this.requestModel({model:req.model,instructions:SCENE_FICTION_INSTRUCTIONS,input:JSON.stringify(packet),
-            max_output_tokens:1000,text:{format:{type:'json_schema',name:'audience_scoped_scene_fiction',strict:true,schema:sceneFictionResponseSchema}}},
-            {guildId,signal:turnSignal,purpose:'scene_writer'});turnSignal.throwIfAborted();return parseStructuredJsonText(response.output_text);}
-          catch{throw sceneFictionFailure('writer_unavailable');}
-        }});
+        scope:fictionScope,sourceRef:fictionSource,
+        viewProvider:movement?()=>{if(stagedError||!stagedView)throw sceneFictionFailure('destination_not_authorized');return stagedView;}:null,
+        budget:authoringBudget,generate:packet=>this.generateSceneFiction(guildId,packet,turnSignal,req.model)});
       await this.authorFreshNpcs(guildId,candidate,{mode:scope,actorUserId,actorCharacterId:ctx.actor_assignment?.character_id},
         messageId&&ctx.actor_assignment?.character_id?worldInputKey(messageId,ctx.actor_assignment.character_id):null,authoringBudget,turnSignal,req.model);
       await authorFreshSceneRequests({db:this.db,guild:guildId,result:candidate,
@@ -898,6 +907,17 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
     }
   }
 
+  async generateSceneFiction(guildId,packet,signal,model=this.config.gmModel){
+    try{const response=await this.requestModel({model,instructions:SCENE_FICTION_INSTRUCTIONS,input:JSON.stringify(packet),
+      max_output_tokens:1000,text:{format:{type:'json_schema',name:'audience_scoped_scene_fiction',strict:true,schema:sceneFictionResponseSchema}}},
+      {guildId,signal,purpose:'scene_writer'});signal.throwIfAborted();return parseStructuredJsonText(response.output_text);}
+    catch{throw sceneFictionFailure('writer_unavailable');}
+  }
+  async authorAssemblyScene(guildId,sessionId,scope){
+    const {candidate,source}=assemblyNarrativeCandidate(this.db,guildId,sessionId,scope),signal=AbortSignal.timeout(Number(this.config.gmTurnDeadlineMs||120000));
+    await authorSceneFictionRequests({db:this.db,guild:guildId,result:candidate,scope,sourceRef:source.event_key,budget:{used:false},
+      generate:packet=>this.generateSceneFiction(guildId,packet,signal)});
+  }
   async authorFreshNpcs(guildId,result,scope,sourceRef,budget,signal,model=this.config.gmModel){
     await measureStage(this.metrics,'npc_writer',()=>authorFreshNpcRequests({db:this.db,guild:guildId,result,scope,sourceRef,budget,generate:async packet=>{
       let response;

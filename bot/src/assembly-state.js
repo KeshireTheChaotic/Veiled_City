@@ -1,6 +1,6 @@
 /** Read-only assembly identity, native orientation and legacy-state inspection. */
 import {createHash} from 'node:crypto';
-import {currentScene} from './scene-continuity.js';
+import {currentScene,scenePresence} from './scene-continuity.js';
 import {conversationPrincipal} from './conversation-principal.js';
 import {assemblyPartsFor} from './assembly-delivery.js';
 export const assemblyHash=value=>createHash('sha256').update(JSON.stringify(value)).digest('hex');
@@ -10,8 +10,14 @@ export function assemblyPlanHash(plan){
 }
 export function assemblySlots(db,guild,session){
   const plan=db.getAssemblyPlan(session.id)||{},roster=db.roster(session.id).filter(r=>r.character_id&&['present','late','guest'].includes(r.presence));
+  // One actual public viewpoint, not an inference that check-in places the roster together.
+  const viewpoint=db.getCityCalendar(guild).flags.playable_narration===true?roster.find(r=>{
+    const p=scenePresence(db,guild,'character',r.character_id);
+    return p?.status==='active'&&p.data.state==='actually_present'&&['party','public'].includes(p.visibility)
+      &&db.getWorldEvent(guild,p.source_event)?.status==='active';
+  }):null;
   return [...roster.map(r=>({name:r.name,scope:{mode:'private',actorUserId:r.discord_user_id,actorCharacterId:r.character_id},
-    entry:plan.character_entries?.find(e=>e.discord_user_id===r.discord_user_id)})),{name:'party',scope:{mode:'party',actorUserId:null,actorCharacterId:null}}]
+    entry:plan.character_entries?.find(e=>e.discord_user_id===r.discord_user_id)})),{name:'party',scope:{mode:'party',actorUserId:viewpoint?.discord_user_id||null,actorCharacterId:viewpoint?.character_id||null}}]
     .map(slot=>({...slot,key:`assembly:${assemblyHash([session.id,assemblyPlanHash(plan),slot.scope])}`}));
 }
 export function legacyAssemblyState(plan,scope){

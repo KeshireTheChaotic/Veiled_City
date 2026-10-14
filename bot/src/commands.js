@@ -900,7 +900,7 @@ Initial phase: ${s.assembly_phase}`});
         plan=await gm.planAssembly({guildId:interaction.guildId,mode:s.assembly_mode});
         db.setAssemblyPlan(s.id,plan);
       }
-      const deliveryResult=await deliverVerifiedAssembly({db,guild:interaction.guild,session:s});
+      const deliveryResult=await deliverVerifiedAssembly({db,guild:interaction.guild,session:s,gm});
       const delivery=deliveryResult.slots.filter(slot=>slot.scope.mode==='private').map(slot=>`${slot.name}: ${slot.status.toUpperCase()}`);
       if(!plan.launch_recorded){
         db.audit(interaction.guildId,s.id,"ai","assembly","assembly_plan",{mode:s.assembly_mode,delivery,bonds:plan.bonds});

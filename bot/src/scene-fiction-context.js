@@ -5,6 +5,7 @@ import {conversationPrincipal} from './conversation-principal.js';
 import {factVisibleTo} from './disclosure-authority.js';
 import {activeEvidence,objectiveEvidence,evidenceType} from './epistemic.js';
 import {protectedPvpScope} from './pvp-output.js';
+import {assemblyOrientation} from './assembly-state.js';
 export const sceneFictionHash=value=>createHash('sha256').update(JSON.stringify(value)).digest('hex');
 export function sceneFictionFailure(reason){return Object.assign(new Error(`Scene fiction held: ${reason}. No character action or outcome was inferred.`),
   {code:'SCENE_FICTION',expected:true,diagnostic:{category:reason}});}
@@ -23,10 +24,14 @@ export function buildSceneFictionContext(db,guild,scope,sourceRef,{operation='de
   if(!['party','private'].includes(scope.mode)||!['describe_scene','current_situation'].includes(operation))throw sceneFictionFailure('audience_or_operation');
   const principal=conversationPrincipal(db,guild,scope.actorUserId,scope.actorCharacterId),pc=db.getCharacter(scope.actorCharacterId),scene=currentScene(db,guild);
   const source=db.getWorldEvent(guild,sourceRef);
-  if(principal.kind!=='owner'||source?.status!=='active'||source.kind!=='ai_gm_input'||source.session_id!==scene.session_id
-    ||source.scene!==scene.key||source.details.author!==scope.actorUserId||source.details.character_id!==pc?.id
-    ||source.details.revision!==principal.revision||!db.ownerAuthoredSource(guild,sourceRef,scope.actorUserId)||!visible(source,scope)
-    ||typeof source.details.text!=='string'||source.details.text.length>4000)throw sceneFictionFailure('current_owner_source');
+  const assembly=source?.kind==='native_assembly_scope'&&source.source_id==='native:assembly';
+  const assemblyValid=assembly&&sceneFictionHash(source.details.scope)===sceneFictionHash(scope)
+    &&source.details.revision===assemblyOrientation(db,guild,scene.session_id,scope).revision;
+  const ownerValid=source?.kind==='ai_gm_input'&&!(
+    source.details.author!==scope.actorUserId||source.details.character_id!==pc?.id||source.details.revision!==principal.revision
+    ||!db.ownerAuthoredSource(guild,sourceRef,scope.actorUserId)||typeof source.details.text!=='string'||source.details.text.length>4000);
+  if(principal.kind!=='owner'||source?.status!=='active'||!ownerValid&&!assemblyValid||source.session_id!==scene.session_id
+    ||source.scene!==scene.key||!visible(source,scope))throw sceneFictionFailure('current_owner_source');
   if(protectedPvpScope(db,guild,scope).length||db.getCurrentEncounter(scene.session_id)?.status==='active')throw sceneFictionFailure('protected_or_encounter');
   const presence=scenePresence(db,guild,'character',pc.id),arrival=presence&&db.getWorldEvent(guild,presence.source_event),location=pc.data.location;
   const entity=location&&db.getSimulationEntity(guild,'location',location),authored=location&&db.getCityRecord(guild,'autonomous_entity',`location:${location}`);
@@ -49,7 +54,7 @@ export function buildSceneFictionContext(db,guild,scope,sourceRef,{operation='de
     &&sceneAccess(db,guild,{observer_type:'character',observer_key:pc.id,target_type:'npc',target_key:n.entity_key}))
     .slice(0,6).map(n=>({name:short(db.getNpcProfile(guild,n.entity_key)?.display_name),role:short(n.state.public_role,80),activity:'No additional activity established.'}));
   const viewpoint=['interior','exterior'].includes(presence.data.zone)?presence.data.zone:'unspecified';
-  const packet={version:1,operation,observation_request:short(source.details.text,4000),
+  const packet={version:1,operation,observation_request:assemblyValid?'Describe the established scene for assembly without assigning any character action, cooperation or disclosure.':short(source.details.text,4000),
     place:{name:short(entity.state.name||location),type:short(entity.state.place_type||entity.state.location_type,80)||'unknown'},viewpoint,
     established_observations:evidence.map(f=>({source_ref:f.id,text:f.content})),
     recent_scene_beats:evidence.filter(f=>['clue','activity'].includes(f.category)).map(f=>({source_ref:f.id,text:f.content})),

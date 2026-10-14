@@ -15,6 +15,7 @@ import {deliverTurnOutbox} from '../src/publication-outbox.js';
 import {revalidateOutputPublication} from '../src/pvp-output.js';
 import {proposePvp} from '../src/narrative-pvp.js';
 import {pvpTerms} from './v9-fixtures.mjs';
+import {deliverVerifiedAssembly} from '../src/assembly-publications.js';
 export const prompts=['Set the scene','What does the laundromat look like inside?','What else is going on currently?',
   'I head inside Twenty-Four Spin','What does it look like inside?','I examine the frozen terminal'];
 const fiction={description:'Two rows of steel washers face a long folding counter. A blue bench stands beneath the front window, and detergent scents the warm air.',
@@ -130,3 +131,42 @@ test('PLAY08 protected PvP and active native windows cannot acquire broad scene 
     assert(out.rows.every(r=>!r.payload.includes('steel washers')));
   });
 });
+
+test('PLAY09 real native movement publishes one arrival plus the destination interior, never the departure place',()=>nativeFixture(async f=>{
+  const x=fixture(f,{location:'street',placeType:'street',text:prompts[3]});
+  f.db.setSimulationEntity(f.guild,'location','spin',{name:'Twenty-Four Spin',place_type:'laundromat',parent_location_key:'street',visibility:'party'});
+  f.db.upsertReference(f.guild,{kind:'location',key:'spin',name:'Twenty-Four Spin',summary:'A public laundromat.',visibility:'party'});
+  const r=candidate(x.text);r.player_intents=[{...r.player_intents[0],type:'move',target_name:'Twenty-Four Spin',target_key:'spin',destination:'interior',operation:'move',resolution:'auto'}];
+  r.scene_actions=[{kind:'move',entity_ref:'spin',source_span:x.text,zone:'interior'}];
+  const out=await run(f,x,[r,fiction]),text=out.rows.map(r=>r.payload).join('\n');
+  assert.equal(f.db.getCharacter(x.pc.id).data.location,'spin');assert.match(text,/has arrived at spin/);assert.match(text,/steel washers/);
+  const packet=JSON.parse(out.ai.requests[1].input);assert.equal(packet.place.name,'Twenty-Four Spin');assert.equal(packet.viewpoint,'interior');
+  assert.equal(f.db.listWorldEvents(f.guild,{includeGM:true,limit:100}).filter(e=>e.kind==='arrival'&&e.details.input_source===x.sourceRef).length,1);
+}));
+
+test('PLAY10 repeat situation keeps committed layout and current cues, excludes secret explanations',()=>nativeFixture(async f=>{
+  const x=fixture(f),out=await run(f,x);assert(out.rows.some(r=>r.payload.includes('blue bench')));
+  const ref=f.db.addFact(f.guild,{category:'clue',content:'Three measured knocks sound at the rear door.',visibility:'party',provenance:{scene_location:'spin'}});
+  f.db.addFact(f.guild,{category:'clue',content:'SECRET_CAUSE_TOLLMAN',visibility:'gm',provenance:{scene_location:'spin'}});
+  const text=prompts[2],messageId='follow-up',source=captureWorldInput(f.db,f.guild,x.pc.owner_user_id,x.pc.id,messageId,text);
+  const next={...x,text,messageId,sourceRef:source.event_key},answer={...fiction,description:'The blue bench remains beneath the window. The rear door is the focus of the repeated knocking.',evidence_refs:[ref]};
+  const follow=await run(f,next,[candidate(text,'current_situation'),answer]),packet=JSON.parse(follow.ai.requests[1].input);
+  assert(packet.scene_local_details.some(d=>d.id==='blue-bench'));assert.equal(packet.operation,'current_situation');
+  const published=follow.rows.map(r=>r.payload).join('\n');assert(published.includes('Three measured knocks'));assert(!published.includes('SECRET_CAUSE_TOLLMAN'));
+}));
+
+test('PLAY11 real assembly delivers an opening and owner-scoped views once; uncertain or delivered parts are not regenerated',()=>nativeFixture(async f=>{
+  const x=fixture(f);f.db.setAssemblyPlan(f.session.id,{public_opening:'Choso apologizes for losing.',character_entries:[]});
+  const ai=new FakeResponses([fiction,fiction]),gm=new GMService({db:f.db,content:new ContentIndex(path.resolve('../content')),ai,config:{gmModel:'offline'}}),sent=[];
+  const deliver=async({turnId})=>{
+    await deliverTurnOutbox(f.db,f.guild,turnId,async row=>{sent.push(row);return {messageId:`assembly-${sent.length}`,channelId:'offline'};});
+    return {pending:f.db.listTurnPublications(f.guild,turnId).filter(r=>r.status!=='delivered')};
+  };
+  await deliverVerifiedAssembly({db:f.db,guild:{id:f.guild},session:f.db.getActiveSession(f.guild),gm,deliver});
+  assert(sent.some(r=>r.visibility==='party'&&r.payload.includes('steel washers')));
+  assert(sent.some(r=>r.visibility==='character'&&r.target_user_id===x.pc.owner_user_id&&r.payload.includes('blue bench')));
+  assert(sent.every(r=>!r.payload.includes('Choso apologizes for losing.')));
+  assert.equal(ai.requests.length,2);const count=sent.length;f.restart();
+  await deliverVerifiedAssembly({db:f.db,guild:{id:f.guild},session:f.db.getActiveSession(f.guild),gm,deliver});
+  assert.equal(sent.length,count);assert.equal(ai.requests.length,2);
+}));

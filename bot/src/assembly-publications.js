@@ -11,13 +11,19 @@ function metadataSource(db,guild,session,key){
     title:'Assembly transport bookkeeping, not fictional authority',source_id:'native:assembly',visibility:'gm',session_id:session.id,
     details:{key,plan:assemblyPlanHash(db.getAssemblyPlan(session.id))}},'native:assembly').event_key;
 }
-export async function deliverVerifiedAssembly({db,guild,session}){
+export async function deliverVerifiedAssembly({db,guild,session,gm=null,deliver=deliverQueuedTurn}){
   const plan=db.getAssemblyPlan(session.id)||{},diagnostics=[];
-  for(const slot of assemblySlots(db,guild.id,session)){
+  const slots=assemblySlots(db,guild.id,session);
+  // Commit public local layout first when a real public viewpoint exists. Private writers may reuse it,
+  // but private-only observations never flow back into the public opening.
+  if(db.getCityCalendar(guild.id).flags.playable_narration===true)slots.sort((a,b)=>Number(b.scope.mode==='party')-Number(a.scope.mode==='party'));
+  for(const slot of slots){
     const legacy=legacyAssemblyState(plan,slot.scope);
     if(legacy.uncertain.length||legacy.partial||legacy.complete)continue;
     let job=db.getCityRecord(guild.id,'assembly_delivery',slot.key);
     try{
+      if(!job?.data.turn_id&&db.getCityCalendar(guild.id).flags.playable_narration===true&&gm&&slot.scope.actorCharacterId)
+        await gm.authorAssemblyScene(guild.id,session.id,slot.scope);
       if(!job?.data.turn_id)job=db.transaction(()=>{
         const result=prepareAssemblyOutput(db,guild.id,session.id,slot.scope),turn=db.beginTurnAttempt({guildId:guild.id,sessionId:session.id,
           messageId:slot.key,actorPrincipal:slot.scope.actorUserId||'__assembly__',audience:slot.scope.mode});
@@ -26,7 +32,7 @@ export async function deliverVerifiedAssembly({db,guild,session}){
         return db.saveCityRecord(guild.id,{kind:'assembly_delivery',key:slot.key,status:'pending',visibility:'gm',source_event:metadataSource(db,guild.id,session,slot.key),
           data:{version:1,session:session.id,plan_hash:assemblyPlanHash(plan),scope:slot.scope,turn_id:turn.turn_id,raw_prose_held:true}});
       });
-      const delivered=await deliverQueuedTurn({db,guild,turnId:job.data.turn_id});
+      const delivered=await deliver({db,guild,turnId:job.data.turn_id});
       db.saveCityRecord(guild.id,{...job,key:slot.key,status:delivered.pending.length?'pending':'delivered'});
     }catch(error){
       if(!error.expected&&!['ASSEMBLY_SOURCE','NARRATIVE_PVP','OUTPUT_AUTHORITY','NARRATIVE_INTEGRITY'].includes(error.code))throw error;
