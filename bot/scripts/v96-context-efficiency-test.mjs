@@ -187,6 +187,46 @@ test('TOK01 exact source/scope/revision duplicates alone become detail reference
   assert.deepEqual(plan.segments[0].data,row.data,'projection is read-only');
 });
 
+test('STORAGE exact canonical native duplicates become local references without changing source/control/effect fields',()=>{
+  const data={actor:'owner',visibility:'character',status:'pending',resources:{hp:{current:0,max:6}},consent:false};
+  const original=[{label:'AI MANAGEMENT (GM-private proposals, policy, revisions and receipts; never actor knowledge)',required:true,
+    value:{row:{source_event:'native-source',expected_revision:'current-revision',data,data_json:JSON.stringify(data)}}},
+    {label:'AUTHENTICATED RAW PLAYER SOURCE (immutable; native-consumed spans are context only)',required:true,value:JSON.stringify(data)},
+    {label:'NATIVE SOURCE-SPAN LEDGER (receipts prevent re-execution)',required:true,value:{data,data_json:JSON.stringify(data)}}];
+  const before=structuredClone(original),out=budget.referenceTurnStorage(original,{guildId:'g'});
+  assert.deepEqual(out[0].value.row.data,data);assert.deepEqual(out[0].value.row.data_json,{$json:'data'});
+  assert.equal(out[0].value.row.source_event,'native-source');assert.equal(out[0].value.row.expected_revision,'current-revision');
+  assert.deepEqual(out[1],original[1]);assert.deepEqual(out[2],original[2]);assert.deepEqual(original,before);
+  assert(out.at(-1).required&&out.at(-1).label.startsWith('PROMPT STORAGE REFERENCES'));
+});
+
+test('STORAGE differently serialized, mismatched and unknown native fields are retained verbatim',()=>{
+  const data={long:'x'.repeat(400)},value={data,data_json:JSON.stringify(data,null,2),details:data,details_json:JSON.stringify({long:'different'}),
+    custom:data,custom_json:JSON.stringify(data)};
+  const sections=[{label:'AI MANAGEMENT (GM-private proposals, policy, revisions and receipts; never actor knowledge)',value,required:true}];
+  assert.deepEqual(budget.referenceTurnStorage(sections,{guildId:'g'}),sections);
+});
+
+test('STORAGE targeted facts reference only identical current same-guild mandatory details, never optional or conflicting material',()=>{
+  const detail={id:'native-fact',guild_id:'g',visibility:'character',subject_character_id:'owner',archived:0,evidence_active:true,
+    content:'Scoped evidence '.repeat(40),provenance_json:'{"source_refs":["native-source"]}'};
+  const targeted={source_ref:detail.id,content:detail.content,provenance:detail.provenance_json};
+  const sections=[{label:'GM-PRIVATE + ALL KNOWN FACTS (OBJECTIVE CAMPAIGN CONTEXT; DO NOT ASSUME NPCS KNOW THESE)',value:[detail],required:true},
+    {label:'SCOPED INTERPRETATION (not authority)',value:{principal:{revision:'owner-revision'},targeted_sources:[targeted]},required:true}];
+  const before=structuredClone(sections),scope={mode:'private',actorCharacterId:'owner',actorUserId:'u'},out=budget.referenceTurnStorage(sections,{guildId:'g',scope});
+  assert.deepEqual(out[0],sections[0]);assert.equal(out[1].value.targeted_sources[0].source_ref,detail.id);
+  assert.equal(out[1].value.targeted_sources[0].detail_ref.fact,detail.id);assert.deepEqual(out[1].value.principal,sections[1].value.principal);
+  for(const field of ['guild_id','content','provenance_json','archived','evidence_active']){
+    const changed=structuredClone(sections);changed[0].value[0][field]=field==='archived'?1:field==='evidence_active'?false:'different';
+    assert.deepEqual(budget.referenceTurnStorage(changed,{guildId:'g',scope})[1].value.targeted_sources,[targeted]);
+  }
+  const optional=structuredClone(sections);optional[0].required=false;
+  assert.deepEqual(budget.referenceTurnStorage(optional,{guildId:'g',scope})[1].value.targeted_sources,[targeted]);
+  assert.deepEqual(budget.referenceTurnStorage(sections,{guildId:'g',scope:{mode:'party'}})[1].value.targeted_sources,[targeted]);
+  assert.deepEqual(budget.referenceTurnStorage(sections,{guildId:'g',scope:{...scope,actorCharacterId:'other'}})[1].value.targeted_sources,[targeted]);
+  assert.deepEqual(sections,before);
+});
+
 test('TOK02 nonlexical page and exact scoped expansion retain obscure evidence and contradictions',()=>nativeFixture(f=>{
   const id=f.db.addFact(f.guild,{content:'The witness saw a copper button.',visibility:'party'});
   const contradiction=f.db.addFact(f.guild,{content:'The witness denied seeing any button.',visibility:'party'});

@@ -1,5 +1,6 @@
 /** Whole-turn character budget: preserve mandatory authority and omit only complete optional records. No writes or provider calls. */
 import {createHash} from 'node:crypto';
+import {factVisibleTo} from './disclosure-authority.js';
 const separator="\n\n---\n\n";
 const encode=value=>typeof value==="string"?value:JSON.stringify(value)??"null";
 const render=(section,value=section.value)=>`${section.label}:\n${encode(value)}`;
@@ -41,6 +42,47 @@ export function referenceContextPlan(plan,facts){
     return {...reference,detail_ref:row.source,detail_section:'GM-PRIVATE + ALL KNOWN FACTS',
       scope:plan.scope,actor:plan.actor};
   })};
+}
+const nativeStorageSections=new Set([
+  'AI MANAGEMENT (GM-private proposals, policy, revisions and receipts; never actor knowledge)',
+  'SOURCED CONTEXT PLAN (GM-only, never actor omniscience)',
+  'AUTONOMOUS WORLD (GM-private native creation/action context)'
+]);
+/** Lossless request-local projection only. Immutable declarations/ledgers and persisted records are never rewritten. */
+export function referenceTurnStorage(sections,{guildId,scope}={}){
+  let aliases=0;
+  const project=value=>{
+    if(Array.isArray(value))return value.map(project);
+    if(!value||typeof value!=='object')return value;
+    const out=Object.fromEntries(Object.entries(value).map(([key,item])=>[key,project(item)]));
+    for(const [raw,parsed] of [['details_json','details'],['data_json','data'],['state_json','state']]){
+      // Byte-exact canonical serialization, not text similarity, parsed equivalence or a missing-field inference.
+      if(typeof value[raw]!=='string'||!Object.hasOwn(value,parsed)||value[raw]!==JSON.stringify(value[parsed]))continue;
+      const marker={$json:parsed};if(JSON.stringify(marker).length>=JSON.stringify(value[raw]).length)continue;
+      out[raw]=marker;aliases++;
+    }
+    return out;
+  };
+  // Cross-section references require the complete destination to be mandatory in this very request.
+  const destination=sections.find(s=>s.required&&s.label.startsWith('GM-PRIVATE + ALL KNOWN FACTS'));
+  const facts=Array.isArray(destination?.value)?destination.value:[];
+  const projected=sections.map(section=>{
+    let value=section.value;
+    if(section.label==='SCOPED INTERPRETATION (not authority)'&&Array.isArray(value?.targeted_sources)){
+      value={...value,targeted_sources:value.targeted_sources.map(row=>{
+        if(!guildId||!scope||!row||Object.hasOwn(row,'detail_ref')||typeof row.content!=='string'||typeof row.provenance!=='string')return row;
+        const matches=facts.filter(f=>f.id===row.source_ref&&f.guild_id===guildId&&f.visibility&&!f.archived&&f.evidence_active!==false
+          &&factVisibleTo(f,scope)&&f.content===row.content&&f.provenance_json===row.provenance);
+        if(matches.length!==1)return row;
+        const {content,provenance,...rest}=row;aliases++;
+        return {...rest,detail_ref:{section:destination.label,fact:matches[0].id,fields:{content:'content',provenance:'provenance_json'}}};
+      })};
+    }
+    return {...section,value:nativeStorageSections.has(section.label)?project(value):value};
+  });
+  if(aliases)projected.push({label:'PROMPT STORAGE REFERENCES (GM-private projection only)',required:true,
+    value:'In this prompt only, a native *_json field {"$json":"sibling"} is exactly JSON.stringify(the fully expanded sibling in the same object). Expand nested references first. A targeted_sources detail_ref aliases only its named fields from the mandatory facts section by exact native fact ID. These are request-local encodings, not new sources, tools, consent, knowledge, effect receipts or permission to disclose. Original actor/audience/status and native validation remain binding.'});
+  return projected;
 }
 export function budgetTurnPrompt(sections,{instructions="",query="",maxChars=120000,reserveChars=6000}={}){
   const overflow=(message,diagnostic)=>{throw Object.assign(new Error(message),{code:"CONTEXT_OVERFLOW",diagnostic});};

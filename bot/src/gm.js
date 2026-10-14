@@ -34,7 +34,7 @@ import { entryReferenceContext } from "./scene-entry.js";
 import { OnlineSrd } from "./rules-srd.js";
 import { interpretationSchema, CONTEXT_CONTRACT, interpretationContext, validateInterpretation } from "./narrative-context.js";
 import { epistemicSchema, evidenceType, activeEvidence } from "./epistemic.js";
-import { budgetTurnPrompt, referenceContextPlan, referenceSessionContext, partitionRosterContext } from "./prompt-budget.js";
+import { budgetTurnPrompt, referenceContextPlan, referenceSessionContext, partitionRosterContext, referenceTurnStorage } from "./prompt-budget.js";
 import { recoverOptionalTurnFields } from "./turn-recovery.js";
 import { projectAuthorityRecords } from "./authority-projection.js";
 import { operationalMetrics, measureStage, measureNative } from "./operational-metrics.js";
@@ -723,7 +723,8 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
     // structuredResponse appends these fixed wrappers on every request; reserve them in addition to bounded correction headroom.
     const reserveChars=6000+(instructions.includes(AUTHORITY_POLICY)?0:AUTHORITY_POLICY.length+1)
       +INTENT_PROMPT.length+GM_WORLD_NARRATIVE_PROMPT.length+8;
-    const {input}=budgetTurnPrompt(sections,{instructions,query:messageText,reserveChars});
+    const {input}=budgetTurnPrompt(referenceTurnStorage(sections,{guildId,
+      scope:{mode:scope,actorUserId,actorCharacterId:ctx.actor_assignment?.character_id}}),{instructions,query:messageText,reserveChars});
     const req={
       model:this.config.routineGmModel||this.config.gmModel,
       instructions,
