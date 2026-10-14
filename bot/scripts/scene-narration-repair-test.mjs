@@ -17,6 +17,8 @@ import {prepareStoredOutput} from '../src/pvp-output.js';
 import {CITY_FEATURE_FLAGS,configureCityFlags} from '../src/city-core.js';
 import {ContextPlanner} from '../src/context-planner.js';
 import {spawnSync} from 'node:child_process';
+import {prepareRollRequest} from '../src/roll-requests.js';
+import {currentScene} from '../src/scene-continuity.js';
 function response(f,text){
   const review=Object.fromEntries(POST_TURN_REVIEW_CATEGORIES.map(k=>[k,{decision:'no_change',reason:'No mutation.',confidence:100}]));
   review.scene={decision:'continue',label:'',reason:'Same scene.',confidence:100};
@@ -229,3 +231,36 @@ test('SCENE05 independent scene service entrypoints initialize without circular 
     assert.equal(child.status,0,`${file}: ${child.stderr}`);
   }
 });
+
+for(const deathStatus of [null,'pending_choice','unconscious'])test(`SCENE06 fully marked HP allows descriptive setup/narration but not ordinary actions: ${deathStatus}`,()=>nativeFixture(async f=>{
+  const {prepareSceneSetup,confirmSceneSetup}=await import('../src/scene-setup.js'),x=setup(f,{placed:false});
+  f.db.updateCharacterData(x.pc.id,data=>{
+    data.resources.hp.current=data.resources.hp.max;
+    if(deathStatus)data.death_state={status:deathStatus,request:'unresolved-death'};
+  });
+  const before=structuredClone(f.db.getCharacter(x.pc.id).data),offer=prepareSceneSetup(f.db,f.guild,x.pc.owner_user_id,x.pc.id);
+  assert(offer,'Initial-position confirmation is not travel or a character action.');
+  const choice=offer.options.find(o=>o.location==='terminal'&&o.visibility==='party');
+  confirmSceneSetup(f.db,f.guild,x.pc.owner_user_id,offer.key,choice.value,{interactionId:'marked-hp-setup'});
+  const out=await turn(f,x),payload=out.rows.map(row=>row.payload).join('\n');
+  assert(payload.includes('saved location'));assert(!payload.includes('No additional character response'));
+  assert.deepEqual(f.db.getCharacter(x.pc.id).data.resources,before.resources);
+  assert.deepEqual(f.db.getCharacter(x.pc.id).data.death_state,before.death_state);
+  const source=indexWorldEvent(f.db,f.guild,{key:'marked-hp-action',kind:'player_declaration',title:'I lift the crate.',source_id:`player:${x.pc.owner_user_id}`,
+    session_id:f.session.id,scene:currentScene(f.db,f.guild).key,visibility:'character',subject_key:x.pc.id,
+    details:{author:x.pc.owner_user_id,character_id:x.pc.id,content:'I lift the crate.'}},x.pc.owner_user_id);
+  f.db.setCityCalendar(f.guild,{flags:{...f.db.getCityCalendar(f.guild).flags,roll_requests:true}});
+  assert.throws(()=>prepareRollRequest(f.db,f.guild,{source_event:source.event_key,character_id:x.pc.id},'offline-gm'),
+    error=>error.code==='PC_NATIVE_ELIGIBILITY','Descriptive access never grants native action eligibility or an ability exception.');
+  assert.equal(f.db.listCityRecords(f.guild,{kind:'roll_request',includeGM:true}).length,0);
+}));
+
+test('FRESHSCENE09 fully marked HP does not silence owner-scoped scenery or grant character knowledge/actions',()=>nativeFixture(async f=>{
+  const x=setup(f),candidate=response(f,x.text);
+  f.db.updateCharacterData(x.pc.id,data=>{data.resources.hp.current=data.resources.hp.max;});
+  const before=structuredClone(f.db.getCharacter(x.pc.id).data);
+  candidate.gm_world_parts=[{version:6,kind:'scene_fresh_request',fact_refs:[]}];
+  const text='A soft amber glow rests across the parcel counter.',out=await turn(f,x,candidate,[{description:text}]);
+  assert(out.rows.some(row=>row.payload.includes(text)));assert.equal(out.ai.requests.length,2);
+  assert.deepEqual(f.db.getCharacter(x.pc.id).data,before,'Scenery does not heal, resolve death, assign knowledge or enact a PC action.');
+}));

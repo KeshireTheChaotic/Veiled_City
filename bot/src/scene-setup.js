@@ -3,7 +3,6 @@ import {createHash,randomUUID} from 'node:crypto';
 import {conversationPrincipal} from './conversation-principal.js';
 import {currentScene,recordScenePresence} from './scene-continuity.js';
 import {indexWorldEvent} from './city-calendar.js';
-import {assertPcCanAct} from './pc-native-eligibility.js';
 const hash=value=>createHash('sha256').update(JSON.stringify(value)).digest('hex');
 function fail(){throw Object.assign(new Error('Current owner, empty initial position and unchanged safe scene setup required.'),{code:'SCENE_SETUP',expected:true});}
 function owner(db,guild,user,character){
@@ -15,7 +14,8 @@ function snapshot(db,guild,user,character){
   const {principal,pc,scene}=owner(db,guild,user,character),session=db.getActiveSession(guild);
   if(session.assembly_phase!=='assembly'||pc.data.location||db.hasCharacterPlacementHistory(guild,pc.id)
     ||db.getCurrentEncounter(session.id)?.status==='active'||db.getCityCalendar(guild).flags.scene_continuity!==true)fail();
-  assertPcCanAct(pc,db,guild);
+  // Confirming an unset initial position is descriptive setup, not an in-fiction action or travel.
+  // Marked HP/death workflow stays untouched; native action services still enforce eligibility and exact ability exceptions.
   const locations=db.listSimulationEntities(guild,'location').flatMap(entity=>{
     const state=entity.state,authored=db.getCityRecord(guild,'autonomous_entity',`location:${entity.entity_key}`);
     const source=authored&&db.getWorldEvent(guild,authored.source_event);
@@ -28,7 +28,7 @@ function snapshot(db,guild,user,character){
   return {session:session.id,scene:scene.key,user,character,principal:principal.revision,locations};
 }
 export function prepareSceneSetup(db,guild,user,character){
-  let state;try{state=snapshot(db,guild,user,character);}catch(error){if(error.code==='SCENE_SETUP'||error.code==='PC_NATIVE_ELIGIBILITY')return null;throw error;}
+  let state;try{state=snapshot(db,guild,user,character);}catch(error){if(error.code==='SCENE_SETUP')return null;throw error;}
   if(!state.locations.length)return null;
   const options=state.locations.flatMap(location=>['party','character'].map(visibility=>({location:location.key,visibility})))
     .map((option,index)=>({...option,value:String(index)}));
