@@ -18,6 +18,7 @@ import { relationshipEvidence } from "./presentation-evidence.js";
 import { activeEvidence, evidenceType } from "./epistemic.js";
 import { validateChannelRouting } from "./routing-diagnostics.js";
 import {assertCanonProposalProof} from './semantic-candidate-source.js';
+import {historicalArchiveProjection} from './historical-archive.js';
 
 /** SQLite repository facade and transaction boundary for campaign state. */
 export class VeiledDB {
@@ -1286,22 +1287,72 @@ export class VeiledDB {
       payload_hash,status,discord_message_id,attempt_count,last_failure,created_at,updated_at FROM publication_outbox
       WHERE guild_id=? AND status!='delivered' ORDER BY created_at,ordinal LIMIT ?`).all(guildId,Math.max(1,Math.min(100,Number(limit)||50)));
   }
-  /** Read-only operational projection: never select prose, subjects, owners, credentials or JSON payloads. */
+  /** Bounded GM archival proof inventory; raw rows never leave the administrative service. */
+  hasHistoricalArchives(guildId){
+    return !!this.db.prepare("SELECT 1 FROM city_records WHERE guild_id=? AND kind='historical_record_archive' LIMIT 1").get(guildId);
+  }
+  historicalArchiveState(guildId,{proofOnly=false}={}){
+    const state={campaign:this.getCampaign(guildId),tables:{}};
+    const tables=this.db.prepare("SELECT name FROM sqlite_schema WHERE type='table' AND name NOT LIKE 'sqlite_%' ORDER BY name").all();
+    for(const {name} of tables){
+      if(['campaigns','campaign_snapshots','campaign_backups'].includes(name))continue;
+      if(proofOnly&&!['city_records','world_events','sessions','turn_attempts','publication_outbox','encounters','simulation_records'].includes(name))continue;
+      if(!/^[a-z_]+$/.test(name))throw new StateConflictError('Unknown archival inventory table.');
+      const columns=this.db.prepare(`PRAGMA table_info(${name})`).all().map(c=>c.name);
+      let rows;
+      if(columns.includes('guild_id'))rows=this.db.prepare(`SELECT * FROM ${name} WHERE guild_id=? ORDER BY rowid LIMIT 10001`).all(guildId);
+      else if(columns.includes('session_id'))rows=this.db.prepare(`SELECT * FROM ${name}
+        WHERE session_id IN (SELECT id FROM sessions WHERE guild_id=?) ORDER BY rowid LIMIT 10001`).all(guildId);
+      else throw new StateConflictError(`Unscoped archival inventory table: ${name}.`);
+      if(rows.length>10000)throw new StateConflictError('Archival inventory exceeds bounded review; no silent truncation.',{code:'ARCHIVAL_INVENTORY_LIMIT'});
+      state.tables[name]=rows;
+    }
+    return state;
+  }
+  createHistoricalArchiveBackup(guildId,actorId,batch,state){
+    const current=this.historicalArchiveState(guildId);
+    if(JSON.stringify(current)!==JSON.stringify(state))throw new StateConflictError('Archive backup snapshot changed.');
+    const id=randomUUID();
+    this.db.prepare('INSERT INTO campaign_backups(id,guild_id,label,reason,state_json,created_by) VALUES(?,?,?,?,?,?)')
+      .run(id,guildId,'Historical archival safety backup',batch,JSON.stringify(current),actorId);
+    const saved=this.getBackup(id);
+    if(JSON.stringify(saved?.state)!==JSON.stringify(current))throw new StateConflictError('Archive backup verification failed.');
+    return saved;
+  }
+  historicalArchiveReplay(guildId,actorId,previewHash){
+    return this.db.prepare(`SELECT * FROM operation_receipts WHERE guild_id=? AND actor_user_id=?
+      AND command_key='admin:archive-history' AND status='completed' AND json_extract(payload_json,'$.preview_hash')=? LIMIT 1`)
+      .get(guildId,actorId,previewHash);
+  }
+  /** Display/retrieval-only filtering BEFORE pagination; native authority reads remain unchanged. */
+  listActiveAdministrativeRecords(guildId,{kind,limit=100,offset=0}={}){
+    const projection=historicalArchiveProjection(this,guildId);
+    return this.db.prepare(`SELECT r.* FROM city_records r WHERE r.guild_id=? AND r.kind=?
+      AND NOT EXISTS (SELECT 1 FROM json_each(?) a WHERE json_extract(a.value,'$.kind')=r.kind
+        AND json_extract(a.value,'$.key')=r.record_key)
+      ORDER BY r.minute DESC,r.rowid DESC LIMIT ? OFFSET ?`)
+      .all(guildId,kind,JSON.stringify(projection.excluded),Math.max(1,Math.min(100,limit)),Math.max(0,offset))
+      .map(row=>({...row,data:JSON.parse(row.data_json)}));
+  }
+  /** Read-only operational projection; archival proofs are internal, emitted diagnostics remain content-free. */
   operationalHealthData(guildId){
+    const archival=historicalArchiveProjection(this,guildId),excluded=JSON.stringify(archival.excluded);
+    const active=`AND NOT EXISTS (SELECT 1 FROM json_each(?) a WHERE json_extract(a.value,'$.kind')=r.kind
+      AND json_extract(a.value,'$.key')=r.record_key)`;
     const kinds=['pvp_fear_trigger','pvp_output_quarantine','action_continuation','pc_incoming_attack',
       'pvp_consent','pvp_damage_consent','pvp_fear_move_decision','pvp_fear_effect_receipt','pvp_ui_delivery',
       'roll_publication','roll_party_publication','pvp_status_publication','pvp_projection_publication','pvp_fear_publication'];
     const marks=kinds.map(()=>'?').join(',');
-    const groups=this.db.prepare(`SELECT kind,status,COUNT(*) AS count FROM city_records
-      WHERE guild_id=? AND kind IN (${marks}) GROUP BY kind,status LIMIT 256`).all(guildId,...kinds);
+    const groups=this.db.prepare(`SELECT kind,status,COUNT(*) AS count FROM city_records r
+      WHERE guild_id=? AND kind IN (${marks}) ${active} GROUP BY kind,status LIMIT 256`).all(guildId,...kinds,excluded);
     const incidents=[];
     for(const kind of ['pvp_fear_trigger','pvp_output_quarantine','action_continuation','pc_incoming_attack','pvp_ui_delivery']){
       incidents.push(...this.db.prepare(`SELECT r.kind,r.record_key,r.status,w.status AS source_status,
         CASE WHEN roll.created_at IS NULL THEN NULL ELSE MAX(0,unixepoch('now')-unixepoch(roll.created_at)) END AS age_seconds
         FROM city_records r LEFT JOIN world_events w ON w.guild_id=r.guild_id AND w.event_key=r.source_event
         LEFT JOIN rolls roll ON roll.guild_id=r.guild_id AND roll.id=json_extract(r.data_json,'$.roll_id')
-        WHERE r.guild_id=? AND r.kind=? AND r.status NOT IN ('resolved','delivered','complete','cancelled')
-        ORDER BY r.rowid LIMIT 20`).all(guildId,kind));
+        WHERE r.guild_id=? AND r.kind=? AND r.status NOT IN ('resolved','delivered','complete','cancelled') ${active}
+        ORDER BY r.rowid LIMIT 20`).all(guildId,kind,excluded));
     }
     const publications=this.db.prepare(`SELECT status,COUNT(*) AS count FROM publication_outbox
       WHERE guild_id=? GROUP BY status`).all(guildId);
@@ -1317,7 +1368,10 @@ export class VeiledDB {
       WHERE guild_id=? AND actor_type IN ('human','human_gm')`).get(guildId).count;
     const reviews=this.db.prepare(`SELECT COUNT(*) AS count FROM audit_log
       WHERE guild_id=? AND action='pvp_fear_needs_review'`).get(guildId).count;
-    return {groups,publications,turns,manual,reviews,incidents:[...incidents,...delivery,...recovery]};
+    const archiveConflicts=archival.conflicts.map(r=>({kind:'historical_archive_conflict',record_key:`${r.kind}:${r.key}`,
+      status:'needs_review',source_status:null,age_seconds:null}));
+    return {groups,publications,turns,manual,reviews,archival:{archived:archival.archived,conflicts:archival.conflicts.length},
+      incidents:[...archiveConflicts,...incidents,...delivery,...recovery]};
   }
   pendingContinuationTurns(guildId,userId,{limit=20}={}){
     return this.db.prepare(`SELECT DISTINCT t.turn_id FROM turn_attempts t
@@ -1405,7 +1459,9 @@ export class VeiledDB {
     };
     const contentSeed={seed:this.getSeedRun(guildId,"seed_data_v1"),
       documents:this.db.prepare("SELECT COUNT(*) n FROM seed_documents WHERE guild_id=?").get(guildId).n};
-    return {schemaVersion:this.db.prepare("PRAGMA user_version").get().user_version,activeSession:active,presentWithoutCharacter,duplicateCanon,orphanCharacters,orphanAssignments,orphanHandouts,brokenProxies,absentControl,invalidVisibility,pendingDirector:pending,npcCognition,contentSeed};
+    const archival=historicalArchiveProjection(this,guildId);
+    return {schemaVersion:this.db.prepare("PRAGMA user_version").get().user_version,activeSession:active,presentWithoutCharacter,duplicateCanon,orphanCharacters,orphanAssignments,orphanHandouts,brokenProxies,absentControl,invalidVisibility,pendingDirector:pending,npcCognition,contentSeed,
+      historicalArchival:{archived:archival.archived,conflicts:archival.conflicts.length}};
   }
 
   findGuestCharacter(guildId,name,userId) {

@@ -15,6 +15,7 @@ export async function runCampaignDiagnostics({db,guild}){
   const data=db.doctorData(guild.id);
   const campaign=db.getCampaign(guild.id);
   const issues=[];
+  if(data.historicalArchival?.conflicts)issues.push(`${data.historicalArchival.conflicts} historical archive proof conflict(s); inspect /vc-admin archive-history. No outcomes were reversed.`);
   const passed=[];
   const routing=validateChannelRouting(campaign);
   if(!routing.ok)issues.push(`Channel routing conflicts: ${routing.conflicts.map(row=>row.roles.join("/")).join(", ")}.`);

@@ -8,6 +8,7 @@ const statuses=new Set(['active','proposed','selected','superseded','awaiting_pa
   'pending_choice','reviewed','missed','held','not_sent']);
 const safe=value=>statuses.has(value)?value:'unknown';
 function recovery(kind,status,source){
+  if(kind==='historical_archive_conflict')return 'Archive proof changed or was reversed. Inspect history; no native effects or old actions were restored.';
   if(source&&source!=='active')return 'Revalidate the exact source and audience; preserve committed native effects. Do not publish stale material.';
   if(kind==='publication'||kind==='pvp_ui_delivery')return ['uncertain','delivering'].includes(status)?
     'Inspect exact Discord delivery; reconcile evidence before any resend. Never blindly retry.':
@@ -36,7 +37,7 @@ export function operationalReport(db,guildId,{authorized=false,metrics=operation
     return {incident:incident||null,note:'References are guild-scoped and process-salted; absent/expired references disclose nothing.'};
   }
   return {metrics:metrics.snapshot(guildId),native:{counts:normalize(native.groups),publications:normalize(native.publications),
-    turns:normalize(native.turns),manual_mutation_receipts:native.manual,fear_review_events:native.reviews},incidents,recent_failures:memory,
+    turns:normalize(native.turns),manual_mutation_receipts:native.manual,fear_review_events:native.reviews,archival:native.archival},incidents,recent_failures:memory,
     bounds:'At most 20 oldest pending records per category, bounded recent in-memory incidents; native group limit 256.',
     native_counts_capped:native.groups.length===256,
     certainty:'Persisted delivering/uncertain is NOT delivered. This report performs no recovery or model execution.',

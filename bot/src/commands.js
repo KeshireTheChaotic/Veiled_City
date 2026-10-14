@@ -28,6 +28,7 @@ import { deliverAssemblyParts } from "./assembly-delivery.js";
 import { assertGmOnlyChannel, assertPlayerPrivateChannel } from "./discord/privacy.js";
 import { isExpectedError, PermissionError, NotFoundError, StateConflictError, UserInputError } from "./errors.js";
 import { replayReceiptIfPresent, installReceiptCapture, isMutatingCommand } from "./idempotency.js";
+import {previewHistoricalArchive,applyHistoricalArchive,listHistoricalArchive} from './historical-archive.js';
 import { runCampaignDiagnostics, formatDiagnostics } from "./operations/diagnostics.js";
 import {operationalReport} from './operations/health.js';
 import {operationalMetrics} from './operational-metrics.js';
@@ -370,6 +371,28 @@ ${draft.gm_notes||""}`}));
  */
 export async function handleCommand(interaction,{db,gm,voice=null}){
   beginInteraction(interaction);
+  // Administrative preview/list must not upsert players, execute continuations or capture gameplay receipts.
+  if(interaction.isChatInputCommand()&&interaction.guildId
+    &&(interaction.commandName==='vc-admin'||interaction.commandName==='vc'&&interaction.options.getSubcommandGroup()==='admin')
+    &&interaction.options.getSubcommand()==='archive-history'){
+    if(!isGM(db,interaction))throw new PermissionError('GM/admin permission required.');
+    try{
+      await acknowledgeNative(interaction,'archive-history');
+      const operation=interaction.options.getString('operation'),session=interaction.options.getInteger('session'),
+        token=interaction.options.getString('preview'),reason=interaction.options.getString('reason');
+      if(!['preview','apply','list'].includes(operation)||operation==='apply'&&session!==null
+        ||operation!=='apply'&&(token!==null||reason!==null))throw new UserInputError('Use session for preview/list; preview and reason for apply.');
+      const options={authorized:true},report=operation==='preview'
+        ?previewHistoricalArchive(db,interaction.guildId,interaction.user.id,session,options)
+        :operation==='list'?listHistoricalArchive(db,interaction.guildId,interaction.user.id,session,options)
+          :applyHistoricalArchive(db,interaction.guildId,interaction.user.id,{preview:token,reason,interactionId:interaction.id},options);
+      const content=operation==='apply'?`Archived ${report.archived} ended-session records. No gameplay outcomes changed. Backup: ${report.backup_id}.`
+        :`GM-private historical ${operation}: ${report.eligible} eligible, ${report.held} held, ${report.already_archived} archived. Details${operation==='preview'?' and confirmation token':''} attached.`;
+      await interaction.editReply({content,files:[new AttachmentBuilder(Buffer.from(JSON.stringify(report,null,2)),{name:'historical-archive.json'})],
+        allowedMentions:{parse:[]}});
+    }catch(error){throw interactionFailure(interaction,error);}
+    return true;
+  }
   // Read-only ops bypass player upserts, receipt capture and continuation/publication execution entirely.
   if(interaction.isChatInputCommand()&&interaction.guildId&&interaction.commandName==='vc-admin'
     &&interaction.options.getSubcommand()==='ops'){

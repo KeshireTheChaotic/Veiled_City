@@ -328,6 +328,7 @@ Some commands below need additional required options selected in Discord.
 | Inspect scenes / manage plans | `/vc-story scene-view`; `/vc-story strategy json:<native operation>` |
 | Explain provenance | `/vc-story why json:{"event_key":"<event-key>"}` |
 | Durable backup / listing | `/vc-admin backup label:Before changes`; `/vc-admin backups` |
+| Archive unfinished historical work | `/vc-admin archive-history operation:preview session:2`; then `operation:apply preview:<token> reason:<reason>`; inspect with `operation:list session:2`. GM-private, ended sessions only; no gameplay outcomes or characters changed. See [archival guide](docs/HISTORICAL_RECORD_ARCHIVAL_PLAN.md). |
 | Preview / restore | `/vc-admin restore-preview backup_id:<id>`; `/vc-admin restore backup_id:<id>` |
 | Snapshot / audit ledger | `/vc-admin snapshot label:Checkpoint`; `/vc-admin ledger` |
 | Pause / disconnect voice | `/vc-voice pause`; `/vc-voice leave` |

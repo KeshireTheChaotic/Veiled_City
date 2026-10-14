@@ -63,6 +63,7 @@ bot/scripts/h02-referent-movement-test.mjs
 bot/scripts/h03-post-turn-review-test.mjs
 bot/scripts/h04-narrative-claim-evidence-test.mjs
 bot/scripts/h05-discord-delivery-test.mjs
+bot/scripts/historical-archive-test.mjs
 bot/scripts/i-heard-you-1-test.mjs
 bot/scripts/i-heard-you-2-test.mjs
 bot/scripts/i-heard-you-3-test.mjs
@@ -246,6 +247,7 @@ bot/src/gm-world-narrative.js
 bot/src/gm-world-scope.js
 bot/src/gm.js
 bot/src/handout.js
+bot/src/historical-archive.js
 bot/src/history-reconciliation.js
 bot/src/idempotency.js
 bot/src/index.js
@@ -469,6 +471,7 @@ docs/EXPANSION_GAP_ANALYSIS.md
 docs/EXPANSION_RELEASES.md
 docs/GM_OPERATIONS.md
 docs/HANDOUTS_AND_EVIDENCE.md
+docs/HISTORICAL_RECORD_ARCHIVAL_PLAN.md
 docs/HOTFIX_CANDIDATE_CLAIM_REVIEW.md
 docs/IMPLEMENTATION_EVALUATION.md
 docs/IMPLEMENTATION_PLAN_EXECUTION.md

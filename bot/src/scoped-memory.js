@@ -10,7 +10,9 @@ const normalize=value=>String(value||"").normalize("NFKD").toLocaleLowerCase()
 function pendingIdentityRefs(db,guild,scope){
   const refs=new Set();
   for(const kind of ["compound_action","semantic_intent_proposal","roll_request","scene_action_pending"]){
-    for(const row of db.listCityRecords(guild,{kind,includeGM:true,limit:100})){
+    const rows=typeof db.listActiveAdministrativeRecords==='function'?db.listActiveAdministrativeRecords(guild,{kind,limit:100})
+      :db.listCityRecords(guild,{kind,includeGM:true,limit:100});
+    for(const row of rows){
       if(!["public","party"].includes(row.visibility)&&!(scope.mode==="private"&&(
         row.visibility==="character"&&row.subject_key===scope.actorCharacterId
         ||row.visibility==="player"&&row.subject_key===scope.actorUserId)))continue;

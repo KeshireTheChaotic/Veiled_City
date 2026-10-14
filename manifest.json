@@ -31,8 +31,8 @@
     },
     {
       "path": "README.md",
-      "size_bytes": 21311,
-      "sha256": "204d3b6c8a19c0799866840237e66eb965698c29555badd15c80d263e5ab02e4"
+      "size_bytes": 21646,
+      "sha256": "5f94b2c2cb20ef537ce68f10999779f2e6b04f9023837b479c7ad4f05f4cbd17"
     },
     {
       "path": "bot/.env.example",
@@ -328,6 +328,11 @@
       "path": "bot/scripts/h05-discord-delivery-test.mjs",
       "size_bytes": 3129,
       "sha256": "2c236c9c68f63d5deb97a207000a80f5365c8d454eff4bd96b624356f984c166"
+    },
+    {
+      "path": "bot/scripts/historical-archive-test.mjs",
+      "size_bytes": 18409,
+      "sha256": "7cfccf331f84186fada83905d757517b37fde4f10097d0174c700b387ba0c994"
     },
     {
       "path": "bot/scripts/i-heard-you-1-test.mjs",
@@ -906,8 +911,8 @@
     },
     {
       "path": "bot/scripts/validate-offline.mjs",
-      "size_bytes": 8351,
-      "sha256": "de0601b11b1c563d2c08cb7e8f5f27d76da2c844aa885fdd47f02ca48dc0abbe"
+      "size_bytes": 8391,
+      "sha256": "38821e8d60edbc79dd485b1e360bdb54d96334ee0761c0fbaabef1bb91ed8560"
     },
     {
       "path": "bot/sql/schema.sql",
@@ -1046,8 +1051,8 @@
     },
     {
       "path": "bot/src/command-definitions.js",
-      "size_bytes": 72934,
-      "sha256": "2a35c737243544d4522f421161050a95a920070a48d511cf26d4548775fc2704"
+      "size_bytes": 73691,
+      "sha256": "60bc10d2c4f336040ed1d39e5ceccc24779bc3be9b78bce5f943f9d025da8aaa"
     },
     {
       "path": "bot/src/command-schema.js",
@@ -1056,8 +1061,8 @@
     },
     {
       "path": "bot/src/commands.js",
-      "size_bytes": 177151,
-      "sha256": "e37dbc5d217f47ed3904a22eaad06cb4c305ae1e8c9cfbeb0e10d454af569310"
+      "size_bytes": 179289,
+      "sha256": "473af287304a986cd27a927cf0d2bf309a1dd87517202a7b1668c118dfdd488b"
     },
     {
       "path": "bot/src/concept-context.js",
@@ -1111,8 +1116,8 @@
     },
     {
       "path": "bot/src/db.js",
-      "size_bytes": 165969,
-      "sha256": "c8cccc435d18a071252ab91108ca5332ecf435af2f66db0e846611f987475e92"
+      "size_bytes": 170173,
+      "sha256": "4e9206bea2b4eb0187d9890431fd6eb99bb71563566f68309ce44204ead4386e"
     },
     {
       "path": "bot/src/decision-advisory.js",
@@ -1245,6 +1250,11 @@
       "sha256": "70b3f7d024e1dc35cd3ecdc6408ddca92626caec8c5e5045820fd9e084827fdb"
     },
     {
+      "path": "bot/src/historical-archive.js",
+      "size_bytes": 14045,
+      "sha256": "84f3dc79be51a8deb5dbb3452742211b56a37fa97b9d1e85994d9ec181365709"
+    },
+    {
       "path": "bot/src/history-reconciliation.js",
       "size_bytes": 8580,
       "sha256": "83cb6e990acb856dca1ab58fcdd321f606ea5ee6c1f5fa2a62217518eece09a1"
@@ -1361,13 +1371,13 @@
     },
     {
       "path": "bot/src/operations/diagnostics.js",
-      "size_bytes": 5681,
-      "sha256": "543464d4f364ad1a814d55ec01b4ffd68ecf45dfa903757be1510e08f587c26d"
+      "size_bytes": 5874,
+      "sha256": "780739a02c34a0acbba88816158ba024bf4a08c8f294d708a1d5e6e0ce81384f"
     },
     {
       "path": "bot/src/operations/health.js",
-      "size_bytes": 4278,
-      "sha256": "0b2f994761a6b65f995b82fb1c73a3c99f1ab6bcaf50bb8b1e2ed311df177886"
+      "size_bytes": 4459,
+      "sha256": "1900d07e71bd5be75eba4db908787f47276774c95cbfde476113b6bce2e6d681"
     },
     {
       "path": "bot/src/operations/overview.js",
@@ -1621,8 +1631,8 @@
     },
     {
       "path": "bot/src/scoped-memory.js",
-      "size_bytes": 6331,
-      "sha256": "274772456c05379e902f9d933d46f7c4be930a2245836618d7d0e6539836eba8"
+      "size_bytes": 6473,
+      "sha256": "54a80e6971f6b11b3d4d6a34d40b5beeea5ec79b9b5abbf5ad95524378bf053d"
     },
     {
       "path": "bot/src/scoped-query.js",
@@ -2360,6 +2370,11 @@
       "sha256": "b1c3ac422015fcb9f44bef42a4a1f3b79b8db8bad52f62e6f4f07a3f8522ee5b"
     },
     {
+      "path": "docs/HISTORICAL_RECORD_ARCHIVAL_PLAN.md",
+      "size_bytes": 18742,
+      "sha256": "444bc061cdf0c0eb2ce7b37f7f5015ea1c9345b052c57591fe9213348b49dec6"
+    },
+    {
       "path": "docs/HOTFIX_CANDIDATE_CLAIM_REVIEW.md",
       "size_bytes": 7372,
       "sha256": "79e5718578baa04a25c6fcd8a926e17cb329162fb869497860f8fae1b77d98f0"
@@ -2601,8 +2616,8 @@
     },
     {
       "path": "docs/TYPED_INTENT_PROGRESS.md",
-      "size_bytes": 327112,
-      "sha256": "d383a74d7ea6b660246a4d4c69846bdf7faf04f54090bb8f181fb68181d8e688"
+      "size_bytes": 329886,
+      "sha256": "d46a8b8039c39e3719d7e162cfd4190ccded53b37015567e01128f53bf63cf65"
     },
     {
       "path": "docs/TYPED_INTENT_RELEASE_10.0.0.md",
