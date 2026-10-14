@@ -10,6 +10,7 @@ import { ContentIndex } from "../src/content.js";
 import { configureCityFlags } from "../src/city-core.js";
 import { FakeResponses } from "./contract-fixtures.mjs";
 import { POST_TURN_REVIEW_CATEGORIES } from "../src/director.js";
+import { AUTHORITY_POLICY } from "../src/authority-policy.js";
 
 const core={label:"AUTHORITY",value:{consent:false,source:"native"},required:true};
 const rows=Array.from({length:40},(_,id)=>({id,text:(id===0?"lighthouse clue ":"ordinary ")+"x".repeat(1000),source:`source:${id}`}));
@@ -57,6 +58,7 @@ try{
     await gm.runTurn({guildId:guild,actorUserId:"owner",actorName:"Owner",messageText:text,scope});
     assert.equal(fake.requests.length,3,"Both structured parsing and state-review retries exercised");
     for(const req of fake.requests){
+      assert.equal(req.instructions.split(AUTHORITY_POLICY).length-1,1,"Complete authority guidance is retained once, including both retry paths");
       assert(req.input.length+req.instructions.length<120000,"Instructions, turn input and retry/intent text fit the total budget");
       assert(req.input.includes(text));assert(req.input.includes("HUMAN RULING PRESERVED"));
       assert(req.input.includes("NATIVE CANON PRESERVED"));assert(req.input.includes("CURRENT COMBATANTS"));

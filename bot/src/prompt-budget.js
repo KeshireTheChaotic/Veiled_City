@@ -48,7 +48,7 @@ export function budgetTurnPrompt(sections,{instructions="",query="",maxChars=120
   const required=sections.filter(section=>section.required);
   const optional=sections.filter(section=>!section.required);
   const core=required.map(section=>render(section)).join(separator);
-  if(limit<2000||core.length+2000>limit)overflow("Mandatory turn context exceeds the safe input budget; retry with a narrower scene or query.",
+  if(core.length>limit)overflow("Mandatory turn context exceeds the safe input budget; retry with a narrower scene or query.",
     {stage:"mandatory_authority",required_chars:core.length,limit,retryable:true,committed:false});
   const complete=sections.map(section=>render(section)).join(separator);
   if(complete.length<=limit) return {input:complete,metrics:{compacted:false,input_chars:complete.length,limit,omissions:[]}};
@@ -56,23 +56,43 @@ export function budgetTurnPrompt(sections,{instructions="",query="",maxChars=120
   const selected=new Map(optional.map(section=>[section,[]]));
   const noticeFor=omissions=>`\n\nCONTEXT BUDGET (GM-private): ${JSON.stringify({omissions,
     authority:"Only complete optional records omitted. Omission is not evidence of nonexistence, consent or success. Check relevant existing authority before native effects. Ordinary new fiction may use autonomous world additions; missing descriptions alone never require human review."})}`;
-  const metadataReserve=noticeFor(optional.map(section=>({section:section.label,
-    records:Array.isArray(section.value)?section.value.length:1}))).length;
+  const omissionsFor=(extra=null,extraCount=1)=>optional.flatMap(section=>{
+    const count=Array.isArray(section.value)?section.value.length:1;
+    const omitted=count-selected.get(section).length-(section===extra?extraCount:0);
+    return omitted>0?[{section:section.label,records:omitted}]:[];
+  });
+  const minimalBodies=sections.flatMap(section=>section.required?[render(section)]:
+    Array.isArray(section.value)?[render(section,[])]:[]);
+  let bodyChars=minimalBodies.join(separator).length,bodyCount=minimalBodies.length;
   const candidates=optional.flatMap((section,sectionIndex)=>{
     const rows=Array.isArray(section.value)?section.value:[section.value];
     return rows.map((value,index)=>{
       const text=encode(value).toLowerCase();
       const relevance=terms.reduce((score,term)=>score+(text.includes(term)?1:0),0);
-      return {section,sectionIndex,index,value,score:(section.priority||0)+Math.min(12,relevance)*10};
+      const serialized=Array.isArray(section.value)?JSON.stringify(value)??"null":encode(value);
+      return {section,sectionIndex,index,value,serialized,score:(section.priority||0)+Math.min(12,relevance)*10};
     });
   }).sort((a,b)=>b.score-a.score||a.sectionIndex-b.sectionIndex||b.index-a.index);
-  // Reserve metadata, section labels and separators before allocating record bodies.
-  let remaining=limit-core.length-metadataReserve-optional.reduce((size,section)=>size+section.label.length+separator.length+8,0);
+  // A tiny complete section can be cheaper than describing its omission. Keep such sections
+  // before testing the minimum; otherwise even exact metadata budgeting can reject a fitting packet.
+  for(const section of optional){
+    const rows=candidates.filter(row=>row.section===section);if(!rows.length)continue;
+    const array=Array.isArray(section.value),size=array?encode(section.value).length-2:
+      render(section).length+(bodyCount?separator.length:0);
+    if(size+noticeFor(omissionsFor(section,rows.length)).length>noticeFor(omissionsFor()).length)continue;
+    selected.set(section,rows);bodyChars+=size;if(!array)bodyCount++;
+  }
+  const minimum=bodyChars+noticeFor(omissionsFor()).length;
+  if(minimum>limit)overflow("Turn context budget metadata exceeds the safe input budget.",
+    {stage:"budget_metadata",required_chars:minimum,limit,retryable:true,committed:false});
+  // Count actual JSON escaping, array commas, labels, separators and the updated omission notice.
+  // Retry/provider-wrapper headroom is already reserved by the caller; no extra arbitrary margin.
   for(const row of candidates){
-    const serialized=Array.isArray(row.section.value)?JSON.stringify(row.value)??"null":encode(row.value);
-    const size=serialized.length+1;
-    if(size>remaining) continue;
-    selected.get(row.section).push(row);remaining-=size;
+    const array=Array.isArray(row.section.value),rows=selected.get(row.section);
+    if(rows.includes(row))continue;
+    const size=array?row.serialized.length+(rows.length?1:0):render(row.section,row.value).length+(bodyCount?separator.length:0);
+    if(bodyChars+size+noticeFor(omissionsFor(row.section)).length>limit)continue;
+    rows.push(row);bodyChars+=size;if(!array)bodyCount++;
   }
   const omissions=[];
   const input=sections.flatMap(section=>{

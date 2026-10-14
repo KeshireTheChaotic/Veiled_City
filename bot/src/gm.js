@@ -403,7 +403,9 @@ export class GMService{
     const operationSignal=signal||AbortSignal.timeout(Number(deadlineMs||this.config.aiOperationDeadlineMs||120000));
     let lastError=null;
     for(let attempt=1;attempt<=2;attempt++){
-      const request={...req,instructions:`${AUTHORITY_POLICY}\n${req.instructions||""}`};
+      // Combined turn/context instructions already carry this complete native policy. Other callers still receive it.
+      const instructions=req.instructions||"";
+      const request={...req,instructions:instructions.includes(AUTHORITY_POLICY)?instructions:`${AUTHORITY_POLICY}\n${instructions}`};
       if(req.text?.format?.schema?.properties?.ai_intents) request.input=`${req.input}\n\n${INTENT_PROMPT}`;
       if(req.text?.format?.schema?.properties?.gm_world_parts)request.input+=`\n\n${GM_WORLD_NARRATIVE_PROMPT}`;
       if(attempt===2){
@@ -719,7 +721,8 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
         value:referenceContextPlan(ctx.context_plan,ctx.gm_all_facts),required:true});
     }
     // structuredResponse appends these fixed wrappers on every request; reserve them in addition to bounded correction headroom.
-    const reserveChars=6000+AUTHORITY_POLICY.length+INTENT_PROMPT.length+GM_WORLD_NARRATIVE_PROMPT.length+8;
+    const reserveChars=6000+(instructions.includes(AUTHORITY_POLICY)?0:AUTHORITY_POLICY.length+1)
+      +INTENT_PROMPT.length+GM_WORLD_NARRATIVE_PROMPT.length+8;
     const {input}=budgetTurnPrompt(sections,{instructions,query:messageText,reserveChars});
     const req={
       model:this.config.routineGmModel||this.config.gmModel,

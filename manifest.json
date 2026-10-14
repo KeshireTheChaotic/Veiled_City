@@ -496,8 +496,8 @@
     },
     {
       "path": "bot/scripts/prompt-budget-test.mjs",
-      "size_bytes": 6117,
-      "sha256": "b4eeab628676d12627f33ea4ec056d1aafcbd7934e0f3ddae7ab7b38486fa0c3"
+      "size_bytes": 6328,
+      "sha256": "61098b75b44b08e6bcaf8f209b7277cbc1c5ced030f4d971945b2ae18d9f1ace"
     },
     {
       "path": "bot/scripts/quality-check.mjs",
@@ -896,8 +896,8 @@
     },
     {
       "path": "bot/scripts/v96-context-efficiency-test.mjs",
-      "size_bytes": 18984,
-      "sha256": "3e03c179df4ee7dab629cd7b05a3197c2b73e385a070c5b0c4f9bc2e81e9e46f"
+      "size_bytes": 23169,
+      "sha256": "ae5fb8187f4e39f3d76f9ceb2703fc546f4a26b177579b8bf1820f26b68dfd60"
     },
     {
       "path": "bot/scripts/v96-corpus.mjs",
@@ -1326,8 +1326,8 @@
     },
     {
       "path": "bot/src/gm.js",
-      "size_bytes": 111859,
-      "sha256": "0fc71b4f348a012d6ccf13fad856c4cb25d3c6ecf113e7ea822c5aed9ffc92e1"
+      "size_bytes": 112123,
+      "sha256": "c0b394ea5d1c9796a2edbb7cf5270cfd8b9e7782d685835ade8f464e9c5136be"
     },
     {
       "path": "bot/src/handout.js",
@@ -1546,8 +1546,8 @@
     },
     {
       "path": "bot/src/prompt-budget.js",
-      "size_bytes": 6289,
-      "sha256": "89892c29e2f95067066b52025cf434a0b2105ca6ad858ad271ea13714eb38fd9"
+      "size_bytes": 7778,
+      "sha256": "8360159b19ce9bae3d718aaacd3858c082fbf30222b85642a2238e24d4131227"
     },
     {
       "path": "bot/src/provenance.js",
@@ -2736,8 +2736,8 @@
     },
     {
       "path": "docs/TURN_CONTEXT_BUDGET_REPAIR.md",
-      "size_bytes": 5166,
-      "sha256": "f6219f25355b0d0818967152f38eabd6714680e3848efdd5697cca58a3acf48b"
+      "size_bytes": 7999,
+      "sha256": "4709270b7b71776574926e50d9ee4f037bcd045a33c2e039ebc75abc104242f2"
     },
     {
       "path": "docs/TYPED_INTENT_BASELINE.md",
@@ -2761,8 +2761,8 @@
     },
     {
       "path": "docs/TYPED_INTENT_PROGRESS.md",
-      "size_bytes": 347321,
-      "sha256": "f6dc2bba5bcbdbf38eb584afd7e3a301d50d565422b8f1e2547c9d06d650850b"
+      "size_bytes": 351575,
+      "sha256": "bc0e9cc0ec59cf23cf03cbfd83fe3f5f62dd042224ac15af8bf3a3bbba3a59c9"
     },
     {
       "path": "docs/TYPED_INTENT_RELEASE_10.0.0.md",

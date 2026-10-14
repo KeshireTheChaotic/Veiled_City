@@ -11,6 +11,7 @@ import {GMService} from '../src/gm.js';
 import {ContentIndex} from '../src/content.js';
 import {FakeResponses} from './contract-fixtures.mjs';
 import {POST_TURN_REVIEW_CATEGORIES} from '../src/director.js';
+import {AUTHORITY_POLICY} from '../src/authority-policy.js';
 
 const response=()=>{
   const state_review=Object.fromEntries(POST_TURN_REVIEW_CATEGORIES.map(key=>[key,
@@ -22,6 +23,60 @@ const response=()=>{
 };
 const service=(f,ai,metrics=new OperationalMetrics())=>new GMService({db:f.db,ai,metrics,
   content:new ContentIndex(path.resolve('../content')),config:{gmModel:'offline',maxRecentMessages:10,maxContentChunks:2}});
+
+test('BUDGET near-edge production-size mandatory payload fits without an invented 2000-character requirement',()=>{
+  const sections=[{label:'A',value:'x'.repeat(63972),required:true}],before=structuredClone(sections);
+  const packet=budget.budgetTurnPrompt(sections,{maxChars:65909,reserveChars:0});
+  assert.equal(packet.input.length,63975);assert.equal(packet.metrics.compacted,false);assert.deepEqual(sections,before);
+});
+
+test('BUDGET near-edge optional omissions use exact serialized metadata and preserve all mandatory authority',()=>{
+  const sections=[{label:'A',value:'x'.repeat(63972),required:true},
+    {label:'OPTIONAL HISTORY',value:[{source:'historical',body:'z'.repeat(100000)}]}];
+  const packet=budget.budgetTurnPrompt(sections,{maxChars:65909,reserveChars:0});
+  assert(packet.input.startsWith(`A:\n${sections[0].value}`));assert(packet.input.length<=65909);
+  assert(packet.metrics.compacted);assert.deepEqual(packet.metrics.omissions,[{section:'OPTIONAL HISTORY',records:1}]);
+  assert(!packet.input.includes('z'.repeat(1000)));
+});
+
+test('BUDGET actual minimal compacted payload fits exactly; one character less fails closed with honest required size',()=>{
+  const sections=[{label:'AUTHORITY',value:{consent:false,source:'native'},required:true},
+    {label:'HISTORY',value:[{body:'x'.repeat(200000)}]}];
+  const baseline=budget.budgetTurnPrompt(sections,{maxChars:120000,reserveChars:0}),exact=baseline.input.length;
+  assert.equal(budget.budgetTurnPrompt(sections,{maxChars:exact,reserveChars:0}).input,baseline.input);
+  assert.throws(()=>budget.budgetTurnPrompt(sections,{maxChars:exact-1,reserveChars:0}),
+    error=>error.code==='CONTEXT_OVERFLOW'&&error.diagnostic.stage==='budget_metadata'&&error.diagnostic.required_chars===exact);
+});
+
+test('BUDGET exact selection preserves scalar sections and escaped JSON records at tight boundaries',()=>{
+  const sections=[{label:'AUTHORITY',value:{source:'native',consent:false},required:true},
+    {label:'HISTORY',value:[{id:1,text:'"\\\n'.repeat(120)},{id:2,text:'short sourced clue'}]},
+    {label:'SCALAR',value:'Whole descriptive record.'},
+    {label:'UNRELATED',value:[{id:3,text:'x'.repeat(10000)}]}];
+  for(const maxChars of [800,1000,1500,2500]){
+    const packet=budget.budgetTurnPrompt(sections,{maxChars,reserveChars:0});
+    assert(packet.input.length<=maxChars);assert(packet.input.includes(JSON.stringify(sections[0].value)));
+    for(const record of sections[1].value)if(packet.input.includes(`"id":${record.id}`))assert(packet.input.includes(JSON.stringify(record)));
+    assert.equal(packet.metrics.input_chars,packet.input.length);
+    assert.deepEqual(packet,budget.budgetTurnPrompt(sections,{maxChars,reserveChars:0}));
+  }
+});
+
+for(const value of [null,[1,2]])test(`BUDGET keeping tiny optional ${Array.isArray(value)?'array':'scalar'} can cost less than its omission descriptor`,()=>{
+  const sections=[{label:'AUTHORITY',value:{consent:false},required:true},{label:'TINY',value},
+    {label:'LARGE',value:[{body:'x'.repeat(200000)}]}];
+  const roomy=budget.budgetTurnPrompt(sections,{maxChars:5000,reserveChars:0});
+  const exact=budget.budgetTurnPrompt(sections,{maxChars:roomy.input.length,reserveChars:0});
+  assert.equal(exact.input,roomy.input);assert(exact.input.includes(`TINY:\n${JSON.stringify(value)}`));
+  assert.deepEqual(exact.metrics.omissions,[{section:'LARGE',records:1}]);
+});
+
+test('BUDGET structured requests without the complete authority policy still receive the full native policy',()=>nativeFixture(async f=>{
+  const ai=new FakeResponses([{ok:true}]),gm=service(f,ai),req={model:'offline',instructions:'Partial APPLICATION AUTHORITY POLICY v1 is not complete.',input:'native test'};
+  const before=structuredClone(req);await gm.structuredResponse(req,{guildId:f.guild});
+  assert.equal(ai.requests.length,1);assert(ai.requests[0].instructions.startsWith(`${AUTHORITY_POLICY}\n`));
+  assert.deepEqual(req,before,'Deduplication does not mutate the caller request.');
+}));
 
 test('BUDGET session storage aliases only an identical separately retained assembly plan',()=>{
   const plan={public_opening:'Established opening',character_entries:[],delivery_state:{part:{status:'uncertain'}}};
@@ -94,6 +149,7 @@ test('BUDGET ordinary party/private turns retain complete background when it fit
     messageText:'What do I remember about the copper button?',scope});
   assert.equal(ai.requests.length,2);
   for(const request of ai.requests){
+    assert.equal(request.instructions.split(AUTHORITY_POLICY).length-1,1,'One complete policy, not duplicate fixed guidance.');
     assert(request.input.includes('A patient mechanic who remembers the copper button.'));
     assert(request.input.includes('CHARACTER BACKGROUND REFERENCE (GM-private; not mechanical authority)'));
     assert(request.input.includes(`character:${pc.id}:field:notes`));
