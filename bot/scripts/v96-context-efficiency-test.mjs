@@ -23,6 +23,83 @@ const response=()=>{
 const service=(f,ai,metrics=new OperationalMetrics())=>new GMService({db:f.db,ai,metrics,
   content:new ContentIndex(path.resolve('../content')),config:{gmModel:'offline',maxRecentMessages:10,maxContentChunks:2}});
 
+test('BUDGET session storage aliases only an identical separately retained assembly plan',()=>{
+  const plan={public_opening:'Established opening',character_entries:[],delivery_state:{part:{status:'uncertain'}}};
+  const session={id:'s',status:'active',assembly_phase:'assembly',assembly_plan_json:JSON.stringify(plan),director_state_json:'{"scene_number":2}'};
+  const before=structuredClone(session),out=budget.referenceSessionContext(session,plan);
+  assert.equal(out.assembly_plan_json,undefined);assert.equal(out.assembly_plan_detail.section,'ASSEMBLY PLAN (GM-PRIVATE; protect per-character hooks)');
+  assert.equal(out.director_state_json,session.director_state_json);assert.equal(out.id,session.id);assert.deepEqual(session,before);
+  for(const changed of [{...plan,public_opening:'Changed'},null])assert.deepEqual(budget.referenceSessionContext(session,changed),session);
+  assert.deepEqual(budget.referenceSessionContext({...session,assembly_plan_json:'{malformed'},plan),{...session,assembly_plan_json:'{malformed'});
+  assert.equal(budget.referenceSessionContext(null,plan),null);
+});
+
+test('BUDGET roster partition retains mechanics, unknown fields, control and hook permissions exactly',()=>{
+  const roster=[{character_id:'pc',user_id:'owner',presence:'present',control_policy:'player_only',proxy_user_id:null,
+    accessibility:{screen_reader:true},sheet:{traits:{Agility:2},resources:{hope:3},domain_cards:['Native feature'],
+      inventory:[{name:'Armor',slots:3}],hook_permissions:{pursuit:false},unrecognized_native_field:{value:5},
+      background:'BACKGROUND',notes:'NOTES',appearance:'DESCRIPTION'}}];
+  const before=structuredClone(roster),out=budget.partitionRosterContext(roster);
+  for(const field of ['traits','resources','domain_cards','inventory','hook_permissions','unrecognized_native_field'])
+    assert.deepEqual(out.roster[0].sheet[field],roster[0].sheet[field],field);
+  assert.equal(out.roster[0].sheet.notes,undefined);assert.equal(out.background.length,3);
+  assert.equal(out.roster[0].control_policy,'player_only');assert.deepEqual(out.roster[0].accessibility,roster[0].accessibility);
+  assert.deepEqual(out.background.map(row=>row.value),['BACKGROUND','NOTES','DESCRIPTION']);
+  assert(out.background.every(row=>row.visibility==='gm'&&row.character_id==='pc'&&row.user_id==='owner'&&row.content_hash));
+  assert.deepEqual(roster,before,'Prompt projection must not edit characters.');
+});
+
+test('BUDGET nontext sheet fields and unidentified character data are never silently deferred',()=>{
+  const rows=[{character_id:'pc',sheet:{notes:{native_rule:'Do not spend Hope'},appearance:['structured contract']}},
+    {user_id:'missing-character',sheet:{notes:'Keep this field mandatory without native identity'}}];
+  const packet=budget.partitionRosterContext(rows);
+  assert.deepEqual(packet.roster.map(row=>row.sheet),rows.map(row=>row.sheet));assert.equal(packet.background.length,0);
+});
+
+test('BUDGET real oversized four-owner turn keeps one assembly detail and all native authority while omitting whole background fields',()=>nativeFixture(async f=>{
+  for(const pc of f.pcs)f.db.updateCharacterData(pc.id,data=>{
+    data.notes=`BACKGROUND-${pc.name}: `+'unrelated background '.repeat(2200);
+    data.background='An old account. '.repeat(1200);data.hook_permissions={may_disclose:false};
+    data.unknown_mechanical_contract={version:9,allowed:false};
+  });
+  f.db.setAssemblyPlan(f.session.id,{public_opening:'SAVED-ASSEMBLY-FULL '+ 'saved opening '.repeat(700),character_entries:[],gm_notes:'Keep private.'});
+  const ai=new FakeResponses([response()]),gm=service(f,ai),source='I examine the terminal.',ledger={handled_spans:[],native_receipts:[],unresolved_spans:[{id:'span:0:23',text:source}]};
+  const before=f.pcs.map(pc=>f.db.getCharacter(pc.id).data);
+  await gm.runTurn({guildId:f.guild,actorUserId:f.pcs[0].owner_user_id,actorName:f.pcs[0].name,messageText:source,sourceText:source,nativeLedger:ledger});
+  assert.equal(ai.requests.length,1);const req=ai.requests[0],parts=req.input.split('\n\n---\n\n');
+  assert(req.input.length+req.instructions.length<120000);assert.match(req.input,/CONTEXT BUDGET/);
+  assert.equal(req.input.split('SAVED-ASSEMBLY-FULL').length-1,1);
+  const roster=JSON.parse(parts.find(part=>part.startsWith('ROSTER/PRESENCE:\n')).slice('ROSTER/PRESENCE:\n'.length));
+  assert.equal(roster.length,4);
+  for(const row of roster){assert(row.character_id);assert.equal(row.sheet.hook_permissions.may_disclose,false);
+    assert.equal(row.sheet.unknown_mechanical_contract.allowed,false);assert(row.sheet.resources);assert(row.sheet.traits);}
+  for(const label of ['NATIVE SOURCE-SPAN LEDGER','CURRENT COMBATANTS','SAVED GM RULINGS','PENDING NATIVE CONTINUATIONS',
+    'PENDING NATIVE ACTION REVIEWS','AUTHENTICATED RAW PLAYER SOURCE'])assert(req.input.includes(label),label);
+  assert(req.input.includes(JSON.stringify(ledger)));assert(req.input.includes(source));
+  assert.deepEqual(f.pcs.map(pc=>f.db.getCharacter(pc.id).data),before);
+}));
+
+test('BUDGET unknown oversized mechanical fields still fail closed before the provider',()=>nativeFixture(async f=>{
+  f.db.updateCharacterData(f.pcs[0].id,data=>{data.unrecognized_native_contract='x'.repeat(130000);});
+  const ai=new FakeResponses([]),gm=service(f,ai);
+  await assert.rejects(()=>gm.runTurn({guildId:f.guild,actorUserId:f.pcs[0].owner_user_id,actorName:f.pcs[0].name,
+    messageText:'What now?'}),error=>error.code==='CONTEXT_OVERFLOW');
+  assert.equal(ai.requests.length,0);
+}));
+
+test('BUDGET ordinary party/private turns retain complete background when it fits, without another request',()=>nativeFixture(async f=>{
+  const pc=f.pcs[0];f.db.updateCharacterData(pc.id,data=>{data.notes='A patient mechanic who remembers the copper button.';});
+  const ai=new FakeResponses([response(),response()]),gm=service(f,ai);
+  for(const scope of ['party','private'])await gm.runTurn({guildId:f.guild,actorUserId:pc.owner_user_id,actorName:pc.name,
+    messageText:'What do I remember about the copper button?',scope});
+  assert.equal(ai.requests.length,2);
+  for(const request of ai.requests){
+    assert(request.input.includes('A patient mechanic who remembers the copper button.'));
+    assert(request.input.includes('CHARACTER BACKGROUND REFERENCE (GM-private; not mechanical authority)'));
+    assert(request.input.includes(`character:${pc.id}:field:notes`));
+  }
+}));
+
 test('MEASURE paired combined GM requests, synthetic bytes/timing and unknown usage',()=>nativeFixture(async f=>{
   configureCityFlags(f.db,f.guild,{adaptive_context:true},'gm');
   for(let i=0;i<24;i++)f.db.addFact(f.guild,{content:`Terminal evidence ${i}: `+'intact testimony '.repeat(12),visibility:'party'});

@@ -1,7 +1,35 @@
 /** Whole-turn character budget: preserve mandatory authority and omit only complete optional records. No writes or provider calls. */
+import {createHash} from 'node:crypto';
 const separator="\n\n---\n\n";
 const encode=value=>typeof value==="string"?value:JSON.stringify(value)??"null";
 const render=(section,value=section.value)=>`${section.label}:\n${encode(value)}`;
+/** Alias duplicate storage only when the complete identical assembly detail is retained separately. */
+export function referenceSessionContext(session,assembly){
+  if(!session||typeof session.assembly_plan_json!=='string'||assembly==null)return session;
+  try{if(JSON.stringify(JSON.parse(session.assembly_plan_json))!==JSON.stringify(assembly))return session;}
+  catch{return session;}
+  const {assembly_plan_json,...projected}=session;
+  return {...projected,assembly_plan_detail:{section:'ASSEMBLY PLAN (GM-PRIVATE; protect per-character hooks)',session_id:session.id}};
+}
+// Only known descriptive fields are deferrable. Unknown fields, mechanics, inventory, permissions,
+// owner/control and accessibility remain mandatory; this is not a sheet migration or authority classifier.
+const descriptiveSheetFields=new Set(['background','notes','backstory','personality','appearance','description','biography']);
+export function partitionRosterContext(rows){
+  const background=[];
+  const roster=rows.map(row=>{
+    if(!row.character_id||!row.sheet||typeof row.sheet!=='object'||Array.isArray(row.sheet))return row;
+    const sheet={},refs=[];
+    for(const [field,value] of Object.entries(row.sheet)){
+      if(!descriptiveSheetFields.has(field)||typeof value!=='string'){sheet[field]=value;continue;}
+      const content_hash=createHash('sha256').update(JSON.stringify(value)).digest('hex');
+      const locator=`character:${row.character_id}:field:${field}`;
+      refs.push({field,content_hash,locator});
+      background.push({character_id:row.character_id,user_id:row.user_id,field,value,content_hash,locator,visibility:'gm'});
+    }
+    return {...row,sheet,sheet_detail_refs:refs};
+  });
+  return {roster,background};
+}
 /** Only identical native fact records in this same scoped plan may reference an already rendered detail section.
  * No text similarity, cross-plan cache, source-only replacement or merging of conflicting revisions. */
 export function referenceContextPlan(plan,facts){

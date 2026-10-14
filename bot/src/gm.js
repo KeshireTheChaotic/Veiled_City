@@ -34,7 +34,7 @@ import { entryReferenceContext } from "./scene-entry.js";
 import { OnlineSrd } from "./rules-srd.js";
 import { interpretationSchema, CONTEXT_CONTRACT, interpretationContext, validateInterpretation } from "./narrative-context.js";
 import { epistemicSchema, evidenceType, activeEvidence } from "./epistemic.js";
-import { budgetTurnPrompt, referenceContextPlan } from "./prompt-budget.js";
+import { budgetTurnPrompt, referenceContextPlan, referenceSessionContext, partitionRosterContext } from "./prompt-budget.js";
 import { recoverOptionalTurnFields } from "./turn-recovery.js";
 import { projectAuthorityRecords } from "./authority-projection.js";
 import { operationalMetrics, measureStage, measureNative } from "./operational-metrics.js";
@@ -555,7 +555,7 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
         control_policy:actorAssignment.control_policy,player_packet:actorAssignment.player_packet
       }:{controller_user_id:actorUserId,owner_user_id:actorAssignment.discord_user_id,character_id:actorAssignment.character_id,character_name:actorAssignment.name,control_policy:actorAssignment.control_policy}):null,
       active_npc_proxies:session?this.db.listNpcProxies(session.id,{statuses:["active"]}).map(p=>({npc_name:p.npc_name,controller_user_id:p.discord_user_id,control_level:p.control_level})):[],
-      roster:summarizeRoster(roster),
+      roster:summarizeRoster(roster).map((row,index)=>({...row,character_id:roster[index].character_id||null})),
       recent:recent.map(m=>({speaker:m.speaker_name,user_id:m.discord_user_id,visibility:m.visibility,subject_user_id:m.subject_user_id,character_id:m.character_id,content:m.content})),
       actor_visible_facts:actorFacts,
       gm_all_facts:contextPlan?contextPlan.segments.filter(row=>row.source.startsWith("fact:")).map(row=>row.data):gmFacts,
@@ -634,8 +634,10 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
       "Veiled City setting lens: hospitality can create supernatural/social obligations only when established custom, invitation, shelter, exchange, oath, Court/Concord practice, or explicit terms support it; ordinary politeness is not automatically a binding contract. Record remembered hospitality/debt as relational memory/knowledge, not global canon. Veil/threshold/anchor effects may shape supernatural impressions, but never give an NPC omniscience through the Veil.",
       "MANDATORY POST-TURN STATE REVIEW: explicitly review facts/clues, PC resources, clocks, threads, references, relationships, NPC cognition, handouts, canon, Veil Exposure and scene continuity. Match changed/no_change to structured category mutations, with a reason and confidence 0-100. World additions/actions have their own native receipt, not legacy category events. A canon_proposals entry is not a canon change. Low confidence alone never requires a human: simplify ordinary fiction, safely retry or ask a material player question. Never hide mechanics in prose; native validators remain mandatory.",
       "For scene continuity, choose transition only when fictional location, objective, time frame, or dramatic scene boundary actually changes. Provide a short new-scene label when transitioning; otherwise use continue with an empty label.",
+      "Character background references are GM-private descriptive material, not mechanics, consent or actor knowledge. A deferred field locator/hash is not its content or a tool result; never invent omitted details or infer permission from omission.",
       "Keep narration suitable for Discord. Prefer 1-4 compact paragraphs unless a longer scene is genuinely needed."
     ].join("\n\n");
+    const rosterContext=partitionRosterContext(ctx.roster);
     const rawSections=[
       `NPC DICTION GUIDANCE (GM-private; not facts or PC emotions): ${JSON.stringify(ctx.npc_cognition.slice(0,4)
         .map(row=>portrayalPacket(this.db,guildId,row.npc_key)))}`,
@@ -654,13 +656,14 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
       `SCOPED INTERPRETATION (not authority): ${JSON.stringify(interpretationContext(this.db,guildId,actorUserId,ctx.actor_assignment?.character_id,messageText,{mode:scope,messageId}))}`,
       `CONVERSATIONAL ENTRY REFERENCES (not authority): ${JSON.stringify(entryReferenceContext(this.db,guildId,actorUserId,ctx.actor_assignment?.character_id,{mode:scope}))}`,
       `AI MANAGEMENT (GM-private proposals, policy, revisions and receipts; never actor knowledge): ${JSON.stringify(ctx.ai_management)}`,
-      `SESSION:\n${JSON.stringify(ctx.session)}`,
+      `SESSION:\n${JSON.stringify(referenceSessionContext(ctx.session,ctx.assembly))}`,
       `ASSEMBLY PLAN (GM-PRIVATE; protect per-character hooks):\n${JSON.stringify(ctx.assembly)}`,
       `ESTABLISHED PARTY STATE:\n${JSON.stringify(ctx.party_state)}`,
       `CURRENT ENCOUNTER (GM-PRIVATE; do not expose BP math/composition unless learned in fiction):\n${JSON.stringify(ctx.current_encounter)}`,
       `ACTING CHARACTER/NPC ASSIGNMENT:\n${JSON.stringify(ctx.actor_assignment)}`,
       `ACTIVE HUMAN-CONTROLLED NPC PROXIES:\n${JSON.stringify(ctx.active_npc_proxies)}`,
-      `ROSTER/PRESENCE:\n${JSON.stringify(ctx.roster)}`,
+      `ROSTER/PRESENCE:\n${JSON.stringify(rosterContext.roster)}`,
+      `CHARACTER BACKGROUND REFERENCE (GM-private; not mechanical authority):\n${JSON.stringify(rosterContext.background)}`,
       `RECENT TRANSCRIPT VISIBLE TO THIS PLAYER:\n${JSON.stringify(ctx.recent)}`,
       `FACTS VISIBLE TO ACTING PLAYER:\n${JSON.stringify(ctx.actor_visible_facts)}`,
       `GM-PRIVATE + ALL KNOWN FACTS (OBJECTIVE CAMPAIGN CONTEXT; DO NOT ASSUME NPCS KNOW THESE):\n${JSON.stringify(ctx.gm_all_facts)}`,
@@ -702,7 +705,7 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
       const label=text.slice(0,split),body=text.slice(split+1).trimStart();let value=body;
       try{value=JSON.parse(body);}catch{ /* Preserve authored input and static instructions verbatim. */ }
       return {label,value,required:requiredLabels.has(label),priority:label.startsWith("RECENT TRANSCRIPT")?30:
-        label.startsWith("NPC_COGNITION")||label.startsWith("FACTS VISIBLE")?20:0};
+        label.startsWith("NPC_COGNITION")||label.startsWith("FACTS VISIBLE")||label.startsWith("CHARACTER BACKGROUND REFERENCE")?20:0};
     });
     sections.push({label:"CANON LEDGER (authoritative; GM-private)",value:ctx.canon,required:true},
       {label:"SAVED GM RULINGS (authoritative)",value:ctx.rulings,required:true},
