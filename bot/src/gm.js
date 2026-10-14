@@ -1,6 +1,7 @@
 /** AI GM service: prompt/context assembly, structured schemas, and model calls. It proposes state; state.js/VeiledDB enforce authority. */
 import OpenAI from "openai";
-import {randomUUID} from 'node:crypto';
+import {randomUUID,createHash} from 'node:crypto';
+import {setTimeout as waitForRetry} from 'node:timers/promises';
 import { AUTHORITY_POLICY } from "./authority-policy.js";
 import { conversationPrincipal } from "./conversation-principal.js";
 import {continuationInbox} from "./action-continuation.js";
@@ -355,9 +356,12 @@ export class GMService{
   async requestModel(request,{guildId,signal,retry=false}={}){
     const limit=Number.isInteger(this.config.openaiMaxRetries)?Math.max(0,Math.min(5,this.config.openaiMaxRetries)):1;
     for(let attempt=0;attempt<=limit;attempt++){
+      if(signal?.aborted)throw Object.assign(new Error('Model operation cancelled before dispatch.'),{code:'AI_GENERATION_DEADLINE'});
       const start=performance.now();
+      let response=null;
       try{
-        const response=await this.ai.responses.create(request,{signal,maxRetries:0});
+        response=await this.ai.responses.create(request,{signal,maxRetries:0});
+        if(signal?.aborted)throw Object.assign(new Error('Model response arrived after cancellation.'),{code:'AI_GENERATION_DEADLINE'});
         this.metrics.record('model_request',{guildId,model:request.model,durationMs:performance.now()-start,
           inputTokens:response?.usage?.input_tokens,outputTokens:response?.usage?.output_tokens,
           cachedInputTokens:response?.usage?.input_tokens_details?.cached_tokens,retries:(attempt>0||retry)?1:0});
@@ -365,13 +369,21 @@ export class GMService{
       }catch(error){
         const code=signal?.aborted?'AI_GENERATION_DEADLINE':'PROVIDER_ERROR';
         this.metrics.record('model_request',{guildId,model:request.model,durationMs:performance.now()-start,status:'error',errorCode:code,
+          inputTokens:response?.usage?.input_tokens,outputTokens:response?.usage?.output_tokens,
+          cachedInputTokens:response?.usage?.input_tokens_details?.cached_tokens,
           retries:(attempt>0||retry)?1:0});
         this.metrics.incident('model',{guildId,reference:randomUUID(),code});
         const recoverable=[408,409,429].includes(error.status)||error.status>=500
           ||['APIConnectionError','APIConnectionTimeoutError'].includes(error.name);
         if(signal?.aborted||!recoverable||attempt===limit)throw error;
         // Preserve bounded provider retries without collecting headers, request bodies or SDK error messages.
-        await new Promise(resolve=>setTimeout(resolve,Math.min(1000,250*2**attempt)));
+        const hint=error.headers?.get?.('retry-after')??error.headers?.['retry-after']??error.headers?.['Retry-After'];
+        const hintedMs=typeof hint==='string'?(/^\d+(?:\.\d+)?$/.test(hint.trim())
+          ?Number(hint)*1000:Date.parse(hint)-Date.now()):NaN;
+        const delayMs=Math.max(Math.min(1000,250*2**attempt),Number.isFinite(hintedMs)?Math.max(0,hintedMs):0);
+        // A long server delay is a bounded deferral, not permission to retry sooner than requested.
+        if(delayMs>1000)throw error;
+        await waitForRetry(delayMs,undefined,{signal});
         if(signal?.aborted)throw error;
       }
     }
@@ -896,7 +908,7 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
     return result;
   }
 
-  async planNpcActions({guildId,layer,query,candidates}){
+  async planNpcActions({guildId,layer,query,candidates,cycleKey=null}){
     const deliveryTargets=this.db.listPlayers(guildId).slice(0,50).map(player=>({user_id:player.discord_user_id,
       characters:this.db.listCharacters(guildId,player.discord_user_id).map(character=>({id:character.id,name:character.name}))}));
     const rumors=this.db.listSimulationRecords(guildId,{kind:"rumor",limit:100});
@@ -913,11 +925,24 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
       "Routine attacks cause only bounded wounds; sabotage only minor damage. Never use routine classification to express irreversible intent.",
       "public_hook is a brief player-perceivable setup (a knock, summons, caller, report, clue, waiting NPC), never a claim of mechanical success or hidden motives.",
       "Private hooks need an established player recipient. Otherwise leave private_user_id empty. Empty hooks are valid for still-hidden actions.",
-      `Layer: ${layer}`,`Scene/query: ${query}`,`Hook delivery identities (not automatic NPC knowledge): ${JSON.stringify(deliveryTargets)}`,
+      `Layer: ${layer}`,`Native opportunity locator (not effect authority): ${JSON.stringify(cycleKey)}`,
+      `Scene/query: ${query}`,`Hook delivery identities (not automatic NPC knowledge): ${JSON.stringify(deliveryTargets)}`,
       `Actor-specific packets: ${JSON.stringify(packets)}`].join("\n\n");
     const management=`\nAI MANAGEMENT (GM-private planning only, not actor knowledge): ${JSON.stringify(intentContext(this.db,guildId))}`;
-    return this.requestStructured({model:this.config.gmModel,input:input+management,max_output_tokens:2400,
-      text:{format:{type:"json_schema",name:"npc_director",strict:true,schema:npcDirectorSchema}}},{guildId,label:"NPC Director"});
+    const request={model:this.config.gmModel,input:input+management,max_output_tokens:2400,
+      text:{format:{type:"json_schema",name:"npc_director",strict:true,schema:npcDirectorSchema}}};
+    if(!cycleKey)return this.requestStructured(request,{guildId,label:"NPC Director"});
+    // Share only an identical in-flight proposal request, never native effects or completed output.
+    // Full prompt/schema/model + guild/opportunity bind privacy and revisions; each caller gets a clone.
+    this.npcPlanFlights??=new Map();
+    const key=createHash('sha256').update(JSON.stringify([guildId,request])).digest('hex');
+    let flight=this.npcPlanFlights.get(key);
+    if(!flight){
+      flight=this.requestStructured(request,{guildId,label:"NPC Director"})
+        .finally(()=>{if(this.npcPlanFlights.get(key)===flight)this.npcPlanFlights.delete(key);});
+      this.npcPlanFlights.set(key,flight);
+    }
+    return structuredClone(await flight);
   }
 
   async planAssembly({guildId,mode=null}){

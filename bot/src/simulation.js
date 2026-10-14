@@ -591,7 +591,7 @@ export async function prepareNpcDirector({db,gm,guildId,layer,cycleKey,query="",
   const prior=db.getSimulationRecord(guildId,cycleId);
   if(prior?.status==="completed") return {replayed:true,guildId};
   const candidates=simulationCandidates(db,guildId,{layer,query});
-  const proposed=candidates.length?await gm.planNpcActions({guildId,layer,query,candidates}):{actions:[]};
+  const proposed=candidates.length?await gm.planNpcActions({guildId,layer,query,candidates,cycleKey}):{actions:[]};
   return {guildId,layer,cycleKey,minutes,cycleId,candidates,proposed,query};
 }
 

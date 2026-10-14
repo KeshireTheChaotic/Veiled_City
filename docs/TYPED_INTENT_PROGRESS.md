@@ -1,5 +1,9 @@
 # Typed Intent Refinement Progress
 
+## Current resume pointer — V96-07 (2026-10-13)
+
+**QUALIFIED OFFLINE**, starting V96-06 `732936aac55e30e0b6200e4273f8a4d17a79c2d1`, origin `d670fcd` integrated. TOK05–07 preserve native/direct/assisted 0/1/2 call paths, reject pre-cancelled/late candidates without inventing usage, honor bounded retry/server hints, and share only exact in-flight NPC proposals, never effects. Final own **11/11**, native T1 **128/128**, full T2 **146/146**, **0 failed / 0 not-run**, **26/26** acceptance mappings, **393,892 ms**, both D08/check/manifest/diff integrity. Local commit `perf(v9.6-routing): minimize redundant model calls without lost turns`; SHA supplied in handoff/Git history. [Actual failures/results](V96_PROGRESS.md), [contract/limits/rollback](V96_07_REQUEST_CONTRACT.md). No push/deploy/live operation; V96-08 is next, unstarted.
+
 ## Current resume pointer — V96-06 (2026-10-13)
 
 **QUALIFIED OFFLINE**, starting `9421b6e3dceeb0c1f5f86aa7f3c347b644833b25`, origin integrated at `d670fcd9d6c2963c00f208c11d3c35dd2edf9742`. TOK01–04 plus upstream candidate hotfix and separately retained supplemental regressions pass final **145/145** mandatory suites, **0 failed / 0 not-run**, **26/26** acceptance mappings, **398,802 ms**, both D08/check/manifest/diff integrity. All **365** frozen non-document inputs unchanged; **621** manifest files. Local commit `perf(v9.6-context): reduce redundant context with continuity safeguards`; SHA follows in next-phase start/Git history. No push/deployment/live operation. [Exact evidence, failed and pre-merge runs](V96_PROGRESS.md), [implementation/limits/rollback](V96_06_CONTEXT_CONTRACT.md). No real-model token, cache, latency or quality claim. V96-07 begins after this commit.

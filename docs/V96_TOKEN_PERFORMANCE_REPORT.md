@@ -1,5 +1,13 @@
 # V96 token / performance baseline
 
+## V96-07 synthetic call-path checkpoint
+
+Starting `732936aac55e30e0b6200e4273f8a4d17a79c2d1`. Existing ordinary path counts remain **0 native queries / 1 direct combined / 2 assisted router+combined**; no model change or typical-turn saving claimed. Actual injected concurrent preparation of one native NPC cycle changed **2 requests → 1**, with one committed native tick before/after and zero additional request on completed-cycle restart. Sharing binds exact current request bytes and native opportunity, never outputs/effects. Distinct guilds/opportunities/owner context/models remain independent. Cancelled pre-dispatch requests make zero calls; actually received late usage is counted once and never turned into native effects.
+
+Frozen eleven-case suite's actual source/commit/fake-delivery fixture: direct **53.9719 ms**, assisted **49.2060 ms**, **n=1 per flow**, hence each flow's nearest-rank p50/p95 is just its sole sample, not a useful distribution. Aggregate synthetic model stage **n=3**, p50 **0.5617 ms**, p95 **0.7073 ms**; **3 unknown usage**, **0 retries**, reported input/output/cache tokens **unknown**. No real-model latency, caching, narrative quality, cost or billing claim. Native/source/privacy/complete-response quality is deterministic regression evidence, not a prose rating. [Phase contract and official retry source](V96_07_REQUEST_CONTRACT.md), [qualification ledger](V96_PROGRESS.md). Earlier baseline measurements below remain historical.
+
+Final V96-07 same-tree qualification: **146/146** mandatory offline suites, zero failed/not-run, both D08, **26/26** acceptance mappings, **393,892 ms**, check/manifest/diff integrity. This is authority/compatibility evidence, not measured live interactivity or model narrative quality. Real token/cost/cache/latency comparisons still require separate authorization and representative live measurements; none were performed.
+
 ## V96-06 paired synthetic checkpoint (unqualified)
 
 Starting HEAD `9421b6e3dceeb0c1f5f86aa7f3c347b644833b25`. Same `MEASURE` fixture, twenty-four native facts, party/private combined turns; initial run before production edits, final focused run after scoped changes. Logs live outside the repository in TEMP (`veiled-v96-06-red.log`, `veiled-v96-06-final-focus.log`). Each measurement made **two synthetic requests total**, one per turn, **zero retry/repair**, **two unknown usage reports** and **no prompt-budget omissions**. Input/output/cached provider tokens are **unknown**, not reported zeros. Actual output-token/cost/live latency savings remain unknown.

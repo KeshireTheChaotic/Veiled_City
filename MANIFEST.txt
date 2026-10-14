@@ -172,6 +172,7 @@ bot/scripts/v96-corpus.mjs
 bot/scripts/v96-fresh-authoring-test.mjs
 bot/scripts/v96-native-actions-test.mjs
 bot/scripts/v96-ordinary-effects-test.mjs
+bot/scripts/v96-routing-efficiency-test.mjs
 bot/scripts/v96-rules-discretion-test.mjs
 bot/scripts/v96-semantic-intake-test.mjs
 bot/scripts/v96-semantic-output-p0-test.mjs
@@ -555,6 +556,7 @@ docs/V96_05R_OUTPUT_BOUNDARY_EXPERIMENT.md
 docs/V96_05R_OUTPUT_CONTRACT.md
 docs/V96_05S_SEMANTIC_CONTRACT.md
 docs/V96_06_CONTEXT_CONTRACT.md
+docs/V96_07_REQUEST_CONTRACT.md
 docs/V96_ACCEPTANCE_CROSSWALK.csv
 docs/V96_ACTION_REVIEW.md
 docs/V96_CODEX_KICKOFF.md

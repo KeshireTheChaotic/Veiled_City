@@ -706,8 +706,8 @@
     },
     {
       "path": "bot/scripts/v9-release-qualification-test.mjs",
-      "size_bytes": 18828,
-      "sha256": "931d9bcaca8689fbdc8983815f8921c4c5e277978abe4d8a3179dbf9c3caad0a"
+      "size_bytes": 19031,
+      "sha256": "7af087b85d76d2dbc60875832edd7d1ad66778b26f65475e7f2b8521cb353636"
     },
     {
       "path": "bot/scripts/v9-roll-truth-test.mjs",
@@ -875,6 +875,11 @@
       "sha256": "89cbcdf2049f7e2b25b7a76c9307d8af9e016a96a60791bb58906095ea18183f"
     },
     {
+      "path": "bot/scripts/v96-routing-efficiency-test.mjs",
+      "size_bytes": 15193,
+      "sha256": "f7fc4d821507a7969f7451206583ddf8ea9e6fbd775f27cfdad0146addea42e6"
+    },
+    {
       "path": "bot/scripts/v96-rules-discretion-test.mjs",
       "size_bytes": 18214,
       "sha256": "de89adc637b299186cab6f91419e8ca889b1157fd3ea329e9c6598a6ecf0f2ee"
@@ -901,8 +906,8 @@
     },
     {
       "path": "bot/scripts/validate-offline.mjs",
-      "size_bytes": 8307,
-      "sha256": "e2e731feadd89669949d8abac3a07b72798e957aaa3a4d62ba1f2eb23083beba"
+      "size_bytes": 8351,
+      "sha256": "de0601b11b1c563d2c08cb7e8f5f27d76da2c844aa885fdd47f02ca48dc0abbe"
     },
     {
       "path": "bot/sql/schema.sql",
@@ -1231,8 +1236,8 @@
     },
     {
       "path": "bot/src/gm.js",
-      "size_bytes": 105142,
-      "sha256": "ae02d3fa693ce8fadb165b4651317fb52f9c6b011136e21c3def1dafef1f0525"
+      "size_bytes": 106979,
+      "sha256": "accde8f8345d775fcd8384822bbfa0611f1a4b2aca1415f8a8e2e2cac0b45d69"
     },
     {
       "path": "bot/src/handout.js",
@@ -1676,8 +1681,8 @@
     },
     {
       "path": "bot/src/simulation.js",
-      "size_bytes": 55772,
-      "sha256": "8236e94d59e9c9a191e19cd19b8ebf5af78baa795df788439b344ebfe293afbb"
+      "size_bytes": 55781,
+      "sha256": "9ea60521ce69fea97b97e0f60955db8125be1d6ee0a26ac74272f602675a933c"
     },
     {
       "path": "bot/src/state.js",
@@ -2581,8 +2586,8 @@
     },
     {
       "path": "docs/TYPED_INTENT_CONTRACTS.md",
-      "size_bytes": 92403,
-      "sha256": "79ca8b87be22ef92824e9ccc04f9e3a33c614a52a27eb84fc5d0a4c6f9d3651a"
+      "size_bytes": 93215,
+      "sha256": "1210dc56416fa9eb9d6e1bd4fa8288a73ac9415a162aa1e2d2894fad01abc63d"
     },
     {
       "path": "docs/TYPED_INTENT_DELTA_AUDIT.md",
@@ -2596,8 +2601,8 @@
     },
     {
       "path": "docs/TYPED_INTENT_PROGRESS.md",
-      "size_bytes": 326271,
-      "sha256": "6677f19c0d701d8b1afbdb66f8076c3a58d346b462af5b2f1a0a1ac1cc31fc0b"
+      "size_bytes": 327112,
+      "sha256": "d383a74d7ea6b660246a4d4c69846bdf7faf04f54090bb8f181fb68181d8e688"
     },
     {
       "path": "docs/TYPED_INTENT_RELEASE_10.0.0.md",
@@ -2790,6 +2795,11 @@
       "sha256": "a0600f84998eb74a5671d99875ce19eb1050c31334de1b4e9a82dc0d6d476cb9"
     },
     {
+      "path": "docs/V96_07_REQUEST_CONTRACT.md",
+      "size_bytes": 7881,
+      "sha256": "1c8060301fbf9c193b40cf55f727a8dab00448151a9cbef866df54a24ef48bd8"
+    },
+    {
       "path": "docs/V96_ACCEPTANCE_CROSSWALK.csv",
       "size_bytes": 4847,
       "sha256": "afc7521a1c77a54fcb956cbb714dcdd59c521103d35edec7e5e0163000d6efdb"
@@ -2831,8 +2841,8 @@
     },
     {
       "path": "docs/V96_PROGRESS.md",
-      "size_bytes": 61377,
-      "sha256": "5d14a108ae1472b7d03872444593d4f9cf48d27ae87e0f334fa2f15998da32d6"
+      "size_bytes": 66152,
+      "sha256": "a1c3baeee5f03e8765875fa437e80f19575ad05451873eb83c8ab242d57d0247"
     },
     {
       "path": "docs/V96_RULE_DISCRETION_CONTRACT.md",
@@ -2846,8 +2856,8 @@
     },
     {
       "path": "docs/V96_TOKEN_PERFORMANCE_REPORT.md",
-      "size_bytes": 7742,
-      "sha256": "85e690234428b183ec621a9ebf1a7fc1b6bc834464bfc9d91f00e384c3e34819"
+      "size_bytes": 9645,
+      "sha256": "3d03a90487dcf3c3dc8b3ef917be777e2ce49e9853d69bec481b422714b1e52b"
     },
     {
       "path": "docs/V9_1_NARRATIVE_PVP_CONTRACT_REFERENCE.md",

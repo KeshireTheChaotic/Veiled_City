@@ -1,5 +1,9 @@
 # Typed Intent Authority Contracts
 
+## V96-06/07 offline qualification — context and requests
+
+Qualified local context phase **145/145** and request phase **146/146** preserve the foundational authority contract below. Retrieval/detail references, cache counters, engagement routing and shared in-flight NPC **proposals** do not grant actor knowledge or outcomes. Native source, owner, audience and current-state checks still own effects and publication; native receipts own replay. No model change, completed result/consent/dice/delivery cache or new effect adapter. [Context proof/limits](V96_06_CONTEXT_CONTRACT.md), [request/cadence proof/limits](V96_07_REQUEST_CONTRACT.md), [actual qualification ledger](V96_PROGRESS.md). Both D08 and original PC/PvP/resource/death/privacy guards passed; no live performance or universal semantics claim.
+
 ## V96-05E native follow-through (qualified offline: 142/142)
 
 Accepted typed intents are canonical adjudication inputs; authenticated human declarations own intent; native receipts own outcomes. Saved success/no-roll is a precondition, not material authority. Bounded `ordinary_effect_proposals` reuse only eligible native observation, delegated NPC intention, exact scene and matched service adapters. Separate effect receipts bind immutable native result, original ruling location/context, actual adapter terms/source/target and narrowest audience. Internal NPC intentions remain GM-only. Pending native child review retains the causal gate; a human GM cannot substitute terms, revive a retracted source, consent for a PC or grant an unsupported ability. Unsupported effects retain scoped private review; independent outcomes survive. No PC resource/custody/death/secret-disclosure fallback, generic roll-to-magic, extra dice/spending/provider call, or implicit private-to-party promotion. [Contract, routes, review controls and rollback](V96_05E_CONSEQUENCE_BRIDGE.md).
