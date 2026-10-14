@@ -1,7 +1,7 @@
 {
   "package": "Veiled_City_Multiplayer_Discord",
   "version": "10.0.0",
-  "generated": "2026-10-13",
+  "generated": "2026-10-14",
   "content_normalization": "utf8-lf",
   "files": [
     {
@@ -68,6 +68,11 @@
       "path": "bot/scripts/autonomous-world-test.mjs",
       "size_bytes": 14229,
       "sha256": "146915c465d856d7316d02b2ba1a0c9830417702c6695f40df570dbbfe458f2d"
+    },
+    {
+      "path": "bot/scripts/candidate-claim-quarantine-test.mjs",
+      "size_bytes": 9851,
+      "sha256": "bccedbfb944e0172a5fd674d420ac911e69f7757bbfe21c8d39d8396131767a0"
     },
     {
       "path": "bot/scripts/check-source.mjs",
@@ -886,8 +891,8 @@
     },
     {
       "path": "bot/scripts/validate-offline.mjs",
-      "size_bytes": 8188,
-      "sha256": "90f61fffa32f1f188f1c0044c2242e1cfa3a4920f14abc37eb0ec66916850321"
+      "size_bytes": 8236,
+      "sha256": "f409c47c593460238acc6568aa87d34d586d253b01c250021904f77b519496e0"
     },
     {
       "path": "bot/sql/schema.sql",
@@ -1286,8 +1291,8 @@
     },
     {
       "path": "bot/src/narrative-integrity.js",
-      "size_bytes": 24071,
-      "sha256": "d3dd7d46ac4ae1636f9c2ade822ac631f905013122de1e2ccde3f9ff0a350022"
+      "size_bytes": 25984,
+      "sha256": "6d9ebe4f65dad7c2f5f547e7778997ecd4eb39c368170fad97d5df968d58d4fc"
     },
     {
       "path": "bot/src/narrative-pvp.js",
@@ -1666,8 +1671,8 @@
     },
     {
       "path": "bot/src/state.js",
-      "size_bytes": 39286,
-      "sha256": "b2c99dd8a1caf776b2fa66b8c9d47f64a9e271ecdbcdbfdbd6f311ba9e3d1305"
+      "size_bytes": 39760,
+      "sha256": "75911b76d41a98b67622dfc9936ab7591876cb9cb28735cec1b2ffcb72d0f325"
     },
     {
       "path": "bot/src/story-commands.js",
@@ -2338,6 +2343,11 @@
       "path": "docs/HANDOUTS_AND_EVIDENCE.md",
       "size_bytes": 2026,
       "sha256": "b1c3ac422015fcb9f44bef42a4a1f3b79b8db8bad52f62e6f4f07a3f8522ee5b"
+    },
+    {
+      "path": "docs/HOTFIX_CANDIDATE_CLAIM_REVIEW.md",
+      "size_bytes": 7372,
+      "sha256": "79e5718578baa04a25c6fcd8a926e17cb329162fb869497860f8fae1b77d98f0"
     },
     {
       "path": "docs/IMPLEMENTATION_EVALUATION.md",

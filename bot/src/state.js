@@ -558,7 +558,13 @@ export function applyAuthoritativeMutation(db,{guildId,sessionId=null,events=[],
       origin:provenance.messageId||provenance.interactionId||source});
     const ordinaryEffects=applyOrdinaryEffects(db,guildId,narrative?.ordinary_effect_proposals||[],scope,
       {typedIntents,budget:opportunityBudget,provenance});
-    if(originalNarrative)validateCandidateClaims(db,guildId,originalNarrative,scope,eventResults);
+    if(originalNarrative){
+      const audit=validateCandidateClaims(db,guildId,originalNarrative,scope,eventResults,{output:narrative});
+      if(audit?.diagnostics?.length)db.saveCityRecord(guildId,{kind:'candidate_claim_review',
+        key:`candidate-claims:${createHash('sha256').update(JSON.stringify([sessionId,outputSource,originalNarrative])).digest('hex')}`,
+        status:'needs_review',visibility:'gm',source_event:outputSource||'',data:{version:1,diagnostics:audit.diagnostics,
+          authority:'rejected_unpublished_annotations_not_world_state'}});
+    }
     const nativeEntries=intents.filter(row=>row.status==='accepted'&&row.data.intent?.feature==='scene'
       &&row.data.intent.payload?.op==='enter'&&row.data.result?.status==='approved').map(row=>row.data.result.record_key);
     if((nativeEntries.length||ordinaryEffects.some(row=>row.status==='applied'))&&narrative)prepareAuthorizedTurnOutput(db,guildId,narrative,scope,{

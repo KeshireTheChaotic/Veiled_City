@@ -2,6 +2,7 @@
 import { sceneAccess, scenePresence, npcEvidenceActive } from "./scene-continuity.js";
 import { objectiveEvidence, activeEvidence, evidenceType } from "./epistemic.js";
 import { assertPvpOutput } from "./pvp-authorship.js";
+import { candidateNarrative } from "./pvp-output.js";
 const claimProperties={
   actor:{type:"string"},entity_type:{type:"string",enum:["character","npc","combatant","world"]},entity:{type:"string"},
   action:{type:"string",enum:["damage","movement","access","disclosure","obligation","status","canon","dice","possession"]},
@@ -20,6 +21,7 @@ export const NARRATIVE_CONTRACT="Return narrative_claims for EVERY consequential
   +"Use authored_source_span only for exact player-input evidence and output_claim_span only for the exact claim text on one output surface. Use empty authored_source_span when no human declaration supports the claim. Legacy source_span means output_claim_span only. Stable actor/entity IDs and source_ref identify existing fact/knowledge/canon/obligation evidence. "
   +"actor identifies the observer/speaker: npc:<key>, character:<id>, or empty for GM narration, not an invented NPC. "
   +"A character observing their own saved position needs no NPC witness. An entry declaration alone is not arrival evidence. Create ordinary places/people via world_additions, and arrival/presence via scene_actions before asserting material claims. Atmospheric details need no entity per noun. "
+  +"action=status means an existing character/NPC lifecycle, not a generic door, sound or equipment condition. Historical recap text supplies context, not a current lifecycle, repeated event or native consequence receipt. Use current source-grounded GM fiction parts for eligible description; do not manufacture a lifecycle claim for it. "
   +"Separate conversational understanding from authority: resolve ordinary contextual names, pronouns and references using scoped conversation. "
   +"Acknowledging an earlier attempt or clarified destination is not a material state change and needs no movement claim. "
   +"Do not demand a clarification solely because a place is not yet authorized. Ask only when unresolved ambiguity materially affects an action. "
@@ -157,9 +159,33 @@ export function validateNarrativeClaims(db,guildId,result,scope={mode:"party"},{
   return validateClaims(db,guildId,result,scope,{staged,eventResults},true);
 }
 /** Private candidate audit only. It validates annotations against native state, never grants publication authority. */
-export function validateCandidateClaims(db,guildId,result,scope,eventResults){
+export function validateCandidateClaims(db,guildId,result,scope,eventResults,{output=null}={}){
   if(!(result.narrative_claims||[]).length)return;
-  return validateClaims(db,guildId,result,scope,{staged:true,eventResults},false);
+  if(!output)return validateClaims(db,guildId,result,scope,{staged:true,eventResults},false);
+  // Only an actual native-prepared projection can separate an unpublished annotation
+  // from published assertions. A model flag, empty claims or forged output cannot.
+  assertPvpOutput(db,guildId,output,scope,{publication:true});
+  if(JSON.stringify(candidateNarrative(output))!==JSON.stringify(result))deny('candidate_output_binding');
+  const claims=result.narrative_claims;
+  if(!Array.isArray(claims)||claims.length>32)deny('claim_budget');
+  const diagnostics=[],remaining=[...claims];
+  for(let attempt=0;attempt<=claims.length;attempt++){
+    try{
+      validateClaims(db,guildId,{...result,narrative_claims:remaining},scope,{staged:true,eventResults},false);
+      return {ok:true,diagnostics};
+    }
+    catch(error){
+      // status is actor lifecycle, not a generic door/sound/equipment-description
+      // handler. These rejected world annotations remain private, never facts.
+      if(error.code!=='NARRATIVE_INTEGRITY'||!['actor_status','uncertainty_framing'].includes(error.diagnostic?.category))throw error;
+      const index=remaining.findIndex(raw=>raw?.entity_type==='world'&&raw.action==='status'&&!raw.authored_source_span
+        &&raw.entity===error.diagnostic.entity&&raw.actor===error.diagnostic.actor
+        &&(raw.output_claim_span??raw.source_span)===error.diagnostic.source_span);
+      if(index<0)throw error;
+      diagnostics.push({index:claims.indexOf(remaining[index]),...error.diagnostic});remaining.splice(index,1);
+    }
+  }
+  deny('claim_budget');
 }
 function validateClaims(db,guildId,result,scope,{staged=false,eventResults=[]},checkOutput){
   const outputAuthority=checkOutput?assertPvpOutput(db,guildId,result,scope):null;
