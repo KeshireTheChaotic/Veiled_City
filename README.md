@@ -161,11 +161,19 @@ commands are documented in [the inference audit](docs/NARRATIVE_INFERENCE_AUDIT.
 Remaining natural-language scope gaps are tracked in
 [the follow-up review](docs/NATURAL_LANGUAGE_SCOPE_DRIFT.md).
 
-Enable all 37 optional city/story flags only after reviewing their data and authority requirements:
+The current release supports 43 optional city/story flags. Review their data and authority requirements before enabling them. Start with the original 37:
 
 ```text
 /vc-city flags json:{"institutions":true,"opportunities":true,"economy":true,"minor_npcs":true,"adaptive_context":true,"conversations":true,"pacing":true,"negotiations":true,"voice_direction":true,"authoring":true,"emergent_goals":true,"consequences":true,"scene_continuity":true,"emergent_groups":true,"strategies":true,"personal_arcs":true,"discovery":true,"long_projects":true,"conflict_mediation":true,"memory_consolidation":true,"activity_density":true,"decision_advisory":true,"encounter_intelligence":true,"tactical_memory":true,"dialogue_history":true,"evidence_custody":true,"audience_influence":true,"player_organizations":true,"history_reconciliation":true,"narrative_setups":true,"supply_dependencies":true,"natural_language":true,"roll_requests":true,"roll_collaboration":true,"semantic_integrity":true,"narrative_relevance":true,"session_briefs":true}
 ```
+
+Then enable the six newer flags if desired:
+
+```text
+/vc-city flags json:{"autonomous_pvp_fear":true,"pvp_private_ui":true,"gm_discretion":true,"scoped_disclosure_recovery":true,"scene_descriptions":true,"post_projection_answers":true}
+```
+
+If a character has no native initial position, `/vc session present` offers an owner-private setup control for eligible existing locations. The owner chooses public or private disclosure, or leaves placement unconfirmed. This does not authorize travel or resolve prior attempts. See [scene narration and setup](docs/SCENE_NARRATION_REPAIR.md).
 
 Flags do not authorize AI execution. Start with review-only proposals:
 

@@ -47,6 +47,7 @@ import {ordinaryEffectContext} from './ordinary-effects.js';
 import {authorFreshNpcRequests,hasFreshNpcResponse,FRESH_NPC_INSTRUCTIONS,freshNpcResponseSchema} from './fresh-npc-authoring.js';
 import {worldInputKey} from './autonomous-world.js';
 import {shadowEngagement} from './engagement-shadow.js';
+import {authorFreshSceneRequests,hasFreshSceneResponse,FRESH_SCENE_INSTRUCTIONS,freshSceneResponseSchema} from './fresh-scene-authoring.js';
 
 const routerSchema={
   type:"object",
@@ -717,7 +718,9 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
       sections.push({label:"SOURCED CONTEXT PLAN (GM-only, never actor omniscience)",
         value:referenceContextPlan(ctx.context_plan,ctx.gm_all_facts),required:true});
     }
-    const {input}=budgetTurnPrompt(sections,{instructions,query:messageText});
+    // structuredResponse appends these fixed wrappers on every request; reserve them in addition to bounded correction headroom.
+    const reserveChars=6000+AUTHORITY_POLICY.length+INTENT_PROMPT.length+GM_WORLD_NARRATIVE_PROMPT.length+8;
+    const {input}=budgetTurnPrompt(sections,{instructions,query:messageText,reserveChars});
     const req={
       model:this.config.routineGmModel||this.config.gmModel,
       instructions,
@@ -755,7 +758,8 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
         throw new Error("Missing ordinary world data is AI-GM work, not a human approval prerequisite. Create/reuse ordinary fiction via native world additions/actions and keep the scene moving.");
       const obligation=semanticResponseObligation(authenticatedSource,result.player_intents,{authenticated:!!ctx.actor_assignment});
       if(obligation.needed&&(!result.respond||!String(result.narration||"").trim()
-        &&!hasFreshNpcResponse(this.db,guildId,result,typedScope,messageId&&typedScope.actorCharacterId?worldInputKey(messageId,typedScope.actorCharacterId):null)))
+        &&!hasFreshNpcResponse(this.db,guildId,result,typedScope,messageId&&typedScope.actorCharacterId?worldInputKey(messageId,typedScope.actorCharacterId):null)
+        &&!hasFreshSceneResponse(this.db,guildId,result,typedScope,messageId&&typedScope.actorCharacterId?worldInputKey(messageId,typedScope.actorCharacterId):null)))
         throw Object.assign(new Error("An authenticated in-character turn requires meaningful GM engagement without choosing a PC decision."),
           {code:"RESPONSE_OBLIGATION",diagnostic:obligation});
       validateInterpretation(this.db,guildId,result.narrative_interpretation,{mode:scope,actorUserId,actorCharacterId:ctx.actor_assignment?.character_id});
@@ -784,6 +788,15 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
     const author=async candidate=>{
       await this.authorFreshNpcs(guildId,candidate,{mode:scope,actorUserId,actorCharacterId:ctx.actor_assignment?.character_id},
         messageId&&ctx.actor_assignment?.character_id?worldInputKey(messageId,ctx.actor_assignment.character_id):null,authoringBudget,turnSignal,req.model);
+      await authorFreshSceneRequests({db:this.db,guild:guildId,result:candidate,
+        scope:{mode:scope,actorUserId,actorCharacterId:ctx.actor_assignment?.character_id},
+        sourceRef:messageId&&ctx.actor_assignment?.character_id?worldInputKey(messageId,ctx.actor_assignment.character_id):null,
+        budget:authoringBudget,generate:async packet=>{
+          try{const response=await this.requestModel({model:req.model,instructions:FRESH_SCENE_INSTRUCTIONS,input:JSON.stringify(packet),
+            max_output_tokens:700,text:{format:{type:'json_schema',name:'audience_scoped_scene_framing',strict:true,schema:freshSceneResponseSchema}}},
+            {guildId,signal:turnSignal,purpose:'scene_writer'});turnSignal.throwIfAborted();return parseStructuredJsonText(response.output_text);}
+          catch(cause){throw Object.assign(new Error('Isolated scene writer unavailable; native viewpoint remains available.'),{code:'SCENE_AUTHORING_PROVIDER',cause});}
+        }});
       return candidate;
     };
     let result=await author(await this.requestStructured(req,{guildId,label:"GM turn",signal:turnSignal}));

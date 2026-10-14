@@ -120,7 +120,8 @@ export async function authorFreshNpcRequests({db,guild,result,scope,sourceRef,ge
       const binding=envelope(db,guild,request,scope,sourceRef),id=key(binding);
       if(db.getCityRecord(guild,'npc_fresh_authoring',id)){renderFreshNpcPart(db,guild,id,scope);continue;}
       attemptKey=`npc-authoring-attempt:${hash([sourceRef,scope])}`;
-      if(budget.used||db.getCityRecord(guild,'npc_authoring_attempt',attemptKey)){
+      if(budget.used||db.getCityRecord(guild,'npc_authoring_attempt',attemptKey)
+        ||db.getCityRecord(guild,'scene_authoring_attempt',`scene-authoring-attempt:${hash([sourceRef,scope])}`)){
         hold(db,guild,request,scope,sourceRef,'authoring_budget_exhausted_or_interrupted');continue;
       }
       budget.used=true;

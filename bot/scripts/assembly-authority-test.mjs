@@ -50,6 +50,12 @@ test('saved assembly sends verified private and public orientations through real
   assert(x.sent.gm.some(p=>String(p?.content||p).includes('GM-ONLY-NOTES')));
 }));
 
+test('enabled scene recovery cannot reject native assembly scope lacking a player-authored scene question',()=>nativeFixture(async f=>{
+  const x=fixture(f);f.db.setCityCalendar(f.guild,{flags:{...f.db.getCityCalendar(f.guild).flags,scene_descriptions:true,post_projection_answers:true}});
+  await handleCommand(x.interaction(),{db:f.db,gm:x.gm});assert.equal(x.sent.private.length,2,JSON.stringify(x.sent.gm));
+  assert.equal(x.sent.party.length,1);assert(!x.sent.party[0].includes('No additional character response'));
+}));
+
 test('legacy uncertain hook holds only its recipient; GM confirms non-delivery then resumes saved plan once',()=>nativeFixture(async f=>{
   const x=fixture(f,{legacy:true});await handleCommand(x.interaction(),{db:f.db,gm:x.gm});
   assert.equal(x.sent.private.filter(p=>p.user===f.pcs[0].owner_user_id).length,0);

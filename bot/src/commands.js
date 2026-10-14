@@ -25,6 +25,7 @@ import { buildSessionRosterReport, chunkRosterReport } from "./roster.js";
 import { chunkDiscordLines } from "./discord/chunking.js";
 import { deliverInteractionText } from "./discord/delivery.js";
 import {deliverVerifiedAssembly,prepareAssemblyReconciliation,reconcileAssemblyNotSent} from './assembly-publications.js';
+import {prepareSceneSetup,confirmSceneSetup} from './scene-setup.js';
 import { assertGmOnlyChannel, assertPlayerPrivateChannel } from "./discord/privacy.js";
 import { isExpectedError, PermissionError, NotFoundError, StateConflictError, UserInputError } from "./errors.js";
 import { replayReceiptIfPresent, installReceiptCapture, isMutatingCommand } from "./idempotency.js";
@@ -41,7 +42,7 @@ import { publishSimulationHooks } from "./publishing.js";
 import { handleSimulationCommand } from "./simulation-commands.js";
 import { handleCityCommand } from "./city-commands.js";
 import { handleStoryCommand } from "./story-commands.js";
-import { recordCharacterArrival } from "./scene-continuity.js";
+import { recordCharacterArrival,scenePresence } from "./scene-continuity.js";
 import { personalCharacter, personalArc, discoverPersonal, personalInbox } from "./personal-continuity.js";
 import { consentOffers } from "./consent-language.js";
 import { sessionBrief, formatSessionBrief } from "./session-briefs.js";
@@ -386,6 +387,14 @@ export async function handleCommand(interaction,{db,gm,voice=null}){
 }
 async function handleCommandBody(interaction,{db,gm,voice=null}){
   beginInteraction(interaction);
+  if(typeof interaction.isStringSelectMenu==='function'&&interaction.isStringSelectMenu()&&interaction.customId?.startsWith('vcsetup:')){
+    if(!interaction.guildId||interaction.values?.length!==1)throw new UserInputError('Choose one exact owner-private scene setup option.');
+    await interaction.deferReply({ephemeral:true});
+    const receipt=confirmSceneSetup(db,interaction.guildId,interaction.user.id,interaction.customId.slice(8),interaction.values[0],{interactionId:interaction.id});
+    await interaction.editReply({content:receipt.status==='declined'?'Your initial position remains unconfirmed. No arrival or action was inferred.':
+      'Your exact initial position and disclosure choice were saved. No travel, prior attempt, resources, dice or other character response was resolved. You may now ask about your surroundings.',allowedMentions:{parse:[]}});
+    return true;
+  }
   if(typeof interaction.isButton==='function'&&interaction.isButton()&&interaction.customId?.startsWith('vcassembly:')){
     if(!interaction.guildId||!isGM(db,interaction))throw new PermissionError('GM/admin permission required.');
     await interaction.deferReply({ephemeral:true});
@@ -964,7 +973,17 @@ Initial phase: ${s.assembly_phase}`});
       if(!c) throw new Error("No active owned character found. Create/import one or specify a character.");
       db.setPresence(s.id,interaction.user.id,sub==="arrive"?"late":"present","offscreen",null,sub==="arrive"?"Arrived during session.":"");
       db.assignCharacter(s.id,interaction.user.id,c.id,{role:"primary",controlPolicy:"player_only"});
-      recordCharacterArrival(db,interaction.guildId,c,interaction.user.id,interaction.id);
+      // Re-check-in is not consent to publish an owner-private initial position.
+      if(scenePresence(db,interaction.guildId,'character',c.id)?.visibility!=='character')
+        recordCharacterArrival(db,interaction.guildId,c,interaction.user.id,interaction.id);
+      if(!c.data.location){
+        const setup=prepareSceneSetup(db,interaction.guildId,interaction.user.id,c.id);
+        await interaction.reply({content:setup?
+          `Checked in for Session ${s.session_number}. Confirm where your character already starts; this is not travel or resolution of an earlier attempt. Share makes this initial position visible at the table; Private keeps it owner-only. You may leave it unconfirmed.`:
+          `Checked in for Session ${s.session_number}. Initial position needs native setup/history review; no location or movement was inferred.`,
+          ephemeral:true,allowedMentions:{parse:[]},...(setup?{components:setup.components}:{})});
+        return true;
+      }
       let suffix="";
       const returning=db.partyHasCharacter(interaction.guildId,c.id);
       const shouldPlan=sub==="arrive" || (s.assembly_phase==="party" && !returning && s.assembly_mode!=="already_together");

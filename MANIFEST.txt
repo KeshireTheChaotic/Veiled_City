@@ -106,6 +106,7 @@ bot/scripts/rules-adjudication-test.mjs
 bot/scripts/rules-srd-test.mjs
 bot/scripts/scene-action-window-test.mjs
 bot/scripts/scene-entry-test.mjs
+bot/scripts/scene-narration-repair-test.mjs
 bot/scripts/seed-data-regression-test.mjs
 bot/scripts/seed-drafts-regression-test.mjs
 bot/scripts/semantic-proposal-fixtures.mjs
@@ -252,6 +253,7 @@ bot/src/evidence-custody.js
 bot/src/expansion-contracts.js
 bot/src/failure-trace.js
 bot/src/fresh-npc-authoring.js
+bot/src/fresh-scene-authoring.js
 bot/src/gameplay-intake.js
 bot/src/generation-feedback.js
 bot/src/gm-action-review.js
@@ -339,6 +341,7 @@ bot/src/scene-action-window.js
 bot/src/scene-continuity.js
 bot/src/scene-description.js
 bot/src/scene-entry.js
+bot/src/scene-setup.js
 bot/src/scoped-memory.js
 bot/src/scoped-query.js
 bot/src/seed-commands.js
@@ -526,6 +529,7 @@ docs/RULES_DESK.md
 docs/RULES_GROUNDING.md
 docs/RULES_ONLINE_SRD.md
 docs/SCENE_ENTRY_FIX.md
+docs/SCENE_NARRATION_REPAIR.md
 docs/SECURITY_AND_PRIVACY.md
 docs/SERVER_CHANNEL_SETUP.md
 docs/SESSION2_REGRESSION_MATRIX_v8.md

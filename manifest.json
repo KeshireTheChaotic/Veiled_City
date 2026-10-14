@@ -31,8 +31,8 @@
     },
     {
       "path": "README.md",
-      "size_bytes": 21646,
-      "sha256": "5f94b2c2cb20ef537ce68f10999779f2e6b04f9023837b479c7ad4f05f4cbd17"
+      "size_bytes": 22286,
+      "sha256": "ba18242731f0ce95cd5284bd209986397809dec2e64008e76ef25d846845ac4a"
     },
     {
       "path": "bot/.env.example",
@@ -61,8 +61,8 @@
     },
     {
       "path": "bot/scripts/assembly-authority-test.mjs",
-      "size_bytes": 14454,
-      "sha256": "49e3b4c5f04563fdd76e3f45fa19ef307d9c592a872dd45024ef260adee96f1b"
+      "size_bytes": 14981,
+      "sha256": "f633a625af804f44d122f2a88fe089bc7c92f9c460db18d5c05bfd7337999aef"
     },
     {
       "path": "bot/scripts/audit-regression-test.mjs",
@@ -545,6 +545,11 @@
       "sha256": "0e28ba38a49fce192a56b9c4422d062f630103a3b246c66aae50d5f0c948bda2"
     },
     {
+      "path": "bot/scripts/scene-narration-repair-test.mjs",
+      "size_bytes": 20674,
+      "sha256": "aee2315a3f694562b4cc86eec8d5dad84f79e31419a4e92a64744aa09fb96ab6"
+    },
+    {
       "path": "bot/scripts/seed-data-regression-test.mjs",
       "size_bytes": 10746,
       "sha256": "f2f07dd9b67b883d426beeae7560b378e8b5ce659412a40f88de4bb3e88c4ef1"
@@ -946,8 +951,8 @@
     },
     {
       "path": "bot/scripts/validate-offline.mjs",
-      "size_bytes": 8547,
-      "sha256": "19cc21ab80caee10c4d5f895764899029a7e1d83968c7ce9556ea77a3da43da6"
+      "size_bytes": 8591,
+      "sha256": "f004e9863883f514e470dc7790a135af63c2e56e10a5af883493acbf6db601ee"
     },
     {
       "path": "bot/sql/schema.sql",
@@ -1081,8 +1086,8 @@
     },
     {
       "path": "bot/src/city-core.js",
-      "size_bytes": 25284,
-      "sha256": "91c3e32ce23827780864a854a52cf7154fc5cfd41054f3a0a55b2625f094fbed"
+      "size_bytes": 25326,
+      "sha256": "7081574495ecdc04cf026747f5cc6c68cbc76369f1084307e71c0e27eee98517"
     },
     {
       "path": "bot/src/city-depth.js",
@@ -1111,8 +1116,8 @@
     },
     {
       "path": "bot/src/commands.js",
-      "size_bytes": 181004,
-      "sha256": "b64ae9b9e7f7cf2e0afa21194cefbfd284cf4e98ae9ed6438ea0d99431198c3b"
+      "size_bytes": 182865,
+      "sha256": "24392a4bf96ca2171930869e94dbcfc6d029d3ababb2eb508ecd3b7b5226f236"
     },
     {
       "path": "bot/src/concept-context.js",
@@ -1151,8 +1156,8 @@
     },
     {
       "path": "bot/src/context-planner.js",
-      "size_bytes": 8085,
-      "sha256": "7d6cecbe45c43341b01ee440ac3fcd3cd94c7cbb5c0e57bad521451d3f64d5b8"
+      "size_bytes": 8185,
+      "sha256": "679d0eb8778d9cb082ee7f0dfeede4e7f97ba9a1cca174280ab74e3df75a10de"
     },
     {
       "path": "bot/src/continuity-routing.js",
@@ -1166,8 +1171,8 @@
     },
     {
       "path": "bot/src/db.js",
-      "size_bytes": 170311,
-      "sha256": "6ccb2cb24ab9cf22f01f2dd68fe46966a172d34efd2fef288ade3640c44922bc"
+      "size_bytes": 170864,
+      "sha256": "c46d06f9828e5f91b85ec510b45515523f2e6b655b8fe56edd8d907b91ddbbb7"
     },
     {
       "path": "bot/src/decision-advisory.js",
@@ -1271,8 +1276,13 @@
     },
     {
       "path": "bot/src/fresh-npc-authoring.js",
-      "size_bytes": 10954,
-      "sha256": "6e5df465faa0dca223c2429143dba4b25b375afd16a9e3c55b66f7ff2a764ef4"
+      "size_bytes": 11067,
+      "sha256": "35a5d7f6df5f85750551f953443f77c70ae395d206bbe2a768d111f672d89de4"
+    },
+    {
+      "path": "bot/src/fresh-scene-authoring.js",
+      "size_bytes": 7676,
+      "sha256": "386dfb366c218e645f6433e337abddb4aeefadfd48a5283ec8330a8bd74bbfa6"
     },
     {
       "path": "bot/src/gameplay-intake.js",
@@ -1301,13 +1311,13 @@
     },
     {
       "path": "bot/src/gm-fiction-schema.js",
-      "size_bytes": 1859,
-      "sha256": "521d1308855a98503d42763c6497a99a5776a3967c75efadd846d85fadd15cf1"
+      "size_bytes": 3076,
+      "sha256": "e2f0126cdd9a503f90b882fcf2e7c444c58faefb62d3d3cc7a807adf6341be9b"
     },
     {
       "path": "bot/src/gm-world-narrative.js",
-      "size_bytes": 9606,
-      "sha256": "1ecc209890675b3dc8525315c41b0d4bef0b88867a32cd2ac60575d66261286b"
+      "size_bytes": 10143,
+      "sha256": "4a1aec6ecf3ae5563ad00c475667de3dff729afa150497fed9600c76bb4911a5"
     },
     {
       "path": "bot/src/gm-world-scope.js",
@@ -1316,8 +1326,8 @@
     },
     {
       "path": "bot/src/gm.js",
-      "size_bytes": 110323,
-      "sha256": "19f1b3b817a1aaf1392fe8af798b49b26ff2d09f01a1b88406b36a6a9b752109"
+      "size_bytes": 111859,
+      "sha256": "0fc71b4f348a012d6ccf13fad856c4cb25d3c6ecf113e7ea822c5aed9ffc92e1"
     },
     {
       "path": "bot/src/handout.js",
@@ -1596,8 +1606,8 @@
     },
     {
       "path": "bot/src/pvp-output.js",
-      "size_bytes": 49253,
-      "sha256": "d58c84848482973a86cdb07203f9619bc176355297e332f6adb42ca1a8b6be0b"
+      "size_bytes": 49812,
+      "sha256": "db23b03c9390bf82220360c5fa0460f94acf6cc4e739e0de04516b30b1d3f0c8"
     },
     {
       "path": "bot/src/pvp-profiles.js",
@@ -1701,13 +1711,18 @@
     },
     {
       "path": "bot/src/scene-description.js",
-      "size_bytes": 8141,
-      "sha256": "6235ac2a5fa9911bf06a999a4df5a5907bcc6ac128ecbdbf63117f3356dbe60f"
+      "size_bytes": 9822,
+      "sha256": "ac82df032bacd005e928416e788eb4f7056000be34684ac35e5cc37855732827"
     },
     {
       "path": "bot/src/scene-entry.js",
       "size_bytes": 12863,
       "sha256": "b0a8103b203e8429ac57dcec5ed36db3030ded9bc37580a701c0d6eb4755e764"
+    },
+    {
+      "path": "bot/src/scene-setup.js",
+      "size_bytes": 6736,
+      "sha256": "41c9214c280fcd9d11157591c1a6a48da8baaa0e704c9788af726fdb870659c1"
     },
     {
       "path": "bot/src/scoped-memory.js",
@@ -2416,8 +2431,8 @@
     },
     {
       "path": "docs/DATABASE_USAGE_AUDIT.md",
-      "size_bytes": 14869,
-      "sha256": "03a51b84560ff620b2a5a211058424d62c71a25b26942d5be526e7a3cebb8740"
+      "size_bytes": 15569,
+      "sha256": "7ecaad54bf8fdab6ea063ae0a02f2175f2198f283e68274dabd4dbb07d61e682"
     },
     {
       "path": "docs/DEPLOYMENT.md",
@@ -2645,6 +2660,11 @@
       "sha256": "c6bf50f6b9e95d7ce214d90a397035b122a0e682c095faf5d939ea1f813ac6c8"
     },
     {
+      "path": "docs/SCENE_NARRATION_REPAIR.md",
+      "size_bytes": 9931,
+      "sha256": "f850a7fe30464088d72fdef1639605ec991f39149a9050e454c46a318b227bca"
+    },
+    {
       "path": "docs/SECURITY_AND_PRIVACY.md",
       "size_bytes": 4507,
       "sha256": "089aa5ba661893473222b422a669aafa41155c977da39ca4f4fac24914939aa7"
@@ -2741,8 +2761,8 @@
     },
     {
       "path": "docs/TYPED_INTENT_PROGRESS.md",
-      "size_bytes": 336920,
-      "sha256": "239ea17dd64007ac4fb042fae5de6670cbc5692035b27c74500af43da2ffab75"
+      "size_bytes": 343481,
+      "sha256": "ba8ca3302beb01a32f25542342d5842988189447af30422f391847e525d10853"
     },
     {
       "path": "docs/TYPED_INTENT_RELEASE_10.0.0.md",

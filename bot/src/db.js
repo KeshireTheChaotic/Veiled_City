@@ -501,6 +501,13 @@ export class VeiledDB {
     return this.db.prepare("SELECT * FROM simulation_clock WHERE guild_id=?").get(guildId)||{guild_id:guildId,tick:0,minute:0};
   }
 
+  hasCharacterPlacementHistory(guildId,characterId){
+    return !!this.db.prepare(`SELECT 1 FROM world_events WHERE guild_id=? AND kind IN ('arrival','travel')
+      AND json_extract(details_json,'$.entity_type')='character' AND json_extract(details_json,'$.entity_key')=? LIMIT 1`)
+      .get(guildId,characterId)||!!this.db.prepare(`SELECT 1 FROM city_records WHERE guild_id=? AND kind='scene_presence'
+      AND json_extract(data_json,'$.entity_type')='character' AND json_extract(data_json,'$.entity_key')=? LIMIT 1`).get(guildId,characterId);
+  }
+
   listDueSimulationActions(guildId){
     const clock=this.getSimulationClock(guildId);
     return this.db.prepare(`SELECT * FROM simulation_records WHERE rowid IN (

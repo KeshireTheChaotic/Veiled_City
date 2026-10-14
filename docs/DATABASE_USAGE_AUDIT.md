@@ -7,6 +7,8 @@ queried, rewritten or exported for this audit. Sources: `bot/sql/schema.sql`,
 
 ## Conclusion and design boundary
 
+2026-10-14 scene-repair addendum: `scene_setup` persists owner-private expiring controls, exact source/revision choices and terminal initial-placement receipts. `scene_authoring_attempt`, `scene_fresh_authoring`, `scene_authoring_hold` and their world events persist bounded generation/restart provenance and scoped diagnostics, not objective setting truth or consequential effect authority. See [scene narration repair](SCENE_NARRATION_REPAIR.md). These extend existing operational uses of the generic stores; no new physical table or migration is introduced. The separately authorized production flag change used an online backup and native configuration audit only, not character/gameplay edits.
+
 SQLite is not used only as fictional memory. It also persists native mechanics,
 identity/privacy/control grants, configuration, proposals/consent, scheduling,
 publication/idempotency, diagnostics, provenance and recovery. These are generally

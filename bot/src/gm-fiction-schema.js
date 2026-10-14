@@ -15,3 +15,13 @@ export const freshNpcResponseSchema=closed({utterance:str(1400)});
 export const nativeOutcomeKinds=['pc_effect_receipt','roll_request','evidence_receipt','commitment','scene_entry','ordinary_effect_receipt'];
 export const nativeOutcomeSchema=closed({version:{type:'integer',enum:[4]},kind:{type:'string',enum:['native_outcome']},
   receipt_kind:{type:'string',enum:nativeOutcomeKinds},ref:str(200)});
+export const sceneAtmosphereSubjects={light:'Light',silence:'Silence',air:'The air',shadows:'Shadows'};
+export const sceneAtmosphereVerbs={light:['settles','lingers','spreads'],silence:['settles','lingers'],air:['stirs','drifts'],shadows:['settle','linger','spread']};
+export const sceneAtmosphereEndings={light:['softly','at the edges of the view'],silence:['briefly','between moments'],air:['gently','through the surroundings'],shadows:['softly','at the edges of the view']};
+export const sceneDescriptionSchema=closed({version:{type:'integer',enum:[5]},kind:{type:'string',enum:['scene_description']},
+  fact_refs:{type:'array',maxItems:6,items:str(200)},atmosphere:{type:'array',maxItems:3,items:closed({
+    subject:{type:'string',enum:Object.keys(sceneAtmosphereSubjects)},verb:{type:'string',enum:[...new Set(Object.values(sceneAtmosphereVerbs).flat())]},
+    manner:{type:'string',enum:[...new Set(Object.values(sceneAtmosphereEndings).flat())]}})}});
+export const freshSceneRequestSchema=closed({version:{type:'integer',enum:[6]},kind:{type:'string',enum:['scene_fresh_request']},
+  fact_refs:{type:'array',maxItems:6,items:str(200)}});
+export const freshSceneResponseSchema=closed({description:str(1400)});

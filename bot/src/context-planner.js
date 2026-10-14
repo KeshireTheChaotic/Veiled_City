@@ -24,6 +24,7 @@ export class ContextPlanner {
     const add=(source,data,priority=0)=>{
       if(data?.kind?.startsWith("pvp_")||["character_visible_fact","character_perception_receipt","world_visible_fact"].includes(data?.kind))return;
       if(data?.kind==="authored_turn"&&data.details?.discord_message_id?.startsWith("description:"))return;
+      if(['native_fresh_scene_description','native_scene_setup_offer'].includes(data?.kind))return;
       const text=JSON.stringify(data);const score=terms.reduce((n,word)=>n+(text.toLowerCase().includes(word)?10:0),priority);
       candidates.set(source,{source,data,priority:score,estimated_tokens:Math.ceil((text.length+source.length+80)/3)});
     };

@@ -5,17 +5,9 @@ import {conversationPrincipal} from './conversation-principal.js';
 import {factVisibleTo} from './disclosure-authority.js';
 import {activeEvidence,objectiveEvidence,evidenceType} from './epistemic.js';
 import {environmentalText} from './environment-observation.js';
+import {sceneAtmosphereSubjects as subjects,sceneAtmosphereVerbs as verbs,sceneAtmosphereEndings as endings} from './gm-fiction-schema.js';
+export {sceneDescriptionSchema} from './gm-fiction-schema.js';
 const hash=value=>createHash('sha256').update(JSON.stringify(value??null)).digest('hex');
-const subjects={light:'Light',silence:'Silence',air:'The air',shadows:'Shadows'};
-const verbs={light:['settles','lingers','spreads'],silence:['settles','lingers'],air:['stirs','drifts'],shadows:['settle','linger','spread']};
-const endings={light:['softly','at the edges of the view'],silence:['briefly','between moments'],air:['gently','through the surroundings'],shadows:['softly','at the edges of the view']};
-export const sceneDescriptionSchema={type:'object',additionalProperties:false,properties:{
-  version:{type:'integer',enum:[5]},kind:{type:'string',enum:['scene_description']},
-  fact_refs:{type:'array',maxItems:6,items:{type:'string',maxLength:200}},
-  atmosphere:{type:'array',maxItems:3,items:{type:'object',additionalProperties:false,properties:{
-    subject:{type:'string',enum:Object.keys(subjects)},verb:{type:'string',enum:[...new Set(Object.values(verbs).flat())]},
-    manner:{type:'string',enum:[...new Set(Object.values(endings).flat())]}},required:['subject','verb','manner']}}
-},required:['version','kind','fact_refs','atmosphere']};
 function fail(){throw Object.assign(new Error('Scene description needs current owner source and scoped established evidence.'),{code:'SCENE_DESCRIPTION',expected:true});}
 function shape(input){
   if(!input||Object.keys(input).sort().join()!=='atmosphere,fact_refs,kind,version'||input.version!==5||input.kind!=='scene_description'
@@ -24,19 +16,26 @@ function shape(input){
   for(const clause of input.atmosphere)if(!clause||Object.keys(clause).sort().join()!=='manner,subject,verb'
     ||!Object.hasOwn(subjects,clause.subject)||!verbs[clause.subject].includes(clause.verb)||!endings[clause.subject].includes(clause.manner))fail();
 }
-function request(db,guild,scope,sourceRef){
-  const scene=currentScene(db,guild),principal=conversationPrincipal(db,guild,scope.actorUserId,scope.actorCharacterId);
-  const source=db.getWorldEvent(guild,sourceRef),pc=db.getCharacter(scope.actorCharacterId);
-  if(principal.kind!=='owner'||!source||source.status!=='active'||source.kind!=='ai_gm_input'
+function ownerSource(db,guild,scope,sourceRef){
+  const source=db.getWorldEvent(guild,sourceRef);
+  if(!scope.actorUserId||!scope.actorCharacterId||source?.kind!=='ai_gm_input')return null;
+  let principal;try{principal=conversationPrincipal(db,guild,scope.actorUserId,scope.actorCharacterId);}catch{return null;}
+  const scene=currentScene(db,guild),pc=db.getCharacter(scope.actorCharacterId);
+  if(principal.kind!=='owner'||source.status!=='active'||source.details.revision!==principal.revision
     ||source.session_id!==scene.session_id||source.scene!==scene.key||source.details.character_id!==pc?.id
     ||!db.ownerAuthoredSource(guild,sourceRef,scope.actorUserId)
-    ||!factVisibleTo({...source,subject_character_id:source.subject_key,subject_user_id:source.subject_key},scope))fail();
+    ||!factVisibleTo({...source,subject_character_id:source.subject_key,subject_user_id:source.subject_key},scope))return null;
+  return {scene,principal,source,pc};
+}
+function request(db,guild,scope,sourceRef){
+  const r=ownerSource(db,guild,scope,sourceRef);if(!r)return null;
+  const {principal,pc}=r;
   const rows=db.listCityRecords(guild,{kind:'typed_intent',includeGM:true,limit:120}).filter(row=>
     row.status==='accepted_for_adjudication'&&row.data.world_source_event===sourceRef&&row.data.actor===pc.id
     &&row.data.actor_principal_revision===principal.revision&&row.data.framing==='immediate'&&row.data.type==='other'
     &&['describe_scene','current_situation'].includes(row.data.operation));
   if(!rows.length)return null;
-  return {scene,principal,source,pc,intents:rows.map(row=>[row.record_key,hash(row.data)])};
+  return {...r,intents:rows.map(row=>[row.record_key,hash(row.data)])};
 }
 function visibleClosure(db,guild,key,scope,seen=new Set()){
   if(seen.has(key)||seen.size>=32)return false;seen.add(key);
@@ -57,7 +56,7 @@ export function sceneDescriptionRequest(db,guild,scope,sourceRef){
 }
 export function defaultSceneDescription(db,guild,scope,sourceRef){
   const r=sceneDescriptionRequest(db,guild,scope,sourceRef);if(!r)return null;
-  const refs=db.listFactsForGM(guild,{category:'environment',limit:100})
+  const refs=['environment','scene'].flatMap(category=>db.listFactsForGM(guild,{category,limit:100}))
     .filter(f=>eligible(db,guild,f,scope,r.pc.data.location)).slice(0,6).map(f=>f.id);
   return {version:5,kind:'scene_description',fact_refs:refs,atmosphere:[]};
 }
@@ -65,14 +64,16 @@ export function projectSceneDescription(db,guild,input,scope,sourceRef){
   shape(input);const r=sceneDescriptionRequest(db,guild,scope,sourceRef);if(!r)fail();
   const {scene,principal,source,pc}=r,location=typeof pc.data.location==='string'?pc.data.location:null;
   const entity=location&&db.getSimulationEntity(guild,'location',location);
+  // A request has one authenticated viewpoint, not a requirement that the whole roster share a room.
   const roster=db.roster(scene.session_id).filter(row=>['present','late','guest'].includes(row.presence)
-    &&(scope.mode!=='private'||row.character_id===scope.actorCharacterId&&row.discord_user_id===scope.actorUserId));
+    &&row.character_id===scope.actorCharacterId&&row.discord_user_id===scope.actorUserId);
   const occupancy=roster.map(row=>{
     const character=db.getCharacter(row.character_id),presence=scenePresence(db,guild,'character',row.character_id);
     const event=presence&&db.getWorldEvent(guild,presence.source_event);
     return {character:row.character_id,owner:character?.owner_user_id,assignment:row.discord_user_id,
       location:character?.data.location,presence:hash(presence),event:hash(event),
-      publicHere:character?.data.location===location&&presence?.location_key===location&&event?.status==='active'
+      publicHere:presence?.status==='active'&&presence.data.state==='actually_present'&&presence.data.scene===scene.key
+        &&character?.data.location===location&&presence?.location_key===location&&event?.status==='active'
         &&['public','party'].includes(presence.visibility)};
   });
   const visibleLocation=entity&&/^[a-z0-9][a-z0-9:_-]{0,159}$/i.test(location)&&!entity.state.hidden&&!entity.state.removed
@@ -87,7 +88,8 @@ export function projectSceneDescription(db,guild,input,scope,sourceRef){
     location,entity:hash(entity),occupancy,minute:db.getSimulationClock(guild).minute,facts:facts.map(f=>[f.id,hash(f)]),
     scope:{...scope},shared};
   let text;
-  if(!shared)text='The current party viewpoint is not established: shared presence has not been confirmed. Each owner can ask privately for their saved location and visible surroundings. Where would you like to focus the scene?';
+  if(!location)text='Your initial scene location is not established in native state. Check-in and the assembly plan do not place your character. Use /vc session present for owner-private initial-location confirmation; earlier attempted actions remain unresolved. What location would you like to establish or ask about?';
+  else if(!shared)text='An audience-visible viewpoint for this character is not established; shared presence has not been confirmed. Other players may continue independently. Ask privately about your saved surroundings, or reconcile the missing native presence source; no movement is inferred.';
   else if(!visibleLocation)text='Your current location has no established, accessible scene description. No arrival or movement is inferred. Where would you like to focus your view?';
   else {
     text=`Your saved location is ${JSON.stringify(location)}; this describes the current viewpoint, not a new arrival.`;
@@ -96,4 +98,21 @@ export function projectSceneDescription(db,guild,input,scope,sourceRef){
     if(input.atmosphere.length)text+='\n'+input.atmosphere.map(c=>`${subjects[c.subject]} ${c.verb} ${c.manner}.`).join(' ');
   }
   return {text,revision:hash([input,state]),source,state};
+}
+
+/** Isolated authoring can describe only this current audience-entitled viewpoint, never supply its own placement. */
+export function sceneAuthoringContext(db,guild,scope,sourceRef,refs=[]){
+  if(db.getCityCalendar(guild).flags.scene_descriptions!==true)fail();
+  const r=ownerSource(db,guild,scope,sourceRef);if(!r)fail();
+  // Reuse the identical snapshot/entitlement renderer, but authoring does not require a persisted semantic request yet.
+  const {pc,scene,principal,source}=r,location=pc.data.location,entity=location&&db.getSimulationEntity(guild,'location',location);
+  const presence=scenePresence(db,guild,'character',pc.id),event=presence&&db.getWorldEvent(guild,presence.source_event);
+  if(!entity||entity.state.hidden||entity.state.removed||!['public','party'].includes(entity.state.visibility||'party')
+    ||scope.mode!=='private'&&(!presence||presence.status!=='active'||presence.data.state!=='actually_present'
+      ||presence.data.scene!==scene.key||presence.location_key!==location||event?.status!=='active'||!['party','public'].includes(presence.visibility)))fail();
+  const facts=refs.map(ref=>db.getFact(guild,ref));if(facts.some(f=>!eligible(db,guild,f,scope,location)))fail();
+  return {state:{scene,principal:principal.revision,owner:pc.owner_user_id,character:pc.id,location,entity:hash(entity),
+    presence:scope.mode==='private'?null:hash(presence),presence_source:scope.mode==='private'?null:hash(event),source:hash(source),
+    facts:facts.map(f=>[f.id,hash(f)]),scope:{...scope}},source,
+    location_name:String(entity.state.name||location),evidence:facts.map(f=>environmentalText(f))};
 }
