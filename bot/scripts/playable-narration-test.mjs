@@ -32,9 +32,11 @@ function fixture(f,{mode='party',text=prompts[0],location='spin',placeType='laun
   f.db.setCityCalendar(f.guild,{flags:{...f.db.getCityCalendar(f.guild).flags,playable_narration:true,scene_continuity:true}});
   f.db.setSimulationEntity(f.guild,'location',location,{name:location==='spin'?'Twenty-Four Spin':'Public Observatory',place_type:placeType,visibility:'party'});
   f.db.updateCharacterData(pc.id,d=>{d.location=location;});
-  recordCharacterArrival(f.db,f.guild,f.db.getCharacter(pc.id),pc.owner_user_id,`${messageId}:arrival`);
-  const presence=f.db.listCityRecords(f.guild,{kind:'scene_presence',includeGM:true}).find(r=>r.data.entity_key===pc.id&&r.data.scene===currentScene(f.db,f.guild).key);
-  recordScenePresence(f.db,f.guild,{entity_type:'character',entity_key:pc.id,location_key:location,source_event:presence.source_event,
+  const arrival=indexWorldEvent(f.db,f.guild,{key:`${messageId}:arrival`,kind:'arrival',title:'Owner-confirmed synthetic initial viewpoint',
+    source_id:`player:${pc.owner_user_id}`,session_id:f.session.id,scene:currentScene(f.db,f.guild).key,location_key:location,
+    visibility:mode==='private'?'character':'party',subject_key:mode==='private'?pc.id:null,
+    details:{entity_type:'character',entity_key:pc.id,owner_user_id:pc.owner_user_id}},pc.owner_user_id);
+  recordScenePresence(f.db,f.guild,{entity_type:'character',entity_key:pc.id,location_key:location,source_event:arrival.event_key,
     zone:'interior',visibility:mode==='private'?'character':'party',subject_key:mode==='private'?pc.id:null,accepted_by:pc.owner_user_id},'native-fixture');
   captureWorldInput(f.db,f.guild,pc.owner_user_id,pc.id,messageId,text,{privateScene:mode==='private'});
   return {pc,messageId,text,scope:{mode,actorUserId:pc.owner_user_id,actorCharacterId:pc.id},sourceRef:worldInputKey(messageId,pc.id)};
@@ -71,4 +73,19 @@ test('PLAY03 general packet is not a laundromat special case',()=>nativeFixture(
 test('PLAY04 raw PC injury/choice drafts never become scene-fiction authority',()=>nativeFixture(async f=>{
   const x=fixture(f),draft=candidate(x.text);draft.narration='Choso apologizes for losing.';draft.gm_world_parts=[];
   const out=await run(f,x,[draft]);assert(out.rows.every(r=>!r.payload.includes('Choso apologizes for losing.')));
+}));
+test('PLAY05 current visible clues survive without closed grammar; private source ancestry and other owners stay excluded',()=>nativeFixture(async f=>{
+  const x=fixture(f),{buildSceneFictionContext}=await import('../src/scene-fiction-context.js');
+  for(const text of ['The terminal display is frozen.','A parcel rests on the counter.','Three knocks sound at the rear door.'])
+    f.db.addFact(f.guild,{category:'clue',content:text,visibility:'party',provenance:{scene_location:'spin'}});
+  const hidden=f.db.addFact(f.guild,{category:'clue',content:'SECRET_CAUSE',visibility:'gm',provenance:{scene_location:'spin'}});
+  f.db.addFact(f.guild,{category:'scene',content:'LAUNDERED_SECRET',visibility:'party',provenance:{scene_location:'spin',
+    epistemic:{kind:'observation',source_refs:[hidden],perspective:'test'}}});
+  const out=buildSceneFictionContext(f.db,f.guild,x.scope,x.sourceRef),text=JSON.stringify(out.packet);
+  assert(text.includes('terminal display is frozen'));assert(text.includes('Three knocks'));assert(text.includes('parcel rests'));
+  assert(!text.includes('SECRET_CAUSE'));assert(!text.includes('LAUNDERED_SECRET'));
+  const privateView=fixture(f,{mode:'private',text:prompts[4]});
+  f.db.addFact(f.guild,{category:'scene',content:'OWNER_ONLY_WALL',visibility:'character',subjectCharacterId:x.pc.id,provenance:{scene_location:'spin'}});
+  assert(JSON.stringify(buildSceneFictionContext(f.db,f.guild,privateView.scope,privateView.sourceRef).packet).includes('OWNER_ONLY_WALL'));
+  assert.throws(()=>buildSceneFictionContext(f.db,f.guild,x.scope,privateView.sourceRef),/source|viewpoint/);
 }));
