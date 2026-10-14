@@ -48,6 +48,8 @@ import {authorFreshNpcRequests,hasFreshNpcResponse,FRESH_NPC_INSTRUCTIONS,freshN
 import {worldInputKey} from './autonomous-world.js';
 import {shadowEngagement} from './engagement-shadow.js';
 import {authorFreshSceneRequests,hasFreshSceneResponse,FRESH_SCENE_INSTRUCTIONS,freshSceneResponseSchema} from './fresh-scene-authoring.js';
+import {authorSceneFictionRequests,SCENE_FICTION_INSTRUCTIONS,sceneFictionResponseSchema} from './scene-fiction-authority.js';
+import {sceneFictionFailure} from './scene-fiction-context.js';
 
 const routerSchema={
   type:"object",
@@ -583,6 +585,9 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
       CONTEXT_CONTRACT,
       AUTHORED_CANDIDATES_PROMPT,
       PLAYER_INTENT_PROMPT,
+      this.db.getCityCalendar(guildId).flags.playable_narration===true
+        ?'Playable narration is enabled. For ordinary visible surroundings or situation use gm_world_parts version=7 kind=scene_fiction_request operation=describe_scene/current_situation source_refs=[]. This requests an isolated native-scoped writer, not effects. For auto movement request a destination description alongside the native move. NPC dialogue and consequential outcomes still use their existing NPC/native receipt parts. Never use version 7 in PvP, active encounters or contested windows.'
+        :'Playable scene fiction is disabled; do not request version 7.',
       this.db.getCityCalendar(guildId).flags.gm_discretion===true?GM_RULING_PROMPT:"GM ruling proposals are disabled; use existing native services.",
       ORDINARY_EFFECT_PROMPT,
       CONTEXT_MEMORY_PROMPT,
@@ -792,6 +797,15 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
     const validateTurn=result=>measureNative('validate',guildId,()=>validateCore(result),this.metrics);
     const authoringBudget={used:false};
     const author=async candidate=>{
+      await authorSceneFictionRequests({db:this.db,guild:guildId,result:candidate,
+        scope:{mode:scope,actorUserId,actorCharacterId:ctx.actor_assignment?.character_id},
+        sourceRef:messageId&&ctx.actor_assignment?.character_id?worldInputKey(messageId,ctx.actor_assignment.character_id):null,
+        budget:authoringBudget,generate:async packet=>{
+          try{const response=await this.requestModel({model:req.model,instructions:SCENE_FICTION_INSTRUCTIONS,input:JSON.stringify(packet),
+            max_output_tokens:1000,text:{format:{type:'json_schema',name:'audience_scoped_scene_fiction',strict:true,schema:sceneFictionResponseSchema}}},
+            {guildId,signal:turnSignal,purpose:'scene_writer'});turnSignal.throwIfAborted();return parseStructuredJsonText(response.output_text);}
+          catch{throw sceneFictionFailure('writer_unavailable');}
+        }});
       await this.authorFreshNpcs(guildId,candidate,{mode:scope,actorUserId,actorCharacterId:ctx.actor_assignment?.character_id},
         messageId&&ctx.actor_assignment?.character_id?worldInputKey(messageId,ctx.actor_assignment.character_id):null,authoringBudget,turnSignal,req.model);
       await authorFreshSceneRequests({db:this.db,guild:guildId,result:candidate,

@@ -14,6 +14,7 @@ function closure(db,guild,key,scope,seen=new Set()){
   if(seen.has(key)||seen.size>=32)return false;seen.add(key);
   const row=db.getFact(guild,key)||db.getWorldEvent(guild,String(key).replace(/^event:/,''));
   return !!(row&&visible(row,scope)&&activeEvidence(db,guild,key)
+    &&(row.kind!=='native_scene_fiction'||closure(db,guild,row.details.origin,scope,new Set(seen)))
     &&(!row.content||evidenceType(row).source_refs.every(ref=>closure(db,guild,ref,scope,new Set(seen)))));
 }
 const short=(value,max=180)=>typeof value==='string'&&!/[\x00-\x1f\u202a-\u202e\u2066-\u2069]/u.test(value)?value.slice(0,max):'';
@@ -34,7 +35,7 @@ export function buildSceneFictionContext(db,guild,scope,sourceRef,{operation='de
     ||presence.data.scene!==scene.key||presence.location_key!==location||arrival?.status!=='active'||arrival.location_key!==location
     ||!visible(presence,scope)||!visible(arrival,scope))throw sceneFictionFailure('viewpoint');
   for(const kind of ['scene_action_window','action_window'])if(db.listCityRecords(guild,{kind,includeGM:true,limit:500}).some(r=>
-    ['open','collecting','pending','contested'].includes(r.status)&&[r.data.scene,r.data.scene_id].includes(scene.key)
+    ['open','locked','collecting','pending','contested'].includes(r.status)&&[r.data.scene,r.data.scene_id].includes(scene.key)
     &&(!r.location_key||r.location_key===location)))throw sceneFictionFailure('contested');
   const evidence=db.listFactsForGM(guild,{limit:200}).filter(f=>{
     let p;try{p=JSON.parse(f.provenance_json||'{}');}catch{return false;}

@@ -178,7 +178,7 @@ export const CITY_FEATURE_FLAGS=Object.freeze(["institutions","opportunities","e
     "autonomous_pvp_fear",
     "pvp_private_ui",
     "gm_discretion",
-    "scoped_disclosure_recovery","scene_descriptions","post_projection_answers",
+    "scoped_disclosure_recovery","scene_descriptions","post_projection_answers","playable_narration",
     ...Object.keys(EXPANSION_FEATURES)]);
 export function configureCityFlags(db,guildId,input,actorId){
   cityObject(input);

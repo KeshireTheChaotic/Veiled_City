@@ -25,3 +25,8 @@ export const sceneDescriptionSchema=closed({version:{type:'integer',enum:[5]},ki
 export const freshSceneRequestSchema=closed({version:{type:'integer',enum:[6]},kind:{type:'string',enum:['scene_fresh_request']},
   fact_refs:{type:'array',maxItems:6,items:str(200)}});
 export const freshSceneResponseSchema=closed({description:str(1400)});
+export const sceneFictionRequestSchema=closed({version:{type:'integer',enum:[7]},kind:{type:'string',enum:['scene_fiction_request']},
+  operation:{type:'string',enum:['describe_scene','current_situation']},source_refs:{type:'array',maxItems:8,items:str(200)}});
+export const sceneFictionResponseSchema=closed({description:str(1800),details:{type:'array',maxItems:8,items:closed({
+  id:str(64),category:{type:'string',enum:['layout','sensory','nonmechanical_prop','ambient_activity']},text:str(300)})},
+  evidence_refs:{type:'array',maxItems:8,items:str(200)}});

@@ -12,6 +12,9 @@ import {indexWorldEvent} from '../src/city-calendar.js';
 import {recordCharacterArrival,recordScenePresence,currentScene} from '../src/scene-continuity.js';
 import {commitGmTurn} from '../src/turn-orchestration.js';
 import {deliverTurnOutbox} from '../src/publication-outbox.js';
+import {revalidateOutputPublication} from '../src/pvp-output.js';
+import {proposePvp} from '../src/narrative-pvp.js';
+import {pvpTerms} from './v9-fixtures.mjs';
 export const prompts=['Set the scene','What does the laundromat look like inside?','What else is going on currently?',
   'I head inside Twenty-Four Spin','What does it look like inside?','I examine the frozen terminal'];
 const fiction={description:'Two rows of steel washers face a long folding counter. A blue bench stands beneath the front window, and detergent scents the warm air.',
@@ -89,3 +92,41 @@ test('PLAY05 current visible clues survive without closed grammar; private sourc
   assert(JSON.stringify(buildSceneFictionContext(f.db,f.guild,privateView.scope,privateView.sourceRef).packet).includes('OWNER_ONLY_WALL'));
   assert.throws(()=>buildSceneFictionContext(f.db,f.guild,x.scope,privateView.sourceRef),/source|viewpoint/);
 }));
+
+test('PLAY06 isolated fiction rejects PC choices, injury, custody and forged evidence without effects',async()=>{
+  for(const description of ['Choso apologizes for losing.','Jaxon agrees to surrender.','You have been taken into custody.',
+    'Jaxon feels a sharp pain as his arm breaks.'])await nativeFixture(async f=>{
+    const x=fixture(f),out=await run(f,x,[candidate(x.text),{...fiction,description}]);
+    assert(out.rows.every(r=>!r.payload.includes(description)));assert.equal(f.db.listCityRecords(f.guild,{kind:'scene_fiction',includeGM:true}).length,0);
+    assert(f.db.listCityRecords(f.guild,{kind:'scene_fiction_hold',includeGM:true}).length);
+    assert.equal(f.db.getCharacter(x.pc.id).data.resources.hp.current,0);
+  });
+  await nativeFixture(async f=>{const x=fixture(f),out=await run(f,x,[candidate(x.text),{...fiction,evidence_refs:['invented-clue']}]);
+    assert(out.rows.every(r=>!r.payload.includes('steel washers')));});
+});
+
+test('PLAY07 committed fiction is restart-safe, private and revoked at deferred publication; no duplicate native authoring',()=>nativeFixture(async f=>{
+  const x=fixture(f,{mode:'private'}),out=await run(f,x);assert.equal(out.ai.requests.length,2);
+  assert(out.rows.every(r=>r.visibility==='character'&&r.target_user_id===x.pc.owner_user_id));
+  const count=f.db.listCityRecords(f.guild,{kind:'scene_fiction',includeGM:true}).length;assert.equal(count,1);
+  f.restart();for(const row of out.rows)revalidateOutputPublication(f.db,f.guild,f.db.getPublication(f.guild,row.id));
+  assert.equal(f.db.listCityRecords(f.guild,{kind:'scene_fiction',includeGM:true}).length,count);
+  // Native event status is changed only in this disposable fixture; persisted payload remains unchanged, send must not occur.
+  f.db.db.prepare("UPDATE world_events SET status='retracted' WHERE guild_id=? AND event_key=?").run(f.guild,x.sourceRef);
+  let sends=0;await deliverTurnOutbox(f.db,f.guild,out.attempt.turn_id,async()=>{sends++;return {messageId:'fake',channelId:'fake'};});
+  assert.equal(sends,0);assert(f.db.listTurnPublications(f.guild,out.attempt.turn_id).every(r=>r.status==='failed'));
+}));
+
+test('PLAY08 protected PvP and active native windows cannot acquire broad scene fiction or extra writer calls',async()=>{
+  for(const kind of ['pvp','window'])await nativeFixture(async f=>{
+    const x=fixture(f);
+    if(kind==='pvp'){
+      f.db.updateCharacterData(f.pcs[1].id,d=>{d.location='spin';});
+      proposePvp(f.db,f.guild,f.pcs[0].owner_user_id,{accepted_intent:f.accepted().record_key,opponent:f.pcs[1].id,terms:pvpTerms(f.pcs)});
+    }
+    else f.db.saveCityRecord(f.guild,{kind:'scene_action_window',key:'native-fixture-window',status:'locked',source_event:x.sourceRef,
+      location_key:'spin',data:{scene:currentScene(f.db,f.guild).key}});
+    const out=await run(f,x,[candidate(x.text)]);assert.equal(out.ai.requests.length,1);
+    assert(out.rows.every(r=>!r.payload.includes('steel washers')));
+  });
+});

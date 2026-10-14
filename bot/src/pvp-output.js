@@ -21,6 +21,7 @@ import {projectSceneDescription,defaultSceneDescription} from './scene-descripti
 import {turnTraceFor} from './turn-trace-context.js';
 import {assemblyOrientation} from './assembly-state.js';
 import {findFreshScenePart,renderFreshScenePart} from './fresh-scene-authoring.js';
+import {establishSceneFiction,renderSceneFiction,holdSceneFiction} from './scene-fiction-authority.js';
 
 const hash=v=>createHash("sha256").update(JSON.stringify(v??null)).digest("hex");
 const prepared=new WeakMap();
@@ -117,7 +118,9 @@ function renderPart(db,guild,part){
     if(!assignment||assignment.character_id!==scope.actorCharacterId)fail();
   }
   if(kind==="neutral")return neutral;
+  if(kind==='scene_fiction_review')return 'The surroundings could not be safely described from the current viewpoint. That description is held for review; independently authorized actions remain in effect.';
   if(kind==='gm_fresh_scene')return renderFreshScenePart(db,guild,ref,scope);
+  if(kind==='gm_scene_fiction')return renderSceneFiction(db,guild,ref,scope);
   if(kind==='assembly_orientation'){
     const projection=assemblyOrientation(db,guild,ref,scope);
     if(projection.revision!==part.projection_revision)fail();return projection.text;
@@ -314,6 +317,10 @@ export function prepareAuthorizedTurnOutput(db,guild,result,scope,{sourceRef=nul
   }
   for(const proposal of worldParts){
     try{
+      if(proposal?.version===7){
+        const row=establishSceneFiction(db,guild,proposal,scope,sourceRef),event=db.getWorldEvent(guild,row.source_event);
+        parts.push(savePart(db,guild,{...common,kind:'gm_scene_fiction',ref:row.record_key,source_ref:event.event_key,source_hash:hash(event.details)}));continue;
+      }
       if(proposal?.version===6){
         const row=findFreshScenePart(db,guild,proposal,scope,sourceRef),event=db.getWorldEvent(guild,row.source_event);
         parts.push(savePart(db,guild,{...common,kind:'gm_fresh_scene',ref:row.record_key,source_ref:event.event_key,source_hash:hash(event.details)}));continue;
@@ -334,7 +341,8 @@ export function prepareAuthorizedTurnOutput(db,guild,result,scope,{sourceRef=nul
       parts.push(savePart(db,guild,{...common,kind:fresh?'gm_fresh_npc':"gm_world_narrative",ref:row.record_key,
         source_ref:event.event_key,source_hash:hash(event.details)}));
     }catch(error){
-      if(!['SCENE_DESCRIPTION','SCENE_AUTHORING_SCOPE','SCENE_AUTHORING_WORDS','GM_WORLD_NARRATIVE','NPC_AUTHORING_SCOPE','NPC_AUTHORING_WORDS','NARRATIVE_PVP','PC_EFFECT_AUTHORITY','NATIVE_NOTICE'].includes(error.code))throw error;
+      if(!['SCENE_FICTION','SCENE_DESCRIPTION','SCENE_AUTHORING_SCOPE','SCENE_AUTHORING_WORDS','GM_WORLD_NARRATIVE','NPC_AUTHORING_SCOPE','NPC_AUTHORING_WORDS','NARRATIVE_PVP','PC_EFFECT_AUTHORITY','NATIVE_NOTICE'].includes(error.code))throw error;
+      if(error.code==='SCENE_FICTION')holdSceneFiction(db,guild,proposal,scope,sourceRef,error.diagnostic?.category);
       // Unsupported parts stay in the private draft quarantine. Independent native work is preserved.
     }
   }
@@ -364,7 +372,7 @@ export function prepareAuthorizedTurnOutput(db,guild,result,scope,{sourceRef=nul
     try{parts.push(savePart(db,guild,{...common,kind:"owner_clause",ref:row.record_key}));}
     catch(e){if(e.code!=="NARRATIVE_PVP")throw e;} // Stale records stay inert; raw prose is not a fallback.
   }
-  if(db.getCityCalendar(guild).flags.post_projection_answers===true&&!parts.some(p=>['scene_description','gm_fresh_scene'].includes(p.data.kind))&&sourceRef){
+  if(db.getCityCalendar(guild).flags.post_projection_answers===true&&!parts.some(p=>['scene_description','gm_fresh_scene','gm_scene_fiction'].includes(p.data.kind))&&sourceRef){
     const input=defaultSceneDescription(db,guild,scope,sourceRef);
     if(input){
       const trace=turnTraceFor(guild);if(trace)trace.category='observation';
@@ -373,6 +381,8 @@ export function prepareAuthorizedTurnOutput(db,guild,result,scope,{sourceRef=nul
       parts.push(savePart(db,guild,{...common,kind:'scene_description',input,scene_revision:view.revision}));
     }
   }
+  if(!parts.length&&db.getCityCalendar(guild).flags.playable_narration===true&&worldParts.some(p=>p?.version===7)&&sourceRef)
+    parts.push(savePart(db,guild,{...common,kind:'scene_fiction_review'}));
   if(!parts.length){
     if(!common.source_ref){
       const details={version:1,issuer:'native:output-review',session:scene.session_id,scene:scene.key,
