@@ -26,7 +26,7 @@ import { pacingAdvice, validatePacing } from "./story-continuity.js";
 import { portrayalPacket } from "./portrayal.js";
 import { intentArraySchema, INTENT_PROMPT } from "./ai-intent-contracts.js";
 import { intentContext } from "./ai-intents.js";
-import { decisionAdvisorySchema, decisionContext, validateDecisionAdvisory } from "./decision-advisory.js";
+import { decisionAdvisorySchema, requiredDecisionAdvisorySchema, decisionPromptContext, decisionContext, validateDecisionAdvisory } from "./decision-advisory.js";
 import { declarationContext } from "./player-language.js";
 import {explicitSilence,semanticResponseObligation} from "./gameplay-intake.js";
 import { worldAdditionsSchema, sceneActionsSchema, worldConflictsSchema, AUTONOMOUS_WORLD_PROMPT, autonomousWorldContext, worldAuthority } from "./autonomous-world.js";
@@ -649,7 +649,7 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
       `PENDING NATIVE CONTINUATIONS (owner-scoped; receipts remain authoritative): ${JSON.stringify(ctx.pending_native_continuations)}`,
       `PENDING NATIVE ACTION REVIEWS (owner-scoped; not resolved effects): ${JSON.stringify(ctx.pending_native_action_reviews)}`,
       `CAMPAIGN STATE:\n${JSON.stringify(ctx.campaign)}`,
-      `DECISION ADVISORY (GM-private; null when disabled): ${JSON.stringify(ctx.decision_advisory)}`,
+      `DECISION ADVISORY (GM-private; null when disabled): ${JSON.stringify(decisionPromptContext(ctx.decision_advisory,ctx.rulings))}`,
       `AUTHENTICATED DECLARATION (attempts, not completed facts): ${JSON.stringify(ctx.player_declaration)}`,
       `GM ACTION RULING CONTEXT (native proposals only): ${JSON.stringify(gmRulingContext(this.db,guildId,
         {mode:scope,actorUserId,actorCharacterId:ctx.actor_assignment?.character_id}))}`,
@@ -702,6 +702,7 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
       "NPC_COGNITION (SUBJECTIVE MEMORY/KNOWLEDGE/GOALS; GM-PRIVATE)",
       "AUTHENTICATED RAW PLAYER SOURCE (immutable; native-consumed spans are context only)",
       "NATIVE SOURCE-SPAN LEDGER (receipts prevent re-execution)","CURRENT UNCONSUMED PLAYER INPUT"]);
+    if(ctx.decision_advisory)requiredLabels.add('DECISION ADVISORY (GM-private; null when disabled)');
     const sections=rawSections.map(text=>{
       const split=text.indexOf(":");
       if(split<0||text===SIMULATION_PROMPT) return {label:"SIMULATION RULES",value:text,required:true};
@@ -725,11 +726,12 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
       +INTENT_PROMPT.length+GM_WORLD_NARRATIVE_PROMPT.length+8;
     const {input}=budgetTurnPrompt(referenceTurnStorage(sections,{guildId,
       scope:{mode:scope,actorUserId,actorCharacterId:ctx.actor_assignment?.character_id}}),{instructions,query:messageText,reserveChars});
+    const turnSchema=ctx.decision_advisory?{...gmSchema,properties:{...gmSchema.properties,decision_advisory:requiredDecisionAdvisorySchema}}:gmSchema;
     const req={
       model:this.config.routineGmModel||this.config.gmModel,
       instructions,
       input,
-      text:{format:{type:"json_schema",name:"veiled_city_gm_turn",strict:true,schema:gmSchema}}
+      text:{format:{type:"json_schema",name:"veiled_city_gm_turn",strict:true,schema:turnSchema}}
     };
     if(this.config.reasoningEffort) req.reasoning={effort:this.config.reasoningEffort};
     const validateCore=(result)=>{
@@ -816,10 +818,11 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
           this.metrics.record('optional_quarantine',{guildId});return recovered.result;
         }catch{/* Narration-dependent or consequential failures continue through bounded correction. */}
       }
-      const detail=JSON.stringify(["NARRATIVE_INTEGRITY","NARRATIVE_CONTEXT","POST_TURN_REVIEW","RESPONSE_OBLIGATION"].includes(err.code)?err.diagnostic||{}:{}).slice(0,800);
+      const detail=JSON.stringify(["NARRATIVE_INTEGRITY","NARRATIVE_CONTEXT","POST_TURN_REVIEW","RESPONSE_OBLIGATION","DECISION_ADVISORY"].includes(err.code)?err.diagnostic||{}:{}).slice(0,800);
       const correction=[
         `STRUCTURED TURN CORRECTION: ${String(err.message||err).slice(0,600)} Diagnostic: ${detail}.`,
         "Return a complete replacement response.",
+        ctx.decision_advisory?'decision_advisory is enabled and cannot be null. Supply mode, check, nonempty reason (max 600), uncertainty, consequence, referent_uncertainty, fictional_uncertainty (each max 300). For roll only, check is action/reaction with real mechanical uncertainty and consequence; otherwise check is empty. Narrate requires empty mechanical uncertainty; silence cannot emit narration/effects. Follow pinned DECISION ADVISORY guidance. This is advisory only, never permission for a native effect.':'',
         "Set narrative_interpretation to null unless SCOPED INTERPRETATION supplies a non-null input_source.",
         "If used, source_ref must exactly equal that input_source and references[].source_refs may contain only audience-visible source_ref values explicitly supplied in scoped context.",
         "Interpretation never authorizes narration or consequences.",
@@ -832,7 +835,7 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
         "Use empty actor for narrator claims; character:<id> for a PC observer. State review must agree with mutations.",
         "In particular, references=changed only when events contains npc_update or location_update; native world_additions and scene_actions use their own receipt and do not count as reference review mutations.",
         "Explicit private canon requests use canon_proposals; never narrate application recording or notification."
-      ].join(" ");
+      ].filter(Boolean).join(" ");
       const retry={...req,input:`${req.input}\n\n${correction}`};
       this.metrics.record('validation_retry',{guildId});
       result=await author(await this.requestStructured(retry,{guildId,label:"GM turn state-review retry",signal:turnSignal,retry:true}));

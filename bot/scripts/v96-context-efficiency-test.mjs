@@ -12,6 +12,7 @@ import {ContentIndex} from '../src/content.js';
 import {FakeResponses} from './contract-fixtures.mjs';
 import {POST_TURN_REVIEW_CATEGORIES} from '../src/director.js';
 import {AUTHORITY_POLICY} from '../src/authority-policy.js';
+import {decisionPromptContext,validateDecisionAdvisory} from '../src/decision-advisory.js';
 
 const response=()=>{
   const state_review=Object.fromEntries(POST_TURN_REVIEW_CATEGORIES.map(key=>[key,
@@ -226,6 +227,41 @@ test('STORAGE targeted facts reference only identical current same-guild mandato
   assert.deepEqual(budget.referenceTurnStorage(sections,{guildId:'g',scope:{...scope,actorCharacterId:'other'}})[1].value.targeted_sources,[targeted]);
   assert.deepEqual(sections,before);
 });
+
+test('ADVISORY enabled guidance survives compaction, schema rejects null and existing bounded retry receives explicit contract',()=>nativeFixture(async f=>{
+  configureCityFlags(f.db,f.guild,{decision_advisory:true},'offline-gm');
+  const valid={mode:'narrate',check:'',reason:'Describe current surroundings without resolving an action.',
+    uncertainty:'',consequence:'',referent_uncertainty:'',fictional_uncertainty:''};
+  const ai=new FakeResponses([{...response(),decision_advisory:null},{...response(),decision_advisory:valid},{...response(),decision_advisory:null}]);
+  const gm=service(f,ai),build=gm.buildContext.bind(gm);
+  gm.buildContext=(...args)=>({...build(...args),reference_chunks:[{source:'optional',text:'x'.repeat(200000)}]});
+  const source={guildId:f.guild,actorUserId:f.pcs[0].owner_user_id,actorName:f.pcs[0].name,messageText:'Describe the surroundings.'};
+  const before=f.pcs.map(pc=>f.db.getCharacter(pc.id).data),out=await gm.runTurn(source);
+  assert.deepEqual(out.decision_advisory,valid);assert.equal(ai.requests.length,2);
+  for(const req of ai.requests){
+    assert(req.input.includes('DECISION ADVISORY (GM-private; null when disabled):'));
+    assert(req.input.includes('return a non-null decision_advisory object'));
+    assert(!req.input.includes('"section":"DECISION ADVISORY (GM-private; null when disabled)","records":1'));
+    assert.equal(req.text.format.schema.properties.decision_advisory.type,'object');
+    assert.equal(req.text.format.schema.properties.decision_advisory.anyOf,undefined);
+    assert(req.input.length+req.instructions.length<120000);
+  }
+  assert(ai.requests[1].input.includes('decision_advisory is enabled and cannot be null'));
+  configureCityFlags(f.db,f.guild,{decision_advisory:false},'offline-gm');
+  await gm.runTurn(source);assert(ai.requests[2].text.format.schema.properties.decision_advisory.anyOf.some(s=>s.type==='null'));
+  assert.deepEqual(f.pcs.map(pc=>f.db.getCharacter(pc.id).data),before);
+}));
+
+test('ADVISORY exact ruling references retain differences and native invalid advice remains rejected',()=>nativeFixture(f=>{
+  const rulings=[{id:'r',ruling:'Native rule '.repeat(30)}],context={rulings,guidance:'Advisory only'};
+  assert.equal(decisionPromptContext(context,rulings).rulings,undefined);
+  assert.deepEqual(decisionPromptContext(context,[{...rulings[0],ruling:'Different'}]),context);
+  assert.deepEqual(decisionPromptContext({rulings:[],guidance:'Advisory only'},[]),{rulings:[],guidance:'Advisory only'});
+  configureCityFlags(f.db,f.guild,{decision_advisory:true},'offline-gm');
+  assert.throws(()=>validateDecisionAdvisory(f.db,f.guild,{decision_advisory:null}),error=>error.code==='DECISION_ADVISORY'&&error.diagnostic.category==='shape');
+  assert.throws(()=>validateDecisionAdvisory(f.db,f.guild,{decision_advisory:{mode:'roll',check:'action',reason:'Request',uncertainty:'',consequence:''}}),
+    error=>error.code==='DECISION_ADVISORY'&&error.diagnostic.category==='check_contract');
+}));
 
 test('TOK02 nonlexical page and exact scoped expansion retain obscure evidence and contradictions',()=>nativeFixture(f=>{
   const id=f.db.addFact(f.guild,{content:'The witness saw a copper button.',visibility:'party'});
