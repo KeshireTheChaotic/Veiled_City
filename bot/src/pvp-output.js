@@ -4,7 +4,7 @@ import { currentScene } from "./scene-continuity.js";
 import { conversationPrincipal } from "./conversation-principal.js";
 import { pvpProjection, validatePvpClause } from "./pvp-authorship.js";
 import { observationQueries, ambientWorldQueries, renderObservation } from "./character-observation.js";
-import { activeEvidence, objectiveEvidence } from "./epistemic.js";
+import { activeEvidence, objectiveEvidence,evidenceType } from "./epistemic.js";
 import { renderFearEffect } from "./pvp-fear-moves.js";
 import { indexWorldEvent } from "./city-calendar.js";
 import {renderContinuationNotice} from "./action-continuation.js";
@@ -17,11 +17,37 @@ import {findFreshNpcPart,renderFreshNpcPart,hasPcReference} from './fresh-npc-au
 import {nativeHookProjection} from './native-hook-output.js';
 import {nativeOutcomeProjection} from './native-outcome-output.js';
 import {validatePostTurnStateReview} from './director.js';
+import {projectSceneDescription,defaultSceneDescription} from './scene-description.js';
+import {turnTraceFor} from './turn-trace-context.js';
 
 const hash=v=>createHash("sha256").update(JSON.stringify(v??null)).digest("hex");
 const prepared=new WeakMap();
 const archiveCaptures=new WeakMap();
 const neutral="No additional character response has been established. Independently authorized actions remain in effect.";
+const disclosureDependencies=['events','world_additions','scene_actions','world_conflicts','context_memories','handouts',
+  'relationships','npc_memories','npc_knowledge','npc_goals','canon_proposals','simulation_updates','ai_intents','authored_candidates',
+  'ordinary_effect_proposals','narrative_interpretation'];
+/** Conservative separation proof, not a waiver of disclosure/knowledge authority or arbitrary prose analysis. */
+export function canQuarantineDisclosure(db,guild,output,claim,scope,eventResults){
+  if(db.getCityCalendar(guild).flags.scoped_disclosure_recovery!==true)return false;
+  const proof=prepared.get(output),span=claim.output_claim_span??claim.source_span;
+  if(!proof||proof.scope!==hash(scope)||proof.fingerprint!==fingerprint(output)||eventResults?.length
+    ||claim.action!=='disclosure'||claim.entity_type!=='world'||claim.actor||claim.authored_source_span
+    ||claim.mutation_index!==-1||!span||proof.hasDisclosureDependencies)return false;
+  // Only a whole independently held surface may be dropped. No substring/semantic guesses.
+  const held=Object.values(proof.raw).filter(text=>text.trim());
+  if(held.length!==1||held[0]!==span||Object.keys(proof.privateParts).length)return false;
+  assertPvpOutput(db,guild,output,scope,{publication:true});
+  return proof.parts.length>0&&proof.parts.every(ref=>{
+    const part=validateOutputPart(db,guild,ref);
+    if(part.data.text.includes(span)||claim.proposed&&part.data.text.includes(claim.proposed))return false;
+    if(part.data.kind==='neutral')return true;
+    if(part.data.kind!=='gm_world_narrative')return false;
+    const input=db.getCityRecord(guild,'gm_world_narrative',part.data.ref)?.data.input;
+    // Closed ephemeral atmosphere has no fact/text interpolation or secret-dependent effect.
+    return input?.version===1&&input.kind==='scene_atmosphere';
+  });
+}
 /** Optional-field recovery may carry only untrusted candidate data; every renderer still needs fresh native proof. */
 export function restoreGmWorldCandidates(original,recovered){
   const proposals=prepared.get(original)?.drafts?.gm_world_parts;
@@ -89,6 +115,10 @@ function renderPart(db,guild,part){
     if(!assignment||assignment.character_id!==scope.actorCharacterId)fail();
   }
   if(kind==="neutral")return neutral;
+  if(kind==='scene_description'){
+    const view=projectSceneDescription(db,guild,part.input,scope,part.source_ref);
+    if(view.revision!==part.scene_revision)fail();return view.text;
+  }
   if(kind==='native_simulation_hook'){
     const hook=nativeHookProjection(db,guild,ref,scope);if(hook.revision!==part.hook_revision)fail();return hook.text;
   }
@@ -210,6 +240,11 @@ export function validateOutputPart(db,guild,id){
 /** Trusted orchestration only; a model cannot manufacture the in-process capability or native proofs. */
 export function prepareAuthorizedTurnOutput(db,guild,result,scope,{sourceRef=null,world=[],nativeEntries=[],nativeEffects=[],origin="turn"}={}){
   const prior=prepared.get(result),raw=prior?.raw||Object.fromEntries(surfaces(result));
+  const hasDisclosureDependencies=prior?.hasDisclosureDependencies??(disclosureDependencies.some(field=>{
+    const value=result[field];return Array.isArray(value)?value.length>0:!!value;
+  })||(result.player_intents||[]).some(intent=>intent.type!=='other'||intent.framing!=='immediate'
+    ||intent.resolution!=='conversational'||!['wait','describe_scene','current_situation'].includes(intent.operation)
+    ||intent.gm_ruling||intent.native_adjudication));
   const candidate=candidateNarrative(result);
   const drafts=prior?.drafts||Object.fromEntries(["context_memories","handouts","npc_memories","npc_knowledge","npc_goals","gm_world_parts"]
     .map(field=>[field,result[field]||[]]));
@@ -217,7 +252,7 @@ export function prepareAuthorizedTurnOutput(db,guild,result,scope,{sourceRef=nul
     quarantineGeneratedOutput(db,guild,'no-active-scene',{raw,drafts,candidate,producer:origin});
     for(const field of ['narration','public_narration','player_summary'])if(field in result)result[field]='';
     for(const field of ['private_messages','narrative_claims',...Object.keys(drafts)])if(field in result)result[field]=[];
-    prepared.set(result,{raw,drafts,candidate,parts:[],privateParts:{},scope:hash(scope),fingerprint:fingerprint(result),draftOnly:true});
+    prepared.set(result,{raw,drafts,candidate,hasDisclosureDependencies,parts:[],privateParts:{},scope:hash(scope),fingerprint:fingerprint(result),draftOnly:true});
     return result; // No fictional scene is fabricated. Independent native events still execute.
   }
   const proposals=protectedPvpScope(db,guild,scope);
@@ -248,6 +283,11 @@ export function prepareAuthorizedTurnOutput(db,guild,result,scope,{sourceRef=nul
   }
   for(const proposal of worldParts){
     try{
+      if(proposal?.version===5){
+        const view=projectSceneDescription(db,guild,proposal,scope,sourceRef);
+        const trace=turnTraceFor(guild);if(trace)trace.category='observation';
+        parts.push(savePart(db,guild,{...common,kind:'scene_description',input:proposal,scene_revision:view.revision}));continue;
+      }
       if(proposal?.version===4){
         const outcome=nativeOutcomeProjection(db,guild,proposal,scope);
         parts.push(savePart(db,guild,{...common,kind:'native_outcome',input:proposal,outcome_revision:outcome.revision,
@@ -259,7 +299,7 @@ export function prepareAuthorizedTurnOutput(db,guild,result,scope,{sourceRef=nul
       parts.push(savePart(db,guild,{...common,kind:fresh?'gm_fresh_npc':"gm_world_narrative",ref:row.record_key,
         source_ref:event.event_key,source_hash:hash(event.details)}));
     }catch(error){
-      if(!['GM_WORLD_NARRATIVE','NPC_AUTHORING_SCOPE','NPC_AUTHORING_WORDS','NARRATIVE_PVP','PC_EFFECT_AUTHORITY','NATIVE_NOTICE'].includes(error.code))throw error;
+      if(!['SCENE_DESCRIPTION','GM_WORLD_NARRATIVE','NPC_AUTHORING_SCOPE','NPC_AUTHORING_WORDS','NARRATIVE_PVP','PC_EFFECT_AUTHORITY','NATIVE_NOTICE'].includes(error.code))throw error;
       // Unsupported parts stay in the private draft quarantine. Independent native work is preserved.
     }
   }
@@ -288,6 +328,15 @@ export function prepareAuthorizedTurnOutput(db,guild,result,scope,{sourceRef=nul
     if(!proposals.some(p=>p.record_key===row.data.proposal)||row.data.version!==2)continue;
     try{parts.push(savePart(db,guild,{...common,kind:"owner_clause",ref:row.record_key}));}
     catch(e){if(e.code!=="NARRATIVE_PVP")throw e;} // Stale records stay inert; raw prose is not a fallback.
+  }
+  if(db.getCityCalendar(guild).flags.post_projection_answers===true&&!parts.some(p=>p.data.kind==='scene_description')&&sourceRef){
+    const input=defaultSceneDescription(db,guild,scope,sourceRef);
+    if(input){
+      const trace=turnTraceFor(guild);if(trace)trace.category='observation';
+      operationalMetrics.record('answerless_projection',{guildId:guild});
+      const view=projectSceneDescription(db,guild,input,scope,sourceRef);
+      parts.push(savePart(db,guild,{...common,kind:'scene_description',input,scene_revision:view.revision}));
+    }
   }
   if(!parts.length){
     if(!common.source_ref){
@@ -363,7 +412,7 @@ export function prepareAuthorizedTurnOutput(db,guild,result,scope,{sourceRef=nul
     operationalMetrics.incident('narrative',{guildId:guild,reference:quarantineKey,code:'NARRATIVE_PVP'});
   }
   saveOutputGroup(db,guild,parts);
-  prepared.set(result,{raw,drafts,candidate,parts:parts.map(p=>p.record_key),privateParts,scope:hash(scope),fingerprint:fingerprint(result)});
+  prepared.set(result,{raw,drafts,candidate,hasDisclosureDependencies,parts:parts.map(p=>p.record_key),privateParts,scope:hash(scope),fingerprint:fingerprint(result)});
   return result;
 }
 /** Direct unprepared boundaries reject. High-level callers deliberately prepare before entering them. */
@@ -448,6 +497,25 @@ export function revalidateOutputPublication(db,guild,row){
   }else fail();
   return row;
 }
+/** Classify the actual acknowledged chunk from its native parts, never from a model's safety/response label. */
+export function substantivePublication(db,guild,row){
+  revalidateOutputPublication(db,guild,row);
+  const proof=db.getCityRecord(guild,'pvp_output_publication',row.id),parts=proof.data.parts.map(id=>validateOutputPart(db,guild,id));
+  const prefix=row.surface.startsWith('private_user:')?'**Veilkeeper — private:**\n':'';
+  const text=prefix+parts.map(p=>p.data.text).join('\n'),chunks=splitDiscordText(text);
+  const {chunk_index:index}=publicationChunk(db,guild,row,proof.data.parts);let cursor=0,start=0;
+  for(let i=0;i<=index;i++){start=text.indexOf(chunks[i],cursor);if(start<0)fail();cursor=start+chunks[i].length;}
+  let at=prefix.length;
+  for(const part of parts){const end=at+part.data.text.length;
+    if(part.data.kind!=='neutral'&&start<end&&cursor>at)return true;at=end+1;
+  }
+  return false;
+}
+/** Conservative direct-delivery metric: mixed neutral groups are not counted here (outbox has exact chunk accounting). */
+export function substantivePreparedOutput(db,guild,result,scope){
+  assertPvpOutput(db,guild,result,scope,{publication:true});
+  const proof=prepared.get(result);return proof.parts.length>0&&proof.parts.every(ref=>validateOutputPart(db,guild,ref).data.kind!=='neutral');
+}
 export function deliveredPartyOutput(db,guild,turnId){
   return db.listTurnPublications(guild,turnId).filter(r=>r.status==="delivered"&&r.visibility==="party")
     .map(r=>revalidateOutputPublication(db,guild,r).payload).join("\n");
@@ -481,6 +549,11 @@ export function captureOutputArchive(db,guild,publication){
     if(event&&!seen.has(eventKey)){
       if(event.status!=="active")fail();seen.add(eventKey);refs.push({type:"event",key:value,digest:hash(event)});scan(event.details);
     }
+    const fact=db.getFact(guild,value),factKey=`fact:${value}`;
+    if(fact&&!seen.has(factKey)){
+      if(!['party','public'].includes(fact.visibility)||!activeEvidence(db,guild,fact.id))fail();
+      seen.add(factKey);refs.push({type:'fact',key:fact.id,digest:hash(fact)});scan(evidenceType(fact).source_refs);
+    }
     for(const row of byKey.get(value)||[]){
       const key=`${row.kind}:${value}`;if(seen.has(key))continue;seen.add(key);
       refs.push({type:"record",kind:row.kind,key:value,digest:archiveRowHash(row)});scan(row.source_event);scan(row.data);
@@ -497,8 +570,10 @@ export function captureOutputArchive(db,guild,publication){
 }
 function archiveEvidence(db,guild,data){
   for(const ref of data.refs){
-    const row=ref.type==="record"?db.getCityRecord(guild,ref.kind,ref.key):ref.type==="event"?db.getWorldEvent(guild,ref.key):db.getSavedRoll(guild,ref.key);
+    const row=ref.type==="record"?db.getCityRecord(guild,ref.kind,ref.key):ref.type==="event"?db.getWorldEvent(guild,ref.key)
+      :ref.type==='fact'?db.getFact(guild,ref.key):db.getSavedRoll(guild,ref.key);
     if(!row||(ref.type==="record"?archiveRowHash(row):hash(row))!==ref.digest||ref.type==="event"&&row.status!=="active")fail();
+    if(ref.type==='fact'&&(!['party','public'].includes(row.visibility)||!activeEvidence(db,guild,row.id)))fail();
   }
   for(const owner of data.owners)if(db.getCharacter(owner.character)?.owner_user_id!==owner.user)fail();
 }
@@ -523,7 +598,10 @@ export function certifiedSessionRecap(db,guild,sessionId){
   for(const certificate of records(db,guild,"pvp_delivered_archive").reverse()){
     if(certificate.data.session!==sessionId)continue;
     const row=db.getPublication(guild,certificate.record_key);
-    try{parts.push(archivedPublication(db,guild,row,sessionId));}catch(error){if(error.code!=="NARRATIVE_PVP")throw error;}
+    try{
+      const text=archivedPublication(db,guild,row,sessionId);
+      parts.push(text===neutral?`[Historical output-review acknowledgment, not a scene description or resolved action]\n${text}`:text);
+    }catch(error){if(error.code!=="NARRATIVE_PVP")throw error;}
   }
   return parts.length?`Previously delivered, source-verified session excerpts (not new or current observations):\n\n${parts.join("\n\n")}`:"";
 }

@@ -2,7 +2,8 @@
 import { sceneAccess, scenePresence, npcEvidenceActive } from "./scene-continuity.js";
 import { objectiveEvidence, activeEvidence, evidenceType } from "./epistemic.js";
 import { assertPvpOutput } from "./pvp-authorship.js";
-import { candidateNarrative } from "./pvp-output.js";
+import { candidateNarrative,canQuarantineDisclosure } from "./pvp-output.js";
+import {disclosureFailureReason} from './disclosure-authority.js';
 const claimProperties={
   actor:{type:"string"},entity_type:{type:"string",enum:["character","npc","combatant","world"]},entity:{type:"string"},
   action:{type:"string",enum:["damage","movement","access","disclosure","obligation","status","canon","dice","possession"]},
@@ -31,10 +32,11 @@ export const NARRATIVE_CONTRACT="Return narrative_claims for EVERY consequential
   +"mutation_index is a matching events index or -1 for already established state. A newly staged fact/clue uses source_ref event:<index>; native receipts supply its actual ID. "
   +"Ordinary new businesses, streets, signs and NPCs are NOT canon-ledger claims. Only existing exact canon keys/values support action=canon; event:<index> is never a canon key. World additions need no human approval absent an authoritative contradiction. "
   +"Never invent dice, PC consent or compensate for a rejected claim. Cosmetic prose needs no claim.";
-function deny(category,claim,source=""){
+function deny(category,claim,source="",reasonCode=null){
   const error=new Error(`Narrative integrity rejected ${category}; revise to an explicitly uncommitted intent/uncertainty or use established authorized state.`);
   error.code="NARRATIVE_INTEGRITY";
   error.diagnostic={category,actor:claim?.actor||"",entity:claim?.entity||"",action:claim?.action||"",source,source_ref:claim?.source_ref||"",
+    ...(reasonCode?{reason_code:reasonCode}:{}),
     source_span:claim?.output_claim_span||claim?.source_span||"",authored_source_span:claim?.authored_source_span||"",
     recovery:"Inspect authoritative state and ledger; correct the proposal without inventing changes."};
   throw error;
@@ -177,11 +179,14 @@ export function validateCandidateClaims(db,guildId,result,scope,eventResults,{ou
     catch(error){
       // status is actor lifecycle, not a generic door/sound/equipment-description
       // handler. These rejected world annotations remain private, never facts.
-      if(error.code!=='NARRATIVE_INTEGRITY'||!['actor_status','uncertainty_framing'].includes(error.diagnostic?.category))throw error;
-      const index=remaining.findIndex(raw=>raw?.entity_type==='world'&&raw.action==='status'&&!raw.authored_source_span
+      if(error.code!=='NARRATIVE_INTEGRITY')throw error;
+      const disclosure=error.diagnostic?.category==='scoped_disclosure';
+      if(!disclosure&&!['actor_status','uncertainty_framing'].includes(error.diagnostic?.category))throw error;
+      const index=remaining.findIndex(raw=>raw?.entity_type==='world'&&raw.action===(disclosure?'disclosure':'status')&&!raw.authored_source_span
         &&raw.entity===error.diagnostic.entity&&raw.actor===error.diagnostic.actor
         &&(raw.output_claim_span??raw.source_span)===error.diagnostic.source_span);
       if(index<0)throw error;
+      if(disclosure&&!canQuarantineDisclosure(db,guildId,output,remaining[index],scope,eventResults))throw error;
       diagnostics.push({index:claims.indexOf(remaining[index]),...error.diagnostic});remaining.splice(index,1);
     }
   }
@@ -266,8 +271,8 @@ function validateClaims(db,guildId,result,scope,{staged=false,eventResults=[]},c
     if(c.action==="disclosure"){
       const receipt=staged&&c.source_ref===`event:${c.mutation_index}`?eventResults[c.mutation_index]:null;
       const fact=db.getFact(guildId,c.source_ref)||(receipt?.ok&&["fact","clue"].includes(receipt.type)?db.getFact(guildId,receipt.id):null);
-      if(!fact||fact.archived||c.proposed!==fact.content||!audiences.every(audience=>visible(fact,audience)))
-        deny("scoped_disclosure",c,"scoped fact");
+      const reason=disclosureFailureReason(fact,c.proposed,audiences);
+      if(reason)deny("scoped_disclosure",c,"scoped fact",reason);
       if(!activeEvidence(db,guildId,fact.id)||c.certainty==="committed"&&!objectiveEvidence(db,guildId,fact))
         deny("epistemic_authority",c,"Hypothesis/testimony or retracted ancestry is not objective truth.");
       if(actor.type==="character"&&!visible(fact,{mode:"private",actorUserId:actor.owner,actorCharacterId:actor.key}))

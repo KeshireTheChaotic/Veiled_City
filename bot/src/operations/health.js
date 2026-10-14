@@ -1,5 +1,6 @@
 /** GM-only, content-free operational reports. Reads native status without invoking validators, recovery or models. */
 import {operationalMetrics} from '../operational-metrics.js';
+import {turnLatency} from '../turn-latency.js';
 const statuses=new Set(['active','proposed','selected','superseded','awaiting_pair','awaiting_move','move_selected',
   'executing','resolved','needs_review','needs_scope_review','pending','blocked','needs_adjudication','ready',
   'awaiting_defense','awaiting_armor','awaiting_damage','awaiting_owner','awaiting_death','accepted','declined','revoked',
@@ -36,7 +37,7 @@ export function operationalReport(db,guildId,{authorized=false,metrics=operation
     const incident=[...incidents,...memory].find(r=>r.reference===reference);
     return {incident:incident||null,note:'References are guild-scoped and process-salted; absent/expired references disclose nothing.'};
   }
-  return {metrics:metrics.snapshot(guildId),native:{counts:normalize(native.groups),publications:normalize(native.publications),
+  return {metrics:metrics.snapshot(guildId),turn_latency:turnLatency.snapshot(guildId),native:{counts:normalize(native.groups),publications:normalize(native.publications),
     turns:normalize(native.turns),manual_mutation_receipts:native.manual,fear_review_events:native.reviews,archival:native.archival},incidents,recent_failures:memory,
     bounds:'At most 20 oldest pending records per category, bounded recent in-memory incidents; native group limit 256.',
     native_counts_capped:native.groups.length===256,

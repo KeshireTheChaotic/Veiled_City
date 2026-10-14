@@ -2,9 +2,11 @@
 import { createHash } from "node:crypto";
 import { splitDiscordText } from "./discord/chunking.js";
 import { assertPvpOutput } from "./pvp-authorship.js";
-import { bindOutputPublication, revalidateOutputPublication, captureOutputArchive, recordOutputArchive } from "./pvp-output.js";
+import { bindOutputPublication, revalidateOutputPublication, captureOutputArchive, recordOutputArchive,substantivePublication } from "./pvp-output.js";
 import {KeyedSerialQueue} from "./serial-queue.js";
 import {operationalMetrics} from './operational-metrics.js';
+import {turnLatency} from './turn-latency.js';
+import {currentTurnTrace,turnTraceFor} from './turn-trace-context.js';
 const deliveryQueues=new WeakMap();
 function serialized(db,key,job){
   if(!deliveryQueues.has(db))deliveryQueues.set(db,new KeyedSerialQueue());
@@ -46,6 +48,7 @@ export function queueTurnPublications(db,{guild,session,result,scope,turnId,chan
       targetCharacterId:assignment?.character_id||null});
   }
   db.updateTurnAttempt(turnId,{publicationId:`publication:${turnId}`});
+  const trace=currentTurnTrace();if(trace&&trace.guild===guild.id){trace.publications+=rows.length;trace.private_publications+=rows.filter(row=>row.visibility!=='party').length;}
   return rows;
 }
 
@@ -88,9 +91,12 @@ export function deliverTurnOutbox(db,guildId,turnId,transport,{forceUncertain=fa
     let attempted=false;
     try{
       revalidateOutputPublication(db,guildId,row);
+      const substantive=substantivePublication(db,guildId,row);
       const archive=captureOutputArchive(db,guildId,row);
       attempted=true;
       const receipt=await transport(row);
+      // Transport acknowledged this exact validated chunk. Voice/progress do not enter this path.
+      if(receipt?.ok!==false&&receipt?.messageId&&receipt?.channelId)turnLatency.publication(guildId,turnId,substantive);
       if(!receipt||receipt.ok===false||!receipt.messageId||!receipt.channelId)
         throw Object.assign(new Error("Delivery needs an acknowledged Discord message/channel receipt."),
           {deliveryCertainty:receipt?.certainty||"uncertain"});
@@ -98,6 +104,7 @@ export function deliverTurnOutbox(db,guildId,turnId,transport,{forceUncertain=fa
         channelId:receipt?.channelId||row.channel_id,lastFailure:""});
       recordOutputArchive(db,guildId,delivered,archive);
       operationalMetrics.record('discord',{guildId,durationMs:performance.now()-metricStart});
+      turnTraceFor(guildId)?.stage('discord',performance.now()-metricStart);
       results.push({ok:true,row:delivered});
     }catch(error){
       const safe=!attempted||error.deliveryCertainty==="not_sent";

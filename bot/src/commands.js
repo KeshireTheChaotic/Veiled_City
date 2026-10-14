@@ -61,6 +61,9 @@ import { saveVisibleCharacterFacts } from "./character-observation.js";
 import { establishWorldDescription } from "./world-observation.js";
 import { fearInbox, establishFearContext, selectFearMove, applyFearMove, reconcileFearMove, resumeAutonomousPvpFear } from "./pvp-fear-moves.js";
 import { archivePvpHistory, quarantineSessionRecap, certifiedSessionRecap, scopedSessionRecap,revalidateOutputPublication } from "./pvp-output.js";
+import {assemblyReadiness} from './assembly-readiness.js';
+import {currentTurnTrace,withTurnTrace} from './turn-trace-context.js';
+import {turnLatency} from './turn-latency.js';
 import { pendingPvpFear } from "./pvp-fear-gate.js";
 import { proposeDamagePvp, reviewDamagePvp, respondDamagePvp, reviseDamagePvp, damagePvpInbox } from "./pvp-profiles.js";
 import { preparePvpAttack, reviewPvpAttack, authorizePvpAttack, rollPvpAttack } from "./pvp-attacks.js";
@@ -164,6 +167,8 @@ function compactAssemblyStatus(db,guildId,session){
   if(plan.convergence_goal) lines.push(`Convergence goal: ${plan.convergence_goal}`);
   if(plan.bonds?.length) lines.push(`Proposed practical links:\n${plan.bonds.slice(0,6).map(b=>`• ${b.from_character} → ${b.to_character}: ${b.reason}`).join("\n")}`);
   if(plan.gm_notes) lines.push(`GM notes: ${plan.gm_notes}`);
+  const readiness=assemblyReadiness(db,session);
+  lines.push(`Delivered parts: ${readiness.delivered} • uncertain/interrupted: ${readiness.uncertain}`,readiness.guidance);
   return lines.join("\n");
 }
 
@@ -370,6 +375,16 @@ ${draft.gm_notes||""}`}));
  * @returns {Promise<boolean>} True when the interaction was handled.
  */
 export async function handleCommand(interaction,{db,gm,voice=null}){
+  const assembly=interaction.guildId&&interaction.isChatInputCommand()&&interaction.options.getSubcommand()==='assemble'
+    &&(interaction.commandName==='vc-session'||interaction.commandName==='vc'&&interaction.options.getSubcommandGroup()==='session');
+  if(!assembly||currentTurnTrace())return handleCommandBody(interaction,{db,gm,voice});
+  const trace=turnLatency.begin(interaction.guildId);trace.category='assembly';trace.queueStarted(0);
+  return withTurnTrace(trace,async()=>{
+    try{const result=await handleCommandBody(interaction,{db,gm,voice});trace.finish('delivered');return result;}
+    catch(error){trace.finish('failed');throw error;}
+  });
+}
+async function handleCommandBody(interaction,{db,gm,voice=null}){
   beginInteraction(interaction);
   // Administrative preview/list must not upsert players, execute continuations or capture gameplay receipts.
   if(interaction.isChatInputCommand()&&interaction.guildId
@@ -888,7 +903,7 @@ Initial phase: ${s.assembly_phase}`});
       }
       const warning=deliveryResult.failed.length?"\n\n⚠️ A delivery part failed and remains retryable without regenerating the plan.":
         deliveryResult.uncertain.length?"\n\n⚠️ An interrupted part is marked uncertain and was not duplicated; resync it after checking Discord.":"";
-      await deliverInteractionText(interaction,`Convergence scene launched in the play channel.\n\n${compactAssemblyStatus(db,interaction.guildId,db.getSession(s.id))}\n\nPrivate hook delivery: ${delivery.join(", ")||"none"}${warning}`,{ephemeral:true});
+      await deliverInteractionText(interaction,`Convergence opening delivery processed.\n\n${compactAssemblyStatus(db,interaction.guildId,db.getSession(s.id))}\n\nPrivate hook delivery: ${delivery.join(", ")||"none"}${warning}`,{ephemeral:true});
       return true;
     }
     if(group==="session"&&sub==="assembly-status"){

@@ -9,7 +9,8 @@ import { deliverTurnOutbox, outboxSummary, notSent } from "./publication-outbox.
 import { failureTrace } from "./failure-trace.js";
 import {operationalMetrics} from './operational-metrics.js';
 import { assertArchiveOutput, archivePvpHistory, assertPvpOutput, prepareStoredOutput, prepareNativeHookOutput,
-  quarantineSimulationHook, quarantineGeneratedOutput, revalidateOutputPublication } from "./pvp-output.js";
+  quarantineSimulationHook, quarantineGeneratedOutput, revalidateOutputPublication,substantivePreparedOutput } from "./pvp-output.js";
+import {turnTraceFor} from './turn-trace-context.js';
 import { queueDirectorPublications } from "./publication-outbox.js";
 import {KeyedSerialQueue} from "./serial-queue.js";
 const continuationDeliveryQueue=new KeyedSerialQueue();
@@ -165,7 +166,7 @@ export async function postStateError({db,guild,error,context="runtime",sessionId
   operationalMetrics.incident('runtime',{guildId:guild.id,reference:ref,code:error?.code});
   try{
     const diagnostic=error?.code==="NARRATIVE_INTEGRITY"&&error.diagnostic?Object.fromEntries(
-      ["category","actor","entity","action","source","source_ref","source_span","recovery"].map(key=>[key,String(error.diagnostic[key]||"").slice(0,1000)])):null;
+      ["category","actor","entity","action","source","source_ref","source_span","recovery","reason_code"].map(key=>[key,String(error.diagnostic[key]||"").slice(0,1000)])):null;
     const lifetime=error?.interaction_diagnostic?JSON.parse(JSON.stringify(error.interaction_diagnostic)):null;
     db.audit(guild.id,sessionId,"system","veilkeeper","state_error",{ref,context,error:String(error?.message||error),
       trace:failureTrace(error,attempt||{}),...(diagnostic?{diagnostic}:{}),...(lifetime?{interaction:lifetime}:{})});
@@ -220,6 +221,7 @@ export async function syncConfiguredSurfaces({db,guild}){
 
 export async function postPlayMessage({db,guild,content,sessionId=null,authority=null,publication=null}){
   const scope={mode:"party",actorUserId:null,actorCharacterId:null},needsProof=!!db.getActiveSession(guild.id);
+  let substantive=false;
   const check=()=>{
     if(publication){
       if(publication.visibility!=="party"||publication.target_user_id||content!==publication.payload)throw notSent("Exact party publication required.");
@@ -229,7 +231,8 @@ export async function postPlayMessage({db,guild,content,sessionId=null,authority
       if(sourceScope?.mode!=="party"||content!==result.narration&&content!==`**Encounter Aftermath**\n${result.player_summary}`)
         throw Object.assign(new Error("Exact native output body required."),{code:"NARRATIVE_PVP"});
       assertPvpOutput(db,guild.id,result,sourceScope,{publication:true});
-    }else if(needsProof)prepareStoredOutput(db,guild.id,content,scope);
+      substantive=substantivePreparedOutput(db,guild.id,result,sourceScope);
+    }else if(needsProof)substantive=substantivePreparedOutput(db,guild.id,prepareStoredOutput(db,guild.id,content,scope),scope);
   };
   check();
   const c=db.getCampaign(guild.id);
@@ -239,6 +242,7 @@ export async function postPlayMessage({db,guild,content,sessionId=null,authority
   for(const part of chunks(content)){
     check();
     const sent=await ch.send(part);
+    turnTraceFor(guild.id)?.publication(substantive);
     messages.push({messageId:sent.id,channelId:sent.channelId||ch.id});
     if(sessionId) db.addMessage({guildId:guild.id,sessionId,userId:null,speakerName:"Veilkeeper",visibility:"party",content:part});
   }
@@ -272,10 +276,11 @@ export async function deliverQueuedTurn({db,guild,turnId,forceUncertain=false}){
 
 export async function sendPlayerPrivate({db,guild,userId,content,sessionId=null,characterId=null,beforeSend=null,publication=null,
   recordMessage=true,allowedMentions=null,generated=false}){
-  const messages=[];let attempted=false,via="unavailable";
+  const messages=[];let attempted=false,via="unavailable",substantive=false;
   const check=()=>{
     if(generated){
-      try{prepareStoredOutput(db,guild.id,content,{mode:'private',actorUserId:userId,actorCharacterId:characterId});}
+      try{const scope={mode:'private',actorUserId:userId,actorCharacterId:characterId};
+        substantive=substantivePreparedOutput(db,guild.id,prepareStoredOutput(db,guild.id,content,scope),scope);}
       catch(error){
         if(error.code!=='NARRATIVE_PVP')throw error;
         quarantineGeneratedOutput(db,guild.id,'direct-generated-private',{userId,characterId,content},sessionId);throw error;
@@ -296,6 +301,7 @@ export async function sendPlayerPrivate({db,guild,userId,content,sessionId=null,
       if(route==="private_channel")assertPlayerPrivateChannel({guild,channel:target,userId,gmRoleId:db.getCampaign(guild.id)?.gm_role_id||null});
       check();attempted=true;
       const sent=await target.send(allowedMentions?{content:part,allowedMentions}:part);messages.push({messageId:sent.id,channelId:sent.channelId||(route==="private_channel"?target.id:null)});
+      if(generated)turnTraceFor(guild.id)?.publication(substantive);
     }
     if(sessionId&&recordMessage)db.addMessage({guildId:guild.id,sessionId,userId:null,speakerName:"Veilkeeper",visibility:characterId?"character":"player",
       subjectUserId:characterId?null:userId,subjectCharacterId:characterId,content});

@@ -1,0 +1,16 @@
+{
+  "synthetic": true,
+  "command": "cd bot; node --import ./scripts/offline-guard.mjs scripts/session5-benchmark.mjs",
+  "network": "denied",
+  "live_requests": 0,
+  "billable_tokens": 0,
+  "clock": "Controlled 6000 ms per synthetic provider dispatch, 1000 ms publication step; not live provider or SQLite latency",
+  "comparisons": [
+    {"recovery_enabled": false, "status": "failed", "provider_calls": 2, "first_substantive_ms": null},
+    {"recovery_enabled": true, "status": "delivered", "provider_calls": 1, "first_substantive_ms": 7000}
+  ],
+  "tokens_and_cost": "Unknown; no usage returned by synthetic provider. No invented cost estimate.",
+  "distribution": "One successful controlled sample: p50/p90/p95/p99 all 7000 ms. This is not a live SLA result or latency improvement measurement.",
+  "routine_effort": "Production low unchanged. None request variant prepared only for separately approved quality evaluation.",
+  "direct_mentions": "Existing zero-router-call bypass preserved, not claimed as a newly implemented optimization."
+}

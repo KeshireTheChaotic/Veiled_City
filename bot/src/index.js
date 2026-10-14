@@ -31,29 +31,21 @@ import { serializeSpanLedger } from "./message-span-ledger.js";
 import { captureAuthoredTurnEnvelope, recordNativeConsumedSpans } from "./authored-turn-envelope.js";
 import { beginTurnAttempt, advanceTurnAttempt, turnFailureNotice, isTurnReplay } from "./turn-attempts.js";
 import { validateChannelRouting, shouldSendInactiveSessionNotice } from "./routing-diagnostics.js";
-import { operationalMetrics, measureStage } from "./operational-metrics.js";
+import { operationalMetrics, measureStage,measureNative } from "./operational-metrics.js";
 import { resumeAutonomousPvpFear, setPvpFearContentIndex } from "./pvp-fear-moves.js";
+import {beginGenerationFeedback} from './generation-feedback.js';
+import {turnLatency} from './turn-latency.js';
+import {enqueueTrackedTurn} from './tracked-turn.js';
+import {currentTurnTrace} from './turn-trace-context.js';
 
 const config=loadConfig();
 const log=createLogger(config.logLevel);
-const db=new VeiledDB(config.dbPath,path.resolve(process.cwd(),"./sql/schema.sql"));
+const db=new VeiledDB(config.dbPath,path.resolve(process.cwd(),"./sql/schema.sql"),{sqlMetrics:true});
 const content=new ContentIndex(config.contentRoot);
 setPvpFearContentIndex(content);
 const gm=new GMService({db,content,config});
 const voice=new VoiceNarrator(config,{db});
 const gmTurnQueue=new KeyedSerialQueue();
-
-function beginGenerationFeedback(message){
-  let stopped=false;
-  const typing=()=>message.channel.sendTyping().catch(()=>{});
-  void typing();
-  const typingTimer=setInterval(()=>{if(!stopped)void typing();},Number(config.typingRefreshMs||8000));
-  const progressTimer=setTimeout(()=>{
-    if(!stopped)void message.reply("⏳ Veilkeeper is still working on this turn. No generated campaign state has been committed yet.").catch(()=>{});
-  },Number(config.gmProgressAfterMs||20000));
-  typingTimer.unref?.();progressTimer.unref?.();
-  return ()=>{stopped=true;clearInterval(typingTimer);clearTimeout(progressTimer);};
-}
 
 const client=new Client({
   intents:[GatewayIntentBits.Guilds,GatewayIntentBits.GuildMessages,GatewayIntentBits.MessageContent,GatewayIntentBits.DirectMessages,GatewayIntentBits.GuildVoiceStates],
@@ -305,23 +297,24 @@ async function processPrivateTurn(message,directMention,attempt=null){
   let conversationId=controlled?.character_id||null;
   try{conversationId=conversationPrincipal(db,message.guild.id,message.author.id,conversationId).context_id;}catch{/* No authenticated role context. */}
   const authoredText=playerText;
-  if(controlled?.character_id)captureAuthoredTurnEnvelope(db,message.guild.id,message.author.id,controlled.character_id,
-    message.id,authoredText,{privateScene:true});
-  const nativeLedger=await routeNativeSpans({message,text:authoredText,session,controlled});
+  if(controlled?.character_id)measureNative('turn_capture',message.guild.id,()=>captureAuthoredTurnEnvelope(db,message.guild.id,message.author.id,controlled.character_id,
+    message.id,authoredText,{privateScene:true}));
+  const nativeLedger=await measureStage(operationalMetrics,'native_span',()=>routeNativeSpans({message,text:authoredText,session,controlled}),{guildId:message.guild.id});
   if(controlled?.character_id)recordNativeConsumedSpans(db,message.guild.id,message.author.id,controlled.character_id,message.id,
     nativeLedger.handled_spans.map(span=>({start:span.start,end:span.end,receipt_ref:`native-route:${message.id}:${span.id}`})));
   recordSpanLedger(attempt,nativeLedger);playerText=nativeLedger.remaining_text;
   if(!playerText){if(attempt)advanceTurnAttempt(db,attempt.turn_id,"delivered");return;}
   // Typed source-backed action intents replace pre-GM lexical declaration capture.
-  captureContextSource(db,message.guild.id,message.author.id,controlled?.character_id,message.id,authoredText,{privateScene:true});
-  captureWorldInput(db,message.guild.id,message.author.id,controlled?.character_id,message.id,authoredText,{privateScene:true});
+  measureNative('turn_capture',message.guild.id,()=>{
+    captureContextSource(db,message.guild.id,message.author.id,controlled?.character_id,message.id,authoredText,{privateScene:true});
+    captureWorldInput(db,message.guild.id,message.author.id,controlled?.character_id,message.id,authoredText,{privateScene:true});
+  });
   // Typed speech is verified and captured after native scene movement and NPC presence.
   db.addMessage({guildId:message.guild.id,sessionId:session.id,messageId:message.id,userId:message.author.id,speakerName:speaker,characterId:controlled?.character_id||null,visibility:vis,subjectUserId:vis==="player"?message.author.id:null,subjectCharacterId:vis==="character"?conversationId:null,content:authoredText});
   if(attempt)advanceTurnAttempt(db,attempt.turn_id,"captured");
   // Only model-typed entry intents reach native scene actions; no lexical staging gate.
 
   let result;
-  const stopFeedback=beginGenerationFeedback(message);
   try{
     if(attempt)advanceTurnAttempt(db,attempt.turn_id,"generating",{modelAttempts:Number(db.getTurnAttempt(attempt.turn_id)?.model_attempts||0)+1});
     const cleaned=playerText.replaceAll(`<@${client.user.id}>`,"").replaceAll(`<@!${client.user.id}>`,"").trim();
@@ -336,7 +329,7 @@ async function processPrivateTurn(message,directMention,attempt=null){
     if(attempt)advanceTurnAttempt(db,attempt.turn_id,db.getTurnAttempt(attempt.turn_id)?.committed==="yes"?"needs_recovery":"failed",{terminalCode:err.code||"GENERATION_FAILED",errorRef:ref});
     await message.reply(attempt?turnFailureNotice(db.getTurnAttempt(attempt.turn_id),ref):`⚠️ ${reason} (${ref}).`).catch(()=>{});
     return;
-  }finally{stopFeedback();}
+  }
 
   const scope={mode:"private",actorUserId:message.author.id,actorCharacterId:controlled?.character_id||null};
   let mutation;
@@ -402,22 +395,25 @@ async function processPartyTurn(message,directMention,attempt=null){
   }
   const speaker=controlled?.name||message.member?.displayName||message.author.username;
   const authoredText=playerText;
-  if(controlled?.character_id)captureAuthoredTurnEnvelope(db,message.guild.id,message.author.id,controlled.character_id,
-    message.id,authoredText);
-  const nativeLedger=await routeNativeSpans({message,text:authoredText,session,controlled});
+  if(controlled?.character_id)measureNative('turn_capture',message.guild.id,()=>captureAuthoredTurnEnvelope(db,message.guild.id,message.author.id,controlled.character_id,
+    message.id,authoredText));
+  const nativeLedger=await measureStage(operationalMetrics,'native_span',()=>routeNativeSpans({message,text:authoredText,session,controlled}),{guildId:message.guild.id});
   if(controlled?.character_id)recordNativeConsumedSpans(db,message.guild.id,message.author.id,controlled.character_id,message.id,
     nativeLedger.handled_spans.map(span=>({start:span.start,end:span.end,receipt_ref:`native-route:${message.id}:${span.id}`})));
   recordSpanLedger(attempt,nativeLedger);playerText=nativeLedger.remaining_text;
   if(!playerText){if(attempt)advanceTurnAttempt(db,attempt.turn_id,"delivered");return;}
   if(pendingAtTurnStart){
+    if(currentTurnTrace())currentTurnTrace().pending_director=true;
     if(attempt)advanceTurnAttempt(db,attempt.turn_id,"pre_director",{committed:"unknown"});
-    const director=await runPendingDirectorPass(message.guild,session);
+    const director=await measureStage(operationalMetrics,'pre_director',()=>runPendingDirectorPass(message.guild,session),{guildId:message.guild.id});
     if(attempt)advanceTurnAttempt(db,attempt.turn_id,"routed",director?.ran&&director?.ok?
       {committed:"yes",nativeCommitId:`director:${attempt.turn_id}`}:{committed:"no"});
   }
   // Typed source-backed action intents replace pre-GM lexical declaration capture.
-  captureContextSource(db,message.guild.id,message.author.id,controlled?.character_id,message.id,authoredText);
-  captureWorldInput(db,message.guild.id,message.author.id,controlled?.character_id,message.id,authoredText);
+  measureNative('turn_capture',message.guild.id,()=>{
+    captureContextSource(db,message.guild.id,message.author.id,controlled?.character_id,message.id,authoredText);
+    captureWorldInput(db,message.guild.id,message.author.id,controlled?.character_id,message.id,authoredText);
+  });
   db.addMessage({guildId:message.guild.id,sessionId:session.id,messageId:message.id,userId:message.author.id,speakerName:speaker,characterId:controlled?.character_id||null,visibility:"party",content:authoredText});
   if(attempt)advanceTurnAttempt(db,attempt.turn_id,"captured");
   // Typed speech is verified and captured after native scene movement and NPC presence.
@@ -433,7 +429,6 @@ async function processPartyTurn(message,directMention,attempt=null){
   if(!should) return;
 
   let result;
-  const stopFeedback=beginGenerationFeedback(message);
   try{
     if(attempt)advanceTurnAttempt(db,attempt.turn_id,"generating",{modelAttempts:Number(db.getTurnAttempt(attempt.turn_id)?.model_attempts||0)+1});
     const cleaned=playerText.replaceAll(`<@${client.user.id}>`,"").replaceAll(`<@!${client.user.id}>`,"").trim();
@@ -448,7 +443,7 @@ async function processPartyTurn(message,directMention,attempt=null){
     if(attempt)advanceTurnAttempt(db,attempt.turn_id,db.getTurnAttempt(attempt.turn_id)?.committed==="yes"?"needs_recovery":"failed",{terminalCode:err.code||"GENERATION_FAILED",errorRef:ref});
     await message.reply(attempt?turnFailureNotice(db.getTurnAttempt(attempt.turn_id),ref):`⚠️ ${reason} (${ref}).`).catch(()=>{});
     return;
-  }finally{stopFeedback();}
+  }
 
   const scope={mode:"party",actorUserId:message.author.id,actorCharacterId:controlled?.character_id||null};
   let mutation;
@@ -540,6 +535,8 @@ async function processTurnEnvelope(message,directMention,audience,processor){
   if(isTurnReplay(attempt)||["delivered","failed"].includes(attempt.stage)){
     operationalMetrics.record('native_replay',{guildId:message.guild.id});return attempt;
   }
+  turnLatency.bind(message.guild.id,attempt.turn_id,currentTurnTrace());
+  const stopFeedback=beginGenerationFeedback(message,config);
   try{
     await measureStage(operationalMetrics,`${audience}_turn_envelope`,()=>processor(message,directMention,attempt),{guildId:message.guild.id});
     const after=db.getTurnAttempt(attempt.turn_id);
@@ -552,11 +549,12 @@ async function processTurnEnvelope(message,directMention,audience,processor){
     advanceTurnAttempt(db,attempt.turn_id,stage,{terminalCode:error.code||"TURN_ENVELOPE_FAILED",errorRef:ref});
     await message.reply(turnFailureNotice(db.getTurnAttempt(attempt.turn_id),ref)).catch(()=>{});
     return db.getTurnAttempt(attempt.turn_id);
-  }
+  }finally{stopFeedback();}
 }
 
 client.on("messageCreate",async message=>{
   if(!message.guild||message.author.bot) return;
+  const trace=turnLatency.begin(message.guild.id);
   const campaign=db.getCampaign(message.guild.id);
   if(!campaign) return;
   const routing=validateChannelRouting(campaign);
@@ -590,7 +588,7 @@ client.on("messageCreate",async message=>{
 
   const privateOwner=db.getPlayerByPrivateChannel(message.guild.id,message.channel.id);
   if(privateOwner && privateOwner.discord_user_id===message.author.id){
-    await gmTurnQueue.enqueue(`guild:${message.guild.id}`,()=>processTurnEnvelope(message,directMention,"private",processPrivateTurn)).catch(async error=>{
+    await enqueueTrackedTurn(gmTurnQueue,message.guild.id,()=>processTurnEnvelope(message,directMention,"private",processPrivateTurn),{trace}).catch(async error=>{
       log.error("Private turn failed",error);
       await safeStateError({guild:message.guild,error,context:"private-turn"});
     });
@@ -598,7 +596,7 @@ client.on("messageCreate",async message=>{
   }
 
   if(campaign.play_channel_id&&message.channel.id===campaign.play_channel_id){
-    await gmTurnQueue.enqueue(`guild:${message.guild.id}`,()=>processTurnEnvelope(message,directMention,"party",processPartyTurn)).catch(async error=>{
+    await enqueueTrackedTurn(gmTurnQueue,message.guild.id,()=>processTurnEnvelope(message,directMention,"party",processPartyTurn),{trace}).catch(async error=>{
       log.error("Party turn failed",error);
       await safeStateError({guild:message.guild,error,context:"party-turn"});
     });

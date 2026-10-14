@@ -5,6 +5,7 @@ export {gmWorldScope} from './gm-world-scope.js';
 import {indexWorldEvent} from "./city-calendar.js";
 import {validateCompositionShape,compositionEvidence,projectComposition} from "./gm-fiction-composition.js";
 import {npcCompositionSchema,freshNpcRequestSchema,nativeOutcomeSchema} from './gm-fiction-schema.js';
+import {sceneDescriptionSchema} from './scene-description.js';
 
 const hash=v=>createHash("sha256").update(JSON.stringify(v)).digest("hex");
 const dialogue={
@@ -26,7 +27,7 @@ export const gmWorldPartsSchema={type:"array",maxItems:4,items:{type:"object",ad
   properties:{version:{type:"integer",enum:[1]},kind:{type:"string",enum:["npc_dialogue","scene_atmosphere"]},
     entity_key:{type:"string",maxLength:160},acts:{type:"array",minItems:1,maxItems:3,items:{type:"string",enum:acts}},
     tone:{type:"string",enum:Object.keys(tones)}},required:["version","kind","entity_key","acts","tone"]}};
-gmWorldPartsSchema.items={anyOf:[gmWorldPartsSchema.items,npcCompositionSchema,freshNpcRequestSchema,nativeOutcomeSchema]};
+gmWorldPartsSchema.items={anyOf:[gmWorldPartsSchema.items,npcCompositionSchema,freshNpcRequestSchema,nativeOutcomeSchema,sceneDescriptionSchema]};
 export const GM_WORLD_NARRATIVE_PROMPT="In ordinary, private and protected PvP scenes, use gm_world_parts for meaningful GM-owned conversation and atmosphere. "
   +"Choose current native NPC/location entity_key and compose up to three speech acts with a tone. ask_work + ask_skills invites a natural work discussion. "
   +"These parts authorize only the NPC's own closed utterance or harmless ephemeral atmosphere: never a PC response, secrets, promises, new access or mechanics. "
@@ -37,7 +38,10 @@ export const GM_WORLD_NARRATIVE_PROMPT="In ordinary, private and protected PvP s
   +"No utterance/text/safety flag is accepted from this combined GM prompt: a native audience-isolated authoring stage supplies words. "
   +"Use at most one such request; it authorizes no PC effect, revelation, reaction, spending or factual assertion about a PC. "
   +"Project an existing committed receipt using version=4 kind=native_outcome receipt_kind (pc_effect_receipt/roll_request/evidence_receipt/commitment) and ref. "
-  +"This is read-only, audience-checked rendering, never permission to apply a receipt or disclose private resources.";
+  +"This is read-only, audience-checked rendering, never permission to apply a receipt or disclose private resources. "
+  +"For an owner's scene/situation request use type=other, operation=describe_scene or current_situation with the exact authored span. "
+  +"When scene descriptions are enabled, version=5 kind=scene_description accepts only current GM-established environmental fact_refs and "
+  +"typed ephemeral atmosphere clauses (subject, verb, manner). No arbitrary prose, new facts, PC effects or inferred arrival is accepted.";
 function fail(){throw Object.assign(new Error("Current native GM-owned output scope and closed nonmechanical projection required."),
   {code:"GM_WORLD_NARRATIVE",expected:true});}
 function closed(input){

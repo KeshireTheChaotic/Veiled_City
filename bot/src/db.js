@@ -19,12 +19,14 @@ import { activeEvidence, evidenceType } from "./epistemic.js";
 import { validateChannelRouting } from "./routing-diagnostics.js";
 import {assertCanonProposalProof} from './semantic-candidate-source.js';
 import {historicalArchiveProjection} from './historical-archive.js';
+import {instrumentSqlReads} from './turn-trace-context.js';
 
 /** SQLite repository facade and transaction boundary for campaign state. */
 export class VeiledDB {
-  constructor(dbPath, schemaPath) {
+  constructor(dbPath, schemaPath, {sqlMetrics=false}={}) {
     fs.mkdirSync(path.dirname(dbPath), { recursive: true });
     this.db = new DatabaseSync(dbPath);
+    if(sqlMetrics)this.db=instrumentSqlReads(this.db);
     this.db.exec("PRAGMA journal_mode=WAL; PRAGMA foreign_keys=ON;");
     this.db.exec(fs.readFileSync(schemaPath, "utf8"));
     this.migrateSchema();

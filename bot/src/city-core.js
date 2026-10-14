@@ -180,6 +180,7 @@ export function configureCityFlags(db,guildId,input,actorId){
     "autonomous_pvp_fear",
     "pvp_private_ui",
     "gm_discretion",
+    "scoped_disclosure_recovery","scene_descriptions","post_projection_answers",
     ...Object.keys(EXPANSION_FEATURES)];
   if(Object.keys(input).some(key=>!allowed.includes(key)||typeof input[key]!=="boolean")) throw new Error("Unknown city feature flag.");
   return db.transaction(()=>{

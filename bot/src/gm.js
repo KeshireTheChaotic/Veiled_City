@@ -40,11 +40,13 @@ import { projectAuthorityRecords } from "./authority-projection.js";
 import { operationalMetrics, measureStage, measureNative } from "./operational-metrics.js";
 import { scopedSceneMemory } from "./scoped-memory.js";
 import {gmWorldPartsSchema,GM_WORLD_NARRATIVE_PROMPT} from "./gm-world-narrative.js";
+import {turnTraceFor} from './turn-trace-context.js';
 import {gmRulingContext,GM_RULING_PROMPT} from "./gm-action-ruling.js";
 import {ordinaryEffectsSchema,ORDINARY_EFFECT_PROMPT} from './ordinary-effect-schema.js';
 import {ordinaryEffectContext} from './ordinary-effects.js';
 import {authorFreshNpcRequests,hasFreshNpcResponse,FRESH_NPC_INSTRUCTIONS,freshNpcResponseSchema} from './fresh-npc-authoring.js';
 import {worldInputKey} from './autonomous-world.js';
+import {shadowEngagement} from './engagement-shadow.js';
 
 const routerSchema={
   type:"object",
@@ -353,7 +355,7 @@ export class GMService{
       text:{format:{type:"json_schema",name:"minor_npc_draft",strict:true,schema:minorNpcSchema}}},{guildId,label:"minor NPC draft"});
   }
 
-  async requestModel(request,{guildId,signal,retry=false}={}){
+  async requestModel(request,{guildId,signal,retry=false,purpose='other'}={}){
     const limit=Number.isInteger(this.config.openaiMaxRetries)?Math.max(0,Math.min(5,this.config.openaiMaxRetries)):1;
     for(let attempt=0;attempt<=limit;attempt++){
       if(signal?.aborted)throw Object.assign(new Error('Model operation cancelled before dispatch.'),{code:'AI_GENERATION_DEADLINE'});
@@ -365,9 +367,11 @@ export class GMService{
         this.metrics.record('model_request',{guildId,model:request.model,durationMs:performance.now()-start,
           inputTokens:response?.usage?.input_tokens,outputTokens:response?.usage?.output_tokens,
           cachedInputTokens:response?.usage?.input_tokens_details?.cached_tokens,retries:(attempt>0||retry)?1:0});
+        turnTraceFor(guildId)?.model(response?.usage,{purpose,model:request.model,ms:performance.now()-start,retry:attempt>0});
         return response;
       }catch(error){
         const code=signal?.aborted?'AI_GENERATION_DEADLINE':'PROVIDER_ERROR';
+        turnTraceFor(guildId)?.model(response?.usage,{purpose,model:request.model,ms:performance.now()-start,retry:attempt>0,error:code});
         this.metrics.record('model_request',{guildId,model:request.model,durationMs:performance.now()-start,status:'error',errorCode:code,
           inputTokens:response?.usage?.input_tokens,outputTokens:response?.usage?.output_tokens,
           cachedInputTokens:response?.usage?.input_tokens_details?.cached_tokens,
@@ -412,7 +416,8 @@ export class GMService{
 STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Return one COMPLETE JSON object matching the schema. Be concise. Do not use Markdown fences or commentary. Preserve quotation marks and other punctuation from user-provided text as ordinary JSON string content.`;
       }
       let response;
-      try{response=await this.requestModel(request,{guildId,signal:operationSignal,retry:attempt>1||retry});}
+      try{response=await this.requestModel(request,{guildId,signal:operationSignal,retry:attempt>1||retry,
+        purpose:label==='message router'?'router':label.startsWith('GM turn')?'gm':label.includes('NPC author')?'npc_writer':label.includes('assembly')?'assembly':label.includes('director')?'director':'other'});}
       catch(err){
         if(operationSignal.aborted){
           const timeout=Object.assign(new Error(`${label} exceeded its bounded generation deadline; no generated state was committed.`),
@@ -465,16 +470,36 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
       `Scoped conversation focus (not authority): ${JSON.stringify(focus)}`,
       `Message from ${message.member?.displayName||message.author.username}: ${text}`
     ].join("\n");
-    const out=await this.requestStructured({
+    const shadow=this.config.routerDecisionsShadow===true
+      ?shadowEngagement(this.ai,prompt,{enabled:true,signal,deadlineMs:this.config.routerShadowDeadlineMs||1000}):null;
+    const recordShadow=async expected=>{
+      if(!shadow)return;
+      const candidate=await shadow;
+      this.metrics.record(candidate.status==='unavailable'?'router_shadow_unavailable':candidate.respond===null||expected===undefined?'router_shadow_uncertain'
+        :candidate.respond===expected?'router_shadow_match':'router_shadow_disagree',{guildId});
+      if(candidate.status!=='unavailable'){
+        this.metrics.record('model_request',{guildId,model:'gpt-6-luna',durationMs:candidate.durationMs,
+          inputTokens:candidate.usage?.input_tokens,outputTokens:candidate.usage?.output_tokens,
+          cachedInputTokens:candidate.usage?.input_tokens_details?.cached_tokens,status:candidate.error?'error':'ok'});
+        turnTraceFor(guildId)?.model(candidate.usage,{purpose:'decisions',model:'gpt-6-luna',ms:candidate.durationMs,
+          error:candidate.error?'PROVIDER_ERROR':null});
+      }
+    };
+    let out;
+    try{out=await this.requestStructured({
       model:this.config.routerModel,
       input:prompt,
       max_output_tokens:200,
       text:{format:{type:"json_schema",name:"route",strict:true,schema:routerSchema}}
-    },{guildId,label:"message router",signal,deadlineMs:this.config.routerDeadlineMs||20000});
+    },{guildId,label:"message router",signal,deadlineMs:this.config.routerDeadlineMs||20000});}
+    finally{await recordShadow(out?.respond);}
     return out.respond;
   }
 
   buildContext(guildId,actorUserId,messageText,actorAssignmentOverride=null,{worldDirector=false,scope="party"}={}){
+    return measureNative('context',guildId,()=>this.buildContextData(guildId,actorUserId,messageText,actorAssignmentOverride,{worldDirector,scope}));
+  }
+  buildContextData(guildId,actorUserId,messageText,actorAssignmentOverride=null,{worldDirector=false,scope="party"}={}){
     const campaign=this.db.getCampaign(guildId);
     const session=this.db.getActiveSession(guildId);
     const roster=session?this.db.roster(session.id):[];
@@ -836,16 +861,16 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
   }
 
   async authorFreshNpcs(guildId,result,scope,sourceRef,budget,signal,model=this.config.gmModel){
-    await authorFreshNpcRequests({db:this.db,guild:guildId,result,scope,sourceRef,budget,generate:async packet=>{
+    await measureStage(this.metrics,'npc_writer',()=>authorFreshNpcRequests({db:this.db,guild:guildId,result,scope,sourceRef,budget,generate:async packet=>{
       let response;
       try{response=await this.requestModel({model,
         instructions:FRESH_NPC_INSTRUCTIONS,input:JSON.stringify(packet),max_output_tokens:700,
         text:{format:{type:'json_schema',name:'audience_scoped_npc_utterance',strict:true,schema:freshNpcResponseSchema}}},
-        {guildId,signal});signal?.throwIfAborted();}
+        {guildId,signal,purpose:'npc_writer'});signal?.throwIfAborted();}
       catch(error){throw Object.assign(new Error('Isolated NPC writer unavailable; scope review retained.'),{code:'NPC_AUTHORING_PROVIDER',cause:error});}
       try{return parseStructuredJsonText(response.output_text,{label:'isolated NPC authoring'});}
       catch(error){throw Object.assign(new Error('Isolated NPC writer returned malformed output.'),{code:'NPC_AUTHORING_PARSE',cause:error});}
-    }});
+    }}),{guildId});
   }
 
   async runWorldDirector({guildId,layer,trigger={},cycle=null,projects=[],actorAssignment=null}){
