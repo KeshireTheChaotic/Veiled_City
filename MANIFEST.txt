@@ -94,6 +94,7 @@ bot/scripts/npc-cognition-regression-test.mjs
 bot/scripts/offline-guard.mjs
 bot/scripts/offline-smoke-test.mjs
 bot/scripts/operations-regression-test.mjs
+bot/scripts/playable-narration-test.mjs
 bot/scripts/portrayal-authoring-test.mjs
 bot/scripts/production-regression-test.mjs
 bot/scripts/prompt-budget-test.mjs
@@ -341,6 +342,9 @@ bot/src/scene-action-window.js
 bot/src/scene-continuity.js
 bot/src/scene-description.js
 bot/src/scene-entry.js
+bot/src/scene-fiction-authority.js
+bot/src/scene-fiction-context.js
+bot/src/scene-observation-route.js
 bot/src/scene-setup.js
 bot/src/scoped-memory.js
 bot/src/scoped-query.js
@@ -478,6 +482,7 @@ docs/CODEX_TYPED_INTENT_DELTA_KICKOFF_v8.md
 docs/CODEX_TYPED_INTENT_DELTA_PLAN_v8.md
 docs/CODEX_TYPED_INTENT_MASTER_KICKOFF_v5.md
 docs/CODEX_TYPED_INTENT_REFINEMENT_PLAN_v5.md
+docs/CODEX_VEILED_CITY_PLAYABLE_NARRATION_REPAIR_PLAN.md
 docs/CODEX_VEILKEEPER_SESSION5_NARRATIVE_LATENCY_PLAN.md
 docs/CODE_STANDARDS.md
 docs/COMBAT_STATE.md
@@ -514,6 +519,8 @@ docs/NPC_SIMULATION.md
 docs/OPENAI_SETUP.md
 docs/PACKAGE_COUNTS.json
 docs/PARTY_ASSEMBLY.md
+docs/PLAYABLE_NARRATION_CONTRACT.md
+docs/PLAYABLE_NARRATION_HANDOFF.md
 docs/PLAYER_LIFECYCLE.md
 docs/PRIVATE_ROLL_GUIDE.md
 docs/README.md

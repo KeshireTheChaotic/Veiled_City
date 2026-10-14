@@ -12,13 +12,13 @@ import {indexWorldEvent} from '../src/city-calendar.js';
 import {recordCharacterArrival,recordScenePresence,currentScene} from '../src/scene-continuity.js';
 import {commitGmTurn} from '../src/turn-orchestration.js';
 import {deliverTurnOutbox} from '../src/publication-outbox.js';
-import {revalidateOutputPublication} from '../src/pvp-output.js';
+import {revalidateOutputPublication,prepareStoredOutput,certifiedSessionRecap} from '../src/pvp-output.js';
 import {proposePvp} from '../src/narrative-pvp.js';
 import {pvpTerms} from './v9-fixtures.mjs';
 import {deliverVerifiedAssembly} from '../src/assembly-publications.js';
 export const prompts=['Set the scene','What does the laundromat look like inside?','What else is going on currently?',
   'I head inside Twenty-Four Spin','What does it look like inside?','I examine the frozen terminal'];
-const fiction={description:'Two rows of steel washers face a long folding counter. A blue bench stands beneath the front window, and detergent scents the warm air.',
+const fiction={description:'Two rows of steel washers face a long folding counter. A blue bench stands beneath the front window. Detergent scents the warm air.',
   details:[{id:'washer-rows',category:'layout',text:'Two rows of steel washers face a long folding counter.'},
     {id:'blue-bench',category:'nonmechanical_prop',text:'A blue bench stands beneath the front window.'}],evidence_refs:[]};
 function candidate(text,operation='describe_scene'){
@@ -31,10 +31,10 @@ function candidate(text,operation='describe_scene'){
     ordinary_effect_proposals:[],narrative_interpretation:null,world_additions:[],scene_actions:[],world_conflicts:[],context_memories:[],authored_candidates:null,
     private_messages:[],events:[],handouts:[],relationships:[],npc_memories:[],npc_knowledge:[],npc_goals:[],canon_proposals:[],simulation_updates:[],ai_intents:[],decision_advisory:null,state_review};
 }
-function fixture(f,{mode='party',text=prompts[0],location='spin',placeType='laundromat'}={}){
+function fixture(f,{mode='party',text=prompts[0],location='spin',placeType='laundromat',name=null}={}){
   const pc=f.pcs[0],messageId=`playable-${f.db.listWorldEvents(f.guild,{includeGM:true,limit:100}).length}`;
   f.db.setCityCalendar(f.guild,{flags:{...f.db.getCityCalendar(f.guild).flags,playable_narration:true,scene_continuity:true}});
-  f.db.setSimulationEntity(f.guild,'location',location,{name:location==='spin'?'Twenty-Four Spin':'Public Observatory',place_type:placeType,visibility:'party'});
+  f.db.setSimulationEntity(f.guild,'location',location,{name:name||(location==='spin'?'Twenty-Four Spin':'Public Observatory'),place_type:placeType,visibility:'party'});
   f.db.updateCharacterData(pc.id,d=>{d.location=location;});
   const arrival=indexWorldEvent(f.db,f.guild,{key:`${messageId}:arrival`,kind:'arrival',title:'Owner-confirmed synthetic initial viewpoint',
     source_id:`player:${pc.owner_user_id}`,session_id:f.session.id,scene:currentScene(f.db,f.guild).key,location_key:location,
@@ -88,6 +88,18 @@ test('PLAY05 current visible clues survive without closed grammar; private sourc
   const out=buildSceneFictionContext(f.db,f.guild,x.scope,x.sourceRef),text=JSON.stringify(out.packet);
   assert(text.includes('terminal display is frozen'));assert(text.includes('Three knocks'));assert(text.includes('parcel rests'));
   assert(!text.includes('SECRET_CAUSE'));assert(!text.includes('LAUNDERED_SECRET'));
+  const root=indexWorldEvent(f.db,f.guild,{key:'private-ancestry',kind:'observation',title:'Private evidence',source_id:'fixture-gm',visibility:'character',subject_key:f.pcs[1].id,details:{}},'fixture-gm'),
+    wrapper=indexWorldEvent(f.db,f.guild,{key:'public-wrapper',kind:'observation',title:'Invalid wrapper',source_id:'fixture-gm',visibility:'party',details:{input_source:root.event_key}},'fixture-gm');
+  f.db.addFact(f.guild,{category:'clue',content:'EVENT_LAUNDERED_SECRET',visibility:'party',provenance:{scene_location:'spin',
+    epistemic:{kind:'observation',source_refs:[wrapper.event_key],perspective:'test'}}});
+  f.db.upsertNpcProfile(f.guild,{npcKey:'private-occupant',displayName:'PRIVATE_OCCUPANT',role:'local'});
+  f.db.setSimulationEntity(f.guild,'npc','private-occupant',{location_key:'spin',visibility:'party'});
+  const npcSource=indexWorldEvent(f.db,f.guild,{key:'private-npc-arrival',kind:'arrival',title:'Private NPC viewpoint',source_id:'fixture-gm',visibility:'character',subject_key:f.pcs[1].id,location_key:'spin',
+    details:{entity_type:'npc',entity_key:'private-occupant'}},'fixture-gm');
+  recordScenePresence(f.db,f.guild,{entity_type:'npc',entity_key:'private-occupant',location_key:'spin',source_event:npcSource.event_key,
+    visibility:'character',subject_key:f.pcs[1].id},'fixture-gm');
+  const closed=JSON.stringify(buildSceneFictionContext(f.db,f.guild,x.scope,x.sourceRef).packet);
+  assert(!closed.includes('EVENT_LAUNDERED_SECRET'));assert(!closed.includes('PRIVATE_OCCUPANT'));
   const privateView=fixture(f,{mode:'private',text:prompts[4]});
   f.db.addFact(f.guild,{category:'scene',content:'OWNER_ONLY_WALL',visibility:'character',subjectCharacterId:x.pc.id,provenance:{scene_location:'spin'}});
   assert(JSON.stringify(buildSceneFictionContext(f.db,f.guild,privateView.scope,privateView.sourceRef).packet).includes('OWNER_ONLY_WALL'));
@@ -132,17 +144,27 @@ test('PLAY08 protected PvP and active native windows cannot acquire broad scene 
   });
 });
 
-test('PLAY09 real native movement publishes one arrival plus the destination interior, never the departure place',()=>nativeFixture(async f=>{
+test('PLAY09 real native movement publishes one arrival plus the existing or newly authored destination interior',async()=>{
+  for(const fresh of [false,true])await nativeFixture(async f=>{
   const x=fixture(f,{location:'street',placeType:'street',text:prompts[3]});
-  f.db.setSimulationEntity(f.guild,'location','spin',{name:'Twenty-Four Spin',place_type:'laundromat',parent_location_key:'street',visibility:'party'});
-  f.db.upsertReference(f.guild,{kind:'location',key:'spin',name:'Twenty-Four Spin',summary:'A public laundromat.',visibility:'party'});
+  if(!fresh){
+    f.db.setSimulationEntity(f.guild,'location','spin',{name:'Twenty-Four Spin',place_type:'laundromat',parent_location_key:'street',visibility:'party'});
+    f.db.upsertReference(f.guild,{kind:'location',key:'spin',name:'Twenty-Four Spin',summary:'A public laundromat.',visibility:'party'});
+  }
   const r=candidate(x.text);r.player_intents=[{...r.player_intents[0],type:'move',target_name:'Twenty-Four Spin',target_key:'spin',destination:'interior',operation:'move',resolution:'auto'}];
+  if(fresh)r.world_additions=[{kind:'location',key:'spin',name:'Twenty-Four Spin',summary:'A public laundromat.',parent_location_key:'street',visibility:'party'}];
+  if(fresh){
+    const get=f.db.getCityRecord.bind(f.db);let reads=0;
+    f.db.getCityRecord=(guild,kind,key)=>{const row=get(guild,kind,key);
+      return row&&kind==='autonomous_entity'?{...row,created_at:`audit-clock-${++reads}`,updated_at:`audit-clock-${reads}`}:row;};
+  }
   r.scene_actions=[{kind:'move',entity_ref:'spin',source_span:x.text,zone:'interior'}];
   const out=await run(f,x,[r,fiction]),text=out.rows.map(r=>r.payload).join('\n');
   assert.equal(f.db.getCharacter(x.pc.id).data.location,'spin');assert.match(text,/has arrived at spin/);assert.match(text,/steel washers/);
   const packet=JSON.parse(out.ai.requests[1].input);assert.equal(packet.place.name,'Twenty-Four Spin');assert.equal(packet.viewpoint,'interior');
   assert.equal(f.db.listWorldEvents(f.guild,{includeGM:true,limit:100}).filter(e=>e.kind==='arrival'&&e.details.input_source===x.sourceRef).length,1);
-}));
+  });
+});
 
 test('PLAY10 repeat situation keeps committed layout and current cues, excludes secret explanations',()=>nativeFixture(async f=>{
   const x=fixture(f),out=await run(f,x);assert(out.rows.some(r=>r.payload.includes('blue bench')));
@@ -193,5 +215,76 @@ test('PLAY13 mixed/action/quoted requests never use observation admission; malfo
   await nativeFixture(async f=>{const x=fixture(f),out=await run(f,x,[{description:'bad shape'}],true);
     assert.equal(out.ai.requests.length,1);assert(out.rows.every(r=>!r.payload.includes('bad shape')));
     assert(out.rows.some(r=>r.payload.includes('held for review')));assert.equal(out.mutation.world.length,0);
+  });
+});
+
+// This is a deterministic acceptance check of explicit physical fixture expectations, not an LLM judge or semantic certifier.
+function usefulScene(out,specifics){
+  const payload=out.rows.map(r=>r.payload).join('\n');
+  for(const detail of specifics)assert(payload.includes(detail),`Missing usable fixture detail: ${detail}`);
+  assert(!/UNVERIFIED RAW|No additional character response|insufficient details|nonmechanical scene framing/.test(payload));
+  assert(out.rows.length);return payload;
+}
+test('PLAY14 contextual narration is generic across exploration, investigation, social setting, supernatural evidence and story aftermath',async()=>{
+  const scenarios=[
+    {name:'Ash Quarry',type:'quarry',text:'Set the scene',details:['Limestone terraces step down toward a gravel floor.','Dust glows in the pale afternoon light.']},
+    {name:'Parcel Office',type:'parcel office',text:prompts[5],details:['Sorting shelves flank a narrow work counter.','A brass desk lamp warms the scarred wood.'],cue:'The terminal display is frozen.'},
+    {name:'Evening Market',type:'market',text:'Describe the scene',details:['Canvas awnings shade a cobbled passage.','The scent of baked bread drifts past the stalls.']},
+    {name:'Old Shrine',type:'shrine',text:'What else is going on currently?',details:['Stone arches frame a shallow alcove.','Cold air stirs the dust on its flagstones.'],cue:'A violet light is visible along the altar edge.'},
+    {name:'Courtyard Aftermath',type:'courtyard',text:'What does it look like inside?',details:['Broken paving surrounds a dry fountain.','Evening light rests on the weathered stone.'],cue:'The earlier clash has ended; its explanation is not established.'}
+  ];
+  for(const s of scenarios)await nativeFixture(async f=>{
+    const x=fixture(f,{location:'generic-place',placeType:s.type,name:s.name,text:s.text}),refs=[];
+    if(s.cue)refs.push(f.db.addFact(f.guild,{category:'clue',content:s.cue,visibility:'party',provenance:{scene_location:'generic-place'}}));
+    const answer={description:s.details.join(' '),details:s.details.map((text,i)=>({id:`detail-${i}`,category:i?'sensory':'layout',text})),evidence_refs:refs};
+    const r=candidate(s.text,s.cue?'current_situation':'describe_scene');
+    if(s.text===prompts[5]){
+      f.db.setCityCalendar(f.guild,{flags:{...f.db.getCityCalendar(f.guild).flags,gm_discretion:true}});
+      const evidence=indexWorldEvent(f.db,f.guild,{key:'visible-terminal',kind:'observation',source_id:'fixture-gm',title:'Visible terminal',
+        truth_status:'observed',visibility:'party',location_key:'generic-place',session_id:f.session.id,scene:currentScene(f.db,f.guild).key,
+        details:{description:s.cue}},'fixture-gm');
+      r.player_intents=[{...r.player_intents[0],type:'observe',operation:'examine',resolution:'auto',gm_ruling:{version:1,
+        disposition:'narrative_no_roll',context_refs:[evidence.event_key],capability:{kind:'mundane',ref:''},effect_class:'observation',
+        trait:null,difficulty:null,risk:'none',stakes:'none',explanation:'Examining an already visible display has no uncertain consequence.',
+        difficulty_reason:'No check required for accessible evidence.',saved_ruling_key:'',override_refs:[],raw_refs:[],house_refs:[],homebrew_refs:[],modifier_keys:[]}}];
+    }
+    const out=await run(f,x,[r,answer]),payload=usefulScene(out,s.details),packet=JSON.parse(out.ai.requests[1].input);
+    assert.equal(packet.place.name,s.name);assert.equal(packet.place.type,s.type);if(s.cue)assert(payload.includes(s.cue));
+    assert.equal(f.db.getCharacter(x.pc.id).data.resources.hp.current,0);assert.equal(out.ai.requests.length,2);
+  });
+  // Conversations still use the existing native NPC-owned authoring lane, not environmental prose or player control.
+  await nativeFixture(async f=>{
+    const x=fixture(f,{text:'I ask the attendant what work is available.'});
+    f.db.upsertNpcProfile(f.guild,{npcKey:'attendant',displayName:'Attendant',role:'local attendant',publicIdentity:'PRIVATE_NPC_HOOK'});
+    f.db.setSimulationEntity(f.guild,'npc','attendant',{location_key:'spin',visibility:'party'});
+    const r=candidate(x.text);r.gm_world_parts=[{version:3,kind:'npc_fresh_request',entity_key:'attendant',focus:'work',source_refs:[]}];
+    const out=await run(f,x,[r,{utterance:'There might be a night shift worth asking about. What sort of work interests you?'}]);
+    assert(out.rows.some(row=>row.payload.includes('night shift')));assert(out.rows.every(row=>!row.payload.includes('PRIVATE_NPC_HOOK')));
+    assert.equal(out.ai.requests.length,2);assert.equal(out.mutation.world.length,0);
+  });
+});
+
+test('PLAY15 fresh fiction fails audience/payload/owner/scene TOCTOU without resource changes; archives remain scoped',async()=>{
+  for(const change of ['audience','payload','owner','scene'])await nativeFixture(async f=>{
+    const x=fixture(f,{mode:'private'}),out=await run(f,x),row=out.rows[0];
+    if(change==='audience')assert.throws(()=>revalidateOutputPublication(f.db,f.guild,{...row,visibility:'party',target_user_id:null}));
+    if(change==='payload')assert.throws(()=>revalidateOutputPublication(f.db,f.guild,{...row,payload:row.payload+' Choso apologizes for losing.'}));
+    if(change==='owner'){
+      f.db.db.prepare('UPDATE characters SET owner_user_id=? WHERE id=?').run(f.pcs[1].owner_user_id,x.pc.id);
+      assert.throws(()=>revalidateOutputPublication(f.db,f.guild,row));
+    }
+    if(change==='scene'){
+      f.db.setDirectorState(f.session.id,{scene_number:f.db.getDirectorState(f.session.id).scene_number+1,scene_label:'Another native scene'});
+      assert.throws(()=>revalidateOutputPublication(f.db,f.guild,row));
+    }
+    assert.equal(f.db.getCharacter(x.pc.id).data.resources.hp.current,0);
+  });
+  for(const mode of ['party','private'])await nativeFixture(async f=>{
+    const x=fixture(f,{mode}),out=await run(f,x);let sends=0;
+    await deliverTurnOutbox(f.db,f.guild,out.attempt.turn_id,async()=>({messageId:`delivered-${++sends}`,channelId:'offline'}));
+    assert.equal(sends,out.rows.length);assert.doesNotThrow(()=>prepareStoredOutput(f.db,f.guild,out.result.narration,x.scope));
+    const recap=certifiedSessionRecap(f.db,f.guild,f.session.id);
+    assert.equal(recap.includes('steel washers'),mode==='party');
+    if(mode==='private')assert.throws(()=>prepareStoredOutput(f.db,f.guild,out.result.narration,{mode:'party'}));
   });
 });

@@ -36,13 +36,16 @@ function answer(db,guild,value,view){
     ids.add(d.id);words(db,guild,d.text,300);
     const prior=view.packet.scene_local_details.find(p=>p.id===d.id);
     if(prior&&hash(prior)!==hash(d))throw fail('continuity_conflict');
+    if(!prior&&!value.description.includes(d.text))throw fail('unbound_detail_span');
   }
   const eligible=new Set(view.packet.established_observations.map(e=>e.source_ref));
   if(new Set(value.evidence_refs).size!==value.evidence_refs.length||value.evidence_refs.some(ref=>!eligible.has(ref)))throw fail('evidence');
 }
 const draftKey=(input,scope,sourceRef)=>`scene-fiction-draft:${hash([input,scope,sourceRef])}`;
 function viewFor(db,guild,input,scope,sourceRef,excludeFictionKey){
-  request(input);return buildSceneFictionContext(db,guild,scope,sourceRef,{operation:input.operation,excludeFictionKey});
+  request(input);const view=buildSceneFictionContext(db,guild,scope,sourceRef,{operation:input.operation,excludeFictionKey});
+  if(input.source_refs.some(ref=>!view.packet.established_observations.some(e=>e.source_ref===ref)))throw fail('request_evidence');
+  return view;
 }
 export function holdSceneFiction(db,guild,input,scope,sourceRef,reason){
   if(!sourceRef||!db.getWorldEvent(guild,sourceRef))return;
@@ -57,6 +60,7 @@ export async function authorSceneFictionRequests({db,guild,result,scope,sourceRe
     const key=draftKey(input,scope,sourceRef),attempt=`scene-authoring-attempt:${hash([sourceRef,scope])}`;
     try{
       request(input);const view=viewProvider?viewProvider(input):viewFor(db,guild,input,scope,sourceRef);
+      if(input.source_refs.some(ref=>!view.packet.established_observations.some(e=>e.source_ref===ref)))throw fail('request_evidence');
       const prior=db.getCityRecord(guild,'scene_fiction_draft',key);
       if(prior){if(hash(prior.data.state)!==hash(view.state))throw fail('stale_draft');continue;}
       if(budget.used||db.getCityRecord(guild,'scene_authoring_attempt',attempt)
@@ -70,6 +74,8 @@ export async function authorSceneFictionRequests({db,guild,result,scope,sourceRe
       db.saveCityRecord(guild,{...db.getCityRecord(guild,'scene_authoring_attempt',attempt),key:attempt,status:'authored'});
     }catch(error){
       if(error.code!=='SCENE_FICTION')throw error;
+      const pending=db.getCityRecord(guild,'scene_authoring_attempt',attempt);
+      if(pending?.status==='authoring')db.saveCityRecord(guild,{...pending,key:attempt,status:'needs_scope_review'});
       holdSceneFiction(db,guild,input,scope,sourceRef,error.diagnostic?.category||'writer_unavailable');
     }
   }

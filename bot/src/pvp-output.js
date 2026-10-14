@@ -120,7 +120,9 @@ function renderPart(db,guild,part){
   if(kind==="neutral")return neutral;
   if(kind==='scene_fiction_review')return 'The surroundings could not be safely described from the current viewpoint. That description is held for review; independently authorized actions remain in effect.';
   if(kind==='gm_fresh_scene')return renderFreshScenePart(db,guild,ref,scope);
-  if(kind==='gm_scene_fiction')return renderSceneFiction(db,guild,ref,scope);
+  if(kind==='gm_scene_fiction'){
+    try{return renderSceneFiction(db,guild,ref,scope);}catch(error){if(error.code!=='SCENE_FICTION')throw error;fail();}
+  }
   if(kind==='assembly_orientation'){
     const projection=assemblyOrientation(db,guild,ref,scope);
     if(projection.revision!==part.projection_revision)fail();return projection.text;

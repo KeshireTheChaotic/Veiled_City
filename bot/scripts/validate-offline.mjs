@@ -29,6 +29,7 @@ suites.push("historical-archive-test");
 suites.push("session5-diagnostics-test","session5-narrative-test","session5-latency-test","session5-routing-test");
 suites.push("assembly-authority-test");
 suites.push("scene-narration-repair-test");
+suites.push("playable-narration-test");
 const report={fixture_only:true,network:"denied",billable_tokens:0,live_requests:0,suites:[],limits:["Synthetic fixtures do not establish unrestricted live-model semantics.","Consult I_HEARD_YOU_EVALUATION for measured false positives/negatives and unresolved ambiguities."]};
 
 // VC_VALIDATION_REPORT_V1: compact, atomic, local-only suite diagnostics.

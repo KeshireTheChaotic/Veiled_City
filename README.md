@@ -330,6 +330,7 @@ Some commands below need additional required options selected in Discord.
 | Pause / resume / request review | `/vc-director pause`; `/vc-director resume`; `/vc-director run reason:<fictional reason>` |
 | Simulation / queued-action review | `/vc-sim status`; `/vc-sim review action_id:<id> decision:reject` |
 | City clock / feature flags | `/vc-city status`; `/vc-city flags json:<boolean flags>` |
+| Playable scene narration (default OFF) | `/vc-city flags json:{"playable_narration":true,"scene_continuity":true}`; source-bound local fiction, native arrivals, private assembly views and one-call read-only observations. [Scope, risks and rollback](docs/PLAYABLE_NARRATION_HANDOFF.md). |
 | AI eligibility / receipts | `/vc-story expansion-status`; `/vc-story ai-inbox` |
 | Configure delegation | `/vc-story delegation json:<policy>` |
 | Approve / reject / modify / defer AI proposals | `/vc-story ai-review json:<key, decision, expected_revision>`; modify also needs `replacement_intent` |

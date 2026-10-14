@@ -12,11 +12,13 @@ export function sceneFictionFailure(reason){return Object.assign(new Error(`Scen
 const visible=(row,scope)=>row&&factVisibleTo({...row,subject_character_id:row.subject_character_id||row.subject_key,
   subject_user_id:row.subject_user_id||row.subject_key},scope);
 function closure(db,guild,key,scope,seen=new Set()){
+  if(typeof key!=='string'||!key)return false;
   if(seen.has(key)||seen.size>=32)return false;seen.add(key);
   const row=db.getFact(guild,key)||db.getWorldEvent(guild,String(key).replace(/^event:/,''));
+  const ancestors=row?.content?evidenceType(row).source_refs:[row?.details?.input_source,row?.details?.declaration,
+    ...(row?.kind==='native_scene_fiction'?[row.details.origin]:[]),...(Array.isArray(row?.details?.source_refs)?row.details.source_refs:[])].filter(Boolean);
   return !!(row&&visible(row,scope)&&activeEvidence(db,guild,key)
-    &&(row.kind!=='native_scene_fiction'||closure(db,guild,row.details.origin,scope,new Set(seen)))
-    &&(!row.content||evidenceType(row).source_refs.every(ref=>closure(db,guild,ref,scope,new Set(seen)))));
+    &&ancestors.every(ref=>closure(db,guild,ref,scope,new Set(seen))));
 }
 const short=(value,max=180)=>typeof value==='string'&&!/[\x00-\x1f\u202a-\u202e\u2066-\u2069]/u.test(value)?value.slice(0,max):'';
 export function buildSceneFictionContext(db,guild,scope,sourceRef,{operation='describe_scene',excludeFictionKey=null}={}){
@@ -49,9 +51,13 @@ export function buildSceneFictionContext(db,guild,scope,sourceRef,{operation='de
   }).slice(0,8);
   const local=db.listCityRecords(guild,{kind:'scene_local_detail',status:'committed',includeGM:true,limit:100}).filter(r=>
     r.source_event!==excludeFictionKey&&r.data.scene===scene.key&&r.location_key===location&&visible(r,scope)&&closure(db,guild,r.source_event,scope));
-  const npcs=db.listSimulationEntities(guild,'npc').filter(n=>!n.state.hidden&&!n.state.removed&&n.state.location_key===location
-    &&['party','public'].includes(n.state.visibility||'party')&&scenePresence(db,guild,'npc',n.entity_key)
-    &&sceneAccess(db,guild,{observer_type:'character',observer_key:pc.id,target_type:'npc',target_key:n.entity_key}))
+  const npcs=db.listSimulationEntities(guild,'npc').filter(n=>{
+    const p=scenePresence(db,guild,'npc',n.entity_key),a=db.getCityRecord(guild,'autonomous_entity',`npc:${n.entity_key}`);
+    return !n.state.hidden&&!n.state.removed&&n.state.location_key===location&&['party','public'].includes(n.state.visibility||'party')
+      &&p?.status==='active'&&visible(p,scope)&&closure(db,guild,p.source_event,scope)
+      &&(!a||visible(a,scope)&&closure(db,guild,a.source_event,scope))
+      &&sceneAccess(db,guild,{observer_type:'character',observer_key:pc.id,target_type:'npc',target_key:n.entity_key});
+  })
     .slice(0,6).map(n=>({name:short(db.getNpcProfile(guild,n.entity_key)?.display_name),role:short(n.state.public_role,80),activity:'No additional activity established.'}));
   const viewpoint=['interior','exterior'].includes(presence.data.zone)?presence.data.zone:'unspecified';
   const packet={version:1,operation,observation_request:assemblyValid?'Describe the established scene for assembly without assigning any character action, cooperation or disclosure.':short(source.details.text,4000),
@@ -61,7 +67,9 @@ export function buildSceneFictionContext(db,guild,scope,sourceRef,{operation='de
     visible_npcs:npcs,open_leads:evidence.filter(f=>f.category==='clue').map(f=>f.id),
     scene_local_details:local.map(r=>r.data.detail),unknowns:['Unprovided activity, hidden causes and NPC intentions are unknown.']};
   const state={guild,scene:scene.key,session:scene.session_id,scope:{...scope},principal:principal.revision,source:sceneFictionHash(source.details),
-    location,entity:sceneFictionHash(entity.state),authored:authored?sceneFictionHash(authored):null,
+    // Preview/commit may occur in different wall-clock seconds. Audit timestamps/row IDs confer no fiction authority.
+    location,entity:sceneFictionHash(entity.state),authored:authored?sceneFictionHash({key:authored.record_key,status:authored.status,
+      source:authored.source_event,visibility:authored.visibility,subject:authored.subject_key,location:authored.location_key,data:authored.data}):null,
     presence:{source:presence.source_event,location,zone:presence.data.zone,state:presence.data.state,visibility:presence.visibility,subject:presence.subject_key},
     arrival:sceneFictionHash(arrival.details),evidence:evidence.map(f=>[f.id,sceneFictionHash(f)]),
     prior:local.map(r=>[r.record_key,sceneFictionHash(r.data)]),npcs:sceneFictionHash(npcs)};

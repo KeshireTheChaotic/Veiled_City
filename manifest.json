@@ -31,8 +31,8 @@
     },
     {
       "path": "README.md",
-      "size_bytes": 22286,
-      "sha256": "ba18242731f0ce95cd5284bd209986397809dec2e64008e76ef25d846845ac4a"
+      "size_bytes": 22576,
+      "sha256": "ec8beb8b97c2364ab3996c9ec858a11bec7770c7967c9463e99ce0f48b13206f"
     },
     {
       "path": "bot/.env.example",
@@ -483,6 +483,11 @@
       "path": "bot/scripts/operations-regression-test.mjs",
       "size_bytes": 9485,
       "sha256": "00156b3cb0eeecc20e374f6320c65251162542854072184c1729c37f528181a2"
+    },
+    {
+      "path": "bot/scripts/playable-narration-test.mjs",
+      "size_bytes": 26898,
+      "sha256": "263b9bda765e7c5dc26e7e9570e6273d68087455bbd9ca097ee5f8ed5b7177cd"
     },
     {
       "path": "bot/scripts/portrayal-authoring-test.mjs",
@@ -951,8 +956,8 @@
     },
     {
       "path": "bot/scripts/validate-offline.mjs",
-      "size_bytes": 8591,
-      "sha256": "f004e9863883f514e470dc7790a135af63c2e56e10a5af883493acbf6db601ee"
+      "size_bytes": 8631,
+      "sha256": "9da77dc5f5c05c338e747c1a6b5364bfbf119158d469109f27d29ddc8eb4801e"
     },
     {
       "path": "bot/sql/schema.sql",
@@ -1001,8 +1006,8 @@
     },
     {
       "path": "bot/src/assembly-publications.js",
-      "size_bytes": 5258,
-      "sha256": "f9e2312d2283267ce6470e1d66e4492a9e06e36184832a70db8c490b4ef69a36"
+      "size_bytes": 5826,
+      "sha256": "864d8a6f83d2e6b6df28374d397260d658aee27372740cc3dc18599c99a633de"
     },
     {
       "path": "bot/src/assembly-readiness.js",
@@ -1011,8 +1016,8 @@
     },
     {
       "path": "bot/src/assembly-state.js",
-      "size_bytes": 6010,
-      "sha256": "0401b6f5584efce905f41c676f5a6fffb323f5e0d97e985ff72a3d22cee6d279"
+      "size_bytes": 6515,
+      "sha256": "8fbce3c45d5a99c8fcb5c10b24f3a7123a410ac68cf7be2df777b905e939afee"
     },
     {
       "path": "bot/src/authored-candidates.js",
@@ -1086,8 +1091,8 @@
     },
     {
       "path": "bot/src/city-core.js",
-      "size_bytes": 25326,
-      "sha256": "7081574495ecdc04cf026747f5cc6c68cbc76369f1084307e71c0e27eee98517"
+      "size_bytes": 25347,
+      "sha256": "81f1df140d585f1fd5c7c9be1191e2088327297fe34bcc2c44b519272d29bd39"
     },
     {
       "path": "bot/src/city-depth.js",
@@ -1116,8 +1121,8 @@
     },
     {
       "path": "bot/src/commands.js",
-      "size_bytes": 182865,
-      "sha256": "24392a4bf96ca2171930869e94dbcfc6d029d3ababb2eb508ecd3b7b5226f236"
+      "size_bytes": 182868,
+      "sha256": "ba107876ef4627756e167ac068faaa29a3cab622b9a0ed92860ed63a7fa56184"
     },
     {
       "path": "bot/src/concept-context.js",
@@ -1156,8 +1161,8 @@
     },
     {
       "path": "bot/src/context-planner.js",
-      "size_bytes": 8185,
-      "sha256": "679d0eb8778d9cb082ee7f0dfeede4e7f97ba9a1cca174280ab74e3df75a10de"
+      "size_bytes": 8208,
+      "sha256": "e90362b416865d415a9bdbfa84b7c45f3f1b5703e403b101566af10aef06a61c"
     },
     {
       "path": "bot/src/continuity-routing.js",
@@ -1311,13 +1316,13 @@
     },
     {
       "path": "bot/src/gm-fiction-schema.js",
-      "size_bytes": 3076,
-      "sha256": "e2f0126cdd9a503f90b882fcf2e7c444c58faefb62d3d3cc7a807adf6341be9b"
+      "size_bytes": 3638,
+      "sha256": "5cf65abd5f8c95af0a3b9f390ff884841897a41ceba66628053eab53b15b38de"
     },
     {
       "path": "bot/src/gm-world-narrative.js",
-      "size_bytes": 10143,
-      "sha256": "4a1aec6ecf3ae5563ad00c475667de3dff729afa150497fed9600c76bb4911a5"
+      "size_bytes": 10195,
+      "sha256": "0bef07d6b9f4dfd9e7498b2d6f68e46aafbdd492c1ef7677440923c3c7c3dc3e"
     },
     {
       "path": "bot/src/gm-world-scope.js",
@@ -1326,8 +1331,8 @@
     },
     {
       "path": "bot/src/gm.js",
-      "size_bytes": 113173,
-      "sha256": "323e6cf06f3603be302b2395d45202219d9453aa8dd0f21c644b70730a7db892"
+      "size_bytes": 121521,
+      "sha256": "1416901d1b2cdc337ef7ad34e7a1801972600b260fc5496b7abde5afaaea0e4d"
     },
     {
       "path": "bot/src/handout.js",
@@ -1451,8 +1456,8 @@
     },
     {
       "path": "bot/src/operational-metrics.js",
-      "size_bytes": 9328,
-      "sha256": "f0036e0e24542f869c042d61bc24eb5c749d581fd03e1bf1042ecefad955d992"
+      "size_bytes": 9390,
+      "sha256": "5430ad4269315e9b78331df041ab9f9116b40cd336b36d2834ac60c1bebf2d7a"
     },
     {
       "path": "bot/src/operations/diagnostics.js",
@@ -1606,8 +1611,8 @@
     },
     {
       "path": "bot/src/pvp-output.js",
-      "size_bytes": 49812,
-      "sha256": "db23b03c9390bf82220360c5fa0460f94acf6cc4e739e0de04516b30b1d3f0c8"
+      "size_bytes": 51525,
+      "sha256": "d03e970405d48ad7090778e61d0bc9911aed2497b193a16bcf032d07d017d0d6"
     },
     {
       "path": "bot/src/pvp-profiles.js",
@@ -1720,6 +1725,21 @@
       "sha256": "b0a8103b203e8429ac57dcec5ed36db3030ded9bc37580a701c0d6eb4755e764"
     },
     {
+      "path": "bot/src/scene-fiction-authority.js",
+      "size_bytes": 10124,
+      "sha256": "dbc5160f13ebd87f1c2dff4a46befc5e1839c355dbcde9ae6d16f52496762853"
+    },
+    {
+      "path": "bot/src/scene-fiction-context.js",
+      "size_bytes": 7888,
+      "sha256": "d7e8b752d0d58fc3285d6d5faf71d67c94ccd4099d32b18c231c962b256dfacf"
+    },
+    {
+      "path": "bot/src/scene-observation-route.js",
+      "size_bytes": 1256,
+      "sha256": "2ac0d1d0e8e330d4498a96f7c541404af88ed5747a4b0375bf08630397797f80"
+    },
+    {
       "path": "bot/src/scene-setup.js",
       "size_bytes": 6834,
       "sha256": "bc4c2702c62d56556c98905e5f22040f3bf8c1b3f6c90fa238321b3d9f1f35de"
@@ -1791,8 +1811,8 @@
     },
     {
       "path": "bot/src/state.js",
-      "size_bytes": 39760,
-      "sha256": "75911b76d41a98b67622dfc9936ab7591876cb9cb28735cec1b2ffcb72d0f325"
+      "size_bytes": 40045,
+      "sha256": "41c7a2cdc8773d207db6067190ad4ab30c09cad632d49b76c67948baaa06f5dc"
     },
     {
       "path": "bot/src/story-commands.js",
@@ -1821,8 +1841,8 @@
     },
     {
       "path": "bot/src/turn-latency.js",
-      "size_bytes": 5744,
-      "sha256": "8acd40716a4ee7f97f7569f0061d1867a96498a9d7ea25ff88318b58b5277514"
+      "size_bytes": 5774,
+      "sha256": "4f639d42e4e5111123ea23f416e2c8293481ce36d081cf84ca93f3e1b1d8f364"
     },
     {
       "path": "bot/src/turn-orchestration.js",
@@ -2405,6 +2425,11 @@
       "sha256": "405de74448e4f74d15173655aba90c9d2e8ef9a672a390e92e724386fde1fe70"
     },
     {
+      "path": "docs/CODEX_VEILED_CITY_PLAYABLE_NARRATION_REPAIR_PLAN.md",
+      "size_bytes": 23289,
+      "sha256": "3a63c4a155779687d6930a1540b828160988c97c7e4714d0be3e0a6f53d670f6"
+    },
+    {
       "path": "docs/CODEX_VEILKEEPER_SESSION5_NARRATIVE_LATENCY_PLAN.md",
       "size_bytes": 30474,
       "sha256": "0dc14ff31934bd3f13920710097b2b8453501e3a291e6dc6fb0f5834c4810f6e"
@@ -2583,6 +2608,16 @@
       "path": "docs/PARTY_ASSEMBLY.md",
       "size_bytes": 4684,
       "sha256": "07043508321fe543fe570bfd1806338646d89d886a7e6c4dff1a3b377433a618"
+    },
+    {
+      "path": "docs/PLAYABLE_NARRATION_CONTRACT.md",
+      "size_bytes": 15776,
+      "sha256": "a3df1ceec0263d1d06bc6a13500818982b4e0a0060bbd69e44b9b8526390645d"
+    },
+    {
+      "path": "docs/PLAYABLE_NARRATION_HANDOFF.md",
+      "size_bytes": 8987,
+      "sha256": "c38a4e216c10387dda93b75ae50ad50ca8eab455835bb62123ee268b52397c3f"
     },
     {
       "path": "docs/PLAYER_LIFECYCLE.md",
