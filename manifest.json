@@ -60,6 +60,11 @@
       "sha256": "4bb2ab7fc307062992d53a2c0351d0bb26271eee9e8e18d9dbc55c39c525f633"
     },
     {
+      "path": "bot/scripts/assembly-authority-test.mjs",
+      "size_bytes": 14454,
+      "sha256": "49e3b4c5f04563fdd76e3f45fa19ef307d9c592a872dd45024ef260adee96f1b"
+    },
+    {
       "path": "bot/scripts/audit-regression-test.mjs",
       "size_bytes": 5490,
       "sha256": "628a27301dabeadf68e07714eda32543b8a557d834d34fad30e14a7ef10f2d18"
@@ -941,8 +946,8 @@
     },
     {
       "path": "bot/scripts/validate-offline.mjs",
-      "size_bytes": 8507,
-      "sha256": "19b2f5adea62b79f8c0222149c9e765bf7a5785bc6dbda1900bca533a50521e3"
+      "size_bytes": 8547,
+      "sha256": "19cc21ab80caee10c4d5f895764899029a7e1d83968c7ce9556ea77a3da43da6"
     },
     {
       "path": "bot/sql/schema.sql",
@@ -986,13 +991,23 @@
     },
     {
       "path": "bot/src/assembly-delivery.js",
-      "size_bytes": 2605,
-      "sha256": "83203549eb8895daede91ad154c49e557cf2a7ce861c7152f93e6bb1dff137c0"
+      "size_bytes": 2628,
+      "sha256": "1ae1c1aaf039884c8c123656bf60c09bb22ecb9a9cab8475692565a6d6cabbe1"
+    },
+    {
+      "path": "bot/src/assembly-publications.js",
+      "size_bytes": 5258,
+      "sha256": "f9e2312d2283267ce6470e1d66e4492a9e06e36184832a70db8c490b4ef69a36"
     },
     {
       "path": "bot/src/assembly-readiness.js",
-      "size_bytes": 1127,
-      "sha256": "7031889810634437ff9947a5e3c0791833b74d74b91195a115fa84b49b9db5c6"
+      "size_bytes": 1423,
+      "sha256": "31dead0a6dbf4ff70252d0e5fbd48759eb1ce045ecca8220c96f8e7bf0095f0b"
+    },
+    {
+      "path": "bot/src/assembly-state.js",
+      "size_bytes": 6010,
+      "sha256": "0401b6f5584efce905f41c676f5a6fffb323f5e0d97e985ff72a3d22cee6d279"
     },
     {
       "path": "bot/src/authored-candidates.js",
@@ -1096,8 +1111,8 @@
     },
     {
       "path": "bot/src/commands.js",
-      "size_bytes": 180361,
-      "sha256": "8aaa27e496dff6b4ca3f987cfa8d03ad6c7173915b5537af4918e192e1fe3a55"
+      "size_bytes": 181004,
+      "sha256": "b64ae9b9e7f7cf2e0afa21194cefbfd284cf4e98ae9ed6438ea0d99431198c3b"
     },
     {
       "path": "bot/src/concept-context.js",
@@ -1191,8 +1206,8 @@
     },
     {
       "path": "bot/src/discord/delivery.js",
-      "size_bytes": 751,
-      "sha256": "777d15f3d3b2b9184f282181fc2b5d9e78c23f1799915f89e64bda21bef64cf2"
+      "size_bytes": 804,
+      "sha256": "22b2ee99e5aa52ee087575c9a7b1d02df7ecee0de99a2b0673efee4de485cf52"
     },
     {
       "path": "bot/src/discord/interaction-lifecycle.js",
@@ -1301,8 +1316,8 @@
     },
     {
       "path": "bot/src/gm.js",
-      "size_bytes": 109085,
-      "sha256": "da4ef54f04803541afa49a10d0bdeee1cad32e3456629b8684b0033b6fb20180"
+      "size_bytes": 109662,
+      "sha256": "baa8dac323008de82c66252afbbd7737be2d2b9d5de3e051c028345721b398f2"
     },
     {
       "path": "bot/src/handout.js",
@@ -1581,8 +1596,8 @@
     },
     {
       "path": "bot/src/pvp-output.js",
-      "size_bytes": 46669,
-      "sha256": "aca1c750a105788c9354b27d48d312671600c005f7b25e58915fa83415514f15"
+      "size_bytes": 49253,
+      "sha256": "d58c84848482973a86cdb07203f9619bc176355297e332f6adb42ca1a8b6be0b"
     },
     {
       "path": "bot/src/pvp-profiles.js",
@@ -2205,6 +2220,11 @@
       "sha256": "f2d696245cb546ea5c31ca4b9611e77d872995528edd1a81f073047b3ad6335c"
     },
     {
+      "path": "docs/ASSEMBLY_DELIVERY_HARDENING.md",
+      "size_bytes": 5191,
+      "sha256": "a70120a28cb75d6b52e34d44c07a267cd4e0472d6c4d81db08e791c2dda768fd"
+    },
+    {
       "path": "docs/BOT_COMMANDS.md",
       "size_bytes": 8095,
       "sha256": "5f1c882a7ecb691f2612361648d8d7620aff74a367b90b23a01a982838475038"
@@ -2716,8 +2736,8 @@
     },
     {
       "path": "docs/TYPED_INTENT_PROGRESS.md",
-      "size_bytes": 329886,
-      "sha256": "d46a8b8039c39e3719d7e162cfd4190ccded53b37015567e01128f53bf63cf65"
+      "size_bytes": 333116,
+      "sha256": "05f9dec764a2f20c8a2ea979d39fe2df8a3225f23cb0cf8c9db1fc5210656142"
     },
     {
       "path": "docs/TYPED_INTENT_RELEASE_10.0.0.md",

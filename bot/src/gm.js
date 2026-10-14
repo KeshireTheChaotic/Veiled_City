@@ -229,10 +229,11 @@ const assemblySchema={
           discord_user_id:{type:"string"},
           character_name:{type:"string"},
           private_hook:{type:"string"},
+          private_parts:gmWorldPartsSchema,
           public_cue:{type:"string"},
           stay_reason:{type:"string"}
         },
-        required:["discord_user_id","character_name","private_hook","public_cue","stay_reason"]
+        required:["discord_user_id","character_name","private_hook","private_parts","public_cue","stay_reason"]
       }
     },
     bonds:{
@@ -243,9 +244,9 @@ const assemblySchema={
         required:["from_character","to_character","reason"]
       }
     },
-    gm_notes:{type:"string"}
+    gm_notes:{type:"string"},public_parts:gmWorldPartsSchema
   },
-  required:["public_opening","convergence_goal","character_entries","bonds","gm_notes"]
+  required:["public_opening","convergence_goal","character_entries","bonds","gm_notes","public_parts"]
 };
 
 const arrivalSchema={
@@ -994,6 +995,7 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
       "The convergence should progress from ASSEMBLY (same incident) toward CONVERGED (overlapping immediate objectives). The players decide whether it becomes a lasting PARTY.",
       "Prefer crossed cases/shared incident in investigative urban fantasy unless the requested mode says otherwise.",
       "Each character gets a private_hook containing only information that character could know at scene start. public_cue is what others can visibly perceive about their arrival, without revealing secrets.",
+      "public_opening/private_hook remain GM-private prose proposals. Supply public_parts and each entry's private_parts as source-verified gm_world_parts (versions 1, 2 or 4); omit unsupported parts. Native scope independently checks every NPC/location/source/owner/audience. Do not invent PC actions or receipt IDs, expose another owner's private material, or request a fresh writer call. Native orientation can be delivered even when no fictional part is eligible.",
       "stay_reason is an opportunity/reason for continued cooperation, not a compulsory motivation.",
       "Bonds are proposed practical connections such as 'A knows something B needs'; they are not emotional commitments.",
       "Do not reveal mystery solutions, GM-only truths, hidden motives, or future twists in public_opening/private_hook.",

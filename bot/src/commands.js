@@ -24,7 +24,7 @@ import { normalizeNarrativeMarkdown, narrativeRelativePath, createNarrativeExpor
 import { buildSessionRosterReport, chunkRosterReport } from "./roster.js";
 import { chunkDiscordLines } from "./discord/chunking.js";
 import { deliverInteractionText } from "./discord/delivery.js";
-import { deliverAssemblyParts } from "./assembly-delivery.js";
+import {deliverVerifiedAssembly,prepareAssemblyReconciliation,reconcileAssemblyNotSent} from './assembly-publications.js';
 import { assertGmOnlyChannel, assertPlayerPrivateChannel } from "./discord/privacy.js";
 import { isExpectedError, PermissionError, NotFoundError, StateConflictError, UserInputError } from "./errors.js";
 import { replayReceiptIfPresent, installReceiptCapture, isMutatingCommand } from "./idempotency.js";
@@ -386,6 +386,14 @@ export async function handleCommand(interaction,{db,gm,voice=null}){
 }
 async function handleCommandBody(interaction,{db,gm,voice=null}){
   beginInteraction(interaction);
+  if(typeof interaction.isButton==='function'&&interaction.isButton()&&interaction.customId?.startsWith('vcassembly:')){
+    if(!interaction.guildId||!isGM(db,interaction))throw new PermissionError('GM/admin permission required.');
+    await interaction.deferReply({ephemeral:true});
+    reconcileAssemblyNotSent(db,interaction.guildId,interaction.user.id,interaction.customId.slice(11),
+      {authorized:true,interactionId:interaction.id});
+    await interaction.editReply({content:'Recorded your confirmation that the exact legacy hooks were not delivered. No send or regeneration occurred. Run /vc session assemble to resume verified delivery.',allowedMentions:{parse:[]}});
+    return true;
+  }
   // Administrative preview/list must not upsert players, execute continuations or capture gameplay receipts.
   if(interaction.isChatInputCommand()&&interaction.guildId
     &&(interaction.commandName==='vc-admin'||interaction.commandName==='vc'&&interaction.options.getSubcommandGroup()==='admin')
@@ -883,27 +891,20 @@ Initial phase: ${s.assembly_phase}`});
         plan=await gm.planAssembly({guildId:interaction.guildId,mode:s.assembly_mode});
         db.setAssemblyPlan(s.id,plan);
       }
-      const roster=presentRoster(db,s.id);
-      const deliveryResult=await deliverAssemblyParts({plan,savePlan:next=>db.setAssemblyPlan(s.id,next),
-        sendPrivate:(userId,content)=>sendPlayerPrivate({db,guild:interaction.guild,userId,content,sessionId:s.id,
-          characterId:roster.find(row=>row.discord_user_id===userId)?.character_id||null,generated:true}),
-        sendPublic:content=>postPlayMessage({db,guild:interaction.guild,content,sessionId:s.id})});
-      plan=deliveryResult.plan;
-      const delivery=(plan.character_entries||[]).map(entry=>{
-        const states=Object.entries(plan.delivery_state||{}).filter(([key])=>key.startsWith(`private:${entry.discord_user_id}:`))
-          .map(([,value])=>value.status);
-        return `${entry.character_name}: ${states.length&&states.every(status=>status==="delivered")?"delivered":
-          states.includes("uncertain")?"UNCERTAIN":"FAILED"}`;
-      });
+      const deliveryResult=await deliverVerifiedAssembly({db,guild:interaction.guild,session:s});
+      const delivery=deliveryResult.slots.filter(slot=>slot.scope.mode==='private').map(slot=>`${slot.name}: ${slot.status.toUpperCase()}`);
       if(!plan.launch_recorded){
         db.audit(interaction.guildId,s.id,"ai","assembly","assembly_plan",{mode:s.assembly_mode,delivery,bonds:plan.bonds});
-        await postGmLog({db,guild:interaction.guild,sessionId:s.id,title:"Party convergence launched",
+        await postGmLog({db,guild:interaction.guild,sessionId:s.id,title:"Verified assembly delivery processed",
           details:`Mode: ${s.assembly_mode}\n${plan.gm_notes||""}\nPrivate delivery: ${delivery.join(", ")||"none"}`});
         plan={...plan,launch_recorded:true};db.setAssemblyPlan(s.id,plan);
       }
-      const warning=deliveryResult.failed.length?"\n\n⚠️ A delivery part failed and remains retryable without regenerating the plan.":
-        deliveryResult.uncertain.length?"\n\n⚠️ An interrupted part is marked uncertain and was not duplicated; resync it after checking Discord.":"";
-      await deliverInteractionText(interaction,`Convergence opening delivery processed.\n\n${compactAssemblyStatus(db,interaction.guildId,db.getSession(s.id))}\n\nPrivate hook delivery: ${delivery.join(", ")||"none"}${warning}`,{ephemeral:true});
+      const uncertain=deliveryResult.slots.some(slot=>slot.status==='uncertain'),failed=deliveryResult.slots.some(slot=>['failed','blocked'].includes(slot.status));
+      const warning=uncertain?'\n\n⚠️ Uncertain parts remain held. Check Discord before explicitly reconciling; never blindly resend.':
+        failed?'\n\n⚠️ A verified delivery is blocked or demonstrably unsent. Inspect status before retrying; the saved plan is unchanged.':'';
+      const token=prepareAssemblyReconciliation(db,interaction.guildId,s,interaction.user.id,{authorized:true});
+      const components=token?[{type:1,components:[{type:2,style:2,label:'I checked: hooks were not delivered',custom_id:`vcassembly:${token}`}]}]:[];
+      await deliverInteractionText(interaction,`Verified assembly delivery processed.\n\n${compactAssemblyStatus(db,interaction.guildId,db.getSession(s.id))}\n\nVerified private orientation: ${delivery.join(", ")||"none"}\nOriginal freeform opening/hooks remain GM-private proposals; only independently verified narrative parts are delivered.${warning}`,{ephemeral:true,components});
       return true;
     }
     if(group==="session"&&sub==="assembly-status"){

@@ -19,6 +19,7 @@ import {nativeOutcomeProjection} from './native-outcome-output.js';
 import {validatePostTurnStateReview} from './director.js';
 import {projectSceneDescription,defaultSceneDescription} from './scene-description.js';
 import {turnTraceFor} from './turn-trace-context.js';
+import {assemblyOrientation} from './assembly-state.js';
 
 const hash=v=>createHash("sha256").update(JSON.stringify(v??null)).digest("hex");
 const prepared=new WeakMap();
@@ -115,6 +116,10 @@ function renderPart(db,guild,part){
     if(!assignment||assignment.character_id!==scope.actorCharacterId)fail();
   }
   if(kind==="neutral")return neutral;
+  if(kind==='assembly_orientation'){
+    const projection=assemblyOrientation(db,guild,ref,scope);
+    if(projection.revision!==part.projection_revision)fail();return projection.text;
+  }
   if(kind==='scene_description'){
     const view=projectSceneDescription(db,guild,part.input,scope,part.source_ref);
     if(view.revision!==part.scene_revision)fail();return view.text;
@@ -222,6 +227,30 @@ export function prepareNativeNoticeOutput(db,guild,notice,scope){
     principal_revision:scope.mode==="private"?conversationPrincipal(db,guild,scope.actorUserId,scope.actorCharacterId).revision:null});
   const result={narration:part.data.text,player_summary:part.data.text,private_messages:[],narrative_claims:[]};
   prepared.set(result,{raw:{},drafts:{},parts:[part.record_key],scope:hash(scope),fingerprint:fingerprint(result)});return result;
+}
+/** Native assembly UI plus independently validated GM fiction; raw model hooks never become authority. */
+export function prepareAssemblyOutput(db,guild,sessionId,scope){
+  const view=assemblyOrientation(db,guild,sessionId,scope),plan=db.getAssemblyPlan(sessionId)||{};
+  const entry=scope.mode==='private'?(plan.character_entries||[]).find(e=>e.discord_user_id===scope.actorUserId):null;
+  const candidate={narration:scope.mode==='private'?entry?.private_hook||'':plan.public_opening||'',private_messages:[],narrative_claims:[],
+    gm_world_parts:(scope.mode==='private'?entry?.private_parts:plan.public_parts)||[]};
+  if(!Array.isArray(candidate.gm_world_parts)||candidate.gm_world_parts.length>4)candidate.gm_world_parts=[];
+  const source=indexWorldEvent(db,guild,{key:`assembly-scope:${hash(view.state)}`,kind:'native_assembly_scope',
+    title:'Native assembly orientation scope',source_id:'native:assembly',visibility:scope.mode==='private'?'character':'party',
+    subject_key:scope.mode==='private'?scope.actorCharacterId:null,session_id:sessionId,scene:view.state.scene,
+    details:{version:1,revision:view.revision,scope}},'native:assembly');
+  prepareAuthorizedTurnOutput(db,guild,candidate,scope,{sourceRef:source.event_key,origin:'assembly-candidate'});
+  // Assembly is not a replay of every saved Fear/PvP projection in this scene.
+  const narrativeParts=prepared.get(candidate).parts.map(ref=>validateOutputPart(db,guild,ref)).filter(p=>
+    ['gm_world_narrative','gm_fresh_npc'].includes(p.data.kind)||p.data.kind==='native_outcome'
+      &&candidate.gm_world_parts.some(input=>hash(input)===hash(p.data.input)));
+  const orientation=savePart(db,guild,{render_version:1,scene:view.state.scene,session:sessionId,scope:{...scope},origin:'native_assembly',
+    kind:'assembly_orientation',ref:sessionId,projection_revision:view.revision,source_ref:source.event_key,source_hash:hash(source.details),
+    principal_revision:view.state.principal});
+  const parts=[orientation,...narrativeParts],text=parts.map(p=>p.data.text).join('\n');saveOutputGroup(db,guild,parts);
+  const result={narration:text,player_summary:text,narrative_claims:[],private_messages:[]};
+  prepared.set(result,{raw:{},drafts:{},parts:parts.map(p=>p.record_key),privateParts:{},scope:hash(scope),fingerprint:fingerprint(result)});
+  return result;
 }
 export function prepareNativeHookOutput(db,guild,hook,scope){
   const projection=nativeHookProjection(db,guild,hook.id,scope),scene=currentScene(db,guild);

@@ -4,7 +4,7 @@ import { splitDiscordText } from "./discord/chunking.js";
 
 const digest=value=>createHash("sha256").update(String(value)).digest("hex").slice(0,24);
 
-function partsFor(plan){
+export function assemblyPartsFor(plan){
   const parts=[];
   for(const entry of plan.character_entries||[]){
     const text=`**Veilkeeper — private opening hook for ${entry.character_name}:**\n${entry.private_hook||""}`;
@@ -23,7 +23,7 @@ function partsFor(plan){
 export async function deliverAssemblyParts({plan,savePlan,sendPublic,sendPrivate}){
   const state=plan.delivery_state&&typeof plan.delivery_state==="object"?structuredClone(plan.delivery_state):{};
   const delivered=[],failed=[],uncertain=[];
-  for(const part of partsFor(plan)){
+  for(const part of assemblyPartsFor(plan)){
     const prior=state[part.key];
     if(prior?.status==="delivered")continue;
     if(prior?.status==="delivering"||prior?.status==="uncertain"){

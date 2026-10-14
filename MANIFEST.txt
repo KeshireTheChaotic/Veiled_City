@@ -9,6 +9,7 @@ bot/.gitignore
 bot/data/.gitkeep
 bot/package-lock.json
 bot/package.json
+bot/scripts/assembly-authority-test.mjs
 bot/scripts/audit-regression-test.mjs
 bot/scripts/autonomous-world-test.mjs
 bot/scripts/candidate-claim-quarantine-test.mjs
@@ -195,7 +196,9 @@ bot/src/ai-intents.js
 bot/src/ai-review.js
 bot/src/application-authority.js
 bot/src/assembly-delivery.js
+bot/src/assembly-publications.js
 bot/src/assembly-readiness.js
+bot/src/assembly-state.js
 bot/src/authored-candidates.js
 bot/src/authored-turn-envelope.js
 bot/src/authority-policy.js
@@ -438,6 +441,7 @@ content/manifest.json
 docker-compose.yml
 docs/ACCESSIBILITY.md
 docs/API_COSTS_2026-10-01.md
+docs/ASSEMBLY_DELIVERY_HARDENING.md
 docs/BOT_COMMANDS.md
 docs/CANON_LEDGER.md
 docs/CHANGELOG_v3.2.0_DISCORD.md
