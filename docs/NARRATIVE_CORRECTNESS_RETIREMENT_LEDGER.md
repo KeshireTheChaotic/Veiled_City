@@ -6,8 +6,9 @@ Accepted typed intents are canonical adjudication inputs; human declarations own
 
 | Phase | Status | Commit |
 | --- | --- | --- |
-| R0 | Compact red baseline/contracts | Recorded in next phase receipt |
-| R1–R6 | Not started | — |
+| R0 | Compact red baseline/contracts | `ef89a6282f910934239d1eef3e8d61b3aa1b53f0` |
+| R1 | Locality and exact writer audience qualified | Recorded in R2 receipt |
+| R2–R6 | Not started | — |
 | D0–D3 | Not started | — |
 
 ## R0 — compact baseline and frozen formats
@@ -21,3 +22,9 @@ Command `node --import ./scripts/offline-guard.mjs --test --test-reporter=spec -
 Contracts in `NARRATIVE_CORRECTNESS_RETIREMENT_CONTRACTS.md`: old shape/hash immutability; per-task native sidecar; local audience/speaker/actor vs disclosure proof; retained native version4 and historical1–8 readers. R0 is a reproduction checkpoint, not a qualified release. No full registry per phase; final D3 (or terminal R6) runs mandatory qualification on its actual frozen tree.
 
 Final compact R0 baseline after fixture correction: **12/28 pass, 16/28 expected failures**, zero skipped, exit 1, 15201.427ms. Log `%TEMP%\vc-narrative-r0-red-final.log`. NC15 now fails at the actual native `predefined_narrative_choices` boundary. This is a deliberately red reproduction checkpoint, not a qualified implementation or release.
+
+## R1 — native locality / effective audience
+
+Starting HEAD `ef89a6282f910934239d1eef3e8d61b3aa1b53f0`. Missing boundary: mutually agreeing remote NPC/unit locations previously passed without matching the packet viewpoint; private writers could label new units party-visible. `narrative-authority.js:validateUnit` now requires exact effective unit visibility and local creative placement. Genuine new camera settings require an unanchored camera and current native creation provenance; native v4 outcomes retain their own receipt validation. The same validator runs during establishment and deferred `renderNarrativeUnit`, so no weaker restart reader exists. No historical shape/hash, native effects, flag or schema changes. Rollback: revert this phase's code, preserving all native records; source/effect histories are not rewritten.
+
+Focused `--test-name-pattern='R1 '` compact module: **5/5 pass**, zero skipped, exit 0, 2249.4594ms. Previously red NC01/03 green; local/new-NPC, retraction/restart and altered payload proof remain green. Original `narrative-publication-hotfix-test.mjs`: **12/12 pass**, zero skipped, exit 0, 8270.3108ms. Logs `%TEMP%\vc-narrative-r1.log`, `vc-narrative-r1-hotfix.log`. No provider round-trips added; all calls fake/offline. Full registry intentionally deferred.

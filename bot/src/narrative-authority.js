@@ -64,6 +64,9 @@ function shape(answer){
   }
 }
 function validateUnit(db,guild,u,ctx,entities=[]){
+  // Citing public evidence privately is allowed; authoring a new party unit from a
+  // private writer packet is not. This check also runs on every deferred read.
+  if(u.visibility!==(ctx.scope.mode==='private'?'character':'party'))throw fail('held_scope');
   if(!narrativeVisible({visibility:u.visibility,subject_key:ctx.scope.actorCharacterId},ctx.scope))throw fail(u.visibility==='gm'?'held_secret':'held_scope');
   if(u.source_refs.some(ref=>!narrativeSourceVisible(db,guild,ref,ctx.scope)))throw fail('held_secret');
   if(u.location_key){
@@ -76,6 +79,16 @@ function validateUnit(db,guild,u,ctx,entities=[]){
   if(u.kind==='native_outcome_render'){
     try{return nativeOutcomeProjection(db,guild,{version:4,kind:'native_outcome',receipt_kind:u.receipt_kind,ref:u.receipt_ref},ctx.scope).text;}
     catch(error){if(error.code==='NATIVE_NOTICE')throw fail('held_secret');throw error;}
+  }
+  // A location's visibility proves entitlement, not local presence. Do not let
+  // mutually consistent remote speaker/unit fields mint a remote conversation.
+  const local=u.location_key||ctx.binding.location;
+  if(local!==ctx.binding.location){
+    const proposed=entities.find(e=>e.kind==='location'&&e.key===local),
+      created=db.getCityRecord(guild,'autonomous_entity',`location:${local}`);
+    const newCamera=ctx.binding.viewpoint==='camera'&&!ctx.binding.location
+      &&(proposed||created?.data?.narrative_origin===ctx.sourceRef);
+    if(!newCamera)throw fail('held_scope');
   }
   if(u.receipt_kind||u.receipt_ref||u.epistemic==='native_outcome')throw fail('held_material');
   const names=protectedNarrativeNames(db,guild);
