@@ -2,3 +2,4 @@
 * text=auto
 # Preserve the owner's supplied Markdown hard breaks without relaxing source-code whitespace checks.
 docs/CODEX_VEILED_CITY_NARRATIVE_AUTHORITY_IMPLEMENTATION_PLAN.md whitespace=-blank-at-eol
+docs/CODEX_VEILED_CITY_10_2_DELEGATION_QUALITY_PLAN.md whitespace=-blank-at-eol
