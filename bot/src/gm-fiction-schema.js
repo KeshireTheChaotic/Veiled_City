@@ -30,3 +30,11 @@ export const sceneFictionRequestSchema=closed({version:{type:'integer',enum:[7]}
 export const sceneFictionResponseSchema=closed({description:str(1800),details:{type:'array',maxItems:8,items:closed({
   id:str(64),category:{type:'string',enum:['layout','sensory','nonmechanical_prop','ambient_activity']},text:str(300)})},
   evidence_refs:{type:'array',maxItems:8,items:str(200)}});
+export const narrativeRequestSchema=closed({version:{type:'integer',enum:[8]},kind:{type:'string',enum:['narrative_request']},
+  operation:{type:'string',enum:['describe_scene','current_situation','conversation','combat','continuation']},source_refs:{type:'array',maxItems:12,items:str(200)}});
+export const narrativeUnitKinds=['scene','npc_speech','npc_action_attempt','lead','rumor','established_observation','native_outcome_render'];
+export const narrativeResponseSchema=closed({narrative_units:{type:'array',maxItems:8,items:closed({id:str(64),kind:{type:'string',enum:narrativeUnitKinds},text:str(1800),
+  subject_key:str(160),location_key:str(160),visibility:{type:'string',enum:['party','character','gm']},
+  epistemic:{type:'string',enum:['observation','testimony','hypothesis','attempt','native_outcome']},source_refs:{type:'array',maxItems:8,items:str(200)},receipt_kind:str(80),receipt_ref:str(200)})},
+  fiction_delta:{type:'array',maxItems:4,items:closed({kind:{type:'string',enum:['location','npc']},key:str(100),name:str(160),summary:str(600),
+    location_key:str(160),parent_location_key:str(160),role:str(160),aliases:{type:'array',maxItems:6,items:str(80)}})}});

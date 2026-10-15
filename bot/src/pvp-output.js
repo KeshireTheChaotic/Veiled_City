@@ -22,6 +22,7 @@ import {turnTraceFor} from './turn-trace-context.js';
 import {assemblyOrientation} from './assembly-state.js';
 import {findFreshScenePart,renderFreshScenePart} from './fresh-scene-authoring.js';
 import {establishSceneFiction,renderSceneFiction,holdSceneFiction} from './scene-fiction-authority.js';
+import {establishNarrativeUnits,renderNarrativeUnit} from './narrative-authority.js';
 
 const hash=v=>createHash("sha256").update(JSON.stringify(v??null)).digest("hex");
 const prepared=new WeakMap();
@@ -122,6 +123,9 @@ function renderPart(db,guild,part){
   if(kind==='gm_fresh_scene')return renderFreshScenePart(db,guild,ref,scope);
   if(kind==='gm_scene_fiction'){
     try{return renderSceneFiction(db,guild,ref,scope);}catch(error){if(error.code!=='SCENE_FICTION')throw error;fail();}
+  }
+  if(kind==='gm_narrative_unit'){
+    try{return renderNarrativeUnit(db,guild,ref,scope);}catch(error){if(error.code!=='SCENE_FICTION')throw error;fail();}
   }
   if(kind==='assembly_orientation'){
     const projection=assemblyOrientation(db,guild,ref,scope);
@@ -326,6 +330,12 @@ export function prepareAuthorizedTurnOutput(db,guild,result,scope,{sourceRef=nul
   }
   for(const proposal of worldParts){
     try{
+      if(proposal?.version===8){
+        for(const row of establishNarrativeUnits(db,guild,proposal,scope,sourceRef)){
+          const event=db.getWorldEvent(guild,row.source_event);
+          parts.push(savePart(db,guild,{...common,kind:'gm_narrative_unit',ref:row.record_key,source_ref:event.event_key,source_hash:hash(event.details)}));
+        }continue;
+      }
       if(proposal?.version===7){
         const row=establishSceneFiction(db,guild,proposal,scope,sourceRef),event=db.getWorldEvent(guild,row.source_event);
         parts.push(savePart(db,guild,{...common,kind:'gm_scene_fiction',ref:row.record_key,source_ref:event.event_key,source_hash:hash(event.details)}));continue;
@@ -381,7 +391,7 @@ export function prepareAuthorizedTurnOutput(db,guild,result,scope,{sourceRef=nul
     try{parts.push(savePart(db,guild,{...common,kind:"owner_clause",ref:row.record_key}));}
     catch(e){if(e.code!=="NARRATIVE_PVP")throw e;} // Stale records stay inert; raw prose is not a fallback.
   }
-  if(db.getCityCalendar(guild).flags.post_projection_answers===true&&!parts.some(p=>['scene_description','gm_fresh_scene','gm_scene_fiction'].includes(p.data.kind))&&sourceRef){
+  if(db.getCityCalendar(guild).flags.post_projection_answers===true&&!parts.some(p=>['scene_description','gm_fresh_scene','gm_scene_fiction','gm_narrative_unit'].includes(p.data.kind))&&sourceRef){
     const input=defaultSceneDescription(db,guild,scope,sourceRef);
     if(input){
       const trace=turnTraceFor(guild);if(trace)trace.category='observation';

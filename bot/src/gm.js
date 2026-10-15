@@ -52,6 +52,8 @@ import {authorSceneFictionRequests,SCENE_FICTION_INSTRUCTIONS,sceneFictionRespon
 import {sceneFictionFailure,buildSceneFictionContext} from './scene-fiction-context.js';
 import {assemblyNarrativeCandidate} from './pvp-output.js';
 import {sceneObservationOperation} from './scene-observation-route.js';
+import {authorNarrativeRequests,NARRATIVE_AUTHORITY_INSTRUCTIONS,narrativeResponseSchema} from './narrative-authority.js';
+import {buildNarrativeContext} from './narrative-authority-context.js';
 
 const routerSchema={
   type:"object",
@@ -465,7 +467,8 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
       const pc=this.db.getCharacter(assignment.character_id),place=pc?.data.location&&this.db.getSimulationEntity(guildId,'location',pc.data.location),
         operation=sceneObservationOperation(text,place?.state.name,place?.state.place_type||place?.state.location_type),sourceRef=pc?.id&&worldInputKey(message.id,pc.id);
       if(operation&&pc?.id&&this.db.getWorldEvent(guildId,sourceRef)?.details.text===text){
-        try{buildSceneFictionContext(this.db,guildId,{mode:'party',actorUserId:message.author.id,actorCharacterId:pc.id},sourceRef,{operation});return true;}
+        try{(this.db.getCityCalendar(guildId).flags.narrative_authority?buildNarrativeContext:buildSceneFictionContext)
+          (this.db,guildId,{mode:'party',actorUserId:message.author.id,actorCharacterId:pc.id},sourceRef,{operation});return true;}
         catch(error){if(error.code!=='SCENE_FICTION')throw error;}
       }
     }
@@ -594,7 +597,8 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
       if(operation&&pc?.id&&pc.owner_user_id===actorUserId){
         const directScope={mode:scope,actorUserId,actorCharacterId:pc?.id},sourceRef=pc?.id&&worldInputKey(messageId,pc.id);
         let eligible=false;
-        try{buildSceneFictionContext(this.db,guildId,directScope,sourceRef,{operation});eligible=true;}
+        try{(this.db.getCityCalendar(guildId).flags.narrative_authority?buildNarrativeContext:buildSceneFictionContext)
+          (this.db,guildId,directScope,sourceRef,{operation});eligible=true;}
         catch(error){if(error.code!=='SCENE_FICTION'&&error.code!=='ASSEMBLY_SOURCE')throw error;}
         // Pre-admission scope rejection uses the existing path. Never invoke a second provider after a direct writer hold/error.
         if(eligible)return this.runSceneObservation({guildId,scope:directScope,sourceRef,messageId,text:authenticatedSource,operation,signal:turnSignal});
@@ -610,7 +614,11 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
       CONTEXT_CONTRACT,
       AUTHORED_CANDIDATES_PROMPT,
       PLAYER_INTENT_PROMPT,
-      this.db.getCityCalendar(guildId).flags.playable_narration===true
+      this.db.getCityCalendar(guildId).flags.narrative_authority===true
+        ?'Delegated creative narrative authority is enabled. Request version=8 kind=narrative_request operation=describe_scene/current_situation/conversation/combat/continuation source_refs=[]. The isolated GM writer can invent ordinary people, places, dialogue, motives, leads and rumors without older ledger facts. Prefer version 8 to restricted scenery-only requests. PC/proxy agency, privacy, canon and native outcomes remain hard boundaries. Undefined PC position permits a camera, never teleportation.'
+        :'Version 8 narrative authority is disabled.',
+      this.db.getCityCalendar(guildId).flags.narrative_authority===true?'Use delegated version 8 for expressive fiction, not restricted version 7.'
+        :this.db.getCityCalendar(guildId).flags.playable_narration===true
         ?'Playable narration is enabled. For ordinary visible surroundings or situation use gm_world_parts version=7 kind=scene_fiction_request operation=describe_scene/current_situation source_refs=[]. This requests an isolated native-scoped writer, not effects. For auto movement request a destination description alongside the native move. NPC dialogue and consequential outcomes still use their existing NPC/native receipt parts. Never use version 7 in PvP, active encounters or contested windows.'
         :'Playable scene fiction is disabled; do not request version 7.',
       this.db.getCityCalendar(guildId).flags.gm_discretion===true?GM_RULING_PROMPT:"GM ruling proposals are disabled; use existing native services.",
@@ -826,15 +834,19 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
         fictionSource=messageId&&fictionScope.actorCharacterId?worldInputKey(messageId,fictionScope.actorCharacterId):null;
       const movement=(candidate.player_intents||[]).some(i=>i.type==='move'&&i.resolution==='auto'&&i.framing==='immediate')
         ||(candidate.scene_actions||[]).some(a=>a.kind==='move');
-      if(this.db.getCityCalendar(guildId).flags.playable_narration===true&&movement&&!(candidate.gm_world_parts||[]).some(p=>p.version===7))
-        candidate.gm_world_parts=[...(candidate.gm_world_parts||[]).slice(0,3),{version:7,kind:'scene_fiction_request',operation:'describe_scene',source_refs:[]}];
+      const creative=this.db.getCityCalendar(guildId).flags.narrative_authority===true;
+      if(this.db.getCityCalendar(guildId).flags.playable_narration===true&&movement&&!(candidate.gm_world_parts||[]).some(p=>p.version===(creative?8:7)))
+        candidate.gm_world_parts=[...(candidate.gm_world_parts||[]).slice(0,3),{version:creative?8:7,kind:creative?'narrative_request':'scene_fiction_request',operation:'describe_scene',source_refs:[]}];
       let stagedView=null,stagedError=null;
       if(movement&&this.db.getCityCalendar(guildId).flags.playable_narration===true){
         try{validateTurn(structuredClone(candidate),({world,nativeEntries})=>{
           if(!world.some(r=>r.status==='arrived')&&!nativeEntries.length)throw sceneFictionFailure('arrival_not_resolved');
-          stagedView=buildSceneFictionContext(this.db,guildId,fictionScope,fictionSource);
+          stagedView=(creative?buildNarrativeContext:buildSceneFictionContext)(this.db,guildId,fictionScope,fictionSource);
         });}catch(error){stagedError=error;}
       }
+      await authorNarrativeRequests({db:this.db,guild:guildId,result:candidate,scope:fictionScope,sourceRef:fictionSource,budget:authoringBudget,
+        viewProvider:creative&&movement?()=>{if(stagedError||!stagedView)throw sceneFictionFailure('destination_not_authorized');return stagedView;}:null,
+        generate:packet=>this.generateNarrative(guildId,packet,turnSignal,req.model)});
       await authorSceneFictionRequests({db:this.db,guild:guildId,result:candidate,
         scope:fictionScope,sourceRef:fictionSource,
         viewProvider:movement?()=>{if(stagedError||!stagedView)throw sceneFictionFailure('destination_not_authorized');return stagedView;}:null,
@@ -937,24 +949,34 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
       {guildId,signal,purpose:'scene_writer'});signal.throwIfAborted();return parseStructuredJsonText(response.output_text);}
     catch{throw sceneFictionFailure('writer_unavailable');}},{guildId});
   }
+  async generateNarrative(guildId,packet,signal,model=this.config.gmModel){
+    return measureStage(this.metrics,'scene_writer',async()=>{
+      try{const response=await this.requestModel({model,instructions:NARRATIVE_AUTHORITY_INSTRUCTIONS,input:JSON.stringify(packet),max_output_tokens:1800,
+        text:{format:{type:'json_schema',name:'veiled_city_delegated_narrative',strict:true,schema:narrativeResponseSchema}}},{guildId,signal,purpose:'scene_writer'});
+        signal.throwIfAborted();return parseStructuredJsonText(response.output_text);
+      }catch{throw sceneFictionFailure('creative_writer_unavailable');}
+    },{guildId});
+  }
   async runSceneObservation({guildId,scope,sourceRef,messageId,text,operation,signal}){
     // This path creates only an exact source-bound other/observation input. It has no effect proposal surface.
-    const view=buildSceneFictionContext(this.db,guildId,scope,sourceRef,{operation});
+    const creative=this.db.getCityCalendar(guildId).flags.narrative_authority===true,
+      view=(creative?buildNarrativeContext:buildSceneFictionContext)(this.db,guildId,scope,sourceRef,{operation});
     if(view.source.details.text!==text)throw sceneFictionFailure('exact_request');
     this.metrics.record('scene_observation_route',{guildId});const trace=turnTraceFor(guildId);if(trace)trace.category='observation';
     const state_review=Object.fromEntries(POST_TURN_REVIEW_CATEGORIES.map(k=>[k,{decision:'no_change',reason:'Read-only observation.',confidence:100}]));
     state_review.scene={decision:'continue',label:'',reason:'Existing native scene.',confidence:100};
     const result={respond:true,narration:'',player_summary:'',narrative_claims:[],private_messages:[],
-      gm_world_parts:[{version:7,kind:'scene_fiction_request',operation,source_refs:[]}],
+      gm_world_parts:[{version:creative?8:7,kind:creative?'narrative_request':'scene_fiction_request',operation,source_refs:[]}],
       player_intents:[{type:'other',source_span:text,target_name:'',target_key:'',destination:'unspecified',operation,utterance:'',excluded_targets:[],
         framing:'immediate',resolution:'conversational',reason:'Complete read-only observation request; no action adjudication.'}],
       ordinary_effect_proposals:[],narrative_interpretation:null,authored_candidates:null,world_additions:[],scene_actions:[],world_conflicts:[],context_memories:[],
       events:[],relationships:[],handouts:[],npc_memories:[],npc_knowledge:[],npc_goals:[],canon_proposals:[],simulation_updates:[],ai_intents:[],state_review,
       decision_advisory:this.db.getCityCalendar(guildId).flags.decision_advisory===true?{mode:'narrate',check:'',reason:'Read-only native-scoped observation, not a resolved action.',
         uncertainty:'',consequence:'',referent_uncertainty:'',fictional_uncertainty:''}:null};
-    await authorSceneFictionRequests({db:this.db,guild:guildId,result,scope,sourceRef,budget:{used:false},generate:packet=>this.generateSceneFiction(guildId,packet,signal)});
+    if(creative)await authorNarrativeRequests({db:this.db,guild:guildId,result,scope,sourceRef,budget:{used:false},generate:packet=>this.generateNarrative(guildId,packet,signal)});
+    else await authorSceneFictionRequests({db:this.db,guild:guildId,result,scope,sourceRef,budget:{used:false},generate:packet=>this.generateSceneFiction(guildId,packet,signal)});
     validateIntentResolutions(result);validatePostTurnStateReview(result);validatePacing(this.db,guildId,result);validateDecisionAdvisory(this.db,guildId,result);
-    measureNative('validate',guildId,()=>previewAuthoritativeMutation(this.db,{guildId,sessionId:view.state.session,narrative:result,scope,
+    measureNative('validate',guildId,()=>previewAuthoritativeMutation(this.db,{guildId,sessionId:creative?view.binding.session:view.state.session,narrative:result,scope,
       provenance:{messageId,actorId:scope.actorUserId},content:this.content}),this.metrics);
     return result;
   }

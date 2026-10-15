@@ -17,7 +17,7 @@ Actual command: `node --import ./scripts/offline-guard.mjs --test scripts/critic
 
 | Phase | Status | Commit / actual evidence |
 | --- | --- | --- |
-| 1 — creative authority first | Not started | |
+| 1 — creative authority first | Complete (focused gate) | Starting SHA `0b300e1ac5e077a14f7fb6fff155c57881c27fa1`; completion SHA recorded by the next ledger commit. |
 | 2 — salvage and publication-bound memory | Not started | |
 | 3 — camera and owner initial placement | Not started | |
 | 4 — NPC/encounter narration | Not started | |
@@ -25,3 +25,11 @@ Actual command: `node --import ./scripts/offline-guard.mjs --test scripts/critic
 | 6 — qualification/deploy | Not started | |
 
 No production modification/restart is permitted until a consistent online backup, integrity/foreign-key checks and disposable restore drill pass. No paid model/Discord synthetic tests. Production deployment is authorized only after phase qualification; activation requires a legitimate administrative path, not forged Discord identity or ad-hoc flag SQL. New prose has residual semantic risk; provenance is not universal semantic proof.
+
+## Phase 1 — actual implementation and evidence
+
+New `narrative-authority-context.js` separates native character POV from a source-bound world camera and retrieves provenance-verified AI-GM observations without admitting private ancestors. New `narrative-authority.js` consumes only isolated, native-authored drafts, validates independent units, creates ordinary identities through the existing world policy/preflight/minor-NPC services and prepares shared publisher proofs. Schema 8 adds scene/NPC/attempt/lead/rumor/observation/native-result units and compact identity deltas. The native outcome renderer never trusts model outcome text. PC aliases/surnames are protected. Canon and human proxy checks remain. Flag dependencies/cascaded rollback are enforced through existing flag configuration; flags remain OFF in production.
+
+GM combined and direct observation adapters request the new writer only when opted in; direct camera observation is one fake provider call. Successful combined cases use two fake requests. New place/NPC creation creates no PC arrival, roll, cost, ability, encounter or resources. `native_narrative_entity` / `native_narrative_unit` events and generic city records need no new SQL table. Raw combined text stays quarantined; finite semantic risk is documented in the new versioned creative contract.
+
+Red-first `narrative-freedom-test.mjs`: **0/6**, exit 1, 1,681.3037 ms against the foundation's missing route (TEMP `veiled-freedom-phase1-red.log`). Green: **6/6**, exit 0, 1,881.9706 ms, zero skips; a subsequent direct camera/one-call case passed **1/1**, 566.5246 ms. Explicit private-ancestor fixture rerun: **6/6**, exit 0, 1,965.2217 ms. Final PC-ID identity guard rerun: **6/6**, exit 0, 1,932.9126 ms. Direct source syntax checks and command-schema construction passed; no full validation run. The unchanged owner plan uses intentional Markdown two-space hard breaks: a file-specific Git whitespace attribute preserves its exact bytes; source whitespace rules remain strict. Test trim prerequisite commit: `0b300e1ac5e077a14f7fb6fff155c57881c27fa1`. No deployment/production writes or model API traffic.

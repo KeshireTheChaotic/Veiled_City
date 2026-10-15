@@ -1,2 +1,4 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+# Preserve the owner's supplied Markdown hard breaks without relaxing source-code whitespace checks.
+docs/CODEX_VEILED_CITY_NARRATIVE_AUTHORITY_IMPLEMENTATION_PLAN.md whitespace=-blank-at-eol

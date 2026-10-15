@@ -20,6 +20,7 @@ function closure(db,guild,key,scope,seen=new Set()){
   return !!(row&&visible(row,scope)&&activeEvidence(db,guild,key)
     &&ancestors.every(ref=>closure(db,guild,ref,scope,new Set(seen))));
 }
+export {closure as narrativeSourceVisible};
 const short=(value,max=180)=>typeof value==='string'&&!/[\x00-\x1f\u202a-\u202e\u2066-\u2069]/u.test(value)?value.slice(0,max):'';
 export function buildSceneFictionContext(db,guild,scope,sourceRef,{operation='describe_scene',excludeFictionKey=null}={}){
   if(db.getCityCalendar(guild).flags.playable_narration!==true)throw sceneFictionFailure('disabled');
