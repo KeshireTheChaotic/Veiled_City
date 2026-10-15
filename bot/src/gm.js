@@ -1059,9 +1059,7 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
     const authoringBudget={used:false};
     if(this.db.getCityCalendar(guildId).flags.narrative_authority){
       const nativeSource=bindDirectorNarrativeSource(this.db,guildId,result,creativeScope,layer,trigger,this.content);
-      if(result.act&&!(result.gm_world_parts||[]).some(p=>p.version===8))
-        result.gm_world_parts=[...(result.gm_world_parts||[]).filter(p=>![3,6,7].includes(p.version)).slice(0,3),
-          {version:8,kind:'narrative_request',operation:'continuation',source_refs:[]}];
+      coordinateNarrative(this.db,guildId,result,{scope:creativeScope,sourceRef:nativeSource,director:true});
       await authorNarrativeRequests({db:this.db,guild:guildId,result,scope:creativeScope,sourceRef:nativeSource,budget:authoringBudget,
         generate:packet=>this.generateNarrative(guildId,packet,directorSignal,layer==='downtime'?'downtime':'director')});
     }

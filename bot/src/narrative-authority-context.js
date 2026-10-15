@@ -10,6 +10,7 @@ import {activeCityProxy} from './city-constraints.js';
 import {disclosedNarrativeMemory} from './narrative-memory.js';
 import {rankNarrativeMemory} from './narrative-salience.js';
 import {speakerBrief} from './narrative-speakers.js';
+import {directorBriefForAudience} from './narrative-director-source.js';
 export const narrativeVisible=(row,scope)=>!!row&&factVisibleTo({...row,subject_character_id:row.subject_character_id||row.subject_key,
   subject_user_id:row.subject_user_id||row.subject_key},scope);
 export function buildNarrativeContext(db,guild,scope,sourceRef,{operation='describe_scene'}={}){
@@ -77,5 +78,6 @@ export function buildNarrativeContext(db,guild,scope,sourceRef,{operation='descr
     observations:facts.map(f=>({source_ref:f.id,text:f.content,epistemic:evidenceType(f).kind})),npcs,
     prior_fiction:rankNarrativeMemory(db,guild,scope,disclosedNarrativeMemory(db,guild,scope,{limit:40}),
       {location,query:owner?source.details.text:'',maxChars:Math.max(3000,9000-speakerChars)}),unknowns:['Hidden causes, private character details and unresolved outcomes are unknown.']};
+  if(director)packet.director_brief=directorBriefForAudience(db,guild,source,scope);
   return {binding,packet,scope,source,pc,sourceRef,protectedScene};
 }

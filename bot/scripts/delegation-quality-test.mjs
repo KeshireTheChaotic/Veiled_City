@@ -13,6 +13,8 @@ import {coordinateNarrative,narrativeModel} from '../src/narrative-delegation.js
 import {buildNarrativeContext} from '../src/narrative-authority-context.js';
 import {configurePortrayal} from '../src/portrayal.js';
 import {deliverTurnOutbox} from '../src/publication-outbox.js';
+import {indexWorldEvent} from '../src/city-calendar.js';
+import {currentScene} from '../src/scene-continuity.js';
 import {GMService} from '../src/gm.js';
 import {ContentIndex} from '../src/content.js';
 import {commitGmTurn} from '../src/turn-orchestration.js';
@@ -123,4 +125,38 @@ test('NS01 differentiated public portrayal and native own knowledge exclude secr
   assert(JSON.stringify(packet).includes('porter saw a parcel'));assert(!JSON.stringify(packet).includes('PRIVATE_'));
   const proxy=f.db.upsertNpcProxy(f.guild,f.session.id,{npcName:'porter',userId:f.pcs[3].owner_user_id});f.db.activateNpcProxy(proxy.id,f.pcs[3].owner_user_id);
   assert(!buildNarrativeContext(f.db,f.guild,x.scope,x.sourceRef).packet.npcs.find(n=>n.key==='porter').speaker_brief);
+}));
+test('ND01 Director one-call multi-beat brief is native-grounded and excludes trigger planning',()=>nativeFixture(async f=>{
+  const x=setup(f);f.db.upsertNpcProfile(f.guild,{npcKey:'porter',displayName:'Porter',role:'porter'});
+  f.db.setSimulationEntity(f.guild,'npc','porter',{location_key:'terminal',visibility:'party'});
+  const source=indexWorldEvent(f.db,f.guild,{key:'director-visible-change',kind:'observation',title:'Native public observation',source_id:'native:fixture',
+    visibility:'party',scene:currentScene(f.db,f.guild).key,session_id:f.session.id,location_key:'terminal',truth_status:'observed',details:{description:'A service bell sounds.'}},'native:fixture');
+  const draft={...candidate(x.text),act:true,public_narration:'PRIVATE_TRIGGER_SECRET',confidence:100,gm_notes:'PRIVATE_TRIGGER_SECRET'};
+  draft.player_intents=[];draft.gm_world_parts=[{version:8,kind:'narrative_request',operation:'conversation',source_refs:[]},
+    {version:8,kind:'narrative_request',operation:'describe_scene',source_refs:[]}];
+  const answer=scene();answer.narrative_units.push(unit('refusal','npc_speech','The freight cage stays shut tonight. The public desk may help.',{subject_key:'porter',epistemic:'testimony'}),
+    unit('attempt','npc_action_attempt','The porter raises a hand toward the service bell.',{subject_key:'porter',epistemic:'attempt'}));
+  const ai=new FakeResponses([draft,answer]),gm=new GMService({db:f.db,content:new ContentIndex(path.resolve('../content')),ai,config:{gmModel:'offline',narrativeModel:'offline-writer'}});
+  const result=await gm.runWorldDirector({guildId:f.guild,layer:'manual',trigger:{requested_by:'gm',event_refs:[source.event_key],notes:'PRIVATE_TRIGGER_SECRET'}});
+  assert.equal(ai.requests.length,2);const packet=JSON.parse(ai.requests[1].input);
+  assert(packet.director_brief.events.some(e=>e.ref===source.event_key&&e.state==='established'&&e.observation==='A service bell sounds.'));
+  assert(packet.creative_brief.tasks.includes('conversation')&&packet.creative_brief.tasks.includes('scene'));
+  assert(!JSON.stringify(packet).includes('PRIVATE_TRIGGER_SECRET'));
+  const {applyAuthoritativeMutation}=await import('../src/state.js'),{queueDirectorPublications}=await import('../src/publication-outbox.js'),scope={mode:'party',actorUserId:null,actorCharacterId:null};
+  applyAuthoritativeMutation(f.db,{guildId:f.guild,sessionId:f.session.id,narrative:result,scope,source:'world_director_manual'});
+  const turn=queueDirectorPublications(f.db,{guild:{id:f.guild},session:f.session,result,scope,key:'quality-director'}),rows=f.db.listTurnPublications(f.guild,turn);
+  assert(rows.some(r=>r.payload.includes('freight cage')));assert(rows.some(r=>r.payload.includes('raises a hand')));assert(rows.every(r=>!r.payload.includes('PRIVATE_TRIGGER_SECRET')));
+}));
+test('ND02 proposed Director work stays unresolved, private references excluded, quiet pass has no writer',()=>nativeFixture(async f=>{
+  const x=setup(f),hidden=indexWorldEvent(f.db,f.guild,{key:'hidden-director',kind:'observation',title:'Private change',source_id:'native:fixture',
+    visibility:'character',subject_key:f.pcs[1].id,scene:currentScene(f.db,f.guild).key,session_id:f.session.id,truth_status:'observed',
+    details:{description:'PRIVATE_UNSEEN_CHANGE'}},'native:fixture');
+  const {bindDirectorNarrativeSource,directorBriefForAudience}=await import('../src/narrative-director-source.js');
+  const scope={mode:'party',actorUserId:null,actorCharacterId:null},r={act:true,events:[{type:'resource_delta',note:'UNTRUSTED_COMPLETED_DAMAGE'}]};
+  const ref=bindDirectorNarrativeSource(f.db,f.guild,r,scope,'manual',{event_refs:[hidden.event_key]},null),brief=directorBriefForAudience(f.db,f.guild,f.db.getWorldEvent(f.guild,ref),scope);
+  assert.deepEqual(brief.events,[]);assert(brief.pending.every(p=>p.state==='proposed_requires_native_validation'));
+  assert(!JSON.stringify(brief).includes('UNTRUSTED')&&!JSON.stringify(brief).includes('PRIVATE_UNSEEN_CHANGE'));
+  const draft={...candidate(x.text),act:false,public_narration:'',confidence:100,gm_notes:''};draft.player_intents=[];
+  const ai=new FakeResponses([draft]),gm=new GMService({db:f.db,content:new ContentIndex(path.resolve('../content')),ai,config:{gmModel:'offline'}});
+  await gm.runWorldDirector({guildId:f.guild,layer:'manual',trigger:{requested_by:'gm'}});assert.equal(ai.requests.length,1);
 }));

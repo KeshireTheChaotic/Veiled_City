@@ -37,3 +37,11 @@ Starting SHA `4a570ef`. Native speaker briefs include explicitly public-approved
 Only a literal leading vocative in typed NPC speech may use a currently present PC's independently native-known name/alias. The remaining clause still faces PC-name/material checks. This is not a permission flag or authorization for PC responses. Original schema and on-disk v8 drafts unchanged; native knowledge/source/presence rechecked at publication, including source withdrawal and owner changes. Finite English guards are defense in depth, not universal semantic certification; free generated speech still carries the disclosed residual risk.
 
 DQ04 red-to-green; focused actual outbox/source-revocation/portrayal/proxy + unchanged PVP30q/PVP30ag: 11/11, exit 0. Forced surrender and exact `Choso apologizes for losing.` sibling held while legal address survives. No extra provider requests; no resource effects. Full qualification deferred.
+
+Phase 3 commit `24b2595`; final changed-order focused DQ04/NS01 2/2 pass.
+
+## Phase 4
+
+Starting SHA `24b2595`. Native Director scope now saves a bounded dramatic brief with current active audience-visible observation/arrival/established-fiction references and immutable revisions. Visible observed descriptions are included; arbitrary trigger text, GM notes, private plans and source titles are not. Proposed work is explicitly unresolved; only existing native outcome projection can supply resolved mechanical prose. Evidence is revalidated before reuse/publication. Old Director sources without the new field retain their previous contract.
+
+Coordinator merges dialogue/environment/continuation into one writer call. Quiet Director passes stay planner-only. Native cadence/effect budgets unchanged. ND01 first failed because no dramatic brief existed (0/1, exit 1); actual party/private Director/outbox tests plus ND01–02 now 4/4 pass, exit 0. One planner + one writer for multi-beat response; one planner and zero writer for quiet pass. Native action/resource state unaffected; no new effect adapter or schema migration.
