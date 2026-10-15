@@ -12,8 +12,9 @@ Accepted typed intents are canonical adjudication inputs; human declarations own
 | R3 | Native task sidecar / NPC answer arbitration qualified | `418cc2585491b770ae7a13b868a8fd82a0713fe5` |
 | R4 | Native nonbinding prop composition / unit-local choice hold qualified | `13cbd92f35a5a82b306d66e3bdeca6d2efd2b2af` |
 | R5 | Offers/allegations improved; N05/N06 guards explicitly RETAINED | `e4217767f02d4e89589cc8e3468599ebf7587eb7` |
-| R6 | Focused correctness/security checkpoint passed, with explicit quality deferrals | Recorded in D0 receipt |
-| D0–D3 | Not started | — |
+| R6 | Focused correctness/security checkpoint passed, with explicit quality deferrals | `17f388cd03fab4c9fff126d922452257dc40c5b3` |
+| D0 | Symbol/record/assertion crosswalk complete; no deletion | Recorded in D1 receipt |
+| D1–D3 | Not started | — |
 
 ## R0 — compact baseline and frozen formats
 
@@ -72,3 +73,9 @@ Starting HEAD `e4217767f02d4e89589cc8e3468599ebf7587eb7`. Compact repair group `
 Focused four original failures + NC01/02/10: **7/7 pass**, exit0,2198.4131ms. Final integrated targeted gate (`^R|PVP30|FH40|OBS21|DQ04|SEM06|D08|N0[127]|N21` across compact, original authorship/PC-effect/observation/delegation/SEM06/D08/narrative-freedom suites): **102/102 pass**, zero skipped/todo, exit0,47303.7867ms (`%TEMP%\vc-narrative-r6-final.log`). Prior larger batch's other186 tests, including native death/Fear and archive, passed; final full gate will exercise them again at D3.
 
 Diagnostic invocation corrected: Node test workers do not forward arbitrary script argv. `VC_NARRATIVE_QUALITY_PROBES=1` + pattern `NC20|NC21|NC22` genuinely executes the original desired positives: **0 pass/3 fail**, exit1,2208.053ms (`vc-narrative-r6-retained-probes-real.log`). The plain CLI attempt did NOT enable probes (3 guard passes); do not count it as positive evidence. These three quality goals remain explicitly retained/deferred, not falsely fixed or skipped P0 guards. All original mandatory security assertions remain unchanged. R6 authorizes only proven safe retirement; no full-release/production claim. No new model round-trips, native effects or historical shape rewrites.
+
+## D0 — deletion eligibility / crosswalk
+
+Starting HEAD `17f388cd03fab4c9fff126d922452257dc40c5b3`. `NARRATIVE_CORRECTNESS_RETIREMENT_CROSSWALK.md` inventories individual producer/native/reader exports and consumers, record families, original assertions, replacement cases, KEEP/RETIRE/DEFER decisions and N01–15 dispositions. `rg` current source/test analysis confirms four old freeform routes absent from normal intake but still exercised by mandatory/optional compatibility tests; this alone is NOT deletion parity. Native roll review, consent inbox/replies, entry policy/review and discovery delivery proof have live command/AI callers and must remain. v1–7 generators still have supported flag-off/assembly uses. Only current model schema/hint retirement has a sufficiently bounded replacement; no whole files or old readers deleted.
+
+Focused NC25 + unchanged `legacy-authority-migration-test`: **2/2 pass**, zero skipped/todo, exit0,407.1379ms (`%TEMP%\vc-narrative-d0.log`). No executable change in D0; no full registry rerun. Unknown external consumers explicitly KEEP. Rollback is documentation-only.
