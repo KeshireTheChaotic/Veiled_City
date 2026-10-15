@@ -305,6 +305,11 @@
       "sha256": "aa6371ae524f2486b7d9d89e5bcb63836c952b67dfa37818f0d87ce710c3d564"
     },
     {
+      "path": "bot/scripts/fixtures/session7-narrative-drafts.json",
+      "size_bytes": 15724,
+      "sha256": "86f157262667f46ac386ddbde4d744aa192f4905812725dc4156c98baea8884a"
+    },
+    {
       "path": "bot/scripts/fixtures/systems-judgment-golden.json",
       "size_bytes": 2852,
       "sha256": "dc9085755ba97609c27315052982d17fa10dba658328e76b500477976cb6bfd3"
@@ -473,6 +478,11 @@
       "path": "bot/scripts/narrative-inference-test.mjs",
       "size_bytes": 17656,
       "sha256": "62a70ab34f2ec4761dffae4e3698ad7fc03233703c8d8807e871650c4681a4b7"
+    },
+    {
+      "path": "bot/scripts/narrative-publication-hotfix-test.mjs",
+      "size_bytes": 16620,
+      "sha256": "16ee2ee75b3c3f120e183007435c4fce9595aabb53b43a523871d60a16c7277e"
     },
     {
       "path": "bot/scripts/narrative-salience-test.mjs",
@@ -991,8 +1001,8 @@
     },
     {
       "path": "bot/scripts/validate-offline.mjs",
-      "size_bytes": 10518,
-      "sha256": "e0fc375d8207ce0ca42e116885c9dec74d0a725bc2cae95d3fe6d7d22165f8ef"
+      "size_bytes": 10568,
+      "sha256": "e8ade52ab76ad9a23e8b966fc2e585bceba225329ba18336c446b56533e612d2"
     },
     {
       "path": "bot/sql/schema.sql",
@@ -1441,18 +1451,18 @@
     },
     {
       "path": "bot/src/narrative-authority-context.js",
-      "size_bytes": 8387,
-      "sha256": "7507e59ed7f38e74c45e4131b68430e11e77757d799c6321b6a6e8634a6ef6e7"
+      "size_bytes": 9209,
+      "sha256": "4933141f6884b7a9c453f7e1df7d55b0b7534d7f72d57d765837e620fecda022"
     },
     {
       "path": "bot/src/narrative-authority.js",
-      "size_bytes": 18352,
-      "sha256": "6a0714fb314c96186959ce464afd2237443e530776899c48dd5c74841d4eae16"
+      "size_bytes": 19633,
+      "sha256": "6944144016eb52df40fba8d3cdd5fb4689c2263fccc641b892a5f0468fc435e2"
     },
     {
       "path": "bot/src/narrative-completeness.js",
-      "size_bytes": 5570,
-      "sha256": "5bf42924c06da22da6006ba0b14768d64545942df049176151886aecb9837da4"
+      "size_bytes": 6536,
+      "sha256": "44931281806328b2c2451976a65053dc8f6051e1bc1234e85c4eea2572ca54c0"
     },
     {
       "path": "bot/src/narrative-context.js",
@@ -1496,8 +1506,8 @@
     },
     {
       "path": "bot/src/narrative-speakers.js",
-      "size_bytes": 3674,
-      "sha256": "6fa7942aea1b617c1ddfab3ef56a8459a6ea662663d5f1b34c9ab3d7e8ad4e83"
+      "size_bytes": 3790,
+      "sha256": "e2237059813db3274047259c78e1ad2734f49abc05d22d05043d4b1be896d9a0"
     },
     {
       "path": "bot/src/native-hook-output.js",
@@ -1646,8 +1656,8 @@
     },
     {
       "path": "bot/src/publication-outbox.js",
-      "size_bytes": 9835,
-      "sha256": "3b9ee2dfc03bab9b194e70f0df12b39ffc4f0ccb141d2f139d8657436554fa7d"
+      "size_bytes": 9951,
+      "sha256": "44cf638445165eba2118fd469919715617b56cb572fadb65bc3f77d7e15ef345"
     },
     {
       "path": "bot/src/publishing.js",
@@ -1931,8 +1941,8 @@
     },
     {
       "path": "bot/src/turn-orchestration.js",
-      "size_bytes": 5464,
-      "sha256": "3d870e753ca5ee9db80a61a899aacedc4d80d6a21f5ad1f98018b39e20c77cc8"
+      "size_bytes": 5620,
+      "sha256": "ff1f19736cbe3a989146f1376d5c1bd28204a4a940eb3f2f57a5aa92fa4370b9"
     },
     {
       "path": "bot/src/turn-pipeline.js",
@@ -2693,6 +2703,11 @@
       "path": "docs/NARRATIVE_INFERENCE_AUDIT.md",
       "size_bytes": 16997,
       "sha256": "7b1388cbf2da82ae72977637c89fb9d9b2f126b47e0b13e8710b65ea2a895b43"
+    },
+    {
+      "path": "docs/NARRATIVE_PUBLICATION_HOTFIX_10_2.md",
+      "size_bytes": 11046,
+      "sha256": "aec110ddf9e5d2cc453fc2463eba436e23589a6b60b8a068a5fb58bfd41f7bc0"
     },
     {
       "path": "docs/NARRATIVE_UNDERSTANDING.md",

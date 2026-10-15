@@ -8,6 +8,7 @@ import {refreshActionContinuations} from "./action-continuation.js";
 import {measureNative,operationalMetrics} from './operational-metrics.js';
 import {currentTurnTrace} from './turn-trace-context.js';
 import {recordNarrativeHealth} from './narrative-completeness.js';
+import {worldInputKey} from './autonomous-world.js';
 export function commitGmTurn({db,guild,session,result,scope,speaker,label,meta={},content=null}){
   const decision_advisory=validateDecisionAdvisory(db,guild.id,result);
   const mutates=(result.ai_intents||[]).length||(result.events||[]).some(e=>e.type!=="log_only")||(result.relationships||[]).length||(result.handouts||[]).length||(result.npc_memories||[]).length||(result.npc_knowledge||[]).length||(result.npc_goals||[]).length||(result.simulation_updates||[]).length;
@@ -39,7 +40,8 @@ export function commitGmTurn({db,guild,session,result,scope,speaker,label,meta={
       else if(trace.category==='unknown')trace.category='conversation';
     }
     mutation.continuations=refreshActionContinuations(db,guild.id);
-    recordNarrativeHealth(db,guild.id,result,`narrative-health:${meta.turnId||meta.messageId}`,mutation.typedIntents?.[0]?.source_event||'');
+    recordNarrativeHealth(db,guild.id,result,`narrative-health:${meta.turnId||meta.messageId}`,
+      mutation.typedIntents?.[0]?.source_event||(meta.messageId&&scope.actorCharacterId?worldInputKey(meta.messageId,scope.actorCharacterId):null));
     if(mutation.typedIntents?.length)mutation.reconciliation=reconcileConsequences(db,guild.id,{
       intents:mutation.typedIntents,narration:result.narration||"",private_messages:result.private_messages||[],scope,strict:true});
     const proposalMap=new Map();

@@ -1,0 +1,55 @@
+# 10.2.0 critical narrative-publication hotfix
+
+Base development/production revision: `69852dbf5c29372515463d2b8e70bac22c4020cd`; branch `codex/delegation-narrative-quality`. Application remains10.2.0; schema460 unchanged. Accepted typed intents are canonical adjudication inputs; human declarations own intent; native receipts own outcomes.
+
+## Evidence and causes
+
+Read-only production inspection confirms eight saved creative drafts, seven saved fate reports with twelve rejected units: eleven `held_scope`, one `held_secret`. One further draft has no committed fate report because narrative-health logging aborted its turn. Integrity/FK checks are clean; no database cleanup is required. `session7-narrative-drafts.json` preserves all eight actual draft answers and scope/location shapes, replacing production source refs with placeholders and omitting guild/user/character IDs, prompts, credentials, private character dossiers and raw DB exports. Scene/NPC draft prose is retained. The supplied description request and actual stored assembly/player structures are exercised; no separate transcript attachment was available in the checkout.
+
+| Boundary | Actual defect | Repair / retained limit |
+| --- | --- | --- |
+| Entity creation | Existing location redeclared in every fiction_delta; strict creator correctly rejects collision | Orchestrator explicitly reuses an already established identity, ignores its proposed replacement fields, never updates it. New identities still require the unchanged native creator. |
+| Unit dependency | Failed location creation poisons every unit using its existing key; name substrings also poison independent prose | Dependencies follow explicit subject/location keys and kind, not prose substrings. Only a genuinely failed required identity holds its dependent unit. Existing visibility/proxy/placement checks run again. |
+| Audience | Six units in the eight stored answers are character-private while the output is party-scoped | New native packet states audience.mode/unit_visibility/subject; strict validator still holds all six unchanged wrong-audience units. No promotion or relabeling. |
+| NPC knowledge | Night Owl speech cites assembly scope, not known NPC evidence | Native packet/instructions distinguish request scope from speaker knowledge; speaker brief lists entitled known source refs. The invalid saved line stays held_secret; positive native knowledge and deferred revocation are tested. No reference stripping. |
+| Optional diagnostics | Health source is first typed intent or empty; empty is not an FK parent. Director also omitted its source | Use verified owner-world-input fallback and native Director Symbol source. Missing/retracted/forged source skips optional telemetry. Isolated SQLite diagnostic-write failure rolls back only its savepoint, records bounded incident/counter; required native/outbox failures still abort. No FK weakening or synthetic provenance. |
+| Completeness | Legacy post_projection_answers scene description can hide absent creative units | A fallback is not substantive creative completion; explicit creative coverage remains false and status held/missing. Native outcomes are untouched. |
+
+Stored originals are not edited. Replay of all eight **in disposable fixtures only** changes **0 published /12 held_scope /1 held_secret** to **6 published /6 held_scope /1 held_secret**. For the seven originally committed fate reports, the corresponding result is **5 published /6 held_scope /1 held_secret**, versus **0 /11 /1** before. Remaining holds are correct: six wrong-audience units and one knowledge-unsupported speech. A correctly audience-scoped regenerated party draft publishes its scene, NPC speech and lead. No actual production replay is performed.
+
+## Regression and qualification ledger
+
+- Initial HOT01–HOT07: **0/7 pass**, exit1; existing-location publication, aggregate original holds, audience instructions, independent salvage, health FK, Director/missing health source and coverage fields all red before production edits.
+- During fixture integration, assembly was initially passed through owner-message commit, incorrectly changing its source. Corrected to the real assembly queue adapter. A positive NPC recall fixture initially tried rewriting a cached immutable assembly draft; corrected to a fresh authenticated owner turn. No native cache/idempotency contract changed.
+- HOT04 dependency audit independently reproduced a scene subject bound to a failed NPC incorrectly surviving an intermediate implementation (exit1). Explicit subject dependencies now hold across unit kinds; unrelated prose mentioning the same name remains valid.
+- Affected native/security batch: **235/235 tests**, zero skipped, exit0, 66690.7334ms. Includes original SEM06, PVP30/PVP30q/ag, OBS21/PC observations, FH40 resource gates, native damage/death, publication/restart, both D08 checks and historical/new narrative suites. A subsequent conservative subject-dependency correction is qualified again by HOT04 and final full validation, not falsely included in the earlier batch result.
+- Final focused suite **12/12**, zero skipped, exit0, 5533.976ms. Manifest sync10.2.0; `npm run check` exit0 (**381 modules/scripts,24 root commands**); complete network-denied `npm run validate` exit0, **121/121 suites, zero failed/not-run,26/26 acceptance rows,450927ms**, 2026-10-15T16:48:24.314Z–16:55:55.241Z. Network denied/live requests0/billable tokens0. Both D08 and original mandatory guards passed on the final executable/test tree. Compact report remains at ignored `bot/.reports/offline-validation.json` and CI uploads its own exact-tree artifact. Default validator registers the new hotfix suite; all previous mandatory registrations and39 optional matrices remain. Results-only documentation/manifest updates do not change tested executable inputs and do not justify repeating this full run.
+
+| Test | Production path / actual assertion |
+| --- | --- |
+| HOT01 | Authentic party draft → native authoring/projection/commit/outbox → fake transport receives substantive exact creative prose; location unchanged |
+| HOT02 | All8 original structures; exact6/6/1 fates and forbidden prose absent from queued payloads |
+| HOT03 | Native audience/reference/identity packet; correctly scoped fresh party scene/NPC/lead reach outbox |
+| HOT04 | Invalid identity held; dependent speech/scene withheld, independent scene survives without lexical dependency guessing |
+| HOT05 | Zero accepted intents; valid health FK; diagnostic SQLite failure cannot abort output; restart preserves outbox |
+| HOT06 | Missing/forged metric source inert; actual Director adapter records genuine native source |
+| HOT07 | Real accepted observation + legacy fallback path; creative coverage false, no false completed narration |
+| HOT08 | Private Night Owl prose queued only to entitled owner; assembly reference does not authorize speech; source revoked after restart sends nothing |
+| HOT09 | Immutable cached NPC identity reused without recreation; repeated/restarted delivery sends each publication once |
+| HOT10 | Fresh owner turn with actual NPC-known observation publishes recall; revoked knowledge source blocks deferred delivery |
+| HOT11 | Required outbox failure still rolls back whole commit and optional health record |
+| HOT12 | Actual GMService observation fast path with one fake writer; committed outbox/fake transport receives authentic saved scene text, no movement |
+
+No automated provider/Discord request, billable token or production synthetic test. Fake writer calls are not live-model prose qualification. Generated English still carries the previously disclosed residual semantic risk; the audience/receipt/native agency gates are not a universal semantic proof.
+
+## Installation, live acceptance and rollback
+
+Owner confirmed authenticated `/vc-city flags json:{"narrative_completeness":false}` and stopped Veilkeeper. Independent read-only inspection confirms completeness false, authority true and only Codex tooling Node processes. Installation must preserve this owner-managed flag change. Do not enable completeness until owner-controlled live smoke acceptance; do not start the bot or generate an automated live canary.
+
+Before production mutation: fresh protected WAL-aware online backup outside repo, integrity/FK/count/hash verification and disposable restore. Commit reviewed final hotfix, push normally, require exact-SHA green CI, inspect clean production tree and stopped processes, fast-forward only. Verify installed manifest, DB/env hashes, counts, flags and policy unchanged from fresh preflight. No dependency/command schema changes, registration, schema migration, campaign reset or raw SQL flag manipulation.
+
+Verified fresh pre-install backup: `D:\Library\Backups\Veiled_City\narrative-publication-hotfix-20261015-114844\pre-hotfix.sqlite`,22,196,224bytes, SHA-256 `1dedd5d926d58b56fe568632a80470a415c6afe8a9c72abbbcf5a78c2ef011b4`. Protected current-owner/SYSTEM/Administrators ACL; original/backup/disposable restore integrityOK,FK0,WAL,schema460 and matching counts: characters6,legacy rolls0,mutation ledger345,outbox43,world events217,city records416. Disposable restore passed and removed. All43 outbox rows delivered; no blind replay is indicated. Current owner-authorized flags digest `4c749ba5cf90de3ba9ba80c3acb8d5a556c97a9c0fdac9f92e4c2a421bb509ec`; policy digest `d7b84a6dcf6b57faac087393d092734b2cceec25955eb7d4bebf1f757aba2ef1`. Closed source DB hash `2634FD2CBB06BE60459A3411A6D201FB43D661BD429A6EA8873F140E19C1F075`; current `.env` hash `7B92DAF9FF6D98811EDBC12DD93B0055CF1C00FBE6EB39509AE3453C0AECD341`. Compare installation against this fresh preflight, not obsolete hashes preceding organic play/operator changes. No credential contents are read or changed.
+
+Live acceptance is **pending organic owner-controlled smoke testing**, not claimed by offline transports. After the owner starts the bot, send a **new** description question at Twenty-Four Spin; verify substantive fiction in the actual player-visible response, no arrival/movement/injury, correct audience, and no rollback. Check NPC dialogue only against that NPC's knowledge. Keep completeness OFF pending confirmation. Do not blindly retry old failed messages or resubmit delivered/uncertain assembly slots; stale wrong-audience drafts remain held, not silently repaired or promoted. Native receipts and committed history must remain intact.
+
+Code rollback: with bot stopped, clean tree and a fresh verified backup, `git -C 'D:\Library\Veiled City' switch --detach 69852dbf5c29372515463d2b8e70bac22c4020cd`. Keep narrative_completeness OFF under that revision because its logger is defective. Do not restore the pre-release campaign DB as routine rollback, replay dice/costs/Fear, or resend uncertain publications. V2 fate-report entity diagnostics are additive; historical receipts/identities remain compatible. Final commit/CI/backup/install evidence is recorded in the final handoff; this document never invents a self-referential commit SHA.

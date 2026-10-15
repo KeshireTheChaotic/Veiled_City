@@ -18,14 +18,15 @@ export const NARRATIVE_AUTHORITY_INSTRUCTIONS='You are the creative GM for this 
   +'believable NPC self-knowledge/motives/ordinary plans/dialogue, soft leads and attributed rumors. No older ledger fact is required for new ordinary fiction. '
   +'Respect existing fiction and canon. Do not reveal hidden causes or infer NPC omniscience. NPC rumors/claims are not objective truth. '
   +'Return independently meaningful narrative_units plus compact fiction_delta for meaningful named NPC/place identities, in this SAME call. '
-  +'Prioritize an NPC answer over optional atmosphere. Scene-only detail needs no separate entity. Use exact stable IDs. '
+  +'Prioritize an NPC answer over optional atmosphere. Scene-only detail needs no separate entity. Use exact stable IDs. Reuse existing locations/NPCs without redeclaring them in fiction_delta; never replace their identity or summary. '
   +'Use speaker_brief direction and only that speaker\'s entitled knowledge. A native-known PC address may begin NPC dialogue as Name, or Mr./Ms./Mx. Name,; it permits only the address, never that PC\'s answer or action. '
   +'In protected combat, contests and PvP, portray atmosphere and NPC attempts freely within these same boundaries. Native_results are already resolved evidence, never permission for an additional hit or reaction. '
   +'NPCs may refuse, lie, speculate, pursue their own ordinary goals and attempt local actions. Do not convert an attempt into completed travel, success or a PC effect. Offscreen progression needs native world-time authority. '
   +'Never choose PC/proxy actions, reactions, dialogue, thoughts, feelings, consent, commitments or disclosures; never assert native damage, custody, movement, costs, success or inventory without a matching receipt. '
   +'Model receipt/safe/authority labels cannot authorize anything. native_outcome_render is projected from a real receipt; its text field confers no authority. '
   +'Second-person sensory POV is allowed only for a proven character viewpoint, never for a camera. Camera openings do not place or grant in-world knowledge to PCs. '
-  +'Human-controlled NPCs cannot be authored by you. Match visibility to the packet; references must be entitled native evidence. '
+  +'Human-controlled NPCs cannot be authored by you. Match every unit visibility to audience.unit_visibility. Party is not character-private. References must be entitled native evidence. '
+  +'Assembly/input source refs authenticate a request, not NPC knowledge. NPC speech may cite only the speaker\'s entitled known knowledge sources; ordinary new self-dialogue/speculation uses source_refs: []. Never copy assembly refs into NPC recall. '
   +'A lead may be a new observed oddity; its explanation stays unknown. No automatic binding contracts, locked access, hazards or other PC effects. '
   +'Use typed unit boundaries, not a mixed paragraph containing unauthorized PC assertions. No policy disclaimers. Generated English retains semantic risk; do not certify your own output as safe.';
 export function protectedNarrativeNames(db,guild){
@@ -152,20 +153,29 @@ export function establishNarrativeUnits(db,guild,input,scope,sourceRef,{content=
     try{validateUnit(db,guild,u,ctx,entities);units.push(u);}
     catch(error){if(!['SCENE_FICTION','NARRATIVE_PVP'].includes(error.code))throw error;fates.push({id:u.id,fate:error.diagnostic?.category||'held_material'});}
   }
-  const failedEntities=new Set();
+  const failedEntities=new Set(),entityResults=[];
+  const identityKey=e=>`${e.kind}:${e.key}`;
   for(const e of [...entities].sort((a,b)=>Number(a.kind==='npc')-Number(b.kind==='npc'))){
-    if(!units.some(u=>u.subject_key===e.key||u.location_key===e.key||u.text.includes(e.name)))continue;
+    if(!units.some(u=>u.subject_key===e.key||u.location_key===e.key))continue;
     try{
+      // A redundant creation proposal cannot replace an existing identity or poison its independently valid prose.
+      // Actual unit placement/visibility/proxy checks still run both before and after this step.
+      if(['location','npc'].includes(e.kind)&&db.getSimulationEntity(guild,e.kind,e.key)){
+        entityResults.push({kind:e.kind,key:e.key,status:'reused_existing',reason:'creation_ignored_no_overwrite'});continue;
+      }
       if(mentions(`${e.name} ${e.summary} ${(e.aliases||[]).join(' ')}`,protectedNarrativeNames(db,guild)))throw fail('held_material');
       validateUnit(db,guild,{id:'identity',kind:'scene',text:`${e.name} ${e.summary} ${e.role}`,subject_key:'',location_key:ctx.binding.location||'',
         visibility:scope.mode==='private'?'character':'party',epistemic:'observation',source_refs:[],receipt_kind:'',receipt_ref:''},ctx,entities);
       db.transaction(()=>establishNarrativeEntity(db,guild,e,ctx,{content}));
-    }catch(error){if(!['SCENE_FICTION','AUTONOMOUS_WORLD'].includes(error.code))throw error;failedEntities.add(e.key);}
+      entityResults.push({kind:e.kind,key:e.key,status:'created'});
+    }catch(error){if(!['SCENE_FICTION','AUTONOMOUS_WORLD'].includes(error.code))throw error;
+      failedEntities.add(identityKey(e));entityResults.push({kind:e.kind,key:e.key,status:'rejected',reason:error.diagnostic?.category||'native_identity_validation'});}
   }
   const rows=[];
   for(const u of units){
     const key=`narrative-unit:${hash([d.binding,u])}`,prior=db.getCityRecord(guild,'narrative_unit',key);
-    if(failedEntities.has(u.subject_key)||failedEntities.has(u.location_key)||entities.some(e=>failedEntities.has(e.key)&&u.text.includes(e.name))){
+    // Only structured identity dependencies confer placement/speaker authority; a name appearing in prose is not a dependency.
+    if(failedEntities.has(`location:${u.location_key}`)||entities.some(e=>e.key===u.subject_key&&failedEntities.has(identityKey(e)))){
       fates.push({id:u.id,fate:'held_scope'});continue;
     }
     try{
@@ -178,10 +188,10 @@ export function establishNarrativeUnits(db,guild,input,scope,sourceRef,{content=
       const accepted=db.saveCityRecord(guild,{kind:'narrative_unit',key,status:'accepted_established',visibility:u.visibility,subject_key:scope.mode==='private'?scope.actorCharacterId:null,
         source_event:event.event_key,location_key:event.location_key,data});
       retainEstablishedNarrative(db,guild,accepted);noteNarrativeReuse(db,guild,accepted);rows.push(accepted);fates.push({id:u.id,fate:'published'});
-    }catch(error){if(!['SCENE_FICTION','NARRATIVE_PVP'].includes(error.code))throw error;fates.push({id:u.id,fate:'held_scope'});}
+    }catch(error){if(!['SCENE_FICTION','NARRATIVE_PVP'].includes(error.code))throw error;fates.push({id:u.id,fate:error.diagnostic?.category||'held_scope'});}
   }
   db.saveCityRecord(guild,{kind:'narrative_unit_fates',key:draft.record_key,status:'evaluated',visibility:'gm',source_event:sourceRef,
-    data:{version:1,fates,scope,source:sourceRef}});
+    data:{version:2,fates,entity_results:entityResults,scope,source:sourceRef}});
   for(const fate of fates.filter(f=>f.fate!=='published'))review(db,guild,`${draft.record_key}:${fate.id}`,sourceRef,scope,fate.fate);
   return rows;
 }

@@ -1,0 +1,378 @@
+[
+  {
+    "origin": "player",
+    "scope": "party",
+    "location": "twenty-four-spin",
+    "answer": {
+      "narrative_units": [
+        {
+          "id": "scene-twenty-four-spin-interior",
+          "kind": "scene",
+          "text": "Twenty-Four Spin is a narrow laundromat with rows of front-loading machines, their steady churn and occasional clunk filling the room. The air carries a mix of warm cotton and detergent; cool fluorescent light gleams on the tiled floor. A handwritten sign above the change machine reads, “Exact coins appreciated.”",
+          "subject_key": "twenty-four-spin",
+          "location_key": "twenty-four-spin",
+          "visibility": "character",
+          "epistemic": "observation",
+          "source_refs": [
+            "$SOURCE"
+          ],
+          "receipt_kind": "",
+          "receipt_ref": ""
+        }
+      ],
+      "fiction_delta": [
+        {
+          "kind": "location",
+          "key": "twenty-four-spin",
+          "name": "Twenty-Four Spin",
+          "summary": "A narrow laundromat with rows of front-loading machines and a change machine.",
+          "location_key": "twenty-four-spin",
+          "parent_location_key": "",
+          "role": "laundromat",
+          "aliases": []
+        }
+      ]
+    }
+  },
+  {
+    "origin": "player",
+    "scope": "party",
+    "location": "twenty-four-spin",
+    "answer": {
+      "narrative_units": [
+        {
+          "id": "scene-twenty-four-spin",
+          "kind": "scene",
+          "text": "Twenty-Four Spin is a neighborhood laundromat, bright with ceiling panels and close with the warmth of running dryers. Rows of machines turn at different speeds; a loose metal panel on one washer gives a faint, regular rattle. A folding table holds a stack of empty plastic baskets, and a handwritten sign by the change machine says, “Please leave the lint traps clean.” The room is otherwise ordinary and occupied by the steady churn of laundry and ventilation.",
+          "subject_key": "twenty-four-spin",
+          "location_key": "twenty-four-spin",
+          "visibility": "character",
+          "epistemic": "observation",
+          "source_refs": [
+            "$SOURCE"
+          ],
+          "receipt_kind": "",
+          "receipt_ref": ""
+        }
+      ],
+      "fiction_delta": [
+        {
+          "kind": "location",
+          "key": "twenty-four-spin",
+          "name": "Twenty-Four Spin",
+          "summary": "A neighborhood laundromat with rows of machines, a folding table, and a change machine.",
+          "location_key": "twenty-four-spin",
+          "parent_location_key": "",
+          "role": "",
+          "aliases": []
+        }
+      ]
+    }
+  },
+  {
+    "origin": "player",
+    "scope": "party",
+    "location": "twenty-four-spin",
+    "answer": {
+      "narrative_units": [
+        {
+          "id": "scene-twenty-four-spin",
+          "kind": "scene",
+          "text": "The Twenty-Four Spin is a small, all-night laundromat: washers and dryers line the walls beneath bright fluorescent tubes, and a change machine hums beside a folding table. Warm, damp air carries the smell of detergent. A paper sign on the front counter lists the prices in fading marker; for now, the machines turn steadily and the room is otherwise quiet.",
+          "subject_key": "twenty-four-spin",
+          "location_key": "twenty-four-spin",
+          "visibility": "party",
+          "epistemic": "observation",
+          "source_refs": [
+            "$SOURCE"
+          ],
+          "receipt_kind": "",
+          "receipt_ref": ""
+        }
+      ],
+      "fiction_delta": [
+        {
+          "kind": "location",
+          "key": "twenty-four-spin",
+          "name": "Twenty-Four Spin",
+          "summary": "A small all-night laundromat with rows of washers and dryers, a change machine, and a folding table.",
+          "location_key": "twenty-four-spin",
+          "parent_location_key": "",
+          "role": "laundromat",
+          "aliases": []
+        }
+      ]
+    }
+  },
+  {
+    "origin": "player",
+    "scope": "party",
+    "location": "twenty-four-spin",
+    "answer": {
+      "narrative_units": [
+        {
+          "id": "twenty-four-spin-scene",
+          "kind": "scene",
+          "text": "Twenty-Four Spin is a compact, brightly lit laundromat. Washers line one wall, their round doors catching the fluorescent glare; a few turn with a steady slosh and thump. Warm, damp air carries the smell of detergent and lint. Near the change machine, a hand-lettered sign warns that the small dryer on the end runs hot. Outside noise comes through the front glass as a muffled wash of passing traffic.",
+          "subject_key": "twenty-four-spin",
+          "location_key": "twenty-four-spin",
+          "visibility": "party",
+          "epistemic": "observation",
+          "source_refs": [
+            "$SOURCE"
+          ],
+          "receipt_kind": "",
+          "receipt_ref": ""
+        }
+      ],
+      "fiction_delta": [
+        {
+          "kind": "location",
+          "key": "twenty-four-spin",
+          "name": "Twenty-Four Spin",
+          "summary": "A compact, brightly lit laundromat with a row of washers, a change machine, and a hand-lettered warning about one hot-running dryer.",
+          "location_key": "twenty-four-spin",
+          "parent_location_key": "",
+          "role": "Laundromat",
+          "aliases": []
+        }
+      ]
+    }
+  },
+  {
+    "origin": "player",
+    "scope": "party",
+    "location": "twenty-four-spin",
+    "answer": {
+      "narrative_units": [
+        {
+          "id": "twenty-four-spin-scene",
+          "kind": "scene",
+          "text": "Twenty-Four Spin is a compact, well-used laundromat. Rows of round-windowed machines line the walls, their brushed metal dulled by fingerprints and detergent streaks. The air carries the warm, damp smell of clean cotton, with a faint sharp note of soap. Fluorescent tubes hum overhead; somewhere among the washers, water swishes steadily behind a closed glass door. A folding table occupies the middle of the room, its laminate edge nicked and its surface mostly clear.",
+          "subject_key": "twenty-four-spin",
+          "location_key": "twenty-four-spin",
+          "visibility": "character",
+          "epistemic": "observation",
+          "source_refs": [
+            "$SOURCE"
+          ],
+          "receipt_kind": "",
+          "receipt_ref": ""
+        }
+      ],
+      "fiction_delta": [
+        {
+          "kind": "location",
+          "key": "twenty-four-spin",
+          "name": "Twenty-Four Spin",
+          "summary": "A compact, well-used laundromat with rows of washers and dryers, fluorescent lighting, and a central folding table.",
+          "location_key": "twenty-four-spin",
+          "parent_location_key": "",
+          "role": "",
+          "aliases": []
+        }
+      ]
+    }
+  },
+  {
+    "origin": "assembly",
+    "scope": "party",
+    "location": "twenty-four-spin",
+    "answer": {
+      "narrative_units": [
+        {
+          "id": "twenty-four-spin-opening-scene",
+          "kind": "scene",
+          "text": "Twenty-Four Spin is a narrow laundromat lit by fluorescent tubes and the pink glow of its window sign. Rain ticks against a boarded-up transom. Inside, dryer windows turn like little amber moons; the air smells of hot cotton, detergent, and burnt coffee. A folding table has been carefully leveled with a paperback romance. Behind the change counter sits an attendant whose name badge reads MARA, beside a mug marked NIGHT MANAGEMENT.",
+          "subject_key": "twenty-four-spin",
+          "location_key": "twenty-four-spin",
+          "visibility": "character",
+          "epistemic": "observation",
+          "source_refs": [],
+          "receipt_kind": "",
+          "receipt_ref": ""
+        },
+        {
+          "id": "mara-vale-opening-speech",
+          "kind": "npc_speech",
+          "text": "“Coffee's fresh enough to argue about,” Mara says. “Help yourself. Just don't put the cups on the washers—the vibration walks them right off.”",
+          "subject_key": "mara-vale",
+          "location_key": "twenty-four-spin",
+          "visibility": "character",
+          "epistemic": "testimony",
+          "source_refs": [],
+          "receipt_kind": "",
+          "receipt_ref": ""
+        },
+        {
+          "id": "twenty-four-spin-noticeboard-lead",
+          "kind": "lead",
+          "text": "Among the babysitting cards and room advertisements on the noticeboard hangs a handwritten appeal: “Whoever took the green coat on Tuesday: keep it. Please return the map.” Beneath it are six tear-off tabs, each bearing the same instruction: “Leave it with the night attendant.” None has been torn away.",
+          "subject_key": "twenty-four-spin",
+          "location_key": "twenty-four-spin",
+          "visibility": "character",
+          "epistemic": "observation",
+          "source_refs": [],
+          "receipt_kind": "",
+          "receipt_ref": ""
+        }
+      ],
+      "fiction_delta": [
+        {
+          "kind": "location",
+          "key": "twenty-four-spin",
+          "name": "Twenty-Four Spin",
+          "summary": "A narrow laundromat with a change counter, complimentary coffee, and a community noticeboard displaying an appeal for a map taken with a green coat.",
+          "location_key": "twenty-four-spin",
+          "parent_location_key": "",
+          "role": "laundromat",
+          "aliases": []
+        },
+        {
+          "kind": "npc",
+          "key": "mara-vale",
+          "name": "Mara Vale",
+          "summary": "The night attendant at Twenty-Four Spin; wears a MARA badge and offers coffee with a warning about vibrating washers.",
+          "location_key": "twenty-four-spin",
+          "parent_location_key": "",
+          "role": "night attendant",
+          "aliases": [
+            "Mara"
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "origin": "assembly",
+    "scope": "private",
+    "location": "twenty-four-spin",
+    "answer": {
+      "narrative_units": [
+        {
+          "id": "twenty-four-spin-opening-scene",
+          "kind": "scene",
+          "text": "Twenty-Four Spin is a laundromat with peppermint-green machines and a change dispenser labeled COINS, NOT MIRACLES. Warm air carries detergent, damp wool, and the toasted smell of an overworked vending machine. One dryer has a sneaker tumbling inside it: three soft thuds, a pause, then three more. Behind the folding counter, an attendant wearing a paper name badge—INEZ—uses a seam ripper to free a red ribbon from a zipper. Beside her stands a small blue suitcase, conspicuously clean among the lint.",
+          "subject_key": "twenty-four-spin",
+          "location_key": "twenty-four-spin",
+          "visibility": "character",
+          "epistemic": "observation",
+          "source_refs": [
+            "$ASSEMBLY"
+          ],
+          "receipt_kind": "",
+          "receipt_ref": ""
+        },
+        {
+          "id": "twenty-four-spin-inez-opening-speech",
+          "kind": "npc_speech",
+          "text": "“The suitcase isn't lost property,” Inez says, without raising her voice above the dryers. “A woman paid me to keep it until midnight. Then she came back and paid me not to give it to her if she asked.” She sets the seam ripper beside the register. “I'm beginning to think I charged too little.”",
+          "subject_key": "inez-vale",
+          "location_key": "twenty-four-spin",
+          "visibility": "character",
+          "epistemic": "testimony",
+          "source_refs": [],
+          "receipt_kind": "",
+          "receipt_ref": ""
+        }
+      ],
+      "fiction_delta": [
+        {
+          "kind": "location",
+          "key": "twenty-four-spin",
+          "name": "Twenty-Four Spin",
+          "summary": "A laundromat with peppermint-green machines, a folding counter, and an overworked vending machine.",
+          "location_key": "twenty-four-spin",
+          "parent_location_key": "",
+          "role": "",
+          "aliases": []
+        },
+        {
+          "kind": "npc",
+          "key": "inez-vale",
+          "name": "Inez Vale",
+          "summary": "Twenty-Four Spin's attendant, wearing an INEZ name badge. Claims she accepted contradictory instructions about holding a blue suitcase until midnight.",
+          "location_key": "twenty-four-spin",
+          "parent_location_key": "",
+          "role": "Laundromat attendant",
+          "aliases": [
+            "Inez"
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "origin": "assembly",
+    "scope": "private",
+    "location": "location-night-owl-copy-parcel",
+    "answer": {
+      "narrative_units": [
+        {
+          "id": "night-owl-opening-scene",
+          "kind": "scene",
+          "text": "Night Owl Copy & Parcel smells of hot toner, cardboard, and orange peel. A fluorescent tube hums above two copiers; between them, a potted fern wears a fine coating of paper dust. Behind the counter, cubbyholes hold parcels of every shape, including a long cardboard tube labeled PLEASE KEEP LEVEL in three different hands. The wall clock has a paper sign beneath it: CLOCK FAST. DEADLINES REAL.",
+          "subject_key": "location-night-owl-copy-parcel",
+          "location_key": "location-night-owl-copy-parcel",
+          "visibility": "character",
+          "epistemic": "observation",
+          "source_refs": [
+            "$ASSEMBLY"
+          ],
+          "receipt_kind": "",
+          "receipt_ref": ""
+        },
+        {
+          "id": "night-owl-opening-inez-speech",
+          "kind": "npc_speech",
+          "text": "The clerk's badge reads INEZ. A pencil is tucked through her bun, and another rests behind her ear. “For copying, I need the original. For shipping, I need an address. For complaints about the clock, there's already a list.”",
+          "subject_key": "npc-night-owl-inez",
+          "location_key": "location-night-owl-copy-parcel",
+          "visibility": "character",
+          "epistemic": "testimony",
+          "source_refs": [
+            "$ASSEMBLY"
+          ],
+          "receipt_kind": "",
+          "receipt_ref": ""
+        },
+        {
+          "id": "night-owl-opening-unusual-envelope",
+          "kind": "lead",
+          "text": "A small envelope stands upright in the counter's business-card holder. Its handwritten address reads: NIGHT OWL COPY & PARCEL — ATTENTION: THE NEXT CLERK. There is no visible stamp. Someone has written NOT ME on a sticky note attached to its corner.",
+          "subject_key": "location-night-owl-copy-parcel",
+          "location_key": "location-night-owl-copy-parcel",
+          "visibility": "character",
+          "epistemic": "observation",
+          "source_refs": [
+            "$ASSEMBLY"
+          ],
+          "receipt_kind": "",
+          "receipt_ref": ""
+        }
+      ],
+      "fiction_delta": [
+        {
+          "kind": "location",
+          "key": "location-night-owl-copy-parcel",
+          "name": "Night Owl Copy & Parcel",
+          "summary": "A compact copy-and-shipping shop with humming copiers, parcel cubbyholes, and a notoriously fast wall clock.",
+          "location_key": "location-night-owl-copy-parcel",
+          "parent_location_key": "",
+          "role": "",
+          "aliases": []
+        },
+        {
+          "kind": "npc",
+          "key": "npc-night-owl-inez",
+          "name": "Inez",
+          "summary": "The dryly practical counter clerk at Night Owl Copy & Parcel; wears a name badge and keeps spare pencils in her hair.",
+          "location_key": "location-night-owl-copy-parcel",
+          "parent_location_key": "",
+          "role": "Copy-and-parcel clerk",
+          "aliases": []
+        }
+      ]
+    }
+  }
+]

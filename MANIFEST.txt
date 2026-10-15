@@ -58,6 +58,7 @@ bot/scripts/fixtures/i-heard-you-acceptance.json
 bot/scripts/fixtures/i-heard-you-golden.json
 bot/scripts/fixtures/implementation-evaluation.json
 bot/scripts/fixtures/session2-sanitized.json
+bot/scripts/fixtures/session7-narrative-drafts.json
 bot/scripts/fixtures/systems-judgment-golden.json
 bot/scripts/format-check.mjs
 bot/scripts/gm-recovery-regression-test.mjs
@@ -92,6 +93,7 @@ bot/scripts/narrative-deployment-safety-test.mjs
 bot/scripts/narrative-fixtures.mjs
 bot/scripts/narrative-freedom-test.mjs
 bot/scripts/narrative-inference-test.mjs
+bot/scripts/narrative-publication-hotfix-test.mjs
 bot/scripts/narrative-salience-test.mjs
 bot/scripts/narrative-understanding-test.mjs
 bot/scripts/natural-language-scope-test.mjs
@@ -536,6 +538,7 @@ docs/NARRATIVE_AUTHORITY_PRODUCTION_RUNBOOK.md
 docs/NARRATIVE_AUTHORITY_RELEASE.md
 docs/NARRATIVE_CREATIVE_AUTHORITY_CONTRACT.md
 docs/NARRATIVE_INFERENCE_AUDIT.md
+docs/NARRATIVE_PUBLICATION_HOTFIX_10_2.md
 docs/NARRATIVE_UNDERSTANDING.md
 docs/NATURAL_LANGUAGE_SCOPE_DRIFT.md
 docs/NEXT_EXPANSION.md

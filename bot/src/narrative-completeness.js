@@ -3,13 +3,16 @@ import {sceneFictionHash as hash} from './scene-fiction-context.js';
 import {operationalMetrics} from './operational-metrics.js';
 export function validateNarrativeCompleteness(db,guild,result,parts,requests=[],{sourceRef=null,scope=null}={}){
   const actual=parts.filter(p=>p.kind==='pvp_output_part'&&p.status==='verified'&&db.getCityRecord(guild,'pvp_output_part',p.record_key)?.data.content_hash===p.data.content_hash);
-  const substantive=actual.filter(p=>!['neutral','scene_fiction_review'].includes(p.data.kind));
+  const creativeRequested=requests.some(r=>r.version===8);
+  const substantive=actual.filter(p=>!['neutral','scene_fiction_review'].includes(p.data.kind)
+    &&!(creativeRequested&&p.data.kind==='scene_description'));
   const units=substantive.filter(p=>p.data.kind==='gm_narrative_unit').map(p=>db.getCityRecord(guild,'narrative_unit',p.data.ref)?.data)
     .filter(Boolean).map(d=>({...d.unit,effective_location:d.unit.location_key||d.binding.location}));
   const conversation=requests.some(r=>r.version===8&&r.operation==='conversation'),moving=(result.player_intents||[]).some(i=>(i.type==='move'||i.operation==='initial_position')&&i.framing==='immediate'),
     investigation=(result.player_intents||[]).some(i=>i.type==='search'||i.operation==='investigate'),
     combat=requests.some(r=>r.version===8&&r.operation==='combat'),director=db.getWorldEvent(guild,sourceRef)?.kind==='native_director_narrative_scope';
   let status=!result.respond||result.act===false?'not_applicable':substantive.length?'complete':'held_irrecoverable';
+  if(status==='complete'&&creativeRequested&&!units.length)status='creative_narration_missing';
   if(status==='complete'&&conversation&&!units.some(u=>u.kind==='npc_speech')&&!substantive.some(p=>['gm_fresh_npc','gm_world_narrative','observation_answer'].includes(p.data.kind)))status='npc_response_missing';
   const arrivals=substantive.filter(p=>p.data.kind==='verified_action').map(p=>db.getWorldEvent(guild,p.data.ref)?.location_key).filter(Boolean);
   if(status==='complete'&&moving&&arrivals.length
@@ -33,13 +36,26 @@ export function validateNarrativeCompleteness(db,guild,result,parts,requests=[],
   if(units.some(u=>u.text.length<160&&past.some(p=>p.data.binding.source!==sourceRef&&p.data.unit.text===u.text)))
     diagnostics.push('repeated_short_scaffolding');
   return {version:2,status,scope:scope?.mode||'unknown',substantive_parts:substantive.length,held_parts:held||(!fates.length?reviews.length:0),diagnostics,
-    coverage:{conversation:!conversation||units.some(u=>u.kind==='npc_speech'),scene:units.some(u=>['scene','lead','established_observation'].includes(u.kind)),
+    coverage:{creative:!creativeRequested||units.length>0,conversation:!conversation||units.some(u=>u.kind==='npc_speech'),scene:units.some(u=>['scene','lead','established_observation'].includes(u.kind)),
       investigation:!investigation||status!=='investigation_response_missing',combat:!combat||status!=='combat_fiction_missing'},
     authority:'native_projection_health_not_effect_authority',quality:'Typed coverage; not a universal literary-quality or semantic proof.'};
 }
-export function recordNarrativeHealth(db,guild,result,key,sourceRef=''){
-  if(!db.getCityCalendar(guild).flags.narrative_completeness||!result.narrative_completion||db.getCityRecord(guild,'narrative_health',key))return;
-  db.saveCityRecord(guild,{kind:'narrative_health',key,status:result.narrative_completion.status,visibility:'gm',source_event:sourceRef,data:{...result.narrative_completion}});
+export function recordNarrativeHealth(db,guild,result,key,sourceRef=null){
+  try{
+    const saved=db.transaction(()=>{
+      if(!db.getCityCalendar(guild).flags.narrative_completeness||!result.narrative_completion||db.getCityRecord(guild,'narrative_health',key))return false;
+      const source=sourceRef&&db.getWorldEvent(guild,sourceRef);
+      if(!source||source.status!=='active')return false; // No invented source/event merely to record optional telemetry.
+      db.saveCityRecord(guild,{kind:'narrative_health',key,status:result.narrative_completion.status,visibility:'gm',source_event:source.event_key,data:{...result.narrative_completion}});
+      return true;
+    });
+    if(!saved)return;
+  }catch(error){
+    // Only this optional write is isolated. Native mutation/publication failures still abort their own transaction.
+    if(error.code!=='ERR_SQLITE_ERROR')throw error;
+    operationalMetrics.record('optional_quarantine',{guildId:guild,status:'failed',errorCode:'UNCLASSIFIED'});
+    operationalMetrics.incident('runtime',{guildId:guild,reference:key,code:'UNCLASSIFIED'});return;
+  }
   operationalMetrics.record(result.narrative_completion.status==='complete'?'narrative_completed':'narrative_missing',{guildId:guild});
   const stages={unit_local_hold:'narrative_unit_hold',validated_siblings_salvaged:'narrative_sibling_salvage',administrative_fallback:'narrative_administrative_fallback',
     player_facing_answer_missing:'narrative_answer_missing',source_retrieval_miss:'narrative_retrieval_miss',repeated_short_scaffolding:'narrative_generic_repeat',

@@ -74,7 +74,12 @@ export function buildNarrativeContext(db,guild,scope,sourceRef,{operation='descr
     placement:placed?hash([p.source_event,p.location_key,p.data.zone,arrival.details]):null};
   const packet={version:2,operation,request:owner?source.details.text:director?'Portray a contextual world response without inventing PC actions or consequences.':'Open this assembly with interesting fiction, without inventing PC co-location or cooperation.',
     viewpoint:{kind:binding.viewpoint,zone:placed?p.data.zone:null,pc_witness:!!placed},
-    place:{key:location||'',name:entity?.state.name||'An unestablished public setting',type:entity?.state.place_type||'unknown'},
+    audience:{mode:scope.mode,unit_visibility:scope.mode==='private'?'character':'party',subject_key:scope.mode==='private'?scope.actorCharacterId:null,
+      rule:'Every unit must match this audience. Never relabel private evidence as party-visible.'},
+    reference_rules:{npc_speech:'Use only entitled known speaker knowledge references for factual recall; assembly/input references authenticate this request, not NPC knowledge. Use [] for new ordinary self-dialogue or speculation.',
+      scene:'Current source references bind the description, not a PC action or hidden explanation.'},
+    place:{key:location||'',name:entity?.state.name||'An unestablished public setting',type:entity?.state.place_type||'unknown',
+      identity_state:entity?'established_reuse_only':'unestablished',identity_rule:'Reuse established keys without fiction_delta; descriptive prose belongs in narrative_units. fiction_delta creates genuinely new identities only.'},
     observations:facts.map(f=>({source_ref:f.id,text:f.content,epistemic:evidenceType(f).kind})),npcs,
     prior_fiction:rankNarrativeMemory(db,guild,scope,disclosedNarrativeMemory(db,guild,scope,{limit:40}),
       {location,query:owner?source.details.text:'',maxChars:Math.max(3000,9000-speakerChars)}),unknowns:['Hidden causes, private character details and unresolved outcomes are unknown.']};

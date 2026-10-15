@@ -33,6 +33,7 @@ export function speakerBrief(db,guild,npc,scope,location,query=''){
       .filter(r=>r.from_type==='npc'&&r.from_key===npc&&['public','party'].includes(r.visibility)).slice(0,2)
       .map(r=>({target:r.to_key,type:r.relationship_type}));
   return {direction:portrayal?.direction||{},knowledge:rank(knowledge),memories:rank(memories),goals,relationships,
+    speech_source_refs:[...new Set(knowledge.filter(k=>k.belief_state==='known').map(k=>k.source_ref))].slice(0,8),
     addresses:npcAddresses(db,guild,npc,scope,location),
     guidance:'Answer, offer, disagree, decline or speculate in this voice. Beliefs are subjective; no forced player response.'};
 }

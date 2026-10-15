@@ -33,6 +33,7 @@ suites.push("playable-narration-test");
 suites.push("critical-validation-profile-test");
 suites.push("narrative-freedom-test","narrative-salience-test","narrative-deployment-safety-test");
 suites.push("delegation-quality-test");
+suites.push("narrative-publication-hotfix-test");
 // Critical is the release gate. Optional feature/history matrices remain executable via --extended;
 // no source assertion is deleted, and historical registration inventory stays intact above.
 const extendedSuiteInventory=[...suites];
