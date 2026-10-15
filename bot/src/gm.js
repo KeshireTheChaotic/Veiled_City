@@ -617,6 +617,9 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
       }
     }
     const ctx=this.buildContext(guildId,actorUserId,messageText,actorAssignment,{scope});
+    const scopedEngagement=currentSemanticEngagement(this.db,guildId,engagement,
+      {mode:scope,actorUserId,actorCharacterId:ctx.actor_assignment?.character_id},
+      messageId&&ctx.actor_assignment?.character_id?worldInputKey(messageId,ctx.actor_assignment.character_id):null);
     const privateMode=scope==="private";
     const instructions=[
       ctx.constitution,
@@ -695,7 +698,7 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
       `NPC DICTION GUIDANCE (GM-private; not facts or PC emotions): ${JSON.stringify(ctx.npc_cognition.slice(0,4)
         .map(row=>portrayalPacket(this.db,guildId,row.npc_key)))}`,
       `PACING GUIDANCE (GM-private; not authority): ${JSON.stringify(this.db.getCityCalendar(guildId).flags.pacing
-        ?pacingAdvice(this.db,guildId,messageText):null)}`,
+        ?pacingAdvice(this.db,guildId,messageText,scopedEngagement):null)}`,
       `PENDING NATIVE CONTINUATIONS (owner-scoped; receipts remain authoritative): ${JSON.stringify(ctx.pending_native_continuations)}`,
       `PENDING NATIVE ACTION REVIEWS (owner-scoped; not resolved effects): ${JSON.stringify(ctx.pending_native_action_reviews)}`,
       `CAMPAIGN STATE:\n${JSON.stringify(ctx.campaign)}`,
@@ -707,6 +710,7 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
         {mode:scope,actorUserId,actorCharacterId:ctx.actor_assignment?.character_id}))}`,
       `AUTONOMOUS WORLD (GM-private native creation/action context): ${JSON.stringify(autonomousWorldContext(this.db,guildId,{mode:scope,actorUserId,actorCharacterId:ctx.actor_assignment?.character_id},messageId))}`,
       `SCOPED INTERPRETATION (not authority): ${JSON.stringify(interpretationContext(this.db,guildId,actorUserId,ctx.actor_assignment?.character_id,messageText,{mode:scope,messageId}))}`,
+      `CURRENT SEMANTIC ROUTE (response-only, not native authority): ${JSON.stringify(scopedEngagement)}`,
       `CONVERSATIONAL ENTRY REFERENCES (not authority): ${JSON.stringify(entryReferenceContext(this.db,guildId,actorUserId,ctx.actor_assignment?.character_id,{mode:scope}))}`,
       `AI MANAGEMENT (GM-private proposals, policy, revisions and receipts; never actor knowledge): ${JSON.stringify(ctx.ai_management)}`,
       `SESSION:\n${JSON.stringify(referenceSessionContext(ctx.session,ctx.assembly))}`,
@@ -812,7 +816,8 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
       if(worldAuthority(this.db,guildId).gm_authority_mode==="autonomous"&&!(result.world_conflicts||[]).length
         &&/\b(?:(?:I|we) need (?:a |the |human )?GM to|(?:the |human )GM (?:needs|must|has) to) (?:establish|create|approve|promote|describe)\b[^.!?\n]{0,140}\b(?:surroundings|location|place|NPC|person|diner|street|scene)\b/i.test(prose))
         throw new Error("Missing ordinary world data is AI-GM work, not a human approval prerequisite. Create/reuse ordinary fiction via native world additions/actions and keep the scene moving.");
-      const obligation=semanticResponseObligation(authenticatedSource,result.player_intents,{authenticated:!!ctx.actor_assignment});
+      const obligation=semanticResponseObligation(authenticatedSource,result.player_intents,{authenticated:!!ctx.actor_assignment,
+        engagement:scopedEngagement||{respond:result.respond===true,engagement_kind:'uncertain'}});
       if(obligation.needed&&(!result.respond||!String(result.narration||"").trim()
         &&!hasFreshNpcResponse(this.db,guildId,result,typedScope,messageId&&typedScope.actorCharacterId?worldInputKey(messageId,typedScope.actorCharacterId):null)
         &&!hasFreshSceneResponse(this.db,guildId,result,typedScope,messageId&&typedScope.actorCharacterId?worldInputKey(messageId,typedScope.actorCharacterId):null)))
@@ -848,7 +853,7 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
         ||(candidate.scene_actions||[]).some(a=>a.kind==='move')
         ||(candidate.player_intents||[]).some(i=>i.operation==='initial_position'&&i.framing==='immediate');
       const creative=this.db.getCityCalendar(guildId).flags.narrative_authority===true;
-      coordinateNarrative(this.db,guildId,candidate,{scope:fictionScope,sourceRef:fictionSource,movement});
+      coordinateNarrative(this.db,guildId,candidate,{scope:fictionScope,sourceRef:fictionSource,movement,engagement:scopedEngagement});
       if(this.db.getCityCalendar(guildId).flags.playable_narration===true&&movement&&!(candidate.gm_world_parts||[]).some(p=>p.version===(creative?8:7)))
         candidate.gm_world_parts=[...(candidate.gm_world_parts||[]).slice(0,3),{version:creative?8:7,kind:creative?'narrative_request':'scene_fiction_request',operation:'describe_scene',source_refs:[]}];
       let stagedView=null,stagedError=null;

@@ -21,8 +21,8 @@ S0 intentionally commits reproductions before repairs; they are not a qualified 
 | S0 | Baseline/red corpus complete | `ed4c0b4163bc9724ce9602669b0b517b885dacad` |
 | S1 | Implemented; focused qualification below | `123dede2e4180bf924953d066e66fafe96744375` |
 | S2 | Implemented; focused qualification below | `c575a071b082cb3400c00908703a1e44f6fbb50f` |
-| S3 | Implemented; focused qualification below | See Git commit named `fix(semantic): verify typed speech and scoped native listeners` |
-| S4 | Pending | — |
+| S3 | Implemented; focused qualification below | `470660e505e81c9bb87a2bef3485d24914111334` |
+| S4 | Implemented; focused qualification below | See Git commit named `refactor(semantic): share contextual engagement and pacing` |
 | S5 | Pending | — |
 | S6 | Pending | — |
 
@@ -51,3 +51,11 @@ Starting `c575a071b082cb3400c00908703a1e44f6fbb50f`. Normal typed speech capture
 Original D14–D16 red cases green. Added within the same22-case table: private owner positive, two ambiguous role/pronoun negatives, proxy negative, and accepted-but-explicitly-reported speech negative. That stronger reported test reproduced red exit1 during S3; a bounded literal attribution/quote-position tripwire now withholds it rather than trusting the model framing. Shared quote-position helper moved to immutable-source module (no change to source/envelope authority). A remote-NPC fixture initially lacked its native location and was corrected to establish a genuine separate room, not bypass location validation.
 
 S2+S3 focused **8/8**, zero skipped, exit0,5274.7329ms; final S3-only **4/4**, exit0,4392.0293ms. Existing IHY1/SP2 **2/2 suite processes** exit0,899.842ms, their full original assertions preserved. Their first run found missing legacy coarse PC location; legitimate native actual presence already existed, so legacy lookup now uses that verified location while typed captures also require agreement with saved PC location and entitled placement. No invented presence, fixture assertion waiver, new provider call, production write or permission expansion. Ambiguity does not block independent GM narration.
+
+## S4 — one response obligation and contextual pacing
+
+Starting `470660e505e81c9bb87a2bef3485d24914111334`. gameplay-intake derives needs_world_response/does_not_need_world_response/uncertain from authenticated exact-source immediate proposals and existing semantic response classification. Explicit OOC/mention-only behavior retained; response classification never supplies an outcome/consent/listener. Narrative coordinator no longer calls English responseObligation or literal scene-route lookup; tasks derive from semantic typed proposals/current response, with NPC conversation limited to real proposed NPC targets. GM consumes the revalidated request-local router handoff in its same combined request, response obligation and writer coordination.
+
+Pacing no longer interprets an English `to the other player` prefix as silence. Explicit OOC and GM pause cues remain, uncertainty is advisory only. prepare/commitNpcDirector accept request-local engagement, recheck pause/context, and preserve existing budgets/clock/native validators. Active index newly queued post-turn Director passes receive only a currently revalidated router token; preexisting cycles/other commands have unknown communication, not a fabricated classifier or global cross-turn cache. No new cycle or action is triggered by this hint. Private/direct conversations continue using existing combined typed interpretation; no router added. The old player-language responseObligation remains only in the offline evaluation harness, not active runtime delegation; historical tests/functions are not removed.
+
+S4 focused **3/3** exit0,1402.4308ms, plus existing IHY6 Director native ranking/quiet/no-write/no-provider/replay group PASS exit0. Existing delegation-quality **14/14** passed in the earlier impacted run; that combined run was16/17 because the new reflection fixture improperly omitted **mandatory typed interpretation**, not only writer delegation. Diagnostic confirmed the native typed-input guard correctly rejected it. Fixture repaired to retain a verbatim type=other proposal while omitting creative requests; guard not weakened. Both reflection examples (including no-keyword/no-question phrasing) now produce creative fiction with2 fake requests, no job/debt/PC action. No full registry or production/paid call.

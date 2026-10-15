@@ -18,9 +18,15 @@ export function routerFailureEngagement(value,{authenticated=false,directMention
 }
 
 /** Called after exact-source recovery, before native preview. A proposal is still not an outcome. */
-export function semanticResponseObligation(value,intents,{authenticated=false}={}){
+export function semanticResponseObligation(value,intents,{authenticated=false,engagement=null}={}){
   const source=String(value||'');
-  const needed=authenticated&&!explicitSilence(source)&&(intents||[]).some(row=>
+  const immediate=(intents||[]).filter(row=>
     row.framing==='immediate'&&typeof row.source_span==='string'&&row.source_span.length>0&&source.includes(row.source_span));
-  return {needed,reason:needed?'source_grounded_semantic_input':'no_immediate_semantic_input'};
+  if(!authenticated||explicitSilence(source))return {needed:false,state:'does_not_need_world_response',reason:'unauthenticated_or_explicit_silence'};
+  const noResponse=engagement?.engagement_kind==='no_response'&&engagement.respond===false;
+  const material=immediate.some(row=>!['speak','other','observe'].includes(row.type)||row.resolution!=='conversational');
+  const needed=material||!noResponse&&(immediate.length>0||engagement?.respond===true);
+  return {needed,state:needed?'needs_world_response':noResponse?'does_not_need_world_response':'uncertain',
+    reason:needed?'source_grounded_semantic_engagement':noResponse?'classified_non_world_communication':'no_current_semantic_engagement',
+    authority:'Response obligation only; never a listener, action, roll, consent or effect receipt.'};
 }

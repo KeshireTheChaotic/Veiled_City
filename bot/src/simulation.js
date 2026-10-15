@@ -557,9 +557,9 @@ export function inspectNpcAction(db,guildId,id){
 }
 
 /** Called only by fictional round/scene/downtime triggers, with a stable retry key. */
-function quietOpportunity(db,guild,query){
+function quietOpportunity(db,guild,query,engagement=null){
   if(db.getCityCalendar(guild).flags.narrative_relevance!==true) return false;
-  const pacing=pacingAdvice(db,guild,query);
+  const pacing=pacingAdvice(db,guild,query,engagement);
   return pacing.suggested_mode==="silence"||pacing.cues?.pause_background===true;
 }
 /** Ranking is read-only; actual native validators and resources are checked again at execution. */
@@ -583,20 +583,20 @@ export function rankDirectorActions(db,{guildId,candidates,proposed,query=""}){
     }catch{return [];}
   }).sort((a,b)=>b.score-a.score||a.index-b.index);
 }
-export async function prepareNpcDirector({db,gm,guildId,layer,cycleKey,query="",minutes=0}={}){
+export async function prepareNpcDirector({db,gm,guildId,layer,cycleKey,query="",minutes=0,engagement=null}={}){
   if(!["round","scene","downtime"].includes(layer)) throw new Error("NPC Director requires a fictional round, scene, or downtime trigger.");
-  if(quietOpportunity(db,guildId,query)) return {quiet:true,guildId};
+  if(quietOpportunity(db,guildId,query,engagement)) return {quiet:true,guildId};
   if(db.isDirectorPaused(guildId)) return {paused:true,guildId};
   const cycleId=`simulation:${guildId}:${cycleKey}`;
   const prior=db.getSimulationRecord(guildId,cycleId);
   if(prior?.status==="completed") return {replayed:true,guildId};
   const candidates=simulationCandidates(db,guildId,{layer,query});
   const proposed=candidates.length?await gm.planNpcActions({guildId,layer,query,candidates,cycleKey}):{actions:[]};
-  return {guildId,layer,cycleKey,minutes,cycleId,candidates,proposed,query};
+  return {guildId,layer,cycleKey,minutes,cycleId,candidates,proposed,query,engagement};
 }
 
 export function commitNpcDirector(db,prepared,{roll}={}){
-  if(prepared.quiet||quietOpportunity(db,prepared.guildId,prepared.query)) return {quiet:true,actions:[],clock:db.getSimulationClock(prepared.guildId),
+  if(prepared.quiet||quietOpportunity(db,prepared.guildId,prepared.query,prepared.engagement)) return {quiet:true,actions:[],clock:db.getSimulationClock(prepared.guildId),
     telemetry:{used:0,institution_count:0,reason:"Quiet/OOC is a valid no-move; no time, work or provider request."}};
   if(prepared.paused||prepared.replayed) return {...prepared,actions:[]};
   const {guildId,layer,cycleKey,minutes,cycleId,candidates,proposed}=prepared;

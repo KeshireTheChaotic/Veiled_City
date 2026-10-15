@@ -32,7 +32,7 @@ function npc(f,x,key='attendant',{hidden=false,location='terminal'}={}){
     session_id:f.session.id,location_key:location,visibility:'party',truth_status:'observed',details:{}},'native:fixture');
   recordScenePresence(f.db,f.guild,{entity_type:'npc',entity_key:key,location_key:location,zone:'interior',source_event:source.event_key,visibility:'party',accepted_by:'native:fixture'},'native:fixture');
 }
-async function play(f,text,{route=false,moving=false,samePlace=false,mixed=false,held=false,speech=null,observe=false,otherQuery=false,restart=false}={}){
+async function play(f,text,{route=false,moving=false,samePlace=false,mixed=false,held=false,speech=null,observe=false,otherQuery=false,restart=false,omitted=false}={}){
   const x=base(f,text),r=candidate(text);r.player_intents=[];
   if(moving){
     f.db.setSimulationEntity(f.guild,'location','twenty-four-spin',{name:'Twenty-Four Spin',place_type:'laundromat',parent_location_key:'terminal',visibility:'party',access:'public'});
@@ -49,6 +49,7 @@ async function play(f,text,{route=false,moving=false,samePlace=false,mixed=false
   if(otherQuery){r.player_intents[0].source_span='Describe the scene';
     r.player_intents.push(intent('what does Choso look like?',{type:'observe',operation:'appearance',target_name:'Choso',target_key:f.pcs[1].id}));}
   if(speech){npc(f,x);r.gm_world_parts[0].operation='conversation';}
+  if(omitted)r.gm_world_parts=[]; // Keep mandatory typed interpretation; omission concerns creative delegation only.
   const writer=answer(moving?'twenty-four-spin':'terminal',held?'Choso surrenders.':speech||creative,speech?'npc_speech':'scene',speech?{subject_key:'attendant',epistemic:'testimony'}:{});
   const classification={respond:true,reason:'Synthetic contextual classification',engagement_kind:mixed?'action':'scene_description',observation_only:!mixed,target_scope:'current_location'};
   const ai=new FakeResponses(route?[classification,...(mixed?[r,writer]:[writer])]:[r,writer]);
@@ -59,7 +60,7 @@ async function play(f,text,{route=false,moving=false,samePlace=false,mixed=false
   let result;
   try{result=await gm.runTurn({guildId:f.guild,actorUserId:x.pc.owner_user_id,actorName:x.pc.name,messageId:x.messageId,messageText:text,scope:x.scope.mode,engagement});}
   catch(error){const diagnostics=f.db.listCityRecords(f.guild,{includeGM:true,limit:30}).filter(row=>/authoring|draft|review|fates/.test(row.kind)).map(row=>({kind:row.kind,status:row.status,reason:row.data.reason,binding:row.data.binding}));
-    error.message+=`\nFixture native diagnostics: ${JSON.stringify(diagnostics)}`;throw error;}
+    error.stack+=`\nFixture native diagnostics: ${JSON.stringify(diagnostics)}\nFixture correction: ${String(ai.requests.at(-1)?.input).match(/STRUCTURED TURN CORRECTION:[\s\S]{0,1000}/)?.[0]||'none'}`;throw error;}
   const turn=f.db.beginTurnAttempt({guildId:f.guild,sessionId:f.session.id,messageId:x.messageId,actorPrincipal:x.pc.owner_user_id,audience:x.scope.mode});
   commitGmTurn({db:f.db,content,guild:{id:f.guild},session:f.session,result,scope:x.scope,speaker:x.pc.name,label:'Semantic regression',meta:{turnId:turn.turn_id,messageId:x.messageId}});
   const sent=[],start=performance.now(),send=async row=>{sent.push(row.payload);return {id:'fake-'+row.id};};
@@ -100,7 +101,7 @@ const cases=[
   ['S3','D14','two plausible listeners are not guessed',async()=>{for(const text of ['I ask her why the noise','I ask the attendant why the noise'])await nativeFixture(async f=>{const o=await dialogue(f,text,{ambiguous:true});assert.equal(o.rows.length,0);assert.equal(o.memories.length,0);});}],
   ['S3','D15','private/absent/proxy listener never receives party utterance',async()=>{for(const options of [{hidden:true},{remote:true},{proxy:true}])await nativeFixture(async f=>{const o=await dialogue(f,'I ask the woman behind the counter why the noise',options);assert.equal(o.rows.length,0);assert.equal(o.memories.length,0);});}],
   ['S3','D16','unaccepted or reported model speech label cannot mint heard speech',async()=>{for(const accepted of [false,true])await nativeFixture(async f=>{const o=await dialogue(f,"She says 'why the noise'",{accepted});assert.equal(o.rows.length,0);assert.equal(o.memories.length,0);});}],
-  ['S4','E17','contextual reflective engagement without verbs',async f=>{const text="Another empty shift. That's the third this week";assert(semanticResponseObligation(text,[],{authenticated:true,engagement:{engagement_kind:'conversation',respond:true}}).needed);const o=await play(f,text);assert(o.text.includes(creative));assert.equal(f.db.getCharacter(o.x.pc.id).data.resources.hp.current,0);}],
+  ['S4','E17','contextual reflective engagement without verbs',async()=>{for(const text of ["Another empty shift. That's the third this week",'Three evenings, and not a single customer'])await nativeFixture(async f=>{assert(semanticResponseObligation(text,[],{authenticated:true,engagement:{engagement_kind:'conversation',respond:true}}).needed);const o=await play(f,text,{omitted:true});assert(o.text.includes(creative));assert.equal(o.calls,2);assert.equal(f.db.getCharacter(o.x.pc.id).data.resources.hp.current,0);});}],
   ['S4','E18','OOC and player banter do not force world response',async()=>{assert(!semanticResponseObligation('OOC: My headset is broken',[],{authenticated:true,engagement:{engagement_kind:'conversation',respond:true}}).needed);assert(!semanticResponseObligation('Funny game last week',[],{authenticated:true,engagement:{engagement_kind:'no_response',respond:false}}).needed);}],
   ['S4','E19','unknown pacing does not silence scene by English phrase',async f=>{assert.notEqual(pacingAdvice(f.db,f.guild,'to the other player: is the attendant waiting?',{engagement_kind:'uncertain'}).suggested_mode,'silence');}],
   ['S5','P20','NPC alleges agreement without creating PC obligation',async f=>{const o=await play(f,'What does the attendant say?',{speech:'You agreed to the debt, or so the courier claimed.'});assert(o.text.includes('You agreed to the debt'));assert.equal(f.db.listCityRecords(f.guild,{kind:'commitment',includeGM:true}).length,0);}],

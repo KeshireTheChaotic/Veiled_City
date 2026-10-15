@@ -5,6 +5,7 @@ import { cityVisibility } from "./city-calendar.js";
 import { personalCharacter } from "./personal-continuity.js";
 import { stateRevision } from "./ai-intents.js";
 import { motivationKey } from "./simulation-motivation.js";
+import {explicitSilence,semanticResponseObligation} from './gameplay-intake.js';
 export function setPacingCues(db,guildId,input,actorId){
   if(input?.op==="setup") return manageNarrativeSetup(db,guildId,input,actorId);
   cityObject(input);requireCitySource(db,guildId,input.source_event);
@@ -64,14 +65,16 @@ export function suggestSetupPayoff(db,guild,input,actor){
   return db.saveCityRecord(guild,{kind:"setup_payoff",key,status:"pending",source_event:row.source_event,data:{setup:row.record_key,character:pc.id,choice_source:choice.event_key,
     suggestion:input.suggestion,proposed_by:actor,authority:"GM-private optional proposal, not a completed payoff, NPC knowledge, PC choice, culprit or canon."}});
 }
-export function pacingAdvice(db,guildId,message=""){
+export function pacingAdvice(db,guildId,message="",engagement=null){
   const session=db.getActiveSession(guildId),scene=session?db.getDirectorState(session.id):null;
   const saved=session?db.getCityRecord(guildId,"pacing",`scene:${session.id}`):null;
   const cues=saved?.data.scene===scene?.scene_label?saved?.data:null;
   const counts={};for(const row of db.recentPartyMessages(guildId,{limit:20})) counts[row.discord_user_id]=(counts[row.discord_user_id]||0)+1;
   const eligible=session?db.roster(session.id).filter(row=>["present","late","guest"].includes(row.presence)):[];
+  const obligation=semanticResponseObligation(message,[],{authenticated:!!String(message).trim(),engagement});
+  const silence=!!String(message).trim()&&explicitSilence(message)||engagement?.engagement_kind==='no_response'&&engagement.respond===false;
   return {scene:scene?.scene_label||"",cues,least_recently_heard:eligible.map(row=>({user:row.discord_user_id,count:counts[row.discord_user_id]||0}))
-    .sort((a,b)=>a.count-b.count),suggested_mode:/^(?:ooc\b|\(\(|to (?:the other|[a-z]+ player)\b)/i.test(message)?"silence":"answer_if_needed",
+    .sort((a,b)=>a.count-b.count),suggested_mode:silence?'silence':'answer_if_needed',communication:engagement?obligation.state:'uncertain',
     guidance:"Descriptive only. Preserve player dialogue; no mandatory threat/cliffhanger/combat or scene change. Spotlight is opportunity, never initiative."};
 }
 export function validatePacing(db,guildId,result){

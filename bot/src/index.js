@@ -13,7 +13,8 @@ import { captureContextSource } from "./narrative-context.js";
 import { conversationPrincipal } from "./conversation-principal.js";
 import { publishRollRequests } from "./roll-requests.js";
 import {publishContinuationNotices} from "./publishing.js";
-import { captureWorldInput } from "./autonomous-world.js";
+import { captureWorldInput,worldInputKey } from "./autonomous-world.js";
+import {currentSemanticEngagement} from './semantic-engagement.js';
 import {routeGameplayIntake,routerFailureEngagement} from "./gameplay-intake.js";
 import { interactionResponseExpired } from "./discord/interaction-lifecycle.js";
 import { publishEventResults, postGmLog, postStateError, deliverHandout, postPlayMessage, deliverQueuedTurn, sendPlayerPrivate } from "./publishing.js";
@@ -133,13 +134,14 @@ async function notifyBlockedActions({guild,session,actorUserId=null,actorCharact
   db.audit(guild.id,session?.id||null,"system","veilkeeper","blocked_actions",{context,count:rows.length,details:gmLines});
 }
 
-async function runPendingDirectorPass(guild,session){
+async function runPendingDirectorPass(guild,session,{engagement=null,interactionScope=null,interactionSource=null}={}){
   const pending=db.getPendingDirectorPass(session.id);
   if(!pending) return {ran:false};
   if(db.isDirectorPaused(guild.id)) return {ran:false,paused:true,pending:true};
   let result;
   try{
-    await runNpcDirector({db,gm,guildId:guild.id,layer:pending.layer,
+    const communication=interactionScope&&interactionSource?currentSemanticEngagement(db,guild.id,engagement,interactionScope,interactionSource):null;
+    await runNpcDirector({db,gm,guildId:guild.id,layer:pending.layer,engagement:communication,
       cycleKey:`${session.id}:${pending.layer}:${pending.queued_at||pending.round_number||pending.scene_label}`,
       query:pending.reason||pending.scene_label||""});
     await publishSimulationHooks({db,guild,sessionId:session.id});
@@ -499,7 +501,8 @@ async function processPartyTurn(message,directMention,attempt=null){
   const queuedToken=queued?`${queued.layer}:${queued.queued_at||""}:${queued.scene_label||""}:${queued.round_number||""}`:null;
   // Do not immediately charge/retry the exact same failed pending pass twice during one player message.
   // A newly queued/replaced pass still runs immediately; a failed pre-existing pass remains durable for a later turn.
-  if(queued&&queuedToken!==pendingTokenAtTurnStart) await runPendingDirectorPass(message.guild,session);
+  if(queued&&queuedToken!==pendingTokenAtTurnStart) await runPendingDirectorPass(message.guild,session,{engagement,
+    interactionScope:scope,interactionSource:controlled?.character_id?worldInputKey(message.id,controlled.character_id):null});
   if(outputErrors.length) await message.reply(`⚠️ This turn's campaign state **was committed**, but ${outputErrors.length} Discord delivery/logging step(s) failed. Do not retry the turn to repair delivery; ask a GM to resend or run the relevant sync. References: ${outputErrors.map(x=>x.ref).join(", ")}`).catch(()=>{});
   if(attempt)advanceTurnAttempt(db,attempt.turn_id,outputErrors.length?"needs_recovery":"delivered",outputErrors.length?{terminalCode:"PUBLICATION_FAILED",errorRef:outputErrors[0].ref}:{});
 }
