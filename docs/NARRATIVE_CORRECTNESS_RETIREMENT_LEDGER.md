@@ -13,8 +13,9 @@ Accepted typed intents are canonical adjudication inputs; human declarations own
 | R4 | Native nonbinding prop composition / unit-local choice hold qualified | `13cbd92f35a5a82b306d66e3bdeca6d2efd2b2af` |
 | R5 | Offers/allegations improved; N05/N06 guards explicitly RETAINED | `e4217767f02d4e89589cc8e3468599ebf7587eb7` |
 | R6 | Focused correctness/security checkpoint passed, with explicit quality deferrals | `17f388cd03fab4c9fff126d922452257dc40c5b3` |
-| D0 | Symbol/record/assertion crosswalk complete; no deletion | Recorded in D1 receipt |
-| D1–D3 | Not started | — |
+| D0 | Symbol/record/assertion crosswalk complete; no deletion | `e0ea11d05e33387f94a69d89d78c54cc5095c089` |
+| D1 | Current-model legacy producers retired; old native APIs retained | Recorded in D2 receipt |
+| D2–D3 | Not started | — |
 
 ## R0 — compact baseline and frozen formats
 
@@ -79,3 +80,9 @@ Diagnostic invocation corrected: Node test workers do not forward arbitrary scri
 Starting HEAD `17f388cd03fab4c9fff126d922452257dc40c5b3`. `NARRATIVE_CORRECTNESS_RETIREMENT_CROSSWALK.md` inventories individual producer/native/reader exports and consumers, record families, original assertions, replacement cases, KEEP/RETIRE/DEFER decisions and N01–15 dispositions. `rg` current source/test analysis confirms four old freeform routes absent from normal intake but still exercised by mandatory/optional compatibility tests; this alone is NOT deletion parity. Native roll review, consent inbox/replies, entry policy/review and discovery delivery proof have live command/AI callers and must remain. v1–7 generators still have supported flag-off/assembly uses. Only current model schema/hint retirement has a sufficiently bounded replacement; no whole files or old readers deleted.
 
 Focused NC25 + unchanged `legacy-authority-migration-test`: **2/2 pass**, zero skipped/todo, exit0,407.1379ms (`%TEMP%\vc-narrative-d0.log`). No executable change in D0; no full registry rerun. Unknown external consumers explicitly KEEP. Rollback is documentation-only.
+
+## D1 — current producer retirement, not historical parser retirement
+
+Starting HEAD `e0ea11d05e33387f94a69d89d78c54cc5095c089`. Reproduced NC24 **0/1 pass**, exit1: provider schema still invited the old five-field candidate. Added a separate current v2-only candidate emission schema; the exported old schema and `persistAuthoredCandidates` legacy/manual recovery remain. Current combined typed-model output cannot stage legacy five-field candidates. `structuredResponse` narrows v8-enabled GM/Director world proposals to native4 plus creative8 and removes the old v1–7 catalog wrapper for that mode. Supported flag-off requests retain their original native/legacy provider contract. Native4, closed v8 authoring response and historical hashes are unchanged. Current GM context now provides exact owner input without `declarationContext`'s coarse lexical kind; historical function/readers/tests remain.
+
+Focused NC24/26/27 + original S2 and natural-language-scope: **8/8 pass**, zero skipped/todo, exit0,1849.373ms (`%TEMP%\vc-narrative-d1-final.log`). NC24 verifies actual provider schema4/8, absent old catalog, unclassified exact source and flag-off legacy proposal availability. Its third fake call explicitly tests a separate flag-off request, not an extra gameplay round-trip. Native historical candidate/entry/source/privacy assertions remain unchanged. Optional stub DB guard is fail-closed for absent flags; final integration covers that tiny compatibility edit. No extra calls, permissions, effects or schema migration. Rollback code-only; existing persisted candidates remain readable throughout.

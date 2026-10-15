@@ -6,7 +6,7 @@ import { AUTHORITY_POLICY } from "./authority-policy.js";
 import { conversationPrincipal } from "./conversation-principal.js";
 import {continuationInbox} from "./action-continuation.js";
 import {actionReviewInbox} from "./gm-action-review.js";
-import { authoredCandidatesSchema, AUTHORED_CANDIDATES_PROMPT } from "./authored-candidates.js";
+import { authoredCandidatesSchema,currentAuthoredCandidatesSchema, AUTHORED_CANDIDATES_PROMPT } from "./authored-candidates.js";
 import { playerIntentSchema, PLAYER_INTENT_PROMPT, recoverPlayerIntents, autoCompleteOrdinaryMovements, validateIntentResolutions } from "./typed-intents.js";
 import { tierWorldAdditions } from "./entity-memory.js";
 import { contextMemorySchema, CONTEXT_MEMORY_PROMPT } from "./context-memory.js";
@@ -27,7 +27,6 @@ import { portrayalPacket } from "./portrayal.js";
 import { intentArraySchema, INTENT_PROMPT } from "./ai-intent-contracts.js";
 import { intentContext } from "./ai-intents.js";
 import { decisionAdvisorySchema, requiredDecisionAdvisorySchema, decisionPromptContext, decisionContext, validateDecisionAdvisory } from "./decision-advisory.js";
-import { declarationContext } from "./player-language.js";
 import {explicitSilence,semanticResponseObligation} from "./gameplay-intake.js";
 import { worldAdditionsSchema, sceneActionsSchema, worldConflictsSchema, AUTONOMOUS_WORLD_PROMPT, autonomousWorldContext, worldAuthority } from "./autonomous-world.js";
 import { entryReferenceContext } from "./scene-entry.js";
@@ -54,6 +53,7 @@ import {assemblyNarrativeCandidate} from './pvp-output.js';
 import {sceneObservationOperation} from './scene-observation-route.js';
 import {engagementKinds,bindSemanticEngagement,currentSemanticEngagement,semanticSceneOperation} from './semantic-engagement.js';
 import {authorNarrativeRequests,NARRATIVE_AUTHORITY_INSTRUCTIONS,narrativeResponseSchema} from './narrative-authority.js';
+import {nativeOutcomeSchema,narrativeRequestSchema} from './gm-fiction-schema.js';
 import {coordinateNarrative,narrativeModel} from './narrative-delegation.js';
 import {bindDirectorNarrativeSource} from './narrative-director-source.js';
 import {buildNarrativeContext} from './narrative-authority-context.js';
@@ -416,8 +416,19 @@ export class GMService{
       // Combined turn/context instructions already carry this complete native policy. Other callers still receive it.
       const instructions=req.instructions||"";
       const request={...req,instructions:instructions.includes(AUTHORITY_POLICY)?instructions:`${AUTHORITY_POLICY}\n${instructions}`};
+      const originalSchema=req.text?.format?.schema;
+      const creative=!!guildId&&this.db?.getCityCalendar?.(guildId)?.flags?.narrative_authority===true;
+      if(originalSchema?.properties){
+        const properties={...originalSchema.properties};
+        if(properties.authored_candidates)properties.authored_candidates=currentAuthoredCandidatesSchema;
+        if(creative&&properties.gm_world_parts)properties.gm_world_parts={...gmWorldPartsSchema,
+          items:{anyOf:[nativeOutcomeSchema,narrativeRequestSchema]}};
+        request.text={...req.text,format:{...req.text.format,schema:{...originalSchema,properties}}};
+      }
       if(req.text?.format?.schema?.properties?.ai_intents) request.input=`${req.input}\n\n${INTENT_PROMPT}`;
-      if(req.text?.format?.schema?.properties?.gm_world_parts)request.input+=`\n\n${GM_WORLD_NARRATIVE_PROMPT}`;
+      if(req.text?.format?.schema?.properties?.gm_world_parts)request.input+=`\n\n${creative
+        ?'Current creative mode: gm_world_parts proposes only version=8 narrative_request or version=4 native_outcome. One source/audience-bound writer handles all requested fiction; native receipt projections remain read-only. Do not emit v1–7 prose generators or catalogs. Narrative words never grant PC control, secrets, consent or effects.'
+        :GM_WORLD_NARRATIVE_PROMPT}`;
       if(attempt===2){
         const base=Number(req.max_output_tokens||0);
         const retryCap=Number(this.config.structuredRetryMaxTokens||6000);
@@ -572,7 +583,8 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
       pending_native_action_reviews:actionReviewInbox(this.db,guildId,actorUserId).filter(t=>t.status==="needs_review").slice(0,12)
         .map(({attempt,...status})=>status), // Owner inbox keeps full source; model context already has scoped messages/references.
       decision_advisory:decisionContext(this.db,guildId,messageText),
-      player_declaration:declarationContext(this.db,guildId,actorUserId,actorKnowledgeId,messageText),
+      player_declaration:actorCharacter?.owner_user_id===actorUserId?{character_id:actorKnowledgeId,exact_text:String(messageText).slice(0,4000),
+        authority:'Exact current owner input for semantic interpretation, not a lexical classification, consent or completed outcome.'}:null,
       ai_management:intentContext(this.db,guildId),
       context_plan:contextPlan,
       campaign,session,assembly,party_state:partyState,current_encounter:currentEncounter,current_combatants:currentCombatants,canon,rulings,
@@ -808,6 +820,8 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
       }
       // An optional expansion must not veto the always-on semantic GM pipeline.
       if(this.db.getCityCalendar(guildId).flags.natural_language!==true) result.authored_candidates=null;
+      else if(providedIntents&&result.authored_candidates?.some(c=>c?.version!==2))
+        throw Object.assign(new Error('Current model candidates require version 2 exact offsets and framing; legacy recovery is a separate native interface.'),{code:'PLAYER_INTENT'});
       // Named and consequential context persists; incidental description stays in transcript only.
       tierWorldAdditions(result,authenticatedSource,{requireEstablishedOutput:this.db.getCityCalendar(guildId).flags.narrative_authority===true});
       autoCompleteOrdinaryMovements(this.db,guildId,result,typedScope);
