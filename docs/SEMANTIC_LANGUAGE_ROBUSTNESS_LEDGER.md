@@ -22,8 +22,8 @@ S0 intentionally commits reproductions before repairs; they are not a qualified 
 | S1 | Implemented; focused qualification below | `123dede2e4180bf924953d066e66fafe96744375` |
 | S2 | Implemented; focused qualification below | `c575a071b082cb3400c00908703a1e44f6fbb50f` |
 | S3 | Implemented; focused qualification below | `470660e505e81c9bb87a2bef3485d24914111334` |
-| S4 | Implemented; focused qualification below | See Git commit named `refactor(semantic): share contextual engagement and pacing` |
-| S5 | Pending | — |
+| S4 | Implemented; focused qualification below | `d7f0097a90c52a89398b2fc1cd5f941516684dc8` |
+| S5 | Implemented; focused qualification below | See Git commit named `fix(semantic): distinguish certified NPC speech from PC choices` |
 | S6 | Pending | — |
 
 ## S1 — scoped answer arbitration and semantic routing
@@ -59,3 +59,13 @@ Starting `470660e505e81c9bb87a2bef3485d24914111334`. gameplay-intake derives nee
 Pacing no longer interprets an English `to the other player` prefix as silence. Explicit OOC and GM pause cues remain, uncertainty is advisory only. prepare/commitNpcDirector accept request-local engagement, recheck pause/context, and preserve existing budgets/clock/native validators. Active index newly queued post-turn Director passes receive only a currently revalidated router token; preexisting cycles/other commands have unknown communication, not a fabricated classifier or global cross-turn cache. No new cycle or action is triggered by this hint. Private/direct conversations continue using existing combined typed interpretation; no router added. The old player-language responseObligation remains only in the offline evaluation harness, not active runtime delegation; historical tests/functions are not removed.
 
 S4 focused **3/3** exit0,1402.4308ms, plus existing IHY6 Director native ranking/quiet/no-write/no-provider/replay group PASS exit0. Existing delegation-quality **14/14** passed in the earlier impacted run; that combined run was16/17 because the new reflection fixture improperly omitted **mandatory typed interpretation**, not only writer delegation. Diagnostic confirmed the native typed-input guard correctly rejected it. Fixture repaired to retain a verbatim type=other proposal while omitting creative requests; guard not weakened. Both reflection examples (including no-keyword/no-question phrasing) now produce creative fiction with2 fake requests, no job/debt/PC action. No full registry or production/paid call.
+
+## S5 — role-proven NPC speech, retained material safeguards
+
+Starting `d7f0097a90c52a89398b2fc1cd5f941516684dc8`. P20 red: retrospective NPC allegation rejected at the native unit's forced-choice tripwire. P21 red: the exact certified server line was rejected again by the global predefined-choice scan, leading to bounded validation recovery. Both remain source-bound before/after; no provider safety judge is added.
+
+Certified gm_narrative_unit NPC utterances already have an independently validated native speaker/source/audience/placement/non-proxy proof and are projected/stored as **attributed**, never objective truth or a PC commitment receipt. Retrospective verbal allegations are now allowed in that role; present forced PC decisions, protected PC-name assertions, material/damage/custody/secret checks remain held. The global choice scan inspects actual verified output parts outside certified NPC utterances, not a raw paragraph with a model dialogue/safe label. Actual output fingerprint and all part proofs are revalidated before this role separation. Thus a server's menu offer is speech, not a selected PC option. No commitment, resource, consent or history effect follows it.
+
+Deliberately retained: source-backed literal contextual-entry acknowledgement guard (a declaration does not prove arbitrary prose is only an acknowledgement); uncertain-claim markers/materialParaphrases; PC-name defenses except the existing native-known leading vocative; exact consent/native roll identities; unprepared/raw mixed-paragraph rejection; non-NPC forced-choice tripwire. No universally reliable semantic meaning proof exists for replacing those with model labels, so no broad waiver, sentence catalog or new phrase exception was added. Named PC reactions and current `You agree` remain held even inside NPC units. Ambiguously material narration remains reviewable. Residual generated-English semantic risk remains disclosed; attribution does not make an NPC allegation true.
+
+Focused S5 **3/3**, zero skipped, exit0,1700.13ms. Impacted `--test-name-pattern='S5 |PVP30|SEM06'` across the compact table + original PvP authorship + original ordinary-scene P0 suites: **63/63**, zero skipped, exit0,31083.872ms. Original PVP30/PVP30q/ag/Choso apology and SEM06 assertions unchanged. Exact fake outbox text includes permitted allegations/menu, excludes forced agreement/reaction; resources/commitments unchanged. No full registry, billable/live call or production operation.

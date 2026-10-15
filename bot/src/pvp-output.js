@@ -610,6 +610,20 @@ export function substantivePreparedOutput(db,guild,result,scope){
   assertPvpOutput(db,guild,result,scope,{publication:true});
   const proof=prepared.get(result);return proof.parts.length>0&&proof.parts.every(ref=>!['neutral','scene_fiction_review'].includes(validateOutputPart(db,guild,ref).data.kind));
 }
+/** Choice tripwire input only: independently certified NPC utterances are attributed speech, not selected PC choices.
+ * Never accepts a model label/raw paragraph or waives material, privacy, source or owner validation. */
+export function unattributedChoiceText(db,guild,result,scope){
+  const proof=prepared.get(result);if(!proof)return null;
+  assertPvpOutput(db,guild,result,scope,{publication:true});
+  return [...proof.parts,...Object.values(proof.privateParts||{}).flat()].map(ref=>{
+    const part=validateOutputPart(db,guild,ref);
+    if(part.data.kind==='gm_narrative_unit'){
+      const unit=db.getCityRecord(guild,'narrative_unit',part.data.ref);
+      if(unit?.data.unit.kind==='npc_speech'&&unit.data.epistemic==='attributed')return '';
+    }
+    return part.data.text;
+  }).join('\n');
+}
 export function deliveredPartyOutput(db,guild,turnId){
   return db.listTurnPublications(guild,turnId).filter(r=>r.status==="delivered"&&r.visibility==="party")
     .map(r=>revalidateOutputPublication(db,guild,r).payload).join("\n");

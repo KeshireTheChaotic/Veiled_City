@@ -2,7 +2,7 @@
 import { sceneAccess, scenePresence, npcEvidenceActive } from "./scene-continuity.js";
 import { objectiveEvidence, activeEvidence, evidenceType } from "./epistemic.js";
 import { assertPvpOutput } from "./pvp-authorship.js";
-import { candidateNarrative,canQuarantineDisclosure } from "./pvp-output.js";
+import { candidateNarrative,canQuarantineDisclosure,unattributedChoiceText } from "./pvp-output.js";
 import {disclosureFailureReason} from './disclosure-authority.js';
 const claimProperties={
   actor:{type:"string"},entity_type:{type:"string",enum:["character","npc","combatant","world"]},entity:{type:"string"},
@@ -201,8 +201,9 @@ function validateClaims(db,guildId,result,scope,{staged=false,eventResults=[]},c
   const names=flags.semantic_integrity===true||claims.some(claim=>claim?.certainty!=="committed")
     ?[...db.listGuildCharacters(guildId).map(row=>row.name),...db.listNpcProfiles(guildId,{limit:100}).map(row=>row.display_name)]:[];
   if(flags.natural_language===true||flags.semantic_integrity===true){
-    if(/\b(?:choose|pick|select) (?:one of|from the following|an option)|\b(?:reply|answer|respond) (?:with )?(?:yes or no|accept or decline)\b/i.test(narration)
-      ||/(?:^|\n)\s*A[).:].*\n\s*B[).:]/i.test(narration)) deny("predefined_narrative_choices");
+    const choiceText=checkOutput?(unattributedChoiceText(db,guildId,result,scope)??narration):narration;
+    if(/\b(?:choose|pick|select) (?:one of|from the following|an option)|\b(?:reply|answer|respond) (?:with )?(?:yes or no|accept or decline)\b/i.test(choiceText)
+      ||/(?:^|\n)\s*A[).:].*\n\s*B[).:]/i.test(choiceText)) deny("predefined_narrative_choices");
   }
   for(const raw of claims){
     if(!validClaimShape(raw))deny("claim_shape",raw);
