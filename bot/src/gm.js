@@ -833,7 +833,8 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
       const fictionScope={mode:scope,actorUserId,actorCharacterId:ctx.actor_assignment?.character_id},
         fictionSource=messageId&&fictionScope.actorCharacterId?worldInputKey(messageId,fictionScope.actorCharacterId):null;
       const movement=(candidate.player_intents||[]).some(i=>i.type==='move'&&i.resolution==='auto'&&i.framing==='immediate')
-        ||(candidate.scene_actions||[]).some(a=>a.kind==='move');
+        ||(candidate.scene_actions||[]).some(a=>a.kind==='move')
+        ||(candidate.player_intents||[]).some(i=>i.operation==='initial_position'&&i.framing==='immediate');
       const creative=this.db.getCityCalendar(guildId).flags.narrative_authority===true;
       const requestedSpeakers=(candidate.gm_world_parts||[]).filter(p=>p.version===3);
       if(creative&&requestedSpeakers.length){
@@ -988,6 +989,8 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
   }
   async authorAssemblyScene(guildId,sessionId,scope){
     const {candidate,source}=assemblyNarrativeCandidate(this.db,guildId,sessionId,scope),signal=AbortSignal.timeout(Number(this.config.gmTurnDeadlineMs||120000));
+    if(this.db.getCityCalendar(guildId).flags.narrative_authority)return authorNarrativeRequests({db:this.db,guild:guildId,result:candidate,scope,
+      sourceRef:source.event_key,budget:{used:false},generate:packet=>this.generateNarrative(guildId,packet,signal)});
     await authorSceneFictionRequests({db:this.db,guild:guildId,result:candidate,scope,sourceRef:source.event_key,budget:{used:false},
       generate:packet=>this.generateSceneFiction(guildId,packet,signal)});
   }

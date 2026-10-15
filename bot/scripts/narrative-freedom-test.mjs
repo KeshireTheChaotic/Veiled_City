@@ -136,3 +136,36 @@ test('N12 acknowledged fiction survives recall and source revocation holds reuse
   const {retrieveMemoryRevisions}=await import('../src/memory-lifecycle.js');
   assert(!retrieveMemoryRevisions(f.db,f.guild,x.scope).some(r=>r.summary.includes('slate counter')),'generic memory sink must follow disclosure ancestry too');
 }));
+
+test('N07 assembly camera opens an unplaced split party without fictional co-location and never repeats delivery',()=>nativeFixture(async f=>{
+  setup(f,{placed:false});for(const pc of f.pcs)f.db.updateCharacterData(pc.id,d=>{delete d.location;});
+  f.db.setAssemblyPlan(f.session.id,{public_opening:'RAW MUST STAY PRIVATE',character_entries:[]});
+  const {deliverVerifiedAssembly}=await import('../src/assembly-publications.js'),ai=new FakeResponses(Array(5).fill(setting())),
+    gm=new GMService({db:f.db,content:new ContentIndex(path.resolve('../content')),ai,config:{gmModel:'offline'}});
+  const sent=[];const deliver=async({turnId})=>{const rows=await deliverTurnOutbox(f.db,f.guild,turnId,async row=>{
+    sent.push(row.payload);return {messageId:`asm-${sent.length}`,channelId:'offline'};});return {pending:rows.filter(r=>r.status!=='delivered')};};
+  await deliverVerifiedAssembly({db:f.db,guild:{id:f.guild},session:f.session,gm,deliver});
+  assert(sent.some(t=>t.includes('slate counter')));assert(!sent.some(t=>t.includes('RAW MUST')));
+  assert(f.pcs.every(pc=>!f.db.getCharacter(pc.id).data.location));const count=sent.length;
+  await deliverVerifiedAssembly({db:f.db,guild:{id:f.guild},session:f.session,gm,deliver});assert.equal(sent.length,count);
+}));
+
+test('N08 exact owner initial-position declaration uses native setup once, never travel or a locked-location shortcut',()=>nativeFixture(async f=>{
+  const x=setup(f,{placed:false,text:'My initial position is the Public Terminal.'}),r=candidate(x.text);
+  r.player_intents[0]={...r.player_intents[0],operation:'initial_position',target_key:'terminal',target_name:'Public Terminal'};
+  const out=await run(f,x,setting(),r);assert.equal(f.db.getCharacter(x.pc.id).data.location,'terminal');
+  const arrivals=f.db.listWorldEvents(f.guild,{includeGM:true,limit:500}).filter(e=>e.kind==='arrival');
+  assert.equal(arrivals.length,1);assert.equal(arrivals[0].details.initial_setup,true);assert.equal(arrivals[0].details.not_travel,true);
+  assert(out.rows.some(row=>row.payload.includes('slate counter')));assert.equal(f.db.getCharacter(x.pc.id).data.resources.hp.current,0);
+  const {applyAuthoredInitialPosition}=await import('../src/scene-setup.js');
+  const accepted=f.db.listCityRecords(f.guild,{kind:'typed_intent',includeGM:true}).find(i=>i.data.operation==='initial_position');
+  applyAuthoredInitialPosition(f.db,f.guild,accepted,x.scope);assert.equal(f.db.listWorldEvents(f.guild,{includeGM:true,limit:500}).filter(e=>e.kind==='arrival').length,1);
+}));
+
+test('N08 initial setup cannot bypass protected access or previous position history',()=>nativeFixture(async f=>{
+  const x=setup(f,{placed:false,text:'My initial position is the Public Terminal.'});
+  f.db.setSimulationEntity(f.guild,'location','terminal',{name:'Public Terminal',visibility:'party',locked:true});
+  const {prepareSceneSetup}=await import('../src/scene-setup.js');assert.equal(prepareSceneSetup(f.db,f.guild,x.pc.owner_user_id,x.pc.id),null);
+  f.db.setSimulationEntity(f.guild,'location','terminal',{name:'Public Terminal',visibility:'party'});
+  setup(f,{placed:true});f.db.updateCharacterData(x.pc.id,d=>{delete d.location;});assert.equal(prepareSceneSetup(f.db,f.guild,x.pc.owner_user_id,x.pc.id),null);
+}));

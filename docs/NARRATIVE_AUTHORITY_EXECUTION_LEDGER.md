@@ -19,12 +19,18 @@ Actual command: `node --import ./scripts/offline-guard.mjs --test scripts/critic
 | --- | --- | --- |
 | 1 — creative authority first | Complete (focused gate) | Starting SHA `0b300e1ac5e077a14f7fb6fff155c57881c27fa1`; completion SHA recorded by the next ledger commit. |
 | 2 — salvage and publication-bound memory | Complete (focused + affected gate) | Starting `960e0588b49fb0b0d69ae45ffd0c95bf7f03509f`; completion SHA recorded next phase. |
-| 3 — camera and owner initial placement | Not started | |
+| 3 — camera and owner initial placement | Complete (focused gate) | Starting `e91c010`; completion SHA recorded next phase. |
 | 4 — NPC/encounter narration | Not started | |
 | 5 — salience/archive/completeness | Not started | |
 | 6 — qualification/deploy | Not started | |
 
 No production modification/restart is permitted until a consistent online backup, integrity/foreign-key checks and disposable restore drill pass. No paid model/Discord synthetic tests. Production deployment is authorized only after phase qualification; activation requires a legitimate administrative path, not forged Discord identity or ad-hoc flag SQL. New prose has residual semantic risk; provenance is not universal semantic proof.
+
+## Phase 3 — actual implementation and evidence
+
+Public assembly can now author a camera opening without a placed PC, while each private slot retains its own source/audience. Shared outbox acknowledgments prevent reentrant assembly from reintroducing an opening. An accepted immediate owner `initial_position` typed declaration (other/conversational, not travel) uses the existing native setup snapshot/confirmation path, with exact immutable authored source, current control revision, target and public/private disclosure. Prior placement history, locks/costs/hazards/active encounter remain disqualifiers. Deterministic declaration-derived offer IDs make rollback preview and real placement agree; no fake travel or resolving an earlier attempt. Existing reconciliation continues to reuse native arrival history; no unsourced location is promoted to presence. The GM destination writer runs after native setup/movement preview, preserving both native position and fiction. No new tables.
+
+Red-first N07/N08: **1/3 pass, 2 fail**, 1,235.9053 ms; setup protection already passed. Native setup initially passed but destination fiction failed due to a random preview/commit offer key; corrected deterministic native identity rather than relaxing the output proof. Final focused + required affected suites: `node --import ./scripts/offline-guard.mjs --test scripts/narrative-freedom-test.mjs scripts/scene-entry-test.mjs scripts/assembly-authority-test.mjs`: **28/28**, 5,905.2494 ms, zero skips. Added explicit current-scene/principal replay guard, syntactically checked and included in final integration gate. No provider/Discord traffic or production changes. Phase 2 SHA: `e91c010` (full hash in Git ledger). New setup is opt-in; unsupported setup remains native review, never a teleport.
 
 ## Phase 2 — actual implementation and evidence
 

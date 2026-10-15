@@ -22,7 +22,8 @@ export async function deliverVerifiedAssembly({db,guild,session,gm=null,deliver=
     if(legacy.uncertain.length||legacy.partial||legacy.complete)continue;
     let job=db.getCityRecord(guild.id,'assembly_delivery',slot.key);
     try{
-      if(!job?.data.turn_id&&db.getCityCalendar(guild.id).flags.playable_narration===true&&gm&&slot.scope.actorCharacterId)
+      if(!job?.data.turn_id&&db.getCityCalendar(guild.id).flags.playable_narration===true&&gm
+        &&(slot.scope.actorCharacterId||db.getCityCalendar(guild.id).flags.narrative_camera&&db.getCityCalendar(guild.id).flags.narrative_authority))
         await gm.authorAssemblyScene(guild.id,session.id,slot.scope);
       if(!job?.data.turn_id)job=db.transaction(()=>{
         const result=prepareAssemblyOutput(db,guild.id,session.id,slot.scope),turn=db.beginTurnAttempt({guildId:guild.id,sessionId:session.id,

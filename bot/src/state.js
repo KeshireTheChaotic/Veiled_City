@@ -1,5 +1,6 @@
 /** Authoritative AI/state mutation layer. Applies validated structured outputs while enforcing transaction and visibility invariants. */
 import { randomUUID, createHash } from "node:crypto";
+import {applyAuthoredInitialPosition} from './scene-setup.js';
 import { indexWorldEvent } from "./city-calendar.js";
 import { normalizeNpcKey } from "./npc-cognition.js";
 import { applySimulationUpdates } from "./simulation.js";
@@ -451,6 +452,8 @@ export function applyAuthoritativeMutation(db,{guildId,sessionId=null,events=[],
     persistAuthoredCandidates(db,guildId,narrative?.authored_candidates,scope,provenance);
     const intentDiagnostics=persistPlayerIntentDiagnostics(db,guildId,narrative?.player_intent_diagnostics||[],scope,provenance);
     const typedIntents=persistPlayerIntents(db,guildId,narrative?.player_intents||[],scope,provenance);
+    const initialPositions=typedIntents.filter(row=>row.data.operation==='initial_position')
+      .map(row=>applyAuthoredInitialPosition(db,guildId,row,scope));
     const personalCandidates=[];
     for(const intent of typedIntents.filter(row=>row.data.operation==='personal_commitment_candidate')){
       try{
@@ -504,6 +507,7 @@ export function applyAuthoritativeMutation(db,{guildId,sessionId=null,events=[],
       scene_actions:(narrative?.scene_actions||[]).filter(action=>!narrative.player_intents.some(row=>row.framing==="immediate"&&row.source_span===action.source_span)
         ||executableSpans.has(action.source_span))}:narrative;
     const world=applyAutonomousWorld(db,guildId,plannedNarrative,scope,provenance,content);
+    world.push(...initialPositions.map(row=>({status:'arrived',source_event:row.data.arrival,initial_setup:true})));
     recordCharacterPerceptions(db,guildId,{world,intents:typedIntents,scope,sourceRef:outputSource});
     if(narrative)prepareAuthorizedTurnOutput(db,guildId,narrative,scope,{
       sourceRef:outputSource&&db.getWorldEvent(guildId,outputSource)?outputSource:null,world,origin:source});

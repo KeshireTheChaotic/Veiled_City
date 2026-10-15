@@ -27,12 +27,12 @@ function snapshot(db,guild,user,character){
   }).sort((a,b)=>a.key.localeCompare(b.key)).slice(0,12);
   return {session:session.id,scene:scene.key,user,character,principal:principal.revision,locations};
 }
-export function prepareSceneSetup(db,guild,user,character){
+export function prepareSceneSetup(db,guild,user,character,{declarationKey=null}={}){
   let state;try{state=snapshot(db,guild,user,character);}catch(error){if(error.code==='SCENE_SETUP')return null;throw error;}
   if(!state.locations.length)return null;
   const options=state.locations.flatMap(location=>['party','character'].map(visibility=>({location:location.key,visibility})))
     .map((option,index)=>({...option,value:String(index)}));
-  const key=randomUUID(),source=indexWorldEvent(db,guild,{key:`scene-setup-offer:${key}`,kind:'native_scene_setup_offer',
+  const key=declarationKey?`declaration-${hash(declarationKey)}`:randomUUID(),source=indexWorldEvent(db,guild,{key:`scene-setup-offer:${key}`,kind:'native_scene_setup_offer',
     title:'Owner-private initial scene setup; not placement or travel',source_id:'native:scene-setup',visibility:'character',subject_key:character,
     session_id:state.session,scene:state.scene,details:{version:1,state,options}},'native:scene-setup');
   db.saveCityRecord(guild,{kind:'scene_setup',key,status:'offered',visibility:'character',subject_key:character,source_event:source.event_key,
@@ -41,9 +41,16 @@ export function prepareSceneSetup(db,guild,user,character){
     placeholder:'Confirm initial location and disclosure, or leave unplaced',options:[...options.map(o=>({label:`${o.visibility==='party'?'Share':'Private'}: ${o.location}`.slice(0,100),value:o.value})),
       {label:'Leave my initial position unconfirmed',value:'decline'}]}]}]};
 }
-export function confirmSceneSetup(db,guild,user,key,value,{interactionId=null}={}){
+export function confirmSceneSetup(db,guild,user,key,value,{interactionId=null,authoredSource=null}={}){
   const row=db.getCityRecord(guild,'scene_setup',key);if(!row||row.data.state.user!==user)fail();
   const {pc,principal}=owner(db,guild,user,row.data.state.character);
+  if(authoredSource){
+    const declaration=db.getWorldEvent(guild,authoredSource);
+    if(declaration?.status!=='active'||declaration.kind!=='ai_gm_input'||declaration.details.author!==user
+      ||declaration.details.character_id!==pc.id||declaration.details.revision!==principal.revision
+      ||declaration.session_id!==row.data.state.session||declaration.scene!==row.data.state.scene
+      ||!db.ownerAuthoredSource(guild,authoredSource,user))fail();
+  }
   if(principal.revision!==row.data.state.principal)fail();
   if(['confirmed','declined'].includes(row.status)){if(row.data.choice!==value)fail();return row;}
   const source=db.getWorldEvent(guild,row.source_event);
@@ -65,9 +72,33 @@ export function confirmSceneSetup(db,guild,user,key,value,{interactionId=null}={
       source_id:`player:${user}`,visibility:option.visibility,subject_key:option.visibility==='character'?pc.id:null,
       session_id:row.data.state.session,scene:row.data.state.scene,location_key:option.location,
       details:{entity_type:'character',entity_key:pc.id,owner_user_id:user,principal_revision:principal.revision,confirmation:confirmation.event_key,
-        initial_setup:true,not_travel:true}},user);
+        initial_setup:true,not_travel:true,...(authoredSource?{input_source:authoredSource}:{})}},user);
     recordScenePresence(db,guild,{entity_type:'character',entity_key:pc.id,location_key:option.location,source_event:arrival.event_key,
       accepted_by:user,visibility:option.visibility,subject_key:option.visibility==='character'?pc.id:null},'native:scene-setup');
     return db.saveCityRecord(guild,{...row,key,status:'confirmed',data:{...row.data,choice:value,confirmation:confirmation.event_key,arrival:arrival.event_key,interaction:interactionId}});
   });
+}
+
+/** Accepted exact owner setup is a canonical setup input, never travel or a model receipt. */
+export function applyAuthoredInitialPosition(db,guild,intent,scope){
+  if(!db.getCityCalendar(guild).flags.narrative_camera||!db.getCityCalendar(guild).flags.narrative_authority)fail();
+  const row=intent&&db.getCityRecord(guild,'typed_intent',intent.record_key),source=row&&db.getWorldEvent(guild,row.source_event);
+  if(!row||row.data.operation!=='initial_position'||row.data.type!=='other'||row.data.framing!=='immediate'
+    ||row.data.actor!==scope.actorCharacterId||row.data.owner_user_id!==scope.actorUserId||source?.status!=='active'
+    ||!db.ownerAuthoredSource(guild,source.event_key,scope.actorUserId))fail();
+  const principal=conversationPrincipal(db,guild,scope.actorUserId,scope.actorCharacterId),prior=db.getCityRecord(guild,'scene_setup_declaration',row.record_key);
+  const scene=currentScene(db,guild);
+  if(row.data.scene!==scene.key||row.data.session_id!==scene.session_id||row.data.actor_principal_revision!==principal.revision)fail();
+  if(prior){if(prior.data.owner!==scope.actorUserId||prior.data.principal!==principal.revision)fail();return prior;}
+  if(source.details.raw_text?.slice(row.data.start,row.data.end)!==row.data.source_span)fail();
+  const input=db.listWorldEvents(guild,{includeGM:true,limit:500}).find(e=>e.kind==='ai_gm_input'&&e.status==='active'
+    &&e.details.message_id===source.details.discord_message_id&&e.details.character_id===scope.actorCharacterId);
+  if(!input||input.details.text!==source.details.raw_text||input.details.private_scene!==(scope.mode==='private'))fail();
+  const offer=prepareSceneSetup(db,guild,scope.actorUserId,scope.actorCharacterId,{declarationKey:row.record_key}),choice=offer?.options.find(o=>o.location===row.data.target_key
+    &&o.visibility===(scope.mode==='private'?'character':'party'));
+  if(!choice)fail();
+  const result=confirmSceneSetup(db,guild,scope.actorUserId,offer.key,choice.value,{authoredSource:input.event_key});
+  return db.saveCityRecord(guild,{kind:'scene_setup_declaration',key:row.record_key,status:'confirmed',source_event:result.source_event,
+    visibility:result.visibility,subject_key:result.subject_key,data:{owner:scope.actorUserId,principal:principal.revision,arrival:result.data.arrival,
+      declaration:row.record_key,not_travel:true}});
 }

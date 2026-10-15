@@ -56,6 +56,7 @@ export const PLAYER_INTENT_PROMPT=[
   'Interpret complete actions in order: travel, approach, observation, interaction, speech, searching, rolls and proposed agreements.',
   'Copy source_span VERBATIM from this message; do not fabricate owner-authored words, merge unrelated speakers or extract quoted examples as actions.',
   'Use type/operation to describe meaning; NEVER make a dictionary of accepted verbs into a rule gate.',
+  'For an authentic owner declaration of their INITIAL current position, use type=other operation=initial_position resolution=conversational and exact known target_key. This is setup only: no prior placement, encounter, lock, travel or cost bypass. Never classify a question, quotation, hypothetical or attempted travel as initial setup.',
   'target_key must be an existing audience-visible identity or a same-turn world_additions key, otherwise leave it blank.',
   'Destination exterior means arriving at the outside of a building, not entering it. Do not conflate approach with entry.',
   'For speech, copy utterance verbatim as it appears in source_span; never paraphrase invented PC speech.',
