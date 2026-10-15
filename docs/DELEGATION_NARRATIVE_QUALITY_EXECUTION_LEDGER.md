@@ -17,3 +17,13 @@ Starting SHA: `c44ac15`. Shared native policy validation removes both numeric gr
 Commands: focused DQ01/DP01–03: 4/4 pass, exit 0. Existing `end-to-end-a-test` and `end-to-end-d-test`: 2/2 suite processes pass, exit 0 (governance/review/replay/privacy). Registry-growth fixture temporarily adds a 42nd schema enum and restores it. No schema migration.
 
 Reconciliation finding: all 41 native contract permissions are assignable, but historical `discovery.lookup` has no dispatch adapter. Catalog explicitly reports it as runtime-unavailable; dispatch remains fail-closed. No competing discovery executor was invented. Thus assignment is not a promise of runtime availability. All other native review/flags/cost/expiry guards remain unchanged.
+
+Phase 1 resulting commit: `3e2e844` (full SHA available in Git). A documentation EOF whitespace finding was corrected by amending the local phase commit before proceeding; diff-check is clean.
+
+## Phase 2
+
+Starting SHA: `3e2e844`. Deterministic coordinator merges creative requests into one version-8 task, preserving native projections and source references; authenticated source and native audience checks still gate writing. Exact owner spans inform routing only, not effect authority. Conversation, investigation, arrival, scene, combat and continuation objectives form one bounded brief; OOC/quiet/disabled turns do not acquire a writer. Existing durable one-attempt budget and drafts remain unchanged.
+
+`OPENAI_NARRATIVE_MODEL` overrides the creative model independently; `OPENAI_NARRATIVE_FAST_MODEL` optionally overrides only unprotected direct observations. Empty values retain previous lane defaults (routine combined, main direct/Director, downtime downtime). No speculative model IDs, pricing claim or second writer. Combined main planner private context is not copied to the writer.
+
+Focused command selecting DQ02/DQ03/N01/N04: 4/4 pass, exit 0. DN01 additionally tests actual writer-only direct route, explicit overrides and disabled/OOC/quiet contrasts. No full validator yet. No schema migration; v8 request/response fields unchanged.

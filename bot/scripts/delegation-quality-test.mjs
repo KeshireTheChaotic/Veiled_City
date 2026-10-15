@@ -9,6 +9,7 @@ import {INTENT_PAYLOADS,intentOperations} from '../src/ai-intent-contracts.js';
 import {configureDelegation,delegationPolicy,delegationOperation} from '../src/ai-intents.js';
 import {delegationCatalog} from '../src/delegation-catalog.js';
 import {handleStoryCommand} from '../src/story-commands.js';
+import {coordinateNarrative,narrativeModel} from '../src/narrative-delegation.js';
 import {GMService} from '../src/gm.js';
 import {ContentIndex} from '../src/content.js';
 import {commitGmTurn} from '../src/turn-orchestration.js';
@@ -73,6 +74,19 @@ test('DQ02 omitted v8 still produces one isolated creative response',()=>nativeF
 test('DQ03 configured narrative model independent of routine planner',()=>nativeFixture(async f=>{
   const out=await qualityTurn(f,{answer:scene(),config:{narrativeModel:'offline-writer'}});
   assert.equal(out.ai.requests[0].model,'offline-routine');assert.equal(out.ai.requests[1].model,'offline-writer');
+}));
+test('DN01 direct observation writer model and bounded routing contrasts',()=>nativeFixture(async f=>{
+  const out=await qualityTurn(f,{fast:true,answer:scene(),config:{narrativeModel:'offline-writer'}});
+  assert.equal(out.ai.requests.length,1);assert.equal(out.ai.requests[0].model,'offline-writer');
+  assert.equal(narrativeModel({gmModel:'main',narrativeModel:'writer',narrativeFastModel:'fast'},{protected_scene:false},'observation'),'fast');
+  assert.equal(narrativeModel({gmModel:'main',narrativeModel:'writer',narrativeFastModel:'fast'},{protected_scene:true},'observation'),'writer');
+  const x=setup(f,{text:'OOC how do I configure the bot?'}),r=candidate(x.text);
+  coordinateNarrative(f.db,f.guild,r,{scope:x.scope,sourceRef:x.sourceRef});assert(!r.gm_world_parts.some(p=>p.version===8));
+  const quiet=candidate(x.text);quiet.respond=false;quiet.gm_world_parts=[];
+  coordinateNarrative(f.db,f.guild,quiet,{scope:x.scope,sourceRef:x.sourceRef});assert.deepEqual(quiet.gm_world_parts,[]);
+  f.db.setCityCalendar(f.guild,{flags:{...f.db.getCityCalendar(f.guild).flags,narrative_authority:false}});
+  const legacy={respond:true,gm_world_parts:[{version:7,kind:'scene_fiction_request',operation:'describe_scene',source_refs:[]}]};
+  coordinateNarrative(f.db,f.guild,legacy,{scope:x.scope,sourceRef:x.sourceRef});assert.equal(legacy.gm_world_parts[0].version,7);
 }));
 test('DQ04 native known surname NPC vocative is allowed without PC agency',()=>nativeFixture(async f=>{
   f.db.updateCharacterData(f.pcs[0].id,d=>{d.aliases=['Raven'];});

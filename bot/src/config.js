@@ -38,6 +38,8 @@ export function loadConfig(){
     openaiKey:need("OPENAI_API_KEY"),
     modelPricing:parseModelPricing(process.env.MODEL_PRICING_JSON||'{}'),
     gmModel:process.env.OPENAI_GM_MODEL||"gpt-6.1-sol",
+    narrativeModel:process.env.OPENAI_NARRATIVE_MODEL||null,
+    narrativeFastModel:process.env.OPENAI_NARRATIVE_FAST_MODEL||null,
     routerModel:process.env.OPENAI_ROUTER_MODEL||"gpt-6-luna",
     routerDecisionsShadow:enumEnv('ROUTER_DECISIONS_SHADOW','false',['true','false'])==='true',
     routerShadowDeadlineMs:numberEnv('ROUTER_SHADOW_DEADLINE_MS',1000,{min:50,max:2000,integer:true}),

@@ -10,6 +10,7 @@ import {narrativeUnitKinds} from './gm-fiction-schema.js';
 import {objectiveEvidence} from './epistemic.js';
 import {retainEstablishedNarrative} from './narrative-memory.js';
 import {noteNarrativeReuse} from './narrative-salience.js';
+import {creativeBrief} from './narrative-delegation.js';
 export {narrativeResponseSchema} from './gm-fiction-schema.js';
 const issuer='native:narrative-authority';
 export const NARRATIVE_AUTHORITY_INSTRUCTIONS='You are the creative GM for this audience-isolated packet. Invent interesting ordinary places, people, sensory surroundings, '
@@ -115,6 +116,7 @@ export async function authorNarrativeRequests({db,guild,result,scope,sourceRef,b
     const key=draftKey(input,scope,sourceRef),attempt=`scene-authoring-attempt:${hash([sourceRef,scope])}`;
     try{
       const ctx=viewProvider?viewProvider(input):context(db,guild,input,scope,sourceRef);request(input);
+      ctx.packet.creative_brief=creativeBrief(ctx,result,input);ctx.packet.protected_scene=ctx.protectedScene;
       const nativeResults=[];
       for(const proposed of (result.gm_world_parts||[]).filter(part=>part.version===4)){
         try{const projection=nativeOutcomeProjection(db,guild,proposed,scope);nativeResults.push({kind:proposed.receipt_kind,ref:proposed.ref,text:projection.text});}

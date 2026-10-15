@@ -53,6 +53,7 @@ import {sceneFictionFailure,buildSceneFictionContext} from './scene-fiction-cont
 import {assemblyNarrativeCandidate} from './pvp-output.js';
 import {sceneObservationOperation} from './scene-observation-route.js';
 import {authorNarrativeRequests,NARRATIVE_AUTHORITY_INSTRUCTIONS,narrativeResponseSchema} from './narrative-authority.js';
+import {coordinateNarrative,narrativeModel} from './narrative-delegation.js';
 import {bindDirectorNarrativeSource} from './narrative-director-source.js';
 import {buildNarrativeContext} from './narrative-authority-context.js';
 
@@ -837,11 +838,7 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
         ||(candidate.scene_actions||[]).some(a=>a.kind==='move')
         ||(candidate.player_intents||[]).some(i=>i.operation==='initial_position'&&i.framing==='immediate');
       const creative=this.db.getCityCalendar(guildId).flags.narrative_authority===true;
-      const requestedSpeakers=(candidate.gm_world_parts||[]).filter(p=>p.version===3);
-      if(creative&&requestedSpeakers.length){
-        const retained=(candidate.gm_world_parts||[]).filter(p=>![3,6,7,8].includes(p.version));
-        candidate.gm_world_parts=[...retained.slice(0,3),{version:8,kind:'narrative_request',operation:'conversation',source_refs:[]}];
-      }
+      coordinateNarrative(this.db,guildId,candidate,{scope:fictionScope,sourceRef:fictionSource,movement});
       if(this.db.getCityCalendar(guildId).flags.playable_narration===true&&movement&&!(candidate.gm_world_parts||[]).some(p=>p.version===(creative?8:7)))
         candidate.gm_world_parts=[...(candidate.gm_world_parts||[]).slice(0,3),{version:creative?8:7,kind:creative?'narrative_request':'scene_fiction_request',operation:'describe_scene',source_refs:[]}];
       let stagedView=null,stagedError=null;
@@ -853,7 +850,7 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
       }
       await authorNarrativeRequests({db:this.db,guild:guildId,result:candidate,scope:fictionScope,sourceRef:fictionSource,budget:authoringBudget,
         viewProvider:creative&&movement?()=>{if(stagedError||!stagedView)throw sceneFictionFailure('destination_not_authorized');return stagedView;}:null,
-        generate:packet=>this.generateNarrative(guildId,packet,turnSignal,req.model)});
+        generate:packet=>this.generateNarrative(guildId,packet,turnSignal)});
       // Outside the new unified lane, essential NPC dialogue still wins the single legacy writer budget.
       await this.authorFreshNpcs(guildId,candidate,{mode:scope,actorUserId,actorCharacterId:ctx.actor_assignment?.character_id},
         messageId&&ctx.actor_assignment?.character_id?worldInputKey(messageId,ctx.actor_assignment.character_id):null,authoringBudget,turnSignal,req.model);
@@ -957,7 +954,8 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
       {guildId,signal,purpose:'scene_writer'});signal.throwIfAborted();return parseStructuredJsonText(response.output_text);}
     catch{throw sceneFictionFailure('writer_unavailable');}},{guildId});
   }
-  async generateNarrative(guildId,packet,signal,model=this.config.gmModel){
+  async generateNarrative(guildId,packet,signal,lane='combined'){
+    const model=narrativeModel(this.config,packet,lane);
     return measureStage(this.metrics,'scene_writer',async()=>{
       try{const response=await this.requestModel({model,instructions:NARRATIVE_AUTHORITY_INSTRUCTIONS,input:JSON.stringify(packet),max_output_tokens:1800,
         text:{format:{type:'json_schema',name:'veiled_city_delegated_narrative',strict:true,schema:narrativeResponseSchema}}},{guildId,signal,purpose:'scene_writer'});
@@ -981,7 +979,7 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
       events:[],relationships:[],handouts:[],npc_memories:[],npc_knowledge:[],npc_goals:[],canon_proposals:[],simulation_updates:[],ai_intents:[],state_review,
       decision_advisory:this.db.getCityCalendar(guildId).flags.decision_advisory===true?{mode:'narrate',check:'',reason:'Read-only native-scoped observation, not a resolved action.',
         uncertainty:'',consequence:'',referent_uncertainty:'',fictional_uncertainty:''}:null};
-    if(creative)await authorNarrativeRequests({db:this.db,guild:guildId,result,scope,sourceRef,budget:{used:false},generate:packet=>this.generateNarrative(guildId,packet,signal)});
+    if(creative)await authorNarrativeRequests({db:this.db,guild:guildId,result,scope,sourceRef,budget:{used:false},generate:packet=>this.generateNarrative(guildId,packet,signal,'observation')});
     else await authorSceneFictionRequests({db:this.db,guild:guildId,result,scope,sourceRef,budget:{used:false},generate:packet=>this.generateSceneFiction(guildId,packet,signal)});
     validateIntentResolutions(result);validatePostTurnStateReview(result);validatePacing(this.db,guildId,result);validateDecisionAdvisory(this.db,guildId,result);
     measureNative('validate',guildId,()=>previewAuthoritativeMutation(this.db,{guildId,sessionId:creative?view.binding.session:view.state.session,narrative:result,scope,
@@ -1065,7 +1063,7 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
         result.gm_world_parts=[...(result.gm_world_parts||[]).filter(p=>![3,6,7].includes(p.version)).slice(0,3),
           {version:8,kind:'narrative_request',operation:'continuation',source_refs:[]}];
       await authorNarrativeRequests({db:this.db,guild:guildId,result,scope:creativeScope,sourceRef:nativeSource,budget:authoringBudget,
-        generate:packet=>this.generateNarrative(guildId,packet,directorSignal,req.model)});
+        generate:packet=>this.generateNarrative(guildId,packet,directorSignal,layer==='downtime'?'downtime':'director')});
     }
     await this.authorFreshNpcs(guildId,result,{mode:trigger.scope||'party',actorUserId:trigger.actor_user_id,
       actorCharacterId:trigger.actor_character_id},null,authoringBudget,directorSignal,req.model);
