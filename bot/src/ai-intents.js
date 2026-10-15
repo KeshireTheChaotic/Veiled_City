@@ -1,6 +1,6 @@
 /** Shared governed intent pipeline: bound authority, closed contracts, atomic receipts and native domain adapters. */
 import { createHash } from "node:crypto";
-import { validateIntent, INTENT_PAYLOADS, intentOperations } from "./ai-intent-contracts.js";
+import { validateIntent } from "./ai-intent-contracts.js";
 import { requireCitySource } from "./city-core.js";
 import { cityObject, cityInteger, cityAudit, indexWorldEvent } from "./city-calendar.js";
 import { proposeGoalTransition, reviewGoalTransition } from "./simulation-motivation.js";
@@ -30,6 +30,7 @@ import { mundaneEntryImpact, resolveMundaneEntry } from "./scene-entry.js";
 import {assertSemanticCandidateProof} from './semantic-candidate-source.js';
 import {assertOrdinaryBinding} from './ordinary-effect-proof.js';
 import { conversationPrincipal } from "./conversation-principal.js";
+import {delegationCatalog} from './delegation-catalog.js';
 const hash=value=>createHash("sha256").update(JSON.stringify(value)).digest("hex");
 const adapters=new Map();
 export const FEATURE_FLAGS={roll:"roll_requests",setup:"narrative_setups",organization:"player_organizations",influence:"audience_influence",evidence:"evidence_custody",dialogue:"dialogue_history",encounter:"encounter_intelligence",goal:"emergent_goals",consequence:"consequences",scene:"scene_continuity",group:"emergent_groups",
@@ -40,24 +41,67 @@ export function registerIntentAdapter(feature,adapter){adapters.set(feature,adap
 export function delegationPolicy(db,guild){
   return db.getCityRecord(guild,"ai_delegation","campaign")?.data||{mode:"manual",revision:0,allow:[],max_operations:1,max_cost:0,expires_minute:null};
 }
-export function configureDelegation(db,guild,input,reviewer){
+const policyFields=['mode','allow','private_allow','max_operations','max_cost','expires_minute'];
+function validateDelegation(db,guild,input){
   cityObject(input);
-  if(!reviewer||Object.keys(input).some(key=>!["mode","allow","private_allow","max_operations","max_cost","expires_minute"].includes(key))) throw new Error("Invalid delegation configuration.");
-  if(!["manual","suggest_only","routine_delegated"].includes(input.mode)||!Array.isArray(input.allow)||input.allow.length>40
-    ||input.allow.some(op=>!Object.keys(INTENT_PAYLOADS).some(feature=>op.startsWith(`${feature}.`)
-      &&intentOperations(feature).includes(op.slice(feature.length+1))))) throw new Error("Explicit typed operation allowlist required.");
+  const catalog=delegationCatalog(),validList=(list,eligible)=>Array.isArray(list)&&new Set(list).size===list.length
+    &&list.every(id=>typeof id==='string'&&eligible.includes(id));
+  if(Object.keys(input).some(key=>!policyFields.includes(key)))throw new Error('Invalid delegation configuration.');
+  if(!["manual","suggest_only","routine_delegated"].includes(input.mode)||!validList(input.allow,catalog.all))
+    throw new Error("Explicit registered operation allowlist required; unknown or duplicate permissions are invalid.");
   cityInteger(input.max_operations,1,4);cityInteger(input.max_cost,0,20);
-  if(input.private_allow!==undefined&&(!Array.isArray(input.private_allow)||input.private_allow.length>40
-    ||input.private_allow.some(op=>!input.allow.includes(op)||!['goal','consequence','scene','group','strategy','encounter'].includes(op.split('.')[0]))))
+  if(input.private_allow!==undefined&&(!validList(input.private_allow,catalog.private_eligible)||input.private_allow.some(op=>!input.allow.includes(op))))
     throw new Error("Private world delegation must explicitly name audited native operations already allowed by the main policy.");
   if(input.expires_minute!==null) cityInteger(input.expires_minute,db.getSimulationClock(guild).minute+1,1000000000);
   if(input.mode==="routine_delegated"&&input.expires_minute===null) throw new Error("Delegation requires an explicit fictional-time expiry.");
+}
+function saveDelegation(db,guild,input,reviewer){
+  validateDelegation(db,guild,input);
+  const before=db.getCityRecord(guild,"ai_delegation","campaign"),revision=(before?.data.revision||0)+1;
+  const source=indexWorldEvent(db,guild,{key:`ai-policy:${revision}`,title:"Explicit GM delegation configuration",source_id:reviewer},reviewer);
+  const after=db.saveCityRecord(guild,{kind:"ai_delegation",key:"campaign",source_event:source.event_key,data:{...input,revision,configured_by:reviewer}});
+  cityAudit(db,guild,"ai_delegation","campaign",before,after,reviewer);return after;
+}
+export function configureDelegation(db,guild,input,reviewer){
+  if(!reviewer)throw new Error('Authenticated GM required.');
+  return db.transaction(()=>saveDelegation(db,guild,input,reviewer));
+}
+export function delegationOperation(db,guild,input,reviewer){
+  cityObject(input);if(!reviewer)throw new Error('Authenticated GM required.');
+  if(!input.op)return configureDelegation(db,guild,input,reviewer);
+  if(input.op==='status'){
+    if(Object.keys(input).length!==1)throw new Error('Status takes no updates.');
+    const policy=delegationPolicy(db,guild);return {policy,count:policy.allow.length,private_count:policy.private_allow?.length||0};
+  }
+  if(input.op==='catalog'){
+    if(Object.keys(input).some(k=>!['op','page','filter'].includes(k)))throw new Error('Invalid catalog query.');
+    const page=input.page??1;cityInteger(page,1,10000);
+    if(input.filter!==undefined&&(typeof input.filter!=='string'||input.filter.length>160))throw new Error('Bounded catalog filter required.');
+    const catalog=delegationCatalog(),all=catalog.all.filter(id=>id.includes(input.filter||''));
+    return {...catalog,all:all.slice((page-1)*50,page*50),total:all.length,page,page_size:50,
+      runtime_unavailable:all.filter(id=>!adapters.has(id.split('.')[0]))};
+  }
+  if(input.op!=='patch'||Object.keys(input).some(k=>!['op','expected_revision','allow_add','allow_remove','private_allow_add','private_allow_remove',
+    'mode','max_operations','max_cost','expires_minute'].includes(k)))throw new Error('Invalid delegation patch.');
+  cityInteger(input.expected_revision,0,1000000000);
+  const catalog=delegationCatalog();
+  for(const field of ['allow_add','allow_remove','private_allow_add','private_allow_remove']){
+    const value=Object.hasOwn(input,field)?input[field]:[],eligible=field.startsWith('private_')?catalog.private_eligible:catalog.all;
+    if(!Array.isArray(value)||new Set(value).size!==value.length||value.some(id=>!eligible.includes(id)))throw new Error('Invalid or duplicate patch permissions.');
+    if(field.endsWith('_add')&&value.some(id=>(input[field.replace('_add','_remove')]||[]).includes(id)))throw new Error('Conflicting permission patch.');
+  }
   return db.transaction(()=>{
-    const before=db.getCityRecord(guild,"ai_delegation","campaign");
-    const revision=(before?.data.revision||0)+1;
-    const source=indexWorldEvent(db,guild,{key:`ai-policy:${revision}`,title:"Explicit GM delegation configuration",source_id:reviewer},reviewer);
-    const after=db.saveCityRecord(guild,{kind:"ai_delegation",key:"campaign",source_event:source.event_key,data:{...input,revision,configured_by:reviewer}});
-    cityAudit(db,guild,"ai_delegation","campaign",before,after,reviewer);return after;
+    const before=delegationPolicy(db,guild);if(before.revision!==input.expected_revision)throw new Error('Stale delegation revision; refresh status.');
+    const next=Object.fromEntries(policyFields.map(k=>[k,before[k]??(k==='private_allow'?[]:null)]));
+    for(const field of ['allow','private_allow'])next[field]=[...new Set([...next[field],...(input[`${field}_add`]||[])])]
+      .filter(id=>!(input[`${field}_remove`]||[]).includes(id)).sort();
+    next.private_allow=next.private_allow.filter(id=>next.allow.includes(id));
+    for(const field of ['mode','max_operations','max_cost','expires_minute'])if(Object.hasOwn(input,field))next[field]=input[field];
+    validateDelegation(db,guild,next);
+    const changed=Object.fromEntries(policyFields.filter(k=>JSON.stringify(before[k]??[])!==JSON.stringify(next[k])).map(k=>[k,{before:before[k],after:next[k]}]));
+    if(!Object.keys(changed).length)return {policy:before,previous_revision:before.revision,changed:{},unchanged:true};
+    const after=saveDelegation(db,guild,next,reviewer);
+    return {policy:after.data,previous_revision:before.revision,changed,count:next.allow.length,private_count:next.private_allow.length};
   });
 }
 function preflight(db,guild,intent,context){

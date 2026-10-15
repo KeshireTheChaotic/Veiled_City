@@ -17,7 +17,7 @@ import { manageStrategy } from "./simulation-strategy.js";
 import { proposeArcBeat } from "./personal-continuity.js";
 import { manageMemoryCluster } from "./memory-clusters.js";
 import { expansionStatus } from "./expansion-contracts.js";
-import { configureDelegation, stateRevision, projectPrivateEffect } from "./ai-intents.js";
+import { delegationOperation, stateRevision, projectPrivateEffect } from "./ai-intents.js";
 import { reviewInbox, reviewWorkflow } from "./ai-review.js";
 import { reconcileHistory } from "./history-reconciliation.js";
 import { publishRollRequests } from "./roll-requests.js";
@@ -32,7 +32,7 @@ export async function handleStoryCommand(interaction,{db,gm}){
   const sub=interaction.options.getSubcommand(),raw=interaction.options.getString("json"),input=cityObject(JSON.parse(raw||"{}")),guild=interaction.guildId;
   let result;
   if(sub==="brief") result=sessionBrief(db,guild,{mode:"gm",gm:true});
-  else if(sub==="delegation") result=configureDelegation(db,guild,input,interaction.user.id);
+  else if(sub==="delegation") result=delegationOperation(db,guild,input,interaction.user.id);
   else if(sub==="ai-inbox") result=reviewInbox(db,guild,input);
   else if(sub==="ai-review") result=reviewWorkflow(db,guild,input,interaction.user.id);
   else if(sub==="context") result=new ContextPlanner(db).plan(guild,input);

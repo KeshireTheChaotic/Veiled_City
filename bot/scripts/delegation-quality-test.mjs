@@ -6,7 +6,9 @@ import {nativeFixture} from './v9-fixtures.mjs';
 import {FakeResponses,fakeInteraction} from './contract-fixtures.mjs';
 import {setup,candidate,unit} from './narrative-freedom-test.mjs';
 import {INTENT_PAYLOADS,intentOperations} from '../src/ai-intent-contracts.js';
-import {configureDelegation,delegationPolicy} from '../src/ai-intents.js';
+import {configureDelegation,delegationPolicy,delegationOperation} from '../src/ai-intents.js';
+import {delegationCatalog} from '../src/delegation-catalog.js';
+import {handleStoryCommand} from '../src/story-commands.js';
 import {GMService} from '../src/gm.js';
 import {ContentIndex} from '../src/content.js';
 import {commitGmTurn} from '../src/turn-orchestration.js';
@@ -26,6 +28,43 @@ test('DQ01 all registered permissions exceed forty and persist',()=>nativeFixtur
   const allow=allOperations();assert.equal(allow.length,41);
   configureDelegation(f.db,f.guild,{mode:'manual',allow,private_allow:[],max_operations:1,max_cost:0,expires_minute:null},'gm');
   assert.deepEqual(delegationPolicy(f.db,f.guild).allow,allow);f.restart();assert.deepEqual(delegationPolicy(f.db,f.guild).allow,allow);
+}));
+test('DP01 registry growth and private eligibility have no numeric grant cap',()=>nativeFixture(f=>{
+  const operations=INTENT_PAYLOADS.density.properties.op.enum;operations.push('future_inspect');
+  try{
+    const allow=allOperations();assert.equal(allow.length,42);
+    configureDelegation(f.db,f.guild,{mode:'manual',allow,private_allow:delegationCatalog().private_eligible,max_operations:4,max_cost:20,expires_minute:null},'gm');
+    assert.equal(delegationPolicy(f.db,f.guild).allow.length,42);
+    for(const private_allow of [['density.future_inspect'],['scene.unknown']])assert.throws(()=>configureDelegation(f.db,f.guild,
+      {mode:'manual',allow,private_allow,max_operations:1,max_cost:0,expires_minute:null},'gm'),/Private world/);
+    assert.throws(()=>configureDelegation(f.db,f.guild,{mode:'manual',allow:[],private_allow:['scene.record'],max_operations:1,max_cost:0,expires_minute:null},'gm'));
+  }finally{operations.pop();}
+}));
+test('DP02 CAS patches preserve governance and fail atomically',()=>nativeFixture(f=>{
+  const patch=value=>delegationOperation(f.db,f.guild,{op:'patch',...value},'gm');
+  patch({expected_revision:0,allow_add:['scene.record'],private_allow_add:['scene.record']});
+  const before=delegationPolicy(f.db,f.guild);assert.equal(before.mode,'manual');assert.equal(before.max_operations,1);assert.equal(before.max_cost,0);assert.equal(before.expires_minute,null);
+  for(const bad of [{expected_revision:0,allow_add:['density.inspect']},{expected_revision:1,allow_add:['bad.operation']},
+    {expected_revision:1,allow_add:['scene.enter','scene.enter']},{expected_revision:1,allow_add:['density.inspect'],max_cost:21},
+    {expected_revision:1,mode:'routine_delegated'},{expected_revision:1,private_allow_add:['roll.prepare']},
+    {expected_revision:1,allow_add:'scene.enter'},{expected_revision:1,extra:true}]){
+    assert.throws(()=>patch(bad));assert.deepEqual(delegationPolicy(f.db,f.guild),before);
+  }
+  const removed=patch({expected_revision:1,allow_remove:['scene.record']});assert.equal(removed.policy.revision,2);assert.deepEqual(removed.policy.private_allow,[]);
+  assert.equal(f.db.listWorldEvents(f.guild,{includeGM:true,limit:500}).filter(e=>e.event_key.startsWith('ai-policy:')).length,2);
+  assert.throws(()=>configureDelegation(f.db,f.guild,{mode:'manual',allow:[],max_operations:5,max_cost:0,expires_minute:null},'gm'));
+  assert.notEqual(f.db.getCityCalendar(f.guild).flags.scene_continuity,true);
+}));
+test('DP03 existing JSON command catalog/status/patch remain GM-private, unauthorized rejected',()=>nativeFixture(async f=>{
+  const interaction=(json,gm=true)=>({...fakeInteraction({gm,sub:'delegation',json}),guildId:f.guild});
+  const no=interaction({op:'patch',expected_revision:0,allow_add:['scene.enter']},false);
+  await assert.rejects(handleStoryCommand(no,{db:f.db,gm:{}}),/permission/);assert.equal(delegationPolicy(f.db,f.guild).revision,0);
+  for(const input of [{op:'catalog'},{op:'status'},{op:'patch',expected_revision:0,allow_add:allOperations()}]){
+    const i=interaction(input);await handleStoryCommand(i,{db:f.db,gm:{}});
+    assert.equal(i.deliveries.length,1);assert.equal(i.deliveries[0].ephemeral,true);assert.equal(i.deliveries[0].files.length,1);
+    const json=JSON.parse(i.deliveries[0].files[0].attachment.toString());assert(json.total===41||json.count===0||json.count===41);
+  }
+  assert.equal(delegationPolicy(f.db,f.guild).allow.length,41);
 }));
 test('DQ02 omitted v8 still produces one isolated creative response',()=>nativeFixture(async f=>{
   const out=await qualityTurn(f,{omit:true,answer:scene()});

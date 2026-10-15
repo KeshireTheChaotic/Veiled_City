@@ -203,3 +203,14 @@ GM/admin commands require Manage Server or the configured GM role.
 - `/vc-voice narrate text:<text>` — GM/Admin one-off AI narration
 
 Voice narration is non-authoritative; the text message remains the campaign record. See `VOICE_NARRATION.md`.
+
+# 10.2 delegation policy JSON operations
+
+`/vc-story delegation` remains GM/admin-only and returns an ephemeral JSON attachment. It changes no feature flags. No slash registration is required.
+
+- Catalog: `json:{"op":"catalog","page":1,"filter":"scene."}` (omit filter for all registered permissions).
+- Status/revision: `json:{"op":"status"}`.
+- Incremental grant: `json:{"op":"patch","expected_revision":0,"allow_add":["scene.record"],"private_allow_add":["scene.record"]}`.
+- Revoke: `json:{"op":"patch","expected_revision":1,"allow_remove":["scene.record"]}` also removes the dependent private grant.
+
+Refresh status before patching; stale revisions fail atomically. Explicit `mode`, `max_operations`, `max_cost`, `expires_minute` updates are optional. Adding grants alone never enables execution or changes those settings. Duplicate/unknown identifiers fail. The legacy full replacement object remains supported. All 41 native contract permissions are assignable; the catalog reports runtime-unavailable adapters separately (currently `discovery.lookup`), which remain blocked at dispatch rather than acquiring an invented executor. Native review, flags, costs, expiry and consent always apply.
