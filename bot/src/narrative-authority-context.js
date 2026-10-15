@@ -9,6 +9,7 @@ import {protectedPvpScope} from './pvp-output.js';
 import {activeCityProxy} from './city-constraints.js';
 import {disclosedNarrativeMemory} from './narrative-memory.js';
 import {rankNarrativeMemory} from './narrative-salience.js';
+import {speakerBrief} from './narrative-speakers.js';
 export const narrativeVisible=(row,scope)=>!!row&&factVisibleTo({...row,subject_character_id:row.subject_character_id||row.subject_key,
   subject_user_id:row.subject_user_id||row.subject_key},scope);
 export function buildNarrativeContext(db,guild,scope,sourceRef,{operation='describe_scene'}={}){
@@ -58,8 +59,15 @@ export function buildNarrativeContext(db,guild,scope,sourceRef,{operation='descr
     &&n.state.narrative_origin!==sourceRef&&narrativeVisible({visibility:n.state.visibility||'party',subject_key:n.state.subject_character_id},scope)
     &&(!db.getCityRecord(guild,'autonomous_entity',`npc:${n.entity_key}`)
       ||narrativeSourceVisible(db,guild,db.getCityRecord(guild,'autonomous_entity',`npc:${n.entity_key}`).source_event,scope)))
+    .sort((a,b)=>Number(String(source.details.text||'').toLowerCase().includes(b.entity_key.toLowerCase()))
+      -Number(String(source.details.text||'').toLowerCase().includes(a.entity_key.toLowerCase()))||a.entity_key.localeCompare(b.entity_key))
     .slice(0,8).map(n=>({key:n.entity_key,name:db.getNpcProfile(guild,n.entity_key)?.display_name||n.state.name||n.entity_key,
       role:db.getNpcProfile(guild,n.entity_key)?.role||'',human_controlled:!!activeCityProxy(db,guild,n.entity_key)}));
+  let speakerChars=0;
+  for(const npc of npcs){
+    const brief=speakerBrief(db,guild,npc.key,scope,location,owner?source.details.text:'');
+    if(brief&&speakerChars+JSON.stringify(brief).length<=6000){npc.speaker_brief=brief;speakerChars+=JSON.stringify(brief).length;}
+  }
   const binding={version:1,guild,session:scene.session_id,scene:scene.key,scope:{...scope},source:sourceRef,source_hash:hash(source.details),
     principal:principal?.revision||null,location,viewpoint:placed?'character':'camera',
     placement:placed?hash([p.source_event,p.location_key,p.data.zone,arrival.details]):null};
@@ -68,6 +76,6 @@ export function buildNarrativeContext(db,guild,scope,sourceRef,{operation='descr
     place:{key:location||'',name:entity?.state.name||'An unestablished public setting',type:entity?.state.place_type||'unknown'},
     observations:facts.map(f=>({source_ref:f.id,text:f.content,epistemic:evidenceType(f).kind})),npcs,
     prior_fiction:rankNarrativeMemory(db,guild,scope,disclosedNarrativeMemory(db,guild,scope,{limit:40}),
-      {location,query:owner?source.details.text:'',maxChars:9000}),unknowns:['Hidden causes, private character details and unresolved outcomes are unknown.']};
+      {location,query:owner?source.details.text:'',maxChars:Math.max(3000,9000-speakerChars)}),unknowns:['Hidden causes, private character details and unresolved outcomes are unknown.']};
   return {binding,packet,scope,source,pc,sourceRef,protectedScene};
 }

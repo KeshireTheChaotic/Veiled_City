@@ -27,3 +27,13 @@ Starting SHA: `3e2e844`. Deterministic coordinator merges creative requests into
 `OPENAI_NARRATIVE_MODEL` overrides the creative model independently; `OPENAI_NARRATIVE_FAST_MODEL` optionally overrides only unprotected direct observations. Empty values retain previous lane defaults (routine combined, main direct/Director, downtime downtime). No speculative model IDs, pricing claim or second writer. Combined main planner private context is not copied to the writer.
 
 Focused command selecting DQ02/DQ03/N01/N04: 4/4 pass, exit 0. DN01 additionally tests actual writer-only direct route, explicit overrides and disabled/OOC/quiet contrasts. No full validator yet. No schema migration; v8 request/response fields unchanged.
+
+Phase 2 commit `4a570ef`; final focused group 5/5, exit 0.
+
+## Phase 3
+
+Starting SHA `4a570ef`. Native speaker briefs include explicitly public-approved diction, actor-owned active audience-entitled memories/beliefs, source-backed goals, public relationships and current visible known-name addresses. Unrestricted profile portrayal, GM-only motives and secret knowledge are not passed through. Proxies get no AI speaker brief. Whole speaker packets share a 6,000-character budget inside the previous fiction-context allocation; nearby speakers rank by source relevance.
+
+Only a literal leading vocative in typed NPC speech may use a currently present PC's independently native-known name/alias. The remaining clause still faces PC-name/material checks. This is not a permission flag or authorization for PC responses. Original schema and on-disk v8 drafts unchanged; native knowledge/source/presence rechecked at publication, including source withdrawal and owner changes. Finite English guards are defense in depth, not universal semantic certification; free generated speech still carries the disclosed residual risk.
+
+DQ04 red-to-green; focused actual outbox/source-revocation/portrayal/proxy + unchanged PVP30q/PVP30ag: 11/11, exit 0. Forced surrender and exact `Choso apologizes for losing.` sibling held while legal address survives. No extra provider requests; no resource effects. Full qualification deferred.

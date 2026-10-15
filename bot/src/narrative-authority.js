@@ -11,6 +11,7 @@ import {objectiveEvidence} from './epistemic.js';
 import {retainEstablishedNarrative} from './narrative-memory.js';
 import {noteNarrativeReuse} from './narrative-salience.js';
 import {creativeBrief} from './narrative-delegation.js';
+import {withoutVerifiedVocative} from './narrative-speakers.js';
 export {narrativeResponseSchema} from './gm-fiction-schema.js';
 const issuer='native:narrative-authority';
 export const NARRATIVE_AUTHORITY_INSTRUCTIONS='You are the creative GM for this audience-isolated packet. Invent interesting ordinary places, people, sensory surroundings, '
@@ -18,6 +19,7 @@ export const NARRATIVE_AUTHORITY_INSTRUCTIONS='You are the creative GM for this 
   +'Respect existing fiction and canon. Do not reveal hidden causes or infer NPC omniscience. NPC rumors/claims are not objective truth. '
   +'Return independently meaningful narrative_units plus compact fiction_delta for meaningful named NPC/place identities, in this SAME call. '
   +'Prioritize an NPC answer over optional atmosphere. Scene-only detail needs no separate entity. Use exact stable IDs. '
+  +'Use speaker_brief direction and only that speaker\'s entitled knowledge. A native-known PC address may begin NPC dialogue as Name, or Mr./Ms./Mx. Name,; it permits only the address, never that PC\'s answer or action. '
   +'In protected combat, contests and PvP, portray atmosphere and NPC attempts freely within these same boundaries. Native_results are already resolved evidence, never permission for an additional hit or reaction. '
   +'NPCs may refuse, lie, speculate, pursue their own ordinary goals and attempt local actions. Do not convert an attempt into completed travel, success or a PC effect. Offscreen progression needs native world-time authority. '
   +'Never choose PC/proxy actions, reactions, dialogue, thoughts, feelings, consent, commitments or disclosures; never assert native damage, custody, movement, costs, success or inventory without a matching receipt. '
@@ -76,7 +78,9 @@ function validateUnit(db,guild,u,ctx,entities=[]){
   }
   if(u.receipt_kind||u.receipt_ref||u.epistemic==='native_outcome')throw fail('held_material');
   const names=protectedNarrativeNames(db,guild);
-  if(mentions(u.text,names)||materialParaphrases(u.text,names).length)throw fail('held_material');
+  const assertions=withoutVerifiedVocative(db,guild,u,ctx);
+  if(mentions(assertions,names)||materialParaphrases(assertions,names).length)throw fail('held_material');
+  if(u.kind==='npc_speech'&&/\b(?:you (?:agree|agreed|accept|accepted|obey|obeyed|surrender|surrendered|decide|decided|confess|confessed)|your (?:consent|agreement) is)\b/i.test(assertions))throw fail('held_material');
   // Narrow POV allowance is perception, never a player choice. These finite tripwires are not universal semantics.
   const pov=u.text.replace(/\byou (?:can )?(?:see|hear|smell|notice)\b/gi,'the view').replace(/\byour (?:view|surroundings)\b/gi,'the view');
   if(/\b(?:you|your|yours|yourself)\b/i.test(pov)&&u.kind!=='npc_speech'||ctx.binding.viewpoint==='camera'&&/\b(?:you|your|yours|yourself)\b/i.test(u.text)&&u.kind!=='npc_speech')throw fail('held_material');

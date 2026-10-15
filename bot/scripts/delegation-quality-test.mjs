@@ -10,6 +10,9 @@ import {configureDelegation,delegationPolicy,delegationOperation} from '../src/a
 import {delegationCatalog} from '../src/delegation-catalog.js';
 import {handleStoryCommand} from '../src/story-commands.js';
 import {coordinateNarrative,narrativeModel} from '../src/narrative-delegation.js';
+import {buildNarrativeContext} from '../src/narrative-authority-context.js';
+import {configurePortrayal} from '../src/portrayal.js';
+import {deliverTurnOutbox} from '../src/publication-outbox.js';
 import {GMService} from '../src/gm.js';
 import {ContentIndex} from '../src/content.js';
 import {commitGmTurn} from '../src/turn-orchestration.js';
@@ -96,6 +99,28 @@ test('DQ04 native known surname NPC vocative is allowed without PC agency',()=>n
   const x=setup(f,{text:'I tell the attendant to call me Raven.'});
   f.db.upsertNpcKnowledge(f.guild,{npcKey:'attendant',knowledgeKey:`character-name:${x.pc.id}`,content:'Raven',
     beliefState:'known',sourceType:'observed',sourceRef:x.sourceRef,isSecret:false});
-  const answer=scene();answer.narrative_units.push(unit('address','npc_speech','Mr. Raven, the evening parcels are delayed.',{subject_key:'attendant',epistemic:'testimony'}));
+  const answer=scene();answer.narrative_units.push(unit('address','npc_speech','Mr. Raven, the evening parcels are delayed.',{subject_key:'attendant',epistemic:'testimony'}),
+    unit('forced','npc_speech','Mr. Raven, you agreed to surrender.',{subject_key:'attendant',epistemic:'testimony'}),
+    unit('third','npc_speech','Mr. Raven, Choso apologizes for losing.',{subject_key:'attendant',epistemic:'testimony'}));
   const out=await qualityTurn(f,{answer});assert(out.rows.some(r=>r.payload.includes('Mr. Raven')));
+  assert(out.rows.every(r=>!r.payload.includes('surrender')&&!r.payload.includes('apologizes')));
+  f.db.db.prepare("UPDATE world_events SET status='retracted' WHERE guild_id=? AND event_key=?").run(f.guild,x.sourceRef);
+  let sends=0;await deliverTurnOutbox(f.db,f.guild,out.rows[0].turn_id,async()=>{sends++;return {messageId:'offline',channelId:'offline'};});
+  assert.equal(sends,0);
+}));
+test('NS01 differentiated public portrayal and native own knowledge exclude secrets/proxies',()=>nativeFixture(f=>{
+  const x=setup(f);
+  for(const [npc,tone] of [['porter','terse'],['clerk','warm']]){
+    f.db.upsertNpcProfile(f.guild,{npcKey:npc,displayName:npc,role:'desk staff',portrayal:'PRIVATE_DOSSIER'});
+    f.db.setSimulationEntity(f.guild,'npc',npc,{location_key:'terminal',visibility:'party'});
+    configurePortrayal(f.db,f.guild,{npc,source_event:x.sourceRef,direction:{emotional_tone:tone},public_voice_approved:true},'gm');
+    f.db.upsertNpcKnowledge(f.guild,{npcKey:npc,knowledgeKey:'seen',content:`${npc} saw a parcel`,sourceRef:x.sourceRef,isSecret:false});
+    f.db.upsertNpcKnowledge(f.guild,{npcKey:npc,knowledgeKey:'secret',content:'PRIVATE_SECRET',sourceRef:x.sourceRef,isSecret:true});
+  }
+  const packet=buildNarrativeContext(f.db,f.guild,x.scope,x.sourceRef).packet;
+  assert.equal(packet.npcs.find(n=>n.key==='porter').speaker_brief.direction.emotional_tone,'terse');
+  assert.equal(packet.npcs.find(n=>n.key==='clerk').speaker_brief.direction.emotional_tone,'warm');
+  assert(JSON.stringify(packet).includes('porter saw a parcel'));assert(!JSON.stringify(packet).includes('PRIVATE_'));
+  const proxy=f.db.upsertNpcProxy(f.guild,f.session.id,{npcName:'porter',userId:f.pcs[3].owner_user_id});f.db.activateNpcProxy(proxy.id,f.pcs[3].owner_user_id);
+  assert(!buildNarrativeContext(f.db,f.guild,x.scope,x.sourceRef).packet.npcs.find(n=>n.key==='porter').speaker_brief);
 }));
