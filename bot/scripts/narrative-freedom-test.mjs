@@ -11,6 +11,7 @@ import {captureWorldInput,worldInputKey} from '../src/autonomous-world.js';
 import {indexWorldEvent} from '../src/city-calendar.js';
 import {recordScenePresence,currentScene} from '../src/scene-continuity.js';
 import {commitGmTurn} from '../src/turn-orchestration.js';
+import {deliverTurnOutbox} from '../src/publication-outbox.js';
 export const unit=(id,kind,text,fields={})=>({id,kind,text,subject_key:'',location_key:'terminal',visibility:'party',
   epistemic:kind==='rumor'?'testimony':kind==='npc_action_attempt'?'attempt':'observation',source_refs:[],receipt_kind:'',receipt_ref:'',...fields});
 export function setup(f,{text='Set the scene',privateScene=false,placed=true}={}){
@@ -96,4 +97,42 @@ test('N18 cross-audience reference cannot launder a secret through an invented s
   const x=setup(f),secret=f.db.addFact(f.guild,{content:'PRIVATE_SYNTHETIC_ORIGIN',visibility:'character',subjectCharacterId:f.pcs[1].id}),answer=setting();
   answer.narrative_units.push(unit('secret','scene','PRIVATE_SYNTHETIC_ORIGIN',{source_refs:[secret]}));
   const out=await run(f,x,answer);assert(out.rows.every(r=>!r.payload.includes('PRIVATE_SYNTHETIC_ORIGIN')));assert(out.rows.some(r=>r.payload.includes('slate counter')));
+}));
+test('N04 one isolated writer preserves essential NPC response alongside scenery instead of starving it',()=>nativeFixture(async f=>{
+  const x=setup(f,{text:'I ask the attendant about work.'});
+  f.db.upsertNpcProfile(f.guild,{npcKey:'attendant',displayName:'Attendant',role:'night porter',publicIdentity:'PRIVATE_PROFILE_NOT_WRITER_CONTEXT'});
+  f.db.setSimulationEntity(f.guild,'npc','attendant',{location_key:'terminal',visibility:'party'});
+  const r=candidate(x.text);r.gm_world_parts=[{version:7,kind:'scene_fiction_request',operation:'describe_scene',source_refs:[]},
+    {version:3,kind:'npc_fresh_request',entity_key:'attendant',focus:'work',source_refs:[]}];
+  const answer=setting();answer.narrative_units.push(unit('reply','npc_speech','Night sorting needs steady hands. What sort of work interests you?',{subject_key:'attendant',epistemic:'testimony'}));
+  const out=await run(f,x,answer,r),text=out.rows.map(r=>r.payload).join('\n');assert.match(text,/Night sorting/);assert.match(text,/slate counter/);
+  assert.equal(out.ai.requests.length,2);assert(!JSON.stringify(out.ai.requests[1]).includes('PRIVATE_PROFILE_NOT_WRITER_CONTEXT'));
+}));
+test('N05 material unit is held while two independent fiction units and native state survive',()=>nativeFixture(async f=>{
+  const x=setup(f),answer=setting();answer.narrative_units.push(unit('bad','scene','Choso agrees to surrender.'),unit('lead','lead','A delivery ticket protrudes from the public noticeboard.'));
+  const out=await run(f,x,answer),text=out.rows.map(r=>r.payload).join('\n');assert(text.includes('slate counter'));assert(text.includes('delivery ticket'));assert(!text.includes('surrender'));
+  assert.equal(out.result.narrative_completion.status,'complete');assert.equal(f.db.getCharacter(f.pcs[1].id).data.resources.hp.current,0);
+}));
+test('N09 accepted fiction is not disclosed by queued/uncertain delivery; restart/reconciliation never duplicates it',()=>nativeFixture(async f=>{
+  const {disclosedNarrativeMemory}=await import('../src/narrative-memory.js'),x=setup(f);
+  f.db.setCityCalendar(f.guild,{flags:{...f.db.getCityCalendar(f.guild).flags,narrative_memory:true}});
+  const out=await run(f,x,setting());assert.equal(disclosedNarrativeMemory(f.db,f.guild,x.scope).length,0);
+  assert.equal(f.db.listCityRecords(f.guild,{kind:'narrative_unit',includeGM:true}).length,1);
+  await deliverTurnOutbox(f.db,f.guild,out.attempt.turn_id,async()=>{throw new Error('Synthetic uncertain transport');});
+  assert.equal(disclosedNarrativeMemory(f.db,f.guild,x.scope).length,0);f.restart();let calls=0;
+  await deliverTurnOutbox(f.db,f.guild,out.attempt.turn_id,async()=>{calls++;return {messageId:'must-not-send',channelId:'offline'};});
+  assert.equal(calls,0);assert.equal(f.db.listCityRecords(f.guild,{kind:'narrative_unit',includeGM:true}).length,1);
+}));
+test('N12 acknowledged fiction survives recall and source revocation holds reuse without undoing native resources',()=>nativeFixture(async f=>{
+  const {disclosedNarrativeMemory}=await import('../src/narrative-memory.js'),x=setup(f);
+  f.db.setCityCalendar(f.guild,{flags:{...f.db.getCityCalendar(f.guild).flags,narrative_memory:true}});
+  const out=await run(f,x,setting());let sends=0;
+  await deliverTurnOutbox(f.db,f.guild,out.attempt.turn_id,async()=>({messageId:`sent-${++sends}`,channelId:'offline'}));
+  assert(disclosedNarrativeMemory(f.db,f.guild,x.scope).some(r=>r.text.includes('slate counter')));
+  const follow=setup(f,{text:'What is still here?'}),{buildNarrativeContext}=await import('../src/narrative-authority-context.js');
+  assert(buildNarrativeContext(f.db,f.guild,follow.scope,follow.sourceRef).packet.prior_fiction.some(r=>r.text.includes('slate counter')));
+  f.db.db.prepare("UPDATE world_events SET status='retracted' WHERE guild_id=? AND event_key=?").run(f.guild,x.sourceRef);
+  assert.equal(disclosedNarrativeMemory(f.db,f.guild,x.scope).length,0);assert.equal(f.db.getCharacter(x.pc.id).data.resources.hp.current,0);
+  const {retrieveMemoryRevisions}=await import('../src/memory-lifecycle.js');
+  assert(!retrieveMemoryRevisions(f.db,f.guild,x.scope).some(r=>r.summary.includes('slate counter')),'generic memory sink must follow disclosure ancestry too');
 }));

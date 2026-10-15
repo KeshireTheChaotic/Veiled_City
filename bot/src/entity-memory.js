@@ -11,7 +11,7 @@ function containsIdentity(text,entity){
  * continuity anchor. Other details remain in narration/transcript, not entity tables or canon.
  * The GM must never emit a material scene action referencing a discarded ephemeral addition.
  */
-export function tierWorldAdditions(result,authenticatedPlayerText=''){
+export function tierWorldAdditions(result,authenticatedPlayerText='',{requireEstablishedOutput=false}={}){
   if(!result||!Array.isArray(result.world_additions))return {durable:[],ephemeral:[]};
   const targeted=new Set((result.scene_actions||[]).map(x=>x.entity_ref));
   const intents=result.player_intents||[];
@@ -21,7 +21,9 @@ export function tierWorldAdditions(result,authenticatedPlayerText=''){
     const intentional=intents.some(i=>i.target_key===item.key||containsIdentity(i.target_name,item));
     const used=targeted.has(item.key);
     // If the GM explicitly names a place or NPC in narration, later player references must resolve.
-    const established=containsIdentity(result.narration,item);
+    // Compatibility preserves the old adapter when opted out. Delegated narrative mode never
+    // treats raw combined text as establishment; native committed units own independent inventions.
+    const established=!requireEstablishedOutput&&containsIdentity(result.narration,item);
     if(requested||intentional||used||established)durable.push(item);
     else ephemeral.push({kind:item.kind,key:item.key,reason:'No player reference, consequential use or named narrative appearance.'});
   }

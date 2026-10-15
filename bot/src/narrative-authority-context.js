@@ -7,6 +7,7 @@ import {objectiveEvidence,evidenceType} from './epistemic.js';
 import {sceneFictionHash as hash,sceneFictionFailure as fail,narrativeSourceVisible} from './scene-fiction-context.js';
 import {protectedPvpScope} from './pvp-output.js';
 import {activeCityProxy} from './city-constraints.js';
+import {disclosedNarrativeMemory} from './narrative-memory.js';
 export const narrativeVisible=(row,scope)=>!!row&&factVisibleTo({...row,subject_character_id:row.subject_character_id||row.subject_key,
   subject_user_id:row.subject_user_id||row.subject_key},scope);
 export function buildNarrativeContext(db,guild,scope,sourceRef,{operation='describe_scene'}={}){
@@ -60,6 +61,6 @@ export function buildNarrativeContext(db,guild,scope,sourceRef,{operation='descr
     viewpoint:{kind:binding.viewpoint,zone:placed?p.data.zone:null,pc_witness:!!placed},
     place:{key:location||'',name:entity?.state.name||'An unestablished public setting',type:entity?.state.place_type||'unknown'},
     observations:facts.map(f=>({source_ref:f.id,text:f.content,epistemic:evidenceType(f).kind})),npcs,
-    prior_fiction:[],unknowns:['Hidden causes, private character details and unresolved outcomes are unknown.']};
+    prior_fiction:disclosedNarrativeMemory(db,guild,scope,{location}),unknowns:['Hidden causes, private character details and unresolved outcomes are unknown.']};
   return {binding,packet,scope,source,pc,sourceRef,protectedScene};
 }

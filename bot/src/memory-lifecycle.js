@@ -1,5 +1,6 @@
 /** Audience- and parent-scoped memory identities with explicit epistemic revision lifecycle. */
 import { createHash } from "node:crypto";
+import { narrativeSourceVisible } from './scene-fiction-context.js';
 
 const epistemics=new Set(["observation","testimony","inference","attempt","claimed_result","native_fact"]);
 const digest=value=>createHash("sha256").update(JSON.stringify(value)).digest("hex").slice(0,40);
@@ -77,10 +78,15 @@ export function retrieveMemoryRevisions(db,guild,scope={},options={}){
   const at=options.at_tick??db.getCityCalendar(guild).tick,protectedIds=new Set(options.pending_identity_refs||[]);
   return db.listCityRecords(guild,{kind:"memory_revision",includeGM:true,limit:500}).filter(row=>{
     const source=db.getWorldEvent(guild,row.source_event),identity=db.getCityRecord(guild,"memory_identity",row.data.identity);
-    return row.status==="active"&&identity?.status==="active"&&visible(row,scope)&&source?.status==="active"
+    const narrative=source?.kind==='native_narrative_disclosure';
+    const disclosure=narrative&&db.listCityRecords(guild,{kind:'narrative_delivery',includeGM:true,limit:1000}).find(job=>job.data.ack===source.event_key);
+    const entitled=!narrative||disclosure?.status==='acknowledged_to_audience'&&narrativeSourceVisible(db,guild,source.event_key,scope)
+      &&(disclosure.visibility!=='character'||disclosure.data.user===scope.actorUserId&&db.getCharacter(disclosure.data.character)?.owner_user_id===scope.actorUserId);
+    return entitled&&row.status==="active"&&identity?.status==="active"&&visible(row,scope)&&source?.status==="active"
       &&(row.data.expires_tick==null||row.data.expires_tick>=at||protectedIds.has(row.data.identity));
   }).sort((a,b)=>b.data.created_tick-a.data.created_tick).slice(0,Math.max(1,Math.min(100,options.limit||40))).map(row=>({
     identity:row.data.identity,name:db.getCityRecord(guild,"memory_identity",row.data.identity).data.name,
     aliases:db.getCityRecord(guild,"memory_identity",row.data.identity).data.aliases,parent_key:db.getCityRecord(guild,"memory_identity",row.data.identity).data.parent_key,
-    summary:row.data.summary,epistemic:row.data.epistemic,source_event:row.source_event,visibility:row.visibility,subject_key:row.subject_key}));
+    summary:row.data.summary,epistemic:row.data.epistemic,source_event:row.source_event,visibility:row.visibility,subject_key:row.subject_key,
+    knowledge_scope:db.getWorldEvent(guild,row.source_event)?.details?.knowledge||null}));
 }

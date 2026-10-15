@@ -793,7 +793,7 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
       // An optional expansion must not veto the always-on semantic GM pipeline.
       if(this.db.getCityCalendar(guildId).flags.natural_language!==true) result.authored_candidates=null;
       // Named and consequential context persists; incidental description stays in transcript only.
-      tierWorldAdditions(result,authenticatedSource);
+      tierWorldAdditions(result,authenticatedSource,{requireEstablishedOutput:this.db.getCityCalendar(guildId).flags.narrative_authority===true});
       autoCompleteOrdinaryMovements(this.db,guildId,result,typedScope);
       validateIntentResolutions(result);
       const prose=[result.narration||"",...(result.private_messages||[]).map(row=>row.content)].join("\n");
@@ -835,6 +835,11 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
       const movement=(candidate.player_intents||[]).some(i=>i.type==='move'&&i.resolution==='auto'&&i.framing==='immediate')
         ||(candidate.scene_actions||[]).some(a=>a.kind==='move');
       const creative=this.db.getCityCalendar(guildId).flags.narrative_authority===true;
+      const requestedSpeakers=(candidate.gm_world_parts||[]).filter(p=>p.version===3);
+      if(creative&&requestedSpeakers.length){
+        const retained=(candidate.gm_world_parts||[]).filter(p=>![3,6,7,8].includes(p.version));
+        candidate.gm_world_parts=[...retained.slice(0,3),{version:8,kind:'narrative_request',operation:'conversation',source_refs:[]}];
+      }
       if(this.db.getCityCalendar(guildId).flags.playable_narration===true&&movement&&!(candidate.gm_world_parts||[]).some(p=>p.version===(creative?8:7)))
         candidate.gm_world_parts=[...(candidate.gm_world_parts||[]).slice(0,3),{version:creative?8:7,kind:creative?'narrative_request':'scene_fiction_request',operation:'describe_scene',source_refs:[]}];
       let stagedView=null,stagedError=null;
@@ -847,12 +852,13 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
       await authorNarrativeRequests({db:this.db,guild:guildId,result:candidate,scope:fictionScope,sourceRef:fictionSource,budget:authoringBudget,
         viewProvider:creative&&movement?()=>{if(stagedError||!stagedView)throw sceneFictionFailure('destination_not_authorized');return stagedView;}:null,
         generate:packet=>this.generateNarrative(guildId,packet,turnSignal,req.model)});
+      // Outside the new unified lane, essential NPC dialogue still wins the single legacy writer budget.
+      await this.authorFreshNpcs(guildId,candidate,{mode:scope,actorUserId,actorCharacterId:ctx.actor_assignment?.character_id},
+        messageId&&ctx.actor_assignment?.character_id?worldInputKey(messageId,ctx.actor_assignment.character_id):null,authoringBudget,turnSignal,req.model);
       await authorSceneFictionRequests({db:this.db,guild:guildId,result:candidate,
         scope:fictionScope,sourceRef:fictionSource,
         viewProvider:movement?()=>{if(stagedError||!stagedView)throw sceneFictionFailure('destination_not_authorized');return stagedView;}:null,
         budget:authoringBudget,generate:packet=>this.generateSceneFiction(guildId,packet,turnSignal,req.model)});
-      await this.authorFreshNpcs(guildId,candidate,{mode:scope,actorUserId,actorCharacterId:ctx.actor_assignment?.character_id},
-        messageId&&ctx.actor_assignment?.character_id?worldInputKey(messageId,ctx.actor_assignment.character_id):null,authoringBudget,turnSignal,req.model);
       await authorFreshSceneRequests({db:this.db,guild:guildId,result:candidate,
         scope:{mode:scope,actorUserId,actorCharacterId:ctx.actor_assignment?.character_id},
         sourceRef:messageId&&ctx.actor_assignment?.character_id?worldInputKey(messageId,ctx.actor_assignment.character_id):null,

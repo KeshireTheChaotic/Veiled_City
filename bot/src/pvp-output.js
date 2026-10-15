@@ -23,6 +23,7 @@ import {assemblyOrientation} from './assembly-state.js';
 import {findFreshScenePart,renderFreshScenePart} from './fresh-scene-authoring.js';
 import {establishSceneFiction,renderSceneFiction,holdSceneFiction} from './scene-fiction-authority.js';
 import {establishNarrativeUnits,renderNarrativeUnit} from './narrative-authority.js';
+import {validateNarrativeCompleteness} from './narrative-completeness.js';
 
 const hash=v=>createHash("sha256").update(JSON.stringify(v??null)).digest("hex");
 const prepared=new WeakMap();
@@ -400,7 +401,7 @@ export function prepareAuthorizedTurnOutput(db,guild,result,scope,{sourceRef=nul
       parts.push(savePart(db,guild,{...common,kind:'scene_description',input,scene_revision:view.revision}));
     }
   }
-  if(!parts.length&&db.getCityCalendar(guild).flags.playable_narration===true&&worldParts.some(p=>p?.version===7)&&sourceRef)
+  if(!parts.length&&db.getCityCalendar(guild).flags.playable_narration===true&&worldParts.some(p=>[7,8].includes(p?.version))&&sourceRef)
     parts.push(savePart(db,guild,{...common,kind:'scene_fiction_review'}));
   if(!parts.length){
     if(!common.source_ref){
@@ -477,6 +478,7 @@ export function prepareAuthorizedTurnOutput(db,guild,result,scope,{sourceRef=nul
   }
   saveOutputGroup(db,guild,parts);
   prepared.set(result,{raw,drafts,candidate,hasDisclosureDependencies,parts:parts.map(p=>p.record_key),privateParts,scope:hash(scope),fingerprint:fingerprint(result)});
+  if(db.getCityCalendar(guild).flags.narrative_authority===true)result.narrative_completion=validateNarrativeCompleteness(db,guild,result,parts,worldParts);
   return result;
 }
 /** Direct unprepared boundaries reject. High-level callers deliberately prepare before entering them. */

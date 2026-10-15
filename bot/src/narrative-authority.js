@@ -3,11 +3,12 @@ import {buildNarrativeContext,narrativeVisible} from './narrative-authority-cont
 import {sceneFictionHash as hash,sceneFictionFailure as fail,narrativeSourceVisible} from './scene-fiction-context.js';
 import {indexWorldEvent} from './city-calendar.js';
 import {establishNarrativeEntity} from './autonomous-world.js';
-import {activeCityProxy} from './city-constraints.js';
+import {activeCityProxy,assertNpcAvailability} from './city-constraints.js';
 import {materialParaphrases} from './narrative-integrity.js';
 import {nativeOutcomeProjection} from './native-outcome-output.js';
 import {narrativeUnitKinds} from './gm-fiction-schema.js';
 import {objectiveEvidence} from './epistemic.js';
+import {retainEstablishedNarrative} from './narrative-memory.js';
 export {narrativeResponseSchema} from './gm-fiction-schema.js';
 const issuer='native:narrative-authority';
 export const NARRATIVE_AUTHORITY_INSTRUCTIONS='You are the creative GM for this audience-isolated packet. Invent interesting ordinary places, people, sensory surroundings, '
@@ -22,8 +23,10 @@ export const NARRATIVE_AUTHORITY_INSTRUCTIONS='You are the creative GM for this 
   +'A lead may be a new observed oddity; its explanation stays unknown. No automatic binding contracts, locked access, hazards or other PC effects. '
   +'Use typed unit boundaries, not a mixed paragraph containing unauthorized PC assertions. No policy disclaimers. Generated English retains semantic risk; do not certify your own output as safe.';
 export function protectedNarrativeNames(db,guild){
-  return [...new Set(db.listGuildCharacters(guild).flatMap(pc=>[pc.id,pc.name,...String(pc.name).split(/\s+/),
+  const session=db.getActiveSession(guild),proxies=session?db.listNpcProxies(session.id,{statuses:['active']}):[];
+  return [...new Set([...db.listGuildCharacters(guild).flatMap(pc=>[pc.id,pc.name,...String(pc.name).split(/\s+/),
     ...(Array.isArray(pc.data.aliases)?pc.data.aliases:[]),...(Array.isArray(pc.data.nicknames)?pc.data.nicknames:[])])
+    ,...proxies.flatMap(p=>[p.npc_key,p.npc_name,db.getNpcProfile(guild,p.npc_key)?.display_name])]
     .filter(n=>typeof n==='string'&&n.trim().length>=3))];
 }
 function mentions(text,names){
@@ -78,6 +81,10 @@ function validateUnit(db,guild,u,ctx,entities=[]){
     if(db.getCharacter(u.subject_key)||activeCityProxy(db,guild,u.subject_key)||!entity&&!proposed||entity&&(entity.state.hidden||entity.state.removed
       ||!narrativeVisible({visibility:entity.state.visibility||'party',subject_key:entity.state.subject_character_id},ctx.scope)
       ||entity.state.location_key!==(u.location_key||ctx.binding.location)))throw fail('held_scope');
+    const identity=db.getCityRecord(guild,'autonomous_entity',`npc:${u.subject_key}`);
+    if(identity&&!narrativeSourceVisible(db,guild,identity.source_event,ctx.scope)||db.getNpcProfile(guild,u.subject_key)?.activity_tier==='dormant')throw fail('held_scope');
+    if(entity)try{assertNpcAvailability(db,guild,u.subject_key,{type:'contact',location_key:u.location_key||ctx.binding.location});}
+    catch(error){if(!error.code&&error.constructor===Error)throw fail('held_scope');throw error;}
     if(u.source_refs.length&&!u.source_refs.every(ref=>db.listNpcKnowledge(guild,u.subject_key,{limit:500})
       .some(k=>k.source_ref===ref&&k.belief_state==='known'&&!k.is_secret)))throw fail('held_secret');
   }
@@ -149,8 +156,9 @@ export function establishNarrativeUnits(db,guild,input,scope,sourceRef){
       const event=indexWorldEvent(db,guild,{key:`${key}:source`,kind:'native_narrative_unit',title:'Source-bound delegated GM fiction',source_id:issuer,
         scene:ctx.binding.scene,session_id:ctx.binding.session,location_key:u.location_key||ctx.binding.location||'',visibility:u.visibility,
         subject_key:scope.mode==='private'?scope.actorCharacterId:null,details:{input_source:sourceRef,source_refs:u.source_refs,payload_hash:hash(data),epistemic:data.epistemic}},issuer);
-      rows.push(db.saveCityRecord(guild,{kind:'narrative_unit',key,status:'accepted_established',visibility:u.visibility,subject_key:scope.mode==='private'?scope.actorCharacterId:null,
-        source_event:event.event_key,location_key:event.location_key,data}));fates.push({id:u.id,fate:'published'});
+      const accepted=db.saveCityRecord(guild,{kind:'narrative_unit',key,status:'accepted_established',visibility:u.visibility,subject_key:scope.mode==='private'?scope.actorCharacterId:null,
+        source_event:event.event_key,location_key:event.location_key,data});
+      retainEstablishedNarrative(db,guild,accepted);rows.push(accepted);fates.push({id:u.id,fate:'published'});
     }catch(error){if(!['SCENE_FICTION','NARRATIVE_PVP'].includes(error.code))throw error;fates.push({id:u.id,fate:'held_scope'});}
   }
   db.saveCityRecord(guild,{kind:'narrative_unit_fates',key:draft.record_key,status:'evaluated',visibility:'gm',source_event:sourceRef,

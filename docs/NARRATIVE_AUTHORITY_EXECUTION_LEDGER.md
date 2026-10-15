@@ -18,13 +18,21 @@ Actual command: `node --import ./scripts/offline-guard.mjs --test scripts/critic
 | Phase | Status | Commit / actual evidence |
 | --- | --- | --- |
 | 1 — creative authority first | Complete (focused gate) | Starting SHA `0b300e1ac5e077a14f7fb6fff155c57881c27fa1`; completion SHA recorded by the next ledger commit. |
-| 2 — salvage and publication-bound memory | Not started | |
+| 2 — salvage and publication-bound memory | Complete (focused + affected gate) | Starting `960e0588b49fb0b0d69ae45ffd0c95bf7f03509f`; completion SHA recorded next phase. |
 | 3 — camera and owner initial placement | Not started | |
 | 4 — NPC/encounter narration | Not started | |
 | 5 — salience/archive/completeness | Not started | |
 | 6 — qualification/deploy | Not started | |
 
 No production modification/restart is permitted until a consistent online backup, integrity/foreign-key checks and disposable restore drill pass. No paid model/Discord synthetic tests. Production deployment is authorized only after phase qualification; activation requires a legitimate administrative path, not forged Discord identity or ad-hoc flag SQL. New prose has residual semantic risk; provenance is not universal semantic proof.
+
+## Phase 2 — actual implementation and evidence
+
+Native narrative units are retained separately from drafts, outbox queueing and acknowledged audience disclosure. New `narrative-memory.js` creates GM-only establishment indexes and audience-bound disclosure revisions only after all bound chunks acknowledge real transport. Camera exposition explicitly does not imply PC witnessing or NPC knowledge. Retraction and current private ownership are checked at both dedicated and generic recall sinks. Existing legacy named-entity retention remains compatible when the new master flag is OFF; opted-in turns require established output, never raw combined text. Mixed NPC/scenery requests share one isolated writer; essential NPC portrayal has priority. `narrative-completeness.js` measures actual prepared parts, not provider self-reports. Invalid units are held independently; immutable receipts and safe siblings survive. No schema migration or extra provider call.
+
+Red-first four new cases: 0/4, exit 1, 1,166.4642 ms. Initial green 10/10, 3,257.1926 ms. Additional generic recall revocation assertion reproduced a real leak: 0/1, exit 1, 536.4243 ms; fixed ancestry/current-owner gating, preserving legacy memory semantics. Final focused/affected batch: `node --import ./scripts/offline-guard.mjs --test scripts/narrative-freedom-test.mjs scripts/memory-lifecycle-test.mjs scripts/narrative-contract-test.mjs scripts/v9-pvp-authorship-test.mjs scripts/v95-protected-narrative-test.mjs scripts/h05-discord-delivery-test.mjs`: **99/99**, exit 0, 34,863.8544 ms, zero skips. Original protected assertions unchanged. Full validator deferred to final integration. No live requests, production changes or billable tokens. A fate named `published` currently means independently approved/publishable composition, not transport acknowledgment; only `narrative_delivery=acknowledged_to_audience` grants recall. Semantic prose risk remains explicit.
+
+Phase 1 completion SHA: `960e0588b49fb0b0d69ae45ffd0c95bf7f03509f`.
 
 ## Phase 1 — actual implementation and evidence
 
