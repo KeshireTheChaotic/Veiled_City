@@ -82,8 +82,10 @@ function validateUnit(db,guild,u,ctx,entities=[]){
   const assertions=withoutVerifiedVocative(db,guild,u,ctx);
   if(mentions(assertions,names)||materialParaphrases(assertions,names).length)throw fail('held_material');
   // Native NPC speech renders as attributed, unverified testimony, never a binding PC obligation/history receipt.
-  // Retrospective allegations are speech; present forced choices and all material/privacy/name tripwires remain held.
-  if(u.kind==='npc_speech'&&/\b(?:you (?:agree|accept|obey|surrender|decide|confess)|your (?:consent|agreement) is)\b/i.test(assertions))throw fail('held_material');
+  // Agreement allegations may remain attributed; other retrospective PC actions keep their original tripwires.
+  // A verified personal vocative waives ONLY the address/name check, never the original second-person agency guard.
+  if(u.kind==='npc_speech'&&(/\b(?:you (?:agree|accept|accepted|obey|obeyed|surrender|surrendered|decide|decided|confess|confessed)|your (?:consent|agreement) is)\b/i.test(assertions)
+    ||assertions!==u.text&&/\b(?:you (?:agree|agreed|accept|accepted|obey|obeyed|surrender|surrendered|decide|decided|confess|confessed)|your (?:consent|agreement) is)\b/i.test(assertions)))throw fail('held_material');
   // Narrow POV allowance is perception, never a player choice. These finite tripwires are not universal semantics.
   const pov=u.text.replace(/\byou (?:can )?(?:see|hear|smell|notice)\b/gi,'the view').replace(/\byour (?:view|surroundings)\b/gi,'the view');
   if(ctx.binding.viewpoint==='camera'&&/\b(?:you|your|yours|yourself)\b/i.test(u.text)&&u.kind!=='npc_speech')throw fail('held_viewpoint');

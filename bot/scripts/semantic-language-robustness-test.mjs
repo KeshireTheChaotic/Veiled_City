@@ -1,5 +1,5 @@
 /** One compact semantic regression table. Existing provider doubles, native services, disposable SQLite only. */
-import test from 'node:test';
+import test,{after} from 'node:test';
 import assert from 'node:assert/strict';
 import path from 'node:path';
 import {nativeFixture} from './v9-fixtures.mjs';
@@ -16,7 +16,13 @@ import {persistAuthoredCandidates} from '../src/authored-candidates.js';
 import {captureContextSource,contextSourceKey} from '../src/narrative-context.js';
 import {semanticResponseObligation} from '../src/gameplay-intake.js';
 import {pacingAdvice} from '../src/story-continuity.js';
+import {bindSemanticEngagement,currentSemanticEngagement,semanticSceneOperation} from '../src/semantic-engagement.js';
+import {resolveTypedNativeRolls} from '../src/typed-mechanics.js';
+import {prepareRollRequest} from '../src/roll-requests.js';
+import {captureDeclaration} from '../src/player-language.js';
 const content=new ContentIndex(path.resolve('../content'));
+const measurements=[];
+const outputExamples={};
 const creative='Amber dryer windows glow over the folding counter; warm cotton scents the narrow laundromat.';
 const answer=(location='terminal',text=creative,kind='scene',fields={})=>({narrative_units:[unit('scene-response',kind,text,{location_key:location,...fields})],fiction_delta:[]});
 const intent=(text,fields={})=>({...candidate(text).player_intents[0],...fields});
@@ -33,6 +39,7 @@ function npc(f,x,key='attendant',{hidden=false,location='terminal'}={}){
   recordScenePresence(f.db,f.guild,{entity_type:'npc',entity_key:key,location_key:location,zone:'interior',source_event:source.event_key,visibility:'party',accepted_by:'native:fixture'},'native:fixture');
 }
 async function play(f,text,{route=false,moving=false,samePlace=false,mixed=false,held=false,speech=null,observe=false,otherQuery=false,restart=false,omitted=false}={}){
+  const responseStarted=performance.now();
   const x=base(f,text),r=candidate(text);r.player_intents=[];
   if(moving){
     f.db.setSimulationEntity(f.guild,'location','twenty-four-spin',{name:'Twenty-Four Spin',place_type:'laundromat',parent_location_key:'terminal',visibility:'party',access:'public'});
@@ -63,9 +70,13 @@ async function play(f,text,{route=false,moving=false,samePlace=false,mixed=false
     error.stack+=`\nFixture native diagnostics: ${JSON.stringify(diagnostics)}\nFixture correction: ${String(ai.requests.at(-1)?.input).match(/STRUCTURED TURN CORRECTION:[\s\S]{0,1000}/)?.[0]||'none'}`;throw error;}
   const turn=f.db.beginTurnAttempt({guildId:f.guild,sessionId:f.session.id,messageId:x.messageId,actorPrincipal:x.pc.owner_user_id,audience:x.scope.mode});
   commitGmTurn({db:f.db,content,guild:{id:f.guild},session:f.session,result,scope:x.scope,speaker:x.pc.name,label:'Semantic regression',meta:{turnId:turn.turn_id,messageId:x.messageId}});
-  const sent=[],start=performance.now(),send=async row=>{sent.push(row.payload);return {id:'fake-'+row.id};};
-  await deliverTurnOutbox(f.db,f.guild,turn.turn_id,send);const first_payload_ms=performance.now()-start;
+  const sent=[];let first_payload_ms=null;
+  const send=async row=>{sent.push(row.payload);if(first_payload_ms===null&&(row.payload.includes(creative)||row.payload.includes('has arrived')||speech&&row.payload.includes(speech)))first_payload_ms=performance.now()-responseStarted;return {id:'fake-'+row.id};};
+  await deliverTurnOutbox(f.db,f.guild,turn.turn_id,send);
   if(restart){f.restart();await deliverTurnOutbox(f.db,f.guild,turn.turn_id,send);}
+  measurements.push({lane:route?(mixed?'routed_mixed':'routed_observation'):'combined',calls:ai.requests.length,first_payload_ms});
+  if(moving&&!samePlace)outputExamples[held?'held_destination':'arrival']=sent.join('\n');
+  else if(observe&&!otherQuery)outputExamples.description=sent.join('\n');
   return {x,result,text:sent.join('\n'),sent,calls:ai.requests.length,requests:ai.requests,first_payload_ms,turn:turn.turn_id};
 }
 async function clause(f,text,span,{framing='immediate',start=text.indexOf(span),quote='',target=''}={}){
@@ -106,6 +117,21 @@ const cases=[
   ['S4','E19','unknown pacing does not silence scene by English phrase',async f=>{assert.notEqual(pacingAdvice(f.db,f.guild,'to the other player: is the attendant waiting?',{engagement_kind:'uncertain'}).suggested_mode,'silence');}],
   ['S5','P20','NPC alleges agreement without creating PC obligation',async f=>{const o=await play(f,'What does the attendant say?',{speech:'You agreed to the debt, or so the courier claimed.'});assert(o.text.includes('You agreed to the debt'));assert.equal(f.db.listCityRecords(f.guild,{kind:'commitment',includeGM:true}).length,0);}],
   ['S5','P21','server menu is not forced player selection',async f=>{const o=await play(f,'What does the attendant offer?',{speech:"Choose one of today's specials, if you like."});assert(o.text.includes("Choose one of today's specials"));assert.equal(f.db.getCharacter(o.x.pc.id).data.resources.hp.current,0);}],
-  ['S5','P22','unverified PC reaction and forced choice stay held',async()=>{for(const speech of ['Choso apologizes for losing.','You agree to the debt.'])await nativeFixture(async f=>{const o=await play(f,'What does the attendant say?',{speech});assert(!o.text.includes(speech));assert.equal(f.db.getCharacter(f.pcs[1].id).data.resources.hp.current,0);});}],
+  ['S5','P22','unverified PC reaction and forced choice stay held',async()=>{for(const speech of ['Choso apologizes for losing.','You agree to the debt.','You surrendered.','You accepted the contract.'])await nativeFixture(async f=>{const o=await play(f,'What does the attendant say?',{speech});assert(!o.text.includes(speech));assert.equal(f.db.getCharacter(f.pcs[1].id).data.resources.hp.current,0);});}],
+  ['S6','N23','semantic rolling cannot select an unrelated native pending request',async f=>{const text='I roll the pending attack',x=base(f,text);
+    f.db.setCityCalendar(f.guild,{flags:{...f.db.getCityCalendar(f.guild).flags,roll_requests:true,roll_collaboration:true}});
+    const source=captureDeclaration(f.db,f.guild,x.pc.owner_user_id,x.pc.id,'unrelated-search','I try inspecting the terminal.');
+    const q=prepareRollRequest(f.db,f.guild,{source_event:source.event_key,character_id:x.pc.id,trait:'Knowledge',kind:'action',modifier_keys:[],difficulty_source:'',adjudication:'Inspect the terminal.'},'gm');
+    const i=intent(text,{type:'roll',operation:'roll',target_key:q.record_key});persistPlayerIntents(f.db,f.guild,[i],x.scope,{messageId:x.messageId});
+    const before=f.db.getCharacter(x.pc.id).data.resources;
+    for(const scope of [x.scope,{...x.scope,actorUserId:f.pcs[1].owner_user_id}]){const result=resolveTypedNativeRolls(f.db,f.guild,scope,[i],x.messageId);assert.equal(result[0].status,'needs_clarification');}
+    assert.equal(f.db.getCityRecord(f.guild,'roll_request',q.record_key).status,'pending');assert.equal(f.db.db.prepare('SELECT COUNT(*) n FROM rolls').get().n,0);assert.deepEqual(f.db.getCharacter(x.pc.id).data.resources,before);}],
+  ['S6','N24','router handoff rejects forged, cross-source, cross-owner and stale audience proof',async f=>{const x=base(f,'What is the inside like?'),c={respond:true,engagement_kind:'scene_description',observation_only:true,target_scope:'current_location'},value=bindSemanticEngagement(f.db,f.guild,x.scope,x.sourceRef,c);
+    assert(value);assert.equal(semanticSceneOperation(currentSemanticEngagement(f.db,f.guild,value,x.scope,x.sourceRef)),'describe_scene');
+    for(const [token,scope,source] of [[{...value},x.scope,x.sourceRef],[value,{...x.scope,mode:'private'},x.sourceRef],[value,{...x.scope,actorUserId:f.pcs[1].owner_user_id},x.sourceRef],[value,x.scope,'unknown-source']])assert.equal(currentSemanticEngagement(f.db,f.guild,token,scope,source),null);
+    assert.equal(semanticSceneOperation({...c,target_scope:'other'}),null);assert.equal(semanticSceneOperation({...c,observation_only:false}),null);
+    const event=f.db.getWorldEvent(f.guild,x.sourceRef);f.db.saveWorldEvent(f.guild,{...event,key:event.event_key,status:'retracted'});assert.equal(currentSemanticEngagement(f.db,f.guild,value,x.scope,x.sourceRef),null);}],
 ];
 for(const [phase,id,label,run] of cases)test(`${phase} ${id} ${label}`,()=>nativeFixture(run));
+after(()=>{const lanes={};for(const row of measurements){const lane=lanes[row.lane]??={runs:0,request_counts:[],response_to_substantive_ms:[]};lane.runs++;lane.request_counts.push(row.calls);lane.response_to_substantive_ms.push(row.first_payload_ms===null?null:Number(row.first_payload_ms.toFixed(2)));}
+  console.log('Synthetic lane measurements (fake providers; not live latency): '+JSON.stringify(lanes));console.log('Fake-transport exact outputs: '+JSON.stringify(outputExamples));});

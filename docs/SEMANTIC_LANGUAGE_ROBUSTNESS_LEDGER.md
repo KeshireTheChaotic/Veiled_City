@@ -23,8 +23,8 @@ S0 intentionally commits reproductions before repairs; they are not a qualified 
 | S2 | Implemented; focused qualification below | `c575a071b082cb3400c00908703a1e44f6fbb50f` |
 | S3 | Implemented; focused qualification below | `470660e505e81c9bb87a2bef3485d24914111334` |
 | S4 | Implemented; focused qualification below | `d7f0097a90c52a89398b2fc1cd5f941516684dc8` |
-| S5 | Implemented; focused qualification below | See Git commit named `fix(semantic): distinguish certified NPC speech from PC choices` |
-| S6 | Pending | — |
+| S5 | Implemented; focused qualification below | `bd214070e65a4d7ab709af308f263dc3a859eafd` |
+| S6 | Qualified offline; branch push/CI to be reported separately | Completion SHA recorded in the following documentation receipt |
 
 ## S1 — scoped answer arbitration and semantic routing
 
@@ -69,3 +69,35 @@ Certified gm_narrative_unit NPC utterances already have an independently validat
 Deliberately retained: source-backed literal contextual-entry acknowledgement guard (a declaration does not prove arbitrary prose is only an acknowledgement); uncertain-claim markers/materialParaphrases; PC-name defenses except the existing native-known leading vocative; exact consent/native roll identities; unprepared/raw mixed-paragraph rejection; non-NPC forced-choice tripwire. No universally reliable semantic meaning proof exists for replacing those with model labels, so no broad waiver, sentence catalog or new phrase exception was added. Named PC reactions and current `You agree` remain held even inside NPC units. Ambiguously material narration remains reviewable. Residual generated-English semantic risk remains disclosed; attribution does not make an NPC allegation true.
 
 Focused S5 **3/3**, zero skipped, exit0,1700.13ms. Impacted `--test-name-pattern='S5 |PVP30|SEM06'` across the compact table + original PvP authorship + original ordinary-scene P0 suites: **63/63**, zero skipped, exit0,31083.872ms. Original PVP30/PVP30q/ag/Choso apology and SEM06 assertions unchanged. Exact fake outbox text includes permitted allegations/menu, excludes forced agreement/reaction; resources/commitments unchanged. No full registry, billable/live call or production operation.
+
+## S6 — final integration and qualification
+
+Starting `bd214070e65a4d7ab709af308f263dc3a859eafd`. Compact table extended from22 to24 cases, not a second framework: N23 proves actual owned unrelated pending request remains pending/no RNG/no resource spend for a semantic roll without exact native selection, including wrong owner; N24 rejects JSON-forged, cross-source/owner/audience and retracted router handoffs. An initial N23 fixture used a legacy captureDeclaration verb that intentionally creates no source; corrected to the existing fixture's explicit attempt syntax, not a runtime change. N23/N24 **2/2** exit0. New suite registered as mandatory;39 optional matrices untouched.
+
+Final affected batch: compact24 + HOT12 + D08 security/observability + typed routing + memory audience isolation + publication: **63/63**, zero skipped, exit0,34964.7664ms. Exact command: `node --import ./scripts/offline-guard.mjs --test --test-reporter=spec scripts/semantic-language-robustness-test.mjs scripts/narrative-publication-hotfix-test.mjs scripts/d08-window-security-test.mjs scripts/d08-observability-test.mjs scripts/typed-routing-authority-test.mjs scripts/memory-audience-isolation-test.mjs scripts/v9-publication-test.mjs`. Local evidence `%TEMP%\vc-semantic-s6-security.log`.
+
+First complete final gate: `npm run validate`, **119 passed/1 failed/2 not run** of122, exit1,590545ms. Real default-suite regression **DQ04**, unchanged: `Mr. Raven, you agreed to surrender.` reached the outbox. The S5 broad removal of retrospective PC-agency tripwires was unsafe despite its focused green batch. This is a production defect, not a fixture error, and not qualified/pushed. Isolated original DQ04 + strengthened existing P22: **0/2**, exit1. Added `You surrendered.` and `You accepted the contract.` contrasts within P22 also reproduce the unsafe expansion; original SEM06/PVP30/ag assertions untouched.
+
+Repair restores the original retrospective acceptance/obedience/surrender/decision/confession tripwires. When native verification strips a known PC vocative, the **entire original second-person agency guard** still applies to the remainder: the proof authorizes only the address, not the PC's subsequent action. Generic attributed agreement allegation and menu positives remain permitted without a commitment receipt. No new phrase exception/catalog or model judge; other ambiguous cases deliberately remain conservative.
+
+Recovery command `--test-name-pattern='S5 |DQ04|PVP30|SEM06'` across compact/delegation/PvP authorship/SEM06: **64/64**, zero skipped, exit0,32851.1871ms. Final compact + complete delegation-quality + HOT: **50/50**, zero skipped, exit0,31373.465ms. Logs `%TEMP%\vc-semantic-s6-dq04-red.log`, `vc-semantic-s6-dq04-green.log`, `vc-semantic-s6-final-focused.log`. Original DQ04 assertions untouched. Fresh manifest/check/full requalification pending; no commit/push before it passes.
+
+Final frozen executable/test tree: `node scripts/sync-release.mjs 10.2.0` exit0 (696 non-runtime files), `npm run check` exit0 (383 modules/scripts,24 root commands), `git diff --check` exit0. Necessary repeat complete `npm run validate` after the real DQ04 repair: **122/122 mandatory suites PASS**,0 failed,0 not_run,26/26 acceptance entries passed,645446ms, exit0; network denied/live requests0/billable tokens0. Logs `%TEMP%\vc-semantic-s6-check-final.log` and `vc-semantic-s6-validate-final.log`; compact local machine report `bot/.reports/offline-validation.json`. The prior121-suite report was historical baseline evidence, not a run in this task. Final registry122 critical/161 extended; all39 optional matrices preserved, not executed as extended qualification. No test was removed, weakened or skipped to obtain green. Results-only documentation/manifest refresh does not change qualified executable/test inputs; no redundant full rerun for that refresh.
+
+Synthetic final-focused measurements (not live performance): combined14 runs,2 requests each; routed observation6 runs,2 each; routed mixed1 run,3 requests. Combined first substantive fake payload98.61–191.77ms (10 values;4 intentionally held forced-PC cases have no substantive payload), routed observation113.11–5207.23ms, mixed168.52ms. These include local native work and fake delivery, not real model/network latency; the outlier is retained rather than claiming a speedup. Existing direct literal writer lane1 is separately retained/tested by DN01. Source-path comparison for previously unmatched routed paraphrases is3→2, not a measured live before/after benchmark. Added standard round-trips **0**, no second writer/judge. Exact fake-transport outputs:
+
+```text
+Description:
+Amber dryer windows glow over the folding counter; warm cotton scents the narrow laundromat.
+
+Successful entry (one native arrival):
+Amber dryer windows glow over the folding counter; warm cotton scents the narrow laundromat.
+Jaxon has arrived at twenty-four-spin.
+
+Held destination writer:
+Jaxon has arrived at twenty-four-spin.
+```
+
+No contradictory legacy insufficient-detail answer is appended to the same answered location task. Held destination coverage is false with GM-private source-bound diagnostics. Exact fake allegations/menu publish as attributed NPC speech; unverified Choso apology, forced agreement, surrender and accepted-contract contrasts are absent. Original protected PvP/SEM06/DQ04, native mechanics/death/Fear, owner/consent/privacy, transaction and outbox/restart gates all pass in the final mandatory registry.
+
+No DB schema, dependencies, production configuration, credentials or campaign data changed. No live/paid provider/Discord call or production operation. Push/CI are separate source-delivery steps; a push is not deployment and CI does not establish live semantic quality. Current production installed/running/flags status is unverified by this task. Rollback and residual semantic/conservative-hold limitations are in `SEMANTIC_LANGUAGE_ROBUSTNESS_RELEASE.md`; actual historical12:10 authoring failure remains undiagnosed without its specific records. Final branch/CI receipts are reported in the user handoff, not fabricated here before execution.
