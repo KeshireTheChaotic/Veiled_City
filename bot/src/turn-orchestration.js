@@ -7,6 +7,7 @@ import { reconcileConsequences } from "./consequence-reconciliation.js";
 import {refreshActionContinuations} from "./action-continuation.js";
 import {measureNative,operationalMetrics} from './operational-metrics.js';
 import {currentTurnTrace} from './turn-trace-context.js';
+import {recordNarrativeHealth} from './narrative-completeness.js';
 export function commitGmTurn({db,guild,session,result,scope,speaker,label,meta={},content=null}){
   const decision_advisory=validateDecisionAdvisory(db,guild.id,result);
   const mutates=(result.ai_intents||[]).length||(result.events||[]).some(e=>e.type!=="log_only")||(result.relationships||[]).length||(result.handouts||[]).length||(result.npc_memories||[]).length||(result.npc_knowledge||[]).length||(result.npc_goals||[]).length||(result.simulation_updates||[]).length;
@@ -38,14 +39,7 @@ export function commitGmTurn({db,guild,session,result,scope,speaker,label,meta={
       else if(trace.category==='unknown')trace.category='conversation';
     }
     mutation.continuations=refreshActionContinuations(db,guild.id);
-    if(db.getCityCalendar(guild.id).flags.narrative_completeness&&result.narrative_completion){
-      const key=`narrative-health:${meta.turnId||meta.messageId}`,prior=db.getCityRecord(guild.id,'narrative_health',key);
-      if(!prior){
-        db.saveCityRecord(guild.id,{kind:'narrative_health',key,status:result.narrative_completion.status,visibility:'gm',
-          source_event:mutation.typedIntents?.[0]?.source_event||null,data:{version:1,...result.narrative_completion}});
-        operationalMetrics.record(result.narrative_completion.status==='complete'?'narrative_completed':'narrative_missing',{guildId:guild.id});
-      }
-    }
+    recordNarrativeHealth(db,guild.id,result,`narrative-health:${meta.turnId||meta.messageId}`,mutation.typedIntents?.[0]?.source_event||'');
     if(mutation.typedIntents?.length)mutation.reconciliation=reconcileConsequences(db,guild.id,{
       intents:mutation.typedIntents,narration:result.narration||"",private_messages:result.private_messages||[],scope,strict:true});
     const proposalMap=new Map();

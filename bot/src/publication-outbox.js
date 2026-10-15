@@ -8,6 +8,7 @@ import {operationalMetrics} from './operational-metrics.js';
 import {turnLatency} from './turn-latency.js';
 import {currentTurnTrace,turnTraceFor} from './turn-trace-context.js';
 import {queueNarrativeMemory,acknowledgeNarrativeMemory} from './narrative-memory.js';
+import {recordNarrativeHealth} from './narrative-completeness.js';
 const deliveryQueues=new WeakMap();
 function serialized(db,key,job){
   if(!deliveryQueues.has(db))deliveryQueues.set(db,new KeyedSerialQueue());
@@ -63,6 +64,7 @@ export function queueDirectorPublications(db,{guild,session,result,scope,key}){
     const turn=db.beginTurnAttempt({guildId:guild.id,sessionId:session.id,messageId:`director:${digest(key)}`,
       actorPrincipal:scope.actorUserId||"__world_director__",audience:scope.mode});
     queueTurnPublications(db,{guild,session,result,scope,turnId:turn.turn_id});
+    recordNarrativeHealth(db,guild.id,result,`narrative-health:${turn.turn_id}`);
     db.updateTurnAttempt(turn.turn_id,{stage:"committed",committed:"yes",nativeCommitId:`director:${key}`});
     return turn.turn_id;
   });

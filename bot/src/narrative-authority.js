@@ -83,7 +83,8 @@ function validateUnit(db,guild,u,ctx,entities=[]){
   if(u.kind==='npc_speech'&&/\b(?:you (?:agree|agreed|accept|accepted|obey|obeyed|surrender|surrendered|decide|decided|confess|confessed)|your (?:consent|agreement) is)\b/i.test(assertions))throw fail('held_material');
   // Narrow POV allowance is perception, never a player choice. These finite tripwires are not universal semantics.
   const pov=u.text.replace(/\byou (?:can )?(?:see|hear|smell|notice)\b/gi,'the view').replace(/\byour (?:view|surroundings)\b/gi,'the view');
-  if(/\b(?:you|your|yours|yourself)\b/i.test(pov)&&u.kind!=='npc_speech'||ctx.binding.viewpoint==='camera'&&/\b(?:you|your|yours|yourself)\b/i.test(u.text)&&u.kind!=='npc_speech')throw fail('held_material');
+  if(ctx.binding.viewpoint==='camera'&&/\b(?:you|your|yours|yourself)\b/i.test(u.text)&&u.kind!=='npc_speech')throw fail('held_viewpoint');
+  if(/\b(?:you|your|yours|yourself)\b/i.test(pov)&&u.kind!=='npc_speech')throw fail('held_material');
   if(/\b(?:HP|hit points?|armor slots?|stress (?:marks?|slots?)|marks? \d+|takes? \d+ damage|is (?:captured|restrained|arrested)|has surrendered)\b/i.test(u.text))throw fail('held_material');
   for(const f of db.listFactsForGM(guild,{limit:500}))if(f.content?.length>=12&&u.text.includes(f.content)
     &&(!narrativeVisible(f,ctx.scope)||!narrativeSourceVisible(db,guild,f.id,ctx.scope)))throw fail('held_secret');
@@ -133,7 +134,7 @@ export async function authorNarrativeRequests({db,guild,result,scope,sourceRef,b
       budget.used=true;db.saveCityRecord(guild,{kind:'scene_authoring_attempt',key:attempt,status:'authoring',visibility:'gm',source_event:sourceRef,
         data:{version:3,draft:key,packet_hash:hash(ctx.packet)}});
       const answer=await generate(ctx.packet);shape(answer);
-      const data={version:1,issuer,input,binding:ctx.binding,answer,packet_hash:hash(ctx.packet),semantic_verification:false};
+      const data={version:1,issuer,input,binding:ctx.binding,answer,creative_brief:ctx.packet.creative_brief,packet_hash:hash(ctx.packet),semantic_verification:false};
       db.saveCityRecord(guild,{kind:'narrative_draft',key,status:'drafted_private',visibility:'gm',source_event:sourceRef,data});
       db.saveCityRecord(guild,{...db.getCityRecord(guild,'scene_authoring_attempt',attempt),key:attempt,status:'authored'});
     }catch(error){

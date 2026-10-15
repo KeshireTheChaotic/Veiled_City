@@ -480,7 +480,7 @@ export function prepareAuthorizedTurnOutput(db,guild,result,scope,{sourceRef=nul
   }
   saveOutputGroup(db,guild,parts);
   prepared.set(result,{raw,drafts,candidate,hasDisclosureDependencies,parts:parts.map(p=>p.record_key),privateParts,scope:hash(scope),fingerprint:fingerprint(result)});
-  if(db.getCityCalendar(guild).flags.narrative_authority===true)result.narrative_completion=validateNarrativeCompleteness(db,guild,result,parts,worldParts);
+  if(db.getCityCalendar(guild).flags.narrative_authority===true)result.narrative_completion=validateNarrativeCompleteness(db,guild,result,parts,worldParts,{sourceRef,scope});
   return result;
 }
 /** Direct unprepared boundaries reject. High-level callers deliberately prepare before entering them. */

@@ -15,7 +15,7 @@ export function coordinateNarrative(db,guild,result,{scope,sourceRef,movement=fa
   const tasks=new Set(parts.filter(p=>p.version===8).map(p=>taskFor(p.operation)).filter(Boolean));
   const speakers=parts.filter(p=>p.version===3).map(p=>p.entity_key);
   if(speakers.length||intents.some(i=>i.type==='speak'||i.type==='interact'&&i.target_key&&db.getNpcProfile(guild,i.target_key)))tasks.add('conversation');
-  if(intents.some(i=>i.type==='search'))tasks.add('investigation');
+  if(intents.some(i=>i.type==='search'||i.operation==='investigate'))tasks.add('investigation');
   if(movement)tasks.add('arrival');
   if(intents.some(i=>i.type==='roll')&&db.getCurrentEncounter(db.getActiveSession(guild)?.id)?.status==='active')tasks.add('combat');
   if(director)tasks.add('continuation');

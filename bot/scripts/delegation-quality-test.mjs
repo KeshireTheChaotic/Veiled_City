@@ -4,7 +4,7 @@ import assert from 'node:assert/strict';
 import path from 'node:path';
 import {nativeFixture} from './v9-fixtures.mjs';
 import {FakeResponses,fakeInteraction} from './contract-fixtures.mjs';
-import {setup,candidate,unit} from './narrative-freedom-test.mjs';
+import {setup,candidate,unit,run} from './narrative-freedom-test.mjs';
 import {INTENT_PAYLOADS,intentOperations} from '../src/ai-intent-contracts.js';
 import {configureDelegation,delegationPolicy,delegationOperation} from '../src/ai-intents.js';
 import {delegationCatalog} from '../src/delegation-catalog.js';
@@ -19,8 +19,8 @@ import {GMService} from '../src/gm.js';
 import {ContentIndex} from '../src/content.js';
 import {commitGmTurn} from '../src/turn-orchestration.js';
 export const allOperations=()=>[...new Set(Object.keys(INTENT_PAYLOADS).flatMap(f=>intentOperations(f).map(op=>`${f}.${op}`)))].sort();
-export async function qualityTurn(f,{omit=false,fast=false,text='Describe the scene',answer=null,config={}}={}){
-  const x=setup(f,{text}),r=candidate(text);if(omit)r.gm_world_parts=[];
+export async function qualityTurn(f,{omit=false,fast=false,text='Describe the scene',answer=null,config={},mutate=null}={}){
+  const x=setup(f,{text}),r=candidate(text);if(omit)r.gm_world_parts=[];if(mutate)mutate(r);
   const ai=new FakeResponses(fast?[answer]:[r,answer]),gm=new GMService({db:f.db,content:new ContentIndex(path.resolve('../content')),ai,
     config:{gmModel:'offline-main',routineGmModel:'offline-routine',maxRecentMessages:2,maxContentChunks:1,playableObservationFastPath:fast,...config}});
   const result=await gm.runTurn({guildId:f.guild,actorUserId:x.pc.owner_user_id,actorName:x.pc.name,messageId:x.messageId,messageText:text,scope:x.scope.mode});
@@ -159,4 +159,26 @@ test('ND02 proposed Director work stays unresolved, private references excluded,
   const draft={...candidate(x.text),act:false,public_narration:'',confidence:100,gm_notes:''};draft.player_intents=[];
   const ai=new FakeResponses([draft]),gm=new GMService({db:f.db,content:new ContentIndex(path.resolve('../content')),ai,config:{gmModel:'offline'}});
   await gm.runWorldDirector({guildId:f.guild,layer:'manual',trigger:{requested_by:'gm'}});assert.equal(ai.requests.length,1);
+}));
+test('NH01 investigation coverage flags missing answer, accepts source-bound clue and counts held siblings',()=>nativeFixture(async f=>{
+  f.db.setCityCalendar(f.guild,{flags:{...f.db.getCityCalendar(f.guild).flags,narrative_completeness:true}});
+  const mutate=r=>{r.player_intents[0].operation='investigate';};
+  const missing=await qualityTurn(f,{text:'What stands out on the counter?',answer:scene(),mutate});
+  assert.equal(missing.result.narrative_completion.status,'investigation_response_missing');
+  const answer=scene();answer.narrative_units.push(unit('clue','lead','A second postmark peeks out beneath the delivery label.'),unit('blocked','scene','Choso surrenders.'));
+  const good=await qualityTurn(f,{text:'What stands out on the parcel label?',answer,mutate});
+  assert.equal(good.result.narrative_completion.status,'complete');assert.equal(good.result.narrative_completion.held_parts,1);
+  assert(good.result.narrative_completion.diagnostics.includes('validated_siblings_salvaged'));
+  assert(good.rows.some(r=>r.payload.includes('postmark')));assert(good.rows.every(r=>!r.payload.includes('surrenders')));
+  assert.equal(good.ai.requests.length,2);
+}));
+test('NH02 native combat atmosphere and camera diagnostics preserve independent fiction',()=>nativeFixture(async f=>{
+  const encounter=f.db.createEncounter(f.guild,f.session.id,{status:'active',tier:1,pc_count:4,base_bp:14,budget_bp:14,composition:[]});
+  f.db.setCityCalendar(f.guild,{flags:{...f.db.getCityCalendar(f.guild).flags,narrative_encounters:true,narrative_completeness:true}});
+  const out=await qualityTurn(f,{answer:scene(),mutate:r=>{r.gm_world_parts[0].operation='combat';}});
+  assert.equal(out.result.narrative_completion.status,'complete');assert(out.rows.some(r=>r.payload.includes('brass parcel counter')));
+  assert.equal(f.db.getCharacter(f.pcs[0].id).data.resources.hp.current,0);f.db.setEncounterStatus(encounter.id,'ended');
+  const x=setup(f,{placed:false}),answer=scene();answer.narrative_units.push(unit('bad-pov','scene','You see the red notice.'));
+  const camera=await run(f,x,answer);assert(camera.result.narrative_completion.diagnostics.includes('camera_misframed'));
+  assert(camera.rows.some(r=>r.payload.includes('brass parcel counter')));assert(camera.rows.every(r=>!r.payload.includes('You see')));
 }));

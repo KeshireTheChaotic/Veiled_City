@@ -45,3 +45,15 @@ Phase 3 commit `24b2595`; final changed-order focused DQ04/NS01 2/2 pass.
 Starting SHA `24b2595`. Native Director scope now saves a bounded dramatic brief with current active audience-visible observation/arrival/established-fiction references and immutable revisions. Visible observed descriptions are included; arbitrary trigger text, GM notes, private plans and source titles are not. Proposed work is explicitly unresolved; only existing native outcome projection can supply resolved mechanical prose. Evidence is revalidated before reuse/publication. Old Director sources without the new field retain their previous contract.
 
 Coordinator merges dialogue/environment/continuation into one writer call. Quiet Director passes stay planner-only. Native cadence/effect budgets unchanged. ND01 first failed because no dramatic brief existed (0/1, exit 1); actual party/private Director/outbox tests plus ND01–02 now 4/4 pass, exit 0. One planner + one writer for multi-beat response; one planner and zero writer for quiet pass. Native action/resource state unaffected; no new effect adapter or schema migration.
+
+Phase 4 commit `54ccd93`.
+
+## Phase 5
+
+Starting SHA `54ccd93`. Native typed coverage now distinguishes conversation, destination framing at the actual arrival location, investigation evidence/lead/native notice, combat and Director continuation. GM-private diagnostics count actual unit fates, validated sibling salvage, administrative fallback, retrieval/stale-proof misses, camera misframing and repeated short text. These are coverage proxies, not semantic/literary proof. Existing receive-to-substantive-ack timing already supplies bounded p50/p95 only when real samples exist; no fake production timing is reported.
+
+Health uses a deduplicated native GM-private record and closed aggregate metric categories, including Director commits. Existing unit-local quarantine and native source-backed fallback are reused as bounded local salvage; no model retry/judge, effects or provider calls arise from health reporting.
+
+NH01 corrected a fixture that wrongly modeled a nonmechanical information question as a mechanically unresolved search; the valid question reproduction then failed for the intended missing-coverage reason (exit 1). NH01/NH02 and inherited golden fixtures now pass: 34/34 tests, exit 0. Golden coverage: N01 sparse/camera; N02 introduction/canon identity; N03 improvised clue; NS01 returning NPC portrayal/own evidence; DQ04 name entitlement; NH01 investigation; NH02 combat/camera; ND01–02 Director; N18 private; N09 uncertain ack/restart; N12 source withdrawal; N06 proxy/native receipt. No claim of live prose quality.
+
+Affected security batch: original SEM06, FH40, PVP authorship (including PVP30q/ag), observation/OBS21, D08 window security and D08 observability: 125/125 tests, exit 0. Quality, format and critical registry inventory audit pass. All 39 optional historical matrices preserved. Final full qualification remains pending; no production mutation or paid call.
