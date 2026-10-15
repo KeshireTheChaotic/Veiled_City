@@ -7,8 +7,9 @@ Accepted typed intents are canonical adjudication inputs; human declarations own
 | Phase | Status | Commit |
 | --- | --- | --- |
 | R0 | Compact red baseline/contracts | `ef89a6282f910934239d1eef3e8d61b3aa1b53f0` |
-| R1 | Locality and exact writer audience qualified | Recorded in R2 receipt |
-| R2–R6 | Not started | — |
+| R1 | Locality and exact writer audience qualified | `57e141c88fb71b817bb84fa4a94edf1ffb12d149` |
+| R2 | Actor evidence, grounded referents and camera qualified | Recorded in R3 receipt |
+| R3–R6 | Not started | — |
 | D0–D3 | Not started | — |
 
 ## R0 — compact baseline and frozen formats
@@ -28,3 +29,11 @@ Final compact R0 baseline after fixture correction: **12/28 pass, 16/28 expected
 Starting HEAD `ef89a6282f910934239d1eef3e8d61b3aa1b53f0`. Missing boundary: mutually agreeing remote NPC/unit locations previously passed without matching the packet viewpoint; private writers could label new units party-visible. `narrative-authority.js:validateUnit` now requires exact effective unit visibility and local creative placement. Genuine new camera settings require an unanchored camera and current native creation provenance; native v4 outcomes retain their own receipt validation. The same validator runs during establishment and deferred `renderNarrativeUnit`, so no weaker restart reader exists. No historical shape/hash, native effects, flag or schema changes. Rollback: revert this phase's code, preserving all native records; source/effect histories are not rewritten.
 
 Focused `--test-name-pattern='R1 '` compact module: **5/5 pass**, zero skipped, exit 0, 2249.4594ms. Previously red NC01/03 green; local/new-NPC, retraction/restart and altered payload proof remain green. Original `narrative-publication-hotfix-test.mjs`: **12/12 pass**, zero skipped, exit 0, 8270.3108ms. Logs `%TEMP%\vc-narrative-r1.log`, `vc-narrative-r1-hotfix.log`. No provider round-trips added; all calls fake/offline. Full registry intentionally deferred.
+
+## R2 — actor evidence, references and camera
+
+Starting HEAD `57e141c88fb71b817bb84fa4a94edf1ffb12d149`. Native heard receipts were GM-private, hence omitted by the generic public-source reader; seed paths had no event proof. Added `npc-cognition-projection.js`: exact accepted typed utterance, actual native listener, current owner/principal and source closure are required for heard-claim retrieval. Private hearing remains original-owner/private only. The trusted package importer now issues immutable content/key-bound `native_npc_knowledge_import` receipts for explicitly nonsecret `knows` entries. They authorize attributed actor testimony, not objective facts or blanket dossier disclosure. Arbitrary path-only rows, secrets, unsupported historical seed imports and inferred lore remain excluded. Existing historical rows are not rewritten. Bulk seed-draft historical paths remain KEEP/review pending equivalent import receipts, not retrospectively certified.
+
+`narrative-speakers` supplies bounded actor evidence and exact speech references. `narrative-authority` validates those references only for that NPC's speech; native source events separate actor evidence from generic audience source closure. `scene-fiction-context` checks the exact native unit payload and revalidates actor evidence on deferred memory/source reads, never promotes arbitrary GM events. Source retraction invalidates publication/recall without reversing effects. Fresh GM-created NPCs gain genuine native scene-presence receipts. `dialogue-continuity` resolves complete native public descriptors only when exactly one audible eligible occupant matches; model targets alone, ambiguous/proxy/remote listeners still fail. `public-referents` performs boundary-aware identity matching, not English action inference. Unplaced cameras use a unique entitled request/source anchor or null; no alphabetic fallback and no PC placement.
+
+Initial six focused R2 cases: **6/6 pass**, exit0,2503.5142ms. Expanded NC05/07 exercise genuine NPC recall/import through GM commit, exact outbox and restart; retracting hearing invalidates rendering. Final affected batch `--test-name-pattern='R2 |NC02|S3 '` compact + original semantic suite: **11/11 pass**, zero skipped, exit0,5177.452ms (`%TEMP%\vc-narrative-r2-qualified.log`). Original S3 assertions unchanged. No provider calls added; no production access. No schema/old v8/v4 hash changes. Rollback code-only; preserve new native import/presence receipts and old rows. Residual generated-prose semantics remain probabilistic, not certified by actor knowledge.

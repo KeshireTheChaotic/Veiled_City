@@ -6,6 +6,7 @@ import {factVisibleTo} from './disclosure-authority.js';
 import {activeEvidence,objectiveEvidence,evidenceType} from './epistemic.js';
 import {protectedPvpScope} from './pvp-output.js';
 import {assemblyOrientation} from './assembly-state.js';
+import {actorReferenceVisible} from './npc-cognition-projection.js';
 export const sceneFictionHash=value=>createHash('sha256').update(JSON.stringify(value)).digest('hex');
 export function sceneFictionFailure(reason){return Object.assign(new Error(`Scene fiction held: ${reason}. No character action or outcome was inferred.`),
   {code:'SCENE_FICTION',expected:true,diagnostic:{category:reason}});}
@@ -15,6 +16,11 @@ function closure(db,guild,key,scope,seen=new Set()){
   if(typeof key!=='string'||!key)return false;
   if(seen.has(key)||seen.size>=32)return false;seen.add(key);
   const row=db.getFact(guild,key)||db.getWorldEvent(guild,String(key).replace(/^event:/,''));
+  if(row?.kind==='native_narrative_unit'&&row.details.actor_evidence_refs){
+    const unit=db.getCityRecord(guild,'narrative_unit',row.event_key.replace(/:source$/,''));
+    if(row.source_id!=='native:narrative-authority'||!unit||sceneFictionHash(unit.data)!==row.details.payload_hash
+      ||!row.details.actor_evidence_refs.every(ref=>actorReferenceVisible(db,guild,row.details.actor,ref,scope)))return false;
+  }
   const ancestors=row?.content?evidenceType(row).source_refs:[row?.details?.input_source,row?.details?.declaration,
     ...(row?.kind==='native_scene_fiction'?[row.details.origin]:[]),...(Array.isArray(row?.details?.source_refs)?row.details.source_refs:[])].filter(Boolean);
   return !!(row&&visible(row,scope)&&activeEvidence(db,guild,key)

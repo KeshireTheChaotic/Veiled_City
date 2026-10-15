@@ -92,6 +92,8 @@ export function establishNarrativeEntity(db,guild,input,context,{content=null}={
       activityTier:'background',source:'native_narrative_authority',knowledgeBoundaries:['Own sourced observations and ordinary self-knowledge only.']});
     db.setSimulationEntity(guild,'npc',input.key,{name:input.name,location_key:location,visibility,subject_character_id:subject,aliases:input.aliases,
       narrative_origin:binding.source,activity_tier:'background',resources:{influence:0,materials:0,information:0,manpower:0,leverage:0,wounds:0,stress:0,favors:0}});
+    recordScenePresence(db,guild,{entity_type:'npc',entity_key:input.key,location_key:location,zone:'unspecified',
+      source_event:event.event_key,visibility,subject_key:subject,accepted_by:'native:narrative-authority'},'native:narrative-authority');
   }
   db.upsertReference(guild,{kind:input.kind,key:input.key,name:input.name,summary:input.summary,visibility,subjectCharacterId:subject});
   return db.saveCityRecord(guild,{kind:'autonomous_entity',key:`${input.kind}:${input.key}`,source_event:event.event_key,location_key:location,visibility,subject_key:subject,

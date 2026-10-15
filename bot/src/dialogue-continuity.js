@@ -11,6 +11,7 @@ import {narrativeSourceVisible} from './scene-fiction-context.js';
 import {factVisibleTo} from './disclosure-authority.js';
 import {sourceSpanInsideQuote} from './authored-turn-envelope.js';
 import { interpretAuthoredText } from "./player-language.js";
+import {mentionsPublicIdentity} from './public-referents.js';
 export function captureDialogue(db,guild,user,characterId,messageId,message,{privateScene=false,candidate=null,typedIntentKey=null}={}){
   const flags=db.getCityCalendar(guild).flags;
   if(flags.dialogue_history!==true||flags.scene_continuity!==true||!characterId||!messageId||typeof message!=="string") return null;
@@ -54,8 +55,16 @@ export function captureDialogue(db,guild,user,characterId,messageId,message,{pri
     addressed=occupants.filter(row=>row.data.entity_key===typed.data.target_key);
     const profile=db.getNpcProfile(guild,typed.data.target_key),state=db.getSimulationEntity(guild,'npc',typed.data.target_key)?.state;
     const names=[profile?.display_name,...(state?.aliases||[])].filter(n=>typeof n==='string'&&n.length>=3);
-    const explicitlyNamed=names.some(n=>candidate.source_span.toLocaleLowerCase().includes(n.toLocaleLowerCase()));
-    if(occupants.length>1&&!explicitlyNamed)return null; // Ambiguous pronoun/role does not bestow knowledge on a guessed listener.
+    const explicitlyNamed=names.some(n=>mentionsPublicIdentity(candidate.source_span,n));
+    if(occupants.length>1&&!explicitlyNamed){
+      // Match native public descriptors, not a catalog of English referring phrases.
+      // The model's target must agree with the unique actual audible candidate.
+      const matches=occupants.filter(row=>{
+        const role=db.getSimulationEntity(guild,'npc',row.data.entity_key)?.state.public_role;
+        return mentionsPublicIdentity(candidate.source_span,role);
+      });
+      if(matches.length!==1||matches[0].data.entity_key!==typed.data.target_key)return null;
+    }
   }else addressed=speech.target?occupants.filter(row=>[row.data.entity_key,db.getNpcProfile(guild,row.data.entity_key)?.display_name,
     db.getNpcProfile(guild,row.data.entity_key)?.name].filter(Boolean).some(name=>name.toLowerCase()===speech.target.toLowerCase())):occupants;
   if(speech.target&&addressed.length!==1)return null;

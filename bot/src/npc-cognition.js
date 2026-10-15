@@ -10,6 +10,7 @@
 import {narrativeContextEligible} from './narrative-salience.js';
 import { clusterContext } from "./memory-clusters.js";
 import { sceneView, npcEvidenceActive } from "./scene-continuity.js";
+import {recordImportedNpcKnowledge} from './npc-cognition-projection.js';
 
 function words(value){
   return new Set(String(value||"").toLowerCase().match(/[a-z0-9']{3,}/g)||[]);
@@ -230,7 +231,7 @@ export function seedNpcCognition({db,content,guildId,actorId="system",incrementa
         const item=String(npc.knows[i]||"").trim(); if(!item) continue;
         db.upsertNpcKnowledge(guildId,{
           npcKey:key,knowledgeKey:`seed.known.${i+1}`,content:item,beliefState:"known",
-          confidence:95,sourceType:"seed",sourceRef:"GM_PRIVATE/NPCS/npcs.json",isSecret:false
+          confidence:95,sourceType:"seed",sourceRef:recordImportedNpcKnowledge(db,guildId,key,`seed.known.${i+1}`,item),isSecret:false
         });
         counts.knowledge++;
       }

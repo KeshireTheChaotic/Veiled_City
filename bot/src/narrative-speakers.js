@@ -3,8 +3,10 @@ import {portrayalPacket} from './portrayal.js';
 import {scenePresence,npcEvidenceActive} from './scene-continuity.js';
 import {activeCityProxy} from './city-constraints.js';
 import {narrativeSourceVisible} from './scene-fiction-context.js';
-const entitled=(db,guild,npc,row,scope)=>!row.is_secret&&row.source_ref&&npcEvidenceActive(db,guild,npc,row.source_ref)
-  &&narrativeSourceVisible(db,guild,row.source_ref,scope);
+import {actorEvidenceVisible} from './npc-cognition-projection.js';
+const entitled=(db,guild,npc,row,scope)=>actorEvidenceVisible(db,guild,npc,row,scope)
+  ||!row.is_secret&&row.source_ref&&npcEvidenceActive(db,guild,npc,row.source_ref)
+    &&narrativeSourceVisible(db,guild,row.source_ref,scope);
 export function npcAddresses(db,guild,npc,scope,location){
   if(activeCityProxy(db,guild,npc))return [];
   const knowledge=db.listNpcKnowledge(guild,npc,{limit:200});
@@ -33,7 +35,7 @@ export function speakerBrief(db,guild,npc,scope,location,query=''){
       .filter(r=>r.from_type==='npc'&&r.from_key===npc&&['public','party'].includes(r.visibility)).slice(0,2)
       .map(r=>({target:r.to_key,type:r.relationship_type}));
   return {direction:portrayal?.direction||{},knowledge:rank(knowledge),memories:rank(memories),goals,relationships,
-    speech_source_refs:[...new Set(knowledge.filter(k=>k.belief_state==='known').map(k=>k.source_ref))].slice(0,8),
+    speech_source_refs:[...new Set([...knowledge.filter(k=>k.belief_state==='known'),...memories].map(k=>k.source_ref))].slice(0,8),
     addresses:npcAddresses(db,guild,npc,scope,location),
     guidance:'Answer, offer, disagree, decline or speculate in this voice. Beliefs are subjective; no forced player response.'};
 }

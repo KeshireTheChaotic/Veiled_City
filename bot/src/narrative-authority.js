@@ -12,6 +12,7 @@ import {retainEstablishedNarrative} from './narrative-memory.js';
 import {noteNarrativeReuse} from './narrative-salience.js';
 import {creativeBrief} from './narrative-delegation.js';
 import {withoutVerifiedVocative} from './narrative-speakers.js';
+import {actorReferenceVisible} from './npc-cognition-projection.js';
 export {narrativeResponseSchema} from './gm-fiction-schema.js';
 const issuer='native:narrative-authority';
 export const NARRATIVE_AUTHORITY_INSTRUCTIONS='You are the creative GM for this audience-isolated packet. Invent interesting ordinary places, people, sensory surroundings, '
@@ -68,7 +69,8 @@ function validateUnit(db,guild,u,ctx,entities=[]){
   // private writer packet is not. This check also runs on every deferred read.
   if(u.visibility!==(ctx.scope.mode==='private'?'character':'party'))throw fail('held_scope');
   if(!narrativeVisible({visibility:u.visibility,subject_key:ctx.scope.actorCharacterId},ctx.scope))throw fail(u.visibility==='gm'?'held_secret':'held_scope');
-  if(u.source_refs.some(ref=>!narrativeSourceVisible(db,guild,ref,ctx.scope)))throw fail('held_secret');
+  if(u.source_refs.some(ref=>!(u.kind==='npc_speech'?actorReferenceVisible(db,guild,u.subject_key,ref,ctx.scope)
+    :narrativeSourceVisible(db,guild,ref,ctx.scope))))throw fail('held_secret');
   if(u.location_key){
     const place=db.getSimulationEntity(guild,'location',u.location_key),proposed=entities.find(e=>e.kind==='location'&&e.key===u.location_key),
       identity=db.getCityRecord(guild,'autonomous_entity',`location:${u.location_key}`);
@@ -115,8 +117,7 @@ function validateUnit(db,guild,u,ctx,entities=[]){
     if(identity&&!narrativeSourceVisible(db,guild,identity.source_event,ctx.scope)||db.getNpcProfile(guild,u.subject_key)?.activity_tier==='dormant')throw fail('held_scope');
     if(entity)try{assertNpcAvailability(db,guild,u.subject_key,{type:'contact',location_key:u.location_key||ctx.binding.location});}
     catch(error){if(!error.code&&error.constructor===Error)throw fail('held_scope');throw error;}
-    if(u.source_refs.length&&!u.source_refs.every(ref=>db.listNpcKnowledge(guild,u.subject_key,{limit:500})
-      .some(k=>k.source_ref===ref&&k.belief_state==='known'&&!k.is_secret)))throw fail('held_secret');
+    if(u.source_refs.length&&!u.source_refs.every(ref=>actorReferenceVisible(db,guild,u.subject_key,ref,ctx.scope)))throw fail('held_secret');
   }
   if(u.kind==='established_observation'){
     if(u.source_refs.length!==1)throw fail('held_scope');
@@ -201,7 +202,10 @@ export function establishNarrativeUnits(db,guild,input,scope,sourceRef,{content=
       if(prior){renderNarrativeUnit(db,guild,key,scope);rows.push(prior);fates.push({id:u.id,fate:'published'});continue;}
       const event=indexWorldEvent(db,guild,{key:`${key}:source`,kind:'native_narrative_unit',title:'Source-bound delegated GM fiction',source_id:issuer,
         scene:ctx.binding.scene,session_id:ctx.binding.session,location_key:u.location_key||ctx.binding.location||'',visibility:u.visibility,
-        subject_key:scope.mode==='private'?scope.actorCharacterId:null,details:{input_source:sourceRef,source_refs:u.source_refs,payload_hash:hash(data),epistemic:data.epistemic}},issuer);
+        subject_key:scope.mode==='private'?scope.actorCharacterId:null,details:{input_source:sourceRef,
+          source_refs:u.source_refs.filter(ref=>narrativeSourceVisible(db,guild,ref,scope)),
+          ...(u.kind==='npc_speech'?{actor_evidence_refs:u.source_refs,actor:u.subject_key}:{}),
+          payload_hash:hash(data),epistemic:data.epistemic}},issuer);
       const accepted=db.saveCityRecord(guild,{kind:'narrative_unit',key,status:'accepted_established',visibility:u.visibility,subject_key:scope.mode==='private'?scope.actorCharacterId:null,
         source_event:event.event_key,location_key:event.location_key,data});
       retainEstablishedNarrative(db,guild,accepted);noteNarrativeReuse(db,guild,accepted);rows.push(accepted);fates.push({id:u.id,fate:'published'});

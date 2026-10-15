@@ -11,6 +11,7 @@ import {disclosedNarrativeMemory} from './narrative-memory.js';
 import {rankNarrativeMemory} from './narrative-salience.js';
 import {speakerBrief} from './narrative-speakers.js';
 import {directorBriefForAudience} from './narrative-director-source.js';
+import {mentionsPublicIdentity} from './public-referents.js';
 export const narrativeVisible=(row,scope)=>!!row&&factVisibleTo({...row,subject_character_id:row.subject_character_id||row.subject_key,
   subject_user_id:row.subject_user_id||row.subject_key},scope);
 export function buildNarrativeContext(db,guild,scope,sourceRef,{operation='describe_scene'}={}){
@@ -40,7 +41,12 @@ export function buildNarrativeContext(db,guild,scope,sourceRef,{operation='descr
     subject_key:row.state.subject_character_id},scope)&&(!row.state.narrative_origin||row.state.narrative_origin!==sourceRef)
     &&(!db.getCityRecord(guild,'autonomous_entity',`location:${row.entity_key}`)
       ||narrativeSourceVisible(db,guild,db.getCityRecord(guild,'autonomous_entity',`location:${row.entity_key}`).source_event,scope));
-  const location=placed?pc.data.location:db.listSimulationEntities(guild,'location').filter(entitledLocation).sort((a,b)=>a.entity_key.localeCompare(b.entity_key))[0]?.entity_key||null;
+  const anchors=db.listSimulationEntities(guild,'location').filter(entitledLocation).filter(row=>{
+    if(!owner)return source.location_key===row.entity_key;
+    const request=String(source.details.text||'').toLocaleLowerCase();
+    return [row.entity_key,row.state.name,...(row.state.aliases||[])].some(name=>mentionsPublicIdentity(request,name));
+  });
+  const location=placed?pc.data.location:anchors.length===1?anchors[0].entity_key:null;
   const entity=location&&db.getSimulationEntity(guild,'location',location),authored=location&&db.getCityRecord(guild,'autonomous_entity',`location:${location}`);
   if(entity&&(!narrativeVisible({visibility:entity.state.visibility||'party',subject_key:entity.state.subject_character_id},scope)
     ||entity.state.hidden||entity.state.removed||authored&&!narrativeSourceVisible(db,guild,authored.source_event,scope)))throw fail('hidden_location');
