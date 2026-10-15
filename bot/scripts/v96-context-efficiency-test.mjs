@@ -268,7 +268,8 @@ test('TOK02 nonlexical page and exact scoped expansion retain obscure evidence a
   const contradiction=f.db.addFact(f.guild,{content:'The witness denied seeing any button.',visibility:'party'});
   const secret=f.db.addFact(f.guild,{content:'OWNER_ONLY_MARKER',visibility:'player',subjectUserId:f.pcs[1].owner_user_id});
   f.db.db.prepare("UPDATE facts SET created_at='2000-01-01' WHERE id IN (?,?)").run(id,contradiction);
-  for(let i=0;i<80;i++)f.db.addFact(f.guild,{content:`Recent unrelated ${i}`,visibility:'party'});
+  // Keep page 1 wholly inside the declared budget; over-budget locator recovery has its own deterministic case below.
+  for(let i=0;i<70;i++)f.db.addFact(f.guild,{content:`Recent unrelated ${i}`,visibility:'party'});
   const planner=new ContextPlanner(f.db),options={actorType:'player',userId:f.pcs[0].owner_user_id,scope:'party',query:'What now?'};
   const first=planner.plan(f.guild,options);
   assert(first.segments.some(r=>r.source.startsWith('fact:')),'unrelated query must not filter away all nonlexical evidence');
@@ -281,6 +282,23 @@ test('TOK02 nonlexical page and exact scoped expansion retain obscure evidence a
   const recovered=planner.plan(f.guild,{...options,factPage:1,maxTokens:6000});
   assert(recovered.fact_page.page===1);assert(recovered.fact_page.next_page!==undefined);
   assert(recovered.segments.some(r=>r.source===`fact:${id}`),'bounded nonlexical page can recover old obscure evidence');
+}));
+
+test('TOK02 over-budget nonlexical page preserves a locator and exact entitled expansion',()=>nativeFixture(f=>{
+  const original=f.db.addFact(f.guild,{content:'The witness saw a copper button.',visibility:'party'}),id='zzzz-obscure-fixture';
+  f.db.db.prepare('UPDATE facts SET id=?,created_at=? WHERE id=?').run(id,'2000-01-01',original);
+  f.db.addFact(f.guild,{content:'The witness denied seeing any button.',visibility:'party'});
+  const secret=f.db.addFact(f.guild,{content:'OWNER_ONLY_MARKER',visibility:'player',subjectUserId:f.pcs[1].owner_user_id});
+  for(let i=0;i<80;i++)f.db.addFact(f.guild,{content:`Recent unrelated ${i}`,visibility:'party'});
+  const planner=new ContextPlanner(f.db),options={actorType:'player',userId:f.pcs[0].owner_user_id,scope:'party',query:'What now?',factPage:1,maxTokens:6000};
+  const page=planner.plan(f.guild,options);
+  assert(page.estimated_tokens<=page.budget);assert(!page.segments.some(r=>r.source===`fact:${id}`));
+  assert(page.omissions.some(r=>r.source===`fact:${id}`&&r.reason==='token_budget'));
+  assert(page.fact_page.sources.includes(`fact:${id}`));
+  const expanded=planner.plan(f.guild,{...options,sourceRefs:[`fact:${id}`,`fact:${secret}`]});
+  assert(expanded.segments.some(r=>r.source===`fact:${id}`&&r.data.content==='The witness saw a copper button.'));
+  assert(expanded.estimated_tokens<=expanded.budget);assert(!JSON.stringify(expanded).includes('OWNER_ONLY_MARKER'));
+  assert(!planner.plan('foreign',{...options,sourceRefs:[`fact:${id}`]}).segments.length);
 }));
 
 test('TOK03 retain reported cached tokens separately and reject impossible cache counts',()=>{

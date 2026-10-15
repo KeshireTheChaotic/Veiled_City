@@ -936,8 +936,8 @@
     },
     {
       "path": "bot/scripts/v96-context-efficiency-test.mjs",
-      "size_bytes": 30132,
-      "sha256": "a5710f841e49e3f55cdf6f46a1ab8a610de7ed730e22faec8a1b166103d4f8f8"
+      "size_bytes": 31784,
+      "sha256": "f55f4366fa0ebb82f8ba863661d3e74f8b831b4487100933c38f2b6c436ed09e"
     },
     {
       "path": "bot/scripts/v96-corpus.mjs",
@@ -2556,18 +2556,18 @@
     },
     {
       "path": "docs/DELEGATION_NARRATIVE_QUALITY_EXECUTION_LEDGER.md",
-      "size_bytes": 23250,
-      "sha256": "2031060fb6f387571fc3459650aa555dfba1f32fd5e367621db8a8606e591c5a"
+      "size_bytes": 26379,
+      "sha256": "b6d4a3181d033afa2b73e8f7f26b3c4c39175dd553c4481a09782e36302cda5c"
     },
     {
       "path": "docs/DELEGATION_NARRATIVE_QUALITY_RELEASE.md",
-      "size_bytes": 8310,
-      "sha256": "5aa5fde30f8f00237b4db5b3eb402cedfe44dd2c09172fbc10f4729d07b94cb4"
+      "size_bytes": 8632,
+      "sha256": "008de6f26c5ebc39d7e883b080a1a2340510324b7a762dfa72f57c40fb89159f"
     },
     {
       "path": "docs/DELEGATION_NARRATIVE_QUALITY_VALIDATION.json",
-      "size_bytes": 3149,
-      "sha256": "c62755ddb884e95d6ba10d32b3dd82eb935427e862e08b6f8ad4a922deb21b31"
+      "size_bytes": 3150,
+      "sha256": "47772f52f7eed99788e13203cdc4e9042f7b80756d5c44c5b5ae7324f4228417"
     },
     {
       "path": "docs/DEPLOYMENT.md",
