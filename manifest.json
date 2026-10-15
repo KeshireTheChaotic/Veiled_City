@@ -2556,13 +2556,13 @@
     },
     {
       "path": "docs/DELEGATION_NARRATIVE_QUALITY_EXECUTION_LEDGER.md",
-      "size_bytes": 19849,
-      "sha256": "be812820e97d8120b18dc52278b01703704648e8fb0a21e45521500a9fecec82"
+      "size_bytes": 23250,
+      "sha256": "2031060fb6f387571fc3459650aa555dfba1f32fd5e367621db8a8606e591c5a"
     },
     {
       "path": "docs/DELEGATION_NARRATIVE_QUALITY_RELEASE.md",
-      "size_bytes": 6907,
-      "sha256": "cc6813dd31f13a3fe60429c24f1db5e30fc00d3e33958dd43543b4e109205829"
+      "size_bytes": 8310,
+      "sha256": "5aa5fde30f8f00237b4db5b3eb402cedfe44dd2c09172fbc10f4729d07b94cb4"
     },
     {
       "path": "docs/DELEGATION_NARRATIVE_QUALITY_VALIDATION.json",

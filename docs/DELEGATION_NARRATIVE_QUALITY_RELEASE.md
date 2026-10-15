@@ -36,9 +36,11 @@ Empty overrides preserve historical lane defaults; no model ID, price or latency
 
 ## Operational qualification and rollout
 
-Exact phase/test/CI/backup/install receipts are recorded in [execution ledger](DELEGATION_NARRATIVE_QUALITY_EXECUTION_LEDGER.md). Critical registry: 120 suites; 39 optional extended historical matrices remain available via `npm run validate:extended`. All prior mandatory security/native assertions remain registered.
+Exact phase/test/CI/backup/install receipts are recorded in [execution ledger](DELEGATION_NARRATIVE_QUALITY_EXECUTION_LEDGER.md). Final local qualification: 120/120 suites and 26/26 acceptance rows, network denied, live requests/billable tokens zero. Exact repaired-executable CI [38756452566](https://github.com/KeshireTheChaotic/Veiled_City/actions/runs/38756452566) passed 120/120. Critical registry: 120 suites; 39 optional extended historical matrices remain available via `npm run validate:extended`. All prior mandatory security/native assertions remain registered.
 
-Production preflight on 2026-10-15 found clean 10.1.0 `a74e73a`, direct Node v24.19.0, but **running** PID 7408 with working directory `D:\Library\Veiled City\bot`. Prior stopped-state evidence is no longer current. Installation must not mix old loaded modules with new dynamically imported files. Owner was notified to stop the bot; this task neither starts nor silently restarts it. Production SQLite inspection was read-only. Forty existing main grants and 21 private grants, revision 1, remain unchanged. All six creative flags were OFF; playable narration/scene continuity ON. No authenticated flag activation has been performed.
+Production preflight found 10.1.0 `a74e73a`, direct Node v24.19.0 and a running bot. Owner stopped it; independent verification confirmed the stop. A fresh WAL-aware backup and disposable restore passed before installation. Qualified repaired executable `3531cb7ba4bab3cd3ff6fe24a50c2fc87b6df8a4` was installed by fast-forward to `codex/delegation-narrative-quality`. All 688 manifest hashes match; SQLite integrity/FK/schema460/counts, DB bytes, `.env`, flags and policy are unchanged. **Installed 10.2.0; bot remains stopped.** Forty existing main grants and 21 private grants, revision 1, remain unchanged. All six creative flags remain OFF; playable narration/scene continuity ON. No authenticated flag activation, production model test, startup or restart was performed. A results-only documentation follow-up has identical executable/test inputs.
+
+Final backup: `D:\Library\Backups\Veiled_City\delegation-quality-install-20261015-100445\pre-10.2.0.sqlite`; SHA-256 `9afbc694af6b153e328fdb3e1b7d260eab1f494eaaa71c82cb81c96db2d79c6a`. Integrity/FKs/schema/counts and disposable restore passed; access-controlled outside the repository.
 
 ## Rollback
 
@@ -47,6 +49,17 @@ Before any installation or rollback, obtain a fresh protected online SQLite back
 For code regression, with the bot safely stopped and tree inspected, switch production to qualified 10.1.0 branch `codex/narrative-authority-emergence` at `a74e73a4242177a29ad6473ed1b3cf92c1ec8735` (or its qualified executable ancestor `b8004a8559b9dad879c0feb627f92cc2fba10a86`). Do not reset campaign SQLite. New source/event records remain history; hold incompatible queued prose for review, never replay dice/costs/Fear or blindly resend uncertain delivery.
 
 Restore delegation policy only through an authenticated revision-bound operation, preserving unrelated grants. Revert model overrides through normal operator configuration, or disable the affected creative flag through authenticated `/vc-city flags`. Database restore is a separate explicitly reviewed incident operation: first preserve post-incident legitimate events/outbox and repeat restore verification. A pre-release database restore can erase subsequent play; it is not routine code rollback.
+
+With a fresh backup, bot stopped and clean production tree, exact code rollback on this host is:
+
+```powershell
+$vcGit='C:\Users\Keshi\AppData\Local\GitHubDesktop\app-3.6.6\resources\app\git\cmd\git.exe'
+& $vcGit -C 'D:\Library\Veiled City' status --short
+& $vcGit -C 'D:\Library\Veiled City' switch --detach a74e73a4242177a29ad6473ed1b3cf92c1ec8735
+& $vcGit -C 'D:\Library\Veiled City' rev-parse HEAD
+```
+
+Do not run the switch over unresolved production edits; preserve/reconcile them first. This switches code only, never restores SQLite or starts the bot. Existing delivered/uncertain publications and native outcomes must remain intact.
 
 ## Remaining limitations
 
