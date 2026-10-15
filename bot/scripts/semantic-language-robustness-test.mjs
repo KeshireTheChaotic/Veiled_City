@@ -25,6 +25,7 @@ function base(f,text,{privateScene=false}={}){
   captureContextSource(f.db,f.guild,x.pc.owner_user_id,x.pc.id,x.messageId,text,{privateScene});return x;
 }
 function npc(f,x,key='attendant',{hidden=false,location='terminal'}={}){
+  if(location!=='terminal')f.db.setSimulationEntity(f.guild,'location',location,{name:'Separate remote room',visibility:'party'});
   f.db.upsertNpcProfile(f.guild,{npcKey:key,displayName:key==='attendant'?'Inez Vale':'Mara Vale',role:'woman behind the counter',activityTier:'background'});
   f.db.setSimulationEntity(f.guild,'npc',key,{name:key,location_key:location,visibility:hidden?'character':'party',subject_character_id:hidden?f.pcs[1].id:null,hidden});
   const source=indexWorldEvent(f.db,f.guild,{key:'npc-present:'+key,kind:'observation',title:'Native fixture NPC presence',source_id:'native:fixture',scene:currentScene(f.db,f.guild).key,
@@ -72,8 +73,9 @@ async function clause(f,text,span,{framing='immediate',start=text.indexOf(span),
   const c={version:2,kind:quote?'speech':'action',source_ref:contextSourceKey(x.messageId,x.pc.id),source_span:span,target,quote,start,end:start+span.length,framing};
   const rows=persistAuthoredCandidates(f.db,f.guild,[c],x.scope,{messageId:x.messageId,typedIntents:typed});return {x,rows,typed};
 }
-async function dialogue(f,text,{ambiguous=false,hidden=false,remote=false,accepted=true,repeat=false}={}){
-  const x=base(f,text);npc(f,x,'attendant',{hidden,location:remote?'remote':'terminal'});if(ambiguous)npc(f,x,'second-attendant');
+async function dialogue(f,text,{ambiguous=false,hidden=false,remote=false,proxy=false,privateScene=false,accepted=true,repeat=false}={}){
+  const x=base(f,text,{privateScene});npc(f,x,'attendant',{hidden,location:remote?'remote':'terminal'});if(ambiguous)npc(f,x,'second-attendant');
+  if(proxy)f.db.upsertNpcProxy(f.guild,f.session.id,{npcName:'attendant',userId:f.pcs[1].owner_user_id,status:'active'});
   const i=intent(text,{type:'speak',operation:'conversation',target_name:'the woman behind the counter',target_key:'attendant',utterance:'why the noise'});
   if(accepted)persistPlayerIntents(f.db,f.guild,[i],x.scope,{messageId:x.messageId});
   const rows=persistTypedDialogue(f.db,f.guild,[i],x.scope,{messageId:x.messageId});
@@ -94,10 +96,10 @@ const cases=[
   ['S2','C11','hypothetical owns no immediate attempt',async f=>{const o=await clause(f,'Could we leave if the door opens?','Could we leave if the door opens?',{framing:'hypothetical'});assert(o.rows.every(r=>r.status!=='pending'));assert.equal(o.typed.length,0);}],
   ['S2','C12','repeated source span requires matching offsets',async f=>{const o=await clause(f,'I inspect the envelope. I inspect the envelope','I inspect the envelope',{start:24});assert.equal(o.rows[0].status,'needs_scope_review');assert.equal(o.rows[0].data.typed_intent_key,null);
     await assert.rejects(clause(f,'I inspect the envelope. I inspect the envelope','I inspect the envelope',{start:25}),/offset|span|bound/i);}],
-  ['S3','D13','local role-target speech is remembered verbatim once',async f=>{const o=await dialogue(f,'I ask the woman behind the counter why the noise',{repeat:true});assert.equal(o.rows.length,1);assert.equal(o.memories.length,1);assert(o.memories[0].content.includes('why the noise'));}],
-  ['S3','D14','two plausible listeners are not guessed',async f=>{const o=await dialogue(f,'I ask her why the noise',{ambiguous:true});assert.equal(o.rows.length,0);assert.equal(o.memories.length,0);}],
-  ['S3','D15','private/absent listener never receives party utterance',async()=>{for(const options of [{hidden:true},{remote:true}])await nativeFixture(async f=>{const o=await dialogue(f,'I ask the woman behind the counter why the noise',options);assert.equal(o.rows.length,0);assert.equal(o.memories.length,0);});}],
-  ['S3','D16','unaccepted model speech label cannot mint heard speech',async f=>{const o=await dialogue(f,"She says 'why the noise'",{accepted:false});assert.equal(o.rows.length,0);assert.equal(o.memories.length,0);}],
+  ['S3','D13','local role-target speech is remembered verbatim once',async()=>{for(const privateScene of [false,true])await nativeFixture(async f=>{const o=await dialogue(f,'I ask the woman behind the counter why the noise',{repeat:true,privateScene});assert.equal(o.rows.length,1);assert.equal(o.memories.length,1);assert(o.memories[0].content.includes('why the noise'));assert.equal(o.rows[0].details.private_scene,privateScene);});}],
+  ['S3','D14','two plausible listeners are not guessed',async()=>{for(const text of ['I ask her why the noise','I ask the attendant why the noise'])await nativeFixture(async f=>{const o=await dialogue(f,text,{ambiguous:true});assert.equal(o.rows.length,0);assert.equal(o.memories.length,0);});}],
+  ['S3','D15','private/absent/proxy listener never receives party utterance',async()=>{for(const options of [{hidden:true},{remote:true},{proxy:true}])await nativeFixture(async f=>{const o=await dialogue(f,'I ask the woman behind the counter why the noise',options);assert.equal(o.rows.length,0);assert.equal(o.memories.length,0);});}],
+  ['S3','D16','unaccepted or reported model speech label cannot mint heard speech',async()=>{for(const accepted of [false,true])await nativeFixture(async f=>{const o=await dialogue(f,"She says 'why the noise'",{accepted});assert.equal(o.rows.length,0);assert.equal(o.memories.length,0);});}],
   ['S4','E17','contextual reflective engagement without verbs',async f=>{const text="Another empty shift. That's the third this week";assert(semanticResponseObligation(text,[],{authenticated:true,engagement:{engagement_kind:'conversation',respond:true}}).needed);const o=await play(f,text);assert(o.text.includes(creative));assert.equal(f.db.getCharacter(o.x.pc.id).data.resources.hp.current,0);}],
   ['S4','E18','OOC and player banter do not force world response',async()=>{assert(!semanticResponseObligation('OOC: My headset is broken',[],{authenticated:true,engagement:{engagement_kind:'conversation',respond:true}}).needed);assert(!semanticResponseObligation('Funny game last week',[],{authenticated:true,engagement:{engagement_kind:'no_response',respond:false}}).needed);}],
   ['S4','E19','unknown pacing does not silence scene by English phrase',async f=>{assert.notEqual(pacingAdvice(f.db,f.guild,'to the other player: is the attendant waiting?',{engagement_kind:'uncertain'}).suggested_mode,'silence');}],

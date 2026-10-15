@@ -512,9 +512,12 @@ export function persistTypedDialogue(db,guild,intents,scope={},provenance={}){
   for(const intent of intents){
     if(intent.type!=='speak'||intent.framing!=='immediate'||!intent.utterance||
       !source.details.text.includes(intent.source_span)||!intent.source_span.includes(intent.utterance))continue;
+    const accepted=currentAcceptedIntent(db,guild,{sourceEvent:source.event_key,actor:scope.actorCharacterId,type:'speak',sourceSpan:intent.source_span,scope});
+    if(!accepted||accepted.data.framing!=='immediate'||accepted.data.utterance!==intent.utterance
+      ||intent.target_key&&accepted.data.target_key!==intent.target_key||source.details.text.slice(accepted.data.start,accepted.data.end)!==intent.source_span)continue;
     const record=captureDialogue(db,guild,scope.actorUserId,scope.actorCharacterId,provenance.messageId,
-      source.details.text,{privateScene:scope.mode==='private',candidate:{
-        source_span:intent.source_span,target:intent.target_key||intent.target_name||'',quote:intent.utterance}});
+      source.details.text,{privateScene:scope.mode==='private',typedIntentKey:accepted.record_key,candidate:{
+        source_span:intent.source_span,target:accepted.data.target_key||'',quote:accepted.data.utterance}});
     if(record)rows.push(record);
   }
   return rows;

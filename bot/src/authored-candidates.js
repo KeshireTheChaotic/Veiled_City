@@ -5,6 +5,7 @@ import { interpretAuthoredText, captureDeclaration } from "./player-language.js"
 import { prepareSceneEntry } from "./scene-entry.js";
 import { captureDialogue } from "./dialogue-continuity.js";
 import {currentScene} from './scene-continuity.js';
+import {sourceSpanInsideQuote} from './authored-turn-envelope.js';
 const candidateFields={kind:{type:"string",enum:["action","entry","speech"]},source_ref:{type:"string",maxLength:200},
   source_span:{type:"string",maxLength:1500},target:{type:"string",maxLength:160},quote:{type:"string",maxLength:1000}};
 const closed=properties=>({type:'object',additionalProperties:false,properties,required:Object.keys(properties)});
@@ -16,16 +17,6 @@ export const AUTHORED_CANDIDATES_PROMPT="authored_candidates is optional source-
   +"Do not extract hypothetical/OOC/quoted examples, planning, third-person reported speech or another PC's acts. Entry target must be explicitly named in the span; otherwise preserve an action candidate and resolve ordinary context without claiming arrival. "
   +"Use version=2 with exact original start/end offsets and clause-level framing, matching a player_intents clause. An earlier hypothetical/report does not change a later immediate clause. "
   +"Mixed speech/action uses separate spans. Candidates never authorize rolls, consent, spending, access, travel or presence.";
-/** Literal quote nesting is a source/attribution tripwire, not semantic interpretation of earlier clauses. */
-function insideQuote(text,start){
-  let quote=null;
-  for(let i=0;i<start;i++){
-    const c=text[i];if(c==='\\'){i++;continue;}
-    if((c==="'"||c==='’')&&/[\p{L}\p{N}]/u.test(text[i-1]||'')&&/[\p{L}\p{N}]/u.test(text[i+1]||''))continue;
-    if(quote){if(c===quote||quote==='”'&&c==='”'||quote==='’'&&c==='’')quote=null;}
-    else if(c==='"'||c==="'")quote=c;else if(c==='“')quote='”';else if(c==='‘')quote='’';
-  }return quote!==null;
-}
 export function persistAuthoredCandidates(db,guild,candidates,scope,provenance={}){
   if(candidates==null)return [];
   if(!Array.isArray(candidates)||candidates.length>6)throw new Error("Bounded authored candidates required.");
@@ -49,7 +40,7 @@ export function persistAuthoredCandidates(db,guild,candidates,scope,provenance={
     if(!Number.isSafeInteger(start)||!Number.isSafeInteger(end)||start<0||end<=start||end>authored.length||authored.slice(start,end)!==candidate.source_span
       ||!v2&&authored.indexOf(candidate.source_span,start+1)!==-1)throw new Error('Candidate offsets/span must be unambiguous and exact.');
     if(v2&&!['immediate','hypothetical','conditional','quoted','reported','ooc'].includes(candidate.framing))throw new Error('Clause framing required.');
-    if((!v2||candidate.framing==='immediate')&&insideQuote(authored,start))throw new Error('Quoted source span is not actor authorization.');
+    if((!v2||candidate.framing==='immediate')&&sourceSpanInsideQuote(authored,start))throw new Error('Quoted source span is not actor authorization.');
     if(!v2){
       // Historical producer compatibility only: inspect the containing clause, never unrelated earlier sentences.
       const clause=authored.slice(Math.max(authored.lastIndexOf('.',start-1),authored.lastIndexOf(';',start-1),authored.lastIndexOf('\n',start-1))+1,end).trim();

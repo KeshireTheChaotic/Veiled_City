@@ -20,8 +20,8 @@ S0 intentionally commits reproductions before repairs; they are not a qualified 
 | --- | --- | --- |
 | S0 | Baseline/red corpus complete | `ed4c0b4163bc9724ce9602669b0b517b885dacad` |
 | S1 | Implemented; focused qualification below | `123dede2e4180bf924953d066e66fafe96744375` |
-| S2 | Implemented; focused qualification below | See Git commit named `fix(semantic): bind authored candidates to clause offsets and typed input` |
-| S3 | Pending | — |
+| S2 | Implemented; focused qualification below | `c575a071b082cb3400c00908703a1e44f6fbb50f` |
+| S3 | Implemented; focused qualification below | See Git commit named `fix(semantic): verify typed speech and scoped native listeners` |
 | S4 | Pending | — |
 | S5 | Pending | — |
 | S6 | Pending | — |
@@ -43,3 +43,11 @@ Starting `123dede2e4180bf924953d066e66fafe96744375`. Additive closed v2 candidat
 Whole-message hypothetical veto and unbounded earlier might/would/could/report scans removed. A literal quote-position tripwire remains as attribution defense; explicit authenticated OOC remains intentional silence. Historical five-field candidates remain readable and retain bounded containing-clause compatibility safeguards rather than granting unverified semantic authority. Native exact source spans, entry execution, consent and rolls are unchanged. Later immediate inspect/inquiry survives earlier hypothetical or reported quote. No compatibility movement/utterance is fabricated.
 
 S0 red C09/C10/C11 exit1 became focused S2 **4/4** exit0. C12 fixture's initial closed-shape throw did not prove offset semantics; strengthened to require no pending/typed link at a valid wrong occurrence AND rejection of an invalid offset, without weakening the security expectation. Impacted group `--test-name-pattern='S2 |SEM04'` **18/18**, zero skipped, exit0,11459.8654ms; existing `natural-language-scope-test.mjs` D1–D8 compatibility scope group PASS exit0. No full registry, provider or production call. Native legacy package behavior retained; no assertion retired.
+
+## S3 — verified NPC conversational targets/hearing
+
+Starting `c575a071b082cb3400c00908703a1e44f6fbb50f`. Normal typed speech capture now requires the actual current accepted speak clause, exact utterance/offsets, owner/principal/session/scene, live immutable authored source and audience. Target identity comes from that native accepted record, including native-resolved targets, not exact equality of the English role/pronoun to an NPC display name. Native actual audible, visible local presence, entity scope, NPC availability and non-proxy control are mandatory. Multiple plausible role/pronoun listeners stay unselected; explicit native names/aliases can disambiguate, never a generic key coinciding with a role word. No NPC profile alone or model speech label grants hearing. Original utterance and accepted source/offset/principal link persist in GM-only immutable speech receipts; subjective NPC memories remain utterance-not-truth/consent.
+
+Original D14–D16 red cases green. Added within the same22-case table: private owner positive, two ambiguous role/pronoun negatives, proxy negative, and accepted-but-explicitly-reported speech negative. That stronger reported test reproduced red exit1 during S3; a bounded literal attribution/quote-position tripwire now withholds it rather than trusting the model framing. Shared quote-position helper moved to immutable-source module (no change to source/envelope authority). A remote-NPC fixture initially lacked its native location and was corrected to establish a genuine separate room, not bypass location validation.
+
+S2+S3 focused **8/8**, zero skipped, exit0,5274.7329ms; final S3-only **4/4**, exit0,4392.0293ms. Existing IHY1/SP2 **2/2 suite processes** exit0,899.842ms, their full original assertions preserved. Their first run found missing legacy coarse PC location; legitimate native actual presence already existed, so legacy lookup now uses that verified location while typed captures also require agreement with saved PC location and entitled placement. No invented presence, fixture assertion waiver, new provider call, production write or permission expansion. Ambiguity does not block independent GM narration.
