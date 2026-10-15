@@ -23,7 +23,7 @@ import { reconcileHistory } from "./history-reconciliation.js";
 import { publishRollRequests } from "./roll-requests.js";
 import { sendPlayerPrivate } from "./publishing.js";
 import { sessionBrief } from "./session-briefs.js";
-import { reviewSceneEntry, configureEntryPolicy } from "./scene-entry.js";
+import { reviewSceneEntry, configureEntryPolicy } from "./scene-entry-native.js";
 import { configureWorldAuthority, worldAuthority, retconAutonomousEntity } from "./autonomous-world.js";
 import { reviewPresentation, presentationView } from "./presentation-evidence.js";
 export async function handleStoryCommand(interaction,{db,gm}){

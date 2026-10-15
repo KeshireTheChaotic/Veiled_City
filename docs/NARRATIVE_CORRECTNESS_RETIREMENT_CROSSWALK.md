@@ -64,6 +64,21 @@ Inspected development source at R6 `17f388cd03fab4c9fff126d922452257dc40c5b3`. T
 
 Native records retained: all versions1–8 output parts/drafts/receipts, native4 outcomes, old candidates/declarations, pending rolls/entry/consent, source closure, disclosure, outbox hashes/delivered IDs/uncertain statuses. No evidence is migrated by rerunning mechanics. New sidecars: `narrative_task_coverage`, `narrative_artifact`, native nonsecret NPC import events, native fresh-NPC presence. They confer no player control or mechanical authority.
 
+## D1/D2 implementation receipt
+
+D1 narrows current provider candidate emission to source-exact v2 and v8-enabled world proposals to native4/creative8; the exported historical schemas/parsers remain unchanged. It removes `declarationContext` from current GM context but retains the function and original tests. Flag-off requests retain old generator proposals. No v8/v4 hash change.
+
+D2 extracts actual native implementations (LF-normalized function bodies verified identical):
+
+| Old module / symbols | Native implementation | Live caller migrated | Historical interface |
+| --- | --- | --- | --- |
+| roll-language `reviewRollDeclaration` | `roll-declaration-review.js` | ai-intents roll.adjudicate | exact re-export, unchanged route/parser |
+| consent-language `consentOffers`, `respondConsent` | `consent-native.js` | commands consent inbox | both exact re-exports; legacy route uses the same implementation |
+| continuity-routing `formatDiscovery`, `discoveryDeliveryProof`, `deliverDiscoveryMessage` | `discovery-delivery.js` | commands private discovery | all exact re-exports; old route still uses native proof |
+| scene-entry `locationMatches`, `reviewSceneEntry`, `configureEntryPolicy`, `mundaneEntryImpact`, `resolveMundaneEntry` | `scene-entry-native.js` | story-commands human review/policy; ai-intents native scene.enter | exact re-exports; entry capture/referent/pending APIs retained |
+
+Native validation not duplicated. Extracted body blocks:1461/5790/2784/7261 characters (entry identity helper additionally preserved). `NC25` checks function identity across all old/new exports. Original i-heard-you-4/integration and scene-entry assertions execute against those same native functions, and original v9-discord-hardening14 cases verify awaited privacy/control/source changes. **No freeform wrapper deleted**: original mandatory/optional assertions and unknown external consumers do not yet have one-for-one replacement coverage. This is KEEP rather than a false unused-code claim. See execution ledger for actual commands/counts.
+
 ## Finding dispositions at correctness freeze
 
 | Finding | Disposition / evidence |
@@ -79,7 +94,7 @@ Native records retained: all versions1–8 output parts/drafts/receipts, native4
 | N09 | FIXED native nonbinding local prop + valid independent arrival, held unsafe sibling (NC15/16) |
 | N10 | FIXED no alphabetic camera anchor; exact request/native scene/Director or sole-setting native assembly; no PC placement (NC10; original N01/N07/N21) |
 | N11 | FIXED exact effective private/party unit visibility and deferred validation; not a claim of a prior leak (NC03/04/28) |
-| N12 | D1 current-producer work pending; old/manual reader compatibility required |
+| N12 | FIXED current-model five-field/schema/hint production; old/manual native recovery retained and extracted |
 | N13 | DEFER literal one-call removal and mixed OOC policy |
 | N14 | DEFER broader salience; no cleanup scope expansion |
 | N15 | DEFER rich owner-authored PC appearance; no inferred replacement |

@@ -14,8 +14,9 @@ Accepted typed intents are canonical adjudication inputs; human declarations own
 | R5 | Offers/allegations improved; N05/N06 guards explicitly RETAINED | `e4217767f02d4e89589cc8e3468599ebf7587eb7` |
 | R6 | Focused correctness/security checkpoint passed, with explicit quality deferrals | `17f388cd03fab4c9fff126d922452257dc40c5b3` |
 | D0 | Symbol/record/assertion crosswalk complete; no deletion | `e0ea11d05e33387f94a69d89d78c54cc5095c089` |
-| D1 | Current-model legacy producers retired; old native APIs retained | Recorded in D2 receipt |
-| D2–D3 | Not started | — |
+| D1 | Current-model legacy producers retired; old native APIs retained | `83cf5cd8a44642a034b9795ab6e466599bb2823d` |
+| D2 | Native cores extracted with exact compatibility; wrappers KEEP | Recorded in D3 receipt |
+| D3 | Not started | — |
 
 ## R0 — compact baseline and frozen formats
 
@@ -86,3 +87,9 @@ Focused NC25 + unchanged `legacy-authority-migration-test`: **2/2 pass**, zero s
 Starting HEAD `e0ea11d05e33387f94a69d89d78c54cc5095c089`. Reproduced NC24 **0/1 pass**, exit1: provider schema still invited the old five-field candidate. Added a separate current v2-only candidate emission schema; the exported old schema and `persistAuthoredCandidates` legacy/manual recovery remain. Current combined typed-model output cannot stage legacy five-field candidates. `structuredResponse` narrows v8-enabled GM/Director world proposals to native4 plus creative8 and removes the old v1–7 catalog wrapper for that mode. Supported flag-off requests retain their original native/legacy provider contract. Native4, closed v8 authoring response and historical hashes are unchanged. Current GM context now provides exact owner input without `declarationContext`'s coarse lexical kind; historical function/readers/tests remain.
 
 Focused NC24/26/27 + original S2 and natural-language-scope: **8/8 pass**, zero skipped/todo, exit0,1849.373ms (`%TEMP%\vc-narrative-d1-final.log`). NC24 verifies actual provider schema4/8, absent old catalog, unclassified exact source and flag-off legacy proposal availability. Its third fake call explicitly tests a separate flag-off request, not an extra gameplay round-trip. Native historical candidate/entry/source/privacy assertions remain unchanged. Optional stub DB guard is fail-closed for absent flags; final integration covers that tiny compatibility edit. No extra calls, permissions, effects or schema migration. Rollback code-only; existing persisted candidates remain readable throughout.
+
+## D2 — native core extraction / retained compatibility wrappers
+
+Starting HEAD `83cf5cd8a44642a034b9795ab6e466599bb2823d`. New `roll-declaration-review`, `consent-native`, `discovery-delivery`, `scene-entry-native` own exact native implementations. Live ai-intents/commands/story-commands import those services; old modules re-export identical functions and retain parser/staging/historical routes. All four extracted function-body blocks verified exact LF-normalized source equality (1461/5790/2784/7261 characters); native identity helper also preserved. No authority logic rewrite. Current intake still consumes no lexical clauses. Four freeform routes remain KEEP: they have unique mandatory/optional assertions and unknown external consumers; deleting them now would not meet LD6 parity. No test framework or original assertion changed.
+
+NC25 migration red **0/1 pass**, exit1, missing native module as expected (`vc-narrative-d2-red.log`). Focused NC25 plus original top-level i-heard-you-4/integration and scene-entry: **4 native checks plus one filtered file wrapper**, exit0,1167.0984ms (`vc-narrative-d2.log`); the name filter did NOT exercise registered Discord-hardening cases. Corrected standalone original Discord-hardening run: **14/14 pass**, zero skipped/todo, exit0,3052.0768ms (`vc-narrative-d2-delivery.log`). No false credit for filtered cases. Source parity verification passed for each native body. No extra calls, native data/schema/receipt changes or privacy relaxations. Rollback imports/re-exports together, preserving all campaign/native history. Full registry deferred to D3 as requested.
