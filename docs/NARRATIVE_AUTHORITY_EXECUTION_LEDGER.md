@@ -17,14 +17,35 @@ Actual command: `node --import ./scripts/offline-guard.mjs --test scripts/critic
 
 | Phase | Status | Commit / actual evidence |
 | --- | --- | --- |
-| 1 — creative authority first | Complete (focused gate) | Starting SHA `0b300e1ac5e077a14f7fb6fff155c57881c27fa1`; completion SHA recorded by the next ledger commit. |
-| 2 — salvage and publication-bound memory | Complete (focused + affected gate) | Starting `960e0588b49fb0b0d69ae45ffd0c95bf7f03509f`; completion SHA recorded next phase. |
-| 3 — camera and owner initial placement | Complete (focused gate) | Starting `e91c010`; completion SHA recorded next phase. |
-| 4 — NPC/encounter narration | Complete (focused + affected gate) | Starting `6c504b4`; completion SHA recorded next phase. |
-| 5 — salience/archive/completeness | Complete (focused + affected gate) | Starting `d20161e`; completion SHA recorded next phase. |
-| 6 — qualification/deploy | Not started | |
+| 1 — creative authority first | Complete (focused gate) | `960e0588b49fb0b0d69ae45ffd0c95bf7f03509f` |
+| 2 — salvage and publication-bound memory | Complete (focused + affected gate) | `e91c010f6bb8cc082e61f11d8674ba14e62d9bb5` |
+| 3 — camera and owner initial placement | Complete (focused gate) | `6c504b4832b5915d5ae648d83f3d9586ab33d7b3` |
+| 4 — NPC/encounter narration | Complete (focused + affected gate) | `d20161e872358d11859aefe96a23a79d533dca48` |
+| 5 — salience/archive/completeness | Complete (focused + affected gate) | `9795b8f682bfd8cf2e093a38cebedebc20193f7d` |
+| 6 — qualification/deploy | Qualified locally; installation pending | Starting `9795b8f`; completion is the release commit containing these results. Deployment receipt follows separately. |
 
 No production modification/restart is permitted until a consistent online backup, integrity/foreign-key checks and disposable restore drill pass. No paid model/Discord synthetic tests. Production deployment is authorized only after phase qualification; activation requires a legitimate administrative path, not forged Discord identity or ad-hoc flag SQL. New prose has residual semantic risk; provenance is not universal semantic proof.
+
+## Phase 6 — integration and actual preflight
+
+Actual final-adapter regressions exposed two remaining integration gaps: Director output (party/private) had no v8 writer/source binding, and an archived native placement fell back to camera after a scene transition. Both reproduced red before repair. Director now issues an immutable native audience scope, binds it with an in-process Symbol (model JSON cannot forge it), shares the single writer budget, and uses common state/outbox proof. Its contextual packet never copies raw private GM trigger prose. Original native Director effects remain separately validated. Read-only last-placement proof and existing `reconcileSceneArrival` reuse genuine owner-established position without another move/arrival; native pending travel/active encounter prevent that fallback. Final targeted Director cases **2/2**, 743.8955 ms; native last-placement **1/1**, 499.3833 ms. An unshared native roll unit originally suppressed safe siblings; red **0/1** then green **1/1**, 643.7367 ms after converting only the expected disclosure failure into a unit-local hold, not broad exception suppression.
+
+Native Node SQLite backup tooling (not an added dependency) qualifies online WAL backup with an open uncommitted writer and blocks invalid foreign keys: **2/2**, 109.8351 ms. Initial tool import incorrectly assumed better-sqlite3; corrected to the project's existing `node:sqlite`, not a dependency install or relaxed test. Production online backup + restore already passed before any production modification: SHA `9afbc694af6b153e328fdb3e1b7d260eab1f494eaaa71c82cb81c96db2d79c6a`, 19,890,176 bytes, schema 460, integrity OK/FK 0, identical native ledger/outbox/character counts. ACL-protected external path and exact commands are in the production runbook. No campaign synthetic mutation, VeiledDB startup, bot or model call. Production bot is stopped; only Codex tool Node processes exist. Actual `.env`/lock-file hashes were captured without printing credentials. All 36 production outbox rows are delivered; no replay cleanup is needed. New flags OFF; authenticated activation unavailable locally, so no GM impersonation/raw flag SQL.
+
+Release target 10.1.0 (per native next-minor policy), no SQL schema migration, no dependencies or command-schema changes. Production's local two version-string lock correction will be preserved externally and in a path-scoped stash before the qualified 10.1.0 metadata supersedes it. Full qualification and deployment results below will be recorded only after execution. No push/deploy/live test has happened at this point.
+
+Final source review reproduced one more genuine P0 before full qualification: the new NPC creator used an empty packaged-canon reader, allowing an unseeded protected roster identity to be recreated. The unchanged replacement expectation failed red. Fresh NPC creation now requires the actual native ContentIndex; state, assembly and Director provenance carry it in process (not model JSON), aliases also use the reserved-name validator, and the entity-local transaction rolls back rejected creation. Failed identity references cannot survive merely by moving the name into a scene unit. SQLite/configuration errors are not broadly suppressed. Focused final creation/Director/placement batch **6/6**, 2,522.0986 ms, zero skips. This gate is fixed, not waived. Executable source is now frozen for final validation.
+
+### Final identical-executable-tree qualification
+
+- `node scripts/sync-release.mjs 10.1.0`: **679** non-runtime manifest files; app and lock metadata 10.1.0.
+- `npm run check`: exit **0**, **375** JavaScript modules/scripts; **24** Discord root schemas. Final same-tree standalone check repeated after executable integration fixes, not a redundant full suite.
+- `npm run validate`: exit **0**, **119/119** mandatory critical suites, **0 failed / 0 not_run**, **476,217 ms**. **26/26** historical acceptance rows passed. Network denied, live requests **0**, billable tokens **0**. Machine report: `bot/.reports/offline-validation.json` (local ignored operational artifact).
+- Both D08 suites passed in that final validator (security 274 ms; observability 46 ms). Original SEM06/PVP30q/OBS21/FH40/native death/Fear/privacy/outbox guards remain registered and passed. New narration, salience and deployment suites passed (12,166 / 2,113 / 100 ms). New behavioral inventory is 30 tests across those three suites; no new test is default-skipped.
+- Extended inventory **158**; **39** optional historical/feature matrices explicitly deferred, retained executable through `npm run validate:extended`. They are not claimed freshly validated. Historical foundation's 154-suite pass is not this run.
+- First full attempt stopped at quality-check: **0 passed / 1 failed / 118 not_run** because a new import preceded the required NPC module trust-boundary header. Fixed import placement, retained the check, then completed the full qualification above. No further executable/test changes follow this pass. Results-only documentation and idempotent manifest synchronization do not require repeating gameplay qualification.
+
+Fake-provider assertions establish **one** request for direct scene observations, normally **two** for combined GM/Director fiction, and shared NPC/scenery writer arbitration. These are synthetic request counts, not real latency/cost/cache improvements. No automated live provider/Discord traffic or silent API fallback. Native backup/restore and all production SQL inspection were provider-free and read-only at the source. Production schema/data have not been migrated or rewritten. New flags remain OFF. No bot launch or live quality qualification is claimed.
 
 ## Phase 5 — actual implementation and evidence
 

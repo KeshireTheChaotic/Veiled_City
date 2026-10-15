@@ -15,6 +15,19 @@ const presenceKey=(scene,type,key)=>`presence:${motivationKey([scene,type,key])}
 export function scenePresence(db,guild,type,key){
   return db.getActiveSession(guild)?db.getCityRecord(guild,"scene_presence",presenceKey(currentScene(db,guild).key,type,key)):null;
 }
+/** Reuse native persistent position, not historical prose. No move/arrival or new witness is inferred. */
+export function lastVerifiedCharacterPresence(db,guild,character){
+  if(!character?.data.location||character.guild_id!==guild||!character.owner_user_id
+    ||db.getCurrentEncounter(currentScene(db,guild).session_id)?.status==='active'
+    ||['travelling','traveling','in_transit'].includes(character.data.travel?.status))return null;
+  const prior=db.listCityRecords(guild,{kind:'scene_presence',query:character.id,includeGM:true,limit:100})
+    .find(row=>row.data.entity_type==='character'&&row.data.entity_key===character.id);
+  const event=prior&&db.getWorldEvent(guild,prior.source_event);
+  if(!prior||prior.data.state!=='actually_present'||prior.location_key!==character.data.location||event?.status!=='active'
+    ||event.kind!=='arrival'||event.location_key!==prior.location_key||event.details.entity_key!==character.id
+    ||event.details.owner_user_id!==character.owner_user_id||event.source_id!==`player:${character.owner_user_id}`)return null;
+  return {...prior,status:'active',data:{...prior.data,zone:'scene'}};
+}
 export function reconcileSceneArrival(db,guild,{type,key,source_event,owner=null}){
   if(db.getCityCalendar(guild).flags.scene_continuity!==true||!db.getActiveSession(guild)) return null;
   const event=requireCitySource(db,guild,source_event);

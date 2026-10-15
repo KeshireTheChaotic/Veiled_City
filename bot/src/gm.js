@@ -53,6 +53,7 @@ import {sceneFictionFailure,buildSceneFictionContext} from './scene-fiction-cont
 import {assemblyNarrativeCandidate} from './pvp-output.js';
 import {sceneObservationOperation} from './scene-observation-route.js';
 import {authorNarrativeRequests,NARRATIVE_AUTHORITY_INSTRUCTIONS,narrativeResponseSchema} from './narrative-authority.js';
+import {bindDirectorNarrativeSource} from './narrative-director-source.js';
 import {buildNarrativeContext} from './narrative-authority-context.js';
 
 const routerSchema={
@@ -1056,8 +1057,18 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
     const req={model:layer==="downtime"?this.config.downtimeModel:this.config.gmModel,input:prompt,max_output_tokens:layer==="downtime"?this.config.downtimeMaxOutputTokens:Math.min(this.config.structuredRetryMaxTokens||6000,2200),text:{format:{type:"json_schema",name:`world_director_${layer}`,strict:true,schema:directorSchema}}};
     if(this.config.reasoningEffort) req.reasoning={effort:this.config.reasoningEffort};
     const result=await this.requestStructured(req,{guildId,label:`world director ${layer}`,signal:directorSignal});
+    const creativeScope={mode:trigger.scope||'party',actorUserId:trigger.actor_user_id||null,actorCharacterId:trigger.actor_character_id||null};
+    const authoringBudget={used:false};
+    if(this.db.getCityCalendar(guildId).flags.narrative_authority){
+      const nativeSource=bindDirectorNarrativeSource(this.db,guildId,result,creativeScope,layer,trigger,this.content);
+      if(result.act&&!(result.gm_world_parts||[]).some(p=>p.version===8))
+        result.gm_world_parts=[...(result.gm_world_parts||[]).filter(p=>![3,6,7].includes(p.version)).slice(0,3),
+          {version:8,kind:'narrative_request',operation:'continuation',source_refs:[]}];
+      await authorNarrativeRequests({db:this.db,guild:guildId,result,scope:creativeScope,sourceRef:nativeSource,budget:authoringBudget,
+        generate:packet=>this.generateNarrative(guildId,packet,directorSignal,req.model)});
+    }
     await this.authorFreshNpcs(guildId,result,{mode:trigger.scope||'party',actorUserId:trigger.actor_user_id,
-      actorCharacterId:trigger.actor_character_id},null,{used:false},directorSignal,req.model);
+      actorCharacterId:trigger.actor_character_id},null,authoringBudget,directorSignal,req.model);
     previewAuthoritativeMutation(this.db,{guildId,sessionId:ctx.session?.id,narrative:result,
       events:result.events||[],relationships:result.relationships||[],handouts:result.handouts||[],
       npcMemories:result.npc_memories||[],npcKnowledge:result.npc_knowledge||[],npcGoals:result.npc_goals||[],

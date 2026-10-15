@@ -2,6 +2,8 @@
 import { randomUUID, createHash } from "node:crypto";
 import {applyAuthoredInitialPosition} from './scene-setup.js';
 import {noteNarrativeInterest} from './narrative-salience.js';
+import {nativeDirectorNarrativeSource,nativeDirectorNarrativeContent} from './narrative-director-source.js';
+import {lastVerifiedCharacterPresence,reconcileSceneArrival,scenePresence} from './scene-continuity.js';
 import { indexWorldEvent } from "./city-calendar.js";
 import { normalizeNpcKey } from "./npc-cognition.js";
 import { applySimulationUpdates } from "./simulation.js";
@@ -437,7 +439,8 @@ export function assertMutationSuccess({events=[],relationships=[],handouts=[],np
 export function applyAuthoritativeMutation(db,{guildId,sessionId=null,events=[],relationships=[],handouts=[],npcMemories=[],npcKnowledge=[],npcGoals=[],
   simulationUpdates=[],scope={mode:"party",actorUserId:null,actorCharacterId:null},source="ai_gm",provenance={},narrative=null,aiIntents=narrative?.ai_intents||[],content=null,inspectStaged=null}){
   return db.transaction(()=>{
-    const outputSource=provenance.messageId&&scope.actorCharacterId?worldInputKey(provenance.messageId,scope.actorCharacterId):null;
+    const outputSource=nativeDirectorNarrativeSource(narrative)||(provenance.messageId&&scope.actorCharacterId?worldInputKey(provenance.messageId,scope.actorCharacterId):null);
+    content=content||nativeDirectorNarrativeContent(narrative);
     const originalNarrative=narrative&&candidateNarrative(narrative);
     // Projection cannot erase the existing prohibition on bypassing governed native goal adapters.
     if(npcGoals.length&&source!=='human_gm'&&db.getCityCalendar(guildId).flags.emergent_goals===true)
@@ -445,7 +448,7 @@ export function applyAuthoritativeMutation(db,{guildId,sessionId=null,events=[],
     if(narrative){
       validateCanonAnnotations(db,guildId,originalNarrative,scope);
       prepareAuthorizedTurnOutput(db,guildId,narrative,scope,{
-        sourceRef:outputSource&&db.getWorldEvent(guildId,outputSource)?outputSource:null,origin:source});
+        sourceRef:outputSource&&db.getWorldEvent(guildId,outputSource)?outputSource:null,origin:source,content});
       handouts=narrative.handouts||handouts; npcMemories=narrative.npc_memories||npcMemories;
       npcKnowledge=narrative.npc_knowledge||npcKnowledge; npcGoals=narrative.npc_goals||npcGoals;
     }
@@ -453,6 +456,10 @@ export function applyAuthoritativeMutation(db,{guildId,sessionId=null,events=[],
     persistAuthoredCandidates(db,guildId,narrative?.authored_candidates,scope,provenance);
     const intentDiagnostics=persistPlayerIntentDiagnostics(db,guildId,narrative?.player_intent_diagnostics||[],scope,provenance);
     const typedIntents=persistPlayerIntents(db,guildId,narrative?.player_intents||[],scope,provenance);
+    if(db.getCityCalendar(guildId).flags.narrative_authority&&scope.actorCharacterId&&!scenePresence(db,guildId,'character',scope.actorCharacterId)){
+      const prior=lastVerifiedCharacterPresence(db,guildId,db.getCharacter(scope.actorCharacterId));
+      if(prior)reconcileSceneArrival(db,guildId,{type:'character',key:scope.actorCharacterId,source_event:prior.source_event,owner:scope.actorUserId});
+    }
     const initialPositions=typedIntents.filter(row=>row.data.operation==='initial_position')
       .map(row=>applyAuthoredInitialPosition(db,guildId,row,scope));
     const personalCandidates=[];
@@ -511,8 +518,8 @@ export function applyAuthoritativeMutation(db,{guildId,sessionId=null,events=[],
     world.push(...initialPositions.map(row=>({status:'arrived',source_event:row.data.arrival,initial_setup:true})));
     recordCharacterPerceptions(db,guildId,{world,intents:typedIntents,scope,sourceRef:outputSource});
     if(narrative)prepareAuthorizedTurnOutput(db,guildId,narrative,scope,{
-      sourceRef:outputSource&&db.getWorldEvent(guildId,outputSource)?outputSource:null,world,origin:source});
-    if(outputSource&&scope.actorCharacterId&&db.getCityCalendar(guildId).flags.narrative_salience)
+      sourceRef:outputSource&&db.getWorldEvent(guildId,outputSource)?outputSource:null,world,origin:source,content});
+    if(outputSource&&scope.actorCharacterId&&db.getWorldEvent(guildId,outputSource)?.kind==='ai_gm_input'&&db.getCityCalendar(guildId).flags.narrative_salience)
       noteNarrativeInterest(db,guildId,scope,outputSource,{intents:typedIntents});
     const typedDialogue=persistTypedDialogue(db,guildId,narrative?.player_intents||[],scope,provenance);
     const contextMemories=saveContextMemories(db,guildId,narrative,scope,provenance);
@@ -576,7 +583,7 @@ export function applyAuthoritativeMutation(db,{guildId,sessionId=null,events=[],
       &&row.data.intent.payload?.op==='enter'&&row.data.result?.status==='approved').map(row=>row.data.result.record_key);
     if((nativeEntries.length||ordinaryEffects.some(row=>row.status==='applied'))&&narrative)prepareAuthorizedTurnOutput(db,guildId,narrative,scope,{
       sourceRef:outputSource&&db.getWorldEvent(guildId,outputSource)?outputSource:null,world,nativeEntries,
-      nativeEffects:ordinaryEffects.filter(row=>row.status==='applied').map(row=>row.record_key),origin:source});
+      nativeEffects:ordinaryEffects.filter(row=>row.status==='applied').map(row=>row.record_key),origin:source,content});
     // Validate against native operations staged in this transaction, not the old
     // state or model-described effects. Any failure rolls back the entire bundle.
     if(narrative) validateNarrativeClaims(db,guildId,narrative,scope,{staged:true,eventResults});

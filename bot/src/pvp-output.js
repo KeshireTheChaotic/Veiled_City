@@ -257,10 +257,10 @@ export function assemblyNarrativeCandidate(db,guild,sessionId,scope){
     details:{version:1,revision:view.revision,scope}},'native:assembly');
   return {view,candidate,source};
 }
-export function prepareAssemblyOutput(db,guild,sessionId,scope){
+export function prepareAssemblyOutput(db,guild,sessionId,scope,{content=null}={}){
   const {view,candidate,source}=assemblyNarrativeCandidate(db,guild,sessionId,scope);
   const inputs=structuredClone(candidate.gm_world_parts);
-  prepareAuthorizedTurnOutput(db,guild,candidate,scope,{sourceRef:source.event_key,origin:'assembly-candidate'});
+  prepareAuthorizedTurnOutput(db,guild,candidate,scope,{sourceRef:source.event_key,origin:'assembly-candidate',content});
   // Assembly is not a replay of every saved Fear/PvP projection in this scene.
   const narrativeParts=prepared.get(candidate).parts.map(ref=>validateOutputPart(db,guild,ref)).filter(p=>
     ['gm_world_narrative','gm_fresh_npc','gm_scene_fiction','gm_narrative_unit'].includes(p.data.kind)||p.data.kind==='native_outcome'
@@ -288,7 +288,7 @@ export function validateOutputPart(db,guild,id){
   return row;
 }
 /** Trusted orchestration only; a model cannot manufacture the in-process capability or native proofs. */
-export function prepareAuthorizedTurnOutput(db,guild,result,scope,{sourceRef=null,world=[],nativeEntries=[],nativeEffects=[],origin="turn"}={}){
+export function prepareAuthorizedTurnOutput(db,guild,result,scope,{sourceRef=null,world=[],nativeEntries=[],nativeEffects=[],origin="turn",content=null}={}){
   const prior=prepared.get(result),raw=prior?.raw||Object.fromEntries(surfaces(result));
   const hasDisclosureDependencies=prior?.hasDisclosureDependencies??(disclosureDependencies.some(field=>{
     const value=result[field];return Array.isArray(value)?value.length>0:!!value;
@@ -334,7 +334,7 @@ export function prepareAuthorizedTurnOutput(db,guild,result,scope,{sourceRef=nul
   for(const proposal of worldParts){
     try{
       if(proposal?.version===8){
-        for(const row of establishNarrativeUnits(db,guild,proposal,scope,sourceRef)){
+        for(const row of establishNarrativeUnits(db,guild,proposal,scope,sourceRef,{content})){
           const event=db.getWorldEvent(guild,row.source_event);
           parts.push(savePart(db,guild,{...common,kind:'gm_narrative_unit',ref:row.record_key,source_ref:event.event_key,source_hash:hash(event.details)}));
         }continue;

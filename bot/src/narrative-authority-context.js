@@ -1,5 +1,5 @@
 /** Native creative-GM packet: camera != character position; no secrets, effects, or model-issued authority. */
-import {currentScene,scenePresence} from './scene-continuity.js';
+import {currentScene,scenePresence,lastVerifiedCharacterPresence} from './scene-continuity.js';
 import {conversationPrincipal} from './conversation-principal.js';
 import {assemblyOrientation} from './assembly-state.js';
 import {factVisibleTo} from './disclosure-authority.js';
@@ -27,9 +27,10 @@ export function buildNarrativeContext(db,guild,scope,sourceRef,{operation='descr
     &&source.details.character_id===pc.id&&source.details.revision===principal.revision&&db.ownerAuthoredSource(guild,sourceRef,scope.actorUserId);
   const assembly=source?.kind==='native_assembly_scope'&&source.source_id==='native:assembly'&&hash(source.details.scope)===hash(scope)
     &&source.details.revision===assemblyOrientation(db,guild,scene.session_id,scope).revision;
-  if(!source||source.status!=='active'||source.session_id!==scene.session_id||source.scene!==scene.key||!owner&&!assembly
+  const director=source?.kind==='native_director_narrative_scope'&&source.source_id==='native:director'&&hash(source.details.scope)===hash(scope);
+  if(!source||source.status!=='active'||source.session_id!==scene.session_id||source.scene!==scene.key||!owner&&!assembly&&!director
     ||!narrativeSourceVisible(db,guild,sourceRef,scope))throw fail('authenticated_source');
-  const p=pc&&scenePresence(db,guild,'character',pc.id),arrival=p&&db.getWorldEvent(guild,p.source_event),
+  const p=pc&&(scenePresence(db,guild,'character',pc.id)||lastVerifiedCharacterPresence(db,guild,pc)),arrival=p&&db.getWorldEvent(guild,p.source_event),
     placed=p?.status==='active'&&p.data.state==='actually_present'&&p.location_key===pc.data.location&&arrival?.status==='active'
       &&arrival.location_key===p.location_key&&narrativeVisible(p,scope)&&narrativeSourceVisible(db,guild,p.source_event,scope);
   if(!placed&&!flags.narrative_camera)throw fail('camera_disabled');
@@ -62,7 +63,7 @@ export function buildNarrativeContext(db,guild,scope,sourceRef,{operation='descr
   const binding={version:1,guild,session:scene.session_id,scene:scene.key,scope:{...scope},source:sourceRef,source_hash:hash(source.details),
     principal:principal?.revision||null,location,viewpoint:placed?'character':'camera',
     placement:placed?hash([p.source_event,p.location_key,p.data.zone,arrival.details]):null};
-  const packet={version:2,operation,request:owner?source.details.text:'Open this assembly with interesting fiction, without inventing PC co-location or cooperation.',
+  const packet={version:2,operation,request:owner?source.details.text:director?'Portray a contextual world response without inventing PC actions or consequences.':'Open this assembly with interesting fiction, without inventing PC co-location or cooperation.',
     viewpoint:{kind:binding.viewpoint,zone:placed?p.data.zone:null,pc_witness:!!placed},
     place:{key:location||'',name:entity?.state.name||'An unestablished public setting',type:entity?.state.place_type||'unknown'},
     observations:facts.map(f=>({source_ref:f.id,text:f.content,epistemic:evidenceType(f).kind})),npcs,

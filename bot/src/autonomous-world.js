@@ -52,7 +52,7 @@ export function worldAuthority(db,guild){
     audit_autonomous_worldbuilding:true,...db.getCityRecord(guild,"gm_authority","campaign")?.data};
 }
 /** Trusted isolated-GM fiction creation; no PC source/action impersonation, combat stats, powers or movement. */
-export function establishNarrativeEntity(db,guild,input,context,{content={read:()=>''}}={}){
+export function establishNarrativeEntity(db,guild,input,context,{content=null}={}){
   const {binding,scope,source}=context,policy=worldAuthority(db,guild);
   if(db.getCityCalendar(guild).flags.narrative_authority!==true||source?.status!=='active'||db.getWorldEvent(guild,binding.source)?.status!=='active'
     ||binding.guild!==guild||binding.scene!==currentScene(db,guild).key||policy.gm_authority_mode!=='autonomous'
@@ -84,7 +84,10 @@ export function establishNarrativeEntity(db,guild,input,context,{content={read:(
   if(input.kind==='location')configureSimulationEntity(db,guild,'location',input.key,{name:input.name,description:input.summary,parent_location_key:parent,
     place_type:input.role,visibility,subject_character_id:subject,aliases:input.aliases,narrative_origin:binding.source,access:'public',ai_gm_origin:true});
   else{
-    validateMinorIdentity(db,content,guild,input.key,{name:input.name,occupation:input.role||'ordinary local',public_identity:input.summary.slice(0,160),portrayal:'Ordinary local, no special knowledge or powers.'});
+    if(typeof content?.read!=='function')fail('Packaged NPC canon must be available before creating a fresh identity.');
+    for(const name of [input.name,...input.aliases])try{
+      validateMinorIdentity(db,content,guild,input.key,{name,occupation:input.role||'ordinary local',public_identity:input.summary.slice(0,160),portrayal:'Ordinary local, no special knowledge or powers.'});
+    }catch(error){if(error.constructor===Error&&!error.code)fail('Packaged/established NPC identity cannot be replaced.');throw error;}
     db.upsertNpcProfile(guild,{npcKey:input.key,displayName:input.name,role:input.role||'ordinary local',publicIdentity:input.summary,
       activityTier:'background',source:'native_narrative_authority',knowledgeBoundaries:['Own sourced observations and ordinary self-knowledge only.']});
     db.setSimulationEntity(guild,'npc',input.key,{name:input.name,location_key:location,visibility,subject_character_id:subject,aliases:input.aliases,

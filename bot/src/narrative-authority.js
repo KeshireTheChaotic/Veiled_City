@@ -69,7 +69,10 @@ function validateUnit(db,guild,u,ctx,entities=[]){
       ||!narrativeVisible({visibility:place.state.visibility||'party',subject_key:place.state.subject_character_id},ctx.scope)
       ||identity&&!narrativeSourceVisible(db,guild,identity.source_event,ctx.scope)))throw fail('held_scope');
   }
-  if(u.kind==='native_outcome_render')return nativeOutcomeProjection(db,guild,{version:4,kind:'native_outcome',receipt_kind:u.receipt_kind,ref:u.receipt_ref},ctx.scope).text;
+  if(u.kind==='native_outcome_render'){
+    try{return nativeOutcomeProjection(db,guild,{version:4,kind:'native_outcome',receipt_kind:u.receipt_kind,ref:u.receipt_ref},ctx.scope).text;}
+    catch(error){if(error.code==='NATIVE_NOTICE')throw fail('held_secret');throw error;}
+  }
   if(u.receipt_kind||u.receipt_ref||u.epistemic==='native_outcome')throw fail('held_material');
   const names=protectedNarrativeNames(db,guild);
   if(mentions(u.text,names)||materialParaphrases(u.text,names).length)throw fail('held_material');
@@ -134,7 +137,7 @@ export async function authorNarrativeRequests({db,guild,result,scope,sourceRef,b
   }
 }
 /** Existing authoritative transaction owns creation and unit establishment; raw combined narration is never consumed. */
-export function establishNarrativeUnits(db,guild,input,scope,sourceRef){
+export function establishNarrativeUnits(db,guild,input,scope,sourceRef,{content=null}={}){
   const ctx=context(db,guild,input,scope,sourceRef),draft=db.getCityRecord(guild,'narrative_draft',draftKey(input,scope,sourceRef)),d=draft?.data;
   if(draft?.status!=='drafted_private'||d?.issuer!==issuer||hash(d.binding)!==hash(ctx.binding)||d.semantic_verification!==false)throw fail('isolated_draft_required');
   shape(d.answer);const units=[],fates=[],entities=d.answer.fiction_delta.filter(e=>e&&typeof e==='object'&&!Array.isArray(e));
@@ -149,13 +152,13 @@ export function establishNarrativeUnits(db,guild,input,scope,sourceRef){
       if(mentions(`${e.name} ${e.summary} ${(e.aliases||[]).join(' ')}`,protectedNarrativeNames(db,guild)))throw fail('held_material');
       validateUnit(db,guild,{id:'identity',kind:'scene',text:`${e.name} ${e.summary} ${e.role}`,subject_key:'',location_key:ctx.binding.location||'',
         visibility:scope.mode==='private'?'character':'party',epistemic:'observation',source_refs:[],receipt_kind:'',receipt_ref:''},ctx,entities);
-      db.transaction(()=>establishNarrativeEntity(db,guild,e,ctx));
+      db.transaction(()=>establishNarrativeEntity(db,guild,e,ctx,{content}));
     }catch(error){if(!['SCENE_FICTION','AUTONOMOUS_WORLD'].includes(error.code))throw error;failedEntities.add(e.key);}
   }
   const rows=[];
   for(const u of units){
     const key=`narrative-unit:${hash([d.binding,u])}`,prior=db.getCityRecord(guild,'narrative_unit',key);
-    if(failedEntities.has(u.subject_key)||failedEntities.has(u.location_key)){
+    if(failedEntities.has(u.subject_key)||failedEntities.has(u.location_key)||entities.some(e=>failedEntities.has(e.key)&&u.text.includes(e.name))){
       fates.push({id:u.id,fate:'held_scope'});continue;
     }
     try{

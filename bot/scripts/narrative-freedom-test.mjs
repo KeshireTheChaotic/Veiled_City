@@ -46,7 +46,7 @@ export async function run(f,x,answer,r=candidate(x.text),fast=false){
     config:{gmModel:'offline',maxRecentMessages:2,maxContentChunks:1,playableObservationFastPath:fast}});
   const result=await gm.runTurn({guildId:f.guild,actorUserId:x.pc.owner_user_id,actorName:x.pc.name,messageId:x.messageId,messageText:x.text,scope:x.scope.mode});
   const attempt=f.db.beginTurnAttempt({guildId:f.guild,sessionId:f.session.id,messageId:x.messageId,actorPrincipal:x.pc.owner_user_id,audience:x.scope.mode});
-  const mutation=commitGmTurn({db:f.db,guild:{id:f.guild},session:f.db.getActiveSession(f.guild),result,scope:x.scope,speaker:x.pc.name,label:'Narrative freedom fixture',
+  const mutation=commitGmTurn({db:f.db,content:gm.content,guild:{id:f.guild},session:f.db.getActiveSession(f.guild),result,scope:x.scope,speaker:x.pc.name,label:'Narrative freedom fixture',
     meta:{messageId:x.messageId,turnId:attempt.turn_id}});
   return {ai,gm,result,attempt,mutation,rows:f.db.listTurnPublications(f.guild,attempt.turn_id)};
 }
@@ -214,6 +214,10 @@ test('N06 native result is exposed to the isolated writer but invented outcome p
   const out=await run(f,x,answer,r),packet=JSON.parse(out.ai.requests[1].input);
   assert(packet.native_results.some(receipt=>receipt.ref===saved.record_key));
   assert(out.rows.some(row=>row.payload.includes('slate counter')));assert(out.rows.every(row=>!row.payload.includes('surrenders')));
+  const publicTurn=setup(f,{text:'Describe the counter.'}),unshared=setting();
+  unshared.narrative_units.push(unit('unshared','native_outcome_render','A private roll.',{receipt_kind:'roll_request',receipt_ref:saved.record_key,epistemic:'native_outcome'}));
+  const publicResult=await run(f,publicTurn,unshared);assert(publicResult.rows.some(row=>row.payload.includes('slate counter')));
+  assert(publicResult.rows.every(row=>!row.payload.includes('saved result')));
 }));
 
 test('N06 a new human proxy revokes queued delegated NPC speech without reversing established native state',()=>nativeFixture(async f=>{
@@ -234,4 +238,35 @@ test('N20 native substantive and missing-response metrics contain counts, never 
   const out=await run(f,next,answer);assert.equal(out.result.narrative_completion.status,'held_irrecoverable');
   const metrics=operationalMetrics.snapshot(f.guild);assert(metrics.stages.narrative_missing.count>=1);
   assert(!JSON.stringify(metrics).includes('slate counter'));assert(!JSON.stringify(metrics).includes('Choso'));
+  const direct=setup(f,{text:'Describe the scene'});await run(f,direct,setting(),undefined,true);
+}));
+for(const mode of ['party','private'])test(`N21 real ${mode} Director adapter uses the common delegated fiction boundary without PC effects`,()=>nativeFixture(async f=>{
+  const x=setup(f,{privateScene:mode==='private'}),answer=setting();answer.narrative_units.forEach(u=>{u.visibility=mode==='private'?'character':'party';});
+  const draft={...candidate(x.text),act:true,public_narration:'Choso apologizes for losing.',confidence:100,gm_notes:'No native effect.'};draft.player_intents=[];
+  const ai=new FakeResponses([draft,answer]),gm=new GMService({db:f.db,content:new ContentIndex(path.resolve('../content')),ai,config:{gmModel:'offline'}}),
+    scope=mode==='party'?{mode:'party',actorUserId:null,actorCharacterId:null}:x.scope;
+  const result=await gm.runWorldDirector({guildId:f.guild,layer:'manual',trigger:mode==='private'
+    ?{scope:'private',actor_user_id:x.pc.owner_user_id,actor_character_id:x.pc.id}:{requested_by:'gm'}});
+  const {applyAuthoritativeMutation}=await import('../src/state.js'),{queueDirectorPublications}=await import('../src/publication-outbox.js');
+  applyAuthoritativeMutation(f.db,{guildId:f.guild,sessionId:f.session.id,narrative:result,scope,source:'world_director_manual'});
+  const turn=queueDirectorPublications(f.db,{guild:{id:f.guild},session:f.session,result,scope,key:`fiction-director-${mode}`});
+  const rows=f.db.listTurnPublications(f.guild,turn);assert(rows.some(row=>row.payload.includes('slate counter')));
+  assert(rows.every(row=>!row.payload.includes('apologizes')));assert.equal(ai.requests.length,2);
+}));
+test('N07 last verified placement survives a scene boundary without another move or an inferred arrival',()=>nativeFixture(async f=>{
+  const original=setup(f);f.db.resetDirectorRound(f.session.id,{advanceScene:true});
+  const text='Describe my surroundings.',messageId='verified-position-return';
+  captureWorldInput(f.db,f.guild,original.pc.owner_user_id,original.pc.id,messageId,text);
+  const x={...original,text,messageId,sourceRef:worldInputKey(messageId,original.pc.id)},out=await run(f,x,setting(),undefined,true);
+  assert.equal(JSON.parse(out.ai.requests[0].input).viewpoint.kind,'character');
+  assert.equal(f.db.listWorldEvents(f.guild,{includeGM:true,limit:100}).filter(e=>e.kind==='arrival').length,1);
+  assert.equal(f.db.getCharacter(x.pc.id).data.location,'terminal');
+}));
+test('N02 unseeded packaged canonical NPC cannot be replaced by a new ordinary identity',()=>nativeFixture(async f=>{
+  const x=setup(f),content=new ContentIndex(path.resolve('../content')),name=JSON.parse(content.read('GM_PRIVATE/NPCS/npcs.json'))[0].name;
+  const answer=setting();answer.fiction_delta.push({kind:'npc',key:'new-canonical-impostor',name,summary:'An invented porter.',
+    location_key:'terminal',parent_location_key:'',role:'porter',aliases:[]});
+  answer.narrative_units.push(unit('impostor','npc_speech','I am a newly invented porter.',{subject_key:'new-canonical-impostor',epistemic:'testimony'}));
+  const out=await run(f,x,answer);assert.equal(f.db.getNpcProfile(f.guild,'new-canonical-impostor'),null);
+  assert(out.rows.some(r=>r.payload.includes('slate counter')));assert(out.rows.every(r=>!r.payload.includes('newly invented porter')));
 }));

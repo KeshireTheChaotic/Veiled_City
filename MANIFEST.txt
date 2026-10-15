@@ -23,6 +23,7 @@ bot/scripts/consequence-reconciliation-test.mjs
 bot/scripts/context-conversation-test.mjs
 bot/scripts/contract-fixtures.mjs
 bot/scripts/cost-estimate.mjs
+bot/scripts/critical-validation-profile-test.mjs
 bot/scripts/d01-roll-lifecycle-test.mjs
 bot/scripts/d02-roll-options-test.mjs
 bot/scripts/d03-roll-menu-test.mjs
@@ -86,7 +87,10 @@ bot/scripts/memory-audience-isolation-test.mjs
 bot/scripts/memory-lifecycle-test.mjs
 bot/scripts/movement-authorization-regression-test.mjs
 bot/scripts/narrative-contract-test.mjs
+bot/scripts/narrative-deployment-safety-test.mjs
+bot/scripts/narrative-freedom-test.mjs
 bot/scripts/narrative-inference-test.mjs
+bot/scripts/narrative-salience-test.mjs
 bot/scripts/narrative-understanding-test.mjs
 bot/scripts/natural-language-scope-test.mjs
 bot/scripts/negotiation-preview-test.mjs
@@ -96,6 +100,7 @@ bot/scripts/offline-smoke-test.mjs
 bot/scripts/operations-regression-test.mjs
 bot/scripts/playable-narration-test.mjs
 bot/scripts/portrayal-authoring-test.mjs
+bot/scripts/production-backup.mjs
 bot/scripts/production-regression-test.mjs
 bot/scripts/prompt-budget-test.mjs
 bot/scripts/quality-check.mjs
@@ -277,9 +282,16 @@ bot/src/memory-clusters.js
 bot/src/memory-lifecycle.js
 bot/src/message-span-ledger.js
 bot/src/movement-language.js
+bot/src/narrative-authority-context.js
+bot/src/narrative-authority.js
+bot/src/narrative-completeness.js
 bot/src/narrative-context.js
+bot/src/narrative-director-source.js
 bot/src/narrative-integrity.js
+bot/src/narrative-memory.js
 bot/src/narrative-pvp.js
+bot/src/narrative-records.js
+bot/src/narrative-salience.js
 bot/src/native-hook-output.js
 bot/src/native-notice.js
 bot/src/native-outcome-output.js
@@ -482,6 +494,7 @@ docs/CODEX_TYPED_INTENT_DELTA_KICKOFF_v8.md
 docs/CODEX_TYPED_INTENT_DELTA_PLAN_v8.md
 docs/CODEX_TYPED_INTENT_MASTER_KICKOFF_v5.md
 docs/CODEX_TYPED_INTENT_REFINEMENT_PLAN_v5.md
+docs/CODEX_VEILED_CITY_NARRATIVE_AUTHORITY_IMPLEMENTATION_PLAN.md
 docs/CODEX_VEILED_CITY_PLAYABLE_NARRATION_REPAIR_PLAN.md
 docs/CODEX_VEILKEEPER_SESSION5_NARRATIVE_LATENCY_PLAN.md
 docs/CODE_STANDARDS.md
@@ -509,6 +522,10 @@ docs/I_HEARD_YOU_GAP_ANALYSIS.md
 docs/I_HEARD_YOU_IMPLEMENTATION.md
 docs/LEVEL_UP.md
 docs/LIVING_CITY.md
+docs/NARRATIVE_AUTHORITY_EXECUTION_LEDGER.md
+docs/NARRATIVE_AUTHORITY_PRODUCTION_RUNBOOK.md
+docs/NARRATIVE_AUTHORITY_RELEASE.md
+docs/NARRATIVE_CREATIVE_AUTHORITY_CONTRACT.md
 docs/NARRATIVE_INFERENCE_AUDIT.md
 docs/NARRATIVE_UNDERSTANDING.md
 docs/NATURAL_LANGUAGE_SCOPE_DRIFT.md

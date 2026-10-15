@@ -1,4 +1,3 @@
-import {narrativeContextEligible} from './narrative-salience.js';
 /**
  * Persistent NPC cognition utilities for Veiled City.
  *
@@ -8,6 +7,7 @@ import {narrativeContextEligible} from './narrative-salience.js';
  * campaigns provide only the memories/knowledge relevant to the current scene.
  */
 
+import {narrativeContextEligible} from './narrative-salience.js';
 import { clusterContext } from "./memory-clusters.js";
 import { sceneView, npcEvidenceActive } from "./scene-continuity.js";
 

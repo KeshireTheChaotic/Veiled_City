@@ -26,7 +26,7 @@ export async function deliverVerifiedAssembly({db,guild,session,gm=null,deliver=
         &&(slot.scope.actorCharacterId||db.getCityCalendar(guild.id).flags.narrative_camera&&db.getCityCalendar(guild.id).flags.narrative_authority))
         await gm.authorAssemblyScene(guild.id,session.id,slot.scope);
       if(!job?.data.turn_id)job=db.transaction(()=>{
-        const result=prepareAssemblyOutput(db,guild.id,session.id,slot.scope),turn=db.beginTurnAttempt({guildId:guild.id,sessionId:session.id,
+        const result=prepareAssemblyOutput(db,guild.id,session.id,slot.scope,{content:gm?.content}),turn=db.beginTurnAttempt({guildId:guild.id,sessionId:session.id,
           messageId:slot.key,actorPrincipal:slot.scope.actorUserId||'__assembly__',audience:slot.scope.mode});
         queueTurnPublications(db,{guild,session,result,scope:slot.scope,turnId:turn.turn_id});
         db.updateTurnAttempt(turn.turn_id,{stage:'committed',committed:'yes',nativeCommitId:slot.key});
