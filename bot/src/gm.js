@@ -989,7 +989,7 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
   async authorAssemblyScene(guildId,sessionId,scope){
     const {candidate,source}=assemblyNarrativeCandidate(this.db,guildId,sessionId,scope),signal=AbortSignal.timeout(Number(this.config.gmTurnDeadlineMs||120000));
     if(this.db.getCityCalendar(guildId).flags.narrative_authority)return authorNarrativeRequests({db:this.db,guild:guildId,result:candidate,scope,
-      sourceRef:source.event_key,budget:{used:false},generate:packet=>this.generateNarrative(guildId,packet,signal)});
+      sourceRef:source.event_key,budget:{used:false},generate:packet=>this.generateNarrative(guildId,packet,signal,'assembly')});
     await authorSceneFictionRequests({db:this.db,guild:guildId,result:candidate,scope,sourceRef:source.event_key,budget:{used:false},
       generate:packet=>this.generateSceneFiction(guildId,packet,signal)});
   }

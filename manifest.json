@@ -1,6 +1,6 @@
 {
   "package": "Veiled_City_Multiplayer_Discord",
-  "version": "10.1.0",
+  "version": "10.2.0",
   "generated": "2026-10-15",
   "content_normalization": "utf8-lf",
   "files": [
@@ -11,8 +11,8 @@
     },
     {
       "path": ".gitattributes",
-      "size_bytes": 258,
-      "sha256": "bddd92dd972546421283ca57e655c02a92f8cbec9242e63bf96d0e9f65deb68c"
+      "size_bytes": 338,
+      "sha256": "f5ed5e0e15c3b82f1027ce928c83a5ff128ca33318aed9f41635f0deef738d88"
     },
     {
       "path": ".github/workflows/offline-validation.yml",
@@ -32,12 +32,12 @@
     {
       "path": "README.md",
       "size_bytes": 22576,
-      "sha256": "2b15a955e149e5231f2d1f2656d53b4de4f0d62706c4d954f09afe900bfc51ee"
+      "sha256": "12e812c0cc2961a5f95801ef11e89a605ebc043e23fda255a5ec9743270dc243"
     },
     {
       "path": "bot/.env.example",
-      "size_bytes": 3351,
-      "sha256": "6189dba7cd8e777ff84c82936f96db641e2a1245a879786270b99441f7f26df9"
+      "size_bytes": 3482,
+      "sha256": "81a3a7d38c3d8255e6755c2387f4b4f29345a6b4568a3af71b7f434ae53ed8df"
     },
     {
       "path": "bot/.gitignore",
@@ -52,12 +52,12 @@
     {
       "path": "bot/package-lock.json",
       "size_bytes": 34546,
-      "sha256": "17cc66c9de6707ebce5ac0ddca7614ad3e666db11e97dda4ab5709220987b810"
+      "sha256": "40f84dff6083d4b059e19139873bfdc37771391e813a5ae7a52787690c3643b1"
     },
     {
       "path": "bot/package.json",
       "size_bytes": 2704,
-      "sha256": "8609692ce48862aa85f0b0a6520f2a62d9530b9344f16b69977a69cf1c720f9a"
+      "sha256": "22567ffe8ea9f041c81d499e89dbc68c7a8eb0411a6a41ae8fb698354991c21c"
     },
     {
       "path": "bot/scripts/assembly-authority-test.mjs",
@@ -178,6 +178,11 @@
       "path": "bot/scripts/d08-window-security-test.mjs",
       "size_bytes": 2401,
       "sha256": "353d6bc75082d6a0c407007390443862d110b31bbb42053429f994fb22477731"
+    },
+    {
+      "path": "bot/scripts/delegation-quality-test.mjs",
+      "size_bytes": 19188,
+      "sha256": "ff88bde6d6a13d2411868202f7e9bb74cd1e4bb9b4c0bc555a0736c604361506"
     },
     {
       "path": "bot/scripts/end-to-end-a-test.mjs",
@@ -455,9 +460,14 @@
       "sha256": "4e885f45a93409f2f9d1406823e0208139f40166e21ac3076421a3f1430a6943"
     },
     {
+      "path": "bot/scripts/narrative-fixtures.mjs",
+      "size_bytes": 4547,
+      "sha256": "82f10a99487e975f460ae509ce4ce7d9c0601769e34e4223fa90634f063f25ba"
+    },
+    {
       "path": "bot/scripts/narrative-freedom-test.mjs",
-      "size_bytes": 28548,
-      "sha256": "47068414a72585a52f32799bf7b168cd6d44d65f4213807af059e0f312bc4aca"
+      "size_bytes": 24731,
+      "sha256": "e7e5928f8d462592ce78cae8bbda2208c9245e7b8de9310740da938564c94185"
     },
     {
       "path": "bot/scripts/narrative-inference-test.mjs",
@@ -981,8 +991,8 @@
     },
     {
       "path": "bot/scripts/validate-offline.mjs",
-      "size_bytes": 10460,
-      "sha256": "129689ccc4799497ef5996f704c8350016331ca9fb1771651b757b74e482041c"
+      "size_bytes": 10500,
+      "sha256": "102d5f1f82ae5d26661672837f5438d34cac732a850f7de534fee79d7a8aa14e"
     },
     {
       "path": "bot/sql/schema.sql",
@@ -1011,8 +1021,8 @@
     },
     {
       "path": "bot/src/ai-intents.js",
-      "size_bytes": 40350,
-      "sha256": "ef2c968bfe83e57f916d0c3ca9ed1ca39fe755d45889704bd9ab6958b715996a"
+      "size_bytes": 43952,
+      "sha256": "a294d232370668141fdc1874d21d691b82d870b845a96fa76abfc9acfed047d9"
     },
     {
       "path": "bot/src/ai-review.js",
@@ -1156,8 +1166,8 @@
     },
     {
       "path": "bot/src/config.js",
-      "size_bytes": 5968,
-      "sha256": "b1a69df45db4d3824f19a020e558af2638488f34a73365c982810fdf2f72ed3a"
+      "size_bytes": 6099,
+      "sha256": "c31682862a31cb1628235d7dd19546772f033ec43a56242cd1dc0f315f6f8a17"
     },
     {
       "path": "bot/src/consent-language.js",
@@ -1208,6 +1218,11 @@
       "path": "bot/src/decision-advisory.js",
       "size_bytes": 4426,
       "sha256": "76ac53154c33045caef6b1e2a849e24eb5eda36adbe458032d0055a06f8e65b9"
+    },
+    {
+      "path": "bot/src/delegation-catalog.js",
+      "size_bytes": 682,
+      "sha256": "8ad5b04f0ee0b08dd30047d20fa6cbbb8f0d34e820de985f440e6257e7cb534e"
     },
     {
       "path": "bot/src/diagnostics/session5-reader.js",
@@ -1356,8 +1371,8 @@
     },
     {
       "path": "bot/src/gm.js",
-      "size_bytes": 126176,
-      "sha256": "40c9997d991fb4c9a3e9706b49f3e9b5303c0500e8904cf9132c7ffcf1f62eb6"
+      "size_bytes": 125914,
+      "sha256": "2433da579c7424643b61b8466db354032b86d47eb5fdcf0c15ec428f0a9200ef"
     },
     {
       "path": "bot/src/handout.js",
@@ -1426,18 +1441,18 @@
     },
     {
       "path": "bot/src/narrative-authority-context.js",
-      "size_bytes": 7622,
-      "sha256": "0f510ef51cffb713dee8a4a10189047e2ae0fd4adbaaf9c606503bb3a8598d29"
+      "size_bytes": 8387,
+      "sha256": "7507e59ed7f38e74c45e4131b68430e11e77757d799c6321b6a6e8634a6ef6e7"
     },
     {
       "path": "bot/src/narrative-authority.js",
-      "size_bytes": 17534,
-      "sha256": "89ef2f2c6a0983f54c25703147b737afa7da0dcbffe2d47841494e402e66c372"
+      "size_bytes": 18352,
+      "sha256": "6a0714fb314c96186959ce464afd2237443e530776899c48dd5c74841d4eae16"
     },
     {
       "path": "bot/src/narrative-completeness.js",
-      "size_bytes": 1694,
-      "sha256": "0de67d962a1ffeeff74fc665d281ca9170b7d8f1c5ffb5680544a42c5352c5a1"
+      "size_bytes": 5570,
+      "sha256": "5bf42924c06da22da6006ba0b14768d64545942df049176151886aecb9837da4"
     },
     {
       "path": "bot/src/narrative-context.js",
@@ -1445,9 +1460,14 @@
       "sha256": "7da41e9f96809c621ebe79a6af037493d13eddb6df3654ab73058759efec52bb"
     },
     {
+      "path": "bot/src/narrative-delegation.js",
+      "size_bytes": 3798,
+      "sha256": "92429366e2f9b641cedae0dbf322e8240eb4bfdef202f68a7d69d77cd817e2f0"
+    },
+    {
       "path": "bot/src/narrative-director-source.js",
-      "size_bytes": 1337,
-      "sha256": "cb120fdc8e0302403dc8aed82c695061c76497aa3180d046ad93f48ef04d4852"
+      "size_bytes": 3731,
+      "sha256": "dd675425203bd38c408ffc77a4931509923bf1e182e16b6027fd3506b32a8fa2"
     },
     {
       "path": "bot/src/narrative-integrity.js",
@@ -1473,6 +1493,11 @@
       "path": "bot/src/narrative-salience.js",
       "size_bytes": 9386,
       "sha256": "e3421d7cfc5d9a6dbe74ab2a7a7ac11d9d8bca50ff2d60d6ec3303bc892f1081"
+    },
+    {
+      "path": "bot/src/narrative-speakers.js",
+      "size_bytes": 3674,
+      "sha256": "6fa7942aea1b617c1ddfab3ef56a8459a6ea662663d5f1b34c9ab3d7e8ad4e83"
     },
     {
       "path": "bot/src/native-hook-output.js",
@@ -1516,8 +1541,8 @@
     },
     {
       "path": "bot/src/operational-metrics.js",
-      "size_bytes": 9432,
-      "sha256": "2ad0bc087ce27d2d08f03a4816d41a103fd6ca59f71e874c73ecf941e52581b7"
+      "size_bytes": 9631,
+      "sha256": "85a8bd9ea5678b14cffc110680060e1bac4a52b10a31a29a49cba00a0d097579"
     },
     {
       "path": "bot/src/operations/diagnostics.js",
@@ -1621,8 +1646,8 @@
     },
     {
       "path": "bot/src/publication-outbox.js",
-      "size_bytes": 9686,
-      "sha256": "2ab9c43d5dc87598a6d1944585ad39fa7a8495b21737753e19fd76ddef08daf7"
+      "size_bytes": 9835,
+      "sha256": "3b9ee2dfc03bab9b194e70f0df12b39ffc4f0ccb141d2f139d8657436554fa7d"
     },
     {
       "path": "bot/src/publishing.js",
@@ -1671,8 +1696,8 @@
     },
     {
       "path": "bot/src/pvp-output.js",
-      "size_bytes": 52736,
-      "sha256": "218ac5d1cc67869c114e054a88f1e565869fe5f43b5e26f6d2e307304ba391d6"
+      "size_bytes": 52754,
+      "sha256": "c7c49330b8994c2d733c2e9c3ad1c68b24b1b899f2c749e760a8ee1170c48ce5"
     },
     {
       "path": "bot/src/pvp-profiles.js",
@@ -1877,7 +1902,7 @@
     {
       "path": "bot/src/story-commands.js",
       "size_bytes": 6820,
-      "sha256": "b1bfc0d691f610fafd396c466d2644e31c99ebd6c60d5629bd7453df872b8b12"
+      "sha256": "a1a81e6e8dfe3f18d3c9c71b2714666379e91e3f784201d76f27411877c272b2"
     },
     {
       "path": "bot/src/story-continuity.js",
@@ -1906,8 +1931,8 @@
     },
     {
       "path": "bot/src/turn-orchestration.js",
-      "size_bytes": 5895,
-      "sha256": "e806359001d447af53562ea952107d26a3907f1f12062c8421ba90a4219aa86c"
+      "size_bytes": 5464,
+      "sha256": "3d870e753ca5ee9db80a61a899aacedc4d80d6a21f5ad1f98018b39e20c77cc8"
     },
     {
       "path": "bot/src/turn-pipeline.js",
@@ -2321,8 +2346,8 @@
     },
     {
       "path": "docs/BOT_COMMANDS.md",
-      "size_bytes": 8095,
-      "sha256": "5f1c882a7ecb691f2612361648d8d7620aff74a367b90b23a01a982838475038"
+      "size_bytes": 9296,
+      "sha256": "f367487c491701054a86ca4205e7b58c2b6e408e248be7414a1403f85ee3a2ee"
     },
     {
       "path": "docs/CANON_LEDGER.md",
@@ -2485,6 +2510,11 @@
       "sha256": "405de74448e4f74d15173655aba90c9d2e8ef9a672a390e92e724386fde1fe70"
     },
     {
+      "path": "docs/CODEX_VEILED_CITY_10_2_DELEGATION_QUALITY_PLAN.md",
+      "size_bytes": 28125,
+      "sha256": "bcfb748cd11e312599b4b76f52350b09f9dffd7d882ff9f728ac13c47ccb738d"
+    },
+    {
       "path": "docs/CODEX_VEILED_CITY_NARRATIVE_AUTHORITY_IMPLEMENTATION_PLAN.md",
       "size_bytes": 43235,
       "sha256": "f825f6cd28e40f0cebcd37e499bdbd6a11f978ba8fcd18e5eba2648f91dad52e"
@@ -2523,6 +2553,21 @@
       "path": "docs/DATABASE_USAGE_AUDIT.md",
       "size_bytes": 15569,
       "sha256": "7ecaad54bf8fdab6ea063ae0a02f2175f2198f283e68274dabd4dbb07d61e682"
+    },
+    {
+      "path": "docs/DELEGATION_NARRATIVE_QUALITY_EXECUTION_LEDGER.md",
+      "size_bytes": 15709,
+      "sha256": "80704eaad0c4ef0b84330afe27c496965c3af4e0c650679b6d01c427ccb7fb6a"
+    },
+    {
+      "path": "docs/DELEGATION_NARRATIVE_QUALITY_RELEASE.md",
+      "size_bytes": 6218,
+      "sha256": "e7f1ec49a212bdaa7750a2b5b2b51c6a392bd9b7d992c2f38a2c04db71177fcd"
+    },
+    {
+      "path": "docs/DELEGATION_NARRATIVE_QUALITY_VALIDATION.json",
+      "size_bytes": 2973,
+      "sha256": "7628feb064fb257c7480b489eddb658b983dffc519b7e489db48959bd79206c5"
     },
     {
       "path": "docs/DEPLOYMENT.md",

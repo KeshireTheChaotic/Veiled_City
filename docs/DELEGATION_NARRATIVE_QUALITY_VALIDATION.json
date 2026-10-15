@@ -1,0 +1,137 @@
+{
+  "release": "10.2.0",
+  "profile": "critical",
+  "started_at": "2026-10-15T14:23:44.901Z",
+  "finished_at": "2026-10-15T14:31:26.929Z",
+  "summary": {
+    "status": "passed",
+    "total": 120,
+    "passed": 120,
+    "failed": 0,
+    "not_run": 0,
+    "duration_ms": 462027
+  },
+  "network": "denied",
+  "live_requests": 0,
+  "billable_tokens": 0,
+  "acceptance": {
+    "passed": 26,
+    "total": 26
+  },
+  "deferred_optional_count": 39,
+  "selected_gates": [
+    {
+      "id": "memory-audience-isolation-test",
+      "status": "passed",
+      "duration_ms": 310,
+      "exit_code": 0,
+      "signal": null,
+      "failure": null
+    },
+    {
+      "id": "v94-pc-effect-authority-test",
+      "status": "passed",
+      "duration_ms": 6672,
+      "exit_code": 0,
+      "signal": null,
+      "failure": null
+    },
+    {
+      "id": "v94-pvp-damage-test",
+      "status": "passed",
+      "duration_ms": 7810,
+      "exit_code": 0,
+      "signal": null,
+      "failure": null
+    },
+    {
+      "id": "v94-pc-death-test",
+      "status": "passed",
+      "duration_ms": 14654,
+      "exit_code": 0,
+      "signal": null,
+      "failure": null
+    },
+    {
+      "id": "d08-window-security-test",
+      "status": "passed",
+      "duration_ms": 269,
+      "exit_code": 0,
+      "signal": null,
+      "failure": null
+    },
+    {
+      "id": "v9-pvp-authorship-test",
+      "status": "passed",
+      "duration_ms": 24382,
+      "exit_code": 0,
+      "signal": null,
+      "failure": null
+    },
+    {
+      "id": "v9-observation-compatibility-test",
+      "status": "passed",
+      "duration_ms": 9853,
+      "exit_code": 0,
+      "signal": null,
+      "failure": null
+    },
+    {
+      "id": "v9-npc-observation-test",
+      "status": "passed",
+      "duration_ms": 4354,
+      "exit_code": 0,
+      "signal": null,
+      "failure": null
+    },
+    {
+      "id": "v9-publication-test",
+      "status": "passed",
+      "duration_ms": 7543,
+      "exit_code": 0,
+      "signal": null,
+      "failure": null
+    },
+    {
+      "id": "d08-observability-test",
+      "status": "passed",
+      "duration_ms": 44,
+      "exit_code": 0,
+      "signal": null,
+      "failure": null
+    },
+    {
+      "id": "v95-autonomous-fear-test",
+      "status": "passed",
+      "duration_ms": 17860,
+      "exit_code": 0,
+      "signal": null,
+      "failure": null
+    },
+    {
+      "id": "v96-semantic-output-p0-test",
+      "status": "passed",
+      "duration_ms": 1452,
+      "exit_code": 0,
+      "signal": null,
+      "failure": null
+    },
+    {
+      "id": "narrative-freedom-test",
+      "status": "passed",
+      "duration_ms": 10619,
+      "exit_code": 0,
+      "signal": null,
+      "failure": null
+    },
+    {
+      "id": "delegation-quality-test",
+      "status": "passed",
+      "duration_ms": 5099,
+      "exit_code": 0,
+      "signal": null,
+      "failure": null
+    }
+  ],
+  "note": "Actual network-denied fake-provider qualification; no live literary/cost/latency claim."
+}

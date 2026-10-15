@@ -7,14 +7,17 @@ const sourceBinding=Symbol('native-director-narrative-source');
 export const nativeDirectorNarrativeSource=result=>result?.[sourceBinding]?.ref||null;
 export const nativeDirectorNarrativeContent=result=>result?.[sourceBinding]?.content||null;
 function dramaticBrief(db,guild,result,scope,trigger){
-  const scene=currentScene(db,guild),refs=[trigger.source_event,trigger.event_key,...(Array.isArray(trigger.event_refs)?trigger.event_refs:[])],events=[];
-  for(const ref of [...new Set(refs.filter(r=>typeof r==='string'))].slice(0,8)){
+  const scene=currentScene(db,guild),refs=[trigger.source_event,trigger.event_key,...(Array.isArray(trigger.event_refs)?trigger.event_refs:[]),
+    ...db.listWorldEvents(guild,{includeGM:true,limit:100}).map(e=>e.event_key)],events=[];
+  for(const ref of [...new Set(refs.filter(r=>typeof r==='string'))]){
     const event=db.getWorldEvent(guild,ref);
     if(!event||event.status!=='active'||event.session_id!==scene.session_id||event.scene!==scene.key
       ||!narrativeSourceVisible(db,guild,ref,scope)||!['observation','arrival','native_narrative_unit','native_narrative_entity'].includes(event.kind))continue;
     if(event.kind==='observation'&&event.truth_status!=='observed')continue;
+    if(['native_narrative_unit','native_narrative_entity'].includes(event.kind)&&event.source_id!=='native:narrative-authority')continue;
     events.push({ref,kind:event.kind,location:event.location_key||'',state:'established',revision:hash(event),
       ...(event.kind==='observation'&&typeof event.details.description==='string'?{observation:event.details.description.slice(0,500)}:{})});
+    if(events.length===8)break;
   }
   // Counts/categories describe unfinished work, never proposed prose or fabricated outcomes.
   const pending=result.act?[{kind:'director_plan',state:'proposed_requires_native_validation'}]:[];

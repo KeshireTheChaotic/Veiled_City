@@ -95,10 +95,12 @@ export function delegationOperation(db,guild,input,reviewer){
     const next=Object.fromEntries(policyFields.map(k=>[k,before[k]??(k==='private_allow'?[]:null)]));
     for(const field of ['allow','private_allow'])next[field]=[...new Set([...next[field],...(input[`${field}_add`]||[])])]
       .filter(id=>!(input[`${field}_remove`]||[]).includes(id)).sort();
+    if((input.private_allow_add||[]).some(id=>!next.allow.includes(id)))throw new Error('Private additions require a permission in the effective main allowlist.');
     next.private_allow=next.private_allow.filter(id=>next.allow.includes(id));
     for(const field of ['mode','max_operations','max_cost','expires_minute'])if(Object.hasOwn(input,field))next[field]=input[field];
     validateDelegation(db,guild,next);
-    const changed=Object.fromEntries(policyFields.filter(k=>JSON.stringify(before[k]??[])!==JSON.stringify(next[k])).map(k=>[k,{before:before[k],after:next[k]}]));
+    const changed=Object.fromEntries(policyFields.filter(k=>JSON.stringify(k==='private_allow'?(before[k]||[]):before[k])!==JSON.stringify(next[k]))
+      .map(k=>[k,{before:before[k],after:next[k]}]));
     if(!Object.keys(changed).length)return {policy:before,previous_revision:before.revision,changed:{},unchanged:true};
     const after=saveDelegation(db,guild,next,reviewer);
     return {policy:after.data,previous_revision:before.revision,changed,count:next.allow.length,private_count:next.private_allow.length};

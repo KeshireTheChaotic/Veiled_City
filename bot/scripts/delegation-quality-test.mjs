@@ -4,7 +4,7 @@ import assert from 'node:assert/strict';
 import path from 'node:path';
 import {nativeFixture} from './v9-fixtures.mjs';
 import {FakeResponses,fakeInteraction} from './contract-fixtures.mjs';
-import {setup,candidate,unit,run} from './narrative-freedom-test.mjs';
+import {setup,candidate,unit,run} from './narrative-fixtures.mjs';
 import {INTENT_PAYLOADS,intentOperations} from '../src/ai-intent-contracts.js';
 import {configureDelegation,delegationPolicy,delegationOperation} from '../src/ai-intents.js';
 import {delegationCatalog} from '../src/delegation-catalog.js';
@@ -50,10 +50,11 @@ test('DP02 CAS patches preserve governance and fail atomically',()=>nativeFixtur
   const patch=value=>delegationOperation(f.db,f.guild,{op:'patch',...value},'gm');
   patch({expected_revision:0,allow_add:['scene.record'],private_allow_add:['scene.record']});
   const before=delegationPolicy(f.db,f.guild);assert.equal(before.mode,'manual');assert.equal(before.max_operations,1);assert.equal(before.max_cost,0);assert.equal(before.expires_minute,null);
+  assert.equal(patch({expected_revision:1}).unchanged,true);assert.equal(delegationPolicy(f.db,f.guild).revision,1);
   for(const bad of [{expected_revision:0,allow_add:['density.inspect']},{expected_revision:1,allow_add:['bad.operation']},
     {expected_revision:1,allow_add:['scene.enter','scene.enter']},{expected_revision:1,allow_add:['density.inspect'],max_cost:21},
     {expected_revision:1,mode:'routine_delegated'},{expected_revision:1,private_allow_add:['roll.prepare']},
-    {expected_revision:1,allow_add:'scene.enter'},{expected_revision:1,extra:true}]){
+    {expected_revision:1,allow_add:'scene.enter'},{expected_revision:1,extra:true},{expected_revision:1,private_allow_add:['scene.enter']}]){
     assert.throws(()=>patch(bad));assert.deepEqual(delegationPolicy(f.db,f.guild),before);
   }
   const removed=patch({expected_revision:1,allow_remove:['scene.record']});assert.equal(removed.policy.revision,2);assert.deepEqual(removed.policy.private_allow,[]);
@@ -83,6 +84,10 @@ test('DQ03 configured narrative model independent of routine planner',()=>native
 test('DN01 direct observation writer model and bounded routing contrasts',()=>nativeFixture(async f=>{
   const out=await qualityTurn(f,{fast:true,answer:scene(),config:{narrativeModel:'offline-writer'}});
   assert.equal(out.ai.requests.length,1);assert.equal(out.ai.requests[0].model,'offline-writer');
+  const assemblyAi=new FakeResponses([scene()]),assemblyGm=new GMService({db:f.db,content:new ContentIndex(path.resolve('../content')),ai:assemblyAi,
+    config:{gmModel:'offline-main',routineGmModel:'offline-routine'}});
+  await assemblyGm.authorAssemblyScene(f.guild,f.session.id,{mode:'party',actorUserId:null,actorCharacterId:null});
+  assert.equal(assemblyAi.requests.length,1);assert.equal(assemblyAi.requests[0].model,'offline-main');
   assert.equal(narrativeModel({gmModel:'main',narrativeModel:'writer',narrativeFastModel:'fast'},{protected_scene:false},'observation'),'fast');
   assert.equal(narrativeModel({gmModel:'main',narrativeModel:'writer',narrativeFastModel:'fast'},{protected_scene:true},'observation'),'writer');
   const x=setup(f,{text:'OOC how do I configure the bot?'}),r=candidate(x.text);
@@ -137,7 +142,7 @@ test('ND01 Director one-call multi-beat brief is native-grounded and excludes tr
   const answer=scene();answer.narrative_units.push(unit('refusal','npc_speech','The freight cage stays shut tonight. The public desk may help.',{subject_key:'porter',epistemic:'testimony'}),
     unit('attempt','npc_action_attempt','The porter raises a hand toward the service bell.',{subject_key:'porter',epistemic:'attempt'}));
   const ai=new FakeResponses([draft,answer]),gm=new GMService({db:f.db,content:new ContentIndex(path.resolve('../content')),ai,config:{gmModel:'offline',narrativeModel:'offline-writer'}});
-  const result=await gm.runWorldDirector({guildId:f.guild,layer:'manual',trigger:{requested_by:'gm',event_refs:[source.event_key],notes:'PRIVATE_TRIGGER_SECRET'}});
+  const result=await gm.runWorldDirector({guildId:f.guild,layer:'manual',trigger:{requested_by:'gm',notes:'PRIVATE_TRIGGER_SECRET'}});
   assert.equal(ai.requests.length,2);const packet=JSON.parse(ai.requests[1].input);
   assert(packet.director_brief.events.some(e=>e.ref===source.event_key&&e.state==='established'&&e.observation==='A service bell sounds.'));
   assert(packet.creative_brief.tasks.includes('conversation')&&packet.creative_brief.tasks.includes('scene'));
@@ -146,6 +151,8 @@ test('ND01 Director one-call multi-beat brief is native-grounded and excludes tr
   applyAuthoritativeMutation(f.db,{guildId:f.guild,sessionId:f.session.id,narrative:result,scope,source:'world_director_manual'});
   const turn=queueDirectorPublications(f.db,{guild:{id:f.guild},session:f.session,result,scope,key:'quality-director'}),rows=f.db.listTurnPublications(f.guild,turn);
   assert(rows.some(r=>r.payload.includes('freight cage')));assert(rows.some(r=>r.payload.includes('raises a hand')));assert(rows.every(r=>!r.payload.includes('PRIVATE_TRIGGER_SECRET')));
+  f.db.db.prepare("UPDATE world_events SET status='retracted' WHERE guild_id=? AND event_key=?").run(f.guild,source.event_key);
+  let sends=0;await deliverTurnOutbox(f.db,f.guild,turn,async()=>{sends++;return {messageId:'unsafe',channelId:'offline'};});assert.equal(sends,0);
 }));
 test('ND02 proposed Director work stays unresolved, private references excluded, quiet pass has no writer',()=>nativeFixture(async f=>{
   const x=setup(f),hidden=indexWorldEvent(f.db,f.guild,{key:'hidden-director',kind:'observation',title:'Private change',source_id:'native:fixture',
@@ -154,7 +161,7 @@ test('ND02 proposed Director work stays unresolved, private references excluded,
   const {bindDirectorNarrativeSource,directorBriefForAudience}=await import('../src/narrative-director-source.js');
   const scope={mode:'party',actorUserId:null,actorCharacterId:null},r={act:true,events:[{type:'resource_delta',note:'UNTRUSTED_COMPLETED_DAMAGE'}]};
   const ref=bindDirectorNarrativeSource(f.db,f.guild,r,scope,'manual',{event_refs:[hidden.event_key]},null),brief=directorBriefForAudience(f.db,f.guild,f.db.getWorldEvent(f.guild,ref),scope);
-  assert.deepEqual(brief.events,[]);assert(brief.pending.every(p=>p.state==='proposed_requires_native_validation'));
+  assert(brief.events.every(e=>e.ref!==hidden.event_key));assert(brief.pending.every(p=>p.state==='proposed_requires_native_validation'));
   assert(!JSON.stringify(brief).includes('UNTRUSTED')&&!JSON.stringify(brief).includes('PRIVATE_UNSEEN_CHANGE'));
   const draft={...candidate(x.text),act:false,public_narration:'',confidence:100,gm_notes:''};draft.player_intents=[];
   const ai=new FakeResponses([draft]),gm=new GMService({db:f.db,content:new ContentIndex(path.resolve('../content')),ai,config:{gmModel:'offline'}});
