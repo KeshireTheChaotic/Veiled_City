@@ -10,8 +10,9 @@ Accepted typed intents are canonical adjudication inputs; human declarations own
 | R1 | Locality and exact writer audience qualified | `57e141c88fb71b817bb84fa4a94edf1ffb12d149` |
 | R2 | Actor evidence, grounded referents and camera qualified | `88cfe252bb72ab41d8310ab3bd9180d8344b6c91` |
 | R3 | Native task sidecar / NPC answer arbitration qualified | `418cc2585491b770ae7a13b868a8fd82a0713fe5` |
-| R4 | Native nonbinding prop composition / unit-local choice hold qualified | Recorded in R5 receipt |
-| R5–R6 | Not started | — |
+| R4 | Native nonbinding prop composition / unit-local choice hold qualified | `13cbd92f35a5a82b306d66e3bdeca6d2efd2b2af` |
+| R5 | Offers/allegations improved; N05/N06 guards explicitly RETAINED | Recorded in R6 receipt |
+| R6 | Not started | — |
 | D0–D3 | Not started | — |
 
 ## R0 — compact baseline and frozen formats
@@ -55,3 +56,11 @@ Starting HEAD `418cc2585491b770ae7a13b868a8fd82a0713fe5`. Existing choice valida
 `unattributedChoiceText` excludes only an actual verified native prop projection after output proof and artifact receipt revalidation, not all GM prose. Other choice-bearing creative units are held before the global tripwire; global unprepared validation remains intact. Historical v8 unit shape/hash is unchanged; old accepted rows without this sidecar keep their original rendering. Native source event includes the artifact dependency for archive capture. Sidecar content/source/scene/audience hashes are rechecked on restart. Rollback preserves arrival and prop records; older code may hold newly quoted prop units rather than safely replay them, so never restore stale DB or blindly resend.
 
 Focused R4 + original DQ04/PVP30ag/SEM06 batch: **11/11 pass**, zero skipped, exit0,2218.9047ms. After adding explicit archive dependency: R4 **2/2 pass**, exit0,882.9133ms. Logs `%TEMP%\vc-narrative-r4-final.log`, `vc-narrative-r4-receipt.log`. NC15 now verifies valid sign, independent unsafe sibling hold, exactly one native arrival, native artifact issuer, restart/fake transport and no resend. Combined fake requests exactly2. Exact safe output contains `A local sign reads (nonbinding text):` followed by `> Choose one of today's specials.` and `Jaxon has arrived at twenty-four-spin.` No action/receipt/consent bypass and no new provider round-trip.
+
+## R5 — scoped offers/allegations; explicit protective KEEP decisions
+
+Starting HEAD `13cbd92f35a5a82b306d66e3bdeca6d2efd2b2af`. Improved already native-attributed local NPC speech: a whole modal interrogative can propose acceptance without answering it; remaining text still passes original material/PC checks. Past acceptance allegations may be NPC testimony, never a PC choice/possession receipt. Personal vocatives retain the stricter retrospective agency guard, including the exact DQ04 surrender sentence. No general raw-prose waiver or effect adapter. Generated English still has disclosed residual semantic risk.
+
+Initial R5 + DQ04 **5 pass/3 fail**, exit1,2368.3957ms (`vc-narrative-r5.log`): offers and allegations fixed, but original desired quality positives NC20/21/22 remain held. **N05/N06 are NOT fully fixed.** For `Rain beads...`, an alias match is ambiguous without independently proven referential role; a known name alone cannot certify the meaning of `Have you seen Raven?`; `you feel` cannot generally distinguish external sensation from internal emotion. Adding word/phrase exceptions or trusting a model role would violate LD4. KEEP existing guards; future independently certified composition roles require a separately reviewed contract. This is an explicit retained-guard outcome allowed by R6, not a claim those positives passed.
+
+The new compact cases now assert these documented protective holds and all their negative contrasts; the original desired assertions remain executable with `--original-quality-probes`. All pre-existing mandatory/optional assertions are untouched. Final R5 guard contract + original DQ04: **8/8 pass**, zero skipped/todo, exit0,2356.9477ms (`%TEMP%\vc-narrative-r5-retained.log`). This count includes three retained-guard tests, NOT three repaired expressive positives. Rollback code-only. No historical format changes or new calls.
