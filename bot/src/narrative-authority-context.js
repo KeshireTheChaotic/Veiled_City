@@ -41,12 +41,26 @@ export function buildNarrativeContext(db,guild,scope,sourceRef,{operation='descr
     subject_key:row.state.subject_character_id},scope)&&(!row.state.narrative_origin||row.state.narrative_origin!==sourceRef)
     &&(!db.getCityRecord(guild,'autonomous_entity',`location:${row.entity_key}`)
       ||narrativeSourceVisible(db,guild,db.getCityRecord(guild,'autonomous_entity',`location:${row.entity_key}`).source_event,scope));
-  const anchors=db.listSimulationEntities(guild,'location').filter(entitledLocation).filter(row=>{
+  const entitled=db.listSimulationEntities(guild,'location').filter(entitledLocation);
+  const nativeLocations=new Set(director?(directorBriefForAudience(db,guild,source,scope)?.events||[]).map(e=>e.location).filter(Boolean):[]);
+  if(!placed&&!director&&!assembly){
+    // A unique established local scene beat can anchor a later camera. This
+    // follows actual native history, not alphabetic setting order or raw prose.
+    for(const event of db.listWorldEvents(guild,{includeGM:true,limit:100}))if(event.status==='active'
+      &&event.session_id===scene.session_id&&event.scene===scene.key&&event.kind==='native_narrative_unit'
+      &&event.source_id==='native:narrative-authority'&&event.location_key&&event.details.input_source!==sourceRef
+      &&narrativeSourceVisible(db,guild,event.event_key,scope))nativeLocations.add(event.location_key);
+  }
+  // The native assembly opening capability may frame its sole eligible public
+  // setting. More than one unanchored place remains ambiguous; no sorting fallback.
+  if(assembly&&entitled.length===1)nativeLocations.add(entitled[0].entity_key);
+  const anchors=entitled.filter(row=>{
     if(!owner)return source.location_key===row.entity_key;
     const request=String(source.details.text||'').toLocaleLowerCase();
     return [row.entity_key,row.state.name,...(row.state.aliases||[])].some(name=>mentionsPublicIdentity(request,name));
   });
-  const location=placed?pc.data.location:anchors.length===1?anchors[0].entity_key:null;
+  const grounded=entitled.filter(row=>nativeLocations.has(row.entity_key));
+  const location=placed?pc.data.location:anchors.length===1?anchors[0].entity_key:!anchors.length&&grounded.length===1?grounded[0].entity_key:null;
   const entity=location&&db.getSimulationEntity(guild,'location',location),authored=location&&db.getCityRecord(guild,'autonomous_entity',`location:${location}`);
   if(entity&&(!narrativeVisible({visibility:entity.state.visibility||'party',subject_key:entity.state.subject_character_id},scope)
     ||entity.state.hidden||entity.state.removed||authored&&!narrativeSourceVisible(db,guild,authored.source_event,scope)))throw fail('hidden_location');

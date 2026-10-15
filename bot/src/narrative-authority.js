@@ -91,7 +91,12 @@ function validateUnit(db,guild,u,ctx,entities=[],historical=false){
       created=db.getCityRecord(guild,'autonomous_entity',`location:${local}`);
     const newCamera=ctx.binding.viewpoint==='camera'&&!ctx.binding.location
       &&(proposed||created?.data?.narrative_origin===ctx.sourceRef);
-    if(!newCamera)throw fail('held_scope');
+    // Native new adjacent geography may be introduced from here; this is NOT
+    // remote NPC hearing/speech, PC travel, access or an established remote view.
+    const adjacentSetting=u.kind==='scene'&&ctx.binding.location
+      &&(proposed?.parent_location_key===ctx.binding.location||created?.data?.narrative_origin===ctx.sourceRef
+        &&db.getSimulationEntity(guild,'location',local)?.state.parent_location_key===ctx.binding.location);
+    if(!newCamera&&!adjacentSetting)throw fail('held_scope');
   }
   if(u.receipt_kind||u.receipt_ref||u.epistemic==='native_outcome')throw fail('held_material');
   const names=protectedNarrativeNames(db,guild);
@@ -182,7 +187,9 @@ export function establishNarrativeUnits(db,guild,input,scope,sourceRef,{content=
   const failedEntities=new Set(),entityResults=[];
   const identityKey=e=>`${e.kind}:${e.key}`;
   for(const e of [...entities].sort((a,b)=>Number(a.kind==='npc')-Number(b.kind==='npc'))){
-    if(!units.some(u=>u.subject_key===e.key||u.location_key===e.key))continue;
+    const newLocalPlace=e.kind==='npc'&&entities.some(p=>p.kind==='location'&&p.key===e.location_key
+      &&p.parent_location_key===ctx.binding.location&&units.some(u=>u.kind==='scene'&&u.location_key===p.key));
+    if(!units.some(u=>u.subject_key===e.key||u.location_key===e.key)&&!newLocalPlace)continue;
     try{
       // A redundant creation proposal cannot replace an existing identity or poison its independently valid prose.
       // Actual unit placement/visibility/proxy checks still run both before and after this step.

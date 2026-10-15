@@ -11,8 +11,8 @@ Accepted typed intents are canonical adjudication inputs; human declarations own
 | R2 | Actor evidence, grounded referents and camera qualified | `88cfe252bb72ab41d8310ab3bd9180d8344b6c91` |
 | R3 | Native task sidecar / NPC answer arbitration qualified | `418cc2585491b770ae7a13b868a8fd82a0713fe5` |
 | R4 | Native nonbinding prop composition / unit-local choice hold qualified | `13cbd92f35a5a82b306d66e3bdeca6d2efd2b2af` |
-| R5 | Offers/allegations improved; N05/N06 guards explicitly RETAINED | Recorded in R6 receipt |
-| R6 | Not started | — |
+| R5 | Offers/allegations improved; N05/N06 guards explicitly RETAINED | `e4217767f02d4e89589cc8e3468599ebf7587eb7` |
+| R6 | Focused correctness/security checkpoint passed, with explicit quality deferrals | Recorded in D0 receipt |
 | D0–D3 | Not started | — |
 
 ## R0 — compact baseline and frozen formats
@@ -64,3 +64,11 @@ Starting HEAD `13cbd92f35a5a82b306d66e3bdeca6d2efd2b2af`. Improved already nativ
 Initial R5 + DQ04 **5 pass/3 fail**, exit1,2368.3957ms (`vc-narrative-r5.log`): offers and allegations fixed, but original desired quality positives NC20/21/22 remain held. **N05/N06 are NOT fully fixed.** For `Rain beads...`, an alias match is ambiguous without independently proven referential role; a known name alone cannot certify the meaning of `Have you seen Raven?`; `you feel` cannot generally distinguish external sensation from internal emotion. Adding word/phrase exceptions or trusting a model role would violate LD4. KEEP existing guards; future independently certified composition roles require a separately reviewed contract. This is an explicit retained-guard outcome allowed by R6, not a claim those positives passed.
 
 The new compact cases now assert these documented protective holds and all their negative contrasts; the original desired assertions remain executable with `--original-quality-probes`. All pre-existing mandatory/optional assertions are untouched. Final R5 guard contract + original DQ04: **8/8 pass**, zero skipped/todo, exit0,2356.9477ms (`%TEMP%\vc-narrative-r5-retained.log`). This count includes three retained-guard tests, NOT three repaired expressive positives. Rollback code-only. No historical format changes or new calls.
+
+## R6 — correctness freeze before retirement
+
+Starting HEAD `e4217767f02d4e89589cc8e3468599ebf7587eb7`. Compact repair group `--test-name-pattern='^R'`: **25/25 pass**, zero skipped/todo, exit0,37119.4431ms. Larger original security/history/mechanics batch: **186/190 pass,4 fail**, exit1,79196.348ms. Failures were original narrative-freedom positives, not waived: camera after native scene history, sole-setting assembly, source-grounded party Director, and introducing genuinely new adjacent geography. Fixed narrow native anchoring from active entitled scene-unit history / verified Director brief; native assembly may frame its sole eligible public setting, never alphabetic choice among several. Owner generic camera with no history/anchor remains null (NC10). Native newly created child geography may be introduced descriptively, but remote NPC speech remains held; ordinary new NPC identity in that new setting can be established without speaking for it or moving a PC. No remote/cutaway capability or PC knowledge/placement added.
+
+Focused four original failures + NC01/02/10: **7/7 pass**, exit0,2198.4131ms. Final integrated targeted gate (`^R|PVP30|FH40|OBS21|DQ04|SEM06|D08|N0[127]|N21` across compact, original authorship/PC-effect/observation/delegation/SEM06/D08/narrative-freedom suites): **102/102 pass**, zero skipped/todo, exit0,47303.7867ms (`%TEMP%\vc-narrative-r6-final.log`). Prior larger batch's other186 tests, including native death/Fear and archive, passed; final full gate will exercise them again at D3.
+
+Diagnostic invocation corrected: Node test workers do not forward arbitrary script argv. `VC_NARRATIVE_QUALITY_PROBES=1` + pattern `NC20|NC21|NC22` genuinely executes the original desired positives: **0 pass/3 fail**, exit1,2208.053ms (`vc-narrative-r6-retained-probes-real.log`). The plain CLI attempt did NOT enable probes (3 guard passes); do not count it as positive evidence. These three quality goals remain explicitly retained/deferred, not falsely fixed or skipped P0 guards. All original mandatory security assertions remain unchanged. R6 authorizes only proven safe retirement; no full-release/production claim. No new model round-trips, native effects or historical shape rewrites.

@@ -20,6 +20,9 @@ import {captureContextSource} from '../src/narrative-context.js';
 import {seedNpcCognition} from '../src/npc-cognition.js';
 import {narrativeResponseSchema,nativeOutcomeSchema} from '../src/gm-fiction-schema.js';
 const prose='Amber dryer windows glow over the folding counter.';
+// node --test workers do not forward arbitrary script argv. Environment is
+// diagnostic-only and never enables a runtime capability.
+if(process.env.VC_NARRATIVE_QUALITY_PROBES==='1')process.argv.push('--original-quality-probes');
 const answer=(units,fiction_delta=[])=>({narrative_units:units,fiction_delta});
 const say=(id,text,key='attendant',fields={})=>unit(id,'npc_speech',text,{subject_key:key,epistemic:'testimony',...fields});
 function base(f,text='Describe the scene to me',options={}){const x=setup(f,{text,...options});f.db.setCityCalendar(f.guild,{flags:{...f.db.getCityCalendar(f.guild).flags,natural_language:true,dialogue_history:true,semantic_integrity:true}});captureContextSource(f.db,f.guild,x.pc.owner_user_id,x.pc.id,x.messageId,text,{privateScene:x.scope.mode==='private'});return x;}
