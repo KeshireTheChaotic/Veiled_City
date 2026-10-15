@@ -20,11 +20,17 @@ Actual command: `node --import ./scripts/offline-guard.mjs --test scripts/critic
 | 1 — creative authority first | Complete (focused gate) | Starting SHA `0b300e1ac5e077a14f7fb6fff155c57881c27fa1`; completion SHA recorded by the next ledger commit. |
 | 2 — salvage and publication-bound memory | Complete (focused + affected gate) | Starting `960e0588b49fb0b0d69ae45ffd0c95bf7f03509f`; completion SHA recorded next phase. |
 | 3 — camera and owner initial placement | Complete (focused gate) | Starting `e91c010`; completion SHA recorded next phase. |
-| 4 — NPC/encounter narration | Not started | |
+| 4 — NPC/encounter narration | Complete (focused + affected gate) | Starting `6c504b4`; completion SHA recorded next phase. |
 | 5 — salience/archive/completeness | Not started | |
 | 6 — qualification/deploy | Not started | |
 
 No production modification/restart is permitted until a consistent online backup, integrity/foreign-key checks and disposable restore drill pass. No paid model/Discord synthetic tests. Production deployment is authorized only after phase qualification; activation requires a legitimate administrative path, not forged Discord identity or ad-hoc flag SQL. New prose has residual semantic risk; provenance is not universal semantic proof.
+
+## Phase 4 — actual implementation and evidence
+
+Isolated creative packets can include audience-validated native outcome projections, never raw model result claims. The writer can compose surrounding atmosphere/refusal/attempts while the native receipt remains the exact result; expressive prose cannot replace damage, dice, success, custody or PC response. Instructions explicitly preserve NPC goals/refusals/rumors/attempts, protected-scene fiction, native local movement/offscreen timing and proxy right-of-way. Existing encounter/cognition/world adapters retain all effects; no competing ability or movement system. New native-outcome test found a missing optional party disclosure causing an undefined SQLite bind: guarded it so absent disclosure fails native authorization instead of crashing. The test uses a legitimate private native reaction receipt, not forged public sharing. First fixture was corrected from an unresolved/no-Difficulty public roll to a genuinely resolved owner-private receipt; that harness failure is not claimed a production defect.
+
+Actual red after fixture correction: native-result writer packet absent, **0/1**, exit 1, 553.0928 ms. Full phase/affected run (`narrative-freedom-test`, `v95-protected-narrative-test`, `v9-pvp-rounds-test`, `encounter-service-test`): **58/58**, exit 0, 19,546.6353 ms, zero skips. Additional new-route proxy TOCTOU case: **1/1**, 513.1446 ms; zero transport calls after proxy activation, no reversed position. Duel refusal/atmosphere/PC-apology quarantine passed; existing rounds and encounter assertions unchanged. No live provider traffic. Phase 3 commit `6c504b4`. Residual semantic risk remains for generated world fiction, not permission for mechanical effects.
 
 ## Phase 3 — actual implementation and evidence
 

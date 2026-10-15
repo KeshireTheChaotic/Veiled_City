@@ -169,3 +169,52 @@ test('N08 initial setup cannot bypass protected access or previous position hist
   f.db.setSimulationEntity(f.guild,'location','terminal',{name:'Public Terminal',visibility:'party'});
   setup(f,{placed:true});f.db.updateCharacterData(x.pc.id,d=>{delete d.location;});assert.equal(prepareSceneSetup(f.db,f.guild,x.pc.owner_user_id,x.pc.id),null);
 }));
+
+test('N06 protected duel retains evocative NPC refusal and scenery while withholding a PC response',()=>nativeFixture(async f=>{
+  const x=setup(f,{text:'I ask the attendant to comment on the contest.'});
+  f.db.setCityCalendar(f.guild,{flags:{...f.db.getCityCalendar(f.guild).flags,narrative_encounters:true}});
+  const {pvpTerms}=await import('./v9-fixtures.mjs'),{proposePvp,reviewPvp,respondPvp}=await import('../src/narrative-pvp.js');
+  let p=proposePvp(f.db,f.guild,f.pcs[0].owner_user_id,{accepted_intent:f.accepted().record_key,opponent:f.pcs[1].id,terms:pvpTerms(f.pcs)});
+  for(let i=0;i<2;i++){reviewPvp(f.db,f.guild,f.pcs[i].owner_user_id,p.record_key);p=respondPvp(f.db,f.guild,f.pcs[i].owner_user_id,
+    {proposal:p.record_key,expected_revision:p.data.terms_hash,decision:'accept',interaction_id:`freedom-approve-${i}`});}
+  f.db.upsertNpcProfile(f.guild,{npcKey:'attendant',displayName:'Attendant',role:'porter'});
+  f.db.setSimulationEntity(f.guild,'npc','attendant',{location_key:'terminal',visibility:'party'});
+  const answer=setting();answer.narrative_units.push(unit('refusal','npc_speech','No bets on neighbors. I have a midnight freight queue to mind.',{subject_key:'attendant',epistemic:'testimony'}),
+    unit('agency','npc_action_attempt','Choso apologizes for losing.',{subject_key:'attendant',epistemic:'attempt'}));
+  const before=f.pcs.map(pc=>f.db.getCharacter(pc.id).data.resources),out=await run(f,x,answer);
+  assert(out.rows.some(row=>row.payload.includes('No bets on neighbors')));assert(out.rows.some(row=>row.payload.includes('slate counter')));
+  assert(out.rows.every(row=>!row.payload.includes('Choso apologizes')));assert.deepEqual(f.pcs.map(pc=>f.db.getCharacter(pc.id).data.resources),before);
+}));
+
+test('N06 native result is exposed to the isolated writer but invented outcome prose never replaces the receipt',()=>nativeFixture(async f=>{
+  const x=setup(f,{privateScene:true}),{prepareRollRequest,rollRevision}=await import('../src/roll-requests.js'),{contributeRoll}=await import('../src/roll-collaboration.js');
+  f.db.setCityCalendar(f.guild,{flags:{...f.db.getCityCalendar(f.guild).flags,roll_requests:true,roll_collaboration:true}});
+  const a=f.accepted(0,'I inspect the parcel.',null,{type:'search',operation:'inspect',target:{kind:'object',key:'terminal',phrase:'terminal',grounding:'known'}});
+  const {adjudicateRollSource}=await import('../src/roll-collaboration.js');
+  f.db.upsertRulesRuling(f.guild,{key:'narrative-reaction',createdBy:'gm',ruling:'Native fixture reaction Difficulty 10.'});
+  const difficulty=adjudicateRollSource(f.db,f.guild,{key:'narrative-reaction-difficulty',character_id:x.pc.id,kind:'difficulty',
+    ruling_key:'narrative-reaction',data:{declaration:a.source_event,value:10}},'gm').event_key;
+  const q=prepareRollRequest(f.db,f.guild,{source_event:a.source_event,accepted_intent:a.record_key,character_id:x.pc.id,
+    trait:'Knowledge',kind:'reaction',modifier_keys:[],difficulty_source:difficulty,attack_source:'',adjudication:'Native fixture reaction.'},'gm',{scope:x.scope});
+  let n=0;const saved=contributeRoll(f.db,f.guild,x.pc.owner_user_id,{op:'roll',request:q.record_key,expected_revision:rollRevision(q),key:'native-fiction-roll'}, {rng:()=>[9,3][n++]});
+  assert.equal(saved.status,'resolved');
+  const {nativeOutcomeProjection}=await import('../src/native-outcome-output.js');
+  assert(nativeOutcomeProjection(f.db,f.guild,{version:4,kind:'native_outcome',receipt_kind:'roll_request',ref:saved.record_key},x.scope).text);
+  const r=candidate(x.text);r.gm_world_parts.push({version:4,kind:'native_outcome',receipt_kind:'roll_request',ref:saved.record_key});
+  const answer=setting();answer.narrative_units.push(unit('result','native_outcome_render','Choso is injured and surrenders.',
+    {receipt_kind:'roll_request',receipt_ref:saved.record_key,epistemic:'native_outcome'}));
+  answer.narrative_units.forEach(u=>{u.visibility='character';});
+  const out=await run(f,x,answer,r),packet=JSON.parse(out.ai.requests[1].input);
+  assert(packet.native_results.some(receipt=>receipt.ref===saved.record_key));
+  assert(out.rows.some(row=>row.payload.includes('slate counter')));assert(out.rows.every(row=>!row.payload.includes('surrenders')));
+}));
+
+test('N06 a new human proxy revokes queued delegated NPC speech without reversing established native state',()=>nativeFixture(async f=>{
+  const x=setup(f);f.db.upsertNpcProfile(f.guild,{npcKey:'porter',displayName:'Porter',role:'porter'});
+  f.db.setSimulationEntity(f.guild,'npc','porter',{location_key:'terminal',visibility:'party'});
+  const answer={fiction_delta:[],narrative_units:[unit('warning','npc_speech','I will not open the freight cage. Ask at the public desk.',{subject_key:'porter',epistemic:'testimony'})]};
+  const out=await run(f,x,answer),proxy=f.db.upsertNpcProxy(f.guild,f.session.id,{npcName:'porter',userId:f.pcs[3].owner_user_id});
+  f.db.activateNpcProxy(proxy.id,f.pcs[3].owner_user_id);let calls=0;
+  await deliverTurnOutbox(f.db,f.guild,out.attempt.turn_id,async()=>{calls++;return {messageId:'unsafe',channelId:'offline'};});
+  assert.equal(calls,0);assert.equal(f.db.getCharacter(x.pc.id).data.location,'terminal');
+}));

@@ -24,7 +24,7 @@ export function renderNativeNotice(db,guild,d){
       ||db.getCharacter(r.subject_key)?.owner_user_id!==r.data.owner_user_id
       ||r.data.session_id!==d.session||r.data.scene!==d.scene)fail();
     if(d.kind==='roll_party'){
-      const s=db.getWorldEvent(guild,r.data.party_disclosure?.source_event),roll=db.getSavedRoll(guild,r.data.roll_id);
+      const s=r.data.party_disclosure?.source_event&&db.getWorldEvent(guild,r.data.party_disclosure.source_event),roll=db.getSavedRoll(guild,r.data.roll_id);
       if(d.user||!s||s.status!=='active'||s.visibility!=='party'||s.details.request!==r.record_key
         ||s.details.author!==r.data.owner_user_id||!db.ownerAuthoredSource(guild,s.event_key,r.data.owner_user_id)
         ||!roll||roll.session_id!==d.session||roll.payload.total!==r.data.result?.total
