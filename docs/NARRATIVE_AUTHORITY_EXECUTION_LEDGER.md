@@ -21,10 +21,20 @@ Actual command: `node --import ./scripts/offline-guard.mjs --test scripts/critic
 | 2 — salvage and publication-bound memory | Complete (focused + affected gate) | Starting `960e0588b49fb0b0d69ae45ffd0c95bf7f03509f`; completion SHA recorded next phase. |
 | 3 — camera and owner initial placement | Complete (focused gate) | Starting `e91c010`; completion SHA recorded next phase. |
 | 4 — NPC/encounter narration | Complete (focused + affected gate) | Starting `6c504b4`; completion SHA recorded next phase. |
-| 5 — salience/archive/completeness | Not started | |
+| 5 — salience/archive/completeness | Complete (focused + affected gate) | Starting `d20161e`; completion SHA recorded next phase. |
 | 6 — qualification/deploy | Not started | |
 
 No production modification/restart is permitted until a consistent online backup, integrity/foreign-key checks and disposable restore drill pass. No paid model/Discord synthetic tests. Production deployment is authorized only after phase qualification; activation requires a legitimate administrative path, not forged Discord identity or ad-hoc flag SQL. New prose has residual semantic risk; provenance is not universal semantic proof.
+
+## Phase 5 — actual implementation and evidence
+
+New source/audience-bound `narrative_interest` and `narrative_salience` records weight distinct owner turns (+3 mention, +5 accepted interaction, +6 return), native lead involvement (+7 capped per scene) and GM reuse (+1 per scene). Alias matching affects retrieval only, never intent/effects. Scores decay by fictional ticks. Cold records become `prompt_archived`; NPCs, memory revisions, immutable events and receipts are not deleted. Owner references revive inclusion. Pins conservatively cover occupancy, proxies, active encounter, open actions/rolls/windows/lead/debt/commitment/custody/canon and parents. Scans explicitly page the city API's 100-row cap; at 5,000 dependency/interest records retirement conservatively stops, rather than guessing safety. Very old nonroutine recall beyond the bounded scan may need explicit historical inspection. No claim of unlimited automatic recall.
+
+Dedicated writer memory ranks entitled exact/current references first, pinned/recurring material next, with a 9,000-character fiction sub-budget and two-slot novelty allowance. Existing mandatory native prompt budgets are unchanged; no measured production token/speed saving is claimed. Generic disclosed-memory recall and NPC cognition honor reversible retirement. Conflicting testimony retains distinct immutable units/revisions; no rumor becomes objective knowledge. Current private ownership and source revocation remain gates. Context preflight additionally excludes NPC/location identities whose private source ancestry conflicts with their state visibility. Existing world/cognition services remain effect authority.
+
+Completeness telemetry counts substantive vs missing prepared responses using closed aggregate fields; GM-private `narrative_health` retains typed coverage, never raw text. These in-process counters measure preparation/commit attempts, not billed usage or proof of literary quality; a later transaction failure can still increment an attempt counter. No extra model call or retry is added.
+
+Red-first new suite initially failed module loading (absent capability); first executable version **4/6 pass, 2 fail**, 1,374.5915 ms exposed undefined fictional ticks and retirement failure. Native clock fix also reproduced old generic memory expiry **0/1**, exit 1 (calendar settings were not a clock). Final focused + affected batch (`narrative-salience-test`, `narrative-freedom-test`, `memory-lifecycle-test`, `memory-audience-isolation-test`, `v96-context-efficiency-test`): **54/54**, exit 0, 12,385.976 ms, zero skips. Additional identity-ancestry gate after final context hardening **1/1**, 511.0435 ms. Same-tree complete qualification remains Phase 6. Phase 4 completion SHA `d20161e`. No production writes, live calls or billable API tokens.
 
 ## Phase 4 — actual implementation and evidence
 

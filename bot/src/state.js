@@ -1,6 +1,7 @@
 /** Authoritative AI/state mutation layer. Applies validated structured outputs while enforcing transaction and visibility invariants. */
 import { randomUUID, createHash } from "node:crypto";
 import {applyAuthoredInitialPosition} from './scene-setup.js';
+import {noteNarrativeInterest} from './narrative-salience.js';
 import { indexWorldEvent } from "./city-calendar.js";
 import { normalizeNpcKey } from "./npc-cognition.js";
 import { applySimulationUpdates } from "./simulation.js";
@@ -511,6 +512,8 @@ export function applyAuthoritativeMutation(db,{guildId,sessionId=null,events=[],
     recordCharacterPerceptions(db,guildId,{world,intents:typedIntents,scope,sourceRef:outputSource});
     if(narrative)prepareAuthorizedTurnOutput(db,guildId,narrative,scope,{
       sourceRef:outputSource&&db.getWorldEvent(guildId,outputSource)?outputSource:null,world,origin:source});
+    if(outputSource&&scope.actorCharacterId&&db.getCityCalendar(guildId).flags.narrative_salience)
+      noteNarrativeInterest(db,guildId,scope,outputSource,{intents:typedIntents});
     const typedDialogue=persistTypedDialogue(db,guildId,narrative?.player_intents||[],scope,provenance);
     const contextMemories=saveContextMemories(db,guildId,narrative,scope,provenance);
     const eventResults=applyGMEvents(db,guildId,sessionId,events,scope,{...provenance,pvp_action_ids:[...pvpIds]});

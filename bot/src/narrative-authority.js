@@ -9,6 +9,7 @@ import {nativeOutcomeProjection} from './native-outcome-output.js';
 import {narrativeUnitKinds} from './gm-fiction-schema.js';
 import {objectiveEvidence} from './epistemic.js';
 import {retainEstablishedNarrative} from './narrative-memory.js';
+import {noteNarrativeReuse} from './narrative-salience.js';
 export {narrativeResponseSchema} from './gm-fiction-schema.js';
 const issuer='native:narrative-authority';
 export const NARRATIVE_AUTHORITY_INSTRUCTIONS='You are the creative GM for this audience-isolated packet. Invent interesting ordinary places, people, sensory surroundings, '
@@ -166,7 +167,7 @@ export function establishNarrativeUnits(db,guild,input,scope,sourceRef){
         subject_key:scope.mode==='private'?scope.actorCharacterId:null,details:{input_source:sourceRef,source_refs:u.source_refs,payload_hash:hash(data),epistemic:data.epistemic}},issuer);
       const accepted=db.saveCityRecord(guild,{kind:'narrative_unit',key,status:'accepted_established',visibility:u.visibility,subject_key:scope.mode==='private'?scope.actorCharacterId:null,
         source_event:event.event_key,location_key:event.location_key,data});
-      retainEstablishedNarrative(db,guild,accepted);rows.push(accepted);fates.push({id:u.id,fate:'published'});
+      retainEstablishedNarrative(db,guild,accepted);noteNarrativeReuse(db,guild,accepted);rows.push(accepted);fates.push({id:u.id,fate:'published'});
     }catch(error){if(!['SCENE_FICTION','NARRATIVE_PVP'].includes(error.code))throw error;fates.push({id:u.id,fate:'held_scope'});}
   }
   db.saveCityRecord(guild,{kind:'narrative_unit_fates',key:draft.record_key,status:'evaluated',visibility:'gm',source_event:sourceRef,

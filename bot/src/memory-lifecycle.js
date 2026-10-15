@@ -1,6 +1,8 @@
 /** Audience- and parent-scoped memory identities with explicit epistemic revision lifecycle. */
 import { createHash } from "node:crypto";
 import { narrativeSourceVisible } from './scene-fiction-context.js';
+import {narrativeImportance} from './narrative-salience.js';
+import {listNarrativeRecords} from './narrative-records.js';
 
 const epistemics=new Set(["observation","testimony","inference","attempt","claimed_result","native_fact"]);
 const digest=value=>createHash("sha256").update(JSON.stringify(value)).digest("hex").slice(0,40);
@@ -44,7 +46,7 @@ export function rememberEntity(db,guild,input){
   const revision=db.saveCityRecord(guild,{kind:"memory_revision",key:revisionKey,status:"active",source_event:source.event_key,
     visibility:identity.visibility,subject_key:identity.subject_key,location_key:identity.location_key,data:{identity:identity.record_key,
       identity_revision:identity.data.identity_revision,summary:input.summary,epistemic:input.epistemic,receipt:input.receipt||null,
-      supersedes:null,expires_tick:input.expires_tick??null,created_tick:db.getCityCalendar(guild).tick,
+      supersedes:null,expires_tick:input.expires_tick??null,created_tick:db.getSimulationClock(guild).tick,
       authority:"Memory evidence only; epistemic label and native receipt determine consequence authority."}});
   return {identity,revision};
 }
@@ -64,7 +66,7 @@ export function reviseMemory(db,guild,revisionKey,input){
   return db.saveCityRecord(guild,{kind:"memory_revision",key,status:"active",source_event:source.event_key,
     visibility:prior.visibility,subject_key:prior.subject_key,location_key:prior.location_key,data:{...prior.data,
       summary:input.summary,epistemic:input.epistemic,receipt:input.receipt||null,supersedes:prior.record_key,
-      superseded_by:null,created_tick:db.getCityCalendar(guild).tick}});
+      superseded_by:null,created_tick:db.getSimulationClock(guild).tick}});
 }
 
 export function retractMemory(db,guild,revisionKey,{source_event,reason}){
@@ -75,14 +77,17 @@ export function retractMemory(db,guild,revisionKey,{source_event,reason}){
 }
 
 export function retrieveMemoryRevisions(db,guild,scope={},options={}){
-  const at=options.at_tick??db.getCityCalendar(guild).tick,protectedIds=new Set(options.pending_identity_refs||[]);
+  const at=options.at_tick??db.getSimulationClock(guild).tick,protectedIds=new Set(options.pending_identity_refs||[]);
   return db.listCityRecords(guild,{kind:"memory_revision",includeGM:true,limit:500}).filter(row=>{
     const source=db.getWorldEvent(guild,row.source_event),identity=db.getCityRecord(guild,"memory_identity",row.data.identity);
     const narrative=source?.kind==='native_narrative_disclosure';
-    const disclosure=narrative&&db.listCityRecords(guild,{kind:'narrative_delivery',includeGM:true,limit:1000}).find(job=>job.data.ack===source.event_key);
+    const disclosure=narrative&&listNarrativeRecords(db,guild,'narrative_delivery').find(job=>job.data.ack===source.event_key);
+    const unit=disclosure&&db.getCityRecord(guild,'narrative_unit',disclosure.data.unit)?.data.unit;
+    const entity=unit&&(unit.subject_key?`npc:${unit.subject_key}`:unit.location_key?`location:${unit.location_key}`:null);
+    const archived=db.getCityCalendar(guild).flags.narrative_salience&&entity&&narrativeImportance(db,guild,entity,scope)?.status==='prompt_archived';
     const entitled=!narrative||disclosure?.status==='acknowledged_to_audience'&&narrativeSourceVisible(db,guild,source.event_key,scope)
       &&(disclosure.visibility!=='character'||disclosure.data.user===scope.actorUserId&&db.getCharacter(disclosure.data.character)?.owner_user_id===scope.actorUserId);
-    return entitled&&row.status==="active"&&identity?.status==="active"&&visible(row,scope)&&source?.status==="active"
+    return entitled&&(!archived||options.includeArchived===true)&&row.status==="active"&&identity?.status==="active"&&visible(row,scope)&&source?.status==="active"
       &&(row.data.expires_tick==null||row.data.expires_tick>=at||protectedIds.has(row.data.identity));
   }).sort((a,b)=>b.data.created_tick-a.data.created_tick).slice(0,Math.max(1,Math.min(100,options.limit||40))).map(row=>({
     identity:row.data.identity,name:db.getCityRecord(guild,"memory_identity",row.data.identity).data.name,

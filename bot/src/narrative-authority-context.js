@@ -8,6 +8,7 @@ import {sceneFictionHash as hash,sceneFictionFailure as fail,narrativeSourceVisi
 import {protectedPvpScope} from './pvp-output.js';
 import {activeCityProxy} from './city-constraints.js';
 import {disclosedNarrativeMemory} from './narrative-memory.js';
+import {rankNarrativeMemory} from './narrative-salience.js';
 export const narrativeVisible=(row,scope)=>!!row&&factVisibleTo({...row,subject_character_id:row.subject_character_id||row.subject_key,
   subject_user_id:row.subject_user_id||row.subject_key},scope);
 export function buildNarrativeContext(db,guild,scope,sourceRef,{operation='describe_scene'}={}){
@@ -33,7 +34,9 @@ export function buildNarrativeContext(db,guild,scope,sourceRef,{operation='descr
       &&arrival.location_key===p.location_key&&narrativeVisible(p,scope)&&narrativeSourceVisible(db,guild,p.source_event,scope);
   if(!placed&&!flags.narrative_camera)throw fail('camera_disabled');
   const entitledLocation=row=>row&&!row.state.hidden&&!row.state.removed&&narrativeVisible({visibility:row.state.visibility||'party',
-    subject_key:row.state.subject_character_id},scope)&&(!row.state.narrative_origin||row.state.narrative_origin!==sourceRef);
+    subject_key:row.state.subject_character_id},scope)&&(!row.state.narrative_origin||row.state.narrative_origin!==sourceRef)
+    &&(!db.getCityRecord(guild,'autonomous_entity',`location:${row.entity_key}`)
+      ||narrativeSourceVisible(db,guild,db.getCityRecord(guild,'autonomous_entity',`location:${row.entity_key}`).source_event,scope));
   const location=placed?pc.data.location:db.listSimulationEntities(guild,'location').filter(entitledLocation).sort((a,b)=>a.entity_key.localeCompare(b.entity_key))[0]?.entity_key||null;
   const entity=location&&db.getSimulationEntity(guild,'location',location),authored=location&&db.getCityRecord(guild,'autonomous_entity',`location:${location}`);
   if(entity&&(!narrativeVisible({visibility:entity.state.visibility||'party',subject_key:entity.state.subject_character_id},scope)
@@ -51,7 +54,9 @@ export function buildNarrativeContext(db,guild,scope,sourceRef,{operation='descr
       &&objectiveEvidence(db,guild,f)&&narrativeSourceVisible(db,guild,f.id,scope);
   }).slice(0,12);
   const npcs=db.listSimulationEntities(guild,'npc').filter(n=>n.state.location_key===location&&!n.state.hidden&&!n.state.removed
-    &&n.state.narrative_origin!==sourceRef&&narrativeVisible({visibility:n.state.visibility||'party',subject_key:n.state.subject_character_id},scope))
+    &&n.state.narrative_origin!==sourceRef&&narrativeVisible({visibility:n.state.visibility||'party',subject_key:n.state.subject_character_id},scope)
+    &&(!db.getCityRecord(guild,'autonomous_entity',`npc:${n.entity_key}`)
+      ||narrativeSourceVisible(db,guild,db.getCityRecord(guild,'autonomous_entity',`npc:${n.entity_key}`).source_event,scope)))
     .slice(0,8).map(n=>({key:n.entity_key,name:db.getNpcProfile(guild,n.entity_key)?.display_name||n.state.name||n.entity_key,
       role:db.getNpcProfile(guild,n.entity_key)?.role||'',human_controlled:!!activeCityProxy(db,guild,n.entity_key)}));
   const binding={version:1,guild,session:scene.session_id,scene:scene.key,scope:{...scope},source:sourceRef,source_hash:hash(source.details),
@@ -61,6 +66,7 @@ export function buildNarrativeContext(db,guild,scope,sourceRef,{operation='descr
     viewpoint:{kind:binding.viewpoint,zone:placed?p.data.zone:null,pc_witness:!!placed},
     place:{key:location||'',name:entity?.state.name||'An unestablished public setting',type:entity?.state.place_type||'unknown'},
     observations:facts.map(f=>({source_ref:f.id,text:f.content,epistemic:evidenceType(f).kind})),npcs,
-    prior_fiction:disclosedNarrativeMemory(db,guild,scope,{location}),unknowns:['Hidden causes, private character details and unresolved outcomes are unknown.']};
+    prior_fiction:rankNarrativeMemory(db,guild,scope,disclosedNarrativeMemory(db,guild,scope,{limit:40}),
+      {location,query:owner?source.details.text:'',maxChars:9000}),unknowns:['Hidden causes, private character details and unresolved outcomes are unknown.']};
   return {binding,packet,scope,source,pc,sourceRef,protectedScene};
 }

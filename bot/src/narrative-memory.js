@@ -3,6 +3,7 @@ import {sceneFictionHash as hash,narrativeSourceVisible} from './scene-fiction-c
 import {narrativeVisible} from './narrative-authority-context.js';
 import {indexWorldEvent} from './city-calendar.js';
 import {rememberEntity} from './memory-lifecycle.js';
+import {listNarrativeRecords} from './narrative-records.js';
 function memoryInput(db,guild,row,source,visibility,subject){
   const u=row.data.unit,npc=u.subject_key&&db.getNpcProfile(guild,u.subject_key),place=u.location_key&&db.getSimulationEntity(guild,'location',u.location_key);
   return {kind:npc?'npc':u.kind==='rumor'?'rumor':u.kind==='lead'?'clue':'detail',name:npc?.display_name||u.id,
@@ -38,7 +39,7 @@ export function queueNarrativeMemory(db,guild,rows){
 /** Acknowledgment is idempotent and runs only after a real transport receipt or authenticated exact-message reconciliation. */
 export function acknowledgeNarrativeMemory(db,guild,publication){
   if(publication.status!=='delivered'||!publication.discord_message_id||!db.getCityCalendar(guild).flags.narrative_memory)return;
-  for(const job of db.listCityRecords(guild,{kind:'narrative_delivery',includeGM:true,limit:1000}).filter(r=>r.data.publications.includes(publication.id))){
+  for(const job of listNarrativeRecords(db,guild,'narrative_delivery').filter(r=>r.data.publications.includes(publication.id))){
     if(job.status==='acknowledged_to_audience')continue;
     const unit=db.getCityRecord(guild,'narrative_unit',job.data.unit),rows=job.data.publications.map(id=>db.getPublication(guild,id));
     if(!unit||hash(unit.data)!==job.data.unit_hash||!rows.length||rows.some(r=>r?.status!=='delivered'||!r.discord_message_id))continue;
@@ -55,7 +56,8 @@ export function acknowledgeNarrativeMemory(db,guild,publication){
 /** Historical read-side: validates disclosure/source, not current action eligibility or inferred PC/NPC knowledge. */
 export function disclosedNarrativeMemory(db,guild,scope,{location=null,limit=12}={}){
   if(!db.getCityCalendar(guild).flags.narrative_memory)return [];
-  return db.listCityRecords(guild,{kind:'narrative_delivery',status:'acknowledged_to_audience',includeGM:true,limit:1000}).filter(job=>{
+  return listNarrativeRecords(db,guild,'narrative_delivery').filter(job=>{
+    if(job.status!=='acknowledged_to_audience')return false;
     if(!narrativeVisible(job,scope)||job.visibility==='character'&&(job.data.user!==scope.actorUserId||job.data.character!==scope.actorCharacterId||db.getCharacter(job.data.character)?.owner_user_id!==scope.actorUserId)
       ||!narrativeSourceVisible(db,guild,job.data.ack,scope))return false;
     const unit=db.getCityRecord(guild,'narrative_unit',job.data.unit);

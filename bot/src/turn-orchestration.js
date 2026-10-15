@@ -5,7 +5,7 @@ import { queueTurnPublications } from "./publication-outbox.js";
 import { resolveTypedNativeRolls } from "./typed-mechanics.js";
 import { reconcileConsequences } from "./consequence-reconciliation.js";
 import {refreshActionContinuations} from "./action-continuation.js";
-import {measureNative} from './operational-metrics.js';
+import {measureNative,operationalMetrics} from './operational-metrics.js';
 import {currentTurnTrace} from './turn-trace-context.js';
 export function commitGmTurn({db,guild,session,result,scope,speaker,label,meta={},content=null}){
   const decision_advisory=validateDecisionAdvisory(db,guild.id,result);
@@ -38,6 +38,14 @@ export function commitGmTurn({db,guild,session,result,scope,speaker,label,meta={
       else if(trace.category==='unknown')trace.category='conversation';
     }
     mutation.continuations=refreshActionContinuations(db,guild.id);
+    if(db.getCityCalendar(guild.id).flags.narrative_completeness&&result.narrative_completion){
+      const key=`narrative-health:${meta.turnId||meta.messageId}`,prior=db.getCityRecord(guild.id,'narrative_health',key);
+      if(!prior){
+        db.saveCityRecord(guild.id,{kind:'narrative_health',key,status:result.narrative_completion.status,visibility:'gm',
+          source_event:mutation.typedIntents?.[0]?.source_event||null,data:{version:1,...result.narrative_completion}});
+        operationalMetrics.record(result.narrative_completion.status==='complete'?'narrative_completed':'narrative_missing',{guildId:guild.id});
+      }
+    }
     if(mutation.typedIntents?.length)mutation.reconciliation=reconcileConsequences(db,guild.id,{
       intents:mutation.typedIntents,narration:result.narration||"",private_messages:result.private_messages||[],scope,strict:true});
     const proposalMap=new Map();

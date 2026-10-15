@@ -2,7 +2,7 @@
 import {createHmac,randomBytes} from 'node:crypto';
 import {currentTurnTrace} from './turn-trace-context.js';
 const stages=new Set(['model_request','structured_retry','validation_retry','router','gm','validate','commit','discord',
-  'narrative_projection','narrative_quarantine','neutral_fallback','answerless_projection','optional_quarantine','safe_recovery',
+  'narrative_projection','narrative_quarantine','neutral_fallback','answerless_projection','optional_quarantine','safe_recovery','narrative_completed','narrative_missing',
   'interaction_failure','interaction_ack','native_replay','runtime_failure',
   'party_turn_envelope','private_turn_envelope','turn_capture','turn_generate','turn_validate','turn_commit','turn_publish',
   'context','npc_writer','scene_writer','scene_observation_route','scene_fiction_hold','native_span','pre_director','router_shadow_match','router_shadow_disagree','router_shadow_unavailable','router_shadow_uncertain']);

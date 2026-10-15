@@ -95,6 +95,13 @@ test('N11 PC surname and alias attempts are held without suppressing an independ
 }));
 test('N18 cross-audience reference cannot launder a secret through an invented scene unit',()=>nativeFixture(async f=>{
   const x=setup(f),secret=f.db.addFact(f.guild,{content:'PRIVATE_SYNTHETIC_ORIGIN',visibility:'character',subjectCharacterId:f.pcs[1].id}),answer=setting();
+  const hidden=indexWorldEvent(f.db,f.guild,{key:'hidden-porter-origin',kind:'native_narrative_entity',title:'Private NPC',source_id:'native:narrative-authority',
+    visibility:'character',subject_key:f.pcs[1].id,details:{}},'native:narrative-authority');
+  f.db.upsertNpcProfile(f.guild,{npcKey:'secret-porter',displayName:'SECRET PORTER',role:'PRIVATE ROLE'});
+  f.db.setSimulationEntity(f.guild,'npc','secret-porter',{location_key:'terminal',visibility:'party'});
+  f.db.saveCityRecord(f.guild,{kind:'autonomous_entity',key:'npc:secret-porter',source_event:hidden.event_key,visibility:'character',subject_key:f.pcs[1].id,data:{}});
+  const {buildNarrativeContext}=await import('../src/narrative-authority-context.js');
+  assert(!JSON.stringify(buildNarrativeContext(f.db,f.guild,x.scope,x.sourceRef).packet).includes('SECRET PORTER'));
   answer.narrative_units.push(unit('secret','scene','PRIVATE_SYNTHETIC_ORIGIN',{source_refs:[secret]}));
   const out=await run(f,x,answer);assert(out.rows.every(r=>!r.payload.includes('PRIVATE_SYNTHETIC_ORIGIN')));assert(out.rows.some(r=>r.payload.includes('slate counter')));
 }));
@@ -217,4 +224,14 @@ test('N06 a new human proxy revokes queued delegated NPC speech without reversin
   f.db.activateNpcProxy(proxy.id,f.pcs[3].owner_user_id);let calls=0;
   await deliverTurnOutbox(f.db,f.guild,out.attempt.turn_id,async()=>{calls++;return {messageId:'unsafe',channelId:'offline'};});
   assert.equal(calls,0);assert.equal(f.db.getCharacter(x.pc.id).data.location,'terminal');
+}));
+test('N20 native substantive and missing-response metrics contain counts, never scene or private prose',()=>nativeFixture(async f=>{
+  const x=setup(f),{operationalMetrics}=await import('../src/operational-metrics.js');
+  f.db.setCityCalendar(f.guild,{flags:{...f.db.getCityCalendar(f.guild).flags,narrative_completeness:true}});
+  const before=operationalMetrics.snapshot(f.guild).stages.narrative_completed?.count||0;
+  await run(f,x,setting());assert.equal(operationalMetrics.snapshot(f.guild).stages.narrative_completed.count,before+1);
+  const next=setup(f,{text:'Describe another part.'}),answer={fiction_delta:[],narrative_units:[unit('bad','scene','Choso surrenders.')]};
+  const out=await run(f,next,answer);assert.equal(out.result.narrative_completion.status,'held_irrecoverable');
+  const metrics=operationalMetrics.snapshot(f.guild);assert(metrics.stages.narrative_missing.count>=1);
+  assert(!JSON.stringify(metrics).includes('slate counter'));assert(!JSON.stringify(metrics).includes('Choso'));
 }));

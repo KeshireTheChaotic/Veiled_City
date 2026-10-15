@@ -1,3 +1,4 @@
+import {narrativeContextEligible} from './narrative-salience.js';
 /**
  * Persistent NPC cognition utilities for Veiled City.
  *
@@ -94,13 +95,16 @@ export function retrieveNpcCognition(db,guildId,{
   const profiles=npcKey?[db.getNpcProfile(guildId,npcKey)].filter(Boolean):density
     ?db.densityActorSelection(guildId,query).filter(row=>row.type==="npc").map(row=>db.getNpcProfile(guildId,row.actor_key))
     :db.listNpcProfiles(guildId,{limit:500});
+  // Context retirement is reversible; actor records, goals and receipts remain untouched.
+  const relevantProfiles=profiles.filter(profile=>narrativeContextEligible(db,guildId,`npc:${profile.npc_key}`,{mode:'party'},
+    {query:npcKey||query,location:actorAssignment?.character?.data?.location}));
   if(!profiles.length) return [];
   const queryTokens=words(query);
   const tick=db.getSimulationClock(guildId).tick;
   const proxyNpcKey=actorAssignment?.npc_proxy
     ?normalizeNpcKey(actorAssignment.npc_name||actorAssignment.npc_key||"")
     :"";
-  const candidates=profiles.map(profile=>{
+  const candidates=relevantProfiles.map(profile=>{
     const goals=db.listNpcGoals(guildId,profile.npc_key,{status:"active",limit:20});
     const topPriority=goals.reduce((m,g)=>Math.max(m,Number(g.priority||0)),0);
     const memorySignal=db.listNpcMemories(guildId,profile.npc_key,{status:"retrievable",limit:120,queryTokens:[...queryTokens]})
