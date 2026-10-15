@@ -377,19 +377,20 @@ export function prepareAuthorizedTurnOutput(db,guild,result,scope,{sourceRef=nul
     const observation=renderObservation(db,guild,query,scope);
     // Arbitration is native task/evidence based, never English substring matching or a model "answered" label.
     // Multiple distinct location clauses stay independent; PC/NPC, remote and source-backed answers are never suppressed.
-    const sameTasks=queries.filter(q=>q.target_type==='location'&&q.target===query.target&&q.operation===query.operation),
+    const sameTasks=queries.filter(q=>q.target_type===query.target_type&&q.target===query.target&&q.operation===query.operation),
       singleClause=new Set(sameTasks.map(q=>q.source_span)).size===1;
-    const covered=query.target_type==='location'&&query.operation==='appearance'&&singleClause&&observation.canSee===true
+    const covered=['location','npc'].includes(query.target_type)&&query.operation==='appearance'&&singleClause&&observation.canSee===true
       &&observation.proof_refs.length===0&&Object.keys(observation.facts||{}).length===0&&parts.some(part=>{
         if(part.data.kind!=='gm_narrative_unit')return false;
         const row=db.getCityRecord(guild,'narrative_unit',part.data.ref),d=row?.data;
         if(!d||d.unit.kind!=='scene'||d.binding.source!==query.source_ref||d.binding.viewpoint!=='character'
-          ||d.binding.location!==query.target||(d.unit.location_key||d.binding.location)!==query.target)return false;
+          ||(query.target_type==='location'?(d.binding.location!==query.target||(d.unit.location_key||d.binding.location)!==query.target)
+            :d.unit.subject_key!==query.target))return false;
         renderNarrativeUnit(db,guild,part.data.ref,scope);return true;
       });
     if(covered){
       db.saveCityRecord(guild,{kind:'narrative_answer_arbitration',key:`answer-arbitration:${hash(query)}`,visibility:'gm',status:'covered',source_event:query.source_ref,
-        data:{version:1,reason:'same_source_location_task_answered_by_verified_creative_scene',query_hash:hash(query),target:query.target,operation:query.operation}});
+        data:{version:1,reason:query.target_type==='npc'?'same_source_npc_task_answered_by_verified_creative_scene':'same_source_location_task_answered_by_verified_creative_scene',query_hash:hash(query),target:query.target,operation:query.operation}});
       continue;
     }
     parts.push(savePart(db,guild,{...common,kind:"observation_answer",query}));

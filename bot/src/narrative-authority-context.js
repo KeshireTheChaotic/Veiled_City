@@ -90,5 +90,5 @@ export function buildNarrativeContext(db,guild,scope,sourceRef,{operation='descr
     prior_fiction:rankNarrativeMemory(db,guild,scope,disclosedNarrativeMemory(db,guild,scope,{limit:40}),
       {location,query:owner?source.details.text:'',maxChars:Math.max(3000,9000-speakerChars)}),unknowns:['Hidden causes, private character details and unresolved outcomes are unknown.']};
   if(director)packet.director_brief=directorBriefForAudience(db,guild,source,scope);
-  return {binding,packet,scope,source,pc,sourceRef,protectedScene};
+  return {db,binding,packet,scope,source,pc,sourceRef,protectedScene};
 }

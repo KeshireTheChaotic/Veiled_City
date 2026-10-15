@@ -1,6 +1,7 @@
 /** Post-projection response health. Native verified parts, not model self-certification; no effects or provider retries. */
 import {sceneFictionHash as hash} from './scene-fiction-context.js';
 import {operationalMetrics} from './operational-metrics.js';
+import {taskDispositions} from './narrative-tasks.js';
 export function validateNarrativeCompleteness(db,guild,result,parts,requests=[],{sourceRef=null,scope=null}={}){
   const actual=parts.filter(p=>p.kind==='pvp_output_part'&&p.status==='verified'&&db.getCityRecord(guild,'pvp_output_part',p.record_key)?.data.content_hash===p.data.content_hash);
   const creativeRequested=requests.some(r=>r.version===8);
@@ -22,6 +23,8 @@ export function validateNarrativeCompleteness(db,guild,result,parts,requests=[],
     &&!substantive.some(p=>['native_notice','observation_answer','native_outcome'].includes(p.data.kind)))status='investigation_response_missing';
   if(status==='complete'&&combat&&!units.some(u=>['scene','npc_speech','npc_action_attempt','native_outcome_render'].includes(u.kind)))status='combat_fiction_missing';
   if(status==='complete'&&director&&!units.length)status='director_continuation_missing';
+  const tasks=scope&&sourceRef?taskDispositions(db,guild,result,actual,scope,sourceRef):[];
+  if(status==='complete'&&tasks.some(t=>!['answered','legitimately_unavailable'].includes(t.disposition)))status='task_response_missing';
   const matches=r=>r.source_event===sourceRef&&(!scope||hash(r.data.scope)===hash(scope)),
     fates=sourceRef?db.listCityRecords(guild,{kind:'narrative_unit_fates',includeGM:true,limit:100}).filter(matches).flatMap(r=>r.data.fates):[],
     reviews=sourceRef?db.listCityRecords(guild,{kind:'narrative_unit_review',includeGM:true,limit:100}).filter(matches):[],
@@ -35,7 +38,7 @@ export function validateNarrativeCompleteness(db,guild,result,parts,requests=[],
   const past=db.listCityRecords(guild,{kind:'narrative_unit',includeGM:true,limit:100});
   if(units.some(u=>u.text.length<160&&past.some(p=>p.data.binding.source!==sourceRef&&p.data.unit.text===u.text)))
     diagnostics.push('repeated_short_scaffolding');
-  return {version:2,status,scope:scope?.mode||'unknown',substantive_parts:substantive.length,held_parts:held||(!fates.length?reviews.length:0),diagnostics,
+  return {version:2,status,tasks,scope:scope?.mode||'unknown',substantive_parts:substantive.length,held_parts:held||(!fates.length?reviews.length:0),diagnostics,
     coverage:{creative:!creativeRequested||units.length>0,destination:destinationCovered,conversation:!conversation||units.some(u=>u.kind==='npc_speech'),scene:units.some(u=>['scene','lead','established_observation'].includes(u.kind)),
       investigation:!investigation||status!=='investigation_response_missing',combat:!combat||status!=='combat_fiction_missing'},
     authority:'native_projection_health_not_effect_authority',quality:'Typed coverage; not a universal literary-quality or semantic proof.'};
