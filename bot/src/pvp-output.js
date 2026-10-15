@@ -24,6 +24,7 @@ import {findFreshScenePart,renderFreshScenePart} from './fresh-scene-authoring.j
 import {establishSceneFiction,renderSceneFiction,holdSceneFiction} from './scene-fiction-authority.js';
 import {establishNarrativeUnits,renderNarrativeUnit} from './narrative-authority.js';
 import {validateNarrativeCompleteness} from './narrative-completeness.js';
+import {projectNarrativeArtifact} from './narrative-artifacts.js';
 
 const hash=v=>createHash("sha256").update(JSON.stringify(v??null)).digest("hex");
 const prepared=new WeakMap();
@@ -621,6 +622,7 @@ export function unattributedChoiceText(db,guild,result,scope){
     if(part.data.kind==='gm_narrative_unit'){
       const unit=db.getCityRecord(guild,'narrative_unit',part.data.ref);
       if(unit?.data.unit.kind==='npc_speech'&&unit.data.epistemic==='attributed')return '';
+      if(unit&&projectNarrativeArtifact(db,guild,unit.data.unit,{binding:unit.data.binding,scope,sourceRef:unit.data.binding.source},{historical:true}))return '';
     }
     return part.data.text;
   }).join('\n');

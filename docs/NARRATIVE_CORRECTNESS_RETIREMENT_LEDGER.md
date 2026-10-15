@@ -9,8 +9,9 @@ Accepted typed intents are canonical adjudication inputs; human declarations own
 | R0 | Compact red baseline/contracts | `ef89a6282f910934239d1eef3e8d61b3aa1b53f0` |
 | R1 | Locality and exact writer audience qualified | `57e141c88fb71b817bb84fa4a94edf1ffb12d149` |
 | R2 | Actor evidence, grounded referents and camera qualified | `88cfe252bb72ab41d8310ab3bd9180d8344b6c91` |
-| R3 | Native task sidecar / NPC answer arbitration qualified | Recorded in R4 receipt |
-| R4–R6 | Not started | — |
+| R3 | Native task sidecar / NPC answer arbitration qualified | `418cc2585491b770ae7a13b868a8fd82a0713fe5` |
+| R4 | Native nonbinding prop composition / unit-local choice hold qualified | Recorded in R5 receipt |
+| R5–R6 | Not started | — |
 | D0–D3 | Not started | — |
 
 ## R0 — compact baseline and frozen formats
@@ -46,3 +47,11 @@ Starting HEAD `88cfe252bb72ab41d8310ab3bd9180d8344b6c91`. Added `narrative-tasks
 `pvp-output` extends same-source/single-clause/subject-specific arbitration only to native visible NPC appearance queries with no facts/proof. An independently verified local scene unit for that exact NPC replaces the empty unknown. PC appearance, remote visibility negatives, independent clauses and actual facts remain. `narrative-completeness` reports missing per-task coverage rather than one NPC speech making a whole multi-NPC turn complete. Native outbox/restart proof unchanged.
 
 Initial changed compact group **4/4 pass**, exit0,2294.5852ms. Final compact R3 + original S1 integration: **12/12 pass**, zero skipped, exit0,9275.0445ms (`%TEMP%\vc-narrative-r3-final.log`). Fake lane counts: combined six runs all2; routed observation six runs all2; routed mixed one run3. Exact fake transport: description `Amber dryer windows glow over the folding counter; warm cotton scents the narrow laundromat.`; arrival adds `Jaxon has arrived at twenty-four-spin.`; held writer publishes only that native arrival. These synthetic paths do NOT establish the historic production 12:10 root cause. No new round-trips, live calls, changes to original assertions or native effects. Rollback code-only, retaining sidecar as inert historical diagnostics.
+
+## R4 — certified nonbinding prop / local choice holds
+
+Starting HEAD `418cc2585491b770ae7a13b868a8fd82a0713fe5`. Existing choice validation scanned the whole prepared scene, so a sign's words aborted the still-uncommitted native entry. Added `narrative-artifacts.js`: a bounded whole-unit compatibility grammar (`A/An/The sign/notice/menu/document reads: ...`) proposes an ordinary local GM-owned prop. It is NOT an exception for arbitrary quoted substrings: normal protected-name, material, viewpoint, source, audience and location checks run first. Native establishment creates a source-bound immutable nonbinding prop receipt, owns the attribution and escapes the entire body as quoted text. The model's prefix is not published. No PC effects, objective truth, access, selection or general document authority result. Unsupported mixed prose and forced choices remain held. Residual semantic risk of newly generated words remains, as for the already approved ordinary-fiction route; these finite checks are not universal language certification.
+
+`unattributedChoiceText` excludes only an actual verified native prop projection after output proof and artifact receipt revalidation, not all GM prose. Other choice-bearing creative units are held before the global tripwire; global unprepared validation remains intact. Historical v8 unit shape/hash is unchanged; old accepted rows without this sidecar keep their original rendering. Native source event includes the artifact dependency for archive capture. Sidecar content/source/scene/audience hashes are rechecked on restart. Rollback preserves arrival and prop records; older code may hold newly quoted prop units rather than safely replay them, so never restore stale DB or blindly resend.
+
+Focused R4 + original DQ04/PVP30ag/SEM06 batch: **11/11 pass**, zero skipped, exit0,2218.9047ms. After adding explicit archive dependency: R4 **2/2 pass**, exit0,882.9133ms. Logs `%TEMP%\vc-narrative-r4-final.log`, `vc-narrative-r4-receipt.log`. NC15 now verifies valid sign, independent unsafe sibling hold, exactly one native arrival, native artifact issuer, restart/fake transport and no resend. Combined fake requests exactly2. Exact safe output contains `A local sign reads (nonbinding text):` followed by `> Choose one of today's specials.` and `Jaxon has arrived at twenty-four-spin.` No action/receipt/consent bypass and no new provider round-trip.

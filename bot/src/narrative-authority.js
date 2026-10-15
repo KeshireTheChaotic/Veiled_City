@@ -13,6 +13,7 @@ import {noteNarrativeReuse} from './narrative-salience.js';
 import {creativeBrief} from './narrative-delegation.js';
 import {withoutVerifiedVocative} from './narrative-speakers.js';
 import {actorReferenceVisible} from './npc-cognition-projection.js';
+import {projectNarrativeArtifact,hasNarrativeChoices,narrativeArtifactKey} from './narrative-artifacts.js';
 export {narrativeResponseSchema} from './gm-fiction-schema.js';
 const issuer='native:narrative-authority';
 export const NARRATIVE_AUTHORITY_INSTRUCTIONS='You are the creative GM for this audience-isolated packet. Invent interesting ordinary places, people, sensory surroundings, '
@@ -64,7 +65,7 @@ function shape(answer){
     ids.add(u.id);
   }
 }
-function validateUnit(db,guild,u,ctx,entities=[]){
+function validateUnit(db,guild,u,ctx,entities=[],historical=false){
   // Citing public evidence privately is allowed; authoring a new party unit from a
   // private writer packet is not. This check also runs on every deferred read.
   if(u.visibility!==(ctx.scope.mode==='private'?'character':'party'))throw fail('held_scope');
@@ -127,6 +128,9 @@ function validateUnit(db,guild,u,ctx,entities=[]){
     if(u.text!==(fact?.content||event?.details.description||event?.details.quote))throw fail('held_scope');
   }
   if(u.kind==='rumor'&&!['testimony','hypothesis'].includes(u.epistemic)||u.kind==='npc_action_attempt'&&u.epistemic!=='attempt')throw fail('held_material');
+  const artifact=projectNarrativeArtifact(db,guild,u,ctx,{historical});
+  if(!historical&&u.kind!=='npc_speech'&&!artifact&&hasNarrativeChoices(u.text))throw fail('held_material');
+  if(artifact)return artifact;
   return u.kind==='rumor'?`Rumor — ${u.text}`:u.kind==='npc_speech'
     ?`${db.getNpcProfile(guild,u.subject_key)?.display_name||entities.find(e=>e.key===u.subject_key)?.name||'An NPC'}: “${u.text}”`:u.text;
 }
@@ -199,12 +203,14 @@ export function establishNarrativeUnits(db,guild,input,scope,sourceRef,{content=
     try{
       const text=validateUnit(db,guild,u,ctx),data={version:1,issuer,binding:d.binding,unit:u,text,semantic_verification:false,
         epistemic:u.kind==='rumor'?'testimony':u.kind==='npc_speech'?'attributed':u.kind==='native_outcome_render'?'native_outcome':u.epistemic};
+      projectNarrativeArtifact(db,guild,u,ctx,{establish:true});
       if(prior){renderNarrativeUnit(db,guild,key,scope);rows.push(prior);fates.push({id:u.id,fate:'published'});continue;}
       const event=indexWorldEvent(db,guild,{key:`${key}:source`,kind:'native_narrative_unit',title:'Source-bound delegated GM fiction',source_id:issuer,
         scene:ctx.binding.scene,session_id:ctx.binding.session,location_key:u.location_key||ctx.binding.location||'',visibility:u.visibility,
         subject_key:scope.mode==='private'?scope.actorCharacterId:null,details:{input_source:sourceRef,
           source_refs:u.source_refs.filter(ref=>narrativeSourceVisible(db,guild,ref,scope)),
           ...(u.kind==='npc_speech'?{actor_evidence_refs:u.source_refs,actor:u.subject_key}:{}),
+          ...(db.getCityRecord(guild,'narrative_artifact',narrativeArtifactKey(ctx.binding,u))?{artifact_ref:narrativeArtifactKey(ctx.binding,u)}:{}),
           payload_hash:hash(data),epistemic:data.epistemic}},issuer);
       const accepted=db.saveCityRecord(guild,{kind:'narrative_unit',key,status:'accepted_established',visibility:u.visibility,subject_key:scope.mode==='private'?scope.actorCharacterId:null,
         source_event:event.event_key,location_key:event.location_key,data});
@@ -221,6 +227,6 @@ export function renderNarrativeUnit(db,guild,key,scope){
   if(row?.status!=='accepted_established'||d?.issuer!==issuer||event?.status!=='active'||event.source_id!==issuer
     ||event.details.payload_hash!==hash(d)||key!==`narrative-unit:${hash([d.binding,d.unit])}`||hash(d.binding.scope)!==hash(scope))throw fail('unit_receipt');
   const ctx=context(db,guild,{version:8,kind:'narrative_request',operation:'describe_scene',source_refs:[]},scope,d.binding.source);
-  if(hash(ctx.binding)!==hash(d.binding)||validateUnit(db,guild,d.unit,ctx)!==d.text)throw fail('unit_revalidation');
+  if(hash(ctx.binding)!==hash(d.binding)||validateUnit(db,guild,d.unit,ctx,[],true)!==d.text)throw fail('unit_revalidation');
   return d.text;
 }
