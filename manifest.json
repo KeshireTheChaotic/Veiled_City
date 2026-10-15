@@ -2626,18 +2626,18 @@
     },
     {
       "path": "docs/NARRATIVE_AUTHORITY_EXECUTION_LEDGER.md",
-      "size_bytes": 19661,
-      "sha256": "4dfa57cf58757eb60c23e09f24bf418fb84ad6b9b9831dcb295a1d59d70dd9cd"
+      "size_bytes": 21691,
+      "sha256": "5fa3b39dd2a51dba434a8212f041ba0d72cdf015b4e35a6c023908dc079886b4"
     },
     {
       "path": "docs/NARRATIVE_AUTHORITY_PRODUCTION_RUNBOOK.md",
-      "size_bytes": 6117,
-      "sha256": "ef2d5bc1c49d795b1c2945e7a4aa584a3653733a9588113130c36ad68923523e"
+      "size_bytes": 6758,
+      "sha256": "8dee82eaa9da2f8454dd32bd29476a4a2fa5d1d15c195ea912fe2448fc51296d"
     },
     {
       "path": "docs/NARRATIVE_AUTHORITY_RELEASE.md",
-      "size_bytes": 3770,
-      "sha256": "0c30e4db19e0bd87f5aa24d5567fbf70513caf25fc5a1596785765bd07ffe2eb"
+      "size_bytes": 3866,
+      "sha256": "0ead48f2f52780c98b2b403d79b6eb52087cd9d5f44f42e5ec87e723c42a4e67"
     },
     {
       "path": "docs/NARRATIVE_CREATIVE_AUTHORITY_CONTRACT.md",

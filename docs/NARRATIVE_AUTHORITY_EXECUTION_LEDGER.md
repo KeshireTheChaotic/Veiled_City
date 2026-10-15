@@ -22,7 +22,7 @@ Actual command: `node --import ./scripts/offline-guard.mjs --test scripts/critic
 | 3 — camera and owner initial placement | Complete (focused gate) | `6c504b4832b5915d5ae648d83f3d9586ab33d7b3` |
 | 4 — NPC/encounter narration | Complete (focused + affected gate) | `d20161e872358d11859aefe96a23a79d533dca48` |
 | 5 — salience/archive/completeness | Complete (focused + affected gate) | `9795b8f682bfd8cf2e093a38cebedebc20193f7d` |
-| 6 — qualification/deploy | Qualified locally; installation pending | Starting `9795b8f`; completion is the release commit containing these results. Deployment receipt follows separately. |
+| 6 — qualification/deploy | Complete: code installed; runtime/flags inactive | `b8004a8559b9dad879c0feb627f92cc2fba10a86`; results-only installation receipt follows this qualified commit. |
 
 No production modification/restart is permitted until a consistent online backup, integrity/foreign-key checks and disposable restore drill pass. No paid model/Discord synthetic tests. Production deployment is authorized only after phase qualification; activation requires a legitimate administrative path, not forged Discord identity or ad-hoc flag SQL. New prose has residual semantic risk; provenance is not universal semantic proof.
 
@@ -46,6 +46,14 @@ Final source review reproduced one more genuine P0 before full qualification: th
 - First full attempt stopped at quality-check: **0 passed / 1 failed / 118 not_run** because a new import preceded the required NPC module trust-boundary header. Fixed import placement, retained the check, then completed the full qualification above. No further executable/test changes follow this pass. Results-only documentation and idempotent manifest synchronization do not require repeating gameplay qualification.
 
 Fake-provider assertions establish **one** request for direct scene observations, normally **two** for combined GM/Director fiction, and shared NPC/scenery writer arbitration. These are synthetic request counts, not real latency/cost/cache improvements. No automated live provider/Discord traffic or silent API fallback. Native backup/restore and all production SQL inspection were provider-free and read-only at the source. Production schema/data have not been migrated or rewritten. New flags remain OFF. No bot launch or live quality qualification is claimed.
+
+### Verified production installation
+
+Qualified release `b8004a8559b9dad879c0feb627f92cc2fba10a86` was pushed normally to `origin/codex/narrative-authority-emergence`. GitHub offline CI [run 38681684918](https://github.com/KeshireTheChaotic/Veiled_City/actions/runs/38681684918) completed **successfully** for that exact commit. The branch is unprotected; no force push, merge, PR waiver or protection bypass occurred.
+
+Production fetched, switched to the feature tracking branch, and executed `git pull --ff-only`; installed HEAD independently matched the qualified SHA. Production local lock metadata remains recoverable in protected external copy `package-lock.production-before-10.1.0.json` and retained Git stash `7082c4ccf37ccd545eca45df582f3678157627bb`. Qualified release metadata advances it to 10.1.0; dependencies are unchanged. `.env` hash is unchanged. Production DB byte hash before/after installation matched `1b3c4a3f10a63323f930931cefe99acdde4ee0d47b6382333082df96efc36beb`; no production SQL mutation/migration occurred. Post-install readonly verification: **679/679** normalized manifest files matched, integrity **ok**, FK failures **0**, schema **460**, **6** characters, **303** ledger rows, **36/36** delivered outbox rows. New flags all **OFF**. Production working tree clean after recoverable preservation of its prior version-only edit.
+
+Veilkeeper was already stopped and remains stopped; no Discord login/command registration or model smoke test. Actual code installation is distinguished from live activation. An authenticated GM must enable flags using the release notes once the owner starts the bot; no local admin connector is available, and none was impersonated. Literary quality/live latency/cost remain unverified. A final results-only documentation/manifest commit records this receipt; executable and test inputs are identical to the qualified release, so no redundant full validator is warranted by the lean policy. Final exact installed documentation revision is provided in the handoff.
 
 ## Phase 5 — actual implementation and evidence
 

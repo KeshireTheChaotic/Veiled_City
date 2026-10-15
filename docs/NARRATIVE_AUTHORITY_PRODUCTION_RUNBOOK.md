@@ -46,6 +46,8 @@ The owner controls `npm start` from production `bot/`; no running bot is to be r
 
 ## Rollback
 
+Installation completed at qualified release `b8004a8559b9dad879c0feb627f92cc2fba10a86`; GitHub CI run `38681684918` succeeded. Production normalized manifest: 679 files, zero mismatches. Schema/integrity/FK and receipt/character/outbox counts unchanged; `.env` unchanged. Local version-only lock correction preserved in external copy and retained stash `7082c4ccf37ccd545eca45df582f3678157627bb`. No bot startup, SQL migration, live provider/Discord test or automatic flag enable occurred. Results-only deployment documentation can be fast-forwarded afterward with no executable/test changes; see the handoff for that exact final revision.
+
 For behavior issues use authenticated `/vc-city flags json:{"narrative_authority":false}` first. Stop/hold affected publication, preserve source/receipts/outbox and take a forensic online backup. Do not regenerate resolved dice/costs/Fear, delete historical campaigns or blindly resend uncertain Discord messages.
 
 For code rollback with schema healthy, retain flags OFF, gracefully stop the bot if the owner has started it, and switch production to the old qualified `codex/playable-narration-repair` commit recorded above. Current schema is unchanged; new record kinds remain history. New queued prose may need read-side review under old code; do not treat failed projection as permission to replay mechanics. The retained version-only stash is recoverable; inspect before restoring it.

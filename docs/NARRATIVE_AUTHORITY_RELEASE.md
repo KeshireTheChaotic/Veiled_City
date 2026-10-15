@@ -18,7 +18,7 @@ The release does not automatically enable new flags. No local authenticated admi
 /vc-city flags json:{"narrative_salience":true}
 ```
 
-For an initially unplaced/sparse campaign, enable camera with the master before requesting a scene. A genuine owner initial-position declaration can use native initial setup; existing placement, travel costs, locks or an active encounter cannot be bypassed. Otherwise use the existing owner-private setup control. Names/aliases are continuity identities, not a command grammar.
+For an initially unplaced/sparse campaign, enable camera with the master before requesting a scene. A genuine owner initial-position declaration can use native initial setup at an already established accessible location; camera authoring can establish a new place first. Existing placement, travel costs, locks or an active encounter cannot be bypassed. Otherwise use the existing owner-private setup control. Names/aliases are continuity identities, not a command grammar.
 
 Rollback behavior with `/vc-city flags json:{"narrative_authority":false}`; dependencies cascade OFF. Disabling memory also disables salience. Disabling playable narration disables the new master. Existing accepted world events and delivered history remain intact.
 
