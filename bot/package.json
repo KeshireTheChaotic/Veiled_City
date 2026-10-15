@@ -19,6 +19,7 @@
     "audit:prod": "npm audit --omit=dev --audit-level=moderate",
     "quality": "node scripts/quality-check.mjs",
     "validate": "node scripts/validate-offline.mjs",
+    "validate:extended": "node scripts/validate-offline.mjs --extended",
     "test:contract": "node --import ./scripts/offline-guard.mjs scripts/narrative-contract-test.mjs",
     "test:context": "node --import ./scripts/offline-guard.mjs scripts/context-conversation-test.mjs",
     "test:continuity": "node --import ./scripts/offline-guard.mjs scripts/story-continuity-test.mjs",

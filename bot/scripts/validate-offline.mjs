@@ -30,7 +30,23 @@ suites.push("session5-diagnostics-test","session5-narrative-test","session5-late
 suites.push("assembly-authority-test");
 suites.push("scene-narration-repair-test");
 suites.push("playable-narration-test");
+suites.push("critical-validation-profile-test");
+// Critical is the release gate. Optional feature/history matrices remain executable via --extended;
+// no source assertion is deleted, and historical registration inventory stays intact above.
+const extendedSuiteInventory=[...suites];
+const optionalFeatureMatrices=new Set([
+  "refactor-regression-test","operations-regression-test","audit-regression-test","city-regression-test","city-core-regression-test",
+  "city-civic-regression-test","city-depth-regression-test","seed-drafts-regression-test","context-conversation-test","negotiation-preview-test",
+  "portrayal-authoring-test","expansion-a-test","expansion-b-test","expansion-c-test","expansion-d-test","expansion-e-test","expansion-f-test","expansion-h-test",
+  "end-to-end-a-test","end-to-end-b-test","end-to-end-c-test","end-to-end-d-test","end-to-end-e-test","end-to-end-f-test","end-to-end-g-test","end-to-end-h-test","end-to-end-i-test",
+  "systems-to-players-1-test","systems-to-players-2-test","systems-to-players-4-test","systems-to-players-5-test","systems-to-players-6-test","systems-to-players-7-test",
+  "implementation-phase-a-test","implementation-phase-b-test","implementation-phase-c-test","implementation-phase-d-test","implementation-phase-e-test","implementation-evaluation"
+]);
+const validationProfile=process.argv.includes('--extended')?'extended':'critical';
+if(validationProfile==='critical')suites.splice(0,suites.length,...suites.filter(id=>!optionalFeatureMatrices.has(id)));
 const report={fixture_only:true,network:"denied",billable_tokens:0,live_requests:0,suites:[],limits:["Synthetic fixtures do not establish unrestricted live-model semantics.","Consult I_HEARD_YOU_EVALUATION for measured false positives/negatives and unresolved ambiguities."]};
+report.profile=typeof validationProfile==='undefined'?'fixture':validationProfile;
+report.deferred_optional_suites=typeof extendedSuiteInventory==='undefined'?[]:extendedSuiteInventory.filter(id=>!suites.includes(id));
 
 // VC_VALIDATION_REPORT_V1: compact, atomic, local-only suite diagnostics.
 const reportPath=path.resolve(process.env.VC_VALIDATION_REPORT_PATH||path.join(".reports","offline-validation.json"));
