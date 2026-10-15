@@ -52,6 +52,7 @@ import {authorSceneFictionRequests,SCENE_FICTION_INSTRUCTIONS,sceneFictionRespon
 import {sceneFictionFailure,buildSceneFictionContext} from './scene-fiction-context.js';
 import {assemblyNarrativeCandidate} from './pvp-output.js';
 import {sceneObservationOperation} from './scene-observation-route.js';
+import {engagementKinds,bindSemanticEngagement,currentSemanticEngagement,semanticSceneOperation} from './semantic-engagement.js';
 import {authorNarrativeRequests,NARRATIVE_AUTHORITY_INSTRUCTIONS,narrativeResponseSchema} from './narrative-authority.js';
 import {coordinateNarrative,narrativeModel} from './narrative-delegation.js';
 import {bindDirectorNarrativeSource} from './narrative-director-source.js';
@@ -60,8 +61,9 @@ import {buildNarrativeContext} from './narrative-authority-context.js';
 const routerSchema={
   type:"object",
   additionalProperties:false,
-  properties:{respond:{type:"boolean"},reason:{type:"string"}},
-  required:["respond","reason"]
+  properties:{respond:{type:"boolean"},reason:{type:"string"},engagement_kind:{type:'string',enum:engagementKinds},
+    observation_only:{type:'boolean'},target_scope:{type:'string',enum:['current_location','other','none']}},
+  required:["respond","reason","engagement_kind","observation_only","target_scope"]
 };
 
 const handoutDraftSchema={
@@ -457,7 +459,7 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
     throw lastError||new Error(`${label}: structured response failed.`);
   }
 
-  async shouldRespond({guildId,message,mode,directMention=false,messageText=null,actorAssignment=null,signal=null,channelScope="party"}){
+  async shouldRespond({guildId,message,mode,directMention=false,messageText=null,actorAssignment=null,signal=null,channelScope="party",onInterpretation=null}){
     if(directMention) return true;
     if(mode==="mention") return false;
     const text=(messageText??message.content).trim();
@@ -488,6 +490,7 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
       "Return false for player-to-player banter, planning, jokes, reactions, OOC chatter, or roleplay that needs no world response.",
       "In-character needs, concerns, ambitions, reflective speech and indirect requests invite GM engagement even without a question mark. For 'I need work, PantryQueue is not pulling in enough money', respond=true: ask about seeking work or offer an observable lead; do not infer acceptance, payment or a binding goal. Formatting with asterisks or mixed action/quoted speech does not make a message OOC.",
       "Do not answer the RPG message itself.",
+      "Classify engagement_kind and observation_only in this SAME response. Pure scene/situation questions, including inside/here/this room/current surroundings, may be observation_only=true with target_scope=current_location. Mixed movement, investigation with effects, consent, disputed access and rolls are action/observation_only=false. Conditional/quoted actions never authorize effects. Unknown classification is uncertain/false. PC/NPC-specific or remote inquiries use target_scope=other. This is routing, not proof of any outcome or access.",
       `Current roster: ${JSON.stringify(summarizeRoster(roster))}`,
       `Scoped conversation focus (not authority): ${JSON.stringify(focus)}`,
       `Message from ${message.member?.displayName||message.author.username}: ${text}`
@@ -515,6 +518,11 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
       text:{format:{type:"json_schema",name:"route",strict:true,schema:routerSchema}}
     },{guildId,label:"message router",signal,deadlineMs:this.config.routerDeadlineMs||20000});}
     finally{await recordShadow(out?.respond);}
+    if(onInterpretation&&channelScope==='party'&&assignment?.character_id&&message.id){
+      const scope={mode:'party',actorUserId:message.author.id,actorCharacterId:assignment.character_id};
+      const interpretation=bindSemanticEngagement(this.db,guildId,scope,worldInputKey(message.id,assignment.character_id),out);
+      if(interpretation)onInterpretation(interpretation);
+    }
     return out.respond;
   }
 
@@ -588,14 +596,16 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
     };
   }
 
-  async runTurn({guildId,actorUserId,actorName,messageText,sourceText=null,nativeLedger=null,actorAssignment=null,scope="party",messageId=null,signal=null}){
+  async runTurn({guildId,actorUserId,actorName,messageText,sourceText=null,nativeLedger=null,actorAssignment=null,scope="party",messageId=null,signal=null,engagement=null}){
     const authenticatedSource=String(sourceText??messageText);
     const turnSignal=signal||AbortSignal.timeout(Number(this.config.gmTurnDeadlineMs||120000));
     if(this.db.getCityCalendar(guildId).flags.playable_narration===true&&this.config.playableObservationFastPath!==false
       &&authenticatedSource===messageText&&messageId){
       const assignment=actorAssignment||this.db.controlledAssignment(this.db.getActiveSession(guildId)?.id,actorUserId),pc=assignment?.character_id&&this.db.getCharacter(assignment.character_id),
         location=pc?.data.location&&this.db.getSimulationEntity(guildId,'location',pc.data.location);
-      const operation=sceneObservationOperation(authenticatedSource,location?.state.name,location?.state.place_type||location?.state.location_type);
+      const routerScope={mode:scope,actorUserId,actorCharacterId:pc?.id},routerSource=pc?.id&&worldInputKey(messageId,pc.id),
+        classified=currentSemanticEngagement(this.db,guildId,engagement,routerScope,routerSource);
+      const operation=classified?semanticSceneOperation(classified):sceneObservationOperation(authenticatedSource,location?.state.name,location?.state.place_type||location?.state.location_type);
       if(operation&&pc?.id&&pc.owner_user_id===actorUserId){
         const directScope={mode:scope,actorUserId,actorCharacterId:pc?.id},sourceRef=pc?.id&&worldInputKey(messageId,pc.id);
         let eligible=false;

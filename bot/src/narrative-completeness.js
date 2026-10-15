@@ -15,9 +15,9 @@ export function validateNarrativeCompleteness(db,guild,result,parts,requests=[],
   if(status==='complete'&&creativeRequested&&!units.length)status='creative_narration_missing';
   if(status==='complete'&&conversation&&!units.some(u=>u.kind==='npc_speech')&&!substantive.some(p=>['gm_fresh_npc','gm_world_narrative','observation_answer'].includes(p.data.kind)))status='npc_response_missing';
   const arrivals=substantive.filter(p=>p.data.kind==='verified_action').map(p=>db.getWorldEvent(guild,p.data.ref)?.location_key).filter(Boolean);
-  if(status==='complete'&&moving&&arrivals.length
-    &&!units.some(u=>['scene','lead'].includes(u.kind)&&arrivals.includes(u.effective_location))
-    &&!substantive.some(p=>['gm_scene_fiction','gm_fresh_scene','scene_description'].includes(p.data.kind)))status='destination_fiction_missing';
+  const destinationCovered=!moving||!arrivals.length||units.some(u=>['scene','lead'].includes(u.kind)&&arrivals.includes(u.effective_location))
+    ||substantive.some(p=>['gm_scene_fiction','gm_fresh_scene','scene_description'].includes(p.data.kind));
+  if(status!=='not_applicable'&&!destinationCovered)status='destination_fiction_missing';
   if(status==='complete'&&investigation&&!units.some(u=>['lead','established_observation','npc_speech','native_outcome_render'].includes(u.kind))
     &&!substantive.some(p=>['native_notice','observation_answer','native_outcome'].includes(p.data.kind)))status='investigation_response_missing';
   if(status==='complete'&&combat&&!units.some(u=>['scene','npc_speech','npc_action_attempt','native_outcome_render'].includes(u.kind)))status='combat_fiction_missing';
@@ -36,7 +36,7 @@ export function validateNarrativeCompleteness(db,guild,result,parts,requests=[],
   if(units.some(u=>u.text.length<160&&past.some(p=>p.data.binding.source!==sourceRef&&p.data.unit.text===u.text)))
     diagnostics.push('repeated_short_scaffolding');
   return {version:2,status,scope:scope?.mode||'unknown',substantive_parts:substantive.length,held_parts:held||(!fates.length?reviews.length:0),diagnostics,
-    coverage:{creative:!creativeRequested||units.length>0,conversation:!conversation||units.some(u=>u.kind==='npc_speech'),scene:units.some(u=>['scene','lead','established_observation'].includes(u.kind)),
+    coverage:{creative:!creativeRequested||units.length>0,destination:destinationCovered,conversation:!conversation||units.some(u=>u.kind==='npc_speech'),scene:units.some(u=>['scene','lead','established_observation'].includes(u.kind)),
       investigation:!investigation||status!=='investigation_response_missing',combat:!combat||status!=='combat_fiction_missing'},
     authority:'native_projection_health_not_effect_authority',quality:'Typed coverage; not a universal literary-quality or semantic proof.'};
 }

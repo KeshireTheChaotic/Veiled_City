@@ -373,7 +373,27 @@ export function prepareAuthorizedTurnOutput(db,guild,result,scope,{sourceRef=nul
     const source=db.getWorldEvent(guild,parts[0].source_event);
     common.source_ref=source.event_key;common.source_hash=hash(source.details);
   }
-  for(const query of queries)parts.push(savePart(db,guild,{...common,kind:"observation_answer",query}));
+  for(const query of queries){
+    const observation=renderObservation(db,guild,query,scope);
+    // Arbitration is native task/evidence based, never English substring matching or a model "answered" label.
+    // Multiple distinct location clauses stay independent; PC/NPC, remote and source-backed answers are never suppressed.
+    const sameTasks=queries.filter(q=>q.target_type==='location'&&q.target===query.target&&q.operation===query.operation),
+      singleClause=new Set(sameTasks.map(q=>q.source_span)).size===1;
+    const covered=query.target_type==='location'&&query.operation==='appearance'&&singleClause&&observation.canSee===true
+      &&observation.proof_refs.length===0&&Object.keys(observation.facts||{}).length===0&&parts.some(part=>{
+        if(part.data.kind!=='gm_narrative_unit')return false;
+        const row=db.getCityRecord(guild,'narrative_unit',part.data.ref),d=row?.data;
+        if(!d||d.unit.kind!=='scene'||d.binding.source!==query.source_ref||d.binding.viewpoint!=='character'
+          ||d.binding.location!==query.target||(d.unit.location_key||d.binding.location)!==query.target)return false;
+        renderNarrativeUnit(db,guild,part.data.ref,scope);return true;
+      });
+    if(covered){
+      db.saveCityRecord(guild,{kind:'narrative_answer_arbitration',key:`answer-arbitration:${hash(query)}`,visibility:'gm',status:'covered',source_event:query.source_ref,
+        data:{version:1,reason:'same_source_location_task_answered_by_verified_creative_scene',query_hash:hash(query),target:query.target,operation:query.operation}});
+      continue;
+    }
+    parts.push(savePart(db,guild,{...common,kind:"observation_answer",query}));
+  }
   for(const action of world.filter(r=>r.status==="arrived"&&r.source_event))
     parts.push(savePart(db,guild,{...common,kind:"verified_action",ref:action.source_event}));
   for(const row of records(db,guild,"pvp_fear_effect_receipt")){
@@ -482,6 +502,11 @@ export function prepareAuthorizedTurnOutput(db,guild,result,scope,{sourceRef=nul
   saveOutputGroup(db,guild,parts);
   prepared.set(result,{raw,drafts,candidate,hasDisclosureDependencies,parts:parts.map(p=>p.record_key),privateParts,scope:hash(scope),fingerprint:fingerprint(result)});
   if(db.getCityCalendar(guild).flags.narrative_authority===true)result.narrative_completion=validateNarrativeCompleteness(db,guild,result,parts,worldParts,{sourceRef,scope});
+  if(result.narrative_completion?.status==='destination_fiction_missing'&&sourceRef&&db.getWorldEvent(guild,sourceRef)){
+    db.saveCityRecord(guild,{kind:'narrative_coverage_review',key:`destination-coverage:${hash([sourceRef,scope])}`,status:'needs_review',visibility:'gm',source_event:sourceRef,
+      data:{version:1,reason:'destination_fiction_missing',native_arrivals:world.filter(r=>r.status==='arrived').map(r=>r.source_event),scope:{...scope},
+        recovery:'Arrival is unchanged. Inspect source-bound authoring attempt/draft/fates and native destination zone; do not reroll or replay the move.'}});
+  }
   return result;
 }
 /** Direct unprepared boundaries reject. High-level callers deliberately prepare before entering them. */

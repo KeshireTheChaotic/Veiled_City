@@ -419,9 +419,10 @@ async function processPartyTurn(message,directMention,attempt=null){
   // Typed speech is verified and captured after native scene movement and NPC presence.
   // Only model-typed entry intents reach native scene actions; no lexical staging gate.
 
-  let should=false;
+  let should=false,engagement=null;
   try{
-    should=await gm.shouldRespond({guildId:message.guild.id,message,messageText:playerText,actorAssignment:controlled,mode:campaign.response_mode||config.defaultResponseMode,directMention});
+    should=await gm.shouldRespond({guildId:message.guild.id,message,messageText:playerText,actorAssignment:controlled,mode:campaign.response_mode||config.defaultResponseMode,directMention,
+      onInterpretation:value=>{engagement=value;}});
   }catch(err){
     console.error("router",err); should=routerFailureEngagement(playerText,{authenticated:!!controlled,directMention,
       mode:campaign.response_mode||config.defaultResponseMode});
@@ -433,7 +434,7 @@ async function processPartyTurn(message,directMention,attempt=null){
     if(attempt)advanceTurnAttempt(db,attempt.turn_id,"generating",{modelAttempts:Number(db.getTurnAttempt(attempt.turn_id)?.model_attempts||0)+1});
     const cleaned=playerText.replaceAll(`<@${client.user.id}>`,"").replaceAll(`<@!${client.user.id}>`,"").trim();
     result=await gm.runTurn({guildId:message.guild.id,actorUserId:message.author.id,actorName:speaker,actorAssignment:controlled,
-      messageText:cleaned||playerText,sourceText:authoredText,nativeLedger:serializeSpanLedger(nativeLedger),scope:"party",messageId:message.id});
+      messageText:cleaned||playerText,sourceText:authoredText,nativeLedger:serializeSpanLedger(nativeLedger),scope:"party",messageId:message.id,engagement});
     if(!result.respond){if(attempt)advanceTurnAttempt(db,attempt.turn_id,"delivered");return;}
     if(attempt)advanceTurnAttempt(db,attempt.turn_id,"validated");
   }catch(err){
