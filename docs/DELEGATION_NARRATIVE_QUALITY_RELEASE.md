@@ -19,6 +19,8 @@ Use the actual status revision and intended permission IDs. Revoking a main perm
 
 The opted-in 10.1 creative lane now deterministically coordinates ordinary playable turns even when the combined planner omits a v8 request. One writer handles scene/NPC/investigation/arrival/combat/continuation objectives coherently. Direct read-only observations remain one writer without a router. Durable authoring attempts prevent a second writer on retry/restart. Native receipts and independently valid actions survive unit-local holds.
 
+Four provider output proposals are retained when the native coordinator appends its one creative task. The internal composer accepts this bounded fifth output part; provider schema remains four, narrative units eight, and native execution budgets remain unchanged. Preserving a proposal never authorizes a missing receipt.
+
 NPC packets include bounded audience-entitled native own knowledge/memories, approved public diction and relationships, not unrestricted GM dossiers. Typed NPC speech may address a current visible, native-known PC name/alias; the address grants no PC action or reaction. Names elsewhere remain protected. Director briefs contain revalidated visible source references, not private trigger prose; proposed work remains unresolved.
 
 Typed diagnostics distinguish absent answers, speaker/destination/investigation/combat/Director coverage, held units, sibling salvage, camera misframing, source misses and repeated short text. Existing GM operational reports expose aggregate counters and actual measured receive-to-substantive-ack percentiles. These are health proxies, not semantic certainty or literary scores. No model judge or health-triggered provider request.
@@ -49,3 +51,5 @@ Restore delegation policy only through an authenticated revision-bound operation
 ## Remaining limitations
 
 Fresh generated English retains residual semantic risk. Typed proofs, native outcomes, privacy checks and finite lexical tripwires do not prove arbitrary prose universally safe or good. Native-known leading vocatives are intentionally conservative; unseen/unknown names and ambiguous PC assertions are held. Private NPC motives are omitted rather than entrusted to public writer discretion. No live prose quality, cost, latency or cache improvement is claimed from synthetic fixtures. Organic owner-controlled play remains the live evaluation step.
+
+One initial Ubuntu CI context-suite failure was not reproduced by local CI-mode tests or the subsequent Linux preflight/full run. It remains recorded as an intermittent validation risk, not a claimed source fix. Failure reporting now retains both bounded redacted stdout/stderr and a sanitized fixture-only JSON artifact; all mandatory assertions remain required.

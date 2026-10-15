@@ -16,8 +16,8 @@
     },
     {
       "path": ".github/workflows/offline-validation.yml",
-      "size_bytes": 807,
-      "sha256": "6bca50a8a895f2c3b9a3061dfbdd2272453f7b3564c231f1225d489073afa780"
+      "size_bytes": 632,
+      "sha256": "048e81517aee067ec9e0c1e0a79a4f1df755870393719c87eaec4a3e931d2935"
     },
     {
       "path": "Dockerfile",
@@ -181,8 +181,8 @@
     },
     {
       "path": "bot/scripts/delegation-quality-test.mjs",
-      "size_bytes": 19188,
-      "sha256": "ff88bde6d6a13d2411868202f7e9bb74cd1e4bb9b4c0bc555a0736c604361506"
+      "size_bytes": 20118,
+      "sha256": "0f692577f124833286d0c6a30fbbb0115ab644c3bbccf5323ef8f5cf1cbde9c7"
     },
     {
       "path": "bot/scripts/end-to-end-a-test.mjs",
@@ -906,8 +906,8 @@
     },
     {
       "path": "bot/scripts/v95-validation-reporter-test.mjs",
-      "size_bytes": 3631,
-      "sha256": "3b505a780c7b83ea48f0f65de651c70de0e8f7c317ab7e3ec3819f5d2a6518ce"
+      "size_bytes": 3790,
+      "sha256": "2f393e00389861c154c8cdbf96f3b12b8deb0d0c205a61621ffa9001f8540310"
     },
     {
       "path": "bot/scripts/v96-05r-fiction-test.mjs",
@@ -991,8 +991,8 @@
     },
     {
       "path": "bot/scripts/validate-offline.mjs",
-      "size_bytes": 10500,
-      "sha256": "102d5f1f82ae5d26661672837f5438d34cac732a850f7de534fee79d7a8aa14e"
+      "size_bytes": 10518,
+      "sha256": "e0fc375d8207ce0ca42e116885c9dec74d0a725bc2cae95d3fe6d7d22165f8ef"
     },
     {
       "path": "bot/sql/schema.sql",
@@ -1461,8 +1461,8 @@
     },
     {
       "path": "bot/src/narrative-delegation.js",
-      "size_bytes": 3798,
-      "sha256": "92429366e2f9b641cedae0dbf322e8240eb4bfdef202f68a7d69d77cd817e2f0"
+      "size_bytes": 3913,
+      "sha256": "ba50d0957f9e2910f3f01c2572d286fc2134eb10891dee8493b676272592f8ff"
     },
     {
       "path": "bot/src/narrative-director-source.js",
@@ -1696,8 +1696,8 @@
     },
     {
       "path": "bot/src/pvp-output.js",
-      "size_bytes": 52754,
-      "sha256": "c7c49330b8994c2d733c2e9c3ad1c68b24b1b899f2c749e760a8ee1170c48ce5"
+      "size_bytes": 52874,
+      "sha256": "badb520cd530f3dd2781ac4e389b790dad121c51e5133f1fb937d823dd6c1bfc"
     },
     {
       "path": "bot/src/pvp-profiles.js",
@@ -2556,18 +2556,18 @@
     },
     {
       "path": "docs/DELEGATION_NARRATIVE_QUALITY_EXECUTION_LEDGER.md",
-      "size_bytes": 17215,
-      "sha256": "0d6e0981ff1fdc83c9dffbe6e62549255964e18074983e7346413c5c60162896"
+      "size_bytes": 19849,
+      "sha256": "be812820e97d8120b18dc52278b01703704648e8fb0a21e45521500a9fecec82"
     },
     {
       "path": "docs/DELEGATION_NARRATIVE_QUALITY_RELEASE.md",
-      "size_bytes": 6218,
-      "sha256": "e7f1ec49a212bdaa7750a2b5b2b51c6a392bd9b7d992c2f38a2c04db71177fcd"
+      "size_bytes": 6907,
+      "sha256": "cc6813dd31f13a3fe60429c24f1db5e30fc00d3e33958dd43543b4e109205829"
     },
     {
       "path": "docs/DELEGATION_NARRATIVE_QUALITY_VALIDATION.json",
-      "size_bytes": 2973,
-      "sha256": "7628feb064fb257c7480b489eddb658b983dffc519b7e489db48959bd79206c5"
+      "size_bytes": 3149,
+      "sha256": "c62755ddb884e95d6ba10d32b3dd82eb935427e862e08b6f8ad4a922deb21b31"
     },
     {
       "path": "docs/DEPLOYMENT.md",

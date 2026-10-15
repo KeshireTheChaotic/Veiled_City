@@ -80,7 +80,7 @@ saveReport("running");
 
 for(let i=0;i<suites.length;i++){
   const suite=suites[i],started=performance.now();
-  const result=spawnSync(process.execPath,["--import","./scripts/offline-guard.mjs",`scripts/${suite}.mjs`],{
+  const result=spawnSync(process.execPath,["--test-reporter=spec","--import","./scripts/offline-guard.mjs",`scripts/${suite}.mjs`],{
     stdio:["ignore","pipe","pipe"],encoding:"utf8",maxBuffer:32*1024*1024,
     env:{...process.env,OPENAI_API_KEY:"offline-dummy",DISCORD_TOKEN:"offline-dummy",
       NODE_OPTIONS:`--import=${new URL("./offline-guard.mjs",import.meta.url).href}`}});
@@ -94,7 +94,7 @@ for(let i=0;i<suites.length;i++){
     const detail=report.suites[i];
     console.error(`VALIDATION FAIL ${suite}: exit=${detail.exit_code??"spawn_error"}; ${detail.duration_ms}ms; report=${reportPath}`);
     if(detail.failure.stderr_tail)console.error(detail.failure.stderr_tail);
-    else if(detail.failure.stdout_tail)console.error(detail.failure.stdout_tail);
+    if(detail.failure.stdout_tail)console.error(detail.failure.stdout_tail);
     if(detail.failure.message)console.error(detail.failure.message);
     process.exit(result.status||1);
   }

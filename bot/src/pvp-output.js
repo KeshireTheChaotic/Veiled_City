@@ -308,7 +308,8 @@ export function prepareAuthorizedTurnOutput(db,guild,result,scope,{sourceRef=nul
   const proposals=protectedPvpScope(db,guild,scope);
   const queries=observationQueries(db,guild,result.player_intents||[],scope,sourceRef);
   if(proposals.length)queries.push(...ambientWorldQueries(db,guild,scope,sourceRef));
-  const worldParts=[...(Array.isArray(drafts.gm_world_parts)?drafts.gm_world_parts:[]).slice(0,4),
+  // Native coordinator may append one writer request to four provider parts; every part still needs independent proof.
+  const worldParts=[...(Array.isArray(drafts.gm_world_parts)?drafts.gm_world_parts:[]).slice(0,5),
     ...nativeEntries.map(ref=>({version:4,kind:'native_outcome',receipt_kind:'scene_entry',ref})),
     ...nativeEffects.filter(ref=>{
       const visibility=db.getCityRecord(guild,'ordinary_effect_receipt',ref)?.visibility;

@@ -13,7 +13,7 @@ function fixture(run){
     const scripts=path.join(root,"scripts");fs.mkdirSync(path.join(scripts,"fixtures"),{recursive:true});
     fs.copyFileSync(new URL("./offline-guard.mjs",import.meta.url),path.join(scripts,"offline-guard.mjs"));
     fs.writeFileSync(path.join(scripts,"pass.mjs"),'console.log("PASS_LOG_PRIVATE_MARKER");');
-    fs.writeFileSync(path.join(scripts,"fail.mjs"),'console.error("sk-proj-VERYSECRETTESTTOKEN1234567");process.exit(7);');
+    fs.writeFileSync(path.join(scripts,"fail.mjs"),'console.error("sk-proj-VERYSECRETTESTTOKEN1234567");console.log("FAILED_ASSERTION_EXPECTED");process.exit(7);');
     const invoke=(names,acceptance,{reportPath,malformed=false}={})=>{
       const pattern=/const suites=([\s\S]*?);\s*const report=/;
       assert.equal([...runner.matchAll(new RegExp(pattern,"g"))].length,1);
@@ -33,6 +33,7 @@ test("compact reporter preserves early failure, not-run identity and redacts loc
   assert.equal(r.report.suites[1].exit_code,7);assert(r.report.suites[0].duration_ms>=0);
   assert(!JSON.stringify(r.report).includes("VERYSECRET"));assert(!`${r.stdout}${r.stderr}`.includes("PASS_LOG_PRIVATE_MARKER"));
   assert.equal(r.report.summary.status,"failed");
+  assert(r.stderr.includes('FAILED_ASSERTION_EXPECTED'),'Warning stderr must not hide the failed assertion stdout.');
 }));
 test("compact reporter succeeds silently and preserves acceptance",()=>fixture(invoke=>{
   const r=invoke(["pass"],[{id:"accept",suites:["pass"]}]);assert.equal(r.status,0);

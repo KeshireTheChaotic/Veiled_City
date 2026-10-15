@@ -24,7 +24,8 @@ export function coordinateNarrative(db,guild,result,{scope,sourceRef,movement=fa
   const operation=tasks.has('conversation')?'conversation':tasks.has('combat')?'combat':tasks.has('continuation')?'continuation':'describe_scene';
   const refs=[...new Set(parts.filter(p=>[3,7,8].includes(p.version)).flatMap(p=>p.source_refs||[]))];
   if(refs.length>12)return; // retain invalid original request for native rejection, never silently drop evidence
-  result.gm_world_parts=[...parts.filter(p=>![3,6,7,8].includes(p.version)).slice(0,3),{version:8,kind:'narrative_request',operation,source_refs:refs}];
+  // Four provider proposals plus ONE application-owned creative request. Output capacity is not an effect budget.
+  result.gm_world_parts=[...parts.filter(p=>![3,6,7,8].includes(p.version)).slice(0,4),{version:8,kind:'narrative_request',operation,source_refs:refs}];
   briefs.set(result,{tasks:[...tasks],speakers:[...new Set([...speakers,...intents.filter(i=>['speak','interact'].includes(i.type)).map(i=>i.target_key)])]});
 }
 export function creativeBrief(ctx,result,input){

@@ -189,3 +189,12 @@ test('NH02 native combat atmosphere and camera diagnostics preserve independent 
   const camera=await run(f,x,answer);assert(camera.result.narrative_completion.diagnostics.includes('camera_misframed'));
   assert(camera.rows.some(r=>r.payload.includes('brass parcel counter')));assert(camera.rows.every(r=>!r.payload.includes('You see')));
 }));
+test('DN02 coordinator retains four native proof proposals and its single creative task',()=>nativeFixture(async f=>{
+  const x=setup(f,{text:'Describe the scene'}),r=candidate(x.text),proofs=Array.from({length:4},(_,i)=>
+    ({version:4,kind:'native_outcome',receipt_kind:'roll_request',ref:`unverified-${i}`}));
+  r.gm_world_parts=structuredClone(proofs);coordinateNarrative(f.db,f.guild,r,{scope:x.scope,sourceRef:x.sourceRef});
+  assert.deepEqual(r.gm_world_parts.filter(p=>p.version===4),proofs);assert.equal(r.gm_world_parts.filter(p=>p.version===8).length,1);
+  const out=await qualityTurn(f,{answer:scene(),mutate:r=>{r.gm_world_parts=structuredClone(proofs);}});
+  assert.equal(out.ai.requests.length,2);assert(out.rows.some(row=>row.payload.includes('brass parcel counter')));
+  assert(out.rows.every(row=>!row.payload.includes('unverified-')),'Preserving a proposal never fabricates its missing native receipt.');
+}));
