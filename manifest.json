@@ -16,8 +16,8 @@
     },
     {
       "path": ".github/workflows/offline-validation.yml",
-      "size_bytes": 423,
-      "sha256": "184885decc0dffbaba2c986736d6e8f9b1045632792e004c4e543469e15246f2"
+      "size_bytes": 807,
+      "sha256": "6bca50a8a895f2c3b9a3061dfbdd2272453f7b3564c231f1225d489073afa780"
     },
     {
       "path": "Dockerfile",
@@ -2556,8 +2556,8 @@
     },
     {
       "path": "docs/DELEGATION_NARRATIVE_QUALITY_EXECUTION_LEDGER.md",
-      "size_bytes": 15709,
-      "sha256": "80704eaad0c4ef0b84330afe27c496965c3af4e0c650679b6d01c427ccb7fb6a"
+      "size_bytes": 17215,
+      "sha256": "0d6e0981ff1fdc83c9dffbe6e62549255964e18074983e7346413c5c60162896"
     },
     {
       "path": "docs/DELEGATION_NARRATIVE_QUALITY_RELEASE.md",

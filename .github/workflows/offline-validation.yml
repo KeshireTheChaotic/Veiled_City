@@ -16,4 +16,12 @@ jobs:
           cache: npm
           cache-dependency-path: bot/package-lock.json
       - run: npm ci --ignore-scripts
+      - name: Diagnose context authority regression
+        run: node --import ./scripts/offline-guard.mjs --test --test-reporter=spec scripts/v96-context-efficiency-test.mjs
       - run: npm run validate
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: critical-offline-validation
+          path: bot/.reports/offline-validation.json
+          if-no-files-found: ignore
