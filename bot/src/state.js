@@ -453,9 +453,9 @@ export function applyAuthoritativeMutation(db,{guildId,sessionId=null,events=[],
       npcKnowledge=narrative.npc_knowledge||npcKnowledge; npcGoals=narrative.npc_goals||npcGoals;
     }
     if(narrative?.narrative_interpretation)persistInterpretation(db,guildId,narrative.narrative_interpretation,scope,provenance);
-    persistAuthoredCandidates(db,guildId,narrative?.authored_candidates,scope,provenance);
     const intentDiagnostics=persistPlayerIntentDiagnostics(db,guildId,narrative?.player_intent_diagnostics||[],scope,provenance);
     const typedIntents=persistPlayerIntents(db,guildId,narrative?.player_intents||[],scope,provenance);
+    persistAuthoredCandidates(db,guildId,narrative?.authored_candidates,scope,{...provenance,typedIntents});
     if(db.getCityCalendar(guildId).flags.narrative_authority&&scope.actorCharacterId&&!scenePresence(db,guildId,'character',scope.actorCharacterId)){
       const prior=lastVerifiedCharacterPresence(db,guildId,db.getCharacter(scope.actorCharacterId));
       if(prior)reconcileSceneArrival(db,guildId,{type:'character',key:scope.actorCharacterId,source_event:prior.source_event,owner:scope.actorUserId});

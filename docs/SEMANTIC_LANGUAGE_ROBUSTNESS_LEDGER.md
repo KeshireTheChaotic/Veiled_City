@@ -19,8 +19,8 @@ S0 intentionally commits reproductions before repairs; they are not a qualified 
 | Phase | Status | Commit |
 | --- | --- | --- |
 | S0 | Baseline/red corpus complete | `ed4c0b4163bc9724ce9602669b0b517b885dacad` |
-| S1 | Implemented; focused qualification below | See Git commit named `fix(semantic): arbitrate scene answers and carry scoped routing` |
-| S2 | Pending | — |
+| S1 | Implemented; focused qualification below | `123dede2e4180bf924953d066e66fafe96744375` |
+| S2 | Implemented; focused qualification below | See Git commit named `fix(semantic): bind authored candidates to clause offsets and typed input` |
 | S3 | Pending | — |
 | S4 | Pending | — |
 | S5 | Pending | — |
@@ -35,3 +35,11 @@ After independent unit validation, suppress only an empty, **currently visible**
 Native movement/arrival implementation unchanged: both adjacent and same-place exterior→interior successes already work. Tests now check the staged writer packet zone=interior and exact once native arrival/restarted delivery. A held writer preserves arrival and exposes destination_fiction_missing, explicit destination coverage false and a GM-private native-source coverage review even when optional narrative health persistence is OFF. No added writer or replay. Actual live12:10 absent-destination root cause remains unknown without its specific authoring evidence; synthetic success is not a diagnosis of that historical turn.
 
 Focused `--test-name-pattern='S1 '`8/8 exit0; directly impacted hotfix+routing21/21 exit0; final changed diagnostic batch `--test-name-pattern='S1 |HOT'`20/20 exit0 (actual output captured locally). No full validator per phase. S0 later-phase red cases remain intentionally red pending their phases; final registration/qualification remains S6. No production/paid call or flag change.
+
+## S2 — per-clause optional candidates
+
+Starting `123dede2e4180bf924953d066e66fafe96744375`. Additive closed v2 candidate contract: original start/end, framing, source_ref/span/quote/target. Exact bounds/current owner context/session and matching current persisted typed clause are required for pending immediate interpretation. Repeated identical words at another valid but unaccepted offset become needs_scope_review; wrong offsets reject. Non-immediate framing is interpretation_only. No candidate establishes consent/effect. State persists accepted typed inputs before optional candidates. V2 does not invoke parallel legacy declaration/entry/dialogue staging; normal typed services remain sole normal workflow. No database migration or native execution change.
+
+Whole-message hypothetical veto and unbounded earlier might/would/could/report scans removed. A literal quote-position tripwire remains as attribution defense; explicit authenticated OOC remains intentional silence. Historical five-field candidates remain readable and retain bounded containing-clause compatibility safeguards rather than granting unverified semantic authority. Native exact source spans, entry execution, consent and rolls are unchanged. Later immediate inspect/inquiry survives earlier hypothetical or reported quote. No compatibility movement/utterance is fabricated.
+
+S0 red C09/C10/C11 exit1 became focused S2 **4/4** exit0. C12 fixture's initial closed-shape throw did not prove offset semantics; strengthened to require no pending/typed link at a valid wrong occurrence AND rejection of an invalid offset, without weakening the security expectation. Impacted group `--test-name-pattern='S2 |SEM04'` **18/18**, zero skipped, exit0,11459.8654ms; existing `natural-language-scope-test.mjs` D1–D8 compatibility scope group PASS exit0. No full registry, provider or production call. Native legacy package behavior retained; no assertion retired.
