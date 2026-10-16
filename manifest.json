@@ -2550,6 +2550,11 @@
       "sha256": "b065e8e804cbedb227d9dff148aded5f5a434ca7640a935a9b246dc89eed1e8c"
     },
     {
+      "path": "docs/AI_GM_AUTHORITY_MIGRATION_MATRIX.md",
+      "size_bytes": 18155,
+      "sha256": "607577024f101a0b1488d6f8970dd67422ec656075524bbe5ada184ef5b793c8"
+    },
+    {
       "path": "docs/API_COSTS_2026-10-01.md",
       "size_bytes": 1660,
       "sha256": "f2d696245cb546ea5c31ca4b9611e77d872995528edd1a81f073047b3ad6335c"
@@ -3216,8 +3221,8 @@
     },
     {
       "path": "docs/UNIFIED_ARBITRATION_ADVANCED_LEDGER.md",
-      "size_bytes": 66175,
-      "sha256": "0d7073f56e904bc4caab282f7af742934564ecc9724311a25498fb50ceaa1aed"
+      "size_bytes": 69447,
+      "sha256": "89c45903f65684644055197a6f709a144f2503b1f59e8f06c815f2989beb3fd3"
     },
     {
       "path": "docs/UNIFIED_ARBITRATION_FEATURE_COVERAGE.md",
