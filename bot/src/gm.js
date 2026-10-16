@@ -55,7 +55,7 @@ import {engagementKinds,bindSemanticEngagement,currentSemanticEngagement,semanti
 import {authorNarrativeRequests,NARRATIVE_AUTHORITY_INSTRUCTIONS,narrativeResponseSchema} from './narrative-authority.js';
 import {nativeOutcomeSchema,narrativeRequestSchema} from './gm-fiction-schema.js';
 import {coordinateNarrative,narrativeModel} from './narrative-delegation.js';
-import {bindDirectorNarrativeSource} from './narrative-director-source.js';
+import {bindDirectorNarrativeSource,inheritDirectorNarrativeSource,nativeDirectorNarrativeSource} from './narrative-director-source.js';
 import {buildNarrativeContext} from './narrative-authority-context.js';
 import {createArbitrationOrigin,arbitrationPromptBoard,bindArbitrationTurn} from './scene-intent-board.js';
 import {unifiedArbitrationSchema} from './gm-arbitration-contract.js';
@@ -1054,6 +1054,13 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
         npc_memories:[],npc_knowledge:[],npc_goals:[],simulation_updates:[],confidence:100,gm_notes:"GM scene cues hold background pressure; preserve PC dialogue."};
     const directorActor=trigger?.scope==="private"&&trigger?.actor_user_id?String(trigger.actor_user_id):"__world_director__";
     const ctx=this.buildContext(guildId,directorActor,`${layer} ${JSON.stringify(trigger)}`,actorAssignment,{worldDirector:true});
+    const creativeScope={mode:trigger.scope||'party',actorUserId:trigger.actor_user_id||null,actorCharacterId:trigger.actor_character_id||null};
+    let arbitrationOrigin=null,nativeShell=null;
+    if(this.db.getCityCalendar(guildId).flags.narrative_authority&&this.db.getCityCalendar(guildId).flags.gm_discretion){
+      nativeShell={act:false};const ref=bindDirectorNarrativeSource(this.db,guildId,nativeShell,creativeScope,layer,trigger,this.content);
+      try{arbitrationOrigin=createArbitrationOrigin(this.db,guildId,creativeScope,ref);}
+      catch(error){if(!['SCENE_FICTION','GM_ARBITRATION'].includes(error.code))throw error;nativeShell=null;}
+    }
     const layerRules={
       round:[
         "END-OF-PLAYER-ROUND DIRECTOR PASS. This is a pacing cadence, never initiative. Do not restrict player actions or mention rounds unless fiction itself uses them.",
@@ -1092,13 +1099,14 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
       `Roster: ${JSON.stringify(ctx.roster)}`,`Recent party transcript: ${JSON.stringify(this.db.recentPartyMessages(guildId,{limit:50}))}`,`Actor-visible recent transcript (includes private context only when this is a private-scene director pass): ${JSON.stringify(ctx.recent)}`,`Actor-visible facts: ${JSON.stringify(ctx.actor_visible_facts)}`,`Facts (GM-private/all; objective context, not automatic NPC knowledge): ${JSON.stringify(ctx.gm_all_facts)}`,`NPC cognition (subjective GM-private state): ${JSON.stringify(ctx.npc_cognition)}`,`Clocks: ${JSON.stringify(ctx.clocks)}`,`Canon: ${JSON.stringify(ctx.canon)}`,`Relationships: ${JSON.stringify(ctx.gm_relationships)}`,
       `Current encounter: ${JSON.stringify(ctx.current_encounter)}`,`Downtime cycle: ${JSON.stringify(cycle)}`,`Downtime projects: ${JSON.stringify(projects)}`,`Reference: ${JSON.stringify(ctx.reference_chunks)}`
     ].join("\n\n");
-    const req={model:layer==="downtime"?this.config.downtimeModel:this.config.gmModel,input:prompt,max_output_tokens:layer==="downtime"?this.config.downtimeMaxOutputTokens:Math.min(this.config.structuredRetryMaxTokens||6000,2200),text:{format:{type:"json_schema",name:`world_director_${layer}`,strict:true,schema:directorSchema}}};
+    const currentDirectorSchema=arbitrationOrigin?{...directorSchema,properties:{...directorSchema.properties,unified_arbitration:unifiedArbitrationSchema},required:[...directorSchema.required,'unified_arbitration']}:directorSchema;
+    const req={model:layer==="downtime"?this.config.downtimeModel:this.config.gmModel,input:prompt+(arbitrationOrigin?`\n${UNIFIED_ARBITRATION_PROMPT}\n${JSON.stringify(arbitrationPromptBoard(this.db,guildId,arbitrationOrigin))}`:''),max_output_tokens:layer==="downtime"?this.config.downtimeMaxOutputTokens:Math.min(this.config.structuredRetryMaxTokens||6000,2200),text:{format:{type:"json_schema",name:`world_director_${layer}`,strict:true,schema:currentDirectorSchema}}};
     if(this.config.reasoningEffort) req.reasoning={effort:this.config.reasoningEffort};
     const result=await this.requestStructured(req,{guildId,label:`world director ${layer}`,signal:directorSignal});
-    const creativeScope={mode:trigger.scope||'party',actorUserId:trigger.actor_user_id||null,actorCharacterId:trigger.actor_character_id||null};
+    if(arbitrationOrigin){bindArbitrationTurn(result,arbitrationOrigin);inheritDirectorNarrativeSource(result,nativeShell);}
     const authoringBudget={used:false};
     if(this.db.getCityCalendar(guildId).flags.narrative_authority){
-      const nativeSource=bindDirectorNarrativeSource(this.db,guildId,result,creativeScope,layer,trigger,this.content);
+      const nativeSource=nativeDirectorNarrativeSource(result)||bindDirectorNarrativeSource(this.db,guildId,result,creativeScope,layer,trigger,this.content);
       coordinateNarrative(this.db,guildId,result,{scope:creativeScope,sourceRef:nativeSource,director:true});
       await authorNarrativeRequests({db:this.db,guild:guildId,result,scope:creativeScope,sourceRef:nativeSource,budget:authoringBudget,
         generate:packet=>this.generateNarrative(guildId,packet,directorSignal,layer==='downtime'?'downtime':'director')});
@@ -1108,8 +1116,7 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
     previewAuthoritativeMutation(this.db,{guildId,sessionId:ctx.session?.id,narrative:result,
       events:result.events||[],relationships:result.relationships||[],handouts:result.handouts||[],
       npcMemories:result.npc_memories||[],npcKnowledge:result.npc_knowledge||[],npcGoals:result.npc_goals||[],
-      simulationUpdates:result.simulation_updates||[],scope:{mode:trigger.scope||"party",actorUserId:trigger.actor_user_id,
-        actorCharacterId:trigger.actor_character_id},provenance:{messageId:trigger.message_id||null}});
+      simulationUpdates:result.simulation_updates||[],scope:creativeScope,provenance:{messageId:trigger.message_id||null}});
     validatePacing(this.db,guildId,result);
     return result;
   }

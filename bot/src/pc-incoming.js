@@ -180,6 +180,13 @@ function verifyRoll(db,guild,row){
 /** Read-only current source + immutable GM roll ancestry, usable by receipt-only output adapters. */
 export function incomingRollProjection(db,guild,key){
   const {row,offer}=incomingAttackEvidence(db,guild,key),receipt=verifyRoll(db,guild,row),r=receipt.data;
+  if(offer.input.ruling?.startsWith('ai-decision:')){
+    const decision=inspectNativeGmDecision(db,guild,offer.input.ruling.slice(12)).row,cost=db.getCityRecord(guild,'gm_action_cost_receipt',r.cost_ref);
+    let i=0;const expected=gmD20Roll({kind:'attack',modifier:offer.bonus,difficulty:offer.evasion,
+      advantage:decision.data.proposal.advantage,disadvantage:decision.data.proposal.disadvantage},()=>r.gm_d20?.faces[i++]);
+    if(r.gm_decision!==decision.record_key||hash(expected)!==hash(r.gm_d20)||expected.selected!==r.face||cost?.status!=='committed'
+      ||cost.source_event!==decision.source_event||cost.data.decision!==decision.record_key||cost.data.before-cost.data.after!==cost.data.amount)fail('Exact native GM d20 and pre-roll payment proof required.');
+  }
   const {count,sides,mod}=diceSpec(offer.damage);
   if(r.face<1||r.face>20||!Number.isSafeInteger(r.face)||r.bonus!==offer.bonus||r.evasion!==offer.evasion
     ||r.total!==r.face+r.bonus||r.hit!==(r.face===20||r.total>=r.evasion)||r.type!==offer.damage_type

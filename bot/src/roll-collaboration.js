@@ -17,7 +17,7 @@ import { validatePcDeathOutcome,blazeActionAuthorization,blazeCriticalResult,com
 import {assertPcCanAct,hopeCap} from "./pc-native-eligibility.js";
 import {consentAction,historicalActionSource} from "./action-consent.js";
 import {assertGmRulingRequest} from "./gm-action-ruling.js";
-import {assertGmInvitationRequest} from './gm-native-rolls.js';
+import {assertGmInvitationRequest,resumePendingGmActions} from './gm-native-rolls.js';
 function fail(message){throw new StateConflictError(message);}
 /** Called only by the authenticated GM command/review boundary, never by model-supplied identity. */
 export function adjudicateRollSource(db,guild,input,reviewer){
@@ -194,7 +194,7 @@ export function applyRollOutcome(db,guild,session,characterIds,result,{reaction=
   if(encounter?.status==="active"&&characterIds.length) db.recordSpotlight(encounter.id,characterIds[0]); // One action, not one per participant.
 }
 /** Bound only to the actual interaction/message author. expected_revision is mandatory; receipts protect redelivery before stale checks. */
-export function contributeRoll(db,guild,user,input,{rng=d}={}){
+export function contributeRoll(db,guild,user,input,{rng=d,gmRng=d}={}){
   if(db.getCityCalendar(guild).flags.roll_collaboration!==true||db.getCityCalendar(guild).flags.roll_requests!==true)
     fail("Native roll collaboration is opt-in.");
   const pc=personalCharacter(db,guild,user),key=cityKey(input.request),row=db.getCityRecord(guild,"roll_request",key);
@@ -375,6 +375,7 @@ export function contributeRoll(db,guild,user,input,{rng=d}={}){
       data:{user,request:key,op:input.op,authorization:input,resource_deltas,result:after}});
     reserveRollAmendment(db,guild,after);
     if(input.op==="share")reserveRollPartyDisclosure(db,guild,after);
+    if(['roll','damage'].includes(input.op)&&after.status==='resolved')resumePendingGmActions(db,guild,{rng:gmRng});
     return after;
   });
 }

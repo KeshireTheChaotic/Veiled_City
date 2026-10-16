@@ -11,6 +11,8 @@ import {recordNarrativeHealth} from './narrative-completeness.js';
 import {worldInputKey} from './autonomous-world.js';
 import {executeUnifiedGmActions} from './gm-native-rolls.js';
 import {EncounterLibrary} from './encounter.js';
+import {prepareAuthorizedTurnOutput} from './pvp-output.js';
+import {nativeDirectorNarrativeSource} from './narrative-director-source.js';
 export function commitGmTurn({db,guild,session,result,scope,speaker,label,meta={},content=null}){
   const decision_advisory=validateDecisionAdvisory(db,guild.id,result);
   const mutates=(result.ai_intents||[]).length||(result.events||[]).some(e=>e.type!=="log_only")||(result.relationships||[]).length||(result.handouts||[]).length||(result.npc_memories||[]).length||(result.npc_knowledge||[]).length||(result.npc_goals||[]).length||(result.simulation_updates||[]).length;
@@ -37,6 +39,10 @@ export function commitGmTurn({db,guild,session,result,scope,speaker,label,meta={
     mutation.gmNativeActions=executeUnifiedGmActions(db,guild.id,mutation.unifiedArbitration||[],{library:new EncounterLibrary(content?.root||'../content')});
     const nativeRolls=resolveTypedNativeRolls(db,guild.id,scope,result.player_intents||[],meta.messageId||'');
     mutation.intents=[...(mutation.intents||[]),...nativeRolls];
+    if(mutation.gmNativeActions.length)prepareAuthorizedTurnOutput(db,guild.id,result,scope,{
+      sourceRef:nativeDirectorNarrativeSource(result)||(meta.messageId&&scope.actorCharacterId?worldInputKey(meta.messageId,scope.actorCharacterId):null),world:mutation.world,
+      nativeEntries:(mutation.intents||[]).filter(row=>row.status==='accepted'&&row.data.intent?.feature==='scene'&&row.data.result?.status==='approved').map(row=>row.data.result.record_key),
+      nativeEffects:(mutation.ordinaryEffects||[]).filter(row=>row.status==='applied').map(row=>row.record_key),content});
     const trace=currentTurnTrace();if(trace&&trace.guild===guild.id){
       if(nativeRolls.length||mutation.nativeAdjudications?.length||mutation.gmRulings?.length)trace.category='mechanical';
       else if(result.state_review?.scene?.decision==='transition')trace.category='transition';

@@ -144,6 +144,10 @@ function renderPart(db,guild,part){
   if(kind==='native_outcome'){
     const outcome=nativeOutcomeProjection(db,guild,part.input,scope);if(outcome.revision!==part.outcome_revision)fail();return outcome.text;
   }
+  if(kind==='gm_arbitration_notice'){
+    const projection=nativeGmNotice(db,guild,ref,scope);
+    if(!projection||projection.revision!==part.notice_revision)fail();return projection.text;
+  }
   if(kind==="nonmaterial_grammar")return renderNonmaterialGrammar(db,guild,part);
   if(kind==="gm_world_narrative")return renderGmWorldPart(db,guild,ref,scope);
   if(kind==='gm_fresh_npc'){
@@ -455,6 +459,14 @@ export function prepareAuthorizedTurnOutput(db,guild,result,scope,{sourceRef=nul
   if("public_narration" in result)result.public_narration=text;
   result.player_summary=text;result.private_messages=[];
   const privateParts={};
+  for(const notice of nativeGmNotices(db,guild,sourceRef,scope)){
+    const part=savePart(db,guild,{...common,kind:'gm_arbitration_notice',ref:notice.ref,scope:notice.scope,notice_revision:notice.revision,
+      source_ref:notice.source.event_key,source_hash:hash(notice.source.details),
+      principal_revision:conversationPrincipal(db,guild,notice.scope.actorUserId,notice.scope.actorCharacterId).revision});
+    privateParts[notice.scope.actorUserId]=[...(privateParts[notice.scope.actorUserId]||[]),part.record_key];
+    const message=result.private_messages.find(m=>m.discord_user_id===notice.scope.actorUserId);
+    if(message)message.content+=`\n${part.data.text}`;else result.private_messages.push({discord_user_id:notice.scope.actorUserId,content:part.data.text});
+  }
   // A proposed private message is only a lookup, never evidence. Preserve exact independently owner-authorized clauses.
   for(const [surface,content] of Object.entries(raw).filter(([s])=>s.startsWith("private:"))){
     const user=surface.slice(8),assignment=db.activeAssignment(scene.session_id,user);
@@ -468,7 +480,9 @@ export function prepareAuthorizedTurnOutput(db,guild,result,scope,{sourceRef=nul
         const part=savePart(db,guild,{...common,scope:privateScope,kind:"private_owner_clause",ref:clause.record_key,
           source_ref:source?.event_key,source_hash:hash(source?.details),
           principal_revision:conversationPrincipal(db,guild,user,assignment.character_id).revision});
-        privateParts[user]=[part.record_key];result.private_messages.push({discord_user_id:user,content:part.data.text});break;
+        privateParts[user]=[...(privateParts[user]||[]),part.record_key];
+        const message=result.private_messages.find(m=>m.discord_user_id===user);
+        if(message)message.content+=`\n${part.data.text}`;else result.private_messages.push({discord_user_id:user,content:part.data.text});break;
       }catch(error){if(error.code!=="NARRATIVE_PVP")throw error;}
     }
   }
@@ -781,3 +795,4 @@ export function quarantineSessionRecap(db,guild,session,text){
     data:{version:1,session:session.id,origin:"session-recap",raw:{narration:String(text||"")},canonical:false,
       reason:"Unverified archive synthesis; session closure supplies no PC authorship or disclosure authority."}});
 }
+import {nativeGmNotice,nativeGmNotices} from './gm-arbitration-output.js';

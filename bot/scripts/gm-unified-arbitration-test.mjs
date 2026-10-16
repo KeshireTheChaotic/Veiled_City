@@ -9,7 +9,17 @@ import {persistPlayerIntents} from '../src/typed-intents.js';
 import {candidate,run} from './narrative-fixtures.mjs';
 import {unifiedArbitrationSchema,matchesArbitrationSchema,ARBITRATION_DISPOSITIONS} from '../src/gm-arbitration-contract.js';
 import {createArbitrationOrigin,buildSceneIntentBoard,arbitrationPromptBoard} from '../src/scene-intent-board.js';
-import {executeUnifiedGmActions,inspectGmReactionInvitation,submitGmReactionInvitation} from '../src/gm-native-rolls.js';
+import {executeUnifiedGmActions,inspectGmReactionInvitation,submitGmReactionInvitation,withdrawGmReactionInvitation} from '../src/gm-native-rolls.js';
+import {captureWorldInput,worldInputKey} from '../src/autonomous-world.js';
+import {adjudicateAcceptedIntent} from '../src/rules-arbitration.js';
+import {contributeRoll} from '../src/roll-collaboration.js';
+import {rollRevision} from '../src/roll-requests.js';
+import {GMService} from '../src/gm.js';
+import {ContentIndex} from '../src/content.js';
+import {FakeResponses} from './contract-fixtures.mjs';
+import {commitGmTurn} from '../src/turn-orchestration.js';
+import {nativeGmOpportunity} from '../src/gm-action-capability.js';
+import {deliverTurnOutbox} from '../src/publication-outbox.js';
 import {adjudicateSceneBoard} from '../src/gm-unified-arbitration.js';
 const decision=(intent_ref,disposition='no_roll')=>({intent_ref,disposition,rule_basis_refs:['srd:action-rolls'],difficulty:null,trait:null,stakes_kind:disposition==='gm_attack_roll'?'native_attack':'attempt_only',stakes:'none',reason:'Ordinary costless observation.',difficulty_reason:'',feature_ref:'',experience_ref:'',advantage:false,disadvantage:false});
 function boardFixture(f,{privateScene=false,rollQuestion=false}={}){
@@ -28,8 +38,8 @@ import {indexWorldEvent} from '../src/city-calendar.js';
 import {currentScene,recordScenePresence} from '../src/scene-continuity.js';
 import {projectNativeGmProposal} from '../src/gm-mechanical-v9.js';
 function npc(f,key='attendant',location='terminal'){f.db.upsertNpcProfile(f.guild,{npcKey:key,displayName:'Inez',role:'attendant',publicIdentity:'A local attendant.'});f.db.setSimulationEntity(f.guild,'npc',key,{name:'Inez',location_key:location,visibility:'party'});}
-function incoming(f){
-  const x=setup(f,{privateScene:true}),library=new EncounterLibrary('../content'),scene=currentScene(f.db,f.guild);npc(f,'guard');
+function incoming(f,{privateScene=true,text}={}){
+  const x=setup(f,{privateScene,text}),library=new EncounterLibrary('../content'),scene=currentScene(f.db,f.guild);npc(f,'guard');
   f.db.setCityCalendar(f.guild,{flags:{...f.db.getCityCalendar(f.guild).flags,narrative_encounters:true}});
   f.db.updateCharacterData(x.pc.id,d=>{d.evasion=12;d.thresholds={major:7,severe:14};});
   const source=indexWorldEvent(f.db,f.guild,{key:'af-guard-source',kind:'observation',source_id:'gm',title:'Native guard encounter',session_id:f.session.id,scene:scene.key,location_key:'terminal',visibility:'party'},'gm');
@@ -43,6 +53,63 @@ function incoming(f){
 }
 
 const cases=[
+ ['AR4','18','actual non-PvP action Fear supplies an optional GM opportunity not automatic dice or spending',f=>{
+   const x=boardFixture(f,{rollQuestion:true,privateScene:true}),board=buildSceneIntentBoard(f.db,f.guild,x.origin,x.rows,[]),[r]=adjudicateSceneBoard(f.db,f.guild,x.origin,board,
+     [{...decision('player:0','request_pc_action_roll'),difficulty:12,trait:'Finesse',stakes:'Attempt only.',difficulty_reason:'Current native scene.'}]);
+   assert.throws(()=>nativeGmOpportunity(f.db,f.guild,board));const q=f.db.getCityRecord(f.guild,'roll_request',r.data.native.roll_request_ref);let calls=0;
+   const result=contributeRoll(f.db,f.guild,x.pc.owner_user_id,{op:'roll',request:q.record_key,expected_revision:rollRevision(q),key:'ar-action-fear'},
+     {rng:()=>[3,10][calls++],gmRng:()=>assert.fail('no automatic GM move')});
+   const opportunity=nativeGmOpportunity(f.db,f.guild,board);assert.equal(opportunity.roll,result.data.roll_id);assert.equal(calls,2);
+   assert.equal(f.db.getCampaign(f.guild).fear,1);assert.equal(f.db.listCityRecords(f.guild,{kind:'gm_action_cost_receipt',includeGM:true}).length,0);}],
+ ['AR4','17','authenticated Director uses the same board without laundering civic simulation or adding a call',async f=>{
+   const x=boardFixture(f),r={...candidate(x.text),player_intents:[],act:true,public_narration:'',confidence:100,gm_notes:''},ai=new FakeResponses([r,{version:9,acts:[],fiction_delta:[]}]),original=ai.responses.create;
+   ai.responses.create=async req=>{
+     if(ai.requests.length===0){const source=f.db.listWorldEvents(f.guild,{includeGM:true,limit:100}).find(e=>e.kind==='native_director_narrative_scope'),ref=`npc-intent:${hash([source.event_key,'attendant','speak'])}`;
+       r.unified_arbitration={version:1,npc_intents:[x.proposal],decisions:[{...decision(ref,'npc_no_roll'),rule_basis_refs:['srd:gm-moves']}]};}
+     return original(req);
+   };
+   const content=new ContentIndex('../content'),gm=new GMService({db:f.db,content,ai,config:{gmModel:'offline'}}),result=await gm.runWorldDirector({guildId:f.guild,layer:'manual',trigger:{requested_by:'gm',scope:'party',actor_user_id:x.pc.owner_user_id,actor_character_id:x.pc.id}});
+   const saved=commitGmTurn({db:f.db,guild:{id:f.guild},session:f.session,result,scope:x.scope,speaker:'Native Director',label:'Offline Director arbitration',content});
+   assert.equal(saved.unifiedArbitration[0].status,'resolved_no_roll');assert.equal(ai.requests.length,2);assert(ai.requests[0].text.format.schema.properties.unified_arbitration);
+   assert.equal(f.db.getWorldEvent(f.guild,f.db.getCityRecord(f.guild,'scene_intent_board',saved.unifiedArbitration[0].data.board).data.entries.find(e=>e.actor.type==='npc').source_ref).source_id,'native:unified-gm');}],
+ ['AR4','16','saved native success resumes only the exact preauthorized NPC dependent action',f=>{
+   const x=incoming(f,{privateScene:false});f.db.setCityCalendar(f.guild,{flags:{...f.db.getCityCalendar(f.guild).flags,gm_discretion:true,roll_requests:true,roll_collaboration:true}});
+   const text='I inspect the counter.',messageId='ar-existing-search';captureWorldInput(f.db,f.guild,x.pc.owner_user_id,x.pc.id,messageId,text);
+   const [search]=persistPlayerIntents(f.db,f.guild,[{...candidate(text).player_intents[0],type:'search',operation:'inspect'}],x.scope,{messageId});
+   f.db.upsertNpcGoal(f.guild,{npcKey:'guard',goalKey:'console',objective:'Operate the independent console.',source:x.row.data.offer.input.source});
+   const look=persistPlayerIntents(f.db,f.guild,candidate(x.text).player_intents,x.scope,{messageId:x.messageId}),origin=createArbitrationOrigin(f.db,f.guild,x.scope,x.sourceRef),
+     proposal={actor_key:'guard',operation:'exceptional_action',target_refs:[],objective_ref:'console',source_refs:[],dependencies:[search.record_key]},board=buildSceneIntentBoard(f.db,f.guild,origin,[...look,search],[proposal]);
+   const [r]=adjudicateSceneBoard(f.db,f.guild,origin,board,[{...decision(board.data.entries[2].intent_ref,'gm_exceptional_action_roll'),rule_basis_refs:['srd:exceptional-adversary-actions'],difficulty:15,stakes:'Independent NPC attempt.',difficulty_reason:'A difficult independent console task.'}],{library:x.library});
+   assert.equal(executeUnifiedGmActions(f.db,f.guild,[r],{library:x.library,rng:()=>assert.fail('prerequisite pending')})[0].status,'pending');
+   const native=adjudicateAcceptedIntent(f.db,f.guild,{acceptedIntent:search.record_key,mode:'roll_required',trait:'Finesse',kind:'action',difficulty:12,risk:'Delay',stakes:'Attempt may fail.',rawRefs:['srd:action-rolls'],explanation:'Native ordinary action.'},'ai_gm',{scope:x.scope}),q=f.db.getCityRecord(f.guild,'roll_request',native.roll_request_ref);
+   let pcCalls=0,gmCalls=0;const result=contributeRoll(f.db,f.guild,x.pc.owner_user_id,{op:'roll',request:q.record_key,expected_revision:rollRevision(q),key:'ar-dependency-owner'},
+     {rng:()=>[10,4][pcCalls++],gmRng:()=>{gmCalls++;return 19;}});
+   assert.equal(result.status,'resolved');assert.equal(pcCalls,2);assert.equal(gmCalls,1);assert.equal(f.db.listCityRecords(f.guild,{kind:'gm_action_continuation',includeGM:true})[0].status,'resumed');
+   assert.equal(f.db.listCityRecords(f.guild,{kind:'gm_native_roll_receipt',includeGM:true}).length,1);}],
+ ['AR4','15','owner may withhold a reaction without dice or an invented failed response',f=>{
+   const x=incoming(f);f.db.setCityCalendar(f.guild,{flags:{...f.db.getCityCalendar(f.guild).flags,gm_discretion:true}});
+   const rows=persistPlayerIntents(f.db,f.guild,candidate(x.text).player_intents,x.scope,{messageId:x.messageId}),origin=createArbitrationOrigin(f.db,f.guild,x.scope,x.sourceRef),
+     proposal={actor_key:'guard',operation:'prepare',target_refs:[x.pc.id],objective_ref:'',source_refs:[],dependencies:[]},board=buildSceneIntentBoard(f.db,f.guild,origin,rows,[proposal]),
+     [r]=adjudicateSceneBoard(f.db,f.guild,origin,board,[{...decision(board.data.entries[1].intent_ref,'request_pc_reaction_roll'),rule_basis_refs:['srd:reaction-rolls'],trait:'Agility',difficulty:12,stakes:'Attempt only.',difficulty_reason:'Local NPC attempt.'}]);
+   executeUnifiedGmActions(f.db,f.guild,[r],{library:x.library});const terms=inspectGmReactionInvitation(f.db,f.guild,x.pc.owner_user_id,r.record_key).terms,input={op:'gm-reaction-withdraw',request:r.record_key,revision:terms.revision},opts={interactionId:'ar-withhold',authoredText:JSON.stringify(input)};
+   const saved=withdrawGmReactionInvitation(f.db,f.guild,x.pc.owner_user_id,input,opts);assert.equal(saved.status,'withdrawn');assert.equal(withdrawGmReactionInvitation(f.db,f.guild,x.pc.owner_user_id,input,opts).record_key,saved.record_key);
+   assert.equal(inspectGmReactionInvitation(f.db,f.guild,x.pc.owner_user_id,r.record_key).terms.status,'withdrawn');
+   const roll={...input,op:'gm-reaction-roll'};assert.throws(()=>submitGmReactionInvitation(f.db,f.guild,x.pc.owner_user_id,roll,{interactionId:'ar-no-resurrection',authoredText:JSON.stringify(roll),rng:()=>assert.fail('withheld')}));
+   assert.equal(f.db.listCityRecords(f.guild,{kind:'roll_operation',includeGM:true}).length,0);assert.equal(f.db.getCharacter(x.pc.id).data.resources.hp.current,0);}],
+ ['AR4','13','actual outbox privately delivers native pending terms without GM commentary or repeated dice',async f=>{const x=boardFixture(f,{rollQuestion:true}),r=candidate(x.text);
+   r.player_intents[0]={...r.player_intents[0],type:'roll',operation:'request_roll'};
+   r.unified_arbitration={version:1,npc_intents:[],decisions:[{...decision('player:0','request_pc_action_roll'),difficulty:14,trait:'Finesse',stakes:'SECRET DO NOT DISCLOSE',difficulty_reason:'SECRET DO NOT DISCLOSE'}]};
+   const out=await run(f,x,{version:9,acts:[],fiction_delta:[]},r),privateRows=out.rows.filter(row=>row.target_user_id===x.pc.owner_user_id);
+   assert(privateRows.length>0);assert(privateRows.some(row=>row.payload.includes('Finesse')&&row.payload.includes('14')));
+   assert(!out.rows.some(row=>row.payload.includes('SECRET DO NOT DISCLOSE')));assert(!out.rows.filter(row=>row.surface==='party').some(row=>row.payload.includes('Pending Daggerheart')));
+   assert.equal(out.ai.requests.length,2);const delivered=[];await deliverTurnOutbox(f.db,f.guild,out.attempt.turn_id,async row=>{delivered.push(row.payload);return{messageId:`fake-${delivered.length}`,channelId:'offline'};});
+   assert(delivered.some(text=>text.includes('Finesse')));await deliverTurnOutbox(f.db,f.guild,out.attempt.turn_id,async()=>assert.fail('no duplicate delivery'));}],
+ ['AR4','14','restart revalidates actual pending outbox payload before delivery',async f=>{const x=boardFixture(f,{rollQuestion:true}),r=candidate(x.text);
+   r.player_intents[0]={...r.player_intents[0],type:'roll',operation:'request_roll'};r.unified_arbitration={version:1,npc_intents:[],decisions:[{...decision('player:0','request_pc_action_roll'),difficulty:14,trait:'Finesse',stakes:'Attempt only.',difficulty_reason:'Current scene.'}]};
+   const out=await run(f,x,{version:9,acts:[],fiction_delta:[]},r);assert(out.rows.some(row=>row.target_user_id===x.pc.owner_user_id));f.restart();
+   f.db.db.prepare("UPDATE world_events SET status='retracted' WHERE guild_id=? AND event_key=?").run(f.guild,x.sourceRef);
+   let sends=0;await deliverTurnOutbox(f.db,f.guild,out.attempt.turn_id,async()=>{sends++;return{messageId:'fake',channelId:'offline'};});assert.equal(sends,0);
+   assert.equal(f.db.listCityRecords(f.guild,{kind:'roll_operation',includeGM:true}).length,0);}],
  ['AR3','12','additional spotlight plus native Experience costs are additive and committed before dice once',f=>{
    const x=incoming(f),find=x.library.findAdversary.bind(x.library);x.library.findAdversary=name=>({...find(name),experiences:[{name:'Technical systems',modifier:2}]});
    f.db.setCityCalendar(f.guild,{flags:{...f.db.getCityCalendar(f.guild).flags,gm_discretion:true}});
@@ -60,12 +127,15 @@ const cases=[
    assert.deepEqual(cost.data.expenses,{additional_spotlight:1,feature:0,experience:1});assert.equal(cost.data.amount,2);
    executeUnifiedGmActions(f.db,f.guild,[r],{library:x.library,rng:()=>assert.fail('no second payment/roll')});assert.equal(f.db.getCampaign(f.guild).fear,0);}],
  ['AR3','10','ordinary behavior cannot mint attack spotlight and unsupported multi-target features remain held',f=>{
-   const x=incoming(f);f.db.setCityCalendar(f.guild,{flags:{...f.db.getCityCalendar(f.guild).flags,gm_discretion:true}});
+   const x=incoming(f,{text:'I inspect the counter.'});f.db.setCityCalendar(f.guild,{flags:{...f.db.getCityCalendar(f.guild).flags,gm_discretion:true}});
+   npc(f);
    const declared={...candidate(x.text).player_intents[0],type:'search',operation:'inspect'},rows=persistPlayerIntents(f.db,f.guild,[declared],x.scope,{messageId:x.messageId}),origin=createArbitrationOrigin(f.db,f.guild,x.scope,x.sourceRef),
-     proposal={actor_key:'guard',operation:'attack',target_refs:[x.pc.id],objective_ref:'',source_refs:[],dependencies:[]},board=buildSceneIntentBoard(f.db,f.guild,origin,rows,[proposal]);
-   assert.throws(()=>adjudicateSceneBoard(f.db,f.guild,origin,board,[{...decision(board.data.entries[1].intent_ref,'gm_attack_roll'),rule_basis_refs:['srd:adversary-attacks'],feature_ref:'standard_attack'}],{library:x.library}),/spotlight/);
-   const [hold]=adjudicateSceneBoard(f.db,f.guild,origin,board,[{...decision(board.data.entries[1].intent_ref,'native_feature_resolution'),feature_ref:'invented-multi-target-feature',stakes_kind:'native_feature'}]);
-   assert.equal(hold.status,'needs_rules_review');assert.equal(executeUnifiedGmActions(f.db,f.guild,[hold],{rng:()=>assert.fail('no unsupported RNG')}).length,0);
+     proposal={actor_key:'guard',operation:'attack',target_refs:[x.pc.id],objective_ref:'',source_refs:[],dependencies:[]},board=buildSceneIntentBoard(f.db,f.guild,origin,rows,[proposal,{...proposal,operation:'feature'},{...proposal,actor_key:'attendant',operation:'speak',target_refs:[]}]);
+   const [attack,hold,safe]=adjudicateSceneBoard(f.db,f.guild,origin,board,[{...decision(board.data.entries[1].intent_ref,'gm_attack_roll'),rule_basis_refs:['srd:adversary-attacks'],feature_ref:'standard_attack'},
+     {...decision(board.data.entries[2].intent_ref,'native_feature_resolution'),feature_ref:'invented-multi-target-feature',stakes_kind:'native_feature'},
+     {...decision(board.data.entries[3].intent_ref,'npc_no_roll'),rule_basis_refs:['srd:gm-moves']}],{library:x.library});
+   assert.equal(attack.status,'needs_rules_review');assert.match(attack.data.reason,/spotlight/);assert.equal(safe.status,'resolved_no_roll');
+   assert.equal(hold.status,'needs_rules_review');assert.equal(executeUnifiedGmActions(f.db,f.guild,[attack,hold,safe],{rng:()=>assert.fail('no unsupported RNG')}).length,0);
    assert.equal(f.db.getCampaign(f.guild).fear,0);}],
  ['AR3','11','untrusted adjudicator commentary never becomes owner-facing stakes or secrets',f=>{const x=boardFixture(f,{rollQuestion:true}),board=buildSceneIntentBoard(f.db,f.guild,x.origin,x.rows,[]);
    const [r]=adjudicateSceneBoard(f.db,f.guild,x.origin,board,[{...decision('player:0','request_pc_action_roll'),difficulty:14,trait:'Finesse',
@@ -79,6 +149,7 @@ const cases=[
    const [r]=adjudicateSceneBoard(f.db,f.guild,origin,board,[{...decision(board.data.entries[1].intent_ref,'request_pc_reaction_roll'),rule_basis_refs:['srd:reaction-rolls'],
      trait:'Agility',difficulty:12,stakes:'The threatened obstruction may impede the attempted passage.',difficulty_reason:'The local guard prepares to obstruct passage.'}]);
    assert.equal(r.status,'pending_pc_reaction');assert.equal(f.db.listCityRecords(f.guild,{kind:'roll_request',includeGM:true}).length,0);
+   executeUnifiedGmActions(f.db,f.guild,[r],{library:x.library,rng:()=>assert.fail('GM invitation is not dice')});
    assert.throws(()=>inspectGmReactionInvitation(f.db,f.guild,f.pcs[1].owner_user_id,r.record_key));
    const terms=inspectGmReactionInvitation(f.db,f.guild,x.pc.owner_user_id,r.record_key).terms,input={op:'gm-reaction-roll',request:r.record_key,revision:terms.revision},before=structuredClone(f.db.getCharacter(x.pc.id).data.resources),fear=f.db.getCampaign(f.guild).fear;
    let calls=0;const result=submitGmReactionInvitation(f.db,f.guild,x.pc.owner_user_id,input,{interactionId:'ar-reaction-owner',authoredText:JSON.stringify(input),rng:s=>{calls++;assert.equal(s,12);return 8;}});

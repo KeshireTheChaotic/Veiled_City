@@ -6,6 +6,9 @@ import {consentAction,historicalActionSource} from './action-consent.js';
 import {arbitrationFailure as fail} from './gm-arbitration-contract.js';
 import {scenePresence} from './scene-continuity.js';
 import {actorReferenceVisible} from './npc-cognition-projection.js';
+import {typedRollProof} from './typed-roll-proof.js';
+import {isPvpIntent} from './pvp-authority.js';
+import {narrativeSourceVisible} from './scene-fiction-context.js';
 
 export function inspectNativeGmDecision(db,guild,key){
   const row=db.getCityRecord(guild,'gm_arbitration_decision',key),d=row?.data,source=row&&db.getWorldEvent(guild,row.source_event),
@@ -20,6 +23,9 @@ export function inspectNativeGmDecision(db,guild,key){
   if(!entry||d.entry_hash!==hash(entry)||hash(current.binding)!==hash(d.origin))throw fail('decision_source_scene_or_owner');
   if(entry.actor.type==='npc'&&(activeCityProxy(db,guild,entry.actor.key)||db.getSimulationEntity(guild,'npc',entry.actor.key)?.state.location_key!==d.origin.location))throw fail('npc_control_or_locality');
   if(entry.actor.type==='npc'){
+    const proposalSource=db.getWorldEvent(guild,entry.source_ref),{source_ref:ignoredRef,source_hash:ignoredHash,...material}=entry;
+    if(proposalSource?.status!=='active'||proposalSource.kind!=='native_npc_scene_intent'||proposalSource.source_id!=='native:unified-gm'
+      ||hash(proposalSource.details)!==entry.source_hash||proposalSource.details.entry_hash!==hash(material)||proposalSource.details.input_source!==d.origin.source)throw fail('native_npc_intent_source');
     const npc=current.packet.npcs.find(n=>n.key===entry.actor.key),snapshot=hash([db.getSimulationEntity(guild,'npc',entry.actor.key),db.getNpcProfile(guild,entry.actor.key),
       scenePresence(db,guild,'npc',entry.actor.key),db.listNpcProxies(d.origin.session)]);
     if(!npc||npc.human_controlled||snapshot!==entry.snapshot||entry.knowledge_refs.some(ref=>!actorReferenceVisible(db,guild,entry.actor.key,ref,d.scope))
@@ -40,15 +46,26 @@ export function nativeGmOpportunity(db,guild,board){
       (row.status==='resolved'?historicalActionSource:consentAction)(db,guild,row.record_key,{resolved:true});return {source:row.source_event,intent:row.record_key,key:`gm-opportunity:${hash([board.data.origin.source,board.data.origin.scene])}`};
     }
   }
+  for(const request of db.listCityRecords(guild,{kind:'roll_request',includeGM:true,limit:100})){
+    if(request.status!=='resolved'||request.data.kind==='reaction'||request.data.scene!==board.data.origin.scene||!request.data.input.accepted_intent)continue;
+    const accepted=db.getCityRecord(guild,'typed_intent',request.data.input.accepted_intent),scope=board.data.origin.scope;
+    if(!accepted||isPvpIntent(db,guild,accepted)||!narrativeSourceVisible(db,guild,accepted.source_event,scope))continue;
+    let proof;
+    try{proof=typedRollProof(db,guild,request);}catch(error){if(!['TYPED_ROLL_PROOF','SCENE_ACTION_WINDOW'].includes(error.code))throw error;continue;}
+    if(proof.outcome==='needs_review'||request.data.result.duality!=='Fear'&&proof.outcome!=='failure')continue;
+    const key=`gm-opportunity:roll:${request.data.roll_id}`,used=db.listCityRecords(guild,{kind:'gm_action_cost_receipt',includeGM:true,limit:200})
+      .some(r=>r.data.opportunity===key&&db.getCityRecord(guild,'gm_arbitration_decision',r.data.decision)?.data.board!==board.record_key);
+    if(!used)return {source:accepted.source_event,request:request.record_key,roll:request.data.roll_id,key};
+  }
   throw fail('native_spotlight_opportunity_missing');
 }
 /** Called inside the attack's native transaction, after defense checks, before RNG. */
 export function commitGmActionCost(db,guild,decisionKey){
   const {row,entry,board}=inspectNativeGmDecision(db,guild,decisionKey),n=row.data.native,opportunity=nativeGmOpportunity(db,guild,board);
-  if(!['commit_adversary_attack','commit_exceptional_adversary_action'].includes(n?.operation)||hash(n.opportunity)!==hash(opportunity))throw fail('exact_spotlight_opportunity');
+  if(!['commit_adversary_attack','commit_exceptional_adversary_action','request_pc_reaction_roll'].includes(n?.operation)||hash(n.opportunity)!==hash(opportunity))throw fail('exact_spotlight_opportunity');
   const selected=new Set(db.listCityRecords(guild,{kind:'gm_arbitration_decision',includeGM:true,limit:200})
-    .filter(r=>r.status==='gm_action_ready'&&r.data.board===board.record_key).map(r=>r.data.entry));
-  const order=board.data.entries.filter(e=>selected.has(e.intent_ref)&&['attack','exceptional_action'].includes(e.operation)&&e.actor.type==='npc'),ordinal=order.findIndex(e=>e.intent_ref===entry.intent_ref);
+    .filter(r=>['gm_action_ready','pending_pc_reaction'].includes(r.status)&&r.data.board===board.record_key).map(r=>r.data.entry));
+  const order=board.data.entries.filter(e=>selected.has(e.intent_ref)&&e.actor.type==='npc'),ordinal=order.findIndex(e=>e.intent_ref===entry.intent_ref);
   if(ordinal<0)throw fail('attack_spotlight_slot');
   const spotlight=ordinal===0?0:1,experience=n.experience?1:0;
   const key=`gm-action-cost:${hash([decisionKey,opportunity.key])}`,prior=db.getCityRecord(guild,'gm_action_cost_receipt',key),amount=spotlight+experience;

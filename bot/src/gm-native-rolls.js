@@ -12,12 +12,36 @@ import {persistPlayerIntents} from './typed-intents.js';
 import {adjudicateAcceptedIntent} from './rules-arbitration.js';
 import {contributeRoll} from './roll-collaboration.js';
 import {rollRevision} from './roll-requests.js';
+import {consentAction,historicalActionSource} from './action-consent.js';
+import {typedRollProof} from './typed-roll-proof.js';
+import {indexWorldEvent} from './city-calendar.js';
+
+function dependencyState(db,guild,entry){
+  for(const ref of entry.dependencies){
+    const accepted=db.getCityRecord(guild,'typed_intent',ref);
+    if(!accepted)return 'needs_review'; // No narrative-only NPC assertion may certify a consequence.
+    (accepted.status==='resolved'?historicalActionSource:consentAction)(db,guild,ref,{resolved:true});
+    if(accepted.status!=='resolved')return 'pending';
+    const receipt=db.getCityRecord(guild,'action_outcome_receipt',accepted.data.outcome_receipt);
+    if(receipt?.status!=='resolved'||receipt.source_event!==accepted.source_event||receipt.data.action_id!==ref)return 'needs_review';
+    if(!['party','public'].includes(receipt.visibility))return 'needs_review'; // No actor knowledge or disclosure from a private numeric result.
+    if(receipt.data.request){
+      const request=db.getCityRecord(guild,'roll_request',receipt.data.request),proof=typedRollProof(db,guild,request);
+      if(proof.outcome==='needs_review')return 'needs_review';if(proof.outcome!=='success')return 'failed';
+    }else if(receipt.data.outcome!=='resolved_no_roll'||receipt.data.native_roll_refs.length||receipt.data.state_mutations.length)return 'needs_review';
+  }
+  return 'ready';
+}
 
 export function executeUnifiedGmActions(db,guild,decisions,{library=new EncounterLibrary('../content'),rng=d}={}){
-  return decisions.filter(r=>r.status==='gm_action_ready').map(decision=>{
+  return decisions.filter(r=>['gm_action_ready','pending_pc_reaction'].includes(r.status)).map(decision=>{
     try{return db.transaction(()=>{
     const {row,entry}=inspectNativeGmDecision(db,guild,decision.record_key),n=row.data.native;
-    if(row.status!=='gm_action_ready')return row;
+    if(!['gm_action_ready','pending_pc_reaction'].includes(row.status))return row;
+    const dependency=dependencyState(db,guild,entry),continuationKey=`gm-continuation:${hash(row.record_key)}`;
+    if(dependency!=='ready')return db.saveCityRecord(guild,{kind:'gm_action_continuation',key:continuationKey,status:dependency,visibility:'gm',source_event:row.source_event,
+      data:{decision:row.record_key,dependencies:entry.dependencies,authority:'Only exact successful native prerequisites resume the preauthorized GM action; no PC action or new spotlight is inferred.'}});
+    if(n.operation==='request_pc_reaction_roll')return commitGmActionCost(db,guild,row.record_key);
     if(n.operation==='commit_adversary_attack')return prepareArbitratedIncomingAttack(db,guild,row.record_key,{library});
     const key=`gm-execution:${hash(row.record_key)}`,prior=db.getCityRecord(guild,'gm_native_roll_receipt',key);
     if(prior)return inspectGmRollReceipt(db,guild,prior.record_key);
@@ -36,6 +60,18 @@ export function executeUnifiedGmActions(db,guild,decisions,{library=new Encounte
     }
   });
 }
+export function resumePendingGmActions(db,guild,options={}){
+  const decisions=db.listCityRecords(guild,{kind:'gm_action_continuation',includeGM:true,limit:200})
+    .filter(r=>r.status==='pending').map(r=>db.getCityRecord(guild,'gm_arbitration_decision',r.data.decision)).filter(Boolean);
+  const results=executeUnifiedGmActions(db,guild,decisions,options);
+  for(const result of results){
+    const decision=result.data.decision||decisions.find(d=>result.data.offer?.input.ruling===`ai-decision:${d.record_key}`)?.record_key;
+    if(!decision)continue;
+    const key=`gm-continuation:${hash(decision)}`,row=db.getCityRecord(guild,'gm_action_continuation',key);
+    if(row&&result.kind!=='gm_action_continuation')db.saveCityRecord(guild,{...row,key,status:result.kind==='gm_execution_review'?'needs_review':'resumed',data:{...row.data,result_kind:result.kind,result:result.record_key}});
+  }
+  return results;
+}
 export function inspectGmRollReceipt(db,guild,key){
   const row=db.getCityRecord(guild,'gm_native_roll_receipt',key),roll=row&&db.getSavedRoll(guild,row.data.roll),{roll:ignored,...payload}=row?.data||{};
   if(row?.status!=='resolved'||roll?.roll_type!=='gm_exceptional_action'||hash(roll.payload)!==hash(payload))throw fail('native_gm_roll_ancestry');
@@ -47,12 +83,40 @@ export function inspectGmRollReceipt(db,guild,key){
 export function inspectGmReactionInvitation(db,guild,user,key){
   const {row}=inspectNativeGmDecision(db,guild,key),n=row.data.native,p=row.data.proposal;
   if(row.status!=='pending_pc_reaction'||n?.operation!=='request_pc_reaction_roll')throw fail('exact_reaction_invitation');
+  const cost=db.listCityRecords(guild,{kind:'gm_action_cost_receipt',includeGM:true,limit:200}).find(r=>r.data.decision===row.record_key);
+  if(cost?.status!=='committed'||cost.source_event!==row.source_event)throw fail('reaction_gm_move_not_committed');
   const pc=personalCharacter(db,guild,user,n.character),principal=conversationPrincipal(db,guild,user,pc.id);
   if(user!==n.owner||principal.revision!==n.principal)throw fail('reaction_invitation_owner_changed');
-  return {row,pc,terms:{request:row.record_key,revision:hash(row.data),trait:p.trait,difficulty:p.difficulty,
+  const terminal=db.getCityRecord(guild,'gm_reaction_submission',`gm-reaction-submit:${hash([row.record_key,user])}`);
+  if(terminal){
+    const source=db.getWorldEvent(guild,terminal.source_event);
+    if(terminal.visibility!=='character'||terminal.subject_key!==pc.id||terminal.data.owner!==user||terminal.data.invitation!==row.record_key
+      ||terminal.data.invitation_hash!==hash(row.data)||source?.status!=='active'||!db.ownerAuthoredSource(guild,source.event_key,user))throw fail('reaction_terminal_source');
+    if(terminal.status==='resolved'){
+      const request=db.getCityRecord(guild,'roll_request',terminal.data.request);typedRollProof(db,guild,request);
+      if(request.status!=='resolved'||request.subject_key!==pc.id||request.data.input.gm_invitation!==row.record_key)throw fail('reaction_terminal_result');
+    }else if(terminal.status!=='withdrawn'||source.kind!=='native_gm_reaction_withdrawal'||source.details.invitation!==row.record_key
+      ||source.details.revision!==hash(row.data))throw fail('reaction_terminal_withdrawal');
+  }
+  return {row,pc,terms:{request:row.record_key,revision:hash(row.data),status:terminal?.status||'pending',trait:p.trait,difficulty:p.difficulty,
     stakes:'Success or failure settles your reaction to the local NPC attempt only. Damage, custody, movement and costs require separate native receipts.',
     reason:'Native source-bound local NPC reaction request; you choose whether and how to respond.',
     authority:'Pending only. Choose your response; no roll, damage or spending is inferred.'}};
+}
+export function withdrawGmReactionInvitation(db,guild,user,input,{interactionId,authoredText}={}){
+  if(!interactionId||typeof authoredText!=='string'||hash(JSON.parse(authoredText))!==hash(input)||Object.keys(input).sort().join()!=='op,request,revision'
+    ||input.op!=='gm-reaction-withdraw')throw fail('exact_owner_withdrawal');
+  return db.transaction(()=>{
+    const {row,pc,terms}=inspectGmReactionInvitation(db,guild,user,input.request);
+    if(input.revision!==terms.revision)throw fail('reaction_withdrawal_revision');
+    const key=`gm-reaction-submit:${hash([row.record_key,user])}`,prior=db.getCityRecord(guild,'gm_reaction_submission',key);
+    if(prior){if(prior.status!=='withdrawn')throw fail('committed_reaction_cannot_be_erased');return prior;}
+    const source=indexWorldEvent(db,guild,{key:`${key}:withdrawal`,kind:'native_gm_reaction_withdrawal',source_id:`player:${user}`,title:'Owner withheld a reaction without fictional consequences',
+      session_id:row.data.origin.session,scene:row.data.origin.scene,visibility:'character',subject_key:pc.id,
+      details:{author:user,character_id:pc.id,invitation:row.record_key,revision:terms.revision,interaction:interactionId,authored_text:authoredText}},user);
+    return db.saveCityRecord(guild,{kind:'gm_reaction_submission',key,status:'withdrawn',source_event:source.event_key,visibility:'character',subject_key:pc.id,
+      data:{invitation:row.record_key,owner:user,invitation_hash:terms.revision,interaction:interactionId,authority:'No surrender, failure, dice or reaction is inferred.'}});
+  });
 }
 /** Authenticated command input is preserved verbatim, not attributed to the model or another owner. */
 export function submitGmReactionInvitation(db,guild,user,input,{interactionId,authoredText,rng=d}={}){
@@ -62,7 +126,7 @@ export function submitGmReactionInvitation(db,guild,user,input,{interactionId,au
     const {row,pc,terms}=inspectGmReactionInvitation(db,guild,user,input.request);
     if(input.revision!==terms.revision)throw fail('reaction_invitation_revision');
     const key=`gm-reaction-submit:${hash([row.record_key,user])}`,prior=db.getCityRecord(guild,'gm_reaction_submission',key);
-    if(prior)return db.getCityRecord(guild,'roll_request',prior.data.request);
+    if(prior){if(prior.status!=='resolved')throw fail('reaction_invitation_withdrawn');return db.getCityRecord(guild,'roll_request',prior.data.request);}
     const text=authoredText,messageId=`interaction:${interactionId}`,scope={mode:'private',actorUserId:user,actorCharacterId:pc.id};
     captureWorldInput(db,guild,user,pc.id,messageId,text,{privateScene:true});
     const [accepted]=persistPlayerIntents(db,guild,[{type:'roll',source_span:text,target_name:'',target_key:'',destination:'unspecified',operation:'request_roll',utterance:'',

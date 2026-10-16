@@ -43,6 +43,7 @@ export function adjudicateSceneBoard(db,guild,origin,board,proposals,{library=ne
     if(prior){if(prior.data.proposal_hash!==hash(p)||prior.data.entry_hash!==hash(entry))throw fail('immutable_decision_changed');return prior;}
     let status='needs_rules_review',native=null,reason='No supported native effect adapter; no outcome or permission granted.';
     const rules=resolveRuleReferences(db,guild,'RAW',p.rule_basis_refs);
+    try{
     if(!rules||!p.reason.trim()||p.advantage&&p.disadvantage)reason='Missing current rule, explanation, or incompatible dice choice.';
     else if(['blocked','needs_consent','needs_rules_review'].includes(p.disposition)){status=p.disposition;reason=p.reason;}
     else if(entry.actor.type==='character'){
@@ -78,7 +79,7 @@ export function adjudicateSceneBoard(db,guild,origin,board,proposals,{library=ne
       const pc=db.getCharacter(entry.target_refs[0]);
       // Actual local PC, not a model's name/target label. No successful NPC effect is established.
       const ctx=buildReactionTarget(db,guild,o,pc);
-      status='pending_pc_reaction';native={operation:'request_pc_reaction_roll',character:pc.id,owner:pc.owner_user_id,principal:ctx};
+      status='pending_pc_reaction';native={operation:'request_pc_reaction_roll',character:pc.id,owner:pc.owner_user_id,principal:ctx,opportunity:nativeGmOpportunity(db,guild,board)};
       reason='Owner-private reaction invitation; no PC action, dice or negative effect is executed.';
     }else if(p.disposition==='gm_exceptional_action_roll'&&entry.operation==='exceptional_action'&&p.rule_basis_refs.includes('srd:exceptional-adversary-actions')
       &&p.stakes_kind==='attempt_only'&&entry.objective_ref&&entry.target_refs.every(ref=>!db.getCharacter(ref))&&p.difficulty!==null&&p.trait===null&&p.stakes.trim()&&p.difficulty_reason.trim()&&!p.feature_ref){
@@ -88,6 +89,10 @@ export function adjudicateSceneBoard(db,guild,origin,board,proposals,{library=ne
       if(!template||c.status!=='active'||p.experience_ref&&!experience)throw fail('exceptional_native_statblock_or_experience');
       status='gm_action_ready';native={operation:'commit_exceptional_adversary_action',opportunity,combatant,template_hash:hash(template),experience:experience||null};
       reason='GM-owned exceptional independent NPC task only; no PC effect, default contested roll or routine behavior roll.';
+    }
+    }catch(error){
+      if(!['GM_ARBITRATION','PC_EFFECT_AUTHORITY'].includes(error.code))throw error;
+      status='needs_rules_review';native=null;reason=error.message;
     }
     const data={version:1,board:board.record_key,entry:entry.intent_ref,entry_hash:hash(entry),proposal:p,proposal_hash:hash(p),
       origin:o.binding,scope:o.scope,rules:rules||[],reason,native,authority:'GM ruling only; controller executes; native receipts own outcomes.'};

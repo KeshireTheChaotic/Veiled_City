@@ -6,6 +6,11 @@ import {narrativeSourceVisible,sceneFictionHash as hash,sceneFictionFailure} fro
 const sourceBinding=Symbol('native-director-narrative-source');
 export const nativeDirectorNarrativeSource=result=>result?.[sourceBinding]?.ref||null;
 export const nativeDirectorNarrativeContent=result=>result?.[sourceBinding]?.content||null;
+/** Transfer only a server-minted in-process Director scope, never a JSON reference from the provider. */
+export function inheritDirectorNarrativeSource(result,nativeShell){
+  if(!nativeShell?.[sourceBinding])throw sceneFictionFailure('native_director_origin_required');
+  result[sourceBinding]=nativeShell[sourceBinding];return result;
+}
 function dramaticBrief(db,guild,result,scope,trigger){
   const scene=currentScene(db,guild),refs=[trigger.source_event,trigger.event_key,...(Array.isArray(trigger.event_refs)?trigger.event_refs:[]),
     ...db.listWorldEvents(guild,{includeGM:true,limit:100}).map(e=>e.event_key)],events=[];

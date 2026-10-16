@@ -42,7 +42,8 @@ function sharedSceneInputs(db,guild,o){
   return db.listCityRecords(guild,{kind:'typed_intent',includeGM:true,limit:100}).filter(row=>{
     const p=scenePresence(db,guild,'character',row.data.actor);
     return row.status==='accepted_for_adjudication'&&['party','public'].includes(row.visibility)&&row.data.scene===o.binding.scene
-      &&row.data.session_id===o.binding.session&&p?.data.state==='actually_present'&&p.location_key===o.binding.location;
+      &&row.data.session_id===o.binding.session&&p?.data.state==='actually_present'&&p.location_key===o.binding.location
+      &&narrativeSourceVisible(db,guild,p.source_event,o.scope);
   }).slice(0,12);
 }
 export function currentScenePlayerInputs(db,guild,origin,rows){
@@ -72,10 +73,15 @@ export function buildSceneIntentBoard(db,guild,origin,playerRows=[],npcProposals
     if(new Set(p.target_refs).size!==p.target_refs.length||p.target_refs.some(key=>!db.getCharacter(key)&&!db.getNpcProfile(guild,key)
       &&!db.getSimulationEntity(guild,'location',key)))throw fail('npc_native_target');
     const ref=actor.intents[p.operation];if(seen.has(ref))throw fail('duplicate_npc_intent');seen.add(ref);
-    entries.push({intent_ref:ref,proposal_ref:ref,actor:{type:'npc',key:p.actor_key,controller:'ai_gm'},source_ref:o.binding.source,
-      source_hash:o.binding.source_hash,scene_ref:o.binding.scene,session:o.binding.session,operation:p.operation,
-      target_refs:[...p.target_refs],dependencies:[...p.dependencies],snapshot:actor.snapshot,visibility:o.scope.mode==='private'?'character':'party',
-      subject:o.scope.mode==='private'?o.scope.actorCharacterId:null,objective_ref:p.objective_ref,knowledge_refs:[...p.source_refs]});
+    const entry={intent_ref:ref,proposal_ref:ref,actor:{type:'npc',key:p.actor_key,controller:'ai_gm'},
+      scene_ref:o.binding.scene,session:o.binding.session,operation:p.operation,
+      target_refs:[...p.target_refs],dependencies:p.dependencies.map(ref=>entries.find(e=>e.proposal_ref===ref)?.intent_ref||ref),snapshot:actor.snapshot,visibility:o.scope.mode==='private'?'character':'party',
+      subject:o.scope.mode==='private'?o.scope.actorCharacterId:null,objective_ref:p.objective_ref,knowledge_refs:[...p.source_refs]};
+    const details={input_source:o.binding.source,proposal:p,entry_hash:hash(entry),authority:'GM-owned proposal, never a player declaration or established NPC success.'};
+    const source=indexWorldEvent(db,guild,{key:`${ref}:source`,kind:'native_npc_scene_intent',source_id:'native:unified-gm',title:'Native GM-owned NPC intent proposal',
+      session_id:o.binding.session,scene:o.binding.scene,location_key:o.binding.location,visibility:'gm',details},'native:unified-gm');
+    if(source.status!=='active'||hash(source.details)!==hash(details))throw fail('immutable_npc_proposal_changed');
+    entries.push({...entry,source_ref:source.event_key,source_hash:hash(source.details)});
   }
   for(const e of entries)if(e.dependencies.some(ref=>!entries.some(other=>other.intent_ref===ref)))throw fail('unverified_dependency');
   const data={version:1,origin:o.binding,entries},key=`intent-board:${hash([o.binding.source,o.scope])}`,prior=db.getCityRecord(guild,'scene_intent_board',key);
