@@ -81,7 +81,7 @@ try{
   assert.equal(ai.requests.length,1);assert.equal(output.classification,"GM_RULING");
   assert(output.sources.includes("GM_RULING: help-hope"));assert(output.sources.includes(source));
   assert(!output.sources.some(value=>value.includes("evil.example")));
-  assert.match(ai.requests[0].input,/saved human GM rulings > supplied official online/);
+  assert.match(ai.requests[0].input,/saved scoped GM ruling > verified explicit campaign override > verified Daggerheart SRD/);
   assert.match(ai.requests[0].input,/Fixture human ruling takes precedence/);
   assert.doesNotMatch(JSON.stringify(requests),/DO_NOT_SEND_TO_SITE/);
   gm.srd=new OnlineSrd({fetcher:async()=>{throw new Error("Fixture outage");}});

@@ -327,9 +327,12 @@ bot/src/native-feature-catalog.js
 bot/src/native-feature-damage.js
 bot/src/native-feature-definitions.json
 bot/src/native-feature-effects.js
+bot/src/native-feature-hit.js
 bot/src/native-feature-passives.js
 bot/src/native-feature-windows.js
 bot/src/native-hook-output.js
+bot/src/native-house-errata.js
+bot/src/native-house-errata.json
 bot/src/native-notice.js
 bot/src/native-outcome-output.js
 bot/src/native-publications.js

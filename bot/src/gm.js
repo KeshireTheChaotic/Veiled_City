@@ -682,7 +682,7 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
       "SAVED GM RULINGS have precedence over model memory for campaign-specific interpretations unless the human GM changes them.",
       "For npc_update/location_update: key is the entity's display name and value is a concise PLAYER-SAFE reference summary. Only emit these when the entity or updated fact has actually been learned.",
       "For thread events: status must be active/resolved/failed/dormant; note holds concise player-safe case-board notes.",
-      "Do not mark a character dead; death/retirement is a human-controlled lifecycle action.",
+      "Never mark a character dead through model narration/state events or choose their death move. A verified final-HP receipt opens an affected-owner-only native death choice; the native service commits actual dead/journey_ended status where supported. Unsupported exceptions, administrative reversal and historical correction retain their exact review controls; retirement remains separately owner/admin authorized.",
       "Respect SESSION assembly_phase. 'assembly' means unrelated PCs may only share an incident and must not be treated as friends/allies by assumption. 'converged' means their immediate objectives overlap but long-term cooperation is still voluntary. 'party' means the current PCs may be treated as an established working group unless fiction says otherwise.",
       "The saved assembly plan is GM-private planning. Never reveal another character's private_hook or hidden reason unless that player shares it or the fiction independently reveals it.",
       "During assembly/convergence, offer reasons to cooperate but never decide that a PC trusts, joins, follows, confesses to, or remains with the group.",

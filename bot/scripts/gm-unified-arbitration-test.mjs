@@ -49,10 +49,10 @@ import {indexWorldEvent} from '../src/city-calendar.js';
 import {currentScene,recordScenePresence,scenePresence} from '../src/scene-continuity.js';
 import {projectNativeGmProposal} from '../src/gm-mechanical-v9.js';
 function npc(f,key='attendant',location='terminal'){f.db.upsertNpcProfile(f.guild,{npcKey:key,displayName:'Inez',role:'attendant',publicIdentity:'A local attendant.'});f.db.setSimulationEntity(f.guild,'npc',key,{name:'Inez',location_key:location,visibility:'party'});}
-function incoming(f,{privateScene=true,text,template='Aster Vale Contractor',stress=0,allies=0}={}){
+function incoming(f,{privateScene=true,text,template='Aster Vale Contractor',stress=0,allies=0,hpMarked=null}={}){
   const x=setup(f,{privateScene,text}),library=new EncounterLibrary('../content'),scene=currentScene(f.db,f.guild);npc(f,'guard');
   f.db.setCityCalendar(f.guild,{flags:{...f.db.getCityCalendar(f.guild).flags,narrative_encounters:true}});
-  f.db.updateCharacterData(x.pc.id,d=>{d.evasion=12;d.thresholds={major:7,severe:14};});
+  f.db.updateCharacterData(x.pc.id,d=>{d.evasion=12;d.thresholds={major:7,severe:14};if(hpMarked!==null)d.resources.hp.current=hpMarked;});
   const source=indexWorldEvent(f.db,f.guild,{key:'af-guard-source',kind:'observation',source_id:'gm',title:'Native guard encounter',session_id:f.session.id,scene:scene.key,location_key:'terminal',visibility:'party'},'gm');
   recordScenePresence(f.db,f.guild,{entity_type:'npc',entity_key:'guard',source_event:source.event_key,location_key:'terminal',zone:'interior',range:'Close',visibility:'party',accepted_by:'gm'},'gm');
   const encounter=f.db.createEncounter(f.guild,f.session.id,{status:'active',tier:1,pc_count:4,base_bp:14,budget_bp:14,composition:[{name:template,quantity:1+allies}]}),combatants=f.db.initializeCombatants(encounter.id,buildCombatants(encounter,library)),c=combatants[0];
@@ -104,8 +104,116 @@ function strikeAdversary(f,x,serial,{damage=100,critical=false}={}){
   const input={op:'damage',key:`damage-${serial}`,request:request.record_key,expected_revision:rollRevision(rolled)};
   const resolved=contributeRoll(f.db,f.guild,x.pc.owner_user_id,input,{rng:()=>damage});return {target,request:resolved,input};
 }
+function packFearAttack(f,{looking=false,hopeFailure=false,hp=4,miss=false,armor=false,pcStress=2,signalTouched=false,beforeDice=()=>{},beforeDamage=()=>{}}={}){
+  const x=incoming(f,{privateScene:false,template:'Wraith Pack',text:looking?'Describe the scene.':'I inspect the counter.'});
+  f.db.setCityCalendar(f.guild,{flags:{...f.db.getCityCalendar(f.guild).flags,gm_discretion:true,roll_requests:true,roll_collaboration:true}});
+  f.db.updateCombatant(f.db.getCurrentEncounter(f.session.id)&&x.row.data.offer.input.combatant,{hp_current:hp});
+  f.db.updateCharacterData(x.pc.id,d=>{d.resources.stress.current=pcStress;if(signalTouched)d.domain_cards=[{name:'Signal-Touched',domain:'Signal',active:true}];});
+  const rows=persistPlayerIntents(f.db,f.guild,[{...candidate(x.text).player_intents[0],type:looking?'other':'search',operation:looking?'describe_scene':'inspect'}],x.scope,{messageId:x.messageId});
+  let request=null;
+  if(!looking){
+    const a=adjudicateAcceptedIntent(f.db,f.guild,{acceptedIntent:rows[0].record_key,mode:'roll_required',trait:'Knowledge',kind:'action',difficulty:14,
+      risk:'The inspection may fail.',stakes:'Attempt only; native source.',rawRefs:['srd:action-rolls'],explanation:'An actual owner-controlled action.'},'native:unified-gm',{scope:x.scope});
+    request=f.db.getCityRecord(f.guild,'roll_request',a.roll_request_ref);let faces=0;
+    request=contributeRoll(f.db,f.guild,x.pc.owner_user_id,{op:'roll',key:'hr-pack-opportunity',request:request.record_key,expected_revision:rollRevision(request)},
+      {rng:()=>hopeFailure?[2,1][faces++]:[8,12][faces++]});
+  }
+  const origin=createArbitrationOrigin(f.db,f.guild,x.scope,x.sourceRef),board=buildSceneIntentBoard(f.db,f.guild,origin,
+    rows.map(r=>f.db.getCityRecord(f.guild,'typed_intent',r.record_key)),[{actor_key:'guard',operation:'attack',target_refs:[x.pc.id],objective_ref:'',source_refs:[],dependencies:[]}]),
+    [r]=adjudicateSceneBoard(f.db,f.guild,origin,board,[{...decision(board.data.entries[1].intent_ref,'gm_attack_roll'),feature_ref:'standard_attack',
+      rule_basis_refs:['srd:adversary-attacks'],stakes:'The Pack attempts its native standard attack.'}],{library:x.library});
+  assert.equal(r.status,'gm_action_ready',r.data.reason);
+  const [attack]=executeUnifiedGmActions(f.db,f.guild,[r],{library:x.library});
+  reviewIncomingAttack(f.db,f.guild,x.pc.owner_user_id,attack.record_key,{library:x.library});confirmIncomingDefense(f.db,f.guild,x.pc.owner_user_id,attack.record_key);
+  beforeDice({x,attack,decision:r,request});
+  let dice=0;const roll=rollArbitratedIncomingAttack(f.db,f.guild,attack.record_key,{library:x.library,rng:s=>{dice++;return s===20?(miss?1:15):1;}});
+  beforeDamage({x,attack,decision:r,request,roll});const
+    effect=miss?null:resolveIncomingDamage(f.db,f.guild,x.pc.owner_user_id,attack.record_key,{armor,library:x.library});
+  return {...x,request,decision:r,attack,roll,effect,dice};
+}
 
 const cases=[
+ ['HR01','a','Many Deaths marks exactly one additional Stress from actual causal PC Fear and native hit',f=>{
+   const x=packFearAttack(f),pc=f.db.getCharacter(x.pc.id);
+   assert.equal(x.request.data.result.duality,'Fear');assert.equal(x.roll.data.hit,true);assert.equal(pc.data.resources.stress.current,3);
+   assert.equal(f.db.getCampaign(f.guild).fear,1);assert.equal(pc.data.resources.hope,2);assert.equal(x.roll.data.gm_d20.family,'gm_d20');
+   f.restart();resolveIncomingDamage(f.db,f.guild,x.pc.owner_user_id,x.attack.record_key,{armor:false,library:x.library});
+   assert.equal(f.db.getCharacter(pc.id).data.resources.stress.current,3);
+   assert.equal(f.db.listCityRecords(f.guild,{kind:'gm_feature_effect_receipt',includeGM:true}).filter(r=>r.data.feature==='adversary:wraith-pack:many-deaths').length,1);
+ }],
+ ...[{looking:true},{hopeFailure:true},{hp:3},{miss:true}].map((options,i)=>['HR01',`b${i}`,'Many Deaths does not invent a d20 Fear trigger '+JSON.stringify(options),f=>{
+   const x=packFearAttack(f,options);assert.equal(f.db.getCharacter(x.pc.id).data.resources.stress.current,2);
+   assert.equal(f.db.listCityRecords(f.guild,{kind:'gm_feature_effect_receipt',includeGM:true}).filter(r=>r.data.feature==='adversary:wraith-pack:many-deaths').length,0);
+   if(options.miss)assert.equal(x.roll.data.damage,null);
+ }]),
+ ['HR02','a','resolver and application policy honor explicit override precedence without authorizing effects',async f=>{
+   const {selectRuleBasis}=await import('../src/rules-arbitration.js'),{AUTHORITY_POLICY}=await import('../src/authority-policy.js');
+   f.db.upsertRulesRuling(f.guild,{key:'hr-scoped',question:'Scoped native fixture ruling',ruling:'Current scoped ruling.',createdBy:'gm'});
+   f.db.upsertRulesRuling(f.guild,{key:'hr-override',question:'Explicit override fixture',ruling:'Exact override.',createdBy:'gm'});
+   const input={savedRulingKey:'hr-scoped',overrideRefs:['override:hr-override'],rawRefs:['srd:action-rolls'],houseRefs:['house:missing']};
+   assert.equal(selectRuleBasis(f.db,f.guild,input).kind,'saved_ruling');
+   assert.equal(selectRuleBasis(f.db,f.guild,{...input,savedRulingKey:''}).kind,'campaign_override');
+   assert.equal(selectRuleBasis(f.db,f.guild,{...input,savedRulingKey:'',overrideRefs:[]}).kind,'RAW');
+   assert.equal(selectRuleBasis(f.db,f.guild,{...input,savedRulingKey:'',overrideRefs:['override:missing']}).kind,'provisional');
+   assert.match(AUTHORITY_POLICY,/saved scoped GM ruling > verified explicit campaign override > verified Daggerheart SRD/);
+   assert.match(AUTHORITY_POLICY,/consent.*ownership.*source.*receipt/i);
+   assert.equal(f.db.listCityRecords(f.guild,{kind:'roll_request',includeGM:true}).length,0);
+ }],
+ ['HR01','c','Armor does not erase a genuine on-hit Fear erratum and cannot replay the extra Stress',async f=>{
+   const x=packFearAttack(f,{armor:true}),{inspectManyDeathsEffect}=await import('../src/native-feature-hit.js'),receipt=f.db.listCityRecords(f.guild,{kind:'gm_feature_effect_receipt',includeGM:true})[0];
+   assert.equal(f.db.getCharacter(x.pc.id).data.resources.stress.current,3);assert.equal(x.effect.data.hp_marks,0);
+   assert.equal(inspectManyDeathsEffect(f.db,f.guild,receipt.record_key).record_key,receipt.record_key);
+   f.restart();assert.equal(inspectManyDeathsEffect(f.db,f.guild,receipt.record_key).record_key,receipt.record_key);
+   assert.throws(()=>resolveIncomingDamage(f.db,f.guild,f.pcs[1].owner_user_id,x.attack.record_key,{armor:true,library:x.library}));
+ }],
+ ['HR01','d','revoked causal roll proof holds only extra Stress after a saved valid standard hit',f=>{
+   const x=packFearAttack(f,{beforeDamage:({request})=>indexWorldEvent(f.db,f.guild,{key:request.data.input.difficulty_source,status:'retracted'},'gm')});
+   assert.equal(x.roll.data.hit,true);assert(x.effect.data.hp_marks>0);assert.equal(f.db.getCharacter(x.pc.id).data.resources.stress.current,2);
+   assert.equal(f.db.getCityRecord(f.guild,'pc_incoming_attack',x.attack.record_key).status,'resolved');
+   assert.equal(f.db.listCityRecords(f.guild,{kind:'gm_feature_effect_review',includeGM:true})[0].status,'needs_rules_review');
+ }],
+ ['HR01','e','revoked or altered extra-effect proof cannot reverse committed damage or Stress',async f=>{
+   const x=packFearAttack(f),{inspectManyDeathsEffect}=await import('../src/native-feature-hit.js'),receipt=f.db.listCityRecords(f.guild,{kind:'gm_feature_effect_receipt',includeGM:true})[0],
+     before=structuredClone(f.db.getCharacter(x.pc.id).data.resources);
+   indexWorldEvent(f.db,f.guild,{key:receipt.source_event,status:'retracted'},'gm');
+   assert.throws(()=>inspectManyDeathsEffect(f.db,f.guild,receipt.record_key));f.restart();
+   assert.deepEqual(f.db.getCharacter(x.pc.id).data.resources,before);
+ }],
+ ...[{pcStress:6},{signalTouched:true}].map((options,i)=>['HR01',`f${i}`,'unsupported extra Stress prerequisite preserves standard damage '+JSON.stringify(options),f=>{
+   const x=packFearAttack(f,options),review=f.db.listCityRecords(f.guild,{kind:'gm_feature_effect_review',includeGM:true})[0];
+   assert.equal(x.roll.data.hit,true);assert(x.effect.data.hp_marks>0);
+   assert.equal(f.db.getCharacter(x.pc.id).data.resources.stress.current,options.pcStress||2);assert.equal(f.db.getCampaign(f.guild).fear,1);
+   assert.equal(review.status,'needs_rules_review');assert.equal(review.visibility,'gm');
+   assert.match(review.data.reason,options.signalTouched?/owner_preconsequence_choice/:/stress_overflow/);
+   assert.equal(f.db.listCityRecords(f.guild,{kind:'gm_feature_effect_receipt',includeGM:true}).length,0);
+ }]),
+ ['HR12','a','death protocol wording matches native affected-owner selection and automatic terminal status',()=>{
+   const rules=fs.readFileSync('../content/ENGINE/MULTIPLAYER_GM_RULES.md','utf8'),source=fs.readFileSync('src/gm.js','utf8');
+   assert(!rules.includes('A human resolves the death move'));assert(!source.includes('death/retirement is a human-controlled lifecycle action'));
+   assert(rules.includes('affected player selects'));assert(source.includes('affected-owner-only native death choice'));
+ }],
+ ['HR11','a','native HP representation handles odd maxima final marks and DB clamping without confusing PC marks',async f=>{
+   const {adversaryHpState,wouldMarkLastAdversaryHp}=await import('../src/combat.js'),x=incoming(f),encounter=f.db.getCurrentEncounter(f.session.id),c=f.db.listCombatants(encounter.id)[0];
+   const zero=f.db.updateCombatant(c.id,{hp_current:-9}),full=f.db.updateCombatant(c.id,{hp_current:c.hp_max+9});
+   assert.equal(adversaryHpState(zero).remaining,0);assert.equal(adversaryHpState(full).marked,0);
+   assert.equal(adversaryHpState({hp_current:3,hp_max:5}).marked_half_or_more,false);
+   assert.equal(adversaryHpState({hp_current:2,hp_max:5}).marked_half_or_more,true);
+   assert.equal(wouldMarkLastAdversaryHp({...c,hp_current:2},1),false);assert.equal(wouldMarkLastAdversaryHp({...c,hp_current:2},2),true);
+   assert.equal(wouldMarkLastAdversaryHp(zero,3),false);assert.throws(()=>adversaryHpState(f.db.getCharacter(x.pc.id).data.resources.hp));
+   assert.throws(()=>adversaryHpState({hp_current:6,hp_max:5}));assert.equal(f.db.getCharacter(x.pc.id).data.resources.hp.current,0);
+ }],
+ ['HR','registry','house errata is explicit immutable source-pinned and never a generic feature executor',async()=>{
+   const {compileNativeHouseErrata,nativeHouseErratum}=await import('../src/native-house-errata.js'),rows=compileNativeHouseErrata();
+   assert.equal(rows.length,10);assert(Object.isFrozen(rows));
+   for(const row of rows){assert(Object.isFrozen(row));assert.equal(row.version,1);assert(row.sources.every(s=>/^[a-f0-9]{64}$/.test(s.source_hash)));
+     if(row.id!=='HR01'){assert.equal(row.status,'review_only');assert.equal(row.native_handler,null);}}
+   assert.equal(nativeHouseErratum({id:'HR01',native_handler:'eval'}),null);assert.equal(nativeHouseErratum('model:HR01'),null);
+   assert.equal(nativeHouseErratum('HR01',2),null);assert.equal(nativeHouseErratum('HR01','1'),null);
+   assert.equal(nativeHouseErratum('HR03').interpretation.maximum_aura_bonus,1);
+   assert.equal(nativeHouseErratum('HR05').interpretation.normal_fear_gain,'unchanged');
+   assert.equal(nativeHouseErratum('HR08').interpretation.executor,'same_pc_owner');
+   assert.equal(nativeHouseErratum('HR09').interpretation.generic_machine_d20,false);
+ }],
  ['F7','22','fully marked HP does not erase expressive scene narration or permit a character action',async f=>{
    const x=setup(f,{text:'Describe the scene to me'});f.db.setCityCalendar(f.guild,{flags:{...f.db.getCityCalendar(f.guild).flags,gm_discretion:true}});
    f.db.updateCharacterData(x.pc.id,d=>{d.resources.hp.current=d.resources.hp.max;});const r=candidate(x.text);
@@ -633,7 +741,7 @@ cases.push(
    assert.equal(new Set(rows.filter(r=>r.actor_kind==='environment').map(r=>r.actor_name)).size,16);
    for(const r of rows){assert.match(r.source_hash,/^[a-f0-9]{64}$/);assert.match(r.template_hash,/^[a-f0-9]{64}$/);
      assert(Object.isFrozen(r));assert.equal(featureDisposition(r.feature_key).status,r.native_handler?'supported':'needs_rules_review');}
-   assert.deepEqual(rows.filter(r=>r.native_handler).map(r=>r.feature_key),['adversary:pale-court-thrall:pack-pressure','adversary:static-wraith:feedback','adversary:pale-court-knight:blood-rush','adversary:aster-vale-catastrophe-analyst:contingency-stack']);
+   assert.deepEqual(rows.filter(r=>r.native_handler).map(r=>r.feature_key),['adversary:pale-court-thrall:pack-pressure','adversary:static-wraith:feedback','adversary:pale-court-knight:blood-rush','adversary:wraith-pack:many-deaths','adversary:aster-vale-catastrophe-analyst:contingency-stack']);
  }],
  ['UA6','02','typed representative descriptors distinguish action reaction passive and defense',async()=>{
    const {compileNativeFeatures}=await import('../src/native-feature-catalog.js'),rows=compileNativeFeatures(),get=(actor,name)=>rows.find(r=>r.actor_name===actor&&r.name===name);

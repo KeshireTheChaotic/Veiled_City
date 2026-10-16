@@ -88,7 +88,7 @@ The bot supports:
 Even in active mode, silence is a valid GM behavior.
 
 ## 9. Death
-Use normal Daggerheart death resolution. The AI cannot mark a PC dead through a state event. A human resolves the death move and then uses the character lifecycle command. This prevents model narration from bypassing player-facing death mechanics.
+Use normal Daggerheart death resolution through the native service. A verified final-HP receipt creates an owner-private choice: the affected player selects Risk It All, Avoid Death, or Blaze of Glory and controls any permitted recovery allocation or final-action proposal. The AI cannot select that choice or mark a PC dead through narration/state events. Native committed `dead` or `journey_ended` outcomes automatically update character status where supported; no routine human lifecycle command is required. Unsupported death-card exceptions, exact final-action eligibility still lacking a native adapter, administrative reversal/retcon and historical correction remain explicitly controlled. Never rewrite old death receipts or assume a death move from silence.
 
 ## 10. Accessibility
 Honor each user's stored response-length, mechanics-detail, and screen-reader preferences when addressing that player privately. Public narration should be concise enough for mobile Discord by default.

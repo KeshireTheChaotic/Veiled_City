@@ -850,13 +850,13 @@
       "template_hash": "f93fa4b254539a239efc9eca86c4b05225112e540f17580d7712d42cbc63011b",
       "index": 0,
       "type": "Passive",
-      "status": "review_only",
-      "trigger_kind": "unmapped",
-      "target_policy": "unmapped",
-      "roll_protocol": "unmapped",
-      "costs": null,
-      "native_handler": null,
-      "reason": "No qualified native feature handler."
+      "status": "supported",
+      "trigger_kind": "after_hit",
+      "target_policy": "one",
+      "roll_protocol": "none",
+      "costs": [],
+      "native_handler": "many_deaths_fear_opportunity",
+      "reason": "Explicit HR01 v1 only: actual causal PC Fear opportunity, Pack at 4+ remaining HP, native standard hit; extra Stress capacity and suppression prerequisites remain guarded."
     },
     {
       "feature_key": "adversary:wraith-pack:replay-the-moment",

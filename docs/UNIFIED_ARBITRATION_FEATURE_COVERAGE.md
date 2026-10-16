@@ -6,7 +6,7 @@ Accepted typed intents are canonical adjudication inputs; human declarations own
 
 ## Inventory and execution status
 
-41 adversaries / 104 occurrences (39 Passive, 35 Action, 29 Reaction, 1 untyped); 16 environments / 48 occurrences (17 Passive, 27 Action, 4 Reaction). **152 total: 4 supported bounded routes, 147 review_only, 1 needs_authoring, 0 not_mechanical.** UA6 initially had zero handlers. These counts concern textual special features only. Existing standard attacks, exceptional actions, no-roll fiction and owner reaction invitations remain separate. UA8 is PARTIAL, not a completed advanced release.
+41 adversaries / 104 occurrences (39 Passive, 35 Action, 29 Reaction, 1 untyped); 16 environments / 48 occurrences (17 Passive, 27 Action, 4 Reaction). **152 total: 5 supported bounded routes, 146 review_only, 1 needs_authoring, 0 not_mechanical.** UA6 initially had zero handlers. These counts concern textual special features only. Existing standard attacks, exceptional actions, no-roll fiction and owner reaction invitations remain separate. UA8 is PARTIAL, not a completed advanced release.
 
 Code-owned `bot/src/native-feature-definitions.json` pins each exact feature string and entire actor template using SHA-256 over JSON serialization (including stats). `native-feature-catalog.js` checks hashes, completeness and unique keys against actual content before returning immutable descriptors. Original content prose is untouched. Source order/index is part of the crosswalk; a content edit requires explicit requalification, not silent regeneration. A model cannot supply descriptors or a handler.
 
@@ -27,6 +27,27 @@ The owner explicitly classifies these eight templates as Signal-based: **Static 
 `native-feature-definitions.json:actor_taxonomy` stores the exact eight immutable UA6 full-template hashes. `compileNativeActors()` validates every original actor/feature against the existing pinned sources, then derives frozen actor metadata; `nativeActorTaxonomy()` selects only an exact template fingerprint, never keywords, equipment, similarity, a model role or a supplied `signal_based` field. Existing feature descriptors/hashes and original compendium JSON are unchanged. Unlisted actors return `signal_based:false` for **eligibility only**, not a new fiction claim that their nature can never be Signal. In particular, Wraith Pack remains unclassified. The six explicit technological/suppression exclusions (Aster Vale Forecast Engine, Aster Vale Catastrophe Analyst, Aster Vale Occult Analyst, Ritual Enforcement Team, Blacksite Null Team, Civic Null Operative) receive no Signal eligibility from their equipment or portrayal.
 
 `nativeSignalFeatureTarget()` is the shared necessary-only taxonomy gate for both Local Mesh and Route Around; it does not issue a native effect capability or promote either review-only feature to implemented. Live alliance, separate active combatants, current scene/range, actual before-final-HP damage, two available Relay Stress, established powered destination, lawful movement/occupancy and particular represented-node/local-manifestation evidence remain independent requirements. A distributed intelligence's taxonomy does not authorize moving its entire network into a device. Missing proof must hold the particular reaction, preserve saved attack/damage and allow independently authorized effects. With complete native evidence, supported GM-owned activation must not require fabricated human approval. Full end-to-end Local Mesh/Route Around acceptance remains outstanding.
+
+## Versioned house-rule errata
+
+`native-house-errata.json` records the explicit owner addendum, with immutable original UA6 feature/template hashes (and exact normalized Signal card section hashes). These are new interpretations, not a claim that original prose already resolved the conflicts. Only a code-allowlisted versioned handler is executable; an erratum by itself grants no effect.
+
+HR01 `many_deaths_fear_opportunity` is bounded native support: an AI-owned Wraith Pack with at least four **remaining** HP, an actual related terminal PC action Fear opportunity, and a real standard attack hit. After affected-owner defense/Armor and native damage commit, it marks exactly one additional PC Stress with separate private mutation/source/effect ancestry. No Fear from GM d20; no repeat after restart. Missing/revoked causal proof, Stress overflow, or an active Signal-Touched owner option holds this extra effect privately without discarding valid base damage. No alternative HP overflow or suppression choice is invented. Historical offers without this proof keep their original shape; this is not a universal human-GM feature adapter.
+
+| Addendum | Native status in this subfamily |
+| --- | --- |
+| HR01 Many Deaths | Bounded handler above; overflow and Signal-Touched choice held |
+| HR02 precedence | Shared policy v2 aligned with existing native saved > explicit override > RAW > compatible house resolver; absolute source/consent restrictions retained |
+| HR03 Local Mesh | Interpretation pinned; live allied defense aura not yet implemented |
+| HR04 Invitation Revoked | Interpretation pinned; prior hospitality communication/violation proof adapter missing |
+| HR05 Signal-Touched | Interpretation pinned; owner preconsequence suppression choice not yet implemented; ordinary Fear remains intact |
+| HR06 Flashbang / HR07 Command the Blood | Interpretations pinned; owner choice workflows not yet implemented |
+| HR08 Spend Forecast | Interpretation pinned; owner one-d12 prefinalization reroll not yet implemented |
+| HR09 Blackout / HR10 Three Vectors | Interpretations pinned; specialized native adapters not yet implemented |
+| HR11 HP representations | Read-only remaining/marked and last-HP predicates tested; Horde/Bad Future and paid final-HP interception not yet implemented |
+| HR12 death | Legacy wording corrected to existing owner-selected native death service and automatic actual terminal status; original native death regressions retained |
+
+The ten mechanical registry entries (HR01, HR03–HR11) are not ten implemented routes. HR02 policy and HR12 existing native behavior are documented separately. This is not UA8–UA11 completion, final full qualification, or production authorization evidence.
 
 ## Per-occurrence source crosswalk
 
@@ -78,7 +99,7 @@ All rows are GM-owned content, not public disclosure grants. Source paths and ex
 | `adversary:aster-vale-forecast-engine:expected-value` | Passive | review_only | unmapped | `a86ec6fb836e2f51` |
 | `adversary:aster-vale-forecast-engine:spend-forecast` | Reaction | review_only | unmapped | `d287ea494175f8e9` |
 | `adversary:aster-vale-forecast-engine:model-collapse` | Reaction | review_only | unmapped | `2343f552f8107da6` |
-| `adversary:wraith-pack:many-deaths` | Passive | review_only | unmapped | `a294330cfbf15903` |
+| `adversary:wraith-pack:many-deaths` | Passive | supported (bounded HR01) | many_deaths_fear_opportunity | `a294330cfbf15903` |
 | `adversary:wraith-pack:replay-the-moment` | Action | review_only | unmapped | `94387394b0d7bf5b` |
 | `adversary:pale-court-elder:ownership-has-weight` | Passive | review_only | unmapped | `54789d2e2c673e8d` |
 | `adversary:pale-court-elder:call-the-household` | Action | review_only | unmapped | `210894b4a748eae4` |

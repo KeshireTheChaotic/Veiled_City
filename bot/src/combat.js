@@ -1,4 +1,15 @@
 /** Deterministic combat-state helpers. These functions do not narrate or invoke AI. */
+/** Read-only remaining/marked adapter. It is not PC resource math or permission to change HP. */
+export function adversaryHpState(combatant){
+  const {hp_current:remaining,hp_max:max}=combatant||{};
+  if(!Number.isSafeInteger(max)||max<1||!Number.isSafeInteger(remaining)||remaining<0||remaining>max)
+    throw Object.assign(new Error('Verified adversary remaining HP required; PC marked HP is a different representation.'),{code:'COMBAT_HEALTH'});
+  return Object.freeze({remaining,max,marked:max-remaining,marked_half_or_more:max-remaining>=Math.ceil(max/2)});
+}
+export function wouldMarkLastAdversaryHp(combatant,marks){
+  if(!Number.isSafeInteger(marks)||marks<0)throw Object.assign(new Error('Verified nonnegative native HP marks required.'),{code:'COMBAT_HEALTH'});
+  const hp=adversaryHpState(combatant);return hp.remaining>0&&marks>=hp.remaining;
+}
 function parseThresholds(s){
   const m=String(s||"").match(/(\d+)\s*\/\s*(\d+)/); return m?{major:Number(m[1]),severe:Number(m[2])}:{major:null,severe:null};
 }

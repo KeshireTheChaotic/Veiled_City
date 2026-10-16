@@ -10,7 +10,7 @@ const freeze=value=>{if(value&&typeof value==='object'){Object.values(value).for
 freeze(definitions);
 // Populated only when a handler's real native path has passed its phase qualification.
 // planned_handler in the inventory is documentation, never dispatch authority.
-const handlers=Object.freeze({blood_rush_hold_position:true,pack_pressure:true,feedback:true,first_severe_to_major:true});
+const handlers=Object.freeze({blood_rush_hold_position:true,pack_pressure:true,feedback:true,first_severe_to_major:true,many_deaths_fear_opportunity:true});
 
 export function compileNativeFeatures({adversaries=read('../../content/GM_PRIVATE/ADVERSARIES/adversaries.json'),
   environments=read('../../content/GM_PRIVATE/ENVIRONMENTS/environments.json')}={}){
