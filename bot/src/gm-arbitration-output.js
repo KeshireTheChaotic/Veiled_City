@@ -30,6 +30,8 @@ export function nativeGmNotice(db,guild,key,scope,{library=new EncounterLibrary(
     const {terms}=inspectGmReactionInvitation(db,guild,pc.owner_user_id,row.record_key);
     text=terms.status==='withdrawn'?'You withheld this reaction. No roll, surrender or failed response was inferred.':terms.status==='resolved'
       ?'Your reaction has a saved native result. No additional roll or GM move is inferred.'
+      :terms.status==='awaiting_choice'?`Your successful Flashbang reaction is saved. Choose exactly ONE consequence privately; no further dice.\n${['vulnerable','stress'].map(choice=>'/vc-roll window json:'+JSON.stringify({op:'gm-reaction-choice',request:row.record_key,revision:terms.revision,choice})).join('\n')}`
+      :terms.status==='needs_rules_review'?'Your reaction dice are saved. The native consequence needs scoped rules/resource review; no substitute effect or new roll is inferred.'
       :`Pending owner reaction: ${terms.trait}, Difficulty ${terms.difficulty}. ${terms.stakes}\nReview: /vc-roll window json:${JSON.stringify({op:'gm-reaction-review',request:row.record_key})}\nYour response is not assumed; review does not roll.`;
     proof=terms;
   }else if(['commit_adversary_attack','commit_adversary_volley'].includes(n?.operation)){

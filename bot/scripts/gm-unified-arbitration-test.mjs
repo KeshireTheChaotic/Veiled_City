@@ -148,6 +148,31 @@ function packFearAttack(f,{looking=false,hopeFailure=false,hp=4,miss=false,armor
 }
 
 const VOLLEY='adversary:ritual-enforcement-team:coordinated-volley';
+const LANES='adversary:traffic-saint:all-lanes-stop',FLASH='adversary:aster-vale-contractor:flashbang';
+function groupReactionScenario(f,{flash=false,fear=2,expectReady=true,privateScene=false,beforeDecision=()=>{},proposalPatch={},targets=null,throughTurn=false}={}){
+  const x=incoming(f,{privateScene,template:flash?'Aster Vale Contractor':'Traffic Saint',text:'Describe the scene.'});
+  f.db.setCityCalendar(f.guild,{flags:{...f.db.getCityCalendar(f.guild).flags,gm_discretion:true,roll_requests:true,roll_collaboration:true}});
+  f.db.changeFear(f.guild,fear-f.db.getCampaign(f.guild).fear);
+  for(const pc of f.pcs.slice(1,3))recordScenePresence(f.db,f.guild,{entity_type:'character',entity_key:pc.id,source_event:x.row.data.offer.input.source,
+    location_key:'terminal',zone:'interior',range:'Close',visibility:'party',accepted_by:pc.owner_user_id},'fixture-native');
+  beforeDecision(x);
+  const rows=persistPlayerIntents(f.db,f.guild,candidate(x.text).player_intents,x.scope,{messageId:x.messageId}),origin=createArbitrationOrigin(f.db,f.guild,x.scope,x.sourceRef),
+    proposal={actor_key:'guard',operation:'feature',target_refs:(targets?targets.map(i=>f.pcs[i]):f.pcs.slice(0,flash?1:3)).map(p=>p.id),objective_ref:'',source_refs:[],dependencies:[]},
+    board=buildSceneIntentBoard(f.db,f.guild,origin,rows,[proposal]),[r]=adjudicateSceneBoard(f.db,f.guild,origin,board,[{...decision(board.data.entries[1].intent_ref,'native_feature_resolution'),
+      rule_basis_refs:['srd:reaction-rolls'],stakes_kind:'native_feature',feature_ref:flash?FLASH:LANES,trait:'Instinct',difficulty:flash?12:14,stakes:'Exact native feature reaction.',...proposalPatch}],{library:x.library});
+  if(!expectReady)return {...x,decision:r};
+  assert.equal(r.status,'gm_action_ready',r.data.reason);
+  if(throughTurn)return {...x,decision:r,proposal};
+  const [group]=executeUnifiedGmActions(f.db,f.guild,[r],{library:x.library,rng:()=>assert.fail('a feature invitation never rolls')});assert.equal(group.kind,'gm_group_feature_execution');
+  return {...x,decision:r,group,children:group.data.children.map(c=>f.db.getCityRecord(f.guild,'gm_arbitration_decision',c.decision))};
+}
+function groupChild(f,x,index){return x.children.find(c=>c.data.native.character===f.pcs[index].id);}
+function submitGroupReaction(f,x,index,faces=[10,8]){
+  const child=groupChild(f,x,index),user=f.pcs[index].owner_user_id,terms=inspectGmReactionInvitation(f.db,f.guild,user,child.record_key).terms,
+    input={op:'gm-reaction-roll',request:child.record_key,revision:terms.revision};let calls=0;
+  const request=submitGmReactionInvitation(f.db,f.guild,user,input,{interactionId:`group-roll-${index}`,authoredText:JSON.stringify(input),rng:()=>faces[calls++]});
+  return {child,request,input,calls};
+}
 function volleyScenario(f,{evasions=[12,17,24],fear=3,privateScene=false,extraSpotlight=false,throughTurn=false,hpMarked=null,deferred=false}={}){
   const x=incoming(f,{privateScene,template:'Ritual Enforcement Team',text:'Describe the scene.',hpMarked});
   f.db.setCityCalendar(f.guild,{flags:{...f.db.getCityCalendar(f.guild).flags,gm_discretion:true}});
@@ -179,6 +204,167 @@ function volleyScenario(f,{evasions=[12,17,24],fear=3,privateScene=false,extraSp
 }
 function readyVolley(f,x,i=0){const pc=f.pcs[i],a=x.attacks[i];reviewIncomingAttack(f.db,f.guild,pc.owner_user_id,a.record_key,{library:x.library});confirmIncomingDefense(f.db,f.guild,pc.owner_user_id,a.record_key);return a;}
 const cases=[
+ ['UA9','G15','direct native consequence cannot accept a model-selected option or forged source',async f=>{
+   const x=groupReactionScenario(f,{flash:true}),a=submitGroupReaction(f,x,0),{applyGroupReactionOutcome}=await import('../src/native-group-features.js');
+   assert.throws(()=>applyGroupReactionOutcome(f.db,f.guild,a.child,a.request,x.sourceRef,'stress'));
+   assert.throws(()=>applyGroupReactionOutcome(f.db,f.guild,a.child,a.request,null,'vulnerable'));
+   assert.equal(f.db.listCityRecords(f.guild,{kind:'gm_group_feature_effect',includeGM:true}).length,0);
+   assert.equal(f.db.getCharacter(x.pc.id).data.resources.stress.current,2);assert.equal(f.db.getCharacter(x.pc.id).data.conditions?.length||0,0);
+ }],
+ ['UA9','G16','private reaction inbox does not lose an older owned request behind the database page cap',f=>{
+   const x=groupReactionScenario(f),own=groupChild(f,x,0),other=groupChild(f,x,1);
+   for(let i=0;i<120;i++)f.db.saveCityRecord(f.guild,{...other,key:`unrelated-pending-${i}`});
+   assert(gmReactionInbox(f.db,f.guild,x.pc.owner_user_id).some(r=>r.request===own.record_key&&r.status==='pending'));
+ }],
+ ...['valid','resource','revoked'].map(mode=>['UA9',`G13-${mode}`,'expiration during native attack cost preserves exact defense CAS without unrelated change waivers '+mode,f=>{
+   const x=groupReactionScenario(f);submitGroupReaction(f,x,0,[2,1]);
+   const messageId='saint-after-lanes',text='Describe the scene.';captureWorldInput(f.db,f.guild,x.pc.owner_user_id,x.pc.id,messageId,text);
+   const rows=persistPlayerIntents(f.db,f.guild,candidate(text).player_intents,x.scope,{messageId}),
+     origin=createArbitrationOrigin(f.db,f.guild,x.scope,worldInputKey(messageId,x.pc.id,false)),
+     board=buildSceneIntentBoard(f.db,f.guild,origin,rows,[{actor_key:'guard',operation:'attack',target_refs:[x.pc.id],objective_ref:'',source_refs:[],dependencies:[]}]),
+     [r]=adjudicateSceneBoard(f.db,f.guild,origin,board,[{...decision(board.data.entries.at(-1).intent_ref,'gm_attack_roll'),rule_basis_refs:['srd:adversary-attacks'],feature_ref:'standard_attack',stakes:'Visible standard attack.'}],{library:x.library});
+   assert.equal(r.status,'gm_action_ready');const [attack]=executeUnifiedGmActions(f.db,f.guild,[r],{library:x.library});
+   reviewIncomingAttack(f.db,f.guild,x.pc.owner_user_id,attack.record_key,{library:x.library});confirmIncomingDefense(f.db,f.guild,x.pc.owner_user_id,attack.record_key);
+   const roll=rollArbitratedIncomingAttack(f.db,f.guild,attack.record_key,{library:x.library,rng:s=>s===20?19:1});assert.equal(roll.data.hit,true);
+   if(mode==='resource')f.db.updateCharacterData(x.pc.id,d=>{d.resources.stress.current++;});
+   if(mode==='revoked'){const expiry=f.db.listCityRecords(f.guild,{kind:'pc_native_condition_expiry',includeGM:true})[0];indexWorldEvent(f.db,f.guild,{key:expiry.source_event,status:'retracted'},'gm');}
+   if(mode!=='valid'){
+     assert.throws(()=>resolveIncomingDamage(f.db,f.guild,x.pc.owner_user_id,attack.record_key,{armor:false,library:x.library}));
+     assert.equal(f.db.getCharacter(x.pc.id).data.resources.hp.current,0);return;
+   }
+   const effect=resolveIncomingDamage(f.db,f.guild,x.pc.owner_user_id,attack.record_key,{armor:false,library:x.library});
+   assert.equal(effect.status,'resolved');validateIncomingDamageApplication(f.db,f.guild,effect.record_key);
+ }]),
+ ['UA9','G14','group replay never charges another Fear or creates another cohort after restart',f=>{
+   const x=groupReactionScenario(f);submitGroupReaction(f,x,0,[2,1]);f.restart();
+   const [again]=executeUnifiedGmActions(f.db,f.guild,[x.decision],{library:x.library,rng:()=>assert.fail('no replay')});
+   assert.equal(again.record_key,x.group.record_key);assert.equal(f.db.getCampaign(f.guild).fear,1);
+   assert.equal(f.db.listCityRecords(f.guild,{kind:'gm_group_feature_execution',includeGM:true}).length,1);
+   assert.equal(f.db.listCityRecords(f.guild,{kind:'pc_native_condition',includeGM:true}).length,1);
+ }],
+ ...[
+   ['no-fear',{fear:0}],['incomplete-cohort',{targets:[0,1]}],['absent-target',{targets:[0,1,2,3]}],['private-cross-owner',{privateScene:true}],
+   ['wrong-fixed-difficulty',{proposalPatch:{difficulty:13}}],['wrong-trait',{proposalPatch:{trait:'Agility'}}],
+ ].map(([id,options])=>['UA9',`G08-${id}`,'group feature rejects missing authority before costs or owner dice '+id,f=>{
+   const x=groupReactionScenario(f,{...options,expectReady:false});assert.equal(x.decision.status,'needs_rules_review');
+   assert.deepEqual(executeUnifiedGmActions(f.db,f.guild,[x.decision],{library:x.library,rng:()=>assert.fail('no illegal dice')}),[]);
+   assert.equal(f.db.listCityRecords(f.guild,{kind:'gm_group_feature_execution',includeGM:true}).length,0);
+   assert.equal(f.db.listCityRecords(f.guild,{kind:'gm_action_cost_receipt',includeGM:true}).length,0);
+   assert.equal(f.db.getCampaign(f.guild).fear,options.fear??2);for(const pc of f.pcs)assert.equal(f.db.getCharacter(pc.id).data.resources.hp.current,0);
+ }]),
+ ['UA9','G09','a changed owner or revoked child holds only that owner, never another target',f=>{
+   const x=groupReactionScenario(f),child=groupChild(f,x,1);indexWorldEvent(f.db,f.guild,{key:child.source_event,status:'retracted'},'gm');
+   assert.throws(()=>inspectGmReactionInvitation(f.db,f.guild,f.pcs[1].owner_user_id,child.record_key));
+   submitGroupReaction(f,x,0);f.restart();submitGroupReaction(f,x,2);assert.equal(f.db.getCampaign(f.guild).fear,1);
+ }],
+ ['UA9','G10','resource overflow preserves owner dice and reports scoped review rather than false completion',f=>{
+   const x=groupReactionScenario(f,{flash:true,beforeDecision:()=>f.db.updateCharacterData(f.pcs[0].id,d=>{d.resources.stress.current=d.resources.stress.max;})});
+   const a=submitGroupReaction(f,x,0,[2,1]);assert.equal(a.calls,2);
+   assert.equal(inspectGmReactionInvitation(f.db,f.guild,x.pc.owner_user_id,a.child.record_key).terms.status,'needs_rules_review');
+   assert.equal(f.db.listCityRecords(f.guild,{kind:'gm_group_feature_effect',includeGM:true}).length,0);
+   assert.equal(f.db.listCityRecords(f.guild,{kind:'gm_group_feature_review',includeGM:true}).length,1);
+   const repeat=submitGmReactionInvitation(f.db,f.guild,x.pc.owner_user_id,a.input,{interactionId:'repeat-review',authoredText:JSON.stringify(a.input),rng:()=>assert.fail('no duplicate dice')});
+   assert.equal(repeat.data.roll_id,a.request.data.roll_id);
+ }],
+ ['UA9','G11','private successful Flashbang choice reaches the actual command with no forced PC response',async f=>{
+   const x=groupReactionScenario(f,{flash:true}),a=submitGroupReaction(f,x,0),{nativeGmNotice}=await import('../src/gm-arbitration-output.js');
+   const scope={mode:'private',actorUserId:x.pc.owner_user_id,actorCharacterId:x.pc.id},notice=nativeGmNotice(f.db,f.guild,a.child.record_key,scope,{library:x.library});
+   assert.match(notice.text,/Choose exactly ONE/);assert.match(notice.text,/gm-reaction-choice/);
+   assert.throws(()=>nativeGmNotice(f.db,f.guild,a.child.record_key,{mode:'party',actorUserId:x.pc.owner_user_id,actorCharacterId:x.pc.id}));
+   const input={op:'gm-reaction-choice',request:a.child.record_key,revision:hash(a.child.data),choice:'vulnerable'},
+     i=fakeInteraction({gm:false,sub:'window'});Object.assign(i,{id:'native-group-command',guildId:f.guild,user:{id:x.pc.owner_user_id,username:x.pc.owner_user_id},commandName:'vc-roll',isChatInputCommand:()=>true});
+   i.options.getString=key=>key==='json'?JSON.stringify(input):null;await handleCommand(i,{db:f.db,gm:{}});
+   assert.equal(f.db.listCityRecords(f.guild,{kind:'gm_group_feature_effect',includeGM:true}).length,1);assert.match(i.deliveries[0].content,/resolved/);
+   assert.equal(f.db.getCharacter(x.pc.id).data.resources.stress.current,2);
+ }],
+ ['UA9','G12','combined GM turn delivers three separate private reaction notices exactly once through restart-safe outbox',async f=>{
+   const x=groupReactionScenario(f,{throughTurn:true}),r=candidate(x.text);
+   r.unified_arbitration={version:1,npc_intents:[x.proposal],decisions:[x.decision.data.proposal]};
+   const out=await run(f,x,{version:9,acts:[],fiction_delta:[]},r),rows=out.rows.filter(row=>row.payload.includes('Pending owner reaction'));
+   assert.equal(out.ai.requests.length,2);assert.equal(rows.length,3);
+   for(const pc of f.pcs.slice(0,3)){const row=rows.find(r=>r.target_user_id===pc.owner_user_id);assert(row);assert.equal(row.visibility,'character');assert.equal(row.target_character_id,pc.id);assert(!row.payload.includes('SECRET'));}
+   assert(!out.rows.filter(row=>row.surface==='party').some(row=>row.payload.includes('gm-reaction-review')));
+   f.restart();const sent=[];await deliverTurnOutbox(f.db,f.guild,out.attempt.turn_id,async row=>{sent.push(row);return{messageId:`offline-group-${sent.length}`,channelId:'offline'};});
+   assert.equal(sent.filter(row=>row.payload.includes('Pending owner reaction')).length,3);
+   await deliverTurnOutbox(f.db,f.guild,out.attempt.turn_id,async()=>assert.fail('no repeated delivery'));
+   assert.equal(f.db.getCampaign(f.guild).fear,1);assert.equal(f.db.listCityRecords(f.guild,{kind:'roll_request',includeGM:true}).length,0);
+ }],
+ ['UA9','G05','native movement guard enforces a failed group reaction without blocking description or unrelated PCs',async f=>{
+   const x=groupReactionScenario(f);submitGroupReaction(f,x,0,[2,1]);
+   const {nativeMovementConditionIssue}=await import('../src/native-group-features.js');
+   assert.equal(nativeMovementConditionIssue(f.db,f.guild,f.pcs[0].id,{range:'Close'}),'NATIVE_MOVEMENT_LIMIT_VERY_CLOSE');
+   assert.equal(nativeMovementConditionIssue(f.db,f.guild,f.pcs[0].id,{range:'Very Close'}),null);
+   assert.equal(nativeMovementConditionIssue(f.db,f.guild,f.pcs[1].id,{range:'Far'}),null);
+   const source=indexWorldEvent(f.db,f.guild,{key:'blocked-movement',kind:'observation',source_id:'gm',title:'Owner movement attempt',session_id:f.session.id,
+     scene:currentScene(f.db,f.guild).key,location_key:'terminal',visibility:'party'},'gm');
+   assert.throws(()=>recordScenePresence(f.db,f.guild,{entity_type:'character',entity_key:f.pcs[0].id,source_event:source.event_key,
+     location_key:'terminal',zone:'elsewhere',range:'Far',visibility:'party',accepted_by:f.pcs[0].owner_user_id},'gm'),/NATIVE_MOVEMENT_LIMIT/);
+   assert.equal(scenePresence(f.db,f.guild,'character',f.pcs[0].id).data.zone,'interior');
+ }],
+ ['UA9','G06','next legitimate Saint spotlight expires only its sourced movement restriction once',async f=>{
+   const x=groupReactionScenario(f);submitGroupReaction(f,x,0,[2,1]);const {nativeMovementConditionIssue,validateNativeCondition}=await import('../src/native-group-features.js');
+   const condition=f.db.listCityRecords(f.guild,{kind:'pc_native_condition',includeGM:true})[0];
+   const messageId='next-saint-spotlight',text='What happens next?';captureWorldInput(f.db,f.guild,x.pc.owner_user_id,x.pc.id,messageId,text);
+   const [accepted]=persistPlayerIntents(f.db,f.guild,[{...candidate(text).player_intents[0],operation:'continuation'}],x.scope,{messageId}),
+     origin=createArbitrationOrigin(f.db,f.guild,x.scope,worldInputKey(messageId,x.pc.id,false)),
+     board=buildSceneIntentBoard(f.db,f.guild,origin,[accepted],[{actor_key:'guard',operation:'prepare',target_refs:[f.pcs[1].id],objective_ref:'',source_refs:[],dependencies:[]}]),
+     [r]=adjudicateSceneBoard(f.db,f.guild,origin,board,[{...decision(board.data.entries.at(-1).intent_ref,'request_pc_reaction_roll'),
+       rule_basis_refs:['srd:reaction-rolls'],trait:'Agility',difficulty:14,stakes:'Dodge the guard attempt.',difficulty_reason:'Verified local danger.'}],{library:x.library});
+   assert.equal(r.status,'pending_pc_reaction');executeUnifiedGmActions(f.db,f.guild,[r],{library:x.library});
+   assert.equal(validateNativeCondition(f.db,f.guild,condition.record_key).status,'expired');
+   assert.equal(nativeMovementConditionIssue(f.db,f.guild,f.pcs[0].id,{range:'Far'}),null);f.restart();
+   executeUnifiedGmActions(f.db,f.guild,[r],{library:x.library});assert.equal(f.db.listCityRecords(f.guild,{kind:'pc_native_condition_expiry',includeGM:true}).length,1);
+   const moved=indexWorldEvent(f.db,f.guild,{key:'after-expiry-presence',kind:'observation',source_id:'gm',title:'Verified test movement',session_id:f.session.id,
+     scene:currentScene(f.db,f.guild).key,location_key:'terminal',visibility:'party'},'gm');
+   recordScenePresence(f.db,f.guild,{entity_type:'character',entity_key:x.pc.id,source_event:moved.event_key,location_key:'terminal',zone:'other-side',range:'Close',visibility:'party',accepted_by:x.pc.owner_user_id},'gm');
+   assert.equal(nativeMovementConditionIssue(f.db,f.guild,x.pc.id,{range:'Far'}),null);
+   f.db.setDirectorState(f.session.id,{scene_number:2});
+   assert.equal(nativeMovementConditionIssue(f.db,f.guild,x.pc.id,{range:'Far'}),null,'expired native proof cannot freeze later scenes');
+ }],
+ ['UA9','G07','native Vulnerable grants real incoming d20 advantage without model permission or replay dice',f=>{
+   const x=groupReactionScenario(f,{flash:true});submitGroupReaction(f,x,0,[2,1]);
+   const old=x.row.data.offer.input,source=indexWorldEvent(f.db,f.guild,{key:'post-flash-attack',kind:'observation',source_id:'gm',title:'Visible standard attack',
+     session_id:f.session.id,scene:currentScene(f.db,f.guild).key,location_key:'terminal',visibility:'party'},'gm'),
+     attack=prepareIncomingAttack(f.db,f.guild,'gm',{...old,source:source.event_key},{gm:true,interactionId:'after-flash',library:x.library});
+   reviewIncomingAttack(f.db,f.guild,x.pc.owner_user_id,attack.record_key,{library:x.library});confirmIncomingDefense(f.db,f.guild,x.pc.owner_user_id,attack.record_key);
+   let calls=0;const faces=[1,19,1,1],result=rollIncomingAttack(f.db,f.guild,'gm',attack.record_key,{gm:true,library:x.library,rng:()=>faces[calls++]});
+   assert.equal(result.data.face,19);assert.equal(calls,3);assert.deepEqual(result.data.gm_d20.faces,[1,19]);
+   assert.equal(f.db.getCharacter(x.pc.id).data.resources.hp.current,0);f.restart();
+   assert.equal(incomingRollProjection(f.db,f.guild,attack.record_key).receipt.data.face,19);
+   assert.equal(rollIncomingAttack(f.db,f.guild,'gm',attack.record_key,{gm:true,library:x.library,rng:()=>assert.fail('no replay')}).record_key,result.record_key);
+ }],
+ ['UA9','G01','All Lanes Stop creates three independent owner reactions with one Fear cost and no GM dice',f=>{
+   const x=groupReactionScenario(f);assert.equal(x.children.length,3);assert.equal(f.db.getCampaign(f.guild).fear,1);
+   const a=submitGroupReaction(f,x,0,[2,1]);assert.equal(a.calls,2);assert.equal(a.request.data.kind,'reaction');assert.equal(a.request.data.breakdown.difficulty,14);
+   assert.equal(f.db.getCharacter(f.pcs[0].id).data.conditions.filter(c=>c.native_ref&&c.active).length,1);
+   assert.equal(f.db.getCharacter(f.pcs[1].id).data.conditions?.length||0,0);assert.equal(f.db.getCampaign(f.guild).fear,1);
+   assert.equal(inspectGmReactionInvitation(f.db,f.guild,f.pcs[1].owner_user_id,groupChild(f,x,1).record_key).terms.status,'pending');
+ }],
+ ['UA9','G02','group withdrawal and restart do not block siblings or manufacture a failed reaction',f=>{
+   const x=groupReactionScenario(f),child=groupChild(f,x,1),user=f.pcs[1].owner_user_id,terms=inspectGmReactionInvitation(f.db,f.guild,user,child.record_key).terms,
+     input={op:'gm-reaction-withdraw',request:child.record_key,revision:terms.revision};
+   assert.throws(()=>withdrawGmReactionInvitation(f.db,f.guild,f.pcs[0].owner_user_id,input,{interactionId:'foreign',authoredText:JSON.stringify(input)}));
+   withdrawGmReactionInvitation(f.db,f.guild,user,input,{interactionId:'group-withhold',authoredText:JSON.stringify(input)});f.restart();
+   const a=submitGroupReaction(f,x,0);submitGroupReaction(f,x,2,[6,6]);
+   const repeat=submitGmReactionInvitation(f.db,f.guild,f.pcs[0].owner_user_id,a.input,{interactionId:'group-roll-0',authoredText:JSON.stringify(a.input),rng:()=>assert.fail('no replay dice')});
+   assert.equal(repeat.record_key,a.request.record_key);assert.equal(f.db.getCampaign(f.guild).fear,1);
+   for(const pc of f.pcs){const data=f.db.getCharacter(pc.id).data;assert.equal(data.resources.hope,2);assert.equal(data.resources.stress.current,2);assert.equal(data.resources.hp.current,0);assert.equal(data.conditions?.length||0,0);}
+ }],
+ ['UA9','G03','Flashbang success waits for an exact owner choice instead of selecting a consequence',async f=>{
+   const x=groupReactionScenario(f,{flash:true}),a=submitGroupReaction(f,x,0),{chooseGroupReactionOutcome}=await import('../src/native-group-features.js');
+   assert.equal(f.db.getCharacter(f.pcs[0].id).data.resources.stress.current,2);assert.equal(f.db.getCharacter(f.pcs[0].id).data.conditions?.length||0,0);
+   const input={op:'gm-reaction-choice',request:a.child.record_key,revision:hash(a.child.data),choice:'stress'};
+   assert.throws(()=>chooseGroupReactionOutcome(f.db,f.guild,f.pcs[1].owner_user_id,input,{interactionId:'foreign-choice',authoredText:JSON.stringify(input)}));
+   chooseGroupReactionOutcome(f.db,f.guild,f.pcs[0].owner_user_id,input,{interactionId:'flash-choice',authoredText:JSON.stringify(input)});f.restart();
+   chooseGroupReactionOutcome(f.db,f.guild,f.pcs[0].owner_user_id,input,{interactionId:'flash-choice',authoredText:JSON.stringify(input)});
+   assert.equal(f.db.getCharacter(f.pcs[0].id).data.resources.stress.current,3);assert.equal(f.db.getCharacter(f.pcs[0].id).data.conditions?.length||0,0);
+   assert.equal(f.db.getCampaign(f.guild).fear,2);
+ }],
+ ['UA9','G04','Flashbang failed owner reaction applies both native consequences exactly once',f=>{
+   const x=groupReactionScenario(f,{flash:true});submitGroupReaction(f,x,0,[2,1]);
+   const pc=f.db.getCharacter(f.pcs[0].id);assert.equal(pc.data.resources.stress.current,3);assert.equal(pc.data.conditions.filter(c=>c.name==='Vulnerable'&&c.native_ref&&c.active).length,1);
+   assert.equal(f.db.listCombatants(f.db.getCurrentEncounter(f.session.id).id)[0].stress_current,1);assert.equal(f.db.getCampaign(f.guild).fear,2);
+ }],
  ['UA9','V01','Coordinated Volley shares one attack and damage roll but preserves each owner workflow',f=>{
    const x=volleyScenario(f);readyVolley(f,x);let calls=0;
    const r=rollArbitratedIncomingAttack(f.db,f.guild,x.attacks[0].record_key,{library:x.library,rng:s=>{calls++;return s===20?14:4;}});
@@ -1099,7 +1285,7 @@ cases.push(
    assert.equal(new Set(rows.filter(r=>r.actor_kind==='environment').map(r=>r.actor_name)).size,16);
    for(const r of rows){assert.match(r.source_hash,/^[a-f0-9]{64}$/);assert.match(r.template_hash,/^[a-f0-9]{64}$/);
      assert(Object.isFrozen(r));assert.equal(featureDisposition(r.feature_key).status,r.native_handler?'supported':'needs_rules_review');}
-   assert.deepEqual(rows.filter(r=>r.native_handler).map(r=>r.feature_key),['adversary:pale-court-thrall:pack-pressure','adversary:static-wraith:feedback','adversary:choir-relay:local-mesh','adversary:pale-court-knight:blood-rush',VOLLEY,'adversary:wraith-pack:many-deaths','adversary:green-root-host:horde-3d8-8','adversary:aster-vale-catastrophe-analyst:contingency-stack']);
+   assert.deepEqual(rows.filter(r=>r.native_handler).map(r=>r.feature_key),['adversary:pale-court-thrall:pack-pressure',FLASH,'adversary:static-wraith:feedback','adversary:choir-relay:local-mesh','adversary:pale-court-knight:blood-rush',VOLLEY,LANES,'adversary:wraith-pack:many-deaths','adversary:green-root-host:horde-3d8-8','adversary:aster-vale-catastrophe-analyst:contingency-stack']);
  }],
  ['UA6','02','typed representative descriptors distinguish action reaction passive and defense',async()=>{
    const {compileNativeFeatures}=await import('../src/native-feature-catalog.js'),rows=compileNativeFeatures(),get=(actor,name)=>rows.find(r=>r.actor_name===actor&&r.name===name);

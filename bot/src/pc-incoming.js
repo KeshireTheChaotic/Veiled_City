@@ -15,6 +15,7 @@ import {nativeAttackPassives,nativeStandardDamage} from './native-feature-passiv
 import {compileNativeFeatures} from './native-feature-catalog.js';
 import {nativeHouseErratum} from './native-house-errata.js';
 import {nativeHitFeatureCandidates,applyManyDeathsAfterIncoming} from './native-feature-hit.js';
+import {nativeIncomingConditions,validateIncomingConditions,incomingConditionOdds,nativeAttackExpiryRevision} from './native-group-features.js';
 
 const hash=v=>createHash("sha256").update(JSON.stringify(v)).digest("hex");
 const AUTONOMOUS_FEAR_ATTACK=Symbol("native-autonomous-fear-attack");
@@ -76,7 +77,11 @@ function facts(db,guild,input,library,authority=null,existingOffer=null,committe
   const damage_detail=existingOffer&&!Object.hasOwn(existingOffer,'damage_passive')?null:nativeStandardDamage({template,combatant:c,damage:standard[3]});
   const damage_passive=damage_detail?{ref:`damage-passive:${hash([guild,input.source,input.npc,pc.id,damage_detail])}`,fingerprint:hash(damage_detail)}:null;
   if(damage_passive)snapshot.damage_passive=hash(damage_passive);
+  const native_conditions=existingOffer&&!Object.hasOwn(existingOffer,'native_conditions')?[]:
+    committedRoll?existingOffer?.native_conditions||[]:nativeIncomingConditions(db,guild,pc.id);
+  if(native_conditions.length)snapshot.native_conditions=hash(native_conditions);
   return {pc,snapshot,damage:damage_detail?.expression||standard[3],damage_type:standard[4],bonus:Number(template.attack)+passives.reduce((sum,p)=>sum+p.modifier,0),evasion,major,severe,defenses,
+    ...(native_conditions.length?{native_conditions}:{}),
     ...(damage_passive?{damage_passive,damage_detail}:{}),
     ...(passives.length?{passives,passive_details:passiveDetails,base_bonus:Number(template.attack)}:{}),...(hit_features.length?{hit_features,hit_details}:{})};
 }
@@ -94,6 +99,7 @@ export function inspectVolleyCandidate(db,guild,origin,entry,p,feature,{library,
     if(origin.scope.mode==='private'&&character!==origin.scope.actorCharacterId)fail('Private attack cannot select another recipient.');
     const input={npc:entry.actor.key,combatant,character,source:origin.binding.source,ruling:'',defenses:{resistance:'none',armor_reduction:1,armor_allowed:true,source:'base'}},
       c=facts(db,guild,input,library,INSPECT_ONLY);
+    if(c.native_conditions?.length)fail('Target-specific condition odds require a qualified shared-roll policy; no silent waiver.');
     if(c.snapshot.template!==feature.template_hash)fail('Volley template source changed.');return input;
   });
   return {operation:'commit_adversary_volley',inputs,opportunity,template_hash:feature.template_hash,feature:VOLLEY,feature_hash:hash(feature)};
@@ -184,6 +190,12 @@ function context(db,guild,key,library,{applied=false}={}){
   passiveProof(db,guild,row);
   if(actual.pc.owner_user_id!==row.data.offer.snapshot.owner||actual.snapshot.principal!==row.data.offer.snapshot.principal)
     fail("Incoming attack owner/principal changed; native review required.");
+  if(!applied&&row.data.roll&&!o.shared_attack&&o.input.ruling?.startsWith('ai-decision:')&&actual.snapshot.pc!==o.snapshot.pc){
+    const roll=verifyRoll(db,guild,row),cost=db.getCityRecord(guild,'gm_action_cost_receipt',roll.data.cost_ref);
+    if(cost?.data.decision!==o.input.ruling.slice(12)||!nativeAttackExpiryRevision(db,guild,row.subject_key,o.snapshot.pc,actual.snapshot.pc,cost.record_key))
+      fail('Incoming PC state changed outside this native condition expiration.');
+    actual.snapshot.pc=o.snapshot.pc;
+  }
   if(!applied&&hash(actual.snapshot)!==hash(row.data.offer.snapshot))fail("Native attack source/scene/target compare-and-set is stale.");
   return {row,...actual};
 }
@@ -198,6 +210,7 @@ export function prepareIncomingAttack(db,guild,user,input,options={}){
     damage:actual.damage,damage_type:actual.damage_type,bonus:actual.bonus,evasion:actual.evasion,major:actual.major,severe:actual.severe,
     ...(actual.passives?{passives:actual.passives,base_bonus:actual.base_bonus}:{}),...(actual.hit_features?{hit_features:actual.hit_features}:{}),
     ...(actual.damage_passive?{damage_passive:actual.damage_passive}:{}),...(options.gm===NATIVE_AI_ATTACK&&options.sharedAttack?{shared_attack:options.sharedAttack}:{})};
+  if(actual.native_conditions)offer.native_conditions=actual.native_conditions;
   return db.transaction(()=>{
     const key=`npc-incoming:${hash([guild,input.source,input.npc,input.combatant,input.character])}`,prior=db.getCityRecord(guild,"pc_incoming_attack",key);
     if(prior){if(hash(prior.data.offer)!==hash(offer))fail("Native attack offer identity reused.");return prior;}
@@ -278,11 +291,12 @@ export function rollIncomingAttack(db,guild,user,key,options={}){
       nativeDecision=inspectNativeGmDecision(db,guild,row.data.offer.input.ruling.slice(12)).row;
       cost=commitGmActionCost(db,guild,nativeDecision.record_key);
     }
+    validateIncomingConditions(db,guild,c.pc.id,row.data.offer.native_conditions||[]);
     const rng=options.rng||d,result=gmD20Roll({kind:'attack',modifier:c.bonus,difficulty:c.evasion,
-      advantage:nativeDecision?.data.proposal.advantage||false,disadvantage:nativeDecision?.data.proposal.disadvantage||false},rng),face=result.selected;
+      ...incomingConditionOdds(row.data.offer,nativeDecision?.data.proposal)},rng),face=result.selected;
     const hit=result.success,damage=gmAttackDamage(result,c.damage,rng);
     const payload={attack:key,face,bonus:c.bonus,total:face+c.bonus,evasion:c.evasion,hit,damage,type:c.damage_type,offer_hash:hash(row.data.offer),
-      ...(nativeDecision?{gm_decision:nativeDecision.record_key,gm_d20:result,cost_ref:cost.record_key}: {})};
+      ...(nativeDecision?{gm_decision:nativeDecision.record_key,gm_d20:result,cost_ref:cost.record_key}:row.data.offer.native_conditions?{gm_d20:result}: {})};
     const roll=db.addRoll(guild,c.snapshot.session,user,c.pc.id,"npc_incoming_standard",payload);
     const receipt=db.saveCityRecord(guild,{kind:"npc_attack_roll_receipt",key:`${key}:roll`,status:"resolved",source_event:row.source_event,
       visibility:"character",subject_key:c.pc.id,data:{...payload,roll}});
@@ -374,6 +388,7 @@ function verifyRoll(db,guild,row){
 }
 function passiveProof(db,guild,row){
   const o=row.data.offer;
+  if(o.native_conditions)validateIncomingConditions(db,guild,row.subject_key,o.native_conditions);
   if(o.damage_passive){
     const p=o.damage_passive,record=db.getCityRecord(guild,'npc_damage_passive_proof',p.ref),v=record?.data.proof,
       feature=compileNativeFeatures().find(f=>f.native_handler==='horde_marked_half_damage'),erratum=nativeHouseErratum('HR11');
@@ -401,9 +416,14 @@ export function incomingRollProjection(db,guild,key){
   if(!offer.shared_attack&&offer.input.ruling?.startsWith('ai-decision:')){
     const decision=inspectNativeGmDecision(db,guild,offer.input.ruling.slice(12)).row,cost=db.getCityRecord(guild,'gm_action_cost_receipt',r.cost_ref);
     let i=0;const expected=gmD20Roll({kind:'attack',modifier:offer.bonus,difficulty:offer.evasion,
-      advantage:decision.data.proposal.advantage,disadvantage:decision.data.proposal.disadvantage},()=>r.gm_d20?.faces[i++]);
+      ...incomingConditionOdds(offer,decision.data.proposal)},()=>r.gm_d20?.faces[i++]);
     if(r.gm_decision!==decision.record_key||hash(expected)!==hash(r.gm_d20)||expected.selected!==r.face||cost?.status!=='committed'
       ||cost.source_event!==decision.source_event||cost.data.decision!==decision.record_key||cost.data.before-cost.data.after!==cost.data.amount)fail('Exact native GM d20 and pre-roll payment proof required.');
+  }
+  if(!offer.input.ruling?.startsWith('ai-decision:')&&offer.native_conditions){
+    validateIncomingConditions(db,guild,row.subject_key,offer.native_conditions);
+    let i=0;const expected=gmD20Roll({kind:'attack',modifier:offer.bonus,difficulty:offer.evasion,...incomingConditionOdds(offer)},()=>r.gm_d20?.faces[i++]);
+    if(hash(expected)!==hash(r.gm_d20)||expected.selected!==r.face)fail('Native condition d20 ancestry required.');
   }
   const {count,sides,mod}=diceSpec(offer.damage);
   if(r.face<1||r.face>20||!Number.isSafeInteger(r.face)||r.bonus!==offer.bonus||r.evasion!==offer.evasion

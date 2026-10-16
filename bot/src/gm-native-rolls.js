@@ -18,6 +18,7 @@ import {indexWorldEvent} from './city-calendar.js';
 import {commitFeatureChoice,commitFeatureReactionCost} from './native-feature-windows.js';
 import {applyFeatureReactionOutcome,validateFeatureInvitation,featureReactionStakes,cancelFeatureReaction} from './native-feature-effects.js';
 import {commitNativeNpcAlliance} from './native-encounter-relations.js';
+import {prepareGroupFeature,inspectGroupFeature,groupReactionState} from './native-group-features.js';
 
 function dependencyState(db,guild,entry){
   for(const ref of entry.dependencies){
@@ -41,6 +42,8 @@ export function executeUnifiedGmActions(db,guild,decisions,{library=new Encounte
     try{return db.transaction(()=>{
     const committed=db.getCityRecord(guild,'npc_volley_attack',`npc-volley:${hash(decision.record_key)}`);
     if(committed?.data.roll)return inspectVolley(db,guild,committed.record_key).row; // Read-only committed replay, never a new permission.
+    const group=db.getCityRecord(guild,'gm_group_feature_execution',`group-feature:${hash(decision.record_key)}`);
+    if(group)return inspectGroupFeature(db,guild,group.record_key).execution;
     const {row,entry}=inspectNativeGmDecision(db,guild,decision.record_key),n=row.data.native;
     if(!['gm_action_ready','pending_pc_reaction'].includes(row.status))return row;
     const dependency=dependencyState(db,guild,entry),continuationKey=`gm-continuation:${hash(row.record_key)}`;
@@ -50,6 +53,7 @@ export function executeUnifiedGmActions(db,guild,decisions,{library=new Encounte
     if(n.operation==='request_feature_reaction_roll')return commitFeatureReactionCost(db,guild,row.record_key);
     if(n.operation==='commit_adversary_attack')return prepareArbitratedIncomingAttack(db,guild,row.record_key,{library});
     if(n.operation==='commit_adversary_volley')return prepareArbitratedVolley(db,guild,row.record_key,{library});
+    if(n.operation==='commit_group_feature')return prepareGroupFeature(db,guild,row.record_key,{library});
     if(n.operation==='commit_adversary_feature')return commitFeatureChoice(db,guild,row.record_key,{library});
     if(n.operation==='commit_npc_alliance')return commitNativeNpcAlliance(db,guild,row.record_key,{library});
     const key=`gm-execution:${hash(row.record_key)}`,prior=db.getCityRecord(guild,'gm_native_roll_receipt',key);
@@ -92,10 +96,11 @@ export function inspectGmRollReceipt(db,guild,key){
 }
 export function inspectGmReactionInvitation(db,guild,user,key){
   const {row}=inspectNativeGmDecision(db,guild,key),n=row.data.native,p=row.data.proposal;
-  if(row.status!=='pending_pc_reaction'||!['request_pc_reaction_roll','request_feature_reaction_roll'].includes(n?.operation))throw fail('exact_reaction_invitation');
-  const cost=n.feature?db.getCityRecord(guild,'gm_action_cost_receipt',`gm-feature-cost:${hash(row.record_key)}`):
+  if(row.status!=='pending_pc_reaction'||!['request_pc_reaction_roll','request_feature_reaction_roll','request_group_feature_reaction'].includes(n?.operation))throw fail('exact_reaction_invitation');
+  const group=n.operation==='request_group_feature_reaction'?inspectGroupFeature(db,guild,n.execution):null;
+  const cost=group?group.cost:n.feature?db.getCityRecord(guild,'gm_action_cost_receipt',`gm-feature-cost:${hash(row.record_key)}`):
     db.getCityRecord(guild,'gm_action_cost_receipt',`gm-action-cost:${hash([row.record_key,n.opportunity?.key])}`);
-  if(cost?.status!=='committed'||cost.source_event!==row.source_event)throw fail('reaction_gm_move_not_committed');
+  if(cost?.status!=='committed'||cost.source_event!==(group?group.parent.source_event:row.source_event))throw fail('reaction_gm_move_not_committed');
   const pc=personalCharacter(db,guild,user,n.character),principal=conversationPrincipal(db,guild,user,pc.id);
   if(user!==n.owner||principal.revision!==n.principal)throw fail('reaction_invitation_owner_changed');
   const terminal=db.getCityRecord(guild,'gm_reaction_submission',`gm-reaction-submit:${hash([row.record_key,user])}`);
@@ -110,14 +115,17 @@ export function inspectGmReactionInvitation(db,guild,user,key){
       ||source.details.revision!==hash(row.data))throw fail('reaction_terminal_withdrawal');
   }
   if(n.feature)validateFeatureInvitation(db,guild,row,terminal);
-  return {row,pc,terms:{request:row.record_key,revision:hash(row.data),status:terminal?.status||'pending',trait:p.trait,difficulty:p.difficulty,
+  const state=group?groupReactionState(db,guild,row,terminal):terminal?.status||'pending';
+  return {row,pc,terms:{request:row.record_key,revision:hash(row.data),status:state==='awaiting_owner'?'awaiting_choice':state,trait:p.trait,difficulty:p.difficulty,
     stakes:n.feature?featureReactionStakes(n.feature):'Success or failure settles your reaction to the local NPC attempt only. Damage, custody, movement and costs require separate native receipts.',
     reason:'Native source-bound local NPC reaction request; you choose whether and how to respond.',
     authority:'Pending only. Choose your response; no roll, damage or spending is inferred.'}};
 }
 export function gmReactionInbox(db,guild,user){
   const pc=personalCharacter(db,guild,user);
-  return db.listCityRecords(guild,{kind:'gm_arbitration_decision',includeGM:true,limit:200}).filter(row=>row.status==='pending_pc_reaction'
+  const rows=[];for(let offset=0;;offset+=100){const page=db.listCityRecords(guild,{kind:'gm_arbitration_decision',status:'pending_pc_reaction',includeGM:true,limit:100,offset});
+    rows.push(...page);if(page.length<100)break;}
+  return rows.filter(row=>row.status==='pending_pc_reaction'
     &&row.data.native?.owner===user&&row.data.native.character===pc.id).map(row=>{
       try{return inspectGmReactionInvitation(db,guild,user,row.record_key).terms;}
       catch(error){if(!['GM_ARBITRATION','SCENE_FICTION','TYPED_ROLL_PROOF','SCENE_ACTION_WINDOW'].includes(error.code))throw error;

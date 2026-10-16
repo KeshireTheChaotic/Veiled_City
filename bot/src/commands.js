@@ -560,6 +560,10 @@ async function executeCommand(interaction,{db,gm,voice=null}){
       }else if(input.op==='gm-reaction-review'){
         if(Object.keys(input).sort().join()!=='op,request')throw new UserInputError('Select one exact private GM reaction invitation.');
         result=inspectGmReactionInvitation(db,interaction.guildId,interaction.user.id,input.request).terms;
+      }else if(input.op==='gm-reaction-choice'){
+        const {chooseGroupReactionOutcome}=await import('./native-group-features.js');
+        const row=chooseGroupReactionOutcome(db,interaction.guildId,interaction.user.id,input,{interactionId:interaction.id,authoredText});
+        result={request:input.request,status:row.status};
       }else if(['gm-reaction-roll','gm-reaction-withdraw'].includes(input.op)){
         const row=(input.op==='gm-reaction-roll'?submitGmReactionInvitation:withdrawGmReactionInvitation)(db,interaction.guildId,interaction.user.id,input,{interactionId:interaction.id,authoredText});
         result={request:row.record_key,status:row.status,roll:row.data.roll_id||null};

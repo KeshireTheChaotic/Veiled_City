@@ -81,7 +81,7 @@
       "template_hash": "d0358ceef04dbe77c3414f9a8b3e77db6842565e993583bf2b4e64826ed11feb",
       "index": 1,
       "type": "Action",
-      "status": "review_only",
+      "status": "supported",
       "trigger_kind": "spotlight_action",
       "target_policy": "one",
       "roll_protocol": "pc_reaction_each",
@@ -91,8 +91,8 @@
           "amount": 1
         }
       ],
-      "native_handler": null,
-      "reason": "No qualified native feature handler.",
+      "native_handler": "flashbang_owner_choice",
+      "reason": "Native owner reaction and independent exact owner success choice; no automatic PC response.",
       "planned_handler": "flashbang"
     },
     {
@@ -736,7 +736,7 @@
       "template_hash": "7e899508db8331d30664201d226ce4f2ff2c19b7837bab3255a4ce820a358140",
       "index": 1,
       "type": "Action",
-      "status": "review_only",
+      "status": "supported",
       "trigger_kind": "spotlight_action",
       "target_policy": "all_in_range",
       "roll_protocol": "pc_reaction_each",
@@ -746,8 +746,8 @@
           "amount": 1
         }
       ],
-      "native_handler": null,
-      "reason": "No qualified native feature handler.",
+      "native_handler": "all_lanes_stop_group",
+      "reason": "Native shared feature cost with independent owner reactions and sourced movement limits.",
       "planned_handler": "all_lanes_stop"
     },
     {

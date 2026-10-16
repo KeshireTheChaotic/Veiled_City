@@ -5,6 +5,7 @@ import {inspectFeatureWindow} from './native-feature-windows.js';
 import {typedRollProof} from './typed-roll-proof.js';
 import {indexWorldEvent} from './city-calendar.js';
 import {arbitrationFailure as fail} from './gm-arbitration-contract.js';
+import {isGroupFeature,groupFeatureStakes,groupReactionState,applyGroupReactionOutcome} from './native-group-features.js';
 
 const FEEDBACK='adversary:static-wraith:feedback';
 const effectKey=decision=>`feature-effect:${hash(decision)}`;
@@ -15,6 +16,7 @@ export function nativeDeviceUseIssue(pc,accepted){
   return device?.disabled_by?'NATIVE_DEVICE_RESET_REQUIRED':null;
 }
 export function featureReactionStakes(feature){
+  if(isGroupFeature(feature))return groupFeatureStakes(feature);
   if(feature!==FEEDBACK)throw fail('feature_reaction_stakes_adapter');
   return 'On a failed Instinct reaction, mark 1 Stress and the electronic device shuts down until repaired or reset. On success it does not. Your roll is not assumed.';
 }
@@ -30,6 +32,7 @@ function paymentProof(db,guild,row){
   return cost;
 }
 export function validateFeatureInvitation(db,guild,row,terminal){
+  if(row.data.native.operation==='request_group_feature_reaction'){groupReactionState(db,guild,row,terminal);return;}
   const n=row.data.native,w=inspectFeatureWindow(db,guild,n.window),pc=db.getCharacter(n.character);
   paymentProof(db,guild,row);
   if(pc?.owner_user_id!==n.owner)throw fail('feature_invitation_current_owner');
@@ -43,12 +46,16 @@ export function validateFeatureInvitation(db,guild,row,terminal){
     throw fail('feature_pending_target_state_changed');
 }
 export function cancelFeatureReaction(db,guild,decision){
+  const child=db.getCityRecord(guild,'gm_arbitration_decision',decision);
+  if(child?.data.native.operation==='request_group_feature_reaction'){groupReactionState(db,guild,child,db.getCityRecord(guild,'gm_reaction_submission',`gm-reaction-submit:${hash([decision,child.data.native.owner])}`));return;}
   const {row}=inspectNativeGmDecision(db,guild,decision),n=row.data.native,w=inspectFeatureWindow(db,guild,n.window),
     terminal=db.getCityRecord(guild,'gm_reaction_submission',`gm-reaction-submit:${hash([decision,n.owner])}`);
   if(n.feature!==FEEDBACK||terminal?.status!=='withdrawn'||terminal.data.invitation_hash!==hash(row.data))throw fail('feature_exact_owner_withdrawal');
   db.saveCityRecord(guild,{...w,key:w.record_key,status:'cancelled'});
 }
 export function applyFeatureReactionOutcome(db,guild,decision,request){
+  const child=db.getCityRecord(guild,'gm_arbitration_decision',decision);
+  if(child?.data.native.operation==='request_group_feature_reaction')return applyGroupReactionOutcome(db,guild,child,request);
   return db.transaction(()=>{
     const {row}=inspectNativeGmDecision(db,guild,decision),n=row.data.native,key=effectKey(decision),prior=db.getCityRecord(guild,'gm_feature_effect_receipt',key);
     if(prior)return validateFeatureReactionEffect(db,guild,key);

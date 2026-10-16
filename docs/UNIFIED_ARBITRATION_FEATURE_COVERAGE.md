@@ -6,7 +6,7 @@ Accepted typed intents are canonical adjudication inputs; human declarations own
 
 ## Inventory and execution status
 
-41 adversaries / 105 occurrences (39 Passive, 36 Action, 29 Reaction, 1 untyped); 16 environments / 48 occurrences (17 Passive, 27 Action, 4 Reaction). **153 total: 8 supported bounded routes, 144 review_only, 1 needs_authoring, 0 not_mechanical.** UA6 initially had zero handlers. The additional occurrence is the owner's explicitly authorized in-place Coordinated Volley (2026-10-16), not an interpretation of Null Foam. These counts concern textual special features only. Existing standard attacks, exceptional actions, no-roll fiction and owner reaction invitations remain separate. UA8 and UA9 are PARTIAL, not a completed advanced release.
+41 adversaries / 105 occurrences (39 Passive, 36 Action, 29 Reaction, 1 untyped); 16 environments / 48 occurrences (17 Passive, 27 Action, 4 Reaction). **153 total: 10 bounded handler routes, 142 review_only, 1 needs_authoring, 0 not_mechanical.** UA6 initially had zero handlers. The additional occurrence is the owner's explicitly authorized in-place Coordinated Volley (2026-10-16), not an interpretation of Null Foam. These counts concern textual special features only. Existing standard attacks, exceptional actions, no-roll fiction and owner reaction invitations remain separate. UA8 and UA9 are PARTIAL, not a completed advanced release. The two new group handlers require the subfamily gate recorded at the end of the advanced ledger; inventory membership alone is never qualification.
 
 Code-owned `bot/src/native-feature-definitions.json` pins each exact feature string and entire actor template using SHA-256 over JSON serialization (including stats). `native-feature-catalog.js` checks hashes, completeness and unique keys against actual content before returning immutable descriptors. Original prose is retained; exactly one new feature was appended to the existing Ritual Enforcement Team after a read-only live-dependency preflight. Its two existing text hashes/indices are unchanged; their full-template pins deliberately change. Source order/index is part of the crosswalk; a content edit requires explicit requalification, not silent regeneration. A model cannot supply descriptors or a handler.
 
@@ -49,7 +49,8 @@ HR01 `many_deaths_fear_opportunity` is bounded native support: an AI-owned Wrait
 | HR03 Local Mesh | v1 immutable review record retained; appended v2 bounded allied same-zone defense aura, +1 maximum, no self-buff or attack/reaction bonus; cross-zone range unproved |
 | HR04 Invitation Revoked | Interpretation pinned; prior hospitality communication/violation proof adapter missing |
 | HR05 Signal-Touched | Interpretation pinned; owner preconsequence suppression choice not yet implemented; ordinary Fear remains intact |
-| HR06 Flashbang / HR07 Command the Blood | Interpretations pinned; owner choice workflows not yet implemented |
+| HR06 Flashbang | Native failed reaction or success-owner choice; full-Stress overflow and unsourced preexisting conditions stay reviewed; original v1 erratum preserved |
+| HR07 Command the Blood | Interpretation pinned; owner failure alternatives/compliance workflow not yet implemented |
 | HR08 Spend Forecast | Interpretation pinned; owner one-d12 prefinalization reroll not yet implemented |
 | HR09 Blackout / HR10 Three Vectors | Interpretations pinned; specialized native adapters not yet implemented |
 | HR11 HP representations | Remaining/marked and last-HP predicates tested; native Host Horde standard-damage replacement supported; Bad Future and paid final-HP interception not yet implemented |
@@ -65,6 +66,14 @@ HR11's exact Green Root Host `horde_marked_half_damage` handler derives marked H
 
 ## Per-occurrence source crosswalk
 
+### Owner-executed group reaction bounds
+
+`native-group-features.js` adds one native feature execution and independently sourced owner reaction children, using the existing unified GM decision and exact `/vc-roll window` submission. All Lanes Stop derives the whole audience-entitled, visible, in-Far native cohort and charges one feature Fear plus any separate extra-spotlight expense. Flashbang selects one actual Close target and marks one Contractor Stress. No GM dice, PC dice, inferred silence-failure, Hope/Fear reward or Critical Stress clear occurs at preparation. Successful Flashbang requires the affected owner's exact private `gm-reaction-choice` revision and source; a failed real reaction applies both effects only when the native resource adapter supports them.
+
+Native condition source/effect/roll/mutation proof is private and nonstacking. Vulnerable supplies real high-of-two d20 advantage to a subsequent standard incoming attack; it does not modify Evasion or invent a hit/HP effect. Shared Volley with target-specific Vulnerable odds remains explicitly held pending an authored shared-odds policy, not silently rerolled or weakened. All Lanes Stop movement restriction ends through an actual next Saint spotlight cost/source receipt; a sealed condition-only expiry can advance only that attack's otherwise unchanged PC CAS. It cannot waive changed Stress, ownership, scene, source or defense. Expired source ancestry is read-only, not a future action grant.
+
+**Not yet supported:** a source-backed within-Very-Close relocation executor (unknown-distance relocation is held, not all fiction/actions), manual-GM-only spotlight expiry, native Vulnerable-clearing adjudication, Stress-overflow conversion, and condition/PvP option mappings. Those remain UA11/UA14 work. Already saved dice, base costs and independent owner reactions remain intact. The overall UA9 group family remains partial: Null Foam, Regent alternatives and Matured one-d12 finalization are not implemented by analogy. Original HR06 v1 and all other errata/history are retained rather than edited in place. The new code-owned group policy is version 1 and must not be semantically rewritten for later saved records.
+
 All rows are GM-owned content, not public disclosure grants. Source paths and exact 64-character hashes are retained in the JSON catalog; abbreviated hashes here are identification aids only. A planned handler is not implemented support.
 
 | Native feature key | Type | Status | Planned handler | Feature SHA-256 prefix |
@@ -72,7 +81,7 @@ All rows are GM-owned content, not public disclosure grants. Source paths and ex
 | `adversary:pale-court-thrall:pack-pressure` | Passive | supported (bounded native presence) | pack_pressure | `86d4ebc68823a9e5` |
 | `adversary:pale-court-thrall:break-the-hold` | Reaction | review_only | unmapped | `cf7bf4fbdb01e9b3` |
 | `adversary:aster-vale-contractor:professional-entry` | Passive | review_only | unmapped | `f66ba265a8139184` |
-| `adversary:aster-vale-contractor:flashbang` | Action | review_only | flashbang | `8c481c1b7ba6cbc0` |
+| `adversary:aster-vale-contractor:flashbang` | Action | supported (bounded native owner choice) | flashbang_owner_choice | `8c481c1b7ba6cbc0` |
 | `adversary:aster-vale-occult-analyst:mark-the-variable` | Action | review_only | unmapped | `7a4b6412c0eff2de` |
 | `adversary:aster-vale-occult-analyst:readout` | Reaction | review_only | unmapped | `fa6da860d53ca540` |
 | `adversary:static-wraith:ride-the-current` | Passive | review_only | unmapped | `96a8990dd782bd60` |
@@ -107,7 +116,7 @@ All rows are GM-owned content, not public disclosure grants. Source paths and ex
 | `adversary:ritual-enforcement-team:null-foam` | Action | review_only | null_foam | `56e5fcfe6ab7ad83` |
 | `adversary:ritual-enforcement-team:coordinated-volley` | Action | supported | coordinated_volley | `8d86763434197c32` |
 | `adversary:traffic-saint:right-of-way` | Passive | review_only | unmapped | `b914a830882cb33a` |
-| `adversary:traffic-saint:all-lanes-stop` | Action | review_only | all_lanes_stop | `6116bc4cd4facead` |
+| `adversary:traffic-saint:all-lanes-stop` | Action | supported (bounded native group reactions) | all_lanes_stop_group | `6116bc4cd4facead` |
 | `adversary:skin-thief:perfect-surface` | Passive | review_only | unmapped | `b893fc1a1dfcbc07` |
 | `adversary:skin-thief:borrow-a-memory` | Reaction | review_only | unmapped | `e328b5a2e51f79c5` |
 | `adversary:skin-thief:wear-the-doubt` | Action | review_only | unmapped | `fbb7973191531112` |

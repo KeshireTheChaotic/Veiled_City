@@ -5,6 +5,7 @@ import { activeCityProxy } from "./city-constraints.js";
 import { motivationKey } from "./simulation-motivation.js";
 import { UserInputError, StateConflictError } from "./errors.js";
 import { activeEvidence } from "./epistemic.js";
+import {nativeMovementConditionIssue} from './native-group-features.js';
 export const RANGE_BANDS=["Melee","Very Close","Close","Far","Very Far"];
 export function currentScene(db,guildId){
   const session=db.getActiveSession(guildId);if(!session) throw new StateConflictError("Active session required for occupancy.");
@@ -153,6 +154,13 @@ export function recordScenePresence(db,guildId,input,actorId){
     &&(source.visibility!==boundary.visibility||source.subject_key!==boundary.subject_key)) throw new StateConflictError("Private source requires a legitimate disclosure event.");
   const key=presenceKey(scene.key,type,entity),before=db.getCityRecord(guildId,"scene_presence",key);
   if(before?.source_event===input.source_event) return before;
+  if(type==='character'&&before?.data.state==='actually_present'&&state==='actually_present'
+    &&(before.location_key!==location||before.data.zone!==zone)){
+    // Descriptive range-to-an-observer is not proof of the distance moved. Until a native
+    // within-Very-Close movement adapter supplies that proof, hold relocation, not narration.
+    const issue=nativeMovementConditionIssue(db,guildId,entity);
+    if(issue)throw new StateConflictError(issue+'; native step-distance proof or feature expiry required.');
+  }
   if(before?.data.state==="departed"&&state==="actually_present"&&!['arrival','travel'].includes(source.kind))
     throw new StateConflictError("Reappearance requires a sourced arrival or completed travel.");
   return db.transaction(()=>{

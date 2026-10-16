@@ -4,6 +4,7 @@ import { conversationPrincipal } from "./conversation-principal.js";
 import { personalCharacter } from "./personal-continuity.js";
 import { indexWorldEvent, cityAudit, cityObject } from "./city-calendar.js";
 import { currentScene, recordScenePresence } from "./scene-continuity.js";
+import {nativeMovementConditionIssue} from './native-group-features.js';
 import { activeCityProxy } from "./city-constraints.js";
 import { configureSimulationEntity } from "./simulation.js";
 import { validateMinorIdentity } from "./city-depth.js";
@@ -332,6 +333,8 @@ function applyWorld(db,guild,narrative,scope,provenance,content){
     const latest=db.getCharacter(pc.id);
     if(action.kind==="move"){
       assertPcCanAct(latest,db,guild);
+      const conditionIssue=nativeMovementConditionIssue(db,guild,latest.id);
+      if(conditionIssue)fail(conditionIssue+'; no source-verified within-Very-Close movement adapter.');
       const semantic=currentTypedMovement(db,guild,latest,action.source_span,target,scope,source.event_key);
       if(!semantic&&!entrySource)
         fail("Movement requires current verified typed intent authorization or an explicit revalidated legacy scene entry.");

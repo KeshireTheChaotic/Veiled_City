@@ -14,8 +14,9 @@ import {featureDisposition} from './native-feature-catalog.js';
 import {authorizeFeatureChoice,reserveFeatureWindow,pendingFeatureWindows} from './native-feature-windows.js';
 import {nativeAlliancePlan} from './native-encounter-relations.js';
 import {nativeFeatureReviewContract} from './native-house-errata.js';
+import {isGroupFeature,planGroupFeature} from './native-group-features.js';
 
-export const UNIFIED_ARBITRATION_PROMPT='Evaluate unified_arbitration in this SAME GM call. Accepted typed intents are canonical adjudication inputs; human declarations own intent; native receipts own outcomes. Select player:<original player_intents index> or exact shared/NPC intent_ref. NPC proposals select native local actor and native knowledge refs; no PC declaration or secret disclosure may be invented. Each decision needs current rules, reason, stakes before dice, and justified Difficulty for an action/reaction. NPC attack uses actual PC Evasion, never invented Difficulty. Ordinary NPC fiction normally uses npc_no_roll. PC roll questions are adjudication only: player alone executes dice. A feature decision uses proposal_version=2 and the EXACT trigger_ref and feature_ref from feature_windows; a Reaction does not mint normal spotlight. Blood Rush currently permits Stress recovery while electing the current position only; other relocation remains reviewed. Unsupported features/proxies/PvP remain review/consent. Do not emit duplicate gm_ruling/native_adjudication for a unified decision. No dice faces, role waiver, outcome or automatic Fear spending. For an explicit GM-owned alliance choice between currently active local unproxied NPC combatants, use set_allies or clear_allies, exact other NPC target_refs, npc_no_roll, srd:gm-moves, stakes=none, no feature or dice. This does not enroll PCs or prove a powered device, movement, NPC knowledge or disclosure. Group membership and relationship scores alone never grant Local Mesh.';
+export const UNIFIED_ARBITRATION_PROMPT='Evaluate unified_arbitration in this SAME GM call. Accepted typed intents are canonical adjudication inputs; human declarations own intent; native receipts own outcomes. Select player:<original player_intents index> or exact shared/NPC intent_ref. NPC proposals select native local actor and native knowledge refs; no PC declaration or secret disclosure may be invented. Each decision needs current rules, reason, stakes before dice, and justified Difficulty for an action/reaction. NPC attack uses actual PC Evasion, never invented Difficulty. Ordinary NPC fiction normally uses npc_no_roll. PC roll questions are adjudication only: player alone executes dice. A triggered feature decision uses proposal_version=2 and the EXACT trigger_ref and feature_ref from feature_windows; a Reaction does not mint normal spotlight. An action from action_features uses its specified proposal_version=1, exact feature_ref, operation, trait, Difficulty and source-derived target policy, stakes_kind=native_feature, no trigger_ref. Do not omit an entitled target from an all_in_range feature. Blood Rush currently permits Stress recovery while electing the current position only; other relocation remains reviewed. Unsupported features/proxies/PvP remain review/consent. Do not emit duplicate gm_ruling/native_adjudication for a unified decision. No dice faces, role waiver, outcome or automatic Fear spending. For an explicit GM-owned alliance choice between currently active local unproxied NPC combatants, use set_allies or clear_allies, exact other NPC target_refs, npc_no_roll, srd:gm-moves, stakes=none, no feature or dice. This does not enroll PCs or prove a powered device, movement, NPC knowledge or disclosure. Group membership and relationship scores alone never grant Local Mesh.';
 
 export function adjudicateSceneBoard(db,guild,origin,board,proposals,{library=new EncounterLibrary('../content')}={}){
   const o=inspectArbitrationOrigin(db,guild,origin);
@@ -45,10 +46,13 @@ export function adjudicateSceneBoard(db,guild,origin,board,proposals,{library=ne
       const feature=featureDisposition(p.feature_ref);
       reason=feature.reason; // Catalog membership alone never grants a feature capability.
       if(feature.status==='supported'){
-        native=feature.feature.native_handler==='coordinated_volley'
+        native=isGroupFeature(feature.feature.feature_key)
+          ?planGroupFeature(db,guild,o,entry,p,feature.feature,{library,opportunity:nativeGmOpportunity(db,guild,board)})
+          :feature.feature.native_handler==='coordinated_volley'
           ?inspectVolleyCandidate(db,guild,o,entry,p,feature.feature,{library,opportunity:nativeGmOpportunity(db,guild,board)})
           :authorizeFeatureChoice(db,guild,o,entry,p,feature.feature,{library});status=native.operation==='request_feature_reaction_roll'?'pending_pc_reaction':'gm_action_ready';
-        reason=native.operation==='commit_adversary_volley'
+        reason=native.operation==='commit_group_feature'?'Source-verified feature action only; each affected owner separately submits their reaction and choices.'
+          :native.operation==='commit_adversary_volley'
           ?'Current sourced GM spotlight and exact Volley targets; one shared native attack awaits owner defense, with independent target effects.'
           :'Exact native reaction occurrence only; no ordinary spotlight or player roll is inferred.';
       }else{
@@ -107,6 +111,10 @@ export function adjudicateSceneBoard(db,guild,origin,board,proposals,{library=ne
     }catch(error){
       if(!['GM_ARBITRATION','PC_EFFECT_AUTHORITY','PC_NATIVE_ELIGIBILITY'].includes(error.code))throw error;
       status='needs_rules_review';native=null;reason=error.message;
+      if(p.feature_ref){
+        review_contract=nativeFeatureReviewContract(p.feature_ref);
+        reason=`Missing native authority for this native handler: ${reason}`;
+      }
     }
     const data={version:1,board:board.record_key,entry:entry.intent_ref,entry_hash:hash(entry),proposal:p,proposal_hash:hash(p),
       origin:o.binding,scope:o.scope,rules:rules||[],reason,native,...(review_contract?{review_contract}:{}),authority:'GM ruling only; controller executes; native receipts own outcomes.'};
