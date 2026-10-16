@@ -10,6 +10,7 @@ bot/data/.gitkeep
 bot/package-lock.json
 bot/package.json
 bot/scripts/assembly-authority-test.mjs
+bot/scripts/audience-first-framework-test.mjs
 bot/scripts/audit-regression-test.mjs
 bot/scripts/autonomous-world-test.mjs
 bot/scripts/candidate-claim-quarantine-test.mjs
@@ -212,6 +213,7 @@ bot/src/assembly-delivery.js
 bot/src/assembly-publications.js
 bot/src/assembly-readiness.js
 bot/src/assembly-state.js
+bot/src/audience-first-capability.js
 bot/src/authored-candidates.js
 bot/src/authored-turn-envelope.js
 bot/src/authority-policy.js
@@ -287,10 +289,12 @@ bot/src/legacy-authority.js
 bot/src/location-language.js
 bot/src/logger.js
 bot/src/long-projects.js
+bot/src/mechanical-boundary-v9.js
 bot/src/memory-clusters.js
 bot/src/memory-lifecycle.js
 bot/src/message-span-ledger.js
 bot/src/movement-language.js
+bot/src/narrative-acts-v9.js
 bot/src/narrative-artifacts.js
 bot/src/narrative-authority-context.js
 bot/src/narrative-authority.js
@@ -304,6 +308,7 @@ bot/src/narrative-pvp.js
 bot/src/narrative-records.js
 bot/src/narrative-salience.js
 bot/src/narrative-speakers.js
+bot/src/narrative-tasks-v9.js
 bot/src/narrative-tasks.js
 bot/src/native-hook-output.js
 bot/src/native-notice.js
@@ -479,6 +484,9 @@ docker-compose.yml
 docs/ACCESSIBILITY.md
 docs/API_COSTS_2026-10-01.md
 docs/ASSEMBLY_DELIVERY_HARDENING.md
+docs/AUDIENCE_FIRST_V9_EXECUTION_LEDGER.md
+docs/AUDIENCE_FIRST_V9_IMPLEMENTATION_PLAN.md
+docs/AUDIENCE_FIRST_V9_PURGE_LEDGER.md
 docs/BOT_COMMANDS.md
 docs/CANON_LEDGER.md
 docs/CHANGELOG_v3.2.0_DISCORD.md
@@ -515,7 +523,6 @@ docs/CODEX_TYPED_INTENT_REFINEMENT_PLAN_v5.md
 docs/CODEX_VEILED_CITY_10_2_DELEGATION_QUALITY_PLAN.md
 docs/CODEX_VEILED_CITY_NARRATIVE_AUTHORITY_IMPLEMENTATION_PLAN.md
 docs/CODEX_VEILED_CITY_PLAYABLE_NARRATION_REPAIR_PLAN.md
-docs/CODEX_VEILED_CITY_SEMANTIC_REPLACEMENT_PLAN.md
 docs/CODEX_VEILKEEPER_SESSION5_NARRATIVE_LATENCY_PLAN.md
 docs/CODE_STANDARDS.md
 docs/COMBAT_STATE.md
@@ -708,4 +715,5 @@ docs/Veiled_City_V96_Revised_Implementation_Plan.md
 docs/WORLD_DIRECTOR.md
 docs/apply_validation_reporter.py
 docs/experiments/v96-05r-boundary-probe.mjs
+docs/rework/AUDIENCE_FIRST_V9_IMPLEMENTATION_PLAN.md
 docs/self_test_reporter.py

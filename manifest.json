@@ -1,6 +1,6 @@
 {
   "package": "Veiled_City_Multiplayer_Discord",
-  "version": "10.2.0",
+  "version": "0.0.0.1",
   "generated": "2026-10-16",
   "content_normalization": "utf8-lf",
   "files": [
@@ -31,8 +31,8 @@
     },
     {
       "path": "README.md",
-      "size_bytes": 22576,
-      "sha256": "12e812c0cc2961a5f95801ef11e89a605ebc043e23fda255a5ec9743270dc243"
+      "size_bytes": 22578,
+      "sha256": "ca3b87180646bfa6b4e0213fc5c81c1a49ffeec294660bb05eddf0d801e04222"
     },
     {
       "path": "bot/.env.example",
@@ -51,18 +51,23 @@
     },
     {
       "path": "bot/package-lock.json",
-      "size_bytes": 34546,
-      "sha256": "40f84dff6083d4b059e19139873bfdc37771391e813a5ae7a52787690c3643b1"
+      "size_bytes": 34548,
+      "sha256": "0fe3a2e247c92e85dce61ef384daffe3c9226dff8226f67b59e0393579335f8d"
     },
     {
       "path": "bot/package.json",
-      "size_bytes": 2704,
-      "sha256": "22567ffe8ea9f041c81d499e89dbc68c7a8eb0411a6a41ae8fb698354991c21c"
+      "size_bytes": 2705,
+      "sha256": "32b74a6488ae115348267b49681385954274fa928e9eec28469b435e7ba8ef75"
     },
     {
       "path": "bot/scripts/assembly-authority-test.mjs",
       "size_bytes": 14981,
       "sha256": "f633a625af804f44d122f2a88fe089bc7c92f9c460db18d5c05bfd7337999aef"
+    },
+    {
+      "path": "bot/scripts/audience-first-framework-test.mjs",
+      "size_bytes": 6172,
+      "sha256": "2a8e53109003d45e47ce7a2f52fe2bebb8821bac373503b3d7647ee4fad2d62d"
     },
     {
       "path": "bot/scripts/audit-regression-test.mjs",
@@ -576,8 +581,8 @@
     },
     {
       "path": "bot/scripts/release-version.mjs",
-      "size_bytes": 917,
-      "sha256": "859e66b6853ebec3f165e03bd76bd3f37c47ae8814436cfae702c57afe99e040"
+      "size_bytes": 1310,
+      "sha256": "0c1f666fe6113cb4c32ba8714a65869c2f9fd7012cfd501cddb8d6f7154f1ac1"
     },
     {
       "path": "bot/scripts/rules-adjudication-test.mjs",
@@ -676,8 +681,8 @@
     },
     {
       "path": "bot/scripts/sync-release.mjs",
-      "size_bytes": 1977,
-      "sha256": "66d95983f7b98d265f1f151e005dc81495efaf8da8bb567011398c3e9be76a3c"
+      "size_bytes": 2129,
+      "sha256": "78b6293b533450989e0e92fbf421134665c14e831622f5804e60709c645d582e"
     },
     {
       "path": "bot/scripts/systems-to-players-1-test.mjs",
@@ -1075,6 +1080,11 @@
       "sha256": "8fbce3c45d5a99c8fcb5c10b24f3a7123a410ac68cf7be2df777b905e939afee"
     },
     {
+      "path": "bot/src/audience-first-capability.js",
+      "size_bytes": 3304,
+      "sha256": "fbbc18a414ba12d29ce1a02373984634d99407601b9bdaaeda6b2453332c8727"
+    },
+    {
       "path": "bot/src/authored-candidates.js",
       "size_bytes": 8558,
       "sha256": "8929889d18f3721600b8da51c0910e5b66d5cfa92d2d6a03e503d0b8eaeab919"
@@ -1450,6 +1460,11 @@
       "sha256": "ded0337b9ffc24dc57c3e6f67424f3516884c0d37053f2377a7eed7d1c77ba72"
     },
     {
+      "path": "bot/src/mechanical-boundary-v9.js",
+      "size_bytes": 3526,
+      "sha256": "f42459ef01a860520d1cf5d4857d7dbe00c10eec578fdc1973f64c5977133e32"
+    },
+    {
       "path": "bot/src/memory-clusters.js",
       "size_bytes": 8064,
       "sha256": "9f41f6249135ffe74d4dc5e038989b2c0fb79277b2938b29557d975c22e1d0e0"
@@ -1468,6 +1483,11 @@
       "path": "bot/src/movement-language.js",
       "size_bytes": 3261,
       "sha256": "ce0315a1df2b8aa2377911cd22215a95b7db31c5b811daa93627a70a72a1ba66"
+    },
+    {
+      "path": "bot/src/narrative-acts-v9.js",
+      "size_bytes": 2962,
+      "sha256": "eff47b971d9ee1e16c4a603668da26d1d08ceca8521b8785a0c768a4c1e18a64"
     },
     {
       "path": "bot/src/narrative-artifacts.js",
@@ -1533,6 +1553,11 @@
       "path": "bot/src/narrative-speakers.js",
       "size_bytes": 3926,
       "sha256": "967614f3f712ac42c5cf9cf9b429f1a74b82d0105af010dcf5de5f0627d63785"
+    },
+    {
+      "path": "bot/src/narrative-tasks-v9.js",
+      "size_bytes": 2054,
+      "sha256": "5e6c1cc8dab4e18b1bf691dbb80cd668cba00f2adff61e94827e7d25f126b7a3"
     },
     {
       "path": "bot/src/narrative-tasks.js",
@@ -2410,6 +2435,21 @@
       "sha256": "a70120a28cb75d6b52e34d44c07a267cd4e0472d6c4d81db08e791c2dda768fd"
     },
     {
+      "path": "docs/AUDIENCE_FIRST_V9_EXECUTION_LEDGER.md",
+      "size_bytes": 1842,
+      "sha256": "ed12a1d6c075f6ca529bc3d2be20fa93937d0802735b5f76b802b1246dc4aac2"
+    },
+    {
+      "path": "docs/AUDIENCE_FIRST_V9_IMPLEMENTATION_PLAN.md",
+      "size_bytes": 19799,
+      "sha256": "27a0b931254ca04cf044134e995d41d5952bffc3abc7938277d21ab3815ddb8e"
+    },
+    {
+      "path": "docs/AUDIENCE_FIRST_V9_PURGE_LEDGER.md",
+      "size_bytes": 5683,
+      "sha256": "023011022702ae0c2c8d018be15104cef1157bc6adee2cde678051f570be2625"
+    },
+    {
       "path": "docs/BOT_COMMANDS.md",
       "size_bytes": 9296,
       "sha256": "f367487c491701054a86ca4205e7b58c2b6e408e248be7414a1403f85ee3a2ee"
@@ -2588,11 +2628,6 @@
       "path": "docs/CODEX_VEILED_CITY_PLAYABLE_NARRATION_REPAIR_PLAN.md",
       "size_bytes": 23289,
       "sha256": "3a63c4a155779687d6930a1540b828160988c97c7e4714d0be3e0a6f53d670f6"
-    },
-    {
-      "path": "docs/CODEX_VEILED_CITY_SEMANTIC_REPLACEMENT_PLAN.md",
-      "size_bytes": 27435,
-      "sha256": "74c1e986706381ffedf11df6cd56d3ba6a8a0657b1dcd794c2cb9f9c9f44436c"
     },
     {
       "path": "docs/CODEX_VEILKEEPER_SESSION5_NARRATIVE_LATENCY_PLAN.md",
@@ -3553,6 +3588,11 @@
       "path": "docs/experiments/v96-05r-boundary-probe.mjs",
       "size_bytes": 2986,
       "sha256": "dfcfd7f2e5808aa1ad9bce6d1d797ac75ba77feb008d247850ec90804109ba31"
+    },
+    {
+      "path": "docs/rework/AUDIENCE_FIRST_V9_IMPLEMENTATION_PLAN.md",
+      "size_bytes": 18625,
+      "sha256": "49438a0eb30ae12b6ed3255a9e9809d8ec8e8b4b79d8bc290aa88089978ac28d"
     },
     {
       "path": "docs/self_test_reporter.py",
