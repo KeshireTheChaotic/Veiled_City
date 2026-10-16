@@ -323,6 +323,8 @@ bot/src/narrative-speakers.js
 bot/src/narrative-tasks-v9.js
 bot/src/narrative-tasks.js
 bot/src/narrative-writer-v9.js
+bot/src/native-feature-catalog.js
+bot/src/native-feature-definitions.json
 bot/src/native-hook-output.js
 bot/src/native-notice.js
 bot/src/native-outcome-output.js
@@ -628,6 +630,8 @@ docs/TYPED_INTENT_DELTA_AUDIT.md
 docs/TYPED_INTENT_MIGRATION.md
 docs/TYPED_INTENT_PROGRESS.md
 docs/TYPED_INTENT_RELEASE_10.0.0.md
+docs/UNIFIED_ARBITRATION_ADVANCED_LEDGER.md
+docs/UNIFIED_ARBITRATION_FEATURE_COVERAGE.md
 docs/UNIFIED_GM_ARBITRATION.md
 docs/UPGRADE_3.0_TO_3.1.md
 docs/UPGRADE_3.1.1_TO_3.1.2.md

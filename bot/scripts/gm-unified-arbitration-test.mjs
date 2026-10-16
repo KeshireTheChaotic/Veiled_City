@@ -269,4 +269,49 @@ const cases=[
  ['F2-GM','24','stale native attack source denies before GM RNG',f=>{const x=incoming(f);f.db.db.prepare("UPDATE world_events SET status='retracted' WHERE guild_id=? AND event_key=?").run(f.guild,x.row.data.offer.input.source);assert.throws(()=>rollIncomingAttack(f.db,f.guild,'gm',x.row.record_key,{gm:true,library:x.library,rng:()=>assert.fail('no unauthorized RNG')}));}],
 
 ];
+cases.push(
+ ['UA6','01','feature catalog pins every source occurrence without granting execution',async()=>{
+   const {compileNativeFeatures,featureDisposition}=await import('../src/native-feature-catalog.js');
+   const rows=compileNativeFeatures();assert.equal(rows.length,152);assert.equal(new Set(rows.map(r=>r.feature_key)).size,152);
+   assert.equal(rows.filter(r=>r.actor_kind==='adversary').length,104);assert.equal(rows.filter(r=>r.actor_kind==='environment').length,48);
+   assert.equal(new Set(rows.filter(r=>r.actor_kind==='adversary').map(r=>r.actor_name)).size,41);
+   assert.equal(new Set(rows.filter(r=>r.actor_kind==='environment').map(r=>r.actor_name)).size,16);
+   for(const r of rows){assert.match(r.source_hash,/^[a-f0-9]{64}$/);assert.match(r.template_hash,/^[a-f0-9]{64}$/);
+     assert(Object.isFrozen(r));assert.notEqual(featureDisposition(r.feature_key).status,'supported');}
+ }],
+ ['UA6','02','typed representative descriptors distinguish action reaction passive and defense',async()=>{
+   const {compileNativeFeatures}=await import('../src/native-feature-catalog.js'),rows=compileNativeFeatures(),get=(actor,name)=>rows.find(r=>r.actor_name===actor&&r.name===name);
+   assert.equal(get('Static Wraith','Feedback').trigger_kind,'on_pc_action');assert.equal(get('Static Wraith','Feedback').roll_protocol,'pc_reaction_each');
+   assert.deepEqual(get('Static Wraith','Feedback').costs,[{resource:'npc_stress',amount:1}]);
+   assert.equal(get('Choir Relay','Route Around').trigger_kind,'before_damage_applied');
+   assert.equal(get('Pale Court Thrall','Pack Pressure').roll_protocol,'none');
+   assert.equal(get('Traffic Saint','All Lanes Stop').target_policy,'all_in_range');
+   assert.equal(get('Occult Crime Scene','Sirens Outside').roll_protocol,'none');
+   assert.equal(get('Pale Court Townhouse','Ownership Bites').trigger_kind,'on_scene_event');
+   assert.equal(rows.filter(r=>r.status==='needs_authoring').length,1);
+ }],
+ ['UA6','03','changed feature text or stats and forged handler status fail catalog validation',async()=>{
+   const {compileNativeFeatures,featureDisposition}=await import('../src/native-feature-catalog.js');
+   const adversaries=JSON.parse(fs.readFileSync('../content/GM_PRIVATE/ADVERSARIES/adversaries.json','utf8'));
+   const environments=JSON.parse(fs.readFileSync('../content/GM_PRIVATE/ENVIRONMENTS/environments.json','utf8'));
+   const changed=structuredClone(adversaries);changed[0].features[0]+=' Model grants +99.';
+   assert.throws(()=>compileNativeFeatures({adversaries:changed,environments}),/source/);
+   const stats=structuredClone(adversaries);stats[0].attack='+99';assert.throws(()=>compileNativeFeatures({adversaries:stats,environments}),/source/);
+   assert.equal(featureDisposition('model:invented').status,'needs_rules_review');
+   assert.equal(featureDisposition({feature_key:'adversary:static-wraith:feedback',status:'supported',native_handler:'eval'}).status,'needs_rules_review');
+ }],
+ ['UA6','04','registered unmapped and unregistered feature proposals remain private holds with no costs or dice',async f=>{
+   const {compileNativeFeatures}=await import('../src/native-feature-catalog.js');
+   const feature=compileNativeFeatures().find(r=>r.actor_name==='Static Wraith'&&r.name==='Feedback');
+   const x=boardFixture(f),board=buildSceneIntentBoard(f.db,f.guild,x.origin,x.rows,[{...x.proposal,operation:'feature'},{...x.proposal,operation:'reaction'}]);
+   const before=structuredClone(f.db.getCharacter(x.pc.id).data.resources),fear=f.db.getCampaign(f.guild).fear;
+   const rows=adjudicateSceneBoard(f.db,f.guild,x.origin,board,board.data.entries.filter(e=>e.actor.type==='npc').map((e,i)=>
+     ({...decision(e.intent_ref,'native_feature_resolution'),feature_ref:i?'model:invented':feature.feature_key,stakes_kind:'native_feature'})));
+   assert(rows.every(r=>r.status==='needs_rules_review'&&r.visibility==='gm'&&!r.data.native));
+   assert(rows[0].data.reason.includes('native handler'));assert(rows[1].data.reason.includes('Unregistered'));
+   executeUnifiedGmActions(f.db,f.guild,rows,{rng:()=>assert.fail('no unsupported RNG')});
+   assert.equal(f.db.listCityRecords(f.guild,{kind:'gm_action_cost_receipt',includeGM:true}).length,0);
+   assert.equal(f.db.getCampaign(f.guild).fear,fear);assert.deepEqual(f.db.getCharacter(x.pc.id).data.resources,before);
+ }]
+);
 for(const [phase,id,name,body] of cases)test(`${phase} AF${id} ${name}`,()=>nativeFixture(body));
