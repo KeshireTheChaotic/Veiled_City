@@ -57,6 +57,9 @@ import {nativeOutcomeSchema,narrativeRequestSchema} from './gm-fiction-schema.js
 import {coordinateNarrative,narrativeModel} from './narrative-delegation.js';
 import {bindDirectorNarrativeSource} from './narrative-director-source.js';
 import {buildNarrativeContext} from './narrative-authority-context.js';
+import {createArbitrationOrigin,arbitrationPromptBoard,bindArbitrationTurn} from './scene-intent-board.js';
+import {unifiedArbitrationSchema} from './gm-arbitration-contract.js';
+import {UNIFIED_ARBITRATION_PROMPT} from './gm-unified-arbitration.js';
 import {narrativeResponseV9Schema,NARRATIVE_V9_INSTRUCTIONS,NATIVE_CLAUSE_INSTRUCTIONS} from './narrative-writer-v9.js';
 
 const routerSchema={
@@ -788,12 +791,18 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
       sections.push({label:"SOURCED CONTEXT PLAN (GM-only, never actor omniscience)",
         value:referenceContextPlan(ctx.context_plan,ctx.gm_all_facts),required:true});
     }
+    let arbitrationOrigin=null;
+    if(this.db.getCityCalendar(guildId).flags.gm_discretion===true&&this.db.getCityCalendar(guildId).flags.narrative_authority===true&&messageId&&ctx.actor_assignment?.character_id){
+      arbitrationOrigin=createArbitrationOrigin(this.db,guildId,{mode:scope,actorUserId,actorCharacterId:ctx.actor_assignment.character_id},worldInputKey(messageId,ctx.actor_assignment.character_id));
+      sections.push({label:'SOURCE-VALID SCENE INTENT BOARD',value:{...arbitrationPromptBoard(this.db,guildId,arbitrationOrigin),instructions:UNIFIED_ARBITRATION_PROMPT},required:true});
+    }
     // structuredResponse appends these fixed wrappers on every request; reserve them in addition to bounded correction headroom.
     const reserveChars=6000+(instructions.includes(AUTHORITY_POLICY)?0:AUTHORITY_POLICY.length+1)
       +INTENT_PROMPT.length+GM_WORLD_NARRATIVE_PROMPT.length+8;
     const {input}=budgetTurnPrompt(referenceTurnStorage(sections,{guildId,
       scope:{mode:scope,actorUserId,actorCharacterId:ctx.actor_assignment?.character_id}}),{instructions,query:messageText,reserveChars});
-    const turnSchema=ctx.decision_advisory?{...gmSchema,properties:{...gmSchema.properties,decision_advisory:requiredDecisionAdvisorySchema}}:gmSchema;
+    let turnSchema=ctx.decision_advisory?{...gmSchema,properties:{...gmSchema.properties,decision_advisory:requiredDecisionAdvisorySchema}}:gmSchema;
+    if(arbitrationOrigin)turnSchema={...turnSchema,properties:{...turnSchema.properties,unified_arbitration:unifiedArbitrationSchema},required:[...turnSchema.required,'unified_arbitration']};
     const req={
       model:this.config.routineGmModel||this.config.gmModel,
       instructions,
@@ -802,6 +811,7 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
     };
     if(this.config.reasoningEffort) req.reasoning={effort:this.config.reasoningEffort};
     const validateCore=(result,inspectStaged=null)=>{
+      if(arbitrationOrigin)bindArbitrationTurn(result,arbitrationOrigin);
       const providedIntents=Array.isArray(result.player_intents);
       // Old non-authoritative fixtures may omit this strict-schema field, but omission never synthesizes action authority.
       if(!providedIntents&&(result.scene_actions||[]).some(action=>action.kind==='move'))

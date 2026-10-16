@@ -3,7 +3,7 @@ import {createHash} from "node:crypto";
 import {adjudicateAcceptedIntent,selectRuleBasis} from "./rules-arbitration.js";
 import {consentAction,historicalActionSource} from "./action-consent.js";
 import {conversationPrincipal} from "./conversation-principal.js";
-import {currentScene} from "./scene-continuity.js";
+import {currentScene,scenePresence} from "./scene-continuity.js";
 import {isPvpIntent} from "./pvp-authority.js";
 import {assertPcCanAct} from "./pc-native-eligibility.js";
 import {resolveRuleReferences} from "./rule-reference-catalog.js";
@@ -41,6 +41,14 @@ function eligibleContext(event,scene,location,scope){
     &&event.session_id===scene.session_id&&event.scene===scene.key&&(!event.location_key||event.location_key===location)
     &&(["party","public"].includes(event.visibility)||scope.mode==="private"&&event.visibility==="character"
       &&event.subject_key===scope.actorCharacterId);
+}
+/** Native scene geometry is ruling context, never evidence of player success or invented danger. */
+export function nativeGmSceneContext(db,guild,scope){
+  const scene=currentScene(db,guild),pc=db.getCharacter(scope.actorCharacterId),presence=pc&&scenePresence(db,guild,'character',pc.id),
+    place=pc?.data.location&&db.getSimulationEntity(guild,'location',pc.data.location),source=presence&&db.getWorldEvent(guild,presence.source_event);
+  if(!place||presence?.data.state!=='actually_present'||presence.location_key!==pc.data.location||source?.status!=='active'
+    ||!(['party','public'].includes(source.visibility)||scope.mode==='private'&&source.visibility==='character'&&source.subject_key===pc.id))return null;
+  const data={scene:scene.key,session:scene.session_id,place,presence,source};return {ref:`native-scene:${hash(data)}`,data};
 }
 /** Read-only, bounded evidence inventory. Player declarations and GM/private-other facts cannot certify ordinary scene facts. */
 export function gmRulingContext(db,guild,scope){
@@ -91,8 +99,9 @@ export function adjudicateGmRuling(db,guild,acceptedKey,proposal,scope,recovery=
     }else if(Object.keys(recovery).length)throw new Error("Closed native recovery context required.");
     if(accepted.status==="resolved"&&!prior)throw new Error("Historical completion cannot authorize a new ruling interpretation.");
     if(prior&&prior.data.proposal_hash!==proposalHash)throw new Error("Ruling terms changed; explicit revision/review is required.");
-    const evidence=proposal.context_refs.map(ref=>db.getWorldEvent(guild,ref));
-    const contextValid=evidence.length>0&&evidence.every(event=>eligibleContext(event,p.scene,p.pc.data.location,scope));
+    const nativeContext=nativeGmSceneContext(db,guild,scope);
+    const evidence=proposal.context_refs.map(ref=>ref===nativeContext?.ref?nativeContext:db.getWorldEvent(guild,ref));
+    const contextValid=evidence.length>0&&evidence.every(event=>event===nativeContext||eligibleContext(event,p.scene,p.pc.data.location,scope));
     const contextHash=contextValid?hash(evidence):null;
     if(prior&&prior.data.context_hash&&(prior.data.context_hash!==contextHash||prior.data.location!==p.pc.data.location))
       throw new Error("Ruling context/evidence changed; stale authority cannot be replayed.");
@@ -102,7 +111,8 @@ export function adjudicateGmRuling(db,guild,acceptedKey,proposal,scope,recovery=
     else if(proposal.disposition==="needs_review")review="PROPOSED_REVIEW";
     else if(proposal.capability.kind!=="mundane"||proposal.capability.ref)review="CAPABILITY_ADAPTER_REQUIRED";
     else if(!["observation","attempt_only"].includes(proposal.effect_class)
-      ||["move","local_zone","roll","consent"].includes(accepted.data.type))review="NATIVE_EFFECT_ADAPTER_REQUIRED";
+      ||["move","local_zone","consent"].includes(accepted.data.type)
+      ||accepted.data.type==='roll'&&accepted.data.operation!=='request_roll')review="NATIVE_EFFECT_ADAPTER_REQUIRED";
     else if(!contextValid)review="CONTEXT_UNVERIFIED";
     const specifiedRule=proposal.saved_ruling_key||proposal.override_refs.length||proposal.raw_refs.length
       ||proposal.house_refs.length||proposal.homebrew_refs.length;

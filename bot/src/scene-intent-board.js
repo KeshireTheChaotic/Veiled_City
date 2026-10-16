@@ -32,19 +32,32 @@ export function arbitrationPromptBoard(db,guild,origin){
   const o=inspectArbitrationOrigin(db,guild,origin);
   return {version:1,source:o.binding.source,scene:o.binding.scene,location:o.binding.location,audience:o.scope.mode,
     npc_candidates:o.eligible.map(n=>({actor_key:n.key,intent_refs:n.intents,objective_refs:n.objectives,known_source_refs:n.source_refs})),
+    shared_player_inputs:sharedSceneInputs(db,guild,o).map(row=>({intent_ref:row.record_key,actor:row.data.actor,source_span:row.data.source_span,operation:row.data.operation})),
     player_input_refs:'player:0..15 select exact current player_intents index, then native accepted source; not an outcome or dice authorization'};
 }
 export function bindArbitrationTurn(result,origin){bindings.set(result,origin);return result;}
 export const arbitrationTurnOrigin=result=>bindings.get(result)||null;
+function sharedSceneInputs(db,guild,o){
+  if(o.scope.mode==='private')return [];
+  return db.listCityRecords(guild,{kind:'typed_intent',includeGM:true,limit:100}).filter(row=>{
+    const p=scenePresence(db,guild,'character',row.data.actor);
+    return row.status==='accepted_for_adjudication'&&['party','public'].includes(row.visibility)&&row.data.scene===o.binding.scene
+      &&row.data.session_id===o.binding.session&&p?.data.state==='actually_present'&&p.location_key===o.binding.location;
+  }).slice(0,12);
+}
+export function currentScenePlayerInputs(db,guild,origin,rows){
+  const o=inspectArbitrationOrigin(db,guild,origin);
+  return [...new Map([...rows,...sharedSceneInputs(db,guild,o)].map(row=>[row.record_key,row])).values()].slice(0,16);
+}
 export function buildSceneIntentBoard(db,guild,origin,playerRows=[],npcProposals=[]){
   const o=inspectArbitrationOrigin(db,guild,origin),entries=[];
   if(playerRows.length>16||npcProposals.length>4)throw fail('board_budget');
   for(const row of playerRows){
     const proof=row.status==='resolved'?historicalActionSource(db,guild,row.record_key,{resolved:true}):consentAction(db,guild,row.record_key);
-    if(!narrativeSourceVisible(db,guild,row.source_event,o.scope)||row.data.world_source_event!==o.binding.source
-      ||row.data.actor!==o.scope.actorCharacterId||row.data.owner_user_id!==o.scope.actorUserId)throw fail('player_source_audience');
+    const triggering=row.data.world_source_event===o.binding.source&&row.data.actor===o.scope.actorCharacterId&&row.data.owner_user_id===o.scope.actorUserId;
+    if(!narrativeSourceVisible(db,guild,row.source_event,o.scope)||!triggering&&!sharedSceneInputs(db,guild,o).some(r=>r.record_key===row.record_key))throw fail('player_source_audience');
     if(!Number.isSafeInteger(row.data.sequence_index))throw fail('player_occurrence_index');
-    entries.push({intent_ref:row.record_key,proposal_ref:`player:${row.data.sequence_index}`,actor:{type:'character',key:row.data.actor,controller:'owner'},
+    entries.push({intent_ref:row.record_key,proposal_ref:triggering?`player:${row.data.sequence_index}`:row.record_key,actor:{type:'character',key:row.data.actor,controller:'owner'},
       source_ref:row.source_event,source_hash:row.data.source_hash,scene_ref:row.data.scene,session:row.data.session_id,
       operation:row.data.operation,target_refs:row.data.target_key?[row.data.target_key]:[],dependencies:row.data.dependencies||[],
       snapshot:hash([proof.source,proof.principal.user,proof.principal.revision,row.data.start,row.data.end,row.data.accepted_scope]),visibility:row.visibility,subject:row.subject_key||null});

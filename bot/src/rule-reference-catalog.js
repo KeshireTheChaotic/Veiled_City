@@ -1,6 +1,10 @@
 /** Versioned, bounded rule references that native adjudication may actually ground. */
 const SRD_VERSION="2.0 (2026-08-25)";
 const srd=new Map([
+  ["srd:gm-moves",{title:"Fiction-driven GM moves and spotlight",rollKinds:[],version:SRD_VERSION}],
+  ["srd:adversary-attacks",{title:"Adversary d20 attacks against Evasion",rollKinds:[],version:SRD_VERSION}],
+  ["srd:adversary-reactions",{title:"Adversary d20 reaction rolls",rollKinds:[],version:SRD_VERSION}],
+  ["srd:exceptional-adversary-actions",{title:"Exceptional independent adversary action rolls",rollKinds:[],version:SRD_VERSION}],
   ["srd:action-rolls",{title:"Action rolls and Duality Dice",rollKinds:["action","attack"],version:SRD_VERSION}],
   ["srd:reaction-rolls",{title:"Reaction rolls",rollKinds:["reaction"],version:SRD_VERSION}],
   ["srd:attack-rolls",{title:"Attack rolls",rollKinds:["attack"],version:SRD_VERSION}],

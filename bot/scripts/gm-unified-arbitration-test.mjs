@@ -6,12 +6,14 @@ import {setup} from './narrative-fixtures.mjs';
 import {sceneFictionHash as hash} from '../src/scene-fiction-context.js';
 import {nativeMechanicalOutput,nativeMechanicalInput} from '../src/mechanical-native-v9.js';
 import {persistPlayerIntents} from '../src/typed-intents.js';
-import {candidate} from './narrative-fixtures.mjs';
+import {candidate,run} from './narrative-fixtures.mjs';
 import {unifiedArbitrationSchema,matchesArbitrationSchema,ARBITRATION_DISPOSITIONS} from '../src/gm-arbitration-contract.js';
 import {createArbitrationOrigin,buildSceneIntentBoard,arbitrationPromptBoard} from '../src/scene-intent-board.js';
-function boardFixture(f,{privateScene=false}={}){
-  const x=setup(f,{text:'I inspect the counter.',privateScene});f.db.setCityCalendar(f.guild,{flags:{...f.db.getCityCalendar(f.guild).flags,gm_discretion:true,roll_requests:true,roll_collaboration:true}});npc(f);
-  const i={...candidate(x.text).player_intents[0],type:'search',operation:'inspect'},rows=persistPlayerIntents(f.db,f.guild,[i],x.scope,{messageId:x.messageId});
+import {adjudicateSceneBoard} from '../src/gm-unified-arbitration.js';
+const decision=(intent_ref,disposition='no_roll')=>({intent_ref,disposition,rule_basis_refs:['srd:action-rolls'],difficulty:null,trait:null,stakes:'none',reason:'Ordinary costless observation.',difficulty_reason:'',feature_ref:'',experience_ref:'',advantage:false,disadvantage:false});
+function boardFixture(f,{privateScene=false,rollQuestion=false}={}){
+  const x=setup(f,{text:rollQuestion?'Can I roll?':'I inspect the counter.',privateScene});f.db.setCityCalendar(f.guild,{flags:{...f.db.getCityCalendar(f.guild).flags,gm_discretion:true,roll_requests:true,roll_collaboration:true}});npc(f);
+  const i={...candidate(x.text).player_intents[0],type:rollQuestion?'roll':'search',operation:rollQuestion?'request_roll':'inspect'},rows=persistPlayerIntents(f.db,f.guild,[i],x.scope,{messageId:x.messageId});
   const origin=createArbitrationOrigin(f.db,f.guild,x.scope,x.sourceRef),proposal={actor_key:'attendant',operation:'speak',target_refs:[],objective_ref:'',source_refs:[],dependencies:[]};
   return {...x,rows,origin,proposal};
 }
@@ -40,6 +42,22 @@ function incoming(f){
 }
 
 const cases=[
+ ['AR2','06','combined GM production request arbitrates without an extra provider pass',async f=>{const x=boardFixture(f,{rollQuestion:true}),r=candidate(x.text);
+   r.player_intents[0]={...r.player_intents[0],type:'roll',operation:'request_roll'};
+   r.unified_arbitration={version:1,npc_intents:[],decisions:[{...decision('player:0','request_pc_action_roll'),difficulty:14,trait:'Finesse',stakes:'A delay if unsuccessful.',difficulty_reason:'A delicate current-scene task.'}]};
+   const out=await run(f,x,{version:9,acts:[]},r);
+   assert.equal(out.ai.requests.length,2);const saved=f.db.listCityRecords(f.guild,{kind:'gm_arbitration_decision',includeGM:true});assert.equal(saved.length,1);assert.equal(saved[0].status,'pending_pc_roll');
+   assert.equal(out.mutation.unifiedArbitration.length,1);}],
+ ['AR2','04','autonomous owner roll question prepares real pending dice without rolling',f=>{const x=boardFixture(f,{rollQuestion:true}),row=x.rows[0];
+   const source=indexWorldEvent(f.db,f.guild,{key:'ar-counter-evidence',kind:'observation',source_id:'gm',title:'A delicate mechanism is visible in the counter.',session_id:f.session.id,scene:currentScene(f.db,f.guild).key,location_key:'terminal',visibility:'party'},'gm');
+   const board=buildSceneIntentBoard(f.db,f.guild,x.origin,x.rows,[]),p={...decision('player:0','request_pc_action_roll'),difficulty:14,trait:'Finesse',stakes:'The mechanism jams on failure.',difficulty_reason:source.title};
+   const [r]=adjudicateSceneBoard(f.db,f.guild,x.origin,board,[p]);assert.equal(r.status,'pending_pc_roll');
+   assert(f.db.getCityRecord(f.guild,'roll_request',r.data.native.roll_request_ref));assert.equal(f.db.listCityRecords(f.guild,{kind:'roll_operation',includeGM:true}).length,0);
+   assert.equal(adjudicateSceneBoard(f.db,f.guild,x.origin,board,[p])[0].record_key,r.record_key);
+   assert.throws(()=>adjudicateSceneBoard(f.db,f.guild,x.origin,board,[{...p,difficulty:15}]));assert.equal(f.db.getCityRecord(f.guild,'typed_intent',row.record_key).status,'accepted_for_adjudication');}],
+ ['AR2','05','independent native NPC no-roll disposition survives unsupported feature hold',f=>{const x=boardFixture(f),board=buildSceneIntentBoard(f.db,f.guild,x.origin,x.rows,[x.proposal]),npcRef=board.data.entries[1].intent_ref;
+   const rows=adjudicateSceneBoard(f.db,f.guild,x.origin,board,[decision('player:0','native_feature_resolution'),{...decision(npcRef,'npc_no_roll'),rule_basis_refs:['srd:gm-moves']}]);
+   assert.equal(rows[0].status,'needs_rules_review');assert.equal(rows[1].status,'resolved_no_roll');assert.equal(f.db.getCharacter(x.pc.id).data.resources.hp.current,0);}],
  ['AR1','03','accepted occurrence identity is independent of mutable adjudication status',f=>{const x=boardFixture(f),first=buildSceneIntentBoard(f.db,f.guild,x.origin,x.rows,[]),row=x.rows[0];
    f.db.saveCityRecord(f.guild,{...row,key:row.record_key,status:'resolved',data:{...row.data,outcome_receipt:'native-test-terminal'}});
    assert.equal(buildSceneIntentBoard(f.db,f.guild,x.origin,[f.db.getCityRecord(f.guild,'typed_intent',row.record_key)],[]).record_key,first.record_key);}],
