@@ -11,8 +11,9 @@ import {nativeGmOpportunity,nativeReactionTarget} from './gm-action-capability.j
 import {inspectIncomingCandidate} from './pc-incoming.js';
 import {EncounterLibrary} from './encounter.js';
 import {featureDisposition} from './native-feature-catalog.js';
+import {authorizeFeatureChoice} from './native-feature-windows.js';
 
-export const UNIFIED_ARBITRATION_PROMPT='Evaluate unified_arbitration in this SAME GM call. Accepted typed intents are canonical adjudication inputs; human declarations own intent; native receipts own outcomes. Select player:<original player_intents index> or exact shared/NPC intent_ref. NPC proposals select native local actor and native knowledge refs; no PC declaration or secret disclosure may be invented. Each decision needs current rules, reason, stakes before dice, and justified Difficulty for an action/reaction. NPC attack uses actual PC Evasion, never invented Difficulty. Ordinary NPC fiction normally uses npc_no_roll. PC roll questions are adjudication only: player alone executes dice. Unsupported features/proxies/PvP remain review/consent. Do not emit duplicate gm_ruling/native_adjudication for a unified decision. No dice faces, role waiver, outcome or automatic Fear spending.';
+export const UNIFIED_ARBITRATION_PROMPT='Evaluate unified_arbitration in this SAME GM call. Accepted typed intents are canonical adjudication inputs; human declarations own intent; native receipts own outcomes. Select player:<original player_intents index> or exact shared/NPC intent_ref. NPC proposals select native local actor and native knowledge refs; no PC declaration or secret disclosure may be invented. Each decision needs current rules, reason, stakes before dice, and justified Difficulty for an action/reaction. NPC attack uses actual PC Evasion, never invented Difficulty. Ordinary NPC fiction normally uses npc_no_roll. PC roll questions are adjudication only: player alone executes dice. A feature decision uses proposal_version=2 and the EXACT trigger_ref and feature_ref from feature_windows; a Reaction does not mint normal spotlight. Blood Rush currently permits Stress recovery while electing the current position only; other relocation remains reviewed. Unsupported features/proxies/PvP remain review/consent. Do not emit duplicate gm_ruling/native_adjudication for a unified decision. No dice faces, role waiver, outcome or automatic Fear spending.';
 
 export function adjudicateSceneBoard(db,guild,origin,board,proposals,{library=new EncounterLibrary('../content')}={}){
   const o=inspectArbitrationOrigin(db,guild,origin);
@@ -41,6 +42,10 @@ export function adjudicateSceneBoard(db,guild,origin,board,proposals,{library=ne
     else if(p.feature_ref&&p.feature_ref!=='standard_attack'){
       const feature=featureDisposition(p.feature_ref);
       reason=feature.reason; // Catalog membership alone never grants a feature capability.
+      if(feature.status==='supported'){
+        native=authorizeFeatureChoice(db,guild,o,entry,p,feature.feature,{library});status='gm_action_ready';
+        reason='Exact native reaction occurrence only; no ordinary spotlight or player roll is inferred.';
+      }
     }
     else if(entry.actor.type==='character'){
       const accepted=db.getCityRecord(guild,'typed_intent',entry.intent_ref);

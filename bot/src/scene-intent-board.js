@@ -7,6 +7,7 @@ import {scenePresence} from './scene-continuity.js';
 import {actorReferenceVisible} from './npc-cognition-projection.js';
 import {matchesArbitrationSchema,npcSceneIntentSchema,arbitrationFailure as fail} from './gm-arbitration-contract.js';
 import {indexWorldEvent} from './city-calendar.js';
+import {featureWindowChoices} from './native-feature-windows.js';
 const origins=new WeakMap(),bindings=new WeakMap();
 const deepFreeze=v=>{if(v&&typeof v==='object'){Object.values(v).forEach(deepFreeze);Object.freeze(v);}return v;};
 export function createArbitrationOrigin(db,guild,scope,sourceRef){
@@ -31,6 +32,7 @@ export function inspectArbitrationOrigin(db,guild,origin){
 export function arbitrationPromptBoard(db,guild,origin){
   const o=inspectArbitrationOrigin(db,guild,origin);
   return {version:1,source:o.binding.source,scene:o.binding.scene,location:o.binding.location,audience:o.scope.mode,
+    feature_windows:featureWindowChoices(db,guild,o.scope),
     npc_candidates:o.eligible.map(n=>({actor_key:n.key,intent_refs:n.intents,objective_refs:n.objectives,known_source_refs:n.source_refs})),
     shared_player_inputs:sharedSceneInputs(db,guild,o).map(row=>({intent_ref:row.record_key,actor:row.data.actor,source_span:row.data.source_span,operation:row.data.operation})),
     player_input_refs:'player:0..15 select exact current player_intents index, then native accepted source; not an outcome or dice authorization'};

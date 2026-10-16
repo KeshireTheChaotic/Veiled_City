@@ -15,6 +15,7 @@ import {rollRevision} from './roll-requests.js';
 import {consentAction,historicalActionSource} from './action-consent.js';
 import {typedRollProof} from './typed-roll-proof.js';
 import {indexWorldEvent} from './city-calendar.js';
+import {commitFeatureChoice} from './native-feature-windows.js';
 
 function dependencyState(db,guild,entry){
   for(const ref of entry.dependencies){
@@ -43,6 +44,7 @@ export function executeUnifiedGmActions(db,guild,decisions,{library=new Encounte
       data:{decision:row.record_key,dependencies:entry.dependencies,authority:'Only exact successful native prerequisites resume the preauthorized GM action; no PC action or new spotlight is inferred.'}});
     if(n.operation==='request_pc_reaction_roll')return commitGmActionCost(db,guild,row.record_key);
     if(n.operation==='commit_adversary_attack')return prepareArbitratedIncomingAttack(db,guild,row.record_key,{library});
+    if(n.operation==='commit_adversary_feature')return commitFeatureChoice(db,guild,row.record_key,{library});
     const key=`gm-execution:${hash(row.record_key)}`,prior=db.getCityRecord(guild,'gm_native_roll_receipt',key);
     if(prior)return inspectGmRollReceipt(db,guild,prior.record_key);
     if(n.operation!=='commit_exceptional_adversary_action')throw fail('native_gm_executor_missing');

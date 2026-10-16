@@ -336,8 +336,8 @@
     },
     {
       "path": "bot/scripts/gm-unified-arbitration-test.mjs",
-      "size_bytes": 56246,
-      "sha256": "bfceff63258a99d17c98efd2fb6b5850f490def9ac7c0c764ff6eee46694dade"
+      "size_bytes": 67017,
+      "sha256": "5fd3d6da56e01b8765d301bc5ed11a60a7821a15f3d44d8d0a6106719804a436"
     },
     {
       "path": "bot/scripts/h01-source-recovery-test.mjs",
@@ -1401,8 +1401,8 @@
     },
     {
       "path": "bot/src/gm-action-capability.js",
-      "size_bytes": 8979,
-      "sha256": "505964a991a7e15ff505ec1d75fdc6288fbc352cb8104a31f8a33f82dc3664af"
+      "size_bytes": 9159,
+      "sha256": "768e93664d78579d459ca182eb472686fa9c4335a6372da1bae3a5a5993191c0"
     },
     {
       "path": "bot/src/gm-action-review.js",
@@ -1416,8 +1416,8 @@
     },
     {
       "path": "bot/src/gm-arbitration-contract.js",
-      "size_bytes": 2853,
-      "sha256": "fe0d09db0b784c84141d73f8d9af0191728e0aa0b1d36e86997cba1df98d7e53"
+      "size_bytes": 2988,
+      "sha256": "14675cecc595f617c66d31eb5ad72703ae6501a0c30c7933dd578f69c8d83328"
     },
     {
       "path": "bot/src/gm-arbitration-output.js",
@@ -1441,13 +1441,13 @@
     },
     {
       "path": "bot/src/gm-native-rolls.js",
-      "size_bytes": 14412,
-      "sha256": "e7cc5a570249867dea56b518fad3586076cc13cf30a5e56753654e8074cfdd6a"
+      "size_bytes": 14588,
+      "sha256": "db4bd92d1076d341236b3c74c1978e3013312f372a18383a6480d3dd3c9030fd"
     },
     {
       "path": "bot/src/gm-unified-arbitration.js",
-      "size_bytes": 12123,
-      "sha256": "597da4d808b70a4bdc91d284dbb6e5e4ad45351d1d4a0f2caeb83f0f49f5652e"
+      "size_bytes": 12728,
+      "sha256": "31365c203230782b6534b788093c68ac10d1389faf03d1542c413da37a997c62"
     },
     {
       "path": "bot/src/gm-world-narrative.js",
@@ -1631,13 +1631,18 @@
     },
     {
       "path": "bot/src/native-feature-catalog.js",
-      "size_bytes": 2783,
-      "sha256": "70ed80be80c79f4154cecb0592998487a0116684d1195e94d1f97366d2cd49d6"
+      "size_bytes": 2812,
+      "sha256": "841ad0bdf8f7449654217334c8ace8d121e320b16b2812a30020222e65a29359"
     },
     {
       "path": "bot/src/native-feature-definitions.json",
-      "size_bytes": 116630,
-      "sha256": "3e728590621f7e6805e9848fd7725637a0805dfccabe78b58e687c0bcba5503c"
+      "size_bytes": 116723,
+      "sha256": "bce3ce79870b96fa87a59db9f1b451681bcc39515216722c76038696d5b15af0"
+    },
+    {
+      "path": "bot/src/native-feature-windows.js",
+      "size_bytes": 16726,
+      "sha256": "4dcb5335a1346da871d7a6584dcf95fb0fec2afc386fb97472ebeeaf3666a3a1"
     },
     {
       "path": "bot/src/native-hook-output.js",
@@ -1751,8 +1756,8 @@
     },
     {
       "path": "bot/src/pc-incoming.js",
-      "size_bytes": 29252,
-      "sha256": "3b78b6c28517e77ae4f13337f347bdc8246f1ddf6bf44115377b6db5b740705c"
+      "size_bytes": 29406,
+      "sha256": "ad6cdb12701f72001b518cf1fd590dc834e28cd2671a840aef58b22b080cd619"
     },
     {
       "path": "bot/src/pc-native-eligibility.js",
@@ -1976,8 +1981,8 @@
     },
     {
       "path": "bot/src/scene-intent-board.js",
-      "size_bytes": 8904,
-      "sha256": "78dab975c14bffb1c774daf9601ac18e4ed3bf51237b06e77dbc3a74176af727"
+      "size_bytes": 9030,
+      "sha256": "f0fbe28b71f237e1f55d9ee8b91690224c28ab874cbb16f1fab68ad2c51cd1ca"
     },
     {
       "path": "bot/src/scene-observation-route.js",
@@ -2131,8 +2136,8 @@
     },
     {
       "path": "bot/src/typed-roll-outcomes.js",
-      "size_bytes": 6747,
-      "sha256": "d7305e388dcaecfec3b74810aa8f51f19ff215591993b0fc54d2b15007bade26"
+      "size_bytes": 6923,
+      "sha256": "07325e37618893b3ccb9f13c71eb8be61a9f6f88fccb6cb8ecba92f32c41eadf"
     },
     {
       "path": "bot/src/typed-roll-proof.js",
@@ -3166,13 +3171,13 @@
     },
     {
       "path": "docs/UNIFIED_ARBITRATION_ADVANCED_LEDGER.md",
-      "size_bytes": 9810,
-      "sha256": "c083e828f62808580c169f4e8b95cb6eddee5db5c4bd8597f3b45f3e308ec925"
+      "size_bytes": 13241,
+      "sha256": "d9cea89c3db6dfd9691ecb8f37d9d02c905657482bfbf2626c1860ad640c35af"
     },
     {
       "path": "docs/UNIFIED_ARBITRATION_FEATURE_COVERAGE.md",
-      "size_bytes": 18835,
-      "sha256": "d6f982ef47237f7d0b7e79ac566005926b1f0fae90a30e6d9af15d6b2d0428c8"
+      "size_bytes": 19064,
+      "sha256": "5158ab33aa129f383871c3008ebb5ade9744981a52c7a2b8857e142f511e29d2"
     },
     {
       "path": "docs/UNIFIED_GM_ARBITRATION.md",

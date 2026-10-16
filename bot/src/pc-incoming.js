@@ -10,6 +10,7 @@ import { assertNonPvpCombatant } from "./pvp-authority.js";
 import {assertPcAttackable} from "./pc-native-eligibility.js";
 import {assertFearIncomingExecution} from "./pvp-fear-moves.js";
 import {inspectNativeGmDecision,commitGmActionCost} from './gm-action-capability.js';
+import {captureIncomingFeatureWindows} from './native-feature-windows.js';
 
 const hash=v=>createHash("sha256").update(JSON.stringify(v)).digest("hex");
 const AUTONOMOUS_FEAR_ATTACK=Symbol("native-autonomous-fear-attack");
@@ -250,7 +251,9 @@ export function resolveIncomingDamage(db,guild,user,key,{armor=false,library}={}
       authority:"Only the affected owner may select their native SRD death move; no death or narration is automatically chosen."};
       db.saveCityRecord(guild,{kind:"pc_death_move_request",key:`${key}:death`,status:"awaiting_owner",
         source_event:row.source_event,visibility:"character",subject_key:pc.id,data:{...data,digest:hash(data)}});}
-    db.saveCityRecord(guild,{...row,key,status:"resolved"});return receipt;
+    db.saveCityRecord(guild,{...row,key,status:"resolved"});
+    captureIncomingFeatureWindows(db,guild,receipt.record_key,{library});
+    return receipt;
   });
 }
 

@@ -49,18 +49,29 @@ import {indexWorldEvent} from '../src/city-calendar.js';
 import {currentScene,recordScenePresence,scenePresence} from '../src/scene-continuity.js';
 import {projectNativeGmProposal} from '../src/gm-mechanical-v9.js';
 function npc(f,key='attendant',location='terminal'){f.db.upsertNpcProfile(f.guild,{npcKey:key,displayName:'Inez',role:'attendant',publicIdentity:'A local attendant.'});f.db.setSimulationEntity(f.guild,'npc',key,{name:'Inez',location_key:location,visibility:'party'});}
-function incoming(f,{privateScene=true,text}={}){
+function incoming(f,{privateScene=true,text,template='Aster Vale Contractor',stress=0}={}){
   const x=setup(f,{privateScene,text}),library=new EncounterLibrary('../content'),scene=currentScene(f.db,f.guild);npc(f,'guard');
   f.db.setCityCalendar(f.guild,{flags:{...f.db.getCityCalendar(f.guild).flags,narrative_encounters:true}});
   f.db.updateCharacterData(x.pc.id,d=>{d.evasion=12;d.thresholds={major:7,severe:14};});
   const source=indexWorldEvent(f.db,f.guild,{key:'af-guard-source',kind:'observation',source_id:'gm',title:'Native guard encounter',session_id:f.session.id,scene:scene.key,location_key:'terminal',visibility:'party'},'gm');
   recordScenePresence(f.db,f.guild,{entity_type:'npc',entity_key:'guard',source_event:source.event_key,location_key:'terminal',zone:'interior',range:'Close',visibility:'party',accepted_by:'gm'},'gm');
-  const encounter=f.db.createEncounter(f.guild,f.session.id,{status:'active',tier:1,pc_count:4,base_bp:14,budget_bp:14,composition:[{name:'Aster Vale Contractor',quantity:1}]}),c=f.db.initializeCombatants(encounter.id,buildCombatants(encounter,library))[0];
+  const encounter=f.db.createEncounter(f.guild,f.session.id,{status:'active',tier:1,pc_count:4,base_bp:14,budget_bp:14,composition:[{name:template,quantity:1}]}),c=f.db.initializeCombatants(encounter.id,buildCombatants(encounter,library))[0];
+  if(stress)f.db.updateCombatant(c.id,{stress_current:stress});
   f.db.saveCityRecord(f.guild,{kind:'encounter_binding',key:encounter.id,source_event:source.event_key,data:{combatants:[{actor:'guard',id:c.id}]}});
   f.db.upsertRulesRuling(f.guild,{key:'af-standard',ruling:'Current standard attack; no unreviewed feature or extra spotlight.',createdBy:'gm'});
   const input={npc:'guard',combatant:c.id,character:x.pc.id,source:source.event_key,ruling:'af-standard',defenses:{resistance:'none',armor_reduction:1,armor_allowed:true,source:'base'}};
   const row=prepareIncomingAttack(f.db,f.guild,'gm',input,{gm:true,interactionId:'af-attack',library});reviewIncomingAttack(f.db,f.guild,x.pc.owner_user_id,row.record_key,{library});confirmIncomingDefense(f.db,f.guild,x.pc.owner_user_id,row.record_key);
   return {...x,library,row};
+}
+async function featureScenario(f){
+  const {pendingFeatureWindows}=await import('../src/native-feature-windows.js'),x=incoming(f,{template:'Pale Court Knight',stress:2,text:'I inspect the counter.'});
+  rollIncomingAttack(f.db,f.guild,'gm',x.row.record_key,{gm:true,library:x.library,rng:s=>s});resolveIncomingDamage(f.db,f.guild,x.pc.owner_user_id,x.row.record_key,{armor:false,library:x.library});
+  const w=pendingFeatureWindows(f.db,f.guild)[0];f.db.setCityCalendar(f.guild,{flags:{...f.db.getCityCalendar(f.guild).flags,gm_discretion:true}});
+  const rows=persistPlayerIntents(f.db,f.guild,[{...candidate(x.text).player_intents[0],type:'search',operation:'inspect'}],x.scope,{messageId:x.messageId}),
+    origin=createArbitrationOrigin(f.db,f.guild,x.scope,x.sourceRef),board=buildSceneIntentBoard(f.db,f.guild,origin,rows,[{actor_key:'guard',operation:'reaction',target_refs:[x.pc.id],objective_ref:'',source_refs:[],dependencies:[]}]);
+  const p={...decision(board.data.entries[1].intent_ref,'native_feature_resolution'),proposal_version:2,trigger_ref:w.record_key,
+    rule_basis_refs:['srd:adversary-attacks'],feature_ref:w.data.feature,stakes_kind:'native_feature'};
+  return {...x,w,rows,origin,board,p};
 }
 
 const cases=[
@@ -280,6 +291,87 @@ const cases=[
 
 ];
 cases.push(
+ ['UA7','06','forged trigger holds only that feature and preserves an independent native PC disposition',async f=>{
+   const x=await featureScenario(f),[held,safe]=adjudicateSceneBoard(f.db,f.guild,x.origin,x.board,[{...x.p,trigger_ref:'model:forged'},decision('player:0','no_roll')],{library:x.library});
+   assert.equal(held.status,'needs_rules_review');assert.equal(safe.status,'resolved_no_roll');
+   executeUnifiedGmActions(f.db,f.guild,[held,safe],{library:x.library,rng:()=>assert.fail('no forged RNG')});
+   assert.equal(f.db.listCombatants(x.row.data.offer.snapshot.encounter)[0].stress_current,2);
+   assert.equal(f.db.listCityRecords(f.guild,{kind:'gm_feature_use_receipt',includeGM:true}).length,0);
+ }],
+ ['UA7','07','source revocation before reaction cannot spend clear Stress or apply an NPC effect',async f=>{
+   const x=await featureScenario(f),[r]=adjudicateSceneBoard(f.db,f.guild,x.origin,x.board,[x.p],{library:x.library});
+   f.db.db.prepare("UPDATE world_events SET status='retracted' WHERE guild_id=? AND event_key=?").run(f.guild,x.row.source_event);
+   const [held]=executeUnifiedGmActions(f.db,f.guild,[r],{library:x.library,rng:()=>assert.fail('no stale RNG')});assert.equal(held.status,'needs_review');
+   assert.equal(f.db.listCombatants(x.row.data.offer.snapshot.encounter)[0].stress_current,2);assert.equal(f.db.getCampaign(f.guild).fear,0);
+ }],
+ ['UA7','08','proxy takeover and depth tampering invalidate exact native windows',async f=>{
+   const {inspectFeatureWindow}=await import('../src/native-feature-windows.js'),x=await featureScenario(f);
+   f.db.upsertNpcProxy(f.guild,f.session.id,{npcName:'guard',userId:f.pcs[1].owner_user_id,status:'active'});
+   assert.throws(()=>inspectFeatureWindow(f.db,f.guild,x.w.record_key));assert.throws(()=>adjudicateSceneBoard(f.db,f.guild,x.origin,x.board,[x.p],{library:x.library}));
+   f.db.saveCityRecord(f.guild,{...x.w,key:x.w.record_key,data:{...x.w.data,depth:4}});assert.throws(()=>inspectFeatureWindow(f.db,f.guild,x.w.record_key));
+   assert.equal(f.db.listCombatants(x.row.data.offer.snapshot.encounter)[0].stress_current,2);
+ }],
+ ['UA7','09','private reaction window stays out of party and foreign-owner prompt boards',async f=>{
+   const {featureWindowChoices}=await import('../src/native-feature-windows.js'),x=await featureScenario(f);
+   assert.equal(featureWindowChoices(f.db,f.guild,x.scope).length,1);
+   assert.deepEqual(featureWindowChoices(f.db,f.guild,{mode:'party',actorUserId:x.pc.owner_user_id,actorCharacterId:x.pc.id}),[]);
+   assert.deepEqual(featureWindowChoices(f.db,f.guild,{mode:'private',actorUserId:f.pcs[1].owner_user_id,actorCharacterId:f.pcs[1].id}),[]);
+   assert.deepEqual(featureWindowChoices(f.db,f.guild,{mode:'private',actorUserId:f.pcs[1].owner_user_id,actorCharacterId:x.pc.id}),[]);
+   const prompt=arbitrationPromptBoard(f.db,f.guild,x.origin);assert.equal(prompt.feature_windows.length,1);assert(!JSON.stringify(prompt.feature_windows).includes('hp_marks'));
+ }],
+ ['UA7','05','source-triggered native reaction resolves without spotlight and cannot be charged or replayed twice',async f=>{
+   const {pendingFeatureWindows,inspectFeatureUse}=await import('../src/native-feature-windows.js');
+   const x=incoming(f,{template:'Pale Court Knight',stress:2,text:'I inspect the counter.'});
+   rollIncomingAttack(f.db,f.guild,'gm',x.row.record_key,{gm:true,library:x.library,rng:s=>s});resolveIncomingDamage(f.db,f.guild,x.pc.owner_user_id,x.row.record_key,{armor:false,library:x.library});
+   const w=pendingFeatureWindows(f.db,f.guild)[0];assert(w);f.db.setCityCalendar(f.guild,{flags:{...f.db.getCityCalendar(f.guild).flags,gm_discretion:true}});
+   const rows=persistPlayerIntents(f.db,f.guild,[{...candidate(x.text).player_intents[0],type:'search',operation:'inspect'}],x.scope,{messageId:x.messageId}),
+     origin=createArbitrationOrigin(f.db,f.guild,x.scope,x.sourceRef),board=buildSceneIntentBoard(f.db,f.guild,origin,rows,[{actor_key:'guard',operation:'reaction',target_refs:[x.pc.id],objective_ref:'',source_refs:[],dependencies:[]}]);
+   assert.throws(()=>nativeGmOpportunity(f.db,f.guild,board));
+   const [r]=adjudicateSceneBoard(f.db,f.guild,origin,board,[{...decision(board.data.entries[1].intent_ref,'native_feature_resolution'),proposal_version:2,trigger_ref:w.record_key,
+     rule_basis_refs:['srd:adversary-attacks'],feature_ref:w.data.feature,stakes_kind:'native_feature'}],{library:x.library});assert.equal(r.status,'gm_action_ready',r.data.reason);
+   const before=structuredClone(f.db.getCharacter(x.pc.id).data.resources),[effect]=executeUnifiedGmActions(f.db,f.guild,[r],{library:x.library,rng:()=>assert.fail('no reaction RNG')});
+   assert.equal(effect.kind,'gm_feature_use_receipt');assert.equal(effect.data.before.stress_current,2);assert.equal(effect.data.after.stress_current,1);
+   assert.equal(effect.data.cost.fear,0);assert.equal(effect.data.cost.npc_stress,0);assert.equal(f.db.getCampaign(f.guild).fear,0);
+   assert.deepEqual(f.db.getCharacter(x.pc.id).data.resources,before);assert.equal(f.db.listCityRecords(f.guild,{kind:'gm_action_cost_receipt',includeGM:true}).length,0);
+   f.restart();assert.equal(inspectFeatureUse(f.db,f.guild,effect.record_key).record_key,effect.record_key);
+   assert.equal(executeUnifiedGmActions(f.db,f.guild,[r],{library:x.library,rng:()=>assert.fail('no replay RNG')})[0].record_key,effect.record_key);
+   assert.equal(f.db.listCombatants(x.row.data.offer.snapshot.encounter)[0].stress_current,1);assert.equal(pendingFeatureWindows(f.db,f.guild).length,0);
+ }],
+ ['UA7','02','actual damage creates an exact reaction window without minting spotlight or replaying costs',async f=>{
+   const {pendingFeatureWindows,inspectFeatureWindow}=await import('../src/native-feature-windows.js');
+   const x=incoming(f,{template:'Pale Court Knight'});let calls=0;
+   rollIncomingAttack(f.db,f.guild,'gm',x.row.record_key,{gm:true,library:x.library,rng:s=>{calls++;return s;}});
+   const effect=resolveIncomingDamage(f.db,f.guild,x.pc.owner_user_id,x.row.record_key,{armor:false,library:x.library});
+   const rows=pendingFeatureWindows(f.db,f.guild);assert.equal(rows.length,1);
+   const w=inspectFeatureWindow(f.db,f.guild,rows[0].record_key);assert.equal(w.data.phase,'after_damage');assert.equal(w.data.actor,'guard');
+   assert.equal(w.data.receipt,effect.record_key);assert.equal(w.data.feature,'adversary:pale-court-knight:blood-rush');
+   assert.equal(w.data.timing,'reaction');assert.equal(w.status,'pending');assert.equal(w.visibility,'gm');
+   assert.equal(f.db.listCityRecords(f.guild,{kind:'gm_action_cost_receipt',includeGM:true}).length,0);
+   f.restart();assert.equal(pendingFeatureWindows(f.db,f.guild)[0].record_key,w.record_key);
+   resolveIncomingDamage(f.db,f.guild,x.pc.owner_user_id,x.row.record_key,{armor:false,library:x.library});assert.equal(pendingFeatureWindows(f.db,f.guild).length,1);
+   assert.equal(calls,3);assert.equal(f.db.getCampaign(f.guild).fear,0);
+ }],
+ ['UA7','03','window provenance rejects fabricated receipts retraction proxy and stale scene without effects',async f=>{
+   const {captureIncomingFeatureWindows,inspectFeatureWindow}=await import('../src/native-feature-windows.js');
+   assert.throws(()=>captureIncomingFeatureWindows(f.db,f.guild,'invented'));
+   const x=incoming(f,{template:'Pale Court Knight'});rollIncomingAttack(f.db,f.guild,'gm',x.row.record_key,{gm:true,library:x.library,rng:s=>s});
+   resolveIncomingDamage(f.db,f.guild,x.pc.owner_user_id,x.row.record_key,{armor:false,library:x.library});
+   const w=f.db.listCityRecords(f.guild,{kind:'native_feature_window',includeGM:true})[0];assert(w);
+   f.db.db.prepare("UPDATE world_events SET status='retracted' WHERE guild_id=? AND event_key=?").run(f.guild,x.row.source_event);
+   const before=structuredClone(f.db.getCharacter(x.pc.id).data.resources);assert.throws(()=>inspectFeatureWindow(f.db,f.guild,w.record_key));
+   assert.deepEqual(f.db.getCharacter(x.pc.id).data.resources,before);assert.equal(f.db.getCampaign(f.guild).fear,0);
+ }],
+ ['UA7','04','cost plans are additive bounded and timing-specific without charging unsupported features',async()=>{
+   const {featureCostPlan,FEATURE_PHASES,MAX_FEATURE_DEPTH}=await import('../src/native-feature-windows.js');
+   assert(FEATURE_PHASES.includes('before_damage_applied'));assert(FEATURE_PHASES.includes('on_pc_action'));assert.equal(MAX_FEATURE_DEPTH,3);
+   const descriptor={costs:[{resource:'fear',amount:1},{resource:'npc_stress',amount:2}]};
+   assert.deepEqual(featureCostPlan(descriptor,{timing:'spotlight_action',additionalSpotlight:true,experience:true,fear:3,stress:1,stressMax:3}),
+     {fear:3,npc_stress:2,expenses:{additional_spotlight:1,feature:1,experience:1}});
+   assert.equal(featureCostPlan(descriptor,{timing:'reaction',additionalSpotlight:false,experience:false,fear:1,stress:0,stressMax:2}).fear,1);
+   assert.throws(()=>featureCostPlan(descriptor,{timing:'reaction',additionalSpotlight:true,experience:false,fear:3,stress:0,stressMax:2}));
+   assert.throws(()=>featureCostPlan(descriptor,{timing:'spotlight_action',additionalSpotlight:true,experience:true,fear:2,stress:0,stressMax:2}));
+   assert.throws(()=>featureCostPlan(descriptor,{timing:'reaction',additionalSpotlight:false,experience:false,fear:1,stress:1,stressMax:2}));
+ }],
  ['UA7','01','native AI attack injury and last-HP proof remain valid through owner Armor and restart',f=>{
    const x=incoming(f);f.db.updateCharacterData(x.pc.id,d=>{d.resources.hp.current=3;});
    f.db.setCityCalendar(f.guild,{flags:{...f.db.getCityCalendar(f.guild).flags,gm_discretion:true}});
@@ -364,7 +456,8 @@ cases.push(
    assert.equal(new Set(rows.filter(r=>r.actor_kind==='adversary').map(r=>r.actor_name)).size,41);
    assert.equal(new Set(rows.filter(r=>r.actor_kind==='environment').map(r=>r.actor_name)).size,16);
    for(const r of rows){assert.match(r.source_hash,/^[a-f0-9]{64}$/);assert.match(r.template_hash,/^[a-f0-9]{64}$/);
-     assert(Object.isFrozen(r));assert.notEqual(featureDisposition(r.feature_key).status,'supported');}
+     assert(Object.isFrozen(r));assert.equal(featureDisposition(r.feature_key).status,r.native_handler?'supported':'needs_rules_review');}
+   assert.deepEqual(rows.filter(r=>r.native_handler).map(r=>r.feature_key),['adversary:pale-court-knight:blood-rush']);
  }],
  ['UA6','02','typed representative descriptors distinguish action reaction passive and defense',async()=>{
    const {compileNativeFeatures}=await import('../src/native-feature-catalog.js'),rows=compileNativeFeatures(),get=(actor,name)=>rows.find(r=>r.actor_name===actor&&r.name===name);

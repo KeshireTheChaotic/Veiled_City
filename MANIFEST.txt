@@ -325,6 +325,7 @@ bot/src/narrative-tasks.js
 bot/src/narrative-writer-v9.js
 bot/src/native-feature-catalog.js
 bot/src/native-feature-definitions.json
+bot/src/native-feature-windows.js
 bot/src/native-hook-output.js
 bot/src/native-notice.js
 bot/src/native-outcome-output.js

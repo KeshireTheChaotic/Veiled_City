@@ -6,13 +6,13 @@ Accepted typed intents are canonical adjudication inputs; human declarations own
 
 ## Inventory and execution status
 
-41 adversaries / 104 occurrences (39 Passive, 35 Action, 29 Reaction, 1 untyped); 16 environments / 48 occurrences (17 Passive, 27 Action, 4 Reaction). **152 total: 0 supported, 151 review_only, 1 needs_authoring, 0 not_mechanical.** These counts concern textual special features only. Existing native standard attacks, exceptional actions, no-roll fiction and owner reaction invitations remain supported independently; they are not reclassified by this inventory.
+41 adversaries / 104 occurrences (39 Passive, 35 Action, 29 Reaction, 1 untyped); 16 environments / 48 occurrences (17 Passive, 27 Action, 4 Reaction). **152 total: 1 supported bounded route, 150 review_only, 1 needs_authoring, 0 not_mechanical.** UA6 initially had zero handlers. These counts concern textual special features only. Existing standard attacks, exceptional actions, no-roll fiction and owner reaction invitations remain separate.
 
 Code-owned `bot/src/native-feature-definitions.json` pins each exact feature string and entire actor template using SHA-256 over JSON serialization (including stats). `native-feature-catalog.js` checks hashes, completeness and unique keys against actual content before returning immutable descriptors. Original content prose is untouched. Source order/index is part of the crosswalk; a content edit requires explicit requalification, not silent regeneration. A model cannot supply descriptors or a handler.
 
 ## Handler crosswalk
 
-No special-feature handler is execution-qualified at UA6. The following are **planned**, not dispatchable: pack_pressure, flashbang, feedback, route_around, all_lanes_stop, null_foam, sirens_outside, ownership_bites, upload_countdown, first_forced_movement, first_severe_to_major. Their bounded trigger/target/roll/cost metadata is in the code-owned inventory. All remaining effect metadata is explicitly unmapped, not inferred from names or prose. The untyped Catastrophic Echo feature needs authored timing before execution. No feature is labeled harmless/nonmechanical merely to bypass native effect validation.
+UA7 adds `blood_rush_hold_position`: an actual incoming hit marking 2+ HP permits an AI-owned Knight to clear one marked NPC Stress while electing its current position within Very Close. Exact native occurrence, current actor/control/scene/owner/audience, a separate same-call GM decision and native result/mutation proof are required. Other relocation remains reviewed. No PC dice/resources, ordinary spotlight or metacurrency. The following are still **planned**, not dispatchable: pack_pressure, flashbang, feedback, route_around, all_lanes_stop, null_foam, sirens_outside, ownership_bites, upload_countdown, first_forced_movement, first_severe_to_major. All other effect metadata is explicitly unmapped; untyped Catastrophic Echo needs authored timing. No feature is labeled harmless to bypass effect validation.
 
 ## Per-occurrence source crosswalk
 
@@ -46,7 +46,7 @@ All rows are GM-owned content, not public disclosure grants. Source paths and ex
 | `adversary:cicada-runner:always-a-price` | Passive | review_only | unmapped | `84c48b17def86972` |
 | `adversary:cicada-runner:exit-clause` | Reaction | review_only | unmapped | `4c3f3878c6ac2b60` |
 | `adversary:pale-court-knight:predatory-grace` | Passive | review_only | first_forced_movement | `316bee8e6ca7f3d9` |
-| `adversary:pale-court-knight:blood-rush` | Reaction | review_only | unmapped | `c02071b8b756f9f0` |
+| `adversary:pale-court-knight:blood-rush` | Reaction | supported (current-position recovery only) | blood_rush_hold_position | `c02071b8b756f9f0` |
 | `adversary:pale-court-fixer:reputation-attack` | Action | review_only | unmapped | `71a92b466bb5be9e` |
 | `adversary:pale-court-fixer:call-security` | Action | review_only | unmapped | `f7f8a79df4ae31e3` |
 | `adversary:thorn-hound-of-the-green:urban-cover` | Passive | review_only | unmapped | `b070e02d7b77c2c7` |

@@ -10,6 +10,7 @@ import {actorReferenceVisible} from './npc-cognition-projection.js';
 import {typedRollProof} from './typed-roll-proof.js';
 import {isPvpIntent} from './pvp-authority.js';
 import {narrativeSourceVisible} from './scene-fiction-context.js';
+import {featureCostPlan} from './native-feature-windows.js';
 
 export function nativeReactionTarget(db,guild,origin,pc,actor){
   const target=pc&&scenePresence(db,guild,'character',pc.id),npc=scenePresence(db,guild,'npc',actor),
@@ -87,8 +88,9 @@ export function commitGmActionCost(db,guild,decisionKey){
   const key=`gm-action-cost:${hash([decisionKey,opportunity.key])}`,prior=db.getCityRecord(guild,'gm_action_cost_receipt',key),amount=spotlight+experience;
   if(prior){if(prior.source_event!==row.source_event||prior.data.amount!==amount||prior.data.decision!==decisionKey)throw fail('cost_receipt_changed');return prior;}
   const before=db.getCampaign(guild).fear;
+  const plan=featureCostPlan({costs:[]},{timing:'spotlight_action',additionalSpotlight:!!spotlight,experience:!!experience,fear:before,stress:0,stressMax:0});
   if(!Number.isSafeInteger(before)||before<amount||before>12)throw fail('insufficient_gm_fear');
   const after=amount?db.changeFear(guild,-amount):before;
   return db.saveCityRecord(guild,{kind:'gm_action_cost_receipt',key,status:'committed',source_event:row.source_event,visibility:'gm',
-    data:{decision:decisionKey,opportunity:opportunity.key,ordinal,amount,before,after,expenses:{additional_spotlight:spotlight,feature:0,experience}}});
+    data:{decision:decisionKey,opportunity:opportunity.key,ordinal,amount,before,after,expenses:plan.expenses}});
 }
