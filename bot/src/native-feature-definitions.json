@@ -1844,13 +1844,13 @@
       "template_hash": "7058e2c3115d9b2e0efad7aa9964532b2c16f9fd268e89210e6398384ea2d906",
       "index": 2,
       "type": "Passive",
-      "status": "review_only",
+      "status": "supported",
       "trigger_kind": "before_damage_applied",
       "target_policy": "one",
       "roll_protocol": "none",
       "costs": [],
-      "native_handler": null,
-      "reason": "No qualified native feature handler.",
+      "native_handler": "first_severe_to_major",
+      "reason": "Automatic pinned native pre-damage defense; first actual Severe hit per actor/scene only, no new dice or PC effect.",
       "planned_handler": "first_severe_to_major"
     },
     {

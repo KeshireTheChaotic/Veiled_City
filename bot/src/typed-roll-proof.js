@@ -2,6 +2,7 @@
 import {StateConflictError} from "./errors.js";
 import {historicalActionSource} from "./action-consent.js";
 import {validateBlazeSavedRoll} from "./pc-death.js";
+import {inspectAdversaryDamageDefense} from './native-feature-damage.js';
 const same=(a,b)=>JSON.stringify(a)===JSON.stringify(b);
 function fail(){throw Object.assign(new StateConflictError("Exact saved native request, source and result proof required; changed results need reviewed recovery."),{code:"TYPED_ROLL_PROOF"});}
 export function typedRollProof(db,guild,request){
@@ -54,6 +55,7 @@ export function typedRollProof(db,guild,request){
     if(v.duality==="Critical"||v.total>=difficulty){
       const damage=d.tag?d.tag.participants.map(x=>x.damage):[d.damage];
       if(!d.damage_result||damage.some(x=>!x||db.getSavedRoll(guild,x.roll_id)?.payload.request!==q.record_key))fail();
+      if(d.damage_result.defense_ref)inspectAdversaryDamageDefense(db,guild,q);
     }
   }else if(difficulty!==null&&difficulty!==undefined){
     const e=db.getWorldEvent(guild,d.input.difficulty_source),p=e?.details.roll_difficulty;

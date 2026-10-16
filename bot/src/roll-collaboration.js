@@ -18,6 +18,7 @@ import {assertPcCanAct,hopeCap} from "./pc-native-eligibility.js";
 import {consentAction,historicalActionSource} from "./action-consent.js";
 import {assertGmRulingRequest} from "./gm-action-ruling.js";
 import {assertGmInvitationRequest,resumePendingGmActions} from './gm-native-rolls.js';
+import {nativeAdversaryDamageDefense} from './native-feature-damage.js';
 function fail(message){throw new StateConflictError(message);}
 /** Called only by the authenticated GM command/review boundary, never by model-supplied identity. */
 export function adjudicateRollSource(db,guild,input,reviewer){
@@ -125,10 +126,11 @@ function finishDamage(db,guild,row,data){
   const target=db.listCombatants(encounter.id).find(item=>item.id===attack.target_id);
   assertNonPvpCombatant(db,guild,target);
   if(!target||target.status!=="active") fail("Target is no longer active; do not apply a second consequence.");
-  const total=participants.reduce((sum,item)=>sum+item.damage.total,0),marks=hpMarksForDamage(target,total);
+  const total=participants.reduce((sum,item)=>sum+item.damage.total,0),baseMarks=hpMarksForDamage(target,total),
+    defense=nativeAdversaryDamageDefense(db,guild,row,data,target,{total,type,marks:baseMarks}),marks=defense?.marks??baseMarks;
   const hp=Math.max(0,target.hp_current-marks);
   const after=db.updateCombatant(target.id,{hp_current:hp,status:hp===0?"defeated":target.status});
-  data.damage_result={total,type,marks,target_id:target.id,before:target.hp_current,after:after.hp_current,source_count:1};
+  data.damage_result={total,type,marks,target_id:target.id,before:target.hp_current,after:after.hp_current,source_count:1,...(defense?{defense_ref:defense.ref}:{})};
   cityAudit(db,guild,"combined_attack_damage",row.record_key,target,after,"native_roll");return "resolved";
 }
 /** Same native action/reaction metacurrency semantics used by raw and request-bound rolls. */

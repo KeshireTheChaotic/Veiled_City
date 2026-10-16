@@ -336,8 +336,8 @@
     },
     {
       "path": "bot/scripts/gm-unified-arbitration-test.mjs",
-      "size_bytes": 80340,
-      "sha256": "29e387445c1c23de6d236d9c19c24dc10c3dd3aa780c6b093bf6e73a42f7cf91"
+      "size_bytes": 87048,
+      "sha256": "89bf0fc279812788aecab16e19ddc6a899b37beb8ea3b2191b5917ea72313783"
     },
     {
       "path": "bot/scripts/h01-source-recovery-test.mjs",
@@ -1631,13 +1631,18 @@
     },
     {
       "path": "bot/src/native-feature-catalog.js",
-      "size_bytes": 2845,
-      "sha256": "d9a746828d31473e80cfdce63e11a9a74a61b660f78e1f1450b8ee88cfb815bb"
+      "size_bytes": 2872,
+      "sha256": "3b083e9fd2455bb5189b515ccfc35a3f4621afea1502dbfc96c620dc8f7f25e9"
+    },
+    {
+      "path": "bot/src/native-feature-damage.js",
+      "size_bytes": 8083,
+      "sha256": "3174254f50c112368d97788b90e1cd3164322a22cb3346f3da212f2a6d10d1e7"
     },
     {
       "path": "bot/src/native-feature-definitions.json",
-      "size_bytes": 116914,
-      "sha256": "0cc9186d353a02babc2b97d734de214d178f4fdcc18597e3a2361e479c0b2f10"
+      "size_bytes": 117010,
+      "sha256": "ffe08db25852fe4cd37a2a70216b0b31f8fd8571df1953c8966529cf8a1e8d2f"
     },
     {
       "path": "bot/src/native-feature-effects.js",
@@ -1896,8 +1901,8 @@
     },
     {
       "path": "bot/src/roll-collaboration.js",
-      "size_bytes": 32364,
-      "sha256": "d7ec3bc52acee995039b54684c641dacc6c4e82c146dd65f9ea89b54df12d0c9"
+      "size_bytes": 32612,
+      "sha256": "2a07145c7ad9bc45ead3543271d60237763ebb68c09984d9c3da6d462488c826"
     },
     {
       "path": "bot/src/roll-declaration-review.js",
@@ -2151,8 +2156,8 @@
     },
     {
       "path": "bot/src/typed-roll-proof.js",
-      "size_bytes": 5728,
-      "sha256": "137daaa944c6f6418150d7688ddeb8fe4f3a81f03efbcf956baf37fbeaf88bd2"
+      "size_bytes": 5882,
+      "sha256": "57a92d7283d1055dff0e850bef0813d14e25e86a54c3bbe7c598686345c36f2e"
     },
     {
       "path": "bot/src/voice.js",
@@ -3181,13 +3186,13 @@
     },
     {
       "path": "docs/UNIFIED_ARBITRATION_ADVANCED_LEDGER.md",
-      "size_bytes": 19870,
-      "sha256": "179e110710237ae1c924ddfb3ff6d296816ac24e5d95450b3ed1070dc128d58d"
+      "size_bytes": 23855,
+      "sha256": "64f47b485115378a4e6f3d9e64d9e08e4103b472cd85755007a41f1de0a1dcb9"
     },
     {
       "path": "docs/UNIFIED_ARBITRATION_FEATURE_COVERAGE.md",
-      "size_bytes": 20435,
-      "sha256": "5540a73c5895799aac86f5ad26b8985f80ccc2b9d794f73377bb8aba08d165a2"
+      "size_bytes": 21246,
+      "sha256": "eac77227d31e2d9454062f24f227fa87afb1ed93a6b35a8614872e6b062b2a8b"
     },
     {
       "path": "docs/UNIFIED_GM_ARBITRATION.md",

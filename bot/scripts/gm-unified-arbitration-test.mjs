@@ -12,8 +12,8 @@ import {createArbitrationOrigin,buildSceneIntentBoard,arbitrationPromptBoard} fr
 import {executeUnifiedGmActions,inspectGmReactionInvitation,submitGmReactionInvitation,withdrawGmReactionInvitation,gmReactionInbox} from '../src/gm-native-rolls.js';
 import {captureWorldInput,worldInputKey} from '../src/autonomous-world.js';
 import {adjudicateAcceptedIntent} from '../src/rules-arbitration.js';
-import {contributeRoll} from '../src/roll-collaboration.js';
-import {rollRevision} from '../src/roll-requests.js';
+import {contributeRoll,adjudicateRollSource} from '../src/roll-collaboration.js';
+import {rollRevision,prepareRollRequest} from '../src/roll-requests.js';
 import {GMService} from '../src/gm.js';
 import {ContentIndex} from '../src/content.js';
 import {FakeResponses} from './contract-fixtures.mjs';
@@ -88,6 +88,21 @@ async function feedbackScenario(f,{privateScene=false,proxy=false,stress=0,pcStr
   r.unified_arbitration={version:1,npc_intents:[],decisions:[decision('player:0','no_roll')]};
   const out=await run(f,x,{version:9,acts:[],fiction_delta:[]},r),invites=f.db.listCityRecords(f.guild,{kind:'gm_arbitration_decision',includeGM:true}).filter(d=>d.status==='pending_pc_reaction');
   return {...x,out,invites};
+}
+function strikeAdversary(f,x,serial,{damage=100,critical=false}={}){
+  const target=f.db.listCombatants(f.db.getCurrentEncounter(f.session.id).id)[0];
+  f.db.setCityCalendar(f.guild,{flags:{...f.db.getCityCalendar(f.guild).flags,roll_requests:true,roll_collaboration:true}});
+  f.db.updateCharacterData(x.pc.id,d=>{if(!d.inventory.some(i=>i.name==='Fixture blade'))d.inventory.push({name:'Fixture blade',equipped:true});});
+  const accepted=f.accepted(0,'I strike the guard.',null,{type:'interact',operation:'attack',target:{kind:'npc',key:'guard',phrase:'guard',grounding:'known'}});
+  f.db.upsertRulesRuling(f.guild,{key:'fixture-blade',ruling:'Exact owned equipped fixture blade attack damage 1d100 physical.',createdBy:'gm'});
+  const proof=adjudicateRollSource(f.db,f.guild,{key:`blade-${serial}`,character_id:x.pc.id,kind:'attack',ruling_key:'fixture-blade',
+    data:{trait:'Finesse',active:true,weapon:'Fixture blade',damage:'1d100',damage_type:'physical',target_id:target.id}},'gm'),
+    request=prepareRollRequest(f.db,f.guild,{source_event:accepted.source_event,accepted_intent:accepted.record_key,character_id:x.pc.id,trait:'Finesse',kind:'attack',
+      attack_source:proof.event_key,modifier_keys:[],difficulty_source:'',adjudication:'Exact actual native fixture attack.'},'gm',{scope:x.scope});
+  let faces=0;const rolled=contributeRoll(f.db,f.guild,x.pc.owner_user_id,{op:'roll',key:`strike-${serial}`,request:request.record_key,expected_revision:rollRevision(request)},
+    {rng:()=>[12,critical?12:11][faces++]});
+  const input={op:'damage',key:`damage-${serial}`,request:request.record_key,expected_revision:rollRevision(rolled)};
+  const resolved=contributeRoll(f.db,f.guild,x.pc.owner_user_id,input,{rng:()=>damage});return {target,request:resolved,input};
 }
 
 const cases=[
@@ -356,6 +371,53 @@ cases.push(
    f.restart();submitGmReactionInvitation(f.db,f.guild,pc.owner_user_id,input,{...options,rng:()=>assert.fail('no repeated reaction dice')});
    assert.equal(f.db.getCharacter(pc.id).data.resources.stress.current,3);
  }],
+ ['UA8','D1','Contingency Stack reduces only the first actual Severe hit before NPC HP finalization',f=>{
+   const x=incoming(f,{template:'Aster Vale Catastrophe Analyst'}),first=strikeAdversary(f,x,1);
+   assert.equal(first.request.data.damage_result.marks,2);assert.equal(first.request.data.damage_result.before-first.request.data.damage_result.after,2);
+   assert(first.request.data.damage_result.defense_ref);assert.equal(first.request.data.damage.total,100);
+   f.restart();const replay=contributeRoll(f.db,f.guild,x.pc.owner_user_id,first.input,{rng:()=>assert.fail('saved damage must not reroll')});
+   assert.deepEqual(replay.data.damage_result,first.request.data.damage_result);
+   const second=strikeAdversary(f,x,2);assert.equal(second.request.data.damage_result.marks,3);assert(!second.request.data.damage_result.defense_ref);
+   assert.equal(f.db.listCityRecords(f.guild,{kind:'adversary_defense_charge',includeGM:true}).length,1);
+ }],
+ ['UA8','D2','Contingency Stack does not consume its scene charge on a lesser hit',f=>{
+   const x=incoming(f,{template:'Aster Vale Catastrophe Analyst'}),minor=strikeAdversary(f,x,1,{damage:1});
+   assert.equal(minor.request.data.damage_result.marks,1);assert.equal(f.db.listCityRecords(f.guild,{kind:'adversary_defense_charge',includeGM:true}).length,0);
+   const severe=strikeAdversary(f,x,2);assert.equal(severe.request.data.damage_result.marks,2);
+ }],
+ ['UA8','D3','altered native pre-damage proof cannot certify or refresh an already consumed scene defense',async f=>{
+   const x=incoming(f,{template:'Aster Vale Catastrophe Analyst'}),first=strikeAdversary(f,x,1),
+     {inspectAdversaryDamageDefense}=await import('../src/native-feature-damage.js'),ref=first.request.data.damage_result.defense_ref,
+     receipt=f.db.getCityRecord(f.guild,'adversary_defense_receipt',ref),before=f.db.listCombatants(f.db.getCurrentEncounter(f.session.id).id)[0].hp_current;
+   assert.equal(inspectAdversaryDamageDefense(f.db,f.guild,first.request).record_key,ref);
+   f.db.saveCityRecord(f.guild,{...receipt,key:ref,data:{...receipt.data,marks_after:1}});
+   assert.throws(()=>inspectAdversaryDamageDefense(f.db,f.guild,first.request));
+   assert.equal(f.db.listCombatants(f.db.getCurrentEncounter(f.session.id).id)[0].hp_current,before);
+   const second=strikeAdversary(f,x,2);assert.equal(second.request.data.damage_result.marks,3);
+ }],
+ ...['proxy','unbound'].map(mode=>['UA8',`D4-${mode}`,'pre-damage automatic AI defense requires actual unproxied bound actor '+mode,f=>{
+   const x=incoming(f,{template:'Aster Vale Catastrophe Analyst'}),encounter=f.db.getCurrentEncounter(f.session.id);
+   if(mode==='proxy')f.db.upsertNpcProxy(f.guild,f.session.id,{npcName:'guard',userId:f.pcs[1].owner_user_id,status:'active'});
+   else{const b=f.db.getCityRecord(f.guild,'encounter_binding',encounter.id);f.db.saveCityRecord(f.guild,{...b,key:b.record_key,data:{combatants:[]}});}
+   const result=strikeAdversary(f,x,1);assert.equal(result.request.data.damage_result.marks,3);assert(!result.request.data.damage_result.defense_ref);
+   assert.equal(f.db.listCityRecords(f.guild,{kind:'adversary_defense_charge',includeGM:true}).length,0);
+ }]),
+ ['UA8','D5','source retraction holds defense presentation without undoing damage or restoring its scene charge',async f=>{
+   const x=incoming(f,{template:'Aster Vale Catastrophe Analyst'}),first=strikeAdversary(f,x,1),{inspectAdversaryDamageDefense}=await import('../src/native-feature-damage.js'),
+     receipt=f.db.getCityRecord(f.guild,'adversary_defense_receipt',first.request.data.damage_result.defense_ref),hp=f.db.listCombatants(f.db.getCurrentEncounter(f.session.id).id)[0].hp_current;
+   indexWorldEvent(f.db,f.guild,{key:receipt.source_event,status:'retracted'},'gm');
+   assert.throws(()=>inspectAdversaryDamageDefense(f.db,f.guild,first.request));f.restart();
+   assert.equal(f.db.listCombatants(f.db.getCurrentEncounter(f.session.id).id)[0].hp_current,hp);
+   const second=strikeAdversary(f,x,2);assert.equal(second.request.data.damage_result.marks,3);
+ }],
+ ['UA8','D6','Contingency Stack preserves Critical dice and never resurrects an NPC at last HP',f=>{
+   const x=incoming(f,{template:'Aster Vale Catastrophe Analyst'}),target=f.db.listCombatants(f.db.getCurrentEncounter(f.session.id).id)[0];
+   f.db.updateCombatant(target.id,{hp_current:1});const result=strikeAdversary(f,x,1,{critical:true});
+   assert.equal(result.request.data.result.duality,'Critical');assert.equal(result.request.data.damage.total,200);
+   assert.equal(result.request.data.damage_result.marks,2);assert.equal(result.request.data.damage_result.after,0);
+   const saved=f.db.listCombatants(f.db.getCurrentEncounter(f.session.id).id)[0];assert.equal(saved.status,'defeated');
+   assert.equal(f.db.getCharacter(x.pc.id).data.resources.hp.current,0);
+ }],
  ['UA8','F5','a disabled Feedback device cannot acquire another native use completion without reset proof',async f=>{
    const x=await feedbackScenario(f),invitation=x.invites[0],pc=f.db.getCharacter(x.pc.id),terms=inspectGmReactionInvitation(f.db,f.guild,pc.owner_user_id,invitation.record_key).terms,
      input={op:'gm-reaction-roll',request:invitation.record_key,revision:terms.revision};let face=0;
@@ -571,7 +633,7 @@ cases.push(
    assert.equal(new Set(rows.filter(r=>r.actor_kind==='environment').map(r=>r.actor_name)).size,16);
    for(const r of rows){assert.match(r.source_hash,/^[a-f0-9]{64}$/);assert.match(r.template_hash,/^[a-f0-9]{64}$/);
      assert(Object.isFrozen(r));assert.equal(featureDisposition(r.feature_key).status,r.native_handler?'supported':'needs_rules_review');}
-   assert.deepEqual(rows.filter(r=>r.native_handler).map(r=>r.feature_key),['adversary:pale-court-thrall:pack-pressure','adversary:static-wraith:feedback','adversary:pale-court-knight:blood-rush']);
+   assert.deepEqual(rows.filter(r=>r.native_handler).map(r=>r.feature_key),['adversary:pale-court-thrall:pack-pressure','adversary:static-wraith:feedback','adversary:pale-court-knight:blood-rush','adversary:aster-vale-catastrophe-analyst:contingency-stack']);
  }],
  ['UA6','02','typed representative descriptors distinguish action reaction passive and defense',async()=>{
    const {compileNativeFeatures}=await import('../src/native-feature-catalog.js'),rows=compileNativeFeatures(),get=(actor,name)=>rows.find(r=>r.actor_name===actor&&r.name===name);
