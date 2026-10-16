@@ -8,6 +8,13 @@ import {nativeMechanicalOutput,nativeMechanicalInput} from '../src/mechanical-na
 import {persistPlayerIntents} from '../src/typed-intents.js';
 import {candidate} from './narrative-fixtures.mjs';
 import {unifiedArbitrationSchema,matchesArbitrationSchema,ARBITRATION_DISPOSITIONS} from '../src/gm-arbitration-contract.js';
+import {createArbitrationOrigin,buildSceneIntentBoard,arbitrationPromptBoard} from '../src/scene-intent-board.js';
+function boardFixture(f,{privateScene=false}={}){
+  const x=setup(f,{text:'I inspect the counter.',privateScene});f.db.setCityCalendar(f.guild,{flags:{...f.db.getCityCalendar(f.guild).flags,gm_discretion:true,roll_requests:true,roll_collaboration:true}});npc(f);
+  const i={...candidate(x.text).player_intents[0],type:'search',operation:'inspect'},rows=persistPlayerIntents(f.db,f.guild,[i],x.scope,{messageId:x.messageId});
+  const origin=createArbitrationOrigin(f.db,f.guild,x.scope,x.sourceRef),proposal={actor_key:'attendant',operation:'speak',target_refs:[],objective_ref:'',source_refs:[],dependencies:[]};
+  return {...x,rows,origin,proposal};
+}
 import {buildNarrativeContext} from '../src/narrative-authority-context.js';
 import {mintNarrativeAudience} from '../src/audience-native-v9.js';
 import {gmD20Roll,gmAttackDamage} from '../src/dice.js';
@@ -33,6 +40,16 @@ function incoming(f){
 }
 
 const cases=[
+ ['AR1','03','accepted occurrence identity is independent of mutable adjudication status',f=>{const x=boardFixture(f),first=buildSceneIntentBoard(f.db,f.guild,x.origin,x.rows,[]),row=x.rows[0];
+   f.db.saveCityRecord(f.guild,{...row,key:row.record_key,status:'resolved',data:{...row.data,outcome_receipt:'native-test-terminal'}});
+   assert.equal(buildSceneIntentBoard(f.db,f.guild,x.origin,[f.db.getCityRecord(f.guild,'typed_intent',row.record_key)],[]).record_key,first.record_key);}],
+ ['AR1','01','one native board retains owner and NPC sources without leaking private motives',f=>{const x=boardFixture(f),packet=arbitrationPromptBoard(f.db,f.guild,x.origin),board=buildSceneIntentBoard(f.db,f.guild,x.origin,x.rows,[x.proposal]);
+   assert.equal(board.data.entries.length,2);assert.equal(board.data.entries[0].actor.controller,'owner');assert.equal(board.data.entries[1].actor.controller,'ai_gm');
+   assert.notEqual(board.data.entries[0].source_ref,board.data.entries[1].source_ref);assert(!JSON.stringify(packet).includes('resources'));assert.equal(buildSceneIntentBoard(f.db,f.guild,x.origin,x.rows,[x.proposal]).record_key,board.record_key);
+   assert.throws(()=>buildSceneIntentBoard(f.db,f.guild,{},x.rows,[]));}],
+ ['AR1','02','revocation and cross-owner private inputs cannot enter current board',f=>{const x=boardFixture(f,{privateScene:true});
+   const foreign=f.accepted(1,'I whisper a secret.',null,{type:'search',operation:'inspect'});assert.throws(()=>buildSceneIntentBoard(f.db,f.guild,x.origin,[foreign],[]));
+   f.db.db.prepare("UPDATE world_events SET status='retracted' WHERE guild_id=? AND event_key=?").run(f.guild,x.sourceRef);assert.throws(()=>buildSceneIntentBoard(f.db,f.guild,x.origin,x.rows,[x.proposal]));}],
  ['AR0','00','closed arbitration schema carries no executable dice or role waiver',()=>{const value={version:1,npc_intents:[],decisions:[]};assert(matchesArbitrationSchema(unifiedArbitrationSchema,value));
    assert(!matchesArbitrationSchema(unifiedArbitrationSchema,{...value,gm:true}));assert(ARBITRATION_DISPOSITIONS.includes('gm_attack_roll'));assert(ARBITRATION_DISPOSITIONS.includes('request_pc_reaction_roll'));}],
  ['F2-GM','31','revoked current query invalidates mechanical grant without rolling',f=>{const x=setup(f,{privateScene:true,text:'Can I roll?'}),i={...candidate(x.text).player_intents[0],type:'roll',operation:'request_roll'};
