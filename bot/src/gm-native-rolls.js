@@ -54,7 +54,7 @@ export function executeUnifiedGmActions(db,guild,decisions,{library=new Encounte
     const roll=db.addRoll(guild,row.data.origin.session,'native:unified-gm',null,'gm_exceptional_action',payload);
     return db.saveCityRecord(guild,{kind:'gm_native_roll_receipt',key,status:'resolved',source_event:row.source_event,visibility:'gm',data:{...payload,roll}});
     });}catch(error){
-      if(!['GM_ARBITRATION','PC_EFFECT_AUTHORITY'].includes(error.code))throw error;
+      if(!['GM_ARBITRATION','PC_EFFECT_AUTHORITY','PC_NATIVE_ELIGIBILITY','SCENE_FICTION','SCENE_ACTION_WINDOW','TYPED_ROLL_PROOF'].includes(error.code))throw error;
       return db.saveCityRecord(guild,{kind:'gm_execution_review',key:`gm-execution-review:${hash(decision.record_key)}`,status:'needs_review',visibility:'gm',source_event:decision.source_event,
         data:{decision:decision.record_key,reason:error.message,authority:'No unsupported effect, RNG replay or automatic substitute. Independent actions remain valid.'}});
     }
@@ -102,6 +102,15 @@ export function inspectGmReactionInvitation(db,guild,user,key){
     stakes:'Success or failure settles your reaction to the local NPC attempt only. Damage, custody, movement and costs require separate native receipts.',
     reason:'Native source-bound local NPC reaction request; you choose whether and how to respond.',
     authority:'Pending only. Choose your response; no roll, damage or spending is inferred.'}};
+}
+export function gmReactionInbox(db,guild,user){
+  const pc=personalCharacter(db,guild,user);
+  return db.listCityRecords(guild,{kind:'gm_arbitration_decision',includeGM:true,limit:200}).filter(row=>row.status==='pending_pc_reaction'
+    &&row.data.native?.owner===user&&row.data.native.character===pc.id).map(row=>{
+      try{return inspectGmReactionInvitation(db,guild,user,row.record_key).terms;}
+      catch(error){if(!['GM_ARBITRATION','SCENE_FICTION','TYPED_ROLL_PROOF','SCENE_ACTION_WINDOW'].includes(error.code))throw error;
+        return {request:row.record_key,status:'needs_review',authority:'Current native source/scene/owner proof unavailable; no roll or response inferred.'};}
+    });
 }
 export function withdrawGmReactionInvitation(db,guild,user,input,{interactionId,authoredText}={}){
   if(!interactionId||typeof authoredText!=='string'||hash(JSON.parse(authoredText))!==hash(input)||Object.keys(input).sort().join()!=='op,request,revision'

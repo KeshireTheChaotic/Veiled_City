@@ -15,7 +15,7 @@ fs.writeFileSync(readme,fs.readFileSync(readme,"utf8").replace(/ENGINE v\d+\.\d+
 const git=process.env.VEILED_GIT||"git";
 const files=[...new Set(execFileSync(git,["ls-files","--cached","--others","--exclude-standard","-z"],{cwd:root,encoding:"utf8"}).split("\0"))]
   .filter(file=>file&&!["manifest.json","MANIFEST.txt"].includes(file)&&fs.existsSync(path.join(root,file)))
-  .filter(file=>file!=="docs/rework/Veiled_City_Audience_First_V9_Starter.zip") // owner-supplied input, not a distribution payload
+  .filter(file=>!file.startsWith('docs/rework/')) // Preserve owner-supplied input files outside the distribution payload.
   .filter(file=>!/(^|\/)(?:\.env(?:\.|$)|node_modules\/)|veiled_city\.sqlite(?:-|$)/.test(file)||file.endsWith(".env.example"))
   .sort().map(file=>{const bytes=manifestBytes(fs.readFileSync(path.join(root,file)));return {path:file,size_bytes:bytes.length,sha256:createHash("sha256").update(bytes).digest("hex")};});
 fs.writeFileSync(path.join(root,"manifest.json"),JSON.stringify({package:"Veiled_City_Multiplayer_Discord",version,

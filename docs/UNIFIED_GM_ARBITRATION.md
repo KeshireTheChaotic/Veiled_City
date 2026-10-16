@@ -29,4 +29,6 @@ The existing combined GM and Director calls share native scene boards and immuta
 
 Owner controls use the existing `/vc-roll window json` endpoint: `{"op":"gm-reaction-review","request":"<native-decision>"}`, then `{"op":"gm-reaction-roll","request":"<native-decision>","revision":"<reviewed revision>"}` or `gm-reaction-withdraw` with the same fields. Review does not roll. Normal incoming `/vc-roll effect` review/defense/Armor remains authoritative; native AI attack dice may continue after exact owner defense confirmation. No registered Discord commands or production flags were changed.
 
+`{"op":"gm-reaction-inbox"}` lists only the current owner's invitations and terminal/held statuses, including after restart. No foreign-character or GM scope selector is accepted.
+
 Still **not implemented** by this bridge: generic adversary reaction-feature executor, multi-target feature mapping, arbitrary environment feature executor, special defense mapping, and NPC effects based on private result dependencies without separate disclosure/observable proof. These are explicit review paths, not evidence of end-to-end native feature support. Existing specialized native features and protected PvP remain available unchanged.

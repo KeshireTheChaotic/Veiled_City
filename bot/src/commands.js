@@ -75,7 +75,7 @@ import {hopeCap,assertPcCanAct} from "./pc-native-eligibility.js";
 import { preparePvpReaction, reviewPvpReaction, rollPvpReaction } from "./pvp-reactions.js";
 import { reviewFeatureEffect, reviewPcEffect, approvePcEffect, applyPcEffect,reviewHealingSource,authorizeHealingSource } from "./pc-effects.js";
 import { prepareIncomingAttack, reviewIncomingAttack, confirmIncomingDefense, rollIncomingAttack, rollArbitratedIncomingAttack, resolveIncomingDamage } from "./pc-incoming.js";
-import {inspectGmReactionInvitation,submitGmReactionInvitation,withdrawGmReactionInvitation} from './gm-native-rolls.js';
+import {inspectGmReactionInvitation,submitGmReactionInvitation,withdrawGmReactionInvitation,gmReactionInbox} from './gm-native-rolls.js';
 import { queueDirectorPublications } from "./publication-outbox.js";
 import {publishContinuationNotices} from "./publishing.js";
 import {publishPvpNotices,materializeNativeNotices,resyncNativeNotice} from "./native-publications.js";
@@ -553,7 +553,10 @@ async function executeCommand(interaction,{db,gm,voice=null}){
       const authoredText=interaction.options.getString("json")||'{"op":"inbox"}',input=JSON.parse(authoredText);
       if(["respond","cancel"].includes(input.op))input.interaction_id=interaction.id;
       let result;
-      if(input.op==='gm-reaction-review'){
+      if(input.op==='gm-reaction-inbox'){
+        if(Object.keys(input).length!==1)throw new UserInputError('Private reaction inbox takes no foreign scope.');
+        result=gmReactionInbox(db,interaction.guildId,interaction.user.id);
+      }else if(input.op==='gm-reaction-review'){
         if(Object.keys(input).sort().join()!=='op,request')throw new UserInputError('Select one exact private GM reaction invitation.');
         result=inspectGmReactionInvitation(db,interaction.guildId,interaction.user.id,input.request).terms;
       }else if(['gm-reaction-roll','gm-reaction-withdraw'].includes(input.op)){

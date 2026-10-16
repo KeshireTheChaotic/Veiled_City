@@ -9,7 +9,7 @@ import {persistPlayerIntents} from '../src/typed-intents.js';
 import {candidate,run} from './narrative-fixtures.mjs';
 import {unifiedArbitrationSchema,matchesArbitrationSchema,ARBITRATION_DISPOSITIONS} from '../src/gm-arbitration-contract.js';
 import {createArbitrationOrigin,buildSceneIntentBoard,arbitrationPromptBoard} from '../src/scene-intent-board.js';
-import {executeUnifiedGmActions,inspectGmReactionInvitation,submitGmReactionInvitation,withdrawGmReactionInvitation} from '../src/gm-native-rolls.js';
+import {executeUnifiedGmActions,inspectGmReactionInvitation,submitGmReactionInvitation,withdrawGmReactionInvitation,gmReactionInbox} from '../src/gm-native-rolls.js';
 import {captureWorldInput,worldInputKey} from '../src/autonomous-world.js';
 import {adjudicateAcceptedIntent} from '../src/rules-arbitration.js';
 import {contributeRoll} from '../src/roll-collaboration.js';
@@ -54,6 +54,36 @@ function incoming(f,{privateScene=true,text}={}){
 }
 
 const cases=[
+ ['F7','22','fully marked HP does not erase expressive scene narration or permit a character action',async f=>{
+   const x=setup(f,{text:'Describe the scene to me'});f.db.setCityCalendar(f.guild,{flags:{...f.db.getCityCalendar(f.guild).flags,gm_discretion:true}});
+   f.db.updateCharacterData(x.pc.id,d=>{d.resources.hp.current=d.resources.hp.max;});const r=candidate(x.text);
+   r.unified_arbitration={version:1,npc_intents:[],decisions:[decision('player:0','no_roll')]};
+   const task=`narrative-task:${hash([x.sourceRef,hash(f.db.getWorldEvent(f.guild,x.sourceRef).details),x.scope,'describe_scene'])}`,
+     answer={version:9,acts:[{id:'scene',task_id:task,kind:'scene_description',speaker_key:'',location_key:'terminal',text:'Amber lights fall across a scarred folding counter; the coin tray rattles beneath a steady dryer hum.',source_refs:[]}],fiction_delta:[]},out=await run(f,x,answer,r);
+   assert(out.rows.some(row=>row.payload.includes('Amber lights')));assert.equal(f.db.getCharacter(x.pc.id).data.resources.hp.current,6);
+   assert.equal(f.db.listCityRecords(f.guild,{kind:'roll_operation',includeGM:true}).length,0);
+   const y=boardFixture(f,{rollQuestion:true}),board=buildSceneIntentBoard(f.db,f.guild,y.origin,y.rows,[]),[held]=adjudicateSceneBoard(f.db,f.guild,y.origin,board,
+     [{...decision('player:0','request_pc_action_roll'),difficulty:14,trait:'Finesse',stakes:'Attempt only.',difficulty_reason:'Current scene.'}]);
+   assert.equal(held.status,'needs_rules_review');assert.equal(f.db.listCityRecords(f.guild,{kind:'roll_request',includeGM:true}).length,0);}],
+ ['AR5','21','shared public owner inputs retain independent dispositions and exact private rollers',f=>{
+   const x=boardFixture(f,{rollQuestion:true}),other=f.pcs[1],scene=currentScene(f.db,f.guild),source=indexWorldEvent(f.db,f.guild,{key:'ar-other-position',kind:'arrival',source_id:`player:${other.owner_user_id}`,
+     title:'Native fixture initial position',session_id:f.session.id,scene:scene.key,location_key:'terminal',visibility:'party',details:{entity_type:'character',entity_key:other.id,owner_user_id:other.owner_user_id}},other.owner_user_id);
+   recordScenePresence(f.db,f.guild,{entity_type:'character',entity_key:other.id,location_key:'terminal',zone:'interior',source_event:source.event_key,visibility:'party',accepted_by:other.owner_user_id},'fixture-native');
+   const otherIntent=f.accepted(1,'I inspect the label.',null,{type:'search',operation:'inspect',target:{kind:'unknown',key:'',phrase:'',grounding:'unknown'}}),
+     board=buildSceneIntentBoard(f.db,f.guild,x.origin,[...x.rows,otherIntent],[x.proposal]);
+   const [pending,done,speech]=adjudicateSceneBoard(f.db,f.guild,x.origin,board,[{...decision('player:0','request_pc_action_roll'),difficulty:14,trait:'Finesse',stakes:'Attempt only.',difficulty_reason:'Current native scene.'},
+     decision(otherIntent.record_key,'no_roll'),{...decision(board.data.entries[2].intent_ref,'npc_no_roll'),rule_basis_refs:['srd:gm-moves']}]);
+   assert.equal(pending.status,'pending_pc_roll');assert.equal(done.status,'resolved_no_roll');assert.equal(speech.status,'resolved_no_roll');
+   const q=f.db.getCityRecord(f.guild,'roll_request',pending.data.native.roll_request_ref);assert.equal(q.data.owner_user_id,x.pc.owner_user_id);assert.equal(q.subject_key,x.pc.id);
+   assert.equal(f.db.getCityRecord(f.guild,'typed_intent',otherIntent.record_key).status,'resolved');assert.equal(f.db.getCharacter(other.id).data.resources.hope,2);}],
+ ['AR4','20','a stale NPC presence cannot authorize a player reaction even when its profile remains local',f=>{
+   const x=incoming(f);f.db.setCityCalendar(f.guild,{flags:{...f.db.getCityCalendar(f.guild).flags,gm_discretion:true}});
+   f.db.db.prepare("UPDATE world_events SET status='retracted' WHERE guild_id=? AND event_key=?").run(f.guild,x.row.data.offer.input.source);
+   const rows=persistPlayerIntents(f.db,f.guild,candidate(x.text).player_intents,x.scope,{messageId:x.messageId}),origin=createArbitrationOrigin(f.db,f.guild,x.scope,x.sourceRef),
+     proposal={actor_key:'guard',operation:'prepare',target_refs:[x.pc.id],objective_ref:'',source_refs:[],dependencies:[]},board=buildSceneIntentBoard(f.db,f.guild,origin,rows,[proposal]),
+     [r]=adjudicateSceneBoard(f.db,f.guild,origin,board,[{...decision(board.data.entries[1].intent_ref,'request_pc_reaction_roll'),rule_basis_refs:['srd:reaction-rolls'],trait:'Agility',difficulty:12,stakes:'Attempt only.',difficulty_reason:'Local NPC attempt.'}]);
+   assert.equal(r.status,'needs_rules_review');assert.equal(executeUnifiedGmActions(f.db,f.guild,[r],{rng:()=>assert.fail('no stale dice')}).length,0);
+   assert.equal(f.db.listCityRecords(f.guild,{kind:'roll_request',includeGM:true}).length,0);}],
  ['AR5','19','retired syntax producers have no production import while native readers remain',async()=>{
    for(const file of ['roll-language','consent-language'])assert.equal(fs.existsSync(`src/${file}.js`),false);
    for(const file of fs.readdirSync('src',{recursive:true}).filter(p=>p.endsWith('.js'))){const source=fs.readFileSync(`src/${file}`,'utf8');assert(!/from\s+['"][^'"]*legacy-fixtures\//u.test(source),file);}
@@ -100,6 +130,7 @@ const cases=[
    executeUnifiedGmActions(f.db,f.guild,[r],{library:x.library});const terms=inspectGmReactionInvitation(f.db,f.guild,x.pc.owner_user_id,r.record_key).terms,input={op:'gm-reaction-withdraw',request:r.record_key,revision:terms.revision},opts={interactionId:'ar-withhold',authoredText:JSON.stringify(input)};
    const saved=withdrawGmReactionInvitation(f.db,f.guild,x.pc.owner_user_id,input,opts);assert.equal(saved.status,'withdrawn');assert.equal(withdrawGmReactionInvitation(f.db,f.guild,x.pc.owner_user_id,input,opts).record_key,saved.record_key);
    assert.equal(inspectGmReactionInvitation(f.db,f.guild,x.pc.owner_user_id,r.record_key).terms.status,'withdrawn');
+   assert.equal(gmReactionInbox(f.db,f.guild,x.pc.owner_user_id)[0].status,'withdrawn');assert.equal(gmReactionInbox(f.db,f.guild,f.pcs[1].owner_user_id).length,0);
    const roll={...input,op:'gm-reaction-roll'};assert.throws(()=>submitGmReactionInvitation(f.db,f.guild,x.pc.owner_user_id,roll,{interactionId:'ar-no-resurrection',authoredText:JSON.stringify(roll),rng:()=>assert.fail('withheld')}));
    assert.equal(f.db.listCityRecords(f.guild,{kind:'roll_operation',includeGM:true}).length,0);assert.equal(f.db.getCharacter(x.pc.id).data.resources.hp.current,0);}],
  ['AR4','13','actual outbox privately delivers native pending terms without GM commentary or repeated dice',async f=>{const x=boardFixture(f,{rollQuestion:true}),r=candidate(x.text);

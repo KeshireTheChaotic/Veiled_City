@@ -4,11 +4,25 @@ import {buildNarrativeContext} from './narrative-authority-context.js';
 import {activeCityProxy} from './city-constraints.js';
 import {consentAction,historicalActionSource} from './action-consent.js';
 import {arbitrationFailure as fail} from './gm-arbitration-contract.js';
-import {scenePresence} from './scene-continuity.js';
+import {scenePresence,sceneAccess,RANGE_BANDS} from './scene-continuity.js';
+import {conversationPrincipal} from './conversation-principal.js';
 import {actorReferenceVisible} from './npc-cognition-projection.js';
 import {typedRollProof} from './typed-roll-proof.js';
 import {isPvpIntent} from './pvp-authority.js';
 import {narrativeSourceVisible} from './scene-fiction-context.js';
+
+export function nativeReactionTarget(db,guild,origin,pc,actor){
+  const target=pc&&scenePresence(db,guild,'character',pc.id),npc=scenePresence(db,guild,'npc',actor),
+    principal=pc&&conversationPrincipal(db,guild,pc.owner_user_id,pc.id),scope=origin.scope,binding=origin.binding||origin;
+  const targetSource=target&&db.getWorldEvent(guild,target.source_event),npcSource=npc&&db.getWorldEvent(guild,npc.source_event),
+    range=npc?.data.zone===target?.data.zone?'Melee':target?.data.range;
+  if(pc?.guild_id!==guild||principal?.kind!=='owner'||target?.data.state!=='actually_present'||npc?.data.state!=='actually_present'
+    ||target.location_key!==binding.location||npc.location_key!==binding.location||scope.mode==='private'&&pc.id!==scope.actorCharacterId
+    ||targetSource?.status!=='active'||npcSource?.status!=='active'||!narrativeSourceVisible(db,guild,npcSource.event_key,scope)
+    ||!RANGE_BANDS.includes(range)||RANGE_BANDS.indexOf(range)>RANGE_BANDS.indexOf('Close')
+    ||!sceneAccess(db,guild,{observer_type:'npc',observer_key:actor,target_type:'character',target_key:pc.id,sense:'sight'}))throw fail('reaction_owner_presence_range_audience');
+  return {principal:principal.revision,target:hash(target),target_source:hash(targetSource),actor:hash(npc),actor_source:hash(npcSource)};
+}
 
 export function inspectNativeGmDecision(db,guild,key){
   const row=db.getCityRecord(guild,'gm_arbitration_decision',key),d=row?.data,source=row&&db.getWorldEvent(guild,row.source_event),
@@ -35,6 +49,8 @@ export function inspectNativeGmDecision(db,guild,key){
     const accepted=db.getCityRecord(guild,'typed_intent',entry.intent_ref);
     (accepted?.status==='resolved'?historicalActionSource:consentAction)(db,guild,entry.intent_ref,{resolved:true});
   }
+  if(d.native?.operation==='request_pc_reaction_roll'&&hash(nativeReactionTarget(db,guild,{...d.origin,scope:d.scope},db.getCharacter(d.native.character),entry.actor.key))!==hash(d.native.target_snapshot))
+    throw fail('reaction_target_snapshot_changed');
   return {row,entry,board};
 }
 /** Exact authenticated looking-to-GM input is an opportunity, not an automatic attack or Fear spend. */

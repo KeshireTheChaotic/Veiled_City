@@ -7,18 +7,9 @@ import {gmRulingContext,adjudicateGmRuling,nativeGmSceneContext} from './gm-acti
 import {indexWorldEvent} from './city-calendar.js';
 import {consentAction,historicalActionSource} from './action-consent.js';
 import {isPvpIntent} from './pvp-authority.js';
-import {nativeGmOpportunity} from './gm-action-capability.js';
+import {nativeGmOpportunity,nativeReactionTarget} from './gm-action-capability.js';
 import {inspectIncomingCandidate} from './pc-incoming.js';
 import {EncounterLibrary} from './encounter.js';
-import {scenePresence} from './scene-continuity.js';
-import {conversationPrincipal} from './conversation-principal.js';
-
-function buildReactionTarget(db,guild,o,pc){
-  const presence=pc&&scenePresence(db,guild,'character',pc.id),principal=pc&&conversationPrincipal(db,guild,pc.owner_user_id,pc.id);
-  if(pc?.guild_id!==guild||principal?.kind!=='owner'||presence?.data.state!=='actually_present'||presence.location_key!==o.binding.location
-    ||o.scope.mode==='private'&&pc.id!==o.scope.actorCharacterId||db.getWorldEvent(guild,presence.source_event)?.status!=='active')throw fail('reaction_owner_presence_audience');
-  return principal.revision;
-}
 
 export const UNIFIED_ARBITRATION_PROMPT='Evaluate unified_arbitration in this SAME GM call. Accepted typed intents are canonical adjudication inputs; human declarations own intent; native receipts own outcomes. Select player:<original player_intents index> or exact shared/NPC intent_ref. NPC proposals select native local actor and native knowledge refs; no PC declaration or secret disclosure may be invented. Each decision needs current rules, reason, stakes before dice, and justified Difficulty for an action/reaction. NPC attack uses actual PC Evasion, never invented Difficulty. Ordinary NPC fiction normally uses npc_no_roll. PC roll questions are adjudication only: player alone executes dice. Unsupported features/proxies/PvP remain review/consent. Do not emit duplicate gm_ruling/native_adjudication for a unified decision. No dice faces, role waiver, outcome or automatic Fear spending.';
 
@@ -55,7 +46,8 @@ export function adjudicateSceneBoard(db,guild,origin,board,proposals,{library=ne
       }else if(['no_roll','request_pc_action_roll'].includes(p.disposition)&&p.stakes_kind==='attempt_only'&&!p.feature_ref&&!p.experience_ref&&!p.advantage&&!p.disadvantage){
         const scope={mode:accepted.visibility==='character'?'private':'party',actorUserId:accepted.data.owner_user_id,actorCharacterId:accepted.data.actor};
         const r=adjudicateGmRuling(db,guild,entry.intent_ref,{version:1,disposition:p.disposition==='no_roll'?'narrative_no_roll':'standard_action_roll',
-          context_refs:[nativeGmSceneContext(db,guild,scope)?.ref,...gmRulingContext(db,guild,scope).evidence.map(e=>e.ref)].filter(Boolean).slice(0,8),capability:{kind:'mundane',ref:''},effect_class:'attempt_only',
+          context_refs:[nativeGmSceneContext(db,guild,scope)?.ref,...gmRulingContext(db,guild,scope).evidence.map(e=>e.ref)].filter(Boolean).slice(0,8),capability:{kind:'mundane',ref:''},
+          effect_class:p.disposition==='no_roll'&&accepted.data.type==='other'&&['describe_scene','current_situation'].includes(accepted.data.operation)?'observation':'attempt_only',
           trait:p.trait,difficulty:p.difficulty,risk:p.disposition==='no_roll'?'none':'Your declared attempt may fail.',
           stakes:p.disposition==='no_roll'?'none':'Success or failure settles this declared attempt only. New damage, custody, movement, access or costs require separate native authority.',
           explanation:'Source-bound ordinary Daggerheart adjudication of your exact accepted declaration.',
@@ -78,8 +70,8 @@ export function adjudicateSceneBoard(db,guild,origin,board,proposals,{library=ne
       &&!p.feature_ref&&!p.experience_ref&&!p.advantage&&!p.disadvantage){
       const pc=db.getCharacter(entry.target_refs[0]);
       // Actual local PC, not a model's name/target label. No successful NPC effect is established.
-      const ctx=buildReactionTarget(db,guild,o,pc);
-      status='pending_pc_reaction';native={operation:'request_pc_reaction_roll',character:pc.id,owner:pc.owner_user_id,principal:ctx,opportunity:nativeGmOpportunity(db,guild,board)};
+      const ctx=nativeReactionTarget(db,guild,o,pc,entry.actor.key);
+      status='pending_pc_reaction';native={operation:'request_pc_reaction_roll',character:pc.id,owner:pc.owner_user_id,principal:ctx.principal,target_snapshot:ctx,opportunity:nativeGmOpportunity(db,guild,board)};
       reason='Owner-private reaction invitation; no PC action, dice or negative effect is executed.';
     }else if(p.disposition==='gm_exceptional_action_roll'&&entry.operation==='exceptional_action'&&p.rule_basis_refs.includes('srd:exceptional-adversary-actions')
       &&p.stakes_kind==='attempt_only'&&entry.objective_ref&&entry.target_refs.every(ref=>!db.getCharacter(ref))&&p.difficulty!==null&&p.trait===null&&p.stakes.trim()&&p.difficulty_reason.trim()&&!p.feature_ref){
@@ -91,7 +83,7 @@ export function adjudicateSceneBoard(db,guild,origin,board,proposals,{library=ne
       reason='GM-owned exceptional independent NPC task only; no PC effect, default contested roll or routine behavior roll.';
     }
     }catch(error){
-      if(!['GM_ARBITRATION','PC_EFFECT_AUTHORITY'].includes(error.code))throw error;
+      if(!['GM_ARBITRATION','PC_EFFECT_AUTHORITY','PC_NATIVE_ELIGIBILITY'].includes(error.code))throw error;
       status='needs_rules_review';native=null;reason=error.message;
     }
     const data={version:1,board:board.record_key,entry:entry.intent_ref,entry_hash:hash(entry),proposal:p,proposal_hash:hash(p),

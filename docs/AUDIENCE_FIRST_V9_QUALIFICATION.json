@@ -1,0 +1,60 @@
+{
+  "application_version": "0.0.0.1",
+  "schema_version": 460,
+  "branch": "codex/audience-first-narrative-v9",
+  "starting_sha": "e2737f8189f6ba5795b4d4d13158c4e371b0be50",
+  "qualification_parent_sha": "f0e3994a910c33d59d7bf537be276ffc88077a63",
+  "scope": "Implemented audience-first and supported native arbitration routes only; not all feature adapters or live play",
+  "final_validation": {
+    "command": "cd bot; npm run validate",
+    "exit_code": 0,
+    "mandatory_suites": 126,
+    "passed": 126,
+    "failed": 0,
+    "not_run": 0,
+    "acceptance_entries_passed": 26,
+    "duration_ms": 570953,
+    "network": "denied",
+    "live_requests": 0,
+    "billable_tokens": 0,
+    "report_sha256": "606c2de7ae6948cf2959ea7052cf502344868d7a0a106e268309ab0c0090090b"
+  },
+  "checks": {
+    "npm_check_exit": 0,
+    "javascript_modules_scripts": 410,
+    "discord_root_schemas": 24,
+    "d08_window_security": "passed",
+    "d08_observability": "passed",
+    "optional_matrices_preserved": 39,
+    "starting_mandatory_registry_count": 123,
+    "framework_cases": 9,
+    "audience_cases": 21,
+    "arbitration_cases": 33,
+    "provider_call_delta": 0
+  },
+  "interrupted_run_not_qualification": {
+    "passed": 89,
+    "failed": 0,
+    "not_run": 37,
+    "parent_exit": -1,
+    "reason": "Independent red reproduction found full-HP read-only scene query incorrectly blocked by action eligibility; fixed and requalified"
+  },
+  "remaining_unsupported": [
+    "Generic adversary reaction-feature execution",
+    "Multi-target feature mapping",
+    "Arbitrary environment feature execution",
+    "Special defense mapping",
+    "Private-result NPC dependencies without separate disclosure or observable proof"
+  ],
+  "operational_state": {
+    "pushed": false,
+    "merged": false,
+    "remote_ci_run": false,
+    "installed": false,
+    "started_or_restarted": false,
+    "production_running_state": "not inspected",
+    "flags_changed": false,
+    "production_database_accessed": false,
+    "live_tested": false
+  }
+}

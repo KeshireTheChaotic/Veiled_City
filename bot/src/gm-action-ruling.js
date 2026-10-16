@@ -63,7 +63,7 @@ export function gmRulingContext(db,guild,scope){
         description:typeof event.details.description==="string"&&event.details.description.length<=600?event.details.description:null})),
     authority:"Evidence and proposal context only. Generic rolls grant no feature, special ability or material effect."};
 }
-function proof(db,guild,accepted,scope){
+function proof(db,guild,accepted,scope,{readOnly=false}={}){
   const principal=conversationPrincipal(db,guild,scope.actorUserId,scope.actorCharacterId);
   if(principal.kind!=="owner"||accepted?.data.actor!==principal.character_id||accepted.data.owner_user_id!==principal.user
     ||accepted.data.actor_principal_revision!==principal.revision)throw new Error("Current ruling owner/principal required.");
@@ -72,14 +72,17 @@ function proof(db,guild,accepted,scope){
   const value=accepted.status==="resolved"?historicalActionSource(db,guild,accepted.record_key,{resolved:true})
     :consentAction(db,guild,accepted.record_key);
   if(isPvpIntent(db,guild,accepted))throw new Error("PC conflict requires the native bilateral PvP service, not GM discretion.");
-  const pc=db.getCharacter(principal.character_id);assertPcCanAct(pc,db,guild);
+  const pc=db.getCharacter(principal.character_id);
+  if(!readOnly)assertPcCanAct(pc,db,guild);
   return {...value,pc};
 }
 /** Validate before replay or preparation. Native receipts alone authorize subsequent outcomes; no RNG/effect lives here. */
 export function adjudicateGmRuling(db,guild,acceptedKey,proposal,scope,recovery={}){
   validateGmRulingProposal(proposal);
   return db.transaction(()=>{
-    const accepted=db.getCityRecord(guild,"typed_intent",acceptedKey),p=proof(db,guild,accepted,scope);
+    const accepted=db.getCityRecord(guild,"typed_intent",acceptedKey),readOnly=proposal.disposition==='narrative_no_roll'&&proposal.effect_class==='observation'
+      &&accepted?.data.type==='other'&&['describe_scene','current_situation'].includes(accepted.data.operation)
+      &&accepted.data.framing==='immediate'&&accepted.data.resolution==='conversational',p=proof(db,guild,accepted,scope,{readOnly});
     const key=`gm-ruling:${hash([acceptedKey,1])}`,prior=db.getCityRecord(guild,"gm_action_ruling",key),proposalHash=hash(proposal);
     const reviewKey=`unsupported-action:${hash([acceptedKey,key])}`,oldReview=db.getCityRecord(guild,"unsupported_action",reviewKey);
     let authorizedRecovery=false;
