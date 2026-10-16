@@ -16,7 +16,7 @@ Accepted typed intents are canonical adjudication inputs; human declarations own
 | D0 | Symbol/record/assertion crosswalk complete; no deletion | `e0ea11d05e33387f94a69d89d78c54cc5095c089` |
 | D1 | Current-model legacy producers retired; old native APIs retained | `83cf5cd8a44642a034b9795ab6e466599bb2823d` |
 | D2 | Native cores extracted with exact compatibility; wrappers KEEP | `b72b7274d39b0079d4b6daa22bd8a40ce66e6ef6` |
-| D3 | Final offline qualification PASS; supported generators/readers KEEP | Recorded in final SHA receipt |
+| D3 | Final offline qualification PASS; supported generators/readers KEEP | `4acecb839ac92eb795bc49bd47682d0d8fc6cc9f` |
 
 ## R0 — compact baseline and frozen formats
 
@@ -150,3 +150,5 @@ Provider round-trips added: **0**. Actual fake lanes retain direct observation1,
 Final limitations: N02 historical path-only seed imports remain untrusted/review-only; N04 acceptance allegations and N05/N06 alias/reference/feel prose remain protective holds (four original quality probes red). N13 literal-route/mixed OOC policy, N14 salience, N15 rich owner appearance and general remote cutaways remain deferred. Four old freeform wrappers and flag-off generators KEEP until assertion-equivalent retirement is demonstrated. No security test was removed, rewritten or made optional to save time.
 
 Commit/install distinction: local phase commits only; no push, CI run, merge, installation, restart, flag activation or live testing. Production state is uninspected and unchanged by this task. Rollback is a reviewed code-only revert to safe foundation `6de758c95f94fa5895f9d14bc05970922b050b44` (or a separately verified safe revision); preserve every native receipt, source, character, history, sidecar and uncertain/delivered outbox record. Never restore a stale DB, reroll or blindly resend. Do not deploy the unsafe intermediate R5–D2 snapshots; use the final fully qualified source. A later authorized production installation still needs its own WAL-aware verified backup/restore/runbook, and must not auto-start Veilkeeper.
+
+Final implementation phase committed and verified locally: **`4acecb839ac92eb795bc49bd47682d0d8fc6cc9f`**. Working tree was clean immediately after this commit. This following receipt changes only result documentation/normalized manifest metadata; all402 qualified code/test/SQL/package inputs must retain SHA256 `81d11025f695096055d7db3fe4215a87eef43cd2709e1f7eb8ff835d920d004e`. Branch remains `codex/narrative-correctness-legacy-retirement`, exact starting lineage `6de758c95f94fa5895f9d14bc05970922b050b44`. All11 phase SHAs are recorded above; no remote or operational action is inferred from local commits.
