@@ -19,6 +19,7 @@ import {consentAction,historicalActionSource} from "./action-consent.js";
 import {assertGmRulingRequest} from "./gm-action-ruling.js";
 import {assertGmInvitationRequest,resumePendingGmActions} from './gm-native-rolls.js';
 import {nativeAdversaryDamageDefense} from './native-feature-damage.js';
+import {reconcileNativeFormationBreakdown} from './native-defense-aura.js';
 function fail(message){throw new StateConflictError(message);}
 /** Called only by the authenticated GM command/review boundary, never by model-supplied identity. */
 export function adjudicateRollSource(db,guild,input,reviewer){
@@ -55,7 +56,7 @@ function live(db,guild,row){
       fail("Current Hope/Stress values are unverified; seek human correction before dice or spending.");
   };
   checkResources(pc);
-  const actual=rollBreakdown(db,guild,row.data.input,pc);
+  const actual=reconcileNativeFormationBreakdown(db,guild,row,rollBreakdown(db,guild,row.data.input,pc));
   if(JSON.stringify(actual)!==JSON.stringify(row.data.breakdown)||actual.unresolved.length) fail("Sheet or authority changed, or mechanics need review; no dice or spending.");
   if(row.data.tag){
     requireCitySource(db,guild,row.data.tag.proof);

@@ -3,7 +3,7 @@ import {StateConflictError} from "./errors.js";
 import {historicalActionSource} from "./action-consent.js";
 import {validateBlazeSavedRoll} from "./pc-death.js";
 import {inspectAdversaryDamageDefense} from './native-feature-damage.js';
-import {inspectNativeDefenseAura} from './native-defense-aura.js';
+import {inspectNativeDefenseAura,inspectNativeFormationDefense} from './native-defense-aura.js';
 const same=(a,b)=>JSON.stringify(a)===JSON.stringify(b);
 function fail(){throw Object.assign(new StateConflictError("Exact saved native request, source and result proof required; changed results need reviewed recovery."),{code:"TYPED_ROLL_PROOF"});}
 export function typedRollProof(db,guild,request){
@@ -51,8 +51,9 @@ export function typedRollProof(db,guild,request){
     const attack=d.breakdown.attack,event=db.getWorldEvent(guild,d.input.attack_source),proof=event?.details.roll_attack;
     const target=attack&&db.listCombatants(attack.encounter_id).find(c=>c.id===attack.target_id);
     if(event?.status!=="active"||event.kind!=="roll_adjudication"||event.details.human_reviewed!==true||event.source_kind!=="gm"
-      ||event.subject_key!==a.data.actor||proof?.target_id!==attack?.target_id||target?.difficulty!==(attack.defense_aura?attack.base_difficulty:attack.difficulty))fail();
+      ||event.subject_key!==a.data.actor||proof?.target_id!==attack?.target_id||target?.difficulty!==(attack.defense_aura||attack.defense_passive?attack.base_difficulty:attack.difficulty))fail();
     if(attack.defense_aura)inspectNativeDefenseAura(db,guild,q);
+    if(attack.defense_passive)inspectNativeFormationDefense(db,guild,q);
     difficulty=attack.difficulty;basis={kind:"native_attack_target",source:event.event_key,target:attack.target_id,difficulty};
     if(v.duality==="Critical"||v.total>=difficulty){
       const damage=d.tag?d.tag.participants.map(x=>x.damage):[d.damage];

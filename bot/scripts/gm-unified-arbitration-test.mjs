@@ -90,7 +90,7 @@ async function feedbackScenario(f,{privateScene=false,proxy=false,stress=0,pcStr
   const out=await run(f,x,{version:9,acts:[],fiction_delta:[]},r),invites=f.db.listCityRecords(f.guild,{kind:'gm_arbitration_decision',includeGM:true}).filter(d=>d.status==='pending_pc_reaction');
   return {...x,out,invites};
 }
-function strikeAdversary(f,x,serial,{damage=100,critical=false,targetId=null,beforeRoll=()=>{},rollRng=null}={}){
+function strikeAdversary(f,x,serial,{damage=100,critical=false,targetId=null,beforeRoll=()=>{},afterRoll=()=>{},rollRng=null}={}){
   const targets=f.db.listCombatants(f.db.getCurrentEncounter(f.session.id).id),target=targetId?targets.find(c=>c.id===targetId):targets[0];
   f.db.setCityCalendar(f.guild,{flags:{...f.db.getCityCalendar(f.guild).flags,roll_requests:true,roll_collaboration:true}});
   f.db.updateCharacterData(x.pc.id,d=>{if(!d.inventory.some(i=>i.name==='Fixture blade'))d.inventory.push({name:'Fixture blade',equipped:true});});
@@ -102,6 +102,8 @@ function strikeAdversary(f,x,serial,{damage=100,critical=false,targetId=null,bef
       attack_source:proof.event_key,modifier_keys:[],difficulty_source:'',adjudication:'Exact actual native fixture attack.'},'gm',{scope:x.scope});
   beforeRoll({request});let faces=0;const rolled=contributeRoll(f.db,f.guild,x.pc.owner_user_id,{op:'roll',key:`strike-${serial}`,request:request.record_key,expected_revision:rollRevision(request)},
     {rng:rollRng||(()=>[12,critical?12:11][faces++])});
+  afterRoll({request:rolled});
+  if(rolled.status==='resolved')return {target,request:rolled,input:null};
   const input={op:'damage',key:`damage-${serial}`,request:request.record_key,expected_revision:rollRevision(rolled)};
   const resolved=contributeRoll(f.db,f.guild,x.pc.owner_user_id,input,{rng:()=>damage});return {target,request:resolved,input};
 }
@@ -206,6 +208,108 @@ function volleyScenario(f,{evasions=[12,17,24],fear=3,privateScene=false,extraSp
 }
 function readyVolley(f,x,i=0){const pc=f.pcs[i],a=x.attacks[i];reviewIncomingAttack(f.db,f.guild,pc.owner_user_id,a.record_key,{library:x.library});confirmIncomingDefense(f.db,f.guild,pc.owner_user_id,a.record_key);return a;}
 const cases=[
+ ['UA11','S01','Stack Formation derives +1 defensive Difficulty from the actual Horde remaining HP, never marked PC HP',f=>{
+   const x=incoming(f,{privateScene:false,template:'Ritual Enforcement Team',npcHp:4});
+   const strike=strikeAdversary(f,x,'stack-four',{damage:1,beforeRoll:({request})=>{
+     assert.equal(request.data.breakdown.attack.difficulty,15);assert.equal(request.data.breakdown.attack.base_difficulty,14);
+     assert(request.data.breakdown.attack.defense_passive);assert.equal(f.db.listCombatants(f.db.getCurrentEncounter(f.session.id).id)[0].difficulty,14);
+   }});
+   assert.equal(strike.request.data.breakdown.attack.difficulty,15);
+ }],
+ ['UA11','S02','Stack Formation loses its defense bonus at three remaining HP without rewriting native template stats',f=>{
+   const x=incoming(f,{privateScene:false,template:'Ritual Enforcement Team',npcHp:3});
+   strikeAdversary(f,x,'stack-three',{damage:1,beforeRoll:({request})=>{
+     assert.equal(request.data.breakdown.attack.difficulty,14);const proof=f.db.getCityRecord(f.guild,'npc_defense_passive_proof',request.data.breakdown.attack.defense_passive.ref);
+     assert.equal(proof.data.bonus,0);assert.equal(proof.data.hp_remaining,3);
+   }});
+ }],
+ ['UA11','S03','Stack Formation HP change after preparation rejects stale odds before any owner RNG',f=>{
+   const x=incoming(f,{privateScene:false,template:'Ritual Enforcement Team',npcHp:4});let dice=0;
+   assert.throws(()=>strikeAdversary(f,x,'stack-stale',{damage:1,beforeRoll:()=>{
+     const c=f.db.listCombatants(f.db.getCurrentEncounter(f.session.id).id)[0];f.db.updateCombatant(c.id,{hp_current:3});
+   },rollRng:()=>{dice++;return 12;}}));
+   assert.equal(dice,0);assert.equal(f.db.listCityRecords(f.guild,{kind:'roll_request',includeGM:true})[0].status,'pending');
+ }],
+ ['UA11','S04','Stack Formation saved attack retains its real odds and can share once after native damage crosses the HP threshold',async f=>{
+   const x=incoming(f,{privateScene:false,template:'Ritual Enforcement Team',npcHp:4}),strike=strikeAdversary(f,x,'stack-history',{damage:12});
+   assert.equal(strike.request.data.damage_result.after,2);assert.equal(strike.request.data.breakdown.attack.difficulty,15);
+   const {typedRollProof}=await import('../src/typed-roll-proof.js');f.restart();assert.equal(typedRollProof(f.db,f.guild,strike.request).outcome,'success');
+   const before=f.db.listCombatants(f.db.getCurrentEncounter(f.session.id).id),input={op:'share',key:'stack-share',request:strike.request.record_key,
+     expected_revision:rollRevision(strike.request),scope:'party',confirm:true},
+     shared=contributeRoll(f.db,f.guild,x.pc.owner_user_id,input,{rng:()=>assert.fail('sharing cannot replay dice')});
+   assert.equal(shared.data.roll_id,strike.request.data.roll_id);assert.equal(shared.data.breakdown.attack.difficulty,15);
+   assert.deepEqual(f.db.listCombatants(f.db.getCurrentEncounter(f.session.id).id),before);
+ }],
+ ['UA11','S05','Stack Formation committed attack does not reroll or change its saved Difficulty when HP changes before damage',async f=>{
+   const x=incoming(f,{privateScene:false,template:'Ritual Enforcement Team',npcHp:4}),strike=strikeAdversary(f,x,'stack-before-damage',{damage:1,afterRoll:()=>{
+     f.db.updateCombatant(x.row.data.offer.input.combatant,{hp_current:3});
+   }}),{typedRollProof}=await import('../src/typed-roll-proof.js');
+   assert.equal(strike.request.data.breakdown.attack.difficulty,15);assert.equal(strike.request.data.damage_result.before,3);
+   assert.equal(strike.request.data.damage_result.after,2);assert.equal(typedRollProof(f.db,f.guild,strike.request).outcome,'success');
+ }],
+ ...['proxy','source','equipment'].map(kind=>['UA11',`S06-${kind}`,'Stack Formation historical-odds preservation never waives other current native authority '+kind,f=>{
+   const x=incoming(f,{privateScene:false,template:'Ritual Enforcement Team',npcHp:4});
+   assert.throws(()=>strikeAdversary(f,x,`stack-stale-${kind}`,{damage:1,afterRoll:()=>{
+     f.db.updateCombatant(x.row.data.offer.input.combatant,{hp_current:3});
+     if(kind==='proxy')f.db.upsertNpcProxy(f.guild,f.session.id,{npcName:'guard',userId:f.pcs[1].owner_user_id,status:'active'});
+     if(kind==='source')indexWorldEvent(f.db,f.guild,{key:x.row.data.offer.input.source,status:'retracted'},'fixture-revocation');
+     if(kind==='equipment')f.db.updateCharacterData(x.pc.id,d=>{d.inventory.find(i=>i.name==='Fixture blade').equipped=false;});
+   }}));
+   const request=f.db.listCityRecords(f.guild,{kind:'roll_request',includeGM:true})[0];assert.equal(request.status,'awaiting_damage');assert(request.data.roll_id);
+   assert.equal(f.db.listCombatants(f.db.getCurrentEncounter(f.session.id).id)[0].hp_current,3);assert.equal(request.data.damage,undefined);
+ }]),
+ ...['unbound','proxy'].map(kind=>['UA11',`S07-${kind}`,'unbound or player-proxied Horde never acquires an automatic GM-owned passive by name '+kind,f=>{
+   const x=incoming(f,{privateScene:false,template:'Ritual Enforcement Team',npcHp:4});
+   if(kind==='unbound'){const binding=f.db.getCityRecord(f.guild,'encounter_binding',f.db.getCurrentEncounter(f.session.id).id);
+     f.db.saveCityRecord(f.guild,{...binding,key:binding.record_key,data:{combatants:[]}});}
+   else f.db.upsertNpcProxy(f.guild,f.session.id,{npcName:'guard',userId:f.pcs[1].owner_user_id,status:'active'});
+   const strike=strikeAdversary(f,x,`stack-denied-${kind}`,{damage:1});assert.equal(strike.request.data.breakdown.attack.difficulty,14);
+   assert.equal(strike.request.data.breakdown.attack.defense_passive,undefined);assert.equal(f.db.listCityRecords(f.guild,{kind:'npc_defense_passive_proof',includeGM:true}).length,0);
+ }]),
+ ...['tamper','revoke'].map(kind=>['UA11',`S08-${kind}`,'Stack Formation private proof corruption holds saved output without reversing native damage '+kind,async f=>{
+   const x=incoming(f,{privateScene:false,template:'Ritual Enforcement Team',npcHp:4}),strike=strikeAdversary(f,x,`stack-proof-${kind}`,{damage:12}),
+     proof=f.db.getCityRecord(f.guild,'npc_defense_passive_proof',strike.request.data.breakdown.attack.defense_passive.ref),before=f.db.listCombatants(f.db.getCurrentEncounter(f.session.id).id),
+     {typedRollProof}=await import('../src/typed-roll-proof.js');
+   assert.equal(proof.visibility,'gm');assert.equal(typedRollProof(f.db,f.guild,strike.request).outcome,'success');
+   if(kind==='tamper')f.db.saveCityRecord(f.guild,{...proof,key:proof.record_key,data:{...proof.data,bonus:50}});
+   else indexWorldEvent(f.db,f.guild,{key:proof.source_event,status:'retracted'},'fixture-revocation');
+   f.restart();assert.throws(()=>typedRollProof(f.db,f.guild,strike.request));assert.deepEqual(f.db.listCombatants(f.db.getCurrentEncounter(f.session.id).id),before);
+   assert.throws(()=>contributeRoll(f.db,f.guild,x.pc.owner_user_id,{...strike.input,key:'never-reroll',expected_revision:rollRevision(strike.request)},
+     {rng:()=>assert.fail('saved damage is never rerolled')}));
+ }]),
+ ['UA11','S09','Stack Formation changes no GM attack odds or PC defenses and exposes no private actor state in owner request text',async f=>{
+   const x=incoming(f,{privateScene:true,template:'Ritual Enforcement Team',npcHp:4}),before=f.db.getCharacter(x.pc.id).data.resources,
+     {formatRollRequest}=await import('../src/roll-requests.js'),strike=strikeAdversary(f,x,'stack-private',{damage:1,beforeRoll:({request})=>{
+       const text=formatRollRequest(request,{user:x.pc.owner_user_id,db:f.db,guild:f.guild});assert(!/hp_remaining|target_snapshot|scope_snapshot|stack-formation|SECRET/.test(text));
+       assert.throws(()=>formatRollRequest(request,{user:f.pcs[1].owner_user_id,db:f.db,guild:f.guild}));
+     }});
+   assert.equal(x.row.data.offer.bonus,3);assert.equal(x.row.data.offer.evasion,12);
+   assert.deepEqual(f.db.getCharacter(x.pc.id).data.resources.hp,before.hp);assert.equal(strike.request.data.breakdown.attack.difficulty,15);
+ }],
+ ...[4,3].map(hp=>['UA11',`S10-${hp}`,'Stack Formation changes actual native hit/miss at the boundary, not the dice or ordinary Hope '+hp,async f=>{
+   const x=incoming(f,{privateScene:false,template:'Ritual Enforcement Team',npcHp:hp});let faces=0;
+   const strike=strikeAdversary(f,x,`stack-hit-${hp}`,{damage:1,rollRng:()=>[6,5][faces++]}),{typedRollProof}=await import('../src/typed-roll-proof.js');
+   assert.equal(faces,2);assert.equal(strike.request.data.result.total,14);assert.equal(strike.request.data.result.duality,'Hope');
+   assert.equal(typedRollProof(f.db,f.guild,strike.request).outcome,hp===4?'failure':'success');
+   assert.equal(f.db.listCombatants(f.db.getCurrentEncounter(f.session.id).id)[0].hp_current,hp===4?4:2);
+   assert.equal(f.db.getCharacter(x.pc.id).data.resources.hope,3);assert.equal(f.db.getCampaign(f.guild).fear,0);
+   for(const pc of f.pcs.slice(1))assert.equal(f.db.getCharacter(pc.id).data.resources.hope,2);
+ }]),
+ ['UA11','S11','Stack Formation damage replay after restart returns existing native outcome, no additional dice or HP changes',f=>{
+   const x=incoming(f,{privateScene:false,template:'Ritual Enforcement Team',npcHp:4}),strike=strikeAdversary(f,x,'stack-replay',{damage:12}),
+     before=f.db.listCombatants(f.db.getCurrentEncounter(f.session.id).id);f.restart();
+   const replay=contributeRoll(f.db,f.guild,x.pc.owner_user_id,strike.input,{rng:()=>assert.fail('no duplicate damage dice')});
+   assert.equal(replay.data.roll_id,strike.request.data.roll_id);assert.deepEqual(replay.data.damage_result,strike.request.data.damage_result);
+   assert.deepEqual(f.db.listCombatants(f.db.getCurrentEncounter(f.session.id).id),before);
+   assert.equal(f.db.listCityRecords(f.guild,{kind:'npc_defense_passive_proof',includeGM:true}).length,1);
+ }],
+ ['UA11','S12','Stack Formation native zero-bonus snapshot preserves a committed attack when later NPC recovery crosses the threshold',async f=>{
+   const x=incoming(f,{privateScene:false,template:'Ritual Enforcement Team',npcHp:3}),strike=strikeAdversary(f,x,'stack-recovered',{damage:1,afterRoll:()=>{
+     f.db.updateCombatant(x.row.data.offer.input.combatant,{hp_current:4});
+   }}),{typedRollProof}=await import('../src/typed-roll-proof.js');
+   assert.equal(strike.request.data.breakdown.attack.difficulty,14);assert.equal(strike.request.data.damage_result.before,4);
+   assert.equal(typedRollProof(f.db,f.guild,strike.request).outcome,'success');
+ }],
  ['UA9','R01','Regent failure awaits exactly its owner alternatives with no automatic resources, response or extra metacurrency',async f=>{
    const x=groupReactionScenario(f,{regent:true}),before=structuredClone(f.db.getCharacter(x.pc.id).data.resources),a=submitGroupReaction(f,x,0,[2,1]);
    assert.equal(a.calls,2);assert.equal(f.db.getCampaign(f.guild).fear,1,'Exactly one feature Fear, no reaction Fear.');
@@ -1484,7 +1588,7 @@ cases.push(
    assert.equal(new Set(rows.filter(r=>r.actor_kind==='environment').map(r=>r.actor_name)).size,16);
    for(const r of rows){assert.match(r.source_hash,/^[a-f0-9]{64}$/);assert.match(r.template_hash,/^[a-f0-9]{64}$/);
      assert(Object.isFrozen(r));assert.equal(featureDisposition(r.feature_key).status,r.native_handler?'supported':'needs_rules_review');}
-   assert.deepEqual(rows.filter(r=>r.native_handler).map(r=>r.feature_key),['adversary:pale-court-thrall:pack-pressure',FLASH,'adversary:static-wraith:feedback','adversary:choir-relay:local-mesh','adversary:pale-court-knight:blood-rush',VOLLEY,LANES,'adversary:wraith-pack:many-deaths',REGENT,'adversary:green-root-host:horde-3d8-8','adversary:aster-vale-catastrophe-analyst:contingency-stack']);
+   assert.deepEqual(rows.filter(r=>r.native_handler).map(r=>r.feature_key),['adversary:pale-court-thrall:pack-pressure',FLASH,'adversary:static-wraith:feedback','adversary:choir-relay:local-mesh','adversary:pale-court-knight:blood-rush','adversary:ritual-enforcement-team:stack-formation',VOLLEY,LANES,'adversary:wraith-pack:many-deaths',REGENT,'adversary:green-root-host:horde-3d8-8','adversary:aster-vale-catastrophe-analyst:contingency-stack']);
  }],
  ['UA6','02','typed representative descriptors distinguish action reaction passive and defense',async()=>{
    const {compileNativeFeatures}=await import('../src/native-feature-catalog.js'),rows=compileNativeFeatures(),get=(actor,name)=>rows.find(r=>r.actor_name===actor&&r.name===name);

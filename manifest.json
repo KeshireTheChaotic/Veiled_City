@@ -341,8 +341,8 @@
     },
     {
       "path": "bot/scripts/gm-unified-arbitration-test.mjs",
-      "size_bytes": 184833,
-      "sha256": "5f59371636cd8a9595c77fe5d78f85812013803ed5ce32276590e903d0569d3f"
+      "size_bytes": 195406,
+      "sha256": "adafb4647b3cc83a1e5ab712c759ca1ced84b44cac02ed03a064436bd4acc446"
     },
     {
       "path": "bot/scripts/h01-source-recovery-test.mjs",
@@ -1651,8 +1651,8 @@
     },
     {
       "path": "bot/src/native-defense-aura.js",
-      "size_bytes": 6214,
-      "sha256": "ec7547dab4c8ce148b5d557c00ce7f5f5158b21c8e0081013d507e522552dfce"
+      "size_bytes": 12619,
+      "sha256": "e4d0188704c439d844994585b6de3536c5d10ae38e90f1a4f2810a8895d278c4"
     },
     {
       "path": "bot/src/native-encounter-relations.js",
@@ -1661,8 +1661,8 @@
     },
     {
       "path": "bot/src/native-feature-catalog.js",
-      "size_bytes": 5859,
-      "sha256": "b20a6e06e139cd9dd851543ae3476e5102c69a552b4acab2c6a3b5ab6d21f4bd"
+      "size_bytes": 5893,
+      "sha256": "0a7c79256b5085e3eee2c3ac48ddc06f9dd42a4be618e17b9497b31e21be3ccf"
     },
     {
       "path": "bot/src/native-feature-damage.js",
@@ -1671,8 +1671,8 @@
     },
     {
       "path": "bot/src/native-feature-definitions.json",
-      "size_bytes": 120046,
-      "sha256": "a44e862e89737f16e225e35ff5f15efd7dbaef75bd44cf3039b388f6fccff423"
+      "size_bytes": 120160,
+      "sha256": "faf2594bca7aa3238cf38fec9652a26175e23ddaefb8044c07ee7e793401fbee"
     },
     {
       "path": "bot/src/native-feature-effects.js",
@@ -1951,8 +1951,8 @@
     },
     {
       "path": "bot/src/roll-collaboration.js",
-      "size_bytes": 32612,
-      "sha256": "2a07145c7ad9bc45ead3543271d60237763ebb68c09984d9c3da6d462488c826"
+      "size_bytes": 32736,
+      "sha256": "c08e11a6d73681decc64d898cd85e0a1d637aee08e40ca7d09ab32ab04a28133"
     },
     {
       "path": "bot/src/roll-declaration-review.js",
@@ -1976,8 +1976,8 @@
     },
     {
       "path": "bot/src/roll-requests.js",
-      "size_bytes": 19833,
-      "sha256": "8df7d75e61f490229021e9b4749fe0eb879701d950dc5db7ce6cd8a371e43051"
+      "size_bytes": 20293,
+      "sha256": "cceea862dd5df9a7c3bf6fd2803d2f7cbe1ca45f0020a3746d58a33c505e2cc8"
     },
     {
       "path": "bot/src/roll-sharing.js",
@@ -2206,8 +2206,8 @@
     },
     {
       "path": "bot/src/typed-roll-proof.js",
-      "size_bytes": 6059,
-      "sha256": "d44033de8c72866e1bdb0c8646ac2d7a97b4e89bcdbbdacc5fb75e5efff9e652"
+      "size_bytes": 6186,
+      "sha256": "2f3749e249d2a60e20c2343cb236516ee5f6a035a27a70111473dc298db9725c"
     },
     {
       "path": "bot/src/voice.js",
@@ -3246,18 +3246,18 @@
     },
     {
       "path": "docs/UNIFIED_ARBITRATION_ADVANCED_LEDGER.md",
-      "size_bytes": 83019,
-      "sha256": "8107a72e0a71b0bb5990e85083fd1b135fdaf41b294a7e0bc59356c18a718c15"
+      "size_bytes": 90468,
+      "sha256": "e5d3004e3b0dae07df0c040ad86d847a9f06f3b8cbda246f9abc3815cf49e54a"
     },
     {
       "path": "docs/UNIFIED_ARBITRATION_FEATURE_COVERAGE.md",
-      "size_bytes": 35580,
-      "sha256": "b95ed4859fe7ad59032bee23929639aea87d5c4db1fcf8b7d6098b7567a97e8f"
+      "size_bytes": 36741,
+      "sha256": "676ea60c946ba33c801fb3a8b7ee840641672c69a3b8b5922a3d1b886d807d1a"
     },
     {
       "path": "docs/UNIFIED_GM_ARBITRATION.md",
-      "size_bytes": 6915,
-      "sha256": "f94c87a5360d5ab0597e2a962aac3b138634089dc6bb0cadc3245b4ed9f84097"
+      "size_bytes": 7312,
+      "sha256": "bb11ac0fe6e690d0602b6c7e74a0268629d18f2d904853019c0d736383b0d3ce"
     },
     {
       "path": "docs/UPGRADE_3.0_TO_3.1.md",

@@ -14,7 +14,7 @@ import {publishNativeNotice,queueNativeNotice,reserveNativeNotice} from "./nativ
 import {noticeHash} from "./native-notice.js";
 import {gmRulingDetails} from "./gm-action-ruling.js";
 import {overlapsOwnerActionTerminal} from "./owner-action-terminal.js";
-import {nativeDefenseAura,persistNativeDefenseAura} from './native-defense-aura.js';
+import {nativeDefenseAura,persistNativeDefenseAura,nativeFormationDefense,persistNativeFormationDefense} from './native-defense-aura.js';
 const hash=value=>createHash("sha256").update(JSON.stringify(value)).digest("hex");
 const signed=value=>`${value>=0?"+":""}${value}`;
 export const rollRevision=hash;
@@ -97,6 +97,11 @@ export function rollBreakdown(db,guild,input,pc){
     attack={weapon:a.weapon,damage:a.damage,damage_type:a.damage_type,target_id:target.id,encounter_id:encounter.id,difficulty:target.difficulty};
     const aura=nativeDefenseAura(db,guild,target,input);
     if(aura)attack={...attack,difficulty:target.difficulty+1,base_difficulty:target.difficulty,defense_aura:aura.proof};
+    const formation=nativeFormationDefense(db,guild,target,input);
+    if(formation){
+      if(aura)throw new StateConflictError('Combined defensive passive/aura odds require an authored native mapping.');
+      attack={...attack,difficulty:target.difficulty+formation.detail.bonus,base_difficulty:target.difficulty,defense_passive:formation.proof};
+    }
   }
   const unresolved=[...base.unresolved,
     ...(input.kind==="attack"&&!attack?["Active weapon/feature attack provenance requires native adjudication before resolution."]:[])];
@@ -124,6 +129,7 @@ export function prepareRollRequest(db,guild,input,actor,context={}){
         attempt:source.details.text||source.details.raw_text,kind:input.kind,adjudication:input.adjudication,breakdown:values,input,
         sheet_fingerprint:hash(pc.data),revision:1,history:[],authority:"Pending only; no dice, expenditure or outcome."}});
     persistNativeDefenseAura(db,guild,after);
+    persistNativeFormationDefense(db,guild,after);
     cityAudit(db,guild,"roll_request_prepared",key,null,after,actor);reserveRollAmendment(db,guild,after);return after;
   });
 }
