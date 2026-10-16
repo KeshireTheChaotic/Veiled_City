@@ -656,6 +656,46 @@ cases.push(
    assert.equal(featureDisposition('model:invented').status,'needs_rules_review');
    assert.equal(featureDisposition({feature_key:'adversary:static-wraith:feedback',status:'supported',native_handler:'eval'}).status,'needs_rules_review');
  }],
+ ['UA8','S1','owner Signal taxonomy classifies exactly eight source-pinned templates without changing feature proof',async()=>{
+   const {compileNativeActors,compileNativeFeatures,nativeActorTaxonomy}=await import('../src/native-feature-catalog.js'),before=hash(compileNativeFeatures()),actors=compileNativeActors(),
+     expected=['Static Wraith','Choir Relay','Morrowline Echo','Traffic Saint','Choir Junction Intelligence','Morrowline Matured','Citywide Choir','Choir Storm Node'];
+   assert.equal(actors.length,57);assert.deepEqual(actors.filter(a=>a.signal_based).map(a=>a.actor_name).sort(),expected.sort());
+   const library=new EncounterLibrary('../content');
+   for(const name of expected){const template=library.findAdversary(name),a=nativeActorTaxonomy('adversary',template);
+     assert.equal(a.signal_based,true);assert.equal(a.template_hash,hash(template));assert.equal(a.taxonomy_ruling,'owner:signal-taxonomy:v1');
+     assert(Object.isFrozen(a));assert.throws(()=>{a.signal_based=false;},TypeError);}
+   assert(Object.isFrozen(actors));assert.equal(hash(compileNativeFeatures()),before);
+ }],
+ ['UA8','S2','technological equipment and electrical portrayal do not confer Signal classification',async f=>{
+   const {compileNativeActors,nativeActorTaxonomy}=await import('../src/native-feature-catalog.js'),library=new EncounterLibrary('../content'),
+     excluded=['Aster Vale Forecast Engine','Aster Vale Catastrophe Analyst','Aster Vale Occult Analyst','Ritual Enforcement Team','Blacksite Null Team','Civic Null Operative','Wraith Pack'],
+     before=structuredClone(f.db.getCharacter(f.pcs[0].id).data.resources),fear=f.db.getCampaign(f.guild).fear;
+   for(const name of excluded)assert.equal(nativeActorTaxonomy('adversary',library.findAdversary(name)).signal_based,false,name);
+   assert(compileNativeActors().filter(a=>a.actor_kind==='environment').every(a=>a.signal_based===false));
+   assert.deepEqual(f.db.getCharacter(f.pcs[0].id).data.resources,before);assert.equal(f.db.getCampaign(f.guild).fear,fear);
+   assert.equal(f.db.listCityRecords(f.guild,{kind:'gm_action_cost_receipt',includeGM:true}).length,0);
+ }],
+ ['UA8','S3','Signal metadata cannot be supplied by model flags names changed stats or narrative keywords',async()=>{
+   const {compileNativeActors,nativeActorTaxonomy}=await import('../src/native-feature-catalog.js'),library=new EncounterLibrary('../content'),
+     wraith=library.findAdversary('Static Wraith'),pack=library.findAdversary('Wraith Pack');
+   for(const forged of [undefined,null,[],'Static Wraith',{name:'Static Wraith',signal_based:true},{...pack,signal_based:true},{...pack,name:'Static Wraith'},
+     {...wraith,attack:'+99'},{...pack,description:'Explicit Signal-based network intelligence.'}])assert.throws(()=>nativeActorTaxonomy('adversary',forged),/source/);
+   assert.throws(()=>nativeActorTaxonomy('environment',wraith),/source/);
+   const adversaries=JSON.parse(fs.readFileSync('../content/GM_PRIVATE/ADVERSARIES/adversaries.json','utf8'));
+   adversaries.find(a=>a.name==='Static Wraith').signal_based=true;
+   assert.throws(()=>compileNativeActors({adversaries}),/source/);
+ }],
+ ['UA8','S4','Local Mesh and Route Around share one necessary-only Signal taxonomy gate',async()=>{
+   const {nativeSignalFeatureTarget,compileNativeActors}=await import('../src/native-feature-catalog.js'),library=new EncounterLibrary('../content');
+   for(const actor of compileNativeActors().filter(a=>a.actor_kind==='adversary')){
+     const template=library.findAdversary(actor.actor_name),mesh=nativeSignalFeatureTarget('adversary:choir-relay:local-mesh',template),
+       route=nativeSignalFeatureTarget('adversary:choir-relay:route-around',template);
+     assert.deepEqual(mesh.target,route.target);assert.equal(mesh.target.signal_based,actor.signal_based);
+     for(const proof of [mesh,route]){assert(Object.isFrozen(proof));assert.deepEqual(Object.keys(proof).sort(),['feature_hash','feature_key','target']);
+       assert(!Object.hasOwn(proof,'allied'));assert(!Object.hasOwn(proof,'powered'));assert(!Object.hasOwn(proof,'authorized'));}
+   }
+   assert.throws(()=>nativeSignalFeatureTarget('model:route-around',library.findAdversary('Static Wraith')),/source/);
+ }],
  ['UA6','04','registered unmapped and unregistered feature proposals remain private holds with no costs or dice',async f=>{
    const {compileNativeFeatures}=await import('../src/native-feature-catalog.js');
    const feature=compileNativeFeatures().find(r=>r.actor_name==='Aster Vale Contractor'&&r.name==='Flashbang');

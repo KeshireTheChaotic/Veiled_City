@@ -39,3 +39,40 @@ export function featureDisposition(key){
   if(row.status!=='supported')return Object.freeze({status:'needs_rules_review',reason:`${row.reason} No qualified native handler; no cost, roll or effect.`,feature:row});
   return Object.freeze({status:'supported',reason:'Qualified descriptor only; current native trigger, actor, costs and targets still required.',feature:row});
 }
+
+/** Owner taxonomy is additive: existing closed feature descriptors and their saved hashes do not change. */
+export function compileNativeActors({adversaries=read('../../content/GM_PRIVATE/ADVERSARIES/adversaries.json'),
+  environments=read('../../content/GM_PRIVATE/ENVIRONMENTS/environments.json')}={}){
+  const features=compileNativeFeatures({adversaries,environments}),taxonomy=definitions.actor_taxonomy,
+    rows=[...new Map(features.map(f=>[`${f.actor_kind}:${f.actor_name}`,{
+      version:1,actor_kind:f.actor_kind,actor_key:`${f.actor_kind}:${slug(f.actor_name)}`,actor_name:f.actor_name,
+      template_hash:f.template_hash,source_ref:f.source_ref.split('/features/')[0],signal_based:false,taxonomy_ruling:null
+    }])).values()];
+  if(taxonomy?.version!==1||taxonomy.ruling_ref!=='owner:signal-taxonomy:v1'||!Array.isArray(taxonomy.signal_based)
+    ||taxonomy.signal_based.length!==8||new Set(taxonomy.signal_based.map(a=>a.template_hash)).size!==8)throw fail('actor_taxonomy_source_inventory');
+  for(const classification of taxonomy.signal_based){
+    if(Object.keys(classification).sort().join()!=='actor_name,signal_based,template_hash'||classification.signal_based!==true)
+      throw fail('actor_taxonomy_source_shape');
+    // Hash selects the immutable template. The exact name is an integrity cross-check, never a semantic gate.
+    const actor=rows.find(a=>a.actor_kind==='adversary'&&a.template_hash===classification.template_hash);
+    if(!actor||actor.actor_name!==classification.actor_name)throw fail('actor_taxonomy_source_hash_changed');
+    actor.signal_based=true;actor.taxonomy_ruling=taxonomy.ruling_ref;
+  }
+  return freeze(rows);
+}
+
+/** Read-only classification of an exact trusted template; this grants no alliance, move, cost or effect capability. */
+export function nativeActorTaxonomy(kind,template){
+  if(!['adversary','environment'].includes(kind)||!template||typeof template!=='object'||Array.isArray(template))throw fail('actor_template_source_shape');
+  const fingerprint=hash(template),actor=compileNativeActors().find(a=>a.actor_kind===kind&&a.template_hash===fingerprint);
+  if(!actor)throw fail('actor_template_source_changed');
+  return actor;
+}
+
+/** Shared necessary-only taxonomy gate. Callers must separately prove live actors, alliance, timing and host legality. */
+export function nativeSignalFeatureTarget(featureKey,template){
+  if(!['adversary:choir-relay:local-mesh','adversary:choir-relay:route-around'].includes(featureKey))throw fail('signal_feature_source');
+  const feature=compileNativeFeatures().find(f=>f.feature_key===featureKey),actor=nativeActorTaxonomy('adversary',template);
+  if(!feature)throw fail('signal_feature_source');
+  return freeze({feature_key:featureKey,feature_hash:hash(feature),target:actor});
+}

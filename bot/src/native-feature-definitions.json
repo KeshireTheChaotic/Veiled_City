@@ -1,6 +1,20 @@
 {
   "version": 1,
   "rules_edition": "Daggerheart SRD 2.0 2026-08-25 + exact Veiled City content",
+  "actor_taxonomy": {
+    "version": 1,
+    "ruling_ref": "owner:signal-taxonomy:v1",
+    "signal_based": [
+      {"actor_name":"Static Wraith","template_hash":"df4233402bab5e0b353a19ad0fa0b9617e4c9b88c943cd5dc0d4ee9f116f3fc1","signal_based":true},
+      {"actor_name":"Choir Relay","template_hash":"8d96b1f9606e8910602b63021d03b23d7e564daf015b062db86ffa66d4e7e364","signal_based":true},
+      {"actor_name":"Morrowline Echo","template_hash":"0488f9de16410d11fb9a095e4951045a323d3eea51ad8a8e425ae4e96d47e8fa","signal_based":true},
+      {"actor_name":"Traffic Saint","template_hash":"7e899508db8331d30664201d226ce4f2ff2c19b7837bab3255a4ce820a358140","signal_based":true},
+      {"actor_name":"Choir Junction Intelligence","template_hash":"5c43d1e56113bec4f5aa07f311d79497fe6b5e7e5f8289aabef031ec6c28b85b","signal_based":true},
+      {"actor_name":"Morrowline Matured","template_hash":"ac82c9eb16bc13d7294fccf9c8cb6f71796cce992c030a7f77c81c16263bccad","signal_based":true},
+      {"actor_name":"Citywide Choir","template_hash":"54e14f252028372412bb36247086bd664f38867b07c3b571cd6d330cec19a4d1","signal_based":true},
+      {"actor_name":"Choir Storm Node","template_hash":"633f044799981991e3a3f94078a9484a46a8566a25cc201df7698c1ac4e341af","signal_based":true}
+    ]
+  },
   "features": [
     {
       "feature_key": "adversary:pale-court-thrall:pack-pressure",
