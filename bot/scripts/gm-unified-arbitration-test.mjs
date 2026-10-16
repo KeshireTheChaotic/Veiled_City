@@ -208,6 +208,40 @@ function volleyScenario(f,{evasions=[12,17,24],fear=3,privateScene=false,extraSp
 }
 function readyVolley(f,x,i=0){const pc=f.pcs[i],a=x.attacks[i];reviewIncomingAttack(f.db,f.guild,pc.owner_user_id,a.record_key,{library:x.library});confirmIncomingDefense(f.db,f.guild,pc.owner_user_id,a.record_key);return a;}
 const cases=[
+ ...[[1,1],[12,12]].map((faces,i)=>['UA11',`C01-${i}`,'Flashbang native Critical ignores success consequences without Hope, Fear or Stress reward '+faces,f=>{
+   const x=groupReactionScenario(f,{flash:true}),before=structuredClone(f.db.getCharacter(x.pc.id).data),a=submitGroupReaction(f,x,0,faces);
+   assert.equal(a.request.data.result.duality,'Critical');assert.equal(inspectGmReactionInvitation(f.db,f.guild,x.pc.owner_user_id,a.child.record_key).terms.status,'resolved');
+   assert.deepEqual(f.db.getCharacter(x.pc.id).data,before);assert.equal(f.db.getCampaign(f.guild).fear,2);
+   assert.equal(f.db.listCityRecords(f.guild,{kind:'gm_group_feature_choice',includeGM:true}).length,0);
+   const effect=f.db.listCityRecords(f.guild,{kind:'gm_group_feature_effect',includeGM:true})[0];assert(effect);assert.equal(effect.data.stress,0);assert.equal(effect.data.condition,null);
+ }]),
+ ['UA11','C02','Flashbang Critical cannot be converted into an owner resource charge and its private result survives restart once',async f=>{
+   const x=groupReactionScenario(f,{flash:true}),a=submitGroupReaction(f,x,0,[6,6]),{chooseGroupReactionOutcome,validateGroupReactionEffect}=await import('../src/native-group-features.js'),
+     input={op:'gm-reaction-choice',request:a.child.record_key,revision:hash(a.child.data),choice:'stress'},before=f.db.getCharacter(x.pc.id).data;
+   assert.throws(()=>chooseGroupReactionOutcome(f.db,f.guild,x.pc.owner_user_id,input,{interactionId:'critical-no-choice',authoredText:JSON.stringify(input)}));
+   f.restart();const effect=f.db.listCityRecords(f.guild,{kind:'gm_group_feature_effect',includeGM:true})[0];validateGroupReactionEffect(f.db,f.guild,effect.record_key);
+   assert.deepEqual(f.db.getCharacter(x.pc.id).data,before);
+   const {publishGmArbitrationNotice}=await import('../src/native-publications.js'),sent=[];
+   await publishGmArbitrationNotice(f.db,f.guild,a.child.record_key,async(user,text,session,character,{publication:row})=>{
+     assert.equal(user,x.pc.owner_user_id);assert.equal(text,row.payload);assert.equal(character,x.pc.id);sent.push(row);return {messageId:`crit-${sent.length}`,channelId:'offline'};
+   });
+   assert(sent.some(row=>row.payload.includes('marked 0 Stress')&&row.visibility==='character'&&row.target_user_id===x.pc.owner_user_id));
+   assert(!sent.some(row=>/Choose exactly ONE|"choice":"stress"/.test(row.payload)));
+   await publishGmArbitrationNotice(f.db,f.guild,a.child.record_key,async()=>assert.fail('no replay delivery'));
+ }],
+ ['UA11','C03','Flashbang Critical at full Stress preserves existing conditions rather than demanding overflow or clearing effects',f=>{
+   const x=groupReactionScenario(f,{flash:true,beforeDecision:x=>f.db.updateCharacterData(x.pc.id,d=>{
+     d.resources.stress.current=d.resources.stress.max;d.resources.hope=0;d.conditions=['Vulnerable'];
+   })}),before=structuredClone(f.db.getCharacter(x.pc.id).data),a=submitGroupReaction(f,x,0,[1,1]);
+   assert.equal(inspectGmReactionInvitation(f.db,f.guild,x.pc.owner_user_id,a.child.record_key).terms.status,'resolved');
+   assert.deepEqual(f.db.getCharacter(x.pc.id).data,before);assert.equal(f.db.listCityRecords(f.guild,{kind:'gm_group_feature_review',includeGM:true}).length,0);
+ }],
+ ['UA11','C04','incomplete historical group choice fails with a scoped proof error, not an unhandled native-state exception',f=>{
+   const x=groupReactionScenario(f,{flash:true}),a=submitGroupReaction(f,x,0);
+   const terminal=f.db.listCityRecords(f.guild,{kind:'gm_reaction_submission',includeGM:true})[0];
+   f.db.db.prepare('DELETE FROM city_records WHERE guild_id=? AND kind=? AND record_key=?').run(f.guild,'gm_reaction_submission',terminal.record_key);
+   assert.throws(()=>inspectGmReactionInvitation(f.db,f.guild,x.pc.owner_user_id,a.child.record_key),error=>error.code==='GM_ARBITRATION');
+ }],
  ['UA11','S01','Stack Formation derives +1 defensive Difficulty from the actual Horde remaining HP, never marked PC HP',f=>{
    const x=incoming(f,{privateScene:false,template:'Ritual Enforcement Team',npcHp:4});
    const strike=strikeAdversary(f,x,'stack-four',{damage:1,beforeRoll:({request})=>{

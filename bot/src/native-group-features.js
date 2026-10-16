@@ -25,11 +25,11 @@ export function groupReactionRules(key){
   const policy=policies[key];if(!policy)throw fail('group_feature_fixed_rules');
   return Object.freeze({trait:policy.trait,difficulty:policy.difficulty});
 }
-const needsChoice=(feature,success)=>feature===FLASH&&success||feature===REGENT&&!success;
+const needsChoice=(feature,success,critical=false)=>!critical&&(feature===FLASH&&success||feature===REGENT&&!success);
 export const groupReactionOptions=feature=>feature===REGENT?['hope','stress','command']:feature===FLASH?['vulnerable','stress']:[];
 export function groupFeatureStakes(key){
   if(key===LANES)return 'On failure you cannot move beyond Very Close until after the Saint next takes the spotlight. On success no restriction applies. No roll or failed response is assumed.';
-  if(key===FLASH)return 'On failure become Vulnerable and mark 1 Stress. On success YOU choose Vulnerable or 1 Stress. Silence/withdrawal is not a failed reaction.';
+  if(key===FLASH)return 'On failure become Vulnerable and mark 1 Stress. On ordinary success YOU choose Vulnerable or 1 Stress. A native Critical ignores both effects, without Hope/Fear or Stress recovery. Silence/withdrawal is not a failed reaction.';
   if(key===REGENT)return 'On failure YOU choose lose 2 Hope, mark 2 Stress, or one immediate non-suicidal command. Command compliance needs an exact communicated command and supported owner declaration; it is never invented. Success applies no consequence. Silence/withdrawal is not failure.';
   throw fail('group_feature_stakes');
 }
@@ -146,7 +146,8 @@ export function groupReactionState(db,guild,row,terminal){
   const choice=db.getCityRecord(guild,'gm_group_feature_choice',effectKey(row.record_key));
   if(choice){
     const request=terminal?.status==='resolved'&&db.getCityRecord(guild,'roll_request',terminal.data.request);
-    if(!request||!needsChoice(row.data.native.feature,typedRollProof(db,guild,request).outcome==='success')
+    if(request?.data?.result?.duality==='Critical'&&row.data.native.feature===FLASH)return 'needs_rules_review'; // Historical pending choice: never charge or silently rewrite it.
+    if(!request||!needsChoice(row.data.native.feature,typedRollProof(db,guild,request).outcome==='success',request.data.result.duality==='Critical')
       ||choice.status!=='awaiting_owner'||choice.visibility!=='character'||choice.subject_key!==pc.id
       ||choice.source_event!==row.source_event||choice.data.decision!==row.record_key||choice.data.request!==request?.record_key
       ||hash(choice.data.options)!==hash(groupReactionOptions(row.data.native.feature)))throw fail('group_choice_pending_proof');
@@ -159,7 +160,7 @@ export function applyGroupReactionOutcome(db,guild,row,request,choiceSource=null
   return db.transaction(()=>{
   const result=db.transaction(()=>{
     const n=row.data.native,{pc,cost}= {...inspectGroupFeatureChild(db,guild,row),...inspectGroupFeature(db,guild,n.execution)},key=effectKey(row.record_key),
-      prior=db.getCityRecord(guild,'gm_group_feature_effect',key),proof=typedRollProof(db,guild,request),policy=policies[n.feature],success=proof.outcome==='success';
+      prior=db.getCityRecord(guild,'gm_group_feature_effect',key),proof=typedRollProof(db,guild,request),policy=policies[n.feature],success=proof.outcome==='success',critical=request.data.result.duality==='Critical';
     if(prior)return validateGroupReactionEffect(db,guild,key);
     if(request.data.kind!=='reaction'||request.data.input.gm_invitation!==row.record_key||request.subject_key!==pc.id
       ||request.data.owner_user_id!==n.owner||proof.difficulty!==policy.difficulty||proof.outcome==='needs_review')throw fail('group_actual_owner_reaction');
@@ -169,19 +170,22 @@ export function applyGroupReactionOutcome(db,guild,row,request,choiceSource=null
       ||submission?.status!=='active'||!db.ownerAuthoredSource(guild,submission.event_key,n.owner))throw fail('group_actual_owner_submission');
     if(choice||choiceSource){
       const source=db.getWorldEvent(guild,choiceSource);
-      if(!needsChoice(n.feature,success)||!groupReactionOptions(n.feature).includes(choice)||source?.status!=='active'||source.kind!=='native_group_feature_choice'
+      if(!needsChoice(n.feature,success,critical)||!groupReactionOptions(n.feature).includes(choice)||source?.status!=='active'||source.kind!=='native_group_feature_choice'
         ||source.source_id!==`player:${n.owner}`||source.visibility!=='character'||source.subject_key!==pc.id||source.session_id!==row.data.origin.session
         ||source.scene!==row.data.origin.scene||source.details.author!==n.owner||source.details.decision!==row.record_key||source.details.revision!==hash(row.data)
         ||source.details.choice!==choice||!db.ownerAuthoredSource(guild,source.event_key,n.owner)
         ||hash(JSON.parse(source.details.authored_text))!==hash({op:'gm-reaction-choice',request:row.record_key,revision:hash(row.data),choice}))throw fail('group_choice_native_owner_source');
     }
-    if(needsChoice(n.feature,success)&&!choice)return db.saveCityRecord(guild,{kind:'gm_group_feature_choice',key,status:'awaiting_owner',source_event:row.source_event,
+    if(critical&&n.feature===FLASH&&db.getCityRecord(guild,'gm_group_feature_choice',key))return db.saveCityRecord(guild,{kind:'gm_group_feature_review',key,status:'needs_rules_review',
+      source_event:row.source_event,visibility:'character',subject_key:pc.id,data:{decision:row.record_key,request:request.record_key,
+        reason:'Historical Critical-success choice requires scoped reconciliation. No new cost, condition, dice or historical outcome rewrite.'}});
+    if(needsChoice(n.feature,success,critical)&&!choice)return db.saveCityRecord(guild,{kind:'gm_group_feature_choice',key,status:'awaiting_owner',source_event:row.source_event,
       visibility:'character',subject_key:pc.id,data:{decision:row.record_key,request:request.record_key,options:groupReactionOptions(n.feature)}});
     if(n.feature===REGENT&&choice==='command')return db.saveCityRecord(guild,{kind:'gm_group_feature_review',key,status:'needs_rules_review',
       source_event:row.source_event,visibility:'character',subject_key:pc.id,data:{decision:row.record_key,request:request.record_key,choice_source:choiceSource,
         reason:'A communicated bounded non-suicidal command and exact supported owner declaration/effect are required. No compliance, surrender, speech or resource change was inferred.'}});
-    const stress=n.feature===REGENT?(choice==='stress'?2:0):n.feature===FLASH&&(!success||choice==='stress')?1:0,
-      hope=n.feature===REGENT&&choice==='hope'?2:0,condition=n.feature!==REGENT&&(!success||n.feature===FLASH&&choice==='vulnerable'),
+    const stress=critical?0:n.feature===REGENT?(choice==='stress'?2:0):n.feature===FLASH&&(!success||choice==='stress')?1:0,
+      hope=n.feature===REGENT&&choice==='hope'?2:0,condition=!critical&&n.feature!==REGENT&&(!success||n.feature===FLASH&&choice==='vulnerable'),
       before=structuredClone(pc.data),after=structuredClone(before);
     if(hash(before.resources)!==n.resources_hash||stress&&before.resources.stress.current+stress>before.resources.stress.max
       ||hope&&(!Number.isSafeInteger(before.resources.hope)||before.resources.hope<hope))
@@ -198,7 +202,7 @@ export function applyGroupReactionOutcome(db,guild,row,request,choiceSource=null
     db.updateCharacterData(pc.id,data=>Object.assign(data,after));
     const mutation=db.recordMutation(guild,{sessionId:row.data.origin.session,actorType:'ai_gm',actorId:'native:unified-gm',sourceLayer:'native_feature',mutationType:'verified_group_feature',
       entityKey:pc.id,visibility:'character',before,after,rationale:'Verified owner reaction and optional exact owner choice.',payload:{decision:row.record_key,request:request.record_key}});
-    const data={version:n.feature===REGENT?2:1,...(n.feature===REGENT?{hope}:{}),decision:row.record_key,parent:n.parent,feature:n.feature,feature_hash:n.feature_hash,character:pc.id,owner:n.owner,request:request.record_key,
+    const data={version:n.feature===REGENT?2:critical&&n.feature===FLASH?3:1,...(n.feature===REGENT?{hope}:{}),decision:row.record_key,parent:n.parent,feature:n.feature,feature_hash:n.feature_hash,character:pc.id,owner:n.owner,request:request.record_key,
       roll:request.data.roll_id,request_hash:hash(request),roll_hash:hash(db.getSavedRoll(guild,request.data.roll_id)),request_source_hash:hash(submission),
       success,choice,choice_source:choiceSource,before,after,stress,condition:conditionKey,condition_reused,mutation:mutation.id,cost:cost.record_key};
     const event=indexWorldEvent(db,guild,{key:`${key}:source`,kind:'native_group_feature_effect',source_id:'native:unified-gm',title:'Native owner-specific feature consequence',
@@ -273,8 +277,9 @@ export function validateGroupReactionEffect(db,guild,key,{historical=false}={}){
     if(existing.data.condition!==policy.condition||existing.subject_key!==v.character||!(v.before.conditions||[]).some(c=>c.native_ref===v.condition&&c.active))
       throw fail('group_condition_reuse_source');
   }
-  const requiredChoice=needsChoice(n.feature,v.success),stress=n.feature===REGENT?(v.choice==='stress'?2:0):n.feature===FLASH&&(!v.success||v.choice==='stress')?1:0,
-    hope=n.feature===REGENT&&v.choice==='hope'?2:0,condition=n.feature!==REGENT&&(!v.success||n.feature===FLASH&&v.choice==='vulnerable'),
+  const critical=v.version===3&&n.feature===FLASH&&request.data.result.duality==='Critical',requiredChoice=needsChoice(n.feature,v.success,critical),
+    stress=critical?0:n.feature===REGENT?(v.choice==='stress'?2:0):n.feature===FLASH&&(!v.success||v.choice==='stress')?1:0,
+    hope=n.feature===REGENT&&v.choice==='hope'?2:0,condition=!critical&&n.feature!==REGENT&&(!v.success||n.feature===FLASH&&v.choice==='vulnerable'),
     choice=v.choice_source&&db.getWorldEvent(guild,v.choice_source);
   if(event?.status!=='active'||event.kind!=='native_group_feature_effect'||event.source_id!=='native:unified-gm'||event.visibility!=='character'||event.subject_key!==v.character
     ||event.details.payload_hash!==hash(v)||event.details.owner_source!==request.source_event||key!==effectKey(v.decision)||v.character!==n.character||v.owner!==n.owner
@@ -284,7 +289,7 @@ export function validateGroupReactionEffect(db,guild,key,{historical=false}={}){
     ||hash(v.before.resources)!==n.resources_hash||v.stress!==stress||!!v.condition!==condition||typeof v.condition_reused!=='boolean'
     ||v.condition&&!v.condition_reused&&v.condition!==`${key}:condition`||v.condition_reused&&!v.condition
     ||hash(v.after)!==hash(expected)||stress&&v.before.resources.stress.current+stress>v.before.resources.stress.max
-    ||(n.feature===REGENT?v.version!==2||v.hope!==hope:v.version!==1||v.hope!==undefined)
+    ||(n.feature===REGENT?v.version!==2||v.hope!==hope:v.version===3?!critical||v.hope!==undefined:v.version!==1||v.hope!==undefined)
     ||hope&&(!Number.isSafeInteger(v.before.resources.hope)||v.before.resources.hope<hope)
     ||requiredChoice&&(!groupReactionOptions(n.feature).filter(c=>c!=='command').includes(v.choice)||choice?.status!=='active'||choice.kind!=='native_group_feature_choice'
       ||choice.source_id!==`player:${v.owner}`||choice.visibility!=='character'||choice.subject_key!==v.character||choice.details.choice!==v.choice||choice.details.decision!==v.decision
@@ -306,7 +311,7 @@ export function chooseGroupReactionOutcome(db,guild,user,input,{interactionId,au
     const terminal=db.getCityRecord(guild,'gm_reaction_submission',`gm-reaction-submit:${hash([row.record_key,user])}`),
       request=terminal?.status==='resolved'&&db.getCityRecord(guild,'roll_request',terminal.data.request),prior=db.getCityRecord(guild,'gm_group_feature_effect',effectKey(row.record_key));
     if(prior){const effect=validateGroupReactionEffect(db,guild,prior.record_key);if(effect.data.choice!==input.choice)throw fail('committed_group_choice_changed');return effect;}
-    if(!request||!needsChoice(n.feature,typedRollProof(db,guild,request).outcome==='success'))throw fail('group_choice_actual_success');
+    if(!request||!needsChoice(n.feature,typedRollProof(db,guild,request).outcome==='success',request.data.result.duality==='Critical'))throw fail('group_choice_actual_success');
     const source=indexWorldEvent(db,guild,{key:`${effectKey(row.record_key)}:choice${n.feature===REGENT?':'+hash([input.choice,interactionId]):''}`,kind:'native_group_feature_choice',source_id:`player:${user}`,
       title:'Affected owner selects exactly one native feature consequence',session_id:row.data.origin.session,scene:row.data.origin.scene,visibility:'character',subject_key:n.character,
       details:{author:user,decision:row.record_key,revision:input.revision,choice:input.choice,authored_text:authoredText,interaction:interactionId}},user);
