@@ -23,6 +23,7 @@ import {assemblyOrientation} from './assembly-state.js';
 import {findFreshScenePart,renderFreshScenePart} from './fresh-scene-authoring.js';
 import {establishSceneFiction,renderSceneFiction,holdSceneFiction} from './scene-fiction-authority.js';
 import {establishNarrativeUnits,renderNarrativeUnit} from './narrative-authority.js';
+import {narrativeTasks} from './narrative-tasks.js';
 import {validateNarrativeCompleteness} from './narrative-completeness.js';
 import {projectNarrativeArtifact} from './narrative-artifacts.js';
 
@@ -374,6 +375,7 @@ export function prepareAuthorizedTurnOutput(db,guild,result,scope,{sourceRef=nul
     const source=db.getWorldEvent(guild,parts[0].source_event);
     common.source_ref=source.event_key;common.source_hash=hash(source.details);
   }
+  const sourceTasks=narrativeTasks(db,guild,result,scope,sourceRef);
   for(const query of queries){
     const observation=renderObservation(db,guild,query,scope);
     // Arbitration is native task/evidence based, never English substring matching or a model "answered" label.
@@ -387,6 +389,10 @@ export function prepareAuthorizedTurnOutput(db,guild,result,scope,{sourceRef=nul
         if(!d||d.unit.kind!=='scene'||d.binding.source!==query.source_ref||d.binding.viewpoint!=='character'
           ||(query.target_type==='location'?(d.binding.location!==query.target||(d.unit.location_key||d.binding.location)!==query.target)
             :d.unit.subject_key!==query.target))return false;
+        if(d.act_v9&&!sourceTasks.some(t=>t.id===d.act_v9.task_id
+          &&db.getWorldEvent(guild,t.binding.source)?.details.text.slice(t.binding.start,t.binding.end)===query.source_span
+          &&(t.kind==='scene'&&['describe_scene','current_situation'].includes(t.binding.operation)
+            ||t.binding.target===query.target&&t.binding.operation===query.operation)))return false;
         renderNarrativeUnit(db,guild,part.data.ref,scope);return true;
       });
     if(covered){

@@ -2,7 +2,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {nativeFixture} from './v9-fixtures.mjs';
-import {setup,run,unit} from './narrative-fixtures.mjs';
+import {setup,run,unit,candidate} from './narrative-fixtures.mjs';
 import {buildNarrativeContext} from '../src/narrative-authority-context.js';
 import {mintNarrativeAudience,revalidateNarrativeAudience} from '../src/audience-native-v9.js';
 import {nativeMechanicalInput,nativeMechanicalOutput} from '../src/mechanical-native-v9.js';
@@ -12,12 +12,20 @@ import {contributeRoll} from '../src/roll-collaboration.js';
 import {sceneFictionHash as hash} from '../src/scene-fiction-context.js';
 import {renderNarrativeUnit} from '../src/narrative-authority.js';
 import {deliverTurnOutbox} from '../src/publication-outbox.js';
+import {narrativeTasks} from '../src/narrative-tasks.js';
+import {captureWorldInput,worldInputKey} from '../src/autonomous-world.js';
 const taskFor=x=>`narrative-task:${hash([x.sourceRef,hash(x.sourceDetails),x.scope,'describe_scene'])}`;
 function v9Answer(f,x,acts){
   x.sourceDetails=f.db.getWorldEvent(f.guild,x.sourceRef).details;
   return {version:9,acts:acts.map(a=>({id:'scene',task_id:taskFor(x),kind:'scene_description',speaker_key:'',location_key:'terminal',source_refs:[],...a})),fiction_delta:[]};
 }
 function npc(f,key='attendant',location='terminal'){f.db.upsertNpcProfile(f.guild,{npcKey:key,displayName:'Inez',role:'attendant',publicIdentity:'A local attendant.'});f.db.setSimulationEntity(f.guild,'npc',key,{name:'Inez',location_key:location,visibility:'party'});}
+function move(f){const x=setup(f,{text:'I head inside the Twenty-Four Spin'}),r=candidate(x.text);
+  f.db.setSimulationEntity(f.guild,'location','twenty-four-spin',{name:'Twenty-Four Spin',parent_location_key:'terminal',visibility:'party',access:'public'});
+  f.db.upsertReference(f.guild,{kind:'location',key:'twenty-four-spin',name:'Twenty-Four Spin',summary:'A public laundromat.',visibility:'party'});
+  r.player_intents=[{...r.player_intents[0],type:'move',operation:'move',resolution:'auto',destination:'interior',target_key:'twenty-four-spin',target_name:'Twenty-Four Spin'}];
+  r.scene_actions=[{kind:'move',entity_ref:'twenty-four-spin',source_span:x.text,zone:'interior'}];return {x,r};}
+const taskId=(f,x,r,index=0)=>narrativeTasks(f.db,f.guild,r,x.scope,x.sourceRef)[index].id;
 function rollInput(f,operation='request_roll',text='Can I roll to inspect the terminal?'){
   const x=setup(f,{text,privateScene:true});f.db.setCityCalendar(f.guild,{flags:{...f.db.getCityCalendar(f.guild).flags,roll_requests:true,roll_collaboration:true}});
   const i={type:'roll',source_span:text,target_name:'',target_key:'',destination:'unspecified',operation,utterance:'',excluded_targets:[],framing:'immediate',resolution:'conversational',reason:'Exact owner request, not a result.'};
@@ -26,6 +34,20 @@ function rollInput(f,operation='request_roll',text='Can I roll to inspect the te
   return {...x,i,a,audience};
 }
 const cases=[
+ ['F4','14','Twenty-Four Spin arrival has one native result and interior fiction then contextual inside answer',async f=>{const {x,r}=move(f),a=v9Answer(f,x,[{task_id:taskId(f,x,r),location_key:'twenty-four-spin',text:'Inside, amber dryer doors flank a narrow folding counter; the coin tray hums beneath a buzzing strip light.'}]);
+   const o=await run(f,x,a,r);const text=o.rows.map(r=>r.payload).join('\n');assert(text.includes('has arrived'));assert(text.includes('Inside, amber'));assert.equal(o.result.narrative_completion.coverage.destination,true);
+   assert.equal(f.db.listWorldEvents(f.guild,{includeGM:true,limit:500}).filter(e=>e.kind==='arrival'&&e.details.input_source===x.sourceRef).length,1);
+   const y={...x,text:'What is the inside like?',messageId:'af-inside'};captureWorldInput(f.db,f.guild,x.pc.owner_user_id,x.pc.id,y.messageId,y.text);y.sourceRef=worldInputKey(y.messageId,x.pc.id);
+   const next=await run(f,y,v9Answer(f,y,[{location_key:'twenty-four-spin',text:'The folding aisle runs between hot dryer windows and a scuffed change machine.'}]),candidate(y.text));
+   assert(next.rows.some(r=>r.payload.includes('folding aisle')));assert(!next.rows.some(r=>r.payload.includes('not established in enough detail')));assert.equal(next.ai.requests.length,2);}],
+ ['F4','15','held writer preserves native arrival and reports missing fiction honestly',async f=>{const {x,r}=move(f),o=await run(f,x,v9Answer(f,x,[{location_key:'twenty-four-spin',text:'Choso apologizes for losing.'}]),r);
+   assert.equal(f.db.getCharacter(x.pc.id).data.location,'twenty-four-spin');assert(o.rows.some(r=>r.payload.includes('has arrived')));assert.equal(o.result.narrative_completion.status,'destination_fiction_missing');}],
+ ['F4','16','repeated same NPC tasks require individually matching native task IDs',async f=>{const x=setup(f,{text:'I ask Inez about the noise. I ask Inez about the parcel.'});npc(f);const r=candidate(x.text);
+   r.player_intents=['I ask Inez about the noise.','I ask Inez about the parcel.'].map(source_span=>({...r.player_intents[0],type:'speak',operation:'conversation',target_key:'attendant',target_name:'Inez',source_span,utterance:source_span.slice(source_span.indexOf('about'),-1)}));
+   const o=await run(f,x,v9Answer(f,x,[{id:'first',task_id:taskId(f,x,r,0),kind:'npc_speech',speaker_key:'attendant',text:'The dryer rattled a moment ago.'}]),r);
+   const tasks=o.result.narrative_completion.tasks;assert.equal(tasks.length,2);assert.equal(tasks[0].disposition,'answered');assert.notEqual(tasks[1].disposition,'answered');assert.notEqual(o.result.narrative_completion.status,'complete');}],
+ ['F4','17','nonbinding v9 artifact and arrival survive a forced-surrender sibling',async f=>{const {x,r}=move(f),o=await run(f,x,v9Answer(f,x,[{id:'menu',task_id:taskId(f,x,r),kind:'artifact_text',location_key:'twenty-four-spin',text:"Choose one of today's specials."},{id:'unsafe',location_key:'twenty-four-spin',text:'You choose the first option and surrender.'}]),r);
+   const text=o.rows.map(r=>r.payload).join('\n');assert(text.includes('has arrived'));assert(text.includes('nonbinding text'));assert(!text.includes('You choose'));}],
  ['F3','10','v9 scoped writer publishes useful empty-facts scene and no model audience fields',async f=>{const x=setup(f),o=await run(f,x,v9Answer(f,x,[{text:'Amber dryer windows glow over a scarred folding counter; a coin tray rattles in the steady hum.'}]));
    assert(o.rows.some(r=>r.payload.includes('coin tray')));assert.equal(o.ai.requests.length,2);const writer=o.ai.requests.at(-1);assert.equal(writer.text.format.schema.properties.version.enum[0],9);
    assert(!JSON.stringify(writer.text.format.schema).includes('"visibility"'));const saved=f.db.listCityRecords(f.guild,{kind:'narrative_unit',includeGM:true})[0];assert.equal(saved.data.act_v9.task_id,taskFor(x));}],

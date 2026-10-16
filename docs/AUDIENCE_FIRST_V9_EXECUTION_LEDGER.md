@@ -47,4 +47,22 @@ Red-first actual v9 output/outbox cases: **0/4 pass, 4 fail**, exit 1. After imp
 
 Residual limitation: independently enforced source/audience/actor/receipt gates are deterministic; the meaning of newly generated ordinary prose is not universally semantically provable. Existing conservative material tripwires remain; v9 role labels alone never waive them. Further expressive false holds are F5, not claimed fixed here. No DB schema migration or historical rewrite. Rollback by source revert, preserving native outcomes.
 
-Next: F4 commit-state separation and native per-task completion. No live runtime, production DB, flags, push or deployment touched.
+F3 commit: `fe7cbe18e0013eda25092e7ab60ad743ee7a6958`.
+
+## F4 — task-local composition and native arrival (qualified)
+
+Starting SHA: `fe7cbe18e0013eda25092e7ab60ad743ee7a6958`. `narrative-tasks.js` now credits a v9 act only to its exact native task ID, in addition to accepted source, actual output, target and operation. Two questions to one NPC no longer require guessing an attribution or falsely marking both answered. Existing legacy uniqueness remains conservative. `pvp-output.js` suppresses an empty legacy observation only when the specific v9 source-span/task/target is answered, not merely because a creative sibling exists.
+
+Existing native preview already stages successful movement/zone and snapshots the verified context before the awaited writer, outside the SQLite write lock. Commit revalidates that snapshot; local writer holds do not reverse a valid arrival or reroll an effect. The current v9 adapter reuses this path, not a second effect executor. Artifact output uses native local prop attribution, never a player-choice waiver.
+
+Initial four new cases: **2 pass / 2 fail**. Two fixture issues were identified explicitly: contextual `What is the inside like?` is not the retained literal one-call lane, so the fake must supply the existing combined + writer responses (2 calls, not 1); conversation was incorrectly labeled a physical `interact` with conversational resolution, so corrected to an exact `speak` utterance. Corrected repeated-question reproduction remained red (`needs_clarification` vs `answered`) before implementation. Temporary synthetic diagnostics removed. After task binding, **4/4**. Final affected F4 + NC11–16 native composition/arrival/replay group: **10/10**, exit 0, 0 skipped.
+
+Verified Twenty-Four Spin arrival text and substantive interior prose in the actual outbox; exactly one arrival receipt. Follow-up contextual interior query answers current interior (2 fake calls, no contradictory unknown). Held apology leaves arrival committed and `destination_fiction_missing`. A certified nonbinding sign survives independently of held forced surrender. One answered NPC task leaves its distinct sibling incomplete. The historic live arrival-only cause is still unknown, not retrospectively claimed fixed by this fixture.
+
+No new model calls, schema migration, production operation or full validator. Source rollback does not restore DB or replay committed actions.
+
+## Owner GM-mechanics addendum (received during F4)
+
+F2 is already committed; apply as a separate follow-up before final qualification, not a restart. Consult official SRD v2.0 dated 2026-08-25, printed pp.47–48 / 86–90. User now requires separate native GM/adversary/environment proposal and outcome authority, d20 families and critical/multitarget/spotlight/cost correctness. A label cannot mint GM authority. Existing player/native/PvP protections and zero extra model calls remain binding. Implementation/status pending native service inspection; do not call an envelope a complete mechanic.
+
+Next: focused F2-GM follow-up, then F5 expression/latency. F6/F7 not started. No live runtime, production DB, flags, push or deployment touched.

@@ -71,8 +71,8 @@
     },
     {
       "path": "bot/scripts/audience-first-integration-test.mjs",
-      "size_bytes": 11317,
-      "sha256": "895532d847c199d5508c819e0499415199aabd2f82fbcc47f450b41453f04b34"
+      "size_bytes": 15419,
+      "sha256": "132cbd2ff6c86bcfe5fc88a1569b0d61e699219d30b7f2fe21026e3270bbe83c"
     },
     {
       "path": "bot/scripts/audit-regression-test.mjs",
@@ -1576,8 +1576,8 @@
     },
     {
       "path": "bot/src/narrative-tasks.js",
-      "size_bytes": 5610,
-      "sha256": "2637034205b8abc8d0057bdee8e2afc140efd17cdda6b8f55f0578370868e5f0"
+      "size_bytes": 5681,
+      "sha256": "ee1cd6222b8f57108bfe811f000aca58c1e93e385a2738ad50f73f83b9c80f62"
     },
     {
       "path": "bot/src/narrative-writer-v9.js",
@@ -1791,8 +1791,8 @@
     },
     {
       "path": "bot/src/pvp-output.js",
-      "size_bytes": 56279,
-      "sha256": "f2bfbbde17ca01b130fcc6f994aa2d1f158c2b15088dafb365486719b790f6fc"
+      "size_bytes": 56792,
+      "sha256": "dae809f0788a2b5b721382907382ae4bc0854f8cc9ae88939c0935f3df26b7c2"
     },
     {
       "path": "bot/src/pvp-profiles.js",
@@ -2456,8 +2456,8 @@
     },
     {
       "path": "docs/AUDIENCE_FIRST_V9_EXECUTION_LEDGER.md",
-      "size_bytes": 7943,
-      "sha256": "959fa2d8889bf3c8916859b7aa1da4f9c76f6217d8460613e0eb49cce5ac3fe3"
+      "size_bytes": 10977,
+      "sha256": "40a1efea8c28d00bf0eccf37410a30ce7b5d8145090b20d5cb53531a2e3a58cb"
     },
     {
       "path": "docs/AUDIENCE_FIRST_V9_IMPLEMENTATION_PLAN.md",

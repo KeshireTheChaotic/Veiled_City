@@ -41,14 +41,16 @@ export function taskDispositions(db,guild,result,parts,scope,sourceRef){
     const same=tasks.filter(other=>other.kind===t.kind&&other.binding.target===t.binding.target),unique=same.length===1;
     const matched=units.filter(({row})=>{
       const u=row.data.unit;
-      if(t.kind==='npc_response')return unique&&u.kind==='npc_speech'&&u.subject_key===t.binding.target;
-      if(t.kind==='observation')return unique&&t.binding.operation==='appearance'&&u.kind==='scene'
+      const taskBound=row.data.act_v9?row.data.act_v9.task_id===t.id:unique;
+      if(!taskBound)return false;
+      if(t.kind==='npc_response')return u.kind==='npc_speech'&&u.subject_key===t.binding.target;
+      if(t.kind==='observation')return t.binding.operation==='appearance'&&u.kind==='scene'
         &&(db.getNpcProfile(guild,t.binding.target)?u.subject_key===t.binding.target
           :db.getSimulationEntity(guild,'location',t.binding.target)&&(u.location_key||row.data.binding.location)===t.binding.target);
-      if(t.kind==='scene')return unique&&['scene','lead','established_observation'].includes(u.kind);
-      if(t.kind==='arrival')return unique&&['scene','lead'].includes(u.kind)&&(u.location_key||row.data.binding.location)===t.binding.target
+      if(t.kind==='scene')return ['scene','lead','established_observation'].includes(u.kind);
+      if(t.kind==='arrival')return ['scene','lead'].includes(u.kind)&&(u.location_key||row.data.binding.location)===t.binding.target
         &&parts.some(p=>p.data.kind==='verified_action'&&db.getWorldEvent(guild,p.data.ref)?.location_key===t.binding.target);
-      if(t.kind==='investigation')return unique&&['lead','established_observation','native_outcome_render'].includes(u.kind)
+      if(t.kind==='investigation')return ['lead','established_observation','native_outcome_render'].includes(u.kind)
         &&(!t.binding.target||u.subject_key===t.binding.target);
       return false;
     });
