@@ -16,6 +16,7 @@ import {actorReferenceVisible} from './npc-cognition-projection.js';
 import {projectNarrativeArtifact,hasNarrativeChoices,narrativeArtifactKey} from './narrative-artifacts.js';
 import {mintNarrativeAudience,revalidateNarrativeAudience} from './audience-native-v9.js';
 import {compileWriterV9,actToNativeUnit} from './narrative-writer-v9.js';
+import {constructNativeClause} from './narrative-clauses-v9.js';
 export {narrativeResponseSchema} from './gm-fiction-schema.js';
 const issuer='native:narrative-authority';
 export const NARRATIVE_AUTHORITY_INSTRUCTIONS='You are the creative GM for this audience-isolated packet. Invent interesting ordinary places, people, sensory surroundings, '
@@ -68,7 +69,7 @@ function shape(answer){
     ids.add(u.id);
   }
 }
-function validateUnit(db,guild,u,ctx,entities=[],historical=false){
+function validateUnit(db,guild,u,ctx,entities=[],historical=false,act=null){
   // Citing public evidence privately is allowed; authoring a new party unit from a
   // private writer packet is not. This check also runs on every deferred read.
   if(u.visibility!==(ctx.scope.mode==='private'?'character':'party'))throw fail('held_scope');
@@ -102,6 +103,11 @@ function validateUnit(db,guild,u,ctx,entities=[],historical=false){
     if(!newCamera&&!adjacentSetting)throw fail('held_scope');
   }
   if(u.receipt_kind||u.receipt_ref||u.epistemic==='native_outcome')throw fail('held_material');
+  if(act?.construction){
+    const b=mintNarrativeAudience(ctx).proof,text=constructNativeClause(db,guild,act,b);
+    if(hash(actToNativeUnit(act,b,{db,guild}))!==hash(u))throw fail('native_clause_binding');
+    return u.kind==='npc_speech'?`${db.getNpcProfile(guild,u.subject_key).display_name}: “${text}”`:text;
+  }
   const names=protectedNarrativeNames(db,guild);
   const assertions=withoutVerifiedVocative(db,guild,u,ctx);
   if(mentions(assertions,names)||materialParaphrases(assertions,names).length)throw fail('held_material');
@@ -178,7 +184,7 @@ export async function authorNarrativeRequests({db,guild,result,scope,sourceRef,b
       budget.used=true;db.saveCityRecord(guild,{kind:'scene_authoring_attempt',key:attempt,status:'authoring',visibility:'gm',source_event:sourceRef,
         data:{version:3,draft:key,packet_hash:hash(ctx.packet)}});
       const generated=await generate(ctx.packet);
-      const v9=generated?.version===9?compileWriterV9(generated,audience,(u,entities)=>validateUnit(db,guild,u,ctx,entities)):null;
+      const v9=generated?.version===9?compileWriterV9(generated,audience,(u,entities,act)=>validateUnit(db,guild,u,ctx,entities,false,act),{db,guild}):null;
       const answer=v9?v9.answer:generated;shape(answer);
       const data={version:v9?9:1,issuer,input,binding:ctx.binding,answer,audience_v9:audience.proof,
         ...(v9?{acts_v9:v9.acts,compiled_v9:v9.compiled}:{}),creative_brief:ctx.packet.creative_brief,packet_hash:hash(ctx.packet),semantic_verification:false};
@@ -197,7 +203,7 @@ export function establishNarrativeUnits(db,guild,input,scope,sourceRef,{content=
   if(d.audience_v9)revalidateNarrativeAudience(db,guild,d.audience_v9,scope);
   shape(d.answer);const units=[],fates=(d.compiled_v9||[]).filter(a=>a.status==='held').map(a=>({id:a.id,fate:a.reason})),entities=d.answer.fiction_delta.filter(e=>e&&typeof e==='object'&&!Array.isArray(e));
   for(const u of d.answer.narrative_units){
-    try{validateUnit(db,guild,u,ctx,entities);units.push(u);}
+    try{validateUnit(db,guild,u,ctx,entities,false,d.acts_v9?.find(a=>a.id===u.id));units.push(u);}
     catch(error){if(!['SCENE_FICTION','NARRATIVE_PVP'].includes(error.code))throw error;fates.push({id:u.id,fate:error.diagnostic?.category||'held_material'});}
   }
   const failedEntities=new Set(),entityResults=[];
@@ -228,7 +234,7 @@ export function establishNarrativeUnits(db,guild,input,scope,sourceRef,{content=
       fates.push({id:u.id,fate:'held_scope'});continue;
     }
     try{
-      const text=validateUnit(db,guild,u,ctx),data={version:d.version===9?9:1,issuer,binding:d.binding,unit:u,text,semantic_verification:false,
+      const text=validateUnit(db,guild,u,ctx,[],false,d.acts_v9?.find(a=>a.id===u.id)),data={version:d.version===9?9:1,issuer,binding:d.binding,unit:u,text,semantic_verification:false,
         ...(d.audience_v9?{audience_v9:d.audience_v9}:{}),
         ...(d.version===9?{act_v9:d.acts_v9.find(a=>a.id===u.id)}:{}),
         epistemic:u.kind==='rumor'?'testimony':u.kind==='npc_speech'?'attributed':u.kind==='native_outcome_render'?'native_outcome':u.epistemic};
@@ -256,8 +262,8 @@ export function renderNarrativeUnit(db,guild,key,scope){
   if(row?.status!=='accepted_established'||d?.issuer!==issuer||event?.status!=='active'||event.source_id!==issuer
     ||event.details.payload_hash!==hash(d)||key!==`narrative-unit:${hash([d.binding,d.unit])}`||hash(d.binding.scope)!==hash(scope))throw fail('unit_receipt');
   const ctx=context(db,guild,{version:8,kind:'narrative_request',operation:'describe_scene',source_refs:[]},scope,d.binding.source);
-  if(hash(ctx.binding)!==hash(d.binding)||validateUnit(db,guild,d.unit,ctx,[],true)!==d.text)throw fail('unit_revalidation');
+  if(hash(ctx.binding)!==hash(d.binding)||validateUnit(db,guild,d.unit,ctx,[],true,d.act_v9)!==d.text)throw fail('unit_revalidation');
   if(d.audience_v9)revalidateNarrativeAudience(db,guild,d.audience_v9,scope);
-  if(d.act_v9&&(!d.audience_v9.task_ids.includes(d.act_v9.task_id)||hash(actToNativeUnit(d.act_v9,d.audience_v9))!==hash(d.unit)))throw fail('v9_act_revalidation');
+  if(d.act_v9&&(!d.audience_v9.task_ids.includes(d.act_v9.task_id)||hash(actToNativeUnit(d.act_v9,d.audience_v9,{db,guild}))!==hash(d.unit)))throw fail('v9_act_revalidation');
   return d.text;
 }

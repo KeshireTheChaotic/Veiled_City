@@ -26,6 +26,7 @@ function move(f){const x=setup(f,{text:'I head inside the Twenty-Four Spin'}),r=
   r.player_intents=[{...r.player_intents[0],type:'move',operation:'move',resolution:'auto',destination:'interior',target_key:'twenty-four-spin',target_name:'Twenty-Four Spin'}];
   r.scene_actions=[{kind:'move',entity_ref:'twenty-four-spin',source_span:x.text,zone:'interior'}];return {x,r};}
 const taskId=(f,x,r,index=0)=>narrativeTasks(f.db,f.guild,r,x.scope,x.sourceRef)[index].id;
+const fateEvidence=f=>JSON.stringify(f.db.listCityRecords(f.guild,{kind:'narrative_unit_fates',includeGM:true,limit:10}).flatMap(r=>r.data.fates));
 function rollInput(f,operation='request_roll',text='Can I roll to inspect the terminal?'){
   const x=setup(f,{text,privateScene:true});f.db.setCityCalendar(f.guild,{flags:{...f.db.getCityCalendar(f.guild).flags,roll_requests:true,roll_collaboration:true}});
   const i={type:'roll',source_span:text,target_name:'',target_key:'',destination:'unspecified',operation,utterance:'',excluded_targets:[],framing:'immediate',resolution:'conversational',reason:'Exact owner request, not a result.'};
@@ -34,6 +35,22 @@ function rollInput(f,operation='request_roll',text='Can I roll to inspect the te
   return {...x,i,a,audience};
 }
 const cases=[
+ ['F5','27','ordinary Rain weather survives but a Rain PC reaction is held',async f=>{const x=setup(f);f.db.updateCharacterData(x.pc.id,d=>{d.aliases=['Rain'];});
+   const o=await run(f,x,v9Answer(f,x,[{id:'weather',text:'',construction:{kind:'weather',phenomenon:'rain',motion:'bead',surface:'window'}},{id:'forced',text:'Rain apologizes for losing.'}]));const text=o.rows.map(r=>r.payload).join('\n');assert(!text.includes('apologizes'));assert(text.includes('Rain beads on the window.'),fateEvidence(f));}],
+ ['F5','28','native character sensory viewpoint permits physical touch but no emotion or decision',async f=>{const x=setup(f),o=await run(f,x,v9Answer(f,x,[{id:'physical',kind:'player_perception',text:'',construction:{kind:'physical_sense',sense:'touch',stimulus:'warm_air',origin:'dryers'}},{id:'choice',kind:'player_perception',text:'You feel afraid and decide to run.'}]));
+   const text=o.rows.map(r=>r.payload).join('\n');assert(!text.includes('decide to run'));assert(text.includes('You feel warm air'),fateEvidence(f));}],
+ ['F5','29','known local NPC may refer to a PC without forcing that PC to surrender',async f=>{const x=setup(f,{text:'I tell the attendant to call me Raven.'});npc(f);f.db.updateCharacterData(x.pc.id,d=>{d.aliases=['Raven'];});
+   f.db.upsertNpcKnowledge(f.guild,{npcKey:'attendant',knowledgeKey:'name',content:'Raven',beliefState:'known',sourceType:'observed',sourceRef:x.sourceRef,isSecret:false});
+   const o=await run(f,x,v9Answer(f,x,[{id:'question',kind:'npc_speech',speaker_key:'attendant',text:'',construction:{kind:'known_pc_query',character_ref:x.pc.id,name:'Raven',question:'seen'}},{id:'forced',kind:'npc_speech',speaker_key:'attendant',text:'Mr. Raven, you agreed to surrender.'}]));
+   const text=o.rows.map(r=>r.payload).join('\n');assert(!text.includes('agreed to surrender'));assert(text.includes('Have you seen Raven?'),fateEvidence(f));}],
+ ['F5','30','construction cannot launder raw PC prose or create camera witnesses and stale publications',async()=>{for(const placed of [true,false])await nativeFixture(async f=>{
+   const x=setup(f,{placed,text:'Describe terminal'}),construction={kind:'physical_sense',sense:'touch',stimulus:'warm_air',origin:'dryers'};
+   const o=await run(f,x,v9Answer(f,x,[{id:'injected',kind:'player_perception',text:'You decide to surrender.',construction},
+     {id:'physical',kind:'player_perception',text:'',construction},{id:'unknown',text:'',construction:{kind:'weather',phenomenon:'rain',motion:'apologizes',surface:'window'}}]));
+   const text=o.rows.map(r=>r.payload).join('\n');assert(!text.includes('surrender'));assert.equal(text.includes('You feel warm air'),placed);
+   f.restart();f.db.db.prepare("UPDATE world_events SET status='retracted' WHERE guild_id=? AND event_key=?").run(f.guild,x.sourceRef);
+   let sends=0;await deliverTurnOutbox(f.db,f.guild,o.attempt.turn_id,async()=>{sends++;return{messageId:'fake',channelId:'offline'};});assert.equal(sends,0);
+ });}],
  ['F4','14','Twenty-Four Spin arrival has one native result and interior fiction then contextual inside answer',async f=>{const {x,r}=move(f),a=v9Answer(f,x,[{task_id:taskId(f,x,r),location_key:'twenty-four-spin',text:'Inside, amber dryer doors flank a narrow folding counter; the coin tray hums beneath a buzzing strip light.'}]);
    const o=await run(f,x,a,r);const text=o.rows.map(r=>r.payload).join('\n');assert(text.includes('has arrived'));assert(text.includes('Inside, amber'));assert.equal(o.result.narrative_completion.coverage.destination,true);
    assert.equal(f.db.listWorldEvents(f.guild,{includeGM:true,limit:500}).filter(e=>e.kind==='arrival'&&e.details.input_source===x.sourceRef).length,1);
