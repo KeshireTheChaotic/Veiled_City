@@ -2501,8 +2501,8 @@
     },
     {
       "path": "docs/AUDIENCE_FIRST_V9_EXECUTION_LEDGER.md",
-      "size_bytes": 40396,
-      "sha256": "51c1bef4a5db218c08d5c1ce26bb2bfbc81207155963d5ff56b05966d05c8459"
+      "size_bytes": 41018,
+      "sha256": "b032eb29387f9a1e2dc1a0930c265fa7962d4c3453829d5a24ba73c960005e54"
     },
     {
       "path": "docs/AUDIENCE_FIRST_V9_IMPLEMENTATION_PLAN.md",
@@ -2516,13 +2516,13 @@
     },
     {
       "path": "docs/AUDIENCE_FIRST_V9_QUALIFICATION.json",
-      "size_bytes": 2017,
-      "sha256": "3ca59cb79a1661f470ae16aba8582adec4c9d42c8647a0baf26258cbc801cf20"
+      "size_bytes": 2087,
+      "sha256": "684ddf0c085c8a8b6bade9162d86500f9f04c1f7d9cf0577f3307671f63956d9"
     },
     {
       "path": "docs/AUDIENCE_FIRST_V9_RELEASE.md",
-      "size_bytes": 7562,
-      "sha256": "413fc85c783653d3e7a5872f8620b21abf2e64c3490dc87de5679da91ed4d9ee"
+      "size_bytes": 8037,
+      "sha256": "a97f4033ed1028aeac64f678c8cd521f0c9db65906a5cbdcc0f6e5c56f942801"
     },
     {
       "path": "docs/BOT_COMMANDS.md",

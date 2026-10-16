@@ -4,6 +4,7 @@
   "branch": "codex/audience-first-narrative-v9",
   "starting_sha": "e2737f8189f6ba5795b4d4d13158c4e371b0be50",
   "qualification_parent_sha": "f0e3994a910c33d59d7bf537be276ffc88077a63",
+  "qualified_source_sha": "c600349b15a057bfde582cb864b52acf12d37c41",
   "scope": "Implemented audience-first and supported native arbitration routes only; not all feature adapters or live play",
   "final_validation": {
     "command": "cd bot; npm run validate",

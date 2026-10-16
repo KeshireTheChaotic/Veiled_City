@@ -15,7 +15,7 @@ Starting actual source: `e2737f8189f6ba5795b4d4d13158c4e371b0be50`; preserved di
 | AR3 | `7a0d92496ce89faacb88cddb0ddf7027d6f8d367` | Supported native GM execution; explicit unmapped-feature holds |
 | AR4 | `2bb2d1e930e669134730355225d0ca09e8ba241c` | Private native notices, owner terminal paths, exact continuation, Director integration |
 | F6 / AR5 purge | `f0e3994a910c33d59d7bf537be276ffc88077a63` | Two unreachable runtime producers retired; native services/assertions retained |
-| F7 / final AR5 qualification | Qualification commit containing this receipt | Same-tree check, manifest and full mandatory gate passed |
+| F7 / final AR5 qualification | `c600349b15a057bfde582cb864b52acf12d37c41` | Same-tree check, manifest and full mandatory gate passed |
 
 ## Authority and delivery
 
@@ -38,6 +38,8 @@ Private pending terms contain native-owned trait/Difficulty/request identity and
 ## Qualification and operational state
 
 Compact machine-readable report: `bot/.reports/offline-validation.json`; retained summary: [qualification JSON](AUDIENCE_FIRST_V9_QUALIFICATION.json). Actual starting registry was **123 mandatory / 39 optional**, not a newly observed baseline pass; final registry **126 mandatory / 39 optional**. All previous registrations and assertions remain. The three added mandatory suites contain 9 framework, 21 audience and 33 arbitration cases (no skip/todo declarations). Full mandatory run passed, exit 0, in **570953 ms**; both D08 suites passed. `npm run check` passed, exit 0: **410 modules/scripts, 24 command schemas**. Manifest sync and diff-check passed. The first validation was explicitly interrupted at 89/126 after a separate real full-HP regression; it is not counted as qualification. The corrected readonly-query/action-isolation case and original rules/PC-effect contrasts passed before the necessary final rerun.
+
+Qualified source commit: `c600349b15a057bfde582cb864b52acf12d37c41`. A following handoff commit records that SHA and refreshes documentation/manifest only; it does not change the qualified executable or test inputs. Final manifest: **734 files, zero hash/size mismatches**, owner `docs/rework/` inputs excluded and preserved. Original high-value security test files have zero diff from the starting F4 SHA; compatibility retirement changed import paths, not their assertions.
 
 Fully marked HP remains unchanged and blocks character actions, but not a source-valid read-only GM scene description. This is not a blanket eligibility waiver for actions, dice, abilities, damage or death. Native reaction invitations now also fingerprint current NPC/PC presence sources and range, not merely a local NPC profile.
 
