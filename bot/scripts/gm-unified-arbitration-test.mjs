@@ -42,7 +42,7 @@ function boardFixture(f,{privateScene=false,rollQuestion=false}={}){
 import {buildNarrativeContext} from '../src/narrative-authority-context.js';
 import {mintNarrativeAudience} from '../src/audience-native-v9.js';
 import {gmD20Roll,gmAttackDamage} from '../src/dice.js';
-import {prepareIncomingAttack,prepareArbitratedIncomingAttack,rollArbitratedIncomingAttack,reviewIncomingAttack,confirmIncomingDefense,rollIncomingAttack,incomingAttackEvidence} from '../src/pc-incoming.js';
+import {prepareIncomingAttack,prepareArbitratedIncomingAttack,rollArbitratedIncomingAttack,reviewIncomingAttack,confirmIncomingDefense,rollIncomingAttack,incomingAttackEvidence,resolveIncomingDamage,validateIncomingDamageApplication} from '../src/pc-incoming.js';
 import {EncounterLibrary} from '../src/encounter.js';
 import {buildCombatants} from '../src/combat.js';
 import {indexWorldEvent} from '../src/city-calendar.js';
@@ -280,6 +280,25 @@ const cases=[
 
 ];
 cases.push(
+ ['UA7','01','native AI attack injury and last-HP proof remain valid through owner Armor and restart',f=>{
+   const x=incoming(f);f.db.updateCharacterData(x.pc.id,d=>{d.resources.hp.current=3;});
+   f.db.setCityCalendar(f.guild,{flags:{...f.db.getCityCalendar(f.guild).flags,gm_discretion:true}});
+   const rows=persistPlayerIntents(f.db,f.guild,candidate(x.text).player_intents,x.scope,{messageId:x.messageId}),origin=createArbitrationOrigin(f.db,f.guild,x.scope,x.sourceRef),
+     proposal={actor_key:'guard',operation:'attack',target_refs:[x.pc.id],objective_ref:'',source_refs:[],dependencies:[]},board=buildSceneIntentBoard(f.db,f.guild,origin,rows,[proposal]),
+     [r]=adjudicateSceneBoard(f.db,f.guild,origin,board,[{...decision(board.data.entries[1].intent_ref,'gm_attack_roll'),rule_basis_refs:['srd:adversary-attacks'],feature_ref:'standard_attack',stakes:'Native standard attack.'}],{library:x.library}),
+     offer=prepareArbitratedIncomingAttack(f.db,f.guild,r.record_key,{library:x.library});
+   reviewIncomingAttack(f.db,f.guild,x.pc.owner_user_id,offer.record_key,{library:x.library});confirmIncomingDefense(f.db,f.guild,x.pc.owner_user_id,offer.record_key);
+   let n=0;rollArbitratedIncomingAttack(f.db,f.guild,offer.record_key,{library:x.library,rng:()=>[20,8][n++]});assert.equal(n,2);
+   const injury=resolveIncomingDamage(f.db,f.guild,x.pc.owner_user_id,offer.record_key,{armor:false,library:x.library});
+   assert.equal(f.db.getCharacter(x.pc.id).data.resources.hp.current,6);
+   assert.equal(f.db.getCityRecord(f.guild,'pc_death_move_request',`${offer.record_key}:death`).status,'awaiting_owner');
+   assert.equal(validateIncomingDamageApplication(f.db,f.guild,injury.record_key).record_key,injury.record_key);
+   f.restart();assert.equal(resolveIncomingDamage(f.db,f.guild,x.pc.owner_user_id,offer.record_key,{armor:false,library:x.library}).record_key,injury.record_key);
+   assert.equal(f.db.getCharacter(x.pc.id).data.resources.hp.current,6);assert.equal(n,2);
+   f.db.db.prepare("UPDATE world_events SET status='retracted' WHERE guild_id=? AND event_key=?").run(f.guild,r.source_event);
+   assert.throws(()=>validateIncomingDamageApplication(f.db,f.guild,injury.record_key));
+   assert.equal(f.db.getCharacter(x.pc.id).data.resources.hp.current,6);assert.equal(n,2);
+ }],
  ['UA16','01','optional import owner is a native Discord User option',()=>{
    const root=buildCommands().find(c=>c.name==='vc-character'),option=root.options.find(o=>o.name==='import').options.find(o=>o.name==='player');
    assert.equal(option?.type,6);assert.notEqual(option.required,true);

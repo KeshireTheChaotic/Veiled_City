@@ -263,8 +263,8 @@ export function validateIncomingDamageApplication(db,guild,key){
     ||key!==`${row.record_key}:damage`||receipt.visibility!=="character"||receipt.subject_key!==v.character||receipt.source_event!==row.source_event
     ||pc?.guild_id!==guild||pc.owner_user_id!==v.owner||v.owner!==o.snapshot.owner||v.principal!==o.snapshot.principal
     ||historicalOwnerPrincipal(db,guild,v.owner,v.character).revision!==v.principal||v.scene!==scene.key||v.session!==scene.session_id
-    ||source?.status!=="active"||source.kind!=="native_npc_attack_offer"||source.source_id!==`gm:${o.gm}`||hash(source.details)!==hash(o)
-    ||!db.ownerAuthoredSource(guild,source.event_key,o.gm)||original?.status!=="active"||hash(original)!==o.snapshot.source)
+    ||source?.status!=="active"||source.kind!=="native_npc_attack_offer"||hash(source.details)!==hash(o)
+    ||!incomingSourceAuthority(db,guild,source,o)||original?.status!=="active"||hash(original)!==o.snapshot.source)
     fail("Exact current native incoming effect/source/owner ancestry required.");
   defenseProof(db,guild,row);const roll=verifyRoll(db,guild,row),r=roll.data,spec=diceSpec(o.damage),specDamage=r.damage;
   const expectedHit=r.face===20||r.face+o.bonus>=o.evasion;

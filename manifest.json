@@ -336,8 +336,8 @@
     },
     {
       "path": "bot/scripts/gm-unified-arbitration-test.mjs",
-      "size_bytes": 53889,
-      "sha256": "0f149f72ce30952ba739d83265f3d47e6fc863f61eb26864983eb25db2b2e0cf"
+      "size_bytes": 56246,
+      "sha256": "bfceff63258a99d17c98efd2fb6b5850f490def9ac7c0c764ff6eee46694dade"
     },
     {
       "path": "bot/scripts/h01-source-recovery-test.mjs",
@@ -1751,8 +1751,8 @@
     },
     {
       "path": "bot/src/pc-incoming.js",
-      "size_bytes": 29294,
-      "sha256": "8478f374176f0700fcb886fdfd18b258a2d8cecde1655515f6145403a9961358"
+      "size_bytes": 29252,
+      "sha256": "3b78b6c28517e77ae4f13337f347bdc8246f1ddf6bf44115377b6db5b740705c"
     },
     {
       "path": "bot/src/pc-native-eligibility.js",
@@ -3166,8 +3166,8 @@
     },
     {
       "path": "docs/UNIFIED_ARBITRATION_ADVANCED_LEDGER.md",
-      "size_bytes": 7291,
-      "sha256": "873ca328fb318f8bd51c5c4c08f8013686d7587c513b3e65aeee852eccfea890"
+      "size_bytes": 9810,
+      "sha256": "c083e828f62808580c169f4e8b95cb6eddee5db5c4bd8597f3b45f3e308ec925"
     },
     {
       "path": "docs/UNIFIED_ARBITRATION_FEATURE_COVERAGE.md",
