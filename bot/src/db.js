@@ -1277,7 +1277,7 @@ export class VeiledDB {
   }
   heldNativeNotices(guildId){
     return this.db.prepare(`SELECT kind,record_key,status FROM city_records WHERE guild_id=?
-      AND kind IN ('roll_publication','roll_party_publication','pvp_status_publication','pvp_projection_publication','pvp_fear_publication')
+      AND kind IN ('roll_publication','roll_party_publication','pvp_status_publication','pvp_projection_publication','pvp_fear_publication','gm_arbitration_publication')
       AND status!='delivered' AND json_extract(data_json,'$.turn_id') IS NULL ORDER BY rowid LIMIT 100`).all(guildId);
   }
   latestPcHpEffect(guildId,characterId){
@@ -1350,7 +1350,7 @@ export class VeiledDB {
       AND json_extract(a.value,'$.key')=r.record_key)`;
     const kinds=['pvp_fear_trigger','pvp_output_quarantine','action_continuation','pc_incoming_attack',
       'pvp_consent','pvp_damage_consent','pvp_fear_move_decision','pvp_fear_effect_receipt','pvp_ui_delivery',
-      'roll_publication','roll_party_publication','pvp_status_publication','pvp_projection_publication','pvp_fear_publication'];
+      'roll_publication','roll_party_publication','pvp_status_publication','pvp_projection_publication','pvp_fear_publication','gm_arbitration_publication'];
     const marks=kinds.map(()=>'?').join(',');
     const groups=this.db.prepare(`SELECT kind,status,COUNT(*) AS count FROM city_records r
       WHERE guild_id=? AND kind IN (${marks}) ${active} GROUP BY kind,status LIMIT 256`).all(guildId,...kinds,excluded);

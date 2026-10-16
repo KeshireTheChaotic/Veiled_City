@@ -204,6 +204,77 @@ function volleyScenario(f,{evasions=[12,17,24],fear=3,privateScene=false,extraSp
 }
 function readyVolley(f,x,i=0){const pc=f.pcs[i],a=x.attacks[i];reviewIncomingAttack(f.db,f.guild,pc.owner_user_id,a.record_key,{library:x.library});confirmIncomingDefense(f.db,f.guild,pc.owner_user_id,a.record_key);return a;}
 const cases=[
+ ['UA12','G23','native notice reservation failure rolls back only the new owner option and preserves saved reaction dice',async f=>{
+   const x=groupReactionScenario(f,{flash:true}),a=submitGroupReaction(f,x,0),{chooseGroupReactionOutcome}=await import('../src/native-group-features.js'),
+     input={op:'gm-reaction-choice',request:a.child.record_key,revision:hash(a.child.data),choice:'stress'},save=f.db.saveCityRecord.bind(f.db);
+   f.db.saveCityRecord=(guild,input)=>{if(input.kind==='gm_arbitration_publication')throw new Error('fixture reservation failure');return save(guild,input);};
+   try{assert.throws(()=>chooseGroupReactionOutcome(f.db,f.guild,x.pc.owner_user_id,input,{interactionId:'reserve-failure',authoredText:JSON.stringify(input)}),/reservation failure/);}
+   finally{f.db.saveCityRecord=save;}
+   assert.equal(f.db.getCharacter(x.pc.id).data.resources.stress.current,2);assert.equal(f.db.listCityRecords(f.guild,{kind:'gm_group_feature_effect',includeGM:true}).length,0);
+   assert.equal(f.db.getCityRecord(f.guild,'roll_request',a.request.record_key).data.roll_id,a.request.data.roll_id);
+   chooseGroupReactionOutcome(f.db,f.guild,x.pc.owner_user_id,input,{interactionId:'reserve-failure',authoredText:JSON.stringify(input)});
+   assert.equal(f.db.getCharacter(x.pc.id).data.resources.stress.current,3);
+ }],
+ ['UA12','G24','a resolved group label without native per-owner completion cannot certify pending children',async f=>{
+   const x=groupReactionScenario(f),{inspectGroupFeature}=await import('../src/native-group-features.js');
+   f.db.saveCityRecord(f.guild,{...x.group,key:x.group.record_key,status:'resolved'});
+   assert.throws(()=>inspectGroupFeature(f.db,f.guild,x.group.record_key));assert.equal(f.db.getCampaign(f.guild).fear,1);
+   assert.equal(f.db.listCityRecords(f.guild,{kind:'roll_request',includeGM:true}).length,0);
+ }],
+ ['UA12','G21','uncertain native group result never blindly resends or repeats owner cost after restart',async f=>{
+   const x=groupReactionScenario(f,{flash:true}),a=submitGroupReaction(f,x,0),{chooseGroupReactionOutcome}=await import('../src/native-group-features.js'),
+     {publishGmArbitrationNotice}=await import('../src/native-publications.js'),input={op:'gm-reaction-choice',request:a.child.record_key,revision:hash(a.child.data),choice:'stress'};
+   chooseGroupReactionOutcome(f.db,f.guild,x.pc.owner_user_id,input,{interactionId:'uncertain-choice',authoredText:JSON.stringify(input)});let calls=0;
+   await assert.rejects(()=>publishGmArbitrationNotice(f.db,f.guild,a.child.record_key,async(user,text)=>{
+     calls++;assert.equal(user,x.pc.owner_user_id);assert.match(text,/marked 1 Stress/);throw new Error('unknown transport result');
+   }));assert.equal(calls,1);f.restart();
+   await assert.rejects(()=>publishGmArbitrationNotice(f.db,f.guild,a.child.record_key,async()=>assert.fail('uncertain resend')));
+   assert.equal(f.db.getCharacter(x.pc.id).data.resources.stress.current,3);assert.equal(f.db.getCampaign(f.guild).fear,2);
+ }],
+ ['UA12','G22','changed owner holds reserved private notices without transferring disclosure or aborting recovery',async f=>{
+   const x=groupReactionScenario(f,{flash:true});submitGroupReaction(f,x,0);
+   f.db.db.prepare('UPDATE characters SET owner_user_id=? WHERE id=?').run(f.pcs[3].owner_user_id,x.pc.id);f.restart();
+   const {materializeNativeNotices}=await import('../src/native-publications.js');materializeNativeNotices(f.db,f.guild);
+   const job=f.db.listCityRecords(f.guild,{kind:'gm_arbitration_publication',includeGM:true})[0];assert.equal(job.status,'needs_review');
+   assert.equal(job.data.turn_id,undefined);assert(f.db.heldNativeNotices(f.guild).some(r=>r.record_key===job.record_key));
+   assert.equal(f.db.getCharacter(x.pc.id).data.resources.stress.current,2);
+ }],
+ ['UA12','G20','a reassigned sibling cannot roll or globally freeze another owner native result and notice',f=>{
+   const x=groupReactionScenario(f);f.db.db.prepare('UPDATE characters SET owner_user_id=? WHERE id=?').run(f.pcs[3].owner_user_id,f.pcs[1].id);
+   assert.throws(()=>inspectGmReactionInvitation(f.db,f.guild,f.pcs[1].owner_user_id,groupChild(f,x,1).record_key));
+   submitGroupReaction(f,x,0);f.restart();submitGroupReaction(f,x,2);
+   const progress=f.db.getCityRecord(f.guild,'gm_group_feature_progress',x.group.record_key);assert.equal(progress.status,'awaiting_owners');
+   assert.equal(progress.data.children[1].status,'needs_review');assert.equal(f.db.getCampaign(f.guild).fear,1);
+   const jobs=f.db.listCityRecords(f.guild,{kind:'gm_arbitration_publication',includeGM:true});assert.equal(jobs.length,2);
+   assert(!jobs.some(j=>j.data.user===f.pcs[1].owner_user_id||j.data.user===f.pcs[3].owner_user_id));
+ }],
+ ['UA12','G18','group completion records each actual owner disposition without treating withdrawal as failure',f=>{
+   const x=groupReactionScenario(f);submitGroupReaction(f,x,0);submitGroupReaction(f,x,2);
+   const child=groupChild(f,x,1),terms=inspectGmReactionInvitation(f.db,f.guild,f.pcs[1].owner_user_id,child.record_key).terms,
+     input={op:'gm-reaction-withdraw',request:child.record_key,revision:terms.revision};
+   withdrawGmReactionInvitation(f.db,f.guild,f.pcs[1].owner_user_id,input,{interactionId:'group-terminal',authoredText:JSON.stringify(input)});
+   assert.equal(f.db.getCityRecord(f.guild,'gm_group_feature_execution',x.group.record_key).status,'resolved');
+   const progress=f.db.getCityRecord(f.guild,'gm_group_feature_progress',x.group.record_key);assert(progress);
+   assert.equal(progress.visibility,'gm');assert.deepEqual(progress.data.children.map(c=>c.status),['resolved','withdrawn','resolved']);
+   assert(!JSON.stringify(progress.data).includes('SECRET'));f.restart();
+   assert.equal(executeUnifiedGmActions(f.db,f.guild,[x.decision],{library:x.library})[0].status,'resolved');assert.equal(f.db.getCampaign(f.guild).fear,1);
+ }],
+ ['UA12','G19','saved owner choice and real native consequence receive restart-safe private publication',async f=>{
+   const x=groupReactionScenario(f,{flash:true}),a=submitGroupReaction(f,x,0),{materializeNativeNotices}=await import('../src/native-publications.js');
+   f.restart();materializeNativeNotices(f.db,f.guild);
+   const jobs=f.db.listCityRecords(f.guild,{kind:'gm_arbitration_publication',includeGM:true});assert.equal(jobs.length,1);
+   const rows=f.db.listTurnPublications(f.guild,jobs[0].data.turn_id);assert.equal(rows.length,1);assert.match(rows[0].payload,/Choose exactly ONE/);
+   assert.equal(rows[0].target_user_id,x.pc.owner_user_id);assert.equal(rows[0].visibility,'character');
+   const {chooseGroupReactionOutcome}=await import('../src/native-group-features.js'),input={op:'gm-reaction-choice',request:a.child.record_key,revision:hash(a.child.data),choice:'stress'};
+   chooseGroupReactionOutcome(f.db,f.guild,x.pc.owner_user_id,input,{interactionId:'notify-choice',authoredText:JSON.stringify(input)});
+   f.restart();materializeNativeNotices(f.db,f.guild);
+   const latest=f.db.listCityRecords(f.guild,{kind:'gm_arbitration_publication',includeGM:true}).find(j=>j.record_key!==jobs[0].record_key);assert(latest);
+   const final=f.db.listTurnPublications(f.guild,latest.data.turn_id);assert.match(final[0].payload,/marked 1 Stress/);
+   const sent=[];await deliverTurnOutbox(f.db,f.guild,latest.data.turn_id,async row=>{sent.push(row);return{messageId:'offline-group-effect',channelId:'offline'};});assert.equal(sent.length,1);
+   await deliverTurnOutbox(f.db,f.guild,latest.data.turn_id,async()=>assert.fail('no resend'));
+   await deliverTurnOutbox(f.db,f.guild,jobs[0].data.turn_id,async()=>assert.fail('old pending-choice text must be stale'));
+   assert.equal(f.db.getCharacter(x.pc.id).data.resources.stress.current,3);
+ }],
  ['UA9','G15','direct native consequence cannot accept a model-selected option or forged source',async f=>{
    const x=groupReactionScenario(f,{flash:true}),a=submitGroupReaction(f,x,0),{applyGroupReactionOutcome}=await import('../src/native-group-features.js');
    assert.throws(()=>applyGroupReactionOutcome(f.db,f.guild,a.child,a.request,x.sourceRef,'stress'));
@@ -282,6 +353,7 @@ const cases=[
    r.unified_arbitration={version:1,npc_intents:[x.proposal],decisions:[x.decision.data.proposal]};
    const out=await run(f,x,{version:9,acts:[],fiction_delta:[]},r),rows=out.rows.filter(row=>row.payload.includes('Pending owner reaction'));
    assert.equal(out.ai.requests.length,2);assert.equal(rows.length,3);
+   assert(out.ai.requests.some(request=>JSON.stringify(request).includes('omit proposal_version and trigger_ref')));
    for(const pc of f.pcs.slice(0,3)){const row=rows.find(r=>r.target_user_id===pc.owner_user_id);assert(row);assert.equal(row.visibility,'character');assert.equal(row.target_character_id,pc.id);assert(!row.payload.includes('SECRET'));}
    assert(!out.rows.filter(row=>row.surface==='party').some(row=>row.payload.includes('gm-reaction-review')));
    f.restart();const sent=[];await deliverTurnOutbox(f.db,f.guild,out.attempt.turn_id,async row=>{sent.push(row);return{messageId:`offline-group-${sent.length}`,channelId:'offline'};});

@@ -7,7 +7,22 @@ import {currentScene} from './scene-continuity.js';
 import {progressPvp} from './pvp-rounds.js';
 import {validateFearEffect} from './pvp-fear-moves.js';
 import {StateConflictError} from './errors.js';
+import {nativeGmNotice} from './gm-arbitration-output.js';
 const queues=new WeakMap();
+/** Native affected-owner status/result only; model text and another target's mechanics are not accepted. */
+function gmArbitrationSpec(db,guild,decision){
+  const row=db.getCityRecord(guild,'gm_arbitration_decision',decision),n=row?.data.native;
+  if(n?.operation!=='request_group_feature_reaction')throw new StateConflictError('Exact native group reaction required.');
+  const projection=nativeGmNotice(db,guild,decision,{mode:'private',actorUserId:n.owner,actorCharacterId:n.character});
+  if(!projection)throw new StateConflictError('Verified owned GM result required.');
+  return {kind:'gm_arbitration_publication',key:`gm-notice:${noticeHash([decision,n.owner,projection.revision])}`,source:row.source_event,
+    notice:{kind:'gm_arbitration_private',ref:decision,revision:projection.revision,user:n.owner,character:n.character}};
+}
+export function reserveGmArbitrationNotice(db,guild,decision){return reserveNativeNotice(db,guild,gmArbitrationSpec(db,guild,decision));}
+export function publishGmArbitrationNotice(db,guild,decision,sendPrivate){
+  const spec=gmArbitrationSpec(db,guild,decision),row=db.getCityRecord(guild,'gm_arbitration_decision',decision);
+  return publishNativeNotice(db,guild,spec,r=>sendPrivate(spec.notice.user,r.payload,row.data.origin.session,spec.notice.character,{publication:r}));
+}
 /** Native transaction checkpoint only. It is a wake-up pointer, never publication/consent authority. */
 export function reserveNativeNotice(db,guild,spec){
   const {kind,key,source,notice}=spec,prior=db.getCityRecord(guild,kind,key);
@@ -80,14 +95,14 @@ export function reservePvpProjection(db,guild,row){return reserveNativeNotice(db
   key:`pvp-share:${row.record_key}`,source:row.source_event,notice:{kind:'pvp_projection',ref:row.record_key}});}
 /** Reconstruct only native reference jobs; stale jobs are held, never converted into new effects. */
 export function materializeNativeNotices(db,guild){
-  const kinds=['roll_publication','roll_party_publication','pvp_status_publication','pvp_projection_publication','pvp_fear_publication'];
+  const kinds=['roll_publication','roll_party_publication','pvp_status_publication','pvp_projection_publication','pvp_fear_publication','gm_arbitration_publication'];
   const jobs=db.reservedNativeNotices(guild,kinds);
   for(const r of jobs){
     const {reservation_version,reservation_hash,...notice}=r.data;
     if(reservation_version!==2)continue;
     try{queueNativeNotice(db,guild,{kind:r.kind,key:r.record_key,source:r.source_event,notice});}
     catch(error){
-      if(!['NATIVE_NOTICE','NARRATIVE_PVP','STATE_CONFLICT','CHARACTER_OBSERVATION','WORLD_OBSERVATION'].includes(error.code))throw error;
+      if(!['NATIVE_NOTICE','NARRATIVE_PVP','STATE_CONFLICT','CHARACTER_OBSERVATION','WORLD_OBSERVATION','GM_ARBITRATION','TYPED_ROLL_PROOF','SCENE_ACTION_WINDOW','PERMISSION_DENIED'].includes(error.code))throw error;
       db.saveCityRecord(guild,{...r,key:r.record_key,status:'needs_review',data:{...r.data,hold_code:error.code}});
     }
   }
@@ -95,7 +110,7 @@ export function materializeNativeNotices(db,guild){
 }
 export function resyncNativeNotice(db,guild,kind,key,{gm=false,actor=null}={}){
   if(!gm||!actor)throw new StateConflictError('Authenticated GM resynchronization required.');
-  if(!['roll_publication','roll_party_publication','pvp_status_publication','pvp_projection_publication','pvp_fear_publication'].includes(kind))throw new StateConflictError('Native publication kind required.');
+  if(!['roll_publication','roll_party_publication','pvp_status_publication','pvp_projection_publication','pvp_fear_publication','gm_arbitration_publication'].includes(kind))throw new StateConflictError('Native publication kind required.');
   const r=db.getCityRecord(guild,kind,key);if(!r)throw new StateConflictError('Exact native notice identity required.');
   if(r.data.turn_id)return r;
   const {reservation_version,reservation_hash,hold_code,...notice}=r.data;

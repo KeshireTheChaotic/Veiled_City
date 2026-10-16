@@ -5,7 +5,8 @@ import {inspectFeatureWindow} from './native-feature-windows.js';
 import {typedRollProof} from './typed-roll-proof.js';
 import {indexWorldEvent} from './city-calendar.js';
 import {arbitrationFailure as fail} from './gm-arbitration-contract.js';
-import {isGroupFeature,groupFeatureStakes,groupReactionState,applyGroupReactionOutcome} from './native-group-features.js';
+import {isGroupFeature,groupFeatureStakes,groupReactionState,applyGroupReactionOutcome,settleGroupFeature} from './native-group-features.js';
+import {reserveGmArbitrationNotice} from './native-publications.js';
 
 const FEEDBACK='adversary:static-wraith:feedback';
 const effectKey=decision=>`feature-effect:${hash(decision)}`;
@@ -47,7 +48,10 @@ export function validateFeatureInvitation(db,guild,row,terminal){
 }
 export function cancelFeatureReaction(db,guild,decision){
   const child=db.getCityRecord(guild,'gm_arbitration_decision',decision);
-  if(child?.data.native.operation==='request_group_feature_reaction'){groupReactionState(db,guild,child,db.getCityRecord(guild,'gm_reaction_submission',`gm-reaction-submit:${hash([decision,child.data.native.owner])}`));return;}
+  if(child?.data.native.operation==='request_group_feature_reaction'){
+    groupReactionState(db,guild,child,db.getCityRecord(guild,'gm_reaction_submission',`gm-reaction-submit:${hash([decision,child.data.native.owner])}`));
+    settleGroupFeature(db,guild,child.data.native.execution);reserveGmArbitrationNotice(db,guild,decision);return;
+  }
   const {row}=inspectNativeGmDecision(db,guild,decision),n=row.data.native,w=inspectFeatureWindow(db,guild,n.window),
     terminal=db.getCityRecord(guild,'gm_reaction_submission',`gm-reaction-submit:${hash([decision,n.owner])}`);
   if(n.feature!==FEEDBACK||terminal?.status!=='withdrawn'||terminal.data.invitation_hash!==hash(row.data))throw fail('feature_exact_owner_withdrawal');

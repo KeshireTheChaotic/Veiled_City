@@ -78,7 +78,7 @@ import { prepareIncomingAttack, reviewIncomingAttack, confirmIncomingDefense, wi
 import {inspectGmReactionInvitation,submitGmReactionInvitation,withdrawGmReactionInvitation,gmReactionInbox} from './gm-native-rolls.js';
 import { queueDirectorPublications } from "./publication-outbox.js";
 import {publishContinuationNotices} from "./publishing.js";
-import {publishPvpNotices,materializeNativeNotices,resyncNativeNotice} from "./native-publications.js";
+import {publishPvpNotices,materializeNativeNotices,resyncNativeNotice,publishGmArbitrationNotice} from "./native-publications.js";
 import {reconcilePublication} from "./publication-outbox.js";
 import {finishRollOperation} from './roll-operation-publications.js';
 import {createRollSharePreview} from './roll-sharing.js';
@@ -553,7 +553,7 @@ async function executeCommand(interaction,{db,gm,voice=null}){
     if(group==="roll"&&sub==="window"){
       const authoredText=interaction.options.getString("json")||'{"op":"inbox"}',input=JSON.parse(authoredText);
       if(["respond","cancel"].includes(input.op))input.interaction_id=interaction.id;
-      let result;
+      let result,gmReactionPublication=null;
       if(input.op==='gm-reaction-inbox'){
         if(Object.keys(input).length!==1)throw new UserInputError('Private reaction inbox takes no foreign scope.');
         result=gmReactionInbox(db,interaction.guildId,interaction.user.id);
@@ -564,13 +564,17 @@ async function executeCommand(interaction,{db,gm,voice=null}){
         const {chooseGroupReactionOutcome}=await import('./native-group-features.js');
         const row=chooseGroupReactionOutcome(db,interaction.guildId,interaction.user.id,input,{interactionId:interaction.id,authoredText});
         result={request:input.request,status:row.status};
+        gmReactionPublication=input.request;
       }else if(['gm-reaction-roll','gm-reaction-withdraw'].includes(input.op)){
         const row=(input.op==='gm-reaction-roll'?submitGmReactionInvitation:withdrawGmReactionInvitation)(db,interaction.guildId,interaction.user.id,input,{interactionId:interaction.id,authoredText});
         result={request:row.record_key,status:row.status,roll:row.data.roll_id||null};
+        if(db.getCityRecord(interaction.guildId,'gm_arbitration_decision',input.request)?.data.native?.operation==='request_group_feature_reaction')gmReactionPublication=input.request;
       }else result=windowOperation(db,interaction.guildId,interaction.user.id,input,{gm:isGM(db,interaction)});
       const chunks=chunkTextLines(JSON.stringify(result,null,2).split("\n"));
       await interaction.reply({content:chunks[0]||"No pending windows.",ephemeral:true,allowedMentions:{parse:[]}});
       for(const content of chunks.slice(1))await interaction.followUp({content,ephemeral:true,allowedMentions:{parse:[]}});
+      if(gmReactionPublication&&interaction.guild)await publishGmArbitrationNotice(db,interaction.guildId,gmReactionPublication,
+        (userId,content,sessionId,characterId,meta)=>sendPlayerPrivate({db,guild:interaction.guild,userId,content,sessionId,characterId,...meta}));
       return true;
     }
     if(group==="roll"&&sub==="pvp"){

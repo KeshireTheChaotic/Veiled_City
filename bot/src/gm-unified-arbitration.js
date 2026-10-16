@@ -16,7 +16,25 @@ import {nativeAlliancePlan} from './native-encounter-relations.js';
 import {nativeFeatureReviewContract} from './native-house-errata.js';
 import {isGroupFeature,planGroupFeature} from './native-group-features.js';
 
-export const UNIFIED_ARBITRATION_PROMPT='Evaluate unified_arbitration in this SAME GM call. Accepted typed intents are canonical adjudication inputs; human declarations own intent; native receipts own outcomes. Select player:<original player_intents index> or exact shared/NPC intent_ref. NPC proposals select native local actor and native knowledge refs; no PC declaration or secret disclosure may be invented. Each decision needs current rules, reason, stakes before dice, and justified Difficulty for an action/reaction. NPC attack uses actual PC Evasion, never invented Difficulty. Ordinary NPC fiction normally uses npc_no_roll. PC roll questions are adjudication only: player alone executes dice. A triggered feature decision uses proposal_version=2 and the EXACT trigger_ref and feature_ref from feature_windows; a Reaction does not mint normal spotlight. An action from action_features uses its specified proposal_version=1, exact feature_ref, operation, trait, Difficulty and source-derived target policy, stakes_kind=native_feature, no trigger_ref. Do not omit an entitled target from an all_in_range feature. Blood Rush currently permits Stress recovery while electing the current position only; other relocation remains reviewed. Unsupported features/proxies/PvP remain review/consent. Do not emit duplicate gm_ruling/native_adjudication for a unified decision. No dice faces, role waiver, outcome or automatic Fear spending. For an explicit GM-owned alliance choice between currently active local unproxied NPC combatants, use set_allies or clear_allies, exact other NPC target_refs, npc_no_roll, srd:gm-moves, stakes=none, no feature or dice. This does not enroll PCs or prove a powered device, movement, NPC knowledge or disclosure. Group membership and relationship scores alone never grant Local Mesh.';
+export const UNIFIED_ARBITRATION_PROMPT="Evaluate unified_arbitration in this SAME GM call. "
+  +"Accepted typed intents are canonical adjudication inputs; human declarations own intent; native receipts own outcomes. "
+  +"Select player:<original player_intents index> or exact shared/NPC intent_ref. "
+  +"NPC proposals select native local actor and native knowledge refs; no PC declaration or secret disclosure may be invented. "
+  +"Each decision needs current rules, reason, stakes before dice, and justified Difficulty for an action/reaction. "
+  +"NPC attack uses actual PC Evasion, never invented Difficulty. "
+  +"Ordinary NPC fiction normally uses npc_no_roll. "
+  +"PC roll questions are adjudication only: player alone executes dice. "
+  +"A triggered feature decision uses proposal_version=2 and the EXACT trigger_ref and feature_ref from feature_windows; a Reaction does not mint normal spotlight. "
+  +"An action from action_features uses the v1 default variant: OMIT proposal_version and trigger_ref. "
+  +"Select its exact feature_ref, operation, trait, Difficulty and source-derived target policy, stakes_kind=native_feature. "
+  +"Do not omit an entitled target from an all_in_range feature. "
+  +"Blood Rush currently permits Stress recovery while electing the current position only; other relocation remains reviewed. "
+  +"Unsupported features/proxies/PvP remain review/consent. "
+  +"Do not emit duplicate gm_ruling/native_adjudication for a unified decision. "
+  +"No dice faces, role waiver, outcome or automatic Fear spending. "
+  +"For an explicit GM-owned alliance choice between currently active local unproxied NPC combatants, use set_allies or clear_allies, exact other NPC target_refs, npc_no_roll, srd:gm-moves, stakes=none, no feature or dice. "
+  +"This does not enroll PCs or prove a powered device, movement, NPC knowledge or disclosure. "
+  +"Group membership and relationship scores alone never grant Local Mesh.";
 
 export function adjudicateSceneBoard(db,guild,origin,board,proposals,{library=new EncounterLibrary('../content')}={}){
   const o=inspectArbitrationOrigin(db,guild,origin);

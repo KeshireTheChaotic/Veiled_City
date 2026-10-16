@@ -42,7 +42,7 @@ export function arbitrationPromptBoard(db,guild,origin){
       const c=combatants.find(c=>c.status==='active'&&binding?.data.combatants.some(b=>b.actor===n.key&&b.id===c.id)),template=c&&library.findAdversary(c.base_name);
       return {actor_key:n.key,intent_refs:n.intents,objective_refs:n.objectives,known_source_refs:n.source_refs,
         action_features:features.filter(f=>template&&(f.native_handler==='coordinated_volley'||f.status==='supported'&&isGroupFeature(f.feature_key))&&f.template_hash===hash(template)).map(f=>isGroupFeature(f.feature_key)?{feature_ref:f.feature_key,
-          disposition:'native_feature_resolution',operation:'feature',proposal_version:1,target_policy:f.target_policy,rule_basis_refs:['srd:reaction-rolls'],
+          disposition:'native_feature_resolution',operation:'feature',proposal_shape:'v1 default: omit proposal_version and trigger_ref',target_policy:f.target_policy,rule_basis_refs:['srd:reaction-rolls'],
           trait:'Instinct',difficulty:f.native_handler==='all_lanes_stop_group'?14:12,costs:f.costs,stakes:groupFeatureStakes(f.feature_key)}:({feature_ref:f.feature_key,
           disposition:'gm_attack_roll',operation:'attack',target_policy:f.target_policy,rule_basis_refs:['srd:adversary-attacks'],difficulty:null,
           costs:f.costs,stakes:'Declare the attempted attack before dice. Each owner controls their own defenses.'}))};

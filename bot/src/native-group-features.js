@@ -12,6 +12,7 @@ import {indexWorldEvent} from './city-calendar.js';
 import {typedRollProof} from './typed-roll-proof.js';
 import {arbitrationFailure as fail} from './gm-arbitration-contract.js';
 import {EncounterLibrary} from './encounter.js';
+import {reserveGmArbitrationNotice} from './native-publications.js';
 
 const LANES='adversary:traffic-saint:all-lanes-stop',FLASH='adversary:aster-vale-contractor:flashbang';
 const policies=Object.freeze({[LANES]:Object.freeze({trait:'Instinct',difficulty:14,range:'Far',all:true,condition:'Movement limited',expiry:'next_spotlight'}),
@@ -87,12 +88,41 @@ export function inspectGroupFeature(db,guild,key){
       ||row.data.native.parent!==v.decision||row.data.native.execution!==key||row.data.native.character!==target.character
       ||!source||source.kind!=='native_gm_arbitration'||source.source_id!=='native:unified-gm'||source.details.payload_hash!==hash(row.data))throw fail('group_feature_child_ancestry');
   }
+  if(execution.status==='resolved'){
+    const progress=db.getCityRecord(guild,'gm_group_feature_progress',key),source=progress&&db.getWorldEvent(guild,progress.source_event);
+    if(progress?.status!=='resolved'||progress.visibility!=='gm'||source?.status!=='active'||source.kind!=='native_group_progress'
+      ||source.source_id!=='native:unified-gm'||source.details.payload_hash!==hash(progress.data)||progress.data.execution!==key
+      ||progress.data.execution_hash!==hash(v)||progress.data.children.length!==v.children.length)throw fail('group_terminal_native_progress');
+    for(const [i,p] of progress.data.children.entries()){
+      const child=db.getCityRecord(guild,'gm_arbitration_decision',v.children[i].decision),n=child.data.native;
+      if(p.decision!==child.record_key||p.character!==n.character||!['resolved','withdrawn'].includes(p.status))throw fail('group_terminal_child_disposition');
+      if(p.status==='resolved'){
+        const effect=db.getCityRecord(guild,'gm_group_feature_effect',p.proof),e=effect&&db.getWorldEvent(guild,effect.source_event),request=effect&&db.getCityRecord(guild,'roll_request',effect.data.request),
+          roll=request&&db.getSavedRoll(guild,request.data.roll_id);
+        if(p.proof!==effectKey(child.record_key)||effect?.status!=='resolved'||effect.subject_key!==n.character||effect.data.owner!==n.owner
+          ||effect.data.decision!==child.record_key||e?.status!=='active'||e.kind!=='native_group_feature_effect'||e.source_id!=='native:unified-gm'
+          ||e.details.payload_hash!==hash(effect.data)||hash(request)!==effect.data.request_hash||hash(roll)!==effect.data.roll_hash)
+          throw fail('group_terminal_actual_effect');
+      }else{
+        const terminal=db.getCityRecord(guild,'gm_reaction_submission',p.proof),e=terminal&&db.getWorldEvent(guild,terminal.source_event);
+        if(p.proof!==`gm-reaction-submit:${hash([child.record_key,n.owner])}`||terminal?.status!=='withdrawn'||terminal.subject_key!==n.character
+          ||terminal.data.owner!==n.owner||terminal.data.invitation_hash!==hash(child.data)||e?.status!=='active'||e.kind!=='native_gm_reaction_withdrawal'
+          ||e.subject_key!==n.character||e.source_id!==`player:${n.owner}`||e.details.invitation!==child.record_key||e.details.revision!==hash(child.data)
+          ||!db.ownerAuthoredSource(guild,e.event_key,n.owner))throw fail('group_terminal_actual_withdrawal');
+      }
+    }
+  }
   return {execution,parent:parent.row,entry:parent.entry,cost};
 }
 /** Current child recipient proof, independent of the triggering player's later resources/ownership. */
 export function inspectGroupFeatureChild(db,guild,row){
-  const n=row.data.native,{execution,parent}=inspectGroupFeature(db,guild,n.execution),scene=currentScene(db,guild),pc=db.getCharacter(n.character),
-    principal=pc&&conversationPrincipal(db,guild,pc.owner_user_id,pc.id),presence=pc&&scenePresence(db,guild,'character',pc.id);
+  const n=row.data.native,{execution,parent}=inspectGroupFeature(db,guild,n.execution),scene=currentScene(db,guild),pc=db.getCharacter(n.character);
+  if(pc?.owner_user_id!==n.owner)throw fail('group_feature_current_recipient_source');
+  let principal;
+  try{principal=conversationPrincipal(db,guild,n.owner,pc.id);}
+  catch(error){if(!['Active session required.','Select an authenticated current controlled role.','Controller attendance required.','Active campaign character required.'].includes(error.message))throw error;
+    throw fail('group_feature_owner_control_unavailable');}
+  const presence=scenePresence(db,guild,'character',pc.id);
   if(!execution.data.children.some(c=>c.decision===row.record_key&&c.hash===hash(row.data))||n.parent!==parent.record_key
     ||pc?.owner_user_id!==n.owner||principal?.kind!=='owner'||principal.revision!==n.principal||scene.key!==row.data.origin.scene||scene.session_id!==row.data.origin.session
     ||hash(presence)!==n.target_snapshot.target||db.getWorldEvent(guild,presence?.source_event)?.status!=='active'
@@ -117,6 +147,7 @@ export function groupReactionState(db,guild,row,terminal){
 }
 export function applyGroupReactionOutcome(db,guild,row,request,choiceSource=null,choice=null){
   return db.transaction(()=>{
+  const result=db.transaction(()=>{
     const n=row.data.native,{pc,cost}= {...inspectGroupFeatureChild(db,guild,row),...inspectGroupFeature(db,guild,n.execution)},key=effectKey(row.record_key),
       prior=db.getCityRecord(guild,'gm_group_feature_effect',key),proof=typedRollProof(db,guild,request),policy=policies[n.feature],success=proof.outcome==='success';
     if(prior)return validateGroupReactionEffect(db,guild,key);
@@ -163,6 +194,44 @@ export function applyGroupReactionOutcome(db,guild,row,request,choiceSource=null
       db.saveCityRecord(guild,{kind:'pc_native_condition',key:conditionKey,actor_key:pc.id,status:'active',source_event:source.event_key,visibility:'character',subject_key:pc.id,data:v});}
     return effect;
   });
+  settleGroupFeature(db,guild,row.data.native.execution);
+  reserveGmArbitrationNotice(db,guild,row.record_key);
+  return result;
+  });
+}
+/** Per-target progress only; no inferred failure, consent, public disclosure or mechanical execution. */
+export function settleGroupFeature(db,guild,key){
+  const {execution,parent}=inspectGroupFeature(db,guild,key),children=execution.data.children.map(c=>{
+    const row=db.getCityRecord(guild,'gm_arbitration_decision',c.decision),n=row.data.native,
+      terminal=db.getCityRecord(guild,'gm_reaction_submission',`gm-reaction-submit:${hash([row.record_key,n.owner])}`);
+    let status='pending',proof=null;
+    try{
+      if(terminal){const source=db.getWorldEvent(guild,terminal.source_event);
+        if(terminal.subject_key!==n.character||terminal.visibility!=='character'||terminal.data.owner!==n.owner||terminal.data.invitation_hash!==hash(row.data)
+          ||source?.status!=='active'||!db.ownerAuthoredSource(guild,source.event_key,n.owner))throw fail('group_progress_owner_source');
+        if(terminal.status==='withdrawn'&&(source.kind!=='native_gm_reaction_withdrawal'||source.details.invitation!==row.record_key
+          ||source.details.revision!==hash(row.data)))throw fail('group_progress_exact_withdrawal');
+        if(!['resolved','withdrawn'].includes(terminal.status))throw fail('group_progress_native_terminal');
+        proof=terminal.record_key;
+      }
+      status=groupReactionState(db,guild,row,terminal);
+      if(status==='resolved'){const effect=validateGroupReactionEffect(db,guild,effectKey(row.record_key));proof=effect.record_key;}
+    }catch(error){if(!['GM_ARBITRATION','TYPED_ROLL_PROOF','SCENE_ACTION_WINDOW'].includes(error.code))throw error;status='needs_review';}
+    return {decision:c.decision,character:c.character,status,proof};
+  });
+  const status=children.every(c=>['resolved','withdrawn'].includes(c.status))?'resolved':'awaiting_owners',
+    data={version:1,execution:key,execution_hash:hash(execution.data),children},
+    source=indexWorldEvent(db,guild,{key:`group-progress:${hash(data)}`,kind:'native_group_progress',source_id:'native:unified-gm',
+      title:'Verified per-owner group disposition',session_id:parent.data.origin.session,scene:parent.data.origin.scene,
+      visibility:'gm',details:{payload_hash:hash(data)}},'native:unified-gm');
+  db.saveCityRecord(guild,{kind:'gm_group_feature_progress',key,status,source_event:source.event_key,visibility:'gm',data});
+  return db.saveCityRecord(guild,{...execution,key,status});
+}
+export function groupReactionDetails(db,guild,row){
+  const effect=db.getCityRecord(guild,'gm_group_feature_effect',effectKey(row.record_key));if(!effect)return null;
+  validateGroupReactionEffect(db,guild,effect.record_key);
+  return {ref:effect.record_key,revision:hash(effect.data),success:effect.data.success,stress_marked:effect.data.stress,
+    condition:effect.data.condition?policies[effect.data.feature].condition:null,condition_reused:effect.data.condition_reused};
 }
 export function validateGroupReactionEffect(db,guild,key,{historical=false}={}){
   const row=db.getCityRecord(guild,'gm_group_feature_effect',key),v=row?.data,event=row&&db.getWorldEvent(guild,row.source_event),
