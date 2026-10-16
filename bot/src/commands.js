@@ -1058,6 +1058,21 @@ Initial phase: ${s.assembly_phase}`});
       return true;
     }
     if(group==="character"&&sub==="import"){
+      const selected=interaction.options.getUser("player"),admin=isGM(db,interaction);
+      if(selected&&!admin)throw new PermissionError("GM/admin permission required to select an import owner.");
+      if(selected?.bot)throw new UserInputError("A bot cannot own a player character.");
+      let member=null;
+      if(selected){
+        // Recheck current membership; cached option/member data alone is not an entitlement.
+        if(interaction.guild?.id!==interaction.guildId||typeof interaction.guild.members?.fetch!=="function")
+          throw new UserInputError("Cannot verify the selected player belongs to this server.");
+        try{member=await interaction.guild.members.fetch(selected.id);}
+        catch{throw new UserInputError("The selected player must be a current server member.");}
+        if(member?.id!==selected.id||member.user?.id!==selected.id||member.guild?.id!==interaction.guildId)
+          throw new UserInputError("Selected player identity does not match this server member.");
+        if(member.user.bot)throw new UserInputError("A bot cannot own a player character.");
+      }
+      const owner=selected||interaction.user;
       const a=interaction.options.getAttachment("file",true);
       if(!a.name?.toLowerCase().endsWith(".json")) throw new Error("Import requires a .json file.");
       const res=await fetch(a.url);
@@ -1070,13 +1085,23 @@ Initial phase: ${s.assembly_phase}`});
         const nr=await fetch(narrative.url); if(!nr.ok) throw new Error("Could not download the narrative attachment.");
         narrativeMarkdown=normalizeNarrativeMarkdown(await nr.text());
       }
-      const c=db.importCharacter(interaction.guildId,interaction.user.id,data);
-      let narrativeNote="";
-      if(narrativeMarkdown){
-        db.upsertCharacterNarrative(interaction.guildId,c.id,"player",narrativeMarkdown,{sourceFilename:narrative.name,importedBy:interaction.user.id});
-        narrativeNote=` Player narrative imported as \`${narrativeRelativePath(c.name,"player")}\`.`;
-      }
-      await interaction.reply({content:`Imported **${c.name}**.${narrativeNote}`,ephemeral:true});
+      const response=db.transaction(()=>{
+        db.upsertPlayer(interaction.guildId,owner.id,member?.displayName||owner.globalName||owner.username||owner.id);
+        // Owner ID is a verified Discord identity, never a field from uploaded JSON.
+        const c=db.importCharacter(interaction.guildId,owner.id,data);
+        if(narrativeMarkdown)db.upsertCharacterNarrative(interaction.guildId,c.id,"player",narrativeMarkdown,
+          {sourceFilename:narrative.name,importedBy:interaction.user.id});
+        db.audit(interaction.guildId,db.getActiveSession(interaction.guildId)?.id||null,admin?"human_gm":"player",
+          interaction.user.id,"character_import",{character_id:c.id,owner_user_id:owner.id,imported_by:interaction.user.id,
+            file:a.name,narrative_file:narrative?.name||null});
+        const note=narrativeMarkdown?` Player narrative imported as \`${narrativeRelativePath(c.name,"player")}\`.`:"";
+        const content=`Imported **${c.name}**. Owner: <@${owner.id}>.${note}`;
+        // Close the crash-before-reply gap, preserving the existing Discord receipt replay path.
+        if(interaction.id)db.recordOperationReceipt(interaction.guildId,{interactionId:interaction.id,commandKey:"character:import",
+          actorUserId:interaction.user.id,responseText:content,payload:{character_id:c.id,owner_user_id:owner.id}});
+        return content;
+      });
+      await interaction.reply({content:response,ephemeral:true,allowedMentions:{parse:[]}});
       return true;
     }
     if(group==="character"&&sub==="context-export"){

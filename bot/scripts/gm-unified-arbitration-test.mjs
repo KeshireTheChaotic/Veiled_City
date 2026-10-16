@@ -22,6 +22,16 @@ import {nativeGmOpportunity} from '../src/gm-action-capability.js';
 import fs from 'node:fs';
 import {deliverTurnOutbox} from '../src/publication-outbox.js';
 import {adjudicateSceneBoard} from '../src/gm-unified-arbitration.js';
+import {handleCommand,buildCommands} from '../src/commands.js';
+import {fakeInteraction} from './contract-fixtures.mjs';
+async function importCommand(f,{selected=null,admin=false,id='import-test',sheet={name:'Imported PC'},markdown=null,member=null,fetchMember=null,sendError=false}={}){
+  const i=fakeInteraction({gm:admin,sub:'import'});Object.assign(i,{id,guildId:f.guild,user:{id:admin?'admin':f.pcs[0].owner_user_id,username:'Invoker'},commandName:'vc-character',isChatInputCommand:()=>true,
+    guild:{id:f.guild,members:{fetch:fetchMember||(async user=>member||{id:user,user:selected,guild:{id:f.guild},displayName:'Selected Player'})}}});
+  i.options.getUser=()=>selected;i.options.getAttachment=key=>key==='file'?{name:'sheet.json',url:'https://offline.invalid/sheet'}:markdown!==null?{name:'player.md',url:'https://offline.invalid/narrative'}:null;
+  if(sendError)i.reply=async()=>{throw new Error('synthetic delivery failure');};
+  const original=globalThis.fetch;globalThis.fetch=async url=>{assert(['https://offline.invalid/sheet','https://offline.invalid/narrative'].includes(url));return {ok:true,json:async()=>sheet,text:async()=>markdown};};
+  try{await handleCommand(i,{db:f.db,gm:{}});return i;}finally{globalThis.fetch=original;}
+}
 const decision=(intent_ref,disposition='no_roll')=>({intent_ref,disposition,rule_basis_refs:['srd:action-rolls'],difficulty:null,trait:null,stakes_kind:disposition==='gm_attack_roll'?'native_attack':'attempt_only',stakes:'none',reason:'Ordinary costless observation.',difficulty_reason:'',feature_ref:'',experience_ref:'',advantage:false,disadvantage:false});
 function boardFixture(f,{privateScene=false,rollQuestion=false}={}){
   const x=setup(f,{text:rollQuestion?'Can I roll?':'I inspect the counter.',privateScene});f.db.setCityCalendar(f.guild,{flags:{...f.db.getCityCalendar(f.guild).flags,gm_discretion:true,roll_requests:true,roll_collaboration:true}});npc(f);
@@ -36,7 +46,7 @@ import {prepareIncomingAttack,prepareArbitratedIncomingAttack,rollArbitratedInco
 import {EncounterLibrary} from '../src/encounter.js';
 import {buildCombatants} from '../src/combat.js';
 import {indexWorldEvent} from '../src/city-calendar.js';
-import {currentScene,recordScenePresence} from '../src/scene-continuity.js';
+import {currentScene,recordScenePresence,scenePresence} from '../src/scene-continuity.js';
 import {projectNativeGmProposal} from '../src/gm-mechanical-v9.js';
 function npc(f,key='attendant',location='terminal'){f.db.upsertNpcProfile(f.guild,{npcKey:key,displayName:'Inez',role:'attendant',publicIdentity:'A local attendant.'});f.db.setSimulationEntity(f.guild,'npc',key,{name:'Inez',location_key:location,visibility:'party'});}
 function incoming(f,{privateScene=true,text}={}){
@@ -270,6 +280,64 @@ const cases=[
 
 ];
 cases.push(
+ ['UA16','01','optional import owner is a native Discord User option',()=>{
+   const root=buildCommands().find(c=>c.name==='vc-character'),option=root.options.find(o=>o.name==='import').options.find(o=>o.name==='player');
+   assert.equal(option?.type,6);assert.notEqual(option.required,true);
+ }],
+ ['UA16','02','admin import assigns selected member and narrative atomically without session presence',async f=>{
+   const selected={id:'new-player',username:'New Player',bot:false},before=f.db.roster(f.session.id),i=await importCommand(f,{selected,admin:true,markdown:'# Player-only story',sheet:{name:'Jaxon',owner_user_id:'admin',admin:true}});
+   const c=f.db.listCharacters(f.guild,selected.id,{includeClosed:true})[0];assert(c);assert.equal(c.owner_user_id,selected.id);assert.equal(c.name,'Jaxon');
+   assert.equal(f.db.getPlayer(f.guild,selected.id).display_name,'Selected Player');assert.equal(f.db.getCharacterNarrative(f.guild,c.id,'player').character_id,c.id);
+   assert.equal(f.db.getCharacterNarrative(f.guild,c.id,'gm_private'),null);assert.equal(f.db.getCharacter(f.pcs[0].id).owner_user_id,f.pcs[0].owner_user_id);
+   assert.deepEqual(f.db.roster(f.session.id),before);assert.equal(f.db.activeAssignment(f.session.id,selected.id),null);assert.equal(scenePresence(f.db,f.guild,'character',c.id),null);
+   const audit=f.db.db.prepare("SELECT * FROM audit_log WHERE action='character_import'").get(),data=JSON.parse(audit.payload_json);
+   assert.equal(audit.actor_id,'admin');assert.equal(data.owner_user_id,selected.id);assert.equal(data.character_id,c.id);
+   assert(i.deliveries[0].content.includes(`Owner: <@${selected.id}>`));assert.equal(i.deliveries[0].ephemeral,true);assert.deepEqual(i.deliveries[0].allowedMentions,{parse:[]});
+   f.restart();assert.equal(f.db.getCharacter(c.id).owner_user_id,selected.id);assert.equal(f.db.listCharacters(f.guild,'admin',{includeClosed:true}).length,0);
+ }],
+ ['UA16','03','player and admin self-import remain default with no JSON owner spoof',async f=>{
+   for(const admin of [false,true]){await importCommand(f,{admin,id:`self-${admin}`,sheet:{name:'Self',owner_user_id:'other'}});
+     assert.equal(f.db.listCharacters(f.guild,admin?'admin':f.pcs[0].owner_user_id,{includeClosed:true}).filter(c=>c.name==='Self').length,1);}
+ }],
+ ['UA16','04','foreign unresolved bot and nonadmin owner selections deny without importing or registering target',async f=>{
+   const selected={id:'unentitled',username:'Unknown',bot:false},before=f.db.listCharacters(f.guild,null,{includeClosed:true}).length;
+   const failures=[{admin:false},{admin:true,selected:{...selected,bot:true}},{admin:true,fetchMember:async()=>{throw new Error('not a member');}},
+     {admin:true,member:{id:'wrong',user:{id:'wrong'},guild:{id:f.guild}}},{admin:true,member:{id:selected.id,user:selected,guild:{id:'other-guild'}}},
+     {admin:true,member:{id:selected.id,user:{...selected,bot:true},guild:{id:f.guild}}}];
+   for(const [n,options] of failures.entries()){const i=await importCommand(f,{selected,id:`denied-${n}`,...options});
+     assert.match(i.deliveries.at(-1).content,/^⚠️.*(?:GM|member|server|bot|identity)/i);}
+   assert.equal(f.db.getPlayer(f.guild,selected.id),undefined);assert.equal(f.db.listCharacters(f.guild,null,{includeClosed:true}).length,before);
+ }],
+ ['UA16','05','narrative persistence or audit failure rolls back player character and hooks',async f=>{
+   for(const route of ['upsertCharacterNarrative','audit']){const original=f.db[route];f.db[route]=()=>{throw new Error('synthetic atomic failure');};
+     try{const i=await importCommand(f,{admin:true,selected:{id:`new-${route}`,bot:false},id:`rollback-${route}`,markdown:'# valid',sheet:{name:'Must Roll Back'}});
+       assert.match(i.deliveries.at(-1).content,/^⚠️.*atomic failure/);}
+     finally{f.db[route]=original;}
+     assert.equal(f.db.getPlayer(f.guild,`new-${route}`),undefined);assert.equal(f.db.listCharacters(f.guild,`new-${route}`,{includeClosed:true}).length,0);}
+ }],
+ ['UA16','06','restart replay and failed response do not duplicate import while distinct imports never transfer ownership',async f=>{
+   const selected={id:'new-player',bot:false};await assert.rejects(()=>importCommand(f,{admin:true,selected,id:'delivery-failed',sendError:true}),/delivery failure/);
+   f.restart();const i=await importCommand(f,{admin:true,selected,id:'delivery-failed'});assert(i.deliveries[0].content.includes('Already applied'));
+   assert.equal(f.db.listCharacters(f.guild,selected.id,{includeClosed:true}).length,1);
+   await importCommand(f,{admin:true,selected,id:'distinct-import'});assert.equal(f.db.listCharacters(f.guild,selected.id,{includeClosed:true}).length,2);
+   assert.equal(f.db.getCharacter(f.pcs[0].id).owner_user_id,f.pcs[0].owner_user_id);
+ }],
+ ['UA16','07','malformed sheet or narrative does not leave a target owner or partial import',async f=>{
+   for(const [n,options] of [{sheet:{}},{markdown:'   '},{markdown:'x'.repeat(131073)}].entries()){
+     const i=await importCommand(f,{admin:true,selected:{id:`invalid-${n}`,bot:false},id:`malformed-${n}`,...options});
+     assert.match(i.deliveries.at(-1).content,/^⚠️/);assert.equal(f.db.getPlayer(f.guild,`invalid-${n}`),undefined);
+     assert.equal(f.db.listCharacters(f.guild,`invalid-${n}`,{includeClosed:true}).length,0);
+   }
+ }],
+ ['UA16','08','actual owner sheet and list see new import while another player cannot select it',async f=>{
+   const selected={id:'new-player',bot:false};await importCommand(f,{admin:true,selected,sheet:{name:'Unique Import',class:'Ranger'}});
+   for(const [user,sub] of [[selected.id,'list'],[selected.id,'sheet'],[f.pcs[1].owner_user_id,'select']]){
+     const i=fakeInteraction({gm:false,sub});Object.assign(i,{id:`visibility-${user}-${sub}`,guildId:f.guild,user:{id:user,username:user},commandName:'vc-character',isChatInputCommand:()=>true});
+     i.options.getString=key=>key==='character'?'Unique Import':null;await handleCommand(i,{db:f.db,gm:{}});
+     if(user===selected.id)assert(i.deliveries[0].content.includes('Unique Import'));else assert.match(i.deliveries[0].content,/^⚠️.*not found/i);
+   }
+   assert.equal(f.db.activeAssignment(f.session.id,selected.id),null);
+ }],
  ['UA6','01','feature catalog pins every source occurrence without granting execution',async()=>{
    const {compileNativeFeatures,featureDisposition}=await import('../src/native-feature-catalog.js');
    const rows=compileNativeFeatures();assert.equal(rows.length,152);assert.equal(new Set(rows.map(r=>r.feature_key)).size,152);

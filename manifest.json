@@ -336,8 +336,8 @@
     },
     {
       "path": "bot/scripts/gm-unified-arbitration-test.mjs",
-      "size_bytes": 46395,
-      "sha256": "6041d0096d7b6a45d3a21376dea7aed7ca9bf4792a86faf78d89f0bec9882b88"
+      "size_bytes": 53889,
+      "sha256": "0f149f72ce30952ba739d83265f3d47e6fc863f61eb26864983eb25db2b2e0cf"
     },
     {
       "path": "bot/scripts/h01-source-recovery-test.mjs",
@@ -1201,8 +1201,8 @@
     },
     {
       "path": "bot/src/command-definitions.js",
-      "size_bytes": 73691,
-      "sha256": "60bc10d2c4f336040ed1d39e5ceccc24779bc3be9b78bce5f943f9d025da8aaa"
+      "size_bytes": 73800,
+      "sha256": "6a7e0c06b85879e75d017238419245f8439a8068da448189dcd9b6da51e2e268"
     },
     {
       "path": "bot/src/command-schema.js",
@@ -1211,8 +1211,8 @@
     },
     {
       "path": "bot/src/commands.js",
-      "size_bytes": 184171,
-      "sha256": "9b590628c88817f89c0fd14455939336db4676012d6308645e84024f8fcdaa5b"
+      "size_bytes": 186307,
+      "sha256": "eff94a0de4d8b27fb5ede6346e275d4a4ee98e82058b9c207c02948fac1bccd1"
     },
     {
       "path": "bot/src/concept-context.js",
@@ -3166,8 +3166,8 @@
     },
     {
       "path": "docs/UNIFIED_ARBITRATION_ADVANCED_LEDGER.md",
-      "size_bytes": 4494,
-      "sha256": "b72dd2dfa2ecb2dfc4275b6275ae7a38dc533caff218d51605c3bd74c8d7f248"
+      "size_bytes": 7291,
+      "sha256": "873ca328fb318f8bd51c5c4c08f8013686d7587c513b3e65aeee852eccfea890"
     },
     {
       "path": "docs/UNIFIED_ARBITRATION_FEATURE_COVERAGE.md",
