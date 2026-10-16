@@ -35,6 +35,7 @@ suites.push("narrative-freedom-test","narrative-salience-test","narrative-deploy
 suites.push("delegation-quality-test");
 suites.push("narrative-publication-hotfix-test");
 suites.push("semantic-language-robustness-test");
+suites.push("narrative-correctness-retirement-test");
 // Critical is the release gate. Optional feature/history matrices remain executable via --extended;
 // no source assertion is deleted, and historical registration inventory stays intact above.
 const extendedSuiteInventory=[...suites];

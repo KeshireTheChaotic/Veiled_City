@@ -86,7 +86,7 @@ Native validation not duplicated. Extracted body blocks:1461/5790/2784/7261 char
 | N01 | FIXED remote speaker/local viewpoint; native adjacent setting compatibility retained without remote speech (NC01/02; original N02) |
 | N02 | PARTIAL/FIXED current genuine hearing and newly trusted nonsecret package imports; unsupported historical path-only seed-drafts remain KEEP/review (NC05–07) |
 | N03 | FIXED same-task NPC appearance/empty unknown; separate PC/remote facts retained (NC11/12) |
-| N04 | IMPROVED source-proven nonbinding offers/allegations, strict personal surrender guard (NC17–19/DQ04) |
+| N04 | PARTIAL: bounded offers improved (NC17); original agreement allegations retained (S5 P20). New acceptance allegations KEEP (NC18 original desired probe red), original S5 P22 and DQ04 restored/unchanged |
 | N05 | RETAINED guard / DEFER ambiguous aliases and non-vocative reference proof (NC20/21 original quality probes still red) |
 | N06 | RETAINED `you feel` ambiguity; existing see/hear/smell character POV works; camera witnessing blocked (NC22/23) |
 | N07 | FIXED unique native public role among audible NPCs; ambiguity/proxy/remote stays zero hearing (NC08/09; S3) |
@@ -100,5 +100,9 @@ Native validation not duplicated. Extracted body blocks:1461/5790/2784/7261 char
 | N15 | DEFER rich owner-authored PC appearance; no inferred replacement |
 
 ## Rollback and non-claims
+
+D3 generator decision: KEEP v1/v2 closed projection and v3/v5/v6/v7 supported flag-off generators/readers. D1's current request no longer invites them; deleting their implementations would break supported historical/disabled-v8 paths and fails LD7 parity. No old format or native4 is made obsolete by its version. The new compact suite is added to critical/extended validation without removing any existing registration or the39 optional matrices. Existing v8 rows whose old camera/visibility proof is not compatible with current source/locality rules may be held for scope review; their evidence and saved effects are never rewritten or replayed. This is retained safe reader behavior, not a claim of universal byte-equivalence for formerly unsafe bindings.
+
+D3 compatibility refinement: the unchanged SEM04/05 source contract also requires named historical definitions. Four exports therefore become thin named delegates with original arguments/arity (`reviewSceneEntry`, `configureEntryPolicy`, `formatDiscovery`, `discoveryDeliveryProof`), not function-identical re-exports. Their native validation bodies remain unchanged in the extracted services and are invoked once. All other extracted exports retain exact reference identity. Original source/security assertions were not modified. NC25 plus actual original scene-entry/consent/discovery behavior proves this compatibility boundary; see the full-gate failure/repair receipt rather than assuming extraction was fully qualified at D2.
 
 Code-only reviewed revert per phase; retain all native sources/receipts/outbox and new sidecars. Older code may conservatively hold newly certified prop output. Never roll back a current campaign DB to undo code changes, replay dice, restore uncertain sends to pending or recertify historical private text. No production, push, CI, flags or live language quality evidence was collected.

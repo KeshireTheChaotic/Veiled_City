@@ -16,8 +16,11 @@ export function discoveryQuestion(message){
   if(!match) return null;
   return {mode:/leads/i.test(text)?"leads":/changed/i.test(text)?"changed":/witness/i.test(text)?"witness":"know",query:match[1].replace(/\?$/,"").trim().slice(0,300)};
 }
-import {formatDiscovery,discoveryDeliveryProof} from './discovery-delivery.js';
-export {formatDiscovery,discoveryDeliveryProof,deliverDiscoveryMessage} from './discovery-delivery.js';
+import {formatDiscovery as nativeFormatDiscovery,discoveryDeliveryProof as nativeDiscoveryDeliveryProof} from './discovery-delivery.js';
+// Keep historical named APIs without duplicating scope or transport validation.
+export function formatDiscovery(db,guild,user,packet){return nativeFormatDiscovery(db,guild,user,packet);}
+export function discoveryDeliveryProof(db,guild,user,query,packet){return nativeDiscoveryDeliveryProof(db,guild,user,query,packet);}
+export {deliverDiscoveryMessage} from './discovery-delivery.js';
 export async function routeDiscoveryMessage({db,message,text=message.content,deliver,detailed=false}){
   if(db.getCityCalendar(message.guild.id).flags.discovery!==true) return detailed?null:false;
   const question=discoveryQuestion(text);if(!question) return detailed?null:false;

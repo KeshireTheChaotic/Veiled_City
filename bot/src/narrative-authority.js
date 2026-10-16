@@ -20,6 +20,7 @@ export const NARRATIVE_AUTHORITY_INSTRUCTIONS='You are the creative GM for this 
   +'believable NPC self-knowledge/motives/ordinary plans/dialogue, soft leads and attributed rumors. No older ledger fact is required for new ordinary fiction. '
   +'Respect existing fiction and canon. Do not reveal hidden causes or infer NPC omniscience. NPC rumors/claims are not objective truth. '
   +'Return independently meaningful narrative_units plus compact fiction_delta for meaningful named NPC/place identities, in this SAME call. '
+  +'Use creative_brief.source_tasks to address each exact requested target separately. Set subject_key to the native NPC key for its visual description as well as speech; one speaker does not answer another speaker\'s task. '
   +'Prioritize an NPC answer over optional atmosphere. Scene-only detail needs no separate entity. Use exact stable IDs. Reuse existing locations/NPCs without redeclaring them in fiction_delta; never replace their identity or summary. '
   +'Use speaker_brief direction and only that speaker\'s entitled knowledge. A native-known PC address may begin NPC dialogue as Name, or Mr./Ms./Mx. Name,; it permits only the address, never that PC\'s answer or action. '
   +'In protected combat, contests and PvP, portray atmosphere and NPC attempts freely within these same boundaries. Native_results are already resolved evidence, never permission for an additional hit or reaction. '
@@ -109,7 +110,7 @@ function validateUnit(db,guild,u,ctx,entities=[],historical=false){
   // remaining words still pass the same material and protected-reference guards.
   const speechAssertions=u.kind==='npc_speech'&&/^(?:would|could|will|can) you\b[^\r\n]*\?$/i.test(assertions)
     ?assertions.replace(/^(?:would|could|will|can) you (?:accept|agree)\b/i,'the proposed offer'):assertions;
-  if(u.kind==='npc_speech'&&(/\b(?:you (?:agree|accept|obey|obeyed|surrender|surrendered|decide|decided|confess|confessed)|your (?:consent|agreement) is)\b/i.test(speechAssertions)
+  if(u.kind==='npc_speech'&&(/\b(?:you (?:agree|accept|accepted|obey|obeyed|surrender|surrendered|decide|decided|confess|confessed)|your (?:consent|agreement) is)\b/i.test(speechAssertions)
     ||assertions!==u.text&&/\b(?:you (?:agree|agreed|accept|accepted|obey|obeyed|surrender|surrendered|decide|decided|confess|confessed)|your (?:consent|agreement) is)\b/i.test(assertions)))throw fail('held_material');
   // Narrow POV allowance is perception, never a player choice. These finite tripwires are not universal semantics.
   const pov=u.text.replace(/\byou (?:can )?(?:see|hear|smell|notice)\b/gi,'the view').replace(/\byour (?:view|surroundings)\b/gi,'the view');
@@ -118,16 +119,22 @@ function validateUnit(db,guild,u,ctx,entities=[],historical=false){
   if(/\b(?:HP|hit points?|armor slots?|stress (?:marks?|slots?)|marks? \d+|takes? \d+ damage|is (?:captured|restrained|arrested)|has surrendered)\b/i.test(u.text))throw fail('held_material');
   for(const f of db.listFactsForGM(guild,{limit:500}))if(f.content?.length>=12&&u.text.includes(f.content)
     &&(!narrativeVisible(f,ctx.scope)||!narrativeSourceVisible(db,guild,f.id,ctx.scope)))throw fail('held_secret');
-  if(['npc_speech','npc_action_attempt'].includes(u.kind)){
+  if(['npc_speech','npc_action_attempt'].includes(u.kind)||u.subject_key&&(db.getNpcProfile(guild,u.subject_key)
+    ||entities.some(e=>e.kind==='npc'&&e.key===u.subject_key))){
     const entity=db.getSimulationEntity(guild,'npc',u.subject_key),proposed=entities.find(e=>e.kind==='npc'&&e.key===u.subject_key);
-    if(db.getCharacter(u.subject_key)||activeCityProxy(db,guild,u.subject_key)||!entity&&!proposed||entity&&(entity.state.hidden||entity.state.removed
+    // A scene/rumor label cannot authorize a known remote/proxy actor. Exact
+    // established observations still require their independent native proof.
+    if(ctx.binding.location&&(u.location_key||ctx.binding.location)!==ctx.binding.location
+      ||db.getCharacter(u.subject_key)||activeCityProxy(db,guild,u.subject_key)&&u.kind!=='established_observation'
+      ||!entity&&!proposed||entity&&(entity.state.hidden||entity.state.removed
       ||!narrativeVisible({visibility:entity.state.visibility||'party',subject_key:entity.state.subject_character_id},ctx.scope)
       ||entity.state.location_key!==(u.location_key||ctx.binding.location)))throw fail('held_scope');
     const identity=db.getCityRecord(guild,'autonomous_entity',`npc:${u.subject_key}`);
     if(identity&&!narrativeSourceVisible(db,guild,identity.source_event,ctx.scope)||db.getNpcProfile(guild,u.subject_key)?.activity_tier==='dormant')throw fail('held_scope');
-    if(entity)try{assertNpcAvailability(db,guild,u.subject_key,{type:'contact',location_key:u.location_key||ctx.binding.location});}
+    if(entity&&['npc_speech','npc_action_attempt'].includes(u.kind))try{assertNpcAvailability(db,guild,u.subject_key,{type:'contact',location_key:u.location_key||ctx.binding.location});}
     catch(error){if(!error.code&&error.constructor===Error)throw fail('held_scope');throw error;}
-    if(u.source_refs.length&&!u.source_refs.every(ref=>actorReferenceVisible(db,guild,u.subject_key,ref,ctx.scope)))throw fail('held_secret');
+    if(['npc_speech','npc_action_attempt'].includes(u.kind)&&u.source_refs.length
+      &&!u.source_refs.every(ref=>actorReferenceVisible(db,guild,u.subject_key,ref,ctx.scope)))throw fail('held_secret');
   }
   if(u.kind==='established_observation'){
     if(u.source_refs.length!==1)throw fail('held_scope');

@@ -32,7 +32,7 @@ export function coordinateNarrative(db,guild,result,{scope,sourceRef,movement=fa
 export function creativeBrief(ctx,result,input){
   const selected=briefs.get(result)||{tasks:[taskFor(input.operation)||'scene'],speakers:[]};
   return {version:1,tasks:selected.tasks,priority:selected.tasks.includes('conversation')?'answer_or_react_as_npc':'ground_the_situation',
-    source_tasks:narrativeTasks(ctx.db,ctx.binding.guild,result,ctx.scope,ctx.sourceRef,{requireAccepted:false}),
+    source_tasks:narrativeTasks(ctx.db,ctx.binding.guild,result,ctx.scope,ctx.sourceRef),
     speakers:ctx.packet.npcs.filter(n=>!n.human_controlled&&selected.speakers.includes(n.key)).map(n=>n.key),
     viewpoint:ctx.binding.viewpoint,source_refs:[ctx.sourceRef,...input.source_refs],
     response_obligation:'Address every requested task coherently in ONE response; preserve uncertainty and leave player decisions open.',

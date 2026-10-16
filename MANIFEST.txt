@@ -89,6 +89,7 @@ bot/scripts/memory-audience-isolation-test.mjs
 bot/scripts/memory-lifecycle-test.mjs
 bot/scripts/movement-authorization-regression-test.mjs
 bot/scripts/narrative-contract-test.mjs
+bot/scripts/narrative-correctness-retirement-test.mjs
 bot/scripts/narrative-deployment-safety-test.mjs
 bot/scripts/narrative-fixtures.mjs
 bot/scripts/narrative-freedom-test.mjs
@@ -235,6 +236,7 @@ bot/src/commands.js
 bot/src/concept-context.js
 bot/src/config.js
 bot/src/consent-language.js
+bot/src/consent-native.js
 bot/src/consequence-reconciliation.js
 bot/src/content-packages.js
 bot/src/content.js
@@ -254,6 +256,7 @@ bot/src/discord/chunking.js
 bot/src/discord/delivery.js
 bot/src/discord/interaction-lifecycle.js
 bot/src/discord/privacy.js
+bot/src/discovery-delivery.js
 bot/src/encounter.js
 bot/src/engagement-shadow.js
 bot/src/entity-memory.js
@@ -288,6 +291,7 @@ bot/src/memory-clusters.js
 bot/src/memory-lifecycle.js
 bot/src/message-span-ledger.js
 bot/src/movement-language.js
+bot/src/narrative-artifacts.js
 bot/src/narrative-authority-context.js
 bot/src/narrative-authority.js
 bot/src/narrative-completeness.js
@@ -300,12 +304,14 @@ bot/src/narrative-pvp.js
 bot/src/narrative-records.js
 bot/src/narrative-salience.js
 bot/src/narrative-speakers.js
+bot/src/narrative-tasks.js
 bot/src/native-hook-output.js
 bot/src/native-notice.js
 bot/src/native-outcome-output.js
 bot/src/native-publications.js
 bot/src/negotiations.js
 bot/src/nonmaterial-grammar.js
+bot/src/npc-cognition-projection.js
 bot/src/npc-cognition.js
 bot/src/npc-conversations.js
 bot/src/operational-metrics.js
@@ -329,6 +335,7 @@ bot/src/portrayal.js
 bot/src/presentation-evidence.js
 bot/src/prompt-budget.js
 bot/src/provenance.js
+bot/src/public-referents.js
 bot/src/publication-outbox.js
 bot/src/publishing.js
 bot/src/pvp-attacks.js
@@ -347,6 +354,7 @@ bot/src/pvp-terminal.js
 bot/src/register-commands.js
 bot/src/relationship-state.js
 bot/src/roll-collaboration.js
+bot/src/roll-declaration-review.js
 bot/src/roll-language.js
 bot/src/roll-menu.js
 bot/src/roll-operation-publications.js
@@ -361,6 +369,7 @@ bot/src/rules-srd.js
 bot/src/scene-action-window.js
 bot/src/scene-continuity.js
 bot/src/scene-description.js
+bot/src/scene-entry-native.js
 bot/src/scene-entry.js
 bot/src/scene-fiction-authority.js
 bot/src/scene-fiction-context.js
@@ -539,6 +548,9 @@ docs/LIVING_CITY.md
 docs/NARRATIVE_AUTHORITY_EXECUTION_LEDGER.md
 docs/NARRATIVE_AUTHORITY_PRODUCTION_RUNBOOK.md
 docs/NARRATIVE_AUTHORITY_RELEASE.md
+docs/NARRATIVE_CORRECTNESS_RETIREMENT_CONTRACTS.md
+docs/NARRATIVE_CORRECTNESS_RETIREMENT_CROSSWALK.md
+docs/NARRATIVE_CORRECTNESS_RETIREMENT_LEDGER.md
 docs/NARRATIVE_CREATIVE_AUTHORITY_CONTRACT.md
 docs/NARRATIVE_INFERENCE_AUDIT.md
 docs/NARRATIVE_PUBLICATION_HOTFIX_10_2.md
@@ -570,6 +582,8 @@ docs/RULES_ONLINE_SRD.md
 docs/SCENE_ENTRY_FIX.md
 docs/SCENE_NARRATION_REPAIR.md
 docs/SECURITY_AND_PRIVACY.md
+docs/SEMANTIC_LANGUAGE_LEGACY_DEPRECATION_PLAN.md
+docs/SEMANTIC_LANGUAGE_ROBUSTNESS_GAP.md
 docs/SEMANTIC_LANGUAGE_ROBUSTNESS_LEDGER.md
 docs/SEMANTIC_LANGUAGE_ROBUSTNESS_RELEASE.md
 docs/SERVER_CHANNEL_SETUP.md
@@ -688,6 +702,7 @@ docs/V9_NARRATIVE_PVP_CONTRACT.md
 docs/V9_REGRESSION_MATRIX.csv
 docs/V9_SOURCE_AUDIT.md
 docs/VALIDATION_REPORT.md
+docs/VEILED_CITY_NEXT_PHASE_REPAIR_AND_DEPRECATION_PLAN.md
 docs/VOICE_NARRATION.md
 docs/Veiled_City_V96_Revised_Implementation_Plan.md
 docs/WORLD_DIRECTOR.md

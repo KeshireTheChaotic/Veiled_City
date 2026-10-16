@@ -1,5 +1,7 @@
 # Semantic language robustness execution
 
+Next local feature work (historical S0–S6 evidence below is unchanged): see [narrative correctness / retirement ledger](NARRATIVE_CORRECTNESS_RETIREMENT_LEDGER.md) and [symbol crosswalk](NARRATIVE_CORRECTNESS_RETIREMENT_CROSSWALK.md). Branch `codex/narrative-correctness-legacy-retirement` from `6de758c`; four expressive quality guards remain explicitly retained. Push/CI/production are not authorized by this follow-up.
+
 Accepted typed intents are canonical adjudication inputs; human declarations own intent; native receipts own outcomes.
 
 Branch `codex/semantic-language-robustness`, starting SHA `87b2817b0ed017c3e1472ff406a4a3c99aa4543f`, origin reconciled equal. Initial tree had only the supplied untracked companion plan, preserved in full. Application10.2.0/schema460. No production operation authorized or performed by this task. Prior installation/running/flags evidence is not a claim about current live state.

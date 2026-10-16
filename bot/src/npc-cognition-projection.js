@@ -2,6 +2,7 @@
 import {sceneFictionHash as hash,narrativeSourceVisible} from './scene-fiction-context.js';
 import {conversationPrincipal} from './conversation-principal.js';
 import {indexWorldEvent} from './city-calendar.js';
+import {createHash} from 'node:crypto';
 
 /** Only the trusted native importer calls this, never model output. The nonsecret
  * dossier `knows` field permits attributed actor testimony, not objective canon. */
@@ -20,6 +21,8 @@ function heardEvidence(db,guild,npc,row,scope,event){
     ||row.source_type!=='heard'||row.content!==`${pc.name} said: “${d.quote}” (claim unverified; not consent or binding terms)`
     ||typed?.status!=='accepted_for_adjudication'||t.type!=='speak'||t.actor!==pc.id||t.owner_user_id!==d.author
     ||t.target_key!==npc||t.utterance!==d.quote||typed.source_event!==d.input_source||input?.status!=='active'
+    ||typeof input.details.raw_text!=='string'||input.details.raw_hash!==t.source_hash
+    ||createHash('sha256').update(input.details.raw_text).digest('hex')!==t.source_hash
     ||input.details.raw_text?.slice(t.start,t.end)!==t.source_span||!db.ownerAuthoredSource(guild,input.event_key,d.author)
     ||!narrativeSourceVisible(db,guild,input.event_key,scope)
     ||d.private_scene&&(scope.mode!=='private'||scope.actorUserId!==d.author||scope.actorCharacterId!==pc.id))return false;

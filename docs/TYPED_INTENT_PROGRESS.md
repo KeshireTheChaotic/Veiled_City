@@ -1,5 +1,7 @@
 # Typed Intent Refinement Progress
 
+Current follow-up pointer (2026-10-15): [narrative correctness and retirement ledger](NARRATIVE_CORRECTNESS_RETIREMENT_LEDGER.md), branch `codex/narrative-correctness-legacy-retirement`, foundation `6de758c`. Historical phase records below remain unchanged. Local implementation only; see that ledger for actual final qualification and explicit retained quality limitations.
+
 ## Current resume pointer — V96-07 (2026-10-13)
 
 **QUALIFIED OFFLINE**, starting V96-06 `732936aac55e30e0b6200e4273f8a4d17a79c2d1`, origin `d670fcd` integrated. TOK05–07 preserve native/direct/assisted 0/1/2 call paths, reject pre-cancelled/late candidates without inventing usage, honor bounded retry/server hints, and share only exact in-flight NPC proposals, never effects. Final own **11/11**, native T1 **128/128**, full T2 **146/146**, **0 failed / 0 not-run**, **26/26** acceptance mappings, **393,892 ms**, both D08/check/manifest/diff integrity. Local commit `perf(v9.6-routing): minimize redundant model calls without lost turns`; SHA supplied in handoff/Git history. [Actual failures/results](V96_PROGRESS.md), [contract/limits/rollback](V96_07_REQUEST_CONTRACT.md). No push/deploy/live operation; V96-08 is next, unstarted.

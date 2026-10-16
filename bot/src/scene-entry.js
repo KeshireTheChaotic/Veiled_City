@@ -63,4 +63,9 @@ export function entryReferenceContext(db,guild,user,character,{mode="private"}={
       +"Ask only when ambiguity materially affects an action; do not repeatedly ask for an already understood name. "
       +"Use autonomous world additions/actions for ordinary local creation and entry; keep native travel/encounter/access rules. Review keys and revisions are GM metadata, not dialogue."};
 }
-export {reviewSceneEntry,configureEntryPolicy,mundaneEntryImpact,resolveMundaneEntry} from './scene-entry-native.js';
+import {reviewSceneEntry as nativeReviewSceneEntry,configureEntryPolicy as nativeConfigureEntryPolicy} from './scene-entry-native.js';
+// Named historical entry points remain for compatibility; all validation and
+// effects live in the extracted native service and execute exactly once.
+export function reviewSceneEntry(db,guild,input,reviewer){return nativeReviewSceneEntry(db,guild,input,reviewer);}
+export function configureEntryPolicy(db,guild,input,reviewer){return nativeConfigureEntryPolicy(db,guild,input,reviewer);}
+export {mundaneEntryImpact,resolveMundaneEntry} from './scene-entry-native.js';
