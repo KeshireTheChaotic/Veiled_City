@@ -12,13 +12,13 @@
       "template_hash": "b84f4192e2c4632ac103115bac62461c08251eb6f61610ece4329e9421c29906",
       "index": 0,
       "type": "Passive",
-      "status": "review_only",
+      "status": "supported",
       "trigger_kind": "passive",
       "target_policy": "one",
       "roll_protocol": "none",
       "costs": [],
-      "native_handler": null,
-      "reason": "No qualified native feature handler.",
+      "native_handler": "pack_pressure",
+      "reason": "Native standard attack modifier from bound live Thralls in the target's actual zone; no guessed pairwise range.",
       "planned_handler": "pack_pressure"
     },
     {
@@ -145,7 +145,7 @@
       "template_hash": "df4233402bab5e0b353a19ad0fa0b9617e4c9b88c943cd5dc0d4ee9f116f3fc1",
       "index": 1,
       "type": "Reaction",
-      "status": "review_only",
+      "status": "supported",
       "trigger_kind": "on_pc_action",
       "target_policy": "one",
       "roll_protocol": "pc_reaction_each",
@@ -155,8 +155,8 @@
           "amount": 1
         }
       ],
-      "native_handler": null,
-      "reason": "No qualified native feature handler.",
+      "native_handler": "feedback",
+      "reason": "Native visible owned-device use; owner-only Instinct 12 reaction with supported Stress capacity. No hidden use or Stress-overflow shortcut.",
       "planned_handler": "feedback"
     },
     {

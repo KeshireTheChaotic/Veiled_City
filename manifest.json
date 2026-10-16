@@ -336,8 +336,8 @@
     },
     {
       "path": "bot/scripts/gm-unified-arbitration-test.mjs",
-      "size_bytes": 67017,
-      "sha256": "5fd3d6da56e01b8765d301bc5ed11a60a7821a15f3d44d8d0a6106719804a436"
+      "size_bytes": 80340,
+      "sha256": "29e387445c1c23de6d236d9c19c24dc10c3dd3aa780c6b093bf6e73a42f7cf91"
     },
     {
       "path": "bot/scripts/h01-source-recovery-test.mjs",
@@ -1401,8 +1401,8 @@
     },
     {
       "path": "bot/src/gm-action-capability.js",
-      "size_bytes": 9159,
-      "sha256": "768e93664d78579d459ca182eb472686fa9c4335a6372da1bae3a5a5993191c0"
+      "size_bytes": 9337,
+      "sha256": "da1a3e93c06f6679d3076b29062450371d2f7e175aefa9e33a9bbd1249f96d01"
     },
     {
       "path": "bot/src/gm-action-review.js",
@@ -1411,8 +1411,8 @@
     },
     {
       "path": "bot/src/gm-action-ruling.js",
-      "size_bytes": 20489,
-      "sha256": "22c440474d1049100a71158103294aaf10f3c7e59cffd6bd7d37d36f9e8024a2"
+      "size_bytes": 20741,
+      "sha256": "af9679e9c7370a7556db0f0fbdd678f4d03ed6c552dc10c14c33098c81348e33"
     },
     {
       "path": "bot/src/gm-arbitration-contract.js",
@@ -1441,13 +1441,13 @@
     },
     {
       "path": "bot/src/gm-native-rolls.js",
-      "size_bytes": 14588,
-      "sha256": "db4bd92d1076d341236b3c74c1978e3013312f372a18383a6480d3dd3c9030fd"
+      "size_bytes": 15311,
+      "sha256": "20a2849df97add68ba9cf7eccb8db161deea818a0be9c8a377dc342f81c65d2c"
     },
     {
       "path": "bot/src/gm-unified-arbitration.js",
-      "size_bytes": 12728,
-      "sha256": "31365c203230782b6534b788093c68ac10d1389faf03d1542c413da37a997c62"
+      "size_bytes": 14393,
+      "sha256": "27d1839f08cb55c7aaf9e3e3124fae67309f9f9ff22d59345a54323386c99dcf"
     },
     {
       "path": "bot/src/gm-world-narrative.js",
@@ -1631,18 +1631,28 @@
     },
     {
       "path": "bot/src/native-feature-catalog.js",
-      "size_bytes": 2812,
-      "sha256": "841ad0bdf8f7449654217334c8ace8d121e320b16b2812a30020222e65a29359"
+      "size_bytes": 2845,
+      "sha256": "d9a746828d31473e80cfdce63e11a9a74a61b660f78e1f1450b8ee88cfb815bb"
     },
     {
       "path": "bot/src/native-feature-definitions.json",
-      "size_bytes": 116723,
-      "sha256": "bce3ce79870b96fa87a59db9f1b451681bcc39515216722c76038696d5b15af0"
+      "size_bytes": 116914,
+      "sha256": "0cc9186d353a02babc2b97d734de214d178f4fdcc18597e3a2361e479c0b2f10"
+    },
+    {
+      "path": "bot/src/native-feature-effects.js",
+      "size_bytes": 9288,
+      "sha256": "ff95118746f6f2a5a519e701c2e8dc01d21c5685a21ca1deab00933860c99676"
+    },
+    {
+      "path": "bot/src/native-feature-passives.js",
+      "size_bytes": 2181,
+      "sha256": "bdc9dd75bf95341b314ebd6ef3efe9e8af94a902884251b3e590af6155124668"
     },
     {
       "path": "bot/src/native-feature-windows.js",
-      "size_bytes": 16726,
-      "sha256": "4dcb5335a1346da871d7a6584dcf95fb0fec2afc386fb97472ebeeaf3666a3a1"
+      "size_bytes": 23713,
+      "sha256": "c02f67c9f15bfd8f5d4db0e1d5b39b3796643e2aeabe42f23cf48e6c5eaa5a97"
     },
     {
       "path": "bot/src/native-hook-output.js",
@@ -1756,8 +1766,8 @@
     },
     {
       "path": "bot/src/pc-incoming.js",
-      "size_bytes": 29406,
-      "sha256": "ad6cdb12701f72001b518cf1fd590dc834e28cd2671a840aef58b22b080cd619"
+      "size_bytes": 31441,
+      "sha256": "7a2a7dc95ae6298350e12df929ed3718b6bc7551cb17ab7db9310d9b9788a984"
     },
     {
       "path": "bot/src/pc-native-eligibility.js",
@@ -1936,8 +1946,8 @@
     },
     {
       "path": "bot/src/rules-arbitration.js",
-      "size_bytes": 9322,
-      "sha256": "c1d7751f5b80efe65c7e701b85b1f919630c312936dc77b144464e54c64444dc"
+      "size_bytes": 9736,
+      "sha256": "73d275fd2c7819765905caa2eaba5ce74b7f575e796defa2cd07f3eb231bc8a4"
     },
     {
       "path": "bot/src/rules-srd.js",
@@ -1981,8 +1991,8 @@
     },
     {
       "path": "bot/src/scene-intent-board.js",
-      "size_bytes": 9030,
-      "sha256": "f0fbe28b71f237e1f55d9ee8b91690224c28ab874cbb16f1fab68ad2c51cd1ca"
+      "size_bytes": 9714,
+      "sha256": "8d0344f4156284fbcdcda552878b7d838fd04f24bc2279551472d4d69d33b77c"
     },
     {
       "path": "bot/src/scene-observation-route.js",
@@ -3171,13 +3181,13 @@
     },
     {
       "path": "docs/UNIFIED_ARBITRATION_ADVANCED_LEDGER.md",
-      "size_bytes": 13241,
-      "sha256": "d9cea89c3db6dfd9691ecb8f37d9d02c905657482bfbf2626c1860ad640c35af"
+      "size_bytes": 19870,
+      "sha256": "179e110710237ae1c924ddfb3ff6d296816ac24e5d95450b3ed1070dc128d58d"
     },
     {
       "path": "docs/UNIFIED_ARBITRATION_FEATURE_COVERAGE.md",
-      "size_bytes": 19064,
-      "sha256": "5158ab33aa129f383871c3008ebb5ade9744981a52c7a2b8857e142f511e29d2"
+      "size_bytes": 20435,
+      "sha256": "5540a73c5895799aac86f5ad26b8985f80ccc2b9d794f73377bb8aba08d165a2"
     },
     {
       "path": "docs/UNIFIED_GM_ARBITRATION.md",

@@ -7,7 +7,7 @@ import {scenePresence} from './scene-continuity.js';
 import {actorReferenceVisible} from './npc-cognition-projection.js';
 import {matchesArbitrationSchema,npcSceneIntentSchema,arbitrationFailure as fail} from './gm-arbitration-contract.js';
 import {indexWorldEvent} from './city-calendar.js';
-import {featureWindowChoices} from './native-feature-windows.js';
+import {featureWindowChoices,inspectFeatureWindow} from './native-feature-windows.js';
 const origins=new WeakMap(),bindings=new WeakMap();
 const deepFreeze=v=>{if(v&&typeof v==='object'){Object.values(v).forEach(deepFreeze);Object.freeze(v);}return v;};
 export function createArbitrationOrigin(db,guild,scope,sourceRef){
@@ -52,8 +52,12 @@ export function currentScenePlayerInputs(db,guild,origin,rows){
   const o=inspectArbitrationOrigin(db,guild,origin);
   return [...new Map([...rows,...sharedSceneInputs(db,guild,o)].map(row=>[row.record_key,row])).values()].slice(0,16);
 }
-export function buildSceneIntentBoard(db,guild,origin,playerRows=[],npcProposals=[]){
+export function buildSceneIntentBoard(db,guild,origin,playerRows=[],npcProposals=[],nativeChildWindow=null){
   const o=inspectArbitrationOrigin(db,guild,origin),entries=[];
+  const child=nativeChildWindow&&inspectFeatureWindow(db,guild,nativeChildWindow);
+  if(child&&(child.data.origin_source!==o.binding.source||child.data.scene!==o.binding.scene||playerRows.length||npcProposals.length!==1
+    ||npcProposals[0].actor_key!==child.data.actor||npcProposals[0].operation!=='reaction'
+    ||npcProposals[0].target_refs.length!==1||npcProposals[0].target_refs[0]!==child.data.target))throw fail('native_child_board_scope');
   if(playerRows.length>16||npcProposals.length>4)throw fail('board_budget');
   for(const row of playerRows){
     const proof=row.status==='resolved'?historicalActionSource(db,guild,row.record_key,{resolved:true}):consentAction(db,guild,row.record_key);
@@ -74,7 +78,7 @@ export function buildSceneIntentBoard(db,guild,origin,playerRows=[],npcProposals
     if(p.objective_ref&&!actor.objectives.includes(p.objective_ref)||p.source_refs.some(ref=>!actorReferenceVisible(db,guild,p.actor_key,ref,o.scope)))throw fail('npc_objective_or_knowledge');
     if(new Set(p.target_refs).size!==p.target_refs.length||p.target_refs.some(key=>!db.getCharacter(key)&&!db.getNpcProfile(guild,key)
       &&!db.getSimulationEntity(guild,'location',key)))throw fail('npc_native_target');
-    const ref=actor.intents[p.operation];if(seen.has(ref))throw fail('duplicate_npc_intent');seen.add(ref);
+    const ref=child?`npc-intent:${hash([o.binding.source,p.actor_key,p.operation,child.record_key])}`:actor.intents[p.operation];if(seen.has(ref))throw fail('duplicate_npc_intent');seen.add(ref);
     const entry={intent_ref:ref,proposal_ref:ref,actor:{type:'npc',key:p.actor_key,controller:'ai_gm'},
       scene_ref:o.binding.scene,session:o.binding.session,operation:p.operation,
       target_refs:[...p.target_refs],dependencies:p.dependencies.map(ref=>entries.find(e=>e.proposal_ref===ref)?.intent_ref||ref),snapshot:actor.snapshot,visibility:o.scope.mode==='private'?'character':'party',
@@ -86,7 +90,8 @@ export function buildSceneIntentBoard(db,guild,origin,playerRows=[],npcProposals
     entries.push({...entry,source_ref:source.event_key,source_hash:hash(source.details)});
   }
   for(const e of entries)if(e.dependencies.some(ref=>!entries.some(other=>other.intent_ref===ref)))throw fail('unverified_dependency');
-  const data={version:1,origin:o.binding,entries},key=`intent-board:${hash([o.binding.source,o.scope])}`,prior=db.getCityRecord(guild,'scene_intent_board',key);
+  const data={version:1,origin:o.binding,entries,...(child?{parent_window:child.record_key}:{} )},
+    key=`intent-board:${hash(child?[o.binding.source,o.scope,child.record_key]:[o.binding.source,o.scope])}`,prior=db.getCityRecord(guild,'scene_intent_board',key);
   if(prior){if(hash(prior.data)!==hash(data))throw fail('immutable_board_changed');return prior;}
   const source=indexWorldEvent(db,guild,{key:`${key}:source`,kind:'native_scene_intent_board',source_id:'native:unified-gm',title:'Native sourced scene intent board',
     session_id:o.binding.session,scene:o.binding.scene,location_key:o.binding.location||'',visibility:'gm',details:{input_source:o.binding.source,payload_hash:hash(data)}},'native:unified-gm');

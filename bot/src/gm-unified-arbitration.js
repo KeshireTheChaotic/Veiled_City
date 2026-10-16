@@ -11,7 +11,7 @@ import {nativeGmOpportunity,nativeReactionTarget} from './gm-action-capability.j
 import {inspectIncomingCandidate} from './pc-incoming.js';
 import {EncounterLibrary} from './encounter.js';
 import {featureDisposition} from './native-feature-catalog.js';
-import {authorizeFeatureChoice} from './native-feature-windows.js';
+import {authorizeFeatureChoice,reserveFeatureWindow,pendingFeatureWindows} from './native-feature-windows.js';
 
 export const UNIFIED_ARBITRATION_PROMPT='Evaluate unified_arbitration in this SAME GM call. Accepted typed intents are canonical adjudication inputs; human declarations own intent; native receipts own outcomes. Select player:<original player_intents index> or exact shared/NPC intent_ref. NPC proposals select native local actor and native knowledge refs; no PC declaration or secret disclosure may be invented. Each decision needs current rules, reason, stakes before dice, and justified Difficulty for an action/reaction. NPC attack uses actual PC Evasion, never invented Difficulty. Ordinary NPC fiction normally uses npc_no_roll. PC roll questions are adjudication only: player alone executes dice. A feature decision uses proposal_version=2 and the EXACT trigger_ref and feature_ref from feature_windows; a Reaction does not mint normal spotlight. Blood Rush currently permits Stress recovery while electing the current position only; other relocation remains reviewed. Unsupported features/proxies/PvP remain review/consent. Do not emit duplicate gm_ruling/native_adjudication for a unified decision. No dice faces, role waiver, outcome or automatic Fear spending.';
 
@@ -43,7 +43,7 @@ export function adjudicateSceneBoard(db,guild,origin,board,proposals,{library=ne
       const feature=featureDisposition(p.feature_ref);
       reason=feature.reason; // Catalog membership alone never grants a feature capability.
       if(feature.status==='supported'){
-        native=authorizeFeatureChoice(db,guild,o,entry,p,feature.feature,{library});status='gm_action_ready';
+        native=authorizeFeatureChoice(db,guild,o,entry,p,feature.feature,{library});status=native.operation==='request_feature_reaction_roll'?'pending_pc_reaction':'gm_action_ready';
         reason='Exact native reaction occurrence only; no ordinary spotlight or player roll is inferred.';
       }
     }
@@ -100,7 +100,9 @@ export function adjudicateSceneBoard(db,guild,origin,board,proposals,{library=ne
       origin:o.binding,scope:o.scope,rules:rules||[],reason,native,authority:'GM ruling only; controller executes; native receipts own outcomes.'};
     const source=indexWorldEvent(db,guild,{key:`${key}:source`,kind:'native_gm_arbitration',source_id:'native:unified-gm',title:'Source-bound GM ruling',
       session_id:o.binding.session,scene:o.binding.scene,location_key:o.binding.location||'',visibility:'gm',details:{board:board.record_key,payload_hash:hash(data)}},'native:unified-gm');
-    return db.saveCityRecord(guild,{kind:'gm_arbitration_decision',key,status,source_event:source.event_key,visibility:'gm',data});
+    const saved=db.saveCityRecord(guild,{kind:'gm_arbitration_decision',key,status,source_event:source.event_key,visibility:'gm',data});
+    if(native?.feature)reserveFeatureWindow(db,guild,saved.record_key);
+    return saved;
     });
   });
 }
@@ -109,5 +111,19 @@ export function applyUnifiedArbitration(db,guild,result,playerRows){
   if(!matchesArbitrationSchema(unifiedArbitrationSchema,result.unified_arbitration))throw fail('transport_shape');
   const origin=arbitrationTurnOrigin(result);if(!origin)throw fail('native_service_origin_required');
   const rows=currentScenePlayerInputs(db,guild,origin,playerRows),board=buildSceneIntentBoard(db,guild,origin,rows,result.unified_arbitration.npc_intents);
-  return adjudicateSceneBoard(db,guild,origin,board,result.unified_arbitration.decisions);
+  const decisions=adjudicateSceneBoard(db,guild,origin,board,result.unified_arbitration.decisions);
+  // One bounded native GM reactive policy, in the current authenticated GM opportunity.
+  // It is not a model role, a civic simulation score, or an extra provider invocation.
+  const o=inspectArbitrationOrigin(db,guild,origin),remaining=4-board.data.entries.filter(e=>e.actor.type==='npc').length;
+  let used=0;
+  for(const w of pendingFeatureWindows(db,guild)){
+    if(used>=remaining||w.status!=='pending'||w.data.feature!=='adversary:static-wraith:feedback'||w.data.origin_source!==o.binding.source
+      ||db.getCityRecord(guild,'native_feature_reservation',`feature-reservation:${hash(w.record_key)}`))continue;
+    const proposal={actor_key:w.data.actor,operation:'reaction',target_refs:[w.data.target],objective_ref:'',source_refs:[],dependencies:[]};
+    const child=buildSceneIntentBoard(db,guild,origin,[],[proposal],w.record_key),p={intent_ref:child.data.entries[0].intent_ref,disposition:'native_feature_resolution',
+      rule_basis_refs:['srd:reaction-rolls'],difficulty:12,trait:'Instinct',stakes_kind:'native_feature',stakes:'Native Feedback reaction.',reason:'Native GM reactive policy feedback_v1; current visible owned-device use.',
+      difficulty_reason:'Exact native Static Wraith feature.',feature_ref:w.data.feature,experience_ref:'',advantage:false,disadvantage:false,proposal_version:2,trigger_ref:w.record_key};
+    decisions.push(...adjudicateSceneBoard(db,guild,origin,child,[p]));used++;
+  }
+  return decisions;
 }

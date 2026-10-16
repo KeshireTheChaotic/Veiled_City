@@ -7,6 +7,7 @@ import {currentScene,scenePresence} from "./scene-continuity.js";
 import {isPvpIntent} from "./pvp-authority.js";
 import {assertPcCanAct} from "./pc-native-eligibility.js";
 import {resolveRuleReferences} from "./rule-reference-catalog.js";
+import {nativeDeviceUseIssue} from './native-feature-effects.js';
 
 const text=n=>({type:"string",maxLength:n});
 const list=n=>({type:"array",maxItems:n,items:text(200)});
@@ -133,6 +134,8 @@ export function adjudicateGmRuling(db,guild,acceptedKey,proposal,scope,recovery=
         ["homebrew",proposal.homebrew_refs]].every(([kind,refs])=>!refs.length||!!resolveRuleReferences(db,guild,kind,refs,{rollKind:"action"}));
     if(!review&&(!referencesValid||ruleBasis.kind==="provisional"))review="RULE_UNVERIFIED";
     if(!review&&!proposal.explanation.trim())review="EXPLANATION_REQUIRED";
+    // Preserve historical completion; a new attempt cannot use a shutdown device as functional.
+    if(!review&&accepted.status!=='resolved')review=nativeDeviceUseIssue(p.pc,accepted);
     const noRoll=proposal.disposition==="narrative_no_roll";
     if(!review&&noRoll&&(proposal.risk!=="none"||proposal.stakes!=="none"||proposal.difficulty!==null||proposal.trait!==null
       ||proposal.modifier_keys.length))review="NO_ROLL_PERMISSION_UNVERIFIED";

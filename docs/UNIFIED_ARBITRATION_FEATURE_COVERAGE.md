@@ -6,13 +6,17 @@ Accepted typed intents are canonical adjudication inputs; human declarations own
 
 ## Inventory and execution status
 
-41 adversaries / 104 occurrences (39 Passive, 35 Action, 29 Reaction, 1 untyped); 16 environments / 48 occurrences (17 Passive, 27 Action, 4 Reaction). **152 total: 1 supported bounded route, 150 review_only, 1 needs_authoring, 0 not_mechanical.** UA6 initially had zero handlers. These counts concern textual special features only. Existing standard attacks, exceptional actions, no-roll fiction and owner reaction invitations remain separate.
+41 adversaries / 104 occurrences (39 Passive, 35 Action, 29 Reaction, 1 untyped); 16 environments / 48 occurrences (17 Passive, 27 Action, 4 Reaction). **152 total: 3 supported bounded routes, 148 review_only, 1 needs_authoring, 0 not_mechanical.** UA6 initially had zero handlers. These counts concern textual special features only. Existing standard attacks, exceptional actions, no-roll fiction and owner reaction invitations remain separate. UA8 is PARTIAL, not a completed advanced release.
 
 Code-owned `bot/src/native-feature-definitions.json` pins each exact feature string and entire actor template using SHA-256 over JSON serialization (including stats). `native-feature-catalog.js` checks hashes, completeness and unique keys against actual content before returning immutable descriptors. Original content prose is untouched. Source order/index is part of the crosswalk; a content edit requires explicit requalification, not silent regeneration. A model cannot supply descriptors or a handler.
 
 ## Handler crosswalk
 
-UA7 adds `blood_rush_hold_position`: an actual incoming hit marking 2+ HP permits an AI-owned Knight to clear one marked NPC Stress while electing its current position within Very Close. Exact native occurrence, current actor/control/scene/owner/audience, a separate same-call GM decision and native result/mutation proof are required. Other relocation remains reviewed. No PC dice/resources, ordinary spotlight or metacurrency. The following are still **planned**, not dispatchable: pack_pressure, flashbang, feedback, route_around, all_lanes_stop, null_foam, sirens_outside, ownership_bites, upload_countdown, first_forced_movement, first_severe_to_major. All other effect metadata is explicitly unmapped; untyped Catastrophic Echo needs authored timing. No feature is labeled harmless to bypass effect validation.
+UA7 adds `blood_rush_hold_position`: an actual incoming hit marking 2+ HP permits an AI-owned Knight to clear one marked NPC Stress while electing its current position within Very Close. Exact native occurrence, current actor/control/scene/owner/audience, a separate same-call GM decision and native result/mutation proof are required. Other relocation remains reviewed. No PC dice/resources, ordinary spotlight or metacurrency.
+
+UA8's qualified subfamilies add `pack_pressure` and `feedback`. Pack Pressure uses actual native Thrall presence in the target's same zone (conservative Melee subset of Very Close), caps the modifier at +2, and keeps ally identities in GM-only proof rather than owner offers. Historical offers retain their original odds. Feedback uses actual public/party owner-device use, a native Wraith/control/range/source window, and bounded same-call GM policy `feedback_v1`; it marks one NPC Stress before creating an exact owner-private Instinct 12 reaction. Only the actual owner's native failed reaction marks one PC Stress and disables that device. Critical/success/withdrawal grant no Hope/Fear/Stress reward, no PC HP effect, and no extra GM move. Full-PC-Stress overflow is held before activation; reset/repair requires a separately verified native route (not yet implemented). A disabled device cannot receive another functional-use completion merely from a no-roll ruling. No raw device content or private roll is promoted to public fiction/NPC cognition.
+
+Still **planned**, not dispatchable: flashbang, route_around, all_lanes_stop, null_foam, sirens_outside, ownership_bites, upload_countdown, first_forced_movement, first_severe_to_major. Route Around additionally lacks native Signal classification/alliance/powered-destination proof; no tag is inferred from names or portrayal. All other effect metadata is explicitly unmapped; untyped Catastrophic Echo needs authored timing. No feature is labeled harmless to bypass effect validation. Pre-damage interception, on-hit temporary conditions, group/environment adapters and UA17–UA19 remain unqualified.
 
 ## Per-occurrence source crosswalk
 
@@ -20,14 +24,14 @@ All rows are GM-owned content, not public disclosure grants. Source paths and ex
 
 | Native feature key | Type | Status | Planned handler | Feature SHA-256 prefix |
 | --- | --- | --- | --- | --- |
-| `adversary:pale-court-thrall:pack-pressure` | Passive | review_only | pack_pressure | `86d4ebc68823a9e5` |
+| `adversary:pale-court-thrall:pack-pressure` | Passive | supported (bounded native presence) | pack_pressure | `86d4ebc68823a9e5` |
 | `adversary:pale-court-thrall:break-the-hold` | Reaction | review_only | unmapped | `cf7bf4fbdb01e9b3` |
 | `adversary:aster-vale-contractor:professional-entry` | Passive | review_only | unmapped | `f66ba265a8139184` |
 | `adversary:aster-vale-contractor:flashbang` | Action | review_only | flashbang | `8c481c1b7ba6cbc0` |
 | `adversary:aster-vale-occult-analyst:mark-the-variable` | Action | review_only | unmapped | `7a4b6412c0eff2de` |
 | `adversary:aster-vale-occult-analyst:readout` | Reaction | review_only | unmapped | `fa6da860d53ca540` |
 | `adversary:static-wraith:ride-the-current` | Passive | review_only | unmapped | `96a8990dd782bd60` |
-| `adversary:static-wraith:feedback` | Reaction | review_only | feedback | `e9f014629e4accf8` |
+| `adversary:static-wraith:feedback` | Reaction | supported (bounded owner reaction) | feedback | `e9f014629e4accf8` |
 | `adversary:veil-burned-stalker:peripheral` | Passive | review_only | unmapped | `b0989706dfbf8c41` |
 | `adversary:veil-burned-stalker:steal-the-focus` | Action | review_only | unmapped | `a98b2fb874771c97` |
 | `adversary:hexbound-familiar:sympathetic-relay` | Passive | review_only | unmapped | `86c5d334a2f56ea6` |

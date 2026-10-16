@@ -9,7 +9,9 @@ import {indexWorldEvent} from './city-calendar.js';
 import {arbitrationFailure as fail} from './gm-arbitration-contract.js';
 import {EncounterLibrary} from './encounter.js';
 import {isPvpIntent} from './pvp-authority.js';
-import {inspectNativeGmDecision} from './gm-action-capability.js';
+import {inspectNativeGmDecision,nativeReactionTarget} from './gm-action-capability.js';
+import {historicalActionSource} from './action-consent.js';
+import {assertPcCanAct} from './pc-native-eligibility.js';
 
 export const FEATURE_PHASES=Object.freeze(['before_attack','after_hit','before_damage_applied','after_damage','on_pc_action','on_scene_event','spotlight_action']);
 export const MAX_FEATURE_DEPTH=3;
@@ -24,6 +26,18 @@ function actorFacts(db,guild,actor,templateHash,library){
   return {scene,combatant,presence,control_hash:hash([entity,db.getNpcProfile(guild,actor),presence,db.listNpcProxies(scene.session_id)])};
 }
 function sourceProof(db,guild,kind,ref){
+  if(kind==='pc_no_roll'){
+    const receipt=db.getCityRecord(guild,'action_outcome_receipt',ref),accepted=receipt&&db.getCityRecord(guild,'typed_intent',receipt.data.action_id),
+      adjudication=accepted&&db.listCityRecords(guild,{kind:'native_adjudication',includeGM:true,limit:100}).find(r=>r.data.action_id===accepted.record_key&&r.data.receipts?.includes(ref));
+    if(receipt?.status!=='resolved'||receipt.data.outcome!=='resolved_no_roll'||accepted?.status!=='resolved'||accepted.data.outcome_receipt!==ref
+      ||accepted.data.type!=='interact'||accepted.data.operation!=='use_device'||accepted.data.framing!=='immediate'
+      ||receipt.source_event!==accepted.source_event||adjudication?.status!=='resolved'||adjudication.data.rule_basis?.kind==='provisional'
+      ||receipt.data.native_roll_refs.length||receipt.data.state_mutations.length||!['party','public'].includes(receipt.visibility))throw fail('feature_actual_visible_device_use');
+    historicalActionSource(db,guild,accepted.record_key,{resolved:true});
+    const pc=db.getCharacter(accepted.data.actor),device=pc?.data.inventory?.find(i=>i?.id===accepted.data.target_key&&i.category==='electronic_device'&&i.equipped===true);
+    if(!device||device.concealed===true||device.hidden===true)throw fail('feature_owned_visible_electronic_device');
+    return {receipt,accepted,character:pc.id,source:receipt.source_event,phase:'on_pc_action',device,origin_source:accepted.data.world_source_event};
+  }
   if(kind==='incoming_damage'){
     const receipt=validateIncomingDamageApplication(db,guild,ref),attack=incomingAttackEvidence(db,guild,receipt.data.roll.replace(/:roll$/u,''));
     return {receipt,actor:attack.offer.input.npc,character:receipt.subject_key,source:receipt.source_event,phase:'after_damage'};
@@ -39,15 +53,16 @@ function sourceProof(db,guild,kind,ref){
   throw fail('feature_native_source_adapter_missing');
 }
 function predicate(feature,p){
+  if(feature.feature_key==='adversary:static-wraith:feedback')return !!p.device;
   if(feature.feature_key==='adversary:pale-court-knight:blood-rush')return p.phase==='after_damage'&&p.receipt.data.hp_marks>=2;
   if(feature.feature_key==='adversary:aster-vale-catastrophe-analyst:bad-branch')return p.phase==='on_pc_action'
-    &&p.proof.outcome==='success'&&p.request.data.result.duality==='Fear';
+    &&p.proof?.outcome==='success'&&p.request?.data.result.duality==='Fear';
   return false; // No prose/feature-name match or model-supplied trigger boolean.
 }
 function capture(db,guild,kind,ref,{library=new EncounterLibrary('../content')}={}){
   const p=sourceProof(db,guild,kind,ref),scene=currentScene(db,guild),source=db.getWorldEvent(guild,p.source),result=[];
   if(source?.status!=='active'||source.session_id!==scene.session_id||source.scene!==scene.key)throw fail('feature_current_source');
-  if(kind==='pc_action'&&isPvpIntent(db,guild,p.proof.accepted))return result;
+  if((p.proof?.accepted||p.accepted)&&isPvpIntent(db,guild,p.proof?.accepted||p.accepted))return result;
   if(kind==='pc_action'&&!['party','public'].includes(p.receipt.visibility)){
     // A private numeric PC result is not NPC cognition or disclosure authority.
     return result;
@@ -75,6 +90,11 @@ function capture(db,guild,kind,ref,{library=new EncounterLibrary('../content')}=
         target_presence:hash(target),actor_control:a.control_hash,location:a.presence.location_key,depth:0,parent:null,
         audience:{visibility:p.receipt.visibility,subject:p.receipt.subject_key||null},costs:feature.costs,
         authority:'Native occurrence only; no PC action, public disclosure, effect or ordinary spotlight is authorized.'};
+      if(p.device){
+        const range=a.presence.data.zone===target.data.zone?'Melee':target.data.range;
+        if(!['Melee','Very Close','Close'].includes(range)||p.device.disabled_by)continue;
+        Object.assign(data,{device_key:p.device.id,device_hash:hash(p.device),origin_source:p.origin_source});
+      }
       const key=`feature-window:${hash([scene.key,b.actor,ref,feature.feature_key,p.phase])}`,prior=db.getCityRecord(guild,'native_feature_window',key);
       if(prior){if(hash(prior.data)!==hash(data))throw fail('immutable_feature_occurrence_changed');result.push(prior);continue;}
       const event=indexWorldEvent(db,guild,{key:`${key}:source`,kind:'native_feature_trigger',source_id:'native:feature-gate',title:'Native feature trigger occurrence',
@@ -86,6 +106,13 @@ function capture(db,guild,kind,ref,{library=new EncounterLibrary('../content')}=
 }
 export const captureIncomingFeatureWindows=(db,guild,ref,options)=>capture(db,guild,'incoming_damage',ref,options);
 export const captureActionFeatureWindows=(db,guild,ref,options)=>capture(db,guild,'pc_action',ref,options);
+export function captureNoRollFeatureWindows(db,guild,ref){
+  const receipt=db.getCityRecord(guild,'action_outcome_receipt',ref),accepted=receipt&&db.getCityRecord(guild,'typed_intent',receipt.data.action_id);
+  if(accepted?.data.type!=='interact'||accepted.data.operation!=='use_device'||!['party','public'].includes(receipt.visibility))return [];
+  const device=db.getCharacter(accepted.data.actor)?.data.inventory?.find(i=>i?.id===accepted.data.target_key&&i.category==='electronic_device'&&i.equipped===true);
+  if(!device||device.disabled_by||device.concealed===true||device.hidden===true)return [];
+  return capture(db,guild,'pc_no_roll',ref);
+}
 
 export function inspectFeatureWindow(db,guild,key,{library=new EncounterLibrary('../content')}={}){
   const row=db.getCityRecord(guild,'native_feature_window',key),v=row?.data,event=row&&db.getWorldEvent(guild,row.source_event),
@@ -103,8 +130,15 @@ export function inspectFeatureWindow(db,guild,key,{library=new EncounterLibrary(
   return row;
 }
 export function pendingFeatureWindows(db,guild){
-  return db.listCityRecords(guild,{kind:'native_feature_window',includeGM:true,limit:200}).filter(r=>['pending','ready','hold_for_owner'].includes(r.status))
-    .sort((a,b)=>FEATURE_PHASES.indexOf(a.data.phase)-FEATURE_PHASES.indexOf(b.data.phase)||a.data.receipt.localeCompare(b.data.receipt)||a.record_key.localeCompare(b.record_key));
+  const rows=[];
+  // listCityRecords caps every page at 100. Terminal history must not hide a live occurrence.
+  // Read synchronously before any writes; execution remains separately bounded by the native board.
+  for(const status of ['pending','ready','hold_for_owner'])for(let offset=0;;offset+=100){
+    const page=db.listCityRecords(guild,{kind:'native_feature_window',status,includeGM:true,limit:100,offset});
+    rows.push(...page);if(page.length<100)break;
+  }
+  return rows.sort((a,b)=>FEATURE_PHASES.indexOf(a.data.phase)-FEATURE_PHASES.indexOf(b.data.phase)
+    ||String(a.data.receipt).localeCompare(String(b.data.receipt))||a.record_key.localeCompare(b.record_key));
 }
 export function featureWindowChoices(db,guild,scope){
   const result=[];
@@ -118,16 +152,56 @@ export function featureWindowChoices(db,guild,scope){
   return result.slice(0,16); // No private numeric dice/resources/motives in the board projection.
 }
 export function authorizeFeatureChoice(db,guild,origin,entry,p,feature,{library=new EncounterLibrary('../content')}={}){
-  if(feature?.native_handler!=='blood_rush_hold_position'||p.proposal_version!==2||p.disposition!=='native_feature_resolution'
-    ||p.stakes_kind!=='native_feature'||p.difficulty!==null||p.trait!==null||p.experience_ref||p.advantage||p.disadvantage
+  if(!['blood_rush_hold_position','feedback'].includes(feature?.native_handler)||p.proposal_version!==2||p.disposition!=='native_feature_resolution'
+    ||p.stakes_kind!=='native_feature'||p.experience_ref||p.advantage||p.disadvantage
     ||entry.actor.type!=='npc'||entry.operation!=='reaction')throw fail('feature_choice_shape_or_handler');
   const window=inspectFeatureWindow(db,guild,p.trigger_ref,{library}),v=window.data,a=actorFacts(db,guild,entry.actor.key,feature.template_hash,library);
   if(window.status!=='pending'||v.feature!==feature.feature_key||v.actor!==entry.actor.key||v.scene!==origin.binding.scene
     ||entry.target_refs.length!==1||entry.target_refs[0]!==v.target||!featureWindowChoices(db,guild,origin.scope).some(w=>w.trigger_ref===window.record_key)
-    ||a.combatant.stress_current<1)throw fail('feature_current_occurrence_target_audience_or_recovery');
+    )throw fail('feature_current_occurrence_target_audience');
   const cost=featureCostPlan(feature,{timing:'reaction',fear:db.getCampaign(guild).fear,stress:a.combatant.stress_current,stressMax:a.combatant.stress_max});
+  if(feature.native_handler==='feedback'){
+    const pc=db.getCharacter(v.target),device=pc.data.inventory.find(i=>i?.id===v.device_key),target_snapshot=nativeReactionTarget(db,guild,origin,pc,entry.actor.key);
+    assertPcCanAct(pc,db,guild);
+    if(p.trait!=='Instinct'||p.difficulty!==12||hash(device)!==v.device_hash||device.disabled_by
+      ||!Number.isSafeInteger(pc.data.resources.stress.current)||pc.data.resources.stress.current>=pc.data.resources.stress.max)throw fail('feedback_fixed_terms_device_or_stress_capacity');
+    return {operation:'request_feature_reaction_roll',feature:feature.feature_key,feature_hash:hash(feature),window:window.record_key,combatant:a.combatant.id,cost,
+      character:pc.id,owner:pc.owner_user_id,principal:target_snapshot.principal,target_snapshot,resources_hash:hash(pc.data.resources),device_key:v.device_key};
+  }
+  if(p.difficulty!==null||p.trait!==null||a.combatant.stress_current<1)throw fail('blood_rush_recovery_terms');
   return {operation:'commit_adversary_feature',feature:feature.feature_key,feature_hash:hash(feature),window:window.record_key,
     combatant:a.combatant.id,cost,position_choice:'retain_current_position'};
+}
+export function reserveFeatureWindow(db,guild,decisionKey){
+  const {row}=inspectNativeGmDecision(db,guild,decisionKey),n=row.data.native;
+  if(!n?.window||!n.feature)throw fail('native_feature_reservation');
+  const w=inspectFeatureWindow(db,guild,n.window),key=`feature-reservation:${hash(n.window)}`,prior=db.getCityRecord(guild,'native_feature_reservation',key);
+  if(prior){if(prior.data.decision!==decisionKey||prior.source_event!==row.source_event)throw fail('feature_occurrence_already_reserved');return prior;}
+  if(w.status!=='pending')throw fail('feature_occurrence_not_pending');
+  return db.saveCityRecord(guild,{kind:'native_feature_reservation',key,status:'reserved',source_event:row.source_event,visibility:'gm',data:{window:n.window,decision:decisionKey}});
+}
+export function commitFeatureReactionCost(db,guild,decisionKey){
+  return db.transaction(()=>{
+    const {row,entry}=inspectNativeGmDecision(db,guild,decisionKey),n=row.data.native;
+    if(n?.operation!=='request_feature_reaction_roll')throw fail('native_feature_reaction_cost');
+    reserveFeatureWindow(db,guild,decisionKey);
+    const key=`gm-feature-cost:${hash(decisionKey)}`,prior=db.getCityRecord(guild,'gm_action_cost_receipt',key);
+    if(prior){if(prior.source_event!==row.source_event||prior.data.decision!==decisionKey||hash(prior.data.feature_cost)!==hash(n.cost))throw fail('feature_payment_changed');return prior;}
+    const feature=compileNativeFeatures().find(f=>f.feature_key===n.feature),actual=authorizeFeatureChoice(db,guild,{binding:row.data.origin,scope:row.data.scope},entry,row.data.proposal,feature);
+    if(hash(actual)!==hash(n))throw fail('feature_cost_state_changed');
+    const combatant=db.listCombatants(db.getCurrentEncounter(row.data.origin.session).id).find(c=>c.id===n.combatant),before=db.getCampaign(guild).fear;
+    if(n.cost.fear)db.changeFear(guild,-n.cost.fear);
+    const after=db.updateCombatant(combatant.id,{stress_current:combatant.stress_current+n.cost.npc_stress});
+    const data={decision:decisionKey,
+      opportunity:n.window,ordinal:null,amount:n.cost.fear,before,after:db.getCampaign(guild).fear,expenses:n.cost.expenses,feature_cost:n.cost,
+      npc_stress:{combatant:combatant.id,before:combatant.stress_current,after:after.stress_current}};
+    const payment=indexWorldEvent(db,guild,{key:`${key}:payment`,kind:'native_feature_payment',source_id:'native:unified-gm',title:'Native feature costs paid once',
+      session_id:row.data.origin.session,scene:row.data.origin.scene,location_key:row.data.origin.location,visibility:'gm',
+      details:{input_source:row.source_event,payload_hash:hash(data)}},'native:unified-gm');
+    const receipt=db.saveCityRecord(guild,{kind:'gm_action_cost_receipt',key,status:'committed',source_event:row.source_event,visibility:'gm',data:{...data,payment_source:payment.event_key}});
+    const window=db.getCityRecord(guild,'native_feature_window',n.window);db.saveCityRecord(guild,{...window,key:window.record_key,status:'hold_for_owner'});
+    return receipt;
+  });
 }
 export function commitFeatureChoice(db,guild,decisionKey,{library=new EncounterLibrary('../content')}={}){
   return db.transaction(()=>{

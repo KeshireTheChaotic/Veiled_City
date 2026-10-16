@@ -49,29 +49,45 @@ import {indexWorldEvent} from '../src/city-calendar.js';
 import {currentScene,recordScenePresence,scenePresence} from '../src/scene-continuity.js';
 import {projectNativeGmProposal} from '../src/gm-mechanical-v9.js';
 function npc(f,key='attendant',location='terminal'){f.db.upsertNpcProfile(f.guild,{npcKey:key,displayName:'Inez',role:'attendant',publicIdentity:'A local attendant.'});f.db.setSimulationEntity(f.guild,'npc',key,{name:'Inez',location_key:location,visibility:'party'});}
-function incoming(f,{privateScene=true,text,template='Aster Vale Contractor',stress=0}={}){
+function incoming(f,{privateScene=true,text,template='Aster Vale Contractor',stress=0,allies=0}={}){
   const x=setup(f,{privateScene,text}),library=new EncounterLibrary('../content'),scene=currentScene(f.db,f.guild);npc(f,'guard');
   f.db.setCityCalendar(f.guild,{flags:{...f.db.getCityCalendar(f.guild).flags,narrative_encounters:true}});
   f.db.updateCharacterData(x.pc.id,d=>{d.evasion=12;d.thresholds={major:7,severe:14};});
   const source=indexWorldEvent(f.db,f.guild,{key:'af-guard-source',kind:'observation',source_id:'gm',title:'Native guard encounter',session_id:f.session.id,scene:scene.key,location_key:'terminal',visibility:'party'},'gm');
   recordScenePresence(f.db,f.guild,{entity_type:'npc',entity_key:'guard',source_event:source.event_key,location_key:'terminal',zone:'interior',range:'Close',visibility:'party',accepted_by:'gm'},'gm');
-  const encounter=f.db.createEncounter(f.guild,f.session.id,{status:'active',tier:1,pc_count:4,base_bp:14,budget_bp:14,composition:[{name:template,quantity:1}]}),c=f.db.initializeCombatants(encounter.id,buildCombatants(encounter,library))[0];
+  const encounter=f.db.createEncounter(f.guild,f.session.id,{status:'active',tier:1,pc_count:4,base_bp:14,budget_bp:14,composition:[{name:template,quantity:1+allies}]}),combatants=f.db.initializeCombatants(encounter.id,buildCombatants(encounter,library)),c=combatants[0];
   if(stress)f.db.updateCombatant(c.id,{stress_current:stress});
-  f.db.saveCityRecord(f.guild,{kind:'encounter_binding',key:encounter.id,source_event:source.event_key,data:{combatants:[{actor:'guard',id:c.id}]}});
+  const bindings=[{actor:'guard',id:c.id}];
+  for(const [i,ally] of combatants.slice(1).entries()){const actor=`ally-${i}`;npc(f,actor);
+    recordScenePresence(f.db,f.guild,{entity_type:'npc',entity_key:actor,source_event:source.event_key,location_key:'terminal',zone:'interior',range:'Close',visibility:'party'},'gm');
+    bindings.push({actor,id:ally.id});}
+  f.db.saveCityRecord(f.guild,{kind:'encounter_binding',key:encounter.id,source_event:source.event_key,data:{combatants:bindings}});
   f.db.upsertRulesRuling(f.guild,{key:'af-standard',ruling:'Current standard attack; no unreviewed feature or extra spotlight.',createdBy:'gm'});
   const input={npc:'guard',combatant:c.id,character:x.pc.id,source:source.event_key,ruling:'af-standard',defenses:{resistance:'none',armor_reduction:1,armor_allowed:true,source:'base'}};
   const row=prepareIncomingAttack(f.db,f.guild,'gm',input,{gm:true,interactionId:'af-attack',library});reviewIncomingAttack(f.db,f.guild,x.pc.owner_user_id,row.record_key,{library});confirmIncomingDefense(f.db,f.guild,x.pc.owner_user_id,row.record_key);
   return {...x,library,row};
 }
-async function featureScenario(f){
-  const {pendingFeatureWindows}=await import('../src/native-feature-windows.js'),x=incoming(f,{template:'Pale Court Knight',stress:2,text:'I inspect the counter.'});
+async function featureScenario(f,{looking=false,extraNpc=false}={}){
+  const {pendingFeatureWindows}=await import('../src/native-feature-windows.js'),x=incoming(f,{template:'Pale Court Knight',stress:2,text:looking?'Describe the scene.':'I inspect the counter.'});
   rollIncomingAttack(f.db,f.guild,'gm',x.row.record_key,{gm:true,library:x.library,rng:s=>s});resolveIncomingDamage(f.db,f.guild,x.pc.owner_user_id,x.row.record_key,{armor:false,library:x.library});
   const w=pendingFeatureWindows(f.db,f.guild)[0];f.db.setCityCalendar(f.guild,{flags:{...f.db.getCityCalendar(f.guild).flags,gm_discretion:true}});
-  const rows=persistPlayerIntents(f.db,f.guild,[{...candidate(x.text).player_intents[0],type:'search',operation:'inspect'}],x.scope,{messageId:x.messageId}),
-    origin=createArbitrationOrigin(f.db,f.guild,x.scope,x.sourceRef),board=buildSceneIntentBoard(f.db,f.guild,origin,rows,[{actor_key:'guard',operation:'reaction',target_refs:[x.pc.id],objective_ref:'',source_refs:[],dependencies:[]}]);
+  if(extraNpc){npc(f);recordScenePresence(f.db,f.guild,{entity_type:'npc',entity_key:'attendant',source_event:x.row.data.offer.input.source,location_key:'terminal',zone:'interior',range:'Close',visibility:'party'},'gm');}
+  const rows=persistPlayerIntents(f.db,f.guild,[{...candidate(x.text).player_intents[0],type:looking?'other':'search',operation:looking?'describe_scene':'inspect'}],x.scope,{messageId:x.messageId}),
+    origin=createArbitrationOrigin(f.db,f.guild,x.scope,x.sourceRef),board=buildSceneIntentBoard(f.db,f.guild,origin,rows,[{actor_key:'guard',operation:'reaction',target_refs:[x.pc.id],objective_ref:'',source_refs:[],dependencies:[]},
+      ...(extraNpc?[{actor_key:'attendant',operation:'prepare',target_refs:[x.pc.id],objective_ref:'',source_refs:[],dependencies:[]}]:[])]);
   const p={...decision(board.data.entries[1].intent_ref,'native_feature_resolution'),proposal_version:2,trigger_ref:w.record_key,
     rule_basis_refs:['srd:adversary-attacks'],feature_ref:w.data.feature,stakes_kind:'native_feature'};
   return {...x,w,rows,origin,board,p};
+}
+async function feedbackScenario(f,{privateScene=false,proxy=false,stress=0,pcStress=2,category='electronic_device'}={}){
+  const x=incoming(f,{privateScene,template:'Static Wraith',stress,text:'I use my phone.'});
+  f.db.updateCharacterData(x.pc.id,d=>{d.inventory.push({id:'phone',name:'Phone',category,equipped:true});d.resources.stress.current=pcStress;});
+  if(proxy)f.db.upsertNpcProxy(f.guild,f.session.id,{npcName:'guard',userId:f.pcs[1].owner_user_id,status:'active'});
+  f.db.setCityCalendar(f.guild,{flags:{...f.db.getCityCalendar(f.guild).flags,gm_discretion:true,roll_requests:true,roll_collaboration:true}});
+  const r=candidate(x.text);r.player_intents[0]={...r.player_intents[0],type:'interact',operation:'use_device',target_name:'Phone',target_key:'phone',resolution:'auto'};
+  r.unified_arbitration={version:1,npc_intents:[],decisions:[decision('player:0','no_roll')]};
+  const out=await run(f,x,{version:9,acts:[],fiction_delta:[]},r),invites=f.db.listCityRecords(f.guild,{kind:'gm_arbitration_decision',includeGM:true}).filter(d=>d.status==='pending_pc_reaction');
+  return {...x,out,invites};
 }
 
 const cases=[
@@ -291,6 +307,104 @@ const cases=[
 
 ];
 cases.push(
+ ...[{privateScene:true},{proxy:true},{stress:3},{pcStress:6},{category:'ordinary_item'}].map((options,i)=>['UA8',`N${i}`,'Feedback rejects unavailable source controller budget or native effect '+JSON.stringify(options),async f=>{
+   const x=await feedbackScenario(f,options);assert.equal(x.invites.length,0);assert.equal(x.out.ai.requests.length,2);
+   assert.equal(f.db.listCombatants(x.row.data.offer.snapshot.encounter)[0].stress_current,options.stress||0);
+   assert.equal(f.db.getCharacter(x.pc.id).data.resources.stress.current,options.pcStress||2);
+   assert.equal(f.db.getCharacter(x.pc.id).data.resources.hp.current,0);
+   assert.equal(f.db.listCityRecords(f.guild,{kind:'gm_action_cost_receipt',includeGM:true}).length,0);
+   assert(x.out.mutation.unifiedArbitration.some(r=>r.status==='resolved_no_roll'));
+ }]),
+ ['UA8','F2','Feedback Critical succeeds without Hope Fear Stress reward or device shutdown',async f=>{
+   const x=await feedbackScenario(f),r=x.invites[0],terms=inspectGmReactionInvitation(f.db,f.guild,x.pc.owner_user_id,r.record_key).terms,
+     input={op:'gm-reaction-roll',request:r.record_key,revision:terms.revision};
+   submitGmReactionInvitation(f.db,f.guild,x.pc.owner_user_id,input,{interactionId:'feedback-critical',authoredText:JSON.stringify(input),rng:()=>12});
+   const pc=f.db.getCharacter(x.pc.id);assert.equal(pc.data.resources.stress.current,2);assert.equal(pc.data.resources.hope,2);assert.equal(f.db.getCampaign(f.guild).fear,0);
+   assert(!pc.data.inventory.find(i=>i.id==='phone').disabled_by);
+ }],
+ ['UA8','F3','Feedback owner may withhold but another player cannot roll or withdraw that reaction',async f=>{
+   const x=await feedbackScenario(f),r=x.invites[0],terms=inspectGmReactionInvitation(f.db,f.guild,x.pc.owner_user_id,r.record_key).terms,
+     input={op:'gm-reaction-roll',request:r.record_key,revision:terms.revision},options={interactionId:'feedback-wrong-owner',authoredText:JSON.stringify(input),rng:()=>assert.fail('no foreign dice')};
+   assert.throws(()=>submitGmReactionInvitation(f.db,f.guild,f.pcs[1].owner_user_id,input,options));
+   const withdraw={...input,op:'gm-reaction-withdraw'},w={interactionId:'feedback-withheld',authoredText:JSON.stringify(withdraw)};
+   assert.throws(()=>withdrawGmReactionInvitation(f.db,f.guild,f.pcs[1].owner_user_id,withdraw,w));
+   withdrawGmReactionInvitation(f.db,f.guild,x.pc.owner_user_id,withdraw,w);f.restart();withdrawGmReactionInvitation(f.db,f.guild,x.pc.owner_user_id,withdraw,w);
+   assert.equal(inspectGmReactionInvitation(f.db,f.guild,x.pc.owner_user_id,r.record_key).terms.status,'withdrawn');
+   assert.equal(f.db.getCharacter(x.pc.id).data.resources.stress.current,2);assert(!f.db.getCharacter(x.pc.id).data.inventory[0].disabled_by);
+   assert.equal(f.db.listCityRecords(f.guild,{kind:'roll_operation',includeGM:true}).length,0);assert.equal(f.db.listCombatants(x.row.data.offer.snapshot.encounter)[0].stress_current,1);
+ }],
+ ['UA8','F4','retracted Feedback payment proof blocks owner dice and deferred publication without refund or replay',async f=>{
+   const x=await feedbackScenario(f),r=x.invites[0],terms=inspectGmReactionInvitation(f.db,f.guild,x.pc.owner_user_id,r.record_key).terms,
+     cost=f.db.listCityRecords(f.guild,{kind:'gm_action_cost_receipt',includeGM:true})[0],input={op:'gm-reaction-roll',request:r.record_key,revision:terms.revision};
+   f.db.db.prepare("UPDATE world_events SET status='retracted' WHERE guild_id=? AND event_key=?").run(f.guild,cost.data.payment_source);
+   assert.throws(()=>submitGmReactionInvitation(f.db,f.guild,x.pc.owner_user_id,input,{interactionId:'feedback-revoked',authoredText:JSON.stringify(input),rng:()=>assert.fail('no revoked dice')}));
+   const sent=[];await deliverTurnOutbox(f.db,f.guild,x.out.attempt.turn_id,async row=>{sent.push(row);return{messageId:'fake',channelId:'offline'};});
+   assert(!sent.some(row=>row.target_user_id===x.pc.owner_user_id&&row.payload.includes('Pending owner reaction')));
+   assert.equal(f.db.listCombatants(x.row.data.offer.snapshot.encounter)[0].stress_current,1);assert.equal(f.db.getCharacter(x.pc.id).data.resources.stress.current,2);
+ }],
+ ['UA8','F1','visible native device use reaches an owner-only Feedback reaction in the same GM call',async f=>{
+   const x=await feedbackScenario(f),{out,invites}=x;
+   assert.equal(invites.length,1);assert.equal(out.ai.requests.length,2);
+   const pc=f.db.getCharacter(x.pc.id),terms=inspectGmReactionInvitation(f.db,f.guild,pc.owner_user_id,invites[0].record_key).terms;
+   assert.equal(terms.trait,'Instinct');assert.equal(terms.difficulty,12);assert(terms.stakes.includes('Stress'));assert(terms.stakes.includes('device'));
+   assert.equal(f.db.listCombatants(x.row.data.offer.snapshot.encounter)[0].stress_current,1);assert.equal(pc.data.resources.stress.current,2);assert.equal(pc.data.resources.hp.current,0);
+   assert(out.rows.some(row=>row.target_user_id===pc.owner_user_id&&row.payload.includes('Instinct')));
+   let calls=0;const input={op:'gm-reaction-roll',request:invites[0].record_key,revision:terms.revision},options={interactionId:'feedback-owner',authoredText:JSON.stringify(input),rng:()=>[1,2][calls++]};
+   submitGmReactionInvitation(f.db,f.guild,pc.owner_user_id,input,options);assert.equal(calls,2);
+   const after=f.db.getCharacter(pc.id);assert.equal(after.data.resources.stress.current,3);assert.equal(after.data.resources.hope,2);assert.equal(after.data.resources.hp.current,0);
+   assert(after.data.inventory.find(i=>i.id==='phone').disabled_by);assert.equal(f.db.getCampaign(f.guild).fear,0);
+   f.restart();submitGmReactionInvitation(f.db,f.guild,pc.owner_user_id,input,{...options,rng:()=>assert.fail('no repeated reaction dice')});
+   assert.equal(f.db.getCharacter(pc.id).data.resources.stress.current,3);
+ }],
+ ['UA8','F5','a disabled Feedback device cannot acquire another native use completion without reset proof',async f=>{
+   const x=await feedbackScenario(f),invitation=x.invites[0],pc=f.db.getCharacter(x.pc.id),terms=inspectGmReactionInvitation(f.db,f.guild,pc.owner_user_id,invitation.record_key).terms,
+     input={op:'gm-reaction-roll',request:invitation.record_key,revision:terms.revision};let face=0;
+   submitGmReactionInvitation(f.db,f.guild,pc.owner_user_id,input,{interactionId:'feedback-before-reuse',authoredText:JSON.stringify(input),rng:()=>[1,2][face++]});
+   const text='I use my phone again.',messageId='feedback-disabled-use';captureWorldInput(f.db,f.guild,pc.owner_user_id,pc.id,messageId,text);
+   const rows=persistPlayerIntents(f.db,f.guild,[{...candidate(text).player_intents[0],type:'interact',operation:'use_device',target_key:'phone',resolution:'auto'}],x.scope,{messageId}),
+     origin=createArbitrationOrigin(f.db,f.guild,x.scope,worldInputKey(messageId,pc.id)),board=buildSceneIntentBoard(f.db,f.guild,origin,rows,[]),
+     [held]=adjudicateSceneBoard(f.db,f.guild,origin,board,[decision('player:0','no_roll')]);
+   assert.equal(held.status,'needs_rules_review');assert.equal(held.data.native,null);assert.equal(f.db.getCharacter(pc.id).data.resources.stress.current,3);
+   assert.equal(f.db.getCityRecord(f.guild,'typed_intent',rows[0].record_key).status,'accepted_for_adjudication');
+   assert.equal(f.db.listCityRecords(f.guild,{kind:'action_outcome_receipt',includeGM:true}).filter(r=>r.data.action_id===rows[0].record_key).length,0);
+ }],
+ ['UA8','T2','native feature backlog cannot hide an older live window behind the database page cap',async f=>{
+   const x=await featureScenario(f),{featureWindowChoices}=await import('../src/native-feature-windows.js');
+   for(let i=0;i<102;i++)f.db.saveCityRecord(f.guild,{kind:'native_feature_window',key:`untrusted-backlog-${i}`,source_event:x.sourceRef,
+     status:'pending',visibility:'gm',data:{phase:'on_scene_event',receipt:`untrusted-${i}`,audience:{visibility:'gm',subject:null}}});
+   assert(featureWindowChoices(f.db,f.guild,x.scope).some(w=>w.trigger_ref===x.w.record_key));
+ }],
+ ['UA8','T1','feature reaction does not consume the first normal GM spotlight or charge its sibling Fear',async f=>{
+   const x=await featureScenario(f,{looking:true,extraNpc:true}),p={...decision(x.board.data.entries[2].intent_ref,'request_pc_reaction_roll'),
+     rule_basis_refs:['srd:reaction-rolls'],trait:'Instinct',difficulty:12,stakes:'Attempt only.',difficulty_reason:'A local NPC attempt.'},
+     rows=adjudicateSceneBoard(f.db,f.guild,x.origin,x.board,[x.p,p],{library:x.library});
+   assert.equal(rows[0].status,'gm_action_ready');assert.equal(rows[1].status,'pending_pc_reaction');
+   const effects=executeUnifiedGmActions(f.db,f.guild,rows,{library:x.library,rng:()=>assert.fail('no PC dice')});
+   assert.equal(effects[0].kind,'gm_feature_use_receipt');assert.equal(effects[1].kind,'gm_action_cost_receipt');
+   assert.equal(effects[1].data.ordinal,0);assert.equal(effects[1].data.amount,0);assert.equal(f.db.getCampaign(f.guild).fear,0);
+ }],
+ ...[0,1,3].map(allies=>['UA8',`P${allies}`,'Pack Pressure native ally count '+allies+' has bounded modifier and actual Evasion result',f=>{
+   const x=incoming(f,{template:'Pale Court Thrall',allies}),expected=2+Math.min(2,allies);assert.equal(x.row.data.offer.bonus,expected);
+   assert(!JSON.stringify(x.row.data.offer).includes('ally-'));assert(f.db.listCityRecords(f.guild,{kind:'npc_passive_proof',includeGM:true}).every(r=>r.visibility==='gm'));
+   let calls=0;const roll=rollIncomingAttack(f.db,f.guild,'gm',x.row.record_key,{gm:true,library:x.library,rng:()=>[8,1][calls++]});
+   assert.equal(roll.data.total,8+expected);assert.equal(roll.data.hit,allies>=2);assert.equal(calls,allies>=2?2:1);
+   assert.equal(f.db.getCharacter(x.pc.id).data.resources.hp.current,0);
+   if(allies>=2){const effect=resolveIncomingDamage(f.db,f.guild,x.pc.owner_user_id,x.row.record_key,{armor:false,library:x.library});
+     assert.equal(effect.data.hp_marks,1);f.db.setSimulationEntity(f.guild,'npc','ally-0',{location_key:'elsewhere'});
+     assert.equal(validateIncomingDamageApplication(f.db,f.guild,effect.record_key).record_key,effect.record_key);assert.equal(calls,2);}
+ }]),
+ ['UA8','P4','ally movement after native attack offer invalidates passive proof before RNG',f=>{
+   const x=incoming(f,{template:'Pale Court Thrall',allies:2}),before=structuredClone(f.db.getCharacter(x.pc.id).data.resources);
+   assert.equal(x.row.data.offer.bonus,4);f.db.setSimulationEntity(f.guild,'npc','ally-0',{location_key:'elsewhere'});
+   assert.throws(()=>rollIncomingAttack(f.db,f.guild,'gm',x.row.record_key,{gm:true,library:x.library,rng:()=>assert.fail('no stale passive RNG')}));
+   assert.deepEqual(f.db.getCharacter(x.pc.id).data.resources,before);
+ }],
+ ['UA8','P5','missing GM-internal passive proof cannot authorize a bonus roll or PC effect',f=>{
+   const x=incoming(f,{template:'Pale Court Thrall',allies:2}),proof=f.db.listCityRecords(f.guild,{kind:'npc_passive_proof',includeGM:true})[0];
+   f.db.saveCityRecord(f.guild,{...proof,key:proof.record_key,status:'held'});
+   assert.throws(()=>rollIncomingAttack(f.db,f.guild,'gm',x.row.record_key,{gm:true,library:x.library,rng:()=>assert.fail('no uncertified bonus RNG')}));
+   assert.equal(f.db.getCharacter(x.pc.id).data.resources.hp.current,0);assert.equal(f.db.getCampaign(f.guild).fear,0);
+ }],
  ['UA7','06','forged trigger holds only that feature and preserves an independent native PC disposition',async f=>{
    const x=await featureScenario(f),[held,safe]=adjudicateSceneBoard(f.db,f.guild,x.origin,x.board,[{...x.p,trigger_ref:'model:forged'},decision('player:0','no_roll')],{library:x.library});
    assert.equal(held.status,'needs_rules_review');assert.equal(safe.status,'resolved_no_roll');
@@ -457,7 +571,7 @@ cases.push(
    assert.equal(new Set(rows.filter(r=>r.actor_kind==='environment').map(r=>r.actor_name)).size,16);
    for(const r of rows){assert.match(r.source_hash,/^[a-f0-9]{64}$/);assert.match(r.template_hash,/^[a-f0-9]{64}$/);
      assert(Object.isFrozen(r));assert.equal(featureDisposition(r.feature_key).status,r.native_handler?'supported':'needs_rules_review');}
-   assert.deepEqual(rows.filter(r=>r.native_handler).map(r=>r.feature_key),['adversary:pale-court-knight:blood-rush']);
+   assert.deepEqual(rows.filter(r=>r.native_handler).map(r=>r.feature_key),['adversary:pale-court-thrall:pack-pressure','adversary:static-wraith:feedback','adversary:pale-court-knight:blood-rush']);
  }],
  ['UA6','02','typed representative descriptors distinguish action reaction passive and defense',async()=>{
    const {compileNativeFeatures}=await import('../src/native-feature-catalog.js'),rows=compileNativeFeatures(),get=(actor,name)=>rows.find(r=>r.actor_name===actor&&r.name===name);
@@ -482,7 +596,7 @@ cases.push(
  }],
  ['UA6','04','registered unmapped and unregistered feature proposals remain private holds with no costs or dice',async f=>{
    const {compileNativeFeatures}=await import('../src/native-feature-catalog.js');
-   const feature=compileNativeFeatures().find(r=>r.actor_name==='Static Wraith'&&r.name==='Feedback');
+   const feature=compileNativeFeatures().find(r=>r.actor_name==='Aster Vale Contractor'&&r.name==='Flashbang');
    const x=boardFixture(f),board=buildSceneIntentBoard(f.db,f.guild,x.origin,x.rows,[{...x.proposal,operation:'feature'},{...x.proposal,operation:'reaction'}]);
    const before=structuredClone(f.db.getCharacter(x.pc.id).data.resources),fear=f.db.getCampaign(f.guild).fear;
    const rows=adjudicateSceneBoard(f.db,f.guild,x.origin,board,board.data.entries.filter(e=>e.actor.type==='npc').map((e,i)=>

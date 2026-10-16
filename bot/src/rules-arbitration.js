@@ -7,6 +7,9 @@ import { currentScene } from "./scene-continuity.js";
 import { resolveRuleReferences } from "./rule-reference-catalog.js";
 import { isPvpIntent } from "./pvp-authority.js";
 import {overlapsOwnerActionTerminal} from "./owner-action-terminal.js";
+import {captureNoRollFeatureWindows} from './native-feature-windows.js';
+import {nativeDeviceUseIssue} from './native-feature-effects.js';
+import {arbitrationFailure} from './gm-arbitration-contract.js';
 
 const modes=new Set(["no_roll","roll_required","native_resolved","human_exception","blocked"]);
 const hash=value=>createHash("sha256").update(JSON.stringify(value)).digest("hex").slice(0,40);
@@ -62,6 +65,8 @@ export function adjudicateAcceptedIntent(db,guild,input,actor,context={}){
     throw new Error("Accepted action source, actor or scene is stale.");
   if(!["no_roll","roll_required"].includes(input.mode)||typeof input.explanation!=="string"||!input.explanation.trim())
     throw new Error("Native adjudication needs a supported disposition and explanation.");
+  const deviceIssue=nativeDeviceUseIssue(db.getCharacter(principal.character_id),accepted);
+  if(deviceIssue)throw arbitrationFailure(deviceIssue);
   const rule_basis=selectRuleBasis(db,guild,input),actionId=accepted.record_key,key=replayKey;
   if(input.mode==="no_roll"){
     if(input.risk!=="none"||input.stakes!=="none"||rule_basis.kind==="provisional")
@@ -80,6 +85,7 @@ export function adjudicateAcceptedIntent(db,guild,input,actor,context={}){
       receipts:[receipt.record_key],explanation:input.explanation,expected_revisions:{scene:scene.key}};
     db.saveCityRecord(guild,{kind:"native_adjudication",key,status:"resolved",source_event:source.event_key,
       visibility:accepted.visibility,subject_key:accepted.subject_key,data});
+    captureNoRollFeatureWindows(db,guild,receipt.record_key);
     return data;
   }
   if(rule_basis.kind==="provisional")throw new Error("Unsupported risky adjudication needs a saved or sourced provisional human ruling.");

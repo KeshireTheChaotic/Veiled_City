@@ -11,13 +11,14 @@ import {assertPcAttackable} from "./pc-native-eligibility.js";
 import {assertFearIncomingExecution} from "./pvp-fear-moves.js";
 import {inspectNativeGmDecision,commitGmActionCost} from './gm-action-capability.js';
 import {captureIncomingFeatureWindows} from './native-feature-windows.js';
+import {nativeAttackPassives} from './native-feature-passives.js';
 
 const hash=v=>createHash("sha256").update(JSON.stringify(v)).digest("hex");
 const AUTONOMOUS_FEAR_ATTACK=Symbol("native-autonomous-fear-attack");
 const NATIVE_AI_ATTACK=Symbol('native-ai-gm-attack'),INSPECT_ONLY=Symbol('read-only-native-attack');
 function fail(message){throw Object.assign(new Error(message),{code:"PC_EFFECT_AUTHORITY",expected:true});}
 function gmOnly(user,options){if(!options.gm||!user)fail("Authenticated GM native attack required.");}
-function facts(db,guild,input,library,authority=null){
+function facts(db,guild,input,library,authority=null,existingOffer=null){
   assertNonPvpCombatant(db,guild,{actor_key:input.npc});
   const scene=currentScene(db,guild),pc=db.getCharacter(input.character),encounter=db.getCurrentEncounter(scene.session_id);
   const c=encounter&&db.listCombatants(encounter.id).find(c=>c.id===input.combatant),binding=encounter&&db.getCityRecord(guild,"encounter_binding",encounter.id);
@@ -58,7 +59,13 @@ function facts(db,guild,input,library,authority=null){
   const snapshot={scene:scene.key,session:scene.session_id,pc:hash(pc.data),owner:pc.owner_user_id,
     principal:conversationPrincipal(db,guild,pc.owner_user_id,pc.id).revision,encounter:encounter.id,combatant:hash(c),binding:hash(binding),
     npc:hash(npc),target:hash(target),source:hash(source),ruling:hash(ruling),template:hash(template)};
-  return {pc,snapshot,damage:standard[3],damage_type:standard[4],bonus:Number(template.attack),evasion,major,severe,defenses};
+  // Saved pre-feature offers retain their original native input; do not retroactively alter odds.
+  const passiveDetails=existingOffer&&!Object.hasOwn(existingOffer,'passives')?[]:
+    nativeAttackPassives(db,guild,{npc:input.npc,combatant:c,character:pc.id,encounter,binding,template,library});
+  const passives=passiveDetails.map(p=>({proof_ref:`npc-passive:${hash([guild,input.source,input.npc,pc.id,p])}`,modifier:p.modifier,fingerprint:hash(p)}));
+  if(passives.length)snapshot.passives=hash(passives);
+  return {pc,snapshot,damage:standard[3],damage_type:standard[4],bonus:Number(template.attack)+passives.reduce((sum,p)=>sum+p.modifier,0),evasion,major,severe,defenses,
+    ...(passives.length?{passives,passive_details:passiveDetails,base_bonus:Number(template.attack)}:{})};
 }
 /** Legality inspection alone grants no execution, ruling, encounter activation or dice. */
 export function inspectIncomingCandidate(db,guild,input,{library}={}){return facts(db,guild,input,library,INSPECT_ONLY);}
@@ -73,7 +80,8 @@ function context(db,guild,key,library,{applied=false}={}){
   const row=db.getCityRecord(guild,"pc_incoming_attack",key),source=row&&db.getWorldEvent(guild,row.source_event);
   if(row?.data.version!==1||row.visibility!=="character"||source?.status!=="active"||source.kind!=="native_npc_attack_offer"
     ||hash(source.details)!==hash(row.data.offer)||!incomingSourceAuthority(db,guild,source,row.data.offer))fail("Exact native incoming attack source required.");
-  const actual=facts(db,guild,row.data.offer.input,library);
+  const actual=facts(db,guild,row.data.offer.input,library,null,row.data.offer);
+  passiveProof(db,guild,row);
   if(actual.pc.owner_user_id!==row.data.offer.snapshot.owner||actual.snapshot.principal!==row.data.offer.snapshot.principal)
     fail("Incoming attack owner/principal changed; native review required.");
   if(!applied&&hash(actual.snapshot)!==hash(row.data.offer.snapshot))fail("Native attack source/scene/target compare-and-set is stale.");
@@ -87,12 +95,15 @@ export function prepareIncomingAttack(db,guild,user,input,options={}){
   if(!options.interactionId||!input||Object.keys(input).some(k=>!["npc","combatant","character","source","ruling","defenses"].includes(k)))fail("Closed native attack offer required.");
   if(input.ruling?.startsWith('ai-decision:')&&options.gm!==NATIVE_AI_ATTACK)fail('Only the native AI-GM adapter may bind this decision.');
   const actual=facts(db,guild,input,options.library),offer={version:1,gm:user,input,snapshot:actual.snapshot,
-    damage:actual.damage,damage_type:actual.damage_type,bonus:actual.bonus,evasion:actual.evasion,major:actual.major,severe:actual.severe};
+    damage:actual.damage,damage_type:actual.damage_type,bonus:actual.bonus,evasion:actual.evasion,major:actual.major,severe:actual.severe,
+    ...(actual.passives?{passives:actual.passives,base_bonus:actual.base_bonus}:{})};
   return db.transaction(()=>{
     const key=`npc-incoming:${hash([guild,input.source,input.npc,input.combatant,input.character])}`,prior=db.getCityRecord(guild,"pc_incoming_attack",key);
     if(prior){if(hash(prior.data.offer)!==hash(offer))fail("Native attack offer identity reused.");return prior;}
     const source=indexWorldEvent(db,guild,{key:`${key}:source`,kind:"native_npc_attack_offer",title:"Native standard attack awaiting defense review",
       source_id:options.gm===NATIVE_AI_ATTACK?'native:unified-gm':`gm:${user}`,session_id:actual.snapshot.session,scene:actual.snapshot.scene,visibility:"character",subject_key:actual.pc.id,details:offer},user);
+    for(const [i,proof] of (actual.passive_details||[]).entries())db.saveCityRecord(guild,{kind:'npc_passive_proof',key:actual.passives[i].proof_ref,
+      status:'verified',source_event:source.event_key,visibility:'gm',data:{attack:key,proof}});
     return db.saveCityRecord(guild,{kind:"pc_incoming_attack",key,status:"awaiting_defense",source_event:source.event_key,
       visibility:"character",subject_key:actual.pc.id,data:{version:1,offer}});
   });
@@ -172,11 +183,24 @@ export function rollAutonomousFearIncomingAttack(db,guild,key,{library,rng}={}){
   return rollIncomingAttack(db,guild,"autonomous_pvp_fear",key,{gm:AUTONOMOUS_FEAR_ATTACK,library,rng});
 }
 function verifyRoll(db,guild,row){
+  passiveProof(db,guild,row);
   const r=db.getCityRecord(guild,"npc_attack_roll_receipt",row.data.roll),roll=r&&db.getSavedRoll(guild,r.data.roll),{roll:ignored,...payload}=r?.data||{};
   if(r?.status!=="resolved"||r.source_event!==row.source_event||r.subject_key!==row.subject_key
     ||roll?.roll_type!=="npc_incoming_standard"||roll.character_id!==row.subject_key||roll.session_id!==row.data.offer.snapshot.session
     ||hash(roll.payload)!==hash(payload)||payload.offer_hash!==hash(row.data.offer)||payload.attack!==row.record_key)fail("Saved native attack/damage roll ancestry required.");
   return r;
+}
+function passiveProof(db,guild,row){
+  const o=row.data.offer;if(!o.passives)return;
+  if(!Number.isSafeInteger(o.base_bonus)||!Array.isArray(o.passives)||o.passives.length>8||o.bonus!==o.base_bonus+o.passives.reduce((n,p)=>n+p.modifier,0))
+    fail('Native passive bonus arithmetic required.');
+  for(const p of o.passives){
+    const record=db.getCityRecord(guild,'npc_passive_proof',p.proof_ref),v=record?.data.proof;
+    if(record?.status!=='verified'||record.visibility!=='gm'||record.source_event!==row.source_event||record.data.attack!==row.record_key
+      ||hash(v)!==p.fingerprint||v.modifier!==p.modifier||v.actor!==o.input.npc||v.target!==o.input.character
+      ||v.template_hash!==o.snapshot.template||p.proof_ref!==`npc-passive:${hash([guild,o.input.source,o.input.npc,o.input.character,v])}`)
+      fail('Exact GM-internal native passive proof required.');
+  }
 }
 /** Read-only current source + immutable GM roll ancestry, usable by receipt-only output adapters. */
 export function incomingRollProjection(db,guild,key){

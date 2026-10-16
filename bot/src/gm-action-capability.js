@@ -50,7 +50,7 @@ export function inspectNativeGmDecision(db,guild,key){
     const accepted=db.getCityRecord(guild,'typed_intent',entry.intent_ref);
     (accepted?.status==='resolved'?historicalActionSource:consentAction)(db,guild,entry.intent_ref,{resolved:true});
   }
-  if(d.native?.operation==='request_pc_reaction_roll'&&hash(nativeReactionTarget(db,guild,{...d.origin,scope:d.scope},db.getCharacter(d.native.character),entry.actor.key))!==hash(d.native.target_snapshot))
+  if(['request_pc_reaction_roll','request_feature_reaction_roll'].includes(d.native?.operation)&&hash(nativeReactionTarget(db,guild,{...d.origin,scope:d.scope},db.getCharacter(d.native.character),entry.actor.key))!==hash(d.native.target_snapshot))
     throw fail('reaction_target_snapshot_changed');
   return {row,entry,board};
 }
@@ -81,7 +81,8 @@ export function commitGmActionCost(db,guild,decisionKey){
   const {row,entry,board}=inspectNativeGmDecision(db,guild,decisionKey),n=row.data.native,opportunity=nativeGmOpportunity(db,guild,board);
   if(!['commit_adversary_attack','commit_exceptional_adversary_action','request_pc_reaction_roll'].includes(n?.operation)||hash(n.opportunity)!==hash(opportunity))throw fail('exact_spotlight_opportunity');
   const selected=new Set(db.listCityRecords(guild,{kind:'gm_arbitration_decision',includeGM:true,limit:200})
-    .filter(r=>['gm_action_ready','pending_pc_reaction'].includes(r.status)&&r.data.board===board.record_key).map(r=>r.data.entry));
+    .filter(r=>['gm_action_ready','pending_pc_reaction'].includes(r.status)&&r.data.board===board.record_key
+      &&['commit_adversary_attack','commit_exceptional_adversary_action','request_pc_reaction_roll'].includes(r.data.native?.operation)).map(r=>r.data.entry));
   const order=board.data.entries.filter(e=>selected.has(e.intent_ref)&&e.actor.type==='npc'),ordinal=order.findIndex(e=>e.intent_ref===entry.intent_ref);
   if(ordinal<0)throw fail('attack_spotlight_slot');
   const spotlight=ordinal===0?0:1,experience=n.experience?1:0;
