@@ -327,13 +327,13 @@
       "template_hash": "8d96b1f9606e8910602b63021d03b23d7e564daf015b062db86ffa66d4e7e364",
       "index": 0,
       "type": "Passive",
-      "status": "review_only",
-      "trigger_kind": "unmapped",
-      "target_policy": "unmapped",
-      "roll_protocol": "unmapped",
-      "costs": null,
-      "native_handler": null,
-      "reason": "No qualified native feature handler."
+      "status": "supported",
+      "trigger_kind": "before_pc_attack",
+      "target_policy": "other_active_allied_signal_in_proved_same_zone",
+      "roll_protocol": "none",
+      "costs": [],
+      "native_handler": "local_mesh_allied_zone",
+      "reason": "HR03 v2 bounded native alliance and same-zone Melee subset of Close; nonstacking defense Difficulty only. Unproved cross-zone range remains held."
     },
     {
       "feature_key": "adversary:choir-relay:route-around",

@@ -5,7 +5,7 @@ import {sceneFictionHash as hash} from './scene-fiction-context.js';
 import {arbitrationFailure as fail} from './gm-arbitration-contract.js';
 const freeze=v=>{if(v&&typeof v==='object'){Object.values(v).forEach(freeze);Object.freeze(v);}return v;};
 const data=freeze(JSON.parse(fs.readFileSync(new URL('./native-house-errata.json',import.meta.url),'utf8')));
-const handlers=Object.freeze({many_deaths_fear_opportunity:Object.freeze([1])});
+const handlers=Object.freeze({many_deaths_fear_opportunity:Object.freeze([1]),local_mesh_allied_zone:Object.freeze([2])});
 export function compileNativeHouseErrata(){
   const features=compileNativeFeatures(),signal=fs.readFileSync(new URL('../../content/CARDS/DOMAINS/SIGNAL.md',import.meta.url),'utf8').replace(/\r\n/g,'\n');
   if(data.version!==1||data.authority!=='owner:ua7-ua11-conflict-resolution:v1'||new Set(data.entries.map(e=>`${e.id}:${e.version}`)).size!==data.entries.length)

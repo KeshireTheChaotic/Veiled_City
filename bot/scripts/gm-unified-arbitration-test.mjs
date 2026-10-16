@@ -49,17 +49,17 @@ import {indexWorldEvent} from '../src/city-calendar.js';
 import {currentScene,recordScenePresence,scenePresence} from '../src/scene-continuity.js';
 import {projectNativeGmProposal} from '../src/gm-mechanical-v9.js';
 function npc(f,key='attendant',location='terminal'){f.db.upsertNpcProfile(f.guild,{npcKey:key,displayName:'Inez',role:'attendant',publicIdentity:'A local attendant.'});f.db.setSimulationEntity(f.guild,'npc',key,{name:'Inez',location_key:location,visibility:'party'});}
-function incoming(f,{privateScene=true,text,template='Aster Vale Contractor',stress=0,allies=0,hpMarked=null,npcHp=null}={}){
+function incoming(f,{privateScene=true,text,template='Aster Vale Contractor',stress=0,allies=0,hpMarked=null,npcHp=null,otherTemplates=[]}={}){
   const x=setup(f,{privateScene,text}),library=new EncounterLibrary('../content'),scene=currentScene(f.db,f.guild);npc(f,'guard');
   f.db.setCityCalendar(f.guild,{flags:{...f.db.getCityCalendar(f.guild).flags,narrative_encounters:true}});
   f.db.updateCharacterData(x.pc.id,d=>{d.evasion=12;d.thresholds={major:7,severe:14};if(hpMarked!==null)d.resources.hp.current=hpMarked;});
   const source=indexWorldEvent(f.db,f.guild,{key:'af-guard-source',kind:'observation',source_id:'gm',title:'Native guard encounter',session_id:f.session.id,scene:scene.key,location_key:'terminal',visibility:'party'},'gm');
   recordScenePresence(f.db,f.guild,{entity_type:'npc',entity_key:'guard',source_event:source.event_key,location_key:'terminal',zone:'interior',range:'Close',visibility:'party',accepted_by:'gm'},'gm');
-  const encounter=f.db.createEncounter(f.guild,f.session.id,{status:'active',tier:1,pc_count:4,base_bp:14,budget_bp:14,composition:[{name:template,quantity:1+allies}]}),combatants=f.db.initializeCombatants(encounter.id,buildCombatants(encounter,library)),c=combatants[0];
+  const encounter=f.db.createEncounter(f.guild,f.session.id,{status:'active',tier:1,pc_count:4,base_bp:14,budget_bp:14,composition:[{name:template,quantity:1+allies},...otherTemplates.map(name=>({name,quantity:1}))]}),combatants=f.db.initializeCombatants(encounter.id,buildCombatants(encounter,library)),c=combatants.find(c=>c.base_name===template);
   if(stress)f.db.updateCombatant(c.id,{stress_current:stress});
   if(npcHp!==null)f.db.updateCombatant(c.id,{hp_current:npcHp});
   const bindings=[{actor:'guard',id:c.id}];
-  for(const [i,ally] of combatants.slice(1).entries()){const actor=`ally-${i}`;npc(f,actor);
+  for(const [i,ally] of combatants.filter(a=>a.id!==c.id).entries()){const actor=`ally-${i}`;npc(f,actor);
     recordScenePresence(f.db,f.guild,{entity_type:'npc',entity_key:actor,source_event:source.event_key,location_key:'terminal',zone:'interior',range:'Close',visibility:'party'},'gm');
     bindings.push({actor,id:ally.id});}
   f.db.saveCityRecord(f.guild,{kind:'encounter_binding',key:encounter.id,source_event:source.event_key,data:{combatants:bindings}});
@@ -90,8 +90,8 @@ async function feedbackScenario(f,{privateScene=false,proxy=false,stress=0,pcStr
   const out=await run(f,x,{version:9,acts:[],fiction_delta:[]},r),invites=f.db.listCityRecords(f.guild,{kind:'gm_arbitration_decision',includeGM:true}).filter(d=>d.status==='pending_pc_reaction');
   return {...x,out,invites};
 }
-function strikeAdversary(f,x,serial,{damage=100,critical=false}={}){
-  const target=f.db.listCombatants(f.db.getCurrentEncounter(f.session.id).id)[0];
+function strikeAdversary(f,x,serial,{damage=100,critical=false,targetId=null,beforeRoll=()=>{},rollRng=null}={}){
+  const targets=f.db.listCombatants(f.db.getCurrentEncounter(f.session.id).id),target=targetId?targets.find(c=>c.id===targetId):targets[0];
   f.db.setCityCalendar(f.guild,{flags:{...f.db.getCityCalendar(f.guild).flags,roll_requests:true,roll_collaboration:true}});
   f.db.updateCharacterData(x.pc.id,d=>{if(!d.inventory.some(i=>i.name==='Fixture blade'))d.inventory.push({name:'Fixture blade',equipped:true});});
   const accepted=f.accepted(0,'I strike the guard.',null,{type:'interact',operation:'attack',target:{kind:'npc',key:'guard',phrase:'guard',grounding:'known'}});
@@ -100,10 +100,24 @@ function strikeAdversary(f,x,serial,{damage=100,critical=false}={}){
     data:{trait:'Finesse',active:true,weapon:'Fixture blade',damage:'1d100',damage_type:'physical',target_id:target.id}},'gm'),
     request=prepareRollRequest(f.db,f.guild,{source_event:accepted.source_event,accepted_intent:accepted.record_key,character_id:x.pc.id,trait:'Finesse',kind:'attack',
       attack_source:proof.event_key,modifier_keys:[],difficulty_source:'',adjudication:'Exact actual native fixture attack.'},'gm',{scope:x.scope});
-  let faces=0;const rolled=contributeRoll(f.db,f.guild,x.pc.owner_user_id,{op:'roll',key:`strike-${serial}`,request:request.record_key,expected_revision:rollRevision(request)},
-    {rng:()=>[12,critical?12:11][faces++]});
+  beforeRoll({request});let faces=0;const rolled=contributeRoll(f.db,f.guild,x.pc.owner_user_id,{op:'roll',key:`strike-${serial}`,request:request.record_key,expected_revision:rollRevision(request)},
+    {rng:rollRng||(()=>[12,critical?12:11][faces++])});
   const input={op:'damage',key:`damage-${serial}`,request:request.record_key,expected_revision:rollRevision(rolled)};
   const resolved=contributeRoll(f.db,f.guild,x.pc.owner_user_id,input,{rng:()=>damage});return {target,request:resolved,input};
+}
+function meshScenario(f,{template='Static Wraith',relays=1,establish=true}={}){
+  const x=incoming(f,{privateScene:false,template,otherTemplates:Array.from({length:relays},()=> 'Choir Relay')});
+  f.db.setCityCalendar(f.guild,{flags:{...f.db.getCityCalendar(f.guild).flags,gm_discretion:true}});
+  const encounter=f.db.getCurrentEncounter(f.session.id),binding=f.db.getCityRecord(f.guild,'encounter_binding',encounter.id),
+    actors=binding.data.combatants,origin=createArbitrationOrigin(f.db,f.guild,x.scope,x.sourceRef),target=actors.find(a=>a.actor==='guard');
+  if(establish){
+    const proposals=actors.filter(a=>a.actor!=='guard').map(a=>({actor_key:a.actor,operation:'set_allies',target_refs:['guard'],objective_ref:'',source_refs:[],dependencies:[]})),
+      board=buildSceneIntentBoard(f.db,f.guild,origin,[],proposals),decisions=adjudicateSceneBoard(f.db,f.guild,origin,board,board.data.entries.map(e=>({...decision(e.intent_ref,'npc_no_roll'),rule_basis_refs:['srd:gm-moves']})),{library:x.library});
+    assert(decisions.every(r=>r.status==='gm_action_ready'),decisions.map(r=>r.data.reason).join(';'));
+    const effects=executeUnifiedGmActions(f.db,f.guild,decisions,{library:x.library,rng:()=>assert.fail('alliance is not a die roll')});
+    assert(effects.every(r=>r.kind==='native_npc_alliance_receipt'));x.allianceDecisions=decisions;x.allianceEffects=effects;
+  }
+  return {...x,encounter,binding,target,actors};
 }
 function packFearAttack(f,{looking=false,hopeFailure=false,hp=4,miss=false,armor=false,pcStress=2,signalTouched=false,template='Wraith Pack',beforeDice=()=>{},beforeDamage=()=>{}}={}){
   const x=incoming(f,{privateScene:false,template,text:looking?'Describe the scene.':'I inspect the counter.'});
@@ -134,6 +148,88 @@ function packFearAttack(f,{looking=false,hopeFailure=false,hp=4,miss=false,armor
 }
 
 const cases=[
+ ['HR03','meshClear','ending an NPC alliance recalculates later attacks but never rewrites saved earlier dice',async f=>{
+   const x=meshScenario(f),first=strikeAdversary(f,x,'before-ending',{damage:1,targetId:x.target.id}),ally=x.actors.find(a=>a.actor!=='guard'),
+     source=worldInputKey('mesh-end',x.pc.id);
+   captureWorldInput(f.db,f.guild,x.pc.owner_user_id,x.pc.id,'mesh-end','Describe the scene.');
+   const origin=createArbitrationOrigin(f.db,f.guild,x.scope,source),board=buildSceneIntentBoard(f.db,f.guild,origin,[],[
+     {actor_key:ally.actor,operation:'clear_allies',target_refs:['guard'],objective_ref:'',source_refs:[],dependencies:[]}]),
+     decisions=adjudicateSceneBoard(f.db,f.guild,origin,board,[{...decision(board.data.entries[0].intent_ref,'npc_no_roll'),rule_basis_refs:['srd:gm-moves']}],{library:x.library});
+   assert.equal(decisions[0].status,'gm_action_ready');
+   const [ended]=executeUnifiedGmActions(f.db,f.guild,decisions,{rng:()=>assert.fail('no alliance dice')});assert.equal(ended.data.plan.state,'ended');
+   const second=strikeAdversary(f,x,'after-ending',{damage:1,targetId:x.target.id}),{typedRollProof}=await import('../src/typed-roll-proof.js');
+   assert.equal(second.request.data.breakdown.attack.difficulty,second.target.difficulty);
+   assert.equal(first.request.data.breakdown.attack.difficulty,first.target.difficulty+1);
+   assert.equal(typedRollProof(f.db,f.guild,first.request).outcome,'success');
+   assert.equal(f.db.listCityRecords(f.guild,{kind:'native_npc_alliance_receipt',includeGM:true}).length,2);
+ }],
+ ['HR03','meshCombined','same combined GM and writer calls commit one private alliance without new provider roundtrip',async f=>{
+   const x=meshScenario(f,{establish:false}),ally=x.actors.find(a=>a.actor!=='guard'),r=candidate(x.text),ref=`npc-intent:${hash([x.sourceRef,ally.actor,'set_allies'])}`;
+   r.unified_arbitration={version:1,npc_intents:[{actor_key:ally.actor,operation:'set_allies',target_refs:['guard'],objective_ref:'',source_refs:[],dependencies:[]}],
+     decisions:[{...decision(ref,'npc_no_roll'),rule_basis_refs:['srd:gm-moves']}]};
+   const out=await run(f,x,{version:9,acts:[],fiction_delta:[]},r),receipts=f.db.listCityRecords(f.guild,{kind:'native_npc_alliance_receipt',includeGM:true});
+   assert.equal(out.ai.requests.length,2);assert.equal(receipts.length,1);assert.equal(receipts[0].visibility,'gm');
+   assert(!out.rows.some(row=>row.payload.includes('npc-alliance')||row.payload.includes('ally-0')));
+   assert.equal(f.db.listNpcKnowledge(f.guild,ally.actor).length,0);assert.equal(f.db.getCampaign(f.guild).fear,0);
+ }],
+ ['HR03','meshAuthority','GM alliance creation rejects PC participation human proxy and forged principal while independent fiction remains valid',async f=>{
+   const x=meshScenario(f,{establish:false}),ally=x.actors.find(a=>a.actor!=='guard'),origin=createArbitrationOrigin(f.db,f.guild,x.scope,x.sourceRef),
+     board=buildSceneIntentBoard(f.db,f.guild,origin,[],[{actor_key:ally.actor,operation:'set_allies',target_refs:[x.pc.id],objective_ref:'',source_refs:[],dependencies:[]}]),
+     [held]=adjudicateSceneBoard(f.db,f.guild,origin,board,[{...decision(board.data.entries[0].intent_ref,'npc_no_roll'),rule_basis_refs:['srd:gm-moves']}],{library:x.library}),
+     {commitNativeNpcAlliance}=await import('../src/native-encounter-relations.js');
+   assert.equal(held.status,'needs_rules_review');assert.equal(held.data.native,null);
+   assert.throws(()=>commitNativeNpcAlliance(f.db,f.guild,held.record_key),/alliance_native_decision/);
+   assert.throws(()=>buildSceneIntentBoard(f.db,f.guild,{gm:true,actor:'ai_gm'},[],[]),/native_origin/);
+   f.db.upsertNpcProxy(f.guild,f.session.id,{npcName:ally.actor,userId:f.pcs[1].owner_user_id,status:'active'});
+   assert.throws(()=>buildSceneIntentBoard(f.db,f.guild,origin,[],[{actor_key:ally.actor,operation:'set_allies',target_refs:['guard'],objective_ref:'',source_refs:[],dependencies:[]}]),/origin_source_owner_scene_or_control_changed/);
+   assert.equal(f.db.listCityRecords(f.guild,{kind:'native_npc_alliance_receipt',includeGM:true}).length,0);
+   assert.deepEqual(f.db.getCharacter(x.pc.id).data.resources.hope,2);
+ }],
+ ['HR03','mesh1','Local Mesh changes only native PC attack defense Difficulty with independently authored alliance',f=>{
+   const x=meshScenario(f),result=strikeAdversary(f,x,'mesh',{damage:1,targetId:x.target.id});
+   assert.equal(result.request.data.breakdown.attack.difficulty,result.target.difficulty+1);
+   assert(result.request.data.breakdown.attack.defense_aura);assert(!JSON.stringify(result.request.data.breakdown.attack).includes('ally-0'));
+   assert.equal(x.row.data.offer.bonus,Number(x.library.findAdversary('Static Wraith').attack));
+   f.restart();
+   assert.equal(f.db.getCityRecord(f.guild,'roll_request',result.request.record_key).data.breakdown.attack.difficulty,result.target.difficulty+1);
+ }],
+ ['HR03','mesh2','two allied Relays do not stack defense and share one Signal classification gate',f=>{
+   const x=meshScenario(f,{relays:2}),result=strikeAdversary(f,x,'mesh2',{damage:1,targetId:x.target.id});
+   assert.equal(result.request.data.breakdown.attack.difficulty,result.target.difficulty+1);
+ }],
+ ...[{establish:false},{template:'Wraith Pack'}].map((v,i)=>['HR03',`meshDeny${i}`,'same scene group or electrical description is not Local Mesh eligibility '+JSON.stringify(v),f=>{
+   const x=meshScenario(f,v),result=strikeAdversary(f,x,'mesh-none',{damage:1,targetId:x.target.id});
+   assert.equal(result.request.data.breakdown.attack.difficulty,result.target.difficulty);assert.equal(result.request.data.breakdown.attack.defense_aura,undefined);
+ }]),
+ ...[{template:'Choir Relay',relays:0,bonus:0},{template:'Choir Relay',relays:1,bonus:1}].map((v,i)=>['HR03',`meshRelay${i}`,'Relay self and other-source distinction '+JSON.stringify(v),f=>{
+   const x=meshScenario(f,{...v,establish:v.relays>0}),result=strikeAdversary(f,x,'mesh-relay',{damage:1,targetId:x.target.id});
+   assert.equal(result.request.data.breakdown.attack.difficulty,result.target.difficulty+v.bonus);
+ }]),
+ ...['moved','defeated','proxy','revoked'].map(kind=>['HR03',`meshStale-${kind}`,'pending Local Mesh proof revalidates '+kind+' before owner dice without granting another action',f=>{
+   const x=meshScenario(f),ally=x.actors.find(a=>a.actor!=='guard'),before=f.db.getCharacter(x.pc.id).data.resources;
+   assert.throws(()=>strikeAdversary(f,x,'mesh-stale',{targetId:x.target.id,rollRng:()=>assert.fail('no stale-proof RNG'),beforeRoll:()=>{
+     if(kind==='moved'){
+       const source=indexWorldEvent(f.db,f.guild,{key:'mesh-ally-moved',kind:'observation',source_id:'gm',title:'Relay changes native zone',
+         session_id:f.session.id,scene:currentScene(f.db,f.guild).key,location_key:'terminal',visibility:'party'},'gm');
+       recordScenePresence(f.db,f.guild,{entity_type:'npc',entity_key:ally.actor,source_event:source.event_key,location_key:'terminal',zone:'remote',range:'Far',visibility:'party'},'gm');
+     }
+     if(kind==='defeated')f.db.updateCombatant(ally.id,{hp_current:0,status:'defeated'});
+     if(kind==='proxy')f.db.upsertNpcProxy(f.guild,f.session.id,{npcName:ally.actor,userId:f.pcs[1].owner_user_id,status:'active'});
+     if(kind==='revoked')indexWorldEvent(f.db,f.guild,{key:x.allianceEffects[0].source_event,status:'retracted'},'gm');
+   }}),/Sheet or authority changed/);
+   assert.deepEqual(f.db.getCharacter(x.pc.id).data.resources,before);assert.equal(f.db.getCampaign(f.guild).fear,0);
+ }]),
+ ['HR03','meshHistory','native alliance replay and source retraction preserve saved damage and private receipt history',async f=>{
+   const x=meshScenario(f),result=strikeAdversary(f,x,'mesh-history',{damage:1,targetId:x.target.id}),before=f.db.listCombatants(x.encounter.id),
+     {typedRollProof}=await import('../src/typed-roll-proof.js');
+   assert.equal(typedRollProof(f.db,f.guild,result.request).outcome,'success');
+   const replay=executeUnifiedGmActions(f.db,f.guild,x.allianceDecisions,{rng:()=>assert.fail('no alliance replay RNG')});
+   assert.equal(replay[0].record_key,x.allianceEffects[0].record_key);
+   indexWorldEvent(f.db,f.guild,{key:x.allianceEffects[0].source_event,status:'retracted'},'gm');f.restart();
+   assert.throws(()=>typedRollProof(f.db,f.guild,f.db.getCityRecord(f.guild,'roll_request',result.request.record_key)),/alliance/);
+   assert.deepEqual(f.db.listCombatants(x.encounter.id),before);
+   assert.equal(f.db.listCityRecords(f.guild,{kind:'native_npc_alliance_receipt',includeGM:true}).length,1);
+ }],
  ['HR11','hordeAI','native AI Host attack keeps the same saved GM d20 cost and owner Armor workflow',f=>{
    const x=packFearAttack(f,{template:'Green Root Host',hp:4,armor:true}),r=x.roll.data;
    assert.equal(r.damage.expression,'3d8+8');assert.equal(r.damage.total,11);assert.equal(r.gm_d20.family,'gm_d20');
@@ -234,9 +330,10 @@ const cases=[
  }],
  ['HR','registry','house errata is explicit immutable source-pinned and never a generic feature executor',async()=>{
    const {compileNativeHouseErrata,nativeHouseErratum}=await import('../src/native-house-errata.js'),rows=compileNativeHouseErrata();
-   assert.equal(rows.length,10);assert(Object.isFrozen(rows));
-   for(const row of rows){assert(Object.isFrozen(row));assert.equal(row.version,1);assert(row.sources.every(s=>/^[a-f0-9]{64}$/.test(s.source_hash)));
-     if(row.id!=='HR01'){assert.equal(row.status,'review_only');assert.equal(row.native_handler,null);}}
+   assert.equal(rows.length,11);assert(Object.isFrozen(rows));
+   for(const row of rows){assert(Object.isFrozen(row));assert(row.sources.every(s=>/^[a-f0-9]{64}$/.test(s.source_hash)));
+     if(row.version===1&&row.id!=='HR01'){assert.equal(row.status,'review_only');assert.equal(row.native_handler,null);}}
+   assert.equal(nativeHouseErratum('HR03').status,'review_only');assert.equal(nativeHouseErratum('HR03',2).native_handler,'local_mesh_allied_zone');
    assert.equal(nativeHouseErratum({id:'HR01',native_handler:'eval'}),null);assert.equal(nativeHouseErratum('model:HR01'),null);
    assert.equal(nativeHouseErratum('HR01',2),null);assert.equal(nativeHouseErratum('HR01','1'),null);
    assert.equal(nativeHouseErratum('HR03').interpretation.maximum_aura_bonus,1);
@@ -771,7 +868,7 @@ cases.push(
    assert.equal(new Set(rows.filter(r=>r.actor_kind==='environment').map(r=>r.actor_name)).size,16);
    for(const r of rows){assert.match(r.source_hash,/^[a-f0-9]{64}$/);assert.match(r.template_hash,/^[a-f0-9]{64}$/);
      assert(Object.isFrozen(r));assert.equal(featureDisposition(r.feature_key).status,r.native_handler?'supported':'needs_rules_review');}
-   assert.deepEqual(rows.filter(r=>r.native_handler).map(r=>r.feature_key),['adversary:pale-court-thrall:pack-pressure','adversary:static-wraith:feedback','adversary:pale-court-knight:blood-rush','adversary:wraith-pack:many-deaths','adversary:green-root-host:horde-3d8-8','adversary:aster-vale-catastrophe-analyst:contingency-stack']);
+   assert.deepEqual(rows.filter(r=>r.native_handler).map(r=>r.feature_key),['adversary:pale-court-thrall:pack-pressure','adversary:static-wraith:feedback','adversary:choir-relay:local-mesh','adversary:pale-court-knight:blood-rush','adversary:wraith-pack:many-deaths','adversary:green-root-host:horde-3d8-8','adversary:aster-vale-catastrophe-analyst:contingency-stack']);
  }],
  ['UA6','02','typed representative descriptors distinguish action reaction passive and defense',async()=>{
    const {compileNativeFeatures}=await import('../src/native-feature-catalog.js'),rows=compileNativeFeatures(),get=(actor,name)=>rows.find(r=>r.actor_name===actor&&r.name===name);

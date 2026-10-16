@@ -19,7 +19,7 @@ export function createArbitrationOrigin(db,guild,scope,sourceRef){
     return {key:n.key,snapshot:hash([entity,profile,presence,db.listNpcProxies(ctx.binding.session)]),
       objectives:db.listNpcGoals(guild,n.key,{status:'active',limit:8}).filter(g=>narrativeSourceVisible(db,guild,g.source,scope)).map(g=>g.goal_key),
       source_refs:n.speaker_brief?.speech_source_refs||[],
-      intents:Object.fromEntries(['speak','walk','prepare','attack','exceptional_action','reaction','feature'].map(op=>[op,`npc-intent:${hash([sourceRef,n.key,op])}`]))};
+      intents:Object.fromEntries(['speak','walk','prepare','attack','exceptional_action','reaction','feature','set_allies','clear_allies'].map(op=>[op,`npc-intent:${hash([sourceRef,n.key,op])}`]))};
   });
   origins.set(origin,deepFreeze({guild,scope:structuredClone(scope),binding:structuredClone(ctx.binding),eligible}));return origin;
 }

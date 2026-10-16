@@ -14,6 +14,7 @@ import {publishNativeNotice,queueNativeNotice,reserveNativeNotice} from "./nativ
 import {noticeHash} from "./native-notice.js";
 import {gmRulingDetails} from "./gm-action-ruling.js";
 import {overlapsOwnerActionTerminal} from "./owner-action-terminal.js";
+import {nativeDefenseAura,persistNativeDefenseAura} from './native-defense-aura.js';
 const hash=value=>createHash("sha256").update(JSON.stringify(value)).digest("hex");
 const signed=value=>`${value>=0?"+":""}${value}`;
 export const rollRevision=hash;
@@ -94,6 +95,8 @@ export function rollBreakdown(db,guild,input,pc){
       throw new StateConflictError("Active owned attack, damage formula, target and rules require exact current human adjudication.");
     diceSpec(a.damage);
     attack={weapon:a.weapon,damage:a.damage,damage_type:a.damage_type,target_id:target.id,encounter_id:encounter.id,difficulty:target.difficulty};
+    const aura=nativeDefenseAura(db,guild,target,input);
+    if(aura)attack={...attack,difficulty:target.difficulty+1,base_difficulty:target.difficulty,defense_aura:aura.proof};
   }
   const unresolved=[...base.unresolved,
     ...(input.kind==="attack"&&!attack?["Active weapon/feature attack provenance requires native adjudication before resolution."]:[])];
@@ -120,6 +123,7 @@ export function prepareRollRequest(db,guild,input,actor,context={}){
       data:{session_id:session.id,scene:source.scene,character_id:pc.id,owner_user_id:pc.owner_user_id,character_name:pc.name,
         attempt:source.details.text||source.details.raw_text,kind:input.kind,adjudication:input.adjudication,breakdown:values,input,
         sheet_fingerprint:hash(pc.data),revision:1,history:[],authority:"Pending only; no dice, expenditure or outcome."}});
+    persistNativeDefenseAura(db,guild,after);
     cityAudit(db,guild,"roll_request_prepared",key,null,after,actor);reserveRollAmendment(db,guild,after);return after;
   });
 }

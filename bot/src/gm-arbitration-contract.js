@@ -3,7 +3,7 @@ export const ARBITRATION_DISPOSITIONS=Object.freeze(['no_roll','npc_no_roll','re
   'gm_attack_roll','gm_exceptional_action_roll','gm_reaction_roll','native_feature_resolution','needs_consent','needs_rules_review','blocked']);
 const str=maxLength=>({type:'string',maxLength});
 const obj=properties=>({type:'object',additionalProperties:false,properties,required:Object.keys(properties)});
-export const npcSceneIntentSchema=obj({actor_key:str(160),operation:{type:'string',enum:['speak','walk','prepare','attack','exceptional_action','reaction','feature']},
+export const npcSceneIntentSchema=obj({actor_key:str(160),operation:{type:'string',enum:['speak','walk','prepare','attack','exceptional_action','reaction','feature','set_allies','clear_allies']},
   target_refs:{type:'array',maxItems:8,items:str(160)},objective_ref:str(160),source_refs:{type:'array',maxItems:8,items:str(160)},
   dependencies:{type:'array',maxItems:8,items:str(160)}});
 const proposalV1=obj({intent_ref:str(200),disposition:{type:'string',enum:ARBITRATION_DISPOSITIONS},
