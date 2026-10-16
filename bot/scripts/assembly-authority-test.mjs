@@ -157,7 +157,8 @@ test('assembly planning adds proof-bearing parts within its existing single stru
     function inspect(node){if(!node||typeof node!=='object')return;
       if(node.enum||node.const!==undefined)assert(node.type,'Every enum/const schema must declare its type.');
       for(const value of Object.values(node))if(Array.isArray(value))value.forEach(inspect);else inspect(value);
-    }inspect(schema);return {public_opening:'GM proposal',character_entries:[],public_parts:[]};};
+    }inspect(schema);return {public_opening:'GM proposal',character_entries:f.pcs.slice(0,2).map(pc=>({
+      discord_user_id:pc.owner_user_id,character_id:pc.id,character_name:pc.name,hook_source_refs:[],private_hook:'GM proposal',private_parts:[]})),public_parts:[]};};
   await gm.planAssembly({guildId:f.guild});assert.equal(requests,1);
 }));
 

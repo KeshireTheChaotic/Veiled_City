@@ -3,6 +3,7 @@ import {createHash} from 'node:crypto';
 import {currentScene,scenePresence} from './scene-continuity.js';
 import {conversationPrincipal} from './conversation-principal.js';
 import {assemblyPartsFor} from './assembly-delivery.js';
+import {assemblyInputFingerprint} from './assembly-context.js';
 export const assemblyHash=value=>createHash('sha256').update(JSON.stringify(value)).digest('hex');
 const display=value=>JSON.stringify(value).replaceAll('@','@\u200b');
 export function assemblyPlanHash(plan){
@@ -35,13 +36,17 @@ export function assemblyDeliverySummary(db,guild,session){
     const legacy=legacyAssemblyState(plan,slot.scope);
     const status=rows.length?rows.every(r=>r.status==='delivered')?'delivered':rows.some(r=>['uncertain','delivering'].includes(r.status))?'uncertain'
       :rows.some(r=>r.status==='failed')?'failed':'pending':legacy.uncertain.length||legacy.partial?'uncertain':legacy.complete?'legacy_delivered':job?.status==='blocked'?'blocked':'pending';
-    return {...slot,status,rows,job,legacy};
+    const evidence=job?.data.evidence||{},narrative_status=status==='delivered'
+      ?evidence.hook_verified?'SOURCE_HOOK_DELIVERED':evidence.narrative_verified?'VERIFIED_SCENE_DELIVERED':'FALLBACK_DELIVERED':status.toUpperCase();
+    return {...slot,status,narrative_status,evidence,previously_delivered:job?.data.retained_acknowledgement===true,rows,job,legacy};
   });
 }
 export function assemblyOrientation(db,guild,sessionId,scope){
   const session=db.getActiveSession(guild),scene=currentScene(db,guild);
   if(!session||session.id!==sessionId||session.assembly_phase!=='assembly')throw Object.assign(new Error('Current assembly session required.'),{code:'ASSEMBLY_SOURCE'});
   const plan=db.getAssemblyPlan(sessionId)||{},roster=db.roster(sessionId).filter(r=>r.character_id&&['present','late','guest'].includes(r.presence));
+  if(plan.assembly_contract?.version===2&&plan.assembly_contract.input_fingerprint!==assemblyInputFingerprint(db,guild,session))
+    throw Object.assign(new Error('Assembly input revision is stale; reconcile the saved plan before publication.'),{code:'ASSEMBLY_SOURCE',expected:true});
   let principal=null,character=null,quote=null;
   if(scope.mode==='private'){
     character=db.getCharacter(scope.actorCharacterId);
@@ -64,7 +69,8 @@ export function assemblyOrientation(db,guild,sessionId,scope){
   }else if(scope.mode!=='party')throw new Error('Assembly audience required.');
   const state={session:session.id,scene:scene.key,plan:assemblyPlanHash(plan),scope,principal:principal?.revision||null,
     roster:roster.map(r=>({character:r.character_id,user:r.discord_user_id,name:r.name,owner:db.getCharacter(r.character_id)?.owner_user_id})),
-    character:character?{id:character.id,location:character.data.location||null,status:character.status}:null,quote};
+    character:character?{id:character.id,location:character.data.location||null,status:character.status}:null,quote,
+    ...(plan.assembly_contract?.version===2?{hook_inputs:assemblyInputFingerprint(db,guild,session)}:{})};
   let text=scope.mode==='private'
     ?`**Veilkeeper — private assembly orientation**\nChecked-in character: ${display(character.name)}.\nSaved position: ${display(character.data.location||'not recorded')}; this is not a new arrival.`
     :`**Session ${session.session_number} — assembly orientation**\nChecked in: ${roster.map(r=>display(r.name)).join(', ')||'none'}. Check-in does not establish shared fictional presence.`;

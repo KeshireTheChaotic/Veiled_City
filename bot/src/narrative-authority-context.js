@@ -13,11 +13,15 @@ import {speakerBrief} from './narrative-speakers.js';
 import {directorBriefForAudience} from './narrative-director-source.js';
 import {mentionsPublicIdentity} from './public-referents.js';
 import {registerNarrativeContext} from './audience-native-v9.js';
+import {assemblyWriterBrief} from './assembly-context.js';
 export const narrativeVisible=(row,scope)=>!!row&&factVisibleTo({...row,subject_character_id:row.subject_character_id||row.subject_key,
   subject_user_id:row.subject_user_id||row.subject_key},scope);
 export function buildNarrativeContext(db,guild,scope,sourceRef,{operation='describe_scene'}={}){
-  const flags=db.getCityCalendar(guild).flags;
-  if(!flags.narrative_authority||!flags.playable_narration||!db.getActiveSession(guild))throw fail('creative_authority_disabled_or_no_session');
+  const flags=db.getCityCalendar(guild).flags,requestSource=db.getWorldEvent(guild,sourceRef);
+  const dedicated=requestSource?.kind==='native_assembly_scope'&&requestSource.source_id==='native:assembly'
+    &&requestSource.details.version===2&&db.ownerAuthoredSource(guild,sourceRef,'native:assembly')
+    &&db.getAssemblyPlan(db.getActiveSession(guild)?.id)?.assembly_contract?.version===2;
+  if((!flags.narrative_authority||!flags.playable_narration)&&!dedicated||!db.getActiveSession(guild))throw fail('creative_authority_disabled_or_no_session');
   if(!['party','private'].includes(scope.mode))throw fail('audience');
   const scene=currentScene(db,guild),source=db.getWorldEvent(guild,sourceRef);let principal=null,pc=null;
   if(scope.actorCharacterId&&scope.actorUserId){
@@ -37,7 +41,7 @@ export function buildNarrativeContext(db,guild,scope,sourceRef,{operation='descr
   const p=pc&&(scenePresence(db,guild,'character',pc.id)||lastVerifiedCharacterPresence(db,guild,pc)),arrival=p&&db.getWorldEvent(guild,p.source_event),
     placed=p?.status==='active'&&p.data.state==='actually_present'&&p.location_key===pc.data.location&&arrival?.status==='active'
       &&arrival.location_key===p.location_key&&narrativeVisible(p,scope)&&narrativeSourceVisible(db,guild,p.source_event,scope);
-  if(!placed&&!flags.narrative_camera)throw fail('camera_disabled');
+  if(!placed&&!flags.narrative_camera&&!dedicated)throw fail('camera_disabled');
   const entitledLocation=row=>row&&!row.state.hidden&&!row.state.removed&&narrativeVisible({visibility:row.state.visibility||'party',
     subject_key:row.state.subject_character_id},scope)&&(!row.state.narrative_origin||row.state.narrative_origin!==sourceRef)
     &&(!db.getCityRecord(guild,'autonomous_entity',`location:${row.entity_key}`)
@@ -105,5 +109,6 @@ export function buildNarrativeContext(db,guild,scope,sourceRef,{operation='descr
     prior_fiction:rankNarrativeMemory(db,guild,scope,disclosedNarrativeMemory(db,guild,scope,{limit:40}),
       {location,query:owner?source.details.text:'',maxChars:Math.max(3000,9000-speakerChars)}),unknowns:['Hidden causes, private character details and unresolved outcomes are unknown.']};
   if(director)packet.director_brief=directorBriefForAudience(db,guild,source,scope);
+  if(assembly)packet.assembly_brief=assemblyWriterBrief(db,guild,scene.session_id,scope);
   return registerNarrativeContext({db,binding,packet,scope,source,pc,sourceRef,protectedScene});
 }

@@ -20,6 +20,7 @@ import {validatePostTurnStateReview} from './director.js';
 import {projectSceneDescription,defaultSceneDescription} from './scene-description.js';
 import {turnTraceFor} from './turn-trace-context.js';
 import {assemblyOrientation} from './assembly-state.js';
+import {assemblyHookProjection} from './assembly-context.js';
 import {findFreshScenePart,renderFreshScenePart} from './fresh-scene-authoring.js';
 import {establishSceneFiction,renderSceneFiction,holdSceneFiction} from './scene-fiction-authority.js';
 import {establishNarrativeUnits,renderNarrativeUnit} from './narrative-authority.js';
@@ -133,6 +134,11 @@ function renderPart(db,guild,part){
   if(kind==='assembly_orientation'){
     const projection=assemblyOrientation(db,guild,ref,scope);
     if(projection.revision!==part.projection_revision)fail();return projection.text;
+  }
+  if(kind==='assembly_hook'){
+    const projection=assemblyHookProjection(db,guild,ref,scope);
+    if(!projection||projection.revision!==part.projection_revision
+      ||assemblyOrientation(db,guild,ref,scope).revision!==part.assembly_revision)fail();return projection.text;
   }
   if(kind==='scene_description'){
     const view=projectSceneDescription(db,guild,part.input,scope,part.source_ref);
@@ -254,13 +260,14 @@ export function assemblyNarrativeCandidate(db,guild,sessionId,scope){
     gm_world_parts:(scope.mode==='private'?entry?.private_parts:plan.public_parts)||[]};
   if(!Array.isArray(candidate.gm_world_parts)||candidate.gm_world_parts.length>4)candidate.gm_world_parts=[];
   const flags=db.getCityCalendar(guild).flags;
-  if(flags.playable_narration===true&&(scope.actorCharacterId||flags.narrative_authority&&flags.narrative_camera))
+  const dedicated=plan.assembly_contract?.version===2;
+  if(dedicated||flags.playable_narration===true&&(scope.actorCharacterId||flags.narrative_authority&&flags.narrative_camera))
     candidate.gm_world_parts=[...candidate.gm_world_parts.slice(0,3),{version:flags.narrative_authority?8:7,
-      kind:flags.narrative_authority?'narrative_request':'scene_fiction_request',operation:'describe_scene',source_refs:[]}];
+      ...(dedicated?{version:8}:{}),kind:dedicated||flags.narrative_authority?'narrative_request':'scene_fiction_request',operation:'describe_scene',source_refs:[]}];
   const source=indexWorldEvent(db,guild,{key:`assembly-scope:${hash(view.state)}`,kind:'native_assembly_scope',
     title:'Native assembly orientation scope',source_id:'native:assembly',visibility:scope.mode==='private'?'character':'party',
     subject_key:scope.mode==='private'?scope.actorCharacterId:null,session_id:sessionId,scene:view.state.scene,
-    details:{version:1,revision:view.revision,scope}},'native:assembly');
+    details:{version:dedicated?2:1,revision:view.revision,scope}},'native:assembly');
   return {view,candidate,source};
 }
 export function prepareAssemblyOutput(db,guild,sessionId,scope,{content=null}={}){
@@ -271,11 +278,22 @@ export function prepareAssemblyOutput(db,guild,sessionId,scope,{content=null}={}
   const narrativeParts=prepared.get(candidate).parts.map(ref=>validateOutputPart(db,guild,ref)).filter(p=>
     ['gm_world_narrative','gm_fresh_npc','gm_scene_fiction','gm_narrative_unit'].includes(p.data.kind)||p.data.kind==='native_outcome'
       &&inputs.some(input=>hash(input)===hash(p.data.input)));
+  const hook=assemblyHookProjection(db,guild,sessionId,scope);
   const orientation=savePart(db,guild,{render_version:1,scene:view.state.scene,session:sessionId,scope:{...scope},origin:'native_assembly',
-    kind:'assembly_orientation',ref:sessionId,projection_revision:view.revision,source_ref:source.event_key,source_hash:hash(source.details),
+    kind:hook?'assembly_hook':'assembly_orientation',ref:sessionId,projection_revision:hook?.revision||view.revision,
+    ...(hook?{assembly_revision:view.revision}:{}),
+    source_ref:source.event_key,source_hash:hash(source.details),
     principal_revision:view.state.principal});
-  const parts=[orientation,...narrativeParts],text=parts.map(p=>p.data.text).join('\n');saveOutputGroup(db,guild,parts);
-  const result={narration:text,player_summary:text,narrative_claims:[],private_messages:[]};
+  const supplement=scope.mode==='party'&&db.getAssemblyPlan(sessionId)?.assembly_contract?.parent_plan&&narrativeParts.length;
+  const parts=supplement?narrativeParts:[orientation,...narrativeParts],text=parts.map(p=>p.data.text).join('\n');saveOutputGroup(db,guild,parts);
+  const result={narration:text,player_summary:text,narrative_claims:[],private_messages:[],
+    assembly_evidence:{hook_selected:!!hook,hook_verified:!!hook,narrative_verified:narrativeParts.length>0,
+      hook_revision:hook?.revision||null,hook_source_refs:hook?.selected.map(s=>s.id)||[],
+      narrative_generated:db.listCityRecords(guild,{kind:'narrative_draft',includeGM:true,limit:1000})
+        .some(r=>r.data.binding?.source===source.event_key),
+      narrative_quarantined:db.listCityRecords(guild,{kind:'narrative_unit_review',includeGM:true,limit:1000})
+        .some(r=>r.source_event===source.event_key),
+      fallback:!hook&&!narrativeParts.length,original_hook_delivered:false,raw_prose_held:!!candidate.narration}};
   prepared.set(result,{raw:{},drafts:{},parts:parts.map(p=>p.record_key),privateParts:{},scope:hash(scope),fingerprint:fingerprint(result)});
   return result;
 }

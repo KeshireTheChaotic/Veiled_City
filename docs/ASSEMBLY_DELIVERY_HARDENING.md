@@ -1,5 +1,7 @@
 # Saved assembly delivery recovery
 
+For the later character-specific source selection, expressive audience-isolated openings, precise fallback status and stale-plan replacement, see [Character-hook pipeline repair](ASSEMBLY_HOOK_PIPELINE_REPAIR.md). The transport-only orientation behavior documented below is historical; an acknowledged orientation is not a substantive hook delivery.
+
 Starting source: `391988528c2a366bb4aa57fc2493ef6b205cb340` (10.0.0). This is an assembly transport/projection repair, not a campaign reset, new assembly generation, or rules change.
 
 Accepted typed intents are canonical adjudication inputs; authenticated human declarations own intent; native receipts own outcomes.

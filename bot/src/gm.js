@@ -50,6 +50,7 @@ import {authorFreshSceneRequests,hasFreshSceneResponse,FRESH_SCENE_INSTRUCTIONS,
 import {authorSceneFictionRequests,SCENE_FICTION_INSTRUCTIONS,sceneFictionResponseSchema} from './scene-fiction-authority.js';
 import {sceneFictionFailure,buildSceneFictionContext} from './scene-fiction-context.js';
 import {assemblyNarrativeCandidate} from './pvp-output.js';
+import {assemblyInputs,hookHash,certifyAssemblyPlan} from './assembly-context.js';
 import {sceneObservationOperation} from './scene-observation-route.js';
 import {engagementKinds,bindSemanticEngagement,currentSemanticEngagement,semanticSceneOperation} from './semantic-engagement.js';
 import {authorNarrativeRequests,NARRATIVE_AUTHORITY_INSTRUCTIONS,narrativeResponseSchema} from './narrative-authority.js';
@@ -242,13 +243,15 @@ const assemblySchema={
         type:"object",additionalProperties:false,
         properties:{
           discord_user_id:{type:"string"},
+          character_id:{type:"string"},
+          hook_source_refs:{type:"array",maxItems:2,items:{type:"string"}},
           character_name:{type:"string"},
           private_hook:{type:"string"},
           private_parts:gmWorldPartsSchema,
           public_cue:{type:"string"},
           stay_reason:{type:"string"}
         },
-        required:["discord_user_id","character_name","private_hook","private_parts","public_cue","stay_reason"]
+        required:["discord_user_id","character_id","hook_source_refs","character_name","private_hook","private_parts","public_cue","stay_reason"]
       }
     },
     bonds:{
@@ -1028,7 +1031,7 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
   }
   async authorAssemblyScene(guildId,sessionId,scope){
     const {candidate,source}=assemblyNarrativeCandidate(this.db,guildId,sessionId,scope),signal=AbortSignal.timeout(Number(this.config.gmTurnDeadlineMs||120000));
-    if(this.db.getCityCalendar(guildId).flags.narrative_authority)return authorNarrativeRequests({db:this.db,guild:guildId,result:candidate,scope,
+    if(source.details.version===2||this.db.getCityCalendar(guildId).flags.narrative_authority)return authorNarrativeRequests({db:this.db,guild:guildId,result:candidate,scope,
       sourceRef:source.event_key,budget:{used:false},generate:packet=>this.generateNarrative(guildId,packet,signal,'assembly')});
     await authorSceneFictionRequests({db:this.db,guild:guildId,result:candidate,scope,sourceRef:source.event_key,budget:{used:false},
       generate:packet=>this.generateSceneFiction(guildId,packet,signal)});
@@ -1169,6 +1172,7 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
     const roster=this.db.roster(session.id).filter(r=>["present","guest","late"].includes(r.presence) && r.character_id);
     if(roster.length<2) throw new Error("At least two present characters are required to generate a convergence scene.");
     const partyState=this.db.getPartyState(guildId);
+    const hookInputs=assemblyInputs(this.db,guildId,session),inputFingerprint=hookHash(hookInputs);
     const facts=this.db.factsFor(guildId,"",{includeGM:true,limit:120});
     const importedHooks=roster.filter(r=>r.character_id).flatMap(r=>this.db.listCharacterGmHooks(guildId,r.character_id).map(h=>({character_id:r.character_id,character_name:r.name,title:h.title,type:h.hook_type,premise:h.premise,permission:h.permission,suggested_entry:h.suggested_entry,payload:h.payload})));
     const narratives=narrativeContext(this.db,guildId,roster.map(r=>r.character_id).filter(Boolean),{includeGM:true,maxChars:6000});
@@ -1184,23 +1188,26 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
       "Each character gets a private_hook containing only information that character could know at scene start. public_cue is what others can visibly perceive about their arrival, without revealing secrets.",
       "public_opening/private_hook remain GM-private prose proposals. Supply public_parts and each entry's private_parts as source-verified gm_world_parts (versions 1, 2 or 4); omit unsupported parts. Native scope independently checks every NPC/location/source/owner/audience. Do not invent PC actions or receipt IDs, expose another owner's private material, or request a fresh writer call. Native orientation can be delivered even when no fictional part is eligible.",
       "stay_reason is an opportunity/reason for continued cooperation, not a compulsory motivation.",
+      "Each entry must use the exact character_id and select one or two applicable hook_source_refs from that character's source catalog when available. GM-private hooks are planning proposals, never player knowledge. Empty refs are allowed ONLY when that character has no permitted sources. public_cue stays a GM-private proposal unless independently authorized; do not infer an arrival from it.",
       "Bonds are proposed practical connections such as 'A knows something B needs'; they are not emotional commitments.",
       "Do not reveal mystery solutions, GM-only truths, hidden motives, or future twists in public_opening/private_hook.",
       `Requested assembly mode: ${requested}`,
       `Session: ${JSON.stringify(session)}`,
       `Previously established party state: ${JSON.stringify(partyState)}`,
       `Present roster: ${JSON.stringify(summarizeRoster(roster))}`,
+      `Owner-private source catalog by exact character ID: ${JSON.stringify(hookInputs.characters.map(p=>({character_id:p.character,user_id:p.user,sources:p.sources})))}`,
       `Known campaign facts (GM context; protect secrets): ${JSON.stringify(facts)}`,
       `Imported GM-only character hook proposals (optional seeds; protect secrets): ${JSON.stringify(importedHooks)}`,
       `Freeform character narratives (player + GM-private; protect GM-private): ${JSON.stringify(narratives)}`,
       `Relevant Veiled City references (GM context; protect secrets): ${JSON.stringify(chunks.map(c=>({source:c.file,text:c.body})))}`,
     ].join("\n\n");
-    return this.requestStructured({
+    const generated=await this.requestStructured({
       model:this.config.assemblyModel,
       input:prompt,
       max_output_tokens:this.config.assemblyMaxOutputTokens,
       text:{format:{type:"json_schema",name:"veiled_city_party_assembly",strict:true,schema:assemblySchema}}
     },{guildId,label:"party assembly plan"});
+    return certifyAssemblyPlan(this.db,guildId,session,generated,{strict:true,fingerprint:inputFingerprint});
   }
 
   async planArrival({guildId,userId,characterId,reason="late arrival"}){

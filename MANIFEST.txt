@@ -10,6 +10,7 @@ bot/data/.gitkeep
 bot/package-lock.json
 bot/package.json
 bot/scripts/assembly-authority-test.mjs
+bot/scripts/assembly-hooks-test.mjs
 bot/scripts/audience-first-framework-test.mjs
 bot/scripts/audience-first-integration-test.mjs
 bot/scripts/audit-regression-test.mjs
@@ -213,7 +214,9 @@ bot/src/ai-intent-contracts.js
 bot/src/ai-intents.js
 bot/src/ai-review.js
 bot/src/application-authority.js
+bot/src/assembly-context.js
 bot/src/assembly-delivery.js
+bot/src/assembly-planning.js
 bot/src/assembly-publications.js
 bot/src/assembly-readiness.js
 bot/src/assembly-state.js
@@ -284,6 +287,7 @@ bot/src/gm-arbitration-contract.js
 bot/src/gm-arbitration-output.js
 bot/src/gm-fiction-composition.js
 bot/src/gm-fiction-schema.js
+bot/src/gm-hook-import.js
 bot/src/gm-mechanical-v9.js
 bot/src/gm-native-rolls.js
 bot/src/gm-unified-arbitration.js
@@ -510,6 +514,7 @@ docs/ACCESSIBILITY.md
 docs/AI_GM_AUTHORITY_MIGRATION_MATRIX.md
 docs/API_COSTS_2026-10-01.md
 docs/ASSEMBLY_DELIVERY_HARDENING.md
+docs/ASSEMBLY_HOOK_PIPELINE_REPAIR.md
 docs/AUDIENCE_FIRST_V9_EXECUTION_LEDGER.md
 docs/AUDIENCE_FIRST_V9_IMPLEMENTATION_PLAN.md
 docs/AUDIENCE_FIRST_V9_PURGE_LEDGER.md

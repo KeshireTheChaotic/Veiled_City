@@ -6,6 +6,7 @@ import {queueTurnPublications} from './publication-outbox.js';
 import {deliverQueuedTurn} from './publishing.js';
 import {PermissionError,StateConflictError} from './errors.js';
 import {indexWorldEvent} from './city-calendar.js';
+import {assemblyRefreshRequired,retainedAssemblyDelivery} from './assembly-planning.js';
 function metadataSource(db,guild,session,key){
   return indexWorldEvent(db,guild,{key:`assembly-meta:${assemblyHash(key)}`,kind:'assembly_delivery_metadata',
     title:'Assembly transport bookkeeping, not fictional authority',source_id:'native:assembly',visibility:'gm',session_id:session.id,
@@ -13,25 +14,39 @@ function metadataSource(db,guild,session,key){
 }
 export async function deliverVerifiedAssembly({db,guild,session,gm=null,deliver=deliverQueuedTurn}){
   const plan=db.getAssemblyPlan(session.id)||{},diagnostics=[];
+  const freshness=assemblyRefreshRequired(db,guild.id,session);
+  if(freshness.hold)return {slots:assemblyDeliverySummary(db,guild.id,session),diagnostics:[{code:'ASSEMBLY_STALE_REVIEW'}],freshness};
   const slots=assemblySlots(db,guild.id,session);
   // Commit public local layout first when a real public viewpoint exists. Private writers may reuse it,
   // but private-only observations never flow back into the public opening.
-  if(db.getCityCalendar(guild.id).flags.playable_narration===true)slots.sort((a,b)=>Number(b.scope.mode==='party')-Number(a.scope.mode==='party'));
+  if(plan.assembly_contract?.version===2||db.getCityCalendar(guild.id).flags.playable_narration===true)
+    slots.sort((a,b)=>Number(b.scope.mode==='party')-Number(a.scope.mode==='party'));
   for(const slot of slots){
     const legacy=legacyAssemblyState(plan,slot.scope);
     if(legacy.uncertain.length||legacy.partial||legacy.complete)continue;
     let job=db.getCityRecord(guild.id,'assembly_delivery',slot.key);
     try{
-      if(!job?.data.turn_id&&db.getCityCalendar(guild.id).flags.playable_narration===true&&gm
-        &&(slot.scope.actorCharacterId||db.getCityCalendar(guild.id).flags.narrative_camera&&db.getCityCalendar(guild.id).flags.narrative_authority))
+      const retained=!job?.data.turn_id&&retainedAssemblyDelivery(db,guild.id,session,slot.scope);
+      if(retained)job=db.saveCityRecord(guild.id,{kind:'assembly_delivery',key:slot.key,status:'delivered',visibility:'gm',
+        source_event:metadataSource(db,guild.id,session,slot.key),data:{version:2,session:session.id,scope:slot.scope,
+          turn_id:retained.turn_id,evidence:retained.evidence,retained_acknowledgement:true}});
+      if(!job?.data.turn_id&&typeof gm?.authorAssemblyScene==='function'
+        &&(plan.assembly_contract?.version===2||db.getCityCalendar(guild.id).flags.playable_narration===true
+          &&(slot.scope.actorCharacterId||db.getCityCalendar(guild.id).flags.narrative_camera&&db.getCityCalendar(guild.id).flags.narrative_authority)))
         await gm.authorAssemblyScene(guild.id,session.id,slot.scope);
       if(!job?.data.turn_id)job=db.transaction(()=>{
-        const result=prepareAssemblyOutput(db,guild.id,session.id,slot.scope,{content:gm?.content}),turn=db.beginTurnAttempt({guildId:guild.id,sessionId:session.id,
+        const result=prepareAssemblyOutput(db,guild.id,session.id,slot.scope,{content:gm?.content});
+        const prior=result.assembly_evidence.fallback&&retainedAssemblyDelivery(db,guild.id,session,slot.scope,{fallback:true});
+        if(prior)return db.saveCityRecord(guild.id,{kind:'assembly_delivery',key:slot.key,status:'delivered',visibility:'gm',
+          source_event:metadataSource(db,guild.id,session,slot.key),data:{version:2,session:session.id,scope:slot.scope,
+            turn_id:prior.turn_id,evidence:prior.evidence,retained_acknowledgement:true}});
+        const turn=db.beginTurnAttempt({guildId:guild.id,sessionId:session.id,
           messageId:slot.key,actorPrincipal:slot.scope.actorUserId||'__assembly__',audience:slot.scope.mode});
         queueTurnPublications(db,{guild,session,result,scope:slot.scope,turnId:turn.turn_id});
         db.updateTurnAttempt(turn.turn_id,{stage:'committed',committed:'yes',nativeCommitId:slot.key});
         return db.saveCityRecord(guild.id,{kind:'assembly_delivery',key:slot.key,status:'pending',visibility:'gm',source_event:metadataSource(db,guild.id,session,slot.key),
-          data:{version:1,session:session.id,plan_hash:assemblyPlanHash(plan),scope:slot.scope,turn_id:turn.turn_id,raw_prose_held:true}});
+          data:{version:2,session:session.id,plan_hash:assemblyPlanHash(plan),scope:slot.scope,turn_id:turn.turn_id,
+            raw_prose_held:true,evidence:result.assembly_evidence}});
       });
       const delivered=await deliver({db,guild,turnId:job.data.turn_id});
       db.saveCityRecord(guild.id,{...job,key:slot.key,status:delivered.pending.length?'pending':'delivered'});
@@ -42,7 +57,7 @@ export async function deliverVerifiedAssembly({db,guild,session,gm=null,deliver=
         data:{version:1,session:session.id,scope:slot.scope,hold_code:error.code||'ASSEMBLY_SOURCE'}});
     }
   }
-  return {slots:assemblyDeliverySummary(db,guild.id,session),diagnostics};
+  return {slots:assemblyDeliverySummary(db,guild.id,session),diagnostics,freshness};
 }
 function reviewSnapshot(db,guild,session){
   const plan=db.getAssemblyPlan(session.id)||{};

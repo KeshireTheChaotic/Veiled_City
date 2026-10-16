@@ -28,6 +28,7 @@ suites.push("v96-routing-efficiency-test");
 suites.push("historical-archive-test");
 suites.push("session5-diagnostics-test","session5-narrative-test","session5-latency-test","session5-routing-test");
 suites.push("assembly-authority-test");
+suites.push("assembly-hooks-test");
 suites.push("scene-narration-repair-test");
 suites.push("playable-narration-test");
 suites.push("critical-validation-profile-test");

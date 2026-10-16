@@ -25,6 +25,9 @@ import { buildSessionRosterReport, chunkRosterReport } from "./roster.js";
 import { chunkDiscordLines } from "./discord/chunking.js";
 import { deliverInteractionText } from "./discord/delivery.js";
 import {deliverVerifiedAssembly,prepareAssemblyReconciliation,reconcileAssemblyNotSent} from './assembly-publications.js';
+import {normalizeGmHookImport} from './gm-hook-import.js';
+import {certifyAssemblyPlan,assemblyPlanFreshness} from './assembly-context.js';
+import {assemblyHasHistory,prepareAssemblyRefresh,refreshAssemblyPlan} from './assembly-planning.js';
 import {prepareSceneSetup,confirmSceneSetup} from './scene-setup.js';
 import { assertGmOnlyChannel, assertPlayerPrivateChannel } from "./discord/privacy.js";
 import { isExpectedError, PermissionError, NotFoundError, StateConflictError, UserInputError } from "./errors.js";
@@ -170,6 +173,8 @@ function compactAssemblyStatus(db,guildId,session){
   if(plan.bonds?.length) lines.push(`Proposed practical links:\n${plan.bonds.slice(0,6).map(b=>`• ${b.from_character} → ${b.to_character}: ${b.reason}`).join("\n")}`);
   if(plan.gm_notes) lines.push(`GM notes: ${plan.gm_notes}`);
   const readiness=assemblyReadiness(db,session);
+  lines.push(`Plan sources: ${readiness.freshness}`,
+    ...readiness.narrative_delivery.map(d=>`${d.name}: ${d.status}${d.previous?' (previous acknowledgement)':''}; sources=${d.source_status}`));
   lines.push(`Delivered parts: ${readiness.delivered} • uncertain/interrupted: ${readiness.uncertain}`,readiness.guidance);
   return lines.join("\n");
 }
@@ -394,6 +399,13 @@ async function handleCommandBody(interaction,{db,gm,voice=null}){
     const receipt=confirmSceneSetup(db,interaction.guildId,interaction.user.id,interaction.customId.slice(8),interaction.values[0],{interactionId:interaction.id});
     await interaction.editReply({content:receipt.status==='declined'?'Your initial position remains unconfirmed. No arrival or action was inferred.':
       'Your exact initial position and disclosure choice were saved. No travel, prior attempt, resources, dice or other character response was resolved. You may now ask about your surroundings.',allowedMentions:{parse:[]}});
+    return true;
+  }
+  if(typeof interaction.isButton==='function'&&interaction.isButton()&&interaction.customId?.startsWith('vcassemblyrefresh:')){
+    if(!interaction.guildId||!isGM(db,interaction))throw new PermissionError('GM/admin permission required.');
+    await interaction.deferReply({ephemeral:true});
+    await refreshAssemblyPlan(db,interaction.guildId,interaction.user.id,interaction.customId.slice(18),gm,{authorized:true});
+    await interaction.editReply({content:'New sourced assembly plan prepared; previous plans and delivery receipts retained. Nothing sent. Run assemble to deliver the newly prepared openings once.',allowedMentions:{parse:[]}});
     return true;
   }
   if(typeof interaction.isButton==='function'&&interaction.isButton()&&interaction.customId?.startsWith('vcassembly:')){
@@ -917,12 +929,16 @@ Initial phase: ${s.assembly_phase}`});
       if(s.assembly_phase==="party") throw new Error("The session is already in established-party phase.");
       await interaction.deferReply({ephemeral:true});
       let plan=db.getAssemblyPlan(s.id)||{};
-      if(!plan.public_opening&&!plan.character_entries?.length){
+      const stale=assemblyPlanFreshness(db,interaction.guildId,s,plan)==='stale';
+      if(!plan.public_opening&&!plan.character_entries?.length||stale&&!assemblyHasHistory(db,interaction.guildId,s,plan)){
         plan=await gm.planAssembly({guildId:interaction.guildId,mode:s.assembly_mode});
+        plan=certifyAssemblyPlan(db,interaction.guildId,s,plan);
         db.setAssemblyPlan(s.id,plan);
       }
       const deliveryResult=await deliverVerifiedAssembly({db,guild:interaction.guild,session:s,gm});
-      const delivery=deliveryResult.slots.filter(slot=>slot.scope.mode==='private').map(slot=>`${slot.name}: ${slot.status.toUpperCase()}`);
+      const delivery=deliveryResult.slots.filter(slot=>slot.scope.mode==='private').map(slot=>`${slot.name}: ${slot.narrative_status}`
+        +`${slot.previously_delivered?' (previous acknowledgement retained)':''}; hook selected=${!!slot.evidence.hook_selected}`
+        +`; narrative generated=${!!slot.evidence.narrative_generated}; verified=${!!slot.evidence.narrative_verified}; quarantined=${!!slot.evidence.narrative_quarantined}`);
       if(!plan.launch_recorded){
         db.audit(interaction.guildId,s.id,"ai","assembly","assembly_plan",{mode:s.assembly_mode,delivery,bonds:plan.bonds});
         await postGmLog({db,guild:interaction.guild,sessionId:s.id,title:"Verified assembly delivery processed",
@@ -934,7 +950,10 @@ Initial phase: ${s.assembly_phase}`});
         failed?'\n\n⚠️ A verified delivery is blocked or demonstrably unsent. Inspect status before retrying; the saved plan is unchanged.':'';
       const token=prepareAssemblyReconciliation(db,interaction.guildId,s,interaction.user.id,{authorized:true});
       const components=token?[{type:1,components:[{type:2,style:2,label:'I checked: hooks were not delivered',custom_id:`vcassembly:${token}`}]}]:[];
-      await deliverInteractionText(interaction,`Verified assembly delivery processed.\n\n${compactAssemblyStatus(db,interaction.guildId,db.getSession(s.id))}\n\nVerified private orientation: ${delivery.join(", ")||"none"}\nOriginal freeform opening/hooks remain GM-private proposals; only independently verified narrative parts are delivered.${warning}`,{ephemeral:true,components});
+      const refresh=prepareAssemblyRefresh(db,interaction.guildId,s,interaction.user.id);
+      if(refresh)components.push({type:1,components:[{type:2,style:2,label:'Prepare NEW sourced openings (no send)',custom_id:`vcassemblyrefresh:${refresh}`} ]});
+      const staleWarning=deliveryResult.freshness?.hold?'\nSTALE PLAN — publication held for GM review. Existing delivery acknowledgements are unchanged.':'';
+      await deliverInteractionText(interaction,`Assembly processing complete.\n\n${compactAssemblyStatus(db,interaction.guildId,db.getSession(s.id))}\n\nPrivate narrative delivery: ${delivery.join(", ")||"none"}\nRaw planner prose remains quarantined, not delivered. SOURCE_HOOK means the exact permitted character source was delivered; FALLBACK is orientation only.${staleWarning}${warning}`,{ephemeral:true,components});
       return true;
     }
     if(group==="session"&&sub==="assembly-status"){
@@ -1126,8 +1145,7 @@ Initial phase: ${s.assembly_phase}`});
       const a=interaction.options.getAttachment("file",true);
       if(!a.name?.toLowerCase().endsWith(".json")) throw new Error("GM hook import requires a .json file.");
       const res=await fetch(a.url); if(!res.ok) throw new Error("Could not download the GM hook attachment.");
-      const packet=await res.json();
-      if(packet.schema && !["veiled-city-gm-hooks-import-v3.3.1","veiled-city-gm-hooks-import-v3.3.2","veiled-city-gm-hooks-import-v3.3.3"].includes(packet.schema)) throw new Error(`Unsupported GM hook schema: ${packet.schema}`);
+      const packet=normalizeGmHookImport(await res.json());
       const name=interaction.options.getString("character")||packet.character_name;
       if(!String(name||"").trim()) throw new Error("The GM hook package must include character_name or you must provide the character option.");
       const c=db.findGuildCharacter(interaction.guildId,name,{includeClosed:true}); if(!c) throw new Error(`Campaign character not found: ${name}`);

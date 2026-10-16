@@ -6,6 +6,7 @@
  * one reviewable layer.
  */
 import fs from "node:fs";
+import {normalizeGmHookImport} from './gm-hook-import.js';
 import { updateRelationshipDimensions, relationshipPairKey, relationshipProjection } from "./relationship-state.js";
 import path from "node:path";
 import { randomUUID } from "node:crypto";
@@ -2217,12 +2218,14 @@ export class VeiledDB {
   }
   importCharacterGmHooks(guildId,character,packet){
     if(!character||character.guild_id!==guildId) throw new Error("Campaign character not found.");
-    if(!packet||typeof packet!=="object") throw new Error("GM hook package must be a JSON object.");
+    packet=normalizeGmHookImport(packet);
+    return this.transaction(()=>{
     const hooks=Array.isArray(packet.hooks)?packet.hooks:[];
     const canonSuggestions=Array.isArray(packet.canon_suggestions)?packet.canon_suggestions:[];
     let imported=0,relationships=0;
     for(const h of hooks){
-      this.upsertCharacterGmHook(guildId,character.id,h); imported++;
+      const saved=this.upsertCharacterGmHook(guildId,character.id,h,{source:h.source||'external_character_creator'}); imported++;
+      if(h.status&&h.status!=='active')this.db.prepare('UPDATE character_gm_hooks SET status=? WHERE id=?').run(h.status,saved.id);
       for(const t of Array.isArray(h.targets)?h.targets:[]){
         const type=String(t.type||"entity");
         let key,label=String(t.label||t.key||"").trim(); if(!label) continue;
@@ -2240,6 +2243,7 @@ export class VeiledDB {
       imported++;
     }
     return {hooks:imported,relationships,canon_suggestions:canonSuggestions.length};
+    });
   }
 
   // Evidence and handout persistence.

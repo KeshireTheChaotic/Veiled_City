@@ -61,8 +61,13 @@
     },
     {
       "path": "bot/scripts/assembly-authority-test.mjs",
-      "size_bytes": 14981,
-      "sha256": "f633a625af804f44d122f2a88fe089bc7c92f9c460db18d5c05bfd7337999aef"
+      "size_bytes": 15154,
+      "sha256": "dd3f9155a00b954a33bc5fd3bd52f846cfd411c6b251874640e7c504ab486783"
+    },
+    {
+      "path": "bot/scripts/assembly-hooks-test.mjs",
+      "size_bytes": 23126,
+      "sha256": "38c92666e9b0e20e5e2058dfaadad16e9d42a2c9924882e6dd114cb6f1f6139e"
     },
     {
       "path": "bot/scripts/audience-first-framework-test.mjs",
@@ -1036,8 +1041,8 @@
     },
     {
       "path": "bot/scripts/validate-offline.mjs",
-      "size_bytes": 10782,
-      "sha256": "ad723b147b5a89d6b2ec7c4f820ae5894db04daf8341c935e2d5fb4f81223ccf"
+      "size_bytes": 10818,
+      "sha256": "ddd1d17c4a8c46f052d4cdaa4cddc5a432e7676ae39fac3db4b96e0f26092d21"
     },
     {
       "path": "bot/sql/schema.sql",
@@ -1080,24 +1085,34 @@
       "sha256": "58554e42ec04ca5908ca7ac6e96225b1690a8025a273d4d0e836df4bd4054901"
     },
     {
+      "path": "bot/src/assembly-context.js",
+      "size_bytes": 7672,
+      "sha256": "95aa4e4378193755ccec10d59c20ebe81f90bdc602ed91b331398b59533f6388"
+    },
+    {
       "path": "bot/src/assembly-delivery.js",
       "size_bytes": 2628,
       "sha256": "1ae1c1aaf039884c8c123656bf60c09bb22ecb9a9cab8475692565a6d6cabbe1"
     },
     {
+      "path": "bot/src/assembly-planning.js",
+      "size_bytes": 6193,
+      "sha256": "9580616bca6cc8f0542847f55c17b0127f60a08e7c896bacb8f4e43ea1c9cdc9"
+    },
+    {
       "path": "bot/src/assembly-publications.js",
-      "size_bytes": 5968,
-      "sha256": "37a3af17c13ccba0540ca35371a2b297af4223a205849b52160fe3ad899ca589"
+      "size_bytes": 7368,
+      "sha256": "bffd3b10a1f9eb908de4f76b44121610f77af4b2ef5307db71d9563b868b9e6c"
     },
     {
       "path": "bot/src/assembly-readiness.js",
-      "size_bytes": 1423,
-      "sha256": "31dead0a6dbf4ff70252d0e5fbd48759eb1ce045ecca8220c96f8e7bf0095f0b"
+      "size_bytes": 1809,
+      "sha256": "9e596dc6f1cf13e43f6265be5b50c6913cc0f9754c43008f336be5f8995ba477"
     },
     {
       "path": "bot/src/assembly-state.js",
-      "size_bytes": 6515,
-      "sha256": "8fbce3c45d5a99c8fcb5c10b24f3a7123a410ac68cf7be2df777b905e939afee"
+      "size_bytes": 7292,
+      "sha256": "fc92b111d356fb53d668ddafda1ab69749c6d101d31b4f9ab63341579ae89afe"
     },
     {
       "path": "bot/src/audience-first-capability.js",
@@ -1211,8 +1226,8 @@
     },
     {
       "path": "bot/src/commands.js",
-      "size_bytes": 187390,
-      "sha256": "9f753a90bfd7070ec428c2894e7ff614911784587d216f7f67fcf7e3e557f2d9"
+      "size_bytes": 189249,
+      "sha256": "0251c35ab867f548d22888c8388baee0b2c4991a66ac224ed4dfffa41a5029bd"
     },
     {
       "path": "bot/src/concept-context.js",
@@ -1266,8 +1281,8 @@
     },
     {
       "path": "bot/src/db.js",
-      "size_bytes": 170922,
-      "sha256": "601286db1ca7bcdf6b9b937cc7a37eedf2b29d395c56ddb24301f489478f61f5"
+      "size_bytes": 171156,
+      "sha256": "32be5df8a848e0e3775cf54efa1e6c5ffa12a3fd717682a3bacbdce422a2de27"
     },
     {
       "path": "bot/src/decision-advisory.js",
@@ -1435,6 +1450,11 @@
       "sha256": "da22accba0944b0950b7474fc77f79ac77a598652b293e6b29b464f195b4d7b3"
     },
     {
+      "path": "bot/src/gm-hook-import.js",
+      "size_bytes": 2379,
+      "sha256": "14fbf825b4c2d40e8ffcb5159fd1da27849d27076bc747520cd5645aa33808d9"
+    },
+    {
       "path": "bot/src/gm-mechanical-v9.js",
       "size_bytes": 3042,
       "sha256": "47c49fa92d983d3c6bac40a123447ec5b325f1da1c353640bf5dc6f1713f82d3"
@@ -1461,8 +1481,8 @@
     },
     {
       "path": "bot/src/gm.js",
-      "size_bytes": 132199,
-      "sha256": "6c3c6a0f13615aeec37a1316ce4987b5213c8b5520c238335d9dee004d339ef3"
+      "size_bytes": 133256,
+      "sha256": "4a65297aa166c648b54a909eaf0ff0222ce3eba8d80ab38860b81b36f1249a54"
     },
     {
       "path": "bot/src/handout.js",
@@ -1551,13 +1571,13 @@
     },
     {
       "path": "bot/src/narrative-authority-context.js",
-      "size_bytes": 10801,
-      "sha256": "d56fed364b9e01820463799e3f8e12f9b13fd1c5a2f866d3dcf4052fc510f9d6"
+      "size_bytes": 11322,
+      "sha256": "016043047b0fdfa2d762b8a835f43bb92574c353746cffa22636f5138def48f8"
     },
     {
       "path": "bot/src/narrative-authority.js",
-      "size_bytes": 25434,
-      "sha256": "97480200d07f23d555ec8741cbbd053e4da44c3bb3ac6c0a531b4d10252c179d"
+      "size_bytes": 25726,
+      "sha256": "2fc904f235cf0b542e93b5ff2296c376c2dbfe8f38e5d421f14cd76940ba2065"
     },
     {
       "path": "bot/src/narrative-clauses-v9.js",
@@ -1896,8 +1916,8 @@
     },
     {
       "path": "bot/src/pvp-output.js",
-      "size_bytes": 58012,
-      "sha256": "971f47894853e92aa7a3f9a58f4458fba5094858dc26e0e069a781c5c2d2b9f5"
+      "size_bytes": 59424,
+      "sha256": "d04035a5277024d6df6e56ec6d42479953baadd5ce2b3b9419416f835db13100"
     },
     {
       "path": "bot/src/pvp-profiles.js",
@@ -2561,8 +2581,13 @@
     },
     {
       "path": "docs/ASSEMBLY_DELIVERY_HARDENING.md",
-      "size_bytes": 5191,
-      "sha256": "a70120a28cb75d6b52e34d44c07a267cd4e0472d6c4d81db08e791c2dda768fd"
+      "size_bytes": 5542,
+      "sha256": "431b65376d96b9795c9536b83db66fb12ee99d67179afaac06f9b81a13d10482"
+    },
+    {
+      "path": "docs/ASSEMBLY_HOOK_PIPELINE_REPAIR.md",
+      "size_bytes": 21841,
+      "sha256": "41e67ad5daad66cd6c650ad602a79f89c1377561ff9eb1aa01d3a5664162ae5c"
     },
     {
       "path": "docs/AUDIENCE_FIRST_V9_EXECUTION_LEDGER.md",
