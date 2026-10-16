@@ -3,6 +3,7 @@ import {createAudienceAuthority} from './audience-first-capability.js';
 import {projectGmMechanicalInput} from './mechanical-boundary-v9.js';
 import {authorizeIncomingOffer} from './pc-incoming.js';
 import {assertFearIncomingExecution} from './pvp-fear-moves.js';
+import {inspectNativeGmDecision} from './gm-action-capability.js';
 import {sceneFictionHash as hash,sceneFictionFailure as fail} from './scene-fiction-context.js';
 
 // These are distinct proposal operations, NOT a promise of a completed native adapter.
@@ -17,7 +18,8 @@ export function projectNativeGmProposal(db,guild,proposal,{library}={}){
   const c=authorizeIncomingOffer(db,guild,proposal.request_id,{library}),{row}=c,o=row.data.offer;
   // A human-reviewed offer alone NEVER grants autonomous execution. Require the
   // already authenticated exact immediate Fear choice and current native gate.
-  assertFearIncomingExecution(db,guild,row,{autonomous:true,committedRoll:!!row.data.roll});
+  if(o.input.ruling?.startsWith('ai-decision:'))inspectNativeGmDecision(db,guild,o.input.ruling.slice(12));
+  else assertFearIncomingExecution(db,guild,row,{autonomous:true,committedRoll:!!row.data.roll});
   if(hash(proposal.actor_ref)!==hash({kind:'adversary',id:o.input.npc})
     ||hash(proposal.target_refs)!==hash([{kind:'character',id:o.input.character}])
     ||proposal.stat_block_ref!==o.snapshot.template||proposal.feature_ref!=='standard_attack'

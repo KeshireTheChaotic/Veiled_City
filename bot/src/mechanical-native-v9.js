@@ -46,9 +46,9 @@ export function nativeMechanicalOutput(db,guild,{authority,grant},input){
         ||native.offer.snapshot.owner!==b.recipient_user_id)throw fail('gm_roll_output_audience');
       return {verified:true,ref,proof_ref:`gm-output-v9:${hash([r,b.proof_ref])}`,audience:b.audience,
         request_source_event:b.source_event,native_source_event:r.source_event,subject:{kind:'adversary',id:native.offer.input.npc},
-        native_detail:{roll_id:r.data.roll,attack:native.row.record_key,source:r.source_event,faces:[r.data.face],selected_d20:r.data.face,
+        native_detail:{roll_id:r.data.roll,attack:native.row.record_key,source:r.source_event,faces:r.data.gm_d20?.faces||[r.data.face],selected_d20:r.data.face,
           modifier:r.data.bonus,evasion:r.data.evasion,critical:r.data.face===20?'gm_attack_critical':'none',damage:r.data.damage,
-          disposition:native.row.status,payment_refs:[],fingerprint:hash(r)},
+          disposition:native.row.status,payment_refs:r.data.cost_ref?[r.data.cost_ref]:[],fingerprint:hash(r)},
         rendered_text:`Native adversary attack: d20 ${r.data.face} ${r.data.bonus>=0?'+':''}${r.data.bonus} = ${r.data.total}; Evasion ${r.data.evasion}; ${r.data.hit?'hit':'miss'}.`
           +(r.data.damage?` Damage roll ${r.data.damage.total}; target Armor/effect resolution remains native (${native.row.status}).`:' No damage rolled.')};
     }

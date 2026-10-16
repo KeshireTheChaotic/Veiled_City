@@ -74,7 +74,8 @@ import {reviewPcDeathMove,choosePcDeathMove,allocatePcDeathRecovery,approveBlaze
 import {hopeCap,assertPcCanAct} from "./pc-native-eligibility.js";
 import { preparePvpReaction, reviewPvpReaction, rollPvpReaction } from "./pvp-reactions.js";
 import { reviewFeatureEffect, reviewPcEffect, approvePcEffect, applyPcEffect,reviewHealingSource,authorizeHealingSource } from "./pc-effects.js";
-import { prepareIncomingAttack, reviewIncomingAttack, confirmIncomingDefense, rollIncomingAttack, resolveIncomingDamage } from "./pc-incoming.js";
+import { prepareIncomingAttack, reviewIncomingAttack, confirmIncomingDefense, rollIncomingAttack, rollArbitratedIncomingAttack, resolveIncomingDamage } from "./pc-incoming.js";
+import {inspectGmReactionInvitation,submitGmReactionInvitation} from './gm-native-rolls.js';
 import { queueDirectorPublications } from "./publication-outbox.js";
 import {publishContinuationNotices} from "./publishing.js";
 import {publishPvpNotices,materializeNativeNotices,resyncNativeNotice} from "./native-publications.js";
@@ -540,6 +541,7 @@ async function executeCommand(interaction,{db,gm,voice=null}){
         row=op==="incoming-defense"?confirmIncomingDefense(db,interaction.guildId,user,input.attack)
           :op==="incoming-roll"?rollIncomingAttack(db,interaction.guildId,user,input.attack,{...native,library:encounterLibrary(gm)})
             :resolveIncomingDamage(db,interaction.guildId,user,input.attack,{armor:input.armor,library:encounterLibrary(gm)});
+        if(op==='incoming-defense'&&row.data.offer.input.ruling?.startsWith('ai-decision:'))row=rollArbitratedIncomingAttack(db,interaction.guildId,row.record_key,{library:encounterLibrary(gm)});
         if(op!=="incoming-roll")resumeAutonomousPvpFear(db,interaction.guildId,{library:encounterLibrary(gm)});
       }else throw new UserInputError("Choose a native feature review/approval or incoming attack operation.");
       const chunks=chunkTextLines(JSON.stringify(row.record_key?{key:row.record_key,status:row.status}:row,null,2).split("\n"));
@@ -548,9 +550,16 @@ async function executeCommand(interaction,{db,gm,voice=null}){
       return true;
     }
     if(group==="roll"&&sub==="window"){
-      const input=JSON.parse(interaction.options.getString("json")||'{"op":"inbox"}');
+      const authoredText=interaction.options.getString("json")||'{"op":"inbox"}',input=JSON.parse(authoredText);
       if(["respond","cancel"].includes(input.op))input.interaction_id=interaction.id;
-      const result=windowOperation(db,interaction.guildId,interaction.user.id,input,{gm:isGM(db,interaction)});
+      let result;
+      if(input.op==='gm-reaction-review'){
+        if(Object.keys(input).sort().join()!=='op,request')throw new UserInputError('Select one exact private GM reaction invitation.');
+        result=inspectGmReactionInvitation(db,interaction.guildId,interaction.user.id,input.request).terms;
+      }else if(input.op==='gm-reaction-roll'){
+        const row=submitGmReactionInvitation(db,interaction.guildId,interaction.user.id,input,{interactionId:interaction.id,authoredText});
+        result={request:row.record_key,status:row.status,roll:row.data.roll_id};
+      }else result=windowOperation(db,interaction.guildId,interaction.user.id,input,{gm:isGM(db,interaction)});
       const chunks=chunkTextLines(JSON.stringify(result,null,2).split("\n"));
       await interaction.reply({content:chunks[0]||"No pending windows.",ephemeral:true,allowedMentions:{parse:[]}});
       for(const content of chunks.slice(1))await interaction.followUp({content,ephemeral:true,allowedMentions:{parse:[]}});

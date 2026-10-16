@@ -9,6 +9,8 @@ import {measureNative,operationalMetrics} from './operational-metrics.js';
 import {currentTurnTrace} from './turn-trace-context.js';
 import {recordNarrativeHealth} from './narrative-completeness.js';
 import {worldInputKey} from './autonomous-world.js';
+import {executeUnifiedGmActions} from './gm-native-rolls.js';
+import {EncounterLibrary} from './encounter.js';
 export function commitGmTurn({db,guild,session,result,scope,speaker,label,meta={},content=null}){
   const decision_advisory=validateDecisionAdvisory(db,guild.id,result);
   const mutates=(result.ai_intents||[]).length||(result.events||[]).some(e=>e.type!=="log_only")||(result.relationships||[]).length||(result.handouts||[]).length||(result.npc_memories||[]).length||(result.npc_knowledge||[]).length||(result.npc_goals||[]).length||(result.simulation_updates||[]).length;
@@ -32,6 +34,7 @@ export function commitGmTurn({db,guild,session,result,scope,speaker,label,meta={
       provenance:{actorType:"ai",actorId:scope.actorUserId||"veilkeeper",messageId:meta.messageId||null,triggerText:meta.triggerText||"",rationale:Object.values(result.state_review||{}).filter(x=>x&&x.reason).map(x=>x.reason).join(" | "),confidence:Math.min(...Object.values(result.state_review||{}).filter(x=>x&&Number.isFinite(Number(x.confidence))).map(x=>Number(x.confidence)),100)}
     });
     // Dice RNG occurs only in final commit. Preview never samples dice and cannot accidentally reroll.
+    mutation.gmNativeActions=executeUnifiedGmActions(db,guild.id,mutation.unifiedArbitration||[],{library:new EncounterLibrary(content?.root||'../content')});
     const nativeRolls=resolveTypedNativeRolls(db,guild.id,scope,result.player_intents||[],meta.messageId||'');
     mutation.intents=[...(mutation.intents||[]),...nativeRolls];
     const trace=currentTurnTrace();if(trace&&trace.guild===guild.id){

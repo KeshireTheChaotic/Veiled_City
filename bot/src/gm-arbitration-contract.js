@@ -9,6 +9,7 @@ export const npcSceneIntentSchema=obj({actor_key:str(160),operation:{type:'strin
 export const gmArbitrationProposalSchema=obj({intent_ref:str(200),disposition:{type:'string',enum:ARBITRATION_DISPOSITIONS},
   rule_basis_refs:{type:'array',minItems:1,maxItems:8,items:str(200)},difficulty:{anyOf:[{type:'integer',minimum:0,maximum:100},{type:'null'}]},
   trait:{anyOf:[{type:'string',enum:['Agility','Strength','Finesse','Instinct','Presence','Knowledge']},{type:'null'}]},
+  stakes_kind:{type:'string',enum:['attempt_only','native_attack','native_feature','needs_review']},
   stakes:str(600),reason:str(600),difficulty_reason:str(600),feature_ref:str(160),experience_ref:str(160),
   advantage:{type:'boolean'},disadvantage:{type:'boolean'}});
 export const unifiedArbitrationSchema=obj({version:{type:'integer',enum:[1]},
