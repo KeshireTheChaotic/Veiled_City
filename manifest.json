@@ -71,8 +71,8 @@
     },
     {
       "path": "bot/scripts/audience-first-integration-test.mjs",
-      "size_bytes": 7768,
-      "sha256": "82cbd123dde66abab15e14f831ab6e0fb4a7cc50301c07d7d599cbd310ddba4b"
+      "size_bytes": 11317,
+      "sha256": "895532d847c199d5508c819e0499415199aabd2f82fbcc47f450b41453f04b34"
     },
     {
       "path": "bot/scripts/audit-regression-test.mjs",
@@ -1421,8 +1421,8 @@
     },
     {
       "path": "bot/src/gm.js",
-      "size_bytes": 129546,
-      "sha256": "18088a3f99a9aa7d07f1d5ef20a5cef8890cf90ebddba6b9c0aa82dc23ca0a88"
+      "size_bytes": 129680,
+      "sha256": "65bae1a02343a71c3d1892630adad8f0039cb114629278d274a8b8dc067df366"
     },
     {
       "path": "bot/src/handout.js",
@@ -1501,8 +1501,8 @@
     },
     {
       "path": "bot/src/narrative-acts-v9.js",
-      "size_bytes": 2962,
-      "sha256": "eff47b971d9ee1e16c4a603668da26d1d08ceca8521b8785a0c768a4c1e18a64"
+      "size_bytes": 3087,
+      "sha256": "d556fbb38c033e2f30074ba8f93d0d47ff234b4d993dbbd0cf202e33a8efac67"
     },
     {
       "path": "bot/src/narrative-artifacts.js",
@@ -1516,8 +1516,8 @@
     },
     {
       "path": "bot/src/narrative-authority.js",
-      "size_bytes": 24098,
-      "sha256": "c175ddc1369a9bee255ac4441ca31ff0e06d8d8a35ecf9f57092aa55032992d4"
+      "size_bytes": 24914,
+      "sha256": "794beb2b66e015d20cea94f325ed5d04e467b695bb13b2b2729cb1677a343f94"
     },
     {
       "path": "bot/src/narrative-completeness.js",
@@ -1578,6 +1578,11 @@
       "path": "bot/src/narrative-tasks.js",
       "size_bytes": 5610,
       "sha256": "2637034205b8abc8d0057bdee8e2afc140efd17cdda6b8f55f0578370868e5f0"
+    },
+    {
+      "path": "bot/src/narrative-writer-v9.js",
+      "size_bytes": 3955,
+      "sha256": "7c068883d4e7d5c992fe3416bd1b69ef79f9a31233ea07a0c8445d683c4d54cd"
     },
     {
       "path": "bot/src/native-hook-output.js",
@@ -2451,8 +2456,8 @@
     },
     {
       "path": "docs/AUDIENCE_FIRST_V9_EXECUTION_LEDGER.md",
-      "size_bytes": 5624,
-      "sha256": "f3c20868c532338a047628f06e717ab33ce8ae31c67cb012f6a4b98f07ff268c"
+      "size_bytes": 7943,
+      "sha256": "959fa2d8889bf3c8916859b7aa1da4f9c76f6217d8460613e0eb49cce5ac3fe3"
     },
     {
       "path": "docs/AUDIENCE_FIRST_V9_IMPLEMENTATION_PLAN.md",

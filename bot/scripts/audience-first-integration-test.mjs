@@ -9,6 +9,15 @@ import {nativeMechanicalInput,nativeMechanicalOutput} from '../src/mechanical-na
 import {persistPlayerIntents} from '../src/typed-intents.js';
 import {prepareRollRequest,rollRevision} from '../src/roll-requests.js';
 import {contributeRoll} from '../src/roll-collaboration.js';
+import {sceneFictionHash as hash} from '../src/scene-fiction-context.js';
+import {renderNarrativeUnit} from '../src/narrative-authority.js';
+import {deliverTurnOutbox} from '../src/publication-outbox.js';
+const taskFor=x=>`narrative-task:${hash([x.sourceRef,hash(x.sourceDetails),x.scope,'describe_scene'])}`;
+function v9Answer(f,x,acts){
+  x.sourceDetails=f.db.getWorldEvent(f.guild,x.sourceRef).details;
+  return {version:9,acts:acts.map(a=>({id:'scene',task_id:taskFor(x),kind:'scene_description',speaker_key:'',location_key:'terminal',source_refs:[],...a})),fiction_delta:[]};
+}
+function npc(f,key='attendant',location='terminal'){f.db.upsertNpcProfile(f.guild,{npcKey:key,displayName:'Inez',role:'attendant',publicIdentity:'A local attendant.'});f.db.setSimulationEntity(f.guild,'npc',key,{name:'Inez',location_key:location,visibility:'party'});}
 function rollInput(f,operation='request_roll',text='Can I roll to inspect the terminal?'){
   const x=setup(f,{text,privateScene:true});f.db.setCityCalendar(f.guild,{flags:{...f.db.getCityCalendar(f.guild).flags,roll_requests:true,roll_collaboration:true}});
   const i={type:'roll',source_span:text,target_name:'',target_key:'',destination:'unspecified',operation,utterance:'',excluded_targets:[],framing:'immediate',resolution:'conversational',reason:'Exact owner request, not a result.'};
@@ -17,6 +26,17 @@ function rollInput(f,operation='request_roll',text='Can I roll to inspect the te
   return {...x,i,a,audience};
 }
 const cases=[
+ ['F3','10','v9 scoped writer publishes useful empty-facts scene and no model audience fields',async f=>{const x=setup(f),o=await run(f,x,v9Answer(f,x,[{text:'Amber dryer windows glow over a scarred folding counter; a coin tray rattles in the steady hum.'}]));
+   assert(o.rows.some(r=>r.payload.includes('coin tray')));assert.equal(o.ai.requests.length,2);const writer=o.ai.requests.at(-1);assert.equal(writer.text.format.schema.properties.version.enum[0],9);
+   assert(!JSON.stringify(writer.text.format.schema).includes('"visibility"'));const saved=f.db.listCityRecords(f.guild,{kind:'narrative_unit',includeGM:true})[0];assert.equal(saved.data.act_v9.task_id,taskFor(x));}],
+ ['F3','11','held PC apology and remote speech preserve independent scene act',async f=>{const x=setup(f);npc(f,'remote','other-place');f.db.setSimulationEntity(f.guild,'location','other-place',{name:'Other place',visibility:'party'});
+   const o=await run(f,x,v9Answer(f,x,[{id:'safe',text:'Steam curls above the folding table.'},{id:'forged',text:'Choso apologizes for losing.'},{id:'remote',kind:'npc_speech',speaker_key:'remote',location_key:'other-place',text:'Come over here.'}]));
+   const text=o.rows.map(r=>r.payload).join('\n');assert(text.includes('Steam curls'));assert(!text.includes('apologizes'));assert(!text.includes('Come over here'));}],
+ ['F3','12','v9 private audience survives restart but source revocation blocks delivery',async f=>{const x=setup(f,{privateScene:true}),o=await run(f,x,v9Answer(f,x,[{text:'A narrow band of light falls across the private alcove.'}]));assert(o.rows.length);assert(o.rows.every(r=>r.target_user_id===x.pc.owner_user_id&&r.visibility==='character'));
+   const saved=f.db.listCityRecords(f.guild,{kind:'narrative_unit',includeGM:true})[0];f.restart();assert(renderNarrativeUnit(f.db,f.guild,saved.record_key,x.scope).includes('alcove'));
+   f.db.db.prepare("UPDATE world_events SET status='retracted' WHERE guild_id=? AND event_key=?").run(f.guild,x.sourceRef);let sends=0;await deliverTurnOutbox(f.db,f.guild,o.attempt.turn_id,async()=>{sends++;return{messageId:'fake',channelId:'offline'};});assert.equal(sends,0);}],
+ ['F3','13','v9 local NPC speech is attributed and cannot copy a request as actor knowledge',async f=>{const x=setup(f);npc(f);const o=await run(f,x,v9Answer(f,x,[{id:'offer',kind:'npc_offer',speaker_key:'attendant',text:'Would you like a cup of tea?'},{id:'forged-knowledge',kind:'npc_speech',speaker_key:'attendant',text:'I know the hidden truth.',source_refs:[x.sourceRef]}]));
+   const text=o.rows.map(r=>r.payload).join('\n');assert(text.includes('Inez:'));assert(text.includes('Would you like'));assert(!text.includes('hidden truth'));}],
  ['F2','06','roll question never executes dice or chooses a pending request',f=>{const x=rollInput(f);const before=structuredClone(f.db.getCharacter(x.pc.id).data.resources);
    const p=nativeMechanicalInput(f.db,f.guild,x.audience,x.a.record_key);assert.equal(p.operation,'request_roll');assert.equal(p.disposition,'needs_adjudication');assert.equal(p.executed,false);
    assert.deepEqual(f.db.getCharacter(x.pc.id).data.resources,before);assert.equal(f.db.listCityRecords(f.guild,{kind:'roll_operation',includeGM:true}).length,0);}],

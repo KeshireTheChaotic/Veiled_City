@@ -57,6 +57,7 @@ import {nativeOutcomeSchema,narrativeRequestSchema} from './gm-fiction-schema.js
 import {coordinateNarrative,narrativeModel} from './narrative-delegation.js';
 import {bindDirectorNarrativeSource} from './narrative-director-source.js';
 import {buildNarrativeContext} from './narrative-authority-context.js';
+import {narrativeResponseV9Schema,NARRATIVE_V9_INSTRUCTIONS} from './narrative-writer-v9.js';
 
 const routerSchema={
   type:"object",
@@ -986,8 +987,8 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
   async generateNarrative(guildId,packet,signal,lane='combined'){
     const model=narrativeModel(this.config,packet,lane);
     return measureStage(this.metrics,'scene_writer',async()=>{
-      try{const response=await this.requestModel({model,instructions:NARRATIVE_AUTHORITY_INSTRUCTIONS,input:JSON.stringify(packet),max_output_tokens:1800,
-        text:{format:{type:'json_schema',name:'veiled_city_delegated_narrative',strict:true,schema:narrativeResponseSchema}}},{guildId,signal,purpose:'scene_writer'});
+      try{const response=await this.requestModel({model,instructions:`${NARRATIVE_AUTHORITY_INSTRUCTIONS}\n${NARRATIVE_V9_INSTRUCTIONS}`,input:JSON.stringify(packet),max_output_tokens:1800,
+        text:{format:{type:'json_schema',name:'veiled_city_delegated_narrative_v9',strict:true,schema:narrativeResponseV9Schema}}},{guildId,signal,purpose:'scene_writer'});
         signal.throwIfAborted();return parseStructuredJsonText(response.output_text);
       }catch{throw sceneFictionFailure('creative_writer_unavailable');}
     },{guildId});

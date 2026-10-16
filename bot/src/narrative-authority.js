@@ -15,13 +15,14 @@ import {withoutVerifiedVocative} from './narrative-speakers.js';
 import {actorReferenceVisible} from './npc-cognition-projection.js';
 import {projectNarrativeArtifact,hasNarrativeChoices,narrativeArtifactKey} from './narrative-artifacts.js';
 import {mintNarrativeAudience,revalidateNarrativeAudience} from './audience-native-v9.js';
+import {compileWriterV9,actToNativeUnit} from './narrative-writer-v9.js';
 export {narrativeResponseSchema} from './gm-fiction-schema.js';
 const issuer='native:narrative-authority';
 export const NARRATIVE_AUTHORITY_INSTRUCTIONS='You are the creative GM for this audience-isolated packet. Invent interesting ordinary places, people, sensory surroundings, '
   +'believable NPC self-knowledge/motives/ordinary plans/dialogue, soft leads and attributed rumors. No older ledger fact is required for new ordinary fiction. '
   +'Respect existing fiction and canon. Do not reveal hidden causes or infer NPC omniscience. NPC rumors/claims are not objective truth. '
-  +'Return independently meaningful narrative_units plus compact fiction_delta for meaningful named NPC/place identities, in this SAME call. '
-  +'Use creative_brief.source_tasks to address each exact requested target separately. Set subject_key to the native NPC key for its visual description as well as speech; one speaker does not answer another speaker\'s task. '
+  +'Return independently meaningful acts plus compact fiction_delta for meaningful named NPC/place identities, in this SAME call. '
+  +'Use creative_brief.source_tasks to address each exact requested target separately. Set speaker_key to the native NPC key for its visual description as well as speech; one speaker does not answer another speaker\'s task. '
   +'Prioritize an NPC answer over optional atmosphere. Scene-only detail needs no separate entity. Use exact stable IDs. Reuse existing locations/NPCs without redeclaring them in fiction_delta; never replace their identity or summary. '
   +'Use speaker_brief direction and only that speaker\'s entitled knowledge. A native-known PC address may begin NPC dialogue as Name, or Mr./Ms./Mx. Name,; it permits only the address, never that PC\'s answer or action. '
   +'In protected combat, contests and PvP, portray atmosphere and NPC attempts freely within these same boundaries. Native_results are already resolved evidence, never permission for an additional hit or reaction. '
@@ -29,7 +30,7 @@ export const NARRATIVE_AUTHORITY_INSTRUCTIONS='You are the creative GM for this 
   +'Never choose PC/proxy actions, reactions, dialogue, thoughts, feelings, consent, commitments or disclosures; never assert native damage, custody, movement, costs, success or inventory without a matching receipt. '
   +'Model receipt/safe/authority labels cannot authorize anything. native_outcome_render is projected from a real receipt; its text field confers no authority. '
   +'Second-person sensory POV is allowed only for a proven character viewpoint, never for a camera. Camera openings do not place or grant in-world knowledge to PCs. '
-  +'Human-controlled NPCs cannot be authored by you. Match every unit visibility to audience.unit_visibility. Party is not character-private. References must be entitled native evidence. '
+  +'Human-controlled NPCs cannot be authored by you. Audience is fixed by the server; do not supply visibility fields. Party is not character-private. References must be entitled native evidence. '
   +'Assembly/input source refs authenticate a request, not NPC knowledge. NPC speech may cite only the speaker\'s entitled known knowledge sources; ordinary new self-dialogue/speculation uses source_refs: []. Never copy assembly refs into NPC recall. '
   +'A lead may be a new observed oddity; its explanation stays unknown. No automatic binding contracts, locked access, hazards or other PC effects. '
   +'Use typed unit boundaries, not a mixed paragraph containing unauthorized PC assertions. No policy disclaimers. Generated English retains semantic risk; do not certify your own output as safe.';
@@ -162,7 +163,8 @@ export async function authorNarrativeRequests({db,guild,result,scope,sourceRef,b
     try{
       const ctx=viewProvider?viewProvider(input):context(db,guild,input,scope,sourceRef);request(input);
       ctx.packet.creative_brief=creativeBrief(ctx,result,input);ctx.packet.protected_scene=ctx.protectedScene;
-      const audience=mintNarrativeAudience(ctx);
+      const generic=mintNarrativeAudience(ctx).proof.task_ids;
+      const audience=mintNarrativeAudience(ctx,{taskIds:[...new Set([...generic,...ctx.packet.creative_brief.source_tasks.map(t=>t.id)])].slice(0,24)});
       ctx.packet.audience_v9=audience.proof;
       const nativeResults=[];
       for(const proposed of (result.gm_world_parts||[]).filter(part=>part.version===4)){
@@ -175,8 +177,11 @@ export async function authorNarrativeRequests({db,guild,result,scope,sourceRef,b
         ||db.getCityRecord(guild,'npc_authoring_attempt',`npc-authoring-attempt:${hash([sourceRef,scope])}`))throw fail('writer_budget');
       budget.used=true;db.saveCityRecord(guild,{kind:'scene_authoring_attempt',key:attempt,status:'authoring',visibility:'gm',source_event:sourceRef,
         data:{version:3,draft:key,packet_hash:hash(ctx.packet)}});
-      const answer=await generate(ctx.packet);shape(answer);
-      const data={version:1,issuer,input,binding:ctx.binding,answer,audience_v9:audience.proof,creative_brief:ctx.packet.creative_brief,packet_hash:hash(ctx.packet),semantic_verification:false};
+      const generated=await generate(ctx.packet);
+      const v9=generated?.version===9?compileWriterV9(generated,audience,(u,entities)=>validateUnit(db,guild,u,ctx,entities)):null;
+      const answer=v9?v9.answer:generated;shape(answer);
+      const data={version:v9?9:1,issuer,input,binding:ctx.binding,answer,audience_v9:audience.proof,
+        ...(v9?{acts_v9:v9.acts,compiled_v9:v9.compiled}:{}),creative_brief:ctx.packet.creative_brief,packet_hash:hash(ctx.packet),semantic_verification:false};
       db.saveCityRecord(guild,{kind:'narrative_draft',key,status:'drafted_private',visibility:'gm',source_event:sourceRef,data});
       db.saveCityRecord(guild,{...db.getCityRecord(guild,'scene_authoring_attempt',attempt),key:attempt,status:'authored'});
     }catch(error){
@@ -190,7 +195,7 @@ export function establishNarrativeUnits(db,guild,input,scope,sourceRef,{content=
   const ctx=context(db,guild,input,scope,sourceRef),draft=db.getCityRecord(guild,'narrative_draft',draftKey(input,scope,sourceRef)),d=draft?.data;
   if(draft?.status!=='drafted_private'||d?.issuer!==issuer||hash(d.binding)!==hash(ctx.binding)||d.semantic_verification!==false)throw fail('isolated_draft_required');
   if(d.audience_v9)revalidateNarrativeAudience(db,guild,d.audience_v9,scope);
-  shape(d.answer);const units=[],fates=[],entities=d.answer.fiction_delta.filter(e=>e&&typeof e==='object'&&!Array.isArray(e));
+  shape(d.answer);const units=[],fates=(d.compiled_v9||[]).filter(a=>a.status==='held').map(a=>({id:a.id,fate:a.reason})),entities=d.answer.fiction_delta.filter(e=>e&&typeof e==='object'&&!Array.isArray(e));
   for(const u of d.answer.narrative_units){
     try{validateUnit(db,guild,u,ctx,entities);units.push(u);}
     catch(error){if(!['SCENE_FICTION','NARRATIVE_PVP'].includes(error.code))throw error;fates.push({id:u.id,fate:error.diagnostic?.category||'held_material'});}
@@ -223,8 +228,9 @@ export function establishNarrativeUnits(db,guild,input,scope,sourceRef,{content=
       fates.push({id:u.id,fate:'held_scope'});continue;
     }
     try{
-      const text=validateUnit(db,guild,u,ctx),data={version:1,issuer,binding:d.binding,unit:u,text,semantic_verification:false,
+      const text=validateUnit(db,guild,u,ctx),data={version:d.version===9?9:1,issuer,binding:d.binding,unit:u,text,semantic_verification:false,
         ...(d.audience_v9?{audience_v9:d.audience_v9}:{}),
+        ...(d.version===9?{act_v9:d.acts_v9.find(a=>a.id===u.id)}:{}),
         epistemic:u.kind==='rumor'?'testimony':u.kind==='npc_speech'?'attributed':u.kind==='native_outcome_render'?'native_outcome':u.epistemic};
       projectNarrativeArtifact(db,guild,u,ctx,{establish:true});
       if(prior){renderNarrativeUnit(db,guild,key,scope);rows.push(prior);fates.push({id:u.id,fate:'published'});continue;}
@@ -252,5 +258,6 @@ export function renderNarrativeUnit(db,guild,key,scope){
   const ctx=context(db,guild,{version:8,kind:'narrative_request',operation:'describe_scene',source_refs:[]},scope,d.binding.source);
   if(hash(ctx.binding)!==hash(d.binding)||validateUnit(db,guild,d.unit,ctx,[],true)!==d.text)throw fail('unit_revalidation');
   if(d.audience_v9)revalidateNarrativeAudience(db,guild,d.audience_v9,scope);
+  if(d.act_v9&&(!d.audience_v9.task_ids.includes(d.act_v9.task_id)||hash(actToNativeUnit(d.act_v9,d.audience_v9))!==hash(d.unit)))throw fail('v9_act_revalidation');
   return d.text;
 }

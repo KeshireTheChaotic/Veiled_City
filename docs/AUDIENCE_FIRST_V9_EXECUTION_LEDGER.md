@@ -35,4 +35,16 @@ Red: missing adapter API (exit 1). New F2 cases then **4/4**. First native integ
 
 No schema migration; additive adapter only. Public results require the existing native owner disclosure, never a writer label. Rollback is a source revert; committed outcomes are untouched. Full validation remains deferred to F7.
 
-Next: F3 scoped v9 writer/compiler and actor cognition. No live runtime, production DB, flags, push or deployment touched.
+F2 commit: `9e2f534556b7c9822cafa5e3d2dd6167b4bfe705`.
+
+## F3 — scoped v9 writer and native compiler (qualified adapter cutover)
+
+Starting SHA: `9e2f534556b7c9822cafa5e3d2dd6167b4bfe705`. The existing isolated writer now requests `narrativeResponseV9Schema`: version 9, independently task-bound acts and bounded ordinary identity proposals. No model visibility/owner/recipient/grant/effect fields. Grant task IDs are native request/task identities, sent before generation. `compileWriterV9` maps role/speaker/location/source proposals to existing native per-unit locality, proxy, actor-known/listener-entitled, material, secret, canon/identity and artifact validators. Compiler failures are part-local; unexpected programming errors propagate, never masquerade as safety success. Accepted rows bind the original act, translated unit and audience proof; deferred reads verify all three and immutable hashes.
+
+The same existing writer call handles all acts; zero extra round trips or judge. V8 fixture/flag-off readers remain temporarily reachable pending F6, but current strict provider producer is v9. Native v4 output remains separate. Existing grounded NPC cognition/import/hearing services are reused, not model-issued evidence. An assembly/input reference still cannot grant NPC knowledge. Unknown/remote/proxy speakers stay held.
+
+Red-first actual v9 output/outbox cases: **0/4 pass, 4 fail**, exit 1. After implementation **4/4**, exit 0: substantive empty-facts scene; safe sibling vs exact Choso apology/remote speaker; private restart/revocation; attributed local offer vs forged actor evidence. Combined guarded `audience-first-framework-test.mjs`, `audience-first-integration-test.mjs`, `semantic-language-robustness-test.mjs`: **46/46**, 0 skipped, exit 0. No real provider/Discord/network/API calls. Exact SEM/agency/arrival/replay assertions unchanged.
+
+Residual limitation: independently enforced source/audience/actor/receipt gates are deterministic; the meaning of newly generated ordinary prose is not universally semantically provable. Existing conservative material tripwires remain; v9 role labels alone never waive them. Further expressive false holds are F5, not claimed fixed here. No DB schema migration or historical rewrite. Rollback by source revert, preserving native outcomes.
+
+Next: F4 commit-state separation and native per-task completion. No live runtime, production DB, flags, push or deployment touched.

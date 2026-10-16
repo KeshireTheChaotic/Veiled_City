@@ -34,7 +34,10 @@ export function compileNarrativeActs({authority, grant, proposals, verifyAct}) {
     if (typeof verifyAct !== 'function') return hold(id, 'native_verifier_required');
     let native;
     try { native = verifyAct(Object.freeze({...act, source_refs: Object.freeze([...act.source_refs])}), binding); }
-    catch { return hold(id, 'native_verification_failed'); }
+    catch(error) {
+      if(!['SCENE_FICTION','NARRATIVE_PVP'].includes(error.code))throw error;
+      return hold(id, error.diagnostic?.category || 'native_verification_failed');
+    }
     if (native?.approved !== true || !safeId(native.proof_ref) || native.task_id !== act.task_id
       || native.audience !== binding.audience || native.source_event !== binding.source_event) return hold(id, 'native_verification_failed');
     return Object.freeze({id, task_id: act.task_id, kind: act.kind, status: 'verified_candidate',
