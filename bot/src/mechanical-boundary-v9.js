@@ -4,6 +4,18 @@ const id = v => typeof v === 'string' && v.length > 0 && v.length <= 256;
 const inputKinds = new Set(['request_roll', 'submit_roll']);
 const inputStatuses = new Set(['needs_adjudication', 'needs_selection', 'native_pending']);
 
+/** GM proposal projection, not a generic roll(actor) executor or player authorization. */
+export function projectGmMechanicalInput({authority,grant,proposal,verifyInput}){
+  const b=authority.inspect(grant);
+  if(b.audience!=='gm_internal'||b.native_capability!=='gm_action'||typeof verifyInput!=='function')error('native_gm_capability');
+  const p=verifyInput(proposal,b);
+  if(p?.verified!==true||p.source_event!==b.source_event||p.proof_ref!==b.proof_ref||p.request_id!==b.request_id
+    ||p.actor?.kind!=='adversary'||p.actor.id!==b.actor.id||p.operation!=='commit_adversary_attack'
+    ||!['awaiting_owner_defense','native_pending'].includes(p.disposition))error('native_gm_input_proof');
+  return Object.freeze({kind:'mechanical_input',initiator_class:b.initiator_class,operation:p.operation,actor:Object.freeze({...p.actor}),
+    request_ref:p.request_id,source_event:p.source_event,proof_ref:p.proof_ref,disposition:p.disposition,executed:false});
+}
+
 /**
  * An authenticated player asking to roll is a mechanical INPUT request, not a completed roll.
  * verifyInput MUST find the accepted typed source and owner/scene/revision, distinguish
@@ -41,11 +53,14 @@ export function projectMechanicalOutput({authority, grant, receiptRef, verifyRec
   if (binding.audience === 'gm_internal' || !id(receiptRef) || typeof verifyReceipt !== 'function')
     error('native_output_verifier_required');
   const receipt = verifyReceipt(receiptRef, binding);
+  const subject=receipt?.subject || (id(receipt?.subject_character_id)?{kind:'character',id:receipt.subject_character_id}:null);
   if (receipt?.verified !== true || receipt.ref !== receiptRef || !id(receipt.proof_ref)
     || receipt.audience !== binding.audience || receipt.request_source_event !== binding.source_event
-    || !id(receipt.native_source_event) || !id(receipt.subject_character_id) || typeof receipt.rendered_text !== 'string'
+    || !id(receipt.native_source_event) || !subject || !['character','adversary','environment'].includes(subject.kind)
+    || !id(subject.id) || typeof receipt.rendered_text !== 'string'
     || !receipt.rendered_text.trim()) error('native_output_proof');
   return Object.freeze({kind: 'mechanical_output', receipt_ref: receipt.ref,
     proof_ref: receipt.proof_ref, audience: receipt.audience, source_event: receipt.native_source_event,
-    subject_character_id: receipt.subject_character_id, text: receipt.rendered_text});
+    subject:Object.freeze({...subject}),...(subject.kind==='character'?{subject_character_id:subject.id}:{}),
+    ...(receipt.native_detail?{native_detail:receipt.native_detail}:{}),text: receipt.rendered_text});
 }

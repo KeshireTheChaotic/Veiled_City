@@ -1,6 +1,6 @@
 /** Real Daggerheart incoming standard NPC attacks. Simulation d20 rows and GM prose are not damage authority. */
 import { createHash } from "node:crypto";
-import { d, parseDice, diceSpec } from "./dice.js";
+import { d, diceSpec, gmD20Roll, gmAttackDamage } from "./dice.js";
 import { indexWorldEvent } from "./city-calendar.js";
 import { currentScene, scenePresence, sceneAccess, RANGE_BANDS } from "./scene-continuity.js";
 import { activeCityProxy } from "./city-constraints.js";
@@ -63,6 +63,8 @@ function context(db,guild,key,library,{applied=false}={}){
   if(!applied&&hash(actual.snapshot)!==hash(row.data.offer.snapshot))fail("Native attack source/scene/target compare-and-set is stale.");
   return {row,...actual};
 }
+/** Read-only live offer authorization; still no GM turn, dice, target consent or damage is created. */
+export function authorizeIncomingOffer(db,guild,key,{library}={}){return context(db,guild,key,library);}
 /** A saved human ruling reviews applicability of the template and defense features; it cannot invent dice. */
 export function prepareIncomingAttack(db,guild,user,input,options={}){
   gmOnly(user,options);
@@ -117,9 +119,8 @@ export function rollIncomingAttack(db,guild,user,key,options={}){
     if(row.data.roll)return verifyRoll(db,guild,row);
     if(row.status!=="ready")fail("Native attack is not ready.");
     assertFearIncomingExecution(db,guild,row,{autonomous:options.gm===AUTONOMOUS_FEAR_ATTACK});
-    const rng=options.rng||d,face=rng(20);if(!Number.isInteger(face)||face<1||face>20)fail("Native d20 out of range.");
-    const hit=face===20||face+c.bonus>=c.evasion,damage=hit?parseDice(c.damage,rng):null;
-    if(damage&&face===20){const spec=diceSpec(c.damage);damage.total+=spec.count*spec.sides;}
+    const rng=options.rng||d,result=gmD20Roll({kind:'attack',modifier:c.bonus,difficulty:c.evasion},rng),face=result.selected;
+    const hit=result.success,damage=gmAttackDamage(result,c.damage,rng);
     const payload={attack:key,face,bonus:c.bonus,total:face+c.bonus,evasion:c.evasion,hit,damage,type:c.damage_type,offer_hash:hash(row.data.offer)};
     const roll=db.addRoll(guild,c.snapshot.session,user,c.pc.id,"npc_incoming_standard",payload);
     const receipt=db.saveCityRecord(guild,{kind:"npc_attack_roll_receipt",key:`${key}:roll`,status:"resolved",source_event:row.source_event,
@@ -139,6 +140,17 @@ function verifyRoll(db,guild,row){
     ||roll?.roll_type!=="npc_incoming_standard"||roll.character_id!==row.subject_key||roll.session_id!==row.data.offer.snapshot.session
     ||hash(roll.payload)!==hash(payload)||payload.offer_hash!==hash(row.data.offer)||payload.attack!==row.record_key)fail("Saved native attack/damage roll ancestry required.");
   return r;
+}
+/** Read-only current source + immutable GM roll ancestry, usable by receipt-only output adapters. */
+export function incomingRollProjection(db,guild,key){
+  const {row,offer}=incomingAttackEvidence(db,guild,key),receipt=verifyRoll(db,guild,row),r=receipt.data;
+  const {count,sides,mod}=diceSpec(offer.damage);
+  if(r.face<1||r.face>20||!Number.isSafeInteger(r.face)||r.bonus!==offer.bonus||r.evasion!==offer.evasion
+    ||r.total!==r.face+r.bonus||r.hit!==(r.face===20||r.total>=r.evasion)||r.type!==offer.damage_type
+    ||!r.hit&&r.damage!==null||r.hit&&(!r.damage||r.damage.expression!==offer.damage||r.damage.modifier!==mod
+      ||r.damage.dice.length!==count||r.damage.dice.some(n=>!Number.isSafeInteger(n)||n<1||n>sides)
+      ||r.damage.total!==r.damage.dice.reduce((a,b)=>a+b,0)+mod+(r.face===20?count*sides:0)))fail('Verified incoming GM dice arithmetic required.');
+  return {row,offer,receipt};
 }
 /** Read-only immutable offer/outcome proof for a selected immediate GM move; never executes mechanics. */
 export function incomingAttackEvidence(db,guild,key,{terminal=false}={}){
