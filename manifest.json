@@ -336,8 +336,8 @@
     },
     {
       "path": "bot/scripts/gm-unified-arbitration-test.mjs",
-      "size_bytes": 116176,
-      "sha256": "17126388f00b2d878af76bcabc8a9a4f07e7680fafd0106113e801af66042b46"
+      "size_bytes": 118189,
+      "sha256": "c7045137c3ef037d3d4f36bfa70e594d950e67bef37083123a1c7d51549bcbec"
     },
     {
       "path": "bot/scripts/h01-source-recovery-test.mjs",
@@ -1446,8 +1446,8 @@
     },
     {
       "path": "bot/src/gm-unified-arbitration.js",
-      "size_bytes": 15314,
-      "sha256": "0589b8e4cd3c6cb1a2634485a9fa568871a6da6312aa33d70030b7187a38a386"
+      "size_bytes": 15721,
+      "sha256": "f95d3e70720482abe557a00c13ea576df0fd07340e068616cea7d63710164373"
     },
     {
       "path": "bot/src/gm-world-narrative.js",
@@ -1681,8 +1681,8 @@
     },
     {
       "path": "bot/src/native-house-errata.js",
-      "size_bytes": 2425,
-      "sha256": "9f672d83e9bc49a4c243e001ce12b31fa364912eda28636900fe87a1dcbe5e6e"
+      "size_bytes": 3292,
+      "sha256": "62d5b2477d308bd7f4abdc32c2a94c6507cb6a55db14421685bb866d8950f0eb"
     },
     {
       "path": "bot/src/native-house-errata.json",
@@ -3211,13 +3211,13 @@
     },
     {
       "path": "docs/UNIFIED_ARBITRATION_ADVANCED_LEDGER.md",
-      "size_bytes": 39742,
-      "sha256": "91c90e1c3208b360280f5f9cd692f3f2e0010590581d8fe01692098244ca0fb6"
+      "size_bytes": 44126,
+      "sha256": "ee02605b0523614e622ae816b83718916ac021f05d940474f5829f2d86790c7c"
     },
     {
       "path": "docs/UNIFIED_ARBITRATION_FEATURE_COVERAGE.md",
-      "size_bytes": 28431,
-      "sha256": "a0c4a7023de5ef882118c8ad536b10fc9f0ce36703e993eca45b675e273ca09f"
+      "size_bytes": 28989,
+      "sha256": "556ccd5527411211533019b6692c7f0eea4cea97725847a35b23418b89585cfa"
     },
     {
       "path": "docs/UNIFIED_GM_ARBITRATION.md",

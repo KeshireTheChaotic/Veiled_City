@@ -148,6 +148,25 @@ function packFearAttack(f,{looking=false,hopeFailure=false,hp=4,miss=false,armor
 }
 
 const cases=[
+ ...[
+   ['HR04','Pale Court Elder','adversary:pale-court-elder:invitation-revoked','npc_stress'],
+   ['HR06','Aster Vale Contractor','adversary:aster-vale-contractor:flashbang','success'],
+   ['HR07','Pale Regent','adversary:pale-regent:command-the-blood','failure'],
+   ['HR08','Morrowline Matured','adversary:morrowline-matured:spend-forecast','executor']
+ ].map(([id,template,feature,requirement])=>[id,'review','unsupported native feature has a precise private erratum hold, never substituted dice or PC effects',f=>{
+   const x=incoming(f,{template,text:'Describe the scene.'});f.db.setCityCalendar(f.guild,{flags:{...f.db.getCityCalendar(f.guild).flags,gm_discretion:true}});
+   const before=f.db.getCharacter(x.pc.id).data,origin=createArbitrationOrigin(f.db,f.guild,x.scope,x.sourceRef),
+     board=buildSceneIntentBoard(f.db,f.guild,origin,[],[{actor_key:'guard',operation:'feature',target_refs:[x.pc.id],objective_ref:'',source_refs:[],dependencies:[]}]),
+     [held]=adjudicateSceneBoard(f.db,f.guild,origin,board,[{...decision(board.data.entries[0].intent_ref,'native_feature_resolution'),
+       rule_basis_refs:['srd:gm-moves'],feature_ref:feature,stakes_kind:'native_feature'}],{library:x.library});
+   assert.equal(held.status,'needs_rules_review');assert.equal(held.visibility,'gm');assert.equal(held.data.native,null);
+   assert.equal(held.data.review_contract.erratum,id);assert.equal(held.data.review_contract.erratum_version,1);
+   assert(held.data.review_contract.requirements[requirement]);assert.match(held.data.reason,/missing native authority/i);
+   assert.deepEqual(executeUnifiedGmActions(f.db,f.guild,[held],{rng:()=>assert.fail('no unsupported RNG')}),[]);
+   assert.deepEqual(f.db.getCharacter(x.pc.id).data,before);assert.equal(f.db.getCampaign(f.guild).fear,0);
+   assert.equal(f.db.listCityRecords(f.guild,{kind:'gm_action_cost_receipt',includeGM:true}).length,0);
+   assert.equal(f.db.listCityRecords(f.guild,{kind:'gm_feature_effect_receipt',includeGM:true}).length,0);
+ }]),
  ['HR03','meshClear','ending an NPC alliance recalculates later attacks but never rewrites saved earlier dice',async f=>{
    const x=meshScenario(f),first=strikeAdversary(f,x,'before-ending',{damage:1,targetId:x.target.id}),ally=x.actors.find(a=>a.actor!=='guard'),
      source=worldInputKey('mesh-end',x.pc.id);

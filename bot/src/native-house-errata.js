@@ -29,3 +29,13 @@ export function compileNativeHouseErrata(){
 export function nativeHouseErratum(id,version=1){
   return typeof id==='string'&&Number.isSafeInteger(version)&&version>0?compileNativeHouseErrata().find(e=>e.id===id&&e.version===version)||null:null;
 }
+/** GM-private diagnosis, never an execution capability or a replacement for player choice. */
+export function nativeFeatureReviewContract(key){
+  if(typeof key!=='string')return null;
+  const entry=compileNativeHouseErrata().filter(e=>e.sources.some(s=>s.kind==='feature'&&s.key===key)).sort((a,b)=>b.version-a.version)[0];
+  if(!entry)return null;
+  return freeze({version:1,erratum:entry.id,erratum_version:entry.version,erratum_hash:hash(entry),feature:key,
+    requirements:entry.interpretation,missing:entry.interpretation.missing||entry.limitations?.join(' ')||'Native adapter for this exact operation.',
+    native_authority_granted:false,effect_status:'not_executed',
+    recovery:'Implement and qualify the missing source/owner/rules adapter, then obtain a fresh native adjudication. No PC choice, dice, consent, cost or terminal outcome is inferred.'});
+}

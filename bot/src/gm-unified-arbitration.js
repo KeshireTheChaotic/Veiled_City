@@ -13,6 +13,7 @@ import {EncounterLibrary} from './encounter.js';
 import {featureDisposition} from './native-feature-catalog.js';
 import {authorizeFeatureChoice,reserveFeatureWindow,pendingFeatureWindows} from './native-feature-windows.js';
 import {nativeAlliancePlan} from './native-encounter-relations.js';
+import {nativeFeatureReviewContract} from './native-house-errata.js';
 
 export const UNIFIED_ARBITRATION_PROMPT='Evaluate unified_arbitration in this SAME GM call. Accepted typed intents are canonical adjudication inputs; human declarations own intent; native receipts own outcomes. Select player:<original player_intents index> or exact shared/NPC intent_ref. NPC proposals select native local actor and native knowledge refs; no PC declaration or secret disclosure may be invented. Each decision needs current rules, reason, stakes before dice, and justified Difficulty for an action/reaction. NPC attack uses actual PC Evasion, never invented Difficulty. Ordinary NPC fiction normally uses npc_no_roll. PC roll questions are adjudication only: player alone executes dice. A feature decision uses proposal_version=2 and the EXACT trigger_ref and feature_ref from feature_windows; a Reaction does not mint normal spotlight. Blood Rush currently permits Stress recovery while electing the current position only; other relocation remains reviewed. Unsupported features/proxies/PvP remain review/consent. Do not emit duplicate gm_ruling/native_adjudication for a unified decision. No dice faces, role waiver, outcome or automatic Fear spending. For an explicit GM-owned alliance choice between currently active local unproxied NPC combatants, use set_allies or clear_allies, exact other NPC target_refs, npc_no_roll, srd:gm-moves, stakes=none, no feature or dice. This does not enroll PCs or prove a powered device, movement, NPC knowledge or disclosure. Group membership and relationship scores alone never grant Local Mesh.';
 
@@ -35,7 +36,7 @@ export function adjudicateSceneBoard(db,guild,origin,board,proposals,{library=ne
       (live?.status==='resolved'?historicalActionSource:consentAction)(db,guild,entry.intent_ref,{resolved:true});
     }
     if(prior){if(prior.data.proposal_hash!==hash(p)||prior.data.entry_hash!==hash(entry))throw fail('immutable_decision_changed');return prior;}
-    let status='needs_rules_review',native=null,reason='No supported native effect adapter; no outcome or permission granted.';
+    let status='needs_rules_review',native=null,review_contract=null,reason='No supported native effect adapter; no outcome or permission granted.';
     const rules=resolveRuleReferences(db,guild,'RAW',p.rule_basis_refs);
     try{
     if(!rules||!p.reason.trim()||p.advantage&&p.disadvantage)reason='Missing current rule, explanation, or incompatible dice choice.';
@@ -46,6 +47,9 @@ export function adjudicateSceneBoard(db,guild,origin,board,proposals,{library=ne
       if(feature.status==='supported'){
         native=authorizeFeatureChoice(db,guild,o,entry,p,feature.feature,{library});status=native.operation==='request_feature_reaction_roll'?'pending_pc_reaction':'gm_action_ready';
         reason='Exact native reaction occurrence only; no ordinary spotlight or player roll is inferred.';
+      }else{
+        review_contract=nativeFeatureReviewContract(p.feature_ref);
+        if(review_contract)reason+=` Missing native authority: ${review_contract.missing} [${review_contract.erratum} v${review_contract.erratum_version}]. Owner decisions remain owner-only.`;
       }
     }
     else if(entry.actor.type==='character'){
@@ -101,7 +105,7 @@ export function adjudicateSceneBoard(db,guild,origin,board,proposals,{library=ne
       status='needs_rules_review';native=null;reason=error.message;
     }
     const data={version:1,board:board.record_key,entry:entry.intent_ref,entry_hash:hash(entry),proposal:p,proposal_hash:hash(p),
-      origin:o.binding,scope:o.scope,rules:rules||[],reason,native,authority:'GM ruling only; controller executes; native receipts own outcomes.'};
+      origin:o.binding,scope:o.scope,rules:rules||[],reason,native,...(review_contract?{review_contract}:{}),authority:'GM ruling only; controller executes; native receipts own outcomes.'};
     const source=indexWorldEvent(db,guild,{key:`${key}:source`,kind:'native_gm_arbitration',source_id:'native:unified-gm',title:'Source-bound GM ruling',
       session_id:o.binding.session,scene:o.binding.scene,location_key:o.binding.location||'',visibility:'gm',details:{board:board.record_key,payload_hash:hash(data)}},'native:unified-gm');
     const saved=db.saveCityRecord(guild,{kind:'gm_arbitration_decision',key,status,source_event:source.event_key,visibility:'gm',data});
