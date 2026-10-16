@@ -5,7 +5,37 @@ import {nativeFixture} from './v9-fixtures.mjs';
 import {setup,run,unit} from './narrative-fixtures.mjs';
 import {buildNarrativeContext} from '../src/narrative-authority-context.js';
 import {mintNarrativeAudience,revalidateNarrativeAudience} from '../src/audience-native-v9.js';
+import {nativeMechanicalInput,nativeMechanicalOutput} from '../src/mechanical-native-v9.js';
+import {persistPlayerIntents} from '../src/typed-intents.js';
+import {prepareRollRequest,rollRevision} from '../src/roll-requests.js';
+import {contributeRoll} from '../src/roll-collaboration.js';
+function rollInput(f,operation='request_roll',text='Can I roll to inspect the terminal?'){
+  const x=setup(f,{text,privateScene:true});f.db.setCityCalendar(f.guild,{flags:{...f.db.getCityCalendar(f.guild).flags,roll_requests:true,roll_collaboration:true}});
+  const i={type:'roll',source_span:text,target_name:'',target_key:'',destination:'unspecified',operation,utterance:'',excluded_targets:[],framing:'immediate',resolution:'conversational',reason:'Exact owner request, not a result.'};
+  const [a]=persistPlayerIntents(f.db,f.guild,[i],x.scope,{messageId:x.messageId});
+  const ctx=buildNarrativeContext(f.db,f.guild,x.scope,x.sourceRef),audience=mintNarrativeAudience(ctx);
+  return {...x,i,a,audience};
+}
 const cases=[
+ ['F2','06','roll question never executes dice or chooses a pending request',f=>{const x=rollInput(f);const before=structuredClone(f.db.getCharacter(x.pc.id).data.resources);
+   const p=nativeMechanicalInput(f.db,f.guild,x.audience,x.a.record_key);assert.equal(p.operation,'request_roll');assert.equal(p.disposition,'needs_adjudication');assert.equal(p.executed,false);
+   assert.deepEqual(f.db.getCharacter(x.pc.id).data.resources,before);assert.equal(f.db.listCityRecords(f.guild,{kind:'roll_operation',includeGM:true}).length,0);}],
+ ['F2','07','unspecified submit stays selection-only even with one native request',f=>{const x=rollInput(f,'roll','I roll my request.'),a=f.accepted(0,'I inspect the counter.',null,{type:'search',operation:'inspect',target:{kind:'object',key:'terminal',phrase:'terminal',grounding:'known'}});
+   const q=prepareRollRequest(f.db,f.guild,{source_event:a.source_event,accepted_intent:a.record_key,character_id:x.pc.id,trait:'Knowledge',kind:'action',modifier_keys:[],difficulty_source:'',adjudication:'Inspect the terminal.'},'offline-gm');
+   const p=nativeMechanicalInput(f.db,f.guild,x.audience,x.a.record_key);assert.equal(p.disposition,'needs_selection');assert.equal(f.db.getCityRecord(f.guild,'roll_request',q.record_key).status,'pending');}],
+ ['F2','08','exact bound pending request is nonexecuting native input',f=>{const x=rollInput(f,'roll','I roll this inspection.');
+   const q=prepareRollRequest(f.db,f.guild,{source_event:x.a.source_event,accepted_intent:x.a.record_key,character_id:x.pc.id,trait:'Knowledge',kind:'action',modifier_keys:[],difficulty_source:'',adjudication:'Inspect the terminal.'},'offline-gm');
+   const p=nativeMechanicalInput(f.db,f.guild,x.audience,x.a.record_key);assert.equal(p.disposition,'native_pending');assert.equal(p.request_ref,q.record_key);assert.equal(p.executed,false);
+   assert.throws(()=>nativeMechanicalInput(f.db,f.guild,{...x.audience,grant:{}},x.a.record_key));}],
+ ['F2','09','saved roll output uses ancestry and never grants another owner or party access',f=>{const x=rollInput(f,'roll','I roll this inspection.');
+   const q=prepareRollRequest(f.db,f.guild,{source_event:x.a.source_event,accepted_intent:x.a.record_key,character_id:x.pc.id,trait:'Knowledge',kind:'action',modifier_keys:[],difficulty_source:'',adjudication:'Inspect the terminal.'},'offline-gm');
+   let n=0;const saved=contributeRoll(f.db,f.guild,x.pc.owner_user_id,{op:'roll',request:q.record_key,expected_revision:rollRevision(q),key:'af-native-roll'},{rng:()=>[9,9][n++]});
+   const output=nativeMechanicalOutput(f.db,f.guild,x.audience,{version:4,kind:'native_outcome',receipt_kind:'roll_request',ref:saved.record_key});assert.equal(output.kind,'mechanical_output');assert(output.text.includes('Critical'));
+   assert.throws(()=>nativeMechanicalOutput(f.db,f.guild,x.audience,{version:4,kind:'native_outcome',receipt_kind:'roll_request',ref:'model-spoof'}));
+   const next=setup(f,{privateScene:true,text:'What was that result?'}),g=mintNarrativeAudience(buildNarrativeContext(f.db,f.guild,next.scope,next.sourceRef));
+   assert(nativeMechanicalOutput(f.db,f.guild,g,{version:4,kind:'native_outcome',receipt_kind:'roll_request',ref:saved.record_key}).text.includes('Critical'));
+   const publicQuery=setup(f,{text:'Tell the party the result.'}),publicGrant=mintNarrativeAudience(buildNarrativeContext(f.db,f.guild,publicQuery.scope,publicQuery.sourceRef));
+   assert.throws(()=>nativeMechanicalOutput(f.db,f.guild,publicGrant,{version:4,kind:'native_outcome',receipt_kind:'roll_request',ref:saved.record_key}));}],
  ['F1','01','native placed owner gets public direct-address grant',f=>{const x=setup(f);const ctx=buildNarrativeContext(f.db,f.guild,x.scope,x.sourceRef);
    const g=mintNarrativeAudience(ctx);assert.equal(g.proof.audience,'player');assert.equal(g.proof.recipient_user_id,x.pc.owner_user_id);
    assert.equal(g.proof.viewpoint,'character');assert.throws(()=>g.authority.inspect({...g.proof}),/unissued/);}],

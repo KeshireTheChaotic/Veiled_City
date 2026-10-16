@@ -71,8 +71,8 @@
     },
     {
       "path": "bot/scripts/audience-first-integration-test.mjs",
-      "size_bytes": 3188,
-      "sha256": "49419d92e2bd5cd277e2199bfa4c05bef6c70c590e6938a9ef0a6117bbddc348"
+      "size_bytes": 7768,
+      "sha256": "82cbd123dde66abab15e14f831ab6e0fb4a7cc50301c07d7d599cbd310ddba4b"
     },
     {
       "path": "bot/scripts/audit-regression-test.mjs",
@@ -1475,6 +1475,11 @@
       "sha256": "f42459ef01a860520d1cf5d4857d7dbe00c10eec578fdc1973f64c5977133e32"
     },
     {
+      "path": "bot/src/mechanical-native-v9.js",
+      "size_bytes": 3424,
+      "sha256": "28c7f7c4ed50a60f2315f3fd771f5eb38d30a6276b6b2724f06fd14e70359f4a"
+    },
+    {
       "path": "bot/src/memory-clusters.js",
       "size_bytes": 8064,
       "sha256": "9f41f6249135ffe74d4dc5e038989b2c0fb79277b2938b29557d975c22e1d0e0"
@@ -2056,13 +2061,13 @@
     },
     {
       "path": "bot/src/typed-intents.js",
-      "size_bytes": 48350,
-      "sha256": "51d37578242697dbb1cde31e6bb04715ffdb1c7248e8729abaf8022e033b4329"
+      "size_bytes": 48568,
+      "sha256": "328a8490664fe5114e593342c007d84fd679e302fd9d60f6ef729fd45cc89f78"
     },
     {
       "path": "bot/src/typed-mechanics.js",
-      "size_bytes": 5977,
-      "sha256": "fd522bcb50f46b6de06050ef8ac37ced8db312adb651a6bc5d9bf4bfd6611d0e"
+      "size_bytes": 5677,
+      "sha256": "42b9d34aa93d89103056ac059fb7483e665751b1ab40a8191c23ffd38a9965ca"
     },
     {
       "path": "bot/src/typed-roll-outcomes.js",
@@ -2446,8 +2451,8 @@
     },
     {
       "path": "docs/AUDIENCE_FIRST_V9_EXECUTION_LEDGER.md",
-      "size_bytes": 3602,
-      "sha256": "7594a567eb3dee8451a527d52e386fc0ea6209f1c8ff067878dec7649f5db17b"
+      "size_bytes": 5624,
+      "sha256": "f3c20868c532338a047628f06e717ab33ce8ae31c67cb012f6a4b98f07ff268c"
     },
     {
       "path": "docs/AUDIENCE_FIRST_V9_IMPLEMENTATION_PLAN.md",

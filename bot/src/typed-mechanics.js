@@ -1,10 +1,11 @@
 /** Typed player mechanical intents: no regex phrases, native dice only after validated committed turn. */
 import { createHash } from 'node:crypto';
-import { pendingRollRequests, rollRevision } from './roll-requests.js';
+import { rollRevision } from './roll-requests.js';
 import { contributeRoll } from './roll-collaboration.js';
 import { isPvpIntent } from './pvp-authority.js';
 import {authoredTurnEnvelope} from './authored-turn-envelope.js';
 import {consentAction,historicalActionSource} from './action-consent.js';
+import {exactTypedRollSelection} from './mechanical-native-v9.js';
 
 const hash=s=>createHash('sha256').update(JSON.stringify(s)).digest('hex').slice(0,32);
 
@@ -20,8 +21,6 @@ export function resolveTypedNativeRolls(db,guild,scope,intents=[],messageId=''){
       results.push({status:'needs_consent',operation:intent.operation,reason:'PC conflict requires locked bilateral narrative PvP.'});
       continue;
     }
-    const pending=pendingRollRequests(db,guild,scope.actorUserId).filter(row=>row.subject_key===scope.actorCharacterId
-      &&row.status===(intent.operation==='roll'?'pending':'awaiting_damage'));
     const envelope=authoredTurnEnvelope(db,guild,messageId,scope.actorCharacterId);
     const accepted=envelope&&db.listCityRecords(guild,{kind:'typed_intent',includeGM:true,limit:500}).filter(a=>
       a.source_event===envelope.source_event&&a.data.actor===scope.actorCharacterId&&a.data.owner_user_id===scope.actorUserId
@@ -45,9 +44,7 @@ export function resolveTypedNativeRolls(db,guild,scope,intents=[],messageId=''){
       &&(scope.mode==='private'?declaration.visibility==='character'&&declaration.subject_key===scope.actorCharacterId
         :declaration.visibility==='party');}
     // Explicit native identities are exact source tokens, not a model target/name guess or a sole-request heuristic.
-    const selected=verified?pending.filter(row=>row.data.input?.accepted_intent===declaration.record_key
-      ||intent.target_key===row.record_key&&declaration.data.target_key===row.record_key
-        &&intent.source_span.split(/\s|[.,;!?()[\]{}"'`]/).includes(row.record_key)):[];
+    const selected=verified?exactTypedRollSelection(db,guild,declaration,scope,intent.operation,{targetKey:intent.target_key||''}):[];
     if(selected.length!==1){
       if(verified)db.saveCityRecord(guild,{...declaration,key:declaration.record_key,data:{...declaration.data,
         resolution:'needs_clarification',native_disposition:'exact_request_selection_required'}});

@@ -292,6 +292,7 @@ bot/src/location-language.js
 bot/src/logger.js
 bot/src/long-projects.js
 bot/src/mechanical-boundary-v9.js
+bot/src/mechanical-native-v9.js
 bot/src/memory-clusters.js
 bot/src/memory-lifecycle.js
 bot/src/message-span-ledger.js
