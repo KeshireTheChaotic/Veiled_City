@@ -70,6 +70,11 @@
       "sha256": "2a8e53109003d45e47ce7a2f52fe2bebb8821bac373503b3d7647ee4fad2d62d"
     },
     {
+      "path": "bot/scripts/audience-first-integration-test.mjs",
+      "size_bytes": 3188,
+      "sha256": "49419d92e2bd5cd277e2199bfa4c05bef6c70c590e6938a9ef0a6117bbddc348"
+    },
+    {
       "path": "bot/scripts/audit-regression-test.mjs",
       "size_bytes": 5490,
       "sha256": "628a27301dabeadf68e07714eda32543b8a557d834d34fad30e14a7ef10f2d18"
@@ -1085,6 +1090,11 @@
       "sha256": "fbbc18a414ba12d29ce1a02373984634d99407601b9bdaaeda6b2453332c8727"
     },
     {
+      "path": "bot/src/audience-native-v9.js",
+      "size_bytes": 2575,
+      "sha256": "82595e5147a93f021d62e1a38a3cff685ca60243bb09d5975dcfe723cd24fcfa"
+    },
+    {
       "path": "bot/src/authored-candidates.js",
       "size_bytes": 8558,
       "sha256": "8929889d18f3721600b8da51c0910e5b66d5cfa92d2d6a03e503d0b8eaeab919"
@@ -1496,13 +1506,13 @@
     },
     {
       "path": "bot/src/narrative-authority-context.js",
-      "size_bytes": 10709,
-      "sha256": "352ac88c922bec1f8766fe536d9f54e463f1f613165a59b930b0bfcf916c27db"
+      "size_bytes": 10801,
+      "sha256": "d56fed364b9e01820463799e3f8e12f9b13fd1c5a2f866d3dcf4052fc510f9d6"
     },
     {
       "path": "bot/src/narrative-authority.js",
-      "size_bytes": 23671,
-      "sha256": "15232aa30990e53ba1866cb500da8f9dbd0e70448784868db88dad811849b248"
+      "size_bytes": 24098,
+      "sha256": "c175ddc1369a9bee255ac4441ca31ff0e06d8d8a35ecf9f57092aa55032992d4"
     },
     {
       "path": "bot/src/narrative-completeness.js",
@@ -2436,8 +2446,8 @@
     },
     {
       "path": "docs/AUDIENCE_FIRST_V9_EXECUTION_LEDGER.md",
-      "size_bytes": 1842,
-      "sha256": "ed12a1d6c075f6ca529bc3d2be20fa93937d0802735b5f76b802b1246dc4aac2"
+      "size_bytes": 3602,
+      "sha256": "7594a567eb3dee8451a527d52e386fc0ea6209f1c8ff067878dec7649f5db17b"
     },
     {
       "path": "docs/AUDIENCE_FIRST_V9_IMPLEMENTATION_PLAN.md",

@@ -11,6 +11,7 @@ bot/package-lock.json
 bot/package.json
 bot/scripts/assembly-authority-test.mjs
 bot/scripts/audience-first-framework-test.mjs
+bot/scripts/audience-first-integration-test.mjs
 bot/scripts/audit-regression-test.mjs
 bot/scripts/autonomous-world-test.mjs
 bot/scripts/candidate-claim-quarantine-test.mjs
@@ -214,6 +215,7 @@ bot/src/assembly-publications.js
 bot/src/assembly-readiness.js
 bot/src/assembly-state.js
 bot/src/audience-first-capability.js
+bot/src/audience-native-v9.js
 bot/src/authored-candidates.js
 bot/src/authored-turn-envelope.js
 bot/src/authority-policy.js

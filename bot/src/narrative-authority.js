@@ -14,6 +14,7 @@ import {creativeBrief} from './narrative-delegation.js';
 import {withoutVerifiedVocative} from './narrative-speakers.js';
 import {actorReferenceVisible} from './npc-cognition-projection.js';
 import {projectNarrativeArtifact,hasNarrativeChoices,narrativeArtifactKey} from './narrative-artifacts.js';
+import {mintNarrativeAudience,revalidateNarrativeAudience} from './audience-native-v9.js';
 export {narrativeResponseSchema} from './gm-fiction-schema.js';
 const issuer='native:narrative-authority';
 export const NARRATIVE_AUTHORITY_INSTRUCTIONS='You are the creative GM for this audience-isolated packet. Invent interesting ordinary places, people, sensory surroundings, '
@@ -161,6 +162,8 @@ export async function authorNarrativeRequests({db,guild,result,scope,sourceRef,b
     try{
       const ctx=viewProvider?viewProvider(input):context(db,guild,input,scope,sourceRef);request(input);
       ctx.packet.creative_brief=creativeBrief(ctx,result,input);ctx.packet.protected_scene=ctx.protectedScene;
+      const audience=mintNarrativeAudience(ctx);
+      ctx.packet.audience_v9=audience.proof;
       const nativeResults=[];
       for(const proposed of (result.gm_world_parts||[]).filter(part=>part.version===4)){
         try{const projection=nativeOutcomeProjection(db,guild,proposed,scope);nativeResults.push({kind:proposed.receipt_kind,ref:proposed.ref,text:projection.text});}
@@ -173,7 +176,7 @@ export async function authorNarrativeRequests({db,guild,result,scope,sourceRef,b
       budget.used=true;db.saveCityRecord(guild,{kind:'scene_authoring_attempt',key:attempt,status:'authoring',visibility:'gm',source_event:sourceRef,
         data:{version:3,draft:key,packet_hash:hash(ctx.packet)}});
       const answer=await generate(ctx.packet);shape(answer);
-      const data={version:1,issuer,input,binding:ctx.binding,answer,creative_brief:ctx.packet.creative_brief,packet_hash:hash(ctx.packet),semantic_verification:false};
+      const data={version:1,issuer,input,binding:ctx.binding,answer,audience_v9:audience.proof,creative_brief:ctx.packet.creative_brief,packet_hash:hash(ctx.packet),semantic_verification:false};
       db.saveCityRecord(guild,{kind:'narrative_draft',key,status:'drafted_private',visibility:'gm',source_event:sourceRef,data});
       db.saveCityRecord(guild,{...db.getCityRecord(guild,'scene_authoring_attempt',attempt),key:attempt,status:'authored'});
     }catch(error){
@@ -186,6 +189,7 @@ export async function authorNarrativeRequests({db,guild,result,scope,sourceRef,b
 export function establishNarrativeUnits(db,guild,input,scope,sourceRef,{content=null}={}){
   const ctx=context(db,guild,input,scope,sourceRef),draft=db.getCityRecord(guild,'narrative_draft',draftKey(input,scope,sourceRef)),d=draft?.data;
   if(draft?.status!=='drafted_private'||d?.issuer!==issuer||hash(d.binding)!==hash(ctx.binding)||d.semantic_verification!==false)throw fail('isolated_draft_required');
+  if(d.audience_v9)revalidateNarrativeAudience(db,guild,d.audience_v9,scope);
   shape(d.answer);const units=[],fates=[],entities=d.answer.fiction_delta.filter(e=>e&&typeof e==='object'&&!Array.isArray(e));
   for(const u of d.answer.narrative_units){
     try{validateUnit(db,guild,u,ctx,entities);units.push(u);}
@@ -220,6 +224,7 @@ export function establishNarrativeUnits(db,guild,input,scope,sourceRef,{content=
     }
     try{
       const text=validateUnit(db,guild,u,ctx),data={version:1,issuer,binding:d.binding,unit:u,text,semantic_verification:false,
+        ...(d.audience_v9?{audience_v9:d.audience_v9}:{}),
         epistemic:u.kind==='rumor'?'testimony':u.kind==='npc_speech'?'attributed':u.kind==='native_outcome_render'?'native_outcome':u.epistemic};
       projectNarrativeArtifact(db,guild,u,ctx,{establish:true});
       if(prior){renderNarrativeUnit(db,guild,key,scope);rows.push(prior);fates.push({id:u.id,fate:'published'});continue;}
@@ -246,5 +251,6 @@ export function renderNarrativeUnit(db,guild,key,scope){
     ||event.details.payload_hash!==hash(d)||key!==`narrative-unit:${hash([d.binding,d.unit])}`||hash(d.binding.scope)!==hash(scope))throw fail('unit_receipt');
   const ctx=context(db,guild,{version:8,kind:'narrative_request',operation:'describe_scene',source_refs:[]},scope,d.binding.source);
   if(hash(ctx.binding)!==hash(d.binding)||validateUnit(db,guild,d.unit,ctx,[],true)!==d.text)throw fail('unit_revalidation');
+  if(d.audience_v9)revalidateNarrativeAudience(db,guild,d.audience_v9,scope);
   return d.text;
 }
