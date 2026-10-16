@@ -6,7 +6,7 @@ Accepted typed intents are canonical adjudication inputs; human declarations own
 
 ## Inventory and execution status
 
-41 adversaries / 104 occurrences (39 Passive, 35 Action, 29 Reaction, 1 untyped); 16 environments / 48 occurrences (17 Passive, 27 Action, 4 Reaction). **152 total: 5 supported bounded routes, 146 review_only, 1 needs_authoring, 0 not_mechanical.** UA6 initially had zero handlers. These counts concern textual special features only. Existing standard attacks, exceptional actions, no-roll fiction and owner reaction invitations remain separate. UA8 is PARTIAL, not a completed advanced release.
+41 adversaries / 104 occurrences (39 Passive, 35 Action, 29 Reaction, 1 untyped); 16 environments / 48 occurrences (17 Passive, 27 Action, 4 Reaction). **152 total: 6 supported bounded routes, 145 review_only, 1 needs_authoring, 0 not_mechanical.** UA6 initially had zero handlers. These counts concern textual special features only. Existing standard attacks, exceptional actions, no-roll fiction and owner reaction invitations remain separate. UA8 is PARTIAL, not a completed advanced release.
 
 Code-owned `bot/src/native-feature-definitions.json` pins each exact feature string and entire actor template using SHA-256 over JSON serialization (including stats). `native-feature-catalog.js` checks hashes, completeness and unique keys against actual content before returning immutable descriptors. Original content prose is untouched. Source order/index is part of the crosswalk; a content edit requires explicit requalification, not silent regeneration. A model cannot supply descriptors or a handler.
 
@@ -44,10 +44,12 @@ HR01 `many_deaths_fear_opportunity` is bounded native support: an AI-owned Wrait
 | HR06 Flashbang / HR07 Command the Blood | Interpretations pinned; owner choice workflows not yet implemented |
 | HR08 Spend Forecast | Interpretation pinned; owner one-d12 prefinalization reroll not yet implemented |
 | HR09 Blackout / HR10 Three Vectors | Interpretations pinned; specialized native adapters not yet implemented |
-| HR11 HP representations | Read-only remaining/marked and last-HP predicates tested; Horde/Bad Future and paid final-HP interception not yet implemented |
+| HR11 HP representations | Remaining/marked and last-HP predicates tested; native Host Horde standard-damage replacement supported; Bad Future and paid final-HP interception not yet implemented |
 | HR12 death | Legacy wording corrected to existing owner-selected native death service and automatic actual terminal status; original native death regressions retained |
 
 The ten mechanical registry entries (HR01, HR03–HR11) are not ten implemented routes. HR02 policy and HR12 existing native behavior are documented separately. This is not UA8–UA11 completion, final full qualification, or production authorization evidence.
+
+HR11's exact Green Root Host `horde_marked_half_damage` handler derives marked HP as max minus remaining and switches the existing native standard attack to `3d8+8` at ceiling-half marked. It does not edit the stat block, Attack Modifier, PC defenses or GM critical rule. GM-private pinned passive ancestry and an opaque owner-offer reference bind the chosen damage before dice; changing HP/proof before execution fails CAS. Native critical adds all three d8 maxima (24) once, plus the flat 8 once. Existing offers without the additive passive keep their historical damage expression. Other HR11 adapters remain held; the omnibus erratum stays review-only rather than pretending full coverage.
 
 ## Per-occurrence source crosswalk
 
@@ -147,7 +149,7 @@ All rows are GM-owned content, not public disclosure grants. Source paths and ex
 | `adversary:choir-storm-node:network-sight` | Passive | review_only | unmapped | `9043554b1075d43f` |
 | `adversary:choir-storm-node:brownout` | Action | review_only | unmapped | `89fdaa371aa0a127` |
 | `adversary:choir-storm-node:arc-through` | Reaction | review_only | unmapped | `f1b15ef73bb5405e` |
-| `adversary:green-root-host:horde-3d8-8` | Passive | review_only | unmapped | `d2c6817c978cf3f6` |
+| `adversary:green-root-host:horde-3d8-8` | Passive | supported (native marked-half damage) | horde_marked_half_damage | `d2c6817c978cf3f6` |
 | `adversary:green-root-host:take-the-pavement` | Action | review_only | unmapped | `cd22500e55da8911` |
 | `adversary:green-root-host:regrow-through-concrete` | Reaction | review_only | unmapped | `27e2a72af8056ab3` |
 | `adversary:civic-null-operative:countermeasure-suite` | Passive | review_only | unmapped | `7392cdfaff565c42` |

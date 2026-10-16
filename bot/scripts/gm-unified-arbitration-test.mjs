@@ -42,14 +42,14 @@ function boardFixture(f,{privateScene=false,rollQuestion=false}={}){
 import {buildNarrativeContext} from '../src/narrative-authority-context.js';
 import {mintNarrativeAudience} from '../src/audience-native-v9.js';
 import {gmD20Roll,gmAttackDamage} from '../src/dice.js';
-import {prepareIncomingAttack,prepareArbitratedIncomingAttack,rollArbitratedIncomingAttack,reviewIncomingAttack,confirmIncomingDefense,rollIncomingAttack,incomingAttackEvidence,resolveIncomingDamage,validateIncomingDamageApplication} from '../src/pc-incoming.js';
+import {prepareIncomingAttack,prepareArbitratedIncomingAttack,rollArbitratedIncomingAttack,reviewIncomingAttack,confirmIncomingDefense,rollIncomingAttack,incomingAttackEvidence,incomingRollProjection,resolveIncomingDamage,validateIncomingDamageApplication} from '../src/pc-incoming.js';
 import {EncounterLibrary} from '../src/encounter.js';
 import {buildCombatants} from '../src/combat.js';
 import {indexWorldEvent} from '../src/city-calendar.js';
 import {currentScene,recordScenePresence,scenePresence} from '../src/scene-continuity.js';
 import {projectNativeGmProposal} from '../src/gm-mechanical-v9.js';
 function npc(f,key='attendant',location='terminal'){f.db.upsertNpcProfile(f.guild,{npcKey:key,displayName:'Inez',role:'attendant',publicIdentity:'A local attendant.'});f.db.setSimulationEntity(f.guild,'npc',key,{name:'Inez',location_key:location,visibility:'party'});}
-function incoming(f,{privateScene=true,text,template='Aster Vale Contractor',stress=0,allies=0,hpMarked=null}={}){
+function incoming(f,{privateScene=true,text,template='Aster Vale Contractor',stress=0,allies=0,hpMarked=null,npcHp=null}={}){
   const x=setup(f,{privateScene,text}),library=new EncounterLibrary('../content'),scene=currentScene(f.db,f.guild);npc(f,'guard');
   f.db.setCityCalendar(f.guild,{flags:{...f.db.getCityCalendar(f.guild).flags,narrative_encounters:true}});
   f.db.updateCharacterData(x.pc.id,d=>{d.evasion=12;d.thresholds={major:7,severe:14};if(hpMarked!==null)d.resources.hp.current=hpMarked;});
@@ -57,6 +57,7 @@ function incoming(f,{privateScene=true,text,template='Aster Vale Contractor',str
   recordScenePresence(f.db,f.guild,{entity_type:'npc',entity_key:'guard',source_event:source.event_key,location_key:'terminal',zone:'interior',range:'Close',visibility:'party',accepted_by:'gm'},'gm');
   const encounter=f.db.createEncounter(f.guild,f.session.id,{status:'active',tier:1,pc_count:4,base_bp:14,budget_bp:14,composition:[{name:template,quantity:1+allies}]}),combatants=f.db.initializeCombatants(encounter.id,buildCombatants(encounter,library)),c=combatants[0];
   if(stress)f.db.updateCombatant(c.id,{stress_current:stress});
+  if(npcHp!==null)f.db.updateCombatant(c.id,{hp_current:npcHp});
   const bindings=[{actor:'guard',id:c.id}];
   for(const [i,ally] of combatants.slice(1).entries()){const actor=`ally-${i}`;npc(f,actor);
     recordScenePresence(f.db,f.guild,{entity_type:'npc',entity_key:actor,source_event:source.event_key,location_key:'terminal',zone:'interior',range:'Close',visibility:'party'},'gm');
@@ -104,8 +105,8 @@ function strikeAdversary(f,x,serial,{damage=100,critical=false}={}){
   const input={op:'damage',key:`damage-${serial}`,request:request.record_key,expected_revision:rollRevision(rolled)};
   const resolved=contributeRoll(f.db,f.guild,x.pc.owner_user_id,input,{rng:()=>damage});return {target,request:resolved,input};
 }
-function packFearAttack(f,{looking=false,hopeFailure=false,hp=4,miss=false,armor=false,pcStress=2,signalTouched=false,beforeDice=()=>{},beforeDamage=()=>{}}={}){
-  const x=incoming(f,{privateScene:false,template:'Wraith Pack',text:looking?'Describe the scene.':'I inspect the counter.'});
+function packFearAttack(f,{looking=false,hopeFailure=false,hp=4,miss=false,armor=false,pcStress=2,signalTouched=false,template='Wraith Pack',beforeDice=()=>{},beforeDamage=()=>{}}={}){
+  const x=incoming(f,{privateScene:false,template,text:looking?'Describe the scene.':'I inspect the counter.'});
   f.db.setCityCalendar(f.guild,{flags:{...f.db.getCityCalendar(f.guild).flags,gm_discretion:true,roll_requests:true,roll_collaboration:true}});
   f.db.updateCombatant(f.db.getCurrentEncounter(f.session.id)&&x.row.data.offer.input.combatant,{hp_current:hp});
   f.db.updateCharacterData(x.pc.id,d=>{d.resources.stress.current=pcStress;if(signalTouched)d.domain_cards=[{name:'Signal-Touched',domain:'Signal',active:true}];});
@@ -133,6 +134,35 @@ function packFearAttack(f,{looking=false,hopeFailure=false,hp=4,miss=false,armor
 }
 
 const cases=[
+ ['HR11','hordeAI','native AI Host attack keeps the same saved GM d20 cost and owner Armor workflow',f=>{
+   const x=packFearAttack(f,{template:'Green Root Host',hp:4,armor:true}),r=x.roll.data;
+   assert.equal(r.damage.expression,'3d8+8');assert.equal(r.damage.total,11);assert.equal(r.gm_d20.family,'gm_d20');
+   assert.equal(f.db.getCampaign(f.guild).fear,1);assert.equal(f.db.getCharacter(x.pc.id).data.resources.stress.current,2);
+   assert.equal(x.effect.data.armor,true);assert.equal(f.db.getCityRecord(f.guild,'gm_action_cost_receipt',r.cost_ref).data.amount,0);
+ }],
+ ...['hp','proof','owner'].map(kind=>['HR11',`hordeDeny-${kind}`,'native Host '+kind+' mismatch never executes unentitled dice or HP',f=>{
+   const x=incoming(f,{template:'Green Root Host',npcHp:4}),before=f.db.getCharacter(x.pc.id).data.resources;
+   if(kind==='hp')f.db.updateCombatant(x.row.data.offer.input.combatant,{hp_current:5});
+   if(kind==='proof'){
+     const p=f.db.getCityRecord(f.guild,'npc_damage_passive_proof',x.row.data.offer.damage_passive.ref);
+     f.db.saveCityRecord(f.guild,{...p,key:p.record_key,data:{...p.data,proof:{...p.data.proof,expression:'50d1000'}}});
+   }
+   if(kind==='owner')assert.throws(()=>resolveIncomingDamage(f.db,f.guild,f.pcs[1].owner_user_id,x.row.record_key,{armor:false,library:x.library}));
+   else assert.throws(()=>rollIncomingAttack(f.db,f.guild,'gm',x.row.record_key,{gm:true,library:x.library,rng:()=>assert.fail('no invalid-source RNG')}),/stale|proof/);
+   assert.deepEqual(f.db.getCharacter(x.pc.id).data.resources,before);assert.equal(f.db.listCityRecords(f.guild,{kind:'npc_attack_roll_receipt',includeGM:true}).length,0);
+ }]),
+ ...[{remaining:5,face:19,expression:'4d8+12',total:16},{remaining:4,face:19,expression:'3d8+8',total:11},
+   {remaining:3,face:20,expression:'3d8+8',total:35}].map((v,i)=>['HR11',`horde${i}`,'native Host attack uses marked-half threshold and saved damage '+JSON.stringify(v),f=>{
+   const x=incoming(f,{template:'Green Root Host',npcHp:v.remaining}),before=f.db.getCharacter(x.pc.id).data.resources;
+   const roll=rollIncomingAttack(f.db,f.guild,'gm',x.row.record_key,{gm:true,library:x.library,rng:s=>s===20?v.face:1});
+   assert.equal(roll.data.damage.expression,v.expression);assert.equal(roll.data.damage.total,v.total);
+   assert.equal(roll.data.damage.critical_bonus,v.face===20?24:0);
+   const effect=resolveIncomingDamage(f.db,f.guild,x.pc.owner_user_id,x.row.record_key,{armor:true,library:x.library});
+   assert.equal(effect.data.after.hope,before.hope);assert.equal(f.db.getCampaign(f.guild).fear,0);
+   f.restart();const replay=incomingRollProjection(f.db,f.guild,x.row.record_key).receipt;
+   assert.equal(replay.record_key,roll.record_key);assert.equal(replay.data.damage.total,v.total);
+   assert.equal(resolveIncomingDamage(f.db,f.guild,x.pc.owner_user_id,x.row.record_key,{armor:true,library:x.library}).record_key,effect.record_key);
+ }]),
  ['HR01','a','Many Deaths marks exactly one additional Stress from actual causal PC Fear and native hit',f=>{
    const x=packFearAttack(f),pc=f.db.getCharacter(x.pc.id);
    assert.equal(x.request.data.result.duality,'Fear');assert.equal(x.roll.data.hit,true);assert.equal(pc.data.resources.stress.current,3);
@@ -741,7 +771,7 @@ cases.push(
    assert.equal(new Set(rows.filter(r=>r.actor_kind==='environment').map(r=>r.actor_name)).size,16);
    for(const r of rows){assert.match(r.source_hash,/^[a-f0-9]{64}$/);assert.match(r.template_hash,/^[a-f0-9]{64}$/);
      assert(Object.isFrozen(r));assert.equal(featureDisposition(r.feature_key).status,r.native_handler?'supported':'needs_rules_review');}
-   assert.deepEqual(rows.filter(r=>r.native_handler).map(r=>r.feature_key),['adversary:pale-court-thrall:pack-pressure','adversary:static-wraith:feedback','adversary:pale-court-knight:blood-rush','adversary:wraith-pack:many-deaths','adversary:aster-vale-catastrophe-analyst:contingency-stack']);
+   assert.deepEqual(rows.filter(r=>r.native_handler).map(r=>r.feature_key),['adversary:pale-court-thrall:pack-pressure','adversary:static-wraith:feedback','adversary:pale-court-knight:blood-rush','adversary:wraith-pack:many-deaths','adversary:green-root-host:horde-3d8-8','adversary:aster-vale-catastrophe-analyst:contingency-stack']);
  }],
  ['UA6','02','typed representative descriptors distinguish action reaction passive and defense',async()=>{
    const {compileNativeFeatures}=await import('../src/native-feature-catalog.js'),rows=compileNativeFeatures(),get=(actor,name)=>rows.find(r=>r.actor_name===actor&&r.name===name);

@@ -1714,13 +1714,13 @@
       "template_hash": "f0253cf92dc720c4be3b8b977a137ceec03ffaf1036076dbc446843cef10185d",
       "index": 0,
       "type": "Passive",
-      "status": "review_only",
-      "trigger_kind": "unmapped",
-      "target_policy": "unmapped",
-      "roll_protocol": "unmapped",
-      "costs": null,
-      "native_handler": null,
-      "reason": "No qualified native feature handler."
+      "status": "supported",
+      "trigger_kind": "before_standard_attack",
+      "target_policy": "existing_standard_target",
+      "roll_protocol": "standard_attack_damage",
+      "costs": [],
+      "native_handler": "horde_marked_half_damage",
+      "reason": "HR11 remaining-vs-marked HP; exact Host changes standard damage at marked half, with native offer and damage proof."
     },
     {
       "feature_key": "adversary:green-root-host:take-the-pavement",

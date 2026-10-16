@@ -11,7 +11,9 @@ import {assertPcAttackable} from "./pc-native-eligibility.js";
 import {assertFearIncomingExecution} from "./pvp-fear-moves.js";
 import {inspectNativeGmDecision,commitGmActionCost} from './gm-action-capability.js';
 import {captureIncomingFeatureWindows} from './native-feature-windows.js';
-import {nativeAttackPassives} from './native-feature-passives.js';
+import {nativeAttackPassives,nativeStandardDamage} from './native-feature-passives.js';
+import {compileNativeFeatures} from './native-feature-catalog.js';
+import {nativeHouseErratum} from './native-house-errata.js';
 import {nativeHitFeatureCandidates,applyManyDeathsAfterIncoming} from './native-feature-hit.js';
 
 const hash=v=>createHash("sha256").update(JSON.stringify(v)).digest("hex");
@@ -69,7 +71,11 @@ function facts(db,guild,input,library,authority=null,existingOffer=null,committe
     nativeHitFeatureCandidates(db,guild,{template,combatant:c,input});
   const hit_features=committedRoll?existingOffer?.hit_features||[]:hit_details.map(p=>({ref:`hit-feature:${hash([guild,input.source,input.npc,pc.id,p])}`,fingerprint:hash(p)}));
   if(hit_features.length)snapshot.hit_features=hash(hit_features);
-  return {pc,snapshot,damage:standard[3],damage_type:standard[4],bonus:Number(template.attack)+passives.reduce((sum,p)=>sum+p.modifier,0),evasion,major,severe,defenses,
+  const damage_detail=existingOffer&&!Object.hasOwn(existingOffer,'damage_passive')?null:nativeStandardDamage({template,combatant:c,damage:standard[3]});
+  const damage_passive=damage_detail?{ref:`damage-passive:${hash([guild,input.source,input.npc,pc.id,damage_detail])}`,fingerprint:hash(damage_detail)}:null;
+  if(damage_passive)snapshot.damage_passive=hash(damage_passive);
+  return {pc,snapshot,damage:damage_detail?.expression||standard[3],damage_type:standard[4],bonus:Number(template.attack)+passives.reduce((sum,p)=>sum+p.modifier,0),evasion,major,severe,defenses,
+    ...(damage_passive?{damage_passive,damage_detail}:{}),
     ...(passives.length?{passives,passive_details:passiveDetails,base_bonus:Number(template.attack)}:{}),...(hit_features.length?{hit_features,hit_details}:{})};
 }
 /** Legality inspection alone grants no execution, ruling, encounter activation or dice. */
@@ -101,7 +107,8 @@ export function prepareIncomingAttack(db,guild,user,input,options={}){
   if(input.ruling?.startsWith('ai-decision:')&&options.gm!==NATIVE_AI_ATTACK)fail('Only the native AI-GM adapter may bind this decision.');
   const actual=facts(db,guild,input,options.library),offer={version:1,gm:user,input,snapshot:actual.snapshot,
     damage:actual.damage,damage_type:actual.damage_type,bonus:actual.bonus,evasion:actual.evasion,major:actual.major,severe:actual.severe,
-    ...(actual.passives?{passives:actual.passives,base_bonus:actual.base_bonus}:{}),...(actual.hit_features?{hit_features:actual.hit_features}:{})};
+    ...(actual.passives?{passives:actual.passives,base_bonus:actual.base_bonus}:{}),...(actual.hit_features?{hit_features:actual.hit_features}:{}),
+    ...(actual.damage_passive?{damage_passive:actual.damage_passive}:{})};
   return db.transaction(()=>{
     const key=`npc-incoming:${hash([guild,input.source,input.npc,input.combatant,input.character])}`,prior=db.getCityRecord(guild,"pc_incoming_attack",key);
     if(prior){if(hash(prior.data.offer)!==hash(offer))fail("Native attack offer identity reused.");return prior;}
@@ -111,6 +118,8 @@ export function prepareIncomingAttack(db,guild,user,input,options={}){
       status:'verified',source_event:source.event_key,visibility:'gm',data:{attack:key,proof}});
     for(const [i,proof] of (actual.hit_details||[]).entries())db.saveCityRecord(guild,{kind:'npc_hit_feature_proof',key:actual.hit_features[i].ref,
       status:'verified',source_event:source.event_key,visibility:'gm',data:{attack:key,proof}});
+    if(actual.damage_detail)db.saveCityRecord(guild,{kind:'npc_damage_passive_proof',key:actual.damage_passive.ref,
+      status:'verified',source_event:source.event_key,visibility:'gm',data:{attack:key,proof:actual.damage_detail}});
     return db.saveCityRecord(guild,{kind:"pc_incoming_attack",key,status:"awaiting_defense",source_event:source.event_key,
       visibility:"character",subject_key:actual.pc.id,data:{version:1,offer}});
   });
@@ -198,7 +207,18 @@ function verifyRoll(db,guild,row){
   return r;
 }
 function passiveProof(db,guild,row){
-  const o=row.data.offer;if(!o.passives)return;
+  const o=row.data.offer;
+  if(o.damage_passive){
+    const p=o.damage_passive,record=db.getCityRecord(guild,'npc_damage_passive_proof',p.ref),v=record?.data.proof,
+      feature=compileNativeFeatures().find(f=>f.native_handler==='horde_marked_half_damage'),erratum=nativeHouseErratum('HR11');
+    if(!v||record?.status!=='verified'||record.visibility!=='gm'||record.source_event!==row.source_event||record.data.attack!==row.record_key
+      ||hash(v)!==p.fingerprint||v.feature!==feature.feature_key||v.feature_hash!==hash(feature)||v.template_hash!==o.snapshot.template
+      ||v.erratum!=='HR11'||v.erratum_version!==1||v.erratum_hash!==hash(erratum)||v.combatant!==o.input.combatant
+      ||o.damage!==v.expression||v.expression!==(v.hp.marked_half_or_more?'3d8+8':v.original_damage)
+      ||v.hp.marked!==v.hp.max-v.hp.remaining||v.hp.marked_half_or_more!==(v.hp.marked>=Math.ceil(v.hp.max/2))
+      ||p.ref!==`damage-passive:${hash([guild,o.input.source,o.input.npc,o.input.character,v])}`)fail('Exact native Horde damage proof required.');
+  }
+  if(!o.passives)return;
   if(!Number.isSafeInteger(o.base_bonus)||!Array.isArray(o.passives)||o.passives.length>8||o.bonus!==o.base_bonus+o.passives.reduce((n,p)=>n+p.modifier,0))
     fail('Native passive bonus arithmetic required.');
   for(const p of o.passives){

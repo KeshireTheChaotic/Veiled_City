@@ -3,6 +3,20 @@ import {compileNativeFeatures} from './native-feature-catalog.js';
 import {sceneFictionHash as hash} from './scene-fiction-context.js';
 import {scenePresence,sceneAccess} from './scene-continuity.js';
 import {arbitrationFailure as fail} from './gm-arbitration-contract.js';
+import {adversaryHpState} from './combat.js';
+import {nativeHouseErratum} from './native-house-errata.js';
+
+/** Exact source-pinned standard damage replacement; not a new attack or mutable stat block. */
+export function nativeStandardDamage({template,combatant,damage}){
+  const feature=compileNativeFeatures().find(f=>f.native_handler==='horde_marked_half_damage'&&f.template_hash===hash(template));
+  if(!feature)return null;
+  const hp=adversaryHpState(combatant),erratum=nativeHouseErratum('HR11');
+  if(combatant.hp_max!==template.hp||erratum?.interpretation.Horde_threshold!=='marked_hp_at_least_ceiling_half_max')
+    throw fail('horde_native_hp_and_erratum');
+  const expression=hp.marked_half_or_more?'3d8+8':damage;
+  return {feature:feature.feature_key,feature_hash:hash(feature),template_hash:feature.template_hash,erratum:'HR11',erratum_version:1,
+    erratum_hash:hash(erratum),combatant:combatant.id,hp,original_damage:damage,expression};
+}
 
 export function nativeAttackPassives(db,guild,{npc,combatant,character,encounter,binding,template,library}){
   const feature=compileNativeFeatures().find(f=>f.actor_name===template.name&&f.native_handler==='pack_pressure');
