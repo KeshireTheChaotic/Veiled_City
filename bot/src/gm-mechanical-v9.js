@@ -6,9 +6,6 @@ import {assertFearIncomingExecution} from './pvp-fear-moves.js';
 import {inspectNativeGmDecision} from './gm-action-capability.js';
 import {sceneFictionHash as hash,sceneFictionFailure as fail} from './scene-fiction-context.js';
 
-// These are distinct proposal operations, NOT a promise of a completed native adapter.
-export const GM_MECHANICAL_OPERATIONS=Object.freeze(['request_pc_action_roll','request_pc_reaction_roll','commit_adversary_attack',
-  'commit_adversary_reaction','commit_exceptional_adversary_action','apply_world_feature']);
 export function projectNativeGmProposal(db,guild,proposal,{library}={}){
   if(!proposal||Object.keys(proposal).sort().join()!=='actor_ref,feature_ref,initiator_class,intent_kind,kind,request_id,source_task_id,stat_block_ref,target_refs,version'
     ||proposal.version!==9||proposal.kind!=='mechanical_input'||!['ai_gm','adversary','environment'].includes(proposal.initiator_class))throw fail('gm_proposal_shape');

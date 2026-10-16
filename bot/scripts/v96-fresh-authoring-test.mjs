@@ -230,7 +230,7 @@ test('OUT06 actual owner collection projects custody, not an adjacent concession
 }));
 
 test('OUT06 authenticated exact commitment is privately projectable, but private acceptance is not public disclosure',()=>nativeFixture(async f=>{
-  const {establishCommitment}=await import('../src/city-core.js'),{consentOffers,respondConsent}=await import('../src/consent-language.js');
+  const {establishCommitment}=await import('../src/city-core.js'),{consentOffers,respondConsent}=await import('../src/consent-native.js');
   setup(f);f.db.setCityCalendar(f.guild,{flags:{...f.db.getCityCalendar(f.guild).flags,natural_language:true}});
   const pc=f.pcs[0],scene=currentScene(f.db,f.guild),source=indexWorldEvent(f.db,f.guild,{key:'meeting-offer-source',kind:'observation',
     source_id:'gm',title:'Meeting invitation',visibility:'party',session_id:scene.session_id,scene:scene.key},'gm');

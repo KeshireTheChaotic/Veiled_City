@@ -7,7 +7,7 @@ import { VeiledDB } from "../src/db.js";
 import { configureCityFlags } from "../src/city-core.js";
 import { indexWorldEvent } from "../src/city-calendar.js";
 import { organizationRequest } from "../src/owned-community.js";
-import { consentOffers, respondConsent, routeConsentMessage } from "../src/consent-language.js";
+import { consentOffers, respondConsent, routeConsentMessage } from "./legacy-fixtures/consent-language.mjs";
 import { routeDiscoveryMessage } from "../src/continuity-routing.js";
 import { discoverPersonal } from "../src/personal-continuity.js";
 import { stateRevision } from "../src/ai-intents.js";

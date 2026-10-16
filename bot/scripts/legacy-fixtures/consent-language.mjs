@@ -1,6 +1,6 @@
-/** Historical exact syntax route; current commands use the native consent service. */
-import {consentOffers,respondConsent} from './consent-native.js';
-export {consentOffers,respondConsent} from './consent-native.js';
+/** OFFLINE COMPATIBILITY FIXTURE ONLY. Current commands use the native consent service. */
+import {consentOffers,respondConsent} from '../../src/consent-native.js';
+export {consentOffers,respondConsent} from '../../src/consent-native.js';
 export async function routeConsentMessage({db,message,characterId,text=message.content,deliver,detailed=false}){
   if(message.author.bot||db.getCityCalendar(message.guild.id).flags.natural_language!==true||!characterId) return detailed?null:false;
   const match=/^Regarding ([^,@\n]+)(?:@([^,\n]+))?, ([\s\S]+)$/.exec(text);if(!match) return detailed?null:false;

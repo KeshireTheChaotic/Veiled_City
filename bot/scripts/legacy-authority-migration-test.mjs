@@ -2,7 +2,7 @@
 import assert from "node:assert/strict";
 import fs from "node:fs";
 import { auditLegacyLanguageAuthority } from "../src/legacy-authority.js";
-import { rollDeclaration } from "../src/roll-language.js";
+import { rollDeclaration } from "./legacy-fixtures/roll-language.mjs";
 
 const read=file=>fs.readFileSync(new URL(`../src/${file}`,import.meta.url),"utf8");
 const report=auditLegacyLanguageAuthority({

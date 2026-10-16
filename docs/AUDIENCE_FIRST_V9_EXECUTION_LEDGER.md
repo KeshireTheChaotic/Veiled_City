@@ -183,3 +183,11 @@ NPC proposals now have distinct immutable `native_npc_scene_intent` GM-origin ev
 Latest complete compact arbitration + audience + original publication batch **72/72**, exit 0; then new AF18 real native action-Fear opportunity case **1/1**, exit 0. Earlier original publication/roll-truth batch **53/53**, exit 0. AR4 five-case selected batch plus AR3 six cases **11/11** before AF18; actual Director adapter separately **1/1**. No skips in these selections. Actual fake transport delivered the private Finesse/Difficulty 14 terms once; repeated drain sent nothing. Restart + source retraction produced **zero sends**, no rolls. `SECRET DO NOT DISCLOSE` never appeared in any payload. Owner withheld reaction created no failed response/HP effect. Source syntax and `git diff --check` exit 0. Combined and Director lanes still **2 fake provider calls**, no extra arbitration or judge; no live/provider billing/production access.
 
 AR3's explicit unsupported feature limitations still apply. Manifest sync/full mandatory validation remain deferred to AR5/F6–F7 executable freeze. The old arrival-only historical incident is still not root-caused without its production turn records.
+
+AR4 commit: `2bb2d1e930e669134730355225d0ca09e8ba241c`.
+
+## F6 / AR5 — proven producer retirement (focused passed; final gate pending)
+
+Removed two zero-runtime-consumer syntax producers from `src/`; preserved their exact behavior in offline fixtures and all original assertions. Already extracted native services, current v4 outcome readers, active pending/outbox proof and mixed flag-off/source wrappers remain. Removed one unused operation-list export, refreshed the current docs index, and recorded the per-symbol consumer/native-reader/assertion crosswalk in the purge ledger. No historical game record or native result changed. The six referenced initial doc candidates remain; no deletion for cosmetic counts.
+
+Focused AR5/D2 **2/2**, exit 0. Five original compatibility modules **5/5** (module wrappers; internal assertion counts not inferred), exit 0. New mandatory registrations: audience framework, compact audience integration, unified arbitration; all prior mandatory entries and all 39 optional matrices preserved. Full qualification, manifest sync and final receipt remain F7. No provider calls added, production operations or push.

@@ -1,11 +1,11 @@
-/** Conservative free-form mechanical declarations. Authenticated exact text authorizes only its current request; ambiguity never spends. */
+/** OFFLINE COMPATIBILITY FIXTURE ONLY. Retired syntax behavior; no production import is permitted. */
 import { createHash } from "node:crypto";
-import { personalCharacter } from "./personal-continuity.js";
-import { currentScene } from "./scene-continuity.js";
-import { indexWorldEvent } from "./city-calendar.js";
-import { rollRevision, pendingRollRequests, formatRollRequest, publishRollAmendment } from "./roll-requests.js";
-import { contributeRoll, mayKnowRoll } from "./roll-collaboration.js";
-import { StateConflictError } from "./errors.js";
+import { personalCharacter } from "../../src/personal-continuity.js";
+import { currentScene } from "../../src/scene-continuity.js";
+import { indexWorldEvent } from "../../src/city-calendar.js";
+import { rollRevision, pendingRollRequests, formatRollRequest, publishRollAmendment } from "../../src/roll-requests.js";
+import { contributeRoll, mayKnowRoll } from "../../src/roll-collaboration.js";
+import { StateConflictError } from "../../src/errors.js";
 const hash=value=>createHash("sha256").update(JSON.stringify(value)).digest("hex").slice(0,40);
 export function rollDeclaration(text){
   const exact=String(text||"").trim();
@@ -28,7 +28,7 @@ export function rollDeclaration(text){
   if(match) return {op:"damage-type",damage_type:match[1].toLowerCase()};
   return null;
 }
-export {reviewRollDeclaration} from './roll-declaration-review.js';
+export {reviewRollDeclaration} from '../../src/roll-declaration-review.js';
 export async function routeRollMessage({db,message,text=message.content,characterId,deliver,sendAmendment,detailed=false}){
   const guild=message.guild.id,flags=db.getCityCalendar(guild).flags;
   if(flags.natural_language!==true||flags.roll_collaboration!==true||!characterId||!message.id||message.author.bot) return detailed?null:false;

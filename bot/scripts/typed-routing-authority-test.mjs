@@ -6,7 +6,7 @@ import path from "node:path";
 import { VeiledDB } from "../src/db.js";
 import { captureAuthoredTurnEnvelope } from "../src/authored-turn-envelope.js";
 import { proposeIntents, acceptIntentForAdjudication, currentAcceptedIntent } from "../src/typed-intents.js";
-import { rollDeclaration } from "../src/roll-language.js";
+import { rollDeclaration } from "./legacy-fixtures/roll-language.mjs";
 
 const dir=fs.mkdtempSync(path.join(os.tmpdir(),"vc-t02-"));
 const db=new VeiledDB(path.join(dir,"fixture.sqlite"),path.resolve("sql/schema.sql"));

@@ -1,15 +1,14 @@
-# Veiled City v9.6 follow-on package
+# Veiled City — current development documentation
 
-Current execution: [V96 progress](V96_PROGRESS.md), [authority contract](V96_RULE_DISCRETION_CONTRACT.md), [source/case audit](V96_INTENT_AUTHORITY_AUDIT.md), [performance evidence](V96_TOKEN_PERFORMANCE_REPORT.md). The owner has authorized sequential local implementation; original package provenance below remains historical. No live-play prerequisite or deployment authorization.
+Audience-First Narrative v9, application `0.0.0.1`, schema 460, on `codex/audience-first-narrative-v9`.
 
-The earlier compact reporter instructions are preserved in [V95_VALIDATION_REPORTER_README.md](V95_VALIDATION_REPORTER_README.md); the supplied V96 package index does not retire them.
+- [Implementation contract](AUDIENCE_FIRST_V9_IMPLEMENTATION_PLAN.md)
+- [Execution and qualification ledger](AUDIENCE_FIRST_V9_EXECUTION_LEDGER.md)
+- [Unified GM arbitration and supported operations](UNIFIED_GM_ARBITRATION.md)
+- [Producer/native-reader deletion crosswalk](AUDIENCE_FIRST_V9_PURGE_LEDGER.md)
 
-This package is a **plan only**. It proposes a v9.6 cycle after **V95-06** has actually completed and committed. It does not modify the code or assert that V95-05/06 are complete.
+Player declarations own intent; native receipts own outcomes. Native audience grants precede writing. GM-owned discretion does not execute PC dice or waive privacy, proxy, PvP, damage/death or publication authority.
 
-**Owner amendment (2026-10-12): V95-06 is bypassed; V96 is not contingent on live-play testing or a V95-06 completion commit.** Follow [current planning status](V96_PROGRESS.md) and [the pre-implementation runbook](V96_PRE_IMPLEMENTATION_PLAN.md). Original package conditions below are historical where superseded; all V96 offline phase gates remain mandatory.
+Earlier [typed-intent progress](TYPED_INTENT_PROGRESS.md), [V96 progress](V96_PROGRESS.md), release receipts and rule/privacy/operator contracts remain historical evidence or active native contracts where referenced. They are not instructions to reset the current branch or repeat completed phases. V95-06 remains bypassed, not completed. [Compact validation policy](V9_5_LEAN_VALIDATION_POLICY.md) and [reporter documentation](V95_VALIDATION_REPORTER_README.md) remain applicable.
 
-- `V96_IMPLEMENTATION_PLAN.md` — architecture, nine phase gates, compatibility and test strategy, rollback and cost guardrails.
-- `V96_CODEX_KICKOFF.md` — direct Codex continuation, prerequisites, execution order and efficiency safeguards.
-- `V96_ACCEPTANCE_CROSSWALK.csv` — concise runnable-coverage inventory; not an instruction to create a separate heavyweight test per row.
-
-GitHub public source verified for planning: `194a64a6405a0068eb1c0a13d7ff0e38b18d1b11`. The user's accepted **local** V95-04 commit is this SHA; V95-05/06 are later required gates and may change source files and suite numbers. Do not use this package to overwrite local changes. No commits, pushes, live model calls or deployments performed by this plan.
+No push, merge, production installation, startup, flags or live-provider test is authorized by this documentation.

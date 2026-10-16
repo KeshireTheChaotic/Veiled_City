@@ -11,7 +11,7 @@ import { captureDeclaration } from "../src/player-language.js";
 import { prepareRollRequest, rollRevision, formatRollRequest } from "../src/roll-requests.js";
 import { contributeRoll, adjudicateRollSource } from "../src/roll-collaboration.js";
 import { dualityRoll } from "../src/dice.js";
-import { routeRollMessage } from "../src/roll-language.js";
+import { routeRollMessage } from "./legacy-fixtures/roll-language.mjs";
 import { configureDelegation, dispatchAiIntents, reviewAiIntent, stateRevision } from "../src/ai-intents.js";
 import { validateNarrativeClaims, materialParaphrases } from "../src/narrative-integrity.js";
 const temp=fs.mkdtempSync(path.join(os.tmpdir(),"vc-ihy2-")),file=path.join(temp,"test.sqlite"),schema=path.resolve("sql/schema.sql");

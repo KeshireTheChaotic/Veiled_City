@@ -19,6 +19,7 @@ import {ContentIndex} from '../src/content.js';
 import {FakeResponses} from './contract-fixtures.mjs';
 import {commitGmTurn} from '../src/turn-orchestration.js';
 import {nativeGmOpportunity} from '../src/gm-action-capability.js';
+import fs from 'node:fs';
 import {deliverTurnOutbox} from '../src/publication-outbox.js';
 import {adjudicateSceneBoard} from '../src/gm-unified-arbitration.js';
 const decision=(intent_ref,disposition='no_roll')=>({intent_ref,disposition,rule_basis_refs:['srd:action-rolls'],difficulty:null,trait:null,stakes_kind:disposition==='gm_attack_roll'?'native_attack':'attempt_only',stakes:'none',reason:'Ordinary costless observation.',difficulty_reason:'',feature_ref:'',experience_ref:'',advantage:false,disadvantage:false});
@@ -53,6 +54,11 @@ function incoming(f,{privateScene=true,text}={}){
 }
 
 const cases=[
+ ['AR5','19','retired syntax producers have no production import while native readers remain',async()=>{
+   for(const file of ['roll-language','consent-language'])assert.equal(fs.existsSync(`src/${file}.js`),false);
+   for(const file of fs.readdirSync('src',{recursive:true}).filter(p=>p.endsWith('.js'))){const source=fs.readFileSync(`src/${file}`,'utf8');assert(!/from\s+['"][^'"]*legacy-fixtures\//u.test(source),file);}
+   const legacy=await import('./legacy-fixtures/roll-language.mjs'),native=await import('../src/roll-declaration-review.js');assert.equal(legacy.reviewRollDeclaration,native.reviewRollDeclaration);
+   const consent=await import('./legacy-fixtures/consent-language.mjs'),service=await import('../src/consent-native.js');assert.equal(consent.respondConsent,service.respondConsent);}],
  ['AR4','18','actual non-PvP action Fear supplies an optional GM opportunity not automatic dice or spending',f=>{
    const x=boardFixture(f,{rollQuestion:true,privateScene:true}),board=buildSceneIntentBoard(f.db,f.guild,x.origin,x.rows,[]),[r]=adjudicateSceneBoard(f.db,f.guild,x.origin,board,
      [{...decision('player:0','request_pc_action_roll'),difficulty:12,trait:'Finesse',stakes:'Attempt only.',difficulty_reason:'Current native scene.'}]);
