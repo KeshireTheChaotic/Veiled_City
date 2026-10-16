@@ -1354,13 +1354,13 @@
       "template_hash": "00949a801df5e696f63819d56baf70d50e6b52642c7863b1d25cbd238b7bdfab",
       "index": 1,
       "type": "Action",
-      "status": "review_only",
-      "trigger_kind": "unmapped",
-      "target_policy": "unmapped",
-      "roll_protocol": "unmapped",
-      "costs": null,
-      "native_handler": null,
-      "reason": "No qualified native feature handler."
+      "status": "supported",
+      "trigger_kind": "spotlight_action",
+      "target_policy": "single_visible_same_zone",
+      "roll_protocol": "pc_reaction_each",
+      "costs": [{"resource":"fear","amount":1}],
+      "native_handler": "regent_owner_resource_choice",
+      "reason": "Bounded same-zone Presence 20 reaction; failed owner selects 2 Hope or 2 Stress. Command selection remains scoped review until a communicated bounded command and supported owner declaration/effect exist."
     },
     {
       "feature_key": "adversary:pale-regent:second-face",

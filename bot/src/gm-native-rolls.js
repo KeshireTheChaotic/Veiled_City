@@ -18,7 +18,7 @@ import {indexWorldEvent} from './city-calendar.js';
 import {commitFeatureChoice,commitFeatureReactionCost} from './native-feature-windows.js';
 import {applyFeatureReactionOutcome,validateFeatureInvitation,featureReactionStakes,cancelFeatureReaction} from './native-feature-effects.js';
 import {commitNativeNpcAlliance} from './native-encounter-relations.js';
-import {prepareGroupFeature,inspectGroupFeature,groupReactionState,groupReactionDetails} from './native-group-features.js';
+import {prepareGroupFeature,inspectGroupFeature,groupReactionState,groupReactionDetails,groupReactionOptions} from './native-group-features.js';
 
 function dependencyState(db,guild,entry){
   for(const ref of entry.dependencies){
@@ -118,6 +118,7 @@ export function inspectGmReactionInvitation(db,guild,user,key){
   const state=group?groupReactionState(db,guild,row,terminal):terminal?.status||'pending';
   return {row,pc,terms:{request:row.record_key,revision:hash(row.data),status:state==='awaiting_owner'?'awaiting_choice':state,trait:p.trait,difficulty:p.difficulty,
     ...(group&&state==='resolved'?{native_effect:groupReactionDetails(db,guild,row)}:{}),
+    ...(group&&state==='awaiting_owner'?{options:groupReactionOptions(n.feature)}:{}),
     stakes:n.feature?featureReactionStakes(n.feature):'Success or failure settles your reaction to the local NPC attempt only. Damage, custody, movement and costs require separate native receipts.',
     reason:'Native source-bound local NPC reaction request; you choose whether and how to respond.',
     authority:'Pending only. Choose your response; no roll, damage or spending is inferred.'}};

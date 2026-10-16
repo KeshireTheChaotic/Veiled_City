@@ -149,17 +149,19 @@ function packFearAttack(f,{looking=false,hopeFailure=false,hp=4,miss=false,armor
 
 const VOLLEY='adversary:ritual-enforcement-team:coordinated-volley';
 const LANES='adversary:traffic-saint:all-lanes-stop',FLASH='adversary:aster-vale-contractor:flashbang';
-function groupReactionScenario(f,{flash=false,fear=2,expectReady=true,privateScene=false,beforeDecision=()=>{},proposalPatch={},targets=null,throughTurn=false}={}){
-  const x=incoming(f,{privateScene,template:flash?'Aster Vale Contractor':'Traffic Saint',text:'Describe the scene.'});
+const REGENT='adversary:pale-regent:command-the-blood';
+function groupReactionScenario(f,{flash=false,regent=false,fear=2,expectReady=true,privateScene=false,beforeDecision=()=>{},proposalPatch={},targets=null,throughTurn=false}={}){
+  const x=incoming(f,{privateScene,template:regent?'Pale Regent':flash?'Aster Vale Contractor':'Traffic Saint',text:'Describe the scene.'});
   f.db.setCityCalendar(f.guild,{flags:{...f.db.getCityCalendar(f.guild).flags,gm_discretion:true,roll_requests:true,roll_collaboration:true}});
   f.db.changeFear(f.guild,fear-f.db.getCampaign(f.guild).fear);
   for(const pc of f.pcs.slice(1,3))recordScenePresence(f.db,f.guild,{entity_type:'character',entity_key:pc.id,source_event:x.row.data.offer.input.source,
     location_key:'terminal',zone:'interior',range:'Close',visibility:'party',accepted_by:pc.owner_user_id},'fixture-native');
   beforeDecision(x);
   const rows=persistPlayerIntents(f.db,f.guild,candidate(x.text).player_intents,x.scope,{messageId:x.messageId}),origin=createArbitrationOrigin(f.db,f.guild,x.scope,x.sourceRef),
-    proposal={actor_key:'guard',operation:'feature',target_refs:(targets?targets.map(i=>f.pcs[i]):f.pcs.slice(0,flash?1:3)).map(p=>p.id),objective_ref:'',source_refs:[],dependencies:[]},
+    proposal={actor_key:'guard',operation:'feature',target_refs:(targets?targets.map(i=>f.pcs[i]):f.pcs.slice(0,flash||regent?1:3)).map(p=>p.id),objective_ref:'',source_refs:[],dependencies:[]},
     board=buildSceneIntentBoard(f.db,f.guild,origin,rows,[proposal]),[r]=adjudicateSceneBoard(f.db,f.guild,origin,board,[{...decision(board.data.entries[1].intent_ref,'native_feature_resolution'),
-      rule_basis_refs:['srd:reaction-rolls'],stakes_kind:'native_feature',feature_ref:flash?FLASH:LANES,trait:'Instinct',difficulty:flash?12:14,stakes:'Exact native feature reaction.',...proposalPatch}],{library:x.library});
+      rule_basis_refs:['srd:reaction-rolls'],stakes_kind:'native_feature',feature_ref:regent?REGENT:flash?FLASH:LANES,
+      trait:regent?'Presence':'Instinct',difficulty:regent?20:flash?12:14,stakes:'Exact native feature reaction.',...proposalPatch}],{library:x.library});
   if(!expectReady)return {...x,decision:r};
   assert.equal(r.status,'gm_action_ready',r.data.reason);
   if(throughTurn)return {...x,decision:r,proposal};
@@ -204,6 +206,131 @@ function volleyScenario(f,{evasions=[12,17,24],fear=3,privateScene=false,extraSp
 }
 function readyVolley(f,x,i=0){const pc=f.pcs[i],a=x.attacks[i];reviewIncomingAttack(f.db,f.guild,pc.owner_user_id,a.record_key,{library:x.library});confirmIncomingDefense(f.db,f.guild,pc.owner_user_id,a.record_key);return a;}
 const cases=[
+ ['UA9','R01','Regent failure awaits exactly its owner alternatives with no automatic resources, response or extra metacurrency',async f=>{
+   const x=groupReactionScenario(f,{regent:true}),before=structuredClone(f.db.getCharacter(x.pc.id).data.resources),a=submitGroupReaction(f,x,0,[2,1]);
+   assert.equal(a.calls,2);assert.equal(f.db.getCampaign(f.guild).fear,1,'Exactly one feature Fear, no reaction Fear.');
+   const terms=inspectGmReactionInvitation(f.db,f.guild,x.pc.owner_user_id,a.child.record_key).terms;
+   assert.equal(terms.status,'awaiting_choice');assert.deepEqual(terms.options,['hope','stress','command']);
+   assert.deepEqual(f.db.getCharacter(x.pc.id).data.resources,before);
+   const {nativeGmNotice}=await import('../src/gm-arbitration-output.js');
+   const notice=nativeGmNotice(f.db,f.guild,a.child.record_key,{mode:'private',actorUserId:x.pc.owner_user_id,actorCharacterId:x.pc.id});
+   assert.match(notice.text,/failed.*saved/);assert.match(notice.text,/"choice":"hope"/);assert.match(notice.text,/"choice":"command"/);
+   assert(!notice.text.includes('You obey'));assert.equal(f.db.listCityRecords(f.guild,{kind:'gm_group_feature_effect',includeGM:true}).length,0);
+ }],
+ ...['hope','stress'].map(choice=>['UA9',`R02-${choice}`,'Regent exact owner resource choice commits once without HP, Armor, narration or sibling changes',async f=>{
+   const x=groupReactionScenario(f,{regent:true}),a=submitGroupReaction(f,x,0,[2,1]),{chooseGroupReactionOutcome,validateGroupReactionEffect}=await import('../src/native-group-features.js'),
+     input={op:'gm-reaction-choice',request:a.child.record_key,revision:hash(a.child.data),choice},before=f.pcs.map(p=>structuredClone(f.db.getCharacter(p.id).data));
+   const effect=chooseGroupReactionOutcome(f.db,f.guild,x.pc.owner_user_id,input,{interactionId:'regent-choice',authoredText:JSON.stringify(input)});
+   assert.equal(effect.status,'resolved');assert.equal(effect.data.hope,choice==='hope'?2:0);assert.equal(effect.data.stress,choice==='stress'?2:0);
+   const after=f.db.getCharacter(x.pc.id).data;assert.equal(after.resources.hope,choice==='hope'?0:2);assert.equal(after.resources.stress.current,choice==='stress'?4:2);
+   assert.deepEqual(after.resources.hp,before[0].resources.hp);assert.deepEqual(after.resources.armor,before[0].resources.armor);
+   for(const [i,pc] of f.pcs.entries())if(i)assert.deepEqual(f.db.getCharacter(pc.id).data,before[i]);
+   f.restart();assert.equal(validateGroupReactionEffect(f.db,f.guild,effect.record_key).record_key,effect.record_key);
+   assert.equal(chooseGroupReactionOutcome(f.db,f.guild,x.pc.owner_user_id,input,{interactionId:'repeat-regent',authoredText:JSON.stringify(input)}).record_key,effect.record_key);
+   assert.equal(f.db.getCampaign(f.guild).fear,1);assert.equal(f.db.listCityRecords(f.guild,{kind:'gm_group_feature_effect',includeGM:true}).length,1);
+ }]),
+ ['UA9','R03','Regent Critical reaction clears no Stress and creates no Hope, Fear, owner option or compelled response',f=>{
+   const x=groupReactionScenario(f,{regent:true}),before=f.db.getCharacter(x.pc.id).data.resources,a=submitGroupReaction(f,x,0,[12,12]);
+   assert.equal(a.request.data.result.duality,'Critical');assert.equal(inspectGmReactionInvitation(f.db,f.guild,x.pc.owner_user_id,a.child.record_key).terms.status,'resolved');
+   assert.deepEqual(f.db.getCharacter(x.pc.id).data.resources,before);assert.equal(f.db.getCampaign(f.guild).fear,1);
+ }],
+ ['UA9','R04','Regent owner command selection stays scoped review without a communicated supported command or fabricated compliance',async f=>{
+   const x=groupReactionScenario(f,{regent:true}),a=submitGroupReaction(f,x,0,[2,1]),{chooseGroupReactionOutcome}=await import('../src/native-group-features.js'),
+     input={op:'gm-reaction-choice',request:a.child.record_key,revision:hash(a.child.data),choice:'command'},before=f.db.getCharacter(x.pc.id).data;
+   const held=chooseGroupReactionOutcome(f.db,f.guild,x.pc.owner_user_id,input,{interactionId:'regent-command',authoredText:JSON.stringify(input)});
+   assert.equal(held.status,'needs_rules_review');assert.match(held.data.reason,/command|declaration/);
+   assert.deepEqual(f.db.getCharacter(x.pc.id).data,before);assert.equal(f.db.listCityRecords(f.guild,{kind:'gm_group_feature_effect',includeGM:true}).length,0);
+ }],
+ ['UA9','R05','Regent wrong owner, stale revision and unsupported resource amount cannot authorize choice',async f=>{
+   const x=groupReactionScenario(f,{regent:true}),a=submitGroupReaction(f,x,0,[2,1]),{chooseGroupReactionOutcome}=await import('../src/native-group-features.js'),
+     input={op:'gm-reaction-choice',request:a.child.record_key,revision:hash(a.child.data),choice:'hope'},before=f.db.getCharacter(x.pc.id).data;
+   for(const [user,proposal] of [[f.pcs[1].owner_user_id,input],[x.pc.owner_user_id,{...input,revision:'stale'}],[x.pc.owner_user_id,{...input,amount:0}]])
+     assert.throws(()=>chooseGroupReactionOutcome(f.db,f.guild,user,proposal,{interactionId:'bad-regent',authoredText:JSON.stringify(proposal)}));
+   assert.deepEqual(f.db.getCharacter(x.pc.id).data,before);
+ }],
+ ...['hope','stress'].map(choice=>['UA9',`R06-${choice}`,'Regent unaffordable resource branch stays held, never negative Hope or native HP overflow',async f=>{
+   const x=groupReactionScenario(f,{regent:true,beforeDecision:x=>f.db.updateCharacterData(x.pc.id,d=>{if(choice==='hope')d.resources.hope=1;else d.resources.stress.current=5;})}),
+     a=submitGroupReaction(f,x,0,[2,1]),{chooseGroupReactionOutcome}=await import('../src/native-group-features.js'),
+     input={op:'gm-reaction-choice',request:a.child.record_key,revision:hash(a.child.data),choice},before=f.db.getCharacter(x.pc.id).data;
+   const held=chooseGroupReactionOutcome(f.db,f.guild,x.pc.owner_user_id,input,{interactionId:'short-regent',authoredText:JSON.stringify(input)});
+   assert.equal(held.status,'needs_rules_review');assert.deepEqual(f.db.getCharacter(x.pc.id).data,before);
+   assert.equal(f.db.listCityRecords(f.guild,{kind:'gm_group_feature_effect',includeGM:true}).length,0);
+ }]),
+ ['UA9','R07','Regent real owner command publishes its exact private resource result once through native outbox',async f=>{
+   const x=groupReactionScenario(f,{regent:true}),a=submitGroupReaction(f,x,0,[2,1]),sent=[],
+     input={op:'gm-reaction-choice',request:a.child.record_key,revision:hash(a.child.data),choice:'hope'},
+     i=fakeInteraction({gm:false,sub:'window'});
+   Object.assign(i,{id:'regent-owner-command',guildId:f.guild,user:{id:x.pc.owner_user_id,username:x.pc.owner_user_id},commandName:'vc-roll',isChatInputCommand:()=>true,
+     guild:{id:f.guild,members:{fetch:async user=>({send:async body=>{sent.push({user,text:body.content||body});return {id:'regent-ack',channelId:'regent-dm'};}})}}});
+   i.options.getString=key=>key==='json'?JSON.stringify(input):null;await handleCommand(i,{db:f.db,gm:{}});
+   assert.equal(sent.length,1);assert.equal(sent[0].user,x.pc.owner_user_id);assert.match(sent[0].text,/Spent 2 Hope/);
+   assert(!/SECRET|obey|surrender/.test(sent[0].text));
+   const {publishGmArbitrationNotice}=await import('../src/native-publications.js');f.restart();
+   await publishGmArbitrationNotice(f.db,f.guild,a.child.record_key,async()=>assert.fail('acknowledged result is not resent'));
+   assert.equal(f.db.getCharacter(x.pc.id).data.resources.hope,0);
+   const jobs=f.db.listCityRecords(f.guild,{kind:'gm_arbitration_publication',includeGM:true}).filter(r=>r.data.ref===a.child.record_key&&r.data.turn_id),
+     rows=jobs.flatMap(j=>f.db.listTurnPublications(f.guild,j.data.turn_id));
+   assert(rows.some(r=>r.status==='delivered'&&r.payload.includes('Spent 2 Hope')&&r.target_character_id===x.pc.id&&r.visibility==='character'));
+ }],
+ ...['source','owner','scene'].map(mismatch=>['UA9',`R08-${mismatch}`,'Regent changed source, owner or scene cannot use saved choice to mint a new resource consequence',async f=>{
+   const x=groupReactionScenario(f,{regent:true}),a=submitGroupReaction(f,x,0,[2,1]),{chooseGroupReactionOutcome}=await import('../src/native-group-features.js'),
+     input={op:'gm-reaction-choice',request:a.child.record_key,revision:hash(a.child.data),choice:'stress'};
+   if(mismatch==='source')indexWorldEvent(f.db,f.guild,{key:a.child.source_event,status:'retracted'},'fixture-retraction');
+   if(mismatch==='owner')f.db.db.prepare('UPDATE characters SET owner_user_id=? WHERE id=?').run(f.pcs[1].owner_user_id,x.pc.id);
+   if(mismatch==='scene')f.db.resetDirectorRound(f.session.id,{advanceScene:true,sceneLabel:'A genuinely different scene'});
+   const before=f.db.getCharacter(x.pc.id).data;
+   assert.throws(()=>chooseGroupReactionOutcome(f.db,f.guild,x.pc.owner_user_id,input,{interactionId:'stale-regent',authoredText:JSON.stringify(input)}));
+   assert.deepEqual(f.db.getCharacter(x.pc.id).data,before);assert.equal(f.db.listCityRecords(f.guild,{kind:'gm_group_feature_effect',includeGM:true}).length,0);
+ }]),
+ ['UA9','R09','Regent insufficient Fear does not create invitations, dice or costs',f=>{
+   const x=groupReactionScenario(f,{regent:true,fear:0,expectReady:false});assert.equal(x.decision.status,'needs_rules_review');
+   assert.deepEqual(executeUnifiedGmActions(f.db,f.guild,[x.decision],{rng:()=>assert.fail('held native feature never rolls')}),[]);
+   assert.equal(f.db.listCityRecords(f.guild,{kind:'gm_action_cost_receipt',includeGM:true}).length,0);
+   assert.equal(f.db.listCityRecords(f.guild,{kind:'gm_group_feature_execution',includeGM:true}).length,0);
+ }],
+ ['UA9','R10','Regent successful reaction cannot be converted into a forced resource choice',async f=>{
+   const x=groupReactionScenario(f,{regent:true}),a=submitGroupReaction(f,x,0,[12,12]),{chooseGroupReactionOutcome}=await import('../src/native-group-features.js'),
+     input={op:'gm-reaction-choice',request:a.child.record_key,revision:hash(a.child.data),choice:'hope'},before=f.db.getCharacter(x.pc.id).data;
+   assert.throws(()=>chooseGroupReactionOutcome(f.db,f.guild,x.pc.owner_user_id,input,{interactionId:'success-regent',authoredText:JSON.stringify(input)}));
+   assert.deepEqual(f.db.getCharacter(x.pc.id).data,before);
+ }],
+ ['UA9','R11','Regent withheld reaction is a native neutral terminal, not a failed roll or PC compliance',f=>{
+   const x=groupReactionScenario(f,{regent:true}),child=groupChild(f,x,0),terms=inspectGmReactionInvitation(f.db,f.guild,x.pc.owner_user_id,child.record_key).terms,
+     input={op:'gm-reaction-withdraw',request:child.record_key,revision:terms.revision},before=f.db.getCharacter(x.pc.id).data;
+   withdrawGmReactionInvitation(f.db,f.guild,x.pc.owner_user_id,input,{interactionId:'regent-withhold',authoredText:JSON.stringify(input)});
+   assert.equal(inspectGmReactionInvitation(f.db,f.guild,x.pc.owner_user_id,child.record_key).terms.status,'withdrawn');
+   assert.deepEqual(f.db.getCharacter(x.pc.id).data,before);assert.equal(f.db.listCityRecords(f.guild,{kind:'gm_group_feature_effect',includeGM:true}).length,0);
+   assert.equal(f.db.getCityRecord(f.guild,'gm_group_feature_execution',x.group.record_key).status,'resolved');
+ }],
+ ['UA9','R12','Regent nonlocal unqualified range stays held instead of silently inventing feature reach',f=>{
+   const x=groupReactionScenario(f,{regent:true,expectReady:false,beforeDecision:x=>recordScenePresence(f.db,f.guild,
+     {entity_type:'character',entity_key:x.pc.id,source_event:x.row.data.offer.input.source,location_key:'terminal',zone:'exterior',range:'Close',visibility:'party',accepted_by:x.pc.owner_user_id},'fixture-native')});
+   assert.equal(x.decision.status,'needs_rules_review');assert.equal(f.db.getCampaign(f.guild).fear,2);
+   assert.equal(f.db.listCityRecords(f.guild,{kind:'gm_group_feature_execution',includeGM:true}).length,0);
+ }],
+ ['UA9','R13','combined Regent GM turn reserves only its owner invitation without extra model calls or automatic PC dice',async f=>{
+   const x=groupReactionScenario(f,{regent:true,throughTurn:true}),r=candidate(x.text);
+   r.unified_arbitration={version:1,npc_intents:[x.proposal],decisions:[x.decision.data.proposal]};
+   const out=await run(f,x,{version:9,acts:[],fiction_delta:[]},r),rows=out.rows.filter(row=>row.payload.includes('Pending owner reaction'));
+   assert.equal(out.ai.requests.length,2);assert.equal(rows.length,1);assert.match(rows[0].payload,/Presence, Difficulty 20/);
+   assert.equal(rows[0].visibility,'character');assert.equal(rows[0].target_user_id,x.pc.owner_user_id);assert.equal(rows[0].target_character_id,x.pc.id);
+   assert(!out.rows.filter(row=>row.surface==='party').some(row=>/gm-reaction-review|lose 2 Hope/.test(row.payload)));
+   assert.equal(f.db.listCityRecords(f.guild,{kind:'roll_request',includeGM:true}).length,0);assert.equal(f.db.getCampaign(f.guild).fear,1);
+   f.restart();let sent=0;await deliverTurnOutbox(f.db,f.guild,out.attempt.turn_id,async row=>{sent++;return {messageId:`regent-invite-${sent}`,channelId:'offline'};});
+   assert(sent>0);await deliverTurnOutbox(f.db,f.guild,out.attempt.turn_id,async()=>assert.fail('no replay delivery'));
+ }],
+ ['UA9','R14','Regent effect proof rejects altered cost amounts while preserving the native committed resource history',async f=>{
+   const x=groupReactionScenario(f,{regent:true}),a=submitGroupReaction(f,x,0,[2,1]),{chooseGroupReactionOutcome,validateGroupReactionEffect}=await import('../src/native-group-features.js'),
+     input={op:'gm-reaction-choice',request:a.child.record_key,revision:hash(a.child.data),choice:'hope'},
+     effect=chooseGroupReactionOutcome(f.db,f.guild,x.pc.owner_user_id,input,{interactionId:'regent-proof',authoredText:JSON.stringify(input)}),before=f.db.getCharacter(x.pc.id).data;
+   f.db.saveCityRecord(f.guild,{...effect,key:effect.record_key,data:{...effect.data,hope:1}});
+   assert.throws(()=>validateGroupReactionEffect(f.db,f.guild,effect.record_key));assert.deepEqual(f.db.getCharacter(x.pc.id).data,before);
+ }],
+ ['UA9','R15','actual combined GM prompt advertises Regent native Presence 20 rather than borrowing another feature rules',f=>{
+   const x=groupReactionScenario(f,{regent:true,throughTurn:true}),origin=createArbitrationOrigin(f.db,f.guild,x.scope,x.sourceRef),
+     board=arbitrationPromptBoard(f.db,f.guild,origin),feature=board.npc_candidates.find(n=>n.actor_key==='guard').action_features.find(a=>a.feature_ref===REGENT);
+   assert(feature);assert.equal(feature.trait,'Presence');assert.equal(feature.difficulty,20);assert.deepEqual(feature.rule_basis_refs,['srd:reaction-rolls']);
+ }],
  ['UA12','G23','native notice reservation failure rolls back only the new owner option and preserves saved reaction dice',async f=>{
    const x=groupReactionScenario(f,{flash:true}),a=submitGroupReaction(f,x,0),{chooseGroupReactionOutcome}=await import('../src/native-group-features.js'),
      input={op:'gm-reaction-choice',request:a.child.record_key,revision:hash(a.child.data),choice:'stress'},save=f.db.saveCityRecord.bind(f.db);
@@ -1357,7 +1484,7 @@ cases.push(
    assert.equal(new Set(rows.filter(r=>r.actor_kind==='environment').map(r=>r.actor_name)).size,16);
    for(const r of rows){assert.match(r.source_hash,/^[a-f0-9]{64}$/);assert.match(r.template_hash,/^[a-f0-9]{64}$/);
      assert(Object.isFrozen(r));assert.equal(featureDisposition(r.feature_key).status,r.native_handler?'supported':'needs_rules_review');}
-   assert.deepEqual(rows.filter(r=>r.native_handler).map(r=>r.feature_key),['adversary:pale-court-thrall:pack-pressure',FLASH,'adversary:static-wraith:feedback','adversary:choir-relay:local-mesh','adversary:pale-court-knight:blood-rush',VOLLEY,LANES,'adversary:wraith-pack:many-deaths','adversary:green-root-host:horde-3d8-8','adversary:aster-vale-catastrophe-analyst:contingency-stack']);
+   assert.deepEqual(rows.filter(r=>r.native_handler).map(r=>r.feature_key),['adversary:pale-court-thrall:pack-pressure',FLASH,'adversary:static-wraith:feedback','adversary:choir-relay:local-mesh','adversary:pale-court-knight:blood-rush',VOLLEY,LANES,'adversary:wraith-pack:many-deaths',REGENT,'adversary:green-root-host:horde-3d8-8','adversary:aster-vale-catastrophe-analyst:contingency-stack']);
  }],
  ['UA6','02','typed representative descriptors distinguish action reaction passive and defense',async()=>{
    const {compileNativeFeatures}=await import('../src/native-feature-catalog.js'),rows=compileNativeFeatures(),get=(actor,name)=>rows.find(r=>r.actor_name===actor&&r.name===name);

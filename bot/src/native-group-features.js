@@ -15,13 +15,22 @@ import {EncounterLibrary} from './encounter.js';
 import {reserveGmArbitrationNotice} from './native-publications.js';
 
 const LANES='adversary:traffic-saint:all-lanes-stop',FLASH='adversary:aster-vale-contractor:flashbang';
+const REGENT='adversary:pale-regent:command-the-blood';
 const policies=Object.freeze({[LANES]:Object.freeze({trait:'Instinct',difficulty:14,range:'Far',all:true,condition:'Movement limited',expiry:'next_spotlight'}),
-  [FLASH]:Object.freeze({trait:'Instinct',difficulty:12,range:'Close',all:false,condition:'Vulnerable',expiry:'until_cleared'})});
+  [FLASH]:Object.freeze({trait:'Instinct',difficulty:12,range:'Close',all:false,condition:'Vulnerable',expiry:'until_cleared'}),
+  [REGENT]:Object.freeze({trait:'Presence',difficulty:20,range:'Melee',all:false,condition:null,expiry:null})});
 const executionKey=key=>`group-feature:${hash(key)}`,effectKey=key=>`group-effect:${hash(key)}`;
 export const isGroupFeature=key=>Object.hasOwn(policies,key);
+export function groupReactionRules(key){
+  const policy=policies[key];if(!policy)throw fail('group_feature_fixed_rules');
+  return Object.freeze({trait:policy.trait,difficulty:policy.difficulty});
+}
+const needsChoice=(feature,success)=>feature===FLASH&&success||feature===REGENT&&!success;
+export const groupReactionOptions=feature=>feature===REGENT?['hope','stress','command']:feature===FLASH?['vulnerable','stress']:[];
 export function groupFeatureStakes(key){
   if(key===LANES)return 'On failure you cannot move beyond Very Close until after the Saint next takes the spotlight. On success no restriction applies. No roll or failed response is assumed.';
   if(key===FLASH)return 'On failure become Vulnerable and mark 1 Stress. On success YOU choose Vulnerable or 1 Stress. Silence/withdrawal is not a failed reaction.';
+  if(key===REGENT)return 'On failure YOU choose lose 2 Hope, mark 2 Stress, or one immediate non-suicidal command. Command compliance needs an exact communicated command and supported owner declaration; it is never invented. Success applies no consequence. Silence/withdrawal is not failure.';
   throw fail('group_feature_stakes');
 }
 export function planGroupFeature(db,guild,o,entry,p,feature,{library,opportunity}={}){
@@ -137,9 +146,10 @@ export function groupReactionState(db,guild,row,terminal){
   const choice=db.getCityRecord(guild,'gm_group_feature_choice',effectKey(row.record_key));
   if(choice){
     const request=terminal?.status==='resolved'&&db.getCityRecord(guild,'roll_request',terminal.data.request);
-    if(row.data.native.feature!==FLASH||choice.status!=='awaiting_owner'||choice.visibility!=='character'||choice.subject_key!==pc.id
+    if(!request||!needsChoice(row.data.native.feature,typedRollProof(db,guild,request).outcome==='success')
+      ||choice.status!=='awaiting_owner'||choice.visibility!=='character'||choice.subject_key!==pc.id
       ||choice.source_event!==row.source_event||choice.data.decision!==row.record_key||choice.data.request!==request?.record_key
-      ||typedRollProof(db,guild,request).outcome!=='success')throw fail('group_choice_pending_proof');
+      ||hash(choice.data.options)!==hash(groupReactionOptions(row.data.native.feature)))throw fail('group_choice_pending_proof');
     return 'awaiting_owner';
   }
   if(!terminal&&hash(pc.data.resources)!==row.data.native.resources_hash)throw fail('group_feature_pending_resources_changed');
@@ -159,19 +169,26 @@ export function applyGroupReactionOutcome(db,guild,row,request,choiceSource=null
       ||submission?.status!=='active'||!db.ownerAuthoredSource(guild,submission.event_key,n.owner))throw fail('group_actual_owner_submission');
     if(choice||choiceSource){
       const source=db.getWorldEvent(guild,choiceSource);
-      if(n.feature!==FLASH||!success||!['stress','vulnerable'].includes(choice)||source?.status!=='active'||source.kind!=='native_group_feature_choice'
+      if(!needsChoice(n.feature,success)||!groupReactionOptions(n.feature).includes(choice)||source?.status!=='active'||source.kind!=='native_group_feature_choice'
         ||source.source_id!==`player:${n.owner}`||source.visibility!=='character'||source.subject_key!==pc.id||source.session_id!==row.data.origin.session
         ||source.scene!==row.data.origin.scene||source.details.author!==n.owner||source.details.decision!==row.record_key||source.details.revision!==hash(row.data)
         ||source.details.choice!==choice||!db.ownerAuthoredSource(guild,source.event_key,n.owner)
         ||hash(JSON.parse(source.details.authored_text))!==hash({op:'gm-reaction-choice',request:row.record_key,revision:hash(row.data),choice}))throw fail('group_choice_native_owner_source');
     }
-    if(n.feature===FLASH&&success&&!choice)return db.saveCityRecord(guild,{kind:'gm_group_feature_choice',key,status:'awaiting_owner',source_event:row.source_event,
-      visibility:'character',subject_key:pc.id,data:{decision:row.record_key,request:request.record_key,options:['vulnerable','stress']}});
-    const stress=n.feature===FLASH&&(!success||choice==='stress')?1:0,condition=!success||n.feature===FLASH&&choice==='vulnerable',before=structuredClone(pc.data),after=structuredClone(before);
-    if(hash(before.resources)!==n.resources_hash||stress&&before.resources.stress.current>=before.resources.stress.max)
+    if(needsChoice(n.feature,success)&&!choice)return db.saveCityRecord(guild,{kind:'gm_group_feature_choice',key,status:'awaiting_owner',source_event:row.source_event,
+      visibility:'character',subject_key:pc.id,data:{decision:row.record_key,request:request.record_key,options:groupReactionOptions(n.feature)}});
+    if(n.feature===REGENT&&choice==='command')return db.saveCityRecord(guild,{kind:'gm_group_feature_review',key,status:'needs_rules_review',
+      source_event:row.source_event,visibility:'character',subject_key:pc.id,data:{decision:row.record_key,request:request.record_key,choice_source:choiceSource,
+        reason:'A communicated bounded non-suicidal command and exact supported owner declaration/effect are required. No compliance, surrender, speech or resource change was inferred.'}});
+    const stress=n.feature===REGENT?(choice==='stress'?2:0):n.feature===FLASH&&(!success||choice==='stress')?1:0,
+      hope=n.feature===REGENT&&choice==='hope'?2:0,condition=n.feature!==REGENT&&(!success||n.feature===FLASH&&choice==='vulnerable'),
+      before=structuredClone(pc.data),after=structuredClone(before);
+    if(hash(before.resources)!==n.resources_hash||stress&&before.resources.stress.current+stress>before.resources.stress.max
+      ||hope&&(!Number.isSafeInteger(before.resources.hope)||before.resources.hope<hope))
       return db.saveCityRecord(guild,{kind:'gm_group_feature_review',key,status:'needs_rules_review',source_event:row.source_event,visibility:'character',subject_key:pc.id,
-        data:{decision:row.record_key,request:request.record_key,reason:'Current resources or native Stress-overflow adapter need review; committed owner dice are preserved.'}});
-    if(stress)after.resources.stress.current++;
+        data:{decision:row.record_key,request:request.record_key,reason:'Current resources, insufficient Hope or native Stress-overflow adapter need review; committed owner dice are preserved.'}});
+    if(stress)after.resources.stress.current+=stress;
+    if(hope)after.resources.hope-=hope;
     const existing=condition&&(before.conditions||[]).find(c=>(typeof c==='string'?c:c.name)===policy.condition&&c.active!==false);
     if(existing&&!existing.native_ref)return db.saveCityRecord(guild,{kind:'gm_group_feature_review',key,status:'needs_rules_review',source_event:row.source_event,
       visibility:'character',subject_key:pc.id,data:{decision:row.record_key,request:request.record_key,reason:'Existing condition has no verified native duration/source; no stacking or replacement.'}});
@@ -181,7 +198,7 @@ export function applyGroupReactionOutcome(db,guild,row,request,choiceSource=null
     db.updateCharacterData(pc.id,data=>Object.assign(data,after));
     const mutation=db.recordMutation(guild,{sessionId:row.data.origin.session,actorType:'ai_gm',actorId:'native:unified-gm',sourceLayer:'native_feature',mutationType:'verified_group_feature',
       entityKey:pc.id,visibility:'character',before,after,rationale:'Verified owner reaction and optional exact owner choice.',payload:{decision:row.record_key,request:request.record_key}});
-    const data={version:1,decision:row.record_key,parent:n.parent,feature:n.feature,feature_hash:n.feature_hash,character:pc.id,owner:n.owner,request:request.record_key,
+    const data={version:n.feature===REGENT?2:1,...(n.feature===REGENT?{hope}:{}),decision:row.record_key,parent:n.parent,feature:n.feature,feature_hash:n.feature_hash,character:pc.id,owner:n.owner,request:request.record_key,
       roll:request.data.roll_id,request_hash:hash(request),roll_hash:hash(db.getSavedRoll(guild,request.data.roll_id)),request_source_hash:hash(submission),
       success,choice,choice_source:choiceSource,before,after,stress,condition:conditionKey,condition_reused,mutation:mutation.id,cost:cost.record_key};
     const event=indexWorldEvent(db,guild,{key:`${key}:source`,kind:'native_group_feature_effect',source_id:'native:unified-gm',title:'Native owner-specific feature consequence',
@@ -231,6 +248,7 @@ export function groupReactionDetails(db,guild,row){
   const effect=db.getCityRecord(guild,'gm_group_feature_effect',effectKey(row.record_key));if(!effect)return null;
   validateGroupReactionEffect(db,guild,effect.record_key);
   return {ref:effect.record_key,revision:hash(effect.data),success:effect.data.success,stress_marked:effect.data.stress,
+    ...(effect.data.feature===REGENT?{hope_spent:effect.data.hope}:{}),
     condition:effect.data.condition?policies[effect.data.feature].condition:null,condition_reused:effect.data.condition_reused};
 }
 export function validateGroupReactionEffect(db,guild,key,{historical=false}={}){
@@ -247,15 +265,17 @@ export function validateGroupReactionEffect(db,guild,key,{historical=false}={}){
   const proof=historical?{difficulty:request.data.breakdown.difficulty,outcome:request.data.result.duality==='Critical'||request.data.result.total>=request.data.breakdown.difficulty?'success':'failure'}:
     typedRollProof(db,guild,request),
     terminal=db.getCityRecord(guild,'gm_reaction_submission',`gm-reaction-submit:${hash([decision.record_key,n.owner])}`),mutation=db.getMutation(guild,v.mutation),expected=structuredClone(v.before);
-  if(v.stress)expected.resources.stress.current++;
+  if(v.stress)expected.resources.stress.current+=v.stress;
+  if(v.hope)expected.resources.hope-=v.hope;
   if(v.condition&&!v.condition_reused)expected.conditions=[...(expected.conditions||[]),{name:policy.condition,native_ref:v.condition,active:true}];
   if(v.condition_reused){
     const existing=validateNativeCondition(db,guild,v.condition);
     if(existing.data.condition!==policy.condition||existing.subject_key!==v.character||!(v.before.conditions||[]).some(c=>c.native_ref===v.condition&&c.active))
       throw fail('group_condition_reuse_source');
   }
-  const needsChoice=n.feature===FLASH&&v.success,stress=n.feature===FLASH&&(!v.success||v.choice==='stress')?1:0,
-    condition=!v.success||n.feature===FLASH&&v.choice==='vulnerable',choice=v.choice_source&&db.getWorldEvent(guild,v.choice_source);
+  const requiredChoice=needsChoice(n.feature,v.success),stress=n.feature===REGENT?(v.choice==='stress'?2:0):n.feature===FLASH&&(!v.success||v.choice==='stress')?1:0,
+    hope=n.feature===REGENT&&v.choice==='hope'?2:0,condition=n.feature!==REGENT&&(!v.success||n.feature===FLASH&&v.choice==='vulnerable'),
+    choice=v.choice_source&&db.getWorldEvent(guild,v.choice_source);
   if(event?.status!=='active'||event.kind!=='native_group_feature_effect'||event.source_id!=='native:unified-gm'||event.visibility!=='character'||event.subject_key!==v.character
     ||event.details.payload_hash!==hash(v)||event.details.owner_source!==request.source_event||key!==effectKey(v.decision)||v.character!==n.character||v.owner!==n.owner
     ||v.feature!==n.feature||v.feature_hash!==n.feature_hash||v.parent!==n.parent||v.roll!==request.data.roll_id||request.data.input.gm_invitation!==v.decision
@@ -263,29 +283,32 @@ export function validateGroupReactionEffect(db,guild,key,{historical=false}={}){
     ||v.success!==(proof.outcome==='success')||terminal?.status!=='resolved'||terminal.data.request!==v.request||terminal.data.invitation_hash!==hash(decision.data)
     ||hash(v.before.resources)!==n.resources_hash||v.stress!==stress||!!v.condition!==condition||typeof v.condition_reused!=='boolean'
     ||v.condition&&!v.condition_reused&&v.condition!==`${key}:condition`||v.condition_reused&&!v.condition
-    ||hash(v.after)!==hash(expected)||stress&&v.before.resources.stress.current>=v.before.resources.stress.max
-    ||needsChoice&&(!['stress','vulnerable'].includes(v.choice)||choice?.status!=='active'||choice.kind!=='native_group_feature_choice'
+    ||hash(v.after)!==hash(expected)||stress&&v.before.resources.stress.current+stress>v.before.resources.stress.max
+    ||(n.feature===REGENT?v.version!==2||v.hope!==hope:v.version!==1||v.hope!==undefined)
+    ||hope&&(!Number.isSafeInteger(v.before.resources.hope)||v.before.resources.hope<hope)
+    ||requiredChoice&&(!groupReactionOptions(n.feature).filter(c=>c!=='command').includes(v.choice)||choice?.status!=='active'||choice.kind!=='native_group_feature_choice'
       ||choice.source_id!==`player:${v.owner}`||choice.visibility!=='character'||choice.subject_key!==v.character||choice.details.choice!==v.choice||choice.details.decision!==v.decision
       ||choice.session_id!==decision.data.origin.session||choice.scene!==decision.data.origin.scene||choice.details.revision!==hash(decision.data)
       ||hash(JSON.parse(choice.details.authored_text))!==hash({op:'gm-reaction-choice',request:v.decision,revision:hash(decision.data),choice:v.choice})
-      ||!db.ownerAuthoredSource(guild,choice.event_key,v.owner))||!needsChoice&&(v.choice!==null||v.choice_source!==null)
+      ||!db.ownerAuthoredSource(guild,choice.event_key,v.owner))||!requiredChoice&&(v.choice!==null||v.choice_source!==null)
     ||mutation?.source_layer!=='native_feature'||mutation.entity_key!==v.character||hash(JSON.parse(mutation.before_json))!==hash(v.before)
     ||hash(JSON.parse(mutation.after_json))!==hash(v.after))throw fail('group_effect_native_ancestry');
   return row;
 }
 export function chooseGroupReactionOutcome(db,guild,user,input,{interactionId,authoredText}={}){
   if(!interactionId||typeof authoredText!=='string'||Object.keys(input).sort().join()!=='choice,op,request,revision'||input.op!=='gm-reaction-choice'
-    ||hash(JSON.parse(authoredText))!==hash(input)||!['stress','vulnerable'].includes(input.choice))throw fail('exact_group_owner_choice');
+      ||hash(JSON.parse(authoredText))!==hash(input)||!['stress','vulnerable','hope','command'].includes(input.choice))throw fail('exact_group_owner_choice');
   return db.transaction(()=>{
     const row=db.getCityRecord(guild,'gm_arbitration_decision',input.request),n=row?.data.native;
-    if(!row||n?.feature!==FLASH||n.operation!=='request_group_feature_reaction'||n.owner!==user||input.revision!==hash(row.data))throw fail('group_choice_owner_revision');
+    if(!row||!groupReactionOptions(n?.feature).includes(input.choice)||n.operation!=='request_group_feature_reaction'
+      ||n.owner!==user||input.revision!==hash(row.data))throw fail('group_choice_owner_revision');
     personalCharacter(db,guild,user,n.character);inspectGroupFeatureChild(db,guild,row);
     const terminal=db.getCityRecord(guild,'gm_reaction_submission',`gm-reaction-submit:${hash([row.record_key,user])}`),
       request=terminal?.status==='resolved'&&db.getCityRecord(guild,'roll_request',terminal.data.request),prior=db.getCityRecord(guild,'gm_group_feature_effect',effectKey(row.record_key));
     if(prior){const effect=validateGroupReactionEffect(db,guild,prior.record_key);if(effect.data.choice!==input.choice)throw fail('committed_group_choice_changed');return effect;}
-    if(!request||typedRollProof(db,guild,request).outcome!=='success')throw fail('group_choice_actual_success');
-    const source=indexWorldEvent(db,guild,{key:`${effectKey(row.record_key)}:choice`,kind:'native_group_feature_choice',source_id:`player:${user}`,
-      title:'Affected owner selects exactly one Flashbang consequence',session_id:row.data.origin.session,scene:row.data.origin.scene,visibility:'character',subject_key:n.character,
+    if(!request||!needsChoice(n.feature,typedRollProof(db,guild,request).outcome==='success'))throw fail('group_choice_actual_success');
+    const source=indexWorldEvent(db,guild,{key:`${effectKey(row.record_key)}:choice${n.feature===REGENT?':'+hash([input.choice,interactionId]):''}`,kind:'native_group_feature_choice',source_id:`player:${user}`,
+      title:'Affected owner selects exactly one native feature consequence',session_id:row.data.origin.session,scene:row.data.origin.scene,visibility:'character',subject_key:n.character,
       details:{author:user,decision:row.record_key,revision:input.revision,choice:input.choice,authored_text:authoredText,interaction:interactionId}},user);
     if(source.status!=='active')throw fail('group_choice_source_revoked');
     return applyGroupReactionOutcome(db,guild,row,request,source.event_key,input.choice);
