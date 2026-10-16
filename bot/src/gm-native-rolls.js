@@ -1,6 +1,6 @@
 /** Thin native execution bridge: player invitations never roll until their real owner submits. */
 import {inspectNativeGmDecision,commitGmActionCost} from './gm-action-capability.js';
-import {prepareArbitratedIncomingAttack} from './pc-incoming.js';
+import {prepareArbitratedIncomingAttack,prepareArbitratedVolley,inspectVolley} from './pc-incoming.js';
 import {gmD20Roll,d} from './dice.js';
 import {sceneFictionHash as hash} from './scene-fiction-context.js';
 import {EncounterLibrary} from './encounter.js';
@@ -39,6 +39,8 @@ function dependencyState(db,guild,entry){
 export function executeUnifiedGmActions(db,guild,decisions,{library=new EncounterLibrary('../content'),rng=d}={}){
   return decisions.filter(r=>['gm_action_ready','pending_pc_reaction'].includes(r.status)).map(decision=>{
     try{return db.transaction(()=>{
+    const committed=db.getCityRecord(guild,'npc_volley_attack',`npc-volley:${hash(decision.record_key)}`);
+    if(committed?.data.roll)return inspectVolley(db,guild,committed.record_key).row; // Read-only committed replay, never a new permission.
     const {row,entry}=inspectNativeGmDecision(db,guild,decision.record_key),n=row.data.native;
     if(!['gm_action_ready','pending_pc_reaction'].includes(row.status))return row;
     const dependency=dependencyState(db,guild,entry),continuationKey=`gm-continuation:${hash(row.record_key)}`;
@@ -47,6 +49,7 @@ export function executeUnifiedGmActions(db,guild,decisions,{library=new Encounte
     if(n.operation==='request_pc_reaction_roll')return commitGmActionCost(db,guild,row.record_key);
     if(n.operation==='request_feature_reaction_roll')return commitFeatureReactionCost(db,guild,row.record_key);
     if(n.operation==='commit_adversary_attack')return prepareArbitratedIncomingAttack(db,guild,row.record_key,{library});
+    if(n.operation==='commit_adversary_volley')return prepareArbitratedVolley(db,guild,row.record_key,{library});
     if(n.operation==='commit_adversary_feature')return commitFeatureChoice(db,guild,row.record_key,{library});
     if(n.operation==='commit_npc_alliance')return commitNativeNpcAlliance(db,guild,row.record_key,{library});
     const key=`gm-execution:${hash(row.record_key)}`,prior=db.getCityRecord(guild,'gm_native_roll_receipt',key);
@@ -71,7 +74,8 @@ export function resumePendingGmActions(db,guild,options={}){
     .filter(r=>r.status==='pending').map(r=>db.getCityRecord(guild,'gm_arbitration_decision',r.data.decision)).filter(Boolean);
   const results=executeUnifiedGmActions(db,guild,decisions,options);
   for(const result of results){
-    const decision=result.data.decision||decisions.find(d=>result.data.offer?.input.ruling===`ai-decision:${d.record_key}`)?.record_key;
+    const decision=result.data.decision||result.data.offer?.decision
+      ||decisions.find(d=>result.data.offer?.input?.ruling===`ai-decision:${d.record_key}`)?.record_key;
     if(!decision)continue;
     const key=`gm-continuation:${hash(decision)}`,row=db.getCityRecord(guild,'gm_action_continuation',key);
     if(row&&result.kind!=='gm_action_continuation')db.saveCityRecord(guild,{...row,key,status:result.kind==='gm_execution_review'?'needs_review':'resumed',data:{...row.data,result_kind:result.kind,result:result.record_key}});

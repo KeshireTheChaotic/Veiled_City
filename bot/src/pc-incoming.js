@@ -9,7 +9,7 @@ import { conversationPrincipal,historicalOwnerPrincipal } from "./conversation-p
 import { assertNonPvpCombatant } from "./pvp-authority.js";
 import {assertPcAttackable} from "./pc-native-eligibility.js";
 import {assertFearIncomingExecution} from "./pvp-fear-moves.js";
-import {inspectNativeGmDecision,commitGmActionCost} from './gm-action-capability.js';
+import {inspectNativeGmDecision,inspectCommittedGmDecision,commitGmActionCost} from './gm-action-capability.js';
 import {captureIncomingFeatureWindows} from './native-feature-windows.js';
 import {nativeAttackPassives,nativeStandardDamage} from './native-feature-passives.js';
 import {compileNativeFeatures} from './native-feature-catalog.js';
@@ -19,6 +19,7 @@ import {nativeHitFeatureCandidates,applyManyDeathsAfterIncoming} from './native-
 const hash=v=>createHash("sha256").update(JSON.stringify(v)).digest("hex");
 const AUTONOMOUS_FEAR_ATTACK=Symbol("native-autonomous-fear-attack");
 const NATIVE_AI_ATTACK=Symbol('native-ai-gm-attack'),INSPECT_ONLY=Symbol('read-only-native-attack');
+const VOLLEY='adversary:ritual-enforcement-team:coordinated-volley';
 function fail(message){throw Object.assign(new Error(message),{code:"PC_EFFECT_AUTHORITY",expected:true});}
 function gmOnly(user,options){if(!options.gm||!user)fail("Authenticated GM native attack required.");}
 function facts(db,guild,input,library,authority=null,existingOffer=null,committedRoll=false){
@@ -30,8 +31,9 @@ function facts(db,guild,input,library,authority=null,existingOffer=null,committe
   const source=db.getWorldEvent(guild,input.source),ruling=input.ruling?.startsWith('ai-decision:')?inspectNativeGmDecision(db,guild,input.ruling.slice(12)).row:db.getRulesRuling(guild,input.ruling),template=c&&library?.findAdversary(c.base_name);
   if(ruling?.kind==='gm_arbitration_decision'){
     const n=ruling.data.native;
-    if(ruling.status!=='gm_action_ready'||n?.operation!=='commit_adversary_attack'||input.source!==ruling.source_event
-      ||hash({...input,source:n.input.source,ruling:''})!==hash(n.input)||hash(template)!==n.template_hash)fail('Exact native AI-GM attack ruling required.');
+    const expected=n?.operation==='commit_adversary_volley'?n.inputs?.find(i=>i.character===input.character):n?.input;
+    if(ruling.status!=='gm_action_ready'||!['commit_adversary_attack','commit_adversary_volley'].includes(n?.operation)||input.source!==ruling.source_event
+      ||!expected||hash({...input,source:expected.source,ruling:''})!==hash(expected)||hash(template)!==n.template_hash)fail('Exact native AI-GM attack ruling required.');
   }
   if(pc?.guild_id!==guild||!db.getNpcProfile(guild,input.npc)||!db.getSimulationEntity(guild,"npc",input.npc)
     ||encounter?.status!=="active"||c?.status!=="active"||activeCityProxy(db,guild,input.npc)
@@ -80,7 +82,86 @@ function facts(db,guild,input,library,authority=null,existingOffer=null,committe
 }
 /** Legality inspection alone grants no execution, ruling, encounter activation or dice. */
 export function inspectIncomingCandidate(db,guild,input,{library}={}){return facts(db,guild,input,library,INSPECT_ONLY);}
+/** One explicitly authored feature, never a generic multi-target permission. */
+export function inspectVolleyCandidate(db,guild,origin,entry,p,feature,{library,opportunity}={}){
+  if(feature.feature_key!==VOLLEY||feature.native_handler!=='coordinated_volley'||entry.actor.type!=='npc'||entry.operation!=='attack'
+    ||p.disposition!=='gm_attack_roll'||p.stakes_kind!=='native_attack'||!p.rule_basis_refs.includes('srd:adversary-attacks')
+    ||p.difficulty!==null||p.trait!==null||p.experience_ref||p.advantage||p.disadvantage||!p.stakes.trim()||p.proposal_version===2
+    ||entry.target_refs.length<1||entry.target_refs.length>3||new Set(entry.target_refs).size!==entry.target_refs.length)fail('Exact Coordinated Volley action, targets and stakes required.');
+  const encounter=db.getCurrentEncounter(origin.binding.session),binding=encounter&&db.getCityRecord(guild,'encounter_binding',encounter.id),
+    combatant=binding?.data.combatants.find(c=>c.actor===entry.actor.key)?.id;
+  const inputs=entry.target_refs.map(character=>{
+    if(origin.scope.mode==='private'&&character!==origin.scope.actorCharacterId)fail('Private attack cannot select another recipient.');
+    const input={npc:entry.actor.key,combatant,character,source:origin.binding.source,ruling:'',defenses:{resistance:'none',armor_reduction:1,armor_allowed:true,source:'base'}},
+      c=facts(db,guild,input,library,INSPECT_ONLY);
+    if(c.snapshot.template!==feature.template_hash)fail('Volley template source changed.');return input;
+  });
+  return {operation:'commit_adversary_volley',inputs,opportunity,template_hash:feature.template_hash,feature:VOLLEY,feature_hash:hash(feature)};
+}
+/** Parent operation plus existing character-private child offers; no attack dice or Fear spent here. */
+export function prepareArbitratedVolley(db,guild,decisionKey,{library}={}){
+  return db.transaction(()=>{
+    const key=`npc-volley:${hash(decisionKey)}`,saved=db.getCityRecord(guild,'npc_volley_attack',key);
+    if(saved?.data.roll)return inspectVolley(db,guild,key).row;
+    const {row}=inspectNativeGmDecision(db,guild,decisionKey),n=row.data.native;
+    if(row.status!=='gm_action_ready'||n?.operation!=='commit_adversary_volley'||n.feature!==VOLLEY)fail('Native Volley ruling required.');
+    const prior=db.getCityRecord(guild,'npc_volley_attack',key);if(prior){inspectVolley(db,guild,key);return prior;}
+    const children=n.inputs.map(input=>prepareIncomingAttack(db,guild,'native:unified-gm',{...input,source:row.source_event,ruling:`ai-decision:${decisionKey}`},
+      {gm:NATIVE_AI_ATTACK,interactionId:decisionKey,library,sharedAttack:key}));
+    const feature_definition=compileNativeFeatures().find(f=>f.feature_key===VOLLEY);
+    if(hash(feature_definition)!==n.feature_hash)fail('Volley descriptor changed before preparation.');
+    const offer={version:1,decision:decisionKey,feature:VOLLEY,feature_hash:n.feature_hash,feature_definition,template_hash:n.template_hash,
+      targets:children.map(c=>({character:c.subject_key,attack:c.record_key,offer_hash:hash(c.data.offer)}))};
+    const source=indexWorldEvent(db,guild,{key:`${key}:source`,kind:'native_volley_offer',source_id:'native:unified-gm',
+      title:'Native shared attack with independent target ownership',session_id:row.data.origin.session,scene:row.data.origin.scene,visibility:'gm',details:offer},'native:unified-gm');
+    return db.saveCityRecord(guild,{kind:'npc_volley_attack',key,status:'awaiting_defense',source_event:source.event_key,visibility:'gm',data:{offer,targets:offer.targets}});
+  });
+}
+/** Read-only parent proof. Historical provenance never grants a new roll; unexecuted operations use current authority. */
+export function inspectVolley(db,guild,key){
+  const row=db.getCityRecord(guild,'npc_volley_attack',key),o=row?.data.offer,source=row&&db.getWorldEvent(guild,row.source_event),
+    result=row?.data.roll&&db.getCityRecord(guild,'npc_volley_roll_receipt',row.data.roll);
+  if(row?.visibility!=='gm'||o?.version!==1||o.feature!==VOLLEY||key!==`npc-volley:${hash(o.decision)}`
+    ||source?.status!=='active'||source.kind!=='native_volley_offer'||source.source_id!=='native:unified-gm'||hash(source.details)!==hash(o)
+    ||hash(row.data.targets)!==hash(o.targets))fail('Immutable native Volley offer required.');
+  const {row:decision}=result?inspectCommittedGmDecision(db,guild,o.decision):inspectNativeGmDecision(db,guild,o.decision),n=decision.data.native;
+  if(n?.operation!=='commit_adversary_volley'||n.feature!==o.feature||n.feature_hash!==o.feature_hash||hash(o.feature_definition)!==o.feature_hash
+    ||o.feature_definition.native_handler!=='coordinated_volley'||o.feature_definition.feature_key!==VOLLEY
+    ||!result&&hash(compileNativeFeatures().find(f=>f.feature_key===VOLLEY))!==o.feature_hash
+    ||n.template_hash!==o.template_hash||o.targets.length!==n.inputs.length||o.targets.length<1||o.targets.length>3)fail('Volley feature or targets changed.');
+  const children=o.targets.map((target,i)=>{
+    const child=db.getCityRecord(guild,'pc_incoming_attack',target.attack),input=n.inputs[i];
+    if(!child||target.character!==input.character||target.character!==child.subject_key||target.offer_hash!==hash(child.data.offer)
+      ||child.data.offer.shared_attack!==key||hash(child.data.offer.input)!==hash({...input,source:decision.source_event,ruling:`ai-decision:${decision.record_key}`}))fail('Volley child identity changed.');
+    return child;
+  });
+  if(!result){if(row.data.roll)fail('Volley roll receipt missing.');return {row,decision,children,result:null};}
+  const {roll:rollId,damage_roll:damageId,...payload}=result.data,roll=db.getSavedRoll(guild,rollId),damageRoll=damageId&&db.getSavedRoll(guild,damageId),
+    sealed=db.getWorldEvent(guild,result.source_event),cost=db.getCityRecord(guild,'gm_action_cost_receipt',payload.cost_ref),first=children[0].data.offer;
+  if(row.data.roll!==`${key}:roll`||result.record_key!==row.data.roll||result.visibility!=='gm'||result.status!=='resolved'
+    ||sealed?.status!=='active'||sealed.kind!=='native_volley_result'||sealed.source_id!=='native:unified-gm'||sealed.details.payload_hash!==hash(result.data)
+    ||roll?.roll_type!=='npc_incoming_volley'||roll.character_id!==null||roll.session_id!==first.snapshot.session||hash(roll.payload)!==hash(payload)
+    ||payload.attack!==key||payload.offer_hash!==hash(o)||payload.gm_decision!==decision.record_key
+    ||cost?.status!=='committed'||cost.source_event!==decision.source_event||cost.data.decision!==decision.record_key
+    ||cost.data.before-cost.data.after!==cost.data.amount||hash(cost)!==payload.cost_hash)fail('Saved shared roll and cost ancestry required.');
+  let i=0;const expected=gmD20Roll({kind:'attack',modifier:first.bonus,difficulty:Math.min(...children.map(c=>c.data.offer.evasion)),
+    advantage:decision.data.proposal.advantage,disadvantage:decision.data.proposal.disadvantage},()=>payload.gm_d20?.faces[i++]);
+  if(hash(expected)!==hash(payload.gm_d20)||children.some(c=>c.data.offer.bonus!==first.bonus||c.data.offer.damage!==first.damage)
+    ||payload.hits.length!==children.length||payload.hits.some((t,j)=>t.character!==children[j].subject_key||t.evasion!==children[j].data.offer.evasion
+      ||t.hit!==(expected.selected===20||expected.total>=t.evasion)))fail('Shared attack arithmetic or Evasions changed.');
+  const hit=payload.hits.some(t=>t.hit);let k=0;
+  const expectedDamage=gmAttackDamage({...expected,success:hit},first.damage,()=>payload.damage?.dice[k++]);
+  if(hash(expectedDamage)!==hash(payload.damage)||hit&&(!damageRoll||damageRoll.roll_type!=='npc_incoming_volley_damage'
+    ||damageRoll.character_id!==null||damageRoll.session_id!==first.snapshot.session||hash(damageRoll.payload)!==hash({attack:key,attack_roll:rollId,damage:payload.damage}))
+    ||!hit&&damageId!==null)fail('Shared damage ancestry or critical arithmetic required.');
+  return {row,decision,children,result};
+}
 function incomingSourceAuthority(db,guild,source,offer){
+  if(offer.shared_attack){
+    const parent=inspectVolley(db,guild,offer.shared_attack);
+    return offer.gm==='native:unified-gm'&&source.source_id==='native:unified-gm'&&offer.input.source===parent.decision.source_event
+      &&parent.children.some(c=>hash(c.data.offer)===hash(offer));
+  }
   if(offer.input.ruling?.startsWith('ai-decision:')){
     const {row}=inspectNativeGmDecision(db,guild,offer.input.ruling.slice(12));
     return offer.gm==='native:unified-gm'&&source.source_id==='native:unified-gm'&&offer.input.source===row.source_event;
@@ -91,7 +172,15 @@ function context(db,guild,key,library,{applied=false}={}){
   const row=db.getCityRecord(guild,"pc_incoming_attack",key),source=row&&db.getWorldEvent(guild,row.source_event);
   if(row?.data.version!==1||row.visibility!=="character"||source?.status!=="active"||source.kind!=="native_npc_attack_offer"
     ||hash(source.details)!==hash(row.data.offer)||!incomingSourceAuthority(db,guild,source,row.data.offer))fail("Exact native incoming attack source required.");
-  const actual=facts(db,guild,row.data.offer.input,library,null,row.data.offer,!!row.data.roll);
+  const o=row.data.offer,shared=o.shared_attack&&inspectVolley(db,guild,o.shared_attack);
+  // Once the shared attack is committed, an unrelated target's response/state cannot freeze this owner.
+  // Revalidate this child's own PC, principal, position and immutable native outcome instead.
+  const pc=shared?.result&&db.getCharacter(o.input.character),target=pc&&scenePresence(db,guild,'character',pc.id),scene=currentScene(db,guild);
+  if(pc&&(scene.session_id!==o.snapshot.session||scene.key!==o.snapshot.scene||hash(target)!==o.snapshot.target
+    ||db.getWorldEvent(guild,target?.source_event)?.status!=='active'||!applied&&hash(pc.data)!==o.snapshot.pc))fail('Volley target state changed; own native review required.');
+  const actual=pc?{pc,snapshot:{...o.snapshot,principal:conversationPrincipal(db,guild,pc.owner_user_id,pc.id).revision},
+    damage:o.damage,damage_type:o.damage_type,bonus:o.bonus,evasion:o.evasion,major:o.major,severe:o.severe,defenses:o.input.defenses}
+    :facts(db,guild,o.input,library,null,o,!!row.data.roll);
   passiveProof(db,guild,row);
   if(actual.pc.owner_user_id!==row.data.offer.snapshot.owner||actual.snapshot.principal!==row.data.offer.snapshot.principal)
     fail("Incoming attack owner/principal changed; native review required.");
@@ -108,7 +197,7 @@ export function prepareIncomingAttack(db,guild,user,input,options={}){
   const actual=facts(db,guild,input,options.library),offer={version:1,gm:user,input,snapshot:actual.snapshot,
     damage:actual.damage,damage_type:actual.damage_type,bonus:actual.bonus,evasion:actual.evasion,major:actual.major,severe:actual.severe,
     ...(actual.passives?{passives:actual.passives,base_bonus:actual.base_bonus}:{}),...(actual.hit_features?{hit_features:actual.hit_features}:{}),
-    ...(actual.damage_passive?{damage_passive:actual.damage_passive}:{})};
+    ...(actual.damage_passive?{damage_passive:actual.damage_passive}:{}),...(options.gm===NATIVE_AI_ATTACK&&options.sharedAttack?{shared_attack:options.sharedAttack}:{})};
   return db.transaction(()=>{
     const key=`npc-incoming:${hash([guild,input.source,input.npc,input.combatant,input.character])}`,prior=db.getCityRecord(guild,"pc_incoming_attack",key);
     if(prior){if(hash(prior.data.offer)!==hash(offer))fail("Native attack offer identity reused.");return prior;}
@@ -134,11 +223,24 @@ export function prepareArbitratedIncomingAttack(db,guild,decisionKey,{library}={
 export function reviewIncomingAttack(db,guild,user,key,{library}={}){
   const {row,pc,...c}=context(db,guild,key,library);
   personalCharacter(db,guild,user,pc.id);
+  if(row.status==='hold_for_owner')db.saveCityRecord(guild,{...row,key,status:'awaiting_defense'});
   db.saveCityRecord(guild,{kind:"pc_incoming_review",key:`${key}:review`,status:"reviewed",source_event:row.source_event,
     visibility:"character",subject_key:pc.id,data:{owner:user,offer_hash:hash(row.data.offer)}});
-  return {attack:key,status:row.status,character:pc.id,evasion:c.evasion,major:c.major,severe:c.severe,
+  return {attack:key,status:row.status==='hold_for_owner'?'awaiting_defense':row.status,character:pc.id,evasion:c.evasion,major:c.major,severe:c.severe,
     damage:c.damage,damage_type:c.damage_type,attack_bonus:c.bonus,defenses:row.data.offer.input.defenses,
     instruction:"Confirm only after reviewing applicable defenses. Unsupported defense features hold the attack for human ruling. Armor is your own later choice; last HP never chooses a death move."};
+}
+/** Affected owner may leave only their own unresolved workflow pending; silence is not a failed defense. */
+export function withholdIncomingDefense(db,guild,user,key,{library,interactionId}={}){
+  return db.transaction(()=>{
+    const {row,pc}=context(db,guild,key,library);personalCharacter(db,guild,user,pc.id);
+    if(!interactionId||!row.data.offer.shared_attack||!['awaiting_defense','ready','awaiting_armor','hold_for_owner'].includes(row.status))fail('Exact owned unresolved Volley required.');
+    const source=indexWorldEvent(db,guild,{key:`${key}:withhold:${hash(interactionId)}`,kind:'native_incoming_withheld',source_id:`player:${user}`,
+      session_id:row.data.offer.snapshot.session,scene:row.data.offer.snapshot.scene,visibility:'character',subject_key:pc.id,
+      title:'Owner leaves incoming defense pending',details:{author:user,attack:key,offer_hash:hash(row.data.offer),interaction:interactionId}},user);
+    if(source.status!=='active')fail('Withheld source revoked.');
+    return db.saveCityRecord(guild,{...row,key,status:'hold_for_owner',data:{...row.data,withheld:source.event_key}});
+  });
 }
 export function confirmIncomingDefense(db,guild,user,key){
   const row=db.getCityRecord(guild,"pc_incoming_attack",key),o=row?.data.offer,pc=o&&personalCharacter(db,guild,user,o.input.character);
@@ -165,6 +267,7 @@ function defenseProof(db,guild,row){
 export function rollIncomingAttack(db,guild,user,key,options={}){
   gmOnly(user,options);
   return db.transaction(()=>{
+    if(db.getCityRecord(guild,'pc_incoming_attack',key)?.data.offer.shared_attack)fail('Shared Volley requires its single native executor, never a target-specific GM roll.');
     const c=context(db,guild,key,options.library),{row}=c;defenseProof(db,guild,row);
     if(row.data.roll)return verifyRoll(db,guild,row);
     if(row.status!=="ready")fail("Native attack is not ready.");
@@ -188,9 +291,66 @@ export function rollIncomingAttack(db,guild,user,key,options={}){
 }
 /** No human identity/approval is forged. Current native GM ruling, spotlight and defense authorize this executor. */
 export function rollArbitratedIncomingAttack(db,guild,key,{library,rng}={}){
+  if(db.getCityRecord(guild,'pc_incoming_attack',key)?.data.offer.shared_attack)return rollVolley(db,guild,key,{library,rng});
   const c=context(db,guild,key,library);
   if(!c.row.data.offer.input.ruling?.startsWith('ai-decision:'))fail('Native AI-GM decision required.');
   return rollIncomingAttack(db,guild,'native:unified-gm',key,{gm:NATIVE_AI_ATTACK,library,rng});
+}
+function volleyChildPayload(parent,child){
+  const r=parent.result.data,o=child.data.offer,t=r.hits.find(t=>t.character===child.subject_key);
+  return {attack:child.record_key,face:r.gm_d20.selected,bonus:o.bonus,total:r.gm_d20.total,evasion:o.evasion,hit:t.hit,
+    damage:t.hit?r.damage:null,type:o.damage_type,offer_hash:hash(o),gm_decision:r.gm_decision,cost_ref:r.cost_ref,
+    gm_d20_faces:r.gm_d20.faces,shared_attack:parent.row.record_key,shared_receipt:parent.result.record_key,shared_hash:hash(parent.result.data)};
+}
+/** The first entitled defense confirmation executes once. Other owners remain pending, never failed by silence. */
+function rollVolley(db,guild,key,{library,rng=d}={}){
+  return db.transaction(()=>{
+    const prior=db.getCityRecord(guild,'pc_incoming_attack',key);
+    if(prior?.data.roll&&['resolved','missed'].includes(prior.status)){
+      incomingAttackEvidence(db,guild,key,{terminal:true});return verifyRoll(db,guild,prior);
+    }
+    let c=context(db,guild,key,library),parent=inspectVolley(db,guild,c.row.data.offer.shared_attack);
+    defenseProof(db,guild,c.row);
+    if(c.row.status!=='ready'){
+      if(c.row.data.roll&&['awaiting_armor','resolved','missed'].includes(c.row.status))return verifyRoll(db,guild,c.row);
+      fail('This target has not confirmed its own defenses.');
+    }
+    if(!parent.result){
+      // All selected target/range/source snapshots are checked BEFORE the one cost and RNG.
+      const current=parent.children.map(child=>context(db,guild,child.record_key,library)),first=current[0];
+      if(current.some(t=>t.bonus!==first.bonus||t.damage!==first.damage))fail('Unsupported target-specific pre-roll modifiers require review.');
+      const cost=commitGmActionCost(db,guild,parent.decision.record_key),p=parent.decision.data.proposal,
+        result=gmD20Roll({kind:'attack',modifier:first.bonus,difficulty:Math.min(...current.map(t=>t.evasion)),advantage:p.advantage,disadvantage:p.disadvantage},rng),
+        hits=current.map(t=>({character:t.pc.id,evasion:t.evasion,hit:result.selected===20||result.total>=t.evasion})),
+        damage=gmAttackDamage({...result,success:hits.some(t=>t.hit)},first.damage,rng),
+        payload={attack:parent.row.record_key,offer_hash:hash(parent.row.data.offer),gm_decision:parent.decision.record_key,
+          gm_d20:result,hits,damage,cost_ref:cost.record_key,cost_hash:hash(cost)};
+      const roll=db.addRoll(guild,first.snapshot.session,'native:unified-gm',null,'npc_incoming_volley',payload),
+        damage_roll=damage?db.addRoll(guild,first.snapshot.session,'native:unified-gm',null,'npc_incoming_volley_damage',{attack:parent.row.record_key,attack_roll:roll,damage}):null,
+        data={...payload,roll,damage_roll};
+      const source=indexWorldEvent(db,guild,{key:`${parent.row.record_key}:result-source`,kind:'native_volley_result',source_id:'native:unified-gm',
+        session_id:first.snapshot.session,scene:first.snapshot.scene,title:'Committed native shared attack and damage',visibility:'gm',details:{payload_hash:hash(data)}},'native:unified-gm');
+      const saved=db.saveCityRecord(guild,{kind:'npc_volley_roll_receipt',key:`${parent.row.record_key}:roll`,status:'resolved',source_event:source.event_key,visibility:'gm',data});
+      db.saveCityRecord(guild,{...parent.row,key:parent.row.record_key,status:'rolled',data:{...parent.row.data,roll:saved.record_key}});
+      parent=inspectVolley(db,guild,parent.row.record_key);
+      for(const child of parent.children){
+        const v=volleyChildPayload(parent,child),receipt=db.saveCityRecord(guild,{kind:'npc_attack_roll_receipt',key:`${child.record_key}:roll`,
+          status:'resolved',source_event:child.source_event,visibility:'character',subject_key:child.subject_key,data:{...v,roll}});
+        db.saveCityRecord(guild,{...child,key:child.record_key,status:child.status==='ready'?(v.hit?'awaiting_armor':'missed'):child.status,
+          data:{...child.data,roll:receipt.record_key}});
+      }
+    }else{
+      const r=verifyRoll(db,guild,c.row);
+      db.saveCityRecord(guild,{...c.row,key,status:r.data.hit?'awaiting_armor':'missed'});
+    }
+    settleVolley(db,guild,c.row.data.offer.shared_attack);
+    return verifyRoll(db,guild,db.getCityRecord(guild,'pc_incoming_attack',key));
+  });
+}
+function settleVolley(db,guild,key){
+  if(!key)return;
+  const p=inspectVolley(db,guild,key);
+  if(p.result)db.saveCityRecord(guild,{...p.row,key,status:p.children.every(c=>['resolved','missed'].includes(c.status))?'resolved':'rolled'});
 }
 /** Internal automation verifies the exact selected Fear decision; a caller flag is never authority. */
 export function rollAutonomousFearIncomingAttack(db,guild,key,{library,rng}={}){
@@ -200,6 +360,12 @@ export function rollAutonomousFearIncomingAttack(db,guild,key,{library,rng}={}){
 }
 function verifyRoll(db,guild,row){
   passiveProof(db,guild,row);
+  if(row.data.offer.shared_attack){
+    const parent=inspectVolley(db,guild,row.data.offer.shared_attack),r=db.getCityRecord(guild,'npc_attack_roll_receipt',row.data.roll);
+    if(!parent.result||r?.status!=='resolved'||r.visibility!=='character'||r.source_event!==row.source_event||r.subject_key!==row.subject_key
+      ||r.record_key!==`${row.record_key}:roll`||hash(r.data)!==hash({...volleyChildPayload(parent,row),roll:parent.result.data.roll}))fail('Shared native target roll ancestry required.');
+    return r;
+  }
   const r=db.getCityRecord(guild,"npc_attack_roll_receipt",row.data.roll),roll=r&&db.getSavedRoll(guild,r.data.roll),{roll:ignored,...payload}=r?.data||{};
   if(r?.status!=="resolved"||r.source_event!==row.source_event||r.subject_key!==row.subject_key
     ||roll?.roll_type!=="npc_incoming_standard"||roll.character_id!==row.subject_key||roll.session_id!==row.data.offer.snapshot.session
@@ -232,7 +398,7 @@ function passiveProof(db,guild,row){
 /** Read-only current source + immutable GM roll ancestry, usable by receipt-only output adapters. */
 export function incomingRollProjection(db,guild,key){
   const {row,offer}=incomingAttackEvidence(db,guild,key),receipt=verifyRoll(db,guild,row),r=receipt.data;
-  if(offer.input.ruling?.startsWith('ai-decision:')){
+  if(!offer.shared_attack&&offer.input.ruling?.startsWith('ai-decision:')){
     const decision=inspectNativeGmDecision(db,guild,offer.input.ruling.slice(12)).row,cost=db.getCityRecord(guild,'gm_action_cost_receipt',r.cost_ref);
     let i=0;const expected=gmD20Roll({kind:'attack',modifier:offer.bonus,difficulty:offer.evasion,
       advantage:decision.data.proposal.advantage,disadvantage:decision.data.proposal.disadvantage},()=>r.gm_d20?.faces[i++]);
@@ -303,6 +469,7 @@ export function resolveIncomingDamage(db,guild,user,key,{armor=false,library}={}
       db.saveCityRecord(guild,{kind:"pc_death_move_request",key:`${key}:death`,status:"awaiting_owner",
         source_event:row.source_event,visibility:"character",subject_key:pc.id,data:{...data,digest:hash(data)}});}
     db.saveCityRecord(guild,{...row,key,status:"resolved"});
+    settleVolley(db,guild,row.data.offer.shared_attack);
     captureIncomingFeatureWindows(db,guild,receipt.record_key,{library});
     applyManyDeathsAfterIncoming(db,guild,key);
     return receipt;

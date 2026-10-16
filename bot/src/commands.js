@@ -74,7 +74,7 @@ import {reviewPcDeathMove,choosePcDeathMove,allocatePcDeathRecovery,approveBlaze
 import {hopeCap,assertPcCanAct} from "./pc-native-eligibility.js";
 import { preparePvpReaction, reviewPvpReaction, rollPvpReaction } from "./pvp-reactions.js";
 import { reviewFeatureEffect, reviewPcEffect, approvePcEffect, applyPcEffect,reviewHealingSource,authorizeHealingSource } from "./pc-effects.js";
-import { prepareIncomingAttack, reviewIncomingAttack, confirmIncomingDefense, rollIncomingAttack, rollArbitratedIncomingAttack, resolveIncomingDamage } from "./pc-incoming.js";
+import { prepareIncomingAttack, reviewIncomingAttack, confirmIncomingDefense, withholdIncomingDefense, rollIncomingAttack, rollArbitratedIncomingAttack, resolveIncomingDamage } from "./pc-incoming.js";
 import {inspectGmReactionInvitation,submitGmReactionInvitation,withdrawGmReactionInvitation,gmReactionInbox} from './gm-native-rolls.js';
 import { queueDirectorPublications } from "./publication-outbox.js";
 import {publishContinuationNotices} from "./publishing.js";
@@ -536,9 +536,10 @@ async function executeCommand(interaction,{db,gm,voice=null}){
         if(Object.keys(input).some(k=>k!=="authority"))throw new UserInputError("Exact native authority key only.");
         row=db.transaction(()=>{approvePcEffect(db,interaction.guildId,user,input.authority,native);return applyPcEffect(db,interaction.guildId,input.authority);});
       }else if(op==="incoming-prepare")row=prepareIncomingAttack(db,interaction.guildId,user,input,{...native,library:encounterLibrary(gm)});
-      else if(["incoming-defense","incoming-roll","incoming-armor"].includes(op)){
+      else if(["incoming-defense","incoming-roll","incoming-armor","incoming-withhold"].includes(op)){
         if(Object.keys(input).some(k=>!["attack",...(op==="incoming-armor"?["armor"]:[])].includes(k)))throw new UserInputError("Exact incoming attack and own Armor choice only.");
-        row=op==="incoming-defense"?confirmIncomingDefense(db,interaction.guildId,user,input.attack)
+        row=op==='incoming-withhold'?withholdIncomingDefense(db,interaction.guildId,user,input.attack,{...native,library:encounterLibrary(gm)})
+          :op==="incoming-defense"?confirmIncomingDefense(db,interaction.guildId,user,input.attack)
           :op==="incoming-roll"?rollIncomingAttack(db,interaction.guildId,user,input.attack,{...native,library:encounterLibrary(gm)})
             :resolveIncomingDamage(db,interaction.guildId,user,input.attack,{armor:input.armor,library:encounterLibrary(gm)});
         if(op==='incoming-defense'&&row.data.offer.input.ruling?.startsWith('ai-decision:'))row=rollArbitratedIncomingAttack(db,interaction.guildId,row.record_key,{library:encounterLibrary(gm)});

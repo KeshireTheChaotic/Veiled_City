@@ -8,7 +8,7 @@ import {indexWorldEvent} from './city-calendar.js';
 import {consentAction,historicalActionSource} from './action-consent.js';
 import {isPvpIntent} from './pvp-authority.js';
 import {nativeGmOpportunity,nativeReactionTarget} from './gm-action-capability.js';
-import {inspectIncomingCandidate} from './pc-incoming.js';
+import {inspectIncomingCandidate,inspectVolleyCandidate} from './pc-incoming.js';
 import {EncounterLibrary} from './encounter.js';
 import {featureDisposition} from './native-feature-catalog.js';
 import {authorizeFeatureChoice,reserveFeatureWindow,pendingFeatureWindows} from './native-feature-windows.js';
@@ -45,8 +45,12 @@ export function adjudicateSceneBoard(db,guild,origin,board,proposals,{library=ne
       const feature=featureDisposition(p.feature_ref);
       reason=feature.reason; // Catalog membership alone never grants a feature capability.
       if(feature.status==='supported'){
-        native=authorizeFeatureChoice(db,guild,o,entry,p,feature.feature,{library});status=native.operation==='request_feature_reaction_roll'?'pending_pc_reaction':'gm_action_ready';
-        reason='Exact native reaction occurrence only; no ordinary spotlight or player roll is inferred.';
+        native=feature.feature.native_handler==='coordinated_volley'
+          ?inspectVolleyCandidate(db,guild,o,entry,p,feature.feature,{library,opportunity:nativeGmOpportunity(db,guild,board)})
+          :authorizeFeatureChoice(db,guild,o,entry,p,feature.feature,{library});status=native.operation==='request_feature_reaction_roll'?'pending_pc_reaction':'gm_action_ready';
+        reason=native.operation==='commit_adversary_volley'
+          ?'Current sourced GM spotlight and exact Volley targets; one shared native attack awaits owner defense, with independent target effects.'
+          :'Exact native reaction occurrence only; no ordinary spotlight or player roll is inferred.';
       }else{
         review_contract=nativeFeatureReviewContract(p.feature_ref);
         if(review_contract)reason+=` Missing native authority: ${review_contract.missing} [${review_contract.erratum} v${review_contract.erratum_version}]. Owner decisions remain owner-only.`;
@@ -109,7 +113,7 @@ export function adjudicateSceneBoard(db,guild,origin,board,proposals,{library=ne
     const source=indexWorldEvent(db,guild,{key:`${key}:source`,kind:'native_gm_arbitration',source_id:'native:unified-gm',title:'Source-bound GM ruling',
       session_id:o.binding.session,scene:o.binding.scene,location_key:o.binding.location||'',visibility:'gm',details:{board:board.record_key,payload_hash:hash(data)}},'native:unified-gm');
     const saved=db.saveCityRecord(guild,{kind:'gm_arbitration_decision',key,status,source_event:source.event_key,visibility:'gm',data});
-    if(native?.feature)reserveFeatureWindow(db,guild,saved.record_key);
+    if(native?.window)reserveFeatureWindow(db,guild,saved.record_key);
     return saved;
     });
   });

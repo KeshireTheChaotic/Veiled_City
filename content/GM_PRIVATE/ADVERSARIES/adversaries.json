@@ -335,7 +335,8 @@
     "standard": "Coordinated Fire — Far — 2d8+3 physical",
     "features": [
       "**Stack Formation — Passive:** While the Horde has 4+ HP, gain +1 Difficulty. At 3 or fewer HP, lose this bonus.",
-      "**Null Foam — Action:** Mark a Stress. A point within Close range erupts in suppressive alchemical foam. Anyone there makes an Agility Reaction Roll (14); on a failure, become Restrained and Spellcast Rolls have disadvantage until freed."
+      "**Null Foam — Action:** Mark a Stress. A point within Close range erupts in suppressive alchemical foam. Anyone there makes an Agility Reaction Roll (14); on a failure, become Restrained and Spellcast Rolls have disadvantage until freed.",
+      "**Coordinated Volley — Action:** Spend 1 Fear. Choose up to three distinct PCs within Far range. Make **one** Coordinated Fire attack roll using the Ritual Enforcement Team's normal Attack Modifier and compare its total independently against each target's Evasion. Roll the attack's normal damage **once**; apply that one damage result separately to each target hit. Each affected PC owner independently resolves eligible defenses, Armor, HP, injury and death choices. Missed targets take no damage. A natural-20 attack applies the native critical damage rule to the single shared damage roll; it is not a second roll or a multiplied flat modifier."
     ],
     "battle_points": 2,
     "battle_unit": "each adversary",

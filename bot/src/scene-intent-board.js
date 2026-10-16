@@ -8,6 +8,8 @@ import {actorReferenceVisible} from './npc-cognition-projection.js';
 import {matchesArbitrationSchema,npcSceneIntentSchema,arbitrationFailure as fail} from './gm-arbitration-contract.js';
 import {indexWorldEvent} from './city-calendar.js';
 import {featureWindowChoices,inspectFeatureWindow} from './native-feature-windows.js';
+import {compileNativeFeatures} from './native-feature-catalog.js';
+import {EncounterLibrary} from './encounter.js';
 const origins=new WeakMap(),bindings=new WeakMap();
 const deepFreeze=v=>{if(v&&typeof v==='object'){Object.values(v).forEach(deepFreeze);Object.freeze(v);}return v;};
 export function createArbitrationOrigin(db,guild,scope,sourceRef){
@@ -31,9 +33,17 @@ export function inspectArbitrationOrigin(db,guild,origin){
 /** Read-only pre-prompt packet; excludes NPC motives, private sheets and unentitled evidence. */
 export function arbitrationPromptBoard(db,guild,origin){
   const o=inspectArbitrationOrigin(db,guild,origin);
+  const encounter=db.getCurrentEncounter(o.binding.session),binding=encounter&&db.getCityRecord(guild,'encounter_binding',encounter.id),
+    combatants=encounter?db.listCombatants(encounter.id):[],library=new EncounterLibrary('../content'),features=compileNativeFeatures();
   return {version:1,source:o.binding.source,scene:o.binding.scene,location:o.binding.location,audience:o.scope.mode,
     feature_windows:featureWindowChoices(db,guild,o.scope),
-    npc_candidates:o.eligible.map(n=>({actor_key:n.key,intent_refs:n.intents,objective_refs:n.objectives,known_source_refs:n.source_refs})),
+    npc_candidates:o.eligible.map(n=>{
+      const c=combatants.find(c=>c.status==='active'&&binding?.data.combatants.some(b=>b.actor===n.key&&b.id===c.id)),template=c&&library.findAdversary(c.base_name);
+      return {actor_key:n.key,intent_refs:n.intents,objective_refs:n.objectives,known_source_refs:n.source_refs,
+        action_features:features.filter(f=>template&&f.native_handler==='coordinated_volley'&&f.template_hash===hash(template)).map(f=>({feature_ref:f.feature_key,
+          disposition:'gm_attack_roll',operation:'attack',target_policy:f.target_policy,rule_basis_refs:['srd:adversary-attacks'],difficulty:null,
+          costs:f.costs,stakes:'Declare the attempted attack before dice. Each owner controls their own defenses.'}))};
+    }),
     shared_player_inputs:sharedSceneInputs(db,guild,o).map(row=>({intent_ref:row.record_key,actor:row.data.actor,source_span:row.data.source_span,operation:row.data.operation})),
     player_input_refs:'player:0..15 select exact current player_intents index, then native accepted source; not an outcome or dice authorization'};
 }

@@ -42,7 +42,7 @@ function boardFixture(f,{privateScene=false,rollQuestion=false}={}){
 import {buildNarrativeContext} from '../src/narrative-authority-context.js';
 import {mintNarrativeAudience} from '../src/audience-native-v9.js';
 import {gmD20Roll,gmAttackDamage} from '../src/dice.js';
-import {prepareIncomingAttack,prepareArbitratedIncomingAttack,rollArbitratedIncomingAttack,reviewIncomingAttack,confirmIncomingDefense,rollIncomingAttack,incomingAttackEvidence,incomingRollProjection,resolveIncomingDamage,validateIncomingDamageApplication} from '../src/pc-incoming.js';
+import {prepareIncomingAttack,prepareArbitratedIncomingAttack,rollArbitratedIncomingAttack,reviewIncomingAttack,confirmIncomingDefense,withholdIncomingDefense,rollIncomingAttack,incomingAttackEvidence,incomingRollProjection,resolveIncomingDamage,validateIncomingDamageApplication,inspectVolley} from '../src/pc-incoming.js';
 import {EncounterLibrary} from '../src/encounter.js';
 import {buildCombatants} from '../src/combat.js';
 import {indexWorldEvent} from '../src/city-calendar.js';
@@ -147,7 +147,219 @@ function packFearAttack(f,{looking=false,hopeFailure=false,hp=4,miss=false,armor
   return {...x,request,decision:r,attack,roll,effect,dice};
 }
 
+const VOLLEY='adversary:ritual-enforcement-team:coordinated-volley';
+function volleyScenario(f,{evasions=[12,17,24],fear=3,privateScene=false,extraSpotlight=false,throughTurn=false,hpMarked=null,deferred=false}={}){
+  const x=incoming(f,{privateScene,template:'Ritual Enforcement Team',text:'Describe the scene.',hpMarked});
+  f.db.setCityCalendar(f.guild,{flags:{...f.db.getCityCalendar(f.guild).flags,gm_discretion:true}});
+  f.db.changeFear(f.guild,fear-f.db.getCampaign(f.guild).fear);
+  for(const [i,evasion] of evasions.entries()){
+    const pc=f.pcs[i];f.db.updateCharacterData(pc.id,d=>{d.evasion=evasion;d.thresholds={major:7,severe:14};if(hpMarked!==null)d.level=1;});
+    if(i)recordScenePresence(f.db,f.guild,{entity_type:'character',entity_key:pc.id,source_event:x.row.data.offer.input.source,
+      location_key:'terminal',zone:'interior',range:'Close',visibility:'party',accepted_by:pc.owner_user_id},'fixture-native');
+  }
+  let search=null;
+  if(deferred){const text='I inspect the counter.',messageId='volley-prerequisite';captureWorldInput(f.db,f.guild,x.pc.owner_user_id,x.pc.id,messageId,text);
+    [search]=persistPlayerIntents(f.db,f.guild,[{...candidate(text).player_intents[0],type:'search',operation:'inspect'}],x.scope,{messageId});
+    f.db.setCityCalendar(f.guild,{flags:{...f.db.getCityCalendar(f.guild).flags,roll_requests:true,roll_collaboration:true}});}
+  const rows=persistPlayerIntents(f.db,f.guild,[candidate(x.text).player_intents[0]],x.scope,{messageId:x.messageId}),
+    origin=createArbitrationOrigin(f.db,f.guild,x.scope,x.sourceRef),board=buildSceneIntentBoard(f.db,f.guild,origin,[...rows,...(search?[search]:[])],
+      [...(extraSpotlight?[{actor_key:'guard',operation:'prepare',target_refs:[x.pc.id],objective_ref:'',source_refs:[],dependencies:[]}]:[]),
+        {actor_key:'guard',operation:'attack',target_refs:f.pcs.slice(0,evasions.length).map(p=>p.id),objective_ref:'',source_refs:[],dependencies:search?[search.record_key]:[]}]),
+    index=1+Number(extraSpotlight)+Number(!!search),
+    proposal={...decision(board.data.entries[index].intent_ref,'gm_attack_roll'),feature_ref:VOLLEY,rule_basis_refs:['srd:adversary-attacks'],stakes:'The Team attempts its source-pinned Coordinated Volley.'};
+  if(throughTurn)return {...x,origin,board,proposal};
+  const rulings=adjudicateSceneBoard(f.db,f.guild,origin,board,[...(extraSpotlight?[{...decision(board.data.entries[1].intent_ref,'request_pc_reaction_roll'),
+      rule_basis_refs:['srd:reaction-rolls'],trait:'Agility',difficulty:14,stakes:'Avoid an attempted interruption.',difficulty_reason:'Current native local NPC threat.'}]:[]),proposal],{library:x.library}),r=rulings.at(-1);
+  assert.equal(r.status,'gm_action_ready',r.data.reason);
+  const [parent]=executeUnifiedGmActions(f.db,f.guild,[r],{library:x.library,rng:()=>assert.fail('Preparation must not roll')});
+  if(deferred){assert.equal(parent.kind,'gm_action_continuation');assert.equal(parent.status,'pending');return {...x,search,decision:r};}
+  assert.equal(parent.kind,'npc_volley_attack');
+  const attacks=parent.data.targets.map(t=>f.db.getCityRecord(f.guild,'pc_incoming_attack',t.attack));
+  return {...x,decision:r,parent,attacks,board,origin};
+}
+function readyVolley(f,x,i=0){const pc=f.pcs[i],a=x.attacks[i];reviewIncomingAttack(f.db,f.guild,pc.owner_user_id,a.record_key,{library:x.library});confirmIncomingDefense(f.db,f.guild,pc.owner_user_id,a.record_key);return a;}
 const cases=[
+ ['UA9','V01','Coordinated Volley shares one attack and damage roll but preserves each owner workflow',f=>{
+   const x=volleyScenario(f);readyVolley(f,x);let calls=0;
+   const r=rollArbitratedIncomingAttack(f.db,f.guild,x.attacks[0].record_key,{library:x.library,rng:s=>{calls++;return s===20?14:4;}});
+   assert.equal(calls,3);assert.equal(r.data.damage.total,11);assert.equal(f.db.getCampaign(f.guild).fear,2);
+   for(const [i,a] of x.attacks.entries()){
+     const proof=incomingRollProjection(f.db,f.guild,a.record_key).receipt;
+     assert.equal(proof.data.hit,i<2);assert.equal(proof.data.roll,r.data.roll);assert.equal(f.db.getCharacter(f.pcs[i].id).data.resources.hp.current,0);
+   }
+   assert.equal(f.db.getCityRecord(f.guild,'pc_incoming_attack',x.attacks[1].record_key).status,'awaiting_defense');
+   resolveIncomingDamage(f.db,f.guild,f.pcs[0].owner_user_id,x.attacks[0].record_key,{armor:true,library:x.library});
+   assert.equal(rollArbitratedIncomingAttack(f.db,f.guild,x.attacks[0].record_key,{library:x.library,rng:()=>assert.fail('terminal target replay')}).data.roll,r.data.roll);
+   readyVolley(f,x,1);rollArbitratedIncomingAttack(f.db,f.guild,x.attacks[1].record_key,{library:x.library,rng:()=>assert.fail('shared dice never repeat')});
+   resolveIncomingDamage(f.db,f.guild,f.pcs[1].owner_user_id,x.attacks[1].record_key,{armor:false,library:x.library});
+   assert.equal(f.db.getCharacter(f.pcs[0].id).data.resources.hp.current,1);assert.equal(f.db.getCharacter(f.pcs[1].id).data.resources.hp.current,2);
+   assert.equal(f.db.getCharacter(f.pcs[2].id).data.resources.hp.current,0);
+   readyVolley(f,x,2);assert.equal(rollArbitratedIncomingAttack(f.db,f.guild,x.attacks[2].record_key,{library:x.library,rng:()=>assert.fail('no repeat')}).data.damage,null);
+   assert.equal(f.db.getCityRecord(f.guild,'pc_incoming_attack',x.attacks[2].record_key).status,'missed');
+   assert.equal(inspectVolley(f.db,f.guild,x.parent.record_key).row.status,'resolved');
+   assert.equal(executeUnifiedGmActions(f.db,f.guild,[x.decision],{library:x.library,rng:()=>assert.fail('completed execution replay')})[0].kind,'npc_volley_attack');
+   assert.equal(f.db.getCampaign(f.guild).fear,2);
+   assert.deepEqual(f.db.db.prepare('SELECT roll_type, COUNT(*) AS count FROM rolls WHERE guild_id=? GROUP BY roll_type ORDER BY roll_type').all(f.guild).map(r=>[r.roll_type,r.count]),
+     [['npc_incoming_volley',1],['npc_incoming_volley_damage',1]]);
+ }],
+ ...[1,19,20].map(face=>['UA9',`V02-${face}`,'Coordinated Volley miss and natural critical damage '+face,f=>{
+   const x=volleyScenario(f,{evasions:face===19?[12,17,24]:[24,25,26]});readyVolley(f,x);let calls=0;
+   const r=rollArbitratedIncomingAttack(f.db,f.guild,x.attacks[0].record_key,{library:x.library,rng:s=>{calls++;return s===20?face:4;}});
+   assert.equal(calls,face===1?1:3);assert.equal(r.data.hit,face!==1);assert.equal(r.data.damage?.total??null,face===20?27:face===19?11:null);
+   assert.equal(f.db.getCampaign(f.guild).fear,2);
+ }]),
+ ['UA9','V03','Coordinated Volley pays extra spotlight and Fear feature separately once',f=>{
+   const x=volleyScenario(f,{extraSpotlight:true,fear:2});readyVolley(f,x);
+   const r=rollArbitratedIncomingAttack(f.db,f.guild,x.attacks[0].record_key,{library:x.library,rng:s=>s===20?14:4}),cost=f.db.getCityRecord(f.guild,'gm_action_cost_receipt',r.data.cost_ref);
+   assert.deepEqual(cost.data.expenses,{additional_spotlight:1,feature:1,experience:0});assert.equal(f.db.getCampaign(f.guild).fear,0);
+   rollArbitratedIncomingAttack(f.db,f.guild,x.attacks[0].record_key,{library:x.library,rng:()=>assert.fail('no duplicate cost/dice')});
+ }],
+ ...[{fear:0},{fear:1,extraSpotlight:true}].map((options,i)=>['UA9',`V04-${i}`,'unaffordable shared cost holds all target dice and resources',f=>{
+   const x=volleyScenario(f,options);readyVolley(f,x);const before=f.db.getCampaign(f.guild).fear;
+   assert.throws(()=>rollArbitratedIncomingAttack(f.db,f.guild,x.attacks[0].record_key,{library:x.library,rng:()=>assert.fail('unaffordable RNG')}));
+   assert.equal(f.db.getCampaign(f.guild).fear,before);assert.equal(f.db.listCityRecords(f.guild,{kind:'npc_volley_roll_receipt',includeGM:true}).length,0);
+   assert(x.attacks.every(a=>f.db.getCharacter(a.subject_key).data.resources.hp.current===0));
+ }]),
+ ...['owner','source','range','proxy','template','scene'].map(mode=>['UA9',`V05-${mode}`,'stale Volley authority rejects before shared RNG '+mode,f=>{
+   const x=volleyScenario(f);readyVolley(f,x);const before=f.db.getCampaign(f.guild).fear;
+   if(mode==='owner')f.db.db.prepare('UPDATE characters SET owner_user_id=? WHERE id=?').run(f.pcs[3].owner_user_id,f.pcs[1].id);
+   if(mode==='source')f.db.db.prepare("UPDATE world_events SET status='retracted' WHERE guild_id=? AND event_key=?").run(f.guild,x.sourceRef);
+   if(mode==='proxy')f.db.upsertNpcProxy(f.guild,f.session.id,{npcName:'guard',userId:f.pcs[3].owner_user_id,status:'active'});
+   if(mode==='range'){const p=scenePresence(f.db,f.guild,'character',f.pcs[1].id);f.db.saveCityRecord(f.guild,{...p,key:p.record_key,data:{...p.data,zone:'remote',range:'Very Far'}});}
+   if(mode==='template'){const find=x.library.findAdversary.bind(x.library);x.library.findAdversary=name=>({...find(name),attack:'+99'});}
+   if(mode==='scene')f.db.setCityCalendar(f.guild,{flags:{...f.db.getCityCalendar(f.guild).flags,gm_discretion:false}});
+   assert.throws(()=>rollArbitratedIncomingAttack(f.db,f.guild,x.attacks[0].record_key,{library:x.library,rng:()=>assert.fail('stale RNG')}));
+   assert.equal(f.db.getCampaign(f.guild).fear,before);assert.equal(f.db.listCityRecords(f.guild,{kind:'npc_volley_roll_receipt',includeGM:true}).length,0);
+ }]),
+ ['UA9','V06','withheld owner and restart preserve independent native damage and exact saved dice',f=>{
+   const x=volleyScenario(f);const held=x.attacks[1];
+   assert.throws(()=>withholdIncomingDefense(f.db,f.guild,f.pcs[0].owner_user_id,held.record_key,{library:x.library,interactionId:'wrong-owner'}));
+   withholdIncomingDefense(f.db,f.guild,f.pcs[1].owner_user_id,held.record_key,{library:x.library,interactionId:'hold-own'});
+   readyVolley(f,x);rollArbitratedIncomingAttack(f.db,f.guild,x.attacks[0].record_key,{library:x.library,rng:s=>s===20?14:4});f.restart();
+   assert.equal(f.db.getCityRecord(f.guild,'pc_incoming_attack',held.record_key).status,'hold_for_owner');
+   const receipt=resolveIncomingDamage(f.db,f.guild,f.pcs[0].owner_user_id,x.attacks[0].record_key,{armor:false,library:x.library});
+   assert.equal(receipt.data.hp_marks,2);assert.equal(f.db.getCharacter(f.pcs[1].id).data.resources.hp.current,0);
+   assert.equal(resolveIncomingDamage(f.db,f.guild,f.pcs[0].owner_user_id,x.attacks[0].record_key,{armor:false,library:x.library}).record_key,receipt.record_key);
+   readyVolley(f,x,1);rollArbitratedIncomingAttack(f.db,f.guild,held.record_key,{library:x.library,rng:()=>assert.fail('restart replay')});
+   resolveIncomingDamage(f.db,f.guild,f.pcs[1].owner_user_id,held.record_key,{armor:true,library:x.library});assert.equal(f.db.getCampaign(f.guild).fear,2);
+ }],
+ ['UA9','V07','changed sibling owner after saved Volley holds only that target not independent damage',f=>{
+   const x=volleyScenario(f);readyVolley(f,x);rollArbitratedIncomingAttack(f.db,f.guild,x.attacks[0].record_key,{library:x.library,rng:s=>s===20?14:4});
+   f.db.db.prepare('UPDATE characters SET owner_user_id=? WHERE id=?').run(f.pcs[3].owner_user_id,f.pcs[1].id);
+   assert.throws(()=>reviewIncomingAttack(f.db,f.guild,f.pcs[1].owner_user_id,x.attacks[1].record_key,{library:x.library}));
+   assert.throws(()=>reviewIncomingAttack(f.db,f.guild,f.pcs[3].owner_user_id,x.attacks[1].record_key,{library:x.library}));
+   assert.equal(resolveIncomingDamage(f.db,f.guild,f.pcs[0].owner_user_id,x.attacks[0].record_key,{armor:false,library:x.library}).data.hp_marks,2);
+   assert.equal(f.db.getCampaign(f.guild).fear,2);
+ }],
+ ['UA9','V08','retracted shared result preserves committed HP and forbids unresolved sibling effects',f=>{
+   const x=volleyScenario(f);readyVolley(f,x);rollArbitratedIncomingAttack(f.db,f.guild,x.attacks[0].record_key,{library:x.library,rng:s=>s===20?14:4});
+   resolveIncomingDamage(f.db,f.guild,f.pcs[0].owner_user_id,x.attacks[0].record_key,{armor:false,library:x.library});
+   const parent=inspectVolley(f.db,f.guild,x.parent.record_key);f.db.db.prepare("UPDATE world_events SET status='retracted' WHERE guild_id=? AND event_key=?").run(f.guild,parent.result.source_event);
+   assert.throws(()=>reviewIncomingAttack(f.db,f.guild,f.pcs[1].owner_user_id,x.attacks[1].record_key,{library:x.library}));
+   assert.equal(f.db.getCharacter(f.pcs[0].id).data.resources.hp.current,2);assert.equal(f.db.getCharacter(f.pcs[1].id).data.resources.hp.current,0);
+   assert.equal(f.db.getCampaign(f.guild).fear,2);
+ }],
+ ['UA9','V09','ordinary GM cannot roll a shared child or choose another owner Armor',f=>{
+   const x=volleyScenario(f);readyVolley(f,x);assert.throws(()=>rollIncomingAttack(f.db,f.guild,'gm',x.attacks[0].record_key,{gm:true,library:x.library,rng:()=>assert.fail('independent child dice')}));
+   rollArbitratedIncomingAttack(f.db,f.guild,x.attacks[0].record_key,{library:x.library,rng:s=>s===20?14:4});
+   assert.throws(()=>resolveIncomingDamage(f.db,f.guild,f.pcs[1].owner_user_id,x.attacks[0].record_key,{armor:true,library:x.library}));
+   assert.equal(f.db.getCharacter(f.pcs[0].id).data.resources.hp.current,0);
+ }],
+ ['UA9','V10','GM combined turn publishes three distinct owner-private offers through actual outbox',async f=>{
+   const x=volleyScenario(f,{throughTurn:true}),r=candidate(x.text);
+   r.unified_arbitration={version:1,npc_intents:[{actor_key:'guard',operation:'attack',target_refs:f.pcs.slice(0,3).map(p=>p.id),objective_ref:'',source_refs:[],dependencies:[]}],decisions:[x.proposal]};
+   const out=await run(f,x,{version:9,acts:[],fiction_delta:[]},r);assert.equal(out.ai.requests.length,2);
+   assert(out.ai.requests.some(request=>JSON.stringify(request).includes(VOLLEY)),'Native action selector must reach the existing GM prompt');
+   const rows=out.rows.filter(row=>row.payload.includes('Incoming native Coordinated Volley'));assert.equal(rows.length,3);
+   for(const [i,pc] of f.pcs.slice(0,3).entries()){
+     const own=rows.find(row=>row.target_user_id===pc.owner_user_id);assert(own);assert.equal(own.visibility,'character');assert.equal(own.target_character_id,pc.id);
+     assert(!own.payload.includes('SECRET'));assert(!own.payload.includes('Evasion'));assert(!/HP\s*\d/u.test(own.payload));
+     assert(!rows.filter(row=>row.target_user_id!==pc.owner_user_id).some(row=>row.payload.includes(own.payload.match(/npc-incoming:[a-f0-9]+/u)[0])));
+   }
+   assert(!out.rows.filter(row=>row.surface==='party').some(row=>row.payload.includes('npc-incoming:')));
+   assert.equal(f.db.listCityRecords(f.guild,{kind:'npc_volley_roll_receipt',includeGM:true}).length,0);
+   f.restart();const sent=[];
+   await deliverTurnOutbox(f.db,f.guild,out.attempt.turn_id,async row=>{sent.push({recipient:row.target_user_id,text:row.payload});return{messageId:`offline-${sent.length}`,channelId:'offline'};});
+   assert.equal(sent.filter(r=>r.text.includes('Incoming native Coordinated Volley')).length,3);
+   await deliverTurnOutbox(f.db,f.guild,out.attempt.turn_id,async()=>assert.fail('delivered replay'));
+   assert.equal(f.db.getCampaign(f.guild).fear,3);
+ }],
+ ['UA9','V11','uncertain Volley outbox is not blindly resent after restart',async f=>{
+   const x=volleyScenario(f,{throughTurn:true}),r=candidate(x.text);
+   r.unified_arbitration={version:1,npc_intents:[{actor_key:'guard',operation:'attack',target_refs:f.pcs.slice(0,3).map(p=>p.id),objective_ref:'',source_refs:[],dependencies:[]}],decisions:[x.proposal]};
+   const out=await run(f,x,{version:9,acts:[],fiction_delta:[]},r);let sends=0;
+   await deliverTurnOutbox(f.db,f.guild,out.attempt.turn_id,async row=>{sends++;if(row.target_user_id)throw new Error('unknown transport result');return{messageId:'offline-party',channelId:'offline'};});
+   assert(f.db.listTurnPublications(f.guild,out.attempt.turn_id).some(r=>r.status==='uncertain'));const before=sends;f.restart();
+   await deliverTurnOutbox(f.db,f.guild,out.attempt.turn_id,async()=>{sends++;assert.fail('uncertain resend');});assert.equal(sends,before);
+   assert.equal(f.db.getCampaign(f.guild).fear,3);assert.equal(f.db.listCityRecords(f.guild,{kind:'npc_volley_roll_receipt',includeGM:true}).length,0);
+ }],
+ ['UA9','V12','shared attack damage at last HP opens only the affected owner death choice',async f=>{
+   const x=volleyScenario(f,{hpMarked:3});
+   readyVolley(f,x);const r=rollArbitratedIncomingAttack(f.db,f.guild,x.attacks[0].record_key,{library:x.library,rng:s=>s===20?20:4});
+   const effect=resolveIncomingDamage(f.db,f.guild,f.pcs[0].owner_user_id,x.attacks[0].record_key,{armor:false,library:x.library});
+   assert.equal(r.data.damage.total,27);assert.equal(effect.data.hp_marks,3);assert.equal(f.db.getCharacter(f.pcs[0].id).status,'active');
+   const death=f.db.getCityRecord(f.guild,'pc_death_move_request',`${x.attacks[0].record_key}:death`);assert.equal(death.status,'awaiting_owner');
+   const {reviewPcDeathMove}=await import('../src/pc-death.js');assert.throws(()=>reviewPcDeathMove(f.db,f.guild,f.pcs[1].owner_user_id,death.record_key));
+   assert.equal(reviewPcDeathMove(f.db,f.guild,f.pcs[0].owner_user_id,death.record_key).request,death.record_key);
+   validateIncomingDamageApplication(f.db,f.guild,effect.record_key);assert.equal(f.db.getCharacter(f.pcs[1].id).data.resources.hp.current,0);
+   assert.equal(f.db.getCharacter(f.pcs[0].id).data.resources.hope,2);assert.equal(f.db.getCharacter(f.pcs[0].id).data.resources.stress.current,2);
+ }],
+ ...[{privateScene:true},{evasions:[12,13,14,15]},{evasions:[]}].map((options,i)=>['UA9',`V13-${i}`,'Volley rejects cross-private or invalid target cardinality '+i,f=>{
+   assert.throws(()=>volleyScenario(f,options));
+   assert.equal(f.db.listCityRecords(f.guild,{kind:'npc_volley_attack',includeGM:true}).length,0);
+   assert.equal(f.db.listCityRecords(f.guild,{kind:'gm_action_cost_receipt',includeGM:true}).length,0);
+ }]),
+ ['UA9','V14','Discord owner command withholds only its own target and applies only its own Armor',async f=>{
+   const x=volleyScenario(f),effect=async(user,input,id)=>{
+     const i=fakeInteraction({gm:false,sub:'effect',json:input});Object.assign(i,{id,guildId:f.guild,user:{id:user,username:user},commandName:'vc-roll',isChatInputCommand:()=>true});
+     await handleCommand(i,{db:f.db,gm:{content:{root:'../content'}}});return i;
+   };
+   const denied=await effect(f.pcs[0].owner_user_id,{op:'incoming-withhold',attack:x.attacks[1].record_key},'wrong-withhold');assert(denied.deliveries.some(d=>d.content.startsWith('⚠')));
+   const own=await effect(f.pcs[1].owner_user_id,{op:'incoming-withhold',attack:x.attacks[1].record_key},'own-withhold');assert(own.deliveries.every(d=>d.ephemeral));
+   assert.equal(f.db.getCityRecord(f.guild,'pc_incoming_attack',x.attacks[1].record_key).status,'hold_for_owner');
+   readyVolley(f,x);rollArbitratedIncomingAttack(f.db,f.guild,x.attacks[0].record_key,{library:x.library,rng:s=>s===20?14:4});
+   await effect(f.pcs[0].owner_user_id,{op:'incoming-armor',attack:x.attacks[0].record_key,armor:true},'own-armor');
+   assert.equal(f.db.getCharacter(f.pcs[0].id).data.resources.hp.current,1);assert.equal(f.db.getCharacter(f.pcs[1].id).data.resources.hp.current,0);
+   f.restart();await effect(f.pcs[0].owner_user_id,{op:'incoming-armor',attack:x.attacks[0].record_key,armor:true},'own-armor');
+   assert.equal(f.db.getCharacter(f.pcs[0].id).data.resources.armor.current,1);assert.equal(f.db.getCampaign(f.guild).fear,2);
+ }],
+ ['UA9','V15','changed private recipient holds deferred Volley text before fake transport',async f=>{
+   const x=volleyScenario(f,{throughTurn:true}),r=candidate(x.text);
+   r.unified_arbitration={version:1,npc_intents:[{actor_key:'guard',operation:'attack',target_refs:f.pcs.slice(0,3).map(p=>p.id),objective_ref:'',source_refs:[],dependencies:[]}],decisions:[x.proposal]};
+   const out=await run(f,x,{version:9,acts:[],fiction_delta:[]},r);f.restart();
+   f.db.db.prepare('UPDATE characters SET owner_user_id=? WHERE id=?').run(f.pcs[3].owner_user_id,f.pcs[1].id);
+   const sent=[];await deliverTurnOutbox(f.db,f.guild,out.attempt.turn_id,async row=>{sent.push(row);return{messageId:`offline-${sent.length}`,channelId:'offline'};});
+   assert(!sent.some(row=>row.target_user_id===f.pcs[1].owner_user_id||row.target_user_id===f.pcs[3].owner_user_id));
+   assert(f.db.listTurnPublications(f.guild,out.attempt.turn_id).some(row=>row.target_user_id===f.pcs[1].owner_user_id&&row.status==='failed'));
+   assert.equal(f.db.getCampaign(f.guild).fear,3);
+ }],
+ ['UA9','V16','shuffled native target list cannot reuse a sealed Volley offer',f=>{
+   const x=volleyScenario(f);readyVolley(f,x);const p=f.db.getCityRecord(f.guild,'npc_volley_attack',x.parent.record_key);
+   f.db.saveCityRecord(f.guild,{...p,key:p.record_key,data:{...p.data,offer:{...p.data.offer,targets:[...p.data.offer.targets].reverse()}}});
+   assert.throws(()=>rollArbitratedIncomingAttack(f.db,f.guild,x.attacks[0].record_key,{library:x.library,rng:()=>assert.fail('reordered RNG')}));
+   assert.equal(f.db.getCampaign(f.guild).fear,3);
+ }],
+ ['UA9','V17','damaged target receipt cannot authorize HP or another target private result',async f=>{
+   const x=volleyScenario(f);readyVolley(f,x);const r=rollArbitratedIncomingAttack(f.db,f.guild,x.attacks[0].record_key,{library:x.library,rng:s=>s===20?14:4});
+   f.db.saveCityRecord(f.guild,{...r,key:r.record_key,data:{...r.data,evasion:1}});
+   assert.throws(()=>incomingRollProjection(f.db,f.guild,x.attacks[0].record_key));
+   assert.throws(()=>resolveIncomingDamage(f.db,f.guild,f.pcs[0].owner_user_id,x.attacks[0].record_key,{armor:false,library:x.library}));
+   const {nativeGmNotice}=await import('../src/gm-arbitration-output.js');
+   const own=nativeGmNotice(f.db,f.guild,x.decision.record_key,{mode:'private',actorUserId:f.pcs[1].owner_user_id,actorCharacterId:f.pcs[1].id});
+   assert(own.text.includes('Evasion 17'));assert(own.text.includes('awaiting_defense'));assert(!own.text.includes('Evasion 12'));
+   assert.equal(f.db.getCharacter(f.pcs[0].id).data.resources.hp.current,0);assert.equal(f.db.getCampaign(f.guild).fear,2);
+ }],
+ ['UA9','V18','actual owner success resumes a dependent Volley once without executing the GM attack',f=>{
+   const x=volleyScenario(f,{deferred:true}),a=adjudicateAcceptedIntent(f.db,f.guild,{acceptedIntent:x.search.record_key,mode:'roll_required',trait:'Finesse',kind:'action',difficulty:12,
+     risk:'Delay',stakes:'Declared inspection only.',rawRefs:['srd:action-rolls'],explanation:'Native owner-controlled prerequisite.'},'native:unified-gm',{scope:x.scope}),
+     request=f.db.getCityRecord(f.guild,'roll_request',a.roll_request_ref);let pcDice=0;
+   contributeRoll(f.db,f.guild,x.pc.owner_user_id,{op:'roll',key:'volley-prerequisite-owner',request:request.record_key,expected_revision:rollRevision(request)},
+     {rng:()=>[10,4][pcDice++],gmRng:()=>assert.fail('GM dice await target owner defense')});
+   assert.equal(pcDice,2);const continuation=f.db.listCityRecords(f.guild,{kind:'gm_action_continuation',includeGM:true})[0];assert.equal(continuation.status,'resumed');
+   const parent=f.db.getCityRecord(f.guild,'npc_volley_attack',continuation.data.result);assert.equal(parent.status,'awaiting_defense');assert.equal(parent.data.targets.length,3);
+   f.restart();assert.equal(executeUnifiedGmActions(f.db,f.guild,[x.decision],{library:x.library,rng:()=>assert.fail('restart does not roll')})[0].record_key,parent.record_key);
+   assert.equal(f.db.getCampaign(f.guild).fear,3);
+ }],
  ...[
    ['HR04','Pale Court Elder','adversary:pale-court-elder:invitation-revoked','npc_stress'],
    ['HR06','Aster Vale Contractor','adversary:aster-vale-contractor:flashbang','success'],
@@ -881,13 +1093,13 @@ cases.push(
  }],
  ['UA6','01','feature catalog pins every source occurrence without granting execution',async()=>{
    const {compileNativeFeatures,featureDisposition}=await import('../src/native-feature-catalog.js');
-   const rows=compileNativeFeatures();assert.equal(rows.length,152);assert.equal(new Set(rows.map(r=>r.feature_key)).size,152);
-   assert.equal(rows.filter(r=>r.actor_kind==='adversary').length,104);assert.equal(rows.filter(r=>r.actor_kind==='environment').length,48);
+   const rows=compileNativeFeatures();assert.equal(rows.length,153);assert.equal(new Set(rows.map(r=>r.feature_key)).size,153);
+   assert.equal(rows.filter(r=>r.actor_kind==='adversary').length,105);assert.equal(rows.filter(r=>r.actor_kind==='environment').length,48);
    assert.equal(new Set(rows.filter(r=>r.actor_kind==='adversary').map(r=>r.actor_name)).size,41);
    assert.equal(new Set(rows.filter(r=>r.actor_kind==='environment').map(r=>r.actor_name)).size,16);
    for(const r of rows){assert.match(r.source_hash,/^[a-f0-9]{64}$/);assert.match(r.template_hash,/^[a-f0-9]{64}$/);
      assert(Object.isFrozen(r));assert.equal(featureDisposition(r.feature_key).status,r.native_handler?'supported':'needs_rules_review');}
-   assert.deepEqual(rows.filter(r=>r.native_handler).map(r=>r.feature_key),['adversary:pale-court-thrall:pack-pressure','adversary:static-wraith:feedback','adversary:choir-relay:local-mesh','adversary:pale-court-knight:blood-rush','adversary:wraith-pack:many-deaths','adversary:green-root-host:horde-3d8-8','adversary:aster-vale-catastrophe-analyst:contingency-stack']);
+   assert.deepEqual(rows.filter(r=>r.native_handler).map(r=>r.feature_key),['adversary:pale-court-thrall:pack-pressure','adversary:static-wraith:feedback','adversary:choir-relay:local-mesh','adversary:pale-court-knight:blood-rush',VOLLEY,'adversary:wraith-pack:many-deaths','adversary:green-root-host:horde-3d8-8','adversary:aster-vale-catastrophe-analyst:contingency-stack']);
  }],
  ['UA6','02','typed representative descriptors distinguish action reaction passive and defense',async()=>{
    const {compileNativeFeatures}=await import('../src/native-feature-catalog.js'),rows=compileNativeFeatures(),get=(actor,name)=>rows.find(r=>r.actor_name===actor&&r.name===name);
