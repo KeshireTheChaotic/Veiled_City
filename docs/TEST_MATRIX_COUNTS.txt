@@ -1,4 +1,0 @@
-Original v9.3.1 regression matrix: 137 rows.
-New FH policy and lifecycle scenarios: 54 rows.
-Total: 191 unique scenario IDs.
-These are planned scenarios, not executed tests.
