@@ -59,7 +59,7 @@ export const PLAYER_INTENT_PROMPT=[
   'Copy source_span VERBATIM from this message; do not fabricate owner-authored words, merge unrelated speakers or extract quoted examples as actions.',
   'Use type/operation to describe meaning; NEVER make a dictionary of accepted verbs into a rule gate.',
   'For an authentic owner declaration of their INITIAL current position, use type=other operation=initial_position resolution=conversational and exact known target_key. This is setup only: no prior placement, encounter, lock, travel or cost bypass. Never classify a question, quotation, hypothetical or attempted travel as initial setup.',
-  'target_key must be an existing audience-visible identity or a same-turn world_additions key, otherwise leave it blank.',
+  'target_key must be an existing audience-visible native identity; a player mention or same-turn raw world_additions key cannot establish it. Otherwise leave it blank.',
   'Destination exterior means arriving at the outside of a building, not entering it. Do not conflate approach with entry.',
   'For speech, copy utterance verbatim as it appears in source_span; never paraphrase invented PC speech.',
   'For constrained searches, put explicitly excluded destinations in excluded_targets, even when the sentence is not in a predefined format.',
@@ -71,8 +71,8 @@ export const PLAYER_INTENT_PROMPT=[
   'Use type=other, resolution=conversational and operation=personal_commitment_candidate for an authentic owner first-person declarative goal worth OPTIONAL private review. Never extract quoted, conditional, hypothetical or reported words as an owned goal. It creates no arc or consent.',
   'Use type=other, resolution=conversational and operation=proposal_campaign_canon only for an explicit CURRENT private owner request to submit canon for review. Include its exact full source clause and canon_proposals with value copied verbatim from that source. Discussion, quotations and questions ABOUT canon are not submission. No proposal establishes canon.',
   'Ordinary untracked scene props may be handled descriptively, but never grant permanent inventory custody or a canon possession claim without a verified native handout receipt.',
-  'A local NPC receiving the player\'s dialogue must exist and actually share the scene: reuse/create it through world_additions and scene_actions.introduce_npc; give the NPC a natural response when free to speak.',
-  'If a player names a location or NPC or takes a consequential action involving it, create/reuse a durable world entity when missing. Name-only narration does not make canon.',
+  'A local NPC receiving the player\'s dialogue must exist and actually share the scene. Fresh ordinary GM invention uses the isolated narrative_request stage, not raw world_additions or a claimed listener. Give an established free NPC a natural response.',
+  'Player naming, targeting, repetition and relationship assertions are interest, never new entity or canon authority. Resolve existing identities; preserve independent actions when an unknown reference needs review.',
   'Otherwise keep incidental atmosphere ephemeral: describe it in narration, do not put it in world_additions, facts, canon or NPC memories.',
   'Create persistent GM-originated leads, recurring people and actionable places when they become important to continued play.',
   'Every immediate actionable intent needs a resolution; never finish a GM turn by merely repeating its declaration.'
@@ -559,28 +559,18 @@ export function autoCompleteOrdinaryMovements(db,guild,result,scope={}){
   const existing=new Set((result.scene_actions||[]).filter(action=>action.kind==='move').map(action=>action.source_span));
   for(const intent of result.player_intents){
     if(intent.type!=='move'||intent.framing!=='immediate'||intent.resolution!=='auto'||existing.has(intent.source_span))continue;
-    const sameTurn=(result.world_additions||[]).find(a=>a.kind==='location'&&
-      (a.key===intent.target_key||a.name.toLowerCase()===intent.target_name.toLowerCase()));
     const pc=scope.actorCharacterId?db.getCharacter(scope.actorCharacterId):null;
     const resolved=pc&&resolvePlaceReference(db,guild,pc.id,intent.target_name||intent.target_key,
       {mode:scope.mode,user:scope.actorUserId});
-    const key=intent.target_key||sameTurn?.key||
-      (resolved?.status==='resolved_existing'?resolved.location.entity_key:'');
-    if(!key)throw error('A declared automatic move requires a resolvable destination or a matching new ordinary place.',
+    const key=resolved?.status==='resolved_existing'?resolved.location.entity_key:'';
+    if(!key||intent.target_key&&intent.target_key!==key)throw error('A declared automatic move requires an established audience-visible native destination.',
       {source_span:intent.source_span,target:intent.target_name});
     // Preserve the schema's existing zone field. Native access checks still decide if arrival is allowed.
     auto.push({kind:'move',entity_ref:key,source_span:intent.source_span,
       zone:intent.destination==='exterior'?'exterior':intent.destination==='interior'?'interior':'scene'});
     existing.add(intent.source_span);
   }
-  // Introducing an ordinary newly-generated local listener is native scene presence, not human approval.
-  for(const intent of result.player_intents){
-    if(!['speak','interact'].includes(intent.type)||intent.framing!=='immediate'||!intent.target_key)continue;
-    if((result.scene_actions||[]).some(a=>a.kind==='introduce_npc'&&a.entity_ref===intent.target_key)||
-      auto.some(a=>a.kind==='introduce_npc'&&a.entity_ref===intent.target_key))continue;
-    const npc=(result.world_additions||[]).find(a=>a.kind==='npc'&&a.key===intent.target_key);
-    if(npc)auto.push({kind:'introduce_npc',entity_ref:intent.target_key,source_span:intent.source_span,zone:''});
-  }
+  // Raw listener proposals cannot establish identity/presence. Native GM authoring owns fresh NPCs.
   if(auto.length)result.scene_actions=[...(result.scene_actions||[]),...auto];
   return result;
 }

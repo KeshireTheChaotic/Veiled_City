@@ -12,6 +12,7 @@ import { validatePlayerIntents } from '../src/typed-intents.js';
 import { tierWorldAdditions } from '../src/entity-memory.js';
 import { POST_TURN_REVIEW_CATEGORIES } from '../src/director.js';
 import { FakeResponses } from './contract-fixtures.mjs';
+import {establishFixtureAdditions} from './native-world-fixtures.mjs';
 
 const temp=fs.mkdtempSync(path.join(os.tmpdir(),'vc-typed-intents-'));
 const db=new VeiledDB(path.join(temp,'fixture.sqlite'),path.resolve('sql/schema.sql'));
@@ -44,6 +45,8 @@ try{
       world_additions:[{kind:'location',key,name,summary:'A public, open neighborhood storefront.',parent_location_key:id==='dash'?'': 'twenty-four-spin',visibility:'party'}],
       state_review:emptyReview()};
     captureWorldInput(db,guild,'player',pc.id,id,message);
+    establishFixtureAdditions(db,{guildId:guild,scope:{mode:'party',actorUserId:'player',actorCharacterId:pc.id},
+      provenance:{messageId:id},narrative:turn});
     gm.ai=new FakeResponses([turn]);
     const result=await gm.runTurn({guildId:guild,actorUserId:'player',actorName:pc.name,messageText:message,
       actorAssignment:actor,messageId:id});
@@ -67,7 +70,8 @@ try{
   assert.deepEqual(incidental.world_additions,[]);
   const named={narration:'A lit sign says Willow Street Pharmacy.',player_intents:[],scene_actions:[],world_additions:[
     {kind:'location',key:'willow-street-pharmacy',name:'Willow Street Pharmacy',summary:'Open all night.'}]};
-  assert.equal(tierWorldAdditions(named,'Where is the nearest pharmacy?').durable.length,1);
+  assert.equal(tierWorldAdditions(named,'Where is the nearest pharmacy?').ephemeral.length,1,
+    'Narrator naming alone cannot create an identity; native GM creation is covered above.');
   console.log('Typed semantic GM PASS: bolt/rush no verb whitelist, native arrival after preview, source scope, ephemeral/durable memory.');
 }finally{
   db.close();fs.rmSync(temp,{recursive:true,force:true});

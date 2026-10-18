@@ -4,14 +4,16 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import { VeiledDB } from "../src/db.js";
-import { applyAuthoritativeMutation, previewAuthoritativeMutation } from "../src/state.js";
+import {applyNativeFixtureMutation as applyAuthoritativeMutation,previewNativeFixtureMutation as previewAuthoritativeMutation} from './native-world-fixtures.mjs';
 import { captureWorldInput, applyAutonomousWorld, configureWorldAuthority, retconAutonomousEntity } from "../src/autonomous-world.js";
 import { stateRevision } from "../src/ai-intents.js";
 import { resolvePlaceReference } from "../src/location-language.js";
 import { prepareSceneEntry } from "../src/scene-entry.js";
 import { worldRequirements, hasCharacterInvitation } from "../src/player-language.js";
-import { scenePresence } from "../src/scene-continuity.js";
+import {scenePresence,recordScenePresence} from "../src/scene-continuity.js";
 import { configureCityFlags } from "../src/city-core.js";
+import {indexWorldEvent} from '../src/city-calendar.js';
+import {currentScene} from '../src/scene-continuity.js';
 const dir=fs.mkdtempSync(path.join(os.tmpdir(),"vc-autonomous-world-")),file=path.join(dir,"world.sqlite");
 let db=new VeiledDB(file,path.resolve("sql/schema.sql"));
 const guild="contract";db.ensureCampaign(guild);db.ensureCampaign("other");
@@ -97,7 +99,12 @@ try{
   assert.equal(db.getSimulationEntity(guild,"location","quiet-shop").state.description,"A small public shop with a blue awning.");
   assert.equal(db.getReference(guild,"location","quiet-shop").visibility,"character","Human retcon preserves original privacy");
   assert.equal(db.getSimulationEntity("other","location","quiet-shop"),null,"Guild isolation");
-  applyAuthoritativeMutation(db,input("secret-place","I look around.",{world_additions:[location("hidden-world-only","Hidden World Only","quiet-shop","gm")]},privateScope));
+  // A separately imported GM-only setting is not created from a private player's assertion.
+  const secretSource=indexWorldEvent(db,guild,{key:'fixture:gm-secret-place',kind:'gm_setting_import',source_id:'fixture:gm',
+    title:'Independent GM fixture setting',session_id:session.id,scene:currentScene(db,guild).key,visibility:'gm'},'fixture:gm');
+  db.setSimulationEntity(guild,'location','hidden-world-only',{name:'Hidden World Only',visibility:'gm',parent_location_key:'quiet-shop'});
+  db.saveCityRecord(guild,{kind:'autonomous_entity',key:'location:hidden-world-only',source_event:secretSource.event_key,visibility:'gm',
+    location_key:'hidden-world-only',data:{kind:'location',key:'hidden-world-only',name:'Hidden World Only'}});
   const secretIdentity=db.getCityRecord(guild,"autonomous_entity","location:hidden-world-only");
   assert.equal(db.getWorldEvent(guild,secretIdentity.source_event).visibility,"gm","R19: creation provenance cannot leak a GM-only identity");
   assert.equal(db.getReference(guild,"location","hidden-world-only")??null,null);
@@ -115,7 +122,16 @@ try{
       "Malformed optional world additions are rejected at the closed schema boundary before any write.");
     assert.equal(db.getSimulationEntity(guild,"location",addition.key),null);
   }
-  const unsourced=input("atomic","I look around.",{world_additions:[location("rollback","Rollback","quiet-shop")],
+  // Later cases have an explicitly independent public fixture position at the established diner;
+  // never widen the preceding private setting or arrival's audience.
+  configureCityFlags(db,guild,{scene_continuity:true});
+  db.updateCharacterData(pc.id,data=>{data.location='diner';});
+  const publicPosition=indexWorldEvent(db,guild,{key:'fixture:owner-public-position',kind:'arrival',source_id:'player:owner',
+    title:'Owner-disclosed fixture position',session_id:session.id,scene:currentScene(db,guild).key,location_key:'diner',visibility:'party',
+    details:{entity_type:'character',entity_key:pc.id,owner_user_id:'owner'}},'owner');
+  recordScenePresence(db,guild,{entity_type:'character',entity_key:pc.id,location_key:'diner',zone:'interior',
+    source_event:publicPosition.event_key,visibility:'party',accepted_by:'owner'},'ai_gm');
+  const unsourced=input("atomic","I look around.",{world_additions:[location("rollback","Rollback","diner")],
     scene_actions:[action("move","rollback","I look around.")],player_intents:[]});
   assert.throws(()=>applyAuthoritativeMutation(db,unsourced),/typed intent authorization/);assert.equal(db.getSimulationEntity(guild,"location","rollback"),null,"Atomic rollback");
   const hypothetical='Someone says: "I enter the Diner."';
@@ -130,7 +146,7 @@ try{
   db.saveCityRecord(guild,{...legacy,key:legacy.record_key,status:"pending"});
   captureWorldInput(db,guild,"owner",pc.id,"legacy-followup","That cafe.");
   assert.equal(db.getCityRecord(guild,"scene_entry",legacy.record_key).status,"awaiting_adjudication");
-  applyAuthoritativeMutation(db,input("legacy-followup","That cafe.",{world_additions:[location("corner-cafe","Corner Cafe","quiet-shop")],
+  applyAuthoritativeMutation(db,input("legacy-followup","That cafe.",{world_additions:[location("corner-cafe","Corner Cafe","diner")],
     scene_actions:[action("move","corner-cafe","I enter the Corner Cafe.")]}));
   assert.equal(db.getCityRecord(guild,"scene_entry",legacy.record_key).status,"resolved","Legacy current declaration can resolve through native AI-GM adjudication");
   const stale=prepareSceneEntry(db,guild,"owner",pc.id,"stale","I enter the Other Cafe.");

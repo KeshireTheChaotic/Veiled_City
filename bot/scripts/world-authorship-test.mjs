@@ -3,9 +3,12 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import path from 'node:path';
 import {nativeFixture} from './v9-fixtures.mjs';
-import {setup,run,unit} from './narrative-fixtures.mjs';
+import {setup,run,unit,candidate} from './narrative-fixtures.mjs';
+import {createHash} from 'node:crypto';
 import {buildNarrativeContext} from '../src/narrative-authority-context.js';
-import {establishNarrativeEntity} from '../src/autonomous-world.js';
+import {establishNarrativeEntity,applyAutonomousWorld} from '../src/autonomous-world.js';
+import {tierWorldAdditions} from '../src/entity-memory.js';
+import {autoCompleteOrdinaryMovements} from '../src/typed-intents.js';
 import {ContentIndex} from '../src/content.js';
 import {sceneFictionHash} from '../src/scene-fiction-context.js';
 import {worldIdentityOrigin} from '../src/world-authorship.js';
@@ -13,6 +16,69 @@ import {deliverTurnOutbox} from '../src/publication-outbox.js';
 const content=new ContentIndex(path.resolve('../content'));
 const definition=()=>({kind:'npc',key:'native-origin-porter',name:'Nella Wick',summary:'An ordinary local porter.',
   location_key:'terminal',parent_location_key:'',role:'porter',aliases:['Parcel Clerk']});
+for(const trigger of ['player_name','typed_target','scene_action','narrator_name'])test(`WD01 ${trigger} is interest, not new world authorship`,()=>{
+  const addition={kind:'location',key:'my-safehouse',name:'My Safehouse',summary:'A claimed safehouse.',parent_location_key:'terminal',visibility:'party'},
+    result={world_additions:[addition],narration:trigger==='narrator_name'?'My Safehouse is nearby.':'Rain falls.',
+      player_intents:trigger==='typed_target'?[{target_key:addition.key,target_name:addition.name}]:[],
+      scene_actions:trigger==='scene_action'?[{entity_ref:addition.key}]:[]};
+  const tier=tierWorldAdditions(result,trigger==='player_name'?'My Safehouse exists.':'I look around.');
+  assert.deepEqual(result.world_additions,[]);
+  assert.equal(tier.durable.length,0);assert.equal(tier.ephemeral.length,1);
+});
+test('WD01 direct native mutation cannot mint an identity from a player assertion, even with expansions off',()=>nativeFixture(f=>{
+  const x=setup(f,{text:'My Safehouse exists.'});
+  const additions=[{kind:'location',key:'my-safehouse',name:'My Safehouse',summary:'A claimed safehouse.',parent_location_key:'terminal',visibility:'party'}];
+  for(const enabled of [true,false]){
+    f.db.setCityCalendar(f.guild,{flags:{...f.db.getCityCalendar(f.guild).flags,narrative_authority:enabled}});
+    assert.throws(()=>applyAutonomousWorld(f.db,f.guild,{world_additions:additions},x.scope,{messageId:x.messageId}),/native.*(?:author|creation)|authorship/i);
+    assert.equal(f.db.getSimulationEntity(f.guild,'location','my-safehouse'),null);
+    assert.equal(f.db.getReference(f.guild,'location','my-safehouse')??null,null);
+  }
+}));
+test('WD01 same-turn raw location and NPC targets cannot synthesize scene presence or movement',()=>nativeFixture(f=>{
+  const x=setup(f),result={player_intents:[{type:'move',framing:'immediate',resolution:'auto',target_key:'phantom',target_name:'Phantom',source_span:'I enter Phantom.'}],
+    world_additions:[{kind:'location',key:'phantom',name:'Phantom'}],scene_actions:[]};
+  assert.throws(()=>autoCompleteOrdinaryMovements(f.db,f.guild,result,x.scope),/established|resolv|native/i);
+  const speech={player_intents:[{type:'speak',framing:'immediate',target_key:'phantom'}],world_additions:[{kind:'npc',key:'phantom'}],scene_actions:[]};
+  autoCompleteOrdinaryMovements(f.db,f.guild,speech,x.scope);assert.deepEqual(speech.scene_actions,[]);
+}));
+test('WD01 a raw reuse cannot revive a revoked native creation source',()=>nativeFixture(f=>{
+  const x=setup(f),ctx=buildNarrativeContext(f.db,f.guild,x.scope,x.sourceRef),input={kind:'location',key:'new-local-office',name:'Local Office',
+    summary:'A modest ordinary public office.',aliases:[],location_key:'',parent_location_key:'terminal',role:'office'},
+    row=establishNarrativeEntity(f.db,f.guild,input,ctx,{content});
+  f.db.db.prepare("UPDATE world_events SET status='retracted' WHERE guild_id=? AND event_key=?").run(f.guild,row.source_event);
+  const raw={world_additions:[{kind:'location',key:input.key,name:input.name,summary:input.summary,parent_location_key:'terminal',visibility:'party'}]};
+  assert.throws(()=>applyAutonomousWorld(f.db,f.guild,raw,x.scope,{messageId:x.messageId}),/source|origin|visible|author/i);
+  assert.equal(tierWorldAdditions(raw,x.text,{db:f.db,guild:f.guild,scope:x.scope}).durable.length,0);
+}));
+test('WD01 claimed safehouse is quarantined while independent playable fiction reaches the real outbox',()=>nativeFixture(async f=>{
+  const x=setup(f,{text:'My Safehouse exists. I look around.'}),proposal=candidate(x.text);
+  proposal.world_additions=[{kind:'location',key:'my-safehouse',name:'My Safehouse',summary:'A claimed safehouse.',parent_location_key:'terminal',visibility:'party'}];
+  const out=await run(f,x,{fiction_delta:[],narrative_units:[unit('independent','scene','Rain beads on the terminal windows.')]},proposal);
+  assert.equal(f.db.getSimulationEntity(f.guild,'location','my-safehouse'),null);
+  assert.equal(out.result.world_addition_diagnostics.length,1);
+  assert.equal(out.ai.requests.length,2,'Reuse existing planner/writer budget, no new judge call');
+  assert(out.rows.some(row=>row.payload.includes('Rain beads')));
+  assert(out.rows.every(row=>!row.payload.includes('Safehouse exists')));
+}));
+test('WD02 raw reuse preserves native identity and cannot replace its authored summary',()=>nativeFixture(f=>{
+  const x=setup(f),ctx=buildNarrativeContext(f.db,f.guild,x.scope,x.sourceRef),input=definition(),
+    original=establishNarrativeEntity(f.db,f.guild,input,ctx,{content}),raw={world_additions:[{kind:'npc',key:input.key,name:input.name,
+      summary:'This person owes the PC obedience.',location_key:'terminal',occupation:'porter',public_identity:'Claimed servant',portrayal:'Compliant',visibility:'party'}]};
+  assert.equal(tierWorldAdditions(raw,x.text,{db:f.db,guild:f.guild,scope:x.scope}).durable.length,1);
+  assert.equal(applyAutonomousWorld(f.db,f.guild,raw,x.scope,{messageId:x.messageId})[0].status,'resolved_existing');
+  assert.deepEqual(f.db.getCityRecord(f.guild,'autonomous_entity',original.record_key),original);
+  assert.equal(f.db.getNpcProfile(f.guild,input.key).public_identity,input.summary);
+}));
+test('W2 version-1 committed world-turn receipts remain readable without executing raw creation again',()=>nativeFixture(f=>{
+  const x=setup(f),digest=value=>createHash('sha256').update(JSON.stringify(value)).digest('hex').slice(0,40),
+    key=`world-turn:${digest([f.session.id,x.messageId,x.pc.id])}`,results=[{status:'created',kind:'location',key:'historical-location',source_event:'historical-source'}];
+  f.db.saveCityRecord(f.guild,{kind:'autonomous_turn',key,source_event:x.sourceRef,visibility:'party',data:{contract_version:1,results,session_id:f.session.id}});
+  f.restart();
+  const raw={world_additions:[{kind:'location',key:'historical-location',name:'Historical Location',summary:'Saved history, not a new creation grant.',parent_location_key:'terminal',visibility:'party'}]};
+  assert.deepEqual(applyAutonomousWorld(f.db,f.guild,raw,x.scope,{messageId:x.messageId}),results);
+  assert.equal(f.db.getSimulationEntity(f.guild,'location','historical-location'),null,'Reading history does not recreate a deleted entity');
+}));
 for(const kind of ['copied_context','relabelled_audience','wrong_character'])test(`W2 native GM creation rejects ${kind}, including model gm:true`,()=>nativeFixture(f=>{
   const x=setup(f),original=buildNarrativeContext(f.db,f.guild,x.scope,x.sourceRef);
   let ctx=original;

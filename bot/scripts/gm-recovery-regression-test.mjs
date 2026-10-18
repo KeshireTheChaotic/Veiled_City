@@ -10,6 +10,7 @@ import { FakeResponses } from './contract-fixtures.mjs';
 import { POST_TURN_REVIEW_CATEGORIES } from '../src/director.js';
 import { captureWorldInput } from '../src/autonomous-world.js';
 import { applyAuthoritativeMutation } from '../src/state.js';
+import {establishFixtureAdditions} from './native-world-fixtures.mjs';
 
 const temp = fs.mkdtempSync(path.join(os.tmpdir(), 'vc-gm-recovery-'));
 const db = new VeiledDB(path.join(temp, 'test.sqlite'), path.resolve('sql/schema.sql'));
@@ -71,6 +72,9 @@ try {
     source_span:narration, mutation_index:-1, certainty:'committed'
   };
   const misclassified = {...located, narrative_claims:[falseCanonClaim]};
+  establishFixtureAdditions(db,{guildId:guild,scope:{mode:'party',actorUserId:'owner',actorCharacterId:pc.id},
+    provenance:{messageId:'relay'},narrative:located});
+  const established=db.getSimulationEntity(guild,'location','relay-night-staffing');
   gm.ai = new FakeResponses([misclassified, misclassified, located]);
   const repaired = await gm.runTurn({guildId:guild, actorUserId:'owner', actorName:'Billy', actorAssignment:assignment,
     messageText:search, messageId:'relay'});
@@ -78,15 +82,15 @@ try {
   assert.equal(repaired.narrative_claims.length, 0);
   assert.equal(gm.ai.requests.length, 3, 'Repeated mistaken canon annotation receives bounded fail-safe recovery');
   assert.match(gm.ai.requests[2].input, /CANON CLAIM RECOVERY/);
-  assert.equal(db.getSimulationEntity(guild, 'location', 'relay-night-staffing'), null,
-    'Generation previews must not commit even the corrected location');
+  assert.deepEqual(db.getSimulationEntity(guild, 'location', 'relay-night-staffing'), established,
+    'Generation previews do not alter the independently GM-established identity');
 
   gm.ai = new FakeResponses([misclassified, misclassified, misclassified]);
   await assert.rejects(() => gm.runTurn({guildId:guild, actorUserId:'owner', actorName:'Billy',
     actorAssignment:assignment, messageText:search, messageId:'relay'}),
     error => error?.code === 'NARRATIVE_INTEGRITY' && error?.diagnostic?.category === 'canon',
     'Three invalid canon claims must ultimately fail rather than bypass canon');
-  assert.equal(db.getSimulationEntity(guild, 'location', 'relay-night-staffing'), null);
+  assert.deepEqual(db.getSimulationEntity(guild, 'location', 'relay-night-staffing'), established);
   console.log('GM recovery regression PASS: disabled extraction quarantined, ordinary place recovered, real canon enforcement retained.');
 } finally {
   db.close();

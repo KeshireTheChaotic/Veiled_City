@@ -10,6 +10,7 @@ import { FakeResponses } from "./contract-fixtures.mjs";
 import { POST_TURN_REVIEW_CATEGORIES, normalizeDirectorConfidence } from "../src/director.js";
 import { captureWorldInput } from "../src/autonomous-world.js";
 import { commitGmTurn } from "../src/turn-orchestration.js";
+import {establishFixtureAdditions} from './native-world-fixtures.mjs';
 const dir=fs.mkdtempSync(path.join(os.tmpdir(),"vc-relax-e2e-"));
 const db=new VeiledDB(path.join(dir,"fixture.sqlite"),path.resolve("sql/schema.sql"));
 try{
@@ -46,6 +47,8 @@ try{
     world_additions:[{kind:"location",key:"laundromat",name:"All-Night Laundromat",summary:"An open public laundromat with a shaded awning.",parent_location_key:"",visibility:"party"}],
     scene_actions:[{kind:"reveal_nearby_place",entity_ref:"laundromat",source_span:search,zone:""}]};
   captureWorldInput(db,guild,"owner",pc.id,"search",search);
+  const scope={mode:'party',actorUserId:'owner',actorCharacterId:pc.id};
+  establishFixtureAdditions(db,{guildId:guild,scope,provenance:{messageId:'search'},narrative:finding});
   gm.ai=new FakeResponses([{...empty,player_intents:[searchIntent],narration:"I need the GM to establish the nearby surroundings before resolving what you find."},finding]);
   const discovered=await gm.runTurn({guildId:guild,actorUserId:"owner",actorName:"Tyrell",actorAssignment:assignment,messageText:search,messageId:"search"});
   assert.equal(gm.ai.requests.length,2,"R01: obsolete human worldbuilding deferral is corrected with a native discovery");
@@ -81,8 +84,11 @@ try{
     scene_actions:[{kind:"move",entity_ref:"diner",source_span:enter,zone:"interior"}],
     narrative_claims:[{actor:"",entity_type:"character",entity:pc.id,action:"movement",prior:"",proposed:"diner",visibility:"party",source_ref:"",source_span:"You arrive at the diner.",mutation_index:-1,certainty:"committed"}]};
   captureWorldInput(db,guild,"owner",pc.id,"enter",enter);gm.ai=new FakeResponses([result]);
+  establishFixtureAdditions(db,{guildId:guild,scope,provenance:{messageId:'enter'},narrative:result});
+  const established=db.getSimulationEntity(guild,'location','diner');
   const generated=await gm.runTurn({guildId:guild,actorUserId:"owner",actorName:"Tyrell",actorAssignment:assignment,messageText:enter,messageId:"enter"});
-  assert.equal(db.getSimulationEntity(guild,"location","diner"),null,"Generation previews but never commits");
+  assert.deepEqual(db.getSimulationEntity(guild,"location","diner"),established,"Generation cannot alter independent native GM identity");
+  assert.equal(db.getCharacter(pc.id).data.location,undefined,'Preview still cannot commit PC movement');
   const mutation=commitGmTurn({db,content,guild:{id:guild},session,result:generated,scope:{mode:"party",actorUserId:"owner",actorCharacterId:pc.id},
     speaker:"Tyrell",label:"Fixture",meta:{messageId:"enter",triggerText:enter}});
   assert(mutation.world.some(row=>row.status==="arrived"));assert.equal(db.getCharacter(pc.id).data.location,"diner");

@@ -1,31 +1,32 @@
-/** Source-aware distinction between temporary scene prose and entities with durable continuity. */
-
-function containsIdentity(text,entity){
-  const input=String(text||'').toLocaleLowerCase();
-  const names=[entity.name,entity.key?.replace(/-/g,' ')].filter(Boolean).map(s=>String(s).toLocaleLowerCase());
-  return names.some(name=>name.length>=3&&input.includes(name));
-}
-
-/**
- * Durable only if named/targeted by player, used in native actions or deliberately presented as a named
- * continuity anchor. Other details remain in narration/transcript, not entity tables or canon.
- * The GM must never emit a material scene action referencing a discarded ephemeral addition.
- */
-export function tierWorldAdditions(result,authenticatedPlayerText='',{requireEstablishedOutput=false}={}){
+/** Retrieval interest is not world authorship. Only established identities survive the legacy adapter. */
+import {resolvePlaceReference,preflightNpcIdentity} from './location-language.js';
+import {narrativeSourceVisible} from './scene-fiction-context.js';
+import {worldIdentityOrigin} from './world-authorship.js';
+/** Raw combined proposals never establish a new identity. The isolated native GM stage owns fresh invention. */
+export function tierWorldAdditions(result,_authenticatedPlayerText='',{db,guild,scope={}}={}){
   if(!result||!Array.isArray(result.world_additions))return {durable:[],ephemeral:[]};
-  const targeted=new Set((result.scene_actions||[]).map(x=>x.entity_ref));
-  const intents=result.player_intents||[];
   const durable=[],ephemeral=[];
   for(const item of result.world_additions){
-    const requested=containsIdentity(authenticatedPlayerText,item);
-    const intentional=intents.some(i=>i.target_key===item.key||containsIdentity(i.target_name,item));
-    const used=targeted.has(item.key);
-    // If the GM explicitly names a place or NPC in narration, later player references must resolve.
-    // Compatibility preserves the old adapter when opted out. Delegated narrative mode never
-    // treats raw combined text as establishment; native committed units own independent inventions.
-    const established=!requireEstablishedOutput&&containsIdentity(result.narration,item);
-    if(requested||intentional||used||established)durable.push(item);
-    else ephemeral.push({kind:item.kind,key:item.key,reason:'No player reference, consequential use or named narrative appearance.'});
+    let established=false;
+    if(db&&guild&&['location','npc'].includes(item?.kind)){
+      const identity=db.getCityRecord(guild,'autonomous_entity',`${item.kind}:${item.key}`),
+        ref=db.getReference(guild,item.kind,item.key),row=identity||ref;
+      const entitled=row&&(['party','public'].includes(row.visibility)||scope.mode==='private'&&row.visibility==='character'
+        &&(row.subject_key||row.subject_character_id)===scope.actorCharacterId);
+      const sourced=!identity||narrativeSourceVisible(db,guild,identity.source_event,scope)
+        &&(!identity.data.authorship_ref||worldIdentityOrigin(db,guild,identity,scope));
+      if(entitled&&sourced){
+        if(item.kind==='location'){
+          const match=resolvePlaceReference(db,guild,scope.actorCharacterId,item.name,{mode:scope.mode,user:scope.actorUserId});
+          established=match.status==='resolved_existing'&&match.location.entity_key===item.key;
+        }else{
+          const match=preflightNpcIdentity(db,guild,{key:item.key,name:item.name,scope});
+          established=match.status==='reuse'&&match.matches.length===1&&match.matches[0].npc_key===item.key;
+        }
+      }
+    }
+    if(established)durable.push(item);
+    else ephemeral.push({kind:item?.kind,key:item?.key,reason:'Unverified combined proposal: independent native GM creation receipt required.'});
   }
   result.world_additions=durable;
   return {durable,ephemeral};

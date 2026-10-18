@@ -18,9 +18,9 @@ import { captureDepartureWitnesses } from "./character-observation.js";
 import {assertPcCanAct} from "./pc-native-eligibility.js";
 import {continuationAuthorization} from "./action-continuation.js";
 import {verifiedWorldAuthoringContext,worldIdentityOrigin} from './world-authorship.js';
-import {sceneFictionHash} from './scene-fiction-context.js';
+import {sceneFictionHash,narrativeSourceVisible} from './scene-fiction-context.js';
 const hash=value=>createHash("sha256").update(JSON.stringify(value)).digest("hex").slice(0,40);
-export const AUTONOMOUS_WORLD_VERSION=1;
+export const AUTONOMOUS_WORLD_VERSION=2;
 const object=properties=>({type:"object",additionalProperties:false,properties,required:Object.keys(properties)});
 const text=maxLength=>({type:"string",maxLength});
 const nonEmptyText=maxLength=>({type:"string",minLength:1,maxLength});
@@ -36,12 +36,12 @@ export const sceneActionsSchema={type:"array",maxItems:4,items:object({
 export const worldConflictsSchema={type:"array",maxItems:2,items:object({canon_key:text(160),current_event_id:text(160),
   proposed_value:text(600),reason:text(600)})};
 export const AUTONOMOUS_WORLD_PROMPT="Veilkeeper IS the GM: missing ordinary surroundings, places, people or descriptions are prompts to create, not human approval gates. "
-  +"Use world_additions for modest new locations or NPCs, scene_actions for validated reveal/move/introduce_npc/local_zone. Reuse existing identities first. "
+  +"Fresh modest locations or NPCs require the isolated native narrative_request stage. Raw world_additions may only reference established audience-visible identities, never create them. Use scene_actions for validated reveal/move/introduce_npc/local_zone. "
   +"Every new location is an ordinary public accessible nearby place, not a vault, hidden answer, new canon override, distant route or free combatant. "
   +"parent_location_key is the acting PC's current location (empty only if none exists). New NPCs need a real location, ordinary role/voice and bounded knowledge. "
   +"No special powers, money, stats, property grants or hidden campaign knowledge. Never introduce/move/speak for an active human NPC proxy. "
   +"Search/observation reveals a candidate WITHOUT moving the PC. move needs the owner's exact current explicit entry clause in source_span and an ordinary accessible local destination. "
-  +"local_zone changes only the local zone, not city location. scene_actions.entity_ref is the canonical existing or proposed key. "
+  +"local_zone changes only the local zone, not city location. scene_actions.entity_ref is a canonical established key, never an unverified proposal. "
   +"Native preview stages entities, arrival and presence before checking claims; use claims for completed movement/access, not cosmetic description. "
   +"Unknown records, disabled expansions, low confidence and technical failures are NOT fictional contradictions. "
   +"For actual locked access, distant travel, costs or encounters adjudicate the obstacle through native rules; keep unrelated conversation moving. "
@@ -189,6 +189,8 @@ export function captureWorldInput(db,guild,user,character,messageId,message,{pri
 }
 function visible(db,guild,type,key,scope){
   const authored=db.getCityRecord(guild,"autonomous_entity",`${type}:${key}`);
+  if(authored&&(authored.status!=='active'||!narrativeSourceVisible(db,guild,authored.source_event,scope)
+    ||authored.data.authorship_ref&&!worldIdentityOrigin(db,guild,authored,scope)))return false;
   const reference=db.getReference(guild,type,key);
   const boundary=authored||reference;
   if(!boundary&&type==="location"&&scope.actorCharacterId&&db.getCharacter(scope.actorCharacterId)?.data.location===key)return true;
@@ -280,7 +282,9 @@ function applyWorld(db,guild,narrative,scope,provenance,content){
       if(preflight.status==="protected_collision")fail(`Proposed ordinary ${a.kind} conflicts with protected existing identity or canon; choose another mundane detail without exposing it.`);
       if(preflight.status==="ambiguous")fail(`${a.kind} aliases are materially ambiguous; use a specific visible existing key.`);
       if(preflight.status==="reuse"){
-        const existingKey=preflight.matches[0].entity_key||preflight.matches[0].npc_key;refs.set(a.key,existingKey);
+        const existingKey=preflight.matches[0].entity_key||preflight.matches[0].npc_key;
+        if(!visible(db,guild,a.kind,existingKey,scope))fail('Existing identity source/origin is not audience-visible and active.');
+        refs.set(a.key,existingKey);
         results.push({status:"resolved_existing",kind:a.kind,key:existingKey});continue;
       }
     }
@@ -292,33 +296,7 @@ function applyWorld(db,guild,narrative,scope,provenance,content){
       if(!visible(db,guild,a.kind,existingKey,scope))fail("Existing private identity cannot be disclosed/replaced by autonomous creation.");
       refs.set(a.key,existingKey);results.push({status:"resolved_existing",kind:a.kind,key:existingKey});continue;
     }
-    if(db.getReference(guild,a.kind,a.key)||db.worldDraftNameInUse(guild,a.kind,a.name,a.key))fail("Established reference/draft identity exists; resolve it without replacement.");
-    const visibility=a.visibility==="gm"?"gm":boundary.visibility,subject=visibility==="character"?pc.id:null;
-    let location;
-    if(a.kind==="location"){
-      const parent=refs.get(a.parent_location_key)||a.parent_location_key;
-      if(parent!==(pc.data.location||""))fail("A new nearby place must be grounded in the actor's actual location, not invented remote geography.");
-      configureSimulationEntity(db,guild,"location",a.key,{name:a.name,description:a.summary,parent_location_key:parent,
-        access:"public",ai_gm_origin:true,visibility,subject_character_id:subject});location=a.key;
-    }else{
-      location=refs.get(a.location_key)||a.location_key;
-      if(!db.getSimulationEntity(guild,"location",location))fail("NPC location must exist before introduction.");
-      if(location!==pc.data.location&&!localAccess(db,guild,pc,location))fail("New NPC must be grounded locally, not an invented distant occupant.");
-      const profile={name:a.name,occupation:a.occupation,public_identity:a.public_identity,portrayal:a.portrayal};
-      validateMinorIdentity(db,content||{read:()=>""},guild,a.key,profile);
-      db.upsertNpcProfile(guild,{npcKey:a.key,displayName:a.name,role:a.occupation,publicIdentity:a.public_identity,portrayal:a.portrayal,
-        activityTier:"background",source:"ai_gm_world_create",knowledgeBoundaries:["Only own local observations and legitimate delivery; no campaign secrets granted by generation."]});
-      // Do not use simulation actor defaults: no free resources, powers or adversary statistics.
-      db.setSimulationEntity(guild,"npc",a.key,{name:a.name,activity_tier:"background",location_key:location,ai_gm_origin:true,
-        resources:{influence:0,materials:0,information:0,manpower:0,leverage:0,wounds:0,stress:0,favors:0},visibility,subject_character_id:subject});
-    }
-    const created=event(`create:${a.kind}:${a.key}`,"ai_gm_world_create",location,{entity_type:a.kind,entity_key:a.key},{visibility,subject_key:subject});
-    const record=db.saveCityRecord(guild,{kind:"autonomous_entity",key:`${a.kind}:${a.key}`,source_event:created.event_key,
-      location_key:location,visibility,subject_key:subject,data:{kind:a.kind,key:a.key,name:a.name,summary:a.summary,
-        epistemic_label:"established",session_id:session.id}});
-    if(visibility!=="gm")db.upsertReference(guild,{kind:a.kind,key:a.key,name:a.name,summary:a.summary,visibility,subjectCharacterId:subject});
-    cityAudit(db,guild,"ai_gm_world_create",a.key,null,record,"ai_gm");
-    refs.set(a.key,a.key);results.push({status:"created",kind:a.kind,key:a.key,source_event:created.event_key});
+    fail('A new world identity requires an independent native GM authorship creation receipt; player source, targeting and model labels cannot mint one.');
   }
   for(const [index,action] of actions.entries()){
     const target=refs.get(action.entity_ref)||action.entity_ref;

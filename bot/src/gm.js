@@ -659,9 +659,9 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
       ORDINARY_EFFECT_PROMPT,
       CONTEXT_MEMORY_PROMPT,
       AUTONOMOUS_WORLD_PROMPT,
-      "Ordinary storefronts, hiring signs, streets, and minor NPC introductions use world_additions, scene_actions and context_memories, NOT action=canon claims. A committed canon claim needs the exact existing canon-ledger key and matching value; event:<index> is not a canon key.",
+      "New ordinary storefronts, streets and NPCs require the isolated native narrative_request stage, NOT raw world_additions or action=canon claims. An existing committed canon claim needs the exact canon-ledger key and matching value; event:<index> is not a canon key.",
       "Relationship and artifact epistemic source_refs must preserve active perspective/ancestry. PC-outgoing attitudes and debt/obligation changes are nonbinding interpretation drafts, never PC feelings or binding terms. Artifact canonical_facts need matching independently authorized sources; unsupported detail stays illustrative presentation. Legacy recaps are narrator summaries, not observations or new rulings.",
-      "Fact/clue epistemic metadata distinguishes observation, testimony and hypothesis. Null defaults to hypothesis, never world truth. NPC memories need own witnessed/delivered/inferred evidence; inferred or reported knowledge cannot become known. Use world_additions to establish ordinary places/NPCs and scene_actions for ordinary owner-authorized local travel, independently of optional delegation. Use scene.enter only for the older saved policy workflow. Never infer access or consent from an understood name.",
+      "Fact/clue epistemic metadata distinguishes observation, testimony and hypothesis. Null defaults to hypothesis, never world truth. NPC memories need own witnessed/delivered/inferred evidence; inferred or reported knowledge cannot become known. world_additions can only reuse established identities; native GM authoring establishes fresh fiction. scene_actions need established targets and owner authority. scene.enter is historical compatibility. Never infer access or consent from a name.",
       "GM-private facts/clocks/reference content may be used to simulate the world but MUST NOT appear in narration until legitimately discovered.",
       "PLAYER visibility applies only to target_user_id. CHARACTER visibility applies to target_character_id and persists with that character even if the human later changes PCs.",
       "Never choose voluntary actions, dialogue, beliefs, resource spends, or secrets for a player-controlled character.",
@@ -837,7 +837,7 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
       else if(providedIntents&&result.authored_candidates?.some(c=>c?.version!==2))
         throw Object.assign(new Error('Current model candidates require version 2 exact offsets and framing; legacy recovery is a separate native interface.'),{code:'PLAYER_INTENT'});
       // Named and consequential context persists; incidental description stays in transcript only.
-      tierWorldAdditions(result,authenticatedSource,{requireEstablishedOutput:this.db.getCityCalendar(guildId).flags.narrative_authority===true});
+      result.world_addition_diagnostics=tierWorldAdditions(result,authenticatedSource,{db:this.db,guild:guildId,scope:typedScope}).ephemeral;
       autoCompleteOrdinaryMovements(this.db,guildId,result,typedScope);
       validateIntentResolutions(result);
       const prose=[result.narration||"",...(result.private_messages||[]).map(row=>row.content)].join("\n");
@@ -935,8 +935,8 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
         "Interpretation never authorizes narration or consequences.",
         "Every world_additions item needs a non-empty normalized lowercase stable key plus non-empty name and summary; omit an uncertain or incomplete addition.",
         "Use player_intents with verbatim current source_span and explicit type/framing/target to drive automatic mundane movement. If movement is auto, emit scene_actions.move or a matching new location; never repeat only the declaration.",
-        "New names are ordinary typed world entities, not canon ledger claims. Keep unimportant incidental prose out of world_additions.",
-        "When canon validation fails for an ordinary new business, place, hiring sign or incidental scenery, remove the unsupported canon claim, NOT the ordinary world creation; preserve any valid world_additions, scene_actions and player_intents.",
+        "New names need independent native GM creation; player mention or narration is not establishment. Keep unverified raw proposals out of world_additions.",
+        "For an ordinary new business or incidental scenery, remove unsupported canon claims and request the native GM stage. Preserve independently valid native actions/intents; never assume unestablished targets exist.",
         "Do not invent witnesses, arrivals or knowledge. A clarified referent acknowledgement is conversational, not movement; omit material claims for it.",
         "Understand scoped context without repeating resolved questions. Ask only for missing information needed to authorize an action.",
         "Use empty actor for narrator claims; character:<id> for a PC observer. State review must agree with mutations.",

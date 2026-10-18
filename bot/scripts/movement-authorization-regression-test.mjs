@@ -4,7 +4,7 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import { VeiledDB } from "../src/db.js";
-import { applyAuthoritativeMutation } from "../src/state.js";
+import {applyNativeFixtureMutation as applyAuthoritativeMutation} from './native-world-fixtures.mjs';
 import { captureWorldInput } from "../src/autonomous-world.js";
 import { configureSimulationEntity } from "../src/simulation.js";
 import { configureCityFlags } from "../src/city-core.js";

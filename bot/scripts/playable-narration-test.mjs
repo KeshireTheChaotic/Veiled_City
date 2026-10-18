@@ -1,5 +1,6 @@
 /** Generic playable-narration acceptance. Synthetic native state and fake providers; no production data. */
 import test from 'node:test';
+import {establishFixtureAdditions} from './native-world-fixtures.mjs';
 import assert from 'node:assert/strict';
 import path from 'node:path';
 import {nativeFixture} from './v9-fixtures.mjs';
@@ -153,6 +154,7 @@ test('PLAY09 real native movement publishes one arrival plus the existing or new
   }
   const r=candidate(x.text);r.player_intents=[{...r.player_intents[0],type:'move',target_name:'Twenty-Four Spin',target_key:'spin',destination:'interior',operation:'move',resolution:'auto'}];
   if(fresh)r.world_additions=[{kind:'location',key:'spin',name:'Twenty-Four Spin',summary:'A public laundromat.',parent_location_key:'street',visibility:'party'}];
+  if(fresh)establishFixtureAdditions(f.db,{guildId:f.guild,scope:x.scope,provenance:{messageId:x.messageId},narrative:r});
   if(fresh){
     const get=f.db.getCityRecord.bind(f.db);let reads=0;
     f.db.getCityRecord=(guild,kind,key)=>{const row=get(guild,kind,key);
