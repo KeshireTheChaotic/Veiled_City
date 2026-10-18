@@ -17,6 +17,7 @@ import {projectNarrativeArtifact,hasNarrativeChoices,narrativeArtifactKey} from 
 import {mintNarrativeAudience,revalidateNarrativeAudience} from './audience-native-v9.js';
 import {compileWriterV9,actToNativeUnit} from './narrative-writer-v9.js';
 import {constructNativeClause} from './narrative-clauses-v9.js';
+import {worldIdentityOrigin} from './world-authorship.js';
 export {narrativeResponseSchema} from './gm-fiction-schema.js';
 const issuer='native:narrative-authority';
 export const NARRATIVE_AUTHORITY_INSTRUCTIONS='You are the creative GM for this audience-isolated packet. Invent interesting ordinary places, people, sensory surroundings, '
@@ -83,6 +84,7 @@ function validateUnit(db,guild,u,ctx,entities=[],historical=false,act=null){
     if(!place&&!proposed||place&&(place.state.hidden||place.state.removed
       ||!narrativeVisible({visibility:place.state.visibility||'party',subject_key:place.state.subject_character_id},ctx.scope)
       ||identity&&!narrativeSourceVisible(db,guild,identity.source_event,ctx.scope)))throw fail('held_scope');
+    if(identity?.data.authorship_ref&&!worldIdentityOrigin(db,guild,identity,ctx.scope))throw fail('held_scope');
   }
   if(u.kind==='native_outcome_render'){
     try{return nativeOutcomeProjection(db,guild,{version:4,kind:'native_outcome',receipt_kind:u.receipt_kind,ref:u.receipt_ref},ctx.scope).text;}
@@ -139,6 +141,7 @@ function validateUnit(db,guild,u,ctx,entities=[],historical=false,act=null){
       ||!narrativeVisible({visibility:entity.state.visibility||'party',subject_key:entity.state.subject_character_id},ctx.scope)
       ||entity.state.location_key!==(u.location_key||ctx.binding.location)))throw fail('held_scope');
     const identity=db.getCityRecord(guild,'autonomous_entity',`npc:${u.subject_key}`);
+    if(identity?.data.authorship_ref&&!worldIdentityOrigin(db,guild,identity,ctx.scope))throw fail('held_scope');
     if(identity&&!narrativeSourceVisible(db,guild,identity.source_event,ctx.scope)||db.getNpcProfile(guild,u.subject_key)?.activity_tier==='dormant')throw fail('held_scope');
     if(entity&&['npc_speech','npc_action_attempt'].includes(u.kind))try{assertNpcAvailability(db,guild,u.subject_key,{type:'contact',location_key:u.location_key||ctx.binding.location});}
     catch(error){if(!error.code&&error.constructor===Error)throw fail('held_scope');throw error;}

@@ -14,6 +14,7 @@ import {directorBriefForAudience} from './narrative-director-source.js';
 import {mentionsPublicIdentity} from './public-referents.js';
 import {registerNarrativeContext} from './audience-native-v9.js';
 import {assemblyWriterBrief} from './assembly-context.js';
+import {worldIdentityOrigin} from './world-authorship.js';
 export const narrativeVisible=(row,scope)=>!!row&&factVisibleTo({...row,subject_character_id:row.subject_character_id||row.subject_key,
   subject_user_id:row.subject_user_id||row.subject_key},scope);
 export function buildNarrativeContext(db,guild,scope,sourceRef,{operation='describe_scene'}={}){
@@ -46,7 +47,10 @@ export function buildNarrativeContext(db,guild,scope,sourceRef,{operation='descr
     subject_key:row.state.subject_character_id},scope)&&(!row.state.narrative_origin||row.state.narrative_origin!==sourceRef)
     &&(!db.getCityRecord(guild,'autonomous_entity',`location:${row.entity_key}`)
       ||narrativeSourceVisible(db,guild,db.getCityRecord(guild,'autonomous_entity',`location:${row.entity_key}`).source_event,scope));
-  const entitled=db.listSimulationEntities(guild,'location').filter(entitledLocation);
+  const entitled=db.listSimulationEntities(guild,'location').filter(entitledLocation).filter(row=>{
+    const receipt=db.getCityRecord(guild,'autonomous_entity',`location:${row.entity_key}`);
+    return !receipt?.data.authorship_ref||!!worldIdentityOrigin(db,guild,receipt,scope);
+  });
   const nativeLocations=new Set(director?(directorBriefForAudience(db,guild,source,scope)?.events||[]).map(e=>e.location).filter(Boolean):[]);
   if(!placed&&!director&&!assembly){
     // A unique established local scene beat can anchor a later camera. This
@@ -69,6 +73,7 @@ export function buildNarrativeContext(db,guild,scope,sourceRef,{operation='descr
   const entity=location&&db.getSimulationEntity(guild,'location',location),authored=location&&db.getCityRecord(guild,'autonomous_entity',`location:${location}`);
   if(entity&&(!narrativeVisible({visibility:entity.state.visibility||'party',subject_key:entity.state.subject_character_id},scope)
     ||entity.state.hidden||entity.state.removed||authored&&!narrativeSourceVisible(db,guild,authored.source_event,scope)))throw fail('hidden_location');
+  if(authored?.data.authorship_ref&&!worldIdentityOrigin(db,guild,authored,scope))throw fail('native_location_origin');
   const protectedScene=!!protectedPvpScope(db,guild,scope).length||db.getCurrentEncounter(scene.session_id)?.status==='active'
     ||db.listCityRecords(guild,{kind:'scene_action_window',includeGM:true,limit:500}).some(r=>['open','locked'].includes(r.status)&&r.data.scene===scene.key&&r.location_key===location);
   if(protectedScene&&!flags.narrative_encounters)throw fail('encounter_fiction_disabled');
@@ -85,6 +90,8 @@ export function buildNarrativeContext(db,guild,scope,sourceRef,{operation='descr
     &&n.state.narrative_origin!==sourceRef&&narrativeVisible({visibility:n.state.visibility||'party',subject_key:n.state.subject_character_id},scope)
     &&(!db.getCityRecord(guild,'autonomous_entity',`npc:${n.entity_key}`)
       ||narrativeSourceVisible(db,guild,db.getCityRecord(guild,'autonomous_entity',`npc:${n.entity_key}`).source_event,scope)))
+    .filter(n=>{const receipt=db.getCityRecord(guild,'autonomous_entity',`npc:${n.entity_key}`);
+      return !receipt?.data.authorship_ref||!!worldIdentityOrigin(db,guild,receipt,scope);})
     .sort((a,b)=>Number(String(source.details.text||'').toLowerCase().includes(b.entity_key.toLowerCase()))
       -Number(String(source.details.text||'').toLowerCase().includes(a.entity_key.toLowerCase()))||a.entity_key.localeCompare(b.entity_key))
     .slice(0,8).map(n=>({key:n.entity_key,name:db.getNpcProfile(guild,n.entity_key)?.display_name||n.state.name||n.entity_key,

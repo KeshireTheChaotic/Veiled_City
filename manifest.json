@@ -1076,8 +1076,13 @@
     },
     {
       "path": "bot/scripts/validate-offline.mjs",
-      "size_bytes": 10961,
-      "sha256": "af7b8775b2e84c1d19abbd06c38698eee0aed13cd0292e3ac8c8d88fe6424b8c"
+      "size_bytes": 10999,
+      "sha256": "d80cfbb53c38b195c2739cf5ebd840dc47e36d8396fac68c1b8cba23be18c82d"
+    },
+    {
+      "path": "bot/scripts/world-authorship-test.mjs",
+      "size_bytes": 8207,
+      "sha256": "1f6ba460539758fe3a469476f49564d65612f642af3fa784ebe30cf153f47f7c"
     },
     {
       "path": "bot/sql/schema.sql",
@@ -1181,8 +1186,8 @@
     },
     {
       "path": "bot/src/autonomous-world.js",
-      "size_bytes": 41200,
-      "sha256": "4e0129f7cd7ef25718f0fcd9bc60e3b17592722fc989bc08c7080b3488359993"
+      "size_bytes": 42811,
+      "sha256": "cb7aa931d3e99bfe1739180c8beeb075777b74ce7c74d93b79a19d9bc4dacc32"
     },
     {
       "path": "bot/src/character-export.js",
@@ -1606,13 +1611,13 @@
     },
     {
       "path": "bot/src/narrative-authority-context.js",
-      "size_bytes": 11567,
-      "sha256": "94e221bf78e0df33fedc8de76caa8d4f53f013ebfc54eadc5ecd3d7dc644cd21"
+      "size_bytes": 12136,
+      "sha256": "323be73760606948e79f27a216ae2072d4fd8a31550adfdfd1f26d7a6c5f42b2"
     },
     {
       "path": "bot/src/narrative-authority.js",
-      "size_bytes": 25726,
-      "sha256": "2fc904f235cf0b542e93b5ff2296c376c2dbfe8f38e5d421f14cd76940ba2065"
+      "size_bytes": 26013,
+      "sha256": "7ef3206bc266acd60ff94d8cbb6c159e3e208a5ba9383a6fb016e8742fa29464"
     },
     {
       "path": "bot/src/narrative-clauses-v9.js",
@@ -1661,8 +1666,8 @@
     },
     {
       "path": "bot/src/narrative-relevance.js",
-      "size_bytes": 1574,
-      "sha256": "a50c76ba8e91b074d477d0ed7bd91385d262bb9531334f8f31693b4af54b3b58"
+      "size_bytes": 1052,
+      "sha256": "0795e395a1cf1bb2590dae8034607e21ca607cfae49b72dbff3feffab856bdd4"
     },
     {
       "path": "bot/src/narrative-salience.js",
@@ -2270,6 +2275,11 @@
       "sha256": "e5773b9c1c24b050521fe9c6cac45c8a4744ad736621b209de4977be306694e0"
     },
     {
+      "path": "bot/src/world-authorship.js",
+      "size_bytes": 3003,
+      "sha256": "3843daa103fb41727d0fcafd5516bcab2500863326983bc9b8aa556c7cba5595"
+    },
+    {
       "path": "bot/src/world-observation.js",
       "size_bytes": 7054,
       "sha256": "815ede68af1bd6d94f05ebc088cb8a96b132b55977c11e1cdea20083c33b9882"
@@ -2636,8 +2646,8 @@
     },
     {
       "path": "docs/Active_Implementation/NO_DEFERRALS_LEDGER.md",
-      "size_bytes": 17613,
-      "sha256": "f8a6b2916630b8f6b6d3882d2ab946425bde5e24c580ba04922665632534aac6"
+      "size_bytes": 21005,
+      "sha256": "988bb1ab6494611475bea1aa341d6b51f921924d5cde728c2f0dd1772fce495d"
     },
     {
       "path": "docs/Active_Implementation/README.md",
