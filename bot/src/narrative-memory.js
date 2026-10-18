@@ -2,14 +2,23 @@
 import {sceneFictionHash as hash,narrativeSourceVisible} from './scene-fiction-context.js';
 import {narrativeVisible} from './narrative-authority-context.js';
 import {indexWorldEvent} from './city-calendar.js';
-import {rememberEntity} from './memory-lifecycle.js';
+import {rememberEntity,narrativeMemoryEpistemic} from './memory-lifecycle.js';
 import {listNarrativeRecords} from './narrative-records.js';
 import {narrativeQueryRelevance,narrativeIdentityRelevance} from './narrative-relevance.js';
+import {BACKGROUND_WORLD_KINDS} from './world-background-identities.js';
 function memoryInput(db,guild,row,source,visibility,subject){
   const u=row.data.unit,npc=u.subject_key&&db.getNpcProfile(guild,u.subject_key),place=u.location_key&&db.getSimulationEntity(guild,'location',u.location_key);
+  const groups=[...new Map(u.source_refs.map(ref=>db.getWorldEvent(guild,ref.replace(/^event:/,'')))
+    .filter(event=>event?.kind==='native_narrative_entity'&&event.source_id==='native:narrative-authority'&&BACKGROUND_WORLD_KINDS.includes(event.details.entity_type))
+    .map(event=>db.getCityRecord(guild,'autonomous_entity',`${event.details.entity_type}:${event.details.entity_key}`)).filter(Boolean).map(r=>[r.record_key,r])).values()];
+  if(groups.length===1){
+    const identity=groups[0];return {version:2,world_identity_ref:identity.record_key,kind:identity.data.kind,name:identity.data.name,
+      aliases:identity.data.aliases,parent_key:`world:${identity.record_key}`,source_event:source,visibility,subject_key:subject,
+      summary:row.data.text.slice(0,600),epistemic:narrativeMemoryEpistemic(u)};
+  }
   return {kind:npc?'npc':u.kind==='rumor'?'rumor':u.kind==='lead'?'clue':'detail',name:npc?.display_name||u.id,
     parent_key:`location:${u.location_key||row.data.binding.location||`camera-${row.data.binding.scene}`}`,aliases:[],source_event:source,
-    visibility,subject_key:subject,summary:row.data.text.slice(0,600),epistemic:['rumor','npc_speech'].includes(u.kind)?'testimony':u.kind==='npc_action_attempt'?'attempt':'observation'};
+    visibility,subject_key:subject,summary:row.data.text.slice(0,600),epistemic:narrativeMemoryEpistemic(u)};
 }
 export function retainEstablishedNarrative(db,guild,row){
   if(!db.getCityCalendar(guild).flags.narrative_memory||row.data.unit.kind==='native_outcome_render')return;

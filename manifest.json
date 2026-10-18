@@ -1081,8 +1081,8 @@
     },
     {
       "path": "bot/scripts/validate-offline.mjs",
-      "size_bytes": 11046,
-      "sha256": "4b7c95e9c67a95a1b8120d76bf60b520abe0130b900e6933ffd0cddc8671cbf8"
+      "size_bytes": 11091,
+      "sha256": "c6387c951af8275ab0922eb8a277d26c0fb9f5b1c158663feb75e23cc4ac393c"
     },
     {
       "path": "bot/scripts/world-authorship-test.mjs",
@@ -1091,8 +1091,13 @@
     },
     {
       "path": "bot/scripts/world-background-identity-test.mjs",
-      "size_bytes": 5658,
-      "sha256": "d32717b3276a5c057df2c8d42334c78b17231f3646a906a5e2d317e249b11a1c"
+      "size_bytes": 7857,
+      "sha256": "db951939e434f034bdf4eb0a250f8601864d69f1cff451a00687d2393a950745"
+    },
+    {
+      "path": "bot/scripts/world-background-memory-test.mjs",
+      "size_bytes": 7445,
+      "sha256": "cd4b45752d5b9459db432adecaaf6441f952b609b92c0aff02aec2ab02e72721"
     },
     {
       "path": "bot/sql/schema.sql",
@@ -1331,8 +1336,8 @@
     },
     {
       "path": "bot/src/db.js",
-      "size_bytes": 171156,
-      "sha256": "32be5df8a848e0e3775cf54efa1e6c5ffa12a3fd717682a3bacbdce422a2de27"
+      "size_bytes": 171269,
+      "sha256": "0ef7020028db38799f65668c80e2254e5e4f57171f697ca3ca46af439102c12a"
     },
     {
       "path": "bot/src/decision-advisory.js",
@@ -1596,8 +1601,8 @@
     },
     {
       "path": "bot/src/memory-lifecycle.js",
-      "size_bytes": 8881,
-      "sha256": "aa7cd98e3a92cc9c25b4b229e173fe32d377fb02d3a7fd667210a791f934340f"
+      "size_bytes": 13956,
+      "sha256": "e3d426c5452cb4bb1d8c515f78f049e353b3228a792caeaff2dab69cad392eaf"
     },
     {
       "path": "bot/src/message-span-ledger.js",
@@ -1661,8 +1666,8 @@
     },
     {
       "path": "bot/src/narrative-memory.js",
-      "size_bytes": 8000,
-      "sha256": "82665185e9d7043759832d3995fe123ae3abb6c529e3c86e5c3060e1c4a8a8ff"
+      "size_bytes": 8837,
+      "sha256": "adc3588ed0c3781aa97c7404070be0cb670f154b72135ccb3cb864aa5feab9de"
     },
     {
       "path": "bot/src/narrative-pvp.js",
@@ -2291,8 +2296,8 @@
     },
     {
       "path": "bot/src/world-background-identities.js",
-      "size_bytes": 3199,
-      "sha256": "41842d3652fbcb602c9c03483afa792aca4b1fbd8cc873de596b60c87f323638"
+      "size_bytes": 3411,
+      "sha256": "a741200bda016449f5cbb971ed3340d4ca20f7ec1e1b22372d30617956089858"
     },
     {
       "path": "bot/src/world-observation.js",
@@ -2661,8 +2666,8 @@
     },
     {
       "path": "docs/Active_Implementation/NO_DEFERRALS_LEDGER.md",
-      "size_bytes": 35169,
-      "sha256": "2ab4769c90e0ab830a1ce046dedf23f9ccfc96141ce52861b4c1cf6162335800"
+      "size_bytes": 39582,
+      "sha256": "16c9d388e8fcef3044466f3d7361f9889de1f87ea2b7b28d7b9348f7199177b1"
     },
     {
       "path": "docs/Active_Implementation/README.md",

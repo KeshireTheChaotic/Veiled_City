@@ -1645,9 +1645,11 @@ export class VeiledDB {
       ||rows.find(x=>x.npc_key.startsWith(q)||x.display_name.toLowerCase().includes(q))||null;
   }
 
-  listNpcProfiles(guildId,{activityTier="",limit=200}={}){
+  listNpcProfiles(guildId,{activityTier="",limit=200,offset=0}={}){
     const cap=Math.max(1,Math.min(500,Number(limit)||200));
-    const rows=this.db.prepare(`SELECT * FROM npc_profiles WHERE guild_id=? AND (?='' OR activity_tier=?) ORDER BY display_name LIMIT ?`).all(guildId,activityTier,activityTier,cap);
+    const start=Math.max(0,Math.min(5000,Math.trunc(Number(offset)||0)));
+    const rows=this.db.prepare(`SELECT * FROM npc_profiles WHERE guild_id=? AND (?='' OR activity_tier=?) ORDER BY display_name,npc_key LIMIT ? OFFSET ?`)
+      .all(guildId,activityTier,activityTier,cap,start);
     return rows.map(r=>({...r,decision_profile:JSON.parse(r.decision_profile_json||"{}"),knowledge_boundaries:JSON.parse(r.knowledge_boundaries_json||"[]"),capabilities:JSON.parse(r.capabilities_json||"[]")}));
   }
 

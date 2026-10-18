@@ -41,6 +41,7 @@ suites.push("semantic-owner-appearance-test");
 suites.push("semantic-native-alias-recall-test");
 suites.push("world-authorship-test");
 suites.push("world-background-identity-test");
+suites.push("world-background-memory-test");
 suites.push("narrative-correctness-retirement-test");
 suites.push("audience-first-framework-test","audience-first-integration-test","gm-unified-arbitration-test");
 // Critical is the release gate. Optional feature/history matrices remain executable via --extended;

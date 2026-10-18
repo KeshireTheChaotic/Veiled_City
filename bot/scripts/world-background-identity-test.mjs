@@ -59,3 +59,27 @@ test('W2 a private imported profile without simulation cannot be replaced by a b
   assert.throws(()=>establishNarrativeEntity(f.db,f.guild,definition('organization'),ctx,{content}),/protected|existing|identity/i);
   assert.equal(f.db.getCityRecord(f.guild,'autonomous_entity','organization:copper-sparrow-organization'),null);
 }));
+test('W2 protected civic identities beyond the city-record first page cannot be shadowed',()=>nativeFixture(f=>{
+  const x=setup(f),ctx=buildNarrativeContext(f.db,f.guild,x.scope,x.sourceRef);
+  f.db.transaction(()=>{
+    f.db.saveCityRecord(f.guild,{kind:'organization',key:'old-private-organization',visibility:'gm',source_event:x.sourceRef,data:{name:'Copper Sparrow'}});
+    for(let i=0;i<100;i++)f.db.saveCityRecord(f.guild,{kind:'organization',key:`newer-${i}`,visibility:'gm',source_event:x.sourceRef,data:{name:`Other Organization ${i}`}});
+  });
+  assert.throws(()=>establishNarrativeEntity(f.db,f.guild,definition('organization'),ctx,{content}),/protected|existing|identity/i);
+}));
+test('W2 older entitled background identities remain retrievable beyond one hundred unrelated records',()=>nativeFixture(f=>{
+  const x=setup(f),ctx=buildNarrativeContext(f.db,f.guild,x.scope,x.sourceRef);
+  establishNarrativeEntity(f.db,f.guild,definition('district'),ctx,{content});
+  f.db.transaction(()=>{for(let i=0;i<100;i++)f.db.saveCityRecord(f.guild,{kind:'autonomous_entity',key:`unrelated:${i}`,visibility:'party',source_event:x.sourceRef,
+    data:{kind:'unrelated_fixture',key:`unrelated-${i}`,name:`Unrelated ${i}`}});});
+  assert.equal(buildNarrativeContext(f.db,f.guild,x.scope,x.sourceRef).packet.background_identities.length,1);
+}));
+test('W2 profile collision beyond five hundred does not shadow a private NPC or globally freeze independent invention',()=>nativeFixture(f=>{
+  const x=setup(f),ctx=buildNarrativeContext(f.db,f.guild,x.scope,x.sourceRef);
+  f.db.transaction(()=>{
+    for(let i=0;i<500;i++)f.db.upsertNpcProfile(f.guild,{npcKey:`filler-${i}`,displayName:`A Profile ${String(i).padStart(3,'0')}`,role:'fixture'});
+    f.db.upsertNpcProfile(f.guild,{npcKey:'last-private-profile',displayName:'Zzz Copper Sparrow',role:'private fixture'});
+  });
+  assert.throws(()=>establishNarrativeEntity(f.db,f.guild,{...definition('faction'),name:'Zzz Copper Sparrow'},ctx,{content}),/protected|existing|identity/i);
+  assert.equal(establishNarrativeEntity(f.db,f.guild,{...definition('faction'),name:'Independent Silver Kite'},ctx,{content}).data.name,'Independent Silver Kite');
+}));

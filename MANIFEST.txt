@@ -216,6 +216,7 @@ bot/scripts/validate-command-schema.mjs
 bot/scripts/validate-offline.mjs
 bot/scripts/world-authorship-test.mjs
 bot/scripts/world-background-identity-test.mjs
+bot/scripts/world-background-memory-test.mjs
 bot/sql/schema.sql
 bot/src/action-consent.js
 bot/src/action-continuation.js
