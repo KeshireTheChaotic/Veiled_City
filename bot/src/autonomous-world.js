@@ -17,7 +17,7 @@ import { contextMemoriesForScope } from "./context-memory.js";
 import { captureDepartureWitnesses } from "./character-observation.js";
 import {assertPcCanAct} from "./pc-native-eligibility.js";
 import {continuationAuthorization} from "./action-continuation.js";
-import {verifiedWorldAuthoringContext,worldIdentityOrigin} from './world-authorship.js';
+import {verifiedWorldAuthoringContext,worldIdentityOrigin,assertIndependentWorldIdentity,assertWorldIdentityNames} from './world-authorship.js';
 import {sceneFictionHash,narrativeSourceVisible} from './scene-fiction-context.js';
 const hash=value=>createHash("sha256").update(JSON.stringify(value)).digest("hex").slice(0,40);
 export const AUTONOMOUS_WORLD_VERSION=2;
@@ -79,6 +79,8 @@ function establishNativeNarrativeEntity(db,guild,input,context,{content=null}={}
       fail('Native identity replay is immutable; an altered definition cannot reuse its original authorship receipt.');
     return existing;
   }
+  assertIndependentWorldIdentity(input,source);
+  assertWorldIdentityNames(db,guild,input);
   const check=input.kind==='npc'?preflightNpcIdentity:preflightPlaceIdentity;
   for(const name of [input.name,...input.aliases]){
     const result=check(db,guild,{key:input.key,name,scope});

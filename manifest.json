@@ -551,8 +551,8 @@
     },
     {
       "path": "bot/scripts/native-world-fixtures.mjs",
-      "size_bytes": 2468,
-      "sha256": "109ece251a2808a585922b383cf31dc68c18adb36a8183c45a01f2a1c9d1fa04"
+      "size_bytes": 2712,
+      "sha256": "51f45cc8529ea9a7e27951670af847761bd3c3b843ea06199b540303d773362a"
     },
     {
       "path": "bot/scripts/natural-language-scope-test.mjs",
@@ -1086,8 +1086,8 @@
     },
     {
       "path": "bot/scripts/world-authorship-test.mjs",
-      "size_bytes": 14660,
-      "sha256": "3ca646a44c7ae9e878ba27219fe26b0e7826ce173e76cafb5a9ebfe7a5873b4e"
+      "size_bytes": 16738,
+      "sha256": "57020c1d9b938831906ad531ad14710367b87e352f2b83dd6c42566d98978df2"
     },
     {
       "path": "bot/sql/schema.sql",
@@ -1191,8 +1191,8 @@
     },
     {
       "path": "bot/src/autonomous-world.js",
-      "size_bytes": 40651,
-      "sha256": "c951ccac50a1856d03f7d360e0c1ef5eaec546c0893392415136eb33ab3bae67"
+      "size_bytes": 40799,
+      "sha256": "5a981043f73cfa6db1c9447ff5f522717c6e2cfa5220880e81ea5a1b471b2477"
     },
     {
       "path": "bot/src/character-export.js",
@@ -2281,8 +2281,8 @@
     },
     {
       "path": "bot/src/world-authorship.js",
-      "size_bytes": 3003,
-      "sha256": "3843daa103fb41727d0fcafd5516bcab2500863326983bc9b8aa556c7cba5595"
+      "size_bytes": 4469,
+      "sha256": "db88ec3d0ca1e5541764fad9ceeba7fd49f29795a5a86cf3e52c8dac9fbaed13"
     },
     {
       "path": "bot/src/world-observation.js",
@@ -2651,8 +2651,8 @@
     },
     {
       "path": "docs/Active_Implementation/NO_DEFERRALS_LEDGER.md",
-      "size_bytes": 27941,
-      "sha256": "a4b89d33eee5711b3b31ac8f2cc93b3183fdc774bfbdb5936ebddffcf0044cc9"
+      "size_bytes": 31034,
+      "sha256": "5bf35c780d9d37ac551fcc5d6a63d001fec41f781152aaf84e291794faf53a4b"
     },
     {
       "path": "docs/Active_Implementation/README.md",

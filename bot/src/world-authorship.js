@@ -3,6 +3,25 @@ import {mintNarrativeAudience,revalidateNarrativeAudience} from './audience-nati
 import {sceneFictionHash as hash,sceneFictionFailure as fail,narrativeSourceVisible} from './scene-fiction-context.js';
 import {factVisibleTo} from './disclosure-authority.js';
 const issuer='native:narrative-authority';
+const identityTokens=value=>(String(value||'').normalize('NFKC').toLocaleLowerCase().match(/[\p{L}\p{N}]+/gu)||[]).join('\u0001');
+/** Exact protected identity collision check at materialization, not merely in the writer projection. */
+export function assertWorldIdentityNames(db,guild,definition){
+  const session=db.getActiveSession(guild),protectedNames=[...db.listGuildCharacters(guild).flatMap(pc=>[pc.name,
+    ...(Array.isArray(pc.data.aliases)?pc.data.aliases:[]),...(Array.isArray(pc.data.nicknames)?pc.data.nicknames:[])]),
+    ...(session?db.listNpcProxies(session.id,{statuses:['active']}).flatMap(p=>[p.npc_name,p.npc_key]):[])].map(identityTokens);
+  if([definition.key,definition.name,...definition.aliases].some(name=>protectedNames.includes(identityTokens(name))))
+    throw fail('protected_character_or_proxy_identity');
+}
+/** Conservative identity-echo quarantine, NOT semantic interpretation or a grant.
+ * An ordinary owner request may inspire a different GM invention; it cannot name a new fact into existence.
+ */
+export function assertIndependentWorldIdentity(definition,source){
+  if(source?.kind!=='ai_gm_input')return;
+  const text=`\u0001${identityTokens(source.details.text)}\u0001`;
+  if([definition.key,definition.name,...(definition.aliases||[])].some(name=>{
+    const phrase=identityTokens(name);return phrase&&text.includes(`\u0001${phrase}\u0001`);
+  }))throw fail('owner_named_identity_requires_independent_authoring_source');
+}
 /** Only an actual registered server context can delegate GM-owned ordinary authoring. */
 export function verifiedWorldAuthoringContext(db,guild,ctx){
   if(ctx?.db!==db||ctx.binding?.guild!==guild||!ctx.scope||!ctx.binding.scope

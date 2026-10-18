@@ -16,6 +16,32 @@ import {deliverTurnOutbox} from '../src/publication-outbox.js';
 const content=new ContentIndex(path.resolve('../content'));
 const definition=()=>({kind:'npc',key:'native-origin-porter',name:'Nella Wick',summary:'An ordinary local porter.',
   location_key:'terminal',parent_location_key:'',role:'porter',aliases:['Parcel Clerk']});
+for(const [text,privateScene,patch] of [
+  ['My friend Nella Wick is waiting here.',false,{}],
+  ['Nella—Wick is my contact.',true,{}],
+  ['My Parcel Clerk is waiting here.',false,{}],
+  ['My friend Al is waiting here.',false,{name:'Al',aliases:[]}]
+])test(`WD01 isolated authoring cannot materialize an owner-named new identity: ${text}`,()=>nativeFixture(f=>{
+  const x=setup(f,{text,privateScene}),ctx=buildNarrativeContext(f.db,f.guild,x.scope,x.sourceRef);
+  assert.throws(()=>establishNarrativeEntity(f.db,f.guild,{...definition(),...patch},ctx,{content}),/owner.*(?:identity|assert|name)|independent/i);
+  assert.equal(f.db.getNpcProfile(f.guild,'native-origin-porter'),null);
+}));
+for(const variant of ['npc_name','npc_alias','location_name'])test(`W2 direct native identity validator protects PC ${variant}`,()=>nativeFixture(f=>{
+  const x=setup(f),ctx=buildNarrativeContext(f.db,f.guild,x.scope,x.sourceRef),input=definition(),other=f.pcs[1];
+  if(variant==='npc_alias')input.aliases=[other.name];else input.name=other.name;
+  if(variant==='location_name'){input.kind='location';input.location_key='';input.parent_location_key='terminal';}
+  assert.throws(()=>establishNarrativeEntity(f.db,f.guild,input,ctx,{content}),/protected|identity|character/i);
+  assert.equal(f.db.getCityRecord(f.guild,'autonomous_entity',`${input.kind}:${input.key}`),null);
+}));
+test('WD01 actual writer withholds an echoed contact without losing independent scene fiction',()=>nativeFixture(async f=>{
+  const x=setup(f,{text:'My friend Nella Wick is waiting here.'}),input=definition(),out=await run(f,x,{fiction_delta:[input],
+    narrative_units:[unit('claim','npc_speech','The sorting counter is open.',{subject_key:input.key}),
+      unit('scene','scene','Rain beads on the terminal windows.')]});
+  assert.equal(f.db.getNpcProfile(f.guild,input.key),null);
+  assert(out.rows.some(row=>row.payload.includes('Rain beads')));
+  assert(out.rows.every(row=>!row.payload.includes('sorting counter')));
+  assert.equal(out.ai.requests.length,2,'No extra classification/judge call');
+}));
 for(const trigger of ['player_name','typed_target','scene_action','narrator_name'])test(`WD01 ${trigger} is interest, not new world authorship`,()=>{
   const addition={kind:'location',key:'my-safehouse',name:'My Safehouse',summary:'A claimed safehouse.',parent_location_key:'terminal',visibility:'party'},
     result={world_additions:[addition],narration:trigger==='narrator_name'?'My Safehouse is nearby.':'Rain falls.',
