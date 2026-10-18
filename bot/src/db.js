@@ -806,6 +806,10 @@ export class VeiledDB {
     return this.getSession(id);
   }
 
+  nextSessionNumber(guildId) {
+    return this.db.prepare("SELECT COALESCE(MAX(session_number),0)+1 n FROM sessions WHERE guild_id=?").get(guildId).n;
+  }
+
   getSession(id) { return this.db.prepare("SELECT * FROM sessions WHERE id=?").get(id); }
 
   getActiveSession(guildId) {

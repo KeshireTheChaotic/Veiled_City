@@ -46,6 +46,7 @@ import { publishSimulationHooks } from "./publishing.js";
 import { handleSimulationCommand } from "./simulation-commands.js";
 import { handleCityCommand } from "./city-commands.js";
 import { handleStoryCommand } from "./story-commands.js";
+import { registerOpeningAttendance, carryOpeningAttendance } from "./session-opening-attendance.js";
 import { recordCharacterArrival,scenePresence } from "./scene-continuity.js";
 import { personalCharacter, personalArc, discoverPersonal, personalInbox } from "./personal-continuity.js";
 import { consentOffers } from "./consent-native.js";
@@ -910,8 +911,10 @@ async function executeCommand(interaction,{db,gm,voice=null}){
       db.ensureCampaign(interaction.guildId);
       db.snapshotCampaign(interaction.guildId,{label:"Pre-session",reason:"Automatic snapshot before session start",createdBy:interaction.user.id});
       const s=db.startSession(interaction.guildId,interaction.options.getString("title")||"",assembly);
-      // Known players default to absent/offscreen until they opt in.
-      for(const p of db.listPlayers(interaction.guildId)) db.setPresence(s.id,p.discord_user_id,"absent","offscreen",null,"Not checked in.");
+      // Carry only source-bound pre-start registrations; all other players remain unrecorded.
+      const attendance=carryOpeningAttendance(db,interaction.guildId,s);
+      for(const p of db.listPlayers(interaction.guildId)) if(!attendance.carried.some(id=>db.getCharacter(id)?.owner_user_id===p.discord_user_id))
+        db.setPresence(s.id,p.discord_user_id,"absent","offscreen",null,"Not checked in.");
       const next=s.assembly_phase==="party"
         ?"Returning established party: check in with `/vc-session present`."
         :assembly==="manual"
@@ -1008,6 +1011,12 @@ Initial phase: ${s.assembly_phase}`});
       return true;
     }
     if(group==="session"&&["present","arrive"].includes(sub)){
+      if(sub==="present"&&!db.getActiveSession(interaction.guildId)){
+        const registration=registerOpeningAttendance(db,interaction.guildId,interaction.user.id,interaction.id,
+          interaction.options.getString("character")||"");
+        await interaction.reply({content:`Attendance registered for **${registration.character.name}** for the next session. This records attendance only; no arrival, location, movement, co-location, or party membership was inferred.`,ephemeral:true});
+        return true;
+      }
       const s=requireSession(db,interaction.guildId);
       const q=interaction.options.getString("character");
       const c=db.findOwnedCharacter(interaction.guildId,interaction.user.id,q);
@@ -1015,7 +1024,7 @@ Initial phase: ${s.assembly_phase}`});
       db.setPresence(s.id,interaction.user.id,sub==="arrive"?"late":"present","offscreen",null,sub==="arrive"?"Arrived during session.":"");
       db.assignCharacter(s.id,interaction.user.id,c.id,{role:"primary",controlPolicy:"player_only"});
       // Re-check-in is not consent to publish an owner-private initial position.
-      if(scenePresence(db,interaction.guildId,'character',c.id)?.visibility!=='character')
+      if(sub==="arrive"&&scenePresence(db,interaction.guildId,'character',c.id)?.visibility!=='character')
         recordCharacterArrival(db,interaction.guildId,c,interaction.user.id,interaction.id);
       if(!c.data.location){
         const setup=prepareSceneSetup(db,interaction.guildId,interaction.user.id,c.id);
