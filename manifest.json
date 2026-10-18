@@ -705,6 +705,11 @@
       "sha256": "ea96899baeb5f1e1708d95fd238c2e8cdb40b1ebb3af00107166b19bb2b795aa"
     },
     {
+      "path": "bot/scripts/session-opening-attendance-test.mjs",
+      "size_bytes": 18318,
+      "sha256": "1a478837a2a03b6907eb6cc3393d94a65f8924f7433c3f371139e06be6575352"
+    },
+    {
       "path": "bot/scripts/session2-message-contract-test.mjs",
       "size_bytes": 1505,
       "sha256": "c892737bf35d820a00ba553de684c360919a7d93fc3b33f97bd9387d898b7001"
@@ -1091,8 +1096,8 @@
     },
     {
       "path": "bot/scripts/validate-offline.mjs",
-      "size_bytes": 11312,
-      "sha256": "c4bab14595dccc69d02468c10111735a0a8add33655afe237ab031f5aaccb71d"
+      "size_bytes": 11360,
+      "sha256": "c4542b2012ed3ad15da22d73e3269994293e7160377142405e3c4682dbf9fa49"
     },
     {
       "path": "bot/scripts/world-authorship-test.mjs",
@@ -1306,8 +1311,8 @@
     },
     {
       "path": "bot/src/commands.js",
-      "size_bytes": 190162,
-      "sha256": "abf07ca6644a29beaf2d285eb7bc56fdaeb090da51bd9d272e1ff3a0da765476"
+      "size_bytes": 191654,
+      "sha256": "e611f1ec9706733d85a3fc67a82a606cf60f9115751b98ee8965efa5a7f8be7b"
     },
     {
       "path": "bot/src/concept-context.js",
@@ -1361,8 +1366,8 @@
     },
     {
       "path": "bot/src/db.js",
-      "size_bytes": 171389,
-      "sha256": "dedccf7a887e55b4fc93d52fa8c832ade4aba295bde33e6f5812505cde0b7e0a"
+      "size_bytes": 172432,
+      "sha256": "39d18291a2e0fc075a5015a485affcfea0fcb7d8c55871637c07d5e27b2bc019"
     },
     {
       "path": "bot/src/decision-advisory.js",
@@ -2195,6 +2200,11 @@
       "sha256": "1c27291810c18163430f99903edada93451a9152c5b0b5e3ad20e7457618a86a"
     },
     {
+      "path": "bot/src/session-opening-attendance.js",
+      "size_bytes": 13023,
+      "sha256": "48a26f6f9c13eedf8013fbb9a36cff0f49cc98c6d17637f913c120986d683fc4"
+    },
+    {
       "path": "bot/src/simulation-commands.js",
       "size_bytes": 5283,
       "sha256": "f9bd110be3714fe4a12b73f6b45344d8e42901bc283ad8e80a0094128afb14a9"
@@ -2721,8 +2731,8 @@
     },
     {
       "path": "docs/Active_Implementation/NO_DEFERRALS_LEDGER.md",
-      "size_bytes": 99820,
-      "sha256": "1d40db6e7cc229adb7d48c6af72b2476d77c14de74dae1bd9f73bc356e56023c"
+      "size_bytes": 107506,
+      "sha256": "7de5f4f7929fbf1d09f33d0f9c05c4a7b4398aa0731b77c0de02b1746a733252"
     },
     {
       "path": "docs/Active_Implementation/README.md",
