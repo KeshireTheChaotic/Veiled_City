@@ -439,6 +439,7 @@ bot/src/semantic-engagement.js
 bot/src/serial-queue.js
 bot/src/session-briefs.js
 bot/src/session-opening-attendance.js
+bot/src/session-opening-recovery.js
 bot/src/session-opening-runner.js
 bot/src/session-opening.js
 bot/src/simulation-commands.js

@@ -48,7 +48,8 @@ import { handleCityCommand } from "./city-commands.js";
 import { handleStoryCommand } from "./story-commands.js";
 import { registerOpeningAttendance, carryOpeningAttendance, prepareOpeningEntryOpportunity } from "./session-opening-attendance.js";
 import {scheduleSessionOpening} from './session-opening.js';
-import {runSessionOpening} from './session-opening-runner.js';
+import {runSessionOpening,sessionOpeningStatus} from './session-opening-runner.js';
+import {prepareSessionOpeningDeliveryReview,recoverSessionOpeningDelivery} from './session-opening-recovery.js';
 import { recordCharacterArrival,scenePresence } from "./scene-continuity.js";
 import { personalCharacter, personalArc, discoverPersonal, personalInbox } from "./personal-continuity.js";
 import { consentOffers } from "./consent-native.js";
@@ -397,6 +398,13 @@ export async function handleCommand(interaction,{db,gm,voice=null}){
 }
 async function handleCommandBody(interaction,{db,gm,voice=null}){
   beginInteraction(interaction);
+  if(typeof interaction.isButton==='function'&&interaction.isButton()&&interaction.customId?.startsWith('vcopeningdelivery:')){
+    if(!interaction.guildId||!isGM(db,interaction))throw new PermissionError('GM/admin permission required.');
+    await interaction.deferReply({ephemeral:true});
+    const job=await recoverSessionOpeningDelivery({db,interaction,authorize:isGM,key:interaction.customId.slice(18)});
+    await deliverInteractionText(interaction,`Native opening delivery: ${job.status}. Existing acknowledgements and uncertain parts were retained. No model or mechanics reran.`,{ephemeral:true});
+    return true;
+  }
   if(typeof interaction.isStringSelectMenu==='function'&&interaction.isStringSelectMenu()&&interaction.customId?.startsWith('vcsetup:')){
     if(!interaction.guildId||interaction.values?.length!==1)throw new UserInputError('Choose one exact owner-private scene setup option.');
     await interaction.deferReply({ephemeral:true});
@@ -930,7 +938,13 @@ async function executeCommand(interaction,{db,gm,voice=null}){
       await postGmLog({db,guild:interaction.guild,sessionId:s.id,title:`Session ${s.session_number} started`,details:`${s.title||"Untitled session"}
 Assembly mode: ${assembly}
 Initial phase: ${s.assembly_phase}`});
-      await runSessionOpening({db,guild:interaction.guild,gm});
+      const opening=await runSessionOpening({db,guild:interaction.guild,gm});
+      if(opening){
+        const status=sessionOpeningStatus(opening);
+        if(typeof interaction.followUp==='function')await interaction.followUp({content:status,ephemeral:true,allowedMentions:{parse:[]}})
+          .catch(()=>postGmLog({db,guild:interaction.guild,sessionId:s.id,title:'Native opening status',details:status}));
+        else await postGmLog({db,guild:interaction.guild,sessionId:s.id,title:'Native opening status',details:status});
+      }
       return true;
     }
     if(group==="session"&&sub==="assemble"){
@@ -941,9 +955,9 @@ Initial phase: ${s.assembly_phase}`});
       await interaction.deferReply({ephemeral:true});
       const opening=await runSessionOpening({db,guild:interaction.guild,gm});
       if(opening){
-        await deliverInteractionText(interaction,`Native opening: ${opening.status}. Attempts: ${opening.data.attempts}.`
-          +`\n${(opening.data.slots||[]).map(slot=>`${slot.audience==='private'?'Owner-private opening':'Shared opening'}: ${slot.narrative_status}`).join('\n')}`
-          +`${opening.data.hold_code?`\nReview reference: ${opening.data.hold_code}. Existing acknowledgements and uncertain sends are retained; no blind retry.`:''}`,{ephemeral:true});
+        const review=prepareSessionOpeningDeliveryReview(db,interaction,isGM),components=review?
+          [{type:1,components:[{type:2,style:2,label:'Resume verified unsent parts only',custom_id:`vcopeningdelivery:${review}`}]}]:[];
+        await deliverInteractionText(interaction,sessionOpeningStatus(opening),{ephemeral:true,components});
         return true;
       }
       let plan=db.getAssemblyPlan(s.id)||{};

@@ -7,20 +7,21 @@ import {handleCommand} from '../src/commands.js';
 import {GMService} from '../src/gm.js';
 import {ContentIndex} from '../src/content.js';
 import {FakeResponses} from './contract-fixtures.mjs';
-import {assemblyHookSources} from '../src/assembly-context.js';
-import {scheduleSessionOpening,inspectSessionOpening} from '../src/session-opening.js';
+import {assemblyHookSources,certifyAssemblyPlan} from '../src/assembly-context.js';
+import {scheduleSessionOpening,inspectSessionOpening,beginSessionOpeningAttempt,bindSessionOpeningTurn} from '../src/session-opening.js';
 import {indexWorldEvent} from '../src/city-calendar.js';
 import {registerOpeningAttendance} from '../src/session-opening-attendance.js';
-import {runSessionOpening} from '../src/session-opening-runner.js';
+import {runSessionOpening,sessionOpeningStatus} from '../src/session-opening-runner.js';
 import {deliverTurnOutbox} from '../src/publication-outbox.js';
 import {assemblyOrientation} from '../src/assembly-state.js';
+import {deliverVerifiedAssembly} from '../src/assembly-publications.js';
 
 function startInteraction(f,{mode='auto',id='opening-start'}={}){
   const replies=[];
   return {id,guildId:f.guild,guild:{id:f.guild},commandName:'vc-session',user:{id:'operator',username:'Operator'},
     memberPermissions:{has:()=>true},member:{roles:{cache:new Map()}},isChatInputCommand:()=>true,isButton:()=>false,isStringSelectMenu:()=>false,
     options:{getSubcommand:()=>'start',getSubcommandGroup:()=>null,getString:k=>k==='assembly'?mode:null,getBoolean:()=>null,getInteger:()=>null,getUser:()=>null},
-    reply:async p=>replies.push(p),deferReply:async()=>{},editReply:async p=>replies.push(p),replies};
+    reply:async p=>replies.push(p),deferReply:async()=>{},editReply:async p=>replies.push(p),followUp:async p=>replies.push(p),replies};
 }
 
 test('O2 actual session start queues one durable native opening job even with zero attendees',()=>nativeFixture(async f=>{
@@ -229,3 +230,89 @@ test('O2 already_together without saved party membership never manufactures a pa
   assert.match(x.sent.party[0],/does not establish shared fictional presence/);
   assert.equal(f.db.listCityRecords(f.guild,{kind:'scene_presence',includeGM:true}).length,0);
 }));
+
+test('O3 GM inspection exposes exact unsent-opening recovery and never repeats acknowledged private output',()=>nativeFixture(async f=>{
+  const x=queued(f),fetch=x.guild.channels.fetch;x.guild.channels.fetch=async()=>null;
+  await runSessionOpening({db:f.db,guild:x.guild,gm:x.gm});assert.equal(x.sent.private.length,4);assert.equal(x.sent.party.length,0);
+  const inspect=startInteraction(f,{id:'inspect-unsent'});inspect.guild=x.guild;inspect.options.getSubcommand=()=>'assemble';
+  await handleCommand(inspect,{db:f.db,gm:x.gm});
+  const control=inspect.replies.flatMap(r=>r.components||[]).flatMap(r=>r.components||[]).find(b=>b.custom_id?.startsWith('vcopeningdelivery:'));
+  assert(control,'Native-job inspect must provide an authenticated recovery for demonstrably unsent prepared output.');
+  x.guild.channels.fetch=fetch;f.restart();
+  const click=startInteraction(f,{id:'recover-unsent'});click.guild=x.guild;click.customId=control.custom_id;click.isButton=()=>true;click.isChatInputCommand=()=>false;
+  await handleCommand(click,{db:f.db,gm:x.gm});await handleCommand(click,{db:f.db,gm:x.gm});
+  assert.equal(x.sent.party.length,1);assert.equal(x.sent.private.length,4);assert.equal(x.calls,1);
+  assert.equal(inspectSessionOpening(f.db,f.guild,f.session.id).status,'completed');
+}));
+
+async function deliveryReview(f,x){
+  const inspect=startInteraction(f,{id:'inspect-recovery'});inspect.guild=x.guild;inspect.options.getSubcommand=()=>'assemble';
+  await handleCommand(inspect,{db:f.db,gm:x.gm});
+  return inspect.replies.flatMap(r=>r.components||[]).flatMap(r=>r.components||[]).find(b=>b.custom_id?.startsWith('vcopeningdelivery:'));
+}
+function recoveryClick(f,x,control,{user='operator',allowed=true}={}){
+  const i=startInteraction(f,{id:`click-${user}`});i.guild=x.guild;i.user.id=user;i.memberPermissions.has=()=>allowed;
+  i.customId=control.custom_id;i.isButton=()=>true;i.isChatInputCommand=()=>false;return i;
+}
+for(const change of ['source','owner','roster','plan','recipient'])test(`O3 recovery rejects changed ${change} before transport`,()=>nativeFixture(async f=>{
+  const x=queued(f),fetch=x.guild.channels.fetch;x.guild.channels.fetch=async()=>null;
+  await runSessionOpening({db:f.db,guild:x.guild,gm:x.gm});const control=await deliveryReview(f,x);assert(control);
+  if(change==='source')indexWorldEvent(f.db,f.guild,{key:inspectSessionOpening(f.db,f.guild,f.session.id).source_event,status:'retracted'});
+  if(change==='owner')f.db.db.prepare('UPDATE characters SET owner_user_id=? WHERE id=?').run('changed-owner',f.pcs[0].id);
+  if(change==='roster')f.db.setPresence(f.session.id,f.pcs[0].owner_user_id,'absent');
+  if(change==='plan')f.db.setAssemblyPlan(f.session.id,{...f.db.getAssemblyPlan(f.session.id),convergence_goal:'Changed terms'});
+  if(change==='recipient'){
+    const turn=f.db.listCityRecords(f.guild,{kind:'session_opening_turn',includeGM:true,limit:20}).find(r=>f.db.listTurnPublications(f.guild,r.record_key).some(p=>p.surface==='party')),
+      row=f.db.listTurnPublications(f.guild,turn.record_key)[0];
+    f.db.db.prepare('UPDATE publication_outbox SET target_user_id=? WHERE id=?').run('wrong-owner',row.id);
+  }
+  x.guild.channels.fetch=fetch;f.restart();
+  if(change==='recipient')await handleCommand(recoveryClick(f,x,control),{db:f.db,gm:x.gm});
+  else await assert.rejects(()=>handleCommand(recoveryClick(f,x,control),{db:f.db,gm:x.gm}));
+  assert.equal(x.sent.party.length,0);assert.equal(x.sent.private.length,4);assert.equal(x.calls,1);
+}));
+
+test('O3 forwarded/revoked GM control cannot authorize delivery; genuine operator resumes once',()=>nativeFixture(async f=>{
+  const x=queued(f),fetch=x.guild.channels.fetch;x.guild.channels.fetch=async()=>null;
+  await runSessionOpening({db:f.db,guild:x.guild,gm:x.gm});const control=await deliveryReview(f,x);assert(control);x.guild.channels.fetch=fetch;
+  await assert.rejects(()=>handleCommand(recoveryClick(f,x,control,{user:'other-gm'}),{db:f.db,gm:x.gm}));
+  await assert.rejects(()=>handleCommand(recoveryClick(f,x,control,{allowed:false}),{db:f.db,gm:x.gm}));
+  assert.equal(x.sent.party.length,0);
+  await handleCommand(recoveryClick(f,x,control),{db:f.db,gm:x.gm});assert.equal(x.sent.party.length,1);assert.equal(x.sent.private.length,4);
+}));
+
+test('O3 mixed recovery preserves one uncertain owner while independently resuming known-unsent shared output',()=>nativeFixture(async f=>{
+  const x=queued(f),fetch=x.guild.channels.fetch,members=x.guild.members.fetch;let attempts=0;
+  x.guild.channels.fetch=async()=>null;x.guild.members.fetch=async user=>user===f.pcs[0].owner_user_id?{send:async()=>{attempts++;throw Error('ack lost');}}:members(user);
+  await runSessionOpening({db:f.db,guild:x.guild,gm:x.gm});const control=await deliveryReview(f,x);assert(control);
+  x.guild.channels.fetch=fetch;f.restart();await handleCommand(recoveryClick(f,x,control),{db:f.db,gm:x.gm});
+  assert.equal(attempts,1);assert.equal(x.sent.party.length,1);assert.equal(x.sent.private.length,3);assert.equal(x.calls,1);
+  assert.equal(inspectSessionOpening(f.db,f.guild,f.session.id).status,'needs_delivery_review');
+  assert.equal(await deliveryReview(f,x),undefined,'No resend control for uncertainty alone.');
+}));
+
+test('O3 commit-before-send restart recovers exact native prepared payloads without any provider',()=>nativeFixture(async f=>{
+  const x=queued(f);beginSessionOpeningAttempt(f.db,f.guild,f.session.id);
+  f.db.setAssemblyPlan(f.session.id,certifyAssemblyPlan(f.db,f.guild,f.session,openingPlan(f.db,f.guild,f.session)));
+  const job=inspectSessionOpening(f.db,f.guild,f.session.id);f.db.saveCityRecord(f.guild,{...job,key:job.record_key,status:'publishing'});
+  await deliverVerifiedAssembly({db:f.db,guild:x.guild,session:f.session,bindTurn:id=>bindSessionOpeningTurn(f.db,f.guild,f.session.id,id),
+    deliver:async({turnId})=>({pending:f.db.listTurnPublications(f.guild,turnId)})});
+  assert.equal(x.sent.party.length,0);assert.equal(x.sent.private.length,0);f.restart();
+  const control=await deliveryReview(f,x);assert(control);
+  await handleCommand(recoveryClick(f,x,control),{db:f.db,gm:{planAssembly:()=>{throw Error('No replan.');},authorAssemblyScene:()=>{throw Error('No writer.');}}});
+  assert.equal(x.sent.party.length,1);assert.equal(x.sent.private.length,4);assert.equal(x.calls,0);
+  assert.equal(inspectSessionOpening(f.db,f.guild,f.session.id).status,'completed');
+}));
+
+test('O3 failed automatic opening ends with a truthful GM-private diagnostic rather than a silent queued acknowledgement',()=>nativeFixture(async f=>{
+  f.db.endSession(f.guild,'');const x=transport(f),i=startInteraction(f);i.guild=x.guild;
+  await handleCommand(i,{db:f.db,gm:{planAssembly:async()=>{throw Error('PRIVATE MODEL BODY');}}});
+  const final=i.replies.find(r=>r?.ephemeral&&r.content?.includes('Native opening: needs_review'));
+  assert(final,'Operator must receive the final bounded hold status, not merely the initial queued message.');
+  assert(!JSON.stringify(i.replies).includes('PRIVATE MODEL BODY'));assert.equal(x.sent.party.length,0);assert.equal(x.sent.private.length,0);
+}));
+
+test('O3 operational final report stays below Discord limit even for a large native attendance roster',()=>{
+  const text=sessionOpeningStatus({status:'completed',data:{attempts:1,slots:Array.from({length:5000},()=>({audience:'private',narrative_status:'FALLBACK_DELIVERED'}))}});
+  assert(text.length<1900);assert.match(text,/5000/);assert.match(text,/FALLBACK_DELIVERED/);
+});

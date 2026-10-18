@@ -711,8 +711,8 @@
     },
     {
       "path": "bot/scripts/session-opening-test.mjs",
-      "size_bytes": 19319,
-      "sha256": "7ca530edfdcb9a5051c657637effe63eda4e2658568434bf5caecb0fbd186a62"
+      "size_bytes": 27012,
+      "sha256": "b94956b434e24a4835c7bfdfc673d4bd6066e6b71b94a3ad989cb57c01c3e1f9"
     },
     {
       "path": "bot/scripts/session2-message-contract-test.mjs",
@@ -1316,8 +1316,8 @@
     },
     {
       "path": "bot/src/commands.js",
-      "size_bytes": 192683,
-      "sha256": "2a6879b4f947d42e8f9756766f01dd20802d8d088717361524d5be5fcd397380"
+      "size_bytes": 193791,
+      "sha256": "cd7134c1f4ea302e0d9cd067810f21bf99640115d6b80bb4bac9afbfddedad3a"
     },
     {
       "path": "bot/src/concept-context.js",
@@ -2210,9 +2210,14 @@
       "sha256": "48a26f6f9c13eedf8013fbb9a36cff0f49cc98c6d17637f913c120986d683fc4"
     },
     {
+      "path": "bot/src/session-opening-recovery.js",
+      "size_bytes": 4160,
+      "sha256": "632c6d3f44900f4366376455f5a0941d8359040c74291e9bcfdb693165935bab"
+    },
+    {
       "path": "bot/src/session-opening-runner.js",
-      "size_bytes": 3758,
-      "sha256": "24ba9a986009db49b25c2b7e8cbf92e0bc84781ed3a5d9d3c76c08f94bd00563"
+      "size_bytes": 4904,
+      "sha256": "590adabe67bf7609fb09fb09068c85239d5abd556480e84627f03e6b730848be"
     },
     {
       "path": "bot/src/session-opening.js",
@@ -2746,8 +2751,8 @@
     },
     {
       "path": "docs/Active_Implementation/NO_DEFERRALS_LEDGER.md",
-      "size_bytes": 120264,
-      "sha256": "055f836d56a6c0481d4efd8d1a62dfce34c51ac9c503bcbb0f5b2dd4d8d73de2"
+      "size_bytes": 124137,
+      "sha256": "dfc3369f8c6567bbabc2c2b1c6cafd2c1d96d9bc8bd0b42cdceb0573813d8174"
     },
     {
       "path": "docs/Active_Implementation/README.md",
