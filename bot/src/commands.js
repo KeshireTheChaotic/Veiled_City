@@ -48,6 +48,7 @@ import { handleCityCommand } from "./city-commands.js";
 import { handleStoryCommand } from "./story-commands.js";
 import { registerOpeningAttendance, carryOpeningAttendance, prepareOpeningEntryOpportunity } from "./session-opening-attendance.js";
 import {scheduleSessionOpening} from './session-opening.js';
+import {runSessionOpening} from './session-opening-runner.js';
 import { recordCharacterArrival,scenePresence } from "./scene-continuity.js";
 import { personalCharacter, personalArc, discoverPersonal, personalInbox } from "./personal-continuity.js";
 import { consentOffers } from "./consent-native.js";
@@ -924,11 +925,12 @@ async function executeCommand(interaction,{db,gm,voice=null}){
         ?"Returning established party: check in with `/vc-session present`."
         :assembly==="manual"
           ?"Manual assembly selected; the human GM introduces the PCs."
-          :"After expected players check in, the GM runs `/vc-session assemble`.";
+          :"The native opening is queued automatically; `/vc-session assemble` is inspection/recovery, not a required startup ritual.";
       await interaction.reply(`**Session ${s.session_number} started${s.title?`: ${s.title}`:""}.** Assembly: **${assembly}**. ${next}`);
       await postGmLog({db,guild:interaction.guild,sessionId:s.id,title:`Session ${s.session_number} started`,details:`${s.title||"Untitled session"}
 Assembly mode: ${assembly}
 Initial phase: ${s.assembly_phase}`});
+      await runSessionOpening({db,guild:interaction.guild,gm});
       return true;
     }
     if(group==="session"&&sub==="assemble"){
@@ -937,6 +939,13 @@ Initial phase: ${s.assembly_phase}`});
       if(s.assembly_mode==="manual") throw new Error("This session is set to manual assembly.");
       if(s.assembly_phase==="party") throw new Error("The session is already in established-party phase.");
       await interaction.deferReply({ephemeral:true});
+      const opening=await runSessionOpening({db,guild:interaction.guild,gm});
+      if(opening){
+        await deliverInteractionText(interaction,`Native opening: ${opening.status}. Attempts: ${opening.data.attempts}.`
+          +`\n${(opening.data.slots||[]).map(slot=>`${slot.audience==='private'?'Owner-private opening':'Shared opening'}: ${slot.narrative_status}`).join('\n')}`
+          +`${opening.data.hold_code?`\nReview reference: ${opening.data.hold_code}. Existing acknowledgements and uncertain sends are retained; no blind retry.`:''}`,{ephemeral:true});
+        return true;
+      }
       let plan=db.getAssemblyPlan(s.id)||{};
       const stale=assemblyPlanFreshness(db,interaction.guildId,s,plan)==='stale';
       if(!plan.public_opening&&!plan.character_entries?.length||stale&&!assemblyHasHistory(db,interaction.guildId,s,plan)){

@@ -49,3 +49,37 @@ export function scheduleSessionOpening(db,interaction,session,authorize){
     return inspectSessionOpening(db,guild,session.id);
   });
 }
+
+/** A native attempt is operational provenance, never an exemption from assembly/output checks. */
+export function beginSessionOpeningAttempt(db,guild,key){
+  return db.transaction(()=>{
+    const row=inspectSessionOpening(db,guild,key),session=db.getActiveSession(guild);
+    if(!['queued','held_paused'].includes(row.status)||row.data.attempts!==0||session?.id!==key||db.isDirectorPaused(guild))fail('an unattempted current job');
+    const context={version:1,job:key,origin_hash:row.data.origin_hash,input_fingerprint:assemblyInputFingerprint(db,guild,session),attempt:1},
+      source=indexWorldEvent(db,guild,{key:`opening-attempt:${key}:1`,kind:'native_session_opening_attempt',title:'Native opening attempt; not fictional authority',
+        source_kind:'event',source_id:row.source_event,session_id:key,visibility:'gm',details:context},ISSUER);
+    return db.saveCityRecord(guild,{...row,key,status:'planning',data:{...row.data,attempts:1,attempt_source:source.event_key,context}});
+  });
+}
+export function assertSessionOpeningAttempt(db,guild,key){
+  const row=inspectSessionOpening(db,guild,key),session=db.getActiveSession(guild),c=row.data.context,e=db.getWorldEvent(guild,row.data.attempt_source);
+  if(session?.id!==key||db.isDirectorPaused(guild)||!c||c.version!==1||c.job!==key||c.attempt!==row.data.attempts||c.origin_hash!==row.data.origin_hash
+    ||c.input_fingerprint!==assemblyInputFingerprint(db,guild,session)||e?.status!=='active'||e.kind!=='native_session_opening_attempt'
+    ||e.event_key!==`opening-attempt:${key}:${c.attempt}`||e.session_id!==key||e.visibility!=='gm'||e.subject_key!==null
+    ||e.source_kind!=='event'||e.source_id!==row.source_event||hash(e.details)!==hash(c))fail('the current source-bound attempt');
+  return row;
+}
+export function bindSessionOpeningTurn(db,guild,key,turnId){
+  const row=assertSessionOpeningAttempt(db,guild,key),turn=db.getTurnAttempt(turnId);
+  if(turn?.guild_id!==guild||turn.session_id!==key)fail('the actual opening turn');
+  db.saveCityRecord(guild,{kind:'session_opening_turn',key:turnId,status:'bound',visibility:'gm',source_event:row.data.attempt_source,
+    data:{version:1,job:key,origin_hash:row.data.origin_hash,context_hash:hash(row.data.context),turn:turnId}});
+}
+/** Also called by the common persisted publication verifier, including deferred/private transports. */
+export function assertSessionOpeningPublication(db,guild,publication){
+  const proof=db.getCityRecord(guild,'session_opening_turn',publication.turn_id);if(!proof)return;
+  const row=assertSessionOpeningAttempt(db,guild,proof.data.job);
+  if(proof.status!=='bound'||proof.visibility!=='gm'||proof.subject_key!==null||proof.data.version!==1
+    ||proof.source_event!==row.data.attempt_source||proof.data.origin_hash!==row.data.origin_hash
+    ||proof.data.context_hash!==hash(row.data.context)||proof.data.turn!==publication.turn_id)fail('the persisted opening publication proof');
+}

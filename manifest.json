@@ -711,8 +711,8 @@
     },
     {
       "path": "bot/scripts/session-opening-test.mjs",
-      "size_bytes": 6986,
-      "sha256": "28a8787e46ec935393b9a2d5c944a1d80fdc77c166e168ad31076430ca892fa1"
+      "size_bytes": 15410,
+      "sha256": "eaf10bc0515e4d1e95285026a5888e71b71257a82d047f92af4b88f8e323b3e9"
     },
     {
       "path": "bot/scripts/session2-message-contract-test.mjs",
@@ -1191,8 +1191,8 @@
     },
     {
       "path": "bot/src/assembly-publications.js",
-      "size_bytes": 7368,
-      "sha256": "bffd3b10a1f9eb908de4f76b44121610f77af4b2ef5307db71d9563b868b9e6c"
+      "size_bytes": 7550,
+      "sha256": "20e5c7f7ecb49cbca51d99c1ab241e666da65585ba818167e762899a87844c13"
     },
     {
       "path": "bot/src/assembly-readiness.js",
@@ -1316,8 +1316,8 @@
     },
     {
       "path": "bot/src/commands.js",
-      "size_bytes": 191776,
-      "sha256": "fb75e6fffcd1d09a3972a1447c52c8e775d8fdc26931bc11a7984facdbe737ff"
+      "size_bytes": 192553,
+      "sha256": "ac2f80de95f411ec2ae97a9b40887db8cda817d64d727782da657847e20e442b"
     },
     {
       "path": "bot/src/concept-context.js",
@@ -1596,8 +1596,8 @@
     },
     {
       "path": "bot/src/index.js",
-      "size_bytes": 52872,
-      "sha256": "c43ef676f383f25ef515c8414b9f0659c611c71a7b4fb22a16ea8cc65462d31d"
+      "size_bytes": 53157,
+      "sha256": "80cf43a69c79915676d271d7015977e0d3813ffd61ed0384b305856f5cfc4ce8"
     },
     {
       "path": "bot/src/legacy-authority.js",
@@ -2016,8 +2016,8 @@
     },
     {
       "path": "bot/src/pvp-output.js",
-      "size_bytes": 60165,
-      "sha256": "c4e1f446602f141c9a48121452aab8c131730cbbe03b815e73635425bc88cbed"
+      "size_bytes": 60284,
+      "sha256": "6a6dd263b2e35750ec5be5416ebb8867bc3c1fde9f079d261ba0815cf106e02c"
     },
     {
       "path": "bot/src/pvp-profiles.js",
@@ -2210,9 +2210,14 @@
       "sha256": "48a26f6f9c13eedf8013fbb9a36cff0f49cc98c6d17637f913c120986d683fc4"
     },
     {
+      "path": "bot/src/session-opening-runner.js",
+      "size_bytes": 3896,
+      "sha256": "88b939dfb14f665eb1dbc991389214d22a323d0f63d924e1d118a9f43149801a"
+    },
+    {
       "path": "bot/src/session-opening.js",
-      "size_bytes": 4592,
-      "sha256": "a29fbb9fb016f22e006ffa167dfd58e478aeea7ddf5fc0ffe99c169bb5c5f3ce"
+      "size_bytes": 7527,
+      "sha256": "cd970b7d6757c29585686422f34423af91b90f171e7f8da439cd38056746d5de"
     },
     {
       "path": "bot/src/simulation-commands.js",
@@ -2741,8 +2746,8 @@
     },
     {
       "path": "docs/Active_Implementation/NO_DEFERRALS_LEDGER.md",
-      "size_bytes": 111801,
-      "sha256": "15f6d130108b3dc9930f0af4fb85b929dd54b9669463febae24f63b8ed123654"
+      "size_bytes": 117100,
+      "sha256": "8d0f2faea244e77cb9004f20d8bbb869fc287e7c4ab627993beaccd4ca4b236f"
     },
     {
       "path": "docs/Active_Implementation/README.md",

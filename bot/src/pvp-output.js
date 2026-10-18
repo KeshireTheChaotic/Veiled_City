@@ -27,6 +27,7 @@ import {establishNarrativeUnits,renderNarrativeUnit} from './narrative-authority
 import {narrativeTasks} from './narrative-tasks.js';
 import {validateNarrativeCompleteness} from './narrative-completeness.js';
 import {projectNarrativeArtifact} from './narrative-artifacts.js';
+import {assertSessionOpeningPublication} from './session-opening.js';
 
 const hash=v=>createHash("sha256").update(JSON.stringify(v??null)).digest("hex");
 const prepared=new WeakMap();
@@ -619,6 +620,7 @@ export function bindOutputPublication(db,guild,result,publication,payload){
       visibility:publication.visibility,character:publication.target_character_id||null}});
 }
 export function revalidateOutputPublication(db,guild,row){
+  assertSessionOpeningPublication(db,guild,row);
   const record=db.getCityRecord(guild,"pvp_output_publication",row.id);
   if(record){
     if(record.status!=="verified"||![1,2].includes(record.data.version)

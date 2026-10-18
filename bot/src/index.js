@@ -38,6 +38,7 @@ import {beginGenerationFeedback} from './generation-feedback.js';
 import {turnLatency} from './turn-latency.js';
 import {enqueueTrackedTurn} from './tracked-turn.js';
 import {currentTurnTrace} from './turn-trace-context.js';
+import {runSessionOpening} from './session-opening-runner.js';
 
 const config=loadConfig();
 const log=createLogger(config.logLevel);
@@ -512,6 +513,8 @@ client.once("ready",()=>{
   for(const guild of client.guilds.cache.values()){
     try{resumeAutonomousPvpFear(db,guild.id,{limit:12});}
     catch(error){log.error("Autonomous immediate Fear recovery requires review",error);}
+    // Only a never-attempted native opening can execute automatically. Interrupted/uncertain work is held.
+    void runSessionOpening({db,guild,gm}).catch(()=>log.error('Native session opening requires source review.'));
   }
   console.log(`Veilkeeper v3.5.5 logged in as ${client.user.tag}`);
   console.log(`Voice narration: ${config.voiceEnabled?`enabled (${config.voiceName}/${config.voiceModel})`:"disabled"}.`);
