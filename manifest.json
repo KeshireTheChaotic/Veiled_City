@@ -1106,8 +1106,8 @@
     },
     {
       "path": "bot/scripts/world-narrative-bridge-test.mjs",
-      "size_bytes": 19103,
-      "sha256": "42558b13690ee91f08742b00be8e990e3418128f767d6906e5ee584a88776176"
+      "size_bytes": 29399,
+      "sha256": "e6171d3da202071bc72049de7abc318834b3bf162539a6ddb4d99c4963c191de"
     },
     {
       "path": "bot/scripts/world-sanctioned-sources-test.mjs",
@@ -2321,8 +2321,8 @@
     },
     {
       "path": "bot/src/world-narrative-bridge.js",
-      "size_bytes": 11929,
-      "sha256": "e12977276fa18f623ad4068d6189f1468c9ec8be93091961d00ce4e084ee2807"
+      "size_bytes": 18229,
+      "sha256": "7fdb119e272a3d9f217e0e602b732f69e3fb9a65acc95bf9550e19ffe4c10111"
     },
     {
       "path": "bot/src/world-observation.js",
@@ -2706,8 +2706,8 @@
     },
     {
       "path": "docs/Active_Implementation/NO_DEFERRALS_LEDGER.md",
-      "size_bytes": 79453,
-      "sha256": "1e25e42c0cc87289cb7a910abbf7e8cc9a5bcdda9773eca8ddccf672333a3dd9"
+      "size_bytes": 83702,
+      "sha256": "46c5df01ccfbf7cd471cddb93ddb6ca6ee3951ffc052e588c21c9d43d259fc6c"
     },
     {
       "path": "docs/Active_Implementation/README.md",
