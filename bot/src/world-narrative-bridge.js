@@ -76,7 +76,8 @@ function nativeTask(db,guild,row,scope,scene){
 function nativeSceneTransition(db,guild,scope,scene){
   if(!scope.actorCharacterId||!scope.actorUserId)return null;
   const pc=db.getCharacter(scope.actorCharacterId);if(pc?.guild_id!==guild||pc.owner_user_id!==scope.actorUserId)return null;
-  let principal;try{principal=conversationPrincipal(db,guild,scope.actorUserId,pc.id);}catch{return null;}
+  let principal;try{principal=conversationPrincipal(db,guild,scope.actorUserId,pc.id);}
+  catch(error){if(['Active session required.','Select an authenticated current controlled role.','Controller attendance required.','Active campaign character required.'].includes(error.message))return null;throw error;}
   if(principal.kind!=='owner')return null;
   const presence=scenePresence(db,guild,'character',pc.id);
   if(!presence||presence.status!=='active'||presence.data.scene!==scene.key||presence.data.session_id!==scene.session_id
@@ -93,10 +94,15 @@ function nativeSceneTransition(db,guild,scope,scene){
     ||source.scene!==scene.key||source.details.author!==pc.owner_user_id||source.details.character_id!==pc.id
     ||source.details.revision!==principal.revision||!db.ownerAuthoredSource(guild,source.event_key,pc.owner_user_id)
     ||!narrativeSourceVisible(db,guild,source.event_key,scope)||!narrativeSourceVisible(db,guild,arrival.event_key,scope))return null;
-  const turnKey=arrival.event_key.replace(/:action:\d+$/,'');
-  if(turnKey===arrival.event_key||!turnKey.startsWith('world-turn:'))return null;
+  if(typeof source.details.message_id!=='string'||!source.details.message_id)return null;
+  const turnKey=`world-turn:${hash([scene.session_id,source.details.message_id,pc.id]).slice(0,40)}`;
+  const actionSuffix=arrival.event_key.slice(turnKey.length);
+  if(!/^:action:\d+$/.test(actionSuffix))return null;
   const turn=db.getCityRecord(guild,'autonomous_turn',turnKey);
   if(!turn||turn.status!=='active'||turn.source_event!==source.event_key||turn.data.session_id!==scene.session_id||!entitled(turn,scope))return null;
+  const movement=arrival.details.departure;
+  if(!movement||movement.location===arrival.location_key||arrival.location_key!==presence.location_key
+    ||typeof movement.location!=='string'||!movement.location)return null;
   const matches=(turn.data.results||[]).filter(result=>result.status==='arrived'&&result.source_event===arrival.event_key
     &&result.adjudication?.intent==='movement'&&result.adjudication.mode==='native_resolved'
     &&result.adjudication.source_refs?.length===1&&result.adjudication.source_refs[0]===source.event_key
@@ -107,10 +113,19 @@ function nativeSceneTransition(db,guild,scope,scene){
     &&row.data.world_source_event===source.event_key&&row.data.arrival===arrival.event_key&&row.data.type==='move'
     &&row.data.framing==='immediate'&&row.data.resolution==='auto'&&row.data.actor===pc.id&&row.data.owner_user_id===pc.owner_user_id
     &&row.data.session_id===scene.session_id&&row.data.scene===scene.key&&row.data.source_span&&source.details.text.includes(row.data.source_span)
-    &&entitled(row,scope));
+    &&row.data.actor_principal_revision===principal.revision&&row.data.target_key===arrival.location_key
+    &&(!row.data.owner_user_id||row.data.owner_user_id===pc.owner_user_id)&&entitled(row,scope));
   const pairs=matches.flatMap(result=>intents.filter(row=>row.data.source_span===result.adjudication.source_span).map(row=>({result,row})));
   if(pairs.length!==1)return null;
   const {row}=pairs[0],root=source.event_key;
+  let sourceProof;try{sourceProof=historicalActionSource(db,guild,row.record_key,{resolved:true});}
+  catch(error){if(error.code==='SCENE_ACTION_WINDOW')return null;throw error;}
+  if(sourceProof.principal.user!==pc.owner_user_id||sourceProof.source.details.author!==pc.owner_user_id)return null;
+  if(!['scene','interior','exterior'].includes(presence.data.zone)
+    ||!['none','interior','exterior'].includes(row.data.destination_scope)
+    ||row.data.destination_scope==='interior'&&presence.data.zone!=='interior'
+    ||row.data.destination_scope==='exterior'&&presence.data.zone!=='exterior')return null;
+  if(pairs[0].result.key!==arrival.location_key)return null;
   return envelope(scene,scope,'scene_transition',root,[{kind:'typed_intent',key:row.record_key,hash:hash(row)},
     {kind:'autonomous_turn',key:turn.record_key,hash:hash(turn)},{kind:'world_event',key:arrival.event_key,hash:hash(arrival)},
     {kind:'world_event',key:source.event_key,hash:hash(source)},{kind:'scene_presence',key:presence.record_key,hash:hash(presence)}],'ranking_only');

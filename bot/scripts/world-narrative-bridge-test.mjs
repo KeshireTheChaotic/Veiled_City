@@ -12,7 +12,7 @@ import {setup,run} from './narrative-fixtures.mjs';
 import {adjudicateAcceptedIntent} from '../src/rules-arbitration.js';
 import {FakeResponses} from './contract-fixtures.mjs';
 import {candidate} from './narrative-fixtures.mjs';
-import {revalidateWorldNarrativeSignal,worldNarrativeBridgePacket} from '../src/world-narrative-bridge.js';
+import {canonicalNarrativeCause,revalidateWorldNarrativeSignal,worldNarrativeBridgePacket} from '../src/world-narrative-bridge.js';
 import {captureWorldInput,applyAutonomousWorld,configureWorldAuthority} from '../src/autonomous-world.js';
 import {persistPlayerIntents} from '../src/typed-intents.js';
 import {bindDirectorNarrativeSource,directorBriefForAudience} from '../src/narrative-director-source.js';
@@ -24,6 +24,7 @@ import {unit} from './narrative-fixtures.mjs';
 import {indexWorldEvent} from '../src/city-calendar.js';
 import {sceneFictionHash} from '../src/scene-fiction-context.js';
 import {currentScene,scenePresence} from '../src/scene-continuity.js';
+import {historicalActionSource} from '../src/action-consent.js';
 function packet(f,pc=f.pcs[0],mode='party'){
   const gm=new GMService({db:f.db,content:new ContentIndex(path.resolve('../content')),ai:null,config:{maxRecentMessages:2,maxContentChunks:1}});
   return gm.buildContext(f.guild,pc.owner_user_id,'What happens next?',null,{scope:mode}).world_narrative_bridge;
@@ -34,33 +35,61 @@ function resolve(f,privateScene=false){
   contributeRoll(f.db,f.guild,x.pc.owner_user_id,{op:'roll',request:q.record_key,expected_revision:rollRevision(q),key:'bridge-native-roll'},
     {rng:()=>[8,5][index++]});return x;
 }
-function move(f,{id='bridge-move',text='I move to the terminal.',privateScene=false}={}){
+function move(f,{id='bridge-move',text='I move to the annex.',privateScene=false}={}){
   configureWorldAuthority(f.db,f.guild,{gm_authority_mode:'autonomous',auto_create_locations:true,auto_create_npcs:true},'fixture-gm');
-  const x=setup(f,{text,privateScene,messageId:id}),intent={type:'move',source_span:text,target_name:'terminal',target_key:'terminal',
+  const x=setup(f,{text,privateScene,messageId:id}),intent={type:'move',source_span:text,target_name:'annex',target_key:'annex',
     destination:'unspecified',operation:'move',utterance:'',excluded_targets:[],framing:'immediate',resolution:'auto',reason:'Owner move.'};
+  f.db.setSimulationEntity(f.guild,'location','annex',{name:'Annex',parent_location_key:'terminal',visibility:privateScene?'character':'party',access:'public'});
+  f.db.upsertReference(f.guild,{kind:'location',key:'annex',name:'Annex',summary:'A modest nearby room.',visibility:privateScene?'character':'party',subjectCharacterId:privateScene?x.pc.id:null});
   const [accepted]=persistPlayerIntents(f.db,f.guild,[intent],x.scope,{messageId:x.messageId});
-  const results=applyAutonomousWorld(f.db,f.guild,{scene_actions:[{kind:'move',entity_ref:'terminal',source_span:text,zone:'scene'}],player_intents:[intent]},
+  const results=applyAutonomousWorld(f.db,f.guild,{scene_actions:[{kind:'move',entity_ref:'annex',source_span:text,zone:'scene'}],player_intents:[intent]},
     x.scope,{messageId:x.messageId});
   assert.equal(results?.[0]?.status,'arrived',JSON.stringify({accepted,results}));
   return {x,accepted,results};
 }
 test('WD bridge emits a scene transition only from the persisted native movement result and arrival receipt',()=>nativeFixture(f=>{
-  const {x,accepted,results}=move(f),p=packet(f,x.pc),signal=p.signals.find(s=>s.kind==='scene_transition');
+  const {x,accepted,results}=move(f),resolved=f.db.getCityRecord(f.guild,'typed_intent',accepted.record_key),p=packet(f,x.pc),signal=p.signals.find(s=>s.kind==='scene_transition');
+  assert.equal(resolved.status,'resolved');
+  assert.doesNotThrow(()=>historicalActionSource(f.db,f.guild,accepted.record_key,{resolved:true}));
+  const ev=f.db.getWorldEvent(f.guild,results[0].source_event),src=f.db.getWorldEvent(f.guild,ev.details.input_source);
+  assert.equal(src.details.message_id,x.messageId);assert.equal(ev.details.departure.location,'terminal');assert.equal(ev.location_key,'annex');
+  const tkey=`world-turn:${sceneFictionHash([f.session.id,x.messageId,x.pc.id]).slice(0,40)}`;
+  assert.equal(ev.event_key.startsWith(`${tkey}:action:`),true);
+  assert.equal(f.db.getCharacter(x.pc.id).data.location,'annex');
+  const typed=f.db.getCityRecord(f.guild,'typed_intent',accepted.record_key);
+  assert.equal(typed.data.target_key,'annex');assert.equal(typed.data.actor_principal_revision,historicalActionSource(f.db,f.guild,accepted.record_key,{resolved:true}).principal.revision);
+  assert.equal(f.db.getCharacter(x.pc.id).data.location,'annex');
   assert(signal);assert.equal(signal.authority_disposition,'ranking_only');assert.equal(signal.origin_kind,'human_action');
   assert.equal(signal.causation_ref,x.sourceRef);assert(signal.source_refs.some(r=>r.kind==='typed_intent'&&r.key===accepted.record_key));
   assert(signal.source_refs.some(r=>r.kind==='world_event'&&r.key===results[0].source_event));
   assert.equal(signal.execution_authority,false);assert.equal(signal.publication_authority,false);
   assert.equal(packet(f,x.pc,'private').signals.filter(s=>s.kind==='scene_transition').length,1);
   f.restart();assert.equal(packet(f,x.pc).signals.filter(s=>s.id===signal.id).length,1);
+  const directorRef=bindDirectorNarrativeSource(f.db,f.guild,{act:false},x.scope,'round',{},new ContentIndex(path.resolve('../content')));
+  assert.equal(canonicalNarrativeCause(f.db,f.guild,directorRef,x.scope),x.sourceRef);
+  const turn=f.db.listCityRecords(f.guild,{kind:'autonomous_turn',includeGM:true})[0];
+  f.db.saveCityRecord(f.guild,{...turn,key:turn.record_key,data:{...turn.data,results:[]}});
+  assert.equal(canonicalNarrativeCause(f.db,f.guild,directorRef,x.scope),null,
+    'changed native basis cannot retain canonical causal weight');
 }));
 test('WD bridge holds scene transition on forged, stale, owner-mismatched, scene-mismatched, or private-audience receipts',()=>nativeFixture(f=>{
-  const {x,accepted,results}=move(f),arrival=f.db.getWorldEvent(f.guild,results[0].source_event);
+  const {x,accepted,results}=move(f),resolved=f.db.getCityRecord(f.guild,'typed_intent',accepted.record_key),arrival=f.db.getWorldEvent(f.guild,results[0].source_event);
   assert.equal(packet(f,x.pc).signals.filter(s=>s.kind==='scene_transition').length,1);
   f.db.saveCityRecord(f.guild,{kind:'autonomous_turn',key:`forged:${x.messageId}`,source_event:x.sourceRef,visibility:'party',data:{results:[{...results[0],status:'arrived'}],session_id:f.session.id}});
-  f.db.saveCityRecord(f.guild,{...accepted,key:accepted.record_key,data:{...accepted.data,arrival:'forged-arrival'}});
+  f.db.saveCityRecord(f.guild,{...resolved,key:resolved.record_key,data:{...resolved.data,arrival:'forged-arrival'}});
   assert.equal(packet(f,x.pc).signals.filter(s=>s.kind==='scene_transition').length,0);
-  f.db.saveCityRecord(f.guild,{...accepted,key:accepted.record_key,data:{...accepted.data,arrival:arrival.event_key}});
+  f.db.saveCityRecord(f.guild,{...resolved,key:resolved.record_key,data:resolved.data});
+  assert.equal(packet(f,x.pc).signals.filter(s=>s.kind==='scene_transition').length,1);
   f.db.db.prepare("UPDATE world_events SET status='retracted' WHERE guild_id=? AND event_key=?").run(f.guild,arrival.event_key);
+  assert.equal(packet(f,x.pc).signals.filter(s=>s.kind==='scene_transition').length,0);
+  f.db.db.prepare("UPDATE world_events SET status='active' WHERE guild_id=? AND event_key=?").run(f.guild,arrival.event_key);
+  assert.equal(packet(f,x.pc).signals.filter(s=>s.kind==='scene_transition').length,1);
+  const source=arrival.details.input_source;
+  f.db.db.prepare("UPDATE world_events SET status='retracted' WHERE guild_id=? AND event_key=?").run(f.guild,source);
+  assert.equal(packet(f,x.pc).signals.filter(s=>s.kind==='scene_transition').length,0);
+  f.db.db.prepare("UPDATE world_events SET status='active' WHERE guild_id=? AND event_key=?").run(f.guild,source);
+  assert.equal(packet(f,x.pc).signals.filter(s=>s.kind==='scene_transition').length,1);
+  f.db.db.prepare("UPDATE world_events SET details_json=json_set(details_json,'$.revision','stale-principal') WHERE guild_id=? AND event_key=?").run(f.guild,source);
   assert.equal(packet(f,x.pc).signals.filter(s=>s.kind==='scene_transition').length,0);
 }));
 test('WD bridge holds scene transition for mismatched owner, scene, private audience, and duplicate receipts',()=>nativeFixture(f=>{
@@ -69,12 +98,15 @@ test('WD bridge holds scene transition for mismatched owner, scene, private audi
   f.db.saveCityRecord(f.guild,{...turn,key:turn.record_key,data:{...turn.data,results:[...turn.data.results,...turn.data.results]}});
   assert.equal(packet(f,x.pc).signals.filter(s=>s.kind==='scene_transition').length,0,'duplicate native outcome pairing is ambiguous');
   f.db.saveCityRecord(f.guild,{...turn,key:turn.record_key,data:{...turn.data,results:turn.data.results}});
+  assert.equal(packet(f,x.pc).signals.filter(s=>s.kind==='scene_transition').length,1,'restored valid turn proof is accepted');
   f.db.db.prepare("UPDATE world_events SET details_json=json_set(details_json,'$.owner_user_id','somebody-else') WHERE guild_id=? AND event_key=?").run(f.guild,arrival.event_key);
   assert.equal(packet(f,x.pc).signals.filter(s=>s.kind==='scene_transition').length,0);
   f.db.db.prepare("UPDATE world_events SET details_json=json_set(details_json,'$.owner_user_id',?) WHERE guild_id=? AND event_key=?").run(x.pc.owner_user_id,f.guild,arrival.event_key);
+  assert.equal(packet(f,x.pc).signals.filter(s=>s.kind==='scene_transition').length,1,'restored valid owner proof is accepted');
   f.db.db.prepare("UPDATE world_events SET scene='stale-scene' WHERE guild_id=? AND event_key=?").run(f.guild,arrival.event_key);
   assert.equal(packet(f,x.pc).signals.filter(s=>s.kind==='scene_transition').length,0,'arrival must belong to current scene');
   f.db.db.prepare("UPDATE world_events SET scene=? WHERE guild_id=? AND event_key=?").run(currentScene(f.db,f.guild).key,f.guild,arrival.event_key);
+  assert.equal(packet(f,x.pc).signals.filter(s=>s.kind==='scene_transition').length,1,'restored valid scene proof is accepted');
   f.db.db.prepare("UPDATE world_events SET status='retracted' WHERE guild_id=? AND event_key=?").run(f.guild,arrival.details.input_source);
   assert.equal(packet(f,x.pc).signals.filter(s=>s.kind==='scene_transition').length,0,'stale owner source holds transition');
 }));
@@ -82,6 +114,7 @@ test('WD bridge keeps an owner private arrival out of party signals and retains 
   const {x}=move(f,{id:'bridge-private-move',text:'I privately move to the terminal.',privateScene:true});
   assert.equal(packet(f,x.pc,'party').signals.filter(s=>s.kind==='scene_transition').length,0);
   assert.equal(packet(f,x.pc,'private').signals.filter(s=>s.kind==='scene_transition').length,1);
+  assert.equal(packet(f,f.pcs[1],'private').signals.filter(s=>s.kind==='scene_transition').length,0,'private transition does not cross owners');
 }));
 test('WD bridge sends a genuine native result once per original cause without exposing the declaration or replaying effects',()=>nativeFixture(f=>{
   const x=resolve(f),before=f.db.db.prepare('SELECT COUNT(*) n FROM rolls').get().n,resources=f.db.getCharacter(x.pc.id).data.resources,
