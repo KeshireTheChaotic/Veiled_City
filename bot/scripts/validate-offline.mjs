@@ -44,6 +44,7 @@ suites.push("world-background-identity-test");
 suites.push("world-background-memory-test");
 suites.push("world-identity-persistence-test");
 suites.push("world-sanctioned-sources-test");
+suites.push("world-narrative-bridge-test");
 suites.push("narrative-correctness-retirement-test");
 suites.push("audience-first-framework-test","audience-first-integration-test","gm-unified-arbitration-test");
 // Critical is the release gate. Optional feature/history matrices remain executable via --extended;

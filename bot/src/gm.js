@@ -12,6 +12,7 @@ import { tierWorldAdditions } from "./entity-memory.js";
 import { contextMemorySchema, CONTEXT_MEMORY_PROMPT } from "./context-memory.js";
 import { presentationContext } from "./presentation-evidence.js";
 import {worldHookSeedForGm,worldRecordOriginForGm} from './world-sanctioned-sources.js';
+import {worldNarrativeBridgePacket} from './world-narrative-bridge.js';
 import { summarizeRoster, previewAuthoritativeMutation } from "./state.js";
 import { narrativeContext } from "./character-narrative.js";
 import { validatePostTurnStateReview,POST_TURN_REVIEW_CATEGORIES } from "./director.js";
@@ -598,6 +599,7 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
       campaign,session,assembly,party_state:partyState,current_encounter:currentEncounter,current_combatants:currentCombatants,canon,rulings,
       authority_index:{canon:projectAuthorityRecords("canon",canon),rulings:projectAuthorityRecords("rulings",rulings)},
       actor_relationships:actorRelationships,gm_relationships:gmRelationships,gm_character_hooks:gmCharacterHooks,character_narratives:characterNarratives,visible_handouts:visibleHandouts,
+      world_narrative_bridge:worldNarrativeBridgePacket(this.db,guildId,memoryScope),
       actor_assignment:actorAssignment?(actorAssignment.npc_proxy?{
         assignment_kind:"npc_proxy",controller_user_id:actorUserId,npc_proxy_id:actorAssignment.id,character_id:actorKnowledgeId,
         npc_name:actorAssignment.npc_name,knowledge_id:actorAssignment.knowledge_id,control_level:actorAssignment.control_level,
@@ -746,6 +748,7 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
       `GM-PRIVATE + ALL KNOWN FACTS (OBJECTIVE CAMPAIGN CONTEXT; DO NOT ASSUME NPCS KNOW THESE):\n${JSON.stringify(ctx.gm_all_facts)}`,
       `NPC_COGNITION (SUBJECTIVE MEMORY/KNOWLEDGE/GOALS; GM-PRIVATE):\n${JSON.stringify(ctx.npc_cognition)}`,
       `SCOPED MEMORY AND NATIVE POSITIONS (audience-visible evidence only; never consequence authority):\n${JSON.stringify(ctx.scoped_memory)}`,
+      `WORLD NARRATIVE BRIDGE (native causal metadata, not NPC knowledge or new effect authority):\n${JSON.stringify(ctx.world_narrative_bridge)}`,
       SIMULATION_PROMPT,
       `SIMULATION (GM-private; never copy wholesale to player narration): ${JSON.stringify(simulationContext(this.db,guildId,messageText))}`,
       `CIVIC CONTEXT (GM-only reference, not actor knowledge or canon): ${JSON.stringify(cityContext(this.db,guildId,messageText))}`,
@@ -1090,6 +1093,7 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
     const prompt=[
       ctx.constitution,ctx.multi,"# AUTONOMOUS WORLD DIRECTOR",...layerRules,SIMULATION_PROMPT,NARRATIVE_CONTRACT,
       `AI MANAGEMENT (GM-private proposals, policy, revisions and receipts; never actor knowledge): ${JSON.stringify(ctx.ai_management)}`,
+      `WORLD NARRATIVE BRIDGE (existing request only; native results rank opportunities, unfinished tasks are diagnostics, not world facts): ${JSON.stringify(ctx.world_narrative_bridge)}`,
       `Relevant simulation state: ${JSON.stringify(simulationContext(this.db,guildId,JSON.stringify(trigger)))}`,
       `Relevant civic context (not actor knowledge): ${JSON.stringify(cityContext(this.db,guildId,JSON.stringify(trigger)))}`,
       "You may autonomously emit the same authoritative campaign events, relationships, handouts, private_messages, and player-facing narration available to the normal GM, subject to all security/canon/player-agency restrictions.",

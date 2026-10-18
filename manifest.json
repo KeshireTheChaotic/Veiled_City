@@ -1081,8 +1081,8 @@
     },
     {
       "path": "bot/scripts/validate-offline.mjs",
-      "size_bytes": 11185,
-      "sha256": "f2228de833a2550de319fc645567a0cdcbd533b50da67f3da370705cfa918db6"
+      "size_bytes": 11229,
+      "sha256": "20c82834c7ddb5e02927f3266a44060a040f0a76396d0422ef1199a6c3f80016"
     },
     {
       "path": "bot/scripts/world-authorship-test.mjs",
@@ -1103,6 +1103,11 @@
       "path": "bot/scripts/world-identity-persistence-test.mjs",
       "size_bytes": 10800,
       "sha256": "e91d0cee0ae11a8be7e77a00f8377b41e9da31a2e589f01c5936b535890d78a9"
+    },
+    {
+      "path": "bot/scripts/world-narrative-bridge-test.mjs",
+      "size_bytes": 10734,
+      "sha256": "ad88175971c74e8b559083bd9b717688afb732b61cf10b84ed469fce42500556"
     },
     {
       "path": "bot/scripts/world-sanctioned-sources-test.mjs",
@@ -1546,8 +1551,8 @@
     },
     {
       "path": "bot/src/gm.js",
-      "size_bytes": 133637,
-      "sha256": "5bed6260748a710ef68bce041c8a68d20e77b421683181a8c6ed101f8864a87b"
+      "size_bytes": 134132,
+      "sha256": "0944c9318b356fc384f91f2ab8f9b094afbb5648d8317735451ffd79e85aff79"
     },
     {
       "path": "bot/src/handout.js",
@@ -2315,6 +2320,11 @@
       "sha256": "41524eed71b75879137851413b485cd19dbabe39b5703c05cb50613c8db4f137"
     },
     {
+      "path": "bot/src/world-narrative-bridge.js",
+      "size_bytes": 8277,
+      "sha256": "95c000ee1aebc92fe0780fe3974dae361d50e174bc70c810668e8e08cada4861"
+    },
+    {
       "path": "bot/src/world-observation.js",
       "size_bytes": 7054,
       "sha256": "815ede68af1bd6d94f05ebc088cb8a96b132b55977c11e1cdea20083c33b9882"
@@ -2686,8 +2696,8 @@
     },
     {
       "path": "docs/Active_Implementation/NO_DEFERRALS_LEDGER.md",
-      "size_bytes": 52661,
-      "sha256": "9a0669fb3805fafa7a5ea9a8e8e230e1ae4fbae53d73713d8c5e19b36d487c10"
+      "size_bytes": 58089,
+      "sha256": "93802de0e539c4a263423e8d14cd116a1a0842e17ed8fddfc04792a5de970598"
     },
     {
       "path": "docs/Active_Implementation/README.md",
