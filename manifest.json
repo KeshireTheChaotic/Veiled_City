@@ -1106,8 +1106,8 @@
     },
     {
       "path": "bot/scripts/world-narrative-bridge-test.mjs",
-      "size_bytes": 10734,
-      "sha256": "ad88175971c74e8b559083bd9b717688afb732b61cf10b84ed469fce42500556"
+      "size_bytes": 19103,
+      "sha256": "42558b13690ee91f08742b00be8e990e3418128f767d6906e5ee584a88776176"
     },
     {
       "path": "bot/scripts/world-sanctioned-sources-test.mjs",
@@ -1641,8 +1641,8 @@
     },
     {
       "path": "bot/src/narrative-authority-context.js",
-      "size_bytes": 12292,
-      "sha256": "89153700cf20ff6f55a196ccf0f79021a089f1626c7c14a669c1c247058aab72"
+      "size_bytes": 12403,
+      "sha256": "feaeff7063ea3bdc65f2b4dc96abace9bef2472ff1dc40fbeac45ac21e0ca891"
     },
     {
       "path": "bot/src/narrative-authority.js",
@@ -1671,8 +1671,8 @@
     },
     {
       "path": "bot/src/narrative-director-source.js",
-      "size_bytes": 4070,
-      "sha256": "abeac31d9df9784068445aee8d4c6d5a41b43e25a35386cffa0b06768b35facc"
+      "size_bytes": 4788,
+      "sha256": "6f9e967487cc215270cdc7e9ba7d791492b60877de6a6a86810015727a69bf70"
     },
     {
       "path": "bot/src/narrative-integrity.js",
@@ -1701,8 +1701,8 @@
     },
     {
       "path": "bot/src/narrative-salience.js",
-      "size_bytes": 14600,
-      "sha256": "ad02bf0ee0f47a45d08951323111478fb685bc42a49a1604fe946ef08506b79c"
+      "size_bytes": 14709,
+      "sha256": "5abfc22f97942ede97e4e46db1fdf38503f9f7c96a75ede69543a3719cbd6947"
     },
     {
       "path": "bot/src/narrative-speakers.js",
@@ -2306,8 +2306,8 @@
     },
     {
       "path": "bot/src/world-authorship.js",
-      "size_bytes": 4469,
-      "sha256": "db88ec3d0ca1e5541764fad9ceeba7fd49f29795a5a86cf3e52c8dac9fbaed13"
+      "size_bytes": 4572,
+      "sha256": "bebdf72224ea7e0c1e8c2b3dc01970bff6a148cb589cb557d403106cbdc9c61c"
     },
     {
       "path": "bot/src/world-background-identities.js",
@@ -2321,8 +2321,8 @@
     },
     {
       "path": "bot/src/world-narrative-bridge.js",
-      "size_bytes": 8277,
-      "sha256": "95c000ee1aebc92fe0780fe3974dae361d50e174bc70c810668e8e08cada4861"
+      "size_bytes": 11929,
+      "sha256": "e12977276fa18f623ad4068d6189f1468c9ec8be93091961d00ce4e084ee2807"
     },
     {
       "path": "bot/src/world-observation.js",
@@ -2696,8 +2696,8 @@
     },
     {
       "path": "docs/Active_Implementation/NO_DEFERRALS_LEDGER.md",
-      "size_bytes": 58089,
-      "sha256": "93802de0e539c4a263423e8d14cd116a1a0842e17ed8fddfc04792a5de970598"
+      "size_bytes": 62968,
+      "sha256": "99f46a0a517cbe475b240e60b1a7ae42c7004ca98fae68a30aa0918ef693bc91"
     },
     {
       "path": "docs/Active_Implementation/README.md",

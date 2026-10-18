@@ -10,6 +10,7 @@ import {worldIdentityOrigin} from './world-authorship.js';
 import {consentAction,historicalActionSource} from './action-consent.js';
 import {characterSourceRanges} from './source-communication.js';
 import {maintainIdentityPersistence} from './world-identity-persistence.js';
+import {canonicalNarrativeCause} from './world-narrative-bridge.js';
 const hash=x=>createHash('sha256').update(JSON.stringify(x)).digest('hex').slice(0,40);
 const visible=(r,s)=>['party','public'].includes(r.visibility)||s.mode==='private'&&r.visibility==='character'&&r.subject_key===s.actorCharacterId;
 const records=listNarrativeRecords;
@@ -85,7 +86,7 @@ export function canonicalInterestEvidence(db,guild,entity,scope){
       const unit=db.getCityRecord(guild,'narrative_unit',source.event_key.replace(/:source$/,'')),u=unit?.data.unit;
       if(unit?.status!=='accepted_established'||source.details.payload_hash!==proofHash(unit.data)
         ||(u.subject_key?`npc:${u.subject_key}`:u.location_key?`location:${u.location_key}`:null)!==entity)continue;
-      const lead=u.kind==='lead';weight=lead?7:1;dedup=[unit.data.binding.scene,lead?'lead':'gm'];causation=unit.data.binding.source;
+      const lead=u.kind==='lead';weight=lead?7:1;dedup=[unit.data.binding.scene,lead?'lead':'gm'];causation=canonicalNarrativeCause(db,guild,unit.data.binding.source,scope);
     }
     if(!dedup||row.record_key!==`narrative-interest:${hash([entity,row.visibility,row.subject_key||null,dedup])}`)continue;
     weight=Math.max(0,weight-Math.floor(Math.max(0,tick-d.tick)/6));if(weight&&causation)found.push({source:row.source_event,weight,causation});

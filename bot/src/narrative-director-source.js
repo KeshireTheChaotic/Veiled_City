@@ -3,6 +3,7 @@ import {createHash} from 'node:crypto';
 import {currentScene} from './scene-continuity.js';
 import {indexWorldEvent} from './city-calendar.js';
 import {narrativeSourceVisible,sceneFictionHash as hash,sceneFictionFailure} from './scene-fiction-context.js';
+import {worldNarrativeBridgePacket,worldDirectorBridgeBeats} from './world-narrative-bridge.js';
 const sourceBinding=Symbol('native-director-narrative-source');
 export const nativeDirectorNarrativeSource=result=>result?.[sourceBinding]?.ref||null;
 export const nativeDirectorNarrativeContent=result=>result?.[sourceBinding]?.content||null;
@@ -31,18 +32,25 @@ function dramaticBrief(db,guild,result,scope,trigger){
     unresolved_outcomes:'Proposals are not outcomes. Only native_results can render mechanical consequences.'};
 }
 export function directorBriefForAudience(db,guild,source,scope){
+  const stored=source&&db.getWorldEvent(guild,source.event_key);
+  if(!stored||stored.status!=='active'||stored.kind!=='native_director_narrative_scope'||stored.source_id!=='native:director'
+    ||hash(stored)!==hash(source)||hash(stored.details.scope)!==hash(scope))throw sceneFictionFailure('native_director_source');
   const brief=source.details.dramatic_brief;if(!brief)return null; // old sources retain old generic contract
   for(const proof of brief.events){
     const event=db.getWorldEvent(guild,proof.ref);
     if(!event||event.status!=='active'||hash(event)!==proof.revision||!narrativeSourceVisible(db,guild,proof.ref,scope))
       throw sceneFictionFailure('stale_director_evidence');
   }
+  if(source.details.version===2){
+    const bridge=worldDirectorBridgeBeats(db,guild,source,scope);if(!bridge)throw sceneFictionFailure('native_director_bridge_source');
+    return {...brief,world_bridge:bridge};
+  }
   return brief;
 }
 export function bindDirectorNarrativeSource(db,guild,result,scope,layer,trigger,content){
-  const scene=currentScene(db,guild),details={version:1,scope,layer,scene:scene.key,session:scene.session_id,
+  const scene=currentScene(db,guild),details={version:2,scope,layer,scene:scene.key,session:scene.session_id,
     trigger_hash:createHash('sha256').update(JSON.stringify(trigger)).digest('hex'),clock:db.getSimulationClock(guild),
-    dramatic_brief:dramaticBrief(db,guild,result,scope,trigger)};
+    dramatic_brief:dramaticBrief(db,guild,result,scope,trigger),world_bridge:{version:1,signals:worldNarrativeBridgePacket(db,guild,scope).signals}};
   const key=`director-fiction:${createHash('sha256').update(JSON.stringify(details)).digest('hex')}`;
   const event=indexWorldEvent(db,guild,{key,kind:'native_director_narrative_scope',title:'Native Director fiction scope, not PC intent or consequence',
     source_id:'native:director',visibility:scope.mode==='private'?'character':'party',subject_key:scope.actorCharacterId||null,

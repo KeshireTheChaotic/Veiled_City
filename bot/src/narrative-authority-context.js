@@ -52,7 +52,8 @@ export function buildNarrativeContext(db,guild,scope,sourceRef,{operation='descr
     const receipt=db.getCityRecord(guild,'autonomous_entity',`location:${row.entity_key}`);
     return !receipt?.data.authorship_ref||!!worldIdentityOrigin(db,guild,receipt,scope);
   });
-  const nativeLocations=new Set(director?(directorBriefForAudience(db,guild,source,scope)?.events||[]).map(e=>e.location).filter(Boolean):[]);
+  const directorBrief=director?directorBriefForAudience(db,guild,source,scope):null,
+    nativeLocations=new Set((directorBrief?.events||[]).map(e=>e.location).filter(Boolean));
   if(!placed&&!director&&!assembly){
     // A unique established local scene beat can anchor a later camera. This
     // follows actual native history, not alphabetic setting order or raw prose.
@@ -104,7 +105,8 @@ export function buildNarrativeContext(db,guild,scope,sourceRef,{operation='descr
   }
   const binding={version:1,guild,session:scene.session_id,scene:scene.key,scope:{...scope},source:sourceRef,source_hash:hash(source.details),
     principal:principal?.revision||null,location,viewpoint:placed?'character':'camera',
-    placement:placed?hash([p.source_event,p.location_key,p.data.zone,arrival.details]):null};
+    placement:placed?hash([p.source_event,p.location_key,p.data.zone,arrival.details]):null,
+    ...(director&&source.details.version===2?{director_bridge_revision:hash(directorBrief.world_bridge)}:{})};
   const memory=selectDisclosedNarrativeMemory(db,guild,scope,{limit:40,query:owner?source.details.text:'',preferLocation:location}),
     prior=rankNarrativeMemory(db,guild,scope,memory.rows,{location,query:owner?source.details.text:'',maxChars:Math.max(3000,9000-speakerChars)});
   const packet={version:2,operation,request:owner?source.details.text:director?'Portray a contextual world response without inventing PC actions or consequences.':'Open this assembly with interesting fiction, without inventing PC co-location or cooperation.',
@@ -119,7 +121,7 @@ export function buildNarrativeContext(db,guild,scope,sourceRef,{operation='descr
     background_identities:backgroundIdentityContext(db,guild,scope,{location}),
     prior_fiction:prior,memory_selection:{...memory.selection,selected_for_prompt:prior.length,omitted_from_prompt:memory.selection.eligible-prior.length},
     unknowns:['Hidden causes, private character details and unresolved outcomes are unknown.']};
-  if(director)packet.director_brief=directorBriefForAudience(db,guild,source,scope);
+  if(director)packet.director_brief=directorBrief;
   if(assembly)packet.assembly_brief=assemblyWriterBrief(db,guild,scene.session_id,scope);
   return registerNarrativeContext({db,binding,packet,scope,source,pc,sourceRef,protectedScene});
 }

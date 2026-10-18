@@ -15,6 +15,14 @@ import {candidate} from './narrative-fixtures.mjs';
 import {revalidateWorldNarrativeSignal,worldNarrativeBridgePacket} from '../src/world-narrative-bridge.js';
 import {captureWorldInput} from '../src/autonomous-world.js';
 import {persistPlayerIntents} from '../src/typed-intents.js';
+import {bindDirectorNarrativeSource,directorBriefForAudience} from '../src/narrative-director-source.js';
+import {buildNarrativeContext} from '../src/narrative-authority-context.js';
+import {authorNarrativeRequests,establishNarrativeUnits} from '../src/narrative-authority.js';
+import {establishNarrativeEntity} from '../src/autonomous-world.js';
+import {canonicalInterestEvidence,noteNarrativeInterest} from '../src/narrative-salience.js';
+import {unit} from './narrative-fixtures.mjs';
+import {indexWorldEvent} from '../src/city-calendar.js';
+import {sceneFictionHash} from '../src/scene-fiction-context.js';
 function packet(f,pc=f.pcs[0],mode='party'){
   const gm=new GMService({db:f.db,content:new ContentIndex(path.resolve('../content')),ai:null,config:{maxRecentMessages:2,maxContentChunks:1}});
   return gm.buildContext(f.guild,pc.owner_user_id,'What happens next?',null,{scope:mode}).world_narrative_bridge;
@@ -110,4 +118,75 @@ test('WD bridge preserves independent native action occurrences from the same de
   const signals=packet(f).signals;assert.equal(signals.length,2);assert.equal(new Set(signals.map(s=>s.id)).size,2);
   assert.equal(new Set(signals.map(s=>s.causation_ref)).size,1);assert.equal(new Set(signals.map(s=>s.world_cycle_ref)).size,1);
   assert.equal(new Set(signals.map(s=>s.source_refs.find(r=>r.kind==='action_outcome_receipt').key)).size,2);
+}));
+test('WD bridge native Director source carries versioned nonauthorizing beats to the actual audience writer context',()=>nativeFixture(f=>{
+  const x=resolve(f,true);setup(f,{privateScene:true,messageId:'outbound-camera'});
+  const shell={act:false},content=new ContentIndex(path.resolve('../content')),
+    ref=bindDirectorNarrativeSource(f.db,f.guild,shell,x.scope,'round',{},content),source=f.db.getWorldEvent(f.guild,ref),
+    ctx=buildNarrativeContext(f.db,f.guild,x.scope,ref),bridge=ctx.packet.director_brief.world_bridge;
+  assert.equal(source.details.version,2);assert(bridge);assert.equal(bridge.beats.length,1);
+  assert.equal(bridge.beats[0].protocol,'world_beat_v1');assert.equal(bridge.beats[0].kind,'pacing_hint');
+  assert.equal(bridge.beats[0].depth,1);assert.equal(bridge.beats[0].execution_authority,false);
+  assert.equal(bridge.beats[0].publication_authority,false);assert.equal(bridge.beats[0].source_ref,ref);
+  assert.equal(packet(f,x.pc,'private').signals.length,1,'Director exposition does not create another inbound native event');
+  assert.throws(()=>buildNarrativeContext(f.db,f.guild,{...x.scope,actorUserId:f.pcs[1].owner_user_id},ref),/owner|source|audience/i);
+}));
+test('WD bridge revalidates deferred beat basis while preserving independent scene fiction and saved native results',()=>nativeFixture(f=>{
+  const x=resolve(f,true);setup(f,{privateScene:true,messageId:'outbound-stale-camera'});
+  const ref=bindDirectorNarrativeSource(f.db,f.guild,{act:false},x.scope,'round',{},new ContentIndex(path.resolve('../content'))),source=f.db.getWorldEvent(f.guild,ref),
+    a=f.db.listCityRecords(f.guild,{kind:'typed_intent',includeGM:true}).find(r=>r.data.outcome_receipt);
+  assert.equal(directorBriefForAudience(f.db,f.guild,source,x.scope).world_bridge.beats.length,1);
+  f.db.db.prepare("UPDATE world_events SET status='retracted' WHERE guild_id=? AND event_key=?").run(f.guild,a.source_event);f.restart();
+  const b=directorBriefForAudience(f.db,f.guild,source,x.scope).world_bridge;assert.equal(b.beats.length,0);assert.equal(b.held,1);
+  assert(buildNarrativeContext(f.db,f.guild,x.scope,ref).packet.place.key);
+  assert.equal(f.db.db.prepare('SELECT COUNT(*) n FROM rolls').get().n,1);
+}));
+for(const causes of [1,2])test(`WD bridge Director-to-writer echo with ${causes} owner cause(s) never adds fresh canonical interest`,()=>nativeFixture(async f=>{
+  const base=setup(f,{messageId:'causal-npc-birth'}),content=new ContentIndex(path.resolve('../content'));
+  f.db.setCityCalendar(f.guild,{flags:{...f.db.getCityCalendar(f.guild).flags,narrative_salience:true}});
+  const identity=establishNarrativeEntity(f.db,f.guild,{kind:'npc',key:'mara-lane',name:'Mara Lane',aliases:[],summary:'An ordinary parcel porter.',
+    role:'porter',location_key:'terminal',parent_location_key:''},buildNarrativeContext(f.db,f.guild,base.scope,base.sourceRef),{content}),
+    x=setup(f,{text:'I look toward Mara Lane.',messageId:'causal-owner-action'}),raw=candidate(x.text),
+    [a]=persistPlayerIntents(f.db,f.guild,raw.player_intents,x.scope,{messageId:x.messageId});
+  noteNarrativeInterest(f.db,f.guild,x.scope,x.sourceRef);
+  adjudicateAcceptedIntent(f.db,f.guild,{acceptedIntent:a.record_key,mode:'no_roll',risk:'none',stakes:'none',rawRefs:['srd:action-rolls'],explanation:'Ordinary attempt.'},'ai_gm',{scope:x.scope});
+  if(causes===2){
+    const other=setup(f,{text:'I look again toward Mara Lane.',messageId:'causal-other-action'}),
+      [b]=persistPlayerIntents(f.db,f.guild,candidate(other.text).player_intents,other.scope,{messageId:other.messageId});
+    noteNarrativeInterest(f.db,f.guild,other.scope,other.sourceRef);
+    adjudicateAcceptedIntent(f.db,f.guild,{acceptedIntent:b.record_key,mode:'no_roll',risk:'none',stakes:'none',rawRefs:['srd:action-rolls'],explanation:'Another ordinary attempt.'},'ai_gm',{scope:other.scope});
+  }
+  const ref=bindDirectorNarrativeSource(f.db,f.guild,{act:true},x.scope,'round',{},content),input={version:8,kind:'narrative_request',operation:'conversation',source_refs:[]},
+    result={act:true,gm_world_parts:[input],player_intents:[]};
+  await authorNarrativeRequests({db:f.db,guild:f.guild,result,scope:x.scope,sourceRef:ref,budget:{used:false},
+    generate:async()=>({fiction_delta:[],narrative_units:[unit('answer','npc_speech','My counter closes at midnight.',{subject_key:'mara-lane',epistemic:'testimony'})]})});
+  const rows=establishNarrativeUnits(f.db,f.guild,input,x.scope,ref,{content});assert.equal(rows.length,1);
+  assert.equal(canonicalInterestEvidence(f.db,f.guild,identity.record_key,x.scope).reduce((sum,e)=>sum+e.weight,0),causes*3);
+  assert.equal(packet(f).signals.length,causes);assert.equal(f.db.listCanon(f.guild,{includeGM:true}).length,0);
+}));
+test('WD bridge cannot downgrade a current source object to bypass its sidecar; genuine historical v1 keeps its old projection',()=>nativeFixture(f=>{
+  const x=setup(f),ref=bindDirectorNarrativeSource(f.db,f.guild,{act:false},x.scope,'round',{},new ContentIndex(path.resolve('../content'))),
+    source=f.db.getWorldEvent(f.guild,ref),forged=structuredClone(source);forged.details.version=1;
+  assert.throws(()=>directorBriefForAudience(f.db,f.guild,forged,x.scope),/source|director|bridge/i);
+  const details={...structuredClone(source.details),version:1};delete details.world_bridge;
+  const historical=indexWorldEvent(f.db,f.guild,{key:`director-fiction:${sceneFictionHash(details)}`,kind:'native_director_narrative_scope',
+    title:'Historical source fixture',source_id:'native:director',visibility:'party',session_id:f.session.id,scene:details.scene,details},'native:director');
+  assert.deepEqual(directorBriefForAudience(f.db,f.guild,historical,x.scope),details.dramatic_brief);
+}));
+for(const boundary of ['prepared_draft','creation_capability'])test(`WD bridge changed causal basis invalidates the old ${boundary}, not independent native outcomes`,()=>nativeFixture(async f=>{
+  const x=resolve(f,true);setup(f,{privateScene:true,messageId:`revision-camera-${boundary}`});
+  const content=new ContentIndex(path.resolve('../content')),ref=bindDirectorNarrativeSource(f.db,f.guild,{act:true},x.scope,'round',{},content),
+    ctx=buildNarrativeContext(f.db,f.guild,x.scope,ref),input={version:8,kind:'narrative_request',operation:'describe_scene',source_refs:[]};
+  if(boundary==='prepared_draft')await authorNarrativeRequests({db:f.db,guild:f.guild,result:{act:true,gm_world_parts:[input],player_intents:[]},scope:x.scope,
+    sourceRef:ref,budget:{used:false},generate:async()=>({fiction_delta:[],narrative_units:[unit('bell','scene','A small brass bell rests beside the counter.',{visibility:'character'})]})});
+  const a=f.db.listCityRecords(f.guild,{kind:'typed_intent',includeGM:true}).find(r=>r.data.outcome_receipt),before=f.db.getCharacter(x.pc.id).data.resources;
+  f.db.db.prepare("UPDATE world_events SET status='retracted' WHERE guild_id=? AND event_key=?").run(f.guild,a.source_event);
+  if(boundary==='prepared_draft')assert.throws(()=>establishNarrativeUnits(f.db,f.guild,input,x.scope,ref,{content}),/draft|stale|scope|source/i);
+  else{
+    const definition={kind:'npc',key:'red-sparrow-porter',name:'Red Sparrow Porter',aliases:[],summary:'An ordinary porter.',role:'porter',location_key:'terminal',parent_location_key:''};
+    assert.throws(()=>establishNarrativeEntity(f.db,f.guild,definition,ctx,{content}),/scope|context|source|stale/i);
+    assert.equal(f.db.getNpcProfile(f.guild,definition.key),null);
+    assert(establishNarrativeEntity(f.db,f.guild,definition,buildNarrativeContext(f.db,f.guild,x.scope,ref),{content}));
+  }
+  assert.equal(f.db.db.prepare('SELECT COUNT(*) n FROM rolls').get().n,1);assert.deepEqual(f.db.getCharacter(x.pc.id).data.resources,before);
 }));

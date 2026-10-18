@@ -27,6 +27,7 @@ export function verifiedWorldAuthoringContext(db,guild,ctx){
   if(ctx?.db!==db||ctx.binding?.guild!==guild||!ctx.scope||!ctx.binding.scope
     ||hash(ctx.scope)!==hash(ctx.binding.scope))throw fail('native_world_authoring_context');
   const issued=mintNarrativeAudience(ctx),current=revalidateNarrativeAudience(db,guild,issued.proof,ctx.scope);
+  if(hash(ctx.binding)!==hash(current.ctx.binding))throw fail('native_world_authoring_scope_changed');
   return {context:current.ctx,audience_ref:current.proof.proof_ref};
 }
 export function worldIdentityOrigin(db,guild,row,scope){

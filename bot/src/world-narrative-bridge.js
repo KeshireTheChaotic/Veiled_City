@@ -32,7 +32,8 @@ function nativeResult(db,guild,a,scope,scene){
       const q=db.getCityRecord(guild,'roll_request',r.data.request);if(!q||!entitled(q,scope))return null;
       completedActionSource(db,guild,a.record_key);const proof=typedRollProof(db,guild,q);
       if(proof.outcome==='needs_review'||r.data.outcome!==proof.outcome)return null;
-      refs.push({kind:'roll_request',key:q.record_key,hash:hash(q)});
+      refs.push({kind:'roll_request',key:q.record_key,hash:hash(q)},
+        {kind:'saved_roll',key:proof.roll.id,hash:hash(db.getSavedRoll(guild,proof.roll.id))});
     }else if(r.data.outcome==='resolved_no_roll'){
       historicalActionSource(db,guild,a.record_key,{resolved:true});
       const key=`adjudication:${hash([a.record_key,'no_roll']).slice(0,40)}`,ad=db.getCityRecord(guild,'native_adjudication',key);
@@ -93,4 +94,47 @@ export function revalidateWorldNarrativeSignal(db,guild,saved,scope){
   if(saved?.version!==1||saved.protocol!=='narrative_signal_v1')return false;
   // The packet is bounded, so a formerly selected signal that is no longer selected is held rather than silently reused.
   return worldNarrativeBridgePacket(db,guild,scope).signals.some(current=>hash(current)===hash(saved));
+}
+function nativeDirectorBridge(db,guild,source,scope){
+  const actual=source&&db.getWorldEvent(guild,source.event_key),d=source?.details;
+  return !!(actual&&hash(actual)===hash(source)&&source.status==='active'&&source.kind==='native_director_narrative_scope'
+    &&source.source_id==='native:director'&&source.event_key===`director-fiction:${hash(d)}`&&d?.version===2
+    &&hash(d.scope)===hash(scope)&&narrativeSourceVisible(db,guild,source.event_key,scope)
+    &&d.world_bridge?.version===1&&Array.isArray(d.world_bridge.signals)&&d.world_bridge.signals.length<=4);
+}
+/** Sidecar hints only. Never a public message, NPC knowledge, new world change or consent receipt. */
+export function worldDirectorBridgeBeats(db,guild,source,scope){
+  if(!nativeDirectorBridge(db,guild,source,scope))return null;
+  const beats=[];let held=0;
+  for(const signal of source.details.world_bridge.signals){
+    if(!revalidateWorldNarrativeSignal(db,guild,signal,scope)){held++;continue;}
+    beats.push({version:1,protocol:'world_beat_v1',id:`world-beat:${hash([source.event_key,signal.id,signal.audience])}`,kind:'pacing_hint',
+      source_ref:source.event_key,signal_ref:signal.id,causation_ref:signal.causation_ref,world_cycle_ref:signal.world_cycle_ref,
+      audience:signal.audience,depth:1,origin_kind:'director',reason:signal.kind==='unresolved_narrative_task'?'request_missing_coverage':'consider_native_result_opportunity',
+      execution_authority:false,publication_authority:false});
+  }
+  return {version:1,beats,held,authority:'Pacing only; not fictional facts, speaker knowledge, PC outcomes or native execution authority.'};
+}
+/** Historical snapshot reader for retrieval weight ONLY; cannot revive a live action or publication grant. */
+function activeSignalSnapshot(db,guild,s,scope){
+  if(s?.version!==1||s.protocol!=='narrative_signal_v1'||s.depth!==0||hash(s.audience)!==hash(audience(scope))
+    ||!['human_action','native_diagnostic'].includes(s.origin_kind)||!Array.isArray(s.source_refs)||s.source_refs.length<2
+    ||s.source_refs.length>6||!narrativeSourceVisible(db,guild,s.causation_ref,scope))return false;
+  return s.source_refs.every(ref=>{
+    const row=ref.kind==='world_event'?db.getWorldEvent(guild,ref.key):ref.kind==='saved_roll'?db.getSavedRoll(guild,ref.key)
+      :['typed_intent','action_outcome_receipt','roll_request','native_adjudication','narrative_task_coverage'].includes(ref.kind)?db.getCityRecord(guild,ref.kind,ref.key):null;
+    if(!row||hash(row)!==ref.hash)return false;
+    if(ref.kind==='world_event')return narrativeSourceVisible(db,guild,row.event_key,scope);
+    if(ref.kind==='saved_roll')return scope.mode==='private'&&row.character_id===scope.actorCharacterId&&row.discord_user_id===scope.actorUserId;
+    return (ref.kind==='narrative_task_coverage'||entitled(row,scope))&&narrativeSourceVisible(db,guild,row.source_event,scope);
+  });
+}
+/** Reprojected Director narration inherits the human cause. Ambiguous/missing ancestry earns no new persistence weight. */
+export function canonicalNarrativeCause(db,guild,sourceRef,scope){
+  const source=db.getWorldEvent(guild,sourceRef);
+  if(source?.kind!=='native_director_narrative_scope'||source.details.version!==2)return sourceRef;
+  if(!nativeDirectorBridge(db,guild,source,scope))return null;
+  const signals=source.details.world_bridge.signals;if(!signals.length)return sourceRef;
+  if(!signals.every(s=>activeSignalSnapshot(db,guild,s,scope)))return null;
+  const roots=[...new Set(signals.map(s=>s.causation_ref))];return roots.length===1?roots[0]:null;
 }
