@@ -49,6 +49,7 @@ suites.push("native-actor-control-test");
 suites.push("native-veil-defense-test");
 suites.push("session-opening-attendance-test");
 suites.push("session-opening-test");
+suites.push("session-opening-entry-test");
 suites.push("narrative-correctness-retirement-test");
 suites.push("audience-first-framework-test","audience-first-integration-test","gm-unified-arbitration-test");
 // Critical is the release gate. Optional feature/history matrices remain executable via --extended;

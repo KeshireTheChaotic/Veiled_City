@@ -10,7 +10,8 @@ import {consentAction} from '../src/action-consent.js';
 
 function interaction(sub,user,character=null,gm=false,id='attendance'){
   const replies=[];
-  return {id,guildId:'v9-synthetic',commandName:'vc-session',user:{id:user,username:user},memberPermissions:{has:()=>gm},member:{roles:{cache:new Map()}},
+  return {id,guildId:'v9-synthetic',guild:{id:'v9-synthetic',channels:{fetch:async()=>null},members:{fetch:async recipient=>({
+    send:async()=>({id:`attendance-ack-${id}-${recipient}`,channelId:`dm-${recipient}`})})}},commandName:'vc-session',user:{id:user,username:user},memberPermissions:{has:()=>gm},member:{roles:{cache:new Map()}},
     isChatInputCommand:()=>true,isButton:()=>false,isStringSelectMenu:()=>false,
     options:{getSubcommand:()=>sub,getSubcommandGroup:()=>null,getString:key=>key==='character'?character:key==='assembly'?'manual':null,
       getBoolean:()=>null,getInteger:()=>null,getUser:()=>null,getChannel:()=>null},

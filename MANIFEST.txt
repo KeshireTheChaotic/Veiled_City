@@ -139,6 +139,7 @@ bot/scripts/semantic-native-alias-recall-test.mjs
 bot/scripts/semantic-owner-appearance-test.mjs
 bot/scripts/semantic-proposal-fixtures.mjs
 bot/scripts/session-opening-attendance-test.mjs
+bot/scripts/session-opening-entry-test.mjs
 bot/scripts/session-opening-test.mjs
 bot/scripts/session2-message-contract-test.mjs
 bot/scripts/session2-replay-test.mjs
@@ -368,6 +369,8 @@ bot/src/nonmaterial-grammar.js
 bot/src/npc-cognition-projection.js
 bot/src/npc-cognition.js
 bot/src/npc-conversations.js
+bot/src/opening-entry-context.js
+bot/src/opening-entry.js
 bot/src/operational-metrics.js
 bot/src/operations/diagnostics.js
 bot/src/operations/health.js

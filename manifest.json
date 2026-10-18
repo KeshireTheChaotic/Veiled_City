@@ -706,8 +706,13 @@
     },
     {
       "path": "bot/scripts/session-opening-attendance-test.mjs",
-      "size_bytes": 18318,
-      "sha256": "1a478837a2a03b6907eb6cc3393d94a65f8924f7433c3f371139e06be6575352"
+      "size_bytes": 18502,
+      "sha256": "12027962eed193b838db6ee6f557b03718956c74a8e9b0810164b10f56fb49f3"
+    },
+    {
+      "path": "bot/scripts/session-opening-entry-test.mjs",
+      "size_bytes": 13420,
+      "sha256": "673fe68123b1a9d96e6175db78fb44f1be5e298cc860e96b1b94b41e6c357c12"
     },
     {
       "path": "bot/scripts/session-opening-test.mjs",
@@ -1101,8 +1106,8 @@
     },
     {
       "path": "bot/scripts/validate-offline.mjs",
-      "size_bytes": 11397,
-      "sha256": "688a7f81bddd6ec75a8f79c7991c8bd528fb2afdea42293505dfba28aab71195"
+      "size_bytes": 11440,
+      "sha256": "5db1944bc292d09f61b3a8f1c179a6e90880fb194b06199831dadf89629030ed"
     },
     {
       "path": "bot/scripts/world-authorship-test.mjs",
@@ -1316,8 +1321,8 @@
     },
     {
       "path": "bot/src/commands.js",
-      "size_bytes": 193791,
-      "sha256": "cd7134c1f4ea302e0d9cd067810f21bf99640115d6b80bb4bac9afbfddedad3a"
+      "size_bytes": 193001,
+      "sha256": "88a5316e8c8df149aba79e96d28be2656e428c59270c29529fc46a90e6ef8fbf"
     },
     {
       "path": "bot/src/concept-context.js",
@@ -1855,6 +1860,16 @@
       "sha256": "a8c22834277860327f259fae97850be576acdcf5b30765c4730832b7583289a2"
     },
     {
+      "path": "bot/src/opening-entry-context.js",
+      "size_bytes": 2429,
+      "sha256": "1ecadde56f75e9b6207dff6f3883917b9d89d409cb22b2460e352a49cb6ec80d"
+    },
+    {
+      "path": "bot/src/opening-entry.js",
+      "size_bytes": 4844,
+      "sha256": "a1c8d97368610dbd8ac8f3d7dacd55932430ddbf397fba987e26feb00456a5cd"
+    },
+    {
       "path": "bot/src/operational-metrics.js",
       "size_bytes": 9631,
       "sha256": "85a8bd9ea5678b14cffc110680060e1bac4a52b10a31a29a49cba00a0d097579"
@@ -2016,8 +2031,8 @@
     },
     {
       "path": "bot/src/pvp-output.js",
-      "size_bytes": 60284,
-      "sha256": "6a6dd263b2e35750ec5be5416ebb8867bc3c1fde9f079d261ba0815cf106e02c"
+      "size_bytes": 61799,
+      "sha256": "e7a5821dcf19881c745da99c4eb814ff2b76ae86a2c62cbcc00ce74232e4c0bc"
     },
     {
       "path": "bot/src/pvp-profiles.js",
@@ -2751,8 +2766,8 @@
     },
     {
       "path": "docs/Active_Implementation/NO_DEFERRALS_LEDGER.md",
-      "size_bytes": 124137,
-      "sha256": "dfc3369f8c6567bbabc2c2b1c6cafd2c1d96d9bc8bd0b42cdceb0573813d8174"
+      "size_bytes": 130570,
+      "sha256": "190833c8205ad58a976b9cdfb94d991ef84333d07ca1aeb96d59eb962bf1dd61"
     },
     {
       "path": "docs/Active_Implementation/README.md",

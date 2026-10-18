@@ -50,6 +50,7 @@ import { registerOpeningAttendance, carryOpeningAttendance, prepareOpeningEntryO
 import {scheduleSessionOpening} from './session-opening.js';
 import {runSessionOpening,sessionOpeningStatus} from './session-opening-runner.js';
 import {prepareSessionOpeningDeliveryReview,recoverSessionOpeningDelivery} from './session-opening-recovery.js';
+import {deliverOpeningEntry} from './opening-entry.js';
 import { recordCharacterArrival,scenePresence } from "./scene-continuity.js";
 import { personalCharacter, personalArc, discoverPersonal, personalInbox } from "./personal-continuity.js";
 import { consentOffers } from "./consent-native.js";
@@ -184,23 +185,12 @@ function compactAssemblyStatus(db,guildId,session){
   return lines.join("\n");
 }
 
-async function launchArrival({db,gm,guild,userId,character,reason}){
+async function launchArrival({db,guild,userId,character,interactionId}){
   const session=db.getActiveSession(guild.id);
-  if(!session||session.assembly_mode==="manual"||session.assembly_mode==="already_together") return {planned:false};
-  try{
-    const entry=await gm.planArrival({guildId:guild.id,userId,characterId:character.id,reason});
-    const privateText=entry.private_hook?.trim()
-      ?`**Veilkeeper — entry hook for ${character.name}:**\n${entry.private_hook}`
-      :"";
-    let privateDelivery={ok:true,via:"none"};
-    if(privateText) privateDelivery=await sendPlayerPrivate({db,guild,userId,content:privateText,sessionId:session.id,characterId:character.id,generated:true});
-    if(entry.public_entry?.trim()) await postPlayMessage({db,guild,content:entry.public_entry,sessionId:session.id});
-    db.audit(guild.id,session.id,"ai","assembly","arrival_plan",{userId,characterId:character.id,reason,connection_reason:entry.connection_reason,private_delivery:privateDelivery.via});
-    return {planned:true,entry,privateDelivery};
-  }catch(err){
-    await postStateError({db,guild,error:err,context:`arrival-plan:${character.name}`,sessionId:session.id});
-    return {planned:false,error:err};
-  }
+  if(!session||session.assembly_mode==="manual"||character.owner_user_id!==userId)return {planned:false};
+  const opportunity=prepareOpeningEntryOpportunity(db,guild.id,userId,character.id,interactionId),
+    delivery=await deliverOpeningEntry({db,guild,key:opportunity.record_key});
+  return {planned:['delivered','retained_acknowledgement'].includes(delivery.status),delivery};
 }
 
 function npcControlLabel(level){
@@ -1048,6 +1038,7 @@ Initial phase: ${s.assembly_phase}`});
       }
       const s=requireSession(db,interaction.guildId);
       const q=interaction.options.getString("character");
+      let openingEntry=null;
       const c=db.transaction(()=>{
         const selected=db.findOwnedCharacter(interaction.guildId,interaction.user.id,q);
         if(!selected) throw new Error("No active owned character found. Create/import one or specify a character.");
@@ -1056,7 +1047,7 @@ Initial phase: ${s.assembly_phase}`});
         db.setPresence(s.id,interaction.user.id,sub==="arrive"?"late":"present","offscreen",null,sub==="arrive"?"Arrived during session.":"");
         if(!attending||assigned?.character_id!==selected.id||assigned.control_policy!=="player_only"||assigned.proxy_user_id)
           db.assignCharacter(s.id,interaction.user.id,selected.id,{role:"primary",controlPolicy:"player_only"});
-        if(sub==="present")prepareOpeningEntryOpportunity(db,interaction.guildId,interaction.user.id,selected.id,interaction.id);
+        openingEntry=prepareOpeningEntryOpportunity(db,interaction.guildId,interaction.user.id,selected.id,interaction.id);
         return selected;
       });
       // Re-check-in is not consent to publish an owner-private initial position.
@@ -1068,18 +1059,11 @@ Initial phase: ${s.assembly_phase}`});
           `Checked in for Session ${s.session_number}. Confirm where your character already starts; this is not travel or resolution of an earlier attempt. Share makes this initial position visible at the table; Private keeps it owner-only. You may leave it unconfirmed.`:
           `Checked in for Session ${s.session_number}. Initial position needs native setup/history review; no location or movement was inferred.`,
           ephemeral:true,allowedMentions:{parse:[]},...(setup?{components:setup.components}:{})});
+        if(openingEntry&&s.assembly_mode!=='manual')await deliverOpeningEntry({db,guild:interaction.guild,key:openingEntry.record_key});
         return true;
       }
-      let suffix="";
-      const shouldPlan=sub==="arrive";
-      if(shouldPlan){
-        await interaction.deferReply({ephemeral:true});
-        const result=await launchArrival({db,gm,guild:interaction.guild,userId:interaction.user.id,character:c,reason:sub==="arrive"?"late arrival":"new character joining an established party"});
-        suffix=result.planned?" An entry hook was sent privately and an opening was posted at the table.":" Entry planning was unavailable; the GM can introduce the character manually.";
-        await interaction.editReply(`**${c.name}** is now present in Session ${s.session_number}.${suffix}`);
-      }else{
-        await interaction.reply(`**${c.name}** is now present in Session ${s.session_number}.`);
-      }
+      await interaction.reply({content:`${JSON.stringify(c.name)} is now present in Session ${s.session_number}. Attendance does not choose travel, cooperation or party membership.`,allowedMentions:{parse:[]}});
+      if(openingEntry&&s.assembly_mode!=='manual')await deliverOpeningEntry({db,guild:interaction.guild,key:openingEntry.record_key});
       return true;
     }
     if(group==="session"&&["absent","leave"].includes(sub)){
@@ -1275,8 +1259,8 @@ Source file: ${a.name}${narrativeImported?`\nGM-private narrative: ${narrativeRe
       db.assignCharacter(s.id,interaction.user.id,c.id,{role:"primary",controlPolicy:"player_only"});
       if(previous?.character_id && previous.character_id!==c.id && s.assembly_mode!=="manual"){
         await interaction.deferReply({ephemeral:true});
-        const result=await launchArrival({db,gm,guild:interaction.guild,userId:interaction.user.id,character:c,reason:"replacement or character switch"});
-        await interaction.editReply(`You are now playing **${c.name}**.${result.planned?" Veilkeeper prepared a fictionally appropriate entry.":" The GM should introduce the change when fictionally appropriate."}`);
+        const result=await launchArrival({db,guild:interaction.guild,userId:interaction.user.id,character:c,interactionId:interaction.id});
+        await interaction.editReply({content:`You are now playing ${JSON.stringify(c.name)}. Owner-private entry opportunity: ${result.delivery?.status||'held'}. No public arrival or PC action was inferred.`,allowedMentions:{parse:[]}});
       }else{
         await interaction.reply({content:`You are now playing **${c.name}**.`,ephemeral:true});
       }
@@ -1389,8 +1373,8 @@ Source file: ${a.name}${narrativeImported?`\nGM-private narrative: ${narrativeRe
       db.assignCharacter(s.id,interaction.user.id,c.id,{role:"guest",controlPolicy:"player_only"});
       if(s.assembly_phase!=="assembly" && s.assembly_mode!=="manual"){
         await interaction.deferReply({ephemeral:true});
-        const result=await launchArrival({db,gm,guild:interaction.guild,userId:interaction.user.id,character:c,reason:"guest character drop-in"});
-        await interaction.editReply(`You are now playing guest character **${c.name}** for this session.${result.planned?" Veilkeeper prepared an entry hook.":""}`);
+        const result=await launchArrival({db,guild:interaction.guild,userId:interaction.user.id,character:c,interactionId:interaction.id});
+        await interaction.editReply({content:`You are now playing guest character ${JSON.stringify(c.name)} for this session. Owner-private entry opportunity: ${result.delivery?.status||'held'}. No public arrival or PC action was inferred.`,allowedMentions:{parse:[]}});
       }else{
         await interaction.reply(`You are now playing guest character **${c.name}** for this session.`);
       }

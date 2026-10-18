@@ -28,6 +28,7 @@ import {narrativeTasks} from './narrative-tasks.js';
 import {validateNarrativeCompleteness} from './narrative-completeness.js';
 import {projectNarrativeArtifact} from './narrative-artifacts.js';
 import {assertSessionOpeningPublication} from './session-opening.js';
+import {openingEntryProjection} from './opening-entry-context.js';
 
 const hash=v=>createHash("sha256").update(JSON.stringify(v??null)).digest("hex");
 const prepared=new WeakMap();
@@ -134,6 +135,10 @@ function renderPart(db,guild,part){
   }
   if(kind==='assembly_orientation'){
     const projection=assemblyOrientation(db,guild,ref,scope);
+    if(projection.revision!==part.projection_revision)fail();return projection.text;
+  }
+  if(kind==='opening_entry'){
+    const projection=openingEntryProjection(db,guild,ref,scope);
     if(projection.revision!==part.projection_revision)fail();return projection.text;
   }
   if(kind==='assembly_hook'){
@@ -301,6 +306,18 @@ export function prepareAssemblyOutput(db,guild,sessionId,scope,{content=null}={}
       fallback:!hook&&!narrativeParts.length,original_hook_delivered:false,raw_prose_held:!!candidate.narration}};
   prepared.set(result,{raw:{},drafts:{},parts:parts.map(p=>p.record_key),privateParts:{},scope:hash(scope),fingerprint:fingerprint(result)});
   return result;
+}
+export function prepareOpeningEntryOutput(db,guild,key,scope){
+  const view=openingEntryProjection(db,guild,key,scope),source=indexWorldEvent(db,guild,{key:`opening-entry-scope:${view.revision}`,
+    kind:'native_opening_entry_scope',title:'Owner-private sourced entry projection',source_id:'native:opening-director',
+    visibility:'character',subject_key:scope.actorCharacterId,session_id:view.state.material.session,scene:view.state.material.scene,
+    details:{version:1,opportunity:key,revision:view.revision,scope}},'native:opening-director'),
+    part=savePart(db,guild,{render_version:1,scene:view.state.material.scene,session:view.state.material.session,scope:{...scope},
+      origin:'native_opening_entry',kind:'opening_entry',ref:key,projection_revision:view.revision,
+      source_ref:source.event_key,source_hash:hash(source.details),principal_revision:view.state.principal}),
+    result={narration:part.data.text,player_summary:part.data.text,narrative_claims:[],private_messages:[],
+      entry_evidence:{hook_verified:view.hook_verified,source_refs:view.source_refs,fallback:!view.hook_verified}};
+  prepared.set(result,{raw:{},drafts:{},parts:[part.record_key],privateParts:{},scope:hash(scope),fingerprint:fingerprint(result)});return result;
 }
 export function prepareNativeHookOutput(db,guild,hook,scope){
   const projection=nativeHookProjection(db,guild,hook.id,scope),scene=currentScene(db,guild);
