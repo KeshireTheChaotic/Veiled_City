@@ -218,6 +218,7 @@ bot/scripts/world-authorship-test.mjs
 bot/scripts/world-background-identity-test.mjs
 bot/scripts/world-background-memory-test.mjs
 bot/scripts/world-identity-persistence-test.mjs
+bot/scripts/world-sanctioned-sources-test.mjs
 bot/sql/schema.sql
 bot/src/action-consent.js
 bot/src/action-continuation.js
@@ -460,6 +461,7 @@ bot/src/world-authorship.js
 bot/src/world-background-identities.js
 bot/src/world-identity-persistence.js
 bot/src/world-observation.js
+bot/src/world-sanctioned-sources.js
 content/CARDS/ANCESTRIES_AND_COMMUNITIES.md
 content/CARDS/CUSTOM_DOMAINS.md
 content/CARDS/DOMAINS/HEX.md

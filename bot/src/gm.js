@@ -11,6 +11,7 @@ import { playerIntentSchema, PLAYER_INTENT_PROMPT, recoverPlayerIntents, autoCom
 import { tierWorldAdditions } from "./entity-memory.js";
 import { contextMemorySchema, CONTEXT_MEMORY_PROMPT } from "./context-memory.js";
 import { presentationContext } from "./presentation-evidence.js";
+import {worldHookSeedForGm} from './world-sanctioned-sources.js';
 import { summarizeRoster, previewAuthoritativeMutation } from "./state.js";
 import { narrativeContext } from "./character-narrative.js";
 import { validatePostTurnStateReview,POST_TURN_REVIEW_CATEGORIES } from "./director.js";
@@ -573,7 +574,7 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
     const rulings=this.db.searchRulesRulings(guildId,messageText);
     const actorRelationships=this.db.listRelationships(guildId,{includeGM:false,characterId:memoryId,userId:actorUserId});
     const gmRelationships={graph:this.db.listRelationships(guildId,{includeGM:true}),perspectives:presentationContext(this.db,guildId)};
-    const gmCharacterHooks=roster.filter(r=>r.character_id).flatMap(r=>this.db.listCharacterGmHooks(guildId,r.character_id).map(h=>({character_id:r.character_id,character_name:r.name,key:h.hook_key,title:h.title,type:h.hook_type,premise:h.premise,permission:h.permission,suggested_entry:h.suggested_entry,payload:h.payload})));
+    const gmCharacterHooks=roster.filter(r=>r.character_id).flatMap(r=>this.db.listCharacterGmHooks(guildId,r.character_id).map(h=>({character_id:r.character_id,character_name:r.name,key:h.hook_key,title:h.title,type:h.hook_type,premise:h.premise,permission:h.permission,suggested_entry:h.suggested_entry,payload:h.payload,authorship:worldHookSeedForGm(this.db,guildId,h.id)})));
     const narrativeIds=[...new Set([...roster.map(r=>r.character_id).filter(Boolean),actorKnowledgeId].filter(Boolean))];
     const characterNarratives=narrativeContext(this.db,guildId,narrativeIds,{includeGM:true,maxChars:8000});
     const visibleHandouts=this.db.listHandoutsFor(guildId,actorUserId,{characterId:memoryId,includeGM:false,limit:40}).map(h=>({id:h.id,title:h.title,kind:h.kind,authority:h.authority,visibility:h.visibility,case_key:h.case_key,npc_key:h.npc_key,location_key:h.location_key,epistemic:h.metadata.epistemic||{kind:"testimony",perspective:"legacy artifact; presentation is not truth",source_refs:[]}}));
@@ -1174,7 +1175,7 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
     const partyState=this.db.getPartyState(guildId);
     const hookInputs=assemblyInputs(this.db,guildId,session),inputFingerprint=hookHash(hookInputs);
     const facts=this.db.factsFor(guildId,"",{includeGM:true,limit:120});
-    const importedHooks=roster.filter(r=>r.character_id).flatMap(r=>this.db.listCharacterGmHooks(guildId,r.character_id).map(h=>({character_id:r.character_id,character_name:r.name,title:h.title,type:h.hook_type,premise:h.premise,permission:h.permission,suggested_entry:h.suggested_entry,payload:h.payload})));
+    const importedHooks=roster.filter(r=>r.character_id).flatMap(r=>this.db.listCharacterGmHooks(guildId,r.character_id).map(h=>({character_id:r.character_id,character_name:r.name,title:h.title,type:h.hook_type,premise:h.premise,permission:h.permission,suggested_entry:h.suggested_entry,payload:h.payload,authorship:worldHookSeedForGm(this.db,guildId,h.id)})));
     const narratives=narrativeContext(this.db,guildId,roster.map(r=>r.character_id).filter(Boolean),{includeGM:true,maxChars:6000});
     const query=roster.map(r=>`${r.name} ${JSON.stringify(r.data||{})}`).join(" ");
     const chunks=this.searchContent(guildId,`party convergence ${requested} ${query}`,Math.min(this.config.maxContentChunks,6),{gm:true});
@@ -1220,7 +1221,7 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
     const plan=this.db.getAssemblyPlan(session.id)||{};
     const recent=this.db.recentMessages(guildId,40).filter(x=>["public","party"].includes(x.visibility)).slice(-18);
     const facts=this.db.factsFor(guildId,userId,{characterId,includeGM:true,limit:80});
-    const importedHooks=this.db.listCharacterGmHooks(guildId,characterId).map(h=>({title:h.title,type:h.hook_type,premise:h.premise,permission:h.permission,suggested_entry:h.suggested_entry,payload:h.payload}));
+    const importedHooks=this.db.listCharacterGmHooks(guildId,characterId).map(h=>({title:h.title,type:h.hook_type,premise:h.premise,permission:h.permission,suggested_entry:h.suggested_entry,payload:h.payload,authorship:worldHookSeedForGm(this.db,guildId,h.id)}));
     const narratives=narrativeContext(this.db,guildId,[characterId],{includeGM:true,maxChars:8000});
     const query=`arrival ${character.name} ${reason} ${JSON.stringify(character.data||{})}`;
     const chunks=this.searchContent(guildId,query,Math.min(this.config.maxContentChunks,4),{gm:true});

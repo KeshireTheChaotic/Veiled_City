@@ -1081,8 +1081,8 @@
     },
     {
       "path": "bot/scripts/validate-offline.mjs",
-      "size_bytes": 11139,
-      "sha256": "10e4d84e75fb6d55078e713e23b19cd1991b794915e80a328572d8896f28c97d"
+      "size_bytes": 11185,
+      "sha256": "f2228de833a2550de319fc645567a0cdcbd533b50da67f3da370705cfa918db6"
     },
     {
       "path": "bot/scripts/world-authorship-test.mjs",
@@ -1103,6 +1103,11 @@
       "path": "bot/scripts/world-identity-persistence-test.mjs",
       "size_bytes": 10800,
       "sha256": "e91d0cee0ae11a8be7e77a00f8377b41e9da31a2e589f01c5936b535890d78a9"
+    },
+    {
+      "path": "bot/scripts/world-sanctioned-sources-test.mjs",
+      "size_bytes": 6410,
+      "sha256": "1acc1cc44d8da4850c76def7d144cfae1714a5eeb927362ab38968bcc6129d51"
     },
     {
       "path": "bot/sql/schema.sql",
@@ -1286,8 +1291,8 @@
     },
     {
       "path": "bot/src/commands.js",
-      "size_bytes": 189249,
-      "sha256": "0251c35ab867f548d22888c8388baee0b2c4991a66ac224ed4dfffa41a5029bd"
+      "size_bytes": 189318,
+      "sha256": "56b97981c4d6262556a6ef1d5323202054fabe89ecb7f1120a34bb6d99617072"
     },
     {
       "path": "bot/src/concept-context.js",
@@ -1341,8 +1346,8 @@
     },
     {
       "path": "bot/src/db.js",
-      "size_bytes": 171269,
-      "sha256": "0ef7020028db38799f65668c80e2254e5e4f57171f697ca3ca46af439102c12a"
+      "size_bytes": 171389,
+      "sha256": "dedccf7a887e55b4fc93d52fa8c832ade4aba295bde33e6f5812505cde0b7e0a"
     },
     {
       "path": "bot/src/decision-advisory.js",
@@ -1541,8 +1546,8 @@
     },
     {
       "path": "bot/src/gm.js",
-      "size_bytes": 133216,
-      "sha256": "b25a7ed1e29f5a61a171b47c6c7bd2ef7e28b91ceff4416ba7bce5d631563ddf"
+      "size_bytes": 133438,
+      "sha256": "8ed9cd8a5105e6fd76e617a4b566dc7563b682f3d6f83fcc93d4eebcf71f8c9c"
     },
     {
       "path": "bot/src/handout.js",
@@ -2315,6 +2320,11 @@
       "sha256": "815ede68af1bd6d94f05ebc088cb8a96b132b55977c11e1cdea20083c33b9882"
     },
     {
+      "path": "bot/src/world-sanctioned-sources.js",
+      "size_bytes": 4330,
+      "sha256": "13fc82074797d38b7142fe17854021a8b824913fdb093538dff382aa9b1baf85"
+    },
+    {
       "path": "content/CARDS/ANCESTRIES_AND_COMMUNITIES.md",
       "size_bytes": 5481,
       "sha256": "310ec6017770595ce9615465fe23193558eb0cef31a85b6f8e66b7a405664315"
@@ -2676,8 +2686,8 @@
     },
     {
       "path": "docs/Active_Implementation/NO_DEFERRALS_LEDGER.md",
-      "size_bytes": 44358,
-      "sha256": "059231f2ef9e3ffd3911ba9589e22186d56bd3771bd9f0c42e6bc134ba2eecba"
+      "size_bytes": 48494,
+      "sha256": "6c918882e2919da85d8b576764bbc312f770090aa50b6a6e3544eb8c6ca68961"
     },
     {
       "path": "docs/Active_Implementation/README.md",

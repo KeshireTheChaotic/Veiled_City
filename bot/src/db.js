@@ -2218,7 +2218,7 @@ export class VeiledDB {
     const updated=this.setCanonProposalState(guildId,id,"accepted",{resolutionValue:r.event?.value||value,eventId:r.event?.id||null,note,actorId});
     return {status:"accepted",proposal:updated,event:r.event,conflict:null,unchanged:r.status==="unchanged"};
   }
-  importCharacterGmHooks(guildId,character,packet){
+  importCharacterGmHooks(guildId,character,packet,{onHookImported=null}={}){
     if(!character||character.guild_id!==guildId) throw new Error("Campaign character not found.");
     packet=normalizeGmHookImport(packet);
     return this.transaction(()=>{
@@ -2228,6 +2228,7 @@ export class VeiledDB {
     for(const h of hooks){
       const saved=this.upsertCharacterGmHook(guildId,character.id,h,{source:h.source||'external_character_creator'}); imported++;
       if(h.status&&h.status!=='active')this.db.prepare('UPDATE character_gm_hooks SET status=? WHERE id=?').run(h.status,saved.id);
+      if(typeof onHookImported==='function')onHookImported(this.getCharacterGmHook(saved.id));
       for(const t of Array.isArray(h.targets)?h.targets:[]){
         const type=String(t.type||"entity");
         let key,label=String(t.label||t.key||"").trim(); if(!label) continue;

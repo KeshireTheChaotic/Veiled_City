@@ -26,6 +26,7 @@ import { chunkDiscordLines } from "./discord/chunking.js";
 import { deliverInteractionText } from "./discord/delivery.js";
 import {deliverVerifiedAssembly,prepareAssemblyReconciliation,reconcileAssemblyNotSent} from './assembly-publications.js';
 import {normalizeGmHookImport} from './gm-hook-import.js';
+import {importSanctionedGmHooks} from './world-sanctioned-sources.js';
 import {certifyAssemblyPlan,assemblyPlanFreshness} from './assembly-context.js';
 import {assemblyHasHistory,prepareAssemblyRefresh,refreshAssemblyPlan} from './assembly-planning.js';
 import {prepareSceneSetup,confirmSceneSetup} from './scene-setup.js';
@@ -1157,7 +1158,7 @@ Initial phase: ${s.assembly_phase}`});
         narrativeMarkdown=normalizeNarrativeMarkdown(await nr.text());
       }
       db.snapshotCampaign(interaction.guildId,{label:`Pre-GM-hook import ${c.name}`,reason:"Before importing external character concept GM hooks",createdBy:interaction.user.id});
-      const result=db.importCharacterGmHooks(interaction.guildId,c,packet);
+      const result=importSanctionedGmHooks(db,interaction,c,packet,isGM);
       let narrativeImported=false;
       if(narrativeMarkdown){
         db.upsertCharacterNarrative(interaction.guildId,c.id,"gm_private",narrativeMarkdown,{sourceFilename:narrative.name,importedBy:interaction.user.id});
