@@ -16,18 +16,18 @@ Accepted typed intents are canonical adjudication inputs; human declarations own
 | Scope | Status | Current evidence / next requirement |
 | --- | --- | --- |
 | W0 current-source baseline | implemented | Original fail-fast 52/127 result recorded; missing historical inputs repaired, not claimed as original green baseline |
-| W1 N05/N06, NC20–22 | implemented | Existing audience-first integration F5/27–30 uses source-bound native constructions, not free-text safety labels. Legacy R5 holds intentionally remain. Rerun current tree. |
-| W1 N01–04/N07–12 | implemented | R0–R6/D0–D3 regression table covers locality, audience, speaker entitlement, task coverage and historical producers; rerun before S-GATE. |
-| W1 N13 mixed communication | implemented | Exact OOC/IC, line-comment and delimited-table-talk ranges; source offsets retained. Native acceptance rejects OOC and quoted action sources, independent IC source survives. Focused evidence below; final qualification pending. |
-| W1 N14 long-horizon recall | implemented | Entitled disclosed history ranked before recent-40 cap, then bounded 16-unit/character-budget projection; counts report entitled omissions. Existing fictional-time decay, pins and anti-replay retained. Final qualification pending. |
-| W1 N15 owner appearance | implemented | Owner explicitly selected native-validated structured descriptions. Added exact-source coat styling primitives through the existing owner command, source/visibility proof and outbox. Arbitrary prose remains rejected. Final qualification pending. |
-| S-GATE | in_progress | **NOT PASSED; no S-GATE SHA yet.** Frozen-tree qualification and exact-SHA semantic/security gate must succeed before W2. |
-| W2 native authority/authorship | blocked_authority | Transitive S-GATE; no new runtime changes |
-| W3 World Director/UA native adapters | blocked_authority | Transitive S-GATE; no new runtime changes |
-| W4 OpeningDirector | blocked_authority | Transitive S-GATE; preserve completed assembly v2 |
-| W5 autonomous PvP/death/pre-roll Fear | blocked_authority | Transitive S-GATE; current player-choice/native mechanics retained |
+| W1 N05/N06, NC20–22 | qualified | Existing audience-first integration F5/27–30 source-bound native constructions, not free-text safety labels; legacy R5 holds retained. Exact-SHA gate passes. |
+| W1 N01–04/N07–12 | qualified | Reused R0–R6/D0–D3 locality/audience, speaker entitlement, task coverage and historical producer/readers. Exact-SHA gate passes; no ancestor remerge. |
+| W1 N13 mixed communication | qualified | Exact OOC/IC/comment ranges; original offsets retained. OOC/quoted source cannot authorize native effects; independent IC source survives. |
+| W1 N14 long-horizon recall | qualified | Source/audience-verified text/native-identity recall before recent-40 cap, bounded final projection and omission counts. Private/unproved/retracted aliases do not qualify. |
+| W1 N15 owner appearance | qualified | Explicit structured-only owner policy, exact selected styling/source/visibility proof, current v2 and historical v1 observations, no arbitrary prose. |
+| S-GATE | qualified | **PASS at `6d13ede87f4284ac55c863625f96e18d845a89d9`: 368/368 exact-commit semantic/security tests. Matching executable/test tree passes 130/130 mandatory suites, 26/26 acceptance entries.** |
+| W2 native authority/authorship | in_progress | S-GATE now permits source tracing and red-first implementation; no W2 code in the semantic commit |
+| W3 World Director/UA native adapters | in_progress | Dependency-ordered after W2; not implemented by W1 |
+| W4 OpeningDirector | in_progress | After native bridge; preserve completed assembly v2 |
+| W5 autonomous PvP/death/pre-roll Fear | in_progress | After native source dependencies; current contracts unchanged until separately qualified replacement |
 | W6 complete source-defined catalog | blocked_missing_source | Current read-only native inventory reconfirms 153 occurrences/12 supported/140 review-only/1 needs-authoring. Exact source gap below; also gated by S-GATE. |
-| W7 frozen-tree qualification | blocked_authority | Requires all preceding executable scope; no remote/live authorization |
+| W7 frozen-tree qualification | in_progress | Requires all preceding executable scope; no remote/live authorization |
 
 Proposed later contracts (names only, not implemented during W1): `authorship_origin_v1`, `narrative_signal_v1`, `world_beat_v1`, `world_pulse_v1`, `weighted_identity_v1`, `session_opening_v1`, `native_feature_vN`, `pvp_resolution_v2`, `fear_interrupt_v1`.
 
@@ -65,6 +65,14 @@ Actual development evidence (logs under ignored `bot/.reports/`):
 - Frozen final executable/test tree: `npm.cmd run check` **exit 0 / 429 modules**, then `npm.cmd run validate` **exit 0 / 130 passed / 0 failed / 0 not run**, **626288 ms**, critical profile, all acceptance entries passed, network denied, live=0, billable=0 (`semantic-w1-sgate-check.log`, `semantic-w1-sgate-validation.log`, compact `.reports/offline-validation.json`). Quality, format, D08 security/observability and all original mandatory suites are included in that actual run. No skipped security assertions were introduced.
 - Normalized distribution integrity **548/548**, no mismatched entries. Executable/content/fixture set: **514 files**, digest `c816bd1c63ac95845ba5db8b8f4a66963059e06055a135c9f9344f9501507714` (SHA256 of the ordered manifest entries under `bot/` and `content/`). Results-only ledger/manifest refresh does not alter this set. Both working and staged `git diff --check` passed; owner Markdown hard breaks retained through existing-style file-specific `.gitattributes` rules, source-code whitespace rules unchanged.
 - Commit and exact-SHA S-GATE execution remain to be recorded; **no W2 runtime work has begun**.
+
+## S-GATE receipt and next checkpoint
+
+- Semantic implementation commit: **`6d13ede87f4284ac55c863625f96e18d845a89d9`**, parent `47c5d35f90df2e5a69e406e857bbc946ce0957bf`, branch unchanged. Serial integration; no redundant branch merge or worktree. Supplied owner plans imported unchanged; `.unsnooze/` remains untouched/untracked and excluded from distribution.
+- Gate executed with HEAD fixed at that commit: `node --import ./scripts/offline-guard.mjs --test --test-concurrency=4` over **30 scripts**: the three new semantic suites; semantic-language-robustness; narrative-correctness-retirement; audience-first framework/integration; narrative salience; v96 semantic intake/output-P0/proposals; H01; typed-routing/movement authorization; memory-audience isolation; D06/D07; v94 PC effect/damage/death/recovery; v9 PvP authorship/rounds, NPC/PC observation and publication; D08 security/observability; autonomous world and v96 native actions (all `scripts/<name>-test.mjs`).
+- Actual result **exit 0, 368 tests / 368 passed / 0 failed / 0 cancelled / 0 skipped / 0 todo**, **115039.9136 ms**. Local log `.reports/semantic-sgate-exact-sha.log`. Full mandatory qualification for the identical executable/test/content digest: **130/130**, **26/26** acceptance entries, zero mandatory not-run. Results-only ledger/manifest receipt update does not change executable/test inputs and does not warrant another full run.
+- Usage: **0 spawned agents, 0 real-provider requests, 0 billable test tokens, 0 live Discord, 0 production DB operations**. New residual suite explicitly measured 17 in-memory provider-double requests per run; this is not API usage. Total Codex account consumption is unavailable; no fabricated usage/cost/performance claim.
+- W2 may begin only **after** this receipt. Next action: trace `entity-memory.js`, `autonomous-world.js`, typed same-turn references and salience readers; close ordinary player-assertion materialization through bounded native provenance, red-first tests and a separate qualified commit. The catalog's exact missing authored rule remains a W6 blocker, not an excuse to stop independent native work.
 - `npm.cmd run check`: exit 0 on the intermediate tree; final repeat pending.
 
 ### Current semantic coverage inventory
