@@ -1,5 +1,8 @@
 /** W2 background identities use the existing native GM issuer, not actor stats or player assertions. */
 import test from 'node:test';
+import {narrativeResponseSchema} from '../src/gm-fiction-schema.js';
+import {narrativeResponseV9Schema} from '../src/narrative-writer-v9.js';
+
 import assert from 'node:assert/strict';
 import path from 'node:path';
 import {nativeFixture} from './v9-fixtures.mjs';
@@ -9,6 +12,12 @@ import {buildNarrativeContext} from '../src/narrative-authority-context.js';
 import {establishNarrativeEntity} from '../src/autonomous-world.js';
 import {worldIdentityOrigin} from '../src/world-authorship.js';
 import {createArbitrationOrigin,buildSceneIntentBoard} from '../src/scene-intent-board.js';
+test('current background authoring preserves the frozen historical v8 schema',()=>{
+  assert.deepEqual(narrativeResponseSchema.properties.fiction_delta.items.properties.kind.enum,['location','npc']);
+  assert.deepEqual(narrativeResponseV9Schema.properties.fiction_delta.items.properties.kind.enum,
+    ['location','npc','faction','organization','district']);
+  assert.notEqual(narrativeResponseSchema.properties.fiction_delta,narrativeResponseV9Schema.properties.fiction_delta);
+});
 const content=new ContentIndex(path.resolve('../content'));
 const definition=kind=>({kind,key:`copper-sparrow-${kind}`,name:'Copper Sparrow',summary:'A small ordinary local community identity.',
   aliases:['Sparrow Fellowship'],role:'local community',location_key:'',parent_location_key:''});

@@ -3,7 +3,7 @@ import { createHash } from "node:crypto";
 import { currentScene } from "./scene-continuity.js";
 import { conversationPrincipal } from "./conversation-principal.js";
 import { pvpProjection, validatePvpClause } from "./pvp-authorship.js";
-import { observationQueries, ambientWorldQueries, renderObservation } from "./character-observation.js";
+import { observationQueries, ambientWorldQueries, renderObservation,characterSelfDescriptionForQuery,renderCharacterSelfDescription } from "./character-observation.js";
 import { activeEvidence, objectiveEvidence,evidenceType } from "./epistemic.js";
 import { renderFearEffect } from "./pvp-fear-moves.js";
 import { indexWorldEvent } from "./city-calendar.js";
@@ -184,6 +184,10 @@ function renderPart(db,guild,part){
     const answer=renderObservation(db,guild,part.query,scope);
     if(part.evidence_refs&&hash(answer.proof_refs)!==hash(part.evidence_refs))fail();
     return answer.text;
+  }
+  if(kind==='owner_self_description'){
+    if(part.epistemic!=='unverified_owner_report')fail();
+    return renderCharacterSelfDescription(db,guild,ref,part.query,scope);
   }
   if(kind==="pvp_fear_publication_part")return renderFearEffect(db,guild,ref,scope);
   if(kind==="verified_action"){
@@ -423,6 +427,9 @@ export function prepareAuthorizedTurnOutput(db,guild,result,scope,{sourceRef=nul
       continue;
     }
     parts.push(savePart(db,guild,{...common,kind:"observation_answer",query}));
+    const description=characterSelfDescriptionForQuery(db,guild,query,scope);
+    if(description)parts.push(savePart(db,guild,{...common,kind:'owner_self_description',query,ref:description.record_key,
+      epistemic:'unverified_owner_report'}));
   }
   for(const action of world.filter(r=>r.status==="arrived"&&r.source_event))
     parts.push(savePart(db,guild,{...common,kind:"verified_action",ref:action.source_event}));
@@ -657,6 +664,9 @@ export function unattributedChoiceText(db,guild,result,scope){
   assertPvpOutput(db,guild,result,scope,{publication:true});
   return [...proof.parts,...Object.values(proof.privateParts||{}).flat()].map(ref=>{
     const part=validateOutputPart(db,guild,ref);
+    // This exact native-bound quotation is the owner's report, not a GM-imposed choice menu.
+    // Validation above still checks source, recipient, ownership and nonauthorizing epistemic type.
+    if(part.data.kind==='owner_self_description')return '';
     if(part.data.kind==='gm_narrative_unit'){
       const unit=db.getCityRecord(guild,'narrative_unit',part.data.ref);
       if(unit?.data.unit.kind==='npc_speech'&&unit.data.epistemic==='attributed')return '';

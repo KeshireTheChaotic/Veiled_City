@@ -62,7 +62,7 @@ import { proposePvp, reviewPvp, revisePvp, respondPvp, pvpInbox, choosePvp, roll
 import { synchronizePvpWindow, windowOperation } from "./window-coordinator.js";
 import { draftPvpNarrative, ratifyPvpClause, reviewPvpScope, reviewPvpDraft, pvpNarrationInbox } from "./pvp-authorship.js";
 import { captureAuthoredTurnEnvelope } from "./authored-turn-envelope.js";
-import { saveVisibleCharacterFacts } from "./character-observation.js";
+import { saveVisibleCharacterFacts,saveCharacterSelfDescription } from "./character-observation.js";
 import { establishWorldDescription } from "./world-observation.js";
 import { fearInbox, establishFearContext, selectFearMove, applyFearMove, reconcileFearMove, resumeAutonomousPvpFear } from "./pvp-fear-moves.js";
 import { archivePvpHistory, quarantineSessionRecap, certifiedSessionRecap, scopedSessionRecap,revalidateOutputPublication } from "./pvp-output.js";
@@ -1064,13 +1064,19 @@ Initial phase: ${s.assembly_phase}`});
       const assignment=session&&db.activeAssignment(session.id,interaction.user.id);
       if(!assignment)throw new NotFoundError("Select your character in an active session first.");
       const input=JSON.parse(interaction.options.getString("json",true));
-      if(Object.keys(input).sort().join(",")!=="facts,observers,text,visibility"||typeof input.text!=="string")
-        throw new UserInputError("Provide only text, facts, observers and visibility.");
-      const envelope=captureAuthoredTurnEnvelope(db,interaction.guildId,interaction.user.id,assignment.character_id,
-        `description:${interaction.id}`,input.text,{privateScene:true});
-      const saved=saveVisibleCharacterFacts(db,interaction.guildId,interaction.user.id,assignment.character_id,
-        {...input,source_event:envelope.source_event});
-      await interaction.reply({content:`Saved ${saved.length} explicit description field(s) with ${input.visibility} visibility.`,ephemeral:true});
+      const prose=input.lane==='expressive';
+      const expected=prose?'lane,observers,text,visibility':input.lane==='structured'?'facts,lane,observers,text,visibility':'facts,observers,text,visibility';
+      if(Object.keys(input).sort().join(",")!==expected||typeof input.text!=="string")
+        throw new UserInputError("Use text, facts, observers, visibility; or lane: expressive, text (max 700), observers, visibility.");
+      const saved=db.transaction(()=>{
+        const envelope=captureAuthoredTurnEnvelope(db,interaction.guildId,interaction.user.id,assignment.character_id,
+          `description:${interaction.id}`,input.text,{privateScene:true});
+        return (prose?saveCharacterSelfDescription:saveVisibleCharacterFacts)(db,interaction.guildId,interaction.user.id,assignment.character_id,
+          {...input,source_event:envelope.source_event});
+      });
+      const message=prose?`Saved exact owner-attributed self-description with ${input.visibility} visibility; not verified appearance or outcome authority.`
+        :`Saved ${saved.length} explicit description field(s) with ${input.visibility} visibility.`;
+      await interaction.reply({content:message,ephemeral:true});
       return true;
     }
     if(group==="character"&&sub==="create"){

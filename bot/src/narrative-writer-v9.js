@@ -1,6 +1,6 @@
 /** Current isolated writer contract. Audience, ownership and effects are NOT model fields. */
 import {NARRATIVE_ACT_KINDS,compileNarrativeActs} from './narrative-acts-v9.js';
-import {narrativeResponseSchema} from './gm-fiction-schema.js';
+import {narrativeFictionDeltaV9Schema} from './gm-fiction-schema.js';
 import {sceneFictionHash as hash,sceneFictionFailure as fail} from './scene-fiction-context.js';
 import {nativeClauseSchema,constructNativeClause} from './narrative-clauses-v9.js';
 const str=maxLength=>({type:'string',maxLength});
@@ -10,7 +10,7 @@ const actProperties={
   speaker_key:str(160),location_key:str(160),text:str(1800),source_refs:{type:'array',maxItems:8,items:str(160)}
 };
 export const narrativeResponseV9Schema=closed({version:{type:'integer',enum:[9]},acts:{type:'array',maxItems:8,
-  items:{anyOf:[closed(actProperties),closed({...actProperties,construction:nativeClauseSchema})]}},fiction_delta:narrativeResponseSchema.properties.fiction_delta});
+  items:{anyOf:[closed(actProperties),closed({...actProperties,construction:nativeClauseSchema})]}},fiction_delta:narrativeFictionDeltaV9Schema});
 export const NARRATIVE_V9_INSTRUCTIONS='Return version:9, acts and fiction_delta. Each act answers a native task_id from audience_v9.task_ids. '
   +'The server alone chose the audience and viewpoint BEFORE this request. Do not set visibility, owners, grants or outcomes. '
   +'Use independent scene_description, entitled player_perception, local npc_speech/npc_offer/npc_allegation, or artifact_text. '

@@ -85,6 +85,62 @@ function visible(db,guild,observer,target){
 function audienceAllows(row,scope){
   return row.visibility==="party"||scope.mode==="private"&&row.data.character===scope.actorCharacterId;
 }
+// Lossless display encoding, not semantic filtering: prevent Markdown/mentions from impersonating framing.
+const ownerLiteral=text=>JSON.stringify(text).replace(/[`*_~|<>@#[\]]/gu,c=>`\\u${c.charCodeAt(0).toString(16).padStart(4,'0')}`);
+/** Owner testimony is a separate epistemic lane, NOT a visible fact, consent or material outcome. */
+export function saveCharacterSelfDescription(db,guild,user,character,input){
+  const {s,principal}=sourceProof(db,guild,character,user,input.source_event),text=s.details.raw_text;
+  if(!['party','character'].includes(input.visibility)||typeof text!=='string'||!text.trim()||text.length>700||ownerLiteral(text).length>1200
+    ||/[\u0000-\u0008\u000b\u000c\u000e-\u001f\u007f\u202a-\u202e\u2066-\u2069]/u.test(text)
+    ||!Array.isArray(input.observers)||input.observers.length>30
+    ||input.observers.some(id=>typeof id!=='string'||db.getCharacter(id)?.guild_id!==guild||!visible(db,guild,id,character)))fail();
+  return db.transaction(()=>{
+    const data={version:1,character,user,principal_revision:principal.revision,source_event:s.event_key,source_hash:hash(s.details),
+      text,visibility:input.visibility,observers:[...new Set(input.observers)],epistemic:'unverified_owner_report',
+      canonical:false,effect_authority:false,observation_authority:false};
+    const key=`self-description:${hash(data)}`;
+    const disclosure=input.visibility==='party'?indexWorldEvent(db,guild,{key:`${key}:disclosure`,kind:'character_self_description_disclosure',
+      title:'Owner selected sharing of unverified self-description',source_id:`player:${user}`,visibility:'party',
+      session_id:s.session_id,scene:s.scene,details:{character,user,source_ref:s.event_key,description:key,
+        principal_revision:principal.revision,epistemic:data.epistemic}},user):null;
+    const body={...data,disclosure_ref:disclosure?.event_key||null,disclosure_hash:disclosure?hash(disclosure.details):null};
+    return db.getCityRecord(guild,'character_self_description',key)||db.saveCityRecord(guild,{
+      kind:'character_self_description',key,status:'active',visibility:input.visibility,subject_key:character,source_event:s.event_key,data:body});
+  });
+}
+function selfDescriptionProof(db,guild,ref){
+  const row=db.getCityRecord(guild,'character_self_description',ref);if(!row)fail();
+  const {disclosure_ref,disclosure_hash,...data}=row.data,{s,principal}=sourceProof(db,guild,data.character,data.user,data.source_event);
+  if(row.status!=='active'||row.record_key!==`self-description:${hash(data)}`||data.version!==1
+    ||row.source_event!==s.event_key||row.subject_key!==data.character||row.visibility!==data.visibility
+    ||hash(s.details)!==data.source_hash||data.principal_revision!==principal.revision||s.details.raw_text!==data.text
+    ||data.epistemic!=='unverified_owner_report'||data.canonical!==false||data.effect_authority!==false||data.observation_authority!==false)fail();
+  if(data.visibility==='party'){
+    const disclosure=db.getWorldEvent(guild,disclosure_ref);
+    if(disclosure?.kind!=='character_self_description_disclosure'||disclosure.status!=='active'||disclosure.visibility!=='party'
+      ||hash(disclosure.details)!==disclosure_hash||!db.ownerAuthoredSource(guild,disclosure.event_key,data.user))fail();
+  }else if(data.visibility!=='character'||disclosure_ref||disclosure_hash)fail();
+  return row;
+}
+/** Exact attributed quotation; source authentication does not certify the paragraph's semantic claims. */
+export function renderCharacterSelfDescription(db,guild,ref,query,scope){
+  if(scope.actorUserId!==query.user||scope.actorCharacterId!==query.observer)fail();
+  renderObservation(db,guild,query,scope); // Revalidate current query/actor/scene independently of the owner report.
+  const row=selfDescriptionProof(db,guild,ref),d=row.data;
+  if(query.target_type!=='character'||query.target!==d.character||!['appearance','clothing'].includes(query.operation)
+    ||!audienceAllows(row,scope)||!visible(db,guild,query.observer,d.character)&&!d.observers.includes(query.observer))fail();
+  // Display encoding preserves exact words on decoding; it is NOT a semantic proof of any claims inside them.
+  return `Owner-attributed self-description by ${ownerLiteral(db.getCharacter(d.character).name)} (unverified owner report; not verified appearance, actions, knowledge or outcomes):\n${ownerLiteral(d.text)}`;
+}
+export function characterSelfDescriptionForQuery(db,guild,query,scope){
+  if(query.target_type!=='character'||!['appearance','clothing'].includes(query.operation))return null;
+  for(const row of db.listCityRecords(guild,{kind:'character_self_description',includeGM:true,limit:500})){
+    if(row.subject_key!==query.target)continue;
+    try{renderCharacterSelfDescription(db,guild,row.record_key,query,scope);return row;}
+    catch(error){if(error.code!=='CHARACTER_OBSERVATION')throw error;}
+  }
+  return null;
+}
 /** Called by the native movement transaction BEFORE location/presence changes. Never model-authored witnesses. */
 export function captureDepartureWitnesses(db,guild,character,visibility){
   const session=db.getActiveSession(guild),pc=db.getCharacter(character);

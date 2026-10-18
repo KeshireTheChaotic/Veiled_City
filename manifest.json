@@ -686,8 +686,8 @@
     },
     {
       "path": "bot/scripts/semantic-owner-appearance-test.mjs",
-      "size_bytes": 5459,
-      "sha256": "5d804050ab7d04766f6d39fcb4dcd8348c760264fd68674a096d637dbda7529a"
+      "size_bytes": 15181,
+      "sha256": "2375d504697c953a7c3492b5cfb22e3e280fcb76c595c6e62f0bad8bc6ad524e"
     },
     {
       "path": "bot/scripts/semantic-proposal-fixtures.mjs",
@@ -1091,8 +1091,8 @@
     },
     {
       "path": "bot/scripts/world-background-identity-test.mjs",
-      "size_bytes": 7857,
-      "sha256": "db951939e434f034bdf4eb0a250f8601864d69f1cff451a00687d2393a950745"
+      "size_bytes": 8483,
+      "sha256": "f3b277ad49ed42eef0b9fc037a5d06726868d036f11c169749bc7661ef09e3fa"
     },
     {
       "path": "bot/scripts/world-background-memory-test.mjs",
@@ -1231,8 +1231,8 @@
     },
     {
       "path": "bot/src/character-observation.js",
-      "size_bytes": 18685,
-      "sha256": "53dadc90329289223b9f1e370a8d0472af66d394a850d0fa2f393967a1f4bef8"
+      "size_bytes": 23573,
+      "sha256": "92420f988e5e8b72c8e3a55afe57889fe48f018e899c15b253970e732d6f1693"
     },
     {
       "path": "bot/src/character-system.js",
@@ -1286,8 +1286,8 @@
     },
     {
       "path": "bot/src/command-definitions.js",
-      "size_bytes": 73800,
-      "sha256": "6a7e0c06b85879e75d017238419245f8439a8068da448189dcd9b6da51e2e268"
+      "size_bytes": 73817,
+      "sha256": "7975c61ff057677f676bc41eaad8c004a1019537379f0e4c69ce26dba5640eed"
     },
     {
       "path": "bot/src/command-schema.js",
@@ -1296,8 +1296,8 @@
     },
     {
       "path": "bot/src/commands.js",
-      "size_bytes": 189641,
-      "sha256": "a63d40987d6c9c8fb559da20f624cae36e27bb838e68f2a1b9ba47a47607f73b"
+      "size_bytes": 190162,
+      "sha256": "abf07ca6644a29beaf2d285eb7bc56fdaeb090da51bd9d272e1ff3a0da765476"
     },
     {
       "path": "bot/src/concept-context.js",
@@ -1516,8 +1516,8 @@
     },
     {
       "path": "bot/src/gm-fiction-schema.js",
-      "size_bytes": 4856,
-      "sha256": "b6493884d7a3d4735439855e04f9a3e629746dd9e52e8d937fdfa7883a802919"
+      "size_bytes": 5127,
+      "sha256": "1149fbe5c41e518bf04964890aaa734f942997a9a6be93ea3157a39020bd8a6f"
     },
     {
       "path": "bot/src/gm-hook-import.js",
@@ -1721,8 +1721,8 @@
     },
     {
       "path": "bot/src/narrative-writer-v9.js",
-      "size_bytes": 5094,
-      "sha256": "2fbb3cc39bfc3fe5648fcd61fde8ea36b2754bc1ec1d91472512f5438f5bda95"
+      "size_bytes": 5081,
+      "sha256": "ba81297ed812352cc48c8eec0e1381feb359bd8bbed8b62c8c825a81deab880e"
     },
     {
       "path": "bot/src/native-defense-aura.js",
@@ -1991,8 +1991,8 @@
     },
     {
       "path": "bot/src/pvp-output.js",
-      "size_bytes": 59424,
-      "sha256": "d04035a5277024d6df6e56ec6d42479953baadd5ce2b3b9419416f835db13100"
+      "size_bytes": 60165,
+      "sha256": "c4e1f446602f141c9a48121452aab8c131730cbbe03b815e73635425bc88cbed"
     },
     {
       "path": "bot/src/pvp-profiles.js",
@@ -2695,9 +2695,14 @@
       "sha256": "9ac4e3447cb45d4fe28a4d16f678ac795fa9cec1fa4a8ac780454c5deb98e520"
     },
     {
+      "path": "docs/Active_Implementation/N15_APPEARANCE_CONTRACT.md",
+      "size_bytes": 5383,
+      "sha256": "7b90e342a9ffdb01b9f114555faf5a55b89649c0b85bb9ef705582146094ef7b"
+    },
+    {
       "path": "docs/Active_Implementation/NO_DEFERRALS_LEDGER.md",
-      "size_bytes": 62968,
-      "sha256": "99f46a0a517cbe475b240e60b1a7ae42c7004ca98fae68a30aa0918ef693bc91"
+      "size_bytes": 70631,
+      "sha256": "025dd22c5ea203e0abb5afac94f47110af9903512a80dfc58c5adeaeeba293fc"
     },
     {
       "path": "docs/Active_Implementation/README.md",
@@ -2731,8 +2736,8 @@
     },
     {
       "path": "docs/Active_Implementation/VEILED_CITY_COST_OPTIMIZED_IMPLEMENTATION_PLAN_v2_1_SEMANTIC_FIRST.md",
-      "size_bytes": 44221,
-      "sha256": "8d5c07f8f6f7f2656236c52f86d4b259344d26fca7ae99e75c5e5a6d663d9c1b"
+      "size_bytes": 44611,
+      "sha256": "61465f12719f961a26f89196a8afe1d49b3384e606423742768d4999204b088f"
     },
     {
       "path": "docs/Active_Implementation/VEILED_CITY_WORLD_DIRECTOR_BIDIRECTIONAL_DESIGN_v1_2.md",
