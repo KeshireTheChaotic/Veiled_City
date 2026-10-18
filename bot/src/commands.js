@@ -922,7 +922,7 @@ async function executeCommand(interaction,{db,gm,voice=null}){
         return {s:session,attendance:carried};
       });
       const next=s.assembly_phase==="party"
-        ?"Returning established party: check in with `/vc-session present`."
+        ?"A native current-continuity opening is queued, without forcing reunion or party membership. Check in with `/vc-session present`."
         :assembly==="manual"
           ?"Manual assembly selected; the human GM introduces the PCs."
           :"The native opening is queued automatically; `/vc-session assemble` is inspection/recovery, not a required startup ritual.";
@@ -937,7 +937,7 @@ Initial phase: ${s.assembly_phase}`});
       if(!isGM(db,interaction)) throw new Error("Only a GM/admin may assemble a party.");
       const s=requireSession(db,interaction.guildId);
       if(s.assembly_mode==="manual") throw new Error("This session is set to manual assembly.");
-      if(s.assembly_phase==="party") throw new Error("The session is already in established-party phase.");
+      if(s.assembly_phase==="party"&&!db.getCityRecord(interaction.guildId,'session_opening_job',s.id)) throw new Error("The session is already in established-party phase.");
       await interaction.deferReply({ephemeral:true});
       const opening=await runSessionOpening({db,guild:interaction.guild,gm});
       if(opening){

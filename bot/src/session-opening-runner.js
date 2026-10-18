@@ -22,8 +22,6 @@ async function execute({db,guild,gm,key}){
   if(!['queued','held_paused'].includes(row.status))return row;
   if(row.data.origin.mode==='manual')return save(db,guild.id,row,'held_manual');
   if(db.isDirectorPaused(guild.id))return save(db,guild.id,row,'held_paused');
-  // Returning-party resume requires its own current-scene adapter; never use assembly as forced reunion.
-  if(row.data.origin.kind!=='assembly')return save(db,guild.id,row,'held_resume',{hold_code:'OPENING_RESUME_ADAPTER_REQUIRED'});
   if(typeof gm?.planAssembly!=='function')return save(db,guild.id,row,'queued',{hold_code:'OPENING_PLANNER_UNAVAILABLE'});
   try{
     row=beginSessionOpeningAttempt(db,guild.id,key);
@@ -31,9 +29,10 @@ async function execute({db,guild,gm,key}){
     const stale=assemblyPlanFreshness(db,guild.id,session,plan)==='stale',history=assemblyHasHistory(db,guild.id,session,plan);
     if(stale&&history)return save(db,guild.id,row,'needs_review',{hold_code:'ASSEMBLY_STALE_REVIEW'});
     if(!plan.public_opening&&!plan.character_entries?.length&&!plan.assembly_contract||stale&&!history){
-      const generated=await gm.planAssembly({guildId:guild.id,mode:session.assembly_mode});
+      const generated=await gm.planAssembly({guildId:guild.id,mode:session.assembly_mode,openingKind:row.data.origin.kind});
       assertSessionOpeningAttempt(db,guild.id,key);
-      plan=certifyAssemblyPlan(db,guild.id,session,generated);db.setAssemblyPlan(key,plan);
+      plan=certifyAssemblyPlan(db,guild.id,session,generated);
+      plan.assembly_contract.opening_kind=row.data.origin.kind;db.setAssemblyPlan(key,plan);
     }
     row=assertSessionOpeningAttempt(db,guild.id,key);row=save(db,guild.id,row,'publishing');
     const result=await deliverVerifiedAssembly({db,guild,session,gm,

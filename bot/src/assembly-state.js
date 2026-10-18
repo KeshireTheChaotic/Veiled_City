@@ -4,6 +4,7 @@ import {currentScene,scenePresence} from './scene-continuity.js';
 import {conversationPrincipal} from './conversation-principal.js';
 import {assemblyPartsFor} from './assembly-delivery.js';
 import {assemblyInputFingerprint} from './assembly-context.js';
+import {assertSessionOpeningAttempt} from './session-opening.js';
 export const assemblyHash=value=>createHash('sha256').update(JSON.stringify(value)).digest('hex');
 const display=value=>JSON.stringify(value).replaceAll('@','@\u200b');
 export function assemblyPlanHash(plan){
@@ -43,7 +44,12 @@ export function assemblyDeliverySummary(db,guild,session){
 }
 export function assemblyOrientation(db,guild,sessionId,scope){
   const session=db.getActiveSession(guild),scene=currentScene(db,guild);
-  if(!session||session.id!==sessionId||session.assembly_phase!=='assembly')throw Object.assign(new Error('Current assembly session required.'),{code:'ASSEMBLY_SOURCE'});
+  const resume=session?.id===sessionId&&session.assembly_phase==='party';
+  if(!session||session.id!==sessionId||session.assembly_phase!=='assembly'&&!resume)throw Object.assign(new Error('Current assembly session required.'),{code:'ASSEMBLY_SOURCE'});
+  if(resume){
+    const job=assertSessionOpeningAttempt(db,guild,sessionId);
+    if(job.data.origin.kind!=='resume')throw Object.assign(new Error('Native returning-party opening required.'),{code:'ASSEMBLY_SOURCE'});
+  }
   const plan=db.getAssemblyPlan(sessionId)||{},roster=db.roster(sessionId).filter(r=>r.character_id&&['present','late','guest'].includes(r.presence));
   if(plan.assembly_contract?.version===2&&plan.assembly_contract.input_fingerprint!==assemblyInputFingerprint(db,guild,session))
     throw Object.assign(new Error('Assembly input revision is stale; reconcile the saved plan before publication.'),{code:'ASSEMBLY_SOURCE',expected:true});
@@ -72,8 +78,8 @@ export function assemblyOrientation(db,guild,sessionId,scope){
     character:character?{id:character.id,location:character.data.location||null,status:character.status}:null,quote,
     ...(plan.assembly_contract?.version===2?{hook_inputs:assemblyInputFingerprint(db,guild,session)}:{})};
   let text=scope.mode==='private'
-    ?`**Veilkeeper — private assembly orientation**\nChecked-in character: ${display(character.name)}.\nSaved position: ${display(character.data.location||'not recorded')}; this is not a new arrival.`
-    :`**Session ${session.session_number} — assembly orientation**\nChecked in: ${roster.map(r=>display(r.name)).join(', ')||'none'}. Check-in does not establish shared fictional presence.`;
+    ?`**Veilkeeper — private ${resume?'session resume':'assembly'} orientation**\nChecked-in character: ${display(character.name)}.\nSaved position: ${display(character.data.location||'not recorded')}; this is not a new arrival.`
+    :`**Session ${session.session_number} — ${resume?'session resume opening':'assembly orientation'}**\nChecked in: ${roster.map(r=>display(r.name)).join(', ')||'none'}. Check-in does not establish shared fictional presence.`;
   if(quote)text+=`\nYour earlier declaration, not an adjudicated outcome: ${display(quote.text)}`;
   text+=scope.mode==='private'?'\nWhat would you like to notice, ask, or do? Your decisions and disclosures remain yours.'
     :'\nYou may compare the observations you choose to share. Cooperation and party formation remain your choices.';

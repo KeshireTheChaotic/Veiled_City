@@ -84,13 +84,14 @@ export function assemblyHookProjection(db,guild,sessionId,scope){
   return {text,selected,revision:hookHash([pc.id,pc.owner_user_id,selected])};
 }
 export function assemblyWriterBrief(db,guild,sessionId,scope){
+  const resume=db.getSession(sessionId)?.assembly_phase==='party';
   if(scope.mode==='private'){
     const hook=assemblyHookProjection(db,guild,sessionId,scope);
-    return {kind:'private_opening',sources:hook?.selected||[],
-      task:'Offer a playable ordinary circumstance relevant to this personal thread. Do not resolve its mystery, assert an arrival, or decide a PC response.',
+    return {kind:resume?'private_resume':'private_opening',sources:hook?.selected||[],
+      task:`${resume?'Resume the owner character current independent thread.':'Offer a playable ordinary circumstance relevant to this personal thread.'} Do not resolve its mystery, assert an arrival, or decide a PC response.`,
       knowledge:'Only this owner character material is available. Imported GM-only mysteries are not player knowledge.'};
   }
-  return {kind:'public_convergence',sources:[],
-    task:'Frame a playable shared opportunity as a camera scene, not established PC presence. Ordinary NPC offers, visible surroundings and nonbinding signs are allowed.',
+  return {kind:resume?'public_resume':'public_convergence',sources:[],
+    task:`${resume?'Frame current scene continuity without asserting new party membership, requiring reunion or inventing intervening PC activity.':'Frame a playable shared opportunity as a camera scene, not established PC presence.'} Ordinary NPC offers, visible surroundings and nonbinding signs are allowed.`,
     knowledge:'Private hooks, private cues and motivations are intentionally excluded. Let the players discover and choose any connection.'};
 }

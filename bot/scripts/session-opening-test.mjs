@@ -13,6 +13,7 @@ import {indexWorldEvent} from '../src/city-calendar.js';
 import {registerOpeningAttendance} from '../src/session-opening-attendance.js';
 import {runSessionOpening} from '../src/session-opening-runner.js';
 import {deliverTurnOutbox} from '../src/publication-outbox.js';
+import {assemblyOrientation} from '../src/assembly-state.js';
 
 function startInteraction(f,{mode='auto',id='opening-start'}={}){
   const replies=[];
@@ -188,4 +189,43 @@ test('O2 queued opening provenance is rechecked by real deferred outbox after re
   indexWorldEvent(f.db,f.guild,{key:inspectSessionOpening(f.db,f.guild,f.session.id).source_event,status:'retracted'});f.restart();
   let sends=0;await deliverTurnOutbox(f.db,f.guild,turn.record_key,async()=>{sends++;return {messageId:'wrong',channelId:'wrong'};});
   assert.equal(sends,0);assert(f.db.listTurnPublications(f.guild,turn.record_key).every(p=>p.status!=='delivered'));
+}));
+
+for(const mode of ['auto','already_together'])test(`O2 returning party ${mode} opens from current continuity without forced reunion`,()=>nativeFixture(async f=>{
+  f.db.establishParty(f.guild,f.session.id,{name:'Previously chosen party'});f.db.endSession(f.guild,'');
+  const pc=f.pcs[0];f.db.updateCharacterData(pc.id,d=>{d.location='private-workshop';d.entry_hooks=['The unresolved telemetry invoice remains a possible lead.'];});
+  registerOpeningAttendance(f.db,f.guild,pc.owner_user_id,`return-${mode}`,pc.name);
+  const x=transport(f),i=startInteraction(f,{mode,id:`return-start-${mode}`});i.guild=x.guild;
+  const before=f.db.getCharacter(pc.id).data,answer={public_opening:'UNVERIFIED: Everyone meets at the station.',public_parts:[],convergence_goal:'Resume independent threads.',
+    bonds:[],gm_notes:'No forced reunion.',character_entries:[{discord_user_id:pc.owner_user_id,character_id:pc.id,character_name:pc.name,
+      hook_source_refs:assemblyHookSources(f.db,f.guild,pc.id).slice(0,1).map(s=>s.id),private_hook:'A possible follow-up.',private_parts:[],public_cue:'',stay_reason:''}]},
+    ai=new FakeResponses([answer]),service=new GMService({db:f.db,content:new ContentIndex(path.resolve('../content')),ai,
+      config:{gmModel:'offline',assemblyModel:'offline',assemblyMaxOutputTokens:2000,maxContentChunks:1,maxRecentMessages:0}});
+  await handleCommand(i,{db:f.db,gm:{planAssembly:args=>service.planAssembly(args)}});
+  const session=f.db.getActiveSession(f.guild),row=inspectSessionOpening(f.db,f.guild,session.id);
+  assert.equal(row.data.origin.kind,'resume');assert.equal(row.status,'completed');assert.equal(ai.requests.length,1);
+  assert.equal(session.assembly_phase,'party');assert.equal(x.sent.private.length,1);assert.equal(x.sent.party.length,1);
+  assert.match(x.sent.private[0].content,/unresolved telemetry invoice/);assert(!JSON.stringify(x.sent).includes('Everyone meets'));
+  assert.deepEqual(f.db.getCharacter(pc.id).data,before);assert.equal(f.db.listCityRecords(f.guild,{kind:'scene_presence',includeGM:true}).length,0);
+  assert.match(String(ai.requests[0].input),/returning.*party|established.*party/i);
+  f.restart();await runSessionOpening({db:f.db,guild:x.guild,gm:{planAssembly:()=>{throw Error('Must not replan.');}}});
+  assert.equal(x.sent.private.length,1);assert.equal(x.sent.party.length,1);
+}));
+
+test('O2 resume output cannot be minted by simply changing phase or presenting an assembly job as party consent',()=>nativeFixture(f=>{
+  f.db.setAssemblyPhase(f.session.id,'party');
+  assert.throws(()=>assemblyOrientation(f.db,f.guild,f.session.id,{mode:'party'}),/native origin/);
+  f.db.setAssemblyPhase(f.session.id,'assembly');scheduleSessionOpening(f.db,startInteraction(f),f.session,()=>true);
+  f.db.setAssemblyPhase(f.session.id,'party');
+  assert.throws(()=>assemblyOrientation(f.db,f.guild,f.session.id,{mode:'party'}));
+  assert.equal(f.db.getPartyState(f.guild).established,false);assert.equal(f.db.listCityRecords(f.guild,{kind:'assembly_delivery',includeGM:true}).length,0);
+}));
+
+test('O2 already_together without saved party membership never manufactures a party or a physical gathering',()=>nativeFixture(async f=>{
+  f.db.endSession(f.guild,'');const x=transport(f),i=startInteraction(f,{mode:'already_together'});i.guild=x.guild;
+  await handleCommand(i,{db:f.db,gm:{planAssembly:async()=>openingPlan(f.db,f.guild,f.db.getActiveSession(f.guild))}});
+  assert.equal(inspectSessionOpening(f.db,f.guild,f.db.getActiveSession(f.guild).id).status,'completed');
+  assert.equal(f.db.getPartyState(f.guild).established,false);assert.equal(x.sent.party.length,1);assert.equal(x.sent.private.length,0);
+  assert.match(x.sent.party[0],/does not establish shared fictional presence/);
+  assert.equal(f.db.listCityRecords(f.guild,{kind:'scene_presence',includeGM:true}).length,0);
 }));

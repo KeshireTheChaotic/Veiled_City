@@ -1176,12 +1176,13 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
     return structuredClone(await flight);
   }
 
-  async planAssembly({guildId,mode=null}){
+  async planAssembly({guildId,mode=null,openingKind='assembly'}){
     const session=this.db.getActiveSession(guildId);
     if(!session) throw new Error("No active session.");
     const requested=mode||session.assembly_mode||"auto";
     if(requested==="manual") throw new Error("This session uses manual assembly; no AI convergence plan will be generated.");
-    if(requested==="already_together"){
+    if(!['assembly','resume'].includes(openingKind)||openingKind==='resume'&&session.assembly_phase!=='party')throw new Error('Current native opening kind required.');
+    if(requested==="already_together"&&openingKind!=='resume'){
       return {public_opening:"",convergence_goal:"Established party resumes play.",character_entries:[],bonds:[],gm_notes:"No convergence scene required."};
     }
     const roster=this.db.roster(session.id).filter(r=>["present","guest","late"].includes(r.presence) && r.character_id);
@@ -1193,12 +1194,12 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
     const query=roster.map(r=>`${r.name} ${JSON.stringify(r.data||{})}`).join(" ");
     const chunks=this.searchContent(guildId,`party convergence ${requested} ${query}`,Math.min(this.config.maxContentChunks,6),{gm:true});
     const prompt=[
-      "You are Veilkeeper's multiplayer party-convergence planner.",
-      "Create ONE credible Veiled City opening that gives every present character an independent reason to enter the same situation.",
+      openingKind==='resume'?"You are Veilkeeper's returning established-party session-opening planner.":"You are Veilkeeper's multiplayer party-convergence planner.",
+      openingKind==='resume'?"Resume current established continuity and independent owner threads. Use only actual saved party membership; attendance or the already_together mode cannot establish a reunion, arrival, new location, intervening activity, consent or new party membership. Never choose a PC response.":"Create ONE credible Veiled City opening that gives every present character an independent reason to enter the same situation.",
       "With zero attendees, prepare a GM-owned camera opening with no PC, arrival, personal hook, bond or party claim. With one attendee, prepare one independent private opportunity, not forced convergence or cooperation. Never invent missing participants.",
       "Do not assume unrelated PCs already know, trust, like, or work for one another. Do not choose any PC's dialogue, thoughts, promises, or decision to join.",
       "Use each character's background, Home, Person, Obligation, Opening Status, goals, unresolved incident, GM hooks, faction connections, entry hooks, notes, and existing campaign facts when present.",
-      "The convergence should progress from ASSEMBLY (same incident) toward CONVERGED (overlapping immediate objectives). The players decide whether it becomes a lasting PARTY.",
+      openingKind==='resume'?"Preserve any actual saved PARTY relationship. Do not create membership, require convergence, presume shared private knowledge, or reset independent positions and choices.":"The convergence should progress from ASSEMBLY (same incident) toward CONVERGED (overlapping immediate objectives). The players decide whether it becomes a lasting PARTY.",
       "Prefer crossed cases/shared incident in investigative urban fantasy unless the requested mode says otherwise.",
       "Each character gets a private_hook containing only information that character could know at scene start. public_cue is what others can visibly perceive about their arrival, without revealing secrets.",
       "public_opening/private_hook remain GM-private prose proposals. Supply public_parts and each entry's private_parts as source-verified gm_world_parts (versions 1, 2 or 4); omit unsupported parts. Native scope independently checks every NPC/location/source/owner/audience. Do not invent PC actions or receipt IDs, expose another owner's private material, or request a fresh writer call. Native orientation can be delivered even when no fictional part is eligible.",
