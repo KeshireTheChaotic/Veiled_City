@@ -8,6 +8,9 @@ import {adjudicateSceneBoard} from '../src/gm-unified-arbitration.js';
 import {inspectNativeGmDecision,inspectCommittedGmDecision} from '../src/gm-action-capability.js';
 import * as controls from '../src/native-actor-control.js';
 import {sceneFictionHash as hash} from '../src/scene-fiction-context.js';
+import {assertNpcAvailability} from '../src/city-constraints.js';
+import {actorSource} from '../src/simulation-motivation.js';
+import {indexWorldEvent} from '../src/city-calendar.js';
 
 function fixture(f,key='attendant'){
   const x=setup(f,{text:'What happens next?'});
@@ -19,6 +22,22 @@ function fixture(f,key='attendant'){
 const proposal=key=>({actor_key:key,operation:'speak',target_refs:[],objective_ref:'',source_refs:[],dependencies:[]});
 const ruling=intent_ref=>({intent_ref,disposition:'npc_no_roll',rule_basis_refs:['srd:gm-moves'],difficulty:null,trait:null,
   stakes_kind:'attempt_only',stakes:'none',reason:'An ordinary NPC invitation only.',difficulty_reason:'',feature_ref:'',experience_ref:'',advantage:false,disadvantage:false});
+
+test('native actor control: legacy NPC availability and motivation cannot acquire a real PC through a colliding profile',()=>nativeFixture(f=>{
+  const x=fixture(f,f.pcs[0].id),before=f.db.getCharacter(x.pc.id),source=indexWorldEvent(f.db,f.guild,{key:'control-report',kind:'observation',
+    title:'A native reported lead',source_id:'gm',visibility:'gm'},'gm');
+  f.db.upsertNpcKnowledge(f.guild,{npcKey:x.key,knowledgeKey:'lead',content:'An attributed report, not an established fact.',sourceRef:source.event_key});
+  assert.throws(()=>assertNpcAvailability(f.db,f.guild,x.key,{type:'investigate',location_key:'terminal'}),/Player characters cannot be controlled as NPCs/);
+  assert.throws(()=>actorSource(f.db,f.guild,{actor_type:'npc',actor_key:x.key,information_key:'lead',source_event:source.event_key}),/Player characters cannot be controlled as NPCs/);
+  assert.deepEqual(f.db.getCharacter(x.pc.id),before);
+}));
+
+test('native actor control: ordinary native NPC availability and its own sourced motivation remain available',()=>nativeFixture(f=>{
+  const x=fixture(f),source=indexWorldEvent(f.db,f.guild,{key:'npc-control-report',kind:'observation',title:'An available NPC lead',source_id:'gm',visibility:'gm'},'gm');
+  f.db.upsertNpcKnowledge(f.guild,{npcKey:x.key,knowledgeKey:'lead',content:'An attributed report, not an established fact.',sourceRef:source.event_key});
+  assert.doesNotThrow(()=>assertNpcAvailability(f.db,f.guild,x.key,{type:'investigate',location_key:'terminal'}));
+  assert.equal(actorSource(f.db,f.guild,{actor_type:'npc',actor_key:x.key,information_key:'lead',source_event:source.event_key}).event.event_key,source.event_key);
+}));
 
 test('native actor control: a PC ID with an NPC profile is never an AI NPC candidate',()=>nativeFixture(f=>{
   const x=fixture(f,f.pcs[0].id),packet=arbitrationPromptBoard(f.db,f.guild,x.origin);

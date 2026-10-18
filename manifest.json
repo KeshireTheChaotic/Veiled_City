@@ -551,8 +551,8 @@
     },
     {
       "path": "bot/scripts/native-actor-control-test.mjs",
-      "size_bytes": 6944,
-      "sha256": "bba15184d15b59433a4d73f1125aaba1518cd7ce4d7e086a5375feb33721fba9"
+      "size_bytes": 8794,
+      "sha256": "6f4e31c29f24559f5e51bf6cc02508247428b6c7591cec7101f31dc5ab1ac3f0"
     },
     {
       "path": "bot/scripts/native-world-fixtures.mjs",
@@ -1266,8 +1266,8 @@
     },
     {
       "path": "bot/src/city-constraints.js",
-      "size_bytes": 5215,
-      "sha256": "7af25666ee678d0815fe08379aa7fcd02960be276c85757355a6a10f70ecd10a"
+      "size_bytes": 5310,
+      "sha256": "f7c01c47b7ad9ad9c6e3d55ee1d78c0d553be4b8dc1dd98a99ab1cd8e0e93df0"
     },
     {
       "path": "bot/src/city-core.js",
@@ -2716,8 +2716,8 @@
     },
     {
       "path": "docs/Active_Implementation/NO_DEFERRALS_LEDGER.md",
-      "size_bytes": 91709,
-      "sha256": "3266f676b686aa92a04f76fe2bc6f5c2fc96e8199141a2f3c7770989bda6a539"
+      "size_bytes": 93743,
+      "sha256": "06c3e9ab956f81748b790ff32eaa3421ca05a6e2913cd092c875de56d76d019d"
     },
     {
       "path": "docs/Active_Implementation/README.md",
