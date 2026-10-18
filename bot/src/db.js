@@ -9,7 +9,7 @@ import fs from "node:fs";
 import {normalizeGmHookImport} from './gm-hook-import.js';
 import { updateRelationshipDimensions, relationshipPairKey, relationshipProjection } from "./relationship-state.js";
 import path from "node:path";
-import { randomUUID } from "node:crypto";
+import { randomUUID, createHash } from "node:crypto";
 import { DatabaseSync } from "node:sqlite";
 import {StateConflictError} from "./errors.js";
 import { processCityDue } from "./city-calendar.js";
@@ -804,6 +804,23 @@ export class VeiledDB {
     this.db.prepare("UPDATE campaigns SET active_session_id=?,updated_at=CURRENT_TIMESTAMP WHERE guild_id=?")
       .run(id,guildId);
     return this.getSession(id);
+  }
+
+  nextSessionNumber(guildId) {
+    return this.db.prepare("SELECT COALESCE(MAX(session_number),0)+1 n FROM sessions WHERE guild_id=?").get(guildId).n;
+  }
+
+  attendanceOwnerBinding(guildId,userId,characterId){
+    const pc=this.getCharacter(characterId);
+    if(pc?.guild_id!==guildId||pc.owner_user_id!==userId||!['active','reserve','guest'].includes(pc.status))return null;
+    // Current ownership snapshot only, not a conversational principal or a history/transfer epoch.
+    return createHash('sha256').update(JSON.stringify([guildId,characterId,userId,pc.created_at,pc.status])).digest('hex');
+  }
+
+  openingAttendanceRegistrations(guildId,{limit=100,offset=0}={}){
+    const rows=this.db.prepare("SELECT * FROM city_records WHERE guild_id=? AND kind='opening_attendance_registration' AND status='registered' ORDER BY rowid LIMIT ? OFFSET ?")
+      .all(guildId,Math.max(1,Math.min(100,Number(limit)||100)),Math.max(0,Math.floor(Number(offset)||0)));
+    return rows.map(row=>({...row,data:JSON.parse(row.data_json)}));
   }
 
   getSession(id) { return this.db.prepare("SELECT * FROM sessions WHERE id=?").get(id); }
