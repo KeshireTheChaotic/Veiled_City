@@ -4,6 +4,7 @@ import {narrativeVisible} from './narrative-authority-context.js';
 import {indexWorldEvent} from './city-calendar.js';
 import {rememberEntity} from './memory-lifecycle.js';
 import {listNarrativeRecords} from './narrative-records.js';
+import {narrativeQueryRelevance,narrativeIdentityRelevance} from './narrative-relevance.js';
 function memoryInput(db,guild,row,source,visibility,subject){
   const u=row.data.unit,npc=u.subject_key&&db.getNpcProfile(guild,u.subject_key),place=u.location_key&&db.getSimulationEntity(guild,'location',u.location_key);
   return {kind:npc?'npc':u.kind==='rumor'?'rumor':u.kind==='lead'?'clue':'detail',name:npc?.display_name||u.id,
@@ -54,9 +55,14 @@ export function acknowledgeNarrativeMemory(db,guild,publication){
   }
 }
 /** Historical read-side: validates disclosure/source, not current action eligibility or inferred PC/NPC knowledge. */
-export function disclosedNarrativeMemory(db,guild,scope,{location=null,limit=12}={}){
-  if(!db.getCityCalendar(guild).flags.narrative_memory)return [];
-  return listNarrativeRecords(db,guild,'narrative_delivery').filter(job=>{
+export function disclosedNarrativeMemory(db,guild,scope,{location=null,limit=12,query='',preferLocation=null}={}){
+  return selectDisclosedNarrativeMemory(db,guild,scope,{location,limit,query,preferLocation}).rows;
+}
+/** Selection diagnostics count only verified entitled units, never other audiences' private records. */
+export function selectDisclosedNarrativeMemory(db,guild,scope,{location=null,limit=12,query='',preferLocation=null}={}){
+  const cap=Math.max(1,Math.min(40,limit));
+  if(!db.getCityCalendar(guild).flags.narrative_memory)return {rows:[],selection:{eligible:0,selected:0,omitted:0,candidate_limit:cap}};
+  const eligible=listNarrativeRecords(db,guild,'narrative_delivery').filter(job=>{
     if(job.status!=='acknowledged_to_audience')return false;
     if(!narrativeVisible(job,scope)||job.visibility==='character'&&(job.data.user!==scope.actorUserId||job.data.character!==scope.actorCharacterId||db.getCharacter(job.data.character)?.owner_user_id!==scope.actorUserId)
       ||!narrativeSourceVisible(db,guild,job.data.ack,scope))return false;
@@ -67,5 +73,14 @@ export function disclosedNarrativeMemory(db,guild,scope,{location=null,limit=12}
     const unit=db.getCityRecord(guild,'narrative_unit',job.data.unit);
     return {unit:unit.record_key,source_ref:job.data.ack,text:unit.data.text,epistemic:unit.data.epistemic,location:unit.location_key,
       knowledge:unit.data.binding.viewpoint==='character'?'disclosed narrative, not NPC cognition':'camera exposition, not PC witness'};
-  }).filter((row,i,all)=>all.findIndex(other=>other.unit===row.unit)===i).slice(0,Math.max(1,Math.min(40,limit)));
+  }).filter((row,i,all)=>all.findIndex(other=>other.unit===row.unit)===i);
+    // Rank the bounded, already source/audience-verified scan BEFORE its output
+    // cap. Stable ties preserve the historical most-recent ordering.
+  const rows=eligible.map(row=>{
+    const unit=db.getCityRecord(guild,'narrative_unit',row.unit)?.data.unit,
+      entity=unit?.subject_key?`npc:${unit.subject_key}`:row.location?`location:${row.location}`:null;
+    return {row,score:narrativeQueryRelevance(row.text,query)+narrativeIdentityRelevance(db,guild,entity,scope,query)
+      +(preferLocation&&row.location===preferLocation?50:0)};
+  }).sort((a,b)=>b.score-a.score).slice(0,cap).map(item=>item.row);
+  return {rows,selection:{eligible:eligible.length,selected:rows.length,omitted:eligible.length-rows.length,candidate_limit:cap}};
 }

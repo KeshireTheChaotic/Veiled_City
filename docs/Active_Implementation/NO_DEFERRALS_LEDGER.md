@@ -1,0 +1,92 @@
+# Semantic-first implementation ledger
+
+Accepted typed intents are canonical adjudication inputs; human declarations own intent; native receipts own outcomes.
+
+## W0 checkpoint
+
+- Starting branch `codex/audience-first-narrative-v9`, SHA `47c5d35f90df2e5a69e406e857bbc946ce0957bf`; fetched origin has identical ancestry (0 ahead/0 behind).
+- Tracked source/index clean. Four supplied untracked planning documents and `.unsnooze/` are owner files, preserved without modification. No extra worktrees or agents created.
+- Application `0.0.0.1`, native DB `PRAGMA user_version=460`. `git merge-base --is-ancestor` independently confirms both semantic `6de758c95f94fa5895f9d14bc05970922b050b44` and audience-first `c600349b15a057bfde582cb864b52acf12d37c41` are ancestors (exit 0 each). No semantic ancestor remerge is needed.
+- Original baseline: `cd bot; npm.cmd run validate`, exit 1: **52 passed / 1 failed / 74 not run**, 127 mandatory suites. `natural-language-scope-test` referenced a deleted audit file. Log `.reports/semantic-w0-baseline.log`. This is not full qualification.
+- Restored three historical assertion inputs from `014bc39` into `bot/scripts/fixtures/historical/`, without restoring deleted owner documentation. Every retained assertion remains enforced. The existing strengthened native rule-precedence assertion has a one-for-one explicit historical wording migration. Repair batch: scope suite passes; deprecation batch **4/4**, including the unchanged isolated D08 consent mutant.
+- Frozen W1 interfaces: current audience-v9 grant, exact authored/context sources, typed intent/task IDs, native clauses, disclosure receipts and existing outbox revalidation. Historical v8/v4 schemas/readers remain unchanged.
+
+## Mandatory scope (semantic first)
+
+| Scope | Status | Current evidence / next requirement |
+| --- | --- | --- |
+| W0 current-source baseline | implemented | Original fail-fast 52/127 result recorded; missing historical inputs repaired, not claimed as original green baseline |
+| W1 N05/N06, NC20–22 | implemented | Existing audience-first integration F5/27–30 uses source-bound native constructions, not free-text safety labels. Legacy R5 holds intentionally remain. Rerun current tree. |
+| W1 N01–04/N07–12 | implemented | R0–R6/D0–D3 regression table covers locality, audience, speaker entitlement, task coverage and historical producers; rerun before S-GATE. |
+| W1 N13 mixed communication | implemented | Exact OOC/IC, line-comment and delimited-table-talk ranges; source offsets retained. Native acceptance rejects OOC and quoted action sources, independent IC source survives. Focused evidence below; final qualification pending. |
+| W1 N14 long-horizon recall | implemented | Entitled disclosed history ranked before recent-40 cap, then bounded 16-unit/character-budget projection; counts report entitled omissions. Existing fictional-time decay, pins and anti-replay retained. Final qualification pending. |
+| W1 N15 owner appearance | implemented | Owner explicitly selected native-validated structured descriptions. Added exact-source coat styling primitives through the existing owner command, source/visibility proof and outbox. Arbitrary prose remains rejected. Final qualification pending. |
+| S-GATE | in_progress | **NOT PASSED; no S-GATE SHA yet.** Frozen-tree qualification and exact-SHA semantic/security gate must succeed before W2. |
+| W2 native authority/authorship | blocked_authority | Transitive S-GATE; no new runtime changes |
+| W3 World Director/UA native adapters | blocked_authority | Transitive S-GATE; no new runtime changes |
+| W4 OpeningDirector | blocked_authority | Transitive S-GATE; preserve completed assembly v2 |
+| W5 autonomous PvP/death/pre-roll Fear | blocked_authority | Transitive S-GATE; current player-choice/native mechanics retained |
+| W6 complete source-defined catalog | blocked_missing_source | Current read-only native inventory reconfirms 153 occurrences/12 supported/140 review-only/1 needs-authoring. Exact source gap below; also gated by S-GATE. |
+| W7 frozen-tree qualification | blocked_authority | Requires all preceding executable scope; no remote/live authorization |
+
+Proposed later contracts (names only, not implemented during W1): `authorship_origin_v1`, `narrative_signal_v1`, `world_beat_v1`, `world_pulse_v1`, `weighted_identity_v1`, `session_opening_v1`, `native_feature_vN`, `pvp_resolution_v2`, `fear_interrupt_v1`.
+
+## Usage / safety
+
+W0: one coordinator, **0 spawned agents**, **0 real provider requests**, **0 billable test tokens**, **0 Discord requests**, **0 production database access**. Codex account token/allowance consumption is not exposed by these tools; no estimate is substituted. Deterministic provider doubles are not real model requests. No push/deployment authorized.
+
+## W1 root causes and evidence
+
+| Finding | Missing boundary | Correction / test |
+| --- | --- | --- |
+| N13 explicit IC after OOC never reaches router | Whole-message prefix silence | `source-communication.js` derives formatting-only source ranges; `explicitSilence()` no longer consumes later explicit IC. One existing fake router request, unchanged full source. |
+| N13 model `immediate` can accept explicitly OOC text | Acceptance previously checked proposed framing but not communication scope | Proposal diagnostics for OOC spans; native acceptance independently rejects OOC/inside-quote spans. Current candidates require exact IC range and matching accepted offsets. No inferred action or effect. |
+| N14 relevance only sees newest 40 disclosures | Candidate truncation precedes query ranking | Rank only source/audience-verified disclosed units before cap. Query scoring is retrieval only, not knowledge/canon/identity authority. Final prompt bounded; no disclosure from an uncertain send. |
+| Long-history regression appeared nondeterministic | Fixture message IDs used a capped 100-event count | Add optional explicit message ID; new 49-unit history fixture uses distinct IDs and asserts the actual 49 delivery jobs. No production identity rewrite. |
+| Quoted movement / goal compatibility during repair | A blanket throw interferes with harmless optional-candidate review, while silent filtering masks an attempted effect | Rejected quoted proposals stay diagnostic-only; direct acceptance rejects them. `state.js` separately rejects native scene effects whose exact source is quoted/OOC, before execution. Both unchanged quoted movement and SEM04 one-call/no-owned-goal assertions pass. No assertion waiver. |
+| N15 richer-description source is authentic but unsupported | Native vocabulary is closed; owner provenance is not semantic proof for arbitrary foreign-PC clauses | Owner chose structured descriptions. Extended native coat color/material/finish/detail, not arbitrary text. New version-2 observation query exposes selected styling; historical version-1 query retains original field projection. All source/owner/injury/privacy guards retained. |
+
+Actual development evidence (logs under ignored `bot/.reports/`):
+
+- Existing S0–S6/R0–D3/v9/salience baseline: **80/80**, exit 0 (`semantic-w0-focused.log`).
+- Initial new N13/router/recall reproductions: **0/3**, exit 1 (`semantic-w1-red.log`). Initial long-history fixture later corrected as described above; deterministic new IDs are mandatory for its final evidence.
+- Added OOC acceptance probes: **0/2**, exit 1 (`semantic-w1-span-red.log`); model immediate label admitted the OOC span and direct acceptance did not reject it.
+- Scoped repaired memory/retirement batch: **42/42**, exit 0 (`semantic-w1-scoped.log`).
+- Intake/native compatibility batch: **37/37**, exit 0 (`semantic-w1-intake-impacted.log`).
+- Original SEM06/FH40/PVP30q/ag/OBS21/D08/outbox batch: **144/144**, exit 0 (`semantic-w1-security.log`); later exact-tree registry must reconfirm after subsequent source changes.
+- Intermediate full attempt: **21 passed / 1 failed / 106 not run**, exit 1, quoted-action assertion. Not qualification. Corrected quote/residual batch **8/8**, exit 0.
+- Latest residual/salience/autonomous-world batch before the final N15 safety probe: **16/16**, exit 0 (`semantic-w1-final-focused.log`). N15 retained safety probe separately **1/1**, exit 0 (`semantic-w1-n15-boundary.log`).
+- Subsequent registry attempt: **101 passed / 1 failed / 26 not run**, exit 1, `v96-semantic-proposals-test` detected an unwanted model retry on nested quoted goals. Not qualification. Corrected effect-boundary/SEM04/appearance batch **30/30**, exit 0 (`semantic-w1-quote-appearance-final.log`).
+- Final residual suite before N15 adapter integration: **9/9**, exit 0, measured **17 fake requests**, real/billable/Discord = 0 (`semantic-w1-frozen-residuals.log`).
+- N15 red-first adapter probe: **0/3**, exit 1 (`semantic-w1-appearance-red.log`); existing native command rejected new fields, so no styled observation reached outbox. New native adapter plus original OBS compatibility batch: **28/28**, exit 0 (`semantic-w1-appearance-green.log`).
+- Pre-alias-extension frozen focused batch: **94/94**, exit 0 (`semantic-w1-complete-focused.log`); complete critical validator **129/129**, exit 0, zero failed/not-run, **609479 ms**, network denied/live=0/billable=0 (`semantic-w1-complete-validation.log`). This does not qualify the subsequently reproduced alias residual or later tree.
+- Additional N14 native-alias probe: **0/1**, exit 1 (`semantic-w1-alias-red.log`). Ranking text before cap still missed an older speaker selected only through its native-established alias. Added audience/source-verified native-identity relevance to both candidate and final rank; never accept mutable simulation aliases as identity proof. Alias/salience batch **8/8**, exit 0 (`semantic-w1-alias-green.log`); final registered test additionally checks creation-source retraction without deleting identity history.
+- Final alias/source/private/retraction, residual, styling and salience batch: **20/20**, exit 0, zero failures/skips/cancellations (`semantic-w1-final-memory-appearance.log`). Final required registry now has **130** suites (original 127 plus three semantic suites); final exact-tree qualification pending.
+- Frozen final executable/test tree: `npm.cmd run check` **exit 0 / 429 modules**, then `npm.cmd run validate` **exit 0 / 130 passed / 0 failed / 0 not run**, **626288 ms**, critical profile, all acceptance entries passed, network denied, live=0, billable=0 (`semantic-w1-sgate-check.log`, `semantic-w1-sgate-validation.log`, compact `.reports/offline-validation.json`). Quality, format, D08 security/observability and all original mandatory suites are included in that actual run. No skipped security assertions were introduced.
+- Normalized distribution integrity **548/548**, no mismatched entries. Executable/content/fixture set: **514 files**, digest `c816bd1c63ac95845ba5db8b8f4a66963059e06055a135c9f9344f9501507714` (SHA256 of the ordered manifest entries under `bot/` and `content/`). Results-only ledger/manifest refresh does not alter this set. Both working and staged `git diff --check` passed; owner Markdown hard breaks retained through existing-style file-specific `.gitattributes` rules, source-code whitespace rules unchanged.
+- Commit and exact-SHA S-GATE execution remain to be recorded; **no W2 runtime work has begun**.
+- `npm.cmd run check`: exit 0 on the intermediate tree; final repeat pending.
+
+### Current semantic coverage inventory
+
+N01/N11 locality/audience: NC01–03. N02/N07 actor entitlement/listener uniqueness: NC04–09. N03/N08 per-target completeness: NC11–14 and current v9 F4/16. N04/N09 offer/artifact contrast: NC15–19 and current F4/17. N05/N06/NC20–22: **current v9 F5/27–30** native clauses, not a raw-prose exemption; legacy holds remain. N10 camera: NC10. N12 historical/current producer split: NC24–28. N13: new mixed-source/routing/acceptance tests and existing C09–12. N14: new 49-unit recall/retraction/private/budget tests plus salience N13–19. N15: original OBS plus `semantic-owner-appearance-test.mjs` real owner-command/native-query/outbox styling, source/ownership/prose negatives, private/retraction/restart and historical v1 projection. These identifiers overlap across historical files; filenames, not numeric labels alone, determine coverage.
+
+W1 usage: **0 spawned agents**. New residual suite reports measured fake request count in `W1_USAGE`; all provider/Discord network requests and billable test tokens remain zero. No real-model quality/cost/latency claim. Existing generated GM prose retains documented residual semantic risk; native constructions provide bounded positive coverage, not universal language understanding.
+
+### Early source gap (inventory only, no mechanics implementation)
+
+`compileNativeFeatures()` executed under the offline guard: 12 supported, 140 review-only, 1 needs-authoring. `adversary:catastrophic-echo:break-the-pattern`, original `content/GM_PRIVATE/ADVERSARIES/adversaries.json#catastrophic-echo/features/1`, lacks authored feature type/timing (source hash `4e60ea7640e3c1cff3822722f30798595489ca088a64f30d4ef21add27c534a9`). Its trigger/targets/roll/cost/handler are unmapped. Full W6 completion requires lawful original rule authoring, not a model guess. Other source-defined families remain executable development scope after S-GATE; this inventory is not implementation.
+
+### Bounded residual limitations
+
+- Communication ranges understand explicit formatting boundaries; they do not claim universal detection of unmarked irony, reported speech or hypothetical language. Existing framing/source/native-effect guards still apply. A boundary never grants an action.
+- Memory candidate scan retains the existing maximum 5,000 records; candidate cap 40, prompt cap 16 (12 flags-off), plus character budget. This is not unbounded recall or an embedding/semantic-search performance claim. Counts in the writer packet describe only verified entitled candidates, not another audience's private record totals.
+- N15 owner source authenticity does **not** prove an arbitrary paragraph has only that owner's nonmechanical appearance. Owner decision: **“Keep native-validated structured descriptions.”** Thus new styling uses exact selected native attributes; no arbitrary paragraph admission, cross-PC claim, mechanics/capability or new inventory authority. Freeform appearance disclosure remains outside the chosen policy, not silently accepted under a model label.
+
+### N15 owner use / persistence
+
+Use existing `/vc-character describe` JSON with `text`, `visibility` (`party` or `character`), `observers`, and exact `facts[{field,value,start,end}]`. New fields: `coat_material` (canvas/wool/leather/denim/cotton/synthetic), `coat_finish` (weathered/clean/faded/patched/polished), `coat_detail` (patched elbows/brass buttons/rolled sleeves/broad lapels/narrow lapels); `coat` additionally accepts olive/navy/cream/rust. Select only exact spans in your own source. These describe styling, not Armor, equipment custody, injury, another PC or action success. No Discord schema registration changes and no database migration. New observation queries are additive v2; historical v1 queries retain their old projection rather than silently rewriting saved payloads.
+
+## Qualification and rollback
+
+No phase-completion or S-GATE claim. Preserve immutable effects and historical receipts. Local implementation commits are rollback boundaries; do not revert campaign outcomes or blindly resend uncertain outbox publications. Executable/test changes require affected requalification; results-only documentation does not.

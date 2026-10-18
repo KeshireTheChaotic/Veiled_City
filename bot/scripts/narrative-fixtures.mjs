@@ -10,8 +10,8 @@ import {recordScenePresence,currentScene} from '../src/scene-continuity.js';
 import {commitGmTurn} from '../src/turn-orchestration.js';
 export const unit=(id,kind,text,fields={})=>({id,kind,text,subject_key:'',location_key:'terminal',visibility:'party',
   epistemic:kind==='rumor'?'testimony':kind==='npc_action_attempt'?'attempt':'observation',source_refs:[],receipt_kind:'',receipt_ref:'',...fields});
-export function setup(f,{text='Set the scene',privateScene=false,placed=true}={}){
-  const pc=f.pcs[0],messageId=`freedom-${f.db.listWorldEvents(f.guild,{includeGM:true,limit:100}).length}`,
+export function setup(f,{text='Set the scene',privateScene=false,placed=true,messageId:explicitMessageId=null}={}){
+  const pc=f.pcs[0],messageId=explicitMessageId||`freedom-${f.db.listWorldEvents(f.guild,{includeGM:true,limit:100}).length}`,
     scope={mode:privateScene?'private':'party',actorUserId:pc.owner_user_id,actorCharacterId:pc.id};
   f.db.setCityCalendar(f.guild,{flags:{...f.db.getCityCalendar(f.guild).flags,playable_narration:true,scene_continuity:true,
     narrative_authority:true,narrative_camera:true}});

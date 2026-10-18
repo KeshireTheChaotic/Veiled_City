@@ -1,6 +1,8 @@
 /** Non-authorizing full-message intake; semantic proposals, never English verbs, decide engagement. */
+import {characterSourceRanges} from './source-communication.js';
 export function explicitSilence(value){
-  return !String(value||'').trim()||/^\s*(?:ooc\b|\(\(|\/\/)/i.test(String(value));
+  const text=String(value||'');
+  return !characterSourceRanges(text).some(({start,end})=>text.slice(start,end).trim());
 }
 
 /** No freeform clause is consumed by a lexical read-only handler. Slash commands remain separate. */

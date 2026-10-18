@@ -9,10 +9,12 @@ import { captureDialogue } from './dialogue-continuity.js';
 import { resolveScopedMemoryReference } from './scoped-memory.js';
 import {gmRulingSchema,validateGmRulingProposal} from './gm-action-ruling.js';
 import {overlapsOwnerActionTerminal} from './owner-action-terminal.js';
+import {isCharacterSourceSpan} from './source-communication.js';
 import {
   authoredTurnEnvelope,
   captureAuthoredTurnEnvelope,
-  overlapsConsumedSpan
+  overlapsConsumedSpan,
+  sourceSpanInsideQuote
 } from './authored-turn-envelope.js';
 
 const text = length => ({type:'string',maxLength:length});
@@ -161,6 +163,15 @@ export function proposeIntents(db,guild,values,scope={},provenance={}){
           authority:'Rejected interpretation only; never action or outcome authority.'}
       });
     }
+    if(proposal.framing==='immediate'&&(!isCharacterSourceSpan(envelope.raw_text,proposal.start,proposal.end)
+      ||sourceSpanInsideQuote(envelope.raw_text,proposal.start))){
+      withdrawn.add(proposal.proposal_id);
+      const key=`diagnostic:${digest([envelope.source_event,index,'non_ic_source_span'])}`;
+      return db.getCityRecord(guild,'semantic_intent_diagnostic',key)||db.saveCityRecord(guild,{
+        kind:'semantic_intent_diagnostic',key,status:'non_ic_source_span',source_event:envelope.source_event,
+        visibility:'character',subject_key:envelope.character_id,data:{version:1,index,category:'non_ic_source_span',
+          source_hash:envelope.raw_hash,authority:'Explicit OOC/quoted source is not an immediate owner declaration; independent IC spans remain eligible.'}});
+    }
     if(overlapsOwnerActionTerminal(db,guild,envelope.source_event,proposal.start,proposal.end)){
       withdrawn.add(proposal.proposal_id);
       const key=`diagnostic:${digest([envelope.source_event,index,'withdrawn_source_span'])}`;
@@ -224,6 +235,8 @@ export function acceptIntentForAdjudication(db,guild,proposalRow,scope={},resolv
     ||scene.session_id!==currentEnvelope.session_id||scene.key!==currentEnvelope.scene_id)
     throw error('Accepted intent principal or scene is stale.');
   if(proposal.framing!=='immediate')throw error('Only immediate framing can be accepted for adjudication.');
+  if(!isCharacterSourceSpan(currentEnvelope.raw_text,proposal.start,proposal.end)
+    ||sourceSpanInsideQuote(currentEnvelope.raw_text,proposal.start))throw error('Quoted or explicitly OOC source is not a character action.');
   if(overlapsConsumedSpan(currentEnvelope,proposal.start,proposal.end))
     throw error('A native-consumed source span cannot be accepted or executed again.');
   if(overlapsOwnerActionTerminal(db,guild,event.event_key,proposal.start,proposal.end))

@@ -6,7 +6,7 @@ import os from "node:os";
 import path from "node:path";
 import {spawnSync} from "node:child_process";
 
-const root=path.resolve(".."),evidence=JSON.parse(fs.readFileSync("../docs/V95_05_DEPRECATION_EVIDENCE.json","utf8"));
+const root=path.resolve(".."),evidence=JSON.parse(fs.readFileSync(new URL("./fixtures/historical/V95_05_DEPRECATION_EVIDENCE.json",import.meta.url),"utf8"));
 // V96-05R: exact one-for-one native transport fixture/API migrations, not assertion removals. Historical inventory is unchanged.
 const publicationFixtureMigrations=[{suite:'v9-publication-test',
   old:"assert.throws(()=>queueTurnPublications(db,{guild:{id:'g'},session:{id:'s'},scope:{mode:'party'},turnId:turn,result:{narration:'different'}}),/immutable|identity|payload/i);",
@@ -48,7 +48,11 @@ const semanticFixtureMigrations=[{suite:'npc-cognition-regression-test',
   {suite:'npc-cognition-regression-test',old:'assert.equal(eliasWren.decision_profile.veil_awareness,"aware");',
     current:'assert.equal(eliasWren.decision_profile.veil_awareness,"limited");'},
   {suite:'production-regression-test',old:'assert.equal(playerProposalResults[0].row.source,"player_private_scene");',
-    current:'assert.equal(playerProposalResults[0].row.source,"typed_private_proposal_v2");'}];
+    current:'assert.equal(playerProposalResults[0].row.source,"typed_private_proposal_v2");'},
+  // Existing native UA rule hierarchy predates this fixture relocation. Retain
+  // the exact assertion of scoped-ruling precedence rather than the obsolete prompt wording.
+  {suite:'rules-srd-test',old:'assert.match(ai.requests[0].input,/saved human GM rulings > supplied official online/);',
+    current:'assert.match(ai.requests[0].input,/saved scoped GM ruling > verified explicit campaign override > verified Daggerheart SRD/);'}];
 test("DEP01/02/04 retired artifacts are absent; historical hashes and all mandatory suites remain",()=>{
   for(const row of evidence.retired){assert(!fs.existsSync(path.join(root,row.file)),row.file);assert.match(row.sha256,/^[a-f0-9]{64}$/);
     assert.match(row.last_change,/^[a-f0-9]{40}$/);}
@@ -65,7 +69,7 @@ test("all original PvP inventory IDs and native exports survive consolidation",a
   const service=await import("../src/narrative-pvp.js");
   for(const name of ["proposePvp","reviewPvp","respondPvp","revisePvp","rollPvp","authorPvpNarrative","sharePvpNarrative"])
     assert.equal(typeof service[name],"function",name);
-  const matrix=fs.readFileSync("../docs/V9_REGRESSION_MATRIX.csv","utf8");assert.equal(evidence.availability.length,32);
+  const matrix=fs.readFileSync(new URL("./fixtures/historical/V9_REGRESSION_MATRIX.csv",import.meta.url),"utf8");assert.equal(evidence.availability.length,32);
   for(const row of evidence.availability)assert(matrix.includes(`,${row.old_case_id},`));
 });
 test("DEP03/06/08/09 compatibility and corrected v7 behavioral sentinel are retained",()=>{

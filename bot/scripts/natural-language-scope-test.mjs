@@ -153,7 +153,7 @@ try{
   assert.equal(db.getHandout(artifact.id).metadata.epistemic.kind,"hypothesis");assert.equal(db.getCityRecord(guild,"presentation_review",review.record_key).data.decision,"reject");
   indexWorldEvent(db,guild,{key:source.event_key,status:"retracted"});
   assert(!interpretationContext(db,guild,"owner",pc.id,"there").query_plan.aliases.length);
-  const databaseAudit=fs.readFileSync("../docs/DATABASE_USAGE_AUDIT.md","utf8");
+  const databaseAudit=fs.readFileSync(new URL("./fixtures/historical/DATABASE_USAGE_AUDIT.md",import.meta.url),"utf8");
   for(const [,table] of fs.readFileSync(schema,"utf8").matchAll(/CREATE TABLE IF NOT EXISTS (\w+)/g))
     assert(databaseAudit.includes(`\`${table}\``),`Database audit omits ${table}`);
   console.log("Natural-language scope PASS: D1-D8 grammar/candidates, scoped old recall/zero writes, proxy revocation, private native reaction/projection/replay, router matrix, unified policy, nonbinding relationships/artifacts/recaps and restart/retraction; zero live calls.");

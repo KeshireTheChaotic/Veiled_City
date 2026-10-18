@@ -36,6 +36,9 @@ suites.push("narrative-freedom-test","narrative-salience-test","narrative-deploy
 suites.push("delegation-quality-test");
 suites.push("narrative-publication-hotfix-test");
 suites.push("semantic-language-robustness-test");
+suites.push("semantic-first-residuals-test");
+suites.push("semantic-owner-appearance-test");
+suites.push("semantic-native-alias-recall-test");
 suites.push("narrative-correctness-retirement-test");
 suites.push("audience-first-framework-test","audience-first-integration-test","gm-unified-arbitration-test");
 // Critical is the release gate. Optional feature/history matrices remain executable via --extended;

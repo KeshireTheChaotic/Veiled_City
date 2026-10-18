@@ -9,7 +9,10 @@ import { visibleIncomingInjury } from "./pc-incoming.js";
 const hash=v=>createHash("sha256").update(JSON.stringify(v)).digest("hex");
 const vocabulary={
   hair:["black","brown","blond","red","gray","white","blue","green","purple","bald"],
-  coat:["black","brown","gray","white","blue","green","red","yellow"],
+  coat:["black","brown","gray","white","blue","green","red","yellow","olive","navy","cream","rust"],
+  coat_material:["canvas","wool","leather","denim","cotton","synthetic"],
+  coat_finish:["weathered","clean","faded","patched","polished"],
+  coat_detail:["patched elbows","brass buttons","rolled sleeves","broad lapels","narrow lapels"],
   disguise:["hooded","masked"],visible_condition:["injured"]
 };
 function fail(){throw Object.assign(new Error("Current owner, exact source and explicit visible fields required."),{code:"CHARACTER_OBSERVATION"});}
@@ -154,7 +157,7 @@ export function observationQueries(db,guild,intents,scope,sourceRef){
   return (intents||[]).filter(i=>i.type==="observe"&&i.framing==="immediate"&&i.source_span
     &&raw.includes(i.source_span)&&(db.getCharacter(i.target_key)?.guild_id===guild
       ||db.getNpcProfile(guild,i.target_key)||db.getSimulationEntity(guild,"location",i.target_key))).map(i=>({
-    version:1,observer:pc.id,user:scope.actorUserId,target:i.target_key,operation:i.operation||"appearance",
+    version:2,observer:pc.id,user:scope.actorUserId,target:i.target_key,operation:i.operation||"appearance",
     target_type:db.getCharacter(i.target_key)?"character":db.getNpcProfile(guild,i.target_key)?"npc":"location",
     source_ref:sourceRef,source_hash:hash(s.details),source_span:i.source_span,
     principal_revision:conversationPrincipal(db,guild,scope.actorUserId,pc.id).revision,scene:scene.key,session:scene.session_id
@@ -199,23 +202,33 @@ export function renderObservation(db,guild,query,scope){
   const name=target.name,proof_refs=[];
   const witnessed=perception(db,guild,query,scope);
   let state="not_established",text;
-  const category=({appearance:["hair","disguise"],clothing:["coat","disguise"],condition:["visible_condition"]})[query.operation];
+  // Historical queries retain their original field projection and payload.
+  // V2 adds only owner-selected nonmechanical styling, never equipment/Armor capabilities.
+  const coatFields=["coat","coat_material","coat_finish","coat_detail"],modern=query.version===2;
+  const category=({appearance:modern?["hair","disguise",...coatFields]:["hair","disguise"],
+    clothing:modern?[...coatFields,"disguise"]:["coat","disguise"],condition:["visible_condition"]})[query.operation];
   if(category){
     const selected=facts.filter(f=>category.includes(f.data.field));
     if(selected.length){
-      const descriptions=selected.map(row=>{
+      const coat=selected.find(row=>row.data.field==="coat"),styling=modern?selected.filter(row=>coatFields.includes(row.data.field)):[],
+        style=Object.fromEntries(styling.map(row=>[row.data.field,row.data.value]));
+      const descriptions=selected.filter(row=>!coat||row.data.field==="coat"||!coatFields.includes(row.data.field)).map(row=>{
         proof_refs.push(row.record_key);
         if(row.data.field==="hair")return row.data.value==="bald"?"a bald head":`${row.data.value} hair`;
         if(row.data.field==="coat"){
+          proof_refs.push(...styling.filter(other=>other.record_key!==row.record_key).map(other=>other.record_key));
+          const description=[style.coat_finish,row.data.value,style.coat_material,"coat"].filter(Boolean).join(" ")
+            +(style.coat_detail?` with ${style.coat_detail}`:"");
           const location=db.getCharacter(query.target)?.data.location;
           if(canSee&&location&&db.getSimulationEntity(guild,"location",location)){
             const weather=renderWorldObservation(db,guild,{...query,target_type:"location",target:location,operation:"appearance"},scope);
             if(weather.canSee&&weather.facts.weather==="rain"&&weather.facts.exposure==="outdoors"){
-              proof_refs.push(...weather.proof_refs);return `a rain-wet ${row.data.value} coat`;
+              proof_refs.push(...weather.proof_refs);return `a rain-wet ${description}`;
             }
           }
-          return `a ${row.data.value} coat`;
+          return `a ${description}`;
         }
+        if(coatFields.includes(row.data.field))return `${row.data.value} (${({coat_material:"coat fabric",coat_finish:"coat finish",coat_detail:"coat detail"})[row.data.field]})`;
         if(row.data.field==="disguise")return `a ${row.data.value} appearance`;
         return `an established ${row.data.value} visible condition`;
       });

@@ -7,7 +7,7 @@ import {objectiveEvidence,evidenceType} from './epistemic.js';
 import {sceneFictionHash as hash,sceneFictionFailure as fail,narrativeSourceVisible} from './scene-fiction-context.js';
 import {protectedPvpScope} from './pvp-output.js';
 import {activeCityProxy} from './city-constraints.js';
-import {disclosedNarrativeMemory} from './narrative-memory.js';
+import {selectDisclosedNarrativeMemory} from './narrative-memory.js';
 import {rankNarrativeMemory} from './narrative-salience.js';
 import {speakerBrief} from './narrative-speakers.js';
 import {directorBriefForAudience} from './narrative-director-source.js';
@@ -97,6 +97,8 @@ export function buildNarrativeContext(db,guild,scope,sourceRef,{operation='descr
   const binding={version:1,guild,session:scene.session_id,scene:scene.key,scope:{...scope},source:sourceRef,source_hash:hash(source.details),
     principal:principal?.revision||null,location,viewpoint:placed?'character':'camera',
     placement:placed?hash([p.source_event,p.location_key,p.data.zone,arrival.details]):null};
+  const memory=selectDisclosedNarrativeMemory(db,guild,scope,{limit:40,query:owner?source.details.text:'',preferLocation:location}),
+    prior=rankNarrativeMemory(db,guild,scope,memory.rows,{location,query:owner?source.details.text:'',maxChars:Math.max(3000,9000-speakerChars)});
   const packet={version:2,operation,request:owner?source.details.text:director?'Portray a contextual world response without inventing PC actions or consequences.':'Open this assembly with interesting fiction, without inventing PC co-location or cooperation.',
     viewpoint:{kind:binding.viewpoint,zone:placed?p.data.zone:null,pc_witness:!!placed},
     audience:{mode:scope.mode,unit_visibility:scope.mode==='private'?'character':'party',subject_key:scope.mode==='private'?scope.actorCharacterId:null,
@@ -106,8 +108,8 @@ export function buildNarrativeContext(db,guild,scope,sourceRef,{operation='descr
     place:{key:location||'',name:entity?.state.name||'An unestablished public setting',type:entity?.state.place_type||'unknown',
       identity_state:entity?'established_reuse_only':'unestablished',identity_rule:'Reuse established keys without fiction_delta; descriptive prose belongs in narrative_units. fiction_delta creates genuinely new identities only.'},
     observations:facts.map(f=>({source_ref:f.id,text:f.content,epistemic:evidenceType(f).kind})),npcs,
-    prior_fiction:rankNarrativeMemory(db,guild,scope,disclosedNarrativeMemory(db,guild,scope,{limit:40}),
-      {location,query:owner?source.details.text:'',maxChars:Math.max(3000,9000-speakerChars)}),unknowns:['Hidden causes, private character details and unresolved outcomes are unknown.']};
+    prior_fiction:prior,memory_selection:{...memory.selection,selected_for_prompt:prior.length,omitted_from_prompt:memory.selection.eligible-prior.length},
+    unknowns:['Hidden causes, private character details and unresolved outcomes are unknown.']};
   if(director)packet.director_brief=directorBriefForAudience(db,guild,source,scope);
   if(assembly)packet.assembly_brief=assemblyWriterBrief(db,guild,scene.session_id,scope);
   return registerNarrativeContext({db,binding,packet,scope,source,pc,sourceRef,protectedScene});

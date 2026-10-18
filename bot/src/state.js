@@ -29,6 +29,8 @@ import { relationshipProvenance, artifactProvenance, inferredSource } from "./pr
 import {captureArcCandidate} from './personal-continuity.js';
 import {ownerSemanticSource,semanticCandidateHash} from './semantic-candidate-source.js';
 import {applyOrdinaryEffects} from './ordinary-effects.js';
+import {isCharacterSourceSpan} from './source-communication.js';
+import {sourceSpanInsideQuote} from './authored-turn-envelope.js';
 
 export function summarizeRoster(rows){
   return rows.map(r=>({
@@ -443,6 +445,15 @@ export function applyAuthoritativeMutation(db,{guildId,sessionId=null,events=[],
     const outputSource=nativeDirectorNarrativeSource(narrative)||(provenance.messageId&&scope.actorCharacterId?worldInputKey(provenance.messageId,scope.actorCharacterId):null);
     content=content||nativeDirectorNarrativeContent(narrative);
     const originalNarrative=narrative&&candidateNarrative(narrative);
+    // Semantic rejection may preserve an independent conversational sibling,
+    // but must never silently bless/drop an explicitly proposed native effect.
+    // Retain the original hard rejection for quoted movement at this effect boundary.
+    const authoredInput=outputSource&&db.getWorldEvent(guildId,outputSource);
+    if(authoredInput?.kind==='ai_gm_input')for(const action of narrative?.scene_actions||[]){
+      const raw=authoredInput.details.text,span=action.source_span,start=typeof span==='string'?raw.indexOf(span):-1;
+      if(span&&start>=0&&(!isCharacterSourceSpan(raw,start,start+span.length)||sourceSpanInsideQuote(raw,start)))
+        throw Object.assign(new Error('Quoted or explicitly OOC source cannot authorize a native scene action.'),{code:'PLAYER_INTENT'});
+    }
     // Projection cannot erase the existing prohibition on bypassing governed native goal adapters.
     if(npcGoals.length&&source!=='human_gm'&&db.getCityCalendar(guildId).flags.emergent_goals===true)
       assertMutationSuccess({npcGoals:applyNpcCognitionDrafts(db,guildId,{goals:npcGoals},source,provenance).goals});

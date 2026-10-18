@@ -5,6 +5,7 @@ import {conversationPrincipal} from './conversation-principal.js';
 import {currentScene} from './scene-continuity.js';
 import {activeCityProxy} from './city-constraints.js';
 import {listNarrativeRecords,NARRATIVE_RECORD_LIMIT} from './narrative-records.js';
+import {narrativeQueryRelevance,narrativeIdentityRelevance} from './narrative-relevance.js';
 const hash=x=>createHash('sha256').update(JSON.stringify(x)).digest('hex').slice(0,40);
 const visible=(r,s)=>['party','public'].includes(r.visibility)||s.mode==='private'&&r.visibility==='character'&&r.subject_key===s.actorCharacterId;
 const records=listNarrativeRecords;
@@ -91,12 +92,17 @@ export function maintainNarrativeSalience(db,guild){
   }
 }
 export function rankNarrativeMemory(db,guild,scope,rows,{query='',location=null,maxChars=9000}={}){
-  if(!db.getCityCalendar(guild).flags.narrative_salience)return rows.slice(0,12);
+  if(!db.getCityCalendar(guild).flags.narrative_salience){
+    const selected=[];let used=0;
+    for(const row of rows){const size=JSON.stringify(row).length;if(used+size>maxChars)continue;
+      selected.push(row);used+=size;if(selected.length>=12)break;}
+    return selected;
+  }
   const ranked=rows.map(row=>{
     const unit=db.getCityRecord(guild,'narrative_unit',row.unit)?.data.unit;
     const entity=unit?.subject_key?`npc:${unit.subject_key}`:row.location?`location:${row.location}`:null;
-    const importance=entity&&narrativeImportance(db,guild,entity,scope),exact=entity&&mentions(query,names(db,guild,entity));
-    return {row,score:(exact?1000:0)+(row.location===location?500:0)+(importance?.pins.length?300:0)+(importance?.score||0),
+    const importance=entity&&narrativeImportance(db,guild,entity,scope),exact=entity&&narrativeIdentityRelevance(db,guild,entity,scope,query)>0;
+    return {row,score:narrativeQueryRelevance(row.text,query)+(exact?1000:0)+(row.location===location?500:0)+(importance?.pins.length?300:0)+(importance?.score||0),
       archived:importance?.status==='prompt_archived'&&!exact&&!importance.pins.length};
   }).filter(r=>!r.archived).sort((a,b)=>b.score-a.score||a.row.unit.localeCompare(b.row.unit));
   const selected=[];let used=0,novelty=0;

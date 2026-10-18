@@ -3,3 +3,6 @@
 # Preserve the owner's supplied Markdown hard breaks without relaxing source-code whitespace checks.
 docs/CODEX_VEILED_CITY_NARRATIVE_AUTHORITY_IMPLEMENTATION_PLAN.md whitespace=-blank-at-eol
 docs/CODEX_VEILED_CITY_10_2_DELEGATION_QUALITY_PLAN.md whitespace=-blank-at-eol
+docs/Active_Implementation/VEILED_CITY_CONSOLIDATED_MULTI_AGENT_PLAN_v1_3.md whitespace=-blank-at-eol
+docs/Active_Implementation/VEILED_CITY_COST_OPTIMIZED_IMPLEMENTATION_PLAN_v2_1_SEMANTIC_FIRST.md whitespace=-blank-at-eol
+docs/Active_Implementation/VEILED_CITY_WORLD_DIRECTOR_BIDIRECTIONAL_DESIGN_v1_2.md whitespace=-blank-at-eol

@@ -6,6 +6,8 @@ import { prepareSceneEntry } from "./scene-entry.js";
 import { captureDialogue } from "./dialogue-continuity.js";
 import {currentScene} from './scene-continuity.js';
 import {sourceSpanInsideQuote} from './authored-turn-envelope.js';
+import {isCharacterSourceSpan} from './source-communication.js';
+import {explicitSilence} from './gameplay-intake.js';
 const candidateFields={kind:{type:"string",enum:["action","entry","speech"]},source_ref:{type:"string",maxLength:200},
   source_span:{type:"string",maxLength:1500},target:{type:"string",maxLength:160},quote:{type:"string",maxLength:1000}};
 const closed=properties=>({type:'object',additionalProperties:false,properties,required:Object.keys(properties)});
@@ -32,7 +34,7 @@ export function persistAuthoredCandidates(db,guild,candidates,scope,provenance={
     ||!db.ownerAuthoredSource(guild,source.event_key,principal.user))throw new Error("Current authenticated candidate source required.");
   const authored=source.details.text;
   if(source.session_id!==db.getActiveSession(guild)?.id)throw new Error('Current candidate session required.');
-  if(/^\s*(?:ooc\b|\(\(|\/\/)/i.test(authored)&&candidates.length)throw new Error('Explicit OOC is not native authored action.');
+  if(explicitSilence(authored)&&candidates.length)throw new Error('Explicit OOC is not native authored action.');
   return candidates.map((candidate,index)=>{
     const v2=candidate.version===2,fields=v2?'end,framing,kind,quote,source_ref,source_span,start,target,version':'kind,quote,source_ref,source_span,target';
     if(Object.keys(candidate).sort().join()!==fields||!["action","entry","speech"].includes(candidate.kind)
@@ -44,6 +46,7 @@ export function persistAuthoredCandidates(db,guild,candidates,scope,provenance={
     if(!Number.isSafeInteger(start)||!Number.isSafeInteger(end)||start<0||end<=start||end>authored.length||authored.slice(start,end)!==candidate.source_span
       ||!v2&&authored.indexOf(candidate.source_span,start+1)!==-1)throw new Error('Candidate offsets/span must be unambiguous and exact.');
     if(v2&&!['immediate','hypothetical','conditional','quoted','reported','ooc'].includes(candidate.framing))throw new Error('Clause framing required.');
+    if((!v2||candidate.framing==='immediate')&&!isCharacterSourceSpan(authored,start,end))throw new Error('Explicit OOC span is not an actor declaration.');
     if((!v2||candidate.framing==='immediate')&&sourceSpanInsideQuote(authored,start))throw new Error('Quoted source span is not actor authorization.');
     if(!v2){
       // Historical producer compatibility only: inspect the containing clause, never unrelated earlier sentences.
