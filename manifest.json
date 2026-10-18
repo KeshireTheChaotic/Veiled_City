@@ -1106,8 +1106,8 @@
     },
     {
       "path": "bot/scripts/world-sanctioned-sources-test.mjs",
-      "size_bytes": 6410,
-      "sha256": "1acc1cc44d8da4850c76def7d144cfae1714a5eeb927362ab38968bcc6129d51"
+      "size_bytes": 13241,
+      "sha256": "5b8c1ef4e57a481a1cd977cd4eb50531a880fb29f1f0b1b1eeb0d2792e86eddb"
     },
     {
       "path": "bot/sql/schema.sql",
@@ -1291,8 +1291,8 @@
     },
     {
       "path": "bot/src/commands.js",
-      "size_bytes": 189318,
-      "sha256": "56b97981c4d6262556a6ef1d5323202054fabe89ecb7f1120a34bb6d99617072"
+      "size_bytes": 189641,
+      "sha256": "a63d40987d6c9c8fb559da20f624cae36e27bb838e68f2a1b9ba47a47607f73b"
     },
     {
       "path": "bot/src/concept-context.js",
@@ -1546,8 +1546,8 @@
     },
     {
       "path": "bot/src/gm.js",
-      "size_bytes": 133438,
-      "sha256": "8ed9cd8a5105e6fd76e617a4b566dc7563b682f3d6f83fcc93d4eebcf71f8c9c"
+      "size_bytes": 133637,
+      "sha256": "5bed6260748a710ef68bce041c8a68d20e77b421683181a8c6ed101f8864a87b"
     },
     {
       "path": "bot/src/handout.js",
@@ -2321,8 +2321,8 @@
     },
     {
       "path": "bot/src/world-sanctioned-sources.js",
-      "size_bytes": 4330,
-      "sha256": "13fc82074797d38b7142fe17854021a8b824913fdb093538dff382aa9b1baf85"
+      "size_bytes": 9093,
+      "sha256": "90ad0d7ea86ce1ec3259a824ea839532c67273fbdfe93abc7ef539c7580c3df6"
     },
     {
       "path": "content/CARDS/ANCESTRIES_AND_COMMUNITIES.md",
@@ -2686,8 +2686,8 @@
     },
     {
       "path": "docs/Active_Implementation/NO_DEFERRALS_LEDGER.md",
-      "size_bytes": 48494,
-      "sha256": "6c918882e2919da85d8b576764bbc312f770090aa50b6a6e3544eb8c6ca68961"
+      "size_bytes": 52661,
+      "sha256": "9a0669fb3805fafa7a5ea9a8e8e230e1ae4fbae53d73713d8c5e19b36d487c10"
     },
     {
       "path": "docs/Active_Implementation/README.md",

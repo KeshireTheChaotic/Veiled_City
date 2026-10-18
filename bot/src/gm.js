@@ -11,7 +11,7 @@ import { playerIntentSchema, PLAYER_INTENT_PROMPT, recoverPlayerIntents, autoCom
 import { tierWorldAdditions } from "./entity-memory.js";
 import { contextMemorySchema, CONTEXT_MEMORY_PROMPT } from "./context-memory.js";
 import { presentationContext } from "./presentation-evidence.js";
-import {worldHookSeedForGm} from './world-sanctioned-sources.js';
+import {worldHookSeedForGm,worldRecordOriginForGm} from './world-sanctioned-sources.js';
 import { summarizeRoster, previewAuthoritativeMutation } from "./state.js";
 import { narrativeContext } from "./character-narrative.js";
 import { validatePostTurnStateReview,POST_TURN_REVIEW_CATEGORIES } from "./director.js";
@@ -570,10 +570,10 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
     const partyState=this.db.getPartyState(guildId);
     const currentEncounter=session?this.db.getCurrentEncounter(session.id):null;
     const currentCombatants=currentEncounter?.status==="active"?this.db.listCombatants(currentEncounter.id,{includeRemoved:true}):[];
-    const canon=this.db.listCanon(guildId,{includeGM:true,limit:120});
+    const canon=this.db.listCanon(guildId,{includeGM:true,limit:120}).map(r=>({...r,authorship:worldRecordOriginForGm(this.db,guildId,'canon',r.canon_key)}));
     const rulings=this.db.searchRulesRulings(guildId,messageText);
     const actorRelationships=this.db.listRelationships(guildId,{includeGM:false,characterId:memoryId,userId:actorUserId});
-    const gmRelationships={graph:this.db.listRelationships(guildId,{includeGM:true}),perspectives:presentationContext(this.db,guildId)};
+    const gmRelationships={graph:this.db.listRelationships(guildId,{includeGM:true}).map(r=>({...r,authorship:worldRecordOriginForGm(this.db,guildId,'relationship',r.id)})),perspectives:presentationContext(this.db,guildId)};
     const gmCharacterHooks=roster.filter(r=>r.character_id).flatMap(r=>this.db.listCharacterGmHooks(guildId,r.character_id).map(h=>({character_id:r.character_id,character_name:r.name,key:h.hook_key,title:h.title,type:h.hook_type,premise:h.premise,permission:h.permission,suggested_entry:h.suggested_entry,payload:h.payload,authorship:worldHookSeedForGm(this.db,guildId,h.id)})));
     const narrativeIds=[...new Set([...roster.map(r=>r.character_id).filter(Boolean),actorKnowledgeId].filter(Boolean))];
     const characterNarratives=narrativeContext(this.db,guildId,narrativeIds,{includeGM:true,maxChars:8000});

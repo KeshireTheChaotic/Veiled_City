@@ -26,7 +26,7 @@ import { chunkDiscordLines } from "./discord/chunking.js";
 import { deliverInteractionText } from "./discord/delivery.js";
 import {deliverVerifiedAssembly,prepareAssemblyReconciliation,reconcileAssemblyNotSent} from './assembly-publications.js';
 import {normalizeGmHookImport} from './gm-hook-import.js';
-import {importSanctionedGmHooks} from './world-sanctioned-sources.js';
+import {importSanctionedGmHooks,sanctionedWorldMutation} from './world-sanctioned-sources.js';
 import {certifyAssemblyPlan,assemblyPlanFreshness} from './assembly-context.js';
 import {assemblyHasHistory,prepareAssemblyRefresh,refreshAssemblyPlan} from './assembly-planning.js';
 import {prepareSceneSetup,confirmSceneSetup} from './scene-setup.js';
@@ -1618,12 +1618,12 @@ GM notes: ${a.draft.gm_notes}`:""}`.slice(0,1950):"No aftermath draft exists for
         const ft=interaction.options.getString("from_type",true), tt=interaction.options.getString("to_type",true);
         const from=resolveEndpoint(db,interaction.guildId,ft,interaction.options.getString("from",true));
         const to=resolveEndpoint(db,interaction.guildId,tt,interaction.options.getString("to",true));
-        const row=db.upsertRelationship(interaction.guildId,{fromType:ft,fromKey:from.key,fromLabel:from.label,toType:tt,toKey:to.key,toLabel:to.label,relationshipType:interaction.options.getString("relation",true),score:interaction.options.getInteger("score",true),visibility:interaction.options.getString("visibility")||"party",note:interaction.options.getString("note")||"",source:"human_gm",sourceCharacterId:ft==="character"?from.key:null});
+        const row=sanctionedWorldMutation(db,interaction,isGM,'relationship',()=>db.upsertRelationship(interaction.guildId,{fromType:ft,fromKey:from.key,fromLabel:from.label,toType:tt,toKey:to.key,toLabel:to.label,relationshipType:interaction.options.getString("relation",true),score:interaction.options.getInteger("score",true),visibility:interaction.options.getString("visibility")||"party",note:interaction.options.getString("note")||"",source:"human_gm",sourceCharacterId:ft==="character"?from.key:null}));
         await interaction.reply({content:`Saved relationship:\n${relationshipLine(row)}`,ephemeral:true}); return true;
       }
       if(sub==="adjust"){
         const q=interaction.options.getString("id",true).toLowerCase(); const rows=db.listRelationships(interaction.guildId,{includeGM:true}); const row=rows.find(r=>r.id.toLowerCase().startsWith(q)); if(!row) throw new Error("Relationship ID not found.");
-        const next=db.adjustRelationship(row.id,interaction.options.getInteger("delta",true)); await interaction.reply({content:`Updated relationship:\n${relationshipLine(next)}`,ephemeral:true}); return true;
+        const next=sanctionedWorldMutation(db,interaction,isGM,'relationship',()=>db.adjustRelationship(row.id,interaction.options.getInteger("delta",true))); await interaction.reply({content:`Updated relationship:\n${relationshipLine(next)}`,ephemeral:true}); return true;
       }
       if(sub==="import-hooks"){
         const q=interaction.options.getString("character"); let cid=null; if(q){const c=db.findGuildCharacter(interaction.guildId,q,{includeClosed:true}); if(!c) throw new Error("Campaign character not found."); cid=c.id;}
@@ -1944,7 +1944,7 @@ GM notes: ${a.draft.gm_notes}`:""}`.slice(0,1950):"No aftermath draft exists for
     if(group==="canon"&&sub==="set"){
       if(!isGM(db,interaction)) throw new Error("GM/admin permission required.");
       const s=db.getActiveSession(interaction.guildId);
-      const r=db.proposeCanon(interaction.guildId,{key:interaction.options.getString("key",true),value:interaction.options.getString("value",true),visibility:interaction.options.getString("visibility")||"party",sessionId:s?.id||null,sourceType:"human_gm",sourceId:interaction.user.id,provenance:"/vc-canon set"});
+      const r=sanctionedWorldMutation(db,interaction,isGM,'canon',()=>db.proposeCanon(interaction.guildId,{key:interaction.options.getString("key",true),value:interaction.options.getString("value",true),visibility:interaction.options.getString("visibility")||"party",sessionId:s?.id||null,sourceType:"human_gm",sourceId:interaction.user.id,provenance:"/vc-canon set"}));
       if(r.status==="conflict") await interaction.reply({content:`⚠️ Canon conflict created: \`${r.conflict.id.slice(0,8)}\`\nExisting: ${r.existing.value}\nProposed: ${r.conflict.proposed_value}\nResolve with \`/vc-canon resolve\`.`,ephemeral:true});
       else await interaction.reply({content:`Canon **${r.status}**: \`${interaction.options.getString("key",true).toLowerCase()}\` = ${interaction.options.getString("value",true)}`,ephemeral:true});
       return true;
@@ -1988,7 +1988,7 @@ GM notes: ${a.draft.gm_notes}`:""}`.slice(0,1950):"No aftermath draft exists for
       const rows=db.listCanonProposals(interaction.guildId,{status:"all",limit:100});
       const row=byPrefix(rows,interaction.options.getString("proposal_id",true)); if(!row) throw new Error("Canon proposal not found.");
       db.snapshotCampaign(interaction.guildId,{label:`Pre-proposal ${row.canon_key}`,reason:`Before resolving canon proposal ${row.id}`,createdBy:interaction.user.id});
-      const result=db.resolveCanonProposal(interaction.guildId,row.id,{resolution:interaction.options.getString("resolution",true),customValue:interaction.options.getString("custom_value")||"",visibility:interaction.options.getString("visibility")||null,actorId:interaction.user.id,note:interaction.options.getString("note")||""});
+      const result=sanctionedWorldMutation(db,interaction,isGM,'canon',()=>db.resolveCanonProposal(interaction.guildId,row.id,{resolution:interaction.options.getString("resolution",true),customValue:interaction.options.getString("custom_value")||"",visibility:interaction.options.getString("visibility")||null,actorId:interaction.user.id,note:interaction.options.getString("note")||""}));
       const p=result.proposal;
       if(result.status==="conflict"){
         await postGmLog({db,guild:interaction.guild,title:"Canon proposal conflict",details:`${p.character_name}: ${p.canon_key} → ${p.proposed_value}${p.proposed_by_user_id?`\nProposed by: <@${p.proposed_by_user_id}>`:""}\nConflict ${result.conflict.id.slice(0,8)} created for GM resolution.`});
@@ -2003,7 +2003,7 @@ GM notes: ${a.draft.gm_notes}`:""}`.slice(0,1950):"No aftermath draft exists for
       if(!isGM(db,interaction)) throw new Error("GM/admin permission required.");
       const rows=db.listCanonConflicts(interaction.guildId); const row=byPrefix(rows,interaction.options.getString("conflict_id",true)); if(!row) throw new Error("Pending canon conflict not found.");
       db.snapshotCampaign(interaction.guildId,{label:`Pre-canon ${row.canon_key}`,reason:`Before resolving canon conflict ${row.id}`,createdBy:interaction.user.id});
-      const event=db.resolveCanonConflict(interaction.guildId,row.id,{resolution:interaction.options.getString("resolution",true),customValue:interaction.options.getString("custom_value")||"",actorId:interaction.user.id});
+      const event=sanctionedWorldMutation(db,interaction,isGM,'canon',()=>db.resolveCanonConflict(interaction.guildId,row.id,{resolution:interaction.options.getString("resolution",true),customValue:interaction.options.getString("custom_value")||"",actorId:interaction.user.id}));
       const proposalNote=row.source_type==="canon_proposal"&&row.source_id?` Imported proposal \`${row.source_id.slice(0,8)}\` was updated automatically.`:"";
       await postGmLog({db,guild:interaction.guild,title:"Canon conflict resolved",details:`${row.canon_key} → ${event?.value||"existing canon retained"}${proposalNote}`});
       await interaction.reply({content:`Resolved **${row.canon_key}** → ${event?.value||row.existing_value}.${proposalNote}`,ephemeral:true});

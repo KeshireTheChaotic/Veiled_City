@@ -48,3 +48,57 @@ export function worldHookSeedForGm(db,guild,hookId){
     source_ref:verified?.source_event||null,execution_authority:false,publication_authority:false,
     disposition:'GM-private proposal/premise only; independent native materialization and disclosure are required.'};
 }
+function nativeRecord(db,guild,kind,key){
+  const row=kind==='canon'?db.currentCanon(guild,key):kind==='relationship'?db.getRelationship(key):null;
+  return row?.guild_id===guild?row:null;
+}
+function recordTerms(db,guild,kind,key){
+  const r=nativeRecord(db,guild,kind,key);if(!r)return null;
+  if(kind==='canon')return r.status==='current'?[r.id,r.canon_key,r.value,r.visibility,r.source_type,r.source_id,r.provenance,r.supersedes_id]:null;
+  if(r.evidence_active===false)return null;
+  if([['from',r.from_type],['to',r.to_type]].some(([side,type])=>type==='character'&&db.getCharacter(r[`${side}_key`])?.guild_id!==guild))return null;
+  return [r.id,r.from_type,r.from_key,r.from_label,r.to_type,r.to_key,r.to_label,r.relationship_type,r.score,r.visibility,r.note,
+    r.source,r.source_character_id,r.provenance_json,
+    r.from_type==='character'?db.getCharacter(r.from_key)?.owner_user_id:null,
+    r.to_type==='character'?db.getCharacter(r.to_key)?.owner_user_id:null];
+}
+function verifiedRecordOrigin(db,guild,row,kind,key){
+  const d=row?.data,target=recordTerms(db,guild,kind,key),event=row&&db.getWorldEvent(guild,row.source_event);
+  return !!(target&&d?.version===1&&d.issuer===issuer&&d.record_kind===kind&&d.record_key===key&&d.record_hash===hash(target)
+    &&d.origin===(kind==='canon'?'approved_canon':'authorized_relationship')
+    &&d.effect_scope===(kind==='canon'?'canon_entry_only':'directional_connection_only')
+    &&d.execution_authority===false&&d.publication_authority===false&&d.authorized_by&&d.source_interaction
+    &&row.status==='verified_origin'&&row.record_key===`world-sanctioned-origin:${hash([kind,key,hash(target)])}`
+    &&event?.status==='active'&&event.kind==='native_sanctioned_world_origin'&&event.source_id===issuer
+    &&event.event_key===`${row.record_key}:source`&&event.visibility===row.visibility&&event.details.payload_hash===hash(d));
+}
+/** Only native command code supplies authorize/mutate callbacks. JSON booleans, labels and proposed results are not callable. */
+export function sanctionedWorldMutation(db,interaction,authorize,kind,mutate){
+  authenticatedImport(db,interaction,authorize);
+  if(!['canon','relationship'].includes(kind)||typeof mutate!=='function')throw new Error('Closed native sanctioned operation required.');
+  const guild=interaction.guildId;
+  return db.transaction(()=>{
+    const result=mutate();if(result?.then)throw new Error('Native sanctioned transaction must be synchronous.');
+    const target=kind==='relationship'?result:result?.canon_key?result:['accepted','unchanged'].includes(result?.status)?result.event:null;
+    if(!target)return result; // Rejection/conflict never certifies proposed truth.
+    const ref=kind==='canon'?target.canon_key:target.id,current=nativeRecord(db,guild,kind,ref),snapshot=recordTerms(db,guild,kind,ref);
+    if(!snapshot||current.id!==target.id)throw new Error('Current native sanctioned record required.');
+    const key=`world-sanctioned-origin:${hash([kind,ref,hash(snapshot)])}`,prior=db.getCityRecord(guild,'world_sanctioned_origin',key);
+    if(prior){if(!verifiedRecordOrigin(db,guild,prior,kind,ref))throw new Error('Sanctioned source reconciliation required.');return result;}
+    const visibility=['party','public'].includes(current.visibility)?current.visibility:'gm',
+      data={version:1,issuer,origin:kind==='canon'?'approved_canon':'authorized_relationship',record_kind:kind,record_key:ref,
+        record_hash:hash(snapshot),authorized_by:interaction.user.id,source_interaction:interaction.id,
+        effect_scope:kind==='canon'?'canon_entry_only':'directional_connection_only',execution_authority:false,publication_authority:false};
+    const event=indexWorldEvent(db,guild,{key:`${key}:source`,kind:'native_sanctioned_world_origin',title:'Native reviewed scoped world source',
+      source_id:issuer,visibility,details:{payload_hash:hash(data)}},issuer);
+    db.saveCityRecord(guild,{kind:'world_sanctioned_origin',key,status:'verified_origin',visibility,source_event:event.event_key,data});return result;
+  });
+}
+/** Metadata for the private GM planner, not an endpoint, PC agency or disclosure grant. */
+export function worldRecordOriginForGm(db,guild,kind,key){
+  const rows=listNarrativeRecords(db,guild,'world_sanctioned_origin').filter(r=>r.data.record_kind===kind&&r.data.record_key===key),
+    verified=rows.find(r=>verifiedRecordOrigin(db,guild,r,kind,key));
+  return {origin:kind==='canon'?'approved_canon':'authorized_relationship',status:verified?'verified_native_source':rows.length?'held_source':'legacy_unverified_source',
+    source_ref:verified?.source_event||null,effect_scope:kind==='canon'?'canon_entry_only':'directional_connection_only',
+    execution_authority:false,publication_authority:false};
+}
