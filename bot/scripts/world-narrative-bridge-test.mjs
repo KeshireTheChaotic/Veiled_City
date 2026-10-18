@@ -12,10 +12,10 @@ import {setup,run} from './narrative-fixtures.mjs';
 import {adjudicateAcceptedIntent} from '../src/rules-arbitration.js';
 import {FakeResponses} from './contract-fixtures.mjs';
 import {candidate} from './narrative-fixtures.mjs';
-import {canonicalNarrativeCause,revalidateWorldNarrativeSignal,worldNarrativeBridgePacket} from '../src/world-narrative-bridge.js';
+import {canonicalNarrativeCause,revalidateWorldNarrativeSignal,worldNarrativeBridgePacket,worldDirectorBridgeBeats} from '../src/world-narrative-bridge.js';
 import {captureWorldInput,applyAutonomousWorld,configureWorldAuthority} from '../src/autonomous-world.js';
 import {persistPlayerIntents} from '../src/typed-intents.js';
-import {bindDirectorNarrativeSource,directorBriefForAudience} from '../src/narrative-director-source.js';
+import {bindDirectorNarrativeSource,directorBriefForAudience,nativeDirectorNarrativeSource} from '../src/narrative-director-source.js';
 import {buildNarrativeContext} from '../src/narrative-authority-context.js';
 import {authorNarrativeRequests,establishNarrativeUnits} from '../src/narrative-authority.js';
 import {establishNarrativeEntity} from '../src/autonomous-world.js';
@@ -273,6 +273,48 @@ test('WD bridge metadata reaches the existing GM provider request without anothe
   catch(error){throw new Error(`${error.message}; correction: ${ai.requests.at(-1)?.input.split('STRUCTURED TURN CORRECTION:').at(-1).slice(0,550)}`,{cause:error});}
   assert.equal(ai.requests.length,1);assert(ai.requests[0].input.includes('narrative_signal_v1'));
   assert.equal(f.db.db.prepare('SELECT COUNT(*) n FROM rolls').get().n,1);
+}));
+
+function inactiveDirector(){return {act:false,public_narration:'',narrative_claims:[],private_messages:[],events:[],handouts:[],relationships:[],
+  npc_memories:[],npc_knowledge:[],npc_goals:[],simulation_updates:[],confidence:100,gm_notes:'No world action.'};}
+function providerBridge(request){
+  const line=request.input.split('\n').find(s=>s.startsWith('WORLD NARRATIVE BRIDGE ('));assert(line);return JSON.parse(line.slice(line.indexOf('{')));
+}
+test('WD private production Director receives exactly its owner-scoped native bridge, not default party context',()=>nativeFixture(async f=>{
+  f.db.setCityCalendar(f.guild,{flags:{...f.db.getCityCalendar(f.guild).flags,narrative_authority:true}});
+  const x=resolve(f,true),expected=worldNarrativeBridgePacket(f.db,f.guild,x.scope);assert.equal(expected.signals.length,1);
+  const ai=new FakeResponses([inactiveDirector()]),gm=new GMService({db:f.db,content:new ContentIndex(path.resolve('../content')),ai,
+    config:{gmModel:'offline',maxRecentMessages:2,maxContentChunks:1}}),
+    result=await gm.runWorldDirector({guildId:f.guild,layer:'scene',trigger:{scope:'private',actor_user_id:x.pc.owner_user_id,actor_character_id:x.pc.id}});
+  assert.equal(ai.requests.length,1);const seen=providerBridge(ai.requests[0]);
+  assert.deepEqual(seen.signals,expected.signals,'A private Director must receive the private native proof it is later bound to.');
+  const source=f.db.getWorldEvent(f.guild,nativeDirectorNarrativeSource(result));assert.deepEqual(source.details.world_bridge.signals,seen.signals);
+  assert.equal(f.db.db.prepare('SELECT COUNT(*) n FROM rolls').get().n,1);
+}));
+
+test('WD production Director seals the actual pre-provider bridge, never a changed post-response snapshot',()=>nativeFixture(async f=>{
+  const {x}=move(f);f.db.setCityCalendar(f.guild,{flags:{...f.db.getCityCalendar(f.guild).flags,gm_discretion:false}});
+  const expected=worldNarrativeBridgePacket(f.db,f.guild,x.scope);assert.equal(expected.signals.length,1);
+  const ai=new FakeResponses([inactiveDirector()]),original=ai.responses.create;
+  ai.responses.create=async request=>{const response=await original(request);
+    indexWorldEvent(f.db,f.guild,{key:expected.signals[0].causation_ref,status:'retracted'});return response;};
+  const gm=new GMService({db:f.db,content:new ContentIndex(path.resolve('../content')),ai,config:{gmModel:'offline',maxRecentMessages:2,maxContentChunks:1}}),
+    result=await gm.runWorldDirector({guildId:f.guild,layer:'scene',trigger:{scope:'party'}}),seen=providerBridge(ai.requests[0]),
+    source=f.db.getWorldEvent(f.guild,nativeDirectorNarrativeSource(result));
+  assert.equal(ai.requests.length,1);assert.deepEqual(seen.signals,expected.signals);
+  assert.deepEqual(source.details.world_bridge.signals,seen.signals,'Response cannot claim native context the model never received.');
+  const scope={mode:'party',actorUserId:null,actorCharacterId:null};
+  assert.throws(()=>directorBriefForAudience(f.db,f.guild,source,scope),/stale_director_evidence/);
+  const sidecar=worldDirectorBridgeBeats(f.db,f.guild,source,scope);
+  assert.equal(sidecar.beats.length,0);assert.equal(sidecar.held,1);assert.equal(f.db.db.prepare('SELECT COUNT(*) n FROM rolls').get().n,0);
+}));
+
+test('WD native source cannot bind a forwarded private or fabricated packet as party context',()=>nativeFixture(f=>{
+  const x=resolve(f,true),privatePacket=worldNarrativeBridgePacket(f.db,f.guild,x.scope),content=new ContentIndex(path.resolve('../content'));
+  assert(privatePacket.signals.length);
+  assert.throws(()=>bindDirectorNarrativeSource(f.db,f.guild,{}, {mode:'party'},'scene',{},content,privatePacket),/context_mismatch/);
+  const party=worldNarrativeBridgePacket(f.db,f.guild,{mode:'party'});party.signals=privatePacket.signals;
+  assert.throws(()=>bindDirectorNarrativeSource(f.db,f.guild,{}, {mode:'party'},'scene',{},content,party),/context_mismatch/);
 }));
 test('WD bridge no-session reports remain empty rather than breaking unrelated operational reads',()=>nativeFixture(f=>{
   f.db.endSession(f.guild);assert.deepEqual(worldNarrativeBridgePacket(f.db,f.guild,{mode:'party'}).signals,[]);

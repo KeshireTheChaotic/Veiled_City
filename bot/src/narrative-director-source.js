@@ -47,10 +47,12 @@ export function directorBriefForAudience(db,guild,source,scope){
   }
   return brief;
 }
-export function bindDirectorNarrativeSource(db,guild,result,scope,layer,trigger,content){
+export function bindDirectorNarrativeSource(db,guild,result,scope,layer,trigger,content,bridgePacket=null){
+  const currentBridge=worldNarrativeBridgePacket(db,guild,scope),bridge=bridgePacket??currentBridge;
+  if(hash(bridge)!==hash(currentBridge))throw sceneFictionFailure('native_director_bridge_context_mismatch');
   const scene=currentScene(db,guild),details={version:2,scope,layer,scene:scene.key,session:scene.session_id,
     trigger_hash:createHash('sha256').update(JSON.stringify(trigger)).digest('hex'),clock:db.getSimulationClock(guild),
-    dramatic_brief:dramaticBrief(db,guild,result,scope,trigger),world_bridge:{version:1,signals:worldNarrativeBridgePacket(db,guild,scope).signals}};
+    dramatic_brief:dramaticBrief(db,guild,result,scope,trigger),world_bridge:{version:1,signals:structuredClone(bridge.signals)}};
   const key=`director-fiction:${createHash('sha256').update(JSON.stringify(details)).digest('hex')}`;
   const event=indexWorldEvent(db,guild,{key,kind:'native_director_narrative_scope',title:'Native Director fiction scope, not PC intent or consequence',
     source_id:'native:director',visibility:scope.mode==='private'?'character':'party',subject_key:scope.actorCharacterId||null,

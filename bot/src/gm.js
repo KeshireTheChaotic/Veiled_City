@@ -1070,13 +1070,16 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
       return {act:false,public_narration:"",narrative_claims:[],private_messages:[],events:[],handouts:[],relationships:[],
         npc_memories:[],npc_knowledge:[],npc_goals:[],simulation_updates:[],confidence:100,gm_notes:"GM scene cues hold background pressure; preserve PC dialogue."};
     const directorActor=trigger?.scope==="private"&&trigger?.actor_user_id?String(trigger.actor_user_id):"__world_director__";
-    const ctx=this.buildContext(guildId,directorActor,`${layer} ${JSON.stringify(trigger)}`,actorAssignment,{worldDirector:true});
     const creativeScope={mode:trigger.scope||'party',actorUserId:trigger.actor_user_id||null,actorCharacterId:trigger.actor_character_id||null};
+    const ctx=this.buildContext(guildId,directorActor,`${layer} ${JSON.stringify(trigger)}`,actorAssignment,{worldDirector:true,scope:creativeScope.mode});
     let arbitrationOrigin=null,nativeShell=null;
-    if(this.db.getCityCalendar(guildId).flags.narrative_authority&&this.db.getCityCalendar(guildId).flags.gm_discretion){
-      nativeShell={act:false};const ref=bindDirectorNarrativeSource(this.db,guildId,nativeShell,creativeScope,layer,trigger,this.content);
-      try{arbitrationOrigin=createArbitrationOrigin(this.db,guildId,creativeScope,ref);}
-      catch(error){if(!['SCENE_FICTION','GM_ARBITRATION'].includes(error.code))throw error;nativeShell=null;}
+    if(this.db.getCityCalendar(guildId).flags.narrative_authority){
+      nativeShell={act:false};
+      const ref=bindDirectorNarrativeSource(this.db,guildId,nativeShell,creativeScope,layer,trigger,this.content,ctx.world_narrative_bridge);
+      if(this.db.getCityCalendar(guildId).flags.gm_discretion){
+        try{arbitrationOrigin=createArbitrationOrigin(this.db,guildId,creativeScope,ref);}
+        catch(error){if(!['SCENE_FICTION','GM_ARBITRATION'].includes(error.code))throw error;}
+      }
     }
     const layerRules={
       round:[
@@ -1121,10 +1124,11 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
     const req={model:layer==="downtime"?this.config.downtimeModel:this.config.gmModel,input:prompt+(arbitrationOrigin?`\n${UNIFIED_ARBITRATION_PROMPT}\n${JSON.stringify(arbitrationPromptBoard(this.db,guildId,arbitrationOrigin))}`:''),max_output_tokens:layer==="downtime"?this.config.downtimeMaxOutputTokens:Math.min(this.config.structuredRetryMaxTokens||6000,2200),text:{format:{type:"json_schema",name:`world_director_${layer}`,strict:true,schema:currentDirectorSchema}}};
     if(this.config.reasoningEffort) req.reasoning={effort:this.config.reasoningEffort};
     const result=await this.requestStructured(req,{guildId,label:`world director ${layer}`,signal:directorSignal});
-    if(arbitrationOrigin){bindArbitrationTurn(result,arbitrationOrigin);inheritDirectorNarrativeSource(result,nativeShell);}
+    if(arbitrationOrigin)bindArbitrationTurn(result,arbitrationOrigin);
+    if(nativeShell)inheritDirectorNarrativeSource(result,nativeShell);
     const authoringBudget={used:false};
     if(this.db.getCityCalendar(guildId).flags.narrative_authority){
-      const nativeSource=nativeDirectorNarrativeSource(result)||bindDirectorNarrativeSource(this.db,guildId,result,creativeScope,layer,trigger,this.content);
+      const nativeSource=nativeDirectorNarrativeSource(result);
       coordinateNarrative(this.db,guildId,result,{scope:creativeScope,sourceRef:nativeSource,director:true});
       await authorNarrativeRequests({db:this.db,guild:guildId,result,scope:creativeScope,sourceRef:nativeSource,budget:authoringBudget,
         generate:packet=>this.generateNarrative(guildId,packet,directorSignal,layer==='downtime'?'downtime':'director')});
