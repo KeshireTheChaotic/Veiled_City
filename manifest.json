@@ -710,6 +710,11 @@
       "sha256": "1a478837a2a03b6907eb6cc3393d94a65f8924f7433c3f371139e06be6575352"
     },
     {
+      "path": "bot/scripts/session-opening-test.mjs",
+      "size_bytes": 6986,
+      "sha256": "28a8787e46ec935393b9a2d5c944a1d80fdc77c166e168ad31076430ca892fa1"
+    },
+    {
       "path": "bot/scripts/session2-message-contract-test.mjs",
       "size_bytes": 1505,
       "sha256": "c892737bf35d820a00ba553de684c360919a7d93fc3b33f97bd9387d898b7001"
@@ -1096,8 +1101,8 @@
     },
     {
       "path": "bot/scripts/validate-offline.mjs",
-      "size_bytes": 11360,
-      "sha256": "c4542b2012ed3ad15da22d73e3269994293e7160377142405e3c4682dbf9fa49"
+      "size_bytes": 11397,
+      "sha256": "688a7f81bddd6ec75a8f79c7991c8bd528fb2afdea42293505dfba28aab71195"
     },
     {
       "path": "bot/scripts/world-authorship-test.mjs",
@@ -1311,8 +1316,8 @@
     },
     {
       "path": "bot/src/commands.js",
-      "size_bytes": 191654,
-      "sha256": "e611f1ec9706733d85a3fc67a82a606cf60f9115751b98ee8965efa5a7f8be7b"
+      "size_bytes": 191776,
+      "sha256": "fb75e6fffcd1d09a3972a1447c52c8e775d8fdc26931bc11a7984facdbe737ff"
     },
     {
       "path": "bot/src/concept-context.js",
@@ -1566,8 +1571,8 @@
     },
     {
       "path": "bot/src/gm.js",
-      "size_bytes": 135132,
-      "sha256": "949f526d6d89dd57c445238dc500113f02e96272ff2d16028c72d4223dc84baf"
+      "size_bytes": 135269,
+      "sha256": "3d28b6f7f39980024bbb4b7ed5432da5e03ba6e728908e88cfeed5a706766653"
     },
     {
       "path": "bot/src/handout.js",
@@ -2205,6 +2210,11 @@
       "sha256": "48a26f6f9c13eedf8013fbb9a36cff0f49cc98c6d17637f913c120986d683fc4"
     },
     {
+      "path": "bot/src/session-opening.js",
+      "size_bytes": 4592,
+      "sha256": "a29fbb9fb016f22e006ffa167dfd58e478aeea7ddf5fc0ffe99c169bb5c5f3ce"
+    },
+    {
       "path": "bot/src/simulation-commands.js",
       "size_bytes": 5283,
       "sha256": "f9bd110be3714fe4a12b73f6b45344d8e42901bc283ad8e80a0094128afb14a9"
@@ -2731,8 +2741,8 @@
     },
     {
       "path": "docs/Active_Implementation/NO_DEFERRALS_LEDGER.md",
-      "size_bytes": 107506,
-      "sha256": "7de5f4f7929fbf1d09f33d0f9c05c4a7b4398aa0731b77c0de02b1746a733252"
+      "size_bytes": 111801,
+      "sha256": "15f6d130108b3dc9930f0af4fb85b929dd54b9669463febae24f63b8ed123654"
     },
     {
       "path": "docs/Active_Implementation/README.md",

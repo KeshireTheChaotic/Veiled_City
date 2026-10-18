@@ -139,6 +139,7 @@ bot/scripts/semantic-native-alias-recall-test.mjs
 bot/scripts/semantic-owner-appearance-test.mjs
 bot/scripts/semantic-proposal-fixtures.mjs
 bot/scripts/session-opening-attendance-test.mjs
+bot/scripts/session-opening-test.mjs
 bot/scripts/session2-message-contract-test.mjs
 bot/scripts/session2-replay-test.mjs
 bot/scripts/session5-benchmark.mjs
@@ -438,6 +439,7 @@ bot/src/semantic-engagement.js
 bot/src/serial-queue.js
 bot/src/session-briefs.js
 bot/src/session-opening-attendance.js
+bot/src/session-opening.js
 bot/src/simulation-commands.js
 bot/src/simulation-motivation.js
 bot/src/simulation-schema.js

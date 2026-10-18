@@ -1185,7 +1185,6 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
       return {public_opening:"",convergence_goal:"Established party resumes play.",character_entries:[],bonds:[],gm_notes:"No convergence scene required."};
     }
     const roster=this.db.roster(session.id).filter(r=>["present","guest","late"].includes(r.presence) && r.character_id);
-    if(roster.length<2) throw new Error("At least two present characters are required to generate a convergence scene.");
     const partyState=this.db.getPartyState(guildId);
     const hookInputs=assemblyInputs(this.db,guildId,session),inputFingerprint=hookHash(hookInputs);
     const facts=this.db.factsFor(guildId,"",{includeGM:true,limit:120});
@@ -1196,6 +1195,7 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
     const prompt=[
       "You are Veilkeeper's multiplayer party-convergence planner.",
       "Create ONE credible Veiled City opening that gives every present character an independent reason to enter the same situation.",
+      "With zero attendees, prepare a GM-owned camera opening with no PC, arrival, personal hook, bond or party claim. With one attendee, prepare one independent private opportunity, not forced convergence or cooperation. Never invent missing participants.",
       "Do not assume unrelated PCs already know, trust, like, or work for one another. Do not choose any PC's dialogue, thoughts, promises, or decision to join.",
       "Use each character's background, Home, Person, Obligation, Opening Status, goals, unresolved incident, GM hooks, faction connections, entry hooks, notes, and existing campaign facts when present.",
       "The convergence should progress from ASSEMBLY (same incident) toward CONVERGED (overlapping immediate objectives). The players decide whether it becomes a lasting PARTY.",

@@ -47,6 +47,7 @@ import { handleSimulationCommand } from "./simulation-commands.js";
 import { handleCityCommand } from "./city-commands.js";
 import { handleStoryCommand } from "./story-commands.js";
 import { registerOpeningAttendance, carryOpeningAttendance, prepareOpeningEntryOpportunity } from "./session-opening-attendance.js";
+import {scheduleSessionOpening} from './session-opening.js';
 import { recordCharacterArrival,scenePresence } from "./scene-continuity.js";
 import { personalCharacter, personalArc, discoverPersonal, personalInbox } from "./personal-continuity.js";
 import { consentOffers } from "./consent-native.js";
@@ -916,6 +917,7 @@ async function executeCommand(interaction,{db,gm,voice=null}){
         const carried=carryOpeningAttendance(db,interaction.guildId,session);
         for(const p of db.listPlayers(interaction.guildId)) if(!carried.carried.some(id=>db.getCharacter(id)?.owner_user_id===p.discord_user_id))
           db.setPresence(session.id,p.discord_user_id,"absent","offscreen",null,"Not checked in.");
+        scheduleSessionOpening(db,interaction,session,isGM);
         return {s:session,attendance:carried};
       });
       const next=s.assembly_phase==="party"
