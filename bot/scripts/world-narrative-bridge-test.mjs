@@ -23,8 +23,10 @@ import {canonicalInterestEvidence,noteNarrativeInterest} from '../src/narrative-
 import {unit} from './narrative-fixtures.mjs';
 import {indexWorldEvent} from '../src/city-calendar.js';
 import {sceneFictionHash} from '../src/scene-fiction-context.js';
-import {currentScene,scenePresence} from '../src/scene-continuity.js';
+import {currentScene,scenePresence,recordScenePresence} from '../src/scene-continuity.js';
 import {historicalActionSource} from '../src/action-consent.js';
+import {persistTypedDialogue} from '../src/typed-intents.js';
+import {actorEvidenceVisible} from '../src/npc-cognition-projection.js';
 function packet(f,pc=f.pcs[0],mode='party'){
   const gm=new GMService({db:f.db,content:new ContentIndex(path.resolve('../content')),ai:null,config:{maxRecentMessages:2,maxContentChunks:1}});
   return gm.buildContext(f.guild,pc.owner_user_id,'What happens next?',null,{scope:mode}).world_narrative_bridge;
@@ -127,6 +129,83 @@ test('WD bridge keeps an owner private arrival out of party signals and retains 
   assert.equal(packet(f,f.pcs[1],'private').signals.filter(s=>s.kind==='scene_transition').length,0,'private transition does not cross owners');
   assert.equal(worldNarrativeBridgePacket(f.db,f.guild,{mode:'party'}).signals.filter(s=>s.kind==='scene_transition').length,0,
     'actorless party projection excludes private owner transition');
+}));
+function dialogue(f,{privateScene=false,id='bridge-dialogue'}={}){
+  const text='I ask the woman behind the counter why the noise',x=setup(f,{text,privateScene,messageId:id});
+  f.db.setCityCalendar(f.guild,{flags:{...f.db.getCityCalendar(f.guild).flags,natural_language:true,dialogue_history:true,scene_continuity:true}});
+  f.db.upsertNpcProfile(f.guild,{npcKey:'attendant',displayName:'Inez',role:'woman behind the counter'});
+  f.db.setSimulationEntity(f.guild,'npc','attendant',{location_key:'terminal',visibility:privateScene?'character':'party',subject_character_id:privateScene?x.pc.id:null,public_role:'woman behind the counter'});
+  const presence=indexWorldEvent(f.db,f.guild,{key:`dialogue-npc:${id}`,kind:'observation',title:'Native dialogue listener presence',source_id:'native:fixture',
+    session_id:f.session.id,scene:currentScene(f.db,f.guild).key,location_key:'terminal',visibility:privateScene?'character':'party',subject_key:privateScene?x.pc.id:null,
+    truth_status:'observed',details:{}},'native:fixture');
+  recordScenePresence(f.db,f.guild,{entity_type:'npc',entity_key:'attendant',location_key:'terminal',zone:'interior',source_event:presence.event_key,
+    visibility:presence.visibility,subject_key:presence.subject_key,accepted_by:'native:fixture'},'native:fixture');
+  const intent={...candidate(text).player_intents[0],type:'speak',operation:'conversation',target_key:'attendant',target_name:'the woman behind the counter',utterance:'why the noise'};
+  const [accepted]=persistPlayerIntents(f.db,f.guild,[intent],x.scope,{messageId:x.messageId}),speech=persistTypedDialogue(f.db,f.guild,[intent],x.scope,{messageId:x.messageId})[0];
+  assert(speech,'native typed speech producer should create the actual authored_speech receipt');
+  const memories=f.db.listNpcMemories(f.guild,'attendant',{status:'active',limit:100}).filter(m=>m.source_ref===speech.event_key);
+  assert.equal(memories.length,1);assert.equal(actorEvidenceVisible(f.db,f.guild,'attendant',memories[0],x.scope),true);
+  return {x,intent,accepted,speech,memory:memories[0]};
+}
+test('WD bridge ranks only actually heard typed conversation and revalidates after restart',()=>nativeFixture(f=>{
+  const {x}=dialogue(f),before=f.db.listNpcMemories(f.guild,'attendant',{status:'active',limit:100}).length,
+    signals=worldNarrativeBridgePacket(f.db,f.guild,{mode:'party'}).signals.filter(s=>s.kind==='conversation_development');
+  assert.equal(signals.length,1);assert.equal(signals[0].authority_disposition,'ranking_only');
+  assert(signals[0].source_refs.some(r=>r.kind==='world_event'&&r.key.startsWith('speech:')));
+  assert.equal(revalidateWorldNarrativeSignal(f.db,f.guild,signals[0],{mode:'party'}),true);
+  f.restart();assert.equal(worldNarrativeBridgePacket(f.db,f.guild,{mode:'party'}).signals.filter(s=>s.id===signals[0].id).length,1);
+  const scope={mode:'party'},ref=bindDirectorNarrativeSource(f.db,f.guild,{act:false},scope,'round',{},new ContentIndex(path.resolve('../content'))),
+    source=f.db.getWorldEvent(f.guild,ref),brief=directorBriefForAudience(f.db,f.guild,source,scope);
+  assert.equal(brief.world_bridge.beats.length,1);assert.equal(brief.world_bridge.beats[0].signal_ref,signals[0].id);
+  assert.equal(canonicalNarrativeCause(f.db,f.guild,ref,scope),signals[0].causation_ref,'Director dialogue beat keeps its one human cause');
+  assert.equal(f.db.listNpcMemories(f.guild,'attendant',{status:'active',limit:100}).length,before,'bridge ranking adds no NPC knowledge');
+}));
+test('WD bridge keeps private conversation development with its owner and blocks actorless/cross-owner readers',()=>nativeFixture(f=>{
+  const {x}=dialogue(f,{privateScene:true,id:'bridge-private-dialogue'});
+  assert.equal(worldNarrativeBridgePacket(f.db,f.guild,{mode:'party'}).signals.filter(s=>s.kind==='conversation_development').length,0);
+  assert.equal(packet(f,x.pc,'private').signals.filter(s=>s.kind==='conversation_development').length,1);
+  assert.equal(packet(f,f.pcs[1],'private').signals.filter(s=>s.kind==='conversation_development').length,0);
+  const ref=bindDirectorNarrativeSource(f.db,f.guild,{act:false},x.scope,'round',{},new ContentIndex(path.resolve('../content'))),
+    brief=directorBriefForAudience(f.db,f.guild,f.db.getWorldEvent(f.guild,ref),x.scope);
+  assert.equal(brief.world_bridge.beats.length,1);assert.equal(brief.world_bridge.beats[0].audience.visibility,'character');
+}));
+test('WD bridge retracts conversation ranking when its owner source, speech receipt, or listener control becomes invalid',()=>nativeFixture(f=>{
+  const {x,speech}=dialogue(f),get=()=>worldNarrativeBridgePacket(f.db,f.guild,{mode:'party'}).signals.filter(s=>s.kind==='conversation_development').length;
+  assert.equal(get(),1);
+  const partyScope={mode:'party'},directorRef=bindDirectorNarrativeSource(f.db,f.guild,{act:false},partyScope,'round',{},new ContentIndex(path.resolve('../content')));
+  assert.equal(directorBriefForAudience(f.db,f.guild,f.db.getWorldEvent(f.guild,directorRef),partyScope).world_bridge.beats.length,1);
+  const typed=f.db.getCityRecord(f.guild,'typed_intent',speech.details.typed_intent),source=typed.data.world_source_event;
+  f.db.db.prepare("UPDATE world_events SET status='retracted' WHERE guild_id=? AND event_key=?").run(f.guild,source);
+  assert.equal(get(),0,'retracted owner source removes conversation ranking');
+  assert.equal(directorBriefForAudience(f.db,f.guild,f.db.getWorldEvent(f.guild,directorRef),partyScope).world_bridge.held,1);
+  f.db.db.prepare("UPDATE world_events SET status='active' WHERE guild_id=? AND event_key=?").run(f.guild,source);
+  assert.equal(get(),1,'restored owner source restores the native receipt');
+  f.db.db.prepare("UPDATE world_events SET status='retracted' WHERE guild_id=? AND event_key=?").run(f.guild,speech.event_key);
+  assert.equal(get(),0,'retracted authored speech receipt is held');
+  f.db.db.prepare("UPDATE world_events SET status='active' WHERE guild_id=? AND event_key=?").run(f.guild,speech.event_key);
+  assert.equal(get(),1,'restored speech receipt is revalidated');
+  f.db.db.prepare("UPDATE world_events SET scene='stale-scene' WHERE guild_id=? AND event_key=?").run(f.guild,speech.event_key);
+  assert.equal(get(),0,'stale speech scene does not inform current opportunities');
+  f.db.db.prepare("UPDATE world_events SET scene=? WHERE guild_id=? AND event_key=?").run(currentScene(f.db,f.guild).key,f.guild,speech.event_key);
+  assert.equal(get(),1,'restored current scene receipt is accepted');
+  f.db.db.prepare('UPDATE characters SET owner_user_id=? WHERE id=?').run(f.pcs[1].owner_user_id,x.pc.id);
+  assert.equal(get(),0,'ownership transfer invalidates the old owner-authored conversation');
+  f.db.db.prepare('UPDATE characters SET owner_user_id=? WHERE id=?').run(x.pc.owner_user_id,x.pc.id);
+  assert.equal(get(),1,'restored authenticated owner revalidates the historical speech chain');
+  const listenerPresence=scenePresence(f.db,f.guild,'npc','attendant');
+  f.db.db.prepare("UPDATE world_events SET status='retracted' WHERE guild_id=? AND event_key=?").run(f.guild,listenerPresence.source_event);
+  assert.equal(get(),0,'retracted listener presence invalidates heard development');
+  f.db.db.prepare("UPDATE world_events SET status='active' WHERE guild_id=? AND event_key=?").run(f.guild,listenerPresence.source_event);
+  assert.equal(get(),1,'restored listener presence revalidates heard development');
+  f.db.upsertNpcProxy(f.guild,f.session.id,{npcName:'attendant',userId:f.pcs[1].owner_user_id,status:'active'});
+  assert.equal(get(),0,'a currently proxied listener does not receive actor-directed opportunity ranking');
+}));
+test('WD bridge ignores raw dialogue events without the accepted typed intent and native heard-memory chain',()=>nativeFixture(f=>{
+  const x=setup(f,{text:'I tell Inez to meet me at dusk.'}),scope={mode:'party',actorUserId:x.pc.owner_user_id,actorCharacterId:x.pc.id};
+  const forged=indexWorldEvent(f.db,f.guild,{key:'forged-raw-dialogue',kind:'authored_speech',title:'Unverified dialogue label',source_id:`player:${x.pc.owner_user_id}`,
+    session_id:f.session.id,scene:currentScene(f.db,f.guild).key,visibility:'party',details:{author:x.pc.owner_user_id,character_id:x.pc.id,
+      quote:'Meet me at dusk.',listeners:['attendant'],private_scene:false,typed_intent:'invented',input_source:x.sourceRef,principal_revision:'invented'}},x.pc.owner_user_id);
+  assert.equal(forged.status,'active');assert.equal(worldNarrativeBridgePacket(f.db,f.guild,scope).signals.filter(s=>s.kind==='conversation_development').length,0);
 }));
 test('WD bridge sends a genuine native result once per original cause without exposing the declaration or replaying effects',()=>nativeFixture(f=>{
   const x=resolve(f),before=f.db.db.prepare('SELECT COUNT(*) n FROM rolls').get().n,resources=f.db.getCharacter(x.pc.id).data.resources,
