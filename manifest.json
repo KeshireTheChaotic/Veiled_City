@@ -541,8 +541,8 @@
     },
     {
       "path": "bot/scripts/narrative-salience-test.mjs",
-      "size_bytes": 6550,
-      "sha256": "8c4577015056e9aae4e37c24ca139fc62fc76b4c06a27de9b3e768d22f8480c6"
+      "size_bytes": 9600,
+      "sha256": "7c940b6cf319795ac2495674aede63bab39fb107630e4f5321793497472a2090"
     },
     {
       "path": "bot/scripts/narrative-understanding-test.mjs",
@@ -1676,8 +1676,8 @@
     },
     {
       "path": "bot/src/narrative-salience.js",
-      "size_bytes": 9738,
-      "sha256": "30e3e984e65ebbd87f70908b2122f6cd7f4974414e7f629d3517c46aa71049c1"
+      "size_bytes": 11052,
+      "sha256": "478000275d681a26435bfc71cb784d36826a10a2624e1ada49ae053a03ea4f4c"
     },
     {
       "path": "bot/src/narrative-speakers.js",
@@ -2651,8 +2651,8 @@
     },
     {
       "path": "docs/Active_Implementation/NO_DEFERRALS_LEDGER.md",
-      "size_bytes": 25516,
-      "sha256": "0fd90a626eba4199d20b511a7e41b91dce913abd53eaa20b2c1bdd0007a8be3c"
+      "size_bytes": 27941,
+      "sha256": "a4b89d33eee5711b3b31ac8f2cc93b3183fdc774bfbdb5936ebddffcf0044cc9"
     },
     {
       "path": "docs/Active_Implementation/README.md",
