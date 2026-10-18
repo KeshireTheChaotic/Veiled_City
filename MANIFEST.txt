@@ -371,6 +371,7 @@ bot/src/npc-cognition.js
 bot/src/npc-conversations.js
 bot/src/opening-entry-context.js
 bot/src/opening-entry.js
+bot/src/opening-world-bridge.js
 bot/src/operational-metrics.js
 bot/src/operations/diagnostics.js
 bot/src/operations/health.js

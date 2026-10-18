@@ -7,6 +7,7 @@ import {completedActionSource,historicalActionSource} from './action-consent.js'
 import {typedRollProof} from './typed-roll-proof.js';
 import {actorEvidenceVisible} from './npc-cognition-projection.js';
 import {activeCityProxy} from './city-constraints.js';
+import {inspectOpeningEntryOpportunity} from './session-opening-attendance.js';
 const entitled=(row,scope)=>['public','party'].includes(row.visibility)||scope.mode==='private'&&row.visibility==='character'
   &&row.subject_key===scope.actorCharacterId&&!!scope.actorUserId;
 const audience=s=>s.mode==='private'?{visibility:'character',character:s.actorCharacterId,user:s.actorUserId}:{visibility:'party',character:null,user:null};
@@ -18,8 +19,30 @@ function envelope(scene,scope,kind,root,refs,disposition){
   const boundary=audience(scope),operation=refs[0].key,cycle=`world-cycle:${hash([scene.session_id,scene.key,root])}`;
   return {version:1,protocol:'narrative_signal_v1',id:`world-signal:${hash([kind,root,operation,boundary,cycle])}`,kind,operation_ref:operation,
     session:scene.session_id,scene:scene.key,audience:boundary,causation_ref:root,world_cycle_ref:cycle,depth:0,
-    origin_kind:kind==='unresolved_narrative_task'?'native_diagnostic':'human_action',source_refs:refs,
+    origin_kind:['unresolved_narrative_task','opening_opportunity_request'].includes(kind)?'native_diagnostic':'human_action',source_refs:refs,
     authority_disposition:disposition,execution_authority:false,publication_authority:false};
+}
+/** Exact-owner operational request only. This does NOT make the GM-private receipt a visible fictional event. */
+function nativeOpeningRequest(db,guild,scope,scene){
+  if(scope.mode!=='private'||db.getSession(scene.session_id)?.assembly_mode==='manual')return null;
+  try{
+    const principal=conversationPrincipal(db,guild,scope.actorUserId,scope.actorCharacterId);
+    if(principal.kind!=='owner'||!db.roster(scene.session_id).some(r=>r.character_id===scope.actorCharacterId
+      &&r.discord_user_id===scope.actorUserId&&['present','late','guest'].includes(r.presence)))return null;
+    const key=`opening-entry:${hash([scene.session_id,scope.actorCharacterId,principal.revision])}`;
+    if(!db.getCityRecord(guild,'opening_entry_opportunity',key))return null;
+    const request=inspectOpeningEntryOpportunity(db,guild,key),delivery=db.getCityRecord(guild,'opening_entry_delivery',key),
+      rows=delivery?.data.turn_id?db.listTurnPublications(guild,delivery.data.turn_id):[];
+    if(delivery?.source_event===request.source_event&&delivery.data.evidence?.hook_verified===true
+      &&rows.length&&rows.every(r=>r.status==='delivered'&&r.discord_message_id))return null;
+    const source=db.getWorldEvent(guild,request.source_event);
+    return envelope(scene,scope,'opening_opportunity_request',source.event_key,
+      [{kind:'opening_entry_opportunity',key:request.record_key,hash:hash(request)},{kind:'world_event',key:source.event_key,hash:hash(source)}],'diagnostic_only');
+  }catch(error){
+    if(error.code==='SESSION_OPENING_ATTENDANCE'||['Active session required.','Select an authenticated current controlled role.',
+      'Controller attendance required.','Active campaign character required.'].includes(error.message))return null;
+    throw error;
+  }
 }
 function nativeResult(db,guild,a,scope,scene){
   const d=a.data;
@@ -201,6 +224,7 @@ export function worldNarrativeBridgePacket(db,guild,scope){
     const transition=nativeSceneTransition(db,guild,scope,scene,actor.character_id,actor.user_id);if(transition)found.push(transition);
   }
   found.push(...nativeConversationSignals(db,guild,scope,scene));
+  const opening=nativeOpeningRequest(db,guild,scope,scene);if(opening)found.push(opening);
   const signals=[...new Map(found.map(s=>[s.id,s])).values()];
   return {...empty,signals:signals.slice(0,4),eligible:signals.length,omitted:Math.max(0,signals.length-4)};
 }
@@ -225,13 +249,15 @@ export function worldDirectorBridgeBeats(db,guild,source,scope){
     if(!revalidateWorldNarrativeSignal(db,guild,signal,scope)){held++;continue;}
     beats.push({version:1,protocol:'world_beat_v1',id:`world-beat:${hash([source.event_key,signal.id,signal.audience])}`,kind:'pacing_hint',
       source_ref:source.event_key,signal_ref:signal.id,causation_ref:signal.causation_ref,world_cycle_ref:signal.world_cycle_ref,
-      audience:signal.audience,depth:1,origin_kind:'director',reason:signal.kind==='unresolved_narrative_task'?'request_missing_coverage':'consider_native_result_opportunity',
+      audience:signal.audience,depth:1,origin_kind:'director',reason:signal.kind==='opening_opportunity_request'?'request_opening_opportunity':
+        signal.kind==='unresolved_narrative_task'?'request_missing_coverage':'consider_native_result_opportunity',
       execution_authority:false,publication_authority:false});
   }
   return {version:1,beats,held,authority:'Pacing only; not fictional facts, speaker knowledge, PC outcomes or native execution authority.'};
 }
 /** Historical snapshot reader for retrieval weight ONLY; cannot revive a live action or publication grant. */
 function activeSignalSnapshot(db,guild,s,scope){
+  if(s?.kind==='opening_opportunity_request')return false; // Attendance never earns fictional interest/canon weight, including after restart.
   if(s?.version!==1||s.protocol!=='narrative_signal_v1'||s.depth!==0||hash(s.audience)!==hash(audience(scope))
     ||!['human_action','native_diagnostic'].includes(s.origin_kind)||!Array.isArray(s.source_refs)||s.source_refs.length<2
     ||s.source_refs.length>6||!narrativeSourceVisible(db,guild,s.causation_ref,scope))return false;

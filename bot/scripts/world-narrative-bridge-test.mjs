@@ -27,6 +27,20 @@ import {currentScene,scenePresence,recordScenePresence} from '../src/scene-conti
 import {historicalActionSource} from '../src/action-consent.js';
 import {persistTypedDialogue} from '../src/typed-intents.js';
 import {actorEvidenceVisible} from '../src/npc-cognition-projection.js';
+import {handleCommand} from '../src/commands.js';
+import {assemblyNarrativeCandidate} from '../src/pvp-output.js';
+import {openingWorldOpportunities} from '../src/opening-world-bridge.js';
+import {applyNpcCognitionDrafts} from '../src/state.js';
+
+let checkinSequence=0;
+function ownerCheckin(f,pc=f.pcs[0]){
+  const sent=[];return {id:`bridge-entry-${++checkinSequence}`,guildId:f.guild,guild:{id:f.guild,channels:{fetch:async()=>null},
+    members:{fetch:async user=>({send:async body=>{sent.push({user,body});return {id:`entry-ack-${user}`,channelId:`dm-${user}`};}})}},
+    commandName:'vc-session',user:{id:pc.owner_user_id,username:pc.name},memberPermissions:{has:()=>false},member:{roles:{cache:new Map()}},
+    isChatInputCommand:()=>true,isButton:()=>false,isStringSelectMenu:()=>false,
+    options:{getSubcommand:()=> 'present',getSubcommandGroup:()=>null,getString:key=>key==='character'?pc.name:null,getBoolean:()=>null,getInteger:()=>null,getUser:()=>null},
+    reply:async()=>{},deferReply:async()=>{},editReply:async()=>{},followUp:async()=>{},sent};
+}
 function packet(f,pc=f.pcs[0],mode='party'){
   const gm=new GMService({db:f.db,content:new ContentIndex(path.resolve('../content')),ai:null,config:{maxRecentMessages:2,maxContentChunks:1}});
   return gm.buildContext(f.guild,pc.owner_user_id,'What happens next?',null,{scope:mode}).world_narrative_bridge;
@@ -315,6 +329,82 @@ test('WD native source cannot bind a forwarded private or fabricated packet as p
   assert.throws(()=>bindDirectorNarrativeSource(f.db,f.guild,{}, {mode:'party'},'scene',{},content,privatePacket),/context_mismatch/);
   const party=worldNarrativeBridgePacket(f.db,f.guild,{mode:'party'});party.signals=privatePacket.signals;
   assert.throws(()=>bindDirectorNarrativeSource(f.db,f.guild,{}, {mode:'party'},'scene',{},content,party),/context_mismatch/);
+}));
+
+test('WD opening request reaches the real private Director as an operational diagnostic, never party world knowledge',()=>nativeFixture(async f=>{
+  const i=ownerCheckin(f),pc=f.pcs[0];assert.equal(await handleCommand(i,{db:f.db,gm:{}}),true);
+  const scope={mode:'private',actorUserId:pc.owner_user_id,actorCharacterId:pc.id},
+    signal=worldNarrativeBridgePacket(f.db,f.guild,scope).signals.find(s=>s.kind==='opening_opportunity_request');
+  assert(signal,'Missing source-verified opening request on the existing private Director path.');
+  assert.equal(signal.origin_kind,'native_diagnostic');assert.equal(signal.execution_authority,false);assert.equal(signal.publication_authority,false);
+  assert.equal(signal.authority_disposition,'diagnostic_only');assert(!JSON.stringify(signal).includes('terminal'));
+  assert(!worldNarrativeBridgePacket(f.db,f.guild,{mode:'party'}).signals.some(s=>s.id===signal.id));
+  assert(!worldNarrativeBridgePacket(f.db,f.guild,{mode:'private',actorUserId:f.pcs[1].owner_user_id,actorCharacterId:f.pcs[1].id}).signals.some(s=>s.id===signal.id));
+  const ai=new FakeResponses([inactiveDirector()]),gm=new GMService({db:f.db,content:new ContentIndex(path.resolve('../content')),ai,
+    config:{gmModel:'offline',maxRecentMessages:1,maxContentChunks:1}});
+  await gm.runWorldDirector({guildId:f.guild,layer:'scene',trigger:{scope:'private',actor_user_id:pc.owner_user_id,actor_character_id:pc.id}});
+  assert.equal(ai.requests.length,1);assert(providerBridge(ai.requests[0]).signals.some(s=>s.id===signal.id));
+  assert.equal(f.db.listCityRecords(f.guild,{kind:'scene_presence',includeGM:true}).length,0);
+}));
+
+test('WD opening planning and isolated assembly authoring consume only audience-entitled Director hint metadata',()=>nativeFixture(async f=>{
+  f.db.setCityCalendar(f.guild,{flags:{...f.db.getCityCalendar(f.guild).flags,narrative_authority:true,playable_narration:true,narrative_camera:true}});
+  const i=ownerCheckin(f),pc=f.pcs[0];await handleCommand(i,{db:f.db,gm:{}});
+  const scope={mode:'private',actorUserId:pc.owner_user_id,actorCharacterId:pc.id},shell={},content=new ContentIndex(path.resolve('../content')),
+    ref=bindDirectorNarrativeSource(f.db,f.guild,shell,scope,'scene',{},content),source=f.db.getWorldEvent(f.guild,ref),
+    hints=worldDirectorBridgeBeats(f.db,f.guild,source,scope);assert.equal(hints.beats.length,1);
+  const answer={public_opening:'GM proposal only.',public_parts:[],convergence_goal:'Optional threads.',gm_notes:'',bonds:[],character_entries:f.pcs.map(p=>({
+    discord_user_id:p.owner_user_id,character_name:p.name,character_id:p.id,hook_source_refs:[],private_hook:'GM-private proposal.',private_parts:[],public_cue:'',stay_reason:''}))},
+    ai=new FakeResponses([answer]),gm=new GMService({db:f.db,content,ai,config:{assemblyModel:'offline',assemblyMaxOutputTokens:2000,maxContentChunks:1,maxRecentMessages:1}}),
+    plan=await gm.planAssembly({guildId:f.guild});
+  assert(ai.requests[0].input.includes(hints.beats[0].id),'Existing opening planner must request the sourced Director opportunity without another model call.');
+  f.db.setAssemblyPlan(f.session.id,plan);
+  const native=assemblyNarrativeCandidate(f.db,f.guild,f.session.id,scope),ctx=buildNarrativeContext(f.db,f.guild,scope,native.source.event_key),
+    brief=ctx.packet.assembly_brief.world_opportunities;
+  assert(brief.beats.some(b=>b.id===hints.beats[0].id));assert(brief.beats.every(b=>b.execution_authority===false&&b.publication_authority===false));
+  const other={mode:'private',actorUserId:f.pcs[1].owner_user_id,actorCharacterId:f.pcs[1].id},otherNative=assemblyNarrativeCandidate(f.db,f.guild,f.session.id,other),
+    otherCtx=buildNarrativeContext(f.db,f.guild,other,otherNative.source.event_key);
+  assert(!JSON.stringify(otherCtx.packet.assembly_brief).includes(hints.beats[0].id));
+  assert.equal(canonicalNarrativeCause(f.db,f.guild,ref,scope),null,'Attendance never becomes fresh fictional interest/canon cause.');
+  assert.equal(ai.requests.length,1);
+}));
+
+for(const change of ['source','owner','proxy','absence','scene'])test(`WD opening diagnostic and returned hints reject ${change} after restart without erasing outcomes`,()=>nativeFixture(async f=>{
+  const i=ownerCheckin(f),pc=f.pcs[0];await handleCommand(i,{db:f.db,gm:{}});
+  const scope={mode:'private',actorUserId:pc.owner_user_id,actorCharacterId:pc.id},signal=worldNarrativeBridgePacket(f.db,f.guild,scope).signals[0];assert(signal);
+  bindDirectorNarrativeSource(f.db,f.guild,{},scope,'scene',{},new ContentIndex(path.resolve('../content')));
+  assert.equal(openingWorldOpportunities(f.db,f.guild,scope).beats.length,1);const resources=f.db.getCharacter(pc.id).data.resources;
+  if(change==='source')indexWorldEvent(f.db,f.guild,{key:signal.causation_ref,status:'retracted'});
+  if(change==='owner')f.db.db.prepare('UPDATE characters SET owner_user_id=? WHERE id=?').run('changed-owner',pc.id);
+  if(change==='proxy')f.db.assignCharacter(f.session.id,pc.owner_user_id,pc.id,{controlPolicy:'proxy',proxyUserId:f.pcs[1].owner_user_id});
+  if(change==='absence')f.db.setPresence(f.session.id,pc.owner_user_id,'absent');
+  if(change==='scene')f.db.setDirectorState(f.session.id,{scene_number:2});
+  f.restart();assert(!worldNarrativeBridgePacket(f.db,f.guild,scope).signals.some(s=>s.id===signal.id));
+  assert.equal(openingWorldOpportunities(f.db,f.guild,scope).beats.length,0);assert.equal(revalidateWorldNarrativeSignal(f.db,f.guild,signal,scope),false);
+  assert.deepEqual(f.db.getCharacter(pc.id).data.resources,resources);assert.equal(f.db.db.prepare('SELECT COUNT(*) n FROM rolls').get().n,0);
+}));
+
+test('WD completed source hook does not manufacture another opening request, and manual introduction remains operator policy',()=>nativeFixture(async f=>{
+  const pc=f.pcs[0];f.db.updateCharacterData(pc.id,d=>{d.entry_hooks=['A legitimate source thread.'];});
+  await handleCommand(ownerCheckin(f),{db:f.db,gm:{}});
+  const scope={mode:'private',actorUserId:pc.owner_user_id,actorCharacterId:pc.id};
+  assert(!worldNarrativeBridgePacket(f.db,f.guild,scope).signals.some(s=>s.kind==='opening_opportunity_request'));
+  f.db.endSession(f.guild,'');f.db.startSession(f.guild,'Manual introduction','manual');await handleCommand(ownerCheckin(f),{db:f.db,gm:{}});
+  assert(!worldNarrativeBridgePacket(f.db,f.guild,scope).signals.some(s=>s.kind==='opening_opportunity_request'));
+}));
+
+test('WD opening diagnostic and Director hint cannot grant NPC witness knowledge through the real cognition consumer',()=>nativeFixture(async f=>{
+  await handleCommand(ownerCheckin(f),{db:f.db,gm:{}});const pc=f.pcs[0],scope={mode:'private',actorUserId:pc.owner_user_id,actorCharacterId:pc.id},
+    signal=worldNarrativeBridgePacket(f.db,f.guild,scope).signals.find(s=>s.kind==='opening_opportunity_request');assert(signal);
+  f.db.upsertNpcProfile(f.guild,{npcKey:'distant-clerk',displayName:'Distant Clerk',role:'clerk',publicIdentity:'A clerk, not a witness.'});
+  const ref=bindDirectorNarrativeSource(f.db,f.guild,{},scope,'scene',{},new ContentIndex(path.resolve('../content')));
+  for(const source of [signal.causation_ref,ref]){
+    const event=f.db.getWorldEvent(f.guild,source),result=applyNpcCognitionDrafts(f.db,f.guild,{knowledge:[{
+      npc_key:'distant-clerk',knowledge_key:'fabricated-witness',content:event.title,source_type:'observed',source_ref:source,belief_state:'known'}]},'ai_gm');
+    assert.equal(result.knowledge[0].ok,false);assert.match(result.knowledge[0].error,/accessible|witness|source/i);
+  }
+  assert.equal(f.db.listNpcKnowledge(f.guild,'distant-clerk',{limit:10}).length,0);
+  assert.equal(f.db.listCityRecords(f.guild,{kind:'scene_presence',includeGM:true}).length,0);
 }));
 test('WD bridge no-session reports remain empty rather than breaking unrelated operational reads',()=>nativeFixture(f=>{
   f.db.endSession(f.guild);assert.deepEqual(worldNarrativeBridgePacket(f.db,f.guild,{mode:'party'}).signals,[]);

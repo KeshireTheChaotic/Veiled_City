@@ -1131,8 +1131,8 @@
     },
     {
       "path": "bot/scripts/world-narrative-bridge-test.mjs",
-      "size_bytes": 42095,
-      "sha256": "1e19c1a7ceb5d07f7e8990abd531724d53a56d62f29898b6f4f437468c30097c"
+      "size_bytes": 50890,
+      "sha256": "8fc80256fb0361de795f87bf939f9a7e824ebc0c078949b7c7f2fc2f9e120cc9"
     },
     {
       "path": "bot/scripts/world-sanctioned-sources-test.mjs",
@@ -1181,8 +1181,8 @@
     },
     {
       "path": "bot/src/assembly-context.js",
-      "size_bytes": 7996,
-      "sha256": "7a1db178d3901cf470b11293b1ae41ef50193abfb371cea63da12c702bea463b"
+      "size_bytes": 8176,
+      "sha256": "4144e66f1ec66889841e168ca33f33a7d226819ce2739df1e17d021a27ceb682"
     },
     {
       "path": "bot/src/assembly-delivery.js",
@@ -1576,8 +1576,8 @@
     },
     {
       "path": "bot/src/gm.js",
-      "size_bytes": 136075,
-      "sha256": "1a9a1ab9cb1b03ad69b2f19808c6794f43dc9f9ccc8e3d7ea0ae494d1cfb320f"
+      "size_bytes": 136649,
+      "sha256": "2617c0a022fc9255ed212006ec9847ec548e7c39aac1717932e9f483713d72e5"
     },
     {
       "path": "bot/src/handout.js",
@@ -1868,6 +1868,11 @@
       "path": "bot/src/opening-entry.js",
       "size_bytes": 4844,
       "sha256": "a1c8d97368610dbd8ac8f3d7dacd55932430ddbf397fba987e26feb00456a5cd"
+    },
+    {
+      "path": "bot/src/opening-world-bridge.js",
+      "size_bytes": 1686,
+      "sha256": "0d2bbd1a5cb528bcb065b146a62b76a01fed3e9dcbf5cf9725ac2adb31cd77ba"
     },
     {
       "path": "bot/src/operational-metrics.js",
@@ -2381,8 +2386,8 @@
     },
     {
       "path": "bot/src/world-narrative-bridge.js",
-      "size_bytes": 24291,
-      "sha256": "b3c44bc856b6adcfaf1979f97aea249f32151d9b4dacbaa99537e0a7ac2fb6a2"
+      "size_bytes": 26497,
+      "sha256": "c4589a332c5094e6e0bccdf1fa3ae82c25d2c4c4df7a92a9cebaba1b2c938781"
     },
     {
       "path": "bot/src/world-observation.js",
@@ -2766,8 +2771,8 @@
     },
     {
       "path": "docs/Active_Implementation/NO_DEFERRALS_LEDGER.md",
-      "size_bytes": 134609,
-      "sha256": "135a95baedbf26697bb8e2944867465a4bc9603f3afba4e1359226c965be5908"
+      "size_bytes": 139833,
+      "sha256": "aaaf31c1bd2101b579ed56423d9038a2a0efc5ab71436182559b44ea86419c95"
     },
     {
       "path": "docs/Active_Implementation/README.md",

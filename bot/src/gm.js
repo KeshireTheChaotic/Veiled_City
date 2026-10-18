@@ -13,6 +13,7 @@ import { contextMemorySchema, CONTEXT_MEMORY_PROMPT } from "./context-memory.js"
 import { presentationContext } from "./presentation-evidence.js";
 import {worldHookSeedForGm,worldRecordOriginForGm} from './world-sanctioned-sources.js';
 import {worldNarrativeBridgePacket} from './world-narrative-bridge.js';
+import {openingWorldOpportunities} from './opening-world-bridge.js';
 import {createPrivateSeedOrigin,privateSeedPrompt,privateWorldSeedsSchema,bindPrivateSeedTurn} from './world-private-seeds.js';
 import { summarizeRoster, previewAuthoritativeMutation } from "./state.js";
 import { narrativeContext } from "./character-narrative.js";
@@ -1215,6 +1216,10 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
       `Session: ${JSON.stringify(session)}`,
       `Previously established party state: ${JSON.stringify(partyState)}`,
       `Present roster: ${JSON.stringify(summarizeRoster(roster))}`,
+      `Native Director opportunity hints (ranking only, not facts, arrivals, consent or speaker knowledge): ${JSON.stringify({
+        public:openingWorldOpportunities(this.db,guildId,{mode:'party'}),
+        private:roster.slice(0,12).map(r=>({character:r.character_id,user:r.discord_user_id,opportunities:openingWorldOpportunities(this.db,guildId,
+          {mode:'private',actorUserId:r.discord_user_id,actorCharacterId:r.character_id})})),omitted_private_hint_scopes:Math.max(0,roster.length-12)})}`,
       `Owner-private source catalog by exact character ID: ${JSON.stringify(hookInputs.characters.map(p=>({character_id:p.character,user_id:p.user,sources:p.sources})))}`,
       `Known campaign facts (GM context; protect secrets): ${JSON.stringify(facts)}`,
       `Imported GM-only character hook proposals (optional seeds; protect secrets): ${JSON.stringify(importedHooks)}`,
