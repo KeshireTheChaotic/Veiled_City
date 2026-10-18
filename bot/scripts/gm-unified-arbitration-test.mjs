@@ -1622,7 +1622,7 @@ cases.push(
    assert.equal(new Set(rows.filter(r=>r.actor_kind==='environment').map(r=>r.actor_name)).size,16);
    for(const r of rows){assert.match(r.source_hash,/^[a-f0-9]{64}$/);assert.match(r.template_hash,/^[a-f0-9]{64}$/);
      assert(Object.isFrozen(r));assert.equal(featureDisposition(r.feature_key).status,r.native_handler?'supported':'needs_rules_review');}
-   assert.deepEqual(rows.filter(r=>r.native_handler).map(r=>r.feature_key),['adversary:pale-court-thrall:pack-pressure',FLASH,'adversary:static-wraith:feedback','adversary:choir-relay:local-mesh','adversary:pale-court-knight:blood-rush','adversary:ritual-enforcement-team:stack-formation',VOLLEY,LANES,'adversary:wraith-pack:many-deaths',REGENT,'adversary:green-root-host:horde-3d8-8','adversary:aster-vale-catastrophe-analyst:contingency-stack']);
+   assert.deepEqual(rows.filter(r=>r.native_handler).map(r=>r.feature_key),['adversary:pale-court-thrall:pack-pressure',FLASH,'adversary:static-wraith:feedback','adversary:choir-relay:local-mesh','adversary:pale-court-knight:blood-rush','adversary:ritual-enforcement-team:stack-formation',VOLLEY,LANES,'adversary:wraith-pack:many-deaths','adversary:veil-anchor-sentinel:plausible-denial',REGENT,'adversary:veil-engine-custodian:consensus-pressure','adversary:green-root-host:horde-3d8-8','adversary:aster-vale-catastrophe-analyst:contingency-stack']);
  }],
  ['UA6','02','typed representative descriptors distinguish action reaction passive and defense',async()=>{
    const {compileNativeFeatures}=await import('../src/native-feature-catalog.js'),rows=compileNativeFeatures(),get=(actor,name)=>rows.find(r=>r.actor_name===actor&&r.name===name);
