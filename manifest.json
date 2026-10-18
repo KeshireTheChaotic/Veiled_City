@@ -1081,8 +1081,8 @@
     },
     {
       "path": "bot/scripts/validate-offline.mjs",
-      "size_bytes": 11091,
-      "sha256": "c6387c951af8275ab0922eb8a277d26c0fb9f5b1c158663feb75e23cc4ac393c"
+      "size_bytes": 11139,
+      "sha256": "10e4d84e75fb6d55078e713e23b19cd1991b794915e80a328572d8896f28c97d"
     },
     {
       "path": "bot/scripts/world-authorship-test.mjs",
@@ -1098,6 +1098,11 @@
       "path": "bot/scripts/world-background-memory-test.mjs",
       "size_bytes": 7445,
       "sha256": "cd4b45752d5b9459db432adecaaf6441f952b609b92c0aff02aec2ab02e72721"
+    },
+    {
+      "path": "bot/scripts/world-identity-persistence-test.mjs",
+      "size_bytes": 10800,
+      "sha256": "e91d0cee0ae11a8be7e77a00f8377b41e9da31a2e589f01c5936b535890d78a9"
     },
     {
       "path": "bot/sql/schema.sql",
@@ -1686,8 +1691,8 @@
     },
     {
       "path": "bot/src/narrative-salience.js",
-      "size_bytes": 11052,
-      "sha256": "478000275d681a26435bfc71cb784d36826a10a2624e1ada49ae053a03ea4f4c"
+      "size_bytes": 14600,
+      "sha256": "ad02bf0ee0f47a45d08951323111478fb685bc42a49a1604fe946ef08506b79c"
     },
     {
       "path": "bot/src/narrative-speakers.js",
@@ -2300,6 +2305,11 @@
       "sha256": "a741200bda016449f5cbb971ed3340d4ca20f7ec1e1b22372d30617956089858"
     },
     {
+      "path": "bot/src/world-identity-persistence.js",
+      "size_bytes": 5315,
+      "sha256": "41524eed71b75879137851413b485cd19dbabe39b5703c05cb50613c8db4f137"
+    },
+    {
       "path": "bot/src/world-observation.js",
       "size_bytes": 7054,
       "sha256": "815ede68af1bd6d94f05ebc088cb8a96b132b55977c11e1cdea20083c33b9882"
@@ -2666,8 +2676,8 @@
     },
     {
       "path": "docs/Active_Implementation/NO_DEFERRALS_LEDGER.md",
-      "size_bytes": 39582,
-      "sha256": "16c9d388e8fcef3044466f3d7361f9889de1f87ea2b7b28d7b9348f7199177b1"
+      "size_bytes": 44358,
+      "sha256": "059231f2ef9e3ffd3911ba9589e22186d56bd3771bd9f0c42e6bc134ba2eecba"
     },
     {
       "path": "docs/Active_Implementation/README.md",

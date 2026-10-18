@@ -8,6 +8,8 @@ import {listNarrativeRecords,NARRATIVE_RECORD_LIMIT} from './narrative-records.j
 import {narrativeQueryRelevance,narrativeIdentityRelevance} from './narrative-relevance.js';
 import {worldIdentityOrigin} from './world-authorship.js';
 import {consentAction,historicalActionSource} from './action-consent.js';
+import {characterSourceRanges} from './source-communication.js';
+import {maintainIdentityPersistence} from './world-identity-persistence.js';
 const hash=x=>createHash('sha256').update(JSON.stringify(x)).digest('hex').slice(0,40);
 const visible=(r,s)=>['party','public'].includes(r.visibility)||s.mode==='private'&&r.visibility==='character'&&r.subject_key===s.actorCharacterId;
 const records=listNarrativeRecords;
@@ -34,12 +36,12 @@ function pinReasons(db,guild,entity){
   if(db.listSimulationEntities(guild,'location').some(r=>r.state.parent_location===key||r.state.parent_location_key===key))reasons.push('parent_location');
   return reasons;
 }
-function add(db,guild,{entity,source,scene,visibility,subject,reason,weight,dedup,owner=null}){
+function add(db,guild,{entity,source,scene,visibility,subject,reason,weight,dedup,owner=null,nativeIntent=null}){
   const key=`narrative-interest:${hash([entity,visibility,subject,dedup])}`;
   if(db.getCityRecord(guild,'narrative_interest',key))return;
   const profile=profileKey(entity,visibility,subject),tick=db.getSimulationClock(guild).tick;
   db.saveCityRecord(guild,{kind:'narrative_interest',key,status:'active',visibility,subject_key:subject,source_event:source,
-    data:{version:1,entity,profile,scene,reason,weight,tick,owner}});
+    data:{version:2,entity,profile,scene,reason,weight,tick,owner,native_intent:nativeIntent}});
   db.saveCityRecord(guild,{kind:'narrative_salience',key:profile,status:'active',visibility,subject_key:subject,source_event:source,
     data:{version:1,entity,last_interest_tick:tick,retired_tick:null,owner,authority:'Prompt selection only; no change to world entity, knowledge or receipts.'}});
 }
@@ -59,6 +61,40 @@ export function narrativeImportance(db,guild,entity,scope){
   return {score:value,status:pins.length||rows.some(r=>r.status==='active')?'active':'prompt_archived',pins,
     tier:pins.length||value>=20?'anchor':value>=10?'recurring':value>=4?'supporting':'incidental'};
 }
+/** New persistence cannot rely on historical heuristic weights or provider-supplied scores. */
+export function canonicalInterestEvidence(db,guild,entity,scope){
+  const identity=db.getCityRecord(guild,'autonomous_entity',entity),origin=worldIdentityOrigin(db,guild,identity,scope);
+  if(origin?.version!==1)return [];
+  const tick=db.getSimulationClock(guild).tick,found=[];
+  for(const row of records(db,guild,'narrative_interest')){
+    const d=row.data,source=db.getWorldEvent(guild,row.source_event);
+    if(d.version!==2||d.entity!==entity||row.status!=='active'||!visible(row,scope)||!Number.isSafeInteger(d.tick)||d.tick>tick
+      ||row.visibility==='character'&&(d.owner!==scope.actorUserId||db.getCharacter(row.subject_key)?.owner_user_id!==scope.actorUserId)
+      ||!narrativeSourceVisible(db,guild,row.source_event,scope))continue;
+    let weight=0,dedup,causation;
+    if(source?.kind==='ai_gm_input'&&source.details.author===d.owner&&db.ownerAuthoredSource(guild,source.event_key,d.owner)){
+      const ic=characterSourceRanges(source.details.text).map(r=>source.details.text.slice(r.start,r.end)).join('\n');
+      if(!mentions(ic,names(db,guild,entity)))continue;
+      weight=d.reason==='return'?6:3;dedup=[source.event_key,d.owner];causation=source.event_key;
+      if(d.reason==='interaction'&&d.native_intent)try{
+        const action=db.getCityRecord(guild,'typed_intent',d.native_intent),proof=historicalActionSource(db,guild,d.native_intent,{resolved:action?.status==='resolved'});
+        if(proof.row.data.world_source_event===source.event_key&&proof.row.data.actor===source.details.character_id
+          &&proof.row.data.target_key===identity.data.key&&['speak','interact','search'].includes(proof.row.data.type))weight=5;
+      }catch(error){if(error.code!=='SCENE_ACTION_WINDOW')throw error;}
+    }else if(source?.kind==='native_narrative_unit'&&source.source_id==='native:narrative-authority'){
+      const unit=db.getCityRecord(guild,'narrative_unit',source.event_key.replace(/:source$/,'')),u=unit?.data.unit;
+      if(unit?.status!=='accepted_established'||source.details.payload_hash!==proofHash(unit.data)
+        ||(u.subject_key?`npc:${u.subject_key}`:u.location_key?`location:${u.location_key}`:null)!==entity)continue;
+      const lead=u.kind==='lead';weight=lead?7:1;dedup=[unit.data.binding.scene,lead?'lead':'gm'];causation=unit.data.binding.source;
+    }
+    if(!dedup||row.record_key!==`narrative-interest:${hash([entity,row.visibility,row.subject_key||null,dedup])}`)continue;
+    weight=Math.max(0,weight-Math.floor(Math.max(0,tick-d.tick)/6));if(weight&&causation)found.push({source:row.source_event,weight,causation});
+  }
+  // Reprojection into another audience or a native writer echo is not a new causal event.
+  const distinct=new Map();
+  for(const item of found)if(!distinct.has(item.causation)||distinct.get(item.causation).weight<item.weight)distinct.set(item.causation,item);
+  return [...distinct.values()].map(({source,weight})=>({source,weight}));
+}
 export function noteNarrativeInterest(db,guild,scope,sourceRef,{intents=[]}={}){
   if(!db.getCityCalendar(guild).flags.narrative_salience)return;
   const source=db.getWorldEvent(guild,sourceRef),principal=conversationPrincipal(db,guild,scope.actorUserId,scope.actorCharacterId),scene=currentScene(db,guild);
@@ -67,21 +103,25 @@ export function noteNarrativeInterest(db,guild,scope,sourceRef,{intents=[]}={}){
     ||source.scene!==scene.key||source.session_id!==scene.session_id||!db.ownerAuthoredSource(guild,sourceRef,scope.actorUserId)
     ||!narrativeSourceVisible(db,guild,sourceRef,scope))throw Object.assign(new Error('Current authenticated owner source required for interest.'),{code:'NARRATIVE_SALIENCE'});
   const [visibility,subject]=audience(scope);
+  const ic=characterSourceRanges(source.details.text).map(r=>source.details.text.slice(r.start,r.end)).join('\n');
   for(const entity of records(db,guild,'autonomous_entity').filter(r=>r.data.narrative_origin&&visible(r,scope)
     &&worldIdentityOrigin(db,guild,r,scope))){
-    if(!mentions(source.details.text,names(db,guild,entity.record_key)))continue;
+    if(!mentions(ic,names(db,guild,entity.record_key)))continue;
+    let nativeIntent=null;
     const interaction=intents.some(i=>{
       if(i.data?.target_key!==entity.data.key||!['interact','search','speak'].includes(i.data.type)
         ||i.data.actor!==scope.actorCharacterId||i.data.world_source_event!==sourceRef)return false;
       try{
         const accepted=i.status==='resolved'?historicalActionSource(db,guild,i.record_key,{resolved:true}):consentAction(db,guild,i.record_key);
-        return proofHash(accepted.row)===proofHash(i);
+        if(proofHash(accepted.row)!==proofHash(i))return false;
+        nativeIntent=i.record_key;return true;
       }catch(error){if(error.code==='SCENE_ACTION_WINDOW')return false;throw error;}
     });
     const prior=db.getCityRecord(guild,'narrative_salience',profileKey(entity.record_key,visibility,subject));
     const weight=prior?.status==='prompt_archived'?6:interaction?5:3;
     add(db,guild,{entity:entity.record_key,source:sourceRef,scene:scene.key,visibility,subject,reason:prior?.status==='prompt_archived'?'return':interaction?'interaction':'mention',
-      weight,owner:scope.actorUserId,dedup:[sourceRef,scope.actorUserId]});
+      weight,owner:scope.actorUserId,dedup:[sourceRef,scope.actorUserId],nativeIntent});
+    maintainIdentityPersistence(db,guild,entity.record_key,scope,sourceRef);
   }
   maintainNarrativeSalience(db,guild);
 }
@@ -97,6 +137,7 @@ export function noteNarrativeReuse(db,guild,row){
   if(!entity||!worldIdentityOrigin(db,guild,db.getCityRecord(guild,'autonomous_entity',entity),scope))return;
   add(db,guild,{entity,source:row.source_event,scene:row.data.binding.scene,visibility:row.visibility,subject:row.subject_key||null,
     owner:row.data.binding.scope?.actorUserId||null,reason:u.kind==='lead'?'lead':'gm_reuse',weight:u.kind==='lead'?7:1,dedup:[row.data.binding.scene,u.kind==='lead'?'lead':'gm']});
+  maintainIdentityPersistence(db,guild,entity,scope,row.data.binding.source);
 }
 export function maintainNarrativeSalience(db,guild){
   if(!db.getCityCalendar(guild).flags.narrative_salience)return;
