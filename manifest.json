@@ -550,6 +550,11 @@
       "sha256": "89f38317fae006f6a1287fb048cfae27fe8b8a2b4931dfece992342c204666c1"
     },
     {
+      "path": "bot/scripts/native-actor-control-test.mjs",
+      "size_bytes": 6944,
+      "sha256": "bba15184d15b59433a4d73f1125aaba1518cd7ce4d7e086a5375feb33721fba9"
+    },
+    {
       "path": "bot/scripts/native-world-fixtures.mjs",
       "size_bytes": 2712,
       "sha256": "51f45cc8529ea9a7e27951670af847761bd3c3b843ea06199b540303d773362a"
@@ -1081,8 +1086,8 @@
     },
     {
       "path": "bot/scripts/validate-offline.mjs",
-      "size_bytes": 11229,
-      "sha256": "20c82834c7ddb5e02927f3266a44060a040f0a76396d0422ef1199a6c3f80016"
+      "size_bytes": 11271,
+      "sha256": "a6338d4d7cdad1ca5c9d88230d375a7684133c92005050c2cc813d35cc7a722b"
     },
     {
       "path": "bot/scripts/world-authorship-test.mjs",
@@ -1486,8 +1491,8 @@
     },
     {
       "path": "bot/src/gm-action-capability.js",
-      "size_bytes": 12243,
-      "sha256": "c0f3f1bbda18da800dbd0747ec614ba7d515522c0b7b4c448f19968a192c7537"
+      "size_bytes": 12641,
+      "sha256": "565124ddd97f34f2616300235a0fc45367695d9fd91b03a0cca21fba81b2be11"
     },
     {
       "path": "bot/src/gm-action-review.js",
@@ -1723,6 +1728,11 @@
       "path": "bot/src/narrative-writer-v9.js",
       "size_bytes": 5081,
       "sha256": "ba81297ed812352cc48c8eec0e1381feb359bd8bbed8b62c8c825a81deab880e"
+    },
+    {
+      "path": "bot/src/native-actor-control.js",
+      "size_bytes": 1118,
+      "sha256": "90074e5e770d02d747a4aeb1238c769c6d7897e3e3e6b64fe6a944900934dc37"
     },
     {
       "path": "bot/src/native-defense-aura.js",
@@ -2121,8 +2131,8 @@
     },
     {
       "path": "bot/src/scene-intent-board.js",
-      "size_bytes": 11270,
-      "sha256": "eff1f01a0a579d9384b8b60aecc6d1102661438b4e61f91c4a5fcbfd7b94930d"
+      "size_bytes": 11659,
+      "sha256": "48357b04b898bc66d040b5e5fb55cdb63afff0c5e2e738c278401971ebd4a65f"
     },
     {
       "path": "bot/src/scene-observation-route.js",
@@ -2706,8 +2716,8 @@
     },
     {
       "path": "docs/Active_Implementation/NO_DEFERRALS_LEDGER.md",
-      "size_bytes": 83702,
-      "sha256": "46c5df01ccfbf7cd471cddb93ddb6ca6ee3951ffc052e588c21c9d43d259fc6c"
+      "size_bytes": 88689,
+      "sha256": "48b83df2197b6f326c6b1a8bd4cc953cf164d8d7401809410426c85f75631e76"
     },
     {
       "path": "docs/Active_Implementation/README.md",

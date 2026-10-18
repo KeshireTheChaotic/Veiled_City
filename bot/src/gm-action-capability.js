@@ -13,6 +13,7 @@ import {narrativeSourceVisible} from './scene-fiction-context.js';
 import {featureCostPlan} from './native-feature-windows.js';
 import {compileNativeFeatures} from './native-feature-catalog.js';
 import {inspectGroupFeatureChild,planNativeSpotlight,recordNativeSpotlight} from './native-group-features.js';
+import {nativeActorControl} from './native-actor-control.js';
 
 export function nativeReactionTarget(db,guild,origin,pc,actor,{maxRange='Close'}={}){
   const target=pc&&scenePresence(db,guild,'character',pc.id),npc=scenePresence(db,guild,'npc',actor),
@@ -42,6 +43,7 @@ function inspectDecision(db,guild,key,committed){
     ||db.getCityRecord(guild,'gm_authority','campaign')?.data.gm_authority_mode==='manual'))throw fail('native_decision_provenance');
   const entry=board.data.entries.find(e=>e.intent_ref===d.entry);
   if(!entry||d.entry_hash!==hash(entry)||hash(board.data.origin)!==hash(d.origin))throw fail('decision_entry_provenance');
+  if(board.data.version===2&&entry.actor.owner_control_type!==(entry.actor.type==='npc'?'ai_world':'player'))throw fail('decision_actor_control_class');
   if(!committed&&d.native?.operation==='request_group_feature_reaction'){
     inspectGroupFeatureChild(db,guild,row);return {row,entry,board};
   }
@@ -55,7 +57,9 @@ function inspectDecision(db,guild,key,committed){
   }
   const current=buildNarrativeContext(db,guild,d.scope,d.origin.source);
   if(!entry||d.entry_hash!==hash(entry)||hash(current.binding)!==hash(d.origin))throw fail('decision_source_scene_or_owner');
-  if(entry.actor.type==='npc'&&(activeCityProxy(db,guild,entry.actor.key)||db.getSimulationEntity(guild,'npc',entry.actor.key)?.state.location_key!==d.origin.location))throw fail('npc_control_or_locality');
+  if(entry.actor.type==='npc'&&(nativeActorControl(db,guild,'npc',entry.actor.key).owner_control_type!=='ai_world'
+    ||entry.actor.owner_control_type!==undefined&&entry.actor.owner_control_type!=='ai_world'
+    ||activeCityProxy(db,guild,entry.actor.key)||db.getSimulationEntity(guild,'npc',entry.actor.key)?.state.location_key!==d.origin.location))throw fail('npc_control_or_locality');
   if(entry.actor.type==='npc'){
     const proposalSource=db.getWorldEvent(guild,entry.source_ref),{source_ref:ignoredRef,source_hash:ignoredHash,...material}=entry;
     if(proposalSource?.status!=='active'||proposalSource.kind!=='native_npc_scene_intent'||proposalSource.source_id!=='native:unified-gm'
