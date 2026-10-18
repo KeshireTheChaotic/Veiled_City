@@ -1,7 +1,6 @@
 .editorconfig
 .gitattributes
 .github/workflows/offline-validation.yml
-.gitignore
 Dockerfile
 LICENSE
 README.md

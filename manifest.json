@@ -20,11 +20,6 @@
       "sha256": "048e81517aee067ec9e0c1e0a79a4f1df755870393719c87eaec4a3e931d2935"
     },
     {
-      "path": ".gitignore",
-      "size_bytes": 28,
-      "sha256": "d135d269fa8b524726f0d3a322793864bf1717864e3295cb6f1c131faad04e9a"
-    },
-    {
       "path": "Dockerfile",
       "size_bytes": 400,
       "sha256": "37f53728408f447ea3657693d4e178fd7a5153bf9d2368e285c571ff1327e08b"
@@ -751,8 +746,8 @@
     },
     {
       "path": "bot/scripts/sync-release.mjs",
-      "size_bytes": 2238,
-      "sha256": "7060180de90f3bd08c83440c073061db193fb6de68a9f25134c531d124086625"
+      "size_bytes": 2470,
+      "sha256": "d5d4cd843d642f5917469bd294d7442294889774ac460384236ffff85f837158"
     },
     {
       "path": "bot/scripts/systems-to-players-1-test.mjs",
