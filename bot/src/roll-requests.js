@@ -14,7 +14,7 @@ import {publishNativeNotice,queueNativeNotice,reserveNativeNotice} from "./nativ
 import {noticeHash} from "./native-notice.js";
 import {gmRulingDetails} from "./gm-action-ruling.js";
 import {overlapsOwnerActionTerminal} from "./owner-action-terminal.js";
-import {nativeDefenseAura,persistNativeDefenseAura,nativeFormationDefense,persistNativeFormationDefense} from './native-defense-aura.js';
+import {nativeDefenseAura,persistNativeDefenseAura,nativeFormationDefense,persistNativeFormationDefense,nativeVeilExposureDefense} from './native-defense-aura.js';
 const hash=value=>createHash("sha256").update(JSON.stringify(value)).digest("hex");
 const signed=value=>`${value>=0?"+":""}${value}`;
 export const rollRevision=hash;
@@ -101,6 +101,11 @@ export function rollBreakdown(db,guild,input,pc){
     if(formation){
       if(aura)throw new StateConflictError('Combined defensive passive/aura odds require an authored native mapping.');
       attack={...attack,difficulty:target.difficulty+formation.detail.bonus,base_difficulty:target.difficulty,defense_passive:formation.proof};
+    }
+    const veil=nativeVeilExposureDefense(db,guild,target,input);
+    if(veil){
+      if(aura||formation)throw new StateConflictError('Combined defensive passive/aura odds require an authored native mapping.');
+      attack={...attack,difficulty:target.difficulty+veil.detail.bonus,base_difficulty:target.difficulty,defense_passive:veil.proof};
     }
   }
   const unresolved=[...base.unresolved,

@@ -1138,13 +1138,13 @@
       "template_hash": "8a9352c6cabf6c9cdf2dbdb5e3c2c84f66a66cf22c8ce95a8bde600f806a729a",
       "index": 0,
       "type": "Passive",
-      "status": "review_only",
-      "trigger_kind": "unmapped",
-      "target_policy": "unmapped",
-      "roll_protocol": "unmapped",
-      "costs": null,
-      "native_handler": null,
-      "reason": "No qualified native feature handler."
+      "status": "supported",
+      "trigger_kind": "attack_target",
+      "target_policy": "self",
+      "roll_protocol": "difficulty",
+      "costs": [],
+      "native_handler": "veil_exposure_difficulty",
+      "reason": "Exact source-pinned passive: campaign Veil Exposure 0–2 adds 1 Difficulty to attacks against this native actor."
     },
     {
       "feature_key": "adversary:veil-anchor-sentinel:edit-the-scene",
@@ -1462,13 +1462,13 @@
       "template_hash": "d1b823311b7081bbfbeab45ec3fa87ac1809f61f0b7351a3e1a4e745a85874e1",
       "index": 0,
       "type": "Passive",
-      "status": "review_only",
-      "trigger_kind": "unmapped",
-      "target_policy": "unmapped",
-      "roll_protocol": "unmapped",
-      "costs": null,
-      "native_handler": null,
-      "reason": "No qualified native feature handler."
+      "status": "supported",
+      "trigger_kind": "attack_target",
+      "target_policy": "self",
+      "roll_protocol": "difficulty",
+      "costs": [],
+      "native_handler": "veil_exposure_difficulty",
+      "reason": "Exact source-pinned passive: campaign Veil Exposure 0–2 adds 2 Difficulty and 5–6 subtracts 1 Difficulty from attacks against this native actor."
     },
     {
       "feature_key": "adversary:veil-engine-custodian:rewrite-witnesses",
