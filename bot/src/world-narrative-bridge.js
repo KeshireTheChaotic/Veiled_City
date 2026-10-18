@@ -1,7 +1,7 @@
 /** Read-only native causal signals for the existing GM request. No world effects, disclosure or provider calls. */
 import {sceneFictionHash as hash,narrativeSourceVisible} from './scene-fiction-context.js';
 import {listNarrativeRecords} from './narrative-records.js';
-import {currentScene} from './scene-continuity.js';
+import {currentScene,scenePresence} from './scene-continuity.js';
 import {conversationPrincipal} from './conversation-principal.js';
 import {completedActionSource,historicalActionSource} from './action-consent.js';
 import {typedRollProof} from './typed-roll-proof.js';
@@ -73,6 +73,48 @@ function nativeTask(db,guild,row,scope,scene){
   return envelope(scene,scope,'unresolved_narrative_task',s.event_key,[{kind:'narrative_task_coverage',key:row.record_key,hash:hash(row)},
     {kind:'world_event',key:s.event_key,hash:hash(s)}],'diagnostic_only');
 }
+function nativeSceneTransition(db,guild,scope,scene){
+  if(!scope.actorCharacterId||!scope.actorUserId)return null;
+  const pc=db.getCharacter(scope.actorCharacterId);if(pc?.guild_id!==guild||pc.owner_user_id!==scope.actorUserId)return null;
+  let principal;try{principal=conversationPrincipal(db,guild,scope.actorUserId,pc.id);}catch{return null;}
+  if(principal.kind!=='owner')return null;
+  const presence=scenePresence(db,guild,'character',pc.id);
+  if(!presence||presence.status!=='active'||presence.data.scene!==scene.key||presence.data.session_id!==scene.session_id
+    ||presence.data.entity_type!=='character'||presence.data.entity_key!==pc.id||presence.data.state!=='actually_present'
+    ||presence.location_key!==pc.data.location||!presence.source_event||!entitled(presence,scope))return null;
+  const arrival=db.getWorldEvent(guild,presence.source_event);
+  if(!arrival||arrival.status!=='active'||arrival.kind!=='arrival'||arrival.session_id!==scene.session_id||arrival.scene!==scene.key
+    ||arrival.location_key!==presence.location_key||arrival.source_id!==`player:${pc.owner_user_id}`
+    ||arrival.details.entity_type!=='character'||arrival.details.entity_key!==pc.id||arrival.details.owner_user_id!==pc.owner_user_id
+    ||!entitled(arrival,scope))return null;
+  if(!arrival.details.input_source||!arrival.details.declaration)return null;
+  const source=db.getWorldEvent(guild,arrival.details.input_source),decl=arrival.details.declaration;
+  if(!source||source.event_key!==decl||source.status!=='active'||source.kind!=='ai_gm_input'||source.session_id!==scene.session_id
+    ||source.scene!==scene.key||source.details.author!==pc.owner_user_id||source.details.character_id!==pc.id
+    ||source.details.revision!==principal.revision||!db.ownerAuthoredSource(guild,source.event_key,pc.owner_user_id)
+    ||!narrativeSourceVisible(db,guild,source.event_key,scope)||!narrativeSourceVisible(db,guild,arrival.event_key,scope))return null;
+  const turnKey=arrival.event_key.replace(/:action:\d+$/,'');
+  if(turnKey===arrival.event_key||!turnKey.startsWith('world-turn:'))return null;
+  const turn=db.getCityRecord(guild,'autonomous_turn',turnKey);
+  if(!turn||turn.status!=='active'||turn.source_event!==source.event_key||turn.data.session_id!==scene.session_id||!entitled(turn,scope))return null;
+  const matches=(turn.data.results||[]).filter(result=>result.status==='arrived'&&result.source_event===arrival.event_key
+    &&result.adjudication?.intent==='movement'&&result.adjudication.mode==='native_resolved'
+    &&result.adjudication.source_refs?.length===1&&result.adjudication.source_refs[0]===source.event_key
+    &&result.adjudication.verified_receipts?.length===1&&result.adjudication.verified_receipts[0]===arrival.event_key
+    &&typeof result.adjudication.source_span==='string'&&result.adjudication.source_span.length>0
+    &&source.details.text.includes(result.adjudication.source_span));
+  const intents=listNarrativeRecords(db,guild,'typed_intent').filter(row=>row.status==='resolved'
+    &&row.data.world_source_event===source.event_key&&row.data.arrival===arrival.event_key&&row.data.type==='move'
+    &&row.data.framing==='immediate'&&row.data.resolution==='auto'&&row.data.actor===pc.id&&row.data.owner_user_id===pc.owner_user_id
+    &&row.data.session_id===scene.session_id&&row.data.scene===scene.key&&row.data.source_span&&source.details.text.includes(row.data.source_span)
+    &&entitled(row,scope));
+  const pairs=matches.flatMap(result=>intents.filter(row=>row.data.source_span===result.adjudication.source_span).map(row=>({result,row})));
+  if(pairs.length!==1)return null;
+  const {row}=pairs[0],root=source.event_key;
+  return envelope(scene,scope,'scene_transition',root,[{kind:'typed_intent',key:row.record_key,hash:hash(row)},
+    {kind:'autonomous_turn',key:turn.record_key,hash:hash(turn)},{kind:'world_event',key:arrival.event_key,hash:hash(arrival)},
+    {kind:'world_event',key:source.event_key,hash:hash(source)},{kind:'scene_presence',key:presence.record_key,hash:hash(presence)}],'ranking_only');
+}
 /** At most four entitled signals; no scan/write/model loop over background actors. Missing adapters stay absent, not fabricated. */
 export function worldNarrativeBridgePacket(db,guild,scope){
   const empty={version:1,signals:[],eligible:0,omitted:0,
@@ -86,6 +128,7 @@ export function worldNarrativeBridgePacket(db,guild,scope){
   for(const row of listNarrativeRecords(db,guild,'narrative_task_coverage')){
     const signal=nativeTask(db,guild,row,scope,scene);if(signal)found.push(signal);
   }
+  const transition=nativeSceneTransition(db,guild,scope,scene);if(transition)found.push(transition);
   const signals=[...new Map(found.map(s=>[s.id,s])).values()];
   return {...empty,signals:signals.slice(0,4),eligible:signals.length,omitted:Math.max(0,signals.length-4)};
 }
@@ -122,7 +165,8 @@ function activeSignalSnapshot(db,guild,s,scope){
     ||s.source_refs.length>6||!narrativeSourceVisible(db,guild,s.causation_ref,scope))return false;
   return s.source_refs.every(ref=>{
     const row=ref.kind==='world_event'?db.getWorldEvent(guild,ref.key):ref.kind==='saved_roll'?db.getSavedRoll(guild,ref.key)
-      :['typed_intent','action_outcome_receipt','roll_request','native_adjudication','narrative_task_coverage'].includes(ref.kind)?db.getCityRecord(guild,ref.kind,ref.key):null;
+      :['typed_intent','action_outcome_receipt','roll_request','native_adjudication','narrative_task_coverage','autonomous_turn','scene_presence'].includes(ref.kind)
+        ?db.getCityRecord(guild,ref.kind,ref.key):null;
     if(!row||hash(row)!==ref.hash)return false;
     if(ref.kind==='world_event')return narrativeSourceVisible(db,guild,row.event_key,scope);
     if(ref.kind==='saved_roll')return scope.mode==='private'&&row.character_id===scope.actorCharacterId&&row.discord_user_id===scope.actorUserId;
