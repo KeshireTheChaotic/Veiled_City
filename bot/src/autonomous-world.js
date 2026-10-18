@@ -17,7 +17,7 @@ import { contextMemoriesForScope } from "./context-memory.js";
 import { captureDepartureWitnesses } from "./character-observation.js";
 import {assertPcCanAct} from "./pc-native-eligibility.js";
 import {continuationAuthorization} from "./action-continuation.js";
-import {verifiedWorldAuthoringContext,worldIdentityOrigin,assertIndependentWorldIdentity,assertWorldIdentityNames} from './world-authorship.js';
+import {verifiedWorldAuthoringContext,worldIdentityOrigin,privateWorldIdentityForGm,assertIndependentWorldIdentity,assertWorldIdentityNames} from './world-authorship.js';
 import {sceneFictionHash,narrativeSourceVisible} from './scene-fiction-context.js';
 import {BACKGROUND_WORLD_KINDS,validateBackgroundIdentity} from './world-background-identities.js';
 const hash=value=>createHash("sha256").update(JSON.stringify(value)).digest("hex").slice(0,40);
@@ -71,12 +71,13 @@ function establishNativeNarrativeEntity(db,guild,input,context,{content=null}={}
     ||['name','summary','location_key','parent_location_key','role'].some(k=>typeof input[k]!=='string')
     ||!input.name.trim()||input.name.length>160||!input.summary.trim()||input.summary.length>600||input.role.length>160
     ||!Array.isArray(input.aliases)||input.aliases.length>6||input.aliases.some(a=>typeof a!=='string'||!a.trim()||a.length>80))fail('Bounded ordinary identity required.');
-  const visibility=scope.mode==='private'?'character':'party',subject=scope.mode==='private'?scope.actorCharacterId:null,
+  const seed=verified.private_seed,creationSource=seed?.source_ref||binding.source,
+    visibility=seed?'gm':scope.mode==='private'?'character':'party',subject=!seed&&scope.mode==='private'?scope.actorCharacterId:null,
     existing=db.getCityRecord(guild,'autonomous_entity',`${input.kind}:${input.key}`);
-  if(existing?.data.narrative_origin===binding.source){
+  if(existing?.data.narrative_origin===creationSource){
     if(existing.status!=='active'||db.getWorldEvent(guild,existing.source_event)?.status!=='active')fail('Existing creation receipt is no longer active.');
     const original=db.getWorldEvent(guild,existing.data.authorship_ref||existing.source_event)?.details.identity_definition;
-    if(!worldIdentityOrigin(db,guild,existing,scope)||original&&sceneFictionHash(fields.map(k=>original[k]))!==sceneFictionHash(fields.map(k=>input[k]))
+    if(!(seed?privateWorldIdentityForGm(db,guild,existing):worldIdentityOrigin(db,guild,existing,scope))||original&&sceneFictionHash(fields.map(k=>original[k]))!==sceneFictionHash(fields.map(k=>input[k]))
       ||!original&&sceneFictionHash([existing.data.name,existing.data.summary,existing.data.aliases||[]])!==sceneFictionHash([input.name,input.summary,input.aliases]))
       fail('Native identity replay is immutable; an altered definition cannot reuse its original authorship receipt.');
     return existing;
@@ -95,16 +96,18 @@ function establishNativeNarrativeEntity(db,guild,input,context,{content=null}={}
   if(input.kind==='npc'&&!db.getSimulationEntity(guild,'location',location))fail('NPC needs a genuinely established camera/location.');
   if(input.kind==='npc'&&location!==binding.location){
     const place=db.getCityRecord(guild,'autonomous_entity',`location:${location}`);
-    if(place?.data.narrative_origin!==binding.source||!worldIdentityOrigin(db,guild,place,scope))
+    if(place?.data.narrative_origin!==creationSource||!(seed?privateWorldIdentityForGm(db,guild,place):worldIdentityOrigin(db,guild,place,scope)))
       fail('Native scene authoring cannot establish offscene NPC presence outside its camera or same-source new local setting.');
   }
-  const event=indexWorldEvent(db,guild,{key:`narrative-entity:${hash([binding.source,input.kind,input.key])}`,kind:'native_narrative_entity',
+  const origin=seed?{version:2,kind:'gm_private_hook',...seed,frame_ref:binding.source,frame_hash:sceneFictionHash(binding),
+      audience_ref:verified.audience_ref,scope_hash:sceneFictionHash(scope),identity_hash:sceneFictionHash(input)}
+    :{version:1,kind:'native_ai_gm',source_ref:binding.source,audience_ref:verified.audience_ref,scope_hash:sceneFictionHash(scope),identity_hash:sceneFictionHash(input)};
+  const event=indexWorldEvent(db,guild,{key:`narrative-entity:${hash([creationSource,input.kind,input.key])}`,kind:'native_narrative_entity',
     title:'GM-owned ordinary fictional identity',source_id:'native:narrative-authority',session_id:binding.session,scene:binding.scene,location_key:location,
-    visibility,subject_key:subject,details:{input_source:binding.source,entity_type:input.kind,entity_key:input.key,no_pc_movement:true,
-      authorship_version:1,identity_definition:input,authorship_origin:{version:1,kind:'native_ai_gm',source_ref:binding.source,
-        audience_ref:verified.audience_ref,scope_hash:sceneFictionHash(scope),identity_hash:sceneFictionHash(input)}}},'native:narrative-authority');
+    visibility,subject_key:subject,details:{input_source:creationSource,entity_type:input.kind,entity_key:input.key,no_pc_movement:true,
+      authorship_version:seed?2:1,identity_definition:input,authorship_origin:origin}},'native:narrative-authority');
   if(input.kind==='location')configureSimulationEntity(db,guild,'location',input.key,{name:input.name,description:input.summary,parent_location_key:parent,
-    place_type:input.role,visibility,subject_character_id:subject,aliases:input.aliases,narrative_origin:binding.source,access:'public',ai_gm_origin:true});
+    place_type:input.role,visibility,subject_character_id:subject,aliases:input.aliases,narrative_origin:creationSource,access:'public',ai_gm_origin:true,...(seed?{hidden:true}:{})});
   else if(input.kind==='npc'){
     if(typeof content?.read!=='function')fail('Packaged NPC canon must be available before creating a fresh identity.');
     for(const name of [input.name,...input.aliases])try{
@@ -113,15 +116,15 @@ function establishNativeNarrativeEntity(db,guild,input,context,{content=null}={}
     db.upsertNpcProfile(guild,{npcKey:input.key,displayName:input.name,role:input.role||'ordinary local',publicIdentity:input.summary,
       activityTier:'background',source:'native_narrative_authority',knowledgeBoundaries:['Own sourced observations and ordinary self-knowledge only.']});
     db.setSimulationEntity(guild,'npc',input.key,{name:input.name,location_key:location,visibility,subject_character_id:subject,aliases:input.aliases,
-      narrative_origin:binding.source,activity_tier:'background',resources:{influence:0,materials:0,information:0,manpower:0,leverage:0,wounds:0,stress:0,favors:0}});
+      narrative_origin:creationSource,activity_tier:'background',...(seed?{hidden:true}:{}),resources:{influence:0,materials:0,information:0,manpower:0,leverage:0,wounds:0,stress:0,favors:0}});
     recordScenePresence(db,guild,{entity_type:'npc',entity_key:input.key,location_key:location,zone:'unspecified',
-      source_event:event.event_key,visibility,subject_key:subject,accepted_by:'native:narrative-authority'},'native:narrative-authority');
+      source_event:event.event_key,visibility,subject_key:subject,...(seed?{hidden:true}:{}),accepted_by:'native:narrative-authority'},'native:narrative-authority');
   }
   if(!background)db.upsertReference(guild,{kind:input.kind,key:input.key,name:input.name,summary:input.summary,visibility,subjectCharacterId:subject});
   return db.saveCityRecord(guild,{kind:'autonomous_entity',key:`${input.kind}:${input.key}`,source_event:event.event_key,location_key:background?'':location,visibility,subject_key:subject,
     data:{kind:input.kind,key:input.key,name:input.name,summary:input.summary,aliases:input.aliases,session_id:binding.session,
       ...(background?{identity_layer:'background_only',anchor_location:binding.location}:{}),
-      narrative_origin:binding.source,authorship_ref:event.event_key,authority:'ordinary_GM_fiction_not_PC_effect'}});
+      narrative_origin:creationSource,authorship_ref:event.event_key,authority:'ordinary_GM_fiction_not_PC_effect'}});
 }
 export function configureWorldAuthority(db,guild,input,reviewer){
   cityObject(input);

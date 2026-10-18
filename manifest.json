@@ -20,6 +20,11 @@
       "sha256": "048e81517aee067ec9e0c1e0a79a4f1df755870393719c87eaec4a3e931d2935"
     },
     {
+      "path": ".gitignore",
+      "size_bytes": 28,
+      "sha256": "d135d269fa8b524726f0d3a322793864bf1717864e3295cb6f1c131faad04e9a"
+    },
+    {
       "path": "Dockerfile",
       "size_bytes": 400,
       "sha256": "37f53728408f447ea3657693d4e178fd7a5153bf9d2368e285c571ff1327e08b"
@@ -1111,8 +1116,8 @@
     },
     {
       "path": "bot/scripts/world-sanctioned-sources-test.mjs",
-      "size_bytes": 13241,
-      "sha256": "5b8c1ef4e57a481a1cd977cd4eb50531a880fb29f1f0b1b1eeb0d2792e86eddb"
+      "size_bytes": 25633,
+      "sha256": "1dd66832f28a95390855e0dae03e58344badc504476882c796e8c601d390b5c0"
     },
     {
       "path": "bot/sql/schema.sql",
@@ -1216,8 +1221,8 @@
     },
     {
       "path": "bot/src/autonomous-world.js",
-      "size_bytes": 41285,
-      "sha256": "6a4a3581cab5a14e2a1f41d6e71472001f8ef84e5462675477540330e12ba1bb"
+      "size_bytes": 41841,
+      "sha256": "4eb44440ee1b350ba7bc49f6d70d488c5f8c49f67ba7c16c898c51f8c2619f0a"
     },
     {
       "path": "bot/src/character-export.js",
@@ -1551,8 +1556,8 @@
     },
     {
       "path": "bot/src/gm.js",
-      "size_bytes": 134132,
-      "sha256": "0944c9318b356fc384f91f2ab8f9b094afbb5648d8317735451ffd79e85aff79"
+      "size_bytes": 135132,
+      "sha256": "949f526d6d89dd57c445238dc500113f02e96272ff2d16028c72d4223dc84baf"
     },
     {
       "path": "bot/src/handout.js",
@@ -2211,8 +2216,8 @@
     },
     {
       "path": "bot/src/state.js",
-      "size_bytes": 42710,
-      "sha256": "300bab67ae29d9815bbe5b5ea575ead84555bf52faedee19a8b869383fe9eb00"
+      "size_bytes": 42873,
+      "sha256": "a175ec4ee608e1dfc5bb41c4e3cb1c634360382db31185b55bf747bf65ad7779"
     },
     {
       "path": "bot/src/story-commands.js",
@@ -2306,8 +2311,8 @@
     },
     {
       "path": "bot/src/world-authorship.js",
-      "size_bytes": 4572,
-      "sha256": "bebdf72224ea7e0c1e8c2b3dc01970bff6a148cb589cb557d403106cbdc9c61c"
+      "size_bytes": 8483,
+      "sha256": "75555f4929b8b50dd7fb8c2d36774da91f0f6a39ddb2b32cbe71c80762a735d5"
     },
     {
       "path": "bot/src/world-background-identities.js",
@@ -2328,6 +2333,11 @@
       "path": "bot/src/world-observation.js",
       "size_bytes": 7054,
       "sha256": "815ede68af1bd6d94f05ebc088cb8a96b132b55977c11e1cdea20083c33b9882"
+    },
+    {
+      "path": "bot/src/world-private-seeds.js",
+      "size_bytes": 4299,
+      "sha256": "62ca67eb9b4c2ffe1ce72ea6391b2498128d3fd56768434c4d78d22115acd165"
     },
     {
       "path": "bot/src/world-sanctioned-sources.js",
@@ -2701,8 +2711,8 @@
     },
     {
       "path": "docs/Active_Implementation/NO_DEFERRALS_LEDGER.md",
-      "size_bytes": 73104,
-      "sha256": "06d524eaa90eda75b9676db7712f29ed9a0a3114d9d0bac8d993d3e4f29adec4"
+      "size_bytes": 79453,
+      "sha256": "1e25e42c0cc87289cb7a910abbf7e8cc9a5bcdda9773eca8ddccf672333a3dd9"
     },
     {
       "path": "docs/Active_Implementation/README.md",

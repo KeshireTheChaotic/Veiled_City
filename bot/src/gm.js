@@ -13,6 +13,7 @@ import { contextMemorySchema, CONTEXT_MEMORY_PROMPT } from "./context-memory.js"
 import { presentationContext } from "./presentation-evidence.js";
 import {worldHookSeedForGm,worldRecordOriginForGm} from './world-sanctioned-sources.js';
 import {worldNarrativeBridgePacket} from './world-narrative-bridge.js';
+import {createPrivateSeedOrigin,privateSeedPrompt,privateWorldSeedsSchema,bindPrivateSeedTurn} from './world-private-seeds.js';
 import { summarizeRoster, previewAuthoritativeMutation } from "./state.js";
 import { narrativeContext } from "./character-narrative.js";
 import { validatePostTurnStateReview,POST_TURN_REVIEW_CATEGORIES } from "./director.js";
@@ -803,6 +804,13 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
       arbitrationOrigin=createArbitrationOrigin(this.db,guildId,{mode:scope,actorUserId,actorCharacterId:ctx.actor_assignment.character_id},worldInputKey(messageId,ctx.actor_assignment.character_id));
       sections.push({label:'SOURCE-VALID SCENE INTENT BOARD',value:{...arbitrationPromptBoard(this.db,guildId,arbitrationOrigin),instructions:UNIFIED_ARBITRATION_PROMPT},required:true});
     }
+    let privateSeedOrigin=null;
+    if(this.db.getCityCalendar(guildId).flags.narrative_authority===true&&messageId&&ctx.actor_assignment?.character_id
+      &&ctx.gm_character_hooks.some(h=>h.authorship?.status==='verified_private_seed')){
+      privateSeedOrigin=createPrivateSeedOrigin(this.db,guildId,{mode:scope,actorUserId,actorCharacterId:ctx.actor_assignment.character_id},
+        worldInputKey(messageId,ctx.actor_assignment.character_id));
+      sections.push({label:'NATIVE PRIVATE WORLD SEED PROPOSALS (GM-only; no disclosure)',value:privateSeedPrompt(privateSeedOrigin),required:true});
+    }
     // structuredResponse appends these fixed wrappers on every request; reserve them in addition to bounded correction headroom.
     const reserveChars=6000+(instructions.includes(AUTHORITY_POLICY)?0:AUTHORITY_POLICY.length+1)
       +INTENT_PROMPT.length+GM_WORLD_NARRATIVE_PROMPT.length+8;
@@ -810,6 +818,7 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
       scope:{mode:scope,actorUserId,actorCharacterId:ctx.actor_assignment?.character_id}}),{instructions,query:messageText,reserveChars});
     let turnSchema=ctx.decision_advisory?{...gmSchema,properties:{...gmSchema.properties,decision_advisory:requiredDecisionAdvisorySchema}}:gmSchema;
     if(arbitrationOrigin)turnSchema={...turnSchema,properties:{...turnSchema.properties,unified_arbitration:unifiedArbitrationSchema},required:[...turnSchema.required,'unified_arbitration']};
+    if(privateSeedOrigin)turnSchema={...turnSchema,properties:{...turnSchema.properties,private_world_seeds:privateWorldSeedsSchema},required:[...turnSchema.required,'private_world_seeds']};
     const req={
       model:this.config.routineGmModel||this.config.gmModel,
       instructions,
@@ -819,6 +828,7 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
     if(this.config.reasoningEffort) req.reasoning={effort:this.config.reasoningEffort};
     const validateCore=(result,inspectStaged=null)=>{
       if(arbitrationOrigin)bindArbitrationTurn(result,arbitrationOrigin);
+      if(privateSeedOrigin)bindPrivateSeedTurn(result,privateSeedOrigin);
       const providedIntents=Array.isArray(result.player_intents);
       // Old non-authoritative fixtures may omit this strict-schema field, but omission never synthesizes action authority.
       if(!providedIntents&&(result.scene_actions||[]).some(action=>action.kind==='move'))

@@ -31,6 +31,7 @@ import {ownerSemanticSource,semanticCandidateHash} from './semantic-candidate-so
 import {applyOrdinaryEffects} from './ordinary-effects.js';
 import {isCharacterSourceSpan} from './source-communication.js';
 import {sourceSpanInsideQuote} from './authored-turn-envelope.js';
+import {applyPrivateSeedTurn} from './world-private-seeds.js';
 
 export function summarizeRoster(rows){
   return rows.map(r=>({
@@ -445,6 +446,7 @@ export function applyAuthoritativeMutation(db,{guildId,sessionId=null,events=[],
     const outputSource=nativeDirectorNarrativeSource(narrative)||(provenance.messageId&&scope.actorCharacterId?worldInputKey(provenance.messageId,scope.actorCharacterId):null);
     content=content||nativeDirectorNarrativeContent(narrative);
     const originalNarrative=narrative&&candidateNarrative(narrative);
+    const privateWorldSeeds=applyPrivateSeedTurn(db,guildId,narrative,{content});
     // Semantic rejection may preserve an independent conversational sibling,
     // but must never silently bless/drop an explicitly proposed native effect.
     // Retain the original hard rejection for quoted movement at this effect boundary.
@@ -606,7 +608,7 @@ export function applyAuthoritativeMutation(db,{guildId,sessionId=null,events=[],
     if(inspectStaged)inspectStaged({world,nativeEntries});
     return {events:eventResults,relationships:relationshipResults,handouts:handoutResults,
       npcMemories:cognition.memories,npcKnowledge:cognition.knowledge,npcGoals:cognition.goals,simulation,intents,world,typedIntents,
-      intentDiagnostics,nativeAdjudications,gmRulings,unifiedArbitration,actionPlan,actionWindows,pvpAttempts,typedDialogue,contextMemories,reviewAudit,personalCandidates,ordinaryEffects};
+      intentDiagnostics,nativeAdjudications,gmRulings,unifiedArbitration,actionPlan,actionWindows,pvpAttempts,typedDialogue,contextMemories,reviewAudit,personalCandidates,ordinaryEffects,privateWorldSeeds};
   });
 }
 
