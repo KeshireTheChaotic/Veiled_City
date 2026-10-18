@@ -5,6 +5,8 @@ import {currentScene,scenePresence} from './scene-continuity.js';
 import {conversationPrincipal} from './conversation-principal.js';
 import {completedActionSource,historicalActionSource} from './action-consent.js';
 import {typedRollProof} from './typed-roll-proof.js';
+import {actorEvidenceVisible} from './npc-cognition-projection.js';
+import {activeCityProxy} from './city-constraints.js';
 const entitled=(row,scope)=>['public','party'].includes(row.visibility)||scope.mode==='private'&&row.visibility==='character'
   &&row.subject_key===scope.actorCharacterId&&!!scope.actorUserId;
 const audience=s=>s.mode==='private'?{visibility:'character',character:s.actorCharacterId,user:s.actorUserId}:{visibility:'party',character:null,user:null};
@@ -132,6 +134,53 @@ function nativeSceneTransition(db,guild,scope,scene,actorCharacterId,actorUserId
     {kind:'autonomous_turn',key:turn.record_key,hash:hash(turn)},{kind:'world_event',key:arrival.event_key,hash:hash(arrival)},
     {kind:'world_event',key:source.event_key,hash:hash(source)},{kind:'scene_presence',key:presence.record_key,hash:hash(presence)}],'ranking_only');
 }
+function nativeConversationSignals(db,guild,scope,scene){
+  const signals=[];
+  for(const speech of db.listWorldEvents(guild,{includeGM:true,limit:160})){
+    const d=speech.details||{};
+    if(speech.status!=='active'||speech.kind!=='authored_speech'||speech.session_id!==scene.session_id||speech.scene!==scene.key
+      ||speech.source_id!==`player:${d.author}`||!d.typed_intent||!d.input_source||!Array.isArray(d.listeners)||!d.listeners.length
+      ||typeof d.quote!=='string'||!d.quote||!d.character_id||!d.principal_revision)continue;
+    if(scope.mode==='private'&&(scope.actorCharacterId!==d.character_id||scope.actorUserId!==d.author))continue;
+    if(scope.mode==='party'&&d.private_scene===true)continue;
+    const typed=db.getCityRecord(guild,'typed_intent',d.typed_intent),t=typed?.data;
+    if(!typed||typed.status!=='accepted_for_adjudication'||typed.source_event!==d.input_source||t.type!=='speak'||t.framing!=='immediate'
+      ||t.session_id!==scene.session_id||t.scene!==scene.key
+      ||t.actor!==d.character_id||t.owner_user_id!==d.author||t.utterance!==d.quote||t.actor_principal_revision!==d.principal_revision)continue;
+    const source=db.getWorldEvent(guild,t.world_source_event),ownerEnvelope=db.getWorldEvent(guild,typed.source_event),pc=db.getCharacter(d.character_id);
+    if(!source||source.status!=='active'||source.kind!=='ai_gm_input'||source.session_id!==scene.session_id||source.scene!==scene.key
+      ||source.details.author!==d.author||source.details.character_id!==d.character_id||source.details.revision!==d.principal_revision
+      ||pc?.owner_user_id!==d.author||!db.ownerAuthoredSource(guild,source.event_key,d.author)
+      ||!narrativeSourceVisible(db,guild,source.event_key,scope)||!source.details.text?.includes(d.quote)
+      ||!ownerEnvelope||ownerEnvelope.status!=='active'||ownerEnvelope.kind!=='authored_turn'||ownerEnvelope.details.author!==d.author
+      ||ownerEnvelope.details.character_id!==d.character_id||ownerEnvelope.details.principal_revision!==d.principal_revision
+      ||ownerEnvelope.details.raw_text!==source.details.text||ownerEnvelope.details.raw_hash!==t.source_hash
+      ||!db.ownerAuthoredSource(guild,ownerEnvelope.event_key,d.author)
+      ||speech.details.input_source!==typed.source_event||!db.ownerAuthoredSource(guild,speech.event_key,d.author))continue;
+    let principal;try{principal=conversationPrincipal(db,guild,d.author,d.character_id);}
+    catch(error){if(['Active session required.','Select an authenticated current controlled role.','Controller attendance required.','Active campaign character required.'].includes(error.message))continue;throw error;}
+    if(principal.kind!=='owner'||principal.revision!==d.principal_revision)continue;
+    for(const npc of [...new Set(d.listeners)].slice(0,12)){
+      if(typeof npc!=='string'||!npc)continue;
+      if(activeCityProxy(db,guild,npc))continue;
+      const presence=scenePresence(db,guild,'npc',npc),state=db.getSimulationEntity(guild,'npc',npc)?.state;
+      const presenceSource=presence?.source_event&&db.getWorldEvent(guild,presence.source_event);
+      if(!presence||presence.status!=='active'||presence.data.scene!==scene.key||presence.data.state!=='actually_present'
+        ||presence.location_key!==state?.location_key||!presenceSource||presenceSource.status!=='active'
+        ||presenceSource.session_id!==scene.session_id||presenceSource.scene!==scene.key||presenceSource.location_key!==presence.location_key
+        ||!narrativeSourceVisible(db,guild,presenceSource.event_key,scope)||!db.getNpcProfile(guild,npc))continue;
+      const memory=db.listNpcMemories(guild,npc,{status:'active',limit:200}).find(row=>row.source_ref===speech.event_key
+        &&row.source_type==='heard'&&actorEvidenceVisible(db,guild,npc,row,scope));
+      if(!memory)continue;
+      const refs=[{kind:'npc_memory',key:memory.id,actor:npc,hash:hash(memory)},
+        {kind:'scene_presence',key:presence.record_key,actor:npc,hash:hash(presence)},
+        {kind:'world_event',key:speech.event_key,hash:hash(speech)},{kind:'typed_intent',key:typed.record_key,hash:hash(typed)},
+        {kind:'world_event',key:source.event_key,hash:hash(source)}];
+      signals.push(envelope(scene,scope,'conversation_development',source.event_key,refs,'ranking_only'));
+    }
+  }
+  return signals;
+}
 /** At most four entitled signals; no scan/write/model loop over background actors. Missing adapters stay absent, not fabricated. */
 export function worldNarrativeBridgePacket(db,guild,scope){
   const empty={version:1,signals:[],eligible:0,omitted:0,
@@ -151,6 +200,7 @@ export function worldNarrativeBridgePacket(db,guild,scope){
   for(const actor of transitionActors){
     const transition=nativeSceneTransition(db,guild,scope,scene,actor.character_id,actor.user_id);if(transition)found.push(transition);
   }
+  found.push(...nativeConversationSignals(db,guild,scope,scene));
   const signals=[...new Map(found.map(s=>[s.id,s])).values()];
   return {...empty,signals:signals.slice(0,4),eligible:signals.length,omitted:Math.max(0,signals.length-4)};
 }
@@ -189,8 +239,27 @@ function activeSignalSnapshot(db,guild,s,scope){
     const row=ref.kind==='world_event'?db.getWorldEvent(guild,ref.key):ref.kind==='saved_roll'?db.getSavedRoll(guild,ref.key)
       :['typed_intent','action_outcome_receipt','roll_request','native_adjudication','narrative_task_coverage','autonomous_turn','scene_presence'].includes(ref.kind)
         ?db.getCityRecord(guild,ref.kind,ref.key):null;
+    if(ref.kind==='npc_memory'){
+      if(typeof ref.actor!=='string'||!ref.actor||typeof ref.key!=='string')return false;
+      const memory=db.listNpcMemories(guild,ref.actor,{status:'active',limit:200}).find(m=>m.id===ref.key);
+      return !!memory&&hash(memory)===ref.hash&&actorEvidenceVisible(db,guild,ref.actor,memory,scope);
+    }
+    if(ref.kind==='scene_presence'&&ref.actor){
+      if(typeof ref.key!=='string'||typeof ref.actor!=='string')return false;
+      const presence=db.getCityRecord(guild,'scene_presence',ref.key),source=presence?.source_event&&db.getWorldEvent(guild,presence.source_event),
+        npcState=db.getSimulationEntity(guild,'npc',ref.actor)?.state;
+      return !!presence&&hash(presence)===ref.hash&&presence.data.entity_type==='npc'&&presence.data.entity_key===ref.actor
+        &&presence.data.state==='actually_present'&&presence.data.scene===currentScene(db,guild).key
+        &&presence.location_key===npcState?.location_key&&!activeCityProxy(db,guild,ref.actor)
+        &&source?.status==='active'&&source.scene===presence.data.scene&&source.location_key===presence.location_key
+        &&narrativeSourceVisible(db,guild,source.event_key,scope);
+    }
     if(!row||hash(row)!==ref.hash)return false;
-    if(ref.kind==='world_event')return narrativeSourceVisible(db,guild,row.event_key,scope);
+    if(ref.kind==='world_event')return row.kind==='authored_speech'
+      ?s.source_refs.some(memoryRef=>memoryRef.kind==='npc_memory'&&memoryRef.actor&&memoryRef.key
+        &&db.listNpcMemories(guild,memoryRef.actor,{status:'active',limit:200}).some(memory=>memory.id===memoryRef.key
+          &&memory.source_ref===row.event_key&&actorEvidenceVisible(db,guild,memoryRef.actor,memory,scope)))
+      :narrativeSourceVisible(db,guild,row.event_key,scope);
     if(ref.kind==='saved_roll')return scope.mode==='private'&&row.character_id===scope.actorCharacterId&&row.discord_user_id===scope.actorUserId;
     return (ref.kind==='narrative_task_coverage'||entitled(row,scope))&&narrativeSourceVisible(db,guild,row.source_event,scope);
   });
