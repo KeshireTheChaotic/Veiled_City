@@ -19,6 +19,7 @@ import {assertPcCanAct} from "./pc-native-eligibility.js";
 import {continuationAuthorization} from "./action-continuation.js";
 import {verifiedWorldAuthoringContext,worldIdentityOrigin,assertIndependentWorldIdentity,assertWorldIdentityNames} from './world-authorship.js';
 import {sceneFictionHash,narrativeSourceVisible} from './scene-fiction-context.js';
+import {BACKGROUND_WORLD_KINDS,validateBackgroundIdentity} from './world-background-identities.js';
 const hash=value=>createHash("sha256").update(JSON.stringify(value)).digest("hex").slice(0,40);
 export const AUTONOMOUS_WORLD_VERSION=2;
 const object=properties=>({type:"object",additionalProperties:false,properties,required:Object.keys(properties)});
@@ -60,11 +61,12 @@ export function establishNarrativeEntity(db,guild,input,context,{content=null}={
 }
 function establishNativeNarrativeEntity(db,guild,input,context,{content=null}={}){
   const verified=verifiedWorldAuthoringContext(db,guild,context),{binding,scope,source}=verified.context,policy=worldAuthority(db,guild);
+  const background=BACKGROUND_WORLD_KINDS.includes(input?.kind),permitted=input?.kind==='npc'?policy.auto_create_npcs:background?true:policy.auto_create_locations;
   if(db.getCityCalendar(guild).flags.narrative_authority!==true||source?.status!=='active'||db.getWorldEvent(guild,binding.source)?.status!=='active'
     ||binding.guild!==guild||binding.scene!==currentScene(db,guild).key||policy.gm_authority_mode!=='autonomous'
-    ||policy[input.kind==='npc'?'auto_create_npcs':'auto_create_locations']!==true)fail('Native GM fiction creation authority is unavailable.');
+    ||permitted!==true)fail('Native GM fiction creation authority is unavailable.');
   const fields=['aliases','key','kind','location_key','name','parent_location_key','role','summary'];
-  if(!input||Object.keys(input).sort().join()!==fields.join()||!['npc','location'].includes(input.kind)
+  if(!input||Object.keys(input).sort().join()!==fields.join()||!['npc','location',...BACKGROUND_WORLD_KINDS].includes(input.kind)
     ||typeof input.key!=='string'||!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(input.key)||input.key.length>100
     ||['name','summary','location_key','parent_location_key','role'].some(k=>typeof input[k]!=='string')
     ||!input.name.trim()||input.name.length>160||!input.summary.trim()||input.summary.length>600||input.role.length>160
@@ -81,13 +83,14 @@ function establishNativeNarrativeEntity(db,guild,input,context,{content=null}={}
   }
   assertIndependentWorldIdentity(input,source);
   assertWorldIdentityNames(db,guild,input);
+  if(background)validateBackgroundIdentity(db,guild,input,content);
   const check=input.kind==='npc'?preflightNpcIdentity:preflightPlaceIdentity;
-  for(const name of [input.name,...input.aliases]){
+  for(const name of background?[]:[input.name,...input.aliases]){
     const result=check(db,guild,{key:input.key,name,scope});
     if(result.status!=='clear')fail('New fiction identity collides with an existing/protected identity; reuse it explicitly without replacing it.');
   }
   if(db.getCharacter(input.key)||db.getReference(guild,input.kind,input.key)||db.getNpcProfile(guild,input.key)||db.getSimulationEntity(guild,input.kind,input.key))fail('Existing identity cannot be overwritten by fiction.');
-  const location=input.kind==='location'?input.key:input.location_key,parent=input.parent_location_key;
+  const location=input.kind==='location'?input.key:background?binding.location:input.location_key,parent=input.parent_location_key;
   if(input.kind==='location'&&parent&&parent!==binding.location)fail('Ordinary new geography must attach to the native camera location.');
   if(input.kind==='npc'&&!db.getSimulationEntity(guild,'location',location))fail('NPC needs a genuinely established camera/location.');
   if(input.kind==='npc'&&location!==binding.location){
@@ -102,7 +105,7 @@ function establishNativeNarrativeEntity(db,guild,input,context,{content=null}={}
         audience_ref:verified.audience_ref,scope_hash:sceneFictionHash(scope),identity_hash:sceneFictionHash(input)}}},'native:narrative-authority');
   if(input.kind==='location')configureSimulationEntity(db,guild,'location',input.key,{name:input.name,description:input.summary,parent_location_key:parent,
     place_type:input.role,visibility,subject_character_id:subject,aliases:input.aliases,narrative_origin:binding.source,access:'public',ai_gm_origin:true});
-  else{
+  else if(input.kind==='npc'){
     if(typeof content?.read!=='function')fail('Packaged NPC canon must be available before creating a fresh identity.');
     for(const name of [input.name,...input.aliases])try{
       validateMinorIdentity(db,content,guild,input.key,{name,occupation:input.role||'ordinary local',public_identity:input.summary.slice(0,160),portrayal:'Ordinary local, no special knowledge or powers.'});
@@ -114,9 +117,10 @@ function establishNativeNarrativeEntity(db,guild,input,context,{content=null}={}
     recordScenePresence(db,guild,{entity_type:'npc',entity_key:input.key,location_key:location,zone:'unspecified',
       source_event:event.event_key,visibility,subject_key:subject,accepted_by:'native:narrative-authority'},'native:narrative-authority');
   }
-  db.upsertReference(guild,{kind:input.kind,key:input.key,name:input.name,summary:input.summary,visibility,subjectCharacterId:subject});
-  return db.saveCityRecord(guild,{kind:'autonomous_entity',key:`${input.kind}:${input.key}`,source_event:event.event_key,location_key:location,visibility,subject_key:subject,
+  if(!background)db.upsertReference(guild,{kind:input.kind,key:input.key,name:input.name,summary:input.summary,visibility,subjectCharacterId:subject});
+  return db.saveCityRecord(guild,{kind:'autonomous_entity',key:`${input.kind}:${input.key}`,source_event:event.event_key,location_key:background?'':location,visibility,subject_key:subject,
     data:{kind:input.kind,key:input.key,name:input.name,summary:input.summary,aliases:input.aliases,session_id:binding.session,
+      ...(background?{identity_layer:'background_only',anchor_location:binding.location}:{}),
       narrative_origin:binding.source,authorship_ref:event.event_key,authority:'ordinary_GM_fiction_not_PC_effect'}});
 }
 export function configureWorldAuthority(db,guild,input,reviewer){

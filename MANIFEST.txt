@@ -215,6 +215,7 @@ bot/scripts/v96-semantic-proposals-test.mjs
 bot/scripts/validate-command-schema.mjs
 bot/scripts/validate-offline.mjs
 bot/scripts/world-authorship-test.mjs
+bot/scripts/world-background-identity-test.mjs
 bot/sql/schema.sql
 bot/src/action-consent.js
 bot/src/action-continuation.js
@@ -454,6 +455,7 @@ bot/src/voice.js
 bot/src/window-coordinator.js
 bot/src/world-authoring.js
 bot/src/world-authorship.js
+bot/src/world-background-identities.js
 bot/src/world-observation.js
 content/CARDS/ANCESTRIES_AND_COMMUNITIES.md
 content/CARDS/CUSTOM_DOMAINS.md

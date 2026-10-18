@@ -18,12 +18,15 @@ import {mintNarrativeAudience,revalidateNarrativeAudience} from './audience-nati
 import {compileWriterV9,actToNativeUnit} from './narrative-writer-v9.js';
 import {constructNativeClause} from './narrative-clauses-v9.js';
 import {worldIdentityOrigin} from './world-authorship.js';
+import {BACKGROUND_WORLD_KINDS} from './world-background-identities.js';
 export {narrativeResponseSchema} from './gm-fiction-schema.js';
 const issuer='native:narrative-authority';
 export const NARRATIVE_AUTHORITY_INSTRUCTIONS='You are the creative GM for this audience-isolated packet. Invent interesting ordinary places, people, sensory surroundings, '
   +'believable NPC self-knowledge/motives/ordinary plans/dialogue, soft leads and attributed rumors. No older ledger fact is required for new ordinary fiction. '
   +'Respect existing fiction and canon. Do not reveal hidden causes or infer NPC omniscience. NPC rumors/claims are not objective truth. '
-  +'Return independently meaningful acts plus compact fiction_delta for meaningful named NPC/place identities, in this SAME call. '
+  +'Return independently meaningful acts plus compact fiction_delta for meaningful named NPC/place/background faction/organization/district identities, in this SAME call. '
+  +'Background identities have empty location_key/parent_location_key and no actor stats, jurisdiction, map links, resources, authority, ownership or automatic knowledge. '
+  +'Never create a missing identity merely because the owner names or claims it. Reuse established identities, or independently invent a different appropriate ordinary opportunity. '
   +'Use creative_brief.source_tasks to address each exact requested target separately. Set speaker_key to the native NPC key for its visual description as well as speech; one speaker does not answer another speaker\'s task. '
   +'Prioritize an NPC answer over optional atmosphere. Scene-only detail needs no separate entity. Use exact stable IDs. Reuse existing locations/NPCs without redeclaring them in fiction_delta; never replace their identity or summary. '
   +'Use speaker_brief direction and only that speaker\'s entitled knowledge. A native-known PC address may begin NPC dialogue as Name, or Mr./Ms./Mx. Name,; it permits only the address, never that PC\'s answer or action. '
@@ -213,13 +216,16 @@ export function establishNarrativeUnits(db,guild,input,scope,sourceRef,{content=
   const failedEntities=new Set(),entityResults=[];
   const identityKey=e=>`${e.kind}:${e.key}`;
   for(const e of [...entities].sort((a,b)=>Number(a.kind==='npc')-Number(b.kind==='npc'))){
+    const background=BACKGROUND_WORLD_KINDS.includes(e.kind);
     const newLocalPlace=e.kind==='npc'&&entities.some(p=>p.kind==='location'&&p.key===e.location_key
       &&p.parent_location_key===ctx.binding.location&&units.some(u=>u.kind==='scene'&&u.location_key===p.key));
-    if(!units.some(u=>u.subject_key===e.key||u.location_key===e.key)&&!newLocalPlace)continue;
+    if(background?!units.some(u=>u.kind==='scene'&&u.location_key===ctx.binding.location)
+      :!units.some(u=>u.subject_key===e.key||u.location_key===e.key)&&!newLocalPlace)continue;
     try{
       // A redundant creation proposal cannot replace an existing identity or poison its independently valid prose.
       // Actual unit placement/visibility/proxy checks still run both before and after this step.
-      if(['location','npc'].includes(e.kind)&&db.getSimulationEntity(guild,e.kind,e.key)){
+      if(['location','npc'].includes(e.kind)&&db.getSimulationEntity(guild,e.kind,e.key)
+        ||background&&worldIdentityOrigin(db,guild,db.getCityRecord(guild,'autonomous_entity',`${e.kind}:${e.key}`),scope)){
         entityResults.push({kind:e.kind,key:e.key,status:'reused_existing',reason:'creation_ignored_no_overwrite'});continue;
       }
       if(mentions(`${e.name} ${e.summary} ${(e.aliases||[]).join(' ')}`,protectedNarrativeNames(db,guild)))throw fail('held_material');
