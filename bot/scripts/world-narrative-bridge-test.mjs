@@ -72,6 +72,16 @@ test('WD bridge emits a scene transition only from the persisted native movement
   assert.equal(canonicalNarrativeCause(f.db,f.guild,directorRef,x.scope),null,
     'changed native basis cannot retain canonical causal weight');
 }));
+test('WD bridge projects eligible owner movement to actorless party Director packets and revalidates its beat',()=>nativeFixture(f=>{
+  const {x}=move(f),partyScope={mode:'party'},signal=worldNarrativeBridgePacket(f.db,f.guild,partyScope).signals.find(s=>s.kind==='scene_transition');
+  assert(signal);assert.equal(signal.audience.visibility,'party');assert.equal(signal.authority_disposition,'ranking_only');
+  assert.equal(packet(f,f.pcs[1],'party').signals.find(s=>s.kind==='scene_transition')?.id,signal.id,'party projection is independent of observer owner');
+  assert.equal(revalidateWorldNarrativeSignal(f.db,f.guild,signal,partyScope),true);
+  const ref=bindDirectorNarrativeSource(f.db,f.guild,{act:false},partyScope,'round',{},new ContentIndex(path.resolve('../content'))),
+    source=f.db.getWorldEvent(f.guild,ref),brief=directorBriefForAudience(f.db,f.guild,source,partyScope);
+  assert.equal(brief.world_bridge.beats.length,1);assert.equal(brief.world_bridge.beats[0].signal_ref,signal.id);
+  assert.equal(brief.world_bridge.beats[0].execution_authority,false);assert.equal(brief.world_bridge.beats[0].publication_authority,false);
+}));
 test('WD bridge holds scene transition on forged, stale, owner-mismatched, scene-mismatched, or private-audience receipts',()=>nativeFixture(f=>{
   const {x,accepted,results}=move(f),resolved=f.db.getCityRecord(f.guild,'typed_intent',accepted.record_key),arrival=f.db.getWorldEvent(f.guild,results[0].source_event);
   assert.equal(packet(f,x.pc).signals.filter(s=>s.kind==='scene_transition').length,1);
@@ -115,6 +125,8 @@ test('WD bridge keeps an owner private arrival out of party signals and retains 
   assert.equal(packet(f,x.pc,'party').signals.filter(s=>s.kind==='scene_transition').length,0);
   assert.equal(packet(f,x.pc,'private').signals.filter(s=>s.kind==='scene_transition').length,1);
   assert.equal(packet(f,f.pcs[1],'private').signals.filter(s=>s.kind==='scene_transition').length,0,'private transition does not cross owners');
+  assert.equal(worldNarrativeBridgePacket(f.db,f.guild,{mode:'party'}).signals.filter(s=>s.kind==='scene_transition').length,0,
+    'actorless party projection excludes private owner transition');
 }));
 test('WD bridge sends a genuine native result once per original cause without exposing the declaration or replaying effects',()=>nativeFixture(f=>{
   const x=resolve(f),before=f.db.db.prepare('SELECT COUNT(*) n FROM rolls').get().n,resources=f.db.getCharacter(x.pc.id).data.resources,

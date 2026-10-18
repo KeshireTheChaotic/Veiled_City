@@ -73,21 +73,23 @@ function nativeTask(db,guild,row,scope,scene){
   return envelope(scene,scope,'unresolved_narrative_task',s.event_key,[{kind:'narrative_task_coverage',key:row.record_key,hash:hash(row)},
     {kind:'world_event',key:s.event_key,hash:hash(s)}],'diagnostic_only');
 }
-function nativeSceneTransition(db,guild,scope,scene){
-  if(!scope.actorCharacterId||!scope.actorUserId)return null;
-  const pc=db.getCharacter(scope.actorCharacterId);if(pc?.guild_id!==guild||pc.owner_user_id!==scope.actorUserId)return null;
-  let principal;try{principal=conversationPrincipal(db,guild,scope.actorUserId,pc.id);}
+function nativeSceneTransition(db,guild,scope,scene,actorCharacterId,actorUserId){
+  if(!actorCharacterId||!actorUserId)return null;
+  const pc=db.getCharacter(actorCharacterId);if(pc?.guild_id!==guild||pc.owner_user_id!==actorUserId)return null;
+  const proofScope=scope.mode==='party'?{mode:'private',actorCharacterId:pc.id,actorUserId:pc.owner_user_id}:scope;
+  const boundaryEligible=row=>scope.mode==='party'?['public','party'].includes(row.visibility):entitled(row,proofScope);
+  let principal;try{principal=conversationPrincipal(db,guild,actorUserId,pc.id);}
   catch(error){if(['Active session required.','Select an authenticated current controlled role.','Controller attendance required.','Active campaign character required.'].includes(error.message))return null;throw error;}
   if(principal.kind!=='owner')return null;
   const presence=scenePresence(db,guild,'character',pc.id);
   if(!presence||presence.status!=='active'||presence.data.scene!==scene.key||presence.data.session_id!==scene.session_id
     ||presence.data.entity_type!=='character'||presence.data.entity_key!==pc.id||presence.data.state!=='actually_present'
-    ||presence.location_key!==pc.data.location||!presence.source_event||!entitled(presence,scope))return null;
+    ||presence.location_key!==pc.data.location||!presence.source_event||!boundaryEligible(presence))return null;
   const arrival=db.getWorldEvent(guild,presence.source_event);
   if(!arrival||arrival.status!=='active'||arrival.kind!=='arrival'||arrival.session_id!==scene.session_id||arrival.scene!==scene.key
     ||arrival.location_key!==presence.location_key||arrival.source_id!==`player:${pc.owner_user_id}`
     ||arrival.details.entity_type!=='character'||arrival.details.entity_key!==pc.id||arrival.details.owner_user_id!==pc.owner_user_id
-    ||!entitled(arrival,scope))return null;
+    ||!boundaryEligible(arrival))return null;
   if(!arrival.details.input_source||!arrival.details.declaration)return null;
   const source=db.getWorldEvent(guild,arrival.details.input_source),decl=arrival.details.declaration;
   if(!source||source.event_key!==decl||source.status!=='active'||source.kind!=='ai_gm_input'||source.session_id!==scene.session_id
@@ -99,7 +101,7 @@ function nativeSceneTransition(db,guild,scope,scene){
   const actionSuffix=arrival.event_key.slice(turnKey.length);
   if(!/^:action:\d+$/.test(actionSuffix))return null;
   const turn=db.getCityRecord(guild,'autonomous_turn',turnKey);
-  if(!turn||turn.status!=='active'||turn.source_event!==source.event_key||turn.data.session_id!==scene.session_id||!entitled(turn,scope))return null;
+  if(!turn||turn.status!=='active'||turn.source_event!==source.event_key||turn.data.session_id!==scene.session_id||!boundaryEligible(turn))return null;
   const movement=arrival.details.departure;
   if(!movement||movement.location===arrival.location_key||arrival.location_key!==presence.location_key
     ||typeof movement.location!=='string'||!movement.location)return null;
@@ -114,7 +116,7 @@ function nativeSceneTransition(db,guild,scope,scene){
     &&row.data.framing==='immediate'&&row.data.resolution==='auto'&&row.data.actor===pc.id&&row.data.owner_user_id===pc.owner_user_id
     &&row.data.session_id===scene.session_id&&row.data.scene===scene.key&&row.data.source_span&&source.details.text.includes(row.data.source_span)
     &&row.data.actor_principal_revision===principal.revision&&row.data.target_key===arrival.location_key
-    &&(!row.data.owner_user_id||row.data.owner_user_id===pc.owner_user_id)&&entitled(row,scope));
+    &&(!row.data.owner_user_id||row.data.owner_user_id===pc.owner_user_id)&&boundaryEligible(row));
   const pairs=matches.flatMap(result=>intents.filter(row=>row.data.source_span===result.adjudication.source_span).map(row=>({result,row})));
   if(pairs.length!==1)return null;
   const {row}=pairs[0],root=source.event_key;
@@ -143,7 +145,12 @@ export function worldNarrativeBridgePacket(db,guild,scope){
   for(const row of listNarrativeRecords(db,guild,'narrative_task_coverage')){
     const signal=nativeTask(db,guild,row,scope,scene);if(signal)found.push(signal);
   }
-  const transition=nativeSceneTransition(db,guild,scope,scene);if(transition)found.push(transition);
+  const transitionActors=scope.mode==='private'?[{character_id:scope.actorCharacterId,user_id:scope.actorUserId}]
+    :db.roster(scene.session_id).filter(row=>['present','late','guest'].includes(row.presence)).slice(0,30)
+      .map(row=>({character_id:row.character_id,user_id:db.getCharacter(row.character_id)?.owner_user_id}));
+  for(const actor of transitionActors){
+    const transition=nativeSceneTransition(db,guild,scope,scene,actor.character_id,actor.user_id);if(transition)found.push(transition);
+  }
   const signals=[...new Map(found.map(s=>[s.id,s])).values()];
   return {...empty,signals:signals.slice(0,4),eligible:signals.length,omitted:Math.max(0,signals.length-4)};
 }
