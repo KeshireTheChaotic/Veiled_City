@@ -1,6 +1,6 @@
 # Bounded native special-feature coverage
 
-**Authoritative source:** `bot/src/native-feature-definitions.json`, its runtime verifier `native-feature-catalog.js`, relevant `native-*` executors and source-pinned original content. Current counts are 153 = 12 supported + 140 review-only + 1 needs-authoring. This is **handler inventory**, not UA17 whole-release certification.
+**Authoritative source:** `bot/src/native-feature-definitions.json`, its runtime verifier `native-feature-catalog.js`, relevant `native-*` executors and source-pinned original content. Current counts are 153 = 14 supported + 138 review-only + 1 needs-authoring, using 13 bounded native handler families. This is **feature inventory**, not UA17 whole-release certification.
 
 ## Supported feature keys and exact scope
 
@@ -12,6 +12,8 @@
 | `adversary:choir-relay:local-mesh` | Verified source-pinned Signal taxonomy, real allied same-zone actor; max +1 defensive Difficulty | Cross-zone buffing or inferred alliance/device access |
 | `adversary:pale-court-knight:blood-rush` | Native actual hit marking ≥2 HP enables bounded Knight Stress clearance and holding its current position | Unproved free relocation/variant movement |
 | `adversary:ritual-enforcement-team:stack-formation` | Actual remaining NPC HP ≥4 gives +1 defense Difficulty, else +0, pre-dice sealed | Combined passive/aura and Tag Team HP-transition replay |
+| `adversary:veil-anchor-sentinel:plausible-denial` | Native campaign Veil Exposure 0–2 gives +1 defense Difficulty, else +0; all bands sealed before owner dice | Combined passive/aura, Tag Team, unbound or human-proxied actor |
+| `adversary:veil-engine-custodian:consensus-pressure` | Native campaign Veil Exposure 0–2 gives +2, 3–4 +0, 5–6 −1 defensive Difficulty; original saved odds retained | Combined passive/aura, Tag Team, unsupported target/source changes |
 | `adversary:ritual-enforcement-team:coordinated-volley` | Owner-authored 1–3 target shared native GM attack/damage, per-owner baseline defense/Armor/HP | Shared target-specific Vulnerable odds, generalized multitarget actions |
 | `adversary:traffic-saint:all-lanes-stop` | Actual visible in-Far cohort; distinct owner reactions and sourced movement condition | Arbitrary movement distances/closure or generic group-feature schema |
 | `adversary:wraith-pack:many-deaths` | Bounded real Fear opportunity and successful native hit can add exactly one PC Stress | Signal-Touched optional response/Stress overflow, other triggers |
@@ -35,4 +37,4 @@ The only deliberately appended actor feature is Ritual Enforcement Team **Coordi
 
 ## What remains unimplemented
 
-The **140 `review_only`** entries and **one `needs_authoring`** occurrence are explicitly non-executable; generic 16-environment feature execution is not certified. Multi-owner condition variants, richer scene reach, generic private-result dependencies and arbitrary additional special defenses require separate adapters and counterexample tests. Do not reclassify items `supported` just to suppress a review status. Catalog completeness must fail closed when a feature string, full actor template, order or hash changes.
+The **138 `review_only`** entries and **one `needs_authoring`** occurrence are explicitly non-executable; generic 16-environment feature execution is not certified. Multi-owner condition variants, richer scene reach, generic private-result dependencies and arbitrary additional special defenses require separate adapters and counterexample tests. Do not reclassify items `supported` just to suppress a review status. Catalog completeness must fail closed when a feature string, full actor template, order or hash changes.
