@@ -242,36 +242,43 @@ function nativeDirectorBridge(db,guild,source,scope){
     &&hash(d.scope)===hash(scope)&&narrativeSourceVisible(db,guild,source.event_key,scope)
     &&d.world_bridge?.version===1&&Array.isArray(d.world_bridge.signals)&&d.world_bridge.signals.length<=4);
 }
-/** Sidecar hints only. Never a public message, NPC knowledge, new world change or consent receipt. */
+/** Audience-bound Director beat metadata only; never a message, knowledge, consent or native outcome. */
 export function worldDirectorBridgeBeats(db,guild,source,scope){
   if(!nativeDirectorBridge(db,guild,source,scope))return null;
   const beats=[];let held=0;
-  const scene=currentScene(db,guild),units=db.listCityRecords(guild,{kind:'narrative_unit',includeGM:true,limit:100});
+  const scene=currentScene(db,guild);
   // Only project scene observations that were already established by the native
   // audience-bound narrative authority. Re-render with the original binding
   // scope on every read; the Director snapshot is a selector, not proof.
   for(const proof of source.details.dramatic_brief?.events||[]){
     if(beats.length>=4)break;
     if(proof.kind!=='native_narrative_unit')continue;
-    const event=db.getWorldEvent(guild,proof.ref),matches=units.filter(row=>row.status==='accepted_established'
-      &&row.source_event===proof.ref&&row.visibility==='party'&&row.data?.unit?.visibility==='party'
-      &&row.data?.issuer==='native:narrative-authority'&&row.data?.unit?.kind==='scene'
-      &&row.data?.unit?.epistemic==='observation'&&row.data?.binding?.scope?.mode==='party');
+    const event=db.getWorldEvent(guild,proof.ref),unitKey=typeof proof.ref==='string'&&proof.ref.endsWith(':source')
+      ?proof.ref.slice(0,-':source'.length):null,row=unitKey&&db.getCityRecord(guild,'narrative_unit',unitKey);
     if(!event||event.status!=='active'||event.kind!=='native_narrative_unit'||event.source_id!=='native:narrative-authority'
-      ||event.session_id!==scene.session_id||event.scene!==scene.key||event.visibility!=='party'||!narrativeSourceVisible(db,guild,event.event_key,scope)
-      ||matches.length!==1){held++;continue;}
-    const row=matches[0],data=row.data,binding=data.binding,origin=binding?.source&&db.getWorldEvent(guild,binding.source),pc=binding?.scope?.actorCharacterId
+      ||hash(event)!==proof.revision||event.session_id!==scene.session_id||event.scene!==scene.key
+      ||!narrativeSourceVisible(db,guild,event.event_key,scope)||!row||row.record_key!==unitKey||row.status!=='accepted_established'
+      ||row.source_event!==event.event_key){held++;continue;}
+    const data=row.data,binding=data?.binding,origin=binding?.source&&db.getWorldEvent(guild,binding.source),pc=binding?.scope?.actorCharacterId
       &&db.getCharacter(binding.scope.actorCharacterId);
-    if(!origin||event.details?.payload_hash!==hash(data)||event.details?.epistemic!=='observation'||event.details?.input_source!==binding?.source
+    const privateAudience=scope.mode==='private',privateBinding=binding?.scope?.mode==='private',audienceValid=privateAudience===privateBinding
+      &&(privateAudience?row.visibility==='character'&&row.subject_key===scope.actorCharacterId&&event.visibility==='character'
+        &&event.subject_key===scope.actorCharacterId&&origin?.visibility==='character'&&origin?.subject_key===scope.actorCharacterId
+        &&binding.scope.actorCharacterId===scope.actorCharacterId&&binding.scope.actorUserId===scope.actorUserId
+        :row.visibility==='party'&&row.subject_key==null&&event.visibility==='party'&&(event.subject_key==null||event.subject_key==='')
+          &&origin?.visibility==='party'&&(origin?.subject_key==null||origin?.subject_key===''));
+    if(!origin||!audienceValid||data?.issuer!=='native:narrative-authority'||data?.unit?.visibility!==row.visibility
+      ||data?.unit?.kind!=='scene'||data?.unit?.epistemic!=='observation'||event.details?.payload_hash!==hash(data)
+      ||event.details?.epistemic!=='observation'||event.details?.input_source!==binding?.source
       ||binding.session!==scene.session_id||binding.scene!==scene.key||binding.location!==event.location_key
-      ||binding.scope.mode!=='party'||binding.viewpoint!=='character'||!binding.placement||origin.visibility!=='party'
+      ||binding.viewpoint!=='character'||!binding.placement||origin.details?.private_scene!==privateBinding
       ||origin.status!=='active'||origin.kind!=='ai_gm_input'||origin.session_id!==scene.session_id||origin.scene!==scene.key
       ||origin.details.author!==binding.scope.actorUserId||origin.details.character_id!==binding.scope.actorCharacterId
       ||pc?.guild_id!==guild||pc.owner_user_id!==binding.scope.actorUserId||!db.ownerAuthoredSource(guild,origin.event_key,pc.owner_user_id)
       ||!narrativeSourceVisible(db,guild,origin.event_key,scope)) {held++;continue;}
     let principal;try{principal=conversationPrincipal(db,guild,pc.owner_user_id,pc.id);}
     catch(error){if(['Active session required.','Select an authenticated current controlled role.','Controller attendance required.','Active campaign character required.'].includes(error.message)){held++;continue;}throw error;}
-    if(principal.kind!=='owner'||principal.revision!==origin.details.revision){held++;continue;}
+    if(principal.kind!=='owner'||principal.revision!==origin.details.revision||principal.character_id!==pc.id){held++;continue;}
     try{renderNarrativeUnit(db,guild,row.record_key,binding.scope);}
     catch(error){if(['SCENE_FICTION','NARRATIVE_PVP'].includes(error.code)){held++;continue;}throw error;}
     const root=origin.event_key,cycle=`world-cycle:${hash([scene.session_id,scene.key,root])}`;
