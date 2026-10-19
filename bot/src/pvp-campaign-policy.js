@@ -6,6 +6,10 @@ const ISSUER='native:pvp-campaign-policy';
 const hash=value=>createHash('sha256').update(JSON.stringify(value)).digest('hex');
 function fail(message){throw Object.assign(new Error(message),{code:'NARRATIVE_PVP',expected:true});}
 function validId(value){return typeof value==='string'&&!!value&&value.length<=120;}
+function closed(value,keys){
+  if(!value||typeof value!=='object'||Array.isArray(value)||Object.keys(value).length!==keys.length||keys.some(k=>!(k in value)))
+    fail('Closed PvP safety-control fields required.');
+}
 function sourceMutation(db,guild,event,mutationType,actorType,actorId,entityKey,binding){
   const e=db.getWorldEvent(guild,event),m=e?.source_kind==='mutation'&&db.getMutation(guild,e.source_id);
   let after;try{after=JSON.parse(m?.after_json||'null');}catch{return false;}
@@ -46,6 +50,7 @@ export function campaignPvpPolicy(db,guild){
   return {enabled:d.enabled,revision:d.revision};
 }
 export function setCampaignPvpMode(db,guild,user,input={},options={}){
+  closed(input,['enabled']);closed(options,['gm','interactionId']);
   const enabled=input?.enabled,{gm=false,interactionId}=options;
   if(!gm||!validId(user)||!validId(interactionId)||typeof enabled!=='boolean')fail('Authenticated GM mode command with explicit enabled boolean required.');
   return db.transaction(()=>{
@@ -58,10 +63,6 @@ export function setCampaignPvpMode(db,guild,user,input={},options={}){
       visibility:'gm',data:{...binding,history:nextHistory}});
     return row;
   });
-}
-function stopRows(db,guild){
-  const rows=db.listCityRecords(guild,{kind:'pvp_safety_stop',includeGM:true,limit:10000});
-  if(rows.length===10000)fail('PvP safety-stop inventory exceeds verified bounds.');return rows;
 }
 function inspectStop(db,guild,row){
   const d=row?.data,b=d&&{version:1,issuer:ISSUER,character:d.character,owner:d.owner,owner_binding:d.owner_binding,interaction_id:d.interaction_id};
@@ -76,6 +77,7 @@ function inspectStop(db,guild,row){
   return row;
 }
 export function setPvpSafetyStop(db,guild,user,input={},options={}){
+  closed(input,['character_id']);closed(options,['interactionId']);
   const character_id=input?.character_id,{interactionId}=options;
   if(!validId(user)||!validId(interactionId)||!validId(character_id))fail('Authenticated current PC owner and stop operation required.');
   return db.transaction(()=>{
@@ -90,9 +92,8 @@ export function setPvpSafetyStop(db,guild,user,input={},options={}){
 }
 export function assertPvpSafety(db,guild,characters){
   if(!Array.isArray(characters)||characters.some(id=>typeof id!=='string'||!id))fail('Exact bounded PvP participant identities required.');
-  const unique=[...new Set(characters)];
-  for(const row of stopRows(db,guild)){
-    if(!unique.includes(row.data?.character))continue;
+  for(const character of new Set(characters)){
+    const row=db.getCityRecord(guild,'pvp_safety_stop',character);if(!row)continue;
     inspectStop(db,guild,row);
     fail('An affected PC owner set a sticky PvP safety stop; no new or unfinished hostile effect may proceed.');
   }
