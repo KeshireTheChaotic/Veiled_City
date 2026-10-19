@@ -108,6 +108,7 @@ bot/scripts/narrative-publication-hotfix-test.mjs
 bot/scripts/narrative-salience-test.mjs
 bot/scripts/narrative-understanding-test.mjs
 bot/scripts/native-actor-control-test.mjs
+bot/scripts/native-experience-eligibility-test.mjs
 bot/scripts/native-group-completion-test.mjs
 bot/scripts/native-veil-defense-test.mjs
 bot/scripts/native-world-fixtures.mjs
@@ -351,6 +352,7 @@ bot/src/narrative-writer-v9.js
 bot/src/native-actor-control.js
 bot/src/native-defense-aura.js
 bot/src/native-encounter-relations.js
+bot/src/native-experience-eligibility.js
 bot/src/native-feature-catalog.js
 bot/src/native-feature-damage.js
 bot/src/native-feature-definitions.json
