@@ -31,8 +31,8 @@
     },
     {
       "path": "README.md",
-      "size_bytes": 14827,
-      "sha256": "cfb3837bdfd8c82f898b3fc6e006178b346bb07abc33d6799e589951368cf51f"
+      "size_bytes": 14925,
+      "sha256": "7e2347a4cf539edceb9ec972984fdcc36972713299edf2d69408186a290a2046"
     },
     {
       "path": "bot/.env.example",
@@ -146,8 +146,8 @@
     },
     {
       "path": "bot/scripts/critical-validation-profile-test.mjs",
-      "size_bytes": 1747,
-      "sha256": "0bc43adcbcabbe922fd7f40b4d68c718675da64af11c2cb26d060c51e2b24819"
+      "size_bytes": 1782,
+      "sha256": "a289a7bc4ab3ccb5f0882ada99fea3490e2e52a07820b3c05cb997e1d857b9bd"
     },
     {
       "path": "bot/scripts/d01-roll-lifecycle-test.mjs",
@@ -770,6 +770,11 @@
       "sha256": "cea5c3ad2e34e34f4ff0a5c4c621dbbd84d34c0d33ede80c0e720d98e7acf0a4"
     },
     {
+      "path": "bot/scripts/session-opening-integration-test.mjs",
+      "size_bytes": 16373,
+      "sha256": "68b6b7cba714d962f2236d09283f7b55e17d819a8427e5da70e16f5bfcdfda05"
+    },
+    {
       "path": "bot/scripts/session-opening-refresh-test.mjs",
       "size_bytes": 19297,
       "sha256": "cc5d8f8d093a01c70cc1252542dad95d24189227e2b72e56acd009c1906598d7"
@@ -1166,8 +1171,8 @@
     },
     {
       "path": "bot/scripts/validate-offline.mjs",
-      "size_bytes": 13371,
-      "sha256": "10bc59b4dfa38e33a615902620b9232cf3f74ec7f57971383c9aab232ca6368c"
+      "size_bytes": 13420,
+      "sha256": "818037c1aec71d16ffbd2d4ec83d0eadd6156415b97ff8951c52de6ce168c483"
     },
     {
       "path": "bot/scripts/validation-selection-test.mjs",
@@ -1281,8 +1286,8 @@
     },
     {
       "path": "bot/src/assembly-readiness.js",
-      "size_bytes": 1809,
-      "sha256": "9e596dc6f1cf13e43f6265be5b50c6913cc0f9754c43008f336be5f8995ba477"
+      "size_bytes": 3203,
+      "sha256": "70fe06fb9bed26732497a6b9415a24d904a59a8793d4c0930c671b971289ed0c"
     },
     {
       "path": "bot/src/assembly-state.js",
@@ -1401,8 +1406,8 @@
     },
     {
       "path": "bot/src/commands.js",
-      "size_bytes": 193725,
-      "sha256": "b9de683d57e55bfa6a098ffca9ed7323f80714613f643a062188160f963294a2"
+      "size_bytes": 193840,
+      "sha256": "4190714cb3f429cbc7c202765049174f9b60fe327c21ab286c01e22f6a414636"
     },
     {
       "path": "bot/src/concept-context.js",
@@ -1456,8 +1461,8 @@
     },
     {
       "path": "bot/src/db.js",
-      "size_bytes": 175833,
-      "sha256": "99d6eab710bfdedc9339eb5befcd1562a19d7b6bc3103b5c3a29a8bab4dcbff0"
+      "size_bytes": 176790,
+      "sha256": "1c826bca2aeb56a310fd5c0c4ddcbd3b5679195655f11fc292244bc37b1ac903"
     },
     {
       "path": "bot/src/decision-advisory.js",
@@ -1976,8 +1981,8 @@
     },
     {
       "path": "bot/src/opening-world-bridge.js",
-      "size_bytes": 1798,
-      "sha256": "68eceac9d7b64540684830c01f98449e6a651154e18923840731e6bef8259d42"
+      "size_bytes": 2086,
+      "sha256": "2649ec43b77f93f5aae80657c37a2e78ba2ff99e14090b3c5a85f50a737615ef"
     },
     {
       "path": "bot/src/operational-metrics.js",
@@ -2366,8 +2371,8 @@
     },
     {
       "path": "bot/src/session-opening-runner.js",
-      "size_bytes": 5182,
-      "sha256": "3c9068ebab9dff1b941a07647f5c35c8bbe1386418c6acf98f83fc82d6b1c31c"
+      "size_bytes": 5685,
+      "sha256": "93b5b66c77aceaeebf4e912bf4ec10f501021f6a02adf926e7e8fd37c6d1fe37"
     },
     {
       "path": "bot/src/session-opening.js",
@@ -2516,8 +2521,8 @@
     },
     {
       "path": "bot/src/world-narrative-bridge.js",
-      "size_bytes": 38292,
-      "sha256": "bc8a7ee4a44e93ffc916b2e6799d701c9ee12e85f3a5fed0263587bdff1bece7"
+      "size_bytes": 40831,
+      "sha256": "25f2ff77749e336625eb8a74176fa24e6d2a6785169bfe9b62a4afe148f44d6b"
     },
     {
       "path": "bot/src/world-observation.js",
@@ -2901,8 +2906,8 @@
     },
     {
       "path": "docs/Active_Implementation/IMPLEMENTATION_RECONCILIATION.md",
-      "size_bytes": 5164,
-      "sha256": "b800da51e3c5821a842da5b042d642580ee296994e480eff8f321ad37e48a3fd"
+      "size_bytes": 5534,
+      "sha256": "27044787878438b202f6cdd68f4a007df78cc4d61c6e8586a83e464144bc33fc"
     },
     {
       "path": "docs/Active_Implementation/N15_APPEARANCE_CONTRACT.md",
@@ -2916,8 +2921,13 @@
     },
     {
       "path": "docs/Active_Implementation/NO_DEFERRALS_LEDGER.md",
-      "size_bytes": 14905,
-      "sha256": "3c96a3b1375292da7638ef5dd974e46c9e9908d73a044a778f89a94f186959eb"
+      "size_bytes": 18941,
+      "sha256": "7708d65d461a70af0ab805e1cd2e00b5e21b83ad720b49e9318fc4d8fc048257"
+    },
+    {
+      "path": "docs/Active_Implementation/OPENING_ASSEMBLY_COMPLETION.md",
+      "size_bytes": 6204,
+      "sha256": "74e414addf5b0df4009d0f38a7f8ea7ce8dccd1aea1a47d46fbee5938d4f8406"
     },
     {
       "path": "docs/Active_Implementation/PRE_ROLL_FEAR_IMPLEMENTATION.md",
@@ -2966,8 +2976,8 @@
     },
     {
       "path": "docs/Active_Implementation/VEILED_CITY_COST_OPTIMIZED_IMPLEMENTATION_PLAN_v2_1_SEMANTIC_FIRST.md",
-      "size_bytes": 45312,
-      "sha256": "ee7dec1268d42af3a54be6c87fc6f11cb21af4971dcf0df316690b1530815775"
+      "size_bytes": 45684,
+      "sha256": "fd0607e278bd3f0b431f12902b408c646240f9d5becc1bf39add20ea6ad5b6dc"
     },
     {
       "path": "docs/Active_Implementation/VEILED_CITY_WORLD_DIRECTOR_BIDIRECTIONAL_DESIGN_v1_2.md",
@@ -3016,8 +3026,8 @@
     },
     {
       "path": "docs/Setup_and_Scope/PARTY_ASSEMBLY.md",
-      "size_bytes": 5355,
-      "sha256": "54a1ff8103a2380f87adfab9e0f9fbe528a721105224b72f8644e711df187447"
+      "size_bytes": 6247,
+      "sha256": "3e54cc7325c0ef3ee0ae41e37e3ebbb3923d3994368188bc6cb3d53eb2eabc37"
     },
     {
       "path": "docs/Setup_and_Scope/PROJECT_SCOPE.md",

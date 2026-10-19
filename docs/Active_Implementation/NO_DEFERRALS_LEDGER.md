@@ -14,7 +14,7 @@ This is the single active status ledger. The [full historical evidence](NO_DEFER
 | W2 authorship/authority | Partial; W2A–K qualified | Complete eligible routine-world producers **and** consumers. No player/model identity creation, inferred knowledge or fake native receipts. |
 | UA14/UA15 | Partial | Supported ordinary rulings, native unarmed/alternate traits and Experience lanes exist; remaining modifiers, collaboration, source-bound weapons, environment/encounter/evidence routes need real adapters. |
 | W3 World Director | Partial | Native source/result, movement/dialogue, scene and committed Fear-clock bridges exist. L0/L1 aggregates, remaining actor tiers/operations/beat classes and complete world consequences remain open. |
-| W4 OpeningDirector | Bounded O0–O5/recovery qualified | Preserve attendance/arrival separation, private hooks, late entry, restart and explicit source-reviewed stale-plan replacement. No automatic semantic freshness or live narrative-quality claim. |
+| W4 OpeningDirector | **Opening/assembly phase complete; targeted qualification below** | Initial world requests, scoped hint lookup, honest quarantine/readiness and actual Fear/death coexistence now qualify alongside O0–O5/recovery. Future world/PvP producers remain their own workstreams; no current Opening implementation gap or live-quality claim. |
 | W5 PvP/death/Fear | Partial; first pre-roll Fear route qualified below | Immediate owner stops and the approved standard-NPC-attack Fear lifecycle are qualified. Campaign non-bilateral execution and integration with custom PvP/other feature requests remain open. Preserve historical agreements, native damage/death and post-action Fear. |
 | W6 feature catalog | **16 supported /137 review-only /0 needs-authoring**,153 occurrences,15 handler families | Implement source-defined remaining adapters; do not infer support from a source definition or rename missing execution as a policy blocker. HR13 authoring is approved; its progress/effect adapter remains absent. |
 | W7/UA17–19 | Not qualified | Frozen complete scope → full offline gate → identical-SHA CI → separately authorized release. A CI repair does not complete the product plan. |
@@ -32,6 +32,7 @@ All figures are executed **targeted/impacted** tests on their recorded trees, no
 | `0881bc062bbaec03131463bf4c03cc4dd7f34ff6` | Native unarmed Strength/Finesse owner choice and saved readers |470/470 |
 | `f3d40befc77a88740c9185d188aab2d53e6b5206` | Immediate owner-priority safety stop at actual hostile-effect boundaries |371/371 |
 | `373c7d61582a99ab87879aa3a02b91fee42e8e18` | Committed native Fear-clock consequences → Director/Opening, no new authority |278/278; syntax472/24 roots; quality256/326 existing warnings; manifest594/594 committed view |
+| `129a5ec0e7622a996da483d9c52d82d8ea0f0152` | Approved standard-NPC pre-roll Fear lifecycle and native recovery |102/102 targeted +4/4 arbitration; no full/remote gate |
 
 ## Owner policies now resolved
 
@@ -55,6 +56,18 @@ Completion source starts at ce8dfbf; the independent `feat(fear): complete ackno
 
 Owner edits to the v2.1 concurrency examples and untracked `.gitignore` are retained. Previously reconciled worktrees are not cleaned again. Any temporary CI worktree is isolated from the above work.
 
+## Completed Opening/assembly phase
+
+Started at **129a5ec0e7622a996da483d9c52d82d8ea0f0152** on the existing branch, no tracked dirty work; owner `.gitignore` preserved. [Acceptance crosswalk, implementation and rollback](OPENING_ASSEMBLY_COMPLETION.md). No agents were needed for this bounded integration.
+
+Baseline4 Opening suites **86/86**,0 failed/skipped,31715.2284ms (`opening-phase-baseline.log`). New original reproductions **0/3** after correcting a missing fixture source ID (`opening-integration-red.log`): automatic readiness still asked for a manual ritual; held writer drafts disappeared from status; unrelated private events hid valid hints. The initial-job world request was also genuinely absent before a second check-in (**0/1**, `opening-initial-bridge-red.log`). Existing writer failure already preserved independent native hooks; no false claim that this behavior was broken. Follow-up negatives caught report handling of revoked operational proof and the new request's terminal retirement; both fixed before qualification, not presented as old native-mechanics defects.
+
+Changes: `world-narrative-bridge` derives initial owner/camera diagnostic requests from the immutable native start job; `opening-world-bridge` supplies those to the existing planner/writer without a provider pass. Requests cannot establish presence, facts, NPC knowledge or canon interest. Closed jobs retire initial requests even after a truthfully labelled fallback; no generation loop. DB-scoped13-row lookup filters current session/scene/audience/owner **before** the12-source budget and flags truncation, retaining existing beat revalidation. `assembly-readiness`, `session-opening-runner` and GM command status report actual lifecycle and generated/verified/quarantined/fallback evidence. Revoked job proof remains held at publication; read-only reporting cannot freeze unrelated gameplay. No new effect adapter, schema/version, live command or historical receipt rewrite.
+
+**Final frozen executable inputs:** new integration **7/7**,0 failed/skipped,5116.0353ms (`opening-integration-final.log`). Final9 directly affected scripts **191/191**,0 failed/cancelled/skipped/todo,67809.3726ms (`opening-phase-targeted-final.log`): session-opening-integration, session-opening, session-opening-attendance, session-opening-entry, session-opening-refresh, assembly-hooks, world-narrative-bridge, world-clock-beats, session5-narrative. Command: `node --import ./scripts/offline-guard.mjs --test --test-concurrency=4 scripts/<each-listed-name>-test.mjs` (actual registered filenames). Registered mandatory guard **1/1**,68.5704ms (`opening-registry-final.log`). Syntax **482 modules/scripts /24 roots**,exit0; quality **260 modules**,exit0,326 existing long-line warnings. Manifest609/609 and diff check after results-only documentation sync. Default critical157/extended196 retain all previous suites; no full validator/CI run.
+
+Real native integration proves pending Fear is not paid/acknowledged/resolved by assembly, all4 owners keep their source-private hooks, actual owner defense/Armor/death choices remain necessary, a lawful native miss/death completes only its Fear obligation, and restart does not replay the opening, dice or cost. Existing expressive positive/forced-PC negatives, late/proxy/zero-attendee, stale source, uncertain delivery and explicit replacement tests pass. No production, live Discord, billable provider call or live/performance claim. Completion is the independent `feat(opening): complete source-bound assembly integration` commit; whole-plan W2/W3/W5/W6 and W7/UA17–19 remain open.
+
 ## CI and validation reconciliation
 
 - Remote failing run: [39257396716](https://github.com/KeshireTheChaotic/Veiled_City/actions/runs/39257396716), exact373c7d6, Ubuntu/Node24.9.0. Fails `v95-protected-narrative-test` NAR05/NAR14: legacy player-triggered additions have no independent native GM identity receipt. Production firewall is correct; fixture setup is obsolete.
@@ -74,7 +87,7 @@ The real clean-tree focused runner passed **7/7 suites**,24971ms, explicitly rep
 
 ## Resume and safety
 
-CI/doc/test-relevance maintenance is complete. Current owner priority: finish the bounded Fear qualification, then report the remaining plan without starting a new feature in this task. Knifewalker `Never Where Recorded` is blocked on an actual source-backed pairwise PC→NPC range producer; location-relative zones or weapon reach do not prove “beyond Close.” Most137 review-only occurrences still need implementation, not owner rulings.
+CI maintenance, the approved Fear route and Opening/assembly integration are complete. Current task stops after this requested phase. Remaining implementation: UA/native features and producer/consumer migrations, World Director tiers/operations/consequences, new campaign-PvP execution/integrations, then final qualification/release gates. Knifewalker `Never Where Recorded` is blocked on an actual source-backed pairwise PC→NPC range producer; location-relative zones or weapon reach do not prove “beyond Close.” Most137 review-only occurrences still need implementation, not owner rulings.
 
 No production/credentials, live Discord, paid provider, model change, merge to main or deployment. Normal branch pushes require standing owner authorization and qualified selected source. Deterministic application test requests/billable tokens0; coding-agent usage unavailable, never guessed. Two workers hit account limits during the preceding feature work; no automatic restart is promised or configured here.
 

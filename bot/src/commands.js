@@ -171,18 +171,19 @@ function refreshEncounterBudget(e){
 function compactAssemblyStatus(db,guildId,session){
   const plan=db.getAssemblyPlan(session.id)||{};
   const roster=presentRoster(db,session.id);
+  const readiness=assemblyReadiness(db,session);
   const lines=[
     `**Session ${session.session_number} Assembly**`,
     `Mode: **${session.assembly_mode||"auto"}** • Phase: **${session.assembly_phase||"assembly"}**`,
     `Present: ${roster.length?roster.map(r=>r.name).join(", "):"none"}`,
-    `Plan: ${plan.public_opening?"generated":"not generated"}`,
+    `Plan: ${readiness.plan?"generated":"not generated"}`,
   ];
   if(plan.convergence_goal) lines.push(`Convergence goal: ${plan.convergence_goal}`);
   if(plan.bonds?.length) lines.push(`Proposed practical links:\n${plan.bonds.slice(0,6).map(b=>`• ${b.from_character} → ${b.to_character}: ${b.reason}`).join("\n")}`);
   if(plan.gm_notes) lines.push(`GM notes: ${plan.gm_notes}`);
-  const readiness=assemblyReadiness(db,session);
   lines.push(`Plan sources: ${readiness.freshness}`,
-    ...readiness.narrative_delivery.map(d=>`${d.name}: ${d.status}${d.previous?' (previous acknowledgement)':''}; sources=${d.source_status}`));
+    ...readiness.narrative_delivery.map(d=>`${d.name}: ${d.status}${d.previous?' (previous acknowledgement)':''}; sources=${d.source_status}`
+      +`; generated=${d.narrative_generated}; verified=${d.narrative_verified}; quarantined=${d.narrative_quarantined}`));
   lines.push(`Delivered parts: ${readiness.delivered} • uncertain/interrupted: ${readiness.uncertain}`,readiness.guidance);
   return lines.join("\n");
 }

@@ -86,7 +86,7 @@ The current owner-prioritized sequence is:
 1. Resolve missing feature authoring (Break the Pattern now has an [owner-approved rule](docs/Active_Implementation/BREAK_THE_PATTERN_AUTHORING_CONTRACT.md)); retain qualified unified-arbitration adapters and saved-result consumers.
 2. World Director integration and supported native consequences.
 3. Versioned PvP/death and pre-roll Fear work, preserving existing protections until replacements qualify.
-4. Remaining OpeningDirector/assembly reconciliation, **then** the remaining review-only special-feature adapters (latest owner amendment).
+4. OpeningDirector/assembly integration is [complete with targeted evidence](docs/Active_Implementation/OPENING_ASSEMBLY_COMPLETION.md); the remaining review-only special-feature adapters are next eligible work under the owner amendment.
 5. Frozen-tree full offline qualification, exact-SHA CI and separately authorized release.
 
 Semantic-first S-GATE and bounded later packages have recorded targeted evidence.

@@ -249,6 +249,18 @@ export class VeiledDB {
       AND json_extract(details_json,'$.roll_modifier.roll_kind')=? ORDER BY rowid LIMIT 101`)
       .all(guildId,character,trait,kind).map(row=>({...row,details:JSON.parse(row.details_json)}));
   }
+  /** Audience/session filters precede the OpeningDirector bound; unrelated event traffic cannot hide eligible context. */
+  openingDirectorSources(guildId,session,scene,scope){
+    const privateScope=scope.mode==='private';
+    return this.db.prepare(`SELECT * FROM world_events WHERE guild_id=? AND status='active'
+      AND kind='native_director_narrative_scope' AND source_id='native:director' AND session_id=? AND scene=?
+      AND visibility=? AND json_extract(details_json,'$.scope.mode')=?
+      AND (?=0 OR subject_key=? AND json_extract(details_json,'$.scope.actorCharacterId')=?
+        AND json_extract(details_json,'$.scope.actorUserId')=?) ORDER BY minute DESC,rowid DESC LIMIT 13`)
+      .all(guildId,session,scene,privateScope?'character':'party',scope.mode,Number(privateScope),
+        scope.actorCharacterId||null,scope.actorCharacterId||null,scope.actorUserId||null)
+      .map(row=>({...row,details:JSON.parse(row.details_json)}));
+  }
   ownedRollRequests(guildId,user,character){
     return this.db.prepare(`SELECT * FROM city_records WHERE guild_id=? AND kind='roll_request' AND visibility='character'
       AND (status IN ('pending','needs_review','awaiting_partner','awaiting_selection','awaiting_damage','awaiting_damage_type')

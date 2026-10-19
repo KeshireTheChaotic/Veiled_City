@@ -19,6 +19,8 @@ Supported start modes include `auto`, `already_together`, `shared_incident`, `co
 - Expressive public/private scene writing uses isolated writer context and the existing native output-parts authorization. The dedicated, source-bound assembly stage can operate for a current v2 plan even when ordinary scene-description flags are off. It does not globally enable spontaneous NPC/effect creation.
 - Current plan freshness fingerprints roster/principals/position/sources, imported hook/narrative revisions, relevant facts/canon and party state. A changed dependency invalidates an undelivered plan.
 - The publisher distinguishes `SOURCE_HOOK_DELIVERED`, `VERIFIED_SCENE_DELIVERED`, `FALLBACK_DELIVERED`, review/blocked/uncertain, and acknowledged legacy states. An acknowledged fallback is **not** retroactive proof that a personal story was delivered.
+- Native status also reports generated/verified/quarantined evidence. A failed or held expressive draft may coexist with a delivered exact owner-source hook; neither is misreported as the other. Completed jobs no longer ask the GM to repeat a manual startup ritual.
+- Initial owner/camera requests and late-entry requests use the same source-bound World Director bridge. Hints are filtered by session/scene/audience before a bounded lookup and never grant knowledge, arrival or native effects. No extra model call is added to obtain them.
 - Private text is checked again against source, ownership, audience, plan, scene, recipient and body at delivery/restart. Unknown sends remain uncertain; no resend by guesswork.
 
 ## GM recovery for a stale or fallback opening
@@ -37,6 +39,8 @@ Unchanged acknowledged personal threads retain their original messages and turn 
 After the replacement attempt, further source changes require scoped operator review; there is no third automatic replacement. These are operational receipts, not permission for unverified prose, forced PC actions or disclosure of GM-private hook answers. The feature does not reset imported characters or established campaign outcomes.
 
 Legacy raw private hooks or freeform planner paragraphs are not automatically safe for publication. GM-only material cannot be converted into player knowledge because it sounds plausible. If a character lacks an entitled source, the correct result may be a truthful orientation/fallback plus a request for player-safe input.
+
+Opening does not resolve an outstanding action or purchase/acknowledge a Fear interruption. Owner defense, Armor and death controls continue through their native workflows. A resulting miss or lawful death does not replay delivered introductions. See the [Opening/assembly completion evidence](../Active_Implementation/OPENING_ASSEMBLY_COMPLETION.md).
 
 ## Late arrivals and proxies
 

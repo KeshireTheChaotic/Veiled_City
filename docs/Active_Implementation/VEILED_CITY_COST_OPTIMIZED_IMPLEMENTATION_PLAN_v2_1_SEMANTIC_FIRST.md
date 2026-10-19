@@ -1,6 +1,8 @@
 # Veiled City — Cost-Optimized, No-Deferrals Codex Execution Plan
 
 > **Current execution overlay — 2026-10-19:** resume from branch HEAD, not the historical baseline below. Read [the reconciled remaining plan](IMPLEMENTATION_RECONCILIATION.md) and [compact ledger](NO_DEFERRALS_LEDGER.md) first. S-GATE, bounded OpeningDirector/recovery, CI maintenance and the approved first standard-NPC-attack pre-roll Fear route are completed; W2/W3/W5/W6 and final W7 remain incomplete. Fear was resumed from ce8dfbf and qualified with targeted tests only at the owner's instruction; no current full/live release claim. Historical kickoff/thread examples do not restart completed work or override current owner limits, native authority, test-selection policy or release gates.
+>
+> **Opening phase completion:** [W4 integration acceptance](OPENING_ASSEMBLY_COMPLETION.md) now closes initial bridge requests, scoped world context, truthful reporting and native Fear/death coexistence. Targeted191/191 plus the mandatory registration check passed; no full/live qualification. Retain the remaining workstreams rather than restarting completed openings.
 
 **Version:** 2.1 — 2026-10-17 (semantic-first revision)  
 **Purpose:** Supersede v2.0 with a mandatory **semantic-first** critical path while retaining the low-usage/no-deferrals execution model of the consolidated plan.  

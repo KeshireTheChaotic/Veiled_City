@@ -6,12 +6,14 @@ import {deliverVerifiedAssembly} from './assembly-publications.js';
 const flights=new WeakMap();
 export function sessionOpeningStatus(job){
   const counts=new Map(),known=new Set(['SOURCE_HOOK_DELIVERED','VERIFIED_SCENE_DELIVERED','FALLBACK_DELIVERED','UNCERTAIN','FAILED','PENDING','BLOCKED','LEGACY_DELIVERED']);
+  const held=(job.data.slots||[]).filter(s=>s.narrative_quarantined===true).length;
   for(const slot of job.data.slots||[]){
     const label=`${slot.audience==='private'?'Owner-private':'Shared'}: ${known.has(slot.narrative_status)?slot.narrative_status:'REVIEW'}`;
     counts.set(label,(counts.get(label)||0)+1);
   }
   return `Native opening: ${job.status}. Attempts: ${job.data.attempts}.`
     +`\n${[...counts].map(([label,count])=>`${label} × ${count}`).join('\n')}`
+    +(held?`\nNarrative authoring held for review: ${held} slot(s). Delivered source hooks or orientation do not certify the original draft.`:'')
     +`${job.data.hold_code?`\nReview reference: ${job.data.hold_code}. Existing acknowledgements and uncertain sends are retained; no blind retry.`:''}`;
 }
 function save(db,guild,row,status,data={}){
@@ -66,6 +68,9 @@ export async function deliverSessionOpening({db,guild,gm=null,key}){
     assertCurrent:()=>assertSessionOpeningAttempt(db,guild.id,key),bindTurn:turn=>bindSessionOpeningTurn(db,guild.id,key,turn)});
   row=assertSessionOpeningAttempt(db,guild.id,key);
   const slots=result.slots.map(s=>({audience:s.scope.mode,character:s.scope.actorCharacterId,user:s.scope.actorUserId,
-    status:s.status,narrative_status:s.narrative_status})),complete=slots.every(s=>['delivered','legacy_delivered'].includes(s.status));
+    status:s.status,narrative_status:s.narrative_status,hook_verified:s.evidence.hook_verified===true,
+    narrative_generated:s.evidence.narrative_generated===true,narrative_verified:s.evidence.narrative_verified===true,
+    narrative_quarantined:s.evidence.narrative_quarantined===true,fallback:s.evidence.fallback===true})),
+    complete=slots.every(s=>['delivered','legacy_delivered'].includes(s.status));
   return save(db,guild.id,row,complete?'completed':'needs_delivery_review',{slots,hold_code:complete?null:'OPENING_DELIVERY_REVIEW'});
 }

@@ -61,6 +61,7 @@ suites.push("native-stress-passives-test");
 suites.push("native-feature-authoring-test");
 suites.push("session-opening-attendance-test");
 suites.push("session-opening-test");
+suites.push("session-opening-integration-test");
 suites.push("session-opening-refresh-test");
 suites.push("session-opening-entry-test");
 suites.push("narrative-correctness-retirement-test");

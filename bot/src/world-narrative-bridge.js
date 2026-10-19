@@ -8,6 +8,8 @@ import {typedRollProof} from './typed-roll-proof.js';
 import {actorEvidenceVisible} from './npc-cognition-projection.js';
 import {activeCityProxy} from './city-constraints.js';
 import {inspectOpeningEntryOpportunity} from './session-opening-attendance.js';
+import {inspectSessionOpening} from './session-opening.js';
+import {assemblyDeliverySummary} from './assembly-state.js';
 import {renderNarrativeUnit} from './narrative-authority.js';
 import {validateFearEffect} from './pvp-fear-moves.js';
 const entitled=(row,scope)=>['public','party'].includes(row.visibility)||scope.mode==='private'&&row.visibility==='character'
@@ -26,6 +28,7 @@ function envelope(scene,scope,kind,root,refs,disposition){
 }
 /** Exact-owner operational request only. This does NOT make the GM-private receipt a visible fictional event. */
 function nativeOpeningRequest(db,guild,scope,scene){
+  const initial=nativeInitialOpeningRequest(db,guild,scope,scene);if(initial)return initial;
   if(scope.mode!=='private'||db.getSession(scene.session_id)?.assembly_mode==='manual')return null;
   try{
     const principal=conversationPrincipal(db,guild,scope.actorUserId,scope.actorCharacterId);
@@ -45,6 +48,34 @@ function nativeOpeningRequest(db,guild,scope,scene){
       'Controller attendance required.','Active campaign character required.'].includes(error.message))return null;
     throw error;
   }
+}
+/** Initial/camera coverage uses the authenticated start job, not a fabricated owner check-in or fictional event. */
+function nativeInitialOpeningRequest(db,guild,scope,scene){
+  if(db.getSession(scene.session_id)?.assembly_mode==='manual'||!db.getCityRecord(guild,'session_opening_job',scene.session_id))return null;
+  try{
+    const job=inspectSessionOpening(db,guild,scene.session_id),privateScope=scope.mode==='private';
+    if(['completed','held_manual'].includes(job.status))return null; // Closed delivery is not permission to retry generation, even after a truthful fallback.
+    if(privateScope){
+      const principal=conversationPrincipal(db,guild,scope.actorUserId,scope.actorCharacterId);
+      if(principal.kind!=='owner'||!job.data.origin.roster.some(p=>p.character===scope.actorCharacterId&&p.user===scope.actorUserId))return null;
+    }
+    const session=db.getActiveSession(guild),slot=assemblyDeliverySummary(db,guild,session).find(s=>s.scope.mode===scope.mode
+      &&(!privateScope||s.scope.actorCharacterId===scope.actorCharacterId&&s.scope.actorUserId===scope.actorUserId));
+    if(!slot||['delivered','legacy_delivered'].includes(slot.status)
+      &&(privateScope?slot.evidence.hook_verified===true:slot.evidence.narrative_verified===true))return null;
+    const source=db.getWorldEvent(guild,job.source_event);
+    return envelope(scene,scope,'opening_opportunity_request',source.event_key,
+      [{kind:'session_opening_job',key:job.record_key,hash:hash(job)},{kind:'world_event',key:source.event_key,hash:hash(source)}],'diagnostic_only');
+  }catch(error){
+    if(error.code==='SESSION_OPENING'||['Active session required.','Select an authenticated current controlled role.',
+      'Controller attendance required.','Active campaign character required.'].includes(error.message))return null;
+    throw error;
+  }
+}
+/** Opening planning needs its own diagnostic only, not repeated scans of every scene result/task/NPC memory. */
+export function openingOpportunityRequests(db,guild,scope){
+  if(!db.getActiveSession(guild)||!['party','private'].includes(scope?.mode)||!ownerScope(db,guild,scope))return [];
+  const signal=nativeOpeningRequest(db,guild,scope,currentScene(db,guild));return signal?[signal]:[];
 }
 function nativeResult(db,guild,a,scope,scene){
   const d=a.data;
@@ -226,7 +257,8 @@ export function worldNarrativeBridgePacket(db,guild,scope){
     const transition=nativeSceneTransition(db,guild,scope,scene,actor.character_id,actor.user_id);if(transition)found.push(transition);
   }
   found.push(...nativeConversationSignals(db,guild,scope,scene));
-  const opening=nativeOpeningRequest(db,guild,scope,scene);if(opening)found.push(opening);
+  const opening=nativeOpeningRequest(db,guild,scope,scene);
+  if(opening){if(opening.source_refs[0].kind==='session_opening_job')found.unshift(opening);else found.push(opening);}
   const signals=[...new Map(found.map(s=>[s.id,s])).values()];
   return {...empty,signals:signals.slice(0,4),eligible:signals.length,omitted:Math.max(0,signals.length-4)};
 }

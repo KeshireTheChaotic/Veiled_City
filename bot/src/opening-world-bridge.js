@@ -1,13 +1,17 @@
 /** Audience-bound Director metadata for existing opening requests. No prose, world effects, new knowledge or provider calls. */
 import {currentScene} from './scene-continuity.js';
-import {worldDirectorBridgeBeats} from './world-narrative-bridge.js';
+import {worldDirectorBridgeBeats,openingOpportunityRequests} from './world-narrative-bridge.js';
 export function openingWorldOpportunities(db,guild,scope){
-  const out={version:1,beats:[],examined_limit:100,
+  const out={version:1,beats:[],requests:[],examined_limit:12,source_limit_reached:false,
     authority:'Existing verified scene observations and pacing requests only; never establish new presence, facts, consent, NPC knowledge or outcomes.'};
   if(!db.getActiveSession(guild)||!['party','private'].includes(scope?.mode))return out;
-  if(scope.mode==='private'&&db.getCharacter(scope.actorCharacterId)?.owner_user_id!==scope.actorUserId)return out;
-  const scene=currentScene(db,guild);
-  for(const source of db.listWorldEvents(guild,{includeGM:true,limit:100})){
+  if(scope.mode==='private'){
+    const pc=db.getCharacter(scope.actorCharacterId);if(pc?.guild_id!==guild||pc.owner_user_id!==scope.actorUserId)return out;
+  }
+  const scene=currentScene(db,guild),sources=db.openingDirectorSources(guild,scene.session_id,scene.key,scope);
+  out.requests=openingOpportunityRequests(db,guild,scope);
+  out.source_limit_reached=sources.length>out.examined_limit;
+  for(const source of sources.slice(0,out.examined_limit)){
     const actual=source.details?.scope;
     if(source.status!=='active'||source.kind!=='native_director_narrative_scope'||source.session_id!==scene.session_id||source.scene!==scene.key
       ||actual?.mode!==scope.mode||scope.mode==='private'&&(actual.actorUserId!==scope.actorUserId||actual.actorCharacterId!==scope.actorCharacterId))continue;

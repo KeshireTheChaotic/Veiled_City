@@ -151,6 +151,7 @@ bot/scripts/semantic-owner-appearance-test.mjs
 bot/scripts/semantic-proposal-fixtures.mjs
 bot/scripts/session-opening-attendance-test.mjs
 bot/scripts/session-opening-entry-test.mjs
+bot/scripts/session-opening-integration-test.mjs
 bot/scripts/session-opening-refresh-test.mjs
 bot/scripts/session-opening-test.mjs
 bot/scripts/session2-message-contract-test.mjs
@@ -581,6 +582,7 @@ docs/Active_Implementation/IMPLEMENTATION_RECONCILIATION.md
 docs/Active_Implementation/N15_APPEARANCE_CONTRACT.md
 docs/Active_Implementation/NO_DEFERRALS_HISTORY_THROUGH_373c7d6.md
 docs/Active_Implementation/NO_DEFERRALS_LEDGER.md
+docs/Active_Implementation/OPENING_ASSEMBLY_COMPLETION.md
 docs/Active_Implementation/PRE_ROLL_FEAR_IMPLEMENTATION.md
 docs/Active_Implementation/PVP_CAMPAIGN_AND_PRE_ROLL_FEAR_CONTRACT.md
 docs/Active_Implementation/README.md
