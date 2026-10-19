@@ -1,5 +1,7 @@
 # Veiled City — Cost-Optimized, No-Deferrals Codex Execution Plan
 
+> **Current execution overlay — 2026-10-19:** resume from branch HEAD, qualified anchor `373c7d6`, not the historical baseline below. Read [the reconciled remaining plan](IMPLEMENTATION_RECONCILIATION.md) and [compact ledger](NO_DEFERRALS_LEDGER.md) first. S-GATE and bounded OpeningDirector/recovery are completed; W2/W3/W5/W6 and final W7 are incomplete. Existing pre-roll Fear edits remain uncommitted/unqualified. Historical kickoff/thread examples do not restart completed work or override current owner limits, native authority, test-selection policy or release gates.
+
 **Version:** 2.1 — 2026-10-17 (semantic-first revision)  
 **Purpose:** Supersede v2.0 with a mandatory **semantic-first** critical path while retaining the low-usage/no-deferrals execution model of the consolidated plan.  
 **Repository:** `KeshireTheChaotic/Veiled_City`  
@@ -35,7 +37,7 @@
 
 ### 1.2 Hard orchestration defaults (tunable down, not up without evidence)
 
-- **Concurrency:** 1 coordinator + **maximum 2 simultaneously working subagents**. Root agent should perform serial tasks itself. No nested subagents, no permanent “QA agent”, no idle agents kept alive for later waves. An agent is not spawned merely because a specialist role was named in an older plan.
+- **Concurrency:** 1 coordinator + **maximum 3 simultaneously working subagents**. Root agent should perform serial tasks itself. No nested subagents, no permanent “QA agent”, no idle agents kept alive for later waves. An agent is not spawned merely because a specialist role was named in an older plan.
 - **Work package:** one integration objective and **2–5 tightly related files** when practical; a precise red fixture + acceptance list + code owner. If only one independent task exists, use zero subagents. Avoid a fleet of six reading the same broad context.
 - **Context:** each child gets path+commit, minimal contract and a bounded excerpt—not the entire 54 KB predecessor document, every log or full repository history. Coordinator retains a compact central status ledger; pass incremental diffs to successors. Cap verbose tool outputs; direct logs to files and show failing summaries.
 - **Effort escalation:** first reproduce with shell/local test; try small model for narrow patch; use stronger coordinator only for contract/rules design, cross-module concurrency, safety-critical state transitions or after one evidenced small-model failure. Never repeatedly churn identical prompts.
@@ -53,7 +55,7 @@ Example **legacy-style** settings *only for a Codex build whose effective config
 # ~/.codex/config.toml — EXAMPLE, not universal across backends
 [agents]
 enabled = true
-max_concurrent_threads_per_session = 2
+max_concurrent_threads_per_session = 6
 default_subagent_model = "gpt-5.4-mini" # Only when available through this Codex runtime
 default_subagent_reasoning_effort = "low"
 max_depth = 1
