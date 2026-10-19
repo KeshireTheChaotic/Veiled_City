@@ -4,6 +4,7 @@ import {historicalActionSource} from "./action-consent.js";
 import {validateBlazeSavedRoll} from "./pc-death.js";
 import {inspectAdversaryDamageDefense} from './native-feature-damage.js';
 import {inspectNativeDefenseAura,inspectNativeFormationDefense} from './native-defense-aura.js';
+import {validateSavedNativeExperienceEligibility} from './native-experience-eligibility.js';
 const same=(a,b)=>JSON.stringify(a)===JSON.stringify(b);
 function fail(){throw Object.assign(new StateConflictError("Exact saved native request, source and result proof required; changed results need reviewed recovery."),{code:"TYPED_ROLL_PROOF"});}
 export function typedRollProof(db,guild,request){
@@ -42,6 +43,31 @@ export function typedRollProof(db,guild,request){
       ||usage?.data.request!==q.record_key||usage.data.user!==a.data.owner_user_id||usage.data.hope_spent!==3)fail();
   }else if(s.character_id!==a.data.actor||s.discord_user_id!==a.data.owner_user_id
     ||s.roll_type!==d.kind&&s.roll_type!=="blaze_final_action")fail();
+  for(const experience of d.experiences||[]){
+    const event=db.getWorldEvent(guild,experience.proof);
+    if(experience.hope_spent!==1||!Number.isSafeInteger(experience.bonus)||experience.bonus<0||experience.bonus>20)fail();
+    if(experience.operation_key){
+      const operation=db.getCityRecord(guild,'roll_operation',experience.operation_key),auth=operation?.data?.authorization,
+        delta=operation?.data?.resource_deltas?.find(item=>item.character===a.data.actor),result=operation?.data?.result,
+        resultExperience=result?.data?.experiences?.find(item=>item.operation_key===experience.operation_key);
+      if(operation?.status!=='active'||operation.visibility!=='character'||operation.subject_key!==a.data.actor
+        ||operation.source_event!==q.source_event||operation.data.user!==a.data.owner_user_id||operation.data.request!==q.record_key
+        ||operation.data.op!=='experience'||auth?.op!=='experience'||auth.request!==q.record_key
+        ||auth.experience!==experience.name||auth.proof!==experience.proof||auth.pay_hope!==true
+        ||!delta||delta.hope?.before-delta.hope?.after!==1||delta.hope?.delta!==-1
+        ||result?.record_key!==q.record_key||!resultExperience||resultExperience.name!==experience.name
+        ||resultExperience.bonus!==experience.bonus||resultExperience.proof!==experience.proof||resultExperience.hope_spent!==1)fail();
+    }else if(event?.kind==='native_experience_eligibility')fail();
+    if(event?.kind==='native_experience_eligibility'&&event.source_id==='native:experience-eligibility')
+      validateSavedNativeExperienceEligibility(db,guild,q,db.getCharacter(a.data.actor),experience);
+    else{
+      const p=event?.details?.roll_participation;
+      if(event?.status!=='active'||event.kind!=='roll_adjudication'||event.source_kind!=='gm'||event.details.human_reviewed!==true
+        ||event.session_id!==d.session_id||event.scene!==d.scene||event.visibility!=='character'||event.subject_key!==a.data.actor
+        ||p?.request!==q.record_key||p.character_id!==a.data.actor||p.kind!=='experience'||p.experience!==experience.name
+        ||!db.getRulesRuling(guild,event.details.ruling_key||p.ruling_key))fail();
+    }
+  }
   const automatic=s.roll_type==="blaze_final_action";
   if(automatic)validateBlazeSavedRoll(db,guild,s.id);
   else if(!Number.isSafeInteger(v.hope)||v.hope<1||v.hope>12||!Number.isSafeInteger(v.fear)||v.fear<1||v.fear>12

@@ -2,6 +2,7 @@
 import { createHash } from "node:crypto";
 import { ownedRollRequest } from "./roll-requests.js";
 import { StateConflictError, UserInputError } from "./errors.js";
+import {recordNativeExperienceEligibility,inspectNativeExperienceEligibility} from './native-experience-eligibility.js';
 
 const hash=value=>createHash("sha256").update(JSON.stringify(value)).digest("hex");
 const states=new Set(["available","requires_owner_choice","requires_additional_authorization","blocked","applied"]);
@@ -85,14 +86,16 @@ export function discoverRollOptions(db,guild,user,request){
     if(typeof name!=="string"||!name.trim())continue;
     const applies=applicability(typeof item==="object"?item.applies_to:null,ctx);
     if(applies==="irrelevant")continue;
-    const proof=participationProof(db,guild,row,name),valid=Number.isSafeInteger(bonus)&&bonus>=0&&bonus<=20;
+    const proof=participationProof(db,guild,row,name),nativeProof=row.data.input?.accepted_intent&&applies==='applicable'&&Number.isSafeInteger(bonus)&&bonus>=0&&bonus<=20
+      ?inspectNativeExperienceEligibility(db,guild,row,pc,name):null,valid=Number.isSafeInteger(bonus)&&bonus>=0&&bonus<=20;
     const applied=(row.data.experiences||[]).some(value=>value.name===name);
-    const state=applied?"applied":!valid||applies==="invalid"?"blocked":proof&&applies==="applicable"?"requires_owner_choice":"requires_additional_authorization";
+    const state=applied?"applied":!valid||applies==="invalid"?"blocked":(nativeProof||proof)&&applies==="applicable"?"requires_owner_choice":"requires_additional_authorization";
     options.push(option({key:`experience:${name}`,type:"experience",label:name,state,effect:valid?{kind:"flat",amount:bonus}:null,
       cost:{resource:"hope",amount:1},exclusive_group:typeof item==="object"&&typeof item.exclusive_group==="string"?item.exclusive_group:"",
-      source:{kind:"character_sheet",character_id:pc.id,path:`experiences.${name}`,proof:proof?.event_key||null,
+      source:{kind:nativeProof?"native_experience_eligibility":"character_sheet",character_id:pc.id,path:`experiences.${name}`,
+        proof:nativeProof?.event_key||proof?.event_key||null,
         proof_description:proof?.details.roll_participation?.description||null,ruling_key:proof?.details.ruling_key||null},
-      reason:state==="requires_owner_choice"?"Applicable reviewed Experience; owner choice and Hope authorization remain required.":
+      reason:state==="requires_owner_choice"?(nativeProof?"Exact native structured applicability; owner choice and Hope authorization remain required.":"Applicable reviewed Experience; owner choice and Hope authorization remain required."):
         state==="blocked"?"The recorded Experience mechanic is invalid.":"Applicability needs an exact reviewed source before owner selection."}));
   }
   const addSheetOptions=(items,type,prefix)=>{
@@ -120,6 +123,8 @@ export function arbitrateRollOptions(db,guild,user,input={}){
   if(!Array.isArray(input.proposed_keys)||input.proposed_keys.length>40||new Set(input.proposed_keys).size!==input.proposed_keys.length
     ||input.proposed_keys.some(key=>typeof key!=="string"||!key||key.length>200))
     throw new UserInputError("Roll option proposals must be a unique bounded key list.");
+  const initial=discoverRollOptions(db,guild,user,input.request),candidate=initial.row;
+  if(candidate.data.input?.accepted_intent)recordNativeExperienceEligibility(db,guild,user,candidate.record_key);
   const {row,pc,options,context:rollContext}=discoverRollOptions(db,guild,user,input.request);
   if(!["pending","needs_review","awaiting_selection"].includes(row.status))throw new StateConflictError("Roll options require a current unsettled owned request.");
   const found=new Set(options.map(item=>item.key));

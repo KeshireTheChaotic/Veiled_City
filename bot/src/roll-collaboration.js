@@ -20,6 +20,7 @@ import {assertGmRulingRequest} from "./gm-action-ruling.js";
 import {assertGmInvitationRequest,resumePendingGmActions} from './gm-native-rolls.js';
 import {nativeAdversaryDamageDefense} from './native-feature-damage.js';
 import {reconcileNativeFormationBreakdown} from './native-defense-aura.js';
+import {validateNativeExperienceEligibility} from './native-experience-eligibility.js';
 function fail(message){throw new StateConflictError(message);}
 /** Called only by the authenticated GM command/review boundary, never by model-supplied identity. */
 export function adjudicateRollSource(db,guild,input,reviewer){
@@ -263,13 +264,16 @@ export function contributeRoll(db,guild,user,input,{rng=d,gmRng=d}={}){
         proof:event.event_key,ruling_key:event.details.ruling_key||choice.ruling_key,reason:choice.reason};
     }else if(input.op==="experience"){
       if(!mine||data.tag||row.status!=="pending") fail("Only the acting owner may amend their unrolled single-PC request.");
-      const p=proof(db,guild,row,pc,input,"experience");
+      let p;
+      try{const native=validateNativeExperienceEligibility(db,guild,row,pc,input.proof);
+        p={experience:native.binding.experience.name,description:''};}
+      catch(error){if(error.code!=="NATIVE_EXPERIENCE_ELIGIBILITY")throw error;p=proof(db,guild,row,pc,input,"experience");}
       if(p.experience!==input.experience||input.pay_hope!==true) fail("Exact relevant owned Experience and explicit 1 Hope authorization required.");
       const found=(pc.data.experiences||[]).find(item=>(typeof item==="string"?item:item.name)===input.experience);
       const bonus=typeof found==="string"?2:found?.modifier;
       if(!found||!Number.isSafeInteger(bonus)||bonus<0||bonus>20||(data.experiences||[]).some(item=>item.name===input.experience))
         fail("Experience is missing, unverified or already invoked.");
-      spend(db,pc,1);data.experiences=[...(data.experiences||[]),{name:input.experience,bonus,proof:input.proof,hope_spent:1}];
+      spend(db,pc,1);data.experiences=[...(data.experiences||[]),{name:input.experience,bonus,proof:input.proof,hope_spent:1,operation_key:receiptKey}];
     }else if(input.op==="tag"){
       if(!mine||data.kind==="reaction"||data.tag||(data.helpers||[]).length||(data.experiences||[]).length||row.status!=="pending")
         fail("Tag Team initiation requires the actor's untouched unsettled action; paid prior amendments need human review.");
@@ -317,9 +321,12 @@ export function contributeRoll(db,guild,user,input,{rng=d,gmRng=d}={}){
       const b=target?.breakdown||data.breakdown;
       if(target?.input&&JSON.stringify(rollBreakdown(db,guild,target.input,pc))!==JSON.stringify(b)) fail("Participant's trait/modifier authority changed.");
       for(const item of data.experiences||[]){
-        requireCitySource(db,guild,item.proof);
         const current=pc.data.experiences.find(e=>(typeof e==="string"?e:e.name)===item.name);
         if((typeof current==="string"?2:current?.modifier)!==item.bonus) fail("Invoked Experience changed; human correction required.");
+        const event=db.getWorldEvent(guild,item.proof);
+        if(event?.kind==='native_experience_eligibility'&&event.source_id==='native:experience-eligibility')
+          validateNativeExperienceEligibility(db,guild,row,pc,item.proof,item);
+        else requireCitySource(db,guild,item.proof);
       }
       const blaze=blazeCriticalResult(db,guild,pc.id,data.input?.accepted_intent);
       if(blaze&&(data.tag||data.helpers?.length||data.experiences?.length))fail("Final action optional features need separate native reviewed mapping; no generic group or paid bonus.");
