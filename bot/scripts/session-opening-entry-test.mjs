@@ -11,6 +11,7 @@ import {indexWorldEvent} from '../src/city-calendar.js';
 import {scenePresence} from '../src/scene-continuity.js';
 import {configureCityFlags} from '../src/city-core.js';
 import {configureSimulationEntity} from '../src/simulation.js';
+import {operationalReport} from '../src/operations/health.js';
 
 function setup(f){
   const sent={party:[],private:[]};let n=0;
@@ -143,4 +144,40 @@ test('O4 source revocation during real recipient fetch blocks transport without 
   const x=setup(f),pc=f.pcs[0],entry=prepareOpeningEntryOpportunity(f.db,f.guild,pc.owner_user_id,pc.id,'toctou-entry');let sends=0;
   x.guild.members.fetch=async()=>{indexWorldEvent(f.db,f.guild,{key:entry.source_event,status:'retracted'});return {send:async()=>{sends++;return {id:'bad',channelId:'bad'};}};};
   const result=await deliverOpeningEntry({db:f.db,guild:x.guild,key:entry.record_key});assert.equal(sends,0);assert.notEqual(result.status,'delivered');
+}));
+
+test('O5 native opening and entry incidents appear in GM-only operational reports without private text or recovery side effects',()=>nativeFixture(async f=>{
+  const x=setup(f),pc=f.pcs[0];f.db.endSession(f.guild,'');
+  await handleCommand(x.interaction('start'),{db:f.db,gm:{planAssembly:async()=>{throw Error('PRIVATE-PLANNER-CONTENT');}}});
+  f.db.updateCharacterData(pc.id,d=>{d.entry_hooks=['PRIVATE-CHARACTER-THREAD'];});
+  x.guild.members.fetch=async()=>({send:async()=>{throw Error('uncertain transport');}});
+  await handleCommand(x.interaction('present',pc.owner_user_id,pc.name),{db:f.db,gm:{}});
+  const before=f.db.db.prepare('SELECT total_changes() n').get().n,report=operationalReport(f.db,f.guild,{authorized:true});
+  assert(report.native.counts.some(r=>r.kind==='session_opening_job'&&r.status==='needs_review'&&r.count===1),'Opening failures must not disappear from operational health.');
+  assert(report.native.counts.some(r=>r.kind==='opening_entry_delivery'&&r.status==='uncertain'&&r.count===1));
+  assert(report.incidents.some(r=>r.kind==='opening_entry_delivery'&&r.status==='uncertain'&&/never.*retry|never.*resend/i.test(r.recovery)));
+  assert(!JSON.stringify(report).includes('PRIVATE-'));assert(!JSON.stringify(report).includes(pc.id));assert(!JSON.stringify(report).includes(pc.owner_user_id));
+  const ops=x.interaction('ops');ops.commandName='vc-admin';
+  assert.equal(await handleCommand(ops,{db:f.db,gm:{runTurn:()=>{throw Error('No model execution allowed.');}}}),true);
+  assert(ops.replies.some(r=>r.files?.length));assert.equal(f.db.db.prepare('SELECT total_changes() n').get().n,before);
+  const denied=x.interaction('ops',pc.owner_user_id);denied.commandName='vc-admin';
+  await assert.rejects(()=>handleCommand(denied,{db:f.db,gm:{}}),/GM|permission/);
+}));
+
+test('O5 completed, retained and manual opening records remain counted without becoming pending incidents',()=>nativeFixture(async f=>{
+  const x=setup(f),pc=f.pcs[0];f.db.endSession(f.guild,'');
+  await handleCommand(x.interaction('start'),{db:f.db,gm:x.gm});
+  await handleCommand(x.interaction('present',pc.owner_user_id,pc.name),{db:f.db,gm:x.gm});
+  const absent=x.interaction('absent',pc.owner_user_id);absent.options.getString=k=>k==='mode'?'offscreen':null;
+  await handleCommand(absent,{db:f.db,gm:x.gm});
+  await handleCommand(x.interaction('present',pc.owner_user_id,pc.name),{db:f.db,gm:x.gm});
+  f.db.endSession(f.guild,'');
+  const manual=x.interaction('start');manual.options.getString=k=>k==='assembly'?'manual':null;
+  await handleCommand(manual,{db:f.db,gm:x.gm});
+  const before=f.db.db.prepare('SELECT total_changes() n').get().n,report=operationalReport(f.db,f.guild,{authorized:true});
+  for(const [kind,status] of [['session_opening_job','completed'],['session_opening_job','held_manual'],['opening_entry_delivery','retained_acknowledgement']]){
+    assert(report.native.counts.some(r=>r.kind===kind&&r.status===status&&r.count>=1),`${kind}/${status} must stay identifiable.`);
+    assert(!report.incidents.some(r=>r.kind===kind&&r.status===status),`${kind}/${status} is not a pending recovery.`);
+  }
+  assert.equal(f.db.db.prepare('SELECT total_changes() n').get().n,before);
 }));

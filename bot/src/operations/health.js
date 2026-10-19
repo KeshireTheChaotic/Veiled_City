@@ -6,11 +6,18 @@ const statuses=new Set(['active','proposed','selected','superseded','awaiting_pa
   'awaiting_defense','awaiting_armor','awaiting_damage','awaiting_owner','awaiting_death','accepted','declined','revoked',
   'withdrawn','delivering','delivered','uncertain','failed','queued','received','capturing','captured','generating',
   'generated','validating','validated','committed','publishing','needs_recovery','cancelled','complete','routed','pre_director',
-  'pending_choice','reviewed','missed','held','not_sent']);
+  'pending_choice','reviewed','missed','held','not_sent','planning','completed','held_manual','held_paused','held_interrupted',
+  'held_resume','needs_delivery_review','retained_acknowledgement','reconciled']);
 const safe=value=>statuses.has(value)?value:'unknown';
 function recovery(kind,status,source){
   if(kind==='historical_archive_conflict')return 'Archive proof changed or was reversed. Inspect history; no native effects or old actions were restored.';
   if(source&&source!=='active')return 'Revalidate the exact source and audience; preserve committed native effects. Do not publish stale material.';
+  if(kind==='opening_entry_delivery')return ['uncertain','delivering'].includes(status)?
+    'Inspect exact owner-private Discord acknowledgement; never blindly retry or resend. Reconcile the saved publication, not the player action.':
+    'Inspect the current owner/source and saved private outbox. Only demonstrably unsent parts may retry; never regenerate or replay game effects.';
+  if(kind==='session_opening_job'||kind==='session_opening_review')return status==='held_paused'?
+    'Operator pause remains in force. Inspect the native opening; this report does not resume it.':
+    'Inspect /vc-session assemble and exact prepared native parts. Preserve delivered/uncertain receipts; never restart generation or resend blindly.';
   if(kind==='publication'||kind==='pvp_ui_delivery')return ['uncertain','delivering'].includes(status)?
     'Inspect exact Discord delivery; reconcile evidence before any resend. Never blindly retry.':
     'Inspect saved delivery and current audience. Only demonstrably unsent output may retry; never rerun mechanics.';

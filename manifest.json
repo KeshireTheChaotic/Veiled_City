@@ -1,7 +1,7 @@
 {
   "package": "Veiled_City_Multiplayer_Discord",
   "version": "0.0.0.1",
-  "generated": "2026-10-18",
+  "generated": "2026-10-19",
   "content_normalization": "utf8-lf",
   "files": [
     {
@@ -711,8 +711,8 @@
     },
     {
       "path": "bot/scripts/session-opening-entry-test.mjs",
-      "size_bytes": 13420,
-      "sha256": "673fe68123b1a9d96e6175db78fb44f1be5e298cc860e96b1b94b41e6c357c12"
+      "size_bytes": 16691,
+      "sha256": "338c4abe377dbb855cb74ecc5fbd1c3446b177bd56589b44d675e70a58a7f6aa"
     },
     {
       "path": "bot/scripts/session-opening-test.mjs",
@@ -1376,8 +1376,8 @@
     },
     {
       "path": "bot/src/db.js",
-      "size_bytes": 172432,
-      "sha256": "39d18291a2e0fc075a5015a485affcfea0fcb7d8c55871637c07d5e27b2bc019"
+      "size_bytes": 172789,
+      "sha256": "da72d09fdd0a389737c3dd5c1a363cbda3d950ec149cf75c3b8c1cecb8e2e66b"
     },
     {
       "path": "bot/src/decision-advisory.js",
@@ -1886,8 +1886,8 @@
     },
     {
       "path": "bot/src/operations/health.js",
-      "size_bytes": 4550,
-      "sha256": "2392740277be73d718dcf48f1ee3b60e656040ab91e0ec06ae54dc2dc0d33bf2"
+      "size_bytes": 5436,
+      "sha256": "a712314a85e2090117d771063d672dbe0d8996e283f51e4c90e5d520c0051779"
     },
     {
       "path": "bot/src/operations/overview.js",
@@ -2771,8 +2771,8 @@
     },
     {
       "path": "docs/Active_Implementation/NO_DEFERRALS_LEDGER.md",
-      "size_bytes": 139833,
-      "sha256": "aaaf31c1bd2101b579ed56423d9038a2a0efc5ab71436182559b44ea86419c95"
+      "size_bytes": 142524,
+      "sha256": "e544c680c757a992a1b9c494c666a3fbe184306c194d344cb47c559380efe8fb"
     },
     {
       "path": "docs/Active_Implementation/README.md",

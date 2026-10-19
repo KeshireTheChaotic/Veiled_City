@@ -1368,17 +1368,21 @@ export class VeiledDB {
       AND json_extract(a.value,'$.key')=r.record_key)`;
     const kinds=['pvp_fear_trigger','pvp_output_quarantine','action_continuation','pc_incoming_attack',
       'pvp_consent','pvp_damage_consent','pvp_fear_move_decision','pvp_fear_effect_receipt','pvp_ui_delivery',
-      'roll_publication','roll_party_publication','pvp_status_publication','pvp_projection_publication','pvp_fear_publication','gm_arbitration_publication'];
+      'roll_publication','roll_party_publication','pvp_status_publication','pvp_projection_publication','pvp_fear_publication','gm_arbitration_publication',
+      'session_opening_job','opening_entry_delivery','session_opening_review'];
     const marks=kinds.map(()=>'?').join(',');
     const groups=this.db.prepare(`SELECT kind,status,COUNT(*) AS count FROM city_records r
       WHERE guild_id=? AND kind IN (${marks}) ${active} GROUP BY kind,status LIMIT 256`).all(guildId,...kinds,excluded);
     const incidents=[];
-    for(const kind of ['pvp_fear_trigger','pvp_output_quarantine','action_continuation','pc_incoming_attack','pvp_ui_delivery']){
+    for(const kind of ['pvp_fear_trigger','pvp_output_quarantine','action_continuation','pc_incoming_attack','pvp_ui_delivery',
+      'session_opening_job','opening_entry_delivery','session_opening_review']){
       incidents.push(...this.db.prepare(`SELECT r.kind,r.record_key,r.status,w.status AS source_status,
         CASE WHEN roll.created_at IS NULL THEN NULL ELSE MAX(0,unixepoch('now')-unixepoch(roll.created_at)) END AS age_seconds
         FROM city_records r LEFT JOIN world_events w ON w.guild_id=r.guild_id AND w.event_key=r.source_event
         LEFT JOIN rolls roll ON roll.guild_id=r.guild_id AND roll.id=json_extract(r.data_json,'$.roll_id')
         WHERE r.guild_id=? AND r.kind=? AND r.status NOT IN ('resolved','delivered','complete','cancelled') ${active}
+        AND (r.kind NOT IN ('session_opening_job','opening_entry_delivery','session_opening_review')
+          OR r.status NOT IN ('completed','retained_acknowledgement','reconciled','held_manual'))
         ORDER BY r.rowid LIMIT 20`).all(guildId,kind,excluded));
     }
     const publications=this.db.prepare(`SELECT status,COUNT(*) AS count FROM publication_outbox
