@@ -52,7 +52,22 @@ const semanticFixtureMigrations=[{suite:'npc-cognition-regression-test',
   // Existing native UA rule hierarchy predates this fixture relocation. Retain
   // the exact assertion of scoped-ruling precedence rather than the obsolete prompt wording.
   {suite:'rules-srd-test',old:'assert.match(ai.requests[0].input,/saved human GM rulings > supplied official online/);',
-    current:'assert.match(ai.requests[0].input,/saved scoped GM ruling > verified explicit campaign override > verified Daggerheart SRD/);'}];
+    current:'assert.match(ai.requests[0].input,/saved scoped GM ruling > verified explicit campaign override > verified Daggerheart SRD/);'},
+  // W2 qualified identity-authority migration (26f7555). The old positive
+  // narrator-name persistence is deliberately prohibited; native GM setup is
+  // independently established BEFORE previews, which must not alter it or move PCs.
+  {suite:'typed-intents-regression-test',
+    old:"assert.equal(tierWorldAdditions(named,'Where is the nearest pharmacy?').durable.length,1);",
+    current:"assert.equal(tierWorldAdditions(named,'Where is the nearest pharmacy?').ephemeral.length,1,"},
+  {suite:'gm-recovery-regression-test',
+    old:"assert.equal(db.getSimulationEntity(guild, 'location', 'relay-night-staffing'), null,",
+    current:"assert.deepEqual(db.getSimulationEntity(guild, 'location', 'relay-night-staffing'), established,"},
+  {suite:'gm-recovery-regression-test',
+    old:"assert.equal(db.getSimulationEntity(guild, 'location', 'relay-night-staffing'), null);",
+    current:"assert.deepEqual(db.getSimulationEntity(guild, 'location', 'relay-night-staffing'), established);"},
+  {suite:'relax-end-to-end-test',
+    old:'assert.equal(db.getSimulationEntity(guild,"location","diner"),null,"Generation previews but never commits");',
+    current:'assert.deepEqual(db.getSimulationEntity(guild,"location","diner"),established,"Generation cannot alter independent native GM identity");'}];
 test("DEP01/02/04 retired artifacts are absent; historical hashes and all mandatory suites remain",()=>{
   for(const row of evidence.retired){assert(!fs.existsSync(path.join(root,row.file)),row.file);assert.match(row.sha256,/^[a-f0-9]{64}$/);
     assert.match(row.last_change,/^[a-f0-9]{40}$/);}

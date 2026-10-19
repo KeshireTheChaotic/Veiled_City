@@ -82,7 +82,7 @@ report.profile=typeof validationProfile==='undefined'?'fixture':validationProfil
 report.deferred_optional_suites=typeof extendedSuiteInventory==='undefined'?[]:extendedSuiteInventory.filter(id=>!suites.includes(id));
 report.selection={mode:'full',reason:'default_full_gate'};
 if(process.argv.includes('--changed')){
-  let paths=null,clean=false;
+  let paths=null,clean=true;
   const base=process.env.VC_CHANGED_BASE;
   if(/^[a-f0-9]{40}$/.test(base||'')&&!/^0+$/.test(base)){
     try{

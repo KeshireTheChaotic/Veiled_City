@@ -16,8 +16,8 @@
     },
     {
       "path": ".github/workflows/offline-validation.yml",
-      "size_bytes": 789,
-      "sha256": "dfa856f93ddc3fc6f943658dc35c8336873de64c00af8cb019c345762514e2ff"
+      "size_bytes": 810,
+      "sha256": "900b9f171e42fc049c4508b214089a9810e10027f957d39fa4cb278bca1d3140"
     },
     {
       "path": "Dockerfile",
@@ -1041,8 +1041,8 @@
     },
     {
       "path": "bot/scripts/v95-deprecation-coverage-test.mjs",
-      "size_bytes": 9777,
-      "sha256": "9d6561f34957ddb689aa50afedca5687416c0fb48dcddc856bb6dbed4a4188f2"
+      "size_bytes": 11076,
+      "sha256": "cde0d6f24c8d2237818b46159508f96a8ec94ea2e3a5235c104ca3ad3162cfb7"
     },
     {
       "path": "bot/scripts/v95-inventory.mjs",
@@ -1151,8 +1151,8 @@
     },
     {
       "path": "bot/scripts/validate-offline.mjs",
-      "size_bytes": 13274,
-      "sha256": "c4063df3b42b7b7f4ba67e38bb94484bac9f5a82b0205d474c9a6553eb2af6e8"
+      "size_bytes": 13273,
+      "sha256": "cbf6146d3c3055b7ed11bf44a87071901b6dd2ba44adf1f187e13d2c955ccdb8"
     },
     {
       "path": "bot/scripts/validation-selection-test.mjs",
@@ -2881,8 +2881,8 @@
     },
     {
       "path": "docs/Active_Implementation/NO_DEFERRALS_LEDGER.md",
-      "size_bytes": 9867,
-      "sha256": "e0e37086907fba9414e38a6d5d0a3007b79e201b70400ce084c22a1d991fcb76"
+      "size_bytes": 10769,
+      "sha256": "77e690f89c3ec7510cc7fdbcaa11bf22efcba39a83f74c8462da400a16edfa8c"
     },
     {
       "path": "docs/Active_Implementation/PVP_CAMPAIGN_AND_PRE_ROLL_FEAR_CONTRACT.md",
@@ -2911,8 +2911,8 @@
     },
     {
       "path": "docs/Active_Implementation/VALIDATION_RECONCILIATION.md",
-      "size_bytes": 4704,
-      "sha256": "44f91fc59c70859c10b711ae9c9fb7d6289c4da371dfc9f04d79d12045b3afe2"
+      "size_bytes": 5842,
+      "sha256": "e9527da0bc80d2e190ce04292f87fbb85f4333378a86c0c7e1e9d453ec7efdc8"
     },
     {
       "path": "docs/Active_Implementation/VEILED_CITY_CODEX_SEMANTIC_FIRST_START_HERE_v2_1.md",
