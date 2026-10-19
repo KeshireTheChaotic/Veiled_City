@@ -6,7 +6,7 @@ import {handleCommand} from '../src/commands.js';
 import {prepareOpeningEntryOpportunity,registerOpeningAttendance} from '../src/session-opening-attendance.js';
 import {deliverOpeningEntry} from '../src/opening-entry.js';
 import {prepareOpeningEntryOutput} from '../src/pvp-output.js';
-import {queueTurnPublications,deliverTurnOutbox} from '../src/publication-outbox.js';
+import {queueTurnPublications,deliverTurnOutbox,reconcilePublication} from '../src/publication-outbox.js';
 import {indexWorldEvent} from '../src/city-calendar.js';
 import {scenePresence} from '../src/scene-continuity.js';
 import {configureCityFlags} from '../src/city-core.js';
@@ -180,4 +180,95 @@ test('O5 completed, retained and manual opening records remain counted without b
     assert(!report.incidents.some(r=>r.kind===kind&&r.status===status),`${kind}/${status} is not a pending recovery.`);
   }
   assert.equal(f.db.db.prepare('SELECT total_changes() n').get().n,before);
+}));
+
+test('O5 four owners retain uncertain initial delivery across duplicate attendance, late entry and restart/rejoin without freezing siblings',()=>nativeFixture(async f=>{
+  const x=setup(f),[uncertain,returning,steady,late]=f.pcs,resources=f.pcs.map(pc=>structuredClone(pc.data.resources));
+  for(const [n,pc] of f.pcs.entries())f.db.updateCharacterData(pc.id,d=>{d.entry_hooks=[`OWNER-${n}-PRIVATE-THREAD`];});
+  f.db.endSession(f.guild,'');
+  for(const pc of f.pcs.slice(0,3))registerOpeningAttendance(f.db,f.guild,pc.owner_user_id,`o5-register-${pc.name}`,pc.name);
+  x.gm.planAssembly=async()=>({public_opening:'Proposal only.',public_parts:[],bonds:[],gm_notes:'PRIVATE-GM-PREMISE',convergence_goal:'Independent openings.',
+    character_entries:f.db.roster(f.db.getActiveSession(f.guild).id).filter(r=>r.character_id&&r.presence==='present').map(r=>({
+      discord_user_id:r.discord_user_id,character_id:r.character_id,character_name:r.name,private_hook:'Proposal only.',private_parts:[],public_cue:'',stay_reason:''}))});
+  const members=x.guild.members.fetch;let unknownAttempts=0;
+  x.guild.members.fetch=async user=>user===uncertain.owner_user_id?{send:async()=>{unknownAttempts++;throw Error('Lost initial acknowledgement');}}:members(user);
+  await handleCommand(x.interaction('start'),{db:f.db,gm:x.gm});
+  const session=f.db.getActiveSession(f.guild),initial=f.db.listCityRecords(f.guild,{kind:'assembly_delivery',includeGM:true})
+    .find(r=>r.data.scope?.actorCharacterId===uncertain.id),original=f.db.listTurnPublications(f.guild,initial.data.turn_id);
+  assert.equal(original.length,1);assert.equal(original[0].status,'uncertain');assert.equal(unknownAttempts,1);
+  assert.equal(x.sent.private.length,2);assert.equal(x.sent.party.length,1);
+  await Promise.all([handleCommand(x.interaction('present',uncertain.owner_user_id,uncertain.name),{db:f.db,gm:x.gm}),
+    handleCommand(x.interaction('present',uncertain.owner_user_id,uncertain.name),{db:f.db,gm:x.gm})]);
+  assert.equal(unknownAttempts,1,'A new entry route cannot resend an initial opening whose acknowledgement is unknown.');
+  const accepted=f.accepted(1,'I ask about my own invoice.',steady.id),revision=f.db.activeAssignment(session.id,returning.owner_user_id).control_revision;
+  const leave=x.interaction('leave',returning.owner_user_id);leave.options.getString=k=>k==='mode'?'offscreen':null;
+  await handleCommand(leave,{db:f.db,gm:x.gm});f.restart();
+  await handleCommand(x.interaction('present',returning.owner_user_id,returning.name),{db:f.db,gm:x.gm});
+  const returningInitial=f.db.listCityRecords(f.guild,{kind:'assembly_delivery',includeGM:true}).find(r=>r.data.scope?.actorCharacterId===returning.id);
+  assert.notEqual(f.db.activeAssignment(session.id,returning.owner_user_id).control_revision,revision);
+  assert.equal(returningInitial.data.evidence.hook_verified,true);
+  assert.equal(f.db.listCityRecords(f.guild,{kind:'opening_entry_delivery',actor:returning.id,includeGM:true})[0].status,'retained_acknowledgement');
+  await handleCommand(x.interaction('present',late.owner_user_id,late.name),{db:f.db,gm:x.gm});
+  assert.equal(x.sent.private.length,3,JSON.stringify(f.db.listCityRecords(f.guild,{kind:'opening_entry_delivery',includeGM:true})
+    .map(r=>({actor:r.actor_key,status:r.status,refs:r.data.evidence?.source_refs,hold:r.data.hold_code}))));assert.equal(x.sent.private.at(-1).user,late.owner_user_id);
+  assert.match(x.sent.private.at(-1).text,/OWNER-3-PRIVATE-THREAD/);assert(!x.sent.private.at(-1).text.includes('OWNER-0-'));
+  assert.notEqual(f.db.activeAssignment(session.id,returning.owner_user_id).control_revision,revision);
+  assert.deepEqual(f.db.getCityRecord(f.guild,'typed_intent',accepted.record_key),accepted);
+  const absent=x.interaction('absent',uncertain.owner_user_id);absent.options.getString=k=>k==='mode'?'offscreen':null;
+  await handleCommand(absent,{db:f.db,gm:x.gm});f.restart();
+  await handleCommand(x.interaction('present',uncertain.owner_user_id,uncertain.name),{db:f.db,gm:x.gm});
+  assert.equal(unknownAttempts,1);assert.equal(x.sent.party.length,1);
+  assert.deepEqual(f.db.listTurnPublications(f.guild,initial.data.turn_id),original);
+  assert.deepEqual(f.pcs.map(pc=>f.db.getCharacter(pc.id).data.resources),resources);
+  assert.equal(f.db.listCityRecords(f.guild,{kind:'scene_presence',includeGM:true}).length,0);
+  assert.notEqual(f.db.getPartyState(f.guild).established,true);
+  assert(!JSON.stringify(x.sent).includes('PRIVATE-GM-PREMISE'));
+}));
+
+test('O5 a new principal and changed hook cannot bypass an uncertain earlier private entry after restart',()=>nativeFixture(async f=>{
+  const x=setup(f),pc=f.pcs[0];let attempts=0;
+  x.guild.members.fetch=async()=>({send:async()=>{attempts++;throw Error('Unknown acknowledgement');}});
+  await handleCommand(x.interaction('present',pc.owner_user_id,pc.name),{db:f.db,gm:x.gm});
+  const original=f.db.listCityRecords(f.guild,{kind:'opening_entry_delivery',includeGM:true})[0],parts=f.db.listTurnPublications(f.guild,original.data.turn_id);
+  const absent=x.interaction('absent',pc.owner_user_id);absent.options.getString=k=>k==='mode'?'offscreen':null;
+  await handleCommand(absent,{db:f.db,gm:x.gm});f.restart();
+  f.db.updateCharacterData(pc.id,d=>{d.entry_hooks=['A newly imported hook is not resend authorization.'];});
+  await handleCommand(x.interaction('present',pc.owner_user_id,pc.name),{db:f.db,gm:x.gm});
+  assert.equal(attempts,1);assert.deepEqual(f.db.listTurnPublications(f.guild,original.data.turn_id),parts);
+  const held=f.db.listCityRecords(f.guild,{kind:'opening_entry_delivery',includeGM:true}).find(r=>r.record_key!==original.record_key);
+  assert.equal(held.status,'needs_review');assert.equal(held.data.held_turn_id,original.data.turn_id);assert(!held.data.turn_id);
+}));
+
+test('O5 exact native delivered reconciliation releases the hold as retained acknowledgement without another send',()=>nativeFixture(async f=>{
+  const x=setup(f),pc=f.pcs[0];let attempts=0;
+  f.db.endSession(f.guild,'');registerOpeningAttendance(f.db,f.guild,pc.owner_user_id,'o5-reconcile-register',pc.name);
+  x.gm.planAssembly=async()=>({public_opening:'Private proposal.',public_parts:[],bonds:[],gm_notes:'',convergence_goal:'Independent thread.',
+    character_entries:[{discord_user_id:pc.owner_user_id,character_id:pc.id,character_name:pc.name,private_hook:'Proposal only.',private_parts:[]}]});
+  x.guild.members.fetch=async()=>({send:async()=>{attempts++;throw Error('Unknown acknowledgement');}});
+  await handleCommand(x.interaction('start'),{db:f.db,gm:x.gm});
+  await handleCommand(x.interaction('present',pc.owner_user_id,pc.name),{db:f.db,gm:x.gm});assert.equal(attempts,1);
+  const initial=f.db.listCityRecords(f.guild,{kind:'assembly_delivery',includeGM:true}).find(r=>r.data.scope.mode==='private'),
+    publication=f.db.listTurnPublications(f.guild,initial.data.turn_id)[0];
+  await reconcilePublication(f.db,f.guild,publication.id,{actor:'operator',gm:true,decision:'delivered',reason:'Exact synthetic Discord receipt verified.',
+    message:{id:'verified-original',channelId:`dm-${pc.owner_user_id}`,author:{bot:true,id:'offline-bot'},verifiedBotId:'offline-bot',
+      verifiedRecipient:pc.owner_user_id,content:publication.payload}});
+  f.restart();await handleCommand(x.interaction('present',pc.owner_user_id,pc.name),{db:f.db,gm:x.gm});
+  assert.equal(attempts,1);assert.equal(f.db.listCityRecords(f.guild,{kind:'opening_entry_delivery',includeGM:true})[0].status,'retained_acknowledgement');
+  assert.equal(f.db.listTurnPublications(f.guild,initial.data.turn_id)[0].discord_message_id,'verified-original');
+}));
+
+test('O5 owner entry does not race a still-planning initial opening into two private messages',()=>nativeFixture(async f=>{
+  const x=setup(f),pc=f.pcs[0];f.db.endSession(f.guild,'');
+  registerOpeningAttendance(f.db,f.guild,pc.owner_user_id,'o5-planning-register',pc.name);
+  let release,entered;const wait=new Promise(r=>{release=r;}),ready=new Promise(r=>{entered=r;});
+  x.gm.planAssembly=async()=>{entered();await wait;return {public_opening:'Proposal only.',public_parts:[],bonds:[],gm_notes:'',convergence_goal:'Independent thread.',
+    character_entries:[{discord_user_id:pc.owner_user_id,character_id:pc.id,character_name:pc.name,private_hook:'Proposal only.',private_parts:[]}]};};
+  const started=handleCommand(x.interaction('start'),{db:f.db,gm:x.gm});
+  try{
+    await ready;await handleCommand(x.interaction('present',pc.owner_user_id,pc.name),{db:f.db,gm:x.gm});
+    assert.equal(x.sent.private.length,0,'The already scheduled owner slot must not have a competing entry send.');
+  }finally{release();await started;}
+  assert.equal(x.sent.private.length,1);f.restart();
+  await handleCommand(x.interaction('present',pc.owner_user_id,pc.name),{db:f.db,gm:x.gm});
+  assert.equal(x.sent.private.length,1);
 }));

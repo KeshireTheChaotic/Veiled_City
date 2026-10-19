@@ -14,10 +14,32 @@ function acknowledged(db,guild,record){
   if(!record?.data.turn_id)return false;
   const rows=db.listTurnPublications(guild,record.data.turn_id);return rows.length>0&&rows.every(p=>p.status==='delivered');
 }
+/** Historical unresolved parts can only hold new output, never authorize its payload or audience. */
+function unresolvedPrior(db,guild,opportunity){
+  const d=opportunity.data,initial=db.getCityRecord(guild,'session_opening_job',d.session);
+  if(initial&&['queued','planning','publishing','held_paused','held_interrupted'].includes(initial.status)){
+    inspectSessionOpening(db,guild,d.session);
+    if(initial.data.origin.roster.some(r=>r.character===d.character&&r.user===d.user))
+      return {job:initial.record_key,code:'OPENING_INITIAL_SLOT_PENDING'};
+  }
+  const entries=db.listCityRecords(guild,{kind:'opening_entry_delivery',actor:d.character,includeGM:true,limit:101}),
+    assemblies=db.listCityRecords(guild,{kind:'assembly_delivery',includeGM:true,limit:1001});
+  if(entries.length>100||assemblies.length>1000)
+    throw Object.assign(new Error('Opening acknowledgement history needs scoped review.'),{code:'OPENING_ENTRY_HISTORY'});
+  const candidates=[...entries.filter(r=>r.record_key!==opportunity.record_key&&r.data.session===d.session&&r.data.user===d.user),
+    ...assemblies.filter(r=>r.data.session===d.session&&r.data.scope?.mode==='private'
+      &&r.data.scope.actorUserId===d.user&&r.data.scope.actorCharacterId===d.character)];
+  for(const row of candidates){
+    if(!row.data.turn_id)continue;
+    const parts=db.listTurnPublications(guild,row.data.turn_id);
+    if(parts.some(p=>p.status!=='delivered'))return {turn:row.data.turn_id,code:'OPENING_PRIOR_DELIVERY_REVIEW'};
+  }
+  return null;
+}
 function priorAssembly(db,guild,opportunity,view){
   const d=opportunity.data,initial=db.getCityRecord(guild,'session_opening_job',d.session);
-  if(!initial||!initial.data.origin.roster.some(r=>r.user===d.user&&r.character===d.character
-    &&r.control_revision===db.activeAssignment(d.session,d.user)?.control_revision))return null;
+  // Delivery ancestry is not renewed conversational control or consent. Current owner/source are checked by projection.
+  if(!initial||!initial.data.origin.roster.some(r=>r.user===d.user&&r.character===d.character))return null;
   inspectSessionOpening(db,guild,d.session);
   const jobs=db.listCityRecords(guild,{kind:'assembly_delivery',includeGM:true,limit:1001});
   if(jobs.length>1000)throw Object.assign(new Error('Opening acknowledgement history needs scoped review.'),{code:'OPENING_ENTRY_HISTORY'});
@@ -30,11 +52,16 @@ export async function deliverOpeningEntry({db,guild,key}){
     prior=db.getCityRecord(guild.id,'opening_entry_delivery',key);
   let job=prior;
   try{
+    const unresolved=unresolvedPrior(db,guild.id,opportunity);
+    if(unresolved)return save(db,guild.id,key,opportunity,'needs_review',{
+      ...(prior?.data||{version:1,session:d.session,user:d.user,character:d.character,revision:view.revision,material_revision:view.material_revision}),
+      ...(unresolved.turn?{held_turn_id:unresolved.turn}:{held_job_id:unresolved.job}),hold_code:unresolved.code});
     if(prior){
       if(prior.source_event!==opportunity.source_event||prior.visibility!=='gm'||prior.data.revision!==view.revision)
         return save(db,guild.id,key,opportunity,'needs_review',{...prior.data,hold_code:'OPENING_ENTRY_STALE'});
       if(prior.status==='retained_acknowledgement'||acknowledged(db,guild.id,prior))return prior;
-    }else{
+    }
+    if(!prior?.data.turn_id){
       const previous=db.listCityRecords(guild.id,{kind:'opening_entry_delivery',actor:d.character,includeGM:true,limit:101});
       if(previous.length>100)return save(db,guild.id,key,opportunity,'needs_review',{version:1,session:d.session,user:d.user,character:d.character,
         revision:view.revision,hold_code:'OPENING_ENTRY_HISTORY_REVIEW'});
