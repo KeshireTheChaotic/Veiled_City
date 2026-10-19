@@ -72,7 +72,7 @@ assembly, diagnostics and durable publication. Each retains its own flags,
 source, consent, rule and actor requirements. A flag is not blanket AI authority.
 
 At this rebuild, the special-feature catalog contains **153 occurrences**:
-**16 bounded supported**, **136 review-only**, and **1 needs-authoring**, using
+**16 bounded supported**, **137 review-only**, and **0 needs-authoring**, using
 **15 handler families**. Standard actions are separate. Supported means the exact
 documented adapter, not arbitrary variants or whole-release qualification.
 See the [feature crosswalk](docs/Active_Implementation/UNIFIED_ARBITRATION_FEATURE_COVERAGE.md)
@@ -80,10 +80,10 @@ and [runtime catalog](bot/src/native-feature-definitions.json).
 
 The current owner-prioritized sequence is:
 
-1. Unified arbitration, special-feature adapters and saved-result consumers.
+1. Resolve missing feature authoring (Break the Pattern now has an [owner-approved rule](docs/Active_Implementation/BREAK_THE_PATTERN_AUTHORING_CONTRACT.md)); retain qualified unified-arbitration adapters and saved-result consumers.
 2. World Director integration and supported native consequences.
 3. Versioned PvP/death and pre-roll Fear work, preserving existing protections until replacements qualify.
-4. Remaining opening/assembly reconciliation.
+4. Remaining OpeningDirector/assembly reconciliation, **then** the remaining review-only special-feature adapters (latest owner amendment).
 5. Frozen-tree full offline qualification, exact-SHA CI and separately authorized release.
 
 Semantic-first S-GATE and bounded later packages have recorded targeted evidence.
@@ -91,7 +91,9 @@ The bounded native PC-to-NPC unarmed adapter now has targeted offline evidence:
 actual local NPC target, Strength/Finesse, Proficiency d4 physical, owner-executed
 dice and private delivery. It does not authorize PC-target attacks or infer weapon
 statistics. The full catalog, authority migration and final W7/release gates are
-**not complete**. Missing authoritative rule sources remain explicit blockers,
+**not complete**. Resolved rule authoring does not establish executable coverage:
+Break the Pattern remains review-only pending a qualified detail/progress adapter.
+Any newly discovered missing authoritative sources remain explicit blockers,
 never invented mechanics.
 
 Active contracts and evidence:

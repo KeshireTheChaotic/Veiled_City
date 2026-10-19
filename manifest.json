@@ -31,8 +31,8 @@
     },
     {
       "path": "README.md",
-      "size_bytes": 12663,
-      "sha256": "f35185a1582ca591eb1e929fb292063efb56c88f16cd52a277ec297a83b802a3"
+      "size_bytes": 13076,
+      "sha256": "9a73430c3fe1a757f87295464ca09e73df854b25d701129d7105d40f1bd60e5a"
     },
     {
       "path": "bot/.env.example",
@@ -361,8 +361,8 @@
     },
     {
       "path": "bot/scripts/gm-unified-arbitration-test.mjs",
-      "size_bytes": 211225,
-      "sha256": "8fd8aa782356d7f11851dfde6fb1c69065421f1c06d232116d8d7813489310b9"
+      "size_bytes": 211504,
+      "sha256": "22682b50eab4997272c1c66847b1debd394ee5551b3e239d863b14241b3be377"
     },
     {
       "path": "bot/scripts/h01-source-recovery-test.mjs",
@@ -558,6 +558,11 @@
       "path": "bot/scripts/native-experience-eligibility-test.mjs",
       "size_bytes": 12672,
       "sha256": "183f8804c000c3942156e30caf842219cfccd6c14d68c6b56301a3403c2a40ee"
+    },
+    {
+      "path": "bot/scripts/native-feature-authoring-test.mjs",
+      "size_bytes": 4512,
+      "sha256": "487d12171d7a2f84f309c1f0bc85e429e492e7322da5508a024483d2907b9716"
     },
     {
       "path": "bot/scripts/native-group-completion-test.mjs",
@@ -1126,8 +1131,8 @@
     },
     {
       "path": "bot/scripts/validate-offline.mjs",
-      "size_bytes": 11623,
-      "sha256": "53f1039be178490197456e142a90e0588ac7c63d8224cc93a791c304c8882404"
+      "size_bytes": 11669,
+      "sha256": "be15872e40d77834b547464d80becb07e0e4cef55184f57156b3e8dc44a31384"
     },
     {
       "path": "bot/scripts/world-authorship-test.mjs",
@@ -1791,8 +1796,8 @@
     },
     {
       "path": "bot/src/native-feature-catalog.js",
-      "size_bytes": 5989,
-      "sha256": "9b72c3d650b066850602d6c7d4051a5c5f6d778af3c7fb62ff5a4aeb5b2555fa"
+      "size_bytes": 6879,
+      "sha256": "dbb3611ea3828a66299615fc286aa2af0674c147a1a805de8c6bd543b2150cac"
     },
     {
       "path": "bot/src/native-feature-damage.js",
@@ -1801,8 +1806,8 @@
     },
     {
       "path": "bot/src/native-feature-definitions.json",
-      "size_bytes": 120649,
-      "sha256": "08b5543174efa0e822a790558b15c45691b5f46c34e793266252eabbeb946627"
+      "size_bytes": 120921,
+      "sha256": "089548757cdf48fc32650a3433a208899553ad89dbfaefc628b0b956adc941c5"
     },
     {
       "path": "bot/src/native-feature-effects.js",
@@ -1841,8 +1846,8 @@
     },
     {
       "path": "bot/src/native-house-errata.json",
-      "size_bytes": 6948,
-      "sha256": "c8ecb8d1d52c68644f9468f02033bdf19291a9d679bad44e857d4817e839b888"
+      "size_bytes": 7877,
+      "sha256": "217ab3e64180bf87e9a7623219b1b4f8bf70451118e9d0b4a1952f9c8e01f5f8"
     },
     {
       "path": "bot/src/native-notice.js",
@@ -2786,8 +2791,13 @@
     },
     {
       "path": "docs/Active_Implementation/AI_GM_AUTHORITY_MIGRATION_MATRIX.md",
-      "size_bytes": 7257,
-      "sha256": "f56da781a6c8260201144b81f41e3cbe0005a3d5002ad89fc3081e2d4d5d134f"
+      "size_bytes": 7324,
+      "sha256": "48e343a961f6969828805b67d80e91b285d102a03937177171673de277e17163"
+    },
+    {
+      "path": "docs/Active_Implementation/BREAK_THE_PATTERN_AUTHORING_CONTRACT.md",
+      "size_bytes": 3693,
+      "sha256": "4ecf0e1f724883c15360375a24e30f7793be65fa23c4e2473f6e73beaa32a545"
     },
     {
       "path": "docs/Active_Implementation/CURRENT_SCOPE.md",
@@ -2806,8 +2816,8 @@
     },
     {
       "path": "docs/Active_Implementation/NO_DEFERRALS_LEDGER.md",
-      "size_bytes": 181218,
-      "sha256": "a791e25cf05f200031d69c109e35087adc6870a4be02dc610f8e8f308a845d8d"
+      "size_bytes": 185311,
+      "sha256": "7de4d209a610efb73bd46acb6216bae8e2ecc40b9536d7707c09dc99e452e73d"
     },
     {
       "path": "docs/Active_Implementation/README.md",
@@ -2821,8 +2831,8 @@
     },
     {
       "path": "docs/Active_Implementation/UNIFIED_ARBITRATION_FEATURE_COVERAGE.md",
-      "size_bytes": 7029,
-      "sha256": "aa0561dd054b53752de7c014714c02db8f75fa4716a589044a84a4571340197f"
+      "size_bytes": 7681,
+      "sha256": "141615b0908e937767e2925d09f27977af3e9b8a0b6ffdfb598253b5a7077a17"
     },
     {
       "path": "docs/Active_Implementation/UNIFIED_GM_ARBITRATION.md",

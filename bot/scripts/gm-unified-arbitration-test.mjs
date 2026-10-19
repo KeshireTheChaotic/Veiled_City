@@ -1201,7 +1201,7 @@ const cases=[
  }],
  ['HR','registry','house errata is explicit immutable source-pinned and never a generic feature executor',async()=>{
    const {compileNativeHouseErrata,nativeHouseErratum}=await import('../src/native-house-errata.js'),rows=compileNativeHouseErrata();
-   assert.equal(rows.length,11);assert(Object.isFrozen(rows));
+   assert.equal(rows.length,12);assert(Object.isFrozen(rows));
    for(const row of rows){assert(Object.isFrozen(row));assert(row.sources.every(s=>/^[a-f0-9]{64}$/.test(s.source_hash)));
      if(row.version===1&&row.id!=='HR01'){assert.equal(row.status,'review_only');assert.equal(row.native_handler,null);}}
    assert.equal(nativeHouseErratum('HR03').status,'review_only');assert.equal(nativeHouseErratum('HR03',2).native_handler,'local_mesh_allied_zone');
@@ -1750,7 +1750,10 @@ cases.push(
    assert.equal(get('Traffic Saint','All Lanes Stop').target_policy,'all_in_range');
    assert.equal(get('Occult Crime Scene','Sirens Outside').roll_protocol,'none');
    assert.equal(get('Pale Court Townhouse','Ownership Bites').trigger_kind,'on_scene_event');
-   assert.equal(rows.filter(r=>r.status==='needs_authoring').length,1);
+   // Owner-approved HR13 resolves the original untyped occurrence, not its native execution adapter.
+   assert.equal(rows.filter(r=>r.status==='needs_authoring').length,0);
+   const echo=get('Catastrophic Echo','Break the Pattern');
+   assert.equal(echo.status,'review_only');assert.equal(echo.type,'Passive');assert.equal(echo.native_handler,null);
  }],
  ['UA6','03','changed feature text or stats and forged handler status fail catalog validation',async()=>{
    const {compileNativeFeatures,featureDisposition}=await import('../src/native-feature-catalog.js');

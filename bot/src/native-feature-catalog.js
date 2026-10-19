@@ -5,9 +5,11 @@ import {arbitrationFailure as fail} from './gm-arbitration-contract.js';
 
 const read=relative=>JSON.parse(fs.readFileSync(new URL(relative,import.meta.url),'utf8'));
 const definitions=read('./native-feature-definitions.json');
+const authoredRules=read('./native-house-errata.json');
 const slug=s=>s.toLowerCase().replace(/[^a-z0-9]+/gu,'-').replace(/^-|-$/gu,'');
 const freeze=value=>{if(value&&typeof value==='object'){Object.values(value).forEach(freeze);Object.freeze(value);}return value;};
 freeze(definitions);
+freeze(authoredRules);
 // Populated only when a handler's real native path has passed its phase qualification.
 // planned_handler in the inventory is documentation, never dispatch authority.
 const handlers=Object.freeze({blood_rush_hold_position:true,pack_pressure:true,feedback:true,first_severe_to_major:true,many_deaths_fear_opportunity:true,horde_marked_half_damage:true,local_mesh_allied_zone:true,coordinated_volley:true,flashbang_owner_choice:true,all_lanes_stop_group:true,regent_owner_resource_choice:true,stack_formation_remaining_hp:true,veil_exposure_difficulty:true,sentence_native_vulnerable_damage:true,first_pc_stress_clear:true});
@@ -24,6 +26,16 @@ export function compileNativeFeatures({adversaries=read('../../content/GM_PRIVAT
         if(!row||row.source_hash!==hash(text)||row.template_hash!==hash(actor)
           ||row.feature_key!==`${kind}:${slug(actor.name)}:${slug(row.name)}`)throw fail('feature_source_hash_changed');
         if(row.status==='supported'&&(!row.native_handler||!Object.hasOwn(handlers,row.native_handler)))throw fail('feature_handler_unqualified');
+        if(row.authored_rule){
+          const ref=row.authored_rule,rule=authoredRules.entries.find(r=>r.id===ref.id&&r.version===ref.version),
+            source=rule?.sources?.find(s=>s.kind==='feature'&&s.key===row.feature_key);
+          if(Object.keys(ref).sort().join()!=='hash,id,version'||ref.id!=='HR13'||ref.version!==1
+            ||rule?.authority_ref!=='owner:break-the-pattern:v1'||hash(rule)!==ref.hash
+            ||source?.source_hash!==row.source_hash||source.template_hash!==row.template_hash
+            ||rule.interpretation.type!==row.type||rule.interpretation.trigger!==row.trigger_kind
+            ||row.status!=='review_only'||rule.status!=='review_only'||rule.native_handler!==null||row.native_handler!==null)
+            throw fail('feature_authored_rule_source_changed');
+        }
         rows.push(row);
       });
     }

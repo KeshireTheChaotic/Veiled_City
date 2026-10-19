@@ -109,6 +109,7 @@ bot/scripts/narrative-salience-test.mjs
 bot/scripts/narrative-understanding-test.mjs
 bot/scripts/native-actor-control-test.mjs
 bot/scripts/native-experience-eligibility-test.mjs
+bot/scripts/native-feature-authoring-test.mjs
 bot/scripts/native-group-completion-test.mjs
 bot/scripts/native-stress-passives-test.mjs
 bot/scripts/native-unarmed-attack-test.mjs
@@ -555,6 +556,7 @@ docker-compose.yml
 docs/Active_Implementation/ACTIVE_IMPLEMENTATION_LEDGER.md
 docs/Active_Implementation/ACTIVE_IMPLEMENTATION_PLAN.md
 docs/Active_Implementation/AI_GM_AUTHORITY_MIGRATION_MATRIX.md
+docs/Active_Implementation/BREAK_THE_PATTERN_AUTHORING_CONTRACT.md
 docs/Active_Implementation/CURRENT_SCOPE.md
 docs/Active_Implementation/DOCUMENTATION_AUDIT.md
 docs/Active_Implementation/N15_APPEARANCE_CONTRACT.md

@@ -1317,14 +1317,15 @@
       "source_hash": "4e60ea7640e3c1cff3822722f30798595489ca088a64f30d4ef21add27c534a9",
       "template_hash": "f71790aec63e3a6da0e6b4395c6af2ae58c7344c2ebc503779b62361a4c03086",
       "index": 1,
-      "type": "untyped",
-      "status": "needs_authoring",
-      "trigger_kind": "unmapped",
-      "target_policy": "unmapped",
-      "roll_protocol": "unmapped",
-      "costs": null,
+      "type": "Passive",
+      "status": "review_only",
+      "trigger_kind": "after_three_distinct_verified_details",
+      "target_policy": "source_echo_actor",
+      "roll_protocol": "ordinary_native_adjudication",
+      "costs": [],
       "native_handler": null,
-      "reason": "Feature type/timing is missing from authored content."
+      "authored_rule": {"id":"HR13","version":1,"hash":"77188557fc64f4b513b3bf35414c9472110bcb56e175571da24bf44244216546"},
+      "reason": "Owner-authored HR13 v1 resolves the rule. Native original-event detail/progress and Difficulty consumers remain unqualified; no effect is authorized."
     },
     {
       "feature_key": "adversary:pale-regent:the-house-is-me",

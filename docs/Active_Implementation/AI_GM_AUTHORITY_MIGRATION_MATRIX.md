@@ -26,7 +26,7 @@ The current runtime has **more than one source of review requirements**. A human
 | Unmapped consequential effect/capability | Missing native adapter | **Adapter pending**; not a role-label fix |
 | Owned PC healing/feature resources | Feature/owner/recipient approvals and immutable causal receipts | **UA14** only fixed, sourced mappings; retain owner cost/consent/death gates |
 | Standard NPC attack | Native AI GM capability and owner defense/Armor | **Retain** current, valid AI/Gm versus player control split |
-| Catalog NPC/group reactions | Exact supported native feature handlers, pending-owner children and immutable parent terminal history | **Retain 16 bounded**; 136 review-only occurrences plus one needs-authoring remain non-executable |
+| Catalog NPC/group reactions | Exact supported native feature handlers, pending-owner children and immutable parent terminal history | **Retain 16 bounded**; 137 review-only occurrences remain non-executable. HR13 resolves Break the Pattern authoring only; remaining adapters follow OpeningDirector. |
 | Delegation mode/permission registry | Manual/suggest/routine administrative policy and costs/revisions | **Retain** independently from normal GM adjudication |
 | Mundane owner travel | Current typed owner move/geography/access native service | **Retain**; UA15 only removes redundant approvals in proved subset |
 | Restricted/encounter travel | Requires actual access/time/encounter adapter | **Retain hold**; no prose-authorized teleport/forced placement |

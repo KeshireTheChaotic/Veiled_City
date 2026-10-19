@@ -1,6 +1,6 @@
 # Bounded native special-feature coverage
 
-**Authoritative source:** `bot/src/native-feature-definitions.json`, its runtime verifier `native-feature-catalog.js`, relevant `native-*` executors and source-pinned original content. Current counts are 153 = 16 supported + 136 review-only + 1 needs-authoring, using 15 bounded native handler families. This is **feature inventory**, not UA17 whole-release certification.
+**Authoritative source:** `bot/src/native-feature-definitions.json`, its runtime verifier `native-feature-catalog.js`, relevant `native-*` executors and source-pinned original content. Current counts are 153 = 16 supported + 137 review-only + 0 needs-authoring, using 15 bounded native handler families. This is **feature inventory**, not UA17 whole-release certification.
 
 ## Supported feature keys and exact scope
 
@@ -39,4 +39,6 @@ The only deliberately appended actor feature is Ritual Enforcement Team **Coordi
 
 ## What remains unimplemented
 
-The **136 `review_only`** entries and **one `needs_authoring`** occurrence are explicitly non-executable; generic 16-environment feature execution is not certified. Multi-owner condition variants, richer scene reach, generic private-result dependencies and arbitrary additional special defenses require separate adapters and counterexample tests. Do not reclassify items `supported` just to suppress a review status. Catalog completeness must fail closed when a feature string, full actor template, order or hash changes.
+The **137 `review_only`** entries are explicitly non-executable; no occurrence currently remains `needs_authoring`. Generic 16-environment feature execution is not certified. Multi-owner condition variants, richer scene reach, generic private-result dependencies and arbitrary additional special defenses require separate adapters and counterexample tests. Do not reclassify items `supported` just to suppress a review status. Catalog completeness must fail closed when a feature string, full actor template, order or hash changes.
+
+Owner-approved [Break the Pattern HR13 v1](BREAK_THE_PATTERN_AUTHORING_CONTRACT.md) supplies its missing passive/timing/evidence rule without changing the original feature or template. Three distinct GM-established original-event details need the same authenticated PC's native identification and deliberate-disruption outcomes; ordinary adjudication determines rolls, no extra cost, one nonstacking −2 per Echo/scene. Its descriptor pins the additive ruling hash. No progress or Difficulty adapter is implemented by this authoring change. Per the 2026-10-19 owner amendment, **all remaining review-only adapters follow OpeningDirector**.
