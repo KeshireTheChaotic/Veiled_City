@@ -2881,8 +2881,8 @@
     },
     {
       "path": "docs/Active_Implementation/NO_DEFERRALS_LEDGER.md",
-      "size_bytes": 10769,
-      "sha256": "77e690f89c3ec7510cc7fdbcaa11bf22efcba39a83f74c8462da400a16edfa8c"
+      "size_bytes": 11575,
+      "sha256": "c177d29ad779510d8fcbbd1c0c9403108ad3a5777f5a860627685fcd03c75b2f"
     },
     {
       "path": "docs/Active_Implementation/PVP_CAMPAIGN_AND_PRE_ROLL_FEAR_CONTRACT.md",
