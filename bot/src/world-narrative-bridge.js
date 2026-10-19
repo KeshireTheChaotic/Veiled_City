@@ -243,7 +243,8 @@ function nativeDirectorBridge(db,guild,source,scope){
     &&hash(d.scope)===hash(scope)&&narrativeSourceVisible(db,guild,source.event_key,scope)
     &&d.world_bridge?.version===1&&Array.isArray(d.world_bridge.signals)&&d.world_bridge.signals.length<=4);
 }
-const FEAR_EFFECT_SCAN_LIMIT=5000;
+const FEAR_EFFECT_RECORD_SCAN_LIMIT=500;
+const FEAR_EFFECT_VALIDATION_LIMIT=32;
 function fearClockAudience(db,guild,row,scope){
   if(scope.mode==='party')return row.visibility==='party'&&row.subject_key==null;
   const pc=db.getCharacter(scope.actorCharacterId);
@@ -264,36 +265,42 @@ function nativeFearClockEffect(db,guild,key,scope,scene){
     ||source.kind!=='pvp_fear_context_established'||source.session_id!==scene.session_id||source.scene!==scene.key
     ||source.location_key!==context.location_key||source.visibility!==row.visibility||source.subject_key!==row.subject_key
     ||!narrativeSourceVisible(db,guild,source.event_key,scope))return null;
+  let principalRevision=null;
   if(scope.mode==='private'){
     let principal;
     try{principal=conversationPrincipal(db,guild,scope.actorUserId,scope.actorCharacterId);}
     catch(error){if(['Active session required.','Select an authenticated current controlled role.','Controller attendance required.','Active campaign character required.'].includes(error.message))return null;throw error;}
     if(principal.kind!=='owner'||context.subject_key!==scope.actorCharacterId||context.data.subject_key!==scope.actorCharacterId)return null;
+    principalRevision=principal.revision;
   }else if(context.visibility!=='party'||context.subject_key!==null||context.data.visibility!=='party'||context.data.subject_key!==null)return null;
   const trigger=db.getCityRecord(guild,'pvp_fear_trigger',d.trigger);
   if(!trigger||trigger.status!=='resolved'||trigger.data.effect!==row.record_key||trigger.data.session!==scene.session_id
     ||trigger.data.scene!==scene.key)return null;
-  return {row,source,context,trigger,causation:source.event_key};
+  return {row,source,context,trigger,causation:source.event_key,principalRevision};
 }
 /** Snapshot direct keys for bounded current-scene Fear clock receipts. */
 export function nativeFearClockConsequenceSnapshot(db,guild,scope){
-  const scene=currentScene(db,guild),rows=[];let overflow=false;
-  for(let offset=0;offset<FEAR_EFFECT_SCAN_LIMIT;offset+=100){
+  const scene=currentScene(db,guild),receipts=[];let overflow=false,scanned=0,validated=0,offset=0;
+  for(;offset<FEAR_EFFECT_RECORD_SCAN_LIMIT;offset+=100){
     const page=db.listCityRecords(guild,{kind:'pvp_fear_effect_receipt',query:scene.key,includeGM:scope.mode==='private',limit:100,offset});
-    rows.push(...page);
+    for(const candidate of page){
+      if(candidate.status!=='resolved'||candidate.data?.scene!==scene.key||candidate.data?.session!==scene.session_id
+        ||!['clock_advance','clock_create_and_advance'].includes(candidate.data?.move_kind)
+        ||!fearClockAudience(db,guild,candidate,scope))continue;
+      scanned++;
+      if(validated>=FEAR_EFFECT_VALIDATION_LIMIT){overflow=true;break;}
+      validated++;
+      const proof=nativeFearClockEffect(db,guild,candidate.record_key,scope,scene);if(!proof)continue;
+      receipts.push({kind:'pvp_fear_effect_receipt',key:proof.row.record_key,revision:hash(proof.row),
+        source_event:proof.source.event_key,source_revision:hash(proof.source),causation_ref:proof.causation,
+        audience:audience(scope),session:scene.session_id,scene:scene.key,
+        ...(proof.principalRevision?{principal_revision:proof.principalRevision}:{})});
+    }
+    if(overflow)break;
     if(page.length<100)break;
-    if(offset+page.length>=FEAR_EFFECT_SCAN_LIMIT)overflow=true;
+    if(offset+page.length>=FEAR_EFFECT_RECORD_SCAN_LIMIT)overflow=true;
   }
-  const receipts=[];
-  for(const candidate of rows){
-    if(candidate.status!=='resolved'||candidate.data?.scene!==scene.key||candidate.data?.session!==scene.session_id
-      ||!fearClockAudience(db,guild,candidate,scope))continue;
-    const proof=nativeFearClockEffect(db,guild,candidate.record_key,scope,scene);if(!proof)continue;
-    receipts.push({kind:'pvp_fear_effect_receipt',key:proof.row.record_key,revision:hash(proof.row),
-      source_event:proof.source.event_key,source_revision:hash(proof.source),causation_ref:proof.causation,
-      audience:audience(scope),session:scene.session_id,scene:scene.key});
-  }
-  return {version:1,receipts:receipts.slice(0,4),omitted:Math.max(0,receipts.length-4),overflow};
+  return {version:1,receipts:receipts.slice(0,4),omitted:Math.max(0,receipts.length-4),overflow,scanned,validated};
 }
 /** Audience-bound Director beat metadata only; never a message, knowledge, consent or native outcome. */
 export function worldDirectorBridgeBeats(db,guild,source,scope){
@@ -349,6 +356,8 @@ export function worldDirectorBridgeBeats(db,guild,source,scope){
       if(!validated||proof.kind!=='pvp_fear_effect_receipt'||hash(validated.row)!==proof.revision
         ||event.event_key!==proof.source_event||hash(event)!==proof.source_revision||proof.session!==current.session_id
         ||proof.scene!==current.key||hash(proof.audience)!==hash(audience(scope))
+        ||proof.causation_ref!==validated.causation
+        ||scope.mode==='private'&&proof.principal_revision!==validated.principalRevision
         ||!narrativeSourceVisible(db,guild,proof.causation_ref,scope)){held++;continue;}
       const root=proof.causation_ref,cycle=`world-cycle:${hash([current.session_id,current.key,root])}`;
       beats.push({version:1,protocol:'world_beat_v1',id:`world-beat:${hash([source.event_key,proof.key,proof.audience])}`,
@@ -421,7 +430,9 @@ export function canonicalNarrativeCause(db,guild,sourceRef,scope){
     const current=nativeFearClockEffect(db,guild,proof.key,scope,scene),event=current?.source;
     if(!current||proof.kind!=='pvp_fear_effect_receipt'||hash(current.row)!==proof.revision||event?.event_key!==proof.source_event
       ||hash(event)!==proof.source_revision||proof.session!==scene.session_id||proof.scene!==scene.key
-      ||hash(proof.audience)!==hash(audience(scope))||!narrativeSourceVisible(db,guild,proof.causation_ref,scope))return null;
+      ||hash(proof.audience)!==hash(audience(scope))||proof.causation_ref!==current.causation
+      ||scope.mode==='private'&&proof.principal_revision!==current.principalRevision
+      ||!narrativeSourceVisible(db,guild,proof.causation_ref,scope))return null;
   }
   const roots=[...new Set([...signals.map(s=>s.causation_ref),...consequences.map(c=>c.causation_ref)])];return roots.length===1?roots[0]:null;
 }
