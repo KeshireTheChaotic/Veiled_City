@@ -1151,8 +1151,8 @@
     },
     {
       "path": "bot/scripts/validate-offline.mjs",
-      "size_bytes": 11866,
-      "sha256": "0b332c1d7b97eeeed0d0d25ddeb71a76e505d50532371615cc3bdf2ef5afeded"
+      "size_bytes": 11905,
+      "sha256": "fe4e3a6cc30c08409a92954a48b41adb928db216ec5bdd77150fecf59323f0fd"
     },
     {
       "path": "bot/scripts/world-authorship-test.mjs",
@@ -1168,6 +1168,11 @@
       "path": "bot/scripts/world-background-memory-test.mjs",
       "size_bytes": 7445,
       "sha256": "cd4b45752d5b9459db432adecaaf6441f952b609b92c0aff02aec2ab02e72721"
+    },
+    {
+      "path": "bot/scripts/world-clock-beats-test.mjs",
+      "size_bytes": 16081,
+      "sha256": "32bc3e68367c39567ae7d663849b5e2dc3fd6db2cf6b48990fd490f4698e7fd7"
     },
     {
       "path": "bot/scripts/world-director-beats-test.mjs",
@@ -1746,8 +1751,8 @@
     },
     {
       "path": "bot/src/narrative-director-source.js",
-      "size_bytes": 4998,
-      "sha256": "cf73458bb2d31c6c26bc5e2ba17171fb05d47aeecef0612bf88a6ec2157fcac0"
+      "size_bytes": 5115,
+      "sha256": "054ef8336238465514080e222b2f91ad93ec9b239f58c106382c0f057e69dc19"
     },
     {
       "path": "bot/src/narrative-integrity.js",
@@ -2466,8 +2471,8 @@
     },
     {
       "path": "bot/src/world-narrative-bridge.js",
-      "size_bytes": 30905,
-      "sha256": "1f629500ad96a6689d4105d0436b626eb8ca08ddb9d9b171d83db2a62d2f2152"
+      "size_bytes": 38292,
+      "sha256": "bc8a7ee4a44e93ffc916b2e6799d701c9ee12e85f3a5fed0263587bdff1bece7"
     },
     {
       "path": "bot/src/world-observation.js",
@@ -2856,8 +2861,8 @@
     },
     {
       "path": "docs/Active_Implementation/NO_DEFERRALS_LEDGER.md",
-      "size_bytes": 206529,
-      "sha256": "6b4d57379dc9e29b2d93216c9366bd335d3f9dfe1e27670b70e9bd25af2c6337"
+      "size_bytes": 210442,
+      "sha256": "9f9df17cab7b7576b30fe95c3cb25d54b959781e0c679510628cf9a800fadee4"
     },
     {
       "path": "docs/Active_Implementation/PVP_CAMPAIGN_AND_PRE_ROLL_FEAR_CONTRACT.md",

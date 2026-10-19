@@ -46,6 +46,7 @@ suites.push("world-identity-persistence-test");
 suites.push("world-sanctioned-sources-test");
 suites.push("world-narrative-bridge-test");
 suites.push("world-director-beats-test");
+suites.push("world-clock-beats-test");
 suites.push("native-actor-control-test");
 suites.push("native-veil-defense-test");
 suites.push("native-group-completion-test");
