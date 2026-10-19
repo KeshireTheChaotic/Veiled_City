@@ -152,8 +152,8 @@ function packFearAttack(f,{looking=false,hopeFailure=false,hp=4,miss=false,armor
 const VOLLEY='adversary:ritual-enforcement-team:coordinated-volley';
 const LANES='adversary:traffic-saint:all-lanes-stop',FLASH='adversary:aster-vale-contractor:flashbang';
 const REGENT='adversary:pale-regent:command-the-blood';
-function groupReactionScenario(f,{flash=false,regent=false,fear=2,expectReady=true,privateScene=false,beforeDecision=()=>{},proposalPatch={},targets=null,throughTurn=false}={}){
-  const x=incoming(f,{privateScene,template:regent?'Pale Regent':flash?'Aster Vale Contractor':'Traffic Saint',text:'Describe the scene.'});
+function groupReactionScenario(f,{flash=false,regent=false,fear=2,expectReady=true,privateScene=false,beforeDecision=()=>{},proposalPatch={},targets=null,throughTurn=false,otherTemplates=[]}={}){
+  const x=incoming(f,{privateScene,template:regent?'Pale Regent':flash?'Aster Vale Contractor':'Traffic Saint',text:'Describe the scene.',otherTemplates});
   f.db.setCityCalendar(f.guild,{flags:{...f.db.getCityCalendar(f.guild).flags,gm_discretion:true,roll_requests:true,roll_collaboration:true}});
   f.db.changeFear(f.guild,fear-f.db.getCampaign(f.guild).fear);
   for(const pc of f.pcs.slice(1,3))recordScenePresence(f.db,f.guild,{entity_type:'character',entity_key:pc.id,source_event:x.row.data.offer.input.source,
@@ -176,6 +176,29 @@ function submitGroupReaction(f,x,index,faces=[10,8]){
     input={op:'gm-reaction-roll',request:child.record_key,revision:terms.revision};let calls=0;
   const request=submitGmReactionInvitation(f.db,f.guild,user,input,{interactionId:`group-roll-${index}`,authoredText:JSON.stringify(input),rng:()=>faces[calls++]});
   return {child,request,input,calls};
+}
+function executionerScenario(f,{vulnerable=true,ai=false,sheetOnly=false}={}){
+  const x=groupReactionScenario(f,{flash:true,otherTemplates:['Pale Court Executioner']});
+  if(vulnerable)submitGroupReaction(f,x,0,[2,1]);
+  if(sheetOnly)f.db.updateCharacterData(x.pc.id,d=>{d.conditions=[{name:'Vulnerable',active:true}];});
+  const encounter=f.db.getCurrentEncounter(f.session.id),binding=f.db.getCityRecord(f.guild,'encounter_binding',encounter.id),
+    combatant=f.db.listCombatants(encounter.id).find(c=>c.base_name==='Pale Court Executioner'),actor=binding.data.combatants.find(b=>b.id===combatant.id).actor;
+  let attack;
+  if(ai){
+    const message='executioner-native-opportunity',text='What happens next?';captureWorldInput(f.db,f.guild,x.pc.owner_user_id,x.pc.id,message,text);
+    const rows=persistPlayerIntents(f.db,f.guild,[{...candidate(text).player_intents[0],type:'other',operation:'continuation',resolution:'conversational'}],x.scope,{messageId:message}),
+      origin=createArbitrationOrigin(f.db,f.guild,x.scope,worldInputKey(message,x.pc.id,false)),board=buildSceneIntentBoard(f.db,f.guild,origin,rows,[
+      {actor_key:actor,operation:'attack',target_refs:[x.pc.id],objective_ref:'',source_refs:[],dependencies:[]}]),
+      [r]=adjudicateSceneBoard(f.db,f.guild,origin,board,[{...decision(board.data.entries.at(-1).intent_ref,'gm_attack_roll'),
+        feature_ref:'standard_attack',rule_basis_refs:['srd:adversary-attacks'],stakes:'The Executioner attempts its native standard attack.'}],{library:x.library});
+    assert.equal(r.status,'gm_action_ready',r.data.reason);[attack]=executeUnifiedGmActions(f.db,f.guild,[r],{library:x.library});
+  }else{
+    const source=indexWorldEvent(f.db,f.guild,{key:'executioner-attempt',kind:'observation',source_id:'gm',title:'Native Executioner attack',
+      session_id:f.session.id,scene:currentScene(f.db,f.guild).key,location_key:'terminal',visibility:'party'},'gm');
+    attack=prepareIncomingAttack(f.db,f.guild,'gm',{...x.row.data.offer.input,npc:actor,combatant:combatant.id,source:source.event_key},
+      {gm:true,interactionId:'executioner-offer',library:x.library});
+  }
+  return {...x,attack};
 }
 function volleyScenario(f,{evasions=[12,17,24],fear=3,privateScene=false,extraSpotlight=false,throughTurn=false,hpMarked=null,deferred=false}={}){
   const x=incoming(f,{privateScene,template:'Ritual Enforcement Team',text:'Describe the scene.',hpMarked});
@@ -208,6 +231,62 @@ function volleyScenario(f,{evasions=[12,17,24],fear=3,privateScene=false,extraSp
 }
 function readyVolley(f,x,i=0){const pc=f.pcs[i],a=x.attacks[i];reviewIncomingAttack(f.db,f.guild,pc.owner_user_id,a.record_key,{library:x.library});confirmIncomingDefense(f.db,f.guild,pc.owner_user_id,a.record_key);return a;}
 const cases=[
+ ...[false,true].map(ai=>['UA8',`Executioner-${ai?'AI':'GM'}`,'Executioner adds exactly two damage only from native Vulnerable through '+(ai?'AI':'GM')+' owner-defense path',f=>{
+   const x=executionerScenario(f,{ai});
+   assert.equal(x.attack.data.offer.damage,'4d12+14');assert.equal(x.attack.status,'awaiting_defense');
+   const before=structuredClone(f.db.getCharacter(x.pc.id).data.resources);
+   assert.throws(()=>rollIncomingAttack(f.db,f.guild,'gm',x.attack.record_key,{gm:true,library:x.library,rng:()=>assert.fail('No unreviewed dice')}));
+   reviewIncomingAttack(f.db,f.guild,x.pc.owner_user_id,x.attack.record_key,{library:x.library});confirmIncomingDefense(f.db,f.guild,x.pc.owner_user_id,x.attack.record_key);
+   const roll=ai?rollArbitratedIncomingAttack(f.db,f.guild,x.attack.record_key,{library:x.library,rng:s=>s===20?19:1})
+     :rollIncomingAttack(f.db,f.guild,'gm',x.attack.record_key,{gm:true,library:x.library,rng:s=>s===20?19:1});
+   assert.equal(roll.data.damage.total,18);assert.deepEqual(f.db.getCharacter(x.pc.id).data.resources,before);
+   const effect=resolveIncomingDamage(f.db,f.guild,x.pc.owner_user_id,x.attack.record_key,{armor:true,library:x.library});
+   f.restart();assert.equal(incomingRollProjection(f.db,f.guild,x.attack.record_key).receipt.record_key,roll.record_key);
+   assert.equal(resolveIncomingDamage(f.db,f.guild,x.pc.owner_user_id,x.attack.record_key,{armor:true,library:x.library}).record_key,effect.record_key);
+   assert.equal(f.db.getCharacter(x.pc.id).data.resources.hope,before.hope);
+ }]),
+ ['UA8','Executioner-sheet','Executioner prose or sheet-only Vulnerable never grants the native damage bonus',f=>{
+   const x=executionerScenario(f,{vulnerable:false,sheetOnly:true});assert.equal(x.attack.data.offer.damage,'4d12+12');
+   assert.equal(x.attack.data.offer.native_conditions,undefined);
+ }],
+ ...[false,true].map(critical=>['UA8',`Executioner-critical-${critical}`,'Executioner fixed bonus is not maximized or duplicated by a critical '+critical,f=>{
+   const x=executionerScenario(f);reviewIncomingAttack(f.db,f.guild,x.pc.owner_user_id,x.attack.record_key,{library:x.library});
+   confirmIncomingDefense(f.db,f.guild,x.pc.owner_user_id,x.attack.record_key);
+   const roll=rollIncomingAttack(f.db,f.guild,'gm',x.attack.record_key,{gm:true,library:x.library,rng:s=>s===20?(critical?20:19):1});
+   assert.equal(roll.data.damage.total,critical?66:18);assert.equal(roll.data.damage.modifier,14);
+   assert.equal(roll.data.damage.critical_bonus,critical?48:0);
+   const proof=f.db.getCityRecord(f.guild,'npc_damage_passive_proof',x.attack.data.offer.damage_passive.ref);
+   assert.equal(proof.visibility,'gm');assert.equal(proof.data.proof.bonus,2);assert.equal(proof.data.proof.conditions.length,1);
+   assert(!JSON.stringify(x.attack.data.offer).includes('Sentence Carried Out'));
+ }]),
+ ...['proof','retracted','proxy','owner','new_condition'].map(change=>['UA8',`Executioner-stale-${change}`,'Executioner '+change+' cannot reach RNG or PC damage',f=>{
+   const x=executionerScenario(f,{vulnerable:change!=='new_condition'}),before=structuredClone(f.db.getCharacter(x.pc.id).data.resources);
+   reviewIncomingAttack(f.db,f.guild,x.pc.owner_user_id,x.attack.record_key,{library:x.library});confirmIncomingDefense(f.db,f.guild,x.pc.owner_user_id,x.attack.record_key);
+   if(change==='proof'){
+     const p=f.db.getCityRecord(f.guild,'npc_damage_passive_proof',x.attack.data.offer.damage_passive.ref);
+     f.db.saveCityRecord(f.guild,{...p,key:p.record_key,data:{...p.data,proof:{...p.data.proof,bonus:200,expression:'4d12+212'}}});
+   }
+   if(change==='retracted')indexWorldEvent(f.db,f.guild,{key:f.db.listCityRecords(f.guild,{kind:'pc_native_condition',includeGM:true})[0].source_event,status:'retracted'},'gm');
+   if(change==='proxy')f.db.upsertNpcProxy(f.guild,f.session.id,{npcName:x.attack.data.offer.input.npc,userId:f.pcs[1].owner_user_id,status:'active'});
+   if(change==='owner')f.db.db.prepare('UPDATE characters SET owner_user_id=? WHERE id=?').run('changed-owner',x.pc.id);
+   if(change==='new_condition')submitGroupReaction(f,x,0,[2,1]);
+   f.restart();
+   assert.throws(()=>rollIncomingAttack(f.db,f.guild,'gm',x.attack.record_key,{gm:true,library:x.library,rng:()=>assert.fail('No unverified condition RNG')}));
+   assert.equal(f.db.listCityRecords(f.guild,{kind:'npc_attack_roll_receipt',includeGM:true}).length,0);
+   assert.equal(f.db.getCharacter(x.pc.id).data.resources.hp.current,before.hp.current);
+   assert.equal(f.db.getCharacter(x.pc.id).data.resources.hope,before.hope);
+ }]),
+ ['UA8','Executioner-legacy','saved pre-feature Executioner offer remains its original standard damage, without a retroactive bonus',f=>{
+   const x=executionerScenario(f),original=x.attack,offer=structuredClone(original.data.offer);
+   // Exact historical native offer shape: pre-feature incoming code had no Executioner damage-passive field.
+   delete offer.damage_passive;delete offer.snapshot.damage_passive;offer.damage='4d12+12';
+   f.db.saveWorldEvent(f.guild,{...f.db.getWorldEvent(f.guild,original.source_event),key:original.source_event,details:offer});
+   f.db.saveCityRecord(f.guild,{...original,key:original.record_key,data:{...original.data,offer}});
+   reviewIncomingAttack(f.db,f.guild,x.pc.owner_user_id,original.record_key,{library:x.library});confirmIncomingDefense(f.db,f.guild,x.pc.owner_user_id,original.record_key);
+   const roll=rollIncomingAttack(f.db,f.guild,'gm',original.record_key,{gm:true,library:x.library,rng:s=>s===20?19:1});
+   assert.equal(roll.data.damage.total,16);f.restart();
+   assert.equal(incomingRollProjection(f.db,f.guild,original.record_key).receipt.data.damage.expression,'4d12+12');
+ }],
  ...[[1,1],[12,12]].map((faces,i)=>['UA11',`C01-${i}`,'Flashbang native Critical ignores success consequences without Hope, Fear or Stress reward '+faces,f=>{
    const x=groupReactionScenario(f,{flash:true}),before=structuredClone(f.db.getCharacter(x.pc.id).data),a=submitGroupReaction(f,x,0,faces);
    assert.equal(a.request.data.result.duality,'Critical');assert.equal(inspectGmReactionInvitation(f.db,f.guild,x.pc.owner_user_id,a.child.record_key).terms.status,'resolved');
@@ -1622,7 +1701,7 @@ cases.push(
    assert.equal(new Set(rows.filter(r=>r.actor_kind==='environment').map(r=>r.actor_name)).size,16);
    for(const r of rows){assert.match(r.source_hash,/^[a-f0-9]{64}$/);assert.match(r.template_hash,/^[a-f0-9]{64}$/);
      assert(Object.isFrozen(r));assert.equal(featureDisposition(r.feature_key).status,r.native_handler?'supported':'needs_rules_review');}
-   assert.deepEqual(rows.filter(r=>r.native_handler).map(r=>r.feature_key),['adversary:pale-court-thrall:pack-pressure',FLASH,'adversary:static-wraith:feedback','adversary:choir-relay:local-mesh','adversary:pale-court-knight:blood-rush','adversary:ritual-enforcement-team:stack-formation',VOLLEY,LANES,'adversary:wraith-pack:many-deaths','adversary:veil-anchor-sentinel:plausible-denial',REGENT,'adversary:veil-engine-custodian:consensus-pressure','adversary:green-root-host:horde-3d8-8','adversary:aster-vale-catastrophe-analyst:contingency-stack']);
+   assert.deepEqual(rows.filter(r=>r.native_handler).map(r=>r.feature_key),['adversary:pale-court-thrall:pack-pressure',FLASH,'adversary:static-wraith:feedback','adversary:choir-relay:local-mesh','adversary:pale-court-knight:blood-rush','adversary:ritual-enforcement-team:stack-formation',VOLLEY,LANES,'adversary:wraith-pack:many-deaths','adversary:veil-anchor-sentinel:plausible-denial',REGENT,'adversary:veil-engine-custodian:consensus-pressure','adversary:pale-court-executioner:sentence-carried-out','adversary:green-root-host:horde-3d8-8','adversary:aster-vale-catastrophe-analyst:contingency-stack']);
  }],
  ['UA6','02','typed representative descriptors distinguish action reaction passive and defense',async()=>{
    const {compileNativeFeatures}=await import('../src/native-feature-catalog.js'),rows=compileNativeFeatures(),get=(actor,name)=>rows.find(r=>r.actor_name===actor&&r.name===name);

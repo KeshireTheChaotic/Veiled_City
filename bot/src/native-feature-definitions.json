@@ -1624,13 +1624,13 @@
       "template_hash": "ec35d5f7a7f19a5c41df6a53b3e54511dc2b2e84a856051d6bce00e1e1a6c7c7",
       "index": 0,
       "type": "Passive",
-      "status": "review_only",
-      "trigger_kind": "unmapped",
-      "target_policy": "unmapped",
-      "roll_protocol": "unmapped",
-      "costs": null,
-      "native_handler": null,
-      "reason": "No qualified native feature handler."
+      "status": "supported",
+      "trigger_kind": "on_attack",
+      "target_policy": "one",
+      "roll_protocol": "none",
+      "costs": [],
+      "native_handler": "sentence_native_vulnerable_damage",
+      "reason": "Exact standard incoming attack adds 2 damage only from a sealed native Vulnerable condition; no sheet/prose authority or extra attack."
     },
     {
       "feature_key": "adversary:pale-court-executioner:break-the-line",

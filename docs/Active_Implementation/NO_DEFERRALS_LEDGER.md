@@ -24,12 +24,24 @@ Accepted typed intents are canonical adjudication inputs; human declarations own
 | S-GATE | qualified N15 amendment | **PASS at `009c288bb8a130b62121ee21acf1f57be58bef65`: 391/391 exact-commit semantic/security/background tests**, including all 11 current N15 cases. Historical full tree 130/130 and 26/26 is not a current full-registry claim; W7 remains pending. |
 | W2 native authority/authorship | in_progress | W2A-K qualified bounded partitions below, including hidden seed identities and native NPC control classification; full supported routine-world authority migration remains open |
 | W3 World Director/UA native adapters | in_progress | W3A read-only source/receipt bridge qualified below on existing native contracts; outbound beats, actor tiers, world effects and UA migration remain open |
-| W4 OpeningDirector | in_progress | W4A pre-start/current attendance partitions qualified below; O2–O5 automatic opening and recovery remain open; existing assembly v2 preserved |
+| W4 OpeningDirector | in_progress | W4A–H attendance, automatic opening, private entry, recovery/health and four-owner replay qualified below; globally stale-plan precision remains open. Owner priority places remaining work after UA/world/PvP/Fear. |
 | W5 autonomous PvP/death/pre-roll Fear | in_progress | After native source dependencies; current contracts unchanged until separately qualified replacement |
-| W6 complete source-defined catalog | blocked_missing_source | Current native inventory is 153 occurrences/14 supported/138 review-only/1 needs-authoring after the Veil defense family below. Exact source gap remains; S-GATE passed. |
+| W6 complete source-defined catalog | blocked_missing_source | Current native inventory is 153 occurrences/15 supported/137 review-only/1 needs-authoring after Executioner below. Exact source gap remains; other source-complete UA work continues first. |
 | W7 frozen-tree qualification | in_progress | Requires all preceding executable scope; no remote/live authorization |
 
 Proposed later contracts (names only, not implemented during W1): `authorship_origin_v1`, `narrative_signal_v1`, `world_beat_v1`, `world_pulse_v1`, `weighted_identity_v1`, `session_opening_v1`, `native_feature_vN`, `pvp_resolution_v2`, `fear_interrupt_v1`.
+
+## Current owner execution priority — 2026-10-18
+
+Owner reprioritization supersedes earlier scheduling, not authority or acceptance contracts:
+
+1. Complete eligible unified-arbitration and source-defined special-feature adapters first.
+2. World Director and native consequences.
+3. Versioned PvP/death and pre-roll Fear.
+4. Finish remaining assembly/opening work; preserve completed opening commits and explicit unresolved recovery findings.
+5. Frozen-tree final qualification, only after executable scope and required source decisions qualify.
+
+S-GATE remains completed and is not repeated. Current Executioner adapter qualification belongs to priority1. No extra assembly implementation is scheduled before priorities1–3. Missing authoritative rules remain named blockers, not fabricated mechanics or completed coverage. No new production, live-provider, push or deployment authorization follows from this ordering.
 
 ## Usage / safety
 
@@ -571,3 +583,20 @@ Starting **`30b333cee7662e9ac7a3541c54668f35d75c3cb1`**. Real four-owner replay 
 | Operations inspection | W4G actual `/vc-admin ops` | GM-only salted references/counts, no private prose or recovery side effects |
 
 **Still incomplete:** fine-grained reconciliation of globally stale initial plans remains conservative. A roster/import/source revision can hold remaining old-plan parts; independent native owner entries and ordinary turns remain available except when that exact owner's original send is unresolved. No automatic destructive reset or reauthoring of already delivered text. Full W7 registry, remaining world effects/tiers, UA/native catalog and versioned PvP/Fear replacement are not qualified by this O5 replay. Read-only worker audits identified missing native receipt adapters, not lawful permission to fabricate rule communication, violation, powered-device or clue-vector proof. Continue independent source-defined work; exact Break the Pattern authoring blocker remains. No live/API/provider/push/deploy/production operations.
+
+W4H committed **`a509710e715edaa9980c8ecf57dfc1c10148515f`**, normalized manifest **575/575**.
+
+## UA / native catalog — Executioner Sentence Carried Out
+
+Starting **`a509710e715edaa9980c8ecf57dfc1c10148515f`**. Per owner's new priority, unified arbitration/special features precede Director, PvP/Fear and unfinished assembly. Exact packaged source `adversary:pale-court-executioner:sentence-carried-out` grants +2 damage when attacking a Vulnerable target; it does not grant an attack, a PC condition, spotlight or damage authority. Source/template hashes remain unchanged. Only the real standard incoming NPC attack consumes this passive.
+
+`nativeStandardDamage` emits additive v2 proof from the actual native target's sealed Vulnerable-condition list, including the zero-bonus case. `pc-incoming` computes that list before damage preparation, saves a GM-private proof with opaque offer reference, and validates feature/template/actor/target/condition provenance plus exact expression at live and saved-roll consumers. Pure dice-expression arithmetic adds two to the modifier, not dice/maximized Critical bonus. Existing native owner defense, Armor, Evasion, HP and death routes are unchanged. Horde proof remains its original version/HR11 branch; saved pre-feature offers lacking the new field retain original odds and damage. No raw sheet condition or model-proposed status grants the bonus.
+
+- Initial focused **1/3 passed, 2 failed**, exit1 (`executioner-red.log`, final red **2025.3324 ms**). GM path correctly showed base `4d12+12` instead of required `4d12+14`. Initial AI fixture reused the earlier group board, then omitted the current accepted looking-to-GM opportunity; both fixture-authority holds were corrected without relaxing production checks. Do not misreport those AI fixture failures as a second independent production defect.
+- First complete focused positive/negative **3/3**, **1773.8135 ms**, exit0 (`executioner-green.log`). Expanded **11/11**, **4707.093 ms**, exit0 (`executioner-focused.log`): actual human/native-AI workflows; private native condition vs sheet label; GM Critical fixed +2 (48 max-dice bonus, never +4 flat); wrong owner/proxy, revoked condition, tampered proof, changed condition before RNG; restart, owner Armor and idempotent effect; historical pre-feature native offer shape. Historical fixture deliberately uses low-level snapshot construction; attempting to mutate the immutable event index first correctly failed, not a production compatibility defect.
+- Final **13 affected scripts / 484 tests**, **484 passed**, zero failed/cancelled/skipped/todo, **159324.3545 ms**, controller exit0 (`executioner-impacted.log`): unified arbitration, Veil passives, FH40 PC effect authority, native death, PvP damage, autonomous Fear, private UX, PVP30/q/ag, OBS21, publication/memory privacy and both D08 suites. Full141-suite frozen W7 registry not run or claimed.
+- Final syntax455, quality250, format455, all exit0 (`executioner-{check,quality,format}.log`), existing326 long-line warnings. Source catalog now **153 =15 supported +137 review-only +1 needs-authoring**, **14** bounded handler families. Inventory assertion adds the exact newly supported key and retains every previous assertion. App/schema unchanged; no migration of saved outcomes. Manifest/diff integrity accompany commit.
+
+**Rollback:** preserve new v2 damage-passive proofs, original incoming offers/outcomes, source events, Armor/death/effect receipts and all legacy readers. Disabling a new adapter cannot rewrite already saved dice or HP; pending offers require source-compatible review, not deletion/regeneration. This is a bounded feature, not arbitrary condition inference or full native catalog qualification.
+
+**Parallel continuation:** three actual workers available under runtime four-total-thread cap; requested worker ceiling is six, local Codex configuration already6 (unchanged). Dedicated Experience worker owns its native eligibility producer/use/replay and tests; group worker audits/qualifies existing UA12 parent lifecycle before inventing changes; third worker audits remaining producer/consumer gaps read-only. Worktrees use direct dependency junctions; coordinator alone removes verified junctions nonrecursively before clean worktree removal. No worker may clean dependencies. No billable application/provider or live Discord/prod operations; usage totals unavailable, not estimated. Owner separately authorized normal branch pushes during this checkpoint; only qualified commits may push, never unqualified worker source, force-push, merge into main or deployment.

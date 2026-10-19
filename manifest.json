@@ -361,8 +361,8 @@
     },
     {
       "path": "bot/scripts/gm-unified-arbitration-test.mjs",
-      "size_bytes": 199352,
-      "sha256": "dbb33cf251b95e787d39e781af6674e6e5d441d800f3a0d73ab9f2c76b5e14e8"
+      "size_bytes": 207311,
+      "sha256": "eb74fdf479cf640ffefcdece25d751451ec1d5792b9c609e6f951d422f93432a"
     },
     {
       "path": "bot/scripts/h01-source-recovery-test.mjs",
@@ -1766,8 +1766,8 @@
     },
     {
       "path": "bot/src/native-feature-catalog.js",
-      "size_bytes": 5923,
-      "sha256": "a774b1d0e204853877527338bed8d6fff60b836479f85cbc678a35ba01cfc295"
+      "size_bytes": 5962,
+      "sha256": "f17c1364cc82bce54130db8bb91a654b50f342d4a87fc0676578017982bc3b04"
     },
     {
       "path": "bot/src/native-feature-damage.js",
@@ -1776,8 +1776,8 @@
     },
     {
       "path": "bot/src/native-feature-definitions.json",
-      "size_bytes": 120391,
-      "sha256": "bf3d323a76ab249e8a5711deeb04989ade4bc02b98418cdf2576c7354dc79d1f"
+      "size_bytes": 120508,
+      "sha256": "d8e2c12d73cc0a808bcf8667aa6f9827ff1795a39f5206470bfcce26af4ea032"
     },
     {
       "path": "bot/src/native-feature-effects.js",
@@ -1791,8 +1791,8 @@
     },
     {
       "path": "bot/src/native-feature-passives.js",
-      "size_bytes": 3137,
-      "sha256": "0010d3f75ad64923652898c17138e8f566dfe30640f683bfca9c148f2cb20726"
+      "size_bytes": 4262,
+      "sha256": "8b1f9d378b257e81773d4789efe0128201337a6c63809b0c4cee4902c2f3f24d"
     },
     {
       "path": "bot/src/native-feature-windows.js",
@@ -1941,8 +1941,8 @@
     },
     {
       "path": "bot/src/pc-incoming.js",
-      "size_bytes": 52370,
-      "sha256": "e52b2f8dce4a173e5850dcfbdfd46b91408b4e650dc87d534c9f586bbef3b624"
+      "size_bytes": 53101,
+      "sha256": "dc6c1a90b84fc4ce89a78277f5fe8d27a3833fe55b518dabdf033ceae5e37a88"
     },
     {
       "path": "bot/src/pc-native-eligibility.js",
@@ -2771,8 +2771,8 @@
     },
     {
       "path": "docs/Active_Implementation/NO_DEFERRALS_LEDGER.md",
-      "size_bytes": 148945,
-      "sha256": "415924a8b3c1e207f9abd3d5422e732ad8045d6b5d9d8f3a7e10b907c63786f3"
+      "size_bytes": 154566,
+      "sha256": "e24cf1d92d1f0055eecfe8fc5b9895b23f4e3efd8bd6e7d7c59497a144aac34c"
     },
     {
       "path": "docs/Active_Implementation/README.md",
@@ -2786,8 +2786,8 @@
     },
     {
       "path": "docs/Active_Implementation/UNIFIED_ARBITRATION_FEATURE_COVERAGE.md",
-      "size_bytes": 6222,
-      "sha256": "173b1359a8342cf4364ad80bcf476fa218a0f8a339d77668576efcf0c43b6983"
+      "size_bytes": 6523,
+      "sha256": "85fb3f8e803194e628a31d708afaab1f2a90928c47a5b3b6d0abf00654c583c7"
     },
     {
       "path": "docs/Active_Implementation/UNIFIED_GM_ARBITRATION.md",

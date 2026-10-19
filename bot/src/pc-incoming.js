@@ -11,7 +11,7 @@ import {assertPcAttackable} from "./pc-native-eligibility.js";
 import {assertFearIncomingExecution} from "./pvp-fear-moves.js";
 import {inspectNativeGmDecision,inspectCommittedGmDecision,commitGmActionCost} from './gm-action-capability.js';
 import {captureIncomingFeatureWindows} from './native-feature-windows.js';
-import {nativeAttackPassives,nativeStandardDamage} from './native-feature-passives.js';
+import {nativeAttackPassives,nativeStandardDamage,nativeDamageBonusExpression} from './native-feature-passives.js';
 import {compileNativeFeatures} from './native-feature-catalog.js';
 import {nativeHouseErratum} from './native-house-errata.js';
 import {nativeHitFeatureCandidates,applyManyDeathsAfterIncoming} from './native-feature-hit.js';
@@ -74,12 +74,13 @@ function facts(db,guild,input,library,authority=null,existingOffer=null,committe
     nativeHitFeatureCandidates(db,guild,{template,combatant:c,input});
   const hit_features=committedRoll?existingOffer?.hit_features||[]:hit_details.map(p=>({ref:`hit-feature:${hash([guild,input.source,input.npc,pc.id,p])}`,fingerprint:hash(p)}));
   if(hit_features.length)snapshot.hit_features=hash(hit_features);
-  const damage_detail=existingOffer&&!Object.hasOwn(existingOffer,'damage_passive')?null:nativeStandardDamage({template,combatant:c,damage:standard[3]});
-  const damage_passive=damage_detail?{ref:`damage-passive:${hash([guild,input.source,input.npc,pc.id,damage_detail])}`,fingerprint:hash(damage_detail)}:null;
-  if(damage_passive)snapshot.damage_passive=hash(damage_passive);
   const native_conditions=existingOffer&&!Object.hasOwn(existingOffer,'native_conditions')?[]:
     committedRoll?existingOffer?.native_conditions||[]:nativeIncomingConditions(db,guild,pc.id);
   if(native_conditions.length)snapshot.native_conditions=hash(native_conditions);
+  const damage_detail=existingOffer&&!Object.hasOwn(existingOffer,'damage_passive')?null:
+    nativeStandardDamage({template,combatant:c,damage:standard[3],actor:input.npc,target:pc.id,conditions:native_conditions});
+  const damage_passive=damage_detail?{ref:`damage-passive:${hash([guild,input.source,input.npc,pc.id,damage_detail])}`,fingerprint:hash(damage_detail)}:null;
+  if(damage_passive)snapshot.damage_passive=hash(damage_passive);
   return {pc,snapshot,damage:damage_detail?.expression||standard[3],damage_type:standard[4],bonus:Number(template.attack)+passives.reduce((sum,p)=>sum+p.modifier,0),evasion,major,severe,defenses,
     ...(native_conditions.length?{native_conditions}:{}),
     ...(damage_passive?{damage_passive,damage_detail}:{}),
@@ -391,13 +392,22 @@ function passiveProof(db,guild,row){
   if(o.native_conditions)validateIncomingConditions(db,guild,row.subject_key,o.native_conditions);
   if(o.damage_passive){
     const p=o.damage_passive,record=db.getCityRecord(guild,'npc_damage_passive_proof',p.ref),v=record?.data.proof,
-      feature=compileNativeFeatures().find(f=>f.native_handler==='horde_marked_half_damage'),erratum=nativeHouseErratum('HR11');
+      feature=compileNativeFeatures().find(f=>f.feature_key===v?.feature);
     if(!v||record?.status!=='verified'||record.visibility!=='gm'||record.source_event!==row.source_event||record.data.attack!==row.record_key
-      ||hash(v)!==p.fingerprint||v.feature!==feature.feature_key||v.feature_hash!==hash(feature)||v.template_hash!==o.snapshot.template
-      ||v.erratum!=='HR11'||v.erratum_version!==1||v.erratum_hash!==hash(erratum)||v.combatant!==o.input.combatant
-      ||o.damage!==v.expression||v.expression!==(v.hp.marked_half_or_more?'3d8+8':v.original_damage)
-      ||v.hp.marked!==v.hp.max-v.hp.remaining||v.hp.marked_half_or_more!==(v.hp.marked>=Math.ceil(v.hp.max/2))
-      ||p.ref!==`damage-passive:${hash([guild,o.input.source,o.input.npc,o.input.character,v])}`)fail('Exact native Horde damage proof required.');
+      ||!feature||hash(v)!==p.fingerprint||v.feature_hash!==hash(feature)||v.template_hash!==o.snapshot.template
+      ||feature.template_hash!==v.template_hash||v.combatant!==o.input.combatant||o.damage!==v.expression
+      ||p.ref!==`damage-passive:${hash([guild,o.input.source,o.input.npc,o.input.character,v])}`)fail('Exact native damage passive proof required.');
+    if(v.version===2&&feature.native_handler==='sentence_native_vulnerable_damage'){
+      if(v.source_hash!==feature.source_hash||v.actor!==o.input.npc||v.target!==o.input.character
+        ||hash(v.conditions)!==hash(o.native_conditions||[])||v.bonus!==(v.conditions.length?2:0)
+        ||v.expression!==nativeDamageBonusExpression(v.original_damage,v.bonus))fail('Exact native Sentence Carried Out proof required.');
+      validateIncomingConditions(db,guild,row.subject_key,v.conditions);
+    }else{
+      const erratum=nativeHouseErratum('HR11');
+      if(feature.native_handler!=='horde_marked_half_damage'||v.erratum!=='HR11'||v.erratum_version!==1||v.erratum_hash!==hash(erratum)
+        ||v.expression!==(v.hp.marked_half_or_more?'3d8+8':v.original_damage)
+        ||v.hp.marked!==v.hp.max-v.hp.remaining||v.hp.marked_half_or_more!==(v.hp.marked>=Math.ceil(v.hp.max/2)))fail('Exact native Horde damage proof required.');
+    }
   }
   if(!o.passives)return;
   if(!Number.isSafeInteger(o.base_bonus)||!Array.isArray(o.passives)||o.passives.length>8||o.bonus!==o.base_bonus+o.passives.reduce((n,p)=>n+p.modifier,0))
