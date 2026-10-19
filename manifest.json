@@ -1136,8 +1136,8 @@
     },
     {
       "path": "bot/scripts/validate-offline.mjs",
-      "size_bytes": 11714,
-      "sha256": "db95bc1e8598a2215180fec11e2a0d9cd16fde2a0c7dcda6af421fdec5c1559b"
+      "size_bytes": 11756,
+      "sha256": "7237c43c89f802aaa3976f28e2bf550e1878388c8cde06e3753cff10d1501c85"
     },
     {
       "path": "bot/scripts/world-authorship-test.mjs",
@@ -1153,6 +1153,11 @@
       "path": "bot/scripts/world-background-memory-test.mjs",
       "size_bytes": 7445,
       "sha256": "cd4b45752d5b9459db432adecaaf6441f952b609b92c0aff02aec2ab02e72721"
+    },
+    {
+      "path": "bot/scripts/world-director-beats-test.mjs",
+      "size_bytes": 13236,
+      "sha256": "c5c246bd41b51433f0ec2e7991c724a388757304a970f55440cf881ee1cc78e3"
     },
     {
       "path": "bot/scripts/world-identity-persistence-test.mjs",
@@ -1916,8 +1921,8 @@
     },
     {
       "path": "bot/src/opening-world-bridge.js",
-      "size_bytes": 1686,
-      "sha256": "0d2bbd1a5cb528bcb065b146a62b76a01fed3e9dcbf5cf9725ac2adb31cd77ba"
+      "size_bytes": 1798,
+      "sha256": "68eceac9d7b64540684830c01f98449e6a651154e18923840731e6bef8259d42"
     },
     {
       "path": "bot/src/operational-metrics.js",
@@ -2431,8 +2436,8 @@
     },
     {
       "path": "bot/src/world-narrative-bridge.js",
-      "size_bytes": 26497,
-      "sha256": "c4589a332c5094e6e0bccdf1fa3ae82c25d2c4c4df7a92a9cebaba1b2c938781"
+      "size_bytes": 30905,
+      "sha256": "1f629500ad96a6689d4105d0436b626eb8ca08ddb9d9b171d83db2a62d2f2152"
     },
     {
       "path": "bot/src/world-observation.js",
@@ -2821,8 +2826,8 @@
     },
     {
       "path": "docs/Active_Implementation/NO_DEFERRALS_LEDGER.md",
-      "size_bytes": 192302,
-      "sha256": "5c4c1829277db5c45909c62c0ccf9e45e3e192236ce8fab0be0b1e3fc64b1575"
+      "size_bytes": 196623,
+      "sha256": "ed0c7af70fbb4831fd60561c37175e0c1540596fef4e37201c4ce656c3c4d8d3"
     },
     {
       "path": "docs/Active_Implementation/README.md",

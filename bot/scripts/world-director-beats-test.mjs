@@ -11,6 +11,7 @@ import {bindDirectorNarrativeSource,directorBriefForAudience} from '../src/narra
 import {indexWorldEvent} from '../src/city-calendar.js';
 import {currentScene} from '../src/scene-continuity.js';
 import {conversationPrincipal} from '../src/conversation-principal.js';
+import {openingWorldOpportunities} from '../src/opening-world-bridge.js';
 
 async function establishedSceneBeat(f,{privateScene=false,audienceMode=null}={}){
   const x=setup(f,{privateScene,messageId:`outbound-unit-${privateScene?'private':'party'}`}),
@@ -154,4 +155,18 @@ test('W3 a moved owner viewpoint cannot reuse an old location-bound native scene
   const bridge=worldDirectorBridgeBeats(f.db,f.guild,f.db.getWorldEvent(f.guild,x.ref),x.directorScope);
   assert.equal(bridge.beats.filter(beat=>beat.kind==='established_world_change').length,0);
   assert(bridge.held>=1);
+}));
+
+test('W3 OpeningDirector consumes verified beats but cannot revive a changed event snapshot',()=>nativeFixture(async f=>{
+  const x=await establishedSceneBeat(f),opening=openingWorldOpportunities(f.db,f.guild,x.directorScope),
+    beat=opening.beats.find(row=>row.kind==='established_world_change');
+  assert(beat);assert.equal(beat.epistemic,'observation');assert.equal(beat.fictional_scope,'nonmechanical_established_scene');
+  assert.equal(beat.publication_authority,false);assert.equal(beat.execution_authority,false);
+  assert.equal(Object.hasOwn(beat,'text'),false);
+  f.restart();
+  assert.deepEqual(openingWorldOpportunities(f.db,f.guild,x.directorScope),opening);
+  f.db.db.prepare("UPDATE world_events SET details_json=json_set(details_json,'$.fixture_metadata','changed-after-opening') WHERE guild_id=? AND event_key=?")
+    .run(f.guild,x.units[0].source_event);
+  const stale=openingWorldOpportunities(f.db,f.guild,x.directorScope);
+  assert.equal(stale.beats.filter(row=>row.kind==='established_world_change').length,0);
 }));
