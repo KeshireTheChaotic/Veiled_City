@@ -108,6 +108,7 @@ bot/scripts/narrative-publication-hotfix-test.mjs
 bot/scripts/narrative-salience-test.mjs
 bot/scripts/narrative-understanding-test.mjs
 bot/scripts/native-actor-control-test.mjs
+bot/scripts/native-group-completion-test.mjs
 bot/scripts/native-veil-defense-test.mjs
 bot/scripts/native-world-fixtures.mjs
 bot/scripts/natural-language-scope-test.mjs

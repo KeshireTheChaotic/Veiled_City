@@ -555,6 +555,11 @@
       "sha256": "6f4e31c29f24559f5e51bf6cc02508247428b6c7591cec7101f31dc5ab1ac3f0"
     },
     {
+      "path": "bot/scripts/native-group-completion-test.mjs",
+      "size_bytes": 8688,
+      "sha256": "e86c2198af4fac1d2a69f66cb50192f7d37d6eabc1228b3bbd99b3ef1bb1e326"
+    },
+    {
       "path": "bot/scripts/native-veil-defense-test.mjs",
       "size_bytes": 13646,
       "sha256": "28c6bdc17a545282786e46b45bf4e1121d14a12ee12e0fbe7eff0973240c3857"
@@ -1106,8 +1111,8 @@
     },
     {
       "path": "bot/scripts/validate-offline.mjs",
-      "size_bytes": 11440,
-      "sha256": "5db1944bc292d09f61b3a8f1c179a6e90880fb194b06199831dadf89629030ed"
+      "size_bytes": 11485,
+      "sha256": "14e920a8818acb94082e3a332cfb5489b6a3461ef64bbdde54bc7faebdcd9a20"
     },
     {
       "path": "bot/scripts/world-authorship-test.mjs",
@@ -1801,8 +1806,8 @@
     },
     {
       "path": "bot/src/native-group-features.js",
-      "size_bytes": 43583,
-      "sha256": "cb7504bff9e7fd747b46613e593d08e05eb30c45dea28974f4a8fed57a546641"
+      "size_bytes": 44684,
+      "sha256": "02ae1e5ec9fb119e4d33bd8db10f803c83cb5fa86ef458ac10a37b5311f22f2c"
     },
     {
       "path": "bot/src/native-hook-output.js",
@@ -2771,8 +2776,8 @@
     },
     {
       "path": "docs/Active_Implementation/NO_DEFERRALS_LEDGER.md",
-      "size_bytes": 154566,
-      "sha256": "e24cf1d92d1f0055eecfe8fc5b9895b23f4e3efd8bd6e7d7c59497a144aac34c"
+      "size_bytes": 159135,
+      "sha256": "68f73dc46ad3e27ec853581c58e85e328944bf99c2dc5e805dabd051115d6ea5"
     },
     {
       "path": "docs/Active_Implementation/README.md",
