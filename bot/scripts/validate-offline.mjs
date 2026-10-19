@@ -56,6 +56,7 @@ suites.push("native-experience-eligibility-test");
 suites.push("native-unarmed-attack-test");
 suites.push("native-unarmed-traits-test");
 suites.push("pvp-campaign-safety-test","pvp-safety-command-test");
+suites.push("pre-roll-fear-test","pre-roll-fear-recovery-test","pre-roll-fear-integration-test");
 suites.push("native-stress-passives-test");
 suites.push("native-feature-authoring-test");
 suites.push("session-opening-attendance-test");

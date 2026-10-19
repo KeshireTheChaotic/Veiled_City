@@ -16,6 +16,7 @@ import {compileNativeFeatures} from './native-feature-catalog.js';
 import {nativeHouseErratum} from './native-house-errata.js';
 import {nativeHitFeatureCandidates,applyManyDeathsAfterIncoming} from './native-feature-hit.js';
 import {nativeIncomingConditions,validateIncomingConditions,incomingConditionOdds,nativeAttackExpiryRevision} from './native-group-features.js';
+import {settlePreRollFearForIncoming} from './pre-roll-fear.js';
 
 const hash=v=>createHash("sha256").update(JSON.stringify(v)).digest("hex");
 const AUTONOMOUS_FEAR_ATTACK=Symbol("native-autonomous-fear-attack");
@@ -163,14 +164,14 @@ export function inspectVolley(db,guild,key){
     ||!hit&&damageId!==null)fail('Shared damage ancestry or critical arithmetic required.');
   return {row,decision,children,result};
 }
-function incomingSourceAuthority(db,guild,source,offer){
+function incomingSourceAuthority(db,guild,source,offer,{committed=false}={}){
   if(offer.shared_attack){
     const parent=inspectVolley(db,guild,offer.shared_attack);
     return offer.gm==='native:unified-gm'&&source.source_id==='native:unified-gm'&&offer.input.source===parent.decision.source_event
       &&parent.children.some(c=>hash(c.data.offer)===hash(offer));
   }
   if(offer.input.ruling?.startsWith('ai-decision:')){
-    const {row}=inspectNativeGmDecision(db,guild,offer.input.ruling.slice(12));
+    const {row}=(committed?inspectCommittedGmDecision:inspectNativeGmDecision)(db,guild,offer.input.ruling.slice(12));
     return offer.gm==='native:unified-gm'&&source.source_id==='native:unified-gm'&&offer.input.source===row.source_event;
   }
   return source.source_id===`gm:${offer.gm}`&&db.ownerAuthoredSource(guild,source.event_key,offer.gm);
@@ -301,12 +302,17 @@ export function rollIncomingAttack(db,guild,user,key,options={}){
     const roll=db.addRoll(guild,c.snapshot.session,user,c.pc.id,"npc_incoming_standard",payload);
     const receipt=db.saveCityRecord(guild,{kind:"npc_attack_roll_receipt",key:`${key}:roll`,status:"resolved",source_event:row.source_event,
       visibility:"character",subject_key:c.pc.id,data:{...payload,roll}});
-    db.saveCityRecord(guild,{...row,key,status:hit?"awaiting_armor":"missed",data:{...row.data,roll:receipt.record_key}});return receipt;
+    db.saveCityRecord(guild,{...row,key,status:hit?"awaiting_armor":"missed",data:{...row.data,roll:receipt.record_key}});
+    settlePreRollFearForIncoming(db,guild,key);return receipt;
   });
 }
 /** No human identity/approval is forged. Current native GM ruling, spotlight and defense authorize this executor. */
 export function rollArbitratedIncomingAttack(db,guild,key,{library,rng}={}){
   if(db.getCityRecord(guild,'pc_incoming_attack',key)?.data.offer.shared_attack)return rollVolley(db,guild,key,{library,rng});
+  // A committed native attack is a receipt read, not a new attack against the PC's later resource snapshot.
+  // Current source/owner/audience ancestry still applies; neither the cost nor any dice are replayed.
+  const saved=db.getCityRecord(guild,'pc_incoming_attack',key);
+  if(saved?.data.roll&&saved.data.offer.input.ruling?.startsWith('ai-decision:'))return incomingRollProjection(db,guild,key).receipt;
   const c=context(db,guild,key,library);
   if(!c.row.data.offer.input.ruling?.startsWith('ai-decision:'))fail('Native AI-GM decision required.');
   return rollIncomingAttack(db,guild,'native:unified-gm',key,{gm:NATIVE_AI_ATTACK,library,rng});
@@ -424,7 +430,7 @@ function passiveProof(db,guild,row){
 export function incomingRollProjection(db,guild,key){
   const {row,offer}=incomingAttackEvidence(db,guild,key),receipt=verifyRoll(db,guild,row),r=receipt.data;
   if(!offer.shared_attack&&offer.input.ruling?.startsWith('ai-decision:')){
-    const decision=inspectNativeGmDecision(db,guild,offer.input.ruling.slice(12)).row,cost=db.getCityRecord(guild,'gm_action_cost_receipt',r.cost_ref);
+    const decision=inspectCommittedGmDecision(db,guild,offer.input.ruling.slice(12)).row,cost=db.getCityRecord(guild,'gm_action_cost_receipt',r.cost_ref);
     let i=0;const expected=gmD20Roll({kind:'attack',modifier:offer.bonus,difficulty:offer.evasion,
       ...incomingConditionOdds(offer,decision.data.proposal)},()=>r.gm_d20?.faces[i++]);
     if(r.gm_decision!==decision.record_key||hash(expected)!==hash(r.gm_d20)||expected.selected!==r.face||cost?.status!=='committed'
@@ -449,7 +455,7 @@ export function incomingAttackEvidence(db,guild,key,{terminal=false}={}){
   const original=o&&db.getWorldEvent(guild,o.input.source),scene=currentScene(db,guild),pc=o&&db.getCharacter(o.input.character);
   if(row?.data.version!==1||row.visibility!=="character"||row.subject_key!==o?.input.character||o?.version!==1
     ||source?.status!=="active"||source.kind!=="native_npc_attack_offer"||hash(source.details)!==hash(o)
-    ||!incomingSourceAuthority(db,guild,source,o)||original?.status!=="active"||hash(original)!==o.snapshot.source
+    ||!incomingSourceAuthority(db,guild,source,o,{committed:!!row.data.roll})||original?.status!=="active"||hash(original)!==o.snapshot.source
     ||o.snapshot.session!==scene.session_id||o.snapshot.scene!==scene.key||pc?.guild_id!==guild||pc.owner_user_id!==o.snapshot.owner
     ||historicalOwnerPrincipal(db,guild,o.snapshot.owner,pc.id).revision!==o.snapshot.principal)
     fail("Exact current native incoming offer/source/owner evidence required.");
@@ -502,6 +508,7 @@ export function resolveIncomingDamage(db,guild,user,key,{armor=false,library}={}
     settleVolley(db,guild,row.data.offer.shared_attack);
     captureIncomingFeatureWindows(db,guild,receipt.record_key,{library});
     applyManyDeathsAfterIncoming(db,guild,key);
+    settlePreRollFearForIncoming(db,guild,key);
     return receipt;
   });
 }
@@ -516,7 +523,7 @@ export function validateIncomingDamageApplication(db,guild,key){
     ||pc?.guild_id!==guild||pc.owner_user_id!==v.owner||v.owner!==o.snapshot.owner||v.principal!==o.snapshot.principal
     ||historicalOwnerPrincipal(db,guild,v.owner,v.character).revision!==v.principal||v.scene!==scene.key||v.session!==scene.session_id
     ||source?.status!=="active"||source.kind!=="native_npc_attack_offer"||hash(source.details)!==hash(o)
-    ||!incomingSourceAuthority(db,guild,source,o)||original?.status!=="active"||hash(original)!==o.snapshot.source)
+    ||!incomingSourceAuthority(db,guild,source,o,{committed:true})||original?.status!=="active"||hash(original)!==o.snapshot.source)
     fail("Exact current native incoming effect/source/owner ancestry required.");
   defenseProof(db,guild,row);const roll=verifyRoll(db,guild,row),r=roll.data,spec=diceSpec(o.damage),specDamage=r.damage;
   const expectedHit=r.face===20||r.face+o.bonus>=o.evasion;

@@ -86,6 +86,7 @@ import { preparePvpReaction, reviewPvpReaction, rollPvpReaction } from "./pvp-re
 import { reviewFeatureEffect, reviewPcEffect, approvePcEffect, applyPcEffect,reviewHealingSource,authorizeHealingSource } from "./pc-effects.js";
 import { prepareIncomingAttack, reviewIncomingAttack, confirmIncomingDefense, withholdIncomingDefense, rollIncomingAttack, rollArbitratedIncomingAttack, resolveIncomingDamage } from "./pc-incoming.js";
 import {inspectGmReactionInvitation,submitGmReactionInvitation,withdrawGmReactionInvitation,gmReactionInbox} from './gm-native-rolls.js';
+import {recoverPreRollFear} from './pre-roll-fear-recovery.js';
 import { queueDirectorPublications } from "./publication-outbox.js";
 import {publishContinuationNotices} from "./publishing.js";
 import {publishPvpNotices,materializeNativeNotices,resyncNativeNotice,publishGmArbitrationNotice} from "./native-publications.js";
@@ -529,7 +530,9 @@ async function executeCommand(interaction,{db,gm,voice=null}){
       const {op,...input}=JSON.parse(interaction.options.getString("json",true));
       const user=interaction.user.id,native={gm:isGM(db,interaction),interactionId:interaction.id};
       let row;
-      if(op==="inbox"){
+      if(['pre-roll-fear-review','pre-roll-fear-cancel','pre-roll-fear-resume'].includes(op)){
+        row=recoverPreRollFear(db,interaction,{op,...input},isGM,{library:encounterLibrary(gm)});
+      }else if(op==="inbox"){
         if(Object.keys(input).length)throw new UserInputError("Inbox takes no additional fields.");
         const pc=personalCharacter(db,interaction.guildId,user);
         row={pending:["pc_effect_authority","pc_incoming_attack","pc_death_move_request"].flatMap(kind=>db.listCityRecords(interaction.guildId,{kind,includeGM:true,limit:200})

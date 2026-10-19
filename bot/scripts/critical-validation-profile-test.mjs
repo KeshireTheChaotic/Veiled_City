@@ -12,7 +12,8 @@ test('critical profile keeps acceptance and native/security gates; extended reta
   for(const id of ['narrative-contract-test','v96-semantic-output-p0-test','v9-pvp-authorship-test','v94-pc-effect-authority-test',
     'v94-pvp-damage-test','v94-pc-death-test','v94-pc-recovery-test','v9-pvp-hope-fear-test','v95-autonomous-fear-test',
     'memory-audience-isolation-test','v9-publication-test','historical-archive-test','h05-discord-delivery-test',
-    'd08-window-security-test','d08-observability-test','movement-authorization-regression-test','legacy-authority-migration-test'])
+    'd08-window-security-test','d08-observability-test','movement-authorization-regression-test','legacy-authority-migration-test',
+    'pre-roll-fear-test','pre-roll-fear-recovery-test','pre-roll-fear-integration-test'])
     assert(critical.suites.includes(id),`mandatory security/native gate: ${id}`);
   for(const id of extended.suites)assert(fs.existsSync(`scripts/${id}.mjs`),id);
 });

@@ -16,6 +16,7 @@ import {gmRulingDetails} from "./gm-action-ruling.js";
 import {overlapsOwnerActionTerminal} from "./owner-action-terminal.js";
 import {nativeDefenseAura,persistNativeDefenseAura,nativeFormationDefense,persistNativeFormationDefense,nativeVeilExposureDefense} from './native-defense-aura.js';
 import {inspectNativeUnarmedAttack} from './native-unarmed-attacks.js';
+import {publishPreRollFearNotice} from './pre-roll-fear-notice.js';
 const hash=value=>createHash("sha256").update(JSON.stringify(value)).digest("hex");
 const signed=value=>`${value>=0?"+":""}${value}`;
 export const rollRevision=hash;
@@ -204,6 +205,12 @@ export function ownedRollRequest(db,guild,user,key){
 }
 /** Retries reuse stored requests; failed private delivery is recoverable through the read-only pending command. */
 export async function publishRollRequests(db,guild,mutation,send){
+  const failures=[];
+  for(const decision of mutation.unifiedArbitration||[]){
+    const key=decision.data?.native?.opportunity?.pre_roll_fear;
+    if(key)try{await publishPreRollFearNotice(db,guild,key,publication=>send(publication.target_user_id,publication.payload,
+      decision.data.origin.session,publication.target_character_id,{publication}));}catch(error){failures.push(error);}
+  }
   const keys=new Set((mutation.nativeAdjudications||[]).map(row=>row?.roll_request_ref).filter(Boolean));
   for(const ruling of mutation.gmRulings||[])if(ruling.data?.adjudication?.roll_request_ref)
     keys.add(ruling.data.adjudication.roll_request_ref);
@@ -214,8 +221,10 @@ export async function publishRollRequests(db,guild,mutation,send){
   for(const key of keys){
     const row=db.getCityRecord(guild,"roll_request",key);
     if(!row||!["pending","needs_review","awaiting_selection","awaiting_partner","awaiting_damage","awaiting_damage_type"].includes(row.status)) continue;
-    await publishRollAmendment(db,guild,row,send);
+    try{await publishRollAmendment(db,guild,row,send);}catch(error){failures.push(error);}
   }
+  // Delivery is not game execution. One held/uncertain notice must not suppress independent native requests.
+  if(failures.length)throw failures[0];
 }
 /** Receipt-backed post-commit delivery. Discord failures never redo mechanics; unsent receipts can be retried. */
 function amendmentSpecs(db,guild,row,{checkOwners=true}={}){

@@ -12,6 +12,7 @@ import {compileNativeFeatures} from './native-feature-catalog.js';
 import {EncounterLibrary} from './encounter.js';
 import {isGroupFeature,groupFeatureStakes,groupReactionRules} from './native-group-features.js';
 import {nativeActorControl} from './native-actor-control.js';
+import {preRollFearCandidates} from './pre-roll-fear.js';
 const origins=new WeakMap(),bindings=new WeakMap();
 const deepFreeze=v=>{if(v&&typeof v==='object'){Object.values(v).forEach(deepFreeze);Object.freeze(v);}return v;};
 export function createArbitrationOrigin(db,guild,scope,sourceRef){
@@ -38,6 +39,7 @@ export function arbitrationPromptBoard(db,guild,origin){
   const encounter=db.getCurrentEncounter(o.binding.session),binding=encounter&&db.getCityRecord(guild,'encounter_binding',encounter.id),
     combatants=encounter?db.listCombatants(encounter.id):[],library=new EncounterLibrary('../content'),features=compileNativeFeatures();
   return {version:1,source:o.binding.source,scene:o.binding.scene,location:o.binding.location,audience:o.scope.mode,
+    pre_roll_fear:preRollFearCandidates(db,guild,origin),
     feature_windows:featureWindowChoices(db,guild,o.scope),
     npc_candidates:o.eligible.map(n=>{
       const c=combatants.find(c=>c.status==='active'&&binding?.data.combatants.some(b=>b.actor===n.key&&b.id===c.id)),template=c&&library.findAdversary(c.base_name);

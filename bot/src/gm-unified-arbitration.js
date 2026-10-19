@@ -16,6 +16,8 @@ import {nativeAlliancePlan} from './native-encounter-relations.js';
 import {nativeFeatureReviewContract} from './native-house-errata.js';
 import {isGroupFeature,planGroupFeature} from './native-group-features.js';
 import {prepareNativeUnarmedAttack} from './native-unarmed-attacks.js';
+import {reservePreRollFear,bindPreRollFearBoard,cancelPreRollFear} from './pre-roll-fear.js';
+import {reservePreRollFearNotice} from './pre-roll-fear-notice.js';
 
 export const UNIFIED_ARBITRATION_PROMPT="Evaluate unified_arbitration in this SAME GM call. "
   +"Accepted typed intents are canonical adjudication inputs; human declarations own intent; native receipts own outcomes. "
@@ -35,6 +37,9 @@ export const UNIFIED_ARBITRATION_PROMPT="Evaluate unified_arbitration in this SA
   +"Unsupported features/proxies/PvP remain review/consent. "
   +"Do not emit duplicate gm_ruling/native_adjudication for a unified decision. "
   +"No dice faces, role waiver, outcome or automatic Fear spending. "
+  +"Optional pre-roll Fear requires unified_arbitration version=2 and one exact pre_roll_fear request_ref/npc_intent_ref from the current board. "
+  +"Select one otherwise-legal standard NPC attack against that pending action owner only; native code reserves 1 existing Fear and requires acknowledged notice before dice. "
+  +"No printed feature, Experience, added modifier, extra action or owner choice is purchased. Version1 with no interrupt remains valid. "
   +"For an explicit GM-owned alliance choice between currently active local unproxied NPC combatants, use set_allies or clear_allies, exact other NPC target_refs, npc_no_roll, srd:gm-moves, stakes=none, no feature or dice. "
   +"This does not enroll PCs or prove a powered device, movement, NPC knowledge or disclosure. "
   +"Group membership and relationship scores alone never grant Local Mesh.";
@@ -152,11 +157,26 @@ export function adjudicateSceneBoard(db,guild,origin,board,proposals,{library=ne
   });
 }
 export function applyUnifiedArbitration(db,guild,result,playerRows){
+  return db.transaction(()=>applyUnifiedBatch(db,guild,result,playerRows));
+}
+function applyUnifiedBatch(db,guild,result,playerRows){
   if(!result?.unified_arbitration)return [];
   if(!matchesArbitrationSchema(unifiedArbitrationSchema,result.unified_arbitration))throw fail('transport_shape');
   const origin=arbitrationTurnOrigin(result);if(!origin)throw fail('native_service_origin_required');
   const rows=currentScenePlayerInputs(db,guild,origin,playerRows),board=buildSceneIntentBoard(db,guild,origin,rows,result.unified_arbitration.npc_intents);
+  let interrupt=null;
+  for(const selection of result.unified_arbitration.pre_roll_fear||[]){
+    if(result.unified_arbitration.npc_intents.length!==1)throw fail('one_pre_roll_npc_spotlight_only');
+    const proposal=result.unified_arbitration.decisions.find(p=>p.intent_ref===selection.npc_intent_ref);
+    interrupt=reservePreRollFear(db,guild,origin,board,selection,proposal);bindPreRollFearBoard(db,guild,interrupt);
+  }
   const decisions=adjudicateSceneBoard(db,guild,origin,board,result.unified_arbitration.decisions);
+  if(interrupt){
+    const decision=decisions.find(d=>d.record_key===interrupt.data.binding.decision);
+    if(decision?.status==='gm_action_ready'&&decision.data.native?.operation==='commit_adversary_attack')
+      reservePreRollFearNotice(db,guild,interrupt.record_key);
+    else cancelPreRollFear(db,guild,origin,interrupt.record_key);
+  }
   // One bounded native GM reactive policy, in the current authenticated GM opportunity.
   // It is not a model role, a civic simulation score, or an extra provider invocation.
   const o=inspectArbitrationOrigin(db,guild,origin),remaining=4-board.data.entries.filter(e=>e.actor.type==='npc').length;

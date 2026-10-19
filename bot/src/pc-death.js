@@ -9,6 +9,7 @@ import {hopeCap} from "./pc-native-eligibility.js";
 import {historicalActionSource,consentAction} from "./action-consent.js";
 import {validateIncomingDamageApplication} from "./pc-incoming.js";
 import {validateAllyHealingApplication} from "./pc-effects.js";
+import {settlePreRollFearForIncoming} from './pre-roll-fear.js';
 export {hopeCap} from "./pc-native-eligibility.js";
 const hash=v=>createHash("sha256").update(JSON.stringify(v)).digest("hex");
 function fail(message){throw Object.assign(new Error(message),{code:"PC_DEATH_MOVE",expected:true});}
@@ -65,7 +66,7 @@ function mutation(db,guild,f,before,after,key){return db.recordMutation(guild,{s
 function snapshot(pc){return {status:pc.status,data:pc.data};}
 function settle(db,guild,f){
   db.saveCityRecord(guild,{...f.row,key:f.row.record_key,status:"resolved"});
-  if(f.cause.data.cause_type==="verified_npc_attack")return;
+  if(f.cause.data.cause_type==="verified_npc_attack")return settlePreRollFearForIncoming(db,guild,f.cause.data.roll.replace(/:roll$/u,''));
   const group=db.getCityRecord(guild,"pvp_damage_offer",f.cause.data.group);
   for(const source of group.data.binding.sources){const damage=db.getCityRecord(guild,"pvp_damage_roll_receipt",source.key);
     const attack=db.getCityRecord(guild,"pvp_attack_roll_receipt",damage.data.attack_receipt);settlePvpDamageAction(db,guild,attack.data.attack);}

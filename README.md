@@ -200,6 +200,13 @@ activate an unqualified non-bilateral effect route or waive existing native
 consent, Armor, optional-cost or death controls. See the
 [owner-approved PvP/Fear contract](docs/Active_Implementation/PVP_CAMPAIGN_AND_PRE_ROLL_FEAR_CONTRACT.md).
 
+The first native pre-roll Fear route reserves1 existing campaign Fear for one
+legal standard NPC attack before an existing unrolled request. Exact private
+delivery acknowledgement, owner defenses/Armor/death choices and native terminal
+receipts gate resumption. GM-only reviewed recovery uses the existing
+`/vc-roll effect` JSON interface; see [Fear lifecycle and recovery](docs/Active_Implementation/PRE_ROLL_FEAR_IMPLEMENTATION.md).
+This does not enable the unfinished non-bilateral PvP executor or other feature adapters.
+
 For workflows, see [assembly](docs/Setup_and_Scope/PARTY_ASSEMBLY.md),
 [GM operations](docs/Setup_and_Scope/GM_OPERATIONS.md),
 [command map](docs/Setup_and_Scope/BOT_COMMANDS.md) and

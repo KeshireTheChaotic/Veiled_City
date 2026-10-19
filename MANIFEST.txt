@@ -124,6 +124,9 @@ bot/scripts/offline-smoke-test.mjs
 bot/scripts/operations-regression-test.mjs
 bot/scripts/playable-narration-test.mjs
 bot/scripts/portrayal-authoring-test.mjs
+bot/scripts/pre-roll-fear-integration-test.mjs
+bot/scripts/pre-roll-fear-recovery-test.mjs
+bot/scripts/pre-roll-fear-test.mjs
 bot/scripts/production-backup.mjs
 bot/scripts/production-regression-test.mjs
 bot/scripts/prompt-budget-test.mjs
@@ -308,6 +311,7 @@ bot/src/evaluation-harness.js
 bot/src/evidence-custody.js
 bot/src/expansion-contracts.js
 bot/src/failure-trace.js
+bot/src/fear-reservations.js
 bot/src/fresh-npc-authoring.js
 bot/src/fresh-scene-authoring.js
 bot/src/gameplay-intake.js
@@ -407,6 +411,9 @@ bot/src/pc-native-eligibility.js
 bot/src/personal-continuity.js
 bot/src/player-language.js
 bot/src/portrayal.js
+bot/src/pre-roll-fear-notice.js
+bot/src/pre-roll-fear-recovery.js
+bot/src/pre-roll-fear.js
 bot/src/presentation-evidence.js
 bot/src/prompt-budget.js
 bot/src/provenance.js
@@ -574,6 +581,7 @@ docs/Active_Implementation/IMPLEMENTATION_RECONCILIATION.md
 docs/Active_Implementation/N15_APPEARANCE_CONTRACT.md
 docs/Active_Implementation/NO_DEFERRALS_HISTORY_THROUGH_373c7d6.md
 docs/Active_Implementation/NO_DEFERRALS_LEDGER.md
+docs/Active_Implementation/PRE_ROLL_FEAR_IMPLEMENTATION.md
 docs/Active_Implementation/PVP_CAMPAIGN_AND_PRE_ROLL_FEAR_CONTRACT.md
 docs/Active_Implementation/README.md
 docs/Active_Implementation/RELEASE_QUALIFICATION_GATES.md

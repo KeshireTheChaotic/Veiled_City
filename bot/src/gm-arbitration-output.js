@@ -9,12 +9,14 @@ import {conversationPrincipal} from './conversation-principal.js';
 import {arbitrationFailure as fail} from './gm-arbitration-contract.js';
 import {EncounterLibrary} from './encounter.js';
 import {inspectNativeUnarmedAttack} from './native-unarmed-attacks.js';
+import {inspectFearReservation} from './fear-reservations.js';
 
 export function nativeGmNotice(db,guild,key,scope,{library=new EncounterLibrary('../content')}={}){
   const stored=db.getCityRecord(guild,'gm_arbitration_decision',key),shared=stored?.data.native?.operation==='commit_adversary_volley'
     &&db.getCityRecord(guild,'npc_volley_attack',`npc-volley:${hash(key)}`),
     checked=shared?inspectVolley(db,guild,shared.record_key):null,
     {row,entry}=checked?{row:checked.decision,entry:null}:inspectNativeGmDecision(db,guild,key),n=row.data.native;
+  if(n?.opportunity?.pre_roll_fear&&inspectFearReservation(db,guild,n.opportunity.pre_roll_fear).row.status==='cancelled')return null;
   const character=n?.operation==='commit_adversary_volley'?n.inputs.find(i=>i.character===scope.actorCharacterId)?.character
     :entry.actor.type==='character'?entry.actor.key:n?.character||n?.input?.character,pc=character&&db.getCharacter(character);
   if(!pc||scope.mode!=='private'||scope.actorUserId!==pc.owner_user_id||scope.actorCharacterId!==pc.id
@@ -68,7 +70,7 @@ export function nativeGmNotices(db,guild,sourceRef,scope){
     if(!pc||scope.mode==='private'&&pc.id!==scope.actorCharacterId)continue;
     const recipient={mode:'private',actorUserId:pc.owner_user_id,actorCharacterId:pc.id};
     try{const projection=nativeGmNotice(db,guild,row.record_key,recipient);if(projection)notices.push({ref:row.record_key,scope:recipient,...projection});}
-    catch(error){if(!['GM_ARBITRATION','PC_EFFECT_AUTHORITY','SCENE_ACTION_WINDOW','SCENE_FICTION'].includes(error.code))throw error;}
+    catch(error){if(!['GM_ARBITRATION','PC_EFFECT_AUTHORITY','SCENE_ACTION_WINDOW','SCENE_FICTION','PRE_ROLL_FEAR'].includes(error.code))throw error;}
     }
   }
   return notices;

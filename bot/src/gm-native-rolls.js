@@ -67,7 +67,7 @@ export function executeUnifiedGmActions(db,guild,decisions,{library=new Encounte
     const roll=db.addRoll(guild,row.data.origin.session,'native:unified-gm',null,'gm_exceptional_action',payload);
     return db.saveCityRecord(guild,{kind:'gm_native_roll_receipt',key,status:'resolved',source_event:row.source_event,visibility:'gm',data:{...payload,roll}});
     });}catch(error){
-      if(!['GM_ARBITRATION','PC_EFFECT_AUTHORITY','PC_NATIVE_ELIGIBILITY','SCENE_FICTION','SCENE_ACTION_WINDOW','TYPED_ROLL_PROOF'].includes(error.code))throw error;
+      if(!['GM_ARBITRATION','PC_EFFECT_AUTHORITY','PC_NATIVE_ELIGIBILITY','SCENE_FICTION','SCENE_ACTION_WINDOW','TYPED_ROLL_PROOF','PRE_ROLL_FEAR'].includes(error.code))throw error;
       return db.saveCityRecord(guild,{kind:'gm_execution_review',key:`gm-execution-review:${hash(decision.record_key)}`,status:'needs_review',visibility:'gm',source_event:decision.source_event,
         data:{decision:decision.record_key,reason:error.message,authority:'No unsupported effect, RNG replay or automatic substitute. Independent actions remain valid.'}});
     }

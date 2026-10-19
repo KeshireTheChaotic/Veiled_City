@@ -13,8 +13,10 @@ const proposalV1=obj({intent_ref:str(200),disposition:{type:'string',enum:ARBITR
   stakes:str(600),reason:str(600),difficulty_reason:str(600),feature_ref:str(160),experience_ref:str(160),
   advantage:{type:'boolean'},disadvantage:{type:'boolean'}});
 export const gmArbitrationProposalSchema={anyOf:[proposalV1,obj({...proposalV1.properties,proposal_version:{type:'integer',enum:[2]},trigger_ref:str(200)})]};
-export const unifiedArbitrationSchema=obj({version:{type:'integer',enum:[1]},
-  npc_intents:{type:'array',maxItems:4,items:npcSceneIntentSchema},decisions:{type:'array',maxItems:16,items:gmArbitrationProposalSchema}});
+const unifiedV1={version:{type:'integer',enum:[1]},npc_intents:{type:'array',maxItems:4,items:npcSceneIntentSchema},
+  decisions:{type:'array',maxItems:16,items:gmArbitrationProposalSchema}};
+export const unifiedArbitrationSchema={anyOf:[obj(unifiedV1),obj({...unifiedV1,version:{type:'integer',enum:[2]},
+  pre_roll_fear:{type:'array',maxItems:1,items:obj({request_ref:str(200),npc_intent_ref:str(200)})}})]};
 export function matchesArbitrationSchema(schema,value){
   if(schema.anyOf)return schema.anyOf.some(s=>matchesArbitrationSchema(s,value));
   if(schema.enum)return schema.enum.includes(value);

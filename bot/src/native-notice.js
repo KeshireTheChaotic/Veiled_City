@@ -13,6 +13,7 @@ import {damagePvpOwnerContext} from './pvp-profiles.js';
 import {assertGmRulingRequest} from './gm-action-ruling.js';
 import {nativeGmNotice} from './gm-arbitration-output.js';
 import {inspectNativeUnarmedAttack} from './native-unarmed-attacks.js';
+import {renderPreRollFearNotice} from './pre-roll-fear-notice.js';
 export const noticeHash=value=>createHash('sha256').update(JSON.stringify(value)).digest('hex');
 function fail(){throw Object.assign(new Error('Native notice source, revision, owner or audience is stale.'),{code:'NATIVE_NOTICE'});}
 export function renderNativeNotice(db,guild,d){
@@ -23,6 +24,9 @@ export function renderNativeNotice(db,guild,d){
     if(!d.user||!d.character)fail();
     const projection=nativeGmNotice(db,guild,d.ref,{mode:'private',actorUserId:d.user,actorCharacterId:d.character});
     if(!projection||projection.revision!==d.revision)fail();return projection.text;
+  }
+  if(d.kind==='pre_roll_fear'){
+    return renderPreRollFearNotice(db,guild,d);
   }
   if(d.kind==='roll_private'||d.kind==='roll_party'){
     const r=db.getCityRecord(guild,'roll_request',d.ref),source=r&&db.getWorldEvent(guild,r.source_event);

@@ -14,6 +14,7 @@ import {featureCostPlan} from './native-feature-windows.js';
 import {compileNativeFeatures} from './native-feature-catalog.js';
 import {inspectGroupFeatureChild,planNativeSpotlight,recordNativeSpotlight} from './native-group-features.js';
 import {nativeActorControl} from './native-actor-control.js';
+import {preRollFearOpportunity,commitPreRollFearCost} from './pre-roll-fear.js';
 
 export function nativeReactionTarget(db,guild,origin,pc,actor,{maxRange='Close'}={}){
   const target=pc&&scenePresence(db,guild,'character',pc.id),npc=scenePresence(db,guild,'npc',actor),
@@ -79,6 +80,7 @@ function inspectDecision(db,guild,key,committed){
 }
 /** Exact authenticated looking-to-GM input is an opportunity, not an automatic attack or Fear spend. */
 export function nativeGmOpportunity(db,guild,board){
+  const interrupted=preRollFearOpportunity(db,guild,board);if(interrupted)return interrupted;
   const input=board.data.entries.find(e=>e.actor.type==='character'&&['describe_scene','current_situation','continuation'].includes(e.operation));
   if(input){
     const row=db.getCityRecord(guild,'typed_intent',input.intent_ref);
@@ -108,7 +110,8 @@ export function commitGmActionCost(db,guild,decisionKey){
       &&['commit_adversary_attack','commit_adversary_volley','commit_group_feature','commit_exceptional_adversary_action','request_pc_reaction_roll'].includes(r.data.native?.operation)).map(r=>r.data.entry));
   const order=board.data.entries.filter(e=>selected.has(e.intent_ref)&&e.actor.type==='npc'),ordinal=order.findIndex(e=>e.intent_ref===entry.intent_ref);
   if(ordinal<0)throw fail('attack_spotlight_slot');
-  const spotlight=ordinal===0?0:1,experience=n.experience?1:0;
+  const spotlight=opportunity.pre_roll_fear?1:ordinal===0?0:1,experience=n.experience?1:0;
+  if(opportunity.pre_roll_fear&&(order.length!==1||n.operation!=='commit_adversary_attack'||experience))throw fail('one_pre_roll_native_standard_attack');
   const descriptor=n.operation==='commit_group_feature'?compileNativeFeatures().find(f=>f.feature_key===n.feature):null;
   if(n.operation==='commit_group_feature'&&(!descriptor||hash(descriptor)!==n.feature_hash))throw fail('feature_cost_source_changed');
   const feature=n.operation==='commit_adversary_volley'?1:descriptor?.costs?.filter(c=>c.resource==='fear').reduce((v,c)=>v+c.amount,0)||0;
@@ -120,7 +123,8 @@ export function commitGmActionCost(db,guild,decisionKey){
   const plan=featureCostPlan(descriptor||{costs:feature?[{resource:'fear',amount:feature}]:[]},{timing:'spotlight_action',additionalSpotlight:!!spotlight,experience:!!experience,
     fear:before,stress:combatant?.stress_current||0,stressMax:combatant?.stress_max||0});
   if(!Number.isSafeInteger(before)||before<amount||before>12)throw fail('insufficient_gm_fear');
-  const after=amount?db.changeFear(guild,-amount):before;
+  const after=opportunity.pre_roll_fear?commitPreRollFearCost(db,guild,opportunity.pre_roll_fear,decisionKey).after
+    :amount?db.changeFear(guild,-amount):before;
   const stressed=combatant&&db.updateCombatant(combatant.id,{stress_current:combatant.stress_current+plan.npc_stress}),
     nativeSpotlight=planNativeSpotlight(db,guild,entry.actor.key,row.data.origin.scene,key),
     receipt=db.saveCityRecord(guild,{kind:'gm_action_cost_receipt',key,status:'committed',source_event:row.source_event,visibility:'gm',

@@ -21,6 +21,7 @@ import { validateChannelRouting } from "./routing-diagnostics.js";
 import {assertCanonProposalProof} from './semantic-candidate-source.js';
 import {historicalArchiveProjection} from './historical-archive.js';
 import {instrumentSqlReads} from './turn-trace-context.js';
+import {reservedCampaignFear,fearReservationFailure} from './fear-reservations.js';
 
 /** SQLite repository facade and transaction boundary for campaign state. */
 export class VeiledDB {
@@ -1908,10 +1909,25 @@ export class VeiledDB {
 
 
   changeFear(guildId,delta){
-    this.ensureCampaign(guildId);
-    const c=this.getCampaign(guildId); const next=Math.max(0,Math.min(12,Number(c.fear||0)+(Number(delta)||0)));
-    this.db.prepare("UPDATE campaigns SET fear=?,updated_at=CURRENT_TIMESTAMP WHERE guild_id=?").run(next,guildId);
-    return next;
+    return this.transaction(()=>{
+      this.ensureCampaign(guildId);
+      const c=this.getCampaign(guildId),amount=Number(delta)||0,next=Math.max(0,Math.min(12,Number(c.fear||0)+amount));
+      if(amount<0&&next<reservedCampaignFear(this,guildId))throw fearReservationFailure('campaign Fear is reserved by an unfinished interruption');
+      this.db.prepare("UPDATE campaigns SET fear=?,updated_at=CURRENT_TIMESTAMP WHERE guild_id=?").run(next,guildId);
+      return next;
+    });
+  }
+
+  pendingFearReservationKeys(guildId){
+    // Projection status is not authority to release held funds. Inspect native ancestry for every reservation.
+    return this.db.prepare("SELECT record_key FROM city_records WHERE guild_id=? AND kind='pre_roll_fear_interrupt'")
+      .all(guildId).map(row=>row.record_key);
+  }
+
+  incomingAttackForNativeDecision(guildId,decision){
+    const row=this.db.prepare("SELECT record_key FROM city_records WHERE guild_id=? AND kind='pc_incoming_attack' AND json_extract(data_json,'$.offer.input.ruling')=?")
+      .get(guildId,`ai-decision:${decision}`);
+    return row?this.getCityRecord(guildId,'pc_incoming_attack',row.record_key):null;
   }
 
   updateEncounterCombatState(id,mutator){

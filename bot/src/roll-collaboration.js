@@ -23,6 +23,7 @@ import {reconcileNativeFormationBreakdown} from './native-defense-aura.js';
 import {validateNativeExperienceEligibility} from './native-experience-eligibility.js';
 import {inspectNativeUnarmedAttack} from './native-unarmed-attacks.js';
 import {alternateNativeUnarmedTrait} from './native-unarmed-traits.js';
+import {assertPreRollFearRollAllowed} from './pre-roll-fear.js';
 function fail(message){throw new StateConflictError(message);}
 /** Called only by the authenticated GM command/review boundary, never by model-supplied identity. */
 export function adjudicateRollSource(db,guild,input,reviewer){
@@ -210,6 +211,7 @@ export function contributeRoll(db,guild,user,input,{rng=d,gmRng=d}={}){
   if(prior){if(prior.data.user!==user||prior.data.request!==key) throw new PermissionError("Receipt does not belong to this request owner.");return row;}
   if(rollRevision(row)!==input.expected_revision) fail("Request changed; read the current revision before authorizing a contribution.");
   return db.transaction(()=>{
+    if(row.status==='pending')assertPreRollFearRollAllowed(db,guild,row);
     if(["resolved","superseded","cancelled"].includes(row.status)&&input.op!=="share")
       fail("Committed/closed rolls cannot be reopened; use human saved-result review.");
     live(db,guild,row);
@@ -305,7 +307,7 @@ export function contributeRoll(db,guild,user,input,{rng=d,gmRng=d}={}){
       if(other&&!mayKnowRoll(db,guild,other,pc.id)) fail("The other owner has not disclosed their private attempt.");
       if(!other||other.subject_key===pc.id||other.status!=="pending"||other.data.kind!==data.kind||other.data.tag
         ||other.data.helpers?.length||other.data.experiences?.length) fail("A separate compatible pending request from the other PC is required.");
-      live(db,guild,other);proof(db,guild,row,pc,input,"tag");
+      assertPreRollFearRollAllowed(db,guild,other);live(db,guild,other);proof(db,guild,row,pc,input,"tag");
       if(data.kind==="attack"&&data.breakdown.attack.target_id!==other.data.breakdown.attack.target_id)
         fail("Combined Tag Team attack damage requires one established common target; other cases need human adjudication.");
       if(input.pay_hope!==true||pc.data.resources.hope<3) fail("Initiator must explicitly authorize 3 Hope and have it available.");
@@ -322,7 +324,7 @@ export function contributeRoll(db,guild,user,input,{rng=d,gmRng=d}={}){
       if(!data.tag||row.status!=="awaiting_partner"||mine) fail("Only the proposed other PC can authorize their participation.");
       const other=db.getCityRecord(guild,"roll_request",data.tag.partner_request);
       if(other?.subject_key!==pc.id||rollRevision(other)!==data.tag.partner_revision||other.status!=="pending") fail("Other participant's request changed.");
-      live(db,guild,other);proof(db,guild,row,pc,input,"participate");
+      assertPreRollFearRollAllowed(db,guild,other);live(db,guild,other);proof(db,guild,row,pc,input,"participate");
       const initiator=personalCharacter(db,guild,data.owner_user_id,data.tag.initiator),usageKey=`${data.session_id}:${initiator.id}`;
       if(db.getCityRecord(guild,"tag_usage",usageKey)||db.playerInitiatedTagTeam(guild,data.session_id,data.owner_user_id))
         fail("Initiator has already used Tag Team this session.");
