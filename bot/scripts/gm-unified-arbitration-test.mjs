@@ -235,7 +235,10 @@ const cases=[
    const x=executionerScenario(f,{ai});
    assert.equal(x.attack.data.offer.damage,'4d12+14');assert.equal(x.attack.status,'awaiting_defense');
    const before=structuredClone(f.db.getCharacter(x.pc.id).data.resources);
-   assert.throws(()=>rollIncomingAttack(f.db,f.guild,'gm',x.attack.record_key,{gm:true,library:x.library,rng:()=>assert.fail('No unreviewed dice')}));
+   let unreviewedDice=0;const unreviewedRng=()=>{unreviewedDice++;return 1;};
+   assert.throws(()=>ai?rollArbitratedIncomingAttack(f.db,f.guild,x.attack.record_key,{library:x.library,rng:unreviewedRng})
+     :rollIncomingAttack(f.db,f.guild,'gm',x.attack.record_key,{gm:true,library:x.library,rng:unreviewedRng}));
+   assert.equal(unreviewedDice,0,'Actual GM and native-AI adapters must reject before RNG.');
    reviewIncomingAttack(f.db,f.guild,x.pc.owner_user_id,x.attack.record_key,{library:x.library});confirmIncomingDefense(f.db,f.guild,x.pc.owner_user_id,x.attack.record_key);
    const roll=ai?rollArbitratedIncomingAttack(f.db,f.guild,x.attack.record_key,{library:x.library,rng:s=>s===20?19:1})
      :rollIncomingAttack(f.db,f.guild,'gm',x.attack.record_key,{gm:true,library:x.library,rng:s=>s===20?19:1});
@@ -271,7 +274,9 @@ const cases=[
    if(change==='owner')f.db.db.prepare('UPDATE characters SET owner_user_id=? WHERE id=?').run('changed-owner',x.pc.id);
    if(change==='new_condition')submitGroupReaction(f,x,0,[2,1]);
    f.restart();
-   assert.throws(()=>rollIncomingAttack(f.db,f.guild,'gm',x.attack.record_key,{gm:true,library:x.library,rng:()=>assert.fail('No unverified condition RNG')}));
+   let rngCalls=0;
+   assert.throws(()=>rollIncomingAttack(f.db,f.guild,'gm',x.attack.record_key,{gm:true,library:x.library,rng:()=>{rngCalls++;return 1;}}));
+   assert.equal(rngCalls,0,'An assertion thrown by the RNG would not prove a pre-RNG authority gate.');
    assert.equal(f.db.listCityRecords(f.guild,{kind:'npc_attack_roll_receipt',includeGM:true}).length,0);
    assert.equal(f.db.getCharacter(x.pc.id).data.resources.hp.current,before.hp.current);
    assert.equal(f.db.getCharacter(x.pc.id).data.resources.hope,before.hope);
