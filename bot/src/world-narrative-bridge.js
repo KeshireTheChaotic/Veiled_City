@@ -8,6 +8,7 @@ import {typedRollProof} from './typed-roll-proof.js';
 import {actorEvidenceVisible} from './npc-cognition-projection.js';
 import {activeCityProxy} from './city-constraints.js';
 import {inspectOpeningEntryOpportunity} from './session-opening-attendance.js';
+import {renderNarrativeUnit} from './narrative-authority.js';
 const entitled=(row,scope)=>['public','party'].includes(row.visibility)||scope.mode==='private'&&row.visibility==='character'
   &&row.subject_key===scope.actorCharacterId&&!!scope.actorUserId;
 const audience=s=>s.mode==='private'?{visibility:'character',character:s.actorCharacterId,user:s.actorUserId}:{visibility:'party',character:null,user:null};
@@ -245,15 +246,50 @@ function nativeDirectorBridge(db,guild,source,scope){
 export function worldDirectorBridgeBeats(db,guild,source,scope){
   if(!nativeDirectorBridge(db,guild,source,scope))return null;
   const beats=[];let held=0;
+  const scene=currentScene(db,guild),units=db.listCityRecords(guild,{kind:'narrative_unit',includeGM:true,limit:100});
+  // Only project scene observations that were already established by the native
+  // audience-bound narrative authority. Re-render with the original binding
+  // scope on every read; the Director snapshot is a selector, not proof.
+  for(const proof of source.details.dramatic_brief?.events||[]){
+    if(beats.length>=4)break;
+    if(proof.kind!=='native_narrative_unit')continue;
+    const event=db.getWorldEvent(guild,proof.ref),matches=units.filter(row=>row.status==='accepted_established'
+      &&row.source_event===proof.ref&&row.visibility==='party'&&row.data?.unit?.visibility==='party'
+      &&row.data?.issuer==='native:narrative-authority'&&row.data?.unit?.kind==='scene'
+      &&row.data?.unit?.epistemic==='observation'&&row.data?.binding?.scope?.mode==='party');
+    if(!event||event.status!=='active'||event.kind!=='native_narrative_unit'||event.source_id!=='native:narrative-authority'
+      ||event.session_id!==scene.session_id||event.scene!==scene.key||event.visibility!=='party'||!narrativeSourceVisible(db,guild,event.event_key,scope)
+      ||matches.length!==1){held++;continue;}
+    const row=matches[0],data=row.data,binding=data.binding,origin=binding?.source&&db.getWorldEvent(guild,binding.source),pc=binding?.scope?.actorCharacterId
+      &&db.getCharacter(binding.scope.actorCharacterId);
+    if(!origin||event.details?.payload_hash!==hash(data)||event.details?.epistemic!=='observation'||event.details?.input_source!==binding?.source
+      ||binding.session!==scene.session_id||binding.scene!==scene.key||binding.location!==event.location_key
+      ||binding.scope.mode!=='party'||binding.viewpoint!=='character'||!binding.placement||origin.visibility!=='party'
+      ||origin.status!=='active'||origin.kind!=='ai_gm_input'||origin.session_id!==scene.session_id||origin.scene!==scene.key
+      ||origin.details.author!==binding.scope.actorUserId||origin.details.character_id!==binding.scope.actorCharacterId
+      ||pc?.guild_id!==guild||pc.owner_user_id!==binding.scope.actorUserId||!db.ownerAuthoredSource(guild,origin.event_key,pc.owner_user_id)
+      ||!narrativeSourceVisible(db,guild,origin.event_key,scope)) {held++;continue;}
+    let principal;try{principal=conversationPrincipal(db,guild,pc.owner_user_id,pc.id);}
+    catch(error){if(['Active session required.','Select an authenticated current controlled role.','Controller attendance required.','Active campaign character required.'].includes(error.message)){held++;continue;}throw error;}
+    if(principal.kind!=='owner'||principal.revision!==origin.details.revision){held++;continue;}
+    try{renderNarrativeUnit(db,guild,row.record_key,binding.scope);}
+    catch(error){if(['SCENE_FICTION','NARRATIVE_PVP'].includes(error.code)){held++;continue;}throw error;}
+    const root=origin.event_key,cycle=`world-cycle:${hash([scene.session_id,scene.key,root])}`;
+    beats.push({version:1,protocol:'world_beat_v1',id:`world-beat:${hash([source.event_key,event.event_key,scope.mode])}`,
+      kind:'established_world_change',source_ref:source.event_key,signal_ref:event.event_key,causation_ref:root,world_cycle_ref:cycle,
+      audience:audience(scope),depth:1,origin_kind:'director',epistemic:'observation',fictional_scope:'nonmechanical_established_scene',
+      location:event.location_key||'',reason:'native_established_scene_unit',execution_authority:false,publication_authority:false});
+  }
   for(const signal of source.details.world_bridge.signals){
     if(!revalidateWorldNarrativeSignal(db,guild,signal,scope)){held++;continue;}
+    if(beats.length>=4)break;
     beats.push({version:1,protocol:'world_beat_v1',id:`world-beat:${hash([source.event_key,signal.id,signal.audience])}`,kind:'pacing_hint',
       source_ref:source.event_key,signal_ref:signal.id,causation_ref:signal.causation_ref,world_cycle_ref:signal.world_cycle_ref,
       audience:signal.audience,depth:1,origin_kind:'director',reason:signal.kind==='opening_opportunity_request'?'request_opening_opportunity':
         signal.kind==='unresolved_narrative_task'?'request_missing_coverage':'consider_native_result_opportunity',
       execution_authority:false,publication_authority:false});
   }
-  return {version:1,beats,held,authority:'Pacing only; not fictional facts, speaker knowledge, PC outcomes or native execution authority.'};
+  return {version:1,beats,held,authority:'Source-bound scene fiction and pacing metadata only; no knowledge, consent, publication or native execution authority.'};
 }
 /** Historical snapshot reader for retrieval weight ONLY; cannot revive a live action or publication grant. */
 function activeSignalSnapshot(db,guild,s,scope){
