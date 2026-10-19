@@ -3,7 +3,7 @@ import { personalCharacter } from "./personal-continuity.js";
 import { currentScene, sceneAccess } from "./scene-continuity.js";
 import { requireCitySource } from "./city-core.js";
 import { cityAudit, cityKey, cityObject, indexWorldEvent } from "./city-calendar.js";
-import { rollRevision, rollBreakdown, reserveRollAmendment } from "./roll-requests.js";
+import { rollRevision, rollBreakdown, rollTraitBreakdown, reserveRollAmendment } from "./roll-requests.js";
 import {reserveRollPartyDisclosure,validateRollSharePreview,sourceConfirmedRollAttempt} from "./roll-sharing.js";
 import { dualityRoll, parseDice, d } from "./dice.js";
 import { hpMarksForDamage } from "./combat.js";
@@ -21,6 +21,8 @@ import {assertGmInvitationRequest,resumePendingGmActions} from './gm-native-roll
 import {nativeAdversaryDamageDefense} from './native-feature-damage.js';
 import {reconcileNativeFormationBreakdown} from './native-defense-aura.js';
 import {validateNativeExperienceEligibility} from './native-experience-eligibility.js';
+import {inspectNativeUnarmedAttack} from './native-unarmed-attacks.js';
+import {alternateNativeUnarmedTrait} from './native-unarmed-traits.js';
 function fail(message){throw new StateConflictError(message);}
 /** Called only by the authenticated GM command/review boundary, never by model-supplied identity. */
 export function adjudicateRollSource(db,guild,input,reviewer){
@@ -252,16 +254,38 @@ export function contributeRoll(db,guild,user,input,{rng=d,gmRng=d}={}){
     }else if(input.op==="alternate-trait"){
       if(!mine||data.tag||row.status!=="pending"||(data.experiences||[]).length)
         fail("Alternate trait choice requires the acting owner's unrolled request before paid options.");
-      const event=requireCitySource(db,guild,input.proof),choice=event.details.roll_alternate_trait;
-      if(event.kind!=="roll_adjudication"||event.source_kind!=="gm"||event.details.human_reviewed!==true
-        ||event.session_id!==data.session_id||event.scene!==data.scene||event.visibility!=="character"||event.subject_key!==pc.id
-        ||!choice||choice.request!==row.record_key||choice.from_trait!==data.breakdown.trait||choice.to_trait!==input.trait
-        ||!choice.reason?.trim()||!db.getRulesRuling(guild,event.details.ruling_key||choice.ruling_key))
-        fail("Alternate trait requires an exact current human-adjudicated source for this request.");
-      const nextInput={...data.input,trait:input.trait},breakdown=rollBreakdown(db,guild,nextInput,pc);
-      if(breakdown.unresolved.length)fail("Alternate trait remains unresolved; seek human review.");
-      data.input=nextInput;data.breakdown=breakdown;data.alternate_trait={from:choice.from_trait,to:choice.to_trait,
-        proof:event.event_key,ruling_key:event.details.ruling_key||choice.ruling_key,reason:choice.reason};
+      const event=requireCitySource(db,guild,input.proof);
+      if(event.kind==='native_unarmed_attack'){
+        if(Object.keys(input).some(field=>!['op','request','expected_revision','key','trait','proof'].includes(field)))
+          fail('Native unarmed trait selection is a closed owner operation.');
+        if(data.alternate_trait||data.input?.accepted_intent==null)fail('Only one native unarmed trait switch is allowed before the roll.');
+        inspectNativeUnarmedAttack(db,guild,data.input,pc);
+        const candidate=alternateNativeUnarmedTrait(db,guild,row,pc);
+        if(event.event_key!==data.input.attack_source||input.trait!==candidate?.trait)
+          fail('Native unarmed trait choice must select the other source-pinned Strength/Finesse trait.');
+        const source=event.details,operationKey=receiptKey,nextInput={...data.input,trait:input.trait,
+          modifier_keys:db.rollModifierSources(guild,pc.id,input.trait,data.kind||data.input.kind||'attack').map(item=>item.event_key),
+          native_unarmed_trait_operation:operationKey};
+        const base=rollTraitBreakdown(db,guild,nextInput,pc),{unresolved,...values}=base;
+        if(unresolved.length)fail('Alternate native trait remains unresolved; no dice or costs.');
+        const prior=data.breakdown;
+        data.input=nextInput;data.breakdown={...values,difficulty:prior.difficulty,attack:prior.attack,unresolved};
+        data.alternate_trait={version:1,issuer:'native:unarmed-traits',request:row.record_key,source:event.event_key,
+          operation_key:operationKey,expected_revision:input.expected_revision,owner_user_id:user,character_id:pc.id,
+          principal_revision:db.getCityRecord(guild,'typed_intent',data.input.accepted_intent).data.actor_principal_revision,
+          from_trait:source.binding.target.trait,to_trait:candidate.trait,from_bonus:source.binding.target.trait_bonus,to_bonus:candidate.bonus};
+      }else{
+        const choice=event.details.roll_alternate_trait;
+        if(event.kind!=="roll_adjudication"||event.source_kind!=="gm"||event.details.human_reviewed!==true
+          ||event.session_id!==data.session_id||event.scene!==data.scene||event.visibility!=="character"||event.subject_key!==pc.id
+          ||!choice||choice.request!==row.record_key||choice.from_trait!==data.breakdown.trait||choice.to_trait!==input.trait
+          ||!choice.reason?.trim()||!db.getRulesRuling(guild,event.details.ruling_key||choice.ruling_key))
+          fail("Alternate trait requires an exact current human-adjudicated source for this request.");
+        const nextInput={...data.input,trait:input.trait},breakdown=rollBreakdown(db,guild,nextInput,pc);
+        if(breakdown.unresolved.length)fail("Alternate trait remains unresolved; seek human review.");
+        data.input=nextInput;data.breakdown=breakdown;data.alternate_trait={from:choice.from_trait,to:choice.to_trait,
+          proof:event.event_key,ruling_key:event.details.ruling_key||choice.ruling_key,reason:choice.reason};
+      }
     }else if(input.op==="experience"){
       if(!mine||data.tag||row.status!=="pending") fail("Only the acting owner may amend their unrolled single-PC request.");
       let p;
