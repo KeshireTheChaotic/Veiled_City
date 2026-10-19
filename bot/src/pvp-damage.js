@@ -11,6 +11,7 @@ import {completeBlazeAction,validatePcDeathOutcome} from "./pc-death.js";
 import {assertPcAttackable} from "./pc-native-eligibility.js";
 import {assertBrawlDamageSources,releaseBrawlLocks} from "./pvp-brawl.js";
 import {drainActionContinuations} from "./action-continuation.js";
+import {assertPvpSafety} from './pvp-campaign-policy.js';
 const hash=v=>createHash("sha256").update(JSON.stringify(v)).digest("hex");
 function fail(message){throw Object.assign(new Error(message),{code:"PC_EFFECT_AUTHORITY",expected:true});}
 function closed(v,keys){if(!v||Array.isArray(v)||Object.keys(v).length!==keys.length||keys.some(k=>!(k in v)))fail("Closed native damage fields required.");}
@@ -22,6 +23,7 @@ export function rollPvpDamage(db,guild,user,input,{rng=d}={}){
   return db.transaction(()=>{
     const p=ownedAttack(db,guild,user,input.attack_receipt),key=`${input.attack_receipt}:damage`,old=db.getCityRecord(guild,"pvp_damage_roll_receipt",key);
     if(old)return validatePvpDamageRoll(db,guild,key).receipt;
+    assertPvpSafety(db,guild,[p.offer.actor,p.offer.target]);
     validateDamagePvp(db,guild,p.offer.contract); // Fresh dice never use history/withdrawn consent.
     const pc=db.getCharacter(p.offer.actor);
     if(hash(pc.data)!==p.offer.snapshot.actor||p.request.status!=="awaiting_damage")fail("Attack equipment/source changed before damage; reviewed recovery required, no reroll.");
@@ -83,7 +85,8 @@ export function preparePvpDamage(db,guild,user,input,{gm=false,interactionId}={}
   return db.transaction(()=>{
     const key=`pvp-damage-group:${hash([guild,[...input.damage_receipts].sort()])}`,old=db.getCityRecord(guild,"pvp_damage_offer",key);
     if(old){if(hash(old.data.binding.input)!==hash(input))fail("Frozen damage group cannot change sources/rules; reviewed recovery required.");proof(db,guild,key,{committed:old.status==="applied"});return old;}
-    const f=facts(db,guild,input),binding={version:1,input,reviewer:user,target:f.pc.id,owner:f.pc.owner_user_id,
+    const f=facts(db,guild,input);assertPvpSafety(db,guild,f.rows.flatMap(p=>[p.offer.actor,p.offer.target]));
+    const binding={version:1,input,reviewer:user,target:f.pc.id,owner:f.pc.owner_user_id,
       principal:f.first.offer.snapshot.target_principal,session:f.first.offer.session,scene:f.first.offer.scene,
       before:hash(f.pc.data),target_state:{resources:f.pc.data.resources,thresholds:f.pc.data.thresholds},
       ruling_hash:hash(f.ruling),sources:f.rows.map(p=>({key:p.receipt.record_key,digest:hash(p.receipt)}))};
@@ -130,6 +133,7 @@ export function resolvePvpDamage(db,guild,user,input,{interactionId}={}){
     if(user!==f.b.owner||input.expected_revision!==old.data.digest)fail("Current affected owner/revision required.");
     if(old.status==="applied"){const receipt=validatePvpDamageApplication(db,guild,old.data.application);
       if(receipt.data.armor!==input.armor)fail("Native Armor decision replay differs.");return receipt;}
+    assertPvpSafety(db,guild,f.rows.flatMap(p=>[p.offer.actor,p.offer.target]));
     personalCharacter(db,guild,user,f.pc.id);
     const review=db.getCityRecord(guild,"pvp_damage_owner_review",`${input.damage}:review`);
     if(review?.status!=="reviewed"||review.visibility!=="character"||review.subject_key!==f.pc.id||review.source_event!==old.source_event

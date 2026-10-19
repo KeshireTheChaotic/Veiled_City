@@ -11,6 +11,7 @@ import {assertPcCanAct,assertPcAttackable} from "./pc-native-eligibility.js";
 import {blazeActionAuthorization,blazeCriticalResult,validateBlazeSavedRoll} from "./pc-death.js";
 import {brawlAdmission,reserveBrawlAttack,verifyBrawlAttack,consumeBrawlAttack,brawlBatchMayFinish} from "./pvp-brawl.js";
 import {resolveAutonomousPvpFear} from "./pvp-fear-moves.js";
+import {assertPvpSafety} from './pvp-campaign-policy.js';
 const hash=v=>createHash("sha256").update(JSON.stringify(v)).digest("hex");
 function fail(message){throw Object.assign(new Error(message),{code:"NARRATIVE_PVP",expected:true});}
 function closed(input,keys){if(!input||Array.isArray(input)||Object.keys(input).length!==keys.length||keys.some(k=>!(k in input)))fail("Closed native PC attack fields required.");}
@@ -86,6 +87,7 @@ export function preparePvpAttack(db,guild,user,input,{gm=false,interactionId}={}
   return db.transaction(()=>{
     const c=mechanics(db,guild,input),key=`pvp-attack:${hash([guild,input.attack])}`,prior=db.getCityRecord(guild,"pvp_attack_request",key);
     if(prior){live(db,guild,key);if(hash(prior.data.offer.input)!==hash(input))fail("Native attack replay cannot change mechanics.");return prior;}
+    assertPvpSafety(db,guild,[c.pc.id,c.target.id]);
     if(pendingPvpFear(db,guild,c.contract).length)fail("Immediate Fear consequence pending; no next attack.");
     const brawl=brawlAdmission(db,guild,c,key);
     if(c.terms.interaction_scope==="duel"&&!blazeActionAuthorization(db,guild,c.pc.id,c.accepted.record_key)
@@ -126,6 +128,7 @@ export function authorizePvpAttack(db,guild,user,input,{interactionId}={}){
   closed(input,["attack","expected_revision"]);if(!interactionId)fail("Authenticated owner interaction required.");
   return db.transaction(()=>{
     const {request:row,o}=live(db,guild,input.attack),character=owner(db,guild,user,o);
+    assertPvpSafety(db,guild,[o.actor,o.target]);
     if(input.expected_revision!==row.data.offer_hash)fail("Owner mechanics revision changed; private review required.");
     const review=db.getCityRecord(guild,"pvp_attack_review",`${input.attack}:${character}`);
     if(review?.status!=="reviewed"||review.data.user!==user||review.data.offer_hash!==row.data.offer_hash||review.source_event!==row.source_event
@@ -170,6 +173,7 @@ export function rollPvpAttack(db,guild,user,input,{rng=d}={}){
     if(input.expected_revision!==row.data.offer_hash)fail("Attack mechanics revision changed.");
     if(row.data.roll)return validatePvpAttackRoll(db,guild,row.data.roll).receipt;
     const c=live(db,guild,input.attack);
+    assertPvpSafety(db,guild,[c.pc.id,c.target.id]);
     if(row.status!=="ready"||![o.actor,o.target].every(character=>choice(db,guild,row,character)))fail("Independent owner attack/defense approvals required; attack not ready.");
     const due=pendingPvpFear(db,guild,c.contract);
     if(due.length&&!brawlBatchMayFinish(db,guild,row,due))fail("Immediate Fear pending; no dice outside the exact pre-reserved simultaneous batch.");
