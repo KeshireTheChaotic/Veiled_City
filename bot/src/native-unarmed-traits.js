@@ -58,6 +58,6 @@ export function validateNativeUnarmedTraitOperation(db,guild,input,pc,baseEvent,
   reject(resourceDeltas.length!==1||!ownerDelta||ownerDelta.hope?.delta!==0||ownerDelta.stress?.delta!==0
     ||ownerDelta.hope?.before!==ownerDelta.hope?.after||ownerDelta.stress?.before!==ownerDelta.stress?.after,'zero_cost');
   if(invalid.length)fail();
-  if(!Number.isSafeInteger(choice.to_bonus)||choice.to_bonus<0||choice.to_bonus>20)fail();
+  if(!Number.isSafeInteger(choice.to_bonus))fail();
   return {operation,choice,snapshot};
 }

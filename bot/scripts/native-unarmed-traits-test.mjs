@@ -16,8 +16,9 @@ import {discoverRollOptions} from '../src/roll-options.js';
 import {contributeRoll} from '../src/roll-collaboration.js';
 import {typedRollProof} from '../src/typed-roll-proof.js';
 
-function fixture(f,{trait='Strength'}={}){
+function fixture(f,{trait='Strength',alternateBonus}={}){
   const x=setup(f,{text:'I punch the guard.'}),scene=currentScene(f.db,f.guild),npc='guard';
+  if(Number.isSafeInteger(alternateBonus))f.db.updateCharacterData(x.pc.id,data=>{data.traits.Finesse=alternateBonus;});
   f.db.setCityCalendar(f.guild,{flags:{...f.db.getCityCalendar(f.guild).flags,gm_discretion:true,roll_requests:true,roll_collaboration:true,
     narrative_encounters:true}});
   f.db.upsertNpcProfile(f.guild,{npcKey:npc,displayName:'Guard'});
@@ -119,6 +120,45 @@ test('owner explicitly switches to Finesse, then rolls, damages, and replays nat
     assert.equal(replayCalls,0);assert.equal(f.db.db.prepare('SELECT count(*) n FROM rolls WHERE guild_id=?').get(f.guild).n,2);
     assert.equal(f.db.listCombatants(x.encounter.id).find(item=>item.id===x.combatant.id).hp_current,hp);
   });
+}));
+
+test('owner may choose a legitimate -1 alternate trait and complete the real attack',()=>nativeFixture(async f=>{
+  const x=fixture(f,{alternateBonus:-1}),opened=openRollMenu(f.db,f.guild,x.pc.owner_user_id,x.request.record_key),
+    select=controls(opened).find(item=>item.type===3),value=select.options.find(item=>item.label==='Finesse')?.value;
+  assert(value);assert.equal(discoverRollOptions(f.db,f.guild,x.pc.owner_user_id,x.request.record_key).options
+    .find(item=>item.type==='alternate_trait').effect.amount,-1);
+  const selected=menuInteraction(f.guild,x.pc.owner_user_id,select.custom_id,{values:[value]});await handleRollMenuInteraction(f.db,selected);
+  const confirm=controls(selected.updated).find(item=>item.label==='Confirm');let menuRng=0;
+  await handleRollMenuInteraction(f.db,menuInteraction(f.guild,x.pc.owner_user_id,confirm.custom_id),{rng:()=>{menuRng++;return 1;}});
+  assert.equal(menuRng,0);const q=f.db.getCityRecord(f.guild,'roll_request',x.request.record_key);
+  assert.equal(q.data.breakdown.trait,'Finesse');assert.equal(q.data.breakdown.trait_bonus,-1);
+  let faces=0;const rolled=contributeRoll(f.db,f.guild,x.pc.owner_user_id,{op:'roll',key:'negative-trait-roll',request:q.record_key,
+    expected_revision:rollRevision(q)},{rng:()=>[12,12][faces++]});
+  const damaged=contributeRoll(f.db,f.guild,x.pc.owner_user_id,{op:'damage',key:'negative-trait-damage',request:q.record_key,
+    expected_revision:rollRevision(rolled)},{rng:()=>4});
+  assert.equal(damaged.status,'resolved');assert.equal(typedRollProof(f.db,f.guild,damaged).request.data.breakdown.trait_bonus,-1);
+}));
+
+test('saved native trait proof rejects a tampered owner principal without replaying rolls or resources',()=>nativeFixture(async f=>{
+  const x=fixture(f),opened=openRollMenu(f.db,f.guild,x.pc.owner_user_id,x.request.record_key),select=controls(opened).find(item=>item.type===3),
+    value=select.options.find(item=>item.label==='Finesse').value,selected=menuInteraction(f.guild,x.pc.owner_user_id,select.custom_id,{values:[value]});
+  await handleRollMenuInteraction(f.db,selected);const confirm=controls(selected.updated).find(item=>item.label==='Confirm');
+  await handleRollMenuInteraction(f.db,menuInteraction(f.guild,x.pc.owner_user_id,confirm.custom_id));
+  const q=f.db.getCityRecord(f.guild,'roll_request',x.request.record_key);let face=0;
+  const rolled=contributeRoll(f.db,f.guild,x.pc.owner_user_id,{op:'roll',key:'proof-tamper-roll',request:q.record_key,expected_revision:rollRevision(q)},
+    {rng:()=>[12,12][face++]});
+  const damaged=contributeRoll(f.db,f.guild,x.pc.owner_user_id,{op:'damage',key:'proof-tamper-damage',request:q.record_key,
+    expected_revision:rollRevision(rolled)},{rng:()=>4}),opKey=damaged.data.alternate_trait.operation_key,
+    op=f.db.getCityRecord(f.guild,'roll_operation',opKey),hope=f.db.getCharacter(x.pc.id).data.resources.hope,
+    stress=f.db.getCharacter(x.pc.id).data.resources.stress,rollCount=f.db.db.prepare('SELECT count(*) n FROM rolls WHERE guild_id=?').get(f.guild).n,
+    hp=f.db.listCombatants(x.encounter.id).find(item=>item.id===x.combatant.id).hp_current;
+  const changed={...op,key:op.record_key,data:{...op.data,result:{...op.data.result,data:{...op.data.result.data,
+    alternate_trait:{...op.data.result.data.alternate_trait,principal_revision:'forged'}}}}};
+  f.db.saveCityRecord(f.guild,changed);
+  assert.throws(()=>typedRollProof(f.db,f.guild,damaged));
+  assert.equal(f.db.getCharacter(x.pc.id).data.resources.hope,hope);assert.deepEqual(f.db.getCharacter(x.pc.id).data.resources.stress,stress);
+  assert.equal(f.db.db.prepare('SELECT count(*) n FROM rolls WHERE guild_id=?').get(f.guild).n,rollCount);
+  assert.equal(f.db.listCombatants(x.encounter.id).find(item=>item.id===x.combatant.id).hp_current,hp);
 }));
 
 test('wrong owner cannot use the native trait option or reach RNG',()=>nativeFixture(f=>{
