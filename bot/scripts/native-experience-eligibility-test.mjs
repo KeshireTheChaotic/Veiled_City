@@ -122,13 +122,26 @@ test('UA14 a player-authored copy of native eligibility metadata is not a native
   assert.equal(f.db.getCharacter(x.pc.id).data.resources.hope,before);
 }));
 
+test('UA14 owner refusal and insufficient Hope reject a valid native proof without charging',()=>nativeFixture(f=>{
+  const {x,row}=eligibleRequest(f),option=options(f,row).options.find(item=>item.key==='experience:Dockworker'),before=f.db.getCharacter(x.pc.id).data.resources.hope;
+  assert.throws(()=>use(f,row,option.source.proof,'declined-choice',{pay_hope:false}),/explicit|Hope|authorization/i);
+  assert.equal(f.db.getCharacter(x.pc.id).data.resources.hope,before,'declining the explicit charge leaves Hope untouched');
+  f.db.updateCharacterData(x.pc.id,d=>{d.resources.hope=0;});
+  assert.throws(()=>use(f,row,option.source.proof,'no-hope'),/Hope|resource/i);
+  assert.equal(f.db.getCharacter(x.pc.id).data.resources.hope,0,'an unaffordable explicit choice cannot charge or go negative');
+  assert.equal(request(f).data.experiences?.length||0,0,'failed choices leave no Experience contribution');
+}));
+
 test('UA14 pre-RNG rechecks the exact Experience sheet after an owner already paid',()=>nativeFixture(f=>{
   const {x,row}=eligibleRequest(f),option=options(f,row).options.find(item=>item.key==='experience:Dockworker'),amended=use(f,row,option.source.proof);
   f.db.updateCharacterData(x.pc.id,d=>{d.experiences[0].modifier=3;});
+  let rngCalls=0;
   assert.throws(()=>contributeRoll(f.db,f.guild,x.pc.owner_user_id,{op:'roll',request:row.record_key,
-    expected_revision:rollRevision(amended),key:'stale-experience-roll'},{rng:()=>assert.fail('stale eligibility must not reach RNG')}),/Experience|eligib|source/i);
+    expected_revision:rollRevision(amended),key:'stale-experience-roll'},{rng:()=>{rngCalls++;return 6;}}),/Experience|eligib|source/i);
+  assert.equal(rngCalls,0,'stale eligibility is rejected before any die is generated');
   assert.equal(f.db.getCharacter(x.pc.id).data.resources.hope,1,'a later stale-sheet hold does not invent a refund');
-  assert.equal(f.db.listCityRecords(f.guild,{kind:'saved_roll',includeGM:true}).length,0);
+  assert.equal(f.db.db.prepare('SELECT COUNT(*) AS count FROM rolls WHERE guild_id=?').get(f.guild).count,0,
+    'no saved native roll exists when pre-RNG validation rejects');
 }));
 
 test('UA14 source retraction before option discovery produces no native eligibility receipt',()=>nativeFixture(f=>{
