@@ -31,8 +31,8 @@
     },
     {
       "path": "README.md",
-      "size_bytes": 13225,
-      "sha256": "a41493ed1157da38ceb8251f17c9635dd6a74598d19cc798a9553ea3e60a7176"
+      "size_bytes": 13990,
+      "sha256": "90503b92bb465042f712088f87045851e17986333ec74b461b6320fddf0e7528"
     },
     {
       "path": "bot/.env.example",
@@ -650,6 +650,16 @@
       "sha256": "61098b75b44b08e6bcaf8f209b7277cbc1c5ced030f4d971945b2ae18d9f1ace"
     },
     {
+      "path": "bot/scripts/pvp-campaign-safety-test.mjs",
+      "size_bytes": 13441,
+      "sha256": "a7d8df34f5296f9c7ec27350ee33ca5bd9410b2d4f5c22cf5b954f46ce05151f"
+    },
+    {
+      "path": "bot/scripts/pvp-safety-command-test.mjs",
+      "size_bytes": 6207,
+      "sha256": "77c66579dd7852d1289fd04f89cbc19dcd4aa78b1160931060e481be3b5af27f"
+    },
+    {
       "path": "bot/scripts/quality-check.mjs",
       "size_bytes": 1469,
       "sha256": "2fbfb8f4775efed989826d268a9d9697dd4bde1bb20b6e09a47f1622756fa96e"
@@ -1011,8 +1021,8 @@
     },
     {
       "path": "bot/scripts/v94-pvp-qualification-test.mjs",
-      "size_bytes": 33212,
-      "sha256": "8690f17315647bc04a48cee7f7cfa8119fd42327a88a5c4ae894103aebe53c3a"
+      "size_bytes": 35071,
+      "sha256": "7291f6075f0f22467a19524400df507ed32e8b50bc8982dbd63f136e3b45de23"
     },
     {
       "path": "bot/scripts/v94-pvp-reaction-test.mjs",
@@ -1141,8 +1151,8 @@
     },
     {
       "path": "bot/scripts/validate-offline.mjs",
-      "size_bytes": 11799,
-      "sha256": "3720138c9a4165d8c5e263771ff453ab8a8920a0912e27350b8a5cf551797d19"
+      "size_bytes": 11866,
+      "sha256": "0b332c1d7b97eeeed0d0d25ddeb71a76e505d50532371615cc3bdf2ef5afeded"
     },
     {
       "path": "bot/scripts/world-authorship-test.mjs",
@@ -1361,8 +1371,8 @@
     },
     {
       "path": "bot/src/commands.js",
-      "size_bytes": 193287,
-      "sha256": "9da02bd0a983ded4b43935c86ee224389c33d6f69d8efd9d5feae3c52d40217f"
+      "size_bytes": 193462,
+      "sha256": "0f3caaa7080a38b5d30375eb28330ae57a981815664d96c06e37ba278a138530"
     },
     {
       "path": "bot/src/concept-context.js",
@@ -1751,8 +1761,8 @@
     },
     {
       "path": "bot/src/narrative-pvp.js",
-      "size_bytes": 21630,
-      "sha256": "0ed55f160e81eda7571f8d5b2ee8d796abc0203910dff382367ffdf6ef51cfdd"
+      "size_bytes": 22784,
+      "sha256": "cecb3dfdd0567710d48811a6e53dc3d1c5241edb240437120dc3398aaf03d7b6"
     },
     {
       "path": "bot/src/narrative-records.js",
@@ -2056,8 +2066,8 @@
     },
     {
       "path": "bot/src/pvp-attacks.js",
-      "size_bytes": 17891,
-      "sha256": "a68e163434728267facc5d05f6342368236edbe11ec0d793b0d571b74255203c"
+      "size_bytes": 18105,
+      "sha256": "69d2f33fafde68a4ea0b77d7cefdbf99586c50d332d2fdbc4bd11219f770fd1c"
     },
     {
       "path": "bot/src/pvp-authority.js",
@@ -2075,9 +2085,14 @@
       "sha256": "e29119c04b52aaeda99c7e548404e7bb7bca28e5541634c952a6391e4d335629"
     },
     {
+      "path": "bot/src/pvp-campaign-policy.js",
+      "size_bytes": 8250,
+      "sha256": "02c903b5289932d57108e4ea59ae9f142c933024a7ccaf8435d693f2b25caf40"
+    },
+    {
       "path": "bot/src/pvp-damage.js",
-      "size_bytes": 23516,
-      "sha256": "e109c3bfe5b5d4d9461842beeae3bf94e92c04d1bb0e606f54d1dd5b4dcc153e"
+      "size_bytes": 23804,
+      "sha256": "01695c4c4a2095d3ee9dad0e93277cb6e38fde191cbde03e7e257b0005885944"
     },
     {
       "path": "bot/src/pvp-fear-gate.js",
@@ -2086,8 +2101,8 @@
     },
     {
       "path": "bot/src/pvp-fear-moves.js",
-      "size_bytes": 80069,
-      "sha256": "f1db59efe875b1691988675a35d435f09b85eb527b8bd2218bc21dc682c33101"
+      "size_bytes": 80334,
+      "sha256": "48198a42f6dcc5812ebdd95e2c56c978cba8d9613d6d0fca70d9ba84c6ad4eee"
     },
     {
       "path": "bot/src/pvp-menu.js",
@@ -2101,8 +2116,8 @@
     },
     {
       "path": "bot/src/pvp-profiles.js",
-      "size_bytes": 27368,
-      "sha256": "504dcdf018c3be51ce26cca5a8624698eff957c93db53a259121f27e2e902d3f"
+      "size_bytes": 27686,
+      "sha256": "2b1f3ddbd790b58ffc0a5c419d1dd9657540755e7194fd01a818ec6635d91a61"
     },
     {
       "path": "bot/src/pvp-reactions.js",
@@ -2111,8 +2126,13 @@
     },
     {
       "path": "bot/src/pvp-rounds.js",
-      "size_bytes": 19289,
-      "sha256": "bded123e5da0c93a5689ba6bf002ce001e4de21475bd307ed9669665c48db84c"
+      "size_bytes": 19560,
+      "sha256": "5080572467af3c3cbedb71eb2b3a9a6236517bac3cf9a1d83e209b4af5ad4c6e"
+    },
+    {
+      "path": "bot/src/pvp-safety-commands.js",
+      "size_bytes": 2629,
+      "sha256": "0bc079550eecfdc45ffc0fdfb65881671aafd3fc374bac36f8e87b5579335649"
     },
     {
       "path": "bot/src/pvp-terminal.js",
@@ -2836,8 +2856,8 @@
     },
     {
       "path": "docs/Active_Implementation/NO_DEFERRALS_LEDGER.md",
-      "size_bytes": 200283,
-      "sha256": "09bf5a47e8c654616c17c184f66adec20f9182e86050f14d99a725b4ace7ef0f"
+      "size_bytes": 206529,
+      "sha256": "6b4d57379dc9e29b2d93216c9366bd335d3f9dfe1e27670b70e9bd25af2c6337"
     },
     {
       "path": "docs/Active_Implementation/PVP_CAMPAIGN_AND_PRE_ROLL_FEAR_CONTRACT.md",

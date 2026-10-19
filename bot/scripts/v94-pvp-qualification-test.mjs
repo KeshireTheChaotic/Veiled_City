@@ -21,6 +21,7 @@ import {EncounterLibrary} from "../src/encounter.js";
 import {buildCombatants} from "../src/combat.js";
 import {indexWorldEvent} from "../src/city-calendar.js";
 import {currentScene,recordScenePresence} from "../src/scene-continuity.js";
+import {setPvpSafetyStop} from '../src/pvp-campaign-policy.js';
 
 const defenses={resistance:"none",armor_reduction:1,armor_allowed:true,source:"base"};
 async function attackFear(f){
@@ -52,6 +53,24 @@ function context(f,a){return establishFearContext(f.db,f.guild,"gm",{move_kind:"
 const target=a=>({key:a.record_key,source_event:a.source_event,offer:a.data.offer});
 function select(f,t,c,a){return selectFearMove(f.db,f.guild,"gm",{trigger:t.record_key,expected_revision:t.data.revision,context:c.record_key,
   expected_target_revision:fearRevision(target(a)),affected_actions:[]},{gm:true,interactionId:"qualification-fear-select"});}
+
+for(const boundary of ['before_npc_roll','before_npc_hp'])test(`W5 owner stop blocks unfinished PvP Fear attack ${boundary}, preserving the original outcome`,()=>nativeFixture(async f=>{
+  const x=await attackFear(f),{a,pc,library}=incoming(f,x.trigger);context(f,a);
+  configureCityFlags(f.db,f.guild,{autonomous_pvp_fear:true},'synthetic-test');
+  let calls=0;const rng=()=>++calls===1?15:8,run=()=>resumeAutonomousPvpFear(f.db,f.guild,{library,rng});
+  assert.equal(run()[0].status,'awaiting_owner');
+  reviewIncomingAttack(f.db,f.guild,pc.owner_user_id,a.record_key,{library});confirmIncomingDefense(f.db,f.guild,pc.owner_user_id,a.record_key);
+  if(boundary==='before_npc_hp'){assert.equal(run()[0].status,'awaiting_owner');assert.equal(calls,2);}
+  const before=f.db.getCharacter(pc.id).data.resources,saved=f.db.getCityRecord(f.guild,'pvp_attack_roll_receipt',x.roll.record_key),priorCalls=calls;
+  setPvpSafetyStop(f.db,f.guild,pc.owner_user_id,{character_id:pc.id},{interactionId:`stop-${boundary}`});
+  if(boundary==='before_npc_hp')assert.throws(()=>resolveIncomingDamage(f.db,f.guild,pc.owner_user_id,a.record_key,{armor:true,library}),/safety stop/i);
+  else {const held=run()[0];assert.equal(held.status,'needs_review');assert.match(held.reason,/safety stop/i);}
+  assert.equal(calls,priorCalls,'no extra NPC dice after the owner stop');
+  assert.deepEqual(f.db.getCharacter(pc.id).data.resources,before,'neither HP nor Armor changes after the stop');
+  assert.deepEqual(f.db.getCityRecord(f.guild,'pvp_attack_roll_receipt',x.roll.record_key),saved);
+  assert.notEqual(f.db.getCityRecord(f.guild,'pvp_fear_trigger',x.trigger.record_key).status,'resolved','Fear remains unresolved, not waived');
+  f.restart();assert.deepEqual(f.db.getCharacter(pc.id).data.resources,before);
+}));
 
 test("FEA05 trusted autonomous selector resumes an exact native NPC offer through owner defense and Armor",()=>nativeFixture(async f=>{
   const x=await attackFear(f),{a,pc,library}=incoming(f,x.trigger),c=context(f,a),savedRoll=structuredClone(x.roll),before=f.db.getCharacter(pc.id).data.resources;

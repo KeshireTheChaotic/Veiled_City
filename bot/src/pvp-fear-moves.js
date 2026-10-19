@@ -18,6 +18,7 @@ import {validateMinorIdentity} from "./city-depth.js";
 import {preflightNpcIdentity} from "./location-language.js";
 import {worldAuthority} from "./autonomous-world.js";
 import {consentAction} from "./action-consent.js";
+import {assertPvpSafety} from './pvp-campaign-policy.js';
 
 export const fearRevision=v=>createHash("sha256").update(JSON.stringify(v)??"undefined").digest("hex");
 const hash=fearRevision;
@@ -523,6 +524,9 @@ export function assertFearIncomingExecution(db,guild,row,{committedRoll=false,au
   if(c.data.move_kind!=="npc_attack"||c.data.target_key!==row.record_key||decision.data.context_hash!==hash(c)
     ||decision.data.expected_target_revision!==hash(target(db,guild,c))||decision.data.gate_revision!==gate.data.revision)
     fail("Native NPC request is not the exact selected immediate Fear context.");
+  // Only this PvP-caused incoming route is affected. Ordinary independent NPC
+  // attacks and immutable already-applied receipts retain their native readers.
+  assertPvpSafety(db,guild,[row.subject_key]);
   incomingMoveProof(db,guild,t,c,{selecting:!committedRoll});
 }
 function holdTargets(db,guild,p,actions){

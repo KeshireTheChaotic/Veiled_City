@@ -11,6 +11,7 @@ import { settlePvpWindow } from "./pvp-terminal.js";
 import {drainActionContinuations} from "./action-continuation.js";
 import { closePartialFearGate } from "./pvp-fear-gate.js";
 import { stageDamagePvp } from "./pvp-profiles.js";
+import {assertPvpSafety} from './pvp-campaign-policy.js';
 export { choosePvp, rollPvp, progressPvp, continuePvp, authorPvpNarrative, reviewPvpNarrative, sharePvpNarrative, pvpComplication } from "./pvp-rounds.js";
 
 const hash=value=>createHash("sha256").update(JSON.stringify(value)).digest("hex");
@@ -261,6 +262,19 @@ export function stagePvpAttempts(db,guild,intents,plans){
   const rows=[];
   for(const action of intents.filter(value=>isPvpIntent(db,guild,value))){
     consentAction(db,guild,action.record_key);
+    try{assertPvpSafety(db,guild,[action.data.actor,pvpTarget(db,guild,action).id]);}
+    catch(error){
+      if(error.code!=='NARRATIVE_PVP'||error.pvpSafetyHold!==true)throw error;
+      const key=pvpAttemptKey(guild,action.record_key),prior=db.getCityRecord(guild,'pvp_attempt',key),
+        held=db.saveCityRecord(guild,{kind:'pvp_attempt',key,status:'held_safety',source_event:action.source_event,
+          visibility:'character',subject_key:action.data.actor,actor_key:action.data.actor,
+          data:{...prior?.data,version:1,accepted_intent:action.record_key,opponent:pvpTarget(db,guild,action).id,
+            authority:'Campaign safety hold only. No consent, outcome or hostile effect; independent actions remain available.'}});
+      const plan=plans.find(value=>value.data.action_id===action.record_key);
+      if(plan&&!['resolved','failed','blocked','clarification'].includes(plan.data.status))
+        db.saveCityRecord(guild,{...plan,key:plan.record_key,status:'pending',data:{...plan.data,status:'pending',pvp_attempt:held.record_key}});
+      rows.push(held);continue;
+    }
     const damage=stageDamagePvp(db,guild,action);
     if(damage){
       const plan=plans.find(value=>value.data.action_id===action.record_key);

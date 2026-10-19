@@ -62,6 +62,7 @@ import { beginInteraction, acknowledgeRules, acknowledgeNative, interactionFailu
 import { validateChannelRouting } from "./routing-diagnostics.js";
 import { handleRollMenuInteraction, isRollMenuInteraction, openRollMenu } from "./roll-menu.js";
 import {handlePvpMenuInteraction,isPvpMenuInteraction,openPvpMenu} from './pvp-menu.js';
+import {handlePvpSafetyCommand} from './pvp-safety-commands.js';
 import { proposePvp, reviewPvp, revisePvp, respondPvp, pvpInbox, choosePvp, rollPvp, continuePvp, progressPvp,
   authorPvpNarrative, reviewPvpNarrative, sharePvpNarrative, pvpComplication } from "./narrative-pvp.js";
 import { synchronizePvpWindow, windowOperation } from "./window-coordinator.js";
@@ -388,6 +389,7 @@ export async function handleCommand(interaction,{db,gm,voice=null}){
 }
 async function handleCommandBody(interaction,{db,gm,voice=null}){
   beginInteraction(interaction);
+  if(await handlePvpSafetyCommand(interaction,{db,gm:interaction.guildId&&isGM(db,interaction)}))return true;
   if(typeof interaction.isButton==='function'&&interaction.isButton()&&interaction.customId?.startsWith('vcopeningdelivery:')){
     if(!interaction.guildId||!isGM(db,interaction))throw new PermissionError('GM/admin permission required.');
     await interaction.deferReply({ephemeral:true});

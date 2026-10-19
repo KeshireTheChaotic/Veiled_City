@@ -186,6 +186,18 @@ inspect stale choices rather than replaying effects. Guided PvP and incoming
 attacks retain native consent, defense, Armor and death controls. Roleplay remains
 text-first, not a requirement to encode every action as JSON.
 
+Owner safety stop (works even while absent or while the GM is generating):
+`/vc-roll pvp json:{"op":"safety-stop","character_id":"YOUR_CHARACTER_ID"}`.
+This immediately holds unfinished hostile PvP effects, including related NPC
+Fear attacks, without reversing saved outcomes. The stop is sticky; a GM cannot
+override it. Independent actions remain available.
+
+GM-only campaign policy: `/vc-roll pvp json:{"op":"campaign-mode","enabled":true}`
+or `{"op":"campaign-status"}`. It defaults disabled. Saving policy does **not**
+activate an unqualified non-bilateral effect route or waive existing native
+consent, Armor, optional-cost or death controls. See the
+[owner-approved PvP/Fear contract](docs/Active_Implementation/PVP_CAMPAIGN_AND_PRE_ROLL_FEAR_CONTRACT.md).
+
 For workflows, see [assembly](docs/Setup_and_Scope/PARTY_ASSEMBLY.md),
 [GM operations](docs/Setup_and_Scope/GM_OPERATIONS.md),
 [command map](docs/Setup_and_Scope/BOT_COMMANDS.md) and

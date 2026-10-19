@@ -8,6 +8,9 @@ import {setCampaignPvpMode,campaignPvpPolicy,setPvpSafetyStop,assertPvpSafety} f
 import {indexWorldEvent} from '../src/city-calendar.js';
 import {proposePvp,reviewPvp,respondPvp,choosePvp,rollPvp,progressPvp} from '../src/narrative-pvp.js';
 import {pvpTerms} from './v9-fixtures.mjs';
+import {stagePvpAttempts} from '../src/narrative-pvp.js';
+import {buildActionPlan} from '../src/action-dependency.js';
+import {adjudicateAcceptedIntent} from '../src/rules-arbitration.js';
 
 async function ready(f){
   const x=await attackFixture(f),row=preparePvpAttack(f.db,f.guild,'gm',x.input,{gm:true,interactionId:'safety-attack'});
@@ -16,6 +19,26 @@ async function ready(f){
   return {...x,row};
 }
 const deterministic=()=>{let i=0;return()=>[5,4][i++];};
+
+test('stopped hostile staging is scoped review, not a rollback of an independent owner native action',()=>nativeFixture(async f=>{
+  const x=await attackFixture(f,{count:3}),hostile=f.db.getCityRecord(f.guild,'typed_intent',x.staged.data.accepted_intent),
+    pc=f.pcs[2],independent=f.accepted(2,'I look at the public terminal notice.','terminal',{type:'observe',operation:'observe',
+      target:{kind:'location',key:'terminal',phrase:'terminal',grounding:'known'}});
+  setPvpSafetyStop(f.db,f.guild,f.pcs[1].owner_user_id,{character_id:f.pcs[1].id},{interactionId:'stop-before-staging'});
+  const plans=[...buildActionPlan(f.db,f.guild,[hostile]),...buildActionPlan(f.db,f.guild,[independent])];
+  let staged,finished;
+  assert.doesNotThrow(()=>f.db.transaction(()=>{
+    staged=stagePvpAttempts(f.db,f.guild,[hostile,independent],plans);
+    finished=adjudicateAcceptedIntent(f.db,f.guild,{acceptedIntent:independent.record_key,mode:'no_roll',risk:'none',stakes:'none',
+      rawRefs:['srd:action-rolls'],explanation:'Observe an ordinary public notice; no contested effect.'},'native:fixture',
+    {scope:{mode:'party',actorUserId:pc.owner_user_id,actorCharacterId:pc.id}});
+  }));
+  assert.equal(staged.length,1);assert.equal(staged[0].status,'held_safety');
+  assert.equal(f.db.getCityRecord(f.guild,'typed_intent',hostile.record_key).status,'accepted_for_adjudication');
+  assert.equal(f.db.getCityRecord(f.guild,'typed_intent',independent.record_key).status,'resolved');
+  assert.equal(f.db.getCityRecord(f.guild,'action_outcome_receipt',finished.receipts[0]).status,'resolved');
+  assert.equal(f.db.db.prepare('SELECT COUNT(*) n FROM rolls').get().n,0);
+}));
 function countedRng(value=4){let calls=0;return {rng:()=>{calls++;return value;},count:()=>calls};}
 async function damageOffer(f){
   const x=await ready(f),attack=rollPvpAttack(f.db,f.guild,f.pcs[0].owner_user_id,

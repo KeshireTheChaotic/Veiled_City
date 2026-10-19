@@ -127,6 +127,8 @@ bot/scripts/portrayal-authoring-test.mjs
 bot/scripts/production-backup.mjs
 bot/scripts/production-regression-test.mjs
 bot/scripts/prompt-budget-test.mjs
+bot/scripts/pvp-campaign-safety-test.mjs
+bot/scripts/pvp-safety-command-test.mjs
 bot/scripts/quality-check.mjs
 bot/scripts/refactor-regression-test.mjs
 bot/scripts/relax-end-to-end-test.mjs
@@ -412,6 +414,7 @@ bot/src/pvp-attacks.js
 bot/src/pvp-authority.js
 bot/src/pvp-authorship.js
 bot/src/pvp-brawl.js
+bot/src/pvp-campaign-policy.js
 bot/src/pvp-damage.js
 bot/src/pvp-fear-gate.js
 bot/src/pvp-fear-moves.js
@@ -420,6 +423,7 @@ bot/src/pvp-output.js
 bot/src/pvp-profiles.js
 bot/src/pvp-reactions.js
 bot/src/pvp-rounds.js
+bot/src/pvp-safety-commands.js
 bot/src/pvp-terminal.js
 bot/src/register-commands.js
 bot/src/relationship-state.js

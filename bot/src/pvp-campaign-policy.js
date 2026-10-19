@@ -94,8 +94,15 @@ export function assertPvpSafety(db,guild,characters){
   if(!Array.isArray(characters)||characters.some(id=>typeof id!=='string'||!id))fail('Exact bounded PvP participant identities required.');
   for(const character of new Set(characters)){
     const row=db.getCityRecord(guild,'pvp_safety_stop',character);if(!row)continue;
-    inspectStop(db,guild,row);
-    fail('An affected PC owner set a sticky PvP safety stop; no new or unfinished hostile effect may proceed.');
+    try{
+      inspectStop(db,guild,row);
+      fail('An affected PC owner set a sticky PvP safety stop; no new or unfinished hostile effect may proceed.');
+    }catch(error){
+      // Native marker for scoped staging recovery only. This never grants an
+      // effect or forgives an invalid stop; unexpected DB failures still escape.
+      if(error.code==='NARRATIVE_PVP')error.pvpSafetyHold=true;
+      throw error;
+    }
   }
   return true;
 }
