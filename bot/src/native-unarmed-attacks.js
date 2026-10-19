@@ -9,6 +9,7 @@ import {assertNonPvpCombatant,isPvpIntent} from './pvp-authority.js';
 import {indexWorldEvent} from './city-calendar.js';
 import {adjudicateAcceptedIntent} from './rules-arbitration.js';
 import {arbitrationFailure as fail} from './gm-arbitration-contract.js';
+import {validateNativeUnarmedTraitOperation} from './native-unarmed-traits.js';
 
 const issuer='native:unarmed-attack';
 const eventKey=b=>`native-unarmed:${hash(b)}`;
@@ -95,14 +96,16 @@ export function inspectNativeUnarmedAttack(db,guild,input,pc,{historical=false}=
     ||mutation.session_id!==a.data.session_id||hash(JSON.parse(mutation.after_json))!==hash(b)
     ||hash(b.declaration)!==hash(declaration(a))||event.session_id!==a.data.session_id||event.scene!==a.data.scene
     ||input.character_id!==a.data.actor||pc.id!==a.data.actor||input.source_event!==a.source_event||input.kind!=='attack'
-    ||input.trait!==b.target.trait||input.private_result!==true||b.target.npc!==a.data.target_key
+    ||!['Strength','Finesse'].includes(input.trait)||input.private_result!==true||b.target.npc!==a.data.target_key
     ||b.origin.session!==a.data.session_id||b.origin.scene!==a.data.scene)throw fail('unarmed_native_receipt_ancestry');
   const originSource=db.getWorldEvent(guild,b.origin.source);
   if(originSource?.status!=='active'||hash(originSource.details)!==b.origin.source_hash)throw fail('unarmed_origin_source_revoked');
+  const traitChoice=input.trait===b.target.trait?null:validateNativeUnarmedTraitOperation(db,guild,input,pc,event,b);
   if(!historical){
     if(db.getCityCalendar(guild).flags.gm_discretion!==true
       ||db.getCityRecord(guild,'gm_authority','campaign')?.data.gm_authority_mode==='manual'
-      ||hash(liveTarget(db,guild,a,pc,input.trait))!==hash(b.target))throw fail('unarmed_current_target_or_rules_changed');
+      ||hash({...liveTarget(db,guild,a,pc,input.trait),trait:b.target.trait,trait_bonus:b.target.trait_bonus})!==hash(b.target)
+      ||traitChoice&&pc.data.traits?.[input.trait]!==traitChoice.choice.to_bonus)throw fail('unarmed_current_target_or_rules_changed');
   }
   return {event,attack:{weapon:'unarmed',damage:b.target.damage,damage_type:'physical',target_id:b.target.combatant,
     encounter_id:b.target.encounter,difficulty:b.target.difficulty}};

@@ -3,6 +3,8 @@ import { createHash } from "node:crypto";
 import { ownedRollRequest } from "./roll-requests.js";
 import { StateConflictError, UserInputError } from "./errors.js";
 import {recordNativeExperienceEligibility,inspectNativeExperienceEligibility} from './native-experience-eligibility.js';
+import {inspectNativeUnarmedAttack} from './native-unarmed-attacks.js';
+import {alternateNativeUnarmedTrait} from './native-unarmed-traits.js';
 
 const hash=value=>createHash("sha256").update(JSON.stringify(value)).digest("hex");
 const states=new Set(["available","requires_owner_choice","requires_additional_authorization","blocked","applied"]);
@@ -68,6 +70,20 @@ export function discoverRollOptions(db,guild,user,request){
       state:"requires_owner_choice",effect:{kind:"alternate_trait",amount:value,trait:choice.to_trait},
       source:{kind:"reviewed_alternate_trait",event:event.event_key,ruling_key:event.details.ruling_key||choice.ruling_key},
       reason:choice.reason}));
+  }
+  if(row.data.kind==='attack'&&row.data.input?.accepted_intent&&row.data.input?.attack_source){
+    const source=db.getWorldEvent(guild,row.data.input.attack_source);
+    if(source?.kind==='native_unarmed_attack'&&source.source_kind==='mutation'){
+      try{
+        inspectNativeUnarmedAttack(db,guild,row.data.input,pc);
+        const alternate=alternateNativeUnarmedTrait(db,guild,row,pc);
+        if(alternate&&!options.some(item=>item.type==='alternate_trait'&&item.effect?.trait===alternate.trait))
+          options.push(option({key:`alternate_trait:${alternate.trait}`,type:'alternate_trait',label:alternate.trait,
+            state:'requires_owner_choice',effect:{kind:'alternate_trait',amount:alternate.bonus,trait:alternate.trait},
+            source:{kind:'native_unarmed_attack',event:alternate.source,from_trait:alternate.from_trait},
+            reason:'Native unarmed rules allow Strength or Finesse; the owner may choose the other recorded trait before rolling.'}));
+      }catch(error){if(error.code!=='NATIVE_UNARMED_TRAIT'&&error.code!=='GM_ARBITRATION')throw error;}
+    }
   }
   if(row.data.kind==="action"){
     const net=(row.data.breakdown.advantage||0)-(row.data.breakdown.disadvantage||0);
