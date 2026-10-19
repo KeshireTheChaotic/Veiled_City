@@ -34,3 +34,9 @@ npm run validate
 ```
 
 Full release qualification still requires the complete frozen product scope and identical-SHA release/CI gates. Uncommitted pre-roll Fear code in the main development checkout is excluded from this repair's test tree and remains unqualified; never infer it passes from this run.
+
+## Additional historical-contract failure found by the broad run
+
+The broad local run stopped at **92 passed /1 failed /60 not run** (153 critical suites),339313ms. `v95-deprecation-coverage-test` correctly reported four unrecorded historical assertion migrations from the qualified W2 identity firewall (`26f7555`): narrator naming no longer creates durable identity; two Relay preview assertions and one Diner preview assertion now preserve an independently GM-established identity rather than require it to be absent. The original historical inventory is unchanged. Four exact old→current mappings document that source-authority migration; no assertion is deleted or broadly waived. The actual guard and all three affected legacy suites passed **7/7**,2195.0716ms (`ci-historical-migration-green.log`), including the unchanged isolated D08 consent mutant.
+
+Manual `workflow_dispatch` is available for a full critical CI run (no changed-base input means full fallback). It is not deployment authorization. Remote failure/success receipts must be read for the precise pushed SHA; the initial fa48531 run predates these four mappings.
