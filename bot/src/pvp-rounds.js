@@ -9,6 +9,7 @@ import { capturePvpFear, gatePvpExchange, fearGateKey, pendingPvpFear } from "./
 import {drainActionContinuations} from "./action-continuation.js";
 import {reservePvpNotices} from "./native-publications.js";
 import {resolveAutonomousPvpFear} from "./pvp-fear-moves.js";
+import {assertPvpSafety} from './pvp-campaign-policy.js';
 export { authorPvpNarrative, reviewPvpNarrative, sharePvpNarrative } from "./pvp-authorship.js";
 
 const hash=value=>createHash("sha256").update(JSON.stringify(value)).digest("hex").slice(0,40);
@@ -58,6 +59,7 @@ export function choosePvp(db,guild,user,input){
   fields(input,[...operationFields,"trait","attempt"]);
   return db.transaction(()=>{
     const {p,w,t,who}=current(db,guild,user,input);
+    assertPvpSafety(db,guild,p.data.participants.map(x=>x.character));
     if(w.data.round_state!=="choosing")fail("Waiting for both continuation decisions or saved round; choices are closed.");
     if(t.option_policy!=="base_trait_only")fail("Optional PvP effects require saved native review; no dice or hidden costs.");
     const modifier=db.getCharacter(who.character).data.traits?.[input.trait];
@@ -161,6 +163,7 @@ export function rollPvp(db,guild,user,input,{rng=d}={}){
     const {p,w,t,who}=current(db,guild,user,input);
     const prior=resultFor(db,guild,p,input.round,who);
     if(prior)return progressPvp(db,guild,user,p.record_key);
+    assertPvpSafety(db,guild,p.data.participants.map(x=>x.character));
     if(w.data.round_state!=="choosing")fail("Round closed or awaiting bilateral continuation.");
     cas(w,input);
     const choices=p.data.participants.map(who=>seal(db,guild,p,input.round,who));
@@ -196,6 +199,7 @@ export function continuePvp(db,guild,user,input){
   fields(input,operationFields);
   return db.transaction(()=>{
     const {p,w,who}=current(db,guild,user,input);
+    assertPvpSafety(db,guild,p.data.participants.map(x=>x.character));
     if(pendingPvpFear(db,guild,p).length)fail("Immediate Fear consequence gate remains pending; no next exchange.");
     if(w.data.round_state!=="awaiting_continuation")fail("Both continuation decisions require a completed paired exchange.");
     const k=`pvp-continue:${hash([p.record_key,p.data.terms_hash,input.round,who.character])}`;

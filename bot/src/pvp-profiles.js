@@ -6,6 +6,7 @@ import {currentScene} from "./scene-continuity.js";
 import {indexWorldEvent} from "./city-calendar.js";
 import {isPvpIntent,pvpTarget} from "./pvp-authority.js";
 import {cancelBrawlForWithdrawal} from "./pvp-brawl.js";
+import {assertPvpSafety} from './pvp-campaign-policy.js';
 const hash=v=>createHash("sha256").update(JSON.stringify(v)).digest("hex");
 const boundaryTerms=["no_forced_player_dialogue","no_private_information_disclosure","no_forced_player_control","no_involuntary_item_loss","no_authored_permanent_scar"];
 function fail(message){throw Object.assign(new Error(message),{code:"NARRATIVE_PVP",expected:true});}
@@ -138,6 +139,7 @@ export function proposeDamagePvp(db,guild,user,input,{interactionId}={}){
   if(principal.user!==user||!isPvpIntent(db,guild,a))fail("Own accepted PC conflict declaration required.");
   const key=`pvp-damage:${hash([guild,a.record_key,interactionId])}`,prior=db.getCityRecord(guild,"pvp_encounter_contract",key);
   if(prior){participant(db,guild,user,prior);live(db,guild,key,{terminal:true});if(hash(checkTerms(db,guild,input.terms))!==hash(prior.data.snapshot.terms))fail("Proposal replay cannot change terms.");return prior;}
+  assertPvpSafety(db,guild,[a.data.actor,pvpTarget(db,guild,a)?.id].filter(Boolean));
   return db.transaction(()=>writeTerms(db,guild,{record_key:key,data:{accepted_intent:a.record_key}},user,input.terms,interactionId));
   });
 }
@@ -197,6 +199,7 @@ export function respondDamagePvp(db,guild,user,input,{interactionId}={}){
   const raw=db.getCityRecord(guild,"pvp_encounter_contract",input.contract),who=participant(db,guild,user,raw),p=live(db,guild,input.contract,{terminal:true});
   if(input.expected_revision!==p.data.terms_hash)fail("PvP terms revision changed; review fresh terms.");
   if(!["accept","decline","withdraw"].includes(input.decision))fail("Explicit affected-owner decision required.");
+  if(input.decision==="accept")assertPvpSafety(db,guild,p.data.snapshot.participants.map(x=>x.character));
   const details={version:3,contract:p.record_key,user,principal_revision:who.principal_revision,terms_hash:p.data.terms_hash,decision:input.decision,interaction_id:interactionId};
   const sourceKey=`pvp-damage-reply:${hash([guild,user,interactionId])}`,oldSource=db.getWorldEvent(guild,sourceKey);
   if(oldSource&&hash(oldSource.details)!==hash(details))fail("Consent interaction replay cannot change decision or terms.");
@@ -261,6 +264,7 @@ export function stageDamagePvp(db,guild,accepted){
   return db.transaction(()=>{
   const ctx=damagePvpEligibility(db,guild,accepted);if(!ctx)return null;
   accepted=ctx.accepted;
+  assertPvpSafety(db,guild,[accepted.data.actor,ctx.edge.target]);
   const p=ctx.contract,key=`pvp-attack-intent:${hash([guild,accepted.record_key,p.record_key,p.data.terms_hash])}`;
   return db.getCityRecord(guild,"pvp_attack_intent",key)||db.saveCityRecord(guild,{kind:"pvp_attack_intent",key,status:"awaiting_native_attack",
     source_event:accepted.source_event,actor_key:accepted.data.actor,subject_key:accepted.data.actor,visibility:"character",
