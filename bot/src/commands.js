@@ -406,7 +406,7 @@ async function handleCommandBody(interaction,{db,gm,voice=null}){
   if(typeof interaction.isButton==='function'&&interaction.isButton()&&interaction.customId?.startsWith('vcassemblyrefresh:')){
     if(!interaction.guildId||!isGM(db,interaction))throw new PermissionError('GM/admin permission required.');
     await interaction.deferReply({ephemeral:true});
-    await refreshAssemblyPlan(db,interaction.guildId,interaction.user.id,interaction.customId.slice(18),gm,{authorized:true});
+    await refreshAssemblyPlan(db,interaction.guildId,interaction.user.id,interaction.customId.slice(18),gm,{authorized:true,interactionId:interaction.id});
     await interaction.editReply({content:'New sourced assembly plan prepared; previous plans and delivery receipts retained. Nothing sent. Run assemble to deliver the newly prepared openings once.',allowedMentions:{parse:[]}});
     return true;
   }
@@ -947,6 +947,8 @@ Initial phase: ${s.assembly_phase}`});
       if(opening){
         const review=prepareSessionOpeningDeliveryReview(db,interaction,isGM),components=review?
           [{type:1,components:[{type:2,style:2,label:'Resume verified unsent parts only',custom_id:`vcopeningdelivery:${review}`}]}]:[];
+        const refresh=prepareAssemblyRefresh(db,interaction.guildId,s,interaction.user.id);
+        if(refresh)components.push({type:1,components:[{type:2,style:2,label:'Prepare NEW sourced openings (no send)',custom_id:`vcassemblyrefresh:${refresh}`} ]});
         await deliverInteractionText(interaction,sessionOpeningStatus(opening),{ephemeral:true,components});
         return true;
       }

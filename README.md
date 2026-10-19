@@ -48,6 +48,9 @@ See the [architecture](docs/Setup_and_Scope/RUNTIME_ARCHITECTURE.md),
 [arbitration contract](docs/Active_Implementation/UNIFIED_GM_ARBITRATION.md) and
 [security/privacy guide](docs/Setup_and_Scope/SECURITY_AND_PRIVACY.md).
 
+For automatic openings and explicit, acknowledgement-preserving recovery, see the
+[session assembly guide](docs/Setup_and_Scope/PARTY_ASSEMBLY.md).
+
 Source verification is not a universal semantic proof of generated English.
 Fresh GM-owned NPC/world prose uses a restricted authoring and audience boundary;
 it must not establish protected PC outcomes. Newly generated prose still carries

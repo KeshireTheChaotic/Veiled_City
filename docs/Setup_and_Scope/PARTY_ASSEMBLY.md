@@ -4,9 +4,9 @@ Veilkeeper distinguishes campaign membership, session attendance, fictional pres
 
 ## First-session sequence
 
-1. GM: `/vc-session start title:Opening Night assembly:auto` (or an explicit supported assembly mode).
+1. GM: `/vc-session start title:Opening Night assembly:auto` (or an explicit supported assembly mode). Native start schedules one opening automatically, including a zero-attendee camera opening; pre-start attendance is carried forward.
 2. Players: `/vc-session present character:<owned name>` and register an isolated private channel using `/vc-player private-channel`.
-3. GM: check `/vc-session roster` and `/vc-session assembly-status`, then run `/vc-session assemble`.
+3. GM: inspect `/vc-session roster` and `/vc-session assembly-status`. `/vc-session assemble` is inspection/recovery, not a required startup ritual.
 4. Native assembly plans identify current attended PCs, owner-entitled character hooks and a separately publishable shared camera; a GM-only planning idea is not an established fact.
 5. Each recipient may receive a **specific personal thread**. The shared opening must not invent that another PC chose to arrive, speak, surrender or disclose a secret.
 6. `/vc-session converged` records overlapping immediate objectives when established; `/vc-party establish` is a later **voluntary** choice.
@@ -27,6 +27,14 @@ Supported start modes include `auto`, `already_together`, `shared_incident`, `co
 2. When offered and appropriate, select **Prepare NEW sourced openings (no send)**. This schedules an explicit reviewed replacement; it does not automatically resend acknowledged messages.
 3. Run `/vc-session assemble` again after preparation. New valid threads supplement previously acknowledged orientation, subject to current source checks.
 4. If delivery is **uncertain**, inspect the exact Discord destination and use scope-specific reconciliation. Do not click "not delivered" unless that exact unacknowledged material was verified unsent.
+
+### Native OpeningDirector replacement boundary
+
+An authenticated GM may prepare **one** explicit replacement for the original native attempt. The review binds the current sources, roster, principals, full saved delivery/recipient state and original opening proof. Clicking preparation calls the planner but sends nothing and changes no dice or character resources; the next assemble runs the current source-verified publication path. A source change during planning rejects the replacement.
+
+Unchanged acknowledged personal threads retain their original messages and turn proofs. A source-changed personal thread may be newly delivered only after that explicit review. Old unsent output never acquires the new attempt's authority. Uncertain or in-progress sends prevent replacement; legacy partial history remains on its exact-part reconciliation path. Review forwarding, revoked sources and stale sibling buttons cannot authorize another planner call. An interrupted active planning lease stays held for inspection, not an automatic provider retry.
+
+After the replacement attempt, further source changes require scoped operator review; there is no third automatic replacement. These are operational receipts, not permission for unverified prose, forced PC actions or disclosure of GM-private hook answers. The feature does not reset imported characters or established campaign outcomes.
 
 Legacy raw private hooks or freeform planner paragraphs are not automatically safe for publication. GM-only material cannot be converted into player knowledge because it sounds plausible. If a character lacks an entitled source, the correct result may be a truthful orientation/fallback plus a request for player-safe input.
 

@@ -32,6 +32,11 @@ async function execute({db,guild,gm,key}){
   if(!db.getCityRecord(guild.id,'session_opening_job',key))return null;
   let row=inspectSessionOpening(db,guild.id,key);
   if(['planning','publishing'].includes(row.status))return save(db,guild.id,row,'held_interrupted',{hold_code:'OPENING_INTERRUPTED_REVIEW'});
+  if(row.status==='prepared_refresh'){
+    if(db.isDirectorPaused(guild.id))return row;
+    try{return await deliverSessionOpening({db,guild,gm,key});}
+    catch(error){return save(db,guild.id,inspectSessionOpening(db,guild.id,key),'needs_review',{hold_code:code(error)});}
+  }
   if(!['queued','held_paused'].includes(row.status))return row;
   if(row.data.origin.mode==='manual')return save(db,guild.id,row,'held_manual');
   if(db.isDirectorPaused(guild.id))return save(db,guild.id,row,'held_paused');

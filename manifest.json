@@ -31,8 +31,8 @@
     },
     {
       "path": "README.md",
-      "size_bytes": 13076,
-      "sha256": "9a73430c3fe1a757f87295464ca09e73df854b25d701129d7105d40f1bd60e5a"
+      "size_bytes": 13225,
+      "sha256": "a41493ed1157da38ceb8251f17c9635dd6a74598d19cc798a9553ea3e60a7176"
     },
     {
       "path": "bot/.env.example",
@@ -740,6 +740,11 @@
       "sha256": "cea5c3ad2e34e34f4ff0a5c4c621dbbd84d34c0d33ede80c0e720d98e7acf0a4"
     },
     {
+      "path": "bot/scripts/session-opening-refresh-test.mjs",
+      "size_bytes": 19297,
+      "sha256": "cc5d8f8d093a01c70cc1252542dad95d24189227e2b72e56acd009c1906598d7"
+    },
+    {
       "path": "bot/scripts/session-opening-test.mjs",
       "size_bytes": 27012,
       "sha256": "b94956b434e24a4835c7bfdfc673d4bd6066e6b71b94a3ad989cb57c01c3e1f9"
@@ -1131,8 +1136,8 @@
     },
     {
       "path": "bot/scripts/validate-offline.mjs",
-      "size_bytes": 11669,
-      "sha256": "be15872e40d77834b547464d80becb07e0e4cef55184f57156b3e8dc44a31384"
+      "size_bytes": 11714,
+      "sha256": "db95bc1e8598a2215180fec11e2a0d9cd16fde2a0c7dcda6af421fdec5c1559b"
     },
     {
       "path": "bot/scripts/world-authorship-test.mjs",
@@ -1216,13 +1221,13 @@
     },
     {
       "path": "bot/src/assembly-planning.js",
-      "size_bytes": 6193,
-      "sha256": "9580616bca6cc8f0542847f55c17b0127f60a08e7c896bacb8f4e43ea1c9cdc9"
+      "size_bytes": 9032,
+      "sha256": "5189a4353e685ee1848598663523c7f9f9d9f3d07e9b1aa2a51042d1053b41a1"
     },
     {
       "path": "bot/src/assembly-publications.js",
-      "size_bytes": 7550,
-      "sha256": "20e5c7f7ecb49cbca51d99c1ab241e666da65585ba818167e762899a87844c13"
+      "size_bytes": 7751,
+      "sha256": "7aa8566cf2850bf81f56cb9df34050ae73dbc29491f01a90c335ad4873c21c22"
     },
     {
       "path": "bot/src/assembly-readiness.js",
@@ -1346,8 +1351,8 @@
     },
     {
       "path": "bot/src/commands.js",
-      "size_bytes": 193001,
-      "sha256": "88a5316e8c8df149aba79e96d28be2656e428c59270c29529fc46a90e6ef8fbf"
+      "size_bytes": 193287,
+      "sha256": "9da02bd0a983ded4b43935c86ee224389c33d6f69d8efd9d5feae3c52d40217f"
     },
     {
       "path": "bot/src/concept-context.js",
@@ -1401,8 +1406,8 @@
     },
     {
       "path": "bot/src/db.js",
-      "size_bytes": 174471,
-      "sha256": "6ce2d5fb47659442c39d5fadbd1d5ddeac4a958bd13fb80124e8f7254ef525f2"
+      "size_bytes": 174867,
+      "sha256": "d375a49358327e1ce53fae159aff682bd25133a05bad20ac9d4415cde1c97271"
     },
     {
       "path": "bot/src/decision-advisory.js",
@@ -2276,13 +2281,13 @@
     },
     {
       "path": "bot/src/session-opening-runner.js",
-      "size_bytes": 4904,
-      "sha256": "590adabe67bf7609fb09fb09068c85239d5abd556480e84627f03e6b730848be"
+      "size_bytes": 5182,
+      "sha256": "3c9068ebab9dff1b941a07647f5c35c8bbe1386418c6acf98f83fc82d6b1c31c"
     },
     {
       "path": "bot/src/session-opening.js",
-      "size_bytes": 7527,
-      "sha256": "cd970b7d6757c29585686422f34423af91b90f171e7f8da439cd38056746d5de"
+      "size_bytes": 11573,
+      "sha256": "64f3c551dfcf109c2291b7d69b3ad5e0e12c971dcba3d18f2501ccf316ee4827"
     },
     {
       "path": "bot/src/simulation-commands.js",
@@ -2816,8 +2821,8 @@
     },
     {
       "path": "docs/Active_Implementation/NO_DEFERRALS_LEDGER.md",
-      "size_bytes": 185311,
-      "sha256": "7de4d209a610efb73bd46acb6216bae8e2ecc40b9536d7707c09dc99e452e73d"
+      "size_bytes": 191578,
+      "sha256": "87a7e89bb56fca11f5791da34f97b38fc995b96f3c3cd87b4153d7b81fd1fb3a"
     },
     {
       "path": "docs/Active_Implementation/README.md",
@@ -2901,8 +2906,8 @@
     },
     {
       "path": "docs/Setup_and_Scope/PARTY_ASSEMBLY.md",
-      "size_bytes": 3785,
-      "sha256": "2d543bfa2d85f8bd0c73269dedbf0fdbd89a4bf92b803cc33747d2b082425e07"
+      "size_bytes": 5355,
+      "sha256": "54a1ff8103a2380f87adfab9e0f9fbe528a721105224b72f8644e711df187447"
     },
     {
       "path": "docs/Setup_and_Scope/PROJECT_SCOPE.md",

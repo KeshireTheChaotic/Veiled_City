@@ -294,6 +294,11 @@ export class VeiledDB {
     return this.db.prepare('SELECT rowid AS sequence FROM city_records WHERE guild_id=? AND kind=? AND record_key=?')
       .get(guildId,kind,key)?.sequence||0;
   }
+  /** Session-local assembly inventory; callers must hold if the bounded result is full. */
+  assemblyDeliveryRecords(guildId,sessionId){
+    return this.db.prepare("SELECT * FROM city_records WHERE guild_id=? AND kind='assembly_delivery' AND json_extract(data_json,'$.session')=? ORDER BY rowid LIMIT 1001")
+      .all(guildId,sessionId).map(row=>({...row,data:JSON.parse(row.data_json)}));
+  }
   worldEventSequence(guildId,key){
     return this.db.prepare('SELECT rowid AS sequence FROM world_events WHERE guild_id=? AND event_key=?').get(guildId,key)?.sequence||0;
   }

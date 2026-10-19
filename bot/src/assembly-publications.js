@@ -32,6 +32,8 @@ export async function deliverVerifiedAssembly({db,guild,session,gm=null,deliver=
       if(retained)job=db.saveCityRecord(guild.id,{kind:'assembly_delivery',key:slot.key,status:'delivered',visibility:'gm',
         source_event:metadataSource(db,guild.id,session,slot.key),data:{version:2,session:session.id,scope:slot.scope,
           turn_id:retained.turn_id,evidence:retained.evidence,retained_acknowledgement:true}});
+      // An acknowledgement is historical evidence, not a new send or a new attempt binding.
+      if(job?.data.retained_acknowledgement)continue;
       if(!job?.data.turn_id&&typeof gm?.authorAssemblyScene==='function'
         &&(plan.assembly_contract?.version===2||db.getCityCalendar(guild.id).flags.playable_narration===true
           &&(slot.scope.actorCharacterId||db.getCityCalendar(guild.id).flags.narrative_camera&&db.getCityCalendar(guild.id).flags.narrative_authority)))
@@ -52,6 +54,7 @@ export async function deliverVerifiedAssembly({db,guild,session,gm=null,deliver=
           data:{version:2,session:session.id,plan_hash:assemblyPlanHash(plan),scope:slot.scope,turn_id:turn.turn_id,
             raw_prose_held:true,evidence:result.assembly_evidence}});
       });
+      if(job?.data.retained_acknowledgement)continue;
       assertCurrent();bindTurn(job.data.turn_id);
       const delivered=await deliver({db,guild,turnId:job.data.turn_id});
       db.saveCityRecord(guild.id,{...job,key:slot.key,status:delivered.pending.length?'pending':'delivered'});

@@ -2,6 +2,7 @@
 import {sceneFictionHash as hash} from './scene-fiction-context.js';
 import {assemblyInputFingerprint} from './assembly-context.js';
 import {indexWorldEvent} from './city-calendar.js';
+import {assemblyPlanHash} from './assembly-state.js';
 const ISSUER='native:opening-director',KIND='session_opening_job';
 function fail(reason){throw Object.assign(new Error(`Native opening job requires ${reason}.`),{code:'SESSION_OPENING',expected:true});}
 
@@ -67,11 +68,51 @@ export function assertSessionOpeningAttempt(db,guild,key){
     ||c.input_fingerprint!==assemblyInputFingerprint(db,guild,session)||e?.status!=='active'||e.kind!=='native_session_opening_attempt'
     ||e.event_key!==`opening-attempt:${key}:${c.attempt}`||e.session_id!==key||e.visibility!=='gm'||e.subject_key!==null
     ||e.source_kind!=='event'||e.source_id!==row.source_event||hash(e.details)!==hash(c))fail('the current source-bound attempt');
+  if(c.attempt===2){
+    const approval=db.getMutation(guild,c.approval_mutation),{approval_mutation,...approved}=c,
+      review=db.getCityRecord(guild,'assembly_refresh',c.refresh?.review),source=review&&db.getWorldEvent(guild,review.source_event),
+      prior=db.getWorldEvent(guild,c.refresh?.previous_source);
+    if(!approval||approval.actor_type!=='human_gm'||approval.actor_id!==review?.data.user||!approval.source_interaction_id
+      ||approval.source_layer!=='assembly_refresh'||approval.mutation_type!=='session_opening_refresh'||approval.entity_key!==key
+      ||approval.session_id!==key||approval.visibility!=='gm'||hash(JSON.parse(approval.after_json))!==hash(approved)
+      ||hash(JSON.parse(approval.before_json))!==c.refresh.previous_context||hash(prior?.details)!==c.refresh.previous_context
+      ||prior?.status!=='active'||prior.kind!=='native_session_opening_attempt'||prior.event_key!==`opening-attempt:${key}:1`
+      ||prior.source_kind!=='event'||prior.source_id!==row.source_event||prior.visibility!=='gm'||prior.session_id!==key
+      ||review?.status!=='prepared'||review.visibility!=='gm'||review.data.version!==2||review.data.session!==key
+      ||source?.status!=='active'||source.kind!=='assembly_refresh_review'||source.source_id!=='native:assembly'
+      ||source.visibility!=='gm'||source.subject_key!==null||source.session_id!==key||hash(source.details)!==hash(review.data)
+      ||c.refresh.plan!==assemblyPlanHash(db.getAssemblyPlan(key)))fail('the exact authenticated replacement receipt');
+  }
   return row;
+}
+/** One explicit, source-bound operator replacement; never resets attempt1 or an uncertain send. */
+export function rebindSessionOpeningRefresh(db,guild,key,review,user,interactionId){
+  if(!db.getCityRecord(guild,KIND,key))return null;
+  const row=inspectSessionOpening(db,guild,key),session=db.getActiveSession(guild),source=db.getWorldEvent(guild,review.source_event);
+  if(session?.id!==key||db.isDirectorPaused(guild)||row.data.attempts!==1||!row.data.context
+    ||['planning','publishing','prepared_refresh'].includes(row.status)||!interactionId||review.status!=='prepared'
+    ||review.visibility!=='gm'||review.data.version!==2||review.data.session!==key||review.data.user!==user
+    ||source?.status!=='active'||source.kind!=='assembly_refresh_review'||source.source_id!=='native:assembly'
+    ||source.visibility!=='gm'||source.subject_key!==null||source.session_id!==key||hash(source.details)!==hash(review.data))
+    fail('one authenticated exact-state replacement');
+  const context={version:1,job:key,origin_hash:row.data.origin_hash,input_fingerprint:assemblyInputFingerprint(db,guild,session),attempt:2,
+    refresh:{review:review.record_key,previous_source:row.data.attempt_source,previous_context:hash(row.data.context),plan:assemblyPlanHash(db.getAssemblyPlan(key))}},
+    mutation=db.recordMutation(guild,{sessionId:key,actorType:'human_gm',actorId:user,sourceLayer:'assembly_refresh',sourceInteractionId:interactionId,
+      mutationType:'session_opening_refresh',entityKey:key,visibility:'gm',before:row.data.context,after:context,
+      rationale:'Exact reviewed source replacement only; old attempts, dice, effects and delivery acknowledgements retained.'});
+  context.approval_mutation=mutation.id;
+  const event=indexWorldEvent(db,guild,{key:`opening-attempt:${key}:2`,kind:'native_session_opening_attempt',
+    title:'Explicit source-reviewed replacement opening attempt',source_kind:'event',source_id:row.source_event,
+    session_id:key,visibility:'gm',details:context},ISSUER);
+  db.saveCityRecord(guild,{...row,key,status:'prepared_refresh',data:{...row.data,attempts:2,attempt_source:event.event_key,context,hold_code:null}});
+  return assertSessionOpeningAttempt(db,guild,key);
 }
 export function bindSessionOpeningTurn(db,guild,key,turnId){
   const row=assertSessionOpeningAttempt(db,guild,key),turn=db.getTurnAttempt(turnId);
   if(turn?.guild_id!==guild||turn.session_id!==key)fail('the actual opening turn');
+  const previous=db.getCityRecord(guild,'session_opening_turn',turnId);
+  if(previous&&(previous.source_event!==row.data.attempt_source||previous.data.context_hash!==hash(row.data.context)))
+    fail('the original immutable turn binding');
   db.saveCityRecord(guild,{kind:'session_opening_turn',key:turnId,status:'bound',visibility:'gm',source_event:row.data.attempt_source,
     data:{version:1,job:key,origin_hash:row.data.origin_hash,context_hash:hash(row.data.context),turn:turnId}});
 }
