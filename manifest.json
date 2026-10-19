@@ -16,8 +16,8 @@
     },
     {
       "path": ".github/workflows/offline-validation.yml",
-      "size_bytes": 632,
-      "sha256": "048e81517aee067ec9e0c1e0a79a4f1df755870393719c87eaec4a3e931d2935"
+      "size_bytes": 789,
+      "sha256": "dfa856f93ddc3fc6f943658dc35c8336873de64c00af8cb019c345762514e2ff"
     },
     {
       "path": "Dockerfile",
@@ -31,8 +31,8 @@
     },
     {
       "path": "README.md",
-      "size_bytes": 13990,
-      "sha256": "90503b92bb465042f712088f87045851e17986333ec74b461b6320fddf0e7528"
+      "size_bytes": 14301,
+      "sha256": "d51b6f0a4245f253d46aa9863daf1b7eb08a2253fa1fb8e67b8d617b5a9397cd"
     },
     {
       "path": "bot/.env.example",
@@ -1056,8 +1056,8 @@
     },
     {
       "path": "bot/scripts/v95-protected-narrative-test.mjs",
-      "size_bytes": 19592,
-      "sha256": "e0c1fca38c1bb2cb87609498c5c212453d9d74b4b02d0dce3af5617d5fe6f304"
+      "size_bytes": 21595,
+      "sha256": "cbbb73a255084207edd22466dfe6a9adf1bc5443f525e9264dbe55602d6639f0"
     },
     {
       "path": "bot/scripts/v95-pvp-ux-test.mjs",
@@ -1066,8 +1066,8 @@
     },
     {
       "path": "bot/scripts/v95-validation-reporter-test.mjs",
-      "size_bytes": 3790,
-      "sha256": "2f393e00389861c154c8cdbf96f3b12b8deb0d0c205a61621ffa9001f8540310"
+      "size_bytes": 3912,
+      "sha256": "519249bff6292c1d9f3d246f069efe2d7e4a536698bdee12940118388001f483"
     },
     {
       "path": "bot/scripts/v96-05r-fiction-test.mjs",
@@ -1151,8 +1151,18 @@
     },
     {
       "path": "bot/scripts/validate-offline.mjs",
-      "size_bytes": 11905,
-      "sha256": "fe4e3a6cc30c08409a92954a48b41adb928db216ec5bdd77150fecf59323f0fd"
+      "size_bytes": 13274,
+      "sha256": "c4063df3b42b7b7f4ba67e38bb94484bac9f5a82b0205d474c9a6553eb2af6e8"
+    },
+    {
+      "path": "bot/scripts/validation-selection-test.mjs",
+      "size_bytes": 2449,
+      "sha256": "61e35d90c4818ddab13a27985b78342d193c5553e5121eb019f80165f07548fc"
+    },
+    {
+      "path": "bot/scripts/validation-selection.mjs",
+      "size_bytes": 1576,
+      "sha256": "c4210bd74fc6a5400f7b757f91c74ef73295b202077f9ff1ee0c2b14b14ddcbc"
     },
     {
       "path": "bot/scripts/world-authorship-test.mjs",
@@ -2826,8 +2836,8 @@
     },
     {
       "path": "docs/Active_Implementation/ACTIVE_IMPLEMENTATION_LEDGER.md",
-      "size_bytes": 5131,
-      "sha256": "f1dad1d3f14e03b2b900faa65df5a57c1e79f0837d4fd80f9f6eeebc15c06ce2"
+      "size_bytes": 919,
+      "sha256": "0fa276f99e05278dad59a260827274117a0a80f4adb8163418c4232aaf763a1a"
     },
     {
       "path": "docs/Active_Implementation/ACTIVE_IMPLEMENTATION_PLAN.md",
@@ -2855,14 +2865,24 @@
       "sha256": "9ac4e3447cb45d4fe28a4d16f678ac795fa9cec1fa4a8ac780454c5deb98e520"
     },
     {
+      "path": "docs/Active_Implementation/IMPLEMENTATION_RECONCILIATION.md",
+      "size_bytes": 4840,
+      "sha256": "64de5afbbf3a18ad37964536dead0c6abcdab1f048c5a43aab01c5089513ec96"
+    },
+    {
       "path": "docs/Active_Implementation/N15_APPEARANCE_CONTRACT.md",
       "size_bytes": 5383,
       "sha256": "7b90e342a9ffdb01b9f114555faf5a55b89649c0b85bb9ef705582146094ef7b"
     },
     {
+      "path": "docs/Active_Implementation/NO_DEFERRALS_HISTORY_THROUGH_373c7d6.md",
+      "size_bytes": 210740,
+      "sha256": "66c0764e0d3dde12f7c3fecb90348dc3c137df2177153c4e7c8610f4c65fff1b"
+    },
+    {
       "path": "docs/Active_Implementation/NO_DEFERRALS_LEDGER.md",
-      "size_bytes": 210442,
-      "sha256": "9f9df17cab7b7576b30fe95c3cb25d54b959781e0c679510628cf9a800fadee4"
+      "size_bytes": 8605,
+      "sha256": "983f10d80a378eb13feecc4a55b7612403da6963f9a491e60f3aef1e81355f22"
     },
     {
       "path": "docs/Active_Implementation/PVP_CAMPAIGN_AND_PRE_ROLL_FEAR_CONTRACT.md",
@@ -2876,8 +2896,8 @@
     },
     {
       "path": "docs/Active_Implementation/RELEASE_QUALIFICATION_GATES.md",
-      "size_bytes": 3816,
-      "sha256": "e9b10392bc8a4a4e4ea2f63935d061007e5a355929ae80a42105c46da8e262ec"
+      "size_bytes": 4312,
+      "sha256": "0ff974f244e206ca3253fcbbca4abc1324e34b58b46dd42e6848ecc1ddc58625"
     },
     {
       "path": "docs/Active_Implementation/UNIFIED_ARBITRATION_FEATURE_COVERAGE.md",
@@ -2888,6 +2908,11 @@
       "path": "docs/Active_Implementation/UNIFIED_GM_ARBITRATION.md",
       "size_bytes": 4302,
       "sha256": "ff1059694841e5444e49e91b26d0a7baf2af8aaf7d2066a527cb12b2be1eca88"
+    },
+    {
+      "path": "docs/Active_Implementation/VALIDATION_RECONCILIATION.md",
+      "size_bytes": 4704,
+      "sha256": "44f91fc59c70859c10b711ae9c9fb7d6289c4da371dfc9f04d79d12045b3afe2"
     },
     {
       "path": "docs/Active_Implementation/VEILED_CITY_CODEX_SEMANTIC_FIRST_START_HERE_v2_1.md",
@@ -2901,8 +2926,8 @@
     },
     {
       "path": "docs/Active_Implementation/VEILED_CITY_COST_OPTIMIZED_IMPLEMENTATION_PLAN_v2_1_SEMANTIC_FIRST.md",
-      "size_bytes": 44611,
-      "sha256": "61465f12719f961a26f89196a8afe1d49b3384e606423742768d4999204b088f"
+      "size_bytes": 45189,
+      "sha256": "7bd99ff3dec79f52543cd08b9f86fe807f2a7e7c942b4a8c98dff188bcd90cba"
     },
     {
       "path": "docs/Active_Implementation/VEILED_CITY_WORLD_DIRECTOR_BIDIRECTIONAL_DESIGN_v1_2.md",

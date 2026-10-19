@@ -1,6 +1,6 @@
 # Active release and qualification gates
 
-Current branch checkpoint: `014bc39dadd4035b43649c2c24ef3508939b1c40`. **Not marked UA17/18/19 qualified** by this audit. The original 126-suite audience-first receipt is a prior baseline, not this branch's release gate.
+Current implementation anchor: `373c7d61582a99ab87879aa3a02b91fee42e8e18`; see [the compact ledger](NO_DEFERRALS_LEDGER.md) and [reconciled execution plan](IMPLEMENTATION_RECONCILIATION.md). **UA17/18/19 remain unqualified.** A maintenance CI repair/full critical run does not complete missing product scope. The original126-suite audience-first receipt is historical, not this branch's release gate.
 
 ## UA17 — final frozen-tree offline qualification
 
@@ -16,6 +16,8 @@ npm run validate
 ```
 
 3. Preserve the `validate` machine-readable report and actual exit codes, counts, failing/skipped/not-run matrices, D08 privacy/window and outbox results; do not infer internal assertion counts from module wrapper results.
+
+   Final UA17/UA18 must use the full profile, not `--changed` focused selection. Reports with `selection.mode=focused` or unselected mandatory suites cannot qualify a release. Keep optional/historical matrices executable through `validate:extended` where their feature scope applies.
 4. Run generated-manifest synchronization using the **actual** checked-out release script (`node scripts/sync-release.mjs 0.0.0.1`) and verify normalized manifest contents. If synchronization changes any executable/test input, rerun affected gates; do not pretend the original SHA was already qualified. Run `git diff --check`.
 5. Freeze the exact passing commit SHA and record it. A docs-only results update must be distinguished from executable/input changes.
 
@@ -34,7 +36,7 @@ Preflight the actual host/process identity, production code SHA/clean state, Nod
 | Claim | Allowed based on current docs | Not allowed without new proof |
 | --- | --- | --- |
 | "Original v9 audience core was offline qualified" | Yes, earlier SHA only | Current UA17 pass |
-| "Current special features include 12 bounded handlers" | Yes, code-owned catalog/source observation | Universal special feature support |
+| "Current catalog has16 supported occurrences /15 bounded handler families" | Yes, current code-owned catalog/source observation | Universal support for153 occurrences |
 | "Recent focused suites passed" | Yes, scoped tests as recorded | Full mandatory/CI pass or live quality |
 | "Assembly repaired in current branch" | Yes, source and targeted offline evidence | Running production code currently uses it |
 | "Owner approved a future rollout" | Authorization noted in source ledger | Claim that UA17/18/19 gates happened |
