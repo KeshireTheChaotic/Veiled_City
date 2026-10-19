@@ -105,6 +105,8 @@ Active contracts and evidence:
 - [World Director bidirectional design](docs/Active_Implementation/VEILED_CITY_WORLD_DIRECTOR_BIDIRECTIONAL_DESIGN_v1_2.md)
 - [AI-GM producer/consumer matrix](docs/Active_Implementation/AI_GM_AUTHORITY_MIGRATION_MATRIX.md)
 - [No-deferrals ledger](docs/Active_Implementation/NO_DEFERRALS_LEDGER.md) — actual tests, later owner amendments and remaining scope
+- [Current execution reconciliation](docs/Active_Implementation/IMPLEMENTATION_RECONCILIATION.md) — actual completed scope and remaining dependencies
+- [Relevant validation and CI](docs/Active_Implementation/VALIDATION_RECONCILIATION.md) — focused versus full gates, retained coverage and failure diagnosis
 - [Release qualification gates](docs/Active_Implementation/RELEASE_QUALIFICATION_GATES.md)
 
 ## Installation and setup

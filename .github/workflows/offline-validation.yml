@@ -10,13 +10,17 @@ jobs:
         working-directory: bot
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: actions/setup-node@v4
         with:
           node-version: 24.9.0
           cache: npm
           cache-dependency-path: bot/package-lock.json
       - run: npm ci --ignore-scripts
-      - run: npm run validate
+      - run: npm run validate -- --changed
+        env:
+          VC_CHANGED_BASE: ${{ github.event.pull_request.base.sha || github.event.before }}
       - uses: actions/upload-artifact@v4
         if: always()
         with:

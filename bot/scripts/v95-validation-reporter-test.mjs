@@ -12,6 +12,7 @@ function fixture(run){
   try{
     const scripts=path.join(root,"scripts");fs.mkdirSync(path.join(scripts,"fixtures"),{recursive:true});
     fs.copyFileSync(new URL("./offline-guard.mjs",import.meta.url),path.join(scripts,"offline-guard.mjs"));
+    fs.copyFileSync(new URL("./validation-selection.mjs",import.meta.url),path.join(scripts,"validation-selection.mjs"));
     fs.writeFileSync(path.join(scripts,"pass.mjs"),'console.log("PASS_LOG_PRIVATE_MARKER");');
     fs.writeFileSync(path.join(scripts,"fail.mjs"),'console.error("sk-proj-VERYSECRETTESTTOKEN1234567");console.log("FAILED_ASSERTION_EXPECTED");process.exit(7);');
     const invoke=(names,acceptance,{reportPath,malformed=false}={})=>{

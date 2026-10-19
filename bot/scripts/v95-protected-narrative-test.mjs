@@ -16,9 +16,20 @@ import {GMService} from "../src/gm.js";
 import {ContentIndex} from "../src/content.js";
 import {POST_TURN_REVIEW_CATEGORIES} from "../src/director.js";
 import path from "node:path";
+import {establishFixtureAdditions} from './native-world-fixtures.mjs';
+import {currentScene,recordScenePresence} from '../src/scene-continuity.js';
 
 function scene(f,status="active"){
+  f.db.setCityCalendar(f.guild,{flags:{...f.db.getCityCalendar(f.guild).flags,scene_continuity:true}});
   f.db.setSimulationEntity(f.guild,"location","terminal",{name:"Terminal"});
+  const current=currentScene(f.db,f.guild);
+  for(const pc of f.pcs){
+    const arrival=indexWorldEvent(f.db,f.guild,{key:`v95-initial-position:${pc.id}`,kind:'arrival',source_id:`player:${pc.owner_user_id}`,
+      title:'Existing synthetic starting position, not a new player action',session_id:f.session.id,scene:current.key,
+      location_key:'terminal',visibility:'party',details:{entity_type:'character',entity_key:pc.id,owner_user_id:pc.owner_user_id}},pc.owner_user_id);
+    recordScenePresence(f.db,f.guild,{entity_type:'character',entity_key:pc.id,location_key:'terminal',zone:'interior',
+      source_event:arrival.event_key,visibility:'party',accepted_by:pc.owner_user_id},'fixture-native');
+  }
   f.db.upsertNpcProfile(f.guild,{npcKey:"bartender",displayName:"Bartender",role:"bartender",
     publicIdentity:"PRIVATE-NPC-SECRET. Choso apologizes for losing."});
   f.db.setSimulationEntity(f.guild,"npc","bartender",{location_key:"terminal",visibility:"party"});
@@ -43,13 +54,16 @@ function scene(f,status="active"){
 }
 const speech={version:1,kind:"npc_dialogue",entity_key:"bartender",acts:["ask_work","ask_skills"],tone:"warm"};
 const resources=f=>f.pcs.map(pc=>f.db.getCharacter(pc.id).data.resources);
-function turn(f,parts=[speech],{id="bartender-question",mode="party",patch={},text="Can you help me find work?"}={}){
+function turn(f,parts=[speech],{id="bartender-question",mode="party",patch={},text="Can you help me find work?",nativeSetup=false}={}){
   const pc=f.pcs[2],scope={mode,actorUserId:pc.owner_user_id,actorCharacterId:pc.id};
   captureWorldInput(f.db,f.guild,pc.owner_user_id,pc.id,id,text,{privateScene:mode==="private"});
   const attempt=f.db.beginTurnAttempt({guildId:f.guild,messageId:id,actorPrincipal:pc.owner_user_id,
     sessionId:f.session.id,audience:mode});
   const result={respond:true,narration:"Choso apologizes for losing.",narrative_claims:[],
     player_intents:[],gm_world_parts:parts,...patch};
+  // Only the two explicitly opted-in setup fixtures establish independent GM
+  // identity receipts. Raw player/model creation remains a production negative.
+  if(nativeSetup)establishFixtureAdditions(f.db,{guildId:f.guild,scope,provenance:{messageId:id},narrative:result});
   const committed=commitGmTurn({db:f.db,guild:{id:f.guild},session:f.session,result,scope,
     speaker:pc.name,label:"NPC conversation",meta:{messageId:id,triggerText:text,turnId:attempt.turn_id}});
   return {result,committed,scope,attempt};
@@ -109,12 +123,20 @@ test("NAR15 direct raw output remains rejected even when a wrapper looks native"
     {mode:"party"}),/PvP|proof/i);
 }));
 test("NAR05 same-turn native NPC creation qualifies only after its actual local source exists",()=>nativeFixture(f=>{
-  scene(f);const out=turn(f,[{...speech,entity_key:"new-porter"}],{text:"I ask the new porter about work.",patch:{
+  scene(f);const out=turn(f,[{...speech,entity_key:"new-porter"}],{nativeSetup:true,text:"I ask the new porter about work.",patch:{
     world_additions:[{kind:"npc",key:"new-porter",name:"Milo Porter",summary:"An ordinary local porter.",
       location_key:"terminal",occupation:"porter",public_identity:"A local porter.",portrayal:"Friendly.",visibility:"party"}]}});
   useful(out.result.narration);const entity=f.db.getCityRecord(f.guild,"autonomous_entity","npc:new-porter");assert(entity);
   const part=f.db.listCityRecords(f.guild,{kind:"gm_world_narrative",includeGM:true})[0];assert(part.data.state.authored);
   assert(f.db.getWorldEvent(f.guild,entity.source_event));
+}));
+test('NAR05 player mention and model addition without the independent GM setup still cannot create an NPC',()=>nativeFixture(f=>{
+  scene(f);const before=resources(f);
+  assert.throws(()=>turn(f,[{...speech,entity_key:'unapproved-porter'}],{text:'I ask the unapproved porter about work.',patch:{
+    world_additions:[{kind:'npc',key:'unapproved-porter',name:'Unapproved Porter',summary:'An ordinary local porter.',
+      location_key:'terminal',occupation:'porter',public_identity:'A local porter.',portrayal:'Friendly.',visibility:'party'}]}}),
+  /independent native GM authorship creation receipt/);
+  assert.equal(f.db.getNpcProfile(f.guild,'unapproved-porter'),null);assert.deepEqual(resources(f),before);
 }));
 for(const [id,operation] of [["NAR09","appearance"],["NAR11","activity"]])test(`${id} valid PC inquiry remains nonblocking alongside NPC conversation`,
   ()=>nativeFixture(f=>{
@@ -135,7 +157,7 @@ test("NAR10 owner-disclosed partial appearance remains scoped and does not becom
 }));
 test("NAR14 independent Billy arrival survives mixed unsupported NPC/PC prose",()=>nativeFixture(f=>{
   scene(f);const span="I enter the terminal lobby.",out=turn(f,[speech,{...speech,text:"Choso apologizes for losing."}],{
-    text:`${span} Can you help me find work?`,patch:{player_intents:[{type:"move",source_span:span,target_name:"Terminal Lobby",
+    nativeSetup:true,text:`${span} Can you help me find work?`,patch:{player_intents:[{type:"move",source_span:span,target_name:"Terminal Lobby",
       target_key:"terminal-lobby",destination:"interior",operation:"enter",utterance:"",excluded_targets:[],framing:"immediate",
       resolution:"auto",reason:"An ordinary adjacent public lobby."}],
       world_additions:[{kind:"location",key:"terminal-lobby",name:"Terminal Lobby",summary:"An adjoining public lobby.",

@@ -228,6 +228,8 @@ bot/scripts/v96-semantic-output-p0-test.mjs
 bot/scripts/v96-semantic-proposals-test.mjs
 bot/scripts/validate-command-schema.mjs
 bot/scripts/validate-offline.mjs
+bot/scripts/validation-selection-test.mjs
+bot/scripts/validation-selection.mjs
 bot/scripts/world-authorship-test.mjs
 bot/scripts/world-background-identity-test.mjs
 bot/scripts/world-background-memory-test.mjs
@@ -568,13 +570,16 @@ docs/Active_Implementation/AI_GM_AUTHORITY_MIGRATION_MATRIX.md
 docs/Active_Implementation/BREAK_THE_PATTERN_AUTHORING_CONTRACT.md
 docs/Active_Implementation/CURRENT_SCOPE.md
 docs/Active_Implementation/DOCUMENTATION_AUDIT.md
+docs/Active_Implementation/IMPLEMENTATION_RECONCILIATION.md
 docs/Active_Implementation/N15_APPEARANCE_CONTRACT.md
+docs/Active_Implementation/NO_DEFERRALS_HISTORY_THROUGH_373c7d6.md
 docs/Active_Implementation/NO_DEFERRALS_LEDGER.md
 docs/Active_Implementation/PVP_CAMPAIGN_AND_PRE_ROLL_FEAR_CONTRACT.md
 docs/Active_Implementation/README.md
 docs/Active_Implementation/RELEASE_QUALIFICATION_GATES.md
 docs/Active_Implementation/UNIFIED_ARBITRATION_FEATURE_COVERAGE.md
 docs/Active_Implementation/UNIFIED_GM_ARBITRATION.md
+docs/Active_Implementation/VALIDATION_RECONCILIATION.md
 docs/Active_Implementation/VEILED_CITY_CODEX_SEMANTIC_FIRST_START_HERE_v2_1.md
 docs/Active_Implementation/VEILED_CITY_CONSOLIDATED_MULTI_AGENT_PLAN_v1_3.md
 docs/Active_Implementation/VEILED_CITY_COST_OPTIMIZED_IMPLEMENTATION_PLAN_v2_1_SEMANTIC_FIRST.md

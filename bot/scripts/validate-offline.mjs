@@ -1,8 +1,9 @@
 /** Required suites run in network-denied child processes with dummy credentials. */
-import { spawnSync } from "node:child_process";
+import { spawnSync,execFileSync } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
 import { performance } from "node:perf_hooks";
+import {selectValidationSuites} from './validation-selection.mjs';
 const suites=["quality-check","format-check","check-source","validate-command-schema","i-heard-you-1-test","i-heard-you-2-test","i-heard-you-3-test","i-heard-you-4-test","i-heard-you-5-test","i-heard-you-6-test","i-heard-you-7-test","i-heard-you-9-test","i-heard-you-integration-test","offline-smoke-test","production-regression-test",
   "refactor-regression-test","operations-regression-test","npc-cognition-regression-test","audit-regression-test","simulation-regression-test",
   "seed-data-regression-test","seed-drafts-regression-test","city-regression-test","city-core-regression-test","city-civic-regression-test","city-depth-regression-test","narrative-contract-test",
@@ -32,6 +33,7 @@ suites.push("assembly-hooks-test");
 suites.push("scene-narration-repair-test");
 suites.push("playable-narration-test");
 suites.push("critical-validation-profile-test");
+suites.push("validation-selection-test");
 suites.push("narrative-freedom-test","narrative-salience-test","narrative-deployment-safety-test");
 suites.push("delegation-quality-test");
 suites.push("narrative-publication-hotfix-test");
@@ -78,6 +80,24 @@ if(validationProfile==='critical')suites.splice(0,suites.length,...suites.filter
 const report={fixture_only:true,network:"denied",billable_tokens:0,live_requests:0,suites:[],limits:["Synthetic fixtures do not establish unrestricted live-model semantics.","Consult I_HEARD_YOU_EVALUATION for measured false positives/negatives and unresolved ambiguities."]};
 report.profile=typeof validationProfile==='undefined'?'fixture':validationProfile;
 report.deferred_optional_suites=typeof extendedSuiteInventory==='undefined'?[]:extendedSuiteInventory.filter(id=>!suites.includes(id));
+report.selection={mode:'full',reason:'default_full_gate'};
+if(process.argv.includes('--changed')){
+  let paths=null,clean=false;
+  const base=process.env.VC_CHANGED_BASE;
+  if(/^[a-f0-9]{40}$/.test(base||'')&&!/^0+$/.test(base)){
+    try{
+      const git=process.env.VEILED_GIT||'git',options={cwd:path.resolve('..'),encoding:'utf8'};
+      clean=!execFileSync(git,['status','--porcelain','--untracked-files=normal'],options).trim();
+      if(clean)paths=execFileSync(git,['diff','--name-only','--diff-filter=ACDMRTUXB','-z',base,'HEAD','--'],options).split('\0').filter(Boolean);
+    }
+    catch{ /* Missing/shallow ancestry selects the full gate, never zero tests. */ }
+  }
+  const selection=selectValidationSuites(suites,paths,{clean}),chosen=new Set(selection.suites);
+  report.not_selected_suites=suites.filter(id=>!chosen.has(id));
+  suites.splice(0,suites.length,...selection.suites);
+  report.selection={mode:selection.mode,reason:selection.reason};
+}
+report.release_qualified=false; // Whole-plan completion and exact-SHA release gates are separate.
 
 // VC_VALIDATION_REPORT_V1: compact, atomic, local-only suite diagnostics.
 const reportPath=path.resolve(process.env.VC_VALIDATION_REPORT_PATH||path.join(".reports","offline-validation.json"));
@@ -130,7 +150,8 @@ for(let i=0;i<suites.length;i++){
 }
 try{
 report.acceptance=JSON.parse(fs.readFileSync(new URL("./fixtures/i-heard-you-acceptance.json",import.meta.url),"utf8")).map(row=>({...row,
-  test_result:row.suites.every(id=>report.suites.some(suite=>suite.id===id&&suite.status==="passed"))?"passed":"missing_or_failed",
+  test_result:row.suites.every(id=>report.suites.some(suite=>suite.id===id&&suite.status==="passed"))?"passed"
+    :report.selection.mode==='focused'&&row.suites.some(id=>report.not_selected_suites.includes(id))?'not_selected':'missing_or_failed',
   status:row.status||"bounded_fixture_verified"}));
 }catch{
   report.acceptance_failures=["invalid_acceptance_inventory"];
@@ -138,11 +159,11 @@ report.acceptance=JSON.parse(fs.readFileSync(new URL("./fixtures/i-heard-you-acc
   console.error(`VALIDATION FAIL invalid acceptance inventory; report=${reportPath}`);
   process.exit(1);
 }
-if(report.acceptance.some(row=>row.test_result!=="passed")){
-  report.acceptance_failures=report.acceptance.filter(row=>row.test_result!=="passed").map(row=>row.id||row.name||"unknown");
+if(report.acceptance.some(row=>row.test_result==='missing_or_failed')){
+  report.acceptance_failures=report.acceptance.filter(row=>row.test_result==='missing_or_failed').map(row=>row.id||row.name||"unknown");
   saveReport("failed");
   console.error(`VALIDATION FAIL acceptance=${report.acceptance_failures.join(",")}; report=${reportPath}`);
   process.exit(1);
 }
 saveReport("passed");
-console.log(`VALIDATION PASS ${report.summary.passed}/${report.summary.total} suites in ${report.summary.duration_ms}ms; network denied; live=0; billed=0; report=${reportPath}`);
+console.log(`VALIDATION ${report.selection.mode==='focused'?'FOCUSED ':''}PASS ${report.summary.passed}/${report.summary.total} suites in ${report.summary.duration_ms}ms; network denied; live=0; billed=0; report=${reportPath}`);
