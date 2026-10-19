@@ -230,13 +230,23 @@ export function settleGroupFeature(db,guild,key){
       if(terminal){const source=db.getWorldEvent(guild,terminal.source_event);
         if(terminal.subject_key!==n.character||terminal.visibility!=='character'||terminal.data.owner!==n.owner||terminal.data.invitation_hash!==hash(row.data)
           ||source?.status!=='active'||!db.ownerAuthoredSource(guild,source.event_key,n.owner))throw fail('group_progress_owner_source');
-        if(terminal.status==='withdrawn'&&(source.kind!=='native_gm_reaction_withdrawal'||source.details.invitation!==row.record_key
-          ||source.details.revision!==hash(row.data)))throw fail('group_progress_exact_withdrawal');
+        if(terminal.status==='withdrawn'){
+          if(terminal.record_key!==`gm-reaction-submit:${hash([row.record_key,n.owner])}`||terminal.data.invitation!==row.record_key
+            ||source.kind!=='native_gm_reaction_withdrawal'||source.source_id!==`player:${n.owner}`||source.visibility!=='character'
+            ||source.subject_key!==n.character||source.session_id!==row.data.origin.session||source.scene!==row.data.origin.scene
+            ||source.details.author!==n.owner||source.details.character_id!==n.character||source.details.invitation!==row.record_key
+            ||source.details.revision!==hash(row.data)||!db.ownerAuthoredSource(guild,source.event_key,n.owner))throw fail('group_progress_exact_withdrawal');
+          // Withdrawal is an immutable owner-authored terminal disposition. A later
+          // reassignment must not turn it into an unresolved current-recipient check.
+          status='withdrawn';proof=terminal.record_key;return {decision:c.decision,character:c.character,status,proof};
+        }
         if(!['resolved','withdrawn'].includes(terminal.status))throw fail('group_progress_native_terminal');
         proof=terminal.record_key;
       }
-      status=groupReactionState(db,guild,row,terminal);
-      if(status==='resolved'){const effect=validateGroupReactionEffect(db,guild,effectKey(row.record_key));proof=effect.record_key;}
+      const effect=terminal?.status==='resolved'&&db.getCityRecord(guild,'gm_group_feature_effect',effectKey(row.record_key));
+      if(effect){const verified=validateGroupReactionEffect(db,guild,effect.record_key,{historical:true});status=verified.status;proof=verified.record_key;}
+      else status=groupReactionState(db,guild,row,terminal);
+      if(status==='resolved'&&!effect){const verified=validateGroupReactionEffect(db,guild,effectKey(row.record_key));proof=verified.record_key;}
     }catch(error){if(!['GM_ARBITRATION','TYPED_ROLL_PROOF','SCENE_ACTION_WINDOW'].includes(error.code))throw error;status='needs_review';}
     return {decision:c.decision,character:c.character,status,proof};
   });
