@@ -3,7 +3,7 @@ import {createHash} from 'node:crypto';
 import {currentScene} from './scene-continuity.js';
 import {indexWorldEvent} from './city-calendar.js';
 import {narrativeSourceVisible,sceneFictionHash as hash,sceneFictionFailure} from './scene-fiction-context.js';
-import {worldNarrativeBridgePacket,worldDirectorBridgeBeats} from './world-narrative-bridge.js';
+import {worldNarrativeBridgePacket,worldDirectorBridgeBeats,nativeFearClockConsequenceSnapshot} from './world-narrative-bridge.js';
 const sourceBinding=Symbol('native-director-narrative-source');
 export const nativeDirectorNarrativeSource=result=>result?.[sourceBinding]?.ref||null;
 export const nativeDirectorNarrativeContent=result=>result?.[sourceBinding]?.content||null;
@@ -28,6 +28,7 @@ function dramaticBrief(db,guild,result,scope,trigger){
   // Counts/categories describe unfinished work, never proposed prose or fabricated outcomes.
   const pending=result.act?[{kind:'director_plan',state:'proposed_requires_native_validation'}]:[];
   return {version:1,dramatic_purpose:events.length?'respond_to_visible_development':'offer_a_local_npc_or_scene_opportunity',events,pending,
+    native_clock_consequences:nativeFearClockConsequenceSnapshot(db,guild,scope),
     narrative_opportunity:'Use one coherent scene/response/attempt beat; leave a concrete opening without choosing a PC action.',
     unresolved_outcomes:'Proposals are not outcomes. Only native_results can render mechanical consequences.'};
 }

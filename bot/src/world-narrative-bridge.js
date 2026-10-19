@@ -9,6 +9,7 @@ import {actorEvidenceVisible} from './npc-cognition-projection.js';
 import {activeCityProxy} from './city-constraints.js';
 import {inspectOpeningEntryOpportunity} from './session-opening-attendance.js';
 import {renderNarrativeUnit} from './narrative-authority.js';
+import {validateFearEffect} from './pvp-fear-moves.js';
 const entitled=(row,scope)=>['public','party'].includes(row.visibility)||scope.mode==='private'&&row.visibility==='character'
   &&row.subject_key===scope.actorCharacterId&&!!scope.actorUserId;
 const audience=s=>s.mode==='private'?{visibility:'character',character:s.actorCharacterId,user:s.actorUserId}:{visibility:'party',character:null,user:null};
@@ -242,10 +243,69 @@ function nativeDirectorBridge(db,guild,source,scope){
     &&hash(d.scope)===hash(scope)&&narrativeSourceVisible(db,guild,source.event_key,scope)
     &&d.world_bridge?.version===1&&Array.isArray(d.world_bridge.signals)&&d.world_bridge.signals.length<=4);
 }
+const FEAR_EFFECT_RECORD_SCAN_LIMIT=500;
+const FEAR_EFFECT_VALIDATION_LIMIT=32;
+function fearClockAudience(db,guild,row,scope){
+  if(scope.mode==='party')return row.visibility==='party'&&row.subject_key==null;
+  const pc=db.getCharacter(scope.actorCharacterId);
+  return !!scope.actorUserId&&pc?.guild_id===guild&&pc.owner_user_id===scope.actorUserId
+    &&row.visibility==='character'&&row.subject_key===scope.actorCharacterId;
+}
+/** Exact committed clock-effect proof. Labels, prose and GM visibility are not outcome authority. */
+function nativeFearClockEffect(db,guild,key,scope,scene){
+  const row=db.getCityRecord(guild,'pvp_fear_effect_receipt',key),d=row?.data;
+  if(!row||row.status!=='resolved'||!d||!['clock_advance','clock_create_and_advance'].includes(d.move_kind)
+    ||d.session!==scene.session_id||d.scene!==scene.key||!fearClockAudience(db,guild,row,scope))return null;
+  try{validateFearEffect(db,guild,row.record_key);}
+  catch(error){if(error.code==='NARRATIVE_PVP')return null;throw error;}
+  const context=db.getCityRecord(guild,'pvp_fear_context',d.context),source=db.getWorldEvent(guild,d.source_event);
+  if(!context||context.status!=='active'||context.record_key!==d.context||context.source_event!==d.source_event
+    ||context.data.move_kind!==d.move_kind||context.data.target_key!==d.target||context.data.scene!==scene.key
+    ||context.data.session!==scene.session_id||context.location_key!==source?.location_key||source?.status!=='active'
+    ||source.kind!=='pvp_fear_context_established'||source.session_id!==scene.session_id||source.scene!==scene.key
+    ||source.location_key!==context.location_key||source.visibility!==row.visibility||source.subject_key!==row.subject_key
+    ||!narrativeSourceVisible(db,guild,source.event_key,scope))return null;
+  let principalRevision=null;
+  if(scope.mode==='private'){
+    let principal;
+    try{principal=conversationPrincipal(db,guild,scope.actorUserId,scope.actorCharacterId);}
+    catch(error){if(['Active session required.','Select an authenticated current controlled role.','Controller attendance required.','Active campaign character required.'].includes(error.message))return null;throw error;}
+    if(principal.kind!=='owner'||context.subject_key!==scope.actorCharacterId||context.data.subject_key!==scope.actorCharacterId)return null;
+    principalRevision=principal.revision;
+  }else if(context.visibility!=='party'||context.subject_key!==null||context.data.visibility!=='party'||context.data.subject_key!==null)return null;
+  const trigger=db.getCityRecord(guild,'pvp_fear_trigger',d.trigger);
+  if(!trigger||trigger.status!=='resolved'||trigger.data.effect!==row.record_key||trigger.data.session!==scene.session_id
+    ||trigger.data.scene!==scene.key)return null;
+  return {row,source,context,trigger,causation:source.event_key,principalRevision};
+}
+/** Snapshot direct keys for bounded current-scene Fear clock receipts. */
+export function nativeFearClockConsequenceSnapshot(db,guild,scope){
+  const scene=currentScene(db,guild),receipts=[];let overflow=false,scanned=0,validated=0,offset=0;
+  for(;offset<FEAR_EFFECT_RECORD_SCAN_LIMIT;offset+=100){
+    const page=db.listCityRecords(guild,{kind:'pvp_fear_effect_receipt',query:scene.key,includeGM:scope.mode==='private',limit:100,offset});
+    for(const candidate of page){
+      if(candidate.status!=='resolved'||candidate.data?.scene!==scene.key||candidate.data?.session!==scene.session_id
+        ||!['clock_advance','clock_create_and_advance'].includes(candidate.data?.move_kind)
+        ||!fearClockAudience(db,guild,candidate,scope))continue;
+      scanned++;
+      if(validated>=FEAR_EFFECT_VALIDATION_LIMIT){overflow=true;break;}
+      validated++;
+      const proof=nativeFearClockEffect(db,guild,candidate.record_key,scope,scene);if(!proof)continue;
+      receipts.push({kind:'pvp_fear_effect_receipt',key:proof.row.record_key,revision:hash(proof.row),
+        source_event:proof.source.event_key,source_revision:hash(proof.source),causation_ref:proof.causation,
+        audience:audience(scope),session:scene.session_id,scene:scene.key,
+        ...(proof.principalRevision?{principal_revision:proof.principalRevision}:{})});
+    }
+    if(overflow)break;
+    if(page.length<100)break;
+    if(offset+page.length>=FEAR_EFFECT_RECORD_SCAN_LIMIT)overflow=true;
+  }
+  return {version:1,receipts:receipts.slice(0,4),omitted:Math.max(0,receipts.length-4),overflow,scanned,validated};
+}
 /** Audience-bound Director beat metadata only; never a message, knowledge, consent or native outcome. */
 export function worldDirectorBridgeBeats(db,guild,source,scope){
   if(!nativeDirectorBridge(db,guild,source,scope))return null;
-  const beats=[];let held=0;
+  const beats=[];let held=0,omitted=0;
   const scene=currentScene(db,guild);
   // Only project scene observations that were already established by the native
   // audience-bound narrative authority. Re-render with the original binding
@@ -287,16 +347,38 @@ export function worldDirectorBridgeBeats(db,guild,source,scope){
       audience:audience(scope),depth:1,origin_kind:'director',epistemic:'observation',fictional_scope:'nonmechanical_established_scene',
       location:event.location_key||'',reason:'native_established_scene_unit',execution_authority:false,publication_authority:false});
   }
+  const consequences=source.details.dramatic_brief?.native_clock_consequences;
+  if(consequences){
+    if(consequences.version!==1||!Array.isArray(consequences.receipts)||consequences.receipts.length>4)held++;
+    else for(const [index,proof] of consequences.receipts.entries()){
+      if(beats.length>=4){omitted+=consequences.receipts.length-index;break;}
+      const current=currentScene(db,guild),validated=nativeFearClockEffect(db,guild,proof.key,scope,current),event=validated?.source;
+      if(!validated||proof.kind!=='pvp_fear_effect_receipt'||hash(validated.row)!==proof.revision
+        ||event.event_key!==proof.source_event||hash(event)!==proof.source_revision||proof.session!==current.session_id
+        ||proof.scene!==current.key||hash(proof.audience)!==hash(audience(scope))
+        ||proof.causation_ref!==validated.causation
+        ||scope.mode==='private'&&proof.principal_revision!==validated.principalRevision
+        ||!narrativeSourceVisible(db,guild,proof.causation_ref,scope)){held++;continue;}
+      const root=proof.causation_ref,cycle=`world-cycle:${hash([current.session_id,current.key,root])}`;
+      beats.push({version:1,protocol:'world_beat_v1',id:`world-beat:${hash([source.event_key,proof.key,proof.audience])}`,
+        kind:'world_consequence',source_ref:source.event_key,signal_ref:proof.key,effect_ref:proof.key,source_event_ref:event.event_key,
+        causation_ref:root,world_cycle_ref:cycle,audience:proof.audience,depth:1,origin_kind:'native_consequence',
+        consequence:'committed_native_clock_change',location:event.location_key||'',reason:'validated_native_fear_clock_receipt',
+        execution_authority:false,publication_authority:false});
+    }
+  }
   for(const signal of source.details.world_bridge.signals){
     if(!revalidateWorldNarrativeSignal(db,guild,signal,scope)){held++;continue;}
-    if(beats.length>=4)break;
+    if(beats.length>=4){omitted++;continue;}
     beats.push({version:1,protocol:'world_beat_v1',id:`world-beat:${hash([source.event_key,signal.id,signal.audience])}`,kind:'pacing_hint',
       source_ref:source.event_key,signal_ref:signal.id,causation_ref:signal.causation_ref,world_cycle_ref:signal.world_cycle_ref,
       audience:signal.audience,depth:1,origin_kind:'director',reason:signal.kind==='opening_opportunity_request'?'request_opening_opportunity':
         signal.kind==='unresolved_narrative_task'?'request_missing_coverage':'consider_native_result_opportunity',
       execution_authority:false,publication_authority:false});
   }
-  return {version:1,beats,held,authority:'Source-bound scene fiction and pacing metadata only; no knowledge, consent, publication or native execution authority.'};
+  const sidecar=source.details.dramatic_brief?.native_clock_consequences;
+  return {version:1,beats,held,...(sidecar?{omitted:omitted+Number(sidecar.omitted||0),omission_truncated:sidecar.overflow===true}:{}),
+    authority:'Source-bound scene fiction and pacing metadata only; no knowledge, consent, publication or native execution authority.'};
 }
 /** Historical snapshot reader for retrieval weight ONLY; cannot revive a live action or publication grant. */
 function activeSignalSnapshot(db,guild,s,scope){
@@ -338,7 +420,19 @@ export function canonicalNarrativeCause(db,guild,sourceRef,scope){
   const source=db.getWorldEvent(guild,sourceRef);
   if(source?.kind!=='native_director_narrative_scope'||source.details.version!==2)return sourceRef;
   if(!nativeDirectorBridge(db,guild,source,scope))return null;
-  const signals=source.details.world_bridge.signals;if(!signals.length)return sourceRef;
+  const signals=source.details.world_bridge.signals,sidecar=source.details.dramatic_brief?.native_clock_consequences,
+    consequences=sidecar?.receipts||[];
+  if(sidecar&&(sidecar.version!==1||sidecar.overflow||sidecar.omitted||!Array.isArray(sidecar.receipts)||sidecar.receipts.length>4))return null;
+  if(!signals.length&&!consequences.length)return sourceRef;
   if(!signals.every(s=>activeSignalSnapshot(db,guild,s,scope)))return null;
-  const roots=[...new Set(signals.map(s=>s.causation_ref))];return roots.length===1?roots[0]:null;
+  const scene=currentScene(db,guild);
+  for(const proof of consequences){
+    const current=nativeFearClockEffect(db,guild,proof.key,scope,scene),event=current?.source;
+    if(!current||proof.kind!=='pvp_fear_effect_receipt'||hash(current.row)!==proof.revision||event?.event_key!==proof.source_event
+      ||hash(event)!==proof.source_revision||proof.session!==scene.session_id||proof.scene!==scene.key
+      ||hash(proof.audience)!==hash(audience(scope))||proof.causation_ref!==current.causation
+      ||scope.mode==='private'&&proof.principal_revision!==current.principalRevision
+      ||!narrativeSourceVisible(db,guild,proof.causation_ref,scope))return null;
+  }
+  const roots=[...new Set([...signals.map(s=>s.causation_ref),...consequences.map(c=>c.causation_ref)])];return roots.length===1?roots[0]:null;
 }
