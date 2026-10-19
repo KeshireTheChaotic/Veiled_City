@@ -31,8 +31,8 @@
     },
     {
       "path": "README.md",
-      "size_bytes": 12137,
-      "sha256": "846f08f5e0ed59b3a9cc482def79f8ec99846fa3e28d40ba1fb2630b1c92e608"
+      "size_bytes": 12267,
+      "sha256": "a07fb4240b26bc2370713e9969c1d603752d9a06316accdc0bc54924d63e8514"
     },
     {
       "path": "bot/.env.example",
@@ -566,8 +566,8 @@
     },
     {
       "path": "bot/scripts/native-unarmed-attack-test.mjs",
-      "size_bytes": 4061,
-      "sha256": "b39b0f4dbb943e352c9d1879c6115494c9d30db78d02ccf74b7b3f3be47e5465"
+      "size_bytes": 14051,
+      "sha256": "e0d0b5e1b302ccc07a58e33b353f20828ab3b24be09b9beec7363d2651f3d327"
     },
     {
       "path": "bot/scripts/native-veil-defense-test.mjs",
@@ -1121,8 +1121,8 @@
     },
     {
       "path": "bot/scripts/validate-offline.mjs",
-      "size_bytes": 11536,
-      "sha256": "5e8d3ac00ae4afadbe14be7efeb46cfa1641468e5e498f2df198e9627c391686"
+      "size_bytes": 11579,
+      "sha256": "f9a05fa2bf97d00635099de5b3e86e1efe7023074beb5f5244abcd02af862619"
     },
     {
       "path": "bot/scripts/world-authorship-test.mjs",
@@ -1546,8 +1546,8 @@
     },
     {
       "path": "bot/src/gm-arbitration-output.js",
-      "size_bytes": 6823,
-      "sha256": "d40bf738d0271ac596eff737d612dd5933aaca6bb527c66d10cf6f8cd321ce74"
+      "size_bytes": 7042,
+      "sha256": "8a18c4ff1be34bfdf0ccea379e09a07695a9da7a251bc197e99564b3bef67ecb"
     },
     {
       "path": "bot/src/gm-fiction-composition.js",
@@ -1576,8 +1576,8 @@
     },
     {
       "path": "bot/src/gm-unified-arbitration.js",
-      "size_bytes": 17130,
-      "sha256": "ebcacae58425c25b416b43b72be735ce2bbe7a8f1533a2e33a15c25222c2f17f"
+      "size_bytes": 17840,
+      "sha256": "f9152f4aa8ef09b1d5e41e632e75d33a19b5937019e6ceb940109bbbe9751be6"
     },
     {
       "path": "bot/src/gm-world-narrative.js",
@@ -1841,8 +1841,8 @@
     },
     {
       "path": "bot/src/native-notice.js",
-      "size_bytes": 8003,
-      "sha256": "53083e71a7d5c8d718c5739b601c24bfa2df5d4ae1e6b1a1aafd973b139295f8"
+      "size_bytes": 8301,
+      "sha256": "c0532ccc7bc851916d84cfe0cdc37b43fd3db39411ee63cc14f26790324461f0"
     },
     {
       "path": "bot/src/native-outcome-output.js",
@@ -1853,6 +1853,11 @@
       "path": "bot/src/native-publications.js",
       "size_bytes": 11153,
       "sha256": "e8f741fb14a237d651497af99363c2eac39b10e4139e2524fb089506bdd7f43a"
+    },
+    {
+      "path": "bot/src/native-unarmed-attacks.js",
+      "size_bytes": 9168,
+      "sha256": "097f57201da70d6e96fc1b5b9e15fda80155bc21eb6516fa0b1ba762852d9113"
     },
     {
       "path": "bot/src/negotiations.js",
@@ -2116,8 +2121,8 @@
     },
     {
       "path": "bot/src/roll-requests.js",
-      "size_bytes": 20669,
-      "sha256": "fb9d4f4a3ee67b18e1646f55030667aa101c09f13855b48ad3a0d0adca27ef39"
+      "size_bytes": 21066,
+      "sha256": "2f89da53f8b12cfbb35db1490f6d53b2e218c17900283f122529cb8220dc7357"
     },
     {
       "path": "bot/src/roll-sharing.js",
@@ -2141,8 +2146,8 @@
     },
     {
       "path": "bot/src/rules-arbitration.js",
-      "size_bytes": 9736,
-      "sha256": "73d275fd2c7819765905caa2eaba5ce74b7f575e796defa2cd07f3eb231bc8a4"
+      "size_bytes": 9800,
+      "sha256": "a0b12febf135a2ebaef465fc9bd0b8b5d373fed861a849fbed6c137c7e217685"
     },
     {
       "path": "bot/src/rules-srd.js",
@@ -2371,8 +2376,8 @@
     },
     {
       "path": "bot/src/typed-roll-proof.js",
-      "size_bytes": 8470,
-      "sha256": "bf5ac9d04345854b536599be33d809431006be877b0146b77a2401006a9e1b4a"
+      "size_bytes": 9055,
+      "sha256": "5fc6048cac89882c98bebe771bf0ac61dc999e803d288c357ac38072d907597b"
     },
     {
       "path": "bot/src/voice.js",
@@ -2791,8 +2796,8 @@
     },
     {
       "path": "docs/Active_Implementation/NO_DEFERRALS_LEDGER.md",
-      "size_bytes": 166391,
-      "sha256": "9ce5e1ae1db5273d7f6b1b452a70d9ca0285aa48a5b14adbaf0810516cfc7b89"
+      "size_bytes": 171846,
+      "sha256": "404c29e9351daf192f5e4d3a15b60cbd4ec93a2cd378fd507786794d2a76f14d"
     },
     {
       "path": "docs/Active_Implementation/README.md",

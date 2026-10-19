@@ -49,6 +49,7 @@ suites.push("native-actor-control-test");
 suites.push("native-veil-defense-test");
 suites.push("native-group-completion-test");
 suites.push("native-experience-eligibility-test");
+suites.push("native-unarmed-attack-test");
 suites.push("session-opening-attendance-test");
 suites.push("session-opening-test");
 suites.push("session-opening-entry-test");

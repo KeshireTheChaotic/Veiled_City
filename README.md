@@ -81,10 +81,12 @@ The current owner-prioritized sequence is:
 5. Frozen-tree full offline qualification, exact-SHA CI and separately authorized release.
 
 Semantic-first S-GATE and bounded later packages have recorded targeted evidence.
-The native PC-to-NPC unarmed-attack regression is currently a **known-red test
-checkpoint**, not an implemented attack adapter. The full catalog, authority
-migration and final W7/release gates are **not complete**. Missing authoritative
-rule sources remain explicit blockers, never invented mechanics.
+The bounded native PC-to-NPC unarmed adapter now has targeted offline evidence:
+actual local NPC target, Strength/Finesse, Proficiency d4 physical, owner-executed
+dice and private delivery. It does not authorize PC-target attacks or infer weapon
+statistics. The full catalog, authority migration and final W7/release gates are
+**not complete**. Missing authoritative rule sources remain explicit blockers,
+never invented mechanics.
 
 Active contracts and evidence:
 

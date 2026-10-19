@@ -15,6 +15,7 @@ import {noticeHash} from "./native-notice.js";
 import {gmRulingDetails} from "./gm-action-ruling.js";
 import {overlapsOwnerActionTerminal} from "./owner-action-terminal.js";
 import {nativeDefenseAura,persistNativeDefenseAura,nativeFormationDefense,persistNativeFormationDefense,nativeVeilExposureDefense} from './native-defense-aura.js';
+import {inspectNativeUnarmedAttack} from './native-unarmed-attacks.js';
 const hash=value=>createHash("sha256").update(JSON.stringify(value)).digest("hex");
 const signed=value=>`${value>=0?"+":""}${value}`;
 export const rollRevision=hash;
@@ -87,25 +88,27 @@ export function rollBreakdown(db,guild,input,pc){
     const target=encounter?db.listCombatants(encounter.id).find(row=>row.id===a?.target_id):null;
     if(target)assertNonPvpCombatant(db,guild,target);
     const weapon=(pc.data.inventory||[]).find(item=>(typeof item==="string"?item:item.name)===a?.weapon);
-    if(event.kind!=="roll_adjudication"||event.details.human_reviewed!==true||event.source_kind!=="gm"
+    const native=event.kind==='native_unarmed_attack'?inspectNativeUnarmedAttack(db,guild,input,pc):null;
+    if(!native&&(event.kind!=="roll_adjudication"||event.details.human_reviewed!==true||event.source_kind!=="gm"
       ||event.subject_key!==pc.id||event.visibility!=="character"||event.session_id!==session?.id||event.scene!==currentScene(db,guild).key
       ||!a||a.trait!==input.trait||a.active!==true||!weapon||typeof weapon==="object"&&weapon.equipped!==true
       ||!db.getRulesRuling(guild,a.ruling_key)||!/^\d{1,2}d\d{1,4}(?:[+-]\d+)?$/i.test(a.damage)
-      ||!["physical","magic"].includes(a.damage_type)||encounter?.status!=="active"||!target||target.status!=="active"||!Number.isSafeInteger(target.difficulty))
+      ||!["physical","magic"].includes(a.damage_type)||encounter?.status!=="active"||!target||target.status!=="active"||!Number.isSafeInteger(target.difficulty)))
       throw new StateConflictError("Active owned attack, damage formula, target and rules require exact current human adjudication.");
-    diceSpec(a.damage);
-    attack={weapon:a.weapon,damage:a.damage,damage_type:a.damage_type,target_id:target.id,encounter_id:encounter.id,difficulty:target.difficulty};
-    const aura=nativeDefenseAura(db,guild,target,input);
-    if(aura)attack={...attack,difficulty:target.difficulty+1,base_difficulty:target.difficulty,defense_aura:aura.proof};
-    const formation=nativeFormationDefense(db,guild,target,input);
+    diceSpec(native?native.attack.damage:a.damage);
+    attack=native?.attack||{weapon:a.weapon,damage:a.damage,damage_type:a.damage_type,target_id:target.id,encounter_id:encounter.id,difficulty:target.difficulty};
+    const actualTarget=native?db.listCombatants(attack.encounter_id).find(t=>t.id===attack.target_id):target;
+    const aura=nativeDefenseAura(db,guild,actualTarget,input);
+    if(aura)attack={...attack,difficulty:actualTarget.difficulty+1,base_difficulty:actualTarget.difficulty,defense_aura:aura.proof};
+    const formation=nativeFormationDefense(db,guild,actualTarget,input);
     if(formation){
       if(aura)throw new StateConflictError('Combined defensive passive/aura odds require an authored native mapping.');
-      attack={...attack,difficulty:target.difficulty+formation.detail.bonus,base_difficulty:target.difficulty,defense_passive:formation.proof};
+      attack={...attack,difficulty:actualTarget.difficulty+formation.detail.bonus,base_difficulty:actualTarget.difficulty,defense_passive:formation.proof};
     }
-    const veil=nativeVeilExposureDefense(db,guild,target,input);
+    const veil=nativeVeilExposureDefense(db,guild,actualTarget,input);
     if(veil){
       if(aura||formation)throw new StateConflictError('Combined defensive passive/aura odds require an authored native mapping.');
-      attack={...attack,difficulty:target.difficulty+veil.detail.bonus,base_difficulty:target.difficulty,defense_passive:veil.proof};
+      attack={...attack,difficulty:actualTarget.difficulty+veil.detail.bonus,base_difficulty:actualTarget.difficulty,defense_passive:veil.proof};
     }
   }
   const unresolved=[...base.unresolved,

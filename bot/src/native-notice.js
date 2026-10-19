@@ -12,6 +12,7 @@ import {renderFearEffect,validateFearEffect} from './pvp-fear-moves.js';
 import {damagePvpOwnerContext} from './pvp-profiles.js';
 import {assertGmRulingRequest} from './gm-action-ruling.js';
 import {nativeGmNotice} from './gm-arbitration-output.js';
+import {inspectNativeUnarmedAttack} from './native-unarmed-attacks.js';
 export const noticeHash=value=>createHash('sha256').update(JSON.stringify(value)).digest('hex');
 function fail(){throw Object.assign(new Error('Native notice source, revision, owner or audience is stale.'),{code:'NATIVE_NOTICE'});}
 export function renderNativeNotice(db,guild,d){
@@ -29,6 +30,10 @@ export function renderNativeNotice(db,guild,d){
       ||!db.ownerAuthoredSource(guild,source.event_key,r.data.owner_user_id)
       ||db.getCharacter(r.subject_key)?.owner_user_id!==r.data.owner_user_id
       ||r.data.session_id!==d.session||r.data.scene!==d.scene)fail();
+    if(r.data.input?.attack_source?.startsWith('native-unarmed:')){
+      if(r.status==='resolved')typedRollProof(db,guild,r);
+      else inspectNativeUnarmedAttack(db,guild,r.data.input,db.getCharacter(r.subject_key));
+    }
     if(d.kind==='roll_party'){
       const s=r.data.party_disclosure?.source_event&&db.getWorldEvent(guild,r.data.party_disclosure.source_event),roll=db.getSavedRoll(guild,r.data.roll_id);
       if(d.user||!s||s.status!=='active'||s.visibility!=='party'||s.details.request!==r.record_key

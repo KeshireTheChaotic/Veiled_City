@@ -368,6 +368,7 @@ bot/src/native-house-errata.json
 bot/src/native-notice.js
 bot/src/native-outcome-output.js
 bot/src/native-publications.js
+bot/src/native-unarmed-attacks.js
 bot/src/negotiations.js
 bot/src/nonmaterial-grammar.js
 bot/src/npc-cognition-projection.js

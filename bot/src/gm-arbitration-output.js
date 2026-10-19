@@ -8,6 +8,7 @@ import {sceneFictionHash as hash} from './scene-fiction-context.js';
 import {conversationPrincipal} from './conversation-principal.js';
 import {arbitrationFailure as fail} from './gm-arbitration-contract.js';
 import {EncounterLibrary} from './encounter.js';
+import {inspectNativeUnarmedAttack} from './native-unarmed-attacks.js';
 
 export function nativeGmNotice(db,guild,key,scope,{library=new EncounterLibrary('../content')}={}){
   const stored=db.getCityRecord(guild,'gm_arbitration_decision',key),shared=stored?.data.native?.operation==='commit_adversary_volley'
@@ -24,7 +25,10 @@ export function nativeGmNotice(db,guild,key,scope,{library=new EncounterLibrary(
     if(!request||request.subject_key!==pc.id||request.data.owner_user_id!==pc.owner_user_id)throw fail('private_notice_request');
     if(request.status==='resolved'){
       const result=typedRollProof(db,guild,request);text=`Native ${request.data.kind} result: ${request.data.result.total}, ${request.data.result.duality}; ${result.outcome}. No new world consequence is inferred.`;
-    }else text=formatRollRequest(request,{user:pc.owner_user_id,db,guild});
+    }else{
+      if(request.data.input?.attack_source?.startsWith('native-unarmed:'))inspectNativeUnarmedAttack(db,guild,request.data.input,pc);
+      text=formatRollRequest(request,{user:pc.owner_user_id,db,guild});
+    }
     proof=request;
   }else if(row.status==='pending_pc_reaction'){
     const {terms}=inspectGmReactionInvitation(db,guild,pc.owner_user_id,row.record_key);

@@ -15,6 +15,7 @@ import {authorizeFeatureChoice,reserveFeatureWindow,pendingFeatureWindows} from 
 import {nativeAlliancePlan} from './native-encounter-relations.js';
 import {nativeFeatureReviewContract} from './native-house-errata.js';
 import {isGroupFeature,planGroupFeature} from './native-group-features.js';
+import {prepareNativeUnarmedAttack} from './native-unarmed-attacks.js';
 
 export const UNIFIED_ARBITRATION_PROMPT="Evaluate unified_arbitration in this SAME GM call. "
   +"Accepted typed intents are canonical adjudication inputs; human declarations own intent; native receipts own outcomes. "
@@ -24,6 +25,8 @@ export const UNIFIED_ARBITRATION_PROMPT="Evaluate unified_arbitration in this SA
   +"NPC attack uses actual PC Evasion, never invented Difficulty. "
   +"Ordinary NPC fiction normally uses npc_no_roll. "
   +"PC roll questions are adjudication only: player alone executes dice. "
+  +"For an exact owner unarmed_attack against a local native NPC, use feature_ref=unarmed_attack, request_pc_action_roll, stakes_kind=native_attack, "
+  +"srd:attack-rolls, Strength or Finesse, difficulty=null; native rules derive Proficiency d4 physical at Melee. No inferred weapon or PC target. "
   +"A triggered feature decision uses proposal_version=2 and the EXACT trigger_ref and feature_ref from feature_windows; a Reaction does not mint normal spotlight. "
   +"An action from action_features uses the v1 default variant: OMIT proposal_version and trigger_ref. "
   +"Select its exact feature_ref, operation, trait, Difficulty and source-derived target policy, stakes_kind=native_feature. "
@@ -60,6 +63,10 @@ export function adjudicateSceneBoard(db,guild,origin,board,proposals,{library=ne
     try{
     if(!rules||!p.reason.trim()||p.advantage&&p.disadvantage)reason='Missing current rule, explanation, or incompatible dice choice.';
     else if(['blocked','needs_consent','needs_rules_review'].includes(p.disposition)){status=p.disposition;reason=p.reason;}
+    else if(entry.actor.type==='character'&&p.feature_ref==='unarmed_attack'){
+      native=prepareNativeUnarmedAttack(db,guild,origin,entry,p,{library});
+      status=native.disposition==='roll_pending'?'pending_pc_roll':'needs_rules_review';reason='Native unarmed eligibility only; owner alone rolls and chooses optional costs.';
+    }
     else if(p.feature_ref&&p.feature_ref!=='standard_attack'){
       const feature=featureDisposition(p.feature_ref);
       reason=feature.reason; // Catalog membership alone never grants a feature capability.
