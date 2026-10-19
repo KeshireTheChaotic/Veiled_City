@@ -276,6 +276,27 @@ export class VeiledDB {
     return this.db.prepare("SELECT rowid AS sequence,* FROM world_events WHERE guild_id=? AND rowid>? ORDER BY rowid LIMIT ?")
       .all(guildId,Math.max(0,after),Math.max(1,Math.min(50,limit))).map(row=>({...row,details:JSON.parse(row.details_json)}));
   }
+  /** Bounded native Stress-cause inventory, not proof that any candidate authorizes an effect.
+   * Keep revoked sources in history so retraction cannot refresh a first-use passive. */
+  nativeStressMarkHistory(guildId,sessionId,scene,{limit=201}={}){
+    return this.db.prepare(`SELECT c.*,c.rowid AS record_sequence,w.rowid AS source_sequence,w.event_key AS cause_event_key
+      FROM city_records c JOIN world_events scoped ON scoped.guild_id=c.guild_id AND scoped.event_key=c.source_event
+      LEFT JOIN world_events w ON w.guild_id=c.guild_id AND w.event_key=CASE
+        WHEN c.kind='pc_effect_receipt' THEN json_extract(c.data_json,'$.owner_choice') ELSE c.source_event END
+      WHERE c.guild_id=? AND c.status='resolved' AND scoped.session_id=? AND scoped.scene=?
+        AND c.kind IN ('gm_group_feature_effect','gm_feature_effect_receipt','pc_effect_receipt')
+        AND (c.kind!='pc_effect_receipt' OR json_extract(c.data_json,'$.resource')='stress')
+      ORDER BY c.rowid LIMIT ?`).all(guildId,sessionId,scene,Math.max(1,Math.min(201,Math.trunc(Number(limit))||201)))
+      .map(row=>({...row,data:JSON.parse(row.data_json),source:this.getWorldEvent(guildId,row.cause_event_key)}));
+  }
+  /** Read-only insertion order. It supplies ordering evidence, never source/actor authority. */
+  cityRecordSequence(guildId,kind,key){
+    return this.db.prepare('SELECT rowid AS sequence FROM city_records WHERE guild_id=? AND kind=? AND record_key=?')
+      .get(guildId,kind,key)?.sequence||0;
+  }
+  worldEventSequence(guildId,key){
+    return this.db.prepare('SELECT rowid AS sequence FROM world_events WHERE guild_id=? AND event_key=?').get(guildId,key)?.sequence||0;
+  }
   consequenceSourceCount(guildId,source){
     return this.db.prepare("SELECT count(*) n FROM city_records WHERE guild_id=? AND kind='consequence' AND source_event=?")
       .get(guildId,source).n;

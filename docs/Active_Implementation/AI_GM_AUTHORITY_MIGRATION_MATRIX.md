@@ -16,7 +16,7 @@ The current runtime has **more than one source of review requirements**. A human
 | Ordinary owner observation/no-roll | Current source-bound AI-GM ordinary ruling | **Retain** working native path |
 | Risky action pending request | GM chooses sourced Difficulty/trait/stakes; owner rolls | **Retain**; no PC die autocompletion |
 | Scoped flat/advantage modifiers | Some consumers require active saved human-reviewed ruling | **UA14** native rule/source proof across request and saved breakdown readers |
-| PC attack weapon/target/damage | Human-reviewed owned equipment and native adversary target mapping still checked | **UA14** source-pinned weapon/rules adapter, keep owner attack/damage rolls |
+| PC attack weapon/target/damage | Native exact unarmed NPC eligibility now has mutation/source, current-use, private publication and historical saved-result proof; equipped weapon variants retain human-reviewed mapping | **UA14 bounded qualified** unarmed Strength/Finesse, Proficiency d4 physical and actual same-zone NPC target. Owner executes attack/damage. Source-pinned equipped-weapon catalog/acquisition adapters remain open; no PC-target shortcut. |
 | Alternate trait | Existing owner choice after human-reviewed permission | **UA14** native contextual permission; keep owner selection |
 | Experience use | Native exact structured operation/trait/roll-kind eligibility plus current owner source; legacy human-reviewed participation remains | **UA14 bounded qualified** eligibility producer/use/pre-RNG/saved receipt reader; owner still opts in and explicitly pays 1 Hope. Free-form/incomplete applicability remains held. |
 | Help / Tag Team | Human-scoped feasibility plus each player's voluntary participation, exact roll/source | **UA14** eligibility proof, retain separate owners and once/session constraints |
@@ -26,7 +26,7 @@ The current runtime has **more than one source of review requirements**. A human
 | Unmapped consequential effect/capability | Missing native adapter | **Adapter pending**; not a role-label fix |
 | Owned PC healing/feature resources | Feature/owner/recipient approvals and immutable causal receipts | **UA14** only fixed, sourced mappings; retain owner cost/consent/death gates |
 | Standard NPC attack | Native AI GM capability and owner defense/Armor | **Retain** current, valid AI/Gm versus player control split |
-| Catalog NPC/group reactions | Exact supported native feature handlers, pending-owner children and immutable parent terminal history | **Retain 15 bounded**; 137 review-only occurrences plus one needs-authoring remain non-executable |
+| Catalog NPC/group reactions | Exact supported native feature handlers, pending-owner children and immutable parent terminal history | **Retain 16 bounded**; 136 review-only occurrences plus one needs-authoring remain non-executable |
 | Delegation mode/permission registry | Manual/suggest/routine administrative policy and costs/revisions | **Retain** independently from normal GM adjudication |
 | Mundane owner travel | Current typed owner move/geography/access native service | **Retain**; UA15 only removes redundant approvals in proved subset |
 | Restricted/encounter travel | Requires actual access/time/encounter adapter | **Retain hold**; no prose-authorized teleport/forced placement |

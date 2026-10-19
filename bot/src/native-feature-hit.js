@@ -8,6 +8,7 @@ import {validateIncomingDamageApplication,incomingAttackEvidence} from './pc-inc
 import {indexWorldEvent} from './city-calendar.js';
 import {arbitrationFailure as fail} from './gm-arbitration-contract.js';
 import {adversaryHpState} from './combat.js';
+import {applyNativeStressPassive} from './native-stress-passives.js';
 
 const FEATURE='adversary:wraith-pack:many-deaths';
 const keyFor=attack=>`many-deaths:${hash(attack)}`;
@@ -73,7 +74,8 @@ export function inspectManyDeathsEffect(db,guild,key){
 export function applyManyDeathsAfterIncoming(db,guild,attackKey){
   const attack=db.getCityRecord(guild,'pc_incoming_attack',attackKey);
   if(!attack?.data.offer.hit_features?.length)return null;
-  try{return db.transaction(()=>{
+  let result;
+  try{result=db.transaction(()=>{
     const key=keyFor(attackKey),prior=db.getCityRecord(guild,'gm_feature_effect_receipt',key);if(prior)return inspectManyDeathsEffect(db,guild,key);
     const proof=eligibility(db,guild,attack);if(!proof)return null;
     const base=validateIncomingDamageApplication(db,guild,`${attackKey}:damage`),pc=db.getCharacter(attack.subject_key),before=structuredClone(pc.data.resources);
@@ -97,4 +99,7 @@ export function applyManyDeathsAfterIncoming(db,guild,attackKey){
       visibility:'gm',data:{feature:FEATURE,attack:attackKey,reason:error.message,
         authority:'Extra effect unresolved. Keep valid attack/damage; no reroll, substituted consequence or private disclosure.'}});
   }
+  if(result?.kind==='gm_feature_effect_receipt'&&result.data.feature===FEATURE)
+    applyNativeStressPassive(db,guild,'feature',result.record_key);
+  return result;
 }

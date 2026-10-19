@@ -7,6 +7,7 @@ import {indexWorldEvent} from './city-calendar.js';
 import {arbitrationFailure as fail} from './gm-arbitration-contract.js';
 import {isGroupFeature,groupFeatureStakes,groupReactionState,applyGroupReactionOutcome,settleGroupFeature} from './native-group-features.js';
 import {reserveGmArbitrationNotice} from './native-publications.js';
+import {applyNativeStressPassive} from './native-stress-passives.js';
 
 const FEEDBACK='adversary:static-wraith:feedback';
 const effectKey=decision=>`feature-effect:${hash(decision)}`;
@@ -60,7 +61,7 @@ export function cancelFeatureReaction(db,guild,decision){
 export function applyFeatureReactionOutcome(db,guild,decision,request){
   const child=db.getCityRecord(guild,'gm_arbitration_decision',decision);
   if(child?.data.native.operation==='request_group_feature_reaction')return applyGroupReactionOutcome(db,guild,child,request);
-  return db.transaction(()=>{
+  const result=db.transaction(()=>{
     const {row}=inspectNativeGmDecision(db,guild,decision),n=row.data.native,key=effectKey(decision),prior=db.getCityRecord(guild,'gm_feature_effect_receipt',key);
     if(prior)return validateFeatureReactionEffect(db,guild,key);
     const terminal=db.getCityRecord(guild,'gm_reaction_submission',`gm-reaction-submit:${hash([decision,n.owner])}`),proof=typedRollProof(db,guild,request);
@@ -84,6 +85,9 @@ export function applyFeatureReactionOutcome(db,guild,decision,request){
     const saved=db.saveCityRecord(guild,{kind:'gm_feature_effect_receipt',key,status:'resolved',source_event:source.event_key,visibility:'character',subject_key:pc.id,data});
     const w=db.getCityRecord(guild,'native_feature_window',n.window);db.saveCityRecord(guild,{...w,key:w.record_key,status:'resolved'});return saved;
   });
+  if(result?.kind==='gm_feature_effect_receipt'&&!result.data.success)
+    applyNativeStressPassive(db,guild,'feature',result.record_key);
+  return result;
 }
 export function validateFeatureReactionEffect(db,guild,key){
   const receipt=db.getCityRecord(guild,'gm_feature_effect_receipt',key),v=receipt?.data,event=receipt&&db.getWorldEvent(guild,receipt.source_event),

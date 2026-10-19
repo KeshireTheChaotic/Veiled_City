@@ -309,13 +309,13 @@
       "template_hash": "a906b9fd4344bc9506b68079108ad467733de538e46547897f221dbc01ff4b1e",
       "index": 1,
       "type": "Passive",
-      "status": "review_only",
-      "trigger_kind": "unmapped",
-      "target_policy": "unmapped",
-      "roll_protocol": "unmapped",
-      "costs": null,
-      "native_handler": null,
-      "reason": "No qualified native feature handler."
+      "status": "supported",
+      "trigger_kind": "after_native_pc_stress_mark",
+      "target_policy": "self",
+      "roll_protocol": "none",
+      "costs": [],
+      "native_handler": "first_pc_stress_clear",
+      "reason": "First verified same-scene native PC Stress mark; existing local unproxied Leech clears one own Stress once. Historical ambiguity remains scoped review."
     },
     {
       "feature_key": "adversary:choir-relay:local-mesh",

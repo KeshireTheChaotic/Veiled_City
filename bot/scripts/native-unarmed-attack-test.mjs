@@ -16,8 +16,8 @@ import {typedRollProof} from '../src/typed-roll-proof.js';
 import {nativeGmNotice} from '../src/gm-arbitration-output.js';
 import {sceneFictionHash as hash} from '../src/scene-fiction-context.js';
 
-function fixture(f,{targetKey='guard',template='Aster Vale Contractor'}={}){
-  const x=setup(f,{text:'I punch the guard.'}),scene=currentScene(f.db,f.guild),npc='guard';
+function fixture(f,{targetKey='guard',template='Aster Vale Contractor',privateScene=false}={}){
+  const x=setup(f,{text:'I punch the guard.',privateScene}),scene=currentScene(f.db,f.guild),npc='guard';
   f.db.setCityCalendar(f.guild,{flags:{...f.db.getCityCalendar(f.guild).flags,gm_discretion:true,roll_requests:true,roll_collaboration:true,
     narrative_encounters:true}});
   f.db.upsertNpcProfile(f.guild,{npcKey:npc,displayName:'Guard'});
@@ -177,4 +177,17 @@ test('unarmed attack resolves the current Veil Anchor Sentinel passive Difficult
     expected_revision:rollRevision(rolled)},{rng:()=>4});
   assert.equal(damaged.status,'resolved');
   assert.equal(typedRollProof(f.db,f.guild,damaged).difficulty,attack.difficulty);
+}));
+
+test('a character-private unarmed declaration remains private at native preparation and publication',async()=>nativeFixture(async f=>{
+  const x=fixture(f,{privateScene:true}),saved=prepare(f,x);assert.equal(saved.status,'pending_pc_roll',saved.data.reason);
+  const q=f.db.getCityRecord(f.guild,'roll_request',saved.data.native.roll_request_ref);
+  assert.equal(x.intent.visibility,'character');assert.equal(q.visibility,'character');assert.equal(q.subject_key,x.pc.id);
+  assert.throws(()=>nativeGmNotice(f.db,f.guild,saved.record_key,{mode:'party',actorUserId:x.pc.owner_user_id,actorCharacterId:x.pc.id}));
+  assert.throws(()=>nativeGmNotice(f.db,f.guild,saved.record_key,{mode:'private',actorUserId:f.pcs[1].owner_user_id,actorCharacterId:f.pcs[1].id}));
+  const sent=[];await publishRollAmendment(f.db,f.guild,q,(user,text,session,character)=>{
+    sent.push({user,text,character});return{messageId:'private-attempt',channelId:'offline-private'};
+  });
+  assert.equal(sent.length,1);assert.equal(sent[0].user,x.pc.owner_user_id);assert.equal(sent[0].character,x.pc.id);
+  assert(sent[0].text.includes(x.text));assert.equal(f.db.listCityRecords(f.guild,{kind:'roll_party_publication',includeGM:true}).length,0);
 }));

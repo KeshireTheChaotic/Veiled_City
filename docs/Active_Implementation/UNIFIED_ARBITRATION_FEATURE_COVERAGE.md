@@ -1,6 +1,6 @@
 # Bounded native special-feature coverage
 
-**Authoritative source:** `bot/src/native-feature-definitions.json`, its runtime verifier `native-feature-catalog.js`, relevant `native-*` executors and source-pinned original content. Current counts are 153 = 15 supported + 137 review-only + 1 needs-authoring, using 14 bounded native handler families. This is **feature inventory**, not UA17 whole-release certification.
+**Authoritative source:** `bot/src/native-feature-definitions.json`, its runtime verifier `native-feature-catalog.js`, relevant `native-*` executors and source-pinned original content. Current counts are 153 = 16 supported + 136 review-only + 1 needs-authoring, using 15 bounded native handler families. This is **feature inventory**, not UA17 whole-release certification.
 
 ## Supported feature keys and exact scope
 
@@ -21,6 +21,7 @@
 | `adversary:green-root-host:horde-3d8-8` | Real half-marked NPC HP chooses native 3d8+8 attack damage; critical dice max once | Other Host HP/final-HP/interception rules |
 | `adversary:aster-vale-catastrophe-analyst:contingency-stack` | First actual Severe native incoming damage to local Analyst becomes Major, charged once/scene | Generic adversary reaction/Route Around or postmortem resurrection |
 | `adversary:pale-court-executioner:sentence-carried-out` | Standard native incoming attack adds exactly +2 damage from current sealed native Vulnerable; zero-bonus state also sealed before dice | Prose/sheet-only conditions, unsupported condition producers, extra attacks or changed pre-roll proof |
+| `adversary:memory-leech:taste-the-fear` | First verified same-scene native PC Stress mark clears one marked Stress from an existing local unproxied Leech, once; actual native owner-cost/group/Feedback/Many Deaths receipts, GM-private proof and restart reader | Missing or later PC placement, late binding, stale/proxied NPC, ambiguous/revoked earlier mark history or >200 scene receipt candidates hold only the passive. No inferred mark from sheet values, PC Stress clear, NPC knowledge or disclosure. |
 
 All handlers need correct native actor template/content hashes, control, scene/zone, target, rules, opportunity and costs; existing source/proof compatibility for saved outcomes survives a later context change. Catalog strings alone are not a fallback executor.
 
@@ -38,4 +39,4 @@ The only deliberately appended actor feature is Ritual Enforcement Team **Coordi
 
 ## What remains unimplemented
 
-The **137 `review_only`** entries and **one `needs_authoring`** occurrence are explicitly non-executable; generic 16-environment feature execution is not certified. Multi-owner condition variants, richer scene reach, generic private-result dependencies and arbitrary additional special defenses require separate adapters and counterexample tests. Do not reclassify items `supported` just to suppress a review status. Catalog completeness must fail closed when a feature string, full actor template, order or hash changes.
+The **136 `review_only`** entries and **one `needs_authoring`** occurrence are explicitly non-executable; generic 16-environment feature execution is not certified. Multi-owner condition variants, richer scene reach, generic private-result dependencies and arbitrary additional special defenses require separate adapters and counterexample tests. Do not reclassify items `supported` just to suppress a review status. Catalog completeness must fail closed when a feature string, full actor template, order or hash changes.

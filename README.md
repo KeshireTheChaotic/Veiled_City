@@ -48,6 +48,12 @@ See the [architecture](docs/Setup_and_Scope/RUNTIME_ARCHITECTURE.md),
 [arbitration contract](docs/Active_Implementation/UNIFIED_GM_ARBITRATION.md) and
 [security/privacy guide](docs/Setup_and_Scope/SECURITY_AND_PRIVACY.md).
 
+Source verification is not a universal semantic proof of generated English.
+Fresh GM-owned NPC/world prose uses a restricted authoring and audience boundary;
+it must not establish protected PC outcomes. Newly generated prose still carries
+residual semantic risk. Deterministic guards and regression corpora demonstrate
+their tested boundaries, not perfect detection of every possible assertion.
+
 ### Appearance: two distinct lanes
 
 Native-validated structured fields support authoritative visible observations.
@@ -66,8 +72,8 @@ assembly, diagnostics and durable publication. Each retains its own flags,
 source, consent, rule and actor requirements. A flag is not blanket AI authority.
 
 At this rebuild, the special-feature catalog contains **153 occurrences**:
-**15 bounded supported**, **137 review-only**, and **1 needs-authoring**, using
-**14 handler families**. Standard actions are separate. Supported means the exact
+**16 bounded supported**, **136 review-only**, and **1 needs-authoring**, using
+**15 handler families**. Standard actions are separate. Supported means the exact
 documented adapter, not arbitrary variants or whole-release qualification.
 See the [feature crosswalk](docs/Active_Implementation/UNIFIED_ARBITRATION_FEATURE_COVERAGE.md)
 and [runtime catalog](bot/src/native-feature-definitions.json).

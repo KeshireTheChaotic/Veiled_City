@@ -80,8 +80,8 @@ async function featureScenario(f,{looking=false,extraNpc=false}={}){
     rule_basis_refs:['srd:adversary-attacks'],feature_ref:w.data.feature,stakes_kind:'native_feature'};
   return {...x,w,rows,origin,board,p};
 }
-async function feedbackScenario(f,{privateScene=false,proxy=false,stress=0,pcStress=2,category='electronic_device'}={}){
-  const x=incoming(f,{privateScene,template:'Static Wraith',stress,text:'I use my phone.'});
+async function feedbackScenario(f,{privateScene=false,proxy=false,stress=0,pcStress=2,category='electronic_device',otherTemplates=[]}={}){
+  const x=incoming(f,{privateScene,template:'Static Wraith',stress,text:'I use my phone.',otherTemplates});
   f.db.updateCharacterData(x.pc.id,d=>{d.inventory.push({id:'phone',name:'Phone',category,equipped:true});d.resources.stress.current=pcStress;});
   if(proxy)f.db.upsertNpcProxy(f.guild,f.session.id,{npcName:'guard',userId:f.pcs[1].owner_user_id,status:'active'});
   f.db.setCityCalendar(f.guild,{flags:{...f.db.getCityCalendar(f.guild).flags,gm_discretion:true,roll_requests:true,roll_collaboration:true}});
@@ -121,8 +121,8 @@ function meshScenario(f,{template='Static Wraith',relays=1,establish=true}={}){
   }
   return {...x,encounter,binding,target,actors};
 }
-function packFearAttack(f,{looking=false,hopeFailure=false,hp=4,miss=false,armor=false,pcStress=2,signalTouched=false,template='Wraith Pack',beforeDice=()=>{},beforeDamage=()=>{}}={}){
-  const x=incoming(f,{privateScene:false,template,text:looking?'Describe the scene.':'I inspect the counter.'});
+function packFearAttack(f,{looking=false,hopeFailure=false,hp=4,miss=false,armor=false,pcStress=2,signalTouched=false,template='Wraith Pack',beforeDice=()=>{},beforeDamage=()=>{},otherTemplates=[]}={}){
+  const x=incoming(f,{privateScene:false,template,text:looking?'Describe the scene.':'I inspect the counter.',otherTemplates});
   f.db.setCityCalendar(f.guild,{flags:{...f.db.getCityCalendar(f.guild).flags,gm_discretion:true,roll_requests:true,roll_collaboration:true}});
   f.db.updateCombatant(f.db.getCurrentEncounter(f.session.id)&&x.row.data.offer.input.combatant,{hp_current:hp});
   f.db.updateCharacterData(x.pc.id,d=>{d.resources.stress.current=pcStress;if(signalTouched)d.domain_cards=[{name:'Signal-Touched',domain:'Signal',active:true}];});
@@ -231,6 +231,39 @@ function volleyScenario(f,{evasions=[12,17,24],fear=3,privateScene=false,extraSp
 }
 function readyVolley(f,x,i=0){const pc=f.pcs[i],a=x.attacks[i];reviewIncomingAttack(f.db,f.guild,pc.owner_user_id,a.record_key,{library:x.library});confirmIncomingDefense(f.db,f.guild,pc.owner_user_id,a.record_key);return a;}
 const cases=[
+ ['UA8','Leech-group','Taste the Fear consumes a genuine owner Flashbang consequence, without extra dice or PC effects',f=>{
+   const x=groupReactionScenario(f,{flash:true,otherTemplates:['Memory Leech']}),encounter=f.db.getCurrentEncounter(f.session.id),
+     leech=f.db.listCombatants(encounter.id).find(c=>c.base_name==='Memory Leech');
+   f.db.updateCombatant(leech.id,{stress_current:2});const fear=f.db.getCampaign(f.guild).fear,result=submitGroupReaction(f,x,0,[2,1]);
+   assert.equal(result.calls,2);assert.equal(f.db.getCharacter(x.pc.id).data.resources.stress.current,3);
+   assert.equal(f.db.listCombatants(encounter.id).find(c=>c.id===leech.id).stress_current,1);
+   assert.equal(f.db.getCampaign(f.guild).fear,fear);assert.equal(f.db.getCharacter(x.pc.id).data.resources.hope,2);
+   assert.equal(f.db.listCityRecords(f.guild,{kind:'native_stress_passive_receipt',includeGM:true}).length,1);
+ }],
+ ['UA8','Leech-feedback','Taste the Fear observes an actual Feedback reaction without leaking the private cause',async f=>{
+   const x=await feedbackScenario(f,{otherTemplates:['Memory Leech']}),encounter=f.db.getCurrentEncounter(f.session.id),
+     leech=f.db.listCombatants(encounter.id).find(c=>c.base_name==='Memory Leech');f.db.updateCombatant(leech.id,{stress_current:2});
+   const r=x.invites[0],terms=inspectGmReactionInvitation(f.db,f.guild,x.pc.owner_user_id,r.record_key).terms,
+     input={op:'gm-reaction-roll',request:r.record_key,revision:terms.revision};let calls=0;
+   submitGmReactionInvitation(f.db,f.guild,x.pc.owner_user_id,input,{interactionId:'leech-feedback-owner',authoredText:JSON.stringify(input),rng:()=>[1,2][calls++]});
+   assert.equal(calls,2);assert.equal(f.db.getCharacter(x.pc.id).data.resources.stress.current,3);
+   assert.equal(f.db.listCombatants(encounter.id).find(c=>c.id===leech.id).stress_current,1);
+   const receipt=f.db.listCityRecords(f.guild,{kind:'native_stress_passive_receipt',includeGM:true})[0];assert.equal(receipt.visibility,'gm');
+   assert.equal(f.db.listCityRecords(f.guild,{kind:'native_stress_passive_receipt'}).length,0);
+   assert.equal(f.db.getCampaign(f.guild).fear,0);assert.equal(f.db.getCharacter(x.pc.id).data.resources.hope,2);
+ }],
+ ['UA8','Leech-hit','Taste the Fear consumes actual Many Deaths Stress without changing the saved incoming hit',f=>{
+   const x=packFearAttack(f,{otherTemplates:['Memory Leech'],beforeDice:()=>{
+     const leech=f.db.listCombatants(f.db.getCurrentEncounter(f.session.id).id).find(c=>c.base_name==='Memory Leech');
+     f.db.updateCombatant(leech.id,{stress_current:2});
+   }}),encounter=f.db.getCurrentEncounter(f.session.id),leech=f.db.listCombatants(encounter.id).find(c=>c.base_name==='Memory Leech');
+   assert.equal(x.roll.data.hit,true);assert.equal(f.db.getCharacter(x.pc.id).data.resources.stress.current,3);
+   assert.equal(leech.stress_current,1);assert.equal(f.db.getCampaign(f.guild).fear,1);
+   assert.equal(f.db.getCharacter(x.pc.id).data.resources.hope,2);assert.equal(f.db.listCityRecords(f.guild,{kind:'native_stress_passive_receipt',includeGM:true}).length,1);
+   const hp=f.db.getCharacter(x.pc.id).data.resources.hp.current;f.restart();
+   resolveIncomingDamage(f.db,f.guild,x.pc.owner_user_id,x.attack.record_key,{armor:false,library:x.library});
+   assert.equal(f.db.getCharacter(x.pc.id).data.resources.hp.current,hp);assert.equal(f.db.listCombatants(encounter.id).find(c=>c.id===leech.id).stress_current,1);
+ }],
  ...[false,true].map(ai=>['UA8',`Executioner-${ai?'AI':'GM'}`,'Executioner adds exactly two damage only from native Vulnerable through '+(ai?'AI':'GM')+' owner-defense path',f=>{
    const x=executionerScenario(f,{ai});
    assert.equal(x.attack.data.offer.damage,'4d12+14');assert.equal(x.attack.status,'awaiting_defense');
@@ -1706,7 +1739,7 @@ cases.push(
    assert.equal(new Set(rows.filter(r=>r.actor_kind==='environment').map(r=>r.actor_name)).size,16);
    for(const r of rows){assert.match(r.source_hash,/^[a-f0-9]{64}$/);assert.match(r.template_hash,/^[a-f0-9]{64}$/);
      assert(Object.isFrozen(r));assert.equal(featureDisposition(r.feature_key).status,r.native_handler?'supported':'needs_rules_review');}
-   assert.deepEqual(rows.filter(r=>r.native_handler).map(r=>r.feature_key),['adversary:pale-court-thrall:pack-pressure',FLASH,'adversary:static-wraith:feedback','adversary:choir-relay:local-mesh','adversary:pale-court-knight:blood-rush','adversary:ritual-enforcement-team:stack-formation',VOLLEY,LANES,'adversary:wraith-pack:many-deaths','adversary:veil-anchor-sentinel:plausible-denial',REGENT,'adversary:veil-engine-custodian:consensus-pressure','adversary:pale-court-executioner:sentence-carried-out','adversary:green-root-host:horde-3d8-8','adversary:aster-vale-catastrophe-analyst:contingency-stack']);
+   assert.deepEqual(rows.filter(r=>r.native_handler).map(r=>r.feature_key),['adversary:pale-court-thrall:pack-pressure',FLASH,'adversary:static-wraith:feedback','adversary:memory-leech:taste-the-fear','adversary:choir-relay:local-mesh','adversary:pale-court-knight:blood-rush','adversary:ritual-enforcement-team:stack-formation',VOLLEY,LANES,'adversary:wraith-pack:many-deaths','adversary:veil-anchor-sentinel:plausible-denial',REGENT,'adversary:veil-engine-custodian:consensus-pressure','adversary:pale-court-executioner:sentence-carried-out','adversary:green-root-host:horde-3d8-8','adversary:aster-vale-catastrophe-analyst:contingency-stack']);
  }],
  ['UA6','02','typed representative descriptors distinguish action reaction passive and defense',async()=>{
    const {compileNativeFeatures}=await import('../src/native-feature-catalog.js'),rows=compileNativeFeatures(),get=(actor,name)=>rows.find(r=>r.actor_name===actor&&r.name===name);

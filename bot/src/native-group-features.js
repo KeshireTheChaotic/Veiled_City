@@ -13,6 +13,7 @@ import {typedRollProof} from './typed-roll-proof.js';
 import {arbitrationFailure as fail} from './gm-arbitration-contract.js';
 import {EncounterLibrary} from './encounter.js';
 import {reserveGmArbitrationNotice} from './native-publications.js';
+import {applyNativeStressPassive} from './native-stress-passives.js';
 
 const LANES='adversary:traffic-saint:all-lanes-stop',FLASH='adversary:aster-vale-contractor:flashbang';
 const REGENT='adversary:pale-regent:command-the-blood';
@@ -157,7 +158,7 @@ export function groupReactionState(db,guild,row,terminal){
   return terminal?.status||'pending';
 }
 export function applyGroupReactionOutcome(db,guild,row,request,choiceSource=null,choice=null){
-  return db.transaction(()=>{
+  const result=db.transaction(()=>{
   const result=db.transaction(()=>{
     const n=row.data.native,{pc,cost}= {...inspectGroupFeatureChild(db,guild,row),...inspectGroupFeature(db,guild,n.execution)},key=effectKey(row.record_key),
       prior=db.getCityRecord(guild,'gm_group_feature_effect',key),proof=typedRollProof(db,guild,request),policy=policies[n.feature],success=proof.outcome==='success',critical=request.data.result.duality==='Critical';
@@ -219,6 +220,9 @@ export function applyGroupReactionOutcome(db,guild,row,request,choiceSource=null
   reserveGmArbitrationNotice(db,guild,row.record_key);
   return result;
   });
+  if(result?.kind==='gm_group_feature_effect'&&result.data.stress>0)
+    applyNativeStressPassive(db,guild,'group',result.record_key);
+  return result;
 }
 /** Per-target progress only; no inferred failure, consent, public disclosure or mechanical execution. */
 export function settleGroupFeature(db,guild,key){

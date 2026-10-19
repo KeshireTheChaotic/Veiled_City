@@ -7,6 +7,7 @@ import { personalCharacter } from "./personal-continuity.js";
 import {hopeCap,assertPcCanAct} from "./pc-native-eligibility.js";
 import {consentAction} from "./action-consent.js";
 import {wakeAfterNativeAllyHealing} from "./pc-death.js";
+import {applyNativeStressPassive} from "./native-stress-passives.js";
 
 const hash=v=>createHash("sha256").update(JSON.stringify(v)).digest("hex");
 const fail=message=>{throw Object.assign(new Error(message),{code:"PC_EFFECT_AUTHORITY",expected:true});};
@@ -148,7 +149,7 @@ export function approvePcEffect(db,guild,user,key,{interactionId}={}){
 }
 /** Atomic CAS + effect receipt. Replays return the same already-applied effect, never another delta. */
 export function applyPcEffect(db,guild,key){
-  return db.transaction(()=>{
+  const result=db.transaction(()=>{
     const row=db.getCityRecord(guild,"pc_effect_authority",key),pc=verify(db,guild,row),d=row.data;
     const k=`pc-effect:${hash(key)}`,prior=db.getCityRecord(guild,"pc_effect_receipt",k);
     const choice=db.getWorldEvent(guild,`pc-effect-choice:${hash([key,d.owner])}`);
@@ -176,6 +177,9 @@ export function applyPcEffect(db,guild,key){
     if(d.healer&&d.resource==="hp"&&after<before)wakeAfterNativeAllyHealing(db,guild,receipt.record_key);
     return receipt;
   });
+  if(result?.kind==="pc_effect_receipt"&&result.data.resource==="stress"&&result.data.amount>0)
+    applyNativeStressPassive(db,guild,"pc",result.record_key);
+  return result;
 }
 /** Read-only applied healing proof; never creates or consumes an effect to validate it. */
 export function validateAllyHealingApplication(db,guild,key){
