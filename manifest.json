@@ -580,6 +580,11 @@
       "sha256": "f4c346cbad62a2f9b38e245affed3c06a7136d7882c042403423bdce59a1d2aa"
     },
     {
+      "path": "bot/scripts/native-unarmed-traits-test.mjs",
+      "size_bytes": 20769,
+      "sha256": "f4fd202ae6de31d1c99d22f819490d631a4da9f050d33ab4645c99f083ddacfd"
+    },
+    {
       "path": "bot/scripts/native-veil-defense-test.mjs",
       "size_bytes": 13646,
       "sha256": "28c6bdc17a545282786e46b45bf4e1121d14a12ee12e0fbe7eff0973240c3857"
@@ -1136,8 +1141,8 @@
     },
     {
       "path": "bot/scripts/validate-offline.mjs",
-      "size_bytes": 11756,
-      "sha256": "7237c43c89f802aaa3976f28e2bf550e1878388c8cde06e3753cff10d1501c85"
+      "size_bytes": 11799,
+      "sha256": "3720138c9a4165d8c5e263771ff453ab8a8920a0912e27350b8a5cf551797d19"
     },
     {
       "path": "bot/scripts/world-authorship-test.mjs",
@@ -1881,8 +1886,13 @@
     },
     {
       "path": "bot/src/native-unarmed-attacks.js",
-      "size_bytes": 9168,
-      "sha256": "097f57201da70d6e96fc1b5b9e15fda80155bc21eb6516fa0b1ba762852d9113"
+      "size_bytes": 9523,
+      "sha256": "2f676f8de636bbdc4315f4cf75cdcdfd3b747b7df4b053003dbcf852d3655830"
+    },
+    {
+      "path": "bot/src/native-unarmed-traits.js",
+      "size_bytes": 6064,
+      "sha256": "f01a8bf032919bdb8017937a7c852e91440d8340717b07b736a488ddb4a5ec42"
     },
     {
       "path": "bot/src/negotiations.js",
@@ -2121,8 +2131,8 @@
     },
     {
       "path": "bot/src/roll-collaboration.js",
-      "size_bytes": 33340,
-      "sha256": "3dfd0ee38915bb18b3eca41932a17a64f4d7dda8766d68cc8398c424ce33dcc0"
+      "size_bytes": 35414,
+      "sha256": "c04775e5f4b176ebaa82e3990eed7ef049fe2005261520ffae9f794863180c82"
     },
     {
       "path": "bot/src/roll-declaration-review.js",
@@ -2141,8 +2151,8 @@
     },
     {
       "path": "bot/src/roll-options.js",
-      "size_bytes": 11021,
-      "sha256": "8b92ecfa40b6f273ee935cdef6e383b8ee6e0e682081706ccd346609b005cce7"
+      "size_bytes": 12263,
+      "sha256": "064ed3e656816864294599a8449e9658d81a5090cf0bbbc09aa80c62b038dcdb"
     },
     {
       "path": "bot/src/roll-requests.js",
@@ -2801,8 +2811,8 @@
     },
     {
       "path": "docs/Active_Implementation/AI_GM_AUTHORITY_MIGRATION_MATRIX.md",
-      "size_bytes": 7324,
-      "sha256": "48e343a961f6969828805b67d80e91b285d102a03937177171673de277e17163"
+      "size_bytes": 7532,
+      "sha256": "5fdd1d916ebb7a49b2eb54b12207c1a3cf99194525fbb7024f5069bce96c10d4"
     },
     {
       "path": "docs/Active_Implementation/BREAK_THE_PATTERN_AUTHORING_CONTRACT.md",
@@ -2826,8 +2836,13 @@
     },
     {
       "path": "docs/Active_Implementation/NO_DEFERRALS_LEDGER.md",
-      "size_bytes": 196623,
-      "sha256": "ed0c7af70fbb4831fd60561c37175e0c1540596fef4e37201c4ce656c3c4d8d3"
+      "size_bytes": 200283,
+      "sha256": "09bf5a47e8c654616c17c184f66adec20f9182e86050f14d99a725b4ace7ef0f"
+    },
+    {
+      "path": "docs/Active_Implementation/PVP_CAMPAIGN_AND_PRE_ROLL_FEAR_CONTRACT.md",
+      "size_bytes": 4189,
+      "sha256": "eb348246b5df30071353a65830c092ad280b56c3e7281852552cefb9aad596dc"
     },
     {
       "path": "docs/Active_Implementation/README.md",

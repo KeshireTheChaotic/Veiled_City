@@ -113,6 +113,7 @@ bot/scripts/native-feature-authoring-test.mjs
 bot/scripts/native-group-completion-test.mjs
 bot/scripts/native-stress-passives-test.mjs
 bot/scripts/native-unarmed-attack-test.mjs
+bot/scripts/native-unarmed-traits-test.mjs
 bot/scripts/native-veil-defense-test.mjs
 bot/scripts/native-world-fixtures.mjs
 bot/scripts/natural-language-scope-test.mjs
@@ -374,6 +375,7 @@ bot/src/native-outcome-output.js
 bot/src/native-publications.js
 bot/src/native-stress-passives.js
 bot/src/native-unarmed-attacks.js
+bot/src/native-unarmed-traits.js
 bot/src/negotiations.js
 bot/src/nonmaterial-grammar.js
 bot/src/npc-cognition-projection.js
@@ -563,6 +565,7 @@ docs/Active_Implementation/CURRENT_SCOPE.md
 docs/Active_Implementation/DOCUMENTATION_AUDIT.md
 docs/Active_Implementation/N15_APPEARANCE_CONTRACT.md
 docs/Active_Implementation/NO_DEFERRALS_LEDGER.md
+docs/Active_Implementation/PVP_CAMPAIGN_AND_PRE_ROLL_FEAR_CONTRACT.md
 docs/Active_Implementation/README.md
 docs/Active_Implementation/RELEASE_QUALIFICATION_GATES.md
 docs/Active_Implementation/UNIFIED_ARBITRATION_FEATURE_COVERAGE.md
