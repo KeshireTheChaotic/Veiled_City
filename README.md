@@ -1,359 +1,193 @@
-# VEILED CITY MULTIPLAYER DISCORD ENGINE v0.0.0.1
+# Veiled City — Veilkeeper
 
-## Current Version
+A persistent, multiplayer Discord AI GM for an occult-noir Daggerheart campaign.
+Players write naturally; the GM interprets the fiction; native services adjudicate
+and record consequential outcomes. Characters, private knowledge and unfinished
+stories survive between sessions.
 
-**0.0.0.1** — Veilkeeper, a stateful Discord AI GM for multiplayer Veiled City
-campaigns using Daggerheart. The version is maintained in
-[bot/package.json](bot/package.json).
+## This development branch
 
-This release provides governed AI proposals, scoped context, native state commits,
-review receipts and bounded fictional-time scheduling. Optional features default
-off; AI delegation defaults to manual.
+**Branch:** [`codex/audience-first-narrative-v9`](https://github.com/KeshireTheChaotic/Veiled_City/tree/codex/audience-first-narrative-v9)
+**Application:** `0.0.0.1` ([package](bot/package.json)) · **SQLite schema:** `460`
 
-The I Heard You release adds owner-authored natural speech, private sourced roll
-requests, native Help/Tag Team collaboration, bounded narrative-integrity checks,
-listener corrections, witnessed tactics, exact owner-consent receipts, scoped case
-views, continuity diagnostics, relevance ranking, reconstructed briefs and inert
-reviewed content packages. [Release guide and limits](docs/I_HEARD_YOU_IMPLEMENTATION.md).
+This README describes the audience-first, semantic-first development branch, not
+`main` or an assurance about an installed production instance. Older document
+titles such as v9.6 or v10 name design milestones, not this application version.
+Targeted offline results are not full release qualification or evidence of live
+narrative quality, latency or cost.
 
-## Concept
+Start with the [setup and scope guide](docs/Setup_and_Scope/README.md) for operation
+and the [latest implementation ledger](docs/Active_Implementation/NO_DEFERRALS_LEDGER.md)
+for completed work, tests and blockers. Some supporting guides are pinned older
+snapshots; the current source and latest ledger outrank their older status claims.
 
-Veilkeeper runs an ongoing occult-noir tabletop campaign through Discord.
-Players describe actions, speak to NPCs, investigate leads and make
-application-rolled checks. The AI GM interprets the fiction and proposes world
-reactions; the application validates and records what actually happens.
+## Concept and authority
 
-SQLite preserves characters, attendance, discoveries, relationships, NPC memories,
-goals, clocks, canon and campaign history between sessions. NPC beliefs remain
-subjective: rumors, mistaken memories and incomplete evidence are not world truth.
-Human GMs retain oversight, review, pause and recovery controls.
+> Accepted typed intents are canonical adjudication inputs. Human declarations
+> own intent. Native receipts own outcomes. GM narration projects authorized
+> fiction; narration does not create its own authority.
 
-Ordinary fictional understanding is separate from native consequential state changes.
-[Scope-drift fixes and operating commands](docs/NATURAL_LANGUAGE_SCOPE_DRIFT.md)
-document that boundary; [database usage audit](docs/DATABASE_USAGE_AUDIT.md)
-also inventories mechanics, identity, configuration, workflows and operational data
-stored alongside campaign memory.
+The goal is expressive, responsive roleplay without requiring special phrases for
+every action. Understanding contextual references is distinct from authorizing
+travel, access, damage, custody, knowledge or consent. A player can attempt an
+action without declaring its success. An NPC can threaten arrest without the GM
+deciding that a PC surrenders.
 
-## Scope
+| Conceptual scope | Responsibility and boundary |
+| --- | --- |
+| Semantic intent | Preserve exact authenticated declarations, actors, spans and dependencies. Questions, quotations and hypothetical wishes are not automatic commitments or capabilities. |
+| Audience-first narration | Compose source-bound public and owner-private output. GM hooks, another PC's secrets and unverified reactions cannot become public facts. Held prose must not discard independent valid actions. |
+| Unified GM arbitration | Make supported ordinary rulings and select source-pinned native actions through the combined GM turn. A model role, proposed receipt or feature name grants no execution authority. |
+| Native mechanics | Resolve actual dice, Difficulty/Evasion, costs, conditions, damage, Armor and death through native services and authenticated choices. Optional spending and participation remain voluntary. |
+| Persistent world | Store campaign memory, subjective NPC beliefs, evidence and continuity alongside identity, workflow and immutable effect receipts. Rumors are not canon; imported dossiers do not establish live presence or PC knowledge. |
+| World Director | Connect bounded world proposals and scoped narrative evidence to native execution. Bidirectional integration is incremental, not a claim that the complete design is implemented. |
+| Openings and assembly | Build privately entitled personal hooks and returning continuity; support late entries and delivery recovery. Attendance cannot force arrival, co-location, party membership or cooperation. |
+| Recovery and operations | Preserve committed effects across retries/restarts. Revalidate queued payloads and recipients; never blindly resend uncertain Discord deliveries. |
 
-- Multiplayer characters, advancement, guests, attendance and human-controlled proxies.
-- Public table play and private player-to-GM channels with player/character-scoped knowledge.
-- Native dice/resources, encounter/combat controls, evidence handouts, relationships, canon and downtime.
-- Persistent NPC/faction cognition, rumors, investigations and fictional-time world reactions.
-- Optional institutions, infrastructure, economy, conversations, pacing, negotiations and reviewed world authoring.
-- Optional sourced goals/consequences, scene continuity, voluntary groups, strategies, personal arcs, discovery, long projects, memory consolidation and fair scheduling.
-- Privacy-aware bulk seeding, inferred-draft review, audit receipts, snapshots and logical backups.
-- Optional public voice narration; Discord text and application state remain authoritative.
+See the [architecture](docs/Setup_and_Scope/RUNTIME_ARCHITECTURE.md),
+[arbitration contract](docs/Active_Implementation/UNIFIED_GM_ARBITRATION.md) and
+[security/privacy guide](docs/Setup_and_Scope/SECURITY_AND_PRIVACY.md).
 
-The AI cannot invent dice results, authorize itself, silently overwrite canon,
-choose voluntary PC actions or override an active human proxy. Major/ambiguous
-changes require review. PC arc confirmation, project consent and private disclosure
-remain authenticated owner decisions. Background work uses fictional opportunities,
-not elapsed wall-clock time.
+### Appearance: two distinct lanes
 
-Gameplay/model requests can incur provider charges; voice is a separate opt-in
-paid pathway. Offline validation uses dummy credentials and denies network access.
-Enabled features still require established data, sources, resources and consent.
+Native-validated structured fields support authoritative visible observations.
+Exact owner-attributed prose supports expressive self-description, but remains an
+**unverified owner report**, not evidence of injuries, capabilities, another PC's
+reaction or canon. Ownership proves authorship, not every clause's truth or safety.
+Both lanes retain source and audience checks. See the
+[N15 contract and residual semantic risk](docs/Active_Implementation/N15_APPEARANCE_CONTRACT.md).
 
-## Installation / Setup
+## Implemented boundaries and unfinished scope
 
-### Requirements
+Existing pathways include character import/advancement, attendance and voluntary
+parties, private channels, sourced roll requests and optional collaboration, NPC
+standard attacks, bounded special features, evidence/canon review, memory,
+assembly, diagnostics and durable publication. Each retains its own flags,
+source, consent, rule and actor requirements. A flag is not blanket AI authority.
 
-- Node.js **22.16.0 or newer**, npm, and Git for repository updates.
-- A Discord application/bot, bot token, application ID and target server.
-- An OpenAI API key with access to your configured models.
-- FFmpeg in `PATH` only for native voice playback.
-- Persistent writable storage for SQLite and campaign content.
+At this rebuild, the special-feature catalog contains **153 occurrences**:
+**15 bounded supported**, **137 review-only**, and **1 needs-authoring**, using
+**14 handler families**. Standard actions are separate. Supported means the exact
+documented adapter, not arbitrary variants or whole-release qualification.
+See the [feature crosswalk](docs/Active_Implementation/UNIFIED_ARBITRATION_FEATURE_COVERAGE.md)
+and [runtime catalog](bot/src/native-feature-definitions.json).
 
-Use a development checkout for edits/tests. The existing production checkout is
-`D:\Library\Veiled City`; it is a deployment destination, not a development workspace.
+The current owner-prioritized sequence is:
 
-### 1. Install and configure
+1. Unified arbitration, special-feature adapters and saved-result consumers.
+2. World Director integration and supported native consequences.
+3. Versioned PvP/death and pre-roll Fear work, preserving existing protections until replacements qualify.
+4. Remaining opening/assembly reconciliation.
+5. Frozen-tree full offline qualification, exact-SHA CI and separately authorized release.
 
-From the repository root in PowerShell:
+Semantic-first S-GATE and bounded later packages have recorded targeted evidence.
+The native PC-to-NPC unarmed-attack regression is currently a **known-red test
+checkpoint**, not an implemented attack adapter. The full catalog, authority
+migration and final W7/release gates are **not complete**. Missing authoritative
+rule sources remain explicit blockers, never invented mechanics.
 
-```powershell
-Set-Location .\bot
-npm install
-if (!(Test-Path -LiteralPath .env)) { Copy-Item -LiteralPath .env.example -Destination .env }
-```
+Active contracts and evidence:
 
-Edit `bot/.env` locally:
+- [Semantic-first v2.1 plan](docs/Active_Implementation/VEILED_CITY_COST_OPTIMIZED_IMPLEMENTATION_PLAN_v2_1_SEMANTIC_FIRST.md)
+- [World Director bidirectional design](docs/Active_Implementation/VEILED_CITY_WORLD_DIRECTOR_BIDIRECTIONAL_DESIGN_v1_2.md)
+- [AI-GM producer/consumer matrix](docs/Active_Implementation/AI_GM_AUTHORITY_MIGRATION_MATRIX.md)
+- [No-deferrals ledger](docs/Active_Implementation/NO_DEFERRALS_LEDGER.md) — actual tests, later owner amendments and remaining scope
+- [Release qualification gates](docs/Active_Implementation/RELEASE_QUALIFICATION_GATES.md)
 
-```dotenv
-DISCORD_TOKEN=your_bot_token
-DISCORD_CLIENT_ID=your_application_id
-DISCORD_GUILD_ID=your_server_id
-OPENAI_API_KEY=your_api_key
-DATABASE_PATH=./data/veiled_city.sqlite
-CONTENT_ROOT=../content
-DEFAULT_RESPONSE_MODE=assisted
-VOICE_ENABLED=false
-```
+## Installation and setup
 
-The guild ID scopes registration to one server; omitting it registers global
-commands. Model names, reasoning/context/token limits, aftermath mode and voice
-settings are listed in [bot/.env.example](bot/.env.example). Configure models your
-account can use.
-
-Run npm commands from `bot` so relative paths resolve correctly. Never commit
-real credentials or runtime SQLite files. Preserve `bot/.env`,
-`bot/data/veiled_city.sqlite` and local campaign content during upgrades.
-
-### 2. Prepare Discord
-
-Enable **Message Content Intent** in the application's bot settings. Invite the bot
-with the `bot` and `applications.commands` scopes.
-
-Grant View Channels, Send Messages, Read Message History, Embed Links and Attach
-Files where needed; add Connect and Speak for voice. Do not grant Administrator
-merely to run Veilkeeper.
-
-Create a table channel, optional rules/reference channels, GM-only log/error
-channels and one private channel per player. Private channels must exclude other
-players; the application validates private delivery permissions.
-See [Discord setup](docs/DISCORD_SETUP.md) and
-[channel layout](docs/SERVER_CHANNEL_SETUP.md).
-
-### 3. Validate, register and start
-
-From `bot`:
+Use Node.js **22.16.0+**, npm, Git and writable persistent SQLite storage. A connected
+bot needs a Discord application and provider account; FFmpeg is optional for voice.
+Use an isolated development/staging checkout, not an unqualified production upgrade.
 
 ```powershell
+git clone --branch codex/audience-first-narrative-v9 --single-branch https://github.com/KeshireTheChaotic/Veiled_City.git
+Set-Location .\Veiled_City\bot
+npm ci
+if (-not (Test-Path -LiteralPath .env)) { Copy-Item .env.example .env }
+```
+
+Configure `.env` locally using [the example](bot/.env.example): Discord IDs/token,
+provider credentials, `DATABASE_PATH`, `CONTENT_ROOT`, response mode and optional
+features. Run npm commands from **`bot/`**. Keep credentials, SQLite/WAL/SHM files,
+backups and private campaign data out of commits and shared logs.
+
+See [installation](docs/Setup_and_Scope/INSTALLATION.md),
+[Discord setup](docs/Setup_and_Scope/DISCORD_SETUP.md),
+[provider setup](docs/Setup_and_Scope/OPENAI_SETUP.md) and
+[content seeding](docs/Setup_and_Scope/CONTENT_SEEDING.md). Configure genuinely private
+per-player and GM-only channels before delivering sensitive material.
+
+### Offline development and qualification
+
+```powershell
+# From bot/
+npm run check
+npm run quality
+npm run format:check
+# Run an affected regression during development, for example:
+node --import ./scripts/offline-guard.mjs --test scripts/semantic-owner-appearance-test.mjs
+# Full mandatory registry at a frozen qualification gate:
 npm run validate
-npm run register
-npm start
 ```
 
-Validation is offline. Registration contacts Discord and replaces the command
-schema in the selected scope. Starting connects the bot to Discord; gameplay can
-then make paid model calls. Run one bot instance per production database.
-After updates, restart the existing instance rather than launching a second copy;
-re-register commands when their schema changes.
+The [offline validator](bot/scripts/validate-offline.mjs) writes a compact JSON
+report under `bot/.reports/`; inspect summary, failed and not-run cases. Keep all
+mandatory security assertions. Deterministic fixtures establish offline behavior,
+not real-provider costs or live Discord performance. These examples are commands
+to run, not a claim that this README rebuild executed full qualification.
 
-### 4. Configure the campaign and seed content
+`npm run register` changes Discord command registration. `npm start` connects the
+bot and may incur provider charges. Use them only in an authorized environment
+after qualification; run one bot instance per campaign database.
 
-As a GM/admin in Discord, replace these channel/role selections with your own:
+## Useful commands
 
-```text
-/vc-campaign setup play_channel:#the-table gm_role:@GM mode:assisted
-/vc-campaign channels rules_channel:#rules-questions case_board:#case-board journal:#party-journal known_npcs:#known-npcs known_locations:#known-locations gm_log:#gm-log state_errors:#state-errors
-/vc-admin doctor
-/vc-admin seed-data
-```
+Current registration uses **split `/vc-*` roots**, not `/vc <group>`; the latter
+is only a compatibility path for stale registered schemas. Use Discord's picker
+and the current [command definitions](bot/src/command-definitions.js) for required
+options and JSON contracts. Registration is an external write, not an offline test.
 
-Seeding archives found files under `GM`, `GM_PRIVATE` and `PLAYER`, and
-materializes recognized data while preserving established state. Unmatched private
-character material remains GM-only. Templates/drafts do not establish live
-occupancy, membership, PC consent or AI authority. Inspect
-`/vc-admin seed-drafts` rather than approving everything blindly.
-See [content seeding](docs/CONTENT_SEEDING.md).
-
-Players create/import characters and register their private channels. Start a
-session with `/vc-session start title:Opening Night`. Players then check in using
-`/vc-session present`; the GM can run `/vc-session assemble`.
-AI scene generation incurs normal configured provider usage.
-
-### 5. Enable optional features and AI management
-
-The 9.4.0 narrative-inference changes, mundane-entry policy and GM fact-establishment
-commands are documented in [the inference audit](docs/NARRATIVE_INFERENCE_AUDIT.md).
-Remaining natural-language scope gaps are tracked in
-[the follow-up review](docs/NATURAL_LANGUAGE_SCOPE_DRIFT.md).
-
-The current release supports 43 optional city/story flags. Review their data and authority requirements before enabling them. Start with the original 37:
-
-```text
-/vc-city flags json:{"institutions":true,"opportunities":true,"economy":true,"minor_npcs":true,"adaptive_context":true,"conversations":true,"pacing":true,"negotiations":true,"voice_direction":true,"authoring":true,"emergent_goals":true,"consequences":true,"scene_continuity":true,"emergent_groups":true,"strategies":true,"personal_arcs":true,"discovery":true,"long_projects":true,"conflict_mediation":true,"memory_consolidation":true,"activity_density":true,"decision_advisory":true,"encounter_intelligence":true,"tactical_memory":true,"dialogue_history":true,"evidence_custody":true,"audience_influence":true,"player_organizations":true,"history_reconciliation":true,"narrative_setups":true,"supply_dependencies":true,"natural_language":true,"roll_requests":true,"roll_collaboration":true,"semantic_integrity":true,"narrative_relevance":true,"session_briefs":true}
-```
-
-Then enable the six newer flags if desired:
-
-```text
-/vc-city flags json:{"autonomous_pvp_fear":true,"pvp_private_ui":true,"gm_discretion":true,"scoped_disclosure_recovery":true,"scene_descriptions":true,"post_projection_answers":true}
-```
-
-If a character has no native initial position, `/vc session present` offers an owner-private setup control for eligible existing locations. The owner chooses public or private disclosure, or leaves placement unconfirmed. This does not authorize travel or resolve prior attempts. See [scene narration and setup](docs/SCENE_NARRATION_REPAIR.md).
-
-Flags do not authorize AI execution. Start with review-only proposals:
-
-```text
-/vc-story delegation json:{"mode":"suggest_only","allow":[],"max_operations":1,"max_cost":0,"expires_minute":null}
-/vc-story expansion-status
-/vc-story ai-inbox
-```
-
-For delegated routine work, first inspect `/vc-city status`. Replace `1440`
-below with an expiry **after the current fictional minute**. This narrow example
-permits goal proposals and reversible memory maintenance:
-
-```text
-/vc-story delegation json:{"mode":"routine_delegated","allow":["goal.propose","memory.consolidate","memory.revise","memory.revert"],"max_operations":1,"max_cost":0,"expires_minute":1440}
-/vc-director resume
-```
-
-Limits bound delegated fictional work, not API spending. Broaden the allowlist
-deliberately using the [complete feature/delegation matrix and rollout
-guide](docs/END_TO_END_IMPLEMENTATION.md). Major review, native mechanics, source
-checks, ownership and consent remain binding. Discovery is read-only.
-
-For the new I Heard You proposal operations only (this **replaces** the policy;
-merge your existing desired allowlist if retaining it):
-
-```text
-/vc-story delegation json:{"mode":"routine_delegated","allow":["roll.prepare","roll.adjudicate","dialogue.interpret"],"max_operations":4,"max_cost":0,"expires_minute":1000000000}
-```
-
-Choose an appropriate expiry after the current fictional minute. `roll.adjudicate`
-still requires human feasibility/rules review. Owners alone authorize Hope,
-participation, selected results, exact consent and private disclosure. Missing
-card mechanics or Help with net disadvantage require a saved human ruling; no
-automatic guessed arithmetic. New slash commands require normal command
-registration after deployment; pulling files does not restart a running bot.
-
-Revoke delegation:
-
-```text
-/vc-story delegation json:{"mode":"manual","allow":[],"max_operations":1,"max_cost":0,"expires_minute":null}
-```
-
-`/vc-director pause` pauses automatic director passes. Turning off flags or
-revoking policy is not a blanket cancellation/refund of legacy human-approved work;
-inspect/cancel queued work through native review or strategy controls.
-
-### 6. Optional voice narration
-
-Set `VOICE_ENABLED=true` and `VOICE_MODE=narrative` in `bot/.env`, ensure
-FFmpeg is available, and restart. Join the desired Discord voice channel, then:
-
-```text
-/vc-voice configure mode:narrative
-/vc-voice join
-/vc-voice status
-```
-
-`voice_direction` enables approved delivery guidance, not TTS itself. Automatic
-voice excludes private scenes and GM-only material. Narration is skipped before
-synthesis when the bot has no voice connection. `/vc-voice repeat` replays cached
-audio without a new TTS request. See [voice narration](docs/VOICE_NARRATION.md).
-
-## Useful Player Commands
-
-Ordinary places and minor NPCs can now be created by the AI GM during play without
-manual promotion. In-character needs and worries invite an open GM response; saying
-you need work does not accept a job or change income. See [RELAX behavior and GM
-controls](docs/RELAX_IMPLEMENTATION.md) and the [remaining response-gap audit](docs/CHARACTER_RESPONSE_GAPS.md).
-
-Use Discord's option picker for attachments and character selections. Placeholders
-such as `<id>` must be replaced; JSON responses need current keys/revisions from
-the relevant inbox. Player commands expose only authorized knowledge.
-
-| Task | Command / example |
+| Player task | Entry points |
 | --- | --- |
-| Create / import a character | `/vc-character create name:Alex`; `/vc-character import file:<character.json>` |
-| Inspect / select / export | `/vc-character list`; `/vc-character sheet`; `/vc-character select character:Alex`; `/vc-character export format:all` |
-| Register your private channel | Run `/vc-player private-channel` inside that private channel |
-| Response preferences | `/vc-player accessibility length:compact mechanics:standard screen_reader:true` |
-| Check in / arrive late | `/vc-session present character:Alex`; `/vc-session arrive character:Alex` |
-| Absence / early departure | `/vc-session absent mode:offscreen`; `/vc-session leave mode:offscreen` |
-| Authorize a human PC proxy | `/vc-session absent mode:proxy proxy:@TrustedPlayer` |
-| Roll Duality Dice | `/vc-roll duality modifier:2` |
-| Inspect / resolve native pending requests | `/vc-roll pending`; `/vc-roll result request:<key>`; say “I roll.” after adjudication |
-| Read a private case / brief | `/vc-intel discover mode:case query:<subject>`; `/vc-intel brief` |
-| Authorize owned collaboration | Describe Help/Tag Team freely; `/vc-roll contribute json:<owned op, key, request, expected_revision, exact authorization>` is the optional mechanical path |
-| Ask about rules | `/vc-rules ask question:<question>` |
-| Review campaign knowledge | `/vc-intel recap`; `/vc-intel facts`; `/vc-intel clues`; `/vc-intel caseboard` |
-| Read continuity / leads | `/vc-intel continuity`; `/vc-intel discover json:{"mode":"leads","query":"visitor"}` |
-| Respond to an arc invitation/candidate | `/vc-intel arc json:<owned response with key/revision>` |
-| Retrieve evidence | `/vc-handout list`; `/vc-handout show id:<id>`; `/vc-handout export id:<id> format:all` |
-| Submit downtime work | `/vc-downtime project type:research title:Study objective:Trace the visitor` |
-| Inspect / consent to long projects | `/vc-downtime status`; `/vc-downtime long-project-status`; `/vc-downtime long-project json:<owned proposal or phase response>` |
-| Begin advancement | `/vc-level level-up character:Alex` (then `/vc-level level-choose` and `/vc-level level-confirm`) |
-| Accept / decline an NPC proxy offer | `/vc-npc claim npc:<name>`; `/vc-npc decline npc:<name>` |
-| Retrieve / release your NPC packet | `/vc-npc packet npc:<name>`; `/vc-npc release npc:<name>` |
-| Join voice / replay narration | `/vc-voice join`; `/vc-voice repeat` |
+| Create/import/select an owned PC | `/vc-character create`, `/vc-character import`, `/vc-character select` |
+| Register an owner-private channel | `/vc-player private-channel` |
+| Check in / arrive / leave | `/vc-session present`, `/vc-session arrive`, `/vc-session leave` |
+| Submit appearance material | `/vc-character describe` — structured or expressive lane, explicit visibility |
+| Inspect pending dice and private options | `/vc-roll pending`, `/vc-roll menu`, `/vc-roll result` |
+| Resolve an owned native choice | Current private controls or `/vc-roll contribute`, `/vc-roll window`, `/vc-roll effect` |
+| Ask rules / inspect entitled knowledge | `/vc-rules ask`, `/vc-intel recap`, `/vc-intel facts`, `/vc-intel clues` |
 
-Rules questions can consult the [official Daggerheart SRD](https://www.daggerheart.com/srd/)
-with PDF page citations. Saved campaign GM rulings retain precedence. Online lookup
-is enabled by default; set `RULES_ONLINE_SRD=false` in `bot/.env` for local-only
-answers. Install updated dependencies with `npm install` before restarting after
-deployment. See [lookup limits and fallback behavior](docs/RULES_ONLINE_SRD.md).
-
-During an active session, describe actions in the configured table channel or your
-registered private GM channel. With discovery enabled, “What do I know about the
-visitor?” uses a grounded, private, read-only route. Arc/project invitations are
-optional; an AI proposal is never your consent.
-
-Natural-language recognition is conservative, not unrestricted semantic proof.
-Authored speech such as `I say to witness: "Call me Doctor."` preserves exact words
-for actual listeners. Questions/counteroffers remain nonbinding. `/vc-intel continuity`
-shows current proposal keys, terms and revisions; an optional exact authorization
-uses `Regarding <key>@<revision>, I agree to: <exact terms>`. Project-phase consent
-also needs `using my submitted project <actual ID>`. Meetings and negotiations
-still await native human/all-participant review; no invitation forces arrival.
-For private attempts, “I share my pending attempt with NAME.” discloses only the
-attempt to a present character with established communication, not private stats.
-Raw Duality modifiers do not bypass a pending sourced request.
-
-Entry prose such as “I walk into the diner” remains provisional if the location
-or access is not established. It cannot create a place or put a named NPC there.
-GM entry review uses `/vc-story scene-view json:{"op":"entries"}` and the existing
-`/vc-story scene` command; see [scene entry and narrative checks](docs/SCENE_ENTRY_FIX.md).
-
-## Useful GM / Admin Commands
-
-GM operations require Discord Manage Server permission or the configured GM role.
-JSON commands use typed native contracts, not arbitrary database patches.
-Some commands below need additional required options selected in Discord.
-
-| Task | Command / example |
+| GM/admin task | Entry points |
 | --- | --- |
-| Campaign setup / status | `/vc-campaign setup`; `/vc-campaign status` |
-| Configure / republish channels | `/vc-campaign channels`; `/vc-campaign sync` |
-| Session lifecycle / roster | `/vc-session start`; `/vc-session assemble`; `/vc-session roster`; `/vc-session end` |
-| Dashboard / health | `/vc-gm overview`; `/vc-admin doctor` |
-| Seed content / inspect drafts | `/vc-admin seed-data`; `/vc-admin seed-drafts draft_id:<id>` (omit ID to list) |
-| Portable inert content packages | `/vc-admin seed-package-preview`; `/vc-admin seed-package-import`; `/vc-admin seed-package-review`; `/vc-admin seed-package-export` (each takes `json`; see implementation guide) |
-| Prepare / adjudicate sourced rolls | `/vc-roll request json:<native request>`; `/vc-roll adjudicate json:<saved human ruling and source proof>` |
-| Guided private PvP | `/vc-roll pvp-menu` (optional `reference:<native reference>`); requires GM opt-in `/vc-city flags json:{"pvp_private_ui":true}`. Review and consent are separate; no automatic damage, reaction or disclosure. See [guided PvP controls](docs/V95_03_PRIVATE_PVP_CONTROLS.md). |
-| Bounded ordinary GM rulings | GM opt-in `/vc-city flags json:{"gm_discretion":true}`; native rolls retain existing roll flags/private owner choices. Generic rolls grant no new abilities or material effects; manual GM authority still wins. See [authority contract](docs/V96_RULE_DISCRETION_CONTRACT.md). |
-| Read-only GM preparation / reconciliation | `/vc-story brief`; `/vc-story why json:{"op":"reconcile"}` |
-| Add / edit seed drafts | `/vc-admin seed-add json:<typed draft>`; `/vc-admin seed-edit draft_id:<id> json:<replacement>` |
-| Approve / reject / remove drafts | `/vc-admin seed-approve draft_id:<id>`; `/vc-admin seed-reject draft_id:<id>`; `/vc-admin seed-remove draft_id:<id>` |
-| Inspect NPC cognition | `/vc-gm npc-state npc:<name>` |
-| List / add facts | `/vc-gm fact-list`; `/vc-gm fact-add content:<text> visibility:gm` |
-| Establish / review canon | `/vc-canon set key:<key> value:<value>`; `/vc-canon conflicts`; `/vc-canon proposals` |
-| Encounters / combat | `/vc-encounter build`; `/vc-encounter start`; `/vc-combat combatants`; `/vc-combat damage` |
-| Generate / store evidence | `/vc-handout generate` (AI); `/vc-handout create` (no generation call) |
-| Open / resolve downtime | `/vc-downtime open`; `/vc-downtime resolve minutes:1440` (explicit fictional duration) |
-| Director status / history | `/vc-director status`; `/vc-director history` |
-| Pause / resume / request review | `/vc-director pause`; `/vc-director resume`; `/vc-director run reason:<fictional reason>` |
-| Simulation / queued-action review | `/vc-sim status`; `/vc-sim review action_id:<id> decision:reject` |
-| City clock / feature flags | `/vc-city status`; `/vc-city flags json:<boolean flags>` |
-| Playable scene narration (default OFF) | `/vc-city flags json:{"playable_narration":true,"scene_continuity":true}`; source-bound local fiction, native arrivals, private assembly views and one-call read-only observations. [Scope, risks and rollback](docs/PLAYABLE_NARRATION_HANDOFF.md). |
-| AI eligibility / receipts | `/vc-story expansion-status`; `/vc-story ai-inbox` |
-| Configure delegation | `/vc-story delegation json:<policy>` |
-| Approve / reject / modify / defer AI proposals | `/vc-story ai-review json:<key, decision, expected_revision>`; modify also needs `replacement_intent` |
-| Inspect scenes / manage plans | `/vc-story scene-view`; `/vc-story strategy json:<native operation>` |
-| Explain provenance | `/vc-story why json:{"event_key":"<event-key>"}` |
-| Durable backup / listing | `/vc-admin backup label:Before changes`; `/vc-admin backups` |
-| Archive unfinished historical work | `/vc-admin archive-history operation:preview session:2`; then `operation:apply preview:<token> reason:<reason>`; inspect with `operation:list session:2`. GM-private, ended sessions only; no gameplay outcomes or characters changed. See [archival guide](docs/HISTORICAL_RECORD_ARCHIVAL_PLAN.md). |
-| Preview / restore | `/vc-admin restore-preview backup_id:<id>`; `/vc-admin restore backup_id:<id>` |
-| Snapshot / audit ledger | `/vc-admin snapshot label:Checkpoint`; `/vc-admin ledger` |
-| Pause / disconnect voice | `/vc-voice pause`; `/vc-voice leave` |
+| Configure channels / inspect health | `/vc-campaign setup`, `/vc-campaign channels`, `/vc-admin doctor` |
+| Seed data / inspect inferred drafts | `/vc-admin seed-data`, `/vc-admin seed-drafts` |
+| Start / inspect assembly | `/vc-session start`, `/vc-session assembly-status`, `/vc-session assemble` |
+| Inspect source-bound operations | `/vc-story expansion-status`, `/vc-story ai-inbox`, `/vc-admin ops` |
+| Inspect flags / delegation | `/vc-city status`, `/vc-city flags`, `/vc-story delegation` |
+| Inspect / pause Director | `/vc-director status`, `/vc-director history`, `/vc-director pause` |
+| Back up / inspect archival | `/vc-admin backup`, `/vc-admin archive-history` — preview first |
 
-Refresh inboxes before review: stale revisions, revoked roles, changed sources or
-proxies, and expired delegation can invalidate approval. Reopen read-only inboxes
-to repair missing notices; do not replay successful mutations or costs.
-Back up before significant changes and preview restores.
+An invocation or invitation is not owner approval. Use current keys/revisions;
+inspect stale choices rather than replaying effects. Guided PvP and incoming
+attacks retain native consent, defense, Armor and death controls. Roleplay remains
+text-first, not a requirement to encode every action as JSON.
 
-### Further Reading
+For workflows, see [assembly](docs/Setup_and_Scope/PARTY_ASSEMBLY.md),
+[GM operations](docs/Setup_and_Scope/GM_OPERATIONS.md),
+[command map](docs/Setup_and_Scope/BOT_COMMANDS.md) and
+[deployment/rollback](docs/Setup_and_Scope/DEPLOYMENT.md).
+Optional voice narrates authorized output, never private records or new outcomes;
+settings are in [the environment example](bot/.env.example).
 
-- [I-heard-you features, enablement, phase evidence and remaining limits](docs/I_HEARD_YOU_IMPLEMENTATION.md)
-- [Systems-to-players features, enablement commands, phase evidence and limits](docs/SYSTEMS_TO_PLAYERS_IMPLEMENTATION.md)
-- [Systems-to-players behavioral gap audit](docs/SYSTEMS_TO_PLAYERS_GAP_ANALYSIS.md)
-- [Current AI management, complete feature matrix, rollout and recovery](docs/END_TO_END_IMPLEMENTATION.md)
-- [Command reference](docs/BOT_COMMANDS.md) — includes historical sections; current slash options are defined in [command-definitions.js](bot/src/command-definitions.js)
-- [Content seeding](docs/CONTENT_SEEDING.md) and [NPC cognition](docs/NPC_COGNITION.md)
-- [NPC simulation](docs/NPC_SIMULATION.md), [World Director](docs/WORLD_DIRECTOR.md) and [Living City](docs/LIVING_CITY.md)
-- [GM operations](docs/GM_OPERATIONS.md), [optional story tools](docs/NEXT_EXPANSION.md) and [voice narration](docs/VOICE_NARRATION.md)
+## Repository map
+
+- [`bot/src/`](bot/src/) — native authority, interpretation, publication and Discord adapters.
+- [`bot/scripts/`](bot/scripts/) — offline regressions, validation and release tooling.
+- [`content/`](content/) — setting/rules inputs; import and visibility rules still apply.
+- [`docs/Setup_and_Scope/`](docs/Setup_and_Scope/README.md) — operator-facing setup and product scope.
+- [`docs/Active_Implementation/`](docs/Active_Implementation/README.md) — contracts, active plans and evidence.
+- [`manifest.json`](manifest.json) — normalized release-file inventory, not deployment proof.
+
+Keep immutable native outcomes and delivery receipts on upgrades. Recovery must
+not repeat dice, resource spending or messages.
