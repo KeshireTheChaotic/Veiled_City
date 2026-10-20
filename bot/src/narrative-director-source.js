@@ -4,6 +4,9 @@ import {currentScene} from './scene-continuity.js';
 import {indexWorldEvent} from './city-calendar.js';
 import {narrativeSourceVisible,sceneFictionHash as hash,sceneFictionFailure} from './scene-fiction-context.js';
 import {worldNarrativeBridgePacket,worldDirectorBridgeBeats,nativeFearClockConsequenceSnapshot} from './world-narrative-bridge.js';
+import {applicationPrincipal} from './application-authority.js';
+import {prepareWorldSimulationObservation} from './world-simulation-receipts.js';
+import {configureWorldEncounterCatalog,snapshotNativeEncounterCandidates} from './world-encounter-beats.js';
 const sourceBinding=Symbol('native-director-narrative-source');
 export const nativeDirectorNarrativeSource=result=>result?.[sourceBinding]?.ref||null;
 export const nativeDirectorNarrativeContent=result=>result?.[sourceBinding]?.content||null;
@@ -27,7 +30,17 @@ function dramaticBrief(db,guild,result,scope,trigger){
   }
   // Counts/categories describe unfinished work, never proposed prose or fabricated outcomes.
   const pending=result.act?[{kind:'director_plan',state:'proposed_requires_native_validation'}]:[];
+  const observations=[];
+  for(const action of db.listSimulationRecords(guild,{kind:'action',status:'completed',limit:16})){
+    if(observations.length>=4)break;
+    const observation=prepareWorldSimulationObservation(db,guild,action.id,scope,
+      {principal:applicationPrincipal(guild,'world.observe-travel','native:director')});
+    if(observation.status==='verified_native_observation')observations.push({kind:'world_simulation_observation',key:observation.source_ref,
+      action:action.id,observation_ref:observation.observation_ref,revision:hash(observation)});
+  }
   return {version:1,dramatic_purpose:events.length?'respond_to_visible_development':'offer_a_local_npc_or_scene_opportunity',events,pending,
+    native_world_observations:{version:1,receipts:observations},
+    native_encounter_candidates:{version:1,...snapshotNativeEncounterCandidates(db,guild,scope)},
     native_clock_consequences:nativeFearClockConsequenceSnapshot(db,guild,scope),
     narrative_opportunity:'Use one coherent scene/response/attempt beat; leave a concrete opening without choosing a PC action.',
     unresolved_outcomes:'Proposals are not outcomes. Only native_results can render mechanical consequences.'};
@@ -49,6 +62,7 @@ export function directorBriefForAudience(db,guild,source,scope){
   return brief;
 }
 export function bindDirectorNarrativeSource(db,guild,result,scope,layer,trigger,content,bridgePacket=null){
+  configureWorldEncounterCatalog(db,content?.root);
   const currentBridge=worldNarrativeBridgePacket(db,guild,scope),bridge=bridgePacket??currentBridge;
   if(hash(bridge)!==hash(currentBridge))throw sceneFictionFailure('native_director_bridge_context_mismatch');
   const scene=currentScene(db,guild),details={version:2,scope,layer,scene:scene.key,session:scene.session_id,

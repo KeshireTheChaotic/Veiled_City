@@ -13,6 +13,7 @@ import { contextMemorySchema, CONTEXT_MEMORY_PROMPT } from "./context-memory.js"
 import { presentationContext } from "./presentation-evidence.js";
 import {worldHookSeedForGm,worldRecordOriginForGm} from './world-sanctioned-sources.js';
 import {worldNarrativeBridgePacket} from './world-narrative-bridge.js';
+import {worldResolutionContext} from './world-resolution.js';
 import {openingWorldOpportunities} from './opening-world-bridge.js';
 import {createPrivateSeedOrigin,privateSeedPrompt,privateWorldSeedsSchema,bindPrivateSeedTurn} from './world-private-seeds.js';
 import { summarizeRoster, previewAuthoritativeMutation } from "./state.js";
@@ -61,6 +62,7 @@ import {authorNarrativeRequests,NARRATIVE_AUTHORITY_INSTRUCTIONS,narrativeRespon
 import {nativeOutcomeSchema,narrativeRequestSchema} from './gm-fiction-schema.js';
 import {coordinateNarrative,narrativeModel} from './narrative-delegation.js';
 import {bindDirectorNarrativeSource,inheritDirectorNarrativeSource,nativeDirectorNarrativeSource} from './narrative-director-source.js';
+import {configureWorldEncounterCatalog} from './world-encounter-beats.js';
 import {buildNarrativeContext} from './narrative-authority-context.js';
 import {createArbitrationOrigin,arbitrationPromptBoard,bindArbitrationTurn} from './scene-intent-board.js';
 import {unifiedArbitrationSchema} from './gm-arbitration-contract.js';
@@ -359,6 +361,7 @@ export function parseStructuredJsonText(text,{label="structured response"}={}){
 export class GMService{
   constructor({db,content,config,ai=null,srd=null,metrics=operationalMetrics}){
     this.db=db; this.content=content; this.config=config;
+    configureWorldEncounterCatalog(db,content?.root);
     this.metrics=metrics;if(config.modelPricing)this.metrics.configurePricing(config.modelPricing);
     this.ai=ai||new OpenAI({apiKey:config.openaiKey,timeout:Number(config.openaiRequestTimeoutMs||60000),
       maxRetries:0}); // Bounded retries below are observable; no hidden SDK request attempts.
@@ -602,6 +605,7 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
       authority_index:{canon:projectAuthorityRecords("canon",canon),rulings:projectAuthorityRecords("rulings",rulings)},
       actor_relationships:actorRelationships,gm_relationships:gmRelationships,gm_character_hooks:gmCharacterHooks,character_narratives:characterNarratives,visible_handouts:visibleHandouts,
       world_narrative_bridge:worldNarrativeBridgePacket(this.db,guildId,memoryScope),
+      world_resolution:worldResolutionContext(this.db,guildId,{scope:memoryScope}),
       actor_assignment:actorAssignment?(actorAssignment.npc_proxy?{
         assignment_kind:"npc_proxy",controller_user_id:actorUserId,npc_proxy_id:actorAssignment.id,character_id:actorKnowledgeId,
         npc_name:actorAssignment.npc_name,knowledge_id:actorAssignment.knowledge_id,control_level:actorAssignment.control_level,
@@ -751,6 +755,7 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
       `NPC_COGNITION (SUBJECTIVE MEMORY/KNOWLEDGE/GOALS; GM-PRIVATE):\n${JSON.stringify(ctx.npc_cognition)}`,
       `SCOPED MEMORY AND NATIVE POSITIONS (audience-visible evidence only; never consequence authority):\n${JSON.stringify(ctx.scoped_memory)}`,
       `WORLD NARRATIVE BRIDGE (native causal metadata, not NPC knowledge or new effect authority):\n${JSON.stringify(ctx.world_narrative_bridge)}`,
+      `WORLD RESOLUTION (audience-scoped derived L0/L1/L2/L3 references; never new truth, actor knowledge, resources or execution permission): ${JSON.stringify(ctx.world_resolution)}`,
       SIMULATION_PROMPT,
       `SIMULATION (GM-private; never copy wholesale to player narration): ${JSON.stringify(simulationContext(this.db,guildId,messageText))}`,
       `CIVIC CONTEXT (GM-only reference, not actor knowledge or canon): ${JSON.stringify(cityContext(this.db,guildId,messageText))}`,
@@ -1108,6 +1113,7 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
       ctx.constitution,ctx.multi,"# AUTONOMOUS WORLD DIRECTOR",...layerRules,SIMULATION_PROMPT,NARRATIVE_CONTRACT,
       `AI MANAGEMENT (GM-private proposals, policy, revisions and receipts; never actor knowledge): ${JSON.stringify(ctx.ai_management)}`,
       `WORLD NARRATIVE BRIDGE (existing request only; native results rank opportunities, unfinished tasks are diagnostics, not world facts): ${JSON.stringify(ctx.world_narrative_bridge)}`,
+      `WORLD RESOLUTION (same planning request; derived tier/scope context, not an additional model job or permission): ${JSON.stringify(ctx.world_resolution)}`,
       `Relevant simulation state: ${JSON.stringify(simulationContext(this.db,guildId,JSON.stringify(trigger)))}`,
       `Relevant civic context (not actor knowledge): ${JSON.stringify(cityContext(this.db,guildId,JSON.stringify(trigger)))}`,
       "You may autonomously emit the same authoritative campaign events, relationships, handouts, private_messages, and player-facing narration available to the normal GM, subject to all security/canon/player-agency restrictions.",

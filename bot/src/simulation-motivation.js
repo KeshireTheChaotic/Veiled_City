@@ -2,8 +2,10 @@
 import { createHash } from "node:crypto";
 import { cityObject, cityKey, cityInteger, cityAudit } from "./city-calendar.js";
 import { requireCitySource } from "./city-core.js";
-import { activeCityProxy, assertNpcAvailability } from "./city-constraints.js";
+import { activeCityProxy, assertNpcAvailability, assertWorldActorControl } from "./city-constraints.js";
 import { UserInputError, StateConflictError } from "./errors.js";
+import {nativeWorldOperationAllows,nativeWorldCoordinatorReady} from './native-world-operations.js';
+import {inspectWorldInformationTransfer} from './world-information-transfer.js';
 export const motivationKey=value=>createHash("sha256").update(JSON.stringify(value)).digest("hex").slice(0,32);
 export function ownedKnowledgeSource(db,guild,npc,known){
   const direct=db.getWorldEvent(guild,known.source_ref);if(direct) return direct;
@@ -15,6 +17,7 @@ export function ownedKnowledgeSource(db,guild,npc,known){
 
 export function actorSource(db,guildId,{actor_type,actor_key,information_key,source_event},{requireResources=true}={}){
   const event=requireCitySource(db,guildId,source_event);cityKey(actor_key);cityKey(information_key);
+  assertWorldActorControl(db,guildId,actor_type,actor_key);
   let evidence,state;
   if(actor_type==="npc"){
     if(!db.getNpcProfile(guildId,actor_key)||activeCityProxy(db,guildId,actor_key)) throw new StateConflictError("Existing non-proxied NPC required.");
@@ -34,6 +37,13 @@ export function actorSource(db,guildId,{actor_type,actor_key,information_key,sou
   if(!state||state.removed||["dormant","dead","removed"].includes(state.activity_tier)||["dead","removed"].includes(state.status))
     throw new StateConflictError("Actor is unavailable.");
   const mapped=actor_type==="npc"&&evidence?ownedKnowledgeSource(db,guildId,actor_key,evidence):null;
+  if(event.kind==='native_world_information_transfer'){
+    const transfer=inspectWorldInformationTransfer(db,guildId,event.details?.receipt_ref,
+      {recipientType:actor_type,recipientKey:actor_key,informationKey:information_key});
+    if(transfer.status!=='verified_native_transfer'||transfer.report.content!==evidence?.content
+      ||transfer.report.belief_state!==evidence?.belief_state||transfer.report.confidence!==evidence?.confidence)
+      throw new StateConflictError('Attributed actor report needs its exact current native transfer source.');
+  }
   if(!evidence||evidence.belief_state==="unknown"||![event.event_key,event.source_id].includes(evidence.source_ref)&&mapped?.event_key!==event.event_key)
     throw new StateConflictError("Actor has no legitimately acquired evidence for this source event.");
   if(requireResources&&(state.resources?.information??2)<1) throw new StateConflictError("Actor lacks feasible investigative resources.");
@@ -44,9 +54,11 @@ function currentGoal(db,guildId,type,key,goalKey){
   return db.listSimulationRecords(guildId,{kind:"goal",entityKey:`${type}:${key}`,limit:1000})
     .find(row=>row.data.goal_key===goalKey);
 }
-export function proposeGoalTransition(db,guildId,input,actorId="human_gm"){
+export function proposeGoalTransition(db,guildId,input,actorId="human_gm",{nativeAuthority=null}={}){
   cityObject(input);
-  if(db.getCityCalendar(guildId).flags.emergent_goals!==true) throw new StateConflictError("Emergent goals are opt-in.");
+  if(db.getCityCalendar(guildId).flags.emergent_goals!==true
+    &&!nativeWorldOperationAllows(db,guildId,nativeAuthority,'goal',input.op||'propose',input))
+    throw new StateConflictError("Emergent goals need their existing opt-in or exact native world-operation authority.");
   const key=cityKey(input.key),prior=db.getCityRecord(guildId,"goal_transition",key);if(prior) return prior;
   const context=actorSource(db,guildId,input),op=input.op||"propose";cityKey(input.goal_key);
   if(!["propose","reprioritize","pause","supersede","abandon","complete","resume"].includes(op)) throw new UserInputError("Unknown goal operation.");
@@ -79,13 +91,15 @@ export function proposeGoalTransition(db,guildId,input,actorId="human_gm"){
     cityAudit(db,guildId,"goal_proposed",key,null,after,actorId);return after;
   });
 }
-export function reviewGoalTransition(db,guildId,input,actorId="human_gm"){
+export function reviewGoalTransition(db,guildId,input,actorId="human_gm",{nativeAuthority=null}={}){
   const before=db.getCityRecord(guildId,"goal_transition",cityKey(input.key));
   if(!before) throw new StateConflictError("Goal transition not found.");
   if(before.status!=="pending") return before;
   if(!["approve","reject"].includes(input.decision)) throw new UserInputError("Explicit approve/reject required.");
   return db.transaction(()=>{
     const data=before.data,previous=currentGoal(db,guildId,data.actor_type,data.actor_key,data.goal_key);
+    if(nativeAuthority&&!nativeWorldOperationAllows(db,guildId,nativeAuthority,'goal',data.op,data))
+      throw new StateConflictError('Native goal authority changed before commitment.');
     if(input.decision==="approve"){
       actorSource(db,guildId,data);
       if(JSON.stringify(previous)!==JSON.stringify(data.before)) throw new StateConflictError("Goal changed since proposal; create a fresh transition.");
@@ -117,8 +131,9 @@ export function reviewGoalTransition(db,guildId,input,actorId="human_gm"){
   });
 }
 
-export function runMotivationCycle(db,guildId,budget=1){
-  if(db.isDirectorPaused(guildId)||db.getCityCalendar(guildId).flags.emergent_goals!==true) return [];
+export function runMotivationCycle(db,guildId,budget=1,{onNativeProposal=null}={}){
+  const nativeReady=typeof onNativeProposal==='function'&&nativeWorldCoordinatorReady(db,guildId,'goal','propose');
+  if(db.isDirectorPaused(guildId)||db.getCityCalendar(guildId).flags.emergent_goals!==true&&!nativeReady) return [];
   const results=[];
   const actors=[...db.listNpcProfiles(guildId,{limit:500}).map(row=>({type:"npc",key:row.npc_key})),
     ...db.listSimulationEntities(guildId,"faction").map(row=>({type:"faction",key:row.entity_key})),
@@ -136,7 +151,17 @@ export function runMotivationCycle(db,guildId,budget=1){
       if(!event||event.status!=="active") continue;
       const informationKey=known.knowledge_key||known.information_key;
       const key=`motivation:${motivationKey([actor.type,actor.key,informationKey,event.event_key])}`;
-      if(db.getCityRecord(guildId,"goal_transition",key)) continue;
+      if(db.getCityRecord(guildId,"goal_transition",key)||currentGoal(db,guildId,actor.type,actor.key,key)) continue;
+      if(nativeReady){
+        try{actorSource(db,guildId,{actor_type:actor.type,actor_key:actor.key,information_key:informationKey,source_event:event.event_key});}
+        catch(error){if(error.expected===true||['Dead or removed NPCs are unavailable.','An active human NPC proxy retains voluntary control.',
+          'NPC has an incompatible established commitment; cancel or delegate explicitly.'].includes(error.message))continue;throw error;}
+        const receipt=onNativeProposal({actor_type:actor.type,actor_key:actor.key,information_key:informationKey,source_event:event.event_key,
+          op:'propose',goal_key:key,new_goal_key:'',objective:`Investigate the report: ${known.content.slice(0,800)}`,
+          reason:'Known source creates an investigative opportunity; report remains subjective.',priority:50,confidence:known.confidence,
+          horizon:'near',dependencies:[],acceptable_methods:['investigate','observe','research'],conflicts:[]});
+        if(receipt?.status==='accepted')results.push(receipt);continue;
+      }
       try{results.push(proposeGoalTransition(db,guildId,{key,actor_type:actor.type,actor_key:actor.key,information_key:informationKey,
         source_event:event.event_key,goal_key:key,objective:`Investigate the report: ${known.content.slice(0,800)}`,op:"propose",
         acceptable_methods:["investigate","observe","research"],dependencies:[],priority:50,confidence:known.confidence,

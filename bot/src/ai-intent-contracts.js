@@ -6,12 +6,19 @@ const list=(items,maxItems=20)=>({type:"array",items,maxItems});
 const object=properties=>({type:"object",additionalProperties:false,properties,required:Object.keys(properties)});
 const actor={actor_type:choice("npc","faction","institution"),actor_key:text(),information_key:text()};
 const source={source_event:text()};
+const institutionalAction={...source,op:choice('act'),institution:text(),information_key:text(),jurisdiction:text(),
+  type:choice('document_request','file_case','interview_request','inspect_request','issue_policy','allocate_resources','negotiate_request','publish_finding','relocate_staff','seek_warrant'),
+  target_type:choice('institution','location','district',''),target_key:text(),report_keys:list(text(),30),personnel_key:text()};
 const action={anyOf:[object({type:text(),target_type:choice("npc","faction","location","institution","community","audience","district",""),
   target_key:text(),location_key:text(),information_key:text(),reason:text(1000)}),
+  object({type:text(),target_type:choice('npc','faction','location','institution','community','audience','district',''),
+    target_key:text(),location_key:text(),information_key:text(),reason:text(1000),
+    delay_minutes:integer(0,525600),delay_ticks:integer(0,525600)}),
   object({type:choice("document_request","file_case","interview_request","inspect_request","issue_policy","allocate_resources",
     "negotiate_request","publish_finding","relocate_staff","seek_warrant"),target_type:choice("npc","location","institution","district",""),
     target_key:text(),jurisdiction:text(),report_keys:list(text(),8),personnel_key:text(),reason:text(1000)})]};
 export const INTENT_PAYLOADS={
+  institution:{anyOf:[object(institutionalAction),object({...institutionalAction,type:choice('issue_policy'),policy:text(),new_jurisdictions:list(text(),30)})]},
   roll:{anyOf:[object({...source,op:choice("prepare"),character_id:text(),trait:choice("Agility","Strength","Finesse","Instinct","Presence","Knowledge"),
     kind:choice("action","reaction","attack"),modifier_keys:list(text(),20),difficulty_source:text(),attack_source:text(),adjudication:text(600)}),
     object({...source,op:choice("adjudicate"),ruling_key:text(),adjudication:text(600)})]},

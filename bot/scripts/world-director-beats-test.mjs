@@ -30,6 +30,25 @@ async function establishedSceneBeat(f,{privateScene=false,audienceMode=null}={})
   return {f,x,units,directorScope,ref,source,brief};
 }
 
+for(const kind of ['npc_speech','npc_action_attempt','lead'])test(`W3 actual ${kind} receipt is an offer/opportunity, never a completed PC consequence`,()=>nativeFixture(async f=>{
+  const x=setup(f,{messageId:`director-native-${kind}`}),content=new ContentIndex(path.resolve('../content')),
+    input={version:8,kind:'narrative_request',operation:'conversation',source_refs:[]},result={act:true,gm_world_parts:[input],player_intents:[]},
+    npc={kind:'npc',key:'native-parcel-clerk',name:'Mira Vale',summary:'An ordinary parcel clerk.',role:'parcel clerk',
+      location_key:'terminal',parent_location_key:'',aliases:[]};
+  const text=kind==='npc_speech'?'Would you like directions?':kind==='npc_action_attempt'?'Mira begins to inspect the notice board.':'An unclaimed shift might be available at the counter.';
+  await authorNarrativeRequests({db:f.db,guild:f.guild,result,scope:x.scope,sourceRef:x.sourceRef,budget:{used:false},
+    generate:async()=>({fiction_delta:[npc],narrative_units:[unit('offer',kind,text,{subject_key:kind==='lead'?'':npc.key})]})});
+  const rows=establishNarrativeUnits(f.db,f.guild,input,x.scope,x.sourceRef,{content});assert.equal(rows.length,1);
+  const ref=bindDirectorNarrativeSource(f.db,f.guild,{act:false},{mode:'party'},'round',{},content),source=f.db.getWorldEvent(f.guild,ref),
+    brief=directorBriefForAudience(f.db,f.guild,source,{mode:'party'}),expected=kind==='lead'?'scene_opportunity':'npc_intention_or_offer',
+    beat=brief.world_bridge.beats.find(b=>b.kind===expected);
+  assert(beat);assert.equal(beat.execution_authority,false);assert.equal(beat.publication_authority,false);
+  assert.notEqual(beat.epistemic,'native_outcome');assert.equal(Object.hasOwn(beat,'text'),false);
+  assert.equal(brief.world_bridge.beats.some(b=>b.kind==='world_consequence'),false);
+  assert.equal(openingWorldOpportunities(f.db,f.guild,{mode:'party'}).beats.some(b=>b.kind===expected),true);
+  f.restart();assert(directorBriefForAudience(f.db,f.guild,f.db.getWorldEvent(f.guild,ref),{mode:'party'}).world_bridge.beats.some(b=>b.id===beat.id));
+}));
+
 test('W3 actual Director writer consumer receives a nonauthorizing established-world beat from a native scene unit',()=>nativeFixture(async f=>{
   const x=await establishedSceneBeat(f),beat=x.brief.world_bridge.beats.find(row=>row.kind==='established_world_change');
   assert(beat,'accepted native scene unit should project a typed established-world beat');

@@ -2,7 +2,7 @@
 import { randomInt, randomUUID } from "node:crypto";
 import { normalizeNpcKey, retrieveNpcCognition } from "./npc-cognition.js";
 import { submitInstitutionAction, runInstitutionDirector, proposeCityOpportunity } from "./city-core.js";
-import { assertNpcAvailability, npcAvailability, activeCityProxy, assertQueuedCompatibility } from "./city-constraints.js";
+import { assertNpcAvailability, npcAvailability, activeCityProxy, assertQueuedCompatibility, worldActorControl, assertWorldActorControl } from "./city-constraints.js";
 import { applyNpcServiceOutcome } from "./city-civic.js";
 import { assertServiceAccess } from "./supply-dependencies.js";
 import { runMotivationCycle } from "./simulation-motivation.js";
@@ -12,8 +12,12 @@ import { proposeContactGroup } from "./city-groups.js";
 import { clusterContext } from "./memory-clusters.js";
 import { reconcileSceneArrival, currentScene } from "./scene-continuity.js";
 import { indexWorldEvent } from "./city-calendar.js";
-import { delegateConsequence, maintainMemory, continueLongProjects, dispatchAiIntents } from "./ai-intents.js";
+import { delegateConsequence, delegateWorldGoal, maintainMemory, continueLongProjects, dispatchAiIntents } from "./ai-intents.js";
 import { pacingAdvice } from "./story-continuity.js";
+import {worldResolutionContext,bindWorldResolutionCycle,finishWorldResolutionCycle} from './world-resolution.js';
+import {inspectWorldSimulationReceipt} from './world-simulation-receipts.js';
+import {nativeWorldStrategyAllowed} from './native-world-operations.js';
+import {commitWorldInformationTransfer,inspectWorldInformationTransfer} from './world-information-transfer.js';
 export { updateRelationshipDimensions } from "./relationship-state.js";
 
 export const ACTION_TYPES=["investigate","travel","contact","recruit","observe","prepare","hide","acquire","spend_resource",
@@ -106,7 +110,7 @@ export function simulationCandidates(db,guildId,{layer,query=""}={}){
     const relevant=intersects(query,JSON.stringify([actor.key,goals,state.location_key]));
     const affordable=!density||goals.some(goal=>Object.entries(COSTS).some(([method,resource])=>state.resources[resource]>0
       &&(!(goal.acceptable_methods||[]).length||goal.acceptable_methods.includes(method))));
-    const eligible=!(actor.type==="npc"&&activeCityProxy(db,guildId,actor.key))&&!state.removed&&(state.activity_tier!=="dormant"||actor.wake)&&goals.length&&affordable&&
+    const eligible=worldActorControl(db,guildId,actor.type,actor.key)==='ai_world'&&!(actor.type==="npc"&&activeCityProxy(db,guildId,actor.key))&&!state.removed&&(state.activity_tier!=="dormant"||actor.wake)&&goals.length&&affordable&&
       (actor.wake||state.activity_tier==="active"||(state.activity_tier==="supporting"&&relevant)||layer==="downtime");
     return {...actor,state,goals,eligible};
   }).filter(actor=>actor.eligible).sort((a,b)=>Number(b.goals[0]?.priority||0)-Number(a.goals[0]?.priority||0)).slice(0,8).map(actor=>{
@@ -142,12 +146,32 @@ function remember(db,guildId,type,key,content,{source="witnessed",confidence=90,
 
 function knownInformation(db,guildId,type,key,informationKey){
   if(!informationKey) return null;
+  let known;
   if(type==="npc"){
     const knowledge=db.getNpcKnowledge(guildId,key,informationKey);
-    if(knowledge&&knowledge.belief_state!=="unknown") return {content:knowledge.content,confidence:knowledge.confidence,belief_state:knowledge.belief_state};
+    if(knowledge&&knowledge.belief_state!=="unknown")known=knowledge;
   }
-  return db.listSimulationRecords(guildId,{kind:"awareness",entityKey:keyOf(type,key),limit:1000})
+  known??=db.listSimulationRecords(guildId,{kind:"awareness",entityKey:keyOf(type,key),limit:1000})
     .find(row=>row.data.information_key===informationKey)?.data||null;
+  const source=known?.source_ref&&db.getWorldEvent(guildId,known.source_ref);
+  if(source?.kind==='native_world_information_transfer'){
+    const proof=inspectWorldInformationTransfer(db,guildId,source.details?.receipt_ref,
+      {recipientType:type,recipientKey:key,informationKey});
+    if(proof.status!=='verified_native_transfer'||proof.report.content!==known.content
+      ||proof.report.belief_state!==known.belief_state||proof.report.confidence!==known.confidence)return null;
+  }
+  return known;
+}
+
+/** Native communication persists a subjective source, never upgrades hearsay into an established fact. */
+function persistNativeInformationTransfer(db,guild,proof,action){
+  if(proof.status!=='verified_native_transfer')return;
+  const report=proof.report,type=action.target_type,key=action.target_key;
+  const previous=knownInformation(db,guild,type,key,report.information_key);
+  if(previous&&(['known','confirmed'].includes(previous.belief_state)||Number(previous.confidence||0)>=report.confidence))return;
+  db.putSimulationRecord(guild,{kind:'awareness',entityKey:keyOf(type,key),data:report});
+  if(type==='npc')db.upsertNpcKnowledge(guild,{npcKey:key,knowledgeKey:report.information_key,content:report.content,
+    beliefState:report.belief_state,confidence:report.confidence,sourceType:report.source_type,sourceRef:proof.source_ref,isSecret:true});
 }
 
 export function shareInformation(db,guildId,{fromType,fromKey,toType,toKey,informationKey,source="told_by_npc"}){
@@ -176,6 +200,13 @@ export function applySimulationUpdates(db,guildId,updates=[],{scope={mode:"party
       results.push({ok:false,blocked:true,type:"simulation",error:"Private scenes cannot mutate global simulation records.",draft:update});
       continue;
     }
+    // Combined model patches are proposals, not native world-authoring/knowledge/capability receipts.
+    // Typed ai_intents and their actual domain adapters remain the executable AI route. Historical
+    // explicit GM maintenance callers are unchanged; a disabled legacy feature flag is not authority.
+    if(provenance.actorType==='ai'){
+      results.push({ok:false,blocked:true,type:'simulation',error:'Generated simulation patches require a source-verified native world adapter.',draft:update});
+      continue;
+    }
     const data=JSON.parse(update.data_json||"{}");
     if(update.kind==="faction_goal"&&db.getCityCalendar(guildId).flags.emergent_goals===true)
       throw new Error("Enabled emergent goals require sourced policy-governed ai_intents, not legacy faction_goal updates.");
@@ -185,7 +216,7 @@ export function applySimulationUpdates(db,guildId,updates=[],{scope={mode:"party
     if(confidence<55) continue;
     const content=text(update.content);
     if(["faction_memory","faction_goal"].includes(update.kind)&&!db.getSimulationEntity(guildId,"faction",actorKey))
-      configureSimulationEntity(db,guildId,"faction",actorKey,{activity_tier:"supporting"});
+      throw new Error('An established faction with separately authorized capacity is required; a memory/goal patch cannot create one.');
     let row;
     switch(update.kind){
       case "city_action":{
@@ -274,6 +305,7 @@ export function applySimulationUpdates(db,guildId,updates=[],{scope={mode:"party
 function validateAction(db,guildId,action){
   if(!ACTION_TYPES.includes(action.type)||!["npc","faction"].includes(action.actor_type)) throw new Error("Unknown autonomous action/actor type.");
   const key=normalizeNpcKey(action.actor_key);
+  assertWorldActorControl(db,guildId,action.actor_type,key);
   if(action.actor_type==="npc"&&!db.getNpcProfile(guildId,key)) throw new Error("Autonomous NPC profile is missing.");
   if(action.actor_type==="npc") assertNpcAvailability(db,guildId,key,action);
   if(action.actor_type==="faction"&&!db.getSimulationEntity(guildId,"faction",key)) throw new Error("Autonomous faction is missing.");
@@ -320,6 +352,7 @@ function validateAction(db,guildId,action){
   }
   if(action.target_type===action.actor_type&&action.target_key===key) throw new Error("An opposed action cannot target its own actor.");
   if(action.target_type==="npc"&&!db.getNpcProfile(guildId,action.target_key)) throw new Error("Target NPC is missing.");
+  if(['npc','faction'].includes(action.target_type))assertWorldActorControl(db,guildId,action.target_type,action.target_key);
   if(action.target_type==="npc"&&actorState(db,guildId,"npc",action.target_key).removed) throw new Error("Target NPC has been removed from play.");
   if(action.target_type==="faction"&&!db.getSimulationEntity(guildId,"faction",action.target_key)) throw new Error("Target faction is missing.");
   if(action.private_user_id&&!db.getPlayer(guildId,action.private_user_id)) throw new Error("Private hook recipient is not a campaign player.");
@@ -368,8 +401,9 @@ export function executeNpcAction(db,guildId,record,{approved=false,roll=()=>rand
     if(action.type==="hide"&&success) state.position=bounded(state.position+1,0,5);
     db.setSimulationEntity(guildId,action.actor_type,key,state);
     const result={success,attack_roll:attackRoll,defense_roll:defenseRoll,attack,defense,resource_cost:{[resource]:1}};
-    if(db.getCityCalendar(guildId).flags.audience_influence===true&&action.actor_type==="npc"&&action.information_key){
-      const known=db.getNpcKnowledge(guildId,key,action.information_key);
+    if(action.information_key&&(db.getCityCalendar(guildId).flags.audience_influence===true
+      ||['contact','negotiate','request_favor'].includes(action.type))){
+      const known=knownInformation(db,guildId,action.actor_type,key,action.information_key);
       result.information_source=known?{source_ref:known.source_ref,content:known.content,belief_state:known.belief_state}:null;
     }
     const content=`${action.type} ${action.target_key||action.location_key||""}: ${success?"succeeded":"did not succeed"}. ${action.rationale||""}`;
@@ -399,6 +433,11 @@ export function executeNpcAction(db,guildId,record,{approved=false,roll=()=>rand
     const completed=saveRecord(db,guildId,current,{status:"completed",data:{...action,result}});
     const mutation=db.recordMutation(guildId,{actorType:"ai",actorId:key,sourceLayer:"npc_director",mutationType:`npc_action:${action.type}`,
       entityKey:current.id,visibility:"gm",before:current,after:completed,rationale:content,payload:result});
+    if(success&&action.information_key&&['contact','negotiate','request_favor'].includes(action.type)
+      &&['npc','faction'].includes(action.target_type)){
+      const transfer=commitWorldInformationTransfer(db,guildId,current.id);
+      persistNativeInformationTransfer(db,guildId,transfer,action);
+    }
     if(success) applyNpcServiceOutcome(db,guildId,action,mutation);
     if(success&&action.type==="travel"&&action.actor_type==="npc"&&db.getCityCalendar(guildId).flags.scene_continuity===true
       &&db.getActiveSession(guildId)){
@@ -413,9 +452,6 @@ export function executeNpcAction(db,guildId,record,{approved=false,roll=()=>rand
 
 function applyActionConsequences(db,guildId,action,{key,state,target,goal,content,actionId}){
   const actor=keyOf(action.actor_type,key);
-  if(action.information_key&&action.target_key&&["contact","negotiate","request_favor"].includes(action.type)
-    &&!["institution","community","audience"].includes(action.target_type))
-    shareInformation(db,guildId,{fromType:action.actor_type,fromKey:key,toType:action.target_type,toKey:action.target_key,informationKey:action.information_key});
   if(target&&["attack","protect","threaten","negotiate","betray","contact"].includes(action.type)){
     if(action.type==="attack") target.resources.wounds=bounded(target.resources.wounds+1,0,100);
     if(action.type==="protect") target.position=bounded(target.position+1,0,5);
@@ -591,8 +627,9 @@ export async function prepareNpcDirector({db,gm,guildId,layer,cycleKey,query="",
   const prior=db.getSimulationRecord(guildId,cycleId);
   if(prior?.status==="completed") return {replayed:true,guildId};
   const candidates=simulationCandidates(db,guildId,{layer,query});
+  const prepared=bindWorldResolutionCycle(db,guildId,{guildId,layer,cycleKey,minutes,cycleId,candidates,query,engagement});
   const proposed=candidates.length?await gm.planNpcActions({guildId,layer,query,candidates,cycleKey}):{actions:[]};
-  return {guildId,layer,cycleKey,minutes,cycleId,candidates,proposed,query,engagement};
+  return Object.assign(prepared,{proposed});
 }
 
 export function commitNpcDirector(db,prepared,{roll}={}){
@@ -608,7 +645,7 @@ export function commitNpcDirector(db,prepared,{roll}={}){
     let budget=layer==="round"?1:layer==="scene"?3:4;
     db.advanceSimulationClock(guildId,{ticks:1,minutes});
     if(db.getCityCalendar(guildId).flags.activity_density===true||db.getCityCalendar(guildId).flags.narrative_relevance===true)
-      return commitFairOpportunity(db,prepared,{roll,budget});
+      return finishWorldResolutionCycle(db,guildId,prepared,commitFairOpportunity(db,prepared,{roll,budget}));
     const delegatedBudget={operations:0,cost:0};
     const intents=dispatchAiIntents(db,guildId,(proposed.ai_intents||[]).slice(0,budget),
       {origin:`npc-director:${cycleKey}`,scope:{mode:"party"},budget:delegatedBudget});
@@ -620,7 +657,8 @@ export function commitNpcDirector(db,prepared,{roll}={}){
     for(const action of (proposed.actions||[]).slice(0,budget)){
       if(actions.length>=budget) break;
       const actor=keyOf(action.actor_type,normalizeNpcKey(action.actor_key));
-      if(db.getCityCalendar(guildId).flags.strategies===true&&db.listCityRecords(guildId,{kind:"strategy",actor,status:"active",includeGM:true,limit:1}).length) continue;
+      const plan=db.listCityRecords(guildId,{kind:'strategy',actor,status:'active',includeGM:true,limit:1})[0];
+      if(plan&&(db.getCityCalendar(guildId).flags.strategies===true||nativeWorldStrategyAllowed(db,guildId,plan)))continue;
       if(seen.has(actor)||!candidates.some(candidate=>keyOf(candidate.type,candidate.key)===actor)) continue;
       seen.add(actor);
       try{
@@ -641,7 +679,8 @@ export function commitNpcDirector(db,prepared,{roll}={}){
     db.putSimulationRecord(guildId,{id:cycleId,kind:"cycle",status:"completed",data:{layer,cycle_key:cycleKey,
       actions:actions.map(row=>row.id).filter(Boolean),blocked:actions.filter(row=>row.status==="blocked")}});
     runInstitutionDirector(db,guildId,cycleKey);
-    const motivations=runMotivationCycle(db,guildId,Math.max(0,budget-actions.length));
+    const motivations=runMotivationCycle(db,guildId,Math.max(0,budget-actions.length),
+      {onNativeProposal:payload=>delegateWorldGoal(db,guildId,payload,delegatedBudget)});
     const consequences=coordinateConsequences(db,guildId,Math.max(0,budget-actions.length-motivations.length),
       {onProposed:row=>delegateConsequence(db,guildId,row,delegatedBudget)});
     const strategies=runStrategyOpportunity(db,guildId,Math.max(0,budget-actions.length-motivations.length-consequences.length),
@@ -651,7 +690,7 @@ export function commitNpcDirector(db,prepared,{roll}={}){
     const memories=remaining>0?maintainMemory(db,guildId,delegatedBudget):[];
     if(remaining>memories.length) continueLongProjects(db,guildId,{limit:1,budget:delegatedBudget});
     proposeCityOpportunity(db,guildId,prepared.query||"","city_director");
-    return {clock:db.getSimulationClock(guildId),actions,intents:[...intents,...deferredIntents]};
+    return finishWorldResolutionCycle(db,guildId,prepared,{clock:db.getSimulationClock(guildId),actions,intents:[...intents,...deferredIntents]});
   });
 }
 function commitFairOpportunity(db,prepared,{roll,budget}){
@@ -673,7 +712,7 @@ function commitFairOpportunity(db,prepared,{roll,budget}){
       try{const row=submitNpcAction(db,guildId,action,{cycleKey,roll});actions.push(row);return [row];}
       catch(error){const row={status:"blocked",error:error.message};actions.push(row);return [row];}
     },
-    motivation:()=>runMotivationCycle(db,guildId,1),
+    motivation:()=>runMotivationCycle(db,guildId,1,{onNativeProposal:payload=>delegateWorldGoal(db,guildId,payload,delegatedBudget)}),
     consequence:()=>coordinateConsequences(db,guildId,1,{onProposed:row=>delegateConsequence(db,guildId,row,delegatedBudget)}),
     strategy:()=>{
       const rows=runStrategyOpportunity(db,guildId,1,{excludedActors:seen,delegationBudget:delegatedBudget});
@@ -723,7 +762,10 @@ export function simulationContext(db,guildId,query=""){
   const relevant=row=>intersects(query,`${row.entity_key} ${JSON.stringify(row.state||row.data)}`);
   const entities=db.listSimulationEntities(guildId).filter(relevant).slice(0,8);
   const records=kind=>db.listSimulationRecords(guildId,{kind,status:"active",limit:200}).filter(relevant).slice(0,12);
-  return {clock:db.getSimulationClock(guildId),entities,obligations:records("obligation"),rumors:records("rumor"),residue:records("residue"),
+  return {clock:db.getSimulationClock(guildId),world_resolution:worldResolutionContext(db,guildId),
+    native_outcomes:db.listSimulationRecords(guildId,{kind:'action',status:'completed',limit:8})
+      .map(row=>inspectWorldSimulationReceipt(db,guildId,row.id)).filter(row=>row.status==='verified_native_receipt'),
+    entities,obligations:records("obligation"),rumors:records("rumor"),residue:records("residue"),
     pending_count:db.listSimulationRecords(guildId,{kind:"action",status:"pending",limit:1000}).length};
 }
 

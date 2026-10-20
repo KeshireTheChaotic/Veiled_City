@@ -5,15 +5,22 @@ import { updateCityCivic } from "./city-civic.js";
 import { activeCityProxy, assertNpcAvailability } from "./city-constraints.js";
 import { motivationKey } from "./simulation-motivation.js";
 import { UserInputError, StateConflictError } from "./errors.js";
+import {nativeWorldOperationAllows} from './native-world-operations.js';
 const playerCommunity=(db,guild,key)=>db.listCityRecords(guild,{kind:"community_membership",actor:`community:${key}`,status:"active",includeGM:true,limit:1}).length>0;
 function protectPlayerCommunity(db,guild,data){
   if(["join","dissolve"].includes(data.operation)&&playerCommunity(db,guild,data.group_key)
     ||data.operation==="merge"&&(data.from_groups||[]).some(key=>playerCommunity(db,guild,key)))
     throw new StateConflictError("Player-participating community changes require the explicit owner workflow; NPC votes cannot appoint staff or dissolve it.");
 }
-export function manageGroup(db,guild,input,actorId){
-  cityObject(input);if(db.getCityCalendar(guild).flags.emergent_groups!==true) throw new StateConflictError("Emergent groups are opt-in.");
+export function manageGroup(db,guild,input,actorId,{nativeAuthority=null,nativePayload=null}={}){
+  cityObject(input);
+  const originalOp=nativePayload?.op||input.op||'propose',native=!!nativeAuthority
+    &&nativeWorldOperationAllows(db,guild,nativeAuthority,'group',originalOp,{...(nativePayload||input),key:input.key});
+  if(nativeAuthority&&!native)throw new StateConflictError('Exact current native group authority required.');
+  if(db.getCityCalendar(guild).flags.emergent_groups!==true&&!native) throw new StateConflictError("Emergent groups are opt-in.");
   const key=cityKey(input.key),before=db.getCityRecord(guild,"group_transition",key),op=input.op||"propose";
+  if(native&&op!==originalOp&&!(originalOp==='respond'&&['approve','reject'].includes(op)))
+    throw new StateConflictError('Native group operation cannot substitute lifecycle authority.');
   if(op==="propose"){
     if(before) return before;requireCitySource(db,guild,input.source_event);cityKey(input.group_key);cityKey(input.name);
     const operation=input.operation||"form",members=input.members;

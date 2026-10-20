@@ -1,6 +1,6 @@
 /** Native scoped mundane-identity persistence. Never creates canon allegations, actors, powers or execution permission. */
 import {verifiedWorldAuthoringContext,worldIdentityOrigin} from './world-authorship.js';
-import {canonicalInterestEvidence} from './narrative-salience.js';
+import {canonicalInterestEvidence,nativeSalienceAvailable} from './narrative-salience.js';
 import {buildNarrativeContext} from './narrative-authority-context.js';
 import {sceneFictionHash as hash,narrativeSourceVisible,sceneFictionFailure as fail} from './scene-fiction-context.js';
 import {factVisibleTo} from './disclosure-authority.js';
@@ -22,7 +22,7 @@ export function promoteWorldIdentity(db,guild,context,identityRef){
   return db.transaction(()=>{
     const verified=verifiedWorldAuthoringContext(db,guild,context),ctx=verified.context,scope=ctx.scope,
       identity=db.getCityRecord(guild,'autonomous_entity',identityRef),origin=worldIdentityOrigin(db,guild,identity,scope);
-    if(db.getCityCalendar(guild).flags.narrative_salience!==true
+    if(!nativeSalienceAvailable(db,guild)||db.isDirectorPaused(guild)
       ||(db.getCityRecord(guild,'gm_authority','campaign')?.data.gm_authority_mode||'autonomous')!=='autonomous'
       ||origin?.version!==1)return null;
     const visibility=scope.mode==='private'?'character':'party',subject=scope.mode==='private'?scope.actorCharacterId:null,

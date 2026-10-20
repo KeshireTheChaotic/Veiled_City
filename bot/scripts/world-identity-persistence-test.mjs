@@ -22,6 +22,21 @@ function fixture(f,privateScene=false,kind='faction'){
   return {...x,identity,mention};
 }
 const promotions=f=>f.db.listCityRecords(f.guild,{kind:'world_identity_promotion',includeGM:true});
+
+test('W3 qualified native fiction earns scoped persistence without the redundant salience toggle',()=>nativeFixture(f=>{
+  const x=fixture(f);
+  f.db.setCityCalendar(f.guild,{flags:{...f.db.getCityCalendar(f.guild).flags,narrative_salience:false}});
+  for(let i=0;i<7;i++)x.mention();
+  assert.equal(promotions(f).length,1);
+  assert.equal(f.db.getSimulationEntity(f.guild,'faction','copper-sparrow'),null,'Identity permanence is not operational resources');
+}));
+
+test('W3 explicit Director pause holds new identity promotion without deleting interest or existing native identities',()=>nativeFixture(f=>{
+  const x=fixture(f);f.db.setDirectorPaused(f.guild,true);
+  for(let i=0;i<7;i++)x.mention();
+  assert.equal(promotions(f).length,0);assert(f.db.getCityRecord(f.guild,'autonomous_entity',x.identity.record_key));
+  f.db.setDirectorPaused(f.guild,false);x.mention();assert.equal(promotions(f).length,1);
+}));
 test('WD02 seven distinct grounded interests natively persist one mundane identity; replay/restart never duplicate it',()=>nativeFixture(async f=>{
   const x=fixture(f),resources=f.pcs.map(pc=>f.db.getCharacter(pc.id).data.resources);let source;
   for(let i=0;i<6;i++)source=x.mention();assert.equal(promotions(f).length,0);

@@ -12,6 +12,8 @@ import {inspectSessionOpening} from './session-opening.js';
 import {assemblyDeliverySummary} from './assembly-state.js';
 import {renderNarrativeUnit} from './narrative-authority.js';
 import {validateFearEffect} from './pvp-fear-moves.js';
+import {worldSimulationReceiptForAudience} from './world-simulation-receipts.js';
+import {inspectNativeEncounterCandidate} from './world-encounter-beats.js';
 const entitled=(row,scope)=>['public','party'].includes(row.visibility)||scope.mode==='private'&&row.visibility==='character'
   &&row.subject_key===scope.actorCharacterId&&!!scope.actorUserId;
 const audience=s=>s.mode==='private'?{visibility:'character',character:s.actorCharacterId,user:s.actorUserId}:{visibility:'party',character:null,user:null};
@@ -359,9 +361,13 @@ export function worldDirectorBridgeBeats(db,guild,source,scope){
         &&binding.scope.actorCharacterId===scope.actorCharacterId&&binding.scope.actorUserId===scope.actorUserId
         :row.visibility==='party'&&row.subject_key==null&&event.visibility==='party'&&(event.subject_key==null||event.subject_key==='')
           &&origin?.visibility==='party'&&(origin?.subject_key==null||origin?.subject_key===''));
+    const unitKind=data?.unit?.kind,unitEpistemic=data?.epistemic??data?.unit?.epistemic,
+      sceneUnit=unitKind==='scene'&&unitEpistemic==='observation',speechUnit=unitKind==='npc_speech'&&!!data.unit.subject_key,
+      attemptUnit=unitKind==='npc_action_attempt'&&unitEpistemic==='attempt'&&!!data.unit.subject_key,
+      leadUnit=unitKind==='lead';
     if(!origin||!audienceValid||data?.issuer!=='native:narrative-authority'||data?.unit?.visibility!==row.visibility
-      ||data?.unit?.kind!=='scene'||data?.unit?.epistemic!=='observation'||event.details?.payload_hash!==hash(data)
-      ||event.details?.epistemic!=='observation'||event.details?.input_source!==binding?.source
+      ||!sceneUnit&&!speechUnit&&!attemptUnit&&!leadUnit||event.details?.payload_hash!==hash(data)
+      ||event.details?.epistemic!==unitEpistemic||event.details?.input_source!==binding?.source
       ||binding.session!==scene.session_id||binding.scene!==scene.key||binding.location!==event.location_key
       ||binding.viewpoint!=='character'||!binding.placement||origin.details?.private_scene!==privateBinding
       ||origin.status!=='active'||origin.kind!=='ai_gm_input'||origin.session_id!==scene.session_id||origin.scene!==scene.key
@@ -375,9 +381,12 @@ export function worldDirectorBridgeBeats(db,guild,source,scope){
     catch(error){if(['SCENE_FICTION','NARRATIVE_PVP'].includes(error.code)){held++;continue;}throw error;}
     const root=origin.event_key,cycle=`world-cycle:${hash([scene.session_id,scene.key,root])}`;
     beats.push({version:1,protocol:'world_beat_v1',id:`world-beat:${hash([source.event_key,event.event_key,scope.mode])}`,
-      kind:'established_world_change',source_ref:source.event_key,signal_ref:event.event_key,causation_ref:root,world_cycle_ref:cycle,
-      audience:audience(scope),depth:1,origin_kind:'director',epistemic:'observation',fictional_scope:'nonmechanical_established_scene',
-      location:event.location_key||'',reason:'native_established_scene_unit',execution_authority:false,publication_authority:false});
+      kind:sceneUnit?'established_world_change':leadUnit?'scene_opportunity':'npc_intention_or_offer',
+      source_ref:source.event_key,signal_ref:event.event_key,causation_ref:root,world_cycle_ref:cycle,
+      audience:audience(scope),depth:1,origin_kind:'director',epistemic:sceneUnit?'observation':attemptUnit?'attempt':'testimony',
+      fictional_scope:sceneUnit?'nonmechanical_established_scene':attemptUnit?'npc_attempt_not_completed_effect':leadUnit?'nonbinding_scene_opportunity':'attributed_npc_dialogue_not_objective_truth',
+      location:event.location_key||'',reason:sceneUnit?'native_established_scene_unit':leadUnit?'native_scene_lead':attemptUnit?'native_npc_attempt':'native_attributed_npc_speech',
+      execution_authority:false,publication_authority:false});
   }
   const consequences=source.details.dramatic_brief?.native_clock_consequences;
   if(consequences){
@@ -396,6 +405,37 @@ export function worldDirectorBridgeBeats(db,guild,source,scope){
         kind:'world_consequence',source_ref:source.event_key,signal_ref:proof.key,effect_ref:proof.key,source_event_ref:event.event_key,
         causation_ref:root,world_cycle_ref:cycle,audience:proof.audience,depth:1,origin_kind:'native_consequence',
         consequence:'committed_native_clock_change',location:event.location_key||'',reason:'validated_native_fear_clock_receipt',
+        execution_authority:false,publication_authority:false});
+    }
+  }
+  const observations=source.details.dramatic_brief?.native_world_observations;
+  if(observations){
+    if(observations.version!==1||!Array.isArray(observations.receipts)||observations.receipts.length>4)held++;
+    else for(const proof of observations.receipts){
+      if(beats.length>=4){omitted++;continue;}
+      const verified=worldSimulationReceiptForAudience(db,guild,proof.action,scope,{sourceRef:proof.key});
+      if(proof.kind!=='world_simulation_observation'||verified.status!=='verified_native_observation'
+        ||hash(verified)!==proof.revision||verified.observation_ref!==proof.observation_ref){held++;continue;}
+      const root=verified.observation_ref;
+      beats.push({version:1,protocol:'world_beat_v1',id:`world-beat:${hash([source.event_key,root,audience(scope)])}`,
+        kind:'world_consequence',source_ref:source.event_key,signal_ref:proof.key,effect_ref:proof.key,source_event_ref:root,
+        causation_ref:root,world_cycle_ref:`world-cycle:${hash([scene.session_id,scene.key,root])}`,audience:audience(scope),
+        depth:1,origin_kind:'native_consequence',consequence:'observed_native_npc_arrival',location:verified.location_key,
+        reason:'current_native_travel_observation',execution_authority:false,publication_authority:false});
+    }
+  }
+  const encounters=source.details.dramatic_brief?.native_encounter_candidates;
+  if(encounters){
+    if(encounters.version!==1||!Array.isArray(encounters.candidates)||encounters.candidates.length>4)held++;
+    else for(const proof of encounters.candidates){
+      if(beats.length>=4){omitted++;continue;}
+      const verified=inspectNativeEncounterCandidate(db,guild,proof,scope);
+      if(!verified){held++;continue;}
+      const root=verified.source_ref;
+      beats.push({version:1,protocol:'world_beat_v1',id:`world-beat:${hash([source.event_key,proof.proposal_ref,audience(scope)])}`,
+        kind:'encounter_candidate',source_ref:source.event_key,signal_ref:proof.proposal_ref,causation_ref:root,
+        world_cycle_ref:`world-cycle:${hash([scene.session_id,scene.key,root])}`,audience:audience(scope),depth:1,
+        origin_kind:'native_encounter_proposal',location:proof.location_ref,reason:'pending_native_encounter_not_activated',
         execution_authority:false,publication_authority:false});
     }
   }
@@ -455,7 +495,11 @@ export function canonicalNarrativeCause(db,guild,sourceRef,scope){
   const signals=source.details.world_bridge.signals,sidecar=source.details.dramatic_brief?.native_clock_consequences,
     consequences=sidecar?.receipts||[];
   if(sidecar&&(sidecar.version!==1||sidecar.overflow||sidecar.omitted||!Array.isArray(sidecar.receipts)||sidecar.receipts.length>4))return null;
-  if(!signals.length&&!consequences.length)return sourceRef;
+  const observationSidecar=source.details.dramatic_brief?.native_world_observations,observations=observationSidecar?.receipts||[];
+  if(observationSidecar&&(observationSidecar.version!==1||!Array.isArray(observations)||observations.length>4))return null;
+  const encounterSidecar=source.details.dramatic_brief?.native_encounter_candidates,encounters=encounterSidecar?.candidates||[];
+  if(encounterSidecar&&(encounterSidecar.version!==1||!Array.isArray(encounters)||encounters.length>4))return null;
+  if(!signals.length&&!consequences.length&&!observations.length&&!encounters.length)return sourceRef;
   if(!signals.every(s=>activeSignalSnapshot(db,guild,s,scope)))return null;
   const scene=currentScene(db,guild);
   for(const proof of consequences){
@@ -466,5 +510,17 @@ export function canonicalNarrativeCause(db,guild,sourceRef,scope){
       ||scope.mode==='private'&&proof.principal_revision!==current.principalRevision
       ||!narrativeSourceVisible(db,guild,proof.causation_ref,scope))return null;
   }
-  const roots=[...new Set([...signals.map(s=>s.causation_ref),...consequences.map(c=>c.causation_ref)])];return roots.length===1?roots[0]:null;
+  const observationRoots=[];
+  for(const proof of observations){
+    const current=worldSimulationReceiptForAudience(db,guild,proof.action,scope,{sourceRef:proof.key});
+    if(proof.kind!=='world_simulation_observation'||current.status!=='verified_native_observation'
+      ||hash(current)!==proof.revision||current.observation_ref!==proof.observation_ref)return null;
+    observationRoots.push(current.observation_ref);
+  }
+  const encounterRoots=[];
+  for(const proof of encounters){
+    const current=inspectNativeEncounterCandidate(db,guild,proof,scope);if(!current)return null;
+    encounterRoots.push(current.source_ref);
+  }
+  const roots=[...new Set([...signals.map(s=>s.causation_ref),...consequences.map(c=>c.causation_ref),...observationRoots,...encounterRoots])];return roots.length===1?roots[0]:null;
 }

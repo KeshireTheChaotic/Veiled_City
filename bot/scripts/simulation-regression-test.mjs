@@ -135,6 +135,9 @@ try{
   assert(db.playerFactsFor(guild,"player",{characterId:pc.id}).some(fact=>fact.content==="A scorched brass key"));
 
   // Factions retain their own memory, goals, policies and finite agency.
+  assert.throws(()=>applySimulationUpdates(db,guild,[update('faction_memory',
+    {actor_type:'faction',actor_key:'unestablished-office',content:'A patch is not native capacity.'})]),/separately authorized capacity/);
+  configureSimulationEntity(db,guild,'faction','lantern-office',{resources:{information:2},activity_tier:'active',location_key:'hollow-street'});
   applySimulationUpdates(db,guild,[update("faction_memory",{actor_type:"faction",actor_key:"lantern-office",content:"Mercer returned our file"}),
     update("faction_goal",{actor_type:"faction",actor_key:"lantern-office",content:"Repair the ward",data_json:'{"priority":90,"horizon":"long"}'})]);
   const faction=simulationCandidates(db,guild,{layer:"downtime"}).find(actor=>actor.type==="faction");
@@ -168,7 +171,7 @@ try{
   assert.equal(retrieveNpcCognition(db,guild,{query:"mara",npcKey:"mara",recordRecall:false})[0].persistent_state.voice.formality,"precise");
 
   // Invalid updates roll back alongside ordinary facts; private scope blocks global simulation.
-  assert.throws(()=>applyAuthoritativeMutation(db,{guildId:guild,events:[{type:"fact",key:"atomic",value:"Must roll back"}],
+  assert.throws(()=>applyAuthoritativeMutation(db,{guildId:guild,source:'human_gm',events:[{type:"fact",key:"atomic",value:"Must roll back"}],
     simulationUpdates:[update("location",{key:"hollow-street",data_json:'{"unsupported":true}'})]}),/Unsupported/);
   assert(!db.listFactsForGM(guild,{search:"Must roll back"}).length);
   const transition={respond:true,narration:"The group leaves.",private_messages:[],events:[],handouts:[],relationships:[],
@@ -224,6 +227,7 @@ try{
     const key=`worker-${index}`;
     db.upsertNpcProfile(guild,{npcKey:key,displayName:key,activityTier:"active",decisionProfile:{violence_threshold:70}});
     db.upsertNpcGoal(guild,{npcKey:key,goalKey:"investigate",objective:"Repair the ward",priority:90});
+    configureSimulationEntity(db,guild,'npc',key,{location_key:'hollow-street',resources:{materials:4,manpower:2}});
     submitNpcAction(db,guild,action(key,"prepare",{delay_ticks:1}),{roll:succeeds});
   }
   const noNewActions={planNpcActions:async()=>({actions:[]})};

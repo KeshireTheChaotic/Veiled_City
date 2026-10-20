@@ -15,7 +15,7 @@ import { proposeArcBeat } from "./personal-continuity.js";
 import { manageLongProject, projectPhaseRevision, reconcileLongProject } from "./long-projects.js";
 import { applicationPrincipal } from "./application-authority.js";
 import { inspectNpcAction } from "./simulation.js";
-import { inspectInstitutionAction } from "./city-core.js";
+import { inspectInstitutionAction,submitInstitutionAction,executeInstitutionAction } from "./city-core.js";
 import { manageMemoryCluster, memoryMaintenanceCandidate } from "./memory-clusters.js";
 import { encounterProposalContext, proposeWorldEncounter } from "./encounter.js";
 import { interpretDialogue } from "./dialogue-continuity.js";
@@ -32,9 +32,10 @@ import {assertOrdinaryBinding} from './ordinary-effect-proof.js';
 import { conversationPrincipal } from "./conversation-principal.js";
 import {delegationCatalog} from './delegation-catalog.js';
 import {activateDelegatedEncounter,inspectNativeEncounterActivation} from './native-encounter-activation.js';
+import {prepareNativeWorldOperation,nativeWorldOperationAllows,nativeWorldOperationOrigin,inspectNativeWorldOperationReceipt,nativeWorldOperationCatalog,nativeWorldStrategyScope} from './native-world-operations.js';
 const hash=value=>createHash("sha256").update(JSON.stringify(value)).digest("hex");
 const adapters=new Map();
-export const FEATURE_FLAGS={roll:"roll_requests",setup:"narrative_setups",organization:"player_organizations",influence:"audience_influence",evidence:"evidence_custody",dialogue:"dialogue_history",encounter:"encounter_intelligence",goal:"emergent_goals",consequence:"consequences",scene:"scene_continuity",group:"emergent_groups",
+export const FEATURE_FLAGS={institution:'institutions',roll:"roll_requests",setup:"narrative_setups",organization:"player_organizations",influence:"audience_influence",evidence:"evidence_custody",dialogue:"dialogue_history",encounter:"encounter_intelligence",goal:"emergent_goals",consequence:"consequences",scene:"scene_continuity",group:"emergent_groups",
   strategy:"strategies",arc:"personal_arcs",discovery:"discovery",project:"long_projects",mediation:"conflict_mediation",
   memory:"memory_consolidation",density:"activity_density"};
 export const stateRevision=row=>row?hash(row):"absent";
@@ -130,7 +131,9 @@ function preflight(db,guild,intent,context){
     if(source.details.author!==context.scope.actorUserId||source.details.character_id!==context.scope.actorCharacterId)
       throw new Error("Private dialogue must belong to this authenticated character.");
   }
-  if(db.getCityCalendar(guild).flags[FEATURE_FLAGS[intent.feature]]!==true) throw new Error("Feature is disabled.");
+  if(db.getCityCalendar(guild).flags[FEATURE_FLAGS[intent.feature]]!==true
+    &&!nativeWorldOperationAllows(db,guild,context.nativeWorldGrant,intent.feature,intent.payload.op,intent.payload))
+    throw new Error("Feature is disabled or has no qualified native world-operation authority.");
   if(db.isDirectorPaused(guild)) throw new Error("Director is paused.");
   for(const key of new Set([intent.payload.source_event,...intent.source_prerequisites])) requireCitySource(db,guild,key);
   const adapter=adapters.get(intent.feature);if(!adapter) throw new Error("Domain adapter is not available yet.");
@@ -198,18 +201,22 @@ export function dispatchAiIntents(db,guild,intents=[],context={}){
         throw new Error('Saved delegated receipt scope or proposal changed; no replay authority.');
       if(context.scope?.mode==='private')conversationPrincipal(db,guild,context.scope.actorUserId,context.scope.actorCharacterId);
       if(previous.status==='accepted'){
+        inspectNativeWorldOperationReceipt(db,guild,previous);
         for(const ref of new Set([intent.payload.source_event,...intent.source_prerequisites]))requireCitySource(db,guild,ref);
         adapters.get(intent.feature)?.replay?.(db,guild,intent,previous,context);
       }
       return previous; // Read-only receipt; never repeat a committed native operation.
     }
     try{return db.transaction(()=>{
-      const {adapter,before,impact,privateWorld}=preflight(db,guild,intent,context);
+      const nativeWorldGrant=validateIntent(intent)?prepareNativeWorldOperation(db,guild,intent,{...context,nativeEffectKey:key}):null,
+        nativeContext={...context,nativeWorldGrant};
+      const {adapter,before,impact,privateWorld}=preflight(db,guild,intent,nativeContext);
       let verdict=decision(db,guild,intent,impact,budget);
       if(context.deferred===true&&verdict.status==="accepted") verdict={status:"deferred",reason:"Fictional work slot exhausted; refresh or review later."};
-      const result=verdict.status==="accepted"?applyNative(db,guild,intent,key,"ai_policy",context,adapter,privateWorld):null;
+      const result=verdict.status==="accepted"?applyNative(db,guild,intent,key,"ai_policy",nativeContext,adapter,privateWorld):null;
       if(verdict.status==="accepted"){budget.operations++;budget.cost+=impact.cost;}
-      return saveReceipt(db,guild,key,intent,verdict.status,verdict.reason,context,{before,impact,result,policy_revision:delegationPolicy(db,guild).revision});
+      return saveReceipt(db,guild,key,intent,verdict.status,verdict.reason,context,{before,impact,result,policy_revision:delegationPolicy(db,guild).revision,
+        ...(verdict.status==='accepted'&&nativeWorldGrant?{authority_origin:nativeWorldOperationOrigin(nativeWorldGrant)}:{})});
     });}catch(error){
       return saveReceipt(db,guild,key,validateIntent(intent)?intent:null,"blocked","Intent validation or domain prerequisites failed.",context,
         {diagnostic:String(error.message).slice(0,1000)});
@@ -242,7 +249,7 @@ export function reviewAiIntent(db,guild,{key,decision:response,expected_revision
 }
 export function intentContext(db,guild){
   const scene=db.getActiveSession(guild)&&db.getCityCalendar(guild).flags.scene_continuity===true?sceneView(db,guild,{gm:true}):null;
-  const packet={policy:delegationPolicy(db,guild),flags:db.getCityCalendar(guild).flags,
+  const packet={policy:delegationPolicy(db,guild),flags:db.getCityCalendar(guild).flags,native_world_operations:nativeWorldOperationCatalog(db,guild),
     scene_entries:db.listCityRecords(guild,{kind:"scene_entry",includeGM:true,limit:30})
       .filter(row=>["pending","awaiting_adjudication"].includes(row.status)).slice(0,8).map(row=>({...row,expected_revision:stateRevision(row)})),
     roll_declarations:db.getCityCalendar(guild).flags.roll_requests===true?db.listWorldEvents(guild,{includeGM:true,limit:100})
@@ -338,6 +345,20 @@ registerIntentAdapter("encounter",{
     ?activateDelegatedEncounter(db,guild,intent,{principal:applicationPrincipal(guild,'encounter.activate',actor)})
     :proposeWorldEncounter(db,guild,{...intent.payload,key:intent.target_key||key},actor)
 });
+registerIntentAdapter('institution',{
+  current:(db,guild,intent)=>intent.target_key?db.getCityRecord(guild,'action',intent.target_key):null,
+  impact:()=>({cost:1,review:false,reason:'Actual institutional procedure and capacity only; requests never grant PC custody, compliance, knowledge or a warrant outcome.'}),
+  apply:(db,guild,intent,key,principal,context)=>{
+    const p=intent.payload;
+    actorSource(db,guild,{actor_type:'institution',actor_key:p.institution,information_key:p.information_key,source_event:p.source_event});
+    const {op,...action}=p,row=intent.target_key?db.getCityRecord(guild,'action',intent.target_key)
+      :submitInstitutionAction(db,guild,{...action,key},principal);
+    if(intent.target_key&&(!context.nativeWorldGrant||!row||!['pending','proposed'].includes(row.status)
+      ||Object.entries(action).some(([field,value])=>field!=='information_key'&&hash(row.data[field]??'')!==hash(value))))
+      throw new Error('Existing institutional request needs exact current native action terms.');
+    return executeInstitutionAction(db,guild,row.record_key,{cycleKey:key,nativeAuthority:context.nativeWorldGrant,nativePayload:p});
+  }
+});
 registerIntentAdapter("goal",{
   current:(db,guild,intent)=>intent.payload.actor_type==="npc"?db.getNpcGoal(guild,intent.payload.actor_key,intent.payload.goal_key)
     :db.listSimulationRecords(guild,{kind:"goal",entityKey:`${intent.payload.actor_type}:${intent.payload.actor_key}`,limit:1000})
@@ -345,9 +366,9 @@ registerIntentAdapter("goal",{
   impact:(db,guild,intent)=>({cost:0,review:["complete","abandon","supersede"].includes(intent.payload.op)
     ||intent.payload.acceptable_methods.some(method=>!["investigate","observe","research","prepare","protect"].includes(method)),
     reason:"Contested goal conclusions or non-routine methods require human review."}),
-  apply:(db,guild,intent,key,principal)=>{
-    const row=proposeGoalTransition(db,guild,{...intent.payload,key},principal);
-    return reviewGoalTransition(db,guild,{key:row.record_key,decision:"approve"},principal);
+  apply:(db,guild,intent,key,principal,context)=>{
+    const options={nativeAuthority:context?.nativeWorldGrant||null},row=proposeGoalTransition(db,guild,{...intent.payload,key},principal,options);
+    return reviewGoalTransition(db,guild,{key:row.record_key,decision:"approve"},principal,options);
   }
 });
 registerIntentAdapter("scene",{
@@ -380,12 +401,13 @@ registerIntentAdapter("consequence",{
   current:(db,guild,intent)=>intent.target_key?db.getCityRecord(guild,intent.payload.op==="apply"?"consequence":"consequence_subscription",intent.target_key):null,
   impact:(db,guild,intent,before)=>({cost:intent.payload.op==="apply"?Math.abs(before?.data.payload?.delta||0):0,
     review:intent.payload.handler!=="service"||intent.payload.op==="apply"&&before?.data.handler!=="service",reason:"Non-service consequences require human review."}),
-  apply:(db,guild,intent,key,principal)=>{
+  apply:(db,guild,intent,key,principal,context)=>{
     const p=intent.payload;
     if(p.op==="apply"){
       const before=db.getCityRecord(guild,"consequence",intent.target_key);
       if(before?.source_event!==p.source_event) throw new Error("Consequence source mismatch.");
-      const result=reviewConsequence(db,guild,{key:intent.target_key,decision:"approve"},principal);
+      const result=reviewConsequence(db,guild,{key:intent.target_key,decision:"approve"},principal,
+        {nativeAuthority:context?.nativeWorldGrant||null,nativePayload:p});
       if(result.status!=="completed") throw new Error("Consequence blocked by native resolver.");return result;
     }
     if(p.op==="subscribe"&&p.handler==="service"&&(!p.event_kinds.length||p.event_kinds.some(kind=>!["infrastructure_damage","infrastructure_repair"].includes(kind))))
@@ -406,16 +428,23 @@ export function delegateConsequence(db,guild,row,budget={operations:0,cost:0}){
       entity_key:p.entity_key,event_kinds:p.event_kinds,location_key:p.location_key||"",delta:p.payload.delta}}],
   {origin:`causal:${row.record_key}:${db.getSimulationClock(guild).tick}`,scope:{mode:"party"},budget})[0];
 }
+export function delegateWorldGoal(db,guild,payload,budget={operations:0,cost:0}){
+  return dispatchAiIntents(db,guild,[{version:1,feature:'goal',target_key:'',expected_revision:'absent',
+    policy_revision:delegationPolicy(db,guild).revision,source_prerequisites:[],payload}],
+    {origin:`native-motivation:${payload.goal_key}`,scope:{mode:'party'},budget})[0];
+}
 registerIntentAdapter("group",{
   current:(db,guild,intent)=>intent.target_key?db.getCityRecord(guild,"group_transition",intent.target_key):null,
-  impact:(db,guild,intent,before)=>({cost:0,review:before?.data.major===true||["split","merge","dissolve"].includes(intent.payload.operation),
+  impact:(db,guild,intent,before,context)=>({cost:0,review:!nativeWorldOperationAllows(db,guild,context.nativeWorldGrant,'group',intent.payload.op,intent.payload)
+    &&(before?.data.major===true||["split","merge","dissolve"].includes(intent.payload.operation)),
     reason:"Major group changes require human review and independent candidate responses."}),
-  apply:(db,guild,intent,key,principal)=>{
+  apply:(db,guild,intent,key,principal,context)=>{
     const p=intent.payload,member=p.member;
+    const options={nativeAuthority:context?.nativeWorldGrant||null,nativePayload:p};
     actorSource(db,guild,{actor_type:"npc",actor_key:member,information_key:p.information_key,source_event:p.source_event},{requireResources:false});
     if(p.op==="propose"){
       if(!p.members.includes(member)) throw new Error("Group proposer must be a candidate.");
-      return manageGroup(db,guild,{...p,key},principal);
+      return manageGroup(db,guild,{...p,key},principal,options);
     }
     const before=db.getCityRecord(guild,"group_transition",intent.target_key);
     if(before?.source_event!==p.source_event) throw new Error("Response must concern this sourced proposal.");
@@ -423,10 +452,13 @@ registerIntentAdapter("group",{
     const profile=db.getNpcProfile(guild,member);
     if(p.decision==="accept"&&["refuse","decline"].includes(profile.decision_profile.group_policy)) throw new Error("Established actor preferences require dissent.");
     if(!p.reason.trim()) throw new Error("Actor-relative response reason required.");
-    const row=manageGroup(db,guild,{key:intent.target_key,op:"respond",member,decision:p.decision,reason:p.reason,information_key:p.information_key},principal);
+    const row=manageGroup(db,guild,{key:intent.target_key,op:"respond",member,decision:p.decision,reason:p.reason,information_key:p.information_key},principal,options);
     if(row.data.members.every(candidate=>row.data.responses[candidate])){
       const accepted=row.data.members.filter(candidate=>row.data.responses[candidate].decision==="accept").length;
-      if(!row.data.major) return manageGroup(db,guild,{key:row.record_key,op:accepted>=(["form"].includes(row.data.operation)?2:1)?"approve":"reject"},principal);
+      if(!row.data.major||context.nativeWorldGrant){
+        const minimum=['form','split','merge'].includes(row.data.operation)?2:row.data.operation==='dissolve'?row.data.members.length:1;
+        return manageGroup(db,guild,{key:row.record_key,op:accepted>=minimum?'approve':'reject'},principal,options);
+      }
     }
     return row;
   }
@@ -438,20 +470,23 @@ registerIntentAdapter("strategy",{
     review:(before?.data.steps||intent.payload.steps).some(step=>!["observe","research","investigate","prepare","travel","protect",
       "document_request","interview_request","inspect_request"].includes(step.action.type)),
     reason:"Aggressive, disclosure or negotiated plan steps require human review."}),
-  apply:(db,guild,intent,key,principal)=>{
+  apply:(db,guild,intent,key,principal,context)=>{
     const p=intent.payload,before=intent.target_key?db.getCityRecord(guild,"strategy",intent.target_key):null;
     if(before&&(p.actor_type!==before.data.actor_type||p.actor_key!==before.data.actor_key||p.goal_key!==before.data.goal_key)) throw new Error("Plan owner/objective cannot be substituted.");
-    const result=manageStrategy(db,guild,{...p,delegation_revision:intent.policy_revision,key:intent.target_key||key},principal);
-    return ["propose","replan"].includes(p.op)?manageStrategy(db,guild,{key:result.record_key,op:"approve"},principal):result;
+    const options={nativeAuthority:context?.nativeWorldGrant||null,nativePayload:p},
+      result=manageStrategy(db,guild,{...p,delegation_revision:intent.policy_revision,key:intent.target_key||key},principal,options);
+    return ["propose","replan"].includes(p.op)?manageStrategy(db,guild,{key:result.record_key,op:"approve"},principal,options):result;
   }
 });
 export function delegateStrategy(db,guild,row,budget={operations:0,cost:0}){
   const p=row.data;
+  const scope=p.native_world_origin?nativeWorldStrategyScope(db,guild,row):{mode:'party'};
+  if(!scope)return {status:'held',reason:'native_strategy_scope_unavailable'};
   return dispatchAiIntents(db,guild,[{version:1,feature:"strategy",target_key:row.record_key,expected_revision:stateRevision(row),
     policy_revision:delegationPolicy(db,guild).revision,source_prerequisites:[],payload:{actor_type:p.actor_type,actor_key:p.actor_key,
       information_key:p.information_key,source_event:row.source_event,op:"run",goal_key:p.goal_key,cost_ceiling:p.cost_ceiling,
       deadline_minute:p.deadline_minute??1000000000,steps:p.steps.map(({key,requires,action})=>({key,requires,action})),
-      alternatives:p.alternatives||[],assumptions:p.assumptions||[]}}],{origin:`strategy:${row.record_key}:${db.getSimulationClock(guild).tick}`,scope:{mode:"party"},budget})[0];
+      alternatives:p.alternatives||[],assumptions:p.assumptions||[]}}],{origin:`strategy:${row.record_key}:${db.getSimulationClock(guild).tick}`,scope,budget})[0];
 }
 registerIntentAdapter("arc",{
   current:(db,guild,intent)=>intent.payload.op==="invite"?db.getCityRecord(guild,"arc",`${intent.payload.character_id}:${intent.payload.arc_key}`)

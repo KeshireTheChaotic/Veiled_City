@@ -1,9 +1,10 @@
 /** Civic domain validation and institutional knowledge firewall. All descriptors are non-player simulation, never mechanical modifiers. */
 import { cityObject, cityKey, cityInteger, cityAudit, indexWorldEvent, scheduleCityEvent } from "./city-calendar.js";
-import { assertInstitutionDelegation, activeCityProxy } from "./city-constraints.js";
+import { assertInstitutionDelegation, activeCityProxy, assertWorldActorControl } from "./city-constraints.js";
 import { EXPANSION_FEATURES } from "./expansion-contracts.js";
 import { assertServiceAccess } from "./supply-dependencies.js";
 import { hasOwnerConsent } from "./owner-consent.js";
+import {nativeWorldOperationAllows,nativeWorldStrategyStepAllowed} from './native-world-operations.js';
 
 export const INSTITUTION_ACTIONS=["document_request","file_case","interview_request","inspect_request","issue_policy",
   "allocate_resources","negotiate_request","publish_finding","relocate_staff","seek_warrant"];
@@ -116,6 +117,7 @@ export function addWorldLink(db,guildId,input,actorId){
   });
 }
 function validateInstitutionAction(db,guildId,input){
+  assertWorldActorControl(db,guildId,'institution',input.institution);
   const institution=requireCityRecord(db,guildId,"institution",input.institution);
   assertInstitutionDelegation(db,guildId,institution,input);
   requireCitySource(db,guildId,input.source_event);
@@ -198,38 +200,53 @@ export function configureCityFlags(db,guildId,input,actorId){
   });
 }
 /** Deterministic bounded Institution Director: validated queued intent, no new per-actor LLM calls. */
+export function executeInstitutionAction(db,guildId,key,{cycleKey='native',nativeAuthority=null,nativePayload=null}={}){
+  return db.transaction(()=>{
+    const row=db.getCityRecord(guildId,'action',key);
+    if(!row)throw new Error('Established institutional action required.');
+    if(row.status==='completed')return row;
+    const native=!!nativeAuthority&&nativeWorldOperationAllows(db,guildId,nativeAuthority,'institution','act',{...nativePayload,key});
+    const plan=row.data.strategy_key&&db.getCityRecord(guildId,'strategy',row.data.strategy_key),
+      planned=!!plan&&nativeWorldStrategyStepAllowed(db,guildId,plan,row.data);
+    if(nativeAuthority&&!native||db.isDirectorPaused(guildId)
+      ||!db.getCityCalendar(guildId).flags.institutions&&!native&&!planned)throw new Error('Current native institutional execution authority required.');
+    if(!['proposed','pending'].includes(row.status)||row.data.major&&!row.data.approved_by&&!native)
+      throw new Error('Institutional action needs its actual native approval or existing human review.');
+    const institute=validateInstitutionAction(db,guildId,row.data);
+    const next=db.saveCityRecord(guildId,{...institute,key:institute.record_key,data:{...institute.data,capacity:institute.data.capacity-1,
+      ...(row.data.policy?{public_policy:row.data.policy}:{}),...(row.data.new_jurisdictions?{jurisdictions:row.data.new_jurisdictions}:{})}});
+    if(row.data.personnel_key){
+      const personnel=db.getCityRecord(guildId,'personnel',row.data.personnel_key),assigned=db.saveCityRecord(guildId,{...personnel,
+        key:personnel.record_key,data:{...personnel.data,capacity:personnel.data.capacity-1}});
+      cityAudit(db,guildId,'personnel_capacity',personnel.record_key,personnel,assigned,'institution_director');
+    }
+    const ledger=cityAudit(db,guildId,'institution_action',row.record_key,institute,next,'institution_director');
+    indexWorldEvent(db,guildId,{key:`institution:${row.record_key}`,kind:row.data.type,title:`${institute.data.name}: ${row.data.type}`,
+      source_kind:'mutation',source_id:ledger.id,details:{request_only:true,institution:institute.record_key,reports:row.data.report_keys||[]}},'institution_director');
+    return db.saveCityRecord(guildId,{...row,key:row.record_key,status:'completed',data:{...row.data,cycle_key:cycleKey,
+      ...(native?{native_review:'source_validated_institutional_request'}:{})}});
+  });
+}
 export function runInstitutionDirector(db,guildId,cycleKey){
-  if(!db.getCityCalendar(guildId).flags.institutions||db.isDirectorPaused(guildId)) return [];
+  if(db.isDirectorPaused(guildId)) return [];
   const receiptKey=`institution-cycle:${cycleKey}`;
   if(db.getCityRecord(guildId,"cycle",receiptKey)) return [];
   return db.transaction(()=>{
     const results=[];
     for(const row of db.listCityRecords(guildId,{kind:"action",status:"proposed",includeGM:true,limit:2})){
+      if(!db.getCityCalendar(guildId).flags.institutions){
+        const plan=row.data.strategy_key&&db.getCityRecord(guildId,'strategy',row.data.strategy_key);
+        if(!plan||!nativeWorldStrategyStepAllowed(db,guildId,plan,row.data))continue;
+      }
       try{
-        results.push(db.transaction(()=>{
-          const institute=validateInstitutionAction(db,guildId,row.data);
-          if(row.data.major&&!row.data.approved_by) throw new Error("Major institutional action still requires review.");
-          const next=db.saveCityRecord(guildId,{...institute,key:institute.record_key,data:{...institute.data,capacity:institute.data.capacity-1,
-            ...(row.data.policy?{public_policy:row.data.policy}:{}),...(row.data.new_jurisdictions?{jurisdictions:row.data.new_jurisdictions}:{})}});
-          if(row.data.personnel_key){
-            const personnel=db.getCityRecord(guildId,"personnel",row.data.personnel_key);
-            const assigned=db.saveCityRecord(guildId,{...personnel,key:personnel.record_key,data:{...personnel.data,capacity:personnel.data.capacity-1}});
-            cityAudit(db,guildId,"personnel_capacity",personnel.record_key,personnel,assigned,"institution_director");
-          }
-          const ledger=cityAudit(db,guildId,"institution_action",row.record_key,institute,next,"institution_director");
-          indexWorldEvent(db,guildId,{key:`institution:${row.record_key}`,kind:row.data.type,title:`${institute.data.name}: ${row.data.type}`,
-            source_kind:"mutation",source_id:ledger.id,details:{request_only:true,institution:institute.record_key,reports:row.data.report_keys||[]}},"institution_director");
-          return db.saveCityRecord(guildId,{...row,key:row.record_key,status:"completed",data:{...row.data,cycle_key:cycleKey}});
-        }));
+        results.push(executeInstitutionAction(db,guildId,row.record_key,{cycleKey}));
       }catch(error){
         db.saveCityRecord(guildId,{...row,key:row.record_key,status:"blocked",data:{...row.data,error:error.message}});
         cityAudit(db,guildId,"institution_blocked",row.record_key,row,{error:error.message},"institution_director");
       }
     }
     const source=results[0]?.source_event;
-    // Even an empty opportunity gets a durable receipt when an established source is available.
-    const fallback=source||db.listWorldEvents(guildId,{includeGM:true,limit:1})[0]?.event_key;
-    if(fallback) db.saveCityRecord(guildId,{kind:"cycle",key:receiptKey,source_event:fallback,status:"completed",data:{actions:results.map(row=>row.record_key)}});
+    if(source) db.saveCityRecord(guildId,{kind:"cycle",key:receiptKey,source_event:source,status:"completed",data:{actions:results.map(row=>row.record_key)}});
     return results;
   });
 }

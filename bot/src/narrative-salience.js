@@ -16,6 +16,12 @@ const visible=(r,s)=>['party','public'].includes(r.visibility)||s.mode==='privat
 const records=listNarrativeRecords;
 const audience=s=>s.mode==='private'?['character',s.actorCharacterId]:['party',null];
 const profileKey=(entity,visibility,subject)=>`salience:${hash([entity,visibility,subject])}`;
+/** Legacy opt-in remains readable. Qualified native fiction does not need a second routine salience toggle. */
+export function nativeSalienceAvailable(db,guild){
+  const flags=db.getCityCalendar(guild).flags;
+  return flags.narrative_salience===true||flags.narrative_authority===true&&flags.playable_narration===true
+    &&(db.getCityRecord(guild,'gm_authority','campaign')?.data.gm_authority_mode||'autonomous')==='autonomous';
+}
 function names(db,guild,entity){
   const d=db.getCityRecord(guild,'autonomous_entity',entity)?.data;
   return d?[d.key,d.name,...(d.aliases||[])].filter(x=>typeof x==='string'&&x.length>=3):[];
@@ -97,7 +103,7 @@ export function canonicalInterestEvidence(db,guild,entity,scope){
   return [...distinct.values()].map(({source,weight})=>({source,weight}));
 }
 export function noteNarrativeInterest(db,guild,scope,sourceRef,{intents=[]}={}){
-  if(!db.getCityCalendar(guild).flags.narrative_salience)return;
+  if(!nativeSalienceAvailable(db,guild))return;
   const source=db.getWorldEvent(guild,sourceRef),principal=conversationPrincipal(db,guild,scope.actorUserId,scope.actorCharacterId),scene=currentScene(db,guild);
   if(source?.status!=='active'||source.kind!=='ai_gm_input'||source.details.author!==scope.actorUserId
     ||source.details.character_id!==scope.actorCharacterId||source.details.revision!==principal.revision||principal.kind!=='owner'
@@ -127,7 +133,7 @@ export function noteNarrativeInterest(db,guild,scope,sourceRef,{intents=[]}={}){
   maintainNarrativeSalience(db,guild);
 }
 export function noteNarrativeReuse(db,guild,row){
-  if(!db.getCityCalendar(guild).flags.narrative_salience)return;
+  if(!nativeSalienceAvailable(db,guild))return;
   const saved=row?.record_key&&db.getCityRecord(guild,'narrative_unit',row.record_key),source=saved&&db.getWorldEvent(guild,saved.source_event),
     scope=saved?.data.binding?.scope,scene=currentScene(db,guild);
   if(saved?.status!=='accepted_established'||proofHash(saved)!==proofHash(row)||source?.kind!=='native_narrative_unit'
@@ -141,7 +147,7 @@ export function noteNarrativeReuse(db,guild,row){
   maintainIdentityPersistence(db,guild,entity,scope,row.data.binding.source);
 }
 export function maintainNarrativeSalience(db,guild){
-  if(!db.getCityCalendar(guild).flags.narrative_salience)return;
+  if(!nativeSalienceAvailable(db,guild))return;
   const tick=db.getSimulationClock(guild).tick;
   for(const row of records(db,guild,'narrative_salience')){
     const scope={mode:row.visibility==='character'?'private':'party',actorCharacterId:row.subject_key,actorUserId:row.subject_key&&db.getCharacter(row.subject_key)?.owner_user_id};
@@ -151,7 +157,7 @@ export function maintainNarrativeSalience(db,guild){
   }
 }
 export function rankNarrativeMemory(db,guild,scope,rows,{query='',location=null,maxChars=9000}={}){
-  if(!db.getCityCalendar(guild).flags.narrative_salience){
+  if(!nativeSalienceAvailable(db,guild)){
     const selected=[];let used=0;
     for(const row of rows){const size=JSON.stringify(row).length;if(used+size>maxChars)continue;
       selected.push(row);used+=size;if(selected.length>=12)break;}
@@ -170,7 +176,7 @@ export function rankNarrativeMemory(db,guild,scope,rows,{query='',location=null,
   return selected;
 }
 export function narrativeContextEligible(db,guild,entity,scope,{query='',location=null}={}){
-  if(!db.getCityCalendar(guild).flags.narrative_salience)return true;
+  if(!nativeSalienceAvailable(db,guild))return true;
   const importance=narrativeImportance(db,guild,entity,scope);
   return importance?.status!=='prompt_archived'||importance.pins.length>0||mentions(query,names(db,guild,entity))||entity===`location:${location}`;
 }

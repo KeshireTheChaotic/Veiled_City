@@ -5,6 +5,22 @@ import { actorSource, motivationKey } from "./simulation-motivation.js";
 import { ACTION_TYPES, ACTION_COSTS, actorState, submitNpcAction } from "./simulation.js";
 import { UserInputError, StateConflictError } from "./errors.js";
 import { delegateStrategy } from "./ai-intents.js";
+import {nativeWorldOperationAllows,nativeWorldOperationOrigin,nativeWorldStrategyAllowed,withNativeStrategyExecution} from './native-world-operations.js';
+import {isDeepStrictEqual} from 'node:util';
+function nativeGrant(db,guild,input,key,op,nativeAuthority,nativePayload){
+  if(!nativeAuthority)return false;
+  if(nativePayload&&nativePayload.key!==undefined&&nativePayload.key!==key)
+    throw new StateConflictError('Native strategy authority cannot substitute the saved plan key.');
+  const originalOp=nativePayload?.op||op;
+  if(originalOp!==op&&!(op==='approve'&&['propose','replan'].includes(originalOp)))
+    throw new StateConflictError('Native strategy operation does not match the original accepted intent.');
+  if(nativePayload&&['propose','replan'].includes(op)&&Object.entries(nativePayload)
+    .some(([field,value])=>!['key','op'].includes(field)&&!isDeepStrictEqual(input[field],value)))
+    throw new StateConflictError('Native strategy definition differs from the original accepted payload.');
+  if(!nativeWorldOperationAllows(db,guild,nativeAuthority,'strategy',originalOp,{...(nativePayload||input),key}))
+    throw new StateConflictError('Exact current native strategy authority required.');
+  return true;
+}
 function objective(db,guild,input){
   if(input.actor_type==="npc") return db.getNpcGoal(guild,input.actor_key,input.goal_key);
   return db.listSimulationRecords(guild,{kind:"goal",entityKey:`${input.actor_type}:${input.actor_key}`,limit:1000})
@@ -32,9 +48,13 @@ function validatePlan(db,guild,input){
     ||input[field].some(value=>typeof value!=="string"||value.length>300))) throw new UserInputError("Bounded subjective options/risks required.");
   return goal;
 }
-export function manageStrategy(db,guild,input,actorId){
-  cityObject(input);if(db.getCityCalendar(guild).flags.strategies!==true) throw new StateConflictError("Strategies are opt-in.");
+export function manageStrategy(db,guild,input,actorId,{nativeAuthority=null,nativePayload=null}={}){
+  cityObject(input);
   const key=cityKey(input.key),before=db.getCityRecord(guild,"strategy",key),op=input.op||"propose";
+  const native=nativeGrant(db,guild,input,key,op,nativeAuthority,nativePayload);
+  if(actorId==='ai_policy'&&before?.data.native_world_origin&&!native)
+    throw new StateConflictError('Saved native strategy requires its exact current source and audience authority.');
+  if(db.getCityCalendar(guild).flags.strategies!==true&&!native) throw new StateConflictError("Strategies are opt-in.");
   if(op==="propose"||op==="replan"){
     if(op==="propose"&&before) return before;
     if(op==="replan"&&(!before||!["active","blocked"].includes(before.status)||input.source_event===before.source_event))
@@ -42,6 +62,9 @@ export function manageStrategy(db,guild,input,actorId){
     if(op==="replan"&&before.data.steps.some(step=>step.status==="submitted"))
       throw new StateConflictError("Reconcile the submitted action before replanning; pause to cancel a queued action.");
     const next={...before?.data,...input};
+    // Native provenance is computed by the application; neither input JSON nor prior revision implies a fresh grant.
+    delete next.native_world_origin;
+    if(native)next.native_world_origin=nativeWorldOperationOrigin(nativeAuthority);
     if(before&&(next.actor_type!==before.data.actor_type||next.actor_key!==before.data.actor_key||next.goal_key!==before.data.goal_key))
       throw new StateConflictError("Replan cannot substitute its owner or objective.");
     validatePlan(db,guild,next);
@@ -57,13 +80,14 @@ export function manageStrategy(db,guild,input,actorId){
     });
   }
   if(!before) throw new StateConflictError("Strategy not found.");
-  if(op==="run") return executeStrategyStep(db,guild,key,{actorId});
+  if(op==="run") return executeStrategyStep(db,guild,key,{actorId,nativeAuthority,nativePayload:nativePayload||input});
   if(!["approve","reject","abandon","pause","resume"].includes(op)) throw new UserInputError("Unknown strategy operation.");
   if(["completed","abandoned","rejected"].includes(before.status)) return before;
   if(op==="approve"&&before.status!=="pending"||op==="resume"&&before.status!=="paused") throw new StateConflictError("Strategy lifecycle does not permit this operation.");
   if(["approve","resume"].includes(op)) validatePlan(db,guild,before.data);
   return db.transaction(()=>{
     const data={...before.data,steps:before.data.steps.map(step=>({...step})),reviewed_by:actorId};
+    if(native&&['approve','resume'].includes(op))data.native_world_origin=nativeWorldOperationOrigin(nativeAuthority);
     if(["pause","abandon","reject"].includes(op)) for(const step of data.steps.filter(step=>step.status==="submitted")){
       const action=data.actor_type==="institution"?db.getCityRecord(guild,"action",step.action_id):db.getSimulationRecord(guild,step.action_id);
       if(!action) throw new StateConflictError("Submitted action missing; restore before changing lifecycle.");
@@ -80,9 +104,13 @@ export function manageStrategy(db,guild,input,actorId){
       data});cityAudit(db,guild,`strategy_${op}`,key,before,after,actorId);return after;
   });
 }
-export function executeStrategyStep(db,guild,key,{actorId="strategy_opportunity",roll}={}){
+export function executeStrategyStep(db,guild,key,{actorId="strategy_opportunity",roll,nativeAuthority=null,nativePayload=null}={}){
   const before=db.getCityRecord(guild,"strategy",key);
-  if(!before||before.status!=="active"||db.isDirectorPaused(guild)||db.getCityCalendar(guild).flags.strategies!==true) return before;
+  const native=nativeGrant(db,guild,nativePayload||{key,op:'run'},key,'run',nativeAuthority,nativePayload),
+    saved=before&&nativeWorldStrategyAllowed(db,guild,before);
+  if(!before||before.status!=="active"||db.isDirectorPaused(guild)
+    ||before.data.native_world_origin&&!saved&&!native
+    ||db.getCityCalendar(guild).flags.strategies!==true&&!saved&&!native)return before;
   try{return db.transaction(()=>{
     const data=before.data;
     const goal=objective(db,guild,data),steps=data.steps.map(step=>({...step}));
@@ -108,12 +136,13 @@ export function executeStrategyStep(db,guild,key,{actorId="strategy_opportunity"
         if(spent+1>data.cost_ceiling) throw new StateConflictError("Strategy cost ceiling reached.");
         if(data.actor_type!=="institution"&&actorState(db,guild,data.actor_type,data.actor_key).resources[ACTION_COSTS[next.action.type]]<1)
           throw new StateConflictError("Resource shortage: replan, delay, retreat or abandon; no cost applied.");
-        const action=data.actor_type==="institution"?submitInstitutionAction(db,guild,{...next.action,
+        const submit=()=>data.actor_type==="institution"?submitInstitutionAction(db,guild,{...next.action,
           key:`step:${motivationKey([key,data.revision,next.key])}`,institution:data.actor_key,source_event:before.source_event,
           strategy_key:key,strategy_revision:data.revision},actorId)
           :submitNpcAction(db,guild,{...next.action,actor_type:data.actor_type,actor_key:data.actor_key,
             goal_key:data.actor_type==="npc"?data.goal_key:goal.id,information_key:data.information_key,strategy_key:key,strategy_revision:data.revision},
             {cycleKey:`strategy:${key}:${data.revision}:${next.key}`,roll});
+        const action=native||saved?withNativeStrategyExecution(db,guild,nativeAuthority,before,submit):submit();
         next.action_id=data.actor_type==="institution"?action.record_key:action.id;
         next.status="submitted";
       }
@@ -127,9 +156,10 @@ export function executeStrategyStep(db,guild,key,{actorId="strategy_opportunity"
   }
 }
 export function runStrategyOpportunity(db,guild,budget=1,{excludedActors=new Set(),delegationBudget={operations:0,cost:0}}={}){
-  if(db.isDirectorPaused(guild)||db.getCityCalendar(guild).flags.strategies!==true) return [];
+  if(db.isDirectorPaused(guild)) return [];
   const seen=new Set(excludedActors);
   return db.listCityRecords(guild,{kind:"strategy",status:"active",includeGM:true,limit:20})
+    .filter(row=>db.getCityCalendar(guild).flags.strategies===true||nativeWorldStrategyAllowed(db,guild,row))
     .filter(row=>{if(seen.has(row.actor_key)) return false;seen.add(row.actor_key);return true;}).slice(0,Math.max(0,Math.min(4,budget)))
     .map(row=>row.data.reviewed_by==="ai_policy"?delegateStrategy(db,guild,row,delegationBudget):executeStrategyStep(db,guild,row.record_key));
 }

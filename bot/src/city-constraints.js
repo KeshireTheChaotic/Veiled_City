@@ -1,10 +1,24 @@
 /** Shared availability/delegation guards; preferences never move NPCs or override a human-controlled proxy. */
 import { delegationPolicy } from "./ai-intents.js";
+import {StateConflictError} from './errors.js';
+import {nativeWorldStrategyStepAllowed} from './native-world-operations.js';
+import {nativeActorControl} from './native-actor-control.js';
 export function activeCityProxy(db,guildId,key){
   const session=db.getActiveSession(guildId);
   return session?db.listNpcProxies(session.id,{statuses:["active"]}).find(row=>row.npc_key===key):null;
 }
+/** Negative ownership boundary, not an execution grant. Native domain/source/cost checks remain mandatory. */
+export function worldActorControl(db,guildId,type,key){
+  return nativeActorControl(db,guildId,type,key).owner_control_type;
+}
+export function assertWorldActorControl(db,guildId,type,key){
+  if(type==='npc'&&db.getCharacter(key))throw new Error('Player characters cannot be controlled as NPCs.');
+  const control=worldActorControl(db,guildId,type,key);
+  if(control!=='ai_world')throw new StateConflictError(`World actor ${control} control requires its rightful principal; no autonomous takeover.`);
+  return control;
+}
 export function assertNpcAvailability(db,guildId,key,action){
+  assertWorldActorControl(db,guildId,'npc',key);
   if(db.getCharacter(key)) throw new Error("Player characters cannot be controlled as NPCs.");
   const lifecycle=db.getSimulationEntity(guildId,"npc",key)?.state||{};
   if(lifecycle.removed||["dead","removed"].includes(lifecycle.status)) throw new Error("Dead or removed NPCs are unavailable.");
@@ -46,7 +60,7 @@ export function assertQueuedCompatibility(db,guildId,record){
     const plan=db.getCityRecord(guildId,"strategy",record.data.strategy_key);
     if(plan?.data.reviewed_by==="ai_policy"){
       const policy=delegationPolicy(db,guildId);
-      if(db.getCityCalendar(guildId).flags.strategies!==true||policy.mode!=="routine_delegated"||!policy.allow.includes("strategy.run")
+      if((plan.data.native_world_origin||db.getCityCalendar(guildId).flags.strategies!==true)&&!nativeWorldStrategyStepAllowed(db,guildId,plan,record.data)||policy.mode!=="routine_delegated"||!policy.allow.includes("strategy.run")
         ||policy.revision!==plan.data.delegation_revision||policy.expires_minute===null||db.getSimulationClock(guildId).minute>=policy.expires_minute)
         throw new Error("Queued AI plan no longer has execution delegation; review or cancel explicitly.");
     }

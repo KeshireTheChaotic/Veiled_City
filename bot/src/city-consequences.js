@@ -4,6 +4,7 @@ import { requireCitySource } from "./city-core.js";
 import { changeCityService, transmitCityBelief } from "./city-civic.js";
 import { actorSource, proposeGoalTransition, motivationKey } from "./simulation-motivation.js";
 import { UserInputError, StateConflictError } from "./errors.js";
+import {nativeWorldCoordinatorReady,nativeWorldOperationAllows} from './native-world-operations.js';
 const handlers={
   goal:(db,guild,row,actor)=>proposeGoalTransition(db,guild,{...row.data.payload,key:row.record_key,source_event:row.source_event},actor),
   service:(db,guild,row,actor)=>{
@@ -50,7 +51,7 @@ export function subscribeConsequence(db,guild,input,actorId){
   });
 }
 export function coordinateConsequences(db,guild,budget=2,{onProposed=null}={}){
-  if(db.isDirectorPaused(guild)||db.getCityCalendar(guild).flags.consequences!==true) return [];
+  if(db.isDirectorPaused(guild)||db.getCityCalendar(guild).flags.consequences!==true&&!nativeWorldCoordinatorReady(db,guild,'consequence','apply')) return [];
   if(budget<=0) return [];
   const results=[];
   return db.transaction(()=>{
@@ -77,12 +78,14 @@ export function coordinateConsequences(db,guild,budget=2,{onProposed=null}={}){
     return results;
   });
 }
-export function reviewConsequence(db,guild,input,actorId){
+export function reviewConsequence(db,guild,input,actorId,{nativeAuthority=null,nativePayload=null}={}){
   const before=db.getCityRecord(guild,"consequence",cityKey(input.key));
   if(!before) throw new StateConflictError("Consequence not found.");
   if(!["pending","blocked"].includes(before.status)) return before;
   if(!["approve","reject","defer"].includes(input.decision)) throw new UserInputError("Explicit consequence decision required.");
   try{return db.transaction(()=>{
+    if(nativeAuthority&&!nativeWorldOperationAllows(db,guild,nativeAuthority,'consequence','apply',nativePayload))
+      throw new StateConflictError('Native consequence authority/source/subscription changed.');
     if(input.decision==="approve") requireCitySource(db,guild,before.source_event);
     const result=input.decision==="approve"?handlers[before.data.handler](db,guild,before,actorId):null;
     if(input.decision==="approve") indexWorldEvent(db,guild,{key:`effect:${motivationKey(before.record_key)}`,kind:"consequence_applied",

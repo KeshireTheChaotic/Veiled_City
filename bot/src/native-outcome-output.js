@@ -8,6 +8,7 @@ import {visibleIncomingInjury} from './pc-incoming.js';
 import {renderNativeNotice,noticeHash} from './native-notice.js';
 import {nativeOutcomeKinds as kinds} from './gm-fiction-schema.js';
 import {ordinaryEffectProjection} from './ordinary-effect-proof.js';
+import {worldSimulationReceiptForAudience} from './world-simulation-receipts.js';
 export {nativeOutcomeSchema} from './gm-fiction-schema.js';
 const hash=v=>createHash('sha256').update(JSON.stringify(v)).digest('hex');
 function fail(){throw Object.assign(new Error('Native output needs the exact committed outcome, current owner and audience.'),{code:'NARRATIVE_PVP'});}
@@ -21,6 +22,14 @@ export function nativeOutcomeProjection(db,guild,input,scope){
       if(!['ORDINARY_EFFECT','SCENE_ACTION_WINDOW','TYPED_ROLL_PROOF'].includes(error.code))throw error;
       fail(); // Invalid read-side proposals are quarantined by the common composer, not treated as native outcomes.
     }
+  }
+  if(input.receipt_kind==='world_simulation_observation'){
+    const row=db.getCityRecord(guild,'world_simulation_observation',input.ref),proof=row&&worldSimulationReceiptForAudience(db,guild,row.data.action_id,scope,{sourceRef:input.ref});
+    if(proof?.status!=='verified_native_observation'||proof.outcome!=='observed_arrival')fail();
+    const source=db.getWorldEvent(guild,proof.observation_ref),npc=db.getNpcProfile(guild,proof.actor.key),
+      location=db.getSimulationEntity(guild,'location',proof.location_key),name=npc?.display_name,place=location?.state.name;
+    if(!name||!place||[name,place].some(s=>typeof s!=='string'||s.length>160||/[\r\n\x00-\x1f`*_<>\[\]\\]/u.test(s)||hasPcReference(db,guild,s)))fail();
+    return {text:`Observed NPC arrival: ${JSON.stringify(name)} is present at ${JSON.stringify(place)}.`,source,revision:hash([row,proof,source,name,place])};
   }
   const row=db.getCityRecord(guild,input.receipt_kind,input.ref),d=row?.data,source=row&&db.getWorldEvent(guild,row.source_event),scene=currentScene(db,guild);
   if(!row||!source||source.status!=='active')fail();

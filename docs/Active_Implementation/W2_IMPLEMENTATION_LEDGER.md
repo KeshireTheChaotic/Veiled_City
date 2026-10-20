@@ -1,6 +1,7 @@
 # W2 / UA14–UA15 implementation ledger
 
-Status: **QUALIFIED BOUNDED NATIVE FRAMEWORK — LOCAL COMMIT PENDING**.
+Status: **QUALIFIED BOUNDED NATIVE FRAMEWORK — COMMITTED LOCALLY**.
+Completion commit: `efb287b9a6cda6036feacab99d42ca469874b96b` (not pushed or deployed).
 Starting HEAD: `38d32fa2e03bd5b9c32208f5beb0fb39405c8f16` on `codex/audience-first-narrative-v9`.
 
 Accepted typed intents are canonical adjudication inputs; human declarations own intent; native receipts own outcomes.
