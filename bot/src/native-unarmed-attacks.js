@@ -74,6 +74,7 @@ export function prepareNativeUnarmedAttack(db,guild,origin,entry,p,{library}={})
     }
     const scope={mode:a.visibility==='character'?'private':'party',actorUserId:a.data.owner_user_id,actorCharacterId:pc.id};
     const adjudication=adjudicateAcceptedIntent(db,guild,{acceptedIntent:a.record_key,mode:'roll_required',kind:'attack',trait:p.trait,
+      modifierKeys:db.rollModifierSources(guild,pc.id,p.trait,'attack',a.record_key,{sessionId:a.data.session_id,sceneKey:a.data.scene}).map(s=>s.event_key),
       difficulty:target.difficulty,attackSource:key,rawRefs:['srd:attack-rolls'],
       risk:'Your declared unarmed attack may miss.',stakes:'Only this native NPC target may receive native physical unarmed damage after your actual dice.',
       explanation:'Native unarmed attack: Proficiency d4 physical, Strength or Finesse, actual local NPC Difficulty.'},

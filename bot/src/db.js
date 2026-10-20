@@ -243,11 +243,22 @@ export class VeiledDB {
       ORDER BY minute DESC,rowid DESC LIMIT ?`).all(guildId,includeGM?1:0,userId,characterId,query,query,Math.min(100,limit))
       .map(row=>({...row,details:JSON.parse(row.details_json)}));
   }
-  rollModifierSources(guildId,character,trait,kind){
+  rollModifierSources(guildId,character,trait,kind,acceptedIntent=null,{sessionId=null,sceneKey=null}={}){
     return this.db.prepare(`SELECT * FROM world_events WHERE guild_id=? AND status='active' AND kind='roll_adjudication'
-      AND visibility='character' AND subject_key=? AND json_extract(details_json,'$.roll_modifier.trait')=?
-      AND json_extract(details_json,'$.roll_modifier.roll_kind')=? ORDER BY rowid LIMIT 101`)
-      .all(guildId,character,trait,kind).map(row=>({...row,details:JSON.parse(row.details_json)}));
+      AND ((visibility='character' AND subject_key=?) OR (visibility='gm'
+        AND json_extract(details_json,'$.issuer')='native:ordinary-roll-modifier'
+        AND json_extract(details_json,'$.binding.declaration.actor')=?)) AND json_extract(details_json,'$.roll_modifier.trait')=?
+      AND json_extract(details_json,'$.roll_modifier.roll_kind')=?
+      AND (? IS NULL OR session_id=?) AND (? IS NULL OR scene=?)
+      AND (coalesce(json_extract(details_json,'$.issuer'),'')<>'native:ordinary-roll-modifier'
+        OR json_extract(details_json,'$.binding.declaration.intent')=?) ORDER BY rowid LIMIT 101`)
+      .all(guildId,character,character,trait,kind,sessionId,sessionId,sceneKey,sceneKey,acceptedIntent).map(row=>({...row,details:JSON.parse(row.details_json)}));
+  }
+  scopedRollAttackSources(guildId,character,session,scene,trait){
+    return this.db.prepare(`SELECT * FROM world_events WHERE guild_id=? AND status='active' AND kind='roll_adjudication'
+      AND source_kind='gm' AND visibility='character' AND subject_key=? AND session_id=? AND scene=?
+      AND json_extract(details_json,'$.human_reviewed')=1 AND (? IS NULL OR json_extract(details_json,'$.roll_attack.trait')=?)
+      ORDER BY rowid LIMIT 101`).all(guildId,character,session,scene,trait,trait).map(r=>({...r,details:JSON.parse(r.details_json)}));
   }
   /** Audience/session filters precede the OpeningDirector bound; unrelated event traffic cannot hide eligible context. */
   openingDirectorSources(guildId,session,scene,scope){

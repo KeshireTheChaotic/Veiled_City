@@ -6,6 +6,7 @@ import {overlapsOwnerActionTerminal} from './owner-action-terminal.js';
 import {typedRollProof} from './typed-roll-proof.js';
 import {isPvpIntent} from './pvp-authority.js';
 import {renderWorldObservation} from './world-observation.js';
+import {verifyRoutineEvidenceAnalysis} from './native-evidence-analysis.js';
 import {scenePresence} from './scene-continuity.js';
 import {validOrdinaryEffect} from './ordinary-effect-schema.js';
 export const effectHash=v=>createHash('sha256').update(JSON.stringify(v)).digest('hex');
@@ -115,7 +116,8 @@ export function verifyOrdinaryEffect(db,guild,ref,scope){
     ||row.source_event!==d.source||row.subject_key!==d.actor&&row.visibility==='character'
     ||row.visibility==='character'&&(scope.mode!=='private'||scope.actorCharacterId!==d.actor))effectFail('CURRENT_EFFECT_AUDIENCE_REQUIRED');
   const proof=ordinaryActionProof(db,guild,d.action,scope),pre=ordinaryPrerequisite(db,guild,d.proposal,proof);
-  const visibility=effectVisibility(db,guild,d.proposal,d.payload,d.origin_scope,pre.receipt);
+  const evidence=d.proposal.adapter==='evidence_excerpt'?verifyRoutineEvidenceAnalysis(db,guild,d.native_ref,scope):null;
+  const visibility=evidence?.visibility||effectVisibility(db,guild,d.proposal,d.payload,d.origin_scope,pre.receipt);
   if(row.visibility!==visibility||(row.subject_key||null)!==(visibility==='character'?proof.pc.id:null))effectFail('IMMUTABLE_EFFECT_AUDIENCE_REQUIRED');
   if(d.owner!==proof.principal.user||d.principal_revision!==proof.principal.revision||d.scene!==proof.scene.key||d.session!==proof.scene.session_id
     ||d.source!==proof.row.source_event||d.prerequisite!==pre.receipt.record_key||d.prerequisite_hash!==effectHash(pre.receipt)
@@ -124,6 +126,9 @@ export function verifyOrdinaryEffect(db,guild,ref,scope){
   if(d.proposal.adapter==='observation'){
     const result=effectObservation(db,guild,d.payload.query,proof,scope);
     if(result.hash!==d.result_hash||text!==result.text)effectFail('OBSERVATION_CHANGED');
+  }else if(evidence){
+    const native=db.getCityRecord(guild,'evidence_analysis',d.native_ref);
+    if(effectHash(native)!==d.native_hash||effectHash(evidence)!==d.result_hash||text!==evidence.text)effectFail('EVIDENCE_EXCERPT_CHANGED');
   }else{
     const native=db.getCityRecord(guild,'ai_intent',d.native_ref),source=native&&db.getWorldEvent(guild,native.source_event);
     const evidence=[native?.source_event,...(d.payload.intent?.source_prerequisites||[])].map(ref=>db.getWorldEvent(guild,ref));

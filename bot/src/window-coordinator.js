@@ -86,7 +86,7 @@ export function advanceActionWindow(db,guild,user,input,{gm=false}={}){
         acceptedIntent:action.record_key,mode:"roll_required",risk:a.risk,stakes:a.stakes,savedRulingKey:a.saved_ruling_key,
         overrideRefs:a.override_refs,rawRefs:a.raw_refs,houseRefs:a.house_refs,homebrewRefs:a.homebrew_refs,
         trait:a.trait,kind:a.kind,difficulty:a.difficulty,modifierKeys:a.modifier_keys,attackSource:a.attack_source,explanation:a.explanation
-      },user,{scope:{actorUserId:action.data.owner_user_id,actorCharacterId:action.data.actor}});
+      },user,{scope:{mode:action.visibility==='character'?'private':'party',actorUserId:action.data.owner_user_id,actorCharacterId:action.data.actor}});
     }
     return locked;
   });

@@ -24,6 +24,8 @@ import {validateNativeExperienceEligibility} from './native-experience-eligibili
 import {inspectNativeUnarmedAttack} from './native-unarmed-attacks.js';
 import {alternateNativeUnarmedTrait} from './native-unarmed-traits.js';
 import {assertPreRollFearRollAllowed} from './pre-roll-fear.js';
+import {inspectNativeRollParticipation} from './native-roll-participation.js';
+import {typedRollProof} from './typed-roll-proof.js';
 function fail(message){throw new StateConflictError(message);}
 /** Called only by the authenticated GM command/review boundary, never by model-supplied identity. */
 export function adjudicateRollSource(db,guild,input,reviewer){
@@ -51,6 +53,10 @@ function live(db,guild,row){
       fail("Exact accepted request source and rolling owner required before dice or costs.");
     if(row.status!=="resolved"&&row.data.input.gm_ruling)assertGmRulingRequest(db,guild,row);
     if(row.status!=="resolved"&&row.data.input.gm_invitation)assertGmInvitationRequest(db,guild,row);
+    if(row.status==='resolved'){
+      typedRollProof(db,guild,row);
+      return pc; // Historical disclosure only: do not re-adjudicate gear, costs or lawful changed resources.
+    }
   }
   const checkResources=character=>{
     const r=character.data.resources;
@@ -75,8 +81,10 @@ function live(db,guild,row){
     }
   }
   for(const helper of row.data.helpers||[]){
-    requireCitySource(db,guild,helper.proof);
+    const helperSource=requireCitySource(db,guild,helper.proof);
     personalCharacter(db,guild,helper.user,helper.character);
+    if(helperSource.details.issuer==='native:roll-participation')
+      inspectNativeRollParticipation(db,guild,row,db.getCharacter(helper.character),helperSource,'help',helper.description,{historical:row.status==='resolved'});
     if(!mayKnowRoll(db,guild,row,helper.character)) fail("Private helper disclosure changed; human correction required without refund/reroll.");
     if(!sceneAccess(db,guild,{observer_type:"character",observer_key:helper.character,target_type:"character",target_key:pc.id,sense:"sound"}))
       fail("Confirmed helper no longer has scene access; human correction required without reroll/refund.");
@@ -97,6 +105,8 @@ function spend(db,pc,amount){
 function proof(db,guild,row,pc,input,kind){
   if(!mayKnowRoll(db,guild,row,pc.id)) fail("Private attempt requires the actual owner's explicit disclosure before another PC can contribute.");
   const event=requireCitySource(db,guild,input.proof),p=event.details.roll_participation;
+  if(event.details.issuer==='native:roll-participation')
+    return inspectNativeRollParticipation(db,guild,row,pc,event,kind,input.description??event.details.binding?.description);
   if(event.kind!=="roll_adjudication"||event.source_kind!=="gm"||event.details.human_reviewed!==true
     ||event.session_id!==row.data.session_id||event.scene!==row.data.scene||event.visibility!=="character"||event.subject_key!==pc.id||!p||p.request!==row.record_key
     ||p.character_id!==pc.id||p.kind!==kind||p.description!==input.description||!input.description?.trim())
@@ -249,10 +259,10 @@ export function contributeRoll(db,guild,user,input,{rng=d,gmRng=d}={}){
       if(mine||data.tag||data.kind!=="action"||row.status!=="pending") fail("Help requires another PC's unsettled action, not a reaction/group/Tag Team.");
       if((data.helpers||[]).some(helper=>helper.character===pc.id)) fail("This character has already helped; no second charge or die.");
       if(data.breakdown.disadvantage>data.breakdown.advantage) fail("Help with net disadvantage requires a saved GM ruling; no charge.");
-      proof(db,guild,row,pc,input,"help");if(input.pay_hope!==true) fail("Helper's explicit authorization to spend 1 Hope required.");
+      const helperProof=proof(db,guild,row,pc,input,"help");if(input.pay_hope!==true) fail("Helper's explicit authorization to spend 1 Hope required.");
       spend(db,pc,1);const die=rng(6);if(!Number.isInteger(die)||die<1||die>6) fail("Native helper die out of range.");
       const rollId=db.addRoll(guild,data.session_id,user,pc.id,"help",{die,request:key,proof:input.proof,hope_spent:1});
-      data.helpers=[...(data.helpers||[]),{character:pc.id,name:pc.name,user,die,roll_id:rollId,proof:input.proof,description:input.description}];
+      data.helpers=[...(data.helpers||[]),{character:pc.id,name:pc.name,user,die,roll_id:rollId,proof:input.proof,description:helperProof.description,operation_key:receiptKey}];
     }else if(input.op==="alternate-trait"){
       if(!mine||data.tag||row.status!=="pending"||(data.experiences||[]).length)
         fail("Alternate trait choice requires the acting owner's unrolled request before paid options.");
@@ -266,7 +276,8 @@ export function contributeRoll(db,guild,user,input,{rng=d,gmRng=d}={}){
         if(event.event_key!==data.input.attack_source||input.trait!==candidate?.trait)
           fail('Native unarmed trait choice must select the other source-pinned Strength/Finesse trait.');
         const source=event.details,operationKey=receiptKey,nextInput={...data.input,trait:input.trait,
-          modifier_keys:db.rollModifierSources(guild,pc.id,input.trait,data.kind||data.input.kind||'attack').map(item=>item.event_key),
+          modifier_keys:db.rollModifierSources(guild,pc.id,input.trait,data.kind||data.input.kind||'attack',data.input.accepted_intent,
+            {sessionId:data.session_id,sceneKey:data.scene}).map(item=>item.event_key),
           native_unarmed_trait_operation:operationKey};
         const base=rollTraitBreakdown(db,guild,nextInput,pc),{unresolved,...values}=base;
         if(unresolved.length)fail('Alternate native trait remains unresolved; no dice or costs.');
@@ -307,13 +318,16 @@ export function contributeRoll(db,guild,user,input,{rng=d,gmRng=d}={}){
       if(other&&!mayKnowRoll(db,guild,other,pc.id)) fail("The other owner has not disclosed their private attempt.");
       if(!other||other.subject_key===pc.id||other.status!=="pending"||other.data.kind!==data.kind||other.data.tag
         ||other.data.helpers?.length||other.data.experiences?.length) fail("A separate compatible pending request from the other PC is required.");
-      assertPreRollFearRollAllowed(db,guild,other);live(db,guild,other);proof(db,guild,row,pc,input,"tag");
+      assertPreRollFearRollAllowed(db,guild,other);live(db,guild,other);const tagProof=proof(db,guild,row,pc,input,"tag");
+      const tagBinding=db.getWorldEvent(guild,input.proof)?.details?.binding;
+      if(tagBinding?.issuer==='native:roll-participation'&&tagBinding.partner_request!==other.record_key)fail('Exact native Tag Team partner request required.');
       if(data.kind==="attack"&&data.breakdown.attack.target_id!==other.data.breakdown.attack.target_id)
         fail("Combined Tag Team attack damage requires one established common target; other cases need human adjudication.");
       if(input.pay_hope!==true||pc.data.resources.hope<3) fail("Initiator must explicitly authorize 3 Hope and have it available.");
       if(db.getCityRecord(guild,"tag_usage",`${data.session_id}:${pc.id}`)||db.playerInitiatedTagTeam(guild,data.session_id,user))
         fail("This PC/player already initiated a Tag Team this session; character switching does not reset usage.");
       data.tag={initiator:pc.id,partner_request:other.record_key,partner_user:other.data.owner_user_id,partner_revision:rollRevision(other),proof:input.proof,authorized_by:user,
+        description:tagProof.description,operation_key:receiptKey,
         participants:[{character:pc.id,user,name:pc.name,request:key,roll_id:null}],selections:{}};status="awaiting_partner";
     }else if(input.op==="withdraw"){
       const other=data.tag&&db.getCityRecord(guild,"roll_request",data.tag.partner_request);
@@ -324,7 +338,9 @@ export function contributeRoll(db,guild,user,input,{rng=d,gmRng=d}={}){
       if(!data.tag||row.status!=="awaiting_partner"||mine) fail("Only the proposed other PC can authorize their participation.");
       const other=db.getCityRecord(guild,"roll_request",data.tag.partner_request);
       if(other?.subject_key!==pc.id||rollRevision(other)!==data.tag.partner_revision||other.status!=="pending") fail("Other participant's request changed.");
-      assertPreRollFearRollAllowed(db,guild,other);live(db,guild,other);proof(db,guild,row,pc,input,"participate");
+      assertPreRollFearRollAllowed(db,guild,other);live(db,guild,other);const participationProof=proof(db,guild,row,pc,input,"participate");
+      const participationBinding=db.getWorldEvent(guild,input.proof)?.details?.binding;
+      if(participationBinding?.issuer==='native:roll-participation'&&participationBinding.partner_request!==other.record_key)fail('Exact native Tag Team participant request required.');
       const initiator=personalCharacter(db,guild,data.owner_user_id,data.tag.initiator),usageKey=`${data.session_id}:${initiator.id}`;
       if(db.getCityRecord(guild,"tag_usage",usageKey)||db.playerInitiatedTagTeam(guild,data.session_id,data.owner_user_id))
         fail("Initiator has already used Tag Team this session.");
@@ -332,7 +348,8 @@ export function contributeRoll(db,guild,user,input,{rng=d,gmRng=d}={}){
       db.saveCityRecord(guild,{kind:"tag_usage",key:usageKey,visibility:"character",subject_key:initiator.id,source_event:row.source_event,
         data:{request:key,user:data.owner_user_id,hope_spent:3,proof:data.tag.proof}});
       data.tag.participants.push({character:pc.id,user,name:pc.name,request:other.record_key,roll_id:null,proof:input.proof,
-        input:other.data.input,breakdown:other.data.breakdown,source_event:other.source_event,attempt:other.data.attempt});
+        input:other.data.input,breakdown:other.data.breakdown,source_event:other.source_event,attempt:other.data.attempt,
+        description:participationProof.description,operation_key:receiptKey});
       save(db,guild,other,{...other.data,superseded_by:key},"superseded",user);status="pending";
     }else if(input.op==="roll"){
       if(row.status!=="pending") fail("Request is awaiting another authorization or adjudication.");
@@ -341,8 +358,17 @@ export function contributeRoll(db,guild,user,input,{rng=d,gmRng=d}={}){
       if(target?.roll_id) fail("This participant has already rolled; saved dice cannot be replaced.");
       if(data.tag) for(const participant of data.tag.participants){
         personalCharacter(db,guild,participant.user,participant.character);
-        if(participant.proof) requireCitySource(db,guild,participant.proof);
+        if(participant.proof){
+          const event=requireCitySource(db,guild,participant.proof);
+          if(event.details.issuer==='native:roll-participation')inspectNativeRollParticipation(db,guild,row,
+            db.getCharacter(participant.character),event,'participate',participant.description);
+        }
         if(participant.source_event) requireCitySource(db,guild,participant.source_event);
+      }
+      if(data.tag){
+        const event=requireCitySource(db,guild,data.tag.proof);
+        if(event.details.issuer==='native:roll-participation')inspectNativeRollParticipation(db,guild,row,
+          db.getCharacter(data.tag.initiator),event,'tag',data.tag.description);
       }
       const b=target?.breakdown||data.breakdown;
       if(target?.input&&JSON.stringify(rollBreakdown(db,guild,target.input,pc))!==JSON.stringify(b)) fail("Participant's trait/modifier authority changed.");

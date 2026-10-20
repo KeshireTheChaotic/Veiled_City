@@ -17,6 +17,8 @@ import {overlapsOwnerActionTerminal} from "./owner-action-terminal.js";
 import {nativeDefenseAura,persistNativeDefenseAura,nativeFormationDefense,persistNativeFormationDefense,nativeVeilExposureDefense} from './native-defense-aura.js';
 import {inspectNativeUnarmedAttack} from './native-unarmed-attacks.js';
 import {publishPreRollFearNotice} from './pre-roll-fear-notice.js';
+import {inspectOrdinaryRollModifier} from './native-roll-modifiers.js';
+import {inspectNativeEquippedAttack} from './native-equipped-attacks.js';
 const hash=value=>createHash("sha256").update(JSON.stringify(value)).digest("hex");
 const signed=value=>`${value>=0?"+":""}${value}`;
 export const rollRevision=hash;
@@ -48,12 +50,19 @@ export function rollTraitBreakdown(db,guild,input,pc){
   if(trait!==null&&!Number.isSafeInteger(trait)) throw new StateConflictError("Recorded trait is not a verified integer.");
   if(!Array.isArray(input.modifier_keys)||input.modifier_keys.length>20||new Set(input.modifier_keys).size!==input.modifier_keys.length)
     throw new UserInputError("A unique bounded modifier-source list is required.");
-  const applicable=db.rollModifierSources(guild,pc.id,input.trait,input.kind);
+  const declaration=db.getWorldEvent(guild,input.source_event);
+  const applicable=db.rollModifierSources(guild,pc.id,input.trait,input.kind,input.accepted_intent,
+    {sessionId:declaration?.session_id||null,sceneKey:declaration?.scene||null});
   if(applicable.length>20||applicable.some(row=>!input.modifier_keys.includes(row.event_key)))
     throw new StateConflictError("Every active scoped modifier source must be accounted for; seek human review rather than omit one.");
   const modifiers=input.modifier_keys.map(id=>{
     const event=requireCitySource(db,guild,id),mod=event.details.roll_modifier;
+    if(event.details.issuer==='native:ordinary-roll-modifier'){
+      const native=inspectOrdinaryRollModifier(db,guild,input,pc,event);
+      return {source:id,name:native.name,kind:native.kind,amount:native.amount,ruling_key:native.ruling_key};
+    }
     if(event.kind!=="roll_adjudication"||event.source_kind!=="gm"||!event.details.human_reviewed
+      ||declaration&&(event.session_id!==declaration.session_id||event.scene!==declaration.scene)
       ||event.visibility!=="character"||event.subject_key!==pc.id||!mod||mod.trait!==input.trait||mod.roll_kind!==input.kind
       ||!["flat","advantage","disadvantage"].includes(mod.kind)||!Number.isSafeInteger(mod.amount)||Math.abs(mod.amount)>20
       ||!mod.name||typeof mod.name!=="string"||mod.name.length>160
@@ -89,7 +98,8 @@ export function rollBreakdown(db,guild,input,pc){
     const target=encounter?db.listCombatants(encounter.id).find(row=>row.id===a?.target_id):null;
     if(target)assertNonPvpCombatant(db,guild,target);
     const weapon=(pc.data.inventory||[]).find(item=>(typeof item==="string"?item:item.name)===a?.weapon);
-    const native=event.kind==='native_unarmed_attack'?inspectNativeUnarmedAttack(db,guild,input,pc):null;
+    const native=event.kind==='native_unarmed_attack'?inspectNativeUnarmedAttack(db,guild,input,pc)
+      :input.native_equipped_ref?inspectNativeEquippedAttack(db,guild,input,pc):null;
     if(!native&&(event.kind!=="roll_adjudication"||event.details.human_reviewed!==true||event.source_kind!=="gm"
       ||event.subject_key!==pc.id||event.visibility!=="character"||event.session_id!==session?.id||event.scene!==currentScene(db,guild).key
       ||!a||a.trait!==input.trait||a.active!==true||!weapon||typeof weapon==="object"&&weapon.equipped!==true
@@ -161,7 +171,7 @@ export function formatRollRequest(row,{user=null,db=null,guild=null}={}){
     `Actor: ${participant?.name||data.character_name} (<@${user||data.owner_user_id}>)`,
     `Attempt: ${participant?.attempt||(participant?.input?"Owner-authored linked contribution; original declaration retained":data.attempt)}`,
     `Trait: ${b.trait} ${b.trait_bonus===null?"PENDING":signed(b.trait_bonus)} [recorded character sheet at preparation]`,
-    ...b.modifiers.map(mod=>`${mod.name}: ${mod.kind==="flat"?signed(mod.amount):mod.kind} [saved ruling ${mod.ruling_key}; ${mod.source}; included]`),
+    ...b.modifiers.map(mod=>`${mod.name}: ${mod.kind==="flat"?signed(mod.amount):mod.kind} [${mod.ruling_key?`saved ruling ${mod.ruling_key}`:'native contextual odds'}; ${mod.source}; included]`),
     ...(data.experiences?.length?data.experiences.map(item=>`Experience: ${item.name} ${signed(item.bonus)} [owner invoked; 1 Hope spent; ${item.proof}]`)
       :["Experience: not applied; requires the owner's explicit relevant declaration and authorized Hope spend."]),
     ...(data.helpers||[]).map(item=>`Helper: ${item.name}, native d6 ${item.die}, 1 Hope spent; highest applicable advantage die only.`),

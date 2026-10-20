@@ -12,7 +12,8 @@ const proposalV1=obj({intent_ref:str(200),disposition:{type:'string',enum:ARBITR
   stakes_kind:{type:'string',enum:['attempt_only','native_attack','native_feature','needs_review']},
   stakes:str(600),reason:str(600),difficulty_reason:str(600),feature_ref:str(160),experience_ref:str(160),
   advantage:{type:'boolean'},disadvantage:{type:'boolean'}});
-export const gmArbitrationProposalSchema={anyOf:[proposalV1,obj({...proposalV1.properties,proposal_version:{type:'integer',enum:[2]},trigger_ref:str(200)})]};
+export const gmArbitrationProposalSchema={anyOf:[proposalV1,obj({...proposalV1.properties,proposal_version:{type:'integer',enum:[2]},trigger_ref:str(200)}),
+  obj({...proposalV1.properties,proposal_version:{type:'integer',enum:[3]},collaboration:obj({kind:{type:'string',enum:['help','tag']},request:str(200),partner_request:str(200)})})]};
 const unifiedV1={version:{type:'integer',enum:[1]},npc_intents:{type:'array',maxItems:4,items:npcSceneIntentSchema},
   decisions:{type:'array',maxItems:16,items:gmArbitrationProposalSchema}};
 export const unifiedArbitrationSchema={anyOf:[obj(unifiedV1),obj({...unifiedV1,version:{type:'integer',enum:[2]},

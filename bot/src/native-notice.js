@@ -2,6 +2,9 @@
 import {createHash} from 'node:crypto';
 import {personalCharacter} from './personal-continuity.js';
 import {formatRollRequest} from './roll-requests.js';
+import {inspectNativeEquippedAttack} from './native-equipped-attacks.js';
+import {inspectOrdinaryRollModifier} from './native-roll-modifiers.js';
+import {inspectNativeRollParticipation} from './native-roll-participation.js';
 import {formatSharedRoll,validateRollSharePreview,sourceConfirmedRollAttempt} from './roll-sharing.js';
 import {pvpOwnerContext} from './narrative-pvp.js';
 import {progressPvp,validatePvpRoundReceipt,validatePvpResolutionReceipt} from './pvp-rounds.js';
@@ -73,6 +76,20 @@ export function renderNativeNotice(db,guild,d){
     if(r.data.input?.gm_ruling&&r.status!=='resolved'){
       try{assertGmRulingRequest(db,guild,r);}catch{fail();}
     }
+    const historical=r.status==='resolved',pc=db.getCharacter(r.subject_key);
+    if(r.data.input?.native_equipped_ref)inspectNativeEquippedAttack(db,guild,r.data.input,pc,{historical});
+    for(const modifier of r.data.breakdown?.modifiers||[]){
+      const event=db.getWorldEvent(guild,modifier.source);
+      if(event?.details?.issuer==='native:ordinary-roll-modifier')inspectOrdinaryRollModifier(db,guild,r.data.input,pc,event,{historical});
+    }
+    for(const contribution of [...(r.data.helpers||[]),...(r.data.tag?.participants||[]).filter(p=>p.proof)]){
+      const event=db.getWorldEvent(guild,contribution.proof);
+      if(event?.details?.issuer==='native:roll-participation')inspectNativeRollParticipation(db,guild,r,db.getCharacter(contribution.character),event,
+        (r.data.helpers||[]).includes(contribution)?'help':'participate',contribution.description,{historical});
+    }
+    if(r.data.tag){const event=db.getWorldEvent(guild,r.data.tag.proof);
+      if(event?.details?.issuer==='native:roll-participation')inspectNativeRollParticipation(db,guild,r,pc,event,'tag',r.data.tag.description,{historical});}
+    if(historical&&r.data.input?.accepted_intent)typedRollProof(db,guild,r);
     return formatRollRequest(r,{user:d.user,db,guild});
   }
   if(d.kind==='pvp_projection'){

@@ -19,7 +19,7 @@ import { persistAuthoredCandidates } from "./authored-candidates.js";
 import { persistPlayerIntents, persistPlayerIntentDiagnostics, persistTypedDialogue } from "./typed-intents.js";
 import { adjudicateAcceptedIntent } from "./rules-arbitration.js";
 import {adjudicateGmRuling} from "./gm-action-ruling.js";
-import {applyUnifiedArbitration} from './gm-unified-arbitration.js';
+import {applyUnifiedArbitration,prepareUnifiedCollaboration} from './gm-unified-arbitration.js';
 import { coordinateTypedActionWindows } from "./scene-action-window.js";
 import { buildActionPlan, executableActionSpans, transitionAction } from "./action-dependency.js";
 import { saveContextMemories } from "./context-memory.js";
@@ -490,10 +490,12 @@ export function applyAuthoritativeMutation(db,{guildId,sessionId=null,events=[],
       }
     }
     let actionPlan=buildActionPlan(db,guildId,typedIntents);
-    const pvpAttempts=stagePvpAttempts(db,guildId,typedIntents,actionPlan);
+    const collaborationOnly=prepareUnifiedCollaboration(db,guildId,narrative,typedIntents);
+    const conflictInputs=typedIntents.filter(row=>!collaborationOnly.has(row.record_key));
+    const pvpAttempts=stagePvpAttempts(db,guildId,conflictInputs,actionPlan);
     const pvpIds=new Set(pvpAttempts.map(row=>row.data.accepted_intent));
     if(pvpAttempts.length)actionPlan=actionPlan.map(row=>db.getCityRecord(guildId,"compound_action",row.record_key));
-    const actionWindows=coordinateTypedActionWindows(db,guildId,typedIntents,actionPlan);
+    const actionWindows=coordinateTypedActionWindows(db,guildId,conflictInputs,actionPlan);
     if(actionWindows.length)actionPlan=actionPlan.map(row=>db.getCityRecord(guildId,"compound_action",row.record_key));
     const coordinatedIds=new Set(actionWindows.map(row=>row.action));
     const unifiedArbitration=applyUnifiedArbitration(db,guildId,narrative,typedIntents);

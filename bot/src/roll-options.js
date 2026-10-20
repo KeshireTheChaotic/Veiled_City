@@ -56,8 +56,9 @@ export function discoverRollOptions(db,guild,user,request){
   options.push(option({key:`trait:${ctx.trait}`,type:"trait",label:ctx.trait,state:"applied",effect:{kind:"flat",amount:row.data.breakdown.trait_bonus},
     source:{kind:"character_sheet",character_id:pc.id,path:`traits.${ctx.trait}`},reason:"Recorded trait used by the prepared request."}));
   for(const mod of row.data.breakdown.modifiers||[])options.push(option({key:`modifier:${mod.source}`,type:"modifier",label:mod.name,state:"applied",
-    effect:{kind:mod.kind,amount:mod.amount},source:{kind:"reviewed_modifier",event:mod.source,ruling_key:mod.ruling_key},
-    reason:"Already included by a current human-reviewed scoped modifier."}));
+    effect:{kind:mod.kind,amount:mod.amount},source:{kind:db.getWorldEvent(guild,mod.source)?.details?.issuer==='native:ordinary-roll-modifier'
+      ?'native_contextual_modifier':"reviewed_modifier",event:mod.source,ruling_key:mod.ruling_key},
+    reason:"Already included by a scoped native or historical human-reviewed modifier; this is not an optional spend."}));
   for(const event of db.listWorldEvents(guild,{includeGM:true,limit:200})){
     const choice=event.details?.roll_alternate_trait;
     if(event.status!=="active"||event.kind!=="roll_adjudication"||event.source_kind!=="gm"||event.details.human_reviewed!==true

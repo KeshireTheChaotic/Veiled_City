@@ -10,9 +10,56 @@ import {overlapsOwnerActionTerminal} from "./owner-action-terminal.js";
 import {captureNoRollFeatureWindows} from './native-feature-windows.js';
 import {nativeDeviceUseIssue} from './native-feature-effects.js';
 import {arbitrationFailure} from './gm-arbitration-contract.js';
+import {consentAction,historicalActionSource} from './action-consent.js';
 
 const modes=new Set(["no_roll","roll_required","native_resolved","human_exception","blocked"]);
 const hash=value=>createHash("sha256").update(JSON.stringify(value)).digest("hex").slice(0,40);
+const inputHash=input=>hash({acceptedIntent:input.acceptedIntent,mode:input.mode,risk:input.risk,stakes:input.stakes,
+  trait:input.trait??null,kind:input.kind||'',difficulty:input.difficulty??null,modifierKeys:input.modifierKeys||[],
+  attackSource:input.attackSource||'',explanation:input.explanation,savedRulingKey:input.savedRulingKey||'',
+  overrideRefs:input.overrideRefs||[],rawRefs:input.rawRefs||[],houseRefs:input.houseRefs||[],homebrewRefs:input.homebrewRefs||[]});
+const intentHash=a=>hash({source:a.source_event,actor:a.data.actor,owner:a.data.owner_user_id,principal:a.data.actor_principal_revision,
+  type:a.data.type,operation:a.data.operation,framing:a.data.framing,target:a.data.target_key||'',start:a.data.start,end:a.data.end,
+  source_hash:a.data.source_hash,source_span:a.data.source_span,audience:a.visibility,subject:a.subject_key||null,
+  scene:a.data.scene,session:a.data.session_id,dependencies:a.data.dependencies||[],coordination:a.data.coordination||null});
+function replayAdjudication(db,guild,accepted,replay,input,scope){
+  // A saved decision is read-only history, not a shortcut around the owner/source boundary.
+  const proof=accepted.status==='resolved'
+    ?historicalActionSource(db,guild,accepted.record_key,{resolved:true})
+    :consentAction(db,guild,accepted.record_key);
+  if(scope.actorUserId!==accepted.data.owner_user_id||scope.actorCharacterId!==accepted.data.actor
+    ||(scope.mode==='private'?(accepted.visibility!=='character'||accepted.subject_key!==accepted.data.actor)
+      :!['party','public'].includes(accepted.visibility)))
+    throw arbitrationFailure('Saved adjudication owner or audience does not match the authenticated scope.');
+  const data=replay.data,basis=selectRuleBasis(db,guild,input);
+  if(replay.source_event!==proof.source.event_key||data.action_id!==accepted.record_key
+    ||JSON.stringify(data.source_refs)!==JSON.stringify([proof.source.event_key])
+    ||data.expected_revisions?.scene!==proof.scene.key||hash(data.rule_basis)!==hash(basis)
+    ||data.stakes!==input.stakes||data.explanation!==input.explanation
+    ||data.input_hash&&data.input_hash!==inputHash(input)||data.intent_hash&&data.intent_hash!==intentHash(accepted))
+    throw arbitrationFailure('Saved adjudication source, rule or proposed terms changed; no new outcome is authorized.');
+  if(input.mode==='roll_required'){
+    const request=db.getCityRecord(guild,'roll_request',data.roll_request_ref);
+    if(!request||request.source_event!==proof.source.event_key||request.subject_key!==accepted.data.actor
+      ||request.visibility!=='character'||request.data.owner_user_id!==accepted.data.owner_user_id
+      ||request.data.session_id!==proof.scene.session_id||request.data.scene!==proof.scene.key
+      ||request.data.input?.accepted_intent!==accepted.record_key
+      ||data.difficulty!==input.difficulty||hash(data.modifier_refs)!==hash(input.modifierKeys||[])
+      ||request.data.input.kind!==input.kind
+      ||(request.data.input.attack_source||'')!==(input.attackSource||'')
+      ||!request.data.alternate_trait&&request.data.input.trait!==input.trait)
+      throw arbitrationFailure('Saved adjudication requires its exact native request ancestry; no replacement dice or costs.');
+  }else{
+    const receipt=data.receipts?.length===1&&db.getCityRecord(guild,'action_outcome_receipt',data.receipts[0]);
+    if(!receipt||receipt.status!=='resolved'||receipt.source_event!==proof.source.event_key
+      ||receipt.data.action_id!==accepted.record_key||receipt.data.actor_ref!==accepted.data.actor
+      ||receipt.data.outcome!=='resolved_no_roll'||receipt.visibility!==accepted.visibility
+      ||(receipt.subject_key||null)!==(accepted.subject_key||null)
+      ||receipt.data.state_mutations?.length!==0||receipt.data.native_roll_refs?.length!==0)
+      throw arbitrationFailure('Saved no-roll adjudication requires its original nonmechanical native receipt.');
+  }
+  return data;
+}
 export function adjudicationEnvelope(input){
   const value={source_refs:[],rule_basis:{kind:"none",refs:[]},risk:"none",stakes:"none",native_mechanic:null,
     required_consent:[],participants:[],proposed_mutations:[],verified_receipts:[],...input};
@@ -55,7 +102,7 @@ export function adjudicateAcceptedIntent(db,guild,input,actor,context={}){
   if(isPvpIntent(db,guild,accepted))throw new Error("PC conflict requires bilateral narrative PvP, never ordinary action or attack adjudication.");
   const replayKey=`adjudication:${hash([accepted.record_key,input.mode])}`;
   const replay=db.getCityRecord(guild,"native_adjudication",replayKey);
-  if(replay)return replay.data;
+  if(replay)return replayAdjudication(db,guild,accepted,replay,input,scope);
   if(accepted.status!=="accepted_for_adjudication")throw new Error("Current accepted typed intent required.");
   const source=db.getWorldEvent(guild,accepted.source_event),principal=conversationPrincipal(db,guild,scope.actorUserId,scope.actorCharacterId);
   const scene=currentScene(db,guild);
@@ -82,7 +129,7 @@ export function adjudicateAcceptedIntent(db,guild,input,actor,context={}){
       data:{...accepted.data,outcome_receipt:receipt.record_key,native_disposition:"no_roll"}});
     const data={action_id:actionId,source_refs:[source.event_key],rule_basis_refs:rule_basis.refs,rule_basis,
       disposition:"resolved",difficulty:null,modifier_refs:[],stakes:input.stakes,roll_request_ref:null,
-      receipts:[receipt.record_key],explanation:input.explanation,expected_revisions:{scene:scene.key}};
+      receipts:[receipt.record_key],explanation:input.explanation,input_hash:inputHash(input),intent_hash:intentHash(accepted),expected_revisions:{scene:scene.key}};
     db.saveCityRecord(guild,{kind:"native_adjudication",key,status:"resolved",source_event:source.event_key,
       visibility:accepted.visibility,subject_key:accepted.subject_key,data});
     captureNoRollFeatureWindows(db,guild,receipt.record_key);
@@ -98,6 +145,7 @@ export function adjudicateAcceptedIntent(db,guild,input,actor,context={}){
   const request=prepareRollRequest(db,guild,{source_event:source.event_key,accepted_intent:actionId,
     ...(context.gmRulingRef?{gm_ruling:context.gmRulingRef,private_result:true}:{}),
     ...(context.privateResult===true?{private_result:true}:{}),
+    ...(context.nativeEquippedRef?{native_equipped_ref:context.nativeEquippedRef}:{}),
     character_id:principal.character_id,trait:input.trait,kind:input.kind,modifier_keys:input.modifierKeys||[],
     difficulty_source:difficulty.event_key,attack_source:input.attackSource||"",adjudication:input.explanation},actor,context);
   const disposition=request.status==="needs_review"?"needs_review":"roll_pending";
@@ -105,7 +153,7 @@ export function adjudicateAcceptedIntent(db,guild,input,actor,context={}){
     disposition,difficulty:input.difficulty,modifier_refs:input.modifierKeys||[],stakes:input.stakes,
     roll_request_ref:request.record_key,receipts:[],explanation:input.explanation,
     review_reasons:request.data.breakdown.unresolved||[],owner_user_id:principal.user,audience:"character",
-    expected_revisions:{scene:scene.key,request:String(request.data.revision)}};
+    input_hash:inputHash(input),intent_hash:intentHash(accepted),expected_revisions:{scene:scene.key,request:String(request.data.revision)}};
   db.saveCityRecord(guild,{kind:"native_adjudication",key,status:disposition,source_event:source.event_key,
     visibility:"character",subject_key:principal.character_id,data});
   return data;

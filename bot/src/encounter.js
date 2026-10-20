@@ -7,6 +7,7 @@ import { requireCitySource } from "./city-core.js";
 import { scenePresence, sceneAccess, currentScene } from "./scene-continuity.js";
 import { activeCityProxy } from "./city-constraints.js";
 import { actorSource } from "./simulation-motivation.js";
+import {inspectNativeEncounterActivation} from './native-encounter-activation.js';
 
 export const BATTLE_POINT_COSTS=Object.freeze({
   Minion:1, Social:1, Support:1,
@@ -42,7 +43,7 @@ export function encounterProposalContext(db,guild){
   if(db.getCityCalendar(guild).flags.encounter_intelligence!==true) return [];
   return db.listCityRecords(guild,{kind:"encounter_actor",status:"active",includeGM:true,limit:16});
 }
-function encounterActors(db,guild,input){
+export function encounterActors(db,guild,input){
   requireCitySource(db,guild,input.source_event);
   const scene=currentScene(db,guild),actors=input.actors;
   if(!Array.isArray(actors)||!actors.length||actors.length>12||new Set(actors).size!==actors.length) throw new Error("One to twelve distinct established encounter actors required.");
@@ -193,6 +194,7 @@ export function bindWorldCombatants(db,guild,encounter,rows){
 }
 export function validateWorldEncounterActivation(db,guild,encounter){
   const binding=db.getCityRecord(guild,"encounter_binding",encounter.id);if(!binding) return;
+  if(binding.data.native_activation)inspectNativeEncounterActivation(db,guild,binding.data.native_activation,{current:true});
   if(db.getCityCalendar(guild).flags.encounter_intelligence!==true) throw new Error("World encounter disabled; review/cancel the plan explicitly.");
   const proposal=db.getCityRecord(guild,"encounter_proposal",binding.data.proposal);
   if(!proposal||proposal.status!=="accepted"||proposal.data.scene!==currentScene(db,guild).key) throw new Error("World encounter scene/review changed.");

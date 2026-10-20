@@ -31,6 +31,7 @@ import {assertSemanticCandidateProof} from './semantic-candidate-source.js';
 import {assertOrdinaryBinding} from './ordinary-effect-proof.js';
 import { conversationPrincipal } from "./conversation-principal.js";
 import {delegationCatalog} from './delegation-catalog.js';
+import {activateDelegatedEncounter,inspectNativeEncounterActivation} from './native-encounter-activation.js';
 const hash=value=>createHash("sha256").update(JSON.stringify(value)).digest("hex");
 const adapters=new Map();
 export const FEATURE_FLAGS={roll:"roll_requests",setup:"narrative_setups",organization:"player_organizations",influence:"audience_influence",evidence:"evidence_custody",dialogue:"dialogue_history",encounter:"encounter_intelligence",goal:"emergent_goals",consequence:"consequences",scene:"scene_continuity",group:"emergent_groups",
@@ -191,7 +192,17 @@ export function dispatchAiIntents(db,guild,intents=[],context={}){
   const budget=context.budget||{operations:0,cost:0};
   return intents.map(intent=>{
     const key=`intent:${hash([guild,context.sessionId||null,context.origin||"",intent]).slice(0,48)}`;
-    const previous=db.getCityRecord(guild,"ai_intent",key);if(previous) return previous;
+    const previous=db.getCityRecord(guild,"ai_intent",key);
+    if(previous){
+      if(hash(previous.data.scope||{mode:'party'})!==hash(context.scope||{mode:'party'})||hash(previous.data.intent)!==hash(intent))
+        throw new Error('Saved delegated receipt scope or proposal changed; no replay authority.');
+      if(context.scope?.mode==='private')conversationPrincipal(db,guild,context.scope.actorUserId,context.scope.actorCharacterId);
+      if(previous.status==='accepted'){
+        for(const ref of new Set([intent.payload.source_event,...intent.source_prerequisites]))requireCitySource(db,guild,ref);
+        adapters.get(intent.feature)?.replay?.(db,guild,intent,previous,context);
+      }
+      return previous; // Read-only receipt; never repeat a committed native operation.
+    }
     try{return db.transaction(()=>{
       const {adapter,before,impact,privateWorld}=preflight(db,guild,intent,context);
       let verdict=decision(db,guild,intent,impact,budget);
@@ -318,9 +329,14 @@ registerIntentAdapter("dialogue",{
   apply:(db,guild,intent)=>interpretDialogue(db,guild,intent.payload)
 });
 registerIntentAdapter("encounter",{
+  replay:(db,guild,intent)=>{if(intent.payload.op==='activate')inspectNativeEncounterActivation(db,guild,`native-encounter-activation:${hash(intent.target_key)}`);},
   current:(db,guild,intent)=>db.getCityRecord(guild,"encounter_proposal",intent.target_key),
-  impact:()=>({cost:0,review:false,reason:"GM-private proposal only; explicit native encounter review required before planning or activation."}),
-  apply:(db,guild,intent,key,actor)=>proposeWorldEncounter(db,guild,{...intent.payload,key:intent.target_key||key},actor)
+  impact:(db,guild,intent)=>({cost:0,review:false,reason:intent.payload.op==='activate'
+    ?'Exact existing grounded encounter only; explicit encounter.activate operator delegation and all native roster/template/BP checks required.'
+    :"GM-private proposal only; explicit native encounter review or separately delegated activation required."}),
+  apply:(db,guild,intent,key,actor)=>intent.payload.op==='activate'
+    ?activateDelegatedEncounter(db,guild,intent,{principal:applicationPrincipal(guild,'encounter.activate',actor)})
+    :proposeWorldEncounter(db,guild,{...intent.payload,key:intent.target_key||key},actor)
 });
 registerIntentAdapter("goal",{
   current:(db,guild,intent)=>intent.payload.actor_type==="npc"?db.getNpcGoal(guild,intent.payload.actor_key,intent.payload.goal_key)

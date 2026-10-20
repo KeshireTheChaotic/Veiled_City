@@ -18,6 +18,9 @@ import {isGroupFeature,planGroupFeature} from './native-group-features.js';
 import {prepareNativeUnarmedAttack} from './native-unarmed-attacks.js';
 import {reservePreRollFear,bindPreRollFearBoard,cancelPreRollFear} from './pre-roll-fear.js';
 import {reservePreRollFearNotice} from './pre-roll-fear-notice.js';
+import {prepareOrdinaryRollModifier} from './native-roll-modifiers.js';
+import {prepareNativeRollParticipation} from './native-roll-participation.js';
+import {prepareNativeEquippedAttack} from './native-equipped-attacks.js';
 
 export const UNIFIED_ARBITRATION_PROMPT="Evaluate unified_arbitration in this SAME GM call. "
   +"Accepted typed intents are canonical adjudication inputs; human declarations own intent; native receipts own outcomes. "
@@ -34,6 +37,7 @@ export const UNIFIED_ARBITRATION_PROMPT="Evaluate unified_arbitration in this SA
   +"Select its exact feature_ref, operation, trait, Difficulty and source-derived target policy, stakes_kind=native_feature. "
   +"Do not omit an entitled target from an all_in_range feature. "
   +"Blood Rush currently permits Stress recovery while electing the current position only; other relocation remains reviewed. "
+  +"For exact owner weapon_attack against a local native NPC, equipped_attack requests native preparation ONLY from a unique already-approved, currently equipped weapon/rule/exact-target source. No approval, ambiguous gear or unsupported range stays reviewed; an inventory name alone does not authorize acquisition or mechanics. "
   +"Unsupported features/proxies/PvP remain review/consent. "
   +"Do not emit duplicate gm_ruling/native_adjudication for a unified decision. "
   +"No dice faces, role waiver, outcome or automatic Fear spending. "
@@ -42,7 +46,10 @@ export const UNIFIED_ARBITRATION_PROMPT="Evaluate unified_arbitration in this SA
   +"No printed feature, Experience, added modifier, extra action or owner choice is purchased. Version1 with no interrupt remains valid. "
   +"For an explicit GM-owned alliance choice between currently active local unproxied NPC combatants, use set_allies or clear_allies, exact other NPC target_refs, npc_no_roll, srd:gm-moves, stakes=none, no feature or dice. "
   +"This does not enroll PCs or prove a powered device, movement, NPC knowledge or disclosure. "
-  +"Group membership and relationship scores alone never grant Local Mesh.";
+  +"Group membership and relationship scores alone never grant Local Mesh. "
+  +"For source-grounded collaboration eligibility only, use proposal_version=3, disposition=native_feature_resolution, stakes_kind=attempt_only, null trait/Difficulty, no feature/Experience/odds, and collaboration {kind,request,partner_request}. "
+  +"Help requires an exact owner-authored help_ally intent targeting the pending request PC, srd:help-an-ally, and empty partner_request. "
+  +"Tag uses the initiator's accepted original action and two actual pending request refs with srd:tag-team-rolls. Eligibility is not consent: both owners separately authorize; native code alone charges/rolls.";
 
 export function adjudicateSceneBoard(db,guild,origin,board,proposals,{library=new EncounterLibrary('../content')}={}){
   const o=inspectArbitrationOrigin(db,guild,origin);
@@ -68,9 +75,17 @@ export function adjudicateSceneBoard(db,guild,origin,board,proposals,{library=ne
     try{
     if(!rules||!p.reason.trim()||p.advantage&&p.disadvantage)reason='Missing current rule, explanation, or incompatible dice choice.';
     else if(['blocked','needs_consent','needs_rules_review'].includes(p.disposition)){status=p.disposition;reason=p.reason;}
+    else if(entry.actor.type==='character'&&p.proposal_version===3){
+      native=prepareNativeRollParticipation(db,guild,origin,entry,p);status='pending_owner_choice';
+      reason='Native collaboration eligibility only; each owner separately chooses participation and any Hope payment.';
+    }
     else if(entry.actor.type==='character'&&p.feature_ref==='unarmed_attack'){
       native=prepareNativeUnarmedAttack(db,guild,origin,entry,p,{library});
       status=native.disposition==='roll_pending'?'pending_pc_roll':'needs_rules_review';reason='Native unarmed eligibility only; owner alone rolls and chooses optional costs.';
+    }
+    else if(entry.actor.type==='character'&&p.feature_ref==='equipped_attack'){
+      native=prepareNativeEquippedAttack(db,guild,origin,entry,p,{library});
+      status=native.disposition==='roll_pending'?'pending_pc_roll':'needs_rules_review';reason='Native exact existing equipped approval only; no acquired gear, new mapping or owner dice are invented.';
     }
     else if(p.feature_ref&&p.feature_ref!=='standard_attack'){
       const feature=featureDisposition(p.feature_ref);
@@ -96,8 +111,12 @@ export function adjudicateSceneBoard(db,guild,origin,board,proposals,{library=ne
       if(isPvpIntent(db,guild,accepted)){status='needs_consent';reason='Exact bilateral PvP agreement required.';}
       else if(accepted.data.coordination||accepted.data.dependencies?.some(ref=>db.getCityRecord(guild,'typed_intent',ref)?.status!=='resolved')){
         status='blocked';reason='Native shared window or exact prerequisite remains unresolved; no automatic participation.';
-      }else if(['no_roll','request_pc_action_roll'].includes(p.disposition)&&p.stakes_kind==='attempt_only'&&!p.feature_ref&&!p.experience_ref&&!p.advantage&&!p.disadvantage){
+      }else if(['no_roll','request_pc_action_roll'].includes(p.disposition)&&p.stakes_kind==='attempt_only'&&!p.feature_ref&&!p.experience_ref
+        &&(p.disposition==='request_pc_action_roll'||!p.advantage&&!p.disadvantage)){
         const scope={mode:accepted.visibility==='character'?'private':'party',actorUserId:accepted.data.owner_user_id,actorCharacterId:accepted.data.actor};
+        const nativeModifiers=prepareOrdinaryRollModifier(db,guild,origin,entry,p);
+        const modifiers=p.disposition==='no_roll'?[]:[...new Set([...db.rollModifierSources(guild,accepted.data.actor,p.trait,'action',accepted.record_key,
+          {sessionId:accepted.data.session_id,sceneKey:accepted.data.scene}).map(s=>s.event_key),...nativeModifiers])];
         const r=adjudicateGmRuling(db,guild,entry.intent_ref,{version:1,disposition:p.disposition==='no_roll'?'narrative_no_roll':'standard_action_roll',
           context_refs:[nativeGmSceneContext(db,guild,scope)?.ref,...gmRulingContext(db,guild,scope).evidence.map(e=>e.ref)].filter(Boolean).slice(0,8),capability:{kind:'mundane',ref:''},
           effect_class:p.disposition==='no_roll'&&accepted.data.type==='other'&&['describe_scene','current_situation'].includes(accepted.data.operation)?'observation':'attempt_only',
@@ -105,7 +124,7 @@ export function adjudicateSceneBoard(db,guild,origin,board,proposals,{library=ne
           stakes:p.disposition==='no_roll'?'none':'Success or failure settles this declared attempt only. New damage, custody, movement, access or costs require separate native authority.',
           explanation:'Source-bound ordinary Daggerheart adjudication of your exact accepted declaration.',
           difficulty_reason:'AI GM selected the saved Difficulty against current native scene context; no unsupported effect is authorized.',
-          saved_ruling_key:'',override_refs:[],raw_refs:p.rule_basis_refs,house_refs:[],homebrew_refs:[],modifier_keys:[]},scope);
+          saved_ruling_key:'',override_refs:[],raw_refs:p.rule_basis_refs,house_refs:[],homebrew_refs:[],modifier_keys:modifiers},scope);
         native=r.data.adjudication||null;status=native?.disposition==='roll_pending'?'pending_pc_roll':native?.receipts?.length?'resolved_no_roll':'needs_rules_review';reason=r.data.review_reason||p.reason;
       }
     }else if(p.disposition==='npc_no_roll'&&['set_allies','clear_allies'].includes(entry.operation)&&p.difficulty===null&&p.trait===null
@@ -139,7 +158,7 @@ export function adjudicateSceneBoard(db,guild,origin,board,proposals,{library=ne
       reason='GM-owned exceptional independent NPC task only; no PC effect, default contested roll or routine behavior roll.';
     }
     }catch(error){
-      if(!['GM_ARBITRATION','PC_EFFECT_AUTHORITY','PC_NATIVE_ELIGIBILITY'].includes(error.code))throw error;
+      if(!['GM_ARBITRATION','PC_EFFECT_AUTHORITY','PC_NATIVE_ELIGIBILITY','STATE_CONFLICT','INVALID_INPUT'].includes(error.code))throw error;
       status='needs_rules_review';native=null;reason=error.message;
       if(p.feature_ref){
         review_contract=nativeFeatureReviewContract(p.feature_ref);
@@ -158,6 +177,26 @@ export function adjudicateSceneBoard(db,guild,origin,board,proposals,{library=ne
 }
 export function applyUnifiedArbitration(db,guild,result,playerRows){
   return db.transaction(()=>applyUnifiedBatch(db,guild,result,playerRows));
+}
+/** Classify only sealed, bounded Help eligibility before generic PC-conflict staging.
+ * This never permits damage or a PC choice; unsuccessful eligibility stays scoped review. */
+export function prepareUnifiedCollaboration(db,guild,result,playerRows){
+  const proposals=result?.unified_arbitration?.decisions?.filter(p=>p.proposal_version===3&&p.collaboration?.kind==='help')||[];
+  if(!proposals.length)return new Set();
+  if(!matchesArbitrationSchema(unifiedArbitrationSchema,result.unified_arbitration))throw fail('transport_shape');
+  const origin=arbitrationTurnOrigin(result);if(!origin)throw fail('native_service_origin_required');
+  const rows=currentScenePlayerInputs(db,guild,origin,playerRows),board=buildSceneIntentBoard(db,guild,origin,rows,result.unified_arbitration.npc_intents),classified=new Set();
+  for(const p of proposals){
+    const entry=board.data.entries.find(e=>e.intent_ref===p.intent_ref||e.proposal_ref===p.intent_ref),a=entry&&db.getCityRecord(guild,'typed_intent',entry.intent_ref);
+    if(entry?.actor.type!=='character'||a?.data.type!=='interact'||a.data.operation!=='help_ally'
+      ||!resolveRuleReferences(db,guild,'RAW',p.rule_basis_refs)||!matchesArbitrationSchema(gmArbitrationProposalSchema,p))continue;
+    consentAction(db,guild,a.record_key);
+    try{prepareNativeRollParticipation(db,guild,origin,entry,p);}
+    catch(error){if(error.code!=='GM_ARBITRATION')throw error;}
+    // The ordinary decision pass records any hold; classification is never an authorization receipt.
+    classified.add(a.record_key);
+  }
+  return classified;
 }
 function applyUnifiedBatch(db,guild,result,playerRows){
   if(!result?.unified_arbitration)return [];

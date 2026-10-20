@@ -128,7 +128,10 @@ export function adjudicateGmRuling(db,guild,acceptedKey,proposal,scope,recovery=
       ...proposal.house_refs.map(ref=>ref.slice("house:".length)),...proposal.homebrew_refs.map(ref=>ref.slice("homebrew:".length))]
       .filter(Boolean))].sort();
     // Timestamps alone are not a revision: same-second edits must invalidate native execution too.
-    const ruleHash=hash({basis:ruleBasis,rulings:rulingKeys.map(ref=>db.getRulesRuling(guild,ref))});
+    const ruleHash=hash({basis:ruleBasis,rulings:rulingKeys.map(ref=>db.getRulesRuling(guild,ref)),
+      ...(proposal.modifier_keys.length?{modifiers:proposal.modifier_keys.map(ref=>{
+        const source=db.getWorldEvent(guild,ref);return {source,ruling:source?.details?.roll_modifier?.ruling_key
+          ?db.getRulesRuling(guild,source.details.roll_modifier.ruling_key):null};})}:{})});
     const referencesValid=(!proposal.saved_ruling_key||!!db.getRulesRuling(guild,proposal.saved_ruling_key))
       &&[["RAW",proposal.raw_refs],["campaign_override",proposal.override_refs],["house_rule",proposal.house_refs],
         ["homebrew",proposal.homebrew_refs]].every(([kind,refs])=>!refs.length||!!resolveRuleReferences(db,guild,kind,refs,{rollKind:"action"}));

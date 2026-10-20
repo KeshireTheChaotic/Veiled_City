@@ -9,7 +9,10 @@ import {conversationPrincipal} from './conversation-principal.js';
 import {arbitrationFailure as fail} from './gm-arbitration-contract.js';
 import {EncounterLibrary} from './encounter.js';
 import {inspectNativeUnarmedAttack} from './native-unarmed-attacks.js';
+import {inspectNativeEquippedAttack} from './native-equipped-attacks.js';
 import {inspectFearReservation} from './fear-reservations.js';
+import {inspectNativeRollParticipation} from './native-roll-participation.js';
+import {rollRevision} from './roll-requests.js';
 
 export function nativeGmNotice(db,guild,key,scope,{library=new EncounterLibrary('../content')}={}){
   const stored=db.getCityRecord(guild,'gm_arbitration_decision',key),shared=stored?.data.native?.operation==='commit_adversary_volley'
@@ -17,18 +20,33 @@ export function nativeGmNotice(db,guild,key,scope,{library=new EncounterLibrary(
     checked=shared?inspectVolley(db,guild,shared.record_key):null,
     {row,entry}=checked?{row:checked.decision,entry:null}:inspectNativeGmDecision(db,guild,key),n=row.data.native;
   if(n?.opportunity?.pre_roll_fear&&inspectFearReservation(db,guild,n.opportunity.pre_roll_fear).row.status==='cancelled')return null;
-  const character=n?.operation==='commit_adversary_volley'?n.inputs.find(i=>i.character===scope.actorCharacterId)?.character
+  const character=n?.operation==='owner_collaboration'?n.choices.find(c=>c.character===scope.actorCharacterId)?.character
+    :n?.operation==='commit_adversary_volley'?n.inputs.find(i=>i.character===scope.actorCharacterId)?.character
     :entry.actor.type==='character'?entry.actor.key:n?.character||n?.input?.character,pc=character&&db.getCharacter(character);
   if(!pc||scope.mode!=='private'||scope.actorUserId!==pc.owner_user_id||scope.actorCharacterId!==pc.id
     ||conversationPrincipal(db,guild,scope.actorUserId,pc.id).kind!=='owner')throw fail('private_notice_recipient');
   let text='',proof=null;
-  if(row.status==='pending_pc_roll'){
+  if(row.status==='pending_owner_choice'&&n?.operation==='owner_collaboration'){
+    const choice=n.choices.find(c=>c.character===pc.id),request=db.getCityRecord(guild,'roll_request',n.request),
+      event=db.getWorldEvent(guild,choice.proof),description=event?.details?.binding?.description;
+    if(!request)throw fail('private_collaboration_request');
+    inspectNativeRollParticipation(db,guild,request,pc,event,choice.op,description,{historical:request.status==='resolved'});
+    const available=choice.op==='participate'?request.status==='awaiting_partner'
+      :request.status==='pending'&&!request.data.tag&&(choice.op!=='help'||!(request.data.helpers||[]).some(h=>h.character===pc.id));
+    const {character:ignored,...fields}=choice,input={...fields,request:request.record_key,expected_revision:rollRevision(request),
+      key:`collaboration:${hash([choice.proof,request.data.revision])}`};
+    text=available?`Native ${choice.op==='help'?'Help (1 Hope)':choice.op==='tag'?'Tag Team proposal (3 Hope, charged only after the partner agrees)':'Tag Team participation'} eligibility is available. This is not consent, a charge or a roll.\n`
+      +`Your optional owner operation: /vc-roll contribute json:${JSON.stringify(input)}`
+      :'This collaboration has no current owner operation. A pending partner proposal, saved outcome or changed request is not inferred as your consent. No dice or costs were repeated.';
+    proof=[request,event];
+  }else if(row.status==='pending_pc_roll'){
     const request=db.getCityRecord(guild,'roll_request',n?.roll_request_ref);
     if(!request||request.subject_key!==pc.id||request.data.owner_user_id!==pc.owner_user_id)throw fail('private_notice_request');
     if(request.status==='resolved'){
       const result=typedRollProof(db,guild,request);text=`Native ${request.data.kind} result: ${request.data.result.total}, ${request.data.result.duality}; ${result.outcome}. No new world consequence is inferred.`;
     }else{
       if(request.data.input?.attack_source?.startsWith('native-unarmed:'))inspectNativeUnarmedAttack(db,guild,request.data.input,pc);
+      if(request.data.input?.native_equipped_ref)inspectNativeEquippedAttack(db,guild,request.data.input,pc);
       text=formatRollRequest(request,{user:pc.owner_user_id,db,guild});
     }
     proof=request;
@@ -63,8 +81,8 @@ export function nativeGmNotices(db,guild,sourceRef,scope){
   for(const row of db.listCityRecords(guild,{kind:'gm_arbitration_decision',includeGM:true,limit:200})){
     if(row.data.origin.source!==sourceRef)continue;
     const board=db.getCityRecord(guild,'scene_intent_board',row.data.board),entry=board?.data.entries.find(e=>e.intent_ref===row.data.entry),n=row.data.native,
-      characters=n?.operation==='commit_adversary_volley'?n.inputs.map(i=>i.character):[entry?.actor.type==='character'?entry.actor.key:n?.character||n?.input?.character];
-    if(!['pending_pc_roll','pending_pc_reaction','gm_action_ready'].includes(row.status))continue;
+      characters=n?.operation==='owner_collaboration'?n.choices.map(i=>i.character):n?.operation==='commit_adversary_volley'?n.inputs.map(i=>i.character):[entry?.actor.type==='character'?entry.actor.key:n?.character||n?.input?.character];
+    if(!['pending_owner_choice','pending_pc_roll','pending_pc_reaction','gm_action_ready'].includes(row.status))continue;
     for(const character of characters){
     const pc=character&&db.getCharacter(character);
     if(!pc||scope.mode==='private'&&pc.id!==scope.actorCharacterId)continue;

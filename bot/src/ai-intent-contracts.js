@@ -24,8 +24,9 @@ export const INTENT_PAYLOADS={
   dialogue:{anyOf:[
     object({...source,op:choice("interpret"),npc_key:text(),topic:choice("promise","offer","refusal","boundary","address","argument","joke","apology","disagreement"),interpretation:text(600),confidence:integer(0,70)}),
     object({...source,op:choice("interpret"),npc_key:text(),topic:choice("promise","offer","refusal","boundary","address","argument","joke","apology","disagreement"),interpretation:text(600),confidence:integer(0,70),corrects:text()})]},
-  encounter:object({...source,op:choice("propose"),actors:list(text(),12),location_key:text(),
+  encounter:{anyOf:[object({...source,op:choice("propose"),actors:list(text(),12),location_key:text(),
     objective:choice("escape","protect_evidence","containment","negotiation"),environment:text()}),
+    object({...source,op:choice('activate'),proposal_key:text()})]},
   goal:object({...actor,...source,op:choice("propose","reprioritize","pause","resume","supersede","complete","abandon"),
     goal_key:text(),new_goal_key:text(),objective:text(1000),reason:text(1000),priority:integer(0,100),confidence:integer(0,100),
     horizon:choice("immediate","near","long"),dependencies:list(text()),acceptable_methods:list(text()),conflicts:list(text())}),

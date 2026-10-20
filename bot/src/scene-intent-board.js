@@ -39,6 +39,14 @@ export function arbitrationPromptBoard(db,guild,origin){
   const encounter=db.getCurrentEncounter(o.binding.session),binding=encounter&&db.getCityRecord(guild,'encounter_binding',encounter.id),
     combatants=encounter?db.listCombatants(encounter.id):[],library=new EncounterLibrary('../content'),features=compileNativeFeatures();
   return {version:1,source:o.binding.source,scene:o.binding.scene,location:o.binding.location,audience:o.scope.mode,
+    equipped_attack_sources:db.scopedRollAttackSources(guild,o.scope.actorCharacterId,o.binding.session,o.binding.scene,null)
+      .filter(e=>(db.getCharacter(o.scope.actorCharacterId)?.data.inventory||[]).some(i=>typeof i==='object'&&i.equipped===true&&i.name===e.details.roll_attack?.weapon))
+      .slice(0,20).map(e=>({source_ref:e.event_key,weapon:e.details.roll_attack.weapon,trait:e.details.roll_attack.trait,
+        target_id:e.details.roll_attack.target_id,authority:'Existing exact approval only; native source/item/target/scene validation still required.'})),
+    collaboration_requests:db.listCityRecords(guild,{kind:'roll_request',includeGM:true,limit:100})
+      .filter(q=>q.status==='pending'&&q.data.scene===o.binding.scene&&q.data.session_id===o.binding.session
+        &&q.data.input?.accepted_intent&&narrativeSourceVisible(db,guild,q.source_event,o.scope))
+      .map(q=>({request:q.record_key,actor:q.subject_key,accepted_intent:q.data.input.accepted_intent,kind:q.data.kind})),
     pre_roll_fear:preRollFearCandidates(db,guild,origin),
     feature_windows:featureWindowChoices(db,guild,o.scope),
     npc_candidates:o.eligible.map(n=>{
