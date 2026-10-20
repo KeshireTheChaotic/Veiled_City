@@ -293,7 +293,7 @@ export function rollIncomingAttack(db,guild,user,key,options={}){
       nativeDecision=inspectNativeGmDecision(db,guild,row.data.offer.input.ruling.slice(12)).row;
       cost=commitGmActionCost(db,guild,nativeDecision.record_key);
     }
-    validateIncomingConditions(db,guild,c.pc.id,row.data.offer.native_conditions||[]);
+    validateIncomingConditions(db,guild,c.pc.id,row.data.offer.native_conditions||[],{current:true});
     const rng=options.rng||d,result=gmD20Roll({kind:'attack',modifier:c.bonus,difficulty:c.evasion,
       ...incomingConditionOdds(row.data.offer,nativeDecision?.data.proposal)},rng),face=result.selected;
     const hit=result.success,damage=gmAttackDamage(result,c.damage,rng);

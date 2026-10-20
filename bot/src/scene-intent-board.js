@@ -8,11 +8,12 @@ import {actorReferenceVisible} from './npc-cognition-projection.js';
 import {matchesArbitrationSchema,npcSceneIntentSchema,arbitrationFailure as fail} from './gm-arbitration-contract.js';
 import {indexWorldEvent} from './city-calendar.js';
 import {featureWindowChoices,inspectFeatureWindow} from './native-feature-windows.js';
-import {compileNativeFeatures} from './native-feature-catalog.js';
+import {executableNativeFeatures} from './native-feature-catalog.js';
 import {EncounterLibrary} from './encounter.js';
 import {isGroupFeature,groupFeatureStakes,groupReactionRules} from './native-group-features.js';
 import {nativeActorControl} from './native-actor-control.js';
 import {preRollFearCandidates} from './pre-roll-fear.js';
+import {nativeEnvironmentBinding} from './native-environment-context.js';
 const origins=new WeakMap(),bindings=new WeakMap();
 const deepFreeze=v=>{if(v&&typeof v==='object'){Object.values(v).forEach(deepFreeze);Object.freeze(v);}return v;};
 export function createArbitrationOrigin(db,guild,scope,sourceRef){
@@ -37,8 +38,14 @@ export function inspectArbitrationOrigin(db,guild,origin){
 export function arbitrationPromptBoard(db,guild,origin){
   const o=inspectArbitrationOrigin(db,guild,origin);
   const encounter=db.getCurrentEncounter(o.binding.session),binding=encounter&&db.getCityRecord(guild,'encounter_binding',encounter.id),
-    combatants=encounter?db.listCombatants(encounter.id):[],library=new EncounterLibrary('../content'),features=compileNativeFeatures();
+    combatants=encounter?db.listCombatants(encounter.id):[],library=new EncounterLibrary('../content'),features=executableNativeFeatures('adversary');
+  let environment=null;
+  if(encounter?.status==='active'){
+    try{environment=nativeEnvironmentBinding(db,guild,{encounter:encounter.id,scene:o.binding.scene,location:o.binding.location},{library});}
+    catch(error){if(!['GM_ARBITRATION','NATIVE_ENCOUNTER_ACTIVATION'].includes(error.code))throw error;}
+  }
   return {version:1,source:o.binding.source,scene:o.binding.scene,location:o.binding.location,audience:o.scope.mode,
+    environment_context:environment,
     equipped_attack_sources:db.scopedRollAttackSources(guild,o.scope.actorCharacterId,o.binding.session,o.binding.scene,null)
       .filter(e=>(db.getCharacter(o.scope.actorCharacterId)?.data.inventory||[]).some(i=>typeof i==='object'&&i.equipped===true&&i.name===e.details.roll_attack?.weapon))
       .slice(0,20).map(e=>({source_ref:e.event_key,weapon:e.details.roll_attack.weapon,trait:e.details.roll_attack.trait,

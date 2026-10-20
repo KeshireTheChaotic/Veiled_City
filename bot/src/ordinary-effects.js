@@ -8,10 +8,13 @@ import {worldInputKey} from './autonomous-world.js';
 import {conversationPrincipal} from './conversation-principal.js';
 import {applicationPrincipal} from './application-authority.js';
 import {applyRoutineEvidenceAnalysis,verifyRoutineEvidenceAnalysis,routineEvidenceContext} from './native-evidence-analysis.js';
+import {clearNativeConditionFromOutcome} from './native-condition-recovery.js';
+import {activeNativeConditions} from './native-group-features.js';
 
 function route(db,guild,p,payload,proof,scope){
   if(p.adapter==='observation'&&p.effect_class==='observation')return;
   if(p.adapter==='evidence_excerpt'&&p.effect_class==='evidence')return;
+  if(p.adapter==='condition_clear'&&p.effect_class==='special')return;
   const i=payload.intent,v=i?.payload,loc=proof.pc.data.location;
   if(p.adapter!=='delegated'||!validateIntent(i))effectFail('UNSUPPORTED_NATIVE_ADAPTER');
   const sources=[v.source_event,...i.source_prerequisites].map(ref=>db.getWorldEvent(guild,ref)),s=sources[0];
@@ -63,12 +66,12 @@ export function applyOrdinaryEffects(db,guild,proposals,scope,{typedIntents=[],b
       if(!validOrdinaryEffect(p))effectFail('CLOSED_PROPOSAL_REQUIRED');
       if(db.getCityCalendar(guild).flags.gm_discretion!==true||db.getCityRecord(guild,'gm_authority','campaign')?.data.gm_authority_mode==='manual')effectFail('GM_DISCRETION_UNAVAILABLE');
       const payload=JSON.parse(p.payload_json);
-      if(!payload||Object.keys(payload).sort().join(',')!==(p.adapter==='observation'?'query,when':p.adapter==='evidence_excerpt'?'evidence,when':'intent,when'))effectFail('CLOSED_NATIVE_PAYLOAD_REQUIRED');
+      if(!payload||Object.keys(payload).sort().join(',')!==(p.adapter==='observation'?'query,when':p.adapter==='evidence_excerpt'?'evidence,when':p.adapter==='condition_clear'?'condition,when':'intent,when'))effectFail('CLOSED_NATIVE_PAYLOAD_REQUIRED');
       route(db,guild,p,payload,proof,scope);
       const pre=ordinaryPrerequisite(db,guild,p,proof),r=pre.receipt;
       if(payload.when==='no_roll'?r.data.outcome!=='resolved_no_roll':payload.when==='success'?r.data.outcome!=='success'
         :payload.when==='failure_fear'?r.data.outcome!=='failure'||r.data.duality!=='Fear':true)effectFail('EXACT_RESULT_PRECONDITION_REQUIRED');
-      const privateResult=scope.mode==='private'||r.visibility==='character',effectiveScope={...scope,mode:privateResult?'private':scope.mode};
+      const privateResult=p.adapter==='condition_clear'||scope.mode==='private'||r.visibility==='character',effectiveScope={...scope,mode:privateResult?'private':scope.mode};
       return db.transaction(()=>{
         let result,text,native=null,evidenceResult=null;
         if(p.adapter==='observation'){
@@ -79,6 +82,12 @@ export function applyOrdinaryEffects(db,guild,proposals,scope,{typedIntents=[],b
             prerequisite_ref:r.record_key},effectiveScope,{principal:applicationPrincipal(guild,'evidence.analyze','ordinary-evidence-excerpt')});
           evidenceResult=verifyRoutineEvidenceAnalysis(db,guild,native.record_key,effectiveScope);
           result={hash:effectHash(evidenceResult)};text=evidenceResult.text;
+        }else if(p.adapter==='condition_clear'){
+          if(!payload.condition||Object.keys(payload.condition).join()!=='condition'
+            ||!['no_roll','success'].includes(payload.when))effectFail('CLOSED_NATIVE_CONDITION_CLEAR_REQUIRED');
+          native=clearNativeConditionFromOutcome(db,guild,{...payload.condition,accepted_intent:proof.row.record_key,
+            prerequisite:r.record_key},effectiveScope);
+          result={hash:effectHash(native)};text='Your source-verified Vulnerable condition has ended. No resources or other conditions changed.';
         }else{
           const ordinaryEffect={key,proposal:p,scope:proof.scope,source_hash:effectHash(proof.source),world_hash:effectHash(proof.world||null),prerequisite_hash:effectHash(r)};
           const nativeResults=dispatchAiIntents(db,guild,[payload.intent],{scope:effectiveScope,sessionId:proof.scene.session_id,origin:key,budget,ordinaryEffect});
@@ -103,7 +112,8 @@ export function applyOrdinaryEffects(db,guild,proposals,scope,{typedIntents=[],b
         verifyOrdinaryEffect(db,guild,key,effectiveScope);return row;
       });
     }catch(error){
-      if(error.code!=='ORDINARY_EFFECT'&&error.code!=='SCENE_ACTION_WINDOW'&&error.code!=='TYPED_ROLL_PROOF'&&error.code!=='NATIVE_EVIDENCE_ANALYSIS'&&!(error instanceof SyntaxError))throw error;
+      if(error.code!=='ORDINARY_EFFECT'&&error.code!=='SCENE_ACTION_WINDOW'&&error.code!=='TYPED_ROLL_PROOF'&&error.code!=='NATIVE_EVIDENCE_ANALYSIS'
+        &&!(p?.adapter==='condition_clear'&&['GM_ARBITRATION','PC_NATIVE_ELIGIBILITY'].includes(error.code))&&!(error instanceof SyntaxError))throw error;
       if(proof)return review(db,guild,key||effectKey(p,proof.scope),p,proof,error.reason||error.code);
       // A foreign/stale requested action cannot create a review attributed to that owner.
       const principal=conversationPrincipal(db,guild,scope.actorUserId,scope.actorCharacterId),source=db.getWorldEvent(guild,worldInputKey(provenance.messageId,scope.actorCharacterId));
@@ -116,9 +126,16 @@ export function applyOrdinaryEffects(db,guild,proposals,scope,{typedIntents=[],b
 /** Owner-scoped locators only. No private result or other character's declaration is disclosed. */
 export function ordinaryEffectContext(db,guild,scope){
   if(!scope.actorCharacterId||!db.getActiveSession(guild))return [];
+  let clearable=[];
+  try{clearable=activeNativeConditions(db,guild,scope.actorCharacterId)
+    .filter(c=>c.data.feature==='adversary:aster-vale-contractor:flashbang'&&c.data.expiry==='until_cleared'
+      &&c.data.owner===scope.actorUserId).map(c=>({ref:c.record_key,condition:c.data.condition,
+      source:c.source_event,authority:'Owner source and native successful clear_condition outcome required; not permission from this locator.'}));
+  }catch(error){if(error.code!=='GM_ARBITRATION'&&error.code!=='PC_EFFECT_AUTHORITY')throw error;}
   const candidates=db.ownedTypedActionLocators(guild,scope.actorCharacterId,scope.actorUserId);
   return candidates
     .flatMap(a=>{try{ordinaryActionProof(db,guild,a.record_key,scope);return [{action:a.record_key,source_excerpt:a.data.source_span.slice(0,120),
       excerpt_truncated:a.data.source_span.length>120,source_ref:a.source_event,
-      prerequisite:a.data.outcome_receipt||'',status:a.status,evidence:routineEvidenceContext(db,guild,a,scope)}];}catch(error){if(error.code==='ORDINARY_EFFECT'||error.code==='SCENE_ACTION_WINDOW')return [];throw error;}});
+      prerequisite:a.data.outcome_receipt||'',status:a.status,evidence:routineEvidenceContext(db,guild,a,scope),
+      clearable_conditions:clearable}];}catch(error){if(error.code==='ORDINARY_EFFECT'||error.code==='SCENE_ACTION_WINDOW')return [];throw error;}});
 }

@@ -52,6 +52,30 @@ export function featureDisposition(key){
   return Object.freeze({status:'supported',reason:'Qualified descriptor only; current native trigger, actor, costs and targets still required.',feature:row});
 }
 
+/** Executable discovery only. Review/source inventories must never become Director capabilities. */
+export function executableNativeFeatures(kind){
+  if(kind!==undefined&&!['adversary','environment'].includes(kind))return Object.freeze([]);
+  return Object.freeze(compileNativeFeatures().filter(row=>row.status==='supported'
+    &&Object.hasOwn(handlers,row.native_handler)&&(!kind||row.actor_kind===kind)));
+}
+
+/** Exact printed rules for GM planning/review only. Never mutate descriptors or mint execution authority. */
+export function compileNativeFeatureRuleContexts({adversaries=read('../../content/GM_PRIVATE/ADVERSARIES/adversaries.json'),
+  environments=read('../../content/GM_PRIVATE/ENVIRONMENTS/environments.json')}={}){
+  const features=compileNativeFeatures({adversaries,environments}),actors=new Map();
+  for(const [kind,rows] of [['adversary',adversaries],['environment',environments]])
+    for(const actor of rows)actors.set(`${kind}:${actor.name}`,actor);
+  return freeze(features.map(feature=>({version:1,feature:feature.feature_key,source_ref:feature.source_ref,
+    source_hash:feature.source_hash,template_hash:feature.template_hash,index:feature.index,
+    printed_rule:actors.get(`${feature.actor_kind}:${feature.actor_name}`).features[feature.index],
+    catalog_status:feature.status,native_handler:feature.native_handler,
+    authority:'Printed source context only; native trigger, owner choices, effects and publication require their own verified adapters.',
+    execution_authorized:false})));
+}
+export function nativeFeatureRuleContext(key){
+  return typeof key==='string'?compileNativeFeatureRuleContexts().find(row=>row.feature===key)||null:null;
+}
+
 /** Owner taxonomy is additive: existing closed feature descriptors and their saved hashes do not change. */
 export function compileNativeActors({adversaries=read('../../content/GM_PRIVATE/ADVERSARIES/adversaries.json'),
   environments=read('../../content/GM_PRIVATE/ENVIRONMENTS/environments.json')}={}){

@@ -9,6 +9,8 @@ import {renderWorldObservation} from './world-observation.js';
 import {verifyRoutineEvidenceAnalysis} from './native-evidence-analysis.js';
 import {scenePresence} from './scene-continuity.js';
 import {validOrdinaryEffect} from './ordinary-effect-schema.js';
+import {validateNativeCondition} from './native-group-features.js';
+import {inspectNativeConditionClearAncestry} from './native-condition-recovery.js';
 export const effectHash=v=>createHash('sha256').update(JSON.stringify(v)).digest('hex');
 export const effectKey=(proposal,scope)=>`ordinary-effect:${effectHash([proposal,scope])}`;
 export function effectFail(reason){throw Object.assign(new Error(`Ordinary effect held: ${reason}`),{code:'ORDINARY_EFFECT',expected:true,reason});}
@@ -75,6 +77,7 @@ export function effectTarget(db,guild,intent){
   effectFail('UNSUPPORTED_NATIVE_ADAPTER');
 }
 export function effectVisibility(db,guild,proposal,payload,origin,prerequisite){
+  if(proposal.adapter==='condition_clear')return 'character';
   if(proposal.adapter==='delegated'){
     if(['goal','consequence'].includes(payload.intent.feature))return 'gm';
     const target=effectTarget(db,guild,payload.intent);
@@ -129,6 +132,13 @@ export function verifyOrdinaryEffect(db,guild,ref,scope){
   }else if(evidence){
     const native=db.getCityRecord(guild,'evidence_analysis',d.native_ref);
     if(effectHash(native)!==d.native_hash||effectHash(evidence)!==d.result_hash||text!==evidence.text)effectFail('EVIDENCE_EXCERPT_CHANGED');
+  }else if(d.proposal.adapter==='condition_clear'){
+    const condition=validateNativeCondition(db,guild,d.payload.condition?.condition),
+      native=inspectNativeConditionClearAncestry(db,guild,condition);
+    if(condition.subject_key!==proof.pc.id||native.record_key!==d.native_ref||native.data.action!==proof.row.record_key
+      ||native.data.prerequisite!==pre.receipt.record_key||effectHash(native)!==d.native_hash||effectHash(native)!==d.result_hash
+      ||text!=='Your source-verified Vulnerable condition has ended. No resources or other conditions changed.')
+      effectFail('NATIVE_CONDITION_CLEAR_CHANGED');
   }else{
     const native=db.getCityRecord(guild,'ai_intent',d.native_ref),source=native&&db.getWorldEvent(guild,native.source_event);
     const evidence=[native?.source_event,...(d.payload.intent?.source_prerequisites||[])].map(ref=>db.getWorldEvent(guild,ref));

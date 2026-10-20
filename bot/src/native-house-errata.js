@@ -1,6 +1,6 @@
 /** Explicit owner-authored errata, not a claim about original RAW or an executable model payload. */
 import fs from 'node:fs';
-import {compileNativeFeatures} from './native-feature-catalog.js';
+import {compileNativeFeatures,nativeFeatureRuleContext} from './native-feature-catalog.js';
 import {sceneFictionHash as hash} from './scene-fiction-context.js';
 import {arbitrationFailure as fail} from './gm-arbitration-contract.js';
 const freeze=v=>{if(v&&typeof v==='object'){Object.values(v).forEach(freeze);Object.freeze(v);}return v;};
@@ -32,9 +32,14 @@ export function nativeHouseErratum(id,version=1){
 /** GM-private diagnosis, never an execution capability or a replacement for player choice. */
 export function nativeFeatureReviewContract(key){
   if(typeof key!=='string')return null;
+  const source=nativeFeatureRuleContext(key);if(!source)return null;
   const entry=compileNativeHouseErrata().filter(e=>e.sources.some(s=>s.kind==='feature'&&s.key===key)).sort((a,b)=>b.version-a.version)[0];
-  if(!entry)return null;
+  if(!entry)return freeze({version:1,feature:key,source,
+    missing:'Exact source-defined native trigger/effect/current-and-saved adapter is not implemented; printed text is not execution permission.',
+    native_authority_granted:false,effect_status:'not_executed',
+    recovery:'Implement the exact bounded source contract with native receipts and owner controls; do not substitute generic success or infer costs.'});
   return freeze({version:1,erratum:entry.id,erratum_version:entry.version,erratum_hash:hash(entry),feature:key,
+    source,
     requirements:entry.interpretation,missing:entry.interpretation.missing||entry.limitations?.join(' ')||'Native adapter for this exact operation.',
     native_authority_granted:false,effect_status:'not_executed',
     recovery:'Implement and qualify the missing source/owner/rules adapter, then obtain a fresh native adjudication. No PC choice, dice, consent, cost or terminal outcome is inferred.'});

@@ -14,6 +14,7 @@ import {arbitrationFailure as fail} from './gm-arbitration-contract.js';
 import {EncounterLibrary} from './encounter.js';
 import {reserveGmArbitrationNotice} from './native-publications.js';
 import {applyNativeStressPassive} from './native-stress-passives.js';
+import {inspectNativeConditionClearAncestry} from './native-condition-recovery.js';
 
 const LANES='adversary:traffic-saint:all-lanes-stop',FLASH='adversary:aster-vale-contractor:flashbang';
 const REGENT='adversary:pale-regent:command-the-blood';
@@ -377,13 +378,15 @@ export function recordNativeSpotlight(db,guild,cost){
 }
 export function validateNativeCondition(db,guild,key){
   const row=db.getCityRecord(guild,'pc_native_condition',key),v=row?.data,event=row&&db.getWorldEvent(guild,row.source_event),
-    effect=v&&validateGroupReactionEffect(db,guild,v.effect,{historical:row.status==='expired'}),child=effect&&db.getCityRecord(guild,'gm_arbitration_decision',effect.data.decision),
+    // The condition's original effect is already committed history, not permission for another NPC action.
+    effect=v&&validateGroupReactionEffect(db,guild,v.effect,{historical:true}),child=effect&&db.getCityRecord(guild,'gm_arbitration_decision',effect.data.decision),
     parent=child&&inspectGroupFeature(db,guild,child.data.native.execution),policy=v&&policies[v.feature];
-  if(v?.version!==1||!policy||!['active','expired'].includes(row.status)||row.visibility!=='character'||row.subject_key!==v.character
+  if(v?.version!==1||!policy||!['active','expired','cleared'].includes(row.status)||row.visibility!=='character'||row.subject_key!==v.character
     ||event?.status!=='active'||event.kind!=='native_pc_condition'||event.source_id!=='native:unified-gm'||event.details.payload_hash!==hash(v)
     ||effect.data.condition!==key||v.character!==effect.data.character||v.owner!==effect.data.owner||v.feature!==effect.data.feature
     ||v.condition!==policy.condition||v.expiry!==policy.expiry||v.actor!==parent.entry.actor.key||v.scene!==parent.parent.data.origin.scene
     ||v.cast_spotlight!==parent.cost.data.spotlight?.index)throw fail('native_condition_effect_source');
+  if(row.status==='cleared')inspectNativeConditionClearAncestry(db,guild,row);
   if(row.status==='expired'){
     const r=db.getCityRecord(guild,'pc_native_condition_expiry',key),source=r&&db.getWorldEvent(guild,r.source_event),spotlight=r&&db.getWorldEvent(guild,r.data.spotlight);
     if(r?.status!=='resolved'||source?.status!=='active'||source.kind!=='native_condition_expiry'||source.source_id!=='native:unified-gm'||hash(source.details)!==hash(r.data)
@@ -407,11 +410,14 @@ export function nativeIncomingConditions(db,guild,character){
   return activeNativeConditions(db,guild,character).filter(r=>r.data.condition==='Vulnerable')
     .map(r=>({ref:r.record_key,fingerprint:hash(r.data),condition:'Vulnerable'}));
 }
-export function validateIncomingConditions(db,guild,character,proofs){
+export function validateIncomingConditions(db,guild,character,proofs,{current=false}={}){
   if(!Array.isArray(proofs)||proofs.length>1)throw fail('native_condition_nonstacking');
   for(const proof of proofs){const row=validateNativeCondition(db,guild,proof.ref);
     if(row.subject_key!==character||row.data.condition!=='Vulnerable'||proof.condition!=='Vulnerable'||hash(row.data)!==proof.fingerprint)
       throw fail('incoming_condition_exact_source');}
+  // Historical odds remain part of their saved roll. New dice must not use a condition
+  // that has since ended, nor omit a newly established native condition.
+  if(current&&hash(proofs)!==hash(nativeIncomingConditions(db,guild,character)))throw fail('incoming_condition_current_state_changed');
 }
 /** Daggerheart cancels opposite sources before selecting high/low; same condition never stacks. */
 export function incomingConditionOdds(offer,proposal={}){

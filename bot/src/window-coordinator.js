@@ -10,6 +10,7 @@ import { transitionAction } from "./action-dependency.js";
 import { indexWorldEvent } from "./city-calendar.js";
 import {drainActionContinuations,continuationInbox} from "./action-continuation.js";
 import {actionReviewOperation} from "./gm-action-review.js";
+import {clearNativeConditionFromOutcome} from './native-condition-recovery.js';
 
 const hash=value=>createHash("sha256").update(JSON.stringify(value)).digest("hex").slice(0,40);
 function fail(message){throw Object.assign(new Error(message),{code:"SCENE_ACTION_WINDOW",expected:true});}
@@ -150,6 +151,12 @@ export function windowOperation(db,guild,user,input,{gm=false}={}){
 function operateWindow(db,guild,user,input,{gm=false}={}){
   if(input?.op?.startsWith("action-review-"))return actionReviewOperation(db,guild,user,input,{gm});
   const {op,...args}=input;
+  if(op==='clear-condition'){
+    const action=db.getCityRecord(guild,'typed_intent',args.accepted_intent);
+    if(action?.data.owner_user_id!==user)fail('Only the actual owner may end a condition through their resolved declaration; GM cannot choose for them.');
+    return clearNativeConditionFromOutcome(db,guild,args,{mode:action.visibility==='character'?'private':'party',
+      actorUserId:user,actorCharacterId:action.data.actor});
+  }
   if(op==="continuation-inbox"){
     if(Object.keys(args).length)fail("Continuation inbox takes no foreign scope.");
     return continuationInbox(db,guild,user,{gm});
