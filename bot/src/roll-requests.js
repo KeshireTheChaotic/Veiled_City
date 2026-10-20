@@ -10,7 +10,7 @@ import { diceSpec } from "./dice.js";
 import { isPvpIntent, assertNonPvpCombatant } from "./pvp-authority.js";
 import {assertPcCanAct} from "./pc-native-eligibility.js";
 import {blazeActionAuthorization} from "./pc-death.js";
-import {publishNativeNotice,queueNativeNotice,reserveNativeNotice} from "./native-publications.js";
+import {publishNativeNotice,queueNativeNotice,reserveNativeNotice,publishCampaignPvpNotices} from "./native-publications.js";
 import {noticeHash} from "./native-notice.js";
 import {gmRulingDetails} from "./gm-action-ruling.js";
 import {overlapsOwnerActionTerminal} from "./owner-action-terminal.js";
@@ -50,7 +50,7 @@ export function rollTraitBreakdown(db,guild,input,pc){
   if(trait!==null&&!Number.isSafeInteger(trait)) throw new StateConflictError("Recorded trait is not a verified integer.");
   if(!Array.isArray(input.modifier_keys)||input.modifier_keys.length>20||new Set(input.modifier_keys).size!==input.modifier_keys.length)
     throw new UserInputError("A unique bounded modifier-source list is required.");
-  const declaration=db.getWorldEvent(guild,input.source_event);
+  const declaration=input.source_event?db.getWorldEvent(guild,input.source_event):null;
   const applicable=db.rollModifierSources(guild,pc.id,input.trait,input.kind,input.accepted_intent,
     {sessionId:declaration?.session_id||null,sceneKey:declaration?.scene||null});
   if(applicable.length>20||applicable.some(row=>!input.modifier_keys.includes(row.event_key)))
@@ -216,6 +216,20 @@ export function ownedRollRequest(db,guild,user,key){
 /** Retries reuse stored requests; failed private delivery is recoverable through the read-only pending command. */
 export async function publishRollRequests(db,guild,mutation,send){
   const failures=[];
+  const campaignRequests=new Set((mutation.campaignPvpPreparations||[]).map(p=>p.request).filter(Boolean));
+  for(const decision of mutation.unifiedArbitration||[])
+    if(decision.data?.native?.operation==='campaign_pvp_attack')campaignRequests.add(decision.data.native.request);
+  for(const contribution of mutation.intents||[]){
+    if(contribution.status!=='accepted'||contribution.data.intent?.feature!=='pvp')continue;
+    const key=contribution.data.result?.record_key,
+      receipt=db.getCityRecord(guild,'pvp_attack_roll_receipt',key)||db.getCityRecord(guild,'pvp_damage_roll_receipt',key);
+    if(receipt?.data.attack)campaignRequests.add(receipt.data.attack);
+    else if(receipt?.data.attack_receipt){
+      const attack=db.getCityRecord(guild,'pvp_attack_roll_receipt',receipt.data.attack_receipt);
+      if(attack?.data.attack)campaignRequests.add(attack.data.attack);
+    }
+  }
+  for(const request of campaignRequests)try{await publishCampaignPvpNotices(db,guild,request,send);}catch(error){failures.push(error);}
   for(const decision of mutation.unifiedArbitration||[]){
     const key=decision.data?.native?.opportunity?.pre_roll_fear;
     if(key)try{await publishPreRollFearNotice(db,guild,key,publication=>send(publication.target_user_id,publication.payload,

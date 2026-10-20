@@ -91,6 +91,25 @@ function live(db,guild,row){
   }
   return pc;
 }
+/** Read-only current unrolled request eligibility shared by the existing Fear coordinator. */
+export function inspectUnrolledInterruptRequest(db,guild,row){
+  if(row?.status!=='pending'||!['action','attack'].includes(row.data.kind)||row.data.result||row.data.roll_id)return false;
+  live(db,guild,row);
+  const tag=row.data.tag;if(!tag)return true;
+  if(tag.participants.length!==2||tag.participants.some(p=>p.roll_id)||tag.initiator!==row.subject_key)return false;
+  const usage=db.getCityRecord(guild,'tag_usage',`${row.data.session_id}:${tag.initiator}`);
+  if(usage?.data.request!==row.record_key||usage.data.user!==row.data.owner_user_id||usage.data.hope_spent!==3||usage.data.proof!==tag.proof)return false;
+  for(const participant of tag.participants){
+    const operation=db.getCityRecord(guild,'roll_operation',participant.operation_key||tag.operation_key),
+      event=requireCitySource(db,guild,participant.proof||tag.proof);
+    if(operation?.data.user!==participant.user||operation.data.request!==row.record_key
+      ||operation.data.op!==(participant.character===tag.initiator?'tag':'participate'))return false;
+    if(event.details.issuer==='native:roll-participation')inspectNativeRollParticipation(db,guild,row,
+      db.getCharacter(participant.character),event,participant.character===tag.initiator?'tag':'participate',
+      participant.description||tag.description);
+  }
+  return true;
+}
 function save(db,guild,before,data,status,actor){
   const after=db.saveCityRecord(guild,{...before,key:before.record_key,status,data:{...data,revision:(before.data.revision||0)+1,
     history:[...(before.data.history||[]),{revision:before.data.revision,status:before.status,breakdown:before.data.breakdown}].slice(-40)}});

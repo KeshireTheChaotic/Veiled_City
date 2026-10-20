@@ -11,7 +11,7 @@ import { settlePvpWindow } from "./pvp-terminal.js";
 import {drainActionContinuations} from "./action-continuation.js";
 import { closePartialFearGate } from "./pvp-fear-gate.js";
 import { stageDamagePvp } from "./pvp-profiles.js";
-import {assertPvpSafety} from './pvp-campaign-policy.js';
+import {assertPvpSafety,campaignPvpPolicy} from './pvp-campaign-policy.js';
 export { choosePvp, rollPvp, progressPvp, continuePvp, authorPvpNarrative, reviewPvpNarrative, sharePvpNarrative, pvpComplication } from "./pvp-rounds.js";
 
 const hash=value=>createHash("sha256").update(JSON.stringify(value)).digest("hex");
@@ -275,7 +275,24 @@ export function stagePvpAttempts(db,guild,intents,plans){
         db.saveCityRecord(guild,{...plan,key:plan.record_key,status:'pending',data:{...plan.data,status:'pending',pvp_attempt:held.record_key}});
       rows.push(held);continue;
     }
-    const damage=stageDamagePvp(db,guild,action);
+    let damage;
+    try{damage=stageDamagePvp(db,guild,action);}
+    catch(error){
+      if(error.code!=='NARRATIVE_PVP'||error.expected!==true||!campaignPvpPolicy(db,guild).enabled)throw error;
+      // Keep this declared attempt pending. A stale native scope is neither ordinary-action permission
+      // nor a reason to roll back another independently authenticated declaration in the same message.
+      const key=pvpAttemptKey(guild,action.record_key),prior=db.getCityRecord(guild,'pvp_attempt',key),
+        held=db.saveCityRecord(guild,{kind:'pvp_attempt',key,status:'held_review',source_event:action.source_event,
+          visibility:'character',subject_key:action.data.actor,actor_key:action.data.actor,
+          data:{...prior?.data,version:1,accepted_intent:action.record_key,opponent:pvpTarget(db,guild,action).id,
+            authority:'Native campaign scope needs review; no hostile effect or ordinary-action fallback.'}});
+      db.saveCityRecord(guild,{kind:'pvp_campaign_review',key,status:'needs_review',visibility:'gm',source_event:action.source_event,
+        data:{version:1,accepted_intent:action.record_key,reason:String(error.message).slice(0,500)}});
+      const plan=plans.find(value=>value.data.action_id===action.record_key);
+      if(plan&&!['resolved','failed','blocked','clarification'].includes(plan.data.status))
+        db.saveCityRecord(guild,{...plan,key:plan.record_key,status:'pending',data:{...plan.data,status:'pending',pvp_attempt:held.record_key}});
+      rows.push(held);continue;
+    }
     if(damage){
       const plan=plans.find(value=>value.data.action_id===action.record_key);
       if(plan&&!["resolved","failed","blocked","clarification"].includes(plan.data.status))

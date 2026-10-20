@@ -5,7 +5,10 @@ import { contributeRoll } from './roll-collaboration.js';
 import { isPvpIntent } from './pvp-authority.js';
 import {authoredTurnEnvelope} from './authored-turn-envelope.js';
 import {consentAction,historicalActionSource} from './action-consent.js';
-import {exactTypedRollSelection} from './mechanical-native-v9.js';
+import {exactTypedRollSelection,exactTypedPvpSelection} from './mechanical-native-v9.js';
+import {rollPvpAttack,validatePvpAttackRoll} from './pvp-attacks.js';
+import {rollPvpDamage,validatePvpDamageRoll} from './pvp-damage.js';
+import {reserveCampaignAttackNotices} from './native-publications.js';
 
 const hash=s=>createHash('sha256').update(JSON.stringify(s)).digest('hex').slice(0,32);
 
@@ -27,6 +30,17 @@ export function resolveTypedNativeRolls(db,guild,scope,intents=[],messageId=''){
       &&a.data.type==='roll'&&a.data.operation===intent.operation&&a.data.source_span===intent.source_span&&a.data.framing==='immediate');
     const declaration=accepted?.length===1?accepted[0]:null;
     const operationKey=`typed-roll:${hash([guild,messageId,scope.actorCharacterId,index])}`;
+    const pvpPrior=declaration&&db.getCityRecord(guild,'pvp_typed_roll_operation',operationKey);
+    if(pvpPrior){
+      historicalActionSource(db,guild,declaration.record_key,{resolved:true});
+      const data=pvpPrior.data,proof=data.operation==='roll'?validatePvpAttackRoll(db,guild,data.receipt):validatePvpDamageRoll(db,guild,data.receipt);
+      if(data.accepted_intent!==declaration.record_key||data.owner!==scope.actorUserId||data.operation!==intent.operation
+        ||proof.offer.actor!==scope.actorCharacterId||data.request!==declaration.data.target_key
+        ||pvpPrior.source_event!==declaration.source_event||(scope.mode==='private'?declaration.visibility!=='character':declaration.visibility!=='party'))
+        throw new Error('Exact owner PvP operation replay required; no new dice.');
+      results.push({status:'accepted',data:{intent:{feature:'pvp',operation:intent.operation},result:{record_key:data.receipt}},source_span:intent.source_span});
+      continue;
+    }
     const prior=declaration&&db.getCityRecord(guild,'roll_operation',`${operationKey}:${scope.actorCharacterId}`);
     if(prior){
       historicalActionSource(db,guild,declaration.record_key,{resolved:declaration.status==='resolved'});
@@ -43,6 +57,23 @@ export function resolveTypedNativeRolls(db,guild,scope,intents=[],messageId=''){
     if(declaration){consentAction(db,guild,declaration.record_key);verified=envelope.user_id===scope.actorUserId
       &&(scope.mode==='private'?declaration.visibility==='character'&&declaration.subject_key===scope.actorCharacterId
         :declaration.visibility==='party');}
+    const pvp=verified?exactTypedPvpSelection(db,guild,declaration,scope,intent.operation):null;
+    if(pvp){
+      const receipt=intent.operation==='roll'?rollPvpAttack(db,guild,scope.actorUserId,{attack:pvp.record_key,expected_revision:pvp.data.offer_hash})
+        :rollPvpDamage(db,guild,scope.actorUserId,{attack_receipt:pvp.data.roll});
+      const record=db.saveCityRecord(guild,{kind:'pvp_typed_roll_operation',key:operationKey,status:'resolved',visibility:'character',
+        subject_key:scope.actorCharacterId,source_event:declaration.source_event,
+        data:{version:1,accepted_intent:declaration.record_key,owner:scope.actorUserId,request:pvp.record_key,operation:intent.operation,receipt:receipt.record_key}});
+      const outcome=db.saveCityRecord(guild,{kind:'action_outcome_receipt',key:`${operationKey}:pvp`,status:'resolved',visibility:'character',
+        subject_key:scope.actorCharacterId,source_event:declaration.source_event,data:{action_id:declaration.record_key,
+          actor_ref:scope.actorCharacterId,outcome:'native_roll_contribution',native_roll_refs:[receipt.data.roll_id],state_mutations:[],
+          audience:'character',operation:record.record_key,native_receipt:receipt.record_key}});
+      db.saveCityRecord(guild,{...declaration,key:declaration.record_key,status:'resolved',data:{...declaration.data,outcome_receipt:outcome.record_key,
+        native_disposition:'native_pvp_roll_contribution'}});
+      if(db.getCityRecord(guild,'pvp_encounter_contract',pvp.data.offer.contract)?.data.version===4)reserveCampaignAttackNotices(db,guild,pvp.record_key);
+      results.push({status:'accepted',data:{intent:{feature:'pvp',operation:intent.operation},result:{record_key:receipt.record_key}},source_span:intent.source_span});
+      continue;
+    }
     // Explicit native identities are exact source tokens, not a model target/name guess or a sole-request heuristic.
     const selected=verified?exactTypedRollSelection(db,guild,declaration,scope,intent.operation,{targetKey:intent.target_key||''}):[];
     if(selected.length!==1){

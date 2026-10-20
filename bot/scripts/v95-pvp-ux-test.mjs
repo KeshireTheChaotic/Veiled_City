@@ -18,6 +18,8 @@ import {prepareIncomingAttack,rollIncomingAttack} from '../src/pc-incoming.js';
 import {publishPvpNotices} from '../src/native-publications.js';
 import {sendPlayerPrivate} from '../src/publishing.js';
 import {buildCommands} from '../src/command-definitions.js';
+import {handlePvpMenuInteraction} from '../src/pvp-menu.js';
+import {pvpSafetyStatus} from '../src/pvp-campaign-policy.js';
 
 let serial=0;
 test('UX16 published PvP-menu schema has Discord-sized option descriptions',()=>{
@@ -39,6 +41,21 @@ function proposal(f,terms=pvpTerms(f.pcs)){
   return proposePvp(f.db,f.guild,f.pcs[0].owner_user_id,{accepted_intent:a.record_key,opponent:f.pcs[1].id,terms});
 }
 function enable(f){configureCityFlags(f.db,f.guild,{pvp_private_ui:true},'test');}
+test('W5 urgent owner stop commits before transport and uncertain acknowledgement is never resent after restart',()=>nativeFixture(async f=>{
+  enable(f);const p=proposal(f),menu=await open(f,0,p.record_key),customId=control(menu,'Stop hostile PvP NOW');
+  let attempts=0;
+  const stop=interaction(f,0,{customId,isChatInputCommand:()=>false,isButton:()=>true,
+    async deferReply(){
+      assert.equal(pvpSafetyStatus(f.db,f.guild,f.pcs[0].owner_user_id,{character_id:f.pcs[0].id}).stopped,true);
+      attempts++;throw new Error('Synthetic uncertain Discord acknowledgement');
+    }});
+  await assert.rejects(()=>handlePvpMenuInteraction(f.db,stop),/Safety stop saved.*uncertain/);
+  const receipt=f.db.getCityRecord(f.guild,'pvp_ui_delivery',`pvp-ui:${stop.id}`);
+  assert.equal(receipt.status,'uncertain');assert.equal(attempts,1);
+  f.restart();assert.equal(await handlePvpMenuInteraction(f.db,stop),true);
+  assert.equal(attempts,1);assert.deepEqual(f.db.getCityRecord(f.guild,'pvp_ui_delivery',receipt.record_key),receipt);
+  assert.equal(pvpSafetyStatus(f.db,f.guild,f.pcs[0].owner_user_id,{character_id:f.pcs[0].id}).stopped,true);
+}));
 function buttons(i){return (i.replies.at(-1)?.components||[]).flatMap(row=>row.toJSON().components);}
 function control(i,label){const b=buttons(i).find(b=>b.label===label);assert(b,`Missing control: ${label}`);return b.custom_id;}
 async function open(f,actor,ref){const i=interaction(f,actor,{ref});await handleCommand(i,{db:f.db,gm:{content:{root:'../content'}}});

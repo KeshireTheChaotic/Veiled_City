@@ -174,6 +174,28 @@ test('executing interrupt cannot resume an altered original action snapshot',()=
   assert.equal(f.db.getCampaign(f.guild).fear,1,'committed NPC cost is never refunded by stale original action');
 }));
 
+test('terminal native unconsciousness completes the spotlight but records scoped unfinished-action recovery, never an invented roll or refund',()=>nativeFixture(async f=>{
+  const x=fixture(f,{hp:5}),{held,attack}=prepare(f,x);
+  await publishPreRollFearNotice(f.db,f.guild,held.record_key,async()=>({ok:true,messageId:'unconscious-ack',channelId:'owner-dm'}));
+  reviewIncomingAttack(f.db,f.guild,x.pc.owner_user_id,attack.record_key,{library:x.library});
+  confirmIncomingDefense(f.db,f.guild,x.pc.owner_user_id,attack.record_key);
+  rollArbitratedIncomingAttack(f.db,f.guild,attack.record_key,{library:x.library,rng:s=>Math.min(12,s)});
+  resolveIncomingDamage(f.db,f.guild,x.pc.owner_user_id,attack.record_key,{armor:false,library:x.library});
+  const death=`${attack.record_key}:death`,review=reviewPcDeathMove(f.db,f.guild,x.pc.owner_user_id,death),
+    outcome=choosePcDeathMove(f.db,f.guild,x.pc.owner_user_id,{request:death,expected_revision:review.revision,move:'avoid_death'},
+      {interactionId:'fear-owner-avoid-death',rng:()=>12});
+  assertPreRollFearRollAllowed(f.db,f.guild,x.request);
+  const recovery=f.db.getCityRecord(f.guild,'pre_roll_fear_action_review',`${held.record_key}:action-review`);
+  assert.equal(recovery.status,'needs_review');assert.equal(recovery.visibility,'gm');
+  assert.equal(recovery.data.death_outcome,outcome.record_key);assert.equal(recovery.source_event,outcome.source_event);
+  const resources=f.db.getCharacter(x.pc.id).data.resources,original=rollPc(f,x);
+  assert.throws(original.run,/unconscious|cannot act|death/i);assert.equal(original.draws,0);
+  assert.deepEqual(f.db.getCharacter(x.pc.id).data.resources,resources);assert.equal(f.db.getCampaign(f.guild).fear,1);
+  f.restart();assertPreRollFearRollAllowed(f.db,f.guild,x.request);
+  assert.deepEqual(f.db.getCityRecord(f.guild,'pre_roll_fear_action_review',recovery.record_key),recovery);
+  assert.equal(inspectPreRollFear(f.db,f.guild,held.record_key,{current:false}).row.status,'completed');
+}));
+
 test('last-HP interrupt holds until an actual owner death move, then preserves native recovery without replay',()=>nativeFixture(async f=>{
   const x=fixture(f,{hp:5}),{held,attack}=prepare(f,x);
   await publishPreRollFearNotice(f.db,f.guild,held.record_key,async()=>({ok:true,messageId:'death-ack',channelId:'owner-dm'}));

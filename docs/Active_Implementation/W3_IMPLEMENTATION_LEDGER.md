@@ -1,6 +1,7 @@
 # W3 — World Director implementation ledger
 
-Status: **PHASE-QUALIFIED LOCALLY — IMPLEMENTATION COMMIT FOLLOWS**.
+Status: **PHASE-QUALIFIED / COMMITTED LOCALLY**.
+Completed commit: `f10d2ccb2e21b9a51a18714c92c00ad601bea8cf`.
 Starting commit: `efb287b9a6cda6036feacab99d42ca469874b96b`.
 Branch: `codex/audience-first-narrative-v9`.
 

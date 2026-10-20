@@ -12,7 +12,7 @@ import {currentScene,recordScenePresence} from '../src/scene-continuity.js';
 import {indexWorldEvent} from '../src/city-calendar.js';
 import {EncounterLibrary} from '../src/encounter.js';
 import {buildCombatants} from '../src/combat.js';
-import {contributeRoll,adjudicateRollSource} from '../src/roll-collaboration.js';
+import {contributeRoll,adjudicateRollSource,inspectUnrolledInterruptRequest} from '../src/roll-collaboration.js';
 import {rollRevision,publishRollRequests} from '../src/roll-requests.js';
 import {inspectPreRollFear} from '../src/pre-roll-fear.js';
 
@@ -94,6 +94,25 @@ test('a later Fear reservation blocks partner acceptance before Tag Team Hope de
   assert.equal(draws,0);assert.equal(f.db.getCharacter(f.pcs[1].id).data.resources.hope,hope);
   assert.equal(f.db.getCityRecord(f.guild,'roll_request',x.heldRequest.record_key).status,'pending');
   assert.equal(f.db.getCityRecord(f.guild,'roll_request',other.record_key).status,'awaiting_partner');
+}));
+
+test('fully owner-authored unrolled Tag Team is eligible for one primary Fear reservation, holding both dice without another Hope debit',()=>nativeFixture(f=>{
+  const x=fixture(f),partner=request(f,1,'I inspect the visible lockers.'),independent=request(f,2,'I inspect the visible floor.'),
+    tagProof=participationProof(f,x.heldRequest,x.pc,'tag');
+  const invitation=contribution(f,x.heldRequest,x.pc.owner_user_id,'tag',{partner_request:partner.record_key,
+    proof:tagProof.event_key,description:'I coordinate the inspection.',pay_hope:true});
+  const acceptance=participationProof(f,invitation,f.pcs[1],'participate'),
+    ready=contribution(f,invitation,f.pcs[1].owner_user_id,'participate',
+      {proof:acceptance.event_key,description:'I coordinate the inspection.'});
+  assert.equal(inspectUnrolledInterruptRequest(f.db,f.guild,ready),true);
+  const before=f.pcs.slice(0,2).map(pc=>f.db.getCharacter(pc.id).data.resources.hope);
+  reserve(f,x);
+  let draws=0;const rng=()=>{draws++;return 7;};
+  const current=f.db.getCityRecord(f.guild,'roll_request',ready.record_key);
+  for(const pc of f.pcs.slice(0,2))assert.throws(()=>contribution(f,current,pc.owner_user_id,'roll',{},rng),/interrupt|Fear|pre.roll/i);
+  assert.equal(draws,0);assert.deepEqual(f.pcs.slice(0,2).map(pc=>f.db.getCharacter(pc.id).data.resources.hope),before);
+  assert.equal(f.db.getCampaign(f.guild).fear,2);assert.equal(contribution(f,independent,f.pcs[2].owner_user_id,'roll').status,'resolved');
+  f.restart();assert.equal(inspectPreRollFear(f.db,f.guild,`pre-roll-fear:${ready.record_key}`,{current:false}).row.status,'awaiting_announcement');
 }));
 
 test('uncertain Fear delivery preserves its hold while independent native request notices deliver once across restart',()=>nativeFixture(async f=>{

@@ -502,7 +502,9 @@ function incomingMoveProof(db,guild,t,context,{terminal=false,selecting=false,al
   catch(error){if(error.code==="NATIVE_EFFECT_PENDING"&&!allowPending)fail("Saved Fear effect has lost its native terminal outcome; retain proof hold.");throw error;}
   const {row,offer}=evidence;
   const contract=db.getCityRecord(guild,"pvp_encounter_contract",t.data.proposal);
-  if(t.data.version!==2||contract?.data.snapshot.terms.profile!=="damage_enabled"||offer.input.source!==t.source_event
+  const profile=contract?.data.snapshot?.terms?.profile,nativeProfile=profile==='damage_enabled'
+    ||contract?.data.version===4&&profile==='campaign_damage';
+  if(t.data.version!==2||!nativeProfile||offer.input.source!==t.source_event
     ||offer.snapshot.scene!==t.data.scene||offer.snapshot.session!==t.data.session||context.visibility!=="character"
     ||context.subject_key!==row.subject_key||!contract.data.participants.some(w=>w.character===row.subject_key)
     ||selecting&&(row.data.roll||!["awaiting_defense","ready"].includes(row.status)))

@@ -1,6 +1,7 @@
 /** Campaign PvP mode and owner-only sticky safety stops. This module grants no PvP consent or effects. */
 import {createHash} from 'node:crypto';
 import {indexWorldEvent} from './city-calendar.js';
+import {cancelBrawlForSafety} from './pvp-brawl.js';
 
 const ISSUER='native:pvp-campaign-policy';
 const hash=value=>createHash('sha256').update(JSON.stringify(value)).digest('hex');
@@ -80,7 +81,7 @@ export function setPvpSafetyStop(db,guild,user,input={},options={}){
   closed(input,['character_id']);closed(options,['interactionId']);
   const character_id=input?.character_id,{interactionId}=options;
   if(!validId(user)||!validId(interactionId)||!validId(character_id))fail('Authenticated current PC owner and stop operation required.');
-  return db.transaction(()=>{
+  const saved=db.transaction(()=>{
     const pc=db.getCharacter(character_id);if(pc?.guild_id!==guild||pc.owner_user_id!==user)fail('Only the actual current PC owner may set a safety stop; proxies and absent-owner substitutions are not accepted.');
     const key=character_id,prior=db.getCityRecord(guild,'pvp_safety_stop',key);
     if(prior)return inspectStop(db,guild,prior);
@@ -89,6 +90,14 @@ export function setPvpSafetyStop(db,guild,user,input={},options={}){
     return db.saveCityRecord(guild,{kind:'pvp_safety_stop',key,status:'stopped',actor_key:character_id,source_event:event.event_key,
       visibility:'gm',subject_key:null,data:binding});
   });
+  // Protection commits first. A damaged old window cannot roll it back or delay it behind a provider/send.
+  try{db.transaction(()=>cancelBrawlForSafety(db,guild,character_id,user,saved.source_event));}
+  catch(error){
+    if(error.code!=='NARRATIVE_PVP')throw error;
+    db.saveCityRecord(guild,{kind:'pvp_safety_recovery',key:character_id,status:'needs_review',visibility:'gm',source_event:saved.source_event,
+      data:{version:1,character:character_id,reason:'Native unfinished-window ancestry requires reconciliation; sticky stop remains effective.'}});
+  }
+  return saved;
 }
 export function assertPvpSafety(db,guild,characters){
   if(!Array.isArray(characters)||characters.some(id=>typeof id!=='string'||!id))fail('Exact bounded PvP participant identities required.');
@@ -105,4 +114,18 @@ export function assertPvpSafety(db,guild,characters){
     }
   }
   return true;
+}
+
+export function pvpSafetyStatus(db,guild,user,input={}) {
+  closed(input,['character_id']);
+  const {character_id}=input;
+  if (!validId(user)) fail('invalid user id');
+  if (!validId(character_id)) fail('invalid character id');
+  const char=db.getCharacter(character_id);
+  if (!char || char.guild_id!==guild || char.owner_user_id!==user) {
+    fail(`owner of character ${character_id} mismatch`);
+  }
+  const row=db.getCityRecord(guild,'pvp_safety_stop',character_id);
+  if (row) inspectStop(db,guild,row);
+  return {character_id, stopped:!!row};
 }

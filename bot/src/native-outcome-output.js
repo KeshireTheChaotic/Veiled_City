@@ -9,6 +9,8 @@ import {renderNativeNotice,noticeHash} from './native-notice.js';
 import {nativeOutcomeKinds as kinds} from './gm-fiction-schema.js';
 import {ordinaryEffectProjection} from './ordinary-effect-proof.js';
 import {worldSimulationReceiptForAudience} from './world-simulation-receipts.js';
+import {validatePvpAttackRoll} from './pvp-attacks.js';
+import {validatePvpDamageApplication,validatePvpDamageRoll} from './pvp-damage.js';
 export {nativeOutcomeSchema} from './gm-fiction-schema.js';
 const hash=v=>createHash('sha256').update(JSON.stringify(v)).digest('hex');
 function fail(){throw Object.assign(new Error('Native output needs the exact committed outcome, current owner and audience.'),{code:'NARRATIVE_PVP'});}
@@ -34,7 +36,15 @@ export function nativeOutcomeProjection(db,guild,input,scope){
   const row=db.getCityRecord(guild,input.receipt_kind,input.ref),d=row?.data,source=row&&db.getWorldEvent(guild,row.source_event),scene=currentScene(db,guild);
   if(!row||!source||source.status!=='active')fail();
   let text;
-  if(input.receipt_kind==='scene_entry'){
+  if(['pvp_attack_roll_receipt','pvp_damage_roll_receipt'].includes(input.receipt_kind)){
+    const proof=input.receipt_kind==='pvp_attack_roll_receipt'?validatePvpAttackRoll(db,guild,input.ref):validatePvpDamageRoll(db,guild,input.ref);
+    if(scope.mode!=='private'||scope.actorCharacterId!==proof.offer.actor||scope.actorUserId!==proof.offer.snapshot.actor_owner
+      ||proof.offer.session!==scene.session_id||proof.offer.scene!==scene.key)fail();
+    const result=proof.receipt.data.result;
+    text=input.receipt_kind==='pvp_attack_roll_receipt'
+      ?`Your saved native attack roll: ${result.total}, ${result.duality}; ${result.hit?'hit':'miss'}. No target response or HP change is implied.`
+      :`Your saved native damage roll: ${result.total} ${result.type}. Target defenses and owner choices still govern any HP effect.`;
+  }else if(input.receipt_kind==='scene_entry'){
     const pc=db.getCharacter(d.character),arrival=db.getWorldEvent(guild,d.arrival),
       presence=scenePresence(db,guild,'character',d.character),location=arrival&&db.getSimulationEntity(guild,'location',arrival.location_key);
     const name=String(location?.state.name||location?.entity_key||'');
@@ -53,7 +63,10 @@ export function nativeOutcomeProjection(db,guild,input,scope){
   }else if(input.receipt_kind==='pc_effect_receipt'){
     if(scope.mode!=='private'||scope.actorCharacterId!==row.subject_key
       ||db.getCharacter(row.subject_key)?.owner_user_id!==scope.actorUserId||d.session!==scene.session_id||d.scene!==scene.key)fail();
-    if(d.cause_type==='verified_npc_attack'){
+    if(d.cause_type==='verified_pvp_damage'){
+      validatePvpDamageApplication(db,guild,row.record_key);
+      text=`Your native resource receipt: HP marked +${d.hp_marks}; Armor spent ${d.armor?1:0}. No reaction, dialogue or death choice is implied.`;
+    }else if(d.cause_type==='verified_npc_attack'){
       visibleIncomingInjury(db,guild,row.record_key,row.subject_key);
       text=`Native resource receipt: hp marked +${d.hp_marks}; before ${d.before.hp.current}, after ${d.after.hp.current}.`;
     }else{

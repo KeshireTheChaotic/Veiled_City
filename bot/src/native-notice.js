@@ -17,6 +17,8 @@ import {assertGmRulingRequest} from './gm-action-ruling.js';
 import {nativeGmNotice} from './gm-arbitration-output.js';
 import {inspectNativeUnarmedAttack} from './native-unarmed-attacks.js';
 import {renderPreRollFearNotice} from './pre-roll-fear-notice.js';
+import {pvpAttackOwnerStatus} from './pvp-attacks.js';
+import {pvpDamageOwnerStatus} from './pvp-damage.js';
 export const noticeHash=value=>createHash('sha256').update(JSON.stringify(value)).digest('hex');
 function fail(){throw Object.assign(new Error('Native notice source, revision, owner or audience is stale.'),{code:'NATIVE_NOTICE'});}
 export function renderNativeNotice(db,guild,d){
@@ -30,6 +32,29 @@ export function renderNativeNotice(db,guild,d){
   }
   if(d.kind==='pre_roll_fear'){
     return renderPreRollFearNotice(db,guild,d);
+  }
+  if(d.kind==='pvp_attack_status'){
+    if(!d.user||!d.character)fail();
+    const p=pvpAttackOwnerStatus(db,guild,d.user,d.ref);
+    if(!p.campaign||p.character!==d.character||noticeHash(p)!==d.revision)fail();
+    return [`**Private campaign PvP ${p.role} status**`,d.ref,`Native status: ${p.status}.`,
+      p.role==='attacker'?`Your attack: ${p.trait}; ${p.damage} ${p.damage_type}; range ${p.range}. Review your own mechanics before authorizing dice.`
+        :`Your base Evasion: ${p.evasion}. No defender approval or reaction is implied. Optional reactions, Armor and death choices remain yours.`,
+      ...(p.own_roll?[`Your saved native roll: ${p.own_roll.total}, ${p.own_roll.duality}; ${p.own_roll.hit?'hit':'miss'}.`]:[]),
+      'No PvP Hope or Critical Stress. Fear requires its distinct immediate native consequence.',
+      `/vc-roll pvp-menu reference:${d.ref}`,
+      `Safety stop: /vc-roll pvp json:{"op":"safety-stop","character_id":"${d.character}"}`,
+      'Status delivery grants no new attack, player choice or public disclosure; any saved result above remains native history.'].join('\n');
+  }
+  if(d.kind==='pvp_damage_choice'){
+    if(!d.user||!d.character)fail();
+    const p=pvpDamageOwnerStatus(db,guild,d.user,d.ref);
+    if(!p.native_campaign||p.character!==d.character||noticeHash(p)!==d.revision)fail();
+    return ['**Your private native damage/Armor decision**',d.ref,
+      `Verified incoming damage: ${p.damage}; severity ${p.severity}${p.direct?'; direct damage':''}.`,
+      'No HP or Armor change has been made by this notice. Review your own native defenses before deciding.',
+      'Final HP invokes YOUR SRD death choice. No forced reaction, guaranteed nonlethal cap or automatic spending.',
+      `/vc-roll pvp-menu reference:${d.ref}`].join('\n');
   }
   if(d.kind==='roll_private'||d.kind==='roll_party'){
     const r=db.getCityRecord(guild,'roll_request',d.ref),source=r&&db.getWorldEvent(guild,r.source_event);
@@ -98,6 +123,11 @@ export function renderNativeNotice(db,guild,d){
   if(d.kind==='pvp_damage_status'){
     const {contract:p,who}=damagePvpOwnerContext(db,guild,d.user,d.ref);
     if(who.character!==d.character||noticeHash([p.status,p.data])!==d.revision)fail();
+    if(p.data.version===4)return ['**Private campaign conflict status**',p.record_key,
+      'Native campaign mode does not imply your reaction, spending or a bilateral signature.',
+      'Use your private attack/defense menu for actual choices. No PvP Hope or Critical Stress.',
+      `/vc-roll pvp-menu reference:${p.record_key}`,
+      `Safety stop: /vc-roll pvp json:{"op":"safety-stop","character_id":"${d.character}"}`].join('\n');
     return [`**Private DAMAGE PvP offer/status — ${p.record_key}**`,
       `Revision: ${p.data.terms_hash}; status: ${p.status}. Real lethal risk; YOUR native SRD death-move choice.`,
       'Notification is not Review, consent, a reaction, dice or damage. No PvP Hope or Critical Stress award.',

@@ -11,7 +11,7 @@ import {TRAITS} from './character-system.js';
 import {proposePvp,reviewPvp,revisePvp,respondPvp,pvpOwnerContext,progressPvp,choosePvp,rollPvp,continuePvp} from './narrative-pvp.js';
 import {proposeDamagePvp,reviewDamagePvp,reviseDamagePvp,respondDamagePvp,validateDamagePvp,damagePvpOwnerContext} from './pvp-profiles.js';
 import {reviewPvpAttack,authorizePvpAttack,rollPvpAttack,validatePvpAttackRoll} from './pvp-attacks.js';
-import {rollPvpDamage,reviewPvpDamage,resolvePvpDamage} from './pvp-damage.js';
+import {rollPvpDamage,reviewPvpDamage,resolvePvpDamage,refreshCampaignPvpDamage} from './pvp-damage.js';
 import {reviewPvpReaction,rollPvpReaction} from './pvp-reactions.js';
 import {reviewPcDeathMove,choosePcDeathMove,allocatePcDeathRecovery} from './pc-death.js';
 import {reviewIncomingAttack,confirmIncomingDefense,resolveIncomingDamage} from './pc-incoming.js';
@@ -22,6 +22,7 @@ import {KeyedSerialQueue} from './serial-queue.js';
 import {splitDiscordText} from './discord/chunking.js';
 import {reservePvpNotices} from './native-publications.js';
 import {PermissionError,StateConflictError,UserInputError} from './errors.js';
+import {setPvpSafetyStop} from './pvp-campaign-policy.js';
 
 const queue=new KeyedSerialQueue(),hash=v=>createHash('sha256').update(JSON.stringify(v)).digest('hex');
 const kinds=['pvp_proposal','pvp_encounter_contract','pvp_attack_request','pvp_damage_offer','pvp_reaction_offer','pc_death_move_request','pc_incoming_attack','typed_intent'];
@@ -86,7 +87,7 @@ function payload(db,guild,r,{library}={}){
     ...(fear?[`Immediate Fear gate: ${fear}. Pending owner defense/Armor remains a separate private native choice.`]:[]),
     'No PvP Hope or Critical Stress award. Action Fear needs an immediate native consequence. No automatic defender reaction.',
     'Fallback: /vc-roll pvp JSON; /vc-roll effect JSON. No private output is sent publicly.'].join('\n');
-  const actions=[['close','Close menu']],choices=[];
+  const actions=[['close','Close menu'],['safety-stop','Stop hostile PvP NOW']],choices=[];
   if(!native){
     const represented=new Set();
     for(const kind of ['pvp_proposal','pvp_encounter_contract'])for(const x of inventory(db,guild,kind)){
@@ -113,7 +114,7 @@ function payload(db,guild,r,{library}={}){
   else if(['pvp_proposal','pvp_encounter_contract'].includes(native.kind)){
     const t=terms(db,guild,native),damage=native.kind==='pvp_encounter_contract';
     actions.push(['review','Review full terms']);
-    if(['proposed','negotiating','awaiting_mutual_consent','awaiting_consent','locked'].includes(native.status)){
+    if(native.data.version!==4&&['proposed','negotiating','awaiting_mutual_consent','awaiting_consent','locked'].includes(native.status)){
       if(view.reviewed&&native.status!=='locked')actions.push(['accept','Accept EXACT terms'],['decline','Decline privately']);
       actions.push(['counter','Counteroffer my stakes'],['withdraw','Withdraw neutrally']);
       if(!damage)actions.push(['mode-duel','Offer Single Roll Duel'],['mode-strikes','Offer Three Strikes'],
@@ -122,7 +123,7 @@ function payload(db,guild,r,{library}={}){
     if(native.status==='locked'){
       if(damage){
         validateDamagePvp(db,guild,ref);
-        if(t.interaction_scope!=='duel')actions.push(['opportunity','Review my opportunity']);
+        if(native.data.version===4||t.interaction_scope!=='duel')actions.push(['opportunity','Review my opportunity']);
         for(const a of inventory(db,guild,'pvp_attack_request')){
           const o=a.data.offer;
           if(o.contract!==ref||![o.actor,o.target].includes(character)||!t.target_permissions.some(e=>e.actor===o.actor&&e.target===o.target))continue;
@@ -148,11 +149,14 @@ function payload(db,guild,r,{library}={}){
     if(view.disclosure&&view.disclosure_reviewed&&t.audience==='bilateral_author_projection')actions.push(['share','Confirm bounded disclosure']);
   }else{
     actions.push(['review','Review own mechanics']);
+    if(native.kind==='pvp_damage_offer'&&native.status==='awaiting_owner'&&native.data.binding.native_authority==='native_campaign')
+      actions.push(['refresh-damage','Reinspect pending defense']);
     if(view.reviewed){
       if(native.kind==='pvp_attack_request'){
-        if(!native.data.roll)actions.push(['authorize','Confirm own mechanics']);
+        if(!native.data.roll&&(native.data.offer.actor===character
+          ||db.getCityRecord(guild,'pvp_encounter_contract',native.data.offer.contract)?.data.version!==4))actions.push(['authorize','Confirm own mechanics']);
         if(native.data.offer.actor===character&&native.status==='ready')actions.push(['attack-roll','Roll authorized attack']);
-        if(native.data.roll&&!native.data.damage&&validatePvpAttackRoll(db,guild,native.data.roll).receipt.data.result.hit)
+        if(native.data.offer.actor===character&&native.data.roll&&!native.data.damage&&validatePvpAttackRoll(db,guild,native.data.roll).receipt.data.result.hit)
           actions.push(['damage-roll','Roll native damage']);
       }else if(native.kind==='pvp_damage_offer'&&native.status!=='applied')actions.push(['armor','Spend one Armor Slot'],['no-armor','Do not spend Armor']);
       else if(native.kind==='pvp_reaction_offer'&&native.status!=='resolved')actions.push(['reaction-roll','Roll reviewed reaction']);
@@ -172,7 +176,7 @@ function payload(db,guild,r,{library}={}){
       .addOptions(shown.map((x,i)=>({label:x.label.slice(0,100),value:String(offset+i)})))));
     if(choices.length>20)actions.push(['choices-prev','Earlier choices'],['choices-next','More choices']);
   }
-  if(pages.length>1)actions.push(['prev','Earlier terms'],['next','More terms']);
+  if(pages.length>1)actions.splice(2,0,['prev','Earlier terms'],['next','More terms']);
   // Discord allows five rows. Action pages preserve every decision without truncation.
   const actionPage=Math.min(Math.max(0,view.action_page||0),Math.floor((actions.length-1)/12)),shownActions=actions.slice(actionPage*12,actionPage*12+12);
   if(actions.length>12)shownActions.push(['actions-prev','Earlier controls'],['actions-next','More controls']);
@@ -233,6 +237,10 @@ function execute(db,i,r,c,action,{library,rng}={}){
   const input={proposal:ref,expected_revision:n?.data.terms_hash,interaction_id:i.id};
   let view={},next=ref,projection=null;
   if(action==='review')view={...reviewed(db,guild,user,n,library),reviewed:true};
+  else if(action==='refresh-damage'){
+    next=refreshCampaignPvpDamage(db,guild,user,{damage:ref},opts).record_key;
+    view={text:'Pending native defense reinspected. Review this exact offer before choosing Armor; no dice or resources changed.'};
+  }
   else if(['accept','decline','withdraw'].includes(action)){
     if(n.kind==='pvp_proposal')respondPvp(db,guild,user,{...input,decision:action});
     else respondDamagePvp(db,guild,user,{contract:ref,expected_revision:n.data.terms_hash,decision:action},opts);
@@ -309,6 +317,27 @@ function claimDelivery(db,i){
 }
 export async function handlePvpMenuInteraction(db,i,options={}){
   const id=parse(i.customId);if(!id)return false;
+  if(id.action==='safety-stop'){
+    // Urgent control bypasses model/normal menu queues, expiry and stale scene snapshots, not actual ownership.
+    const token=db.getCityRecord(i.guildId,'pvp_ui_token',id.key),pc=token&&db.getCharacter(token.subject_key);
+    if(!token||token.visibility!=='character'||token.data.user!==i.user.id||pc?.guild_id!==i.guildId
+      ||pc.owner_user_id!==i.user.id||cid(token,id.action)!==i.customId)throw new PermissionError('Only your own native safety control may stop your character.');
+    setPvpSafetyStop(db,i.guildId,i.user.id,{character_id:pc.id},{interactionId:i.id});
+    if((i.deferred||i.replied)&&i.ephemeral!==true)throw new PermissionError('Safety saved; private acknowledgement required.');
+    // Save protection even on duplicate callbacks, but never retry an uncertain transport.
+    if(!claimDelivery(db,i))return true;
+    let uncertain=true;
+    try{
+      if(!i.deferred&&!i.replied)await i.deferReply({ephemeral:true});
+      await i.editReply({content:'Safety stop saved. New and unfinished hostile effects involving your character are held. Committed outcomes remain recorded.',
+        components:[],allowedMentions:{parse:[]}});
+      uncertain=false;
+    }catch{throw new StateConflictError('Safety stop saved; private acknowledgement is uncertain. Inspect saved status rather than retry delivery.');}
+    finally{db.saveCityRecord(i.guildId,{kind:'pvp_ui_delivery',key:`pvp-ui:${i.id}`,source_event:token.source_event,
+      subject_key:token.subject_key,visibility:'character',status:uncertain?'uncertain':'delivered',
+      data:{interaction:i.id,user:i.user.id,audience:'character',uncertain}});}
+    return true;
+  }
   // Discord delivery identity is immutable. A duplicate callback cannot blindly repost an uncertain acknowledgment.
   const delivered=db.getCityRecord(i.guildId,'pvp_ui_delivery',`pvp-ui:${i.id}`);
   if(delivered){if(delivered.data.user!==i.user.id)throw new PermissionError('Interaction identity belongs to another owner.');return true;}
@@ -349,6 +378,13 @@ export async function handlePvpMenuInteraction(db,i,options={}){
     if(body.modal){await sendModal(db,i,body.modal);return true;}
     if(Object.hasOwn(body,'next')){
       const native=locate(db,i.guildId,body.next);
+      if(native?.kind==='pvp_attack_request'&&options.publishAttack){
+        try{await options.publishAttack(native.record_key);}
+        catch(error){
+          if(error.code!=='STATE_CONFLICT')throw error;
+          body.view={...body.view,text:'Native result saved; private delivery needs reviewed recovery. Do not reroll or blindly resend.'};
+        }
+      }
       if(['pvp_proposal','pvp_encounter_contract'].includes(native?.kind)&&options.publish){
         try{await options.publish(body.next,body.projection);}
         catch(error){

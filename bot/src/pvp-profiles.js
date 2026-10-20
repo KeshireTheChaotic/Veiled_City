@@ -7,6 +7,7 @@ import {indexWorldEvent} from "./city-calendar.js";
 import {isPvpIntent,pvpTarget} from "./pvp-authority.js";
 import {cancelBrawlForWithdrawal} from "./pvp-brawl.js";
 import {assertPvpSafety} from './pvp-campaign-policy.js';
+import {stageCampaignPvp,validateCampaignPvp} from './pvp-campaign-execution.js';
 const hash=v=>createHash("sha256").update(JSON.stringify(v)).digest("hex");
 const boundaryTerms=["no_forced_player_dialogue","no_private_information_disclosure","no_forced_player_control","no_involuntary_item_loss","no_authored_permanent_scar"];
 function fail(message){throw Object.assign(new Error(message),{code:"NARRATIVE_PVP",expected:true});}
@@ -106,6 +107,7 @@ function participant(db,guild,user,p){
   if(controlledOwner(db,guild,who.character).principal_revision!==who.principal_revision)fail("Owner principal changed; fresh review required.");return who;
 }
 function live(db,guild,key,{terminal=false,committed=false}={}){
+  if(db.getCityRecord(guild,'pvp_encounter_contract',key)?.data.version===4)return validateCampaignPvp(db,guild,key,{committed}).contract;
   const p=db.getCityRecord(guild,"pvp_encounter_contract",key),s=p?.data.snapshot,scene=currentScene(db,guild);
   if(!p||p.visibility!=="gm"||p.data.version!==3||s?.guild!==guild||s.contract!==key||hash(s)!==p.data.terms_hash
     ||JSON.stringify(s.participants)!==JSON.stringify(p.data.participants)||s.revision!==p.data.revision
@@ -146,6 +148,11 @@ export function proposeDamagePvp(db,guild,user,input,{interactionId}={}){
 export function reviewDamagePvp(db,guild,user,key){
   return db.transaction(()=>{
   const raw=db.getCityRecord(guild,"pvp_encounter_contract",key),who=participant(db,guild,user,raw),p=live(db,guild,key,{terminal:true}),t=p.data.snapshot.terms;
+  if(p.data.version===4)return {contract:key,terms_hash:p.data.terms_hash,status:p.status,visibility:'character',character_id:who.character,
+    text:['Native campaign conflict scope; not a bilateral consent offer.',`Reference: ${key}; policy revision ${p.data.policy_revision}.`,
+      'Your source-bound attack and current target Evasion still require native mechanics. No player reaction or optional choice is implied.',
+      'Armor, optional resources/reactions and SRD death choices remain owner-controlled. No PvP Hope or Critical Stress.',
+      'Use your immediate safety-stop to prevent new/unfinished hostile effects; committed native outcomes remain saved.'].join('\n')};
   const text=[`Damage-enabled PvP — ${key}`,`Revision ${p.data.revision}; digest ${p.data.terms_hash}; status ${p.status}`,
     `Objective: ${t.objective}`,`Scope: ${t.interaction_scope}; lethality: lethal. Real damage may mark final HP and require YOUR SRD death-move choice.`,
     ...(t.interaction_scope!=="duel"?[t.spotlight_policy==="fair_opportunities_native_target_locks"
@@ -179,6 +186,7 @@ function signature(db,guild,p,ref,decision){
     ||hash(source.details)!==hash(d)||!db.ownerAuthoredSource(guild,source.event_key,w.user))fail("Current exact affected-owner consent signature/source required.");return w;
 }
 export function validateDamagePvp(db,guild,key,{committed=false}={}){
+  if(db.getCityRecord(guild,'pvp_encounter_contract',key)?.data.version===4)return validateCampaignPvp(db,guild,key,{committed});
   const p=live(db,guild,key,{terminal:committed,committed});
   if(!(p.status==="locked"||committed&&p.status==="withdrawn")||p.data.approvals.length!==p.data.participants.length||new Set(p.data.approvals).size!==p.data.approvals.length)fail("All current affected owners must lock identical consent.");
   const signed=p.data.approvals.map(ref=>signature(db,guild,p,ref,"accept"));
@@ -197,6 +205,7 @@ export function respondDamagePvp(db,guild,user,input,{interactionId}={}){
   return db.transaction(()=>{
   closed(input,["contract","expected_revision","decision"]);nativeId(interactionId);
   const raw=db.getCityRecord(guild,"pvp_encounter_contract",input.contract),who=participant(db,guild,user,raw),p=live(db,guild,input.contract,{terminal:true});
+  if(p.data.version===4)fail('Campaign policy is not bilateral consent; use your owner safety-stop, never forged agreement signatures.');
   if(input.expected_revision!==p.data.terms_hash)fail("PvP terms revision changed; review fresh terms.");
   if(!["accept","decline","withdraw"].includes(input.decision))fail("Explicit affected-owner decision required.");
   if(input.decision==="accept")assertPvpSafety(db,guild,p.data.snapshot.participants.map(x=>x.character));
@@ -238,6 +247,7 @@ export function reviseDamagePvp(db,guild,user,input,{interactionId}={}){
   return db.transaction(()=>{
   closed(input,["contract","expected_revision","terms"]);nativeId(interactionId);
   const raw=db.getCityRecord(guild,"pvp_encounter_contract",input.contract);participant(db,guild,user,raw);const p=live(db,guild,input.contract);
+  if(p.data.version===4)fail('Campaign scope is immutable native policy, not a revisable bilateral agreement.');
   if(input.expected_revision!==p.data.terms_hash)fail("PvP terms revision changed.");
   if(inventory(db,guild,"pvp_attack_intent").some(r=>r.data.contract===p.record_key))fail("Attack already staged; its terms are immutable. Stop and use a new contract.");
   return db.transaction(()=>writeTerms(db,guild,p,user,input.terms,interactionId));
@@ -250,15 +260,22 @@ export function damagePvpInbox(db,guild,user){
 }
 export function damagePvpEligibility(db,guild,accepted){
   accepted=consentAction(db,guild,accepted.record_key).row;
-  if(!isPvpIntent(db,guild,accepted)||accepted.data.operation!=="attack")return null;
+  if(!isPvpIntent(db,guild,accepted)||!['attack','unarmed_attack','weapon_attack'].includes(accepted.data.operation))return null;
   const target=pvpTarget(db,guild,accepted),found=[];
   for(const raw of inventory(db,guild,"pvp_encounter_contract").filter(p=>p.status==="locked"&&p.data.scene===accepted.data.scene)){
+    if(raw.data.version===4)continue; // Campaign scopes bind one exact declaration, never another action.
+    if(accepted.data.operation!=='attack')continue; // Original bilateral version retains its original declaration contract.
     let ctx;try{ctx=validateDamagePvp(db,guild,raw.record_key);}catch(error){if(error.code!=="NARRATIVE_PVP")throw error;continue;}
     if(![accepted.data.actor,target.id].every(c=>ctx.participants.some(p=>p.character===c)))continue;
     const edge=ctx.terms.target_permissions.find(e=>e.actor===accepted.data.actor&&e.target===target.id&&e.effect_class==="attack_damage");
     if(edge)found.push({...ctx,edge,accepted});
   }
-  if(found.length>1)fail("Multiple exact damage scopes; private clarification required before choosing one.");return found[0]||null;
+  if(found.length>1)fail("Multiple exact damage scopes; private clarification required before choosing one.");
+  if(found.length)return found[0];
+  const campaign=stageCampaignPvp(db,guild,accepted);
+  if(!campaign)return null;
+  const ctx=validateCampaignPvp(db,guild,campaign.record_key);
+  return {...ctx,edge:ctx.terms.target_permissions[0],accepted};
 }
 export function stageDamagePvp(db,guild,accepted){
   return db.transaction(()=>{
@@ -268,7 +285,7 @@ export function stageDamagePvp(db,guild,accepted){
   const p=ctx.contract,key=`pvp-attack-intent:${hash([guild,accepted.record_key,p.record_key,p.data.terms_hash])}`;
   return db.getCityRecord(guild,"pvp_attack_intent",key)||db.saveCityRecord(guild,{kind:"pvp_attack_intent",key,status:"awaiting_native_attack",
     source_event:accepted.source_event,actor_key:accepted.data.actor,subject_key:accepted.data.actor,visibility:"character",
-    data:{version:3,contract:p.record_key,terms_hash:p.data.terms_hash,accepted_intent:accepted.record_key,source_hash:accepted.data.source_hash,
+    data:{version:p.data.version,contract:p.record_key,terms_hash:p.data.terms_hash,accepted_intent:accepted.record_key,source_hash:accepted.data.source_hash,
       actor:accepted.data.actor,target:ctx.edge.target,session_id:p.data.session_id,scene:p.data.scene,edge:ctx.edge,
       authority:"Consent-bound adjudication input only. Native equipment/attack/defense/effect receipts still required; no dice or damage here."}});
   });
@@ -276,12 +293,12 @@ export function stageDamagePvp(db,guild,accepted){
 /** Pending is backed by this exact native input and current consent, never a model's resolution label. */
 export function validateDamageAttackIntent(db,guild,key,{committed=false}={}){
   const row=db.getCityRecord(guild,"pvp_attack_intent",key),d=row?.data;
-  if(!row||d.version!==3||row.status!=="awaiting_native_attack"||row.visibility!=="character"||row.subject_key!==d.actor
+  if(!row||![3,4].includes(d.version)||row.status!=="awaiting_native_attack"||row.visibility!=="character"||row.subject_key!==d.actor
     ||key!==`pvp-attack-intent:${hash([guild,d.accepted_intent,d.contract,d.terms_hash])}`)fail("Exact native pending attack input required.");
   const {row:accepted}=(committed?historicalActionSource:consentAction)(db,guild,d.accepted_intent),ctx=validateDamagePvp(db,guild,d.contract,{committed});
   if(accepted.source_event!==row.source_event||accepted.data.source_hash!==d.source_hash||accepted.data.actor!==d.actor
-    ||accepted.data.operation!=="attack"||pvpTarget(db,guild,accepted)?.id!==d.target
-    ||ctx.contract.data.terms_hash!==d.terms_hash||d.scene!==ctx.contract.data.scene||d.session_id!==ctx.contract.data.session_id
+    ||!(d.version===4?['attack','unarmed_attack','weapon_attack'].includes(accepted.data.operation):accepted.data.operation==='attack')||pvpTarget(db,guild,accepted)?.id!==d.target
+    ||ctx.contract.data.version!==d.version||ctx.contract.data.terms_hash!==d.terms_hash||d.scene!==ctx.contract.data.scene||d.session_id!==ctx.contract.data.session_id
     ||![d.actor,d.target].every(c=>ctx.participants.some(p=>p.character===c))
     ||!ctx.terms.target_permissions.some(e=>hash(e)===hash(d.edge)&&e.actor===d.actor&&e.target===d.target))
     fail("Pending attack source, owner, edge or signed terms changed.");

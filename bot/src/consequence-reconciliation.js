@@ -1,6 +1,7 @@
 /** Receipt-first action/narration reconciliation; prose projects outcomes but never creates them. */
 import { createHash } from "node:crypto";
-import { pvpAttemptKey } from "./pvp-authority.js";
+import { pvpAttemptKey,pvpTarget } from "./pvp-authority.js";
+import {consentAction} from './action-consent.js';
 import { validateDamageAttackIntent } from "./pvp-profiles.js";
 import {typedRollProof} from "./typed-roll-proof.js";
 
@@ -34,6 +35,19 @@ export function reconcileConsequences(db,guild,{intents=[],narration="",private_
       const native=validateDamageAttackIntent(db,guild,plan.data.pvp_attack);
       if(native.accepted.record_key!==row.record_key)fail("Damage pending state needs its exact accepted action.");
       disposition="pvp_native_attack_pending";refs=[native.row.record_key];
+    }
+    else if(['held_review','held_safety'].includes(pvp?.status)){
+      consentAction(db,guild,row.record_key);
+      if(pvp.source_event!==row.source_event||pvp.subject_key!==row.data.actor||pvp.visibility!=='character'
+        ||pvp.data.accepted_intent!==row.record_key||pvp.data.opponent!==pvpTarget(db,guild,row)?.id
+        ||plan?.data.pvp_attempt!==pvp.record_key||plan.data.status!=='pending')
+        fail('Scoped PvP hold requires its exact current source, owner, target and pending action.');
+      if(pvp.status==='held_review'){
+        const review=db.getCityRecord(guild,'pvp_campaign_review',pvp.record_key);
+        if(review?.status!=='needs_review'||review.visibility!=='gm'||review.source_event!==row.source_event
+          ||review.data.accepted_intent!==row.record_key)fail('Exact native pending campaign review required.');
+      }
+      disposition='pvp_attempt_only';refs=[pvp.record_key];
     }
     else if(pvp?.status==="awaiting_stakes"){disposition="pvp_attempt_only";refs=[pvp.record_key];}
     else if(pvp?.status==="resolved"){

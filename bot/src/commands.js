@@ -79,7 +79,7 @@ import { pendingPvpFear } from "./pvp-fear-gate.js";
 import { proposeDamagePvp, reviewDamagePvp, respondDamagePvp, reviseDamagePvp, damagePvpInbox } from "./pvp-profiles.js";
 import { preparePvpAttack, reviewPvpAttack, authorizePvpAttack, rollPvpAttack } from "./pvp-attacks.js";
 import {reviewBrawlOpportunity,passBrawlOpportunity} from "./pvp-brawl.js";
-import {rollPvpDamage,preparePvpDamage,reviewPvpDamage,resolvePvpDamage} from "./pvp-damage.js";
+import {rollPvpDamage,preparePvpDamage,reviewPvpDamage,resolvePvpDamage,refreshCampaignPvpDamage} from "./pvp-damage.js";
 import {reviewPcDeathMove,choosePcDeathMove,allocatePcDeathRecovery,approveBlazeAction} from "./pc-death.js";
 import {hopeCap,assertPcCanAct} from "./pc-native-eligibility.js";
 import { preparePvpReaction, reviewPvpReaction, rollPvpReaction } from "./pvp-reactions.js";
@@ -89,7 +89,7 @@ import {inspectGmReactionInvitation,submitGmReactionInvitation,withdrawGmReactio
 import {recoverPreRollFear} from './pre-roll-fear-recovery.js';
 import { queueDirectorPublications } from "./publication-outbox.js";
 import {publishContinuationNotices} from "./publishing.js";
-import {publishPvpNotices,materializeNativeNotices,resyncNativeNotice,publishGmArbitrationNotice} from "./native-publications.js";
+import {publishPvpNotices,publishCampaignPvpNotices,materializeNativeNotices,resyncNativeNotice,publishGmArbitrationNotice} from "./native-publications.js";
 import {reconcilePublication} from "./publication-outbox.js";
 import {finishRollOperation} from './roll-operation-publications.js';
 import {createRollSharePreview} from './roll-sharing.js';
@@ -458,6 +458,8 @@ async function handleCommandBody(interaction,{db,gm,voice=null}){
     return true;
   }
   if(isPvpMenuInteraction(interaction))return handlePvpMenuInteraction(db,interaction,{library:gm?.content?.root?encounterLibrary(gm):undefined,
+    publishAttack:interaction.guild?attack=>publishCampaignPvpNotices(db,interaction.guildId,attack,
+      (userId,content,sessionId,characterId,meta)=>sendPlayerPrivate({db,guild:interaction.guild,userId,content,sessionId,characterId,...meta})):null,
     publish:interaction.guild?(proposal,projection)=>publishPvpNotices(db,interaction.guildId,proposal,
       (userId,content,sessionId,characterId,meta)=>sendPlayerPrivate({db,guild:interaction.guild,userId,content,sessionId,characterId,...meta}),
       (content,sessionId,meta)=>postPlayMessage({db,guild:interaction.guild,content,sessionId,...meta}),{projection}):null});
@@ -599,7 +601,7 @@ async function executeCommand(interaction,{db,gm,voice=null}){
     }
     if(group==="roll"&&sub==="pvp"){
       const {op="inbox",...input}=JSON.parse(interaction.options.getString("json")||"{}");
-      let text,noticeProposal=null,noticeProjection=null;
+      let text,noticeProposal=null,noticeProjection=null,noticeAttack=null;
       if(["damage-inbox","damage-propose","damage-review","damage-respond","damage-revise"].includes(op)){
         const native={interactionId:interaction.id},user=interaction.user.id,guild=interaction.guildId;
         if(op==="damage-inbox")text=JSON.stringify(damagePvpInbox(db,guild,user),null,2);
@@ -623,9 +625,11 @@ async function executeCommand(interaction,{db,gm,voice=null}){
           result=reviewPvpAttack(db,guild,user,input.attack);
         }else if(op==="attack-authorize"){
           const row=authorizePvpAttack(db,guild,user,input,native);result={attack:row.record_key,status:row.status};
+          noticeAttack=row.record_key;
         }else{
           const row=rollPvpAttack(db,guild,user,input),r=row.data.result;
           const attack=db.getCityRecord(guild,"pvp_attack_request",row.data.attack);
+          noticeAttack=attack?.record_key;
           if(attack?.data.contract)noticeProposal=attack.data.contract;
           result={attack:row.data.attack,result:{hope:r.hope,fear:r.fear,total:r.total,duality:r.duality,hit:r.hit},
             instruction:"Saved native attack only. Target statistics stay private; HP requires its separate damage and owner Armor workflow."};
@@ -640,11 +644,15 @@ async function executeCommand(interaction,{db,gm,voice=null}){
         }else {const row=passBrawlOpportunity(db,interaction.guildId,interaction.user.id,input,{interactionId:interaction.id});result={key:row.record_key,status:row.status};}
         text=JSON.stringify(result,null,2);
       }
-      else if(["damage-roll","damage-prepare","armor-review","armor-choose"].includes(op)){
+      else if(["damage-roll","damage-prepare","armor-review","armor-choose","armor-refresh"].includes(op)){
         const user=interaction.user.id,guild=interaction.guildId,native={interactionId:interaction.id};let result;
         if(op==="damage-roll"){
           const row=rollPvpDamage(db,guild,user,input);result={damage_roll:row.record_key,total:row.data.result.total,type:row.data.result.type,
             instruction:"Saved damage only; native GM applicability review and target-owned Armor decision still required."};
+          noticeAttack=db.getCityRecord(guild,'pvp_attack_roll_receipt',row.data.attack_receipt)?.data.attack;
+        }else if(op==='armor-refresh'){
+          const row=refreshCampaignPvpDamage(db,guild,user,input,native);
+          result={damage:row.record_key,status:row.status,instruction:'Review the refreshed native offer before choosing Armor. No resources or dice changed.'};
         }else if(op==="damage-prepare"){
           const row=preparePvpDamage(db,guild,user,input,{...native,gm:isGM(db,interaction)});result={damage:row.record_key,status:row.status};
         }else if(op==="armor-review"){
@@ -711,6 +719,8 @@ async function executeCommand(interaction,{db,gm,voice=null}){
         if(op!=="review")noticeProposal=key;
         if(db.getCityRecord(interaction.guildId,"pvp_proposal",key)?.status==="locked")synchronizePvpWindow(db,interaction.guildId,key);
       }
+      if(noticeAttack&&interaction.guild)await publishCampaignPvpNotices(db,interaction.guildId,noticeAttack,
+        (userId,content,sessionId,characterId,meta)=>sendPlayerPrivate({db,guild:interaction.guild,userId,content,sessionId,characterId,...meta}));
       if(noticeProposal&&interaction.guild)await publishPvpNotices(db,interaction.guildId,noticeProposal,
         (userId,content,sessionId,characterId,meta)=>sendPlayerPrivate({db,guild:interaction.guild,userId,content,sessionId,characterId,...meta}),
         (content,sessionId,meta)=>postPlayMessage({db,guild:interaction.guild,content,sessionId,...meta}),{projection:noticeProjection});

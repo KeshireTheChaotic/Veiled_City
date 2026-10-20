@@ -2,6 +2,7 @@
 import { createHash } from "node:crypto";
 import { validateFearEffect } from "./pvp-fear-moves.js";
 import { validatePvpAttackRoll } from "./pvp-attacks.js";
+import {validateCampaignPvp} from './pvp-campaign-execution.js';
 const hash=v=>createHash("sha256").update(JSON.stringify(v)).digest("hex").slice(0,40);
 const triggerKey=(p,r)=>`pvp-fear:${hash([p.record_key,p.data.terms_hash,r.data.round,r.record_key])}`;
 export function fearGateKey(p,round){return `pvp-exchange:${hash([p.record_key,p.data.terms_hash,round])}`;}
@@ -51,15 +52,24 @@ export function gatePvpExchange(db,guild,p,round,rows,pairRef,{partial=false}={}
       expected_fear_trigger_ids:triggers.map(t=>t.record_key),resolved_effect_ids:[],partial,revision:1}});
 }
 export function pendingPvpFear(db,guild,p){
+  const matches=t=>{
+    if(t.data.proposal===p.record_key&&t.data.terms_hash===p.data.terms_hash)return true;
+    if(p.data.version!==4||t.data.version!==2)return false;
+    const other=db.getCityRecord(guild,'pvp_encounter_contract',t.data.proposal),a=p.data.snapshot,b=other?.data.snapshot;
+    const same=other?.data.version===4&&!!b&&t.data.terms_hash===other.data.terms_hash&&a.guild===b.guild&&a.session_id===b.session_id
+      &&a.scene===b.scene&&a.location_key===b.location_key&&a.policy_revision===b.policy_revision;
+    if(same)validateCampaignPvp(db,guild,other.record_key,{committed:true});
+    return same;
+  };
   // Never silently truncate an authority boundary.
   const rows=[];
   for(let offset=0;offset<10000;offset+=100){
     const page=db.listCityRecords(guild,{kind:"pvp_fear_trigger",includeGM:true,limit:100,offset});
-    for(const t of page.filter(t=>t.data.proposal===p.record_key&&t.data.terms_hash===p.data.terms_hash&&t.status==="resolved")){
+    for(const t of page.filter(t=>matches(t)&&t.status==="resolved")){
       if(!t.data.effect)fail();
       validateFearEffect(db,guild,t.data.effect);
     }
-    rows.push(...page.filter(t=>t.data.proposal===p.record_key&&t.data.terms_hash===p.data.terms_hash&&t.status!=="resolved"));
+    rows.push(...page.filter(t=>matches(t)&&t.status!=="resolved"));
     if(page.length<100)return rows;
   }
   fail();

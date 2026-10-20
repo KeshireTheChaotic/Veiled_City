@@ -24,6 +24,8 @@ import { coordinateTypedActionWindows } from "./scene-action-window.js";
 import { buildActionPlan, executableActionSpans, transitionAction } from "./action-dependency.js";
 import { saveContextMemories } from "./context-memory.js";
 import { stagePvpAttempts } from "./narrative-pvp.js";
+import {prepareCampaignPvpAttack} from './pvp-attacks.js';
+import {reserveCampaignAttackNotices} from './native-publications.js';
 import { applyGeneratedPcEffect } from "./pc-effects.js";
 import { relationshipProvenance, artifactProvenance, inferredSource } from "./presentation-evidence.js";
 import {captureArcCandidate} from './personal-continuity.js';
@@ -493,12 +495,33 @@ export function applyAuthoritativeMutation(db,{guildId,sessionId=null,events=[],
     const collaborationOnly=prepareUnifiedCollaboration(db,guildId,narrative,typedIntents);
     const conflictInputs=typedIntents.filter(row=>!collaborationOnly.has(row.record_key));
     const pvpAttempts=stagePvpAttempts(db,guildId,conflictInputs,actionPlan);
+    const campaignPvpPreparations=pvpAttempts.filter(row=>row.kind==='pvp_attack_intent'&&row.data.version===4).map(row=>{
+      try{
+        const request=prepareCampaignPvpAttack(db,guildId,row);
+        reserveCampaignAttackNotices(db,guildId,request.record_key);
+        return {status:'pending_owner',intent:row.record_key,request:request.record_key};
+      }catch(error){
+        if(!['NARRATIVE_PVP','SCENE_ACTION_WINDOW','PC_NATIVE_ELIGIBILITY'].includes(error.code))throw error;
+        const review=db.saveCityRecord(guildId,{kind:'pvp_campaign_review',key:row.record_key,status:'needs_review',visibility:'gm',
+          source_event:row.source_event,data:{version:1,accepted_intent:row.data.accepted_intent,reason:String(error.message).slice(0,500),
+            authority:'Pending native mechanics only; no dice, consent, resources or PC outcome.'}});
+        return {status:'needs_review',intent:row.record_key,review:review.record_key};
+      }
+    });
     const pvpIds=new Set(pvpAttempts.map(row=>row.data.accepted_intent));
     if(pvpAttempts.length)actionPlan=actionPlan.map(row=>db.getCityRecord(guildId,"compound_action",row.record_key));
     const actionWindows=coordinateTypedActionWindows(db,guildId,conflictInputs,actionPlan);
     if(actionWindows.length)actionPlan=actionPlan.map(row=>db.getCityRecord(guildId,"compound_action",row.record_key));
     const coordinatedIds=new Set(actionWindows.map(row=>row.action));
     const unifiedArbitration=applyUnifiedArbitration(db,guildId,narrative,typedIntents);
+    for(const decision of unifiedArbitration.filter(d=>d.data.native?.operation==='campaign_pvp_attack')){
+      const request=db.getCityRecord(guildId,'pvp_attack_request',decision.data.native.request),
+        preparation=campaignPvpPreparations.find(p=>p.intent===request?.data.offer.input.attack);
+      if(!preparation)continue;
+      Object.assign(preparation,{status:'pending_owner',request:request.record_key});
+      const review=db.getCityRecord(guildId,'pvp_campaign_review',preparation.intent);
+      if(review)db.saveCityRecord(guildId,{...review,key:review.record_key,status:'resolved',data:{...review.data,native_request:request.record_key}});
+    }
     const unifiedIds=new Set(unifiedArbitration.map(row=>row.data.entry));
     const gmRulings=typedIntents.filter(row=>!unifiedIds.has(row.record_key)&&row.data.gm_ruling&&!row.data.gm_review_terminal&&!pvpIds.has(row.record_key)&&!coordinatedIds.has(row.record_key)
       &&!actionPlan.some(node=>node.data.action_id===row.record_key&&node.data.status==="suspended"))
@@ -610,7 +633,7 @@ export function applyAuthoritativeMutation(db,{guildId,sessionId=null,events=[],
     if(inspectStaged)inspectStaged({world,nativeEntries});
     return {events:eventResults,relationships:relationshipResults,handouts:handoutResults,
       npcMemories:cognition.memories,npcKnowledge:cognition.knowledge,npcGoals:cognition.goals,simulation,intents,world,typedIntents,
-      intentDiagnostics,nativeAdjudications,gmRulings,unifiedArbitration,actionPlan,actionWindows,pvpAttempts,typedDialogue,contextMemories,reviewAudit,personalCandidates,ordinaryEffects,privateWorldSeeds};
+      intentDiagnostics,nativeAdjudications,gmRulings,unifiedArbitration,actionPlan,actionWindows,pvpAttempts,campaignPvpPreparations,typedDialogue,contextMemories,reviewAudit,personalCandidates,ordinaryEffects,privateWorldSeeds};
   });
 }
 

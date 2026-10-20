@@ -21,6 +21,8 @@ import {reservePreRollFearNotice} from './pre-roll-fear-notice.js';
 import {prepareOrdinaryRollModifier} from './native-roll-modifiers.js';
 import {prepareNativeRollParticipation} from './native-roll-participation.js';
 import {prepareNativeEquippedAttack} from './native-equipped-attacks.js';
+import {prepareCampaignPvpFromBoard} from './pvp-attacks.js';
+import {reserveCampaignAttackNotices} from './native-publications.js';
 
 export const UNIFIED_ARBITRATION_PROMPT="Evaluate unified_arbitration in this SAME GM call. "
   +"Accepted typed intents are canonical adjudication inputs; human declarations own intent; native receipts own outcomes. "
@@ -38,7 +40,10 @@ export const UNIFIED_ARBITRATION_PROMPT="Evaluate unified_arbitration in this SA
   +"Do not omit an entitled target from an all_in_range feature. "
   +"Blood Rush currently permits Stress recovery while electing the current position only; other relocation remains reviewed. "
   +"For exact owner weapon_attack against a local native NPC, equipped_attack requests native preparation ONLY from a unique already-approved, currently equipped weapon/rule/exact-target source. No approval, ambiguous gear or unsupported range stays reviewed; an inventory name alone does not authorize acquisition or mechanics. "
-  +"Unsupported features/proxies/PvP remain review/consent. "
+  +"Unsupported features/proxies remain review-only. PC attacks use their separate native campaign path only when campaign PvP is explicitly enabled; "
+  +"use the exact accepted actor/PC target, unarmed_attack or equipped_attack, request_pc_action_roll, native_attack and srd:attack-rolls. "
+  +"PC Difficulty is current target Evasion (or null for native derivation), never adversary Difficulty. This prepares an owner-private request, not dice, damage, target consent or optional spending. "
+  +"Disabled campaign mode retains historical bilateral PvP. Never invent a signature or waive an owner safety-stop. "
   +"Do not emit duplicate gm_ruling/native_adjudication for a unified decision. "
   +"No dice faces, role waiver, outcome or automatic Fear spending. "
   +"Optional pre-roll Fear requires unified_arbitration version=2 and one exact pre_roll_fear request_ref/npc_intent_ref from the current board. "
@@ -78,6 +83,13 @@ export function adjudicateSceneBoard(db,guild,origin,board,proposals,{library=ne
     else if(entry.actor.type==='character'&&p.proposal_version===3){
       native=prepareNativeRollParticipation(db,guild,origin,entry,p);status='pending_owner_choice';
       reason='Native collaboration eligibility only; each owner separately chooses participation and any Hope payment.';
+    }
+    else if(entry.actor.type==='character'&&isPvpIntent(db,guild,db.getCityRecord(guild,'typed_intent',entry.intent_ref))
+      &&['unarmed_attack','equipped_attack'].includes(p.feature_ref)){
+      const request=prepareCampaignPvpFromBoard(db,guild,origin,board,entry,p);
+      reserveCampaignAttackNotices(db,guild,request.record_key);
+      native={operation:'campaign_pvp_attack',request:request.record_key,accepted_intent:entry.intent_ref};
+      status='pending_owner_choice';reason='Campaign native attack preparation only; rightful owner reviews mechanics and rolls. No defender consent or outcome is invented.';
     }
     else if(entry.actor.type==='character'&&p.feature_ref==='unarmed_attack'){
       native=prepareNativeUnarmedAttack(db,guild,origin,entry,p,{library});

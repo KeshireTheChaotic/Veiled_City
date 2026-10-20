@@ -39,7 +39,7 @@ export function commitGmTurn({db,guild,session,result,scope,speaker,label,meta={
     mutation.gmNativeActions=executeUnifiedGmActions(db,guild.id,mutation.unifiedArbitration||[],{library:new EncounterLibrary(content?.root||'../content')});
     const nativeRolls=resolveTypedNativeRolls(db,guild.id,scope,result.player_intents||[],meta.messageId||'');
     mutation.intents=[...(mutation.intents||[]),...nativeRolls];
-    if(mutation.gmNativeActions.length)prepareAuthorizedTurnOutput(db,guild.id,result,scope,{
+    if(mutation.gmNativeActions.length||nativeRolls.some(row=>row.status==='accepted'&&row.data.intent?.feature==='pvp'))prepareAuthorizedTurnOutput(db,guild.id,result,scope,{
       sourceRef:nativeDirectorNarrativeSource(result)||(meta.messageId&&scope.actorCharacterId?worldInputKey(meta.messageId,scope.actorCharacterId):null),world:mutation.world,
       nativeEntries:(mutation.intents||[]).filter(row=>row.status==='accepted'&&row.data.intent?.feature==='scene'&&row.data.result?.status==='approved').map(row=>row.data.result.record_key),
       nativeEffects:(mutation.ordinaryEffects||[]).filter(row=>row.status==='applied').map(row=>row.record_key),content});

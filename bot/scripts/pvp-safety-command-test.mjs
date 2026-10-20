@@ -50,6 +50,8 @@ test('safety command retry and a lost Discord acknowledgement cannot reopen or d
 
 test('campaign enable requires actual GM permission; model gm fields and other owners cannot stop a PC',()=>nativeFixture(async f=>{
   const pc=f.pcs[1];
+  assert.equal(f.db.getCityRecord(f.guild,'pvp_campaign_policy','campaign'),null,
+    'campaign policy has no saved opt-in by default');
   for(const input of [{op:'campaign-mode',enabled:true},{op:'campaign-mode',enabled:true,gm:true},
     {op:'safety-stop',character_id:pc.id},{op:'safety-stop',character_id:pc.id,owner:pc.owner_user_id,gm:true}]){
     const i=command(f,input,{actor:0});
@@ -60,6 +62,11 @@ test('campaign enable requires actual GM permission; model gm fields and other o
   const i=command(f,{op:'campaign-mode',enabled:true},{gm:true});await handleCommand(i,context(f));
   assert.equal(f.db.getCityRecord(f.guild,'pvp_campaign_policy','campaign')?.data.enabled,true);
   assert.equal(f.db.listCityRecords(f.guild,{kind:'pvp_encounter_contract',includeGM:true}).length,0,'enable is not fabricated consent');
+  const status=command(f,{op:'campaign-status'},{gm:true});await handleCommand(status,context(f));
+  assert(status.responses.some(body=>body.content?.includes('Qualified source-bound native PC attacks may execute without bilateral approval')),
+    'status must describe the enabled attack policy');
+  assert(status.responses.some(body=>body.content?.includes('Owner safety stops, Armor and death choices remain enforced')),
+    'status must preserve owner protections');
 }));
 
 test('actual GM generation awaiting a fake provider cannot delay an owner safety stop',{timeout:5000},()=>nativeFixture(async f=>{

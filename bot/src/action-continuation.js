@@ -8,6 +8,7 @@ import {assertPcCanAct} from "./pc-native-eligibility.js";
 import {validatePvpResolutionReceipt} from "./pvp-rounds.js";
 import {pendingPvpFear} from "./pvp-fear-gate.js";
 import {validatePvpDamageApplication} from "./pvp-damage.js";
+import {validatePvpAttackRoll} from './pvp-attacks.js';
 import {prepareContinuationOutput} from "./pvp-output.js";
 import {queueTurnPublications} from "./publication-outbox.js";
 import {typedRollProof} from "./typed-roll-proof.js";
@@ -38,8 +39,20 @@ function cause(db,guild,node){
   if(r){
     if(r.status!=="resolved"||r.source_event!==a?.source_event||r.data.action_id!==a.record_key)hold("Exact action outcome ancestry required.");
     if(r.data.terminal){
-      live(db,guild,a);const t=db.getCityRecord(guild,"pvp_action_terminal_receipt",r.data.terminal),e=t&&validatePvpDamageApplication(db,guild,t.data.effect);
-      if(t?.status!=="resolved"||t.data.action!==a.record_key||e.record_key!==r.data.state_mutations?.[0])hold("Exact native PvP damage terminal required.");
+      live(db,guild,a);const t=db.getCityRecord(guild,"pvp_action_terminal_receipt",r.data.terminal);
+      if(t?.status!=='resolved'||t.data.action!==a.record_key||t.source_event!==a.source_event)
+        hold('Exact native PvP terminal required.');
+      if(t.data.effect){
+        const e=validatePvpDamageApplication(db,guild,t.data.effect);
+        if(e.record_key!==r.data.state_mutations?.[0])hold('Exact native PvP damage terminal required.');
+      }else{
+        const p=validatePvpAttackRoll(db,guild,t.data.roll),staged=db.getCityRecord(guild,'pvp_attack_intent',p.offer.input.attack);
+        if(p.receipt.data.result.hit||p.request.record_key!==t.data.attack||p.request.data.terminal!==t.record_key
+          ||staged?.data.accepted_intent!==a.record_key||t.data.outcome!=='failure'||r.data.outcome!=='failure'
+          ||node.data.status!=='failed'||r.data.state_mutations?.length!==0||t.data.damage!==null
+          ||hash(r.data.native_roll_refs)!==hash([p.receipt.data.roll_id])||pendingPvpFear(db,guild,p.contract).length)
+          hold('Exact native missed attack and completed Fear gate required; no fabricated success.');
+      }
     }else if(r.data.request){
       live(db,guild,a,{completed:true});const q=db.getCityRecord(guild,"roll_request",r.data.request),proof=typedRollProof(db,guild,q);
       if(proof.outcome==="needs_review")hold("Grounded native result/Difficulty required before dependency success.");

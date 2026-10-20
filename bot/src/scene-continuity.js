@@ -47,8 +47,10 @@ export function recordCharacterArrival(db,guild,character,user,interactionId){
   if(db.getCityCalendar(guild).flags.scene_continuity!==true||typeof location!=="string"||!location.trim()
     ||!db.getSimulationEntity(guild,"location",location)) return null;
   return db.transaction(()=>{
-    const event=indexWorldEvent(db,guild,{key:`arrival:${motivationKey([interactionId,character.id])}`,kind:"arrival",title:"Owner-established arrival",
-      source_id:`player:${user}`,location_key:location,visibility:"party",
+    const scene=currentScene(db,guild),key=`arrival:${motivationKey([interactionId,character.id])}`;
+    // New native arrivals pin actual scope. A retry never backfills or resurrects an old source event.
+    const event=db.getWorldEvent(guild,key)||indexWorldEvent(db,guild,{key,kind:"arrival",title:"Owner-established arrival",
+      source_id:`player:${user}`,session_id:scene.session_id,scene:scene.key,location_key:location,visibility:"party",
       details:{entity_type:"character",entity_key:character.id,owner_user_id:user}},user);
     return reconcileSceneArrival(db,guild,{type:"character",key:character.id,source_event:event.event_key,owner:user});
   });
