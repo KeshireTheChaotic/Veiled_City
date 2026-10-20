@@ -14,6 +14,8 @@ import {isGroupFeature,groupFeatureStakes,groupReactionRules} from './native-gro
 import {nativeActorControl} from './native-actor-control.js';
 import {preRollFearCandidates} from './pre-roll-fear.js';
 import {nativeEnvironmentBinding} from './native-environment-context.js';
+import {nativeEnvironmentInstanceForScope} from './native-environment-instance.js';
+import {nativeAdversaryFeatureContext} from './native-adversary-context.js';
 const origins=new WeakMap(),bindings=new WeakMap();
 const deepFreeze=v=>{if(v&&typeof v==='object'){Object.values(v).forEach(deepFreeze);Object.freeze(v);}return v;};
 export function createArbitrationOrigin(db,guild,scope,sourceRef){
@@ -39,13 +41,16 @@ export function arbitrationPromptBoard(db,guild,origin){
   const o=inspectArbitrationOrigin(db,guild,origin);
   const encounter=db.getCurrentEncounter(o.binding.session),binding=encounter&&db.getCityRecord(guild,'encounter_binding',encounter.id),
     combatants=encounter?db.listCombatants(encounter.id):[],library=new EncounterLibrary('../content'),features=executableNativeFeatures('adversary');
-  let environment=null;
+  let environment=null,localEnvironment=null;
+  try{localEnvironment=nativeEnvironmentInstanceForScope(db,guild,o.scope,o.binding.location);}
+  catch(error){if(!['GM_ARBITRATION','SCENE_FICTION'].includes(error.code))throw error;}
   if(encounter?.status==='active'){
     try{environment=nativeEnvironmentBinding(db,guild,{encounter:encounter.id,scene:o.binding.scene,location:o.binding.location},{library});}
     catch(error){if(!['GM_ARBITRATION','NATIVE_ENCOUNTER_ACTIVATION'].includes(error.code))throw error;}
   }
   return {version:1,source:o.binding.source,scene:o.binding.scene,location:o.binding.location,audience:o.scope.mode,
     environment_context:environment,
+    local_environment_context:localEnvironment,
     equipped_attack_sources:db.scopedRollAttackSources(guild,o.scope.actorCharacterId,o.binding.session,o.binding.scene,null)
       .filter(e=>(db.getCharacter(o.scope.actorCharacterId)?.data.inventory||[]).some(i=>typeof i==='object'&&i.equipped===true&&i.name===e.details.roll_attack?.weapon))
       .slice(0,20).map(e=>({source_ref:e.event_key,weapon:e.details.roll_attack.weapon,trait:e.details.roll_attack.trait,
@@ -58,8 +63,13 @@ export function arbitrationPromptBoard(db,guild,origin){
     feature_windows:featureWindowChoices(db,guild,o.scope),
     npc_candidates:o.eligible.map(n=>{
       const c=combatants.find(c=>c.status==='active'&&binding?.data.combatants.some(b=>b.actor===n.key&&b.id===c.id)),template=c&&library.findAdversary(c.base_name);
+      let provenance=null;
+      if(template){try{provenance=nativeAdversaryFeatureContext(db,guild,origin,n.key,{library});}
+        catch(error){if(error.code!=='GM_ARBITRATION')throw error;}}
       return {actor_key:n.key,owner_control_type:'ai_world',intent_refs:n.intents,objective_refs:n.objectives,known_source_refs:n.source_refs,
-        action_features:features.filter(f=>template&&(f.native_handler==='coordinated_volley'||f.status==='supported'&&isGroupFeature(f.feature_key))&&f.template_hash===hash(template)).map(f=>isGroupFeature(f.feature_key)?{feature_ref:f.feature_key,
+        adversary_context:provenance,
+        action_features:features.filter(f=>provenance&&provenance.features.some(p=>p.key===f.feature_key)
+          &&(f.native_handler==='coordinated_volley'||isGroupFeature(f.feature_key))&&f.template_hash===hash(template)).map(f=>isGroupFeature(f.feature_key)?{feature_ref:f.feature_key,
           disposition:'native_feature_resolution',operation:'feature',proposal_shape:'v1 default: omit proposal_version and trigger_ref',target_policy:f.target_policy,rule_basis_refs:['srd:reaction-rolls'],
           ...groupReactionRules(f.feature_key),costs:f.costs,stakes:groupFeatureStakes(f.feature_key)}:({feature_ref:f.feature_key,
           disposition:'gm_attack_roll',operation:'attack',target_policy:f.target_policy,rule_basis_refs:['srd:adversary-attacks'],difficulty:null,

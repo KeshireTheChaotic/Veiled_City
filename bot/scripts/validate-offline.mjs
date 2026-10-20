@@ -69,6 +69,8 @@ suites.push("pvp-campaign-execution-test","pvp-campaign-turn-test","pvp-campaign
 suites.push("native-feature-rule-context-test");
 suites.push("native-condition-recovery-test");
 suites.push("native-environment-context-test");
+suites.push("native-environment-instance-test");
+suites.push("native-adversary-context-test");
 suites.push("pre-roll-fear-test","pre-roll-fear-recovery-test","pre-roll-fear-integration-test");
 suites.push("native-stress-passives-test");
 suites.push("native-feature-authoring-test");

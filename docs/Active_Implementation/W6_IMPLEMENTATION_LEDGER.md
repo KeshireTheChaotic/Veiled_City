@@ -5,6 +5,8 @@ Starting HEAD: `ecb7344b1012002cada8292e0461d3baaf1d77e7`, branch `codex/audienc
 
 **Current owner priority:** all48 environments before the89 adversary occurrences. [Environment implementation ledger](W6_ENVIRONMENT_IMPLEMENTATION_LEDGER.md) owns that manifest. Unsupported entries must not be executable or advertised as World Director capabilities. No new environment support is claimed until complete native integration and qualification.
 
+[Adversary gating ledger](W6_ADVERSARY_IMPLEMENTATION_LEDGER.md) records the owner's additional matching provenance/exclusion request, not completion of the89 missing adapters. Subsequent owner-authorized construction checkpoints remain unqualified until the full W6 freeze/batch. Both sets of unsupported features stay unavailable; environment mechanics remain first.
+
 Owner explicitly requested a construction checkpoint commit/push on2026-10-20 before continuing. This is an exception to the usual qualified-phase commit timing, **not** W6 completion or release approval. Tests/checks remain unrun. Generated final manifests, local reports and unrelated owner/delegation files are excluded and preserved; final artifacts remain W7 work.
 
 Accepted typed intents are canonical adjudication inputs; human declarations own intent; native receipts own outcomes.

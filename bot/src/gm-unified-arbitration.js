@@ -11,6 +11,7 @@ import {nativeGmOpportunity,nativeReactionTarget} from './gm-action-capability.j
 import {inspectIncomingCandidate,inspectVolleyCandidate} from './pc-incoming.js';
 import {EncounterLibrary} from './encounter.js';
 import {featureDisposition} from './native-feature-catalog.js';
+import {requireNativeAdversaryFeature} from './native-adversary-context.js';
 import {authorizeFeatureChoice,reserveFeatureWindow,pendingFeatureWindows} from './native-feature-windows.js';
 import {nativeAlliancePlan} from './native-encounter-relations.js';
 import {nativeFeatureReviewContract} from './native-house-errata.js';
@@ -103,6 +104,7 @@ export function adjudicateSceneBoard(db,guild,origin,board,proposals,{library=ne
       const feature=featureDisposition(p.feature_ref);
       reason=feature.reason; // Catalog membership alone never grants a feature capability.
       if(feature.status==='supported'){
+        requireNativeAdversaryFeature(db,guild,origin,entry.actor.key,p.feature_ref,{library});
         native=isGroupFeature(feature.feature.feature_key)
           ?planGroupFeature(db,guild,o,entry,p,feature.feature,{library,opportunity:nativeGmOpportunity(db,guild,board)})
           :feature.feature.native_handler==='coordinated_volley'

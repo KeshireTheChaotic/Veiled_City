@@ -37,3 +37,11 @@ Zero tests/checks executed during this construction. Discovery/provenance and ex
 The owner changed implementation ordering, not the phase-complete-first testing policy. Finish environment framework/fixtures, then adversary framework/fixtures; declare the complete W6 freeze before its consolidated relevant batch. Full mandatory qualification remains W7. No push, production, live Discord, paid provider call or deployment.
 
 Next: implement the environment producer/receipt/current-and-saved/output families above, preserving exact source rules and recording any genuinely unavailable rule/owner decision specifically. Do not substitute context-only records for completed feature effects.
+
+## Post-push construction
+
+Owner-authorized WIP checkpoint `45909e8844a777fbf647a98f6d7dbf28956d6000` was committed and fast-forward pushed to `origin/codex/audience-first-narrative-v9`. It is not a phase-completion or release commit. Generated final manifests, local reports and unrelated owner files were preserved outside that commit. No production operation.
+
+Continued uncommitted environment construction adds `native-environment-instance.js`: genuine registered native GM authoring frame, explicit authoring/discretion flags, exact printed environment template and existing entitled local location, private immutable profile source/mutation and current audience/source/scene revalidation. This allows noncombat profile provenance without creating a fake NPC or encounter. A profile is neither feature permission nor player-visible canon. Exact scoped lookup (not global latest-record retrieval) is wired to arbitration planning; only supported feature capabilities can be returned. All48 remain review-only.
+
+`native-environment-instance-test.mjs` is authored and registered but **NOT RUN**: all16 exact environment templates, noncombat/no-NPC/no-PC-effect contrasts, restart/duplicate read-only behavior, private/cross-owner lookup, serialized frame rejection, source retraction, disabled authority, wrong template/location and immutable profile collision. The producer is framework construction; automatic combined-request profile proposal/execution and the48 actual feature adapters still require implementation. No tests/checks/freeze/qualification after the push.

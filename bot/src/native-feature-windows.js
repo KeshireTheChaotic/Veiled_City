@@ -1,6 +1,6 @@
 /** Native trigger occurrences. Proposals/private prose cannot mint triggers, spotlight or costs. */
 import {sceneFictionHash as hash} from './scene-fiction-context.js';
-import {compileNativeFeatures} from './native-feature-catalog.js';
+import {compileNativeFeatures,executableNativeFeatures,featureDisposition} from './native-feature-catalog.js';
 import {currentScene,scenePresence,sceneAccess} from './scene-continuity.js';
 import {activeCityProxy} from './city-constraints.js';
 import {validateIncomingDamageApplication,incomingAttackEvidence} from './pc-incoming.js';
@@ -68,7 +68,7 @@ function capture(db,guild,kind,ref,{library=new EncounterLibrary('../content')}=
     return result;
   }
   const encounter=db.getCurrentEncounter(scene.session_id),binding=encounter&&db.getCityRecord(guild,'encounter_binding',encounter.id);
-  for(const feature of compileNativeFeatures().filter(f=>predicate(f,p))){
+  for(const feature of executableNativeFeatures('adversary').filter(f=>predicate(f,p))){
     for(const b of binding?.data.combatants||[]){
       if(p.actor&&b.actor!==p.actor)continue;
       const combatant=db.listCombatants(encounter.id).find(c=>c.id===b.id);
@@ -143,6 +143,8 @@ export function pendingFeatureWindows(db,guild){
 export function featureWindowChoices(db,guild,scope){
   const result=[];
   for(const row of pendingFeatureWindows(db,guild)){
+    // Old unsupported occurrences remain readable history, not executable Director choices.
+    if(featureDisposition(row.data.feature).status!=='supported')continue;
     const audience=row.data.audience;
     if(!['party','public'].includes(audience.visibility)&&!(scope.mode==='private'&&audience.visibility==='character'&&audience.subject===scope.actorCharacterId
       &&db.getCharacter(audience.subject)?.owner_user_id===scope.actorUserId))continue;
@@ -152,6 +154,9 @@ export function featureWindowChoices(db,guild,scope){
   return result.slice(0,16); // No private numeric dice/resources/motives in the board projection.
 }
 export function authorizeFeatureChoice(db,guild,origin,entry,p,feature,{library=new EncounterLibrary('../content')}={}){
+  const disposition=featureDisposition(feature?.feature_key);
+  if(disposition.status!=='supported'||hash(disposition.feature)!==hash(feature))
+    throw fail('feature_choice_requires_qualified_native_descriptor');
   if(!['blood_rush_hold_position','feedback'].includes(feature?.native_handler)||p.proposal_version!==2||p.disposition!=='native_feature_resolution'
     ||p.stakes_kind!=='native_feature'||p.experience_ref||p.advantage||p.disadvantage
     ||entry.actor.type!=='npc'||entry.operation!=='reaction')throw fail('feature_choice_shape_or_handler');
