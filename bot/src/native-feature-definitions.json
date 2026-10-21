@@ -201,13 +201,13 @@
       "template_hash": "0ae33d49879a2139badd60f4c571e12313bbe135be7d0b5c679e51be489e8945",
       "index": 1,
       "type": "Action",
-      "status": "review_only",
-      "trigger_kind": "unmapped",
-      "target_policy": "unmapped",
-      "roll_protocol": "unmapped",
-      "costs": null,
-      "native_handler": null,
-      "reason": "No qualified native feature handler."
+      "status": "supported",
+      "trigger_kind": "adversary_action",
+      "target_policy": "one",
+      "roll_protocol": "native_adversary_context",
+      "costs": [{ "resource": "fear", "amount": 1 }],
+      "native_handler": "adversary_steal_the_focus_context",
+      "reason": "Exact source-bound GM cue; Fear, movement, attack and conditional Hope loss are not committed."
     },
     {
       "feature_key": "adversary:hexbound-familiar:sympathetic-relay",

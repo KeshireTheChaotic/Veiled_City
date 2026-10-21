@@ -10,6 +10,7 @@ import {projectNativeAdversaryMarkTheVariableContext} from './native-adversary-m
 import {projectNativeAdversaryReadoutContext} from './native-adversary-readout.js';
 import {projectNativeAdversaryRideTheCurrentContext} from './native-adversary-ride-the-current.js';
 import {projectNativeAdversaryPeripheralContext} from './native-adversary-peripheral.js';
+import {projectNativeAdversaryStealTheFocusContext} from './native-adversary-steal-the-focus.js';
 import {arbitrationFailure as fail} from './gm-arbitration-contract.js';
 
 /** A template/display name does not bind a person to an adversary or make its features available. */
@@ -28,7 +29,7 @@ export function nativeAdversaryFeatureContext(db,guild,origin,actor,{library}={}
   return Object.freeze({...terms,feature_rule_contexts:[...projectNativeAdversaryBreakTheHoldContext(terms),
       ...projectNativeAdversaryProfessionalEntryContext(terms),...projectNativeAdversaryMarkTheVariableContext(terms),
       ...projectNativeAdversaryReadoutContext(terms),...projectNativeAdversaryRideTheCurrentContext(terms),
-      ...projectNativeAdversaryPeripheralContext(terms)],
+      ...projectNativeAdversaryPeripheralContext(terms),...projectNativeAdversaryStealTheFocusContext(terms)],
     revision:hash(terms),execution_authorized:false,publication_authorized:false});
 }
 

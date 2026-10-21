@@ -109,7 +109,8 @@
     "bot/tests/ai-gm-2026-10/p06-f41.test.mjs",
     "bot/tests/ai-gm-2026-10/p06-f42.test.mjs",
     "bot/tests/ai-gm-2026-10/p06-f43.test.mjs",
-    "bot/tests/ai-gm-2026-10/p06-f44.test.mjs"
+    "bot/tests/ai-gm-2026-10/p06-f44.test.mjs",
+    "bot/tests/ai-gm-2026-10/p06-f45.test.mjs"
   ],
   "bot/src/native-feature-definitions.json": [
     "bot/tests/ai-gm-2026-10/p06-f01.test.mjs",
@@ -143,7 +144,8 @@
     "bot/tests/ai-gm-2026-10/p06-f41.test.mjs",
     "bot/tests/ai-gm-2026-10/p06-f42.test.mjs",
     "bot/tests/ai-gm-2026-10/p06-f43.test.mjs",
-    "bot/tests/ai-gm-2026-10/p06-f44.test.mjs"
+    "bot/tests/ai-gm-2026-10/p06-f44.test.mjs",
+    "bot/tests/ai-gm-2026-10/p06-f45.test.mjs"
   ],
   "bot/src/native-environment-capabilities.js": [
     "bot/tests/ai-gm-2026-10/p06-f04.test.mjs",
@@ -230,10 +232,15 @@
   ],
   "bot/src/native-adversary-ride-the-current.js": [
     "bot/tests/ai-gm-2026-10/p06-f43.test.mjs",
-    "bot/tests/ai-gm-2026-10/p06-f44.test.mjs"
+    "bot/tests/ai-gm-2026-10/p06-f44.test.mjs",
+    "bot/tests/ai-gm-2026-10/p06-f45.test.mjs"
   ],
   "bot/src/native-adversary-peripheral.js": [
-    "bot/tests/ai-gm-2026-10/p06-f44.test.mjs"
+    "bot/tests/ai-gm-2026-10/p06-f44.test.mjs",
+    "bot/tests/ai-gm-2026-10/p06-f45.test.mjs"
+  ],
+  "bot/src/native-adversary-steal-the-focus.js": [
+    "bot/tests/ai-gm-2026-10/p06-f45.test.mjs"
   ],
   "bot/src/native-adversary-context.js": [
     "bot/tests/ai-gm-2026-10/p06-f39.test.mjs",
@@ -241,7 +248,8 @@
     "bot/tests/ai-gm-2026-10/p06-f41.test.mjs",
     "bot/tests/ai-gm-2026-10/p06-f42.test.mjs",
     "bot/tests/ai-gm-2026-10/p06-f43.test.mjs",
-    "bot/tests/ai-gm-2026-10/p06-f44.test.mjs"
+    "bot/tests/ai-gm-2026-10/p06-f44.test.mjs",
+    "bot/tests/ai-gm-2026-10/p06-f45.test.mjs"
   ],
   "bot/src/native-environment-chain-of-title.js": [
     "bot/tests/ai-gm-2026-10/p06-f18.test.mjs"
