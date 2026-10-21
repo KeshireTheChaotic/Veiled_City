@@ -20,6 +20,7 @@ import {nativeEnvironmentMetaphorPhysicsSituation} from './native-environment-me
 import {nativeEnvironmentNoOrdinarySignalSituation} from './native-environment-no-ordinary-signal.js';
 import {nativeEnvironmentConsensusEngineSituation} from './native-environment-consensus-engine.js';
 import {nativeEnvironmentGuestRightSituation} from './native-environment-guest-right.js';
+import {nativeEnvironmentPrivateRoomSituation} from './native-environment-private-room.js';
 import {arbitrationFailure as fail} from './gm-arbitration-contract.js';
 const issuer='native:environment-scene';
 const rules=Object.freeze({
@@ -219,5 +220,6 @@ export function nativeEnvironmentSituation(db,guild,scope,location){
   if(result.length<6)result.push(...nativeEnvironmentNoOrdinarySignalSituation(db,guild,scope,location).slice(0,6-result.length));
   if(result.length<6)result.push(...nativeEnvironmentConsensusEngineSituation(db,guild,scope,location).slice(0,6-result.length));
   if(result.length<6)result.push(...nativeEnvironmentGuestRightSituation(db,guild,scope,location).slice(0,6-result.length));
+  if(result.length<6)result.push(...nativeEnvironmentPrivateRoomSituation(db,guild,scope,location).slice(0,6-result.length));
   return result;
 }

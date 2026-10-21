@@ -2410,13 +2410,13 @@
       "template_hash": "24375b3fe2b4606ed929b808eb2924be4e848595b8c029f815a3fed8814e9c18",
       "index": 1,
       "type": "Action",
-      "status": "review_only",
-      "trigger_kind": "unmapped",
-      "target_policy": "unmapped",
-      "roll_protocol": "unmapped",
-      "costs": null,
-      "native_handler": null,
-      "reason": "No qualified native feature handler."
+      "status": "supported",
+      "trigger_kind": "spotlight_action",
+      "target_policy": "none",
+      "roll_protocol": "environment_scene_context",
+      "costs": [],
+      "native_handler": "environment_private_room_context",
+      "reason": "Exact source-bound NPC offer cue; PC choice, separation and leverage outcome remain unresolved."
     },
     {
       "feature_key": "environment:pale-court-townhouse:ownership-bites",

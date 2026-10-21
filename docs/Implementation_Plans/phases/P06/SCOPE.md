@@ -32,6 +32,7 @@ Complete source-qualified features, reconcile rules and qualify the changed impl
 - [P06-F21 — Enable District Blackout No Ordinary Signal passive context](../../features/P06-F21/SCOPE.md)
 - [P06-F22 — Enable Veil Anchor Chamber Consensus Engine risk cue](../../features/P06-F22/SCOPE.md)
 - [P06-F23 — Enable Pale Court Townhouse Guest Right passive cue](../../features/P06-F23/SCOPE.md)
+- [P06-F24 — Support the source-bound Private Room offer cue](../../features/P06-F24/SCOPE.md)
 
 ## Exit
 All safe features have current diff, truthful ledger and newly authored tests covering only code changed in this phase. Local source gaps and owner decisions remain visible but do not stop other safe work. No automatic release qualification.
