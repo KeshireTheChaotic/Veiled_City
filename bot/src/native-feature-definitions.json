@@ -2153,13 +2153,13 @@
       "template_hash": "f3b4ece93c32b4b29adaf83ffb16653c7acb0b27af5c9b3e6d70b5c0e2b15953",
       "index": 2,
       "type": "Reaction",
-      "status": "review_only",
-      "trigger_kind": "unmapped",
-      "target_policy": "unmapped",
-      "roll_protocol": "unmapped",
-      "costs": null,
-      "native_handler": null,
-      "reason": "No qualified native feature handler."
+      "status": "supported",
+      "trigger_kind": "on_scene_event",
+      "target_policy": "none",
+      "roll_protocol": "environment_scene_context",
+      "costs": [],
+      "native_handler": "environment_wrong_offering_context",
+      "reason": "Exact source-bound hostility reaction cue; context records no PC action or restitution."
     },
     {
       "feature_key": "environment:apartment-veil-breach:thin-walls",
