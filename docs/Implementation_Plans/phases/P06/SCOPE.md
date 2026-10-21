@@ -26,6 +26,7 @@ Complete source-qualified features, reconcile rules and qualify the changed impl
 - [P06-F15 — Enable After-Hours Emergency Department Something in Imaging](../../features/P06-F15/SCOPE.md)
 - [P06-F16 — Enable After-Hours Emergency Department HIPAA and Procedure](../../features/P06-F16/SCOPE.md)
 - [P06-F17 — Enable Apartment Veil Breach Thin Walls passive context](../../features/P06-F17/SCOPE.md)
+- [P06-F18 — Enable Archive Beneath the Courthouse Chain of Title passive context](../../features/P06-F18/SCOPE.md)
 
 ## Exit
 All safe features have current diff, truthful ledger and newly authored tests covering only code changed in this phase. Local source gaps and owner decisions remain visible but do not stop other safe work. No automatic release qualification.

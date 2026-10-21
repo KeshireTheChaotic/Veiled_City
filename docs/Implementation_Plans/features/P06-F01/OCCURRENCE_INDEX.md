@@ -142,7 +142,7 @@
 | [environment:glass-market-grand-concourse:neutrality-has-teeth](occurrences/environment--glass-market-grand-concourse--neutrality-has-teeth/LEDGER.md) | review_only | verified_source | none |
 | [environment:glass-market-grand-concourse:auction-of-consequences](occurrences/environment--glass-market-grand-concourse--auction-of-consequences/LEDGER.md) | review_only | verified_source | none |
 | [environment:glass-market-grand-concourse:everyone-is-watching](occurrences/environment--glass-market-grand-concourse--everyone-is-watching/LEDGER.md) | review_only | verified_source | none |
-| [environment:archive-beneath-the-courthouse:chain-of-title](occurrences/environment--archive-beneath-the-courthouse--chain-of-title/LEDGER.md) | review_only | verified_source | none |
+| [environment:archive-beneath-the-courthouse:chain-of-title](occurrences/environment--archive-beneath-the-courthouse--chain-of-title/LEDGER.md) | supported | verified_source | environment_chain_of_title_context |
 | [environment:archive-beneath-the-courthouse:sealed-docket](occurrences/environment--archive-beneath-the-courthouse--sealed-docket/LEDGER.md) | review_only | verified_source | none |
 | [environment:archive-beneath-the-courthouse:records-reject-you](occurrences/environment--archive-beneath-the-courthouse--records-reject-you/LEDGER.md) | review_only | verified_source | none |
 | [environment:district-blackout:no-ordinary-signal](occurrences/environment--district-blackout--no-ordinary-signal/LEDGER.md) | review_only | verified_source | none |

@@ -2555,13 +2555,13 @@
       "template_hash": "57b075db846e45a01accbc9022b4a062451525c8a898a8d142f5fab4320004c5",
       "index": 0,
       "type": "Passive",
-      "status": "review_only",
-      "trigger_kind": "unmapped",
-      "target_policy": "unmapped",
-      "roll_protocol": "unmapped",
-      "costs": null,
-      "native_handler": null,
-      "reason": "No qualified native feature handler."
+      "status": "supported",
+      "trigger_kind": "passive",
+      "target_policy": "none",
+      "roll_protocol": "environment_scene_context",
+      "costs": [],
+      "native_handler": "environment_chain_of_title_context",
+      "reason": "Exact passive records-tracing context; no ownership or pact result is inferred."
     },
     {
       "feature_key": "environment:archive-beneath-the-courthouse:sealed-docket",

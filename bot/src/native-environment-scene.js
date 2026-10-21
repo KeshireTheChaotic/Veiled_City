@@ -14,6 +14,7 @@ import {nativeEnvironmentDoorChainSituation} from './native-environment-door-cha
 import {nativeEnvironmentImagingSituation} from './native-environment-imaging.js';
 import {nativeEnvironmentProcedureSituation} from './native-environment-procedure.js';
 import {nativeEnvironmentThinWallsSituation} from './native-environment-thin-walls.js';
+import {nativeEnvironmentChainOfTitleSituation} from './native-environment-chain-of-title.js';
 import {arbitrationFailure as fail} from './gm-arbitration-contract.js';
 const issuer='native:environment-scene';
 const rules=Object.freeze({
@@ -207,5 +208,6 @@ export function nativeEnvironmentSituation(db,guild,scope,location){
   if(result.length<6)result.push(...nativeEnvironmentImagingSituation(db,guild,scope,location).slice(0,6-result.length));
   if(result.length<6)result.push(...nativeEnvironmentProcedureSituation(db,guild,scope,location).slice(0,6-result.length));
   if(result.length<6)result.push(...nativeEnvironmentThinWallsSituation(db,guild,scope,location).slice(0,6-result.length));
+  if(result.length<6)result.push(...nativeEnvironmentChainOfTitleSituation(db,guild,scope,location).slice(0,6-result.length));
   return result;
 }
