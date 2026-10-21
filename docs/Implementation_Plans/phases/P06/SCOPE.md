@@ -41,6 +41,7 @@ Complete source-qualified features, reconcile rules and qualify the changed impl
 - [P06-F30 — Support the source-bound Market neutrality rule cue](../../features/P06-F30/SCOPE.md)
 - [P06-F31 — Support the source-bound Contaminated Scene rule cue](../../features/P06-F31/SCOPE.md)
 - [P06-F32 — Support the source-bound Everyone Is Watching rule cue](../../features/P06-F32/SCOPE.md)
+- [P06-F33 — Support the source-bound Wrong Offering reaction cue](../../features/P06-F33/SCOPE.md)
 
 ## Exit
 All safe features have current diff, truthful ledger and newly authored tests covering only code changed in this phase. Local source gaps and owner decisions remain visible but do not stop other safe work. No automatic release qualification.
