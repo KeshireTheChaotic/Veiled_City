@@ -1,13 +1,11 @@
 # environment:abandoned-mall-glass-market:no-violence-in-the-aisles
 
-Status: SOURCE VERIFIED; LOCAL EXECUTION HOLD. Parent: [P06-F01](../../SCOPE.md).
+Status: SUPPORTED / TARGETED PASS. Parent: [P06-F01](../../SCOPE.md); feature: [P06-F30](../../../P06-F30/SCOPE.md).
 
-Audit SHA: 9e7bf0687357cf96fbe2ea09a04b3e9d2975f6a3. Checkout base: 0834f299ccff1738e9b3dd753a5fc616d3965370.
+Audit SHA: `9e7bf0687357cf96fbe2ea09a04b3e9d2975f6a3`. Branch: `codex/clean-ai-gm-2026-10`. Start SHA: `5ffb94f091fa4fcbc37163f38502cc3dfb242519`. Implementation/tested SHA: `d66db8b1837f8aeeac71a92349271c12eb5f549c`.
 
 Exact source: `content/GM_PRIVATE/ENVIRONMENTS/environments.json#abandoned-mall-glass-market/features/0`. Source SHA-256: `0cd6bf7439938db4f2cba5b0343887a1a5d2da0ff6e06ffc2523420c985ebdbb`; template SHA-256: `9dd2d059a31f678bc584808a1519d2bab2622f51f614c0be63c1637493a4994f`.
 
-This delta qualifies occurrence-local source inspection and discovery isolation only. It does not create or promote a native effect handler. Existing descriptor status: review_only; handler: none.
+The scoped GM receives the exact passive neutrality rule. The GM authors the fictional interpretation and any standing/enforcement response. Context records no violation or consequence; no Daggerheart mechanic changes.
 
-Any future adapter must prove current actor/source/scene/target, owner choices, exact costs, native dice and once-only replay using new tests before support promotion. No generic fallback or new creative limitation. Roll back only the occurrence-specific diff; preserve saved readers and receipts.
-
-Final tested source SHA: `8e01519b6511bc90af6a1c675e4a9950f12b703c`; run `fresh-delta-1792599054739` passed 47/47 union tests. The catalog test verifies this occurrence source; this is not occurrence effect qualification. Input/test hashes: parent final evidence.
+Run `p06-f30-20261021-a`: 100/100 fresh affected cases pass across 28 test files; six JS/MJS syntax checks and two JSON parses pass. See [evidence](../../../../evidence/P06_F30_TARGETED.json) for command and input/test SHA-256 values. Provider usage 0/0/$0; no cache savings claimed; Codex usage unavailable. No owner question, new restriction or critical blocker. Local holds: 110 other review-only occurrences, actual play outcomes, live delivery and whole-release qualification. Release authorization: false.

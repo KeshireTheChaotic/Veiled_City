@@ -1,15 +1,8 @@
 # environment:abandoned-mall-glass-market:no-violence-in-the-aisles — ledger
 
-Status: SOURCE VERIFIED; LOCAL EXECUTION HOLD.
+Status: SUPPORTED / TARGETED PASS. Branch `codex/clean-ai-gm-2026-10`; implementation commit/tested SHA `d66db8b1837f8aeeac71a92349271c12eb5f549c`.
 
-- Branch: codex/clean-ai-gm-2026-10; source checkout SHA: 0834f299ccff1738e9b3dd753a5fc616d3965370 + working-tree delta. Final freeze SHA/evidence: see parent P06-F01 ledger and final delta report.
-- Changed module: bot/src/native-feature-catalog.js (shared occurrence-local inspection). Descriptor and rules unchanged.
-- Fresh test: bot/tests/ai-gm-2026-10/p06-f01.test.mjs; current-catalog test calls inspectNativeFeatureOccurrence for this exact key. Source/content input is current production data, never a historical fixture.
-- Actual result: verified_source, execution_authorized=false in p06-1792598757560; shared repaired batch exit 0, 5 tests passed. This is source verification, not effect execution qualification.
-- Cost/cache: 0 paid provider calls/tokens; $0 provider tests. No cache claim. Codex usage unavailable.
-- Existing catalog reason: No qualified native feature handler.
-- Local hold: No qualified executable occurrence adapter. This remains unsupported; exact source availability alone is insufficient.
-- Questions: none introduced by this source-only delta; no new narrative/autonomy restrictions proposed.
-- Critical blocker: none. Release authorization: none.
-
-Final tested source SHA: `8e01519b6511bc90af6a1c675e4a9950f12b703c`; run `fresh-delta-1792599054739` passed 47/47 union tests. The catalog test verifies this occurrence source; this is not occurrence effect qualification. Input/test hashes: parent final evidence.
+- Changed paths: feature definition/catalog, environment capability resolver and scene projection; new exact-occurrence projector, coverage entry and fresh F30 test; shared F01 count test.
+- Run `p06-f30-20261021-a`: 100/100 fresh affected tests pass in 28 files; no failures or skips. Changed JS/MJS syntax: 6/6. JSON parse: 2/2. Evidence and hashes: [P06_F30_TARGETED.json](../../../../evidence/P06_F30_TARGETED.json).
+- Cost/cache: provider calls/tokens/spend 0/0/$0; no cache savings claimed; Codex usage unavailable.
+- No violation, standing or enforcement presence is recorded by context. No owner question/new restriction; no critical blocker. Local holds: 110 other occurrences and live/full-release verification. Release authorization: false.
