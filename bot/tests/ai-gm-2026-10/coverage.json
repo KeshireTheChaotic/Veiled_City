@@ -1,0 +1,73 @@
+{
+  "bot/src/ai-gm-test-selection.js": [
+    "bot/tests/ai-gm-2026-10/p00-f02.test.mjs",
+    "bot/tests/ai-gm-2026-10/p06-f03.test.mjs"
+  ],
+  "bot/src/gameplay-intake.js": [
+    "bot/tests/ai-gm-2026-10/p01-f01.test.mjs"
+  ],
+  "bot/src/narrative-writer-v9.js": [
+    "bot/tests/ai-gm-2026-10/p01-f02.test.mjs",
+    "bot/tests/ai-gm-2026-10/p01-f03.test.mjs"
+  ],
+  "bot/src/action-consent.js": [
+    "bot/tests/ai-gm-2026-10/p02-f01.test.mjs"
+  ],
+  "bot/src/dice.js": [
+    "bot/tests/ai-gm-2026-10/p02-f02.test.mjs"
+  ],
+  "bot/src/publication-outbox.js": [
+    "bot/tests/ai-gm-2026-10/p02-f03.test.mjs"
+  ],
+  "bot/src/gm-ruling-schema.js": [
+    "bot/tests/ai-gm-2026-10/p06-f03.test.mjs"
+  ],
+  "bot/src/gm-action-ruling.js": [
+    "bot/tests/ai-gm-2026-10/p06-f03.test.mjs"
+  ],
+  "bot/src/typed-intents.js": [
+    "bot/tests/ai-gm-2026-10/p06-f03.test.mjs"
+  ],
+  "bot/src/world-authorship.js": [
+    "bot/tests/ai-gm-2026-10/p03-f01.test.mjs"
+  ],
+  "bot/src/narrative-salience.js": [
+    "bot/tests/ai-gm-2026-10/p03-f02.test.mjs"
+  ],
+  "bot/src/npc-cognition.js": [
+    "bot/tests/ai-gm-2026-10/p03-f03.test.mjs"
+  ],
+  "bot/src/world-narrative-bridge.js": [
+    "bot/tests/ai-gm-2026-10/p03-f04.test.mjs"
+  ],
+  "bot/src/scene-action-window.js": [
+    "bot/tests/ai-gm-2026-10/p04-f01.test.mjs"
+  ],
+  "bot/src/audience-first-capability.js": [
+    "bot/tests/ai-gm-2026-10/p04-f02.test.mjs"
+  ],
+  "bot/src/assembly-planning.js": [
+    "bot/tests/ai-gm-2026-10/p04-f03.test.mjs"
+  ],
+  "bot/src/gm.js": [
+    "bot/tests/ai-gm-2026-10/p05-f01.test.mjs"
+  ],
+  "bot/src/content.js": [
+    "bot/tests/ai-gm-2026-10/p05-f02.test.mjs"
+  ],
+  "bot/src/generation-feedback.js": [
+    "bot/tests/ai-gm-2026-10/p05-f03.test.mjs"
+  ],
+  "bot/src/config.js": [
+    "bot/tests/ai-gm-2026-10/p05-f03.test.mjs"
+  ],
+  "bot/src/native-feature-catalog.js": [
+    "bot/tests/ai-gm-2026-10/p06-f01.test.mjs"
+  ],
+  "bot/src/character-export.js": [
+    "bot/tests/ai-gm-2026-10/p06-f02.test.mjs"
+  ],
+  "bot/scripts/ai-gm-delta.mjs": [
+    "bot/tests/ai-gm-2026-10/p06-f03.test.mjs"
+  ]
+}

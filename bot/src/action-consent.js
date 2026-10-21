@@ -40,6 +40,11 @@ function inspectActionSource(db,guild,key,completed,historical=false){
   const row=db.getCityRecord(guild,"typed_intent",key),scene=currentScene(db,guild);
   if(!row||row.status!==(completed?"resolved":"accepted_for_adjudication"))fail("Consent needs a current accepted action; history cannot authorize new effects.");
   const source=db.getWorldEvent(guild,row.source_event),d=row.data;
+  // Recheck current execution inputs; historical readers retain their saved format.
+  if(!historical&&(!Number.isSafeInteger(d.start)||!Number.isSafeInteger(d.end)||d.start<0||d.end<=d.start
+    ||typeof source?.details?.raw_text!=='string'||d.end>source.details.raw_text.length
+    ||typeof d.source_span!=='string'||!d.source_span||d.framing!==undefined&&d.framing!=='immediate'))
+    fail('Consent requires an exact immediate owner declaration range.');
   if(!historical&&(d.gm_review_terminal||overlapsOwnerActionTerminal(db,guild,row.source_event,d.start,d.end)))
     fail("The owner withdrew/replaced this original source range; a new declaration is required.");
   const principal=historical?historicalOwnerPrincipal(db,guild,d.owner_user_id,d.actor):conversationPrincipal(db,guild,d.owner_user_id,d.actor);

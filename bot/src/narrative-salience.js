@@ -16,6 +16,12 @@ const visible=(r,s)=>['party','public'].includes(r.visibility)||s.mode==='privat
 const records=listNarrativeRecords;
 const audience=s=>s.mode==='private'?['character',s.actorCharacterId]:['party',null];
 const profileKey=(entity,visibility,subject)=>`salience:${hash([entity,visibility,subject])}`;
+/** Fictional-time retrieval weight, never a truth or promotion grant. */
+export function decayedNarrativeWeight(weight,createdTick,currentTick){
+  if(!Number.isFinite(weight)||weight<0||!Number.isSafeInteger(createdTick)||!Number.isSafeInteger(currentTick)
+    ||createdTick<0||currentTick<createdTick)return 0;
+  return Math.max(0,weight-Math.floor((currentTick-createdTick)/6));
+}
 /** Legacy opt-in remains readable. Qualified native fiction does not need a second routine salience toggle. */
 export function nativeSalienceAvailable(db,guild){
   const flags=db.getCityCalendar(guild).flags;
@@ -55,9 +61,9 @@ function add(db,guild,{entity,source,scene,visibility,subject,reason,weight,dedu
 function score(db,guild,row,scope){
   if(!worldIdentityOrigin(db,guild,db.getCityRecord(guild,'autonomous_entity',row.data.entity),scope))return 0;
   const tick=db.getSimulationClock(guild).tick;
-  return records(db,guild,'narrative_interest').filter(e=>e.data.profile===row.record_key&&visible(e,scope)
+  return records(db,guild,'narrative_interest').filter(e=>e.status==='active'&&e.data.profile===row.record_key&&visible(e,scope)
     &&(e.visibility!=='character'||e.data.owner===scope.actorUserId)&&narrativeSourceVisible(db,guild,e.source_event,scope))
-    .reduce((n,e)=>n+Math.max(0,e.data.weight-Math.floor(Math.max(0,tick-e.data.tick)/6)),0);
+    .reduce((n,e)=>n+decayedNarrativeWeight(e.data.weight,e.data.tick,tick),0);
 }
 export function narrativeImportance(db,guild,entity,scope){
   if(!worldIdentityOrigin(db,guild,db.getCityRecord(guild,'autonomous_entity',entity),scope))return null;
@@ -95,7 +101,7 @@ export function canonicalInterestEvidence(db,guild,entity,scope){
       const lead=u.kind==='lead';weight=lead?7:1;dedup=[unit.data.binding.scene,lead?'lead':'gm'];causation=canonicalNarrativeCause(db,guild,unit.data.binding.source,scope);
     }
     if(!dedup||row.record_key!==`narrative-interest:${hash([entity,row.visibility,row.subject_key||null,dedup])}`)continue;
-    weight=Math.max(0,weight-Math.floor(Math.max(0,tick-d.tick)/6));if(weight&&causation)found.push({source:row.source_event,weight,causation});
+    weight=decayedNarrativeWeight(weight,d.tick,tick);if(weight&&causation)found.push({source:row.source_event,weight,causation});
   }
   // Reprojection into another audience or a native writer echo is not a new causal event.
   const distinct=new Map();

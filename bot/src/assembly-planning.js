@@ -101,8 +101,8 @@ export async function refreshAssemblyPlan(db,guild,user,key,gm,{authorized=false
   }
 }
 export function retainedAssemblyDelivery(db,guild,session,scope,{fallback=false}={}){
-  const plan=db.getAssemblyPlan(session.id),previous=plan.assembly_contract?.previous_deliveries||[];
-  for(const item of previous.filter(p=>hookHash(p.scope)===hookHash(scope))){
+  const plan=db.getAssemblyPlan(session.id),previous=plan?.assembly_contract?.previous_deliveries||[];
+  for(const item of previous.filter(p=>p?.scope&&p.evidence&&p.turn_id&&hookHash(p.scope)===hookHash(scope))){
     const rows=db.listTurnPublications(guild,item.turn_id);
     if(!rows.length||!rows.every(r=>r.status==='delivered'))continue;
     if(fallback&&item.evidence.fallback)return item;

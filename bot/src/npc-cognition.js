@@ -33,7 +33,7 @@ export function normalizeNpcKey(value){
 }
 
 function parseJson(value,fallback){
-  try{return JSON.parse(value||"");}catch{return fallback;}
+  try{const parsed=JSON.parse(value||"");return Array.isArray(fallback)&&!Array.isArray(parsed)?fallback:parsed;}catch{return fallback;}
 }
 
 function memoryRank(row,queryTokens,tick){
@@ -94,7 +94,7 @@ export function retrieveNpcCognition(db,guildId,{
 }={}){
   const density=db.getCityCalendar(guildId).flags.activity_density===true;
   const profiles=npcKey?[db.getNpcProfile(guildId,npcKey)].filter(Boolean):density
-    ?db.densityActorSelection(guildId,query).filter(row=>row.type==="npc").map(row=>db.getNpcProfile(guildId,row.actor_key))
+    ?db.densityActorSelection(guildId,query).filter(row=>row.type==="npc").map(row=>db.getNpcProfile(guildId,row.actor_key)).filter(Boolean)
     :db.listNpcProfiles(guildId,{limit:500});
   // Context retirement is reversible; actor records, goals and receipts remain untouched.
   const relevantProfiles=profiles.filter(profile=>narrativeContextEligible(db,guildId,`npc:${profile.npc_key}`,{mode:'party'},
@@ -109,7 +109,7 @@ export function retrieveNpcCognition(db,guildId,{
     const goals=db.listNpcGoals(guildId,profile.npc_key,{status:"active",limit:20});
     const topPriority=goals.reduce((m,g)=>Math.max(m,Number(g.priority||0)),0);
     const memorySignal=db.listNpcMemories(guildId,profile.npc_key,{status:"retrievable",limit:120,queryTokens:[...queryTokens]})
-      .reduce((best,row)=>Math.max(best,overlapScore(queryTokens,words(`${row.content} ${(row.tags||[]).join(" ")}`))*18),0);
+      .reduce((best,row)=>Math.max(best,overlapScore(queryTokens,words(`${row.content} ${(Array.isArray(row.tags)?row.tags:[]).join(" ")}`))*18),0);
     const knowledgeSignal=db.listNpcKnowledge(guildId,profile.npc_key,{limit:120,queryTokens:[...queryTokens]})
       .reduce((best,row)=>Math.max(best,overlapScore(queryTokens,words(`${row.knowledge_key} ${row.content}`))*18),0);
     const goalSignal=goals.reduce((best,row)=>Math.max(best,overlapScore(queryTokens,words(`${row.title} ${row.objective}`))*16),0);

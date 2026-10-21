@@ -490,7 +490,9 @@ function activeSignalSnapshot(db,guild,s,scope){
 /** Reprojected Director narration inherits the human cause. Ambiguous/missing ancestry earns no new persistence weight. */
 export function canonicalNarrativeCause(db,guild,sourceRef,scope){
   const source=db.getWorldEvent(guild,sourceRef);
-  if(source?.kind!=='native_director_narrative_scope'||source.details.version!==2)return sourceRef;
+  if(source?.status!=='active')return null;
+  if(source.kind!=='native_director_narrative_scope'||source.details.version!==2)
+    return narrativeSourceVisible(db,guild,sourceRef,scope)?sourceRef:null;
   if(!nativeDirectorBridge(db,guild,source,scope))return null;
   const signals=source.details.world_bridge.signals,sidecar=source.details.dramatic_brief?.native_clock_consequences,
     consequences=sidecar?.receipts||[];

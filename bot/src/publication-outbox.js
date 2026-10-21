@@ -17,6 +17,16 @@ function serialized(db,key,job){
 }
 export function notSent(message){return Object.assign(new Error(message),{deliveryCertainty:"not_sent"});}
 
+/** An acknowledgement must identify the destination that was actually queued. */
+export function validatePublicationAcknowledgement(row,receipt){
+  if(!receipt||receipt.ok===false||typeof receipt.messageId!=='string'||!receipt.messageId.trim()
+    ||typeof receipt.channelId!=='string'||!receipt.channelId.trim()
+    ||row.channel_id&&receipt.channelId!==row.channel_id)
+    throw Object.assign(new Error('Delivery needs an exact acknowledged Discord message/channel receipt.'),
+      {deliveryCertainty:'uncertain'});
+  return receipt;
+}
+
 const digest=value=>createHash("sha256").update(String(value)).digest("hex");
 
 function allowedPrivateTargets(db,session,scope){
@@ -101,10 +111,9 @@ export function deliverTurnOutbox(db,guildId,turnId,transport,{forceUncertain=fa
       attempted=true;
       const receipt=await transport(row);
       // Transport acknowledged this exact validated chunk. Voice/progress do not enter this path.
-      if(receipt?.ok!==false&&receipt?.messageId&&receipt?.channelId)turnLatency.publication(guildId,turnId,substantive);
-      if(!receipt||receipt.ok===false||!receipt.messageId||!receipt.channelId)
-        throw Object.assign(new Error("Delivery needs an acknowledged Discord message/channel receipt."),
-          {deliveryCertainty:receipt?.certainty||"uncertain"});
+      if(receipt?.ok===false&&receipt.certainty==='not_sent')throw notSent('Transport confirmed no delivery.');
+      validatePublicationAcknowledgement(row,receipt);
+      turnLatency.publication(guildId,turnId,substantive);
       const delivered=db.transaction(()=>{
         const acknowledged=db.updatePublication(row.id,{status:"delivered",discordMessageId:receipt.messageId,
           channelId:receipt.channelId||row.channel_id,lastFailure:""});

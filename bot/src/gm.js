@@ -466,6 +466,10 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
         }
         throw err;
       }
+      // An explicit provider refusal is terminal for this request, not malformed JSON
+      // to regenerate at greater cost. No fallback content or mechanics is invented.
+      if(response.output?.some(item=>item.content?.some(part=>part.type==='refusal')))
+        throw Object.assign(new Error(`${label}: provider declined this structured request.`),{code:'STRUCTURED_PROVIDER_REFUSAL'});
       try{
         const parsed=parseStructuredJsonText(response.output_text,{label});
         if(req.text?.format?.schema?.properties?.ai_intents&&parsed.ai_intents===undefined) parsed.ai_intents=[];

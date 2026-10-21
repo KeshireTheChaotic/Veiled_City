@@ -24,8 +24,8 @@ const identityTokens=value=>(String(value||'').normalize('NFKC').toLocaleLowerCa
 export function assertWorldIdentityNames(db,guild,definition){
   const session=db.getActiveSession(guild),protectedNames=[...db.listGuildCharacters(guild).flatMap(pc=>[pc.name,
     ...(Array.isArray(pc.data.aliases)?pc.data.aliases:[]),...(Array.isArray(pc.data.nicknames)?pc.data.nicknames:[])]),
-    ...(session?db.listNpcProxies(session.id,{statuses:['active']}).flatMap(p=>[p.npc_name,p.npc_key]):[])].map(identityTokens);
-  if([definition.key,definition.name,...definition.aliases].some(name=>protectedNames.includes(identityTokens(name))))
+    ...(session?db.listNpcProxies(session.id,{statuses:['active']}).flatMap(p=>[p.npc_name,p.npc_key]):[])].map(identityTokens).filter(Boolean);
+  if([definition.key,definition.name,...definition.aliases].some(name=>identityTokens(name)&&protectedNames.includes(identityTokens(name))))
     throw fail('protected_character_or_proxy_identity');
 }
 /** Conservative identity-echo quarantine, NOT semantic interpretation or a grant.

@@ -58,7 +58,7 @@ export function loadConfig(){
     gmTurnDeadlineMs:numberEnv("GM_TURN_DEADLINE_MS",120000,{min:10000,max:900000,integer:true}),
     routerDeadlineMs:numberEnv("ROUTER_DEADLINE_MS",20000,{min:1000,max:120000,integer:true}),
     gmProgressAfterMs:numberEnv("GM_PROGRESS_AFTER_MS",20000,{min:5000,max:120000,integer:true}),
-    gmProgressEnabled:enumEnv('GM_PROGRESS_ENABLED','true',['true','false'])==='true',
+    gmProgressEnabled:enumEnv('GM_PROGRESS_ENABLED','false',['true','false'])==='true',
     typingRefreshMs:numberEnv("GM_TYPING_REFRESH_MS",8000,{min:4000,max:30000,integer:true}),
     dbPath:path.resolve(cwd,process.env.DATABASE_PATH||"./data/veiled_city.sqlite"),
     contentRoot:path.resolve(cwd,process.env.CONTENT_ROOT||"../content"),

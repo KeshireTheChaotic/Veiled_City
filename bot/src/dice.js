@@ -15,10 +15,11 @@ export function dualityRoll({modifier=0,experience=0,advantage=0,disadvantage=0,
     : disadvantage>advantage ? -Math.max(...advDice,0) : 0;
   const applied=helperDice.length?Math.max(advNet,...helperDice):advNet;
   const total=hope+fear+modifier+experience+applied;
+  if(!Number.isSafeInteger(total))throw new Error('Native Duality total exceeds safe integer arithmetic.');
   let duality="Hope";
   if(fear>hope) duality="Fear";
   else if(fear===hope) duality="Critical";
-  return {id:randomUUID(),hope,fear,modifier,experience,advantage,disadvantage,adv_dice:advDice,helper_dice:helperDice,adv_net:applied,total,duality};
+  return {id:randomUUID(),hope,fear,modifier,experience,advantage,disadvantage,adv_dice:advDice,helper_dice:[...helperDice],adv_net:applied,total,duality};
 }
 
 export function diceSpec(expr="1d6") {

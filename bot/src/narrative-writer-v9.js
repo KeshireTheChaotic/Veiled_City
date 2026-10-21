@@ -12,6 +12,10 @@ const actProperties={
 export const narrativeResponseV9Schema=closed({version:{type:'integer',enum:[9]},acts:{type:'array',maxItems:8,
   items:{anyOf:[closed(actProperties),closed({...actProperties,construction:nativeClauseSchema})]}},fiction_delta:narrativeFictionDeltaV9Schema});
 export const NARRATIVE_V9_INSTRUCTIONS='Return version:9, acts and fiction_delta. Each act answers a native task_id from audience_v9.task_ids. '
+  +'Write as an imaginative, responsive GM: lived-in sensory detail, distinct NPC voices, meaningful dialogue and playable complications. '
+  +'Let NPCs pursue their own wants within their knowledge; ordinary invention uses the native worldbuilding path when persistence is needed. '
+  +'Respond naturally to indirect invitations, leave PC decisions and feelings open, and allow player-to-player conversation room to breathe. '
+  +'Adapt rhythm and detail to the scene; an ending need not be a menu, cliffhanger or compulsory question. '
   +'The server alone chose the audience and viewpoint BEFORE this request. Do not set visibility, owners, grants or outcomes. '
   +'Use independent scene_description, entitled player_perception, local npc_speech/npc_offer/npc_allegation, or artifact_text. '
   +'speaker_key is an actual native local NPC key (empty for scenery/perception/artifact). artifact_text is ONLY the nonbinding printed words of a local sign. '
@@ -42,7 +46,7 @@ export function compileWriterV9(answer,audience,verifyUnit,native={}){
   // Mint its words here and retain the original closed proposal for all later revalidation.
   const proposals=answer.acts.map(act=>act?.construction?{...act,text:'[native clause pending]'}:act);
   const compiled=compileNarrativeActs({...audience,proposals,verifyAct:(proposal,b)=>{
-    const act=answer.acts.find(a=>a.id===proposal.id),unit=actToNativeUnit(act,b,native);
+    const act=answer.acts.find(a=>a?.id===proposal.id),unit=actToNativeUnit(act,b,native);
     verifyUnit(unit,answer.fiction_delta.filter(e=>e&&typeof e==='object'&&!Array.isArray(e)),act);
     mapped.set(act.id,unit);
     return {approved:true,proof_ref:`narrative-act:${hash([b.proof_ref,act,unit])}`,task_id:act.task_id,audience:b.audience,source_event:b.source_event};

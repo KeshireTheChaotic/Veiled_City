@@ -14,6 +14,38 @@ freeze(authoredRules);
 // planned_handler in the inventory is documentation, never dispatch authority.
 const handlers=Object.freeze({blood_rush_hold_position:true,pack_pressure:true,feedback:true,first_severe_to_major:true,many_deaths_fear_opportunity:true,horde_marked_half_damage:true,local_mesh_allied_zone:true,coordinated_volley:true,flashbang_owner_choice:true,all_lanes_stop_group:true,regent_owner_resource_choice:true,stack_formation_remaining_hp:true,veil_exposure_difficulty:true,sentence_native_vulnerable_damage:true,first_pc_stress_clear:true});
 
+function verifyFeatureDescriptor(row,actor,kind){
+  if(!row||!actor||!Array.isArray(actor.features)||typeof actor.features[row.index]!=='string')throw fail('feature_source_shape');
+  if(!row||row.source_hash!==hash(actor.features[row.index])||row.template_hash!==hash(actor)
+    ||row.feature_key!==`${kind}:${slug(actor.name)}:${slug(row.name)}`)throw fail('feature_source_hash_changed');
+  if(row.status==='supported'&&(!row.native_handler||!Object.hasOwn(handlers,row.native_handler)))throw fail('feature_handler_unqualified');
+  if(row.authored_rule){
+    const ref=row.authored_rule,rule=authoredRules.entries.find(r=>r.id===ref.id&&r.version===ref.version),
+      source=rule?.sources?.find(s=>s.kind==='feature'&&s.key===row.feature_key);
+    if(Object.keys(ref).sort().join()!=='hash,id,version'||ref.id!=='HR13'||ref.version!==1
+      ||rule?.authority_ref!=='owner:break-the-pattern:v1'||hash(rule)!==ref.hash
+      ||source?.source_hash!==row.source_hash||source.template_hash!==row.template_hash
+      ||rule.interpretation.type!==row.type||rule.interpretation.trigger!==row.trigger_kind
+      ||row.status!=='review_only'||rule.status!=='review_only'||rule.native_handler!==null||row.native_handler!==null)
+      throw fail('feature_authored_rule_source_changed');
+  }
+
+  return row;
+}
+
+/** Occurrence-local inspection; one stale source cannot disable independent exact sources. */
+export function inspectNativeFeatureOccurrence(key,{adversaries=read('../../content/GM_PRIVATE/ADVERSARIES/adversaries.json'),
+  environments=read('../../content/GM_PRIVATE/ENVIRONMENTS/environments.json')}={}){
+  const feature=typeof key==='string'&&definitions.features.find(row=>row.feature_key===key);
+  if(!feature)return freeze({status:'unknown',feature:null,reason:'unregistered_feature'});
+  const actors=feature.actor_kind==='adversary'?adversaries:environments;
+  const matches=Array.isArray(actors)?actors.filter(actor=>actor?.name===feature.actor_name):[];
+  if(matches.length!==1)return freeze({status:'held_source',feature,reason:'missing_or_ambiguous_actor_source'});
+  try{verifyFeatureDescriptor(feature,matches[0],feature.actor_kind);}
+  catch(error){if(error.code!=='GM_ARBITRATION')throw error;return freeze({status:'held_source',feature,reason:error.message});}
+  return freeze({status:'verified_source',feature,printed_rule:matches[0].features[feature.index],execution_authorized:false});
+}
+
 export function compileNativeFeatures({adversaries=read('../../content/GM_PRIVATE/ADVERSARIES/adversaries.json'),
   environments=read('../../content/GM_PRIVATE/ENVIRONMENTS/environments.json')}={}){
   const rows=[];
@@ -23,19 +55,7 @@ export function compileNativeFeatures({adversaries=read('../../content/GM_PRIVAT
       if(!Array.isArray(actor.features))throw fail('feature_source_shape');
       actor.features.forEach((text,index)=>{
         const row=definitions.features.find(r=>r.actor_kind===kind&&r.actor_name===actor.name&&r.index===index);
-        if(!row||row.source_hash!==hash(text)||row.template_hash!==hash(actor)
-          ||row.feature_key!==`${kind}:${slug(actor.name)}:${slug(row.name)}`)throw fail('feature_source_hash_changed');
-        if(row.status==='supported'&&(!row.native_handler||!Object.hasOwn(handlers,row.native_handler)))throw fail('feature_handler_unqualified');
-        if(row.authored_rule){
-          const ref=row.authored_rule,rule=authoredRules.entries.find(r=>r.id===ref.id&&r.version===ref.version),
-            source=rule?.sources?.find(s=>s.kind==='feature'&&s.key===row.feature_key);
-          if(Object.keys(ref).sort().join()!=='hash,id,version'||ref.id!=='HR13'||ref.version!==1
-            ||rule?.authority_ref!=='owner:break-the-pattern:v1'||hash(rule)!==ref.hash
-            ||source?.source_hash!==row.source_hash||source.template_hash!==row.template_hash
-            ||rule.interpretation.type!==row.type||rule.interpretation.trigger!==row.trigger_kind
-            ||row.status!=='review_only'||rule.status!=='review_only'||rule.native_handler!==null||row.native_handler!==null)
-            throw fail('feature_authored_rule_source_changed');
-        }
+        verifyFeatureDescriptor(row,actor,kind);
         rows.push(row);
       });
     }
@@ -45,17 +65,20 @@ export function compileNativeFeatures({adversaries=read('../../content/GM_PRIVAT
 }
 
 /** String IDs select only code-owned definitions. Caller objects/role/status never grant execution. */
-export function featureDisposition(key){
-  const row=typeof key==='string'&&compileNativeFeatures().find(r=>r.feature_key===key);
+export function featureDisposition(key,sources){
+  const inspected=inspectNativeFeatureOccurrence(key,sources),row=inspected.feature;
+  if(inspected.status==='held_source')return Object.freeze({status:'needs_rules_review',reason:inspected.reason,feature:row});
   if(!row)return Object.freeze({status:'needs_rules_review',reason:'Unregistered feature; no native handler or execution authority.',feature:null});
   if(row.status!=='supported')return Object.freeze({status:'needs_rules_review',reason:`${row.reason} No qualified native handler; no cost, roll or effect.`,feature:row});
   return Object.freeze({status:'supported',reason:'Qualified descriptor only; current native trigger, actor, costs and targets still required.',feature:row});
 }
 
 /** Executable discovery only. Review/source inventories must never become Director capabilities. */
-export function executableNativeFeatures(kind){
+export function executableNativeFeatures(kind,sources){
   if(kind!==undefined&&!['adversary','environment'].includes(kind))return Object.freeze([]);
-  return Object.freeze(compileNativeFeatures().filter(row=>row.status==='supported'
+  const current=sources||{adversaries:read('../../content/GM_PRIVATE/ADVERSARIES/adversaries.json'),environments:read('../../content/GM_PRIVATE/ENVIRONMENTS/environments.json')};
+  return Object.freeze(definitions.features.filter(row=>row.status==='supported'
+    &&inspectNativeFeatureOccurrence(row.feature_key,current).status==='verified_source'
     &&Object.hasOwn(handlers,row.native_handler)&&(!kind||row.actor_kind===kind)));
 }
 

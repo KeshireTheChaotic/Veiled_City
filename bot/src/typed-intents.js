@@ -7,7 +7,7 @@ import { stateRevision } from './ai-intents.js';
 import { resolvePlaceReference } from './location-language.js';
 import { captureDialogue } from './dialogue-continuity.js';
 import { resolveScopedMemoryReference } from './scoped-memory.js';
-import {gmRulingSchema,validateGmRulingProposal} from './gm-action-ruling.js';
+import {gmRulingSchema,validateGmRulingProposal} from './gm-ruling-schema.js';
 import {overlapsOwnerActionTerminal} from './owner-action-terminal.js';
 import {isCharacterSourceSpan} from './source-communication.js';
 import {

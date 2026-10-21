@@ -30,8 +30,19 @@ function referenceView(row){return {kind:row.kind,key:row.entity_key,name:row.di
 function canonView(row){return {key:row.canon_key,value:row.value,visibility:row.visibility,status:row.status,session_id:row.session_id,source_type:row.source_type,source_id:row.source_id,provenance:row.provenance,created_at:row.created_at};}
 function relationshipView(row){return {id:row.id,from_type:row.from_type,from_key:row.from_key,from_label:row.from_label,to_type:row.to_type,to_key:row.to_key,to_label:row.to_label,relationship_type:row.relationship_type,score:row.score,visibility:row.visibility,note:row.note,source:row.source,updated_at:row.updated_at};}
 
+// These are GM infrastructure fields, not player-authored background or sheet mechanics.
+const gmOnlyFields=new Set(['gm_hooks','imported_gm_hooks','gm_private','gm_secrets','hidden_hooks',
+  'gm_relationships','hidden_relationships','canon_suggestions','canon_proposals','pending_conflicts']);
+export function playerCharacterProjection(value){
+  if(Array.isArray(value))return value.map(playerCharacterProjection).filter(item=>item!==undefined);
+  if(!value||typeof value!=='object')return value;
+  if(['gm','gm_private'].includes(value.visibility)||['gm','gm_private'].includes(value.export_meta?.visibility))return undefined;
+  return Object.fromEntries(Object.entries(value).filter(([key])=>!gmOnlyFields.has(key))
+    .map(([key,item])=>[key,playerCharacterProjection(item)]).filter(([,item])=>item!==undefined));
+}
+
 export function buildPlayerExport(db,guildId,character){
-  const d=structuredClone(character.data||{});
+  const d=playerCharacterProjection(character.data||{});
   const known=db.playerFactsFor(guildId,character.owner_user_id||"",{characterId:character.id,limit:200}).map(factView);
   return {
     ...d,

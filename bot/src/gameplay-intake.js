@@ -22,8 +22,9 @@ export function routerFailureEngagement(value,{authenticated=false,directMention
 /** Called after exact-source recovery, before native preview. A proposal is still not an outcome. */
 export function semanticResponseObligation(value,intents,{authenticated=false,engagement=null}={}){
   const source=String(value||'');
-  const immediate=(intents||[]).filter(row=>
-    row.framing==='immediate'&&typeof row.source_span==='string'&&row.source_span.length>0&&source.includes(row.source_span));
+  // A malformed optional proposal must not erase an independent conversational invitation.
+  const immediate=(Array.isArray(intents)?intents:[]).filter(row=>
+    row?.framing==='immediate'&&typeof row.source_span==='string'&&row.source_span.length>0&&source.includes(row.source_span));
   if(!authenticated||explicitSilence(source))return {needed:false,state:'does_not_need_world_response',reason:'unauthenticated_or_explicit_silence'};
   const noResponse=engagement?.engagement_kind==='no_response'&&engagement.respond===false;
   const material=immediate.some(row=>!['speak','other','observe'].includes(row.type)||row.resolution!=='conversational');

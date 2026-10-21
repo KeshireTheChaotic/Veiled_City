@@ -1,8 +1,14 @@
-/** V9 audience-first framework (NOT wired into production): a model cannot mint an audience grant. */
+/** V9 audience capability used by native adapters: a model cannot mint an audience grant. */
 export const AUDIENCES = Object.freeze(['channel', 'player', 'player_private', 'gm_internal']);
 const audiences = new Set(AUDIENCES);
 const nonempty = value => typeof value === 'string' && value.length > 0 && value.length <= 256;
 const fail = reason => { throw Object.assign(new Error(`Audience capability refused: ${reason}`), {code: 'AUDIENCE_V9'}); };
+function frozenSnapshot(value,seen=new WeakSet()){
+  if(value&&typeof value==='object'&&!seen.has(value)){
+    seen.add(value);for(const child of Object.values(value))frozenSnapshot(child,seen);Object.freeze(value);
+  }
+  return value;
+}
 
 /**
  * The callback MUST be an independently authoritative native policy service. It must verify
@@ -31,7 +37,7 @@ export function createAudienceAuthority({authorize}) {
       if (proof.audience === 'gm_internal' && proof.viewpoint !== 'internal') fail('internal_viewpoint');
       if (proof.audience !== 'gm_internal' && proof.viewpoint === 'internal') fail('external_viewpoint');
       const grant = Object.freeze(Object.create(null));
-      issued.set(grant, Object.freeze({...proof, task_ids: Object.freeze([...proof.task_ids])}));
+      issued.set(grant, frozenSnapshot(structuredClone(proof)));
       return grant;
     },
     inspect(grant) {
