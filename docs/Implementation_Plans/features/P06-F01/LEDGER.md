@@ -134,3 +134,7 @@ Implementation commit: d47c7e582e4c448cb705034b5b2ab24b4b74472c. Sympathetic Rel
 ## Resumption checkpoint — P06-F47 — 2026-10-21
 
 Implementation commit: 7c2116fdaa1d85c4fc093848eb888dfff37d2ded. Snatch a Link is supported as an exact GM-private Action cue; attack, eligible link discovery and theft remain locally held. Frozen p06-f47-20261021-a passed 168/168 across 45 fresh files; syntax 5/5 and JSON 2/2 passed, no reruns. Catalog: 60 supported / 93 review-only / 0 needs-authoring; 59 handlers / 48 P06 families. Provider calls/tokens/spend 0/0/$0; no cache claim; Codex usage unavailable. No owner question, restriction or critical blocker; release unauthorized. Evidence [F47](../../evidence/P06_F47_TARGETED.json).
+
+## Resumption checkpoint — P06-F48 — 2026-10-21
+
+Implementation commit: 4d35f7a612a57e4e7e8f7f9f9a2d609f4fbd333b. Flow Around It is supported as an exact GM-private passive cue; gap qualification and traversal remain locally held. Frozen p06-f48-20261021-a passed 172/172 across 46 fresh files with no reruns; syntax 5/5 and JSON 2/2 passed. Catalog: 61 supported / 92 review-only / 0 needs-authoring; 60 handler keys / 49 P06 families. Provider calls/tokens/spend 0/0/$0; no cache claim; Codex usage unavailable. No owner question, restriction or critical blocker; release unauthorized. Evidence [F48](../../evidence/P06_F48_TARGETED.json).

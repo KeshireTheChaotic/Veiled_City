@@ -1,6 +1,6 @@
 # Native occurrence status
 
-153 individual scope/ledger pairs. 60 supported; 93 review-only occurrence adapters remain. Source verification alone is not native effect qualification.
+153 individual scope/ledger pairs. 61 supported; 92 review-only occurrence adapters remain. Source verification alone is not native effect qualification.
 
 | Occurrence | Existing status | Fresh source result | Handler |
 |---|---|---|---|
@@ -16,7 +16,7 @@
 | [adversary:veil-burned-stalker:steal-the-focus](occurrences/adversary--veil-burned-stalker--steal-the-focus/LEDGER.md) | supported | verified_source | adversary_steal_the_focus_context |
 | [adversary:hexbound-familiar:sympathetic-relay](occurrences/adversary--hexbound-familiar--sympathetic-relay/LEDGER.md) | supported | verified_source | adversary_sympathetic_relay_context |
 | [adversary:hexbound-familiar:snatch-a-link](occurrences/adversary--hexbound-familiar--snatch-a-link/LEDGER.md) | supported | verified_source | adversary_snatch_a_link_context |
-| [adversary:river-hound:flow-around-it](occurrences/adversary--river-hound--flow-around-it/LEDGER.md) | review_only | verified_source | none |
+| [adversary:river-hound:flow-around-it](occurrences/adversary--river-hound--flow-around-it/LEDGER.md) | supported | verified_source | adversary_flow_around_it_context |
 | [adversary:river-hound:drag-down](occurrences/adversary--river-hound--drag-down/LEDGER.md) | review_only | verified_source | none |
 | [adversary:memory-leech:blank-spot](occurrences/adversary--memory-leech--blank-spot/LEDGER.md) | review_only | verified_source | none |
 | [adversary:memory-leech:taste-the-fear](occurrences/adversary--memory-leech--taste-the-fear/LEDGER.md) | supported | verified_source | first_pc_stress_clear |

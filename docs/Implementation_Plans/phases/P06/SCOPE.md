@@ -56,6 +56,7 @@ Complete source-qualified features, reconcile rules and qualify the changed impl
 - [P06-F45 — Support the source-bound Steal the Focus cue](../../features/P06-F45/SCOPE.md)
 - [P06-F46 — Support the source-bound Sympathetic Relay cue](../../features/P06-F46/SCOPE.md)
 - [P06-F47 — Support the source-bound Snatch a Link cue](../../features/P06-F47/SCOPE.md)
+- [P06-F48 — Support the source-bound Flow Around It cue](../../features/P06-F48/SCOPE.md)
 
 ## Exit
 All safe features have current diff, truthful ledger and newly authored tests covering only code changed in this phase. Local source gaps and owner decisions remain visible but do not stop other safe work. No automatic release qualification.
