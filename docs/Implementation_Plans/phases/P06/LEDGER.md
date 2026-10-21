@@ -28,6 +28,11 @@
 | [P06-F24](../../features/P06-F24/LEDGER.md) | SUPPORTED / TARGETED PASS | `p06-f24-20261021-a`; implementation commit `66151f51336de73b40ca4090386432bbf786fcd8`; unique 76/76 after isolated F01 count repair; see [evidence](../../evidence/P06_F24_TARGETED.json) |
 | [P06-F25](../../features/P06-F25/LEDGER.md) | SUPPORTED / TARGETED PASS | `p06-f25-20261021-a`; implementation commit `c70279d1a60cec6da01fd7f119d1fc4ba4c83f7b`; unique 80/80 after isolated F25 assertion repair; see [evidence](../../evidence/P06_F25_TARGETED.json) |
 | [P06-F26](../../features/P06-F26/LEDGER.md) | SUPPORTED / TARGETED PASS | `p06-f26-20261021-a`; implementation commit `1972c4b5ef92dcda2e23422ec8be9b8a95161c6f`; 84/84 fresh tests pass; see [evidence](../../evidence/P06_F26_TARGETED.json) |
+| [P06-F27](../../features/P06-F27/LEDGER.md) | SUPPORTED / TARGETED PASS | `p06-f27-20261021-a`; implementation commit `5cbaefba056d6440274053f6b697b5df84e6b22f`; 88/88 fresh tests pass; see [evidence](../../evidence/P06_F27_TARGETED.json) |
+
+## Resumption checkpoint — P06-F27 — 2026-10-21
+
+Current branch/implementation SHA: `codex/clean-ai-gm-2026-10` / `5cbaefba056d6440274053f6b697b5df84e6b22f`. P06-F27 supports the source-bound Model Room forecast prompt. Catalog: 153 = 40 supported + 113 review-only + 0 needs-authoring; handler family count 28. Frozen batch `p06-f27-20261021-a` passed 88/88, no repair/rerun; syntax 6/6 and JSON 2/2. Provider calls/tokens/spend 0/0/$0; no cache savings claimed; Codex usage unavailable. No owner question, restriction or critical blocker. 113 local occurrence holds remain; P06 is incomplete and release unauthorized. Forecast fiction, player Hope integration, live Discord/provider behavior and whole-release qualification remain unverified. Evidence: [P06-F27](../../evidence/P06_F27_TARGETED.json).
 
 ## Resumption checkpoint — P06-F26 — 2026-10-21
 

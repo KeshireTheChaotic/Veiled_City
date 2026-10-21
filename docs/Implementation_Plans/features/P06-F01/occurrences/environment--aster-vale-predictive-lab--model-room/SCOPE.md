@@ -1,6 +1,6 @@
 # environment:aster-vale-predictive-lab:model-room
 
-Status: FROZEN FOR P06-F27 SOURCE-BOUND CONTEXT ADAPTER. Parent: [P06-F01](../../SCOPE.md).
+Status: SUPPORTED SOURCE-BOUND GM CONTEXT. Parent: [P06-F01](../../SCOPE.md); feature [P06-F27](../../../P06-F27/SCOPE.md).
 
 Audit SHA: 9e7bf0687357cf96fbe2ea09a04b3e9d2975f6a3. Checkout base: 0834f299ccff1738e9b3dd753a5fc616d3965370.
 
