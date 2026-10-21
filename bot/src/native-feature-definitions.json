@@ -2773,13 +2773,13 @@
       "template_hash": "91311d37cd3e25905676ae06eeb13595735c8f2e55e853b1da8fb9a9a8c91e8d",
       "index": 0,
       "type": "Passive",
-      "status": "review_only",
-      "trigger_kind": "unmapped",
-      "target_policy": "unmapped",
-      "roll_protocol": "unmapped",
-      "costs": null,
-      "native_handler": null,
-      "reason": "No qualified native feature handler."
+      "status": "supported",
+      "trigger_kind": "passive",
+      "target_policy": "none",
+      "roll_protocol": "environment_scene_context",
+      "costs": [],
+      "native_handler": "environment_metaphor_physics_context",
+      "reason": "Exact passive cue preserving player-proposed symbolic approaches; no substitution or outcome is automatic."
     },
     {
       "feature_key": "environment:networked-dream:algorithmic-undertow",

@@ -154,6 +154,6 @@
 | [environment:rupture-district:no-consensus](occurrences/environment--rupture-district--no-consensus/LEDGER.md) | supported | verified_source | environment_no_consensus_context |
 | [environment:rupture-district:reality-collision](occurrences/environment--rupture-district--reality-collision/LEDGER.md) | review_only | verified_source | none |
 | [environment:rupture-district:mass-witness](occurrences/environment--rupture-district--mass-witness/LEDGER.md) | review_only | verified_source | none |
-| [environment:networked-dream:metaphor-is-physics](occurrences/environment--networked-dream--metaphor-is-physics/LEDGER.md) | review_only | verified_source | none |
+| [environment:networked-dream:metaphor-is-physics](occurrences/environment--networked-dream--metaphor-is-physics/LEDGER.md) | supported | verified_source | environment_metaphor_physics_context |
 | [environment:networked-dream:algorithmic-undertow](occurrences/environment--networked-dream--algorithmic-undertow/LEDGER.md) | review_only | verified_source | none |
 | [environment:networked-dream:viral-door](occurrences/environment--networked-dream--viral-door/LEDGER.md) | review_only | verified_source | none |
