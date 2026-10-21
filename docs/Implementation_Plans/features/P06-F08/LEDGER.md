@@ -2,6 +2,8 @@
 
 Status: TARGETED PASS; OCCURRENCE SUPPORTED.
 
+Implementation commit: `c3fae2768504fb7b4971c47b0f647fe9d0bf1d43`.
+
 Baseline audit `9e7bf0687357cf96fbe2ea09a04b3e9d2975f6a3`; branch `codex/clean-ai-gm-2026-10`; HEAD `64ca03c1207110925328e010c530d898fa94146f`.
 
 Production changes: `bot/src/native-feature-definitions.json`, `bot/src/native-feature-catalog.js`, `bot/src/native-environment-capabilities.js`. Fresh test: new `p06-f08.test.mjs`; updated `p06-f01.test.mjs`; P06-F04/F05/F06/F07 feature tests run because shared modules changed.

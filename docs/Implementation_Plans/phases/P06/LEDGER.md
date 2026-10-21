@@ -61,4 +61,6 @@ P06-F07 enables Emergency Cascade through its existing exact scene-action route.
 
 P06-F08 enables Code Blue through its exact existing medical emergency route. Fresh shared batch passed 14/14 with 4/4 syntax checks. Catalog: 21 supported / 132 review-only / 0 needs-authoring. Provider calls/tokens/spend 0/0/$0; no cache claim. No owner question, new narrative restriction or critical blocker; release unauthorized.
 
+Latest implementation SHA: `c3fae2768504fb7b4971c47b0f647fe9d0bf1d43`; current catalog has 21 supported occurrences.
+
 Latest implementation SHA: `2958560f52e0bce6c1dc91eacd0b1532875f1c29`; current inventory remains 20 supported / 133 review-only.
