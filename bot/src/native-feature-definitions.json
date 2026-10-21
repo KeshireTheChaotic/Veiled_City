@@ -255,13 +255,13 @@
       "template_hash": "3f7e7cc1ce17c16b7e50d3e1b86822d11f57c60ac97ff49f066df2cae91da9cd",
       "index": 0,
       "type": "Passive",
-      "status": "review_only",
-      "trigger_kind": "unmapped",
-      "target_policy": "unmapped",
-      "roll_protocol": "unmapped",
-      "costs": null,
-      "native_handler": null,
-      "reason": "No qualified native feature handler."
+      "status": "supported",
+      "trigger_kind": "passive",
+      "target_policy": "none",
+      "roll_protocol": "native_adversary_context",
+      "costs": [],
+      "native_handler": "adversary_flow_around_it_context",
+      "reason": "Exact source-bound GM cue; gap qualification and traversal are not committed."
     },
     {
       "feature_key": "adversary:river-hound:drag-down",
