@@ -6,6 +6,7 @@ import {sceneFictionHash as hash,narrativeSourceVisible} from './scene-fiction-c
 import {indexWorldEvent} from './city-calendar.js';
 import {isPvpIntent} from './pvp-authority.js';
 import {arbitrationFailure as fail} from './gm-arbitration-contract.js';
+import {prepareEnvironmentNoiseOdds,inspectEnvironmentNoiseOdds} from './native-environment-noise.js';
 
 const issuer='native:ordinary-roll-modifier';
 const declaration=a=>({intent:a.record_key,source:a.source_event,hash:a.data.source_hash,actor:a.data.actor,
@@ -21,9 +22,10 @@ function evidence(db,guild,scope){
 export function prepareOrdinaryRollModifier(db,guild,origin,entry,p){
   if(!p.advantage&&!p.disadvantage)return [];
   const o=inspectArbitrationOrigin(db,guild,origin),a=consentAction(db,guild,entry.intent_ref).row;
+  const environment=p.feature_ref?prepareEnvironmentNoiseOdds(db,guild,origin,entry,p):null;
   if(entry.actor.type!=='character'||a.data.actor!==entry.actor.key||isPvpIntent(db,guild,a)
     ||a.data.session_id!==o.binding.session||a.data.scene!==o.binding.scene||!narrativeSourceVisible(db,guild,a.source_event,o.scope)
-    ||p.disposition!=='request_pc_action_roll'||p.stakes_kind!=='attempt_only'||p.feature_ref||p.experience_ref
+    ||p.disposition!=='request_pc_action_roll'||p.stakes_kind!=='attempt_only'||p.feature_ref&&!environment||p.experience_ref
     ||p.advantage===p.disadvantage||!p.reason?.trim()||p.reason.length>600
     ||!p.rule_basis_refs.includes('srd:action-rolls')||a.data.coordination||a.data.framing!=='immediate')
     throw fail('ordinary_modifier_requires_exact_nonfeature_action');
@@ -31,7 +33,7 @@ export function prepareOrdinaryRollModifier(db,guild,origin,entry,p){
   const context=evidence(db,guild,scope);
   if(!context.native&&!context.events.length)throw fail('ordinary_modifier_context_unverified');
   const binding={version:1,issuer,declaration:declaration(a),origin:o.binding,context,trait:p.trait,roll_kind:'action',
-    kind:p.advantage?'advantage':'disadvantage',amount:1,reason:p.reason};
+    kind:p.advantage?'advantage':'disadvantage',amount:1,reason:p.reason,...(environment?{environment}:{})};
   const key=`ordinary-modifier:${hash(binding)}`;
   return db.transaction(()=>{
     const prior=db.getWorldEvent(guild,key);
@@ -67,6 +69,10 @@ export function inspectOrdinaryRollModifier(db,guild,input,pc,event,{historical=
     ||hash(mod)!==hash({name:'Contextual GM ruling',trait:b.trait,roll_kind:b.roll_kind,kind:b.kind,amount:1,ruling_key:''}))
     throw fail('ordinary_modifier_native_ancestry_changed');
   for(const source of b.context.events){const e=db.getWorldEvent(guild,source.ref);if(e?.status!=='active'||hash(e)!==source.hash)throw fail('ordinary_modifier_evidence_changed');}
+  if(b.environment){
+    inspectEnvironmentNoiseOdds(db,guild,b.environment,a,{historical});
+    if(b.kind!=='disadvantage'||b.reason!==b.environment.applicability_ruling)throw fail('environment_modifier_exact_ruling_required');
+  }
   if(!historical){
     const scope={mode:a.visibility==='character'?'private':'party',actorUserId:a.data.owner_user_id,actorCharacterId:a.data.actor};
     if(!gmRulingContext(db,guild,scope).enabled||db.getCityRecord(guild,'gm_authority','campaign')?.data.gm_authority_mode==='manual'

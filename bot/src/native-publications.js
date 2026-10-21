@@ -14,11 +14,12 @@ const queues=new WeakMap();
 /** Native affected-owner status/result only; model text and another target's mechanics are not accepted. */
 function gmArbitrationSpec(db,guild,decision){
   const row=db.getCityRecord(guild,'gm_arbitration_decision',decision),n=row?.data.native;
-  if(n?.operation!=='request_group_feature_reaction')throw new StateConflictError('Exact native group reaction required.');
-  const projection=nativeGmNotice(db,guild,decision,{mode:'private',actorUserId:n.owner,actorCharacterId:n.character});
+  if(!['request_group_feature_reaction','environment_trace_choice'].includes(n?.operation)&&!n?.environment_trace_risk)throw new StateConflictError('Exact native owner result required.');
+  const owner=n.owner||row.data.scope.actorUserId,character=n.character||row.data.scope.actorCharacterId;
+  const projection=nativeGmNotice(db,guild,decision,{mode:'private',actorUserId:owner,actorCharacterId:character});
   if(!projection)throw new StateConflictError('Verified owned GM result required.');
-  return {kind:'gm_arbitration_publication',key:`gm-notice:${noticeHash([decision,n.owner,projection.revision])}`,source:row.source_event,
-    notice:{kind:'gm_arbitration_private',ref:decision,revision:projection.revision,user:n.owner,character:n.character}};
+  return {kind:'gm_arbitration_publication',key:`gm-notice:${noticeHash([decision,owner,projection.revision])}`,source:row.source_event,
+    notice:{kind:'gm_arbitration_private',ref:decision,revision:projection.revision,user:owner,character}};
 }
 export function reserveGmArbitrationNotice(db,guild,decision){return reserveNativeNotice(db,guild,gmArbitrationSpec(db,guild,decision));}
 export function publishGmArbitrationNotice(db,guild,decision,sendPrivate){

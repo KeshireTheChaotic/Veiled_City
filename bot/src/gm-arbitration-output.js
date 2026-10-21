@@ -13,6 +13,18 @@ import {inspectNativeEquippedAttack} from './native-equipped-attacks.js';
 import {inspectFearReservation} from './fear-reservations.js';
 import {inspectNativeRollParticipation} from './native-roll-participation.js';
 import {rollRevision} from './roll-requests.js';
+import {inspectEnvironmentTrace,inspectEnvironmentTraceResult,traceOfferForRisk} from './native-environment-trace.js';
+
+function traceNotice(db,guild,offer,pc){
+  if(offer.data.character!==pc.id||offer.data.owner!==pc.owner_user_id)throw fail('environment_trace_notice_current_owner');
+  const saved=db.getCityRecord(guild,'native_environment_trace_result',`${offer.record_key}:result`);
+  if(saved){const proof=inspectEnvironmentTraceResult(db,guild,saved.record_key,pc.owner_user_id);
+    return {proof,text:`Native intrusion trace: ${proof.data.trace}. Hope spent: ${proof.data.hope_spent}. Your saved roll is unchanged.`};}
+  return {proof:offer,text:'Your failed intrusion left a native trace. You may spend exactly 1 Hope to suppress this trace, leave it in place, or resolve a source-backed credible suppression action. Silence never spends Hope or chooses a response for you.\n'
+    +['pay_hope','leave_trace'].map(choice=>'/vc-roll window json:'+JSON.stringify({op:'environment-trace-choice',request:offer.record_key,
+      revision:hash(offer.data),choice,accepted_intent:'',prerequisite:''})).join('\n')
+    +'\nA credible suppression requires your separate native success/no-roll action receipt; no reaction dice or automatic success is invented.'};
+}
 
 export function nativeGmNotice(db,guild,key,scope,{library=new EncounterLibrary('../content')}={}){
   const stored=db.getCityRecord(guild,'gm_arbitration_decision',key),shared=stored?.data.native?.operation==='commit_adversary_volley'
@@ -26,7 +38,9 @@ export function nativeGmNotice(db,guild,key,scope,{library=new EncounterLibrary(
   if(!pc||scope.mode!=='private'||scope.actorUserId!==pc.owner_user_id||scope.actorCharacterId!==pc.id
     ||conversationPrincipal(db,guild,scope.actorUserId,pc.id).kind!=='owner')throw fail('private_notice_recipient');
   let text='',proof=null;
-  if(row.status==='pending_owner_choice'&&n?.operation==='owner_collaboration'){
+  if(row.status==='pending_owner_choice'&&n?.operation==='environment_trace_choice'){
+    ({proof,text}=traceNotice(db,guild,inspectEnvironmentTrace(db,guild,n.request),pc));
+  }else if(row.status==='pending_owner_choice'&&n?.operation==='owner_collaboration'){
     const choice=n.choices.find(c=>c.character===pc.id),request=db.getCityRecord(guild,'roll_request',n.request),
       event=db.getWorldEvent(guild,choice.proof),description=event?.details?.binding?.description;
     if(!request)throw fail('private_collaboration_request');
@@ -50,6 +64,8 @@ export function nativeGmNotice(db,guild,key,scope,{library=new EncounterLibrary(
       text=formatRollRequest(request,{user:pc.owner_user_id,db,guild});
     }
     proof=request;
+    if(n.environment_trace_risk){const offer=traceOfferForRisk(db,guild,n.environment_trace_risk);
+      if(offer){const trace=traceNotice(db,guild,offer,pc);text+=`\n${trace.text}`;proof=[request,trace.proof];}}
   }else if(row.status==='pending_pc_reaction'){
     const {terms}=inspectGmReactionInvitation(db,guild,pc.owner_user_id,row.record_key);
     text=terms.status==='withdrawn'?'You withheld this reaction. No roll, surrender or failed response was inferred.':terms.status==='resolved'

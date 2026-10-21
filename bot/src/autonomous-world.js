@@ -20,6 +20,7 @@ import {continuationAuthorization} from "./action-continuation.js";
 import {verifiedWorldAuthoringContext,worldIdentityOrigin,privateWorldIdentityForGm,assertIndependentWorldIdentity,assertWorldIdentityNames} from './world-authorship.js';
 import {sceneFictionHash,narrativeSourceVisible} from './scene-fiction-context.js';
 import {BACKGROUND_WORLD_KINDS,validateBackgroundIdentity} from './world-background-identities.js';
+import {nativeVipAdmission} from './native-environment-access.js';
 const hash=value=>createHash("sha256").update(JSON.stringify(value)).digest("hex").slice(0,40);
 export const AUTONOMOUS_WORLD_VERSION=2;
 const object=properties=>({type:"object",additionalProperties:false,properties,required:Object.keys(properties)});
@@ -225,8 +226,10 @@ function closed(schema,value){
 function localAccess(db,guild,pc,key){
   const location=db.getSimulationEntity(guild,"location",key),s=location?.state||{};
   const origin=pc.data.location?db.getSimulationEntity(guild,"location",pc.data.location)?.state||{}:{};
-  if(!location||["restricted","locked","contested","hazard","travel_required","removed","sealed"].some(k=>s[k])
-    ||s.hazards?.length||s.wards?.length||Number(s.travel_cost)||Number(s.travel_minutes)||s.access&&s.access!=="public")return false;
+ const admission=location&&s.access==='private'&&s.parent_location_key===pc.data.location
+   ?nativeVipAdmission(db,guild,pc,key):null;
+ if(!location||["locked","contested","hazard","travel_required","removed","sealed"].some(k=>s[k])||s.restricted&&!admission
+   ||s.hazards?.length||s.wards?.length||Number(s.travel_cost)||Number(s.travel_minutes)||s.access&&s.access!=="public"&&!admission)return false;
   if(key!==pc.data.location&&(origin.sealed||origin.locked_exit||origin.blocks_exit||Number(origin.exit_cost)||origin.exit_hazards?.length))return false;
   const policy=db.getCityRecord(guild,"entry_policy",key),scene=currentScene(db,guild);
   const approved=policy?.status==="active"&&db.getWorldEvent(guild,policy.source_event)?.status==="active"

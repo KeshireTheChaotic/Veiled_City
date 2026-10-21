@@ -4,10 +4,10 @@ export const ordinaryEffectClasses=['observation','npc_intent','environment','po
   'special','resource','damage','custody','character_choice','death','disclosure'];
 export const ordinaryEffectsSchema={type:'array',maxItems:4,items:{type:'object',additionalProperties:false,properties:{
   version:{type:'integer',enum:[1]},accepted_intent_ref:str(4000),effect_class:{type:'string',enum:ordinaryEffectClasses},
-  adapter:{type:'string',enum:['observation','evidence_excerpt','condition_clear','delegated','unsupported']},prerequisite_ref:str(200),payload_json:str(6000)
+  adapter:{type:'string',enum:['observation','evidence_excerpt','condition_clear','environment_quiet','environment_resolve','delegated','unsupported']},prerequisite_ref:str(200),payload_json:str(6000)
 },required:['version','accepted_intent_ref','effect_class','adapter','prerequisite_ref','payload_json']}};
 export function validOrdinaryEffect(p){return !!p&&Object.keys(p).sort().join(',')===ordinaryEffectsSchema.items.required.slice().sort().join(',')
-  &&p.version===1&&ordinaryEffectClasses.includes(p.effect_class)&&['observation','evidence_excerpt','condition_clear','delegated','unsupported'].includes(p.adapter)
+  &&p.version===1&&ordinaryEffectClasses.includes(p.effect_class)&&['observation','evidence_excerpt','condition_clear','environment_quiet','environment_resolve','delegated','unsupported'].includes(p.adapter)
   &&['accepted_intent_ref','prerequisite_ref','payload_json'].every(k=>typeof p[k]==='string'&&p[k].length<=ordinaryEffectsSchema.items.properties[k].maxLength);}
 export const ORDINARY_EFFECT_PROMPT='ordinary_effect_proposals are untrusted FOLLOW-THROUGH candidates, never receipts. Use [] unless needed. '
   +'Reference an exact current native accepted action ID from ORDINARY EFFECT CONTEXT, or the exact full current source clause (resolved uniquely natively). '
@@ -17,6 +17,8 @@ export const ORDINARY_EFFECT_PROMPT='ordinary_effect_proposals are untrusted FOL
   +'The native result labels it an unverified document claim, never an inferred conclusion, guilt, authenticity, custody transfer or new canon. '
   +'For condition_clear/effect_class=special use {when:"no_roll"|"success",condition:{condition:<exact owned native condition ref>}} only after an owner clear_condition declaration targets that ref and its own native action succeeds. '
   +'This narrowly ends a verified until-cleared Flashbang Vulnerable condition; it cannot heal, clear unrelated conditions, infer success or free another PC. Its result stays owner-private. '
+  +'For environment_quiet/effect_class=environment use {when:"no_roll"|"success",environment:{environment:<exact native environment instance>}} only after an owner quiet_environment action targeting that instance has its own successful native outcome. This only changes supported nightclub acoustic disadvantage; no PC resources or other effects. '
+  +'For environment_resolve/effect_class=environment use {when:"no_roll"|"success",environment:{effect:<exact native emergency effect ref>}} after an owner resolve_environment_event declaration targeting that effect succeeds. This ends only a supported native medical/service emergency, never heals, pays, resolves an unrelated threat or chooses another PC response. The acknowledgement remains owner-private. '
   +'Only native-scoped observation, bounded document reading, NPC goal, sourced scene record or matched service consequence routes exist. '
   +'Private sources/results stay private; missing/unsupported capability, custody, damage, costs, conditions, death, knowledge/disclosure or generic clock/exposure needs scoped review. '
   +'A high/Critical roll is only a precondition, never effect permission. Do not duplicate the nested intent in ai_intents or infer another PC reaction. '

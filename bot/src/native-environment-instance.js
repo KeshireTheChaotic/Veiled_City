@@ -6,6 +6,7 @@ import {currentScene} from './scene-continuity.js';
 import {sceneFictionHash as hash} from './scene-fiction-context.js';
 import {indexWorldEvent} from './city-calendar.js';
 import {arbitrationFailure as fail} from './gm-arbitration-contract.js';
+import {environmentProposalContract} from './native-environment-capabilities.js';
 const issuer='native:environment-instance';
 const keyFor=d=>`environment-instance:${hash([d.session,d.scene,d.location,d.scope])}`;
 const enabled=(db,guild)=>db.getCityCalendar(guild).flags.authoring===true
@@ -47,14 +48,15 @@ export function establishNativeEnvironmentInstance(db,guild,frame,input){
 }
 
 /** Rebuilding an audience proof cannot revive an opaque execution grant or turn a template into effects. */
-export function inspectNativeEnvironmentInstance(db,guild,key,scope){
+export function inspectNativeEnvironmentInstance(db,guild,key,scope,{historical=false}={}){
   const row=typeof key==='string'&&db.getCityRecord(guild,'native_environment_instance',key),d=row?.data,
     event=row&&db.getWorldEvent(guild,row.source_event),mutation=event&&db.getMutation(guild,event.source_id),
     origin=d&&db.getWorldEvent(guild,d.origin),template=d&&compileNativeActors().find(a=>a.actor_kind==='environment'&&a.actor_key===d.environment),
-    scene=currentScene(db,guild),location=d&&db.getSimulationEntity(guild,'location',d.location);
+    scene=historical?null:currentScene(db,guild),location=d&&db.getSimulationEntity(guild,'location',d.location);
   if(row?.status!=='active'||row.visibility!=='gm'||row.subject_key||d?.version!==1||d.issuer!==issuer||key!==keyFor(d)
-    ||hash(d.scope)!==hash(scope)||d.session!==scene.session_id||d.scene!==scene.key||!location||location.state.removed===true
-    ||hash(location)!==d.location_hash||row.location_key!==d.location||template?.template_hash!==d.template_hash||template.source_ref!==d.source_ref
+    ||hash(d.scope)!==hash(scope)||db.getSession(d.session)?.guild_id!==guild
+    ||!historical&&(d.session!==scene.session_id||d.scene!==scene.key||!location||location.state.removed===true||hash(location)!==d.location_hash)
+    ||row.location_key!==d.location||template?.template_hash!==d.template_hash||template.source_ref!==d.source_ref
     ||d.execution_authority!==false||d.publication_authority!==false||origin?.status!=='active'||hash(origin)!==d.origin_hash
     ||event?.status!=='active'||event.kind!=='native_environment_instance'||event.source_kind!=='mutation'||event.visibility!=='gm'
     ||event.subject_key||event.session_id!==d.session||event.scene!==d.scene||event.location_key!==d.location
@@ -63,8 +65,18 @@ export function inspectNativeEnvironmentInstance(db,guild,key,scope){
     ||mutation.mutation_type!=='establish_environment_profile'||mutation.entity_key!==key||mutation.visibility!=='gm'
     ||mutation.session_id!==d.session||hash(JSON.parse(mutation.after_json))!==hash(d))
     throw fail('environment_native_instance_source_owner_scene_changed');
-  const current=revalidateNarrativeAudience(db,guild,d.audience,scope);
-  if(current.ctx.binding.location!==d.location)throw fail('environment_current_native_viewpoint_changed');
+  // The immutable native establishment receipt attests the original viewpoint. A saved
+  // reader may inspect it after movement/scene end, never reuse it for new effects.
+  const {proof_ref,...audience}=d.audience||{},pc=d.scope.actorCharacterId&&db.getCharacter(d.scope.actorCharacterId);
+  if(proof_ref!==`audience-v9:${hash(audience)}`||audience.guild!==guild||audience.session!==d.session||audience.scene!==d.scene
+    ||audience.location!==d.location||audience.source_event!==d.origin||audience.source_hash!==hash(origin.details)
+    ||hash(audience.scope)!==hash(scope)||d.scope.actorCharacterId&&(pc?.guild_id!==guild||pc.owner_user_id!==d.scope.actorUserId))
+    throw fail('environment_original_audience_or_owner_changed');
+  if(!historical){
+    if(!enabled(db,guild))throw fail('environment_native_authority_disabled');
+    const current=revalidateNarrativeAudience(db,guild,d.audience,scope);
+    if(current.ctx.binding.location!==d.location)throw fail('environment_current_native_viewpoint_changed');
+  }
   return row;
 }
 
@@ -73,7 +85,7 @@ export function nativeEnvironmentInstanceCapabilities(db,guild,key,scope){
   const row=inspectNativeEnvironmentInstance(db,guild,key,scope);
   return {instance:row.record_key,revision:hash(row),environment:row.data.environment,execution_authorized:false,
     features:executableNativeFeatures('environment').filter(f=>f.template_hash===row.data.template_hash)
-      .map(f=>({key:f.feature_key,hash:hash(f)}))};
+      .map(f=>({key:f.feature_key,hash:hash(f),proposal_contract:environmentProposalContract(f)}))};
 }
 
 /** Exact scoped lookup, not a global latest-profile query that could cross private viewpoints. */

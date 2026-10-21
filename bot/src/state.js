@@ -20,6 +20,7 @@ import { persistPlayerIntents, persistPlayerIntentDiagnostics, persistTypedDialo
 import { adjudicateAcceptedIntent } from "./rules-arbitration.js";
 import {adjudicateGmRuling} from "./gm-action-ruling.js";
 import {applyUnifiedArbitration,prepareUnifiedCollaboration} from './gm-unified-arbitration.js';
+import {nativeEnvironmentOutputCandidates} from './native-environment-output.js';
 import { coordinateTypedActionWindows } from "./scene-action-window.js";
 import { buildActionPlan, executableActionSpans, transitionAction } from "./action-dependency.js";
 import { saveContextMemories } from "./context-memory.js";
@@ -513,7 +514,7 @@ export function applyAuthoritativeMutation(db,{guildId,sessionId=null,events=[],
     const actionWindows=coordinateTypedActionWindows(db,guildId,conflictInputs,actionPlan);
     if(actionWindows.length)actionPlan=actionPlan.map(row=>db.getCityRecord(guildId,"compound_action",row.record_key));
     const coordinatedIds=new Set(actionWindows.map(row=>row.action));
-    const unifiedArbitration=applyUnifiedArbitration(db,guildId,narrative,typedIntents);
+    const unifiedArbitration=applyUnifiedArbitration(db,guildId,narrative,typedIntents,{content});
     for(const decision of unifiedArbitration.filter(d=>d.data.native?.operation==='campaign_pvp_attack')){
       const request=db.getCityRecord(guildId,'pvp_attack_request',decision.data.native.request),
         preparation=campaignPvpPreparations.find(p=>p.intent===request?.data.offer.input.attack);
@@ -622,7 +623,8 @@ export function applyAuthoritativeMutation(db,{guildId,sessionId=null,events=[],
     }
     const nativeEntries=intents.filter(row=>row.status==='accepted'&&row.data.intent?.feature==='scene'
       &&row.data.intent.payload?.op==='enter'&&row.data.result?.status==='approved').map(row=>row.data.result.record_key);
-    if((nativeEntries.length||ordinaryEffects.some(row=>row.status==='applied'))&&narrative)prepareAuthorizedTurnOutput(db,guildId,narrative,scope,{
+    if((nativeEntries.length||ordinaryEffects.some(row=>row.status==='applied')
+      ||nativeEnvironmentOutputCandidates(db,guildId,outputSource,scope).length)&&narrative)prepareAuthorizedTurnOutput(db,guildId,narrative,scope,{
       sourceRef:outputSource&&db.getWorldEvent(guildId,outputSource)?outputSource:null,world,nativeEntries,
       nativeEffects:ordinaryEffects.filter(row=>row.status==='applied').map(row=>row.record_key),origin:source,content});
     // Validate against native operations staged in this transaction, not the old

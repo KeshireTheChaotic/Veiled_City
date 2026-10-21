@@ -12,6 +12,8 @@ import {inspectIncomingCandidate,inspectVolleyCandidate} from './pc-incoming.js'
 import {EncounterLibrary} from './encounter.js';
 import {featureDisposition} from './native-feature-catalog.js';
 import {requireNativeAdversaryFeature} from './native-adversary-context.js';
+import {applyNativeEnvironmentProfileProposals} from './native-environment-proposals.js';
+import {executeEnvironmentProposal} from './native-environment-dispatch.js';
 import {authorizeFeatureChoice,reserveFeatureWindow,pendingFeatureWindows} from './native-feature-windows.js';
 import {nativeAlliancePlan} from './native-encounter-relations.js';
 import {nativeFeatureReviewContract} from './native-house-errata.js';
@@ -23,6 +25,7 @@ import {prepareOrdinaryRollModifier} from './native-roll-modifiers.js';
 import {prepareNativeRollParticipation} from './native-roll-participation.js';
 import {prepareNativeEquippedAttack} from './native-equipped-attacks.js';
 import {prepareCampaignPvpFromBoard} from './pvp-attacks.js';
+import {registerEnvironmentTraceRisk} from './native-environment-trace.js';
 import {reserveCampaignAttackNotices} from './native-publications.js';
 
 export const UNIFIED_ARBITRATION_PROMPT="Evaluate unified_arbitration in this SAME GM call. "
@@ -50,6 +53,13 @@ export const UNIFIED_ARBITRATION_PROMPT="Evaluate unified_arbitration in this SA
   +"Optional pre-roll Fear requires unified_arbitration version=2 and one exact pre_roll_fear request_ref/npc_intent_ref from the current board. "
   +"Select one otherwise-legal standard NPC attack against that pending action owner only; native code reserves 1 existing Fear and requires acknowledged notice before dice. "
   +"No printed feature, Experience, added modifier, extra action or owner choice is purchased. Version1 with no interrupt remains valid. "
+  +"Version3 additionally accepts environment_profiles (at most one exact supported environment template at the current location); use [] unless its supported native capabilities are supplied. "
+  +"A profile is GM-private provenance, not a feature effect, PC knowledge, new actor, attack or encounter. Unsupported profiles remain held without blocking independent actions. "
+  +"Version4 adds environment_actions (at most one), only for supplied executable capabilities. Sirens Outside uses its exact native environment instance, feature_ref and ordinary NPC identity/category; native code validates a current GM opportunity, printed Fear, identity collisions and audience. No combat statistics, PC response or custody is authorized. Use [] when unavailable. "
+  +"Version5 also admits exact source-defined environment scene actions: Code Blue medical_emergency, Emergency Cascade service_emergency with an actual local service, or Automatic Correction mundane_detail using the closed native property/value domain. These establish a local complication, never PC injury, a decision, automatic service damage or an invented numerical modifier. Unsupported actions stay private review. "
+  +"Version6 admits Upload in Progress: upload_start requires an existing clear local video with native creation and pending-upload provenance, never a camera assertion; upload_advance selects one actual new native fictional occurrence and contextual ruling; upload_adjust requires the affected owner's own successful tick_back_upload/redirect_upload action. No timer, assumed PC act, invented recording, recipient knowledge or duplicate tick. "
+  +"Version7 admits Everybody Saw Something Different only with an independently GM-established local supernatural incident, exactly three actual local unproxied NPCs, their already native-authored attributed speech and own evidence, an exact established true detail per account, and three pairwise contradictory quote anchors. This is contextual GM comparison, never truth promotion, forced testimony or invented knowledge. "
+  +"Only when supplied as an executable local environment capability, Everything Logs may use its exact feature_ref on an ordinary request_pc_action_roll/attempt_only intrusion ruling, without advantage/disadvantage. Native code records this classification before dice and opens an owner-private response only on an actual action failure. No second reaction or post-hoc success claim; exactly 1 Hope is optional and owner-chosen, never automatic. "
   +"For an explicit GM-owned alliance choice between currently active local unproxied NPC combatants, use set_allies or clear_allies, exact other NPC target_refs, npc_no_roll, srd:gm-moves, stakes=none, no feature or dice. "
   +"This does not enroll PCs or prove a powered device, movement, NPC knowledge or disclosure. "
   +"Group membership and relationship scores alone never grant Local Mesh. "
@@ -100,7 +110,9 @@ export function adjudicateSceneBoard(db,guild,origin,board,proposals,{library=ne
       native=prepareNativeEquippedAttack(db,guild,origin,entry,p,{library});
       status=native.disposition==='roll_pending'?'pending_pc_roll':'needs_rules_review';reason='Native exact existing equipped approval only; no acquired gear, new mapping or owner dice are invented.';
     }
-    else if(p.feature_ref&&p.feature_ref!=='standard_attack'){
+    else if(p.feature_ref&&p.feature_ref!=='standard_attack'
+      &&!(entry.actor.type==='character'&&['environment:haunted-nightclub:too-loud-to-think','environment:aster-vale-predictive-lab:everything-logs'].includes(p.feature_ref)
+        &&featureDisposition(p.feature_ref).status==='supported')){
       const feature=featureDisposition(p.feature_ref);
       reason=feature.reason; // Catalog membership alone never grants a feature capability.
       if(feature.status==='supported'){
@@ -125,10 +137,13 @@ export function adjudicateSceneBoard(db,guild,origin,board,proposals,{library=ne
       if(isPvpIntent(db,guild,accepted)){status='needs_consent';reason='Exact bilateral PvP agreement required.';}
       else if(accepted.data.coordination||accepted.data.dependencies?.some(ref=>db.getCityRecord(guild,'typed_intent',ref)?.status!=='resolved')){
         status='blocked';reason='Native shared window or exact prerequisite remains unresolved; no automatic participation.';
-      }else if(['no_roll','request_pc_action_roll'].includes(p.disposition)&&p.stakes_kind==='attempt_only'&&!p.feature_ref&&!p.experience_ref
+      }else if(['no_roll','request_pc_action_roll'].includes(p.disposition)&&p.stakes_kind==='attempt_only'
+        &&(!p.feature_ref||['environment:haunted-nightclub:too-loud-to-think','environment:aster-vale-predictive-lab:everything-logs'].includes(p.feature_ref)&&p.disposition==='request_pc_action_roll')&&!p.experience_ref
         &&(p.disposition==='request_pc_action_roll'||!p.advantage&&!p.disadvantage)){
         const scope={mode:accepted.visibility==='character'?'private':'party',actorUserId:accepted.data.owner_user_id,actorCharacterId:accepted.data.actor};
-        const nativeModifiers=prepareOrdinaryRollModifier(db,guild,origin,entry,p);
+        const traceRisk=p.feature_ref==='environment:aster-vale-predictive-lab:everything-logs'
+          ?registerEnvironmentTraceRisk(db,guild,origin,board,entry,p):null;
+        const nativeModifiers=traceRisk?[]:prepareOrdinaryRollModifier(db,guild,origin,entry,p);
         const modifiers=p.disposition==='no_roll'?[]:[...new Set([...db.rollModifierSources(guild,accepted.data.actor,p.trait,'action',accepted.record_key,
           {sessionId:accepted.data.session_id,sceneKey:accepted.data.scene}).map(s=>s.event_key),...nativeModifiers])];
         const r=adjudicateGmRuling(db,guild,entry.intent_ref,{version:1,disposition:p.disposition==='no_roll'?'narrative_no_roll':'standard_action_roll',
@@ -139,7 +154,9 @@ export function adjudicateSceneBoard(db,guild,origin,board,proposals,{library=ne
           explanation:'Source-bound ordinary Daggerheart adjudication of your exact accepted declaration.',
           difficulty_reason:'AI GM selected the saved Difficulty against current native scene context; no unsupported effect is authorized.',
           saved_ruling_key:'',override_refs:[],raw_refs:p.rule_basis_refs,house_refs:[],homebrew_refs:[],modifier_keys:modifiers},scope);
-        native=r.data.adjudication||null;status=native?.disposition==='roll_pending'?'pending_pc_roll':native?.receipts?.length?'resolved_no_roll':'needs_rules_review';reason=r.data.review_reason||p.reason;
+        native=r.data.adjudication||null;
+        if(traceRisk&&native?.disposition==='roll_pending')native={...native,environment_trace_risk:traceRisk.record_key};
+        status=native?.disposition==='roll_pending'?'pending_pc_roll':native?.receipts?.length?'resolved_no_roll':'needs_rules_review';reason=r.data.review_reason||p.reason;
       }
     }else if(p.disposition==='npc_no_roll'&&['set_allies','clear_allies'].includes(entry.operation)&&p.difficulty===null&&p.trait===null
       &&p.stakes==='none'&&p.rule_basis_refs.includes('srd:gm-moves')&&!p.feature_ref&&!p.experience_ref&&!p.advantage&&!p.disadvantage){
@@ -189,8 +206,8 @@ export function adjudicateSceneBoard(db,guild,origin,board,proposals,{library=ne
     });
   });
 }
-export function applyUnifiedArbitration(db,guild,result,playerRows){
-  return db.transaction(()=>applyUnifiedBatch(db,guild,result,playerRows));
+export function applyUnifiedArbitration(db,guild,result,playerRows,options={}){
+  return db.transaction(()=>applyUnifiedBatch(db,guild,result,playerRows,options));
 }
 /** Classify only sealed, bounded Help eligibility before generic PC-conflict staging.
  * This never permits damage or a PC choice; unsuccessful eligibility stays scoped review. */
@@ -212,10 +229,11 @@ export function prepareUnifiedCollaboration(db,guild,result,playerRows){
   }
   return classified;
 }
-function applyUnifiedBatch(db,guild,result,playerRows){
+function applyUnifiedBatch(db,guild,result,playerRows,{content}={}){
   if(!result?.unified_arbitration)return [];
   if(!matchesArbitrationSchema(unifiedArbitrationSchema,result.unified_arbitration))throw fail('transport_shape');
   const origin=arbitrationTurnOrigin(result);if(!origin)throw fail('native_service_origin_required');
+  applyNativeEnvironmentProfileProposals(db,guild,origin,result.unified_arbitration.environment_profiles||[]);
   const rows=currentScenePlayerInputs(db,guild,origin,playerRows),board=buildSceneIntentBoard(db,guild,origin,rows,result.unified_arbitration.npc_intents);
   let interrupt=null;
   for(const selection of result.unified_arbitration.pre_roll_fear||[]){
@@ -242,6 +260,20 @@ function applyUnifiedBatch(db,guild,result,playerRows){
       rule_basis_refs:['srd:reaction-rolls'],difficulty:12,trait:'Instinct',stakes_kind:'native_feature',stakes:'Native Feedback reaction.',reason:'Native GM reactive policy feedback_v1; current visible owned-device use.',
       difficulty_reason:'Exact native Static Wraith feature.',feature_ref:w.data.feature,experience_ref:'',advantage:false,disadvantage:false,proposal_version:2,trigger_ref:w.record_key};
     decisions.push(...adjudicateSceneBoard(db,guild,origin,child,[p]));used++;
+  }
+  // Presence changes invalidate the original NPC snapshot: perform them only after all
+  // decisions/reactive policies have consumed the sealed board. A held proposal must
+  // not discard independently authorized sibling actions.
+  for(const proposal of result.unified_arbitration.environment_actions||[]){
+    const key=`environment-action-review:${hash([o.binding.source,o.scope,proposal])}`;
+    if(db.getCityRecord(guild,'native_environment_action_review',key))continue;
+    try{executeEnvironmentProposal(db,guild,origin,board,proposal,{content});}
+    catch(error){
+      if(!['GM_ARBITRATION','SCENE_FICTION','AUTONOMOUS_WORLD','NARRATIVE_AUTHORITY','STATE_CONFLICT','INVALID_INPUT'].includes(error.code))throw error;
+      db.saveCityRecord(guild,{kind:'native_environment_action_review',key,status:'needs_review',visibility:'gm',source_event:o.binding.source,
+        data:{version:1,proposal:structuredClone(proposal),scope:o.scope,scene:o.binding.scene,session:o.binding.session,
+          reason:error.message,execution_authorized:false,recovery:'Reconcile the source, supported capability and native opportunity; no proposed arrival or cost was committed.'}});
+    }
   }
   return decisions;
 }

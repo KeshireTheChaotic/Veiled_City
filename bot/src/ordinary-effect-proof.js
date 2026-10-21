@@ -11,6 +11,8 @@ import {scenePresence} from './scene-continuity.js';
 import {validOrdinaryEffect} from './ordinary-effect-schema.js';
 import {validateNativeCondition} from './native-group-features.js';
 import {inspectNativeConditionClearAncestry} from './native-condition-recovery.js';
+import {inspectNativeEnvironmentNoiseClear} from './native-environment-noise.js';
+import {inspectNativeEnvironmentResolution,environmentResolutionText} from './native-environment-recovery.js';
 export const effectHash=v=>createHash('sha256').update(JSON.stringify(v)).digest('hex');
 export const effectKey=(proposal,scope)=>`ordinary-effect:${effectHash([proposal,scope])}`;
 export function effectFail(reason){throw Object.assign(new Error(`Ordinary effect held: ${reason}`),{code:'ORDINARY_EFFECT',expected:true,reason});}
@@ -77,7 +79,7 @@ export function effectTarget(db,guild,intent){
   effectFail('UNSUPPORTED_NATIVE_ADAPTER');
 }
 export function effectVisibility(db,guild,proposal,payload,origin,prerequisite){
-  if(proposal.adapter==='condition_clear')return 'character';
+  if(['condition_clear','environment_quiet','environment_resolve'].includes(proposal.adapter))return 'character';
   if(proposal.adapter==='delegated'){
     if(['goal','consequence'].includes(payload.intent.feature))return 'gm';
     const target=effectTarget(db,guild,payload.intent);
@@ -139,6 +141,16 @@ export function verifyOrdinaryEffect(db,guild,ref,scope){
       ||native.data.prerequisite!==pre.receipt.record_key||effectHash(native)!==d.native_hash||effectHash(native)!==d.result_hash
       ||text!=='Your source-verified Vulnerable condition has ended. No resources or other conditions changed.')
       effectFail('NATIVE_CONDITION_CLEAR_CHANGED');
+  }else if(d.proposal.adapter==='environment_quiet'){
+    const native=inspectNativeEnvironmentNoiseClear(db,guild,d.native_ref,d.origin_scope);
+    if(native.data.environment!==d.payload.environment?.environment||native.data.action!==proof.row.record_key
+      ||native.data.prerequisite!==pre.receipt.record_key||effectHash(native)!==d.native_hash||effectHash(native)!==d.result_hash
+      ||text!=='The source-verified environmental noise has been quieted. No character resources changed.')effectFail('NATIVE_ENVIRONMENT_RECOVERY_CHANGED');
+  }else if(d.proposal.adapter==='environment_resolve'){
+    const native=inspectNativeEnvironmentResolution(db,guild,d.native_ref,scope);
+    if(native.data.effect!==d.payload.environment?.effect||native.data.action!==proof.row.record_key
+      ||native.data.prerequisite!==pre.receipt.record_key||effectHash(native)!==d.native_hash||effectHash(native)!==d.result_hash
+      ||text!==environmentResolutionText())effectFail('NATIVE_ENVIRONMENT_RESOLUTION_CHANGED');
   }else{
     const native=db.getCityRecord(guild,'ai_intent',d.native_ref),source=native&&db.getWorldEvent(guild,native.source_event);
     const evidence=[native?.source_event,...(d.payload.intent?.source_prerequisites||[])].map(ref=>db.getWorldEvent(guild,ref));

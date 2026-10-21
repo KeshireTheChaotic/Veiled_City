@@ -17,6 +17,7 @@ import {assemblyWriterBrief} from './assembly-context.js';
 import {worldIdentityOrigin} from './world-authorship.js';
 import {backgroundIdentityContext} from './world-background-identities.js';
 import {openingEntryProjection} from './opening-entry-context.js';
+import {nativeEnvironmentSituation} from './native-environment-scene.js';
 export const narrativeVisible=(row,scope)=>!!row&&factVisibleTo({...row,subject_character_id:row.subject_character_id||row.subject_key,
   subject_user_id:row.subject_user_id||row.subject_key},scope);
 export function buildNarrativeContext(db,guild,scope,sourceRef,{operation='describe_scene'}={}){
@@ -123,6 +124,7 @@ export function buildNarrativeContext(db,guild,scope,sourceRef,{operation='descr
     place:{key:location||'',name:entity?.state.name||'An unestablished public setting',type:entity?.state.place_type||'unknown',
       identity_state:entity?'established_reuse_only':'unestablished',identity_rule:'Reuse established keys without fiction_delta; descriptive prose belongs in narrative_units. fiction_delta creates genuinely new identities only.'},
     observations:facts.map(f=>({source_ref:f.id,text:f.content,epistemic:evidenceType(f).kind})),npcs,
+    environment_consequences:nativeEnvironmentSituation(db,guild,scope,location),
     background_identities:backgroundIdentityContext(db,guild,scope,{location}),
     prior_fiction:prior,memory_selection:{...memory.selection,selected_for_prompt:prior.length,omitted_from_prompt:memory.selection.eligible-prior.length},
     unknowns:['Hidden causes, private character details and unresolved outcomes are unknown.']};

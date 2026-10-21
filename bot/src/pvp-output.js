@@ -30,6 +30,7 @@ import {projectNarrativeArtifact} from './narrative-artifacts.js';
 import {assertSessionOpeningPublication} from './session-opening.js';
 import {openingEntryNarrativeCandidate} from './opening-entry-context.js';
 import {lifecycleProjection,lifecycleHash} from './lifecycle-output.js';
+import {nativeEnvironmentOutputCandidates} from './native-environment-output.js';
 
 const hash=v=>createHash("sha256").update(JSON.stringify(v??null)).digest("hex");
 const prepared=new WeakMap();
@@ -352,6 +353,7 @@ export function prepareAuthorizedTurnOutput(db,guild,result,scope,{sourceRef=nul
   if(proposals.length)queries.push(...ambientWorldQueries(db,guild,scope,sourceRef));
   // Native coordinator may append one writer request to four provider parts; every part still needs independent proof.
   const worldParts=[...(Array.isArray(drafts.gm_world_parts)?drafts.gm_world_parts:[]).slice(0,5),
+    ...nativeEnvironmentOutputCandidates(db,guild,sourceRef,scope),
     ...nativeEntries.map(ref=>({version:4,kind:'native_outcome',receipt_kind:'scene_entry',ref})),
     ...nativeEffects.filter(ref=>{
       const visibility=db.getCityRecord(guild,'ordinary_effect_receipt',ref)?.visibility;

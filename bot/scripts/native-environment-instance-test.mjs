@@ -60,3 +60,28 @@ test('another template cannot silently replace an established local profile',()=
   assert.throws(()=>establishNativeEnvironmentInstance(f.db,f.guild,x.frame,{...x.input,environment:actors[1].actor_key}),/explicit_reconciliation_required/);
   assert.equal(changes(f),before);assert.deepEqual(inspectNativeEnvironmentInstance(f.db,f.guild,row.record_key,x.scope),row);
 }));
+
+test('historical environment proof is read-only after movement, location revision and scene end; it cannot authorize a current effect',()=>nativeFixture(f=>{
+  const x=fixture(f),row=establishNativeEnvironmentInstance(f.db,f.guild,x.frame,x.input);
+  f.db.updateCharacterData(x.pc.id,d=>{d.location='elsewhere';});
+  f.db.setSimulationEntity(f.guild,'location','terminal',{name:'A revised location',removed:true});
+  const before=changes(f);
+  assert.deepEqual(inspectNativeEnvironmentInstance(f.db,f.guild,row.record_key,x.scope,{historical:true}),row);
+  assert.throws(()=>inspectNativeEnvironmentInstance(f.db,f.guild,row.record_key,x.scope));assert.equal(changes(f),before);
+  f.db.endSession(f.guild,'');f.restart();const restarted=changes(f);
+  assert.deepEqual(inspectNativeEnvironmentInstance(f.db,f.guild,row.record_key,x.scope,{historical:true}),row);
+  assert.throws(()=>inspectNativeEnvironmentInstance(f.db,f.guild,row.record_key,x.scope));assert.equal(changes(f),restarted);
+}));
+for(const change of ['owner','origin','native-source','receipt'])
+test(`historical environment reads still reject changed ${change}`,()=>nativeFixture(f=>{
+  const x=fixture(f,{privateScene:true}),row=establishNativeEnvironmentInstance(f.db,f.guild,x.frame,x.input);
+  if(change==='owner')f.db.db.prepare('UPDATE characters SET owner_user_id=? WHERE id=?').run('other-owner',x.pc.id);
+  if(change==='origin')indexWorldEvent(f.db,f.guild,{key:x.sourceRef,status:'retracted'},'fixture');
+  if(change==='native-source')indexWorldEvent(f.db,f.guild,{key:row.source_event,status:'retracted'},'fixture');
+  if(change==='receipt'){
+    const source=f.db.getWorldEvent(f.guild,row.source_event);
+    f.db.db.prepare("UPDATE mutation_ledger SET actor_id='forged-model' WHERE id=?").run(source.source_id);
+  }
+  const before=changes(f);assert.throws(()=>inspectNativeEnvironmentInstance(f.db,f.guild,row.record_key,x.scope,{historical:true}));
+  assert.equal(changes(f),before);
+}));

@@ -6,6 +6,7 @@ import {drainActionContinuations} from "./action-continuation.js";
 import {typedRollProof} from "./typed-roll-proof.js";
 import {rollBreakdown,rollRevision,reserveRollAmendment} from "./roll-requests.js";
 import {captureActionFeatureWindows} from './native-feature-windows.js';
+import {captureEnvironmentTrace} from './native-environment-trace.js';
 
 const hash=value=>createHash("sha256").update(JSON.stringify(value)).digest("hex").slice(0,40);
 export function finalizeTypedRollAction(db,guild,request){
@@ -48,6 +49,7 @@ function finalize(db,guild,request){
   const related=nodes.filter(row=>row.source_event===accepted.source_event).map(row=>db.getCityRecord(guild,"typed_intent",row.data.action_id)).filter(Boolean);
   if(related.length)buildActionPlan(db,guild,related);
   if(!review&&request.data.kind!=='reaction')captureActionFeatureWindows(db,guild,receipt.record_key);
+  if(!review&&request.data.kind==='action')captureEnvironmentTrace(db,guild,actionId);
   drainActionContinuations(db,guild,{sourceEvent:accepted.source_event});
   const plan=related.map(a=>db.getCityRecord(guild,"compound_action",`action:${createHash("sha256").update(String(a.record_key)).digest("hex").slice(0,32)}`));
   return {receipt:receipt.record_key,outcome,plan};

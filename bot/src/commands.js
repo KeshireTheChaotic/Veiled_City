@@ -90,7 +90,7 @@ import {inspectGmReactionInvitation,submitGmReactionInvitation,withdrawGmReactio
 import {recoverPreRollFear} from './pre-roll-fear-recovery.js';
 import { queueDirectorPublications } from "./publication-outbox.js";
 import {publishContinuationNotices} from "./publishing.js";
-import {publishPvpNotices,publishCampaignPvpNotices,materializeNativeNotices,resyncNativeNotice,publishGmArbitrationNotice} from "./native-publications.js";
+import {publishPvpNotices,publishCampaignPvpNotices,materializeNativeNotices,resyncNativeNotice,publishGmArbitrationNotice,reserveGmArbitrationNotice} from "./native-publications.js";
 import {reconcilePublication} from "./publication-outbox.js";
 import {finishRollOperation} from './roll-operation-publications.js';
 import {createRollSharePreview} from './roll-sharing.js';
@@ -627,6 +627,24 @@ async function executeCommand(interaction,{db,gm,voice=null}){
       }else if(input.op==='gm-reaction-review'){
         if(Object.keys(input).sort().join()!=='op,request')throw new UserInputError('Select one exact private GM reaction invitation.');
         result=inspectGmReactionInvitation(db,interaction.guildId,interaction.user.id,input.request).terms;
+      }else if(input.op==='environment-admission'){
+        if(Object.keys(input).sort().join()!=='accepted_intent,character,credential,destination,environment,method,op,prerequisite'
+          ||!interaction.id)throw new UserInputError('Select an exact owned character, environment, destination and native admission proof.');
+        const {establishEnvironmentAdmission}=await import('./native-environment-access.js');
+        const {op,character,...proposal}=input;
+        const row=establishEnvironmentAdmission(db,interaction.guildId,proposal,{mode:'private',actorUserId:interaction.user.id,actorCharacterId:character});
+        result={request:row.record_key,status:row.status,authority:'Private admission proof only; movement and all other restrictions remain separately validated.'};
+      }else if(input.op==='recording-upload'){
+        const {createNativeEnvironmentRecording}=await import('./native-environment-recording.js');
+        const row=createNativeEnvironmentRecording(db,interaction.guildId,interaction.user.id,input,{interactionId:interaction.id,authoredText});
+        result={request:row.record_key,status:row.status,handout:row.data.handout.id,creation_source:row.data.creation,
+          authority:'Owner-authorized recording and upload choice only; no public disclosure, NPC knowledge or PC consequence.'};
+      }else if(input.op==='environment-trace-choice'){
+        const {chooseEnvironmentTrace,traceDecisionForOffer}=await import('./native-environment-trace.js');
+        const row=chooseEnvironmentTrace(db,interaction.guildId,interaction.user.id,input,{interactionId:interaction.id,authoredText});
+        result={request:input.request,status:row.status,trace:row.data.trace,hope_spent:row.data.hope_spent};
+        const decision=traceDecisionForOffer(db,interaction.guildId,input.request);
+        reserveGmArbitrationNotice(db,interaction.guildId,decision.record_key);gmReactionPublication=decision.record_key;
       }else if(input.op==='gm-reaction-choice'){
         const {chooseGroupReactionOutcome}=await import('./native-group-features.js');
         const row=chooseGroupReactionOutcome(db,interaction.guildId,interaction.user.id,input,{interactionId:interaction.id,authoredText});

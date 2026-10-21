@@ -6,6 +6,7 @@ import {indexWorldEvent,cityAudit} from './city-calendar.js';
 import {randomUUID} from 'node:crypto';
 import {assertPcCanAct} from './pc-native-eligibility.js';
 import {nativeMovementConditionIssue} from './native-group-features.js';
+import {nativeVipAdmission} from './native-environment-access.js';
 const normalized=value=>String(value||"").toLowerCase().replace(/^the\s+/,"").replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
 export function locationMatches(row,target){
   return [row.entity_key,row.state?.name,row.state?.title,row.state?.display_name].filter(Boolean).some(value=>normalized(value)===normalized(target));
@@ -63,14 +64,18 @@ export function configureEntryPolicy(db,guild,input,reviewer){
 }
 export function mundaneEntryImpact(db,guild,entry,locationKey){
   const policy=db.getCityRecord(guild,"entry_policy",locationKey),location=db.getSimulationEntity(guild,"location",locationKey);
-  const state=location?.state||{};
+  const state=location?.state||{},origin=entry?.data.prior_location&&db.getSimulationEntity(guild,'location',entry.data.prior_location)?.state||{};
+  const pc=entry?.data.character&&db.getCharacter(entry.data.character),admission=pc&&state.access==='private'
+    &&state.parent_location_key===entry.data.prior_location?nativeVipAdmission(db,guild,pc,locationKey):null;
   const safe=["pending","awaiting_adjudication"].includes(entry?.status)&&policy?.status==="active"&&db.getWorldEvent(guild,policy.source_event)?.status==="active"
     &&policy.data.session_id===db.getActiveSession(guild)?.id&&policy.data.scene===currentScene(db,guild).key
     &&policy.data.from_locations.includes(entry.data.prior_location)
     &&policy.data.destination_revision===stateRevision(location)
     &&policy.data.from_revisions?.[entry.data.prior_location]===stateRevision(db.getSimulationEntity(guild,"location",entry.data.prior_location))
     &&(locationMatches(location,entry.data.target)||(entry.data.candidates||[]).length===1)
-    &&!["restricted","locked","contested","hazard","travel_required","removed"].some(key=>state[key])
+    &&!["locked","contested","hazard","travel_required","removed","sealed"].some(key=>state[key])
+    &&(!state.restricted||!!admission)&&(!state.access||state.access==='public'||!!admission)
+    &&!(origin.sealed||origin.locked_exit||origin.blocks_exit||Number(origin.exit_cost)||origin.exit_hazards?.length)
     &&!state.hazards?.length&&!state.wards?.length
     &&!(Number(state.travel_cost)||Number(state.travel_minutes))&&db.getCurrentEncounter(entry.data.session_id)?.status!=="active";
   return {cost:0,review:!safe,reason:safe?"Explicit GM-approved zero-cost mundane adjacency.":"Travel, access, encounter or missing adjacency policy requires native/human resolution."};

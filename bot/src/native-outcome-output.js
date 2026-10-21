@@ -11,6 +11,7 @@ import {ordinaryEffectProjection} from './ordinary-effect-proof.js';
 import {worldSimulationReceiptForAudience} from './world-simulation-receipts.js';
 import {validatePvpAttackRoll} from './pvp-attacks.js';
 import {validatePvpDamageApplication,validatePvpDamageRoll} from './pvp-damage.js';
+import {environmentOutcomeKinds,nativeEnvironmentOutput} from './native-environment-output.js';
 export {nativeOutcomeSchema} from './gm-fiction-schema.js';
 const hash=v=>createHash('sha256').update(JSON.stringify(v)).digest('hex');
 function fail(){throw Object.assign(new Error('Native output needs the exact committed outcome, current owner and audience.'),{code:'NARRATIVE_PVP'});}
@@ -19,6 +20,12 @@ function visible(source,scope){return ['party','public'].includes(source.visibil
 export function nativeOutcomeProjection(db,guild,input,scope){
   if(!input||Object.keys(input).sort().join(',')!=='kind,receipt_kind,ref,version'||input.version!==4
     ||input.kind!=='native_outcome'||!kinds.includes(input.receipt_kind)||typeof input.ref!=='string'||!input.ref||input.ref.length>200)fail();
+  if(environmentOutcomeKinds.includes(input.receipt_kind)){
+    try{return nativeEnvironmentOutput(db,guild,input.receipt_kind,input.ref,scope);}catch(error){
+      if(!['GM_ARBITRATION','SCENE_FICTION','STATE_CONFLICT'].includes(error.code))throw error;
+      fail();
+    }
+  }
   if(input.receipt_kind==='ordinary_effect_receipt'){
     try{return ordinaryEffectProjection(db,guild,input.ref,scope);}catch(error){
       if(!['ORDINARY_EFFECT','SCENE_ACTION_WINDOW','TYPED_ROLL_PROOF'].includes(error.code))throw error;

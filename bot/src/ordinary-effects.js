@@ -10,11 +10,15 @@ import {applicationPrincipal} from './application-authority.js';
 import {applyRoutineEvidenceAnalysis,verifyRoutineEvidenceAnalysis,routineEvidenceContext} from './native-evidence-analysis.js';
 import {clearNativeConditionFromOutcome} from './native-condition-recovery.js';
 import {activeNativeConditions} from './native-group-features.js';
+import {clearNativeEnvironmentNoise} from './native-environment-noise.js';
+import {resolveNativeEnvironmentEvent,environmentResolutionText} from './native-environment-recovery.js';
 
 function route(db,guild,p,payload,proof,scope){
   if(p.adapter==='observation'&&p.effect_class==='observation')return;
   if(p.adapter==='evidence_excerpt'&&p.effect_class==='evidence')return;
   if(p.adapter==='condition_clear'&&p.effect_class==='special')return;
+  if(p.adapter==='environment_quiet'&&p.effect_class==='environment')return;
+  if(p.adapter==='environment_resolve'&&p.effect_class==='environment')return;
   const i=payload.intent,v=i?.payload,loc=proof.pc.data.location;
   if(p.adapter!=='delegated'||!validateIntent(i))effectFail('UNSUPPORTED_NATIVE_ADAPTER');
   const sources=[v.source_event,...i.source_prerequisites].map(ref=>db.getWorldEvent(guild,ref)),s=sources[0];
@@ -66,12 +70,12 @@ export function applyOrdinaryEffects(db,guild,proposals,scope,{typedIntents=[],b
       if(!validOrdinaryEffect(p))effectFail('CLOSED_PROPOSAL_REQUIRED');
       if(db.getCityCalendar(guild).flags.gm_discretion!==true||db.getCityRecord(guild,'gm_authority','campaign')?.data.gm_authority_mode==='manual')effectFail('GM_DISCRETION_UNAVAILABLE');
       const payload=JSON.parse(p.payload_json);
-      if(!payload||Object.keys(payload).sort().join(',')!==(p.adapter==='observation'?'query,when':p.adapter==='evidence_excerpt'?'evidence,when':p.adapter==='condition_clear'?'condition,when':'intent,when'))effectFail('CLOSED_NATIVE_PAYLOAD_REQUIRED');
+      if(!payload||Object.keys(payload).sort().join(',')!==(p.adapter==='observation'?'query,when':p.adapter==='evidence_excerpt'?'evidence,when':p.adapter==='condition_clear'?'condition,when':['environment_quiet','environment_resolve'].includes(p.adapter)?'environment,when':'intent,when'))effectFail('CLOSED_NATIVE_PAYLOAD_REQUIRED');
       route(db,guild,p,payload,proof,scope);
       const pre=ordinaryPrerequisite(db,guild,p,proof),r=pre.receipt;
       if(payload.when==='no_roll'?r.data.outcome!=='resolved_no_roll':payload.when==='success'?r.data.outcome!=='success'
         :payload.when==='failure_fear'?r.data.outcome!=='failure'||r.data.duality!=='Fear':true)effectFail('EXACT_RESULT_PRECONDITION_REQUIRED');
-      const privateResult=p.adapter==='condition_clear'||scope.mode==='private'||r.visibility==='character',effectiveScope={...scope,mode:privateResult?'private':scope.mode};
+      const privateResult=['condition_clear','environment_quiet','environment_resolve'].includes(p.adapter)||scope.mode==='private'||r.visibility==='character',effectiveScope={...scope,mode:privateResult?'private':scope.mode};
       return db.transaction(()=>{
         let result,text,native=null,evidenceResult=null;
         if(p.adapter==='observation'){
@@ -88,6 +92,14 @@ export function applyOrdinaryEffects(db,guild,proposals,scope,{typedIntents=[],b
           native=clearNativeConditionFromOutcome(db,guild,{...payload.condition,accepted_intent:proof.row.record_key,
             prerequisite:r.record_key},effectiveScope);
           result={hash:effectHash(native)};text='Your source-verified Vulnerable condition has ended. No resources or other conditions changed.';
+        }else if(p.adapter==='environment_quiet'){
+          if(!payload.environment||Object.keys(payload.environment).join()!=='environment'||!['no_roll','success'].includes(payload.when))effectFail('CLOSED_ENVIRONMENT_RECOVERY_REQUIRED');
+          native=clearNativeEnvironmentNoise(db,guild,{...payload.environment,accepted_intent:proof.row.record_key,prerequisite:r.record_key},proof.scope);
+          result={hash:effectHash(native)};text='The source-verified environmental noise has been quieted. No character resources changed.';
+        }else if(p.adapter==='environment_resolve'){
+          if(!payload.environment||Object.keys(payload.environment).join()!=='effect'||!['no_roll','success'].includes(payload.when))effectFail('CLOSED_ENVIRONMENT_RESOLUTION_REQUIRED');
+          native=resolveNativeEnvironmentEvent(db,guild,{...payload.environment,accepted_intent:proof.row.record_key,prerequisite:r.record_key},proof.scope);
+          result={hash:effectHash(native)};text=environmentResolutionText();
         }else{
           const ordinaryEffect={key,proposal:p,scope:proof.scope,source_hash:effectHash(proof.source),world_hash:effectHash(proof.world||null),prerequisite_hash:effectHash(r)};
           const nativeResults=dispatchAiIntents(db,guild,[payload.intent],{scope:effectiveScope,sessionId:proof.scene.session_id,origin:key,budget,ordinaryEffect});
@@ -113,7 +125,7 @@ export function applyOrdinaryEffects(db,guild,proposals,scope,{typedIntents=[],b
       });
     }catch(error){
       if(error.code!=='ORDINARY_EFFECT'&&error.code!=='SCENE_ACTION_WINDOW'&&error.code!=='TYPED_ROLL_PROOF'&&error.code!=='NATIVE_EVIDENCE_ANALYSIS'
-        &&!(p?.adapter==='condition_clear'&&['GM_ARBITRATION','PC_NATIVE_ELIGIBILITY'].includes(error.code))&&!(error instanceof SyntaxError))throw error;
+        &&!(['condition_clear','environment_quiet','environment_resolve'].includes(p?.adapter)&&['GM_ARBITRATION','PC_NATIVE_ELIGIBILITY','SCENE_FICTION'].includes(error.code))&&!(error instanceof SyntaxError))throw error;
       if(proof)return review(db,guild,key||effectKey(p,proof.scope),p,proof,error.reason||error.code);
       // A foreign/stale requested action cannot create a review attributed to that owner.
       const principal=conversationPrincipal(db,guild,scope.actorUserId,scope.actorCharacterId),source=db.getWorldEvent(guild,worldInputKey(provenance.messageId,scope.actorCharacterId));

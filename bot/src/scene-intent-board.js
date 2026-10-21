@@ -8,7 +8,7 @@ import {actorReferenceVisible} from './npc-cognition-projection.js';
 import {matchesArbitrationSchema,npcSceneIntentSchema,arbitrationFailure as fail} from './gm-arbitration-contract.js';
 import {indexWorldEvent} from './city-calendar.js';
 import {featureWindowChoices,inspectFeatureWindow} from './native-feature-windows.js';
-import {executableNativeFeatures} from './native-feature-catalog.js';
+import {executableNativeFeatures,compileNativeActors} from './native-feature-catalog.js';
 import {EncounterLibrary} from './encounter.js';
 import {isGroupFeature,groupFeatureStakes,groupReactionRules} from './native-group-features.js';
 import {nativeActorControl} from './native-actor-control.js';
@@ -51,6 +51,10 @@ export function arbitrationPromptBoard(db,guild,origin){
   return {version:1,source:o.binding.source,scene:o.binding.scene,location:o.binding.location,audience:o.scope.mode,
     environment_context:environment,
     local_environment_context:localEnvironment,
+    environment_candidates:compileNativeActors().filter(a=>a.actor_kind==='environment'
+      &&executableNativeFeatures('environment').some(f=>f.template_hash===a.template_hash))
+      .map(a=>({environment:a.actor_key,location:o.binding.location,template_hash:a.template_hash,
+        authority:'Supported capabilities only; establishing a profile does not execute a feature or disclose private evidence.'})),
     equipped_attack_sources:db.scopedRollAttackSources(guild,o.scope.actorCharacterId,o.binding.session,o.binding.scene,null)
       .filter(e=>(db.getCharacter(o.scope.actorCharacterId)?.data.inventory||[]).some(i=>typeof i==='object'&&i.equipped===true&&i.name===e.details.roll_attack?.weapon))
       .slice(0,20).map(e=>({source_ref:e.event_key,weapon:e.details.roll_attack.weapon,trait:e.details.roll_attack.trait,

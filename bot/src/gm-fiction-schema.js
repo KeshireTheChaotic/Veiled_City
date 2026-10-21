@@ -13,7 +13,8 @@ export const freshNpcRequestSchema=closed({version:{type:'integer',enum:[3]},kin
   entity_key:str(160),focus:{type:'string',enum:freshNpcFocuses},source_refs:{type:'array',maxItems:6,items:str(200)}});
 export const freshNpcResponseSchema=closed({utterance:str(1400)});
 export const nativeOutcomeKinds=['pc_effect_receipt','roll_request','evidence_receipt','commitment','scene_entry','ordinary_effect_receipt','world_simulation_observation',
-  'pvp_attack_roll_receipt','pvp_damage_roll_receipt'];
+  'pvp_attack_roll_receipt','pvp_damage_roll_receipt','native_environment_arrival','native_environment_scene_effect',
+  'native_environment_countdown','native_environment_countdown_step','native_environment_witness_accounts'];
 export const nativeOutcomeSchema=closed({version:{type:'integer',enum:[4]},kind:{type:'string',enum:['native_outcome']},
   receipt_kind:{type:'string',enum:nativeOutcomeKinds},ref:str(200)});
 export const sceneAtmosphereSubjects={light:'Light',silence:'Silence',air:'The air',shadows:'Shadows'};

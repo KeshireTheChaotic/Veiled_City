@@ -16,8 +16,35 @@ export const gmArbitrationProposalSchema={anyOf:[proposalV1,obj({...proposalV1.p
   obj({...proposalV1.properties,proposal_version:{type:'integer',enum:[3]},collaboration:obj({kind:{type:'string',enum:['help','tag']},request:str(200),partner_request:str(200)})})]};
 const unifiedV1={version:{type:'integer',enum:[1]},npc_intents:{type:'array',maxItems:4,items:npcSceneIntentSchema},
   decisions:{type:'array',maxItems:16,items:gmArbitrationProposalSchema}};
-export const unifiedArbitrationSchema={anyOf:[obj(unifiedV1),obj({...unifiedV1,version:{type:'integer',enum:[2]},
-  pre_roll_fear:{type:'array',maxItems:1,items:obj({request_ref:str(200),npc_intent_ref:str(200)})}})]};
+const interrupt={type:'array',maxItems:1,items:obj({request_ref:str(200),npc_intent_ref:str(200)})};
+const environmentProfiles={type:'array',maxItems:1,items:obj({version:{type:'integer',enum:[1]},environment:str(200),location:str(160)})};
+const arrivalAction=obj({version:{type:'integer',enum:[1]},feature_ref:str(160),environment:str(200),
+  category:{type:'string',enum:['authority','media','property_management','emergency_response']},
+  npc:obj({kind:{type:'string',enum:['npc']},key:str(100),name:str(160),aliases:{type:'array',maxItems:6,items:str(80)},
+    location_key:str(160),parent_location_key:str(160),role:str(160),summary:str(600)})});
+const sceneAction=obj({version:{type:'integer',enum:[1]},feature_ref:str(160),environment:str(200),
+  detail:obj({kind:{type:'string',enum:['medical_emergency','service_emergency','mundane_detail']},category:str(160),property:str(160),service:str(160),value:str(160)})});
+const environmentActions={type:'array',maxItems:1,items:arrivalAction};
+const uploadCommon={version:{type:'integer',enum:[1]},feature_ref:{type:'string',enum:['environment:apartment-veil-breach:upload-in-progress']}};
+const uploadStart=obj({...uploadCommon,operation:{type:'string',enum:['upload_start']},environment:str(200),handout:str(200),creation_source:str(200)});
+const uploadAdvance=obj({...uploadCommon,operation:{type:'string',enum:['upload_advance']},countdown:str(200),
+  beat_kind:{type:'string',enum:['owner_action','scene_effect']},beat_ref:str(200),accepted_intent:str(200),ruling:str(600)});
+const uploadAdjust=obj({...uploadCommon,operation:{type:'string',enum:['upload_adjust']},countdown:str(200),accepted_intent:str(200),prerequisite:str(200),ruling:str(600)});
+const witnessAccounts=obj({version:{type:'integer',enum:[1]},feature_ref:{type:'string',enum:['environment:haunted-nightclub:everybody-saw-something-different']},
+  environment:str(200),incident_ref:str(200),accounts:{type:'array',minItems:3,maxItems:3,
+    items:obj({npc:str(200),unit_ref:str(200),evidence_ref:str(200),truth_ref:str(200)})},
+  inconsistency:{type:'array',minItems:3,maxItems:3,items:obj({left:str(200),right:str(200)})}});
+export const unifiedArbitrationSchema={anyOf:[obj(unifiedV1),obj({...unifiedV1,version:{type:'integer',enum:[2]},pre_roll_fear:interrupt}),
+  obj({...unifiedV1,version:{type:'integer',enum:[3]},pre_roll_fear:interrupt,
+    environment_profiles:environmentProfiles}),
+  obj({...unifiedV1,version:{type:'integer',enum:[4]},pre_roll_fear:interrupt,environment_profiles:environmentProfiles,
+    environment_actions:environmentActions}),
+  obj({...unifiedV1,version:{type:'integer',enum:[5]},pre_roll_fear:interrupt,environment_profiles:environmentProfiles,
+    environment_actions:{type:'array',maxItems:1,items:{anyOf:[arrivalAction,sceneAction]}}}),
+  obj({...unifiedV1,version:{type:'integer',enum:[6]},pre_roll_fear:interrupt,environment_profiles:environmentProfiles,
+    environment_actions:{type:'array',maxItems:1,items:{anyOf:[arrivalAction,sceneAction,uploadStart,uploadAdvance,uploadAdjust]}}}),
+  obj({...unifiedV1,version:{type:'integer',enum:[7]},pre_roll_fear:interrupt,environment_profiles:environmentProfiles,
+    environment_actions:{type:'array',maxItems:1,items:{anyOf:[arrivalAction,sceneAction,uploadStart,uploadAdvance,uploadAdjust,witnessAccounts]}}})]};
 export function matchesArbitrationSchema(schema,value){
   if(schema.anyOf)return schema.anyOf.some(s=>matchesArbitrationSchema(s,value));
   if(schema.enum)return schema.enum.includes(value);
