@@ -42,5 +42,7 @@ export function environmentProposalContract(feature){
     ||feature.target_policy!=='none'||feature.roll_protocol!=='none'))return null;
   if(feature.native_handler==='nightclub_auditory_disadvantage'&&(feature.type!=='Passive'||feature.trigger_kind!=='passive'
     ||feature.target_policy!=='none'||feature.roll_protocol!=='native_pc_action_disadvantage'))return null;
+  if(feature.native_handler==='environment_emergency_cascade'&&(feature.type!=='Action'||feature.trigger_kind!=='spotlight_action'
+    ||feature.target_policy!=='none'||feature.roll_protocol!=='none'))return null;
   return structuredClone(contract);
 }

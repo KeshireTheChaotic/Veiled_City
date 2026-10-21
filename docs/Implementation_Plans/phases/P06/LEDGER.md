@@ -8,6 +8,7 @@
 | [P06-F04](../../features/P06-F04/LEDGER.md) | TARGETED PASS | `p06-f04-20261021-a`; 6/6 tests; implementation `bd517f2`; see feature ledger |
 | [P06-F05](../../features/P06-F05/LEDGER.md) | TARGETED PASS / SUPPORTED | `p06-f05-20261021-a`; 5/5 tests; see feature ledger |
 | [P06-F06](../../features/P06-F06/LEDGER.md) | TARGETED PASS / SUPPORTED | `p06-f06-20261021-a`; 10 unique passing tests after one catalog assertion repair; see feature ledger |
+| [P06-F07](../../features/P06-F07/LEDGER.md) | TARGETED PASS / SUPPORTED | `p06-f07-20261021-a`; 12/12 tests; see feature ledger |
 
 Audit anchor: `9e7bf0687357cf96fbe2ea09a04b3e9d2975f6a3`. P00-P05 implementation baseline: `8e01519b6511bc90af6a1c675e4a9950f12b703c`; final P06 source: `bd517f2ad101d7a8c14dcbd36476ca67748d180b`. Baseline fresh delta: 47/47 tests passed across 20 fresh files and 43 changed-file syntax checks passed (exit 0), run `fresh-delta-1792599054739`. P06-F04 delta is separately recorded below. This phase is covered by feature results and is not 47 unique tests on its own. Critical blockers: none established. Phase-specific holds and unverified work remain below.
 
@@ -54,3 +55,5 @@ Latest source commit: `4969d912a37df3d8ee35418461dae0d61d1ba742`. README and cur
 P06-F06 enables the exact Too Loud to Think native roll-modifier mapping. Initial batch had one stale expected-status assertion; the single affected catalog test file was repaired and passed, and already-passing feature tests were not rerun. Final unique affected coverage is 10 tests passing; four initial plus one repair syntax checks passed. Current catalog: 19 supported / 134 review-only / 0 needs-authoring. Provider calls/tokens/spend 0/0/$0, no cache claim. No owner restriction or critical blocker; release unauthorized.
 
 Latest implementation SHA: `ca570f89768777e1c165f7d74d6b281e0a1c6580`; current inventory remains 19 supported / 134 review-only.
+
+P06-F07 enables Emergency Cascade through its existing exact scene-action route. The shared fresh batch passed 12/12 with 4/4 syntax checks. Current catalog: 20 supported / 133 review-only / 0 needs-authoring. Provider calls/tokens/spend 0/0/$0; no cache claim. No owner question, new narrative restriction or critical blocker; release unauthorized.

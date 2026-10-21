@@ -1,0 +1,39 @@
+{
+  "run_id": "p06-f07-20261021-a",
+  "status": "TARGETED_PASS",
+  "branch": "codex/clean-ai-gm-2026-10",
+  "base_sha": "d23531313aaddb0c04045f3527f758f38e771527",
+  "inputs_sha256": {
+    "bot/src/native-feature-definitions.json": "2577d7a5977cf2ecc7c078f19e8846d62a5b1c3e18f848041782bef115d2cc4a",
+    "bot/src/native-feature-catalog.js": "fe7f62842b7c577ce31cc7bf93d951c42f5465f90556fc0511b18e44ef7d6b86",
+    "bot/src/native-environment-capabilities.js": "00c0dc4aabf279b8005fdee612121400652cb5297df3d522e5c000b0f7fa49cd",
+    "bot/tests/ai-gm-2026-10/p06-f01.test.mjs": "b823985dc02a78ad6afcca2b8016d9b6afbff007154f8d2c44af1c9f67e12e4a",
+    "bot/tests/ai-gm-2026-10/p06-f04.test.mjs": "47b66cee72b0e83473b1f4875f405fd3c928a09133bcca1197981b6b6e112241",
+    "bot/tests/ai-gm-2026-10/p06-f05.test.mjs": "3f922920133f2a39f2ef899b76563c09b67acb5fb952869c5ab2fc0b9527be6a",
+    "bot/tests/ai-gm-2026-10/p06-f06.test.mjs": "617a4b5fb9542b0b1ba90dba771e6120acfa3d9e4863054230d652dc93827f6d",
+    "bot/tests/ai-gm-2026-10/p06-f07.test.mjs": "5df1b1c12a8e18e94bd1826a96ee942e9f2e9c869b3a13e3188ee4aa21ee7f1b",
+    "bot/tests/ai-gm-2026-10/coverage.json": "a5b51e887119da1e969c54d822b009f17a001cded6fbf3d91e30786f4d6ff935"
+  },
+  "syntax": [
+    { "path": "bot/src/native-feature-catalog.js", "exit": 0 },
+    { "path": "bot/src/native-environment-capabilities.js", "exit": 0 },
+    { "path": "bot/tests/ai-gm-2026-10/p06-f01.test.mjs", "exit": 0 },
+    { "path": "bot/tests/ai-gm-2026-10/p06-f07.test.mjs", "exit": 0 }
+  ],
+  "test_command": "node --test --test-reporter=tap tests/ai-gm-2026-10/p06-f01.test.mjs tests/ai-gm-2026-10/p06-f04.test.mjs tests/ai-gm-2026-10/p06-f05.test.mjs tests/ai-gm-2026-10/p06-f06.test.mjs tests/ai-gm-2026-10/p06-f07.test.mjs",
+  "test_exit": 0,
+  "summary": {
+    "tests": 12,
+    "pass": 12,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "duration_ms": 429.4347
+  },
+  "provider_calls": 0,
+  "provider_tokens": 0,
+  "provider_test_spend_usd": 0,
+  "codex_usage": "Unavailable",
+  "release_authorized": false,
+  "scope_limit": "Exact source occurrence activation and descriptor-to-capability contract; not full runtime adapter or release certification."
+}

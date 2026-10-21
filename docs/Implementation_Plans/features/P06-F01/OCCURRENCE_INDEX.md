@@ -146,7 +146,7 @@
 | [environment:archive-beneath-the-courthouse:sealed-docket](occurrences/environment--archive-beneath-the-courthouse--sealed-docket/LEDGER.md) | review_only | verified_source | none |
 | [environment:archive-beneath-the-courthouse:records-reject-you](occurrences/environment--archive-beneath-the-courthouse--records-reject-you/LEDGER.md) | review_only | verified_source | none |
 | [environment:district-blackout:no-ordinary-signal](occurrences/environment--district-blackout--no-ordinary-signal/LEDGER.md) | review_only | verified_source | none |
-| [environment:district-blackout:emergency-cascade](occurrences/environment--district-blackout--emergency-cascade/LEDGER.md) | review_only | verified_source | none |
+| [environment:district-blackout:emergency-cascade](occurrences/environment--district-blackout--emergency-cascade/LEDGER.md) | supported | verified_source | environment_emergency_cascade |
 | [environment:district-blackout:choir-volume](occurrences/environment--district-blackout--choir-volume/LEDGER.md) | review_only | verified_source | none |
 | [environment:veil-anchor-chamber:consensus-engine](occurrences/environment--veil-anchor-chamber--consensus-engine/LEDGER.md) | review_only | verified_source | none |
 | [environment:veil-anchor-chamber:maintenance-memory](occurrences/environment--veil-anchor-chamber--maintenance-memory/LEDGER.md) | review_only | verified_source | none |
