@@ -71,5 +71,15 @@
     "bot/tests/ai-gm-2026-10/p06-f22.test.mjs",
     "bot/tests/ai-gm-2026-10/p06-f23.test.mjs",
     "bot/tests/ai-gm-2026-10/p06-f24.test.mjs"
-  ]
+  ],
+  "requalification": {
+    "run_id": "p06-f25-20261021-a",
+    "implementation_commit": "c70279d1a60cec6da01fd7f119d1fc4ba4c83f7b",
+    "feature_test": "bot/tests/ai-gm-2026-10/p06-f24.test.mjs",
+    "feature_test_result": "passed in shared 80-case batch",
+    "unique_cases_after_repair": 80,
+    "changed_js_mjs_syntax": "8/8 pass",
+    "changed_json_parse": "2/2 pass",
+    "evidence": "P06_F25_TARGETED.json"
+  }
 }
