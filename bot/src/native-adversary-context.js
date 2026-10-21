@@ -4,6 +4,7 @@ import {nativeActorControl} from './native-actor-control.js';
 import {inspectArbitrationOrigin} from './scene-intent-board.js';
 import {executableNativeFeatures,featureDisposition} from './native-feature-catalog.js';
 import {sceneFictionHash as hash} from './scene-fiction-context.js';
+import {projectNativeAdversaryBreakTheHoldContext} from './native-adversary-break-the-hold.js';
 import {arbitrationFailure as fail} from './gm-arbitration-contract.js';
 
 /** A template/display name does not bind a person to an adversary or make its features available. */
@@ -19,7 +20,8 @@ export function nativeAdversaryFeatureContext(db,guild,origin,actor,{library}={}
       location:bound.presence.location_key,template_hash:templateHash,actor_snapshot:hash(bound),control_revision:control.revision,
       source:o.binding.source,source_hash:o.binding.source_hash,scope:structuredClone(o.scope),
       features:features.map(f=>({key:f.feature_key,hash:hash(f)}))};
-  return Object.freeze({...terms,revision:hash(terms),execution_authorized:false,publication_authorized:false});
+  return Object.freeze({...terms,feature_rule_contexts:projectNativeAdversaryBreakTheHoldContext(terms),
+    revision:hash(terms),execution_authorized:false,publication_authorized:false});
 }
 
 /** Current-use proof only. Saved native outcomes keep their existing historical receipt readers. */
