@@ -1,15 +1,8 @@
 # environment:glass-market-grand-concourse:everyone-is-watching — ledger
 
-Status: SOURCE VERIFIED; LOCAL EXECUTION HOLD.
+Status: SUPPORTED / TARGETED PASS. Branch `codex/clean-ai-gm-2026-10`; implementation commit/tested SHA `0c1ddc97a1c69135cdba66a1c3ea0c7db775d48a`.
 
-- Branch: codex/clean-ai-gm-2026-10; source checkout SHA: 0834f299ccff1738e9b3dd753a5fc616d3965370 + working-tree delta. Final freeze SHA/evidence: see parent P06-F01 ledger and final delta report.
-- Changed module: bot/src/native-feature-catalog.js (shared occurrence-local inspection). Descriptor and rules unchanged.
-- Fresh test: bot/tests/ai-gm-2026-10/p06-f01.test.mjs; current-catalog test calls inspectNativeFeatureOccurrence for this exact key. Source/content input is current production data, never a historical fixture.
-- Actual result: verified_source, execution_authorized=false in p06-1792598757560; shared repaired batch exit 0, 5 tests passed. This is source verification, not effect execution qualification.
-- Cost/cache: 0 paid provider calls/tokens; $0 provider tests. No cache claim. Codex usage unavailable.
-- Existing catalog reason: No qualified native feature handler.
-- Local hold: No qualified executable occurrence adapter. This remains unsupported; exact source availability alone is insufficient.
-- Questions: none introduced by this source-only delta; no new narrative/autonomy restrictions proposed.
-- Critical blocker: none. Release authorization: none.
-
-Final tested source SHA: `8e01519b6511bc90af6a1c675e4a9950f12b703c`; run `fresh-delta-1792599054739` passed 47/47 union tests. The catalog test verifies this occurrence source; this is not occurrence effect qualification. Input/test hashes: parent final evidence.
+- Changed paths: descriptor/catalog, environment capability resolver and shared scene context, new occurrence projector, coverage map and fresh F01/F32 tests.
+- Run `p06-f32-20261021-a`: 108/108 affected fresh tests pass across 30 files; no failures/skips. Syntax 6/6 and JSON parse 2/2 pass. Commands and hashes: [P06_F32_TARGETED.json](../../../../evidence/P06_F32_TARGETED.json).
+- Cost/cache: provider calls/tokens/spend 0/0/$0; no cache savings claimed; Codex usage unavailable.
+- Context creates no durable witness receipt. Owner questions/new restrictions: none. Local holds: durable witness persistence, 108 other review-only occurrences and full-release qualification. Critical blocker: none. Release authorization: false.

@@ -1,13 +1,11 @@
 # environment:glass-market-grand-concourse:everyone-is-watching
 
-Status: SOURCE VERIFIED; LOCAL EXECUTION HOLD. Parent: [P06-F01](../../SCOPE.md).
+Status: SUPPORTED / TARGETED PASS. Parent: [P06-F01](../../SCOPE.md); feature: [P06-F32](../../../P06-F32/SCOPE.md).
 
-Audit SHA: 9e7bf0687357cf96fbe2ea09a04b3e9d2975f6a3. Checkout base: 0834f299ccff1738e9b3dd753a5fc616d3965370.
+Audit SHA: `9e7bf0687357cf96fbe2ea09a04b3e9d2975f6a3`. Branch: `codex/clean-ai-gm-2026-10`. Start SHA: `d03e886b34ae27fa9cc884a3f0bd68438755ba59`. Implementation/tested SHA: `0c1ddc97a1c69135cdba66a1c3ea0c7db775d48a`.
 
 Exact source: `content/GM_PRIVATE/ENVIRONMENTS/environments.json#glass-market-grand-concourse/features/2`. Source SHA-256: `9534b8e9ffe24475e950741dc3250e0c7e26fde064674f260b00b369636e757d`; template SHA-256: `78cd4c8e38a0bfd156d1c2e1d8793ce1cc88c78d744725b6c88e1847571ef947`.
 
-This delta qualifies occurrence-local source inspection and discovery isolation only. It does not create or promote a native effect handler. Existing descriptor status: review_only; handler: none.
+The scoped GM receives the exact public threat/promise/bargain reaction cue. The PC owns their public words; the GM authors any faction witness. Context itself creates no durable witness receipt. No Daggerheart mechanic changes.
 
-Any future adapter must prove current actor/source/scene/target, owner choices, exact costs, native dice and once-only replay using new tests before support promotion. No generic fallback or new creative limitation. Roll back only the occurrence-specific diff; preserve saved readers and receipts.
-
-Final tested source SHA: `8e01519b6511bc90af6a1c675e4a9950f12b703c`; run `fresh-delta-1792599054739` passed 47/47 union tests. The catalog test verifies this occurrence source; this is not occurrence effect qualification. Input/test hashes: parent final evidence.
+Run `p06-f32-20261021-a`: 108/108 fresh affected cases pass across 30 files; changed JS/MJS syntax 6/6 and JSON parse 2/2 pass. See [evidence](../../../../evidence/P06_F32_TARGETED.json) for full result and SHA-256 inputs. Provider usage 0/0/$0; no cache savings claimed; Codex usage unavailable. No owner question/new restriction or critical blocker. Local holds: durable witness persistence, 108 other review-only occurrences, live delivery and whole-release qualification. Release authorization: false.
