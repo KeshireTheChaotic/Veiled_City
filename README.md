@@ -7,7 +7,7 @@ stories survive between sessions.
 
 ## This development branch
 
-**Implementation branch:** `codex/clean-ai-gm-2026-10` · **Implementation source SHA:** `093f24822d9862ae9dcbcc4014121dd1afbef1df` (base for P06-F14)
+**Implementation branch:** `codex/clean-ai-gm-2026-10` · **Implementation source SHA:** `16652d07f36dbf9b83c4da69d39fd43a7f144382`
 **Application:** `0.0.0.1` ([package](bot/package.json)) · **SQLite schema:** `460`
 
 This checkout implements the [clean AI GM plan](docs/Implementation_Plans/README.md), anchored at audit `9e7bf0687357cf96fbe2ea09a04b3e9d2975f6a3`. It is not an assurance about an installed production instance. Older document

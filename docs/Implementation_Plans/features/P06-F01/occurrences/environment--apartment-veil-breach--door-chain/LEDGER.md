@@ -10,4 +10,5 @@ Status: SUPPORTED; TARGETED PASS.
 - Local unverified work: end-to-end persistent database receipt/replay, audience revalidation and same-turn Discord narration. This focused test does not qualify full release.
 - Questions/restrictions: none introduced for this occurrence; creative portrayal and player response remain open.
 - Critical blocker: none. Release authorization: none.
+- Implementation commit: `16652d07f36dbf9b83c4da69d39fd43a7f144382`.
 
