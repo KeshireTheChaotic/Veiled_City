@@ -27,6 +27,11 @@
 | [P06-F23](../../features/P06-F23/LEDGER.md) | SUPPORTED / TARGETED PASS | `p06-f23-20261021-a`; commit `82f8c288792f15db967b0acbb2a278af6170d76b`; 72/72 unique affected tests pass; conditional hospitality context; see [evidence](../../evidence/P06_F23_TARGETED.json) |
 | [P06-F24](../../features/P06-F24/LEDGER.md) | SUPPORTED / TARGETED PASS | `p06-f24-20261021-a`; implementation commit `66151f51336de73b40ca4090386432bbf786fcd8`; unique 76/76 after isolated F01 count repair; see [evidence](../../evidence/P06_F24_TARGETED.json) |
 | [P06-F25](../../features/P06-F25/LEDGER.md) | SUPPORTED / TARGETED PASS | `p06-f25-20261021-a`; implementation commit `c70279d1a60cec6da01fd7f119d1fc4ba4c83f7b`; unique 80/80 after isolated F25 assertion repair; see [evidence](../../evidence/P06_F25_TARGETED.json) |
+| [P06-F26](../../features/P06-F26/LEDGER.md) | SUPPORTED / TARGETED PASS | `p06-f26-20261021-a`; implementation commit `1972c4b5ef92dcda2e23422ec8be9b8a95161c6f`; 84/84 fresh tests pass; see [evidence](../../evidence/P06_F26_TARGETED.json) |
+
+## Resumption checkpoint — P06-F26 — 2026-10-21
+
+Current branch/implementation SHA: `codex/clean-ai-gm-2026-10` / `1972c4b5ef92dcda2e23422ec8be9b8a95161c6f`. P06-F26 supports the source-bound Auction of Consequences GM prompt. Catalog: 153 = 39 supported + 114 review-only + 0 needs-authoring; documented P06 handler family count 27. Frozen batch `p06-f26-20261021-a` passed 84/84, no repairs/reruns; syntax 6/6 and JSON 2/2. Provider calls/tokens/spend 0/0/$0; no cache savings claimed; Codex usage unavailable. No owner question, restriction or critical blocker. The remaining 114 occurrences are local holds; P06 is incomplete and release unauthorized. Live auction outcomes, live provider/Discord behavior and whole-release qualification remain unverified. Evidence: [P06-F26](../../evidence/P06_F26_TARGETED.json).
 
 ## Resumption checkpoint — P06-F25 — 2026-10-21
 
