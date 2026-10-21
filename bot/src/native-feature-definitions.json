@@ -63,13 +63,13 @@
       "template_hash": "d0358ceef04dbe77c3414f9a8b3e77db6842565e993583bf2b4e64826ed11feb",
       "index": 0,
       "type": "Passive",
-      "status": "review_only",
-      "trigger_kind": "unmapped",
-      "target_policy": "unmapped",
-      "roll_protocol": "unmapped",
-      "costs": null,
-      "native_handler": null,
-      "reason": "No qualified native feature handler."
+      "status": "supported",
+      "trigger_kind": "passive",
+      "target_policy": "none",
+      "roll_protocol": "native_adversary_context",
+      "costs": [],
+      "native_handler": "adversary_professional_entry_context",
+      "reason": "Exact source-bound GM cue; prepared-position qualification, first-use tracking and Advantage application remain held."
     },
     {
       "feature_key": "adversary:aster-vale-contractor:flashbang",
