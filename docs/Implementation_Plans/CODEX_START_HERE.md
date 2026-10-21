@@ -1,0 +1,15 @@
+# Paste into Codex
+
+```text
+Implement the clean Veiled City AI GM plan in this package, anchored at audit main 9e7bf0687357cf96fbe2ea09a04b3e9d2975f6a3; first check actual current HEAD and worktree, preserving edits. Read README.md, TEST_PROTOCOL.md, DECISION_GATES.md, and only the active phase/feature scope+ledger. Use the owner's Audience-First, Creative-First, Agency-Preserving specification as behavioral authority, but native code alone commits Daggerheart mechanics; players alone decide their PC actions, feelings, dice and resource choices.
+
+Proceed P00 through P06. Every phase and every feature MUST maintain its own Markdown scope and ledger, logging SHA, changed modules, fresh affected-code tests, actual results, cost/caching evidence, questions and blockers. Native catalog individual occurrences also require their own scope and ledger.
+
+Only stop the whole execution on a CRITICAL blocker. Isolate missing exact rules and unrelated issues; keep moving on independent work. Before a feature adds any new limitation to narrative output, GM creativity, NPC/faction autonomy or invention, ASK OWNER a concrete question and hold that restriction only.
+
+NEVER execute, import, copy or reuse legacy tests, historical fixtures/golden results or old suite registries. Write ONLY fresh feature-specific tests for production code currently being modified, in bot/tests/ai-gm-2026-10/. Freeze feature/phase before one targeted batch and batch repairs. Run only those fresh tests and changed-file syntax checks; do not run broad npm validate. Do not infer full release certification from this delta.
+
+Minimize Codex usage: one coordinator and zero subagents by default, targeted contexts instead of huge diaries, cache safely scoped immutable prompts/content, no paid provider tests or model-as-judge loops. Record real usage. Preserve historic saved readers, native state, private audiences and outbox exactly-once guarantees. Never push code/merge/deploy/restart/read-write production database/trigger CI/spend on live models without separate approval.
+
+Return branch and exact SHA; phase/feature ledger statuses, new tests actually run, measurable results and unverified work, restrictions awaiting owner answer, local holds, critical blockers and release authorization status.
+```
