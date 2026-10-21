@@ -1986,7 +1986,7 @@
       "template_hash": "1071538ee24df905ae15f67823f9478a619871b4dd30ab23d3b7d317535b602f",
       "index": 2,
       "type": "Action",
-      "status": "review_only",
+      "status": "supported",
       "trigger_kind": "spotlight_action",
       "target_policy": "none",
       "roll_protocol": "none",
@@ -1996,9 +1996,8 @@
           "amount": 1
         }
       ],
-      "native_handler": null,
-      "reason": "No qualified native feature handler.",
-      "planned_handler": "sirens_outside"
+      "native_handler": "sirens_outside",
+      "reason": "Source-qualified ordinary responder arrival; exact Fear cost, scene identity, audience and replay are validated by the native adapter. No PC or combat effect."
     },
     {
       "feature_key": "environment:after-hours-emergency-department:hipaa-and-procedure",

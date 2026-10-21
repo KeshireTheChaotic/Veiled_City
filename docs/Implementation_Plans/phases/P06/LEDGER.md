@@ -5,6 +5,7 @@
 | [P06-F01](../../features/P06-F01/LEDGER.md) | SOURCE PASS / LOCAL HOLDS | Final union 8e01519; see feature ledger |
 | [P06-F02](../../features/P06-F02/LEDGER.md) | TARGETED PASS | Final union 8e01519; see feature ledger |
 | [P06-F03](../../features/P06-F03/LEDGER.md) | TARGETED PASS | Final union 8e01519; see feature ledger |
+| [P06-F04](../../features/P06-F04/LEDGER.md) | TARGETED PASS | `p06-f04-20261021-a`; 6/6 tests; see feature ledger |
 
 Audit anchor: `9e7bf0687357cf96fbe2ea09a04b3e9d2975f6a3`. Final source SHA: `8e01519b6511bc90af6a1c675e4a9950f12b703c`. Final fresh delta: 47/47 tests passed across 20 fresh files and 43 changed-file syntax checks passed (exit 0), run `fresh-delta-1792599054739`. This phase is covered by the feature results below and is not 47 unique tests on its own. Critical blockers: none established. Phase-specific holds and unverified work remain below.
 
@@ -37,3 +38,7 @@ Current branch/SHA: `codex/clean-ai-gm-2026-10` / `8e01519b6511bc90af6a1c675e4a9
 ## Resumption checkpoint — second occurrence — 2026-10-21
 
 Current checkout before closeout commit: `codex/clean-ai-gm-2026-10` / `62e13b4b39330ef9b2b144065d1d54616fdd8b34`; tested implementation source: `8e01519b6511bc90af6a1c675e4a9950f12b703c`. Exact-rule review of `adversary:aster-vale-catastrophe-analyst:forecast-window` found the printed Stress cost and temporary advantage duration, but no native persisted grant/consume/expiry path. It remains an occurrence-local `review_only` hold. See the occurrence scope and ledger. Changed production modules: none. New tests run: none; prior green tests were left untouched because associated code did not change. Existing final delta remains 47/47 and is not execution qualification for this rule. Docs changed: occurrence scope/ledger plus P06-F01 and phase P06 ledgers. Provider calls/tokens/spend 0/0/$0; Codex usage unavailable. No owner question or restriction, no critical blocker, release unauthorized.
+
+## P06-F04 phase checkpoint — 2026-10-21
+
+Current base HEAD: `97d3a696831af78d5eb42865467be2dab4b30797`; tested implementation inputs are hash-pinned in [P06_F04_TARGETED.json](../../evidence/P06_F04_TARGETED.json). Sirens Outside is now the 17th supported occurrence; 136 remain review-only. Frozen affected-code batch `p06-f04-20261021-a` passed 6/6 tests and 4/4 syntax checks. Only `p06-f01.test.mjs` was rerun among previous tests because its associated catalog module and expected count changed; `p06-f04.test.mjs` is new. No other passing tests were rerun. Provider calls/tokens/spend 0/0/$0; Codex usage unavailable. No owner restrictions or critical blockers. Local holds remain occurrence-scoped. Not full release qualification; release unauthorized.

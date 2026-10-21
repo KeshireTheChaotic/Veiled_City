@@ -32,5 +32,11 @@ const contracts=Object.freeze({
 });
 export function environmentProposalContract(feature){
   const contract=contracts[feature?.feature_key];
-  return feature?.status==='supported'&&contract?.handler===feature.native_handler?structuredClone(contract):null;
+  if(feature?.status!=='supported'||contract?.handler!==feature.native_handler||!Array.isArray(feature.costs))return null;
+  const fear=feature.costs.filter(c=>c?.resource==='fear').reduce((sum,c)=>sum+c.amount,0),
+    otherCosts=feature.costs.some(c=>c?.resource!=='fear');
+  if(!Number.isSafeInteger(fear)||fear!==contract.fear||otherCosts)return null;
+  if(feature.native_handler==='sirens_outside'&&(feature.type!=='Action'||feature.trigger_kind!=='spotlight_action'
+    ||feature.target_policy!=='none'||feature.roll_protocol!=='none'))return null;
+  return structuredClone(contract);
 }

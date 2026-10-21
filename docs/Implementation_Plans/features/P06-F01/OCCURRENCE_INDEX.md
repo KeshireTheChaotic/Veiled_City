@@ -111,7 +111,7 @@
 | [adversary:veil-engine-knifewalker:never-where-recorded](occurrences/adversary--veil-engine-knifewalker--never-where-recorded/LEDGER.md) | review_only | verified_source | none |
 | [environment:occult-crime-scene:contaminated-scene](occurrences/environment--occult-crime-scene--contaminated-scene/LEDGER.md) | review_only | verified_source | none |
 | [environment:occult-crime-scene:three-vectors](occurrences/environment--occult-crime-scene--three-vectors/LEDGER.md) | review_only | verified_source | none |
-| [environment:occult-crime-scene:sirens-outside](occurrences/environment--occult-crime-scene--sirens-outside/LEDGER.md) | review_only | verified_source | none |
+| [environment:occult-crime-scene:sirens-outside](occurrences/environment--occult-crime-scene--sirens-outside/LEDGER.md) | supported | verified_source | sirens_outside |
 | [environment:after-hours-emergency-department:hipaa-and-procedure](occurrences/environment--after-hours-emergency-department--hipaa-and-procedure/LEDGER.md) | review_only | verified_source | none |
 | [environment:after-hours-emergency-department:code-blue](occurrences/environment--after-hours-emergency-department--code-blue/LEDGER.md) | review_only | verified_source | none |
 | [environment:after-hours-emergency-department:something-in-imaging](occurrences/environment--after-hours-emergency-department--something-in-imaging/LEDGER.md) | review_only | verified_source | none |

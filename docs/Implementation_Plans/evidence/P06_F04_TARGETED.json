@@ -1,0 +1,38 @@
+{
+  "run_id": "p06-f04-20261021-a",
+  "status": "TARGETED_PASS",
+  "branch": "codex/clean-ai-gm-2026-10",
+  "base_sha": "97d3a696831af78d5eb42865467be2dab4b30797",
+  "start": null,
+  "end": null,
+  "inputs_sha256": {
+    "bot/src/native-feature-definitions.json": "7881b3249ffc1e92f4e4c10b66903dc5b71474c9491f3cf2405d89323dbaf347",
+    "bot/src/native-feature-catalog.js": "58a57101ecb18271bb8d70bac49044e271b3db3d0664dc3355d07b38d9aaaf70",
+    "bot/src/native-environment-capabilities.js": "c7226e8aec25f46d19b08ef31742d44950baacc6461942e52cbf541dcd7ac840",
+    "bot/tests/ai-gm-2026-10/p06-f01.test.mjs": "80e13d8efab08ff8b17620e10756b35e173b1121d4c1e059894a64f553011fec",
+    "bot/tests/ai-gm-2026-10/p06-f04.test.mjs": "47b66cee72b0e83473b1f4875f405fd3c928a09133bcca1197981b6b6e112241",
+    "bot/tests/ai-gm-2026-10/coverage.json": "597a1e8ef03e380b6c47900c93f978b8246c8f91908f944f0d8af7b7df8884ba"
+  },
+  "syntax": [
+    { "path": "bot/src/native-feature-catalog.js", "exit": 0 },
+    { "path": "bot/src/native-environment-capabilities.js", "exit": 0 },
+    { "path": "bot/tests/ai-gm-2026-10/p06-f01.test.mjs", "exit": 0 },
+    { "path": "bot/tests/ai-gm-2026-10/p06-f04.test.mjs", "exit": 0 }
+  ],
+  "test_command": "node --test --test-reporter=tap tests/ai-gm-2026-10/p06-f01.test.mjs tests/ai-gm-2026-10/p06-f04.test.mjs",
+  "test_exit": 0,
+  "summary": {
+    "tests": 6,
+    "pass": 6,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "duration_ms": 1910.7688
+  },
+  "provider_calls": 0,
+  "provider_tokens": 0,
+  "provider_test_spend_usd": 0,
+  "codex_usage": "Unavailable",
+  "release_authorized": false,
+  "scope_limit": "Catalog activation and exact descriptor-to-capability contract; not full runtime adapter or release certification."
+}
