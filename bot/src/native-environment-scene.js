@@ -24,6 +24,7 @@ import {nativeEnvironmentPrivateRoomSituation} from './native-environment-privat
 import {nativeEnvironmentPriceOfferSituation} from './native-environment-price-offer.js';
 import {nativeEnvironmentAuctionSituation} from './native-environment-auction.js';
 import {nativeEnvironmentModelRoomSituation} from './native-environment-model-room.js';
+import {nativeEnvironmentContainmentShuttersSituation} from './native-environment-containment-shutters.js';
 import {nativeEnvironmentSealedDocketSituation} from './native-environment-sealed-docket.js';
 import {nativeEnvironmentThreeVectorsSituation} from './native-environment-three-vectors.js';
 import {nativeEnvironmentMarketNeutralitySituation} from './native-environment-market-neutrality.js';
@@ -236,6 +237,7 @@ export function nativeEnvironmentSituation(db,guild,scope,location){
   if(result.length<6)result.push(...nativeEnvironmentPriceOfferSituation(db,guild,scope,location).slice(0,6-result.length));
   if(result.length<6)result.push(...nativeEnvironmentAuctionSituation(db,guild,scope,location).slice(0,6-result.length));
   if(result.length<6)result.push(...nativeEnvironmentModelRoomSituation(db,guild,scope,location).slice(0,6-result.length));
+  if(result.length<6)result.push(...nativeEnvironmentContainmentShuttersSituation(db,guild,scope,location).slice(0,6-result.length));
   if(result.length<6)result.push(...nativeEnvironmentSealedDocketSituation(db,guild,scope,location).slice(0,6-result.length));
   if(result.length<6)result.push(...nativeEnvironmentThreeVectorsSituation(db,guild,scope,location).slice(0,6-result.length));
   if(result.length<6)result.push(...nativeEnvironmentMarketNeutralitySituation(db,guild,scope,location).slice(0,6-result.length));

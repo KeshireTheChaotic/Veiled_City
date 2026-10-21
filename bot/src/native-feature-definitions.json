@@ -2320,13 +2320,13 @@
       "template_hash": "c6f1814ce1c763b7b63f7386b593aa3365d7a47ad43f245503f68a12118932ee",
       "index": 2,
       "type": "Action",
-      "status": "review_only",
-      "trigger_kind": "unmapped",
-      "target_policy": "unmapped",
-      "roll_protocol": "unmapped",
-      "costs": null,
-      "native_handler": null,
-      "reason": "No qualified native feature handler."
+      "status": "supported",
+      "trigger_kind": "spotlight_action",
+      "target_policy": "none",
+      "roll_protocol": "environment_scene_context",
+      "costs": [{ "resource": "fear", "amount": 1 }],
+      "native_handler": "environment_containment_shutters_context",
+      "reason": "Exact source-bound barrier and Difficulty 14 route cue; context commits no Fear, barrier, PC action or result."
     },
     {
       "feature_key": "environment:haunted-nightclub:too-loud-to-think",
