@@ -23,6 +23,7 @@ import {nativeEnvironmentGuestRightSituation} from './native-environment-guest-r
 import {nativeEnvironmentPrivateRoomSituation} from './native-environment-private-room.js';
 import {nativeEnvironmentPriceOfferSituation} from './native-environment-price-offer.js';
 import {nativeEnvironmentAuctionSituation} from './native-environment-auction.js';
+import {nativeEnvironmentModelRoomSituation} from './native-environment-model-room.js';
 import {arbitrationFailure as fail} from './gm-arbitration-contract.js';
 const issuer='native:environment-scene';
 const rules=Object.freeze({
@@ -225,5 +226,6 @@ export function nativeEnvironmentSituation(db,guild,scope,location){
   if(result.length<6)result.push(...nativeEnvironmentPrivateRoomSituation(db,guild,scope,location).slice(0,6-result.length));
   if(result.length<6)result.push(...nativeEnvironmentPriceOfferSituation(db,guild,scope,location).slice(0,6-result.length));
   if(result.length<6)result.push(...nativeEnvironmentAuctionSituation(db,guild,scope,location).slice(0,6-result.length));
+  if(result.length<6)result.push(...nativeEnvironmentModelRoomSituation(db,guild,scope,location).slice(0,6-result.length));
   return result;
 }

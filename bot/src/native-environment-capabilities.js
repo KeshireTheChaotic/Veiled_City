@@ -50,6 +50,8 @@ const contracts=Object.freeze({
     effect:'Exact source-bound prompt for a useful item or answer at a tailored price stated before acceptance; the GM authors the offer and the PC chooses whether to accept, with no trade recorded.'},
   'environment:glass-market-grand-concourse:auction-of-consequences':{handler:'environment_auction_context',entry:'scene_context',fear:0,
     effect:'Exact source-bound prompt for an auction of a campaign-relevant relic, secret or person’s contract; fiction remains GM-authored and audience-bound, with no bid, sale, transfer or PC commitment recorded by context alone.'},
+  'environment:aster-vale-predictive-lab:model-room':{handler:'environment_model_room_context',entry:'scene_context',fear:0,
+    effect:'Exact source-bound prompt for a frighteningly accurate but incomplete GM-authored forecast; the PC may take Hope by accepting one listed risk as real and immediate, with no forecast fact or resource change recorded by context alone.'},
   'environment:haunted-nightclub:too-loud-to-think':{handler:'nightclub_auditory_disadvantage',entry:'decisions',fear:0,
     disposition:'request_pc_action_roll',stakes_kind:'attempt_only',advantage:false,disadvantage:true,
     effect:'Exact delicate auditory/verbal applicability ruling; real owner quiet_environment outcome ends this disadvantage.'},
@@ -114,6 +116,8 @@ export function environmentProposalContract(feature){
   if(feature.native_handler==='environment_price_offer_context'&&(feature.type!=='Action'||feature.trigger_kind!=='spotlight_action'
     ||feature.target_policy!=='none'||feature.roll_protocol!=='environment_scene_context'))return null;
   if(feature.native_handler==='environment_auction_context'&&(feature.type!=='Action'||feature.trigger_kind!=='spotlight_action'
+    ||feature.target_policy!=='none'||feature.roll_protocol!=='environment_scene_context'))return null;
+  if(feature.native_handler==='environment_model_room_context'&&(feature.type!=='Action'||feature.trigger_kind!=='spotlight_action'
     ||feature.target_policy!=='none'||feature.roll_protocol!=='environment_scene_context'))return null;
   return structuredClone(contract);
 }

@@ -2302,13 +2302,13 @@
       "template_hash": "c6f1814ce1c763b7b63f7386b593aa3365d7a47ad43f245503f68a12118932ee",
       "index": 1,
       "type": "Action",
-      "status": "review_only",
-      "trigger_kind": "unmapped",
-      "target_policy": "unmapped",
-      "roll_protocol": "unmapped",
-      "costs": null,
-      "native_handler": null,
-      "reason": "No qualified native feature handler."
+      "status": "supported",
+      "trigger_kind": "spotlight_action",
+      "target_policy": "none",
+      "roll_protocol": "environment_scene_context",
+      "costs": [],
+      "native_handler": "environment_model_room_context",
+      "reason": "Exact source-bound incomplete forecast prompt; forecast is GM fiction and Hope remains optional/player-owned."
     },
     {
       "feature_key": "environment:aster-vale-predictive-lab:containment-shutters",
