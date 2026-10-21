@@ -148,7 +148,7 @@
 | [environment:district-blackout:no-ordinary-signal](occurrences/environment--district-blackout--no-ordinary-signal/LEDGER.md) | supported | verified_source | environment_no_ordinary_signal_context |
 | [environment:district-blackout:emergency-cascade](occurrences/environment--district-blackout--emergency-cascade/LEDGER.md) | supported | verified_source | environment_emergency_cascade |
 | [environment:district-blackout:choir-volume](occurrences/environment--district-blackout--choir-volume/LEDGER.md) | review_only | verified_source | none |
-| [environment:veil-anchor-chamber:consensus-engine](occurrences/environment--veil-anchor-chamber--consensus-engine/LEDGER.md) | review_only | verified_source | none |
+| [environment:veil-anchor-chamber:consensus-engine](occurrences/environment--veil-anchor-chamber--consensus-engine/LEDGER.md) | supported | verified_source | environment_consensus_engine_context |
 | [environment:veil-anchor-chamber:maintenance-memory](occurrences/environment--veil-anchor-chamber--maintenance-memory/LEDGER.md) | review_only | verified_source | none |
 | [environment:veil-anchor-chamber:automatic-correction](occurrences/environment--veil-anchor-chamber--automatic-correction/LEDGER.md) | supported | verified_source | environment_mundane_correction |
 | [environment:rupture-district:no-consensus](occurrences/environment--rupture-district--no-consensus/LEDGER.md) | supported | verified_source | environment_no_consensus_context |

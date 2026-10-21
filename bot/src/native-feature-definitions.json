@@ -2663,13 +2663,13 @@
       "template_hash": "3469856645bba4e30770d3f0d1ae847352ede48103ae6bc0ff904f2961d98093",
       "index": 0,
       "type": "Passive",
-      "status": "review_only",
-      "trigger_kind": "unmapped",
-      "target_policy": "unmapped",
-      "roll_protocol": "unmapped",
-      "costs": null,
-      "native_handler": null,
-      "reason": "No qualified native feature handler."
+      "status": "supported",
+      "trigger_kind": "passive",
+      "target_policy": "none",
+      "roll_protocol": "environment_scene_context",
+      "costs": [],
+      "native_handler": "environment_consensus_engine_context",
+      "reason": "Exact passive pre-action risk cue; native code invents no Veil Exposure result."
     },
     {
       "feature_key": "environment:veil-anchor-chamber:maintenance-memory",

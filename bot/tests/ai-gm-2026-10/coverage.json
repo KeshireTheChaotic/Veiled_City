@@ -86,7 +86,8 @@
     "bot/tests/ai-gm-2026-10/p06-f18.test.mjs",
     "bot/tests/ai-gm-2026-10/p06-f19.test.mjs",
     "bot/tests/ai-gm-2026-10/p06-f20.test.mjs",
-    "bot/tests/ai-gm-2026-10/p06-f21.test.mjs"
+    "bot/tests/ai-gm-2026-10/p06-f21.test.mjs",
+    "bot/tests/ai-gm-2026-10/p06-f22.test.mjs"
   ],
   "bot/src/native-feature-definitions.json": [
     "bot/tests/ai-gm-2026-10/p06-f01.test.mjs",
@@ -97,7 +98,8 @@
     "bot/tests/ai-gm-2026-10/p06-f18.test.mjs",
     "bot/tests/ai-gm-2026-10/p06-f19.test.mjs",
     "bot/tests/ai-gm-2026-10/p06-f20.test.mjs",
-    "bot/tests/ai-gm-2026-10/p06-f21.test.mjs"
+    "bot/tests/ai-gm-2026-10/p06-f21.test.mjs",
+    "bot/tests/ai-gm-2026-10/p06-f22.test.mjs"
   ],
   "bot/src/native-environment-capabilities.js": [
     "bot/tests/ai-gm-2026-10/p06-f04.test.mjs",
@@ -117,7 +119,8 @@
     "bot/tests/ai-gm-2026-10/p06-f18.test.mjs",
     "bot/tests/ai-gm-2026-10/p06-f19.test.mjs",
     "bot/tests/ai-gm-2026-10/p06-f20.test.mjs",
-    "bot/tests/ai-gm-2026-10/p06-f21.test.mjs"
+    "bot/tests/ai-gm-2026-10/p06-f21.test.mjs",
+    "bot/tests/ai-gm-2026-10/p06-f22.test.mjs"
   ],
   "bot/src/native-environment-witnesses.js": [
     "bot/tests/ai-gm-2026-10/p06-f11.test.mjs"
@@ -132,7 +135,8 @@
     "bot/tests/ai-gm-2026-10/p06-f18.test.mjs",
     "bot/tests/ai-gm-2026-10/p06-f19.test.mjs",
     "bot/tests/ai-gm-2026-10/p06-f20.test.mjs",
-    "bot/tests/ai-gm-2026-10/p06-f21.test.mjs"
+    "bot/tests/ai-gm-2026-10/p06-f21.test.mjs",
+    "bot/tests/ai-gm-2026-10/p06-f22.test.mjs"
   ],
   "bot/src/native-environment-chain-of-title.js": [
     "bot/tests/ai-gm-2026-10/p06-f18.test.mjs"
@@ -145,6 +149,9 @@
   ],
   "bot/src/native-environment-no-ordinary-signal.js": [
     "bot/tests/ai-gm-2026-10/p06-f21.test.mjs"
+  ],
+  "bot/src/native-environment-consensus-engine.js": [
+    "bot/tests/ai-gm-2026-10/p06-f22.test.mjs"
   ],
   "bot/src/native-environment-door-chain.js": [
     "bot/tests/ai-gm-2026-10/p06-f14.test.mjs"
