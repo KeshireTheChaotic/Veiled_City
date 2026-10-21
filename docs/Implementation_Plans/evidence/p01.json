@@ -1,0 +1,56 @@
+{
+  "run_id": "p01-1792598078657",
+  "sha": "0834f299ccff1738e9b3dd753a5fc616d3965370",
+  "start": "2026-10-21T15:54:38.698Z",
+  "hashes": {
+    "bot/src/gameplay-intake.js": "50aa4c6ca70d042503f27901e132dddd318bf0e71cf9cf07f30d2f1053a235a3",
+    "bot/src/narrative-writer-v9.js": "44963fb78fdf7592d048780e2e111e2f9ea93b090ba7cb1b8542fddb306c8ba2",
+    "bot/tests/ai-gm-2026-10/p01-f01.test.mjs": "f2a3bd8560081affd4204ac2786b5596e8138c6f59099e3577ab80b802808999",
+    "bot/tests/ai-gm-2026-10/p01-f02.test.mjs": "a7f280eda495a193b902ab5a7f51d27cdc382035650542c6420c069b837be93a",
+    "bot/tests/ai-gm-2026-10/p01-f03.test.mjs": "572fd385aceff5e3d8b2ba211c3af96ed8f97cb637c91f6210fd2ec06e9f35b7"
+  },
+  "tests": [
+    "bot/tests/ai-gm-2026-10/p01-f01.test.mjs",
+    "bot/tests/ai-gm-2026-10/p01-f02.test.mjs",
+    "bot/tests/ai-gm-2026-10/p01-f03.test.mjs"
+  ],
+  "syntax": [
+    {
+      "path": "bot/src/gameplay-intake.js",
+      "exit": 0,
+      "error": ""
+    },
+    {
+      "path": "bot/src/narrative-writer-v9.js",
+      "exit": 0,
+      "error": ""
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/p01-f01.test.mjs",
+      "exit": 0,
+      "error": ""
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/p01-f02.test.mjs",
+      "exit": 0,
+      "error": ""
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/p01-f03.test.mjs",
+      "exit": 0,
+      "error": ""
+    }
+  ],
+  "command": "node --test --test-reporter=tap bot/tests/ai-gm-2026-10/p01-f01.test.mjs bot/tests/ai-gm-2026-10/p01-f02.test.mjs bot/tests/ai-gm-2026-10/p01-f03.test.mjs",
+  "end": "2026-10-21T15:54:40.110Z",
+  "exit": 0,
+  "error": null,
+  "summary": [
+    "# tests 6",
+    "# pass 6",
+    "# fail 0",
+    "# cancelled 0",
+    "# skipped 0",
+    "# duration_ms 1172.5295"
+  ]
+}

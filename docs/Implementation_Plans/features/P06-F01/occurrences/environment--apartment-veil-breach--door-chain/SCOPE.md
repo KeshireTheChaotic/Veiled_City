@@ -1,0 +1,13 @@
+# environment:apartment-veil-breach:door-chain
+
+Status: SOURCE VERIFIED; LOCAL EXECUTION HOLD. Parent: [P06-F01](../../SCOPE.md).
+
+Audit SHA: 9e7bf0687357cf96fbe2ea09a04b3e9d2975f6a3. Checkout base: 0834f299ccff1738e9b3dd753a5fc616d3965370.
+
+Exact source: `content/GM_PRIVATE/ENVIRONMENTS/environments.json#apartment-veil-breach/features/1`. Source SHA-256: `d9f7bf042274ef8deb9f8741eb7e7f6e3b2598616aa2ada49a8f3c125e241f26`; template SHA-256: `7907b02aa1aabb205de4b7ee6a37ac09ff6c6f2f047daf555190b45734d99653`.
+
+This delta qualifies occurrence-local source inspection and discovery isolation only. It does not create or promote a native effect handler. Existing descriptor status: review_only; handler: none.
+
+Any future adapter must prove current actor/source/scene/target, owner choices, exact costs, native dice and once-only replay using new tests before support promotion. No generic fallback or new creative limitation. Roll back only the occurrence-specific diff; preserve saved readers and receipts.
+
+Final tested source SHA: `8e01519b6511bc90af6a1c675e4a9950f12b703c`; run `fresh-delta-1792599054739` passed 47/47 union tests. The catalog test verifies this occurrence source; this is not occurrence effect qualification. Input/test hashes: parent final evidence.

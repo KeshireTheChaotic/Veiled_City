@@ -7,18 +7,17 @@ stories survive between sessions.
 
 ## This development branch
 
-**Branch:** [`codex/audience-first-narrative-v9`](https://github.com/KeshireTheChaotic/Veiled_City/tree/codex/audience-first-narrative-v9)
+**Implementation branch:** `codex/clean-ai-gm-2026-10` · **Implementation source SHA:** `8e01519b6511bc90af6a1c675e4a9950f12b703c`
 **Application:** `0.0.0.1` ([package](bot/package.json)) · **SQLite schema:** `460`
 
-This README describes the audience-first, semantic-first development branch, not
-`main` or an assurance about an installed production instance. Older document
+This checkout implements the [clean AI GM plan](docs/Implementation_Plans/README.md), anchored at audit `9e7bf0687357cf96fbe2ea09a04b3e9d2975f6a3`. It is not an assurance about an installed production instance. Older document
 titles such as v9.6 or v10 name design milestones, not this application version.
 Targeted offline results are not full release qualification or evidence of live
 narrative quality, latency or cost.
 
 Start with the [setup and scope guide](docs/Setup_and_Scope/README.md) for operation
 and the [latest implementation ledger](docs/Active_Implementation/NO_DEFERRALS_LEDGER.md)
-for completed work, tests and blockers. Some supporting guides are pinned older
+for historical context only. That historical package is absent here; use the [current source crosswalk](docs/Implementation_Plans/CURRENT_SOURCE_CROSSWALK.md) and clean phase/feature ledgers for work, tests and blockers. Some supporting guides are pinned older
 snapshots; the current source and latest ledger outrank their older status claims.
 
 ## Concept and authority
@@ -81,33 +80,7 @@ documented adapter, not arbitrary variants or whole-release qualification.
 See the [feature crosswalk](docs/Active_Implementation/UNIFIED_ARBITRATION_FEATURE_COVERAGE.md)
 and [runtime catalog](bot/src/native-feature-definitions.json).
 
-The current owner-prioritized sequence is:
-
-1. Resolve missing feature authoring (Break the Pattern now has an [owner-approved rule](docs/Active_Implementation/BREAK_THE_PATTERN_AUTHORING_CONTRACT.md)); retain qualified unified-arbitration adapters and saved-result consumers.
-2. World Director integration and supported native consequences.
-3. Versioned PvP/death and pre-roll Fear work, preserving existing protections until replacements qualify.
-4. OpeningDirector/assembly integration is [complete with targeted evidence](docs/Active_Implementation/OPENING_ASSEMBLY_COMPLETION.md); the remaining review-only special-feature adapters are next eligible work under the owner amendment.
-5. Frozen-tree full offline qualification, exact-SHA CI and separately authorized release.
-
-Semantic-first S-GATE and bounded later packages have recorded targeted evidence.
-The bounded native PC-to-NPC unarmed adapter now has targeted offline evidence:
-actual local NPC target, Strength/Finesse, Proficiency d4 physical, owner-executed
-dice and private delivery. It does not authorize PC-target attacks or infer weapon
-statistics. The full catalog, authority migration and final W7/release gates are
-**not complete**. Resolved rule authoring does not establish executable coverage:
-Break the Pattern remains review-only pending a qualified detail/progress adapter.
-Any newly discovered missing authoritative sources remain explicit blockers,
-never invented mechanics.
-
-Active contracts and evidence:
-
-- [Semantic-first v2.1 plan](docs/Active_Implementation/VEILED_CITY_COST_OPTIMIZED_IMPLEMENTATION_PLAN_v2_1_SEMANTIC_FIRST.md)
-- [World Director bidirectional design](docs/Active_Implementation/VEILED_CITY_WORLD_DIRECTOR_BIDIRECTIONAL_DESIGN_v1_2.md)
-- [AI-GM producer/consumer matrix](docs/Active_Implementation/AI_GM_AUTHORITY_MIGRATION_MATRIX.md)
-- [No-deferrals ledger](docs/Active_Implementation/NO_DEFERRALS_LEDGER.md) — actual tests, later owner amendments and remaining scope
-- [Current execution reconciliation](docs/Active_Implementation/IMPLEMENTATION_RECONCILIATION.md) — actual completed scope and remaining dependencies
-- [Relevant validation and CI](docs/Active_Implementation/VALIDATION_RECONCILIATION.md) — focused versus full gates, retained coverage and failure diagnosis
-- [Release qualification gates](docs/Active_Implementation/RELEASE_QUALIFICATION_GATES.md)
+Current execution follows [P00 through P06](docs/Implementation_Plans/README.md) and the [owner behavioral specification](docs/Implementation_Plans/OWNER_AI_GM_BEHAVIOR_SPEC.md). The [source crosswalk](docs/Implementation_Plans/CURRENT_SOURCE_CROSSWALK.md) distinguishes existing pathways, changed-code evidence and unverified work. The 137 review-only catalog occurrences remain local execution holds; no generic adapter is implied. Full release qualification, live Discord/provider testing and deployment require separate authorization.
 
 ## Installation and setup
 
@@ -116,7 +89,7 @@ bot needs a Discord application and provider account; FFmpeg is optional for voi
 Use an isolated development/staging checkout, not an unqualified production upgrade.
 
 ```powershell
-git clone --branch codex/audience-first-narrative-v9 --single-branch https://github.com/KeshireTheChaotic/Veiled_City.git
+git clone --branch main --single-branch https://github.com/KeshireTheChaotic/Veiled_City.git
 Set-Location .\Veiled_City\bot
 npm ci
 if (-not (Test-Path -LiteralPath .env)) { Copy-Item .env.example .env }
@@ -135,22 +108,7 @@ per-player and GM-only channels before delivering sensitive material.
 
 ### Offline development and qualification
 
-```powershell
-# From bot/
-npm run check
-npm run quality
-npm run format:check
-# Run an affected regression during development, for example:
-node --import ./scripts/offline-guard.mjs --test scripts/semantic-owner-appearance-test.mjs
-# Full mandatory registry at a frozen qualification gate:
-npm run validate
-```
-
-The [offline validator](bot/scripts/validate-offline.mjs) writes a compact JSON
-report under `bot/.reports/`; inspect summary, failed and not-run cases. Keep all
-mandatory security assertions. Deterministic fixtures establish offline behavior,
-not real-provider costs or live Discord performance. These examples are commands
-to run, not a claim that this README rebuild executed full qualification.
+For this initiative, follow [TEST_PROTOCOL.md](docs/Implementation_Plans/TEST_PROTOCOL.md) and [TEST_EXECUTION_NO_POLL.md](docs/Implementation_Plans/TEST_EXECUTION_NO_POLL.md). Run only fresh feature tests under `bot/tests/ai-gm-2026-10/` and changed-file syntax checks. Never invoke inherited tests, registries or broad validation. Delta evidence is not release certification.
 
 `npm run register` changes Discord command registration. `npm start` connects the
 bot and may incur provider charges. Use them only in an authorized environment

@@ -31,6 +31,6 @@ One principle runs throughout: **human declarations own intent; native receipts 
 
 ## Explicitly partial and not promised
 
-The present code-owned feature inventory covers **153** authored special-feature occurrences: **12 bounded supported**, **140 review-only**, and **1 needs authoring**. A supported status applies only to its exact qualified scope, not an entire family. There is no generic environment/special-defense executor, blanket multi-target/reaction coverage, general Regent-command compliance or universal semantic-English safety proof. Current active plans and unqualified migration gates are in the **separate Active Implementation package**.
+The present code-owned feature inventory covers **153** authored special-feature occurrences: **16 bounded supported**, **137 review-only**, and **0 needs authoring**. A supported status applies only to its exact qualified scope, not an entire family. There is no generic environment/special-defense executor, blanket multi-target/reaction coverage, general Regent-command compliance or universal semantic-English safety proof. Current active plans and unqualified migration gates are in the [clean implementation plan](../Implementation_Plans/README.md).
 
 An earlier v9 core passed an offline validation at its historical commit; that result is **not** equivalent to a full mandatory validator at this later snapshot. Offline synthetic requests do not establish real Discord operation, quality, latency or production deployment.

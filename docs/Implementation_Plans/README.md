@@ -2,6 +2,8 @@
 
 **Static audit date:** 2026-10-21. **Audited `main` SHA:** `9e7bf0687357cf96fbe2ea09a04b3e9d2975f6a3`. **No runtime edits, CI, legacy tests or live services were executed.**
 
+**MANDATORY OWNER SPEC:** Read [OWNER_AI_GM_BEHAVIOR_SPEC.md](OWNER_AI_GM_BEHAVIOR_SPEC.md) in full before P00. The [unaltered source text](OWNER_AI_GM_BEHAVIOR_SOURCE.txt) is preserved alongside the clean Markdown. This full specification was supplied in chat, NOT committed to the GitHub repo. `content/ENGINE/AI_GM_CONSTITUTION.md` defines operational authority; it is complementary but not an interchangeable replacement for this owner behavior specification.
+
 The goal is an imaginative, impartial autonomous GM running a living world, rather than a restrictive rules chatbot. Keep expressive, proactive narration and NPC/faction initiative. Players exclusively own PC decisions; native code owns mechanical resolution; audiences receive only entitled information.
 
 ## Important verified findings
@@ -19,9 +21,10 @@ The goal is an imaginative, impartial autonomous GM running a living world, rath
 2. Each phase has its own `SCOPE.md` and `LEDGER.md`. Every feature has its own independent pair. For catalog occurrences worked on, create a further pair by exact feature key. Maintain real status, SHA, changed paths, new tests, execution results, costs, blockers, rollback and decisions in ledgers.
 3. **Only stop globally for critical blockers.** For an isolated unsupported feature, missing rule, failure or owner-decision hold: mark it locally and continue unrelated safe work. Do not conceal or invent a source.
 4. **Only test currently changed code, using wholly new tests. Never reuse, copy, import or execute legacy tests, fixtures, golden results or suites.** Default tests go in `bot/tests/ai-gm-2026-10/`. No broad `npm run validate` for this plan; a separately authorized release qualification is distinct.
-5. Minimize Codex cost: single serial agent by default, zero subagents, only an independently useful worker when justified; no paid provider tests by default. Use safe immutable caching and observed call-count metrics, not invented savings.
-6. **Ask the owner before adding any new restriction to freeform narrative output, NPC/faction autonomy, world invention, or humanlike GM pacing.** Hold only that proposed restriction; continue other features. Existing mandatory PC rights, privacy, dice and source authority stay enforced without a new vote.
-7. No code push/merge, deployment, live production DB access, restart or provider spend without separate authorization. The original docs/release logic may be read as archaeology, never used as testing shortcuts.
+5. **Never poll/watch tests.** Launch each fresh changed-code test batch once with a blocking execution tool call when possible. Otherwise detach it, do independent work, and retrieve final evidence only at a natural milestone. Do not repeatedly check session/process/log status or use short `wait` loops. Follow [TEST_EXECUTION_NO_POLL.md](TEST_EXECUTION_NO_POLL.md).
+6. Minimize Codex cost: single serial agent by default, zero subagents, only an independently useful worker when justified; no paid provider tests by default. Use safe immutable caching and observed call-count metrics, not invented savings.
+7. **Ask the owner before adding any new restriction to freeform narrative output, NPC/faction autonomy, world invention, or humanlike GM pacing.** Hold only that proposed restriction; continue other features. Existing mandatory PC rights, privacy, dice and source authority stay enforced without a new vote.
+8. No code push/merge, deployment, live production DB access, restart or provider spend without separate authorization. The original docs/release logic may be read as archaeology, never used as testing shortcuts.
 
 ## Phases
 - [P00 — Reconciliation and test reset](phases/P00/SCOPE.md): Inventory actual HEAD, reconcile contradictory docs, establish new tests and change-only selector.

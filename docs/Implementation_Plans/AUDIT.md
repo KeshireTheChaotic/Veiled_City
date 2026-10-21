@@ -1,3 +1,6 @@
+## Governing full owner specification
+Read the attached `OWNER_AI_GM_BEHAVIOR_SPEC.md` in full (and `OWNER_AI_GM_BEHAVIOR_SOURCE.txt` for the unaltered source). This was supplied in chat; the GitHub repo was not expected to contain it. Evaluate code and docs against this owner specification, preserving native rights, receipt integrity and secrecy. This is intended behavior, not evidence of shipped implementation.
+
 # Static reconciliation audit
 
 Review basis: 2026-10-21, current `main` SHA `9e7bf0687357cf96fbe2ea09a04b3e9d2975f6a3`, GitHub-connected tree plus selective source read, expected AI GM behavior supplied by owner. Not a complete executable or live performance audit.

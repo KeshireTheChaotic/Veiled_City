@@ -1,0 +1,63 @@
+{
+  "run_id": "p02-1792598182574",
+  "sha": "0834f299ccff1738e9b3dd753a5fc616d3965370",
+  "start": "2026-10-21T15:56:22.616Z",
+  "hashes": {
+    "bot/src/action-consent.js": "89cd6e8337281901bbd1495acbe6bffe8aa69c8ff51234dc704f87625925e1ef",
+    "bot/src/dice.js": "6534195eb0441d0c9982616a5d79e71f5067ddc863883a4cabda17072b6c865c",
+    "bot/src/publication-outbox.js": "bccc83eb85b32bd807533a746cc9c65b2ae32c5bb6f4fda30fc6e9ea709559ab",
+    "bot/tests/ai-gm-2026-10/p02-f01.test.mjs": "f248845b35fde5f31f519526cb6ac9f289895fe7b8a6b0973eab0ab0462c5aed",
+    "bot/tests/ai-gm-2026-10/p02-f02.test.mjs": "f2bfd26f1310aca238f37394029c7eb48ce9ea4b94cc3fb50c7ed28be1371f24",
+    "bot/tests/ai-gm-2026-10/p02-f03.test.mjs": "c10128bbd70e06c46d967fae735a5656758f14138b2d88192f0a6327865b7680"
+  },
+  "tests": [
+    "bot/tests/ai-gm-2026-10/p02-f01.test.mjs",
+    "bot/tests/ai-gm-2026-10/p02-f02.test.mjs",
+    "bot/tests/ai-gm-2026-10/p02-f03.test.mjs"
+  ],
+  "syntax": [
+    {
+      "path": "bot/src/action-consent.js",
+      "exit": 0,
+      "error": ""
+    },
+    {
+      "path": "bot/src/dice.js",
+      "exit": 0,
+      "error": ""
+    },
+    {
+      "path": "bot/src/publication-outbox.js",
+      "exit": 0,
+      "error": ""
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/p02-f01.test.mjs",
+      "exit": 0,
+      "error": ""
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/p02-f02.test.mjs",
+      "exit": 0,
+      "error": ""
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/p02-f03.test.mjs",
+      "exit": 0,
+      "error": ""
+    }
+  ],
+  "command": "node --test --test-reporter=tap bot/tests/ai-gm-2026-10/p02-f01.test.mjs bot/tests/ai-gm-2026-10/p02-f02.test.mjs bot/tests/ai-gm-2026-10/p02-f03.test.mjs",
+  "end": "2026-10-21T15:56:23.238Z",
+  "exit": 1,
+  "error": null,
+  "summary": [
+    "not ok 3 - bot\\\\tests\\\\ai-gm-2026-10\\\\p02-f03.test.mjs",
+    "# tests 7",
+    "# pass 6",
+    "# fail 1",
+    "# cancelled 0",
+    "# skipped 0",
+    "# duration_ms 335.2217"
+  ]
+}

@@ -1,6 +1,6 @@
 # P06-F02 — Daggerheart and hidden character data
 
-**Phase:** [P06](../../phases/P06/SCOPE.md). **Status:** PLANNED. **Audit SHA:** `9e7bf0687357cf96fbe2ea09a04b3e9d2975f6a3`.
+**Phase:** [P06](../../phases/P06/SCOPE.md). **Status:** TARGETED PASS. **Audit SHA:** `9e7bf0687357cf96fbe2ea09a04b3e9d2975f6a3`.
 
 ## Deliverable
 Reconcile authoritative SRD/house extensions without inventing mechanics. Keep AI GM-only hooks/relationships/canon prospects separate from player-visible imports and exports.
@@ -16,3 +16,7 @@ Write `bot/tests/ai-gm-2026-10/p06-f02.test.mjs` from scratch. Exercise only pro
 
 ## Boundaries and rollback
 Preserve PC agency, authoritative native state, stored proof readers, private scopes and once-only delivery. Any restriction on expressive output, incidental worldbuilding or autonomous AI GM requires the owner's explicit answer before implementation. Missing exact rules are local holds, not grounds to stop unrelated features. Scope changes require ledger record and rollback instructions.
+
+## Frozen implementation delta
+
+Source SHA: `8e01519b6511bc90af6a1c675e4a9950f12b703c`. Status: TARGETED DELTA PASS. Scope is the changed contracts recorded in this feature ledger; unchanged live behavior is not recertified. No new creative restriction. Final evidence: [FINAL_DELTA.json](../../evidence/FINAL_DELTA.json).
