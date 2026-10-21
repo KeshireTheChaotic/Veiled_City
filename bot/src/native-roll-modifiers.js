@@ -6,7 +6,7 @@ import {sceneFictionHash as hash,narrativeSourceVisible} from './scene-fiction-c
 import {indexWorldEvent} from './city-calendar.js';
 import {isPvpIntent} from './pvp-authority.js';
 import {arbitrationFailure as fail} from './gm-arbitration-contract.js';
-import {prepareEnvironmentNoiseOdds,inspectEnvironmentNoiseOdds} from './native-environment-noise.js';
+import {prepareEnvironmentNoiseOdds,prepareEnvironmentMemoryOdds,inspectEnvironmentNoiseOdds} from './native-environment-noise.js';
 
 const issuer='native:ordinary-roll-modifier';
 const declaration=a=>({intent:a.record_key,source:a.source_event,hash:a.data.source_hash,actor:a.data.actor,
@@ -22,7 +22,8 @@ function evidence(db,guild,scope){
 export function prepareOrdinaryRollModifier(db,guild,origin,entry,p){
   if(!p.advantage&&!p.disadvantage)return [];
   const o=inspectArbitrationOrigin(db,guild,origin),a=consentAction(db,guild,entry.intent_ref).row;
-  const environment=p.feature_ref?prepareEnvironmentNoiseOdds(db,guild,origin,entry,p):null;
+  const environment=p.feature_ref=== 'environment:haunted-nightclub:too-loud-to-think'?prepareEnvironmentNoiseOdds(db,guild,origin,entry,p)
+    :p.feature_ref==='environment:storm-drain-shrine:local-memory'?prepareEnvironmentMemoryOdds(db,guild,origin,entry,p):null;
   if(entry.actor.type!=='character'||a.data.actor!==entry.actor.key||isPvpIntent(db,guild,a)
     ||a.data.session_id!==o.binding.session||a.data.scene!==o.binding.scene||!narrativeSourceVisible(db,guild,a.source_event,o.scope)
     ||p.disposition!=='request_pc_action_roll'||p.stakes_kind!=='attempt_only'||p.feature_ref&&!environment||p.experience_ref
@@ -71,7 +72,7 @@ export function inspectOrdinaryRollModifier(db,guild,input,pc,event,{historical=
   for(const source of b.context.events){const e=db.getWorldEvent(guild,source.ref);if(e?.status!=='active'||hash(e)!==source.hash)throw fail('ordinary_modifier_evidence_changed');}
   if(b.environment){
     inspectEnvironmentNoiseOdds(db,guild,b.environment,a,{historical});
-    if(b.kind!=='disadvantage'||b.reason!==b.environment.applicability_ruling)throw fail('environment_modifier_exact_ruling_required');
+    if(b.kind!==b.environment.kind||b.reason!==b.environment.applicability_ruling)throw fail('environment_modifier_exact_ruling_required');
   }
   if(!historical){
     const scope={mode:a.visibility==='character'?'private':'party',actorUserId:a.data.owner_user_id,actorCharacterId:a.data.actor};

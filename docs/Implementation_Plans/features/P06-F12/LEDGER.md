@@ -10,4 +10,4 @@ Run `p06-f12-20261021-a` ran the frozen P06-F01/F03/F04-F12 union once: 29 total
 
 Cost/cache: paid provider calls 0, provider tokens 0, provider test spend $0; no cache claim; Codex usage unavailable. Questions: no new narrative restriction proposed. Separate owner-authority question HR14 `owner:everything-logs-hope:v1` remains unanswered and locally holds only Everything Logs. Critical blocker: none. Integrated live-state scene execution/replay, release qualification and real narrative quality/cost remain unverified. Release authorization: none.
 
-Implementation commit: pending at ledger preparation; see exact committed SHA in the phase ledger after commit.
+Implementation commit: `9e9e94b89b7c77e8e7cddac84aa406515b9d08e2`.

@@ -1,15 +1,9 @@
 # environment:storm-drain-shrine:local-memory — ledger
 
-Status: SOURCE VERIFIED; LOCAL EXECUTION HOLD.
+Status: SUPPORTED; TARGETED DELTA PASS. Parent: P06-F01; feature [P06-F13](../../../P06-F13/LEDGER.md).
 
-- Branch: codex/clean-ai-gm-2026-10; source checkout SHA: 0834f299ccff1738e9b3dd753a5fc616d3965370 + working-tree delta. Final freeze SHA/evidence: see parent P06-F01 ledger and final delta report.
-- Changed module: bot/src/native-feature-catalog.js (shared occurrence-local inspection). Descriptor and rules unchanged.
-- Fresh test: bot/tests/ai-gm-2026-10/p06-f01.test.mjs; current-catalog test calls inspectNativeFeatureOccurrence for this exact key. Source/content input is current production data, never a historical fixture.
-- Actual result: verified_source, execution_authorized=false in p06-1792598757560; shared repaired batch exit 0, 5 tests passed. This is source verification, not effect execution qualification.
-- Cost/cache: 0 paid provider calls/tokens; $0 provider tests. No cache claim. Codex usage unavailable.
-- Existing catalog reason: No qualified native feature handler.
-- Local hold: No qualified executable occurrence adapter. This remains unsupported; exact source availability alone is insufficient.
-- Questions: none introduced by this source-only delta; no new narrative/autonomy restrictions proposed.
-- Critical blocker: none. Release authorization: none.
+Audit SHA `9e7bf0687357cf96fbe2ea09a04b3e9d2975f6a3`; branch `codex/clean-ai-gm-2026-10`; source SHA-256 `5e4555647c8039b304f680fdf6f9adee8aaf15d89361ff6e30e7f15a9f852d04`; template SHA-256 `f3b4ece93c32b4b29adaf83ffb16653c7acb0b27af5c9b3e6d70b5c0e2b15953`.
 
-Final tested source SHA: `8e01519b6511bc90af6a1c675e4a9950f12b703c`; run `fresh-delta-1792599054739` passed 47/47 union tests. The catalog test verifies this occurrence source; this is not occurrence effect qualification. Input/test hashes: parent final evidence.
+Production touched: `native-feature-definitions.json`, `native-feature-catalog.js`, `native-environment-capabilities.js`, `native-environment-noise.js`, `native-roll-modifiers.js`, `gm-unified-arbitration.js`. Frozen fresh batch `p06-f13-20261021-a` passed 30/30; changed JS/MJS syntax 7/7; changed JSON parsed 2/2. Exact commands and all hashes: [P06-F13 evidence](../../../../evidence/P06_F13_TARGETED.json). Cost: provider calls/tokens/spend `0/0/$0`; no cache claim; Codex usage unavailable.
+
+No owner question or additional creative restriction proposed. Player action, dice and resources remain theirs. Live-state roll receipt replay and release qualification are unverified. No critical blocker. Release authorization: none. Implementation commit SHA: pending; see P06 phase ledger.

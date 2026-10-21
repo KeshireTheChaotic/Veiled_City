@@ -1,0 +1,11 @@
+# P06-F13 — Enable Storm Drain Shrine Local Memory
+
+**Phase:** [P06](../../phases/P06/SCOPE.md). **Status:** FROZEN FOR TARGETED QUALIFICATION. **Audit:** `9e7bf0687357cf96fbe2ea09a04b3e9d2975f6a3`.
+
+Occurrence `environment:storm-drain-shrine:local-memory`, source `content/GM_PRIVATE/ENVIRONMENTS/environments.json#storm-drain-shrine/features/0`: respectful offerings grant Advantage on one question about recent movement in the area.
+
+Implement only an exact native ordinary PC action-roll Advantage binding when the acting player has declared the offering/question and the GM's contextual applicability ruling matches this occurrence. Bind it to the exact authenticated intent, current Storm Drain Shrine instance, owner, scene and one ordinary action roll. Native dice remain owned by the player. No resource cost, PC action, answer, movement, knowledge transfer or other effect is implied; if the GM can answer without a roll, the ordinary no-roll path remains available. No limit on expressive narration or unrelated GM/NPC/faction activity is added.
+
+Production candidates: `bot/src/native-feature-definitions.json`, `native-feature-catalog.js`, `native-environment-capabilities.js`, `native-environment-noise.js`, `native-roll-modifiers.js`, `gm-unified-arbitration.js`. Write only new `bot/tests/ai-gm-2026-10/p06-f13.test.mjs`; update fresh coverage and P06-F01 catalog count. Use source/capability, exact modifier proof, role wiring, source-drift and altered-field tests. Integrated live-state/real-player-dice behavior is outside this delta and must be reported unverified.
+
+Frozen run `p06-f13-20261021-a`; from repository root run `node --test bot/tests/ai-gm-2026-10/p06-f01.test.mjs bot/tests/ai-gm-2026-10/p06-f04.test.mjs bot/tests/ai-gm-2026-10/p06-f05.test.mjs bot/tests/ai-gm-2026-10/p06-f06.test.mjs bot/tests/ai-gm-2026-10/p06-f07.test.mjs bot/tests/ai-gm-2026-10/p06-f08.test.mjs bot/tests/ai-gm-2026-10/p06-f09.test.mjs bot/tests/ai-gm-2026-10/p06-f10.test.mjs bot/tests/ai-gm-2026-10/p06-f11.test.mjs bot/tests/ai-gm-2026-10/p06-f12.test.mjs bot/tests/ai-gm-2026-10/p06-f13.test.mjs`, plus `node --check` only for changed JS/MJS files. One blocking test batch, no retries except changed-file repair. Commit the supported feature and evidence; preserve historical modifier readers and exact-once roll handling.

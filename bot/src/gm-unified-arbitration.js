@@ -36,6 +36,7 @@ export const UNIFIED_ARBITRATION_PROMPT="Evaluate unified_arbitration in this SA
   +"NPC attack uses actual PC Evasion, never invented Difficulty. "
   +"Ordinary NPC fiction normally uses npc_no_roll. "
   +"PC roll questions are adjudication only: player alone executes dice. "
+  +"At Storm Drain Shrine, apply the exact Local Memory advantage only to the player's declared question about recent local movement after their respectful offering; the player owns the action, dice and resource choices. "
   +"For an exact owner unarmed_attack against a local native NPC, use feature_ref=unarmed_attack, request_pc_action_roll, stakes_kind=native_attack, "
   +"srd:attack-rolls, Strength or Finesse, difficulty=null; native rules derive Proficiency d4 physical at Melee. No inferred weapon or PC target. "
   +"A triggered feature decision uses proposal_version=2 and the EXACT trigger_ref and feature_ref from feature_windows; a Reaction does not mint normal spotlight. "
@@ -111,7 +112,7 @@ export function adjudicateSceneBoard(db,guild,origin,board,proposals,{library=ne
       status=native.disposition==='roll_pending'?'pending_pc_roll':'needs_rules_review';reason='Native exact existing equipped approval only; no acquired gear, new mapping or owner dice are invented.';
     }
     else if(p.feature_ref&&p.feature_ref!=='standard_attack'
-      &&!(entry.actor.type==='character'&&['environment:haunted-nightclub:too-loud-to-think','environment:aster-vale-predictive-lab:everything-logs'].includes(p.feature_ref)
+      &&!(entry.actor.type==='character'&&['environment:haunted-nightclub:too-loud-to-think','environment:aster-vale-predictive-lab:everything-logs','environment:storm-drain-shrine:local-memory'].includes(p.feature_ref)
         &&featureDisposition(p.feature_ref).status==='supported')){
       const feature=featureDisposition(p.feature_ref);
       reason=feature.reason; // Catalog membership alone never grants a feature capability.
@@ -138,7 +139,7 @@ export function adjudicateSceneBoard(db,guild,origin,board,proposals,{library=ne
       else if(accepted.data.coordination||accepted.data.dependencies?.some(ref=>db.getCityRecord(guild,'typed_intent',ref)?.status!=='resolved')){
         status='blocked';reason='Native shared window or exact prerequisite remains unresolved; no automatic participation.';
       }else if(['no_roll','request_pc_action_roll'].includes(p.disposition)&&p.stakes_kind==='attempt_only'
-        &&(!p.feature_ref||['environment:haunted-nightclub:too-loud-to-think','environment:aster-vale-predictive-lab:everything-logs'].includes(p.feature_ref)&&p.disposition==='request_pc_action_roll')&&!p.experience_ref
+        &&(!p.feature_ref||['environment:haunted-nightclub:too-loud-to-think','environment:aster-vale-predictive-lab:everything-logs','environment:storm-drain-shrine:local-memory'].includes(p.feature_ref)&&p.disposition==='request_pc_action_roll')&&!p.experience_ref
         &&(p.disposition==='request_pc_action_roll'||!p.advantage&&!p.disadvantage)){
         const scope={mode:accepted.visibility==='character'?'private':'party',actorUserId:accepted.data.owner_user_id,actorCharacterId:accepted.data.actor};
         const traceRisk=p.feature_ref==='environment:aster-vale-predictive-lab:everything-logs'

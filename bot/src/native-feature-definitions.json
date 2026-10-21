@@ -2117,13 +2117,13 @@
       "template_hash": "f3b4ece93c32b4b29adaf83ffb16653c7acb0b27af5c9b3e6d70b5c0e2b15953",
       "index": 0,
       "type": "Passive",
-      "status": "review_only",
-      "trigger_kind": "unmapped",
-      "target_policy": "unmapped",
-      "roll_protocol": "unmapped",
-      "costs": null,
-      "native_handler": null,
-      "reason": "No qualified native feature handler."
+      "status": "supported",
+      "trigger_kind": "passive",
+      "target_policy": "none",
+      "roll_protocol": "native_pc_action_advantage",
+      "costs": [],
+      "native_handler": "shrine_local_memory_advantage",
+      "reason": "Source-bound advantage for one player-declared local movement question after an offering."
     },
     {
       "feature_key": "environment:storm-drain-shrine:flash-flood",

@@ -8,17 +8,37 @@ import {indexWorldEvent} from './city-calendar.js';
 import {arbitrationFailure as fail} from './gm-arbitration-contract.js';
 import {inspectArbitrationOrigin} from './scene-intent-board.js';
 import {nativeEnvironmentInstanceForScope} from './native-environment-instance.js';
+import {environmentProposalContract} from './native-environment-capabilities.js';
 import {captureCountdownActionAncestry,inspectCountdownActionAncestry} from './native-environment-countdown.js';
-const FEATURE='environment:haunted-nightclub:too-loud-to-think',issuer='native:environment-noise';
+const FEATURE='environment:haunted-nightclub:too-loud-to-think',MEMORY_FEATURE='environment:storm-drain-shrine:local-memory',issuer='native:environment-noise';
+const featureRules=Object.freeze({[FEATURE]:{handler:'nightclub_auditory_disadvantage',kind:'disadvantage'},
+  [MEMORY_FEATURE]:{handler:'shrine_local_memory_advantage',kind:'advantage'}});
 const keyFor=d=>`environment-noise-clear:${hash([d.session,d.scene,d.location,d.template_hash,d.scope])}`;
 const actionHash=a=>hash({key:a.record_key,source:a.source_event,actor:a.data.actor,owner:a.data.owner_user_id,
   principal:a.data.actor_principal_revision,scene:a.data.scene,session:a.data.session_id,source_hash:a.data.source_hash,
   start:a.data.start,end:a.data.end,type:a.data.type,framing:a.data.framing,operation:a.data.operation,target:a.data.target_key});
-function featureFor(profile){
-  const disposition=featureDisposition(FEATURE),f=disposition.feature;
-  if(disposition.status!=='supported'||f.native_handler!=='nightclub_auditory_disadvantage'||f.template_hash!==profile.data.template_hash)
+function featureFor(profile,key=FEATURE){
+  const expected=featureRules[key],disposition=featureDisposition(key),f=disposition.feature;
+  if(!expected||disposition.status!=='supported'||f.native_handler!==expected.handler||f.template_hash!==profile.data.template_hash
+    ||environmentProposalContract(f)?.handler!==expected.handler)
     throw fail('environment_noise_feature_not_qualified');
   return f;
+}
+/** Pure exact binding for source/context tests and the stateful native proof below. */
+export function validateEnvironmentOddsProposal({feature,profile,entry,action,proposal,kind}){
+  const expected=featureRules[feature?.feature_key];
+  if(!expected||expected.kind!==kind||feature.status!=='supported'||feature.native_handler!==expected.handler
+    ||feature.trigger_kind!=='passive'||feature.target_policy!=='none'
+    ||feature.roll_protocol!==(kind==='advantage'?'native_pc_action_advantage':'native_pc_action_disadvantage')
+    ||!Array.isArray(feature.costs)||feature.costs.length!==0||profile?.data?.template_hash!==feature.template_hash
+    ||entry?.actor?.type!=='character'||entry?.intent_ref!==action?.record_key||entry?.actor?.key!==action?.data?.actor
+    ||action?.data?.session_id!==profile?.data?.session||action?.data?.scene!==profile?.data?.scene
+    ||proposal?.feature_ref!==feature.feature_key||proposal?.disposition!=='request_pc_action_roll'||proposal?.stakes_kind!=='attempt_only'
+    ||proposal?.advantage!==(kind==='advantage')||proposal?.disadvantage!==(kind==='disadvantage')
+    ||proposal?.experience_ref||!proposal?.reason?.trim()||!proposal?.rule_basis_refs?.includes('srd:action-rolls'))
+    throw fail('environment_noise_exact_contextual_action_required');
+  return {version:1,feature:feature.feature_key,feature_hash:hash(feature),environment:profile.record_key,environment_hash:hash(profile),
+    action:action.record_key,applicability_ruling:proposal.reason,kind,amount:1};
 }
 /** Current owner/ruling/outcome must precede the material change. No accepted-only or high-roll shortcut. */
 export function clearNativeEnvironmentNoise(db,guild,input,scope){
@@ -96,27 +116,32 @@ export function nativeEnvironmentNoiseState(db,guild,environment,scope){
  * source-attributed, not a proof of universally correct natural-language interpretation.
  */
 export function prepareEnvironmentNoiseOdds(db,guild,origin,entry,proposal){
+  return prepareEnvironmentOdds(db,guild,origin,entry,proposal,FEATURE);
+}
+/** Exact player-declared offering/question and GM applicability ruling; one ordinary roll only. */
+export function prepareEnvironmentMemoryOdds(db,guild,origin,entry,proposal){
+  return prepareEnvironmentOdds(db,guild,origin,entry,proposal,MEMORY_FEATURE);
+}
+function prepareEnvironmentOdds(db,guild,origin,entry,proposal,featureKey){
+  const expected=featureRules[featureKey];
   const o=inspectArbitrationOrigin(db,guild,origin),action=db.getCityRecord(guild,'typed_intent',entry.intent_ref),
     profileRef=nativeEnvironmentInstanceForScope(db,guild,o.scope,o.binding.location)?.instance;
-  if(!profileRef||entry.actor.type!=='character'||action?.data.actor!==entry.actor.key||proposal.feature_ref!==FEATURE
-    ||proposal.disposition!=='request_pc_action_roll'||proposal.stakes_kind!=='attempt_only'
-    ||proposal.advantage!==false||proposal.disadvantage!==true||!proposal.reason?.trim())
-    throw fail('environment_noise_exact_contextual_action_required');
-  const profile=inspectNativeEnvironmentInstance(db,guild,profileRef,o.scope),feature=featureFor(profile);
-  if(nativeEnvironmentNoiseState(db,guild,profileRef,o.scope).quiet)throw fail('environment_noise_has_already_changed');
-  return {version:1,feature:FEATURE,feature_hash:hash(feature),environment:profileRef,environment_hash:hash(profile),
-    action:action.record_key,scope:structuredClone(o.scope),scene:o.binding.scene,session:o.binding.session,
-    applicability_ruling:proposal.reason,kind:'disadvantage',amount:1};
+  if(!expected||!profileRef)throw fail('environment_noise_exact_contextual_action_required');
+  const profile=inspectNativeEnvironmentInstance(db,guild,profileRef,o.scope),feature=featureFor(profile,featureKey);
+  const proof=validateEnvironmentOddsProposal({feature,profile,entry,action,proposal,kind:expected.kind});
+  if(featureKey===FEATURE&&nativeEnvironmentNoiseState(db,guild,profileRef,o.scope).quiet)throw fail('environment_noise_has_already_changed');
+  return {...proof,scope:structuredClone(o.scope),scene:o.binding.scene,session:o.binding.session};
 }
 
 /** A later legitimate quieting cannot change odds already recorded on a committed native roll. */
 export function inspectEnvironmentNoiseOdds(db,guild,proof,action,{historical=false}={}){
-  if(proof?.version!==1||proof.feature!==FEATURE||proof.action!==action.record_key||proof.kind!=='disadvantage'||proof.amount!==1
+  const expected=featureRules[proof?.feature];
+  if(proof?.version!==1||!expected||proof.action!==action.record_key||proof.kind!==expected.kind||proof.amount!==1
     ||proof.scene!==action.data.scene||proof.session!==action.data.session_id||typeof proof.applicability_ruling!=='string'||!proof.applicability_ruling.trim())
     throw fail('environment_noise_odds_exact_native_action');
-  const profile=inspectNativeEnvironmentInstance(db,guild,proof.environment,proof.scope,{historical}),feature=featureFor(profile);
+  const profile=inspectNativeEnvironmentInstance(db,guild,proof.environment,proof.scope,{historical}),feature=featureFor(profile,proof.feature);
   if(hash(profile)!==proof.environment_hash||hash(feature)!==proof.feature_hash
-    ||!historical&&nativeEnvironmentNoiseState(db,guild,profile.record_key,proof.scope).quiet)
+    ||proof.feature===FEATURE&&!historical&&nativeEnvironmentNoiseState(db,guild,profile.record_key,proof.scope).quiet)
     throw fail('environment_noise_odds_source_or_condition_changed');
   return proof;
 }
