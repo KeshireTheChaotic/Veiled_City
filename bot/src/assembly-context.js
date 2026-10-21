@@ -68,7 +68,7 @@ export function assemblyPlanFreshness(db,guild,session,plan){
   if(plan?.assembly_contract?.version!==2)return 'legacy_untracked';
   return plan.assembly_contract.input_fingerprint===assemblyInputFingerprint(db,guild,session)?'current':'stale';
 }
-export function assemblyHookProjection(db,guild,sessionId,scope){
+export function assemblyHookSelection(db,guild,sessionId,scope){
   if(scope.mode!=='private')return null;
   const session=db.getActiveSession(guild),pc=db.getCharacter(scope.actorCharacterId),plan=db.getAssemblyPlan(sessionId);
   if(!session||session.id!==sessionId||pc?.guild_id!==guild||pc.owner_user_id!==scope.actorUserId
@@ -79,16 +79,22 @@ export function assemblyHookProjection(db,guild,sessionId,scope){
   const sources=assemblyHookSources(db,guild,pc.id),refs=entry?.hook_source_refs??sources.slice(0,1).map(s=>s.id);
   if(!Array.isArray(refs)||refs.some(ref=>!sources.some(s=>s.id===ref)))throw assemblySourceError('Assembly hook source revoked or changed.');
   const selected=refs.map(ref=>sources.find(s=>s.id===ref));if(!selected.length)return null;
+  return {selected,revision:hookHash([pc.id,pc.owner_user_id,selected])};
+}
+/** Historical receipt renderer only. New scene publication never uses this hook recitation. */
+export function assemblyHookProjection(db,guild,sessionId,scope){
+  const selection=assemblyHookSelection(db,guild,sessionId,scope);if(!selection)return null;
+  const pc=db.getCharacter(scope.actorCharacterId),{selected}=selection;
   const text=`**Veilkeeper — private opening thread for ${displayed(pc.name)}**\n`
     +selected.map(s=>`Your character material offers this thread (${s.field}); it is not a newly resolved event:\n> ${displayed(s.text).replaceAll('\n','\n> ')}`).join('\n')
     +'\nWould you like to pursue this lead, ask about it, or take a different approach? No arrival, cooperation, commitment or outcome has been chosen for you.';
-  return {text,selected,revision:hookHash([pc.id,pc.owner_user_id,selected])};
+  return {text,...selection};
 }
 export function assemblyWriterBrief(db,guild,sessionId,scope){
   const resume=db.getSession(sessionId)?.assembly_phase==='party';
   const world_opportunities=openingWorldOpportunities(db,guild,scope);
   if(scope.mode==='private'){
-    const hook=assemblyHookProjection(db,guild,sessionId,scope);
+    const hook=assemblyHookSelection(db,guild,sessionId,scope);
     return {kind:resume?'private_resume':'private_opening',sources:hook?.selected||[],world_opportunities,
       task:`${resume?'Resume the owner character current independent thread.':'Offer a playable ordinary circumstance relevant to this personal thread.'} Do not resolve its mystery, assert an arrival, or decide a PC response.`,
       knowledge:'Only this owner character material is available. Imported GM-only mysteries are not player knowledge.'};

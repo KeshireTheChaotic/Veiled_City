@@ -20,7 +20,7 @@ import {validatePostTurnStateReview} from './director.js';
 import {projectSceneDescription,defaultSceneDescription} from './scene-description.js';
 import {turnTraceFor} from './turn-trace-context.js';
 import {assemblyOrientation} from './assembly-state.js';
-import {assemblyHookProjection} from './assembly-context.js';
+import {assemblyHookSelection} from './assembly-context.js';
 import {findFreshScenePart,renderFreshScenePart} from './fresh-scene-authoring.js';
 import {establishSceneFiction,renderSceneFiction,holdSceneFiction} from './scene-fiction-authority.js';
 import {establishNarrativeUnits,renderNarrativeUnit} from './narrative-authority.js';
@@ -28,7 +28,8 @@ import {narrativeTasks} from './narrative-tasks.js';
 import {validateNarrativeCompleteness} from './narrative-completeness.js';
 import {projectNarrativeArtifact} from './narrative-artifacts.js';
 import {assertSessionOpeningPublication} from './session-opening.js';
-import {openingEntryProjection} from './opening-entry-context.js';
+import {openingEntryNarrativeCandidate} from './opening-entry-context.js';
+import {lifecycleProjection,lifecycleHash} from './lifecycle-output.js';
 
 const hash=v=>createHash("sha256").update(JSON.stringify(v??null)).digest("hex");
 const prepared=new WeakMap();
@@ -116,6 +117,7 @@ function audienceScope(scope,surface){
 }
 function renderPart(db,guild,part){
   const {scope,scene,session,kind,ref}=part;
+  if(kind==='native_lifecycle')return lifecycleProjection(db,guild,ref,scope).text;
   if(!db.getActiveSession(guild)||currentScene(db,guild).key!==scene||db.getActiveSession(guild)?.id!==session)fail();
   const source=db.getWorldEvent(guild,part.source_ref);
   if(!source||source.status!=="active"||hash(source.details)!==part.source_hash)fail();
@@ -138,13 +140,12 @@ function renderPart(db,guild,part){
     if(projection.revision!==part.projection_revision)fail();return projection.text;
   }
   if(kind==='opening_entry'){
-    const projection=openingEntryProjection(db,guild,ref,scope);
-    if(projection.revision!==part.projection_revision)fail();return projection.text;
+    // A historical acknowledgement remains evidence, but an unsent legacy hook dump
+    // cannot resume as new audience-first fiction.
+    fail();
   }
   if(kind==='assembly_hook'){
-    const projection=assemblyHookProjection(db,guild,ref,scope);
-    if(!projection||projection.revision!==part.projection_revision
-      ||assemblyOrientation(db,guild,ref,scope).revision!==part.assembly_revision)fail();return projection.text;
+    fail();
   }
   if(kind==='scene_description'){
     const view=projectSceneDescription(db,guild,part.input,scope,part.source_ref);
@@ -226,7 +227,9 @@ function saveOutputGroup(db,guild,parts){
 function reusableParts(db,guild,text,scope){
   if(scope.mode==='private'){
     const session=db.getActiveSession(guild),assignment=session&&db.activeAssignment(session.id,scope.actorUserId);
-    if(!assignment||assignment.character_id!==scope.actorCharacterId||db.getCharacter(scope.actorCharacterId)?.owner_user_id!==scope.actorUserId)fail();
+    const lifecycle=records(db,guild,'pvp_output_part').some(p=>p.data.kind==='native_lifecycle'&&p.data.text===text
+      &&p.data.scope.actorUserId===scope.actorUserId&&p.data.scope.actorCharacterId===scope.actorCharacterId);
+    if(!lifecycle&&(!assignment||assignment.character_id!==scope.actorCharacterId||db.getCharacter(scope.actorCharacterId)?.owner_user_id!==scope.actorUserId))fail();
   }
   const candidates=records(db,guild,'pvp_output_part').filter(p=>p.data.text===text).map(p=>[p.record_key]);
   for(const group of records(db,guild,'pvp_output_group')){
@@ -271,9 +274,8 @@ export function assemblyNarrativeCandidate(db,guild,sessionId,scope){
   if(!Array.isArray(candidate.gm_world_parts)||candidate.gm_world_parts.length>4)candidate.gm_world_parts=[];
   const flags=db.getCityCalendar(guild).flags;
   const dedicated=plan.assembly_contract?.version===2;
-  if(dedicated||flags.playable_narration===true&&(scope.actorCharacterId||flags.narrative_authority&&flags.narrative_camera))
-    candidate.gm_world_parts=[...candidate.gm_world_parts.slice(0,3),{version:flags.narrative_authority?8:7,
-      ...(dedicated?{version:8}:{}),kind:dedicated||flags.narrative_authority?'narrative_request':'scene_fiction_request',operation:'describe_scene',source_refs:[]}];
+  if(dedicated||flags.playable_narration===true&&flags.narrative_authority===true&&(scope.actorCharacterId||flags.narrative_camera))
+    candidate.gm_world_parts=[{version:8,kind:'narrative_request',operation:'describe_scene',source_refs:[]}];
   const source=indexWorldEvent(db,guild,{key:`assembly-scope:${hash(view.state)}`,kind:'native_assembly_scope',
     title:'Native assembly orientation scope',source_id:'native:assembly',visibility:scope.mode==='private'?'character':'party',
     subject_key:scope.mode==='private'?scope.actorCharacterId:null,session_id:sessionId,scene:view.state.scene,
@@ -282,42 +284,36 @@ export function assemblyNarrativeCandidate(db,guild,sessionId,scope){
 }
 export function prepareAssemblyOutput(db,guild,sessionId,scope,{content=null}={}){
   const {view,candidate,source}=assemblyNarrativeCandidate(db,guild,sessionId,scope);
-  const inputs=structuredClone(candidate.gm_world_parts);
   prepareAuthorizedTurnOutput(db,guild,candidate,scope,{sourceRef:source.event_key,origin:'assembly-candidate',content});
   // Assembly is not a replay of every saved Fear/PvP projection in this scene.
-  const narrativeParts=prepared.get(candidate).parts.map(ref=>validateOutputPart(db,guild,ref)).filter(p=>
-    ['gm_world_narrative','gm_fresh_npc','gm_scene_fiction','gm_narrative_unit'].includes(p.data.kind)||p.data.kind==='native_outcome'
-      &&inputs.some(input=>hash(input)===hash(p.data.input)));
-  const hook=assemblyHookProjection(db,guild,sessionId,scope);
+  const narrativeParts=prepared.get(candidate).parts.map(ref=>validateOutputPart(db,guild,ref)).filter(p=>p.data.kind==='gm_narrative_unit');
+  const hook=assemblyHookSelection(db,guild,sessionId,scope);
   const orientation=savePart(db,guild,{render_version:1,scene:view.state.scene,session:sessionId,scope:{...scope},origin:'native_assembly',
-    kind:hook?'assembly_hook':'assembly_orientation',ref:sessionId,projection_revision:hook?.revision||view.revision,
-    ...(hook?{assembly_revision:view.revision}:{}),
+    kind:'assembly_orientation',ref:sessionId,projection_revision:view.revision,
     source_ref:source.event_key,source_hash:hash(source.details),
     principal_revision:view.state.principal});
-  const supplement=scope.mode==='party'&&db.getAssemblyPlan(sessionId)?.assembly_contract?.parent_plan&&narrativeParts.length;
-  const parts=supplement?narrativeParts:[orientation,...narrativeParts],text=parts.map(p=>p.data.text).join('\n');saveOutputGroup(db,guild,parts);
+  const parts=narrativeParts.length?narrativeParts:[orientation],text=parts.map(p=>p.data.text).join('\n');saveOutputGroup(db,guild,parts);
   const result={narration:text,player_summary:text,narrative_claims:[],private_messages:[],
-    assembly_evidence:{hook_selected:!!hook,hook_verified:!!hook,narrative_verified:narrativeParts.length>0,
+    assembly_evidence:{version:3,narrative_format:'audience_first_v9',hook_selected:!!hook,hook_verified:false,narrative_verified:narrativeParts.length>0,
       hook_revision:hook?.revision||null,hook_source_refs:hook?.selected.map(s=>s.id)||[],
       narrative_generated:db.listCityRecords(guild,{kind:'narrative_draft',includeGM:true,limit:1000})
         .some(r=>r.data.binding?.source===source.event_key),
       narrative_quarantined:db.listCityRecords(guild,{kind:'narrative_unit_review',includeGM:true,limit:1000})
         .some(r=>r.source_event===source.event_key),
-      fallback:!hook&&!narrativeParts.length,original_hook_delivered:false,raw_prose_held:!!candidate.narration}};
+      fallback:!narrativeParts.length,original_hook_delivered:false,raw_prose_held:!!candidate.narration}};
   prepared.set(result,{raw:{},drafts:{},parts:parts.map(p=>p.record_key),privateParts:{},scope:hash(scope),fingerprint:fingerprint(result)});
   return result;
 }
 export function prepareOpeningEntryOutput(db,guild,key,scope){
-  const view=openingEntryProjection(db,guild,key,scope),source=indexWorldEvent(db,guild,{key:`opening-entry-scope:${view.revision}`,
-    kind:'native_opening_entry_scope',title:'Owner-private sourced entry projection',source_id:'native:opening-director',
-    visibility:'character',subject_key:scope.actorCharacterId,session_id:view.state.material.session,scene:view.state.material.scene,
-    details:{version:1,opportunity:key,revision:view.revision,scope}},'native:opening-director'),
-    part=savePart(db,guild,{render_version:1,scene:view.state.material.scene,session:view.state.material.session,scope:{...scope},
-      origin:'native_opening_entry',kind:'opening_entry',ref:key,projection_revision:view.revision,
-      source_ref:source.event_key,source_hash:hash(source.details),principal_revision:view.state.principal}),
-    result={narration:part.data.text,player_summary:part.data.text,narrative_claims:[],private_messages:[],
-      entry_evidence:{hook_verified:view.hook_verified,source_refs:view.source_refs,fallback:!view.hook_verified}};
-  prepared.set(result,{raw:{},drafts:{},parts:[part.record_key],privateParts:{},scope:hash(scope),fingerprint:fingerprint(result)});return result;
+  const {view,source,candidate}=openingEntryNarrativeCandidate(db,guild,key,scope);
+  prepareAuthorizedTurnOutput(db,guild,candidate,scope,{sourceRef:source.event_key,origin:'native_opening_entry'});
+  const parts=prepared.get(candidate).parts.map(ref=>validateOutputPart(db,guild,ref)).filter(p=>p.data.kind==='gm_narrative_unit');
+  if(!parts.length)throw Object.assign(new Error('Entry authoring has no accepted audience-first narrative; source hooks are not a substitute.'),
+    {code:'OPENING_ENTRY_NARRATIVE_REQUIRED',expected:true});
+  saveOutputGroup(db,guild,parts);
+  const text=parts.map(p=>p.data.text).join('\n'),result={narration:text,player_summary:text,narrative_claims:[],private_messages:[],
+    entry_evidence:{version:2,narrative_format:'audience_first_v9',narrative_verified:true,hook_verified:false,source_refs:view.source_refs,fallback:false}};
+  prepared.set(result,{raw:{},drafts:{},parts:parts.map(p=>p.record_key),privateParts:{},scope:hash(scope),fingerprint:fingerprint(result)});return result;
 }
 export function prepareNativeHookOutput(db,guild,hook,scope){
   const projection=nativeHookProjection(db,guild,hook.id,scope),scene=currentScene(db,guild);
@@ -793,6 +789,35 @@ export function prepareStoredOutput(db,guild,text,scope){
   prepared.set(result,{raw:{},drafts:{},parts,scope:hash(scope),fingerprint:fingerprint(result)});
   return result;
 }
+/** Called only after the native lifecycle transaction commits. No model text is certified. */
+export function prepareLifecycleOutput(db,guild,input,scope){
+  const data={version:1,...input,scope:{...scope}},key=`lifecycle:${hash(data)}`;
+  if(!db.getCityRecord(guild,'lifecycle_publication',key)){
+    const receipt=db.recordMutation(guild,{sessionId:input.source_session||null,actorType:'system',actorId:'native:lifecycle-publication',
+      sourceLayer:'lifecycle_publication',mutationType:'lifecycle_publication',entityKey:key,visibility:'gm',after:data});
+    const source=indexWorldEvent(db,guild,{key:`${key}:source`,kind:'native_lifecycle_publication',title:'Native lifecycle publication proof',source_kind:'mutation',source_id:receipt.id,
+      visibility:'gm',
+      session_id:input.source_session||null,details:{digest:lifecycleHash(data)}},'native:lifecycle-publication');
+    db.saveCityRecord(guild,{kind:'lifecycle_publication',key,status:'verified',visibility:scope.mode==='private'?'character':'party',
+      subject_key:scope.actorCharacterId||null,source_event:source.event_key,data});
+  }
+  const native=db.getCityRecord(guild,'lifecycle_publication',key),view=lifecycleProjection(db,guild,key,scope);
+  const part=savePart(db,guild,{kind:'native_lifecycle',ref:key,scope:{...scope},source_ref:native.source_event});
+  saveOutputGroup(db,guild,[part]);
+  return {...view,key,result:prepareStoredOutput(db,guild,view.text,scope)};
+}
+/** Reuse existing verified encounter parts, never the model's summary itself. */
+export function prepareAftermathOutput(db,guild,encounter,draft){
+  const scope={mode:'party',actorUserId:null,actorCharacterId:null},publication=prepareLifecycleOutput(db,guild,
+    {kind:'aftermath',id:encounter.id,source_session:encounter.session_id,snapshot:lifecycleHash(db.getEncounterAftermath(encounter.id))},scope);
+  if(!db.getActiveSession(guild))return publication;
+  const candidate={...draft,narration:draft.player_summary||'',private_messages:[]};
+  prepareAuthorizedTurnOutput(db,guild,candidate,scope,{origin:'encounter-aftermath'});
+  const ids=[...prepared.get(publication.result).parts,...prepared.get(candidate).parts.filter(id=>
+    !['neutral','scene_fiction_review','assembly_orientation'].includes(validateOutputPart(db,guild,id).data.kind))];
+  const parts=[...new Set(ids)].map(id=>validateOutputPart(db,guild,id));saveOutputGroup(db,guild,parts);
+  const text=parts.map(p=>p.data.text).join('\n');return {...publication,text,result:prepareStoredOutput(db,guild,text,scope)};
+}
 export function quarantineSimulationHook(db,guild,hook){
   const key=`pvp-hook-review:${hash([hook.id,hook.data])}`;
   const source=indexWorldEvent(db,guild,{key,kind:"pvp_hook_review",title:"Unsupported hook held for source review",
@@ -825,6 +850,8 @@ export function assertArchiveOutput(db,guild,text,{sessionId=null}={}){
     if(row?.payload===text){archivedPublication(db,guild,row,sessionId);return;}
   }
   if(sessionId&&text===certifiedSessionRecap(db,guild,sessionId))return;
+  const lifecycle=records(db,guild,'pvp_output_part').filter(p=>p.data.kind==='native_lifecycle'&&p.data.text===text&&p.data.scope.mode==='party');
+  if(lifecycle.length){reusableParts(db,guild,text,{mode:'party',actorUserId:null,actorCharacterId:null});return;}
   if(!db.getActiveSession(guild))fail();
   try{reusableParts(db,guild,text,{mode:'party'});return;}catch(error){if(error.code!=='NARRATIVE_PVP')throw error;}
   const projection=records(db,guild,"pvp_public_projection").find(r=>r.visibility==="party"&&r.data.text===text);

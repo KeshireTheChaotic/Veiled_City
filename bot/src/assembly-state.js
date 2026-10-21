@@ -38,7 +38,7 @@ export function assemblyDeliverySummary(db,guild,session){
     const status=rows.length?rows.every(r=>r.status==='delivered')?'delivered':rows.some(r=>['uncertain','delivering'].includes(r.status))?'uncertain'
       :rows.some(r=>r.status==='failed')?'failed':'pending':legacy.uncertain.length||legacy.partial?'uncertain':legacy.complete?'legacy_delivered':job?.status==='blocked'?'blocked':'pending';
     const evidence=job?.data.evidence||{},narrative_status=status==='delivered'
-      ?evidence.hook_verified?'SOURCE_HOOK_DELIVERED':evidence.narrative_verified?'VERIFIED_SCENE_DELIVERED':'FALLBACK_DELIVERED':status.toUpperCase();
+      ?evidence.narrative_verified&&evidence.narrative_format==='audience_first_v9'?'VERIFIED_SCENE_DELIVERED':'FALLBACK_DELIVERED':status.toUpperCase();
     return {...slot,status,narrative_status,evidence,previously_delivered:job?.data.retained_acknowledgement===true,rows,job,legacy};
   });
 }

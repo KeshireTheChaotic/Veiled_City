@@ -15,6 +15,7 @@ import {assemblyDeliverySummary} from '../src/assembly-state.js';
 import {assemblyNarrativeCandidate} from '../src/pvp-output.js';
 import {buildNarrativeContext} from '../src/narrative-authority-context.js';
 import {indexWorldEvent} from '../src/city-calendar.js';
+import {withOpeningWriter} from './opening-writer-fixture.mjs';
 
 function setup(f){
   const pcs=f.pcs.slice(2);
@@ -37,7 +38,7 @@ function setup(f){
   const plan={public_opening:'The two characters surrender their secrets and move to the station.',public_parts:[],convergence_goal:'Independent cases may overlap.',
     bonds:[],gm_notes:'GM-ONLY-CONVERGENCE',character_entries:pcs.map(pc=>({discord_user_id:pc.owner_user_id,character_name:pc.name,
       private_hook:'You accept the job and disclose the other character secret.',private_parts:[],public_cue:'',stay_reason:''}))};
-  const gm={planAssembly:async()=>structuredClone(plan)};
+  const gm=withOpeningWriter(f,{planAssembly:async()=>structuredClone(plan)});
   return {pcs,sent,guild,interaction,plan,gm};
 }
 
@@ -55,7 +56,8 @@ test('two unrelated PCs receive their own source-bound opening through the real 
   await handleCommand(x.interaction(),{db:f.db,gm:x.gm});
   const billy=x.sent.private.find(p=>p.user===x.pcs[0].owner_user_id)?.text||'';
   const tyrell=x.sent.private.find(p=>p.user===x.pcs[1].owner_user_id)?.text||'';
-  assert.match(billy,/telemetry invoice/);assert.match(tyrell,/impossible-route bus card/i);
+  assert.match(billy,/maintenance listing/);assert.match(tyrell,/route-change notice/i);
+  assert(!billy.includes('An unpaid telemetry invoice'));assert(!tyrell.includes('An impossible-route bus card'));
   assert(!billy.includes('impossible-route'));assert(!tyrell.includes('telemetry'));
   assert(!JSON.stringify([...x.sent.private,...x.sent.party]).includes('GM-SECRET'));
   assert(!JSON.stringify([...x.sent.private,...x.sent.party]).includes('accept the job'));
@@ -67,17 +69,18 @@ test('two unrelated PCs receive their own source-bound opening through the real 
 
 test('fallback is not reported as delivered original narrative hook',()=>nativeFixture(async f=>{
   const x=setup(f);
+  delete x.gm.authorAssemblyScene;
   for(const pc of x.pcs)f.db.updateCharacterData(pc.id,d=>{d.entry_hooks=[];});
   await handleCommand(x.interaction(),{db:f.db,gm:x.gm});
   assert(x.sent.gm.some(p=>/FALLBACK_DELIVERED/.test(p.content||'')),JSON.stringify(x.sent.gm));
   assert(x.sent.gm.some(p=>/missing_entitled_source/.test(p.content||'')));
 }));
 
-test('source-bound hook is prepared through the common output boundary',()=>nativeFixture(f=>{
+test('source selection alone cannot become substantive narrative through the common output boundary',()=>nativeFixture(f=>{
   const x=setup(f);f.db.setAssemblyPlan(f.session.id,x.plan);
   const scope={mode:'private',actorUserId:x.pcs[0].owner_user_id,actorCharacterId:x.pcs[0].id};
   const result=prepareAssemblyOutput(f.db,f.guild,f.session.id,scope);
-  assert.match(result.narration,/telemetry invoice/);
+  assert(!result.narration.includes('telemetry invoice'));assert.equal(result.assembly_evidence.narrative_verified,false);
 }));
 
 test('planner rejects missing or duplicate checked-in character entries',()=>nativeFixture(async f=>{
@@ -130,7 +133,8 @@ for(const forced of ['Billy accepts the job and moves inside.','Tyrell reveals t
     assert(![...x.sent.party,...x.sent.private.map(p=>p.text)].some(t=>t.includes(forced)));
     assert.deepEqual(x.pcs.map(p=>f.db.getCharacter(p.id).data),before);
     assert(f.db.listCityRecords(f.guild,{kind:'narrative_unit_review',includeGM:true}).length>0);
-    assert(x.sent.private.every(p=>/opening thread/.test(p.text)),'Independent valid personal source remains deliverable.');
+    assert(x.sent.private.every(p=>!p.text.includes('Your character material')),'Rejected fiction never falls back to source recitation.');
+    assert(assemblyDeliverySummary(f.db,f.guild,f.session).every(s=>!s.evidence.narrative_verified));
   }));
 
 test('player Markdown supplies owner-private opening without sheet hooks or separate GM import',()=>nativeFixture(async f=>{
@@ -140,7 +144,7 @@ test('player Markdown supplies owner-private opening without sheet hooks or sepa
   f.db.upsertCharacterNarrative(f.guild,pc.id,'player','# Billy\n\nAn overdue lease and a missing circuit diagram are the current personal thread.');
   await handleCommand(x.interaction(),{db:f.db,gm:x.gm});
   const own=x.sent.private.find(p=>p.user===pc.owner_user_id),other=x.sent.private.find(p=>p.user!==pc.owner_user_id);
-  assert.match(own.text,/missing circuit diagram/);assert(!other.text.includes('missing circuit diagram'));
+  assert.match(own.text,/service window/);assert(!own.text.includes('An overdue lease'));assert(!other.text.includes('missing circuit diagram'));
 }));
 
 test('GM-only Markdown is retained for planning but does not become player knowledge without an entitled source',()=>nativeFixture(async f=>{
@@ -168,7 +172,7 @@ for(const mismatch of ['hook','narrative','owner','recipient','scene','payload',
     if(mismatch==='scene')f.db.db.prepare("UPDATE sessions SET director_state_json=json_set(director_state_json,'$.scene_number',2) WHERE id=?").run(f.session.id);
     if(mismatch==='payload')f.db.db.prepare('UPDATE publication_outbox SET payload=? WHERE id=?').run('Billy surrenders.',rows[0].id);
     if(mismatch==='source'){
-      const part=f.db.listCityRecords(f.guild,{kind:'pvp_output_part',includeGM:true}).find(p=>p.data.kind==='assembly_hook');
+      const part=f.db.listCityRecords(f.guild,{kind:'pvp_output_part',includeGM:true}).find(p=>p.data.kind==='assembly_orientation');
       f.db.db.prepare("UPDATE world_events SET status='retracted' WHERE event_key=?").run(part.source_event);
     }
     if(mismatch==='plan')f.db.setAssemblyPlan(f.session.id,{...f.db.getAssemblyPlan(f.session.id),public_opening:'Changed proposal'});
@@ -233,7 +237,7 @@ test('sheet-only character gets a meaningful opening without a GM hook import',(
   const x=setup(f),pc=x.pcs[0];f.db.db.prepare('DELETE FROM character_gm_hooks WHERE character_id=?').run(pc.id);
   f.db.db.prepare('DELETE FROM character_narratives WHERE character_id=?').run(pc.id);
   await handleCommand(x.interaction(),{db:f.db,gm:x.gm});
-  assert.match(x.sent.private.find(p=>p.user===pc.owner_user_id).text,/telemetry invoice/);
+  assert.match(x.sent.private.find(p=>p.user===pc.owner_user_id).text,/maintenance listing/);
 }));
 
 test('undelivered stale plan is regenerated by the actual assemble adapter using current hook sources',()=>nativeFixture(async f=>{
@@ -241,7 +245,7 @@ test('undelivered stale plan is regenerated by the actual assemble adapter using
   f.db.updateCharacterData(x.pcs[0].id,d=>{d.entry_hooks=['A newly imported circuit-diagram enquiry is the personal lead.'];});
   let plans=0;x.gm.planAssembly=async()=>{plans++;return structuredClone(x.plan);};
   await handleCommand(x.interaction(),{db:f.db,gm:x.gm});
-  assert.equal(plans,1);assert.match(x.sent.private.find(p=>p.user===x.pcs[0].owner_user_id).text,/newly imported circuit/);
+  assert.equal(plans,1);assert.match(x.sent.private.find(p=>p.user===x.pcs[0].owner_user_id).text,/service window/);
   assert.equal(assemblyPlanFreshness(f.db,f.guild,f.session,f.db.getAssemblyPlan(f.session.id)),'current');
 }));
 
@@ -254,7 +258,8 @@ test('GM refresh component prepares replacement without sending; repeated click 
   await handleCommand(x.interaction(control.custom_id),{db:f.db,gm:x.gm});
   assert.equal(x.sent.private.length,before);
   await handleCommand(x.interaction(),{db:f.db,gm:x.gm});
-  assert.equal(x.sent.private.length,before,'Previously acknowledged source hook is retained, not resent.');
+  assert.equal(x.sent.private.length,before+2,'Explicit refresh delivers substantive v9 fiction after historical orientation; the old orientation is not a completed opening.');
+  f.restart();await handleCommand(x.interaction(),{db:f.db,gm:x.gm});assert.equal(x.sent.private.length,before+2,'Acknowledged narrative is never resent.');
 }));
 
 test('model-shaped assembly source cannot mint the command-owned creative capability',()=>nativeFixture(f=>{

@@ -71,7 +71,8 @@ import { captureAuthoredTurnEnvelope } from "./authored-turn-envelope.js";
 import { saveVisibleCharacterFacts,saveCharacterSelfDescription } from "./character-observation.js";
 import { establishWorldDescription } from "./world-observation.js";
 import { fearInbox, establishFearContext, selectFearMove, applyFearMove, reconcileFearMove, resumeAutonomousPvpFear } from "./pvp-fear-moves.js";
-import { archivePvpHistory, quarantineSessionRecap, certifiedSessionRecap, scopedSessionRecap,revalidateOutputPublication } from "./pvp-output.js";
+import { archivePvpHistory, quarantineSessionRecap, certifiedSessionRecap, scopedSessionRecap,revalidateOutputPublication,prepareLifecycleOutput,prepareAftermathOutput } from "./pvp-output.js";
+import {lifecycleHash} from './lifecycle-output.js';
 import {assemblyReadiness} from './assembly-readiness.js';
 import {currentTurnTrace,withTurnTrace} from './turn-trace-context.js';
 import {turnLatency} from './turn-latency.js';
@@ -188,11 +189,11 @@ function compactAssemblyStatus(db,guildId,session){
   return lines.join("\n");
 }
 
-async function launchArrival({db,guild,userId,character,interactionId}){
+async function launchArrival({db,guild,gm,userId,character,interactionId}){
   const session=db.getActiveSession(guild.id);
   if(!session||session.assembly_mode==="manual"||character.owner_user_id!==userId)return {planned:false};
   const opportunity=prepareOpeningEntryOpportunity(db,guild.id,userId,character.id,interactionId),
-    delivery=await deliverOpeningEntry({db,guild,key:opportunity.record_key});
+    delivery=await deliverOpeningEntry({db,guild,gm,key:opportunity.record_key});
   return {planned:['delivered','retained_acknowledgement'].includes(delivery.status),delivery};
 }
 
@@ -247,16 +248,38 @@ function formatNpcProxyPacket(proxy,{offered=false}={}){
 }
 
 async function deliverNpcProxyPacket({db,guild,proxy,offered=false}){
-  const content=formatNpcProxyPacket(proxy,{offered});
+  const actual=db.getNpcProxyById(proxy.id),revision=JSON.stringify(actual),content=formatNpcProxyPacket(actual||proxy,{offered});
+  const check=()=>{
+    const current=db.getNpcProxyById(proxy.id),session=db.getActiveSession(guild.id);
+    if(!actual||JSON.stringify(proxy)!==revision||JSON.stringify(current)!==revision||current.guild_id!==guild.id
+      ||session?.id!==current.session_id||current.discord_user_id!==proxy.discord_user_id
+      ||current.status!==(offered?'offered':'active')||formatNpcProxyPacket(current,{offered})!==content)
+      throw Object.assign(new Error('NPC proxy assignment, recipient or approved packet changed before delivery.'),{code:'NPC_PROXY_AUTHORITY',expected:true});
+    for(const ref of current.player_packet?.source_refs||[]){
+      const event=db.getWorldEvent(guild.id,ref);if(event?.status!=='active')
+        throw Object.assign(new Error('NPC proxy packet source is no longer active.'),{code:'NPC_PROXY_AUTHORITY',expected:true});
+    }
+  };
+  check();
+  const deliveryKey=`proxy-packet:${lifecycleHash([proxy.id,revision,offered])}`,prior=db.getCityRecord(guild.id,'npc_proxy_packet_delivery',deliveryKey);
+  if(prior&&prior.status!=='not_sent')return {ok:prior.status==='delivered',via:'retained_acknowledgement',certainty:prior.status==='delivered'?'acknowledged':'uncertain'};
+  const saveDelivery=status=>db.saveCityRecord(guild.id,{kind:'npc_proxy_packet_delivery',key:deliveryKey,status,visibility:'gm',
+    source_event:indexWorldEvent(db,guild.id,{key:`${deliveryKey}:source`,kind:'native_proxy_packet_delivery',title:'Native recipient-bound proxy packet delivery',
+      source_id:'native:proxy-packet',visibility:'gm',session_id:proxy.session_id,details:{proxy:proxy.id,revision:lifecycleHash(actual)}},'native:proxy-packet').event_key,
+    data:{proxy:proxy.id,recipient:proxy.discord_user_id,revision:lifecycleHash(actual)}});
+  saveDelivery('sending');
   const delivery=await sendPlayerPrivate({db,guild,userId:proxy.discord_user_id,content,sessionId:proxy.session_id,
-    characterId:proxy.knowledge_id,generated:true});
-  if(delivery.ok) return delivery;
+    characterId:proxy.knowledge_id,generated:false,beforeSend:check});
+  if(delivery.ok){saveDelivery('delivered');return delivery;}
+  if(delivery.certainty==='uncertain'){saveDelivery('uncertain');return delivery;}
+  check();
   const relay=await postPrivateRelay({
     db,guild,userId:proxy.discord_user_id,sessionId:proxy.session_id,
     title:`NPC proxy packet could not be delivered — ${proxy.npc_name}`,
     context:`npc-proxy:${proxy.npc_name}`,
-    content
+    content,beforeSend:check
   });
+  saveDelivery(relay.ok?'relay_required':'not_sent');
   return relay.ok?relay:{ok:false,via:"unavailable",ref:relay.ref,content};
 }
 
@@ -291,7 +314,7 @@ function visibleDowntimeProjects(db,cycle,userId,isGm){
 
 function downtimeStatusText(cycle,projects){
   if(!cycle) return "No open downtime cycle.";
-  const lines=projects.map(p=>`• \`${p.id.slice(0,8)}\` **${p.title}** [${p.project_type}] — ${p.progress}/${p.max_progress} — ${p.status}${p.result?`\n  ${p.result}`:""}`);
+  const lines=projects.map(p=>`• \`${p.id.slice(0,8)}\` **${p.title}** [${p.project_type}] — ${p.progress}/${p.max_progress} — ${p.status}`);
   return [`**${cycle.label}** — ${cycle.status}`,cycle.notes||"",lines.length?lines.join("\n"):"No submitted projects."].filter(Boolean).join("\n").slice(0,1900);
 }
 
@@ -340,10 +363,10 @@ function resolveEndpoint(db,guildId,type,value){
 function latestEncounterForSession(db,sessionId){return db.listEncounters(sessionId)[0]||null;}
 
 async function applyEncounterAftermath({db,guild,encounter,draft,actorId}){
-  if(db.getEncounterAftermath(encounter.id)?.status==="applied") return {events:[],relationships:[],handouts:[],outputErrors:[]};
-  db.snapshotCampaign(guild.id,{label:`Pre-aftermath encounter ${encounter.encounter_number}`,reason:"Automatic snapshot before encounter aftermath",createdBy:actorId});
+  const alreadyApplied=db.getEncounterAftermath(encounter.id)?.status==='applied';
+  if(!alreadyApplied)db.snapshotCampaign(guild.id,{label:`Pre-aftermath encounter ${encounter.encounter_number}`,reason:"Automatic snapshot before encounter aftermath",createdBy:actorId});
   const scope={mode:"party",actorUserId:null,actorCharacterId:null};
-  const mutation=db.transaction(()=>{
+  const mutation=alreadyApplied?{events:[],relationships:[],handouts:[]}:db.transaction(()=>{
     const applied=applyAuthoritativeMutation(db,{narrative:draft,guildId:guild.id,sessionId:encounter.session_id,events:draft.events||[],relationships:draft.relationships||[],handouts:draft.handouts||[],scope,source:"encounter_aftermath"});
     db.setEncounterAftermathStatus(encounter.id,"applied");
     return applied;
@@ -361,16 +384,38 @@ async function applyEncounterAftermath({db,guild,encounter,draft,actorId}){
   await out("encounter-aftermath-publish",()=>publishEventResults({db,guild,results:events}));
   for(const h of handouts.filter(x=>x.ok)) await out(`encounter-aftermath-handout:${h.row.id}`,()=>deliverHandout({db,guild,handout:h.row,format:"markdown"}));
   for(const r of events.filter(x=>x.type==="canon"&&x.status==="conflict")) await out("encounter-aftermath-canon",()=>postStateError({db,guild,error:new Error(`Canon conflict ${r.conflict_id} requires GM resolution`),context:"encounter-aftermath-canon",sessionId:encounter.session_id}));
-  if(draft.player_summary?.trim()){
-    await out("encounter-aftermath-play",()=>postPlayMessage({db,guild,content:`**Encounter Aftermath**
-${draft.player_summary}`,sessionId:encounter.session_id,authority:{result:draft,scope}}));
-    await out("encounter-aftermath-journal",()=>postJournalEntry({db,guild,title:`Encounter ${encounter.encounter_number} Aftermath`,content:draft.player_summary,nativeEncounterId:encounter.id}));
-  }
+  const publication=prepareAftermathOutput(db,guild.id,encounter,draft);
+  await out('encounter-aftermath-play',()=>deliverLifecycleOnce(db,guild,publication,'play',()=>postPlayMessage({db,guild,
+    content:publication.text,sessionId:encounter.session_id,authority:{result:publication.result,scope}})));
+  await out('encounter-aftermath-journal',()=>deliverLifecycleOnce(db,guild,publication,'journal',()=>postJournalEntry({db,guild,
+    title:publication.title,content:publication.text,nativeEncounterId:encounter.id})));
   await out("encounter-aftermath-gm-log",()=>postGmLog({db,guild,sessionId:encounter.session_id,title:`Encounter #${encounter.encounter_number} aftermath applied`,details:`Events: ${events.length}
 Relationships: ${relationships.filter(x=>x.ok).length}
 Handouts: ${handouts.filter(x=>x.ok).length}
 ${draft.gm_notes||""}`}));
   return {events,relationships,handouts,outputErrors};
+}
+
+/** Lease before I/O: ambiguous sends are held, never blindly reposted. */
+async function deliverLifecycleOnce(db,guild,publication,surface,send){
+  const key=`${publication.key}:${surface}`,prior=db.getCityRecord(guild.id,'lifecycle_delivery',key);
+  if(prior&&prior.status!=='not_sent')return prior;
+  const save=status=>db.saveCityRecord(guild.id,{kind:'lifecycle_delivery',key,status,visibility:'gm',
+    source_event:db.getCityRecord(guild.id,'lifecycle_publication',publication.key)?.source_event||null,data:{publication:publication.key,surface}});
+  save('sending');
+  try{const result=await send();return save(result===false||result?.certainty==='not_sent'?'not_sent':result?.certainty==='uncertain'?'uncertain':'delivered');}
+  catch(error){save('uncertain');throw error;}
+}
+async function recoverDowntimeOutput(db,guild,job){
+  const statuses=[];
+  for(const input of job.data.publications||[]){
+    const {scope,...native}=input,publication=prepareLifecycleOutput(db,guild.id,native,scope);
+    const row=await deliverLifecycleOnce(db,guild,publication,scope.mode==='party'?'journal':'private',()=>scope.mode==='party'
+      ?postJournalEntry({db,guild,title:publication.title,content:publication.text,nativeLifecycleKey:publication.key})
+      :sendPlayerPrivate({db,guild,userId:scope.actorUserId,characterId:scope.actorCharacterId,content:publication.text,generated:true}));
+    statuses.push(row.status);
+  }
+  return statuses;
 }
 
 /**
@@ -993,7 +1038,7 @@ Initial phase: ${s.assembly_phase}`});
       const refresh=prepareAssemblyRefresh(db,interaction.guildId,s,interaction.user.id);
       if(refresh)components.push({type:1,components:[{type:2,style:2,label:'Prepare NEW sourced openings (no send)',custom_id:`vcassemblyrefresh:${refresh}`} ]});
       const staleWarning=deliveryResult.freshness?.hold?'\nSTALE PLAN — publication held for GM review. Existing delivery acknowledgements are unchanged.':'';
-      await deliverInteractionText(interaction,`Assembly processing complete.\n\n${compactAssemblyStatus(db,interaction.guildId,db.getSession(s.id))}\n\nPrivate narrative delivery: ${delivery.join(", ")||"none"}\nRaw planner prose remains quarantined, not delivered. SOURCE_HOOK means the exact permitted character source was delivered; FALLBACK is orientation only.${staleWarning}${warning}`,{ephemeral:true,components});
+      await deliverInteractionText(interaction,`Assembly processing complete.\n\n${compactAssemblyStatus(db,interaction.guildId,db.getSession(s.id))}\n\nPrivate narrative delivery: ${delivery.join(", ")||"none"}\nOnly VERIFIED_SCENE_DELIVERED certifies substantive audience-first fiction. FALLBACK is orientation only and leaves narrative delivery unresolved; raw hooks are not published.${staleWarning}${warning}`,{ephemeral:true,components});
       return true;
     }
     if(group==="session"&&sub==="assembly-status"){
@@ -1077,11 +1122,11 @@ Initial phase: ${s.assembly_phase}`});
           `Checked in for Session ${s.session_number}. Confirm where your character already starts; this is not travel or resolution of an earlier attempt. Share makes this initial position visible at the table; Private keeps it owner-only. You may leave it unconfirmed.`:
           `Checked in for Session ${s.session_number}. Initial position needs native setup/history review; no location or movement was inferred.`,
           ephemeral:true,allowedMentions:{parse:[]},...(setup?{components:setup.components}:{})});
-        if(openingEntry&&s.assembly_mode!=='manual')await deliverOpeningEntry({db,guild:interaction.guild,key:openingEntry.record_key});
+        if(openingEntry&&s.assembly_mode!=='manual')await deliverOpeningEntry({db,guild:interaction.guild,gm,key:openingEntry.record_key});
         return true;
       }
       await interaction.reply({content:`${JSON.stringify(c.name)} is now present in Session ${s.session_number}. Attendance does not choose travel, cooperation or party membership.`,allowedMentions:{parse:[]}});
-      if(openingEntry&&s.assembly_mode!=='manual')await deliverOpeningEntry({db,guild:interaction.guild,key:openingEntry.record_key});
+      if(openingEntry&&s.assembly_mode!=='manual')await deliverOpeningEntry({db,guild:interaction.guild,gm,key:openingEntry.record_key});
       return true;
     }
     if(group==="session"&&["absent","leave"].includes(sub)){
@@ -1277,7 +1322,7 @@ Source file: ${a.name}${narrativeImported?`\nGM-private narrative: ${narrativeRe
       db.assignCharacter(s.id,interaction.user.id,c.id,{role:"primary",controlPolicy:"player_only"});
       if(previous?.character_id && previous.character_id!==c.id && s.assembly_mode!=="manual"){
         await interaction.deferReply({ephemeral:true});
-        const result=await launchArrival({db,guild:interaction.guild,userId:interaction.user.id,character:c,interactionId:interaction.id});
+        const result=await launchArrival({db,guild:interaction.guild,gm,userId:interaction.user.id,character:c,interactionId:interaction.id});
         await interaction.editReply({content:`You are now playing ${JSON.stringify(c.name)}. Owner-private entry opportunity: ${result.delivery?.status||'held'}. No public arrival or PC action was inferred.`,allowedMentions:{parse:[]}});
       }else{
         await interaction.reply({content:`You are now playing **${c.name}**.`,ephemeral:true});
@@ -1391,7 +1436,7 @@ Source file: ${a.name}${narrativeImported?`\nGM-private narrative: ${narrativeRe
       db.assignCharacter(s.id,interaction.user.id,c.id,{role:"guest",controlPolicy:"player_only"});
       if(s.assembly_phase!=="assembly" && s.assembly_mode!=="manual"){
         await interaction.deferReply({ephemeral:true});
-        const result=await launchArrival({db,guild:interaction.guild,userId:interaction.user.id,character:c,interactionId:interaction.id});
+        const result=await launchArrival({db,guild:interaction.guild,gm,userId:interaction.user.id,character:c,interactionId:interaction.id});
         await interaction.editReply({content:`You are now playing guest character ${JSON.stringify(c.name)} for this session. Owner-private entry opportunity: ${result.delivery?.status||'held'}. No public arrival or PC action was inferred.`,allowedMentions:{parse:[]}});
       }else{
         await interaction.reply(`You are now playing guest character **${c.name}** for this session.`);
@@ -1644,7 +1689,7 @@ ${isGM(db,interaction)&&a.draft.gm_notes?`
 GM notes: ${a.draft.gm_notes}`:""}`.slice(0,1950):"No aftermath draft exists for the latest encounter.",ephemeral:true}); return true;
         }
         if(!isGM(db,interaction)) throw new Error("GM/admin permission required.");
-        if(!a||a.status!=="pending") throw new Error("No pending aftermath exists for the latest encounter.");
+        if(!a||!['pending','applied'].includes(a.status)||a.status==='applied'&&sub==='aftermath-discard') throw new Error("No pending aftermath exists for the latest encounter.");
         if(sub==="aftermath-discard"){
           db.setEncounterAftermathStatus(e.id,"discarded");
           await interaction.reply({content:`Encounter #${e.encounter_number} aftermath discarded; no proposed consequences were applied.`,ephemeral:true}); return true;
@@ -1922,8 +1967,25 @@ GM notes: ${a.draft.gm_notes}`:""}`.slice(0,1950):"No aftermath draft exists for
     if(group==="downtime"&&sub==="resolve"){
       if(!isGM(db,interaction)) throw new Error("GM/admin permission required.");
       if(db.getActiveSession(interaction.guildId)) throw new Error("Resolve downtime between sessions, not during an active session.");
-      const cycle=db.currentDowntime(interaction.guildId); if(!cycle||cycle.status!=="open") throw new Error("No open downtime cycle.");
+      const cycle=db.currentDowntime(interaction.guildId);
+      if(!cycle){
+        const job=db.listCityRecords(interaction.guildId,{kind:'downtime_authoring_job',status:'committed',includeGM:true,limit:1})[0];
+        if(!job)throw new Error('No open downtime cycle.');
+        await interaction.deferReply({ephemeral:true});
+        const statuses=await recoverDowntimeOutput(db,interaction.guild,job);
+        await interaction.editReply(`Saved downtime publication recovery: ${statuses.join(', ')||'no pending native publications'}. No generation or mechanics reran; uncertain sends remain held.`);
+        return true;
+      }
+      if(cycle.status!=='open')throw new Error('Downtime is already resolving; inspect its saved authoring job.');
       const projects=db.listDowntimeProjects(cycle.id); if(!projects.length) throw new Error("No downtime projects were submitted.");
+      const generationKey=`downtime:${cycle.id}`;
+      if(db.getCityRecord(interaction.guildId,'downtime_authoring_job',generationKey))
+        throw new Error('This downtime cycle already has an authoring attempt. Reconcile its saved job; do not regenerate or replay effects.');
+      const jobSource=indexWorldEvent(db,interaction.guildId,{key:`${generationKey}:authoring`,kind:'native_downtime_authoring',title:'Authenticated downtime resolution attempt',
+        source_id:'native:downtime',visibility:'gm',session_id:cycle.source_session_id||null,
+        details:{cycle:cycle.id,operator:interaction.user.id,interaction:interaction.id,projects_hash:lifecycleHash(projects)}},'native:downtime').event_key;
+      db.saveCityRecord(interaction.guildId,{kind:'downtime_authoring_job',key:generationKey,status:'generating',visibility:'gm',
+        source_event:jobSource,data:{cycle_id:cycle.id,source_session_id:cycle.source_session_id,projects_hash:lifecycleHash(projects)}});
       db.snapshotCampaign(interaction.guildId,{label:`Pre-downtime ${cycle.label}`,reason:"Automatic snapshot before downtime resolution",createdBy:interaction.user.id});
       await interaction.deferReply({ephemeral:true});
 
@@ -1943,12 +2005,18 @@ GM notes: ${a.draft.gm_notes}`:""}`.slice(0,1950):"No aftermath draft exists for
       const byId=new Map(projects.map(p=>[p.id,p]));
       const projectOutputs=[];
       const committed=db.transaction(()=>{
+        if(db.getActiveSession(interaction.guildId)||db.getDowntimeCycle(cycle.id)?.status!=='open'
+          ||lifecycleHash(db.listDowntimeProjects(cycle.id))!==lifecycleHash(projects)
+          ||db.getWorldEvent(interaction.guildId,jobSource)?.status!=='active')throw new Error('Downtime sources changed during authoring; native commit held for review.');
+        const ids=(resolved.project_results||[]).map(r=>r.project_id);
+        if(ids.length!==projects.length||new Set(ids).size!==ids.length||ids.some(id=>!byId.has(id)))
+          throw new Error('Downtime requires exactly one result for every current project.');
         for(const r of resolved.project_results||[]){
           const p=byId.get(r.project_id); if(!p) continue;
           const progress=Math.max(0,Math.min(p.max_progress,Number(p.progress||0)+Number(r.progress_delta||0)));
           const status=r.status==="completed"||progress>=p.max_progress?"completed":r.status;
           const updated=db.updateDowntimeProject(p.id,{progress,status,result:r.result||""});
-          projectOutputs.push({project:updated,message:`**Downtime — ${p.title}**\n${r.result||"Resolved."}\nProgress: ${progress}/${p.max_progress} • ${status}`});
+          projectOutputs.push({project:updated});
         }
         const dscope={mode:"party",actorUserId:null,actorCharacterId:null};
         const projectMutation=applyAuthoritativeMutation(db,{narrative:resolved,guildId:interaction.guildId,sessionId:cycle.source_session_id||null,events:resolved.events||[],relationships:resolved.relationships||[],handouts:resolved.handouts||[],scope:dscope,source:"downtime_project",provenance:{actorType:"ai",actorId:"downtime",interactionId:interaction.id,triggerText:cycle.label,rationale:resolved.summary||"",confidence:100}});
@@ -1957,6 +2025,13 @@ GM notes: ${a.draft.gm_notes}`:""}`.slice(0,1950):"No aftermath draft exists for
         const combinedSummary=[resolved.summary||"",director.act?director.gm_notes||"":""].filter(Boolean).join("\n\n");
         const done=db.resolveDowntimeCycle(cycle.id,combinedSummary);
         commitNpcDirector(db,npcPrepared);
+        db.saveCityRecord(interaction.guildId,{kind:'downtime_authoring_job',key:generationKey,status:'committed',visibility:'gm',
+          source_event:jobSource,data:{cycle_id:cycle.id,source_session_id:cycle.source_session_id,resolved,director,publications:[
+            ...projectOutputs.filter(x=>x.project.visibility!=='gm').map(({project:p})=>({kind:'downtime_project',id:cycle.id,
+              source_session:cycle.source_session_id,job_source:jobSource,project:p.id,snapshot:lifecycleHash(p),scope:p.visibility==='party'
+                ?{mode:'party',actorUserId:null,actorCharacterId:null}:{mode:'private',actorUserId:p.discord_user_id,actorCharacterId:p.character_id}})),
+            ...(director.act?[{kind:'downtime_world',id:cycle.id,source_session:cycle.source_session_id,job_source:jobSource,snapshot:lifecycleHash(done),
+              scope:{mode:'party',actorUserId:null,actorCharacterId:null}}]:[])]}});
         return {projectMutation,directorMutation,done};
       });
       const {projectMutation,directorMutation,done}=committed;
@@ -1969,22 +2044,36 @@ GM notes: ${a.draft.gm_notes}`:""}`.slice(0,1950):"No aftermath draft exists for
         catch(err){const ref=await postStateError({db,guild:interaction.guild,error:err,context,sessionId:cycle.source_session_id||null});outputErrors.push({context,ref});return null;}
       };
       for(const item of projectOutputs){
-        if(item.project.visibility==="party") await out(`downtime-project:${item.project.id}`,()=>postJournalEntry({db,guild:interaction.guild,title:`Downtime: ${item.project.title}`,content:item.message}));
-        else await out(`downtime-project-private:${item.project.id}`,()=>sendPlayerPrivate({db,guild:interaction.guild,userId:item.project.discord_user_id,content:item.message,sessionId:null,characterId:item.project.visibility==="character"?item.project.character_id:null,generated:true}));
+        if(item.project.visibility==='gm')continue;
+        const scope=item.project.visibility==='party'?{mode:'party',actorUserId:null,actorCharacterId:null}:
+          {mode:'private',actorUserId:item.project.discord_user_id,actorCharacterId:item.project.character_id};
+        await out(`downtime-project:${item.project.id}`,async()=>{
+          const publication=prepareLifecycleOutput(db,interaction.guildId,{kind:'downtime_project',id:cycle.id,source_session:cycle.source_session_id,job_source:jobSource,
+            project:item.project.id,snapshot:lifecycleHash(item.project)},scope);
+          return deliverLifecycleOnce(db,interaction.guild,publication,scope.mode==='party'?'journal':'private',()=>scope.mode==='party'
+            ?postJournalEntry({db,guild:interaction.guild,title:publication.title,content:publication.text,nativeLifecycleKey:publication.key})
+            :sendPlayerPrivate({db,guild:interaction.guild,userId:scope.actorUserId,characterId:scope.actorCharacterId,content:publication.text,generated:true}));
+        });
       }
       await out("downtime-event-publish",()=>publishEventResults({db,guild:interaction.guild,results:eventResults}));
       await out("downtime-npc-hooks",()=>publishSimulationHooks({db,guild:interaction.guild}));
       for(const h of handoutResults.filter(x=>x.ok)) await out(`downtime-handout:${h.row.id}`,()=>deliverHandout({db,guild:interaction.guild,handout:h.row,format:"markdown"}));
       for(const r of eventResults.filter(x=>x.type==="canon"&&x.status==="conflict")) await out("downtime-canon-conflict",()=>postStateError({db,guild:interaction.guild,error:new Error(`Pending canon conflict ${r.conflict_id}`),context:"downtime-canon-conflict",sessionId:cycle.source_session_id||null}));
-      if(director.act&&String(director.public_narration||"").trim()) await out("downtime-director-journal",()=>postJournalEntry({db,guild:interaction.guild,title:`World Movement — ${cycle.label}`,content:director.public_narration}));
+      if(director.act)await out('downtime-director-journal',async()=>{
+        const publication=prepareLifecycleOutput(db,interaction.guildId,{kind:'downtime_world',id:cycle.id,source_session:cycle.source_session_id,job_source:jobSource,
+          snapshot:lifecycleHash(done)},{mode:'party',actorUserId:null,actorCharacterId:null});
+        return deliverLifecycleOnce(db,interaction.guild,publication,'journal',()=>postJournalEntry({db,guild:interaction.guild,
+          title:publication.title,content:publication.text,nativeLifecycleKey:publication.key}));
+      });
       const validPlayers=new Set(db.listPlayers(interaction.guildId).map(p=>p.discord_user_id));
       for(const pm of director.private_messages||[]){
         if(!validPlayers.has(pm.discord_user_id)){
           await out("downtime-director-private-blocked",()=>postGmLog({db,guild:interaction.guild,sessionId:cycle.source_session_id||null,title:"Blocked Veilkeeper action — downtime director",details:`Private message target ${pm.discord_user_id} is not a registered campaign player; delivery was blocked.`}));
           continue;
         }
-        const ch=db.findOwnedCharacter(interaction.guildId,pm.discord_user_id,"");
-        await out(`downtime-director-private:${pm.discord_user_id}`,()=>sendPlayerPrivate({db,guild:interaction.guild,userId:pm.discord_user_id,content:`**Veilkeeper — private world movement:**\n${pm.content}`,sessionId:null,characterId:ch?.id||null,generated:true}));
+        // Persisted in the GM-private authoring job; no free-text no-session disclosure authority.
+        await out(`downtime-director-private:${pm.discord_user_id}`,()=>postGmLog({db,guild:interaction.guild,
+          title:'Downtime private narration held for source review',details:'The committed downtime authoring job retains an uncertified private proposal. No player disclosure was made.'}));
       }
       await out("downtime-gm-log",()=>postGmLog({db,guild:interaction.guild,sessionId:cycle.source_session_id||null,title:`Downtime resolved — ${done.label}`,details:`Project layer: ${resolved.summary||"none"}\nWorld Director: ${director.act?(director.gm_notes||"acted"):"no autonomous world move warranted"}`}));
       await out("downtime-post-snapshot",async()=>db.snapshotCampaign(interaction.guildId,{label:`Post-downtime ${done.label}`,reason:"Automatic snapshot after downtime project + world-director resolution",createdBy:interaction.user.id}));

@@ -1,6 +1,6 @@
 /** GM-reviewed replacement of stale/fallback plans. Delivery acknowledgements are never reset. */
 import {randomUUID} from 'node:crypto';
-import {assemblyInputFingerprint,assemblyPlanFreshness,certifyAssemblyPlan,hookHash,assemblySourceError,assemblyHookProjection} from './assembly-context.js';
+import {assemblyInputFingerprint,assemblyPlanFreshness,certifyAssemblyPlan,hookHash,assemblySourceError,assemblyHookSelection} from './assembly-context.js';
 import {assemblyPlanHash} from './assembly-state.js';
 import {indexWorldEvent} from './city-calendar.js';
 import {inspectSessionOpening,rebindSessionOpeningRefresh} from './session-opening.js';
@@ -107,8 +107,8 @@ export function retainedAssemblyDelivery(db,guild,session,scope,{fallback=false}
     if(!rows.length||!rows.every(r=>r.status==='delivered'))continue;
     if(fallback&&item.evidence.fallback)return item;
     if(scope.mode==='party'&&item.evidence.narrative_verified)return item;
-    if(item.evidence.hook_verified){
-      try{if(assemblyHookProjection(db,guild,session.id,scope)?.revision===item.evidence.hook_revision)return item;}
+    if(item.evidence.hook_verified||item.evidence.narrative_verified){
+      try{if(assemblyHookSelection(db,guild,session.id,scope)?.revision===item.evidence.hook_revision)return item;}
       catch(error){if(error.code!=='ASSEMBLY_SOURCE')throw error;}
     }
   }

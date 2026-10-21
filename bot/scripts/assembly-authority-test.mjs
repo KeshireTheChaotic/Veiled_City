@@ -79,7 +79,7 @@ test('legacy reconciliation is bound to original plan and GM, never stale terms 
   await assert.rejects(()=>handleCommand(x.interaction(control.custom_id),{db:f.db,gm:x.gm}),/changed|revision|stale/i);
 }));
 
-test('assembly preserves source-backed NPC dialogue but never promotes another owner private quote',()=>nativeFixture(async f=>{
+test('legacy NPC composition cannot substitute for a v9 assembly narrative or disclose an owner-private quote',()=>nativeFixture(async f=>{
   const x=fixture(f),scene=currentScene(f.db,f.guild),quote='The parcel counter closes at midnight.';
   f.db.setSimulationEntity(f.guild,'location','terminal',{name:'Terminal'});
   f.db.upsertNpcProfile(f.guild,{npcKey:'attendant',displayName:'Attendant',role:'attendant',publicIdentity:'PRIVATE-DOSSIER'});
@@ -93,7 +93,7 @@ test('assembly preserves source-backed NPC dialogue but never promotes another o
     {op:'quote',source_ref:source.event_key,knowledge_key:'counter-hours',source_span:quote}]};
   x.plan.character_entries[0].private_parts=[part];x.plan.character_entries[1].private_parts=[part];x.plan.public_parts=[part];
   f.db.setAssemblyPlan(f.session.id,x.plan);await handleCommand(x.interaction(),{db:f.db,gm:x.gm});
-  assert(x.sent.private.find(p=>p.user===f.pcs[0].owner_user_id).content.includes(quote),JSON.stringify(x.sent));
+  assert(!x.sent.private.find(p=>p.user===f.pcs[0].owner_user_id).content.includes(quote));
   assert(!x.sent.private.find(p=>p.user===f.pcs[1].owner_user_id).content.includes(quote));
   assert(!x.sent.party.join('').includes(quote));assert(!JSON.stringify(x.sent.private).includes('PRIVATE-DOSSIER'));
 }));

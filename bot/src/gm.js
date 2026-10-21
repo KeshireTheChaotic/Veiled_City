@@ -59,6 +59,7 @@ import {assemblyInputs,hookHash,certifyAssemblyPlan} from './assembly-context.js
 import {sceneObservationOperation} from './scene-observation-route.js';
 import {engagementKinds,bindSemanticEngagement,currentSemanticEngagement,semanticSceneOperation} from './semantic-engagement.js';
 import {authorNarrativeRequests,NARRATIVE_AUTHORITY_INSTRUCTIONS,narrativeResponseSchema} from './narrative-authority.js';
+import {openingEntryNarrativeCandidate} from './opening-entry-context.js';
 import {nativeOutcomeSchema,narrativeRequestSchema} from './gm-fiction-schema.js';
 import {coordinateNarrative,narrativeModel} from './narrative-delegation.js';
 import {bindDirectorNarrativeSource,inheritDirectorNarrativeSource,nativeDirectorNarrativeSource} from './narrative-director-source.js';
@@ -1051,10 +1052,13 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
   }
   async authorAssemblyScene(guildId,sessionId,scope){
     const {candidate,source}=assemblyNarrativeCandidate(this.db,guildId,sessionId,scope),signal=AbortSignal.timeout(Number(this.config.gmTurnDeadlineMs||120000));
-    if(source.details.version===2||this.db.getCityCalendar(guildId).flags.narrative_authority)return authorNarrativeRequests({db:this.db,guild:guildId,result:candidate,scope,
+    return authorNarrativeRequests({db:this.db,guild:guildId,result:candidate,scope,
       sourceRef:source.event_key,budget:{used:false},generate:packet=>this.generateNarrative(guildId,packet,signal,'assembly')});
-    await authorSceneFictionRequests({db:this.db,guild:guildId,result:candidate,scope,sourceRef:source.event_key,budget:{used:false},
-      generate:packet=>this.generateSceneFiction(guildId,packet,signal)});
+  }
+  async authorOpeningEntry(guildId,key,scope){
+    const {candidate,source}=openingEntryNarrativeCandidate(this.db,guildId,key,scope),signal=AbortSignal.timeout(Number(this.config.gmTurnDeadlineMs||120000));
+    return authorNarrativeRequests({db:this.db,guild:guildId,result:candidate,scope,sourceRef:source.event_key,budget:{used:false},
+      generate:packet=>this.generateNarrative(guildId,packet,signal,'opening_entry')});
   }
   async authorFreshNpcs(guildId,result,scope,sourceRef,budget,signal,model=this.config.gmModel){
     await measureStage(this.metrics,'npc_writer',()=>authorFreshNpcRequests({db:this.db,guild:guildId,result,scope,sourceRef,budget,generate:async packet=>{

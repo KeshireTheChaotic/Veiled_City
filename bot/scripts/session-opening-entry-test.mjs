@@ -12,6 +12,7 @@ import {scenePresence} from '../src/scene-continuity.js';
 import {configureCityFlags} from '../src/city-core.js';
 import {configureSimulationEntity} from '../src/simulation.js';
 import {operationalReport} from '../src/operations/health.js';
+import {withOpeningWriter} from './opening-writer-fixture.mjs';
 
 function setup(f){
   const sent={party:[],private:[]};let n=0;
@@ -24,10 +25,23 @@ function setup(f){
     isChatInputCommand:()=>true,isButton:()=>false,isStringSelectMenu:()=>false,
     options:{getSubcommand:()=>sub,getSubcommandGroup:()=>null,getString:k=>k==='character'?name:null,getBoolean:()=>null,getInteger:()=>null,getUser:()=>null},
     reply:async body=>replies.push(body),deferReply:async()=>{},editReply:async body=>replies.push(body),followUp:async body=>replies.push(body),replies};};
-  const gm={planAssembly:async()=>({public_opening:'Raw proposal only.',public_parts:[],character_entries:[],convergence_goal:'Independent opportunities.',bonds:[],gm_notes:''}),
-    planArrival:async()=>{throw Error('Legacy freeform arrival must not be called.');}};
+  const gm=withOpeningWriter(f,{planAssembly:async()=>({public_opening:'Raw proposal only.',public_parts:[],character_entries:[],convergence_goal:'Independent opportunities.',bonds:[],gm_notes:''}),
+    planArrival:async()=>{throw Error('Legacy freeform arrival must not be called.');}});
   return {guild,sent,interaction,gm};
 }
+
+test('transport acknowledgements for orientation alone never complete the native opening job',()=>nativeFixture(async f=>{
+  const x=setup(f),pc=f.pcs[0];f.db.endSession(f.guild,'');
+  registerOpeningAttendance(f.db,f.guild,pc.owner_user_id,'orientation-checkin',pc.name);
+  delete x.gm.authorAssemblyScene;
+  x.gm.planAssembly=async()=>({public_opening:'Unverified proposal.',public_parts:[],convergence_goal:'Independent opportunities.',bonds:[],gm_notes:'',
+    character_entries:[{discord_user_id:pc.owner_user_id,character_id:pc.id,character_name:pc.name,private_hook:'Unverified secret.',private_parts:[],public_cue:'',stay_reason:''}]});
+  await handleCommand(x.interaction('start'),{db:f.db,gm:x.gm});
+  const session=f.db.getActiveSession(f.guild),job=f.db.getCityRecord(f.guild,'session_opening_job',session.id);
+  assert.equal(job.status,'needs_narrative_review');assert(job.data.slots.every(s=>s.narrative_status==='FALLBACK_DELIVERED'));
+  const count=x.sent.private.length;f.restart();await handleCommand(x.interaction('present',pc.owner_user_id,pc.name),{db:f.db,gm:x.gm});
+  assert.equal(x.sent.private.length,count,'Explicit narrative review is required; attendance must not resend acknowledged orientation.');
+}));
 
 test('O4 late present privately delivers its own sourced opening through native outbox without changing the shared opening',()=>nativeFixture(async f=>{
   const x=setup(f),pc=f.pcs[0];f.db.updateCharacterData(pc.id,d=>{d.entry_hooks=['An unpaid telemetry invoice offers a personal lead.'];});
@@ -36,7 +50,8 @@ test('O4 late present privately delivers its own sourced opening through native 
   const before=f.db.getCharacter(pc.id).data;
   await handleCommand(x.interaction('present',pc.owner_user_id,pc.name),{db:f.db,gm:x.gm});
   assert.equal(x.sent.private.length,1,'Late attendance needs a native private opportunity, not just a presence acknowledgement.');
-  assert.equal(x.sent.private[0].user,pc.owner_user_id);assert.match(x.sent.private[0].text,/unpaid telemetry invoice/);
+  assert.equal(x.sent.private[0].user,pc.owner_user_id);assert.match(x.sent.private[0].text,/maintenance listing/);
+  assert(!x.sent.private[0].text.includes('An unpaid telemetry invoice'));
   assert.equal(x.sent.party.length,1);assert.deepEqual(f.db.getCharacter(pc.id).data,before);
   assert.equal(f.db.listCityRecords(f.guild,{kind:'scene_presence',includeGM:true}).length,0);
   f.restart();await handleCommand(x.interaction('present',pc.owner_user_id,pc.name),{db:f.db,gm:x.gm});
@@ -53,17 +68,18 @@ test('O4 independent private entry sources never cross owners or disclose import
   f.db.endSession(f.guild,'');await handleCommand(x.interaction('start'),{db:f.db,gm:x.gm});
   for(const pc of f.pcs.slice(0,2))assert.equal(await handleCommand(x.interaction('present',pc.owner_user_id,pc.name),{db:f.db,gm:x.gm}),true);
   for(const [n,pc] of f.pcs.slice(0,2).entries()){
-    const text=x.sent.private.find(p=>p.user===pc.owner_user_id)?.text;assert(text);assert(text.includes(`OWNER-THREAD-${n}`));
+    const text=x.sent.private.find(p=>p.user===pc.owner_user_id)?.text;assert(text);assert(text.includes('service window'));
+    assert(!text.includes(`OWNER-THREAD-${n}`),'The writer does not recite the source.');
     assert(!text.includes(`OWNER-THREAD-${1-n}`));assert(!text.includes('GM-MYSTERY'));assert(!text.includes('GM-NARRATIVE'));
   }
   assert.equal(x.sent.party.length,1);assert(!JSON.stringify(x.sent.party).includes('OWNER-THREAD'));
 }));
 
-test('O4 missing entitled material is accurately labelled fallback; manual mode never auto-delivers an entry',()=>nativeFixture(async f=>{
+test('O4 missing personal material still permits verified ordinary circumstances; manual mode never auto-delivers an entry',()=>nativeFixture(async f=>{
   const x=setup(f),pc=f.pcs[0];assert.equal(await handleCommand(x.interaction('present',pc.owner_user_id,pc.name),{db:f.db,gm:x.gm}),true);
-  assert.equal(x.sent.private.length,1);assert.match(x.sent.private[0].text,/not a delivered character hook/);
+  assert.equal(x.sent.private.length,1);assert.match(x.sent.private[0].text,/service window/);
   const row=f.db.listCityRecords(f.guild,{kind:'opening_entry_delivery',includeGM:true})[0];assert.equal(row.data.evidence.hook_verified,false);
-  assert.equal(row.data.evidence.fallback,true);
+  assert.equal(row.data.evidence.fallback,false);assert.equal(row.data.evidence.narrative_verified,true);
   f.db.endSession(f.guild,'');f.db.startSession(f.guild,'Manual','manual');
   await handleCommand(x.interaction('present',pc.owner_user_id,pc.name),{db:f.db,gm:x.gm});assert.equal(x.sent.private.length,1);
 }));
@@ -96,13 +112,15 @@ test('O4 unknown private acknowledgement never retries on repeated present or re
   await handleCommand(x.interaction('present',pc.owner_user_id,pc.name),{db:f.db,gm:x.gm});f.restart();
   await handleCommand(x.interaction('present',pc.owner_user_id,pc.name),{db:f.db,gm:x.gm});
   await handleCommand(x.interaction('present',f.pcs[1].owner_user_id,f.pcs[1].name),{db:f.db,gm:x.gm});
-  assert.equal(attempts,1);assert.equal(x.sent.private.length,1);assert.equal(x.sent.private[0].user,f.pcs[1].owner_user_id);
+  assert.equal(attempts,1);assert.equal(x.sent.private.length,1,JSON.stringify(f.db.listCityRecords(f.guild,{kind:'opening_entry_delivery',includeGM:true})));assert.equal(x.sent.private[0].user,f.pcs[1].owner_user_id);
   assert.equal(f.db.listCityRecords(f.guild,{kind:'opening_entry_delivery',actor:pc.id,includeGM:true})[0].status,'uncertain');
 }));
 
 for(const change of ['owner','proxy','absence','source','hook','audience'])test(`O4 real deferred entry outbox rejects stale ${change} after restart`,()=>nativeFixture(async f=>{
   const x=setup(f),pc=f.pcs[0],entry=prepareOpeningEntryOpportunity(f.db,f.guild,pc.owner_user_id,pc.id,`deferred-${change}`),
-    scope={mode:'private',actorUserId:pc.owner_user_id,actorCharacterId:pc.id},result=prepareOpeningEntryOutput(f.db,f.guild,entry.record_key,scope),
+    scope={mode:'private',actorUserId:pc.owner_user_id,actorCharacterId:pc.id};
+  await x.gm.authorOpeningEntry(f.guild,entry.record_key,scope);
+  const result=prepareOpeningEntryOutput(f.db,f.guild,entry.record_key,scope),
     turn=f.db.beginTurnAttempt({guildId:f.guild,sessionId:f.session.id,messageId:`deferred-entry-${change}`,actorPrincipal:pc.owner_user_id,audience:'private'});
   const rows=queueTurnPublications(f.db,{guild:x.guild,session:f.session,result,scope,turnId:turn.turn_id});
   if(change==='owner')f.db.db.prepare('UPDATE characters SET owner_user_id=? WHERE id=?').run('other-owner',pc.id);
@@ -116,7 +134,7 @@ for(const change of ['owner','proxy','absence','source','hook','audience'])test(
 }));
 
 test('O4 duplicate check-in retains an actual initial assembly acknowledgement rather than sending a second opening',()=>nativeFixture(async f=>{
-  const x=setup(f),pc=f.pcs[0];f.db.updateCharacterData(pc.id,d=>{d.entry_hooks=['A lead already delivered at session start.'];});f.db.endSession(f.guild,'');
+  const x=setup(f),pc=f.pcs[0];f.db.updateCharacterData(pc.id,d=>{d.entry_hooks=['A lead already delivered at session start.','An independent second source need not trigger duplicate entry.'];});f.db.endSession(f.guild,'');
   registerOpeningAttendance(f.db,f.guild,pc.owner_user_id,'prestart-entry',pc.name);
   x.gm.planAssembly=async()=>({public_opening:'GM proposal.',public_parts:[],convergence_goal:'Independent thread.',bonds:[],gm_notes:'',
     character_entries:[{discord_user_id:pc.owner_user_id,character_name:pc.name,private_hook:'Proposal only.',private_parts:[],public_cue:'',stay_reason:''}]});
@@ -133,7 +151,7 @@ for(const kind of ['select','claim'])test(`O4 real owner ${kind} produces a sour
     {guest:kind==='claim'});f.db.updateCharacterData(pc.id,d=>{d.location='terminal';});f.db.setAssemblyPhase(f.session.id,'party');
   const i=x.interaction(kind,user,pc.name);i.commandName=kind==='select'?'vc-character':'vc-guest';
   assert.equal(await handleCommand(i,{db:f.db,gm:x.gm}),true);assert.equal(x.sent.party.length,0);assert.equal(x.sent.private.length,1);
-  assert.match(x.sent.private[0].text,new RegExp(`${kind.toUpperCase()}-OWNER-THREAD`));
+  assert.match(x.sent.private[0].text,/service window/);assert(!x.sent.private[0].text.includes(`${kind.toUpperCase()}-OWNER-THREAD`));
   const opportunity=f.db.listCityRecords(f.guild,{kind:'opening_entry_opportunity',includeGM:true})[0],event=f.db.getWorldEvent(f.guild,opportunity.source_event),
     mutation=f.db.getMutation(f.guild,event.source_id);
   assert.equal(mutation.actor_type,'player');assert.equal(mutation.actor_id,user);assert.equal(mutation.source_interaction_id,i.id);
@@ -143,7 +161,7 @@ for(const kind of ['select','claim'])test(`O4 real owner ${kind} produces a sour
 test('O4 source revocation during real recipient fetch blocks transport without disclosing the old hook',()=>nativeFixture(async f=>{
   const x=setup(f),pc=f.pcs[0],entry=prepareOpeningEntryOpportunity(f.db,f.guild,pc.owner_user_id,pc.id,'toctou-entry');let sends=0;
   x.guild.members.fetch=async()=>{indexWorldEvent(f.db,f.guild,{key:entry.source_event,status:'retracted'});return {send:async()=>{sends++;return {id:'bad',channelId:'bad'};}};};
-  const result=await deliverOpeningEntry({db:f.db,guild:x.guild,key:entry.record_key});assert.equal(sends,0);assert.notEqual(result.status,'delivered');
+  const result=await deliverOpeningEntry({db:f.db,guild:x.guild,key:entry.record_key,gm:x.gm});assert.equal(sends,0);assert.notEqual(result.status,'delivered');
 }));
 
 test('O5 native opening and entry incidents appear in GM-only operational reports without private text or recovery side effects',()=>nativeFixture(async f=>{
@@ -151,7 +169,7 @@ test('O5 native opening and entry incidents appear in GM-only operational report
   await handleCommand(x.interaction('start'),{db:f.db,gm:{planAssembly:async()=>{throw Error('PRIVATE-PLANNER-CONTENT');}}});
   f.db.updateCharacterData(pc.id,d=>{d.entry_hooks=['PRIVATE-CHARACTER-THREAD'];});
   x.guild.members.fetch=async()=>({send:async()=>{throw Error('uncertain transport');}});
-  await handleCommand(x.interaction('present',pc.owner_user_id,pc.name),{db:f.db,gm:{}});
+  await handleCommand(x.interaction('present',pc.owner_user_id,pc.name),{db:f.db,gm:x.gm});
   const before=f.db.db.prepare('SELECT total_changes() n').get().n,report=operationalReport(f.db,f.guild,{authorized:true});
   assert(report.native.counts.some(r=>r.kind==='session_opening_job'&&r.status==='needs_review'&&r.count===1),'Opening failures must not disappear from operational health.');
   assert(report.native.counts.some(r=>r.kind==='opening_entry_delivery'&&r.status==='uncertain'&&r.count===1));
@@ -206,12 +224,12 @@ test('O5 four owners retain uncertain initial delivery across duplicate attendan
   await handleCommand(x.interaction('present',returning.owner_user_id,returning.name),{db:f.db,gm:x.gm});
   const returningInitial=f.db.listCityRecords(f.guild,{kind:'assembly_delivery',includeGM:true}).find(r=>r.data.scope?.actorCharacterId===returning.id);
   assert.notEqual(f.db.activeAssignment(session.id,returning.owner_user_id).control_revision,revision);
-  assert.equal(returningInitial.data.evidence.hook_verified,true);
+  assert.equal(returningInitial.data.evidence.narrative_verified,true);
   assert.equal(f.db.listCityRecords(f.guild,{kind:'opening_entry_delivery',actor:returning.id,includeGM:true})[0].status,'retained_acknowledgement');
   await handleCommand(x.interaction('present',late.owner_user_id,late.name),{db:f.db,gm:x.gm});
   assert.equal(x.sent.private.length,3,JSON.stringify(f.db.listCityRecords(f.guild,{kind:'opening_entry_delivery',includeGM:true})
     .map(r=>({actor:r.actor_key,status:r.status,refs:r.data.evidence?.source_refs,hold:r.data.hold_code}))));assert.equal(x.sent.private.at(-1).user,late.owner_user_id);
-  assert.match(x.sent.private.at(-1).text,/OWNER-3-PRIVATE-THREAD/);assert(!x.sent.private.at(-1).text.includes('OWNER-0-'));
+  assert.match(x.sent.private.at(-1).text,/service window/);assert(!x.sent.private.at(-1).text.includes('OWNER-0-'));
   assert.notEqual(f.db.activeAssignment(session.id,returning.owner_user_id).control_revision,revision);
   assert.deepEqual(f.db.getCityRecord(f.guild,'typed_intent',accepted.record_key),accepted);
   const absent=x.interaction('absent',uncertain.owner_user_id);absent.options.getString=k=>k==='mode'?'offscreen':null;

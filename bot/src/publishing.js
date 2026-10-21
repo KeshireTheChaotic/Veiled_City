@@ -13,6 +13,10 @@ import { assertArchiveOutput, archivePvpHistory, assertPvpOutput, prepareStoredO
 import {turnTraceFor} from './turn-trace-context.js';
 import { queueDirectorPublications } from "./publication-outbox.js";
 import {KeyedSerialQueue} from "./serial-queue.js";
+import {activeEvidence} from './epistemic.js';
+import {factVisibleTo} from './disclosure-authority.js';
+import {lifecycleProjection} from './lifecycle-output.js';
+import {indexWorldEvent} from './city-calendar.js';
 const continuationDeliveryQueue=new KeyedSerialQueue();
 
 /** Only never-attempted owner notices auto-deliver. Failed/uncertain delivery stays in reviewed recovery. */
@@ -136,16 +140,22 @@ export async function publishJournal({db,guild,session,recap}){
   return true;
 }
 
-export async function postJournalEntry({db,guild,title="Campaign Update",content="",nativeEncounterId=null}){
+export async function postJournalEntry({db,guild,title="Campaign Update",content="",nativeEncounterId=null,nativeLifecycleKey=null}){
   assertArchiveOutput(db,guild.id,content);
   const encounter=nativeEncounterId&&db.getEncounter(nativeEncounterId);
+  const checkLifecycle=()=>{
+    if(!nativeLifecycleKey)return false;
+    const view=lifecycleProjection(db,guild.id,nativeLifecycleKey,{mode:'party',actorUserId:null,actorCharacterId:null});
+    if(view.text!==content||view.title!==title)throw notSent('Exact native lifecycle title and body required.');
+    return true;
+  };
   if(title!=="Campaign Update"
-    &&!(encounter?.guild_id===guild.id&&title===`Encounter ${encounter.encounter_number} Aftermath`))
+    &&!(encounter?.guild_id===guild.id&&title===`Encounter ${encounter.encounter_number} Aftermath`)&&!checkLifecycle())
     throw Object.assign(new Error("PvP archive title requires a native source-bound projection."),{code:"NARRATIVE_PVP"});
   const c=db.getCampaign(guild.id);
   const ch=await textChannel(guild,c?.journal_channel_id);
   if(!ch) return false;
-  for(const p of chunks(`## ${title}\n\n${content}`)){assertArchiveOutput(db,guild.id,content);await ch.send(p);}
+  for(const p of chunks(`## ${title}\n\n${content}`)){assertArchiveOutput(db,guild.id,content);checkLifecycle();await ch.send(p);}
   return true;
 }
 
@@ -186,7 +196,7 @@ export async function postStateError({db,guild,error,context="runtime",sessionId
 }
 
 
-export async function postPrivateRelay({db,guild,userId,title="Private delivery relay required",content,sessionId=null,context="private-delivery"}){
+export async function postPrivateRelay({db,guild,userId,title="Private delivery relay required",content,sessionId=null,context="private-delivery",beforeSend=null}){
   const ref=randomUUID().slice(0,8);
   try{
     db.audit(guild.id,sessionId,"system","veilkeeper","private_delivery_relay",{ref,context,userId,title});
@@ -199,8 +209,8 @@ export async function postPrivateRelay({db,guild,userId,title="Private delivery 
   try { assertGmOnlyChannel({guild,channel:ch,gmRoleId:c?.gm_role_id||null}); }
   catch { return {ok:false,ref,via:"unsafe_channel"}; }
   const header=`**⚠️ ${title} · ${ref}**\nTarget player: <@${userId}>\nContext: ${String(context).slice(0,250)}\n\n**ADMIN GM: relay the following sanitized player-facing package exactly as needed:**`;
-  await ch.send(header.slice(0,1990));
-  for(const part of chunks(content)) await ch.send(part);
+  beforeSend?.();await ch.send(header.slice(0,1990));
+  for(const part of chunks(content)){beforeSend?.();await ch.send(part);}
   return {ok:true,ref,via:"state_errors"};
 }
 
@@ -317,7 +327,7 @@ export async function sendPlayerPrivate({db,guild,userId,content,sessionId=null,
         return await send(ch,"private_channel");
       }
     }catch(error){
-      if(["NARRATIVE_PVP","CHARACTER_OBSERVATION","WORLD_OBSERVATION"].includes(error.code))throw error;
+      if(["NARRATIVE_PVP","CHARACTER_OBSERVATION","WORLD_OBSERVATION","NPC_PROXY_AUTHORITY"].includes(error.code))throw error;
       if(attempted)return {ok:false,via,certainty:"uncertain",messages,error:String(error?.message||error)};
       // Fallback is safe only before any send has been attempted, never after partial/ambiguous I/O.
     }
@@ -326,7 +336,7 @@ export async function sendPlayerPrivate({db,guild,userId,content,sessionId=null,
     const member=await guild.members.fetch(userId);
     return await send(member,"dm");
   }catch(error){
-    if(["NARRATIVE_PVP","CHARACTER_OBSERVATION","WORLD_OBSERVATION"].includes(error.code))throw error;
+    if(["NARRATIVE_PVP","CHARACTER_OBSERVATION","WORLD_OBSERVATION","NPC_PROXY_AUTHORITY"].includes(error.code))throw error;
     return {ok:false,via,certainty:attempted?"uncertain":"not_sent",messages,error:String(error?.message||error)};
   }
 }
@@ -337,13 +347,56 @@ function handoutAttachments(handout,format="markdown"){
 }
 
 export async function deliverHandout({db,guild,handout,format="markdown"}){
+  if(!handout)return {ok:false,via:'missing'};
+  const digest=value=>createHash('sha256').update(JSON.stringify(value)).digest('hex'),actual=db.getHandout(handout.id);
+  if(!actual||actual.guild_id!==guild.id||digest(actual)!==digest(handout))
+    throw Object.assign(notSent('Exact current native handout required.'),{code:'HANDOUT_AUTHORITY'});
+  const key=`handout-delivery:${digest([actual,format])}`,prior=db.getCityRecord(guild.id,'handout_delivery',key);
+  if(prior&&prior.status!=='not_sent')return prior.data.result||{ok:false,via:'held',certainty:'uncertain'};
+  const source=indexWorldEvent(db,guild.id,{key:`${key}:source`,kind:'native_handout_delivery',title:'Native handout delivery attempt',
+    source_id:'native:handout',visibility:'gm',session_id:handout.session_id,details:{handout:handout.id,revision:digest(actual)}},'native:handout');
+  const save=(status,result)=>db.saveCityRecord(guild.id,{kind:'handout_delivery',key,status,visibility:'gm',source_event:source.event_key,
+    data:{handout:handout.id,result}});
+  save('sending',{ok:false,via:'held',certainty:'uncertain'});
+  try{
+    const result=await deliverHandoutNow({db,guild,handout,format});
+    save(result.ok?'delivered':result.certainty==='uncertain'?'uncertain':'not_sent',result);return result;
+  }catch(error){save('needs_review',{ok:false,via:'held',certainty:'uncertain'});throw error;}
+}
+async function deliverHandoutNow({db,guild,handout,format="markdown"}){
   if(!handout) return {ok:false,via:"missing"};
+  if(!['markdown','json','docx','all'].includes(format))throw notSent('Supported native handout format required.');
+  const digest=value=>createHash('sha256').update(JSON.stringify(value)).digest('hex'),initial=db.getHandout(handout.id);
+  const reject=()=>{throw Object.assign(notSent('Handout source, visibility or recipient changed; refresh before delivery.'),{code:'HANDOUT_AUTHORITY',expected:true});};
+  if(!initial||initial.guild_id!==guild.id||initial.status!=='active'||digest(initial)!==digest(handout))reject();
+  const expected=digest(initial),character=initial.subject_character_id&&db.getCharacter(initial.subject_character_id),
+    recipient=initial.subject_user_id||character?.owner_user_id||null;
+  const check=()=>{
+    const current=db.getHandout(initial.id);
+    if(!current||current.status!=='active'||current.guild_id!==guild.id||digest(current)!==expected)reject();
+    if(current.visibility==='character'){
+      const pc=db.getCharacter(current.subject_character_id);
+      if(pc?.guild_id!==guild.id||!pc.owner_user_id||pc.owner_user_id!==recipient
+        ||current.subject_user_id&&current.subject_user_id!==pc.owner_user_id)reject();
+    }else if(current.visibility==='player'){
+      if(!recipient||current.subject_user_id!==recipient||!db.getPlayer(guild.id,recipient))reject();
+    }else if(!['party','public','gm'].includes(current.visibility))reject();
+    const scope=current.visibility==='gm'?{mode:'gm'}:current.visibility==='character'||current.visibility==='player'
+      ?{mode:'private',actorUserId:recipient,actorCharacterId:current.subject_character_id||null}:{mode:'party'};
+    for(const ref of current.metadata?.epistemic?.source_refs||[]){
+      const row=db.getFact(guild.id,ref)||db.getWorldEvent(guild.id,String(ref).replace(/^event:/,''));
+      if(!row||!activeEvidence(db,guild.id,ref)||current.visibility!=='gm'&&!factVisibleTo({...row,
+        subject_character_id:row.subject_character_id||row.subject_key,subject_user_id:row.subject_user_id||row.subject_key},scope))reject();
+    }
+  };
+  check();
   const summary=handoutSummary(handout);
   const files=handoutAttachments(handout,format);
   const campaign=db.getCampaign(guild.id);
   if(["public","party"].includes(handout.visibility)){
     const ch=await textChannel(guild,campaign?.play_channel_id);
     if(!ch) return {ok:false,via:"unavailable"};
+    check();
     await ch.send({content:summary.slice(0,1900),files});
     return {ok:true,via:"play_channel"};
   }
@@ -351,6 +404,7 @@ export async function deliverHandout({db,guild,handout,format="markdown"}){
     const ch=await textChannel(guild,campaign?.gm_log_channel_id);
     if(!ch) return {ok:false,via:"unavailable"};
     assertGmOnlyChannel({guild,channel:ch,gmRoleId:campaign?.gm_role_id||null});
+    check();
     await ch.send({content:summary.slice(0,1900),files});
     return {ok:true,via:"gm_log"};
   }
@@ -360,24 +414,31 @@ export async function deliverHandout({db,guild,handout,format="markdown"}){
   }
   if(!userId) return {ok:false,via:"unavailable"};
   const p=db.getPlayer(guild.id,userId);
+  let attempted=false;
   if(p?.private_channel_id){
     try{
       const ch=await textChannel(guild,p.private_channel_id);
       if(ch){
         assertPlayerPrivateChannel({guild,channel:ch,userId,gmRoleId:campaign?.gm_role_id||null});
+        check();attempted=true;
         await ch.send({content:summary.slice(0,1900),files});
         return {ok:true,via:"private_channel"};
       }
-    }catch{
+    }catch(error){
+      if(error.code==='HANDOUT_AUTHORITY')throw error;
+      if(attempted)return {ok:false,via:'private_channel',certainty:'uncertain',error:String(error.message||error)};
       // Invalid/deleted/unsafe private channels fall back to DM delivery.
     }
   }
   try{
     const member=await guild.members.fetch(userId);
+    check();attempted=true;
     await member.send({content:summary.slice(0,1900),files});
     return {ok:true,via:"dm"};
-  }catch{
-    const relay=await postPrivateRelay({db,guild,userId,title:`Evidence handout delivery failed — ${handout.title}`,content:summary,sessionId:handout.session_id,context:`handout:${handout.id}`});
+  }catch(error){
+    if(error.code==='HANDOUT_AUTHORITY')throw error;
+    if(attempted)return {ok:false,via:'dm',certainty:'uncertain',error:String(error.message||error)};
+    const relay=await postPrivateRelay({db,guild,userId,title:`Evidence handout delivery failed — ${handout.title}`,content:summary,sessionId:handout.session_id,context:`handout:${handout.id}`,beforeSend:check});
     return relay.ok?relay:{ok:false,via:"unavailable",ref:relay.ref};
   }
 }

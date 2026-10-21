@@ -5,7 +5,7 @@ import {assemblyHasHistory} from './assembly-planning.js';
 import {deliverVerifiedAssembly} from './assembly-publications.js';
 const flights=new WeakMap();
 export function sessionOpeningStatus(job){
-  const counts=new Map(),known=new Set(['SOURCE_HOOK_DELIVERED','VERIFIED_SCENE_DELIVERED','FALLBACK_DELIVERED','UNCERTAIN','FAILED','PENDING','BLOCKED','LEGACY_DELIVERED']);
+  const counts=new Map(),known=new Set(['VERIFIED_SCENE_DELIVERED','FALLBACK_DELIVERED','UNCERTAIN','FAILED','PENDING','BLOCKED','LEGACY_DELIVERED']);
   const held=(job.data.slots||[]).filter(s=>s.narrative_quarantined===true).length;
   for(const slot of job.data.slots||[]){
     const label=`${slot.audience==='private'?'Owner-private':'Shared'}: ${known.has(slot.narrative_status)?slot.narrative_status:'REVIEW'}`;
@@ -71,6 +71,8 @@ export async function deliverSessionOpening({db,guild,gm=null,key}){
     status:s.status,narrative_status:s.narrative_status,hook_verified:s.evidence.hook_verified===true,
     narrative_generated:s.evidence.narrative_generated===true,narrative_verified:s.evidence.narrative_verified===true,
     narrative_quarantined:s.evidence.narrative_quarantined===true,fallback:s.evidence.fallback===true})),
-    complete=slots.every(s=>['delivered','legacy_delivered'].includes(s.status));
-  return save(db,guild.id,row,complete?'completed':'needs_delivery_review',{slots,hold_code:complete?null:'OPENING_DELIVERY_REVIEW'});
+    complete=slots.length>0&&slots.every(s=>s.status==='delivered'&&s.narrative_status==='VERIFIED_SCENE_DELIVERED'),
+    transportComplete=slots.every(s=>['delivered','legacy_delivered'].includes(s.status));
+  return save(db,guild.id,row,complete?'completed':transportComplete?'needs_narrative_review':'needs_delivery_review',
+    {slots,hold_code:complete?null:transportComplete?'OPENING_NARRATIVE_REQUIRED':'OPENING_DELIVERY_REVIEW'});
 }

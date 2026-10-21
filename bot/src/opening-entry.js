@@ -17,7 +17,7 @@ function acknowledged(db,guild,record){
 /** Historical unresolved parts can only hold new output, never authorize its payload or audience. */
 function unresolvedPrior(db,guild,opportunity){
   const d=opportunity.data,initial=db.getCityRecord(guild,'session_opening_job',d.session);
-  if(initial&&['queued','planning','publishing','held_paused','held_interrupted'].includes(initial.status)){
+  if(initial&&['queued','planning','publishing','held_paused','held_interrupted','needs_narrative_review'].includes(initial.status)){
     inspectSessionOpening(db,guild,d.session);
     if(initial.data.origin.roster.some(r=>r.character===d.character&&r.user===d.user))
       return {job:initial.record_key,code:'OPENING_INITIAL_SLOT_PENDING'};
@@ -44,9 +44,10 @@ function priorAssembly(db,guild,opportunity,view){
   const jobs=db.listCityRecords(guild,{kind:'assembly_delivery',includeGM:true,limit:1001});
   if(jobs.length>1000)throw Object.assign(new Error('Opening acknowledgement history needs scoped review.'),{code:'OPENING_ENTRY_HISTORY'});
   return jobs.find(r=>r.data.session===d.session&&r.data.scope?.mode==='private'&&r.data.scope.actorUserId===d.user
-    &&r.data.scope.actorCharacterId===d.character&&hash(r.data.evidence?.hook_source_refs||[])===hash(view.source_refs)&&acknowledged(db,guild,r));
+    &&r.data.scope.actorCharacterId===d.character&&(r.data.evidence?.hook_source_refs||[]).every(ref=>view.source_refs.includes(ref))
+    &&acknowledged(db,guild,r));
 }
-export async function deliverOpeningEntry({db,guild,key}){
+export async function deliverOpeningEntry({db,guild,key,gm=null}){
   const opportunity=inspectOpeningEntryOpportunity(db,guild.id,key),d=opportunity.data,
     scope={mode:'private',actorUserId:d.user,actorCharacterId:d.character},view=openingEntryProjection(db,guild.id,key,scope),
     prior=db.getCityRecord(guild.id,'opening_entry_delivery',key);
@@ -69,6 +70,11 @@ export async function deliverOpeningEntry({db,guild,key}){
         ||priorAssembly(db,guild.id,opportunity,view);
       if(retained)return save(db,guild.id,key,opportunity,'retained_acknowledgement',{version:1,session:d.session,user:d.user,character:d.character,
         revision:view.revision,material_revision:view.material_revision,turn_id:retained.data.turn_id,evidence:retained.data.evidence});
+      if(typeof gm?.authorOpeningEntry!=='function')throw Object.assign(new Error('Audience-first entry authoring is unavailable.'),{code:'OPENING_ENTRY_WRITER_REQUIRED',expected:true});
+      await gm.authorOpeningEntry(guild.id,key,scope);
+      // Source, owner, attendance and continuity can change across the writer await.
+      if(openingEntryProjection(db,guild.id,key,scope).revision!==view.revision)
+        throw Object.assign(new Error('Entry source changed during authoring.'),{code:'OPENING_ENTRY_STALE',expected:true});
       job=db.transaction(()=>{
         const result=prepareOpeningEntryOutput(db,guild.id,key,scope),turn=db.beginTurnAttempt({guildId:guild.id,sessionId:d.session,
           messageId:`owner-entry:${key}`,actorPrincipal:d.user,audience:'private'});

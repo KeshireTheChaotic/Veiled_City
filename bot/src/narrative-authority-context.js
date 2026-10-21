@@ -16,13 +16,16 @@ import {registerNarrativeContext} from './audience-native-v9.js';
 import {assemblyWriterBrief} from './assembly-context.js';
 import {worldIdentityOrigin} from './world-authorship.js';
 import {backgroundIdentityContext} from './world-background-identities.js';
+import {openingEntryProjection} from './opening-entry-context.js';
 export const narrativeVisible=(row,scope)=>!!row&&factVisibleTo({...row,subject_character_id:row.subject_character_id||row.subject_key,
   subject_user_id:row.subject_user_id||row.subject_key},scope);
 export function buildNarrativeContext(db,guild,scope,sourceRef,{operation='describe_scene'}={}){
   const flags=db.getCityCalendar(guild).flags,requestSource=db.getWorldEvent(guild,sourceRef);
-  const dedicated=requestSource?.kind==='native_assembly_scope'&&requestSource.source_id==='native:assembly'
+  const dedicatedAssembly=requestSource?.kind==='native_assembly_scope'&&requestSource.source_id==='native:assembly'
     &&requestSource.details.version===2&&db.ownerAuthoredSource(guild,sourceRef,'native:assembly')
     &&db.getAssemblyPlan(db.getActiveSession(guild)?.id)?.assembly_contract?.version===2;
+  const dedicatedEntry=requestSource?.kind==='native_opening_entry_scope'&&requestSource.source_id==='native:opening-director'
+    &&requestSource.details.version===2&&db.ownerAuthoredSource(guild,sourceRef,'native:opening-director'),dedicated=dedicatedAssembly||dedicatedEntry;
   if((!flags.narrative_authority||!flags.playable_narration)&&!dedicated||!db.getActiveSession(guild))throw fail('creative_authority_disabled_or_no_session');
   if(!['party','private'].includes(scope.mode))throw fail('audience');
   const scene=currentScene(db,guild),source=db.getWorldEvent(guild,sourceRef);let principal=null,pc=null;
@@ -38,7 +41,9 @@ export function buildNarrativeContext(db,guild,scope,sourceRef,{operation='descr
   const assembly=source?.kind==='native_assembly_scope'&&source.source_id==='native:assembly'&&hash(source.details.scope)===hash(scope)
     &&source.details.revision===assemblyOrientation(db,guild,scene.session_id,scope).revision;
   const director=source?.kind==='native_director_narrative_scope'&&source.source_id==='native:director'&&hash(source.details.scope)===hash(scope);
-  if(!source||source.status!=='active'||source.session_id!==scene.session_id||source.scene!==scene.key||!owner&&!assembly&&!director
+  const entry=dedicatedEntry&&hash(source.details.scope)===hash(scope)
+    &&openingEntryProjection(db,guild,source.details.opportunity,scope).revision===source.details.revision;
+  if(!source||source.status!=='active'||source.session_id!==scene.session_id||source.scene!==scene.key||!owner&&!assembly&&!director&&!entry
     ||!narrativeSourceVisible(db,guild,sourceRef,scope))throw fail('authenticated_source');
   const p=pc&&(scenePresence(db,guild,'character',pc.id)||lastVerifiedCharacterPresence(db,guild,pc)),arrival=p&&db.getWorldEvent(guild,p.source_event),
     placed=p?.status==='active'&&p.data.state==='actually_present'&&p.location_key===pc.data.location&&arrival?.status==='active'
@@ -123,5 +128,11 @@ export function buildNarrativeContext(db,guild,scope,sourceRef,{operation='descr
     unknowns:['Hidden causes, private character details and unresolved outcomes are unknown.']};
   if(director)packet.director_brief=directorBrief;
   if(assembly)packet.assembly_brief=assemblyWriterBrief(db,guild,scene.session_id,scope);
+  if(entry){
+    const view=openingEntryProjection(db,guild,source.details.opportunity,scope);
+    packet.assembly_brief={kind:'private_entry',sources:view.sources,
+      task:'Offer a playable private circumstance relevant to these owner materials and current continuity. Do not recite the background or establish arrival, participation, movement, knowledge or a PC response.',
+      knowledge:'Owner-entitled material only. GM mysteries and other character secrets are not player knowledge.'};
+  }
   return registerNarrativeContext({db,binding,packet,scope,source,pc,sourceRef,protectedScene});
 }
