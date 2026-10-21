@@ -1,0 +1,54 @@
+{
+  "feature": "P06-F44",
+  "occurrence": "adversary:veil-burned-stalker:peripheral",
+  "audit_anchor": "9e7bf0687357cf96fbe2ea09a04b3e9d2975f6a3",
+  "branch": "codex/clean-ai-gm-2026-10",
+  "start_head": "d1770cf120cea917fd8eda958a779da73f7bb3a5",
+  "implementation_commit": "df75716530ffadff4a51bd52735696021217e3bc",
+  "tested_source_sha": "df75716530ffadff4a51bd52735696021217e3bc",
+  "run_id": "p06-f44-20261021-a",
+  "started_at": "2026-10-21T23:26:55.7532451Z",
+  "ended_at": "2026-10-21T23:26:59.2464279Z",
+  "command": "From bot/: node --test over 42 unique fresh test paths mapped by coverage.json to the four changed production modules.",
+  "exit_code": 0,
+  "tests": 156,
+  "passed": 156,
+  "failed": 0,
+  "cancelled": 0,
+  "skipped": 0,
+  "duration_ms": 3436.0993,
+  "changed_js_mjs_syntax": "5/5 pass",
+  "changed_json_parse": "2/2 pass",
+  "catalog": {
+    "review_only": 96,
+    "supported": 57,
+    "registered_handler_keys": 56,
+    "p06_handler_families": 45,
+    "needs_authoring": 0,
+    "total": 153
+  },
+  "provider_usage": {
+    "calls": 0,
+    "cost_usd": 0,
+    "tokens": 0
+  },
+  "cache": "No cache used or savings claimed; Codex usage unavailable.",
+  "input_hashes_sha256": {
+    "bot/src/native-adversary-context.js": "451f663d1f936c29fa860832b48390e6cb74b5bbd163d526a35a9185addab502",
+    "bot/src/native-feature-definitions.json": "ae34fab2b193bfae2b2511e7c5b397f208c37f1764e2d9b0790e3af0a6504976",
+    "bot/tests/ai-gm-2026-10/p06-f01.test.mjs": "9f2d42f61f09f5313615dfe449aaf990b6e455c5540a66ab6b496cea656a7d2e",
+    "bot/src/native-feature-catalog.js": "295fa515857bfd4d0fa73820390f07dee8bc2f6560058c102162207c5558fb80",
+    "bot/tests/ai-gm-2026-10/coverage.json": "4a9f22fc1c0b3c3a814e0f61e309f6f1c4ac6404882d27efc7eb0a82093c7468",
+    "bot/tests/ai-gm-2026-10/p06-f44.test.mjs": "128926ff654835cc5a770bc1da48a22722814e4c90676ef33f768b984d757b60",
+    "bot/src/native-adversary-peripheral.js": "5b8f9cac7b6c5c5f42f75b7be5080259c192042f33929f0018672b5319c4b15b",
+    "content/GM_PRIVATE/ADVERSARIES/adversaries.json": "846386ded200f84e487f69c1b82adf4387dcb41526cb60e8ee777e48727fca9c"
+  },
+  "owner_questions": [],
+  "local_holds": [
+    "A source event proving the Stalker attacked, spoke, or that the PC searched is not created by this cue.",
+    "Notice target, Daggerheart disadvantage application and result are not committed.",
+    "Persistence, live delivery and whole-release qualification remain unverified."
+  ],
+  "critical_blockers": [],
+  "release_authorized": false
+}

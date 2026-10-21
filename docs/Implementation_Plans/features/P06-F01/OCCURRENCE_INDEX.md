@@ -1,6 +1,6 @@
 # Native occurrence status
 
-153 individual scope/ledger pairs. 56 supported; 97 review-only occurrence adapters remain. Source verification alone is not native effect qualification.
+153 individual scope/ledger pairs. 57 supported; 96 review-only occurrence adapters remain. Source verification alone is not native effect qualification.
 
 | Occurrence | Existing status | Fresh source result | Handler |
 |---|---|---|---|
@@ -12,7 +12,7 @@
 | [adversary:aster-vale-occult-analyst:readout](occurrences/adversary--aster-vale-occult-analyst--readout/LEDGER.md) | supported | verified_source | adversary_readout_context |
 | [adversary:static-wraith:ride-the-current](occurrences/adversary--static-wraith--ride-the-current/LEDGER.md) | supported | verified_source | adversary_ride_the_current_context |
 | [adversary:static-wraith:feedback](occurrences/adversary--static-wraith--feedback/LEDGER.md) | supported | verified_source | feedback |
-| [adversary:veil-burned-stalker:peripheral](occurrences/adversary--veil-burned-stalker--peripheral/LEDGER.md) | review_only | verified_source | none |
+| [adversary:veil-burned-stalker:peripheral](occurrences/adversary--veil-burned-stalker--peripheral/LEDGER.md) | supported | verified_source | adversary_peripheral_context |
 | [adversary:veil-burned-stalker:steal-the-focus](occurrences/adversary--veil-burned-stalker--steal-the-focus/LEDGER.md) | review_only | verified_source | none |
 | [adversary:hexbound-familiar:sympathetic-relay](occurrences/adversary--hexbound-familiar--sympathetic-relay/LEDGER.md) | review_only | verified_source | none |
 | [adversary:hexbound-familiar:snatch-a-link](occurrences/adversary--hexbound-familiar--snatch-a-link/LEDGER.md) | review_only | verified_source | none |
