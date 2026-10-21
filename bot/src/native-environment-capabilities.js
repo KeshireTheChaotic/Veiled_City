@@ -77,7 +77,7 @@ const contracts=Object.freeze({
     disposition:'request_pc_action_roll',stakes_kind:'attempt_only',advantage:true,disadvantage:false,
     effect:"One ordinary PC action roll for the player's exact question about recent local movement after their declared respectful offering; no answer, cost or PC choice is inferred."},
   'environment:aster-vale-predictive-lab:everything-logs':{handler:'intrusion_trace_owner_payment',entry:'decisions',
-    disposition:'request_pc_action_roll',stakes_kind:'attempt_only',advantage:false,disadvantage:false,
+    disposition:'request_pc_action_roll',stakes_kind:'attempt_only',advantage:false,disadvantage:false,fear:0,
     effect:'Register intrusion before dice; real failure creates native trace. Only explicit owner choice may pay exactly 1 Hope.'},
   'environment:apartment-veil-breach:upload-in-progress':{handler:'upload_countdown',transport:6,entry:'environment_actions',
     operations:['upload_start','upload_advance','upload_adjust'],fear:1,max:4,
@@ -97,6 +97,8 @@ export function environmentProposalContract(feature){
     ||feature.target_policy!=='none'||feature.roll_protocol!=='native_pc_action_disadvantage'))return null;
   if(feature.native_handler==='shrine_local_memory_advantage'&&(feature.type!=='Passive'||feature.trigger_kind!=='passive'
     ||feature.target_policy!=='none'||feature.roll_protocol!=='native_pc_action_advantage'))return null;
+  if(feature.native_handler==='intrusion_trace_owner_payment'&&(feature.type!=='Passive'||feature.trigger_kind!=='passive'
+    ||feature.target_policy!=='none'||feature.roll_protocol!=='native_failed_action_trace_owner_choice'))return null;
   if(feature.native_handler==='environment_emergency_cascade'&&(feature.type!=='Action'||feature.trigger_kind!=='spotlight_action'
     ||feature.target_policy!=='none'||feature.roll_protocol!=='none'))return null;
   if(feature.native_handler==='environment_code_blue'&&(feature.type!=='Action'||feature.trigger_kind!=='spotlight_action'

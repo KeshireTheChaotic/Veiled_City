@@ -101,7 +101,8 @@
     "bot/tests/ai-gm-2026-10/p06-f33.test.mjs",
     "bot/tests/ai-gm-2026-10/p06-f34.test.mjs",
     "bot/tests/ai-gm-2026-10/p06-f35.test.mjs",
-    "bot/tests/ai-gm-2026-10/p06-f36.test.mjs"
+    "bot/tests/ai-gm-2026-10/p06-f36.test.mjs",
+    "bot/tests/ai-gm-2026-10/p06-f37.test.mjs"
   ],
   "bot/src/native-feature-definitions.json": [
     "bot/tests/ai-gm-2026-10/p06-f01.test.mjs",
@@ -127,7 +128,8 @@
     "bot/tests/ai-gm-2026-10/p06-f33.test.mjs",
     "bot/tests/ai-gm-2026-10/p06-f34.test.mjs",
     "bot/tests/ai-gm-2026-10/p06-f35.test.mjs",
-    "bot/tests/ai-gm-2026-10/p06-f36.test.mjs"
+    "bot/tests/ai-gm-2026-10/p06-f36.test.mjs",
+    "bot/tests/ai-gm-2026-10/p06-f37.test.mjs"
   ],
   "bot/src/native-environment-capabilities.js": [
     "bot/tests/ai-gm-2026-10/p06-f04.test.mjs",
@@ -162,7 +164,8 @@
     "bot/tests/ai-gm-2026-10/p06-f33.test.mjs",
     "bot/tests/ai-gm-2026-10/p06-f34.test.mjs",
     "bot/tests/ai-gm-2026-10/p06-f35.test.mjs",
-    "bot/tests/ai-gm-2026-10/p06-f36.test.mjs"
+    "bot/tests/ai-gm-2026-10/p06-f36.test.mjs",
+    "bot/tests/ai-gm-2026-10/p06-f37.test.mjs"
   ],
   "bot/src/native-environment-witnesses.js": [
     "bot/tests/ai-gm-2026-10/p06-f11.test.mjs"
@@ -238,7 +241,8 @@
   "bot/src/gm-unified-arbitration.js": [
     "bot/tests/ai-gm-2026-10/p06-f13.test.mjs",
     "bot/tests/ai-gm-2026-10/p06-f14.test.mjs",
-    "bot/tests/ai-gm-2026-10/p06-f15.test.mjs"
+    "bot/tests/ai-gm-2026-10/p06-f15.test.mjs",
+    "bot/tests/ai-gm-2026-10/p06-f37.test.mjs"
   ],
   "bot/src/native-established-fact.js": [
     "bot/tests/ai-gm-2026-10/p06-f12.test.mjs"
@@ -257,5 +261,17 @@
   ],
   "bot/src/native-environment-third-rail-spirit.js": [
     "bot/tests/ai-gm-2026-10/p06-f36.test.mjs"
+  ],
+  "bot/src/native-house-errata.js": [
+    "bot/tests/ai-gm-2026-10/p06-f37.test.mjs"
+  ],
+  "bot/src/native-house-errata.json": [
+    "bot/tests/ai-gm-2026-10/p06-f37.test.mjs"
+  ],
+  "bot/src/native-environment-trace.js": [
+    "bot/tests/ai-gm-2026-10/p06-f37.test.mjs"
+  ],
+  "bot/src/typed-roll-outcomes.js": [
+    "bot/tests/ai-gm-2026-10/p06-f37.test.mjs"
   ]
 }

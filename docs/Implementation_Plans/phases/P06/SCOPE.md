@@ -45,6 +45,7 @@ Complete source-qualified features, reconcile rules and qualify the changed impl
 - [P06-F34 — Support Dead Platform Last Train Rules context](../../features/P06-F34/SCOPE.md)
 - [P06-F35 — Support Dead Platform Express Through Memory context](../../features/P06-F35/SCOPE.md)
 - [P06-F36 — Support Dead Platform Third Rail Spirit cue](../../features/P06-F36/SCOPE.md)
+- [P06-F37 — Enable Aster Vale Everything Logs](../../features/P06-F37/SCOPE.md)
 
 ## Exit
 All safe features have current diff, truthful ledger and newly authored tests covering only code changed in this phase. Local source gaps and owner decisions remain visible but do not stop other safe work. No automatic release qualification.
