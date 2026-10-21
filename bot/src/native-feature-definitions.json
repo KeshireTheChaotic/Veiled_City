@@ -2573,13 +2573,13 @@
       "template_hash": "57b075db846e45a01accbc9022b4a062451525c8a898a8d142f5fab4320004c5",
       "index": 1,
       "type": "Action",
-      "status": "review_only",
-      "trigger_kind": "unmapped",
-      "target_policy": "unmapped",
-      "roll_protocol": "unmapped",
-      "costs": null,
-      "native_handler": null,
-      "reason": "No qualified native feature handler."
+      "status": "supported",
+      "trigger_kind": "spotlight_action",
+      "target_policy": "none",
+      "roll_protocol": "environment_scene_context",
+      "costs": [],
+      "native_handler": "environment_sealed_docket_context",
+      "reason": "Exact source-bound docket prompt; GM authors interpretation, PC owns response, context records no agreement."
     },
     {
       "feature_key": "environment:archive-beneath-the-courthouse:records-reject-you",
