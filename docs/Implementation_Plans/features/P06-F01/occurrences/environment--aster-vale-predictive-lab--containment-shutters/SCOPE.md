@@ -1,13 +1,11 @@
 # environment:aster-vale-predictive-lab:containment-shutters
 
-Status: SOURCE VERIFIED; LOCAL EXECUTION HOLD. Parent: [P06-F01](../../SCOPE.md).
+Status: SUPPORTED SOURCE-BOUND ACTION CUE / TARGETED PASS PENDING. Parent: [P06-F01](../../SCOPE.md); feature [P06-F38](../../../P06-F38/SCOPE.md).
 
-Audit SHA: 9e7bf0687357cf96fbe2ea09a04b3e9d2975f6a3. Checkout base: 0834f299ccff1738e9b3dd753a5fc616d3965370.
+Audit SHA: `9e7bf0687357cf96fbe2ea09a04b3e9d2975f6a3`.
 
 Exact source: `content/GM_PRIVATE/ENVIRONMENTS/environments.json#aster-vale-predictive-lab/features/2`. Source SHA-256: `e904f72300c525b4df351d70f3608694bf4e90e9d9078f9b58ee01dc7ff7b480`; template SHA-256: `c6f1814ce1c763b7b63f7386b593aa3365d7a47ad43f245503f68a12118932ee`.
 
-This delta qualifies occurrence-local source inspection and discovery isolation only. It does not create or promote a native effect handler. Existing descriptor status: review_only; handler: none.
+The native adapter exposes the exact action rule in current scoped GM context: spend one Fear to divide the area with security barriers; escaping or reuniting routes require a Difficulty 14 action. It does not commit Fear, barrier state, a route, a PC choice/roll, or an outcome. No narrative or autonomy restriction is added.
 
-Any future adapter must prove current actor/source/scene/target, owner choices, exact costs, native dice and once-only replay using new tests before support promotion. No generic fallback or new creative limitation. Roll back only the occurrence-specific diff; preserve saved readers and receipts.
-
-Final tested source SHA: `8e01519b6511bc90af6a1c675e4a9950f12b703c`; run `fresh-delta-1792599054739` passed 47/47 union tests. The catalog test verifies this occurrence source; this is not occurrence effect qualification. Input/test hashes: parent final evidence.
+Local execution holds: native barrier state and Fear transaction, route choice, player-owned action roll, Difficulty 14 result, and saved effect replay remain unverified/unimplemented. No generic fallback.

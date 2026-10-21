@@ -1,0 +1,64 @@
+{
+  "feature": "P06-F38",
+  "occurrence": "environment:aster-vale-predictive-lab:containment-shutters",
+  "audit_anchor": "9e7bf0687357cf96fbe2ea09a04b3e9d2975f6a3",
+  "branch": "codex/clean-ai-gm-2026-10",
+  "start_head": "40047cc3187e515392a11926574f0bf9900c1354",
+  "implementation_commit": "c9f214667bee01a21c97580870d13176b20b4812",
+  "tested_source_sha": "c9f214667bee01a21c97580870d13176b20b4812",
+  "execution_attempts": [
+    {
+      "run_id": "p06-f38-20261021-a",
+      "started_at": "2026-10-21T23:10:05.9622001Z",
+      "ended_at": "2026-10-21T23:10:09.0758983Z",
+      "command": "From bot/: node --test --test-reporter=tap over the 36 unique fresh paths selected by coverage.json for five changed production modules.",
+      "exit_code": 1,
+      "tests": 132,
+      "passed": 130,
+      "failed": 2,
+      "cancelled": 0,
+      "skipped": 0,
+      "duration_ms": 3055.5885,
+      "failure": "Two stale expected catalog counts in the fresh P06-F01 catalog test (expected 50/49; actual 51/50). The new F38 feature tests passed."
+    },
+    {
+      "run_id": "p06-f38-20261021-repair",
+      "started_at": "2026-10-21T23:10:19.7774967Z",
+      "ended_at": "2026-10-21T23:10:20.1704326Z",
+      "command": "node --test --test-reporter=tap bot/tests/ai-gm-2026-10/p06-f01.test.mjs",
+      "exit_code": 0,
+      "tests": 3,
+      "passed": 3,
+      "failed": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "duration_ms": 333.108,
+      "scope": "Only the repaired fresh catalog test file reran; no production code changed after the initial batch."
+    }
+  ],
+  "unique_affected_cases_after_repair": {"tests": 132, "passed": 132, "failed": 0},
+  "changed_js_mjs_syntax": "6/6 pass",
+  "changed_json_parse": "2/2 pass",
+  "catalog": {"total": 153, "supported": 51, "review_only": 102, "needs_authoring": 0, "registered_handler_keys": 50, "p06_handler_families": 39},
+  "provider_usage": {"calls": 0, "tokens": 0, "cost_usd": 0},
+  "cache": "No cache used or savings claimed; Codex usage unavailable.",
+  "input_hashes_sha256": {
+    "bot/src/native-feature-catalog.js": "3cc451273b0fd7b9161b57ea8bfb6e2e91700f588e350f407486ba17890c5c35",
+    "bot/src/native-feature-definitions.json": "561b1c0a39cfdd5d4a0c924644512a65293928d3a07596ffa961d811712d505d",
+    "bot/src/native-environment-capabilities.js": "8a9619dce9f81dbd533302194d1e15cf1499c81aaf965e186bdf6be7a2c76c9e",
+    "bot/src/native-environment-scene.js": "31cb432a8e41ff3c26f96746086a99c2923aa156a5129b7a854b9391f5394f8e",
+    "bot/src/native-environment-containment-shutters.js": "4fdf10c439e9a75f43dfcefe73562d7de5c7b5ca2833cb0e1e1eb99988b64f4b",
+    "bot/tests/ai-gm-2026-10/coverage.json": "d9cc7fcd3b2dd67009808d5611661f261a999381c046c4c2b99e1cabc4cc2b91",
+    "bot/tests/ai-gm-2026-10/p06-f01.test.mjs": "4349fca097697b5112dd601e966897a6bb064ab07d0bcafb60809947b1e1269c",
+    "bot/tests/ai-gm-2026-10/p06-f38.test.mjs": "6a96abfc3994af513fe5d31b1537b395e31df0c0e250fc4ebcfc753328855a88",
+    "content/GM_PRIVATE/ENVIRONMENTS/environments.json": "0b5f5004caf4d761c33ce851a020e081a2b6fb980526a38fcc51c7eaec413898"
+  },
+  "owner_questions": [],
+  "local_holds": [
+    "Native barrier state and exact Fear transaction are not implemented by this source-bound cue.",
+    "Route choice, player-owned action roll and Difficulty 14 resolution/replay remain unimplemented or unverified.",
+    "Persistent DB/Discord integration and whole-release qualification are unverified."
+  ],
+  "critical_blockers": [],
+  "release_authorized": false
+}

@@ -128,7 +128,7 @@
 | [environment:dead-platform:express-through-memory](occurrences/environment--dead-platform--express-through-memory/LEDGER.md) | supported | verified_source | environment_express_through_memory_context |
 | [environment:dead-platform:third-rail-spirit](occurrences/environment--dead-platform--third-rail-spirit/LEDGER.md) | supported | verified_source | environment_third_rail_spirit_context |
 | [environment:aster-vale-predictive-lab:everything-logs](occurrences/environment--aster-vale-predictive-lab--everything-logs/LEDGER.md) | supported | verified_source | intrusion_trace_owner_payment |
-| [environment:aster-vale-predictive-lab:model-room](occurrences/environment--aster-vale-predictive-lab--model-room/LEDGER.md) | review_only | verified_source | none |
+| [environment:aster-vale-predictive-lab:model-room](occurrences/environment--aster-vale-predictive-lab--model-room/LEDGER.md) | supported | verified_source | environment_model_room_context |
 | [environment:aster-vale-predictive-lab:containment-shutters](occurrences/environment--aster-vale-predictive-lab--containment-shutters/LEDGER.md) | review_only | verified_source | none |
 | [environment:haunted-nightclub:too-loud-to-think](occurrences/environment--haunted-nightclub--too-loud-to-think/LEDGER.md) | supported | verified_source | nightclub_auditory_disadvantage |
 | [environment:haunted-nightclub:vip-threshold](occurrences/environment--haunted-nightclub--vip-threshold/LEDGER.md) | supported | verified_source | nightclub_vip_threshold |

@@ -1,15 +1,14 @@
 # environment:aster-vale-predictive-lab:containment-shutters — ledger
 
-Status: SOURCE VERIFIED; LOCAL EXECUTION HOLD.
+Status: SUPPORTED SOURCE-BOUND ACTION CUE / TARGETED PASS.
 
-- Branch: codex/clean-ai-gm-2026-10; source checkout SHA: 0834f299ccff1738e9b3dd753a5fc616d3965370 + working-tree delta. Final freeze SHA/evidence: see parent P06-F01 ledger and final delta report.
-- Changed module: bot/src/native-feature-catalog.js (shared occurrence-local inspection). Descriptor and rules unchanged.
-- Fresh test: bot/tests/ai-gm-2026-10/p06-f01.test.mjs; current-catalog test calls inspectNativeFeatureOccurrence for this exact key. Source/content input is current production data, never a historical fixture.
-- Actual result: verified_source, execution_authorized=false in p06-1792598757560; shared repaired batch exit 0, 5 tests passed. This is source verification, not effect execution qualification.
+- Branch/implementation SHA: codex/clean-ai-gm-2026-10 / `c9f214667bee01a21c97580870d13176b20b4812`.
+- Changed modules: native feature definition/catalog, environment capability contract, new Containment Shutters projection, scene context dispatch, coverage mapping and fresh F38 tests.
+- Fresh tests: `p06-f38-20261021-a` ran the mapped fresh set once: 132 cases, 130 passed and 2 stale count assertions failed. `p06-f38-20261021-repair` reran only the repaired catalog test file: 3/3 passed. Unique affected cases: 132/132 pass after repair. Changed JS/MJS syntax: 6/6; changed JSON parse: 2/2.
 - Cost/cache: 0 paid provider calls/tokens; $0 provider tests. No cache claim. Codex usage unavailable.
-- Existing catalog reason: No qualified native feature handler.
-- Local hold: No qualified executable occurrence adapter. This remains unsupported; exact source availability alone is insufficient.
+- Catalog handler: `environment_containment_shutters_context`; exact source-bound GM cue only. Context commits no Fear, barrier, route, player action, or result.
+- Local hold: Native barrier state, exact one-Fear transaction, route choice, player-owned action roll, Difficulty 14 outcome and saved effect replay remain unimplemented/unverified.
 - Questions: none introduced by this source-only delta; no new narrative/autonomy restrictions proposed.
 - Critical blocker: none. Release authorization: none.
 
-Final tested source SHA: `8e01519b6511bc90af6a1c675e4a9950f12b703c`; run `fresh-delta-1792599054739` passed 47/47 union tests. The catalog test verifies this occurrence source; this is not occurrence effect qualification. Input/test hashes: parent final evidence.
+Final tested source SHA: `c9f214667bee01a21c97580870d13176b20b4812`. See [P06-F38 evidence](../../../../evidence/P06_F38_TARGETED.json). This qualifies the exact context cue, not its withheld mechanical effect.
