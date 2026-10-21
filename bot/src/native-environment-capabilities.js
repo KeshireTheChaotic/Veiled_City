@@ -38,5 +38,7 @@ export function environmentProposalContract(feature){
   if(!Number.isSafeInteger(fear)||fear!==contract.fear||otherCosts)return null;
   if(feature.native_handler==='sirens_outside'&&(feature.type!=='Action'||feature.trigger_kind!=='spotlight_action'
     ||feature.target_policy!=='none'||feature.roll_protocol!=='none'))return null;
+  if(feature.native_handler==='upload_countdown'&&(feature.type!=='Action'||feature.trigger_kind!=='spotlight_action'
+    ||feature.target_policy!=='none'||feature.roll_protocol!=='none'))return null;
   return structuredClone(contract);
 }

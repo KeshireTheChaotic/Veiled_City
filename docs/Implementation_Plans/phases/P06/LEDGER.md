@@ -6,6 +6,7 @@
 | [P06-F02](../../features/P06-F02/LEDGER.md) | TARGETED PASS | Phase baseline 8e01519; see feature ledger |
 | [P06-F03](../../features/P06-F03/LEDGER.md) | TARGETED PASS | Phase baseline 8e01519; see feature ledger |
 | [P06-F04](../../features/P06-F04/LEDGER.md) | TARGETED PASS | `p06-f04-20261021-a`; 6/6 tests; implementation `bd517f2`; see feature ledger |
+| [P06-F05](../../features/P06-F05/LEDGER.md) | TARGETED PASS / SUPPORTED | `p06-f05-20261021-a`; 5/5 tests; see feature ledger |
 
 Audit anchor: `9e7bf0687357cf96fbe2ea09a04b3e9d2975f6a3`. P00-P05 implementation baseline: `8e01519b6511bc90af6a1c675e4a9950f12b703c`; final P06 source: `bd517f2ad101d7a8c14dcbd36476ca67748d180b`. Baseline fresh delta: 47/47 tests passed across 20 fresh files and 43 changed-file syntax checks passed (exit 0), run `fresh-delta-1792599054739`. P06-F04 delta is separately recorded below. This phase is covered by feature results and is not 47 unique tests on its own. Critical blockers: none established. Phase-specific holds and unverified work remain below.
 
@@ -44,3 +45,5 @@ Current checkout before closeout commit: `codex/clean-ai-gm-2026-10` / `62e13b4b
 Current base HEAD: `97d3a696831af78d5eb42865467be2dab4b30797`; tested implementation inputs are hash-pinned in [P06_F04_TARGETED.json](../../evidence/P06_F04_TARGETED.json). Sirens Outside is now the 17th supported occurrence; 136 remain review-only. Frozen affected-code batch `p06-f04-20261021-a` passed 6/6 tests and 4/4 syntax checks. Only `p06-f01.test.mjs` was rerun among previous tests because its associated catalog module and expected count changed; `p06-f04.test.mjs` is new. No other passing tests were rerun. Provider calls/tokens/spend 0/0/$0; Codex usage unavailable. No owner restrictions or critical blockers. Local holds remain occurrence-scoped. Not full release qualification; release unauthorized.
 
 P06 phase commit: `bd517f2ad101d7a8c14dcbd36476ca67748d180b`. Current catalog is 17 supported, 136 review-only, 0 needs-authoring. These 136 are occurrence-local review holds, not a critical phase blocker. The source crosswalk and top-level inventory now reflect the implementation commit. No broad suite was run; no passing tests were rerun without associated code changes. Release authorization remains false.
+
+P06-F05 promotes only Upload in Progress through its existing native countdown contract. Frozen batch `p06-f05-20261021-a` passed 5/5 with 4/4 syntax checks. Catalog is now 18 supported, 135 review-only, 0 needs-authoring. Provider calls/tokens/spend 0/0/$0; no cache claim; Codex usage unavailable. No new narrative restriction or critical blocker; release remains unauthorized.

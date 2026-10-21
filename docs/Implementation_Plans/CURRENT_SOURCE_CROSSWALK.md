@@ -12,7 +12,7 @@ all retained through the clean-plan commits. Subsequent scoped source edits are 
 | Native mechanics and owner choices | roll-requests.js, gm-native-rolls.js, pre-roll-fear.js | Existing authority pathways; no whole-system qualification claimed |
 | Living world | autonomous-world.js, npc-cognition.js, world-narrative-bridge.js | Existing implementation; changed contracts require fresh tests |
 | Private audiences / delivery | audience-native-v9.js, assembly modules, outbox | Existing boundaries must survive changes; live Discord unverified |
-| Native catalog | bot/src/native-feature-definitions.json | Parsed locally: 153 = 17 supported + 136 review_only + 0 needs_authoring; labels are not fresh qualification |
+| Native catalog | bot/src/native-feature-definitions.json | Parsed locally: 153 = 18 supported + 135 review_only + 0 needs_authoring; labels are not fresh qualification |
 | Historical implementation package | docs/Active_Implementation | Absent in this checkout; historical links are not current execution authority |
 | CI | .github/workflows | Absent in this checkout; audit describes another snapshot, not current local CI |
 
@@ -26,4 +26,4 @@ Read OWNER_AI_GM_BEHAVIOR_SPEC.md in full after owner identified it during execu
 
 ## Final changed-code evidence
 
-Base source SHA 8e01519b6511bc90af6a1c675e4a9950f12b703c: run fresh-delta-1792599054739 passed 47 tests across 20 fresh files, with 43 changed syntax checks. P06-F04 implementation commit `bd517f2ad101d7a8c14dcbd36476ca67748d180b` adds one source-qualified Sirens Outside occurrence; its affected-code batch passed 6/6 fresh tests with 4 syntax checks. Provider calls/tokens/spend 0/0/$0; Codex usage unavailable. No release qualification. The phase/feature and 153 occurrence ledgers describe precise local limits.
+Base source SHA 8e01519b6511bc90af6a1c675e4a9950f12b703c: run fresh-delta-1792599054739 passed 47 tests across 20 fresh files, with 43 changed syntax checks. P06-F04 implementation `bd517f2ad101d7a8c14dcbd36476ca67748d180b` and P06-F05 implementation add source-qualified Sirens Outside and Upload in Progress; their individual affected-code batches passed 6/6 and 5/5 fresh tests respectively, with 4 syntax checks each. Provider calls/tokens/spend 0/0/$0; Codex usage unavailable. No release qualification. The phase/feature and 153 occurrence ledgers describe precise local limits.

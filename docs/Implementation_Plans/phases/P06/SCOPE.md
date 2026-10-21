@@ -13,6 +13,7 @@ Complete source-qualified features, reconcile rules and qualify the changed impl
 - [P06-F02 — Daggerheart and hidden character data](../../features/P06-F02/SCOPE.md)
 - [P06-F03 — Changed-delta freeze and reporting](../../features/P06-F03/SCOPE.md)
 - [P06-F04 — Enable source-qualified Sirens Outside responder arrival](../../features/P06-F04/SCOPE.md)
+- [P06-F05 — Enable source-qualified Upload in Progress countdown](../../features/P06-F05/SCOPE.md)
 
 ## Exit
 All safe features have current diff, truthful ledger and newly authored tests covering only code changed in this phase. Local source gaps and owner decisions remain visible but do not stop other safe work. No automatic release qualification.
