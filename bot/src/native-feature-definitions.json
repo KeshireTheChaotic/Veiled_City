@@ -2519,13 +2519,13 @@
       "template_hash": "78cd4c8e38a0bfd156d1c2e1d8793ce1cc88c78d744725b6c88e1847571ef947",
       "index": 1,
       "type": "Action",
-      "status": "review_only",
-      "trigger_kind": "unmapped",
-      "target_policy": "unmapped",
-      "roll_protocol": "unmapped",
-      "costs": null,
-      "native_handler": null,
-      "reason": "No qualified native feature handler."
+      "status": "supported",
+      "trigger_kind": "spotlight_action",
+      "target_policy": "none",
+      "roll_protocol": "environment_scene_context",
+      "costs": [],
+      "native_handler": "environment_auction_context",
+      "reason": "Exact source-bound auction prompt; scoped GM authorship, no bid or transfer inferred."
     },
     {
       "feature_key": "environment:glass-market-grand-concourse:everyone-is-watching",
