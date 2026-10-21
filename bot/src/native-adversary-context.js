@@ -12,6 +12,7 @@ import {projectNativeAdversaryRideTheCurrentContext} from './native-adversary-ri
 import {projectNativeAdversaryPeripheralContext} from './native-adversary-peripheral.js';
 import {projectNativeAdversaryStealTheFocusContext} from './native-adversary-steal-the-focus.js';
 import {projectNativeAdversarySympatheticRelayContext} from './native-adversary-sympathetic-relay.js';
+import {projectNativeAdversarySnatchALinkContext} from './native-adversary-snatch-a-link.js';
 import {arbitrationFailure as fail} from './gm-arbitration-contract.js';
 
 /** A template/display name does not bind a person to an adversary or make its features available. */
@@ -31,7 +32,7 @@ export function nativeAdversaryFeatureContext(db,guild,origin,actor,{library}={}
       ...projectNativeAdversaryProfessionalEntryContext(terms),...projectNativeAdversaryMarkTheVariableContext(terms),
       ...projectNativeAdversaryReadoutContext(terms),...projectNativeAdversaryRideTheCurrentContext(terms),
       ...projectNativeAdversaryPeripheralContext(terms),...projectNativeAdversaryStealTheFocusContext(terms),
-      ...projectNativeAdversarySympatheticRelayContext(terms)],
+      ...projectNativeAdversarySympatheticRelayContext(terms),...projectNativeAdversarySnatchALinkContext(terms)],
     revision:hash(terms),execution_authorized:false,publication_authorized:false});
 }
 

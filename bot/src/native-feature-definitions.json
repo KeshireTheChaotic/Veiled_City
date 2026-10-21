@@ -237,13 +237,13 @@
       "template_hash": "0a5f3ad656065cd58170d87898c31d2b67baa4929d63796fadd97c82a510878a",
       "index": 1,
       "type": "Action",
-      "status": "review_only",
-      "trigger_kind": "unmapped",
-      "target_policy": "unmapped",
-      "roll_protocol": "unmapped",
-      "costs": null,
-      "native_handler": null,
-      "reason": "No qualified native feature handler."
+      "status": "supported",
+      "trigger_kind": "adversary_action",
+      "target_policy": "one",
+      "roll_protocol": "native_adversary_context",
+      "costs": [],
+      "native_handler": "adversary_snatch_a_link_context",
+      "reason": "Exact source-bound GM cue; attack, exposed link and theft are not committed."
     },
     {
       "feature_key": "adversary:river-hound:flow-around-it",
