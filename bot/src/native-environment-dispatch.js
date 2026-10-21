@@ -3,6 +3,7 @@ import {applyEnvironmentArrival} from './native-environment-arrivals.js';
 import {applyEnvironmentSceneAction} from './native-environment-scene.js';
 import {applyEnvironmentWitnessAccounts} from './native-environment-witnesses.js';
 import {applyEnvironmentDoorChain} from './native-environment-door-chain.js';
+import {applyEnvironmentImagingRecord} from './native-environment-imaging.js';
 import {establishEnvironmentUploadRecording,startEnvironmentUploadCountdown,advanceEnvironmentUploadCountdown,
   adjustEnvironmentUploadCountdown} from './native-environment-countdown.js';
 import {arbitrationFailure as fail} from './gm-arbitration-contract.js';
@@ -12,6 +13,8 @@ export function executeEnvironmentProposal(db,guild,origin,board,proposal,option
     return applyEnvironmentWitnessAccounts(db,guild,origin,board,proposal);
   if(proposal.feature_ref==='environment:apartment-veil-breach:door-chain')
     return applyEnvironmentDoorChain(db,guild,origin,board,proposal,options);
+  if(proposal.feature_ref==='environment:after-hours-emergency-department:something-in-imaging')
+    return applyEnvironmentImagingRecord(db,guild,origin,board,proposal);
   if(Object.hasOwn(proposal,'detail'))return applyEnvironmentSceneAction(db,guild,origin,board,proposal);
   if(!Object.hasOwn(proposal,'operation'))return applyEnvironmentArrival(db,guild,origin,board,proposal,options);
   if(proposal.version!==1||proposal.feature_ref!==UPLOAD)throw fail('environment_exact_dispatch_source');

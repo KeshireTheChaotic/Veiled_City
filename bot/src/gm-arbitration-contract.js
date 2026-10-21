@@ -39,6 +39,8 @@ const maintenanceMemoryAction=obj({version:{type:'integer',enum:[1]},feature_ref
 const doorChainAction=obj({version:{type:'integer',enum:[1]},feature_ref:{type:'string',enum:['environment:apartment-veil-breach:door-chain']},environment:str(200),
   npc:obj({kind:{type:'string',enum:['npc']},key:str(100),name:str(160),aliases:{type:'array',maxItems:6,items:str(80)},location_key:str(160),
     parent_location_key:str(160),role:str(160),summary:str(600)})});
+const imagingRecordAction=obj({version:{type:'integer',enum:[1]},feature_ref:{type:'string',enum:['environment:after-hours-emergency-department:something-in-imaging']},
+  environment:str(200),modality:{type:'string',enum:['scan','monitor','lab_result']},impossible_detail:str(4000),clue:str(4000)});
 export const unifiedArbitrationSchema={anyOf:[obj(unifiedV1),obj({...unifiedV1,version:{type:'integer',enum:[2]},pre_roll_fear:interrupt}),
   obj({...unifiedV1,version:{type:'integer',enum:[3]},pre_roll_fear:interrupt,
     environment_profiles:environmentProfiles}),
@@ -53,7 +55,9 @@ export const unifiedArbitrationSchema={anyOf:[obj(unifiedV1),obj({...unifiedV1,v
   obj({...unifiedV1,version:{type:'integer',enum:[8]},pre_roll_fear:interrupt,environment_profiles:environmentProfiles,
     environment_actions:{type:'array',maxItems:1,items:{anyOf:[arrivalAction,sceneAction,uploadStart,uploadAdvance,uploadAdjust,witnessAccounts,maintenanceMemoryAction]}}}),
   obj({...unifiedV1,version:{type:'integer',enum:[9]},pre_roll_fear:interrupt,environment_profiles:environmentProfiles,
-    environment_actions:{type:'array',maxItems:1,items:{anyOf:[arrivalAction,sceneAction,uploadStart,uploadAdvance,uploadAdjust,witnessAccounts,maintenanceMemoryAction,doorChainAction]}}})]};
+    environment_actions:{type:'array',maxItems:1,items:{anyOf:[arrivalAction,sceneAction,uploadStart,uploadAdvance,uploadAdjust,witnessAccounts,maintenanceMemoryAction,doorChainAction]}}}),
+  obj({...unifiedV1,version:{type:'integer',enum:[10]},pre_roll_fear:interrupt,environment_profiles:environmentProfiles,
+    environment_actions:{type:'array',maxItems:1,items:{anyOf:[arrivalAction,sceneAction,uploadStart,uploadAdvance,uploadAdjust,witnessAccounts,maintenanceMemoryAction,doorChainAction,imagingRecordAction]}}})]};
 export function matchesArbitrationSchema(schema,value){
   if(schema.anyOf)return schema.anyOf.some(s=>matchesArbitrationSchema(s,value));
   if(schema.enum)return schema.enum.includes(value);

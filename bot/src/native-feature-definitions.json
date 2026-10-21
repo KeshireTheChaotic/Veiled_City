@@ -2045,13 +2045,13 @@
       "template_hash": "7a77c7ebfb53458509d6322389d8430d0e4b5204ea70311c1c3ffaeb010aef85",
       "index": 2,
       "type": "Action",
-      "status": "review_only",
-      "trigger_kind": "unmapped",
-      "target_policy": "unmapped",
-      "roll_protocol": "unmapped",
-      "costs": null,
-      "native_handler": null,
-      "reason": "No qualified native feature handler."
+      "status": "supported",
+      "trigger_kind": "spotlight_action",
+      "target_policy": "none",
+      "roll_protocol": "none",
+      "costs": [],
+      "native_handler": "environment_imaging_record",
+      "reason": "One source-bound impossible finding creates an audience-scoped clue record; no patient or PC outcome is inferred."
     },
     {
       "feature_key": "environment:abandoned-mall-glass-market:no-violence-in-the-aisles",
