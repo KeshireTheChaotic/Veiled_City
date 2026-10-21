@@ -42,6 +42,8 @@ const contracts=Object.freeze({
     effect:'Exact passive source cue: cellular and normal network access is unreliable; alternate infrastructure or Signal magic is required. A connection attempt has no automatic outcome.'},
   'environment:veil-anchor-chamber:consensus-engine':{handler:'environment_consensus_engine_context',entry:'scene_context',fear:0,
     effect:'Exact passive source cue: obvious supernatural actions may alter Veil Exposure unpredictably; state that risk before a voluntary action. No alteration amount or outcome is supplied.'},
+  'environment:pale-court-townhouse:guest-right':{handler:'environment_guest_right_context',entry:'scene_context',fear:0,
+    effect:'Exact passive hospitality rule; applies only when the PC accepts formal hospitality. The adapter does not infer acceptance, protection or agreement to unstated house rules.'},
   'environment:haunted-nightclub:too-loud-to-think':{handler:'nightclub_auditory_disadvantage',entry:'decisions',fear:0,
     disposition:'request_pc_action_roll',stakes_kind:'attempt_only',advantage:false,disadvantage:true,
     effect:'Exact delicate auditory/verbal applicability ruling; real owner quiet_environment outcome ends this disadvantage.'},
@@ -98,6 +100,8 @@ export function environmentProposalContract(feature){
   if(feature.native_handler==='environment_no_ordinary_signal_context'&&(feature.type!=='Passive'||feature.trigger_kind!=='passive'
     ||feature.target_policy!=='none'||feature.roll_protocol!=='environment_scene_context'))return null;
   if(feature.native_handler==='environment_consensus_engine_context'&&(feature.type!=='Passive'||feature.trigger_kind!=='passive'
+    ||feature.target_policy!=='none'||feature.roll_protocol!=='environment_scene_context'))return null;
+  if(feature.native_handler==='environment_guest_right_context'&&(feature.type!=='Passive'||feature.trigger_kind!=='passive'
     ||feature.target_policy!=='none'||feature.roll_protocol!=='environment_scene_context'))return null;
   return structuredClone(contract);
 }

@@ -12,7 +12,7 @@ all retained through the clean-plan commits. Subsequent scoped source edits are 
 | Native mechanics and owner choices | roll-requests.js, gm-native-rolls.js, pre-roll-fear.js | Existing authority pathways; no whole-system qualification claimed |
 | Living world | autonomous-world.js, npc-cognition.js, world-narrative-bridge.js | Existing implementation; changed contracts require fresh tests |
 | Private audiences / delivery | audience-native-v9.js, assembly modules, outbox | Existing boundaries must survive changes; live Discord unverified |
-| Native catalog | bot/src/native-feature-definitions.json | Parsed locally: 153 = 35 supported + 118 review_only + 0 needs_authoring; latest P06 deltas include Door Chain, Something in Imaging, HIPAA and Procedure, Thin Walls, Chain of Title, No Consensus, Metaphor Is Physics, No Ordinary Signal, and Consensus Engine; labels are not fresh qualification |
+| Native catalog | bot/src/native-feature-definitions.json | Parsed locally: 153 = 36 supported + 117 review_only + 0 needs_authoring; latest P06 deltas include Door Chain, Something in Imaging, HIPAA and Procedure, Thin Walls, Chain of Title, No Consensus, Metaphor Is Physics, No Ordinary Signal, Consensus Engine, and Guest Right; labels are not fresh qualification |
 | Historical implementation package | docs/Active_Implementation | Absent in this checkout; historical links are not current execution authority |
 | CI | .github/workflows | Absent in this checkout; audit describes another snapshot, not current local CI |
 
