@@ -2,6 +2,8 @@
 
 Status: SUPPORTED; TARGETED PASS.
 
+Implementation commit: `ca570f89768777e1c165f7d74d6b281e0a1c6580`.
+
 - Branch: codex/clean-ai-gm-2026-10; source checkout SHA: 0834f299ccff1738e9b3dd753a5fc616d3965370 + working-tree delta. Final freeze SHA/evidence: see parent P06-F01 ledger and final delta report.
 - Changed modules: `bot/src/native-feature-definitions.json`, `bot/src/native-feature-catalog.js`, `bot/src/native-environment-capabilities.js`.
 - Fresh tests: new `bot/tests/ai-gm-2026-10/p06-f06.test.mjs` and updated catalog count test `p06-f01.test.mjs`, plus fresh contracts `p06-f04` and `p06-f05` because their shared production modules changed.

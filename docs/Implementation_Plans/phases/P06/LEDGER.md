@@ -52,3 +52,5 @@ P06-F05 promotes only Upload in Progress through its existing native countdown c
 Latest source commit: `4969d912a37df3d8ee35418461dae0d61d1ba742`. README and current source crosswalk inventory fields match the 18/135 catalog state.
 
 P06-F06 enables the exact Too Loud to Think native roll-modifier mapping. Initial batch had one stale expected-status assertion; the single affected catalog test file was repaired and passed, and already-passing feature tests were not rerun. Final unique affected coverage is 10 tests passing; four initial plus one repair syntax checks passed. Current catalog: 19 supported / 134 review-only / 0 needs-authoring. Provider calls/tokens/spend 0/0/$0, no cache claim. No owner restriction or critical blocker; release unauthorized.
+
+Latest implementation SHA: `ca570f89768777e1c165f7d74d6b281e0a1c6580`; current inventory remains 19 supported / 134 review-only.
