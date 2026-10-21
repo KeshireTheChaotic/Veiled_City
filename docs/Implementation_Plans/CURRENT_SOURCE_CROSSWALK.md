@@ -1,7 +1,7 @@
 # Current source crosswalk
 
 Audit anchor: `9e7bf0687357cf96fbe2ea09a04b3e9d2975f6a3`.
-Inspected implementation checkout: `7f2f432bac268d55fb6424b7c6dc211eb78ed431`, local branch
+Inspected implementation checkout: `82f8c288792f15db967b0acbb2a278af6170d76b`, local branch
 `codex/clean-ai-gm-2026-10`. This crosswalk is being updated in the phase closeout commit.
 Initial audit worktree: 22 modified plan documents plus untracked TEST_EXECUTION_NO_POLL.md;
 all retained through the clean-plan commits. Subsequent scoped source edits are recorded in their feature ledgers.
