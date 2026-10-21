@@ -12,6 +12,7 @@
 | [P06-F08](../../features/P06-F08/LEDGER.md) | TARGETED PASS / SUPPORTED | `p06-f08-20261021-a`; 14/14 tests; see feature ledger |
 | [P06-F09](../../features/P06-F09/LEDGER.md) | TARGETED PASS / SUPPORTED | `p06-f09-20261021-a`; see feature ledger |
 | [P06-F10](../../features/P06-F10/LEDGER.md) | TARGETED PASS / SUPPORTED | `p06-f10-20261021-a`; owner approved broadening the adapter |
+| [P06-F11](../../features/P06-F11/LEDGER.md) | TARGETED PASS / SUPPORTED | `p06-f11-20261021-a`; see feature ledger |
 
 Audit anchor: `9e7bf0687357cf96fbe2ea09a04b3e9d2975f6a3`. P00-P05 implementation baseline: `8e01519b6511bc90af6a1c675e4a9950f12b703c`; final P06 source: `bd517f2ad101d7a8c14dcbd36476ca67748d180b`. Baseline fresh delta: 47/47 tests passed across 20 fresh files and 43 changed-file syntax checks passed (exit 0), run `fresh-delta-1792599054739`. P06-F04 delta is separately recorded below. This phase is covered by feature results and is not 47 unique tests on its own. Critical blockers: none established. Phase-specific holds and unverified work remain below.
 
@@ -68,5 +69,7 @@ Latest implementation SHA: `c3fae2768504fb7b4971c47b0f647fe9d0bf1d43`; current c
 P06-F09 supports VIP Threshold through its existing source-backed private-floor admission contract. Initial frozen batch passed 15/16; a case-insensitive assertion repair was isolated and the repaired file passed 2/2. Unique tests: 16 pass after repair; five syntax checks passed. Catalog: 22 supported / 131 review-only / 0 needs-authoring. Implementation SHA: `7b011f25c4cd6ad24aef92a74b3db49616e5b79e`. Provider calls/tokens/spend 0/0/$0; no cache claim; Codex usage unavailable. No new narrative restriction, owner question or critical blocker; release unauthorized.
 
 P06-F10 broadens Automatic Correction per the owner's answer to its open scope question. Its initial frozen batch passed 17/19; two failed files were repaired and only those files reran, passing 6/6. Unique test cases: 19/19 pass after repair; five syntax checks passed. Catalog: 23 supported / 130 review-only / 0 needs-authoring. Implementation SHA: `95e21990e740d17cda5f4386ffbeb35a6070516a`. Provider calls/tokens/spend 0/0/$0; no cache claim; Codex usage unavailable. No new creative limitation, critical blocker or release authorization.
+
+P06-F11 enables Everybody Saw Something Different through the existing exact attributed-witness adapter. Its frozen batch passed 22/22 with four syntax checks. The test delta covers source/capability integrity and early malformed-proposal rejection; complete live-state witness establishment remains unverified. Catalog: 24 supported / 129 review-only / 0 needs-authoring. Implementation SHA: `a857ae4d1dea57e8ecb87309f01371f0f33ebd52`. Provider calls/tokens/spend 0/0/$0; no cache claim; Codex usage unavailable. No new narrative limitation, critical blocker or release authorization.
 
 Latest implementation SHA: `2958560f52e0bce6c1dc91eacd0b1532875f1c29`; current inventory remains 20 supported / 133 review-only.
