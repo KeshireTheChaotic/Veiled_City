@@ -1,6 +1,6 @@
 # P06-F17 — Thin Walls ledger
 
-Status: TARGETED PASS / COMMIT PENDING. Branch `codex/clean-ai-gm-2026-10`; audit `9e7bf0687357cf96fbe2ea09a04b3e9d2975f6a3`; start SHA `f00e9fb051ae28ecb3d34f7a3f7f20ee63373037`.
+Status: SUPPORTED / TARGETED PASS. Branch `codex/clean-ai-gm-2026-10`; audit `9e7bf0687357cf96fbe2ea09a04b3e9d2975f6a3`; start SHA `f00e9fb051ae28ecb3d34f7a3f7f20ee63373037`; implementation commit `f7d1a67cf243beb3a30675f144fa2ec59ea7fe76`.
 
 Exact occurrence and immutable source/template hashes are recorded in [scope](SCOPE.md). Changed modules: `native-feature-definitions.json`, `native-feature-catalog.js`, `native-environment-capabilities.js`, `native-environment-scene.js`, new `native-environment-thin-walls.js`, new `p06-f17.test.mjs`, affected `p06-f01.test.mjs`, and `coverage.json`.
 
@@ -8,4 +8,4 @@ Exact occurrence and immutable source/template hashes are recorded in [scope](SC
 - Provider usage: 0 calls/tokens/$0; no cache/savings claimed; Codex usage unavailable.
 - Unverified: live profile/audience delivery, live provider/Discord, full release qualification.
 
-No owner restriction proposed; no question pending. Critical blocker: none. Release unauthorized. Commit SHA is pending and will be recorded in the post-commit update.
+No owner restriction proposed; no question pending. Critical blocker: none. Release unauthorized. Roll back implementation commit `f7d1a67cf243beb3a30675f144fa2ec59ea7fe76` while preserving saved native state and owner documents.
