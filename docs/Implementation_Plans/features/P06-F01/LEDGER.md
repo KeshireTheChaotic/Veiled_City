@@ -114,3 +114,7 @@ Implementation commit: `71761927e547ca0b0ba5d73ae2246f06b5e5c818`. Added an exac
 ## Resumption checkpoint — P06-F42 — 2026-10-21
 
 Implementation commit: `496ebc739cc2497563662fedeb0ba36bed502fc5`. Added an exact source-checked Readout cue to current bound Analyst context. Frozen `p06-f42-20261021-a` passed 148/148 tests across 40 fresh files, no repair/rerun; syntax 5/5 and JSON 2/2 passed. Catalog now 55 supported / 98 review-only / 0 needs-authoring. Trigger/identification, NPC Stress, allied actor, next-reaction Advantage and replay remain local holds. Provider calls/tokens/spend 0/0/$0; no cache claim; Codex usage unavailable. No owner question, restriction or critical blocker; release unauthorized. See [P06-F42 evidence](../../evidence/P06_F42_TARGETED.json).
+
+## Resumption checkpoint — P06-F43 — 2026-10-21
+
+Implementation commit: 97f9f802f8e2aa4cd9b43dbccad3de326143893b. Ride the Current is supported as an exact GM-private passive cue; movement mechanics remain locally held. Frozen batch p06-f43-20261021-a covered 152 unique cases across 41 fresh files: 151 passed and one stale F01 count failed; only the changed F01 test reran (3/3), yielding 152/152 unique cases. Syntax 5/5 and JSON 2/2 passed. Catalog: 56 supported / 97 review-only / 0 needs-authoring; 55 registered handlers / 44 P06 families. Provider calls/tokens/spend 0/0/$0; no cache claim; Codex usage unavailable. No owner question, restriction or critical blocker; release unauthorized. See [F43 evidence](../../evidence/P06_F43_TARGETED.json).

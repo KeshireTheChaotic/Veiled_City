@@ -1,0 +1,69 @@
+{
+  "feature": "P06-F43",
+  "occurrence": "adversary:static-wraith:ride-the-current",
+  "audit_anchor": "9e7bf0687357cf96fbe2ea09a04b3e9d2975f6a3",
+  "branch": "codex/clean-ai-gm-2026-10",
+  "start_head": "4f4b504908f0c50c63094f8e52f9f81e0189119f",
+  "implementation_commit": "97f9f802f8e2aa4cd9b43dbccad3de326143893b",
+  "tested_source_sha": "97f9f802f8e2aa4cd9b43dbccad3de326143893b",
+  "run_id": "p06-f43-20261021-a",
+  "started_at": "2026-10-21T23:23:50.2463707Z",
+  "ended_at": "2026-10-21T23:23:53.6425048Z",
+  "command": "From bot/: node --test over 41 unique fresh test paths mapped by coverage.json to the four changed production modules; one affected-code repair run targeted only p06-f01.test.mjs.",
+  "exit_code": 0,
+  "tests": 152,
+  "passed": 152,
+  "failed": 0,
+  "cancelled": 0,
+  "skipped": 0,
+  "duration_ms": 3396.134,
+  "initial_batch": {
+    "failed": 1,
+    "exit_code": 1,
+    "tests": 152,
+    "passed": 151,
+    "cause": "Stale p06-f01 expected executable feature count; no production-code defect."
+  },
+  "repair_run": {
+    "tests": 3,
+    "failed": 0,
+    "exit_code": 0,
+    "passed": 3,
+    "duration_ms": 342.1657,
+    "run_id": "p06-f43-repair-20261021-a"
+  },
+  "changed_js_mjs_syntax": "5/5 pass",
+  "changed_json_parse": "2/2 pass",
+  "catalog": {
+    "needs_authoring": 0,
+    "total": 153,
+    "registered_handler_keys": 55,
+    "p06_handler_families": 44,
+    "review_only": 97,
+    "supported": 56
+  },
+  "provider_usage": {
+    "cost_usd": 0,
+    "tokens": 0,
+    "calls": 0
+  },
+  "cache": "No cache used or savings claimed; Codex usage unavailable.",
+  "input_hashes_sha256": {
+    "bot/src/native-feature-definitions.json": "9cbf8c3636ec81248f4d7c9f8bec8ae7c3b17e6821d9184c577247b27fd0bdd1",
+    "bot/tests/ai-gm-2026-10/coverage.json": "0e4c80faa66bee03045b24880fe08d55dc2085f3565a906f83fd41d22613ee14",
+    "bot/tests/ai-gm-2026-10/p06-f01.test.mjs": "e0393007fd2c1af7e4e2cdd2ce7cbf7628e61cca353670b271d6ddcda5b1eb39",
+    "bot/src/native-adversary-context.js": "83b601bf1d78b15f25fe8787c8c425c8da5f160d457ef914899fe24b68badb4e",
+    "content/GM_PRIVATE/ADVERSARIES/adversaries.json": "846386ded200f84e487f69c1b82adf4387dcb41526cb60e8ee777e48727fca9c",
+    "bot/src/native-adversary-ride-the-current.js": "73075aab00fdb5154d54aea41777d53b06d8953dff708289c0507c4d3eb63a49",
+    "bot/src/native-feature-catalog.js": "bc92e016cc9c64ae8eaa7a93bbee69b988ca85c508ceb67d13f5d7f9bfa55164",
+    "bot/tests/ai-gm-2026-10/p06-f43.test.mjs": "29acfdf6d279f90c5820aaabaab10dc40bd6f1bcdbe2de9aa2989db8b1244c04"
+  },
+  "owner_questions": [],
+  "local_holds": [
+    "Powered-device eligibility and Close-range proof are not committed by the cue.",
+    "Destination, movement state mutation and replay-safe movement remain unimplemented or unverified.",
+    "Live persistence, delivery and whole-release qualification remain unverified."
+  ],
+  "critical_blockers": [],
+  "release_authorized": false
+}

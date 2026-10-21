@@ -1,6 +1,6 @@
 # Native occurrence status
 
-153 individual scope/ledger pairs. 16 existing supported; 137 local executable-adapter holds. No descriptor promotion. Source verification is not native effect qualification.
+153 individual scope/ledger pairs. 56 supported; 97 review-only occurrence adapters remain. Source verification alone is not native effect qualification.
 
 | Occurrence | Existing status | Fresh source result | Handler |
 |---|---|---|---|
@@ -10,7 +10,7 @@
 | [adversary:aster-vale-contractor:flashbang](occurrences/adversary--aster-vale-contractor--flashbang/LEDGER.md) | supported | verified_source | flashbang_owner_choice |
 | [adversary:aster-vale-occult-analyst:mark-the-variable](occurrences/adversary--aster-vale-occult-analyst--mark-the-variable/LEDGER.md) | supported | verified_source | adversary_mark_the_variable_context |
 | [adversary:aster-vale-occult-analyst:readout](occurrences/adversary--aster-vale-occult-analyst--readout/LEDGER.md) | supported | verified_source | adversary_readout_context |
-| [adversary:static-wraith:ride-the-current](occurrences/adversary--static-wraith--ride-the-current/LEDGER.md) | review_only | verified_source | none |
+| [adversary:static-wraith:ride-the-current](occurrences/adversary--static-wraith--ride-the-current/LEDGER.md) | supported | verified_source | adversary_ride_the_current_context |
 | [adversary:static-wraith:feedback](occurrences/adversary--static-wraith--feedback/LEDGER.md) | supported | verified_source | feedback |
 | [adversary:veil-burned-stalker:peripheral](occurrences/adversary--veil-burned-stalker--peripheral/LEDGER.md) | review_only | verified_source | none |
 | [adversary:veil-burned-stalker:steal-the-focus](occurrences/adversary--veil-burned-stalker--steal-the-focus/LEDGER.md) | review_only | verified_source | none |
