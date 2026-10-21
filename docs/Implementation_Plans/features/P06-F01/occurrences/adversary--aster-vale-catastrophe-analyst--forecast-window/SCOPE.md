@@ -11,3 +11,7 @@ This delta qualifies occurrence-local source inspection and discovery isolation 
 Any future adapter must prove current actor/source/scene/target, owner choices, exact costs, native dice and once-only replay using new tests before support promotion. No generic fallback or new creative limitation. Roll back only the occurrence-specific diff; preserve saved readers and receipts.
 
 Final tested source SHA: `8e01519b6511bc90af6a1c675e4a9950f12b703c`; run `fresh-delta-1792599054739` passed 47/47 union tests. The catalog test verifies this occurrence source; this is not occurrence effect qualification. Input/test hashes: parent final evidence.
+
+## Resumed exact-rule review — 2026-10-21
+
+The printed action lets the Analyst mark 1 Stress, choose an allied adversary within Far range, and grant that ally advantage on its next action and reaction roll until the Analyst next takes Severe damage. The current catalog still marks this occurrence `review_only`. The native feature route has no persisted advantage grant, consumption on the ally's next rolls, or clearing on the Analyst's Severe damage; the GM proposal's transient advantage field is not this occurrence's authority. Keep this rule local until those native state transitions and replay-safe receipts exist. No new narrative or NPC-autonomy restriction is introduced.

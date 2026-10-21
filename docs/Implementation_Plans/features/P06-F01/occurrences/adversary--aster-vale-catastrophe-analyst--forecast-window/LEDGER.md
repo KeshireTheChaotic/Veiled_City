@@ -13,3 +13,13 @@ Status: SOURCE VERIFIED; LOCAL EXECUTION HOLD.
 - Critical blocker: none. Release authorization: none.
 
 Final tested source SHA: `8e01519b6511bc90af6a1c675e4a9950f12b703c`; run `fresh-delta-1792599054739` passed 47/47 union tests. The catalog test verifies this occurrence source; this is not occurrence effect qualification. Input/test hashes: parent final evidence.
+
+## Resumption review — 2026-10-21
+
+- Current checkout before closeout commit: `codex/clean-ai-gm-2026-10` / `62e13b4b39330ef9b2b144065d1d54616fdd8b34`; tested implementation source: `8e01519b6511bc90af6a1c675e4a9950f12b703c`.
+- Exact printed mechanics: Analyst marks 1 Stress, chooses an allied adversary within Far range, and grants advantage on that ally's next action and reaction roll until the Analyst takes Severe damage.
+- Source review: content source and hashes remain those recorded above. Current native feature consumers have no persisted grant, one-use consumption across action and reaction rolls, or Severe-damage expiration for this occurrence. The general transient proposal advantage flags do not establish this effect.
+- Changed production modules: none. Docs updated: this occurrence scope/ledger, P06-F01 ledger and P06 phase ledger. Catalog descriptor unchanged and remains `review_only`.
+- Fresh tests run: none because production code did not change; prior source-inspection tests were not rerun and do not qualify this execution.
+- Cost/cache: 0 provider calls/tokens/spend; no cache claim; Codex usage unavailable.
+- Local hold: missing replay-safe native advantage grant/consume/expiry lifecycle. No owner restriction or question. No critical blocker. No release authorization.
