@@ -1,0 +1,54 @@
+{
+  "feature": "P06-F46",
+  "occurrence": "adversary:hexbound-familiar:sympathetic-relay",
+  "audit_anchor": "9e7bf0687357cf96fbe2ea09a04b3e9d2975f6a3",
+  "branch": "codex/clean-ai-gm-2026-10",
+  "start_head": "890397954e5bdc259c15bf796330eb3db38d5245",
+  "implementation_commit": "d47c7e582e4c448cb705034b5b2ab24b4b74472c",
+  "tested_source_sha": "d47c7e582e4c448cb705034b5b2ab24b4b74472c",
+  "run_id": "p06-f46-20261021-a",
+  "started_at": "2026-10-21T23:30:28.0122844Z",
+  "ended_at": "2026-10-21T23:30:31.8671412Z",
+  "command": "From bot/: node --test over 44 unique fresh test paths mapped by coverage.json to five changed production modules.",
+  "exit_code": 0,
+  "tests": 164,
+  "passed": 164,
+  "failed": 0,
+  "cancelled": 0,
+  "skipped": 0,
+  "duration_ms": 3797.8911,
+  "changed_js_mjs_syntax": "5/5 pass",
+  "changed_json_parse": "2/2 pass",
+  "catalog": {
+    "registered_handler_keys": 58,
+    "supported": 59,
+    "needs_authoring": 0,
+    "review_only": 94,
+    "p06_handler_families": 47,
+    "total": 153
+  },
+  "provider_usage": {
+    "calls": 0,
+    "tokens": 0,
+    "cost_usd": 0
+  },
+  "cache": "No cache used or savings claimed; Codex usage unavailable.",
+  "input_hashes_sha256": {
+    "bot/tests/ai-gm-2026-10/coverage.json": "be1d2ca1e6a67fcbf7729bf20325541a2f0d57f81a5f3c2ec989bce5618e28d2",
+    "bot/src/native-adversary-context.js": "e7659487ab7e7a775552360dc972af4183d489ea24e01116c4dab68b7aa8d453",
+    "bot/tests/ai-gm-2026-10/p06-f01.test.mjs": "8a7a15cbece85c87831b7f45a3b65873645b42634020c52e1b3fb05767dfb736",
+    "bot/src/native-feature-catalog.js": "4c1fe4a6fc5f3242fed505465d7f1d10ff43104ee25a1d9de23a5774774f39c9",
+    "bot/tests/ai-gm-2026-10/p06-f46.test.mjs": "ae2124fb4b8d6a60ce6e89877a320d5b3a73f87280181c4f2d9c2bf3686cbe04",
+    "content/GM_PRIVATE/ADVERSARIES/adversaries.json": "846386ded200f84e487f69c1b82adf4387dcb41526cb60e8ee777e48727fca9c",
+    "bot/src/native-feature-definitions.json": "04a1c4d107d2d95330cbbb980e0944c0053ab162caa0f1689c243a8ceebb7bfc",
+    "bot/src/native-adversary-sympathetic-relay.js": "0396f4a9d51a27d09c1c8e7d33f306e5f6089b9d5d58693be9d06d6396435591"
+  },
+  "owner_questions": [],
+  "local_holds": [
+    "No hidden creator binding/authority proof is minted by this cue.",
+    "Eligible effect, target, Far-range proof and effect application remain unimplemented or unverified.",
+    "Replay, live delivery and whole-release qualification remain unverified."
+  ],
+  "critical_blockers": [],
+  "release_authorized": false
+}

@@ -74,13 +74,13 @@ assembly, diagnostics and durable publication. Each retains its own flags,
 source, consent, rule and actor requirements. A flag is not blanket AI authority.
 
 At this rebuild, the special-feature catalog contains **153 occurrences**:
-**58 bounded supported**, **95 review-only**, and **0 needs-authoring**, using
-**46 P06 handler families**. Standard actions are separate. Supported means the exact
+**59 bounded supported**, **94 review-only**, and **0 needs-authoring**, using
+**47 P06 handler families**. Standard actions are separate. Supported means the exact
 documented adapter, not arbitrary variants or whole-release qualification.
 See the [feature crosswalk](docs/Active_Implementation/UNIFIED_ARBITRATION_FEATURE_COVERAGE.md)
 and [runtime catalog](bot/src/native-feature-definitions.json).
 
-Current execution follows [P00 through P06](docs/Implementation_Plans/README.md) and the [owner behavioral specification](docs/Implementation_Plans/OWNER_AI_GM_BEHAVIOR_SPEC.md). The [source crosswalk](docs/Implementation_Plans/CURRENT_SOURCE_CROSSWALK.md) distinguishes existing pathways, changed-code evidence and unverified work. The 95 review-only catalog occurrences remain local execution holds; no generic adapter is implied. Full release qualification, live Discord/provider testing and deployment require separate authorization.
+Current execution follows [P00 through P06](docs/Implementation_Plans/README.md) and the [owner behavioral specification](docs/Implementation_Plans/OWNER_AI_GM_BEHAVIOR_SPEC.md). The [source crosswalk](docs/Implementation_Plans/CURRENT_SOURCE_CROSSWALK.md) distinguishes existing pathways, changed-code evidence and unverified work. The 94 review-only catalog occurrences remain local execution holds; no generic adapter is implied. Full release qualification, live Discord/provider testing and deployment require separate authorization.
 
 ## Installation and setup
 
