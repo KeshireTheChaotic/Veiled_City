@@ -2009,13 +2009,13 @@
       "template_hash": "7a77c7ebfb53458509d6322389d8430d0e4b5204ea70311c1c3ffaeb010aef85",
       "index": 0,
       "type": "Passive",
-      "status": "review_only",
-      "trigger_kind": "unmapped",
-      "target_policy": "unmapped",
-      "roll_protocol": "unmapped",
-      "costs": null,
-      "native_handler": null,
-      "reason": "No qualified native feature handler."
+      "status": "supported",
+      "trigger_kind": "passive",
+      "target_policy": "none",
+      "roll_protocol": "environment_scene_context",
+      "costs": [],
+      "native_handler": "environment_patient_procedure_context",
+      "reason": "Exact source-bound patient-record access rule is supplied as passive scene context; no permission is inferred."
     },
     {
       "feature_key": "environment:after-hours-emergency-department:code-blue",

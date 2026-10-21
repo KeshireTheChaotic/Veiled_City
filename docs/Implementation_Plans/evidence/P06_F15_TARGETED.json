@@ -4,6 +4,7 @@
   "audit_anchor": "9e7bf0687357cf96fbe2ea09a04b3e9d2975f6a3",
   "branch": "codex/clean-ai-gm-2026-10",
   "start_head": "9f8c99239f17456f22f54b199d89dc01dc109e47",
+  "implementation_commit": "d2ba81c777db7a19af78df61fe751f4359721899",
   "run_id": "p06-f15-20261021-a",
   "initial_batch": {"command": "node --test --test-reporter=tap tests/ai-gm-2026-10/p06-f01.test.mjs tests/ai-gm-2026-10/p06-f03.test.mjs tests/ai-gm-2026-10/p06-f04.test.mjs tests/ai-gm-2026-10/p06-f05.test.mjs tests/ai-gm-2026-10/p06-f06.test.mjs tests/ai-gm-2026-10/p06-f07.test.mjs tests/ai-gm-2026-10/p06-f08.test.mjs tests/ai-gm-2026-10/p06-f09.test.mjs tests/ai-gm-2026-10/p06-f10.test.mjs tests/ai-gm-2026-10/p06-f11.test.mjs tests/ai-gm-2026-10/p06-f12.test.mjs tests/ai-gm-2026-10/p06-f13.test.mjs tests/ai-gm-2026-10/p06-f14.test.mjs tests/ai-gm-2026-10/p06-f15.test.mjs", "exit_code": 1, "tests": 43, "passed": 42, "failed": 1, "cancelled": 0, "skipped": 0, "duration_ms": 1065.9337, "failure": "One F15 source-wiring assertion expected a direct d.proposal_hash access; production correctly compares saved.data.proposal_hash to the replay payload. Only the changed test assertion was repaired."},
   "repair_batch": {"run_id": "p06-f15-20261021-a-repair-1", "command": "node --test --test-reporter=tap tests/ai-gm-2026-10/p06-f15.test.mjs", "exit_code": 0, "tests": 5, "passed": 5, "failed": 0, "cancelled": 0, "skipped": 0, "duration_ms": 314.8367},

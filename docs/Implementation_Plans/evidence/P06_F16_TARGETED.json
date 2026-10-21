@@ -1,0 +1,29 @@
+{
+  "feature": "P06-F16",
+  "occurrence": "environment:after-hours-emergency-department:hipaa-and-procedure",
+  "audit_anchor": "9e7bf0687357cf96fbe2ea09a04b3e9d2975f6a3",
+  "branch": "codex/clean-ai-gm-2026-10",
+  "start_head": "d2ba81c777db7a19af78df61fe751f4359721899",
+  "run_id": "p06-f16-20261021-a",
+  "initial_batch": {"command": "node --test --test-reporter=tap tests/ai-gm-2026-10/p06-f01.test.mjs tests/ai-gm-2026-10/p06-f04.test.mjs tests/ai-gm-2026-10/p06-f05.test.mjs tests/ai-gm-2026-10/p06-f06.test.mjs tests/ai-gm-2026-10/p06-f07.test.mjs tests/ai-gm-2026-10/p06-f08.test.mjs tests/ai-gm-2026-10/p06-f09.test.mjs tests/ai-gm-2026-10/p06-f10.test.mjs tests/ai-gm-2026-10/p06-f11.test.mjs tests/ai-gm-2026-10/p06-f12.test.mjs tests/ai-gm-2026-10/p06-f13.test.mjs tests/ai-gm-2026-10/p06-f14.test.mjs tests/ai-gm-2026-10/p06-f15.test.mjs tests/ai-gm-2026-10/p06-f16.test.mjs", "exit_code": 1, "tests": 44, "passed": 43, "failed": 1, "cancelled": 0, "skipped": 0, "duration_ms": 1079.8679, "failure": "One new F16 assertion expected the phrase 'is inferred'; the production contract says context creates no permission or access decision. Only the failed assertion was changed."},
+  "repair_batch": {"run_id": "p06-f16-20261021-a-repair-1", "command": "node --test --test-reporter=tap tests/ai-gm-2026-10/p06-f16.test.mjs", "exit_code": 0, "tests": 4, "passed": 4, "failed": 0, "cancelled": 0, "skipped": 0, "duration_ms": 318.248},
+  "final_unique_coverage": {"tests": 44, "passed": 44, "failed": 0, "repaired_file_only_rerun": "p06-f16.test.mjs"},
+  "syntax": {"changed_js_mjs": "6/6 pass", "changed_json": "2/2 parsed"},
+  "provider_usage": {"calls": 0, "tokens": 0, "cost_usd": 0},
+  "cache": "No cache used or savings claimed. Codex usage metric unavailable.",
+  "unverified": ["Integrated construction of an authenticated live environment profile and its recipient-scoped narrative context.", "Actual in-fiction access adjudication remains GM/source driven; this adapter publishes context and does not grant or deny access.", "Live provider behavior, latency and release qualification."],
+  "owner_questions": [],
+  "critical_blockers": [],
+  "release_authorized": false,
+  "input_hashes_sha256": {
+    "bot/src/native-environment-capabilities.js": "db66a0d49c714d8f391896f0126ebe4c5d4c3aac010d7e9ff11bb0849b21e1f1",
+    "bot/src/native-environment-procedure.js": "44751586633b7cc87424364b7073003f8d3ccdf537c6d48ca4f3e073ff3131c0",
+    "bot/src/native-environment-scene.js": "6e604b58494b3b0b45293a227abdb5309a01263c26854a1089ad9001cbd18a82",
+    "bot/src/native-feature-catalog.js": "bd47b2475590da0479d79049f380326e81b500518b20265d03e3461d30c87c1d",
+    "bot/src/native-feature-definitions.json": "f10e6c386bf2e5e603a0ee89fa0ab4a461f80d5dd7b351381c9e1c569bc7f7a7",
+    "bot/tests/ai-gm-2026-10/p06-f01.test.mjs": "9b46380eca62a1eb162d003eeb9100d8b6f550ebec106c1dff37943ad53373df",
+    "bot/tests/ai-gm-2026-10/p06-f16.test.mjs": "6683e57749f5cee3fe5819b191ffb4b8400b270de94bd4c566026910a6cecc37",
+    "bot/tests/ai-gm-2026-10/coverage.json": "dee74a87c085520bfa9dfbe432fb78a6be8bb6c0f68042992fe669f2382c2525",
+    "content/GM_PRIVATE/ENVIRONMENTS/environments.json": "0b5f5004caf4d761c33ce851a020e081a2b6fb980526a38fcc51c7eaec413898"
+  }
+}

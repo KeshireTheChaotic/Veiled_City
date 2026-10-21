@@ -112,7 +112,7 @@
 | [environment:occult-crime-scene:contaminated-scene](occurrences/environment--occult-crime-scene--contaminated-scene/LEDGER.md) | review_only | verified_source | none |
 | [environment:occult-crime-scene:three-vectors](occurrences/environment--occult-crime-scene--three-vectors/LEDGER.md) | review_only | verified_source | none |
 | [environment:occult-crime-scene:sirens-outside](occurrences/environment--occult-crime-scene--sirens-outside/LEDGER.md) | supported | verified_source | sirens_outside |
-| [environment:after-hours-emergency-department:hipaa-and-procedure](occurrences/environment--after-hours-emergency-department--hipaa-and-procedure/LEDGER.md) | review_only | verified_source | none |
+| [environment:after-hours-emergency-department:hipaa-and-procedure](occurrences/environment--after-hours-emergency-department--hipaa-and-procedure/LEDGER.md) | supported | verified_source | environment_patient_procedure_context |
 | [environment:after-hours-emergency-department:code-blue](occurrences/environment--after-hours-emergency-department--code-blue/LEDGER.md) | supported | verified_source | environment_code_blue |
 | [environment:after-hours-emergency-department:something-in-imaging](occurrences/environment--after-hours-emergency-department--something-in-imaging/LEDGER.md) | supported | verified_source | environment_imaging_record |
 | [environment:abandoned-mall-glass-market:no-violence-in-the-aisles](occurrences/environment--abandoned-mall-glass-market--no-violence-in-the-aisles/LEDGER.md) | review_only | verified_source | none |
