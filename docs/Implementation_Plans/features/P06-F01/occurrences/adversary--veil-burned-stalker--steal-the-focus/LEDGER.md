@@ -1,15 +1,12 @@
 # adversary:veil-burned-stalker:steal-the-focus — ledger
 
-Status: SOURCE VERIFIED; LOCAL EXECUTION HOLD.
+Status: SUPPORTED SOURCE-BOUND GM CUE / TARGETED PASS.
 
-- Branch: codex/clean-ai-gm-2026-10; source checkout SHA: 0834f299ccff1738e9b3dd753a5fc616d3965370 + working-tree delta. Final freeze SHA/evidence: see parent P06-F01 ledger and final delta report.
-- Changed module: bot/src/native-feature-catalog.js (shared occurrence-local inspection). Descriptor and rules unchanged.
-- Fresh test: bot/tests/ai-gm-2026-10/p06-f01.test.mjs; current-catalog test calls inspectNativeFeatureOccurrence for this exact key. Source/content input is current production data, never a historical fixture.
-- Actual result: verified_source, execution_authorized=false in p06-1792598757560; shared repaired batch exit 0, 5 tests passed. This is source verification, not effect execution qualification.
-- Cost/cache: 0 paid provider calls/tokens; $0 provider tests. No cache claim. Codex usage unavailable.
-- Existing catalog reason: No qualified native feature handler.
-- Local hold: No qualified executable occurrence adapter. This remains unsupported; exact source availability alone is insufficient.
-- Questions: none introduced by this source-only delta; no new narrative/autonomy restrictions proposed.
-- Critical blocker: none. Release authorization: none.
-
-Final tested source SHA: `8e01519b6511bc90af6a1c675e4a9950f12b703c`; run `fresh-delta-1792599054739` passed 47/47 union tests. The catalog test verifies this occurrence source; this is not occurrence effect qualification. Input/test hashes: parent final evidence.
+- Branch/implementation SHA: `codex/clean-ai-gm-2026-10` / `bdfb7175c5d2aa2fb83e7b4bca1782d2c0f491ba`.
+- Changed modules: native definition/catalog, Steal the Focus cue projector, current adversary context, fresh F45 test and coverage mapping.
+- Fresh run `p06-f45-20261021-a`: 160/160 tests across 43 fresh files, exit 0, no repair/rerun. Syntax 5/5; JSON parse 2/2.
+- Handler `adversary_steal_the_focus_context` exposes the exact Action and Fear cost in current verified GM-private context; execution is unauthorized by this cue.
+- Local holds: Fear transaction, range movement, attack/damage, conditional Hope loss, event validation and once-only receipt/replay.
+- Evidence and hashes: [P06-F45 targeted evidence](../../../../evidence/P06_F45_TARGETED.json).
+- Cost/cache: provider calls/tokens/spend 0/0/$0; no cache claim; Codex usage unavailable.
+- Owner questions/restrictions: none. Critical blocker: none. Release authorization: false.

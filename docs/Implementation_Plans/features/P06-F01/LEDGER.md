@@ -122,3 +122,7 @@ Implementation commit: 97f9f802f8e2aa4cd9b43dbccad3de326143893b. Ride the Curren
 ## Resumption checkpoint — P06-F44 — 2026-10-21
 
 Implementation commit: df75716530ffadff4a51bd52735696021217e3bc. Peripheral is supported as an exact GM-private passive cue; notice-roll resolution remains locally held. Frozen p06-f44-20261021-a passed 156/156 across 42 fresh files with no rerun; syntax 5/5 and JSON 2/2 passed. Catalog: 57 supported / 96 review-only / 0 needs-authoring; 56 registered handlers / 45 P06 families. Provider calls/tokens/spend 0/0/$0; no cache claim; Codex usage unavailable. No owner question, restriction or critical blocker; release unauthorized. Evidence: [F44](../../evidence/P06_F44_TARGETED.json).
+
+## Resumption checkpoint — P06-F45 — 2026-10-21
+
+Implementation commit: dfb7175c5d2aa2fb83e7b4bca1782d2c0f491ba. Steal the Focus is supported as an exact GM-private Action cue; Fear, movement, attack and Hope mechanics remain locally held. Frozen p06-f45-20261021-a passed 160/160 across 43 fresh files with no rerun; syntax 5/5 and JSON 2/2 passed. Catalog: 58 supported / 95 review-only / 0 needs-authoring; 57 handler keys / 46 P06 families. Provider calls/tokens/spend 0/0/$0; no cache claim; Codex usage unavailable. No owner question, restriction or critical blocker; release unauthorized. Evidence [F45](../../evidence/P06_F45_TARGETED.json).

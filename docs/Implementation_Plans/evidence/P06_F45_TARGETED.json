@@ -1,0 +1,54 @@
+{
+  "feature": "P06-F45",
+  "occurrence": "adversary:veil-burned-stalker:steal-the-focus",
+  "audit_anchor": "9e7bf0687357cf96fbe2ea09a04b3e9d2975f6a3",
+  "branch": "codex/clean-ai-gm-2026-10",
+  "start_head": "7db6e579f542b159f8819b54da0633b50e923afb",
+  "implementation_commit": "bdfb7175c5d2aa2fb83e7b4bca1782d2c0f491ba",
+  "tested_source_sha": "bdfb7175c5d2aa2fb83e7b4bca1782d2c0f491ba",
+  "run_id": "p06-f45-20261021-a",
+  "started_at": "2026-10-21T23:29:00.8095272Z",
+  "ended_at": "2026-10-21T23:29:04.5514369Z",
+  "command": "From bot/: node --test over 43 unique fresh test paths mapped by coverage.json to five changed production modules.",
+  "exit_code": 0,
+  "tests": 160,
+  "passed": 160,
+  "failed": 0,
+  "cancelled": 0,
+  "skipped": 0,
+  "duration_ms": 3682.6702,
+  "changed_js_mjs_syntax": "5/5 pass",
+  "changed_json_parse": "2/2 pass",
+  "catalog": {
+    "review_only": 95,
+    "needs_authoring": 0,
+    "p06_handler_families": 46,
+    "supported": 58,
+    "total": 153,
+    "registered_handler_keys": 57
+  },
+  "provider_usage": {
+    "calls": 0,
+    "cost_usd": 0,
+    "tokens": 0
+  },
+  "cache": "No cache used or savings claimed; Codex usage unavailable.",
+  "input_hashes_sha256": {
+    "bot/src/native-feature-catalog.js": "80cf43c982065d68622fe81d283b0a63d3c78d0a6f2369d934beeeecbbf02e90",
+    "bot/src/native-adversary-steal-the-focus.js": "bc08391a31ea3a159196e069e795175e759c5c204fa1b21a4d764eb57608d1cb",
+    "content/GM_PRIVATE/ADVERSARIES/adversaries.json": "846386ded200f84e487f69c1b82adf4387dcb41526cb60e8ee777e48727fca9c",
+    "bot/tests/ai-gm-2026-10/p06-f45.test.mjs": "a21cfcbafb108a7870544268cf9f60f7f9e9840489940cc2245474f0e8052842",
+    "bot/src/native-feature-definitions.json": "923a08727b42962ad3e9049a84617650e8c8e69978e5dac10c3b00f66e3382d6",
+    "bot/tests/ai-gm-2026-10/p06-f01.test.mjs": "fd6632296fb36d8abddfa56c262476fa1a6cdac2f15bcac29444154a6df5fac2",
+    "bot/src/native-adversary-context.js": "9617a137167f6ff31002896c2b176cbf6fd1a818a2da952383673ef9809a4004",
+    "bot/tests/ai-gm-2026-10/coverage.json": "54569a8175070d71dcc8d6070ade7a54fa9b9f5132af0b860299156e48ed5f47"
+  },
+  "owner_questions": [],
+  "local_holds": [
+    "No source event authorizes a Fear transaction or confirms range/target state.",
+    "Movement, standard attack/damage and conditional Hope loss have no execution/receipt path in this cue.",
+    "Live persistence, delivery and whole-release qualification remain unverified."
+  ],
+  "critical_blockers": [],
+  "release_authorized": false
+}
