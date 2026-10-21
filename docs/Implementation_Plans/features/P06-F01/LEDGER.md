@@ -130,3 +130,7 @@ Implementation commit: dfb7175c5d2aa2fb83e7b4bca1782d2c0f491ba. Steal the Focus
 ## Resumption checkpoint — P06-F46 — 2026-10-21
 
 Implementation commit: d47c7e582e4c448cb705034b5b2ab24b4b74472c. Sympathetic Relay is supported as an exact GM-private passive cue; creator/effect/range authority remains locally held. Frozen p06-f46-20261021-a passed 164/164 across 44 fresh files; syntax 5/5 and JSON 2/2 passed; no reruns. Catalog: 59 supported / 94 review-only / 0 needs-authoring; 58 handler keys / 47 P06 families. Provider calls/tokens/spend 0/0/$0; no cache claim; Codex usage unavailable. No owner question, restriction or critical blocker; release unauthorized. Evidence [F46](../../evidence/P06_F46_TARGETED.json).
+
+## Resumption checkpoint — P06-F47 — 2026-10-21
+
+Implementation commit: 7c2116fdaa1d85c4fc093848eb888dfff37d2ded. Snatch a Link is supported as an exact GM-private Action cue; attack, eligible link discovery and theft remain locally held. Frozen p06-f47-20261021-a passed 168/168 across 45 fresh files; syntax 5/5 and JSON 2/2 passed, no reruns. Catalog: 60 supported / 93 review-only / 0 needs-authoring; 59 handlers / 48 P06 families. Provider calls/tokens/spend 0/0/$0; no cache claim; Codex usage unavailable. No owner question, restriction or critical blocker; release unauthorized. Evidence [F47](../../evidence/P06_F47_TARGETED.json).

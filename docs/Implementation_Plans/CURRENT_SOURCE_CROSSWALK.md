@@ -1,7 +1,7 @@
 # Current source crosswalk
 
 Audit anchor: `9e7bf0687357cf96fbe2ea09a04b3e9d2975f6a3`.
-Inspected implementation checkout: `d47c7e582e4c448cb705034b5b2ab24b4b74472c`, local branch
+Inspected implementation checkout: `7c2116fdaa1d85c4fc093848eb888dfff37d2ded`, local branch
 `codex/clean-ai-gm-2026-10`. This crosswalk is being updated in the phase closeout commit.
 Initial audit worktree: 22 modified plan documents plus untracked TEST_EXECUTION_NO_POLL.md;
 all retained through the clean-plan commits. Subsequent scoped source edits are recorded in their feature ledgers.
@@ -12,7 +12,7 @@ all retained through the clean-plan commits. Subsequent scoped source edits are 
 | Native mechanics and owner choices | roll-requests.js, gm-native-rolls.js, pre-roll-fear.js | Existing authority pathways; no whole-system qualification claimed |
 | Living world | autonomous-world.js, npc-cognition.js, world-narrative-bridge.js | Existing implementation; changed contracts require fresh tests |
 | Private audiences / delivery | audience-native-v9.js, assembly modules, outbox | Existing boundaries must survive changes; live Discord unverified |
-| Native catalog | bot/src/native-feature-definitions.json | Qualified delta: 153 = 59 supported + 94 review_only + 0 needs_authoring; 58 registered handler keys and 47 P06 handler families; P06-F34–F36 and F38–F46 are source-bound GM cues with mechanics held, while F37 enables the existing failure-only native trace/owner-choice route; labels are not whole-release qualification |
+| Native catalog | bot/src/native-feature-definitions.json | Qualified delta: 153 = 60 supported + 93 review_only + 0 needs_authoring; 59 registered handler keys and 48 P06 handler families; P06-F34–F36 and F38–F47 are source-bound GM cues with mechanics held, while F37 enables the existing failure-only native trace/owner-choice route; labels are not whole-release qualification |
 | Historical implementation package | docs/Active_Implementation | Absent in this checkout; historical links are not current execution authority |
 | CI | .github/workflows | Absent in this checkout; audit describes another snapshot, not current local CI |
 
