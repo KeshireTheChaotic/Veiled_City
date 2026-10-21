@@ -2266,13 +2266,13 @@
       "template_hash": "dc290c7974aa110f61545ba78c61e9a78aa0f7362ee41bb0b7d7f9ae83bf2011",
       "index": 2,
       "type": "Action",
-      "status": "review_only",
-      "trigger_kind": "unmapped",
-      "target_policy": "unmapped",
-      "roll_protocol": "unmapped",
-      "costs": null,
-      "native_handler": null,
-      "reason": "No qualified native feature handler."
+      "status": "supported",
+      "trigger_kind": "spotlight_action",
+      "target_policy": "none",
+      "roll_protocol": "environment_scene_context",
+      "costs": [{ "resource": "fear", "amount": 1 }],
+      "native_handler": "environment_third_rail_spirit_context",
+      "reason": "Exact source-bound action cue; Fear, attack target, player reaction roll and damage are not committed by context."
     },
     {
       "feature_key": "environment:aster-vale-predictive-lab:everything-logs",

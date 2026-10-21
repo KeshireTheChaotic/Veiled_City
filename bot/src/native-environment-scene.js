@@ -32,6 +32,7 @@ import {nativeEnvironmentEveryoneIsWatchingSituation} from './native-environment
 import {nativeEnvironmentWrongOfferingSituation} from './native-environment-wrong-offering.js';
 import {nativeEnvironmentLastTrainRulesSituation} from './native-environment-last-train-rules.js';
 import {nativeEnvironmentExpressThroughMemorySituation} from './native-environment-express-through-memory.js';
+import {nativeEnvironmentThirdRailSpiritSituation} from './native-environment-third-rail-spirit.js';
 import {arbitrationFailure as fail} from './gm-arbitration-contract.js';
 const issuer='native:environment-scene';
 const rules=Object.freeze({
@@ -243,5 +244,6 @@ export function nativeEnvironmentSituation(db,guild,scope,location){
   if(result.length<6)result.push(...nativeEnvironmentWrongOfferingSituation(db,guild,scope,location).slice(0,6-result.length));
   if(result.length<6)result.push(...nativeEnvironmentLastTrainRulesSituation(db,guild,scope,location).slice(0,6-result.length));
   if(result.length<6)result.push(...nativeEnvironmentExpressThroughMemorySituation(db,guild,scope,location).slice(0,6-result.length));
+  if(result.length<6)result.push(...nativeEnvironmentThirdRailSpiritSituation(db,guild,scope,location).slice(0,6-result.length));
   return result;
 }

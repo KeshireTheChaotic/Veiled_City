@@ -1,15 +1,11 @@
 # environment:dead-platform:third-rail-spirit — ledger
 
-Status: SOURCE VERIFIED; LOCAL EXECUTION HOLD.
+Status: SUPPORTED SOURCE-BOUND GM ACTION CUE; EFFECT HOLD.
 
-- Branch: codex/clean-ai-gm-2026-10; source checkout SHA: 0834f299ccff1738e9b3dd753a5fc616d3965370 + working-tree delta. Final freeze SHA/evidence: see parent P06-F01 ledger and final delta report.
-- Changed module: bot/src/native-feature-catalog.js (shared occurrence-local inspection). Descriptor and rules unchanged.
-- Fresh test: bot/tests/ai-gm-2026-10/p06-f01.test.mjs; current-catalog test calls inspectNativeFeatureOccurrence for this exact key. Source/content input is current production data, never a historical fixture.
-- Actual result: verified_source, execution_authorized=false in p06-1792598757560; shared repaired batch exit 0, 5 tests passed. This is source verification, not effect execution qualification.
-- Cost/cache: 0 paid provider calls/tokens; $0 provider tests. No cache claim. Codex usage unavailable.
-- Existing catalog reason: No qualified native feature handler.
-- Local hold: No qualified executable occurrence adapter. This remains unsupported; exact source availability alone is insufficient.
-- Questions: none introduced by this source-only delta; no new narrative/autonomy restrictions proposed.
-- Critical blocker: none. Release authorization: none.
-
-Final tested source SHA: `8e01519b6511bc90af6a1c675e4a9950f12b703c`; run `fresh-delta-1792599054739` passed 47/47 union tests. The catalog test verifies this occurrence source; this is not occurrence effect qualification. Input/test hashes: parent final evidence.
+- Branch/start SHA: `codex/clean-ai-gm-2026-10` / `b8f9512174779900f2d5fbc040667dd114bcc871`; implementation SHA: recorded in F36 closeout.
+- Exact source `content/GM_PRIVATE/ENVIRONMENTS/environments.json#dead-platform/features/2`; source SHA-256 `1d4bb3b865866591a7e207ee4f2a792d91acf19c977f9f4099328c909a015243`; template SHA-256 `dc290c7974aa110f61545ba78c61e9a78aa0f7362ee41bb0b7d7f9ae83bf2011`.
+- Changed modules: native feature definition/catalog, environment contract and scene projection, new `native-environment-third-rail-spirit.js`, coverage map, F01 counts and fresh F36 test.
+- Frozen run `p06-f36-20261021-a`: exit 1, 124 tests, 123 pass / 1 test-only contract-summary wording assertion. Targeted repair `p06-f36-20261021-repair`: exit 0, 4/4 tests pass. Unique affected coverage 124/124 after repair; syntax 5/5 plus repaired test 1/1, JSON 2/2.
+- Provider calls/tokens/spend 0/0/$0; no cache savings claimed; Codex usage unavailable.
+- Local holds: native one-Fear transaction, current route/target authorization, PC-owned Agility Reaction Roll, failure-only magic damage and replay.
+- Owner questions/new narrative restrictions: none. Critical blocker: none. Release authorization: false.

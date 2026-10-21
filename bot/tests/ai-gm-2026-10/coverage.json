@@ -100,7 +100,8 @@
     "bot/tests/ai-gm-2026-10/p06-f32.test.mjs",
     "bot/tests/ai-gm-2026-10/p06-f33.test.mjs",
     "bot/tests/ai-gm-2026-10/p06-f34.test.mjs",
-    "bot/tests/ai-gm-2026-10/p06-f35.test.mjs"
+    "bot/tests/ai-gm-2026-10/p06-f35.test.mjs",
+    "bot/tests/ai-gm-2026-10/p06-f36.test.mjs"
   ],
   "bot/src/native-feature-definitions.json": [
     "bot/tests/ai-gm-2026-10/p06-f01.test.mjs",
@@ -125,7 +126,8 @@
     "bot/tests/ai-gm-2026-10/p06-f32.test.mjs",
     "bot/tests/ai-gm-2026-10/p06-f33.test.mjs",
     "bot/tests/ai-gm-2026-10/p06-f34.test.mjs",
-    "bot/tests/ai-gm-2026-10/p06-f35.test.mjs"
+    "bot/tests/ai-gm-2026-10/p06-f35.test.mjs",
+    "bot/tests/ai-gm-2026-10/p06-f36.test.mjs"
   ],
   "bot/src/native-environment-capabilities.js": [
     "bot/tests/ai-gm-2026-10/p06-f04.test.mjs",
@@ -159,7 +161,8 @@
     "bot/tests/ai-gm-2026-10/p06-f32.test.mjs",
     "bot/tests/ai-gm-2026-10/p06-f33.test.mjs",
     "bot/tests/ai-gm-2026-10/p06-f34.test.mjs",
-    "bot/tests/ai-gm-2026-10/p06-f35.test.mjs"
+    "bot/tests/ai-gm-2026-10/p06-f35.test.mjs",
+    "bot/tests/ai-gm-2026-10/p06-f36.test.mjs"
   ],
   "bot/src/native-environment-witnesses.js": [
     "bot/tests/ai-gm-2026-10/p06-f11.test.mjs"
@@ -188,7 +191,8 @@
     "bot/tests/ai-gm-2026-10/p06-f32.test.mjs",
     "bot/tests/ai-gm-2026-10/p06-f33.test.mjs",
     "bot/tests/ai-gm-2026-10/p06-f34.test.mjs",
-    "bot/tests/ai-gm-2026-10/p06-f35.test.mjs"
+    "bot/tests/ai-gm-2026-10/p06-f35.test.mjs",
+    "bot/tests/ai-gm-2026-10/p06-f36.test.mjs"
   ],
   "bot/src/native-environment-chain-of-title.js": [
     "bot/tests/ai-gm-2026-10/p06-f18.test.mjs"
@@ -250,5 +254,8 @@
   ],
   "bot/src/native-environment-express-through-memory.js": [
     "bot/tests/ai-gm-2026-10/p06-f35.test.mjs"
+  ],
+  "bot/src/native-environment-third-rail-spirit.js": [
+    "bot/tests/ai-gm-2026-10/p06-f36.test.mjs"
   ]
 }

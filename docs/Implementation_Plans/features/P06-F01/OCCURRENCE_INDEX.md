@@ -126,7 +126,7 @@
 | [environment:apartment-veil-breach:upload-in-progress](occurrences/environment--apartment-veil-breach--upload-in-progress/LEDGER.md) | supported | verified_source | upload_countdown |
 | [environment:dead-platform:last-train-rules](occurrences/environment--dead-platform--last-train-rules/LEDGER.md) | supported | verified_source | environment_last_train_rules_context |
 | [environment:dead-platform:express-through-memory](occurrences/environment--dead-platform--express-through-memory/LEDGER.md) | supported | verified_source | environment_express_through_memory_context |
-| [environment:dead-platform:third-rail-spirit](occurrences/environment--dead-platform--third-rail-spirit/LEDGER.md) | review_only | verified_source | none |
+| [environment:dead-platform:third-rail-spirit](occurrences/environment--dead-platform--third-rail-spirit/LEDGER.md) | supported | verified_source | environment_third_rail_spirit_context |
 | [environment:aster-vale-predictive-lab:everything-logs](occurrences/environment--aster-vale-predictive-lab--everything-logs/LEDGER.md) | review_only | verified_source | none |
 | [environment:aster-vale-predictive-lab:model-room](occurrences/environment--aster-vale-predictive-lab--model-room/LEDGER.md) | review_only | verified_source | none |
 | [environment:aster-vale-predictive-lab:containment-shutters](occurrences/environment--aster-vale-predictive-lab--containment-shutters/LEDGER.md) | review_only | verified_source | none |
