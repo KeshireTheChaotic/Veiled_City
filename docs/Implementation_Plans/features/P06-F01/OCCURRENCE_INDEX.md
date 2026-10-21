@@ -121,7 +121,7 @@
 | [environment:storm-drain-shrine:local-memory](occurrences/environment--storm-drain-shrine--local-memory/LEDGER.md) | review_only | verified_source | none |
 | [environment:storm-drain-shrine:flash-flood](occurrences/environment--storm-drain-shrine--flash-flood/LEDGER.md) | review_only | verified_source | none |
 | [environment:storm-drain-shrine:wrong-offering](occurrences/environment--storm-drain-shrine--wrong-offering/LEDGER.md) | review_only | verified_source | none |
-| [environment:apartment-veil-breach:thin-walls](occurrences/environment--apartment-veil-breach--thin-walls/LEDGER.md) | review_only | verified_source | none |
+| [environment:apartment-veil-breach:thin-walls](occurrences/environment--apartment-veil-breach--thin-walls/LEDGER.md) | supported | verified_source | environment_thin_walls_context |
 | [environment:apartment-veil-breach:door-chain](occurrences/environment--apartment-veil-breach--door-chain/LEDGER.md) | supported | verified_source | environment_door_chain |
 | [environment:apartment-veil-breach:upload-in-progress](occurrences/environment--apartment-veil-breach--upload-in-progress/LEDGER.md) | supported | verified_source | upload_countdown |
 | [environment:dead-platform:last-train-rules](occurrences/environment--dead-platform--last-train-rules/LEDGER.md) | review_only | verified_source | none |

@@ -18,6 +18,7 @@
 | [P06-F14](../../features/P06-F14/LEDGER.md) | SUPPORTED / TARGETED PASS | `p06-f14-20261021-a`; source-qualified Door Chain adapter; see feature ledger and [evidence](../../evidence/P06_F14_TARGETED.json) |
 | [P06-F15](../../features/P06-F15/LEDGER.md) | SUPPORTED / TARGETED PASS | `p06-f15-20261021-a`; source-bound imaging record; see feature ledger and [evidence](../../evidence/P06_F15_TARGETED.json) |
 | [P06-F16](../../features/P06-F16/LEDGER.md) | SUPPORTED / TARGETED PASS | `p06-f16-20261021-a`; commit `ee614362bd21e8b7ac18cf1a1244f3cf13677d68`; 44/44 unique affected tests pass; source-bound passive scene context; see feature ledger and [evidence](../../evidence/P06_F16_TARGETED.json) |
+| [P06-F17](../../features/P06-F17/LEDGER.md) | TARGETED PASS / COMMIT PENDING | `p06-f17-20261021-a`; 48/48 unique affected tests pass; exact passive witness-risk scene context; see feature ledger and [evidence](../../evidence/P06_F17_TARGETED.json) |
 
 Audit anchor: `9e7bf0687357cf96fbe2ea09a04b3e9d2975f6a3`. P00-P05 implementation baseline: `8e01519b6511bc90af6a1c675e4a9950f12b703c`; final P06 source: `bd517f2ad101d7a8c14dcbd36476ca67748d180b`. Baseline fresh delta: 47/47 tests passed across 20 fresh files and 43 changed-file syntax checks passed (exit 0), run `fresh-delta-1792599054739`. P06-F04 delta is separately recorded below. This phase is covered by feature results and is not 47 unique tests on its own. Critical blockers: none established. Phase-specific holds and unverified work remain below.
 

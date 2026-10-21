@@ -2171,13 +2171,13 @@
       "template_hash": "7907b02aa1aabb205de4b7ee6a37ac09ff6c6f2f047daf555190b45734d99653",
       "index": 0,
       "type": "Passive",
-      "status": "review_only",
-      "trigger_kind": "unmapped",
-      "target_policy": "unmapped",
-      "roll_protocol": "unmapped",
-      "costs": null,
-      "native_handler": null,
-      "reason": "No qualified native feature handler."
+      "status": "supported",
+      "trigger_kind": "passive",
+      "target_policy": "none",
+      "roll_protocol": "environment_scene_context",
+      "costs": [],
+      "native_handler": "environment_thin_walls_context",
+      "reason": "Exact passive witness-risk context for the current audience; no witness is automatic."
     },
     {
       "feature_key": "environment:apartment-veil-breach:door-chain",

@@ -30,6 +30,8 @@ const contracts=Object.freeze({
     effect:'One creative impossible diagnostic finding offers a clue and creates an audience-scoped record; no patient identity, treatment, PC response or mechanical result is inferred.'},
   'environment:after-hours-emergency-department:hipaa-and-procedure':{handler:'environment_patient_procedure_context',entry:'scene_context',fear:0,
     effect:'Exact passive source rule: routine patient-information access requires appropriate credentials, consent or a credible workaround; context alone creates no permission or access decision.'},
+  'environment:apartment-veil-breach:thin-walls':{handler:'environment_thin_walls_context',entry:'scene_context',fear:0,
+    effect:'Exact passive source cue: loud or spectacular actions risk adding witnesses; no witness or PC action is automatic.'},
   'environment:haunted-nightclub:too-loud-to-think':{handler:'nightclub_auditory_disadvantage',entry:'decisions',fear:0,
     disposition:'request_pc_action_roll',stakes_kind:'attempt_only',advantage:false,disadvantage:true,
     effect:'Exact delicate auditory/verbal applicability ruling; real owner quiet_environment outcome ends this disadvantage.'},
@@ -74,6 +76,8 @@ export function environmentProposalContract(feature){
   if(feature.native_handler==='environment_imaging_record'&&(feature.type!=='Action'||feature.trigger_kind!=='spotlight_action'
     ||feature.target_policy!=='none'||feature.roll_protocol!=='none'))return null;
   if(feature.native_handler==='environment_patient_procedure_context'&&(feature.type!=='Passive'||feature.trigger_kind!=='passive'
+    ||feature.target_policy!=='none'||feature.roll_protocol!=='environment_scene_context'))return null;
+  if(feature.native_handler==='environment_thin_walls_context'&&(feature.type!=='Passive'||feature.trigger_kind!=='passive'
     ||feature.target_policy!=='none'||feature.roll_protocol!=='environment_scene_context'))return null;
   return structuredClone(contract);
 }
