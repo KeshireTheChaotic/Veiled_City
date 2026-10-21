@@ -110,3 +110,7 @@ Implementation commit: `6e60f3442f85e707e148c11d9a49d59dde7566dd`. Added a sourc
 ## Resumption checkpoint — P06-F41 — 2026-10-21
 
 Implementation commit: `71761927e547ca0b0ba5d73ae2246f06b5e5c818`. Added an exact source-checked Mark the Variable cue to current bound Analyst context. Frozen `p06-f41-20261021-a` passed 144/144 tests across 39 fresh files, no repair/rerun; syntax 5/5 and JSON 2/2 passed. Catalog now 54 supported / 99 review-only / 0 needs-authoring. NPC Stress, PC/ally/target, Difficulty grant and Severe-damage expiry remain local holds. Provider calls/tokens/spend 0/0/$0; no cache claim; Codex usage unavailable. No owner question, restriction or critical blocker; release unauthorized. See [P06-F41 evidence](../../evidence/P06_F41_TARGETED.json).
+
+## Resumption checkpoint — P06-F42 — 2026-10-21
+
+Implementation commit: `496ebc739cc2497563662fedeb0ba36bed502fc5`. Added an exact source-checked Readout cue to current bound Analyst context. Frozen `p06-f42-20261021-a` passed 148/148 tests across 40 fresh files, no repair/rerun; syntax 5/5 and JSON 2/2 passed. Catalog now 55 supported / 98 review-only / 0 needs-authoring. Trigger/identification, NPC Stress, allied actor, next-reaction Advantage and replay remain local holds. Provider calls/tokens/spend 0/0/$0; no cache claim; Codex usage unavailable. No owner question, restriction or critical blocker; release unauthorized. See [P06-F42 evidence](../../evidence/P06_F42_TARGETED.json).

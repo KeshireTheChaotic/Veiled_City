@@ -9,7 +9,7 @@
 | [adversary:aster-vale-contractor:professional-entry](occurrences/adversary--aster-vale-contractor--professional-entry/LEDGER.md) | supported | verified_source | adversary_professional_entry_context |
 | [adversary:aster-vale-contractor:flashbang](occurrences/adversary--aster-vale-contractor--flashbang/LEDGER.md) | supported | verified_source | flashbang_owner_choice |
 | [adversary:aster-vale-occult-analyst:mark-the-variable](occurrences/adversary--aster-vale-occult-analyst--mark-the-variable/LEDGER.md) | supported | verified_source | adversary_mark_the_variable_context |
-| [adversary:aster-vale-occult-analyst:readout](occurrences/adversary--aster-vale-occult-analyst--readout/LEDGER.md) | review_only | verified_source | none |
+| [adversary:aster-vale-occult-analyst:readout](occurrences/adversary--aster-vale-occult-analyst--readout/LEDGER.md) | supported | verified_source | adversary_readout_context |
 | [adversary:static-wraith:ride-the-current](occurrences/adversary--static-wraith--ride-the-current/LEDGER.md) | review_only | verified_source | none |
 | [adversary:static-wraith:feedback](occurrences/adversary--static-wraith--feedback/LEDGER.md) | supported | verified_source | feedback |
 | [adversary:veil-burned-stalker:peripheral](occurrences/adversary--veil-burned-stalker--peripheral/LEDGER.md) | review_only | verified_source | none |

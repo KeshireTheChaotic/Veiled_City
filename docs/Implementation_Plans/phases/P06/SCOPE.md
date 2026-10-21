@@ -50,6 +50,7 @@ Complete source-qualified features, reconcile rules and qualify the changed impl
 - [P06-F39 — Support the source-bound Break the Hold cue](../../features/P06-F39/SCOPE.md)
 - [P06-F40 — Support the source-bound Professional Entry cue](../../features/P06-F40/SCOPE.md)
 - [P06-F41 — Support the source-bound Mark the Variable cue](../../features/P06-F41/SCOPE.md)
+- [P06-F42 — Support the source-bound Readout cue](../../features/P06-F42/SCOPE.md)
 
 ## Exit
 All safe features have current diff, truthful ledger and newly authored tests covering only code changed in this phase. Local source gaps and owner decisions remain visible but do not stop other safe work. No automatic release qualification.
