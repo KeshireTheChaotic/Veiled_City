@@ -57,3 +57,5 @@ P06-F06 enables the exact Too Loud to Think native roll-modifier mapping. Initia
 Latest implementation SHA: `ca570f89768777e1c165f7d74d6b281e0a1c6580`; current inventory remains 19 supported / 134 review-only.
 
 P06-F07 enables Emergency Cascade through its existing exact scene-action route. The shared fresh batch passed 12/12 with 4/4 syntax checks. Current catalog: 20 supported / 133 review-only / 0 needs-authoring. Provider calls/tokens/spend 0/0/$0; no cache claim. No owner question, new narrative restriction or critical blocker; release unauthorized.
+
+Latest implementation SHA: `2958560f52e0bce6c1dc91eacd0b1532875f1c29`; current inventory remains 20 supported / 133 review-only.
