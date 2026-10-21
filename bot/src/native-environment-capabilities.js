@@ -64,6 +64,8 @@ const contracts=Object.freeze({
     effect:'Exact source-bound reaction cue for a PC public threat, promise or bargain; the GM authors at least one faction witness in fiction. Context creates no durable witness receipt or PC declaration.'},
   'environment:storm-drain-shrine:wrong-offering':{handler:'environment_wrong_offering_context',entry:'scene_context',fear:0,
     effect:'Exact source-bound reaction cue for desecrating or carelessly removing an offering; the GM authors hostility until restitution. Context records no PC action, hostility or restitution.'},
+  'environment:dead-platform:last-train-rules':{handler:'environment_last_train_rules_context',entry:'scene_context',fear:0,
+    effect:'Exact source-bound platform departure requirements and +2 Difficulty when the GM judges a PC-authored statement to be a lie; no statement, lie, Difficulty, dice result or action is committed by context alone.'},
   'environment:haunted-nightclub:too-loud-to-think':{handler:'nightclub_auditory_disadvantage',entry:'decisions',fear:0,
     disposition:'request_pc_action_roll',stakes_kind:'attempt_only',advantage:false,disadvantage:true,
     effect:'Exact delicate auditory/verbal applicability ruling; real owner quiet_environment outcome ends this disadvantage.'},
@@ -142,6 +144,8 @@ export function environmentProposalContract(feature){
   if(feature.native_handler==='environment_everyone_is_watching_context'&&(feature.type!=='Reaction'||feature.trigger_kind!=='on_scene_event'
     ||feature.target_policy!=='none'||feature.roll_protocol!=='environment_scene_context'))return null;
   if(feature.native_handler==='environment_wrong_offering_context'&&(feature.type!=='Reaction'||feature.trigger_kind!=='on_scene_event'
+    ||feature.target_policy!=='none'||feature.roll_protocol!=='environment_scene_context'))return null;
+  if(feature.native_handler==='environment_last_train_rules_context'&&(feature.type!=='Passive'||feature.trigger_kind!=='passive'
     ||feature.target_policy!=='none'||feature.roll_protocol!=='environment_scene_context'))return null;
   return structuredClone(contract);
 }

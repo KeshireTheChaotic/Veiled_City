@@ -124,7 +124,7 @@
 | [environment:apartment-veil-breach:thin-walls](occurrences/environment--apartment-veil-breach--thin-walls/LEDGER.md) | supported | verified_source | environment_thin_walls_context |
 | [environment:apartment-veil-breach:door-chain](occurrences/environment--apartment-veil-breach--door-chain/LEDGER.md) | supported | verified_source | environment_door_chain |
 | [environment:apartment-veil-breach:upload-in-progress](occurrences/environment--apartment-veil-breach--upload-in-progress/LEDGER.md) | supported | verified_source | upload_countdown |
-| [environment:dead-platform:last-train-rules](occurrences/environment--dead-platform--last-train-rules/LEDGER.md) | review_only | verified_source | none |
+| [environment:dead-platform:last-train-rules](occurrences/environment--dead-platform--last-train-rules/LEDGER.md) | supported | verified_source | environment_last_train_rules_context |
 | [environment:dead-platform:express-through-memory](occurrences/environment--dead-platform--express-through-memory/LEDGER.md) | review_only | verified_source | none |
 | [environment:dead-platform:third-rail-spirit](occurrences/environment--dead-platform--third-rail-spirit/LEDGER.md) | review_only | verified_source | none |
 | [environment:aster-vale-predictive-lab:everything-logs](occurrences/environment--aster-vale-predictive-lab--everything-logs/LEDGER.md) | review_only | verified_source | none |
