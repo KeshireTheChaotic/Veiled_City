@@ -3,7 +3,7 @@
 **Phase:** [P06](../../phases/P06/SCOPE.md). **Status:** SOURCE PASS / LOCAL ADAPTER HOLDS. **Audit SHA:** `9e7bf0687357cf96fbe2ea09a04b3e9d2975f6a3`.
 
 ## Deliverable
-Current catalog 153 occurrences = 29 supported + 124 review_only after source-qualified Sirens Outside, Upload in Progress, Too Loud to Think, Emergency Cascade, Code Blue, VIP Threshold, owner-authorized Automatic Correction adapter expansion, Everybody Saw Something Different, Maintenance Memory, Local Memory, Door Chain, Something in Imaging and HIPAA and Procedure. Source-qualify each new handler individually; create additional occurrence-level scope and ledger pairs. Missing rules block that occurrence only. No generic fallback.
+Current catalog 153 occurrences = 47 supported + 106 review_only after P06-F04 through P06-F34 source-qualified native feature adapters. Each new handler is occurrence-specific and has its own paired scope and ledger. Missing rules block that occurrence only. No generic fallback.
 
 ## Source entrypoints (inspect current HEAD; not all need editing)
 bot/src/native-feature-definitions.json; bot/src/native-feature-catalog.js; bot/src/native-group-features.js; bot/src/native-environment-*.js
