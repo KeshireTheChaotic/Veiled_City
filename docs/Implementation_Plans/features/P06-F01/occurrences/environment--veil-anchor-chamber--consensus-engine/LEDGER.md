@@ -10,4 +10,4 @@ Status: SUPPORTED; TARGETED PASS.
 - Questions: none; no new narrative/autonomy restriction proposed.
 - Critical blocker: none. Release authorization: none.
 
-Implementation commit SHA pending; see P06-F22 ledger/evidence. Provider calls/tokens/spend 0/0/$0. No critical blocker; release unauthorized.
+Implementation commit: `7f2f432bac268d55fb6424b7c6dc211eb78ed431`; evidence: [P06-F22](../../../../../evidence/P06_F22_TARGETED.json). Provider calls/tokens/spend 0/0/$0. No critical blocker; release unauthorized.
