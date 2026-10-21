@@ -3,7 +3,7 @@
 **Phase:** [P06](../../phases/P06/SCOPE.md). **Status:** SOURCE PASS / LOCAL ADAPTER HOLDS. **Audit SHA:** `9e7bf0687357cf96fbe2ea09a04b3e9d2975f6a3`.
 
 ## Deliverable
-Current catalog 153 occurrences = 21 supported + 132 review_only after source-qualified Sirens Outside, Upload in Progress, Too Loud to Think, Emergency Cascade and Code Blue activations. Source-qualify each new handler individually; create additional occurrence-level scope and ledger pairs. Missing rules block that occurrence only. No generic fallback.
+Current catalog 153 occurrences = 22 supported + 131 review_only after source-qualified Sirens Outside, Upload in Progress, Too Loud to Think, Emergency Cascade, Code Blue and VIP Threshold activations. Source-qualify each new handler individually; create additional occurrence-level scope and ledger pairs. Missing rules block that occurrence only. No generic fallback.
 
 ## Source entrypoints (inspect current HEAD; not all need editing)
 bot/src/native-feature-definitions.json; bot/src/native-feature-catalog.js; bot/src/native-group-features.js; bot/src/native-environment-*.js
