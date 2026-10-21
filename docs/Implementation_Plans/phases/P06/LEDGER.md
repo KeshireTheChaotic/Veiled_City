@@ -30,6 +30,11 @@
 | [P06-F26](../../features/P06-F26/LEDGER.md) | SUPPORTED / TARGETED PASS | `p06-f26-20261021-a`; implementation commit `1972c4b5ef92dcda2e23422ec8be9b8a95161c6f`; 84/84 fresh tests pass; see [evidence](../../evidence/P06_F26_TARGETED.json) |
 | [P06-F27](../../features/P06-F27/LEDGER.md) | SUPPORTED / TARGETED PASS | `p06-f27-20261021-a`; implementation commit `5cbaefba056d6440274053f6b697b5df84e6b22f`; 88/88 fresh tests pass; see [evidence](../../evidence/P06_F27_TARGETED.json) |
 | [P06-F28](../../features/P06-F28/LEDGER.md) | SUPPORTED / TARGETED PASS | `p06-f28-20261021-a`; 92/92 affected fresh tests pass; see [evidence](../../evidence/P06_F28_TARGETED.json) |
+| [P06-F29](../../features/P06-F29/LEDGER.md) | SUPPORTED / TARGETED PASS | `p06-f29-20261021-a`; final unique 96/96 affected cases pass after one descriptor repair and one focused test assertion repair; see [evidence](../../evidence/P06_F29_TARGETED.json) |
+
+## Resumption checkpoint — P06-F29 — 2026-10-21
+
+Current branch/implementation SHA: `codex/clean-ai-gm-2026-10` / `f7c5ac3f8ff185b9a130dfeb9f183b94d4d97a95`. P06-F29 supports the source-bound Three Vectors clue prompt. Catalog: 153 = 42 supported + 111 review-only + 0 needs-authoring; 41 registered handler keys / 30 P06 handler families. Fresh mapped batches: initial 80/96 (16 failures from a duplicate descriptor), batched descriptor repair 95/96 (one assertion wording mismatch), then the changed F29 test file 4/4; final unique affected cases 96/96. Changed-file syntax 6/6 and JSON parse 2/2 passed. Provider calls/tokens/spend 0/0/$0; no cache savings claimed; Codex usage unavailable. No owner question, restriction or critical blocker. 111 local occurrence holds remain; P06 incomplete and release unauthorized. Actual clue fiction/choice, faction action, live delivery and whole-release qualification remain unverified. Evidence: [P06-F29](../../evidence/P06_F29_TARGETED.json).
 
 ## Resumption checkpoint — P06-F28 — 2026-10-21
 

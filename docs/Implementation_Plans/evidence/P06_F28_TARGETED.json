@@ -22,7 +22,8 @@
     "supported": 41,
     "review_only": 112,
     "needs_authoring": 0,
-    "handler_families": 40
+    "handler_families": 29,
+    "registered_handler_keys": 40
   },
   "test_files": [
     "tests/ai-gm-2026-10/p06-f01.test.mjs",
