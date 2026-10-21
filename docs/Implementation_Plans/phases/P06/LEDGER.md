@@ -29,6 +29,11 @@
 | [P06-F25](../../features/P06-F25/LEDGER.md) | SUPPORTED / TARGETED PASS | `p06-f25-20261021-a`; implementation commit `c70279d1a60cec6da01fd7f119d1fc4ba4c83f7b`; unique 80/80 after isolated F25 assertion repair; see [evidence](../../evidence/P06_F25_TARGETED.json) |
 | [P06-F26](../../features/P06-F26/LEDGER.md) | SUPPORTED / TARGETED PASS | `p06-f26-20261021-a`; implementation commit `1972c4b5ef92dcda2e23422ec8be9b8a95161c6f`; 84/84 fresh tests pass; see [evidence](../../evidence/P06_F26_TARGETED.json) |
 | [P06-F27](../../features/P06-F27/LEDGER.md) | SUPPORTED / TARGETED PASS | `p06-f27-20261021-a`; implementation commit `5cbaefba056d6440274053f6b697b5df84e6b22f`; 88/88 fresh tests pass; see [evidence](../../evidence/P06_F27_TARGETED.json) |
+| [P06-F28](../../features/P06-F28/LEDGER.md) | SUPPORTED / TARGETED PASS | `p06-f28-20261021-a`; 92/92 affected fresh tests pass; see [evidence](../../evidence/P06_F28_TARGETED.json) |
+
+## Resumption checkpoint — P06-F28 — 2026-10-21
+
+Current branch/implementation SHA: `codex/clean-ai-gm-2026-10` / `79d31b673d695256dfc3d00bb36a8102f8a3886e`. P06-F28 supports the source-bound Sealed Docket GM prompt. Catalog: 153 = 41 supported + 112 review-only + 0 needs-authoring; 40 registered handler families. Frozen batch `p06-f28-20261021-a` passed 92/92 across 26 affected fresh test files; changed-file syntax 6/6 and JSON parse 2/2 passed. Provider calls/tokens/spend 0/0/$0; no cache savings claimed; Codex usage unavailable. No owner question, restriction or critical blocker. 112 local occurrence holds remain; P06 is incomplete and release unauthorized. Actual docket and access-cost fiction, live profile/audience delivery, Discord/provider behavior and whole-release qualification remain unverified. Evidence: [P06-F28](../../evidence/P06_F28_TARGETED.json).
 
 ## Resumption checkpoint — P06-F27 — 2026-10-21
 

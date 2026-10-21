@@ -1,15 +1,9 @@
 # environment:archive-beneath-the-courthouse:sealed-docket — ledger
 
-Status: SOURCE VERIFIED; LOCAL EXECUTION HOLD.
+Status: SUPPORTED / TARGETED PASS. Branch `codex/clean-ai-gm-2026-10`; implementation commit and tested source SHA `79d31b673d695256dfc3d00bb36a8102f8a3886e`.
 
-- Branch: codex/clean-ai-gm-2026-10; source checkout SHA: 0834f299ccff1738e9b3dd753a5fc616d3965370 + working-tree delta. Final freeze SHA/evidence: see parent P06-F01 ledger and final delta report.
-- Changed module: bot/src/native-feature-catalog.js (shared occurrence-local inspection). Descriptor and rules unchanged.
-- Fresh test: bot/tests/ai-gm-2026-10/p06-f01.test.mjs; current-catalog test calls inspectNativeFeatureOccurrence for this exact key. Source/content input is current production data, never a historical fixture.
-- Actual result: verified_source, execution_authorized=false in p06-1792598757560; shared repaired batch exit 0, 5 tests passed. This is source verification, not effect execution qualification.
-- Cost/cache: 0 paid provider calls/tokens; $0 provider tests. No cache claim. Codex usage unavailable.
-- Existing catalog reason: No qualified native feature handler.
-- Local hold: No qualified executable occurrence adapter. This remains unsupported; exact source availability alone is insufficient.
-- Questions: none introduced by this source-only delta; no new narrative/autonomy restrictions proposed.
-- Critical blocker: none. Release authorization: none.
-
-Final tested source SHA: `8e01519b6511bc90af6a1c675e4a9950f12b703c`; run `fresh-delta-1792599054739` passed 47/47 union tests. The catalog test verifies this occurrence source; this is not occurrence effect qualification. Input/test hashes: parent final evidence.
+- Changed paths: `bot/src/native-feature-definitions.json`, `native-feature-catalog.js`, `native-environment-capabilities.js`, `native-environment-scene.js`, new `native-environment-sealed-docket.js`, fresh F28 test and shared test coverage map. Full paths and SHA-256 inputs are in [F28 evidence](../../../../evidence/P06_F28_TARGETED.json).
+- Run `p06-f28-20261021-a`: 92/92 tests passed across 26 fresh affected test files; 0 failed/skipped; 2108.08 ms. Syntax checks: 6/6. JSON parses: 2/2. No repairs or reruns.
+- Cost/cache: provider calls/tokens/spend 0/0/$0; no cache savings claimed; Codex usage unavailable.
+- The native context exposes the exact current-scene prompt to the scoped GM. The GM authors the document, interpretation and fictional access cost; the PC owns their response. Context alone records no document or agreement.
+- Owner questions/new creative restrictions: none. Local holds: actual fictional outcome, live delivery and whole-release qualification. Critical blocker: none. Release authorization: false.

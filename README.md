@@ -7,7 +7,7 @@ stories survive between sessions.
 
 ## This development branch
 
-**Implementation branch:** `codex/clean-ai-gm-2026-10` · **Implementation source SHA:** `5cbaefba056d6440274053f6b697b5df84e6b22f`
+**Implementation branch:** `codex/clean-ai-gm-2026-10` · **Implementation source SHA:** `79d31b673d695256dfc3d00bb36a8102f8a3886e`
 **Application:** `0.0.0.1` ([package](bot/package.json)) · **SQLite schema:** `460`
 
 This checkout implements the [clean AI GM plan](docs/Implementation_Plans/README.md), anchored at audit `9e7bf0687357cf96fbe2ea09a04b3e9d2975f6a3`. It is not an assurance about an installed production instance. Older document
@@ -75,7 +75,7 @@ source, consent, rule and actor requirements. A flag is not blanket AI authority
 
 At this rebuild, the special-feature catalog contains **153 occurrences**:
 **41 bounded supported**, **112 review-only**, and **0 needs-authoring**, using
-**29 handler families**. Standard actions are separate. Supported means the exact
+**40 registered handler families**. Standard actions are separate. Supported means the exact
 documented adapter, not arbitrary variants or whole-release qualification.
 See the [feature crosswalk](docs/Active_Implementation/UNIFIED_ARBITRATION_FEATURE_COVERAGE.md)
 and [runtime catalog](bot/src/native-feature-definitions.json).

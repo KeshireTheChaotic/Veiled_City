@@ -36,6 +36,7 @@ Complete source-qualified features, reconcile rules and qualify the changed impl
 - [P06-F25 — Support the source-bound Everything Has a Price prompt](../../features/P06-F25/SCOPE.md)
 - [P06-F26 — Support the source-bound Auction of Consequences prompt](../../features/P06-F26/SCOPE.md)
 - [P06-F27 — Support the source-bound Model Room forecast prompt](../../features/P06-F27/SCOPE.md)
+- [P06-F28 — Support the source-bound Sealed Docket prompt](../../features/P06-F28/SCOPE.md)
 
 ## Exit
 All safe features have current diff, truthful ledger and newly authored tests covering only code changed in this phase. Local source gaps and owner decisions remain visible but do not stop other safe work. No automatic release qualification.
