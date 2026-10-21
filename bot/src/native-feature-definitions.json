@@ -2374,13 +2374,13 @@
       "template_hash": "06e5c361501b24e80c323111bd5c600814016b17f8421e83442c54eba4fb5a84",
       "index": 2,
       "type": "Action",
-      "status": "review_only",
-      "trigger_kind": "unmapped",
-      "target_policy": "unmapped",
-      "roll_protocol": "unmapped",
-      "costs": null,
-      "native_handler": null,
-      "reason": "No qualified native feature handler."
+      "status": "supported",
+      "trigger_kind": "spotlight_action",
+      "target_policy": "none",
+      "roll_protocol": "none",
+      "costs": [],
+      "native_handler": "nightclub_inconsistent_witnesses",
+      "reason": "Exact source-qualified three-account native witness adapter."
     },
     {
       "feature_key": "environment:pale-court-townhouse:guest-right",
