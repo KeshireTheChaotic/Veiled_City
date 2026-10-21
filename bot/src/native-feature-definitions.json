@@ -219,13 +219,13 @@
       "template_hash": "0a5f3ad656065cd58170d87898c31d2b67baa4929d63796fadd97c82a510878a",
       "index": 0,
       "type": "Passive",
-      "status": "review_only",
-      "trigger_kind": "unmapped",
-      "target_policy": "unmapped",
-      "roll_protocol": "unmapped",
-      "costs": null,
-      "native_handler": null,
-      "reason": "No qualified native feature handler."
+      "status": "supported",
+      "trigger_kind": "passive",
+      "target_policy": "none",
+      "roll_protocol": "native_adversary_context",
+      "costs": [],
+      "native_handler": "adversary_sympathetic_relay_context",
+      "reason": "Exact source-bound GM cue; creator authority, target range and Hex effect execution remain uncommitted."
     },
     {
       "feature_key": "adversary:hexbound-familiar:snatch-a-link",
