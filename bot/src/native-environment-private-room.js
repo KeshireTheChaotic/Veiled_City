@@ -1,4 +1,4 @@
-/** Source-qualified GM offer cue; no NPC action or PC response is committed here. */
+/** Source-qualified GM fiction prompt; the PC response remains player-owned. */
 import {nativeEnvironmentInstanceForScope} from './native-environment-instance.js';
 import {environmentProposalContract} from './native-environment-capabilities.js';
 import {featureDisposition,nativeFeatureRuleContext} from './native-feature-catalog.js';
@@ -17,7 +17,7 @@ export function projectNativeEnvironmentPrivateRoomContext(capabilities){
     ||hash(feature)!==exposed.hash||source?.catalog_status!=='supported'
     ||source.source_hash!==feature.source_hash||source.template_hash!==feature.template_hash||source.printed_rule!==RULE)return [];
   return [{receipt_kind:'native_environment_feature_context',receipt_ref:capabilities.instance,source_ref:feature.source_ref,
-    text:source.printed_rule,authority:'Exact source-bound GM offer cue only; no offer, NPC, leverage, separation, movement or PC response is created.'}];
+    text:source.printed_rule,authority:'Source-bound GM fiction prompt; narration remains GM-authored, the PC response remains player-owned, and context alone records no acceptance or consequence.'}];
 }
 
 export function nativeEnvironmentPrivateRoomSituation(db,guild,scope,location){

@@ -22,15 +22,15 @@ test('Private Room exposes only the exact source-bound action cue contract',()=>
   assert.ok(executableNativeFeatures('environment',input).some(row=>row.feature_key===FEATURE));
   const contract=environmentProposalContract(feature);
   assert.equal(contract.handler,'environment_private_room_context');assert.equal(contract.entry,'scene_context');assert.equal(contract.fear,0);
-  assert.match(contract.effect,/creates no offer/);
+  assert.match(contract.effect,/fiction remains GM-authored/);
 });
 
-test('entitled profile returns the exact offer cue without committing the offer or PC outcome',()=>{
+test('entitled profile returns the source prompt and preserves GM narration and PC choice',()=>{
   const feature=featureDisposition(FEATURE,sources()).feature,contract=environmentProposalContract(feature),
     capabilities={instance:'profile-private',features:[{key:FEATURE,hash:hash(feature),proposal_contract:contract}]},
     [context]=projectNativeEnvironmentPrivateRoomContext(capabilities);
   assert.deepEqual(context,{receipt_kind:'native_environment_feature_context',receipt_ref:'profile-private',source_ref:feature.source_ref,
-    text:RULE,authority:'Exact source-bound GM offer cue only; no offer, NPC, leverage, separation, movement or PC response is created.'});
+    text:RULE,authority:'Source-bound GM fiction prompt; narration remains GM-authored, the PC response remains player-owned, and context alone records no acceptance or consequence.'});
   assert.deepEqual(projectNativeEnvironmentPrivateRoomContext(null),[]);
   assert.deepEqual(projectNativeEnvironmentPrivateRoomContext({instance:'forged',features:[{key:FEATURE,hash:'forged'}]}),[]);
 });

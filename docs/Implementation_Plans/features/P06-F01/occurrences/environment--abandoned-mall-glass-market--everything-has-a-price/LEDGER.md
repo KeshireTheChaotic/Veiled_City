@@ -1,14 +1,12 @@
 # environment:abandoned-mall-glass-market:everything-has-a-price — ledger
 
-Status: SOURCE VERIFIED; LOCAL EXECUTION HOLD.
+Status: SUPPORTED / TARGETED BATCH PENDING.
 
 - Branch: codex/clean-ai-gm-2026-10; source checkout SHA: 0834f299ccff1738e9b3dd753a5fc616d3965370 + working-tree delta. Final freeze SHA/evidence: see parent P06-F01 ledger and final delta report.
-- Changed module: bot/src/native-feature-catalog.js (shared occurrence-local inspection). Descriptor and rules unchanged.
-- Fresh test: bot/tests/ai-gm-2026-10/p06-f01.test.mjs; current-catalog test calls inspectNativeFeatureOccurrence for this exact key. Source/content input is current production data, never a historical fixture.
-- Actual result: verified_source, execution_authorized=false in p06-1792598757560; shared repaired batch exit 0, 5 tests passed. This is source verification, not effect execution qualification.
+- Changed modules, fresh tests and evidence will be recorded in [P06-F25 scope](../../P06-F25/SCOPE.md), [ledger](../../P06-F25/LEDGER.md) and [targeted evidence](../../../evidence/P06_F25_TARGETED.json).
+- Source inspection is distinct from action-context qualification; all inputs are current production source, never a historical fixture.
 - Cost/cache: 0 paid provider calls/tokens; $0 provider tests. No cache claim. Codex usage unavailable.
-- Existing catalog reason: No qualified native feature handler.
-- Local hold: No qualified executable occurrence adapter. This remains unsupported; exact source availability alone is insufficient.
+- Local hold: actual offer, acceptance and trade are fiction outcomes, not state committed by the prompt; live delivery is unverified.
 - Questions: none introduced by this source-only delta; no new narrative/autonomy restrictions proposed.
 - Critical blocker: none. Release authorization: none.
 
