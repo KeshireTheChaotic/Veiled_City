@@ -1,15 +1,11 @@
 # environment:dead-platform:express-through-memory — ledger
 
-Status: SOURCE VERIFIED; LOCAL EXECUTION HOLD.
+Status: SUPPORTED SOURCE-BOUND GM ACTION CUE; ROLL/OUTCOME HOLD.
 
-- Branch: codex/clean-ai-gm-2026-10; source checkout SHA: 0834f299ccff1738e9b3dd753a5fc616d3965370 + working-tree delta. Final freeze SHA/evidence: see parent P06-F01 ledger and final delta report.
-- Changed module: bot/src/native-feature-catalog.js (shared occurrence-local inspection). Descriptor and rules unchanged.
-- Fresh test: bot/tests/ai-gm-2026-10/p06-f01.test.mjs; current-catalog test calls inspectNativeFeatureOccurrence for this exact key. Source/content input is current production data, never a historical fixture.
-- Actual result: verified_source, execution_authorized=false in p06-1792598757560; shared repaired batch exit 0, 5 tests passed. This is source verification, not effect execution qualification.
-- Cost/cache: 0 paid provider calls/tokens; $0 provider tests. No cache claim. Codex usage unavailable.
-- Existing catalog reason: No qualified native feature handler.
-- Local hold: No qualified executable occurrence adapter. This remains unsupported; exact source availability alone is insufficient.
-- Questions: none introduced by this source-only delta; no new narrative/autonomy restrictions proposed.
-- Critical blocker: none. Release authorization: none.
-
-Final tested source SHA: `8e01519b6511bc90af6a1c675e4a9950f12b703c`; run `fresh-delta-1792599054739` passed 47/47 union tests. The catalog test verifies this occurrence source; this is not occurrence effect qualification. Input/test hashes: parent final evidence.
+- Branch/start SHA: `codex/clean-ai-gm-2026-10` / `cbabc7a0c08c10d087fbd9119a530e5ba540eded`; implementation SHA: recorded in F35 closeout.
+- Exact source: `content/GM_PRIVATE/ENVIRONMENTS/environments.json#dead-platform/features/1`; source SHA-256 `1b5899579f84ceb13e5e1b889a412546713018171d23de8b44a26e6eb227c4d2`; template SHA-256 `dc290c7974aa110f61545ba78c61e9a78aa0f7362ee41bb0b7d7f9ae83bf2011`.
+- Changed modules: native feature definition/catalog, environment contract and scene projection, new `native-environment-express-through-memory.js`, coverage map, F01 count assertions and fresh F35 tests.
+- Frozen run `p06-f35-20261021-a`: exit 0, 120/120 fresh tests pass across 33 files; syntax 5/5, JSON 2/2. Exact file hashes and command: F35 targeted evidence.
+- Cost/cache: paid provider calls/tokens/spend 0/0/$0; no cache savings claimed; Codex usage unavailable.
+- Local hold: the adapter does not execute the player-owned Knowledge Reaction (14) or persist the failure-only alternate destination; no integrated roll/receipt replay qualification.
+- Owner questions/new narrative restrictions: none. Critical blocker: none. Release authorization: false.
