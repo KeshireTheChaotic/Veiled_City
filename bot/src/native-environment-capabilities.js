@@ -34,6 +34,8 @@ const contracts=Object.freeze({
     effect:'Exact passive source cue: loud or spectacular actions risk adding witnesses; no witness or PC action is automatic.'},
   'environment:archive-beneath-the-courthouse:chain-of-title':{handler:'environment_chain_of_title_context',entry:'scene_context',fear:0,
     effect:'Exact passive source cue: ownership, threshold and pact magic used here can often be traced through mundane property records; no record or result is automatic.'},
+  'environment:rupture-district:no-consensus':{handler:'environment_no_consensus_context',entry:'scene_context',fear:0,
+    effect:'Exact passive source cue: different major scenes may obey different supernatural logic; when the PC can perceive it, state the current rule clearly. The adapter invents no rule or perception.'},
   'environment:haunted-nightclub:too-loud-to-think':{handler:'nightclub_auditory_disadvantage',entry:'decisions',fear:0,
     disposition:'request_pc_action_roll',stakes_kind:'attempt_only',advantage:false,disadvantage:true,
     effect:'Exact delicate auditory/verbal applicability ruling; real owner quiet_environment outcome ends this disadvantage.'},
@@ -82,6 +84,8 @@ export function environmentProposalContract(feature){
   if(feature.native_handler==='environment_thin_walls_context'&&(feature.type!=='Passive'||feature.trigger_kind!=='passive'
     ||feature.target_policy!=='none'||feature.roll_protocol!=='environment_scene_context'))return null;
   if(feature.native_handler==='environment_chain_of_title_context'&&(feature.type!=='Passive'||feature.trigger_kind!=='passive'
+    ||feature.target_policy!=='none'||feature.roll_protocol!=='environment_scene_context'))return null;
+  if(feature.native_handler==='environment_no_consensus_context'&&(feature.type!=='Passive'||feature.trigger_kind!=='passive'
     ||feature.target_policy!=='none'||feature.roll_protocol!=='environment_scene_context'))return null;
   return structuredClone(contract);
 }

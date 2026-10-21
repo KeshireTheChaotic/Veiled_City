@@ -2719,13 +2719,13 @@
       "template_hash": "1543b06bf42f7e35dff152f5ca8ba26e9bfbadd944f41b38ce1d7cbf991da7f7",
       "index": 0,
       "type": "Passive",
-      "status": "review_only",
-      "trigger_kind": "unmapped",
-      "target_policy": "unmapped",
-      "roll_protocol": "unmapped",
-      "costs": null,
-      "native_handler": null,
-      "reason": "No qualified native feature handler."
+      "status": "supported",
+      "trigger_kind": "passive",
+      "target_policy": "none",
+      "roll_protocol": "environment_scene_context",
+      "costs": [],
+      "native_handler": "environment_no_consensus_context",
+      "reason": "Exact passive scene-logic cue in current audience context; no logic is invented or imposed by the adapter."
     },
     {
       "feature_key": "environment:rupture-district:reality-collision",
