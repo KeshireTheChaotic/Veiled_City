@@ -1,15 +1,15 @@
 # adversary:aster-vale-contractor:professional-entry — ledger
 
-Status: SOURCE VERIFIED; LOCAL EXECUTION HOLD.
+Status: SUPPORTED SOURCE-BOUND GM CUE / TARGETED PASS.
 
-- Branch: codex/clean-ai-gm-2026-10; source checkout SHA: 0834f299ccff1738e9b3dd753a5fc616d3965370 + working-tree delta. Final freeze SHA/evidence: see parent P06-F01 ledger and final delta report.
-- Changed module: bot/src/native-feature-catalog.js (shared occurrence-local inspection). Descriptor and rules unchanged.
-- Fresh test: bot/tests/ai-gm-2026-10/p06-f01.test.mjs; current-catalog test calls inspectNativeFeatureOccurrence for this exact key. Source/content input is current production data, never a historical fixture.
-- Actual result: verified_source, execution_authorized=false in p06-1792598757560; shared repaired batch exit 0, 5 tests passed. This is source verification, not effect execution qualification.
+- Branch/implementation SHA: `codex/clean-ai-gm-2026-10` / `6e60f3442f85e707e148c11d9a49d59dde7566dd`.
+- Changed modules: feature definition/catalog, exact Professional Entry cue projector, current adversary context, coverage and fresh F40/catalog tests.
+- Fresh run `p06-f40-20261021-a`: 38 fresh files, 140 tests, 139 passed and one stale source-isolation count failed; exit 1. Only the repaired F01 catalog test reran as `p06-f40-20261021-repair`, passing 3/3, exit 0. Unique affected cases: 140/140 pass.
+- Changed JS/MJS syntax: 6/6; changed JSON parse: 2/2. Exact results and hashes: [P06-F40 evidence](../../../../evidence/P06_F40_TARGETED.json).
 - Cost/cache: 0 paid provider calls/tokens; $0 provider tests. No cache claim. Codex usage unavailable.
-- Existing catalog reason: No qualified native feature handler.
-- Local hold: No qualified executable occurrence adapter. This remains unsupported; exact source availability alone is insufficient.
+- Catalog handler: `adversary_professional_entry_context`; exact source-bound GM cue only. It defines no prepared position, first-use reset, Advantage modifier or effect receipt.
+- Local hold: native qualifying-event evidence, one-use boundary/tracking and Advantage application to the actual NPC roll remain unimplemented/unverified.
 - Questions: none introduced by this source-only delta; no new narrative/autonomy restrictions proposed.
 - Critical blocker: none. Release authorization: none.
 
-Final tested source SHA: `8e01519b6511bc90af6a1c675e4a9950f12b703c`; run `fresh-delta-1792599054739` passed 47/47 union tests. The catalog test verifies this occurrence source; this is not occurrence effect qualification. Input/test hashes: parent final evidence.
+Final tested source SHA: `6e60f3442f85e707e148c11d9a49d59dde7566dd`. The supported cue does not qualify Advantage execution or whole-release behavior.

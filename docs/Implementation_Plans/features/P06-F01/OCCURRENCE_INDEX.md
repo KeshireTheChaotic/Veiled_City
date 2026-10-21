@@ -6,7 +6,7 @@
 |---|---|---|---|
 | [adversary:pale-court-thrall:pack-pressure](occurrences/adversary--pale-court-thrall--pack-pressure/LEDGER.md) | supported | verified_source | pack_pressure |
 | [adversary:pale-court-thrall:break-the-hold](occurrences/adversary--pale-court-thrall--break-the-hold/LEDGER.md) | supported | verified_source | adversary_break_the_hold_context |
-| [adversary:aster-vale-contractor:professional-entry](occurrences/adversary--aster-vale-contractor--professional-entry/LEDGER.md) | review_only | verified_source | none |
+| [adversary:aster-vale-contractor:professional-entry](occurrences/adversary--aster-vale-contractor--professional-entry/LEDGER.md) | supported | verified_source | adversary_professional_entry_context |
 | [adversary:aster-vale-contractor:flashbang](occurrences/adversary--aster-vale-contractor--flashbang/LEDGER.md) | supported | verified_source | flashbang_owner_choice |
 | [adversary:aster-vale-occult-analyst:mark-the-variable](occurrences/adversary--aster-vale-occult-analyst--mark-the-variable/LEDGER.md) | review_only | verified_source | none |
 | [adversary:aster-vale-occult-analyst:readout](occurrences/adversary--aster-vale-occult-analyst--readout/LEDGER.md) | review_only | verified_source | none |
