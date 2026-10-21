@@ -25,6 +25,7 @@ import {nativeEnvironmentPriceOfferSituation} from './native-environment-price-o
 import {nativeEnvironmentAuctionSituation} from './native-environment-auction.js';
 import {nativeEnvironmentModelRoomSituation} from './native-environment-model-room.js';
 import {nativeEnvironmentSealedDocketSituation} from './native-environment-sealed-docket.js';
+import {nativeEnvironmentThreeVectorsSituation} from './native-environment-three-vectors.js';
 import {arbitrationFailure as fail} from './gm-arbitration-contract.js';
 const issuer='native:environment-scene';
 const rules=Object.freeze({
@@ -229,5 +230,6 @@ export function nativeEnvironmentSituation(db,guild,scope,location){
   if(result.length<6)result.push(...nativeEnvironmentAuctionSituation(db,guild,scope,location).slice(0,6-result.length));
   if(result.length<6)result.push(...nativeEnvironmentModelRoomSituation(db,guild,scope,location).slice(0,6-result.length));
   if(result.length<6)result.push(...nativeEnvironmentSealedDocketSituation(db,guild,scope,location).slice(0,6-result.length));
+  if(result.length<6)result.push(...nativeEnvironmentThreeVectorsSituation(db,guild,scope,location).slice(0,6-result.length));
   return result;
 }

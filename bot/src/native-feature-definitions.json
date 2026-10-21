@@ -1968,13 +1968,13 @@
       "template_hash": "1071538ee24df905ae15f67823f9478a619871b4dd30ab23d3b7d317535b602f",
       "index": 1,
       "type": "Action",
-      "status": "review_only",
-      "trigger_kind": "unmapped",
-      "target_policy": "unmapped",
-      "roll_protocol": "unmapped",
-      "costs": null,
-      "native_handler": null,
-      "reason": "No qualified native feature handler."
+      "status": "supported",
+      "trigger_kind": "spotlight_action",
+      "target_policy": "none",
+      "roll_protocol": "environment_scene_context",
+      "costs": [],
+      "native_handler": "environment_three_vectors_context",
+      "reason": "Exact source-bound clue prompt; player selects a vector and GM owns faction fiction; context records no choice or movement."
     },
     {
       "feature_key": "environment:occult-crime-scene:sirens-outside",

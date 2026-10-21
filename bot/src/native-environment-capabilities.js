@@ -54,6 +54,8 @@ const contracts=Object.freeze({
     effect:'Exact source-bound prompt for a frighteningly accurate but incomplete GM-authored forecast; the PC may take Hope by accepting one listed risk as real and immediate, with no forecast fact or resource change recorded by context alone.'},
   'environment:archive-beneath-the-courthouse:sealed-docket':{handler:'environment_sealed_docket_context',entry:'scene_context',fear:0,
     effect:'Exact source-bound prompt for a document changing the current conflict’s legal or supernatural interpretation; access costs time, secrecy or favor before acceptance, and context records no document or PC agreement.'},
+  'environment:occult-crime-scene:three-vectors':{handler:'environment_three_vectors_context',entry:'scene_context',fear:0,
+    effect:'Exact source-bound prompt for three clue vectors across the printed evidence domains; the PC chooses one, and a Fear result may prompt the GM to advance another interested party on a different vector. Context records no clue, choice, roll or faction movement.'},
   'environment:haunted-nightclub:too-loud-to-think':{handler:'nightclub_auditory_disadvantage',entry:'decisions',fear:0,
     disposition:'request_pc_action_roll',stakes_kind:'attempt_only',advantage:false,disadvantage:true,
     effect:'Exact delicate auditory/verbal applicability ruling; real owner quiet_environment outcome ends this disadvantage.'},
@@ -122,6 +124,8 @@ export function environmentProposalContract(feature){
   if(feature.native_handler==='environment_model_room_context'&&(feature.type!=='Action'||feature.trigger_kind!=='spotlight_action'
     ||feature.target_policy!=='none'||feature.roll_protocol!=='environment_scene_context'))return null;
   if(feature.native_handler==='environment_sealed_docket_context'&&(feature.type!=='Action'||feature.trigger_kind!=='spotlight_action'
+    ||feature.target_policy!=='none'||feature.roll_protocol!=='environment_scene_context'))return null;
+  if(feature.native_handler==='environment_three_vectors_context'&&(feature.type!=='Action'||feature.trigger_kind!=='spotlight_action'
     ||feature.target_policy!=='none'||feature.roll_protocol!=='environment_scene_context'))return null;
   return structuredClone(contract);
 }
