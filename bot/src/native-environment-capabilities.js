@@ -46,5 +46,7 @@ export function environmentProposalContract(feature){
     ||feature.target_policy!=='none'||feature.roll_protocol!=='none'))return null;
   if(feature.native_handler==='environment_code_blue'&&(feature.type!=='Action'||feature.trigger_kind!=='spotlight_action'
     ||feature.target_policy!=='none'||feature.roll_protocol!=='none'))return null;
+  if(feature.native_handler==='nightclub_vip_threshold'&&(feature.type!=='Passive'||feature.trigger_kind!=='attempted_private_floor_entry'
+    ||feature.target_policy!=='acting_pc'||feature.roll_protocol!=='established_credential_or_successful_deception'))return null;
   return structuredClone(contract);
 }

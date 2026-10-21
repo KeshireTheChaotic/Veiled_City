@@ -2356,13 +2356,13 @@
       "template_hash": "06e5c361501b24e80c323111bd5c600814016b17f8421e83442c54eba4fb5a84",
       "index": 1,
       "type": "Passive",
-      "status": "review_only",
-      "trigger_kind": "unmapped",
-      "target_policy": "unmapped",
-      "roll_protocol": "unmapped",
-      "costs": null,
-      "native_handler": null,
-      "reason": "No qualified native feature handler."
+      "status": "supported",
+      "trigger_kind": "attempted_private_floor_entry",
+      "target_policy": "acting_pc",
+      "roll_protocol": "established_credential_or_successful_deception",
+      "costs": [],
+      "native_handler": "nightclub_vip_threshold",
+      "reason": "Exact source-qualified owner-backed private-floor admission adapter."
     },
     {
       "feature_key": "environment:haunted-nightclub:everybody-saw-something-different",
