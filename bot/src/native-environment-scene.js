@@ -17,6 +17,7 @@ import {nativeEnvironmentThinWallsSituation} from './native-environment-thin-wal
 import {nativeEnvironmentChainOfTitleSituation} from './native-environment-chain-of-title.js';
 import {nativeEnvironmentNoConsensusSituation} from './native-environment-no-consensus.js';
 import {nativeEnvironmentMetaphorPhysicsSituation} from './native-environment-metaphor-physics.js';
+import {nativeEnvironmentNoOrdinarySignalSituation} from './native-environment-no-ordinary-signal.js';
 import {arbitrationFailure as fail} from './gm-arbitration-contract.js';
 const issuer='native:environment-scene';
 const rules=Object.freeze({
@@ -213,5 +214,6 @@ export function nativeEnvironmentSituation(db,guild,scope,location){
   if(result.length<6)result.push(...nativeEnvironmentChainOfTitleSituation(db,guild,scope,location).slice(0,6-result.length));
   if(result.length<6)result.push(...nativeEnvironmentNoConsensusSituation(db,guild,scope,location).slice(0,6-result.length));
   if(result.length<6)result.push(...nativeEnvironmentMetaphorPhysicsSituation(db,guild,scope,location).slice(0,6-result.length));
+  if(result.length<6)result.push(...nativeEnvironmentNoOrdinarySignalSituation(db,guild,scope,location).slice(0,6-result.length));
   return result;
 }

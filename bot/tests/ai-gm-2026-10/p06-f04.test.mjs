@@ -46,5 +46,5 @@ test('duplicate source identity and unrelated review-only features remain held',
   const input=sources(),actor=input.environments.find(row=>row.name==='Occult Crime Scene');
   input.environments.push(structuredClone(actor));
   assert.equal(inspectNativeFeatureOccurrence(FEATURE,input).status,'held_source');
-  assert.equal(featureDisposition('environment:district-blackout:no-ordinary-signal',sources()).status,'needs_rules_review');
+  assert.equal(featureDisposition('environment:flooded-river-threshold:city-vs-river',sources()).status,'needs_rules_review');
 });

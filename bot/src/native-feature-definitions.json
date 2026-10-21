@@ -2609,13 +2609,13 @@
       "template_hash": "24bcd46f4a3a205a6bc8f48768c751d453d8de8beb0e6839ee68081e54cd980c",
       "index": 0,
       "type": "Passive",
-      "status": "review_only",
-      "trigger_kind": "unmapped",
-      "target_policy": "unmapped",
-      "roll_protocol": "unmapped",
-      "costs": null,
-      "native_handler": null,
-      "reason": "No qualified native feature handler."
+      "status": "supported",
+      "trigger_kind": "passive",
+      "target_policy": "none",
+      "roll_protocol": "environment_scene_context",
+      "costs": [],
+      "native_handler": "environment_no_ordinary_signal_context",
+      "reason": "Exact passive network-reliability context; no specific connection attempt outcome is automatic."
     },
     {
       "feature_key": "environment:district-blackout:emergency-cascade",

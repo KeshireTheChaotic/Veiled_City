@@ -1,0 +1,33 @@
+{
+  "feature": "P06-F21",
+  "occurrence": "environment:district-blackout:no-ordinary-signal",
+  "audit_anchor": "9e7bf0687357cf96fbe2ea09a04b3e9d2975f6a3",
+  "branch": "codex/clean-ai-gm-2026-10",
+  "start_head": "7aa3f7e1654ad43d0ddf95ca52fc23857afbea0a",
+  "initial_batch": {"run_id":"p06-f21-20261021-a","exit_code":1,"tests":64,"passed":63,"failed":1,"cancelled":0,"skipped":0,"duration_ms":1492.5226,"failure":"Fresh P06-F04 regression assertion still expected district-blackout:no-ordinary-signal to be review-only after F21 promotion. Corrected that assertion to an unrelated review-only city-vs-river occurrence."},
+  "repair_batch": {
+    "run_id": "p06-f21-20261021-a-repair-1",
+    "command": "node --test --test-reporter=tap tests/ai-gm-2026-10/p06-f01.test.mjs tests/ai-gm-2026-10/p06-f04.test.mjs tests/ai-gm-2026-10/p06-f05.test.mjs tests/ai-gm-2026-10/p06-f06.test.mjs tests/ai-gm-2026-10/p06-f07.test.mjs tests/ai-gm-2026-10/p06-f08.test.mjs tests/ai-gm-2026-10/p06-f09.test.mjs tests/ai-gm-2026-10/p06-f10.test.mjs tests/ai-gm-2026-10/p06-f11.test.mjs tests/ai-gm-2026-10/p06-f12.test.mjs tests/ai-gm-2026-10/p06-f13.test.mjs tests/ai-gm-2026-10/p06-f14.test.mjs tests/ai-gm-2026-10/p06-f15.test.mjs tests/ai-gm-2026-10/p06-f16.test.mjs tests/ai-gm-2026-10/p06-f17.test.mjs tests/ai-gm-2026-10/p06-f18.test.mjs tests/ai-gm-2026-10/p06-f19.test.mjs tests/ai-gm-2026-10/p06-f20.test.mjs tests/ai-gm-2026-10/p06-f21.test.mjs",
+    "exit_code": 0, "tests": 64, "passed": 64, "failed": 0, "cancelled": 0, "skipped": 0, "duration_ms": 1516.5936
+  },
+  "final_unique_coverage": {"tests":64,"passed":64,"failed":0,"repair_scope":"fresh P06-F04 through F21 affected modules; F01 catalog"},
+  "changed_js_mjs_syntax": "7/7 pass",
+  "changed_json_parse": "2/2 pass",
+  "provider_usage": {"calls":0,"tokens":0,"cost_usd":0},
+  "cache": "No cache used or savings claimed; Codex usage metric unavailable.",
+  "owner_questions": [], "critical_blockers": [],
+  "unverified": ["Live profile and current audience scene delivery","Live provider/Discord behavior and full release qualification"],
+  "release_authorized": false,
+  "input_hashes_sha256": {
+    "bot/src/native-environment-capabilities.js":"e365c727835c0006d0769c50be427b3a3299f674d6f24f8080db2d9cc3118ded",
+    "bot/src/native-environment-scene.js":"58191780f1e27e383c46e6c39db084798b18315f96ddaeec70135b4be87ceb1f",
+    "bot/src/native-feature-catalog.js":"49d9a37a71671e00865ccb0b3df946e8b71b9c68b1987797f5279bb919d16c8b",
+    "bot/src/native-environment-no-ordinary-signal.js":"0bdea8d99ff89a5417dbac510743d92c03b77bc3e79704f429dc7aef3a32ace2",
+    "bot/src/native-feature-definitions.json":"301dd55c87758db1fccb3319be04cd50eac1b14978732422a80ed6a6c3e87660",
+    "bot/tests/ai-gm-2026-10/p06-f01.test.mjs":"2bc904e141c47b9739a377757b03831cae622eacc6bb8567644f58cd0a7a2ab1",
+    "bot/tests/ai-gm-2026-10/p06-f04.test.mjs":"a2833092cd20f426919a6232097a68d3198085b23fb749d4a49802c146bae67a",
+    "bot/tests/ai-gm-2026-10/p06-f21.test.mjs":"7266964a36b60838bf38b7d6d88444df680b5824c3a82aedd58ab185536e3cc3",
+    "bot/tests/ai-gm-2026-10/coverage.json":"7665c04a6256fcca0b88966b6c8c5be67a27e935efd9d3c40a21b8e49bfc9416",
+    "content/GM_PRIVATE/ENVIRONMENTS/environments.json":"0b5f5004caf4d761c33ce851a020e081a2b6fb980526a38fcc51c7eaec413898"
+  }
+}

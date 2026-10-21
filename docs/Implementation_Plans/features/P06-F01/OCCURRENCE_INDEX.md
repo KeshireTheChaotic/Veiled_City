@@ -145,7 +145,7 @@
 | [environment:archive-beneath-the-courthouse:chain-of-title](occurrences/environment--archive-beneath-the-courthouse--chain-of-title/LEDGER.md) | supported | verified_source | environment_chain_of_title_context |
 | [environment:archive-beneath-the-courthouse:sealed-docket](occurrences/environment--archive-beneath-the-courthouse--sealed-docket/LEDGER.md) | review_only | verified_source | none |
 | [environment:archive-beneath-the-courthouse:records-reject-you](occurrences/environment--archive-beneath-the-courthouse--records-reject-you/LEDGER.md) | review_only | verified_source | none |
-| [environment:district-blackout:no-ordinary-signal](occurrences/environment--district-blackout--no-ordinary-signal/LEDGER.md) | review_only | verified_source | none |
+| [environment:district-blackout:no-ordinary-signal](occurrences/environment--district-blackout--no-ordinary-signal/LEDGER.md) | supported | verified_source | environment_no_ordinary_signal_context |
 | [environment:district-blackout:emergency-cascade](occurrences/environment--district-blackout--emergency-cascade/LEDGER.md) | supported | verified_source | environment_emergency_cascade |
 | [environment:district-blackout:choir-volume](occurrences/environment--district-blackout--choir-volume/LEDGER.md) | review_only | verified_source | none |
 | [environment:veil-anchor-chamber:consensus-engine](occurrences/environment--veil-anchor-chamber--consensus-engine/LEDGER.md) | review_only | verified_source | none |
