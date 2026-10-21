@@ -4,6 +4,7 @@
   "audit_anchor": "9e7bf0687357cf96fbe2ea09a04b3e9d2975f6a3",
   "branch": "codex/clean-ai-gm-2026-10",
   "start_head": "0d4e8840d14e2778f8881c829612913c7d19eb0b",
+  "implementation_commit": "1e10df280108b572ab65f2aa10986bdbd752e29c",
   "run_id": "p06-f19-20261021-a",
   "command": "node --test --test-reporter=tap tests/ai-gm-2026-10/p06-f01.test.mjs tests/ai-gm-2026-10/p06-f04.test.mjs tests/ai-gm-2026-10/p06-f05.test.mjs tests/ai-gm-2026-10/p06-f06.test.mjs tests/ai-gm-2026-10/p06-f07.test.mjs tests/ai-gm-2026-10/p06-f08.test.mjs tests/ai-gm-2026-10/p06-f09.test.mjs tests/ai-gm-2026-10/p06-f10.test.mjs tests/ai-gm-2026-10/p06-f11.test.mjs tests/ai-gm-2026-10/p06-f12.test.mjs tests/ai-gm-2026-10/p06-f13.test.mjs tests/ai-gm-2026-10/p06-f14.test.mjs tests/ai-gm-2026-10/p06-f15.test.mjs tests/ai-gm-2026-10/p06-f16.test.mjs tests/ai-gm-2026-10/p06-f17.test.mjs tests/ai-gm-2026-10/p06-f18.test.mjs tests/ai-gm-2026-10/p06-f19.test.mjs",
   "exit_code": 0,
