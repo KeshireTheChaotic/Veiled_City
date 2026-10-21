@@ -58,6 +58,8 @@ const contracts=Object.freeze({
     effect:'Exact source-bound prompt for three clue vectors across the printed evidence domains; the PC chooses one, and a Fear result may prompt the GM to advance another interested party on a different vector. Context records no clue, choice, roll or faction movement.'},
   'environment:abandoned-mall-glass-market:no-violence-in-the-aisles':{handler:'environment_market_neutrality_context',entry:'scene_context',fear:0,
     effect:'Exact source-bound Market neutrality rule cue; the GM authors any triggered fictional standing and enforcement response. Context records no violation or consequence.'},
+  'environment:occult-crime-scene:contaminated-scene':{handler:'environment_contaminated_scene_context',entry:'scene_context',fear:0,
+    effect:'Exact source-bound trigger and +1 Veil Exposure cue when a first careless supernatural effect occurs here with mundane investigators present; context itself applies no delta.'},
   'environment:haunted-nightclub:too-loud-to-think':{handler:'nightclub_auditory_disadvantage',entry:'decisions',fear:0,
     disposition:'request_pc_action_roll',stakes_kind:'attempt_only',advantage:false,disadvantage:true,
     effect:'Exact delicate auditory/verbal applicability ruling; real owner quiet_environment outcome ends this disadvantage.'},
@@ -130,6 +132,8 @@ export function environmentProposalContract(feature){
   if(feature.native_handler==='environment_three_vectors_context'&&(feature.type!=='Action'||feature.trigger_kind!=='spotlight_action'
     ||feature.target_policy!=='none'||feature.roll_protocol!=='environment_scene_context'))return null;
   if(feature.native_handler==='environment_market_neutrality_context'&&(feature.type!=='Passive'||feature.trigger_kind!=='passive'
+    ||feature.target_policy!=='none'||feature.roll_protocol!=='environment_scene_context'))return null;
+  if(feature.native_handler==='environment_contaminated_scene_context'&&(feature.type!=='Passive'||feature.trigger_kind!=='passive'
     ||feature.target_policy!=='none'||feature.roll_protocol!=='environment_scene_context'))return null;
   return structuredClone(contract);
 }

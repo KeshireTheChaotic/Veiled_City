@@ -27,6 +27,7 @@ import {nativeEnvironmentModelRoomSituation} from './native-environment-model-ro
 import {nativeEnvironmentSealedDocketSituation} from './native-environment-sealed-docket.js';
 import {nativeEnvironmentThreeVectorsSituation} from './native-environment-three-vectors.js';
 import {nativeEnvironmentMarketNeutralitySituation} from './native-environment-market-neutrality.js';
+import {nativeEnvironmentContaminatedSceneSituation} from './native-environment-contaminated-scene.js';
 import {arbitrationFailure as fail} from './gm-arbitration-contract.js';
 const issuer='native:environment-scene';
 const rules=Object.freeze({
@@ -233,5 +234,6 @@ export function nativeEnvironmentSituation(db,guild,scope,location){
   if(result.length<6)result.push(...nativeEnvironmentSealedDocketSituation(db,guild,scope,location).slice(0,6-result.length));
   if(result.length<6)result.push(...nativeEnvironmentThreeVectorsSituation(db,guild,scope,location).slice(0,6-result.length));
   if(result.length<6)result.push(...nativeEnvironmentMarketNeutralitySituation(db,guild,scope,location).slice(0,6-result.length));
+  if(result.length<6)result.push(...nativeEnvironmentContaminatedSceneSituation(db,guild,scope,location).slice(0,6-result.length));
   return result;
 }
