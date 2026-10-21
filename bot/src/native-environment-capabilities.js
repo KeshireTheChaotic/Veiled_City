@@ -60,6 +60,8 @@ const contracts=Object.freeze({
     effect:'Exact source-bound Market neutrality rule cue; the GM authors any triggered fictional standing and enforcement response. Context records no violation or consequence.'},
   'environment:occult-crime-scene:contaminated-scene':{handler:'environment_contaminated_scene_context',entry:'scene_context',fear:0,
     effect:'Exact source-bound trigger and +1 Veil Exposure cue when a first careless supernatural effect occurs here with mundane investigators present; context itself applies no delta.'},
+  'environment:glass-market-grand-concourse:everyone-is-watching':{handler:'environment_everyone_is_watching_context',entry:'scene_context',fear:0,
+    effect:'Exact source-bound reaction cue for a PC public threat, promise or bargain; the GM authors at least one faction witness in fiction. Context creates no durable witness receipt or PC declaration.'},
   'environment:haunted-nightclub:too-loud-to-think':{handler:'nightclub_auditory_disadvantage',entry:'decisions',fear:0,
     disposition:'request_pc_action_roll',stakes_kind:'attempt_only',advantage:false,disadvantage:true,
     effect:'Exact delicate auditory/verbal applicability ruling; real owner quiet_environment outcome ends this disadvantage.'},
@@ -134,6 +136,8 @@ export function environmentProposalContract(feature){
   if(feature.native_handler==='environment_market_neutrality_context'&&(feature.type!=='Passive'||feature.trigger_kind!=='passive'
     ||feature.target_policy!=='none'||feature.roll_protocol!=='environment_scene_context'))return null;
   if(feature.native_handler==='environment_contaminated_scene_context'&&(feature.type!=='Passive'||feature.trigger_kind!=='passive'
+    ||feature.target_policy!=='none'||feature.roll_protocol!=='environment_scene_context'))return null;
+  if(feature.native_handler==='environment_everyone_is_watching_context'&&(feature.type!=='Reaction'||feature.trigger_kind!=='on_scene_event'
     ||feature.target_policy!=='none'||feature.roll_protocol!=='environment_scene_context'))return null;
   return structuredClone(contract);
 }
