@@ -1,0 +1,64 @@
+{
+  "feature": "P06-F12",
+  "occurrence": "environment:veil-anchor-chamber:maintenance-memory",
+  "audit_sha": "9e7bf0687357cf96fbe2ea09a04b3e9d2975f6a3",
+  "branch": "codex/clean-ai-gm-2026-10",
+  "freeze_head": "ceeadef759fadb22103d45f412265589b343a829",
+  "qualification_date": "2026-10-21",
+  "start_timestamp_utc": "not captured",
+  "completion_timestamp_utc": "2026-10-21 21:39 UTC",
+  "catalog": {"total": 153, "supported": 25, "review_only": 128, "needs_authoring": 0},
+  "runs": [
+    {
+      "run_id": "p06-f12-20261021-a",
+      "command": "node --test bot/tests/ai-gm-2026-10/p06-f01.test.mjs bot/tests/ai-gm-2026-10/p06-f03.test.mjs bot/tests/ai-gm-2026-10/p06-f04.test.mjs bot/tests/ai-gm-2026-10/p06-f05.test.mjs bot/tests/ai-gm-2026-10/p06-f06.test.mjs bot/tests/ai-gm-2026-10/p06-f07.test.mjs bot/tests/ai-gm-2026-10/p06-f08.test.mjs bot/tests/ai-gm-2026-10/p06-f09.test.mjs bot/tests/ai-gm-2026-10/p06-f10.test.mjs bot/tests/ai-gm-2026-10/p06-f11.test.mjs bot/tests/ai-gm-2026-10/p06-f12.test.mjs",
+      "exit_code": 1,
+      "tests": 29,
+      "passed": 28,
+      "failed": 1,
+      "skipped": 0,
+      "failure": "New source-text assertion expected ASCII apostrophe; source contains a typographic apostrophe. Production tests otherwise passed."
+    },
+    {
+      "run_id": "p06-f12-repair2-20261021-a",
+      "command": "node --test bot/tests/ai-gm-2026-10/p06-f12.test.mjs",
+      "exit_code": 0,
+      "tests": 4,
+      "passed": 4,
+      "failed": 0,
+      "skipped": 0,
+      "repair": "Changed the failing F12 assertion; added a positive exact established-fact proof case plus an out-of-audience private-fact rejection before this final run. Only the changed F12 file was rerun."
+    }
+  ],
+  "final_unique_affected_tests": {"passed": 29, "failed": 0, "skipped": 0},
+  "syntax": {"command": "node --check on each changed JS/MJS path", "passed": 6, "failed": 0},
+  "json_parse": {"command": "JSON.parse on native-feature-definitions.json and fresh coverage.json", "passed": 2, "failed": 0},
+  "changed_input_sha256": {
+    "bot/src/gm-arbitration-contract.js": "9a2547dc017ee7202263db90f98c0f579ce7c954682ab258cf88541ce681bd70",
+    "bot/src/native-environment-capabilities.js": "da35aec596f2578176cf0d03c46f4d2e1d9233e6e264d5e61b7813c3a7723128",
+    "bot/src/native-environment-scene.js": "ba98dad447e50c64f5c255fb8429fec12b3b62c654598b4db9e258e835b183c3",
+    "bot/src/native-feature-catalog.js": "958bc118e7e52ce8a9c8e924ef592eccc832738379b6cf67eab7c0f785d78f31",
+    "bot/src/native-feature-definitions.json": "e6abcfd93de819609f5c92d86f03e49c10ae9173f92532a6387488be68ea2bc0",
+    "bot/tests/ai-gm-2026-10/coverage.json": "cb66c723d674359cc07967e399df00c1d8269e06a5e6d67a36d1c76791947f65",
+    "bot/tests/ai-gm-2026-10/p06-f01.test.mjs": "fdea99552ffde9833061d34692ad3155dc9a0dd92e638b2ab9fadfbf5a8053c4",
+    "bot/tests/ai-gm-2026-10/p06-f12.test.mjs": "0d4918fa445d0c522394740d33a9f09a4c8bf29ba54d72731ebcb77fafd6a6b1"
+  },
+  "fresh_batch_test_sha256": {
+    "bot/tests/ai-gm-2026-10/p06-f01.test.mjs": "fdea99552ffde9833061d34692ad3155dc9a0dd92e638b2ab9fadfbf5a8053c4",
+    "bot/tests/ai-gm-2026-10/p06-f03.test.mjs": "de701e296305721082c6c8beff52f4749e0fd64cf4a06193f930f988434c5f2f",
+    "bot/tests/ai-gm-2026-10/p06-f04.test.mjs": "47b66cee72b0e83473b1f4875f405fd3c928a09133bcca1197981b6b6e112241",
+    "bot/tests/ai-gm-2026-10/p06-f05.test.mjs": "3f922920133f2a39f2ef899b76563c09b67acb5fb952869c5ab2fc0b9527be6a",
+    "bot/tests/ai-gm-2026-10/p06-f06.test.mjs": "617a4b5fb9542b0b1ba90dba771e6120acfa3d9e4863054230d652dc93827f6d",
+    "bot/tests/ai-gm-2026-10/p06-f07.test.mjs": "5df1b1c12a8e18e94bd1826a96ee942e9f2e9c869b3a13e3188ee4aa21ee7f1b",
+    "bot/tests/ai-gm-2026-10/p06-f08.test.mjs": "a705cae64b374fb2530dc31cca9a619acc5acee10097fbf7713ecc55baecfcff",
+    "bot/tests/ai-gm-2026-10/p06-f09.test.mjs": "395cf12927d53591b141ef26a14791063834e49eaa878f28a574c172f018fafa",
+    "bot/tests/ai-gm-2026-10/p06-f10.test.mjs": "83846e18ca281ac13e63ec1cb5312d63173e63e5cbf61933f62d874076054cf8",
+    "bot/tests/ai-gm-2026-10/p06-f11.test.mjs": "4c9962b323bd481d9ec41f8c36651f5e2f7ce06121f8500d476cdb12b30fb630",
+    "bot/tests/ai-gm-2026-10/p06-f12.test.mjs": "0d4918fa445d0c522394740d33a9f09a4c8bf29ba54d72731ebcb77fafd6a6b1"
+  },
+  "cost": {"paid_provider_calls": 0, "provider_tokens": 0, "provider_test_spend_usd": 0, "cache_claim": "none", "codex_usage": "unavailable"},
+  "unverified": ["full native scene dispatch and durable receipt replay against live state", "full release qualification", "live provider/Discord behavior", "generated narrative quality and production cost"],
+  "owner_question": "None introduced by this feature. Separate HR14 Everything Logs owner-authority question remains unanswered and occurrence-scoped.",
+  "critical_blocker": null,
+  "release_authorized": false
+}

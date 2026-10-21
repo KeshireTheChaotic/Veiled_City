@@ -19,6 +19,9 @@ const contracts=Object.freeze({
   'environment:veil-anchor-chamber:automatic-correction':{handler:'environment_mundane_correction',transport:5,entry:'environment_actions',
     kind:'mundane_detail',fear:1,detail_shape:'open_property_and_value',
     effect:'One creatively authored mundane environmental detail; exactly one printed Fear, with no automatic PC action or added Daggerheart mechanic.'},
+  'environment:veil-anchor-chamber:maintenance-memory':{handler:'environment_maintenance_memory',transport:8,entry:'environment_actions',
+    kind:'historical_memory',fear:0,required:['version','feature_ref','environment','detail'],
+    effect:'One audience-visible chamber memory anchored to a current GM-established true metaplot fact; no new PC knowledge state or mechanical consequence.'},
   'environment:haunted-nightclub:too-loud-to-think':{handler:'nightclub_auditory_disadvantage',entry:'decisions',fear:0,
     disposition:'request_pc_action_roll',stakes_kind:'attempt_only',advantage:false,disadvantage:true,
     effect:'Exact delicate auditory/verbal applicability ruling; real owner quiet_environment outcome ends this disadvantage.'},
@@ -50,6 +53,8 @@ export function environmentProposalContract(feature){
   if(feature.native_handler==='environment_mundane_correction'&&(feature.type!=='Action'||feature.trigger_kind!=='spotlight_action'
     ||feature.target_policy!=='none'||feature.roll_protocol!=='none'))return null;
   if(feature.native_handler==='nightclub_inconsistent_witnesses'&&(feature.type!=='Action'||feature.trigger_kind!=='spotlight_action'
+    ||feature.target_policy!=='none'||feature.roll_protocol!=='none'))return null;
+  if(feature.native_handler==='environment_maintenance_memory'&&(feature.type!=='Action'||feature.trigger_kind!=='spotlight_action'
     ||feature.target_policy!=='none'||feature.roll_protocol!=='none'))return null;
   return structuredClone(contract);
 }

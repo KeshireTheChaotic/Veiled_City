@@ -9,11 +9,13 @@ import {recordScenePresence,currentScene,scenePresence} from './scene-continuity
 import {sceneFictionHash as hash,narrativeSourceVisible} from './scene-fiction-context.js';
 import {indexWorldEvent} from './city-calendar.js';
 import {assertEnvironmentAudience} from './native-environment-audience.js';
+import {nativeEstablishedFact} from './native-established-fact.js';
 import {arbitrationFailure as fail} from './gm-arbitration-contract.js';
 const issuer='native:environment-scene';
 const rules=Object.freeze({
   'environment:after-hours-emergency-department:code-blue':{handler:'environment_code_blue',kind:'medical_emergency',fear:0},
   'environment:district-blackout:emergency-cascade':{handler:'environment_emergency_cascade',kind:'service_emergency',fear:0},
+  'environment:veil-anchor-chamber:maintenance-memory':{handler:'environment_maintenance_memory',kind:'historical_memory',fear:0},
   'environment:veil-anchor-chamber:automatic-correction':{handler:'environment_mundane_correction',kind:'mundane_detail',fear:1}
 });
 const emergencies=Object.freeze(['hospital','traffic','fire','elevator','refrigeration','public_safety']);
@@ -32,6 +34,12 @@ function shape(p){
 function detailProof(db,guild,p,location,rule,scope){
   const d=p.detail;
   if(d.kind!==rule.kind)throw fail('environment_scene_exact_printed_effect');
+  if(d.kind==='historical_memory'){
+    if(d.category||d.service||d.value)throw fail('environment_memory_closed_source_shape');
+    const proof=validateMaintenanceMemoryFact(db,guild,d.property,scope);
+    return {kind:d.kind,fact_ref:d.property,fact_hash:proof.fact_hash,source_ref:proof.source_ref,
+      source_hash:proof.source_hash,content:proof.content,pc_response:'unselected'};
+  }
   if(d.kind==='medical_emergency'){
     if(d.category!=='medical'||d.property||d.value||d.service)throw fail('environment_medical_emergency_scope');
     return {kind:d.kind,staff_attention:'contested',pc_response:'unselected'};
@@ -55,6 +63,13 @@ export function validateMundaneEnvironmentDetail(detail){
     ||detail.property.length>160||detail.value.length>160||!detail.property.trim()||!detail.value.trim()
     ||/[\x00-\x1f\x7f\u202a-\u202e\u2066-\u2069]/u.test(detail.property+detail.value))throw fail('environment_mundane_detail_shape');
   return {kind:detail.kind,property:detail.property,value:detail.value,pc_response:'unselected'};
+}
+/** Exact established truth anchor; selection can stage a memory but cannot mint canon. */
+export function validateMaintenanceMemoryFact(db,guild,factRef,scope){
+  if(typeof factRef!=='string'||!factRef.trim()||factRef.length>160)throw fail('environment_memory_fact_reference');
+  const {fact,ruling}=nativeEstablishedFact(db,guild,factRef,scope);
+  if(typeof fact.content!=='string'||!fact.content.trim())throw fail('environment_memory_established_content');
+  return {fact_ref:factRef,fact_hash:hash(fact),source_ref:ruling.event_key,source_hash:hash(ruling),content:fact.content};
 }
 /** Sealed GM origin is the execution capability; fields supplied by a model are proposals only. */
 export function applyEnvironmentSceneAction(db,guild,origin,board,input){
@@ -83,7 +98,7 @@ export function applyEnvironmentSceneAction(db,guild,origin,board,input){
         visibility,subject_key:subject,details:{input_source:o.binding.source,payload_hash:hash(terms)}},issuer);
     if(declaration.status!=='active'||declaration.details.payload_hash!==hash(terms))throw fail('environment_scene_original_declaration_changed');
     let presence=null;
-    if(effect.kind!=='mundane_detail')presence=recordScenePresence(db,guild,{entity_type:'hazard',entity_key:`environment-${hash(key)}`,
+    if(['medical_emergency','service_emergency'].includes(effect.kind))presence=recordScenePresence(db,guild,{entity_type:'hazard',entity_key:`environment-${hash(key)}`,
       location_key:o.binding.location,zone:'scene',state:'actually_present',visibility,subject_key:subject,source_event:declaration.event_key},issuer);
     if(cost.fear)db.changeFear(guild,-cost.fear);
     const data={...terms,declaration:declaration.event_key,declaration_hash:hash(declaration),presence:presence?.record_key||null,
@@ -135,10 +150,10 @@ export function inspectEnvironmentSceneEffect(db,guild,key,scope,{current=false}
         ||p.location_key!==d.origin.location||db.getWorldEvent(guild,p.source_event)?.status!=='active'))
       throw fail('environment_scene_current_owner_scene_or_presence_changed');
   }
-  if(d.effect.kind==='mundane_detail'){
+  if(['mundane_detail','historical_memory'].includes(d.effect.kind)){
     if(d.presence!==null||d.presence_snapshot!==null||hash(detailProof(db,guild,d.proposal,d.origin.location,rule,d.scope))!==hash(d.effect))
       throw fail('environment_scene_detail_receipt_changed');
-    if(current&&db.listCityRecords(guild,{kind:'native_environment_scene_effect',includeGM:true,limit:100}).some(other=>{
+    if(d.effect.kind==='mundane_detail'&&current&&db.listCityRecords(guild,{kind:'native_environment_scene_effect',includeGM:true,limit:100}).some(other=>{
       const e=db.getWorldEvent(guild,other.source_event),m=e&&db.getMutation(guild,e.source_id);
       return other.status==='resolved'&&other.record_key!==key&&other.data.origin?.scene===d.origin.scene
         &&other.data.origin?.location===d.origin.location&&hash(other.data.scope)===hash(d.scope)
@@ -167,6 +182,7 @@ export function environmentSceneProjection(db,guild,key,scope){
   let text;
   if(d.effect.kind==='medical_emergency')text='A medical emergency competes for local staff attention. Helping, exploiting the distraction, or leaving it alone remains your choice.';
   else if(d.effect.kind==='service_emergency')text=`A local ${d.effect.category.replaceAll('_',' ')} emergency creates another immediate problem. No character response or mechanical injury is assumed.`;
+  else if(d.effect.kind==='historical_memory')text=`A memory of the Anchor's creation gathers around an established truth: ${d.effect.content}`;
   else text=`The chamber changes one mundane environmental detail: ${d.effect.property.replaceAll('_',' ')} is now ${d.effect.value}. Your response remains yours.`;
   return {text,source:db.getWorldEvent(guild,row.source_event),revision:hash([row,d.declaration_hash])};
 }

@@ -28,6 +28,10 @@
   "bot/src/typed-intents.js": [
     "bot/tests/ai-gm-2026-10/p06-f03.test.mjs"
   ],
+  "bot/src/gm-arbitration-contract.js": [
+    "bot/tests/ai-gm-2026-10/p06-f03.test.mjs",
+    "bot/tests/ai-gm-2026-10/p06-f12.test.mjs"
+  ],
   "bot/src/world-authorship.js": [
     "bot/tests/ai-gm-2026-10/p03-f01.test.mjs"
   ],
@@ -70,7 +74,8 @@
     "bot/tests/ai-gm-2026-10/p06-f08.test.mjs",
     "bot/tests/ai-gm-2026-10/p06-f09.test.mjs",
     "bot/tests/ai-gm-2026-10/p06-f10.test.mjs",
-    "bot/tests/ai-gm-2026-10/p06-f11.test.mjs"
+    "bot/tests/ai-gm-2026-10/p06-f11.test.mjs",
+    "bot/tests/ai-gm-2026-10/p06-f12.test.mjs"
   ],
   "bot/src/native-environment-capabilities.js": [
     "bot/tests/ai-gm-2026-10/p06-f04.test.mjs",
@@ -80,13 +85,18 @@
     "bot/tests/ai-gm-2026-10/p06-f08.test.mjs",
     "bot/tests/ai-gm-2026-10/p06-f09.test.mjs",
     "bot/tests/ai-gm-2026-10/p06-f10.test.mjs",
-    "bot/tests/ai-gm-2026-10/p06-f11.test.mjs"
+    "bot/tests/ai-gm-2026-10/p06-f11.test.mjs",
+    "bot/tests/ai-gm-2026-10/p06-f12.test.mjs"
   ],
   "bot/src/native-environment-witnesses.js": [
     "bot/tests/ai-gm-2026-10/p06-f11.test.mjs"
   ],
   "bot/src/native-environment-scene.js": [
-    "bot/tests/ai-gm-2026-10/p06-f10.test.mjs"
+    "bot/tests/ai-gm-2026-10/p06-f10.test.mjs",
+    "bot/tests/ai-gm-2026-10/p06-f12.test.mjs"
+  ],
+  "bot/src/native-established-fact.js": [
+    "bot/tests/ai-gm-2026-10/p06-f12.test.mjs"
   ],
   "bot/src/character-export.js": [
     "bot/tests/ai-gm-2026-10/p06-f02.test.mjs"

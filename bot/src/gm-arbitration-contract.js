@@ -34,6 +34,8 @@ const witnessAccounts=obj({version:{type:'integer',enum:[1]},feature_ref:{type:'
   environment:str(200),incident_ref:str(200),accounts:{type:'array',minItems:3,maxItems:3,
     items:obj({npc:str(200),unit_ref:str(200),evidence_ref:str(200),truth_ref:str(200)})},
   inconsistency:{type:'array',minItems:3,maxItems:3,items:obj({left:str(200),right:str(200)})}});
+const maintenanceMemoryAction=obj({version:{type:'integer',enum:[1]},feature_ref:{type:'string',enum:['environment:veil-anchor-chamber:maintenance-memory']},
+  environment:str(200),detail:obj({kind:{type:'string',enum:['historical_memory']},category:{type:'string',enum:['']},property:str(160),service:{type:'string',enum:['']},value:{type:'string',enum:['']}})});
 export const unifiedArbitrationSchema={anyOf:[obj(unifiedV1),obj({...unifiedV1,version:{type:'integer',enum:[2]},pre_roll_fear:interrupt}),
   obj({...unifiedV1,version:{type:'integer',enum:[3]},pre_roll_fear:interrupt,
     environment_profiles:environmentProfiles}),
@@ -44,7 +46,9 @@ export const unifiedArbitrationSchema={anyOf:[obj(unifiedV1),obj({...unifiedV1,v
   obj({...unifiedV1,version:{type:'integer',enum:[6]},pre_roll_fear:interrupt,environment_profiles:environmentProfiles,
     environment_actions:{type:'array',maxItems:1,items:{anyOf:[arrivalAction,sceneAction,uploadStart,uploadAdvance,uploadAdjust]}}}),
   obj({...unifiedV1,version:{type:'integer',enum:[7]},pre_roll_fear:interrupt,environment_profiles:environmentProfiles,
-    environment_actions:{type:'array',maxItems:1,items:{anyOf:[arrivalAction,sceneAction,uploadStart,uploadAdvance,uploadAdjust,witnessAccounts]}}})]};
+    environment_actions:{type:'array',maxItems:1,items:{anyOf:[arrivalAction,sceneAction,uploadStart,uploadAdvance,uploadAdjust,witnessAccounts]}}}),
+  obj({...unifiedV1,version:{type:'integer',enum:[8]},pre_roll_fear:interrupt,environment_profiles:environmentProfiles,
+    environment_actions:{type:'array',maxItems:1,items:{anyOf:[arrivalAction,sceneAction,uploadStart,uploadAdvance,uploadAdjust,witnessAccounts,maintenanceMemoryAction]}}})]};
 export function matchesArbitrationSchema(schema,value){
   if(schema.anyOf)return schema.anyOf.some(s=>matchesArbitrationSchema(s,value));
   if(schema.enum)return schema.enum.includes(value);
