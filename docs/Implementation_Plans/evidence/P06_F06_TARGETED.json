@@ -1,0 +1,56 @@
+{
+  "run_id": "p06-f06-20261021-a",
+  "status": "TARGETED_PASS_AFTER_ASSERTION_REPAIR",
+  "branch": "codex/clean-ai-gm-2026-10",
+  "base_sha": "3cc939058b929a4941136b79fa99feb3a203af4e",
+  "input_sha256_for_repair_pass": {
+    "bot/src/native-feature-definitions.json": "ba501a52f60a03f69bed1cb2c14f79efddf3aee940a639c54ad220681570fdc8",
+    "bot/src/native-feature-catalog.js": "f1ef30b7162b56942a0decffd5851c5fa7be20b0cd29de2f0d73dd6248908bc0",
+    "bot/src/native-environment-capabilities.js": "7bce03e8084efda5a3be7cdccc9894edd93b989df9facade2b80d11fdecd4a85",
+    "bot/tests/ai-gm-2026-10/p06-f01.test.mjs": "933aebf47826cfa8d8601380993ad0c2041a0ae4c7c4c82d8e493ec048e12960",
+    "bot/tests/ai-gm-2026-10/p06-f04.test.mjs": "47b66cee72b0e83473b1f4875f405fd3c928a09133bcca1197981b6b6e112241",
+    "bot/tests/ai-gm-2026-10/p06-f05.test.mjs": "3f922920133f2a39f2ef899b76563c09b67acb5fb952869c5ab2fc0b9527be6a",
+    "bot/tests/ai-gm-2026-10/p06-f06.test.mjs": "617a4b5fb9542b0b1ba90dba771e6120acfa3d9e4863054230d652dc93827f6d",
+    "bot/tests/ai-gm-2026-10/coverage.json": "a0c138d138742701e9105263927cfdfed8140c1b3d17ed982d8dad17f4fd435f"
+  },
+  "attempts": [
+    {
+      "command": "node --test --test-reporter=tap tests/ai-gm-2026-10/p06-f01.test.mjs tests/ai-gm-2026-10/p06-f04.test.mjs tests/ai-gm-2026-10/p06-f05.test.mjs tests/ai-gm-2026-10/p06-f06.test.mjs",
+      "exit": 1,
+      "tests": 10,
+      "pass": 9,
+      "fail": 1,
+      "reason": "p06-f01 retained a review-only expectation for the newly supported Too Loud to Think occurrence; the other nine tests passed."
+    },
+    {
+      "command": "node --test --test-reporter=tap tests/ai-gm-2026-10/p06-f01.test.mjs",
+      "exit": 0,
+      "tests": 3,
+      "pass": 3,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "duration_ms": 307.9298
+    }
+  ],
+  "syntax": [
+    { "path": "bot/src/native-feature-catalog.js", "exit": 0 },
+    { "path": "bot/src/native-environment-capabilities.js", "exit": 0 },
+    { "path": "bot/tests/ai-gm-2026-10/p06-f01.test.mjs", "initial_exit": 0, "repair_exit": 0 },
+    { "path": "bot/tests/ai-gm-2026-10/p06-f06.test.mjs", "exit": 0 }
+  ],
+  "unique_final_tests": {
+    "p06-f01": 3,
+    "p06-f04": 3,
+    "p06-f05": 2,
+    "p06-f06": 2,
+    "pass": 10,
+    "fail": 0
+  },
+  "provider_calls": 0,
+  "provider_tokens": 0,
+  "provider_test_spend_usd": 0,
+  "codex_usage": "Unavailable",
+  "release_authorized": false,
+  "scope_limit": "Exact descriptor and capability contract; existing runtime adapter is not fully requalified by this delta."
+}

@@ -130,7 +130,7 @@
 | [environment:aster-vale-predictive-lab:everything-logs](occurrences/environment--aster-vale-predictive-lab--everything-logs/LEDGER.md) | review_only | verified_source | none |
 | [environment:aster-vale-predictive-lab:model-room](occurrences/environment--aster-vale-predictive-lab--model-room/LEDGER.md) | review_only | verified_source | none |
 | [environment:aster-vale-predictive-lab:containment-shutters](occurrences/environment--aster-vale-predictive-lab--containment-shutters/LEDGER.md) | review_only | verified_source | none |
-| [environment:haunted-nightclub:too-loud-to-think](occurrences/environment--haunted-nightclub--too-loud-to-think/LEDGER.md) | review_only | verified_source | none |
+| [environment:haunted-nightclub:too-loud-to-think](occurrences/environment--haunted-nightclub--too-loud-to-think/LEDGER.md) | supported | verified_source | nightclub_auditory_disadvantage |
 | [environment:haunted-nightclub:vip-threshold](occurrences/environment--haunted-nightclub--vip-threshold/LEDGER.md) | review_only | verified_source | none |
 | [environment:haunted-nightclub:everybody-saw-something-different](occurrences/environment--haunted-nightclub--everybody-saw-something-different/LEDGER.md) | review_only | verified_source | none |
 | [environment:pale-court-townhouse:guest-right](occurrences/environment--pale-court-townhouse--guest-right/LEDGER.md) | review_only | verified_source | none |

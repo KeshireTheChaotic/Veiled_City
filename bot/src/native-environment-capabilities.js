@@ -20,7 +20,7 @@ const contracts=Object.freeze({
     kind:'mundane_detail',fear:1,properties:{lighting:['bright','dim','dark'],temperature:['cool','temperate','warm'],
       wall_color:['white','grey','black','blue','green','red'],ambient_sound:['silent','humming','ringing']},
     effect:'One bounded mundane environmental property, no character condition or response.'},
-  'environment:haunted-nightclub:too-loud-to-think':{handler:'nightclub_auditory_disadvantage',entry:'decisions',
+  'environment:haunted-nightclub:too-loud-to-think':{handler:'nightclub_auditory_disadvantage',entry:'decisions',fear:0,
     disposition:'request_pc_action_roll',stakes_kind:'attempt_only',advantage:false,disadvantage:true,
     effect:'Exact delicate auditory/verbal applicability ruling; real owner quiet_environment outcome ends this disadvantage.'},
   'environment:aster-vale-predictive-lab:everything-logs':{handler:'intrusion_trace_owner_payment',entry:'decisions',
@@ -40,5 +40,7 @@ export function environmentProposalContract(feature){
     ||feature.target_policy!=='none'||feature.roll_protocol!=='none'))return null;
   if(feature.native_handler==='upload_countdown'&&(feature.type!=='Action'||feature.trigger_kind!=='spotlight_action'
     ||feature.target_policy!=='none'||feature.roll_protocol!=='none'))return null;
+  if(feature.native_handler==='nightclub_auditory_disadvantage'&&(feature.type!=='Passive'||feature.trigger_kind!=='passive'
+    ||feature.target_policy!=='none'||feature.roll_protocol!=='native_pc_action_disadvantage'))return null;
   return structuredClone(contract);
 }

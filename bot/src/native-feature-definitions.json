@@ -2338,13 +2338,13 @@
       "template_hash": "06e5c361501b24e80c323111bd5c600814016b17f8421e83442c54eba4fb5a84",
       "index": 0,
       "type": "Passive",
-      "status": "review_only",
-      "trigger_kind": "unmapped",
-      "target_policy": "unmapped",
-      "roll_protocol": "unmapped",
-      "costs": null,
-      "native_handler": null,
-      "reason": "No qualified native feature handler."
+      "status": "supported",
+      "trigger_kind": "passive",
+      "target_policy": "none",
+      "roll_protocol": "native_pc_action_disadvantage",
+      "costs": [],
+      "native_handler": "nightclub_auditory_disadvantage",
+      "reason": "Exact source-qualified contextual ordinary action-roll disadvantage adapter."
     },
     {
       "feature_key": "environment:haunted-nightclub:vip-threshold",
