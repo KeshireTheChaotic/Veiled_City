@@ -68,7 +68,8 @@
     "bot/tests/ai-gm-2026-10/p06-f06.test.mjs",
     "bot/tests/ai-gm-2026-10/p06-f07.test.mjs",
     "bot/tests/ai-gm-2026-10/p06-f08.test.mjs",
-    "bot/tests/ai-gm-2026-10/p06-f09.test.mjs"
+    "bot/tests/ai-gm-2026-10/p06-f09.test.mjs",
+    "bot/tests/ai-gm-2026-10/p06-f10.test.mjs"
   ],
   "bot/src/native-environment-capabilities.js": [
     "bot/tests/ai-gm-2026-10/p06-f04.test.mjs",
@@ -76,7 +77,11 @@
     "bot/tests/ai-gm-2026-10/p06-f06.test.mjs",
     "bot/tests/ai-gm-2026-10/p06-f07.test.mjs",
     "bot/tests/ai-gm-2026-10/p06-f08.test.mjs",
-    "bot/tests/ai-gm-2026-10/p06-f09.test.mjs"
+    "bot/tests/ai-gm-2026-10/p06-f09.test.mjs",
+    "bot/tests/ai-gm-2026-10/p06-f10.test.mjs"
+  ],
+  "bot/src/native-environment-scene.js": [
+    "bot/tests/ai-gm-2026-10/p06-f10.test.mjs"
   ],
   "bot/src/character-export.js": [
     "bot/tests/ai-gm-2026-10/p06-f02.test.mjs"

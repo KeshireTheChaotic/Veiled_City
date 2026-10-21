@@ -17,8 +17,6 @@ const rules=Object.freeze({
   'environment:veil-anchor-chamber:automatic-correction':{handler:'environment_mundane_correction',kind:'mundane_detail',fear:1}
 });
 const emergencies=Object.freeze(['hospital','traffic','fire','elevator','refrigeration','public_safety']);
-const mundane=Object.freeze({lighting:['bright','dim','dark'],temperature:['cool','temperate','warm'],
-  wall_color:['white','grey','black','blue','green','red'],ambient_sound:['silent','humming','ringing']});
 const keyFor=(origin,environment,feature)=>`environment-scene:${hash([origin.source,origin.scope,environment,feature])}`;
 function ruleFor(key){
   const rule=rules[key],d=featureDisposition(key);
@@ -48,8 +46,15 @@ function detailProof(db,guild,p,location,rule,scope){
     return {kind:d.kind,category:d.category,service:s.record_key,service_hash:hash(s),source:s.source_event,
       source_hash:hash(source),mechanical_service_delta:0,pc_response:'unselected'};
   }
-  if(d.category||d.service||!mundane[d.property]?.includes(d.value))throw fail('environment_mundane_detail_closed_domain');
-  return {kind:d.kind,property:d.property,value:d.value,pc_response:'unselected'};
+  return validateMundaneEnvironmentDetail(d);
+}
+/** Open mundane property/value pairs are narrative proposals; this validator grants no mechanics. */
+export function validateMundaneEnvironmentDetail(detail){
+  if(!detail||Object.keys(detail).sort().join()!=='category,kind,property,service,value'||detail.kind!=='mundane_detail'
+    ||detail.category||detail.service||typeof detail.property!=='string'||typeof detail.value!=='string'
+    ||detail.property.length>160||detail.value.length>160||!detail.property.trim()||!detail.value.trim()
+    ||/[\x00-\x1f\x7f\u202a-\u202e\u2066-\u2069]/u.test(detail.property+detail.value))throw fail('environment_mundane_detail_shape');
+  return {kind:detail.kind,property:detail.property,value:detail.value,pc_response:'unselected'};
 }
 /** Sealed GM origin is the execution capability; fields supplied by a model are proposals only. */
 export function applyEnvironmentSceneAction(db,guild,origin,board,input){

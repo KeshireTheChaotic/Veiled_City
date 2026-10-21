@@ -17,9 +17,8 @@ const contracts=Object.freeze({
     kind:'service_emergency',categories:['hospital','traffic','fire','elevator','refrigeration','public_safety'],fear:0,
     effect:'Actual local service required; establishes an emergency, not numerical service damage or PC injury.'},
   'environment:veil-anchor-chamber:automatic-correction':{handler:'environment_mundane_correction',transport:5,entry:'environment_actions',
-    kind:'mundane_detail',fear:1,properties:{lighting:['bright','dim','dark'],temperature:['cool','temperate','warm'],
-      wall_color:['white','grey','black','blue','green','red'],ambient_sound:['silent','humming','ringing']},
-    effect:'One bounded mundane environmental property, no character condition or response.'},
+    kind:'mundane_detail',fear:1,detail_shape:'open_property_and_value',
+    effect:'One creatively authored mundane environmental detail; exactly one printed Fear, with no automatic PC action or added Daggerheart mechanic.'},
   'environment:haunted-nightclub:too-loud-to-think':{handler:'nightclub_auditory_disadvantage',entry:'decisions',fear:0,
     disposition:'request_pc_action_roll',stakes_kind:'attempt_only',advantage:false,disadvantage:true,
     effect:'Exact delicate auditory/verbal applicability ruling; real owner quiet_environment outcome ends this disadvantage.'},
@@ -48,5 +47,7 @@ export function environmentProposalContract(feature){
     ||feature.target_policy!=='none'||feature.roll_protocol!=='none'))return null;
   if(feature.native_handler==='nightclub_vip_threshold'&&(feature.type!=='Passive'||feature.trigger_kind!=='attempted_private_floor_entry'
     ||feature.target_policy!=='acting_pc'||feature.roll_protocol!=='established_credential_or_successful_deception'))return null;
+  if(feature.native_handler==='environment_mundane_correction'&&(feature.type!=='Action'||feature.trigger_kind!=='spotlight_action'
+    ||feature.target_policy!=='none'||feature.roll_protocol!=='none'))return null;
   return structuredClone(contract);
 }
