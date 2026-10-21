@@ -9,6 +9,7 @@
 | [P06-F05](../../features/P06-F05/LEDGER.md) | TARGETED PASS / SUPPORTED | `p06-f05-20261021-a`; 5/5 tests; see feature ledger |
 | [P06-F06](../../features/P06-F06/LEDGER.md) | TARGETED PASS / SUPPORTED | `p06-f06-20261021-a`; 10 unique passing tests after one catalog assertion repair; see feature ledger |
 | [P06-F07](../../features/P06-F07/LEDGER.md) | TARGETED PASS / SUPPORTED | `p06-f07-20261021-a`; 12/12 tests; see feature ledger |
+| [P06-F08](../../features/P06-F08/LEDGER.md) | TARGETED PASS / SUPPORTED | `p06-f08-20261021-a`; 14/14 tests; see feature ledger |
 
 Audit anchor: `9e7bf0687357cf96fbe2ea09a04b3e9d2975f6a3`. P00-P05 implementation baseline: `8e01519b6511bc90af6a1c675e4a9950f12b703c`; final P06 source: `bd517f2ad101d7a8c14dcbd36476ca67748d180b`. Baseline fresh delta: 47/47 tests passed across 20 fresh files and 43 changed-file syntax checks passed (exit 0), run `fresh-delta-1792599054739`. P06-F04 delta is separately recorded below. This phase is covered by feature results and is not 47 unique tests on its own. Critical blockers: none established. Phase-specific holds and unverified work remain below.
 
@@ -57,5 +58,7 @@ P06-F06 enables the exact Too Loud to Think native roll-modifier mapping. Initia
 Latest implementation SHA: `ca570f89768777e1c165f7d74d6b281e0a1c6580`; current inventory remains 19 supported / 134 review-only.
 
 P06-F07 enables Emergency Cascade through its existing exact scene-action route. The shared fresh batch passed 12/12 with 4/4 syntax checks. Current catalog: 20 supported / 133 review-only / 0 needs-authoring. Provider calls/tokens/spend 0/0/$0; no cache claim. No owner question, new narrative restriction or critical blocker; release unauthorized.
+
+P06-F08 enables Code Blue through its exact existing medical emergency route. Fresh shared batch passed 14/14 with 4/4 syntax checks. Catalog: 21 supported / 132 review-only / 0 needs-authoring. Provider calls/tokens/spend 0/0/$0; no cache claim. No owner question, new narrative restriction or critical blocker; release unauthorized.
 
 Latest implementation SHA: `2958560f52e0bce6c1dc91eacd0b1532875f1c29`; current inventory remains 20 supported / 133 review-only.
