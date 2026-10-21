@@ -8,6 +8,7 @@ import {projectNativeAdversaryBreakTheHoldContext} from './native-adversary-brea
 import {projectNativeAdversaryProfessionalEntryContext} from './native-adversary-professional-entry.js';
 import {projectNativeAdversaryMarkTheVariableContext} from './native-adversary-mark-the-variable.js';
 import {projectNativeAdversaryReadoutContext} from './native-adversary-readout.js';
+import {projectNativeAdversaryRideTheCurrentContext} from './native-adversary-ride-the-current.js';
 import {arbitrationFailure as fail} from './gm-arbitration-contract.js';
 
 /** A template/display name does not bind a person to an adversary or make its features available. */
@@ -25,7 +26,7 @@ export function nativeAdversaryFeatureContext(db,guild,origin,actor,{library}={}
       features:features.map(f=>({key:f.feature_key,hash:hash(f)}))};
   return Object.freeze({...terms,feature_rule_contexts:[...projectNativeAdversaryBreakTheHoldContext(terms),
       ...projectNativeAdversaryProfessionalEntryContext(terms),...projectNativeAdversaryMarkTheVariableContext(terms),
-      ...projectNativeAdversaryReadoutContext(terms)],
+      ...projectNativeAdversaryReadoutContext(terms),...projectNativeAdversaryRideTheCurrentContext(terms)],
     revision:hash(terms),execution_authorized:false,publication_authorized:false});
 }
 
