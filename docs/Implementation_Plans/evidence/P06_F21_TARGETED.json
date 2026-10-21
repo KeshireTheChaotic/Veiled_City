@@ -4,6 +4,7 @@
   "audit_anchor": "9e7bf0687357cf96fbe2ea09a04b3e9d2975f6a3",
   "branch": "codex/clean-ai-gm-2026-10",
   "start_head": "7aa3f7e1654ad43d0ddf95ca52fc23857afbea0a",
+  "implementation_commit": "9220c2a6c2cba300550eb7f2d721a54edc7b5efb",
   "initial_batch": {"run_id":"p06-f21-20261021-a","exit_code":1,"tests":64,"passed":63,"failed":1,"cancelled":0,"skipped":0,"duration_ms":1492.5226,"failure":"Fresh P06-F04 regression assertion still expected district-blackout:no-ordinary-signal to be review-only after F21 promotion. Corrected that assertion to an unrelated review-only city-vs-river occurrence."},
   "repair_batch": {
     "run_id": "p06-f21-20261021-a-repair-1",
