@@ -18,6 +18,7 @@ Complete source-qualified features, reconcile rules and qualify the changed impl
 - [P06-F07 — Enable source-qualified Emergency Cascade](../../features/P06-F07/SCOPE.md)
 - [P06-F08 — Enable source-qualified Code Blue](../../features/P06-F08/SCOPE.md)
 - [P06-F09 — Enable source-qualified VIP Threshold admission](../../features/P06-F09/SCOPE.md)
+- [P06-F10 — Broaden Automatic Correction to authored mundane details](../../features/P06-F10/SCOPE.md)
 
 ## Exit
 All safe features have current diff, truthful ledger and newly authored tests covering only code changed in this phase. Local source gaps and owner decisions remain visible but do not stop other safe work. No automatic release qualification.

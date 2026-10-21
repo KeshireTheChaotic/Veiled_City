@@ -150,7 +150,7 @@
 | [environment:district-blackout:choir-volume](occurrences/environment--district-blackout--choir-volume/LEDGER.md) | review_only | verified_source | none |
 | [environment:veil-anchor-chamber:consensus-engine](occurrences/environment--veil-anchor-chamber--consensus-engine/LEDGER.md) | review_only | verified_source | none |
 | [environment:veil-anchor-chamber:maintenance-memory](occurrences/environment--veil-anchor-chamber--maintenance-memory/LEDGER.md) | review_only | verified_source | none |
-| [environment:veil-anchor-chamber:automatic-correction](occurrences/environment--veil-anchor-chamber--automatic-correction/LEDGER.md) | review_only | verified_source | none |
+| [environment:veil-anchor-chamber:automatic-correction](occurrences/environment--veil-anchor-chamber--automatic-correction/LEDGER.md) | supported | verified_source | environment_mundane_correction |
 | [environment:rupture-district:no-consensus](occurrences/environment--rupture-district--no-consensus/LEDGER.md) | review_only | verified_source | none |
 | [environment:rupture-district:reality-collision](occurrences/environment--rupture-district--reality-collision/LEDGER.md) | review_only | verified_source | none |
 | [environment:rupture-district:mass-witness](occurrences/environment--rupture-district--mass-witness/LEDGER.md) | review_only | verified_source | none |
