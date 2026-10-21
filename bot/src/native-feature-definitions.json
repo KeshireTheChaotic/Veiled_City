@@ -2189,13 +2189,13 @@
       "template_hash": "7907b02aa1aabb205de4b7ee6a37ac09ff6c6f2f047daf555190b45734d99653",
       "index": 1,
       "type": "Action",
-      "status": "review_only",
-      "trigger_kind": "unmapped",
-      "target_policy": "unmapped",
-      "roll_protocol": "unmapped",
-      "costs": null,
-      "native_handler": null,
-      "reason": "No qualified native feature handler."
+      "status": "supported",
+      "trigger_kind": "spotlight_action",
+      "target_policy": "none",
+      "roll_protocol": "none",
+      "costs": [],
+      "native_handler": "environment_door_chain",
+      "reason": "Source-bound frightened resident asks for an explanation; no PC response is assumed."
     },
     {
       "feature_key": "environment:apartment-veil-breach:upload-in-progress",

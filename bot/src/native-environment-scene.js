@@ -10,6 +10,7 @@ import {sceneFictionHash as hash,narrativeSourceVisible} from './scene-fiction-c
 import {indexWorldEvent} from './city-calendar.js';
 import {assertEnvironmentAudience} from './native-environment-audience.js';
 import {nativeEstablishedFact} from './native-established-fact.js';
+import {nativeEnvironmentDoorChainSituation} from './native-environment-door-chain.js';
 import {arbitrationFailure as fail} from './gm-arbitration-contract.js';
 const issuer='native:environment-scene';
 const rules=Object.freeze({
@@ -199,5 +200,6 @@ export function nativeEnvironmentSituation(db,guild,scope,location){
     }catch(error){if(!['GM_ARBITRATION','SCENE_FICTION','STATE_CONFLICT'].includes(error.code))throw error;}
     if(result.length===6)break;
   }
+  if(result.length<6)result.push(...nativeEnvironmentDoorChainSituation(db,guild,scope,location).slice(0,6-result.length));
   return result;
 }

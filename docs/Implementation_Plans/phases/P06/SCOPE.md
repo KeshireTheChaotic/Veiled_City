@@ -22,6 +22,7 @@ Complete source-qualified features, reconcile rules and qualify the changed impl
 - [P06-F11 — Enable source-qualified witness accounts](../../features/P06-F11/SCOPE.md)
 - [P06-F12 — Enable Maintenance Memory](../../features/P06-F12/SCOPE.md)
 - [P06-F13 — Enable Storm Drain Shrine Local Memory](../../features/P06-F13/SCOPE.md)
+- [P06-F14 — Enable Apartment Veil Breach Door Chain](../../features/P06-F14/SCOPE.md)
 
 ## Exit
 All safe features have current diff, truthful ledger and newly authored tests covering only code changed in this phase. Local source gaps and owner decisions remain visible but do not stop other safe work. No automatic release qualification.
