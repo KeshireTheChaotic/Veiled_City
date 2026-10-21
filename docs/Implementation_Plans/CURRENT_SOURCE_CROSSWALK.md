@@ -1,7 +1,7 @@
 # Current source crosswalk
 
 Audit anchor: `9e7bf0687357cf96fbe2ea09a04b3e9d2975f6a3`.
-Inspected implementation checkout: `82f8c288792f15db967b0acbb2a278af6170d76b`, local branch
+Inspected implementation checkout: `66151f51336de73b40ca4090386432bbf786fcd8`, local branch
 `codex/clean-ai-gm-2026-10`. This crosswalk is being updated in the phase closeout commit.
 Initial audit worktree: 22 modified plan documents plus untracked TEST_EXECUTION_NO_POLL.md;
 all retained through the clean-plan commits. Subsequent scoped source edits are recorded in their feature ledgers.
@@ -12,7 +12,7 @@ all retained through the clean-plan commits. Subsequent scoped source edits are 
 | Native mechanics and owner choices | roll-requests.js, gm-native-rolls.js, pre-roll-fear.js | Existing authority pathways; no whole-system qualification claimed |
 | Living world | autonomous-world.js, npc-cognition.js, world-narrative-bridge.js | Existing implementation; changed contracts require fresh tests |
 | Private audiences / delivery | audience-native-v9.js, assembly modules, outbox | Existing boundaries must survive changes; live Discord unverified |
-| Native catalog | bot/src/native-feature-definitions.json | Parsed locally: 153 = 36 supported + 117 review_only + 0 needs_authoring; latest P06 deltas include Door Chain, Something in Imaging, HIPAA and Procedure, Thin Walls, Chain of Title, No Consensus, Metaphor Is Physics, No Ordinary Signal, Consensus Engine, and Guest Right; labels are not fresh qualification |
+| Native catalog | bot/src/native-feature-definitions.json | Qualified delta: 153 = 37 supported + 116 review_only + 0 needs_authoring; latest P06-F24 is the source-bound Private Room action cue; labels are not whole-release qualification |
 | Historical implementation package | docs/Active_Implementation | Absent in this checkout; historical links are not current execution authority |
 | CI | .github/workflows | Absent in this checkout; audit describes another snapshot, not current local CI |
 
