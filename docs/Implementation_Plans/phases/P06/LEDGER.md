@@ -2,12 +2,12 @@
 
 | Feature | Status | Evidence |
 |---|---|---|
-| [P06-F01](../../features/P06-F01/LEDGER.md) | SOURCE PASS / LOCAL HOLDS | Final union 8e01519; see feature ledger |
-| [P06-F02](../../features/P06-F02/LEDGER.md) | TARGETED PASS | Final union 8e01519; see feature ledger |
-| [P06-F03](../../features/P06-F03/LEDGER.md) | TARGETED PASS | Final union 8e01519; see feature ledger |
-| [P06-F04](../../features/P06-F04/LEDGER.md) | TARGETED PASS | `p06-f04-20261021-a`; 6/6 tests; see feature ledger |
+| [P06-F01](../../features/P06-F01/LEDGER.md) | SOURCE PASS / LOCAL HOLDS | Phase baseline 8e01519; occurrence changes through bd517f2; see feature ledger |
+| [P06-F02](../../features/P06-F02/LEDGER.md) | TARGETED PASS | Phase baseline 8e01519; see feature ledger |
+| [P06-F03](../../features/P06-F03/LEDGER.md) | TARGETED PASS | Phase baseline 8e01519; see feature ledger |
+| [P06-F04](../../features/P06-F04/LEDGER.md) | TARGETED PASS | `p06-f04-20261021-a`; 6/6 tests; implementation `bd517f2`; see feature ledger |
 
-Audit anchor: `9e7bf0687357cf96fbe2ea09a04b3e9d2975f6a3`. Final source SHA: `8e01519b6511bc90af6a1c675e4a9950f12b703c`. Final fresh delta: 47/47 tests passed across 20 fresh files and 43 changed-file syntax checks passed (exit 0), run `fresh-delta-1792599054739`. This phase is covered by the feature results below and is not 47 unique tests on its own. Critical blockers: none established. Phase-specific holds and unverified work remain below.
+Audit anchor: `9e7bf0687357cf96fbe2ea09a04b3e9d2975f6a3`. P00-P05 implementation baseline: `8e01519b6511bc90af6a1c675e4a9950f12b703c`; final P06 source: `bd517f2ad101d7a8c14dcbd36476ca67748d180b`. Baseline fresh delta: 47/47 tests passed across 20 fresh files and 43 changed-file syntax checks passed (exit 0), run `fresh-delta-1792599054739`. P06-F04 delta is separately recorded below. This phase is covered by feature results and is not 47 unique tests on its own. Critical blockers: none established. Phase-specific holds and unverified work remain below.
 
 **Test execution:** one final blocking frozen-delta run, no polling: `fresh-delta-1792599054739`, exit 0. Full command, hashes and concise results: [FINAL_DELTA.json](../../evidence/FINAL_DELTA.json). Feature ledgers retain the individual affected-code batches and any repair history.
 
@@ -42,3 +42,5 @@ Current checkout before closeout commit: `codex/clean-ai-gm-2026-10` / `62e13b4b
 ## P06-F04 phase checkpoint — 2026-10-21
 
 Current base HEAD: `97d3a696831af78d5eb42865467be2dab4b30797`; tested implementation inputs are hash-pinned in [P06_F04_TARGETED.json](../../evidence/P06_F04_TARGETED.json). Sirens Outside is now the 17th supported occurrence; 136 remain review-only. Frozen affected-code batch `p06-f04-20261021-a` passed 6/6 tests and 4/4 syntax checks. Only `p06-f01.test.mjs` was rerun among previous tests because its associated catalog module and expected count changed; `p06-f04.test.mjs` is new. No other passing tests were rerun. Provider calls/tokens/spend 0/0/$0; Codex usage unavailable. No owner restrictions or critical blockers. Local holds remain occurrence-scoped. Not full release qualification; release unauthorized.
+
+P06 phase commit: `bd517f2ad101d7a8c14dcbd36476ca67748d180b`. Current catalog is 17 supported, 136 review-only, 0 needs-authoring. These 136 are occurrence-local review holds, not a critical phase blocker. The source crosswalk and top-level inventory now reflect the implementation commit. No broad suite was run; no passing tests were rerun without associated code changes. Release authorization remains false.
