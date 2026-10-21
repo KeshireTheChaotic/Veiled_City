@@ -10,6 +10,6 @@ Status: SUPPORTED / TARGETED PASS.
 - Questions: none introduced by this source-only delta; no new narrative/autonomy restrictions proposed.
 - Critical blocker: none. Release authorization: none.
 
-Provider calls/tokens/spend: 0/0/$0; no cache used or savings claimed; Codex usage unavailable. No owner question or new narrative restriction. The current catalog has 102 review-only occurrences; whole-release qualification remains an open hold.
+Provider calls/tokens/spend: 0/0/$0; no cache used or savings claimed; Codex usage unavailable. No owner question or new narrative restriction. The current catalog has 101 review-only occurrences; whole-release qualification remains an open hold.
 
 Final tested source SHA: `8e01519b6511bc90af6a1c675e4a9950f12b703c`; run `fresh-delta-1792599054739` passed 47/47 union tests. The catalog test verifies this occurrence source; this is not occurrence effect qualification. Input/test hashes: parent final evidence.

@@ -47,6 +47,7 @@ Complete source-qualified features, reconcile rules and qualify the changed impl
 - [P06-F36 — Support Dead Platform Third Rail Spirit cue](../../features/P06-F36/SCOPE.md)
 - [P06-F37 — Enable Aster Vale Everything Logs](../../features/P06-F37/SCOPE.md)
 - [P06-F38 — Support the source-bound Containment Shutters cue](../../features/P06-F38/SCOPE.md)
+- [P06-F39 — Support the source-bound Break the Hold cue](../../features/P06-F39/SCOPE.md)
 
 ## Exit
 All safe features have current diff, truthful ledger and newly authored tests covering only code changed in this phase. Local source gaps and owner decisions remain visible but do not stop other safe work. No automatic release qualification.
