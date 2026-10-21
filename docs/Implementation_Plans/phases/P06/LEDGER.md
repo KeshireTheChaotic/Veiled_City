@@ -47,3 +47,5 @@ Current base HEAD: `97d3a696831af78d5eb42865467be2dab4b30797`; tested implementa
 P06 phase commit: `bd517f2ad101d7a8c14dcbd36476ca67748d180b`. Current catalog is 17 supported, 136 review-only, 0 needs-authoring. These 136 are occurrence-local review holds, not a critical phase blocker. The source crosswalk and top-level inventory now reflect the implementation commit. No broad suite was run; no passing tests were rerun without associated code changes. Release authorization remains false.
 
 P06-F05 promotes only Upload in Progress through its existing native countdown contract. Frozen batch `p06-f05-20261021-a` passed 5/5 with 4/4 syntax checks. Catalog is now 18 supported, 135 review-only, 0 needs-authoring. Provider calls/tokens/spend 0/0/$0; no cache claim; Codex usage unavailable. No new narrative restriction or critical blocker; release remains unauthorized.
+
+Latest source commit: `4969d912a37df3d8ee35418461dae0d61d1ba742`. README and current source crosswalk inventory fields match the 18/135 catalog state.

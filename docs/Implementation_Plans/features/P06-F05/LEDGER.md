@@ -2,6 +2,8 @@
 
 Status: TARGETED PASS; OCCURRENCE SUPPORTED.
 
+Implementation commit: `4969d912a37df3d8ee35418461dae0d61d1ba742`.
+
 ## Baseline
 
 Audit anchor: `9e7bf0687357cf96fbe2ea09a04b3e9d2975f6a3`. Branch: `codex/clean-ai-gm-2026-10`. Baseline HEAD: `a2b4b6411fc523d0dffea789cdbea6e560f2d8a0`. Implementation baseline: `bd517f2ad101d7a8c14dcbd36476ca67748d180b`.
