@@ -3,7 +3,7 @@
 **Repository:** `KeshireTheChaotic/Veiled_City`  
 **Target branch:** `codex/clean-ai-gm-2026-10`  
 **Reference SHA:** `81569d08699343e401fc11ba1eaed0f10b4fd37a`  
-**Status:** COMPLETE — targeted delta only; Feature 05 has an owner-rule hold; release remains unqualified
+**Status:** COMPLETE — targeted delta only; F05 owner rule implemented with local end-to-end holds; release remains unqualified
 
 ## Governing authority and placement
 
@@ -53,7 +53,7 @@ Each feature's ledger must document actual touched modules, evidence, questions,
 - Relevant source-backed feature context reaches AI GM without leaking GM-private material or treating source snippets as execution permissions.
 - Narrative descriptions can use unexecuted features plausibly without inventing committed mechanical results, PC choices or established canon.
 - Typed mechanical proposals cannot bypass existing native eligibility, exact source, dice, costs, owner choices, privacy, receipts or replay.
-- `Professional Entry` pilot either proves a legal first-use Advantage end-to-end or truthfully remains a documented local rules/adapter hold; no made-up trigger boundary.
+- `Professional Entry` now has an owner-defined prepared-position evidence contract, native source-bound qualification and per-encounter use receipts. Fresh delta tests pass; full database-backed incoming-defense/output and native preparation-producer integration remain local unverified work, not release qualification.
 - `Pack Pressure` and `Feedback` prove no functional degradation relative to their existing qualified native paths, or safely retain those paths and record the hold.
 - No automatic mass catalog promotion, new per-feature registry, unsupported generic effects, historical receipt deletion or full-release claim.
 - Actual new tests, execution results, source hashes and model-call/cost evidence recorded. Any planned but unverified work remains `PLANNED / UNQUALIFIED`.

@@ -40,3 +40,10 @@
 ## Instructions for Codex
 
 Record actual inspected source symbols, code changes, test command/run ID and results, source/test hashes, decisions, local holds, and exact rollback as execution proceeds. Keep a clear separation between `SOURCE CONTEXT AVAILABLE`, `MECHANIC QUALIFIED`, and `LIVE END-TO-END VERIFIED`.
+
+## Phase follow-up evidence — 2026-10-22
+
+- F05's former owner-rule hold was resolved and implemented in isolated commit `66f6764a740856b34accec1684216d5c9c64b7ea`; see [F05 ledger](../../features/P09-F05/LEDGER.md) for all six production SHA-256 values, the new test hash, run history and explicit local holds.
+- Final F05 batch: `p09-f05-20261022-05`, exit 0, 4 passed / 0 failed / 0 skipped. Changed JS/MJS syntax checks passed. Aggregate final targeted P09 evidence is 8 passed / 0 failed / 0 skipped across F02, F06 and F05.
+- Mechanic source/once-use boundary is covered by fresh tests; live database-backed defense, damage and publication flow and a current native-preparation record producer are not. Release remains unqualified; no retirement, production or deployment approval is inferred.
+- Provider/model calls, tokens, spend and new cache entries remain 0. No tests outside the fresh changed-code folder were used.

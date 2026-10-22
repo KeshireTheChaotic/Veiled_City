@@ -47,7 +47,7 @@ The following completion record describes the original P09 closeout before the o
 - Test SHA-256: `p09-f05.test.mjs` `5A0F1533395DF27E018F6F451D220EE3B105075BE1F43807F7BE8F5AE9F1B2A3`.
 - Provider/model calls, tokens and spend: **0 / 0 / $0**. Cache changes: **0**. Latency and full live narrative behavior: **UNMEASURED**. No full database-backed Discord/incoming-defense workflow was run; test results are delta evidence, not end-to-end certification.
 - Critical blockers: **NONE**. Local unverified work: native-preparation producer integration and complete roll/defense/publication workflow. Push, merge, production, deployment and release authorization remain **FALSE**.
-- The F05 implementation commit is recorded in the P09 phase follow-up ledger after commit; rollback is the F05 feature commit while retaining the P06 source cue and prior saved readers.
+- Feature implementation commit: `66f6764a740856b34accec1684216d5c9c64b7ea`. Rollback this F05 feature commit while retaining the P06 source cue and prior saved readers.
 
 ## Instructions for Codex
 
