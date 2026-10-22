@@ -1,7 +1,7 @@
 # Current source crosswalk
 
 Audit anchor: `9e7bf0687357cf96fbe2ea09a04b3e9d2975f6a3`.
-Inspected implementation checkout: `20a6a13e83cc3b6a17187aaf195c5b16a71c421c`, local branch
+Inspected implementation checkout: `b272b6129dcdc72f31ab6e73a92bc3c5e9a4f58c`, local branch
 `codex/clean-ai-gm-2026-10`. This crosswalk is being updated in the phase closeout commit.
 Initial audit worktree: 22 modified plan documents plus untracked TEST_EXECUTION_NO_POLL.md;
 all retained through the clean-plan commits. Subsequent scoped source edits are recorded in their feature ledgers.
@@ -12,7 +12,7 @@ all retained through the clean-plan commits. Subsequent scoped source edits are 
 | Native mechanics and owner choices | roll-requests.js, gm-native-rolls.js, pre-roll-fear.js | Existing authority pathways; no whole-system qualification claimed |
 | Living world | autonomous-world.js, npc-cognition.js, world-narrative-bridge.js | Existing implementation; changed contracts require fresh tests |
 | Private audiences / delivery | audience-native-v9.js, assembly modules, outbox | Existing boundaries must survive changes; live Discord unverified |
-| Native catalog | bot/src/native-feature-definitions.json | Qualified delta: 153 = 72 supported + 81 review_only + 0 needs_authoring; 71 registered handler keys and 60 P06 handler families; P06-F34–F36, F38–F48, F50–F60 include exact source-bound cues whose described mechanical outcomes remain individually governed by native pathways; F49 hardens owner-authorized HR14 v1; F37 enables the existing failure-only native trace/owner-choice route; F57 passed 209/209, F59 213/213, and F60 217/217 mapped fresh tests; labels are not whole-release qualification |
+| Native catalog | bot/src/native-feature-definitions.json | Qualified delta: 153 = 73 supported + 80 review_only + 0 needs_authoring; 72 registered handler keys and 61 P06 handler families; P06-F34–F36, F38–F48, F50–F61 include exact source-bound cues whose described mechanical outcomes remain individually governed by native pathways; F49 hardens owner-authorized HR14 v1; F37 enables the existing failure-only native trace/owner-choice route; F57 passed 209/209, F59 213/213, F60 217/217, and F61 221/221 mapped fresh tests; labels are not whole-release qualification |
 | Historical implementation package | docs/Active_Implementation | Absent in this checkout; historical links are not current execution authority |
 | CI | .github/workflows | Absent in this checkout; audit describes another snapshot, not current local CI |
 

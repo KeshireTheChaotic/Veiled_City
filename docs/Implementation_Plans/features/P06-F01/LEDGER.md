@@ -177,3 +177,7 @@ Implementation commit `ef657cd153694a815d2e3ccb31533f513228fb45` supports Cicada
 - F59 Exit Clause: implementation `cfec6994c71f63b7423782bb15f3e8650f28dcae`; 213/213 mapped fresh tests. Fear, route/protection and social consequence receipts remain held. Evidence [F59](../../evidence/P06_F59_TARGETED.json).
 - F60 Predatory Grace: implementation `20a6a13e83cc3b6a17187aaf195c5b16a71c421c`; after one descriptor repair, 217/217 mapped fresh tests. Forced movement and per-scene prevention remain held. Evidence [F60](../../evidence/P06_F60_TARGETED.json).
 - Current inventory: 72 supported / 81 review-only / 0 needs-authoring. All provider costs 0; no cache claim; Codex usage unavailable. No critical blocker or outstanding owner restriction. Release unauthorized.
+
+## Resumption checkpoint — P06-F61 — 2026-10-22
+
+Pale Court Fixer Reputation Attack implementation `b272b6129dcdc72f31ab6e73a92bc3c5e9a4f58c`; frozen `p06-f61-20261022-a` passed 221/221 across 58 fresh files, syntax 5/5, JSON 2/2. Catalog 73 supported / 80 review-only / 0 needs-authoring; 72 handler keys / 61 P06 families. NPC Stress, institution validation, disadvantage lifecycle and replay remain held. Provider calls/tokens/spend 0/0/$0; no cache claim. No owner restriction or critical blocker; release unauthorized. Evidence [F61](../../evidence/P06_F61_TARGETED.json).

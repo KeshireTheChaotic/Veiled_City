@@ -7,7 +7,7 @@ stories survive between sessions.
 
 ## This development branch
 
-**Implementation branch:** `codex/clean-ai-gm-2026-10` · **Implementation source SHA:** `20a6a13e83cc3b6a17187aaf195c5b16a71c421c`
+**Implementation branch:** `codex/clean-ai-gm-2026-10` · **Implementation source SHA:** `b272b6129dcdc72f31ab6e73a92bc3c5e9a4f58c`
 **Application:** `0.0.0.1` ([package](bot/package.json)) · **SQLite schema:** `460`
 
 This checkout implements the [clean AI GM plan](docs/Implementation_Plans/README.md), anchored at audit `9e7bf0687357cf96fbe2ea09a04b3e9d2975f6a3`. It is not an assurance about an installed production instance. Older document
@@ -74,13 +74,13 @@ assembly, diagnostics and durable publication. Each retains its own flags,
 source, consent, rule and actor requirements. A flag is not blanket AI authority.
 
 At this rebuild, the special-feature catalog contains **153 occurrences**:
-**72 bounded supported**, **81 review-only**, and **0 needs-authoring**, using
-**60 P06 handler families**. Standard actions are separate. Supported means the exact
+**73 bounded supported**, **80 review-only**, and **0 needs-authoring**, using
+**61 P06 handler families**. Standard actions are separate. Supported means the exact
 documented adapter, not arbitrary variants or whole-release qualification.
 See the [feature crosswalk](docs/Active_Implementation/UNIFIED_ARBITRATION_FEATURE_COVERAGE.md)
 and [runtime catalog](bot/src/native-feature-definitions.json).
 
-Current execution follows [P00 through P06](docs/Implementation_Plans/README.md) and the [owner behavioral specification](docs/Implementation_Plans/OWNER_AI_GM_BEHAVIOR_SPEC.md). The [source crosswalk](docs/Implementation_Plans/CURRENT_SOURCE_CROSSWALK.md) distinguishes existing pathways, changed-code evidence and unverified work. The 81 review-only catalog occurrences remain local execution holds; no generic adapter is implied. Full release qualification, live Discord/provider testing and deployment require separate authorization.
+Current execution follows [P00 through P06](docs/Implementation_Plans/README.md) and the [owner behavioral specification](docs/Implementation_Plans/OWNER_AI_GM_BEHAVIOR_SPEC.md). The [source crosswalk](docs/Implementation_Plans/CURRENT_SOURCE_CROSSWALK.md) distinguishes existing pathways, changed-code evidence and unverified work. The 80 review-only catalog occurrences remain local execution holds; no generic adapter is implied. Full release qualification, live Discord/provider testing and deployment require separate authorization.
 
 ## Installation and setup
 
