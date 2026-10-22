@@ -34,3 +34,4 @@ The goal is an imaginative, impartial autonomous GM running a living world, rath
 - [P04 — Multiplayer and private fiction](phases/P04/SCOPE.md): Protect audience perspectives, overlapping intentions, hidden hooks, assembly and proxies.
 - [P05 — Latency, models and caching](phases/P05/SCOPE.md): Profile and reduce redundant model work, cache immutable inputs and improve Discord delivery.
 - [P06 — Native catalog and qualification](phases/P06/SCOPE.md): Complete source-qualified features, reconcile rules and qualify the changed implementation delta.
+- [P07 — Character-driven, party-aware narrative](phases/P07/SCOPE.md): Prefer verified organic overlap among comparable optional world opportunities without forcing convergence or displacing player response.

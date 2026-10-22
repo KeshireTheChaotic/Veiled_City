@@ -1,0 +1,48 @@
+# P07 — Character-Driven, Party-Aware Narrative
+
+**Authority:** [Owner AI GM behavior specification](../../OWNER_AI_GM_BEHAVIOR_SPEC.md), complementary to `content/ENGINE/AI_GM_CONSTITUTION.md`. **Reference at execution:** `codex/clean-ai-gm-2026-10` / `42ca6334bf19fb0a4a3b3f1ea38bf6cd6bd47b0d`.
+
+## Objective
+
+Where multiple equally eligible and similarly urgent optional developments already exist, prefer a naturally party-relevant opportunity when independently supported by entitled native evidence. Preserve individual character stories, NPC/faction autonomy, open player choices and private knowledge boundaries.
+
+## Non-goals and invariants
+
+- No mandatory convergence, common plot, party score, fixed narrative percentages, forced cooperation/co-location/party membership, or inference from absence/roster alone.
+- No PC decisions, feelings, dialogue, consent, movement, dice, resource choices, or success invented by the GM.
+- Native code alone validates and commits Daggerheart mechanics. Existing spotlight, source authority, privacy, saved readers, receipts and outbox contracts stay authoritative.
+- Active player declarations/questions, direct NPC responses, urgent causality and native obligations precede optional party-aware selection.
+- A compelling personal lead remains valid; party overlap is only a deterministic tie-break among comparable optional opportunities. Missing evidence preserves existing order.
+- No new narrative or autonomy restrictions without asking the owner. This phase implements a soft preference only.
+
+## Delivery sequence
+
+1. **P07-F01** baseline, source/data-flow map, decision examples and failure cases; documentation only.
+2. **P07-F02** pure bounded opportunity characterization and unit tests.
+3. **P07-F03** integrate after entitlement/deduplication and before the existing four-signal cap; preserve source hashes and revalidation.
+4. **P07-F04** minimal existing GM-private Director/writer guidance, with response obligations unchanged and no model-call increase.
+5. **P07-F05** inspect continuity, retrieval, multiplayer and privacy boundaries; test only modified production contracts.
+6. **P07-F06** fresh deterministic acceptance cases, coverage map, changed-file syntax and final delta evidence.
+
+Each feature has a separate scope and ledger and is committed after it is supported. Only fresh feature tests under `bot/tests/ai-gm-2026-10/` may run; never execute legacy tests, broad validation, provider tests or CI. Start each frozen batch once and never poll. Do not push, merge, deploy, restart, access production DB, or spend on live providers.
+
+## Data path and decision placement
+
+```text
+existing native/world sources
+  -> worldNarrativeBridgePacket: authorize scope, validate source, deduplicate
+  -> P07 deterministic tie-break (after eligibility, before slice(0, 4))
+  -> bindDirectorNarrativeSource / dramaticBrief (private source-bound guidance)
+  -> worldDirectorBridgeBeats and current Director/writer path
+  -> existing audience projection, revalidation, native receipts/outbox
+```
+
+Ranking cannot create or upgrade truth, provenance, scope, knowledge, location, commitment or salience. Revalidation continues to compare the current native signal snapshot, so changed sources cannot gain authority from their earlier rank.
+
+## Acceptance
+
+- Required responses and justified urgent single-character consequences cannot be displaced by optional overlap.
+- Verified independent links to distinct entitled character interests may break otherwise comparable optional ties; private-only or ambiguous evidence yields `unknown` and preserves order.
+- Stable deterministic order, current signal IDs/schema, current cap of four, replay validation and at-most-one Director beat remain intact.
+- No new model call, network, production DB use or invented causal link.
+- Offline results are delta evidence only; semantics, Discord delivery, production state and release qualification remain unverified absent separate authorization.
