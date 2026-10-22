@@ -93,3 +93,54 @@ The passing fresh coverage comprises F02 (4), F03 (3), F06 (4), F07 (2), F08 (4)
 **Authorization:** NOT DEPLOYED / NOT FULL RELEASE QUALIFIED / NO LIVE NARRATIVE QUALITY VALIDATION. NO PUSH / NO MERGE / NO DEPLOY / NO PRODUCTION DB / NO CI. Release authorization remains NOT AUTHORIZED. No new creative or autonomy restriction is pending owner decision; the only holds are lack of safe native proof/integration evidence.
 
 **Remote-ref discrepancy:** No `git push` command was invoked. A read-only check after local commit found `origin/codex/clean-ai-gm-2026-10` at the same final SHA and its local reflog entry says `update by push` at `2026-10-22 12:15:46 -0500`. The source of that ref update is not established from this checkout. No corrective remote operation was attempted. This is outside the approved release/push authorization and requires owner review.
+
+## Second corrective delta P07-F13..F18 (2026-10-22)
+
+**Phase status override:** P07 remains **PARTIAL — offline source-to-writer-context path verified; local holds remain; NOT RELEASE QUALIFIED**. This append supersedes earlier broad phase-complete language only for the new F13–F18 evidence and does not rewrite F01–F12 results.
+
+**Intake:** branch `codex/clean-ai-gm-2026-10`; actual HEAD `febd854fe47cfd2d5a070f2182b2c2af146d28f6`; tracked tree clean, with three preserved user-supplied untracked P07/P08 handoff/acceptance documents. Reference SHA `78dc7f159592f4904a5faafc91fb457c661873e5` was an ancestor, not a reset target. Read-only upstream at intake matched actual HEAD. No push was performed.
+
+**Implementation commit:** `9bf6f71fac5a4f0c7f1f02270d0b3c00735eef3f` on the requested branch. It adds the F13–F18 scope/ledger pairs, fresh SQLite fixture and tests, duplicate-safe runner loader, coverage unions, P07 scope addendum and plan index note. No change to P08/P09/native mechanics, action authority, database schema, authoring pipeline priorities, caps, or publication/outbox code.
+
+### Findings and acceptance disposition
+
+| Area | Status | Evidence and exact boundary |
+|---|---|---|
+| A4 non-conversation optional intersection | LOCAL HOLD, source-proven | Resolved intents and simulation receipts are causal/committed; encounter candidates do not bind two independently sourced PC hooks; scene intent board represents current actions, not optional opportunities. No non-speech party bonus was added. See F15 evidence matrix. |
+| A5 Director downstream projection | PARTIALLY VERIFIED | Two authenticated same-NPC speech opportunities were selected, appeared in the real mocked `GMService.runWorldDirector` input, were rebound/revalidated, and appeared in the audience-bound writer packet with two of four beat slots available. No four-committed-beat collision fixture; no existing observations/consequences were reordered. |
+| A6 source integration | PARTIALLY VERIFIED | Disposable SQLite builds current owner, scene, presence, accepted speech and heard-memory records; test reaches native bridge, Director, reader and writer-context builder. The writer did not generate playable prose and no output was published. |
+| Coverage loader | FIXED + TESTED | The actual fresh runner uses duplicate-decoded-root-key detection before parsing; escaped/whitespace duplicates and malformed/trailing JSON fail closed; current coverage unions are asserted. |
+| P07-F13 / F14 / F15 / F16 / F17 / F18 | COMPLETE / PARTIAL / LOCAL HOLD / COMPLETE / PARTIAL / COMPLETE | Individual evidence is in each feature ledger. F18 complete means evidence closeout only, not phase completion or release. |
+
+### Fresh execution evidence
+
+Final post-repair union, from `bot/`:
+
+`node --test --test-reporter=tap tests/ai-gm-2026-10/p07-f13.test.mjs tests/ai-gm-2026-10/p07-f14.test.mjs tests/ai-gm-2026-10/p07-f16.test.mjs tests/ai-gm-2026-10/p07-f17.test.mjs`
+
+Exit 0; 6 passed, 0 failed, 0 cancelled, 0 skipped, 0 todo; Node duration 1070.5177 ms. The same single blocking invocation ran `node --check` on `bot/scripts/ai-gm-delta.mjs`, the new fixture and all four new tests; all passed. `git diff --check` passed.
+
+Earlier results are retained accurately: the first two repair batches each exited 1 (2 passed / 4 failed). Initial fixture data did not persist/reload the PC location needed by the native arrival/dialogue writers, and the coverage assertion put the F16 test under bridge mappings rather than the runner mapping. Those setup/assertion defects were repaired. A final batch passed 6/6. Following an EOF-only whitespace edit to three tests, the changed fresh union was run again and passed 6/6; no run was watched or polled. No historical test, old suite, broad validation, CI or provider test ran.
+
+Final tested inputs (working-tree code based on `febd854fe47cfd2d5a070f2182b2c2af146d28f6`, before implementation commit `9bf6f71`):
+
+| Path | SHA-256 |
+|---|---|
+| `bot/scripts/ai-gm-delta.mjs` | `94CD4341D97F343C2E52B4BC5FE3A6078881ACC2E41B246640FB0015745452DE` |
+| `bot/tests/ai-gm-2026-10/p07-f13.test.mjs` | `8727585FE9ED4E96DB6C773376871EEE2D1A6CBF0B25B74F9067D353FB842951` |
+| `bot/tests/ai-gm-2026-10/p07-f14.test.mjs` | `94F58568F9394A74B3D566DE511F1B4EB660F44933CC7FE3975827BE9EF2D1C1` |
+| `bot/tests/ai-gm-2026-10/p07-f16.test.mjs` | `89EBE4DBDBD01D8346591079C4F256C12ECEAC2097979C426EE44CB7425A4A4F` |
+| `bot/tests/ai-gm-2026-10/p07-f17.test.mjs` | `CBFCE2A04EC4A9D55A720102A9DCB9B675EF0872C57F3DBB10B4A6A8270FFCD2` |
+| `bot/tests/ai-gm-2026-10/p07-native-fixture.mjs` | `9DB47F99248FEC77020DF36B7F58A36D32C75C5E621C390F07E9D16E559217DE` |
+| `bot/tests/ai-gm-2026-10/coverage.json` | `B9B66BFD694C032F9209B95CEF22DAE2286D28EC280F6B11920EC7F51104BB89` |
+
+Provider/network/live cost = 0; one offline injected World Director response was counted. No caching change. Offline runtime is not live latency/cost evidence. SQLite was disposable local state only; no live Discord, production database, migration, restart recovery or publication exactly-once test was performed.
+
+### Remaining holds, rollback and authorization
+
+- F14: missing evidence is current audience-validated persisted committed/required beats and comparable optional candidates across 0/1/3/4 committed slots, including revocation/scope revalidation. Until then no reprioritization may displace established observations or native consequences.
+- F15: missing producer contract is recorded in the feature ledger. This is a source capability hold, not a permission restriction; no owner decision is pending.
+- F17: database close/reopen restart replay, owner-control revision and scene-switch changes, required-response overflow, actual writer output, and Discord/outbox exactly-once remain unverified.
+- No critical blocker. No unsupported behavior was fabricated. No new creative/autonomy limitation was proposed.
+- Roll back implementation with `git revert 9bf6f71fac5a4f0c7f1f02270d0b3c00735eef3f`; no schema/data rollback is required. Preserve the three untracked user documents.
+- **NOT LIVE VERIFIED / NOT FULL RELEASE QUALIFIED / RELEASE NOT AUTHORIZED. NO PUSH / NO MERGE / NO DEPLOY / NO CI / NO PRODUCTION DB / NO PAID PROVIDER.**
