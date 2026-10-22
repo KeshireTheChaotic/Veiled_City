@@ -100,9 +100,9 @@ export function assemblyHookProjection(db,guild,sessionId,scope){
     +'\nWould you like to pursue this lead, ask about it, or take a different approach? No arrival, cooperation, commitment or outcome has been chosen for you.';
   return {text,...selection};
 }
-export function assemblyWriterBrief(db,guild,sessionId,scope){
+export function assemblyWriterBrief(db,guild,sessionId,scope,planOverride=null){
   const resume=db.getSession(sessionId)?.assembly_phase==='party';
-  const plan=db.getAssemblyPlan(sessionId)||{};
+  const plan=planOverride||db.getAssemblyPlan(sessionId)||{};
   const contract=plan.assembly_contract?.version===2?plan.assembly_contract:null;
   const goal=typeof plan.convergence_goal==='string'?plan.convergence_goal:'';
   const dramatic_intent=contract?{version:1,goal,session:sessionId,scene:currentScene(db,guild).key,

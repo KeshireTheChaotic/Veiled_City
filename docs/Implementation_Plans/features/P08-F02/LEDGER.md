@@ -26,3 +26,7 @@ For each implementation batch record: date/time if available; current branch/HEA
 ### Feature execution
 
 At baseline `d0cd18a...`, changed the owner-character projection to an explicit allowlist that excludes GM hooks and skips structured values labeled GM/private/hidden. Kept separate GM-only hooks available to planner inputs. The canary test verified ordinary owner notes/player narrative remain while GM/private labels do not enter `assemblyHookSources`. This does not prove absence of leaks in historical drafts or delivered records; none were inspected/mutated by this feature. Test measured offline code behavior only; no Discord/provider/semantic quality evidence.
+
+### Final post-F04 union regression
+
+Because F03/F04 later changed `assembly-context.js`, this feature's fresh test was included again in `p08-final-delta-20261022-02`: exit 0, 11 total P08 fresh tests passed, 0 failed/skipped, 0.758s. Final source hash for the shared projection is `e03786b13b740d0a93113b58cd53876969eaaf36`; F02 test hash remains `38bd601a0e695bf04bde20b5799b60e5947757db`. No provider calls, token usage, cache activity or live secret-disclosure behavior was observed.

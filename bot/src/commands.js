@@ -51,6 +51,7 @@ import {scheduleSessionOpening} from './session-opening.js';
 import {runSessionOpening,sessionOpeningStatus} from './session-opening-runner.js';
 import {prepareSessionOpeningDeliveryReview,recoverSessionOpeningDelivery} from './session-opening-recovery.js';
 import {deliverOpeningEntry} from './opening-entry.js';
+import {runOpeningCohort,openingCohortStatus} from './opening-cohort-runner.js';
 import { recordCharacterArrival,scenePresence } from "./scene-continuity.js";
 import { personalCharacter, personalArc, discoverPersonal, personalInbox } from "./personal-continuity.js";
 import { consentOffers } from "./consent-native.js";
@@ -179,6 +180,8 @@ function compactAssemblyStatus(db,guildId,session){
     `Present: ${roster.length?roster.map(r=>r.name).join(", "):"none"}`,
     `Plan: ${readiness.plan?"generated":"not generated"}`,
   ];
+  const cohort=openingCohortStatus(db.getCityRecord(guildId,'opening_cohort_job',session.id));
+  if(cohort)lines.push(cohort);
   if(plan.convergence_goal) lines.push(`Convergence goal: ${plan.convergence_goal}`);
   if(plan.bonds?.length) lines.push(`Proposed practical links:\n${plan.bonds.slice(0,6).map(b=>`• ${b.from_character} → ${b.to_character}: ${b.reason}`).join("\n")}`);
   if(plan.gm_notes) lines.push(`GM notes: ${plan.gm_notes}`);
@@ -1039,6 +1042,7 @@ Initial phase: ${s.assembly_phase}`});
         db.setAssemblyPlan(s.id,plan);
       }
       const deliveryResult=await deliverVerifiedAssembly({db,guild:interaction.guild,session:s,gm});
+      const cohortStatus=openingCohortStatus(await runOpeningCohort({db,guild:interaction.guild,gm}));
       const delivery=deliveryResult.slots.filter(slot=>slot.scope.mode==='private').map(slot=>`${slot.name}: ${slot.narrative_status}`
         +`${slot.previously_delivered?' (previous acknowledgement retained)':''}; hook selected=${!!slot.evidence.hook_selected}`
         +`; narrative generated=${!!slot.evidence.narrative_generated}; verified=${!!slot.evidence.narrative_verified}; quarantined=${!!slot.evidence.narrative_quarantined}`);
@@ -1056,7 +1060,7 @@ Initial phase: ${s.assembly_phase}`});
       const refresh=prepareAssemblyRefresh(db,interaction.guildId,s,interaction.user.id);
       if(refresh)components.push({type:1,components:[{type:2,style:2,label:'Prepare NEW sourced openings (no send)',custom_id:`vcassemblyrefresh:${refresh}`} ]});
       const staleWarning=deliveryResult.freshness?.hold?'\nSTALE PLAN — publication held for GM review. Existing delivery acknowledgements are unchanged.':'';
-      await deliverInteractionText(interaction,`Assembly processing complete.\n\n${compactAssemblyStatus(db,interaction.guildId,db.getSession(s.id))}\n\nPrivate narrative delivery: ${delivery.join(", ")||"none"}\nOnly VERIFIED_SCENE_DELIVERED certifies substantive audience-first fiction. FALLBACK is orientation only and leaves narrative delivery unresolved; raw hooks are not published.${staleWarning}${warning}`,{ephemeral:true,components});
+      await deliverInteractionText(interaction,`Assembly processing complete.\n\n${compactAssemblyStatus(db,interaction.guildId,db.getSession(s.id))}\n\nPrivate narrative delivery: ${delivery.join(", ")||"none"}\nOnly VERIFIED_SCENE_DELIVERED certifies substantive audience-first fiction. FALLBACK is orientation only and leaves narrative delivery unresolved; raw hooks are not published.${cohortStatus?`\n\n${cohortStatus}`:''}${staleWarning}${warning}`,{ephemeral:true,components});
       return true;
     }
     if(group==="session"&&sub==="assembly-status"){
@@ -1140,11 +1144,19 @@ Initial phase: ${s.assembly_phase}`});
           `Checked in for Session ${s.session_number}. Confirm where your character already starts; this is not travel or resolution of an earlier attempt. Share makes this initial position visible at the table; Private keeps it owner-only. You may leave it unconfirmed.`:
           `Checked in for Session ${s.session_number}. Initial position needs native setup/history review; no location or movement was inferred.`,
           ephemeral:true,allowedMentions:{parse:[]},...(setup?{components:setup.components}:{})});
-        if(openingEntry&&s.assembly_mode!=='manual')await deliverOpeningEntry({db,guild:interaction.guild,gm,key:openingEntry.record_key});
+        if(openingEntry&&s.assembly_mode!=='manual'){
+          await deliverOpeningEntry({db,guild:interaction.guild,gm,key:openingEntry.record_key});
+          const cohort=openingCohortStatus(await runOpeningCohort({db,guild:interaction.guild,gm}));
+          if(cohort&&interaction.followUp)await interaction.followUp({content:cohort,ephemeral:true,allowedMentions:{parse:[]}}).catch(()=>{});
+        }
         return true;
       }
       await interaction.reply({content:`${JSON.stringify(c.name)} is now present in Session ${s.session_number}. Attendance does not choose travel, cooperation or party membership.`,allowedMentions:{parse:[]}});
-      if(openingEntry&&s.assembly_mode!=='manual')await deliverOpeningEntry({db,guild:interaction.guild,gm,key:openingEntry.record_key});
+      if(openingEntry&&s.assembly_mode!=='manual'){
+        await deliverOpeningEntry({db,guild:interaction.guild,gm,key:openingEntry.record_key});
+        const cohort=openingCohortStatus(await runOpeningCohort({db,guild:interaction.guild,gm}));
+        if(cohort&&interaction.followUp)await interaction.followUp({content:cohort,ephemeral:true,allowedMentions:{parse:[]}}).catch(()=>{});
+      }
       return true;
     }
     if(group==="session"&&["absent","leave"].includes(sub)){

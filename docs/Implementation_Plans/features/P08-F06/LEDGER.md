@@ -26,3 +26,7 @@ For each implementation batch record: date/time if available; current branch/HEA
 ### Feature execution
 
 Added a source-bound `opening_entry_orientation` renderer using the current owner-only projection if accepted prose is absent or authoring is unavailable. It claims neither authored narrative nor hook verification; delivery status becomes `fallback_delivered` only with actual Discord message acknowledgements, and uncertain/failed/empty publications remain distinct. Assembly evidence v4 carries an intent revision and explicitly `dramatic_coverage=unverified`; the opening status surface reports that limitation. Offline helper tests cover fallback truth, delivery classification, and nonsemantic assembly coverage only. End-to-end Discord, restart, stale-principal and provider-failure behavior were not exercised and remain unverified.
+
+### Final post-F04 union regression
+
+F04 changed the shared `pvp-output.js` writer/output paths after F06's feature batch, so the fresh F06 test was included in `p08-final-delta-20261022-02`: exit 0, 11 P08 fresh tests passed, 0 failed/skipped, 0.758s. Final hashes include `pvp-output.js` `ee603eef9205226c41c8b92aed771e1c9940c955`; F06 test remains `b9ec4bd051f05cfca5efae1dda5fa55e521a320c`. No live writer failure, outbox, Discord acknowledgement, or restart was exercised.

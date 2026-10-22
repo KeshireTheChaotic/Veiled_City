@@ -1,7 +1,7 @@
 # P08-F04 — Start/check-in cohort assembly and immutable receipts
 
 **Phase:** [P08](../../phases/P08/SCOPE.md)  
-**Status:** LOCAL ARCHITECTURE HOLD — NO COHORT CODE CHANGED  
+**Status:** IMPLEMENTED — SEPARATE ADDITIVE COHORT JOB; OFFLINE CONTRACT TESTED; DELIVERY UNVERIFIED
 **Reference:** `KeshireTheChaotic/Veiled_City` · `codex/clean-ai-gm-2026-10` · `81569d08699343e401fc11ba1eaed0f10b4fd37a`  
 **Dependencies:** P08-F03
 
@@ -29,15 +29,15 @@ Keep the legitimate zero-attendee public camera but ensure authenticated **post-
 
 ## Brand-new affected-code tests
 
-Create `bot/tests/ai-gm-2026-10/p08-f04.test.mjs`: session start empty → acknowledged camera → present A → present B → one additive shared incident with separate private opportunities; double B check-in must not duplicate. Cover pre-registered cohort, one attendee, manual, already-together resume, A absent/leave, owner-character switch, guest/proxy, source revocation between async steps, crash before/after commit, uncertain Discord send, no duplicate message/effect, and no forced placement or party state. Use changed code paths and fresh fakes.
+`bot/tests/ai-gm-2026-10/p08-f04.test.mjs` uses fresh fakes to test distinct owner gating, pre-registered-start exclusion, roster/control revision changes, manual and established-party exclusion, and status wording. Full DB/outbox/Discord restart scenarios were not exercised; see the ledger's unverified work.
 
 
 
-## Current local hold
+## Implemented additive contract
 
-Current openings are bound to a session-singleton `getAssemblyPlan()` and the initial `session_opening_job`'s authenticated attempt/origin roster. `assemblySlots()` and delivery identity hash that plan. Replacing it after a check-in would generate new slot identities; reusing or reopening the start job would violate its immutable roster and one-attempt binding. A safe additive follow-up needs its own persisted plan, source/roster revision, authoring scope, delivery-state reader and status/recovery path. The present feature modules have no such separate plan contract. The existing assembly-refresh path is GM-reviewed replacement and explicitly refuses delivered/uncertain histories, so it is not a safe substitute for automatic cohort follow-up.
+F04 adds a session-keyed GM-private `opening_cohort_job`, separate from the immutable start job and `assembly_plan`. It requires an acknowledged initial public narrative, assembly mode, a second distinct current owner-controlled attendee not present in the original start roster, and two eligible owners. One source-bound plan and one public writer opportunity are created per session. Manual mode, one attendee, pre-registered initial cohorts and established-party resume do not create a follow-up. Existing `/present` and `/arrive` still deliver each owner-private entry independently; authenticated GM `/assemble` can trigger the same follow-up after initial delivery is verified.
 
-This is noncritical and isolated. Do not mutate the historic plan or receipts to simulate support. Continue independent P08 work. The requested second-check-in trigger and additive cohort publication remain unsupported pending that dedicated native contract.
+The new job binds current roster/control/source/scene fingerprints and its GM-only source event. It never updates the historic start plan, attendance, position, convergence phase or party membership. The writer receives the public source-filtered brief and commits through the existing native narrative validator, stable outbox and exact publication acknowledgements. Stale state, interrupted planning/authoring, missing accepted fiction, failed delivery or uncertain transport remains locally held; no source/send is blindly replayed. GM-facing status reports only transport state and preserves the no-arrival/no-party-choice authority.
 
 ## Acceptance / exit
 

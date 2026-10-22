@@ -26,3 +26,7 @@ For each implementation batch record: date/time if available; current branch/HEA
 ### Feature execution
 
 Added an audience-tagged dramatic intent to the writer brief only for a v2 contracted plan, bound to input fingerprint, current scene, session and scope. Raw planner notes/opening/private hooks remain excluded. Added a prompt instruction that convergence goal is public-safe. The existing orientation path rejects stale input and publication rechecks source freshness. The deterministic projection test confirmed intended field inclusion and raw-note exclusion. Semantic safety of generated planner goals and writer output is not proven; no model/provider/Discord test or cost occurred. This is an explicit unqualified limitation, not release evidence.
+
+### Final post-F04 union regression
+
+F04 changed the shared brief and writer modules after this feature's first pass, so `p08-f03.test.mjs` was included in final run `p08-final-delta-20261022-02`: exit 0, 11 P08 fresh tests passed, 0 failed/skipped, 0.758s. Final shared source hashes: `assembly-context.js` `e03786b13b740d0a93113b58cd53876969eaaf36`, `gm.js` `f0dd71feb064337cce26a9844b85e6730cb3b156`; F03 test remains `24356eb444b88fa6ebd1796c06f2fcc0f024f1e8`. Semantic privacy/quality and provider behavior remain unqualified; zero provider spend.

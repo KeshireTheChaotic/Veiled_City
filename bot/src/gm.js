@@ -55,6 +55,7 @@ import {authorFreshSceneRequests,hasFreshSceneResponse,FRESH_SCENE_INSTRUCTIONS,
 import {authorSceneFictionRequests,SCENE_FICTION_INSTRUCTIONS,sceneFictionResponseSchema} from './scene-fiction-authority.js';
 import {sceneFictionFailure,buildSceneFictionContext} from './scene-fiction-context.js';
 import {assemblyNarrativeCandidate} from './pvp-output.js';
+import {openingCohortNarrativeCandidate} from './opening-cohort-state.js';
 import {assemblyInputs,hookHash,certifyAssemblyPlan} from './assembly-context.js';
 import {sceneObservationOperation} from './scene-observation-route.js';
 import {engagementKinds,bindSemanticEngagement,currentSemanticEngagement,semanticSceneOperation} from './semantic-engagement.js';
@@ -1058,6 +1059,12 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
     const {candidate,source}=assemblyNarrativeCandidate(this.db,guildId,sessionId,scope),signal=AbortSignal.timeout(Number(this.config.gmTurnDeadlineMs||120000));
     return measureStage(this.metrics,'opening_authoring',()=>authorNarrativeRequests({db:this.db,guild:guildId,result:candidate,scope,
       sourceRef:source.event_key,budget:{used:false},generate:packet=>this.generateNarrative(guildId,packet,signal,'assembly')}),{guildId});
+  }
+  async authorOpeningCohort(guildId,key){
+    const {candidate,source}=openingCohortNarrativeCandidate(this.db,guildId,key),signal=AbortSignal.timeout(Number(this.config.gmTurnDeadlineMs||120000));
+    return measureStage(this.metrics,'opening_authoring',()=>authorNarrativeRequests({db:this.db,guild:guildId,result:candidate,
+      scope:{mode:'party',actorUserId:null,actorCharacterId:null},sourceRef:source.event_key,budget:{used:false},
+      generate:packet=>this.generateNarrative(guildId,packet,signal,'opening_cohort')}),{guildId});
   }
   async authorOpeningEntry(guildId,key,scope){
     const {candidate,source}=openingEntryNarrativeCandidate(this.db,guildId,key,scope),signal=AbortSignal.timeout(Number(this.config.gmTurnDeadlineMs||120000));

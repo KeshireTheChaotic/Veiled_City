@@ -31,6 +31,7 @@ import {assertSessionOpeningPublication} from './session-opening.js';
 import {openingEntryNarrativeCandidate,openingEntryProjection} from './opening-entry-context.js';
 import {openingEntryEvidence} from './opening-entry-evidence.js';
 import {assemblyCoverageEvidence} from './assembly-evidence.js';
+import {openingCohortNarrativeCandidate} from './opening-cohort-state.js';
 import {lifecycleProjection,lifecycleHash} from './lifecycle-output.js';
 import {nativeEnvironmentOutputCandidates} from './native-environment-output.js';
 
@@ -313,6 +314,18 @@ export function prepareAssemblyOutput(db,guild,sessionId,scope,{content=null}={}
   prepared.set(result,{raw:{},drafts:{},parts:parts.map(p=>p.record_key),privateParts:{},scope:hash(scope),fingerprint:fingerprint(result)});
   return result;
   });
+}
+/** One fresh public writer unit for the separate additive cohort plan; never reuses the initial assembly slot. */
+export function prepareOpeningCohortOutput(db,guild,key,scope,{content=null}={}){
+  const {job,source,candidate}=openingCohortNarrativeCandidate(db,guild,key);
+  prepareAuthorizedTurnOutput(db,guild,candidate,scope,{sourceRef:source.event_key,origin:'opening-cohort',content});
+  const parts=prepared.get(candidate).parts.map(ref=>validateOutputPart(db,guild,ref)).filter(p=>p.data.kind==='gm_narrative_unit');
+  if(!parts.length)return null;
+  saveOutputGroup(db,guild,parts);const text=parts.map(p=>p.data.text).join('\n'),result={narration:text,player_summary:text,
+    narrative_claims:[],private_messages:[],cohort_evidence:{version:1,narrative_format:'audience_first_v9',narrative_verified:true,
+      ...assemblyCoverageEvidence(job.data.plan,job.data.session)}};
+  prepared.set(result,{raw:{},drafts:{},parts:parts.map(p=>p.record_key),privateParts:{},scope:hash(scope),fingerprint:fingerprint(result)});
+  return result;
 }
 export function prepareOpeningEntryOutput(db,guild,key,scope){
   const {view,source,candidate}=openingEntryNarrativeCandidate(db,guild,key,scope);
