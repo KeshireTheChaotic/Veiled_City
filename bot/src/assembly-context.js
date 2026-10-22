@@ -103,9 +103,21 @@ export function certifyAssemblyPlan(db,guild,session,plan,{strict=false,fingerpr
         player_narrative:pc.narratives.some(n=>n.scope==='player'),gm_narrative:pc.narratives.some(n=>n.scope==='gm_private'),
         status:pc.sources.length?'source_selected':'missing_entitled_source_gm_proposals_not_disclosed'}};
   });
+  const requested=plan.public_opportunity_refs??[];
+  if(!Array.isArray(requested)||requested.length>3||requested.some(ref=>!ref||typeof ref.source_ref!=='string'
+    ||typeof ref.signal_ref!=='string')||new Set(requested.map(ref=>`${ref.source_ref}\n${ref.signal_ref}`)).size!==requested.length)
+    throw assemblySourceError('Bounded exact public opportunity references required.');
+  const publicOpportunities=openingWorldOpportunities(db,guild,{mode:'party',actorUserId:null,actorCharacterId:null});
+  const public_opportunity_refs=requested.map(ref=>{
+    const cue=publicOpportunities.beats.find(beat=>beat.source_ref===ref.source_ref&&beat.signal_ref===ref.signal_ref
+      &&beat.audience?.visibility==='party'&&beat.execution_authority===false&&beat.publication_authority===false);
+    if(!cue)throw assemblySourceError('Selected public opportunity is not currently audience-authorized.');
+    return {source_ref:cue.source_ref,signal_ref:cue.signal_ref};
+  });
   const current=hookHash(inputs);
   if(fingerprint&&fingerprint!==current)throw assemblySourceError('Assembly sources changed during generation; retry from current context.');
-  return {...plan,character_entries:normalized,assembly_contract:{version:2,input_fingerprint:current,created_at:new Date().toISOString()}};
+  return {...plan,public_opportunity_refs,character_entries:normalized,assembly_contract:{version:2,input_fingerprint:current,
+    public_opportunity_refs,created_at:new Date().toISOString()}};
 }
 export function assemblyPlanFreshness(db,guild,session,plan){
   if(plan?.assembly_contract?.version!==2)return 'legacy_untracked';
@@ -138,12 +150,23 @@ export function assemblyWriterBrief(db,guild,sessionId,scope,planOverride=null){
   const plan=planOverride||db.getAssemblyPlan(sessionId)||{};
   const contract=plan.assembly_contract?.version===2?plan.assembly_contract:null;
   const world_opportunities=openingWorldOpportunities(db,guild,scope);
-  // Free-form planner fields (including convergence_goal) are GM-private proposals.
-  // Only already-authorized, audience-scoped native opportunity cues may cross this boundary.
-  const dramatic_intent=contract?{version:2,objective:'Explore an interesting shared opportunity without asserting a hidden cause, PC response, or outcome.',
-    cues:world_opportunities.beats.map(({id,kind,source_ref,signal_ref,reason})=>({id,kind,source_ref,signal_ref,reason})),
+  // GM planner prose never crosses this boundary. A selected thread is rebuilt
+  // from exact, currently entitled native source projections on every packet.
+  const selectedRefs=scope.mode==='party'?(contract?.public_opportunity_refs||[]):[];
+  const selected_opportunities=selectedRefs.map(ref=>{
+    const cue=world_opportunities.beats.find(beat=>beat.source_ref===ref.source_ref&&beat.signal_ref===ref.signal_ref
+      &&beat.audience?.visibility==='party'&&beat.execution_authority===false&&beat.publication_authority===false);
+    if(!cue)throw assemblySourceError('Selected public opportunity is stale or no longer audience-authorized.');
+    return {id:cue.id,kind:cue.kind,source_ref:cue.source_ref,signal_ref:cue.signal_ref,reason:cue.reason,
+      ...(typeof cue.visible_text==='string'?{visible_text:cue.visible_text}:{}),
+      ...(cue.epistemic?{epistemic:cue.epistemic}:{}),...(cue.fictional_scope?{fictional_scope:cue.fictional_scope}:{})};
+  });
+  const dramatic_intent=contract?{version:3,objective:selected_opportunities.length
+      ?'Use the selected source-authorized opportunity as a dramatic throughline; interpret and dramatize it freely from its entitled cues.'
+      :'Explore an interesting shared opportunity without asserting a hidden cause, PC response, or outcome.',
+    selected_opportunities,
     session:sessionId,scene:currentScene(db,guild).key,plan_inputs:contract.input_fingerprint,audience:scope.mode,
-    revision:hookHash([sessionId,currentScene(db,guild).key,contract.input_fingerprint,scope.mode,world_opportunities.beats])}:null;
+    revision:hookHash([sessionId,currentScene(db,guild).key,contract.input_fingerprint,scope.mode,selected_opportunities])}:null;
   if(scope.mode==='private'){
     const hook=assemblyHookSelection(db,guild,sessionId,scope);
     return {kind:resume?'private_resume':'private_opening',sources:hook?.selected||[],world_opportunities,dramatic_intent,
@@ -151,8 +174,8 @@ export function assemblyWriterBrief(db,guild,sessionId,scope,planOverride=null){
       knowledge:'Only this owner character material is available. Imported GM-only mysteries are not player knowledge.'};
   }
   return {kind:resume?'public_resume':'public_convergence',sources:[],world_opportunities,dramatic_intent,
-    public_throughline:dramatic_intent?.cues?.length
-      ?'Optional direction: an authorized shared-world cue can connect this scene to current pressure; invent its ordinary presentation and NPC response freely.'
+    public_throughline:dramatic_intent?.selected_opportunities?.length
+      ?'The selected source-authorized opportunity can carry this scene throughline. Explore it imaginatively with natural storytelling and independent NPC behavior; the connection is not a PC choice, hidden cause, or outcome.'
       :'Optional direction: ground the scene in a visible detail already established for this audience, or invent an ordinary detail freely. Keep the cause and all PC responses open.',
     task:`${resume?'Frame current scene continuity without asserting new party membership, requiring reunion or inventing intervening PC activity.':'Frame a playable shared opportunity as a camera scene, not established PC presence.'} Ordinary NPC offers, visible surroundings and nonbinding signs are allowed.`,
     knowledge:'The dramatic intent is an objective, not a fact or character motivation. Private hooks, private cues and motivations are intentionally excluded. Let the players discover and choose any connection.'};

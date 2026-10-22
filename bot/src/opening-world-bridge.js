@@ -19,6 +19,8 @@ export function openingWorldOpportunities(db,guild,scope){
     for(const beat of bridge.beats){
       if(beat.audience.visibility!==(scope.mode==='private'?'character':'party')||out.beats.some(b=>b.signal_ref===beat.signal_ref))continue;
       out.beats.push({id:beat.id,kind:beat.kind,source_ref:beat.source_ref,signal_ref:beat.signal_ref,reason:beat.reason,
+        audience:beat.audience,
+        ...(typeof beat.visible_text==='string'?{visible_text:beat.visible_text}:{}),
         ...(beat.epistemic?{epistemic:beat.epistemic,fictional_scope:beat.fictional_scope}:{}),
         execution_authority:false,publication_authority:false});
       if(out.beats.length===3)return out;

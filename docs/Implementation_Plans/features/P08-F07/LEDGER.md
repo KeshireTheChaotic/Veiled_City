@@ -62,3 +62,13 @@ From `bot/`, exact fresh command: `node --test tests/ai-gm-2026-10/p08-correctio
 After adding the last pre-transport revalidation to public and private delivery, reran the same fresh union once: exit 0, 7 pass, 0 fail/cancelled/skipped/todo, 3.664s. The exact blocking command and final SHA256s are in F02's final-run evidence. Syntax checks for all six changed JS and two fresh MJS files passed in that call. This final run supersedes prior 3.780s measurement; no tests remain running except the distinct old expanded F04 command, still marked RUNNING/UNQUALIFIED and never polled. No provider calls/tokens/cost, cache, CI or live network.
 
 Final batch refinement added an immutable initial publication/ACK snapshot assertion to the two camera→cohort scenarios. The final run was once: exit 0; 7 pass; 0 failed/cancelled/skipped/todo; 3.696s. Final test SHA `97151ba29fb1faed6bccdda7db0822029061fb85ad83a869b4b3b5a0848f81a8`; all changed JS/MJS syntax checks passed. No production code changed after the run.
+
+### Final three corrections qualification — 2026-10-22
+
+The latest two-connection test supports durable outbox-derived state, stale callback rejection, mixed ACK/uncertain handling, and no repeated work after delivered pause. It does not qualify real Discord semantics, uncertain-send restart recovery, whole-runner process safety, or release. The targeted feature tests do not establish semantic dramatic fulfillment. Cost evidence: 0 provider calls/tokens, $0; no cache measurement. Qualification remains PARTIAL / NOT CERTIFIED; release NOT AUTHORIZED.
+
+### F03 camera provenance correction result — 2026-10-22
+
+The native GM-camera provenance correction is now exercised by the independent F03 fresh batch, not inferred from the earlier F04 lifecycle pass. F03 test exit 0, 2/2 passed, 1.100s; actual writer packet and native acceptance were tested with deterministic mocks and disposable SQLite. Source/test hashes and exact provenance boundaries are in `P08-F03/LEDGER.md`. This does not certify generated semantic fulfillment, live delivery, or release. F07 remains locally qualified only for these exercised offline contracts; release NOT AUTHORIZED / NOT CERTIFIED.
+
+F03 final frozen recheck after invalid native-origin coverage: exit 0, 2 pass, 1.100s; final test SHA256 `9cada627e3de329e32a15774d6ea097c47d092d787f2ea25161ab5347725542a`. No F04 rerun; it remains separately evidenced by its two passing tests.

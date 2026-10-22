@@ -65,3 +65,7 @@ Only fresh corrective tests under `bot/tests/ai-gm-2026-10/` are in scope. Final
 ### Expanded qualification follow-up — 2026-10-22
 
 The previous corrective final union predates expanded owner-entry and lifecycle test changes. F02 now has one focused passing changed-code test for nested audience filtering through `openingEntryProjection`. F04’s expanded test/worker command has no terminal result and is recorded RUNNING / UNQUALIFIED; no final corrective union has been run for these changes. Keep A6 cross-process behavior and F02 accepted-output/fallback delivery as local holds; do not claim P08 corrective acceptance complete or release qualified.
+
+### Latest corrective result — 2026-10-22
+
+This handoff adds result rows to the acceptance matrix. F03 remains held because the native Director bridge produced zero beats from two accepted fixture units; actual writer packet and source-specific throughline acceptance are not demonstrated. F04 passed two focused offline SQLite tests for mixed receipt truth, stale callback rejection and pause-after-delivery without replay. S04 is partial (two connections, sequential callbacks). This does not qualify live publication or release. See existing F03/F04/F07/phase ledgers for exact hashes and cost evidence.

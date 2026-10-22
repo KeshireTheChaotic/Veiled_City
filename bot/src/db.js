@@ -386,15 +386,18 @@ export class VeiledDB {
   }
   /** Compare-and-set a source-bound GM job across independent SQLite connections. */
   transitionCityRecord(guildId,{kind,key,expectedStatus,expectedAttemptId,expectedRosterRevision,
-    expectedInputFingerprint,status,data}){
+    expectedInputFingerprint,expectedTurnId,expectedSourceEvent,status,data}){
     if(!kind||!key||!expectedStatus||!status||!data||typeof data!=='object')throw new TypeError('Bounded native record transition required.');
+    const extra=[],values=[];
+    if(expectedTurnId!==undefined){extra.push("AND json_extract(data_json,'$.turn_id') IS ?");values.push(expectedTurnId??null);}
+    if(expectedSourceEvent!==undefined){extra.push('AND source_event IS ?');values.push(expectedSourceEvent??null);}
     const changed=this.db.prepare(`UPDATE city_records SET status=?,data_json=?
       WHERE guild_id=? AND kind=? AND record_key=? AND status=?
       AND json_extract(data_json,'$.attempt_id') IS ?
       AND json_extract(data_json,'$.roster_revision') IS ?
-      AND json_extract(data_json,'$.input_fingerprint') IS ?`)
+      AND json_extract(data_json,'$.input_fingerprint') IS ? ${extra.join(' ')}`)
       .run(status,JSON.stringify(data),guildId,kind,key,expectedStatus,expectedAttemptId??null,
-        expectedRosterRevision??null,expectedInputFingerprint??null).changes;
+        expectedRosterRevision??null,expectedInputFingerprint??null,...values).changes;
     return changed===1?this.getCityRecord(guildId,kind,key):null;
   }
   listCityRecords(guildId,{kind="",actor="",status="",query="",limit=30,offset=0,includeGM=false}={}){

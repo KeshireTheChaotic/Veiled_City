@@ -9,11 +9,38 @@ import {indexWorldEvent} from './city-calendar.js';
 import {measureStage,measureNative,operationalMetrics} from './operational-metrics.js';
 
 const flights=new WeakMap();
-function save(db,guild,row,status,data=row.data){
-  const live=db.getCityRecord(guild,row.kind,row.record_key);
-  if(live&&live.data.attempt_id!==row.data.attempt_id)return live;
-  return db.saveCityRecord(guild,{...row,key:row.record_key,status,data});
+function publicationStatus(rows){
+  if(!rows.length)return 'needs_review';
+  const acknowledged=row=>row.status==='delivered'&&typeof row.discord_message_id==='string'&&!!row.discord_message_id.trim()
+    &&typeof row.channel_id==='string'&&!!row.channel_id.trim()&&typeof row.payload_hash==='string'&&!!row.payload_hash;
+  if(rows.every(acknowledged))return 'delivered';
+  if(rows.some(row=>['uncertain','delivering'].includes(row.status)))return 'uncertain';
+  if(rows.some(row=>row.status==='failed'))return 'failed';
+  return 'pending';
 }
+/** CAS every async callback against its exact job/source/turn snapshot; outbox receipts own transport truth. */
+export function reconcileOpeningCohortStatus(db,guild,row,status=row?.status,data=row?.data){
+  if(!row)return null;
+  return db.transaction(()=>{
+    const live=db.getCityRecord(guild,'opening_cohort_job',row.record_key);
+    if(!live||live.status!==row.status||live.source_event!==row.source_event
+      ||live.data.attempt_id!==row.data.attempt_id||live.data.roster_revision!==row.data.roster_revision
+      ||live.data.input_fingerprint!==row.data.input_fingerprint||live.data.turn_id!==(row.data.turn_id||null))return live;
+    if(live.data.turn_id&&data?.turn_id!==live.data.turn_id)return live;
+    const next={...live.data,...data,turn_id:live.data.turn_id||data?.turn_id||null};let target=status;
+    if(target==='held_paused'&&next.turn_id){next.operational_hold='OPENING_DIRECTOR_PAUSED';next.hold_code='OPENING_DIRECTOR_PAUSED';}
+    if(next.turn_id){
+      const receipts=db.listTurnPublications(guild,next.turn_id);target=publicationStatus(receipts);
+      next.evidence={...(next.evidence||{}),transport_acknowledged:target==='delivered',needs_review:target!=='delivered'};
+    }
+    const updated=db.transitionCityRecord(guild,{kind:live.kind,key:live.record_key,expectedStatus:live.status,
+      expectedAttemptId:live.data.attempt_id,expectedRosterRevision:live.data.roster_revision,
+      expectedInputFingerprint:live.data.input_fingerprint,expectedTurnId:live.data.turn_id||null,
+      expectedSourceEvent:live.source_event,status:target,data:next});
+    return updated||db.getCityRecord(guild,'opening_cohort_job',row.record_key);
+  });
+}
+function save(db,guild,row,status,data=row.data){return reconcileOpeningCohortStatus(db,guild,row,status,data);}
 function code(error){return /^[A-Z_]{2,60}$/.test(error?.code||'')?error.code:'OPENING_COHORT_REVIEW';}
 export function initialCameraAcknowledged(db,guild,session){
   const opening=db.getCityRecord(guild,'session_opening_job',session.id);
@@ -52,27 +79,26 @@ function current(db,guild,session,row){
     throw assemblySourceError('Cohort roster, sources or scene changed; review the additive opportunity.');
   return state;
 }
-function publicationStatus(rows,pending){
-  if(rows.some(row=>['uncertain','delivering'].includes(row.status)))return 'uncertain';
-  if(rows.some(row=>row.status==='failed'))return 'failed';
-  if(!rows.length||pending.length||!rows.every(row=>row.status==='delivered'&&row.discord_message_id))return 'pending';
-  return 'delivered';
-}
 function coverage(rows,pending,evidence){
-  const acknowledged=rows.length>0&&!pending.length&&rows.every(row=>row.status==='delivered'&&row.discord_message_id);
+  const acknowledged=publicationStatus(rows)==='delivered'&&!pending.length;
   return {...evidence,transport_acknowledged:acknowledged,native_narrative_accepted:evidence?.narrative_verified===true,
     dramatic_coverage:'unverified',hook_selected:false,hook_revealed:false,fallback_delivered:false,needs_review:!acknowledged};
 }
 async function publish({db,guild,gm,row}){
-  if(['delivered','uncertain','failed','needs_review','needs_narrative_review','held_interrupted'].includes(row.status))return row;
+  row=save(db,guild.id,row,row.status,row.data);
+  if(['delivered','uncertain','needs_review','needs_narrative_review','held_interrupted'].includes(row.status))return row;
+  if(row.status==='failed'&&!(row.data.turn_id&&db.listTurnPublications(guild.id,row.data.turn_id).length
+    &&db.listTurnPublications(guild.id,row.data.turn_id).every(part=>part.status==='delivered'&&part.discord_message_id
+      &&part.channel_id&&part.payload_hash||part.status==='failed'&&part.last_failure?.startsWith('NOT_SENT: '))))return row;
   if(db.isDirectorPaused(guild.id))return save(db,guild.id,row,'held_paused',{...row.data,hold_code:'OPENING_DIRECTOR_PAUSED'});
+  if(row.data.operational_hold)row=save(db,guild.id,row,row.status,{...row.data,operational_hold:null,hold_code:null});
   // Another worker may currently own planning or authoring. Leave its state
   // intact; stale revisions are handled by the explicit unsent refresh path.
   if(row.status==='planning'||row.status==='authoring')return row;
   if(row.status==='held_paused')row=save(db,guild.id,row,row.data.turn_id?'pending':row.data.plan?'prepared':'needs_review',
     {...row.data,hold_code:null});
   if(row.data.turn_id){
-    if(row.status==='pending'){
+    if(['pending','failed'].includes(row.status)){
       try{
         const live=db.getActiveSession(guild.id);current(db,guild.id,live,row);
         const result=await measureStage(gm?.metrics||operationalMetrics,'opening_publish',
@@ -80,7 +106,7 @@ async function publish({db,guild,gm,row}){
             if(db.isDirectorPaused(guild.id))throw Object.assign(new Error('World Director paused before publication.'),{deliveryCertainty:'not_sent'});
             current(db,guild.id,db.getActiveSession(guild.id),row);
           }}),{guildId:guild.id});
-        const parts=db.listTurnPublications(guild.id,row.data.turn_id),status=publicationStatus(parts,result.pending);
+        const parts=db.listTurnPublications(guild.id,row.data.turn_id),status=publicationStatus(parts);
         return save(db,guild.id,row,status,{...row.data,evidence:coverage(parts,result.pending,row.data.evidence),hold_code:null});
       }catch(error){return save(db,guild.id,row,db.isDirectorPaused(guild.id)?'held_paused':'needs_review',
         {...row.data,hold_code:db.isDirectorPaused(guild.id)?'OPENING_DIRECTOR_PAUSED':code(error)});}
@@ -91,7 +117,7 @@ async function publish({db,guild,gm,row}){
   const session=db.getActiveSession(guild.id);current(db,guild.id,session,row);
   const claimed=db.transitionCityRecord(guild.id,{kind:'opening_cohort_job',key:row.record_key,
     expectedStatus:'prepared',expectedAttemptId:row.data.attempt_id,expectedRosterRevision:row.data.roster_revision,
-    expectedInputFingerprint:row.data.input_fingerprint,status:'authoring',data:row.data});
+    expectedInputFingerprint:row.data.input_fingerprint,expectedTurnId:null,expectedSourceEvent:row.source_event,status:'authoring',data:row.data});
   if(!claimed)return db.getCityRecord(guild.id,'opening_cohort_job',row.record_key);
   row=claimed;
   try{
@@ -118,14 +144,14 @@ async function publish({db,guild,gm,row}){
         current(db,guild.id,db.getActiveSession(guild.id),committed);
       }}),{guildId:guild.id}),
       parts=db.listTurnPublications(guild.id,committed.data.turn_id);
-    return save(db,guild.id,committed,publicationStatus(parts,delivery.pending),
+    return save(db,guild.id,committed,publicationStatus(parts),
       {...committed.data,evidence:coverage(parts,delivery.pending,committed.data.evidence),hold_code:null});
   }catch(error){
     const live=db.getCityRecord(guild.id,'opening_cohort_job',row.record_key);
     if(!live)return null;
     if(live.data.turn_id){
-      const parts=db.listTurnPublications(guild.id,live.data.turn_id),status=publicationStatus(parts,[]);
-      if(db.isDirectorPaused(guild.id))return save(db,guild.id,live,'held_paused',{...live.data,hold_code:'OPENING_DIRECTOR_PAUSED'});
+      const parts=db.listTurnPublications(guild.id,live.data.turn_id),status=publicationStatus(parts);
+      if(db.isDirectorPaused(guild.id))return save(db,guild.id,live,status,{...live.data,operational_hold:'OPENING_DIRECTOR_PAUSED',hold_code:'OPENING_DIRECTOR_PAUSED'});
       if(['uncertain','failed','pending','delivered'].includes(status))return save(db,guild.id,live,status,{...live.data,...(status==='delivered'?{}:{hold_code:code(error)})});
     }
     return save(db,guild.id,live,db.isDirectorPaused(guild.id)?'held_paused':'needs_review',
@@ -134,8 +160,10 @@ async function publish({db,guild,gm,row}){
 }
 async function execute({db,guild,gm,session}){
   let old=db.getCityRecord(guild.id,'opening_cohort_job',session.id);
+  if(old){old=save(db,guild.id,old,old.status,old.data);if(old.status==='delivered')return old;}
   if(db.isDirectorPaused(guild.id))return old?save(db,guild.id,old,'held_paused',{...old.data,hold_code:'OPENING_DIRECTOR_PAUSED'}):null;
   if(old){
+    if(old.data.operational_hold)old=save(db,guild.id,old,old.status,{...old.data,operational_hold:null,hold_code:null});
     const state=currentOpeningCohort(db,guild.id,session),stale=state.scene!==old.data.scene
       ||state.roster_revision!==old.data.roster_revision||state.input_fingerprint!==old.data.input_fingerprint;
     const safeUnsentRefresh=stale||old.status==='held_paused'&&!old.data.plan&&!old.data.turn_id;
@@ -177,7 +205,8 @@ async function execute({db,guild,gm,session}){
     const plan=certifyAssemblyPlan(db,guild.id,live,generated,{strict:true,fingerprint:data.input_fingerprint}),
       prepared=db.transitionCityRecord(guild.id,{kind:'opening_cohort_job',key:row.record_key,
         expectedStatus:'planning',expectedAttemptId:row.data.attempt_id,expectedRosterRevision:row.data.roster_revision,
-        expectedInputFingerprint:row.data.input_fingerprint,status:'prepared',data:{...row.data,plan,
+        expectedInputFingerprint:row.data.input_fingerprint,expectedTurnId:null,expectedSourceEvent:row.source_event,
+        status:'prepared',data:{...row.data,plan,
           plan_hash:openingCohortHash(plan)}});
     if(!prepared)return db.getCityRecord(guild.id,'opening_cohort_job',row.record_key);
     return publish({db,guild,gm,row:prepared});
@@ -195,8 +224,9 @@ export function runOpeningCohort({db,guild,gm}){
 }
 export function openingCohortStatus(row){
   if(!row)return null;
-  const state=row.status==='delivered'?'Shared opportunity transport acknowledged; dramatic fulfillment remains unverified':row.status==='uncertain'?'Shared opportunity delivery uncertain; held for review'
+  const state=row.status==='delivered'?'Shared opportunity transport acknowledged; dramatic fulfillment remains unverified':row.status==='uncertain'&&row.data.operational_hold?'World Director paused; shared opportunity delivery remains uncertain and held for review':row.status==='uncertain'?'Shared opportunity delivery uncertain; held for review'
     :row.status==='failed'?'Shared opportunity delivery failed; held for review':row.status==='held_paused'?'World Director paused; shared opportunity retained for safe resumption':row.status==='needs_review'||row.status==='held_interrupted'
       ?'Shared opportunity needs native review':'Shared opportunity processing';
-  return `${state}. Check-in does not establish arrival, location, cooperation, party state or a PC response.`;
+  const paused=row.data.operational_hold&&row.status!=='uncertain'?' World Director paused; committed unsent work is held without changing its outbox-derived status.':'';
+  return `${state}.${paused} Check-in does not establish arrival, location, cooperation, party state or a PC response.`;
 }

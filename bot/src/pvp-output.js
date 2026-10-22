@@ -287,7 +287,7 @@ export function assemblyNarrativeCandidate(db,guild,sessionId,scope){
   const source=indexWorldEvent(db,guild,{key:`assembly-scope:${hash(view.state)}`,kind:'native_assembly_scope',
     title:'Native assembly orientation scope',source_id:'native:assembly',visibility:scope.mode==='private'?'character':'party',
     subject_key:scope.mode==='private'?scope.actorCharacterId:null,session_id:sessionId,scene:view.state.scene,
-    details:{version:dedicated?2:1,revision:view.revision,scope}},'native:assembly');
+    details:{version:dedicated?2:1,revision:view.revision,scope,private_scene:scope.mode==='private'}},'native:assembly');
   return {view,candidate,source};
 }
 export function prepareAssemblyOutput(db,guild,sessionId,scope,{content=null}={}){

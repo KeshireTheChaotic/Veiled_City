@@ -306,6 +306,18 @@ function nativeDirectorBridge(db,guild,source,scope){
     &&hash(d.scope)===hash(scope)&&narrativeSourceVisible(db,guild,source.event_key,scope)
     &&d.world_bridge?.version===1&&Array.isArray(d.world_bridge.signals)&&d.world_bridge.signals.length<=4);
 }
+/** GM-authored camera fiction is usable only through an active, ledger-authenticated native scope. */
+function nativeCameraNarrativeOrigin(db,guild,origin,binding,scope,scene){
+  if(scope.mode!=='party'||scope.actorUserId||scope.actorCharacterId||binding?.scope?.mode!=='party'
+    ||binding.scope.actorUserId||binding.scope.actorCharacterId||hash(binding.scope)!==hash(scope)
+    ||origin?.status!=='active'||origin.session_id!==scene.session_id||origin.scene!==scene.key
+    ||origin.visibility!=='party'||origin.subject_key!=null||origin.details?.private_scene!==false
+    ||!db.ownerAuthoredSource(guild,origin.event_key,origin.source_id))return false;
+  if(origin.kind==='native_assembly_scope')return origin.source_id==='native:assembly'&&origin.details?.version===2;
+  if(origin.kind==='native_director_narrative_scope')return origin.source_id==='native:director'&&origin.details?.version===2
+    &&origin.event_key===`director-fiction:${hash(origin.details)}`;
+  return false;
+}
 const FEAR_EFFECT_RECORD_SCAN_LIMIT=500;
 const FEAR_EFFECT_VALIDATION_LIMIT=32;
 function fearClockAudience(db,guild,row,scope){
@@ -389,6 +401,13 @@ export function worldDirectorBridgeBeats(db,guild,source,scope){
         &&binding.scope.actorCharacterId===scope.actorCharacterId&&binding.scope.actorUserId===scope.actorUserId
         :row.visibility==='party'&&row.subject_key==null&&event.visibility==='party'&&(event.subject_key==null||event.subject_key==='')
           &&origin?.visibility==='party'&&(origin?.subject_key==null||origin?.subject_key===''));
+    const humanOrigin=origin?.kind==='ai_gm_input',nativeCameraOrigin=nativeCameraNarrativeOrigin(db,guild,origin,binding,scope,scene),
+      originValid=humanOrigin?origin?.status==='active'&&origin.session_id===scene.session_id&&origin.scene===scene.key
+        &&origin.details?.author===binding?.scope?.actorUserId&&origin.details?.character_id===binding?.scope?.actorCharacterId
+        &&origin.details?.private_scene===privateBinding&&db.ownerAuthoredSource(guild,origin.event_key,origin.details.author)
+        :nativeCameraOrigin,
+      viewpointValid=humanOrigin?binding?.viewpoint==='character'&&!!binding.placement
+        :nativeCameraOrigin&&binding?.viewpoint==='camera'&&binding.placement==null;
     const unitKind=data?.unit?.kind,unitEpistemic=data?.epistemic??data?.unit?.epistemic,
       sceneUnit=unitKind==='scene'&&unitEpistemic==='observation',speechUnit=unitKind==='npc_speech'&&!!data.unit.subject_key,
       attemptUnit=unitKind==='npc_action_attempt'&&unitEpistemic==='attempt'&&!!data.unit.subject_key,
@@ -397,16 +416,24 @@ export function worldDirectorBridgeBeats(db,guild,source,scope){
       ||!sceneUnit&&!speechUnit&&!attemptUnit&&!leadUnit||event.details?.payload_hash!==hash(data)
       ||event.details?.epistemic!==unitEpistemic||event.details?.input_source!==binding?.source
       ||binding.session!==scene.session_id||binding.scene!==scene.key||binding.location!==event.location_key
-      ||binding.viewpoint!=='character'||!binding.placement||origin.details?.private_scene!==privateBinding
-      ||origin.status!=='active'||origin.kind!=='ai_gm_input'||origin.session_id!==scene.session_id||origin.scene!==scene.key
-      ||origin.details.author!==binding.scope.actorUserId||origin.details.character_id!==binding.scope.actorCharacterId
-      ||pc?.guild_id!==guild||pc.owner_user_id!==binding.scope.actorUserId||!db.ownerAuthoredSource(guild,origin.event_key,pc.owner_user_id)
+      ||!viewpointValid||!originValid
+      ||humanOrigin&&(pc?.guild_id!==guild||pc.owner_user_id!==binding.scope.actorUserId)
       ||!narrativeSourceVisible(db,guild,origin.event_key,scope)) {held++;continue;}
-    let principal;try{principal=conversationPrincipal(db,guild,pc.owner_user_id,pc.id);}
-    catch(error){if(['Active session required.','Select an authenticated current controlled role.','Controller attendance required.','Active campaign character required.'].includes(error.message)){held++;continue;}throw error;}
-    if(principal.kind!=='owner'||principal.revision!==origin.details.revision||principal.character_id!==pc.id){held++;continue;}
-    try{renderNarrativeUnit(db,guild,row.record_key,binding.scope);}
-    catch(error){if(['SCENE_FICTION','NARRATIVE_PVP'].includes(error.code)){held++;continue;}throw error;}
+    if(humanOrigin){
+      let principal;try{principal=conversationPrincipal(db,guild,pc.owner_user_id,pc.id);}
+      catch(error){if(['Active session required.','Select an authenticated current controlled role.','Controller attendance required.','Active campaign character required.'].includes(error.message)){held++;continue;}throw error;}
+      if(principal.kind!=='owner'||principal.revision!==origin.details.revision||principal.character_id!==pc.id){held++;continue;}
+    }
+    let visibleText;
+    try{
+      // Rebuilding a native assembly writer context here would recursively ask
+      // assemblyInputs for these same opportunities. The accepted row is bound
+      // by the source event payload hash above, so use its immutable rendered
+      // projection for native camera scopes; player-origin rows still revalidate
+      // through the original owner/placement-aware renderer on every read.
+      visibleText=nativeCameraOrigin?data.text:renderNarrativeUnit(db,guild,row.record_key,binding.scope);
+    }catch(error){if(['SCENE_FICTION','NARRATIVE_PVP'].includes(error.code)){held++;continue;}throw error;}
+    if(typeof visibleText!=='string'||!visibleText.trim()){held++;continue;}
     if(beats.length>=4){omitted++;continue;}
     const root=origin.event_key,cycle=`world-cycle:${hash([scene.session_id,scene.key,root])}`;
     beats.push({version:1,protocol:'world_beat_v1',id:`world-beat:${hash([source.event_key,event.event_key,scope.mode])}`,
@@ -415,6 +442,7 @@ export function worldDirectorBridgeBeats(db,guild,source,scope){
       audience:audience(scope),depth:1,origin_kind:'director',epistemic:sceneUnit?'observation':attemptUnit?'attempt':'testimony',
       fictional_scope:sceneUnit?'nonmechanical_established_scene':attemptUnit?'npc_attempt_not_completed_effect':leadUnit?'nonbinding_scene_opportunity':'attributed_npc_dialogue_not_objective_truth',
       location:event.location_key||'',reason:sceneUnit?'native_established_scene_unit':leadUnit?'native_scene_lead':attemptUnit?'native_npc_attempt':'native_attributed_npc_speech',
+      visible_text:visibleText,
       execution_authority:false,publication_authority:false});
   }
   const consequences=source.details.dramatic_brief?.native_clock_consequences;

@@ -246,6 +246,8 @@ const assemblySchema={
   properties:{
     public_opening:{type:"string"},
     convergence_goal:{type:"string"},
+    public_opportunity_refs:{type:"array",maxItems:3,items:{type:"object",additionalProperties:false,
+      properties:{source_ref:{type:"string"},signal_ref:{type:"string"}},required:["source_ref","signal_ref"]}},
     character_entries:{
       type:"array",
       items:{
@@ -273,7 +275,7 @@ const assemblySchema={
     },
     gm_notes:{type:"string"},public_parts:gmWorldPartsSchema
   },
-  required:["public_opening","convergence_goal","character_entries","bonds","gm_notes","public_parts"]
+  required:["public_opening","convergence_goal","public_opportunity_refs","character_entries","bonds","gm_notes","public_parts"]
 };
 
 const arrivalSchema={
@@ -1233,6 +1235,7 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
       "public_opening/private_hook remain GM-private prose proposals. Supply public_parts and each entry's private_parts as source-verified gm_world_parts (versions 1, 2 or 4); omit unsupported parts. Native scope independently checks every NPC/location/source/owner/audience. Do not invent PC actions or receipt IDs, expose another owner's private material, or request a fresh writer call. Native orientation can be delivered even when no fictional part is eligible.",
       "stay_reason is an opportunity/reason for continued cooperation, not a compulsory motivation.",
       "convergence_goal is a public-safe dramatic objective: describe only a shared observable incident or opportunity. Never include GM-only facts, mystery solutions, private character details, motivations, or proposed outcomes in this field.",
+      "Choose zero to three exact {source_ref,signal_ref} pairs from the separately supplied audience-filtered public world opportunities as public_opportunity_refs when they best support this opening. These refs select evidence only; never copy cue prose into planner text or assert more than the current source projection permits.",
       "Each entry must use the exact character_id and select one or two applicable hook_source_refs from that character's source catalog when available. GM-private hooks are planning proposals, never player knowledge. Empty refs are allowed ONLY when that character has no permitted sources. public_cue stays a GM-private proposal unless independently authorized; do not infer an arrival from it.",
       "Bonds are proposed practical connections such as 'A knows something B needs'; they are not emotional commitments.",
       "Do not reveal mystery solutions, GM-only truths, hidden motives, or future twists in public_opening/private_hook.",
