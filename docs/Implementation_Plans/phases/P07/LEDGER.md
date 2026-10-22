@@ -4,8 +4,8 @@
 
 | Feature | Status | Evidence |
 |---|---|---|
-| P07-F01 | IN PROGRESS | Awaiting source map and scenario baseline commit. |
-| P07-F02 | NOT STARTED | — |
+| P07-F01 | COMPLETE | Documentation baseline commit `e8646c3a295391f913d79c3288b43b848761d827`. |
+| P07-F02 | COMPLETE | Pure policy; 4/4 fresh tests and syntax pass; commit pending. |
 | P07-F03 | NOT STARTED | — |
 | P07-F04 | NOT STARTED | — |
 | P07-F05 | NOT STARTED | — |

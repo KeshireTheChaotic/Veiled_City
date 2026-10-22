@@ -1,4 +1,7 @@
 {
+  "bot/src/narrative-opportunity-policy.js": [
+    "bot/tests/ai-gm-2026-10/p07-f02.test.mjs"
+  ],
   "bot/src/ai-gm-test-selection.js": [
     "bot/tests/ai-gm-2026-10/p00-f02.test.mjs",
     "bot/tests/ai-gm-2026-10/p06-f03.test.mjs"

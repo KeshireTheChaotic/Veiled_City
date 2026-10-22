@@ -1,6 +1,6 @@
 # P07-F01 — Ledger
 
-**Status:** IN PROGRESS — documentation baseline.
+**Status:** COMPLETE — documentation baseline committed.
 
 | Field | Result |
 |---|---|
@@ -16,3 +16,5 @@
 | Tests/cost | No tests applicable to docs-only work; no provider calls/tokens/cost. |
 | Questions/blockers | None. |
 | Rollback | Revert this documentation/index commit; no production state affected. |
+
+| Completion SHA | `e8646c3a295391f913d79c3288b43b848761d827`. |
