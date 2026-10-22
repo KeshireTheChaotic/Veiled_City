@@ -1,0 +1,52 @@
+{
+  "feature": "P06-F64",
+  "occurrence": "adversary:thorn-hound-of-the-green:root-snare",
+  "audit_anchor": "9e7bf0687357cf96fbe2ea09a04b3e9d2975f6a3",
+  "branch": "codex/clean-ai-gm-2026-10",
+  "start_head": "c6119dab9a639d6a02fc2c741967e9efd32762b0",
+  "implementation_commit": "7518e41bde9dc0e2240053e8f2298af677b24452",
+  "tested_source_sha": "7518e41bde9dc0e2240053e8f2298af677b24452",
+  "run_id": "p06-f64-20261022-a",
+  "command": "From bot/: node --test --test-reporter=tap over unique fresh tests mapped to native-feature-catalog.js, native-feature-definitions.json, native-adversary-context.js, and native-adversary-root-snare.js.",
+  "exit_code": 0,
+  "tests": 233,
+  "passed": 233,
+  "failed": 0,
+  "cancelled": 0,
+  "skipped": 0,
+  "duration_ms": 5156.3964,
+  "changed_js_mjs_syntax": "5/5 pass",
+  "changed_json_parse": "2/2 pass",
+  "fresh_files": 61,
+  "catalog": {
+    "supported": 76,
+    "total": 153,
+    "review_only": 77,
+    "needs_authoring": 0,
+    "p06_handler_families": 64,
+    "registered_handler_keys": 75
+  },
+  "provider_usage": {
+    "cost_usd": 0,
+    "calls": 0,
+    "tokens": 0
+  },
+  "cache": "No cache used or savings claimed; Codex usage unavailable.",
+  "input_hashes_sha256": {
+    "bot/src/native-adversary-context.js": "9b3fc6f5afc33893b72521cf8f4ed45f85ae18d2090e2cff6835fa0e97a65ede",
+    "bot/tests/ai-gm-2026-10/coverage.json": "9bf4b78236048d468fa50d93527a3927d8d96aa440e7d38839e4e1da1e5f7f90",
+    "bot/src/native-feature-definitions.json": "3fdca6b6b0be6f9883077a64ea59cb1ccbdc17d8a25fd9af76ca3d2ccca68920",
+    "content/GM_PRIVATE/ADVERSARIES/adversaries.json": "846386ded200f84e487f69c1b82adf4387dcb41526cb60e8ee777e48727fca9c",
+    "bot/tests/ai-gm-2026-10/p06-f64.test.mjs": "00b887fc53e714cdbcbab35609b6b7c8ebd863c457493525460658c46a82c2d3",
+    "bot/src/native-feature-catalog.js": "ad0acffda46f6f8c20011517c8f533c5e7aff449ac26a565c815c593b99ddafe",
+    "bot/tests/ai-gm-2026-10/p06-f01.test.mjs": "7732702b59332456cf329c109e953c0e4ccaab147030f42a0ef926cad9d40ff4",
+    "bot/src/native-adversary-root-snare.js": "5fa1d0eadaff2a80caf17c9a39b4828b79b276973b69faed8abeec1148e1ac9f"
+  },
+  "local_holds": [
+    "Live target/range proof, PC Reaction Roll, damage, Restrained application/recovery and replay are not implemented by this cue.",
+    "Whole-release qualification, live narrative quality, Discord delivery and provider latency remain unverified."
+  ],
+  "owner_questions": [],
+  "critical_blockers": [],
+  "release_authorized": false
+}

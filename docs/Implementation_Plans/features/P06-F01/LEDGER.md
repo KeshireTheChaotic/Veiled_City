@@ -189,3 +189,5 @@ Pale Court Fixer Call Security implementation `20f1e117a1330f4b054d6fd1c971aaa7e
 ## Resumption checkpoint — P06-F63 — 2026-10-22
 
 Thorn-Hound Urban Cover implementation `4556eab319ee91e92ab66d26bc1356948cc3a248`; `p06-f63-20261022-a` passed 229/229 across 60 fresh files, syntax 5/5, JSON 2/2. Catalog 75 supported / 78 review-only / 0 needs-authoring; 74 handlers / 63 P06 families. Path/range, movement and concealment results remain held. Cost 0; no cache claim. No owner restriction or critical blocker; release unauthorized. Evidence [F63](../../evidence/P06_F63_TARGETED.json).
+
+P06-F64 supports Thorn-Hound Root Snare as an exact source-bound Action cue. Implementation `7518e41bde9dc0e2240053e8f2298af677b24452`; frozen `p06-f64-20261022-a` passed 233/233 across 61 fresh files; syntax 5/5 and JSON 2/2. Catalog 76/77/0; 75 handlers / 64 families. Target/range, PC Reaction Roll, damage, Restrained lifecycle, recovery and replay remain local holds. Cost 0; no cache claim; Codex usage unavailable. No owner restriction or critical blocker; release unauthorized. Evidence [F64](../../evidence/P06_F64_TARGETED.json).

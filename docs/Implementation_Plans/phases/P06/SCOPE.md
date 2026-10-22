@@ -72,6 +72,7 @@ Complete source-qualified features, reconcile rules and qualify the changed impl
 - [P06-F61 — Support Pale Court Fixer Reputation Attack](../../features/P06-F61/SCOPE.md)
 - [P06-F62 — Support Pale Court Fixer Call Security](../../features/P06-F62/SCOPE.md)
 - [P06-F63 — Support Thorn-Hound Urban Cover](../../features/P06-F63/SCOPE.md)
+- [P06-F64 — Support Thorn-Hound Root Snare](../../features/P06-F64/SCOPE.md)
 
 ## Exit
 All safe features have current diff, truthful ledger and newly authored tests covering only code changed in this phase. Local source gaps and owner decisions remain visible but do not stop other safe work. No automatic release qualification.
