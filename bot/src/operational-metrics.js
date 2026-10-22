@@ -2,6 +2,7 @@
 import {createHmac,randomBytes} from 'node:crypto';
 import {currentTurnTrace} from './turn-trace-context.js';
 const stages=new Set(['model_request','structured_retry','validation_retry','router','gm','validate','commit','discord',
+  'opening_source','opening_plan','opening_authoring','opening_native_accept','opening_commit','opening_publish',
   'narrative_unit_hold','narrative_sibling_salvage','narrative_administrative_fallback','narrative_answer_missing','narrative_retrieval_miss','narrative_generic_repeat','narrative_camera_misframed',
   'narrative_projection','narrative_quarantine','neutral_fallback','answerless_projection','optional_quarantine','safe_recovery','narrative_completed','narrative_missing',
   'interaction_failure','interaction_ack','native_replay','runtime_failure',

@@ -7,6 +7,7 @@ import {deliverQueuedTurn} from './publishing.js';
 import {PermissionError,StateConflictError} from './errors.js';
 import {indexWorldEvent} from './city-calendar.js';
 import {assemblyRefreshRequired,retainedAssemblyDelivery} from './assembly-planning.js';
+import {measureNative,measureStage,operationalMetrics} from './operational-metrics.js';
 function metadataSource(db,guild,session,key){
   return indexWorldEvent(db,guild,{key:`assembly-meta:${assemblyHash(key)}`,kind:'assembly_delivery_metadata',
     title:'Assembly transport bookkeeping, not fictional authority',source_id:'native:assembly',visibility:'gm',session_id:session.id,
@@ -17,7 +18,8 @@ export async function deliverVerifiedAssembly({db,guild,session,gm=null,deliver=
   const plan=db.getAssemblyPlan(session.id)||{},diagnostics=[];
   const freshness=assemblyRefreshRequired(db,guild.id,session);
   if(freshness.hold)return {slots:assemblyDeliverySummary(db,guild.id,session),diagnostics:[{code:'ASSEMBLY_STALE_REVIEW'}],freshness};
-  const slots=assemblySlots(db,guild.id,session);
+  const sourceStarted=performance.now(),slots=assemblySlots(db,guild.id,session);
+  (gm?.metrics||operationalMetrics).record('opening_source',{guildId:guild.id,durationMs:performance.now()-sourceStarted});
   // Commit public local layout first when a real public viewpoint exists. Private writers may reuse it,
   // but private-only observations never flow back into the public opening.
   if(plan.assembly_contract?.version===2||db.getCityCalendar(guild.id).flags.playable_narration===true)
@@ -39,7 +41,7 @@ export async function deliverVerifiedAssembly({db,guild,session,gm=null,deliver=
           &&(slot.scope.actorCharacterId||db.getCityCalendar(guild.id).flags.narrative_camera&&db.getCityCalendar(guild.id).flags.narrative_authority)))
         await gm.authorAssemblyScene(guild.id,session.id,slot.scope);
       assertCurrent();
-      if(!job?.data.turn_id)job=db.transaction(()=>{
+      if(!job?.data.turn_id)job=measureNative('opening_commit',guild.id,()=>db.transaction(()=>{
         const result=prepareAssemblyOutput(db,guild.id,session.id,slot.scope,{content:gm?.content});
         const prior=result.assembly_evidence.fallback&&retainedAssemblyDelivery(db,guild.id,session,slot.scope,{fallback:true});
         if(prior)return db.saveCityRecord(guild.id,{kind:'assembly_delivery',key:slot.key,status:'delivered',visibility:'gm',
@@ -53,10 +55,11 @@ export async function deliverVerifiedAssembly({db,guild,session,gm=null,deliver=
         return db.saveCityRecord(guild.id,{kind:'assembly_delivery',key:slot.key,status:'pending',visibility:'gm',source_event:metadataSource(db,guild.id,session,slot.key),
           data:{version:2,session:session.id,plan_hash:assemblyPlanHash(plan),scope:slot.scope,turn_id:turn.turn_id,
             raw_prose_held:true,evidence:result.assembly_evidence}});
-      });
+      }));
       if(job?.data.retained_acknowledgement)continue;
       assertCurrent();bindTurn(job.data.turn_id);
-      const delivered=await deliver({db,guild,turnId:job.data.turn_id});
+      const delivered=await measureStage(gm?.metrics||operationalMetrics,'opening_publish',
+        ()=>deliver({db,guild,turnId:job.data.turn_id}),{guildId:guild.id});
       db.saveCityRecord(guild.id,{...job,key:slot.key,status:delivered.pending.length?'pending':'delivered'});
     }catch(error){
       if(!error.expected&&!['ASSEMBLY_SOURCE','NARRATIVE_PVP','OUTPUT_AUTHORITY','NARRATIVE_INTEGRITY'].includes(error.code))throw error;

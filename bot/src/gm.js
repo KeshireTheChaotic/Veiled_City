@@ -1056,8 +1056,8 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
   }
   async authorAssemblyScene(guildId,sessionId,scope){
     const {candidate,source}=assemblyNarrativeCandidate(this.db,guildId,sessionId,scope),signal=AbortSignal.timeout(Number(this.config.gmTurnDeadlineMs||120000));
-    return authorNarrativeRequests({db:this.db,guild:guildId,result:candidate,scope,
-      sourceRef:source.event_key,budget:{used:false},generate:packet=>this.generateNarrative(guildId,packet,signal,'assembly')});
+    return measureStage(this.metrics,'opening_authoring',()=>authorNarrativeRequests({db:this.db,guild:guildId,result:candidate,scope,
+      sourceRef:source.event_key,budget:{used:false},generate:packet=>this.generateNarrative(guildId,packet,signal,'assembly')}),{guildId});
   }
   async authorOpeningEntry(guildId,key,scope){
     const {candidate,source}=openingEntryNarrativeCandidate(this.db,guildId,key,scope),signal=AbortSignal.timeout(Number(this.config.gmTurnDeadlineMs||120000));

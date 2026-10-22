@@ -10,7 +10,7 @@ import { indexWorldEvent } from "./city-calendar.js";
 import {renderContinuationNotice} from "./action-continuation.js";
 import {renderNativeNotice} from "./native-notice.js";
 import {establishGmWorldPart,renderGmWorldPart} from "./gm-world-narrative.js";
-import {operationalMetrics} from './operational-metrics.js';
+import {operationalMetrics,measureNative} from './operational-metrics.js';
 import {decodeNonmaterialGrammar,establishGrammarScope,renderNonmaterialGrammar,grammarHash} from './nonmaterial-grammar.js';
 import {splitDiscordText} from './discord/chunking.js';
 import {findFreshNpcPart,renderFreshNpcPart,hasPcReference} from './fresh-npc-authoring.js';
@@ -290,6 +290,7 @@ export function assemblyNarrativeCandidate(db,guild,sessionId,scope){
   return {view,candidate,source};
 }
 export function prepareAssemblyOutput(db,guild,sessionId,scope,{content=null}={}){
+  return measureNative('opening_native_accept',guild,()=>{
   const {view,candidate,source}=assemblyNarrativeCandidate(db,guild,sessionId,scope);
   prepareAuthorizedTurnOutput(db,guild,candidate,scope,{sourceRef:source.event_key,origin:'assembly-candidate',content});
   // Assembly is not a replay of every saved Fear/PvP projection in this scene.
@@ -311,6 +312,7 @@ export function prepareAssemblyOutput(db,guild,sessionId,scope,{content=null}={}
       fallback:!narrativeParts.length,original_hook_delivered:false,raw_prose_held:!!candidate.narration}};
   prepared.set(result,{raw:{},drafts:{},parts:parts.map(p=>p.record_key),privateParts:{},scope:hash(scope),fingerprint:fingerprint(result)});
   return result;
+  });
 }
 export function prepareOpeningEntryOutput(db,guild,key,scope){
   const {view,source,candidate}=openingEntryNarrativeCandidate(db,guild,key,scope);

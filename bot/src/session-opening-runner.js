@@ -3,6 +3,7 @@ import {inspectSessionOpening,beginSessionOpeningAttempt,assertSessionOpeningAtt
 import {certifyAssemblyPlan,assemblyPlanFreshness} from './assembly-context.js';
 import {assemblyHasHistory} from './assembly-planning.js';
 import {deliverVerifiedAssembly} from './assembly-publications.js';
+import {measureStage,operationalMetrics} from './operational-metrics.js';
 const flights=new WeakMap();
 export function sessionOpeningStatus(job){
   const counts=new Map(),known=new Set(['VERIFIED_SCENE_DELIVERED','FALLBACK_DELIVERED','UNCERTAIN','FAILED','PENDING','BLOCKED','LEGACY_DELIVERED']);
@@ -51,7 +52,8 @@ async function execute({db,guild,gm,key}){
     const stale=assemblyPlanFreshness(db,guild.id,session,plan)==='stale',history=assemblyHasHistory(db,guild.id,session,plan);
     if(stale&&history)return save(db,guild.id,row,'needs_review',{hold_code:'ASSEMBLY_STALE_REVIEW'});
     if(!plan.public_opening&&!plan.character_entries?.length&&!plan.assembly_contract||stale&&!history){
-      const generated=await gm.planAssembly({guildId:guild.id,mode:session.assembly_mode,openingKind:row.data.origin.kind});
+      const generated=await measureStage(gm.metrics||operationalMetrics,'opening_plan',
+        ()=>gm.planAssembly({guildId:guild.id,mode:session.assembly_mode,openingKind:row.data.origin.kind}),{guildId:guild.id});
       assertSessionOpeningAttempt(db,guild.id,key);
       plan=certifyAssemblyPlan(db,guild.id,session,generated);
       plan.assembly_contract.opening_kind=row.data.origin.kind;db.setAssemblyPlan(key,plan);
