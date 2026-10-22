@@ -79,3 +79,5 @@ All safe features have current diff, truthful ledger and newly authored tests co
 
 ## Test-runner no-poll rule
 Follow [TEST_EXECUTION_NO_POLL.md](../../TEST_EXECUTION_NO_POLL.md). Run a frozen batch once; never watch, poll or stream test progress. Collect the final exit code at a natural phase checkpoint.
+- [P06-F65 — Clause-Eater Loophole](../../features/P06-F65/SCOPE.md)
+- [P06-F66 — Clause-Eater Conflicting Duty](../../features/P06-F66/SCOPE.md)
