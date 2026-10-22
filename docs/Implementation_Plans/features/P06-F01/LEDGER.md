@@ -166,3 +166,7 @@ Implementation commit `5274829eab02eabaafec179ada806fb263292d29` supports Morrow
 ## Resumption checkpoint — P06-F56 — 2026-10-22
 
 Implementation commit `7d79bf2987fad99b32b8a24311d709d01d82e442` supports Morrowline Echo Self-Fulfilling Event as an exact cue. Frozen `p06-f56-20261022-a`: 201/201 across 53 fresh files; syntax 5/5 and JSON 2/2. Catalog 68 supported / 85 review-only / 0 needs-authoring; 67 handlers / 56 P06 families. Fear, hazard eligibility/creation, PC roll, damage, success choice, scene mutation and replay remain held. Provider use 0/0/$0; no cache claim; Codex usage unavailable. No owner restriction or critical blocker; release unauthorized. Evidence [F56](../../evidence/P06_F56_TARGETED.json).
+
+## Resumption checkpoint — P06-F58 — 2026-10-22
+
+Implementation commit `ef657cd153694a815d2e3ccb31533f513228fb45` supports Cicada Runner Always a Price as an exact source-bound cue. Frozen `p06-f58-20261022-a`: 205/205 across 54 fresh files; syntax 5/5 and JSON 2/2. Catalog 69/84/0; 68 handlers / 57 P06 families. PC offer, comparable-value judgment, NPC response and replay remain held. Provider use 0/0/$0; no cache claim; Codex usage unavailable. No owner restriction or critical blocker; release unauthorized. Evidence [F58](../../evidence/P06_F58_TARGETED.json).

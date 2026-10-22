@@ -1,0 +1,51 @@
+{
+  "feature": "P06-F58",
+  "occurrence": "adversary:cicada-runner:always-a-price",
+  "audit_anchor": "9e7bf0687357cf96fbe2ea09a04b3e9d2975f6a3",
+  "branch": "codex/clean-ai-gm-2026-10",
+  "start_head": "92bf9d2348972e2d6a81a74c31b47bb961f29268",
+  "implementation_commit": "ef657cd153694a815d2e3ccb31533f513228fb45",
+  "tested_source_sha": "ef657cd153694a815d2e3ccb31533f513228fb45",
+  "run_id": "p06-f58-20261022-a",
+  "command": "From bot/: node --test over 54 unique fresh paths mapped by coverage.json to native feature catalog, definitions, adversary context and Always a Price projector.",
+  "exit_code": 0,
+  "tests": 205,
+  "passed": 205,
+  "failed": 0,
+  "cancelled": 0,
+  "skipped": 0,
+  "changed_js_mjs_syntax": "5/5 pass",
+  "changed_json_parse": "2/2 pass",
+  "catalog": {
+    "supported": 69,
+    "total": 153,
+    "review_only": 84,
+    "needs_authoring": 0,
+    "p06_handler_families": 57,
+    "registered_handler_keys": 68
+  },
+  "provider_usage": {
+    "cost_usd": 0,
+    "calls": 0,
+    "tokens": 0
+  },
+  "cache": "No cache used or savings claimed; Codex usage unavailable.",
+  "input_hashes_sha256": {
+    "bot/src/native-feature-definitions.json": "1d9406e413eaf348767257ed1f4c976cb2479347729d6a6b51e45a9cbb2aa2f1",
+    "bot/tests/ai-gm-2026-10/coverage.json": "eeea2a8c4fa265cdfc154c8345ead9284a0af6e7ba9d760750ad478adda43063",
+    "bot/tests/ai-gm-2026-10/p06-f01.test.mjs": "f6ddadb45b8661cf1afee4df352b1b93b9824f80cef48aab232ac2333fe224c2",
+    "bot/tests/ai-gm-2026-10/p06-f58.test.mjs": "ab8ee909324922992d533c276e842bf566fefbd48967f03611a6d44955aef2f3",
+    "content/GM_PRIVATE/ADVERSARIES/adversaries.json": "846386ded200f84e487f69c1b82adf4387dcb41526cb60e8ee777e48727fca9c",
+    "bot/src/native-adversary-context.js": "c586b0fb3b6954fda4d459775952b88b1adb5001794bf7ebc6c8884ec7f1c698",
+    "bot/src/native-adversary-always-a-price.js": "33ac305217288c40d834046afccef240dfbd2ec99d8a1148b4c6806eda1b36c6",
+    "bot/src/native-feature-catalog.js": "40b7fad9c98a226cfa5fbf29553dbe5d39fcd5549fb05bfdddcc1e0dd2b29811"
+  },
+  "owner_questions": [],
+  "local_holds": [
+    "PC offer and comparable-value assessment are not committed.",
+    "The Cicada Runner's answer and NPC choice are not inferred or committed.",
+    "Persistence and replay remain unverified."
+  ],
+  "critical_blockers": [],
+  "release_authorized": false
+}
