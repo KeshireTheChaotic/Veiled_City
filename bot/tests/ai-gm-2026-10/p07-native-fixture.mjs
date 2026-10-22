@@ -15,7 +15,7 @@ import {GMService} from '../../src/gm.js';
 const botRoot=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'../..');
 export function createP07NativeFixture(){
   const directory=mkdtempSync(path.join(tmpdir(),'vc-p07-native-'));
-  const dbPath=path.join(directory,'campaign.sqlite'),db=new VeiledDB(dbPath,path.join(botRoot,'sql/schema.sql'));
+  const dbPath=path.join(directory,'campaign.sqlite');let db=new VeiledDB(dbPath,path.join(botRoot,'sql/schema.sql'));
   const guild='p07-source-proof';db.ensureCampaign(guild,{name:'P07 disposable source proof'});
   db.setCityCalendar(guild,{flags:{dialogue_history:true,scene_continuity:true,narrative_authority:true,playable_narration:true,narrative_camera:true}});
   db.upsertPlayer(guild,'owner-a','Owner A');db.upsertPlayer(guild,'owner-b','Owner B');
@@ -34,7 +34,7 @@ export function createP07NativeFixture(){
   recordScenePresence(db,guild,{source_event:npcArrival.event_key,entity_type:'npc',entity_key:'mara',location_key:'p07-station',visibility:'party',state:'actually_present'},'human_gm');
   for(const [user,pc,id] of [['owner-a',pcs[0],'arrival-a'],['owner-b',pcs[1],'arrival-b']])recordCharacterArrival(db,guild,pc,user,id);
   let closed=false;
-  return {db,guild,session,scene,pcs,scope:{mode:'party',actorUserId:null,actorCharacterId:null},
+  return {get db(){return db;},dbPath,guild,session,scene,pcs,scope:{mode:'party',actorUserId:null,actorCharacterId:null},
     acceptSpeech(user,pc,messageId,quote,{privateScene=false,targetKey='mara',targetName='Mara'}={}){
       const address=`I tell ${targetName}: `,message=`${address}${quote}`,start=message.indexOf(address),end=message.length;
       captureWorldInput(db,guild,user,pc.id,messageId,message,{privateScene});
@@ -65,6 +65,7 @@ export function createP07NativeFixture(){
         brief=directorBriefForAudience(db,guild,source,this.scope),writer=buildNarrativeContext(db,guild,this.scope,sourceRef,{operation:'describe_scene'});
       return {result,providerCalls,lastRequest,sourceRef,source,brief,writer};
     },
+    reopen(){db.close();db=new VeiledDB(dbPath,path.join(botRoot,'sql/schema.sql'));return db;},
     close(){if(!closed){closed=true;try{db.close();}finally{rmSync(directory,{recursive:true,force:true});}}}
   };
 }
