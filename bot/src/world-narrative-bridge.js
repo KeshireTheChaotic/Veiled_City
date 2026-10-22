@@ -374,7 +374,6 @@ export function worldDirectorBridgeBeats(db,guild,source,scope){
   // audience-bound narrative authority. Re-render with the original binding
   // scope on every read; the Director snapshot is a selector, not proof.
   for(const proof of source.details.dramatic_brief?.events||[]){
-    if(beats.length>=4)break;
     if(proof.kind!=='native_narrative_unit')continue;
     const event=db.getWorldEvent(guild,proof.ref),unitKey=typeof proof.ref==='string'&&proof.ref.endsWith(':source')
       ?proof.ref.slice(0,-':source'.length):null,row=unitKey&&db.getCityRecord(guild,'narrative_unit',unitKey);
@@ -408,6 +407,7 @@ export function worldDirectorBridgeBeats(db,guild,source,scope){
     if(principal.kind!=='owner'||principal.revision!==origin.details.revision||principal.character_id!==pc.id){held++;continue;}
     try{renderNarrativeUnit(db,guild,row.record_key,binding.scope);}
     catch(error){if(['SCENE_FICTION','NARRATIVE_PVP'].includes(error.code)){held++;continue;}throw error;}
+    if(beats.length>=4){omitted++;continue;}
     const root=origin.event_key,cycle=`world-cycle:${hash([scene.session_id,scene.key,root])}`;
     beats.push({version:1,protocol:'world_beat_v1',id:`world-beat:${hash([source.event_key,event.event_key,scope.mode])}`,
       kind:sceneUnit?'established_world_change':leadUnit?'scene_opportunity':'npc_intention_or_offer',
@@ -421,7 +421,6 @@ export function worldDirectorBridgeBeats(db,guild,source,scope){
   if(consequences){
     if(consequences.version!==1||!Array.isArray(consequences.receipts)||consequences.receipts.length>4)held++;
     else for(const [index,proof] of consequences.receipts.entries()){
-      if(beats.length>=4){omitted+=consequences.receipts.length-index;break;}
       const current=currentScene(db,guild),validated=nativeFearClockEffect(db,guild,proof.key,scope,current),event=validated?.source;
       if(!validated||proof.kind!=='pvp_fear_effect_receipt'||hash(validated.row)!==proof.revision
         ||event.event_key!==proof.source_event||hash(event)!==proof.source_revision||proof.session!==current.session_id
@@ -429,6 +428,7 @@ export function worldDirectorBridgeBeats(db,guild,source,scope){
         ||proof.causation_ref!==validated.causation
         ||scope.mode==='private'&&proof.principal_revision!==validated.principalRevision
         ||!narrativeSourceVisible(db,guild,proof.causation_ref,scope)){held++;continue;}
+      if(beats.length>=4){omitted++;continue;}
       const root=proof.causation_ref,cycle=`world-cycle:${hash([current.session_id,current.key,root])}`;
       beats.push({version:1,protocol:'world_beat_v1',id:`world-beat:${hash([source.event_key,proof.key,proof.audience])}`,
         kind:'world_consequence',source_ref:source.event_key,signal_ref:proof.key,effect_ref:proof.key,source_event_ref:event.event_key,
@@ -441,10 +441,10 @@ export function worldDirectorBridgeBeats(db,guild,source,scope){
   if(observations){
     if(observations.version!==1||!Array.isArray(observations.receipts)||observations.receipts.length>4)held++;
     else for(const proof of observations.receipts){
-      if(beats.length>=4){omitted++;continue;}
       const verified=worldSimulationReceiptForAudience(db,guild,proof.action,scope,{sourceRef:proof.key});
       if(proof.kind!=='world_simulation_observation'||verified.status!=='verified_native_observation'
         ||hash(verified)!==proof.revision||verified.observation_ref!==proof.observation_ref){held++;continue;}
+      if(beats.length>=4){omitted++;continue;}
       const root=verified.observation_ref;
       beats.push({version:1,protocol:'world_beat_v1',id:`world-beat:${hash([source.event_key,root,audience(scope)])}`,
         kind:'world_consequence',source_ref:source.event_key,signal_ref:proof.key,effect_ref:proof.key,source_event_ref:root,
@@ -457,9 +457,9 @@ export function worldDirectorBridgeBeats(db,guild,source,scope){
   if(encounters){
     if(encounters.version!==1||!Array.isArray(encounters.candidates)||encounters.candidates.length>4)held++;
     else for(const proof of encounters.candidates){
-      if(beats.length>=4){omitted++;continue;}
       const verified=inspectNativeEncounterCandidate(db,guild,proof,scope);
       if(!verified){held++;continue;}
+      if(beats.length>=4){omitted++;continue;}
       const root=verified.source_ref;
       beats.push({version:1,protocol:'world_beat_v1',id:`world-beat:${hash([source.event_key,proof.proposal_ref,audience(scope)])}`,
         kind:'encounter_candidate',source_ref:source.event_key,signal_ref:proof.proposal_ref,causation_ref:root,
