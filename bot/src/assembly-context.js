@@ -7,12 +7,23 @@ export const assemblySourceError=message=>Object.assign(new Error(message),{code
 // Explicit player-entitled character material only. GM hooks remain available
 // through their separate GM-only planner input below; they are never owner sources.
 const ownerFields=['entry_hooks','goals','unresolved_incident','background','obligation','home','person','opening_status'];
-const privateLabels=new Set(['gm','gm_private','private_gm','gm_only','secret','hidden']);
+const privateLabels=new Set(['gm','gm_private','private_gm','gm_only','ai_dm_only','game_master_only','secret','hidden']);
+const visibilityLabel=value=>String(value??'').toLowerCase().trim().replace(/[\s-]+/g,'_');
+function ownerVisible(value,depth=0){
+  if(!value||typeof value!=='object')return true;
+  if(depth>12)return false;
+  const visibility=visibilityLabel(value.visibility??value.audience??value.scope);
+  if(privateLabels.has(visibility)||value.gm_private===true||value.gm_only===true||value.hidden===true)return false;
+  // Export metadata is an authority label even when the payload itself has no label.
+  const exportVisibility=visibilityLabel(value.export_meta?.visibility);
+  if(privateLabels.has(exportVisibility))return false;
+  return Object.values(value).every(child=>Array.isArray(child)?child.every(item=>ownerVisible(item,depth+1)):
+    !child||typeof child!=='object'||ownerVisible(child,depth+1));
+}
 function ownerText(value){
   if(typeof value==='string')return value;
   if(!value||typeof value!=='object'||Array.isArray(value))return null;
-  const visibility=String(value.visibility??value.audience??value.scope??'').toLowerCase();
-  if(privateLabels.has(visibility)||value.gm_private===true||value.gm_only===true||value.hidden===true)return null;
+  if(!ownerVisible(value))return null;
   return typeof value.text==='string'?value.text:null;
 }
 const displayed=text=>String(text).replaceAll('@','@\u200b');
@@ -48,8 +59,23 @@ export function assemblyInputs(db,guild,session){
       narratives:db.listCharacterNarratives(guild,{characterIds:[pc.id],includeGM:true}).sort((a,b)=>a.id.localeCompare(b.id))};
   });
   const facts=db.listFactsForGM(guild,{limit:500}).map(f=>({...f})).sort((a,b)=>a.id.localeCompare(b.id));
+  // Planner-only agenda is a read-only synthesis of existing native motives.
+  // It is deliberately never copied into writer packets as trusted prose.
+  const scene=currentScene(db,guild),world_agenda=[];
+  for(const actor of db.densityActorSelection(guild).slice(0,20)){
+    if(actor.type==='npc')for(const goal of db.listNpcGoals(guild,actor.actor_key,{status:'active',limit:3}))
+      world_agenda.push({actor_type:'npc',actor:actor.actor_key,title:goal.title,objective:goal.objective,
+        horizon:goal.horizon,priority:goal.priority,source_kind:goal.source||'native_npc_goal',scope:{guild,session:session.id,scene:scene.key}});
+    if(actor.type==='faction')for(const goal of db.listSimulationRecords(guild,{kind:'goal',status:'active',entityKey:`faction:${actor.actor_key}`,limit:3}))
+      world_agenda.push({actor_type:'faction',actor:actor.actor_key,title:goal.data.title||'',objective:goal.data.objective||goal.data.goal||'',
+        priority:goal.data.priority||0,source_ref:goal.id,source_kind:'native_faction_goal',scope:{guild,session:session.id,scene:scene.key}});
+  }
+  const worldContext=openingWorldOpportunities(db,guild,{mode:'party',actorUserId:null,actorCharacterId:null}),
+    world_context={version:worldContext.version,beats:worldContext.beats,examined_limit:worldContext.examined_limit,
+      source_limit_reached:worldContext.source_limit_reached,authority:worldContext.authority};
   const canon=db.listCanon(guild,{includeGM:true,limit:500}),party=db.getPartyState(guild);
-  return {version:2,session:session.id,mode:session.assembly_mode,scene:currentScene(db,guild).key,characters,facts,canon,party};
+  return {version:3,session:session.id,mode:session.assembly_mode,scene:currentScene(db,guild).key,characters,facts,canon,party,
+    world_agenda:world_agenda.slice(0,32),world_context};
 }
 export const assemblyInputFingerprint=(db,guild,session)=>hookHash(assemblyInputs(db,guild,session));
 export function certifyAssemblyPlan(db,guild,session,plan,{strict=false,fingerprint=null}={}){
@@ -104,10 +130,13 @@ export function assemblyWriterBrief(db,guild,sessionId,scope,planOverride=null){
   const resume=db.getSession(sessionId)?.assembly_phase==='party';
   const plan=planOverride||db.getAssemblyPlan(sessionId)||{};
   const contract=plan.assembly_contract?.version===2?plan.assembly_contract:null;
-  const goal=typeof plan.convergence_goal==='string'?plan.convergence_goal:'';
-  const dramatic_intent=contract?{version:1,goal,session:sessionId,scene:currentScene(db,guild).key,
-    plan_inputs:contract.input_fingerprint,audience:scope.mode,revision:hookHash([sessionId,currentScene(db,guild).key,contract.input_fingerprint,scope.mode,goal])}:null;
   const world_opportunities=openingWorldOpportunities(db,guild,scope);
+  // Free-form planner fields (including convergence_goal) are GM-private proposals.
+  // Only already-authorized, audience-scoped native opportunity cues may cross this boundary.
+  const dramatic_intent=contract?{version:2,objective:'Explore an interesting shared opportunity without asserting a hidden cause, PC response, or outcome.',
+    cues:world_opportunities.beats.map(({id,kind,source_ref,signal_ref,reason})=>({id,kind,source_ref,signal_ref,reason})),
+    session:sessionId,scene:currentScene(db,guild).key,plan_inputs:contract.input_fingerprint,audience:scope.mode,
+    revision:hookHash([sessionId,currentScene(db,guild).key,contract.input_fingerprint,scope.mode,world_opportunities.beats])}:null;
   if(scope.mode==='private'){
     const hook=assemblyHookSelection(db,guild,sessionId,scope);
     return {kind:resume?'private_resume':'private_opening',sources:hook?.selected||[],world_opportunities,dramatic_intent,

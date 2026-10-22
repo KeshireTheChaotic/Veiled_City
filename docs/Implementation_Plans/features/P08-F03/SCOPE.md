@@ -45,3 +45,7 @@ The actual writer receives useful certified dramatic purpose and permitted conte
 - Before any *new creative limitation* (mandatory template, dialogue length cap, NPC invention ban, new fixed pacing, weaker model), ask the owner a concrete question and hold only that limitation. Enforcing existing player agency, privacy and mechanical authority does not require reapproval.
 - If one item has missing source/rule or a noncritical hold, mark it locally and continue independent safe work. Stop unsafe critical work rather than fabricating proof. Reverse only this feature's scoped changes if rollback is necessary; retain owner edits and all authenticated history.
 - Offline targeted passes are not release certification. No push, merge, deploy, service restart, production DB, provider spend or CI without separate approval.
+
+## Corrective Follow-up — 2026-10-22
+
+Do not forward raw `convergence_goal` or other free-form planner prose to an audience writer. Supply a generic non-factual objective plus only currently audience-validated `openingWorldOpportunities` cues, retaining natural prose and ordinary invention. The objective is inspiration, not a required template. New SQLite-backed projection evidence is in `bot/tests/ai-gm-2026-10/p08-f03-correction.test.mjs`; positive sourced cue delivery, writer output, publication and semantic quality remain unqualified.

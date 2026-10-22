@@ -1,5 +1,4 @@
 /** One additive public opportunity after a verified zero-attendee camera and a genuinely owner-controlled cohort. */
-import {assemblyDeliverySummary} from './assembly-state.js';
 import {assemblyInputFingerprint,certifyAssemblyPlan,assemblySourceError} from './assembly-context.js';
 import {currentOpeningCohort,openingCohortHash,openingCohortNarrativeCandidate,
   inspectOpeningCohortSource,openingCohortEligible,openingCohortIsAdditive} from './opening-cohort-state.js';
@@ -10,22 +9,40 @@ import {indexWorldEvent} from './city-calendar.js';
 import {measureStage,measureNative,operationalMetrics} from './operational-metrics.js';
 
 const flights=new WeakMap();
-function save(db,guild,row,status,data=row.data){return db.saveCityRecord(guild,{...row,key:row.record_key,status,data});}
+function save(db,guild,row,status,data=row.data){
+  const live=db.getCityRecord(guild,row.kind,row.record_key);
+  if(live&&live.data.attempt_id!==row.data.attempt_id)return live;
+  return db.saveCityRecord(guild,{...row,key:row.record_key,status,data});
+}
 function code(error){return /^[A-Z_]{2,60}$/.test(error?.code||'')?error.code:'OPENING_COHORT_REVIEW';}
 function initialCameraAcknowledged(db,guild,session){
   const opening=db.getCityRecord(guild,'session_opening_job',session.id);
-  if(opening?.status!=='completed')return null;
-  const slot=assemblyDeliverySummary(db,guild,session).find(row=>row.scope.mode==='party');
-  return slot&&slot.status==='delivered'&&slot.evidence.narrative_verified===true
-    &&slot.rows.length>0&&slot.rows.every(row=>row.status==='delivered'&&row.discord_message_id)?opening:null;
+  if(!['completed','needs_narrative_review'].includes(opening?.status)||opening.data.origin?.roster?.length!==0)return null;
+  const attempts=db.listCityRecords(guild,{kind:'session_opening_turn',includeGM:true,limit:1000})
+    .filter(turn=>turn.data.job===session.id&&turn.source_event===opening.data.attempt_source
+      &&turn.data.origin_hash===opening.data.origin_hash&&turn.data.turn===turn.record_key);
+  for(const attempt of attempts){
+    const source=db.getWorldEvent(guild,attempt.source_event);
+    if(source?.status!=='active'||source.kind!=='native_session_opening_attempt'||source.session_id!==session.id
+      ||source.visibility!=='gm'||source.details?.job!==session.id||source.details?.origin_hash!==opening.data.origin_hash)continue;
+    const delivery=db.listCityRecords(guild,{kind:'assembly_delivery',includeGM:true,limit:1000})
+      .find(row=>row.data.turn_id===attempt.record_key&&row.data.scope?.mode==='party'
+        &&row.data.scope.actorCharacterId==null&&row.data.scope.actorUserId==null&&row.data.evidence?.narrative_verified===true);
+    if(!delivery)continue;
+    const rows=db.listTurnPublications(guild,attempt.record_key);
+    if(rows.length&&rows.every(row=>row.status==='delivered'&&row.discord_message_id&&['public','party'].includes(row.visibility)))return opening;
+  }
+  return null;
 }
 function jobSource(db,guild,session,key,data){
-  return indexWorldEvent(db,guild,{key:`opening-cohort-job:${key}`,kind:'native_opening_cohort_job',
+  return indexWorldEvent(db,guild,{key:`opening-cohort-job:${key}:${data.attempt_id}`,kind:'native_opening_cohort_job',
     title:'Native additive cohort plan; no placement or party state',source_id:'native:opening-cohort',session_id:session.id,
-    visibility:'gm',details:{version:1,job:key,payload_hash:openingCohortHash(data)}},'native:opening-cohort');
+    visibility:'gm',details:{version:2,job:key,attempt_id:data.attempt_id,payload_hash:openingCohortHash(data)}},'native:opening-cohort');
 }
 function current(db,guild,session,row){
   if(!session||session.id!==row.data.session)throw assemblySourceError('Original active cohort session required.');
+  if(db.isDirectorPaused(guild))throw Object.assign(new Error('World Director is paused; cohort work remains held.'),
+    {code:'OPENING_DIRECTOR_PAUSED',expected:true});
   const state=currentOpeningCohort(db,guild,session);
   if(state.roster_revision!==row.data.roster_revision||state.input_fingerprint!==row.data.input_fingerprint||state.scene!==row.data.scene)
     throw assemblySourceError('Cohort roster, sources or scene changed; review the additive opportunity.');
@@ -37,19 +54,29 @@ function publicationStatus(rows,pending){
   if(!rows.length||pending.length||!rows.every(row=>row.status==='delivered'&&row.discord_message_id))return 'pending';
   return 'delivered';
 }
+function coverage(rows,pending,evidence){
+  const acknowledged=rows.length>0&&!pending.length&&rows.every(row=>row.status==='delivered'&&row.discord_message_id);
+  return {...evidence,transport_acknowledged:acknowledged,native_narrative_accepted:evidence?.narrative_verified===true,
+    dramatic_coverage:'unverified',hook_selected:false,hook_revealed:false,fallback_delivered:false,needs_review:!acknowledged};
+}
 async function publish({db,guild,gm,row}){
   if(['delivered','uncertain','failed','needs_review','needs_narrative_review','held_interrupted'].includes(row.status))return row;
-  if(row.status==='planning'||row.status==='authoring')return save(db,guild.id,row,'held_interrupted',
-    {...row.data,hold_code:'OPENING_COHORT_INTERRUPTED_REVIEW'});
+  if(db.isDirectorPaused(guild.id))return save(db,guild.id,row,'held_paused',{...row.data,hold_code:'OPENING_DIRECTOR_PAUSED'});
+  // Another worker may currently own planning or authoring. Leave its state
+  // intact; stale revisions are handled by the explicit unsent refresh path.
+  if(row.status==='planning'||row.status==='authoring')return row;
+  if(row.status==='held_paused')row=save(db,guild.id,row,row.data.turn_id?'pending':row.data.plan?'prepared':'needs_review',
+    {...row.data,hold_code:null});
   if(row.data.turn_id){
     if(row.status==='pending'){
       try{
         const live=db.getActiveSession(guild.id);current(db,guild.id,live,row);
         const result=await measureStage(gm?.metrics||operationalMetrics,'opening_publish',
           ()=>deliverQueuedTurn({db,guild,turnId:row.data.turn_id}),{guildId:guild.id});
-        const parts=db.listTurnPublications(guild.id,row.data.turn_id);
-        return save(db,guild.id,row,publicationStatus(parts,result.pending),row.data);
-      }catch(error){return save(db,guild.id,row,'needs_review',{...row.data,hold_code:code(error)});}
+        const parts=db.listTurnPublications(guild.id,row.data.turn_id),status=publicationStatus(parts,result.pending);
+        return save(db,guild.id,row,status,{...row.data,evidence:coverage(parts,result.pending,row.data.evidence),hold_code:null});
+      }catch(error){return save(db,guild.id,row,db.isDirectorPaused(guild.id)?'held_paused':'needs_review',
+        {...row.data,hold_code:db.isDirectorPaused(guild.id)?'OPENING_DIRECTOR_PAUSED':code(error)});}
     }
     return row;
   }
@@ -72,10 +99,13 @@ async function publish({db,guild,gm,row}){
       db.updateTurnAttempt(turn.turn_id,{stage:'committed',committed:'yes',nativeCommitId:row.record_key});
       return save(db,guild.id,row,'pending',{...row.data,turn_id:turn.turn_id,evidence:result.cohort_evidence,raw_prose_held:true});
     }));
+    if(db.isDirectorPaused(guild.id))return save(db,guild.id,committed,'held_paused',
+      {...committed.data,hold_code:'OPENING_DIRECTOR_PAUSED'});
     const delivery=await measureStage(gm?.metrics||operationalMetrics,'opening_publish',
       ()=>deliverQueuedTurn({db,guild,turnId:committed.data.turn_id}),{guildId:guild.id}),
       parts=db.listTurnPublications(guild.id,committed.data.turn_id);
-    return save(db,guild.id,committed,publicationStatus(parts,delivery.pending),committed.data);
+    return save(db,guild.id,committed,publicationStatus(parts,delivery.pending),
+      {...committed.data,evidence:coverage(parts,delivery.pending,committed.data.evidence),hold_code:null});
   }catch(error){
     const live=db.getCityRecord(guild.id,'opening_cohort_job',row.record_key);
     if(!live)return null;
@@ -83,21 +113,47 @@ async function publish({db,guild,gm,row}){
       const parts=db.listTurnPublications(guild.id,live.data.turn_id),status=publicationStatus(parts,[]);
       if(['uncertain','failed','pending','delivered'].includes(status))return save(db,guild.id,live,status,{...live.data,...(status==='delivered'?{}:{hold_code:code(error)})});
     }
-    return save(db,guild.id,live,'needs_review',{...live.data,hold_code:code(error)});
+    return save(db,guild.id,live,db.isDirectorPaused(guild.id)?'held_paused':'needs_review',
+      {...live.data,hold_code:db.isDirectorPaused(guild.id)?'OPENING_DIRECTOR_PAUSED':code(error)});
   }
 }
 async function execute({db,guild,gm,session}){
-  const old=db.getCityRecord(guild.id,'opening_cohort_job',session.id);
-  if(old)return publish({db,guild,gm,row:old});
+  let old=db.getCityRecord(guild.id,'opening_cohort_job',session.id);
+  if(db.isDirectorPaused(guild.id))return old?save(db,guild.id,old,'held_paused',{...old.data,hold_code:'OPENING_DIRECTOR_PAUSED'}):null;
+  if(old){
+    const state=currentOpeningCohort(db,guild.id,session),stale=state.scene!==old.data.scene
+      ||state.roster_revision!==old.data.roster_revision||state.input_fingerprint!==old.data.input_fingerprint;
+    const safeUnsentRefresh=stale||old.status==='held_paused'&&!old.data.plan&&!old.data.turn_id;
+    if(safeUnsentRefresh&&!old.data.turn_id&&['planning','prepared','authoring','held_interrupted','needs_review','held_paused'].includes(old.status)){
+      const archived=db.transaction(()=>{
+        const live=db.getCityRecord(guild.id,'opening_cohort_job',session.id);
+        if(live?.data.attempt_id!==old.data.attempt_id||live.data.turn_id)return null;
+        db.saveCityRecord(guild.id,{kind:'opening_cohort_attempt',key:`${session.id}:${old.data.attempt_id||'legacy'}`,
+          status:'superseded_unsent',visibility:'gm',source_event:old.source_event,data:{...old.data,previous_status:old.status}});
+        return true;
+      });
+      if(!archived)return db.getCityRecord(guild.id,'opening_cohort_job',session.id);
+    }else return publish({db,guild,gm,row:old});
+  }
   if(session.assembly_phase!=='assembly'||session.assembly_mode==='manual')return null;
+  if(db.isDirectorPaused(guild.id))return old?save(db,guild.id,old,'held_paused',{...old.data,hold_code:'OPENING_DIRECTOR_PAUSED'}):null;
   const initial=initialCameraAcknowledged(db,guild.id,session);if(!initial)return null;
   const sourceStarted=performance.now(),state=currentOpeningCohort(db,guild.id,session);
   (gm?.metrics||operationalMetrics).record('opening_source',{guildId:guild.id,durationMs:performance.now()-sourceStarted});
   if(!openingCohortEligible(state.roster)||!openingCohortIsAdditive(state.roster,initial.data.origin))return null;
   const data={version:1,session:session.id,scene:state.scene,roster_revision:state.roster_revision,
-    input_fingerprint:state.input_fingerprint,attempts:1,turn_id:null};
-  const source=jobSource(db,guild.id,session,session.id,data),row=db.saveCityRecord(guild.id,{kind:'opening_cohort_job',key:session.id,
-    status:'planning',visibility:'gm',source_event:source.event_key,data:{...data,source_event:source.event_key}});
+    input_fingerprint:state.input_fingerprint,attempts:(old?.data.attempts||0)+1,turn_id:null,
+    attempt_id:openingCohortHash([session.id,state.scene,state.roster_revision,state.input_fingerprint,(old?.data.attempts||0)+1])};
+  const claim=db.transaction(()=>{
+    const currentJob=db.getCityRecord(guild.id,'opening_cohort_job',session.id);
+    if(currentJob&&currentJob.data.attempt_id!==old?.data.attempt_id)return {claimed:false,row:currentJob};
+    if(currentJob?.data.turn_id)return {claimed:false,row:currentJob};
+    const source=jobSource(db,guild.id,session,session.id,data),row=db.saveCityRecord(guild.id,{kind:'opening_cohort_job',key:session.id,
+      status:'planning',visibility:'gm',source_event:source.event_key,data:{...data,source_event:source.event_key}});
+    return {claimed:true,row};
+  });
+  if(!claim.claimed)return claim.row;
+  const row=claim.row;
   try{
     if(typeof gm?.planAssembly!=='function')throw Object.assign(new Error('Assembly planner unavailable.'),{code:'OPENING_COHORT_PLANNER'});
     const generated=await measureStage(gm.metrics||operationalMetrics,'opening_plan',
@@ -108,7 +164,8 @@ async function execute({db,guild,gm,session}){
         plan_hash:openingCohortHash(plan)}});
     return publish({db,guild,gm,row:prepared});
   }catch(error){
-    return save(db,guild.id,row,'needs_review',{...row.data,hold_code:code(error)});
+    return save(db,guild.id,row,db.isDirectorPaused(guild.id)?'held_paused':'needs_review',
+      {...row.data,hold_code:db.isDirectorPaused(guild.id)?'OPENING_DIRECTOR_PAUSED':code(error)});
   }
 }
 export function runOpeningCohort({db,guild,gm}){
@@ -120,8 +177,8 @@ export function runOpeningCohort({db,guild,gm}){
 }
 export function openingCohortStatus(row){
   if(!row)return null;
-  const state=row.status==='delivered'?'Shared opportunity acknowledged':row.status==='uncertain'?'Shared opportunity delivery uncertain; held for review'
-    :row.status==='failed'?'Shared opportunity delivery failed; held for review':row.status==='needs_review'||row.status==='held_interrupted'
+  const state=row.status==='delivered'?'Shared opportunity transport acknowledged; dramatic fulfillment remains unverified':row.status==='uncertain'?'Shared opportunity delivery uncertain; held for review'
+    :row.status==='failed'?'Shared opportunity delivery failed; held for review':row.status==='held_paused'?'World Director paused; shared opportunity retained for safe resumption':row.status==='needs_review'||row.status==='held_interrupted'
       ?'Shared opportunity needs native review':'Shared opportunity processing';
   return `${state}. Check-in does not establish arrival, location, cooperation, party state or a PC response.`;
 }

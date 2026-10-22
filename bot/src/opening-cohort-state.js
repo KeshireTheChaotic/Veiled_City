@@ -32,18 +32,21 @@ export function currentOpeningCohort(db,guild,session){
 export function inspectOpeningCohortSource(db,guild,source){
   const d=source?.details,job=d?.job&&db.getCityRecord(guild,'opening_cohort_job',d.job),session=job&&db.getActiveSession(guild),saved=job?.data;
   const nativeJob=job&&db.getWorldEvent(guild,job.source_event),jobBinding=saved&&{version:saved.version,session:saved.session,scene:saved.scene,
-    roster_revision:saved.roster_revision,input_fingerprint:saved.input_fingerprint,attempts:saved.attempts,turn_id:null};
+    roster_revision:saved.roster_revision,input_fingerprint:saved.input_fingerprint,attempts:saved.attempts,turn_id:null,
+    ...(saved.attempt_id?{attempt_id:saved.attempt_id}:{})},legacy=!saved?.attempt_id;
   if(!source||source.status!=='active'||source.kind!=='native_opening_cohort_scope'||source.source_id!=='native:opening-cohort'
     ||source.visibility!=='party'||source.subject_key!==null||!job||job.visibility!=='gm'||job.subject_key!==null
-    ||source.event_key!==`opening-cohort-scope:${openingCohortHash([d.job,d.scope])}`
+    ||source.event_key!==`opening-cohort-scope:${openingCohortHash(legacy?[d.job,d.scope]:[d.job,d.attempt_id,d.scope])}`
     ||nativeJob?.status!=='active'||nativeJob.kind!=='native_opening_cohort_job'||nativeJob.source_id!=='native:opening-cohort'
     ||nativeJob.visibility!=='gm'||nativeJob.session_id!==saved.session||nativeJob.details.job!==saved.session
+    ||nativeJob.details.version!==(legacy?1:2)||!legacy&&nativeJob.details.attempt_id!==saved.attempt_id
     ||nativeJob.details.payload_hash!==openingCohortHash(jobBinding)||job.source_event!==saved.source_event
     ||!['authoring','prepared','pending'].includes(job.status)||saved.version!==1||saved.session!==session?.id||source.session_id!==session.id
     ||source.scene!==saved.scene||saved.scene!==currentScene(db,guild).key||d.version!==1||d.audience!=='party'
     ||openingCohortHash(d.scope)!==openingCohortHash({mode:'party',actorUserId:null,actorCharacterId:null})
     ||saved.plan_hash!==openingCohortHash(saved.plan)||d.plan_hash!==saved.plan_hash||d.roster_revision!==saved.roster_revision
-    ||d.input_fingerprint!==saved.input_fingerprint||d.revision!==openingCohortHash([saved.session,saved.scene,saved.plan_hash,saved.roster_revision,saved.input_fingerprint,d.scope])
+    ||d.input_fingerprint!==saved.input_fingerprint||!legacy&&d.attempt_id!==saved.attempt_id
+    ||d.revision!==openingCohortHash([saved.session,saved.scene,saved.plan_hash,saved.roster_revision,saved.input_fingerprint,d.scope])
     ||saved.plan?.assembly_contract?.version!==2||saved.plan.assembly_contract.input_fingerprint!==saved.input_fingerprint
     ||saved.roster_revision!==openingCohortRosterRevision(db,guild,session)
     ||saved.input_fingerprint!==assemblyInputFingerprint(db,guild,session))
@@ -56,10 +59,10 @@ export function openingCohortNarrativeCandidate(db,guild,key){
     ||d.scene!==currentScene(db,guild).key||d.roster_revision!==openingCohortRosterRevision(db,guild,session)
     ||d.input_fingerprint!==assemblyInputFingerprint(db,guild,session)||d.plan_hash!==openingCohortHash(d.plan))
     throw assemblySourceError('Current additive opening cohort plan required.');
-  const scope={mode:'party',actorUserId:null,actorCharacterId:null},details={version:1,job:key,plan_hash:d.plan_hash,
+  const scope={mode:'party',actorUserId:null,actorCharacterId:null},details={version:1,job:key,...(d.attempt_id?{attempt_id:d.attempt_id}:{}),plan_hash:d.plan_hash,
     roster_revision:d.roster_revision,input_fingerprint:d.input_fingerprint,audience:'party',scope},
     revision=openingCohortHash([d.session,d.scene,d.plan_hash,d.roster_revision,d.input_fingerprint,scope]),
-    source=indexWorldEvent(db,guild,{key:`opening-cohort-scope:${openingCohortHash([key,scope])}`,kind:'native_opening_cohort_scope',
+    source=indexWorldEvent(db,guild,{key:`opening-cohort-scope:${openingCohortHash(d.attempt_id?[key,d.attempt_id,scope]:[key,scope])}`,kind:'native_opening_cohort_scope',
       title:'Native additive opening cohort narrative scope',source_id:'native:opening-cohort',session_id:d.session,scene:d.scene,
       visibility:'party',details:{...details,revision}},'native:opening-cohort');
   inspectOpeningCohortSource(db,guild,source);

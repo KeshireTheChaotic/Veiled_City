@@ -2,7 +2,7 @@
 
 | Field | Planned evidence / actual result |
 |---|---|
-| Status | **COMPLETE — 3 FRESH TESTS PASSED; LIVE DELIVERY UNVERIFIED** |
+| Status | **ORIGINAL PASS RETAINED; CORRECTIVE STATUS DELTA PASSED; DELIVERY FLOW UNQUALIFIED** |
 | Repository / target | `KeshireTheChaotic/Veiled_City` / `codex/clean-ai-gm-2026-10` |
 | Supplied reference | `81569d08699343e401fc11ba1eaed0f10b4fd37a` (reconcile checkout HEAD at execution) |
 | Actual checkout SHA and dirty tree | Baseline `f2d7ba5c902abebf97795939d43d9bafd209a4a3`; feature diff frozen before batch. |
@@ -30,3 +30,18 @@ Added a source-bound `opening_entry_orientation` renderer using the current owne
 ### Final post-F04 union regression
 
 F04 changed the shared `pvp-output.js` writer/output paths after F06's feature batch, so the fresh F06 test was included in `p08-final-delta-20261022-02`: exit 0, 11 P08 fresh tests passed, 0 failed/skipped, 0.758s. Final hashes include `pvp-output.js` `ee603eef9205226c41c8b92aed771e1c9940c955`; F06 test remains `b9ec4bd051f05cfca5efae1dda5fa55e521a320c`. No live writer failure, outbox, Discord acknowledgement, or restart was exercised.
+
+## Corrective Follow-up — 2026-10-22
+
+| Field | Actual result |
+|---|---|
+| Baseline / changed production SHA256 | Baseline `d52c5ac52f7a993e642af7d11a93101351717ea1`; `opening-cohort-runner.js` `d0520902e22c4432c22058ffbc082d4f5d384b1020b2cded5fd2411dd7136edd`. |
+| Fresh test / SHA256 | `bot/tests/ai-gm-2026-10/p08-f06-correction.test.mjs` `22f9f301326b8e24284a47545eb61f20f913789b407565a60ac6b2b12d09bd1f`. |
+| Batch | `p08-corrective-delta-20261022-01`; final union exit 0; 7 passed, 0 failed/skipped/todo; 1.524s; changed-file syntax checks passed. |
+| Proven boundary | Cohort status reports acknowledged transport and unverified dramatic fulfillment separately; pause/review labels remain distinct. Native acceptance is not semantic proof. |
+| Holds / cost | Full fallback, stale-owner, hook disclosure, uncertain/restarted outbox and late-entry orchestration are not exercised end-to-end. Zero provider calls/tokens, $0; no cache/latency evidence. No keyword-based coverage, compelled template, quota or model self-judgment was added. |
+| Rollback / release | Revert only scoped cohort status/evidence and F06 fresh test/docs; no persisted state. Release NOT AUTHORIZED / NOT CERTIFIED. |
+
+### Corrective verification addendum — 2026-10-22, supersedes prior corrective batch result
+
+The earlier passing union was invalidated by finding that `world_context.requests` could change when the opening job moved from queued to planning, staling the attempt's own fingerprint. `assembly-context.js` now fingerprints only stable audience-filtered beats and their bounds/authority. Fresh regression `p08-f05-correction.test.mjs` asserts scheduling then beginning an opening leaves the fingerprint unchanged. Final frozen union run ID `p08-corrective-delta-20261022-02` ran once after that change: exit 0; 8 passed, 0 failed/cancelled/skipped/todo; 1.655 s; `node --check` passed for all 11 changed JS/MJS paths. No legacy or broad suite ran. No provider calls/tokens, $0; no cache or live latency measurement. Exact final source/test SHA256 values are recorded in the P08 phase ledger. This is local delta evidence only; acceptance holds remain and release is NOT AUTHORIZED / NOT CERTIFIED.

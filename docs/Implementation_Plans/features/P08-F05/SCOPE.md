@@ -49,3 +49,7 @@ Openings feel causally connected to current NPC/faction affairs with sound epist
 - Before any *new creative limitation* (mandatory template, dialogue length cap, NPC invention ban, new fixed pacing, weaker model), ask the owner a concrete question and hold only that limitation. Enforcing existing player agency, privacy and mechanical authority does not require reapproval.
 - If one item has missing source/rule or a noncritical hold, mark it locally and continue independent safe work. Stop unsafe critical work rather than fabricating proof. Reverse only this feature's scoped changes if rollback is necessary; retain owner edits and all authenticated history.
 - Offline targeted passes are not release certification. No push, merge, deploy, service restart, production DB, provider spend or CI without separate approval.
+
+## Corrective Follow-up — 2026-10-22
+
+Expose existing active NPC/faction goals only to the GM planner as a read-only agenda bound to the current guild/session/scene. Include the existing audience-filtered world-opportunity bridge separately; it carries no execution/publication authority. Do not mutate clocks, effects, canon or NPC knowledge. Corrective SQLite evidence is in `bot/tests/ai-gm-2026-10/p08-f05-correction.test.mjs`; actor-relative false beliefs, public/private cue evidence, memory acknowledgement and full writer-context integration remain local holds.

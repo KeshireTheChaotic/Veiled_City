@@ -2,7 +2,7 @@
 
 | Field | Planned evidence / actual result |
 |---|---|
-| Status | **COMPLETE — 1 FRESH TEST PASSED; SEMANTIC SECRECY / QUALITY UNQUALIFIED** |
+| Status | **ORIGINAL PASS RETAINED; CORRECTIVE DELTA PASSED; POSITIVE CUE / SEMANTIC QUALITY UNQUALIFIED** |
 | Repository / target | `KeshireTheChaotic/Veiled_City` / `codex/clean-ai-gm-2026-10` |
 | Supplied reference | `81569d08699343e401fc11ba1eaed0f10b4fd37a` (reconcile checkout HEAD at execution) |
 | Actual checkout SHA and dirty tree | Baseline `09eb0b747042d542964b2f6ca34e4a153d89914d`; modified source/test plus F03 plan files only. |
@@ -30,3 +30,18 @@ Added an audience-tagged dramatic intent to the writer brief only for a v2 contr
 ### Final post-F04 union regression
 
 F04 changed the shared brief and writer modules after this feature's first pass, so `p08-f03.test.mjs` was included in final run `p08-final-delta-20261022-02`: exit 0, 11 P08 fresh tests passed, 0 failed/skipped, 0.758s. Final shared source hashes: `assembly-context.js` `e03786b13b740d0a93113b58cd53876969eaaf36`, `gm.js` `f0dd71feb064337cce26a9844b85e6730cb3b156`; F03 test remains `24356eb444b88fa6ebd1796c06f2fcc0f024f1e8`. Semantic privacy/quality and provider behavior remain unqualified; zero provider spend.
+
+## Corrective Follow-up — 2026-10-22
+
+| Field | Actual result |
+|---|---|
+| Baseline / changed production | Baseline `d52c5ac52f7a993e642af7d11a93101351717ea1`; `bot/src/assembly-context.js` `e2f0343579802715032543502f7e32eb1b65018032ef5f2d3b696178c5bba1aa`. |
+| Fresh test / SHA256 | `bot/tests/ai-gm-2026-10/p08-f03-correction.test.mjs` `4c04929b55dd78863a7c2d05db192aafb9f377d8c74272ab9db3d45a5eb18dfe`. |
+| Batch | `p08-corrective-delta-20261022-01`; final union exit 0; 7 passed, 0 failed/skipped/todo; 1.524s; changed-file syntax checks passed. |
+| Proven boundary | Direct planner goal canary did not enter a public writer brief. No-authorized-cue case receives the generic non-factual objective and remains open to ordinary NPC/environment invention. The brief reads current audience-filtered opportunity cues only. |
+| Holds / cost | No positive sourced cue fixture, accepted writer output, publication or semantic quality assertion. Zero provider calls/tokens, $0; no cache measurement. No new mandatory prose form or creative limit was added. |
+| Rollback / release | Revert only scoped brief projection and F03 fresh test/doc entry; no persisted data. Release NOT AUTHORIZED / NOT CERTIFIED. |
+
+### Corrective verification addendum — 2026-10-22, supersedes prior corrective batch result
+
+The earlier passing union was invalidated by finding that `world_context.requests` could change when the opening job moved from queued to planning, staling the attempt's own fingerprint. `assembly-context.js` now fingerprints only stable audience-filtered beats and their bounds/authority. Fresh regression `p08-f05-correction.test.mjs` asserts scheduling then beginning an opening leaves the fingerprint unchanged. Final frozen union run ID `p08-corrective-delta-20261022-02` ran once after that change: exit 0; 8 passed, 0 failed/cancelled/skipped/todo; 1.655 s; `node --check` passed for all 11 changed JS/MJS paths. No legacy or broad suite ran. No provider calls/tokens, $0; no cache or live latency measurement. Exact final source/test SHA256 values are recorded in the P08 phase ledger. This is local delta evidence only; acceptance holds remain and release is NOT AUTHORIZED / NOT CERTIFIED.

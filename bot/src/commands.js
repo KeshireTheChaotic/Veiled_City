@@ -1027,11 +1027,13 @@ Initial phase: ${s.assembly_phase}`});
       await interaction.deferReply({ephemeral:true});
       const opening=await runSessionOpening({db,guild:interaction.guild,gm});
       if(opening){
+        const cohort=opening.status==='completed'||opening.status==='needs_narrative_review'
+          ?openingCohortStatus(await runOpeningCohort({db,guild:interaction.guild,gm})):null;
         const review=prepareSessionOpeningDeliveryReview(db,interaction,isGM),components=review?
           [{type:1,components:[{type:2,style:2,label:'Resume verified unsent parts only',custom_id:`vcopeningdelivery:${review}`}]}]:[];
         const refresh=prepareAssemblyRefresh(db,interaction.guildId,s,interaction.user.id);
         if(refresh)components.push({type:1,components:[{type:2,style:2,label:'Prepare NEW sourced openings (no send)',custom_id:`vcassemblyrefresh:${refresh}`} ]});
-        await deliverInteractionText(interaction,sessionOpeningStatus(opening),{ephemeral:true,components});
+        await deliverInteractionText(interaction,`${sessionOpeningStatus(opening)}${cohort?`\n\n${cohort}`:''}`,{ephemeral:true,components});
         return true;
       }
       let plan=db.getAssemblyPlan(s.id)||{};

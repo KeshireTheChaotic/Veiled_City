@@ -1,6 +1,6 @@
 # P08 — OpeningDirector × Audience-First Integration
 
-**Status:** IMPLEMENTATION COMPLETE — FINAL FRESH OFFLINE DELTA PASSED; LIVE/SEMANTIC ACCEPTANCE UNQUALIFIED
+**Status:** ORIGINAL IMPLEMENTATION COMPLETE; CORRECTIVE FOLLOW-UP DELTA PASSED; HIGH-LIFECYCLE ACCEPTANCE PARTIALLY UNQUALIFIED
 **Repository:** `KeshireTheChaotic/Veiled_City`  
 **Target branch:** `codex/clean-ai-gm-2026-10`  
 **Reference source SHA:** `81569d08699343e401fc11ba1eaed0f10b4fd37a` (GitHub branch comparison verified identical during planning; Codex re-verifies checkout)  
@@ -55,3 +55,9 @@ All safe implementing P08 features have truthful completed ledgers, with fresh a
 ## Test-runner no-poll rule
 
 Follow [TEST_EXECUTION_NO_POLL.md](../../TEST_EXECUTION_NO_POLL.md) in full. One frozen batch per feature, no status checks during execution, collect final exit code once; after final freeze run the union of new P08 tests with source/test hashes. No legacy validation.
+
+## Corrective Follow-up — 2026-10-22
+
+Baseline is actual branch `codex/clean-ai-gm-2026-10` at `d52c5ac52f7a993e642af7d11a93101351717ea1` with preserved, unrelated user-owned untracked planning documents. This is a delta under F02–F07, not a new phase. Correct nested/export metadata classification and remove free-form planner goal text from writer packets; derive writer cues only from audience-validated world opportunities. Repair `/vc-session assemble` cohort reachability, find the original zero-attendee camera by immutable attempt/turn/outbox provenance, use a SQLite `BEGIN IMMEDIATE` claim with revision-bound unsent refresh history, honor Director pause, scope planner world agenda to session/scene, and report transport separately from unverified dramatic fulfillment.
+
+Only fresh corrective tests under `bot/tests/ai-gm-2026-10/` are in scope. Final run `p08-corrective-delta-20261022-01` passed 7 tests and changed-file `node --check`; test details and exact hashes are in affected feature ledgers. Three earlier attempts failed only on test fixture construction and were repaired before the final pass. This delta does not establish a positive acknowledged camera→cohort delivery, cross-process race behavior, restart recovery, stale principal revocation during a real writer await, or semantic narrative fulfillment. Those remain local acceptance holds; P08 is not release qualified.

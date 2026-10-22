@@ -59,3 +59,7 @@ All safe scoped P08 features have accurate ledgers and completed affected-code t
 - Before any *new creative limitation* (mandatory template, dialogue length cap, NPC invention ban, new fixed pacing, weaker model), ask the owner a concrete question and hold only that limitation. Enforcing existing player agency, privacy and mechanical authority does not require reapproval.
 - If one item has missing source/rule or a noncritical hold, mark it locally and continue independent safe work. Stop unsafe critical work rather than fabricating proof. Reverse only this feature's scoped changes if rollback is necessary; retain owner edits and all authenticated history.
 - Offline targeted passes are not release certification. No push, merge, deploy, service restart, production DB, provider spend or CI without separate approval.
+
+## Corrective Follow-up — 2026-10-22
+
+The one frozen corrective union and changed-file syntax pass are recorded in the P08/F02–F07 ledgers. It uses temporary SQLite and a mocked Discord interaction for command routing, but does not simulate a successful native outbox/Discord delivery or claim whole-lifecycle end-to-end acceptance. No provider, CI, live service or paid model was invoked. Keep staging/release unqualified.

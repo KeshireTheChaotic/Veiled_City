@@ -2,7 +2,7 @@
 
 | Field | Planned evidence / actual result |
 |---|---|
-| Status | **COMPLETE — 1 FRESH TEST PASSED; RUNTIME DISTRIBUTION UNVERIFIED** |
+| Status | **ORIGINAL PASS RETAINED; CORRECTIVE DELTA PASSED; DELIVERY / ASYNC REVOCATION UNQUALIFIED** |
 | Repository / target | `KeshireTheChaotic/Veiled_City` / `codex/clean-ai-gm-2026-10` |
 | Supplied reference | `81569d08699343e401fc11ba1eaed0f10b4fd37a` (reconcile checkout HEAD at execution) |
 | Actual checkout SHA and dirty tree | Baseline `d0cd18a1364cfc6fc5c10f344399a8e496e18046`; only F02 source/test plus this feature's plan files added by this feature. |
@@ -30,3 +30,19 @@ At baseline `d0cd18a...`, changed the owner-character projection to an explicit 
 ### Final post-F04 union regression
 
 Because F03/F04 later changed `assembly-context.js`, this feature's fresh test was included again in `p08-final-delta-20261022-02`: exit 0, 11 total P08 fresh tests passed, 0 failed/skipped, 0.758s. Final source hash for the shared projection is `e03786b13b740d0a93113b58cd53876969eaaf36`; F02 test hash remains `38bd601a0e695bf04bde20b5799b60e5947757db`. No provider calls, token usage, cache activity or live secret-disclosure behavior was observed.
+
+## Corrective Follow-up — 2026-10-22
+
+| Field | Actual result |
+|---|---|
+| Baseline / source | `codex/clean-ai-gm-2026-10` at `d52c5ac52f7a993e642af7d11a93101351717ea1`; tracked tree clean. Owner spec, ENGINE constitution, required process docs, P08 handoff and active F02–F07 scope/ledgers read. |
+| Changed production / SHA256 | `bot/src/assembly-context.js` `e2f0343579802715032543502f7e32eb1b65018032ef5f2d3b696178c5bba1aa`. |
+| Fresh test / SHA256 | `bot/tests/ai-gm-2026-10/p08-f02-correction.test.mjs` `86e9f7a182990c07359a4021cd757d4f7055f3268705b79a927715e6c22063d8`; shared disposable DB fixture `4c2ad984a17eb29923df19d22a33123a450b40a13f055293bbfbe382a903b126`. |
+| Batch | `p08-corrective-delta-20261022-01`, final union command in phase ledger; exit 0, 7 pass, 0 fail/skip/todo, 1.524s. Changed JS/MJS `node --check` passed. Three earlier failed union attempts were test-fixture repairs, not passing runs; final pass was not rerun. |
+| Proven boundary | Nested GM/export/deep metadata canaries did not enter owner sources or owner writer brief; ordinary owner material remained; separate native GM hook remained available in GM planner inputs. |
+| Holds / cost | No accepted prose/fallback/Discord delivery or stale owner/source revocation during an actual writer await. Zero provider calls/tokens, $0; no cache/latency evidence. |
+| Rollback / release | Revert only scoped `assembly-context.js`, fresh test and F02 corrective record; no campaign DB touched. Release NOT AUTHORIZED / NOT CERTIFIED. |
+
+### Corrective verification addendum — 2026-10-22, supersedes prior corrective batch result
+
+The earlier passing union was invalidated by finding that `world_context.requests` could change when the opening job moved from queued to planning, staling the attempt's own fingerprint. `assembly-context.js` now fingerprints only stable audience-filtered beats and their bounds/authority. Fresh regression `p08-f05-correction.test.mjs` asserts scheduling then beginning an opening leaves the fingerprint unchanged. Final frozen union run ID `p08-corrective-delta-20261022-02` ran once after that change: exit 0; 8 passed, 0 failed/cancelled/skipped/todo; 1.655 s; `node --check` passed for all 11 changed JS/MJS paths. No legacy or broad suite ran. No provider calls/tokens, $0; no cache or live latency measurement. Exact final source/test SHA256 values are recorded in the P08 phase ledger. This is local delta evidence only; acceptance holds remain and release is NOT AUTHORIZED / NOT CERTIFIED.

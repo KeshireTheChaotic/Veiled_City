@@ -45,3 +45,7 @@ Unqualified prose/failed writer does not silently count as achieved dramatic obj
 - Before any *new creative limitation* (mandatory template, dialogue length cap, NPC invention ban, new fixed pacing, weaker model), ask the owner a concrete question and hold only that limitation. Enforcing existing player agency, privacy and mechanical authority does not require reapproval.
 - If one item has missing source/rule or a noncritical hold, mark it locally and continue independent safe work. Stop unsafe critical work rather than fabricating proof. Reverse only this feature's scoped changes if rollback is necessary; retain owner edits and all authenticated history.
 - Offline targeted passes are not release certification. No push, merge, deploy, service restart, production DB, provider spend or CI without separate approval.
+
+## Corrective Follow-up — 2026-10-22
+
+Keep native narrative acceptance, transport acknowledgement, dramatic coverage, hook selection/revelation, fallback and review as separate states. Cohort status explicitly says delivery acknowledgement does not verify dramatic fulfillment. No keyword coverage, model self-evaluation, hard quota or fixed prose form was added. Corrective evidence is in `bot/tests/ai-gm-2026-10/p08-f06-correction.test.mjs`; full restart/outbox/late-owner delivery state transitions remain unqualified.

@@ -2,7 +2,7 @@
 
 | Field | Planned evidence / actual result |
 |---|---|
-| Status | **COMPLETE — FINAL OFFLINE FRESH DELTA PASSED; STAGING / RELEASE UNQUALIFIED** |
+| Status | **CORRECTIVE UNION PASSED; FULL LIFECYCLE / STAGING / RELEASE UNQUALIFIED** |
 | Repository / target | `KeshireTheChaotic/Veiled_City` / `codex/clean-ai-gm-2026-10` |
 | Supplied reference | `81569d08699343e401fc11ba1eaed0f10b4fd37a` (reconcile checkout HEAD at execution) |
 | Actual checkout SHA and dirty tree | Baseline `cb848d9fad274cd223e75c1485f4065a1851c5fb`; branch `codex/clean-ai-gm-2026-10`; feature code/tests frozen for union batch. |
@@ -30,3 +30,17 @@ The instrumentation records aggregate durations only; existing model request tel
 ### Final post-F04 changed-delta union
 
 Run `p08-final-delta-20261022-02` included the newly implemented F04 modules and reran the previously passing tests because their shared production paths (`assembly-context.js`, `gm.js`, `pvp-output.js`) changed. Exact command: `node --test tests/ai-gm-2026-10/p08-f02.test.mjs tests/ai-gm-2026-10/p08-f03.test.mjs tests/ai-gm-2026-10/p08-f04.test.mjs tests/ai-gm-2026-10/p08-f06.test.mjs tests/ai-gm-2026-10/p08-f07.test.mjs`; exit 0; 11 passed, 0 failed/cancelled/skipped/todo; 0.758s. All changed-file syntax checks passed. Current changed telemetry path hashes: `operational-metrics.js` `98bd6bbf7eaf9ee882f0765a1bd3152858bb26ad`, `session-opening-runner.js` `be0c0b9b9d118595515d019c4e4a62bddfee6e60`, `assembly-publications.js` `a557e75de34134e6b710b99cf26148ec1185f593`, plus final F04-shared hashes in its ledger. No live provider, cache, or Discord timing was observed.
+
+## Corrective Follow-up — 2026-10-22
+
+| Field | Actual result |
+|---|---|
+| Baseline / changed production and test paths | Baseline `d52c5ac52f7a993e642af7d11a93101351717ea1`; shared production hashes are listed in F02–F06. Fresh test hashes: fixture `4c2ad984a17eb29923df19d22a33123a450b40a13f055293bbfbe382a903b126`; F02 `86e9f7a182990c07359a4021cd757d4f7055f3268705b79a927715e6c22063d8`; F03 `4c04929b55dd78863a7c2d05db192aafb9f377d8c74272ab9db3d45a5eb18dfe`; F04 `48760a6934f22dafd57467424206209caf31badffda1d10bb6a424cdb7779781`; F05 `e763abb69275f23e99b4164120d6cafd7d3c43715db4284d320806f6f283c201`; F06 `22f9f301326b8e24284a47545eb61f20f913789b407565a60ac6b2b12d09bd1f`; F07 `9557262df1b840a9715d93f82317bae6142dd6b2b4c9d320c4f6681c2d538510`. |
+| Final frozen union | Run ID `p08-corrective-delta-20261022-01`; exact union command in phase ledger; exit 0; 7 pass, 0 failed/cancelled/skipped/todo; 1.524s. `node --check` passed for all four changed production JS files and seven fresh MJS tests/helpers. No poll/watch. |
+| Scenario/cost evidence | Actual command route used a mocked Discord interaction and disposable SQLite; no send was attempted. Zero provider calls/tokens; $0. No cache, real latency, token or savings measurement. |
+| Holds | No successful native outbox delivery, initial camera/cohort end-to-end, concurrent workers, crash/restart, live stale-principal revocation, world-memory epistemic matrix or semantic narrative quality. |
+| Rollback / release | Revert only corrective P08 modules/tests/ledger addenda; no DB data touched. Staging/release NOT AUTHORIZED / NOT CERTIFIED. |
+
+### Corrective verification addendum — 2026-10-22, supersedes prior corrective batch result
+
+The earlier passing union was invalidated by finding that `world_context.requests` could change when the opening job moved from queued to planning, staling the attempt's own fingerprint. `assembly-context.js` now fingerprints only stable audience-filtered beats and their bounds/authority. Fresh regression `p08-f05-correction.test.mjs` asserts scheduling then beginning an opening leaves the fingerprint unchanged. Final frozen union run ID `p08-corrective-delta-20261022-02` ran once after that change: exit 0; 8 passed, 0 failed/cancelled/skipped/todo; 1.655 s; `node --check` passed for all 11 changed JS/MJS paths. No legacy or broad suite ran. No provider calls/tokens, $0; no cache or live latency measurement. Exact final source/test SHA256 values are recorded in the P08 phase ledger. This is local delta evidence only; acceptance holds remain and release is NOT AUTHORIZED / NOT CERTIFIED.
