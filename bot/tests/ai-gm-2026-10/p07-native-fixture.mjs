@@ -35,11 +35,11 @@ export function createP07NativeFixture(){
   for(const [user,pc,id] of [['owner-a',pcs[0],'arrival-a'],['owner-b',pcs[1],'arrival-b']])recordCharacterArrival(db,guild,pc,user,id);
   let closed=false;
   return {db,guild,session,scene,pcs,scope:{mode:'party',actorUserId:null,actorCharacterId:null},
-    acceptSpeech(user,pc,messageId,quote,{privateScene=false}={}){
-      const message=`I tell Mara: ${quote}`,start=message.indexOf('I tell Mara:'),end=message.length;
+    acceptSpeech(user,pc,messageId,quote,{privateScene=false,targetKey='mara',targetName='Mara'}={}){
+      const address=`I tell ${targetName}: `,message=`${address}${quote}`,start=message.indexOf(address),end=message.length;
       captureWorldInput(db,guild,user,pc.id,messageId,message,{privateScene});
       captureAuthoredTurnEnvelope(db,guild,user,pc.id,messageId,message,{privateScene});
-      const intent={type:'speak',source_span:message.slice(start,end),target_key:'mara',target_name:'Mara',operation:'speak',utterance:quote,
+      const intent={type:'speak',source_span:message.slice(start,end),target_key:targetKey,target_name:targetName,operation:'speak',utterance:quote,
         framing:'immediate',resolution:'conversational',destination:'unspecified',reason:'',excluded_targets:[]};
       const scope={mode:privateScene?'private':'party',actorUserId:user,actorCharacterId:pc.id};
       const accepted=persistPlayerIntents(db,guild,[intent],scope,{messageId});

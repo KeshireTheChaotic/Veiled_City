@@ -15,7 +15,8 @@
     "bot/tests/ai-gm-2026-10/p07-f14.test.mjs",
     "bot/tests/ai-gm-2026-10/p07-f17.test.mjs",
     "bot/tests/ai-gm-2026-10/p07-f19.test.mjs",
-    "bot/tests/ai-gm-2026-10/p07-f20.test.mjs"
+    "bot/tests/ai-gm-2026-10/p07-f20.test.mjs",
+    "bot/tests/ai-gm-2026-10/p07-f22.test.mjs"
   ],
   "bot/src/narrative-opportunity-guidance.js": [
     "bot/tests/ai-gm-2026-10/p07-f04.test.mjs",
