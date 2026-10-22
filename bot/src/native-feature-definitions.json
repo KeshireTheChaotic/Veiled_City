@@ -369,13 +369,13 @@
       "template_hash": "8d3926fd1e93855408d2f6afd334c698114cd92a8772972f7bab5b546ed61e07",
       "index": 0,
       "type": "Passive",
-      "status": "review_only",
-      "trigger_kind": "unmapped",
-      "target_policy": "unmapped",
-      "roll_protocol": "unmapped",
-      "costs": null,
-      "native_handler": null,
-      "reason": "No qualified native feature handler."
+      "status": "supported",
+      "trigger_kind": "after_pc_rejects_offer_initiates_violence",
+      "target_policy": "source_actor_only",
+      "roll_protocol": "native_adversary_context",
+      "costs": [{ "resource": "npc_fear", "amount": 1 }],
+      "native_handler": "adversary_terms_first_context",
+      "reason": "Exact source-bound cue only; PC event and Fear mutation are not committed."
     },
     {
       "feature_key": "adversary:glass-market-knife:pin-to-the-deal",
