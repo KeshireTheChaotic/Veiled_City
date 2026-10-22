@@ -387,13 +387,13 @@
       "template_hash": "8d3926fd1e93855408d2f6afd334c698114cd92a8772972f7bab5b546ed61e07",
       "index": 1,
       "type": "Action",
-      "status": "review_only",
-      "trigger_kind": "unmapped",
-      "target_policy": "unmapped",
-      "roll_protocol": "unmapped",
-      "costs": null,
-      "native_handler": null,
-      "reason": "No qualified native feature handler."
+      "status": "supported",
+      "trigger_kind": "after_successful_attack",
+      "target_policy": "attack_target",
+      "roll_protocol": "native_adversary_context",
+      "costs": [{ "resource": "npc_stress", "amount": 1 }],
+      "native_handler": "adversary_pin_to_the_deal_context",
+      "reason": "Exact source-bound cue only; attack result, Stress, Restrained state and PC recovery roll are not committed."
     },
     {
       "feature_key": "adversary:morrowline-echo:i-saw-that",
