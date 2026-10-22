@@ -67,6 +67,7 @@ Complete source-qualified features, reconcile rules and qualify the changed impl
 - [P06-F56 — Support the source-bound Self-Fulfilling Event cue](../../features/P06-F56/SCOPE.md)
 - [P06-F57 — Support Morrowline Echo Bad Future](../../features/P06-F57/SCOPE.md)
 - [P06-F58 — Support the source-bound Always a Price cue](../../features/P06-F58/SCOPE.md)
+- [P06-F59 — Support Cicada Runner Exit Clause](../../features/P06-F59/SCOPE.md)
 
 ## Exit
 All safe features have current diff, truthful ledger and newly authored tests covering only code changed in this phase. Local source gaps and owner decisions remain visible but do not stop other safe work. No automatic release qualification.
