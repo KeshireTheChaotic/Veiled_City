@@ -1,0 +1,51 @@
+{
+  "feature": "P06-F54",
+  "occurrence": "adversary:glass-market-knife:pin-to-the-deal",
+  "audit_anchor": "9e7bf0687357cf96fbe2ea09a04b3e9d2975f6a3",
+  "branch": "codex/clean-ai-gm-2026-10",
+  "start_head": "44e5cbdb3e6b756ba712a703e0c9489fc31335f3",
+  "implementation_commit": "89d1d16418f8a80bc912b115546bb52581722d64",
+  "tested_source_sha": "89d1d16418f8a80bc912b115546bb52581722d64",
+  "run_id": "p06-f54-20261022-a",
+  "command": "From bot/: node --test over 51 unique fresh test paths mapped by coverage.json to native feature catalog, definitions, adversary context and Pin to the Deal projector.",
+  "exit_code": 0,
+  "tests": 193,
+  "passed": 193,
+  "failed": 0,
+  "cancelled": 0,
+  "skipped": 0,
+  "changed_js_mjs_syntax": "5/5 pass",
+  "changed_json_parse": "2/2 pass",
+  "catalog": {
+    "supported": 66,
+    "total": 153,
+    "review_only": 87,
+    "needs_authoring": 0,
+    "p06_handler_families": 54,
+    "registered_handler_keys": 65
+  },
+  "provider_usage": {
+    "cost_usd": 0,
+    "calls": 0,
+    "tokens": 0
+  },
+  "cache": "No cache used or savings claimed; Codex usage unavailable.",
+  "input_hashes_sha256": {
+    "bot/src/native-feature-definitions.json": "5a3662c0ba5debc903ef41d4159b56f06582232668346a79b6dd873db176d694",
+    "bot/tests/ai-gm-2026-10/coverage.json": "b20db7e2158b272aff8aa8bd6ad3a0efee96cd6dcf06a7f9babe6d6546b1209d",
+    "bot/tests/ai-gm-2026-10/p06-f01.test.mjs": "12e0b0a7454467c68976b9012ced3bca43e00f85f5e44e281a179cd8a2be0469",
+    "bot/tests/ai-gm-2026-10/p06-f54.test.mjs": "74fbee0cab173417b9e86696163ca95c7a2810f5e054fc259b96b9df17d9863e",
+    "content/GM_PRIVATE/ADVERSARIES/adversaries.json": "846386ded200f84e487f69c1b82adf4387dcb41526cb60e8ee777e48727fca9c",
+    "bot/src/native-adversary-context.js": "fb26ef316064616f60a507357e91bc446383ba476197fb46d4c70a62914fa5fe",
+    "bot/src/native-adversary-pin-to-the-deal.js": "0cea6436a80a227de11884739d4d3cb5a53b711ece4f03952617b7dad916f6de",
+    "bot/src/native-feature-catalog.js": "5c69ccf99ac1e39907987236205c5ec6f4c4af8352d606a5160e4648e599fdc1"
+  },
+  "owner_questions": [],
+  "local_holds": [
+    "No verified successful-attack event or exact attack target is committed.",
+    "NPC Stress spend and Restrained state mutation are not committed.",
+    "PC Finesse/Strength Roll, threshold resolution, duration expiry and replay remain unverified."
+  ],
+  "critical_blockers": [],
+  "release_authorized": false
+}

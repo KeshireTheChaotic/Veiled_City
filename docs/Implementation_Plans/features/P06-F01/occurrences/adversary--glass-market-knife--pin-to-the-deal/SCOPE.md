@@ -1,13 +1,11 @@
 # adversary:glass-market-knife:pin-to-the-deal
 
-Status: SOURCE VERIFIED; LOCAL EXECUTION HOLD. Parent: [P06-F01](../../SCOPE.md).
+Status: BOUNDED NATIVE CUE SUPPORTED; MECHANICS HELD.
 
-Audit SHA: 9e7bf0687357cf96fbe2ea09a04b3e9d2975f6a3. Checkout base: 0834f299ccff1738e9b3dd753a5fc616d3965370.
+Audit SHA: `9e7bf0687357cf96fbe2ea09a04b3e9d2975f6a3`. Branch: `codex/clean-ai-gm-2026-10`. Start SHA: `44e5cbdb3e6b756ba712a703e0c9489fc31335f3`.
 
 Exact source: `content/GM_PRIVATE/ADVERSARIES/adversaries.json#glass-market-knife/features/1`. Source SHA-256: `a353d8298f84f49ea0ac1265542bee8b826f76e3c2897b36bb5542577984bf91`; template SHA-256: `8d3926fd1e93855408d2f6afd334c698114cd92a8772972f7bab5b546ed61e07`.
 
-This delta qualifies occurrence-local source inspection and discovery isolation only. It does not create or promote a native effect handler. Existing descriptor status: review_only; handler: none.
+This feature projects only the exact Action cue from verified GM-private context. It adds no narrative or PC-agency restriction. Attack success, target, Stress, Restrained mutation, PC recovery roll, expiry and replay remain native holds.
 
-Any future adapter must prove current actor/source/scene/target, owner choices, exact costs, native dice and once-only replay using new tests before support promotion. No generic fallback or new creative limitation. Roll back only the occurrence-specific diff; preserve saved readers and receipts.
-
-Final tested source SHA: `8e01519b6511bc90af6a1c675e4a9950f12b703c`; run `fresh-delta-1792599054739` passed 47/47 union tests. The catalog test verifies this occurrence source; this is not occurrence effect qualification. Input/test hashes: parent final evidence.
+Fresh tests, mapped results, syntax and JSON evidence are recorded by [P06-F54](../../../P06-F54/SCOPE.md). No legacy tests or release authorization.

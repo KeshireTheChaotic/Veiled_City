@@ -154,3 +154,7 @@ Implementation commit `7bbf88de04398ab7233c8ad8151b0f790f8b939e` supports Choir 
 ## Resumption checkpoint — P06-F53 — 2026-10-22
 
 Implementation commit `8f5ca2d50b096f324c53f164b6b22d86a9678276` supports Glass Market Knife Terms First as a source-bound cue. Mapped batch `p06-f53-20261022-a`: 189 tests, 188 pass, one F01 actor-source drift-count assertion failed; repair changed only the F01 test, which passed 3/3. Unique mapped coverage 189/189 cumulatively across 50 fresh files; no final aggregate rerun after test-only repair. Syntax 5/5, JSON 2/2. Catalog 65/88/0; 64 handlers / 53 P06 families. PC intent, offer truth, Fear mutation and replay held. Provider use 0/0/$0; no cache claim; Codex usage unavailable. No new restriction/question or critical blocker; release unauthorized. Evidence [F53](../../evidence/P06_F53_TARGETED.json).
+
+## Resumption checkpoint — P06-F54 — 2026-10-22
+
+Implementation commit `89d1d16418f8a80bc912b115546bb52581722d64` supports Glass Market Knife Pin to the Deal as a source-bound Action cue. Frozen `p06-f54-20261022-a` passed 193/193 across 51 fresh files. Syntax 5/5 and JSON 2/2 passed. Catalog 66 supported / 87 review-only / 0 needs-authoring; 65 handler keys / 54 P06 families. Attack success, target, Stress, Restrained mutation, PC roll, expiry and replay remain held. Provider use 0/0/$0; no cache claim; Codex usage unavailable. No owner restriction or critical blocker; release unauthorized. Evidence [F54](../../evidence/P06_F54_TARGETED.json).
