@@ -1,15 +1,13 @@
 # adversary:glass-market-knife:terms-first — ledger
 
-Status: SOURCE VERIFIED; LOCAL EXECUTION HOLD.
+Status: BOUNDED NATIVE CUE SUPPORTED; MECHANICAL EVENT HELD.
 
-- Branch: codex/clean-ai-gm-2026-10; source checkout SHA: 0834f299ccff1738e9b3dd753a5fc616d3965370 + working-tree delta. Final freeze SHA/evidence: see parent P06-F01 ledger and final delta report.
-- Changed module: bot/src/native-feature-catalog.js (shared occurrence-local inspection). Descriptor and rules unchanged.
-- Fresh test: bot/tests/ai-gm-2026-10/p06-f01.test.mjs; current-catalog test calls inspectNativeFeatureOccurrence for this exact key. Source/content input is current production data, never a historical fixture.
-- Actual result: verified_source, execution_authorized=false in p06-1792598757560; shared repaired batch exit 0, 5 tests passed. This is source verification, not effect execution qualification.
-- Cost/cache: 0 paid provider calls/tokens; $0 provider tests. No cache claim. Codex usage unavailable.
-- Existing catalog reason: No qualified native feature handler.
-- Local hold: No qualified executable occurrence adapter. This remains unsupported; exact source availability alone is insufficient.
-- Questions: none introduced by this source-only delta; no new narrative/autonomy restrictions proposed.
-- Critical blocker: none. Release authorization: none.
-
-Final tested source SHA: `8e01519b6511bc90af6a1c675e4a9950f12b703c`; run `fresh-delta-1792599054739` passed 47/47 union tests. The catalog test verifies this occurrence source; this is not occurrence effect qualification. Input/test hashes: parent final evidence.
+- Branch/start SHA: `codex/clean-ai-gm-2026-10` / `8faadced7fb3332ee45cc59c75d8c0537ca91b2b`.
+- Implementation commit: `8f5ca2d50b096f324c53f164b6b22d86a9678276`.
+- Changed modules: native descriptor/catalog, exact adversary context and projector, fresh tests and coverage map.
+- Fresh tests: all four F53 cases passed in `p06-f53-20261022-a`; final F01 count repair passed 3/3. Unique mapped cases 189/189 cumulatively; no aggregate rerun after test-only repair.
+- Syntax/JSON: 5/5 JS/MJS and 2/2 JSON passed.
+- Cost/cache: provider calls/tokens/spend 0/0/$0; no cache claim; Codex usage unavailable.
+- Owner questions/restrictions: none. PC alone chooses the rejection and violence actions.
+- Local holds: offer truth, actual PC rejection and violence sequence, Fear mutation and replay.
+- Critical blocker: none. Release authorization: false.

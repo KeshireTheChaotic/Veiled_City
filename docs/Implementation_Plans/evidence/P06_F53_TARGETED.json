@@ -1,0 +1,65 @@
+{
+  "feature": "P06-F53",
+  "occurrence": "adversary:glass-market-knife:terms-first",
+  "audit_anchor": "9e7bf0687357cf96fbe2ea09a04b3e9d2975f6a3",
+  "branch": "codex/clean-ai-gm-2026-10",
+  "start_head": "8faadced7fb3332ee45cc59c75d8c0537ca91b2b",
+  "implementation_commit": "8f5ca2d50b096f324c53f164b6b22d86a9678276",
+  "tested_source_sha": "8f5ca2d50b096f324c53f164b6b22d86a9678276",
+  "runs": [
+    {
+      "run_id": "p06-f53-20261022-a",
+      "command": "From bot/: node --test over 50 unique fresh paths mapped by coverage.json to native feature catalog, definitions, adversary context and Terms First projector.",
+      "exit_code": 1,
+      "tests": 189,
+      "passed": 188,
+      "failed": 1,
+      "failure_summary": "Only p06-f01's actor-source drift count was stale: actual 63, expected 64. The shared template change correctly held two native occurrences.",
+      "log": "bot/tests/ai-gm-2026-10/p06-f53-20261022-a.log"
+    },
+    {
+      "run_id": "p06-f53-f01-repair-20261022-a",
+      "command": "From bot/: node --test tests/ai-gm-2026-10/p06-f01.test.mjs",
+      "exit_code": 0,
+      "tests": 3,
+      "passed": 3,
+      "failed": 0,
+      "summary": "Only the test expectation changed; final catalog count 65, and 63 after the Thrall template drift.",
+      "unique_mapped_cases": "189/189 cumulatively; no single aggregate rerun after the test-only repair."
+    }
+  ],
+  "changed_js_mjs_syntax": "5/5 pass",
+  "changed_json_parse": "2/2 pass",
+  "catalog": {
+    "supported": 65,
+    "total": 153,
+    "review_only": 88,
+    "needs_authoring": 0,
+    "p06_handler_families": 53,
+    "registered_handler_keys": 64
+  },
+  "provider_usage": {
+    "cost_usd": 0,
+    "calls": 0,
+    "tokens": 0
+  },
+  "cache": "No cache used or savings claimed; Codex usage unavailable.",
+  "input_hashes_sha256": {
+    "bot/src/native-feature-definitions.json": "427ec60337f47f19364ed23dc87ecb31282c5740483021a32c0f7582ec708fbb",
+    "bot/tests/ai-gm-2026-10/coverage.json": "9ca91bccb09464119013d9bd10d7c1a0a8742582af0d1f371d991c2c9282efc7",
+    "bot/tests/ai-gm-2026-10/p06-f01.test.mjs": "fabe9274c63df7ed8b6f0bd44a6c656b53203a824ab8e823224a1a1b7b228a94",
+    "bot/tests/ai-gm-2026-10/p06-f53.test.mjs": "fa60758d77ddc532f7d11f1e76160b2baa3a770e5cf448b8a58a8c689f036ade",
+    "content/GM_PRIVATE/ADVERSARIES/adversaries.json": "846386ded200f84e487f69c1b82adf4387dcb41526cb60e8ee777e48727fca9c",
+    "bot/src/native-adversary-context.js": "6025ebc573c3d8386f08e38d00a9134efbb098710429923b8f94fce9901ad83a",
+    "bot/src/native-adversary-terms-first.js": "bf054db8c78e1bfe78abe953dd6afa227cba4a28968eca175ebb19f3e252fad9",
+    "bot/src/native-feature-catalog.js": "6c99e9992a375c856aee85376d75f9c9a55649cb8a0ef40f4050fa34d88e1af7"
+  },
+  "owner_questions": [],
+  "local_holds": [
+    "The actual offer and whether it clearly states the debt are not recorded by this cue.",
+    "The PC's rejection and immediate violence are never inferred or initiated by the GM cue.",
+    "Fear mutation, native persistence and replay remain unverified."
+  ],
+  "critical_blockers": [],
+  "release_authorized": false
+}
