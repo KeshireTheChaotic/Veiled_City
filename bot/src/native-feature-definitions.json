@@ -495,13 +495,13 @@
       "template_hash": "9a8b967e26660e29f8070f8490d7a9515f63b294b875b181ff716a8b95fda305",
       "index": 0,
       "type": "Passive",
-      "status": "review_only",
+      "status": "supported",
       "trigger_kind": "before_movement_applied",
       "target_policy": "one",
-      "roll_protocol": "none",
+      "roll_protocol": "native_adversary_context",
       "costs": [],
-      "native_handler": null,
-      "reason": "No qualified native feature handler.",
+      "native_handler": "adversary_predatory_grace_context",
+      "reason": "Exact source-bound cue only; forced-movement event matching and once-per-scene prevention are not committed.",
       "planned_handler": "first_forced_movement"
     },
     {
