@@ -185,3 +185,7 @@ Pale Court Fixer Reputation Attack implementation `b272b6129dcdc72f31ab6e73a92bc
 ## Resumption checkpoint — P06-F62 — 2026-10-22
 
 Pale Court Fixer Call Security implementation `20f1e117a1330f4b054d6fd1c971aaa7e82ad066`; `p06-f62-20261022-a` passed 225/225 across 59 fresh files, syntax 5/5, JSON 2/2. Catalog 74 supported / 79 review-only / 0 needs-authoring; 73 handlers / 62 families. Fear payment, creation/range, objective actions and replay remain held. Cost 0; no cache claim. No owner restriction or critical blocker; release unauthorized. Evidence [F62](../../evidence/P06_F62_TARGETED.json).
+
+## Resumption checkpoint — P06-F63 — 2026-10-22
+
+Thorn-Hound Urban Cover implementation `4556eab319ee91e92ab66d26bc1356948cc3a248`; `p06-f63-20261022-a` passed 229/229 across 60 fresh files, syntax 5/5, JSON 2/2. Catalog 75 supported / 78 review-only / 0 needs-authoring; 74 handlers / 63 P06 families. Path/range, movement and concealment results remain held. Cost 0; no cache claim. No owner restriction or critical blocker; release unauthorized. Evidence [F63](../../evidence/P06_F63_TARGETED.json).
