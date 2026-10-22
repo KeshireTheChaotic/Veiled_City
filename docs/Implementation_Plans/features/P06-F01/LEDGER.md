@@ -138,3 +138,7 @@ Implementation commit: 7c2116fdaa1d85c4fc093848eb888dfff37d2ded. Snatch a Link i
 ## Resumption checkpoint — P06-F48 — 2026-10-21
 
 Implementation commit: 4d35f7a612a57e4e7e8f7f9f9a2d609f4fbd333b. Flow Around It is supported as an exact GM-private passive cue; gap qualification and traversal remain locally held. Frozen p06-f48-20261021-a passed 172/172 across 46 fresh files with no reruns; syntax 5/5 and JSON 2/2 passed. Catalog: 61 supported / 92 review-only / 0 needs-authoring; 60 handler keys / 49 P06 families. Provider calls/tokens/spend 0/0/$0; no cache claim; Codex usage unavailable. No owner question, restriction or critical blocker; release unauthorized. Evidence [F48](../../evidence/P06_F48_TARGETED.json).
+
+## Resumption checkpoint — P06-F50 — 2026-10-22
+
+Implementation commit: 25ad4cc74929ad248eff3940e043459c72dc4b88. Drag Down is supported as an exact GM-private Action cue; all mechanics remain individually held for native execution. Frozen p06-f50-20261022-a passed 177/177 across 47 fresh files; syntax 5/5 and JSON 2/2 passed, no reruns. Catalog: 62 supported / 91 review-only / 0 needs-authoring; 61 handler keys / 50 P06 families. Provider calls/tokens/spend 0/0/$0; no cache claim; Codex usage unavailable. No owner question/restriction or critical blocker; release unauthorized. Evidence [F50](../../evidence/P06_F50_TARGETED.json).

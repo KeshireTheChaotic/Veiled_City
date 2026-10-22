@@ -1,15 +1,12 @@
 # adversary:river-hound:drag-down — ledger
 
-Status: SOURCE VERIFIED; LOCAL EXECUTION HOLD.
+Status: SUPPORTED SOURCE-BOUND GM CUE / TARGETED PASS.
 
-- Branch: codex/clean-ai-gm-2026-10; source checkout SHA: 0834f299ccff1738e9b3dd753a5fc616d3965370 + working-tree delta. Final freeze SHA/evidence: see parent P06-F01 ledger and final delta report.
-- Changed module: bot/src/native-feature-catalog.js (shared occurrence-local inspection). Descriptor and rules unchanged.
-- Fresh test: bot/tests/ai-gm-2026-10/p06-f01.test.mjs; current-catalog test calls inspectNativeFeatureOccurrence for this exact key. Source/content input is current production data, never a historical fixture.
-- Actual result: verified_source, execution_authorized=false in p06-1792598757560; shared repaired batch exit 0, 5 tests passed. This is source verification, not effect execution qualification.
-- Cost/cache: 0 paid provider calls/tokens; $0 provider tests. No cache claim. Codex usage unavailable.
-- Existing catalog reason: No qualified native feature handler.
-- Local hold: No qualified executable occurrence adapter. This remains unsupported; exact source availability alone is insufficient.
-- Questions: none introduced by this source-only delta; no new narrative/autonomy restrictions proposed.
-- Critical blocker: none. Release authorization: none.
-
-Final tested source SHA: `8e01519b6511bc90af6a1c675e4a9950f12b703c`; run `fresh-delta-1792599054739` passed 47/47 union tests. The catalog test verifies this occurrence source; this is not occurrence effect qualification. Input/test hashes: parent final evidence.
+- Branch/implementation SHA: `codex/clean-ai-gm-2026-10` / `25ad4cc74929ad248eff3940e043459c72dc4b88`.
+- Changed modules: native definition/catalog, Drag Down cue projector, adversary context, fresh F50 test and coverage mapping.
+- Fresh run `p06-f50-20261022-a`: 177/177 tests across 47 fresh files, exit 0, no repair/rerun. Syntax 5/5; JSON parse 2/2.
+- Handler `adversary_drag_down_context` exposes the exact source cue in current verified GM-private context; mechanics are not executed.
+- Local holds: Fear transaction, qualifying attack, PC Strength Reaction Roll at Difficulty 12, Very Close movement toward significant water, Vulnerable condition/recovery, and receipts/replay.
+- Evidence and hashes: [P06-F50 targeted evidence](../../../../evidence/P06_F50_TARGETED.json).
+- Cost/cache: provider calls/tokens/spend 0/0/$0; no cache claim; Codex usage unavailable.
+- Owner questions/restrictions: none. Critical blocker: none. Release authorization: false.

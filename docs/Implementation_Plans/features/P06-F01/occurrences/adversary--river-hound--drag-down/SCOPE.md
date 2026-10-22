@@ -1,12 +1,12 @@
 # adversary:river-hound:drag-down
 
-Status: SOURCE VERIFIED; LOCAL EXECUTION HOLD. Parent: [P06-F01](../../SCOPE.md).
+Status: SUPPORTED SOURCE-BOUND GM CUE / TARGETED PASS. Parent: [P06-F01](../../SCOPE.md); feature [P06-F50](../../../P06-F50/SCOPE.md).
 
 Audit SHA: 9e7bf0687357cf96fbe2ea09a04b3e9d2975f6a3. Checkout base: 0834f299ccff1738e9b3dd753a5fc616d3965370.
 
 Exact source: `content/GM_PRIVATE/ADVERSARIES/adversaries.json#river-hound/features/1`. Source SHA-256: `ab4fd58eea112dcd07cd4a890d85c0b70a0a80edb42e791b3fa60815635bdba2`; template SHA-256: `3f7e7cc1ce17c16b7e50d3e1b86822d11f57c60ac97ff49f066df2cae91da9cd`.
 
-This delta qualifies occurrence-local source inspection and discovery isolation only. It does not create or promote a native effect handler. Existing descriptor status: review_only; handler: none.
+This delta qualifies the exact Action cue in current verified GM-private River Hound context. Descriptor status: supported; handler: `adversary_drag_down_context`. Fear, attack trigger, PC Strength Reaction Roll, movement, Vulnerable condition and recovery are not committed and remain local holds.
 
 Any future adapter must prove current actor/source/scene/target, owner choices, exact costs, native dice and once-only replay using new tests before support promotion. No generic fallback or new creative limitation. Roll back only the occurrence-specific diff; preserve saved readers and receipts.
 

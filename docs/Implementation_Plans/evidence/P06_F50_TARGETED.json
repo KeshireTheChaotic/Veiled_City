@@ -1,0 +1,54 @@
+{
+  "feature": "P06-F50",
+  "occurrence": "adversary:river-hound:drag-down",
+  "audit_anchor": "9e7bf0687357cf96fbe2ea09a04b3e9d2975f6a3",
+  "branch": "codex/clean-ai-gm-2026-10",
+  "start_head": "5c6e9e6f70488282ef62ffb529494866b9cace29",
+  "implementation_commit": "25ad4cc74929ad248eff3940e043459c72dc4b88",
+  "tested_source_sha": "25ad4cc74929ad248eff3940e043459c72dc4b88",
+  "run_id": "p06-f50-20261022-a",
+  "started_at": "2026-10-22T13:53:05.0436239Z",
+  "ended_at": "2026-10-22T13:53:11.4853038Z",
+  "command": "From bot/: node --test over 47 unique fresh test paths mapped by coverage.json to five changed production modules.",
+  "exit_code": 0,
+  "tests": 177,
+  "passed": 177,
+  "failed": 0,
+  "cancelled": 0,
+  "skipped": 0,
+  "duration_ms": 6386.3289,
+  "changed_js_mjs_syntax": "5/5 pass",
+  "changed_json_parse": "2/2 pass",
+  "catalog": {
+    "supported": 62,
+    "p06_handler_families": 50,
+    "total": 153,
+    "needs_authoring": 0,
+    "registered_handler_keys": 61,
+    "review_only": 91
+  },
+  "provider_usage": {
+    "tokens": 0,
+    "cost_usd": 0,
+    "calls": 0
+  },
+  "cache": "No cache used or savings claimed; Codex usage unavailable.",
+  "input_hashes_sha256": {
+    "bot/tests/ai-gm-2026-10/coverage.json": "bb94e73ece89ae1b1414232e0d3cb582c13866c2c6c2376ca97ba76738c88252",
+    "content/GM_PRIVATE/ADVERSARIES/adversaries.json": "846386ded200f84e487f69c1b82adf4387dcb41526cb60e8ee777e48727fca9c",
+    "bot/src/native-adversary-drag-down.js": "4f0b57d0e92fbed815d96ecacc987b3beb121755ee16d3758d5059c87ea094e1",
+    "bot/src/native-adversary-context.js": "e9ec9422ce518000de01cee2c357bfbee8e76847cc9977ef26f452818985af8d",
+    "bot/tests/ai-gm-2026-10/p06-f01.test.mjs": "b329b58a8a2981ddf2112ef4ee6af63201f79d86a7810d8b998bfb29ad8a4413",
+    "bot/src/native-feature-catalog.js": "86b0599bc1ca9debb0dbc0b224c0ec049cb08c0efa15ab30d203e6adb6c7cbcc",
+    "bot/src/native-feature-definitions.json": "db7d2d4878614ed53ad3a7f2dcee8a2a8713c15d1e33e3c1b4c954792f1b655b",
+    "bot/tests/ai-gm-2026-10/p06-f50.test.mjs": "d18f619dbe317bd5bb18d8dc58f12890d236c07e2047193a589f169d055ba4b7"
+  },
+  "owner_questions": [],
+  "local_holds": [
+    "Native qualification of a successful triggering attack is not performed by the cue.",
+    "Fear, PC Strength Reaction Roll, movement, Vulnerable condition and recovery are not committed.",
+    "Persistence, live delivery and whole-release qualification remain unverified."
+  ],
+  "critical_blockers": [],
+  "release_authorized": false
+}
