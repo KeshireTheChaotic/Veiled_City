@@ -568,13 +568,13 @@
       "template_hash": "635605d21fb6678134b9c6c825a216849d8ca4b8ec854ad719ccb1207103e861",
       "index": 0,
       "type": "Passive",
-      "status": "review_only",
-      "trigger_kind": "unmapped",
-      "target_policy": "unmapped",
-      "roll_protocol": "unmapped",
-      "costs": null,
-      "native_handler": null,
-      "reason": "No qualified native feature handler."
+      "status": "supported",
+      "trigger_kind": "passive",
+      "target_policy": "within_close",
+      "roll_protocol": "native_adversary_context",
+      "costs": [],
+      "native_handler": "adversary_urban_cover_context",
+      "reason": "Exact source-bound cue only; live path/range, movement and concealment outcomes are not committed."
     },
     {
       "feature_key": "adversary:thorn-hound-of-the-green:root-snare",
