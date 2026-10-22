@@ -28,7 +28,9 @@ import {narrativeTasks} from './narrative-tasks.js';
 import {validateNarrativeCompleteness} from './narrative-completeness.js';
 import {projectNarrativeArtifact} from './narrative-artifacts.js';
 import {assertSessionOpeningPublication} from './session-opening.js';
-import {openingEntryNarrativeCandidate} from './opening-entry-context.js';
+import {openingEntryNarrativeCandidate,openingEntryProjection} from './opening-entry-context.js';
+import {openingEntryEvidence} from './opening-entry-evidence.js';
+import {assemblyCoverageEvidence} from './assembly-evidence.js';
 import {lifecycleProjection,lifecycleHash} from './lifecycle-output.js';
 import {nativeEnvironmentOutputCandidates} from './native-environment-output.js';
 
@@ -144,6 +146,10 @@ function renderPart(db,guild,part){
     // A historical acknowledgement remains evidence, but an unsent legacy hook dump
     // cannot resume as new audience-first fiction.
     fail();
+  }
+  if(kind==='opening_entry_orientation'){
+    const view=openingEntryProjection(db,guild,ref,scope);
+    if(view.revision!==part.entry_revision)fail();return view.text;
   }
   if(kind==='assembly_hook'){
     fail();
@@ -295,7 +301,8 @@ export function prepareAssemblyOutput(db,guild,sessionId,scope,{content=null}={}
     principal_revision:view.state.principal});
   const parts=narrativeParts.length?narrativeParts:[orientation],text=parts.map(p=>p.data.text).join('\n');saveOutputGroup(db,guild,parts);
   const result={narration:text,player_summary:text,narrative_claims:[],private_messages:[],
-    assembly_evidence:{version:3,narrative_format:'audience_first_v9',hook_selected:!!hook,hook_verified:false,narrative_verified:narrativeParts.length>0,
+    assembly_evidence:{version:4,narrative_format:'audience_first_v9',hook_selected:!!hook,hook_verified:false,narrative_verified:narrativeParts.length>0,
+      ...assemblyCoverageEvidence(db.getAssemblyPlan(sessionId)||{},sessionId),
       hook_revision:hook?.revision||null,hook_source_refs:hook?.selected.map(s=>s.id)||[],
       narrative_generated:db.listCityRecords(guild,{kind:'narrative_draft',includeGM:true,limit:1000})
         .some(r=>r.data.binding?.source===source.event_key),
@@ -308,12 +315,14 @@ export function prepareAssemblyOutput(db,guild,sessionId,scope,{content=null}={}
 export function prepareOpeningEntryOutput(db,guild,key,scope){
   const {view,source,candidate}=openingEntryNarrativeCandidate(db,guild,key,scope);
   prepareAuthorizedTurnOutput(db,guild,candidate,scope,{sourceRef:source.event_key,origin:'native_opening_entry'});
-  const parts=prepared.get(candidate).parts.map(ref=>validateOutputPart(db,guild,ref)).filter(p=>p.data.kind==='gm_narrative_unit');
-  if(!parts.length)throw Object.assign(new Error('Entry authoring has no accepted audience-first narrative; source hooks are not a substitute.'),
-    {code:'OPENING_ENTRY_NARRATIVE_REQUIRED',expected:true});
+  let parts=prepared.get(candidate).parts.map(ref=>validateOutputPart(db,guild,ref)).filter(p=>p.data.kind==='gm_narrative_unit');
+  const fallback=!parts.length;
+  if(fallback)parts=[savePart(db,guild,{render_version:1,scene:view.state.material.scene,session:view.state.material.session,
+    scope:{...scope},origin:'native_opening_entry_fallback',kind:'opening_entry_orientation',ref:key,
+    entry_revision:view.revision,source_ref:source.event_key,source_hash:hash(source.details),principal_revision:view.state.principal})];
   saveOutputGroup(db,guild,parts);
   const text=parts.map(p=>p.data.text).join('\n'),result={narration:text,player_summary:text,narrative_claims:[],private_messages:[],
-    entry_evidence:{version:2,narrative_format:'audience_first_v9',narrative_verified:true,hook_verified:false,source_refs:view.source_refs,fallback:false}};
+    entry_evidence:openingEntryEvidence(view,{narrativeVerified:!fallback,fallback})};
   prepared.set(result,{raw:{},drafts:{},parts:parts.map(p=>p.record_key),privateParts:{},scope:hash(scope),fingerprint:fingerprint(result)});return result;
 }
 export function prepareNativeHookOutput(db,guild,hook,scope){

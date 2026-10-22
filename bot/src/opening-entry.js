@@ -6,6 +6,7 @@ import {queueTurnPublications} from './publication-outbox.js';
 import {deliverQueuedTurn} from './publishing.js';
 import {inspectSessionOpening} from './session-opening.js';
 import {sceneFictionHash as hash} from './scene-fiction-context.js';
+import {openingEntryDeliveryStatus} from './opening-entry-evidence.js';
 function save(db,guild,key,row,status,data){
   return db.saveCityRecord(guild,{kind:'opening_entry_delivery',key,status,visibility:'gm',actor_key:row.data.character,
     source_event:row.source_event,data});
@@ -70,8 +71,9 @@ export async function deliverOpeningEntry({db,guild,key,gm=null}){
         ||priorAssembly(db,guild.id,opportunity,view);
       if(retained)return save(db,guild.id,key,opportunity,'retained_acknowledgement',{version:1,session:d.session,user:d.user,character:d.character,
         revision:view.revision,material_revision:view.material_revision,turn_id:retained.data.turn_id,evidence:retained.data.evidence});
-      if(typeof gm?.authorOpeningEntry!=='function')throw Object.assign(new Error('Audience-first entry authoring is unavailable.'),{code:'OPENING_ENTRY_WRITER_REQUIRED',expected:true});
-      await gm.authorOpeningEntry(guild.id,key,scope);
+      // Fictional authoring is optional here: if it is unavailable, the native
+      // owner-bound orientation below remains useful and makes no scene claim.
+      try{if(typeof gm?.authorOpeningEntry==='function')await gm.authorOpeningEntry(guild.id,key,scope);}catch{}
       // Source, owner, attendance and continuity can change across the writer await.
       if(openingEntryProjection(db,guild.id,key,scope).revision!==view.revision)
         throw Object.assign(new Error('Entry source changed during authoring.'),{code:'OPENING_ENTRY_STALE',expected:true});
@@ -86,7 +88,7 @@ export async function deliverOpeningEntry({db,guild,key,gm=null}){
     }
     if(!job?.data.turn_id)return job;
     const delivered=await deliverQueuedTurn({db,guild,turnId:job.data.turn_id}),rows=db.listTurnPublications(guild.id,job.data.turn_id),
-      status=rows.some(p=>['uncertain','delivering'].includes(p.status))?'uncertain':delivered.pending.length?'pending':'delivered';
+      status=openingEntryDeliveryStatus(job.data.evidence,rows,delivered.pending.length);
     return save(db,guild.id,key,opportunity,status,job.data);
   }catch(error){
     const code=/^[A-Z_]{2,60}$/.test(error.code||'')?error.code:'OPENING_ENTRY_REVIEW';

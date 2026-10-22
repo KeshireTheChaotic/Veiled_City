@@ -7,6 +7,7 @@ const flights=new WeakMap();
 export function sessionOpeningStatus(job){
   const counts=new Map(),known=new Set(['VERIFIED_SCENE_DELIVERED','FALLBACK_DELIVERED','UNCERTAIN','FAILED','PENDING','BLOCKED','LEGACY_DELIVERED']);
   const held=(job.data.slots||[]).filter(s=>s.narrative_quarantined===true).length;
+  const coverage=(job.data.slots||[]).filter(s=>s.dramatic_coverage==='unverified').length;
   for(const slot of job.data.slots||[]){
     const label=`${slot.audience==='private'?'Owner-private':'Shared'}: ${known.has(slot.narrative_status)?slot.narrative_status:'REVIEW'}`;
     counts.set(label,(counts.get(label)||0)+1);
@@ -14,7 +15,8 @@ export function sessionOpeningStatus(job){
   return `Native opening: ${job.status}. Attempts: ${job.data.attempts}.`
     +`\n${[...counts].map(([label,count])=>`${label} × ${count}`).join('\n')}`
     +(held?`\nNarrative authoring held for review: ${held} slot(s). Delivered source hooks or orientation do not certify the original draft.`:'')
-    +`${job.data.hold_code?`\nReview reference: ${job.data.hold_code}. Existing acknowledgements and uncertain sends are retained; no blind retry.`:''}`;
+    +`${job.data.hold_code?`\nReview reference: ${job.data.hold_code}. Existing acknowledgements and uncertain sends are retained; no blind retry.`:''}`
+    +`${coverage?`\nDramatic coverage remains unverified for ${coverage} slot(s); accepted prose is not semantic proof.`:''}`;
 }
 function save(db,guild,row,status,data={}){
   return db.saveCityRecord(guild,{...row,key:row.record_key,status,data:{...row.data,...data}});
@@ -70,7 +72,8 @@ export async function deliverSessionOpening({db,guild,gm=null,key}){
   const slots=result.slots.map(s=>({audience:s.scope.mode,character:s.scope.actorCharacterId,user:s.scope.actorUserId,
     status:s.status,narrative_status:s.narrative_status,hook_verified:s.evidence.hook_verified===true,
     narrative_generated:s.evidence.narrative_generated===true,narrative_verified:s.evidence.narrative_verified===true,
-    narrative_quarantined:s.evidence.narrative_quarantined===true,fallback:s.evidence.fallback===true})),
+    narrative_quarantined:s.evidence.narrative_quarantined===true,fallback:s.evidence.fallback===true,
+    dramatic_coverage:s.evidence.dramatic_coverage||'unverified'})),
     complete=slots.length>0&&slots.every(s=>s.status==='delivered'&&s.narrative_status==='VERIFIED_SCENE_DELIVERED'),
     transportComplete=slots.every(s=>['delivered','legacy_delivered'].includes(s.status));
   return save(db,guild.id,row,complete?'completed':transportComplete?'needs_narrative_review':'needs_delivery_review',
