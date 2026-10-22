@@ -423,13 +423,13 @@
       "template_hash": "0488f9de16410d11fb9a095e4951045a323d3eea51ad8a8e425ae4e96d47e8fa",
       "index": 1,
       "type": "Action",
-      "status": "review_only",
-      "trigger_kind": "unmapped",
-      "target_policy": "unmapped",
-      "roll_protocol": "unmapped",
-      "costs": null,
-      "native_handler": null,
-      "reason": "No qualified native feature handler."
+      "status": "supported",
+      "trigger_kind": "after_gm_names_existing_hazard",
+      "target_policy": "one_pc",
+      "roll_protocol": "native_adversary_context",
+      "costs": [{ "resource": "npc_fear", "amount": 1 }],
+      "native_handler": "adversary_self_fulfilling_event_context",
+      "reason": "Exact source-bound cue only; Fear, hazard, PC roll, damage and scene mutation are not committed."
     },
     {
       "feature_key": "adversary:morrowline-echo:bad-future",
