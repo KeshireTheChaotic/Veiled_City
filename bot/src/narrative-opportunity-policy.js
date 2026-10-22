@@ -24,7 +24,9 @@ export function rankWorldNarrativeOpportunities(signals,metadata=[]){
       if(au!==bu)return bu-au;
       const ao=overlapKey(a.meta.verifiedActorLinks),bo=overlapKey(b.meta.verifiedActorLinks);
       // Organic overlap is only a tie-break when class and urgency are identical.
-      if(ao!==bo){if(ao)return -1;if(bo)return 1;}
+      // A key is a boolean proof of overlap, not a secondary score. Two
+      // independently qualified overlaps are equal and retain source order.
+      if(Boolean(ao)!==Boolean(bo))return ao?-1:1;
       return a.index-b.index;
     }).map(row=>row.signal).slice(0,4);
 }

@@ -1,7 +1,8 @@
 {
   "bot/src/narrative-opportunity-policy.js": [
     "bot/tests/ai-gm-2026-10/p07-f02.test.mjs",
-    "bot/tests/ai-gm-2026-10/p07-f06.test.mjs"
+    "bot/tests/ai-gm-2026-10/p07-f06.test.mjs",
+    "bot/tests/ai-gm-2026-10/p07-f08.test.mjs"
   ],
   "bot/src/world-narrative-bridge.js": [
     "bot/tests/ai-gm-2026-10/p03-f04.test.mjs",
