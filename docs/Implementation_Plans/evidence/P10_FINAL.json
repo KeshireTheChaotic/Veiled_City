@@ -1,0 +1,509 @@
+{
+  "run_id": "p10-final-20261022-01",
+  "tested_base_sha": "08e965bbfb1920ac2492a2350a17e5f9785d253a",
+  "branch": "codex/clean-ai-gm-2026-10",
+  "start_utc": "2026-10-22T20:50:23.7874396Z",
+  "end_utc": "2026-10-22T20:50:46.4400965Z",
+  "command": "cd bot; node --test --test-concurrency=1 --test-reporter=tap tests/ai-gm-2026-10/p10-f02.test.mjs tests/ai-gm-2026-10/p10-f03.test.mjs tests/ai-gm-2026-10/p10-f04.test.mjs tests/ai-gm-2026-10/p10-f05.test.mjs tests/ai-gm-2026-10/p10-f06.test.mjs tests/ai-gm-2026-10/p10-f07.test.mjs tests/ai-gm-2026-10/p10-f08.test.mjs",
+  "exit_code": 0,
+  "summary": [
+    "# tests 27",
+    "# pass 27",
+    "# fail 0",
+    "# cancelled 0",
+    "# skipped 0",
+    "# todo 0",
+    "# duration_ms 22595.7921"
+  ],
+  "syntax_checks": 26,
+  "hashes": {
+    "bot/src/assembly-publications.js": "9c5c9cae7f2181dbe12bf2e2e666456eb20f2a3044a3e70231287447eabe9af4",
+    "bot/src/commands.js": "edf704e22b8ac4f1ce9dc3a443fa9764393e31f9cd343bef25bc727041abe28e",
+    "bot/src/db.js": "b23c83f84d85bea80477a12eea184a39a9c392dadc5a690981051c08fb73874c",
+    "bot/src/gm.js": "d5fbdbe58c92264f9cad4a2ded4e2c45b0f8d8dc4f8f2d9f77806883bc0bb664",
+    "bot/src/opening-cohort-runner.js": "1fd43a1ede75d57dfb7ef940ca80586b76c2c03a23ef8f2b32cd001dff18955b",
+    "bot/src/opening-cohort-state.js": "e95fc8428890f7bd7d2f818c0e2a8013f00cbf4eef8b7c87c5baeb267af66107",
+    "bot/src/opening-diagnostics.js": "23d7783c563906d65326a5f6498255861d70025da43f7abc6a67078ed85ccf82",
+    "bot/src/opening-entry-context.js": "91143e5341c6da82ff43ec3fb45e5f16b5301aed438f43b4c5e97a4a37152c04",
+    "bot/src/opening-entry-evidence.js": "c0596ec4a5b3dd808eec94bf762d7d1fde61f3aad991c8c28c1c9760fdee010f",
+    "bot/src/opening-entry.js": "968aaa7021e37fdb214f6b35de608bcf09a47f3a07131258fcd1aaebc23efeb5",
+    "bot/src/opening-flow.js": "178da033ae7bfef7d1e96a245d56a4b6051dfe03ca685a8b774238a568ffd515",
+    "bot/src/publishing.js": "5041b4be2aa5a4aefaea41127a022965bcc88fafe826fd8c8430bcec078b9e5e",
+    "bot/src/pvp-output.js": "11b85d26e3e80ca8a9645a815dfeee1436380cb53e5ba3bb6be0c1e10e6bd994",
+    "bot/src/scene-setup.js": "6c1e800d576ce70c5b7af61ae34b3dbdbe3ffa0970d52f2863c2df3d48ac88f5",
+    "bot/src/session-opening-recovery.js": "06de9e5ac09e00c4d95959368f706d5a1cb62bdd745ed76337d22239500a6324",
+    "bot/src/session-opening-runner.js": "e7cf6109ed60aad7d3505ce045d75dd51060b4d451a5c9c4b23685478780fdac",
+    "bot/src/session-opening.js": "f46978cc5d41a114354c7cdee59b5dbf1129a55b8c6585f9d4a010bfe09fde65",
+    "bot/tests/ai-gm-2026-10/p10-f02.test.mjs": "2df56bdc9c3a4861edd4b3bb6bbe4071dbb84d24a25de9a41c33a39cfd3f9d1c",
+    "bot/tests/ai-gm-2026-10/p10-f03.test.mjs": "c4b2641eb9fb4ec115db19e4650a171d43c7331a91f8472e7eec9d5d84566c42",
+    "bot/tests/ai-gm-2026-10/p10-f04.test.mjs": "113be3390d42ad17d510dd62ddc3090c738eaa3b8a29fff4bcbc332b6b6b9088",
+    "bot/tests/ai-gm-2026-10/p10-f05.test.mjs": "36ef9a3a60f9b591b04a9eeb6e9cc00c80a15734738314e537743a57ec312870",
+    "bot/tests/ai-gm-2026-10/p10-f06.test.mjs": "4f9a803e53d8db9e50787e99839d8b63932824ecb2d0c1ee599aca8fe74b96e9",
+    "bot/tests/ai-gm-2026-10/p10-f07.test.mjs": "d6e1898f4cd701225d69c42a7d7f356fa40ca389caedc8546d7149c1aa46401a",
+    "bot/tests/ai-gm-2026-10/p10-f08.test.mjs": "89ce662be023382d1fb1bd89b7120e28a2a0d63d5a89de3c09655e60cdd1f1f9",
+    "bot/tests/ai-gm-2026-10/p10-fixture.mjs": "c755ebb8a1987d709711c4c02f7b923e97c158ef386191a21ae175ed014e12ae",
+    "bot/tests/ai-gm-2026-10/p10-worker.mjs": "c1bbaaabbdb707a59c09e93a5d5b36459a608672d954858c163d61e8812afd6b"
+  },
+  "mock_usage": [
+    {
+      "planner_invocations": 2,
+      "writer_invocations": 3,
+      "paid_provider_calls": 0,
+      "provider_tokens": 0,
+      "provider_spend_usd": 0
+    },
+    {
+      "planner_invocations": 2,
+      "writer_invocations": 0,
+      "paid_provider_calls": 0,
+      "provider_tokens": 0,
+      "provider_spend_usd": 0
+    },
+    {
+      "planner_invocations": 1,
+      "writer_invocations": 0,
+      "paid_provider_calls": 0,
+      "provider_tokens": 0,
+      "provider_spend_usd": 0
+    },
+    {
+      "planner_invocations": 1,
+      "writer_invocations": 1,
+      "paid_provider_calls": 0,
+      "provider_tokens": 0,
+      "provider_spend_usd": 0
+    },
+    {
+      "planner_invocations": 1,
+      "writer_invocations": 1,
+      "paid_provider_calls": 0,
+      "provider_tokens": 0,
+      "provider_spend_usd": 0
+    },
+    {
+      "planner_invocations": 2,
+      "writer_invocations": 1,
+      "paid_provider_calls": 0,
+      "provider_tokens": 0,
+      "provider_spend_usd": 0
+    },
+    {
+      "planner_invocations": 1,
+      "writer_invocations": 1,
+      "paid_provider_calls": 0,
+      "provider_tokens": 0,
+      "provider_spend_usd": 0
+    },
+    {
+      "planner_invocations": 2,
+      "writer_invocations": 1,
+      "paid_provider_calls": 0,
+      "provider_tokens": 0,
+      "provider_spend_usd": 0
+    },
+    {
+      "planner_invocations": 1,
+      "writer_invocations": 1,
+      "paid_provider_calls": 0,
+      "provider_tokens": 0,
+      "provider_spend_usd": 0
+    },
+    {
+      "planner_invocations": 1,
+      "writer_invocations": 2,
+      "paid_provider_calls": 0,
+      "provider_tokens": 0,
+      "provider_spend_usd": 0
+    },
+    {
+      "planner_invocations": 1,
+      "writer_invocations": 2,
+      "paid_provider_calls": 0,
+      "provider_tokens": 0,
+      "provider_spend_usd": 0
+    },
+    {
+      "planner_invocations": 1,
+      "writer_invocations": 2,
+      "paid_provider_calls": 0,
+      "provider_tokens": 0,
+      "provider_spend_usd": 0
+    },
+    {
+      "planner_invocations": 1,
+      "writer_invocations": 2,
+      "paid_provider_calls": 0,
+      "provider_tokens": 0,
+      "provider_spend_usd": 0
+    },
+    {
+      "planner_invocations": 1,
+      "writer_invocations": 2,
+      "paid_provider_calls": 0,
+      "provider_tokens": 0,
+      "provider_spend_usd": 0
+    },
+    {
+      "planner_invocations": 0,
+      "writer_invocations": 0,
+      "paid_provider_calls": 0,
+      "provider_tokens": 0,
+      "provider_spend_usd": 0
+    },
+    {
+      "planner_invocations": 0,
+      "writer_invocations": 1,
+      "paid_provider_calls": 0,
+      "provider_tokens": 0,
+      "provider_spend_usd": 0
+    },
+    {
+      "planner_invocations": 2,
+      "writer_invocations": 3,
+      "paid_provider_calls": 0,
+      "provider_tokens": 0,
+      "provider_spend_usd": 0
+    },
+    {
+      "planner_invocations": 2,
+      "writer_invocations": 4,
+      "paid_provider_calls": 0,
+      "provider_tokens": 0,
+      "provider_spend_usd": 0
+    },
+    {
+      "planner_invocations": 1,
+      "writer_invocations": 1,
+      "paid_provider_calls": 0,
+      "provider_tokens": 0,
+      "provider_spend_usd": 0
+    },
+    {
+      "planner_invocations": 1,
+      "writer_invocations": 1,
+      "paid_provider_calls": 0,
+      "provider_tokens": 0,
+      "provider_spend_usd": 0
+    },
+    {
+      "planner_invocations": 1,
+      "writer_invocations": 0,
+      "paid_provider_calls": 0
+    },
+    {
+      "planner_invocations": 0,
+      "writer_invocations": 0,
+      "paid_provider_calls": 0,
+      "provider_tokens": 0,
+      "provider_spend_usd": 0
+    },
+    {
+      "planner_invocations": 2,
+      "writer_invocations": 1,
+      "paid_provider_calls": 0,
+      "provider_tokens": 0,
+      "provider_spend_usd": 0
+    },
+    {
+      "planner_invocations": 2,
+      "writer_invocations": 3,
+      "paid_provider_calls": 0,
+      "provider_tokens": 0,
+      "provider_spend_usd": 0
+    },
+    {
+      "mock_provider_requests": 3,
+      "paid_provider_calls": 0
+    },
+    {
+      "planner_invocations": 3,
+      "writer_invocations": 1,
+      "paid_provider_calls": 0,
+      "provider_tokens": 0,
+      "provider_spend_usd": 0
+    },
+    {
+      "planner_invocations": 1,
+      "writer_invocations": 3,
+      "paid_provider_calls": 0,
+      "provider_tokens": 0,
+      "provider_spend_usd": 0
+    }
+  ],
+  "real_provider_calls": 0,
+  "real_provider_tokens": 0,
+  "real_provider_spend_usd": 0,
+  "live_latency": "UNMEASURED",
+  "semantic_quality": "NOT QUALIFIED",
+  "production_recovery": "NOT QUALIFIED",
+  "release": "NOT AUTHORIZED",
+  "log_sha256": "cf46d1aed8dbc042eeb2d93213d3d01ac1acf563bd6dcabdea6e84629d99ae80",
+  "implementation_commit": "079ab386c23aca1876a436bfe609e31907f2b633",
+  "worktree_fingerprint": "28b915d6d4f087973179cf42eb93659bcdfc8427abee9bda5f863041efffb162",
+  "mock_totals": {
+    "planner_invocations": 33,
+    "writer_invocations": 37,
+    "mock_adapter_requests": 3
+  },
+  "feature_results": {
+    "F01": {
+      "status": "SOURCE AUDIT COMPLETE",
+      "runtime_incident_cause": "UNPROVEN"
+    },
+    "F02": {
+      "pass": 3,
+      "fail": 0
+    },
+    "F03": {
+      "pass": 3,
+      "fail": 0
+    },
+    "F04": {
+      "pass": 3,
+      "fail": 0
+    },
+    "F05": {
+      "pass": 5,
+      "fail": 0
+    },
+    "F06": {
+      "pass": 2,
+      "fail": 0
+    },
+    "F07": {
+      "pass": 2,
+      "fail": 0
+    },
+    "F08": {
+      "pass": 9,
+      "fail": 0
+    }
+  },
+  "targeted_batches": [
+    {
+      "id": "F02 initial",
+      "pass": 1,
+      "fail": 2,
+      "exit_code": 1,
+      "duration_ms": 1414.5954
+    },
+    {
+      "id": "F02 repair",
+      "pass": 3,
+      "fail": 0,
+      "exit_code": 0,
+      "duration_ms": 2426.9046
+    },
+    {
+      "id": "F03",
+      "pass": 3,
+      "fail": 0,
+      "exit_code": 0,
+      "duration_ms": 2161.5039
+    },
+    {
+      "id": "F04 initial",
+      "pass": 2,
+      "fail": 1,
+      "exit_code": 1,
+      "duration_ms": 2074.0236
+    },
+    {
+      "id": "F04 fixture repair",
+      "pass": 2,
+      "fail": 1,
+      "exit_code": 1,
+      "duration_ms": 1953.585
+    },
+    {
+      "id": "F04 native repair",
+      "pass": 3,
+      "fail": 0,
+      "exit_code": 0,
+      "duration_ms": 2283.3183
+    },
+    {
+      "id": "F05",
+      "pass": 5,
+      "fail": 0,
+      "exit_code": 0,
+      "duration_ms": 4877.6555
+    },
+    {
+      "id": "F06 initial",
+      "pass": 1,
+      "fail": 1,
+      "exit_code": 1,
+      "duration_ms": 1371.9417
+    },
+    {
+      "id": "F06 fixture repair",
+      "pass": 2,
+      "fail": 0,
+      "exit_code": 0,
+      "duration_ms": 1408.1045
+    },
+    {
+      "id": "F07",
+      "pass": 2,
+      "fail": 0,
+      "exit_code": 0,
+      "duration_ms": 2758.4191
+    },
+    {
+      "id": "F08 initial",
+      "pass": 5,
+      "fail": 0,
+      "exit_code": 0,
+      "duration_ms": 4823.2724
+    }
+  ],
+  "case_results": [
+    {
+      "number": 1,
+      "name": "zero-attendee planner rebases coalesced check-ins once, preserving attempt receipt and cross-connection claim",
+      "status": "PASS"
+    },
+    {
+      "number": 2,
+      "name": "a second revision during replanning is bounded and retains unsent history",
+      "status": "PASS"
+    },
+    {
+      "number": 3,
+      "name": "pause and source tampering cannot regenerate or send",
+      "status": "PASS"
+    },
+    {
+      "number": 4,
+      "name": "restart delivers exact known-unsent prepared payload with no provider and immutable ACK",
+      "status": "PASS"
+    },
+    {
+      "number": 5,
+      "name": "uncertain transport forbids recovery, reauthoring and replay across connection restart",
+      "status": "PASS"
+    },
+    {
+      "number": 6,
+      "name": "failed uncommitted planner can receive one authenticated recovery without manual attempt 2",
+      "status": "PASS"
+    },
+    {
+      "number": 7,
+      "name": "zero-attendee public camera is authored, acknowledged once and does not place anyone",
+      "status": "PASS"
+    },
+    {
+      "number": 8,
+      "name": "independent shared scene after failed uncommitted original, separate owner positions, cross-connection claim and immutable repeat",
+      "status": "PASS"
+    },
+    {
+      "number": 9,
+      "name": "original uncertain public transport cannot mint competing cohort",
+      "status": "PASS"
+    },
+    {
+      "number": 10,
+      "name": "owner hooks guide actual private writer, authored units publish once and other secrets stay out",
+      "status": "PASS"
+    },
+    {
+      "number": 11,
+      "name": "entry exception retains redacted reason and honest versioned fallback",
+      "status": "PASS"
+    },
+    {
+      "number": 12,
+      "name": "entry zero retains redacted reason and honest versioned fallback",
+      "status": "PASS"
+    },
+    {
+      "number": 13,
+      "name": "entry held retains redacted reason and honest versioned fallback",
+      "status": "PASS"
+    },
+    {
+      "number": 14,
+      "name": "control changes during writer await fence draft/commit/send and cross-connection entry claim",
+      "status": "PASS"
+    },
+    {
+      "number": 15,
+      "name": "typed setup diagnostics preserve owner boundary, history and explicit decline",
+      "status": "PASS"
+    },
+    {
+      "number": 16,
+      "name": "no safe initial location permits invented provisional camera without character placement or resource changes",
+      "status": "PASS"
+    },
+    {
+      "number": 17,
+      "name": "actual start and during-planner present commands ACK promptly, drain private entries and publish one shared opening",
+      "status": "PASS"
+    },
+    {
+      "number": 18,
+      "name": "closed error and status projections cannot retain provider code/body, and fallback stays explicit",
+      "status": "PASS"
+    },
+    {
+      "number": 19,
+      "name": "check-in during writer await discards unsent draft and regenerates once before acceptance",
+      "status": "PASS"
+    },
+    {
+      "number": 20,
+      "name": "committed scene cannot rebase on check-in during channel lookup; proven pre-send guard stays NOT_SENT",
+      "status": "PASS"
+    },
+    {
+      "number": 21,
+      "name": "durable delivering part after restart remains uncertain without any writer retry",
+      "status": "PASS"
+    },
+    {
+      "number": 22,
+      "name": "two isolated SQLite workers share one durable initial planner claim",
+      "status": "PASS"
+    },
+    {
+      "number": 23,
+      "name": "explicit no-commit recovery fences a still-running stale worker without downgrade",
+      "status": "PASS"
+    },
+    {
+      "number": 24,
+      "name": "pause during writer blocks draft and send; stale recovery card is rejected and fresh authenticated card resumes once",
+      "status": "PASS"
+    },
+    {
+      "number": 25,
+      "name": "actual model adapter preserves redacted provider, parse and deadline categories for opening lanes",
+      "status": "PASS"
+    },
+    {
+      "number": 26,
+      "name": "manual attempt-2 approval remains valid after an uncommitted autonomous epoch",
+      "status": "PASS"
+    },
+    {
+      "number": 27,
+      "name": "nested and contradictory private labels never enter actual public or owner writer packets",
+      "status": "PASS"
+    }
+  ],
+  "limits": [
+    "No live Discord/provider/production database access.",
+    "Database reopen, independent connections and worker-thread isolates exercised; live OS-process crash recovery not certified.",
+    "Native prose acceptance and structural privacy do not prove semantic narrative quality or perfect secrecy.",
+    "No same-context baseline speed comparison; live latency and cache benefit UNMEASURED.",
+    "Conservative no-commit proof may hold an opening after unrelated committed session work. Independent entry/camera work remains available when separately entitled.",
+    "Uncertain/in-flight or stale committed artifacts remain review-only; no blind resend or regeneration.",
+    "Further epoch churn is held; manual attempt2 source remains independently authenticated.",
+    "Earlier targeted per-run source hashes not retained; final union pins final source/test manifest."
+  ],
+  "codex_usage": "UNMEASURED"
+}

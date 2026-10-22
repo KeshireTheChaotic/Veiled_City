@@ -27,6 +27,7 @@ The goal is an imaginative, impartial autonomous GM running a living world, rath
 8. No code push/merge, deployment, live production DB access, restart or provider spend without separate authorization. The original docs/release logic may be read as archaeology, never used as testing shortcuts.
 
 ## Phases
+- [P10 — Reliable, playable, audience-first session openings](phases/P10/SCOPE.md): Precommit revision fencing, exact-state recovery, playable private/public cameras, setup diagnostics and fresh offline qualification.
 - [P00 — Reconciliation and test reset](phases/P00/SCOPE.md): Inventory actual HEAD, reconcile contradictory docs, establish new tests and change-only selector.
 - [P01 — Audience-first narration](phases/P01/SCOPE.md): Improve organic engagement, creative scenes, dialogue, and safe fallbacks.
 - [P02 — Agency and native Daggerheart](phases/P02/SCOPE.md): Protect PC declarations, spotlight, native dice/Fear, effects and replay.
