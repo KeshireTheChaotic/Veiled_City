@@ -99,6 +99,29 @@ export function nativeFeatureRuleContext(key){
   return typeof key==='string'?compileNativeFeatureRuleContexts().find(row=>row.feature===key)||null:null;
 }
 
+/** Current-template GM-private source only. Review-only rules inform fiction, never native dispatch. */
+export function nativeFeatureRuleContextsForTemplate(kind,template,{adversaries=read('../../content/GM_PRIVATE/ADVERSARIES/adversaries.json'),
+  environments=read('../../content/GM_PRIVATE/ENVIRONMENTS/environments.json')}={}){
+  if(!['adversary','environment'].includes(kind)||!template||typeof template!=='object'||Array.isArray(template))return Object.freeze([]);
+  const actors=kind==='adversary'?adversaries:environments;
+  if(!Array.isArray(actors))return Object.freeze([]);
+  const matches=actors.filter(actor=>actor?.name===template.name&&hash(actor)===hash(template));
+  if(matches.length!==1)return Object.freeze([]);
+  const actor=matches[0],templateHash=hash(actor),rows=definitions.features
+    .filter(feature=>feature.actor_kind===kind&&feature.actor_name===actor.name&&feature.template_hash===templateHash)
+    .flatMap(feature=>{
+      const inspected=inspectNativeFeatureOccurrence(feature.feature_key,{adversaries,environments});
+      if(inspected.status!=='verified_source')return [];
+      const printed_rule=actor.features[feature.index];
+      return [{version:1,feature:feature.feature_key,source_ref:feature.source_ref,source_hash:feature.source_hash,
+        template_hash:feature.template_hash,feature_hash:hash(feature),index:feature.index,printed_rule,
+        catalog_status:feature.status,native_handler:feature.native_handler,visibility:'gm',
+        authority:'GM-private source rule context only; native trigger, costs, owner choices, effects and publication require their own validators.',
+        execution_authorized:false}];
+    });
+  return freeze(rows);
+}
+
 /** Owner taxonomy is additive: existing closed feature descriptors and their saved hashes do not change. */
 export function compileNativeActors({adversaries=read('../../content/GM_PRIVATE/ADVERSARIES/adversaries.json'),
   environments=read('../../content/GM_PRIVATE/ENVIRONMENTS/environments.json')}={}){

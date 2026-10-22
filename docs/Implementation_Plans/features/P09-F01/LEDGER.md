@@ -62,4 +62,4 @@ Targeted retrieval should connect a current bound actor to only that actor's sou
 - No narrative restriction proposed; no owner question required. Provider calls/tokens/spend 0/0/$0. No cache, model latency or live context measurements.
 - Critical blockers: none. Release/production/provider/CI/push/merge authorization: false.
 - Rollback: documentation/index edits only; no runtime state.
-- Completion evidence commit: pending.
+- Completion evidence commit: `47e93e7f05711ad8671408662cee2940b7c7e645`.

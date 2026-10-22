@@ -11,6 +11,15 @@
     "bot/tests/ai-gm-2026-10/p07-f04.test.mjs",
     "bot/tests/ai-gm-2026-10/p07-f06.test.mjs"
   ],
+  "bot/src/native-feature-catalog.js": [
+    "bot/tests/ai-gm-2026-10/p09-f02.test.mjs"
+  ],
+  "bot/src/native-adversary-context.js": [
+    "bot/tests/ai-gm-2026-10/p09-f02.test.mjs"
+  ],
+  "bot/src/native-environment-context.js": [
+    "bot/tests/ai-gm-2026-10/p09-f02.test.mjs"
+  ],
   "bot/src/gm.js": [
     "bot/tests/ai-gm-2026-10/p07-f04.test.mjs"
   ],

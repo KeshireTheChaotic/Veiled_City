@@ -10,7 +10,7 @@
 | Feature | Initial status | Evidence / next action |
 |---|---|---|
 | [P09-F01](../../features/P09-F01/LEDGER.md) | COMPLETE / DOC-ONLY | Current source/authority audit and three-pilot migration matrix; commit pending. |
-| [P09-F02](../../features/P09-F02/LEDGER.md) | PLANNED / UNQUALIFIED | Inspect actual HEAD; execute scoped acceptance only; log exact source/tests. |
+| [P09-F02](../../features/P09-F02/LEDGER.md) | COMPLETE / TARGETED DELTA | Exact current-template rule retrieval; 2/2 fresh tests passed; commit pending. |
 | [P09-F03](../../features/P09-F03/LEDGER.md) | PLANNED / UNQUALIFIED | Inspect actual HEAD; execute scoped acceptance only; log exact source/tests. |
 | [P09-F04](../../features/P09-F04/LEDGER.md) | PLANNED / UNQUALIFIED | Inspect actual HEAD; execute scoped acceptance only; log exact source/tests. |
 | [P09-F05](../../features/P09-F05/LEDGER.md) | PLANNED / UNQUALIFIED | Inspect actual HEAD; execute scoped acceptance only; log exact source/tests. |

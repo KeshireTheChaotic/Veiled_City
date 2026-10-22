@@ -1,7 +1,7 @@
 /** Exact encounter environment provenance. Planning/eligibility only, never an effect or disclosure grant. */
 import {EncounterLibrary} from './encounter.js';
 import {currentScene} from './scene-continuity.js';
-import {executableNativeFeatures,nativeActorTaxonomy} from './native-feature-catalog.js';
+import {executableNativeFeatures,nativeActorTaxonomy,nativeFeatureRuleContextsForTemplate} from './native-feature-catalog.js';
 import {inspectNativeEncounterActivation} from './native-encounter-activation.js';
 import {sceneFictionHash as hash} from './scene-fiction-context.js';
 import {arbitrationFailure as fail} from './gm-arbitration-contract.js';
@@ -35,11 +35,12 @@ export function nativeEnvironmentBinding(db,guild,{encounter:ref,scene,location}
   if(proposal.data.reviewed_by==='native:encounter-activation'&&!activation)
     throw fail('environment_native_activation_receipt');
   const actor=nativeActorTaxonomy('environment',template),features=executableNativeFeatures('environment')
-    .filter(f=>f.actor_kind==='environment'&&f.template_hash===actor.template_hash);
+    .filter(f=>f.actor_kind==='environment'&&f.template_hash===actor.template_hash),
+    authoredFeatureRules=nativeFeatureRuleContextsForTemplate('environment',template);
   const terms={version:1,actor:actor.actor_key,encounter:ref,session:actual.session_id,scene,location,
     template_hash:actor.template_hash,proposal:proposal.record_key,proposal_hash:hash(proposal),
     source:source.event_key,source_hash:hash(source),binding_hash:hash(binding),review:review.id,activation:activation?.record_key||null,
-    activation_hash:activation?hash(activation):null,features:features.map(f=>({key:f.feature_key,hash:hash(f)}))};
+    activation_hash:activation?hash(activation):null,features:features.map(f=>({key:f.feature_key,hash:hash(f)})),authored_feature_rules:authoredFeatureRules};
   return Object.freeze({...terms,fingerprint:hash(terms),execution_authorized:false,
     authority:'GM-private environment provenance only; exact feature prerequisites, costs, owner choices and native receipts remain mandatory.'});
 }

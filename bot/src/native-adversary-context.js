@@ -2,7 +2,7 @@
 import {nativeEncounterActor} from './native-encounter-relations.js';
 import {nativeActorControl} from './native-actor-control.js';
 import {inspectArbitrationOrigin} from './scene-intent-board.js';
-import {executableNativeFeatures,featureDisposition} from './native-feature-catalog.js';
+import {executableNativeFeatures,featureDisposition,nativeFeatureRuleContextsForTemplate} from './native-feature-catalog.js';
 import {sceneFictionHash as hash} from './scene-fiction-context.js';
 import {projectNativeAdversaryBreakTheHoldContext} from './native-adversary-break-the-hold.js';
 import {projectNativeAdversaryProfessionalEntryContext} from './native-adversary-professional-entry.js';
@@ -41,9 +41,10 @@ export function nativeAdversaryFeatureContext(db,guild,origin,actor,{library}={}
     ||bound.session!==o.binding.session||bound.presence.location_key!==o.binding.location)
     throw fail('adversary_current_gm_owned_local_source_required');
   const templateHash=hash(bound.template),features=executableNativeFeatures('adversary').filter(f=>f.template_hash===templateHash),
+    authoredFeatureRules=nativeFeatureRuleContextsForTemplate('adversary',bound.template),
     terms={version:1,actor,combatant:bound.combatant.id,encounter:bound.encounter,session:bound.session,scene:bound.scene,
       location:bound.presence.location_key,template_hash:templateHash,actor_snapshot:hash(bound),control_revision:control.revision,
-      source:o.binding.source,source_hash:o.binding.source_hash,scope:structuredClone(o.scope),
+      source:o.binding.source,source_hash:o.binding.source_hash,scope:structuredClone(o.scope),authored_feature_rules:authoredFeatureRules,
       features:features.map(f=>({key:f.feature_key,hash:hash(f)}))};
   return Object.freeze({...terms,feature_rule_contexts:[...projectNativeAdversaryBreakTheHoldContext(terms),
       ...projectNativeAdversaryProfessionalEntryContext(terms),...projectNativeAdversaryMarkTheVariableContext(terms),
