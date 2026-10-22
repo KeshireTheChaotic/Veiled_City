@@ -64,7 +64,7 @@
 - Native encounter-preparation source precedence is implemented for valid source-bound records and tested with a fresh record fixture. The current repository contains no active producer for that record kind; explicit producer integration is local/unverified. Full database-backed Discord incoming-defense, cost, roll and publication flow also remains unverified. The first-use/source/helper and deterministic native-d20 delta passed; do not describe this as end-to-end or full-release certification.
 - Provider/model calls, tokens, spend and new cache entries: **0 / 0 / $0 / 0**. Live tokens, latency and narrative-quality measurements: **UNMEASURED**.
 - Critical blockers: **NONE**. Release qualification/authorization, push, merge, production DB, deployment, live model testing and CI authorization: **FALSE / NOT GRANTED**.
-- Rollback is the isolated F05 feature commit above. Phase documentation closeout commit and final HEAD are recorded by the commit following this ledger update.
+- Rollback is the isolated F05 feature commit above. Phase documentation closeout commit: `aced0406b24b9e42fc8f09eeb7e5d78fba10187d`. This follow-up records that SHA; its resulting branch HEAD is the final execution SHA reported at completion.
 
 ## Execution update template
 

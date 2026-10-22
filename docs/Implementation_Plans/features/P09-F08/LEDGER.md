@@ -47,3 +47,4 @@ Record actual inspected source symbols, code changes, test command/run ID and re
 - Final F05 batch: `p09-f05-20261022-05`, exit 0, 4 passed / 0 failed / 0 skipped. Changed JS/MJS syntax checks passed. Aggregate final targeted P09 evidence is 8 passed / 0 failed / 0 skipped across F02, F06 and F05.
 - Mechanic source/once-use boundary is covered by fresh tests; live database-backed defense, damage and publication flow and a current native-preparation record producer are not. Release remains unqualified; no retirement, production or deployment approval is inferred.
 - Provider/model calls, tokens, spend and new cache entries remain 0. No tests outside the fresh changed-code folder were used.
+- P09 phase documentation closeout commit: `aced0406b24b9e42fc8f09eeb7e5d78fba10187d`; this F08/P09 ledger follow-up preserves that exact phase commit. Final execution HEAD is the commit containing this follow-up.
