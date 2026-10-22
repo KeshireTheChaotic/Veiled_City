@@ -193,3 +193,8 @@ Thorn-Hound Urban Cover implementation `4556eab319ee91e92ab66d26bc1356948cc3a248
 P06-F64 supports Thorn-Hound Root Snare as an exact source-bound Action cue. Implementation `7518e41bde9dc0e2240053e8f2298af677b24452`; frozen `p06-f64-20261022-a` passed 233/233 across 61 fresh files; syntax 5/5 and JSON 2/2. Catalog 76/77/0; 75 handlers / 64 families. Target/range, PC Reaction Roll, damage, Restrained lifecycle, recovery and replay remain local holds. Cost 0; no cache claim; Codex usage unavailable. No owner restriction or critical blocker; release unauthorized. Evidence [F64](../../evidence/P06_F64_TARGETED.json).
 
 P06-F65 supports Clause-Eater Loophole as an exact source-bound Reaction cue. Implementation `9cb535592df4663f5c08a3d3143319cb64ac2eec`; corrected `p06-f65-20261022-b` passed 236/236 across 62 mapped fresh files; syntax 5/5 and JSON 2/2. Catalog 77/76/0; 76 handlers / 65 families. Trigger proof, PC clarification, Stress mutation and replay remain local holds. Cost 0; no cache claim; Codex usage unavailable. No owner restriction or critical blocker; release unauthorized. Evidence [F65](../../evidence/P06_F65_TARGETED.json).
+
+
+## P06-F66 inventory delta — 2026-10-22
+
+F66 adds one source-bound supported cue: catalog now has 78 supported / 75 review-only occurrences out of 153. F01 changed inventory regression passed 3/3 in p06-f01-20261022-repair, including the newly explicit same-template hold check. Changed JS/MJS syntax 5/5 and JSON parse 2/2 passed. Cost 0 calls / 0 tokens / ; no cache claim. F66's source-specified Fear, roll, player choice and effect execution remain local holds; release unauthorized. Implementation commit SHA to be recorded at P06 closeout.

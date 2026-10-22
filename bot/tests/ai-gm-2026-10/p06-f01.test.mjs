@@ -5,13 +5,14 @@ const sources=()=>({adversaries:read('../../../content/GM_PRIVATE/ADVERSARIES/ad
 test('every current occurrence matches exact source but inventory alone grants no effects',()=>{
  const input=sources(),features=compileNativeFeatures(input);assert.equal(features.length,153);
  for(const f of features){const inspection=inspectNativeFeatureOccurrence(f.feature_key,input);assert.equal(inspection.status,'verified_source',f.feature_key);assert.equal(inspection.execution_authorized,false);}
- assert.equal(executableNativeFeatures(undefined,input).length,77);
+ assert.equal(executableNativeFeatures(undefined,input).length,78);
 });
 test('one changed occurrence source locally holds its actor without disabling independent actors',()=>{
  const input=sources();input.adversaries.find(a=>a.name==='Pale Court Thrall').features[0]+=' unverified edit';
  assert.equal(featureDisposition('adversary:pale-court-thrall:pack-pressure',input).status,'needs_rules_review');
+ assert.ok(!executableNativeFeatures('adversary',input).some(row=>row.feature_key==='adversary:pale-court-thrall:break-the-hold'));
  assert.equal(featureDisposition('adversary:choir-relay:local-mesh',input).status,'supported');
-  assert.equal(executableNativeFeatures(undefined,input).length,75);
+  assert.equal(executableNativeFeatures(undefined,input).length,76);
  assert.throws(()=>compileNativeFeatures(input),{code:'GM_ARBITRATION'});
 });
 test('missing, duplicated, forged status and unknown feature never grant execution',()=>{

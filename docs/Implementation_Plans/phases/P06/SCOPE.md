@@ -1,6 +1,6 @@
 # P06 — Native catalog and qualification
 
-**Status:** TARGETED DELTA PASS; LOCAL CATALOG HOLDS. **Base:** `9e7bf0687357cf96fbe2ea09a04b3e9d2975f6a3`.
+**Status:** SCOPED SAFE FEATURES COMPLETE; 75 REVIEW-ONLY OCCURRENCES REMAIN HELD. **Base:** `9e7bf0687357cf96fbe2ea09a04b3e9d2975f6a3`.
 
 ## Governing owner specification
 [OWNER_AI_GM_BEHAVIOR_SPEC.md](../../OWNER_AI_GM_BEHAVIOR_SPEC.md) is the full owner's desired behavior, not proof of already implemented code. ENGINE constitution is complementary.

@@ -30,6 +30,7 @@ import {projectNativeAdversaryCallSecurityContext} from './native-adversary-call
 import {projectNativeAdversaryUrbanCoverContext} from './native-adversary-urban-cover.js';
 import {projectNativeAdversaryRootSnareContext} from './native-adversary-root-snare.js';
 import {projectNativeAdversaryLoopholeContext} from './native-adversary-loophole.js';
+import {projectNativeAdversaryConflictingDutyContext} from './native-adversary-conflicting-duty.js';
 import {arbitrationFailure as fail} from './gm-arbitration-contract.js';
 
 /** A template/display name does not bind a person to an adversary or make its features available. */
@@ -58,7 +59,8 @@ export function nativeAdversaryFeatureContext(db,guild,origin,actor,{library}={}
       ...projectNativeAdversaryAlwaysAPriceContext(terms),...projectNativeAdversaryBadFutureContext(terms),
       ...projectNativeAdversaryExitClauseContext(terms),...projectNativeAdversaryPredatoryGraceContext(terms),
       ...projectNativeAdversaryReputationAttackContext(terms),...projectNativeAdversaryCallSecurityContext(terms),
-      ...projectNativeAdversaryUrbanCoverContext(terms),...projectNativeAdversaryRootSnareContext(terms),...projectNativeAdversaryLoopholeContext(terms)],
+      ...projectNativeAdversaryUrbanCoverContext(terms),...projectNativeAdversaryRootSnareContext(terms),
+      ...projectNativeAdversaryLoopholeContext(terms),...projectNativeAdversaryConflictingDutyContext(terms)],
     revision:hash(terms),execution_authorized:false,publication_authorized:false});
 }
 

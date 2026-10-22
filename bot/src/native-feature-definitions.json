@@ -714,13 +714,18 @@
       "template_hash": "c2923812a24566e4ca25120a7dd760ff9af2b409a47346cfc8ea6eca1ae59297",
       "index": 1,
       "type": "Action",
-      "status": "review_only",
-      "trigger_kind": "unmapped",
-      "target_policy": "unmapped",
-      "roll_protocol": "unmapped",
-      "costs": null,
-      "native_handler": null,
-      "reason": "No qualified native feature handler."
+      "status": "supported",
+      "trigger_kind": "spotlight_action",
+      "target_policy": "one",
+      "roll_protocol": "native_adversary_context",
+      "costs": [
+        {
+          "resource": "npc_fear",
+          "amount": 1
+        }
+      ],
+      "native_handler": "adversary_clause_eater_conflicting_duty_context",
+      "reason": "Exact source-bound GM cue only; Fear payment, PC Presence roll, player consequence choice and effects are not committed."
     },
     {
       "feature_key": "adversary:clause-eater:digest-the-contract",

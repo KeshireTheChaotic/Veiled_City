@@ -80,7 +80,8 @@
     "bot/tests/ai-gm-2026-10/p06-f63.test.mjs",
     "bot/tests/ai-gm-2026-10/p06-f64.test.mjs",
     "bot/tests/ai-gm-2026-10/p06-f65.test.mjs",
-    "bot/tests/ai-gm-2026-10/p09-f02.test.mjs"
+    "bot/tests/ai-gm-2026-10/p09-f02.test.mjs",
+    "bot/tests/ai-gm-2026-10/p06-f66.test.mjs"
   ],
   "bot/src/native-adversary-context.js": [
     "bot/tests/ai-gm-2026-10/p06-f39.test.mjs",
@@ -109,7 +110,8 @@
     "bot/tests/ai-gm-2026-10/p06-f63.test.mjs",
     "bot/tests/ai-gm-2026-10/p06-f64.test.mjs",
     "bot/tests/ai-gm-2026-10/p06-f65.test.mjs",
-    "bot/tests/ai-gm-2026-10/p09-f02.test.mjs"
+    "bot/tests/ai-gm-2026-10/p09-f02.test.mjs",
+    "bot/tests/ai-gm-2026-10/p06-f66.test.mjs"
   ],
   "bot/src/native-environment-context.js": [
     "bot/tests/ai-gm-2026-10/p09-f02.test.mjs"
@@ -232,7 +234,8 @@
     "bot/tests/ai-gm-2026-10/p06-f62.test.mjs",
     "bot/tests/ai-gm-2026-10/p06-f63.test.mjs",
     "bot/tests/ai-gm-2026-10/p06-f64.test.mjs",
-    "bot/tests/ai-gm-2026-10/p06-f65.test.mjs"
+    "bot/tests/ai-gm-2026-10/p06-f65.test.mjs",
+    "bot/tests/ai-gm-2026-10/p06-f66.test.mjs"
   ],
   "bot/src/native-environment-capabilities.js": [
     "bot/tests/ai-gm-2026-10/p06-f04.test.mjs",
@@ -495,5 +498,8 @@
   ],
   "bot/src/native-adversary-loophole.js": [
     "bot/tests/ai-gm-2026-10/p06-f65.test.mjs"
+  ],
+  "bot/src/native-adversary-conflicting-duty.js": [
+    "bot/tests/ai-gm-2026-10/p06-f66.test.mjs"
   ]
 }
