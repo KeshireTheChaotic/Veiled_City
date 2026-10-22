@@ -57,6 +57,7 @@ Complete source-qualified features, reconcile rules and qualify the changed impl
 - [P06-F46 — Support the source-bound Sympathetic Relay cue](../../features/P06-F46/SCOPE.md)
 - [P06-F47 — Support the source-bound Snatch a Link cue](../../features/P06-F47/SCOPE.md)
 - [P06-F48 — Support the source-bound Flow Around It cue](../../features/P06-F48/SCOPE.md)
+- [P06-F49 — Enforce the owner's exact HR14 v1 authorization](../../features/P06-F49/SCOPE.md)
 
 ## Exit
 All safe features have current diff, truthful ledger and newly authored tests covering only code changed in this phase. Local source gaps and owner decisions remain visible but do not stop other safe work. No automatic release qualification.

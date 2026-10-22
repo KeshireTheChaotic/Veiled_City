@@ -1,0 +1,40 @@
+{
+  "feature": "P06-F49",
+  "subject": "owner:everything-logs-hope:v1 / HR14 v1",
+  "audit_anchor": "9e7bf0687357cf96fbe2ea09a04b3e9d2975f6a3",
+  "branch": "codex/clean-ai-gm-2026-10",
+  "start_head": "81569d08699343e401fc11ba1eaed0f10b4fd37a",
+  "implementation_commit": "282b1de560005fd0ba9ed74846624b080c6d9da6",
+  "tested_source_sha": "282b1de560005fd0ba9ed74846624b080c6d9da6",
+  "owner_decision": "2026-10-21: exact HR14 v1 authorized; optional one Hope, affected current PC owner only, silence never pays, suppression limited to this trace.",
+  "run_id": "p06-f49-20261021-a",
+  "started_at": "2026-10-21T23:34:50.6385641Z",
+  "ended_at": "2026-10-21T23:34:51.0423902Z",
+  "command": "From bot/: node --test over the unique fresh path mapped by coverage.json to native-environment-trace.js and native-house-errata.js.",
+  "exit_code": 0,
+  "tests": 5,
+  "passed": 5,
+  "failed": 0,
+  "cancelled": 0,
+  "skipped": 0,
+  "duration_ms": 347.6718,
+  "changed_js_mjs_syntax": "2/2 pass",
+  "changed_json_parse": "2/2 pass",
+  "provider_usage": {
+    "cost_usd": 0,
+    "calls": 0,
+    "tokens": 0
+  },
+  "cache": "No cache used or savings claimed; Codex usage unavailable.",
+  "input_hashes_sha256": {
+    "bot/tests/ai-gm-2026-10/coverage.json": "b406a20cb98d377cc388e3f4a75ce956c7d0a061a96d2325401e87770834dce7",
+    "bot/src/native-house-errata.js": "138aa8ec904fba1605274b36ebc8e94832abed82145a8d03b18108fba43b7dfb",
+    "bot/tests/ai-gm-2026-10/p06-f37.test.mjs": "4a522f40eaf71804d357f5be9fb1d6b07a26bcf1478b6000c4f02654a571a86a",
+    "bot/src/native-environment-trace.js": "e1f48730cb05f8382cadf1192ac783596848551d75051e55c0ad9b44af7c60c5"
+  },
+  "local_holds": [
+    "Live campaign DB replay, Discord delivery and whole-release qualification remain unverified."
+  ],
+  "critical_blockers": [],
+  "release_authorized": false
+}

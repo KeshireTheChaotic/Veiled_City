@@ -9,5 +9,6 @@ Status: SUPPORTED / TARGETED PASS.
 - Implementation/tested SHA: `70a5b734d11a4e64dd649e8e0b506258c70ab634`; changed-file syntax: 5/5; changed JSON parse: 3/3. Exact input hashes: [targeted evidence](../../evidence/P06_F37_TARGETED.json).
 - Cost/cache: provider calls/tokens/spend 0/0/$0; no cache savings claimed; Codex usage unavailable.
 - Owner questions/restrictions: none proposed.
+- Owner decision recorded 2026-10-21: authorized HR14 v1 exactly—optional 1 Hope by the affected current PC owner, silence never pays, suppression only for this trace. Enforcement hardening: [P06-F49](../P06-F49/SCOPE.md).
 - Local holds: DB-backed live replay, Discord delivery and full release qualification. The selected existing route is covered by fresh exact-source and dispatch/saved-reader boundary tests; it was not run against live persistent campaign state.
 - Critical blocker: none. Release authorization: false.
