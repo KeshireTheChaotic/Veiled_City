@@ -405,13 +405,13 @@
       "template_hash": "0488f9de16410d11fb9a095e4951045a323d3eea51ad8a8e425ae4e96d47e8fa",
       "index": 0,
       "type": "Reaction",
-      "status": "review_only",
-      "trigger_kind": "unmapped",
-      "target_policy": "unmapped",
-      "roll_protocol": "unmapped",
-      "costs": null,
-      "native_handler": null,
-      "reason": "No qualified native feature handler."
+      "status": "supported",
+      "trigger_kind": "after_repeated_pc_action_declared",
+      "target_policy": "declared_pc_roll",
+      "roll_protocol": "native_adversary_context",
+      "costs": [{ "resource": "npc_stress", "amount": 1 }],
+      "native_handler": "adversary_i_saw_that_context",
+      "reason": "Exact source-bound cue only; repeated-action proof, turn limit, Stress and disadvantage are not committed."
     },
     {
       "feature_key": "adversary:morrowline-echo:self-fulfilling-event",

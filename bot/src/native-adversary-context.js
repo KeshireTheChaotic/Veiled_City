@@ -19,6 +19,7 @@ import {projectNativeAdversaryBlankSpotContext} from './native-adversary-blank-s
 import {projectNativeAdversaryRouteAroundContext} from './native-adversary-route-around.js';
 import {projectNativeAdversaryTermsFirstContext} from './native-adversary-terms-first.js';
 import {projectNativeAdversaryPinToTheDealContext} from './native-adversary-pin-to-the-deal.js';
+import {projectNativeAdversaryISawThatContext} from './native-adversary-i-saw-that.js';
 import {arbitrationFailure as fail} from './gm-arbitration-contract.js';
 
 /** A template/display name does not bind a person to an adversary or make its features available. */
@@ -41,7 +42,8 @@ export function nativeAdversaryFeatureContext(db,guild,origin,actor,{library}={}
       ...projectNativeAdversarySympatheticRelayContext(terms),...projectNativeAdversarySnatchALinkContext(terms),
       ...projectNativeAdversaryFlowAroundItContext(terms),...projectNativeAdversaryDragDownContext(terms),
       ...projectNativeAdversaryBlankSpotContext(terms),...projectNativeAdversaryRouteAroundContext(terms),
-      ...projectNativeAdversaryTermsFirstContext(terms),...projectNativeAdversaryPinToTheDealContext(terms)],
+      ...projectNativeAdversaryTermsFirstContext(terms),...projectNativeAdversaryPinToTheDealContext(terms),
+      ...projectNativeAdversaryISawThatContext(terms)],
     revision:hash(terms),execution_authorized:false,publication_authorized:false});
 }
 
