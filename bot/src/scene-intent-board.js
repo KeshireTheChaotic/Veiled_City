@@ -16,6 +16,7 @@ import {preRollFearCandidates} from './pre-roll-fear.js';
 import {nativeEnvironmentBinding} from './native-environment-context.js';
 import {nativeEnvironmentInstanceForScope} from './native-environment-instance.js';
 import {nativeAdversaryFeatureContext} from './native-adversary-context.js';
+import {preparedPositionCandidates} from './native-professional-entry.js';
 const origins=new WeakMap(),bindings=new WeakMap();
 const deepFreeze=v=>{if(v&&typeof v==='object'){Object.values(v).forEach(deepFreeze);Object.freeze(v);}return v;};
 export function createArbitrationOrigin(db,guild,scope,sourceRef){
@@ -64,6 +65,7 @@ export function arbitrationPromptBoard(db,guild,origin){
         &&q.data.input?.accepted_intent&&narrativeSourceVisible(db,guild,q.source_event,o.scope))
       .map(q=>({request:q.record_key,actor:q.subject_key,accepted_intent:q.data.input.accepted_intent,kind:q.data.kind})),
     pre_roll_fear:preRollFearCandidates(db,guild,origin),
+    prepared_positions:preparedPositionCandidates(db,guild,o.binding),
     feature_windows:featureWindowChoices(db,guild,o.scope),
     npc_candidates:o.eligible.map(n=>{
       const c=combatants.find(c=>c.status==='active'&&binding?.data.combatants.some(b=>b.actor===n.key&&b.id===c.id)),template=c&&library.findAdversary(c.base_name);

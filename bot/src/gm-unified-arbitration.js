@@ -27,6 +27,7 @@ import {prepareNativeEquippedAttack} from './native-equipped-attacks.js';
 import {prepareCampaignPvpFromBoard} from './pvp-attacks.js';
 import {registerEnvironmentTraceRisk} from './native-environment-trace.js';
 import {reserveCampaignAttackNotices} from './native-publications.js';
+import {PROFESSIONAL_ENTRY,establishPreparedPositions,qualifyProfessionalEntry} from './native-professional-entry.js';
 
 export const UNIFIED_ARBITRATION_PROMPT="Evaluate unified_arbitration in this SAME GM call. "
   +"Accepted typed intents are canonical adjudication inputs; human declarations own intent; native receipts own outcomes. "
@@ -62,6 +63,7 @@ export const UNIFIED_ARBITRATION_PROMPT="Evaluate unified_arbitration in this SA
   +"Version7 admits Everybody Saw Something Different only with an independently GM-established local supernatural incident, exactly three actual local unproxied NPCs, their already native-authored attributed speech and own evidence, an exact established true detail per account, and three pairwise contradictory quote anchors. This is contextual GM comparison, never truth promotion, forced testimony or invented knowledge. "
   +"Version9 also admits Apartment Veil Breach Door Chain: submit its exact supported feature_ref, current environment and one ordinary resident identity at the environment_actions boundary. Native code establishes source-bound presence; do not answer for the PC, move them, decide access or charge a resource. The player chooses whether to answer, refuse or take another route. "
   +"Version10 also admits After-Hours Emergency Department Something in Imaging: submit its exact feature_ref, current environment, modality (scan, monitor or lab_result), one impossible detail and the clue it offers. This records a source-bound audience-scoped diagnostic finding; do not invent a patient, treatment, PC response or mechanical outcome. Preserve creative detail and let the GM narrate it naturally. "
+  +"Version11 may establish up to four prepared_positions from established scene fiction before the roll; use exact participant target_refs and a concise description for a fortified position, prepared defense, ambush or barricade. Do not invent preparation retroactively or treat mere alert/enmity as preparation. For Aster Vale Contractor Professional Entry, use proposal_version=4, exact feature_ref, feature_intent action (breach/restrain/surprise) and position_ref; native code applies Advantage only to the first qualifying roll in this encounter when the prior authoritative position evidence matches this target. Otherwise leave that passive available and adjudicate the independent action normally. Never set proposal Advantage for this passive. "
   +"Only when supplied as an executable local environment capability, Everything Logs may use its exact feature_ref on an ordinary request_pc_action_roll/attempt_only intrusion ruling, without advantage/disadvantage. Native code records this classification before dice and opens an owner-private response only on an actual action failure. No second reaction or post-hoc success claim; exactly 1 Hope is optional and owner-chosen, never automatic. "
   +"For an explicit GM-owned alliance choice between currently active local unproxied NPC combatants, use set_allies or clear_allies, exact other NPC target_refs, npc_no_roll, srd:gm-moves, stakes=none, no feature or dice. "
   +"This does not enroll PCs or prove a powered device, movement, NPC knowledge or disclosure. "
@@ -113,7 +115,7 @@ export function adjudicateSceneBoard(db,guild,origin,board,proposals,{library=ne
       native=prepareNativeEquippedAttack(db,guild,origin,entry,p,{library});
       status=native.disposition==='roll_pending'?'pending_pc_roll':'needs_rules_review';reason='Native exact existing equipped approval only; no acquired gear, new mapping or owner dice are invented.';
     }
-    else if(p.feature_ref&&p.feature_ref!=='standard_attack'
+    else if(p.feature_ref&&p.feature_ref!=='standard_attack'&&p.feature_ref!==PROFESSIONAL_ENTRY
       &&!(entry.actor.type==='character'&&['environment:haunted-nightclub:too-loud-to-think','environment:aster-vale-predictive-lab:everything-logs','environment:storm-drain-shrine:local-memory'].includes(p.feature_ref)
         &&featureDisposition(p.feature_ref).status==='supported')){
       const feature=featureDisposition(p.feature_ref);
@@ -167,13 +169,21 @@ export function adjudicateSceneBoard(db,guild,origin,board,proposals,{library=ne
     }else if(p.disposition==='npc_no_roll'&&['speak','walk','prepare'].includes(entry.operation)&&p.difficulty===null&&p.trait===null
       &&p.stakes==='none'&&!p.feature_ref&&!p.experience_ref&&!p.advantage&&!p.disadvantage){
       status='resolved_no_roll';reason='Ordinary NPC fiction only; no relocation, PC response, damage, knowledge or resource effect.';
-    }else if(p.disposition==='gm_attack_roll'&&p.stakes_kind==='native_attack'&&entry.operation==='attack'&&p.rule_basis_refs.includes('srd:adversary-attacks')&&p.feature_ref==='standard_attack'&&entry.target_refs.length===1&&!p.experience_ref){
+    }else if(p.disposition==='gm_attack_roll'&&p.stakes_kind==='native_attack'&&entry.operation==='attack'&&p.rule_basis_refs.includes('srd:adversary-attacks')&&['standard_attack',PROFESSIONAL_ENTRY].includes(p.feature_ref)&&entry.target_refs.length===1&&!p.experience_ref){
+      let professional_entry=null,professional_entry_hold=null;
+      if(p.feature_ref===PROFESSIONAL_ENTRY){
+        requireNativeAdversaryFeature(db,guild,origin,entry.actor.key,p.feature_ref,{library});
+        if(p.proposal_version!==4||p.advantage!==false)throw fail('professional_entry_closed_proposal');
+        professional_entry=qualifyProfessionalEntry(db,guild,db.getCurrentEncounter(o.binding.session),entry,p);
+        if(!professional_entry)professional_entry_hold='Prepared-position evidence/action/target is not currently established; passive remains available.';
+      }
       const opportunity=nativeGmOpportunity(db,guild,board),encounter=db.getCurrentEncounter(o.binding.session),binding=encounter&&db.getCityRecord(guild,'encounter_binding',encounter.id),
         combatant=binding?.data.combatants.find(c=>c.actor===entry.actor.key)?.id;
       const input={npc:entry.actor.key,combatant,character:entry.target_refs[0],source:o.binding.source,ruling:'',defenses:{resistance:'none',armor_reduction:1,armor_allowed:true,source:'base'}};
       const facts=inspectIncomingCandidate(db,guild,input,{library});
       if(p.difficulty!==null&&p.difficulty!==facts.evasion||p.trait!==null||!p.stakes.trim())throw fail('attack_fixed_evasion_or_stakes');
-      status='gm_action_ready';native={operation:'commit_adversary_attack',input,opportunity,template_hash:facts.snapshot.template};reason='Current standard attack; awaits exact target-owned defense review before any dice.';
+      status='gm_action_ready';native={operation:'commit_adversary_attack',input,opportunity,template_hash:facts.snapshot.template,
+        ...(professional_entry?{professional_entry}:{}),...(professional_entry_hold?{professional_entry_hold}:{})};reason='Current standard attack; awaits exact target-owned defense review before any dice.';
     }else if(p.disposition==='request_pc_reaction_roll'&&p.stakes_kind==='attempt_only'&&['prepare','attack'].includes(entry.operation)&&entry.target_refs.length===1
       &&p.rule_basis_refs.includes('srd:reaction-rolls')&&p.trait!==null&&p.difficulty!==null&&p.stakes.trim()&&p.difficulty_reason.trim()
       &&!p.feature_ref&&!p.experience_ref&&!p.advantage&&!p.disadvantage){
@@ -183,12 +193,20 @@ export function adjudicateSceneBoard(db,guild,origin,board,proposals,{library=ne
       status='pending_pc_reaction';native={operation:'request_pc_reaction_roll',character:pc.id,owner:pc.owner_user_id,principal:ctx.principal,target_snapshot:ctx,opportunity:nativeGmOpportunity(db,guild,board)};
       reason='Owner-private reaction invitation; no PC action, dice or negative effect is executed.';
     }else if(p.disposition==='gm_exceptional_action_roll'&&entry.operation==='exceptional_action'&&p.rule_basis_refs.includes('srd:exceptional-adversary-actions')
-      &&p.stakes_kind==='attempt_only'&&entry.objective_ref&&entry.target_refs.every(ref=>!db.getCharacter(ref))&&p.difficulty!==null&&p.trait===null&&p.stakes.trim()&&p.difficulty_reason.trim()&&!p.feature_ref){
+      &&p.stakes_kind==='attempt_only'&&entry.objective_ref&&entry.target_refs.length===1&&entry.target_refs.every(ref=>!db.getCharacter(ref))&&p.difficulty!==null&&p.trait===null&&p.stakes.trim()&&p.difficulty_reason.trim()&&(!p.feature_ref||p.feature_ref===PROFESSIONAL_ENTRY)){
+      let professional_entry=null,professional_entry_hold=null;
+      if(p.feature_ref===PROFESSIONAL_ENTRY){
+        requireNativeAdversaryFeature(db,guild,origin,entry.actor.key,p.feature_ref,{library});
+        if(p.proposal_version!==4||p.advantage!==false)throw fail('professional_entry_closed_proposal');
+        professional_entry=qualifyProfessionalEntry(db,guild,db.getCurrentEncounter(o.binding.session),entry,p);
+        if(!professional_entry)professional_entry_hold='Prepared-position evidence/action/target is not currently established; passive remains available.';
+      }
       const opportunity=nativeGmOpportunity(db,guild,board),encounter=db.getCurrentEncounter(o.binding.session),binding=encounter&&db.getCityRecord(guild,'encounter_binding',encounter.id),
         combatant=binding?.data.combatants.find(c=>c.actor===entry.actor.key)?.id,c=combatant&&db.listCombatants(encounter.id).find(c=>c.id===combatant),template=c&&library.findAdversary(c.base_name);
       const experience=p.experience_ref&&template?.experiences?.find(e=>e.name===p.experience_ref&&Number.isSafeInteger(e.modifier)&&e.modifier>=0);
       if(!template||c.status!=='active'||p.experience_ref&&!experience)throw fail('exceptional_native_statblock_or_experience');
-      status='gm_action_ready';native={operation:'commit_exceptional_adversary_action',opportunity,combatant,template_hash:hash(template),experience:experience||null};
+      status='gm_action_ready';native={operation:'commit_exceptional_adversary_action',opportunity,combatant,template_hash:hash(template),experience:experience||null,
+        ...(professional_entry?{professional_entry}:{}),...(professional_entry_hold?{professional_entry_hold}:{})};
       reason='GM-owned exceptional independent NPC task only; no PC effect, default contested roll or routine behavior roll.';
     }
     }catch(error){
@@ -237,6 +255,7 @@ function applyUnifiedBatch(db,guild,result,playerRows,{content}={}){
   if(!matchesArbitrationSchema(unifiedArbitrationSchema,result.unified_arbitration))throw fail('transport_shape');
   const origin=arbitrationTurnOrigin(result);if(!origin)throw fail('native_service_origin_required');
   applyNativeEnvironmentProfileProposals(db,guild,origin,result.unified_arbitration.environment_profiles||[]);
+  establishPreparedPositions(db,guild,inspectArbitrationOrigin(db,guild,origin).binding,result.unified_arbitration.prepared_positions||[]);
   const rows=currentScenePlayerInputs(db,guild,origin,playerRows),board=buildSceneIntentBoard(db,guild,origin,rows,result.unified_arbitration.npc_intents);
   let interrupt=null;
   for(const selection of result.unified_arbitration.pre_roll_fear||[]){

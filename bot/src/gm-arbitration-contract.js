@@ -13,7 +13,8 @@ const proposalV1=obj({intent_ref:str(200),disposition:{type:'string',enum:ARBITR
   stakes:str(600),reason:str(600),difficulty_reason:str(600),feature_ref:str(160),experience_ref:str(160),
   advantage:{type:'boolean'},disadvantage:{type:'boolean'}});
 export const gmArbitrationProposalSchema={anyOf:[proposalV1,obj({...proposalV1.properties,proposal_version:{type:'integer',enum:[2]},trigger_ref:str(200)}),
-  obj({...proposalV1.properties,proposal_version:{type:'integer',enum:[3]},collaboration:obj({kind:{type:'string',enum:['help','tag']},request:str(200),partner_request:str(200)})})]};
+  obj({...proposalV1.properties,proposal_version:{type:'integer',enum:[3]},collaboration:obj({kind:{type:'string',enum:['help','tag']},request:str(200),partner_request:str(200)})}),
+  obj({...proposalV1.properties,proposal_version:{type:'integer',enum:[4]},feature_intent:obj({action:{type:'string',enum:['breach','restrain','surprise']},position_ref:str(160)})})]};
 const unifiedV1={version:{type:'integer',enum:[1]},npc_intents:{type:'array',maxItems:4,items:npcSceneIntentSchema},
   decisions:{type:'array',maxItems:16,items:gmArbitrationProposalSchema}};
 const interrupt={type:'array',maxItems:1,items:obj({request_ref:str(200),npc_intent_ref:str(200)})};
@@ -41,6 +42,8 @@ const doorChainAction=obj({version:{type:'integer',enum:[1]},feature_ref:{type:'
     parent_location_key:str(160),role:str(160),summary:str(600)})});
 const imagingRecordAction=obj({version:{type:'integer',enum:[1]},feature_ref:{type:'string',enum:['environment:after-hours-emergency-department:something-in-imaging']},
   environment:str(200),modality:{type:'string',enum:['scan','monitor','lab_result']},impossible_detail:str(4000),clue:str(4000)});
+const preparedPositions={type:'array',maxItems:4,items:obj({position_ref:str(160),kind:{type:'string',enum:['fortified_position','prepared_defense','established_ambush','barricade','other_prepared_position']},
+  description:str(600),target_refs:{type:'array',minItems:1,maxItems:8,items:str(160)}})};
 export const unifiedArbitrationSchema={anyOf:[obj(unifiedV1),obj({...unifiedV1,version:{type:'integer',enum:[2]},pre_roll_fear:interrupt}),
   obj({...unifiedV1,version:{type:'integer',enum:[3]},pre_roll_fear:interrupt,
     environment_profiles:environmentProfiles}),
@@ -57,7 +60,10 @@ export const unifiedArbitrationSchema={anyOf:[obj(unifiedV1),obj({...unifiedV1,v
   obj({...unifiedV1,version:{type:'integer',enum:[9]},pre_roll_fear:interrupt,environment_profiles:environmentProfiles,
     environment_actions:{type:'array',maxItems:1,items:{anyOf:[arrivalAction,sceneAction,uploadStart,uploadAdvance,uploadAdjust,witnessAccounts,maintenanceMemoryAction,doorChainAction]}}}),
   obj({...unifiedV1,version:{type:'integer',enum:[10]},pre_roll_fear:interrupt,environment_profiles:environmentProfiles,
-    environment_actions:{type:'array',maxItems:1,items:{anyOf:[arrivalAction,sceneAction,uploadStart,uploadAdvance,uploadAdjust,witnessAccounts,maintenanceMemoryAction,doorChainAction,imagingRecordAction]}}})]};
+    environment_actions:{type:'array',maxItems:1,items:{anyOf:[arrivalAction,sceneAction,uploadStart,uploadAdvance,uploadAdjust,witnessAccounts,maintenanceMemoryAction,doorChainAction,imagingRecordAction]}}}),
+  obj({...unifiedV1,version:{type:'integer',enum:[11]},pre_roll_fear:interrupt,environment_profiles:environmentProfiles,
+    environment_actions:{type:'array',maxItems:1,items:{anyOf:[arrivalAction,sceneAction,uploadStart,uploadAdvance,uploadAdjust,witnessAccounts,maintenanceMemoryAction,doorChainAction,imagingRecordAction]}},
+    prepared_positions:preparedPositions})]};
 export function matchesArbitrationSchema(schema,value){
   if(schema.anyOf)return schema.anyOf.some(s=>matchesArbitrationSchema(s,value));
   if(schema.enum)return schema.enum.includes(value);

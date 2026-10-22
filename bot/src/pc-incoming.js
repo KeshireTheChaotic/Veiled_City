@@ -17,6 +17,7 @@ import {nativeHouseErratum} from './native-house-errata.js';
 import {nativeHitFeatureCandidates,applyManyDeathsAfterIncoming} from './native-feature-hit.js';
 import {nativeIncomingConditions,validateIncomingConditions,incomingConditionOdds,nativeAttackExpiryRevision} from './native-group-features.js';
 import {settlePreRollFearForIncoming} from './pre-roll-fear.js';
+import {PROFESSIONAL_ENTRY,professionalEntryRollState,commitProfessionalEntryUse,inspectProfessionalEntryUse} from './native-professional-entry.js';
 
 const hash=v=>createHash("sha256").update(JSON.stringify(v)).digest("hex");
 const AUTONOMOUS_FEAR_ATTACK=Symbol("native-autonomous-fear-attack");
@@ -287,19 +288,27 @@ export function rollIncomingAttack(db,guild,user,key,options={}){
     if(row.data.roll)return verifyRoll(db,guild,row);
     if(row.status!=="ready")fail("Native attack is not ready.");
     assertFearIncomingExecution(db,guild,row,{autonomous:options.gm===AUTONOMOUS_FEAR_ATTACK});
-    let nativeDecision=null,cost=null;
+    let nativeDecision=null,nativeEntry=null,cost=null,professionalEntry=null;
     if(row.data.offer.input.ruling?.startsWith('ai-decision:')){
       if(options.gm!==NATIVE_AI_ATTACK)fail('Native AI-GM executor required; owner defense never grants a GM role.');
-      nativeDecision=inspectNativeGmDecision(db,guild,row.data.offer.input.ruling.slice(12)).row;
+      ({row:nativeDecision,entry:nativeEntry}=inspectNativeGmDecision(db,guild,row.data.offer.input.ruling.slice(12)));
+      if(nativeDecision.data.native.professional_entry)professionalEntry=professionalEntryRollState(db,guild,nativeDecision,nativeEntry);
       cost=commitGmActionCost(db,guild,nativeDecision.record_key);
     }
     validateIncomingConditions(db,guild,c.pc.id,row.data.offer.native_conditions||[],{current:true});
+    const p=nativeDecision?.data.proposal,oddsProposal=p?.feature_ref===PROFESSIONAL_ENTRY
+      ?{...p,advantage:professionalEntry?.advantage===true}:p;
     const rng=options.rng||d,result=gmD20Roll({kind:'attack',modifier:c.bonus,difficulty:c.evasion,
-      ...incomingConditionOdds(row.data.offer,nativeDecision?.data.proposal)},rng),face=result.selected;
+      ...incomingConditionOdds(row.data.offer,oddsProposal)},rng),face=result.selected;
     const hit=result.success,damage=gmAttackDamage(result,c.damage,rng);
     const payload={attack:key,face,bonus:c.bonus,total:face+c.bonus,evasion:c.evasion,hit,damage,type:c.damage_type,offer_hash:hash(row.data.offer),
-      ...(nativeDecision?{gm_decision:nativeDecision.record_key,gm_d20:result,cost_ref:cost.record_key}:row.data.offer.native_conditions?{gm_d20:result}: {})};
+      ...(nativeDecision?{gm_decision:nativeDecision.record_key,gm_d20:result,cost_ref:cost.record_key,
+        ...(professionalEntry?.advantage?{professional_entry_use_ref:professionalEntry.use_ref}:{})}:row.data.offer.native_conditions?{gm_d20:result}: {})};
     const roll=db.addRoll(guild,c.snapshot.session,user,c.pc.id,"npc_incoming_standard",payload);
+    if(professionalEntry?.advantage){
+      commitProfessionalEntryUse(db,guild,nativeDecision,professionalEntry,`${key}:roll`,roll);
+      inspectProfessionalEntryUse(db,guild,professionalEntry.use_ref,nativeDecision,`${key}:roll`,roll);
+    }
     const receipt=db.saveCityRecord(guild,{kind:"npc_attack_roll_receipt",key:`${key}:roll`,status:"resolved",source_event:row.source_event,
       visibility:"character",subject_key:c.pc.id,data:{...payload,roll}});
     db.saveCityRecord(guild,{...row,key,status:hit?"awaiting_armor":"missed",data:{...row.data,roll:receipt.record_key}});
@@ -391,6 +400,10 @@ function verifyRoll(db,guild,row){
   if(r?.status!=="resolved"||r.source_event!==row.source_event||r.subject_key!==row.subject_key
     ||roll?.roll_type!=="npc_incoming_standard"||roll.character_id!==row.subject_key||roll.session_id!==row.data.offer.snapshot.session
     ||hash(roll.payload)!==hash(payload)||payload.offer_hash!==hash(row.data.offer)||payload.attack!==row.record_key)fail("Saved native attack/damage roll ancestry required.");
+  if(payload.professional_entry_use_ref){
+    const decision=inspectCommittedGmDecision(db,guild,row.data.offer.input.ruling.slice(12)),{row:d}=decision;
+    inspectProfessionalEntryUse(db,guild,payload.professional_entry_use_ref,d,`${row.record_key}:roll`,roll.id);
+  }
   return r;
 }
 function passiveProof(db,guild,row){
@@ -430,9 +443,12 @@ function passiveProof(db,guild,row){
 export function incomingRollProjection(db,guild,key){
   const {row,offer}=incomingAttackEvidence(db,guild,key),receipt=verifyRoll(db,guild,row),r=receipt.data;
   if(!offer.shared_attack&&offer.input.ruling?.startsWith('ai-decision:')){
-    const decision=inspectCommittedGmDecision(db,guild,offer.input.ruling.slice(12)).row,cost=db.getCityRecord(guild,'gm_action_cost_receipt',r.cost_ref);
+    const decisionInspection=inspectCommittedGmDecision(db,guild,offer.input.ruling.slice(12)),decision=decisionInspection.row,cost=db.getCityRecord(guild,'gm_action_cost_receipt',r.cost_ref);
+    const use=r.professional_entry_use_ref?inspectProfessionalEntryUse(db,guild,r.professional_entry_use_ref,decision,`${row.record_key}:roll`,receipt.data.roll):null;
+    const oddsProposal=decision.data.proposal.feature_ref===PROFESSIONAL_ENTRY
+      ?{...decision.data.proposal,advantage:!!use}:decision.data.proposal;
     let i=0;const expected=gmD20Roll({kind:'attack',modifier:offer.bonus,difficulty:offer.evasion,
-      ...incomingConditionOdds(offer,decision.data.proposal)},()=>r.gm_d20?.faces[i++]);
+      ...incomingConditionOdds(offer,oddsProposal)},()=>r.gm_d20?.faces[i++]);
     if(r.gm_decision!==decision.record_key||hash(expected)!==hash(r.gm_d20)||expected.selected!==r.face||cost?.status!=='committed'
       ||cost.source_event!==decision.source_event||cost.data.decision!==decision.record_key||cost.data.before-cost.data.after!==cost.data.amount)fail('Exact native GM d20 and pre-roll payment proof required.');
   }

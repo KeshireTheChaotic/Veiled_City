@@ -19,6 +19,7 @@ import {commitFeatureChoice,commitFeatureReactionCost} from './native-feature-wi
 import {applyFeatureReactionOutcome,validateFeatureInvitation,featureReactionStakes,cancelFeatureReaction} from './native-feature-effects.js';
 import {commitNativeNpcAlliance} from './native-encounter-relations.js';
 import {prepareGroupFeature,inspectGroupFeature,groupReactionState,groupReactionDetails,groupReactionOptions} from './native-group-features.js';
+import {PROFESSIONAL_ENTRY,professionalEntryRollState,commitProfessionalEntryUse,inspectProfessionalEntryUse} from './native-professional-entry.js';
 
 function dependencyState(db,guild,entry){
   for(const ref of entry.dependencies){
@@ -61,10 +62,15 @@ export function executeUnifiedGmActions(db,guild,decisions,{library=new Encounte
     if(n.operation!=='commit_exceptional_adversary_action')throw fail('native_gm_executor_missing');
     const c=db.listCombatants(db.getCurrentEncounter(row.data.origin.session)?.id).find(c=>c.id===n.combatant),template=c&&library.findAdversary(c.base_name);
     if(c?.status!=='active'||hash(template)!==n.template_hash)throw fail('exceptional_statblock_changed');
-    const cost=commitGmActionCost(db,guild,row.record_key),p=row.data.proposal,result=gmD20Roll({kind:'action',modifier:n.experience?.modifier||0,
-      difficulty:p.difficulty,advantage:p.advantage,disadvantage:p.disadvantage},rng);
-    const payload={decision:row.record_key,actor:{kind:'adversary',id:entry.actor.key},source:row.source_event,cost:cost.record_key,result};
+    const cost=commitGmActionCost(db,guild,row.record_key),p=row.data.proposal,
+      professionalEntry=n.professional_entry?professionalEntryRollState(db,guild,row,entry):null,
+      odds=p.feature_ref===PROFESSIONAL_ENTRY?{advantage:professionalEntry?.advantage===true,disadvantage:p.disadvantage}
+        :{advantage:p.advantage,disadvantage:p.disadvantage},
+      result=gmD20Roll({kind:'action',modifier:n.experience?.modifier||0,difficulty:p.difficulty,...odds},rng);
+    const payload={decision:row.record_key,actor:{kind:'adversary',id:entry.actor.key},source:row.source_event,cost:cost.record_key,result,
+      ...(professionalEntry?.advantage?{professional_entry_use_ref:professionalEntry.use_ref}:{})};
     const roll=db.addRoll(guild,row.data.origin.session,'native:unified-gm',null,'gm_exceptional_action',payload);
+    if(professionalEntry?.advantage)commitProfessionalEntryUse(db,guild,row,professionalEntry,key,roll);
     return db.saveCityRecord(guild,{kind:'gm_native_roll_receipt',key,status:'resolved',source_event:row.source_event,visibility:'gm',data:{...payload,roll}});
     });}catch(error){
       if(!['GM_ARBITRATION','PC_EFFECT_AUTHORITY','PC_NATIVE_ELIGIBILITY','SCENE_FICTION','SCENE_ACTION_WINDOW','TYPED_ROLL_PROOF','PRE_ROLL_FEAR'].includes(error.code))throw error;
@@ -89,9 +95,13 @@ export function resumePendingGmActions(db,guild,options={}){
 export function inspectGmRollReceipt(db,guild,key){
   const row=db.getCityRecord(guild,'gm_native_roll_receipt',key),roll=row&&db.getSavedRoll(guild,row.data.roll),{roll:ignored,...payload}=row?.data||{};
   if(row?.status!=='resolved'||roll?.roll_type!=='gm_exceptional_action'||hash(roll.payload)!==hash(payload))throw fail('native_gm_roll_ancestry');
-  const decision=inspectNativeGmDecision(db,guild,row.data.decision).row;
+  const decisionProof=inspectNativeGmDecision(db,guild,row.data.decision),decision=decisionProof.row,use=row.data.professional_entry_use_ref
+    ?inspectProfessionalEntryUse(db,guild,row.data.professional_entry_use_ref,decision,key,row.data.roll):null,
+    featureOdds=decision.data.proposal.feature_ref===PROFESSIONAL_ENTRY
+      ?{advantage:!!use,disadvantage:decision.data.proposal.disadvantage}
+      :{advantage:decision.data.proposal.advantage,disadvantage:decision.data.proposal.disadvantage};
   const r=row.data.result,p=r&&gmD20Roll({kind:'action',modifier:decision.data.native.experience?.modifier||0,difficulty:decision.data.proposal.difficulty,
-    advantage:decision.data.proposal.advantage,disadvantage:decision.data.proposal.disadvantage},(()=>{let i=0;return()=>r.faces[i++];})());
+    ...featureOdds},(()=>{let i=0;return()=>r.faces[i++];})());
   if(hash(r)!==hash(p))throw fail('native_gm_roll_arithmetic');return row;
 }
 export function inspectGmReactionInvitation(db,guild,user,key){

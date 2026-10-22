@@ -3,7 +3,7 @@
 **Repository:** `KeshireTheChaotic/Veiled_City`  
 **Target branch:** `codex/clean-ai-gm-2026-10`  
 **Reference SHA:** `81569d08699343e401fc11ba1eaed0f10b4fd37a`  
-**Status:** LOCAL HOLD — per-encounter reset authorized; prepared-position predicate awaits owner clarification
+**Status:** IMPLEMENTED — GM-established scene evidence and per-encounter use; executor end-to-end remains unverified
 
 **Phase:** [P09](../../phases/P09/SCOPE.md)  
 **Owner behavior:** [OWNER_AI_GM_BEHAVIOR_SPEC.md](../../OWNER_AI_GM_BEHAVIOR_SPEC.md)  
@@ -15,21 +15,21 @@ Complete the **currently cue-only** `adversary:aster-vale-contractor:professiona
 
 ## Required implementation and proof
 
-- Require an actual current, qualified prepared position and applicable first qualifying roll. Source/scene/context evidence must substantiate eligibility; do not label every target "prepared" automatically.
-- Establish per-source-instance one-use tracking and explicit expiry/reset boundaries only where supported by source and native event lifecycle. If first-use semantics remain ambiguous, hold only the numerical advantage, ask owner if an actual new rules interpretation is needed, and continue fiction.
-- Native roll service—not model output—applies advantage once. No retroactive grant, forged roll or double consumption on replay.
+- A prepared position is an established tactical condition, not merely an alert or hostile enemy. Explicit native encounter preparation evidence takes precedence when present; otherwise a GM-established scene fact captured in authoritative GM-only state may qualify. Evidence must predate modifier determination. With no evidence, hold only this passive modifier and continue the independent action normally.
+- Qualifying action is breach, restraint, or surprise against the established position. The first qualifying roll per encounter is the only use; later rolls in that encounter receive no passive Advantage.
+- Native roll services revalidate source, scene, target and encounter use, then apply Advantage and write an immutable use receipt in the same transaction as the roll. Replays cannot consume again. Historical roll readers remain valid if scene evidence is later retracted.
 - Preserve cue-only behavior while native eligibility is absent.
 
 ## Fresh changed-code-only testing
 
-Brand-new `bot/tests/ai-gm-2026-10/p09-f05.test.mjs`: qualifying vs nonqualifying prepared position, first vs later roll, alternate tasks, unbound actor, stale scene, duplicate submission/replay, sourced advantage exactly once, ambiguous precondition held. No copy/import of P06 tests.
+Brand-new `bot/tests/ai-gm-2026-10/p09-f05.test.mjs`: closed proposal schemas, evidence/action/target checks, native-record precedence, stale scene, first vs later native d20, duplicate use and historical receipt after retraction. No copy/import of P06 tests.
 
 ## Boundaries, local holds, and rollback
 
 - Never fabricate permission from a model response or a source excerpt. A mechanically unqualified effect remains held, not silently applied or narrated as committed.
 - PC actions, dice, resource choices and consent remain owner-controlled. Keep GM-private data and other players' secrets audience-scoped, and preserve old receipt readers, outbox idempotency and valid native outcomes.
 - Do not add creative/GM-autonomy restrictions without the `DECISION_GATES.md` owner question. Isolated holds do not freeze unrelated safe work.
-- Rollback new eligibility/advantage integration but preserve P06-F40 source cue and historical receipts. Do not mark effect-qualified until real roll modifier is exercised.
+- Rollback new eligibility/advantage integration but preserve P06-F40 source cue and historical receipts. Delta tests exercise the source/use contract and native d20, but do not execute a full database-backed Discord attack workflow.
 - Do not execute old tests/fixtures, run `npm test` or `npm run validate`, poll running tests, spend with providers, trigger CI, push/merge/deploy, or access production DB without separate authorization.
 
 ## Exit criteria
