@@ -14,4 +14,4 @@
 | Test/cost | Fresh offline focused test only; no provider calls/tokens/expense, no cache or latency change. |
 | Local holds | Other relationship/interest/location overlaps remain unknown because no equally narrow cross-signal proof was found. |
 | Rollback | Revert F03 commit; no persisted state changed. |
-| Completion SHA | Pending commit. |
+| Completion SHA | `4d07d4c260406c3cd364590f1c83d649b0a07e10`. |

@@ -13,6 +13,7 @@ import { contextMemorySchema, CONTEXT_MEMORY_PROMPT } from "./context-memory.js"
 import { presentationContext } from "./presentation-evidence.js";
 import {worldHookSeedForGm,worldRecordOriginForGm} from './world-sanctioned-sources.js';
 import {worldNarrativeBridgePacket} from './world-narrative-bridge.js';
+import {WORLD_DIRECTOR_OPPORTUNITY_GUIDANCE} from './narrative-opportunity-guidance.js';
 import {worldResolutionContext} from './world-resolution.js';
 import {openingWorldOpportunities} from './opening-world-bridge.js';
 import {createPrivateSeedOrigin,privateSeedPrompt,privateWorldSeedsSchema,bindPrivateSeedTurn} from './world-private-seeds.js';
@@ -1128,6 +1129,7 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
       ctx.constitution,ctx.multi,"# AUTONOMOUS WORLD DIRECTOR",...layerRules,SIMULATION_PROMPT,NARRATIVE_CONTRACT,
       `AI MANAGEMENT (GM-private proposals, policy, revisions and receipts; never actor knowledge): ${JSON.stringify(ctx.ai_management)}`,
       `WORLD NARRATIVE BRIDGE (existing request only; native results rank opportunities, unfinished tasks are diagnostics, not world facts): ${JSON.stringify(ctx.world_narrative_bridge)}`,
+      `CHARACTER-DRIVEN OPPORTUNITIES (soft narrative preference, not authority): ${WORLD_DIRECTOR_OPPORTUNITY_GUIDANCE}`,
       `WORLD RESOLUTION (same planning request; derived tier/scope context, not an additional model job or permission): ${JSON.stringify(ctx.world_resolution)}`,
       `Relevant simulation state: ${JSON.stringify(simulationContext(this.db,guildId,JSON.stringify(trigger)))}`,
       `Relevant civic context (not actor knowledge): ${JSON.stringify(cityContext(this.db,guildId,JSON.stringify(trigger)))}`,

@@ -5,6 +5,12 @@
   "bot/src/world-narrative-bridge.js": [
     "bot/tests/ai-gm-2026-10/p07-f03.test.mjs"
   ],
+  "bot/src/narrative-opportunity-guidance.js": [
+    "bot/tests/ai-gm-2026-10/p07-f04.test.mjs"
+  ],
+  "bot/src/gm.js": [
+    "bot/tests/ai-gm-2026-10/p07-f04.test.mjs"
+  ],
   "bot/src/ai-gm-test-selection.js": [
     "bot/tests/ai-gm-2026-10/p00-f02.test.mjs",
     "bot/tests/ai-gm-2026-10/p06-f03.test.mjs"
