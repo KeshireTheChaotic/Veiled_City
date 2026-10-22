@@ -291,13 +291,13 @@
       "template_hash": "a906b9fd4344bc9506b68079108ad467733de538e46547897f221dbc01ff4b1e",
       "index": 0,
       "type": "Reaction",
-      "status": "review_only",
-      "trigger_kind": "unmapped",
-      "target_policy": "unmapped",
-      "roll_protocol": "unmapped",
-      "costs": null,
-      "native_handler": null,
-      "reason": "No qualified native feature handler."
+      "status": "supported",
+      "trigger_kind": "after_adversary_damage",
+      "target_policy": "one",
+      "roll_protocol": "native_adversary_context",
+      "costs": [],
+      "native_handler": "adversary_blank_spot_context",
+      "reason": "Exact source-bound GM cue; damage event, PC Reaction Roll and temporary Experience access are not committed."
     },
     {
       "feature_key": "adversary:memory-leech:taste-the-fear",
