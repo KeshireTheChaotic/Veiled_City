@@ -5,14 +5,46 @@
     "version": 1,
     "ruling_ref": "owner:signal-taxonomy:v1",
     "signal_based": [
-      {"actor_name":"Static Wraith","template_hash":"df4233402bab5e0b353a19ad0fa0b9617e4c9b88c943cd5dc0d4ee9f116f3fc1","signal_based":true},
-      {"actor_name":"Choir Relay","template_hash":"8d96b1f9606e8910602b63021d03b23d7e564daf015b062db86ffa66d4e7e364","signal_based":true},
-      {"actor_name":"Morrowline Echo","template_hash":"0488f9de16410d11fb9a095e4951045a323d3eea51ad8a8e425ae4e96d47e8fa","signal_based":true},
-      {"actor_name":"Traffic Saint","template_hash":"7e899508db8331d30664201d226ce4f2ff2c19b7837bab3255a4ce820a358140","signal_based":true},
-      {"actor_name":"Choir Junction Intelligence","template_hash":"5c43d1e56113bec4f5aa07f311d79497fe6b5e7e5f8289aabef031ec6c28b85b","signal_based":true},
-      {"actor_name":"Morrowline Matured","template_hash":"ac82c9eb16bc13d7294fccf9c8cb6f71796cce992c030a7f77c81c16263bccad","signal_based":true},
-      {"actor_name":"Citywide Choir","template_hash":"54e14f252028372412bb36247086bd664f38867b07c3b571cd6d330cec19a4d1","signal_based":true},
-      {"actor_name":"Choir Storm Node","template_hash":"633f044799981991e3a3f94078a9484a46a8566a25cc201df7698c1ac4e341af","signal_based":true}
+      {
+        "actor_name": "Static Wraith",
+        "template_hash": "df4233402bab5e0b353a19ad0fa0b9617e4c9b88c943cd5dc0d4ee9f116f3fc1",
+        "signal_based": true
+      },
+      {
+        "actor_name": "Choir Relay",
+        "template_hash": "8d96b1f9606e8910602b63021d03b23d7e564daf015b062db86ffa66d4e7e364",
+        "signal_based": true
+      },
+      {
+        "actor_name": "Morrowline Echo",
+        "template_hash": "0488f9de16410d11fb9a095e4951045a323d3eea51ad8a8e425ae4e96d47e8fa",
+        "signal_based": true
+      },
+      {
+        "actor_name": "Traffic Saint",
+        "template_hash": "7e899508db8331d30664201d226ce4f2ff2c19b7837bab3255a4ce820a358140",
+        "signal_based": true
+      },
+      {
+        "actor_name": "Choir Junction Intelligence",
+        "template_hash": "5c43d1e56113bec4f5aa07f311d79497fe6b5e7e5f8289aabef031ec6c28b85b",
+        "signal_based": true
+      },
+      {
+        "actor_name": "Morrowline Matured",
+        "template_hash": "ac82c9eb16bc13d7294fccf9c8cb6f71796cce992c030a7f77c81c16263bccad",
+        "signal_based": true
+      },
+      {
+        "actor_name": "Citywide Choir",
+        "template_hash": "54e14f252028372412bb36247086bd664f38867b07c3b571cd6d330cec19a4d1",
+        "signal_based": true
+      },
+      {
+        "actor_name": "Choir Storm Node",
+        "template_hash": "633f044799981991e3a3f94078a9484a46a8566a25cc201df7698c1ac4e341af",
+        "signal_based": true
+      }
     ]
   },
   "features": [
@@ -109,7 +141,12 @@
       "trigger_kind": "spotlight_action",
       "target_policy": "one",
       "roll_protocol": "native_adversary_context",
-      "costs": [{ "resource": "npc_stress", "amount": 1 }],
+      "costs": [
+        {
+          "resource": "npc_stress",
+          "amount": 1
+        }
+      ],
       "native_handler": "adversary_mark_the_variable_context",
       "reason": "Exact source-bound GM cue; Stress, PC/ally choice, Difficulty grant and expiry are not committed by context."
     },
@@ -127,7 +164,12 @@
       "trigger_kind": "on_scene_event",
       "target_policy": "one",
       "roll_protocol": "native_adversary_context",
-      "costs": [{ "resource": "npc_stress", "amount": 1 }],
+      "costs": [
+        {
+          "resource": "npc_stress",
+          "amount": 1
+        }
+      ],
       "native_handler": "adversary_readout_context",
       "reason": "Exact source-bound GM cue; identification, disclosure, Stress, ally choice and next-reaction Advantage remain uncommitted."
     },
@@ -205,7 +247,12 @@
       "trigger_kind": "adversary_action",
       "target_policy": "one",
       "roll_protocol": "native_adversary_context",
-      "costs": [{ "resource": "fear", "amount": 1 }],
+      "costs": [
+        {
+          "resource": "fear",
+          "amount": 1
+        }
+      ],
       "native_handler": "adversary_steal_the_focus_context",
       "reason": "Exact source-bound GM cue; Fear, movement, attack and conditional Hope loss are not committed."
     },
@@ -277,7 +324,12 @@
       "trigger_kind": "adversary_action",
       "target_policy": "one",
       "roll_protocol": "native_adversary_context",
-      "costs": [{ "resource": "fear", "amount": 1 }],
+      "costs": [
+        {
+          "resource": "fear",
+          "amount": 1
+        }
+      ],
       "native_handler": "adversary_drag_down_context",
       "reason": "Exact source-bound GM cue; Fear, trigger, PC Reaction Roll, movement and Vulnerable state are not committed."
     },
@@ -373,7 +425,12 @@
       "trigger_kind": "after_pc_rejects_offer_initiates_violence",
       "target_policy": "source_actor_only",
       "roll_protocol": "native_adversary_context",
-      "costs": [{ "resource": "npc_fear", "amount": 1 }],
+      "costs": [
+        {
+          "resource": "npc_fear",
+          "amount": 1
+        }
+      ],
       "native_handler": "adversary_terms_first_context",
       "reason": "Exact source-bound cue only; PC event and Fear mutation are not committed."
     },
@@ -391,7 +448,12 @@
       "trigger_kind": "after_successful_attack",
       "target_policy": "attack_target",
       "roll_protocol": "native_adversary_context",
-      "costs": [{ "resource": "npc_stress", "amount": 1 }],
+      "costs": [
+        {
+          "resource": "npc_stress",
+          "amount": 1
+        }
+      ],
       "native_handler": "adversary_pin_to_the_deal_context",
       "reason": "Exact source-bound cue only; attack result, Stress, Restrained state and PC recovery roll are not committed."
     },
@@ -409,7 +471,12 @@
       "trigger_kind": "after_repeated_pc_action_declared",
       "target_policy": "declared_pc_roll",
       "roll_protocol": "native_adversary_context",
-      "costs": [{ "resource": "npc_stress", "amount": 1 }],
+      "costs": [
+        {
+          "resource": "npc_stress",
+          "amount": 1
+        }
+      ],
       "native_handler": "adversary_i_saw_that_context",
       "reason": "Exact source-bound cue only; repeated-action proof, turn limit, Stress and disadvantage are not committed."
     },
@@ -427,7 +494,12 @@
       "trigger_kind": "after_gm_names_existing_hazard",
       "target_policy": "one_pc",
       "roll_protocol": "native_adversary_context",
-      "costs": [{ "resource": "npc_fear", "amount": 1 }],
+      "costs": [
+        {
+          "resource": "npc_fear",
+          "amount": 1
+        }
+      ],
       "native_handler": "adversary_self_fulfilling_event_context",
       "reason": "Exact source-bound cue only; Fear, hazard, PC roll, damage and scene mutation are not committed."
     },
@@ -481,7 +553,12 @@
       "trigger_kind": "when_threatened_with_violence",
       "target_policy": "current_scene",
       "roll_protocol": "native_adversary_context",
-      "costs": [{ "resource": "npc_fear", "amount": 1 }],
+      "costs": [
+        {
+          "resource": "npc_fear",
+          "amount": 1
+        }
+      ],
       "native_handler": "adversary_exit_clause_context",
       "reason": "Exact source-bound cue only; Fear spend, route/protection, pursuit and social consequences are not committed."
     },
@@ -536,7 +613,12 @@
       "trigger_kind": "on_reputation_attack_action",
       "target_policy": "one_pc",
       "roll_protocol": "native_adversary_context",
-      "costs": [{ "resource": "npc_stress", "amount": 1 }],
+      "costs": [
+        {
+          "resource": "npc_stress",
+          "amount": 1
+        }
+      ],
       "native_handler": "adversary_reputation_attack_context",
       "reason": "Exact source-bound cue only; target relevance, NPC Stress, institution selection, disadvantage and its end condition are not committed."
     },
@@ -554,7 +636,12 @@
       "trigger_kind": "on_fixer_calls_security",
       "target_policy": "two_at_far",
       "roll_protocol": "native_adversary_context",
-      "costs": [{ "resource": "npc_fear", "amount": 1 }],
+      "costs": [
+        {
+          "resource": "npc_fear",
+          "amount": 1
+        }
+      ],
       "native_handler": "adversary_call_security_context",
       "reason": "Exact source-bound cue only; Fear spend, security arrivals and objective-bound actions are not committed."
     },
@@ -604,13 +691,18 @@
       "template_hash": "c2923812a24566e4ca25120a7dd760ff9af2b409a47346cfc8ea6eca1ae59297",
       "index": 0,
       "type": "Reaction",
-      "status": "review_only",
-      "trigger_kind": "unmapped",
-      "target_policy": "unmapped",
-      "roll_protocol": "unmapped",
-      "costs": null,
-      "native_handler": null,
-      "reason": "No qualified native feature handler."
+      "status": "supported",
+      "trigger_kind": "on_pc_invokes_obligation",
+      "target_policy": "invoking_pc",
+      "roll_protocol": "native_adversary_context",
+      "costs": [
+        {
+          "resource": "npc_stress",
+          "amount": 1
+        }
+      ],
+      "native_handler": "adversary_clause_eater_loophole_context",
+      "reason": "Exact source-bound cue only; trigger proof, PC clarification and Stress/resource changes are not committed."
     },
     {
       "feature_key": "adversary:clause-eater:conflicting-duty",
@@ -704,7 +796,12 @@
       "trigger_kind": "spotlight_action",
       "target_policy": "one_to_three_distinct_pcs_far",
       "roll_protocol": "one_gm_d20_shared_damage",
-      "costs": [{"resource": "fear", "amount": 1}],
+      "costs": [
+        {
+          "resource": "fear",
+          "amount": 1
+        }
+      ],
       "native_handler": "coordinated_volley",
       "reason": "Owner-authorized in-place house rule; shared native roll with independent owner defenses."
     },
@@ -1324,7 +1421,11 @@
       "roll_protocol": "ordinary_native_adjudication",
       "costs": [],
       "native_handler": null,
-      "authored_rule": {"id":"HR13","version":1,"hash":"77188557fc64f4b513b3bf35414c9472110bcb56e175571da24bf44244216546"},
+      "authored_rule": {
+        "id": "HR13",
+        "version": 1,
+        "hash": "77188557fc64f4b513b3bf35414c9472110bcb56e175571da24bf44244216546"
+      },
       "reason": "Owner-authored HR13 v1 resolves the rule. Native original-event detail/progress and Difficulty consumers remain unqualified; no effect is authorized."
     },
     {
@@ -1359,7 +1460,12 @@
       "trigger_kind": "spotlight_action",
       "target_policy": "single_visible_same_zone",
       "roll_protocol": "pc_reaction_each",
-      "costs": [{"resource":"fear","amount":1}],
+      "costs": [
+        {
+          "resource": "fear",
+          "amount": 1
+        }
+      ],
       "native_handler": "regent_owner_resource_choice",
       "reason": "Bounded same-zone Presence 20 reaction; failed owner selects 2 Hope or 2 Stress. Command selection remains scoped review until a communicated bounded command and supported owner declaration/effect exist."
     },
@@ -2270,7 +2376,12 @@
       "trigger_kind": "spotlight_action",
       "target_policy": "none",
       "roll_protocol": "environment_scene_context",
-      "costs": [{ "resource": "fear", "amount": 1 }],
+      "costs": [
+        {
+          "resource": "fear",
+          "amount": 1
+        }
+      ],
       "native_handler": "environment_third_rail_spirit_context",
       "reason": "Exact source-bound action cue; Fear, attack target, player reaction roll and damage are not committed by context."
     },
@@ -2324,7 +2435,12 @@
       "trigger_kind": "spotlight_action",
       "target_policy": "none",
       "roll_protocol": "environment_scene_context",
-      "costs": [{ "resource": "fear", "amount": 1 }],
+      "costs": [
+        {
+          "resource": "fear",
+          "amount": 1
+        }
+      ],
       "native_handler": "environment_containment_shutters_context",
       "reason": "Exact source-bound barrier and Difficulty 14 route cue; context commits no Fear, barrier, PC action or result."
     },
@@ -2704,7 +2820,10 @@
       "target_policy": "none",
       "roll_protocol": "none",
       "costs": [
-        { "resource": "fear", "amount": 1 }
+        {
+          "resource": "fear",
+          "amount": 1
+        }
       ],
       "native_handler": "environment_mundane_correction",
       "reason": "Source-qualified one-Fear arbitrary mundane detail correction."

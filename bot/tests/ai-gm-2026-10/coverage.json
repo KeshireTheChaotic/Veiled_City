@@ -128,7 +128,8 @@
     "bot/tests/ai-gm-2026-10/p06-f61.test.mjs",
     "bot/tests/ai-gm-2026-10/p06-f62.test.mjs",
     "bot/tests/ai-gm-2026-10/p06-f63.test.mjs",
-    "bot/tests/ai-gm-2026-10/p06-f64.test.mjs"
+    "bot/tests/ai-gm-2026-10/p06-f64.test.mjs",
+    "bot/tests/ai-gm-2026-10/p06-f65.test.mjs"
   ],
   "bot/src/native-feature-definitions.json": [
     "bot/tests/ai-gm-2026-10/p06-f01.test.mjs",
@@ -181,7 +182,8 @@
     "bot/tests/ai-gm-2026-10/p06-f61.test.mjs",
     "bot/tests/ai-gm-2026-10/p06-f62.test.mjs",
     "bot/tests/ai-gm-2026-10/p06-f63.test.mjs",
-    "bot/tests/ai-gm-2026-10/p06-f64.test.mjs"
+    "bot/tests/ai-gm-2026-10/p06-f64.test.mjs",
+    "bot/tests/ai-gm-2026-10/p06-f65.test.mjs"
   ],
   "bot/src/native-environment-capabilities.js": [
     "bot/tests/ai-gm-2026-10/p06-f04.test.mjs",
@@ -369,7 +371,8 @@
     "bot/tests/ai-gm-2026-10/p06-f61.test.mjs",
     "bot/tests/ai-gm-2026-10/p06-f62.test.mjs",
     "bot/tests/ai-gm-2026-10/p06-f63.test.mjs",
-    "bot/tests/ai-gm-2026-10/p06-f64.test.mjs"
+    "bot/tests/ai-gm-2026-10/p06-f64.test.mjs",
+    "bot/tests/ai-gm-2026-10/p06-f65.test.mjs"
   ],
   "bot/src/native-adversary-bad-future.js": [
     "bot/tests/ai-gm-2026-10/p06-f57.test.mjs"
@@ -468,5 +471,8 @@
   ],
   "bot/src/typed-roll-outcomes.js": [
     "bot/tests/ai-gm-2026-10/p06-f37.test.mjs"
+  ],
+  "bot/src/native-adversary-loophole.js": [
+    "bot/tests/ai-gm-2026-10/p06-f65.test.mjs"
   ]
 }
