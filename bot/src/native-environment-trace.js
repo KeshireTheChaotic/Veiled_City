@@ -24,8 +24,14 @@ const rollHash=row=>hash({ref:row.record_key,source:row.source_event,owner:row.d
 function rules(){
   const feature=featureDisposition(FEATURE),rule=nativeHouseErratum('HR14');
   if(feature.status!=='supported'||feature.feature.native_handler!=='intrusion_trace_owner_payment'
-    ||rule?.authority_ref!=='owner:everything-logs-hope:v1'||rule.interpretation.hope_cost!==1
-    ||rule.interpretation.payment_owner!=='affected_authenticated_pc_owner')throw fail('environment_trace_exact_qualified_rule');
+    ||rule?.status!=='supported'||rule.native_handler!=='intrusion_trace_owner_payment'
+    ||rule.authority_ref!=='owner:everything-logs-hope:v1'||rule.interpretation.trigger!=='actual_failed_intrusion_action'
+    ||rule.interpretation.hope_cost!==1||rule.interpretation.optional!==true
+    ||rule.interpretation.payment_owner!=='affected_authenticated_pc_owner'
+    ||rule.interpretation.silence!=='never_authorizes_payment'
+    ||rule.interpretation.alternative!=='source_backed_credible_suppression'
+    ||rule.interpretation.scope!=='suppress_only_this_native_intrusion_trace'
+    ||rule.interpretation.idempotency!=='one_payment_per_trace_occurrence')throw fail('environment_trace_exact_qualified_rule');
   return {feature:feature.feature,rule};
 }
 function failedAction(db,guild,ref){

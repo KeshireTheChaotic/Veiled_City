@@ -28,9 +28,22 @@ test('Everything Logs and HR14 resolve to the exact qualified source contract',(
   assert.equal(hr14.status,'supported');assert.equal(hr14.native_handler,'intrusion_trace_owner_payment');
   assert.equal(hr14.interpretation.trigger,'actual_failed_intrusion_action');
   assert.equal(hr14.interpretation.hope_cost,1);assert.equal(hr14.interpretation.payment_owner,'affected_authenticated_pc_owner');
-  assert.equal(hr14.interpretation.silence,'never_authorizes_payment');
+  assert.equal(hr14.interpretation.optional,true);assert.equal(hr14.interpretation.silence,'never_authorizes_payment');
+  assert.equal(hr14.interpretation.alternative,'source_backed_credible_suppression');
+  assert.equal(hr14.interpretation.scope,'suppress_only_this_native_intrusion_trace');
+  assert.equal(hr14.interpretation.idempotency,'one_payment_per_trace_occurrence');
   assert.ok(compileNativeHouseErrata().includes(hr14));
   assert.equal(nativeFeatureReviewContract(FEATURE).erratum,'HR14');
+});
+
+test('native trace handler gates every exact owner-authorized HR14 v1 term',()=>{
+  const trace=read('../../src/native-environment-trace.js'),rules=trace.slice(trace.indexOf('function rules()'),trace.indexOf('function failedAction'));
+  for(const term of ['rule?.status!==\'supported\'','rule.native_handler!==\'intrusion_trace_owner_payment\'',
+    'rule.authority_ref!==\'owner:everything-logs-hope:v1\'','rule.interpretation.optional!==true',
+    'rule.interpretation.payment_owner!==\'affected_authenticated_pc_owner\'',
+    'rule.interpretation.silence!==\'never_authorizes_payment\'',
+    'rule.interpretation.scope!==\'suppress_only_this_native_intrusion_trace\'',
+    'rule.interpretation.idempotency!==\'one_payment_per_trace_occurrence\'']) assert.ok(rules.includes(term),term);
 });
 
 test('native route records the exact intrusion classification before the PC roll and handles failure afterward',()=>{
@@ -55,6 +68,7 @@ test('only an actual failure opens the private owner trace choice and never gran
   assert.match(choice,/user!==d\.owner/);assert.match(choice,/principal\.kind!=='owner'/);
   assert.match(choice,/input\.choice==='pay_hope'\?1:0/);assert.match(choice,/data\.resources\.hope-=amount/);
   assert.match(choice,/input\.choice==='native_suppression'/);
+  assert.match(choice,/proof\.row\.data\.target_key!==offer\.record_key/);
   assert.match(saved,/ownerAuthoredSource/);assert.match(saved,/d\.hope_spent!==\(d\.choice==='pay_hope'\?1:0\)/);
   assert.match(saved,/trace\.data\.knowledge_authorized!==false/);assert.match(saved,/trace\.data\.publication_authorized!==false/);
 });
