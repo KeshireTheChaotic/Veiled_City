@@ -10,4 +10,4 @@ Status: TARGETED PASS; EXACT SOURCE-BOUND CUE SUPPORTED; MECHANICAL EFFECTS HELD
 - Local holds: Fear transaction, Presence roll, failure choice, mechanical effects/lifecycle and durable replay.
 - Critical blockers: none. Release authorization: false.
 
-- Final changed-file syntax: 5/5 JS/MJS pass; changed JSON parse 2/2 pass. Implementation commit SHA to be recorded at phase closeout.
+- Final changed-file syntax: 5/5 JS/MJS pass; changed JSON parse 2/2 pass. Implementation commit: `4a487beb37224cdd871106e081b38d8eaee6d23d`. See [targeted evidence](../../evidence/P06_F66_TARGETED.json).

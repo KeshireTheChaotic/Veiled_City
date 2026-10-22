@@ -9,3 +9,5 @@ Expose the exact authored Action cue only within the existing current, GM-owned 
 Changed modules: `bot/src/native-feature-definitions.json`, `bot/src/native-feature-catalog.js`, new `bot/src/native-adversary-conflicting-duty.js`, `bot/src/native-adversary-context.js`, fresh F66 and F01 tests, fresh coverage map, P06/F01/F66 and occurrence ledgers, and targeted evidence.
 
 Rollback only this occurrence's descriptor, handler registration, projector and context dispatch; preserve existing state, private-audience checks, historical readers and outbox guarantees. Cost/cache: zero provider calls, tokens and spend; no cache savings claimed; Codex usage unavailable. Release authorization remains false.
+
+Implementation commit: `4a487beb37224cdd871106e081b38d8eaee6d23d`. Evidence: [targeted evidence](../../evidence/P06_F66_TARGETED.json).

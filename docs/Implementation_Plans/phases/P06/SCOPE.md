@@ -81,3 +81,5 @@ All safe features have current diff, truthful ledger and newly authored tests co
 Follow [TEST_EXECUTION_NO_POLL.md](../../TEST_EXECUTION_NO_POLL.md). Run a frozen batch once; never watch, poll or stream test progress. Collect the final exit code at a natural phase checkpoint.
 - [P06-F65 — Clause-Eater Loophole](../../features/P06-F65/SCOPE.md)
 - [P06-F66 — Clause-Eater Conflicting Duty](../../features/P06-F66/SCOPE.md)
+
+Implementation delta closeout: P06-F66 supported as a source cue in commit `4a487beb37224cdd871106e081b38d8eaee6d23d`; 75 catalog occurrences remain review-only local holds. Evidence: [targeted evidence](../../evidence/P06_F66_TARGETED.json). Release authorization: false.
