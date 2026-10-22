@@ -127,7 +127,8 @@
     "bot/tests/ai-gm-2026-10/p06-f60.test.mjs",
     "bot/tests/ai-gm-2026-10/p06-f61.test.mjs",
     "bot/tests/ai-gm-2026-10/p06-f62.test.mjs",
-    "bot/tests/ai-gm-2026-10/p06-f63.test.mjs"
+    "bot/tests/ai-gm-2026-10/p06-f63.test.mjs",
+    "bot/tests/ai-gm-2026-10/p06-f64.test.mjs"
   ],
   "bot/src/native-feature-definitions.json": [
     "bot/tests/ai-gm-2026-10/p06-f01.test.mjs",
@@ -179,7 +180,8 @@
     "bot/tests/ai-gm-2026-10/p06-f60.test.mjs",
     "bot/tests/ai-gm-2026-10/p06-f61.test.mjs",
     "bot/tests/ai-gm-2026-10/p06-f62.test.mjs",
-    "bot/tests/ai-gm-2026-10/p06-f63.test.mjs"
+    "bot/tests/ai-gm-2026-10/p06-f63.test.mjs",
+    "bot/tests/ai-gm-2026-10/p06-f64.test.mjs"
   ],
   "bot/src/native-environment-capabilities.js": [
     "bot/tests/ai-gm-2026-10/p06-f04.test.mjs",
@@ -366,7 +368,8 @@
     "bot/tests/ai-gm-2026-10/p06-f60.test.mjs",
     "bot/tests/ai-gm-2026-10/p06-f61.test.mjs",
     "bot/tests/ai-gm-2026-10/p06-f62.test.mjs",
-    "bot/tests/ai-gm-2026-10/p06-f63.test.mjs"
+    "bot/tests/ai-gm-2026-10/p06-f63.test.mjs",
+    "bot/tests/ai-gm-2026-10/p06-f64.test.mjs"
   ],
   "bot/src/native-adversary-bad-future.js": [
     "bot/tests/ai-gm-2026-10/p06-f57.test.mjs"
@@ -385,6 +388,9 @@
   ],
   "bot/src/native-adversary-urban-cover.js": [
     "bot/tests/ai-gm-2026-10/p06-f63.test.mjs"
+  ],
+  "bot/src/native-adversary-root-snare.js": [
+    "bot/tests/ai-gm-2026-10/p06-f64.test.mjs"
   ],
   "bot/src/native-environment-chain-of-title.js": [
     "bot/tests/ai-gm-2026-10/p06-f18.test.mjs"
