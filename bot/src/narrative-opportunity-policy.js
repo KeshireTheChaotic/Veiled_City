@@ -1,5 +1,6 @@
 /** Deterministic preference among opportunities that native code has already authorized. */
 const ORDER=Object.freeze({mandatory_response:0,causal_consequence:1,autonomous_world:2,personal_opportunity:3,ambient:4,unknown:5});
+const OPTIONAL_CLASSES=new Set(['autonomous_world','personal_opportunity','ambient']);
 const validClass=value=>Object.hasOwn(ORDER,value)?value:'unknown';
 const validUrgency=value=>Number.isFinite(value)?Math.max(0,Math.min(3,Math.trunc(value))):0;
 function overlapKey(value){
@@ -26,7 +27,7 @@ export function rankWorldNarrativeOpportunities(signals,metadata=[]){
       // Organic overlap is only a tie-break when class and urgency are identical.
       // A key is a boolean proof of overlap, not a secondary score. Two
       // independently qualified overlaps are equal and retain source order.
-      if(Boolean(ao)!==Boolean(bo))return ao?-1:1;
+      if(OPTIONAL_CLASSES.has(ac)&&Boolean(ao)!==Boolean(bo))return ao?-1:1;
       return a.index-b.index;
     }).map(row=>row.signal).slice(0,4);
 }

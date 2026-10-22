@@ -12,7 +12,7 @@ function resolved(id,actor,root,visibility='party'){
     {kind:'world_event',key:root,hash:sceneFictionHash(event)}]}};
 }
 
-test('public causal overlap is optional, reproducible, and does not subsume an urgent personal consequence',()=>{
+test('shared public causal outcomes keep source order; urgent consequences still lead',()=>{
   const a=resolved('carl','pc-carl','incident:station'),b=resolved('raven','pc-raven','incident:station');
   const isolated=resolved('private','pc-choso','incident:private','character');
   const records=new Map([a,b,isolated].map(row=>[row.typed.record_key,row.typed]));
@@ -20,6 +20,7 @@ test('public causal overlap is optional, reproducible, and does not subsume an u
   const lookup=(kind,key)=>kind==='typed_intent'?records.get(key):events.get(key);
   const selected=rankEligibleWorldSignals([a.signal,b.signal],lookup,'guild');
   assert.deepEqual(selected.map(row=>row.id),['carl','raven']);
+  assert.deepEqual(rankEligibleWorldSignals([b.signal,a.signal],lookup,'guild').map(row=>row.id),['raven','carl']);
   const urgent={id:'urgent',kind:'scene_transition',audience:{visibility:'party'},source_refs:[]};
   assert.deepEqual(rankEligibleWorldSignals([a.signal,b.signal,urgent],lookup,'guild').map(row=>row.id),['urgent','carl','raven']);
   assert.match(WORLD_DIRECTOR_OPPORTUNITY_GUIDANCE,/leave PC decisions open/);

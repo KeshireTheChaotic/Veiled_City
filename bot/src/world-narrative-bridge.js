@@ -242,23 +242,10 @@ function nativeConversationSignals(db,guild,scope,scene){
 }
 /** Rank only a source-validated set. Shared NPC links are private selector metadata, never packet fields. */
 export function rankEligibleWorldSignals(signals,lookup,guild){
-  const npcActors=new Map(),validatedActors=new Map(),causeActors=new Map(),validatedCauses=new Map();
+  const npcActors=new Map(),validatedActors=new Map();
   for(const signal of signals){
     if(signal.audience?.visibility!=='party')continue;
     const sourceRefs=Array.isArray(signal.source_refs)?signal.source_refs:[];
-    if(signal.kind==='resolved_player_intent'){
-      const intentRef=sourceRefs.find(ref=>ref.kind==='typed_intent');
-      const rootRef=sourceRefs.find(ref=>ref.kind==='world_event'&&ref.key===signal.causation_ref);
-      const intent=intentRef&&lookup('typed_intent',intentRef.key,guild),root=rootRef&&lookup('world_event',rootRef.key,guild);
-      if(intentRef&&rootRef&&intent?.record_key===intentRef.key&&intent.status==='resolved'&&hash(intent)===intentRef.hash
-        &&typeof intent.data?.actor==='string'&&intent.data.actor
-        &&root?.event_key===rootRef.key&&root.status==='active'&&['public','party'].includes(root.visibility)
-        &&hash(root)===rootRef.hash){
-        const actors=causeActors.get(root.event_key)||new Set();actors.add(intent.data.actor);causeActors.set(root.event_key,actors);
-        validatedCauses.set(signal.id,{root:root.event_key,actor:intent.data.actor});
-      }
-      continue;
-    }
     if(signal.kind!=='conversation_development')continue;
     const npcRefs=sourceRefs.filter(ref=>ref.kind==='npc_memory'&&typeof ref.actor==='string');
     const intentRefs=sourceRefs.filter(ref=>ref.kind==='typed_intent');
@@ -276,8 +263,7 @@ export function rankEligibleWorldSignals(signals,lookup,guild){
     else if(signal.kind==='resolved_player_intent'){classification='causal_consequence';urgency=2;}
     else if(signal.kind==='conversation_development')classification='personal_opportunity';
     const link=validatedActors.get(signal.id),actors=link&&npcActors.get(link.npc);
-    const cause=validatedCauses.get(signal.id),causeSet=cause&&causeActors.get(cause.root);
-    return {index,classification,urgency,verifiedActorLinks:actors?.size>=2?[...actors]:causeSet?.size>=2?[...causeSet]:[]};
+    return {index,classification,urgency,verifiedActorLinks:actors?.size>=2?[...actors]:[]};
   });
   return rankWorldNarrativeOpportunities(signals,metadata);
 }
@@ -304,8 +290,7 @@ export function worldNarrativeBridgePacket(db,guild,scope){
   const opening=nativeOpeningRequest(db,guild,scope,scene);
   if(opening){if(opening.source_refs[0].kind==='session_opening_job')found.unshift(opening);else found.push(opening);}
   const signals=[...new Map(found.map(s=>[s.id,s])).values()];
-  const selected=rankEligibleWorldSignals(signals,(kind,key,server)=>kind==='world_event'
-    ?db.getWorldEvent(server,key):db.getCityRecord(server,kind,key),guild);
+  const selected=rankEligibleWorldSignals(signals,(kind,key,server)=>db.getCityRecord(server,kind,key),guild);
   return {...empty,signals:selected,eligible:signals.length,omitted:Math.max(0,signals.length-4)};
 }
 /** Re-read final source/owner/scene/audience/native result before using a saved bridge proposal after restart. */

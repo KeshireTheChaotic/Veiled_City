@@ -31,6 +31,17 @@ test('classification and urgency outrank overlap, with stable ties and no mutati
   assert.deepEqual(metadata,before);
 });
 
+test('overlap cannot reorder mandatory responses or causal consequences',()=>{
+  const signals=['mandatory-first','mandatory-overlap','causal-first','causal-overlap'];
+  const metadata=[
+    {index:0,classification:'mandatory_response'},
+    {index:1,classification:'mandatory_response',verifiedActorLinks:['a','b']},
+    {index:2,classification:'causal_consequence',urgency:2},
+    {index:3,classification:'causal_consequence',urgency:2,verifiedActorLinks:['c','d']}
+  ];
+  assert.deepEqual(rankWorldNarrativeOpportunities(signals,metadata),signals);
+});
+
 test('fresh selector maps the corrected policy to this focused regression',()=>{
   const selected=selectFreshTests(['bot/src/narrative-opportunity-policy.js'],coverage);
   assert.equal(selected.qualified,true);

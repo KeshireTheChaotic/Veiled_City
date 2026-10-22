@@ -23,6 +23,7 @@ Where multiple equally eligible and similarly urgent optional developments alrea
 4. **P07-F04** minimal existing GM-private Director/writer guidance, with response obligations unchanged and no model-call increase.
 5. **P07-F05** inspect continuity, retrieval, multiplayer and privacy boundaries; test only modified production contracts.
 6. **P07-F06** fresh deterministic acceptance cases, coverage map, changed-file syntax and final delta evidence.
+7. **Corrective delta P07-F07..F12** (handoff `Veiled_City_P07_Correction_Handoff_Luna_Medium.md`): merge duplicate coverage maps; correct stable ordering and mandatory/causal precedence; audit additional source-grounded overlap; verify downstream Director projection or hold it; reconcile evidence without rewriting F01–F06 history.
 
 Each feature has a separate scope and ledger and is committed after it is supported. Only fresh feature tests under `bot/tests/ai-gm-2026-10/` may run; never execute legacy tests, broad validation, provider tests or CI. Start each frozen batch once and never poll. Do not push, merge, deploy, restart, access production DB, or spend on live providers.
 
@@ -46,3 +47,12 @@ Ranking cannot create or upgrade truth, provenance, scope, knowledge, location, 
 - Stable deterministic order, current signal IDs/schema, current cap of four, replay validation and at-most-one Director beat remain intact.
 - No new model call, network, production DB use or invented causal link.
 - Offline results are delta evidence only; semantics, Discord delivery, production state and release qualification remain unverified absent separate authorization.
+
+## Corrective delta scope (anchored at local HEAD `47f93d755e8afc00a13206f148cf759f3c826269`)
+
+- P07-F07 fixes duplicate root keys in the test coverage registry and preserves each mapping's union.
+- P07-F08 fixes comparator antisymmetry and restricts overlap tie-breaking to optional classes only.
+- P07-F09 keeps opening requests and unresolved tasks mandatory; resolved player outcomes remain causal; ordinary NPC conversation developments are optional.
+- P07-F10 audits shared-cause evidence but holds non-conversation overlap because current resolved-action signals are causal, not optional.
+- P07-F11 holds downstream optional-capacity reordering until a source-bound end-to-end Director fixture can prove established observations and native receipts are not displaced.
+- P07-F12 adds focused acceptance evidence and reconciles the stale F06 phase wording. End-to-end persistence, Discord delivery, and live semantic quality remain outside this delta.
