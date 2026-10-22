@@ -62,3 +62,9 @@ Ranking cannot create or upgrade truth, provenance, scope, knowledge, location, 
 See [second corrective handoff](Veiled_City_P07_Second_Corrective_Handoff_Luna_Medium.md) and feature scope/ledger pairs in `docs/Implementation_Plans/features/P07-F13` through `P07-F18`. This delta adds a disposable-SQLite path using native authenticated speech and presence records through the real World Director request, native Director binding, current audience revalidation and writer-context builder; hardens the actual coverage loader against duplicate decoded root keys; and adds public/private/revocation acceptance. It does not change Daggerheart rules, action authority, creative requirements, or the four-item caps.
 
 The added source proof resolves the former “no native Director fixture” gap for the available-capacity conversation path only. It does not identify comparable optional capacity under committed/established beat pressure, and no authoritative non-conversation optional cross-PC source was found. Those remain local holds. F01–F12 entries and P08/P09 work are unchanged.
+
+## Third corrective delta — P07-F19..F25
+
+See [third corrective handoff](Veiled_City_P07_Third_Corrective_Handoff_Luna_Medium.md), [F19–F25 feature scopes](../../features/P07-F19/), and the F25 acceptance matrix. Priority fixes include source-validated omission accounting and offline evidence through real Director and delegated-writer code into native acceptance and mocked outbox recovery. The F21 non-conversation incident-link producer remains unsupported because no authoritative native source writer binds two independent PC sources to one established optional incident. This is a local hold, not a new narrative restriction.
+
+The final fresh union passed 14/14 with syntax and diff checks, but does not satisfy every handoff acceptance row. **P07 remains PARTIAL**; see phase ledger for exact rows, tests and rollback. No production or release action was authorized.

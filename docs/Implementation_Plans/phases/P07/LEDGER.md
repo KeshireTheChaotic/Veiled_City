@@ -144,3 +144,30 @@ Provider/network/live cost = 0; one offline injected World Director response was
 - No critical blocker. No unsupported behavior was fabricated. No new creative/autonomy limitation was proposed.
 - Roll back implementation with `git revert 9bf6f71fac5a4f0c7f1f02270d0b3c00735eef3f`; no schema/data rollback is required. Preserve the three untracked user documents.
 - **NOT LIVE VERIFIED / NOT FULL RELEASE QUALIFIED / RELEASE NOT AUTHORIZED. NO PUSH / NO MERGE / NO DEPLOY / NO CI / NO PRODUCTION DB / NO PAID PROVIDER.**
+## Third corrective delta — P07-F19..F25
+
+Anchored at `c03fd5dbdaa8d0570e59f83d71060285cb7eec07`; feature commits: F19 `d4f3ffe78e5a06e7402fc9fbe6cf1e2dc66b74fe`, F20 `ec0451914fe5080e537c5b04bba12f9ec54f30a2`, F21 hold record `d3012f358f4d8cd851fd1b507c68c27032842fe9`, F22 `507ff89dd7892c649b054c041b5b401edf97eaa4`, F23 `a067857b1029d8579fb41b2517065e7e098305a6`, F24 `77c6ba2`, F25 closeout follows.
+
+P07-F19 adds native SQLite → World Director → source-bound writer-context evidence. F20 repairs omission counts by validating each bounded source proof before accounting: at capacity 0/1/3/4 two optional conversation signals yield 2/3/4/4 beats and 0/0/1/2 omitted; eight accepted native scene proofs yield 4 beats, 4 omitted, 0 held. F21 remains LOCAL HOLD: source inspection found no native producer linking two independently owned PC sources to the same already-established optional non-conversation incident. The smallest safe upstream `optional_incident_link` writer contract is in its ledger. No shared interest was inferred. F22 verifies only existing independently authenticated same-NPC speech ranking. F23 verifies SQLite restart replay, source retraction, attendance/audience/scene revalidation. F24 verifies the real injected Director and delegated writer, accepted native narrative unit, durable mocked outbox, uncertain send reconciliation and known-not-sent retry. F25 runs the frozen fresh-test union.
+
+### Final corrective union
+
+One blocking run: 9 fresh tests from F13, F14, F16, F17, F19, F20, F22, F23 and F24; exit 0; 14 passed, 0 failed/skipped/cancelled/todo; duration 5443.5696 ms. Changed bridge/fixture/all nine tests syntax checks and `git diff --check` passed. No old suites, broad validation, paid providers, CI, production DB or live Discord ran. Four deterministic injected responses were used by the two F24 test workflows; zero live provider calls, zero cost, and no cache change. Full hashes, per-feature results and T01–T14 matrix are in F25 ledger.
+
+### Feature dispositions
+
+| Feature | Status | Evidence / boundary |
+|---|---|---|
+| F19 | COMPLETE | Real owner-authored source → Director request → persisted source → current writer context. Does not alone prove writer acceptance. |
+| F20 | COMPLETE | Validated overflow/omission behavior at 0/1/3/4 and eight accepted scene units. |
+| F21 | LOCAL HOLD | Missing authorized non-conversation source-link producer; do not synthesize native evidence. |
+| F22 | PARTIAL | Same-NPC speech overlap ranking passed; F21 adapter unsupported. |
+| F23 | PARTIAL | Restart, retraction, attendance, audience and scene verified; control change and some required-response recovery gaps remain. |
+| F24 | PARTIAL | Public accepted writer/outbox path verified offline; no private recipient or cross-process contention acceptance. |
+| F25 | COMPLETE | Frozen union and evidence closeout only. |
+
+P07 status: **PARTIAL**. T01/T02/T12/T14 remain untested, T04 locally held, T05/T08/T13 partial; see matrix. No critical blocker is established. No new GM creativity, NPC autonomy, party-convergence, or narrative limits were introduced. Existing privacy, agency and native Daggerheart authority remain in force.
+
+Rollback: revert the third-corrective commits in reverse order, beginning with the F25 closeout commit, then F24 `77c6ba2`, F23 `a067857b1029d8579fb41b2517065e7e098305a6`, F22 `507ff89dd7892c649b054c041b5b401edf97eaa4`, F21 documentation commit `d3012f358f4d8cd851fd1b507c68c27032842fe9`, F20 `ec0451914fe5080e537c5b04bba12f9ec54f30a2`, F19 `d4f3ffe78e5a06e7402fc9fbe6cf1e2dc66b74fe`; preserve all earlier P06/P08/P09 and untracked user work. No migration or production state change was made.
+
+**Offline delta only. NOT LIVE VERIFIED. P07 NOT COMPLETE. RELEASE NOT AUTHORIZED. NO PUSH / MERGE / DEPLOY / CI / PRODUCTION DB / PAID PROVIDER.**
