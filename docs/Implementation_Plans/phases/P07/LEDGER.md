@@ -7,8 +7,8 @@
 | P07-F01 | COMPLETE | Documentation baseline commit `e8646c3a295391f913d79c3288b43b848761d827`. |
 | P07-F02 | COMPLETE | Pure policy; 4/4 fresh tests and syntax pass; commit pending. |
 | P07-F03 | COMPLETE | Bridge integration; 3/3 fresh tests and syntax pass; commit pending. |
-| P07-F04 | COMPLETE | Existing Director prompt guidance; 2/2 fresh tests and syntax pass; commit pending. |
-| P07-F05 | NOT STARTED | — |
+| P07-F04 | COMPLETE | Existing Director prompt guidance; 2/2 fresh tests and syntax pass; commit `cccd0304fa491a9a8425d9693cf94f11e3eacbc7`. |
+| P07-F05 | SUPPORTED BY EXISTING CODE / STATIC | Privacy, continuity, memory, assembly and spotlight boundaries inspected; docs-only. |
 | P07-F06 | NOT STARTED | — |
 
 ## Phase evidence

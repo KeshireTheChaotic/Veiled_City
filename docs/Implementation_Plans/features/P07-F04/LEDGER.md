@@ -12,4 +12,4 @@
 | Model calls/cost | Existing Director request receives this text; no request added. Provider calls/tokens/cost remain zero in tests. |
 | Restrictions | None proposed; guidance does not require convergence or fixed pacing. |
 | Rollback | Revert only F04 prompt module/insertion/test/docs; no state change. |
-| Completion SHA | Pending commit. |
+| Completion SHA | `cccd0304fa491a9a8425d9693cf94f11e3eacbc7`. |
