@@ -59,6 +59,7 @@ Complete source-qualified features, reconcile rules and qualify the changed impl
 - [P06-F48 — Support the source-bound Flow Around It cue](../../features/P06-F48/SCOPE.md)
 - [P06-F49 — Enforce the owner's exact HR14 v1 authorization](../../features/P06-F49/SCOPE.md)
 - [P06-F50 — Support the source-bound Drag Down cue](../../features/P06-F50/SCOPE.md)
+- [P06-F51 — Support the source-bound Blank Spot cue](../../features/P06-F51/SCOPE.md)
 
 ## Exit
 All safe features have current diff, truthful ledger and newly authored tests covering only code changed in this phase. Local source gaps and owner decisions remain visible but do not stop other safe work. No automatic release qualification.

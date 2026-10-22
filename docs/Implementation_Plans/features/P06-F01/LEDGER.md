@@ -142,3 +142,7 @@ Implementation commit: 4d35f7a612a57e4e7e8f7f9f9a2d609f4fbd333b. Flow Around It 
 ## Resumption checkpoint — P06-F50 — 2026-10-22
 
 Implementation commit: 25ad4cc74929ad248eff3940e043459c72dc4b88. Drag Down is supported as an exact GM-private Action cue; all mechanics remain individually held for native execution. Frozen p06-f50-20261022-a passed 177/177 across 47 fresh files; syntax 5/5 and JSON 2/2 passed, no reruns. Catalog: 62 supported / 91 review-only / 0 needs-authoring; 61 handler keys / 50 P06 families. Provider calls/tokens/spend 0/0/$0; no cache claim; Codex usage unavailable. No owner question/restriction or critical blocker; release unauthorized. Evidence [F50](../../evidence/P06_F50_TARGETED.json).
+
+## Resumption checkpoint — P06-F51 — 2026-10-22
+
+Implementation commit: d9014fcc839415e25a658689e7d6a2578158417f. Blank Spot is supported as an exact GM-private Reaction cue; damage, Knowledge roll, Experience access and expiry remain locally held. Frozen p06-f51-20261022-a passed 181/181 across 48 fresh files; syntax 5/5 and JSON 2/2 passed with no reruns. Catalog: 63 supported / 90 review-only / 0 needs-authoring; 62 handler keys / 51 P06 families. Provider calls/tokens/spend 0/0/$0; no cache claim; Codex usage unavailable. No owner restriction or critical blocker; release unauthorized. Evidence [F51](../../evidence/P06_F51_TARGETED.json).
