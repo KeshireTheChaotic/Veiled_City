@@ -170,3 +170,10 @@ Implementation commit `7d79bf2987fad99b32b8a24311d709d01d82e442` supports Morrow
 ## Resumption checkpoint — P06-F58 — 2026-10-22
 
 Implementation commit `ef657cd153694a815d2e3ccb31533f513228fb45` supports Cicada Runner Always a Price as an exact source-bound cue. Frozen `p06-f58-20261022-a`: 205/205 across 54 fresh files; syntax 5/5 and JSON 2/2. Catalog 69/84/0; 68 handlers / 57 P06 families. PC offer, comparable-value judgment, NPC response and replay remain held. Provider use 0/0/$0; no cache claim; Codex usage unavailable. No owner restriction or critical blocker; release unauthorized. Evidence [F58](../../evidence/P06_F58_TARGETED.json).
+
+## Resumption checkpoint — P06-F57 through P06-F60 — 2026-10-22
+
+- F57 Bad Future: implementation `1b2ffc1a54c40ef283eae4fd7cec735400be74db`; 209/209 mapped fresh tests. Exact owner-authorized three-part truthful cue; HP trigger/effect/replay remain held. Evidence [F57](../../evidence/P06_F57_TARGETED.json).
+- F59 Exit Clause: implementation `cfec6994c71f63b7423782bb15f3e8650f28dcae`; 213/213 mapped fresh tests. Fear, route/protection and social consequence receipts remain held. Evidence [F59](../../evidence/P06_F59_TARGETED.json).
+- F60 Predatory Grace: implementation `20a6a13e83cc3b6a17187aaf195c5b16a71c421c`; after one descriptor repair, 217/217 mapped fresh tests. Forced movement and per-scene prevention remain held. Evidence [F60](../../evidence/P06_F60_TARGETED.json).
+- Current inventory: 72 supported / 81 review-only / 0 needs-authoring. All provider costs 0; no cache claim; Codex usage unavailable. No critical blocker or outstanding owner restriction. Release unauthorized.
