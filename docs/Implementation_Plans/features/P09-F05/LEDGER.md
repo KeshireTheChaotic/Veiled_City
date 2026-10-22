@@ -22,7 +22,7 @@
 - Syntax/JSON checks and source/test hashes: **N/A — no source/test files changed**.
 - Provider/model calls/tokens/spend: `0 / 0 / $0`; cache/call-count/latency change: `0`.
 - Rollback: none required; revert this ledger/phase docs commit only.
-- Owner question: asked which exact native rule to use: hold; first qualifying roll per prepared position; or first qualifying roll per encounter. Awaiting response. No new narrative/autonomy restriction was proposed.
+- Owner decision: **one qualifying roll per encounter**. This resolves the first-use reset boundary only. A follow-up asks whether “prepared position” requires an explicit native encounter-preparation record, may rely on GM-established scene fiction, or should remain held pending a precise predicate.
 - Critical blocker: **NONE**.
 - Local hold: keep the exact GM-private source cue available, but do not apply Advantage, consume first-use, or claim a prepared position until the owner rule and qualifying evidence contract are exact. Independent F06–F08 work continues.
 - Release qualification/authorization: **FALSE / NOT AUTHORIZED**.
@@ -32,6 +32,7 @@
 - F05 audit baseline SHA: `3fcd8ac64b2da533ca1d28822349572e294969e3`.
 - No legacy tests, fixtures, golden results, or suite registries were executed or imported.
 - Feature is closed as a precise local hold, not mechanically supported; current cue behavior remains available and unchanged.
+- The per-encounter reset is now owner-authorized, but no Advantage is implemented until a native prepared-position predicate is established. No narrative/autonomy restriction was proposed.
 
 ## Instructions for Codex
 
