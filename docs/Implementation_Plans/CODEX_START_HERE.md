@@ -5,6 +5,8 @@ Implement the clean Veiled City AI GM plan in this package, anchored at audit ma
 
 Proceed P00 through P06. Every phase and every feature MUST maintain its own Markdown scope and ledger, logging SHA, changed modules, fresh affected-code tests, actual results, cost/caching evidence, questions and blockers. Native catalog individual occurrences also require their own scope and ledger.
 
+P07 and P08 were subsequently added and completed on `codex/clean-ai-gm-2026-10`; their individual scope and evidence ledgers remain authoritative. P09 is an additive follow-on; use `docs/Implementation_Plans/phases/P09/SCOPE.md` and its feature pairs without rewriting historic P00-P06 outcomes.
+
 Only stop the whole execution on a CRITICAL blocker. Isolate missing exact rules and unrelated issues; keep moving on independent work. Before a feature adds any new limitation to narrative output, GM creativity, NPC/faction autonomy or invention, ASK OWNER a concrete question and hold that restriction only.
 
 NEVER execute, import, copy or reuse legacy tests, historical fixtures/golden results or old suite registries. Write ONLY fresh feature-specific tests for production code currently being modified, in bot/tests/ai-gm-2026-10/. Freeze feature/phase before one targeted batch and batch repairs. Run only those fresh tests and changed-file syntax checks; do not run broad npm validate.
