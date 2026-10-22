@@ -16,6 +16,9 @@ test('coverage has unique root mappings and preserves the effective P03/P05/P07 
   assert.equal(keys.length,Object.keys(coverage).length);
   assert.ok(coverage['bot/src/world-narrative-bridge.js'].includes('bot/tests/ai-gm-2026-10/p03-f04.test.mjs'));
   assert.ok(coverage['bot/src/world-narrative-bridge.js'].includes('bot/tests/ai-gm-2026-10/p07-f03.test.mjs'));
+  assert.ok(coverage['bot/src/world-narrative-bridge.js'].includes('bot/tests/ai-gm-2026-10/p07-f09.test.mjs'));
+  assert.ok(coverage['bot/src/world-narrative-bridge.js'].includes('bot/tests/ai-gm-2026-10/p07-f10.test.mjs'));
+  assert.ok(coverage['bot/src/world-narrative-bridge.js'].includes('bot/tests/ai-gm-2026-10/p07-f12.test.mjs'));
   assert.ok(coverage['bot/src/gm.js'].includes('bot/tests/ai-gm-2026-10/p05-f01.test.mjs'));
   assert.ok(coverage['bot/src/gm.js'].includes('bot/tests/ai-gm-2026-10/p07-f04.test.mjs'));
 });
@@ -26,6 +29,8 @@ test('changed module selection includes the full deduplicated fresh mapping',()=
   assert.equal(bridge.qualified,true);assert.equal(gm.qualified,true);
   assert.ok(bridge.tests.includes('bot/tests/ai-gm-2026-10/p03-f04.test.mjs'));
   assert.ok(bridge.tests.includes('bot/tests/ai-gm-2026-10/p07-f06.test.mjs'));
+  assert.ok(bridge.tests.includes('bot/tests/ai-gm-2026-10/p07-f10.test.mjs'));
+  assert.ok(bridge.tests.includes('bot/tests/ai-gm-2026-10/p07-f12.test.mjs'));
   assert.ok(gm.tests.includes('bot/tests/ai-gm-2026-10/p05-f01.test.mjs'));
   assert.ok(gm.tests.includes('bot/tests/ai-gm-2026-10/p07-f04.test.mjs'));
 });

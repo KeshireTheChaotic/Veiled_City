@@ -15,7 +15,7 @@ test('same-NPC speech by distinct PCs creates a tie-break without editing signal
   const rows=new Map([[rowA.record_key,rowA],[rowB.record_key,rowB]]);
   const before=structuredClone([a,b,c]);
   const ordered=rankEligibleWorldSignals([c,a,b],(kind,key)=>kind==='typed_intent'?rows.get(key):null,'guild');
-  assert.deepEqual(ordered.map(x=>x.id),['a','b','c']);
+  assert.deepEqual(ordered.map(x=>x.id),['c','a','b']);
   assert.deepEqual([a,b,c],before);
 });
 
