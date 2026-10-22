@@ -4,15 +4,25 @@ import {currentScene,scenePresence} from './scene-continuity.js';
 import {openingWorldOpportunities} from './opening-world-bridge.js';
 export const hookHash=value=>createHash('sha256').update(JSON.stringify(value)).digest('hex');
 export const assemblySourceError=message=>Object.assign(new Error(message),{code:'ASSEMBLY_SOURCE',expected:true});
-const fields=['entry_hooks','gm_hooks','goals','unresolved_incident','background','obligation','home','person','opening_status'];
+// Explicit player-entitled character material only. GM hooks remain available
+// through their separate GM-only planner input below; they are never owner sources.
+const ownerFields=['entry_hooks','goals','unresolved_incident','background','obligation','home','person','opening_status'];
+const privateLabels=new Set(['gm','gm_private','private_gm','gm_only','secret','hidden']);
+function ownerText(value){
+  if(typeof value==='string')return value;
+  if(!value||typeof value!=='object'||Array.isArray(value))return null;
+  const visibility=String(value.visibility??value.audience??value.scope??'').toLowerCase();
+  if(privateLabels.has(visibility)||value.gm_private===true||value.gm_only===true||value.hidden===true)return null;
+  return typeof value.text==='string'?value.text:null;
+}
 const displayed=text=>String(text).replaceAll('@','@\u200b');
 export function assemblyHookSources(db,guild,characterId){
   const pc=db.getCharacter(characterId);if(pc?.guild_id!==guild)return [];
   const sources=[];
-  for(const field of fields){
+  for(const field of ownerFields){
     const values=Array.isArray(pc.data[field])?pc.data[field]:[pc.data[field]];
     for(const [index,value] of values.entries()){
-      const text=typeof value==='string'?value:value?.text;
+      const text=ownerText(value);
       if(!text?.trim()||text.length>1800)continue;
       sources.push({id:`sheet:${characterId}:${field}:${index}:${hookHash(text)}`,character_id:characterId,
         kind:'owner_character_material',field,text,epistemic:'character_material_not_new_outcome'});
