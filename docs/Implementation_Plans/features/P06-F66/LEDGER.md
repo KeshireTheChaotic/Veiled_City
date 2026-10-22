@@ -14,4 +14,4 @@ Status: TARGETED PASS; EXACT SOURCE-BOUND CUE SUPPORTED; MECHANICAL EFFECTS HELD
 
 - Verification: changed JS/MJS syntax 5/5 passed (modified F66 and F01 tests syntax-checked after their final edits); changed JSON parse 2/2 passed. Catalog 78 supported / 75 review-only / 0 needs-authoring; 77 registered handler keys / 66 P06 families.
 
-- Evidence: [targeted evidence](../../evidence/P06_F66_TARGETED.json). Final commit 4a487beb37224cdd871106e081b38d8eaee6d23d includes the scoped feature, tests, and initial phase closeout. A follow-up ledger-only commit will record final evidence references.
+- Evidence: [targeted evidence](../../evidence/P06_F66_TARGETED.json). Final commit 4a487beb37224cdd871106e081b38d8eaee6d23d includes the scoped feature, tests, and initial phase closeout. The evidence closeout is recorded in the phase ledger and targeted evidence JSON.
