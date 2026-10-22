@@ -12,4 +12,4 @@
 | Provider/cost/cache | No provider calls; no cache introduced. |
 | Questions/blocks | None. F03 must prove that current sources can safely produce overlap metadata; otherwise it preserves source order. |
 | Rollback | Revert F02 commit; pure helper has no state effect. |
-| Completion SHA | Pending commit. |
+| Completion SHA | `5bd61cbaafab95f314f99208d979c1bcd56c221b`. |

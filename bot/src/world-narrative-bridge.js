@@ -14,6 +14,7 @@ import {renderNarrativeUnit} from './narrative-authority.js';
 import {validateFearEffect} from './pvp-fear-moves.js';
 import {worldSimulationReceiptForAudience} from './world-simulation-receipts.js';
 import {inspectNativeEncounterCandidate} from './world-encounter-beats.js';
+import {rankWorldNarrativeOpportunities} from './narrative-opportunity-policy.js';
 const entitled=(row,scope)=>['public','party'].includes(row.visibility)||scope.mode==='private'&&row.visibility==='character'
   &&row.subject_key===scope.actorCharacterId&&!!scope.actorUserId;
 const audience=s=>s.mode==='private'?{visibility:'character',character:s.actorCharacterId,user:s.actorUserId}:{visibility:'party',character:null,user:null};
@@ -239,6 +240,29 @@ function nativeConversationSignals(db,guild,scope,scene){
   }
   return signals;
 }
+/** Rank only a source-validated set. Shared NPC links are private selector metadata, never packet fields. */
+export function rankEligibleWorldSignals(signals,lookup,guild){
+  const npcActors=new Map(),validatedActors=new Map();
+  for(const signal of signals){
+    if(signal.kind!=='conversation_development'||signal.audience?.visibility!=='party')continue;
+    const npcRefs=signal.source_refs.filter(ref=>ref.kind==='npc_memory'&&typeof ref.actor==='string');
+    const intentRefs=signal.source_refs.filter(ref=>ref.kind==='typed_intent');
+    if(npcRefs.length!==1||intentRefs.length!==1)continue;
+    const ref=intentRefs[0],intent=lookup('typed_intent',ref.key,guild);
+    if(!intent||intent.record_key!==ref.key||intent.status!=='accepted_for_adjudication'||hash(intent)!==ref.hash
+      ||intent.data?.type!=='speak'||typeof intent.data.actor!=='string'||!intent.data.actor)continue;
+    const npc=npcRefs[0].actor,actors=npcActors.get(npc)||new Set();actors.add(intent.data.actor);npcActors.set(npc,actors);
+    validatedActors.set(signal.id,{npc,actor:intent.data.actor});
+  }
+  const metadata=signals.map((signal,index)=>{
+    let classification='unknown',urgency=0;
+    if(['opening_opportunity_request','unresolved_narrative_task','resolved_player_intent','conversation_development'].includes(signal.kind))classification='mandatory_response';
+    else if(signal.kind==='scene_transition'){classification='causal_consequence';urgency=3;}
+    const link=validatedActors.get(signal.id),actors=link&&npcActors.get(link.npc);
+    return {index,classification,urgency,verifiedActorLinks:actors?.size>=2?[...actors]:[]};
+  });
+  return rankWorldNarrativeOpportunities(signals,metadata);
+}
 /** At most four entitled signals; no scan/write/model loop over background actors. Missing adapters stay absent, not fabricated. */
 export function worldNarrativeBridgePacket(db,guild,scope){
   const empty={version:1,signals:[],eligible:0,omitted:0,
@@ -262,7 +286,8 @@ export function worldNarrativeBridgePacket(db,guild,scope){
   const opening=nativeOpeningRequest(db,guild,scope,scene);
   if(opening){if(opening.source_refs[0].kind==='session_opening_job')found.unshift(opening);else found.push(opening);}
   const signals=[...new Map(found.map(s=>[s.id,s])).values()];
-  return {...empty,signals:signals.slice(0,4),eligible:signals.length,omitted:Math.max(0,signals.length-4)};
+  const selected=rankEligibleWorldSignals(signals,(kind,key,server)=>db.getCityRecord(server,kind,key),guild);
+  return {...empty,signals:selected,eligible:signals.length,omitted:Math.max(0,signals.length-4)};
 }
 /** Re-read final source/owner/scene/audience/native result before using a saved bridge proposal after restart. */
 export function revalidateWorldNarrativeSignal(db,guild,saved,scope){
