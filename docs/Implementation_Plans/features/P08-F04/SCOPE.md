@@ -55,3 +55,7 @@ A cohort joining after camera delivery can be offered a **coherent, agency-prese
 ## Corrective Follow-up — 2026-10-22
 
 Make GM `/vc-session assemble` reach the additive cohort gate after a terminal initial opening. Resolve the original camera from immutable start-attempt/turn/assembly-delivery/outbox records rather than today's recomputed viewpoint. Claim one revision-bound attempt under SQLite `BEGIN IMMEDIATE`; keep unsent stale attempts in history and allow a new sourced attempt only before any turn/outbox exists. Pause before planning, authoring acceptance, commit or publication, retaining committed outbox state for safe resumption. Compatibility reads retain version-1 cohort records. Corrective tests are in `bot/tests/ai-gm-2026-10/p08-f04-correction.test.mjs`; actual acknowledged delivery, multi-process overlap, restart, positive stale refresh and pause during real transport remain local holds.
+
+### Expanded lifecycle acceptance status — 2026-10-22
+
+The F04 corrective suite now includes an acknowledged initial camera and additive cohort using native SQLite outbox plus mocked Discord; stale planner refresh, pause-during-planning, uncertain-send recovery, and separate-process contention are also included. Its current execution has no terminal result; mark RUNNING / UNQUALIFIED. No final union for the expanded suite has run. See F04 ledger for exact scope and holds.

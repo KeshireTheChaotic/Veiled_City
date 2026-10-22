@@ -13,5 +13,5 @@
 | Holds | More mandatory items than four remain truthful omissions in the packet; no implicit resolution. |
 | Rollback | Revert the F09 classification and feature-specific test/docs commit. |
 | Provider/cache | No provider calls, network calls, caching, persistence, or state mutations; no cost or live performance measurements. |
-| Completion commit | Shared source-ranker commit is recorded in both F09/F10 ledgers after local commit. |
+| Completion commit | Shared source-ranker commit `607dba7b9a88696b956a9f7d0358edb8b7381410`; safe final closeout `07d090322ef155368c3b1dad877fc019d1ba6946`. |
 | Comparator guard | Final policy check separately verified mandatory/causal classes ignore overlap metadata; F09 remains protected by this restriction. |

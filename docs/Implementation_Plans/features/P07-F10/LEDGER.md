@@ -13,4 +13,4 @@
 | Local holds | NPC/faction, relationship, backstory, public incident and distinct-location optional intersections are not established by an optional native source. Carl/Choso/Raven/Elias non-conversation causal patterns are not executable as party-aware optional ranking. |
 | Rollback | No F10 production patch remains; revert only the test/coverage/docs additions. |
 | Provider/cache | Zero provider/network calls; no cache, persistence, or live performance measurement. |
-| Completion commit | Local hold evidence commit recorded in P07 phase ledger. |
+| Completion commit | Local hold and removal of the unsafe attempted adapter are recorded in `07d090322ef155368c3b1dad877fc019d1ba6946`. |

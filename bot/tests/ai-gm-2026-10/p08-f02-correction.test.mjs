@@ -1,6 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {assemblyHookSources,assemblyInputFingerprint,assemblyWriterBrief,assemblyInputs} from '../../src/assembly-context.js';
+import {prepareOpeningEntryOpportunity} from '../../src/session-opening-attendance.js';
+import {openingEntryProjection} from '../../src/opening-entry-context.js';
 import {disposableCampaign} from './p08-correction-fixture.mjs';
 
 test('nested export visibility stays out of owner and writer projections while GM planning retains its separate hook source',()=>{
@@ -28,5 +30,9 @@ test('nested export visibility stays out of owner and writer projections while G
     const serialized=JSON.stringify(brief);
     assert.doesNotMatch(serialized,/GM_ONLY_GOAL_CANARY|NESTED_EXPORT_CANARY|NESTED_GM_CANARY|GM_PLANNER_SEED/);
     assert.match(serialized,/SAFE_OWNER_BACKGROUND|SAFE_ENTRY_THREAD/);
+    const opportunity=prepareOpeningEntryOpportunity(db,'guild-correction','owner-a',pc.id,'owner-entry-interaction');
+    const entry=openingEntryProjection(db,'guild-correction',opportunity.record_key,{mode:'private',actorUserId:'owner-a',actorCharacterId:pc.id});
+    assert.match(entry.text,/SAFE_OWNER_BACKGROUND|SAFE_ENTRY_THREAD/);
+    assert.doesNotMatch(entry.text,/CANARY|GM_PLANNER_SEED/);
   }finally{close();}
 });

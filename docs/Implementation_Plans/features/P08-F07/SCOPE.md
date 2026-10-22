@@ -63,3 +63,7 @@ All safe scoped P08 features have accurate ledgers and completed affected-code t
 ## Corrective Follow-up — 2026-10-22
 
 The one frozen corrective union and changed-file syntax pass are recorded in the P08/F02–F07 ledgers. It uses temporary SQLite and a mocked Discord interaction for command routing, but does not simulate a successful native outbox/Discord delivery or claim whole-lifecycle end-to-end acceptance. No provider, CI, live service or paid model was invoked. Keep staging/release unqualified.
+
+### Expanded acceptance status — 2026-10-22
+
+The expanded F04 tests are not terminally qualified and the corrective union is pending. Cross-process idempotency and F02 accepted-output/fallback coverage remain local holds. Do not treat the earlier corrective union as final evidence for these test edits.

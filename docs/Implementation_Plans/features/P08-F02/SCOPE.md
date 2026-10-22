@@ -49,3 +49,7 @@ Zero unauthorized canary projection in touched scenarios; no regression in norma
 ## Corrective Follow-up — 2026-10-22
 
 Treat nested `export_meta.visibility`, nested GM/private/audience labels and deep metadata as authority labels. Keep GM-hook records exclusively in the GM planner input. Do not treat any free-form planner-authored dramatic goal as disclosure permission. Fresh SQLite-backed corrective evidence is in `bot/tests/ai-gm-2026-10/p08-f02-correction.test.mjs`; accepted output, actual delivery, late-entry fallback and source/principal revocation during an awaited writer remain unqualified.
+
+### Expanded corrective scope status — 2026-10-22
+
+`openingEntryProjection()` now has a fresh source-projection test for legitimate owner material and nested GM/export canaries. Accepted narrative output and owner-private fallback delivery are still unqualified. See the F02 ledger addendum; no release claim.

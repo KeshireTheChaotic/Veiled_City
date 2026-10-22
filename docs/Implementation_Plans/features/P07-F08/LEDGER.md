@@ -12,4 +12,4 @@
 | Holds | None. |
 | Rollback | Revert the F08 comparator and feature-specific test/docs commit. |
 | Initial feature commit | `037113edca6c948b4549080510a7ec708f360c2e`. |
-| Final hardening | Corrective closeout limits overlap to optional classifications. The mandatory/causal non-interference regression passed; final source SHA is recorded above. |
+| Final hardening | Corrective closeout commit `07d090322ef155368c3b1dad877fc019d1ba6946` limits overlap to optional classifications. The mandatory/causal non-interference regression passed; final source SHA is recorded above. |

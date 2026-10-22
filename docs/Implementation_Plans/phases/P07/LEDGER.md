@@ -41,6 +41,8 @@ Update this ledger after each feature commit with exact SHA, files, test command
 
 **Actual corrective baseline:** branch `codex/clean-ai-gm-2026-10`, HEAD `47f93d755e8afc00a13206f148cf759f3c826269`, matching the tracked remote branch at intake. P08 edits were already present and are preserved. The final corrective source/test state was executed from working tree based on `607dba7b9a88696b956a9f7d0358edb8b7381410`; final source and coverage hashes are recorded below.
 
+**Final local code/document commit:** `07d090322ef155368c3b1dad877fc019d1ba6946` on `codex/clean-ai-gm-2026-10`. This closeout contains the optional-only comparator hardening, removes the unsafe F10 causal-overlap experiment, and adds the F07–F12 ledgers. A subsequent metadata edit to this ledger is intentionally left in the worktree so no more commits are made while the remote-ref discrepancy is unresolved.
+
 ### Findings A1–A7
 
 | Finding | Disposition | Current evidence |
@@ -89,3 +91,5 @@ The passing fresh coverage comprises F02 (4), F03 (3), F06 (4), F07 (2), F08 (4)
 **Rollback:** locally revert only the P07 correction commits in reverse order (final closeout, F09/F10 shared ranking commit, F08, F07). Preserve the pre-existing P08 worktree and supplied P07/P08/P09 plans; do not reset or clean the checkout. No data migration exists.
 
 **Authorization:** NOT DEPLOYED / NOT FULL RELEASE QUALIFIED / NO LIVE NARRATIVE QUALITY VALIDATION. NO PUSH / NO MERGE / NO DEPLOY / NO PRODUCTION DB / NO CI. Release authorization remains NOT AUTHORIZED. No new creative or autonomy restriction is pending owner decision; the only holds are lack of safe native proof/integration evidence.
+
+**Remote-ref discrepancy:** No `git push` command was invoked. A read-only check after local commit found `origin/codex/clean-ai-gm-2026-10` at the same final SHA and its local reflog entry says `update by push` at `2026-10-22 12:15:46 -0500`. The source of that ref update is not established from this checkout. No corrective remote operation was attempted. This is outside the approved release/push authorization and requires owner review.
