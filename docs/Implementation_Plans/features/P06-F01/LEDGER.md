@@ -158,3 +158,7 @@ Implementation commit `8f5ca2d50b096f324c53f164b6b22d86a9678276` supports Glass 
 ## Resumption checkpoint — P06-F54 — 2026-10-22
 
 Implementation commit `89d1d16418f8a80bc912b115546bb52581722d64` supports Glass Market Knife Pin to the Deal as a source-bound Action cue. Frozen `p06-f54-20261022-a` passed 193/193 across 51 fresh files. Syntax 5/5 and JSON 2/2 passed. Catalog 66 supported / 87 review-only / 0 needs-authoring; 65 handler keys / 54 P06 families. Attack success, target, Stress, Restrained mutation, PC roll, expiry and replay remain held. Provider use 0/0/$0; no cache claim; Codex usage unavailable. No owner restriction or critical blocker; release unauthorized. Evidence [F54](../../evidence/P06_F54_TARGETED.json).
+
+## Resumption checkpoint — P06-F55 — 2026-10-22
+
+Implementation commit `5274829eab02eabaafec179ada806fb263292d29` supports Morrowline Echo I Saw That as an exact source-bound cue. Frozen `p06-f55-20261022-a` passed 197/197 across 52 fresh files. Syntax 5/5 and JSON 2/2 passed. Catalog 67 supported / 86 review-only / 0 needs-authoring; 66 handler keys / 55 P06 families. Repeated-action proof, scene/turn limit, Stress, disadvantage and replay remain local holds. Provider use 0/0/$0; no cache claim; Codex usage unavailable. No owner restriction or critical blocker; release unauthorized. Evidence [F55](../../evidence/P06_F55_TARGETED.json).
