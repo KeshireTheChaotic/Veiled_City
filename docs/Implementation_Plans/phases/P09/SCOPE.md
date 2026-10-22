@@ -3,7 +3,7 @@
 **Repository:** `KeshireTheChaotic/Veiled_City`  
 **Target branch:** `codex/clean-ai-gm-2026-10`  
 **Reference SHA:** `81569d08699343e401fc11ba1eaed0f10b4fd37a`  
-**Status:** PLANNED / UNQUALIFIED (documentation only; no runtime change or test execution)
+**Status:** COMPLETE — targeted delta only; Feature 05 has an owner-rule hold; release remains unqualified
 
 ## Governing authority and placement
 
