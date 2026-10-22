@@ -102,14 +102,19 @@ export function assemblyHookProjection(db,guild,sessionId,scope){
 }
 export function assemblyWriterBrief(db,guild,sessionId,scope){
   const resume=db.getSession(sessionId)?.assembly_phase==='party';
+  const plan=db.getAssemblyPlan(sessionId)||{};
+  const contract=plan.assembly_contract?.version===2?plan.assembly_contract:null;
+  const goal=typeof plan.convergence_goal==='string'?plan.convergence_goal:'';
+  const dramatic_intent=contract?{version:1,goal,session:sessionId,scene:currentScene(db,guild).key,
+    plan_inputs:contract.input_fingerprint,audience:scope.mode,revision:hookHash([sessionId,currentScene(db,guild).key,contract.input_fingerprint,scope.mode,goal])}:null;
   const world_opportunities=openingWorldOpportunities(db,guild,scope);
   if(scope.mode==='private'){
     const hook=assemblyHookSelection(db,guild,sessionId,scope);
-    return {kind:resume?'private_resume':'private_opening',sources:hook?.selected||[],world_opportunities,
+    return {kind:resume?'private_resume':'private_opening',sources:hook?.selected||[],world_opportunities,dramatic_intent,
       task:`${resume?'Resume the owner character current independent thread.':'Offer a playable ordinary circumstance relevant to this personal thread.'} Do not resolve its mystery, assert an arrival, or decide a PC response.`,
       knowledge:'Only this owner character material is available. Imported GM-only mysteries are not player knowledge.'};
   }
-  return {kind:resume?'public_resume':'public_convergence',sources:[],world_opportunities,
+  return {kind:resume?'public_resume':'public_convergence',sources:[],world_opportunities,dramatic_intent,
     task:`${resume?'Frame current scene continuity without asserting new party membership, requiring reunion or inventing intervening PC activity.':'Frame a playable shared opportunity as a camera scene, not established PC presence.'} Ordinary NPC offers, visible surroundings and nonbinding signs are allowed.`,
-    knowledge:'Private hooks, private cues and motivations are intentionally excluded. Let the players discover and choose any connection.'};
+    knowledge:'The dramatic intent is an objective, not a fact or character motivation. Private hooks, private cues and motivations are intentionally excluded. Let the players discover and choose any connection.'};
 }

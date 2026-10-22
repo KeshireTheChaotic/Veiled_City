@@ -1,0 +1,28 @@
+# P08-F03 — Certified dramatic brief to the audience-first writer: ledger
+
+| Field | Planned evidence / actual result |
+|---|---|
+| Status | **COMPLETE — 1 FRESH TEST PASSED; SEMANTIC SECRECY / QUALITY UNQUALIFIED** |
+| Repository / target | `KeshireTheChaotic/Veiled_City` / `codex/clean-ai-gm-2026-10` |
+| Supplied reference | `81569d08699343e401fc11ba1eaed0f10b4fd37a` (reconcile checkout HEAD at execution) |
+| Actual checkout SHA and dirty tree | Baseline `09eb0b747042d542964b2f6ca34e4a153d89914d`; modified source/test plus F03 plan files only. |
+| Source crosswalk / finding revision | F01 confirmed certified `convergence_goal` was omitted; orientation already validates v2 source fingerprint and plan freshness. |
+| Changed production/docs paths | `bot/src/assembly-context.js`, `bot/src/gm.js`, `bot/tests/ai-gm-2026-10/p08-f03.test.mjs`, F03 scope/ledger. |
+| New test files / source and test hashes | `assembly-context.js` `047e696b014f73fd748ca1701c35bcec3d495282`; `gm.js` `1d18069a325ae1eea5d63db0f6bc84e2b7d8fc15`; test `24356eb444b88fa6ebd1796c06f2fcc0f024f1e8`. |
+| Test batch run ID, command, exit, counts | `p08-f03-20261022-01`; `node --test tests/ai-gm-2026-10/p08-f03.test.mjs`; exit 0; 1 passed, 0 failed/skipped; 0.356s; both changed JS files passed `node --check`. No rerun. |
+| Provider calls/tokens/expense | Zero provider calls/tokens; $0 provider expense. |
+| Cache/latency evidence | No cache/provider latency tested; local batch 0.356s. |
+| Proposed new creative restriction / owner decision | None proposed by the plan; add exact question if encountered |
+| Local holds / unknowns | None yet established; investigate at implementation |
+| Critical blockers | None yet established; assess in worktree |
+| Rollback | Revert only the brief projection, prompt instruction, fresh test and F03 plan changes; no persisted data migration. |
+| Release | NOT AUTHORIZED / NOT CERTIFIED |
+
+
+## Execution entries — append after real work, never fabricate
+
+For each implementation batch record: date/time if available; current branch/HEAD and dirty-tree fingerprint; exact file diff and the authoritative input/source revision; scope decisions; source/test hashes; one frozen feature test batch and *terminal* result; failure repair/rerun if performed; call/token/expense evidence; any source or rule hold; confidentiality and agency assertions checked; rollback boundary. Attach links to freshly created evidence files only when they exist.
+
+### Feature execution
+
+Added an audience-tagged dramatic intent to the writer brief only for a v2 contracted plan, bound to input fingerprint, current scene, session and scope. Raw planner notes/opening/private hooks remain excluded. Added a prompt instruction that convergence goal is public-safe. The existing orientation path rejects stale input and publication rechecks source freshness. The deterministic projection test confirmed intended field inclusion and raw-note exclusion. Semantic safety of generated planner goals and writer output is not proven; no model/provider/Discord test or cost occurred. This is an explicit unqualified limitation, not release evidence.
