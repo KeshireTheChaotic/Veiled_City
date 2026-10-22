@@ -532,13 +532,13 @@
       "template_hash": "af98ed2fad3b9caa86fc9353a5409779ce9df91b38597b4f8ce6795837ebc325",
       "index": 0,
       "type": "Action",
-      "status": "review_only",
-      "trigger_kind": "unmapped",
-      "target_policy": "unmapped",
-      "roll_protocol": "unmapped",
-      "costs": null,
-      "native_handler": null,
-      "reason": "No qualified native feature handler."
+      "status": "supported",
+      "trigger_kind": "on_reputation_attack_action",
+      "target_policy": "one_pc",
+      "roll_protocol": "native_adversary_context",
+      "costs": [{ "resource": "npc_stress", "amount": 1 }],
+      "native_handler": "adversary_reputation_attack_context",
+      "reason": "Exact source-bound cue only; target relevance, NPC Stress, institution selection, disadvantage and its end condition are not committed."
     },
     {
       "feature_key": "adversary:pale-court-fixer:call-security",
