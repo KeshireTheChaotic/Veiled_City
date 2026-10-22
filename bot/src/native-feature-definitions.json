@@ -477,13 +477,13 @@
       "template_hash": "9759b3c37f837a063c0c013eaff57ab1e9c63045b34d3b46e657a63cc9cbdebc",
       "index": 1,
       "type": "Reaction",
-      "status": "review_only",
-      "trigger_kind": "unmapped",
-      "target_policy": "unmapped",
-      "roll_protocol": "unmapped",
-      "costs": null,
-      "native_handler": null,
-      "reason": "No qualified native feature handler."
+      "status": "supported",
+      "trigger_kind": "when_threatened_with_violence",
+      "target_policy": "current_scene",
+      "roll_protocol": "native_adversary_context",
+      "costs": [{ "resource": "npc_fear", "amount": 1 }],
+      "native_handler": "adversary_exit_clause_context",
+      "reason": "Exact source-bound cue only; Fear spend, route/protection, pursuit and social consequences are not committed."
     },
     {
       "feature_key": "adversary:pale-court-knight:predatory-grace",
