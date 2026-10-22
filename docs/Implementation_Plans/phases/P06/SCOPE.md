@@ -65,6 +65,7 @@ Complete source-qualified features, reconcile rules and qualify the changed impl
 - [P06-F54 — Support the source-bound Pin to the Deal cue](../../features/P06-F54/SCOPE.md)
 - [P06-F55 — Support the source-bound I Saw That cue](../../features/P06-F55/SCOPE.md)
 - [P06-F56 — Support the source-bound Self-Fulfilling Event cue](../../features/P06-F56/SCOPE.md)
+- [P06-F57 — Support Morrowline Echo Bad Future](../../features/P06-F57/SCOPE.md)
 - [P06-F58 — Support the source-bound Always a Price cue](../../features/P06-F58/SCOPE.md)
 
 ## Exit

@@ -1,15 +1,17 @@
 # adversary:morrowline-echo:bad-future — ledger
 
-Status: SOURCE VERIFIED; LOCAL EXECUTION HOLD.
+Status: CUE IMPLEMENTED; TARGETED TEST PENDING.
 
 - Branch: codex/clean-ai-gm-2026-10; source checkout SHA: 0834f299ccff1738e9b3dd753a5fc616d3965370 + working-tree delta. Final freeze SHA/evidence: see parent P06-F01 ledger and final delta report.
-- Changed module: bot/src/native-feature-catalog.js (shared occurrence-local inspection). Descriptor and rules unchanged.
-- Fresh test: bot/tests/ai-gm-2026-10/p06-f01.test.mjs; current-catalog test calls inspectNativeFeatureOccurrence for this exact key. Source/content input is current production data, never a historical fixture.
-- Actual result: verified_source, execution_authorized=false in p06-1792598757560; shared repaired batch exit 0, 5 tests passed. This is source verification, not effect execution qualification.
+- Changed modules: native feature definitions/catalog, source-bound Bad Future context projector and native adversary context. See P06-F57 scope for the exact changed paths.
+- Fresh test: `bot/tests/ai-gm-2026-10/p06-f57.test.mjs` plus mapped fresh coverage for changed shared modules; current source only.
+- Actual result: `p06-f57-20261022-a`, 209/209 across 55 fresh files, exit 0; syntax 5/5; JSON 2/2. Full evidence: [P06-F57](../../../P06-F57/LEDGER.md).
 - Cost/cache: 0 paid provider calls/tokens; $0 provider tests. No cache claim. Codex usage unavailable.
-- Existing catalog reason: No qualified native feature handler.
-- Local hold: No qualified executable occurrence adapter. This remains unsupported; exact source availability alone is insufficient.
-- Questions: none introduced by this source-only delta; no new narrative/autonomy restrictions proposed.
+- Owner ruling: exact source behavior authorized: one danger, one opportunity, one uncertainty; GM creative latitude remains.
+- Local hold: native HP trigger/effect/replay execution not added.
+- Questions: none outstanding; no new narrative/autonomy restriction proposed.
 - Critical blocker: none. Release authorization: none.
 
-Final tested source SHA: `8e01519b6511bc90af6a1c675e4a9950f12b703c`; run `fresh-delta-1792599054739` passed 47/47 union tests. The catalog test verifies this occurrence source; this is not occurrence effect qualification. Input/test hashes: parent final evidence.
+Implementation commit `1b2ffc1a54c40ef283eae4fd7cec735400be74db`; owner authorized exact behavior. Cue supported; separate native HP/effect/replay execution remains a local hold.
+
+Implementation commit `1b2ffc1a54c40ef283eae4fd7cec735400be74db`; fresh `p06-f57-20261022-a` passed 209/209 across 55 files. See [feature ledger](../../../P06-F57/LEDGER.md) and [evidence](../../../evidence/P06_F57_TARGETED.json). Native HP-trigger/effect/replay execution remains a local hold.

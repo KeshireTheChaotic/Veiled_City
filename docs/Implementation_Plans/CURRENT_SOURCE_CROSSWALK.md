@@ -1,7 +1,7 @@
 # Current source crosswalk
 
 Audit anchor: `9e7bf0687357cf96fbe2ea09a04b3e9d2975f6a3`.
-Inspected implementation checkout: `d9014fcc839415e25a658689e7d6a2578158417f`, local branch
+Inspected implementation checkout: `1b2ffc1a54c40ef283eae4fd7cec735400be74db`, local branch
 `codex/clean-ai-gm-2026-10`. This crosswalk is being updated in the phase closeout commit.
 Initial audit worktree: 22 modified plan documents plus untracked TEST_EXECUTION_NO_POLL.md;
 all retained through the clean-plan commits. Subsequent scoped source edits are recorded in their feature ledgers.
@@ -12,7 +12,7 @@ all retained through the clean-plan commits. Subsequent scoped source edits are 
 | Native mechanics and owner choices | roll-requests.js, gm-native-rolls.js, pre-roll-fear.js | Existing authority pathways; no whole-system qualification claimed |
 | Living world | autonomous-world.js, npc-cognition.js, world-narrative-bridge.js | Existing implementation; changed contracts require fresh tests |
 | Private audiences / delivery | audience-native-v9.js, assembly modules, outbox | Existing boundaries must survive changes; live Discord unverified |
-| Native catalog | bot/src/native-feature-definitions.json | Qualified delta: 153 = 69 supported + 84 review_only + 0 needs_authoring; 68 registered handler keys and 57 P06 handler families; P06-F34–F36 and F38–F48 and F50–F56 and F58 are source-bound GM cues with mechanics held; F49 hardens owner-authorized HR14 v1; F37 enables the existing failure-only native trace/owner-choice route; F53 mapping recorded 188/189 plus a 3/3 F01 repair; F54 193/193, F55 197/197, F56 201/201 and F58 205/205; F57 Bad Future awaits owner ruling; labels are not whole-release qualification |
+| Native catalog | bot/src/native-feature-definitions.json | Qualified delta: 153 = 70 supported + 83 review_only + 0 needs_authoring; 69 registered handler keys and 58 P06 handler families; P06-F34–F36, F38–F48, F50–F58 include exact source-bound cues whose described mechanical outcomes remain individually governed by native pathways; F49 hardens owner-authorized HR14 v1; F37 enables the existing failure-only native trace/owner-choice route; F57 Bad Future's exact three-part truthful cue was owner-authorized and passed 209/209 mapped fresh tests; labels are not whole-release qualification |
 | Historical implementation package | docs/Active_Implementation | Absent in this checkout; historical links are not current execution authority |
 | CI | .github/workflows | Absent in this checkout; audit describes another snapshot, not current local CI |
 
