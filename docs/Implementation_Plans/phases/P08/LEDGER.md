@@ -21,7 +21,7 @@
 | Status | **IMPLEMENTATION COMPLETE — NOT RELEASE QUALIFIED OR AUTHORIZED** |
 | Repository / target | `KeshireTheChaotic/Veiled_City` / `codex/clean-ai-gm-2026-10` |
 | Supplied reference | `81569d08699343e401fc11ba1eaed0f10b4fd37a` (reconcile checkout HEAD at execution) |
-| Actual checkout SHA and dirty tree | Initial `293091d9e8cd4432c59f12f6e89991b4ed7a5be8`; P08 feature commits on `codex/clean-ai-gm-2026-10`; final F04 commit pending at ledger preparation. User-created P07/P09 plans remain unmodified and untracked. |
+| Actual checkout SHA and dirty tree | Initial `293091d9e8cd4432c59f12f6e89991b4ed7a5be8`; implementation commit `25809f5b22966f8bcae6d244dd42b1772539846e` on `codex/clean-ai-gm-2026-10`. User-created P07/P08/P09 planning files outside the scoped feature docs remain unmodified and untracked. |
 | Source crosswalk / finding revision | `../P08_SOURCE_CROSSWALK.md`; current-source findings reconciled. |
 | Changed production/docs paths | F01–F07 ledgers/scopes and crosswalk; production `assembly-context.js`, `gm.js`, `pvp-output.js`, `opening-entry.js`, `session-opening-runner.js`, `assembly-publications.js`, `operational-metrics.js`, `opening-cohort-state.js`, `opening-cohort-runner.js`, `narrative-authority-context.js`, `commands.js`, two evidence helpers; five fresh tests. |
 | New test files / source and test hashes | Only fresh `p08-f02`, `p08-f03`, `p08-f04`, `p08-f06`, `p08-f07`; exact hashes in F02/F03/F04/F06/F07 ledgers. |
@@ -48,6 +48,7 @@
 - **Cohort:** F04 is implemented as a distinct session-keyed job/plan/scope/outbox flow; no historical plan or receipts are rewritten. Full database/outbox delivery and cross-process concurrency remain unverified.
 - **Staging/release:** Not authorized; no release qualification.
 - **Owner questions:** None pending; no new creative restriction was introduced.
+- **Feature commit sequence:** F01 `d0cd18a`; F02 `09eb0b7`; F03 `acfc8e2`; F04 `25809f5`; F05 `f2d7ba5`; F06 `cb848d9`; F07 `860ba47`. The F04 commit also records final union and phase status.
 
 ## Final phase report format (fill only with observed data)
 
