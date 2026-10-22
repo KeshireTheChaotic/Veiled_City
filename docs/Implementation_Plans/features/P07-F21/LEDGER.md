@@ -1,0 +1,19 @@
+# P07-F21 — Ledger
+
+**Status:** LOCAL HOLD — MISSING AUTHORIZED LINKAGE PRODUCER. Baseline `ec0451914fe5080e537c5b04bba12f9ec54f30a2`.
+
+| Producer path inspected | Current contract and why it cannot produce this optional signal |
+|---|---|
+| `bot/src/typed-intents.js` | `persistPlayerIntents` writes each owner-authored accepted intent with actor, exact source event/hash, session/scene and current principal. The accepted record is an individual action input; it has no native incident-root binding or optional disposition. |
+| `bot/src/world-simulation-receipts.js` | NPC travel action + audited mutation can create a current public travel observation after native resolution. It records one NPC action and audience-safe observation; it does not bind two PC source refs to the same incident. Its outcome is committed/causal, not optional. |
+| `bot/src/world-encounter-beats.js` | `snapshotNativeEncounterCandidates`/`inspectNativeEncounterCandidate` validate a pending encounter proposal, native actors, scene roster, audience and budget. The proposal contains no independently owned pair of PC sources linked to an exact optional incident, and stays a proposal rather than a shared narrative interest. |
+| `bot/src/scene-intent-board.js` | `buildSceneIntentBoard` joins currently accepted PC actions and native NPC proposals for adjudication. Entries are live action coordination, not optional opportunities; grouping these would infer common causation or interest. |
+| `bot/src/scene-continuity.js` | Arrival/presence readers prove current actual presence and exact owner arrival. Presence alone is expressly insufficient evidence of shared causation/interest. |
+| `bot/src/city-calendar.js` and `bot/src/world-authorship.js` | Calendar/world-authorship paths can index established GM/public events and authored identities but do not bind two independently authenticated PC investigation/action refs to one incident. GM-created public incident alone cannot establish both PC interests. |
+| Conversation path | `world-narrative-bridge.js` validates authored speech, distinct accepted PC actors, current NPC presence and NPC-heard memory. It is the only inspected optional intersection with the needed independent owner evidence, but is conversation rather than non-conversation. |
+
+**Smallest safe upstream contract proposal:** add a native, deterministic `optional_incident_link` writer at the point where native adjudication accepts a PC investigation/search source against an exact already-established public incident. It must accept only the incident's current public source ref/hash and one exact accepted owner intent ref/hash per owner; validate distinct current owner principals, exact campaign/session/scene, public incident scope, and active source ancestry; deduplicate by incident/session/scene/owner-source tuple; retain revocation by re-reading both inputs; and emit only a party-entitled bounded ID/reference projection. A second independently accepted PC source may complete the pair. No model-authored interested/optional labels, source text, travel, mechanics, canon, output, or publication authority. Add no schema migration unless the existing generic city record is insufficient and that is separately reviewed.
+
+**Attempt/evidence:** audited the current writers/readers above rather than repeating the F15 conclusion. No authorized writer takes an exact shared incident ref plus two PC-owned source refs and records that binding. The needed producer does not currently exist; synthesizing a pair in the reader would manufacture provenance. No fresh test or production change is appropriate for this absent contract.
+
+No new restriction to GM creativity/autonomy is proposed. Character-only and supported same-NPC speech opportunities remain available. No live provider/services/production DB used. Follow-up: implement and test the typed source writer before removing this hold.
