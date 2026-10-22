@@ -6,6 +6,48 @@ import {createHash} from 'node:crypto';
 import {spawnSync} from 'node:child_process';
 import {selectFreshTests} from '../src/ai-gm-test-selection.js';
 
+/** Reject duplicate object keys at the coverage root before JSON.parse can discard one. */
+export function parseCoverageJson(text){
+  if(typeof text!=='string')throw new TypeError('Coverage JSON must be text.');
+  let i=0;const ws=()=>{while(/[\u0009\u000a\u000d\u0020]/.test(text[i]||'')&&i<text.length)i++;};
+  const stringEnd=start=>{
+    if(text[start]!=='"')throw new Error('Coverage JSON root keys must be strings.');
+    let escaped=false;
+    for(let n=start+1;n<text.length;n++){
+      const c=text[n];if(escaped){escaped=false;continue;}if(c==='\\'){escaped=true;continue;}if(c==='"')return n+1;
+    }
+    throw new Error('Malformed coverage JSON string.');
+  };
+  const valueEnd=()=>{
+    ws();const start=i;if(i>=text.length)throw new Error('Missing coverage JSON value.');
+    if(text[i]==='"'){i=stringEnd(i);return;}
+    let depth=0,inString=false,escaped=false;
+    for(;i<text.length;i++){
+      const c=text[i];
+      if(inString){if(escaped)escaped=false;else if(c==='\\')escaped=true;else if(c==='"')inString=false;continue;}
+      if(c==='"'){inString=true;continue;}
+      if(c==='{'||c==='['){depth++;continue;}
+      if(c===']'){depth--;if(depth<0)break;continue;}
+      if(c==='}'){
+        if(depth===0)break;
+        depth--;continue;
+      }
+      if(c===','&&depth===0)break;
+    }
+    if(inString||depth!==0||i===start)throw new Error('Malformed coverage JSON value.');
+  };
+  ws();if(text[i++]!=='{')throw new Error('Coverage JSON root must be an object.');
+  const keys=new Set();ws();
+  while(text[i]!=='}'){
+    const start=i,end=stringEnd(start),key=JSON.parse(text.slice(start,end));i=end;ws();
+    if(text[i++]!==':')throw new Error('Malformed coverage JSON mapping.');
+    if(keys.has(key))throw new Error(`Duplicate coverage mapping: ${key}`);keys.add(key);
+    valueEnd();ws();if(text[i]===','){i++;ws();continue;}if(text[i]!=='}')throw new Error('Malformed coverage JSON root.');
+  }
+  i++;ws();if(i!==text.length)throw new Error('Trailing content after coverage JSON.');
+  return JSON.parse(text);
+}
+
 export function runFreshDelta({changedPaths,coverage,root,execute=spawnSync,reportDirectory}){
   const selection=selectFreshTests(changedPaths,coverage);
   if(!selection.qualified)throw new Error(`Fresh coverage required: ${selection.uncovered.join(', ')}`);
@@ -37,7 +79,7 @@ if(process.argv[1]&&import.meta.url===pathToFileURL(path.resolve(process.argv[1]
   if(!/^[a-f0-9]{40}$/.test(base))throw new Error('Use an exact 40-character base commit SHA.');
   const git=args=>{const r=spawnSync('git',args,{cwd:root,encoding:'utf8'});if(r.status!==0)throw new Error(r.stderr);return r.stdout.trim();};
   const changedPaths=[...new Set([git(['diff','--name-only',base,'--']),git(['ls-files','--others','--exclude-standard'])].join('\n').split(/\r?\n/).filter(Boolean))];
-  const coverage=JSON.parse(fs.readFileSync(path.join(root,'bot/tests/ai-gm-2026-10/coverage.json')));
+  const coverage=parseCoverageJson(fs.readFileSync(path.join(root,'bot/tests/ai-gm-2026-10/coverage.json'),'utf8'));
   const result=runFreshDelta({changedPaths,coverage,root,reportDirectory:path.join(root,'bot/.reports/ai-gm-2026-10')});
   console.log(JSON.stringify({sha:git(['rev-parse','HEAD']),...result}));
   process.exitCode=result.status==='TARGETED_PASS'||result.status==='NO_PRODUCTION_TESTS'?0:1;

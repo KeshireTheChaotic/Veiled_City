@@ -10,7 +10,10 @@
     "bot/tests/ai-gm-2026-10/p07-f06.test.mjs",
     "bot/tests/ai-gm-2026-10/p07-f09.test.mjs",
     "bot/tests/ai-gm-2026-10/p07-f10.test.mjs",
-    "bot/tests/ai-gm-2026-10/p07-f12.test.mjs"
+    "bot/tests/ai-gm-2026-10/p07-f12.test.mjs",
+    "bot/tests/ai-gm-2026-10/p07-f13.test.mjs",
+    "bot/tests/ai-gm-2026-10/p07-f14.test.mjs",
+    "bot/tests/ai-gm-2026-10/p07-f17.test.mjs"
   ],
   "bot/src/narrative-opportunity-guidance.js": [
     "bot/tests/ai-gm-2026-10/p07-f04.test.mjs",
@@ -118,7 +121,10 @@
   ],
   "bot/src/gm.js": [
     "bot/tests/ai-gm-2026-10/p05-f01.test.mjs",
-    "bot/tests/ai-gm-2026-10/p07-f04.test.mjs"
+    "bot/tests/ai-gm-2026-10/p07-f04.test.mjs",
+    "bot/tests/ai-gm-2026-10/p07-f13.test.mjs",
+    "bot/tests/ai-gm-2026-10/p07-f14.test.mjs",
+    "bot/tests/ai-gm-2026-10/p07-f17.test.mjs"
   ],
   "bot/src/ai-gm-test-selection.js": [
     "bot/tests/ai-gm-2026-10/p00-f02.test.mjs",
@@ -473,7 +479,8 @@
     "bot/tests/ai-gm-2026-10/p06-f02.test.mjs"
   ],
   "bot/scripts/ai-gm-delta.mjs": [
-    "bot/tests/ai-gm-2026-10/p06-f03.test.mjs"
+    "bot/tests/ai-gm-2026-10/p06-f03.test.mjs",
+    "bot/tests/ai-gm-2026-10/p07-f16.test.mjs"
   ],
   "bot/src/native-environment-last-train-rules.js": [
     "bot/tests/ai-gm-2026-10/p06-f34.test.mjs"

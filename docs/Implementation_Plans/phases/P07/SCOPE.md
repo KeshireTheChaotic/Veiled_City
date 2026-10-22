@@ -56,3 +56,9 @@ Ranking cannot create or upgrade truth, provenance, scope, knowledge, location, 
 - P07-F10 audits shared-cause evidence but holds non-conversation overlap because current resolved-action signals are causal, not optional.
 - P07-F11 holds downstream optional-capacity reordering until a source-bound end-to-end Director fixture can prove established observations and native receipts are not displaced.
 - P07-F12 adds focused acceptance evidence and reconciles the stale F06 phase wording. End-to-end persistence, Discord delivery, and live semantic quality remain outside this delta.
+
+## Second corrective delta — P07-F13..F18
+
+See [second corrective handoff](Veiled_City_P07_Second_Corrective_Handoff_Luna_Medium.md) and feature scope/ledger pairs in `docs/Implementation_Plans/features/P07-F13` through `P07-F18`. This delta adds a disposable-SQLite path using native authenticated speech and presence records through the real World Director request, native Director binding, current audience revalidation and writer-context builder; hardens the actual coverage loader against duplicate decoded root keys; and adds public/private/revocation acceptance. It does not change Daggerheart rules, action authority, creative requirements, or the four-item caps.
+
+The added source proof resolves the former “no native Director fixture” gap for the available-capacity conversation path only. It does not identify comparable optional capacity under committed/established beat pressure, and no authoritative non-conversation optional cross-PC source was found. Those remain local holds. F01–F12 entries and P08/P09 work are unchanged.

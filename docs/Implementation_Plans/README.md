@@ -36,3 +36,5 @@ The goal is an imaginative, impartial autonomous GM running a living world, rath
 - [P06 — Native catalog and qualification](phases/P06/SCOPE.md): Complete source-qualified features, reconcile rules and qualify the changed implementation delta.
 - [P07 — Character-driven, party-aware narrative](phases/P07/SCOPE.md): Prefer verified organic overlap among comparable optional world opportunities without forcing convergence or displacing player response.
 - [P09 — AI-first feature interpretation and native mechanical validation](phases/P09/SCOPE.md): Retrieve source-backed GM feature rules for creative interpretation while keeping all effects in native validators and receipts.
+
+P07 follow-up evidence is append-only: the F07–F12 correction is in the P07 phase ledger, and the second correction (F13–F18) is tracked in [its handoff](phases/P07/Veiled_City_P07_Second_Corrective_Handoff_Luna_Medium.md) and feature ledgers. P07 remains partially verified where those ledgers name local holds; offline deltas are not release qualification.
