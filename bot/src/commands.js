@@ -29,7 +29,7 @@ import {normalizeGmHookImport} from './gm-hook-import.js';
 import {importSanctionedGmHooks,sanctionedWorldMutation} from './world-sanctioned-sources.js';
 import {certifyAssemblyPlan,assemblyPlanFreshness} from './assembly-context.js';
 import {assemblyHasHistory,prepareAssemblyRefresh,refreshAssemblyPlan} from './assembly-planning.js';
-import {prepareSceneSetup,confirmSceneSetup} from './scene-setup.js';
+import {prepareSceneSetup,confirmSceneSetup,sceneSetupAvailability} from './scene-setup.js';
 import { assertGmOnlyChannel, assertPlayerPrivateChannel } from "./discord/privacy.js";
 import { isExpectedError, PermissionError, NotFoundError, StateConflictError, UserInputError } from "./errors.js";
 import { replayReceiptIfPresent, installReceiptCapture, isMutatingCommand } from "./idempotency.js";
@@ -49,7 +49,8 @@ import { handleStoryCommand } from "./story-commands.js";
 import { registerOpeningAttendance, carryOpeningAttendance, prepareOpeningEntryOpportunity } from "./session-opening-attendance.js";
 import {scheduleSessionOpening} from './session-opening.js';
 import {runSessionOpening,sessionOpeningStatus} from './session-opening-runner.js';
-import {prepareSessionOpeningDeliveryReview,recoverSessionOpeningDelivery} from './session-opening-recovery.js';
+import {continueSessionOpening} from './opening-flow.js';
+import {prepareSessionOpeningDeliveryReview,recoverSessionOpeningDelivery,prepareSessionOpeningPrecommitReview,recoverSessionOpeningPrecommit} from './session-opening-recovery.js';
 import {deliverOpeningEntry} from './opening-entry.js';
 import {runOpeningCohort,openingCohortStatus} from './opening-cohort-runner.js';
 import { recordCharacterArrival,scenePresence } from "./scene-continuity.js";
@@ -180,6 +181,8 @@ function compactAssemblyStatus(db,guildId,session){
     `Present: ${roster.length?roster.map(r=>r.name).join(", "):"none"}`,
     `Plan: ${readiness.plan?"generated":"not generated"}`,
   ];
+  const opening=db.getCityRecord(guildId,'session_opening_job',session.id);
+  if(opening){lines.push(sessionOpeningStatus(opening));if(opening.data.diagnostic)lines.push(`Stage: ${opening.data.diagnostic.stage}; category: ${opening.data.diagnostic.category}; epoch: ${opening.data.diagnostic.epoch}; planner invocations: ${opening.data.diagnostic.planner_invocations}; local elapsed: ${opening.data.diagnostic.duration_ms}ms. Live/provider latency UNMEASURED.`);}
   const cohort=openingCohortStatus(db.getCityRecord(guildId,'opening_cohort_job',session.id));
   if(cohort)lines.push(cohort);
   if(plan.convergence_goal) lines.push(`Convergence goal: ${plan.convergence_goal}`);
@@ -439,6 +442,13 @@ export async function handleCommand(interaction,{db,gm,voice=null}){
 }
 async function handleCommandBody(interaction,{db,gm,voice=null}){
   beginInteraction(interaction);
+  if(typeof interaction.isButton==='function'&&interaction.isButton()&&interaction.customId?.startsWith('vcopeningprecommit:')){
+    if(!interaction.guildId||!isGM(db,interaction))throw new PermissionError('GM/admin permission required.');
+    await interaction.deferReply({ephemeral:true});
+    const job=await recoverSessionOpeningPrecommit({db,interaction,authorize:isGM,gm,reviewKey:interaction.customId.slice(19)});
+    await continueSessionOpening({db,guild:interaction.guild,gm});
+    await deliverInteractionText(interaction,sessionOpeningStatus(job),{ephemeral:true});return true;
+  }
   if(await handlePvpSafetyCommand(interaction,{db,gm:interaction.guildId&&isGM(db,interaction)}))return true;
   if(typeof interaction.isButton==='function'&&interaction.isButton()&&interaction.customId?.startsWith('vcopeningdelivery:')){
     if(!interaction.guildId||!isGM(db,interaction))throw new PermissionError('GM/admin permission required.');
@@ -1010,10 +1020,12 @@ async function executeCommand(interaction,{db,gm,voice=null}){
       await postGmLog({db,guild:interaction.guild,sessionId:s.id,title:`Session ${s.session_number} started`,details:`${s.title||"Untitled session"}
 Assembly mode: ${assembly}
 Initial phase: ${s.assembly_phase}`});
-      const opening=await runSessionOpening({db,guild:interaction.guild,gm});
+      const {opening}=await continueSessionOpening({db,guild:interaction.guild,gm});
       if(opening){
         const status=sessionOpeningStatus(opening);
-        if(typeof interaction.followUp==='function')await interaction.followUp({content:status,ephemeral:true,allowedMentions:{parse:[]}})
+        const review=prepareSessionOpeningPrecommitReview(db,interaction,isGM),components=review?
+          [{type:1,components:[{type:2,style:2,label:'Recover proven-uncommitted opening',custom_id:`vcopeningprecommit:${review}`}]}]:[];
+        if(typeof interaction.followUp==='function')await interaction.followUp({content:status,ephemeral:true,allowedMentions:{parse:[]},components})
           .catch(()=>postGmLog({db,guild:interaction.guild,sessionId:s.id,title:'Native opening status',details:status}));
         else await postGmLog({db,guild:interaction.guild,sessionId:s.id,title:'Native opening status',details:status});
       }
@@ -1068,7 +1080,9 @@ Initial phase: ${s.assembly_phase}`});
     if(group==="session"&&sub==="assembly-status"){
       if(!isGM(db,interaction)) throw new Error("Only a GM/admin may view the private assembly plan.");
       const s=requireSession(db,interaction.guildId);
-      await deliverInteractionText(interaction,compactAssemblyStatus(db,interaction.guildId,s),{ephemeral:true});
+      const review=prepareSessionOpeningPrecommitReview(db,interaction,isGM),components=review?
+        [{type:1,components:[{type:2,style:2,label:'Recover proven-uncommitted opening',custom_id:`vcopeningprecommit:${review}`}]}]:[];
+      await deliverInteractionText(interaction,compactAssemblyStatus(db,interaction.guildId,s),{ephemeral:true,components});
       return true;
     }
     if(group==="session"&&sub==="roster"){
@@ -1144,19 +1158,19 @@ Initial phase: ${s.assembly_phase}`});
         const setup=prepareSceneSetup(db,interaction.guildId,interaction.user.id,c.id);
         await interaction.reply({content:setup?
           `Checked in for Session ${s.session_number}. Confirm where your character already starts; this is not travel or resolution of an earlier attempt. Share makes this initial position visible at the table; Private keeps it owner-only. You may leave it unconfirmed.`:
-          `Checked in for Session ${s.session_number}. Initial position needs native setup/history review; no location or movement was inferred.`,
+          `Checked in for Session ${s.session_number}. ${sceneSetupAvailability(db,interaction.guildId,interaction.user.id,c.id).message}`,
           ephemeral:true,allowedMentions:{parse:[]},...(setup?{components:setup.components}:{})});
         if(openingEntry&&s.assembly_mode!=='manual'){
-          await deliverOpeningEntry({db,guild:interaction.guild,gm,key:openingEntry.record_key});
-          const cohort=openingCohortStatus(await runOpeningCohort({db,guild:interaction.guild,gm}));
+          const flow=await continueSessionOpening({db,guild:interaction.guild,gm});
+          const cohort=openingCohortStatus(flow.cohort);
           if(cohort&&interaction.followUp)await interaction.followUp({content:cohort,ephemeral:true,allowedMentions:{parse:[]}}).catch(()=>{});
         }
         return true;
       }
       await interaction.reply({content:`${JSON.stringify(c.name)} is now present in Session ${s.session_number}. Attendance does not choose travel, cooperation or party membership.`,allowedMentions:{parse:[]}});
       if(openingEntry&&s.assembly_mode!=='manual'){
-        await deliverOpeningEntry({db,guild:interaction.guild,gm,key:openingEntry.record_key});
-        const cohort=openingCohortStatus(await runOpeningCohort({db,guild:interaction.guild,gm}));
+        const flow=await continueSessionOpening({db,guild:interaction.guild,gm});
+        const cohort=openingCohortStatus(flow.cohort);
         if(cohort&&interaction.followUp)await interaction.followUp({content:cohort,ephemeral:true,allowedMentions:{parse:[]}}).catch(()=>{});
       }
       return true;

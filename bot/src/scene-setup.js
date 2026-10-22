@@ -4,7 +4,7 @@ import {conversationPrincipal} from './conversation-principal.js';
 import {currentScene,recordScenePresence} from './scene-continuity.js';
 import {indexWorldEvent} from './city-calendar.js';
 const hash=value=>createHash('sha256').update(JSON.stringify(value)).digest('hex');
-function fail(){throw Object.assign(new Error('Current owner, empty initial position and unchanged safe scene setup required.'),{code:'SCENE_SETUP',expected:true});}
+function fail(setup_reason='owner_invalid'){throw Object.assign(new Error('Current owner, empty initial position and unchanged safe scene setup required.'),{code:'SCENE_SETUP',setup_reason,expected:true});}
 function owner(db,guild,user,character){
   let principal;try{principal=conversationPrincipal(db,guild,user,character);}catch{fail();}
   const pc=db.getCharacter(character);if(principal.kind!=='owner'||pc?.owner_user_id!==user)fail();
@@ -12,8 +12,11 @@ function owner(db,guild,user,character){
 }
 function snapshot(db,guild,user,character){
   const {principal,pc,scene}=owner(db,guild,user,character),session=db.getActiveSession(guild);
-  if(session.assembly_phase!=='assembly'||pc.data.location||db.hasCharacterPlacementHistory(guild,pc.id)
-    ||db.getCurrentEncounter(session.id)?.status==='active'||db.getCityCalendar(guild).flags.scene_continuity!==true)fail();
+  if(session.assembly_phase!=='assembly')fail('not_in_assembly_phase');
+  if(pc.data.location)fail('position_already_set');
+  if(db.hasCharacterPlacementHistory(guild,pc.id))fail('placement_history_requires_review');
+  if(db.getCurrentEncounter(session.id)?.status==='active')fail('encounter_active');
+  if(db.getCityCalendar(guild).flags.scene_continuity!==true)fail('scene_continuity_disabled');
   // Confirming an unset initial position is descriptive setup, not an in-fiction action or travel.
   // Marked HP/death workflow stays untouched; native action services still enforce eligibility and exact ability exceptions.
   const locations=db.listSimulationEntities(guild,'location').flatMap(entity=>{
@@ -26,6 +29,23 @@ function snapshot(db,guild,user,character){
     return [{key:entity.entity_key,digest:hash([entity,authored,source])}];
   }).sort((a,b)=>a.key.localeCompare(b.key)).slice(0,12);
   return {session:session.id,scene:scene.key,user,character,principal:principal.revision,locations};
+}
+const setupGuidance=Object.freeze({
+  owner_invalid:'An active checked-in owner role is required. Select your own character; no position was assigned.',
+  not_in_assembly_phase:'Initial setup is closed for this established session. Existing continuity remains in effect.',
+  position_already_set:'Your saved position is already recorded. Changing it requires a player declaration and native adjudication.',
+  placement_history_requires_review:'Earlier placement history exists. Ask the GM to reconcile it; initial setup cannot reset that history.',
+  encounter_active:'An encounter is active. Initial setup cannot relocate a character during it.',
+  scene_continuity_disabled:'Initial scene setup is not enabled. Your position can remain unconfirmed while an independent world scene opens.',
+  no_eligible_safe_locations:'No entitled initial-location choices are available. You may remain unplaced and describe what you want to explore; a world camera does not place your character.',
+  setup_offer_available:'You may confirm an initial position and its disclosure, or leave it unconfirmed.'
+});
+/** Owner-safe reason only; never disclose hidden location keys or another character's history. */
+export function sceneSetupAvailability(db,guild,user,character){
+  let code;
+  try{code=snapshot(db,guild,user,character).locations.length?'setup_offer_available':'no_eligible_safe_locations';}
+  catch(error){if(error.code!=='SCENE_SETUP')throw error;code=error.setup_reason||'owner_invalid';}
+  return {code,available:code==='setup_offer_available',message:setupGuidance[code]};
 }
 export function prepareSceneSetup(db,guild,user,character,{declarationKey=null}={}){
   let state;try{state=snapshot(db,guild,user,character);}catch(error){if(error.code==='SCENE_SETUP')return null;throw error;}

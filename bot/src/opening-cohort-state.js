@@ -3,8 +3,16 @@ import {createHash} from 'node:crypto';
 import {assemblyInputFingerprint,assemblySourceError} from './assembly-context.js';
 import {currentScene} from './scene-continuity.js';
 import {indexWorldEvent} from './city-calendar.js';
+import {inspectSessionOpening} from './session-opening.js';
 
 export const openingCohortHash=value=>createHash('sha256').update(JSON.stringify(value??null)).digest('hex');
+export function independentOpeningCameraBasis(db,guild,session){
+  if(!db.getCityRecord(guild,'session_opening_job',session.id))return null;
+  const job=inspectSessionOpening(db,guild,session.id);
+  if(['queued','planning','publishing','prepared_refresh','prepared_rebase','held_paused'].includes(job.status)
+    ||!db.openingCameraState(guild,session.id).independent_safe)return null;
+  return {version:1,kind:'independent_absent_original',origin_hash:job.data.origin_hash,source:job.source_event};
+}
 export function openingCohortRoster(db,guild,session){
   return db.roster(session.id).filter(r=>r.character_id&&['present','late','guest'].includes(r.presence))
     .map(r=>{const pc=db.getCharacter(r.character_id),a=db.activeAssignment(session.id,r.discord_user_id);
@@ -33,7 +41,8 @@ export function inspectOpeningCohortSource(db,guild,source){
   const d=source?.details,job=d?.job&&db.getCityRecord(guild,'opening_cohort_job',d.job),session=job&&db.getActiveSession(guild),saved=job?.data;
   const nativeJob=job&&db.getWorldEvent(guild,job.source_event),jobBinding=saved&&{version:saved.version,session:saved.session,scene:saved.scene,
     roster_revision:saved.roster_revision,input_fingerprint:saved.input_fingerprint,attempts:saved.attempts,turn_id:null,
-    ...(saved.attempt_id?{attempt_id:saved.attempt_id}:{})},legacy=!saved?.attempt_id;
+    ...(saved.attempt_id?{attempt_id:saved.attempt_id}:{}),
+    ...(saved.camera_basis?{camera_basis:saved.camera_basis}:{})},legacy=!saved?.attempt_id;
   if(!source||source.status!=='active'||source.kind!=='native_opening_cohort_scope'||source.source_id!=='native:opening-cohort'
     ||source.visibility!=='party'||source.subject_key!==null||!job||job.visibility!=='gm'||job.subject_key!==null
     ||source.event_key!==`opening-cohort-scope:${openingCohortHash(legacy?[d.job,d.scope]:[d.job,d.attempt_id,d.scope])}`
@@ -49,7 +58,8 @@ export function inspectOpeningCohortSource(db,guild,source){
     ||d.revision!==openingCohortHash([saved.session,saved.scene,saved.plan_hash,saved.roster_revision,saved.input_fingerprint,d.scope])
     ||saved.plan?.assembly_contract?.version!==2||saved.plan.assembly_contract.input_fingerprint!==saved.input_fingerprint
     ||saved.roster_revision!==openingCohortRosterRevision(db,guild,session)
-    ||saved.input_fingerprint!==assemblyInputFingerprint(db,guild,session))
+    ||saved.input_fingerprint!==assemblyInputFingerprint(db,guild,session)
+    ||saved.camera_basis&&openingCohortHash(saved.camera_basis)!==openingCohortHash(independentOpeningCameraBasis(db,guild,session)))
     throw assemblySourceError('Current additive opening cohort source and roster required.');
   return {job,session,plan:saved.plan,scope:d.scope,revision:d.revision};
 }

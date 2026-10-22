@@ -39,9 +39,10 @@ export async function deliverVerifiedAssembly({db,guild,session,gm=null,deliver=
       if(!job?.data.turn_id&&typeof gm?.authorAssemblyScene==='function'
         &&(plan.assembly_contract?.version===2||db.getCityCalendar(guild.id).flags.playable_narration===true
           &&(slot.scope.actorCharacterId||db.getCityCalendar(guild.id).flags.narrative_camera&&db.getCityCalendar(guild.id).flags.narrative_authority)))
-        await gm.authorAssemblyScene(guild.id,session.id,slot.scope);
+        await gm.authorAssemblyScene(guild.id,session.id,slot.scope,{assertCurrent});
       assertCurrent();
       if(!job?.data.turn_id)job=measureNative('opening_commit',guild.id,()=>db.transaction(()=>{
+        assertCurrent();
         const result=prepareAssemblyOutput(db,guild.id,session.id,slot.scope,{content:gm?.content});
         const prior=result.assembly_evidence.fallback&&retainedAssemblyDelivery(db,guild.id,session,slot.scope,{fallback:true});
         if(prior)return db.saveCityRecord(guild.id,{kind:'assembly_delivery',key:slot.key,status:'delivered',visibility:'gm',

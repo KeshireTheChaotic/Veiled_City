@@ -1321,6 +1321,45 @@ export class VeiledDB {
       .get(guildId,messageId,actorPrincipal,sessionId);
   }
   getTurnAttempt(id){return this.db.prepare("SELECT * FROM turn_attempts WHERE turn_id=?").get(id);}
+  /** Conservative, durable no-commit proof. Absence of an ACK alone is never no-send proof. */
+  openingCommitmentState(guildId,sessionId){
+    const turns=this.db.prepare(`SELECT t.turn_id,t.committed,t.stage FROM turn_attempts t
+      WHERE t.guild_id=? AND t.session_id=? AND (t.committed!='no'
+      OR EXISTS(SELECT 1 FROM publication_outbox p WHERE p.turn_id=t.turn_id))`).all(guildId,sessionId);
+    const fiction=this.db.prepare(`SELECT record_key FROM city_records WHERE guild_id=? AND kind='narrative_unit'
+      AND status='accepted_established' AND json_extract(data_json,'$.binding.session')=?`).all(guildId,sessionId);
+    const deliveries=this.assemblyDeliveryRecords(guildId,sessionId);
+    const legacy=Object.values(this.getAssemblyPlan(sessionId)?.delivery_state||{});
+    return {safe:!turns.length&&!fiction.length&&!deliveries.some(r=>r.data.turn_id)
+      &&!legacy.some(r=>['delivered','delivering','uncertain'].includes(r.status)),
+      turns:turns.map(t=>t.turn_id),fiction:fiction.map(r=>r.record_key)};
+  }
+  openingCameraState(guildId,sessionId){
+    const deliveries=this.assemblyDeliveryRecords(guildId,sessionId).filter(r=>r.data.scope?.mode==='party'),
+      parts=deliveries.flatMap(r=>r.data.turn_id?this.listTurnPublications(guildId,r.data.turn_id):[]),
+      established=this.db.prepare(`SELECT count(*) n FROM city_records n JOIN world_events s
+        ON s.guild_id=n.guild_id AND s.event_key=json_extract(n.data_json,'$.binding.source')
+        WHERE n.guild_id=? AND n.kind='narrative_unit' AND n.status='accepted_established'
+        AND json_extract(n.data_json,'$.binding.session')=? AND json_extract(n.data_json,'$.binding.scope.mode')='party'
+        AND s.kind='native_assembly_scope'`).get(guildId,sessionId).n,
+      legacy=Object.values(this.getAssemblyPlan(sessionId)?.delivery_state||{});
+    return {independent_safe:!established&&!parts.some(p=>['delivering','uncertain'].includes(p.status))
+      &&!deliveries.some(r=>r.data.evidence?.narrative_verified||r.data.turn_id&&!this.listTurnPublications(guildId,r.data.turn_id).length)
+      &&!parts.some(p=>p.status!=='delivered')&&!legacy.some(p=>['delivering','uncertain','delivered'].includes(p.status)),
+      public_parts:parts.length,established};
+  }
+  openingAuthoringState(guildId,source){
+    const drafts=this.db.prepare(`SELECT data_json FROM city_records WHERE guild_id=? AND kind='narrative_draft' AND source_event=?`).all(guildId,source)
+      .map(r=>JSON.parse(r.data_json));
+    return drafts.some(d=>(d.answer?.narrative_units||[]).length)?'ALL_UNITS_HELD'
+      :drafts.some(d=>(d.compiled_v9||[]).some(a=>a.status==='held'))?'ALL_UNITS_HELD'
+      :drafts.length?'ZERO_UNITS':'NATIVE_AUTHORING_HELD';
+  }
+  openingEntryOpportunities(guildId,sessionId){
+    return this.db.prepare(`SELECT * FROM city_records WHERE guild_id=? AND kind='opening_entry_opportunity'
+      AND json_extract(data_json,'$.session')=? ORDER BY rowid LIMIT 5001`).all(guildId,sessionId)
+      .map(r=>({...r,data:JSON.parse(r.data_json)}));
+  }
   updateTurnAttempt(id,{stage,committed,sourceCapture,modelAttempts,nativeCommitId,publicationId,terminalCode,errorRef}={}){
     const prior=this.getTurnAttempt(id);if(!prior)return null;
     this.db.prepare(`UPDATE turn_attempts SET stage=?,committed=?,source_capture_json=?,model_attempts=?,native_commit_id=?,publication_id=?,

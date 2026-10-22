@@ -149,7 +149,7 @@ function renderPart(db,guild,part){
     fail();
   }
   if(kind==='opening_entry_orientation'){
-    const view=openingEntryProjection(db,guild,ref,scope);
+    const view=openingEntryProjection(db,guild,ref,scope,{orientationVersion:part.entry_orientation_version||1});
     if(view.revision!==part.entry_revision)fail();return view.text;
   }
   if(kind==='assembly_hook'){
@@ -334,6 +334,7 @@ export function prepareOpeningEntryOutput(db,guild,key,scope){
   const fallback=!parts.length;
   if(fallback)parts=[savePart(db,guild,{render_version:1,scene:view.state.material.scene,session:view.state.material.session,
     scope:{...scope},origin:'native_opening_entry_fallback',kind:'opening_entry_orientation',ref:key,
+    entry_orientation_version:2,
     entry_revision:view.revision,source_ref:source.event_key,source_hash:hash(source.details),principal_revision:view.state.principal})];
   saveOutputGroup(db,guild,parts);
   const text=parts.map(p=>p.data.text).join('\n'),result={narration:text,player_summary:text,narrative_claims:[],private_messages:[],

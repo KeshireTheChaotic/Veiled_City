@@ -273,8 +273,8 @@ export async function deliverQueuedTurn({db,guild,turnId,forceUncertain=false,be
     }
     const ch=await textChannel(guild,row.channel_id||db.getCampaign(guild.id)?.play_channel_id);
     if(!ch)throw notSent("Configured publication channel is unavailable.");
-    revalidateOutputPublication(db,guild.id,row);
-    beforeSend?.(row);
+    try{revalidateOutputPublication(db,guild.id,row);beforeSend?.(row);}
+    catch(error){error.deliveryCertainty='not_sent';throw error;} // Native guard failed before channel.send.
     const message=await ch.send(row.payload);
     db.addMessage({guildId:guild.id,sessionId:attempt.session_id,userId:null,speakerName:"Veilkeeper",
       visibility:row.visibility,subjectUserId:row.visibility==="player"?row.target_user_id:null,

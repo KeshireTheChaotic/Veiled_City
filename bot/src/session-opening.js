@@ -5,6 +5,40 @@ import {indexWorldEvent} from './city-calendar.js';
 import {assemblyPlanHash} from './assembly-state.js';
 const ISSUER='native:opening-director',KIND='session_opening_job';
 function fail(reason){throw Object.assign(new Error(`Native opening job requires ${reason}.`),{code:'SESSION_OPENING',expected:true});}
+const epochFailure=code=>Object.assign(new Error('Opening generation requires current native revision and no prior commitment.'),{code,expected:true});
+const snapshotRoster=(db,key)=>db.roster(key).filter(r=>r.character_id&&['present','late','guest'].includes(r.presence))
+  .map(r=>({user:r.discord_user_id,character:r.character_id}));
+
+/** Independent snapshot epochs preserve immutable attempt-1/manual-attempt-2 semantics. */
+export function rebaseSessionOpening(db,guild,key,expected,{prepared=false,interactionId=null}={}){
+  return db.transaction(()=>{
+    const row=inspectSessionOpening(db,guild,key),session=db.getActiveSession(guild),prior=row.data.epoch;
+    if(hash(row.data.context)!==hash(expected.data.context)||hash(prior||null)!==hash(expected.data.epoch||null))throw epochFailure('OPENING_FENCE_LOST');
+    if(session?.id!==key||db.isDirectorPaused(guild))throw epochFailure('OPENING_PAUSED_OR_REVOKED');
+    if(row.data.attempts!==1)throw epochFailure('OPENING_MANUAL_REFRESH_REQUIRED');
+    if(!db.openingCommitmentState(guild,key).safe)throw epochFailure('OPENING_COMMITTED_SOURCE_CHANGED');
+    if((prior?.number||0)>=1)throw epochFailure('OPENING_REBASE_PENDING');
+    const epoch={version:1,number:1,job:key,attempt_source:row.data.attempt_source,context_hash:hash(row.data.context),
+      previous_fingerprint:prior?.input_fingerprint||row.data.context.input_fingerprint,
+      input_fingerprint:assemblyInputFingerprint(db,guild,session),
+      roster:snapshotRoster(db,key)},
+      mutation=db.recordMutation(guild,{sessionId:key,actorType:'system',actorId:ISSUER,sourceLayer:'opening_precommit',
+        sourceInteractionId:interactionId,
+        mutationType:'session_opening_rebase',entityKey:key,visibility:'gm',before:row.data.context,after:epoch,
+        rationale:'Supersede only proven uncommitted generation; original authenticated attempt and all receipts retained.'}),
+      source=indexWorldEvent(db,guild,{key:`opening-epoch:${key}:${row.data.attempts}:1`,kind:'native_opening_epoch',
+        title:'Source-bound precommit revision fence',source_kind:'mutation',source_id:mutation.id,session_id:key,visibility:'gm',details:epoch},ISSUER);
+    db.saveCityRecord(guild,{kind:'session_opening_generation',key:`${key}:${row.data.attempts}:0`,status:'superseded_uncommitted',
+      visibility:'gm',source_event:row.data.attempt_source,data:{context:row.data.context,plan:db.getAssemblyPlan(key),replacement:source.event_key}});
+    db.setAssemblyPlan(key,{});
+    return db.saveCityRecord(guild,{...row,key,status:prepared?'prepared_rebase':'planning',data:{...row.data,epoch:{...epoch,source:source.event_key},hold_code:null}});
+  });
+}
+export function assertSessionOpeningFence(db,guild,key,expected){
+  const row=assertSessionOpeningAttempt(db,guild,key);
+  if(hash(row.data.context)!==hash(expected.data.context)||hash(row.data.epoch||null)!==hash(expected.data.epoch||null))throw epochFailure('OPENING_FENCE_LOST');
+  return row;
+}
 
 export function inspectSessionOpening(db,guild,key){
   const row=db.getCityRecord(guild,KIND,key),d=row?.data,o=d?.origin;
@@ -55,8 +89,9 @@ export function scheduleSessionOpening(db,interaction,session,authorize){
 export function beginSessionOpeningAttempt(db,guild,key){
   return db.transaction(()=>{
     const row=inspectSessionOpening(db,guild,key),session=db.getActiveSession(guild);
+    if(row.data.attempts!==0||!['queued','held_paused'].includes(row.status))return null;
     if(!['queued','held_paused'].includes(row.status)||row.data.attempts!==0||session?.id!==key||db.isDirectorPaused(guild))fail('an unattempted current job');
-    const context={version:1,job:key,origin_hash:row.data.origin_hash,input_fingerprint:assemblyInputFingerprint(db,guild,session),attempt:1},
+    const context={version:1,job:key,origin_hash:row.data.origin_hash,input_fingerprint:assemblyInputFingerprint(db,guild,session),attempt:1,roster:snapshotRoster(db,key)},
       source=indexWorldEvent(db,guild,{key:`opening-attempt:${key}:1`,kind:'native_session_opening_attempt',title:'Native opening attempt; not fictional authority',
         source_kind:'event',source_id:row.source_event,session_id:key,visibility:'gm',details:context},ISSUER);
     return db.saveCityRecord(guild,{...row,key,status:'planning',data:{...row.data,attempts:1,attempt_source:source.event_key,context}});
@@ -64,10 +99,22 @@ export function beginSessionOpeningAttempt(db,guild,key){
 }
 export function assertSessionOpeningAttempt(db,guild,key){
   const row=inspectSessionOpening(db,guild,key),session=db.getActiveSession(guild),c=row.data.context,e=db.getWorldEvent(guild,row.data.attempt_source);
-  if(session?.id!==key||db.isDirectorPaused(guild)||!c||c.version!==1||c.job!==key||c.attempt!==row.data.attempts||c.origin_hash!==row.data.origin_hash
-    ||c.input_fingerprint!==assemblyInputFingerprint(db,guild,session)||e?.status!=='active'||e.kind!=='native_session_opening_attempt'
+  if(db.isDirectorPaused(guild))throw epochFailure('OPENING_DIRECTOR_PAUSED');
+  if(session?.id!==key||!c||c.version!==1||c.job!==key||c.attempt!==row.data.attempts||c.origin_hash!==row.data.origin_hash
+    ||e?.status!=='active'||e.kind!=='native_session_opening_attempt'
     ||e.event_key!==`opening-attempt:${key}:${c.attempt}`||e.session_id!==key||e.visibility!=='gm'||e.subject_key!==null
     ||e.source_kind!=='event'||e.source_id!==row.source_event||hash(e.details)!==hash(c))fail('the current source-bound attempt');
+  const epoch=row.data.epoch;
+  if(epoch){
+    const {source,...payload}=epoch,event=db.getWorldEvent(guild,source),mutation=event&&db.getMutation(guild,event.source_id);
+    if(epoch.version!==1||epoch.number!==1||epoch.job!==key||epoch.attempt_source!==row.data.attempt_source
+      ||epoch.context_hash!==hash(c)||event?.status!=='active'||event.kind!=='native_opening_epoch'||event.visibility!=='gm'
+      ||event.session_id!==key||event.source_kind!=='mutation'||event.event_key!==`opening-epoch:${key}:${c.attempt}:1`
+      ||hash(event.details)!==hash(payload)||mutation?.actor_type!=='system'||mutation.actor_id!==ISSUER
+      ||mutation.mutation_type!=='session_opening_rebase'||mutation.source_layer!=='opening_precommit'||mutation.entity_key!==key
+      ||mutation.session_id!==key||hash(JSON.parse(mutation.after_json))!==hash(payload)||hash(JSON.parse(mutation.before_json))!==hash(c))fail('the authenticated generation receipt');
+  }
+  if((epoch?.input_fingerprint||c.input_fingerprint)!==assemblyInputFingerprint(db,guild,session))throw epochFailure('OPENING_INPUT_CHANGED');
   if(c.attempt===2){
     const approval=db.getMutation(guild,c.approval_mutation),{approval_mutation,...approved}=c,
       review=db.getCityRecord(guild,'assembly_refresh',c.refresh?.review),source=review&&db.getWorldEvent(guild,review.source_event),
@@ -96,6 +143,7 @@ export function rebindSessionOpeningRefresh(db,guild,key,review,user,interaction
     ||source.visibility!=='gm'||source.subject_key!==null||source.session_id!==key||hash(source.details)!==hash(review.data))
     fail('one authenticated exact-state replacement');
   const context={version:1,job:key,origin_hash:row.data.origin_hash,input_fingerprint:assemblyInputFingerprint(db,guild,session),attempt:2,
+    roster:snapshotRoster(db,key),
     refresh:{review:review.record_key,previous_source:row.data.attempt_source,previous_context:hash(row.data.context),plan:assemblyPlanHash(db.getAssemblyPlan(key))}},
     mutation=db.recordMutation(guild,{sessionId:key,actorType:'human_gm',actorId:user,sourceLayer:'assembly_refresh',sourceInteractionId:interactionId,
       mutationType:'session_opening_refresh',entityKey:key,visibility:'gm',before:row.data.context,after:context,
@@ -104,17 +152,21 @@ export function rebindSessionOpeningRefresh(db,guild,key,review,user,interaction
   const event=indexWorldEvent(db,guild,{key:`opening-attempt:${key}:2`,kind:'native_session_opening_attempt',
     title:'Explicit source-reviewed replacement opening attempt',source_kind:'event',source_id:row.source_event,
     session_id:key,visibility:'gm',details:context},ISSUER);
-  db.saveCityRecord(guild,{...row,key,status:'prepared_refresh',data:{...row.data,attempts:2,attempt_source:event.event_key,context,hold_code:null}});
+  db.saveCityRecord(guild,{...row,key,status:'prepared_refresh',data:{...row.data,attempts:2,attempt_source:event.event_key,context,
+    previous_epoch:row.data.epoch||row.data.previous_epoch||null,epoch:null,hold_code:null}});
   return assertSessionOpeningAttempt(db,guild,key);
 }
 export function bindSessionOpeningTurn(db,guild,key,turnId){
   const row=assertSessionOpeningAttempt(db,guild,key),turn=db.getTurnAttempt(turnId);
   if(turn?.guild_id!==guild||turn.session_id!==key)fail('the actual opening turn');
   const previous=db.getCityRecord(guild,'session_opening_turn',turnId);
-  if(previous&&(previous.source_event!==row.data.attempt_source||previous.data.context_hash!==hash(row.data.context)))
+  if(previous&&(previous.source_event!==row.data.attempt_source||previous.data.context_hash!==hash(row.data.context)
+    ||(previous.data.epoch_hash||null)!==(row.data.epoch?hash(row.data.epoch):null)))
     fail('the original immutable turn binding');
+  if(previous)return previous;
   db.saveCityRecord(guild,{kind:'session_opening_turn',key:turnId,status:'bound',visibility:'gm',source_event:row.data.attempt_source,
-    data:{version:1,job:key,origin_hash:row.data.origin_hash,context_hash:hash(row.data.context),turn:turnId}});
+    data:{version:1,job:key,origin_hash:row.data.origin_hash,context_hash:hash(row.data.context),turn:turnId,
+      ...(row.data.epoch?{epoch_hash:hash(row.data.epoch)}:{})}});
 }
 /** Also called by the common persisted publication verifier, including deferred/private transports. */
 export function assertSessionOpeningPublication(db,guild,publication){
@@ -122,5 +174,6 @@ export function assertSessionOpeningPublication(db,guild,publication){
   const row=assertSessionOpeningAttempt(db,guild,proof.data.job);
   if(proof.status!=='bound'||proof.visibility!=='gm'||proof.subject_key!==null||proof.data.version!==1
     ||proof.source_event!==row.data.attempt_source||proof.data.origin_hash!==row.data.origin_hash
+    ||(proof.data.epoch_hash||null)!==(row.data.epoch?hash(row.data.epoch):null)
     ||proof.data.context_hash!==hash(row.data.context)||proof.data.turn!==publication.turn_id)fail('the persisted opening publication proof');
 }

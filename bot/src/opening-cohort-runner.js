@@ -1,12 +1,13 @@
 /** One additive public opportunity after a verified zero-attendee camera and a genuinely owner-controlled cohort. */
 import {assemblyInputFingerprint,certifyAssemblyPlan,assemblySourceError} from './assembly-context.js';
 import {currentOpeningCohort,openingCohortHash,openingCohortNarrativeCandidate,
-  inspectOpeningCohortSource,openingCohortEligible,openingCohortIsAdditive} from './opening-cohort-state.js';
+  inspectOpeningCohortSource,openingCohortEligible,openingCohortIsAdditive,independentOpeningCameraBasis} from './opening-cohort-state.js';
 import {prepareOpeningCohortOutput} from './pvp-output.js';
 import {queueTurnPublications} from './publication-outbox.js';
 import {deliverQueuedTurn} from './publishing.js';
 import {indexWorldEvent} from './city-calendar.js';
 import {measureStage,measureNative,operationalMetrics} from './operational-metrics.js';
+import {openingErrorCode} from './opening-diagnostics.js';
 
 const flights=new WeakMap();
 function publicationStatus(rows){
@@ -41,10 +42,10 @@ export function reconcileOpeningCohortStatus(db,guild,row,status=row?.status,dat
   });
 }
 function save(db,guild,row,status,data=row.data){return reconcileOpeningCohortStatus(db,guild,row,status,data);}
-function code(error){return /^[A-Z_]{2,60}$/.test(error?.code||'')?error.code:'OPENING_COHORT_REVIEW';}
+const code=openingErrorCode;
 export function initialCameraAcknowledged(db,guild,session){
   const opening=db.getCityRecord(guild,'session_opening_job',session.id);
-  const originalRoster=opening?.data?.origin?.roster;
+  const originalRoster=opening?.data?.epoch?.roster||opening?.data?.context?.roster||opening?.data?.origin?.roster;
   // A later cohort is only an additive opening when the immutable original
   // camera had fewer than two owners. One-to-two is eligible; two-to-three
   // must not create a second assembly scene for an already shared start.
@@ -77,6 +78,8 @@ function current(db,guild,session,row){
   const state=currentOpeningCohort(db,guild,session);
   if(state.roster_revision!==row.data.roster_revision||state.input_fingerprint!==row.data.input_fingerprint||state.scene!==row.data.scene)
     throw assemblySourceError('Cohort roster, sources or scene changed; review the additive opportunity.');
+  if(row.data.camera_basis&&openingCohortHash(row.data.camera_basis)!==openingCohortHash(independentOpeningCameraBasis(db,guild,session)))
+    throw assemblySourceError('Independent camera no-send basis changed.');
   return state;
 }
 function coverage(rows,pending,evidence){
@@ -122,7 +125,7 @@ async function publish({db,guild,gm,row}){
   row=claimed;
   try{
     if(typeof gm?.authorOpeningCohort!=='function')throw Object.assign(new Error('Cohort writer unavailable.'),{code:'OPENING_COHORT_WRITER'});
-    await gm.authorOpeningCohort(guild.id,row.record_key);
+    await gm.authorOpeningCohort(guild.id,row.record_key,{assertCurrent:()=>current(db,guild.id,db.getActiveSession(guild.id),row)});
     const {source}=openingCohortNarrativeCandidate(db,guild.id,row.record_key),cohort=inspectOpeningCohortSource(db,guild.id,source);
     current(db,guild.id,cohort.session,row);
     const committed=measureNative('opening_commit',guild.id,()=>db.transaction(()=>{
@@ -180,14 +183,17 @@ async function execute({db,guild,gm,session}){
   }
   if(session.assembly_phase!=='assembly'||session.assembly_mode==='manual')return null;
   if(db.isDirectorPaused(guild.id))return old?save(db,guild.id,old,'held_paused',{...old.data,hold_code:'OPENING_DIRECTOR_PAUSED'}):null;
-  const initial=initialCameraAcknowledged(db,guild.id,session);if(!initial)return null;
+  const initial=initialCameraAcknowledged(db,guild.id,session),camera_basis=!initial&&independentOpeningCameraBasis(db,guild.id,session);
+  if(!initial&&!camera_basis)return null;
   const sourceStarted=performance.now(),state=currentOpeningCohort(db,guild.id,session);
   (gm?.metrics||operationalMetrics).record('opening_source',{guildId:guild.id,durationMs:performance.now()-sourceStarted});
-  if(!openingCohortEligible(state.roster)||!openingCohortIsAdditive(state.roster,initial.data.origin))return null;
+  if(camera_basis?!state.roster.some(r=>r.valid):!openingCohortEligible(state.roster)||!openingCohortIsAdditive(state.roster,initial.data.origin))return null;
   const data={version:1,session:session.id,scene:state.scene,roster_revision:state.roster_revision,
     input_fingerprint:state.input_fingerprint,attempts:(old?.data.attempts||0)+1,turn_id:null,
-    attempt_id:openingCohortHash([session.id,state.scene,state.roster_revision,state.input_fingerprint,(old?.data.attempts||0)+1])};
+    attempt_id:openingCohortHash([session.id,state.scene,state.roster_revision,state.input_fingerprint,(old?.data.attempts||0)+1]),
+    ...(camera_basis?{camera_basis}:{})};
   const claim=db.transaction(()=>{
+    if(camera_basis&&openingCohortHash(camera_basis)!==openingCohortHash(independentOpeningCameraBasis(db,guild.id,session)))return {claimed:false,row:old};
     const currentJob=db.getCityRecord(guild.id,'opening_cohort_job',session.id);
     if(currentJob&&currentJob.data.attempt_id!==old?.data.attempt_id)return {claimed:false,row:currentJob};
     if(currentJob?.data.turn_id)return {claimed:false,row:currentJob};

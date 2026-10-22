@@ -1027,12 +1027,20 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
     catch{throw sceneFictionFailure('writer_unavailable');}},{guildId});
   }
   async generateNarrative(guildId,packet,signal,lane='combined'){
-    const model=narrativeModel(this.config,packet,lane);
+    const model=narrativeModel(this.config,packet,lane),opening=['assembly','opening_entry','opening_cohort'].includes(lane);
     return measureStage(this.metrics,'scene_writer',async()=>{
-      try{const response=await this.requestModel({model,instructions:`${NARRATIVE_AUTHORITY_INSTRUCTIONS}\n${NARRATIVE_V9_INSTRUCTIONS}\n${NATIVE_CLAUSE_INSTRUCTIONS}`,input:JSON.stringify(packet),max_output_tokens:1800,
+      let response;
+      try{response=await this.requestModel({model,instructions:`${NARRATIVE_AUTHORITY_INSTRUCTIONS}\n${NARRATIVE_V9_INSTRUCTIONS}\n${NATIVE_CLAUSE_INSTRUCTIONS}`,input:JSON.stringify(packet),max_output_tokens:1800,
         text:{format:{type:'json_schema',name:'veiled_city_delegated_narrative_v9',strict:true,schema:narrativeResponseV9Schema}}},{guildId,signal,purpose:'scene_writer'});
-        signal.throwIfAborted();return parseStructuredJsonText(response.output_text);
-      }catch{throw sceneFictionFailure('creative_writer_unavailable');}
+        signal.throwIfAborted();
+      }catch(error){
+        if(opening)throw Object.assign(new Error('Opening writer unavailable; native diagnostics retained.'),{expected:true,
+          code:signal?.aborted||error?.code==='AI_GENERATION_DEADLINE'?'OPENING_PROVIDER_DEADLINE':'OPENING_WRITER_PROVIDER'});
+        throw sceneFictionFailure('creative_writer_unavailable');
+      }
+      try{return parseStructuredJsonText(response.output_text);}
+      catch{if(opening)throw Object.assign(new Error('Opening writer response could not be parsed.'),{code:'OPENING_WRITER_PARSE',expected:true});
+        throw sceneFictionFailure('creative_writer_unavailable');}
     },{guildId});
   }
   async runSceneObservation({guildId,scope,sourceRef,messageId,text,operation,signal}){
@@ -1058,21 +1066,26 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
       provenance:{messageId,actorId:scope.actorUserId},content:this.content}),this.metrics);
     return result;
   }
-  async authorAssemblyScene(guildId,sessionId,scope){
+  async authorAssemblyScene(guildId,sessionId,scope,{assertCurrent=()=>{}}={}){
+    assertCurrent();
     const {candidate,source}=assemblyNarrativeCandidate(this.db,guildId,sessionId,scope),signal=AbortSignal.timeout(Number(this.config.gmTurnDeadlineMs||120000));
     return measureStage(this.metrics,'opening_authoring',()=>authorNarrativeRequests({db:this.db,guild:guildId,result:candidate,scope,
-      sourceRef:source.event_key,budget:{used:false},generate:packet=>this.generateNarrative(guildId,packet,signal,'assembly')}),{guildId});
+      sourceRef:source.event_key,budget:{used:false},generate:async packet=>{
+        assertCurrent();const generated=await this.generateNarrative(guildId,packet,signal,'assembly');assertCurrent();return generated;
+      }}),{guildId});
   }
-  async authorOpeningCohort(guildId,key){
+  async authorOpeningCohort(guildId,key,{assertCurrent=()=>{}}={}){
+    assertCurrent();
     const {candidate,source}=openingCohortNarrativeCandidate(this.db,guildId,key),signal=AbortSignal.timeout(Number(this.config.gmTurnDeadlineMs||120000));
     return measureStage(this.metrics,'opening_authoring',()=>authorNarrativeRequests({db:this.db,guild:guildId,result:candidate,
       scope:{mode:'party',actorUserId:null,actorCharacterId:null},sourceRef:source.event_key,budget:{used:false},
-      generate:packet=>this.generateNarrative(guildId,packet,signal,'opening_cohort')}),{guildId});
+      generate:async packet=>{assertCurrent();const generated=await this.generateNarrative(guildId,packet,signal,'opening_cohort');assertCurrent();return generated;}}),{guildId});
   }
-  async authorOpeningEntry(guildId,key,scope){
+  async authorOpeningEntry(guildId,key,scope,{assertCurrent=()=>{}}={}){
+    assertCurrent();
     const {candidate,source}=openingEntryNarrativeCandidate(this.db,guildId,key,scope),signal=AbortSignal.timeout(Number(this.config.gmTurnDeadlineMs||120000));
     return authorNarrativeRequests({db:this.db,guild:guildId,result:candidate,scope,sourceRef:source.event_key,budget:{used:false},
-      generate:packet=>this.generateNarrative(guildId,packet,signal,'opening_entry')});
+      generate:async packet=>{assertCurrent();const generated=await this.generateNarrative(guildId,packet,signal,'opening_entry');assertCurrent();return generated;}});
   }
   async authorFreshNpcs(guildId,result,scope,sourceRef,budget,signal,model=this.config.gmModel){
     await measureStage(this.metrics,'npc_writer',()=>authorFreshNpcRequests({db:this.db,guild:guildId,result,scope,sourceRef,budget,generate:async packet=>{

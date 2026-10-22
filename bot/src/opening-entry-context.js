@@ -6,7 +6,7 @@ import {sceneFictionHash as hash} from './scene-fiction-context.js';
 import {indexWorldEvent} from './city-calendar.js';
 const display=text=>JSON.stringify(text).replaceAll('@','@\u200b');
 function fail(){throw Object.assign(new Error('Current owner-private sourced entry opportunity required.'),{code:'SESSION_OPENING_ATTENDANCE',expected:true});}
-export function openingEntryProjection(db,guild,key,scope){
+export function openingEntryProjection(db,guild,key,scope,{orientationVersion=1}={}){
   const opportunity=inspectOpeningEntryOpportunity(db,guild,key),d=opportunity.data,pc=db.getCharacter(d.character),scene=currentScene(db,guild);
   if(!['active','reserve','guest'].includes(pc.status)||db.getSession(d.session)?.assembly_mode==='manual'
     ||scope?.mode!=='private'||scope.actorUserId!==d.user||scope.actorCharacterId!==d.character
@@ -18,7 +18,8 @@ export function openingEntryProjection(db,guild,key,scope){
     +`Saved position: ${display(pc.data.location||'not recorded')}; check-in is not a new arrival or resolved travel.\n`,
     thread=sources.length?sources.map(s=>`Your own character material offers this thread (${s.field}), not a newly established outcome:\n> ${s.text.replaceAll('@','@\u200b').replaceAll('\n','\n> ')}`).join('\n')
       :'No entitled personal opening source is recorded. This orientation is not a delivered character hook.',
-    text=intro+thread+'\nWould you like to pursue a thread, ask about the current surroundings, or take another approach? No movement, cooperation, disclosure or response has been chosen for you.';
+    text=orientationVersion===2?intro+'This is check-in orientation; an authored private scene has not been certified. Your initial position may remain unconfirmed. You may describe what you want to explore or ask about the surroundings.':
+      intro+thread+'\nWould you like to pursue a thread, ask about the current surroundings, or take another approach? No movement, cooperation, disclosure or response has been chosen for you.';
   return {text,state,revision:hash(state),material_revision:hash(material),source:opportunity.source_event,hook_verified:sources.length>0,
     source_refs:sources.map(s=>s.id),sources};
 }
