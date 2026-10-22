@@ -51,7 +51,8 @@
 - Targeted P09 changed delta is complete. No whole-release inference is made from the four new test cases.
 - P09 was already linked in `README.md`; no README change was needed.
 - No old source registrations, saved readers, native state, private audience data, or outbox exactly-once behavior was removed or rewritten.
-- Final SHA: the commit that records this phase closeout.
+- Phase closeout commit: `93543d3fd20bb3e4b56333e9a773e811892bd12c`.
+- Follow-up ledger commit records that exact closeout SHA; its HEAD is the final branch SHA reported to the owner.
 
 ## Execution update template
 

@@ -35,7 +35,7 @@
 - P09 is complete as a bounded targeted delta with feature-local statuses and holds; this is not whole-release certification.
 - `README.md` already links P09; no README edit was required.
 - No old feature registrations, saved readers, state records, private audiences, or outbox guarantees were removed or rewritten.
-- Final closeout commit SHA is the commit containing the phase P09 ledger and F08 evidence; exact SHA is reported in the final response.
+- Phase closeout commit: `93543d3fd20bb3e4b56333e9a773e811892bd12c`; follow-up ledger commit records this exact SHA.
 
 ## Instructions for Codex
 
