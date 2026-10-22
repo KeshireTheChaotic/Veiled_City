@@ -70,6 +70,7 @@ Complete source-qualified features, reconcile rules and qualify the changed impl
 - [P06-F59 — Support Cicada Runner Exit Clause](../../features/P06-F59/SCOPE.md)
 - [P06-F60 — Support Pale Court Knight Predatory Grace](../../features/P06-F60/SCOPE.md)
 - [P06-F61 — Support Pale Court Fixer Reputation Attack](../../features/P06-F61/SCOPE.md)
+- [P06-F62 — Support Pale Court Fixer Call Security](../../features/P06-F62/SCOPE.md)
 
 ## Exit
 All safe features have current diff, truthful ledger and newly authored tests covering only code changed in this phase. Local source gaps and owner decisions remain visible but do not stop other safe work. No automatic release qualification.
