@@ -14,4 +14,4 @@
 | Live limits | No model semantic testing, Discord, DB, cross-process replay/delivery or release qualification. |
 | Acceptance boundary | Fresh cases prove same-NPC authenticated speech overlap; private/unverified/split-NPC evidence exclusion; urgency/response guidance; deterministic selection and cap. Named campaign-flavored scenarios, generated prose quality, actual no-op Director response, and end-to-end delivery/replay are not exercised. Other cross-character links remain unknown until exposed by an equally safe native source. |
 | Rollback | Revert F06 evidence/test commit; no state migration. |
-| Completion SHA | Pending commit. |
+| Completion SHA | `35fa2eb5510bdff14cb9648e41513cf81878efe3`. |

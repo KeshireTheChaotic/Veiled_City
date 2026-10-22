@@ -1,6 +1,6 @@
 # P07 — Phase ledger
 
-**Status:** IN PROGRESS. **Branch:** `codex/clean-ai-gm-2026-10`. **Baseline:** `42ca6334bf19fb0a4a3b3f1ea38bf6cd6bd47b0d`.
+**Status:** IMPLEMENTATION COMPLETE — OFFLINE DELTA PASSED; LIVE ACCEPTANCE / RELEASE NOT AUTHORIZED. **Branch:** `codex/clean-ai-gm-2026-10`. **Baseline:** `42ca6334bf19fb0a4a3b3f1ea38bf6cd6bd47b0d`.
 
 | Feature | Status | Evidence |
 |---|---|---|
@@ -9,7 +9,7 @@
 | P07-F03 | COMPLETE | Bridge integration; 3/3 fresh tests and syntax pass; commit `4d07d4c260406c3cd364590f1c83d649b0a07e10`. |
 | P07-F04 | COMPLETE | Existing Director prompt guidance; 2/2 fresh tests and syntax pass; commit `cccd0304fa491a9a8425d9693cf94f11e3eacbc7`. |
 | P07-F05 | SUPPORTED BY EXISTING CODE / STATIC | Privacy, continuity, memory, assembly and spotlight boundaries inspected; docs-only. |
-| P07-F06 | COMPLETE — DELTA VERIFIED | 4 fresh acceptance tests passed; commit pending. |
+| P07-F06 | COMPLETE — DELTA VERIFIED | 4 fresh acceptance tests passed; commit `35fa2eb5510bdff14cb9648e41513cf81878efe3`. |
 
 ## Phase evidence
 
@@ -25,12 +25,12 @@
 | Critical blockers | None. |
 | Release authorization | Not authorized; no release certification. |
 
-## Phase closeout (fill after F06 commit)
+## Phase closeout
 
 P07 implements deterministic same-NPC cross-character conversation overlap only when two current party-visible native accepted speech-intent sources match exact hashes. It preserves existing signal schemas, source identities, four-signal selection limit, response/causal precedence and revalidation. Director prompt guidance adds no model call. Static inspection found no need to change memory, privacy, continuity, spotlight, mechanics or outbox code.
 
 Known local hold: cross-character relationships/interests/locations beyond the same-NPC speech evidence remain `unknown` and preserve existing order; no safe native cross-signal proof was established for those classes. No owner restrictions/questions are pending. No provider calls/tokens/expense; no cache or live latency evidence.
 
-Fresh delta verification is not live semantics, Discord, database, cross-process replay/delivery or release certification. No critical blockers; NOT DEPLOYED / NOT FULL RELEASE QUALIFIED / RELEASE NOT AUTHORIZED.
+Fresh delta verification is not live semantics, Discord, database, cross-process replay/delivery or release certification. No critical blockers; NOT DEPLOYED / NOT FULL RELEASE QUALIFIED / RELEASE NOT AUTHORIZED. The final phase-evidence commit is reported by exact HEAD in the handoff.
 
 Update this ledger after each feature commit with exact SHA, files, test command/results and hashes when applicable, cost/cache evidence, local holds, decisions, and rollback. No production data migrations are planned; rollback is feature-commit revert.
