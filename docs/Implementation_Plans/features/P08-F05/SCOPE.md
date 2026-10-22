@@ -1,7 +1,7 @@
 # P08-F05 — Living-world agenda, cognition and continuity at openings
 
 **Phase:** [P08](../../phases/P08/SCOPE.md)  
-**Status:** SUPPORTED BY EXISTING NATIVE CONTEXT — NO PRODUCTION DELTA  
+**Status:** PLANNER AGENDA HANDOFF IMPLEMENTED AND CAPTURE-TESTED; EPISTEMIC / WRITER INTEGRATION UNQUALIFIED
 **Reference:** `KeshireTheChaotic/Veiled_City` · `codex/clean-ai-gm-2026-10` · `81569d08699343e401fc11ba1eaed0f10b4fd37a`  
 **Dependencies:** P08-F03; can proceed independently of unrelated P08-F04 holds
 
@@ -53,3 +53,7 @@ Openings feel causally connected to current NPC/faction affairs with sound epist
 ## Corrective Follow-up — 2026-10-22
 
 Expose existing active NPC/faction goals only to the GM planner as a read-only agenda bound to the current guild/session/scene. Include the existing audience-filtered world-opportunity bridge separately; it carries no execution/publication authority. Do not mutate clocks, effects, canon or NPC knowledge. Corrective SQLite evidence is in `bot/tests/ai-gm-2026-10/p08-f05-correction.test.mjs`; actor-relative false beliefs, public/private cue evidence, memory acknowledgement and full writer-context integration remain local holds.
+
+### Corrective Completion — 2026-10-22
+
+The planner request now serializes the existing bounded native NPC/faction agenda, separately from audience-filtered public opportunity hints. Agenda data remains planner-only and read-only. The fresh test captures the actual `GMService.planAssembly()` request and asserts both active NPC and faction objectives are present while the audience writer brief excludes them. Actor-relative beliefs, acknowledged-memory selection, and the full accepted writer/Discord lifecycle remain unqualified.

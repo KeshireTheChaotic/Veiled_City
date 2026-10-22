@@ -1,7 +1,7 @@
 # P08-F07 — Latency measurement and final changed-delta qualification
 
 **Phase:** [P08](../../phases/P08/SCOPE.md)  
-**Status:** COMPLETE — OFFLINE MEASUREMENT PATH / UNION PASS; STAGING UNQUALIFIED  
+**Status:** COMPLETION DELTA PASSED; END-TO-END OPENING ACCEPTANCE / STAGING UNQUALIFIED
 **Reference:** `KeshireTheChaotic/Veiled_City` · `codex/clean-ai-gm-2026-10` · `81569d08699343e401fc11ba1eaed0f10b4fd37a`  
 **Dependencies:** P08-F02…F06 safe implementations; any independent optimization may be deferred
 
@@ -67,3 +67,9 @@ The one frozen corrective union and changed-file syntax pass are recorded in the
 ### Expanded acceptance status — 2026-10-22
 
 The expanded F04 tests are not terminally qualified and the corrective union is pending. Cross-process idempotency and F02 accepted-output/fallback coverage remain local holds. Do not treat the earlier corrective union as final evidence for these test edits.
+
+### Corrective Completion — 2026-10-22
+
+One fresh completion-only batch covers changed F02/F03/F04/F05/F07 contracts and changed-file syntax. It does not qualify the previous expanded F04 invocation, full opening delivery, private receipts, crash/restart recovery, provider behavior, Discord, or semantic quality. Only offline evidence is recorded; no broad suite or live service was used.
+
+The terminal replacement batch now includes successful native zero→two and one→two opening/cohort paths through disposable SQLite and mocked Discord, plus owner-specific brief separation and immutable ACK checks. This closes only the exercised offline contract; whole-runner multi-process collision, uncertain-send restart, actual Discord/provider, and narrative semantic quality remain unqualified.

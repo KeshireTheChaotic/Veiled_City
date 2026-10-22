@@ -88,11 +88,12 @@ export function outboxSummary(row){
 }
 
 /** Only demonstrably unsent rows retry. A later chunk cannot overtake an uncertain predecessor. */
-export function deliverTurnOutbox(db,guildId,turnId,transport,{forceUncertain=false}={}){
+export function deliverTurnOutbox(db,guildId,turnId,transport,{forceUncertain=false,beforeSend=null}={}){
   if(forceUncertain)throw new Error("Reconcile the exact uncertain publication before resending; blind force is disabled.");
   return serialized(db,`${guildId}:${turnId}`,async()=>{
-  // Inside the lock no same-process sender is active. Startup also performs global recovery.
-  db.markInterruptedPublicationsUncertain(guildId,turnId);
+  // Process-local serialization is a convenience only. SQLite CAS below is
+  // the cross-process sender claim; never reinterpret another live sender's
+  // `delivering` row as an interrupted send here.
   const rows=db.listTurnPublications(guildId,turnId);
   const results=[];
   for(const row of rows){
@@ -101,13 +102,16 @@ export function deliverTurnOutbox(db,guildId,turnId,transport,{forceUncertain=fa
       db.updatePublication(row.id,{status:"uncertain",lastFailure:"Legacy failed delivery has no proof of non-send; exact-part reconciliation required."});break;
     }
     if(!["pending","failed"].includes(row.status))break;
-    db.updatePublication(row.id,{status:"delivering",attemptCount:row.attempt_count+1,lastFailure:""});
+    const claimed=db.claimPublication(row.id);
+    if(!claimed)break; // Another process owns, completed, or made this row uncertain.
+    Object.assign(row,claimed);
     const metricStart=performance.now();
     let attempted=false;
     try{
       revalidateOutputPublication(db,guildId,row);
       const substantive=substantivePublication(db,guildId,row);
       const archive=captureOutputArchive(db,guildId,row);
+      beforeSend?.(row); // Must pass native pause/source gate after ownership and immediately before transport.
       attempted=true;
       const receipt=await transport(row);
       // Transport acknowledged this exact validated chunk. Voice/progress do not enter this path.

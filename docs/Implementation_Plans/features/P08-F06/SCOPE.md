@@ -1,7 +1,7 @@
 # P08-F06 — Truthful story coverage, entry fallback and review states
 
 **Phase:** [P08](../../phases/P08/SCOPE.md)  
-**Status:** COMPLETE — SAFE FALLBACK / TRUTHFUL COVERAGE; PROVIDER AND DISCORD UNVERIFIED  
+**Status:** IMPLEMENTED — TRANSPORT CLAIM HARDENED; FALLBACK / DISCORD / RESTART UNQUALIFIED
 **Reference:** `KeshireTheChaotic/Veiled_City` · `codex/clean-ai-gm-2026-10` · `81569d08699343e401fc11ba1eaed0f10b4fd37a`  
 **Dependencies:** P08-F03; independent parts can follow F02
 
@@ -49,3 +49,7 @@ Unqualified prose/failed writer does not silently count as achieved dramatic obj
 ## Corrective Follow-up — 2026-10-22
 
 Keep native narrative acceptance, transport acknowledgement, dramatic coverage, hook selection/revelation, fallback and review as separate states. Cohort status explicitly says delivery acknowledgement does not verify dramatic fulfillment. No keyword coverage, model self-evaluation, hard quota or fixed prose form was added. Corrective evidence is in `bot/tests/ai-gm-2026-10/p08-f06-correction.test.mjs`; full restart/outbox/late-owner delivery state transitions remain unqualified.
+
+### Corrective Completion — 2026-10-22
+
+Outbox send ownership and pre-send pause/source checks were hardened under F04 without changing the independent meanings of transport acknowledgement, native narrative acceptance, fallback, hook revelation, or `dramatic_coverage:'unverified'`. The completion test covers atomic sender claim, not real fallback or private Discord delivery. Those lifecycle transitions remain unqualified.

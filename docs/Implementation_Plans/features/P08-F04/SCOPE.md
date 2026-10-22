@@ -1,7 +1,7 @@
 # P08-F04 — Start/check-in cohort assembly and immutable receipts
 
 **Phase:** [P08](../../phases/P08/SCOPE.md)  
-**Status:** IMPLEMENTED — SEPARATE ADDITIVE COHORT JOB; OFFLINE CONTRACT TESTED; DELIVERY UNVERIFIED
+**Status:** IMPLEMENTED — PERSISTED CAS VERIFIED; FULL OPENING / PUBLICATION / RESTART LIFECYCLE UNQUALIFIED
 **Reference:** `KeshireTheChaotic/Veiled_City` · `codex/clean-ai-gm-2026-10` · `81569d08699343e401fc11ba1eaed0f10b4fd37a`  
 **Dependencies:** P08-F03
 
@@ -59,3 +59,9 @@ Make GM `/vc-session assemble` reach the additive cohort gate after a terminal i
 ### Expanded lifecycle acceptance status — 2026-10-22
 
 The F04 corrective suite now includes an acknowledged initial camera and additive cohort using native SQLite outbox plus mocked Discord; stale planner refresh, pause-during-planning, uncertain-send recovery, and separate-process contention are also included. Its current execution has no terminal result; mark RUNNING / UNQUALIFIED. No final union for the expanded suite has run. See F04 ledger for exact scope and holds.
+
+### Corrective Completion — 2026-10-22
+
+Immutable camera eligibility now accepts original zero-owner and one-owner rosters, but excludes an already two-owner start. Prepared→authoring and planning→prepared use SQLite compare-and-set over attempt, roster and source revisions. Publication claim is persisted and atomic across processes; final pre-transport Director pause/source checks are retained. The fresh test proves one publication-claim winner across two independent Node/SQLite workers. Successful camera→cohort publication, private entry receipts, cross-process full runner contention, and after-commit restart recovery remain unqualified.
+
+The final completion test now runs both zero→two and one→two flows through the real session-opening and cohort runners, real SQLite outbox, and mocked Discord ACKs. It verifies initial attempt identity and delivered publication IDs remain unchanged, the cohort adds one public opportunity, and no party or PC location is created. Two owner-private brief projections retain separate source material. This remains offline/mock evidence; process-race through the complete runner, owner-private late-entry delivery, and restart recovery are still unqualified.

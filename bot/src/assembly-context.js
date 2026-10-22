@@ -12,11 +12,12 @@ const visibilityLabel=value=>String(value??'').toLowerCase().trim().replace(/[\s
 function ownerVisible(value,depth=0){
   if(!value||typeof value!=='object')return true;
   if(depth>12)return false;
-  const visibility=visibilityLabel(value.visibility??value.audience??value.scope);
-  if(privateLabels.has(visibility)||value.gm_private===true||value.gm_only===true||value.hidden===true)return false;
-  // Export metadata is an authority label even when the payload itself has no label.
-  const exportVisibility=visibilityLabel(value.export_meta?.visibility);
-  if(privateLabels.has(exportVisibility))return false;
+  // Every authority label is meaningful. A less restrictive field must never
+  // mask a contradictory GM/private label elsewhere on the same object.
+  for(const key of ['visibility','audience','scope'])
+    if(privateLabels.has(visibilityLabel(value[key])))return false;
+  if(value.gm_private===true||value.gm_only===true||value.hidden===true)return false;
+  if(value.export_meta&&typeof value.export_meta==='object'&&!ownerVisible(value.export_meta,depth+1))return false;
   return Object.values(value).every(child=>Array.isArray(child)?child.every(item=>ownerVisible(item,depth+1)):
     !child||typeof child!=='object'||ownerVisible(child,depth+1));
 }
@@ -63,12 +64,18 @@ export function assemblyInputs(db,guild,session){
   // It is deliberately never copied into writer packets as trusted prose.
   const scene=currentScene(db,guild),world_agenda=[];
   for(const actor of db.densityActorSelection(guild).slice(0,20)){
-    if(actor.type==='npc')for(const goal of db.listNpcGoals(guild,actor.actor_key,{status:'active',limit:3}))
+    if(actor.type==='npc')for(const goal of db.listNpcGoals(guild,actor.actor_key,{status:'active',limit:3})){
+      if(goal.source&& !['gm','native_npc_goal','npc_goal'].includes(goal.source))continue;
       world_agenda.push({actor_type:'npc',actor:actor.actor_key,title:goal.title,objective:goal.objective,
-        horizon:goal.horizon,priority:goal.priority,source_kind:goal.source||'native_npc_goal',scope:{guild,session:session.id,scene:scene.key}});
-    if(actor.type==='faction')for(const goal of db.listSimulationRecords(guild,{kind:'goal',status:'active',entityKey:`faction:${actor.actor_key}`,limit:3}))
-      world_agenda.push({actor_type:'faction',actor:actor.actor_key,title:goal.data.title||'',objective:goal.data.objective||goal.data.goal||'',
-        priority:goal.data.priority||0,source_ref:goal.id,source_kind:'native_faction_goal',scope:{guild,session:session.id,scene:scene.key}});
+        horizon:goal.horizon,priority:goal.priority,source_ref:`npc_goal:${actor.actor_key}:${goal.goal_key}`,
+        source_kind:goal.source||'native_npc_goal',scope:{guild,session:session.id,scene:scene.key}});
+    }
+    if(actor.type==='faction')for(const goal of db.listSimulationRecords(guild,{kind:'goal',status:'active',entityKey:`faction:${actor.actor_key}`,limit:3})){
+      const data=goal.data||{};
+      if(data.session_id&&data.session_id!==session.id||data.scene&&data.scene!==scene.key||data.archived===true)continue;
+      world_agenda.push({actor_type:'faction',actor:actor.actor_key,title:data.title||'',objective:data.objective||data.goal||'',
+        priority:data.priority||0,source_ref:goal.id,source_kind:'native_faction_goal',scope:{guild,session:session.id,scene:scene.key}});
+    }
   }
   const worldContext=openingWorldOpportunities(db,guild,{mode:'party',actorUserId:null,actorCharacterId:null}),
     world_context={version:worldContext.version,beats:worldContext.beats,examined_limit:worldContext.examined_limit,
@@ -144,6 +151,9 @@ export function assemblyWriterBrief(db,guild,sessionId,scope,planOverride=null){
       knowledge:'Only this owner character material is available. Imported GM-only mysteries are not player knowledge.'};
   }
   return {kind:resume?'public_resume':'public_convergence',sources:[],world_opportunities,dramatic_intent,
+    public_throughline:dramatic_intent?.cues?.length
+      ?'Optional direction: an authorized shared-world cue can connect this scene to current pressure; invent its ordinary presentation and NPC response freely.'
+      :'Optional direction: ground the scene in a visible detail already established for this audience, or invent an ordinary detail freely. Keep the cause and all PC responses open.',
     task:`${resume?'Frame current scene continuity without asserting new party membership, requiring reunion or inventing intervening PC activity.':'Frame a playable shared opportunity as a camera scene, not established PC presence.'} Ordinary NPC offers, visible surroundings and nonbinding signs are allowed.`,
     knowledge:'The dramatic intent is an objective, not a fact or character motivation. Private hooks, private cues and motivations are intentionally excluded. Let the players discover and choose any connection.'};
 }

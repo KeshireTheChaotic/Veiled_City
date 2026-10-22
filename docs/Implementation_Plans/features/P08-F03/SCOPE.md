@@ -1,7 +1,7 @@
 # P08-F03 — Certified dramatic brief to the audience-first writer
 
 **Phase:** [P08](../../phases/P08/SCOPE.md)  
-**Status:** COMPLETE — CERTIFIED OBJECTIVE PROJECTION; SEMANTIC QUALITY UNQUALIFIED  
+**Status:** IMPLEMENTED — PLANNER/WRITER CONFIDENTIALITY VERIFIED; SPECIFIC CUE / SEMANTIC QUALITY UNQUALIFIED
 **Reference:** `KeshireTheChaotic/Veiled_City` · `codex/clean-ai-gm-2026-10` · `81569d08699343e401fc11ba1eaed0f10b4fd37a`  
 **Dependencies:** P08-F02
 
@@ -49,3 +49,7 @@ The actual writer receives useful certified dramatic purpose and permitted conte
 ## Corrective Follow-up — 2026-10-22
 
 Do not forward raw `convergence_goal` or other free-form planner prose to an audience writer. Supply a generic non-factual objective plus only currently audience-validated `openingWorldOpportunities` cues, retaining natural prose and ordinary invention. The objective is inspiration, not a required template. New SQLite-backed projection evidence is in `bot/tests/ai-gm-2026-10/p08-f03-correction.test.mjs`; positive sourced cue delivery, writer output, publication and semantic quality remain unqualified.
+
+### Corrective Completion — 2026-10-22
+
+The actual writer brief continues to exclude free-form GM planner agenda and goals. It offers an explicitly optional audience-safe direction, while preserving ordinary invention and leaving causes and PC responses open. The fresh test checks planner agenda inclusion and writer-packet exclusion. A source-backed specific shared incident cue and semantic scene fulfillment were not demonstrated; those remain unqualified without a suitable audience-authorized source.

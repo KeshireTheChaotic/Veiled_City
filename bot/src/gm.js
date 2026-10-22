@@ -1240,6 +1240,8 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
       `Session: ${JSON.stringify(session)}`,
       `Previously established party state: ${JSON.stringify(partyState)}`,
       `Present roster: ${JSON.stringify(summarizeRoster(roster))}`,
+      `Source-scoped read-only world agenda (GM-private planning context only; objectives are possibilities, not completed actions or player knowledge): ${JSON.stringify(hookInputs.world_agenda)}`,
+      `Audience-filtered public world opportunities (separate from GM-private agenda; no mutation authority): ${JSON.stringify(hookInputs.world_context)}`,
       `Native Director opportunity hints (ranking only, not facts, arrivals, consent or speaker knowledge): ${JSON.stringify({
         public:openingWorldOpportunities(this.db,guildId,{mode:'party'}),
         private:roster.slice(0,12).map(r=>({character:r.character_id,user:r.discord_user_id,opportunities:openingWorldOpportunities(this.db,guildId,

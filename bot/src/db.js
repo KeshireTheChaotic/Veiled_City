@@ -29,7 +29,9 @@ export class VeiledDB {
     fs.mkdirSync(path.dirname(dbPath), { recursive: true });
     this.db = new DatabaseSync(dbPath);
     if(sqlMetrics)this.db=instrumentSqlReads(this.db);
-    this.db.exec("PRAGMA journal_mode=WAL; PRAGMA foreign_keys=ON;");
+    // Cross-process BEGIN IMMEDIATE/CAS transitions wait for the single SQLite
+    // writer instead of failing spuriously with SQLITE_BUSY on brief overlap.
+    this.db.exec("PRAGMA busy_timeout=5000; PRAGMA journal_mode=WAL; PRAGMA foreign_keys=ON;");
     this.db.exec(fs.readFileSync(schemaPath, "utf8"));
     this.migrateSchema();
   }
@@ -381,6 +383,19 @@ export class VeiledDB {
         source_event=excluded.source_event,tick=excluded.tick,minute=excluded.minute,data_json=excluded.data_json`)
       .run(guildId,kind,key,actor_key,location_key,district_key,status,visibility,subject_key,source_event,clock.tick,clock.minute,JSON.stringify(data));
     return this.getCityRecord(guildId,kind,key);
+  }
+  /** Compare-and-set a source-bound GM job across independent SQLite connections. */
+  transitionCityRecord(guildId,{kind,key,expectedStatus,expectedAttemptId,expectedRosterRevision,
+    expectedInputFingerprint,status,data}){
+    if(!kind||!key||!expectedStatus||!status||!data||typeof data!=='object')throw new TypeError('Bounded native record transition required.');
+    const changed=this.db.prepare(`UPDATE city_records SET status=?,data_json=?
+      WHERE guild_id=? AND kind=? AND record_key=? AND status=?
+      AND json_extract(data_json,'$.attempt_id') IS ?
+      AND json_extract(data_json,'$.roster_revision') IS ?
+      AND json_extract(data_json,'$.input_fingerprint') IS ?`)
+      .run(status,JSON.stringify(data),guildId,kind,key,expectedStatus,expectedAttemptId??null,
+        expectedRosterRevision??null,expectedInputFingerprint??null).changes;
+    return changed===1?this.getCityRecord(guildId,kind,key):null;
   }
   listCityRecords(guildId,{kind="",actor="",status="",query="",limit=30,offset=0,includeGM=false}={}){
     return this.db.prepare(`SELECT * FROM city_records WHERE guild_id=? AND (?=1 OR visibility IN ('public','party'))
@@ -1467,6 +1482,13 @@ export class VeiledDB {
       updated_at=CURRENT_TIMESTAMP WHERE id=?`).run(status??prior.status,discordMessageId===undefined?prior.discord_message_id:discordMessageId,
       channelId===undefined?prior.channel_id:channelId,attemptCount??prior.attempt_count,lastFailure===undefined?prior.last_failure:lastFailure,id);
     return this.db.prepare("SELECT * FROM publication_outbox WHERE id=?").get(id);
+  }
+  /** Atomic publication ownership; only one process can move an eligible row to delivering. */
+  claimPublication(id){
+    const changed=this.db.prepare(`UPDATE publication_outbox SET status='delivering',attempt_count=attempt_count+1,
+      last_failure='',updated_at=CURRENT_TIMESTAMP WHERE id=? AND
+      (status='pending' OR status='failed' AND last_failure LIKE 'NOT_SENT: %')`).run(id).changes;
+    return changed===1?this.db.prepare('SELECT * FROM publication_outbox WHERE id=?').get(id):null;
   }
   markInterruptedPublicationsUncertain(guildId,turnId=null){
     this.db.prepare(`UPDATE publication_outbox SET status='uncertain',last_failure='Process stopped after send began; reconcile before force resend.',

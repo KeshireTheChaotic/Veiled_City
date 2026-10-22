@@ -1,7 +1,7 @@
 # P08-F02 — GM-private hook and knowledge firewall
 
 **Phase:** [P08](../../phases/P08/SCOPE.md)  
-**Status:** COMPLETE — FOCUSED OFFLINE CANARY PASS  
+**Status:** IMPLEMENTED — NESTED PRIVACY DELTA VERIFIED; ACCEPTED OUTPUT / DELIVERY UNQUALIFIED
 **Reference:** `KeshireTheChaotic/Veiled_City` · `codex/clean-ai-gm-2026-10` · `81569d08699343e401fc11ba1eaed0f10b4fd37a`  
 **Dependencies:** P08-F01
 
@@ -53,3 +53,7 @@ Treat nested `export_meta.visibility`, nested GM/private/audience labels and dee
 ### Expanded corrective scope status — 2026-10-22
 
 `openingEntryProjection()` now has a fresh source-projection test for legitimate owner material and nested GM/export canaries. Accepted narrative output and owner-private fallback delivery are still unqualified. See the F02 ledger addendum; no release claim.
+
+### Corrective Completion — 2026-10-22
+
+Independent visibility, audience, scope, and nested `export_meta` labels are now checked together; no permissive label masks a GM-private classification. Fresh test `p08-correction-completion.test.mjs` covers contradictory directions, nested labels, canary exclusion, and preservation of legitimate owner material. It also confirms GM agenda text remains absent from the owner/public writer brief. Accepted writer output, private fallback transport, principal revocation during a writer await, and full delivery/restart remain local holds.

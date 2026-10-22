@@ -260,24 +260,27 @@ export async function postPlayMessage({db,guild,content,sessionId=null,authority
 }
 
 /** Deliver committed narration without re-entering GM generation or native mechanics. */
-export async function deliverQueuedTurn({db,guild,turnId,forceUncertain=false}){
+export async function deliverQueuedTurn({db,guild,turnId,forceUncertain=false,beforeSend=null}){
   const attempt=db.getTurnAttempt(turnId);if(!attempt||attempt.guild_id!==guild.id)throw new Error("Turn receipt not found for this campaign.");
   const results=await deliverTurnOutbox(db,guild.id,turnId,async row=>{
     if(row.target_user_id){
       const delivered=await sendPlayerPrivate({db,guild,userId:row.target_user_id,content:row.payload,
-        sessionId:attempt.session_id,characterId:row.target_character_id||null,beforeSend:()=>revalidateOutputPublication(db,guild.id,row)});
+        sessionId:attempt.session_id,characterId:row.target_character_id||null,beforeSend:()=>{
+          revalidateOutputPublication(db,guild.id,row);beforeSend?.(row);
+        }});
       if(!delivered.ok)throw Object.assign(new Error(`Private delivery unavailable (${delivered.via}).`),{deliveryCertainty:delivered.certainty});
       return delivered;
     }
     const ch=await textChannel(guild,row.channel_id||db.getCampaign(guild.id)?.play_channel_id);
     if(!ch)throw notSent("Configured publication channel is unavailable.");
     revalidateOutputPublication(db,guild.id,row);
+    beforeSend?.(row);
     const message=await ch.send(row.payload);
     db.addMessage({guildId:guild.id,sessionId:attempt.session_id,userId:null,speakerName:"Veilkeeper",
       visibility:row.visibility,subjectUserId:row.visibility==="player"?row.target_user_id:null,
       subjectCharacterId:row.visibility==="character"?row.target_character_id:null,content:row.payload});
     return {messageId:message.id,channelId:ch.id};
-  },{forceUncertain});
+  },{forceUncertain,beforeSend});
   const pending=db.listTurnPublications(guild.id,turnId).filter(row=>row.status!=="delivered");
   db.updateTurnAttempt(turnId,{stage:pending.length?"needs_recovery":"delivered",
     terminalCode:pending.length?"PUBLICATION_PENDING":null,errorRef:pending[0]?.last_failure||null});
