@@ -345,18 +345,18 @@
       "template_hash": "8d96b1f9606e8910602b63021d03b23d7e564daf015b062db86ffa66d4e7e364",
       "index": 1,
       "type": "Reaction",
-      "status": "review_only",
-      "trigger_kind": "before_damage_applied",
-      "target_policy": "allied_adversary",
-      "roll_protocol": "none",
+      "status": "supported",
+      "trigger_kind": "on_allied_last_hp",
+      "target_policy": "one",
+      "roll_protocol": "native_adversary_context",
       "costs": [
         {
           "resource": "npc_stress",
           "amount": 2
         }
       ],
-      "native_handler": null,
-      "reason": "No qualified native feature handler.",
+      "native_handler": "adversary_route_around_context",
+      "reason": "Exact source-bound GM cue; allied Signal binding, Stress, last-HP event, relocation and HP mutation are not committed.",
       "planned_handler": "route_around"
     },
     {

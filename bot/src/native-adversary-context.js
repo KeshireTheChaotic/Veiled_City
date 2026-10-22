@@ -16,6 +16,7 @@ import {projectNativeAdversarySnatchALinkContext} from './native-adversary-snatc
 import {projectNativeAdversaryFlowAroundItContext} from './native-adversary-flow-around-it.js';
 import {projectNativeAdversaryDragDownContext} from './native-adversary-drag-down.js';
 import {projectNativeAdversaryBlankSpotContext} from './native-adversary-blank-spot.js';
+import {projectNativeAdversaryRouteAroundContext} from './native-adversary-route-around.js';
 import {arbitrationFailure as fail} from './gm-arbitration-contract.js';
 
 /** A template/display name does not bind a person to an adversary or make its features available. */
@@ -37,7 +38,7 @@ export function nativeAdversaryFeatureContext(db,guild,origin,actor,{library}={}
       ...projectNativeAdversaryPeripheralContext(terms),...projectNativeAdversaryStealTheFocusContext(terms),
       ...projectNativeAdversarySympatheticRelayContext(terms),...projectNativeAdversarySnatchALinkContext(terms),
       ...projectNativeAdversaryFlowAroundItContext(terms),...projectNativeAdversaryDragDownContext(terms),
-      ...projectNativeAdversaryBlankSpotContext(terms)],
+      ...projectNativeAdversaryBlankSpotContext(terms),...projectNativeAdversaryRouteAroundContext(terms)],
     revision:hash(terms),execution_authorized:false,publication_authorized:false});
 }
 
