@@ -26,6 +26,7 @@ import {projectNativeAdversaryBadFutureContext} from './native-adversary-bad-fut
 import {projectNativeAdversaryExitClauseContext} from './native-adversary-exit-clause.js';
 import {projectNativeAdversaryPredatoryGraceContext} from './native-adversary-predatory-grace.js';
 import {projectNativeAdversaryReputationAttackContext} from './native-adversary-reputation-attack.js';
+import {projectNativeAdversaryCallSecurityContext} from './native-adversary-call-security.js';
 import {arbitrationFailure as fail} from './gm-arbitration-contract.js';
 
 /** A template/display name does not bind a person to an adversary or make its features available. */
@@ -52,7 +53,7 @@ export function nativeAdversaryFeatureContext(db,guild,origin,actor,{library}={}
       ...projectNativeAdversaryISawThatContext(terms),...projectNativeAdversarySelfFulfillingEventContext(terms),
       ...projectNativeAdversaryAlwaysAPriceContext(terms),...projectNativeAdversaryBadFutureContext(terms),
       ...projectNativeAdversaryExitClauseContext(terms),...projectNativeAdversaryPredatoryGraceContext(terms),
-      ...projectNativeAdversaryReputationAttackContext(terms)],
+      ...projectNativeAdversaryReputationAttackContext(terms),...projectNativeAdversaryCallSecurityContext(terms)],
     revision:hash(terms),execution_authorized:false,publication_authorized:false});
 }
 

@@ -550,13 +550,13 @@
       "template_hash": "af98ed2fad3b9caa86fc9353a5409779ce9df91b38597b4f8ce6795837ebc325",
       "index": 1,
       "type": "Action",
-      "status": "review_only",
-      "trigger_kind": "unmapped",
-      "target_policy": "unmapped",
-      "roll_protocol": "unmapped",
-      "costs": null,
-      "native_handler": null,
-      "reason": "No qualified native feature handler."
+      "status": "supported",
+      "trigger_kind": "on_fixer_calls_security",
+      "target_policy": "two_at_far",
+      "roll_protocol": "native_adversary_context",
+      "costs": [{ "resource": "npc_fear", "amount": 1 }],
+      "native_handler": "adversary_call_security_context",
+      "reason": "Exact source-bound cue only; Fear spend, security arrivals and objective-bound actions are not committed."
     },
     {
       "feature_key": "adversary:thorn-hound-of-the-green:urban-cover",
