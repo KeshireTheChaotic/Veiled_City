@@ -146,3 +146,7 @@ Implementation commit: 25ad4cc74929ad248eff3940e043459c72dc4b88. Drag Down is su
 ## Resumption checkpoint — P06-F51 — 2026-10-22
 
 Implementation commit: d9014fcc839415e25a658689e7d6a2578158417f. Blank Spot is supported as an exact GM-private Reaction cue; damage, Knowledge roll, Experience access and expiry remain locally held. Frozen p06-f51-20261022-a passed 181/181 across 48 fresh files; syntax 5/5 and JSON 2/2 passed with no reruns. Catalog: 63 supported / 90 review-only / 0 needs-authoring; 62 handler keys / 51 P06 families. Provider calls/tokens/spend 0/0/$0; no cache claim; Codex usage unavailable. No owner restriction or critical blocker; release unauthorized. Evidence [F51](../../evidence/P06_F51_TARGETED.json).
+
+## Resumption checkpoint — P06-F52 — 2026-10-22
+
+Implementation commit `7bbf88de04398ab7233c8ad8151b0f790f8b939e` supports Choir Relay Route Around as an exact GM-private cue. The mapped run recorded 183/185; all four F52 cases passed and only F01 count assertions failed. Corrected F01 then passed 3/3 against final 64/62 catalog state. A final single aggregate run was not collected. Syntax 5/5 and JSON 2/2 pass. Catalog 64 supported / 89 review-only / 0 needs-authoring; 63 handler keys / 52 P06 families. Provider usage 0/0/$0; no cache claim; Codex usage unavailable. Event, cost, range, relocation and HP effects remain held. No owner restriction or critical blocker; release unauthorized. Evidence [F52](../../evidence/P06_F52_TARGETED.json).

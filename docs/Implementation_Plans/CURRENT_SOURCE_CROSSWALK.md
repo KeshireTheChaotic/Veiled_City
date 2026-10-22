@@ -12,7 +12,7 @@ all retained through the clean-plan commits. Subsequent scoped source edits are 
 | Native mechanics and owner choices | roll-requests.js, gm-native-rolls.js, pre-roll-fear.js | Existing authority pathways; no whole-system qualification claimed |
 | Living world | autonomous-world.js, npc-cognition.js, world-narrative-bridge.js | Existing implementation; changed contracts require fresh tests |
 | Private audiences / delivery | audience-native-v9.js, assembly modules, outbox | Existing boundaries must survive changes; live Discord unverified |
-| Native catalog | bot/src/native-feature-definitions.json | Qualified delta: 153 = 63 supported + 90 review_only + 0 needs_authoring; 62 registered handler keys and 51 P06 handler families; P06-F34–F36 and F38–F48 and F50–F51 are source-bound GM cues with mechanics held; F49 hardens owner-authorized HR14 v1; F37 enables the existing failure-only native trace/owner-choice route; labels are not whole-release qualification |
+| Native catalog | bot/src/native-feature-definitions.json | Qualified delta: 153 = 64 supported + 89 review_only + 0 needs_authoring; 63 registered handler keys and 52 P06 handler families; P06-F34–F36 and F38–F48 and F50–F52 are source-bound GM cues with mechanics held; F49 hardens owner-authorized HR14 v1; F37 enables the existing failure-only native trace/owner-choice route; F52's 185-case mapping had 183 passes and a 3/3 final F01 repair, without a single final aggregate rerun; labels are not whole-release qualification |
 | Historical implementation package | docs/Active_Implementation | Absent in this checkout; historical links are not current execution authority |
 | CI | .github/workflows | Absent in this checkout; audit describes another snapshot, not current local CI |
 

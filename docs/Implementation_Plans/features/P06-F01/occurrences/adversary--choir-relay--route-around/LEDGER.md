@@ -1,15 +1,13 @@
 # adversary:choir-relay:route-around — ledger
 
-Status: SOURCE VERIFIED; LOCAL EXECUTION HOLD.
+Status: BOUNDED NATIVE CUE SUPPORTED; MECHANICAL EFFECTS HELD.
 
 - Branch: codex/clean-ai-gm-2026-10; source checkout SHA: 0834f299ccff1738e9b3dd753a5fc616d3965370 + working-tree delta. Final freeze SHA/evidence: see parent P06-F01 ledger and final delta report.
-- Changed module: bot/src/native-feature-catalog.js (shared occurrence-local inspection). Descriptor and rules unchanged.
-- Fresh test: bot/tests/ai-gm-2026-10/p06-f01.test.mjs; current-catalog test calls inspectNativeFeatureOccurrence for this exact key. Source/content input is current production data, never a historical fixture.
-- Actual result: verified_source, execution_authorized=false in p06-1792598757560; shared repaired batch exit 0, 5 tests passed. This is source verification, not effect execution qualification.
+- Changed modules: native feature descriptor/catalog, native adversary context, new exact cue projector, fresh F52 tests and coverage map.
+- Fresh test: `p06-f52.test.mjs`, four exact-source/context tests passed in frozen mapped run `p06-f52-repair-20261022-a`. Full mapped run 183/185; only F01 count assertions failed. F01 count correction was subsequently narrowed to final catalog 64/62; final assertion rerun pending.
 - Cost/cache: 0 paid provider calls/tokens; $0 provider tests. No cache claim. Codex usage unavailable.
-- Existing catalog reason: No qualified native feature handler.
-- Local hold: No qualified executable occurrence adapter. This remains unsupported; exact source availability alone is insufficient.
+- Supported: source-bound GM-private cue only. Local holds: allied Signal binding, last-HP event, NPC Stress choice, device/range proof, relocation, 1-HP mutation and replay.
 - Questions: none introduced by this source-only delta; no new narrative/autonomy restrictions proposed.
 - Critical blocker: none. Release authorization: none.
 
-Final tested source SHA: `8e01519b6511bc90af6a1c675e4a9950f12b703c`; run `fresh-delta-1792599054739` passed 47/47 union tests. The catalog test verifies this occurrence source; this is not occurrence effect qualification. Input/test hashes: parent final evidence.
+Implementation commit: `7bbf88de04398ab7233c8ad8151b0f790f8b939e`. Syntax 5/5 and JSON parse 2/2. Whole mapped qualification incomplete pending F01 rerun. Release authorization: false.
