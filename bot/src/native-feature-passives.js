@@ -6,6 +6,7 @@ import {arbitrationFailure as fail} from './gm-arbitration-contract.js';
 import {adversaryHpState} from './combat.js';
 import {nativeHouseErratum} from './native-house-errata.js';
 import {diceSpec} from './dice.js';
+import {activeCityProxy} from './city-constraints.js';
 
 /** Pure expression arithmetic; it grants no feature, condition, roll or attack authority. */
 export function nativeDamageBonusExpression(damage,bonus){
@@ -41,7 +42,8 @@ export function nativeAttackPassives(db,guild,{npc,combatant,character,encounter
   for(const b of binding.data.combatants){
     if(b.actor===npc||b.id===combatant.id)continue;
     const ally=db.listCombatants(encounter.id).find(c=>c.id===b.id),presence=scenePresence(db,guild,'npc',b.actor),entity=db.getSimulationEntity(guild,'npc',b.actor);
-    if(ally?.base_name!==template.name||ally.status!=='active'||ally.hp_current<1||hash(library.findAdversary(ally.base_name))!==feature.template_hash
+    if(ally?.base_name!==template.name||ally.status!=='active'||ally.hp_current<1||activeCityProxy(db,guild,b.actor)
+      ||hash(library.findAdversary(ally.base_name))!==feature.template_hash
       ||presence?.data.state!=='actually_present'||db.getWorldEvent(guild,presence.source_event)?.status!=='active'
       ||presence.location_key!==target.location_key||entity?.state.location_key!==target.location_key||entity.state.removed||['dead','removed'].includes(entity.state.status)
       ||presence.data.zone!==target.data.zone||!sceneAccess(db,guild,{observer_type:'npc',observer_key:b.actor,target_type:'character',target_key:character,sense:'sight'}))continue;
