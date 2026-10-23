@@ -92,7 +92,7 @@ export function checkBoundaries({sources,policy,legacy={groups:[]},pkg={}}){
     if(!owner)add({code:'UNOWNED_MODULE',from:file});
     else if(owner.location==='legacy'&&!(policy.stableEntrypoints||[]).includes(file))add({code:'LEGACY_MODULE_LOCATION',from:file,owner:owner.owner});
     let parsed={imports:[],exports:[],reviews:[]};
-    try{if(/\.(?:[cm]?js)$/.test(file))parsed=parseModule(source);else if(file.endsWith('.json'))JSON.parse(source);
+    try{if(/\.(?:[cm]?js)$/.test(file))parsed=parseModule(source);else if(file.endsWith('.json')){JSON.parse(source);parsed.exports=['default'];}
       else add({code:'SOURCE_TYPE_REVIEW',from:file,owner:owner?.owner});}
     catch(error){add({code:'SOURCE_PARSE_ERROR',from:file,line:error.loc?.line||null,detail:error.name,owner:owner?.owner});}
     modules.push({path:file,...owner,sha256:createHash('sha256').update(source).digest('hex'),...parsed});
@@ -118,6 +118,16 @@ export function checkBoundaries({sources,policy,legacy={groups:[]},pkg={}}){
     const from=owners.get(module.path),to=owners.get(result.to);
     if(!from||!to){add({...edge,code:'IMPORT_TARGET_UNOWNED'});continue;}
     const code=edgeRule(from,to,result.to,policy);if(code)add({...edge,code});
+  }
+  const byPath=new Map(modules.map(module=>[module.path,module]));
+  function hasExport(file,name,seen=new Set()){
+    if(seen.has(file))return false;seen.add(file);const module=byPath.get(file);if(!module)return false;
+    if(module.exports.includes(name))return true;
+    return name!=='default'&&edges.some(edge=>edge.from===file&&edge.star&&edge.to&&!edge.error&&hasExport(edge.to,name,new Set(seen)));
+  }
+  for(const edge of edges.filter(e=>e.to&&!e.error)){
+    if(owners.get(edge.from)?.location!=='new'&&owners.get(edge.to)?.location!=='new')continue;
+    for(const name of edge.importedNames||[])if(name!=='*'&&!hasExport(edge.to,name))add({...edge,code:'MISSING_NAMED_EXPORT',detail:name});
   }
   const internal=edges.filter(e=>e.to&&!e.error),cycles=stronglyConnected([...files],internal),components=new Map();
   cycles.forEach((cycle,index)=>cycle.forEach(file=>components.set(file,index)));

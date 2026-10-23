@@ -1,0 +1,817 @@
+{
+  "base_sha": "bd85d23da791285dbcc75ffdd6552e1d3a6dfdfd",
+  "qualifying_head_before_commit": "bede41f8bd1b4d8129e061f67ce8176d192a9397",
+  "branch": "codex/clean-ai-gm-2026-10",
+  "recorded_utc": "2026-10-23T17:13:53.436Z",
+  "summary": {
+    "sourceModules": 385,
+    "unowned": 0,
+    "importOccurrences": 2327,
+    "internalImportOccurrences": 2153,
+    "cycleComponents": 1,
+    "largestCycle": 211,
+    "rawViolationOccurrences": 2813,
+    "acceptedLegacyOccurrences": 2813,
+    "activeViolationGroups": 0,
+    "transitionErrors": 0,
+    "pass": true
+  },
+  "retained_transitions": 2791,
+  "removed_transition_records": 48,
+  "next_phase_gate": {
+    "sourceModules": 385,
+    "unowned": 0,
+    "importOccurrences": 2327,
+    "internalImportOccurrences": 2153,
+    "cycleComponents": 1,
+    "largestCycle": 211,
+    "rawViolationOccurrences": 2813,
+    "acceptedLegacyOccurrences": 2738,
+    "activeViolationGroups": 75,
+    "transitionErrors": 75,
+    "pass": false
+  },
+  "feature_runs": [
+    {
+      "command": "node --test --test-concurrency=1 --test-reporter=tap bot/tests/ai-gm-2026-10/rf02-f01.test.mjs",
+      "frozen_files": [
+        {
+          "path": "bot/src/assembly-publications.js",
+          "sha256": "8b6b6cec2146ce099bea8de11622a35d8c5a41af8b59f97ef28563cf9808e83c"
+        },
+        {
+          "path": "bot/src/city-commands.js",
+          "sha256": "cd859be56e1ee0fd1a31ba540ea6788472a94ebac41372199c2c9fa60c12da75"
+        },
+        {
+          "path": "bot/src/city-consequences.js",
+          "sha256": "72c566b2015ba3343123422bac9b02169bd5e657a80378ff8c5e8e200c32993c"
+        },
+        {
+          "path": "bot/src/city-constraints.js",
+          "sha256": "febab4096a3a346c55498b20dce5a953687dca242c05134978982e6de1301006"
+        },
+        {
+          "path": "bot/src/city-groups.js",
+          "sha256": "6f1ac9966ad6833bab46ffab91547aa9b653999a31d57bba3403946672f3223c"
+        },
+        {
+          "path": "bot/src/commands.js",
+          "sha256": "3b83c781be849517bf2d658b95dc6eaaeb5ad13003621e65e17453ace099c84a"
+        },
+        {
+          "path": "bot/src/db.js",
+          "sha256": "334126f546a55a7bee3591e45fc1ccbf530e01f5edfb055a17de030d5824ac15"
+        },
+        {
+          "path": "bot/src/discord/privacy.js",
+          "sha256": "cba771f2a2ae5e38e41dd0ecd5f578c79e9d225128ce32598467772d66fbf102"
+        },
+        {
+          "path": "bot/src/frameworks/operations/error-policy.js",
+          "sha256": "ab6dc5417b6fddad725683731f4cec7ec2676b0003e0e2c61a4d76c90bc99b16"
+        },
+        {
+          "path": "bot/src/frameworks/operations/public.js",
+          "sha256": "59c602ea1c1eaa15f9bdf43a033ed66fa6fe8d4f5d84f83fd78dc6a1193c1cda"
+        },
+        {
+          "path": "bot/src/gm-action-review.js",
+          "sha256": "f43c11f2a8f6c8304a194c09be23b2f45a50b2d3c716718da1832b04537e0a0a"
+        },
+        {
+          "path": "bot/src/historical-archive.js",
+          "sha256": "1c299be3012e20b86dc6f17b4efad80b413c633be8e4ee66d2687b2c3bacbfce"
+        },
+        {
+          "path": "bot/src/index.js",
+          "sha256": "8a524d4f5a0e138ae57322bf9b18bced81e0ee298d6d8beae5b37c65828bcd86"
+        },
+        {
+          "path": "bot/src/kernel/errors.js",
+          "sha256": "ec32691104bd7dff25e71e52a5b65d70ec97a98b284f4075339d40f6866ca4a2"
+        },
+        {
+          "path": "bot/src/kernel/serial-queue.js",
+          "sha256": "aee9209870768a6314b6f091494bd75f74b2b087846231f080a6adeb9647bcc2"
+        },
+        {
+          "path": "bot/src/long-projects.js",
+          "sha256": "63001890cc2a8e8f1775e594cd513459e4736ed05c1dd87ae7a13297e93651d8"
+        },
+        {
+          "path": "bot/src/memory-clusters.js",
+          "sha256": "c7e89436d26b6998e67555695c32364bb6d05192f3d3df0c0cc1aaa0c4baa041"
+        },
+        {
+          "path": "bot/src/native-experience-eligibility.js",
+          "sha256": "63fda5698235f2db52bc5534f5b53f8213b97a7f62bbd7993ef75fe4c65376e6"
+        },
+        {
+          "path": "bot/src/native-publications.js",
+          "sha256": "28d3c78d0b92c9ef4ac46cc4e30e8d0f5614db0f9b124cbd88caa3033f2214f1"
+        },
+        {
+          "path": "bot/src/native-unarmed-traits.js",
+          "sha256": "50e879adb3c404a432153ce140245830d3fdf8f0628e8bed26f1869fe1e9b99c"
+        },
+        {
+          "path": "bot/src/owner-action-terminal.js",
+          "sha256": "eeba048498253a967563a42089f09dd90ebf18974dfe6ccc96a4cb1895d74062"
+        },
+        {
+          "path": "bot/src/personal-continuity.js",
+          "sha256": "36556213b1d92db07c0c5fe4b7d9587457151fe90e52500fa016fc835867a188"
+        },
+        {
+          "path": "bot/src/pre-roll-fear-notice.js",
+          "sha256": "f9f6c0b0be8f67fbb1a7e500a4abffbff73e900d0dbdcb685197353dd5fa0cb7"
+        },
+        {
+          "path": "bot/src/publication-outbox.js",
+          "sha256": "011276bbc643438e3d15cc29a0d3251d0077e84a714c5526e287692d7b60b30e"
+        },
+        {
+          "path": "bot/src/publishing.js",
+          "sha256": "0edba95891ce837bab3be600651974e74ab396cdb9561e604fe71d024974b920"
+        },
+        {
+          "path": "bot/src/pvp-menu.js",
+          "sha256": "5ec18aa8cf791b9aadcce199c0d51a42bf2ba487801d48d1a299c17b01acd260"
+        },
+        {
+          "path": "bot/src/pvp-safety-commands.js",
+          "sha256": "85b071057559528b9042f0524d281ca51533086d19d9d6b63a689183daddb3e6"
+        },
+        {
+          "path": "bot/src/roll-collaboration.js",
+          "sha256": "d9a00b1f27b704bc2965d400b408a9640f4ee45d68950785c7b0ccbd2dc13a46"
+        },
+        {
+          "path": "bot/src/roll-declaration-review.js",
+          "sha256": "22639e3c4ab233de14a4796f04b31e0bae3fe23b744b4de7c706ff8c88616790"
+        },
+        {
+          "path": "bot/src/roll-menu.js",
+          "sha256": "3f3deb5cd8f5ac371b11984434a5c1fc8cba1eb3923e1fc5e1f6e5fb43993311"
+        },
+        {
+          "path": "bot/src/roll-options.js",
+          "sha256": "54993163ca6f5cb1cb100722c74caa4447d124691f182f5e1a9e0dd9d082ba1e"
+        },
+        {
+          "path": "bot/src/roll-requests.js",
+          "sha256": "38ff3096991f1042a8c0a6a79fce59f7daab361eee1faf5ad152d9400bdc52cd"
+        },
+        {
+          "path": "bot/src/roll-sharing.js",
+          "sha256": "c3c761239e4262b8667020f83cb51f8c780015e93c11d63cb2bc32a0cf97ac23"
+        },
+        {
+          "path": "bot/src/scene-continuity.js",
+          "sha256": "8df720b6f19da9a12ca07ac69a43147a775f04d3a1b6ba7c167d01b418e5de1e"
+        },
+        {
+          "path": "bot/src/simulation-commands.js",
+          "sha256": "c7c8377c08f4f62a5e6c5ac502c72e365116ede8633606d00bf2beb7c1d0efe2"
+        },
+        {
+          "path": "bot/src/simulation-motivation.js",
+          "sha256": "dc8b9121da306a80ab091b733ed4d42ddde146bbc9c60bcf6b4da70a4aefcb71"
+        },
+        {
+          "path": "bot/src/simulation-strategy.js",
+          "sha256": "d2a6e64a96d363e491a47c3b62df57f16c73024c001d89b9d281fdbb264be8ac"
+        },
+        {
+          "path": "bot/src/story-commands.js",
+          "sha256": "98bc88e01d75964c8ab60be9c7d21cd166428688af8098bff1df454a74f8d0b5"
+        },
+        {
+          "path": "bot/src/typed-roll-outcomes.js",
+          "sha256": "cd3f05297c5806956ada4700b1ab58b81197b07ba8c772fbc2f0adc9c3c2a92a"
+        },
+        {
+          "path": "bot/src/typed-roll-proof.js",
+          "sha256": "a01a53418137a762f251f424cba088411f25dfaf4a153f9a62b351e74eb8efd2"
+        },
+        {
+          "path": "bot/src/world-encounter-beats.js",
+          "sha256": "cd59630150dca3122a1f83ea19c800809283dd0b1d585caac781deb96a665abc"
+        },
+        {
+          "path": "bot/tests/ai-gm-2026-10/rf02-f01.test.mjs",
+          "sha256": "1772f6a37caf634b1a133cfcc725e701dadfb198914a6ab78ff009e4fec65ed2"
+        }
+      ],
+      "started_utc": "2026-10-23T16:53:28.1439939Z",
+      "gate_exit": 0,
+      "run_id": "RF02-F01-1",
+      "test_exit": 0,
+      "base_sha": "bd85d23da791285dbcc75ffdd6552e1d3a6dfdfd",
+      "finished_utc": "2026-10-23T16:53:35.5015231Z",
+      "syntax_files": 42,
+      "summary": {
+        "tests": 4,
+        "pass": 4,
+        "fail": 0,
+        "duration_ms": 66.1431
+      },
+      "log_sha256": "5b7f79e47e5654107ae15626252859c190c689246b2768820d25aa1ff9bceadd"
+    },
+    {
+      "command": "node --test --test-concurrency=1 --test-reporter=tap bot/tests/ai-gm-2026-10/rf02-f02.test.mjs",
+      "run_id": "RF02-F02-1",
+      "base_sha": "8eb49634beb8228cf5f1c0398ba73ca90ac3bde0",
+      "test_exit": 0,
+      "finished_utc": "2026-10-23T16:56:16.3776471Z",
+      "started_utc": "2026-10-23T16:56:14.1879782Z",
+      "gate_exit": 0,
+      "syntax_files": 6,
+      "frozen_files": [
+        {
+          "sha256": "3be8d5d1cbe51eb39ba392b3c5cbf8918f08da963b206e2e04c1b96ec0225484",
+          "path": "bot/src/config.js"
+        },
+        {
+          "sha256": "e643c545d04e6062ff91002072d2acd4b76b1dbe423992ca58cb8c239e8d5fd1",
+          "path": "bot/src/index.js"
+        },
+        {
+          "sha256": "86875dc9ae71e3ac43fba93e9b6eba597d5ff41a9d1e2c4f843294b964e12855",
+          "path": "bot/src/frameworks/content/content.js"
+        },
+        {
+          "sha256": "10efda958196226dda745ee8484f238950ddcc69f1c9de4d0656393ad485c569",
+          "path": "bot/src/frameworks/content/root.js"
+        },
+        {
+          "sha256": "bce1c8900afc7de3c8c6b5cc4e199fb408125af49d76a204c64b662c773bbe85",
+          "path": "bot/src/frameworks/content/public.js"
+        },
+        {
+          "sha256": "c0344be08778e387c9bf5c4b603ef68504a4fdf249edbf9688c54c957fd3389f",
+          "path": "bot/tests/ai-gm-2026-10/rf02-f02.test.mjs"
+        }
+      ],
+      "summary": {
+        "tests": 5,
+        "pass": 5,
+        "fail": 0,
+        "duration_ms": 160.3629
+      },
+      "log_sha256": "8d347f6e4ae6129146240f783373a73d0a45c00e99ec942a7bddbbe470ffb955"
+    },
+    {
+      "finished_utc": "2026-10-23T16:57:58.2434494Z",
+      "frozen_files": [
+        {
+          "sha256": "29ccfa7bbe73c12b8a44dad5682ab82ce4b9227a8c9c404166f240373ac078f7",
+          "path": "bot/src/frameworks/operations/logger.js"
+        },
+        {
+          "sha256": "23d7783c563906d65326a5f6498255861d70025da43f7abc6a67078ed85ccf82",
+          "path": "bot/src/frameworks/operations/opening-diagnostics.js"
+        },
+        {
+          "sha256": "2b96526e0dfe8817d79029cf6bb4e5cf10ad96c427f385a3cf34d3cf3736b516",
+          "path": "bot/src/frameworks/operations/public.js"
+        },
+        {
+          "sha256": "beb493fe6f3824f509d7ebd0ac3b14664a2799a4c25d4d400e58d49dea6b00b1",
+          "path": "bot/src/index.js"
+        },
+        {
+          "sha256": "03fd2dd4a2ac27a7164d92827de4656fa558b8785a60b3ee5dac2510ae549dda",
+          "path": "bot/src/opening-cohort-runner.js"
+        },
+        {
+          "sha256": "3a5ebc7a2382595181d30c89edc167b4b7e9b00c52d51a835ca0ef5cd779cd64",
+          "path": "bot/src/opening-entry.js"
+        },
+        {
+          "sha256": "b1c154eebd5a76c935a3f93dd70237c38fecd693deef0212d62568a46df70255",
+          "path": "bot/src/opening-flow.js"
+        },
+        {
+          "sha256": "64e07bece23a4a518bd81382796ce6e8b94c4a3b8e0542a700ee39c90251c722",
+          "path": "bot/src/session-opening-runner.js"
+        },
+        {
+          "sha256": "d0c70fad1cf78fc353e20129bfd50012d51352e82cddf1d35c5e737d5203ad71",
+          "path": "bot/tests/ai-gm-2026-10/rf02-f03.test.mjs"
+        }
+      ],
+      "command": "node --test --test-concurrency=1 --test-reporter=tap bot/tests/ai-gm-2026-10/rf02-f03.test.mjs",
+      "syntax_files": 9,
+      "test_exit": 0,
+      "base_sha": "a21ff94a628214c01bdfa0284330b39bcd96505a",
+      "run_id": "RF02-F03-1",
+      "started_utc": "2026-10-23T16:57:55.7728927Z",
+      "gate_exit": 0,
+      "summary": {
+        "tests": 4,
+        "pass": 4,
+        "fail": 0,
+        "duration_ms": 74.8901
+      },
+      "log_sha256": "2cf078136a559111d1f5db79a72da0fb83d4f8dbba79ac114c9f730041fc6aef"
+    },
+    {
+      "syntax_files": 9,
+      "frozen_files": [
+        {
+          "path": "bot/src/character-export.js",
+          "sha256": "4e0e3a3a7dda7d38e5f752cd44bf56daecc7c172a61a004c09952df1963c3619"
+        },
+        {
+          "path": "bot/src/character-narrative.js",
+          "sha256": "c264476fdad25922e4d9b572b0795a92b581fd42800a781ce907f6e5e97a7f19"
+        },
+        {
+          "path": "bot/src/commands.js",
+          "sha256": "7f1fe860418dfbfb66ea6eb84b7073d0027bd79624064a92ca2296aa6d545fa3"
+        },
+        {
+          "path": "bot/src/concept-context.js",
+          "sha256": "fb98905cde1b76bd26383f61df7d0193791c73a28f9416af8b318d54bad7846a"
+        },
+        {
+          "path": "bot/src/frameworks/character/file-names.js",
+          "sha256": "372c2bbe5c3fb4790c2de578e2cbba3773ba28fbd71124683d4b4d05f42824af"
+        },
+        {
+          "path": "bot/src/frameworks/character/narrative-text.js",
+          "sha256": "9fed4b8713e360e7883f01d0a9bcae5ca00f3e00fd9e12d5e498d0e0373e0ca8"
+        },
+        {
+          "path": "bot/src/frameworks/character/public.js",
+          "sha256": "ee74583c4b6d273c47170f9e49f98f24b99cb4c1eda71d8ffcf54a43c9594ce1"
+        },
+        {
+          "path": "bot/src/kernel/zip-store.js",
+          "sha256": "045fe02d75802d1fe8c21826edf518ffaa6c58c753f2f009b6a92b25c965f42e"
+        },
+        {
+          "path": "bot/tests/ai-gm-2026-10/rf02-f04.test.mjs",
+          "sha256": "edfc7954b2f3782e2bd41c682239e3e774f047e85d1f605ab18289c4ae2e25e5"
+        }
+      ],
+      "command": "node --test --test-concurrency=1 --test-reporter=tap bot/tests/ai-gm-2026-10/rf02-f04.test.mjs",
+      "gate_exit": 0,
+      "base_sha": "7594ed9afeb59adbab1adb5966f68fbd1c67eda0",
+      "run_id": "RF02-F04-REPAIR-1",
+      "test_exit": 0,
+      "started_utc": "2026-10-23T17:02:29.3708094Z",
+      "finished_utc": "2026-10-23T17:02:29.5781449Z",
+      "summary": {
+        "tests": 5,
+        "pass": 5,
+        "fail": 0,
+        "duration_ms": 71.6342
+      },
+      "log_sha256": "178f1304274f772151e849be169fe8aeb889e6e2cb34f8c3d6f5fcff2c93aa3d",
+      "repair": "Only newly authored test expectations corrected to established E_lan accent normalization. Production source and prior successful architecture check unchanged."
+    },
+    {
+      "finished_utc": "2026-10-23T17:04:58.2430652Z",
+      "syntax_files": 4,
+      "frozen_files": [
+        {
+          "sha256": "7160237b839ed9c28ea713189381dc8642ca3869c271f5a96079945dd6f4b0e9",
+          "path": "bot/src/frameworks/discord/delivery.js"
+        },
+        {
+          "sha256": "49d4f9c393301b3b3d6b7e50a88ee704c7776169dc8122c76d7a63ef56db7b92",
+          "path": "bot/src/frameworks/discord/public.js"
+        },
+        {
+          "sha256": "7664b5be96ab375561874f2702628952e5907bb7c972ffe94a4904416f75d297",
+          "path": "bot/src/commands.js"
+        },
+        {
+          "sha256": "da3a1efbe26369bee84a022c30d1d40b7982d31f1e8331f8f9916a999f5270f0",
+          "path": "bot/tests/ai-gm-2026-10/rf02-f05.test.mjs"
+        }
+      ],
+      "started_utc": "2026-10-23T17:04:56.1565641Z",
+      "gate_exit": 0,
+      "base_sha": "247d34b162894c79eb4262229d7317347e64bafe",
+      "test_exit": 0,
+      "command": "node --test --test-concurrency=1 --test-reporter=tap bot/tests/ai-gm-2026-10/rf02-f05.test.mjs",
+      "run_id": "RF02-F05-1",
+      "summary": {
+        "tests": 6,
+        "pass": 6,
+        "fail": 0,
+        "duration_ms": 69.4521
+      },
+      "log_sha256": "fbc65812e05d7d53bd7772e34b86b3f0c9dae29d4967e0418eac659c8479d29e"
+    },
+    {
+      "gate_exit": 0,
+      "strict_exit": 1,
+      "phase_base_sha": "bd85d23da791285dbcc75ffdd6552e1d3a6dfdfd",
+      "started_utc": "2026-10-23T17:09:10.6505279Z",
+      "test_exit": 0,
+      "finished_utc": "2026-10-23T17:09:16.7142806Z",
+      "frozen_files": [
+        {
+          "sha256": "8b6b6cec2146ce099bea8de11622a35d8c5a41af8b59f97ef28563cf9808e83c",
+          "path": "bot/src/assembly-publications.js"
+        },
+        {
+          "sha256": "4e0e3a3a7dda7d38e5f752cd44bf56daecc7c172a61a004c09952df1963c3619",
+          "path": "bot/src/character-export.js"
+        },
+        {
+          "sha256": "c264476fdad25922e4d9b572b0795a92b581fd42800a781ce907f6e5e97a7f19",
+          "path": "bot/src/character-narrative.js"
+        },
+        {
+          "sha256": "cd859be56e1ee0fd1a31ba540ea6788472a94ebac41372199c2c9fa60c12da75",
+          "path": "bot/src/city-commands.js"
+        },
+        {
+          "sha256": "72c566b2015ba3343123422bac9b02169bd5e657a80378ff8c5e8e200c32993c",
+          "path": "bot/src/city-consequences.js"
+        },
+        {
+          "sha256": "febab4096a3a346c55498b20dce5a953687dca242c05134978982e6de1301006",
+          "path": "bot/src/city-constraints.js"
+        },
+        {
+          "sha256": "6f1ac9966ad6833bab46ffab91547aa9b653999a31d57bba3403946672f3223c",
+          "path": "bot/src/city-groups.js"
+        },
+        {
+          "sha256": "7664b5be96ab375561874f2702628952e5907bb7c972ffe94a4904416f75d297",
+          "path": "bot/src/commands.js"
+        },
+        {
+          "sha256": "fb98905cde1b76bd26383f61df7d0193791c73a28f9416af8b318d54bad7846a",
+          "path": "bot/src/concept-context.js"
+        },
+        {
+          "sha256": "3be8d5d1cbe51eb39ba392b3c5cbf8918f08da963b206e2e04c1b96ec0225484",
+          "path": "bot/src/config.js"
+        },
+        {
+          "sha256": "334126f546a55a7bee3591e45fc1ccbf530e01f5edfb055a17de030d5824ac15",
+          "path": "bot/src/db.js"
+        },
+        {
+          "sha256": "cba771f2a2ae5e38e41dd0ecd5f578c79e9d225128ce32598467772d66fbf102",
+          "path": "bot/src/discord/privacy.js"
+        },
+        {
+          "sha256": "372c2bbe5c3fb4790c2de578e2cbba3773ba28fbd71124683d4b4d05f42824af",
+          "path": "bot/src/frameworks/character/file-names.js"
+        },
+        {
+          "sha256": "9fed4b8713e360e7883f01d0a9bcae5ca00f3e00fd9e12d5e498d0e0373e0ca8",
+          "path": "bot/src/frameworks/character/narrative-text.js"
+        },
+        {
+          "sha256": "ee74583c4b6d273c47170f9e49f98f24b99cb4c1eda71d8ffcf54a43c9594ce1",
+          "path": "bot/src/frameworks/character/public.js"
+        },
+        {
+          "sha256": "86875dc9ae71e3ac43fba93e9b6eba597d5ff41a9d1e2c4f843294b964e12855",
+          "path": "bot/src/frameworks/content/content.js"
+        },
+        {
+          "sha256": "bce1c8900afc7de3c8c6b5cc4e199fb408125af49d76a204c64b662c773bbe85",
+          "path": "bot/src/frameworks/content/public.js"
+        },
+        {
+          "sha256": "10efda958196226dda745ee8484f238950ddcc69f1c9de4d0656393ad485c569",
+          "path": "bot/src/frameworks/content/root.js"
+        },
+        {
+          "sha256": "7160237b839ed9c28ea713189381dc8642ca3869c271f5a96079945dd6f4b0e9",
+          "path": "bot/src/frameworks/discord/delivery.js"
+        },
+        {
+          "sha256": "49d4f9c393301b3b3d6b7e50a88ee704c7776169dc8122c76d7a63ef56db7b92",
+          "path": "bot/src/frameworks/discord/public.js"
+        },
+        {
+          "sha256": "ab6dc5417b6fddad725683731f4cec7ec2676b0003e0e2c61a4d76c90bc99b16",
+          "path": "bot/src/frameworks/operations/error-policy.js"
+        },
+        {
+          "sha256": "29ccfa7bbe73c12b8a44dad5682ab82ce4b9227a8c9c404166f240373ac078f7",
+          "path": "bot/src/frameworks/operations/logger.js"
+        },
+        {
+          "sha256": "23d7783c563906d65326a5f6498255861d70025da43f7abc6a67078ed85ccf82",
+          "path": "bot/src/frameworks/operations/opening-diagnostics.js"
+        },
+        {
+          "sha256": "2b96526e0dfe8817d79029cf6bb4e5cf10ad96c427f385a3cf34d3cf3736b516",
+          "path": "bot/src/frameworks/operations/public.js"
+        },
+        {
+          "sha256": "f43c11f2a8f6c8304a194c09be23b2f45a50b2d3c716718da1832b04537e0a0a",
+          "path": "bot/src/gm-action-review.js"
+        },
+        {
+          "sha256": "1c299be3012e20b86dc6f17b4efad80b413c633be8e4ee66d2687b2c3bacbfce",
+          "path": "bot/src/historical-archive.js"
+        },
+        {
+          "sha256": "beb493fe6f3824f509d7ebd0ac3b14664a2799a4c25d4d400e58d49dea6b00b1",
+          "path": "bot/src/index.js"
+        },
+        {
+          "sha256": "ec32691104bd7dff25e71e52a5b65d70ec97a98b284f4075339d40f6866ca4a2",
+          "path": "bot/src/kernel/errors.js"
+        },
+        {
+          "sha256": "aee9209870768a6314b6f091494bd75f74b2b087846231f080a6adeb9647bcc2",
+          "path": "bot/src/kernel/serial-queue.js"
+        },
+        {
+          "sha256": "045fe02d75802d1fe8c21826edf518ffaa6c58c753f2f009b6a92b25c965f42e",
+          "path": "bot/src/kernel/zip-store.js"
+        },
+        {
+          "sha256": "63001890cc2a8e8f1775e594cd513459e4736ed05c1dd87ae7a13297e93651d8",
+          "path": "bot/src/long-projects.js"
+        },
+        {
+          "sha256": "c7e89436d26b6998e67555695c32364bb6d05192f3d3df0c0cc1aaa0c4baa041",
+          "path": "bot/src/memory-clusters.js"
+        },
+        {
+          "sha256": "63fda5698235f2db52bc5534f5b53f8213b97a7f62bbd7993ef75fe4c65376e6",
+          "path": "bot/src/native-experience-eligibility.js"
+        },
+        {
+          "sha256": "28d3c78d0b92c9ef4ac46cc4e30e8d0f5614db0f9b124cbd88caa3033f2214f1",
+          "path": "bot/src/native-publications.js"
+        },
+        {
+          "sha256": "50e879adb3c404a432153ce140245830d3fdf8f0628e8bed26f1869fe1e9b99c",
+          "path": "bot/src/native-unarmed-traits.js"
+        },
+        {
+          "sha256": "03fd2dd4a2ac27a7164d92827de4656fa558b8785a60b3ee5dac2510ae549dda",
+          "path": "bot/src/opening-cohort-runner.js"
+        },
+        {
+          "sha256": "3a5ebc7a2382595181d30c89edc167b4b7e9b00c52d51a835ca0ef5cd779cd64",
+          "path": "bot/src/opening-entry.js"
+        },
+        {
+          "sha256": "b1c154eebd5a76c935a3f93dd70237c38fecd693deef0212d62568a46df70255",
+          "path": "bot/src/opening-flow.js"
+        },
+        {
+          "sha256": "eeba048498253a967563a42089f09dd90ebf18974dfe6ccc96a4cb1895d74062",
+          "path": "bot/src/owner-action-terminal.js"
+        },
+        {
+          "sha256": "36556213b1d92db07c0c5fe4b7d9587457151fe90e52500fa016fc835867a188",
+          "path": "bot/src/personal-continuity.js"
+        },
+        {
+          "sha256": "f9f6c0b0be8f67fbb1a7e500a4abffbff73e900d0dbdcb685197353dd5fa0cb7",
+          "path": "bot/src/pre-roll-fear-notice.js"
+        },
+        {
+          "sha256": "011276bbc643438e3d15cc29a0d3251d0077e84a714c5526e287692d7b60b30e",
+          "path": "bot/src/publication-outbox.js"
+        },
+        {
+          "sha256": "0edba95891ce837bab3be600651974e74ab396cdb9561e604fe71d024974b920",
+          "path": "bot/src/publishing.js"
+        },
+        {
+          "sha256": "5ec18aa8cf791b9aadcce199c0d51a42bf2ba487801d48d1a299c17b01acd260",
+          "path": "bot/src/pvp-menu.js"
+        },
+        {
+          "sha256": "85b071057559528b9042f0524d281ca51533086d19d9d6b63a689183daddb3e6",
+          "path": "bot/src/pvp-safety-commands.js"
+        },
+        {
+          "sha256": "d9a00b1f27b704bc2965d400b408a9640f4ee45d68950785c7b0ccbd2dc13a46",
+          "path": "bot/src/roll-collaboration.js"
+        },
+        {
+          "sha256": "22639e3c4ab233de14a4796f04b31e0bae3fe23b744b4de7c706ff8c88616790",
+          "path": "bot/src/roll-declaration-review.js"
+        },
+        {
+          "sha256": "3f3deb5cd8f5ac371b11984434a5c1fc8cba1eb3923e1fc5e1f6e5fb43993311",
+          "path": "bot/src/roll-menu.js"
+        },
+        {
+          "sha256": "54993163ca6f5cb1cb100722c74caa4447d124691f182f5e1a9e0dd9d082ba1e",
+          "path": "bot/src/roll-options.js"
+        },
+        {
+          "sha256": "38ff3096991f1042a8c0a6a79fce59f7daab361eee1faf5ad152d9400bdc52cd",
+          "path": "bot/src/roll-requests.js"
+        },
+        {
+          "sha256": "c3c761239e4262b8667020f83cb51f8c780015e93c11d63cb2bc32a0cf97ac23",
+          "path": "bot/src/roll-sharing.js"
+        },
+        {
+          "sha256": "8df720b6f19da9a12ca07ac69a43147a775f04d3a1b6ba7c167d01b418e5de1e",
+          "path": "bot/src/scene-continuity.js"
+        },
+        {
+          "sha256": "64e07bece23a4a518bd81382796ce6e8b94c4a3b8e0542a700ee39c90251c722",
+          "path": "bot/src/session-opening-runner.js"
+        },
+        {
+          "sha256": "c7c8377c08f4f62a5e6c5ac502c72e365116ede8633606d00bf2beb7c1d0efe2",
+          "path": "bot/src/simulation-commands.js"
+        },
+        {
+          "sha256": "dc8b9121da306a80ab091b733ed4d42ddde146bbc9c60bcf6b4da70a4aefcb71",
+          "path": "bot/src/simulation-motivation.js"
+        },
+        {
+          "sha256": "d2a6e64a96d363e491a47c3b62df57f16c73024c001d89b9d281fdbb264be8ac",
+          "path": "bot/src/simulation-strategy.js"
+        },
+        {
+          "sha256": "98bc88e01d75964c8ab60be9c7d21cd166428688af8098bff1df454a74f8d0b5",
+          "path": "bot/src/story-commands.js"
+        },
+        {
+          "sha256": "cd3f05297c5806956ada4700b1ab58b81197b07ba8c772fbc2f0adc9c3c2a92a",
+          "path": "bot/src/typed-roll-outcomes.js"
+        },
+        {
+          "sha256": "a01a53418137a762f251f424cba088411f25dfaf4a153f9a62b351e74eb8efd2",
+          "path": "bot/src/typed-roll-proof.js"
+        },
+        {
+          "sha256": "cd59630150dca3122a1f83ea19c800809283dd0b1d585caac781deb96a665abc",
+          "path": "bot/src/world-encounter-beats.js"
+        },
+        {
+          "sha256": "1772f6a37caf634b1a133cfcc725e701dadfb198914a6ab78ff009e4fec65ed2",
+          "path": "bot/tests/ai-gm-2026-10/rf02-f01.test.mjs"
+        },
+        {
+          "sha256": "c0344be08778e387c9bf5c4b603ef68504a4fdf249edbf9688c54c957fd3389f",
+          "path": "bot/tests/ai-gm-2026-10/rf02-f02.test.mjs"
+        },
+        {
+          "sha256": "d0c70fad1cf78fc353e20129bfd50012d51352e82cddf1d35c5e737d5203ad71",
+          "path": "bot/tests/ai-gm-2026-10/rf02-f03.test.mjs"
+        },
+        {
+          "sha256": "edfc7954b2f3782e2bd41c682239e3e774f047e85d1f605ab18289c4ae2e25e5",
+          "path": "bot/tests/ai-gm-2026-10/rf02-f04.test.mjs"
+        },
+        {
+          "sha256": "da3a1efbe26369bee84a022c30d1d40b7982d31f1e8331f8f9916a999f5270f0",
+          "path": "bot/tests/ai-gm-2026-10/rf02-f05.test.mjs"
+        },
+        {
+          "sha256": "c009bf61a8e4afa5fbeb16d196f07693fcdcc629a3edcb72920584ab3e702d4c",
+          "path": "bot/tests/ai-gm-2026-10/rf02-f06.test.mjs"
+        },
+        {
+          "sha256": "423d092ad44af0a0549f06dffce33817a4d3636a08df8945aa757939fe2925af",
+          "path": "bot/tooling/architecture/ast-imports.mjs"
+        },
+        {
+          "sha256": "19877c61d52db5dc1c1f85f766c0b22a0880d921d21acf425ff2ec7ee46a9b0f",
+          "path": "bot/tooling/architecture/boundary-checker.mjs"
+        }
+      ],
+      "base_sha": "bede41f8bd1b4d8129e061f67ce8176d192a9397",
+      "syntax_files": 68,
+      "run_id": "RF02-F06-FROZEN-1",
+      "command": "node --test --test-concurrency=1 --test-reporter=tap bot/tests/ai-gm-2026-10/rf02-f06.test.mjs",
+      "summary": {
+        "tests": 11,
+        "pass": 11,
+        "fail": 0,
+        "duration_ms": 97.5388
+      },
+      "log_sha256": "3a350e03e4b799a5f201c6587d20c741d846c0c7a7306ff476e101c3108e8194"
+    }
+  ],
+  "unique_current_tests": 35,
+  "syntax_checks": 68,
+  "frozen_code_drift": [],
+  "preservation": "PRESERVATION_AUDIT.json",
+  "frozen_sha256": {
+    "bot/src/assembly-publications.js": "8b6b6cec2146ce099bea8de11622a35d8c5a41af8b59f97ef28563cf9808e83c",
+    "bot/src/character-export.js": "4e0e3a3a7dda7d38e5f752cd44bf56daecc7c172a61a004c09952df1963c3619",
+    "bot/src/character-narrative.js": "c264476fdad25922e4d9b572b0795a92b581fd42800a781ce907f6e5e97a7f19",
+    "bot/src/city-commands.js": "cd859be56e1ee0fd1a31ba540ea6788472a94ebac41372199c2c9fa60c12da75",
+    "bot/src/city-consequences.js": "72c566b2015ba3343123422bac9b02169bd5e657a80378ff8c5e8e200c32993c",
+    "bot/src/city-constraints.js": "febab4096a3a346c55498b20dce5a953687dca242c05134978982e6de1301006",
+    "bot/src/city-groups.js": "6f1ac9966ad6833bab46ffab91547aa9b653999a31d57bba3403946672f3223c",
+    "bot/src/commands.js": "7664b5be96ab375561874f2702628952e5907bb7c972ffe94a4904416f75d297",
+    "bot/src/concept-context.js": "fb98905cde1b76bd26383f61df7d0193791c73a28f9416af8b318d54bad7846a",
+    "bot/src/config.js": "3be8d5d1cbe51eb39ba392b3c5cbf8918f08da963b206e2e04c1b96ec0225484",
+    "bot/src/db.js": "334126f546a55a7bee3591e45fc1ccbf530e01f5edfb055a17de030d5824ac15",
+    "bot/src/discord/privacy.js": "cba771f2a2ae5e38e41dd0ecd5f578c79e9d225128ce32598467772d66fbf102",
+    "bot/src/frameworks/character/file-names.js": "372c2bbe5c3fb4790c2de578e2cbba3773ba28fbd71124683d4b4d05f42824af",
+    "bot/src/frameworks/character/narrative-text.js": "9fed4b8713e360e7883f01d0a9bcae5ca00f3e00fd9e12d5e498d0e0373e0ca8",
+    "bot/src/frameworks/character/public.js": "ee74583c4b6d273c47170f9e49f98f24b99cb4c1eda71d8ffcf54a43c9594ce1",
+    "bot/src/frameworks/content/content.js": "86875dc9ae71e3ac43fba93e9b6eba597d5ff41a9d1e2c4f843294b964e12855",
+    "bot/src/frameworks/content/public.js": "bce1c8900afc7de3c8c6b5cc4e199fb408125af49d76a204c64b662c773bbe85",
+    "bot/src/frameworks/content/root.js": "10efda958196226dda745ee8484f238950ddcc69f1c9de4d0656393ad485c569",
+    "bot/src/frameworks/discord/delivery.js": "7160237b839ed9c28ea713189381dc8642ca3869c271f5a96079945dd6f4b0e9",
+    "bot/src/frameworks/discord/public.js": "49d4f9c393301b3b3d6b7e50a88ee704c7776169dc8122c76d7a63ef56db7b92",
+    "bot/src/frameworks/operations/error-policy.js": "ab6dc5417b6fddad725683731f4cec7ec2676b0003e0e2c61a4d76c90bc99b16",
+    "bot/src/frameworks/operations/logger.js": "29ccfa7bbe73c12b8a44dad5682ab82ce4b9227a8c9c404166f240373ac078f7",
+    "bot/src/frameworks/operations/opening-diagnostics.js": "23d7783c563906d65326a5f6498255861d70025da43f7abc6a67078ed85ccf82",
+    "bot/src/frameworks/operations/public.js": "2b96526e0dfe8817d79029cf6bb4e5cf10ad96c427f385a3cf34d3cf3736b516",
+    "bot/src/gm-action-review.js": "f43c11f2a8f6c8304a194c09be23b2f45a50b2d3c716718da1832b04537e0a0a",
+    "bot/src/historical-archive.js": "1c299be3012e20b86dc6f17b4efad80b413c633be8e4ee66d2687b2c3bacbfce",
+    "bot/src/index.js": "beb493fe6f3824f509d7ebd0ac3b14664a2799a4c25d4d400e58d49dea6b00b1",
+    "bot/src/kernel/errors.js": "ec32691104bd7dff25e71e52a5b65d70ec97a98b284f4075339d40f6866ca4a2",
+    "bot/src/kernel/serial-queue.js": "aee9209870768a6314b6f091494bd75f74b2b087846231f080a6adeb9647bcc2",
+    "bot/src/kernel/zip-store.js": "045fe02d75802d1fe8c21826edf518ffaa6c58c753f2f009b6a92b25c965f42e",
+    "bot/src/long-projects.js": "63001890cc2a8e8f1775e594cd513459e4736ed05c1dd87ae7a13297e93651d8",
+    "bot/src/memory-clusters.js": "c7e89436d26b6998e67555695c32364bb6d05192f3d3df0c0cc1aaa0c4baa041",
+    "bot/src/native-experience-eligibility.js": "63fda5698235f2db52bc5534f5b53f8213b97a7f62bbd7993ef75fe4c65376e6",
+    "bot/src/native-publications.js": "28d3c78d0b92c9ef4ac46cc4e30e8d0f5614db0f9b124cbd88caa3033f2214f1",
+    "bot/src/native-unarmed-traits.js": "50e879adb3c404a432153ce140245830d3fdf8f0628e8bed26f1869fe1e9b99c",
+    "bot/src/opening-cohort-runner.js": "03fd2dd4a2ac27a7164d92827de4656fa558b8785a60b3ee5dac2510ae549dda",
+    "bot/src/opening-entry.js": "3a5ebc7a2382595181d30c89edc167b4b7e9b00c52d51a835ca0ef5cd779cd64",
+    "bot/src/opening-flow.js": "b1c154eebd5a76c935a3f93dd70237c38fecd693deef0212d62568a46df70255",
+    "bot/src/owner-action-terminal.js": "eeba048498253a967563a42089f09dd90ebf18974dfe6ccc96a4cb1895d74062",
+    "bot/src/personal-continuity.js": "36556213b1d92db07c0c5fe4b7d9587457151fe90e52500fa016fc835867a188",
+    "bot/src/pre-roll-fear-notice.js": "f9f6c0b0be8f67fbb1a7e500a4abffbff73e900d0dbdcb685197353dd5fa0cb7",
+    "bot/src/publication-outbox.js": "011276bbc643438e3d15cc29a0d3251d0077e84a714c5526e287692d7b60b30e",
+    "bot/src/publishing.js": "0edba95891ce837bab3be600651974e74ab396cdb9561e604fe71d024974b920",
+    "bot/src/pvp-menu.js": "5ec18aa8cf791b9aadcce199c0d51a42bf2ba487801d48d1a299c17b01acd260",
+    "bot/src/pvp-safety-commands.js": "85b071057559528b9042f0524d281ca51533086d19d9d6b63a689183daddb3e6",
+    "bot/src/roll-collaboration.js": "d9a00b1f27b704bc2965d400b408a9640f4ee45d68950785c7b0ccbd2dc13a46",
+    "bot/src/roll-declaration-review.js": "22639e3c4ab233de14a4796f04b31e0bae3fe23b744b4de7c706ff8c88616790",
+    "bot/src/roll-menu.js": "3f3deb5cd8f5ac371b11984434a5c1fc8cba1eb3923e1fc5e1f6e5fb43993311",
+    "bot/src/roll-options.js": "54993163ca6f5cb1cb100722c74caa4447d124691f182f5e1a9e0dd9d082ba1e",
+    "bot/src/roll-requests.js": "38ff3096991f1042a8c0a6a79fce59f7daab361eee1faf5ad152d9400bdc52cd",
+    "bot/src/roll-sharing.js": "c3c761239e4262b8667020f83cb51f8c780015e93c11d63cb2bc32a0cf97ac23",
+    "bot/src/scene-continuity.js": "8df720b6f19da9a12ca07ac69a43147a775f04d3a1b6ba7c167d01b418e5de1e",
+    "bot/src/session-opening-runner.js": "64e07bece23a4a518bd81382796ce6e8b94c4a3b8e0542a700ee39c90251c722",
+    "bot/src/simulation-commands.js": "c7c8377c08f4f62a5e6c5ac502c72e365116ede8633606d00bf2beb7c1d0efe2",
+    "bot/src/simulation-motivation.js": "dc8b9121da306a80ab091b733ed4d42ddde146bbc9c60bcf6b4da70a4aefcb71",
+    "bot/src/simulation-strategy.js": "d2a6e64a96d363e491a47c3b62df57f16c73024c001d89b9d281fdbb264be8ac",
+    "bot/src/story-commands.js": "98bc88e01d75964c8ab60be9c7d21cd166428688af8098bff1df454a74f8d0b5",
+    "bot/src/typed-roll-outcomes.js": "cd3f05297c5806956ada4700b1ab58b81197b07ba8c772fbc2f0adc9c3c2a92a",
+    "bot/src/typed-roll-proof.js": "a01a53418137a762f251f424cba088411f25dfaf4a153f9a62b351e74eb8efd2",
+    "bot/src/world-encounter-beats.js": "cd59630150dca3122a1f83ea19c800809283dd0b1d585caac781deb96a665abc",
+    "bot/tests/ai-gm-2026-10/rf02-f01.test.mjs": "1772f6a37caf634b1a133cfcc725e701dadfb198914a6ab78ff009e4fec65ed2",
+    "bot/tests/ai-gm-2026-10/rf02-f02.test.mjs": "c0344be08778e387c9bf5c4b603ef68504a4fdf249edbf9688c54c957fd3389f",
+    "bot/tests/ai-gm-2026-10/rf02-f03.test.mjs": "d0c70fad1cf78fc353e20129bfd50012d51352e82cddf1d35c5e737d5203ad71",
+    "bot/tests/ai-gm-2026-10/rf02-f04.test.mjs": "edfc7954b2f3782e2bd41c682239e3e774f047e85d1f605ab18289c4ae2e25e5",
+    "bot/tests/ai-gm-2026-10/rf02-f05.test.mjs": "da3a1efbe26369bee84a022c30d1d40b7982d31f1e8331f8f9916a999f5270f0",
+    "bot/tests/ai-gm-2026-10/rf02-f06.test.mjs": "c009bf61a8e4afa5fbeb16d196f07693fcdcc629a3edcb72920584ab3e702d4c",
+    "bot/tooling/architecture/ast-imports.mjs": "423d092ad44af0a0549f06dffce33817a4d3636a08df8945aa757939fe2925af",
+    "bot/tooling/architecture/boundary-checker.mjs": "19877c61d52db5dc1c1f85f766c0b22a0880d921d21acf425ff2ec7ee46a9b0f",
+    "bot/package.json": "facf72160af1397c1ff5c72725a48659c837e2889ec818552102a1bccedfaf9e",
+    "docs/Implementation_Plans/Framework_Refactor/RF01/PACKAGES.json": "ea7101b50c47ea83b4c1dce5d74a0d4823d1d23fb72c9136cc513307244a069b",
+    "docs/Implementation_Plans/Framework_Refactor/RF01/TRANSITIONS.json": "aa5ec61fe588e089c6f2fd539c24f9c080e00976067c389178cf995b4c81ef35",
+    "docs/Implementation_Plans/Framework_Refactor/RF01/TRANSITION_BASELINE.json": "213b8e19491ae0ebcbcf85321b00ba40768420f27233e8d84f84ccad96cb84d6"
+  },
+  "provider_calls": 0,
+  "provider_tokens": 0,
+  "provider_cost_usd": 0,
+  "codex_usage_cost": "UNMEASURED",
+  "cache": "No new runtime caching; original immutable content token index verified",
+  "production_databases_accessed": 0,
+  "rf03_started": false,
+  "release": "NOT AUTHORIZED",
+  "feature_statuses": {
+    "F01": "COMPLETE",
+    "F02": "REPRESENTATIVE_COMPLETE_PACKAGE_WORKFLOW_HELD",
+    "F03": "REPRESENTATIVE_COMPLETE_SHARED_INSTRUMENTATION_HELD",
+    "F04": "PURE_SLICE_COMPLETE_MIXED_WORKFLOWS_HELD",
+    "F05": "DELIVERY_SLICE_COMPLETE_SHARED_LIFECYCLE_AND_PUBLICATION_HELD",
+    "F06": "QUALIFICATION_COMPLETE_WITH_LOCAL_HOLDS"
+  },
+  "phase_status": "REPRESENTATIVE_EXIT_COMPLETE_WITH_LOCAL_HOLDS",
+  "candidate_inventory_fully_migrated": false,
+  "holds": "LOCAL_HOLDS.json",
+  "runtime": {
+    "node": "v24.19.0",
+    "npm": "12.1.0"
+  },
+  "feature_checkpoints": {
+    "RF02-F05": "bede41f8bd1b4d8129e061f67ce8176d192a9397",
+    "RF02-F04": "247d34b162894c79eb4262229d7317347e64bafe",
+    "RF02-F03": "7594ed9afeb59adbab1adb5966f68fbd1c67eda0",
+    "RF02-F02": "a21ff94a628214c01bdfa0284330b39bcd96505a",
+    "RF02-F01": "8eb49634beb8228cf5f1c0398ba73ca90ac3bde0"
+  },
+  "gate_log_sha256": {
+    "rf02-f06-architecture.log": "ef7709f35673b8f0fb9ad1f3cb7141ec9d0a5181dabed8456da9b270dae08285",
+    "rf02-f06-strict.log": "65b84871ebdab832585e50c530edfeeeb45a3fd6423aa167e3f46f678cd80a42"
+  }
+}

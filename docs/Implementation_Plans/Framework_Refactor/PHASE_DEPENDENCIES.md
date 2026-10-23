@@ -1,6 +1,6 @@
 # Incremental migration and risk gates
 
-The supplied RF roadmap has 50 features. RF00 inventory is retained as historical evidence; RF01 now provides tested ports, dependency injection and executable import enforcement. RF02 file migrations have **not** begun and remain explicitly held by the owner. Future rows are dependencies, not completion records or generated empty framework directories.
+The supplied RF roadmap has 50 features. RF00 inventory and RF01 evidence are retained as history. RF02's separately authorized representative moves/extractions now pass fresh tests and RF02 enforcement; its [held candidate boundaries](RF02/LOCAL_HOLDS.md) remain unresolved, with 75 original RF02-deadline records blocking a later-phase gate. RF03 has **not** begun. Future rows are dependencies, not completion records or generated empty framework directories.
 
 | Phase | Features | Preconditions | Exit evidence |
 |---|---:|---|---|

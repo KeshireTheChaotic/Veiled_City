@@ -1,6 +1,6 @@
 # RF execution entry
 
-1. Read repository `agent.md` first when present; `AGENTS.md` currently references a missing file. Apply the four owner-supplied collaboration principles from the task history; do not overwrite that owner addition.
+1. Read root `AGENTS.md` first; it now directly contains the four owner-supplied collaboration principles. `agent.md` remains absent. Do not overwrite that owner addition.
 2. Verify branch, actual HEAD/status and all collisions. The source inventory anchor is `f43d002693cb4ee38038b5dbb2c1049de95b3ffd`, not a reset target.
 3. Read the complete owner behavior specification and complementary ENGINE constitution, active implementation protocols and RF master handoff. Follow only the current phase/feature SCOPE and LEDGER while implementing.
 4. RF00 makes no implementation moves. Inspect source ownership, exact import edges, injected collaborators, module state, startup side effects and serialization/receipt boundaries before selecting a migration slice.

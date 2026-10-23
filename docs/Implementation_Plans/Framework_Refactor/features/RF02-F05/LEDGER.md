@@ -11,3 +11,5 @@ RF02-F05-1: exit 0, 6/6 pass, 69.4521 ms, 4 changed syntax checks, RF02 architec
 Removed 2 live transition records; raw debt 2813, zero active/unowned, cycle211 unchanged. Hold chunking/privacy moves until RF06-F03/F04 provide publication and operations-owned consumer ports. Hold lifecycle until RF06-F04 preserves one shared WeakMap/observer binding; duplicating its state would change acknowledgement semantics. Current old files are original implementations, not added shims. No RF06 rewrite attempted.
 
 Revert F05 checkpoint before dependent code; no data rollback. Provider calls/tokens/spend 0/0/$0; no cache changes, Codex/runtime cost UNMEASURED. No new narrative restriction/owner question. Checkpoint SHA follows. RELEASE NOT AUTHORIZED.
+
+Feature checkpoint: `bede41f8bd1b4d8129e061f67ce8176d192a9397`.

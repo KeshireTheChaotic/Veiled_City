@@ -9,3 +9,7 @@ This framework may use its own modules and neutral kernel primitives. Other capa
 RF01 exposes only the real injected capability constructors listed in RF01/PACKAGES.json. They are contract-only and not yet wired into existing gameplay.
 
 Preserve the owner AI GM specification, player control, native mechanics, private audiences, source/receipt identity and autonomous fiction. Do not embed production clients, database connections or provider instances at module load. The RF01 checker enforces imports/public paths; gameplay equivalence requires its own future changed-code tests.
+
+## RF02 current implementation
+
+RF02: delivery.js exposes createInteractionTextDelivery with an explicit same-framework splitter capability. commands.js binds the existing splitter once; original reply/edit/follow-up semantics remain. Chunking, privacy and shared acknowledgement/observer lifecycle remain original implementations pending publication/operations ports; no permanent facade or duplicate state was introduced.

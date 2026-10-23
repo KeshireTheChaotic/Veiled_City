@@ -1,0 +1,398 @@
+{
+  "base_sha": "bd85d23da791285dbcc75ffdd6552e1d3a6dfdfd",
+  "existing_declarations": [
+    {
+      "file": "bot/src/assembly-publications.js",
+      "equal": true,
+      "scope": "imports only"
+    },
+    {
+      "file": "bot/src/character-export.js",
+      "equal": true,
+      "scope": "pure functions extracted; remaining workflow declarations unchanged"
+    },
+    {
+      "file": "bot/src/character-narrative.js",
+      "equal": true,
+      "scope": "text/path functions extracted; remaining workflow declarations unchanged"
+    },
+    {
+      "file": "bot/src/city-commands.js",
+      "equal": true,
+      "scope": "imports only"
+    },
+    {
+      "file": "bot/src/city-consequences.js",
+      "equal": true,
+      "scope": "imports only"
+    },
+    {
+      "file": "bot/src/city-constraints.js",
+      "equal": true,
+      "scope": "imports only"
+    },
+    {
+      "file": "bot/src/city-groups.js",
+      "equal": true,
+      "scope": "imports only"
+    },
+    {
+      "file": "bot/src/commands.js",
+      "equal": true,
+      "scope": "imports plus one delivery-factory binding"
+    },
+    {
+      "file": "bot/src/concept-context.js",
+      "equal": true,
+      "scope": "imports only"
+    },
+    {
+      "file": "bot/src/config.js",
+      "equal": true,
+      "scope": "CONTENT_ROOT resolver call only; remaining declarations unchanged"
+    },
+    {
+      "file": "bot/src/db.js",
+      "equal": true,
+      "scope": "imports only"
+    },
+    {
+      "file": "bot/src/discord/privacy.js",
+      "equal": true,
+      "scope": "imports only"
+    },
+    {
+      "file": "bot/src/gm-action-review.js",
+      "equal": true,
+      "scope": "imports only"
+    },
+    {
+      "file": "bot/src/historical-archive.js",
+      "equal": true,
+      "scope": "imports only"
+    },
+    {
+      "file": "bot/src/index.js",
+      "equal": true,
+      "scope": "imports only"
+    },
+    {
+      "file": "bot/src/long-projects.js",
+      "equal": true,
+      "scope": "imports only"
+    },
+    {
+      "file": "bot/src/memory-clusters.js",
+      "equal": true,
+      "scope": "imports only"
+    },
+    {
+      "file": "bot/src/native-experience-eligibility.js",
+      "equal": true,
+      "scope": "imports only"
+    },
+    {
+      "file": "bot/src/native-publications.js",
+      "equal": true,
+      "scope": "imports only"
+    },
+    {
+      "file": "bot/src/native-unarmed-traits.js",
+      "equal": true,
+      "scope": "imports only"
+    },
+    {
+      "file": "bot/src/opening-cohort-runner.js",
+      "equal": true,
+      "scope": "imports only"
+    },
+    {
+      "file": "bot/src/opening-entry.js",
+      "equal": true,
+      "scope": "imports only"
+    },
+    {
+      "file": "bot/src/opening-flow.js",
+      "equal": true,
+      "scope": "imports only"
+    },
+    {
+      "file": "bot/src/owner-action-terminal.js",
+      "equal": true,
+      "scope": "imports only"
+    },
+    {
+      "file": "bot/src/personal-continuity.js",
+      "equal": true,
+      "scope": "imports only"
+    },
+    {
+      "file": "bot/src/pre-roll-fear-notice.js",
+      "equal": true,
+      "scope": "imports only"
+    },
+    {
+      "file": "bot/src/publication-outbox.js",
+      "equal": true,
+      "scope": "imports only"
+    },
+    {
+      "file": "bot/src/publishing.js",
+      "equal": true,
+      "scope": "imports only"
+    },
+    {
+      "file": "bot/src/pvp-menu.js",
+      "equal": true,
+      "scope": "imports only"
+    },
+    {
+      "file": "bot/src/pvp-safety-commands.js",
+      "equal": true,
+      "scope": "imports only"
+    },
+    {
+      "file": "bot/src/roll-collaboration.js",
+      "equal": true,
+      "scope": "imports only"
+    },
+    {
+      "file": "bot/src/roll-declaration-review.js",
+      "equal": true,
+      "scope": "imports only"
+    },
+    {
+      "file": "bot/src/roll-menu.js",
+      "equal": true,
+      "scope": "imports only"
+    },
+    {
+      "file": "bot/src/roll-options.js",
+      "equal": true,
+      "scope": "imports only"
+    },
+    {
+      "file": "bot/src/roll-requests.js",
+      "equal": true,
+      "scope": "imports only"
+    },
+    {
+      "file": "bot/src/roll-sharing.js",
+      "equal": true,
+      "scope": "imports only"
+    },
+    {
+      "file": "bot/src/scene-continuity.js",
+      "equal": true,
+      "scope": "imports only"
+    },
+    {
+      "file": "bot/src/session-opening-runner.js",
+      "equal": true,
+      "scope": "imports only"
+    },
+    {
+      "file": "bot/src/simulation-commands.js",
+      "equal": true,
+      "scope": "imports only"
+    },
+    {
+      "file": "bot/src/simulation-motivation.js",
+      "equal": true,
+      "scope": "imports only"
+    },
+    {
+      "file": "bot/src/simulation-strategy.js",
+      "equal": true,
+      "scope": "imports only"
+    },
+    {
+      "file": "bot/src/story-commands.js",
+      "equal": true,
+      "scope": "imports only"
+    },
+    {
+      "file": "bot/src/typed-roll-outcomes.js",
+      "equal": true,
+      "scope": "imports only"
+    },
+    {
+      "file": "bot/src/typed-roll-proof.js",
+      "equal": true,
+      "scope": "imports only"
+    },
+    {
+      "file": "bot/src/world-encounter-beats.js",
+      "equal": true,
+      "scope": "imports only"
+    }
+  ],
+  "relocated_declarations": [
+    {
+      "from": "bot/src/errors.js",
+      "to": "bot/src/kernel/errors.js",
+      "name": "VeiledError",
+      "equal": true
+    },
+    {
+      "from": "bot/src/errors.js",
+      "to": "bot/src/kernel/errors.js",
+      "name": "UserInputError",
+      "equal": true
+    },
+    {
+      "from": "bot/src/errors.js",
+      "to": "bot/src/kernel/errors.js",
+      "name": "PermissionError",
+      "equal": true
+    },
+    {
+      "from": "bot/src/errors.js",
+      "to": "bot/src/kernel/errors.js",
+      "name": "NotFoundError",
+      "equal": true
+    },
+    {
+      "from": "bot/src/errors.js",
+      "to": "bot/src/kernel/errors.js",
+      "name": "StateConflictError",
+      "equal": true
+    },
+    {
+      "from": "bot/src/errors.js",
+      "to": "bot/src/frameworks/operations/error-policy.js",
+      "name": "isExpectedError",
+      "equal": true
+    },
+    {
+      "from": "bot/src/serial-queue.js",
+      "to": "bot/src/kernel/serial-queue.js",
+      "name": "KeyedSerialQueue",
+      "equal": true
+    },
+    {
+      "from": "bot/src/character-export.js",
+      "to": "bot/src/kernel/zip-store.js",
+      "name": "crc32",
+      "equal": true
+    },
+    {
+      "from": "bot/src/character-export.js",
+      "to": "bot/src/kernel/zip-store.js",
+      "name": "dosStamp",
+      "equal": true
+    },
+    {
+      "from": "bot/src/character-export.js",
+      "to": "bot/src/kernel/zip-store.js",
+      "name": "u16",
+      "equal": true
+    },
+    {
+      "from": "bot/src/character-export.js",
+      "to": "bot/src/kernel/zip-store.js",
+      "name": "u32",
+      "equal": true
+    },
+    {
+      "from": "bot/src/character-export.js",
+      "to": "bot/src/kernel/zip-store.js",
+      "name": "zipStore",
+      "equal": true
+    },
+    {
+      "from": "bot/src/character-export.js",
+      "to": "bot/src/frameworks/character/file-names.js",
+      "name": "safeText",
+      "equal": true
+    },
+    {
+      "from": "bot/src/character-export.js",
+      "to": "bot/src/frameworks/character/file-names.js",
+      "name": "safeStem",
+      "equal": true
+    },
+    {
+      "from": "bot/src/character-narrative.js",
+      "to": "bot/src/frameworks/character/narrative-text.js",
+      "name": "normalizeNarrativeMarkdown",
+      "equal": true
+    },
+    {
+      "from": "bot/src/character-narrative.js",
+      "to": "bot/src/frameworks/character/narrative-text.js",
+      "name": "narrativeRelativePath",
+      "equal": true
+    },
+    {
+      "from": "bot/src/discord/delivery.js",
+      "to": "bot/src/frameworks/discord/delivery.js",
+      "name": "deliverInteractionText",
+      "equal": true
+    }
+  ],
+  "unchanged_file_moves": [
+    {
+      "from": "bot/src/content.js",
+      "to": "bot/src/frameworks/content/content.js",
+      "equal": true
+    },
+    {
+      "from": "bot/src/logger.js",
+      "to": "bot/src/frameworks/operations/logger.js",
+      "equal": true
+    },
+    {
+      "from": "bot/src/opening-diagnostics.js",
+      "to": "bot/src/frameworks/operations/opening-diagnostics.js",
+      "equal": true
+    }
+  ],
+  "compatibility": {
+    "protected_files": [
+      {
+        "path": "bot/sql/schema.sql",
+        "equal_git_normalized": true,
+        "sha256": "d3a69c4c55a876b087556ab7f291265a684c4287233b1651b1692be34781e374",
+        "intake_raw_sha256": "d3a69c4c55a876b087556ab7f291265a684c4287233b1651b1692be34781e374",
+        "raw_anchor_matches": true
+      },
+      {
+        "path": "bot/src/native-feature-definitions.json",
+        "equal_git_normalized": true,
+        "sha256": "58baf77cc9cb2b5f38e1714422c64131f2f533b4bf09254b8f8729ccd64d1e16",
+        "intake_raw_sha256": "58baf77cc9cb2b5f38e1714422c64131f2f533b4bf09254b8f8729ccd64d1e16",
+        "raw_anchor_matches": true
+      },
+      {
+        "path": "bot/src/native-house-errata.json",
+        "equal_git_normalized": true,
+        "sha256": "6f679f50272861ccc01f5b189d0fc5d9947e5df350df372cb52f97df93a28964",
+        "intake_raw_sha256": "6f679f50272861ccc01f5b189d0fc5d9947e5df350df372cb52f97df93a28964",
+        "raw_anchor_matches": true
+      },
+      {
+        "path": "bot/package-lock.json",
+        "equal_git_normalized": true,
+        "sha256": "0fc4f873dcd5a0cbcc7879d7d9f9737fb98f13729d469a8762230904c6db1d61",
+        "intake_raw_sha256": "0fc4f873dcd5a0cbcc7879d7d9f9737fb98f13729d469a8762230904c6db1d61",
+        "raw_anchor_matches": true
+      },
+      {
+        "path": "Dockerfile",
+        "equal_git_normalized": true,
+        "sha256": "37f53728408f447ea3657693d4e178fd7a5153bf9d2368e285c571ff1327e08b",
+        "intake_raw_sha256": null,
+        "raw_anchor_matches": null
+      }
+    ],
+    "transition_baseline_unchanged": true,
+    "transition_no_new_or_enlarged_or_extended_entries": true,
+    "removed_transition_records": 48,
+    "runtime_commands_unchanged": true,
+    "runtime_dependencies_unchanged": true,
+    "error_policy_exact_suffix": true,
+    "old_paths_removed": true,
+    "protected_content_ci_diff": []
+  }
+}

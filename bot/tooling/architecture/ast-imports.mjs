@@ -8,7 +8,7 @@ export function parseModule(source){
   const loaderNames=new Set(['require','createRequire']);
   const resourceConstructors=new Set(['DatabaseSync','VeiledDB','GMService','OpenAI','Client','REST']);
   const eagerMethods=new Set(['login','connect','createConnection','createPool','writeFileSync','appendFileSync','mkdirSync','renameSync','unlinkSync','rmSync']);
-  const add=(node,kind,specifier)=>imports.push({kind,specifier,line:node.loc.start.line,column:node.loc.start.column});
+  const add=(node,kind,specifier,extra={})=>imports.push({kind,specifier,line:node.loc.start.line,column:node.loc.start.column,...extra});
   for(const node of ast.body)if(node.type==='ImportDeclaration')for(const spec of node.specifiers){
     if(spec.imported?.name==='createRequire')loaderNames.add(spec.local.name);
     if(resourceConstructors.has(spec.imported?.name)||spec.type==='ImportDefaultSpecifier'&&node.source.value==='openai')resourceConstructors.add(spec.local.name);
@@ -27,14 +27,15 @@ export function parseModule(source){
   }
   function extract(node){
     if(node.type==='ImportDeclaration'){
-      add(node,node.specifiers.length?'static':'side-effect',node.source.value);
+      add(node,node.specifiers.length?'static':'side-effect',node.source.value,{importedNames:node.specifiers.map(spec=>
+        spec.type==='ImportDefaultSpecifier'?'default':spec.type==='ImportNamespaceSpecifier'?'*':spec.imported.name??spec.imported.value)});
       for(const spec of node.specifiers)if(spec.imported?.name==='createRequire')loaderNames.add(spec.local.name);
     }else if(node.type==='ExportNamedDeclaration'){
-      if(node.source)add(node,'re-export',node.source.value);
+      if(node.source)add(node,'re-export',node.source.value,{importedNames:node.specifiers.map(spec=>spec.local.name??spec.local.value)});
       for(const spec of node.specifiers)exports.push(spec.exported.name??spec.exported.value);
       if(node.declaration?.id)exports.push(node.declaration.id.name);
       for(const decl of node.declaration?.declarations||[])bindingNames(decl.id,exports);
-    }else if(node.type==='ExportAllDeclaration'){add(node,'re-export',node.source.value);exports.push(node.exported?.name||'*');}
+    }else if(node.type==='ExportAllDeclaration'){add(node,'re-export',node.source.value,{star:!node.exported});exports.push(node.exported?.name||'*');}
     else if(node.type==='ExportDefaultDeclaration')exports.push('default');
     else if(node.type==='ImportExpression'){
       const target=node.source,literal=target.type==='Literal'&&typeof target.value==='string'||target.type==='TemplateLiteral'&&!target.expressions.length;

@@ -9,3 +9,7 @@ This framework may use its own modules and neutral kernel primitives. Other capa
 No public JavaScript API is fabricated here. Introduce a public entrypoint only with an actual migration/contract and fresh tests.
 
 Preserve the owner AI GM specification, player control, native mechanics, private audiences, source/receipt identity and autonomous fiction. Do not embed production clients, database connections or provider instances at module load. The RF01 checker enforces imports/public paths; gameplay equivalence requires its own future changed-code tests.
+
+## RF02 current implementation
+
+RF02: file-names.js and narrative-text.js provide actual extracted filename/Markdown/scope-path functions via public.js, used by current commands and character workflows. Generic ZIP encoding is kernel-owned. Native advancement, source observations and remaining storage/knowledge export workflows are explicitly held, not moved wholesale.
