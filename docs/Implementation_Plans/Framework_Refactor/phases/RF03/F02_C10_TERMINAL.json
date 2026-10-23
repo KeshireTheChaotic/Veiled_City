@@ -1,0 +1,14 @@
+{
+  "feature": "RF03-F02-C10",
+  "status": "QUALIFIED_NATIVE_GROUP_FEATURE_RULES",
+  "branch": "codex/clean-ai-gm-2026-10",
+  "base_sha": "dd3bfa3d835d519e84af4bc4ef368bd661688624",
+  "test": {"path": "bot/tests/ai-gm-2026-10/rf03-f02-c10.test.mjs", "command": "node --test bot/tests/ai-gm-2026-10/rf03-f02-c10.test.mjs", "exit": 0, "passed": 3, "failed": 0, "skipped": 0, "duration_ms": 61.2746, "log": "f02-c10.log", "log_sha256": "2E208D2BD2583924516BB57FC77C3E5FEBD5BA3EA721A35819249A8C8BA6A39D"},
+  "syntax": {"exit": 0, "changed_js_mjs_files": 3},
+  "architecture_ratchet": {"command": "node bot/tooling/architecture/check-boundaries.mjs --ratchet --phase RF03", "exit": 0, "source_modules": 400, "unowned": 0, "import_occurrences": 2332, "largest_cycle": 182, "raw_violation_occurrences": 2600, "accepted_legacy_occurrences": 2600, "active_violation_groups": 0, "transition_errors": 0, "log": "f02-c10-gate.log", "log_sha256": "47E74521C6DB673080AAF72AFEC4A3391BDE93F481F6DD49B18F9EB5B0069A19"},
+  "source_sha256": {"bot/src/frameworks/daggerheart/group-feature-rules.js": "A681B909535D09BC64FCF6C2E872833E50684AE9F86191EA3AD7F02CCC612107", "bot/src/native-group-features.js": "BAD0CBEE3F02133BA694F5309F533A05596A5753B8E57832ECE8BF141AA09401", "bot/tests/ai-gm-2026-10/rf03-f02-c10.test.mjs": "51BC5F887FFEC739920FAA09F74782EDE2D77B68CE18EDC0474F7BEFA49B73E0"},
+  "provider_calls": 0,
+  "provider_cost_usd": 0,
+  "codex_usage": "UNMEASURED",
+  "release_authorized": false
+}

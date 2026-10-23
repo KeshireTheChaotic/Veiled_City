@@ -17,26 +17,11 @@ import {applyNativeStressPassive} from './native-stress-passives.js';
 import {inspectNativeConditionClearAncestry} from './native-condition-recovery.js';
 import {incomingConditionOdds,movementConditionIssue} from './frameworks/daggerheart/native-condition-rules.js';
 export {incomingConditionOdds} from './frameworks/daggerheart/native-condition-rules.js';
+import {LANES,FLASH,REGENT,groupFeaturePolicies as policies,isGroupFeature,groupReactionRules,groupNeedsChoice as needsChoice,
+  groupReactionOptions,groupFeatureStakes} from './frameworks/daggerheart/group-feature-rules.js';
+export {isGroupFeature,groupReactionRules,groupReactionOptions,groupFeatureStakes} from './frameworks/daggerheart/group-feature-rules.js';
 
-const LANES='adversary:traffic-saint:all-lanes-stop',FLASH='adversary:aster-vale-contractor:flashbang';
-const REGENT='adversary:pale-regent:command-the-blood';
-const policies=Object.freeze({[LANES]:Object.freeze({trait:'Instinct',difficulty:14,range:'Far',all:true,condition:'Movement limited',expiry:'next_spotlight'}),
-  [FLASH]:Object.freeze({trait:'Instinct',difficulty:12,range:'Close',all:false,condition:'Vulnerable',expiry:'until_cleared'}),
-  [REGENT]:Object.freeze({trait:'Presence',difficulty:20,range:'Melee',all:false,condition:null,expiry:null})});
 const executionKey=key=>`group-feature:${hash(key)}`,effectKey=key=>`group-effect:${hash(key)}`;
-export const isGroupFeature=key=>Object.hasOwn(policies,key);
-export function groupReactionRules(key){
-  const policy=policies[key];if(!policy)throw fail('group_feature_fixed_rules');
-  return Object.freeze({trait:policy.trait,difficulty:policy.difficulty});
-}
-const needsChoice=(feature,success,critical=false)=>!critical&&(feature===FLASH&&success||feature===REGENT&&!success);
-export const groupReactionOptions=feature=>feature===REGENT?['hope','stress','command']:feature===FLASH?['vulnerable','stress']:[];
-export function groupFeatureStakes(key){
-  if(key===LANES)return 'On failure you cannot move beyond Very Close until after the Saint next takes the spotlight. On success no restriction applies. No roll or failed response is assumed.';
-  if(key===FLASH)return 'On failure become Vulnerable and mark 1 Stress. On ordinary success YOU choose Vulnerable or 1 Stress. A native Critical ignores both effects, without Hope/Fear or Stress recovery. Silence/withdrawal is not a failed reaction.';
-  if(key===REGENT)return 'On failure YOU choose lose 2 Hope, mark 2 Stress, or one immediate non-suicidal command. Command compliance needs an exact communicated command and supported owner declaration; it is never invented. Success applies no consequence. Silence/withdrawal is not failure.';
-  throw fail('group_feature_stakes');
-}
 export function planGroupFeature(db,guild,o,entry,p,feature,{library,opportunity}={}){
   const policy=policies[feature?.feature_key];
   if(!policy||entry.actor.type!=='npc'||entry.operation!=='feature'||p.disposition!=='native_feature_resolution'||p.stakes_kind!=='native_feature'

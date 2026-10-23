@@ -1,0 +1,11 @@
+✔ native group identities and fixed reaction terms remain exact (0.9932ms)
+✔ native owner choices are required only for the existing outcomes (0.1209ms)
+✔ native feature stakes statements preserve existing choice and consent language (0.1614ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 61.2746
