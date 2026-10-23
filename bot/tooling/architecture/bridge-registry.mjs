@@ -1,3 +1,4 @@
+export const isFreshArchitectureTestPath=file=>typeof file==='string'&&/^bot\/tests\/ai-gm-2026-10\/rf\d\d-f\d\d(?:-c\d\d)?\.test\.mjs$/.test(file);
 /** Source-backed registration checks. Test paths are metadata, never imported or executed here. */
 export function checkBridgeRegistry({registry,report,policy,testPaths=new Set()}){
   const errors=[],add=(code,pair,detail)=>errors.push({code,from:'docs/Implementation_Plans/Framework_Refactor/RF01/BRIDGE_CONTRACTS.json',owner:'tooling',detail:`${pair||'[registry]'}: ${detail}`});
@@ -33,7 +34,7 @@ export function checkBridgeRegistry({registry,report,policy,testPaths=new Set()}
     }
     for(const edge of report.edges.filter(e=>e.to===publicPath&&modules.get(e.from)?.owner!==pair))
       if(!(entry.consumers||[]).includes(edge.from))add('UNREGISTERED_BRIDGE_CONSUMER',pair,edge.from);
-    if(!Array.isArray(entry.tests)||!entry.tests.length||entry.tests.some(file=>!/^bot\/tests\/ai-gm-2026-10\/rf\d\d-f\d\d\.test\.mjs$/.test(file)||!testPaths.has(file)))
+    if(!Array.isArray(entry.tests)||!entry.tests.length||entry.tests.some(file=>!isFreshArchitectureTestPath(file)||!testPaths.has(file)))
       add('INVALID_BRIDGE_TEST_REFERENCE',pair,'existing fresh feature tests required; execution evidence is separate');
   }
   for(const module of report.modules.filter(m=>m.role==='pair'&&m.location==='new'))

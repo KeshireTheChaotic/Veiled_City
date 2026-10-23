@@ -1,0 +1,67 @@
+{
+  "run_id": "RF03-F01-C01",
+  "base_sha": "bfc3ab6f118855e8336835efa0ff6375d6abe2a7",
+  "started": "2026-10-23T18:27:35.868Z",
+  "files": [
+    {
+      "path": "bot/src/character-system.js",
+      "sha256": "553882a2dd30f5f5941fa7fea051f0dc063d1dbc7915df0fdc3eac3ac21429bb"
+    },
+    {
+      "path": "bot/src/commands.js",
+      "sha256": "cdcd51e369bbba2b29311b06dde5ced4a206d50a168878f6fbb4cf5503464621"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/advancement.js",
+      "sha256": "ef0a2f6ddcd2f04f1709c99d82fe3b2230207e83fbb31891f495a562ff026e25"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/public.js",
+      "sha256": "7e0877f74880895a9b12b690527eaacabdcef629c8d6c65bb3a42bc4392d7f91"
+    },
+    {
+      "path": "bot/src/frameworks/character/contracts/advancement.js",
+      "sha256": "cf0e92769341bb534c40758f70d0eef6fafe619b7e39eb13736907d52fb64980"
+    },
+    {
+      "path": "bot/src/frameworks/character/public.js",
+      "sha256": "b592ea159d571041ca7b17f968b0c7211bd41e150fd51c80f85e13e047dc222b"
+    },
+    {
+      "path": "bot/src/framework-to-framework/character--daggerheart/public.js",
+      "sha256": "b40d2e855dfd4c742db18f7a5075b6626aee4a807f675330c06a0ae70ca85d0f"
+    },
+    {
+      "path": "bot/tooling/architecture/read-project.mjs",
+      "sha256": "981c6e62ff10802e9b6f0b47f9eb4d2ae1eb46eacef2c56ae227f5c6005fe871"
+    },
+    {
+      "path": "bot/tooling/architecture/bridge-registry.mjs",
+      "sha256": "e50e81681e8b52858a90e1b1200dcd21718472d18527bfd76ce7fa2341dd4ff1"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf03-f01-c01.test.mjs",
+      "sha256": "6ae8ffe8ba260295dcfd446027986cd76f2bbf5d14b70f05c04a33881ef9b5cc"
+    }
+  ],
+  "syntax_count": 10,
+  "tests": {
+    "command": "node --test --test-reporter=tap --test-concurrency=1 bot/tests/ai-gm-2026-10/rf03-f01-c01.test.mjs",
+    "exit": 0,
+    "summary": [
+      "# tests 9",
+      "# pass 9",
+      "# fail 0",
+      "# skipped 0",
+      "# duration_ms 76.1984"
+    ],
+    "log_sha256": "91af52daab03cad9bbebd808e701f2e504d2a7eef9a3f29d8265af57828bf76b"
+  },
+  "architecture": {
+    "command": "node bot/tooling/architecture/check-boundaries.mjs --ratchet --phase RF03",
+    "exit": 0,
+    "summary": [],
+    "log_sha256": "6056bdfb8f3819c5406a2fb2c21742538374ef4165953d37fd871db0d68519c6"
+  },
+  "finished": "2026-10-23T18:27:36.977Z"
+}

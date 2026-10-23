@@ -12,7 +12,8 @@ import { contributeRoll, adjudicateRollSource, applyRollOutcome } from "./roll-c
 import {reviewTypedRollOutcome} from "./typed-roll-outcomes.js";
 import { publishJournal, postJournalEntry, publishEventResults, postGmLog, postStateError, postPrivateRelay, syncConfiguredSurfaces, postPlayMessage, sendPlayerPrivate, deliverHandout, deliverQueuedTurn } from "./publishing.js";
 import { EncounterLibrary, livePcRoster, partyTier, baseBattlePoints, DIFFICULTY_ADJUSTMENTS, autoBuildComposition, recomputeBudget, battlePointCost, HEAVY_ROLES, defaultObjective, manageWorldEncounter, recordWorldEncounterOutcome, validateWorldEncounterActivation, worldCombatantDrafts, bindWorldCombatants } from "./encounter.js";
-import { prepareLevelup, applyLevelupToData, legalAdvancements, tierAchievement } from "./character-system.js";
+import {CLASS_DOMAINS,TRAITS,normalizeClassName} from './character-system.js';
+import {connectCharacterAdvancement} from './framework-to-framework/character--daggerheart/public.js';
 import { buildCombatants, hpMarksForDamage } from "./frameworks/daggerheart/public.js";
 import { applyAuthoritativeMutation } from "./state.js";
 import { manageEvidence, evidenceView } from "./evidence-custody.js";
@@ -99,6 +100,8 @@ import {publishPvpNotices,publishCampaignPvpNotices,materializeNativeNotices,res
 import {reconcilePublication} from "./publication-outbox.js";
 import {finishRollOperation} from './roll-operation-publications.js';
 import {createRollSharePreview} from './roll-sharing.js';
+
+const {prepareLevelup,applyLevelupToData,legalAdvancements,tierAchievement}=connectCharacterAdvancement({classDomains:CLASS_DOMAINS,traits:TRAITS,normalizeClassName});
 
 const deliverInteractionText=createInteractionTextDelivery({splitDiscordText});
 

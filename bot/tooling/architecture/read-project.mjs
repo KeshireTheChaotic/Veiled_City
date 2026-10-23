@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import {parseExpressionAt} from 'acorn';
 import {checkBoundaries,applyTransitions,violationId} from './boundary-checker.mjs';
-import {checkBridgeRegistry} from './bridge-registry.mjs';
+import {checkBridgeRegistry,isFreshArchitectureTestPath} from './bridge-registry.mjs';
 
 export function readStrictJson(text){
   const result=JSON.parse(text),tree=parseExpressionAt(text,0,{ecmaVersion:'latest'});
@@ -41,7 +41,7 @@ export function checkProject(root,{mode='ratchet',phase='RF01'}={}){
   const registry=json(root,`${base}/BRIDGE_CONTRACTS.json`),testPaths=new Set();
   // Only stat explicitly named fresh test files; never read suites, fixture bodies or test registries.
   for(const entry of registry.pairs||[])for(const file of entry.tests||[])
-    if(/^bot\/tests\/ai-gm-2026-10\/rf\d\d-f\d\d\.test\.mjs$/.test(file)&&fs.existsSync(path.join(root,file)))testPaths.add(file);
+    if(isFreshArchitectureTestPath(file)&&fs.existsSync(path.join(root,file)))testPaths.add(file);
   raw.violations.push(...checkBridgeRegistry({registry,report:raw,policy:input.policy,testPaths}).map(v=>({...v,id:violationId(v)})));
   raw.summary.rawViolationOccurrences=raw.violations.length;
   if(mode==='strict')return {...raw,mode,phase,summary:{...raw.summary,pass:raw.violations.length===0}};

@@ -5,3 +5,4 @@ export {BATTLE_POINT_COSTS,HEAVY_ROLES,DIFFICULTY_ADJUSTMENTS,tierForLevel,baseB
 export {fearReservationHash,fearReservationFailure,inspectFearReservation,reservedCampaignFear} from './fear-reservation-proof.js';
 export {hopeCap,pcEffectResource} from './pc-resources.js';
 export {environmentEncounterRejection} from './environment-eligibility.js';
+export {createAdvancementRules} from './advancement.js';
