@@ -2,6 +2,10 @@
 
 ACTIVE. Base 1db80db; reconciliation gates pass. Changes and qualification pending. Provider cost0; Codex cost UNMEASURED.
 
+## Corrective C06 — native roll request engine qualified
+
+Five complete exported native roll-request algorithms plus their source guard moved into `daggerheart/roll-request-rules.js` with explicit source, dependent native verifier and notice reservation capabilities. The actual existing provider invokes the new engine; formatting and post-commit transport remain outside it. The moved policy body is unchanged. Fresh C06:8 passed, zero failed/skipped, exit 0, 14459.8153 ms; four syntax checks and RF03 ratchet passed. Actual private request, no-spend preparation, SQLite reopen/replay and reservation-failure rollback are covered. Exact hashes/results: `F01_C06_TERMINAL.json`. Dependent native implementations and later provider adoption remain visible obligations; no deadlines changed. RF03 incomplete; release unauthorized.
+
 ## F01 first qualified slice
 
 Base 1db80db. Dice and SRD reference implementations moved unchanged into daggerheart; 12 consumer imports/re-exports now use its registered public API. No old-path wrappers. Four resolved transition records retired; 2803 remaining occurrences, zero new/active violations, zero unowned or integrity errors, SCC211 unchanged. Fresh rf03-f01.test.mjs: six passed, zero failed/skipped, exit0, 88.4015ms; 15 changed JS/MJS syntax checks exit0; RF03 ratchet exit0. Source hashes/commands in phases/RF03/F01_TERMINAL.json; log rf03-f01.log. No live SRD fetch; two synthetic fetches coalesced for concurrent mock lookups, cached/retry behavior tested. Provider0/$0, Codex UNMEASURED.

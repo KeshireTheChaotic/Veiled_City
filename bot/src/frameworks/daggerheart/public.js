@@ -22,3 +22,4 @@ export {createEnvironmentProposalContracts} from './environment-capabilities.js'
 export {createNativeHouseErrata} from './house-errata.js';
 export {createPcEligibility} from './pc-eligibility.js';
 export {createPvpAttackTerms} from './pvp-attack-terms.js';
+export {createRollRequestRules} from './roll-request-rules.js';

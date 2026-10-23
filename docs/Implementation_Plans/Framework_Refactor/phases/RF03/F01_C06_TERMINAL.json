@@ -1,0 +1,51 @@
+{
+  "run_id": "RF03-F01-C06",
+  "start": "2026-10-23T23:46:34.6369702Z",
+  "end": "2026-10-23T23:46:49.9511112Z",
+  "test_exit": 0,
+  "syntax_files": 4,
+  "syntax_failed": [],
+  "gate_exit": 0,
+  "base_sha": "2985a2db7e45ac30369413de1202d541ab9d5a92",
+  "status": "NATIVE_ENGINE_QUALIFIED_PROVIDER_ADOPTION_PARTIAL",
+  "command": "node --test --test-reporter=tap bot/tests/ai-gm-2026-10/rf03-f01-c06.test.mjs",
+  "passed": 8,
+  "failed": 0,
+  "skipped": 0,
+  "duration_ms": 14459.8153,
+  "native_body_unchanged": true,
+  "native_body_sha256": "3d193e241f75237ffafbe1be2170d6d5b2c5207a4c46571310934b7fb747663c",
+  "source_sha256": {
+    "bot/src/frameworks/daggerheart/roll-request-rules.js": "59187967465e3dd93b358db162eb9bd257c048128a094005c968016db835ea1b",
+    "bot/src/frameworks/daggerheart/public.js": "c4608a1431a0f26546ffb6cb67067fe0c4128154a2941a3f80e99b7b32bc24d8",
+    "bot/src/roll-requests.js": "4f6acf17db4bc06e78c63b14ff4fdb2ee540ef373bc80194cd6dfc93cd146d33",
+    "bot/tests/ai-gm-2026-10/rf03-f01-c06.test.mjs": "ebb1e04688dec1906256ade1713f69052b88add7ae46b8128ad713a05bdd4543"
+  },
+  "log_sha256": "b86dc5be7ccc4d9fe7afd1bb5176644be7300830061392f525c135370b70c5d3",
+  "architecture": {
+    "mode": "ratchet",
+    "phase": "RF03",
+    "sourceModules": 403,
+    "unowned": 0,
+    "importOccurrences": 2340,
+    "internalImportOccurrences": 2164,
+    "cycleComponents": 1,
+    "largestCycle": 182,
+    "rawViolationOccurrences": 2600,
+    "acceptedLegacyOccurrences": 2600,
+    "activeViolationGroups": 0,
+    "transitionErrors": 0,
+    "pass": true,
+    "firstErrors": []
+  },
+  "gate_log_sha256": "e27676419b865fba40f83c7ce639b48d5a19863b7c19aecea36ac29c6f309471",
+  "provider_calls": 0,
+  "provider_cost_usd": 0,
+  "codex_usage": "UNMEASURED",
+  "residuals": [
+    "Native requests use extracted policy through existing provider; dependent native services remain RF03 obligations.",
+    "Formatting, authenticated source-provider binding and publication orchestration retain legacy paths until named source/transport public interfaces migrate. No deadline changes in this slice."
+  ],
+  "rollback": "Revert this feature checkpoint as one unit; no database/schema or saved-record migration.",
+  "release_authorized": false
+}

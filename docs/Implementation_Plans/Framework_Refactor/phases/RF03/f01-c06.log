@@ -1,0 +1,58 @@
+TAP version 13
+# Subtest: native preparation commits exact private request and reservation without rolling or spending
+ok 1 - native preparation commits exact private request and reservation without rolling or spending
+  ---
+  duration_ms: 4130.2503
+  type: 'test'
+  ...
+# Subtest: saved request survives database reopen and duplicate preparation reserves once
+ok 2 - saved request survives database reopen and duplicate preparation reserves once
+  ---
+  duration_ms: 2884.1809
+  type: 'test'
+  ...
+# Subtest: reservation failure rolls request, audit and reserved notice back atomically
+ok 3 - reservation failure rolls request, audit and reserved notice back atomically
+  ---
+  duration_ms: 2604.4558
+  type: 'test'
+  ...
+# Subtest: current owner, scene, withdrawal, PvP and private scope remain mandatory before preparation
+ok 4 - current owner, scene, withdrawal, PvP and private scope remain mandatory before preparation
+  ---
+  duration_ms: 917.8549
+  type: 'test'
+  ...
+# Subtest: all scoped modifier sources and exact Difficulty provenance are retained
+ok 5 - all scoped modifier sources and exact Difficulty provenance are retained
+  ---
+  duration_ms: 1776.4539
+  type: 'test'
+  ...
+# Subtest: missing sheet trait produces review while current-owner pending readers stay scoped
+ok 6 - missing sheet trait produces review while current-owner pending readers stay scoped
+  ---
+  duration_ms: 1119.7003
+  type: 'test'
+  ...
+# Subtest: native attack verifier and exact defensive source adjustments are invoked in the original order
+ok 7 - native attack verifier and exact defensive source adjustments are invoked in the original order
+  ---
+  duration_ms: 647.8157
+  type: 'test'
+  ...
+# Subtest: actual existing provider cold-imports and calls the new native trait breakdown engine
+ok 8 - actual existing provider cold-imports and calls the new native trait breakdown engine
+  ---
+  duration_ms: 287.6199
+  type: 'test'
+  ...
+1..8
+# tests 8
+# suites 0
+# pass 8
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 14459.8153
