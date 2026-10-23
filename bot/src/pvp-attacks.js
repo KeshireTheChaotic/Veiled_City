@@ -5,7 +5,7 @@ import {personalCharacter} from "./personal-continuity.js";
 import {scenePresence,sceneAccess,RANGE_BANDS} from "./scene-continuity.js";
 import {indexWorldEvent} from "./city-calendar.js";
 import {rollTraitBreakdown} from "./roll-requests.js";
-import {d,dualityRoll} from "./dice.js";
+import {d,dualityRoll} from "./frameworks/daggerheart/public.js";
 import {captureAttackFear,pendingPvpFear} from "./pvp-fear-gate.js";
 import {assertPcCanAct,assertPcAttackable} from "./pc-native-eligibility.js";
 import {blazeActionAuthorization,blazeCriticalResult,validateBlazeSavedRoll} from "./pc-death.js";

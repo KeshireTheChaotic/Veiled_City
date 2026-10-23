@@ -1,0 +1,79 @@
+{
+  "base_sha": "1db80db085b2b18a93fb80a8f51b538b2af7eec5",
+  "started": "2026-10-23T17:55:50.802Z",
+  "finished": "2026-10-23T17:55:52.229Z",
+  "tests": {
+    "exit": 0,
+    "summary": ""
+  },
+  "gate": {
+    "exit": 0,
+    "summary": ""
+  },
+  "syntax": 15,
+  "files": [
+    {
+      "path": "bot/src/commands.js",
+      "sha256": "e0f7b3f958e6fe98d23358ba0c67f21f0816375ad1365aed5d1de7d9ba3ad286"
+    },
+    {
+      "path": "bot/src/gm-native-rolls.js",
+      "sha256": "6ff9221d6fba5a4c57c98dcc59bf848001a3a7cd111f7209de0491232ace0a6a"
+    },
+    {
+      "path": "bot/src/gm.js",
+      "sha256": "d1ae394cba07a7c4ed924a0a31114192060ee23a4a39df9bfb678f5f01b5e82a"
+    },
+    {
+      "path": "bot/src/native-feature-passives.js",
+      "sha256": "26fe70346ebfea9110ce97c2d1828cfb00709549d96bdd4cc84e55427997e333"
+    },
+    {
+      "path": "bot/src/pc-death.js",
+      "sha256": "cafa21224cccdd7780223261bcd0064a7c31fd1d2ec4feefa3a1b5d08e828f18"
+    },
+    {
+      "path": "bot/src/pc-incoming.js",
+      "sha256": "37f023a79a7dc8b05939660accd74e409bc98d1989962530759e5c7fc1ef90bb"
+    },
+    {
+      "path": "bot/src/pvp-attacks.js",
+      "sha256": "e08a796171ab3bd2d6c11784bd643c0813fd65eb88503d53ea2329c52cfb7548"
+    },
+    {
+      "path": "bot/src/pvp-damage.js",
+      "sha256": "b3a492097b4568dcb49957b0c40386706ba767fcc4e42967113bd010ab4b4679"
+    },
+    {
+      "path": "bot/src/pvp-rounds.js",
+      "sha256": "7981bff61a00a11e652040bffca1d819712558bec7613343ed18eda43355e8c6"
+    },
+    {
+      "path": "bot/src/roll-collaboration.js",
+      "sha256": "ce38a185866e74e9c8fed36b262320e175f2d3b8883669f3a53a6219c1fe5b41"
+    },
+    {
+      "path": "bot/src/roll-requests.js",
+      "sha256": "fd605ee6d324c4c645e0fdce7687d47e2c1a565c8d5f6559e6918191624ed699"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/dice.js",
+      "sha256": "6534195eb0441d0c9982616a5d79e71f5067ddc863883a4cabda17072b6c865c"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/rules-srd.js",
+      "sha256": "406537d0549082a06e24b0a12fe57c8f1d2727b711c8acddd02ec19c56a3c5cd"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/public.js",
+      "sha256": "29e1ccc7393ddbfb7b32d2cf0da118a0e950aadeebe3c5d0da3c9d1a824a5753"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf03-f01.test.mjs",
+      "sha256": "1bd66682706638fe9387087bdadf0a6ef46fa6bf21464506b96062984d455891"
+    }
+  ],
+  "provider_calls": 0,
+  "provider_cost": 0,
+  "codex_cost": "UNMEASURED"
+}

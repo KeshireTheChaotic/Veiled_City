@@ -1,7 +1,7 @@
 /** Thin native execution bridge: player invitations never roll until their real owner submits. */
 import {inspectNativeGmDecision,commitGmActionCost} from './gm-action-capability.js';
 import {prepareArbitratedIncomingAttack,prepareArbitratedVolley,inspectVolley} from './pc-incoming.js';
-import {gmD20Roll,d} from './dice.js';
+import {gmD20Roll,d} from './frameworks/daggerheart/public.js';
 import {sceneFictionHash as hash} from './scene-fiction-context.js';
 import {EncounterLibrary} from './encounter.js';
 import {arbitrationFailure as fail} from './gm-arbitration-contract.js';

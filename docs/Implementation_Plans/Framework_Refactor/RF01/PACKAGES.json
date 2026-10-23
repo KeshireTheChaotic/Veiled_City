@@ -46,6 +46,9 @@
     ],
     "character": [
       "bot/src/frameworks/character/public.js"
+    ],
+    "daggerheart": [
+      "bot/src/frameworks/daggerheart/public.js"
     ]
   },
   "externalCapabilityOwners": {

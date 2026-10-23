@@ -1,6 +1,6 @@
 /** Owner-selected SRD death moves. Native dice and receipts, never AI or GM character choices. */
 import {createHash,randomUUID} from "node:crypto";
-import {d,dualityRoll} from "./dice.js";
+import {d,dualityRoll} from "./frameworks/daggerheart/public.js";
 import {historicalOwnerPrincipal} from "./conversation-principal.js";
 import {currentScene} from "./scene-continuity.js";
 import {indexWorldEvent} from "./city-calendar.js";

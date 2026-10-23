@@ -36,7 +36,7 @@ import { decisionAdvisorySchema, requiredDecisionAdvisorySchema, decisionPromptC
 import {explicitSilence,semanticResponseObligation} from "./gameplay-intake.js";
 import { worldAdditionsSchema, sceneActionsSchema, worldConflictsSchema, AUTONOMOUS_WORLD_PROMPT, autonomousWorldContext, worldAuthority } from "./autonomous-world.js";
 import { entryReferenceContext } from "./scene-entry.js";
-import { OnlineSrd } from "./rules-srd.js";
+import { OnlineSrd } from "./frameworks/daggerheart/public.js";
 import { interpretationSchema, CONTEXT_CONTRACT, interpretationContext, validateInterpretation } from "./narrative-context.js";
 import { epistemicSchema, evidenceType, activeEvidence } from "./epistemic.js";
 import { budgetTurnPrompt, referenceContextPlan, referenceSessionContext, partitionRosterContext, referenceTurnStorage } from "./prompt-budget.js";

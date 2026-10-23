@@ -1,6 +1,6 @@
 /** Sealed owner-authorized narrative PvP. Opposed totals only; never ordinary combat damage/metacurrency. */
 import { createHash } from "node:crypto";
-import { dualityRoll, d } from "./dice.js";
+import { dualityRoll, d } from "./frameworks/daggerheart/public.js";
 import { indexWorldEvent } from "./city-calendar.js";
 import { pvpOwnerContext, validatePvpAgreement } from "./narrative-pvp.js";
 import { synchronizePvpWindow } from "./window-coordinator.js";

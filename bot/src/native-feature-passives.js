@@ -5,7 +5,7 @@ import {scenePresence,sceneAccess} from './scene-continuity.js';
 import {arbitrationFailure as fail} from './gm-arbitration-contract.js';
 import {adversaryHpState} from './combat.js';
 import {nativeHouseErratum} from './native-house-errata.js';
-import {diceSpec} from './dice.js';
+import {diceSpec} from './frameworks/daggerheart/public.js';
 import {activeCityProxy} from './city-constraints.js';
 
 /** Pure expression arithmetic; it grants no feature, condition, roll or attack authority. */

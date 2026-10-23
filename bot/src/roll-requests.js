@@ -6,7 +6,7 @@ import { requireCitySource } from "./city-core.js";
 import { cityAudit, cityKey } from "./city-calendar.js";
 import { TRAITS } from "./character-system.js";
 import { StateConflictError, UserInputError } from "./kernel/errors.js";
-import { diceSpec } from "./dice.js";
+import { diceSpec } from "./frameworks/daggerheart/public.js";
 import { isPvpIntent, assertNonPvpCombatant } from "./pvp-authority.js";
 import {assertPcCanAct} from "./pc-native-eligibility.js";
 import {blazeActionAuthorization} from "./pc-death.js";

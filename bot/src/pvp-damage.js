@@ -1,6 +1,6 @@
 /** Native damage is a separate target-owned transaction, never narration or a narrative contest score. */
 import {createHash,randomUUID} from "node:crypto";
-import {d,parseDice,diceSpec} from "./dice.js";
+import {d,parseDice,diceSpec} from "./frameworks/daggerheart/public.js";
 import {validatePvpAttackRoll,campaignAttackActorHash} from "./pvp-attacks.js";
 import {validateDamagePvp} from "./pvp-profiles.js";
 import {personalCharacter} from "./personal-continuity.js";

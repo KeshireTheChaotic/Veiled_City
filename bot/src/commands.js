@@ -3,7 +3,7 @@ import {
   PermissionFlagsBits,
   AttachmentBuilder
 } from "discord.js";
-import { dualityRoll, parseDice } from "./dice.js";
+import { dualityRoll, parseDice } from "./frameworks/daggerheart/public.js";
 import { establishFact } from "./epistemic.js";
 import { indexWorldEvent } from "./city-calendar.js";
 import { prepareRollRequest, pendingRollRequests, ownedRollRequest, formatRollRequest, publishRollAmendment } from "./roll-requests.js";
