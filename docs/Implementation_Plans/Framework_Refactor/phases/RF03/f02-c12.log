@@ -1,0 +1,12 @@
+✔ Traffic Saint applies its existing failure condition without a resource cost (0.7935ms)
+✔ Flashbang preserves failure, chosen success, and native Critical outcomes (0.1322ms)
+✔ Blood Regent preserves its owner-selected Hope or Stress consequence (0.1249ms)
+✔ unknown features or unverified result types cannot produce a native outcome (0.2886ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 62.5232

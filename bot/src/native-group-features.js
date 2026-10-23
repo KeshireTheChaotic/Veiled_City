@@ -19,6 +19,7 @@ import {incomingConditionOdds,movementConditionIssue} from './frameworks/daggerh
 export {incomingConditionOdds} from './frameworks/daggerheart/native-condition-rules.js';
 import {LANES,FLASH,REGENT,groupFeaturePolicies as policies,isGroupFeature,groupReactionRules,groupNeedsChoice as needsChoice,
   groupReactionOptions,groupFeatureStakes,validateGroupFeatureProposal} from './frameworks/daggerheart/group-feature-rules.js';
+import {groupFeatureOutcome} from './frameworks/daggerheart/group-feature-outcomes.js';
 export {isGroupFeature,groupReactionRules,groupReactionOptions,groupFeatureStakes} from './frameworks/daggerheart/group-feature-rules.js';
 
 const executionKey=key=>`group-feature:${hash(key)}`,effectKey=key=>`group-effect:${hash(key)}`;
@@ -170,8 +171,7 @@ export function applyGroupReactionOutcome(db,guild,row,request,choiceSource=null
     if(n.feature===REGENT&&choice==='command')return db.saveCityRecord(guild,{kind:'gm_group_feature_review',key,status:'needs_rules_review',
       source_event:row.source_event,visibility:'character',subject_key:pc.id,data:{decision:row.record_key,request:request.record_key,choice_source:choiceSource,
         reason:'A communicated bounded non-suicidal command and exact supported owner declaration/effect are required. No compliance, surrender, speech or resource change was inferred.'}});
-    const stress=critical?0:n.feature===REGENT?(choice==='stress'?2:0):n.feature===FLASH&&(!success||choice==='stress')?1:0,
-      hope=n.feature===REGENT&&choice==='hope'?2:0,condition=!critical&&n.feature!==REGENT&&(!success||n.feature===FLASH&&choice==='vulnerable'),
+    const {stress,hope,condition}=groupFeatureOutcome(n.feature,{success,critical,choice}),
       before=structuredClone(pc.data),after=structuredClone(before);
     if(hash(before.resources)!==n.resources_hash||stress&&before.resources.stress.current+stress>before.resources.stress.max
       ||hope&&(!Number.isSafeInteger(before.resources.hope)||before.resources.hope<hope))
@@ -276,9 +276,8 @@ export function validateGroupReactionEffect(db,guild,key,{historical=false}={}){
     if(existing.data.condition!==policy.condition||existing.subject_key!==v.character||!(v.before.conditions||[]).some(c=>c.native_ref===v.condition&&c.active))
       throw fail('group_condition_reuse_source');
   }
-  const critical=v.version===3&&n.feature===FLASH&&request.data.result.duality==='Critical',requiredChoice=needsChoice(n.feature,v.success,critical),
-    stress=critical?0:n.feature===REGENT?(v.choice==='stress'?2:0):n.feature===FLASH&&(!v.success||v.choice==='stress')?1:0,
-    hope=n.feature===REGENT&&v.choice==='hope'?2:0,condition=!critical&&n.feature!==REGENT&&(!v.success||n.feature===FLASH&&v.choice==='vulnerable'),
+  const critical=v.version===3&&n.feature===FLASH&&request.data.result.duality==='Critical',
+    {required_choice:requiredChoice,stress,hope,condition}=groupFeatureOutcome(n.feature,{success:v.success,critical,choice:v.choice}),
     choice=v.choice_source&&db.getWorldEvent(guild,v.choice_source);
   if(event?.status!=='active'||event.kind!=='native_group_feature_effect'||event.source_id!=='native:unified-gm'||event.visibility!=='character'||event.subject_key!==v.character
     ||event.details.payload_hash!==hash(v)||event.details.owner_source!==request.source_event||key!==effectKey(v.decision)||v.character!==n.character||v.owner!==n.owner
