@@ -12,7 +12,7 @@ import { assertArchiveOutput, archivePvpHistory, assertPvpOutput, prepareStoredO
   quarantineSimulationHook, quarantineGeneratedOutput, revalidateOutputPublication,substantivePreparedOutput } from "./pvp-output.js";
 import {turnTraceFor} from './turn-trace-context.js';
 import { queueDirectorPublications } from "./publication-outbox.js";
-import {KeyedSerialQueue} from "./serial-queue.js";
+import {KeyedSerialQueue} from "./kernel/serial-queue.js";
 import {activeEvidence} from './epistemic.js';
 import {factVisibleTo} from './disclosure-authority.js';
 import {lifecycleProjection} from './lifecycle-output.js';

@@ -1,6 +1,6 @@
 /** GM-only expansion operations; read-only diagnostics never create command receipts or campaign state. */
 import { AttachmentBuilder, PermissionFlagsBits } from "discord.js";
-import { PermissionError } from "./errors.js";
+import { PermissionError } from "./kernel/errors.js";
 import { cityObject } from "./city-calendar.js";
 import { ContextPlanner } from "./context-planner.js";
 import { resolveNpcConversation } from "./npc-conversations.js";

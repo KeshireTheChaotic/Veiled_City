@@ -18,10 +18,10 @@ import {reviewIncomingAttack,confirmIncomingDefense,resolveIncomingDamage} from 
 import {reviewBrawlOpportunity,passBrawlOpportunity,verifyBrawlAttack} from './pvp-brawl.js';
 import {authorPvpNarrative,draftPvpNarrative,reviewPvpNarrative,sharePvpNarrative} from './pvp-authorship.js';
 import {resumeAutonomousPvpFear} from './pvp-fear-moves.js';
-import {KeyedSerialQueue} from './serial-queue.js';
+import {KeyedSerialQueue} from "./kernel/serial-queue.js";
 import {splitDiscordText} from './discord/chunking.js';
 import {reservePvpNotices} from './native-publications.js';
-import {PermissionError,StateConflictError,UserInputError} from './errors.js';
+import {PermissionError,StateConflictError,UserInputError} from "./kernel/errors.js";
 import {setPvpSafetyStop} from './pvp-campaign-policy.js';
 
 const queue=new KeyedSerialQueue(),hash=v=>createHash('sha256').update(JSON.stringify(v)).digest('hex');

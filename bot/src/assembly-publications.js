@@ -4,7 +4,7 @@ import {assemblyHash,assemblyPlanHash,assemblySlots,legacyAssemblyState,assembly
 import {prepareAssemblyOutput} from './pvp-output.js';
 import {queueTurnPublications} from './publication-outbox.js';
 import {deliverQueuedTurn} from './publishing.js';
-import {PermissionError,StateConflictError} from './errors.js';
+import {PermissionError,StateConflictError} from "./kernel/errors.js";
 import {indexWorldEvent} from './city-calendar.js';
 import {assemblyRefreshRequired,retainedAssemblyDelivery} from './assembly-planning.js';
 import {measureNative,measureStage,operationalMetrics} from './operational-metrics.js';

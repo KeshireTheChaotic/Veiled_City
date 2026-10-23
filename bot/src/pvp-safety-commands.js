@@ -1,6 +1,6 @@
 /** Urgent owner safety controls commit before Discord, model work or normal command continuations. */
 import {setCampaignPvpMode,campaignPvpPolicy,setPvpSafetyStop,pvpSafetyStatus} from './pvp-campaign-policy.js';
-import {PermissionError,UserInputError} from './errors.js';
+import {PermissionError,UserInputError} from "./kernel/errors.js";
 import {acknowledgeNative,interactionFailure} from './discord/interaction-lifecycle.js';
 
 export async function handlePvpSafetyCommand(interaction,{db,gm=false}){

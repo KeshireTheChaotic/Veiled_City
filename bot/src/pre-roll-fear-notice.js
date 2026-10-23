@@ -2,7 +2,7 @@
 import {createHash} from 'node:crypto';
 import {inspectPreRollFear} from './pre-roll-fear.js';
 import {reserveNativeNotice,publishNativeNotice} from './native-publications.js';
-import {StateConflictError} from './errors.js';
+import {StateConflictError} from "./kernel/errors.js";
 import {inspectNativeGmDecision} from './gm-action-capability.js';
 
 function held(){throw new StateConflictError('Pre-roll Fear notice is stale or outside its exact private audience.');}

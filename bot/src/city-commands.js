@@ -1,6 +1,6 @@
 /** GM-only civic commands. No generic city-state endpoint is available to players. */
 import { AttachmentBuilder, PermissionFlagsBits } from "discord.js";
-import { PermissionError } from "./errors.js";
+import { PermissionError } from "./kernel/errors.js";
 import { cityObject, calendarStatus, configureCalendar, indexWorldEvent, scheduleCityEvent, reviewCityEvent } from "./city-calendar.js";
 import { updateCityCore, assignDistrictLocation, fileInstitutionReport, addWorldLink, submitInstitutionAction, reviewInstitutionAction,
   establishCommitment, configureCityFlags, proposeCityOpportunity, runInstitutionDirector } from "./city-core.js";

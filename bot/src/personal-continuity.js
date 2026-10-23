@@ -2,7 +2,7 @@
 import { cityObject, cityKey, cityInteger, cityAudit, indexWorldEvent } from "./city-calendar.js";
 import { requireCitySource } from "./city-core.js";
 import { motivationKey } from "./simulation-motivation.js";
-import { PermissionError, StateConflictError, UserInputError } from "./errors.js";
+import { PermissionError, StateConflictError, UserInputError } from "./kernel/errors.js";
 import { stateRevision } from "./ai-intents.js";
 import { handoutPlayerView } from "./handout.js";
 import { organizationInbox } from "./owned-community.js";

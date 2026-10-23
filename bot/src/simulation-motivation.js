@@ -3,7 +3,7 @@ import { createHash } from "node:crypto";
 import { cityObject, cityKey, cityInteger, cityAudit } from "./city-calendar.js";
 import { requireCitySource } from "./city-core.js";
 import { activeCityProxy, assertNpcAvailability, assertWorldActorControl } from "./city-constraints.js";
-import { UserInputError, StateConflictError } from "./errors.js";
+import { UserInputError, StateConflictError } from "./kernel/errors.js";
 import {nativeWorldOperationAllows,nativeWorldCoordinatorReady} from './native-world-operations.js';
 import {inspectWorldInformationTransfer} from './world-information-transfer.js';
 export const motivationKey=value=>createHash("sha256").update(JSON.stringify(value)).digest("hex").slice(0,32);

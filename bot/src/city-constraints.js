@@ -1,6 +1,6 @@
 /** Shared availability/delegation guards; preferences never move NPCs or override a human-controlled proxy. */
 import { delegationPolicy } from "./ai-intents.js";
-import {StateConflictError} from './errors.js';
+import {StateConflictError} from "./kernel/errors.js";
 import {nativeWorldStrategyStepAllowed} from './native-world-operations.js';
 import {nativeActorControl} from './native-actor-control.js';
 export function activeCityProxy(db,guildId,key){

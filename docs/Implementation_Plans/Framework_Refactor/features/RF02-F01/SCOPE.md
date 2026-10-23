@@ -1,0 +1,5 @@
+# RF02-F01 — Neutral errors and keyed queue
+
+Base `bd85d23da791285dbcc75ffdd6552e1d3a6dfdfd`. Inspect errors.js and serial-queue.js plus all source consumers. First split neutral exception types from LEGACY_EXPECTED/isExpectedError application policy, then relocate classes and queue into kernel. Keep policy operations-owned and expose its public API to the application command consumer. Update every active class/queue import directly; no old-path facade and no duplicate constructors/queue instances. Preserve class names, codes, expected flags, cause/stack, JSON enumerable fields and promise/error ordering.
+
+Fresh rf02-f01.test.mjs covers classes, policy and deterministic same/different-key concurrency with barriers, rejection recovery and drain. Import-only consumer edits get syntax/import resolution checks. Remove only obsolete live transitions, never expand baseline. No unrelated module move or runtime command redesign. Blocking batch, no polling. Revert feature checkpoint to roll back, preserving later changes; no data migration. RELEASE NOT AUTHORIZED.

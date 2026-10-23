@@ -3,7 +3,7 @@ import {createHash} from 'node:crypto';
 import {personalCharacter} from './personal-continuity.js';
 import {requireCitySource} from './city-core.js';
 import {adjudicateRollSource,contributeRoll} from './roll-collaboration.js';
-import {StateConflictError} from './errors.js';
+import {StateConflictError} from "./kernel/errors.js";
 const hash=value=>createHash("sha256").update(JSON.stringify(value)).digest("hex").slice(0,40);
 /** Human review acts on the owner's persisted exact preauthorization, never on a model-supplied user or consent boolean. */
 export function reviewRollDeclaration(db,guild,input,reviewer,context={}){

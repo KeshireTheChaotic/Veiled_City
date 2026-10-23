@@ -4,7 +4,7 @@
  * this module ensures Discord channel configuration does not undermine it.
  */
 import { PermissionFlagsBits } from "discord.js";
-import { PermissionError } from "../errors.js";
+import { PermissionError } from "../kernel/errors.js";
 
 function has(permissionSet, permission) {
   try { return Boolean(permissionSet?.has?.(permission)); } catch { return false; }

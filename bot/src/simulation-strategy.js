@@ -3,7 +3,7 @@ import { cityObject, cityKey, cityInteger, cityAudit } from "./city-calendar.js"
 import { submitInstitutionAction, reviewInstitutionAction } from "./city-core.js";
 import { actorSource, motivationKey } from "./simulation-motivation.js";
 import { ACTION_TYPES, ACTION_COSTS, actorState, submitNpcAction } from "./simulation.js";
-import { UserInputError, StateConflictError } from "./errors.js";
+import { UserInputError, StateConflictError } from "./kernel/errors.js";
 import { delegateStrategy } from "./ai-intents.js";
 import {nativeWorldOperationAllows,nativeWorldOperationOrigin,nativeWorldStrategyAllowed,withNativeStrategyExecution} from './native-world-operations.js';
 import {isDeepStrictEqual} from 'node:util';

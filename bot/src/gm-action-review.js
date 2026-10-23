@@ -5,7 +5,7 @@ import {personalCharacter} from "./personal-continuity.js";
 import {indexWorldEvent} from "./city-calendar.js";
 import {adjudicateGmRuling} from "./gm-action-ruling.js";
 import {currentScene} from "./scene-continuity.js";
-import {StateConflictError} from "./errors.js";
+import {StateConflictError} from "./kernel/errors.js";
 import {recordOwnerActionTerminal} from "./owner-action-terminal.js";
 import {ordinaryActionProof} from './ordinary-effect-proof.js';
 import {applyOrdinaryEffects} from './ordinary-effects.js';

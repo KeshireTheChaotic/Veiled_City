@@ -11,7 +11,7 @@ import { updateRelationshipDimensions, relationshipPairKey, relationshipProjecti
 import path from "node:path";
 import { randomUUID, createHash } from "node:crypto";
 import { DatabaseSync } from "node:sqlite";
-import {StateConflictError} from "./errors.js";
+import {StateConflictError} from "./kernel/errors.js";
 import { processCityDue } from "./city-calendar.js";
 import { normalizeNpcKey } from "./npc-cognition.js";
 import { archiveScenePresence } from "./scene-continuity.js";

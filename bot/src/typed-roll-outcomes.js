@@ -1,7 +1,7 @@
 /** Convert a terminal native roll request into one typed-action outcome receipt and resume its DAG. */
 import { createHash } from "node:crypto";
 import { buildActionPlan, transitionAction } from "./action-dependency.js";
-import { StateConflictError } from "./errors.js";
+import { StateConflictError } from "./kernel/errors.js";
 import {drainActionContinuations} from "./action-continuation.js";
 import {typedRollProof} from "./typed-roll-proof.js";
 import {rollBreakdown,rollRevision,reserveRollAmendment} from "./roll-requests.js";

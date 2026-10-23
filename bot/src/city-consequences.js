@@ -3,7 +3,7 @@ import { cityObject, cityKey, cityInteger, cityAudit, indexWorldEvent } from "./
 import { requireCitySource } from "./city-core.js";
 import { changeCityService, transmitCityBelief } from "./city-civic.js";
 import { actorSource, proposeGoalTransition, motivationKey } from "./simulation-motivation.js";
-import { UserInputError, StateConflictError } from "./errors.js";
+import { UserInputError, StateConflictError } from "./kernel/errors.js";
 import {nativeWorldCoordinatorReady,nativeWorldOperationAllows} from './native-world-operations.js';
 const handlers={
   goal:(db,guild,row,actor)=>proposeGoalTransition(db,guild,{...row.data.payload,key:row.record_key,source_event:row.source_event},actor),

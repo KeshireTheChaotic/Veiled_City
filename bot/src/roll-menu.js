@@ -5,7 +5,7 @@ import { ActionRowBuilder, ButtonBuilder, ButtonStyle, StringSelectMenuBuilder,A
 import { arbitrateRollOptions, discoverRollOptions } from "./roll-options.js";
 import { contributeRoll } from "./roll-collaboration.js";
 import { formatRollRequest, ownedRollRequest, rollRevision } from "./roll-requests.js";
-import { PermissionError, StateConflictError, UserInputError } from "./errors.js";
+import { PermissionError, StateConflictError, UserInputError } from "./kernel/errors.js";
 import {finishRollOperation} from './roll-operation-publications.js';
 import {splitDiscordText} from './discord/chunking.js';
 import {gmRulingDetails} from './gm-action-ruling.js';

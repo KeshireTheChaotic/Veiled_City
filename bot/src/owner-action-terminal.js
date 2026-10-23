@@ -1,6 +1,6 @@
 /** Native owner withdrawal tombstones bind source ranges, not fallible later model occurrence boundaries. */
 import {createHash} from "node:crypto";
-import {StateConflictError} from "./errors.js";
+import {StateConflictError} from "./kernel/errors.js";
 const hash=v=>createHash("sha256").update(JSON.stringify(v)).digest("hex");
 const key=source=>`owner-action-terminal:${hash(source)}`;
 function fail(){throw new StateConflictError("Native owner terminal source ancestry needs review; never restore execution.");}

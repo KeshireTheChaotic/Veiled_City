@@ -1,6 +1,6 @@
 /** GM-only administrative closure. Original sources/receipts stay immutable; archival never authorizes gameplay. */
 import {createHash,createHmac,randomBytes,timingSafeEqual} from 'node:crypto';
-import {PermissionError,StateConflictError,UserInputError} from './errors.js';
+import {PermissionError,StateConflictError,UserInputError} from "./kernel/errors.js";
 
 const secret=randomBytes(32),ttl=10*60*1000;
 const archiveKind='historical_record_archive';

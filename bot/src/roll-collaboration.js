@@ -8,7 +8,7 @@ import {reserveRollPartyDisclosure,validateRollSharePreview,sourceConfirmedRollA
 import { dualityRoll, parseDice, d } from "./dice.js";
 import { hpMarksForDamage } from "./combat.js";
 import { recordObservedAttack } from "./encounter.js";
-import { StateConflictError, PermissionError, UserInputError } from "./errors.js";
+import { StateConflictError, PermissionError, UserInputError } from "./kernel/errors.js";
 import { finalizeTypedRollAction } from "./typed-roll-outcomes.js";
 import { assertNonPvpCombatant } from "./pvp-authority.js";
 import { validatePvpAttackRoll } from "./pvp-attacks.js";

@@ -1,0 +1,187 @@
+{
+  "command": "node --test --test-concurrency=1 --test-reporter=tap bot/tests/ai-gm-2026-10/rf02-f01.test.mjs",
+  "frozen_files": [
+    {
+      "path": "bot/src/assembly-publications.js",
+      "sha256": "8b6b6cec2146ce099bea8de11622a35d8c5a41af8b59f97ef28563cf9808e83c"
+    },
+    {
+      "path": "bot/src/city-commands.js",
+      "sha256": "cd859be56e1ee0fd1a31ba540ea6788472a94ebac41372199c2c9fa60c12da75"
+    },
+    {
+      "path": "bot/src/city-consequences.js",
+      "sha256": "72c566b2015ba3343123422bac9b02169bd5e657a80378ff8c5e8e200c32993c"
+    },
+    {
+      "path": "bot/src/city-constraints.js",
+      "sha256": "febab4096a3a346c55498b20dce5a953687dca242c05134978982e6de1301006"
+    },
+    {
+      "path": "bot/src/city-groups.js",
+      "sha256": "6f1ac9966ad6833bab46ffab91547aa9b653999a31d57bba3403946672f3223c"
+    },
+    {
+      "path": "bot/src/commands.js",
+      "sha256": "3b83c781be849517bf2d658b95dc6eaaeb5ad13003621e65e17453ace099c84a"
+    },
+    {
+      "path": "bot/src/db.js",
+      "sha256": "334126f546a55a7bee3591e45fc1ccbf530e01f5edfb055a17de030d5824ac15"
+    },
+    {
+      "path": "bot/src/discord/privacy.js",
+      "sha256": "cba771f2a2ae5e38e41dd0ecd5f578c79e9d225128ce32598467772d66fbf102"
+    },
+    {
+      "path": "bot/src/frameworks/operations/error-policy.js",
+      "sha256": "ab6dc5417b6fddad725683731f4cec7ec2676b0003e0e2c61a4d76c90bc99b16"
+    },
+    {
+      "path": "bot/src/frameworks/operations/public.js",
+      "sha256": "59c602ea1c1eaa15f9bdf43a033ed66fa6fe8d4f5d84f83fd78dc6a1193c1cda"
+    },
+    {
+      "path": "bot/src/gm-action-review.js",
+      "sha256": "f43c11f2a8f6c8304a194c09be23b2f45a50b2d3c716718da1832b04537e0a0a"
+    },
+    {
+      "path": "bot/src/historical-archive.js",
+      "sha256": "1c299be3012e20b86dc6f17b4efad80b413c633be8e4ee66d2687b2c3bacbfce"
+    },
+    {
+      "path": "bot/src/index.js",
+      "sha256": "8a524d4f5a0e138ae57322bf9b18bced81e0ee298d6d8beae5b37c65828bcd86"
+    },
+    {
+      "path": "bot/src/kernel/errors.js",
+      "sha256": "ec32691104bd7dff25e71e52a5b65d70ec97a98b284f4075339d40f6866ca4a2"
+    },
+    {
+      "path": "bot/src/kernel/serial-queue.js",
+      "sha256": "aee9209870768a6314b6f091494bd75f74b2b087846231f080a6adeb9647bcc2"
+    },
+    {
+      "path": "bot/src/long-projects.js",
+      "sha256": "63001890cc2a8e8f1775e594cd513459e4736ed05c1dd87ae7a13297e93651d8"
+    },
+    {
+      "path": "bot/src/memory-clusters.js",
+      "sha256": "c7e89436d26b6998e67555695c32364bb6d05192f3d3df0c0cc1aaa0c4baa041"
+    },
+    {
+      "path": "bot/src/native-experience-eligibility.js",
+      "sha256": "63fda5698235f2db52bc5534f5b53f8213b97a7f62bbd7993ef75fe4c65376e6"
+    },
+    {
+      "path": "bot/src/native-publications.js",
+      "sha256": "28d3c78d0b92c9ef4ac46cc4e30e8d0f5614db0f9b124cbd88caa3033f2214f1"
+    },
+    {
+      "path": "bot/src/native-unarmed-traits.js",
+      "sha256": "50e879adb3c404a432153ce140245830d3fdf8f0628e8bed26f1869fe1e9b99c"
+    },
+    {
+      "path": "bot/src/owner-action-terminal.js",
+      "sha256": "eeba048498253a967563a42089f09dd90ebf18974dfe6ccc96a4cb1895d74062"
+    },
+    {
+      "path": "bot/src/personal-continuity.js",
+      "sha256": "36556213b1d92db07c0c5fe4b7d9587457151fe90e52500fa016fc835867a188"
+    },
+    {
+      "path": "bot/src/pre-roll-fear-notice.js",
+      "sha256": "f9f6c0b0be8f67fbb1a7e500a4abffbff73e900d0dbdcb685197353dd5fa0cb7"
+    },
+    {
+      "path": "bot/src/publication-outbox.js",
+      "sha256": "011276bbc643438e3d15cc29a0d3251d0077e84a714c5526e287692d7b60b30e"
+    },
+    {
+      "path": "bot/src/publishing.js",
+      "sha256": "0edba95891ce837bab3be600651974e74ab396cdb9561e604fe71d024974b920"
+    },
+    {
+      "path": "bot/src/pvp-menu.js",
+      "sha256": "5ec18aa8cf791b9aadcce199c0d51a42bf2ba487801d48d1a299c17b01acd260"
+    },
+    {
+      "path": "bot/src/pvp-safety-commands.js",
+      "sha256": "85b071057559528b9042f0524d281ca51533086d19d9d6b63a689183daddb3e6"
+    },
+    {
+      "path": "bot/src/roll-collaboration.js",
+      "sha256": "d9a00b1f27b704bc2965d400b408a9640f4ee45d68950785c7b0ccbd2dc13a46"
+    },
+    {
+      "path": "bot/src/roll-declaration-review.js",
+      "sha256": "22639e3c4ab233de14a4796f04b31e0bae3fe23b744b4de7c706ff8c88616790"
+    },
+    {
+      "path": "bot/src/roll-menu.js",
+      "sha256": "3f3deb5cd8f5ac371b11984434a5c1fc8cba1eb3923e1fc5e1f6e5fb43993311"
+    },
+    {
+      "path": "bot/src/roll-options.js",
+      "sha256": "54993163ca6f5cb1cb100722c74caa4447d124691f182f5e1a9e0dd9d082ba1e"
+    },
+    {
+      "path": "bot/src/roll-requests.js",
+      "sha256": "38ff3096991f1042a8c0a6a79fce59f7daab361eee1faf5ad152d9400bdc52cd"
+    },
+    {
+      "path": "bot/src/roll-sharing.js",
+      "sha256": "c3c761239e4262b8667020f83cb51f8c780015e93c11d63cb2bc32a0cf97ac23"
+    },
+    {
+      "path": "bot/src/scene-continuity.js",
+      "sha256": "8df720b6f19da9a12ca07ac69a43147a775f04d3a1b6ba7c167d01b418e5de1e"
+    },
+    {
+      "path": "bot/src/simulation-commands.js",
+      "sha256": "c7c8377c08f4f62a5e6c5ac502c72e365116ede8633606d00bf2beb7c1d0efe2"
+    },
+    {
+      "path": "bot/src/simulation-motivation.js",
+      "sha256": "dc8b9121da306a80ab091b733ed4d42ddde146bbc9c60bcf6b4da70a4aefcb71"
+    },
+    {
+      "path": "bot/src/simulation-strategy.js",
+      "sha256": "d2a6e64a96d363e491a47c3b62df57f16c73024c001d89b9d281fdbb264be8ac"
+    },
+    {
+      "path": "bot/src/story-commands.js",
+      "sha256": "98bc88e01d75964c8ab60be9c7d21cd166428688af8098bff1df454a74f8d0b5"
+    },
+    {
+      "path": "bot/src/typed-roll-outcomes.js",
+      "sha256": "cd3f05297c5806956ada4700b1ab58b81197b07ba8c772fbc2f0adc9c3c2a92a"
+    },
+    {
+      "path": "bot/src/typed-roll-proof.js",
+      "sha256": "a01a53418137a762f251f424cba088411f25dfaf4a153f9a62b351e74eb8efd2"
+    },
+    {
+      "path": "bot/src/world-encounter-beats.js",
+      "sha256": "cd59630150dca3122a1f83ea19c800809283dd0b1d585caac781deb96a665abc"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf02-f01.test.mjs",
+      "sha256": "1772f6a37caf634b1a133cfcc725e701dadfb198914a6ab78ff009e4fec65ed2"
+    }
+  ],
+  "started_utc": "2026-10-23T16:53:28.1439939Z",
+  "gate_exit": 0,
+  "run_id": "RF02-F01-1",
+  "test_exit": 0,
+  "base_sha": "bd85d23da791285dbcc75ffdd6552e1d3a6dfdfd",
+  "finished_utc": "2026-10-23T16:53:35.5015231Z",
+  "syntax_files": 42,
+  "summary": {
+    "tests": 4,
+    "pass": 4,
+    "fail": 0,
+    "duration_ms": 66.1431
+  },
+  "log_sha256": "5b7f79e47e5654107ae15626252859c190c689246b2768820d25aa1ff9bceadd"
+}

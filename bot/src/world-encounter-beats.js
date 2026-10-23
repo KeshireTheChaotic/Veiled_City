@@ -6,7 +6,7 @@ import {nativeActorControl} from './native-actor-control.js';
 import {worldIdentityOrigin} from './world-authorship.js';
 import {sceneFictionHash as hash,narrativeSourceVisible} from './scene-fiction-context.js';
 import {factVisibleTo} from './disclosure-authority.js';
-import {StateConflictError,UserInputError} from './errors.js';
+import {StateConflictError,UserInputError} from "./kernel/errors.js";
 const expectedPrincipal=new Set(['Active session required.','Select an authenticated current controlled role.',
   'Controller attendance required.','Active campaign character required.']);
 const expectedActor=new Set(['One to twelve distinct established encounter actors required.','GM-approved actor template binding required.',

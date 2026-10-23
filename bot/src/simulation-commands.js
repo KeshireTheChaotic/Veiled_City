@@ -1,6 +1,6 @@
 /** GM-only simulation configuration, review, inspection, and explicit fictional time advancement. */
 import { AttachmentBuilder } from "discord.js";
-import { PermissionError, NotFoundError } from "./errors.js";
+import { PermissionError, NotFoundError } from "./kernel/errors.js";
 import { applySimulationUpdates, configureSimulationEntity, simulationOverview, submitNpcAction,
   resolveNpcAction, shareInformation, processSimulationEvents } from "./simulation.js";
 import { publishSimulationHooks } from "./publishing.js";

@@ -3,7 +3,7 @@ import { cityObject, cityKey, cityVisibility, cityAudit, indexWorldEvent } from 
 import { requireCitySource } from "./city-core.js";
 import { activeCityProxy } from "./city-constraints.js";
 import { motivationKey } from "./simulation-motivation.js";
-import { UserInputError, StateConflictError } from "./errors.js";
+import { UserInputError, StateConflictError } from "./kernel/errors.js";
 import { activeEvidence } from "./epistemic.js";
 import {nativeMovementConditionIssue} from './native-group-features.js';
 export const RANGE_BANDS=["Melee","Very Close","Close","Far","Very Far"];

@@ -1,7 +1,7 @@
 /** Owner-private roll option discovery. Candidates never spend or alter the roll request. */
 import { createHash } from "node:crypto";
 import { ownedRollRequest } from "./roll-requests.js";
-import { StateConflictError, UserInputError } from "./errors.js";
+import { StateConflictError, UserInputError } from "./kernel/errors.js";
 import {recordNativeExperienceEligibility,inspectNativeExperienceEligibility} from './native-experience-eligibility.js';
 import {inspectNativeUnarmedAttack} from './native-unarmed-attacks.js';
 import {alternateNativeUnarmedTrait} from './native-unarmed-traits.js';

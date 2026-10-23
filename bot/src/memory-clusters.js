@@ -1,7 +1,7 @@
 /** Reversible actor-relative evidence clusters. Excerpts retain source uncertainty; originals, mysteries and canon are never rewritten. */
 import { cityObject, cityKey, cityAudit } from "./city-calendar.js";
 import { requireCitySource } from "./city-core.js";
-import { StateConflictError, UserInputError } from "./errors.js";
+import { StateConflictError, UserInputError } from "./kernel/errors.js";
 function evidence(db,guild,type,actor,ref){
   if(ref.kind==="npc_memory"&&type==="npc"){
     const row=db.getNpcMemory(ref.key);

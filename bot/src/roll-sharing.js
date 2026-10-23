@@ -1,6 +1,6 @@
 /** Explicit owner-controlled, redacted party projection of a saved native roll result. */
 import { createHash } from "node:crypto";
-import { StateConflictError } from "./errors.js";
+import { StateConflictError } from "./kernel/errors.js";
 import {publishNativeNotice,reserveNativeNotice,queueNativeNotice} from "./native-publications.js";
 import {noticeHash} from "./native-notice.js";
 import {ownedRollRequest} from './roll-requests.js';

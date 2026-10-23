@@ -3,7 +3,7 @@ import {createHash} from 'node:crypto';
 import {indexWorldEvent} from './city-calendar.js';
 import {consentAction,historicalActionSource} from './action-consent.js';
 import {personalCharacter} from './personal-continuity.js';
-import {StateConflictError} from './errors.js';
+import {StateConflictError} from "./kernel/errors.js";
 
 const issuer='native:experience-eligibility';
 const hash=value=>createHash('sha256').update(JSON.stringify(value)).digest('hex');

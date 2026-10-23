@@ -21,7 +21,7 @@ import { publishEventResults, postGmLog, postStateError, deliverHandout, postPla
 import { VoiceNarrator } from "./voice.js";
 import { deliveredPartyOutput } from "./pvp-output.js";
 import { queueDirectorPublications } from "./publication-outbox.js";
-import { KeyedSerialQueue } from "./serial-queue.js";
+import { KeyedSerialQueue } from "./kernel/serial-queue.js";
 import { queueDirectorAfterPartyTurn, blockedMutationRows, describeBlockedAction, lowConfidenceReviewItems, normalizeDirectorConfidence } from "./director.js";
 import { splitDiscordText } from "./discord/chunking.js";
 import { assertPlayerPrivateChannel } from "./discord/privacy.js";

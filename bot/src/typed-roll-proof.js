@@ -1,5 +1,5 @@
 /** Read-only exact native roll ancestry. A request label, model result or absent Difficulty is never success. */
-import {StateConflictError} from "./errors.js";
+import {StateConflictError} from "./kernel/errors.js";
 import {historicalActionSource} from "./action-consent.js";
 import {validateBlazeSavedRoll} from "./pc-death.js";
 import {inspectAdversaryDamageDefense} from './native-feature-damage.js';

@@ -5,7 +5,7 @@ import { currentScene } from "./scene-continuity.js";
 import { requireCitySource } from "./city-core.js";
 import { cityAudit, cityKey } from "./city-calendar.js";
 import { TRAITS } from "./character-system.js";
-import { StateConflictError, UserInputError } from "./errors.js";
+import { StateConflictError, UserInputError } from "./kernel/errors.js";
 import { diceSpec } from "./dice.js";
 import { isPvpIntent, assertNonPvpCombatant } from "./pvp-authority.js";
 import {assertPcCanAct} from "./pc-native-eligibility.js";
