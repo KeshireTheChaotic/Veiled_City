@@ -13,6 +13,7 @@ import {inspectNativeGmDecision,nativeReactionTarget} from './gm-action-capabili
 import {historicalActionSource} from './action-consent.js';
 import {assertPcCanAct} from './pc-native-eligibility.js';
 import {featureCostPlan} from './frameworks/daggerheart/feature-costs.js';
+import {nativeFeatureTriggerEligible} from './frameworks/daggerheart/feature-trigger-eligibility.js';
 export {featureCostPlan} from './frameworks/daggerheart/feature-costs.js';
 
 export const FEATURE_PHASES=Object.freeze(['before_attack','after_hit','before_damage_applied','after_damage','on_pc_action','on_scene_event','spotlight_action']);
@@ -54,13 +55,6 @@ function sourceProof(db,guild,kind,ref){
   }
   throw fail('feature_native_source_adapter_missing');
 }
-function predicate(feature,p){
-  if(feature.feature_key==='adversary:static-wraith:feedback')return !!p.device;
-  if(feature.feature_key==='adversary:pale-court-knight:blood-rush')return p.phase==='after_damage'&&p.receipt.data.hp_marks>=2;
-  if(feature.feature_key==='adversary:aster-vale-catastrophe-analyst:bad-branch')return p.phase==='on_pc_action'
-    &&p.proof?.outcome==='success'&&p.request?.data.result.duality==='Fear';
-  return false; // No prose/feature-name match or model-supplied trigger boolean.
-}
 function capture(db,guild,kind,ref,{library=new EncounterLibrary('../content')}={}){
   const p=sourceProof(db,guild,kind,ref),scene=currentScene(db,guild),source=db.getWorldEvent(guild,p.source),result=[];
   if(source?.status!=='active'||source.session_id!==scene.session_id||source.scene!==scene.key)throw fail('feature_current_source');
@@ -70,7 +64,7 @@ function capture(db,guild,kind,ref,{library=new EncounterLibrary('../content')}=
     return result;
   }
   const encounter=db.getCurrentEncounter(scene.session_id),binding=encounter&&db.getCityRecord(guild,'encounter_binding',encounter.id);
-  for(const feature of executableNativeFeatures('adversary').filter(f=>predicate(f,p))){
+  for(const feature of executableNativeFeatures('adversary').filter(f=>nativeFeatureTriggerEligible(f,p))){
     for(const b of binding?.data.combatants||[]){
       if(p.actor&&b.actor!==p.actor)continue;
       const combatant=db.listCombatants(encounter.id).find(c=>c.id===b.id);
@@ -125,7 +119,7 @@ export function inspectFeatureWindow(db,guild,key,{library=new EncounterLibrary(
     ||!FEATURE_PHASES.includes(v.phase))throw fail('feature_window_provenance_depth');
   const p=sourceProof(db,guild,v.source_kind,v.receipt),a=actorFacts(db,guild,v.actor,v.template_hash,library),source=db.getWorldEvent(guild,p.source),
     pc=db.getCharacter(v.target),target=scenePresence(db,guild,'character',v.target);
-  if(!predicate(feature,p)||hash(p.receipt.data)!==v.receipt_hash||hash(source)!==v.source_hash||a.scene.key!==v.scene
+  if(!nativeFeatureTriggerEligible(feature,p)||hash(p.receipt.data)!==v.receipt_hash||hash(source)!==v.source_hash||a.scene.key!==v.scene
     ||a.scene.session_id!==v.session||a.combatant.id!==v.combatant||a.control_hash!==v.actor_control
     ||hash(target)!==v.target_presence||pc?.owner_user_id!==v.target_owner||p.character!==v.target||p.phase!==v.phase
     ||p.actor&&p.actor!==v.actor||event.details.input_source!==p.source)throw fail('feature_window_source_target_or_control_changed');

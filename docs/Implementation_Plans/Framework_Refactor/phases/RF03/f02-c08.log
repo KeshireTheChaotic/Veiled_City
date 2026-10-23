@@ -1,0 +1,12 @@
+✔ Static Wraith Feedback requires the existing verified device fact (0.4494ms)
+✔ Pale Court Knight Blood Rush requires two or more HP marks after damage (0.0935ms)
+✔ Bad Branch requires a successful Fear PC-action result (0.0815ms)
+✔ unknown feature keys and model-style trigger flags do not qualify (0.0668ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 59.9642

@@ -1,0 +1,14 @@
+{
+  "feature": "RF03-F02-C08",
+  "status": "QUALIFIED_NATIVE_TRIGGER_ELIGIBILITY",
+  "branch": "codex/clean-ai-gm-2026-10",
+  "base_sha": "fe3a45bb50c3ab8e42d1f8a6614dd3f8e48a4e3a",
+  "test": {"path": "bot/tests/ai-gm-2026-10/rf03-f02-c08.test.mjs", "command": "node --test bot/tests/ai-gm-2026-10/rf03-f02-c08.test.mjs", "exit": 0, "passed": 4, "failed": 0, "skipped": 0, "duration_ms": 59.9642, "log": "f02-c08.log", "log_sha256": "18D709508FA26EE4421E7638103C938BC9220F37BD4EC5D61A6BCDFA0CF674DE"},
+  "syntax": {"exit": 0, "changed_js_mjs_files": 3},
+  "architecture_ratchet": {"command": "node bot/tooling/architecture/check-boundaries.mjs --ratchet --phase RF03", "exit": 0, "source_modules": 398, "unowned": 0, "import_occurrences": 2327, "largest_cycle": 182, "raw_violation_occurrences": 2600, "accepted_legacy_occurrences": 2600, "active_violation_groups": 0, "transition_errors": 0, "log": "f02-c08-gate.log", "log_sha256": "8B34B30B4E00E13382446C20957AF1692008A664465AEF5B735CB6AC2F8E65B5"},
+  "source_sha256": {"bot/src/frameworks/daggerheart/feature-trigger-eligibility.js": "4B8F8F6DEFC088FDA0E763D6A97B4C883FAF56E43129D1ACA52482C0536DEBD8", "bot/src/native-feature-windows.js": "E5598EACA5BD2ACBBE3B732039D9A3D81974D80530DB101B67FC9E3AEB549973", "bot/tests/ai-gm-2026-10/rf03-f02-c08.test.mjs": "E41ED4B226BA25A1BFF1EFC7BE02B2A72996D5F692B96CDECE2AD0928793ADBA"},
+  "provider_calls": 0,
+  "provider_cost_usd": 0,
+  "codex_usage": "UNMEASURED",
+  "release_authorized": false
+}
