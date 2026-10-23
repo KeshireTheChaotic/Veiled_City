@@ -3,36 +3,11 @@ import {compileNativeFeatures} from './native-feature-catalog.js';
 import {sceneFictionHash as hash} from './scene-fiction-context.js';
 import {scenePresence,sceneAccess} from './scene-continuity.js';
 import {arbitrationFailure as fail} from './gm-arbitration-contract.js';
-import {adversaryHpState} from './frameworks/daggerheart/public.js';
 import {nativeHouseErratum} from './native-house-errata.js';
-import {diceSpec} from './frameworks/daggerheart/public.js';
+import {createNativeStandardDamage} from './frameworks/daggerheart/standard-damage-passives.js';
 import {activeCityProxy} from './city-constraints.js';
-
-/** Pure expression arithmetic; it grants no feature, condition, roll or attack authority. */
-export function nativeDamageBonusExpression(damage,bonus){
-  const {count,sides,mod}=diceSpec(damage);
-  if(!Number.isSafeInteger(bonus)||bonus<0||bonus>2)throw fail('native_damage_fixed_bonus');
-  const total=mod+bonus;return bonus===0?damage:`${count}d${sides}${total>=0?'+':''}${total}`;
-}
-
-/** Exact source-pinned standard damage replacement; not a new attack or mutable stat block. */
-export function nativeStandardDamage({template,combatant,damage,actor=null,target=null,conditions=[]}){
-  const features=compileNativeFeatures(),sentence=features.find(f=>f.native_handler==='sentence_native_vulnerable_damage'&&f.template_hash===hash(template));
-  if(sentence){
-    if(!actor||!target||!Array.isArray(conditions)||conditions.some(c=>c.condition!=='Vulnerable'))throw fail('sentence_native_target_condition');
-    const bonus=conditions.length?2:0;
-    return {version:2,feature:sentence.feature_key,feature_hash:hash(sentence),template_hash:sentence.template_hash,source_hash:sentence.source_hash,
-      combatant:combatant.id,actor,target,conditions:structuredClone(conditions),bonus,original_damage:damage,expression:nativeDamageBonusExpression(damage,bonus)};
-  }
-  const feature=features.find(f=>f.native_handler==='horde_marked_half_damage'&&f.template_hash===hash(template));
-  if(!feature)return null;
-  const hp=adversaryHpState(combatant),erratum=nativeHouseErratum('HR11');
-  if(combatant.hp_max!==template.hp||erratum?.interpretation.Horde_threshold!=='marked_hp_at_least_ceiling_half_max')
-    throw fail('horde_native_hp_and_erratum');
-  const expression=hp.marked_half_or_more?'3d8+8':damage;
-  return {feature:feature.feature_key,feature_hash:hash(feature),template_hash:feature.template_hash,erratum:'HR11',erratum_version:1,
-    erratum_hash:hash(erratum),combatant:combatant.id,hp,original_damage:damage,expression};
-}
+const nativeDamage=createNativeStandardDamage({compileNativeFeatures,hash,nativeHouseErratum,fail});
+export const {nativeDamageBonusExpression,nativeStandardDamage}=nativeDamage;
 
 export function nativeAttackPassives(db,guild,{npc,combatant,character,encounter,binding,template,library}){
   const feature=compileNativeFeatures().find(f=>f.actor_name===template.name&&f.native_handler==='pack_pressure');

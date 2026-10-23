@@ -1,0 +1,76 @@
+{
+  "feature": "RF03-F02-C03",
+  "status": "QUALIFIED_SLICE_ONLY",
+  "base_commit": "ea1569a",
+  "started_utc": "2026-10-23T22:56:38Z",
+  "finished_utc": "2026-10-23T22:59:36Z",
+  "changed_modules": [
+    "bot/src/native-feature-passives.js",
+    "bot/src/frameworks/daggerheart/standard-damage-passives.js",
+    "bot/tests/ai-gm-2026-10/rf03-f02-c03.test.mjs"
+  ],
+  "source_sha256": {
+    "bot/src/native-feature-passives.js": "760a149328c83ff8e322e9df00ea800b81bcaf738688b018cde759148bc890eb",
+    "bot/src/frameworks/daggerheart/standard-damage-passives.js": "00ae964aa24ae4bd1af3209c1998ff7a35dcabb9d7f9c287a14c7e595b2fb0d4",
+    "bot/tests/ai-gm-2026-10/rf03-f02-c03.test.mjs": "2eb202aaf7996e8c98a09d48ae0bcc22e47fc2d496bbcae5e084e8f3a1cf1d09"
+  },
+  "syntax": {
+    "paths": [
+      "bot/src/native-feature-passives.js",
+      "bot/src/frameworks/daggerheart/standard-damage-passives.js",
+      "bot/tests/ai-gm-2026-10/rf03-f02-c03.test.mjs"
+    ],
+    "exit": 0
+  },
+  "review_finding": {
+    "trigger": "Green Root Host standard attack while marked HP is at least half its maximum",
+    "impact": "The old damage passive consumed HR11 interpretation even though HR11 was review_only and replaced standard damage with 3d8+8.",
+    "correction": "Keep the Horde passive inactive unless the required erratum status is supported. No source catalog status was changed.",
+    "authority": "RF03-F02 scope requires review-only entries to remain inactive."
+  },
+  "test": {
+    "command": "node --test --test-reporter=tap --test-concurrency=1 bot/tests/ai-gm-2026-10/rf03-f02-c03.test.mjs",
+    "exit": 0,
+    "tests": 4,
+    "pass": 4,
+    "fail": 0,
+    "skipped": 0,
+    "duration_ms": 366.8908,
+    "blocking_wall_ms": 542,
+    "log": "f02-c03-final.log",
+    "log_sha256": "4a30c99f531527b763370944fdc464c38979fa35cabcbc26873d010482fd8581",
+    "pre_guard_attempt": {
+      "tests": 3,
+      "pass": 3,
+      "exit": 0,
+      "duration_ms": 352.5741,
+      "log": "f02-c03.log",
+      "qualification": "superseded when inspection discovered the HR11 review-only gap"
+    }
+  },
+  "architecture_gate": {
+    "command": "node bot/tooling/architecture/check-boundaries.mjs --ratchet --phase RF03",
+    "exit": 0,
+    "source_modules": 387,
+    "unowned": 0,
+    "import_occurrences": 2309,
+    "largest_cycle": 182,
+    "raw_violations": 2601,
+    "accepted_legacy_occurrences": 2601,
+    "active_violation_groups": 0,
+    "transition_errors": 0,
+    "pass": true,
+    "log": "f02-c03-final-gate.log",
+    "log_sha256": "62b8341286817509e911f00befa101c153bc9d34d6d4666132b2d1d02eeeaa0d"
+  },
+  "cost": {
+    "provider_calls": 0,
+    "provider_dollars": 0,
+    "codex_usage": "UNMEASURED"
+  },
+  "holds": [
+    "Native attack receipt integration and full incoming attack transaction were not requalified by this passive contract test.",
+    "The broader RF03 feature catalog, PvP/death/Fear workflows, and remaining transition debt keep RF03 incomplete."
+  ],
+  "release": "NOT AUTHORIZED"
+}

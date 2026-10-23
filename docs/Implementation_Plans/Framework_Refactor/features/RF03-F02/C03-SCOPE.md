@@ -1,0 +1,5 @@
+# RF03-F02 corrective C03 — native standard damage passives
+
+Extract the existing source-pinned standard-damage passive policy and its fixed damage-expression arithmetic into a Daggerheart-owned factory. The provider continues supplying the actual immutable native feature catalog, current source hash, house erratum reader, and established failure constructor. Preserve the supported Sentence Carried Out rule, current Vulnerable-condition proof input, returned receipt fields, and null behavior when no matching feature exists. The Horde/HR11 branch must remain inactive while HR11 is `review_only`; the old handler failed to check that status. Do not change catalog statuses or activate review-only entries.
+
+Author new tests using current production adversary/catalog sources only under `bot/tests/ai-gm-2026-10/`; no inherited fixtures or suites. Freeze before one blocking focused test batch, syntax-check changed JS/MJS, and run the RF03 boundary ratchet once. No source/state/receipt schema, gameplay, network, DB, provider, or deployment changes. Record precise outcomes and hashes in `C03-LEDGER.md`; rollback code/provider/test/evidence atomically.
