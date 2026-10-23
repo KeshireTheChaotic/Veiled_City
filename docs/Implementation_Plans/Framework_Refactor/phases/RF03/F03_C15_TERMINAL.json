@@ -1,0 +1,15 @@
+{
+  "feature": "RF03-F03-C15",
+  "status": "PROVIDER_COLD_IMPORT_QUALIFIED",
+  "branch": "codex/clean-ai-gm-2026-10",
+  "base_sha": "b5dcd4e54b0d95bc854adfb968bbbd6947109d05",
+  "test": {"path": "bot/tests/ai-gm-2026-10/rf03-f03-c15.test.mjs", "command": "node --test bot/tests/ai-gm-2026-10/rf03-f03-c15.test.mjs", "exit": 0, "passed": 1, "failed": 0, "skipped": 0, "duration_ms": 345.2031, "log": "f03-c15.log", "log_sha256": "DBE17F779E82A1BFFD9FF083607275B1178E37EBD3F8485729EAB33270B05114"},
+  "syntax": {"exit": 0, "changed_js_mjs_files": 1},
+  "architecture_ratchet": {"command": "node bot/tooling/architecture/check-boundaries.mjs --ratchet --phase RF03", "exit": 0, "source_modules": 402, "unowned": 0, "import_occurrences": 2336, "largest_cycle": 182, "raw_violation_occurrences": 2600, "accepted_legacy_occurrences": 2600, "active_violation_groups": 0, "transition_errors": 0, "log": "f03-c15-gate.log", "log_sha256": "ECBDA36D24CC06B93CB3F5691A13787DA2712613210B8CD92E859FF8C23E6BF7"},
+  "source_sha256": {"bot/src/pvp-attacks.js": "7D9ECCC1D99A82F5B61768FFA8B6926CB2C686E1D3898F938FAA63D07851854F", "bot/tests/ai-gm-2026-10/rf03-f03-c15.test.mjs": "4F24AEB1B1D42881AC046245EB8EE188EB0EF5AF6BDC848ED98C8DB5122DF01F"},
+  "provider_calls": 0,
+  "provider_cost_usd": 0,
+  "codex_usage": "UNMEASURED",
+  "limitations": ["This test imports the actual PvP attack provider and calls its existing snapshot hash export only.", "Attack authorization, roll, damage, transaction, receipt, Discord, and production behavior remain unqualified."],
+  "release_authorized": false
+}

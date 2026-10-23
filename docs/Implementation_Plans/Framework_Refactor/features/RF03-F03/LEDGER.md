@@ -2,6 +2,10 @@
 
 ACTIVE. Native choices and receipts must remain unchanged.
 
+## C15 — actual PvP attack provider cold import
+
+A new offline test imported `pvp-attacks.js` after the C13 lazy-adapter repair and called its existing actor snapshot hash export. It passed 1/1, exit 0, 345.2031 ms; one changed MJS syntax check and the RF03 ratchet passed. Exact hashes/logs are in `phases/RF03/F03_C15_TERMINAL.json`. This does not qualify attack authorization, dice, damage, persistence, receipts, or live combat.
+
 ## F03 qualified proof and arithmetic slice
 
 Base8bea508. Extracted fear-reservation-proof.js (read-only ancestry and reserved-funds calculation) and pc-resources.js (existing Hope cap/pool/marked-slot arithmetic). Existing producer keeps world indexing; pc-effects calls extracted arithmetic inside its unchanged transaction after owner/source/replay checks. pc-native-eligibility preserves death proof at caller. No changed receipt fields, source IDs, effect keys, SQL or costs.
