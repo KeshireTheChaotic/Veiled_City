@@ -1,0 +1,21 @@
+{
+  "feature": "RF03-F02-C04",
+  "retired_transitions": [
+    {
+      "id": "aa366816b55a3f0fa589bc4607bf2bdad07b966cf818f335bc853df0a796e6ac",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "from": "bot/src/native-group-features.js",
+      "to": "bot/src/native-feature-windows.js",
+      "kind": "static",
+      "specifier": "./native-feature-windows.js",
+      "owner": "daggerheart",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF03-F01",
+      "expires_after": "RF03",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+    }
+  ],
+  "removal_evidence": "The exact native-group-features.js import edge to native-feature-windows.js no longer exists; native-group-features.js imports Daggerheart feature-costs.js directly. The frozen baseline and violation identities were not changed.",
+  "active_provider_import_hold": "A separate full cold import of native-feature-windows.js still fails before assertions with a RANGE_BANDS initialization ReferenceError in pvp-attacks.js; this is retained as a local hold, not treated as cured by retiring the removed group-feature edge."
+}

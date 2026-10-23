@@ -3,7 +3,7 @@
 import {sceneFictionHash as hash,narrativeSourceVisible} from './scene-fiction-context.js';
 import {compileNativeFeatures} from './native-feature-catalog.js';
 import {inspectNativeGmDecision,inspectCommittedGmDecision,nativeReactionTarget,commitGmActionCost} from './gm-action-capability.js';
-import {featureCostPlan} from './native-feature-windows.js';
+import {featureCostPlan} from './frameworks/daggerheart/feature-costs.js';
 import {currentScene,scenePresence,sceneAccess,RANGE_BANDS} from './scene-continuity.js';
 import {activeCityProxy} from './city-constraints.js';
 import {conversationPrincipal} from './conversation-principal.js';
