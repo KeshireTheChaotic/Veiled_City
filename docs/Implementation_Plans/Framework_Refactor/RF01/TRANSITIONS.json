@@ -201,17 +201,6 @@
       "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
     },
     {
-      "id": "d7d9b72aa1fcf262801799d6c85817e0fc4bd1b163c9618a25e7a92bf939080d",
-      "code": "LEGACY_MODULE_LOCATION",
-      "from": "bot/src/authority-policy.js",
-      "owner": "daggerheart",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF03-F01",
-      "expires_after": "RF03",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
-    },
-    {
       "id": "51b928c359670b3d81293946af1b87a551066df9af42fceba96b4c6e185eedc3",
       "code": "LEGACY_MODULE_LOCATION",
       "from": "bot/src/authority-projection.js",
@@ -2820,17 +2809,6 @@
       "max_occurrences": 1,
       "remove_in_feature": "RF06-F04",
       "expires_after": "RF06",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
-    },
-    {
-      "id": "69bc0ecd029926423b8806585a3cfc26c1d5111f6f717baeca73859d9d810b84",
-      "code": "LEGACY_MODULE_LOCATION",
-      "from": "bot/src/rule-reference-catalog.js",
-      "owner": "daggerheart",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF03-F01",
-      "expires_after": "RF03",
       "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
       "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
     },
@@ -7516,34 +7494,6 @@
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
     {
-      "id": "761383b6ed8050d85eea7102d5cd398aaaa2d40df4452e074b8b18a84cf77890",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/gm-unified-arbitration.js",
-      "to": "bot/src/scene-fiction-context.js",
-      "kind": "static",
-      "specifier": "./scene-fiction-context.js",
-      "owner": "intent",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF05-F02",
-      "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
-      "id": "5012995d09726992d2d0f3b65be48b16b150525ce529bc98bcf17be37ffef032",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/gm-unified-arbitration.js",
-      "to": "bot/src/rule-reference-catalog.js",
-      "kind": "static",
-      "specifier": "./rule-reference-catalog.js",
-      "owner": "intent",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF05-F02",
-      "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
       "id": "469c6fdecc561efda251ceefbc17898601695a57d4baa43eacd8226902abcdd1",
       "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
       "from": "bot/src/gm-unified-arbitration.js",
@@ -7955,20 +7905,6 @@
       "from": "bot/src/gm.js",
       "kind": "static",
       "specifier": "openai",
-      "owner": "application",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF05-F04",
-      "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
-      "id": "7e6f460a0e2f5a25954f05e1ac773498f3c484fe3187554e4a810b669aadf1cf",
-      "code": "IMPORTS_PRIVATE_API",
-      "from": "bot/src/gm.js",
-      "to": "bot/src/authority-policy.js",
-      "kind": "static",
-      "specifier": "./authority-policy.js",
       "owner": "application",
       "max_occurrences": 1,
       "remove_in_feature": "RF05-F04",

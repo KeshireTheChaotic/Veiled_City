@@ -2,7 +2,7 @@
 import OpenAI from "openai";
 import {randomUUID,createHash} from 'node:crypto';
 import {setTimeout as waitForRetry} from 'node:timers/promises';
-import { AUTHORITY_POLICY } from "./authority-policy.js";
+import { AUTHORITY_POLICY } from "./frameworks/daggerheart/public.js";
 import { conversationPrincipal } from "./conversation-principal.js";
 import {continuationInbox} from "./action-continuation.js";
 import {actionReviewInbox} from "./gm-action-review.js";

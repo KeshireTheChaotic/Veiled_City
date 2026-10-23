@@ -1,0 +1,138 @@
+{
+  "run_id": "RF03-F01-C05",
+  "base_sha": "5458704f8811e5b9becf0474fbec7c788616d38c",
+  "started": "2026-10-23T19:08:05.657Z",
+  "finished": "2026-10-23T19:08:06.990Z",
+  "syntax": [
+    {
+      "path": "bot/src/framework-to-framework/daggerheart--intent/public.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/public.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/frameworks/intent/public.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/gm-action-ruling.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/gm-unified-arbitration.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/gm.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/rules-arbitration.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/state.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/authority-policy.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/rule-reference-catalog.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/unified-adjudication.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/frameworks/intent/contracts/unified-adjudication-source.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf03-f01-c05.test.mjs",
+      "exit": 0
+    }
+  ],
+  "tests": {
+    "command": "node --test --test-reporter=tap --test-concurrency=1 bot/tests/ai-gm-2026-10/rf03-f01-c05.test.mjs",
+    "exit": 0,
+    "summary": [
+      "# tests 9",
+      "# pass 9",
+      "# fail 0",
+      "# skipped 0",
+      "# duration_ms 85.9901"
+    ],
+    "failures": [],
+    "log_sha256": "7f833471b35f96cd68daf42903b765ebddc9f37fe699689dfd9110633a5344e2"
+  },
+  "gate": {
+    "command": "node bot/tooling/architecture/check-boundaries.mjs --ratchet --phase RF03",
+    "exit": 0,
+    "result": "{\n  \"mode\": \"ratchet\",\n  \"phase\": \"RF03\",\n  \"sourceModules\": 381,\n  \"unowned\": 0,\n  \"importOccurrences\": 2299,\n  \"internalImportOccurrences\": 2124,\n  \"cycleComponents\": 1,\n  \"largestCycle\": 183,\n  \"rawViolationOccurrences\": 2608,\n  \"acceptedLegacyOccurrences\": 2608,\n  \"activeViolationGroups\": 0,\n  \"transitionErrors\": 0,\n  \"pass\": true,\n  \"firstErrors\": []\n}",
+    "log_sha256": "d411674967c96cb8e8904af70de5e05fe89a4c08f00138c77934e1fd918a1007"
+  },
+  "files": [
+    {
+      "path": "bot/src/framework-to-framework/daggerheart--intent/public.js",
+      "sha256": "294db696a20e224c729d0730fef5b359aa074bebc531b79f027c7066dad4c5a5"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/public.js",
+      "sha256": "bfc82a251ab59b6c6099fc324d9f63b1a40f549d32f10ca6d325e4768956480d"
+    },
+    {
+      "path": "bot/src/frameworks/intent/public.js",
+      "sha256": "0f49c30091c2de087dae30937ae48fc96e6d4f16f25dccc7a5a237e0464fcc03"
+    },
+    {
+      "path": "bot/src/gm-action-ruling.js",
+      "sha256": "ef87462d6b165ffcb7b1305c2293cce4974ef45dbf6d660573047b1a674af3d5"
+    },
+    {
+      "path": "bot/src/gm-unified-arbitration.js",
+      "sha256": "df669f189993037bbf7b24bfc826b629ab7bbfe201658a2a37d9583b0088c2c3"
+    },
+    {
+      "path": "bot/src/gm.js",
+      "sha256": "cbe067f1e08683ee87a278f69fab263a7247eda66b6d4bc46329144ffef0e0a2"
+    },
+    {
+      "path": "bot/src/rules-arbitration.js",
+      "sha256": "bc5edd3aa5751ba0dd50bb53f01e186bb222c5fbfaa76bdc084b8b3611dbb310"
+    },
+    {
+      "path": "bot/src/state.js",
+      "sha256": "6ccf7fb9505e9cee3725db88f4746ae17f9693703d3c47fe20c2a1a4015ea1d8"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/authority-policy.js",
+      "sha256": "dfefe97f1071868ab2be07b38f713368f4e21a374aa83f10af809c42e7fd50ec"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/rule-reference-catalog.js",
+      "sha256": "2b856baf358d58e7567e324d162d2d875490177073f0237b7c7f380f960fea51"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/unified-adjudication.js",
+      "sha256": "de06468fe6542ad22fd35080e39c214b8cf43ace5f276be0d5b606bc09213bcc"
+    },
+    {
+      "path": "bot/src/frameworks/intent/contracts/unified-adjudication-source.js",
+      "sha256": "a8c7c89d3037fa2eeeb923713c26fd680919f10c960970b8e7eecacd1df39f56"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf03-f01-c05.test.mjs",
+      "sha256": "6e2023e181eb80c3606f8188b7fcb20fc50a1c43634625c4d5d9c0cbf5063fb1"
+    }
+  ],
+  "cost": {
+    "provider_calls": 0,
+    "provider_dollars": 0,
+    "codex": "UNMEASURED"
+  }
+}

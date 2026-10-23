@@ -633,13 +633,15 @@
         }
       ],
       "validation": "Native resolver independently verifies exact accepted source/owner/scope, current selection and immutable replay receipts. Intent supplies authored-envelope reader only; adapter copies no mechanics.",
-      "lifecycle": "Actual commitGmTurn injects connector while existing provider wiring remains in legacy typed-mechanics pending RF05-F05 composition/public-provider adoption. No execution in preview.",
+      "lifecycle": "Actual commitGmTurn injects connector while existing provider wiring remains in legacy typed-mechanics pending RF05-F05 composition/public-provider adoption. No execution in preview. Native unified adjudication also adopted by state.js with explicit source/board capability; original prompt/provider composition remains in intent until later public-provider adoption.",
       "adoption_feature": "RF03-F01",
       "consumers": [
-        "bot/src/turn-orchestration.js"
+        "bot/src/turn-orchestration.js",
+        "bot/src/state.js"
       ],
       "tests": [
-        "bot/tests/ai-gm-2026-10/rf03-f01-c03.test.mjs"
+        "bot/tests/ai-gm-2026-10/rf03-f01-c03.test.mjs",
+        "bot/tests/ai-gm-2026-10/rf03-f01-c05.test.mjs"
       ],
       "observed_directions": [
         {

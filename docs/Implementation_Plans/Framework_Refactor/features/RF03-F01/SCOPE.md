@@ -19,3 +19,7 @@ Extract the complete existing resolveTypedNativeRolls native policy into Daggerh
 ## Corrective C04 — exact typed source selection and saved native result proof
 
 Extract unchanged exactTypedRollSelection/exactTypedPvpSelection and the full typedRollProof validator into Daggerheart with explicit native verifier/repository capabilities. Existing modules retain provider wiring and unrelated audience projection only; no duplicate native rule. Preserve all saved versions, source/owner/modifier/optional-spend/attack/death validation, natural faces, grounded Difficulty and neutral needs_review. Newly authored tests must distinguish actual core proof from mocked dependent feature/death verifiers. No callback may execute rolls or spend during read-only proof.
+
+## Corrective C05 — native unified adjudication and rules authority
+
+Extract all native adjudicateSceneBoard/applyUnifiedArbitration/prepareUnifiedCollaboration policy from the intent transport module into Daggerheart. Intent retains its original GM prompt and provider composition only; state.js supplies the actual daggerheart--intent connector. Move the existing pure rule-reference catalog and authority policy to Daggerheart without edits to rules/text. Preserve typed owner checks, current board/proposal identity, native feature/PvP/pre-roll Fear order, reactive feature timing, per-action holds and same nested transaction boundaries. Fresh native decision/idempotency/rollback/source shape tests; no change to previous qualified implementations.

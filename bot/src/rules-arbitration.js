@@ -4,7 +4,7 @@ import { indexWorldEvent, cityKey } from "./city-calendar.js";
 import { prepareRollRequest } from "./roll-requests.js";
 import { conversationPrincipal } from "./conversation-principal.js";
 import { currentScene } from "./scene-continuity.js";
-import { resolveRuleReferences } from "./rule-reference-catalog.js";
+import { resolveRuleReferences } from "./frameworks/daggerheart/public.js";
 import { isPvpIntent } from "./pvp-authority.js";
 import {overlapsOwnerActionTerminal} from "./owner-action-terminal.js";
 import {captureNoRollFeatureWindows} from './native-feature-windows.js';

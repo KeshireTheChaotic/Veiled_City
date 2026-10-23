@@ -1,3 +1,4 @@
+import {connectUnifiedArbitration} from './framework-to-framework/daggerheart--intent/public.js';
 /** Authoritative AI/state mutation layer. Applies validated structured outputs while enforcing transaction and visibility invariants. */
 import { randomUUID, createHash } from "node:crypto";
 import {applyAuthoredInitialPosition} from './scene-setup.js';
@@ -493,7 +494,7 @@ export function applyAuthoritativeMutation(db,{guildId,sessionId=null,events=[],
       }
     }
     let actionPlan=buildActionPlan(db,guildId,typedIntents);
-    const collaborationOnly=prepareUnifiedCollaboration(db,guildId,narrative,typedIntents);
+    const collaborationOnly=prepareUnifiedCollaboration(db,guildId,narrative,typedIntents,{connectUnifiedArbitration});
     const conflictInputs=typedIntents.filter(row=>!collaborationOnly.has(row.record_key));
     const pvpAttempts=stagePvpAttempts(db,guildId,conflictInputs,actionPlan);
     const campaignPvpPreparations=pvpAttempts.filter(row=>row.kind==='pvp_attack_intent'&&row.data.version===4).map(row=>{
@@ -514,7 +515,7 @@ export function applyAuthoritativeMutation(db,{guildId,sessionId=null,events=[],
     const actionWindows=coordinateTypedActionWindows(db,guildId,conflictInputs,actionPlan);
     if(actionWindows.length)actionPlan=actionPlan.map(row=>db.getCityRecord(guildId,"compound_action",row.record_key));
     const coordinatedIds=new Set(actionWindows.map(row=>row.action));
-    const unifiedArbitration=applyUnifiedArbitration(db,guildId,narrative,typedIntents,{content});
+    const unifiedArbitration=applyUnifiedArbitration(db,guildId,narrative,typedIntents,{content,connectUnifiedArbitration});
     for(const decision of unifiedArbitration.filter(d=>d.data.native?.operation==='campaign_pvp_attack')){
       const request=db.getCityRecord(guildId,'pvp_attack_request',decision.data.native.request),
         preparation=campaignPvpPreparations.find(p=>p.intent===request?.data.offer.input.attack);

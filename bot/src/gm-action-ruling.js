@@ -6,7 +6,7 @@ import {conversationPrincipal} from "./conversation-principal.js";
 import {currentScene,scenePresence} from "./scene-continuity.js";
 import {isPvpIntent} from "./pvp-authority.js";
 import {assertPcCanAct} from "./pc-native-eligibility.js";
-import {resolveRuleReferences} from "./rule-reference-catalog.js";
+import {resolveRuleReferences} from "./frameworks/daggerheart/public.js";
 import {nativeDeviceUseIssue} from './native-feature-effects.js';
 
 import {gmRulingSchema,validateGmRulingProposal} from './gm-ruling-schema.js';
