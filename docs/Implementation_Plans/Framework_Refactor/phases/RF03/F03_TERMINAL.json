@@ -1,0 +1,44 @@
+{
+  "started": "2026-10-23T18:00:14.983Z",
+  "finished": "2026-10-23T18:00:15.703Z",
+  "base_sha": "8bea50861d677d2893207f09b13ee4bfdfff19b8",
+  "tests": {
+    "exit": 1,
+    "summary": "# tests 6\n# pass 5\n# fail 1\n# skipped 0\n# duration_ms 70.1802"
+  },
+  "gate": {
+    "exit": 0,
+    "summary": ""
+  },
+  "syntax": 7,
+  "files": [
+    {
+      "path": "bot/src/frameworks/daggerheart/fear-reservation-proof.js",
+      "sha256": "0bf24653c113db4b87c6aef12f756674edd3f9fd025839abf07962f6f3ff2966"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/pc-resources.js",
+      "sha256": "17717072597b0b84b876a369516fbe0a02aa6a42816b9ba2a7d8f5f7cb741c47"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/public.js",
+      "sha256": "c90f087b617eb8d543cd44bb572cbff3dd88a2c6b493eb46933fd68ba22d7f24"
+    },
+    {
+      "path": "bot/src/fear-reservations.js",
+      "sha256": "64d354c43f8c802c7903314cb1bf41a5ff54fa03178b99a1d304ffd0b3e27cd1"
+    },
+    {
+      "path": "bot/src/pc-native-eligibility.js",
+      "sha256": "3f638c03f97abc6d74a6b4ff2a6df18e378a0fcf91ba0482cbcb24df9a52b8aa"
+    },
+    {
+      "path": "bot/src/pc-effects.js",
+      "sha256": "3f7416bb01c3e1760666d7a68dc14c9d63f9e1102ec39dceb557346b3cf549ca"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf03-f03.test.mjs",
+      "sha256": "0ef7da164e0da52d45d912e3f530a1d2cf12499b9806bb53cea3910c1633cf77"
+    }
+  ]
+}

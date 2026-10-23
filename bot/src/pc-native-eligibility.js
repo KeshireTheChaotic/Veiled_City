@@ -1,9 +1,7 @@
+export {hopeCap} from './frameworks/daggerheart/public.js';
 /** Execution eligibility is separate from conversational understanding and read-only owner ancestry. */
 import {validatePcDeathOutcome} from "./pc-death.js";
 function fail(message){throw Object.assign(new Error(message),{code:"PC_NATIVE_ELIGIBILITY",expected:true});}
-export function hopeCap(data){const cap=data.resources?.hope_max??6;
-  if(!Number.isSafeInteger(cap)||cap<0||cap>6)fail("Verified permanent Hope-slot cap required.");return cap;
-}
 function standingRecovery(pc,db,guild){
   if(!db||pc?.data.death_state?.status!=="recovered")return false;
   const outcome=validatePcDeathOutcome(db,guild,`${pc.data.death_state.request}:outcome`);

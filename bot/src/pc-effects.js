@@ -1,10 +1,11 @@
+import {pcEffectResource} from './frameworks/daggerheart/public.js';
 /** PC resource effects require a separately authorized native cause, never generated prose. */
 import { createHash } from "node:crypto";
 import { indexWorldEvent } from "./city-calendar.js";
 import { currentScene,scenePresence,sceneAccess,RANGE_BANDS } from "./scene-continuity.js";
 import { conversationPrincipal } from "./conversation-principal.js";
 import { personalCharacter } from "./personal-continuity.js";
-import {hopeCap,assertPcCanAct} from "./pc-native-eligibility.js";
+import {assertPcCanAct} from "./pc-native-eligibility.js";
 import {consentAction} from "./action-consent.js";
 import {wakeAfterNativeAllyHealing} from "./pc-death.js";
 import {applyNativeStressPassive} from "./native-stress-passives.js";
@@ -162,10 +163,7 @@ export function applyPcEffect(db,guild,key){
     const actor=d.healer?personalCharacter(db,guild,d.healer_owner,d.healer):pc;assertPcCanAct(actor,db,guild);
     if(d.healer){healerChoice(db,guild,row);if(hash(actor.data)!==d.healer_before)fail("Healer source sheet compare-and-set changed.");}
     if(row.status!=="approved"||hash(pc.data)!==d.before)fail("Native PC effect compare-and-set is stale.");
-    const resource=pc.data.resources?.[d.resource],before=d.resource==="hope"?resource:resource?.current,max=d.resource==="hope"?hopeCap(pc.data):resource?.max;
-    if(!Number.isSafeInteger(before)||!Number.isSafeInteger(max)||before<0||before>max)fail("Verified current resource required.");
-    const after=Math.max(0,Math.min(max,before+d.amount));
-    if(d.amount>0&&before+d.amount>max||d.amount<0&&["hope"].includes(d.resource)&&before+d.amount<0)fail("Insufficient resources or cost overflow.");
+    const {before,after}=pcEffectResource(pc.data,d.resource,d.amount);
     db.updateCharacterData(pc.id,data=>{if(d.resource==="hope")data.resources.hope=after;else data.resources[d.resource].current=after;});
     const mutation=db.recordMutation(guild,{sessionId:d.session,actorType:"player",actorId:d.owner,sourceLayer:"pc_feature",
       mutationType:"owner_approved_feature",entityKey:pc.id,visibility:"character",before:pc.data,after:db.getCharacter(pc.id).data,
