@@ -9,7 +9,7 @@ import {assertNonPvpCombatant,isPvpIntent} from './pvp-authority.js';
 import {indexWorldEvent} from './city-calendar.js';
 import {adjudicateAcceptedIntent} from './rules-arbitration.js';
 import {arbitrationFailure as fail} from './gm-arbitration-contract.js';
-import {validateNativeUnarmedTraitOperation} from './native-unarmed-traits.js';
+import {validateNativeUnarmedTraitOperation} from './frameworks/daggerheart/public.js';
 
 const issuer='native:unarmed-attack';
 const eventKey=b=>`native-unarmed:${hash(b)}`;

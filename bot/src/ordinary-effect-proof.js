@@ -8,7 +8,7 @@ import {isPvpIntent} from './pvp-authority.js';
 import {renderWorldObservation} from './world-observation.js';
 import {verifyRoutineEvidenceAnalysis} from './native-evidence-analysis.js';
 import {scenePresence} from './scene-continuity.js';
-import {validOrdinaryEffect} from './ordinary-effect-schema.js';
+import {validOrdinaryEffect} from './frameworks/daggerheart/public.js';
 import {validateNativeCondition} from './native-group-features.js';
 import {inspectNativeConditionClearAncestry} from './native-condition-recovery.js';
 import {inspectNativeEnvironmentNoiseClear} from './native-environment-noise.js';

@@ -1,0 +1,79 @@
+{
+  "run_id": "RF03-F01-C02",
+  "base_sha": "cc528a504e70d352c2c8630ae58c334aa2e392cd",
+  "started": "2026-10-23T18:33:21.041Z",
+  "finished": "2026-10-23T18:33:22.452Z",
+  "tests": {
+    "command": "node --test --test-reporter=tap --test-concurrency=1 bot/tests/ai-gm-2026-10/rf03-f01-c02.test.mjs",
+    "exit": 0,
+    "summary": [
+      "# tests 8",
+      "# pass 8",
+      "# fail 0",
+      "# skipped 0",
+      "# duration_ms 75.4788"
+    ],
+    "log_sha256": "dcded790f8f2589a2398d9ebff0adecd9e223dc2c7f8c6e2cf1d5f24f9454465"
+  },
+  "gate": {
+    "command": "node bot/tooling/architecture/check-boundaries.mjs --ratchet --phase RF03",
+    "exit": 0,
+    "summary": [],
+    "log_sha256": "314cd0cbf1e3c5db1c6a4bf7359ae62f4f74dbdc22517684d680f9d652d47b6a"
+  },
+  "syntax_count": 13,
+  "files": [
+    {
+      "path": "bot/src/frameworks/daggerheart/public.js",
+      "sha256": "e8c0e435ce7cc8b827756f354cb988bd96a6d9d4f13aa6914a2d2df427aa2921"
+    },
+    {
+      "path": "bot/src/gm-mechanical-v9.js",
+      "sha256": "6ff81d5dec6bd096c5f4f1a8372fa01bce998b9a2282533f0ffadad20495a1e8"
+    },
+    {
+      "path": "bot/src/gm.js",
+      "sha256": "73323ff0339245b31e9ec910f4e7033f5f31c1a3cd83d7b5098634dca71b4c5c"
+    },
+    {
+      "path": "bot/src/mechanical-native-v9.js",
+      "sha256": "0ffc7d5404262d01f8c451f57eecc1a40ff8dd5c3c7fcbcf66162a76a0bbec28"
+    },
+    {
+      "path": "bot/src/native-unarmed-attacks.js",
+      "sha256": "bbd15ba99192fc948388da993c0eca3cae44d1f04ab4605bbf9a741d916a8ce9"
+    },
+    {
+      "path": "bot/src/ordinary-effect-proof.js",
+      "sha256": "2a7b6500e2543b33f5a3c34ac7206e4b4925c00564df6a1218ee50b16a8e76d3"
+    },
+    {
+      "path": "bot/src/ordinary-effects.js",
+      "sha256": "2dd9e9b17af1dc8c97b9e439e797e9def39555ff05be35c4c933d62a07be7a6e"
+    },
+    {
+      "path": "bot/src/roll-collaboration.js",
+      "sha256": "f534b7365bca3876041d29c1f9f57eeb2de9ee5316b1adde5ec45f85f48167f2"
+    },
+    {
+      "path": "bot/src/roll-options.js",
+      "sha256": "321331a47c0d043c8536b7a57a881775b4aa3dd50581b221e87a094b88b3f32a"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/mechanical-boundary-v9.js",
+      "sha256": "a1ec9204cf6ee9f68a2134dec7a0a8ab8497a475967db5ab2cd314bf693e270d"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/ordinary-effect-schema.js",
+      "sha256": "0660c70add4b95ec8553e4fea7624d66903ab1066f7ac248d83f9875cd731260"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/native-unarmed-traits.js",
+      "sha256": "a7eb177e20910ff33e0aafe755d70adb73ff57eeafb1f43b6218536ddcae8825"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf03-f01-c02.test.mjs",
+      "sha256": "f2ccf3943ae51968118d9171754a44cfa8d08b772ca4823645245c50f719eb56"
+    }
+  ]
+}

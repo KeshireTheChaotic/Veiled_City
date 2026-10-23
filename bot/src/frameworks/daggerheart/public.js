@@ -6,3 +6,6 @@ export {fearReservationHash,fearReservationFailure,inspectFearReservation,reserv
 export {hopeCap,pcEffectResource} from './pc-resources.js';
 export {environmentEncounterRejection} from './environment-eligibility.js';
 export {createAdvancementRules} from './advancement.js';
+export {projectGmMechanicalInput,projectMechanicalInput,projectMechanicalOutput} from './mechanical-boundary-v9.js';
+export {ordinaryEffectClasses,ordinaryEffectsSchema,validOrdinaryEffect,ORDINARY_EFFECT_PROMPT} from './ordinary-effect-schema.js';
+export {alternateNativeUnarmedTrait,validateNativeUnarmedTraitOperation} from './native-unarmed-traits.js';

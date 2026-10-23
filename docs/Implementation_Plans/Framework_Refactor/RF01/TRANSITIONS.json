@@ -1052,17 +1052,6 @@
       "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
     },
     {
-      "id": "2ecd3a11de0154fe8df1a58af5fefdaa687a1ce051a415b599b248c3ad9d5b40",
-      "code": "LEGACY_MODULE_LOCATION",
-      "from": "bot/src/mechanical-boundary-v9.js",
-      "owner": "daggerheart",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF03-F01",
-      "expires_after": "RF03",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
-    },
-    {
       "id": "74fd5a010d2265d27e0ad5b15072068702028d5d60d6df0b4c28fe82f1d504c2",
       "code": "LEGACY_MODULE_LOCATION",
       "from": "bot/src/mechanical-native-v9.js",
@@ -2405,17 +2394,6 @@
       "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
     },
     {
-      "id": "e172106811c8c483d9f2e1263e63912066aed9d64ac7e2534ca78fd00f7ee262",
-      "code": "LEGACY_MODULE_LOCATION",
-      "from": "bot/src/native-unarmed-traits.js",
-      "owner": "daggerheart",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF03-F01",
-      "expires_after": "RF03",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
-    },
-    {
       "id": "735e38db773e988c759259127408141ccece1302bce038dfc2df08f627ecec29",
       "code": "LEGACY_MODULE_LOCATION",
       "from": "bot/src/native-world-operations.js",
@@ -2606,17 +2584,6 @@
       "id": "7315d68b8b98aae1ce12e70498d2654490012f9a979a99571f76bc1f89a51f5e",
       "code": "LEGACY_MODULE_LOCATION",
       "from": "bot/src/ordinary-effect-proof.js",
-      "owner": "daggerheart",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF03-F01",
-      "expires_after": "RF03",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
-    },
-    {
-      "id": "f42c184da1f66f7be92e2e54f901ae9a8e8bbeeaf68c7b939682ab48b33de77d",
-      "code": "LEGACY_MODULE_LOCATION",
-      "from": "bot/src/ordinary-effect-schema.js",
       "owner": "daggerheart",
       "max_occurrences": 1,
       "remove_in_feature": "RF03-F01",
@@ -8859,20 +8826,6 @@
       "to": "bot/src/gm-action-ruling.js",
       "kind": "static",
       "specifier": "./gm-action-ruling.js",
-      "owner": "application",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF05-F04",
-      "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
-      "id": "12070a18f8fd00f8f24efd442b9ca5d9ab50146991ed74858929865f8eb28a68",
-      "code": "IMPORTS_PRIVATE_API",
-      "from": "bot/src/gm.js",
-      "to": "bot/src/ordinary-effect-schema.js",
-      "kind": "static",
-      "specifier": "./ordinary-effect-schema.js",
       "owner": "application",
       "max_occurrences": 1,
       "remove_in_feature": "RF05-F04",

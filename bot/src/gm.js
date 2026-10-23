@@ -47,7 +47,7 @@ import { scopedSceneMemory } from "./scoped-memory.js";
 import {gmWorldPartsSchema,GM_WORLD_NARRATIVE_PROMPT} from "./gm-world-narrative.js";
 import {turnTraceFor} from './turn-trace-context.js';
 import {gmRulingContext,GM_RULING_PROMPT} from "./gm-action-ruling.js";
-import {ordinaryEffectsSchema,ORDINARY_EFFECT_PROMPT} from './ordinary-effect-schema.js';
+import {ordinaryEffectsSchema,ORDINARY_EFFECT_PROMPT} from './frameworks/daggerheart/public.js';
 import {ordinaryEffectContext} from './ordinary-effects.js';
 import {authorFreshNpcRequests,hasFreshNpcResponse,FRESH_NPC_INSTRUCTIONS,freshNpcResponseSchema} from './fresh-npc-authoring.js';
 import {worldInputKey} from './autonomous-world.js';

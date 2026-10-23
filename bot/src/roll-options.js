@@ -4,7 +4,7 @@ import { ownedRollRequest } from "./roll-requests.js";
 import { StateConflictError, UserInputError } from "./kernel/errors.js";
 import {recordNativeExperienceEligibility,inspectNativeExperienceEligibility} from './native-experience-eligibility.js';
 import {inspectNativeUnarmedAttack} from './native-unarmed-attacks.js';
-import {alternateNativeUnarmedTrait} from './native-unarmed-traits.js';
+import {alternateNativeUnarmedTrait} from './frameworks/daggerheart/public.js';
 
 const hash=value=>createHash("sha256").update(JSON.stringify(value)).digest("hex");
 const states=new Set(["available","requires_owner_choice","requires_additional_authorization","blocked","applied"]);

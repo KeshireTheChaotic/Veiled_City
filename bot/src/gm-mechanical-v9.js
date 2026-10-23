@@ -1,6 +1,6 @@
 /** Native GM proposal boundary. Reuses the exact selected Fear/incoming service; no role-string authority. */
 import {createAudienceAuthority} from './audience-first-capability.js';
-import {projectGmMechanicalInput} from './mechanical-boundary-v9.js';
+import {projectGmMechanicalInput} from './frameworks/daggerheart/public.js';
 import {authorizeIncomingOffer} from './pc-incoming.js';
 import {assertFearIncomingExecution} from './pvp-fear-moves.js';
 import {inspectNativeGmDecision} from './gm-action-capability.js';

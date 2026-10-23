@@ -22,7 +22,7 @@ import {nativeAdversaryDamageDefense} from './native-feature-damage.js';
 import {reconcileNativeFormationBreakdown} from './native-defense-aura.js';
 import {validateNativeExperienceEligibility} from './native-experience-eligibility.js';
 import {inspectNativeUnarmedAttack} from './native-unarmed-attacks.js';
-import {alternateNativeUnarmedTrait} from './native-unarmed-traits.js';
+import {alternateNativeUnarmedTrait} from './frameworks/daggerheart/public.js';
 import {assertPreRollFearRollAllowed} from './pre-roll-fear.js';
 import {inspectNativeRollParticipation} from './native-roll-participation.js';
 import {typedRollProof} from './typed-roll-proof.js';

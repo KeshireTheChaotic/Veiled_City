@@ -7,3 +7,7 @@ Fresh deterministic dice and mocked SRD tests only; freeze before one blocking b
 ## Corrective completion C01 — adopted advancement engine
 
 Extract the existing tier/slot/level-up policy from character-system.js into Daggerheart. Keep the currently shared character creation vocabulary and its unrelated consumers intact; no duplicate class/trait table. A consumer-owned character advancement port receives the native engine through character--daggerheart. Existing level command calls use that pair, with the same character source metadata and unchanged native plan/application algorithms. Class/creation source catalog relocation remains separate work; do not claim it complete. Fresh advancement tests only; prior dice/resource implementations unchanged.
+
+## Corrective C02 — native typed projection and owner trait choice contracts
+
+Relocate unchanged mechanical-boundary-v9, ordinary-effect-schema and native-unarmed-traits into Daggerheart after confirming exact current consumers. Keep authenticated verifier callbacks, source/recipient binding, no-RNG projection and pre-roll owner choice semantics. No shims or copied validators. Fresh source/grant/receipt/proposal and owner choice tests, no previous unaffected test reruns.

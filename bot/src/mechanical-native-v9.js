@@ -1,5 +1,5 @@
 /** Read-only v9 adapters over accepted input and native receipts. Never invoke RNG. */
-import {projectMechanicalInput,projectMechanicalOutput} from './mechanical-boundary-v9.js';
+import {projectMechanicalInput,projectMechanicalOutput} from './frameworks/daggerheart/public.js';
 import {consentAction} from './action-consent.js';
 import {pendingRollRequests} from './roll-requests.js';
 import {nativeOutcomeProjection} from './native-outcome-output.js';

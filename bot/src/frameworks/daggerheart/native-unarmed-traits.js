@@ -1,5 +1,5 @@
 /** One optional owner-selected trait switch for the closed native unarmed Strength/Finesse rule. */
-import {StateConflictError} from "./kernel/errors.js";
+import {StateConflictError} from "../../kernel/errors.js";
 
 const fail=()=>{throw Object.assign(new StateConflictError('A current owner-authored native unarmed trait choice is required.'),{code:'NATIVE_UNARMED_TRAIT'});};
 const same=(a,b)=>JSON.stringify(a)===JSON.stringify(b);

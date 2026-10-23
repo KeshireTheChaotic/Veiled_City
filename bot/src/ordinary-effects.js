@@ -1,5 +1,5 @@
 /** Bounded ordinary follow-through via existing native adapters. Proposals cannot mint receipts or GM approval. */
-import {validOrdinaryEffect} from './ordinary-effect-schema.js';
+import {validOrdinaryEffect} from './frameworks/daggerheart/public.js';
 import {ordinaryActionProof,ordinaryPrerequisite,effectObservation,effectTarget,effectVisibility,effectHash,effectKey,effectFail,verifyOrdinaryEffect} from './ordinary-effect-proof.js';
 import {dispatchAiIntents} from './ai-intents.js';
 import {validateIntent} from './ai-intent-contracts.js';
