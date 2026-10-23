@@ -2,6 +2,10 @@
 
 ACTIVE. Base 1db80db; reconciliation gates pass. Changes and qualification pending. Provider cost0; Codex cost UNMEASURED.
 
+## Corrective C07 — native collaboration and option engines qualified
+
+Complete existing participation/cost/dice/operation-receipt and private option policy now lives in Daggerheart, invoked by lazy existing providers. Native bodies unchanged. Fresh SQLite batch11/11 passed,exit0,42332.4516ms; six syntax checks and RF03 ratchet passed at405sources,zero unowned/active/errors,SCC182. Verified paid-option/reopen replay, exact independent Tag Team approval, pre-roll Fear-before-RNG, original atomic rollback, protected reaction resources and private option boundaries. Other native/source verifier dependencies mocked and remain separately accountable; no deadline deferred. Terminal evidence F01_C07_TERMINAL.json. RF03 incomplete; release unauthorized.
+
 ## Corrective C06 — native roll request engine qualified
 
 Five complete exported native roll-request algorithms plus their source guard moved into `daggerheart/roll-request-rules.js` with explicit source, dependent native verifier and notice reservation capabilities. The actual existing provider invokes the new engine; formatting and post-commit transport remain outside it. The moved policy body is unchanged. Fresh C06:8 passed, zero failed/skipped, exit 0, 14459.8153 ms; four syntax checks and RF03 ratchet passed. Actual private request, no-spend preparation, SQLite reopen/replay and reservation-failure rollback are covered. Exact hashes/results: `F01_C06_TERMINAL.json`. Dependent native implementations and later provider adoption remain visible obligations; no deadlines changed. RF03 incomplete; release unauthorized.

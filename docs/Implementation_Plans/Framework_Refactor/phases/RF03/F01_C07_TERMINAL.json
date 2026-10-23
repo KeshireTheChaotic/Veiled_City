@@ -1,0 +1,62 @@
+{
+  "run_id": "RF03-F01-C07",
+  "start": "2026-10-23T23:51:26.1816515Z",
+  "end": "2026-10-23T23:52:09.5907273Z",
+  "test_exit": 0,
+  "syntax_files": 6,
+  "syntax_failed": [],
+  "gate_exit": 0,
+  "base_sha": "157096b95db496b5dbca3399b34cb2a6b65197d4",
+  "status": "NATIVE_COLLABORATION_AND_OPTIONS_QUALIFIED_PROVIDER_ADOPTION_PARTIAL",
+  "command": "node --test --test-reporter=tap bot/tests/ai-gm-2026-10/rf03-f01-c07.test.mjs",
+  "passed": 11,
+  "failed": 0,
+  "skipped": 0,
+  "duration_ms": 42332.4516,
+  "policy_comparisons": {
+    "roll-collaboration": {
+      "unchanged": true,
+      "body_sha256": "7a04465a70cec1f5b251154f0b24e5b68c78f7b55c1c6a0911a40ce4235ff5fa"
+    },
+    "roll-options": {
+      "unchanged": true,
+      "body_sha256": "493e4f6c601b06a6e4302cedc0ecac2a230ca78a4689539c682fbd2c588c1b51"
+    }
+  },
+  "source_sha256": {
+    "bot/src/roll-collaboration.js": "8613073251279a8dcf7ea9bb34d84958fd841b7d9469ec7b405a5349da51677a",
+    "bot/src/roll-options.js": "c96ad19c7d33443aee24b93f23d423853db30800223abcd637a5e079f849863d",
+    "bot/src/frameworks/daggerheart/roll-collaboration-rules.js": "fc34174a80e8c3fa9ef4863379ee870e2275a42c697991bba1e4573756054bba",
+    "bot/src/frameworks/daggerheart/roll-options-rules.js": "ddad1ca41c690e8ea09ca1bfc5cc031c69a7883361b235f5fff5966c2c5311bf",
+    "bot/src/frameworks/daggerheart/public.js": "4b46830908854244e36429aa4923cfd486a4dc7ad696d5ec8748d4df55d7e8d0",
+    "bot/tests/ai-gm-2026-10/rf03-f01-c07.test.mjs": "109d5fcc770ad72ab1ebe9766fc0d49ef4105a5621d7e700b20059fc6de1dfc9"
+  },
+  "log_sha256": "98e4ac265e552795c370080ffa15b6330a071cbc30a2a93fb0f7dd25c8c31828",
+  "architecture": {
+    "mode": "ratchet",
+    "phase": "RF03",
+    "sourceModules": 405,
+    "unowned": 0,
+    "importOccurrences": 2344,
+    "internalImportOccurrences": 2168,
+    "cycleComponents": 1,
+    "largestCycle": 182,
+    "rawViolationOccurrences": 2600,
+    "acceptedLegacyOccurrences": 2600,
+    "activeViolationGroups": 0,
+    "transitionErrors": 0,
+    "pass": true,
+    "firstErrors": []
+  },
+  "gate_log_sha256": "2ccf1cc165e0de569b5e63af2b5b5027731237c05f4ab031d50f8075e7a23e6d",
+  "provider_calls": 0,
+  "provider_cost_usd": 0,
+  "codex_usage": "UNMEASURED",
+  "execution": "Launched once; native tool detached at 30 seconds. Completed terminal file read once after independent C16 source review; no process/session/log polling.",
+  "limitations": [
+    "Real disposable SQLite repository; dependent current source and native verifiers are mocks, not qualified by this batch.",
+    "Legacy providers bind the extracted native implementations; their remaining producer/publication integration and dependent native services remain accountable work.",
+    "No schema/gameplay/receipt changes or live behavior certification."
+  ],
+  "release_authorized": false
+}

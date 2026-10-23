@@ -23,3 +23,5 @@ export {createNativeHouseErrata} from './house-errata.js';
 export {createPcEligibility} from './pc-eligibility.js';
 export {createPvpAttackTerms} from './pvp-attack-terms.js';
 export {createRollRequestRules} from './roll-request-rules.js';
+export {createRollCollaborationRules} from './roll-collaboration-rules.js';
+export {createRollOptionRules} from './roll-options-rules.js';
