@@ -47,3 +47,15 @@ Fresh rf02-f04.test.mjs first run: exit 1, 3 pass/2 fail, 76.0251 ms; fixture in
 Removed 1 resolved live transition record; raw 2815, zero active/unowned; cycle211 unchanged. Holds: character-system native class/domain/trait/advancement rules require RF03-F01 authority interface; observation requires RF04-F03/F05 source/scene/native contracts; remaining DB/knowledge export workflows require RF06-F02/F03 mappings. No wholesale move or gameplay redesign authorized by purity alone.
 
 Rollback F04 checkpoint before dependents; no data/schema rollback. Provider calls/tokens/spend 0/0/$0; caches unchanged; Codex/runtime costs UNMEASURED. No owner question or narrative restriction. Checkpoint SHA follows. RELEASE NOT AUTHORIZED.
+
+F04 resulting checkpoint: `247d34b162894c79eb4262229d7317347e64bafe`.
+
+## Frozen result
+
+Status: COMPLETE — delivery-helper slice; shared transport/publication dependencies held. discord/delivery.js removed and implementation relocated to frameworks/discord/delivery.js behind createInteractionTextDelivery({splitDiscordText}). One application commands binding supplies the same original splitter; no new module-level state, default provider, legacy facade, copied chunker or new integration pair. Inner call signature/options/errors/order unchanged.
+
+RF02-F05-1: exit 0, 6/6 pass, 69.4521 ms, 4 changed syntax checks, RF02 architecture exit 0. [F05_TERMINAL.json](../../RF02/F05_TERMINAL.json) records actual command/times/hashes. Fresh mock interactions cover initial reply/edit/follow-ups, original attachments, suppressed mentions, per-part source check, early and sibling failure, and uncertain error without retry. No live Discord or durable outbox proof claimed.
+
+Removed 2 live transition records; raw debt 2813, zero active/unowned, cycle211 unchanged. Hold chunking/privacy moves until RF06-F03/F04 provide publication and operations-owned consumer ports. Hold lifecycle until RF06-F04 preserves one shared WeakMap/observer binding; duplicating its state would change acknowledgement semantics. Current old files are original implementations, not added shims. No RF06 rewrite attempted.
+
+Revert F05 checkpoint before dependent code; no data rollback. Provider calls/tokens/spend 0/0/$0; no cache changes, Codex/runtime cost UNMEASURED. No new narrative restriction/owner question. Checkpoint SHA follows. RELEASE NOT AUTHORIZED.

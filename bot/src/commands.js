@@ -23,8 +23,8 @@ import { createConceptContextPackage } from "./concept-context.js";
 import {normalizeNarrativeMarkdown,narrativeRelativePath} from './frameworks/character/public.js';
 import {createNarrativeExportPackage} from './character-narrative.js';
 import { buildSessionRosterReport, chunkRosterReport } from "./roster.js";
-import { chunkDiscordLines } from "./discord/chunking.js";
-import { deliverInteractionText } from "./discord/delivery.js";
+import { chunkDiscordLines, splitDiscordText } from "./discord/chunking.js";
+import {createInteractionTextDelivery} from './frameworks/discord/public.js';
 import {deliverVerifiedAssembly,prepareAssemblyReconciliation,reconcileAssemblyNotSent} from './assembly-publications.js';
 import {normalizeGmHookImport} from './gm-hook-import.js';
 import {importSanctionedGmHooks,sanctionedWorldMutation} from './world-sanctioned-sources.js';
@@ -98,6 +98,8 @@ import {publishPvpNotices,publishCampaignPvpNotices,materializeNativeNotices,res
 import {reconcilePublication} from "./publication-outbox.js";
 import {finishRollOperation} from './roll-operation-publications.js';
 import {createRollSharePreview} from './roll-sharing.js';
+
+const deliverInteractionText=createInteractionTextDelivery({splitDiscordText});
 
 const interactionQueue=new KeyedSerialQueue();
 

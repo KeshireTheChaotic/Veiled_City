@@ -9,3 +9,4 @@ RF02-F03,bot/src/opening-diagnostics.js,bot/src/frameworks/operations/opening-di
 RF02-F04,bot/src/character-export.js#zipStore+CRC+headers,bot/src/kernel/zip-store.js,kernel,EXTRACTED_NO_DUPLICATE
 RF02-F04,bot/src/character-export.js#safeText+safeStem,bot/src/frameworks/character/file-names.js,character,EXTRACTED
 RF02-F04,bot/src/character-narrative.js#normalizeNarrativeMarkdown+narrativeRelativePath,bot/src/frameworks/character/narrative-text.js,character,EXTRACTED
+RF02-F05,bot/src/discord/delivery.js,bot/src/frameworks/discord/delivery.js,discord,MOVED_WITH_EXPLICIT_SPLIT_PORT

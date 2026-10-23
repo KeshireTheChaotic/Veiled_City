@@ -11,3 +11,5 @@ Fresh rf02-f04.test.mjs first run: exit 1, 3 pass/2 fail, 76.0251 ms; fixture in
 Removed 1 resolved live transition record; raw 2815, zero active/unowned; cycle211 unchanged. Holds: character-system native class/domain/trait/advancement rules require RF03-F01 authority interface; observation requires RF04-F03/F05 source/scene/native contracts; remaining DB/knowledge export workflows require RF06-F02/F03 mappings. No wholesale move or gameplay redesign authorized by purity alone.
 
 Rollback F04 checkpoint before dependents; no data/schema rollback. Provider calls/tokens/spend 0/0/$0; caches unchanged; Codex/runtime costs UNMEASURED. No owner question or narrative restriction. Checkpoint SHA follows. RELEASE NOT AUTHORIZED.
+
+Feature checkpoint: `247d34b162894c79eb4262229d7317347e64bafe`.

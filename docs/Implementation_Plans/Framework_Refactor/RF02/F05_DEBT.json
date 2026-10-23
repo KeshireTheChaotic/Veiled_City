@@ -1,0 +1,43 @@
+{
+  "removed_records": 2,
+  "removed": [
+    {
+      "id": "cb33ed4a998d060ee73c2ddb01cd3dac338ab5f50880d7e0e7344e40d25538f9",
+      "code": "LEGACY_MODULE_LOCATION",
+      "from": "bot/src/discord/delivery.js",
+      "owner": "discord",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF02-F05",
+      "expires_after": "RF02",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
+    },
+    {
+      "id": "11c95bbf4e562cca1d01d2b3271e97746dddf5f8e52081ca470ac37e9e26ab24",
+      "code": "IMPORTS_PRIVATE_API",
+      "from": "bot/src/commands.js",
+      "to": "bot/src/discord/delivery.js",
+      "kind": "static",
+      "specifier": "./discord/delivery.js",
+      "owner": "application",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF06-F04",
+      "expires_after": "RF06",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    }
+  ],
+  "summary": {
+    "sourceModules": 385,
+    "unowned": 0,
+    "importOccurrences": 2327,
+    "internalImportOccurrences": 2153,
+    "cycleComponents": 1,
+    "largestCycle": 211,
+    "rawViolationOccurrences": 2813,
+    "acceptedLegacyOccurrences": 2813,
+    "activeViolationGroups": 0,
+    "transitionErrors": 3,
+    "pass": false
+  }
+}

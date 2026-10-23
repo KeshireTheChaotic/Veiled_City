@@ -1,0 +1,35 @@
+{
+  "finished_utc": "2026-10-23T17:04:58.2430652Z",
+  "syntax_files": 4,
+  "frozen_files": [
+    {
+      "sha256": "7160237b839ed9c28ea713189381dc8642ca3869c271f5a96079945dd6f4b0e9",
+      "path": "bot/src/frameworks/discord/delivery.js"
+    },
+    {
+      "sha256": "49d4f9c393301b3b3d6b7e50a88ee704c7776169dc8122c76d7a63ef56db7b92",
+      "path": "bot/src/frameworks/discord/public.js"
+    },
+    {
+      "sha256": "7664b5be96ab375561874f2702628952e5907bb7c972ffe94a4904416f75d297",
+      "path": "bot/src/commands.js"
+    },
+    {
+      "sha256": "da3a1efbe26369bee84a022c30d1d40b7982d31f1e8331f8f9916a999f5270f0",
+      "path": "bot/tests/ai-gm-2026-10/rf02-f05.test.mjs"
+    }
+  ],
+  "started_utc": "2026-10-23T17:04:56.1565641Z",
+  "gate_exit": 0,
+  "base_sha": "247d34b162894c79eb4262229d7317347e64bafe",
+  "test_exit": 0,
+  "command": "node --test --test-concurrency=1 --test-reporter=tap bot/tests/ai-gm-2026-10/rf02-f05.test.mjs",
+  "run_id": "RF02-F05-1",
+  "summary": {
+    "tests": 6,
+    "pass": 6,
+    "fail": 0,
+    "duration_ms": 69.4521
+  },
+  "log_sha256": "fbc65812e05d7d53bd7772e34b86b3f0c9dae29d4967e0418eac659c8479d29e"
+}
