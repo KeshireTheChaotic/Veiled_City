@@ -7,7 +7,7 @@ import {deliverQueuedTurn} from './publishing.js';
 import {inspectSessionOpening} from './session-opening.js';
 import {sceneFictionHash as hash} from './scene-fiction-context.js';
 import {openingEntryDeliveryStatus,openingEntryAuthoringCode} from './opening-entry-evidence.js';
-import {openingErrorCode} from './opening-diagnostics.js';
+import {openingErrorCode} from './frameworks/operations/public.js';
 function save(db,guild,key,row,status,data){
   return db.transaction(()=>{
     const live=db.getCityRecord(guild,'opening_entry_delivery',key);

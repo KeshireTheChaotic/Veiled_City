@@ -1,0 +1,110 @@
+{
+  "removed_records": 7,
+  "removed": [
+    {
+      "id": "4b76bf72f4f0767bf947c0b9e5eea5c5807bbdfa517d52d032dd7de2abb1a7ec",
+      "code": "LEGACY_MODULE_LOCATION",
+      "from": "bot/src/logger.js",
+      "owner": "operations",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF02-F03",
+      "expires_after": "RF02",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
+    },
+    {
+      "id": "daf643b9bc163667054082d7d5d6f3f6524ddae6f95aff37be03cea38afc2702",
+      "code": "LEGACY_MODULE_LOCATION",
+      "from": "bot/src/opening-diagnostics.js",
+      "owner": "operations",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF02-F03",
+      "expires_after": "RF02",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
+    },
+    {
+      "id": "2f38a9c84c70c8fb33c44474aeca5269f8d68ef4dc1698fe74ca5e6d69c9b135",
+      "code": "IMPORTS_PRIVATE_API",
+      "from": "bot/src/index.js",
+      "to": "bot/src/logger.js",
+      "kind": "static",
+      "specifier": "./logger.js",
+      "owner": "bootstrap",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF06-F05",
+      "expires_after": "RF06",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    },
+    {
+      "id": "e602683830d11714da3dc32cf9959aca20657717ac40961abeaaef5887e79a48",
+      "code": "IMPORTS_PRIVATE_API",
+      "from": "bot/src/opening-cohort-runner.js",
+      "to": "bot/src/opening-diagnostics.js",
+      "kind": "static",
+      "specifier": "./opening-diagnostics.js",
+      "owner": "application",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F04",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    },
+    {
+      "id": "5cdd1bb3ed051fb64a7998bd5baf86858f7e7e967d846202af5f8e826316778b",
+      "code": "IMPORTS_PRIVATE_API",
+      "from": "bot/src/opening-entry.js",
+      "to": "bot/src/opening-diagnostics.js",
+      "kind": "static",
+      "specifier": "./opening-diagnostics.js",
+      "owner": "application",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F04",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    },
+    {
+      "id": "e448b85e7af7eb317d84f601e5b71972979c0f4c75007e5a549a1ea7e9fe0d38",
+      "code": "IMPORTS_PRIVATE_API",
+      "from": "bot/src/opening-flow.js",
+      "to": "bot/src/opening-diagnostics.js",
+      "kind": "static",
+      "specifier": "./opening-diagnostics.js",
+      "owner": "application",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F04",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    },
+    {
+      "id": "8c6cad4b4ffff01e0d1b22f0b8f2526c001208efe93f01a09617df809a962826",
+      "code": "IMPORTS_PRIVATE_API",
+      "from": "bot/src/session-opening-runner.js",
+      "to": "bot/src/opening-diagnostics.js",
+      "kind": "static",
+      "specifier": "./opening-diagnostics.js",
+      "owner": "application",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F04",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    }
+  ],
+  "summary": {
+    "sourceModules": 381,
+    "unowned": 0,
+    "importOccurrences": 2319,
+    "internalImportOccurrences": 2146,
+    "cycleComponents": 1,
+    "largestCycle": 211,
+    "rawViolationOccurrences": 2816,
+    "acceptedLegacyOccurrences": 2816,
+    "activeViolationGroups": 0,
+    "transitionErrors": 9,
+    "pass": false
+  }
+}

@@ -23,3 +23,15 @@ Status: COMPLETE — representative content migration; package workflow locally 
 RF02-F02-1: exit 0, 5/5 pass, 160.3629 ms, 6 changed syntax checks, RF02 gate exit 0. [F02_TERMINAL.json](../../RF02/F02_TERMINAL.json) records exact command/times/source and test hashes; disposable real files/subprocess cwd/env, no providers/DB. Removed 2 obsolete transition records; raw debt 2823, zero active violations/unowned, cycle unchanged211. Frozen RF01 baseline not changed.
 
 Hold: content-packages.js world source/city audit/seed-draft mutations and intent stateRevision need native owner interfaces, RF04-F01/F05 and RF05-F02; no fake adapter or approval policy relocation. Revert F02 checkpoint before dependent changes; no data rollback. Provider calls/tokens/spend 0/0/$0, caching behavior unchanged and exercised; Codex/performance cost UNMEASURED. Result SHA recorded next checkpoint. RELEASE NOT AUTHORIZED.
+
+F02 resulting checkpoint: `a21ff94a628214c01bdfa0284330b39bcd96505a`.
+
+## Frozen result
+
+Status: COMPLETE — selected logging/diagnostic migrations; instrumentation locally held. logger.js and opening-diagnostics.js moved unchanged into frameworks/operations, public exports used by bootstrap and four application coordinators. No constructor, counter, timestamp or source/code mapping change. No facade or new integration package.
+
+RF02-F03-1: exit 0, 4/4 pass, 74.8901 ms; 9 changed syntax checks and architecture gate exit 0. [F03_TERMINAL.json](../../RF02/F03_TERMINAL.json) holds exact command/times/source and test hashes. Controlled console verifies severity/argument identity; closed diagnostics verify fields and raw-message exclusion. 7 transition records removed, raw obligations 2816, zero unowned/active violations; cycle unchanged211.
+
+Hold: operational-metrics.js, turn-trace-context.js, turn-latency.js have shared metrics/AsyncLocalStorage identity and cross-owner narrative, publication, Discord, persistence and provider consumers. Moving those unchanged would introduce forbidden imports; RF05-F01/F03 and RF06-F02/F03/F04 must inject observer capabilities at real runtime roots before relocation. Other operations helpers retain their recorded dependencies; no duplicate singleton or hidden integration installed. Existing old support/test-selection code not executed or repurposed.
+
+Rollback feature checkpoint before dependents; no schema/data rollback. Provider calls/tokens/spend 0/0/$0; Codex/runtime cost UNMEASURED, cache behavior unchanged. No new narrative restriction or owner question. Result SHA follows checkpoint. RELEASE NOT AUTHORIZED.

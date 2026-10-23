@@ -4,7 +4,7 @@ import {certifyAssemblyPlan,assemblyPlanFreshness} from './assembly-context.js';
 import {assemblyHasHistory} from './assembly-planning.js';
 import {deliverVerifiedAssembly} from './assembly-publications.js';
 import {measureStage,operationalMetrics} from './operational-metrics.js';
-import {openingErrorCode,openingDiagnostic} from './opening-diagnostics.js';
+import {openingErrorCode,openingDiagnostic} from './frameworks/operations/public.js';
 const flights=new WeakMap();
 export function sessionOpeningStatus(job){
   const counts=new Map(),known=new Set(['VERIFIED_SCENE_DELIVERED','FALLBACK_DELIVERED','UNCERTAIN','FAILED','PENDING','BLOCKED','LEGACY_DELIVERED']);

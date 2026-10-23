@@ -4,3 +4,5 @@ RF02-F01,bot/src/errors.js,bot/src/frameworks/operations/error-policy.js,operati
 RF02-F01,bot/src/serial-queue.js,bot/src/kernel/serial-queue.js,kernel,MOVED
 RF02-F02,bot/src/content.js,bot/src/frameworks/content/content.js,content,MOVED_UNCHANGED
 RF02-F02,bot/src/config.js#CONTENT_ROOT,bot/src/frameworks/content/root.js,content,EXTRACTED_EXACT_RESOLVER
+RF02-F03,bot/src/logger.js,bot/src/frameworks/operations/logger.js,operations,MOVED_UNCHANGED
+RF02-F03,bot/src/opening-diagnostics.js,bot/src/frameworks/operations/opening-diagnostics.js,operations,MOVED_UNCHANGED

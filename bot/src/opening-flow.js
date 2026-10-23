@@ -2,7 +2,7 @@
 import {runSessionOpening} from './session-opening-runner.js';
 import {deliverOpeningEntry} from './opening-entry.js';
 import {runOpeningCohort} from './opening-cohort-runner.js';
-import {openingErrorCode} from './opening-diagnostics.js';
+import {openingErrorCode} from './frameworks/operations/public.js';
 export async function continueSessionOpening({db,guild,gm}){
   const session=db.getActiveSession(guild.id);if(!session||session.assembly_mode==='manual')return {opening:null,entries:[],cohort:null};
   const opening=await runSessionOpening({db,guild,gm});

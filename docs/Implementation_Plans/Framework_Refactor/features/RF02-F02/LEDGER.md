@@ -9,3 +9,5 @@ Status: COMPLETE — representative content migration; package workflow locally 
 RF02-F02-1: exit 0, 5/5 pass, 160.3629 ms, 6 changed syntax checks, RF02 gate exit 0. [F02_TERMINAL.json](../../RF02/F02_TERMINAL.json) records exact command/times/source and test hashes; disposable real files/subprocess cwd/env, no providers/DB. Removed 2 obsolete transition records; raw debt 2823, zero active violations/unowned, cycle unchanged211. Frozen RF01 baseline not changed.
 
 Hold: content-packages.js world source/city audit/seed-draft mutations and intent stateRevision need native owner interfaces, RF04-F01/F05 and RF05-F02; no fake adapter or approval policy relocation. Revert F02 checkpoint before dependent changes; no data rollback. Provider calls/tokens/spend 0/0/$0, caching behavior unchanged and exercised; Codex/performance cost UNMEASURED. Result SHA recorded next checkpoint. RELEASE NOT AUTHORIZED.
+
+Feature checkpoint: `a21ff94a628214c01bdfa0284330b39bcd96505a`.

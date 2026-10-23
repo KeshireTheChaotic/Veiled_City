@@ -7,7 +7,7 @@ import {queueTurnPublications} from './publication-outbox.js';
 import {deliverQueuedTurn} from './publishing.js';
 import {indexWorldEvent} from './city-calendar.js';
 import {measureStage,measureNative,operationalMetrics} from './operational-metrics.js';
-import {openingErrorCode} from './opening-diagnostics.js';
+import {openingErrorCode} from './frameworks/operations/public.js';
 
 const flights=new WeakMap();
 function publicationStatus(rows){

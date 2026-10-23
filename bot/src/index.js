@@ -25,7 +25,7 @@ import { KeyedSerialQueue } from "./kernel/serial-queue.js";
 import { queueDirectorAfterPartyTurn, blockedMutationRows, describeBlockedAction, lowConfidenceReviewItems, normalizeDirectorConfidence } from "./director.js";
 import { splitDiscordText } from "./discord/chunking.js";
 import { assertPlayerPrivateChannel } from "./discord/privacy.js";
-import { createLogger } from "./logger.js";
+import { createLogger } from "./frameworks/operations/public.js";
 import { runNpcDirector } from "./simulation.js";
 import { publishSimulationHooks } from "./publishing.js";
 import { serializeSpanLedger } from "./message-span-ledger.js";

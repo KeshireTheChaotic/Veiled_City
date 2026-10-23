@@ -1,0 +1,5 @@
+# RF02-F03 — Operations logger and opening diagnostics
+
+Migrate logger.js and opening-diagnostics.js unchanged, register operations public exports and update actual bootstrap/application consumers. Preserve severity filtering, console method/argument identity, closed diagnostic codes, elapsed rounding, retry hints and exclusion of raw provider/campaign content. No new diagnostic policy or narrative limitation. No old-path facades.
+
+Keep operational-metrics/turn-trace-context/turn-latency singleton instrumentation locally held: narrative/publication/Discord/persistence/provider callers need independently wired observer ports before relocation, owning RF05-F01/F03 and RF06-F02/F03/F04. No hidden observer singleton or fresh cross-framework bypass. Pure logger/diagnostics migration is independently safe. Fresh rf02-f03.test.mjs uses controlled console and new data; blocking batch, syntax and RF02 gate. Revert feature checkpoint before later dependents; no storage rollback. RELEASE NOT AUTHORIZED.
