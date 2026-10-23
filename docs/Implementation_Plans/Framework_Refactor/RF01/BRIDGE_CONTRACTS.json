@@ -563,14 +563,12 @@
         "daggerheart",
         "discord"
       ],
-      "status": "PROPOSED_NO_API",
+      "status": "ADOPTED",
       "directions": [
         {
-          "from": "discord",
-          "to": "daggerheart",
-          "import_occurrences": 16,
-          "injected_calls": 0,
-          "contract": "Observed dependency only; exact port remains with accountable migration"
+          "from": "daggerheart",
+          "to": "discord",
+          "contract": "Resolved combatant state to command text, preserving remaining HP and condition labels; GM command authorization remains at existing caller."
         }
       ],
       "source_evidence": [
@@ -581,11 +579,15 @@
           "type": "import"
         }
       ],
-      "validation": "Retain source and audience authority; design exact port in owning migration; observed imports do not prove runtime traffic.",
-      "lifecycle": "Observed proposal; no package/API/consumer claimed.",
-      "adoption_feature": "RF03",
-      "consumers": [],
-      "tests": [],
+      "validation": "Exact native resolved-combatant DTO fields mapped to existing Discord formatter; no new native decision, outcome or delivery grant.",
+      "lifecycle": "Adopted by existing command render paths. Other native/Discord interactions remain legacy and unqualified.",
+      "adoption_feature": "RF03-F05",
+      "consumers": [
+        "bot/src/commands.js"
+      ],
+      "tests": [
+        "bot/tests/ai-gm-2026-10/rf03-f05.test.mjs"
+      ],
       "observed_directions": [
         {
           "from": "discord",
@@ -599,7 +601,8 @@
         "pair": "daggerheart--discord",
         "graph_sha256": "1caa7f33db8af9cbe17685493f4f23e46deb1c80ac2cd01c34ef3f8f7517bfe2",
         "occurrences": 16
-      }
+      },
+      "public_api": "bot/src/framework-to-framework/daggerheart--discord/public.js"
     },
     {
       "pair": "daggerheart--intent",

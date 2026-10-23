@@ -1,0 +1,3 @@
+# RF03-F05 — Observed mechanical integration contracts
+
+Base599f2eb. Adopt the actual command combatant projection in daggerheart--discord: map resolved native combat state to the existing Discord formatter. Command orchestration imports the pair public API; neither framework imports the pair or the other framework. Preserve exact output/fields, no new rejection or adjudication at renderer. Register real consumer and new focused tests. Intent/native and native/narrative receipt paths remain explicit separate holds until source producer and effect commit ports exist; do not add unused speculative wrappers.

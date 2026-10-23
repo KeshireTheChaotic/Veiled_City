@@ -1,0 +1,28 @@
+{
+  "base_sha": "599f2ebfe53a8934eb3167fe082fec4ad77f4c9d",
+  "started": "2026-10-23T18:05:40.824Z",
+  "finished": "2026-10-23T18:05:42.079Z",
+  "syntax": 3,
+  "tests": {
+    "exit": 0,
+    "summary": "# tests 2\n# pass 2\n# fail 0\n# skipped 0\n# duration_ms 415.3442"
+  },
+  "gate": {
+    "exit": 0,
+    "summary": ""
+  },
+  "files": [
+    {
+      "path": "bot/src/commands.js",
+      "sha256": "71d01f69d36ce7a8389ffa6e589af1e2320cd136c8781a04d409f6929a2e49c6"
+    },
+    {
+      "path": "bot/src/framework-to-framework/daggerheart--discord/public.js",
+      "sha256": "7c34b45caf0784952aa450def360c3e9c5c7f6d5dd80bfd2da8c929f98579b3d"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf03-f05.test.mjs",
+      "sha256": "f6131bcbc48cbef792095b5c457a0e5e32adfca80a27f02b844e2a3de224a100"
+    }
+  ]
+}

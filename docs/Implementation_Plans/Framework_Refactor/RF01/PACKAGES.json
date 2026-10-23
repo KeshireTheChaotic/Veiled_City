@@ -49,6 +49,9 @@
     ],
     "daggerheart": [
       "bot/src/frameworks/daggerheart/public.js"
+    ],
+    "daggerheart--discord": [
+      "bot/src/framework-to-framework/daggerheart--discord/public.js"
     ]
   },
   "externalCapabilityOwners": {

@@ -1,4 +1,4 @@
-import {combatantLine} from './frameworks/discord/public.js';
+import {nativeCombatantLine as combatantLine} from './framework-to-framework/daggerheart--discord/public.js';
 /** Discord command schema and interaction dispatcher. Authorization and privacy checks belong at command boundaries; persistence belongs in VeiledDB. */
 import {
   PermissionFlagsBits,
