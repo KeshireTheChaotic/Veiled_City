@@ -1,0 +1,7 @@
+{
+  "run_id": "rf00-f06-20261023-01",
+  "start_utc": "2026-10-23T12:59:19.0422964Z",
+  "end_utc": "2026-10-23T12:59:19.2198332Z",
+  "exit_code": 0,
+  "command": "node --test --test-concurrency=1 --test-reporter=tap tests/ai-gm-2026-10/rf00-f06.test.mjs"
+}

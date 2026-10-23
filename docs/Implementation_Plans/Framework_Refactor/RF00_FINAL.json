@@ -1,0 +1,97 @@
+{
+  "run_id": "rf00-f06-20261023-01",
+  "branch": "codex/clean-ai-gm-2026-10",
+  "base_sha": "f43d002693cb4ee38038b5dbb2c1049de95b3ffd",
+  "execution": {
+    "run_id": "rf00-f06-20261023-01",
+    "start_utc": "2026-10-23T12:59:19.0422964Z",
+    "end_utc": "2026-10-23T12:59:19.2198332Z",
+    "exit_code": 0,
+    "command": "node --test --test-concurrency=1 --test-reporter=tap tests/ai-gm-2026-10/rf00-f06.test.mjs"
+  },
+  "terminal": {
+    "tests": 8,
+    "pass": 8,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0,
+    "duration_ms": 117.9107
+  },
+  "syntax_checks": 3,
+  "test_names": [
+    "lexical imports ignore comment, regexp and literal prose; template expressions remain visible",
+    "re-export aliases and automatic-semicolon boundaries do not invent dependencies",
+    "relative and package import aliases resolve deterministically, computed or missing imports remain explicit",
+    "strongly connected components distinguish cycles, self-cycles and a one-way leaf",
+    "ownership rejects omissions, duplicates, stale paths and relocation collisions",
+    "graph preserves cross-owner and bridge third-owner obligations plus injected storage without evaluating modules",
+    "CSV escapes quoted paths and hashes are deterministic without modifying input",
+    "inventory writes ownership, graph, bridge and complete repository metadata using a disposable source-only fixture"
+  ],
+  "source_and_artifact_sha256": {
+    "bot/tooling/architecture/source-graph.mjs": "8bc9ab26b2179235c4577ba5bf5196dcec3d16f8cdbd5415876e84bba9116968",
+    "bot/tooling/architecture/inventory.mjs": "ee912d561a9898cd24164930a79649a3c7757ad374a5c2d5e1682666331615fc",
+    "bot/tests/ai-gm-2026-10/rf00-f06.test.mjs": "7837b9ccd3e33940193060636fe99c3cd5b33687d735ff398f838ec25422c088",
+    "docs/Implementation_Plans/Framework_Refactor/OWNERSHIP_DECISIONS.json": "d3a6b2ae485805843720b314bd7a4c89d039b5f40c42dc0b36805b5c9d8cfa16",
+    "docs/Implementation_Plans/Framework_Refactor/FRAMEWORK_OWNERSHIP.csv": "65300d5037cdfc7c10efcbe2251ee1f6fa74d9ada2a01fe17df0a5649d3f4529",
+    "docs/Implementation_Plans/Framework_Refactor/SOURCE_RELOCATION_CROSSWALK.csv": "6a5e1fd502d44485a5ef41fba91f0df843fbf21d3123540fa612e51406a07dc7",
+    "docs/Implementation_Plans/Framework_Refactor/TRACKED_APPLICATION_INVENTORY.csv": "9c4737f789a3f40fc0a2ef40422f2ce2faadfe04379c53c3a1493301efdf403d",
+    "docs/Implementation_Plans/Framework_Refactor/REPOSITORY_INVENTORY.csv": "5749c68e8e5a2e0a542614d43a5cd0ecb99aefaa7a89b32c5ad7b4918a81e362",
+    "docs/Implementation_Plans/Framework_Refactor/DEPENDENCY_GRAPH.json": "1caa7f33db8af9cbe17685493f4f23e46deb1c80ac2cd01c34ef3f8f7517bfe2",
+    "docs/Implementation_Plans/Framework_Refactor/PROJECTED_IMPORT_OBLIGATIONS.csv": "7767b2d2f80899d1303310871d2e6112a18d4d4cce2f2415b9553efff0d49578",
+    "docs/Implementation_Plans/Framework_Refactor/BRIDGE_REGISTRY.md": "57c76f51cca26c35467d3aa1380c2e619a351b2cbbd75128dc811d165dc02d1b",
+    "docs/Implementation_Plans/Framework_Refactor/DEPENDENCY_REPORT.md": "16ea7ae634072fe3444240132de5e122dfd18460d2deeb36f3ded8245476fbb0",
+    "docs/Implementation_Plans/Framework_Refactor/ARCHITECTURE_RULES.md": "a0c5956f8ca9373c896ff963e57de75ee9cfc2cec2b807f4fbe06c98c039d209",
+    "docs/Implementation_Plans/Framework_Refactor/AUTHORITY_TRACE.md": "720c6ea97fbbe44cc3d48c2554b25f3ef42363b9cab762333fbae2dbe3999dfd",
+    "docs/Implementation_Plans/Framework_Refactor/FUNCTION_OWNERSHIP.md": "a681611439abfe310a1b9799d66c3012707f9172670a2c83f42c02d33be6abde",
+    "docs/Implementation_Plans/Framework_Refactor/PHASE_DEPENDENCIES.md": "a6b4cd00f5f9187ee57833e26582ba862d2ba4dbe2ca7827e3da7ab1980bc349"
+  },
+  "worktree_fingerprint": "62f92a3395a6622494b3aa74946f4f81069ea36be45efe01fc46bcf848790d79",
+  "summary": {
+    "source_paths": 359,
+    "runtime_source_paths": 355,
+    "source_modules": 359,
+    "unowned": 0,
+    "imports": 2283,
+    "internal_imports": 2121,
+    "projected_import_obligations": 1374,
+    "missing_imports": 0,
+    "computed_imports": 0,
+    "unresolved_aliases": 0,
+    "cycle_components": 1,
+    "cyclic_modules": 211,
+    "proposed_pairs": 63
+  },
+  "tracked_repository_files": 1546,
+  "tracked_application_files": 763,
+  "schema": {
+    "version": 460,
+    "sha256": "d3a69c4c55a876b087556ab7f291265a684c4287233b1651b1692be34781e374",
+    "tables": 55
+  },
+  "catalog": {
+    "sha256": "58baf77cc9cb2b5f38e1714422c64131f2f533b4bf09254b8f8729ccd64d1e16",
+    "statuses": {
+      "supported": 78,
+      "review_only": 75
+    }
+  },
+  "lexical_warnings": [],
+  "runtime_diff": [],
+  "runtime_files_moved": 0,
+  "gameplay_behavior_changed": false,
+  "provider_requests": 0,
+  "provider_tokens": 0,
+  "provider_spend_usd": 0,
+  "codex_usage": "UNMEASURED",
+  "performance_savings": "UNMEASURED",
+  "release": "NOT AUTHORIZED",
+  "limits": [
+    "Audit tooling only; gameplay/native mechanics/privacy/recovery not requalified by these tests.",
+    "Lexer inventory, not full AST or resolved runtime call graph.",
+    "Historical tests/suite scripts were metadata-only, never imported or executed.",
+    "1374 projected obligations and the 211-module SCC remain future migration work.",
+    "No live Discord/provider/production database or CI/deployment access."
+  ]
+}

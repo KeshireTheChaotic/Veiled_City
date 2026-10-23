@@ -1,0 +1,132 @@
+{
+  "version": 1,
+  "meaning": "Exclusive accountable owner at RF00; relocation is blocked until recorded dependency obligations and mixed responsibilities are resolved. Filenames alone do not certify isolation.",
+  "groups": [
+    {
+      "owner": "kernel",
+      "phase": "RF02",
+      "rationale": "Domain-neutral exception and serialized work primitives; no campaign policy belongs here.",
+      "files": "serial-queue.js"
+    },
+    {
+      "owner": "bootstrap",
+      "phase": "RF06",
+      "rationale": "Stable executable/configuration entrypoints; retain executable paths and extract startup wiring before moving implementation.",
+      "files": "index.js register-commands.js config.js"
+    },
+    {
+      "owner": "ai-provider",
+      "phase": "RF05",
+      "rationale": "Request budgeting and provider generation feedback; domain context selection must be extracted from transport policies.",
+      "files": "prompt-budget.js generation-feedback.js"
+    },
+    {
+      "owner": "character",
+      "phase": "RF02",
+      "rationale": "Character identity, advancement, presentation and package boundaries; mechanics and storage collaborators require ports.",
+      "files": "character-system.js character-export.js character-observation.js character-narrative.js"
+    },
+    {
+      "owner": "content",
+      "phase": "RF02",
+      "rationale": "Static content indexing, package discovery and catalog loading; preserve import.meta.url and content-root resolution.",
+      "files": "content.js content-packages.js"
+    },
+    {
+      "owner": "discord",
+      "phase": "RF02",
+      "rationale": "Command/interaction/transport representation; domain policy in command definitions or menus must be extracted before isolation.",
+      "files": "command-definitions.js command-schema.js discord/chunking.js discord/delivery.js discord/interaction-lifecycle.js discord/privacy.js pvp-menu.js roll-menu.js"
+    },
+    {
+      "owner": "operations",
+      "phase": "RF02",
+      "rationale": "Diagnostics, observability and offline qualification support; reporting must retain private-data redaction.",
+      "files": "ai-gm-test-selection.js ai-review.js diagnostics/session5-reader.js evaluation-harness.js failure-trace.js logger.js opening-diagnostics.js operational-metrics.js operations/diagnostics.js operations/health.js operations/overview.js routing-diagnostics.js turn-latency.js turn-trace-context.js typed-intent-qualification.js tracked-turn.js errors.js"
+    },
+    {
+      "owner": "persistence",
+      "phase": "RF06",
+      "rationale": "SQLite connection/repository facade; current domain calls are explicit decomposition obligations, not permission to relocate them into persistence.",
+      "files": "db.js"
+    },
+    {
+      "owner": "intent",
+      "phase": "RF05",
+      "rationale": "Authenticated utterance interpretation, source spans, intent dependencies and arbitration proposals; proposal validation is distinct from native commitment.",
+      "files": "action-dependency.js ai-intent-contracts.js ai-intents.js authored-candidates.js authored-turn-envelope.js decision-advisory.js engagement-shadow.js gameplay-intake.js gm-arbitration-contract.js gm-arbitration-output.js gm-unified-arbitration.js message-span-ledger.js movement-language.js player-language.js scene-intent-board.js semantic-engagement.js source-communication.js typed-intents.js"
+    },
+    {
+      "owner": "knowledge",
+      "phase": "RF04",
+      "rationale": "Source identity, evidence, canon, subjective/scoped memory and disclosure; no audience or belief becomes native effect authority.",
+      "files": "authority-projection.js context-memory.js disclosure-authority.js entity-memory.js epistemic.js evidence-custody.js historical-archive.js history-reconciliation.js legacy-authority.js memory-clusters.js memory-lifecycle.js narrative-memory.js narrative-records.js owned-community.js personal-continuity.js presentation-evidence.js provenance.js public-referents.js relationship-state.js scoped-memory.js scoped-query.js semantic-candidate-source.js"
+    },
+    {
+      "owner": "npc",
+      "phase": "RF04",
+      "rationale": "NPC cognition, conversations, motivation and strategy; storage/world/narrative translation requires separate pair contracts.",
+      "files": "npc-cognition.js npc-cognition-projection.js npc-conversations.js simulation-motivation.js simulation-strategy.js"
+    },
+    {
+      "owner": "world",
+      "phase": "RF04",
+      "rationale": "World/civic state and autonomous environment/event identity; native mechanical authorization remains Daggerheart-owned.",
+      "files": "autonomous-world.js city-calendar.js city-civic.js city-consequences.js city-constraints.js city-core.js city-depth.js city-groups.js director.js environment-observation.js location-language.js long-projects.js native-environment-instance.js native-environment-scene.js native-established-fact.js native-world-operations.js seed-data.js seed-drafts.js simulation-schema.js simulation.js supply-dependencies.js world-authoring.js world-authorship.js world-background-identities.js world-encounter-beats.js world-identity-persistence.js world-information-transfer.js world-observation.js world-private-seeds.js world-resolution.js world-sanctioned-sources.js world-simulation-receipts.js"
+    },
+    {
+      "owner": "session",
+      "phase": "RF04",
+      "rationale": "Attendance, scene presence, openings, response windows and spotlight lifecycle; narration/publication/storage calls must be supplied through contracts.",
+      "files": "action-continuation.js assembly-context.js assembly-evidence.js assembly-readiness.js assembly-state.js conversation-principal.js dialogue-continuity.js negotiations.js opening-cohort-state.js opening-entry-context.js opening-entry-evidence.js owner-action-terminal.js roster.js scene-action-window.js scene-continuity.js scene-entry-native.js scene-entry.js scene-setup.js session-briefs.js session-opening-attendance.js session-opening.js story-continuity.js window-coordinator.js"
+    },
+    {
+      "owner": "narrative",
+      "phase": "RF05",
+      "rationale": "Audience-scoped fiction authoring, portrayal, narrative validation and provisional fiction; all native effects and external source translation remain separately owned.",
+      "files": "audience-first-capability.js audience-native-v9.js concept-context.js delegation-catalog.js expansion-contracts.js fresh-npc-authoring.js fresh-scene-authoring.js gm-fiction-composition.js gm-fiction-schema.js gm-hook-import.js gm-world-narrative.js gm-world-scope.js narrative-acts-v9.js narrative-artifacts.js narrative-authority-context.js narrative-authority.js narrative-clauses-v9.js narrative-completeness.js narrative-context.js narrative-delegation.js narrative-director-source.js narrative-integrity.js narrative-opportunity-guidance.js narrative-opportunity-policy.js narrative-pvp.js narrative-relevance.js narrative-salience.js narrative-speakers.js narrative-tasks-v9.js narrative-tasks.js narrative-writer-v9.js nonmaterial-grammar.js portrayal.js scene-description.js scene-fiction-authority.js scene-fiction-context.js scene-observation-route.js"
+    },
+    {
+      "owner": "publication",
+      "phase": "RF06",
+      "rationale": "Authorized output envelopes, durable delivery identities, outbox state and replay; domain validation and Discord sending require exact pair adapters.",
+      "files": "discovery-delivery.js handout.js lifecycle-output.js native-hook-output.js native-outcome-output.js native-publications.js publication-outbox.js publishing.js pvp-output.js roll-operation-publications.js"
+    },
+    {
+      "owner": "daggerheart",
+      "phase": "RF03",
+      "rationale": "Native mechanics, resource/consent checks, rule-qualified features and immutable result evidence; presentation and world changes require bridges rather than direct imports.",
+      "files": "action-consent.js application-authority.js authority-policy.js combat.js consent-native.js consequence-reconciliation.js dice.js encounter.js fear-reservations.js gm-action-capability.js gm-action-review.js gm-action-ruling.js gm-mechanical-v9.js gm-native-rolls.js gm-ruling-schema.js mechanical-boundary-v9.js mechanical-native-v9.js native-actor-control.js native-adversary-always-a-price.js native-adversary-bad-future.js native-adversary-blank-spot.js native-adversary-break-the-hold.js native-adversary-call-security.js native-adversary-conflicting-duty.js native-adversary-context.js native-adversary-drag-down.js native-adversary-exit-clause.js native-adversary-flow-around-it.js native-adversary-i-saw-that.js native-adversary-loophole.js native-adversary-mark-the-variable.js native-adversary-peripheral.js native-adversary-pin-to-the-deal.js native-adversary-predatory-grace.js native-adversary-professional-entry.js native-adversary-readout.js native-adversary-reputation-attack.js native-adversary-ride-the-current.js native-adversary-root-snare.js native-adversary-route-around.js native-adversary-self-fulfilling-event.js native-adversary-snatch-a-link.js native-adversary-steal-the-focus.js native-adversary-sympathetic-relay.js native-adversary-terms-first.js native-adversary-urban-cover.js native-condition-recovery.js native-defense-aura.js native-encounter-activation.js native-encounter-relations.js native-environment-access.js native-environment-arrivals.js native-environment-auction.js native-environment-audience.js native-environment-capabilities.js native-environment-chain-of-title.js native-environment-consensus-engine.js native-environment-containment-shutters.js native-environment-contaminated-scene.js native-environment-context.js native-environment-countdown.js native-environment-dispatch.js native-environment-door-chain.js native-environment-everyone-is-watching.js native-environment-express-through-memory.js native-environment-guest-right.js native-environment-imaging.js native-environment-last-train-rules.js native-environment-market-neutrality.js native-environment-metaphor-physics.js native-environment-model-room.js native-environment-no-consensus.js native-environment-no-ordinary-signal.js native-environment-noise.js native-environment-output.js native-environment-price-offer.js native-environment-private-room.js native-environment-procedure.js native-environment-proposals.js native-environment-recording.js native-environment-recovery.js native-environment-sealed-docket.js native-environment-thin-walls.js native-environment-third-rail-spirit.js native-environment-three-vectors.js native-environment-trace.js native-environment-witnesses.js native-environment-wrong-offering.js native-equipped-attacks.js native-evidence-analysis.js native-experience-eligibility.js native-feature-catalog.js native-feature-damage.js native-feature-definitions.json native-feature-effects.js native-feature-hit.js native-feature-passives.js native-feature-windows.js native-group-features.js native-house-errata.js native-house-errata.json native-notice.js native-professional-entry.js native-roll-modifiers.js native-roll-participation.js native-stress-passives.js native-unarmed-attacks.js native-unarmed-traits.js ordinary-effect-proof.js ordinary-effect-schema.js ordinary-effects.js outcome-preview.js owner-consent.js pc-death.js pc-effects.js pc-incoming.js pc-native-eligibility.js pre-roll-fear-notice.js pre-roll-fear-recovery.js pre-roll-fear.js pvp-attacks.js pvp-authority.js pvp-authorship.js pvp-brawl.js pvp-campaign-execution.js pvp-campaign-policy.js pvp-damage.js pvp-fear-gate.js pvp-fear-moves.js pvp-profiles.js pvp-reactions.js pvp-rounds.js pvp-terminal.js roll-collaboration.js roll-declaration-review.js roll-options.js roll-requests.js roll-sharing.js rule-reference-catalog.js rules-arbitration.js rules-srd.js typed-mechanics.js typed-roll-outcomes.js typed-roll-proof.js"
+    },
+    {
+      "owner": "narrative--world",
+      "phase": "RF04",
+      "rationale": "Observed World Director evidence to narrative translation; knowledge/session/mechanical collaborators must be extracted into their own pairs or workflows.",
+      "files": "world-narrative-bridge.js"
+    },
+    {
+      "owner": "session--world",
+      "phase": "RF04",
+      "rationale": "Opening opportunity translation between current session context and source-scoped world evidence.",
+      "files": "opening-world-bridge.js"
+    },
+    {
+      "owner": "application",
+      "phase": "RF06",
+      "rationale": "Current multi-framework coordinators/facades: decompose domain implementations into owners and pair adapters before retaining thin use-case workflows.",
+      "files": "commands.js city-commands.js context-planner.js continuity-routing.js gm.js opening-flow.js opening-cohort-runner.js opening-entry.js assembly-delivery.js assembly-planning.js assembly-publications.js pvp-safety-commands.js seed-commands.js session-opening-recovery.js session-opening-runner.js simulation-commands.js state.js story-commands.js turn-attempts.js turn-orchestration.js turn-pipeline.js turn-recovery.js voice.js"
+    },
+    {
+      "owner": "discord--persistence",
+      "phase": "RF06",
+      "rationale": "Discord interaction receipt capture and replay combines transport identity with SQLite operation/mutation receipts; injected dependencies are integration code even without imports.",
+      "files": "idempotency.js"
+    }
+  ],
+  "overrides": {
+    "bot/src/errors.js": {
+      "action": "DECOMPOSE_BEFORE_MOVE",
+      "reason": "Only the base error types are neutral kernel candidates. LEGACY_EXPECTED and isExpectedError encode application message policy and remain operations-owned."
+    }
+  }
+}
