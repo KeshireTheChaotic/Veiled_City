@@ -1,0 +1,9 @@
+{
+  "feature": "RF03-F03-C14",
+  "reason": "pvp-attacks.js changed to defer Daggerheart adapter construction after observed cold-import temporal-dead-zone failure; the existing provider source assertion was updated to match the new lazy wiring.",
+  "test": {"path": "bot/tests/ai-gm-2026-10/rf03-f03-c14.test.mjs", "command": "node --test bot/tests/ai-gm-2026-10/rf03-f03-c14.test.mjs", "exit": 0, "passed": 4, "failed": 0, "skipped": 0, "duration_ms": 64.9821, "log": "f03-c14-after-c13.log", "log_sha256": "8A35CB0077DB23892176653D4500ECF12E78AD6737F2D66647A633F97F00395D"},
+  "updated_source_sha256": {"bot/src/pvp-attacks.js": "7D9ECCC1D99A82F5B61768FFA8B6926CB2C686E1D3898F938FAA63D07851854F", "bot/tests/ai-gm-2026-10/rf03-f03-c14.test.mjs": "91E5C0754AA0ABFA58B0BF46C5F6D48416B6C4C24F6E8C74D1188C3FB772539E"},
+  "syntax_exit": 0,
+  "provider_cost_usd": 0,
+  "release_authorized": false
+}

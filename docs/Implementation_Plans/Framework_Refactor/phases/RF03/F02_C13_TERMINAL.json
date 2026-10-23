@@ -1,0 +1,19 @@
+{
+  "feature": "RF03-F02-C13",
+  "status": "COLD_IMPORT_PATH_QUALIFIED",
+  "branch": "codex/clean-ai-gm-2026-10",
+  "base_sha": "dff49e4c2bde59c5f41ebcaca8417dcf7ede4854",
+  "test": {"path": "bot/tests/ai-gm-2026-10/rf03-f02-c13.test.mjs", "command": "node --test bot/tests/ai-gm-2026-10/rf03-f02-c13.test.mjs", "exit": 0, "passed": 1, "failed": 0, "skipped": 0, "duration_ms": 352.0213, "log": "f02-c13-final.log", "log_sha256": "9F69F69AB48267E7A7CA7BB515A8B06E183D57E874E6D02D14871BA3CF211C24"},
+  "observed_failures": [
+    {"log": "f02-c13.log", "exit": 1, "reason": "After deferring pvp attack terms construction, the same cold import exposed eager feature-reaction stakes construction before isGroupFeature initialization.", "log_sha256": "E8EC7776913ACD83EA5C03D4AC35E7F703E00E1BE3A35521C8E2562A85E3B130"},
+    {"prior_feature_evidence": "F02_C04_TERMINAL.json", "reason": "Earlier provider import attempts exposed RANGE_BANDS temporal-dead-zone failure."}
+  ],
+  "syntax": {"exit": 0, "changed_js_mjs_files": 4},
+  "architecture_ratchet": {"command": "node bot/tooling/architecture/check-boundaries.mjs --ratchet --phase RF03", "exit": 0, "source_modules": 401, "unowned": 0, "import_occurrences": 2335, "largest_cycle": 182, "raw_violation_occurrences": 2600, "accepted_legacy_occurrences": 2600, "active_violation_groups": 0, "transition_errors": 0, "log": "f02-c13-gate.log", "log_sha256": "DF7471DA63798BC5891A38D3D7778796C05AE6A9F410D7D40AADA9D8C71E525D"},
+  "source_sha256": {"bot/src/pvp-attacks.js": "7D9ECCC1D99A82F5B61768FFA8B6926CB2C686E1D3898F938FAA63D07851854F", "bot/src/native-feature-effects.js": "F986121E32C806827B81263DAFC7D2B3346F577E77D04A065B246F565E584442", "bot/tests/ai-gm-2026-10/rf03-f02-c13.test.mjs": "A32D270122F44FF7A23CD9910F3395DCF1E461BFE86A92372FEC4884065D2887"},
+  "provider_calls": 0,
+  "provider_cost_usd": 0,
+  "codex_usage": "UNMEASURED",
+  "limitations": ["The actual feature-window provider cold-import and native stakes invocation passed. This does not certify full application startup, native attack execution, database workflows or live behavior."],
+  "release_authorized": false
+}

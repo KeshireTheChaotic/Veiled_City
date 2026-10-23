@@ -1,0 +1,5 @@
+# RF03-F02 C13 ledger
+
+Status: QUALIFIED for the actual feature-window provider cold-import path; full application startup remains unqualified.
+
+Observed triggers: the actual provider import exposed two eager-construction temporal-dead-zone failures (`RANGE_BANDS` in `pvp-attacks.js`, then `isGroupFeature` in `native-feature-effects.js`). Adapter construction is now deferred until first use. The new cold-import test imports `native-feature-windows.js`, calls its provider-backed feature-cost policy, and invokes the feature-reaction stakes adapter. It passed 1/1, exit 0, 352.0213 ms. A prior attempt after only the first repair failed before assertions and is retained in `f02-c13.log`. Four changed JS/MJS syntax checks passed. RF03 ratchet passed:401 modules, zero unowned, 2,335 imports, largest cycle 182, 2,600 accepted older occurrences, zero active groups/errors. Full evidence and source hashes: `phases/RF03/F02_C13_TERMINAL.json`. This qualifies only the cold-import path and exercised adapters; full application startup, actual attack execution and database workflows remain unqualified. No provider calls or spend; release NOT AUTHORIZED.

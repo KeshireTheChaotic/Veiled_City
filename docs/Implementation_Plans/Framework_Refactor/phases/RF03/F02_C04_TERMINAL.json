@@ -12,6 +12,7 @@
   "provider_calls": 0,
   "provider_cost_usd": 0,
   "codex_usage": "UNMEASURED",
-  "limitation": "Full cold import of native-feature-windows.js remains unqualified due the observed pvp-attacks.js RANGE_BANDS cycle.",
+  "provider_cold_import_requalification": {"feature": "RF03-F02-C13", "test": "bot/tests/ai-gm-2026-10/rf03-f02-c13.test.mjs", "result": "passed; actual native-feature-windows.js import plus provider feature-cost call", "evidence": "F02_C13_TERMINAL.json"},
+  "limitation": "The exact native-feature-windows provider cold-import path is now verified. Full application startup and database-backed workflows remain unqualified.",
   "release_authorized": false
 }

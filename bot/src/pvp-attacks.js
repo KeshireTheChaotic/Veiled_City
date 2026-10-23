@@ -26,7 +26,13 @@ export const campaignAttackActorHash=pc=>hash({status:pc.status,traits:pc.data.t
   inventory:pc.data.inventory,conditions:pc.data.conditions});
 function fail(message){throw Object.assign(new Error(message),{code:"NARRATIVE_PVP",expected:true});}
 function closed(input,keys){if(!input||Array.isArray(input)||Object.keys(input).length!==keys.length||keys.some(k=>!(k in input)))fail("Closed native PC attack fields required.");}
-const {calculatePvpAttackTerms}=createPvpAttackTerms({fail,rangeBands:RANGE_BANDS});
+let nativeAttackTerms;
+function calculatePvpAttackTerms(...args){
+  // The scene and combat ownership graph is cyclic; defer this pure adapter's
+  // construction until after module initialization so RANGE_BANDS is initialized.
+  nativeAttackTerms??=createPvpAttackTerms({fail,rangeBands:RANGE_BANDS});
+  return nativeAttackTerms(...args);
+}
 function mechanics(db,guild,input,{campaign=false,nativePreparation=null}={}){
   const ctx=validateDamageAttackIntent(db,guild,input.attack),{row,contract}=ctx;
   const pc=db.getCharacter(row.data.actor),target=db.getCharacter(row.data.target),ruling=db.getRulesRuling(guild,input.ruling);

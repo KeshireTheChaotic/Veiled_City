@@ -17,3 +17,7 @@ This qualifies the calculated attack terms only. Current presence/range evidence
 ## Rollback
 
 Revert native terms, provider delegation, test and ledger/evidence together. No state migration.
+
+## Requalification after C13 import-cycle repair
+
+`pvp-attacks.js` now defers construction of its native attack-terms adapter until first use to avoid an import-time `RANGE_BANDS` temporal-dead-zone failure. The provider wiring assertion was updated accordingly. The C14 fresh test was rerun because its provider changed: 4/4 passed, exit 0, 64.9821 ms. Updated provider and test hashes and the exact result are recorded in `phases/RF03/F03_C14_REQUALIFICATION_C13.json`. The test qualifies unchanged native term calculations and the lazy wiring shape; a full database-backed PvP attack remains unqualified.

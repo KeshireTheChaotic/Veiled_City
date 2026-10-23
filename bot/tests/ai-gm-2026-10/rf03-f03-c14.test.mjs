@@ -40,6 +40,6 @@ test('unavailable attacks, duplicate or stale weapons, range and malformed stats
 
 test('existing PvP attack provider supplies source range bands to native terms logic',()=>{
   const provider=fs.readFileSync(new URL('../../src/pvp-attacks.js',import.meta.url),'utf8');
-  assert.match(provider,/createPvpAttackTerms\(\{fail,rangeBands:RANGE_BANDS\}\)/);
+  assert.match(provider,/nativeAttackTerms\?\?=createPvpAttackTerms\(\{fail,rangeBands:RANGE_BANDS\}\)/);
   assert.match(provider,/calculatePvpAttackTerms\(input,pc,target,actualRange\)/);
 });

@@ -15,7 +15,11 @@ import {planFeedbackReactionOutcome} from './frameworks/daggerheart/feature-reac
 
 const FEEDBACK='adversary:static-wraith:feedback';
 const effectKey=decision=>`feature-effect:${hash(decision)}`;
-export const featureReactionStakes=createFeatureReactionStakes({isGroupFeature,groupFeatureStakes});
+let nativeFeatureStakes;
+export function featureReactionStakes(feature){
+  nativeFeatureStakes??=createFeatureReactionStakes({isGroupFeature,groupFeatureStakes});
+  return nativeFeatureStakes(feature);
+}
 function paymentProof(db,guild,row){
   const n=row.data.native,cost=db.getCityRecord(guild,'gm_action_cost_receipt',`gm-feature-cost:${hash(row.record_key)}`);
   const {payment_source,...paid}=cost?.data||{},payment=payment_source&&db.getWorldEvent(guild,payment_source);
