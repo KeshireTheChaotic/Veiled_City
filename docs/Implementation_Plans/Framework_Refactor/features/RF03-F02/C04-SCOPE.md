@@ -1,0 +1,5 @@
+# RF03-F02 C04 — Native feature cost calculation
+
+Extract the existing pure feature-cost calculation into Daggerheart-owned code. Preserve the accepted timing values, exact descriptor shape, Fear and NPC Stress bounds, additional spotlight and Experience accounting, output fields, and failure code. Keep existing feature-window, environment, group-feature and GM action callers unchanged through a direct import from the native framework. This slice changes no spending, authorization, persistence, receipt, gameplay, or catalog disposition behavior.
+
+Add a new deterministic test under `bot/tests/ai-gm-2026-10/` for valid cost combinations and rejected timing, descriptor, balance, and insufficient-resource inputs. Run only this frozen test and syntax checks for changed JS/MJS, then the RF03 architecture ratchet. Do not run legacy suites or broad validation. Roll back only the new native module, provider import/export adjustment, test, and this evidence if needed.

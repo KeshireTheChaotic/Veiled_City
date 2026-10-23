@@ -12,6 +12,8 @@ import {isPvpIntent} from './pvp-authority.js';
 import {inspectNativeGmDecision,nativeReactionTarget} from './gm-action-capability.js';
 import {historicalActionSource} from './action-consent.js';
 import {assertPcCanAct} from './pc-native-eligibility.js';
+import {featureCostPlan} from './frameworks/daggerheart/feature-costs.js';
+export {featureCostPlan} from './frameworks/daggerheart/feature-costs.js';
 
 export const FEATURE_PHASES=Object.freeze(['before_attack','after_hit','before_damage_applied','after_damage','on_pc_action','on_scene_event','spotlight_action']);
 export const MAX_FEATURE_DEPTH=3;
@@ -244,19 +246,4 @@ export function inspectFeatureUse(db,guild,key){
     ||v.position_choice!=='retain_current_position'||mutation?.source_layer!=='gm_feature'||mutation.entity_key!==v.combatant
     ||hash(JSON.parse(mutation.before_json))!==hash(v.before)||hash(JSON.parse(mutation.after_json))!==hash(v.after))throw fail('native_feature_use_ancestry');
   return row;
-}
-/** Read-only plan: only a separately verified native handler may commit it before RNG/effects. */
-export function featureCostPlan(feature,{timing,additionalSpotlight=false,experience=false,fear,stress,stressMax}){
-  if(!['spotlight_action','reaction','passive'].includes(timing)||typeof additionalSpotlight!=='boolean'||typeof experience!=='boolean'
-    ||timing!=='spotlight_action'&&additionalSpotlight||!Array.isArray(feature?.costs)
-    ||![fear,stress,stressMax].every(Number.isSafeInteger)||fear<0||fear>12||stress<0||stressMax<stress)throw fail('feature_cost_timing_or_balance');
-  let featureFear=0,npcStress=0;
-  for(const c of feature.costs){
-    if(!c||Object.keys(c).sort().join()!=='amount,resource'||!['fear','npc_stress'].includes(c.resource)||!Number.isSafeInteger(c.amount)||c.amount<0||c.amount>12)
-      throw fail('feature_cost_descriptor');
-    if(c.resource==='fear')featureFear+=c.amount;else npcStress+=c.amount;
-  }
-  const amount=featureFear+Number(additionalSpotlight)+Number(experience);
-  if(fear<amount||stress+npcStress>stressMax)throw fail('insufficient_feature_fear_or_stress');
-  return {fear:amount,npc_stress:npcStress,expenses:{additional_spotlight:Number(additionalSpotlight),feature:featureFear,experience:Number(experience)}};
 }
