@@ -1,0 +1,100 @@
+{
+  "run_id": "RF03-F03-C01/F04-C01",
+  "base_sha": "96b5b0c1c8ec2cd1a96a861ecfed220eaff4b7df",
+  "started": "2026-10-23T22:49:30.108Z",
+  "finished": "2026-10-23T22:49:31.242Z",
+  "syntax": [
+    {
+      "path": "bot/src/pvp-authority.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/native-environment-capabilities.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/public.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/pvp-authority.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/environment-capabilities.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf03-f03-c01.test.mjs",
+      "exit": 0
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf03-f04-c01.test.mjs",
+      "exit": 0
+    }
+  ],
+  "tests": {
+    "command": "node --test --test-reporter=tap --test-concurrency=1 bot/tests/ai-gm-2026-10/rf03-f03-c01.test.mjs bot/tests/ai-gm-2026-10/rf03-f04-c01.test.mjs",
+    "exit": 0,
+    "summary": [
+      "# tests 5",
+      "# pass 5",
+      "# fail 0",
+      "# skipped 0",
+      "# duration_ms 147.7519"
+    ],
+    "failures": [],
+    "log_sha256": "f46f0dc51a34f4c849813d1e68c4838601fbc48d38d40b5d9cd450e2084b6917"
+  },
+  "gate": {
+    "command": "node bot/tooling/architecture/check-boundaries.mjs --ratchet --phase RF03",
+    "exit": 0,
+    "summary": [
+      "  \"sourceModules\": 383,",
+      "  \"unowned\": 0,",
+      "  \"importOccurrences\": 2303,",
+      "  \"largestCycle\": 183,",
+      "  \"rawViolationOccurrences\": 2608,",
+      "  \"acceptedLegacyOccurrences\": 2608,",
+      "  \"activeViolationGroups\": 0,",
+      "  \"transitionErrors\": 0,",
+      "  \"pass\": true,"
+    ],
+    "log_sha256": "ca8b148dd54a7e1af2b8daaa989907d878c7efe2739654f0c45917646af54ac6"
+  },
+  "files": [
+    {
+      "path": "bot/src/pvp-authority.js",
+      "sha256": "f385abd5727c0e4e4ad25ac0306c0914feb236c035f18dd0f9978908d1a3d7e0"
+    },
+    {
+      "path": "bot/src/native-environment-capabilities.js",
+      "sha256": "4027f9ea39fe4bde2840c940c466c2c5bb853b5cf25cb90e632b9ec1406fe92f"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/public.js",
+      "sha256": "8256b6601ae0166aa911fde6c15453cf5638ad49cee2f5b4df43dce98fc6b821"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/pvp-authority.js",
+      "sha256": "ad1504702894ce26a6d6f38015ec767fa60175ffd7abcf63dbf7f39e5ecaea97"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/environment-capabilities.js",
+      "sha256": "67e92ff51553fcb3c57407bac05194963198d1ccc76dd56e66e011c881d02b06"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf03-f03-c01.test.mjs",
+      "sha256": "f7159f96b5e784ec659174dec918c9503cf5f6bee556131f5bc431675c4b166f"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf03-f04-c01.test.mjs",
+      "sha256": "87a2b88e2341de9ebea417be9a0917a0ddcccd6a4ad8b2e3086a60a0b11fdd93"
+    }
+  ],
+  "cost": {
+    "provider_calls": 0,
+    "provider_dollars": 0,
+    "codex": "UNMEASURED"
+  }
+}

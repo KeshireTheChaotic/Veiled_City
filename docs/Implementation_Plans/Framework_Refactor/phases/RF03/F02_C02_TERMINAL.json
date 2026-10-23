@@ -1,0 +1,76 @@
+{
+  "run_id": "RF03-F02-C02",
+  "base_sha": "96b5b0c1c8ec2cd1a96a861ecfed220eaff4b7df",
+  "started": "2026-10-23T22:50:25.058Z",
+  "finished": "2026-10-23T22:50:26.339Z",
+  "syntax": [
+    {
+      "path": "bot/src/frameworks/daggerheart/house-errata.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/native-house-errata.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/public.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf03-f02-c02.test.mjs",
+      "exit": 0
+    }
+  ],
+  "tests": {
+    "command": "node --test --test-reporter=tap --test-concurrency=1 bot/tests/ai-gm-2026-10/rf03-f02-c02.test.mjs",
+    "exit": 0,
+    "summary": [
+      "# tests 6",
+      "# pass 6",
+      "# fail 0",
+      "# skipped 0",
+      "# duration_ms 420.5186"
+    ],
+    "failures": [],
+    "log_sha256": "32a7b10920d1ba285574080c539352099ea8a59ce3ddf14023cc74ce720b7de1"
+  },
+  "gate": {
+    "command": "node bot/tooling/architecture/check-boundaries.mjs --ratchet --phase RF03",
+    "exit": 0,
+    "summary": [
+      "  \"sourceModules\": 384,",
+      "  \"unowned\": 0,",
+      "  \"importOccurrences\": 2305,",
+      "  \"largestCycle\": 183,",
+      "  \"rawViolationOccurrences\": 2608,",
+      "  \"acceptedLegacyOccurrences\": 2608,",
+      "  \"activeViolationGroups\": 0,",
+      "  \"transitionErrors\": 0,",
+      "  \"pass\": true,"
+    ],
+    "log_sha256": "42b028c85d2ea8388d7d9e5dd0c7f98241d8d98d0cf591bf94d289a29d5f133e"
+  },
+  "files": [
+    {
+      "path": "bot/src/frameworks/daggerheart/house-errata.js",
+      "sha256": "874752d63ec86062e57805d5d48919803408dea2e3d8f6085c1578d0f9444404"
+    },
+    {
+      "path": "bot/src/native-house-errata.js",
+      "sha256": "38c42b4d8fceab242de88e782aec88e51dc0714e32f7c2490f4f6f4553f1038b"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/public.js",
+      "sha256": "83ee6ebaedfb0fcfcb2627f4a0cb11aa32b727eeef0c887e760bf061af473fb0"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf03-f02-c02.test.mjs",
+      "sha256": "4dcf3a1a2330b56759407e6bb8cb02506e7cddf4029e97c9625734da866cb5dc"
+    }
+  ],
+  "cost": {
+    "provider_calls": 0,
+    "provider_dollars": 0,
+    "codex": "UNMEASURED"
+  }
+}

@@ -1,0 +1,40 @@
+TAP version 13
+# Subtest: native PC conflict checks current guild ownership and exact target identity
+ok 1 - native PC conflict checks current guild ownership and exact target identity
+  ---
+  duration_ms: 0.5153
+  type: 'test'
+  ...
+# Subtest: native combatant identity blocks PC aliases regardless of attack label
+ok 2 - native combatant identity blocks PC aliases regardless of attack label
+  ---
+  duration_ms: 0.4893
+  type: 'test'
+  ...
+# Subtest: attempt keys remain stable and scoped to the campaign action
+ok 3 - attempt keys remain stable and scoped to the campaign action
+  ---
+  duration_ms: 0.3397
+  type: 'test'
+  ...
+# Subtest: native proposal contract preserves source and cost checks without execution authority
+ok 4 - native proposal contract preserves source and cost checks without execution authority
+  ---
+  duration_ms: 0.6293
+  type: 'test'
+  ...
+# Subtest: unsupported disposition, wrong handler, cost, trigger and target fail closed
+ok 5 - unsupported disposition, wrong handler, cost, trigger and target fail closed
+  ---
+  duration_ms: 0.1242
+  type: 'test'
+  ...
+1..5
+# tests 5
+# suites 0
+# pass 5
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 147.7519

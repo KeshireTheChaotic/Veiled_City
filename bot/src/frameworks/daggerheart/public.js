@@ -17,3 +17,6 @@ export {createNativeAdversaryContextProjectors} from './adversary-contexts.js';
 export {createUnifiedAdjudication} from './unified-adjudication.js';
 export {RULE_AUTHORITY_ORDER,resolveRuleReferences,knownSrdReference} from './rule-reference-catalog.js';
 export {AUTHORITY_POLICY_VERSION,AUTHORITY_POLICY} from './authority-policy.js';
+export {createNativePvpAuthority} from './pvp-authority.js';
+export {createEnvironmentProposalContracts} from './environment-capabilities.js';
+export {createNativeHouseErrata} from './house-errata.js';

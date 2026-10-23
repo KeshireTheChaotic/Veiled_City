@@ -17,3 +17,13 @@ Actual inventory was27 source-qualified adversary projectors (pre-freeze script 
 Frozen C01:33new tests pass/0fail/0skip,exit0,1334.6036ms; nine changed syntax checks passed. Tests verify full current source inventory/classifications, local stale-source isolation, printed rules/taxonomy/no-execution context, loader/caller initialization, neutral hash byte semantics, and every one of27 projectors for exact valid source, stale hash/template and review-only rejection. Current production rules were used as authority inputs, not inherited fixtures/goldens. Catalog rule snapshots cached only within deterministic test scope. Provider0/$0; Codex UNMEASURED.
 
 RF03 gate passes with0new violations/unowned/integrity errors. Actual native extraction reduces largest dependency component211 ->183;184obsolete location/cycle/import records retired (F02_C01_RETIRED.json). No exception baseline, IDs, maxima or deadlines enlarged. C01 source/hash/terminal/relocation evidence in F02_C01_TERMINAL.json and F02_C01_RELOCATIONS.json. Remaining native actor-context eligibility/effects and environment handlers are still active RF03 obligations; compiler and cue tests do not qualify them. No previously passing unchanged test repeated. Rollback this checkpoint atomically (restore27 paths, consumers, catalog provider/core, neutral primitive and exact retired metadata), preserving user AGENTS.md. RELEASE NOT AUTHORIZED.
+
+
+## Corrective C02 active — native owner errata
+
+Started from actual worktree after C01; one native rules body and source/provider boundary only. Intended changed production paths: frameworks/daggerheart/house-errata.js and native-house-errata.js. Source JSON/SIGNAL/card catalog remain unchanged. Fresh test: rf03-f02-c02.test.mjs. No test run yet. Rollback implementation, provider composition, focused test and this ledger section as one checkpoint; preserve prior C01 evidence.
+
+
+## Corrective C02 — qualified native errata validation
+
+Owner-authored errata validation and review-contract projection now reside in daggerheart/house-errata.js. The old provider retains immutable JSON/card loading, catalog lookup, hash/error providers and delegates all policy to the native factory actually used by existing consumers. Exact source hashes, handler versions, authority labels, statuses and diagnostic-only review contracts are retained; review_only entries remain inactive. Six fresh tests passed, zero failed/skipped, exit0,420.5186ms; four changed JS/MJS syntax checks passed. RF03 ratchet exit0:384 modules,0 unowned,2608 counted occurrences,0 active groups,0 transition errors,SCC183. Exact hashes/commands and log digests F02_C02_TERMINAL.json. No provider/network calls; provider cost0, Codex usage UNMEASURED.
