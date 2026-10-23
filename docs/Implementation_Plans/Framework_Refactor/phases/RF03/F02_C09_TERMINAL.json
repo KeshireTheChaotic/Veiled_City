@@ -1,0 +1,15 @@
+{
+  "feature": "RF03-F02-C09",
+  "status": "QUALIFIED_NATIVE_CONDITION_RULES",
+  "branch": "codex/clean-ai-gm-2026-10",
+  "base_sha": "1e450674ab97bda1f7830af8c3137da332337a0a",
+  "test": {"path": "bot/tests/ai-gm-2026-10/rf03-f02-c09.test.mjs", "command": "node --test bot/tests/ai-gm-2026-10/rf03-f02-c09.test.mjs", "exit": 0, "passed": 3, "failed": 0, "skipped": 0, "duration_ms": 63.6105, "log": "f02-c09-final.log", "log_sha256": "680C8AA2CF21097F23C32D948618584DC988A66827BAA67DA36D4D2FD07D1FDD"},
+  "initial_test_attempt": {"log": "f02-c09-initial.log", "exit": 1, "passed": 2, "failed": 1, "duration_ms": 60.4521, "reason": "incorrect test expectation for preserved one-source Advantage cancellation; implementation was correct and assertion was repaired"},
+  "syntax": {"exit": 0, "changed_js_mjs_files": 3},
+  "architecture_ratchet": {"command": "node bot/tooling/architecture/check-boundaries.mjs --ratchet --phase RF03", "exit": 0, "source_modules": 399, "unowned": 0, "import_occurrences": 2329, "largest_cycle": 182, "raw_violation_occurrences": 2600, "accepted_legacy_occurrences": 2600, "active_violation_groups": 0, "transition_errors": 0, "log": "f02-c09-gate.log", "log_sha256": "5AF881FFF4DD5B6003C3B89D366151747EC5BAEA0A894296B0D42F0B2401C1A8"},
+  "source_sha256": {"bot/src/frameworks/daggerheart/native-condition-rules.js": "A891697E318D7E4260E3D9406032F9B075EEBF5EA438A0951C7C3D9CEBD90DEA", "bot/src/native-group-features.js": "61DEA534332594BD3380DBDDE7C2C2A830AF1E0316710D4B770A64C7554DF503", "bot/tests/ai-gm-2026-10/rf03-f02-c09.test.mjs": "9D3278E9EFC247D2E5CF3066266C7D4A63AB0DFF9353F25B66A7C71A172FF6E8"},
+  "provider_calls": 0,
+  "provider_cost_usd": 0,
+  "codex_usage": "UNMEASURED",
+  "release_authorized": false
+}

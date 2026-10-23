@@ -15,6 +15,8 @@ import {EncounterLibrary} from './encounter.js';
 import {reserveGmArbitrationNotice} from './native-publications.js';
 import {applyNativeStressPassive} from './native-stress-passives.js';
 import {inspectNativeConditionClearAncestry} from './native-condition-recovery.js';
+import {incomingConditionOdds,movementConditionIssue} from './frameworks/daggerheart/native-condition-rules.js';
+export {incomingConditionOdds} from './frameworks/daggerheart/native-condition-rules.js';
 
 const LANES='adversary:traffic-saint:all-lanes-stop',FLASH='adversary:aster-vale-contractor:flashbang';
 const REGENT='adversary:pale-regent:command-the-blood';
@@ -419,17 +421,9 @@ export function validateIncomingConditions(db,guild,character,proofs,{current=fa
   // that has since ended, nor omit a newly established native condition.
   if(current&&hash(proofs)!==hash(nativeIncomingConditions(db,guild,character)))throw fail('incoming_condition_current_state_changed');
 }
-/** Daggerheart cancels opposite sources before selecting high/low; same condition never stacks. */
-export function incomingConditionOdds(offer,proposal={}){
-  const adv=Number(proposal.advantage===true)+Number(!!offer.native_conditions?.length),dis=Number(proposal.disadvantage===true);
-  return {advantage:adv>dis,disadvantage:dis>adv};
-}
-/** Restriction only; an unknown movement range never silently waives a sourced limit. */
+/** Source records are validated here; only current native conditions are handed to Daggerheart. */
 export function nativeMovementConditionIssue(db,guild,character,{range=null}={}){
-  for(const c of activeNativeConditions(db,guild,character)){
-    if(c.data.feature===LANES&&(!RANGE_BANDS.includes(range)||RANGE_BANDS.indexOf(range)>RANGE_BANDS.indexOf('Very Close')))return 'NATIVE_MOVEMENT_LIMIT_VERY_CLOSE';
-  }
-  return null;
+  return movementConditionIssue(activeNativeConditions(db,guild,character),{range,rangeBands:RANGE_BANDS});
 }
 /** Only the condition-only change made by THIS attack's native spotlight may advance its PC CAS.
  * No general stale-offer waiver, owner refresh, resource drift or odds-changing condition is admitted. */

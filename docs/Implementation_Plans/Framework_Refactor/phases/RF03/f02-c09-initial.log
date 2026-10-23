@@ -1,0 +1,37 @@
+✖ incoming Advantage and Disadvantage cancel and like conditions do not stack (1.3172ms)
+✔ Traffic Saint movement limit allows through Very Close and blocks farther bands (0.159ms)
+✔ unrelated native conditions and empty evidence do not impose movement limits (0.0811ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 2
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 60.4521
+
+✖ failing tests:
+
+test at bot\tests\ai-gm-2026-10\rf03-f02-c09.test.mjs:9:1
+✖ incoming Advantage and Disadvantage cancel and like conditions do not stack (1.3172ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    {
+      advantage: false,
+  +   disadvantage: false
+  -   disadvantage: true
+    }
+  
+      at TestContext.<anonymous> (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf03-f02-c09.test.mjs:11:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: { advantage: false, disadvantage: false },
+    expected: { advantage: false, disadvantage: true },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
