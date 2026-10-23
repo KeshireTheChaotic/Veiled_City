@@ -1,0 +1,105 @@
+{
+  "run_id": "RF03-F02-C02/F03-C02",
+  "base_sha": "d33f9c928aeda63e25105cb4d39432c25a1b4e69",
+  "started": "2026-10-23T22:52:38.044Z",
+  "finished": "2026-10-23T22:52:39.812Z",
+  "repair": "Avoid public-barrel initialization cycle by importing the native house-errata factory directly.",
+  "syntax": [
+    {
+      "path": "bot/src/frameworks/daggerheart/house-errata.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/pc-eligibility.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/public.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/native-house-errata.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/pc-native-eligibility.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf03-f02-c02.test.mjs",
+      "exit": 0
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf03-f03-c02.test.mjs",
+      "exit": 0
+    }
+  ],
+  "tests": {
+    "command": "node --test --test-reporter=tap --test-concurrency=1 bot/tests/ai-gm-2026-10/rf03-f02-c02.test.mjs bot/tests/ai-gm-2026-10/rf03-f03-c02.test.mjs",
+    "exit": 1,
+    "summary": [
+      "# tests 7",
+      "# pass 6",
+      "# fail 1",
+      "# skipped 0",
+      "# duration_ms 754.6542"
+    ],
+    "failures": [
+      "not ok 2 - bot\\\\tests\\\\ai-gm-2026-10\\\\rf03-f03-c02.test.mjs",
+      "  error: 'test failed'"
+    ],
+    "log_sha256": "f0b40b0452cf9e95d969e24d362b16550382ed562806e50c7b2316e55324035d"
+  },
+  "gate": {
+    "command": "node bot/tooling/architecture/check-boundaries.mjs --ratchet --phase RF03",
+    "exit": 0,
+    "summary": [
+      "  \"sourceModules\": 385,",
+      "  \"unowned\": 0,",
+      "  \"importOccurrences\": 2307,",
+      "  \"largestCycle\": 183,",
+      "  \"rawViolationOccurrences\": 2608,",
+      "  \"acceptedLegacyOccurrences\": 2608,",
+      "  \"activeViolationGroups\": 0,",
+      "  \"transitionErrors\": 0,",
+      "  \"pass\": true,"
+    ],
+    "log_sha256": "6b62a3557dfee3a20e1d41199d40c3048eb9ced9e4f7c801c410bbcfa54ecea4"
+  },
+  "files": [
+    {
+      "path": "bot/src/frameworks/daggerheart/house-errata.js",
+      "sha256": "874752d63ec86062e57805d5d48919803408dea2e3d8f6085c1578d0f9444404"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/pc-eligibility.js",
+      "sha256": "28f011629e34dffaa978d22b8036fa58cc55546064c684fbb3520370331505d6"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/public.js",
+      "sha256": "8ef57c8cd32e78b75abc96bd34cb22f3fb9063ecac94c50f0887f05768da2745"
+    },
+    {
+      "path": "bot/src/native-house-errata.js",
+      "sha256": "a75b9020feed792ef064eb3ec33efaa58cbf8805e66cd57c6a3a82ea47d9316d"
+    },
+    {
+      "path": "bot/src/pc-native-eligibility.js",
+      "sha256": "9dfd0bb9c402e9f0e23a72af7c701c5eb77d1bd6546867085a91faf7c83903ec"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf03-f02-c02.test.mjs",
+      "sha256": "4dcf3a1a2330b56759407e6bb8cb02506e7cddf4029e97c9625734da866cb5dc"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf03-f03-c02.test.mjs",
+      "sha256": "a07e414dbd6cad1208791cf3043640e35a9ab043edc9e174d1774a37c6a03cb4"
+    }
+  ],
+  "prior_failed_attempt": "F03_C02_INITIAL_TERMINAL.json",
+  "cost": {
+    "provider_calls": 0,
+    "provider_dollars": 0,
+    "codex": "UNMEASURED"
+  }
+}

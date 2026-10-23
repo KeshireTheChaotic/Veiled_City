@@ -1,0 +1,98 @@
+{
+  "run_id": "RF03-F03-C02 targeted repair",
+  "base_sha": "d33f9c928aeda63e25105cb4d39432c25a1b4e69",
+  "started": "2026-10-23T22:52:57.294Z",
+  "finished": "2026-10-23T22:53:47.400Z",
+  "repair": "Null or malformed death verifier now returns false and is held with the established native eligibility error.",
+  "syntax": [
+    {
+      "path": "bot/src/frameworks/daggerheart/pc-eligibility.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf03-f03-c02.test.mjs",
+      "exit": 0
+    }
+  ],
+  "tests": {
+    "command": "node --test --test-reporter=tap --test-concurrency=1 --test-name-pattern mismatched, unresolved or unauthenticated recovery proof remains held bot/tests/ai-gm-2026-10/rf03-f03-c02.test.mjs",
+    "exit": 0,
+    "summary": [
+      "# tests 1",
+      "# pass 1",
+      "# fail 0",
+      "# skipped 0",
+      "# duration_ms 356.7256"
+    ],
+    "failures": [],
+    "log_sha256": "2649fc91714ef494232898227e6f162fdd58efb83b7e19b32fa3eef46a8ca4ab"
+  },
+  "gate": {
+    "command": "node bot/tooling/architecture/check-boundaries.mjs --ratchet --phase RF03",
+    "exit": 0,
+    "summary": [
+      "  \"sourceModules\": 385,",
+      "  \"unowned\": 0,",
+      "  \"importOccurrences\": 2307,",
+      "  \"largestCycle\": 182,",
+      "  \"rawViolationOccurrences\": 2601,",
+      "  \"acceptedLegacyOccurrences\": 2601,",
+      "  \"activeViolationGroups\": 0,",
+      "  \"transitionErrors\": 0,",
+      "  \"pass\": true,"
+    ],
+    "log_sha256": "0ca69c09136b0ffe4ffef375e28408384e0ddae4daec6484117dc66aa4809f6c"
+  },
+  "files": [
+    {
+      "path": "bot/src/frameworks/daggerheart/house-errata.js",
+      "sha256": "874752d63ec86062e57805d5d48919803408dea2e3d8f6085c1578d0f9444404"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/pc-eligibility.js",
+      "sha256": "28f011629e34dffaa978d22b8036fa58cc55546064c684fbb3520370331505d6"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/public.js",
+      "sha256": "8ef57c8cd32e78b75abc96bd34cb22f3fb9063ecac94c50f0887f05768da2745"
+    },
+    {
+      "path": "bot/src/native-house-errata.js",
+      "sha256": "df03d356f9403769a811754956649e6e6fdc3fed34f350780fcbead383c175aa"
+    },
+    {
+      "path": "bot/src/pc-native-eligibility.js",
+      "sha256": "9dfd0bb9c402e9f0e23a72af7c701c5eb77d1bd6546867085a91faf7c83903ec"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf03-f02-c02.test.mjs",
+      "sha256": "b0c05281a3785e488476b206069f89e66b89395b0e44e67b7fadd2f346052f5d"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf03-f03-c02.test.mjs",
+      "sha256": "a07e414dbd6cad1208791cf3043640e35a9ab043edc9e174d1774a37c6a03cb4"
+    }
+  ],
+  "prior_attempts": [
+    "F03_C02_INITIAL_TERMINAL.json",
+    "F03_C02_CYCLE_REPAIR_TERMINAL.json"
+  ],
+  "cost": {
+    "provider_calls": 0,
+    "provider_dollars": 0,
+    "codex": "UNMEASURED"
+  },
+  "previous_union_result": {
+    "command": "node --test --test-reporter=tap --test-concurrency=1 bot/tests/ai-gm-2026-10/rf03-f02-c02.test.mjs bot/tests/ai-gm-2026-10/rf03-f03-c02.test.mjs",
+    "exit": 1,
+    "summary": [
+      "# tests 12",
+      "# pass 11",
+      "# fail 1",
+      "# skipped 0",
+      "# duration_ms 477.869"
+    ],
+    "log_sha256": "dda29e13ebfa7bf03fed9390d2dfcbc7c6a91a0f1885eabd77bd5f2b93f87ebc"
+  },
+  "retired_records": "F02_C02_RETIRED.json"
+}

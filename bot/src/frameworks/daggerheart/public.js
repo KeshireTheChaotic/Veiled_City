@@ -20,3 +20,4 @@ export {AUTHORITY_POLICY_VERSION,AUTHORITY_POLICY} from './authority-policy.js';
 export {createNativePvpAuthority} from './pvp-authority.js';
 export {createEnvironmentProposalContracts} from './environment-capabilities.js';
 export {createNativeHouseErrata} from './house-errata.js';
+export {createPcEligibility} from './pc-eligibility.js';

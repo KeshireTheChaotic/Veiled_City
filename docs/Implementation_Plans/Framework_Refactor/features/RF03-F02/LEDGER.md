@@ -27,3 +27,8 @@ Started from actual worktree after C01; one native rules body and source/provide
 ## Corrective C02 — qualified native errata validation
 
 Owner-authored errata validation and review-contract projection now reside in daggerheart/house-errata.js. The old provider retains immutable JSON/card loading, catalog lookup, hash/error providers and delegates all policy to the native factory actually used by existing consumers. Exact source hashes, handler versions, authority labels, statuses and diagnostic-only review contracts are retained; review_only entries remain inactive. Six fresh tests passed, zero failed/skipped, exit0,420.5186ms; four changed JS/MJS syntax checks passed. RF03 ratchet exit0:384 modules,0 unowned,2608 counted occurrences,0 active groups,0 transition errors,SCC183. Exact hashes/commands and log digests F02_C02_TERMINAL.json. No provider/network calls; provider cost0, Codex usage UNMEASURED.
+
+
+## Corrective C02 qualified closeout detail
+
+The initial focused F02 batch passed6/6; an F03 import test then revealed a real initialization cycle through scene-fiction-context, so the errata provider was changed to use kernel jsonHash (byte-identical JSON hash implementation) and its direct native factory. The resulting combined fresh run showed the six F02 cases passed. Seven now-absent exact legacy source-edge records were retired; their full original identities are preserved in phases/RF03/F02_C02_RETIRED.json. No baseline, maxima or new exceptions changed. Provider import no longer loads narrative/PvP code. F02 remains partial because source catalog readers and feature effect handlers remain RF03 obligations.

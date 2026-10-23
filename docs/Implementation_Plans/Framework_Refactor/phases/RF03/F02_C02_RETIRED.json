@@ -1,0 +1,103 @@
+{
+  "reason": "These exact source edges ceased to exist when the errata source provider replaced the scene-fiction import with the kernel JSON hash. Their IDs, baseline entries, owners and maxima are preserved here for audit; no new exception was added.",
+  "entries": [
+    {
+      "id": "6c5cab5fa10f513acc817603224b602f27883cdf4513a1e68dc8b3ea16705321",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/native-house-errata.js",
+      "to": "bot/src/scene-fiction-context.js",
+      "kind": "static",
+      "specifier": "./scene-fiction-context.js",
+      "owner": "daggerheart",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF03-F01",
+      "expires_after": "RF03",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    },
+    {
+      "id": "8dcb5739a5dcde8921d664c528042f3d87bc0774ddb2ac8e438359e2366b66c4",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "from": "bot/src/native-defense-aura.js",
+      "to": "bot/src/native-house-errata.js",
+      "kind": "static",
+      "specifier": "./native-house-errata.js",
+      "owner": "daggerheart",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF03-F01",
+      "expires_after": "RF03",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+    },
+    {
+      "id": "9821cb9604f6455ac5d3e75ac90156ce48029863b4da480dc3240fd8b5451957",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "from": "bot/src/native-environment-trace.js",
+      "to": "bot/src/native-house-errata.js",
+      "kind": "static",
+      "specifier": "./native-house-errata.js",
+      "owner": "daggerheart",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF03-F04",
+      "expires_after": "RF03",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+    },
+    {
+      "id": "9ff3269dea4bfc95d5d75444832cbea696e3a5822f95e035652568d7d6b47d4c",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "from": "bot/src/native-feature-hit.js",
+      "to": "bot/src/native-house-errata.js",
+      "kind": "static",
+      "specifier": "./native-house-errata.js",
+      "owner": "daggerheart",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF03-F02",
+      "expires_after": "RF03",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+    },
+    {
+      "id": "bf342f13a35718f82fc1025f564a4095aff63175f63f379a8ac9f822b32563fd",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "from": "bot/src/native-feature-passives.js",
+      "to": "bot/src/native-house-errata.js",
+      "kind": "static",
+      "specifier": "./native-house-errata.js",
+      "owner": "daggerheart",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF03-F02",
+      "expires_after": "RF03",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+    },
+    {
+      "id": "3033ba4926ca9da65339cd6ebe5dd2031d84664922bc5bdc87ddad30c32a8533",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "from": "bot/src/native-house-errata.js",
+      "to": "bot/src/scene-fiction-context.js",
+      "kind": "static",
+      "specifier": "./scene-fiction-context.js",
+      "owner": "daggerheart",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF03-F01",
+      "expires_after": "RF03",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+    },
+    {
+      "id": "62322d5d97d98b4bf5f6c85523eb029fc224d591f765308c6f7352912df656b3",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "from": "bot/src/pc-incoming.js",
+      "to": "bot/src/native-house-errata.js",
+      "kind": "static",
+      "specifier": "./native-house-errata.js",
+      "owner": "daggerheart",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF03-F01",
+      "expires_after": "RF03",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+    }
+  ]
+}
