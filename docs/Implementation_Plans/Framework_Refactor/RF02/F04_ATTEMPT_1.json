@@ -1,0 +1,48 @@
+{
+  "syntax_files": 9,
+  "frozen_files": [
+    {
+      "path": "bot/src/character-export.js",
+      "sha256": "4e0e3a3a7dda7d38e5f752cd44bf56daecc7c172a61a004c09952df1963c3619"
+    },
+    {
+      "path": "bot/src/character-narrative.js",
+      "sha256": "c264476fdad25922e4d9b572b0795a92b581fd42800a781ce907f6e5e97a7f19"
+    },
+    {
+      "path": "bot/src/commands.js",
+      "sha256": "7f1fe860418dfbfb66ea6eb84b7073d0027bd79624064a92ca2296aa6d545fa3"
+    },
+    {
+      "path": "bot/src/concept-context.js",
+      "sha256": "fb98905cde1b76bd26383f61df7d0193791c73a28f9416af8b318d54bad7846a"
+    },
+    {
+      "path": "bot/src/frameworks/character/file-names.js",
+      "sha256": "372c2bbe5c3fb4790c2de578e2cbba3773ba28fbd71124683d4b4d05f42824af"
+    },
+    {
+      "path": "bot/src/frameworks/character/narrative-text.js",
+      "sha256": "9fed4b8713e360e7883f01d0a9bcae5ca00f3e00fd9e12d5e498d0e0373e0ca8"
+    },
+    {
+      "path": "bot/src/frameworks/character/public.js",
+      "sha256": "ee74583c4b6d273c47170f9e49f98f24b99cb4c1eda71d8ffcf54a43c9594ce1"
+    },
+    {
+      "path": "bot/src/kernel/zip-store.js",
+      "sha256": "045fe02d75802d1fe8c21826edf518ffaa6c58c753f2f009b6a92b25c965f42e"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf02-f04.test.mjs",
+      "sha256": "3915d0bb1b24fdb9738a0b0a8da9771787ebfe76cd7b6e5212d73ea5646d7454"
+    }
+  ],
+  "command": "node --test --test-concurrency=1 --test-reporter=tap bot/tests/ai-gm-2026-10/rf02-f04.test.mjs",
+  "gate_exit": 0,
+  "base_sha": "7594ed9afeb59adbab1adb5966f68fbd1c67eda0",
+  "run_id": "RF02-F04-1",
+  "test_exit": 1,
+  "started_utc": "2026-10-23T17:01:27.8361255Z",
+  "finished_utc": "2026-10-23T17:01:30.3320839Z"
+}

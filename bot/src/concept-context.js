@@ -2,7 +2,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { Buffer } from "node:buffer";
-import { zipStore } from "./character-export.js";
+import {zipStore} from './kernel/zip-store.js';
 import { scopedSessionRecap } from "./pvp-output.js";
 
 function clip(v,n=5000){

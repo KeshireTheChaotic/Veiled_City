@@ -43,6 +43,9 @@
     ],
     "content": [
       "bot/src/frameworks/content/public.js"
+    ],
+    "character": [
+      "bot/src/frameworks/character/public.js"
     ]
   },
   "externalCapabilityOwners": {

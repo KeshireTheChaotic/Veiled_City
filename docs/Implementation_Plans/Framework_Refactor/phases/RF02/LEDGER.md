@@ -35,3 +35,15 @@ RF02-F03-1: exit 0, 4/4 pass, 74.8901 ms; 9 changed syntax checks and architectu
 Hold: operational-metrics.js, turn-trace-context.js, turn-latency.js have shared metrics/AsyncLocalStorage identity and cross-owner narrative, publication, Discord, persistence and provider consumers. Moving those unchanged would introduce forbidden imports; RF05-F01/F03 and RF06-F02/F03/F04 must inject observer capabilities at real runtime roots before relocation. Other operations helpers retain their recorded dependencies; no duplicate singleton or hidden integration installed. Existing old support/test-selection code not executed or repurposed.
 
 Rollback feature checkpoint before dependents; no schema/data rollback. Provider calls/tokens/spend 0/0/$0; Codex/runtime cost UNMEASURED, cache behavior unchanged. No new narrative restriction or owner question. Result SHA follows checkpoint. RELEASE NOT AUTHORIZED.
+
+F03 resulting checkpoint: `7594ed9afeb59adbab1adb5966f68fbd1c67eda0`.
+
+## Frozen result
+
+Status: COMPLETE — pure file/text/archive slice; mixed native/state workflows held. Character safeText/safeStem and normalizeNarrativeMarkdown/narrativeRelativePath extracted to frameworks/character/{file-names,narrative-text,public}.js. Generic CRC/header/stored-ZIP implementation extracted to kernel/zip-store.js, with no character policy or branding. Commands use character public API; original character export/narrative workflows and concept-context use extracted helpers directly. Old duplicate definitions/exports removed, no compatibility re-export. Original mixed modules remain real workflows, not certified isolated facades.
+
+Fresh rf02-f04.test.mjs first run: exit 1, 3 pass/2 fail, 76.0251 ms; fixture incorrectly expected Elan rather than original E_lan normalization. Batched fixture repair only; production preserved. RF02-F04-REPAIR-1: exit 0, 5/5 pass, 71.6342 ms; 9 changed syntax checks. Prior architecture exit 0 remains applicable (source unchanged). Actual player JSON/Markdown/DOCX exporter and explicit-scoped narrative ZIP use new helpers with fresh read-only fakes; tests preserve IDs and private field exclusion. [F04_TERMINAL.json](../../RF02/F04_TERMINAL.json) and first-attempt evidence retain hashes/times.
+
+Removed 1 resolved live transition record; raw 2815, zero active/unowned; cycle211 unchanged. Holds: character-system native class/domain/trait/advancement rules require RF03-F01 authority interface; observation requires RF04-F03/F05 source/scene/native contracts; remaining DB/knowledge export workflows require RF06-F02/F03 mappings. No wholesale move or gameplay redesign authorized by purity alone.
+
+Rollback F04 checkpoint before dependents; no data/schema rollback. Provider calls/tokens/spend 0/0/$0; caches unchanged; Codex/runtime costs UNMEASURED. No owner question or narrative restriction. Checkpoint SHA follows. RELEASE NOT AUTHORIZED.

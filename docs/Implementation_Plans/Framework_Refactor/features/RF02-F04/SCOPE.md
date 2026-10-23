@@ -1,0 +1,7 @@
+# RF02-F04 — Character narrative text/file names and generic archive extraction
+
+Extract active pure Markdown normalization, scope-specific narrative paths and character filename/text conversion into the character framework public API; move generic stored-ZIP encoding into kernel. Update all actual callers, deleting old definitions/exports when callers have migrated. Do not move mixed character export/storage/authorization or native advancement code wholesale, and do not put character privacy or default naming into kernel. ZIP encoding has no character/campaign rules, only Buffer/CRC/header/time encoding.
+
+Inspect actual exports, storage calls and reverse imports. Character-system.js encodes SRD class/domain/trait/advancement rules used by Daggerheart/narrative/Discord: native rule ownership/ports remain RF03-F01, not character-owned policy. Character-observation uses session/world/native controls: RF04-F03/F05 hold. Mixed read/export workflows retain their native DB argument semantics pending character--persistence and knowledge mappings at RF06-F02/F03; no fake public persistence API. This feature completes only the independently safe pure slice.
+
+Fresh rf02-f04.test.mjs covers actual relocated text/path/archive contracts, invalid/oversized/Unicode inputs, binary archive metadata and real active caller import graph. No broad character-engine tests/legacy fixtures; no rule redesign. One blocking batch, changed syntax and RF02 boundary gate; no polling. Revert checkpoint before dependent moves; no data rollback. RELEASE NOT AUTHORIZED.

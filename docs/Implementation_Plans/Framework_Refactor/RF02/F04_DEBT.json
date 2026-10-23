@@ -1,0 +1,32 @@
+{
+  "removed_records": 1,
+  "removed": [
+    {
+      "id": "04c8675f0f4f86a097c8a392e41cddce8cf725e45471942ee04350b831183028",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/concept-context.js",
+      "to": "bot/src/character-export.js",
+      "kind": "static",
+      "specifier": "./character-export.js",
+      "owner": "narrative",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF05-F03",
+      "expires_after": "RF05",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    }
+  ],
+  "summary": {
+    "sourceModules": 385,
+    "unowned": 0,
+    "importOccurrences": 2327,
+    "internalImportOccurrences": 2153,
+    "cycleComponents": 1,
+    "largestCycle": 211,
+    "rawViolationOccurrences": 2815,
+    "acceptedLegacyOccurrences": 2815,
+    "activeViolationGroups": 0,
+    "transitionErrors": 1,
+    "pass": false
+  }
+}

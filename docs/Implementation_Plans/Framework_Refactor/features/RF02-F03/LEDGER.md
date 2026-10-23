@@ -11,3 +11,5 @@ RF02-F03-1: exit 0, 4/4 pass, 74.8901 ms; 9 changed syntax checks and architectu
 Hold: operational-metrics.js, turn-trace-context.js, turn-latency.js have shared metrics/AsyncLocalStorage identity and cross-owner narrative, publication, Discord, persistence and provider consumers. Moving those unchanged would introduce forbidden imports; RF05-F01/F03 and RF06-F02/F03/F04 must inject observer capabilities at real runtime roots before relocation. Other operations helpers retain their recorded dependencies; no duplicate singleton or hidden integration installed. Existing old support/test-selection code not executed or repurposed.
 
 Rollback feature checkpoint before dependents; no schema/data rollback. Provider calls/tokens/spend 0/0/$0; Codex/runtime cost UNMEASURED, cache behavior unchanged. No new narrative restriction or owner question. Result SHA follows checkpoint. RELEASE NOT AUTHORIZED.
+
+Feature checkpoint: `7594ed9afeb59adbab1adb5966f68fbd1c67eda0`.
