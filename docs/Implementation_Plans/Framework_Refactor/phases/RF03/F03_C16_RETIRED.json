@@ -1,0 +1,33 @@
+{
+  "reason": "pc-death source no longer imports or re-exports pc-native-eligibility. Native hopeCap is reused directly from pc-resources and exported through Daggerheart public API; exact old cycle edges absent.",
+  "records": [
+    {
+      "id": "d3985685ba34847a8bc26f2cb3fa0a39096f6b8d74985281d89faf02485d1fa4",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "from": "bot/src/pc-death.js",
+      "to": "bot/src/pc-native-eligibility.js",
+      "kind": "static",
+      "specifier": "./pc-native-eligibility.js",
+      "owner": "daggerheart",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF03-F01",
+      "expires_after": "RF03",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+    },
+    {
+      "id": "7258f17674d9dbbd84b0821d54790bbf34bcdfb5ec3cf166ea55d8a349e68be6",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "from": "bot/src/pc-death.js",
+      "to": "bot/src/pc-native-eligibility.js",
+      "kind": "re-export",
+      "specifier": "./pc-native-eligibility.js",
+      "owner": "daggerheart",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF03-F01",
+      "expires_after": "RF03",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+    }
+  ]
+}

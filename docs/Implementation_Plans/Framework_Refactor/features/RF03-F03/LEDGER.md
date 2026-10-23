@@ -2,6 +2,10 @@
 
 ACTIVE. Native choices and receipts must remain unchanged.
 
+## Corrective C16 — complete native death lifecycle qualified
+
+Eleven owner-selected death lifecycle algorithms plus their source/mutation/receipt helpers extracted into Daggerheart, using the already-qualified outcome/eligibility policy. Existing provider supplies named source/native capabilities only; native body unchanged. Fresh10/10 passed,exit0,737.4518ms; four syntax checks passed. Real disposable SQLite validates owner choice, saved ancestry, recovery, Blaze, healing-backed wake, rollback and reopen/replay against explicitly mocked upstream verifiers. Two removed old import/re-export cycle records retired with full originals; final RF03 gate exit0,zero active/unowned/errors,2598accepted occurrences. Exact evidence F03_C16_TERMINAL.json. Underlying source/damage/native providers remain RF03 or their existing owning phases; no new deferral. RF03 incomplete; release unauthorized.
+
 ## C15 — actual PvP attack provider cold import
 
 A new offline test imported `pvp-attacks.js` after the C13 lazy-adapter repair and called its existing actor snapshot hash export. It passed 1/1, exit 0, 345.2031 ms; one changed MJS syntax check and the RF03 ratchet passed. Exact hashes/logs are in `phases/RF03/F03_C15_TERMINAL.json`. This does not qualify attack authorization, dice, damage, persistence, receipts, or live combat.

@@ -25,3 +25,4 @@ export {createPvpAttackTerms} from './pvp-attack-terms.js';
 export {createRollRequestRules} from './roll-request-rules.js';
 export {createRollCollaborationRules} from './roll-collaboration-rules.js';
 export {createRollOptionRules} from './roll-options-rules.js';
+export {createPcDeathRules} from './pc-death-rules.js';
