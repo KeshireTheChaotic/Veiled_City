@@ -18,15 +18,12 @@ import {inspectNativeConditionClearAncestry} from './native-condition-recovery.j
 import {incomingConditionOdds,movementConditionIssue} from './frameworks/daggerheart/native-condition-rules.js';
 export {incomingConditionOdds} from './frameworks/daggerheart/native-condition-rules.js';
 import {LANES,FLASH,REGENT,groupFeaturePolicies as policies,isGroupFeature,groupReactionRules,groupNeedsChoice as needsChoice,
-  groupReactionOptions,groupFeatureStakes} from './frameworks/daggerheart/group-feature-rules.js';
+  groupReactionOptions,groupFeatureStakes,validateGroupFeatureProposal} from './frameworks/daggerheart/group-feature-rules.js';
 export {isGroupFeature,groupReactionRules,groupReactionOptions,groupFeatureStakes} from './frameworks/daggerheart/group-feature-rules.js';
 
 const executionKey=key=>`group-feature:${hash(key)}`,effectKey=key=>`group-effect:${hash(key)}`;
 export function planGroupFeature(db,guild,o,entry,p,feature,{library,opportunity}={}){
-  const policy=policies[feature?.feature_key];
-  if(!policy||entry.actor.type!=='npc'||entry.operation!=='feature'||p.disposition!=='native_feature_resolution'||p.stakes_kind!=='native_feature'
-    ||p.trait!==policy.trait||p.difficulty!==policy.difficulty||p.proposal_version===2||p.experience_ref||p.advantage||p.disadvantage
-    ||!p.rule_basis_refs.includes('srd:reaction-rolls'))throw fail('group_feature_fixed_rules');
+  const policy=validateGroupFeatureProposal(entry,p,feature);
   const scene=currentScene(db,guild),encounter=db.getCurrentEncounter(scene.session_id),binding=encounter&&db.getCityRecord(guild,'encounter_binding',encounter.id),
     bound=binding?.data.combatants.find(b=>b.actor===entry.actor.key),c=bound&&db.listCombatants(encounter.id).find(c=>c.id===bound.id),
     template=c&&library.findAdversary(c.base_name),actor=scenePresence(db,guild,'npc',entry.actor.key);

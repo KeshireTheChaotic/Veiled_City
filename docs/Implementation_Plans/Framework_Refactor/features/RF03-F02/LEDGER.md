@@ -57,6 +57,10 @@ Daggerheart now owns the existing non-stacking/cancellation rule for incoming Ad
 
 Daggerheart now owns the three existing group-feature identities, fixed reaction terms, choice options, choice-required conditions, and exact stakes text. The provider retains stateful source validation and effects. Fresh test: 3/3 passed, exit 0, 61.2746 ms; three changed syntax checks passed. RF03 ratchet passed at 400 modules, zero unowned, 2,332 imports, 2,600 accepted occurrences, zero active groups/errors. Exact evidence: `F02_C10_TERMINAL.json`. F02 remains active; release not authorized.
 
+## Corrective C11 — qualified native group-feature proposal terms
+
+Daggerheart now validates the existing group-feature proposal's fixed actor, operation, disposition, trait, Difficulty, version, modifiers, Experience, and SRD rule reference. The provider retains database/source/scene checks and effect transactions. C11 fresh test: 2/2 passed, exit 0, 58.2023 ms; C10 regression test after changing the same native file: 3/3 passed, exit 0, 62.2998 ms. Three syntax checks and RF03 ratchet passed, zero unowned modules and transition errors. Exact evidence: `F02_C11_TERMINAL.json`. F02 remains active; release not authorized.
+
 ## Corrective C04 — qualified native feature cost policy
 
 The pure feature cost calculation now resides in `frameworks/daggerheart/feature-costs.js`; the current feature-window module imports and re-exports it without changing the transaction paths. The group-feature provider now imports the native function directly, removing its exact cycle edge to the feature-window provider. Final fresh direct-native test: 3/3 passed, exit 0, 61.3319 ms; four changed JS/MJS syntax checks passed. RF03 ratchet exit 0: 394 modules, zero unowned, 2,320 imports, largest cycle 182, 2,600 accepted prior obligations, zero active groups/errors. Three provider-import attempts failed before assertions due an observed `RANGE_BANDS` cold-import cycle in `pvp-attacks.js`; provider startup remains unqualified. Exact evidence and hashes are in `F02_C04_TERMINAL.json`. Rollback this C04 slice only. RF03 remains incomplete; release not authorized.

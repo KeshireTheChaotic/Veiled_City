@@ -14,6 +14,13 @@ export function groupReactionRules(key){
   const policy=groupFeaturePolicies[key];if(!policy)throw nativeArbitrationFailure('group_feature_fixed_rules');
   return Object.freeze({trait:policy.trait,difficulty:policy.difficulty});
 }
+export function validateGroupFeatureProposal(entry,p,feature){
+  const policy=groupFeaturePolicies[feature?.feature_key];
+  if(!policy||entry.actor.type!=='npc'||entry.operation!=='feature'||p.disposition!=='native_feature_resolution'||p.stakes_kind!=='native_feature'
+    ||p.trait!==policy.trait||p.difficulty!==policy.difficulty||p.proposal_version===2||p.experience_ref||p.advantage||p.disadvantage
+    ||!p.rule_basis_refs.includes('srd:reaction-rolls'))throw nativeArbitrationFailure('group_feature_fixed_rules');
+  return policy;
+}
 export const groupNeedsChoice=(feature,success,critical=false)=>!critical&&(feature===FLASH&&success||feature===REGENT&&!success);
 export const groupReactionOptions=feature=>feature===REGENT?['hope','stress','command']:feature===FLASH?['vulnerable','stress']:[];
 export function groupFeatureStakes(key){
