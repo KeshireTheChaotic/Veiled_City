@@ -10,3 +10,5 @@ export {projectGmMechanicalInput,projectMechanicalInput,projectMechanicalOutput}
 export {ordinaryEffectClasses,ordinaryEffectsSchema,validOrdinaryEffect,ORDINARY_EFFECT_PROMPT} from './ordinary-effect-schema.js';
 export {alternateNativeUnarmedTrait,validateNativeUnarmedTraitOperation} from './native-unarmed-traits.js';
 export {createTypedRollResolver} from './typed-roll-execution.js';
+export {createTypedRollProof} from './typed-roll-proof.js';
+export {createTypedRequestSelection} from './typed-request-selection.js';

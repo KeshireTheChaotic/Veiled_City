@@ -1,0 +1,51 @@
+{
+  "run_id": "RF03-F01-C04",
+  "base_sha": "b7f51249677b6118699ca90209f8b5f6310adc21",
+  "started": "2026-10-23T18:43:57.816Z",
+  "finished": "2026-10-23T18:43:59.273Z",
+  "tests": {
+    "command": "node --test --test-reporter=tap --test-concurrency=1 bot/tests/ai-gm-2026-10/rf03-f01-c04.test.mjs",
+    "exit": 0,
+    "summary": [
+      "# tests 9",
+      "# pass 9",
+      "# fail 0",
+      "# skipped 0",
+      "# duration_ms 427.5802"
+    ],
+    "log_sha256": "ffbf48afdccfd381acea248fc5b54acde69168182efb770c89f9b4258e0530c3"
+  },
+  "gate": {
+    "command": "node bot/tooling/architecture/check-boundaries.mjs --ratchet --phase RF03",
+    "exit": 0,
+    "summary": [],
+    "log_sha256": "8781c25f848051d82e395ace24cf5c6104d1f41d929449358e72c8e098cb3378"
+  },
+  "syntax_count": 6,
+  "files": [
+    {
+      "path": "bot/src/typed-roll-proof.js",
+      "sha256": "6ea4c14efc56f1c77939242d6737540d6a46ad41ff34b910ab2c56694782158d"
+    },
+    {
+      "path": "bot/src/mechanical-native-v9.js",
+      "sha256": "ac4a8350c3af5727e2651aee2488b67f59ae543fb45765a2e484eac49e799cfa"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/typed-roll-proof.js",
+      "sha256": "5eb8ec94c8b6775a495e231eb699e65921f353c67d0b8b45ddab895347ce024c"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/typed-request-selection.js",
+      "sha256": "c0a336adb6525701b1aba27a11947dceae5d36b30f9ed23bc1aae0e53d36b37d"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/public.js",
+      "sha256": "efcd5bcb5c0b75b47dc3a5c32eb5a6ae2116eca9cd62ff81df9417092e0cf60b"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf03-f01-c04.test.mjs",
+      "sha256": "7044ddbbd0c5e184f3b9e95212fe0d2018900b74a2e543acf202f58bbabdc0b0"
+    }
+  ]
+}

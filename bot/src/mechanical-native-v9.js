@@ -1,3 +1,4 @@
+import {createTypedRequestSelection} from './frameworks/daggerheart/public.js';
 /** Read-only v9 adapters over accepted input and native receipts. Never invoke RNG. */
 import {projectMechanicalInput,projectMechanicalOutput} from './frameworks/daggerheart/public.js';
 import {consentAction} from './action-consent.js';
@@ -8,28 +9,8 @@ import {isPvpIntent} from './pvp-authority.js';
 import {incomingRollProjection} from './pc-incoming.js';
 import {revalidateNarrativeAudience} from './audience-native-v9.js';
 
-/** Shared exact selection rule; no sole-pending heuristic or generated request authority. */
-export function exactTypedRollSelection(db,guild,declaration,scope,operation,{targetKey=declaration.data.target_key}={}){
-  const {row}=consentAction(db,guild,declaration.record_key);
-  if(hash(row)!==hash(declaration)||row.data.actor!==scope.actorCharacterId||row.data.owner_user_id!==scope.actorUserId
-    ||(scope.mode==='private'?row.visibility!=='character'||row.subject_key!==scope.actorCharacterId:row.visibility!=='party')
-    ||isPvpIntent(db,guild,row))throw fail('mechanical_input_owner_or_scope');
-  return pendingRollRequests(db,guild,scope.actorUserId).filter(q=>q.subject_key===scope.actorCharacterId
-    &&q.status===(operation==='damage'?'awaiting_damage':'pending')
-    &&(q.data.input?.accepted_intent===row.record_key||targetKey===q.record_key&&row.data.target_key===q.record_key
-      &&row.data.source_span.split(/\s|[.,;!?()[\]{}"'`]/).includes(q.record_key)));
-}
-/** Exact source token identifies a native PvP request; it never supplies the attack outcome or another owner's choice. */
-export function exactTypedPvpSelection(db,guild,declaration,scope,operation){
-  const {row}=consentAction(db,guild,declaration.record_key),key=row.data.target_key;
-  if(hash(row)!==hash(declaration)||row.data.actor!==scope.actorCharacterId||row.data.owner_user_id!==scope.actorUserId
-    ||(scope.mode==='private'?row.visibility!=='character'||row.subject_key!==scope.actorCharacterId:row.visibility!=='party')
-    ||row.data.type!=='roll'||row.data.framing!=='immediate'||row.data.operation!==operation
-    ||!row.data.source_span.split(/\s|[.,;!?()[\]{}"'`]/).includes(key))return null;
-  const q=key?db.getCityRecord(guild,'pvp_attack_request',key):null,o=q?.data?.offer;
-  return o?.actor===scope.actorCharacterId&&o.snapshot.actor_owner===scope.actorUserId
-    &&(operation==='roll'?q.status==='ready'||!!q.data.roll:q.status==='awaiting_damage'||!!q.data.damage)?q:null;
-}
+const {exactTypedRollSelection,exactTypedPvpSelection}=createTypedRequestSelection({consentAction:(...args)=>consentAction(...args),pendingRollRequests:(...args)=>pendingRollRequests(...args),isPvpIntent:(...args)=>isPvpIntent(...args),hash:(...args)=>hash(...args),fail:(...args)=>fail(...args)});
+export {exactTypedRollSelection,exactTypedPvpSelection};
 export function nativeMechanicalInput(db,guild,{authority,grant},typedKey){
   const b=authority.inspect(grant),{row}=consentAction(db,guild,typedKey),d=row.data;
   revalidateNarrativeAudience(db,guild,b,b.scope);
