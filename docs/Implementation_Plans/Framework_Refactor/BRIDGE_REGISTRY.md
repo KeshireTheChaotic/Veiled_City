@@ -1,75 +1,75 @@
-# Observed integration registry — RF00
+# Canonical integration registry — RF01
 
-Generated from current source; proposals are not implemented/public APIs. Pair names are alphabetical. Every record's complete edges and injected db callsites are in DEPENDENCY_GRAPH.json. Do not create all pairs as empty directories. Review each at its owning migration slice; RF01-F05 defines exact contracts/lifecycle/consumer tests before implementation.
+The executable registry is [BRIDGE_CONTRACTS.json](RF01/BRIDGE_CONTRACTS.json). The checker validates actual public entrypoints, exact endpoints, source imports, consumers and fresh-test path references; test execution is evidenced separately in ledgers. Original RF00 observations are preserved [here](RF01/RF00_BRIDGE_REGISTRY.md) and in the unchanged dependency graph.
 
-Observed directions are dependency directions, not proof of bidirectional runtime traffic. Injected storage calls have no module import and still require an owned port/mapping. Application orchestration and telemetry wiring must not be hidden in pairs.
+63 observed pairs remain planning evidence. Two have transparent contracts and explicit composition, with native runner adoption deferred. No gameplay path is rewired and no unused pair packages are created. Dependency directions in historical evidence do not prove runtime traffic; planned bidirectional interfaces are not advertised as implemented.
 
-All pairs: validation preserves original principal/source/audience/session/revision/receipt fields; mapping may not expand authority. Lifecycle is plan → contract → fresh boundary test → implementation → remove old edge; deletion gate RF07-F03. Current consumers are the complete graph callsites, not fabricated new APIs.
+Every pair record names validation, lifecycle, source evidence, consumers, tests and adoption phase/feature. A pair can use only its two endpoints’ registered public APIs plus neutral kernel utilities. Application composition wires dependencies; frameworks never import their adapters.
 
-| Proposed pair | Import direction/count | Injected db calls | First actual evidence | State |
+| Pair | Status | Contract directions | Consumers/tests | Adoption |
 |---|---|---|---|---|
-| ai-provider--knowledge | ai-provider → knowledge: 1 | 0 | bot/src/prompt-budget.js:3 | PROPOSED; no API exists |
-| ai-provider--operations | ai-provider → operations: 1 | 0 | bot/src/generation-feedback.js:2 | PROPOSED; no API exists |
-| character--daggerheart | character → daggerheart: 1; daggerheart → character: 1 | 0 | bot/src/character-observation.js:7 | PROPOSED; no API exists |
-| character--discord | discord → character: 1 | 0 | bot/src/pvp-menu.js:10 | PROPOSED; no API exists |
-| character--narrative | narrative → character: 3 | 0 | bot/src/concept-context.js:5 | PROPOSED; no API exists |
-| character--persistence | injected storage only | 74 | bot/src/character-export.js:46 | PROPOSED; no API exists |
-| character--publication | publication → character: 2 | 0 | bot/src/handout.js:3 | PROPOSED; no API exists |
-| character--session | character → session: 2 | 0 | bot/src/character-observation.js:3 | PROPOSED; no API exists |
-| character--world | world → character: 1; character → world: 2 | 0 | bot/src/autonomous-world.js:17 | PROPOSED; no API exists |
-| content--intent | content → intent: 1 | 0 | bot/src/content-packages.js:6 | PROPOSED; no API exists |
-| content--persistence | injected storage only | 10 | bot/src/content-packages.js:46 | PROPOSED; no API exists |
-| content--world | content → world: 3 | 0 | bot/src/content-packages.js:3 | PROPOSED; no API exists |
-| daggerheart--discord | discord → daggerheart: 16 | 0 | bot/src/pvp-menu.js:8 | PROPOSED; no API exists |
-| daggerheart--intent | intent → daggerheart: 53; daggerheart → intent: 61 | 0 | bot/src/ai-intents.js:16 | PROPOSED; no API exists |
-| daggerheart--knowledge | daggerheart → knowledge: 18 | 0 | bot/src/consent-native.js:2 | PROPOSED; no API exists |
-| daggerheart--narrative | daggerheart → narrative: 101; narrative → daggerheart: 10 | 0 | bot/src/gm-action-capability.js:2 | PROPOSED; no API exists |
-| daggerheart--npc | daggerheart → npc: 4 | 0 | bot/src/consent-native.js:10 | PROPOSED; no API exists |
-| daggerheart--operations | daggerheart → operations: 11 | 0 | bot/src/gm-action-review.js:8 | PROPOSED; no API exists |
-| daggerheart--persistence | persistence → daggerheart: 1 | 1955 | bot/src/db.js:24 | PROPOSED; no API exists |
-| daggerheart--publication | daggerheart → publication: 15; publication → daggerheart: 19 | 0 | bot/src/mechanical-native-v9.js:5 | PROPOSED; no API exists |
-| daggerheart--session | daggerheart → session: 71; session → daggerheart: 17 | 0 | bot/src/action-consent.js:3 | PROPOSED; no API exists |
-| daggerheart--world | daggerheart → world: 115; world → daggerheart: 43 | 0 | bot/src/action-consent.js:5 | PROPOSED; no API exists |
-| discord--narrative | discord → narrative: 1 | 0 | bot/src/pvp-menu.js:11 | PROPOSED; no API exists |
-| discord--operations | discord → operations: 4; operations → discord: 1 | 0 | bot/src/discord/interaction-lifecycle.js:2 | PROPOSED; no API exists |
-| discord--persistence | injected storage only | 42 | bot/src/pvp-menu.js:35 | PROPOSED; no API exists |
-| discord--publication | publication → discord: 4; discord → publication: 2 | 0 | bot/src/publication-outbox.js:3 | PROPOSED; no API exists |
-| discord--session | discord → session: 2 | 0 | bot/src/pvp-menu.js:5 | PROPOSED; no API exists |
-| discord--world | discord → world: 1 | 0 | bot/src/pvp-menu.js:7 | PROPOSED; no API exists |
-| intent--knowledge | intent → knowledge: 8; knowledge → intent: 5 | 0 | bot/src/ai-intents.js:14 | PROPOSED; no API exists |
-| intent--narrative | intent → narrative: 7; narrative → intent: 3 | 0 | bot/src/ai-intents.js:33 | PROPOSED; no API exists |
-| intent--npc | intent → npc: 5; npc → intent: 1 | 0 | bot/src/ai-intents.js:6 | PROPOSED; no API exists |
-| intent--operations | operations → intent: 2 | 0 | bot/src/ai-review.js:2 | PROPOSED; no API exists |
-| intent--persistence | injected storage only | 227 | bot/src/action-dependency.js:50 | PROPOSED; no API exists |
-| intent--publication | intent → publication: 1; publication → intent: 2 | 0 | bot/src/gm-unified-arbitration.js:29 | PROPOSED; no API exists |
-| intent--session | session → intent: 9; intent → session: 21 | 0 | bot/src/action-continuation.js:3 | PROPOSED; no API exists |
-| intent--world | intent → world: 18; world → intent: 11 | 0 | bot/src/ai-intents.js:4 | PROPOSED; no API exists |
-| knowledge--narrative | knowledge → narrative: 6; narrative → knowledge: 16 | 0 | bot/src/entity-memory.js:3 | PROPOSED; no API exists |
-| knowledge--npc | knowledge → npc: 3; npc → knowledge: 1 | 0 | bot/src/evidence-custody.js:7 | PROPOSED; no API exists |
-| knowledge--operations | operations → knowledge: 2; knowledge → operations: 3 | 0 | bot/src/ai-review.js:9 | PROPOSED; no API exists |
-| knowledge--persistence | persistence → knowledge: 5 | 261 | bot/src/db.js:10 | PROPOSED; no API exists |
-| knowledge--publication | publication → knowledge: 6; knowledge → publication: 1 | 0 | bot/src/discovery-delivery.js:2 | PROPOSED; no API exists |
-| knowledge--session | session → knowledge: 10; knowledge → session: 7 | 0 | bot/src/dialogue-continuity.js:2 | PROPOSED; no API exists |
-| knowledge--world | world → knowledge: 14; knowledge → world: 18 | 0 | bot/src/autonomous-world.js:4 | PROPOSED; no API exists |
-| narrative--npc | narrative → npc: 3; npc → narrative: 2 | 0 | bot/src/narrative-authority.js:15 | PROPOSED; no API exists |
-| narrative--operations | narrative → operations: 2 | 0 | bot/src/narrative-completeness.js:3 | PROPOSED; no API exists |
-| narrative--persistence | persistence → narrative: 1 | 400 | bot/src/db.js:9 | PROPOSED; no API exists |
-| narrative--publication | narrative → publication: 6; publication → narrative: 16 | 0 | bot/src/concept-context.js:6 | PROPOSED; no API exists |
-| narrative--session | session → narrative: 4; narrative → session: 27 | 0 | bot/src/dialogue-continuity.js:10 | PROPOSED; no API exists |
-| narrative--world | world → narrative: 22; narrative → world: 30 | 0 | bot/src/autonomous-world.js:21 | PROPOSED; no API exists |
-| npc--operations | operations → npc: 2; npc → operations: 2 | 0 | bot/src/ai-review.js:4 | PROPOSED; no API exists |
-| npc--persistence | persistence → npc: 1 | 113 | bot/src/db.js:16 | PROPOSED; no API exists |
-| npc--session | session → npc: 3; npc → session: 3 | 0 | bot/src/dialogue-continuity.js:6 | PROPOSED; no API exists |
-| npc--world | world → npc: 17; npc → world: 14 | 0 | bot/src/autonomous-world.js:11 | PROPOSED; no API exists |
-| operations--persistence | persistence → operations: 3 | 31 | bot/src/db.js:14 | PROPOSED; no API exists |
-| operations--publication | publication → operations: 9 | 0 | bot/src/native-publications.js:9 | PROPOSED; no API exists |
-| operations--session | session → operations: 2 | 0 | bot/src/owner-action-terminal.js:3 | PROPOSED; no API exists |
-| operations--world | operations → world: 5; world → operations: 5 | 0 | bot/src/ai-review.js:3 | PROPOSED; no API exists |
-| persistence--publication | injected storage only | 239 | bot/src/discovery-delivery.js:7 | PROPOSED; no API exists |
-| persistence--session | persistence → session: 1 | 482 | bot/src/db.js:17 | PROPOSED; no API exists |
-| persistence--world | persistence → world: 1 | 880 | bot/src/db.js:15 | PROPOSED; no API exists |
-| publication--session | session → publication: 3; publication → session: 15 | 0 | bot/src/action-continuation.js:12 | PROPOSED; no API exists |
-| publication--world | publication → world: 6 | 0 | bot/src/native-hook-output.js:4 | PROPOSED; no API exists |
-| session--world | session → world: 23; world → session: 16 | 0 | bot/src/action-continuation.js:6 | PROPOSED; no API exists |
+| ai-provider--knowledge | PROPOSED_NO_API | ai-provider → knowledge (imports 1, injected 0) | None; proposed only | RF05 |
+| ai-provider--operations | PROPOSED_NO_API | ai-provider → operations (imports 1, injected 0) | None; proposed only | RF05 |
+| character--daggerheart | PROPOSED_NO_API | character → daggerheart (imports 1, injected 0); daggerheart → character (imports 1, injected 0) | None; proposed only | RF03 |
+| character--discord | PROPOSED_NO_API | discord → character (imports 1, injected 0) | None; proposed only | RF06 |
+| character--narrative | PROPOSED_NO_API | narrative → character (imports 3, injected 0) | None; proposed only | RF05 |
+| character--persistence | PROPOSED_NO_API | character → persistence (imports 0, injected 74) | None; proposed only | RF06 |
+| character--publication | PROPOSED_NO_API | publication → character (imports 2, injected 0) | None; proposed only | RF06 |
+| character--session | PROPOSED_NO_API | character → session (imports 2, injected 0) | None; proposed only | RF04 |
+| character--world | PROPOSED_NO_API | world → character (imports 1, injected 0); character → world (imports 2, injected 0) | None; proposed only | RF04 |
+| content--intent | PROPOSED_NO_API | content → intent (imports 1, injected 0) | None; proposed only | RF05 |
+| content--persistence | PROPOSED_NO_API | content → persistence (imports 0, injected 10) | None; proposed only | RF06 |
+| content--world | PROPOSED_NO_API | content → world (imports 3, injected 0) | None; proposed only | RF04 |
+| daggerheart--discord | PROPOSED_NO_API | discord → daggerheart (imports 16, injected 0) | None; proposed only | RF03 |
+| daggerheart--intent | PROPOSED_NO_API | intent → daggerheart (imports 53, injected 0); daggerheart → intent (imports 61, injected 0) | None; proposed only | RF03 |
+| daggerheart--knowledge | PROPOSED_NO_API | daggerheart → knowledge (imports 18, injected 0) | None; proposed only | RF03 |
+| daggerheart--narrative | PROPOSED_NO_API | daggerheart → narrative (imports 101, injected 0); narrative → daggerheart (imports 10, injected 0) | None; proposed only | RF03 |
+| daggerheart--npc | PROPOSED_NO_API | daggerheart → npc (imports 4, injected 0) | None; proposed only | RF03 |
+| daggerheart--operations | PROPOSED_NO_API | daggerheart → operations (imports 11, injected 0) | None; proposed only | RF03 |
+| daggerheart--persistence | PROPOSED_NO_API | persistence → daggerheart (imports 1, injected 0); daggerheart → persistence (imports 0, injected 1955) | None; proposed only | RF03 |
+| daggerheart--publication | PROPOSED_NO_API | daggerheart → publication (imports 15, injected 0); publication → daggerheart (imports 19, injected 0) | None; proposed only | RF03 |
+| daggerheart--session | PROPOSED_NO_API | daggerheart → session (imports 71, injected 0); session → daggerheart (imports 17, injected 0) | None; proposed only | RF03 |
+| daggerheart--world | PROPOSED_NO_API | daggerheart → world (imports 115, injected 0); world → daggerheart (imports 43, injected 0) | None; proposed only | RF03 |
+| discord--narrative | PROPOSED_NO_API | discord → narrative (imports 1, injected 0) | None; proposed only | RF05 |
+| discord--operations | PROPOSED_NO_API | discord → operations (imports 4, injected 0); operations → discord (imports 1, injected 0) | None; proposed only | RF06 |
+| discord--persistence | PROPOSED_NO_API | discord → persistence (imports 0, injected 42) | None; proposed only | RF06 |
+| discord--publication | CONTRACT_ONLY_UNWIRED | publication → discord | create-opening-services; rf01-f02/f03 | RF06-F03 |
+| discord--session | PROPOSED_NO_API | discord → session (imports 2, injected 0) | None; proposed only | RF06 |
+| discord--world | PROPOSED_NO_API | discord → world (imports 1, injected 0) | None; proposed only | RF06 |
+| intent--knowledge | PROPOSED_NO_API | intent → knowledge (imports 8, injected 0); knowledge → intent (imports 5, injected 0) | None; proposed only | RF05 |
+| intent--narrative | PROPOSED_NO_API | intent → narrative (imports 7, injected 0); narrative → intent (imports 3, injected 0) | None; proposed only | RF05 |
+| intent--npc | PROPOSED_NO_API | intent → npc (imports 5, injected 0); npc → intent (imports 1, injected 0) | None; proposed only | RF05 |
+| intent--operations | PROPOSED_NO_API | operations → intent (imports 2, injected 0) | None; proposed only | RF05 |
+| intent--persistence | PROPOSED_NO_API | intent → persistence (imports 0, injected 227) | None; proposed only | RF05 |
+| intent--publication | PROPOSED_NO_API | intent → publication (imports 1, injected 0); publication → intent (imports 2, injected 0) | None; proposed only | RF05 |
+| intent--session | PROPOSED_NO_API | session → intent (imports 9, injected 0); intent → session (imports 21, injected 0) | None; proposed only | RF05 |
+| intent--world | PROPOSED_NO_API | intent → world (imports 18, injected 0); world → intent (imports 11, injected 0) | None; proposed only | RF05 |
+| knowledge--narrative | PROPOSED_NO_API | knowledge → narrative (imports 6, injected 0); narrative → knowledge (imports 16, injected 0) | None; proposed only | RF05 |
+| knowledge--npc | PROPOSED_NO_API | knowledge → npc (imports 3, injected 0); npc → knowledge (imports 1, injected 0) | None; proposed only | RF04 |
+| knowledge--operations | PROPOSED_NO_API | operations → knowledge (imports 2, injected 0); knowledge → operations (imports 3, injected 0) | None; proposed only | RF04 |
+| knowledge--persistence | PROPOSED_NO_API | persistence → knowledge (imports 5, injected 0); knowledge → persistence (imports 0, injected 261) | None; proposed only | RF06 |
+| knowledge--publication | PROPOSED_NO_API | publication → knowledge (imports 6, injected 0); knowledge → publication (imports 1, injected 0) | None; proposed only | RF06 |
+| knowledge--session | PROPOSED_NO_API | session → knowledge (imports 10, injected 0); knowledge → session (imports 7, injected 0) | None; proposed only | RF04 |
+| knowledge--world | PROPOSED_NO_API | world → knowledge (imports 14, injected 0); knowledge → world (imports 18, injected 0) | None; proposed only | RF04 |
+| narrative--npc | PROPOSED_NO_API | narrative → npc (imports 3, injected 0); npc → narrative (imports 2, injected 0) | None; proposed only | RF05 |
+| narrative--operations | PROPOSED_NO_API | narrative → operations (imports 2, injected 0) | None; proposed only | RF05 |
+| narrative--persistence | PROPOSED_NO_API | persistence → narrative (imports 1, injected 0); narrative → persistence (imports 0, injected 400) | None; proposed only | RF05 |
+| narrative--publication | PROPOSED_NO_API | narrative → publication (imports 6, injected 0); publication → narrative (imports 16, injected 0) | None; proposed only | RF05 |
+| narrative--session | CONTRACT_ONLY_UNWIRED | session → narrative | create-opening-services; rf01-f02/f03 | RF04-F04 |
+| narrative--world | PROPOSED_NO_API | world → narrative (imports 22, injected 0); narrative → world (imports 30, injected 0) | None; proposed only | RF05 |
+| npc--operations | PROPOSED_NO_API | operations → npc (imports 2, injected 0); npc → operations (imports 2, injected 0) | None; proposed only | RF04 |
+| npc--persistence | PROPOSED_NO_API | persistence → npc (imports 1, injected 0); npc → persistence (imports 0, injected 113) | None; proposed only | RF06 |
+| npc--session | PROPOSED_NO_API | session → npc (imports 3, injected 0); npc → session (imports 3, injected 0) | None; proposed only | RF04 |
+| npc--world | PROPOSED_NO_API | world → npc (imports 17, injected 0); npc → world (imports 14, injected 0) | None; proposed only | RF04 |
+| operations--persistence | PROPOSED_NO_API | persistence → operations (imports 3, injected 0); operations → persistence (imports 0, injected 31) | None; proposed only | RF06 |
+| operations--publication | PROPOSED_NO_API | publication → operations (imports 9, injected 0) | None; proposed only | RF06 |
+| operations--session | PROPOSED_NO_API | session → operations (imports 2, injected 0) | None; proposed only | RF04 |
+| operations--world | PROPOSED_NO_API | operations → world (imports 5, injected 0); world → operations (imports 5, injected 0) | None; proposed only | RF04 |
+| persistence--publication | PROPOSED_NO_API | publication → persistence (imports 0, injected 239) | None; proposed only | RF06 |
+| persistence--session | PROPOSED_NO_API | persistence → session (imports 1, injected 0); session → persistence (imports 0, injected 482) | None; proposed only | RF06 |
+| persistence--world | PROPOSED_NO_API | persistence → world (imports 1, injected 0); world → persistence (imports 0, injected 880) | None; proposed only | RF06 |
+| publication--session | PROPOSED_NO_API | session → publication (imports 3, injected 0); publication → session (imports 15, injected 0) | None; proposed only | RF06 |
+| publication--world | PROPOSED_NO_API | publication → world (imports 6, injected 0) | None; proposed only | RF06 |
+| session--world | PROPOSED_NO_API | session → world (imports 23, injected 0); world → session (imports 16, injected 0) | None; proposed only | RF04 |
 
-Pre-existing logical integrations narrative--world, session--world and discord--persistence have manifest owners, but their current implementations may include third owners. Those edges remain explicit obligations; no exemption is granted.
+Contract validation does not grant canon, PC movement/choices, mechanical outcomes or acknowledgement authority. Rows and authoring arguments are passed unchanged; existing native policy and receipt ownership remain authoritative. No release or narrative quality claim follows from offline contract tests.

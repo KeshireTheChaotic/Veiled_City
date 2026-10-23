@@ -1,0 +1,12 @@
+{
+  "strict_command": "npm --prefix bot run architecture:strict",
+  "ratchet_exit": 0,
+  "run_id": "RF01-REPOSITORY-GATES",
+  "ratchet_command": "npm --prefix bot run architecture:check",
+  "finished_utc": "2026-10-23T14:42:45.1757659Z",
+  "rf07_expiry_command": "node bot/tooling/architecture/check-boundaries.mjs --ratchet --phase RF07",
+  "strict_exit": 1,
+  "rf07_expiry_exit": 1,
+  "started_utc": "2026-10-23T14:42:42.6084774Z",
+  "expiry_terminal": "GATE_LAUNCH_ATTEMPT_1.json"
+}

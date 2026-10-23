@@ -1,0 +1,387 @@
+{
+  "base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+  "branch": "codex/clean-ai-gm-2026-10",
+  "recorded_utc": "2026-10-23T14:47:03.594Z",
+  "ratchet": {
+    "mode": "ratchet",
+    "phase": "RF01",
+    "sourceModules": 377,
+    "unowned": 0,
+    "importOccurrences": 2311,
+    "internalImportOccurrences": 2139,
+    "cycleComponents": 1,
+    "largestCycle": 211,
+    "rawViolationOccurrences": 2861,
+    "acceptedLegacyOccurrences": 2861,
+    "activeViolationGroups": 0,
+    "transitionErrors": 0,
+    "pass": true,
+    "firstErrors": []
+  },
+  "strict": {
+    "mode": "strict",
+    "phase": "RF01",
+    "sourceModules": 377,
+    "unowned": 0,
+    "importOccurrences": 2311,
+    "internalImportOccurrences": 2139,
+    "cycleComponents": 1,
+    "largestCycle": 211,
+    "rawViolationOccurrences": 2861,
+    "pass": false,
+    "firstErrors": [
+      {
+        "code": "LEGACY_MODULE_LOCATION",
+        "from": "bot/src/action-consent.js",
+        "owner": "daggerheart"
+      },
+      {
+        "code": "LEGACY_MODULE_LOCATION",
+        "from": "bot/src/action-continuation.js",
+        "owner": "session"
+      },
+      {
+        "code": "LEGACY_MODULE_LOCATION",
+        "from": "bot/src/action-dependency.js",
+        "owner": "intent"
+      },
+      {
+        "code": "LEGACY_MODULE_LOCATION",
+        "from": "bot/src/ai-gm-test-selection.js",
+        "owner": "operations"
+      },
+      {
+        "code": "LEGACY_MODULE_LOCATION",
+        "from": "bot/src/ai-intent-contracts.js",
+        "owner": "intent"
+      }
+    ]
+  },
+  "rf07_expiry": {
+    "mode": "ratchet",
+    "phase": "RF07",
+    "sourceModules": 377,
+    "unowned": 0,
+    "importOccurrences": 2311,
+    "internalImportOccurrences": 2139,
+    "cycleComponents": 1,
+    "largestCycle": 211,
+    "rawViolationOccurrences": 2861,
+    "acceptedLegacyOccurrences": 0,
+    "activeViolationGroups": 2839,
+    "transitionErrors": 2839,
+    "pass": false,
+    "firstErrors": [
+      {
+        "code": "LEGACY_MODULE_LOCATION",
+        "from": "bot/src/action-consent.js",
+        "owner": "daggerheart"
+      },
+      {
+        "code": "LEGACY_MODULE_LOCATION",
+        "from": "bot/src/action-continuation.js",
+        "owner": "session"
+      },
+      {
+        "code": "LEGACY_MODULE_LOCATION",
+        "from": "bot/src/action-dependency.js",
+        "owner": "intent"
+      },
+      {
+        "code": "LEGACY_MODULE_LOCATION",
+        "from": "bot/src/ai-gm-test-selection.js",
+        "owner": "operations"
+      },
+      {
+        "code": "LEGACY_MODULE_LOCATION",
+        "from": "bot/src/ai-intent-contracts.js",
+        "owner": "intent"
+      }
+    ]
+  },
+  "gate_terminal": {
+    "strict_command": "npm --prefix bot run architecture:strict",
+    "ratchet_exit": 0,
+    "run_id": "RF01-REPOSITORY-GATES",
+    "ratchet_command": "npm --prefix bot run architecture:check",
+    "finished_utc": "2026-10-23T14:42:45.1757659Z",
+    "rf07_expiry_command": "node bot/tooling/architecture/check-boundaries.mjs --ratchet --phase RF07",
+    "strict_exit": 1,
+    "rf07_expiry_exit": 1,
+    "started_utc": "2026-10-23T14:42:42.6084774Z",
+    "expiry_terminal": "GATE_LAUNCH_ATTEMPT_1.json"
+  },
+  "compatibility": {
+    "all_355_original_runtime_hashes_unchanged": true,
+    "legacy_source_drift": [],
+    "existing_package_commands_unchanged": true,
+    "runtime_dependencies_unchanged": true,
+    "overrides_unchanged": true,
+    "engines_unchanged": true,
+    "production_lock_entries_unchanged": true,
+    "protected_tracked_diff": [],
+    "schema_path": "bot/sql/schema.sql",
+    "schema_version_static": 460,
+    "schema_sha256": "d3a69c4c55a876b087556ab7f291265a684c4287233b1651b1692be34781e374",
+    "schema_unchanged": true,
+    "frozen_code_test_hash_drift": [],
+    "rf02_migrations": 0,
+    "existing_runtime_modules_adopted": 0
+  },
+  "test_runs": [
+    {
+      "terminal": "F02_TERMINAL.json",
+      "execution": {
+        "run_id": "rf01-f02-20261023-01",
+        "start_utc": "2026-10-23T14:16:24.9617132Z",
+        "end_utc": "2026-10-23T14:16:25.0828574Z",
+        "exit_code": 0,
+        "syntax_checks": 11,
+        "command": "node --test --test-concurrency=1 --test-reporter=tap tests/ai-gm-2026-10/rf01-f02.test.mjs"
+      },
+      "summary": {
+        "tests": 5,
+        "pass": 5,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "duration_ms": 68.4061
+      },
+      "log_sha256": "e2607a804cc466e2b29895043f9943f4fc3d2bf0deddfe695998bcdcfc923981"
+    },
+    {
+      "terminal": "F03_TERMINAL.json",
+      "execution": {
+        "run_id": "rf01-f03-20261023-01",
+        "start_utc": "2026-10-23T14:18:07.4805609Z",
+        "end_utc": "2026-10-23T14:18:07.6037467Z",
+        "exit_code": 0,
+        "syntax_checks": 4,
+        "command": "node --test --test-concurrency=1 --test-reporter=tap tests/ai-gm-2026-10/rf01-f03.test.mjs"
+      },
+      "summary": {
+        "tests": 6,
+        "pass": 6,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "duration_ms": 70.114
+      },
+      "log_sha256": "e99b14d7c636c0f9fc0990e7debded8592d0603082bdeb33e037f2ad3e5097c5"
+    },
+    {
+      "terminal": "F05_TERMINAL.json",
+      "execution": {
+        "started_utc": "2026-10-23T14:39:11.2932716Z",
+        "finished_utc": "2026-10-23T14:39:11.5684685Z",
+        "syntax_failures": [],
+        "syntax_files": [
+          "tooling/architecture/bridge-registry.mjs",
+          "tooling/architecture/read-project.mjs",
+          "tests/ai-gm-2026-10/rf01-f05.test.mjs"
+        ],
+        "exit": 0,
+        "command": "node --test --test-concurrency=1 --test-reporter=tap tests/ai-gm-2026-10/rf01-f05.test.mjs"
+      },
+      "summary": {
+        "tests": 8,
+        "pass": 8,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "duration_ms": 86.4221
+      },
+      "log_sha256": "729d18d8c84bbd3d526bc688e8bebb7cd377aa4eeb697f9f48f9e5061aa4440d"
+    },
+    {
+      "terminal": "F06_TERMINAL.json",
+      "execution": {
+        "base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+        "syntax_files": 23,
+        "syntax_failures": [],
+        "run_id": "RF01-F06-FROZEN-1",
+        "frozen_files": [
+          {
+            "path": "src/frameworks/discord/public.js",
+            "sha256": "ba937a34fe5d3a883264807c832f32830dc1e6170cfe2b5c3fc3253ff5eca37f"
+          },
+          {
+            "path": "src/frameworks/discord/contracts/committed-publication.js",
+            "sha256": "a4db2327dc3efb7e1cbde1d13750a5f673e4181d0e99a4a7bd7ce798c2b5d6f9"
+          },
+          {
+            "path": "src/frameworks/narrative/public.js",
+            "sha256": "6bedbf57cb1ecebec60eb39e20141bcb837bada0578b41eec32c2e39abbbfecd"
+          },
+          {
+            "path": "src/frameworks/narrative/contracts/opening-author.js",
+            "sha256": "20011cb721f25f8ed929abf20cecd2518fa63fa533b55a56ea0cc5a875ee6e5e"
+          },
+          {
+            "path": "src/frameworks/publication/public.js",
+            "sha256": "5cb26ad7dbedba1931616f13d1d95e962fe5f686a8e14dd8a5c783fb6640d693"
+          },
+          {
+            "path": "src/frameworks/publication/contracts/transport.js",
+            "sha256": "ae357c9a79e146483cfcc551223d75267e787d4c55d4c79a34d9a81ff3530272"
+          },
+          {
+            "path": "src/frameworks/session/public.js",
+            "sha256": "e4af1366273d66db52002daae7a30c4cc984a5ab3424bbdeabe2aa269f38e9bb"
+          },
+          {
+            "path": "src/frameworks/session/contracts/opening-authoring.js",
+            "sha256": "44aed68e2093e448066f1ba0f3f640ca45252dda8375a3d5fb0551410fa0a38a"
+          },
+          {
+            "path": "src/framework-to-framework/discord--publication/public.js",
+            "sha256": "0ca686e4bf3ffc51977aa10d7d30bdac18b44256463b520e0415c0cabcaa56aa"
+          },
+          {
+            "path": "src/framework-to-framework/narrative--session/public.js",
+            "sha256": "8cd417a623f9f2c726ce29e1aaa9658466a228e668bd2965b4dd4c72d75b760f"
+          },
+          {
+            "path": "src/application/composition/compose-services.js",
+            "sha256": "b5c0f6a01a9ea7cfab9bdcc29392d3e4cd78468e31f7707cd383342280b8687f"
+          },
+          {
+            "path": "src/application/composition/create-opening-services.js",
+            "sha256": "8c70b1efc7e01def3ac417dc5cb007e33516a8da87f8fc82074c2537bfc78ee0"
+          },
+          {
+            "path": "src/application/composition/public.js",
+            "sha256": "93122edb604c871497c7ff6bee17e15498ea992c31bdb5ba5de4a1c87776e568"
+          },
+          {
+            "path": "tooling/architecture/ast-imports.mjs",
+            "sha256": "0ee832ec57e826009cf562b75d8cfbe92e1519d741e7bcdef7db1c07a5649924"
+          },
+          {
+            "path": "tooling/architecture/boundary-checker.mjs",
+            "sha256": "886bc685602e60a3fe61b90333972a046178a6726b92e5d75e8de35b6098012a"
+          },
+          {
+            "path": "tooling/architecture/bridge-registry.mjs",
+            "sha256": "9e644b2ef902db92d0473baca3c95c9ac1aa8b3d2013adaa3f672ea373e8e77a"
+          },
+          {
+            "path": "tooling/architecture/check-boundaries.mjs",
+            "sha256": "74f492a468c5fbe4a25a1cde1abb17cc33fb7236eaa4a4c7bda3986cb5ed7ecc"
+          },
+          {
+            "path": "tooling/architecture/read-project.mjs",
+            "sha256": "592d4dedcceb6ee8f431bbab48b48036d85920da58bc4b64295ce858ceb00abc"
+          },
+          {
+            "path": "tests/ai-gm-2026-10/rf01-f02.test.mjs",
+            "sha256": "9c6a504a5b8a3584a95eb9d1091d96692f650c08ded99cc19ea6041531eaa7c3"
+          },
+          {
+            "path": "tests/ai-gm-2026-10/rf01-f03.test.mjs",
+            "sha256": "c5e380c73a1f82be5e6a4522aca873807daf9ea8fe527b76504e81ea2e35804e"
+          },
+          {
+            "path": "tests/ai-gm-2026-10/rf01-f04.test.mjs",
+            "sha256": "1f5454c8686b5e2c0649c3f29091fb66f1179551c9c3c658f8f1271b224b87f5"
+          },
+          {
+            "path": "tests/ai-gm-2026-10/rf01-f05.test.mjs",
+            "sha256": "c4768abf6fc6cb44ca2ef2db5a3d5c3bed39f572cf500db8b2fd7c53de52a80f"
+          },
+          {
+            "path": "tests/ai-gm-2026-10/rf01-f06.test.mjs",
+            "sha256": "f7d3a119360a23dd9fbeea155428f522d38991ce2b052850ab6b654f09817ac9"
+          }
+        ],
+        "finished_utc": "2026-10-23T14:41:59.0368654Z",
+        "exit": 0,
+        "command": "node --test --test-concurrency=1 --test-reporter=tap tests/ai-gm-2026-10/rf01-f04.test.mjs tests/ai-gm-2026-10/rf01-f06.test.mjs",
+        "started_utc": "2026-10-23T14:41:56.5630792Z"
+      },
+      "summary": {
+        "tests": 34,
+        "pass": 34,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "duration_ms": 1338.5653
+      },
+      "log_sha256": "47be43c22c3086222abf61fdb139882b1a5ae6b7dee3406f5078037c9779bba3"
+    }
+  ],
+  "unique_current_tests": 53,
+  "source_and_test_sha256": {
+    "bot/src/frameworks/discord/public.js": "ba937a34fe5d3a883264807c832f32830dc1e6170cfe2b5c3fc3253ff5eca37f",
+    "bot/src/frameworks/discord/contracts/committed-publication.js": "a4db2327dc3efb7e1cbde1d13750a5f673e4181d0e99a4a7bd7ce798c2b5d6f9",
+    "bot/src/frameworks/narrative/public.js": "6bedbf57cb1ecebec60eb39e20141bcb837bada0578b41eec32c2e39abbbfecd",
+    "bot/src/frameworks/narrative/contracts/opening-author.js": "20011cb721f25f8ed929abf20cecd2518fa63fa533b55a56ea0cc5a875ee6e5e",
+    "bot/src/frameworks/publication/public.js": "5cb26ad7dbedba1931616f13d1d95e962fe5f686a8e14dd8a5c783fb6640d693",
+    "bot/src/frameworks/publication/contracts/transport.js": "ae357c9a79e146483cfcc551223d75267e787d4c55d4c79a34d9a81ff3530272",
+    "bot/src/frameworks/session/public.js": "e4af1366273d66db52002daae7a30c4cc984a5ab3424bbdeabe2aa269f38e9bb",
+    "bot/src/frameworks/session/contracts/opening-authoring.js": "44aed68e2093e448066f1ba0f3f640ca45252dda8375a3d5fb0551410fa0a38a",
+    "bot/src/framework-to-framework/discord--publication/public.js": "0ca686e4bf3ffc51977aa10d7d30bdac18b44256463b520e0415c0cabcaa56aa",
+    "bot/src/framework-to-framework/narrative--session/public.js": "8cd417a623f9f2c726ce29e1aaa9658466a228e668bd2965b4dd4c72d75b760f",
+    "bot/src/application/composition/compose-services.js": "b5c0f6a01a9ea7cfab9bdcc29392d3e4cd78468e31f7707cd383342280b8687f",
+    "bot/src/application/composition/create-opening-services.js": "8c70b1efc7e01def3ac417dc5cb007e33516a8da87f8fc82074c2537bfc78ee0",
+    "bot/src/application/composition/public.js": "93122edb604c871497c7ff6bee17e15498ea992c31bdb5ba5de4a1c87776e568",
+    "bot/tooling/architecture/ast-imports.mjs": "0ee832ec57e826009cf562b75d8cfbe92e1519d741e7bcdef7db1c07a5649924",
+    "bot/tooling/architecture/boundary-checker.mjs": "886bc685602e60a3fe61b90333972a046178a6726b92e5d75e8de35b6098012a",
+    "bot/tooling/architecture/bridge-registry.mjs": "9e644b2ef902db92d0473baca3c95c9ac1aa8b3d2013adaa3f672ea373e8e77a",
+    "bot/tooling/architecture/check-boundaries.mjs": "74f492a468c5fbe4a25a1cde1abb17cc33fb7236eaa4a4c7bda3986cb5ed7ecc",
+    "bot/tooling/architecture/read-project.mjs": "592d4dedcceb6ee8f431bbab48b48036d85920da58bc4b64295ce858ceb00abc",
+    "bot/tests/ai-gm-2026-10/rf01-f02.test.mjs": "9c6a504a5b8a3584a95eb9d1091d96692f650c08ded99cc19ea6041531eaa7c3",
+    "bot/tests/ai-gm-2026-10/rf01-f03.test.mjs": "c5e380c73a1f82be5e6a4522aca873807daf9ea8fe527b76504e81ea2e35804e",
+    "bot/tests/ai-gm-2026-10/rf01-f04.test.mjs": "1f5454c8686b5e2c0649c3f29091fb66f1179551c9c3c658f8f1271b224b87f5",
+    "bot/tests/ai-gm-2026-10/rf01-f05.test.mjs": "c4768abf6fc6cb44ca2ef2db5a3d5c3bed39f572cf500db8b2fd7c53de52a80f",
+    "bot/tests/ai-gm-2026-10/rf01-f06.test.mjs": "f7d3a119360a23dd9fbeea155428f522d38991ce2b052850ab6b654f09817ac9",
+    "bot/package.json": "edbfdeddaf27c24b993a6e0b6d1c12e2f74e4750c0081f5fd8d47d65e27402fe",
+    "bot/package-lock.json": "0fc4f873dcd5a0cbcc7879d7d9f9737fb98f13729d469a8762230904c6db1d61",
+    "docs/Implementation_Plans/Framework_Refactor/RF01/PACKAGES.json": "b0067a467e74cf32fd9c7c95d88ad3a90c09961ce99cee95ec7fea2e0dd4572e",
+    "docs/Implementation_Plans/Framework_Refactor/RF01/BRIDGE_CONTRACTS.json": "5995991fe380713778b4c13f9a85d392761690d5d984fc6ffb8bc1114a6cbf4f",
+    "docs/Implementation_Plans/Framework_Refactor/RF01/TRANSITION_BASELINE.json": "213b8e19491ae0ebcbcf85321b00ba40768420f27233e8d84f84ccad96cb84d6",
+    "docs/Implementation_Plans/Framework_Refactor/RF01/TRANSITIONS.json": "74641dfeef0bccb75588272bdeffbb6d70f3cee4a9f61f6bda86552df052d6aa",
+    "docs/Implementation_Plans/Framework_Refactor/OWNERSHIP_DECISIONS.json": "d3a6b2ae485805843720b314bd7a4c89d039b5f40c42dc0b36805b5c9d8cfa16"
+  },
+  "provider_calls": 0,
+  "provider_tokens": 0,
+  "provider_cost_usd": 0,
+  "codex_cost": "UNMEASURED",
+  "cache": "No provider calls/cache. Filesystem parser only; no persistent runtime caches introduced.",
+  "limitations": [
+    "211-module cycle remains",
+    "2 contracts not adopted by native runners",
+    "61 integrations remain proposals",
+    "Static checker is not semantic domain/effect proof",
+    "No live/startup/gameplay/replay equivalence test claimed",
+    "RF02 not started"
+  ],
+  "release": "NOT AUTHORIZED",
+  "final_registry_gate": {
+    "exit": 0,
+    "finished_utc": "2026-10-23T14:50:41.2370807Z",
+    "started_utc": "2026-10-23T14:50:40.5994171Z",
+    "reason": "Final registry uses hash-bound historical graph references instead of duplicating all edge records",
+    "command": "node bot/tooling/architecture/check-boundaries.mjs --ratchet --phase RF01",
+    "summary": {
+      "mode": "ratchet",
+      "phase": "RF01",
+      "sourceModules": 377,
+      "unowned": 0,
+      "importOccurrences": 2311,
+      "internalImportOccurrences": 2139,
+      "cycleComponents": 1,
+      "largestCycle": 211,
+      "rawViolationOccurrences": 2861,
+      "acceptedLegacyOccurrences": 2861,
+      "activeViolationGroups": 0,
+      "transitionErrors": 0,
+      "pass": true,
+      "firstErrors": []
+    }
+  }
+}

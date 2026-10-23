@@ -1,0 +1,5 @@
+# RF01-F02 — consumer-owned interfaces and pair adapters
+
+Base `0abf4be1d45e87abb2df4416f0e0f546b90cce72`. Implement session-owned opening-authoring and publication-owned transport interfaces from actual `GMService.authorAssemblyScene(guildId,sessionId,scope,options)` and `deliverTurnOutbox(...,transport(row))` seams. Narrative/Discord provide injected capabilities through exactly named pair adapters. Public modules expose only these actual new contract constructors.
+
+No legacy module imports/moves, runtime adoption, new story/PC/mechanical authority or copied native validation. Preserve arguments, object identity, callback receiver, return/Promise and exception/uncertain-send metadata. New deterministic tests in rf01-f02.test.mjs must exercise actual new interfaces and adapters. No live provider/Discord or database needed for transparent callable contracts. One frozen blocking batch, no polling; record actual results. Rollback new contract/public/bridge modules together before consumers; no persisted-state impact. RELEASE NOT AUTHORIZED.

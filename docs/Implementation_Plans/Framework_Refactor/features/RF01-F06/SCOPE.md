@@ -1,0 +1,5 @@
+# RF01-F06 — Frozen enforcement and compatibility evidence
+
+Base `0abf4be1d45e87abb2df4416f0e0f546b90cce72`. Add explicit package architecture commands without changing existing commands. Fresh disposable-filesystem tests must exercise the actual checker CLI and fixed configuration loader, prove introduced regressions fail and source is read without evaluation. Include independent rejection of unsupported source types; prior F04 tests rerun only because their production checker/reader changed. F02/F03/F05 passing tests will not be repeated unless their production code changes.
+
+Freeze one targeted batch of fresh F04 (changed checker/reader) and new F06 tests, then batch repairs only if needed. Collect earlier terminal results as the phase evidence union without unnecessarily re-executing passing unchanged contracts. Run only changed-file syntax. Capture actual repository ratchet success versus strict debt failure and RF07 exception expiry. Record hashes, untouched-runtime/storage/startup comparisons, costs, acceptance, rollback and remaining limitations. No RF02 relocation or gameplay adoption. RELEASE NOT AUTHORIZED.

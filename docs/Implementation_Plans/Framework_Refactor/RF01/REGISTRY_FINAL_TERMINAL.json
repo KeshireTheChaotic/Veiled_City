@@ -1,0 +1,7 @@
+{
+  "exit": 0,
+  "finished_utc": "2026-10-23T14:50:41.2370807Z",
+  "started_utc": "2026-10-23T14:50:40.5994171Z",
+  "reason": "Final registry uses hash-bound historical graph references instead of duplicating all edge records",
+  "command": "node bot/tooling/architecture/check-boundaries.mjs --ratchet --phase RF01"
+}

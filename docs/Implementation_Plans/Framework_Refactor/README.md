@@ -2,7 +2,7 @@
 
 RF00 is an offline inventory and migration design, anchored to `f43d002693cb4ee38038b5dbb2c1049de95b3ffd` on `codex/clean-ai-gm-2026-10`. It does not relocate or modify application implementation. The owner handoff is preserved at [its supplied path](../phases/RF00/Veiled_City_RF00_Framework_Isolation_Sol_6_1_Medium_Handoff.md).
 
-Read the [owner behavior specification](../OWNER_AI_GM_BEHAVIOR_SPEC.md), complementary [ENGINE constitution](../../../content/ENGINE/AI_GM_CONSTITUTION.md), [test policy](../TEST_PROTOCOL.md), [no-poll policy](../TEST_EXECUTION_NO_POLL.md), then the active [RF00 scope](phases/RF00/SCOPE.md) and feature pair. Historical P-series evidence remains unchanged.
+Read root AGENTS.md first, then the [owner behavior specification](../OWNER_AI_GM_BEHAVIOR_SPEC.md), complementary [ENGINE constitution](../../../content/ENGINE/AI_GM_CONSTITUTION.md), [test policy](../TEST_PROTOCOL.md), [no-poll policy](../TEST_EXECUTION_NO_POLL.md), then the active [RF01 scope](phases/RF01/SCOPE.md) and feature pair. Historical P-series and RF00 audit evidence remain unchanged except the current registry now has an explicitly preserved RF00 snapshot.
 
 ## Current evidence
 
@@ -15,10 +15,16 @@ Read the [owner behavior specification](../OWNER_AI_GM_BEHAVIOR_SPEC.md), comple
 
 355 tracked `bot/src` paths have exclusive accountable owners. Two supported non-test CLI wrappers and two new offline audit modules are also source-classified. Initial graph: 2,283 import occurrences, 2,121 internal import occurrences, 1,374 projected ownership/public-contract obligations; one strongly connected component includes 211 modules. All individual edges are retained. These unresolved obligations explicitly prevent a claim of architectural isolation. The 63 proposed pairs are evidence-backed planning records, not 63 empty packages or established contracts.
 
-## Reproduce the audit
+## Current executable gate — RF01
 
-From repository root: `node bot/tooling/architecture/inventory.mjs`. This reads Git paths and application source text and writes only this initiative's generated documentation. It never imports the inspected application, runs inherited tests, opens SQLite, starts Discord or calls a provider. Re-run only after relevant source/ownership changes; source hashes identify drift. The generated graph includes the new tooling under its own owner.
+`npm --prefix bot run architecture:check` checks current source ownership, parsed imports, exact public APIs/pairs/consumers and counted expiring legacy debt. `npm --prefix bot run architecture:strict` exposes all raw debt and intentionally fails while migration remains incomplete. See [policy and limitations](RF01/ENFORCEMENT.md), [phase ledger](phases/RF01/LEDGER.md) and [acceptance matrix](RF01/ACCEPTANCE_MATRIX.md). New source cannot use a legacy exception; adding an edge to the existing 211-module cycle fails even if its membership is unchanged.
 
-Fresh audit-tooling tests: `cd bot` then `node --test --test-concurrency=1 --test-reporter=tap tests/ai-gm-2026-10/rf00-f06.test.mjs`, one blocking frozen batch under the no-poll policy. RF00 does not requalify game mechanics or live services. See [phase ledger](phases/RF00/LEDGER.md) for actual terminal evidence.
+Two transparent injected contracts and explicit application composition are implemented and tested. Existing native runners have not adopted them. RF02 file migrations have **not** begun; the owner has held them. Strict architectural isolation is not yet achieved.
 
-RF01–RF07 remain incremental implementation work. No source relocation is approved as complete merely because its proposed destination exists in a CSV. **RELEASE NOT AUTHORIZED.**
+## Historical RF00 audit
+
+RF00 used `node bot/tooling/architecture/inventory.mjs` against its explicit legacy ownership inventory. Its frozen outputs remain historical migration evidence. Do not run it over the new package topology or overwrite that audit to make an enforcement gate pass; use RF01's checker/current ownership evidence instead.
+
+RF00's original test result remains in its [ledger](phases/RF00/LEDGER.md); it was not rerun or reused for RF01. Only newly authored RF01 feature tests were executed, with blocking terminal evidence. Neither phase requalifies game mechanics or live services.
+
+RF02–RF07 remain incremental implementation work. No source relocation is approved as complete merely because its proposed destination exists in a CSV. **RELEASE NOT AUTHORIZED.**

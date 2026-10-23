@@ -1,0 +1,5 @@
+# RF01-F03 — explicit dependency composition
+
+Base `0abf4be1d45e87abb2df4416f0e0f546b90cce72`. Add an application-owned, instance-local composition constructor. Validate every declared dependency, duplicate binding and initialization cycle before any factory runs. Instantiate lazily only when the composition root requests a service; never pass the container into frameworks or construct providers/SQLite/Discord on module import. Failed construction remains failed until explicit fresh composition, avoiding silent resource retries.
+
+Add an opening/publication composition example using the two real RF01 pair adapters, without importing or rewiring existing gameplay. Framework workflow conventions require explicit ports, one unit of work and no duplicated policy. Fresh rf01-f03.test.mjs exercises actual constructors with original fakes. One frozen blocking batch, no legacy/poll/live actions. Rollback new composition modules and declared public path; existing runtime is untouched. RELEASE NOT AUTHORIZED.

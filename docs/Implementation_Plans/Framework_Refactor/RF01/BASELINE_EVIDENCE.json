@@ -1,0 +1,2668 @@
+{
+  "source_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+  "summary": {
+    "sourceModules": 377,
+    "unowned": 0,
+    "importOccurrences": 2311,
+    "internalImportOccurrences": 2139,
+    "cycleComponents": 1,
+    "largestCycle": 211,
+    "rawViolationOccurrences": 2861,
+    "pass": false
+  },
+  "violations_by_code": {
+    "LEGACY_MODULE_LOCATION": 353,
+    "EAGER_MODULE_CONSTRUCTION": 4,
+    "EAGER_MODULE_CALL": 1,
+    "IMPORTS_PRIVATE_API": 332,
+    "DIRECT_CROSS_FRAMEWORK_IMPORT": 1021,
+    "FRAMEWORK_IMPORTS_PAIR": 3,
+    "EXTERNAL_CAPABILITY_OWNER": 9,
+    "PAIR_IMPORTS_PRIVATE_API": 7,
+    "PAIR_IMPORTS_THIRD_OWNER": 11,
+    "CYCLIC_IMPORT_EDGE": 1120
+  },
+  "legacy_source_sha256": "1933ce740f1261c02467e9ed6cc3410d4d74f026621fea5504c260839ef5aa0f",
+  "transition_entries": 2839,
+  "source_ownership": [
+    {
+      "path": "bot/scripts/cost-estimate.mjs",
+      "owner": "tooling",
+      "role": "tooling",
+      "location": "legacy-cli",
+      "sha256": "2122bc75c070b20d39997cf6476b237f25829e91434f65da7b2ada001d31b2eb"
+    },
+    {
+      "path": "bot/scripts/export-campaign.mjs",
+      "owner": "tooling",
+      "role": "tooling",
+      "location": "legacy-cli",
+      "sha256": "97ad584e0f954338beb31fe69ca519d706a896c24dc55dbab8483284cd557595"
+    },
+    {
+      "path": "bot/src/action-consent.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "89cd6e8337281901bbd1495acbe6bffe8aa69c8ff51234dc704f87625925e1ef"
+    },
+    {
+      "path": "bot/src/action-continuation.js",
+      "owner": "session",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "ab4e92203bb67c9c0b079f4cbb01a3254deb1a71c2ff3e1065c9c53dbd55c8f2"
+    },
+    {
+      "path": "bot/src/action-dependency.js",
+      "owner": "intent",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "837aa40bea1ae6bd5cf9402f88dc508fe9373367a9c05badcfce53b22494d71d"
+    },
+    {
+      "path": "bot/src/ai-gm-test-selection.js",
+      "owner": "operations",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "0d07cf6575257bcafe2f79a1f182fed5979ac545926265e57bbc0f25151a8f76"
+    },
+    {
+      "path": "bot/src/ai-intent-contracts.js",
+      "owner": "intent",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "585f1971d099c434e30ae14cfa44c78f817eaafadbab72e1289d6cc406827ae2"
+    },
+    {
+      "path": "bot/src/ai-intents.js",
+      "owner": "intent",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "4d9b0e7b38967766c5f6cafb32dee0e814f3469afedc94e608549fbd91dc499f"
+    },
+    {
+      "path": "bot/src/ai-review.js",
+      "owner": "operations",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "a1f11eaebf2bf69107967dadcf2415d311bde119bee2bc15d04fc5702ccf37ef"
+    },
+    {
+      "path": "bot/src/application-authority.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "58554e42ec04ca5908ca7ac6e96225b1690a8025a273d4d0e836df4bd4054901"
+    },
+    {
+      "path": "bot/src/application/composition/compose-services.js",
+      "owner": "application",
+      "role": "application",
+      "location": "new",
+      "sha256": "b5c0f6a01a9ea7cfab9bdcc29392d3e4cd78468e31f7707cd383342280b8687f"
+    },
+    {
+      "path": "bot/src/application/composition/create-opening-services.js",
+      "owner": "application",
+      "role": "application",
+      "location": "new",
+      "sha256": "8c70b1efc7e01def3ac417dc5cb007e33516a8da87f8fc82074c2537bfc78ee0"
+    },
+    {
+      "path": "bot/src/application/composition/public.js",
+      "owner": "application",
+      "role": "application",
+      "location": "new",
+      "sha256": "93122edb604c871497c7ff6bee17e15498ea992c31bdb5ba5de4a1c87776e568"
+    },
+    {
+      "path": "bot/src/assembly-context.js",
+      "owner": "session",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "bfc23893a2c962133af9f30b10a9fb387282a4adbe28fde152149e0fd32968c6"
+    },
+    {
+      "path": "bot/src/assembly-delivery.js",
+      "owner": "application",
+      "role": "application",
+      "location": "legacy",
+      "sha256": "ff2c219d1322540e2a7e2959a911ad5476f2ba3d92f3a2e833dafe664fc7d4ed"
+    },
+    {
+      "path": "bot/src/assembly-evidence.js",
+      "owner": "session",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "593b0776fdfc0f824480545ecce28256794a7c13e6c75228496f7f57d3f34d55"
+    },
+    {
+      "path": "bot/src/assembly-planning.js",
+      "owner": "application",
+      "role": "application",
+      "location": "legacy",
+      "sha256": "073e0876ae69bd586d9e37106ca6acaefea0664be9829976514e514f4de6918a"
+    },
+    {
+      "path": "bot/src/assembly-publications.js",
+      "owner": "application",
+      "role": "application",
+      "location": "legacy",
+      "sha256": "9c5c9cae7f2181dbe12bf2e2e666456eb20f2a3044a3e70231287447eabe9af4"
+    },
+    {
+      "path": "bot/src/assembly-readiness.js",
+      "owner": "session",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "c5ceede5d8eaf61a6a50feb02b5f6578d40fbe8220d60214267aafa4c8224d87"
+    },
+    {
+      "path": "bot/src/assembly-state.js",
+      "owner": "session",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "ba795cead7417eedd90d230f53abe9915e1ffe1bf289dd9c76243a02487f8b09"
+    },
+    {
+      "path": "bot/src/audience-first-capability.js",
+      "owner": "narrative",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "14775ee06d3e120ea40eeba2745d0462d06e483b684e89686528a8bb2b6a853e"
+    },
+    {
+      "path": "bot/src/audience-native-v9.js",
+      "owner": "narrative",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "cb3e6a1874b328ae1eb708b517be766edbd7de097e2ad94ce2d53448305aa84c"
+    },
+    {
+      "path": "bot/src/authored-candidates.js",
+      "owner": "intent",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "06610b771794799892712409d568af3749c300ac76a55df92b748779f5cc72ff"
+    },
+    {
+      "path": "bot/src/authored-turn-envelope.js",
+      "owner": "intent",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "171cadbd9cac3e61ffcff2c38ae2bec28e2ed9a8bd3704460debf3b3443a5f5f"
+    },
+    {
+      "path": "bot/src/authority-policy.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "dfefe97f1071868ab2be07b38f713368f4e21a374aa83f10af809c42e7fd50ec"
+    },
+    {
+      "path": "bot/src/authority-projection.js",
+      "owner": "knowledge",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "3bc38af3af9bc67d9fd3c1923f492b13400dc9d73a1ee69d8315c679d5cddc1a"
+    },
+    {
+      "path": "bot/src/autonomous-world.js",
+      "owner": "world",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "cc65729a3a084ac892b1b2148b669a594227db913f175a134f3041e537ff411c"
+    },
+    {
+      "path": "bot/src/character-export.js",
+      "owner": "character",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "700e1f9bfc6ac956215a81e6901d500493b2000845282dc1fe20d9601276dc6a"
+    },
+    {
+      "path": "bot/src/character-narrative.js",
+      "owner": "character",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "dad827412db1f40d336e977f47f6901cfa0978cdfccf28728196c3c0329acc34"
+    },
+    {
+      "path": "bot/src/character-observation.js",
+      "owner": "character",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "02553b40b083ecf62b9a58d5a4a7956468cdb54012b1f928a3fa551f70b2e65a"
+    },
+    {
+      "path": "bot/src/character-system.js",
+      "owner": "character",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "ef3e696181d8c0289e8a786d790f6d02db294193d935d1983d7526abeeeca7a4"
+    },
+    {
+      "path": "bot/src/city-calendar.js",
+      "owner": "world",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "72b4cb0df5e0c3c54038e26073f6091b8c861c1266d5df947c0538e84c82ff9e"
+    },
+    {
+      "path": "bot/src/city-civic.js",
+      "owner": "world",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "acbf8743c4609de9272bcd8495cfa3b535314d11ca33ff3af03b1d56ce7df469"
+    },
+    {
+      "path": "bot/src/city-commands.js",
+      "owner": "application",
+      "role": "application",
+      "location": "legacy",
+      "sha256": "4e72052fdd8ec7f59d136ecd03f9873b3c7d6c81d5ab99b6a86fbbf2dd02c756"
+    },
+    {
+      "path": "bot/src/city-consequences.js",
+      "owner": "world",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "e8f9e8c3eb8b725e6bbae9291f52375db46d52db3259ea792582534115345d9f"
+    },
+    {
+      "path": "bot/src/city-constraints.js",
+      "owner": "world",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "18cd6dc640030adf144b35c2330ef63eabb43d1decc6bcfab62861140897cdd8"
+    },
+    {
+      "path": "bot/src/city-core.js",
+      "owner": "world",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "eded6e1092bc0b47abcbffca315b37541cfcd0ce0e16470d62659b880b5c9a8d"
+    },
+    {
+      "path": "bot/src/city-depth.js",
+      "owner": "world",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "0442e79973323bb2b60a4781627acd9c603c0b3577b405d2356a89e1651e2d31"
+    },
+    {
+      "path": "bot/src/city-groups.js",
+      "owner": "world",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "d8a592fe22a3af4f103af6ad1d65e9b460d6139d06fe1c1e493e7d64fd9f1759"
+    },
+    {
+      "path": "bot/src/combat.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "17bc92fcc5c1c49e80a0974970dca7fffb6d6b2c700ce68426494df9cece8891"
+    },
+    {
+      "path": "bot/src/command-definitions.js",
+      "owner": "discord",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "97c12fe79b55ab2c198e86da4c494d90559ab929bff29e7769065161c31e418c"
+    },
+    {
+      "path": "bot/src/command-schema.js",
+      "owner": "discord",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "a46e05a69e80cb5a06393349ef552564048df8137383d5aedbfba776cb303c7e"
+    },
+    {
+      "path": "bot/src/commands.js",
+      "owner": "application",
+      "role": "application",
+      "location": "legacy",
+      "sha256": "edf704e22b8ac4f1ce9dc3a443fa9764393e31f9cd343bef25bc727041abe28e"
+    },
+    {
+      "path": "bot/src/concept-context.js",
+      "owner": "narrative",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "e7a4d9de41dbcd5cf33b17eee33cba18e29377451837d882c04469604a0e5b3c"
+    },
+    {
+      "path": "bot/src/config.js",
+      "owner": "bootstrap",
+      "role": "bootstrap",
+      "location": "legacy",
+      "sha256": "3d5e472d9a2997b30f24233608cff77a8e4ceb7edf0194f40ad5c162a5c86a74"
+    },
+    {
+      "path": "bot/src/consent-native.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "75a1b5d1872dd1c595b0f81fddc9c568bf6a8a911bdd66af321708ddc2fc0c1e"
+    },
+    {
+      "path": "bot/src/consequence-reconciliation.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "43064543693ed8532691828a05a0f91b07e8ee5bc8ce2d94dbc9bf302b440fd2"
+    },
+    {
+      "path": "bot/src/content-packages.js",
+      "owner": "content",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "55422a05f59fc5e97303b85c5098798c8469b836ccb0d93c6c17b0caa9a9823b"
+    },
+    {
+      "path": "bot/src/content.js",
+      "owner": "content",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "86875dc9ae71e3ac43fba93e9b6eba597d5ff41a9d1e2c4f843294b964e12855"
+    },
+    {
+      "path": "bot/src/context-memory.js",
+      "owner": "knowledge",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "8b0a4aad063d049aea47b08366f0081592826c4d8094dc0dab612c2154ae1a32"
+    },
+    {
+      "path": "bot/src/context-planner.js",
+      "owner": "application",
+      "role": "application",
+      "location": "legacy",
+      "sha256": "39b74a245794b852a08d47c0dfc7c2dffbb94066c6881061fd2c2aca260ccba1"
+    },
+    {
+      "path": "bot/src/continuity-routing.js",
+      "owner": "application",
+      "role": "application",
+      "location": "legacy",
+      "sha256": "5863c52960f771f987d045694fe115721ef36d594bd8f1726d64d032ea4b82b0"
+    },
+    {
+      "path": "bot/src/conversation-principal.js",
+      "owner": "session",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "24642e6803e3f7701deb4be77f7e2e1a2e65e7485a05fb81c35d837e66faa65e"
+    },
+    {
+      "path": "bot/src/db.js",
+      "owner": "persistence",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "b23c83f84d85bea80477a12eea184a39a9c392dadc5a690981051c08fb73874c"
+    },
+    {
+      "path": "bot/src/decision-advisory.js",
+      "owner": "intent",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "c266582463f08077a42ef47225a6c59e6b5564847b2943f8654f2e716eb7d7e3"
+    },
+    {
+      "path": "bot/src/delegation-catalog.js",
+      "owner": "narrative",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "16d01026c002d3b0061af04a8d773bec2d3257f91889a2ade21fb0b734e8cf34"
+    },
+    {
+      "path": "bot/src/diagnostics/session5-reader.js",
+      "owner": "operations",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "be5ba7fd38a233a9aeac02dc45827ef6d2e72763b0776742eab13f6a500ba171"
+    },
+    {
+      "path": "bot/src/dialogue-continuity.js",
+      "owner": "session",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "8e3f01e0f81118f31493d87a4495713f056c6599bf6878e0d8374616611680bf"
+    },
+    {
+      "path": "bot/src/dice.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "6534195eb0441d0c9982616a5d79e71f5067ddc863883a4cabda17072b6c865c"
+    },
+    {
+      "path": "bot/src/director.js",
+      "owner": "world",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "d09ca966480dff531905c66e460278aa4337b5139f1fe00fe777b8dc1e29391b"
+    },
+    {
+      "path": "bot/src/disclosure-authority.js",
+      "owner": "knowledge",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "7b332081088646f3800f66d86c84ddbab5df26a18bb6cc3b931d0b24375534b8"
+    },
+    {
+      "path": "bot/src/discord/chunking.js",
+      "owner": "discord",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "01e60a9aaf30f7fa6bafc01f844111e164b0ca961bf3411abe986102807b7c1f"
+    },
+    {
+      "path": "bot/src/discord/delivery.js",
+      "owner": "discord",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "7a5fd4a7dc9d6bd123d708599f629041ad9e0697484c1ca6608c389d7e9f4ae9"
+    },
+    {
+      "path": "bot/src/discord/interaction-lifecycle.js",
+      "owner": "discord",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "1a0619addca591669c6c32147c7b7c82ffb57f6d44aa3d121d399f4ce0956f74"
+    },
+    {
+      "path": "bot/src/discord/privacy.js",
+      "owner": "discord",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "d75b421b084297e458b8b2c1e794a284813c556e426d009b3b5123c105058126"
+    },
+    {
+      "path": "bot/src/discovery-delivery.js",
+      "owner": "publication",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "e643f6247974aafe29c3b5cfc4e643e15de0f51176249844859abc61fd937a37"
+    },
+    {
+      "path": "bot/src/encounter.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "8cc857aac1c1667fde7ac350adb13cbeb0f36fe29e797623de7d009a3d060a01"
+    },
+    {
+      "path": "bot/src/engagement-shadow.js",
+      "owner": "intent",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "320681335965e69687ec99563bb539c3b63f0c554e0cc301f70b34be74f483b5"
+    },
+    {
+      "path": "bot/src/entity-memory.js",
+      "owner": "knowledge",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "7318471ab70672f701dd4012666737a20e2af3caa2ff34f92083db05f6d43264"
+    },
+    {
+      "path": "bot/src/environment-observation.js",
+      "owner": "world",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "043cb77ad45ce6f31c78c739fac7105ed364b22d27d829d254e3a33d3edebfe7"
+    },
+    {
+      "path": "bot/src/epistemic.js",
+      "owner": "knowledge",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "4fbd7e07878eefc19077c619bd1d7c6b1c982be06c8269bd76f3a20d302e6986"
+    },
+    {
+      "path": "bot/src/errors.js",
+      "owner": "operations",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "be34316af40cd415298aa85df636b91dc963d286ea91da8bbac179e3ab4b9b44"
+    },
+    {
+      "path": "bot/src/evaluation-harness.js",
+      "owner": "operations",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "f20bca430e6d93725040cb5397034ffc6a39a6806f0c6a796a79eee852fbcb4c"
+    },
+    {
+      "path": "bot/src/evidence-custody.js",
+      "owner": "knowledge",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "ac43a41cae767d3940af7235631315094e38d5e42096d57ce454a7235bdc0919"
+    },
+    {
+      "path": "bot/src/expansion-contracts.js",
+      "owner": "narrative",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "b275192a1516b30c7fb66be10141177b28b3588e2c0958ff91d1bd4dcf6a03dd"
+    },
+    {
+      "path": "bot/src/failure-trace.js",
+      "owner": "operations",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "9e181d7063920dd6e59ff2f6e8876bb3e98c3f6db955dbb2da92440fc670ce6b"
+    },
+    {
+      "path": "bot/src/fear-reservations.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "f2bfc66e3916b224742b40f8d5273de3fdd21b5fb19641c7bce432bcddd05a5f"
+    },
+    {
+      "path": "bot/src/framework-to-framework/discord--publication/public.js",
+      "owner": "discord--publication",
+      "role": "pair",
+      "location": "new",
+      "sha256": "0ca686e4bf3ffc51977aa10d7d30bdac18b44256463b520e0415c0cabcaa56aa"
+    },
+    {
+      "path": "bot/src/framework-to-framework/narrative--session/public.js",
+      "owner": "narrative--session",
+      "role": "pair",
+      "location": "new",
+      "sha256": "8cd417a623f9f2c726ce29e1aaa9658466a228e668bd2965b4dd4c72d75b760f"
+    },
+    {
+      "path": "bot/src/frameworks/discord/contracts/committed-publication.js",
+      "owner": "discord",
+      "role": "framework",
+      "location": "new",
+      "sha256": "a4db2327dc3efb7e1cbde1d13750a5f673e4181d0e99a4a7bd7ce798c2b5d6f9"
+    },
+    {
+      "path": "bot/src/frameworks/discord/public.js",
+      "owner": "discord",
+      "role": "framework",
+      "location": "new",
+      "sha256": "ba937a34fe5d3a883264807c832f32830dc1e6170cfe2b5c3fc3253ff5eca37f"
+    },
+    {
+      "path": "bot/src/frameworks/narrative/contracts/opening-author.js",
+      "owner": "narrative",
+      "role": "framework",
+      "location": "new",
+      "sha256": "20011cb721f25f8ed929abf20cecd2518fa63fa533b55a56ea0cc5a875ee6e5e"
+    },
+    {
+      "path": "bot/src/frameworks/narrative/public.js",
+      "owner": "narrative",
+      "role": "framework",
+      "location": "new",
+      "sha256": "6bedbf57cb1ecebec60eb39e20141bcb837bada0578b41eec32c2e39abbbfecd"
+    },
+    {
+      "path": "bot/src/frameworks/publication/contracts/transport.js",
+      "owner": "publication",
+      "role": "framework",
+      "location": "new",
+      "sha256": "ae357c9a79e146483cfcc551223d75267e787d4c55d4c79a34d9a81ff3530272"
+    },
+    {
+      "path": "bot/src/frameworks/publication/public.js",
+      "owner": "publication",
+      "role": "framework",
+      "location": "new",
+      "sha256": "5cb26ad7dbedba1931616f13d1d95e962fe5f686a8e14dd8a5c783fb6640d693"
+    },
+    {
+      "path": "bot/src/frameworks/session/contracts/opening-authoring.js",
+      "owner": "session",
+      "role": "framework",
+      "location": "new",
+      "sha256": "44aed68e2093e448066f1ba0f3f640ca45252dda8375a3d5fb0551410fa0a38a"
+    },
+    {
+      "path": "bot/src/frameworks/session/public.js",
+      "owner": "session",
+      "role": "framework",
+      "location": "new",
+      "sha256": "e4af1366273d66db52002daae7a30c4cc984a5ab3424bbdeabe2aa269f38e9bb"
+    },
+    {
+      "path": "bot/src/fresh-npc-authoring.js",
+      "owner": "narrative",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "868e5770b8cbae8ffc4a7e0fa4dba19f4def71c4ccb3608fff3b6f0fe4e15c23"
+    },
+    {
+      "path": "bot/src/fresh-scene-authoring.js",
+      "owner": "narrative",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "ed90c78a43e1f5c062b47961d5ec84b9e70ab31d73030aae84d19187aab64221"
+    },
+    {
+      "path": "bot/src/gameplay-intake.js",
+      "owner": "intent",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "50aa4c6ca70d042503f27901e132dddd318bf0e71cf9cf07f30d2f1053a235a3"
+    },
+    {
+      "path": "bot/src/generation-feedback.js",
+      "owner": "ai-provider",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "44cc1fa24c19cb4c76475ea812304f17e217f885861f5919f298e5b4edecab2e"
+    },
+    {
+      "path": "bot/src/gm-action-capability.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "e6186a4cc6f802e0de86454109cb051648bd0438f08ad5bdc1e1bc737a748c86"
+    },
+    {
+      "path": "bot/src/gm-action-review.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "4fc7e6e315ff5c8e16d340fd224e9bcd8589a04844a0f9638b3aa9ba507104d3"
+    },
+    {
+      "path": "bot/src/gm-action-ruling.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "e464b417969cf7858912d1c13ed1387f703cee4f12c118206a520b228bc4e6d5"
+    },
+    {
+      "path": "bot/src/gm-arbitration-contract.js",
+      "owner": "intent",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "4a54892c530945d5a227b311cfb802d48ad1a1d46a7cccfb481ff7e0d0badf1f"
+    },
+    {
+      "path": "bot/src/gm-arbitration-output.js",
+      "owner": "intent",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "d0b1d95c439e68556f0e148594d79c8449df2b6febc9ffbe4769f09cef9da75b"
+    },
+    {
+      "path": "bot/src/gm-fiction-composition.js",
+      "owner": "narrative",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "8293b78897a59f1b323b29e5ddc850ce5c3e87662b4aa94a295c9b6d54fd9015"
+    },
+    {
+      "path": "bot/src/gm-fiction-schema.js",
+      "owner": "narrative",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "92b9cedc74403903b00da7aded800253f17ea5215fd1997a08e98ea0cba3bff1"
+    },
+    {
+      "path": "bot/src/gm-hook-import.js",
+      "owner": "narrative",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "202f5db9fd1921ea447411281c2b5a9a27be33ec3377cf0ef29b4b5f05722712"
+    },
+    {
+      "path": "bot/src/gm-mechanical-v9.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "ed838edafb4f79aee6ea840f0c6c1bd280b1e1d5cdcb7b7c5390ea3eac321a96"
+    },
+    {
+      "path": "bot/src/gm-native-rolls.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "ae1a9702405af8263bdf733fc7b5eeea9e2b1fad8e2eafa4898f03ec859cc4e9"
+    },
+    {
+      "path": "bot/src/gm-ruling-schema.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "5bf7a66e7ea7c9b2f37dff2b76e19a5370eedd3f360a1afdabdfe8e1d74ee970"
+    },
+    {
+      "path": "bot/src/gm-unified-arbitration.js",
+      "owner": "intent",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "113ea5a9d062ed03fd3b08499c6104866bafc03daed89ec6d157e10092d8289e"
+    },
+    {
+      "path": "bot/src/gm-world-narrative.js",
+      "owner": "narrative",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "e6df0bb031c87868b1ab1f59c6908ce185fd54c0a8af9d9896b2173bf70e976b"
+    },
+    {
+      "path": "bot/src/gm-world-scope.js",
+      "owner": "narrative",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "0175b171f3d071a4e4b304e4f157757dd8bbe69f25a81870e30d57ea545fbf7b"
+    },
+    {
+      "path": "bot/src/gm.js",
+      "owner": "application",
+      "role": "application",
+      "location": "legacy",
+      "sha256": "d5fbdbe58c92264f9cad4a2ded4e2c45b0f8d8dc4f8f2d9f77806883bc0bb664"
+    },
+    {
+      "path": "bot/src/handout.js",
+      "owner": "publication",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "70b3f7d024e1dc35cd3ecdc6408ddca92626caec8c5e5045820fd9e084827fdb"
+    },
+    {
+      "path": "bot/src/historical-archive.js",
+      "owner": "knowledge",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "84f3dc79be51a8deb5dbb3452742211b56a37fa97b9d1e85994d9ec181365709"
+    },
+    {
+      "path": "bot/src/history-reconciliation.js",
+      "owner": "knowledge",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "83cb6e990acb856dca1ab58fcdd321f606ea5ee6c1f5fa2a62217518eece09a1"
+    },
+    {
+      "path": "bot/src/idempotency.js",
+      "owner": "discord--persistence",
+      "role": "pair",
+      "location": "legacy",
+      "sha256": "9ee79881e6c02213d69c171cb3f5f6c3d1352a2d8e0ce418f540e2216ca4dc79"
+    },
+    {
+      "path": "bot/src/index.js",
+      "owner": "bootstrap",
+      "role": "bootstrap",
+      "location": "legacy",
+      "sha256": "a0e63f303021604c06bc90c304a40056cc5f2a367110eb1baf8f79d218db19c6"
+    },
+    {
+      "path": "bot/src/legacy-authority.js",
+      "owner": "knowledge",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "5eab1f365f3655f47701f8453b5b0bb9cba103b4937203bdc4b2f6ec45c96eb4"
+    },
+    {
+      "path": "bot/src/lifecycle-output.js",
+      "owner": "publication",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "37728d52370d769ecc0f58bb1f6454270da0864de8d9e7671fb152a27b9bd873"
+    },
+    {
+      "path": "bot/src/location-language.js",
+      "owner": "world",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "0ddaf72e9126c719c9928a39f4577b17dc2cd733b1eaf14c9d0b9510f77cdc6e"
+    },
+    {
+      "path": "bot/src/logger.js",
+      "owner": "operations",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "29ccfa7bbe73c12b8a44dad5682ab82ce4b9227a8c9c404166f240373ac078f7"
+    },
+    {
+      "path": "bot/src/long-projects.js",
+      "owner": "world",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "ded0337b9ffc24dc57c3e6f67424f3516884c0d37053f2377a7eed7d1c77ba72"
+    },
+    {
+      "path": "bot/src/mechanical-boundary-v9.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "a1ec9204cf6ee9f68a2134dec7a0a8ab8497a475967db5ab2cd314bf693e270d"
+    },
+    {
+      "path": "bot/src/mechanical-native-v9.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "a74982a117d2a842315328e8ea4bacfdb8cd51a2dc499d04b6c7395706de60be"
+    },
+    {
+      "path": "bot/src/memory-clusters.js",
+      "owner": "knowledge",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "9f41f6249135ffe74d4dc5e038989b2c0fb79277b2938b29557d975c22e1d0e0"
+    },
+    {
+      "path": "bot/src/memory-lifecycle.js",
+      "owner": "knowledge",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "14aa3d8344973962b8a1199b33b91a153cee740fcb0e67f3606fefca450df8b2"
+    },
+    {
+      "path": "bot/src/message-span-ledger.js",
+      "owner": "intent",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "f92a183b85c9bcace5456dda1c72d6fd304e61bd8039cbc6aef5ee3cee7dbacd"
+    },
+    {
+      "path": "bot/src/movement-language.js",
+      "owner": "intent",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "ce0315a1df2b8aa2377911cd22215a95b7db31c5b811daa93627a70a72a1ba66"
+    },
+    {
+      "path": "bot/src/narrative-acts-v9.js",
+      "owner": "narrative",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "49bd78b5a8f13aef70ffe8ffeb2083e573274dcf09be980a1f2ba8e2e0936471"
+    },
+    {
+      "path": "bot/src/narrative-artifacts.js",
+      "owner": "narrative",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "5c1bdb7517985a0a70913508cf02e21b2d77246aa2390bbc0f55d0a2a0787f20"
+    },
+    {
+      "path": "bot/src/narrative-authority-context.js",
+      "owner": "narrative",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "07068f2c3554d64706ac6872eedb856875d92c68ac8f66217e200b2c78484231"
+    },
+    {
+      "path": "bot/src/narrative-authority.js",
+      "owner": "narrative",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "4e71f4bdc35c734294337104e6542081d46a80c22fa421a4aaf9b6e43d49bac8"
+    },
+    {
+      "path": "bot/src/narrative-clauses-v9.js",
+      "owner": "narrative",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "fba0586059267b0ef27b1f6633a8e9440b4ced1f5f781681ab86ae36b8578b07"
+    },
+    {
+      "path": "bot/src/narrative-completeness.js",
+      "owner": "narrative",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "f98db0202145adedc11ef46f4803ca9f42d0b808ab89b963d1c2483dbcc448c1"
+    },
+    {
+      "path": "bot/src/narrative-context.js",
+      "owner": "narrative",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "7da41e9f96809c621ebe79a6af037493d13eddb6df3654ab73058759efec52bb"
+    },
+    {
+      "path": "bot/src/narrative-delegation.js",
+      "owner": "narrative",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "cc8671d1ea110965cf562062f777b29fb24aa781e95d769f84285a689a9f4891"
+    },
+    {
+      "path": "bot/src/narrative-director-source.js",
+      "owner": "narrative",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "27521208f31b99f69e1ff18215cdfe501bbbce00f77f448577e9ac354bd8eba4"
+    },
+    {
+      "path": "bot/src/narrative-integrity.js",
+      "owner": "narrative",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "dc707aaec63dc13b910ddff6cf8b9f70eb77e53298fe905750225cdb56f6688b"
+    },
+    {
+      "path": "bot/src/narrative-memory.js",
+      "owner": "knowledge",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "8b674b40a04a8785d62739f5639e102f1188bd3e6fd6c25329c8eda7a65ac6e8"
+    },
+    {
+      "path": "bot/src/narrative-opportunity-guidance.js",
+      "owner": "narrative",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "d5806ae7b37b39e20f5e727d199ebb068fb600425ada60156e7189e68c962eb7"
+    },
+    {
+      "path": "bot/src/narrative-opportunity-policy.js",
+      "owner": "narrative",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "751887c9e810c5f691fea93d853f5564081fa967dc8e7ac6f518b93afb23508b"
+    },
+    {
+      "path": "bot/src/narrative-pvp.js",
+      "owner": "narrative",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "da0cba015a5a68464fd6feb36ba4a142caec952942470ccb1789469b2b83bd7d"
+    },
+    {
+      "path": "bot/src/narrative-records.js",
+      "owner": "knowledge",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "7f1d370e2b6e27287730e2ed594e8fd473a0aaa2c12c3499903e40f5b86314ec"
+    },
+    {
+      "path": "bot/src/narrative-relevance.js",
+      "owner": "narrative",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "7db058b8ea8b568c617c2f3affd73152f372623897b7fab8ae9cc69b0f480f13"
+    },
+    {
+      "path": "bot/src/narrative-salience.js",
+      "owner": "narrative",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "9b88e472ed4cb96dcb49ccc0772cc345b68308e33f277d7916214cf6480aacd5"
+    },
+    {
+      "path": "bot/src/narrative-speakers.js",
+      "owner": "narrative",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "807596235f40a1787038dedb61f3fa956e1cbf8814566b3980e72f462d64c565"
+    },
+    {
+      "path": "bot/src/narrative-tasks-v9.js",
+      "owner": "narrative",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "3595787b8f2fc49d0eff2c2f8946bd92cb279ff9d52c098d5285c785b27c27d8"
+    },
+    {
+      "path": "bot/src/narrative-tasks.js",
+      "owner": "narrative",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "0778d38b1c1a82d09b84502bc0c67ee7c685be1c29d475eb2f3cca4c5a0ea966"
+    },
+    {
+      "path": "bot/src/narrative-writer-v9.js",
+      "owner": "narrative",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "44963fb78fdf7592d048780e2e111e2f9ea93b090ba7cb1b8542fddb306c8ba2"
+    },
+    {
+      "path": "bot/src/native-actor-control.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "f39cb9e50ec3bda5ca06ff8295217797ef447aa6f8bac78e39ce14ccfdc8199f"
+    },
+    {
+      "path": "bot/src/native-adversary-always-a-price.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "33ac305217288c40d834046afccef240dfbd2ec99d8a1148b4c6806eda1b36c6"
+    },
+    {
+      "path": "bot/src/native-adversary-bad-future.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "aaf1e52aafa42727a13ce9bb6174368320a9081da1928344a76c9c45c91a6d7c"
+    },
+    {
+      "path": "bot/src/native-adversary-blank-spot.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "0ee7c4506cc80db5e1856eacc4a02a4786f4073843def63bc501ff3691f4d379"
+    },
+    {
+      "path": "bot/src/native-adversary-break-the-hold.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "dddb10af6ef8446ec55f810e6d39b28adf6cc730927853c0b652ba58438673c9"
+    },
+    {
+      "path": "bot/src/native-adversary-call-security.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "ed3452284bf2ad78a4024fcde630f90d4d400b8fbbe209c2186622e506c2866b"
+    },
+    {
+      "path": "bot/src/native-adversary-conflicting-duty.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "59bb55e458f1f96a47213eb108b1759b0bf9081fc6ca1ec82bd0cb2d18d21c11"
+    },
+    {
+      "path": "bot/src/native-adversary-context.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "07e0a00da135ad4f6755c0ad95db104681f458af2f5142e056ef41ce8bd63c1c"
+    },
+    {
+      "path": "bot/src/native-adversary-drag-down.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "4f0b57d0e92fbed815d96ecacc987b3beb121755ee16d3758d5059c87ea094e1"
+    },
+    {
+      "path": "bot/src/native-adversary-exit-clause.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "fd96f04d28fe189a1f39ceaef74c1a9c8cee59f8c1f5345df9c4ffc037f08c45"
+    },
+    {
+      "path": "bot/src/native-adversary-flow-around-it.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "4a9bde43a148043fabb9f4954cdfa2b557200954b5a9db6d1f600196b2dd868a"
+    },
+    {
+      "path": "bot/src/native-adversary-i-saw-that.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "9bb4a933f8b3e57a642026bd5a5e95e5ec7f56a5b2e63bb37976b787feaa3e2c"
+    },
+    {
+      "path": "bot/src/native-adversary-loophole.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "58ad5e489bedea7f2f7602b85663663d4fb65fec6aa33e267492972ed4712175"
+    },
+    {
+      "path": "bot/src/native-adversary-mark-the-variable.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "aaece74bf824ef5a1b38762196702958df4e0e20a53dde72864e6995df72b218"
+    },
+    {
+      "path": "bot/src/native-adversary-peripheral.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "5b8f9cac7b6c5c5f42f75b7be5080259c192042f33929f0018672b5319c4b15b"
+    },
+    {
+      "path": "bot/src/native-adversary-pin-to-the-deal.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "0cea6436a80a227de11884739d4d3cb5a53b711ece4f03952617b7dad916f6de"
+    },
+    {
+      "path": "bot/src/native-adversary-predatory-grace.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "78b0dbaa603e99f3143468259226159e8d571610f5ac90181c4be3767f5e0926"
+    },
+    {
+      "path": "bot/src/native-adversary-professional-entry.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "2a35231e23bae9e868e3a3e34a7479e1eb826f07aa2326115448ed3862c02f14"
+    },
+    {
+      "path": "bot/src/native-adversary-readout.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "3d2b188433b5d855aabd595dc10c3ca209f7b0dc90a02ab66fbb951a20d9a309"
+    },
+    {
+      "path": "bot/src/native-adversary-reputation-attack.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "bc1cae1bb7cfae596e33f92c3f0234977f7a603aa8fd10a389e333bea5e0c04c"
+    },
+    {
+      "path": "bot/src/native-adversary-ride-the-current.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "73075aab00fdb5154d54aea41777d53b06d8953dff708289c0507c4d3eb63a49"
+    },
+    {
+      "path": "bot/src/native-adversary-root-snare.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "5fa1d0eadaff2a80caf17c9a39b4828b79b276973b69faed8abeec1148e1ac9f"
+    },
+    {
+      "path": "bot/src/native-adversary-route-around.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "b0c732b2d094ac1e67bb84f33b8156b8ffb90ee47ec03c2449efd6213916c51e"
+    },
+    {
+      "path": "bot/src/native-adversary-self-fulfilling-event.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "95d82de0ad174d16f9eeaadb5d198b543153da90294830df540d6e388b044aa6"
+    },
+    {
+      "path": "bot/src/native-adversary-snatch-a-link.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "5c7e012f8d3efeaa246477e40f805cabcb42b50916063abddf84de280d9465f2"
+    },
+    {
+      "path": "bot/src/native-adversary-steal-the-focus.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "bc08391a31ea3a159196e069e795175e759c5c204fa1b21a4d764eb57608d1cb"
+    },
+    {
+      "path": "bot/src/native-adversary-sympathetic-relay.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "0396f4a9d51a27d09c1c8e7d33f306e5f6089b9d5d58693be9d06d6396435591"
+    },
+    {
+      "path": "bot/src/native-adversary-terms-first.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "bf054db8c78e1bfe78abe953dd6afa227cba4a28968eca175ebb19f3e252fad9"
+    },
+    {
+      "path": "bot/src/native-adversary-urban-cover.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "93ff730a201c8858994dd42edd80b8d609cce8cf44fb99b66bd1323caf96d8af"
+    },
+    {
+      "path": "bot/src/native-condition-recovery.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "4bae18ae7e279dbb2ed05113ae31200eacd5d8b7da0b3e961b4d266a005ee90f"
+    },
+    {
+      "path": "bot/src/native-defense-aura.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "e8fa8fce7203a851761ed05305bc9067c970d7e789772864bcb1f541d26b4af7"
+    },
+    {
+      "path": "bot/src/native-encounter-activation.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "c8f2522f2c933fa6fcdc94c10ff9c8e30fc59345cb72f93af2aa8f24030aca24"
+    },
+    {
+      "path": "bot/src/native-encounter-relations.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "e3b90ab835bf4aab090a7a4faf9e0a5b99feebbb7946cd4c853078349fdf8365"
+    },
+    {
+      "path": "bot/src/native-environment-access.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "ec9064f541aefefdce986981b1a18a4c50eed824fca1be4e399cbb9bff5df16f"
+    },
+    {
+      "path": "bot/src/native-environment-arrivals.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "4054ba8d1687843fd4503f2a417cd7c6c5d77364297f37eb4182b5e04a822b54"
+    },
+    {
+      "path": "bot/src/native-environment-auction.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "bc3046d71387813342666abee69416a013ac3a5d7288718f0edce6fc4533f266"
+    },
+    {
+      "path": "bot/src/native-environment-audience.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "9ad43d3fcc984b9cd8d0c6391543fc7dbf110753fb20405106d0e433f53add2e"
+    },
+    {
+      "path": "bot/src/native-environment-capabilities.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "8a9619dce9f81dbd533302194d1e15cf1499c81aaf965e186bdf6be7a2c76c9e"
+    },
+    {
+      "path": "bot/src/native-environment-chain-of-title.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "395d3a102a3d0805958ab2dd69b4db8b3cfc422e3ba397ca2742ab388ece81e3"
+    },
+    {
+      "path": "bot/src/native-environment-consensus-engine.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "1296fdc5302f3ff78320c923960ca83c5371c0dbd95810d200783ff431ca9e73"
+    },
+    {
+      "path": "bot/src/native-environment-containment-shutters.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "4fdf10c439e9a75f43dfcefe73562d7de5c7b5ca2833cb0e1e1eb99988b64f4b"
+    },
+    {
+      "path": "bot/src/native-environment-contaminated-scene.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "34a854136b84b7b17722ff4688b3d72f9de897aea05cd6a06afafc06d317874b"
+    },
+    {
+      "path": "bot/src/native-environment-context.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "2720720674a46c9ae49b4219928b1252b4094a5e3174056c7d3fe34184950515"
+    },
+    {
+      "path": "bot/src/native-environment-countdown.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "744132ca2e3c6729194106473398d3956cc036610a1f637d690ec0a2fbd74d10"
+    },
+    {
+      "path": "bot/src/native-environment-dispatch.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "6e600c1142aaf791723edce516f0a8edaba1434b362468a18e8e856683528917"
+    },
+    {
+      "path": "bot/src/native-environment-door-chain.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "918b2fd6a5159e21e734c085b71cbb99503289a5c0f9b2533777442f53908429"
+    },
+    {
+      "path": "bot/src/native-environment-everyone-is-watching.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "1f72f89bf2e3ef850b7a4a22b7fb109b7d6fe28e748c1ff2843bbd1fa9928037"
+    },
+    {
+      "path": "bot/src/native-environment-express-through-memory.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "4e6771bdac3b4a65593c956925ebbb445170c0473b4119ab23dd516fda218f2b"
+    },
+    {
+      "path": "bot/src/native-environment-guest-right.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "3f0d18fb4a4ce177bdb6b761cf3f3de50094fbd131631fda3c056c0f41ecfd69"
+    },
+    {
+      "path": "bot/src/native-environment-imaging.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "75ba601443c386d215b0fbf0542f650604cbc57bdfc40780bf586ba86b9ea727"
+    },
+    {
+      "path": "bot/src/native-environment-instance.js",
+      "owner": "world",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "85d11edb319161c6da97d9ba1c83b454a2cfea8b416821decc3707e898153e9f"
+    },
+    {
+      "path": "bot/src/native-environment-last-train-rules.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "1fb26f06cd426dedb01494e4858127b2295963bda82b669d4b89db384e685704"
+    },
+    {
+      "path": "bot/src/native-environment-market-neutrality.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "ba0d82a22d20fdf29cf3eff99f953b7c516d83200bc2e9dd6ea6aae6618f6791"
+    },
+    {
+      "path": "bot/src/native-environment-metaphor-physics.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "7e6056d7bebbebed6f62d297850c6fdac84ac2662168017a265c2667f5b76180"
+    },
+    {
+      "path": "bot/src/native-environment-model-room.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "e5ccc65e0112429f46992efd62a0fe562927cc28e8c30ad53021551f23bea3a1"
+    },
+    {
+      "path": "bot/src/native-environment-no-consensus.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "eb6c9ea6aae5b42b96e393a6c76f71d1ddbe13d0d892df71179b13c9559272f7"
+    },
+    {
+      "path": "bot/src/native-environment-no-ordinary-signal.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "0bdea8d99ff89a5417dbac510743d92c03b77bc3e79704f429dc7aef3a32ace2"
+    },
+    {
+      "path": "bot/src/native-environment-noise.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "f5ff68a3d0ee33d5d1080abc1750c363a414d862f1a6e10758c006de528e45c6"
+    },
+    {
+      "path": "bot/src/native-environment-output.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "2c2013bc845faf46bb48ff962adc219c400dc7c28ed2a706f775e34aafd2b45b"
+    },
+    {
+      "path": "bot/src/native-environment-price-offer.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "fcb997b0828549cf51e4ab4866ad52b7bf80fda386a7c24aa674532ed3614e09"
+    },
+    {
+      "path": "bot/src/native-environment-private-room.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "4a10f5d681f04f67233d2fb632bee57a06ba5ff7dba2f8dbe608ab2bb874a52f"
+    },
+    {
+      "path": "bot/src/native-environment-procedure.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "44751586633b7cc87424364b7073003f8d3ccdf537c6d48ca4f3e073ff3131c0"
+    },
+    {
+      "path": "bot/src/native-environment-proposals.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "a4255c69e32c3a6d5cab5be8e131f7bc6bf73b005871ab08fb8f9cd1303052c9"
+    },
+    {
+      "path": "bot/src/native-environment-recording.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "61e579bf6f17149cfea4e4419aff9071bcfdccd60a5a7647ea1ae7c42cd54c7f"
+    },
+    {
+      "path": "bot/src/native-environment-recovery.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "729fac4e110a47b17eda64ac775687afe0962084b644fc8aeb2fbaad63778e7e"
+    },
+    {
+      "path": "bot/src/native-environment-scene.js",
+      "owner": "world",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "31cb432a8e41ff3c26f96746086a99c2923aa156a5129b7a854b9391f5394f8e"
+    },
+    {
+      "path": "bot/src/native-environment-sealed-docket.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "8605e83e278bbb8a635d0b2aab9c72e7427f867b021b98ad14266764a949e9a7"
+    },
+    {
+      "path": "bot/src/native-environment-thin-walls.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "7f37bd65a25d088e16cbf74f169c7520a0c2c972608d749019534b9b2e2f2e66"
+    },
+    {
+      "path": "bot/src/native-environment-third-rail-spirit.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "5a7157d6a5e5af58032bf5bb894a1f485e9d234e85c883e8a9788b8623963604"
+    },
+    {
+      "path": "bot/src/native-environment-three-vectors.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "b12106c03bcb420f63fe8924e488f81dbd69de520a0935b358c59636e53078bc"
+    },
+    {
+      "path": "bot/src/native-environment-trace.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "e1f48730cb05f8382cadf1192ac783596848551d75051e55c0ad9b44af7c60c5"
+    },
+    {
+      "path": "bot/src/native-environment-witnesses.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "c827f61a2c2d7cdd2fee1b46134712f41462b71c1c1677ec26b6908a6b880de0"
+    },
+    {
+      "path": "bot/src/native-environment-wrong-offering.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "36eaaea3b2553ee20998d028c94c325067e74b9d3823aafdad0693964d9152cd"
+    },
+    {
+      "path": "bot/src/native-equipped-attacks.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "e40a1669108e62d3a32f0f21c6b85ecf4862141f2bb74b31e96d522add75577a"
+    },
+    {
+      "path": "bot/src/native-established-fact.js",
+      "owner": "world",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "4dd922a394b16112c6cb24b4520b25e93b67f9ef828a6a7071f9e849bca832d6"
+    },
+    {
+      "path": "bot/src/native-evidence-analysis.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "5242243dc42302c2f82276d5e3a27e64a800f2f56dbe430082189c2ff338fddf"
+    },
+    {
+      "path": "bot/src/native-experience-eligibility.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "0feab725036b4ffb3294329363fd807f3d938fbc73a0ef5e36812ddc4098526d"
+    },
+    {
+      "path": "bot/src/native-feature-catalog.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "d3556d18a4c87b1bff45ac2c08e68ebdf93b3c3cea56ebea5ad323ce479867f8"
+    },
+    {
+      "path": "bot/src/native-feature-damage.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "35ed4d405f53c979c862c1421ce2843e3469d24f4863b065f5895724facfdaf6"
+    },
+    {
+      "path": "bot/src/native-feature-definitions.json",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "58baf77cc9cb2b5f38e1714422c64131f2f533b4bf09254b8f8729ccd64d1e16"
+    },
+    {
+      "path": "bot/src/native-feature-effects.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "17c45f1105bc5783d04c28f0949d58d4db8d423472654fc71cd0035f566cb633"
+    },
+    {
+      "path": "bot/src/native-feature-hit.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "42db73d9b68f50e7d1a8add25a1e0687f304e445e4478d9ab73d6f93a3616e5f"
+    },
+    {
+      "path": "bot/src/native-feature-passives.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "9f53e2cbeb1c7589fd286a1e07111ffbda476a7b587728ffca92ca3acc7ce46a"
+    },
+    {
+      "path": "bot/src/native-feature-windows.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "8faa8ff31822d2ad94ca7d2c2876edc4e711a491242059f16bb980fd3e76d7f9"
+    },
+    {
+      "path": "bot/src/native-group-features.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "b5aab69f0355ee33fbe8f01abc34bfefd08d2bf7f36fed7f9783f6367b61819a"
+    },
+    {
+      "path": "bot/src/native-hook-output.js",
+      "owner": "publication",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "c6feabcf17047b4ed404dde7c034f01504d9eb00ed4a4d02f0812f4b442b2aca"
+    },
+    {
+      "path": "bot/src/native-house-errata.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "138aa8ec904fba1605274b36ebc8e94832abed82145a8d03b18108fba43b7dfb"
+    },
+    {
+      "path": "bot/src/native-house-errata.json",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "6f679f50272861ccc01f5b189d0fc5d9947e5df350df372cb52f97df93a28964"
+    },
+    {
+      "path": "bot/src/native-notice.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "8ceac83ec9b85dcc74b1084331fb7a6a0551bd3e4e2dc7d04fbca0af6388cf5f"
+    },
+    {
+      "path": "bot/src/native-outcome-output.js",
+      "owner": "publication",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "e4ad8bb76397ecbe4c497ad2b2879335d55558f445785b38e186342bd1f31934"
+    },
+    {
+      "path": "bot/src/native-professional-entry.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "f31fc46be0331b364ad2c97140e9d473a54bdfa53146d3ff64ab25456625c760"
+    },
+    {
+      "path": "bot/src/native-publications.js",
+      "owner": "publication",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "610e76db4ad30c1e4b8f2d2d370ec307c464f8639c8f3d7bd3976e5f6ce4f8c7"
+    },
+    {
+      "path": "bot/src/native-roll-modifiers.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "1fe17322ad13e1562a2a964ceebb9040a1a178500f238860c2aa4a2596880dfb"
+    },
+    {
+      "path": "bot/src/native-roll-participation.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "b7dc2c92b3536bf9bc80b583e2e6fa1e3cb6de8098fb0411a2106251535e75dc"
+    },
+    {
+      "path": "bot/src/native-stress-passives.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "b4027df68b99893a2e196cba0e79c980ba41b7c1cd66edfbfcb53d36ea12f195"
+    },
+    {
+      "path": "bot/src/native-unarmed-attacks.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "1a45e41ba9873bf824cec7f7aa6083724399ac3bb81fe2aadf744158f7baaa1c"
+    },
+    {
+      "path": "bot/src/native-unarmed-traits.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "c0d46f83ad4fc1dc66cc29e1c2edb8d6ab62bdd763cd7c27d562f71a9fa8a3e3"
+    },
+    {
+      "path": "bot/src/native-world-operations.js",
+      "owner": "world",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "27c69ae71717cbbce3bd2cf08fdf004944d97e7c586ed1820c828c35eec6e9ee"
+    },
+    {
+      "path": "bot/src/negotiations.js",
+      "owner": "session",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "a6f31cc6e3fabb6352046f7351da6e6bc671f7bc5843af9c427fa7fd51120509"
+    },
+    {
+      "path": "bot/src/nonmaterial-grammar.js",
+      "owner": "narrative",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "4815780bde3c36554763ed59a83c0c948fbc34040bf9bf560897db3910f7a0fb"
+    },
+    {
+      "path": "bot/src/npc-cognition-projection.js",
+      "owner": "npc",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "8847d61424bee3b0754b01ac775ce512b077e7e6e04c2ca799b9b4aa53afdb4c"
+    },
+    {
+      "path": "bot/src/npc-cognition.js",
+      "owner": "npc",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "5a897276ed0ae4197e56cb7943d7b3040a1e727ab37b34d3f94e4844bb734700"
+    },
+    {
+      "path": "bot/src/npc-conversations.js",
+      "owner": "npc",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "a8c22834277860327f259fae97850be576acdcf5b30765c4730832b7583289a2"
+    },
+    {
+      "path": "bot/src/opening-cohort-runner.js",
+      "owner": "application",
+      "role": "application",
+      "location": "legacy",
+      "sha256": "1fd43a1ede75d57dfb7ef940ca80586b76c2c03a23ef8f2b32cd001dff18955b"
+    },
+    {
+      "path": "bot/src/opening-cohort-state.js",
+      "owner": "session",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "e95fc8428890f7bd7d2f818c0e2a8013f00cbf4eef8b7c87c5baeb267af66107"
+    },
+    {
+      "path": "bot/src/opening-diagnostics.js",
+      "owner": "operations",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "23d7783c563906d65326a5f6498255861d70025da43f7abc6a67078ed85ccf82"
+    },
+    {
+      "path": "bot/src/opening-entry-context.js",
+      "owner": "session",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "91143e5341c6da82ff43ec3fb45e5f16b5301aed438f43b4c5e97a4a37152c04"
+    },
+    {
+      "path": "bot/src/opening-entry-evidence.js",
+      "owner": "session",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "c0596ec4a5b3dd808eec94bf762d7d1fde61f3aad991c8c28c1c9760fdee010f"
+    },
+    {
+      "path": "bot/src/opening-entry.js",
+      "owner": "application",
+      "role": "application",
+      "location": "legacy",
+      "sha256": "968aaa7021e37fdb214f6b35de608bcf09a47f3a07131258fcd1aaebc23efeb5"
+    },
+    {
+      "path": "bot/src/opening-flow.js",
+      "owner": "application",
+      "role": "application",
+      "location": "legacy",
+      "sha256": "178da033ae7bfef7d1e96a245d56a4b6051dfe03ca685a8b774238a568ffd515"
+    },
+    {
+      "path": "bot/src/opening-world-bridge.js",
+      "owner": "session--world",
+      "role": "pair",
+      "location": "legacy",
+      "sha256": "b2cd59a309115e0cfa98b54649423b504966ccf4c908cc44c06424603ade8432"
+    },
+    {
+      "path": "bot/src/operational-metrics.js",
+      "owner": "operations",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "5e521b32d2231226e678726a4f04046060ea93c36db2a270bece521238340ae0"
+    },
+    {
+      "path": "bot/src/operations/diagnostics.js",
+      "owner": "operations",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "931317d89e63190e7d79c7d56d14d466c90806f31c5a76b1cc7c342533d22d70"
+    },
+    {
+      "path": "bot/src/operations/health.js",
+      "owner": "operations",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "9135554b8dfdae213f0e1b20a7ffcb8b9282577702834a8bc88b4732aa63983e"
+    },
+    {
+      "path": "bot/src/operations/overview.js",
+      "owner": "operations",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "199d7c03af05e66ed84213f11b460fd373437e0d3fbd510e32a07e34e0863253"
+    },
+    {
+      "path": "bot/src/ordinary-effect-proof.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "52c6ca7d0583672dc9eb81c9c7a467f359fe9e655e84578abb524a21f24a3876"
+    },
+    {
+      "path": "bot/src/ordinary-effect-schema.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "0660c70add4b95ec8553e4fea7624d66903ab1066f7ac248d83f9875cd731260"
+    },
+    {
+      "path": "bot/src/ordinary-effects.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "245854d891c9da2569cb2ee0ac6362679e3cf3fe14d944e2e7779ec5fe75566e"
+    },
+    {
+      "path": "bot/src/outcome-preview.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "41628559282769cb4ed5a1cdd8f4d4710a6d9cd40fa7bdffc0de8eeba14e3569"
+    },
+    {
+      "path": "bot/src/owned-community.js",
+      "owner": "knowledge",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "526afeda8343ebf411f441336499734ba7d1c08453c64a7c1cc75415942fc650"
+    },
+    {
+      "path": "bot/src/owner-action-terminal.js",
+      "owner": "session",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "6f199262ea2bad19072142cc6f763f4aea308f617cb98cdccfd94f089ca58df6"
+    },
+    {
+      "path": "bot/src/owner-consent.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "f291bbc85441f6a391df14596de5977eb30875fa34539cce032efcc1e6a00377"
+    },
+    {
+      "path": "bot/src/pc-death.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "bb71164b5df828506f24c3aac5f0ddbbd717d635bba4b8d6a4111437fb36dcd5"
+    },
+    {
+      "path": "bot/src/pc-effects.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "29b7f48277efb90f7569991b6325ca0850394a13cde80ffcd1b02293d9c5c466"
+    },
+    {
+      "path": "bot/src/pc-incoming.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "c1f64ee41930a768806e14ecde1024d3e91ff0d65b3d4c7a5904540ded42fc81"
+    },
+    {
+      "path": "bot/src/pc-native-eligibility.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "ce52329d96113c375308f5bebdf34ff30d2cf2fa91b48662fb8825d104d6038b"
+    },
+    {
+      "path": "bot/src/personal-continuity.js",
+      "owner": "knowledge",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "5fe0f51b687499a436c4e70aabbfa29919d6ebb90733c1f156836a76cad77172"
+    },
+    {
+      "path": "bot/src/player-language.js",
+      "owner": "intent",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "52a92ec63551a28776625e2ae85d0fadfbbe04817a07b13f7d15a559d1fb8f27"
+    },
+    {
+      "path": "bot/src/portrayal.js",
+      "owner": "narrative",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "834336c2d8ca957490a3a9d1a1885a9e5b352c97680c4deb42877e2389da0ace"
+    },
+    {
+      "path": "bot/src/pre-roll-fear-notice.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "96e459ed36d3577318a7a260bff88778c90155ec076feb062311f574fe4e46bd"
+    },
+    {
+      "path": "bot/src/pre-roll-fear-recovery.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "3b23f6b753f790d07ee80b79c22c0f680847d8e9ec4c58d1daa570c50f11f409"
+    },
+    {
+      "path": "bot/src/pre-roll-fear.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "761cd52e88b6e540d2b52f30f062d08106494887c08b5e48663f9b1721abbf64"
+    },
+    {
+      "path": "bot/src/presentation-evidence.js",
+      "owner": "knowledge",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "9201e90ed80eaad66fc37d8f9509b194bdf8e45fcaa0e118fe7b46bcb02fea77"
+    },
+    {
+      "path": "bot/src/prompt-budget.js",
+      "owner": "ai-provider",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "f27587647bd28a9275d475581ccd70ce886e60d76684077470f4735a0ecc52d3"
+    },
+    {
+      "path": "bot/src/provenance.js",
+      "owner": "knowledge",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "74fb8884faac1b5bfc78ee39b008174b7d02bdc336efdcc2e73224ebafa08e52"
+    },
+    {
+      "path": "bot/src/public-referents.js",
+      "owner": "knowledge",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "6bc4d279c9342522fd9c7a46e920ee8c3e6602322bf276fcde8ea0ef51d4a467"
+    },
+    {
+      "path": "bot/src/publication-outbox.js",
+      "owner": "publication",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "33e09af4997e53b1fe5d853581b33fdc15cd5e8fbcfc9cd8c4aafd6d55c654a5"
+    },
+    {
+      "path": "bot/src/publishing.js",
+      "owner": "publication",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "5041b4be2aa5a4aefaea41127a022965bcc88fafe826fd8c8430bcec078b9e5e"
+    },
+    {
+      "path": "bot/src/pvp-attacks.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "fba1b09256c6b52f27c198bbaea1742c4d15ef365487e74081ea2759545c5d13"
+    },
+    {
+      "path": "bot/src/pvp-authority.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "f02fa9ec0b916383a5f1a394f0b453869a7f413a9014f4bee6507c835a77b4fe"
+    },
+    {
+      "path": "bot/src/pvp-authorship.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "369789422242688c06d5f1bbb72dccdb0297de3dc1b1995be3177f09fc9d3c0d"
+    },
+    {
+      "path": "bot/src/pvp-brawl.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "2a88d9b689cbe19e81f7ab80407bf786a42c8d07108c15f5fa83a0da77d24146"
+    },
+    {
+      "path": "bot/src/pvp-campaign-execution.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "359e3c9383471f4397e0af6a4e37b74e75187c88185b45ea9a4abc9dd4b42bc7"
+    },
+    {
+      "path": "bot/src/pvp-campaign-policy.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "fb8545b313f648e6895d13075192feb0d8f6291b098e77f160eeb925ec9fedad"
+    },
+    {
+      "path": "bot/src/pvp-damage.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "373bfc6717a1ecc27e9ce1affa4fd3e8c8838d1472da916dabddbb0c0920a997"
+    },
+    {
+      "path": "bot/src/pvp-fear-gate.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "b1981402e6bdf059dd4a8e0266141f349a7796c500f8c19de92fee1b134fa673"
+    },
+    {
+      "path": "bot/src/pvp-fear-moves.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "d4615246a27baa274b61f6b788f151a702ba9e44daf62f2e08858e1865272173"
+    },
+    {
+      "path": "bot/src/pvp-menu.js",
+      "owner": "discord",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "88a5d62f0efd594fc3bce359a9fd8ceb631b515c4ce033796c3e2d43232260eb"
+    },
+    {
+      "path": "bot/src/pvp-output.js",
+      "owner": "publication",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "11b85d26e3e80ca8a9645a815dfeee1436380cb53e5ba3bb6be0c1e10e6bd994"
+    },
+    {
+      "path": "bot/src/pvp-profiles.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "1029efa358e5f15e4d4bde4a24e88d818efd3ccf45fbf8029084212ac7bbcb58"
+    },
+    {
+      "path": "bot/src/pvp-reactions.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "b5abfb5b781bfb6fb9c3a863dd850162e0c190ac9c498a8a52a6139380bb2087"
+    },
+    {
+      "path": "bot/src/pvp-rounds.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "bbed23fe6c445c2b4e17fb4334815ebbef00e72e7952c6fc737133296e080c92"
+    },
+    {
+      "path": "bot/src/pvp-safety-commands.js",
+      "owner": "application",
+      "role": "application",
+      "location": "legacy",
+      "sha256": "4fdb547dd2c37a64701675da1bfbaf79ac91bfe5aea1c44a014e93b7184e9481"
+    },
+    {
+      "path": "bot/src/pvp-terminal.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "32a630ecaa1b7ffda889eea9d286f0b4932c6248c3f769b15b6dce9da068c670"
+    },
+    {
+      "path": "bot/src/register-commands.js",
+      "owner": "bootstrap",
+      "role": "bootstrap",
+      "location": "legacy",
+      "sha256": "6e34a7d12efbafaf1fcdeb7c905180eeeaba75f3d0b087c98f6d9b7f8514996d"
+    },
+    {
+      "path": "bot/src/relationship-state.js",
+      "owner": "knowledge",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "5070e9dee4966d46dfef5b919c232411c1a74f739ef971374f52a148e0169cee"
+    },
+    {
+      "path": "bot/src/roll-collaboration.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "ef0575000a792a45ae8e1a0ea65d892fad162e6e9441423baa0c478e7944a11b"
+    },
+    {
+      "path": "bot/src/roll-declaration-review.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "2cd02a7c1c2c966671c51adb87d88718c598786b29827993e84751f42c38ea2f"
+    },
+    {
+      "path": "bot/src/roll-menu.js",
+      "owner": "discord",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "b8c01c536236eaefec81b3c768caae46cb3ed1efd6785980f9926e804997f342"
+    },
+    {
+      "path": "bot/src/roll-operation-publications.js",
+      "owner": "publication",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "413e5883a2bb4c6860a96e6822714a60d94d302bb78bcac3e2c06498d919a662"
+    },
+    {
+      "path": "bot/src/roll-options.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "cc9cf5f4289a766ba8d97fcf2923e8c30e1ab55d197caf0e97d79e2ead78a3b7"
+    },
+    {
+      "path": "bot/src/roll-requests.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "29871e1e106a1aa8bf09b3b44efb0461c5415917004223d54581d212f016379b"
+    },
+    {
+      "path": "bot/src/roll-sharing.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "a6b4aa88fca2d2ea06ee7ed5dd2d0e67d604a37c5162b781438ed8d1a85168e3"
+    },
+    {
+      "path": "bot/src/roster.js",
+      "owner": "session",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "0330c38d8ab651780f3e44efff39602258006caf418666faf1a8ec6ec1637b49"
+    },
+    {
+      "path": "bot/src/routing-diagnostics.js",
+      "owner": "operations",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "2e4c1c71dc18b43e5a2b048ab0204450baa354cbdaa87c55334714357dfb5695"
+    },
+    {
+      "path": "bot/src/rule-reference-catalog.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "2b856baf358d58e7567e324d162d2d875490177073f0237b7c7f380f960fea51"
+    },
+    {
+      "path": "bot/src/rules-arbitration.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "ab40c9e0fcc01b790c2bd1882c267b56bb09b9d4e597392f9921bb9fc4f41d56"
+    },
+    {
+      "path": "bot/src/rules-srd.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "406537d0549082a06e24b0a12fe57c8f1d2727b711c8acddd02ec19c56a3c5cd"
+    },
+    {
+      "path": "bot/src/scene-action-window.js",
+      "owner": "session",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "754a0eaca6ba7800385e4a54e38bf927885842cd1a409c4b01868da51031915f"
+    },
+    {
+      "path": "bot/src/scene-continuity.js",
+      "owner": "session",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "e3d47626d8aaee48b6502f6cafb3c713a2bea3bdb4cc4ff933016d3b557f8aa6"
+    },
+    {
+      "path": "bot/src/scene-description.js",
+      "owner": "narrative",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "1afeb10e0c2db3d600fc1b4c5fd35c6d48297e76d3363324d5e0e08fceaa4871"
+    },
+    {
+      "path": "bot/src/scene-entry-native.js",
+      "owner": "session",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "6c2f3eb2d59c107ae2f9189fdaa7b52fae15c06088752729bf0679d1aeb52a86"
+    },
+    {
+      "path": "bot/src/scene-entry.js",
+      "owner": "session",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "0b1c4301d29cddaf94ac96b49418d512e75a9b78468ab42283339c3078218745"
+    },
+    {
+      "path": "bot/src/scene-fiction-authority.js",
+      "owner": "narrative",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "15d70521a1bc5e84d53ca435d18061648b7cf10afb57793f4df685a7f3bc2fc4"
+    },
+    {
+      "path": "bot/src/scene-fiction-context.js",
+      "owner": "narrative",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "83497569d68af09ef5e3d40730922c6d3aa707b1a8059b1fc556290c6794f029"
+    },
+    {
+      "path": "bot/src/scene-intent-board.js",
+      "owner": "intent",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "5e22d2403e21107dc81bafaab67964f8d62a9752908c3ef1f552532f5f3639db"
+    },
+    {
+      "path": "bot/src/scene-observation-route.js",
+      "owner": "narrative",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "311e5b5e4c2749821bf13fe7b39303bf8d42aa303d641c0adc778cbbd0bd0fdb"
+    },
+    {
+      "path": "bot/src/scene-setup.js",
+      "owner": "session",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "6c1e800d576ce70c5b7af61ae34b3dbdbe3ffa0970d52f2863c2df3d48ac88f5"
+    },
+    {
+      "path": "bot/src/scoped-memory.js",
+      "owner": "knowledge",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "ed95130be67d34e6bf1cc8faff6a40b0515e43b8f2f8312aef67f712c0d91267"
+    },
+    {
+      "path": "bot/src/scoped-query.js",
+      "owner": "knowledge",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "ca47ff8ef202ca0e95c3b52f83d32e6860be2206a182f472e6ed21ec4870e744"
+    },
+    {
+      "path": "bot/src/seed-commands.js",
+      "owner": "application",
+      "role": "application",
+      "location": "legacy",
+      "sha256": "5f598e76b7c250ba3c62acd631813b7791455c6f5522702ecb1998d1da62d6f2"
+    },
+    {
+      "path": "bot/src/seed-data.js",
+      "owner": "world",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "3fc840f4298d7dd3785c312382d9a1e3047db073597d330fc05de7456dfd5b5a"
+    },
+    {
+      "path": "bot/src/seed-drafts.js",
+      "owner": "world",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "23862f8486a139a418836c1595f97745e726f8714ab0ec34f1ecb0cc96222b3d"
+    },
+    {
+      "path": "bot/src/semantic-candidate-source.js",
+      "owner": "knowledge",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "857116870eaca86db56527c38ceae374823c0b81916bde7fa8731ffce63e62e0"
+    },
+    {
+      "path": "bot/src/semantic-engagement.js",
+      "owner": "intent",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "89f9f48f37c48538ec47a8b6b3e38b378520292f5868e987f2afbc303b60c076"
+    },
+    {
+      "path": "bot/src/serial-queue.js",
+      "owner": "kernel",
+      "role": "kernel",
+      "location": "legacy",
+      "sha256": "aee9209870768a6314b6f091494bd75f74b2b087846231f080a6adeb9647bcc2"
+    },
+    {
+      "path": "bot/src/session-briefs.js",
+      "owner": "session",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "e9c0dc35fa08371002dafef206857c4e57745946c0f1d424d1186b4b419c64e7"
+    },
+    {
+      "path": "bot/src/session-opening-attendance.js",
+      "owner": "session",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "cb15a795e2d4be4518b99ce7e9dea74b22d205ceba6fa67a0f3fabe24a137c80"
+    },
+    {
+      "path": "bot/src/session-opening-recovery.js",
+      "owner": "application",
+      "role": "application",
+      "location": "legacy",
+      "sha256": "06de9e5ac09e00c4d95959368f706d5a1cb62bdd745ed76337d22239500a6324"
+    },
+    {
+      "path": "bot/src/session-opening-runner.js",
+      "owner": "application",
+      "role": "application",
+      "location": "legacy",
+      "sha256": "229206d89eca5872042ab4adabacaf8e0c04783981e2161f4a82a4363c128665"
+    },
+    {
+      "path": "bot/src/session-opening.js",
+      "owner": "session",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "f46978cc5d41a114354c7cdee59b5dbf1129a55b8c6585f9d4a010bfe09fde65"
+    },
+    {
+      "path": "bot/src/simulation-commands.js",
+      "owner": "application",
+      "role": "application",
+      "location": "legacy",
+      "sha256": "f9bd110be3714fe4a12b73f6b45344d8e42901bc283ad8e80a0094128afb14a9"
+    },
+    {
+      "path": "bot/src/simulation-motivation.js",
+      "owner": "npc",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "f6509ee7b9851f97fe8e61c85b03ed9a98b285d3ed03daf924f591860af5a5ee"
+    },
+    {
+      "path": "bot/src/simulation-schema.js",
+      "owner": "world",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "8cacaa518e4cae6962115d752191634d4df4f80b254568e71569daa3ef6334e5"
+    },
+    {
+      "path": "bot/src/simulation-strategy.js",
+      "owner": "npc",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "74dafdf1d9cc8d809602a49e5eb888b460f9b672a6c34c69a462c64849878fb8"
+    },
+    {
+      "path": "bot/src/simulation.js",
+      "owner": "world",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "d3a4bc89bea6a1757f22341ffa14a6df0694cfd4fd42e1e274a1438c8fd70ef5"
+    },
+    {
+      "path": "bot/src/source-communication.js",
+      "owner": "intent",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "7306183a0a965c9f7ec0257117471f66ec232e68915984fedd6e51797155b89b"
+    },
+    {
+      "path": "bot/src/state.js",
+      "owner": "application",
+      "role": "application",
+      "location": "legacy",
+      "sha256": "75c8d27f02c5310b738ca1b1fea84e9a2153018589def2614083367a916f14eb"
+    },
+    {
+      "path": "bot/src/story-commands.js",
+      "owner": "application",
+      "role": "application",
+      "location": "legacy",
+      "sha256": "bedc291425006dcb3767c60e788c96778b793a81f6ac228fd8198fd1a93ee985"
+    },
+    {
+      "path": "bot/src/story-continuity.js",
+      "owner": "session",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "578417b0579e897fc835c74a3c1b197a643abd99f903000ab41e55c199d67e1d"
+    },
+    {
+      "path": "bot/src/supply-dependencies.js",
+      "owner": "world",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "6938a9de0781953019098718efda76645373baad2da2d7d9a080f41687c3df9a"
+    },
+    {
+      "path": "bot/src/tracked-turn.js",
+      "owner": "operations",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "8d0a7b51cad004c3782d51dc6be8ac7c55bdc8ae6fd2cd11a7466d101ece7b1e"
+    },
+    {
+      "path": "bot/src/turn-attempts.js",
+      "owner": "application",
+      "role": "application",
+      "location": "legacy",
+      "sha256": "1cf36c9e09e61219be431be5f093a7f13ab74bab6ba367c71059ad859489c518"
+    },
+    {
+      "path": "bot/src/turn-latency.js",
+      "owner": "operations",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "26b53d80cf1d6cbbb662f752a83bf350652fe94874932fca82723d44f72c4cd2"
+    },
+    {
+      "path": "bot/src/turn-orchestration.js",
+      "owner": "application",
+      "role": "application",
+      "location": "legacy",
+      "sha256": "9e37b79b0a17fd5069254d240a9b454971b94546ee38a4eb7a7a511a1b2023c1"
+    },
+    {
+      "path": "bot/src/turn-pipeline.js",
+      "owner": "application",
+      "role": "application",
+      "location": "legacy",
+      "sha256": "f305554c44e5c6142c027126a7a06d8d8e5e6f2c6c387a6a092c1273679151e6"
+    },
+    {
+      "path": "bot/src/turn-recovery.js",
+      "owner": "application",
+      "role": "application",
+      "location": "legacy",
+      "sha256": "6a9635a0e061d50df07f89a1e93cbdaf0c5ba72842b87ec991f92058dce5c4b1"
+    },
+    {
+      "path": "bot/src/turn-trace-context.js",
+      "owner": "operations",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "ffe524ddfdbb86bcc7df42aa2598627f55ccf9f5526136cd893a8aeafbc013fb"
+    },
+    {
+      "path": "bot/src/typed-intent-qualification.js",
+      "owner": "operations",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "6f8db5bab9c2a966e0943a2f7a43e50c7adb9299fe1792e2026867c0d88cfd27"
+    },
+    {
+      "path": "bot/src/typed-intents.js",
+      "owner": "intent",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "ab22c14465978178bc24c2081ea7277e9f09da46fbb6775c382db6dcd32c795d"
+    },
+    {
+      "path": "bot/src/typed-mechanics.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "0a1c8135ec0ab0d1e0475581947797a7aa2ce195913fe6b8dcbf859774c3d15d"
+    },
+    {
+      "path": "bot/src/typed-roll-outcomes.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "94542b7352cce768f39e14178353efb8f12c5e9a3f6789047ec0bdce9c309577"
+    },
+    {
+      "path": "bot/src/typed-roll-proof.js",
+      "owner": "daggerheart",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "405ccdfa7d82e911a2b8e8b76a77ebf773f5804a24a97a416ee219f18a0a5653"
+    },
+    {
+      "path": "bot/src/voice.js",
+      "owner": "application",
+      "role": "application",
+      "location": "legacy",
+      "sha256": "ccf9876c4d479cd570f23e17c60a1abb414df40e9ea168c33475540ed0befc82"
+    },
+    {
+      "path": "bot/src/window-coordinator.js",
+      "owner": "session",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "8f5db6737b66ff01942cc40748e7ce51e4da77006643b67955f9fde8daaa4322"
+    },
+    {
+      "path": "bot/src/world-authoring.js",
+      "owner": "world",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "e5773b9c1c24b050521fe9c6cac45c8a4744ad736621b209de4977be306694e0"
+    },
+    {
+      "path": "bot/src/world-authorship.js",
+      "owner": "world",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "c8ce0e4f24e69e2f9fdc44a8016783e0a921a8c140173aa693ebef8351358c32"
+    },
+    {
+      "path": "bot/src/world-background-identities.js",
+      "owner": "world",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "74c92805f05c0f8002675bc6cc4c0cc420b48ea1f267d1c92466af57bf0a8101"
+    },
+    {
+      "path": "bot/src/world-encounter-beats.js",
+      "owner": "world",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "6a3539a92f1130573464e5613a4291827d34bdf6d7ccf00edac1ab7c7dc6d008"
+    },
+    {
+      "path": "bot/src/world-identity-persistence.js",
+      "owner": "world",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "01ea4b4a32bce70dfb02b1c9e394dde0ab0eed04013b2fe8f159bbe051db78e0"
+    },
+    {
+      "path": "bot/src/world-information-transfer.js",
+      "owner": "world",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "6d31c18ce9fb401e02f3dac3d3032acba02de05eb75768ed84e3185c949e15f7"
+    },
+    {
+      "path": "bot/src/world-narrative-bridge.js",
+      "owner": "narrative--world",
+      "role": "pair",
+      "location": "legacy",
+      "sha256": "aab5ad6f0e970eaa32a09ee711b33f3fd8a3ec0060d75575a9c52fe9554ac2f6"
+    },
+    {
+      "path": "bot/src/world-observation.js",
+      "owner": "world",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "5d7954e7624945799da037cd6cee499d722ff8c77c758eabb1e6275489d1f18e"
+    },
+    {
+      "path": "bot/src/world-private-seeds.js",
+      "owner": "world",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "32a489bb901b31cab24e5ba87f99def93582f803907e04e5c655b66cfa3ad774"
+    },
+    {
+      "path": "bot/src/world-resolution.js",
+      "owner": "world",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "6180dfb5882b67c713afbf4f316b6d812a0e174ccb7a4064f8e4df5c093638f0"
+    },
+    {
+      "path": "bot/src/world-sanctioned-sources.js",
+      "owner": "world",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "b0cb5033f5e9aa629ca2a7f86474544742c1c13fe96cb81c540b2faad03e692c"
+    },
+    {
+      "path": "bot/src/world-simulation-receipts.js",
+      "owner": "world",
+      "role": "framework",
+      "location": "legacy",
+      "sha256": "8eedcc1f0c8120591412e2a0ccff7c9b2980d5c22c6b5825480a2bcb4fbfaf8d"
+    },
+    {
+      "path": "bot/tooling/architecture/ast-imports.mjs",
+      "owner": "tooling",
+      "role": "tooling",
+      "location": "tooling",
+      "sha256": "0ee832ec57e826009cf562b75d8cfbe92e1519d741e7bcdef7db1c07a5649924"
+    },
+    {
+      "path": "bot/tooling/architecture/boundary-checker.mjs",
+      "owner": "tooling",
+      "role": "tooling",
+      "location": "tooling",
+      "sha256": "886bc685602e60a3fe61b90333972a046178a6726b92e5d75e8de35b6098012a"
+    },
+    {
+      "path": "bot/tooling/architecture/bridge-registry.mjs",
+      "owner": "tooling",
+      "role": "tooling",
+      "location": "tooling",
+      "sha256": "9e644b2ef902db92d0473baca3c95c9ac1aa8b3d2013adaa3f672ea373e8e77a"
+    },
+    {
+      "path": "bot/tooling/architecture/check-boundaries.mjs",
+      "owner": "tooling",
+      "role": "tooling",
+      "location": "tooling",
+      "sha256": "74f492a468c5fbe4a25a1cde1abb17cc33fb7236eaa4a4c7bda3986cb5ed7ecc"
+    },
+    {
+      "path": "bot/tooling/architecture/inventory.mjs",
+      "owner": "tooling",
+      "role": "tooling",
+      "location": "tooling",
+      "sha256": "ee912d561a9898cd24164930a79649a3c7757ad374a5c2d5e1682666331615fc"
+    },
+    {
+      "path": "bot/tooling/architecture/read-project.mjs",
+      "owner": "tooling",
+      "role": "tooling",
+      "location": "tooling",
+      "sha256": "592d4dedcceb6ee8f431bbab48b48036d85920da58bc4b64295ce858ceb00abc"
+    },
+    {
+      "path": "bot/tooling/architecture/source-graph.mjs",
+      "owner": "tooling",
+      "role": "tooling",
+      "location": "tooling",
+      "sha256": "8bc9ab26b2179235c4577ba5bf5196dcec3d16f8cdbd5415876e84bba9116968"
+    }
+  ]
+}

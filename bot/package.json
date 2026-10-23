@@ -9,6 +9,8 @@
   },
   "scripts": {
     "start": "node src/index.js",
+    "architecture:check": "node tooling/architecture/check-boundaries.mjs --ratchet --phase RF01",
+    "architecture:strict": "node tooling/architecture/check-boundaries.mjs --strict --phase RF01",
     "register": "node src/register-commands.js",
     "check": "node scripts/check-source.mjs && node scripts/validate-command-schema.mjs",
     "export": "node scripts/export-campaign.mjs",
@@ -48,5 +50,8 @@
   "overrides": {
     "undici": "6.29.0",
     "ws": "8.22.0"
+  },
+  "devDependencies": {
+    "acorn": "8.15.0"
   }
 }

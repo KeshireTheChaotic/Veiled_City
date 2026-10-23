@@ -1,0 +1,14 @@
+{
+  "exit": 0,
+  "syntax_failures": [],
+  "started_utc": "2026-10-23T14:36:44.1385607Z",
+  "command": "node --test --test-concurrency=1 --test-reporter=tap tests/ai-gm-2026-10/rf01-f04.test.mjs",
+  "syntax_files": [
+    "tooling/architecture/ast-imports.mjs",
+    "tooling/architecture/boundary-checker.mjs",
+    "tooling/architecture/read-project.mjs",
+    "tooling/architecture/check-boundaries.mjs",
+    "tests/ai-gm-2026-10/rf01-f04.test.mjs"
+  ],
+  "finished_utc": "2026-10-23T14:36:44.5116778Z"
+}

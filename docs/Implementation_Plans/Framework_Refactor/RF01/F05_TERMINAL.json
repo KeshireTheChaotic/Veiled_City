@@ -1,0 +1,12 @@
+{
+  "started_utc": "2026-10-23T14:39:11.2932716Z",
+  "finished_utc": "2026-10-23T14:39:11.5684685Z",
+  "syntax_failures": [],
+  "syntax_files": [
+    "tooling/architecture/bridge-registry.mjs",
+    "tooling/architecture/read-project.mjs",
+    "tests/ai-gm-2026-10/rf01-f05.test.mjs"
+  ],
+  "exit": 0,
+  "command": "node --test --test-concurrency=1 --test-reporter=tap tests/ai-gm-2026-10/rf01-f05.test.mjs"
+}

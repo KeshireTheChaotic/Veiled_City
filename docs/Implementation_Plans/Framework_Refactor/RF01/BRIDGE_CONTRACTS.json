@@ -1,0 +1,3267 @@
+{
+  "version": 1,
+  "source_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+  "observed_graph_sha256": "1caa7f33db8af9cbe17685493f4f23e46deb1c80ac2cd01c34ef3f8f7517bfe2",
+  "pairs": [
+    {
+      "pair": "ai-provider--knowledge",
+      "endpoints": [
+        "ai-provider",
+        "knowledge"
+      ],
+      "status": "PROPOSED_NO_API",
+      "directions": [
+        {
+          "from": "ai-provider",
+          "to": "knowledge",
+          "import_occurrences": 1,
+          "injected_calls": 0,
+          "contract": "Observed dependency only; exact port remains with accountable migration"
+        }
+      ],
+      "source_evidence": [
+        {
+          "from": "bot/src/prompt-budget.js",
+          "to": "bot/src/disclosure-authority.js",
+          "line": 3,
+          "type": "import"
+        }
+      ],
+      "validation": "Retain source and audience authority; design exact port in owning migration; observed imports do not prove runtime traffic.",
+      "lifecycle": "Observed proposal; no package/API/consumer claimed.",
+      "adoption_feature": "RF05",
+      "consumers": [],
+      "tests": [],
+      "observed_directions": [
+        {
+          "from": "ai-provider",
+          "to": "knowledge",
+          "import_occurrences": 1,
+          "injected_calls": 0
+        }
+      ],
+      "evidence_reference": {
+        "file": "docs/Implementation_Plans/Framework_Refactor/DEPENDENCY_GRAPH.json",
+        "pair": "ai-provider--knowledge",
+        "graph_sha256": "1caa7f33db8af9cbe17685493f4f23e46deb1c80ac2cd01c34ef3f8f7517bfe2",
+        "occurrences": 1
+      }
+    },
+    {
+      "pair": "ai-provider--operations",
+      "endpoints": [
+        "ai-provider",
+        "operations"
+      ],
+      "status": "PROPOSED_NO_API",
+      "directions": [
+        {
+          "from": "ai-provider",
+          "to": "operations",
+          "import_occurrences": 1,
+          "injected_calls": 0,
+          "contract": "Observed dependency only; exact port remains with accountable migration"
+        }
+      ],
+      "source_evidence": [
+        {
+          "from": "bot/src/generation-feedback.js",
+          "to": "bot/src/turn-trace-context.js",
+          "line": 2,
+          "type": "import"
+        }
+      ],
+      "validation": "Retain source and audience authority; design exact port in owning migration; observed imports do not prove runtime traffic.",
+      "lifecycle": "Observed proposal; no package/API/consumer claimed.",
+      "adoption_feature": "RF05",
+      "consumers": [],
+      "tests": [],
+      "observed_directions": [
+        {
+          "from": "ai-provider",
+          "to": "operations",
+          "import_occurrences": 1,
+          "injected_calls": 0
+        }
+      ],
+      "evidence_reference": {
+        "file": "docs/Implementation_Plans/Framework_Refactor/DEPENDENCY_GRAPH.json",
+        "pair": "ai-provider--operations",
+        "graph_sha256": "1caa7f33db8af9cbe17685493f4f23e46deb1c80ac2cd01c34ef3f8f7517bfe2",
+        "occurrences": 1
+      }
+    },
+    {
+      "pair": "character--daggerheart",
+      "endpoints": [
+        "character",
+        "daggerheart"
+      ],
+      "status": "PROPOSED_NO_API",
+      "directions": [
+        {
+          "from": "character",
+          "to": "daggerheart",
+          "import_occurrences": 1,
+          "injected_calls": 0,
+          "contract": "Observed dependency only; exact port remains with accountable migration"
+        },
+        {
+          "from": "daggerheart",
+          "to": "character",
+          "import_occurrences": 1,
+          "injected_calls": 0,
+          "contract": "Observed dependency only; exact port remains with accountable migration"
+        }
+      ],
+      "source_evidence": [
+        {
+          "from": "bot/src/character-observation.js",
+          "to": "bot/src/pc-incoming.js",
+          "line": 7,
+          "type": "import"
+        }
+      ],
+      "validation": "Retain source and audience authority; design exact port in owning migration; observed imports do not prove runtime traffic.",
+      "lifecycle": "Observed proposal; no package/API/consumer claimed.",
+      "adoption_feature": "RF03",
+      "consumers": [],
+      "tests": [],
+      "observed_directions": [
+        {
+          "from": "character",
+          "to": "daggerheart",
+          "import_occurrences": 1,
+          "injected_calls": 0
+        },
+        {
+          "from": "daggerheart",
+          "to": "character",
+          "import_occurrences": 1,
+          "injected_calls": 0
+        }
+      ],
+      "evidence_reference": {
+        "file": "docs/Implementation_Plans/Framework_Refactor/DEPENDENCY_GRAPH.json",
+        "pair": "character--daggerheart",
+        "graph_sha256": "1caa7f33db8af9cbe17685493f4f23e46deb1c80ac2cd01c34ef3f8f7517bfe2",
+        "occurrences": 2
+      }
+    },
+    {
+      "pair": "character--discord",
+      "endpoints": [
+        "character",
+        "discord"
+      ],
+      "status": "PROPOSED_NO_API",
+      "directions": [
+        {
+          "from": "discord",
+          "to": "character",
+          "import_occurrences": 1,
+          "injected_calls": 0,
+          "contract": "Observed dependency only; exact port remains with accountable migration"
+        }
+      ],
+      "source_evidence": [
+        {
+          "from": "bot/src/pvp-menu.js",
+          "to": "bot/src/character-system.js",
+          "line": 10,
+          "type": "import"
+        }
+      ],
+      "validation": "Retain source and audience authority; design exact port in owning migration; observed imports do not prove runtime traffic.",
+      "lifecycle": "Observed proposal; no package/API/consumer claimed.",
+      "adoption_feature": "RF06",
+      "consumers": [],
+      "tests": [],
+      "observed_directions": [
+        {
+          "from": "discord",
+          "to": "character",
+          "import_occurrences": 1,
+          "injected_calls": 0
+        }
+      ],
+      "evidence_reference": {
+        "file": "docs/Implementation_Plans/Framework_Refactor/DEPENDENCY_GRAPH.json",
+        "pair": "character--discord",
+        "graph_sha256": "1caa7f33db8af9cbe17685493f4f23e46deb1c80ac2cd01c34ef3f8f7517bfe2",
+        "occurrences": 1
+      }
+    },
+    {
+      "pair": "character--narrative",
+      "endpoints": [
+        "character",
+        "narrative"
+      ],
+      "status": "PROPOSED_NO_API",
+      "directions": [
+        {
+          "from": "narrative",
+          "to": "character",
+          "import_occurrences": 3,
+          "injected_calls": 0,
+          "contract": "Observed dependency only; exact port remains with accountable migration"
+        }
+      ],
+      "source_evidence": [
+        {
+          "from": "bot/src/concept-context.js",
+          "to": "bot/src/character-export.js",
+          "line": 5,
+          "type": "import"
+        }
+      ],
+      "validation": "Retain source and audience authority; design exact port in owning migration; observed imports do not prove runtime traffic.",
+      "lifecycle": "Observed proposal; no package/API/consumer claimed.",
+      "adoption_feature": "RF05",
+      "consumers": [],
+      "tests": [],
+      "observed_directions": [
+        {
+          "from": "narrative",
+          "to": "character",
+          "import_occurrences": 3,
+          "injected_calls": 0
+        }
+      ],
+      "evidence_reference": {
+        "file": "docs/Implementation_Plans/Framework_Refactor/DEPENDENCY_GRAPH.json",
+        "pair": "character--narrative",
+        "graph_sha256": "1caa7f33db8af9cbe17685493f4f23e46deb1c80ac2cd01c34ef3f8f7517bfe2",
+        "occurrences": 3
+      }
+    },
+    {
+      "pair": "character--persistence",
+      "endpoints": [
+        "character",
+        "persistence"
+      ],
+      "status": "PROPOSED_NO_API",
+      "directions": [
+        {
+          "from": "character",
+          "to": "persistence",
+          "import_occurrences": 0,
+          "injected_calls": 74,
+          "contract": "Observed dependency only; exact port remains with accountable migration"
+        }
+      ],
+      "source_evidence": [
+        {
+          "from": "bot/src/character-export.js",
+          "to": null,
+          "line": 46,
+          "type": "storage"
+        }
+      ],
+      "validation": "Retain source and audience authority; design exact port in owning migration; observed imports do not prove runtime traffic.",
+      "lifecycle": "Observed proposal; no package/API/consumer claimed.",
+      "adoption_feature": "RF06",
+      "consumers": [],
+      "tests": [],
+      "observed_directions": [
+        {
+          "from": "character",
+          "to": "persistence",
+          "import_occurrences": 0,
+          "injected_calls": 74
+        }
+      ],
+      "evidence_reference": {
+        "file": "docs/Implementation_Plans/Framework_Refactor/DEPENDENCY_GRAPH.json",
+        "pair": "character--persistence",
+        "graph_sha256": "1caa7f33db8af9cbe17685493f4f23e46deb1c80ac2cd01c34ef3f8f7517bfe2",
+        "occurrences": 74
+      }
+    },
+    {
+      "pair": "character--publication",
+      "endpoints": [
+        "character",
+        "publication"
+      ],
+      "status": "PROPOSED_NO_API",
+      "directions": [
+        {
+          "from": "publication",
+          "to": "character",
+          "import_occurrences": 2,
+          "injected_calls": 0,
+          "contract": "Observed dependency only; exact port remains with accountable migration"
+        }
+      ],
+      "source_evidence": [
+        {
+          "from": "bot/src/handout.js",
+          "to": "bot/src/character-export.js",
+          "line": 3,
+          "type": "import"
+        }
+      ],
+      "validation": "Retain source and audience authority; design exact port in owning migration; observed imports do not prove runtime traffic.",
+      "lifecycle": "Observed proposal; no package/API/consumer claimed.",
+      "adoption_feature": "RF06",
+      "consumers": [],
+      "tests": [],
+      "observed_directions": [
+        {
+          "from": "publication",
+          "to": "character",
+          "import_occurrences": 2,
+          "injected_calls": 0
+        }
+      ],
+      "evidence_reference": {
+        "file": "docs/Implementation_Plans/Framework_Refactor/DEPENDENCY_GRAPH.json",
+        "pair": "character--publication",
+        "graph_sha256": "1caa7f33db8af9cbe17685493f4f23e46deb1c80ac2cd01c34ef3f8f7517bfe2",
+        "occurrences": 2
+      }
+    },
+    {
+      "pair": "character--session",
+      "endpoints": [
+        "character",
+        "session"
+      ],
+      "status": "PROPOSED_NO_API",
+      "directions": [
+        {
+          "from": "character",
+          "to": "session",
+          "import_occurrences": 2,
+          "injected_calls": 0,
+          "contract": "Observed dependency only; exact port remains with accountable migration"
+        }
+      ],
+      "source_evidence": [
+        {
+          "from": "bot/src/character-observation.js",
+          "to": "bot/src/conversation-principal.js",
+          "line": 3,
+          "type": "import"
+        }
+      ],
+      "validation": "Retain source and audience authority; design exact port in owning migration; observed imports do not prove runtime traffic.",
+      "lifecycle": "Observed proposal; no package/API/consumer claimed.",
+      "adoption_feature": "RF04",
+      "consumers": [],
+      "tests": [],
+      "observed_directions": [
+        {
+          "from": "character",
+          "to": "session",
+          "import_occurrences": 2,
+          "injected_calls": 0
+        }
+      ],
+      "evidence_reference": {
+        "file": "docs/Implementation_Plans/Framework_Refactor/DEPENDENCY_GRAPH.json",
+        "pair": "character--session",
+        "graph_sha256": "1caa7f33db8af9cbe17685493f4f23e46deb1c80ac2cd01c34ef3f8f7517bfe2",
+        "occurrences": 2
+      }
+    },
+    {
+      "pair": "character--world",
+      "endpoints": [
+        "character",
+        "world"
+      ],
+      "status": "PROPOSED_NO_API",
+      "directions": [
+        {
+          "from": "world",
+          "to": "character",
+          "import_occurrences": 1,
+          "injected_calls": 0,
+          "contract": "Observed dependency only; exact port remains with accountable migration"
+        },
+        {
+          "from": "character",
+          "to": "world",
+          "import_occurrences": 2,
+          "injected_calls": 0,
+          "contract": "Observed dependency only; exact port remains with accountable migration"
+        }
+      ],
+      "source_evidence": [
+        {
+          "from": "bot/src/autonomous-world.js",
+          "to": "bot/src/character-observation.js",
+          "line": 17,
+          "type": "import"
+        }
+      ],
+      "validation": "Retain source and audience authority; design exact port in owning migration; observed imports do not prove runtime traffic.",
+      "lifecycle": "Observed proposal; no package/API/consumer claimed.",
+      "adoption_feature": "RF04",
+      "consumers": [],
+      "tests": [],
+      "observed_directions": [
+        {
+          "from": "world",
+          "to": "character",
+          "import_occurrences": 1,
+          "injected_calls": 0
+        },
+        {
+          "from": "character",
+          "to": "world",
+          "import_occurrences": 2,
+          "injected_calls": 0
+        }
+      ],
+      "evidence_reference": {
+        "file": "docs/Implementation_Plans/Framework_Refactor/DEPENDENCY_GRAPH.json",
+        "pair": "character--world",
+        "graph_sha256": "1caa7f33db8af9cbe17685493f4f23e46deb1c80ac2cd01c34ef3f8f7517bfe2",
+        "occurrences": 3
+      }
+    },
+    {
+      "pair": "content--intent",
+      "endpoints": [
+        "content",
+        "intent"
+      ],
+      "status": "PROPOSED_NO_API",
+      "directions": [
+        {
+          "from": "content",
+          "to": "intent",
+          "import_occurrences": 1,
+          "injected_calls": 0,
+          "contract": "Observed dependency only; exact port remains with accountable migration"
+        }
+      ],
+      "source_evidence": [
+        {
+          "from": "bot/src/content-packages.js",
+          "to": "bot/src/ai-intents.js",
+          "line": 6,
+          "type": "import"
+        }
+      ],
+      "validation": "Retain source and audience authority; design exact port in owning migration; observed imports do not prove runtime traffic.",
+      "lifecycle": "Observed proposal; no package/API/consumer claimed.",
+      "adoption_feature": "RF05",
+      "consumers": [],
+      "tests": [],
+      "observed_directions": [
+        {
+          "from": "content",
+          "to": "intent",
+          "import_occurrences": 1,
+          "injected_calls": 0
+        }
+      ],
+      "evidence_reference": {
+        "file": "docs/Implementation_Plans/Framework_Refactor/DEPENDENCY_GRAPH.json",
+        "pair": "content--intent",
+        "graph_sha256": "1caa7f33db8af9cbe17685493f4f23e46deb1c80ac2cd01c34ef3f8f7517bfe2",
+        "occurrences": 1
+      }
+    },
+    {
+      "pair": "content--persistence",
+      "endpoints": [
+        "content",
+        "persistence"
+      ],
+      "status": "PROPOSED_NO_API",
+      "directions": [
+        {
+          "from": "content",
+          "to": "persistence",
+          "import_occurrences": 0,
+          "injected_calls": 10,
+          "contract": "Observed dependency only; exact port remains with accountable migration"
+        }
+      ],
+      "source_evidence": [
+        {
+          "from": "bot/src/content-packages.js",
+          "to": null,
+          "line": 46,
+          "type": "storage"
+        }
+      ],
+      "validation": "Retain source and audience authority; design exact port in owning migration; observed imports do not prove runtime traffic.",
+      "lifecycle": "Observed proposal; no package/API/consumer claimed.",
+      "adoption_feature": "RF06",
+      "consumers": [],
+      "tests": [],
+      "observed_directions": [
+        {
+          "from": "content",
+          "to": "persistence",
+          "import_occurrences": 0,
+          "injected_calls": 10
+        }
+      ],
+      "evidence_reference": {
+        "file": "docs/Implementation_Plans/Framework_Refactor/DEPENDENCY_GRAPH.json",
+        "pair": "content--persistence",
+        "graph_sha256": "1caa7f33db8af9cbe17685493f4f23e46deb1c80ac2cd01c34ef3f8f7517bfe2",
+        "occurrences": 10
+      }
+    },
+    {
+      "pair": "content--world",
+      "endpoints": [
+        "content",
+        "world"
+      ],
+      "status": "PROPOSED_NO_API",
+      "directions": [
+        {
+          "from": "content",
+          "to": "world",
+          "import_occurrences": 3,
+          "injected_calls": 0,
+          "contract": "Observed dependency only; exact port remains with accountable migration"
+        }
+      ],
+      "source_evidence": [
+        {
+          "from": "bot/src/content-packages.js",
+          "to": "bot/src/city-calendar.js",
+          "line": 3,
+          "type": "import"
+        }
+      ],
+      "validation": "Retain source and audience authority; design exact port in owning migration; observed imports do not prove runtime traffic.",
+      "lifecycle": "Observed proposal; no package/API/consumer claimed.",
+      "adoption_feature": "RF04",
+      "consumers": [],
+      "tests": [],
+      "observed_directions": [
+        {
+          "from": "content",
+          "to": "world",
+          "import_occurrences": 3,
+          "injected_calls": 0
+        }
+      ],
+      "evidence_reference": {
+        "file": "docs/Implementation_Plans/Framework_Refactor/DEPENDENCY_GRAPH.json",
+        "pair": "content--world",
+        "graph_sha256": "1caa7f33db8af9cbe17685493f4f23e46deb1c80ac2cd01c34ef3f8f7517bfe2",
+        "occurrences": 3
+      }
+    },
+    {
+      "pair": "daggerheart--discord",
+      "endpoints": [
+        "daggerheart",
+        "discord"
+      ],
+      "status": "PROPOSED_NO_API",
+      "directions": [
+        {
+          "from": "discord",
+          "to": "daggerheart",
+          "import_occurrences": 16,
+          "injected_calls": 0,
+          "contract": "Observed dependency only; exact port remains with accountable migration"
+        }
+      ],
+      "source_evidence": [
+        {
+          "from": "bot/src/pvp-menu.js",
+          "to": "bot/src/action-consent.js",
+          "line": 8,
+          "type": "import"
+        }
+      ],
+      "validation": "Retain source and audience authority; design exact port in owning migration; observed imports do not prove runtime traffic.",
+      "lifecycle": "Observed proposal; no package/API/consumer claimed.",
+      "adoption_feature": "RF03",
+      "consumers": [],
+      "tests": [],
+      "observed_directions": [
+        {
+          "from": "discord",
+          "to": "daggerheart",
+          "import_occurrences": 16,
+          "injected_calls": 0
+        }
+      ],
+      "evidence_reference": {
+        "file": "docs/Implementation_Plans/Framework_Refactor/DEPENDENCY_GRAPH.json",
+        "pair": "daggerheart--discord",
+        "graph_sha256": "1caa7f33db8af9cbe17685493f4f23e46deb1c80ac2cd01c34ef3f8f7517bfe2",
+        "occurrences": 16
+      }
+    },
+    {
+      "pair": "daggerheart--intent",
+      "endpoints": [
+        "daggerheart",
+        "intent"
+      ],
+      "status": "PROPOSED_NO_API",
+      "directions": [
+        {
+          "from": "intent",
+          "to": "daggerheart",
+          "import_occurrences": 53,
+          "injected_calls": 0,
+          "contract": "Observed dependency only; exact port remains with accountable migration"
+        },
+        {
+          "from": "daggerheart",
+          "to": "intent",
+          "import_occurrences": 61,
+          "injected_calls": 0,
+          "contract": "Observed dependency only; exact port remains with accountable migration"
+        }
+      ],
+      "source_evidence": [
+        {
+          "from": "bot/src/ai-intents.js",
+          "to": "bot/src/application-authority.js",
+          "line": 16,
+          "type": "import"
+        }
+      ],
+      "validation": "Retain source and audience authority; design exact port in owning migration; observed imports do not prove runtime traffic.",
+      "lifecycle": "Observed proposal; no package/API/consumer claimed.",
+      "adoption_feature": "RF03",
+      "consumers": [],
+      "tests": [],
+      "observed_directions": [
+        {
+          "from": "intent",
+          "to": "daggerheart",
+          "import_occurrences": 53,
+          "injected_calls": 0
+        },
+        {
+          "from": "daggerheart",
+          "to": "intent",
+          "import_occurrences": 61,
+          "injected_calls": 0
+        }
+      ],
+      "evidence_reference": {
+        "file": "docs/Implementation_Plans/Framework_Refactor/DEPENDENCY_GRAPH.json",
+        "pair": "daggerheart--intent",
+        "graph_sha256": "1caa7f33db8af9cbe17685493f4f23e46deb1c80ac2cd01c34ef3f8f7517bfe2",
+        "occurrences": 114
+      }
+    },
+    {
+      "pair": "daggerheart--knowledge",
+      "endpoints": [
+        "daggerheart",
+        "knowledge"
+      ],
+      "status": "PROPOSED_NO_API",
+      "directions": [
+        {
+          "from": "daggerheart",
+          "to": "knowledge",
+          "import_occurrences": 18,
+          "injected_calls": 0,
+          "contract": "Observed dependency only; exact port remains with accountable migration"
+        }
+      ],
+      "source_evidence": [
+        {
+          "from": "bot/src/consent-native.js",
+          "to": "bot/src/personal-continuity.js",
+          "line": 2,
+          "type": "import"
+        }
+      ],
+      "validation": "Retain source and audience authority; design exact port in owning migration; observed imports do not prove runtime traffic.",
+      "lifecycle": "Observed proposal; no package/API/consumer claimed.",
+      "adoption_feature": "RF03",
+      "consumers": [],
+      "tests": [],
+      "observed_directions": [
+        {
+          "from": "daggerheart",
+          "to": "knowledge",
+          "import_occurrences": 18,
+          "injected_calls": 0
+        }
+      ],
+      "evidence_reference": {
+        "file": "docs/Implementation_Plans/Framework_Refactor/DEPENDENCY_GRAPH.json",
+        "pair": "daggerheart--knowledge",
+        "graph_sha256": "1caa7f33db8af9cbe17685493f4f23e46deb1c80ac2cd01c34ef3f8f7517bfe2",
+        "occurrences": 18
+      }
+    },
+    {
+      "pair": "daggerheart--narrative",
+      "endpoints": [
+        "daggerheart",
+        "narrative"
+      ],
+      "status": "PROPOSED_NO_API",
+      "directions": [
+        {
+          "from": "daggerheart",
+          "to": "narrative",
+          "import_occurrences": 101,
+          "injected_calls": 0,
+          "contract": "Observed dependency only; exact port remains with accountable migration"
+        },
+        {
+          "from": "narrative",
+          "to": "daggerheart",
+          "import_occurrences": 10,
+          "injected_calls": 0,
+          "contract": "Observed dependency only; exact port remains with accountable migration"
+        }
+      ],
+      "source_evidence": [
+        {
+          "from": "bot/src/gm-action-capability.js",
+          "to": "bot/src/scene-fiction-context.js",
+          "line": 2,
+          "type": "import"
+        }
+      ],
+      "validation": "Retain source and audience authority; design exact port in owning migration; observed imports do not prove runtime traffic.",
+      "lifecycle": "Observed proposal; no package/API/consumer claimed.",
+      "adoption_feature": "RF03",
+      "consumers": [],
+      "tests": [],
+      "observed_directions": [
+        {
+          "from": "daggerheart",
+          "to": "narrative",
+          "import_occurrences": 101,
+          "injected_calls": 0
+        },
+        {
+          "from": "narrative",
+          "to": "daggerheart",
+          "import_occurrences": 10,
+          "injected_calls": 0
+        }
+      ],
+      "evidence_reference": {
+        "file": "docs/Implementation_Plans/Framework_Refactor/DEPENDENCY_GRAPH.json",
+        "pair": "daggerheart--narrative",
+        "graph_sha256": "1caa7f33db8af9cbe17685493f4f23e46deb1c80ac2cd01c34ef3f8f7517bfe2",
+        "occurrences": 111
+      }
+    },
+    {
+      "pair": "daggerheart--npc",
+      "endpoints": [
+        "daggerheart",
+        "npc"
+      ],
+      "status": "PROPOSED_NO_API",
+      "directions": [
+        {
+          "from": "daggerheart",
+          "to": "npc",
+          "import_occurrences": 4,
+          "injected_calls": 0,
+          "contract": "Observed dependency only; exact port remains with accountable migration"
+        }
+      ],
+      "source_evidence": [
+        {
+          "from": "bot/src/consent-native.js",
+          "to": "bot/src/simulation-motivation.js",
+          "line": 10,
+          "type": "import"
+        }
+      ],
+      "validation": "Retain source and audience authority; design exact port in owning migration; observed imports do not prove runtime traffic.",
+      "lifecycle": "Observed proposal; no package/API/consumer claimed.",
+      "adoption_feature": "RF03",
+      "consumers": [],
+      "tests": [],
+      "observed_directions": [
+        {
+          "from": "daggerheart",
+          "to": "npc",
+          "import_occurrences": 4,
+          "injected_calls": 0
+        }
+      ],
+      "evidence_reference": {
+        "file": "docs/Implementation_Plans/Framework_Refactor/DEPENDENCY_GRAPH.json",
+        "pair": "daggerheart--npc",
+        "graph_sha256": "1caa7f33db8af9cbe17685493f4f23e46deb1c80ac2cd01c34ef3f8f7517bfe2",
+        "occurrences": 4
+      }
+    },
+    {
+      "pair": "daggerheart--operations",
+      "endpoints": [
+        "daggerheart",
+        "operations"
+      ],
+      "status": "PROPOSED_NO_API",
+      "directions": [
+        {
+          "from": "daggerheart",
+          "to": "operations",
+          "import_occurrences": 11,
+          "injected_calls": 0,
+          "contract": "Observed dependency only; exact port remains with accountable migration"
+        }
+      ],
+      "source_evidence": [
+        {
+          "from": "bot/src/gm-action-review.js",
+          "to": "bot/src/errors.js",
+          "line": 8,
+          "type": "import"
+        }
+      ],
+      "validation": "Retain source and audience authority; design exact port in owning migration; observed imports do not prove runtime traffic.",
+      "lifecycle": "Observed proposal; no package/API/consumer claimed.",
+      "adoption_feature": "RF03",
+      "consumers": [],
+      "tests": [],
+      "observed_directions": [
+        {
+          "from": "daggerheart",
+          "to": "operations",
+          "import_occurrences": 11,
+          "injected_calls": 0
+        }
+      ],
+      "evidence_reference": {
+        "file": "docs/Implementation_Plans/Framework_Refactor/DEPENDENCY_GRAPH.json",
+        "pair": "daggerheart--operations",
+        "graph_sha256": "1caa7f33db8af9cbe17685493f4f23e46deb1c80ac2cd01c34ef3f8f7517bfe2",
+        "occurrences": 11
+      }
+    },
+    {
+      "pair": "daggerheart--persistence",
+      "endpoints": [
+        "daggerheart",
+        "persistence"
+      ],
+      "status": "PROPOSED_NO_API",
+      "directions": [
+        {
+          "from": "persistence",
+          "to": "daggerheart",
+          "import_occurrences": 1,
+          "injected_calls": 0,
+          "contract": "Observed dependency only; exact port remains with accountable migration"
+        },
+        {
+          "from": "daggerheart",
+          "to": "persistence",
+          "import_occurrences": 0,
+          "injected_calls": 1955,
+          "contract": "Observed dependency only; exact port remains with accountable migration"
+        }
+      ],
+      "source_evidence": [
+        {
+          "from": "bot/src/db.js",
+          "to": "bot/src/fear-reservations.js",
+          "line": 24,
+          "type": "import"
+        }
+      ],
+      "validation": "Retain source and audience authority; design exact port in owning migration; observed imports do not prove runtime traffic.",
+      "lifecycle": "Observed proposal; no package/API/consumer claimed.",
+      "adoption_feature": "RF03",
+      "consumers": [],
+      "tests": [],
+      "observed_directions": [
+        {
+          "from": "persistence",
+          "to": "daggerheart",
+          "import_occurrences": 1,
+          "injected_calls": 0
+        },
+        {
+          "from": "daggerheart",
+          "to": "persistence",
+          "import_occurrences": 0,
+          "injected_calls": 1955
+        }
+      ],
+      "evidence_reference": {
+        "file": "docs/Implementation_Plans/Framework_Refactor/DEPENDENCY_GRAPH.json",
+        "pair": "daggerheart--persistence",
+        "graph_sha256": "1caa7f33db8af9cbe17685493f4f23e46deb1c80ac2cd01c34ef3f8f7517bfe2",
+        "occurrences": 1956
+      }
+    },
+    {
+      "pair": "daggerheart--publication",
+      "endpoints": [
+        "daggerheart",
+        "publication"
+      ],
+      "status": "PROPOSED_NO_API",
+      "directions": [
+        {
+          "from": "daggerheart",
+          "to": "publication",
+          "import_occurrences": 15,
+          "injected_calls": 0,
+          "contract": "Observed dependency only; exact port remains with accountable migration"
+        },
+        {
+          "from": "publication",
+          "to": "daggerheart",
+          "import_occurrences": 19,
+          "injected_calls": 0,
+          "contract": "Observed dependency only; exact port remains with accountable migration"
+        }
+      ],
+      "source_evidence": [
+        {
+          "from": "bot/src/mechanical-native-v9.js",
+          "to": "bot/src/native-outcome-output.js",
+          "line": 5,
+          "type": "import"
+        }
+      ],
+      "validation": "Retain source and audience authority; design exact port in owning migration; observed imports do not prove runtime traffic.",
+      "lifecycle": "Observed proposal; no package/API/consumer claimed.",
+      "adoption_feature": "RF03",
+      "consumers": [],
+      "tests": [],
+      "observed_directions": [
+        {
+          "from": "daggerheart",
+          "to": "publication",
+          "import_occurrences": 15,
+          "injected_calls": 0
+        },
+        {
+          "from": "publication",
+          "to": "daggerheart",
+          "import_occurrences": 19,
+          "injected_calls": 0
+        }
+      ],
+      "evidence_reference": {
+        "file": "docs/Implementation_Plans/Framework_Refactor/DEPENDENCY_GRAPH.json",
+        "pair": "daggerheart--publication",
+        "graph_sha256": "1caa7f33db8af9cbe17685493f4f23e46deb1c80ac2cd01c34ef3f8f7517bfe2",
+        "occurrences": 34
+      }
+    },
+    {
+      "pair": "daggerheart--session",
+      "endpoints": [
+        "daggerheart",
+        "session"
+      ],
+      "status": "PROPOSED_NO_API",
+      "directions": [
+        {
+          "from": "daggerheart",
+          "to": "session",
+          "import_occurrences": 71,
+          "injected_calls": 0,
+          "contract": "Observed dependency only; exact port remains with accountable migration"
+        },
+        {
+          "from": "session",
+          "to": "daggerheart",
+          "import_occurrences": 17,
+          "injected_calls": 0,
+          "contract": "Observed dependency only; exact port remains with accountable migration"
+        }
+      ],
+      "source_evidence": [
+        {
+          "from": "bot/src/action-consent.js",
+          "to": "bot/src/conversation-principal.js",
+          "line": 3,
+          "type": "import"
+        }
+      ],
+      "validation": "Retain source and audience authority; design exact port in owning migration; observed imports do not prove runtime traffic.",
+      "lifecycle": "Observed proposal; no package/API/consumer claimed.",
+      "adoption_feature": "RF03",
+      "consumers": [],
+      "tests": [],
+      "observed_directions": [
+        {
+          "from": "daggerheart",
+          "to": "session",
+          "import_occurrences": 71,
+          "injected_calls": 0
+        },
+        {
+          "from": "session",
+          "to": "daggerheart",
+          "import_occurrences": 17,
+          "injected_calls": 0
+        }
+      ],
+      "evidence_reference": {
+        "file": "docs/Implementation_Plans/Framework_Refactor/DEPENDENCY_GRAPH.json",
+        "pair": "daggerheart--session",
+        "graph_sha256": "1caa7f33db8af9cbe17685493f4f23e46deb1c80ac2cd01c34ef3f8f7517bfe2",
+        "occurrences": 88
+      }
+    },
+    {
+      "pair": "daggerheart--world",
+      "endpoints": [
+        "daggerheart",
+        "world"
+      ],
+      "status": "PROPOSED_NO_API",
+      "directions": [
+        {
+          "from": "daggerheart",
+          "to": "world",
+          "import_occurrences": 115,
+          "injected_calls": 0,
+          "contract": "Observed dependency only; exact port remains with accountable migration"
+        },
+        {
+          "from": "world",
+          "to": "daggerheart",
+          "import_occurrences": 43,
+          "injected_calls": 0,
+          "contract": "Observed dependency only; exact port remains with accountable migration"
+        }
+      ],
+      "source_evidence": [
+        {
+          "from": "bot/src/action-consent.js",
+          "to": "bot/src/city-calendar.js",
+          "line": 5,
+          "type": "import"
+        }
+      ],
+      "validation": "Retain source and audience authority; design exact port in owning migration; observed imports do not prove runtime traffic.",
+      "lifecycle": "Observed proposal; no package/API/consumer claimed.",
+      "adoption_feature": "RF03",
+      "consumers": [],
+      "tests": [],
+      "observed_directions": [
+        {
+          "from": "daggerheart",
+          "to": "world",
+          "import_occurrences": 115,
+          "injected_calls": 0
+        },
+        {
+          "from": "world",
+          "to": "daggerheart",
+          "import_occurrences": 43,
+          "injected_calls": 0
+        }
+      ],
+      "evidence_reference": {
+        "file": "docs/Implementation_Plans/Framework_Refactor/DEPENDENCY_GRAPH.json",
+        "pair": "daggerheart--world",
+        "graph_sha256": "1caa7f33db8af9cbe17685493f4f23e46deb1c80ac2cd01c34ef3f8f7517bfe2",
+        "occurrences": 158
+      }
+    },
+    {
+      "pair": "discord--narrative",
+      "endpoints": [
+        "discord",
+        "narrative"
+      ],
+      "status": "PROPOSED_NO_API",
+      "directions": [
+        {
+          "from": "discord",
+          "to": "narrative",
+          "import_occurrences": 1,
+          "injected_calls": 0,
+          "contract": "Observed dependency only; exact port remains with accountable migration"
+        }
+      ],
+      "source_evidence": [
+        {
+          "from": "bot/src/pvp-menu.js",
+          "to": "bot/src/narrative-pvp.js",
+          "line": 11,
+          "type": "import"
+        }
+      ],
+      "validation": "Retain source and audience authority; design exact port in owning migration; observed imports do not prove runtime traffic.",
+      "lifecycle": "Observed proposal; no package/API/consumer claimed.",
+      "adoption_feature": "RF05",
+      "consumers": [],
+      "tests": [],
+      "observed_directions": [
+        {
+          "from": "discord",
+          "to": "narrative",
+          "import_occurrences": 1,
+          "injected_calls": 0
+        }
+      ],
+      "evidence_reference": {
+        "file": "docs/Implementation_Plans/Framework_Refactor/DEPENDENCY_GRAPH.json",
+        "pair": "discord--narrative",
+        "graph_sha256": "1caa7f33db8af9cbe17685493f4f23e46deb1c80ac2cd01c34ef3f8f7517bfe2",
+        "occurrences": 1
+      }
+    },
+    {
+      "pair": "discord--operations",
+      "endpoints": [
+        "discord",
+        "operations"
+      ],
+      "status": "PROPOSED_NO_API",
+      "directions": [
+        {
+          "from": "discord",
+          "to": "operations",
+          "import_occurrences": 4,
+          "injected_calls": 0,
+          "contract": "Observed dependency only; exact port remains with accountable migration"
+        },
+        {
+          "from": "operations",
+          "to": "discord",
+          "import_occurrences": 1,
+          "injected_calls": 0,
+          "contract": "Observed dependency only; exact port remains with accountable migration"
+        }
+      ],
+      "source_evidence": [
+        {
+          "from": "bot/src/discord/interaction-lifecycle.js",
+          "to": "bot/src/operational-metrics.js",
+          "line": 2,
+          "type": "import"
+        }
+      ],
+      "validation": "Retain source and audience authority; design exact port in owning migration; observed imports do not prove runtime traffic.",
+      "lifecycle": "Observed proposal; no package/API/consumer claimed.",
+      "adoption_feature": "RF06",
+      "consumers": [],
+      "tests": [],
+      "observed_directions": [
+        {
+          "from": "discord",
+          "to": "operations",
+          "import_occurrences": 4,
+          "injected_calls": 0
+        },
+        {
+          "from": "operations",
+          "to": "discord",
+          "import_occurrences": 1,
+          "injected_calls": 0
+        }
+      ],
+      "evidence_reference": {
+        "file": "docs/Implementation_Plans/Framework_Refactor/DEPENDENCY_GRAPH.json",
+        "pair": "discord--operations",
+        "graph_sha256": "1caa7f33db8af9cbe17685493f4f23e46deb1c80ac2cd01c34ef3f8f7517bfe2",
+        "occurrences": 5
+      }
+    },
+    {
+      "pair": "discord--persistence",
+      "endpoints": [
+        "discord",
+        "persistence"
+      ],
+      "status": "PROPOSED_NO_API",
+      "directions": [
+        {
+          "from": "discord",
+          "to": "persistence",
+          "import_occurrences": 0,
+          "injected_calls": 42,
+          "contract": "Observed dependency only; exact port remains with accountable migration"
+        }
+      ],
+      "source_evidence": [
+        {
+          "from": "bot/src/pvp-menu.js",
+          "to": null,
+          "line": 35,
+          "type": "storage"
+        }
+      ],
+      "validation": "Retain source and audience authority; design exact port in owning migration; observed imports do not prove runtime traffic.",
+      "lifecycle": "Observed proposal; no package/API/consumer claimed.",
+      "adoption_feature": "RF06",
+      "consumers": [],
+      "tests": [],
+      "observed_directions": [
+        {
+          "from": "discord",
+          "to": "persistence",
+          "import_occurrences": 0,
+          "injected_calls": 42
+        }
+      ],
+      "evidence_reference": {
+        "file": "docs/Implementation_Plans/Framework_Refactor/DEPENDENCY_GRAPH.json",
+        "pair": "discord--persistence",
+        "graph_sha256": "1caa7f33db8af9cbe17685493f4f23e46deb1c80ac2cd01c34ef3f8f7517bfe2",
+        "occurrences": 42
+      }
+    },
+    {
+      "pair": "discord--publication",
+      "endpoints": [
+        "discord",
+        "publication"
+      ],
+      "status": "CONTRACT_ONLY_UNWIRED",
+      "directions": [
+        {
+          "from": "publication",
+          "to": "discord",
+          "contract": "send committed outbox row -> original acknowledgement/error"
+        }
+      ],
+      "source_evidence": [
+        {
+          "from": "bot/src/publication-outbox.js",
+          "to": "bot/src/discord/chunking.js",
+          "line": 3,
+          "type": "import"
+        }
+      ],
+      "validation": "Validate injected callable presence only; preserve source/audience/principal/revision/assertCurrent/receipt fields, Promise/result/error identity; no authority expansion or retries. Native runner keeps policy and acknowledgement ownership.",
+      "lifecycle": "Contract + fresh tests + explicit composition; native adoption and old-edge removal pending.",
+      "adoption_feature": "RF06-F03",
+      "public_api": "bot/src/framework-to-framework/discord--publication/public.js",
+      "consumers": [
+        "bot/src/application/composition/create-opening-services.js"
+      ],
+      "tests": [
+        "bot/tests/ai-gm-2026-10/rf01-f02.test.mjs",
+        "bot/tests/ai-gm-2026-10/rf01-f03.test.mjs"
+      ],
+      "observed_directions": [
+        {
+          "from": "publication",
+          "to": "discord",
+          "import_occurrences": 4,
+          "injected_calls": 0
+        },
+        {
+          "from": "discord",
+          "to": "publication",
+          "import_occurrences": 2,
+          "injected_calls": 0
+        }
+      ],
+      "evidence_reference": {
+        "file": "docs/Implementation_Plans/Framework_Refactor/DEPENDENCY_GRAPH.json",
+        "pair": "discord--publication",
+        "graph_sha256": "1caa7f33db8af9cbe17685493f4f23e46deb1c80ac2cd01c34ef3f8f7517bfe2",
+        "occurrences": 6
+      }
+    },
+    {
+      "pair": "discord--session",
+      "endpoints": [
+        "discord",
+        "session"
+      ],
+      "status": "PROPOSED_NO_API",
+      "directions": [
+        {
+          "from": "discord",
+          "to": "session",
+          "import_occurrences": 2,
+          "injected_calls": 0,
+          "contract": "Observed dependency only; exact port remains with accountable migration"
+        }
+      ],
+      "source_evidence": [
+        {
+          "from": "bot/src/pvp-menu.js",
+          "to": "bot/src/conversation-principal.js",
+          "line": 5,
+          "type": "import"
+        }
+      ],
+      "validation": "Retain source and audience authority; design exact port in owning migration; observed imports do not prove runtime traffic.",
+      "lifecycle": "Observed proposal; no package/API/consumer claimed.",
+      "adoption_feature": "RF06",
+      "consumers": [],
+      "tests": [],
+      "observed_directions": [
+        {
+          "from": "discord",
+          "to": "session",
+          "import_occurrences": 2,
+          "injected_calls": 0
+        }
+      ],
+      "evidence_reference": {
+        "file": "docs/Implementation_Plans/Framework_Refactor/DEPENDENCY_GRAPH.json",
+        "pair": "discord--session",
+        "graph_sha256": "1caa7f33db8af9cbe17685493f4f23e46deb1c80ac2cd01c34ef3f8f7517bfe2",
+        "occurrences": 2
+      }
+    },
+    {
+      "pair": "discord--world",
+      "endpoints": [
+        "discord",
+        "world"
+      ],
+      "status": "PROPOSED_NO_API",
+      "directions": [
+        {
+          "from": "discord",
+          "to": "world",
+          "import_occurrences": 1,
+          "injected_calls": 0,
+          "contract": "Observed dependency only; exact port remains with accountable migration"
+        }
+      ],
+      "source_evidence": [
+        {
+          "from": "bot/src/pvp-menu.js",
+          "to": "bot/src/city-calendar.js",
+          "line": 7,
+          "type": "import"
+        }
+      ],
+      "validation": "Retain source and audience authority; design exact port in owning migration; observed imports do not prove runtime traffic.",
+      "lifecycle": "Observed proposal; no package/API/consumer claimed.",
+      "adoption_feature": "RF06",
+      "consumers": [],
+      "tests": [],
+      "observed_directions": [
+        {
+          "from": "discord",
+          "to": "world",
+          "import_occurrences": 1,
+          "injected_calls": 0
+        }
+      ],
+      "evidence_reference": {
+        "file": "docs/Implementation_Plans/Framework_Refactor/DEPENDENCY_GRAPH.json",
+        "pair": "discord--world",
+        "graph_sha256": "1caa7f33db8af9cbe17685493f4f23e46deb1c80ac2cd01c34ef3f8f7517bfe2",
+        "occurrences": 1
+      }
+    },
+    {
+      "pair": "intent--knowledge",
+      "endpoints": [
+        "intent",
+        "knowledge"
+      ],
+      "status": "PROPOSED_NO_API",
+      "directions": [
+        {
+          "from": "intent",
+          "to": "knowledge",
+          "import_occurrences": 8,
+          "injected_calls": 0,
+          "contract": "Observed dependency only; exact port remains with accountable migration"
+        },
+        {
+          "from": "knowledge",
+          "to": "intent",
+          "import_occurrences": 5,
+          "injected_calls": 0,
+          "contract": "Observed dependency only; exact port remains with accountable migration"
+        }
+      ],
+      "source_evidence": [
+        {
+          "from": "bot/src/ai-intents.js",
+          "to": "bot/src/personal-continuity.js",
+          "line": 14,
+          "type": "import"
+        }
+      ],
+      "validation": "Retain source and audience authority; design exact port in owning migration; observed imports do not prove runtime traffic.",
+      "lifecycle": "Observed proposal; no package/API/consumer claimed.",
+      "adoption_feature": "RF05",
+      "consumers": [],
+      "tests": [],
+      "observed_directions": [
+        {
+          "from": "intent",
+          "to": "knowledge",
+          "import_occurrences": 8,
+          "injected_calls": 0
+        },
+        {
+          "from": "knowledge",
+          "to": "intent",
+          "import_occurrences": 5,
+          "injected_calls": 0
+        }
+      ],
+      "evidence_reference": {
+        "file": "docs/Implementation_Plans/Framework_Refactor/DEPENDENCY_GRAPH.json",
+        "pair": "intent--knowledge",
+        "graph_sha256": "1caa7f33db8af9cbe17685493f4f23e46deb1c80ac2cd01c34ef3f8f7517bfe2",
+        "occurrences": 13
+      }
+    },
+    {
+      "pair": "intent--narrative",
+      "endpoints": [
+        "intent",
+        "narrative"
+      ],
+      "status": "PROPOSED_NO_API",
+      "directions": [
+        {
+          "from": "intent",
+          "to": "narrative",
+          "import_occurrences": 7,
+          "injected_calls": 0,
+          "contract": "Observed dependency only; exact port remains with accountable migration"
+        },
+        {
+          "from": "narrative",
+          "to": "intent",
+          "import_occurrences": 3,
+          "injected_calls": 0,
+          "contract": "Observed dependency only; exact port remains with accountable migration"
+        }
+      ],
+      "source_evidence": [
+        {
+          "from": "bot/src/ai-intents.js",
+          "to": "bot/src/delegation-catalog.js",
+          "line": 33,
+          "type": "import"
+        }
+      ],
+      "validation": "Retain source and audience authority; design exact port in owning migration; observed imports do not prove runtime traffic.",
+      "lifecycle": "Observed proposal; no package/API/consumer claimed.",
+      "adoption_feature": "RF05",
+      "consumers": [],
+      "tests": [],
+      "observed_directions": [
+        {
+          "from": "intent",
+          "to": "narrative",
+          "import_occurrences": 7,
+          "injected_calls": 0
+        },
+        {
+          "from": "narrative",
+          "to": "intent",
+          "import_occurrences": 3,
+          "injected_calls": 0
+        }
+      ],
+      "evidence_reference": {
+        "file": "docs/Implementation_Plans/Framework_Refactor/DEPENDENCY_GRAPH.json",
+        "pair": "intent--narrative",
+        "graph_sha256": "1caa7f33db8af9cbe17685493f4f23e46deb1c80ac2cd01c34ef3f8f7517bfe2",
+        "occurrences": 10
+      }
+    },
+    {
+      "pair": "intent--npc",
+      "endpoints": [
+        "intent",
+        "npc"
+      ],
+      "status": "PROPOSED_NO_API",
+      "directions": [
+        {
+          "from": "intent",
+          "to": "npc",
+          "import_occurrences": 5,
+          "injected_calls": 0,
+          "contract": "Observed dependency only; exact port remains with accountable migration"
+        },
+        {
+          "from": "npc",
+          "to": "intent",
+          "import_occurrences": 1,
+          "injected_calls": 0,
+          "contract": "Observed dependency only; exact port remains with accountable migration"
+        }
+      ],
+      "source_evidence": [
+        {
+          "from": "bot/src/ai-intents.js",
+          "to": "bot/src/simulation-motivation.js",
+          "line": 6,
+          "type": "import"
+        }
+      ],
+      "validation": "Retain source and audience authority; design exact port in owning migration; observed imports do not prove runtime traffic.",
+      "lifecycle": "Observed proposal; no package/API/consumer claimed.",
+      "adoption_feature": "RF05",
+      "consumers": [],
+      "tests": [],
+      "observed_directions": [
+        {
+          "from": "intent",
+          "to": "npc",
+          "import_occurrences": 5,
+          "injected_calls": 0
+        },
+        {
+          "from": "npc",
+          "to": "intent",
+          "import_occurrences": 1,
+          "injected_calls": 0
+        }
+      ],
+      "evidence_reference": {
+        "file": "docs/Implementation_Plans/Framework_Refactor/DEPENDENCY_GRAPH.json",
+        "pair": "intent--npc",
+        "graph_sha256": "1caa7f33db8af9cbe17685493f4f23e46deb1c80ac2cd01c34ef3f8f7517bfe2",
+        "occurrences": 6
+      }
+    },
+    {
+      "pair": "intent--operations",
+      "endpoints": [
+        "intent",
+        "operations"
+      ],
+      "status": "PROPOSED_NO_API",
+      "directions": [
+        {
+          "from": "operations",
+          "to": "intent",
+          "import_occurrences": 2,
+          "injected_calls": 0,
+          "contract": "Observed dependency only; exact port remains with accountable migration"
+        }
+      ],
+      "source_evidence": [
+        {
+          "from": "bot/src/ai-review.js",
+          "to": "bot/src/ai-intents.js",
+          "line": 2,
+          "type": "import"
+        }
+      ],
+      "validation": "Retain source and audience authority; design exact port in owning migration; observed imports do not prove runtime traffic.",
+      "lifecycle": "Observed proposal; no package/API/consumer claimed.",
+      "adoption_feature": "RF05",
+      "consumers": [],
+      "tests": [],
+      "observed_directions": [
+        {
+          "from": "operations",
+          "to": "intent",
+          "import_occurrences": 2,
+          "injected_calls": 0
+        }
+      ],
+      "evidence_reference": {
+        "file": "docs/Implementation_Plans/Framework_Refactor/DEPENDENCY_GRAPH.json",
+        "pair": "intent--operations",
+        "graph_sha256": "1caa7f33db8af9cbe17685493f4f23e46deb1c80ac2cd01c34ef3f8f7517bfe2",
+        "occurrences": 2
+      }
+    },
+    {
+      "pair": "intent--persistence",
+      "endpoints": [
+        "intent",
+        "persistence"
+      ],
+      "status": "PROPOSED_NO_API",
+      "directions": [
+        {
+          "from": "intent",
+          "to": "persistence",
+          "import_occurrences": 0,
+          "injected_calls": 227,
+          "contract": "Observed dependency only; exact port remains with accountable migration"
+        }
+      ],
+      "source_evidence": [
+        {
+          "from": "bot/src/action-dependency.js",
+          "to": null,
+          "line": 50,
+          "type": "storage"
+        }
+      ],
+      "validation": "Retain source and audience authority; design exact port in owning migration; observed imports do not prove runtime traffic.",
+      "lifecycle": "Observed proposal; no package/API/consumer claimed.",
+      "adoption_feature": "RF05",
+      "consumers": [],
+      "tests": [],
+      "observed_directions": [
+        {
+          "from": "intent",
+          "to": "persistence",
+          "import_occurrences": 0,
+          "injected_calls": 227
+        }
+      ],
+      "evidence_reference": {
+        "file": "docs/Implementation_Plans/Framework_Refactor/DEPENDENCY_GRAPH.json",
+        "pair": "intent--persistence",
+        "graph_sha256": "1caa7f33db8af9cbe17685493f4f23e46deb1c80ac2cd01c34ef3f8f7517bfe2",
+        "occurrences": 227
+      }
+    },
+    {
+      "pair": "intent--publication",
+      "endpoints": [
+        "intent",
+        "publication"
+      ],
+      "status": "PROPOSED_NO_API",
+      "directions": [
+        {
+          "from": "intent",
+          "to": "publication",
+          "import_occurrences": 1,
+          "injected_calls": 0,
+          "contract": "Observed dependency only; exact port remains with accountable migration"
+        },
+        {
+          "from": "publication",
+          "to": "intent",
+          "import_occurrences": 2,
+          "injected_calls": 0,
+          "contract": "Observed dependency only; exact port remains with accountable migration"
+        }
+      ],
+      "source_evidence": [
+        {
+          "from": "bot/src/gm-unified-arbitration.js",
+          "to": "bot/src/native-publications.js",
+          "line": 29,
+          "type": "import"
+        }
+      ],
+      "validation": "Retain source and audience authority; design exact port in owning migration; observed imports do not prove runtime traffic.",
+      "lifecycle": "Observed proposal; no package/API/consumer claimed.",
+      "adoption_feature": "RF05",
+      "consumers": [],
+      "tests": [],
+      "observed_directions": [
+        {
+          "from": "intent",
+          "to": "publication",
+          "import_occurrences": 1,
+          "injected_calls": 0
+        },
+        {
+          "from": "publication",
+          "to": "intent",
+          "import_occurrences": 2,
+          "injected_calls": 0
+        }
+      ],
+      "evidence_reference": {
+        "file": "docs/Implementation_Plans/Framework_Refactor/DEPENDENCY_GRAPH.json",
+        "pair": "intent--publication",
+        "graph_sha256": "1caa7f33db8af9cbe17685493f4f23e46deb1c80ac2cd01c34ef3f8f7517bfe2",
+        "occurrences": 3
+      }
+    },
+    {
+      "pair": "intent--session",
+      "endpoints": [
+        "intent",
+        "session"
+      ],
+      "status": "PROPOSED_NO_API",
+      "directions": [
+        {
+          "from": "session",
+          "to": "intent",
+          "import_occurrences": 9,
+          "injected_calls": 0,
+          "contract": "Observed dependency only; exact port remains with accountable migration"
+        },
+        {
+          "from": "intent",
+          "to": "session",
+          "import_occurrences": 21,
+          "injected_calls": 0,
+          "contract": "Observed dependency only; exact port remains with accountable migration"
+        }
+      ],
+      "source_evidence": [
+        {
+          "from": "bot/src/action-continuation.js",
+          "to": "bot/src/action-dependency.js",
+          "line": 3,
+          "type": "import"
+        }
+      ],
+      "validation": "Retain source and audience authority; design exact port in owning migration; observed imports do not prove runtime traffic.",
+      "lifecycle": "Observed proposal; no package/API/consumer claimed.",
+      "adoption_feature": "RF05",
+      "consumers": [],
+      "tests": [],
+      "observed_directions": [
+        {
+          "from": "session",
+          "to": "intent",
+          "import_occurrences": 9,
+          "injected_calls": 0
+        },
+        {
+          "from": "intent",
+          "to": "session",
+          "import_occurrences": 21,
+          "injected_calls": 0
+        }
+      ],
+      "evidence_reference": {
+        "file": "docs/Implementation_Plans/Framework_Refactor/DEPENDENCY_GRAPH.json",
+        "pair": "intent--session",
+        "graph_sha256": "1caa7f33db8af9cbe17685493f4f23e46deb1c80ac2cd01c34ef3f8f7517bfe2",
+        "occurrences": 30
+      }
+    },
+    {
+      "pair": "intent--world",
+      "endpoints": [
+        "intent",
+        "world"
+      ],
+      "status": "PROPOSED_NO_API",
+      "directions": [
+        {
+          "from": "intent",
+          "to": "world",
+          "import_occurrences": 18,
+          "injected_calls": 0,
+          "contract": "Observed dependency only; exact port remains with accountable migration"
+        },
+        {
+          "from": "world",
+          "to": "intent",
+          "import_occurrences": 11,
+          "injected_calls": 0,
+          "contract": "Observed dependency only; exact port remains with accountable migration"
+        }
+      ],
+      "source_evidence": [
+        {
+          "from": "bot/src/ai-intents.js",
+          "to": "bot/src/city-core.js",
+          "line": 4,
+          "type": "import"
+        }
+      ],
+      "validation": "Retain source and audience authority; design exact port in owning migration; observed imports do not prove runtime traffic.",
+      "lifecycle": "Observed proposal; no package/API/consumer claimed.",
+      "adoption_feature": "RF05",
+      "consumers": [],
+      "tests": [],
+      "observed_directions": [
+        {
+          "from": "intent",
+          "to": "world",
+          "import_occurrences": 18,
+          "injected_calls": 0
+        },
+        {
+          "from": "world",
+          "to": "intent",
+          "import_occurrences": 11,
+          "injected_calls": 0
+        }
+      ],
+      "evidence_reference": {
+        "file": "docs/Implementation_Plans/Framework_Refactor/DEPENDENCY_GRAPH.json",
+        "pair": "intent--world",
+        "graph_sha256": "1caa7f33db8af9cbe17685493f4f23e46deb1c80ac2cd01c34ef3f8f7517bfe2",
+        "occurrences": 29
+      }
+    },
+    {
+      "pair": "knowledge--narrative",
+      "endpoints": [
+        "knowledge",
+        "narrative"
+      ],
+      "status": "PROPOSED_NO_API",
+      "directions": [
+        {
+          "from": "knowledge",
+          "to": "narrative",
+          "import_occurrences": 6,
+          "injected_calls": 0,
+          "contract": "Observed dependency only; exact port remains with accountable migration"
+        },
+        {
+          "from": "narrative",
+          "to": "knowledge",
+          "import_occurrences": 16,
+          "injected_calls": 0,
+          "contract": "Observed dependency only; exact port remains with accountable migration"
+        }
+      ],
+      "source_evidence": [
+        {
+          "from": "bot/src/entity-memory.js",
+          "to": "bot/src/scene-fiction-context.js",
+          "line": 3,
+          "type": "import"
+        }
+      ],
+      "validation": "Retain source and audience authority; design exact port in owning migration; observed imports do not prove runtime traffic.",
+      "lifecycle": "Observed proposal; no package/API/consumer claimed.",
+      "adoption_feature": "RF05",
+      "consumers": [],
+      "tests": [],
+      "observed_directions": [
+        {
+          "from": "knowledge",
+          "to": "narrative",
+          "import_occurrences": 6,
+          "injected_calls": 0
+        },
+        {
+          "from": "narrative",
+          "to": "knowledge",
+          "import_occurrences": 16,
+          "injected_calls": 0
+        }
+      ],
+      "evidence_reference": {
+        "file": "docs/Implementation_Plans/Framework_Refactor/DEPENDENCY_GRAPH.json",
+        "pair": "knowledge--narrative",
+        "graph_sha256": "1caa7f33db8af9cbe17685493f4f23e46deb1c80ac2cd01c34ef3f8f7517bfe2",
+        "occurrences": 22
+      }
+    },
+    {
+      "pair": "knowledge--npc",
+      "endpoints": [
+        "knowledge",
+        "npc"
+      ],
+      "status": "PROPOSED_NO_API",
+      "directions": [
+        {
+          "from": "knowledge",
+          "to": "npc",
+          "import_occurrences": 3,
+          "injected_calls": 0,
+          "contract": "Observed dependency only; exact port remains with accountable migration"
+        },
+        {
+          "from": "npc",
+          "to": "knowledge",
+          "import_occurrences": 1,
+          "injected_calls": 0,
+          "contract": "Observed dependency only; exact port remains with accountable migration"
+        }
+      ],
+      "source_evidence": [
+        {
+          "from": "bot/src/evidence-custody.js",
+          "to": "bot/src/simulation-motivation.js",
+          "line": 7,
+          "type": "import"
+        }
+      ],
+      "validation": "Retain source and audience authority; design exact port in owning migration; observed imports do not prove runtime traffic.",
+      "lifecycle": "Observed proposal; no package/API/consumer claimed.",
+      "adoption_feature": "RF04",
+      "consumers": [],
+      "tests": [],
+      "observed_directions": [
+        {
+          "from": "knowledge",
+          "to": "npc",
+          "import_occurrences": 3,
+          "injected_calls": 0
+        },
+        {
+          "from": "npc",
+          "to": "knowledge",
+          "import_occurrences": 1,
+          "injected_calls": 0
+        }
+      ],
+      "evidence_reference": {
+        "file": "docs/Implementation_Plans/Framework_Refactor/DEPENDENCY_GRAPH.json",
+        "pair": "knowledge--npc",
+        "graph_sha256": "1caa7f33db8af9cbe17685493f4f23e46deb1c80ac2cd01c34ef3f8f7517bfe2",
+        "occurrences": 4
+      }
+    },
+    {
+      "pair": "knowledge--operations",
+      "endpoints": [
+        "knowledge",
+        "operations"
+      ],
+      "status": "PROPOSED_NO_API",
+      "directions": [
+        {
+          "from": "operations",
+          "to": "knowledge",
+          "import_occurrences": 2,
+          "injected_calls": 0,
+          "contract": "Observed dependency only; exact port remains with accountable migration"
+        },
+        {
+          "from": "knowledge",
+          "to": "operations",
+          "import_occurrences": 3,
+          "injected_calls": 0,
+          "contract": "Observed dependency only; exact port remains with accountable migration"
+        }
+      ],
+      "source_evidence": [
+        {
+          "from": "bot/src/ai-review.js",
+          "to": "bot/src/owned-community.js",
+          "line": 9,
+          "type": "import"
+        }
+      ],
+      "validation": "Retain source and audience authority; design exact port in owning migration; observed imports do not prove runtime traffic.",
+      "lifecycle": "Observed proposal; no package/API/consumer claimed.",
+      "adoption_feature": "RF04",
+      "consumers": [],
+      "tests": [],
+      "observed_directions": [
+        {
+          "from": "operations",
+          "to": "knowledge",
+          "import_occurrences": 2,
+          "injected_calls": 0
+        },
+        {
+          "from": "knowledge",
+          "to": "operations",
+          "import_occurrences": 3,
+          "injected_calls": 0
+        }
+      ],
+      "evidence_reference": {
+        "file": "docs/Implementation_Plans/Framework_Refactor/DEPENDENCY_GRAPH.json",
+        "pair": "knowledge--operations",
+        "graph_sha256": "1caa7f33db8af9cbe17685493f4f23e46deb1c80ac2cd01c34ef3f8f7517bfe2",
+        "occurrences": 5
+      }
+    },
+    {
+      "pair": "knowledge--persistence",
+      "endpoints": [
+        "knowledge",
+        "persistence"
+      ],
+      "status": "PROPOSED_NO_API",
+      "directions": [
+        {
+          "from": "persistence",
+          "to": "knowledge",
+          "import_occurrences": 5,
+          "injected_calls": 0,
+          "contract": "Observed dependency only; exact port remains with accountable migration"
+        },
+        {
+          "from": "knowledge",
+          "to": "persistence",
+          "import_occurrences": 0,
+          "injected_calls": 261,
+          "contract": "Observed dependency only; exact port remains with accountable migration"
+        }
+      ],
+      "source_evidence": [
+        {
+          "from": "bot/src/db.js",
+          "to": "bot/src/relationship-state.js",
+          "line": 10,
+          "type": "import"
+        }
+      ],
+      "validation": "Retain source and audience authority; design exact port in owning migration; observed imports do not prove runtime traffic.",
+      "lifecycle": "Observed proposal; no package/API/consumer claimed.",
+      "adoption_feature": "RF06",
+      "consumers": [],
+      "tests": [],
+      "observed_directions": [
+        {
+          "from": "persistence",
+          "to": "knowledge",
+          "import_occurrences": 5,
+          "injected_calls": 0
+        },
+        {
+          "from": "knowledge",
+          "to": "persistence",
+          "import_occurrences": 0,
+          "injected_calls": 261
+        }
+      ],
+      "evidence_reference": {
+        "file": "docs/Implementation_Plans/Framework_Refactor/DEPENDENCY_GRAPH.json",
+        "pair": "knowledge--persistence",
+        "graph_sha256": "1caa7f33db8af9cbe17685493f4f23e46deb1c80ac2cd01c34ef3f8f7517bfe2",
+        "occurrences": 266
+      }
+    },
+    {
+      "pair": "knowledge--publication",
+      "endpoints": [
+        "knowledge",
+        "publication"
+      ],
+      "status": "PROPOSED_NO_API",
+      "directions": [
+        {
+          "from": "publication",
+          "to": "knowledge",
+          "import_occurrences": 6,
+          "injected_calls": 0,
+          "contract": "Observed dependency only; exact port remains with accountable migration"
+        },
+        {
+          "from": "knowledge",
+          "to": "publication",
+          "import_occurrences": 1,
+          "injected_calls": 0,
+          "contract": "Observed dependency only; exact port remains with accountable migration"
+        }
+      ],
+      "source_evidence": [
+        {
+          "from": "bot/src/discovery-delivery.js",
+          "to": "bot/src/personal-continuity.js",
+          "line": 2,
+          "type": "import"
+        }
+      ],
+      "validation": "Retain source and audience authority; design exact port in owning migration; observed imports do not prove runtime traffic.",
+      "lifecycle": "Observed proposal; no package/API/consumer claimed.",
+      "adoption_feature": "RF06",
+      "consumers": [],
+      "tests": [],
+      "observed_directions": [
+        {
+          "from": "publication",
+          "to": "knowledge",
+          "import_occurrences": 6,
+          "injected_calls": 0
+        },
+        {
+          "from": "knowledge",
+          "to": "publication",
+          "import_occurrences": 1,
+          "injected_calls": 0
+        }
+      ],
+      "evidence_reference": {
+        "file": "docs/Implementation_Plans/Framework_Refactor/DEPENDENCY_GRAPH.json",
+        "pair": "knowledge--publication",
+        "graph_sha256": "1caa7f33db8af9cbe17685493f4f23e46deb1c80ac2cd01c34ef3f8f7517bfe2",
+        "occurrences": 7
+      }
+    },
+    {
+      "pair": "knowledge--session",
+      "endpoints": [
+        "knowledge",
+        "session"
+      ],
+      "status": "PROPOSED_NO_API",
+      "directions": [
+        {
+          "from": "session",
+          "to": "knowledge",
+          "import_occurrences": 10,
+          "injected_calls": 0,
+          "contract": "Observed dependency only; exact port remains with accountable migration"
+        },
+        {
+          "from": "knowledge",
+          "to": "session",
+          "import_occurrences": 7,
+          "injected_calls": 0,
+          "contract": "Observed dependency only; exact port remains with accountable migration"
+        }
+      ],
+      "source_evidence": [
+        {
+          "from": "bot/src/dialogue-continuity.js",
+          "to": "bot/src/personal-continuity.js",
+          "line": 2,
+          "type": "import"
+        }
+      ],
+      "validation": "Retain source and audience authority; design exact port in owning migration; observed imports do not prove runtime traffic.",
+      "lifecycle": "Observed proposal; no package/API/consumer claimed.",
+      "adoption_feature": "RF04",
+      "consumers": [],
+      "tests": [],
+      "observed_directions": [
+        {
+          "from": "session",
+          "to": "knowledge",
+          "import_occurrences": 10,
+          "injected_calls": 0
+        },
+        {
+          "from": "knowledge",
+          "to": "session",
+          "import_occurrences": 7,
+          "injected_calls": 0
+        }
+      ],
+      "evidence_reference": {
+        "file": "docs/Implementation_Plans/Framework_Refactor/DEPENDENCY_GRAPH.json",
+        "pair": "knowledge--session",
+        "graph_sha256": "1caa7f33db8af9cbe17685493f4f23e46deb1c80ac2cd01c34ef3f8f7517bfe2",
+        "occurrences": 17
+      }
+    },
+    {
+      "pair": "knowledge--world",
+      "endpoints": [
+        "knowledge",
+        "world"
+      ],
+      "status": "PROPOSED_NO_API",
+      "directions": [
+        {
+          "from": "world",
+          "to": "knowledge",
+          "import_occurrences": 14,
+          "injected_calls": 0,
+          "contract": "Observed dependency only; exact port remains with accountable migration"
+        },
+        {
+          "from": "knowledge",
+          "to": "world",
+          "import_occurrences": 18,
+          "injected_calls": 0,
+          "contract": "Observed dependency only; exact port remains with accountable migration"
+        }
+      ],
+      "source_evidence": [
+        {
+          "from": "bot/src/autonomous-world.js",
+          "to": "bot/src/personal-continuity.js",
+          "line": 4,
+          "type": "import"
+        }
+      ],
+      "validation": "Retain source and audience authority; design exact port in owning migration; observed imports do not prove runtime traffic.",
+      "lifecycle": "Observed proposal; no package/API/consumer claimed.",
+      "adoption_feature": "RF04",
+      "consumers": [],
+      "tests": [],
+      "observed_directions": [
+        {
+          "from": "world",
+          "to": "knowledge",
+          "import_occurrences": 14,
+          "injected_calls": 0
+        },
+        {
+          "from": "knowledge",
+          "to": "world",
+          "import_occurrences": 18,
+          "injected_calls": 0
+        }
+      ],
+      "evidence_reference": {
+        "file": "docs/Implementation_Plans/Framework_Refactor/DEPENDENCY_GRAPH.json",
+        "pair": "knowledge--world",
+        "graph_sha256": "1caa7f33db8af9cbe17685493f4f23e46deb1c80ac2cd01c34ef3f8f7517bfe2",
+        "occurrences": 32
+      }
+    },
+    {
+      "pair": "narrative--npc",
+      "endpoints": [
+        "narrative",
+        "npc"
+      ],
+      "status": "PROPOSED_NO_API",
+      "directions": [
+        {
+          "from": "narrative",
+          "to": "npc",
+          "import_occurrences": 3,
+          "injected_calls": 0,
+          "contract": "Observed dependency only; exact port remains with accountable migration"
+        },
+        {
+          "from": "npc",
+          "to": "narrative",
+          "import_occurrences": 2,
+          "injected_calls": 0,
+          "contract": "Observed dependency only; exact port remains with accountable migration"
+        }
+      ],
+      "source_evidence": [
+        {
+          "from": "bot/src/narrative-authority.js",
+          "to": "bot/src/npc-cognition-projection.js",
+          "line": 15,
+          "type": "import"
+        }
+      ],
+      "validation": "Retain source and audience authority; design exact port in owning migration; observed imports do not prove runtime traffic.",
+      "lifecycle": "Observed proposal; no package/API/consumer claimed.",
+      "adoption_feature": "RF05",
+      "consumers": [],
+      "tests": [],
+      "observed_directions": [
+        {
+          "from": "narrative",
+          "to": "npc",
+          "import_occurrences": 3,
+          "injected_calls": 0
+        },
+        {
+          "from": "npc",
+          "to": "narrative",
+          "import_occurrences": 2,
+          "injected_calls": 0
+        }
+      ],
+      "evidence_reference": {
+        "file": "docs/Implementation_Plans/Framework_Refactor/DEPENDENCY_GRAPH.json",
+        "pair": "narrative--npc",
+        "graph_sha256": "1caa7f33db8af9cbe17685493f4f23e46deb1c80ac2cd01c34ef3f8f7517bfe2",
+        "occurrences": 5
+      }
+    },
+    {
+      "pair": "narrative--operations",
+      "endpoints": [
+        "narrative",
+        "operations"
+      ],
+      "status": "PROPOSED_NO_API",
+      "directions": [
+        {
+          "from": "narrative",
+          "to": "operations",
+          "import_occurrences": 2,
+          "injected_calls": 0,
+          "contract": "Observed dependency only; exact port remains with accountable migration"
+        }
+      ],
+      "source_evidence": [
+        {
+          "from": "bot/src/narrative-completeness.js",
+          "to": "bot/src/operational-metrics.js",
+          "line": 3,
+          "type": "import"
+        }
+      ],
+      "validation": "Retain source and audience authority; design exact port in owning migration; observed imports do not prove runtime traffic.",
+      "lifecycle": "Observed proposal; no package/API/consumer claimed.",
+      "adoption_feature": "RF05",
+      "consumers": [],
+      "tests": [],
+      "observed_directions": [
+        {
+          "from": "narrative",
+          "to": "operations",
+          "import_occurrences": 2,
+          "injected_calls": 0
+        }
+      ],
+      "evidence_reference": {
+        "file": "docs/Implementation_Plans/Framework_Refactor/DEPENDENCY_GRAPH.json",
+        "pair": "narrative--operations",
+        "graph_sha256": "1caa7f33db8af9cbe17685493f4f23e46deb1c80ac2cd01c34ef3f8f7517bfe2",
+        "occurrences": 2
+      }
+    },
+    {
+      "pair": "narrative--persistence",
+      "endpoints": [
+        "narrative",
+        "persistence"
+      ],
+      "status": "PROPOSED_NO_API",
+      "directions": [
+        {
+          "from": "persistence",
+          "to": "narrative",
+          "import_occurrences": 1,
+          "injected_calls": 0,
+          "contract": "Observed dependency only; exact port remains with accountable migration"
+        },
+        {
+          "from": "narrative",
+          "to": "persistence",
+          "import_occurrences": 0,
+          "injected_calls": 400,
+          "contract": "Observed dependency only; exact port remains with accountable migration"
+        }
+      ],
+      "source_evidence": [
+        {
+          "from": "bot/src/db.js",
+          "to": "bot/src/gm-hook-import.js",
+          "line": 9,
+          "type": "import"
+        }
+      ],
+      "validation": "Retain source and audience authority; design exact port in owning migration; observed imports do not prove runtime traffic.",
+      "lifecycle": "Observed proposal; no package/API/consumer claimed.",
+      "adoption_feature": "RF05",
+      "consumers": [],
+      "tests": [],
+      "observed_directions": [
+        {
+          "from": "persistence",
+          "to": "narrative",
+          "import_occurrences": 1,
+          "injected_calls": 0
+        },
+        {
+          "from": "narrative",
+          "to": "persistence",
+          "import_occurrences": 0,
+          "injected_calls": 400
+        }
+      ],
+      "evidence_reference": {
+        "file": "docs/Implementation_Plans/Framework_Refactor/DEPENDENCY_GRAPH.json",
+        "pair": "narrative--persistence",
+        "graph_sha256": "1caa7f33db8af9cbe17685493f4f23e46deb1c80ac2cd01c34ef3f8f7517bfe2",
+        "occurrences": 401
+      }
+    },
+    {
+      "pair": "narrative--publication",
+      "endpoints": [
+        "narrative",
+        "publication"
+      ],
+      "status": "PROPOSED_NO_API",
+      "directions": [
+        {
+          "from": "narrative",
+          "to": "publication",
+          "import_occurrences": 6,
+          "injected_calls": 0,
+          "contract": "Observed dependency only; exact port remains with accountable migration"
+        },
+        {
+          "from": "publication",
+          "to": "narrative",
+          "import_occurrences": 16,
+          "injected_calls": 0,
+          "contract": "Observed dependency only; exact port remains with accountable migration"
+        }
+      ],
+      "source_evidence": [
+        {
+          "from": "bot/src/concept-context.js",
+          "to": "bot/src/pvp-output.js",
+          "line": 6,
+          "type": "import"
+        }
+      ],
+      "validation": "Retain source and audience authority; design exact port in owning migration; observed imports do not prove runtime traffic.",
+      "lifecycle": "Observed proposal; no package/API/consumer claimed.",
+      "adoption_feature": "RF05",
+      "consumers": [],
+      "tests": [],
+      "observed_directions": [
+        {
+          "from": "narrative",
+          "to": "publication",
+          "import_occurrences": 6,
+          "injected_calls": 0
+        },
+        {
+          "from": "publication",
+          "to": "narrative",
+          "import_occurrences": 16,
+          "injected_calls": 0
+        }
+      ],
+      "evidence_reference": {
+        "file": "docs/Implementation_Plans/Framework_Refactor/DEPENDENCY_GRAPH.json",
+        "pair": "narrative--publication",
+        "graph_sha256": "1caa7f33db8af9cbe17685493f4f23e46deb1c80ac2cd01c34ef3f8f7517bfe2",
+        "occurrences": 22
+      }
+    },
+    {
+      "pair": "narrative--session",
+      "endpoints": [
+        "narrative",
+        "session"
+      ],
+      "status": "CONTRACT_ONLY_UNWIRED",
+      "directions": [
+        {
+          "from": "session",
+          "to": "narrative",
+          "contract": "authorAssemblyScene(guildId, sessionId, scope, options) -> original result/error"
+        }
+      ],
+      "source_evidence": [
+        {
+          "from": "bot/src/dialogue-continuity.js",
+          "to": "bot/src/scene-fiction-context.js",
+          "line": 10,
+          "type": "import"
+        }
+      ],
+      "validation": "Validate injected callable presence only; preserve source/audience/principal/revision/assertCurrent/receipt fields, Promise/result/error identity; no authority expansion or retries. Native runner keeps policy and acknowledgement ownership.",
+      "lifecycle": "Contract + fresh tests + explicit composition; native adoption and old-edge removal pending.",
+      "adoption_feature": "RF04-F04",
+      "public_api": "bot/src/framework-to-framework/narrative--session/public.js",
+      "consumers": [
+        "bot/src/application/composition/create-opening-services.js"
+      ],
+      "tests": [
+        "bot/tests/ai-gm-2026-10/rf01-f02.test.mjs",
+        "bot/tests/ai-gm-2026-10/rf01-f03.test.mjs"
+      ],
+      "observed_directions": [
+        {
+          "from": "session",
+          "to": "narrative",
+          "import_occurrences": 4,
+          "injected_calls": 0
+        },
+        {
+          "from": "narrative",
+          "to": "session",
+          "import_occurrences": 27,
+          "injected_calls": 0
+        }
+      ],
+      "evidence_reference": {
+        "file": "docs/Implementation_Plans/Framework_Refactor/DEPENDENCY_GRAPH.json",
+        "pair": "narrative--session",
+        "graph_sha256": "1caa7f33db8af9cbe17685493f4f23e46deb1c80ac2cd01c34ef3f8f7517bfe2",
+        "occurrences": 31
+      }
+    },
+    {
+      "pair": "narrative--world",
+      "endpoints": [
+        "narrative",
+        "world"
+      ],
+      "status": "PROPOSED_NO_API",
+      "directions": [
+        {
+          "from": "world",
+          "to": "narrative",
+          "import_occurrences": 22,
+          "injected_calls": 0,
+          "contract": "Observed dependency only; exact port remains with accountable migration"
+        },
+        {
+          "from": "narrative",
+          "to": "world",
+          "import_occurrences": 30,
+          "injected_calls": 0,
+          "contract": "Observed dependency only; exact port remains with accountable migration"
+        }
+      ],
+      "source_evidence": [
+        {
+          "from": "bot/src/autonomous-world.js",
+          "to": "bot/src/scene-fiction-context.js",
+          "line": 21,
+          "type": "import"
+        }
+      ],
+      "validation": "Retain source and audience authority; design exact port in owning migration; observed imports do not prove runtime traffic.",
+      "lifecycle": "Observed proposal; no package/API/consumer claimed.",
+      "adoption_feature": "RF05",
+      "consumers": [],
+      "tests": [],
+      "observed_directions": [
+        {
+          "from": "world",
+          "to": "narrative",
+          "import_occurrences": 22,
+          "injected_calls": 0
+        },
+        {
+          "from": "narrative",
+          "to": "world",
+          "import_occurrences": 30,
+          "injected_calls": 0
+        }
+      ],
+      "evidence_reference": {
+        "file": "docs/Implementation_Plans/Framework_Refactor/DEPENDENCY_GRAPH.json",
+        "pair": "narrative--world",
+        "graph_sha256": "1caa7f33db8af9cbe17685493f4f23e46deb1c80ac2cd01c34ef3f8f7517bfe2",
+        "occurrences": 52
+      }
+    },
+    {
+      "pair": "npc--operations",
+      "endpoints": [
+        "npc",
+        "operations"
+      ],
+      "status": "PROPOSED_NO_API",
+      "directions": [
+        {
+          "from": "operations",
+          "to": "npc",
+          "import_occurrences": 2,
+          "injected_calls": 0,
+          "contract": "Observed dependency only; exact port remains with accountable migration"
+        },
+        {
+          "from": "npc",
+          "to": "operations",
+          "import_occurrences": 2,
+          "injected_calls": 0,
+          "contract": "Observed dependency only; exact port remains with accountable migration"
+        }
+      ],
+      "source_evidence": [
+        {
+          "from": "bot/src/ai-review.js",
+          "to": "bot/src/simulation-motivation.js",
+          "line": 4,
+          "type": "import"
+        }
+      ],
+      "validation": "Retain source and audience authority; design exact port in owning migration; observed imports do not prove runtime traffic.",
+      "lifecycle": "Observed proposal; no package/API/consumer claimed.",
+      "adoption_feature": "RF04",
+      "consumers": [],
+      "tests": [],
+      "observed_directions": [
+        {
+          "from": "operations",
+          "to": "npc",
+          "import_occurrences": 2,
+          "injected_calls": 0
+        },
+        {
+          "from": "npc",
+          "to": "operations",
+          "import_occurrences": 2,
+          "injected_calls": 0
+        }
+      ],
+      "evidence_reference": {
+        "file": "docs/Implementation_Plans/Framework_Refactor/DEPENDENCY_GRAPH.json",
+        "pair": "npc--operations",
+        "graph_sha256": "1caa7f33db8af9cbe17685493f4f23e46deb1c80ac2cd01c34ef3f8f7517bfe2",
+        "occurrences": 4
+      }
+    },
+    {
+      "pair": "npc--persistence",
+      "endpoints": [
+        "npc",
+        "persistence"
+      ],
+      "status": "PROPOSED_NO_API",
+      "directions": [
+        {
+          "from": "persistence",
+          "to": "npc",
+          "import_occurrences": 1,
+          "injected_calls": 0,
+          "contract": "Observed dependency only; exact port remains with accountable migration"
+        },
+        {
+          "from": "npc",
+          "to": "persistence",
+          "import_occurrences": 0,
+          "injected_calls": 113,
+          "contract": "Observed dependency only; exact port remains with accountable migration"
+        }
+      ],
+      "source_evidence": [
+        {
+          "from": "bot/src/db.js",
+          "to": "bot/src/npc-cognition.js",
+          "line": 16,
+          "type": "import"
+        }
+      ],
+      "validation": "Retain source and audience authority; design exact port in owning migration; observed imports do not prove runtime traffic.",
+      "lifecycle": "Observed proposal; no package/API/consumer claimed.",
+      "adoption_feature": "RF06",
+      "consumers": [],
+      "tests": [],
+      "observed_directions": [
+        {
+          "from": "persistence",
+          "to": "npc",
+          "import_occurrences": 1,
+          "injected_calls": 0
+        },
+        {
+          "from": "npc",
+          "to": "persistence",
+          "import_occurrences": 0,
+          "injected_calls": 113
+        }
+      ],
+      "evidence_reference": {
+        "file": "docs/Implementation_Plans/Framework_Refactor/DEPENDENCY_GRAPH.json",
+        "pair": "npc--persistence",
+        "graph_sha256": "1caa7f33db8af9cbe17685493f4f23e46deb1c80ac2cd01c34ef3f8f7517bfe2",
+        "occurrences": 114
+      }
+    },
+    {
+      "pair": "npc--session",
+      "endpoints": [
+        "npc",
+        "session"
+      ],
+      "status": "PROPOSED_NO_API",
+      "directions": [
+        {
+          "from": "session",
+          "to": "npc",
+          "import_occurrences": 3,
+          "injected_calls": 0,
+          "contract": "Observed dependency only; exact port remains with accountable migration"
+        },
+        {
+          "from": "npc",
+          "to": "session",
+          "import_occurrences": 3,
+          "injected_calls": 0,
+          "contract": "Observed dependency only; exact port remains with accountable migration"
+        }
+      ],
+      "source_evidence": [
+        {
+          "from": "bot/src/dialogue-continuity.js",
+          "to": "bot/src/simulation-motivation.js",
+          "line": 6,
+          "type": "import"
+        }
+      ],
+      "validation": "Retain source and audience authority; design exact port in owning migration; observed imports do not prove runtime traffic.",
+      "lifecycle": "Observed proposal; no package/API/consumer claimed.",
+      "adoption_feature": "RF04",
+      "consumers": [],
+      "tests": [],
+      "observed_directions": [
+        {
+          "from": "session",
+          "to": "npc",
+          "import_occurrences": 3,
+          "injected_calls": 0
+        },
+        {
+          "from": "npc",
+          "to": "session",
+          "import_occurrences": 3,
+          "injected_calls": 0
+        }
+      ],
+      "evidence_reference": {
+        "file": "docs/Implementation_Plans/Framework_Refactor/DEPENDENCY_GRAPH.json",
+        "pair": "npc--session",
+        "graph_sha256": "1caa7f33db8af9cbe17685493f4f23e46deb1c80ac2cd01c34ef3f8f7517bfe2",
+        "occurrences": 6
+      }
+    },
+    {
+      "pair": "npc--world",
+      "endpoints": [
+        "npc",
+        "world"
+      ],
+      "status": "PROPOSED_NO_API",
+      "directions": [
+        {
+          "from": "world",
+          "to": "npc",
+          "import_occurrences": 17,
+          "injected_calls": 0,
+          "contract": "Observed dependency only; exact port remains with accountable migration"
+        },
+        {
+          "from": "npc",
+          "to": "world",
+          "import_occurrences": 14,
+          "injected_calls": 0,
+          "contract": "Observed dependency only; exact port remains with accountable migration"
+        }
+      ],
+      "source_evidence": [
+        {
+          "from": "bot/src/autonomous-world.js",
+          "to": "bot/src/npc-cognition.js",
+          "line": 11,
+          "type": "import"
+        }
+      ],
+      "validation": "Retain source and audience authority; design exact port in owning migration; observed imports do not prove runtime traffic.",
+      "lifecycle": "Observed proposal; no package/API/consumer claimed.",
+      "adoption_feature": "RF04",
+      "consumers": [],
+      "tests": [],
+      "observed_directions": [
+        {
+          "from": "world",
+          "to": "npc",
+          "import_occurrences": 17,
+          "injected_calls": 0
+        },
+        {
+          "from": "npc",
+          "to": "world",
+          "import_occurrences": 14,
+          "injected_calls": 0
+        }
+      ],
+      "evidence_reference": {
+        "file": "docs/Implementation_Plans/Framework_Refactor/DEPENDENCY_GRAPH.json",
+        "pair": "npc--world",
+        "graph_sha256": "1caa7f33db8af9cbe17685493f4f23e46deb1c80ac2cd01c34ef3f8f7517bfe2",
+        "occurrences": 31
+      }
+    },
+    {
+      "pair": "operations--persistence",
+      "endpoints": [
+        "operations",
+        "persistence"
+      ],
+      "status": "PROPOSED_NO_API",
+      "directions": [
+        {
+          "from": "persistence",
+          "to": "operations",
+          "import_occurrences": 3,
+          "injected_calls": 0,
+          "contract": "Observed dependency only; exact port remains with accountable migration"
+        },
+        {
+          "from": "operations",
+          "to": "persistence",
+          "import_occurrences": 0,
+          "injected_calls": 31,
+          "contract": "Observed dependency only; exact port remains with accountable migration"
+        }
+      ],
+      "source_evidence": [
+        {
+          "from": "bot/src/db.js",
+          "to": "bot/src/errors.js",
+          "line": 14,
+          "type": "import"
+        }
+      ],
+      "validation": "Retain source and audience authority; design exact port in owning migration; observed imports do not prove runtime traffic.",
+      "lifecycle": "Observed proposal; no package/API/consumer claimed.",
+      "adoption_feature": "RF06",
+      "consumers": [],
+      "tests": [],
+      "observed_directions": [
+        {
+          "from": "persistence",
+          "to": "operations",
+          "import_occurrences": 3,
+          "injected_calls": 0
+        },
+        {
+          "from": "operations",
+          "to": "persistence",
+          "import_occurrences": 0,
+          "injected_calls": 31
+        }
+      ],
+      "evidence_reference": {
+        "file": "docs/Implementation_Plans/Framework_Refactor/DEPENDENCY_GRAPH.json",
+        "pair": "operations--persistence",
+        "graph_sha256": "1caa7f33db8af9cbe17685493f4f23e46deb1c80ac2cd01c34ef3f8f7517bfe2",
+        "occurrences": 34
+      }
+    },
+    {
+      "pair": "operations--publication",
+      "endpoints": [
+        "operations",
+        "publication"
+      ],
+      "status": "PROPOSED_NO_API",
+      "directions": [
+        {
+          "from": "publication",
+          "to": "operations",
+          "import_occurrences": 9,
+          "injected_calls": 0,
+          "contract": "Observed dependency only; exact port remains with accountable migration"
+        }
+      ],
+      "source_evidence": [
+        {
+          "from": "bot/src/native-publications.js",
+          "to": "bot/src/errors.js",
+          "line": 9,
+          "type": "import"
+        }
+      ],
+      "validation": "Retain source and audience authority; design exact port in owning migration; observed imports do not prove runtime traffic.",
+      "lifecycle": "Observed proposal; no package/API/consumer claimed.",
+      "adoption_feature": "RF06",
+      "consumers": [],
+      "tests": [],
+      "observed_directions": [
+        {
+          "from": "publication",
+          "to": "operations",
+          "import_occurrences": 9,
+          "injected_calls": 0
+        }
+      ],
+      "evidence_reference": {
+        "file": "docs/Implementation_Plans/Framework_Refactor/DEPENDENCY_GRAPH.json",
+        "pair": "operations--publication",
+        "graph_sha256": "1caa7f33db8af9cbe17685493f4f23e46deb1c80ac2cd01c34ef3f8f7517bfe2",
+        "occurrences": 9
+      }
+    },
+    {
+      "pair": "operations--session",
+      "endpoints": [
+        "operations",
+        "session"
+      ],
+      "status": "PROPOSED_NO_API",
+      "directions": [
+        {
+          "from": "session",
+          "to": "operations",
+          "import_occurrences": 2,
+          "injected_calls": 0,
+          "contract": "Observed dependency only; exact port remains with accountable migration"
+        }
+      ],
+      "source_evidence": [
+        {
+          "from": "bot/src/owner-action-terminal.js",
+          "to": "bot/src/errors.js",
+          "line": 3,
+          "type": "import"
+        }
+      ],
+      "validation": "Retain source and audience authority; design exact port in owning migration; observed imports do not prove runtime traffic.",
+      "lifecycle": "Observed proposal; no package/API/consumer claimed.",
+      "adoption_feature": "RF04",
+      "consumers": [],
+      "tests": [],
+      "observed_directions": [
+        {
+          "from": "session",
+          "to": "operations",
+          "import_occurrences": 2,
+          "injected_calls": 0
+        }
+      ],
+      "evidence_reference": {
+        "file": "docs/Implementation_Plans/Framework_Refactor/DEPENDENCY_GRAPH.json",
+        "pair": "operations--session",
+        "graph_sha256": "1caa7f33db8af9cbe17685493f4f23e46deb1c80ac2cd01c34ef3f8f7517bfe2",
+        "occurrences": 2
+      }
+    },
+    {
+      "pair": "operations--world",
+      "endpoints": [
+        "operations",
+        "world"
+      ],
+      "status": "PROPOSED_NO_API",
+      "directions": [
+        {
+          "from": "operations",
+          "to": "world",
+          "import_occurrences": 5,
+          "injected_calls": 0,
+          "contract": "Observed dependency only; exact port remains with accountable migration"
+        },
+        {
+          "from": "world",
+          "to": "operations",
+          "import_occurrences": 5,
+          "injected_calls": 0,
+          "contract": "Observed dependency only; exact port remains with accountable migration"
+        }
+      ],
+      "source_evidence": [
+        {
+          "from": "bot/src/ai-review.js",
+          "to": "bot/src/seed-drafts.js",
+          "line": 3,
+          "type": "import"
+        }
+      ],
+      "validation": "Retain source and audience authority; design exact port in owning migration; observed imports do not prove runtime traffic.",
+      "lifecycle": "Observed proposal; no package/API/consumer claimed.",
+      "adoption_feature": "RF04",
+      "consumers": [],
+      "tests": [],
+      "observed_directions": [
+        {
+          "from": "operations",
+          "to": "world",
+          "import_occurrences": 5,
+          "injected_calls": 0
+        },
+        {
+          "from": "world",
+          "to": "operations",
+          "import_occurrences": 5,
+          "injected_calls": 0
+        }
+      ],
+      "evidence_reference": {
+        "file": "docs/Implementation_Plans/Framework_Refactor/DEPENDENCY_GRAPH.json",
+        "pair": "operations--world",
+        "graph_sha256": "1caa7f33db8af9cbe17685493f4f23e46deb1c80ac2cd01c34ef3f8f7517bfe2",
+        "occurrences": 10
+      }
+    },
+    {
+      "pair": "persistence--publication",
+      "endpoints": [
+        "persistence",
+        "publication"
+      ],
+      "status": "PROPOSED_NO_API",
+      "directions": [
+        {
+          "from": "publication",
+          "to": "persistence",
+          "import_occurrences": 0,
+          "injected_calls": 239,
+          "contract": "Observed dependency only; exact port remains with accountable migration"
+        }
+      ],
+      "source_evidence": [
+        {
+          "from": "bot/src/discovery-delivery.js",
+          "to": null,
+          "line": 7,
+          "type": "storage"
+        }
+      ],
+      "validation": "Retain source and audience authority; design exact port in owning migration; observed imports do not prove runtime traffic.",
+      "lifecycle": "Observed proposal; no package/API/consumer claimed.",
+      "adoption_feature": "RF06",
+      "consumers": [],
+      "tests": [],
+      "observed_directions": [
+        {
+          "from": "publication",
+          "to": "persistence",
+          "import_occurrences": 0,
+          "injected_calls": 239
+        }
+      ],
+      "evidence_reference": {
+        "file": "docs/Implementation_Plans/Framework_Refactor/DEPENDENCY_GRAPH.json",
+        "pair": "persistence--publication",
+        "graph_sha256": "1caa7f33db8af9cbe17685493f4f23e46deb1c80ac2cd01c34ef3f8f7517bfe2",
+        "occurrences": 239
+      }
+    },
+    {
+      "pair": "persistence--session",
+      "endpoints": [
+        "persistence",
+        "session"
+      ],
+      "status": "PROPOSED_NO_API",
+      "directions": [
+        {
+          "from": "persistence",
+          "to": "session",
+          "import_occurrences": 1,
+          "injected_calls": 0,
+          "contract": "Observed dependency only; exact port remains with accountable migration"
+        },
+        {
+          "from": "session",
+          "to": "persistence",
+          "import_occurrences": 0,
+          "injected_calls": 482,
+          "contract": "Observed dependency only; exact port remains with accountable migration"
+        }
+      ],
+      "source_evidence": [
+        {
+          "from": "bot/src/db.js",
+          "to": "bot/src/scene-continuity.js",
+          "line": 17,
+          "type": "import"
+        }
+      ],
+      "validation": "Retain source and audience authority; design exact port in owning migration; observed imports do not prove runtime traffic.",
+      "lifecycle": "Observed proposal; no package/API/consumer claimed.",
+      "adoption_feature": "RF06",
+      "consumers": [],
+      "tests": [],
+      "observed_directions": [
+        {
+          "from": "persistence",
+          "to": "session",
+          "import_occurrences": 1,
+          "injected_calls": 0
+        },
+        {
+          "from": "session",
+          "to": "persistence",
+          "import_occurrences": 0,
+          "injected_calls": 482
+        }
+      ],
+      "evidence_reference": {
+        "file": "docs/Implementation_Plans/Framework_Refactor/DEPENDENCY_GRAPH.json",
+        "pair": "persistence--session",
+        "graph_sha256": "1caa7f33db8af9cbe17685493f4f23e46deb1c80ac2cd01c34ef3f8f7517bfe2",
+        "occurrences": 483
+      }
+    },
+    {
+      "pair": "persistence--world",
+      "endpoints": [
+        "persistence",
+        "world"
+      ],
+      "status": "PROPOSED_NO_API",
+      "directions": [
+        {
+          "from": "persistence",
+          "to": "world",
+          "import_occurrences": 1,
+          "injected_calls": 0,
+          "contract": "Observed dependency only; exact port remains with accountable migration"
+        },
+        {
+          "from": "world",
+          "to": "persistence",
+          "import_occurrences": 0,
+          "injected_calls": 880,
+          "contract": "Observed dependency only; exact port remains with accountable migration"
+        }
+      ],
+      "source_evidence": [
+        {
+          "from": "bot/src/db.js",
+          "to": "bot/src/city-calendar.js",
+          "line": 15,
+          "type": "import"
+        }
+      ],
+      "validation": "Retain source and audience authority; design exact port in owning migration; observed imports do not prove runtime traffic.",
+      "lifecycle": "Observed proposal; no package/API/consumer claimed.",
+      "adoption_feature": "RF06",
+      "consumers": [],
+      "tests": [],
+      "observed_directions": [
+        {
+          "from": "persistence",
+          "to": "world",
+          "import_occurrences": 1,
+          "injected_calls": 0
+        },
+        {
+          "from": "world",
+          "to": "persistence",
+          "import_occurrences": 0,
+          "injected_calls": 880
+        }
+      ],
+      "evidence_reference": {
+        "file": "docs/Implementation_Plans/Framework_Refactor/DEPENDENCY_GRAPH.json",
+        "pair": "persistence--world",
+        "graph_sha256": "1caa7f33db8af9cbe17685493f4f23e46deb1c80ac2cd01c34ef3f8f7517bfe2",
+        "occurrences": 881
+      }
+    },
+    {
+      "pair": "publication--session",
+      "endpoints": [
+        "publication",
+        "session"
+      ],
+      "status": "PROPOSED_NO_API",
+      "directions": [
+        {
+          "from": "session",
+          "to": "publication",
+          "import_occurrences": 3,
+          "injected_calls": 0,
+          "contract": "Observed dependency only; exact port remains with accountable migration"
+        },
+        {
+          "from": "publication",
+          "to": "session",
+          "import_occurrences": 15,
+          "injected_calls": 0,
+          "contract": "Observed dependency only; exact port remains with accountable migration"
+        }
+      ],
+      "source_evidence": [
+        {
+          "from": "bot/src/action-continuation.js",
+          "to": "bot/src/pvp-output.js",
+          "line": 12,
+          "type": "import"
+        }
+      ],
+      "validation": "Retain source and audience authority; design exact port in owning migration; observed imports do not prove runtime traffic.",
+      "lifecycle": "Observed proposal; no package/API/consumer claimed.",
+      "adoption_feature": "RF06",
+      "consumers": [],
+      "tests": [],
+      "observed_directions": [
+        {
+          "from": "session",
+          "to": "publication",
+          "import_occurrences": 3,
+          "injected_calls": 0
+        },
+        {
+          "from": "publication",
+          "to": "session",
+          "import_occurrences": 15,
+          "injected_calls": 0
+        }
+      ],
+      "evidence_reference": {
+        "file": "docs/Implementation_Plans/Framework_Refactor/DEPENDENCY_GRAPH.json",
+        "pair": "publication--session",
+        "graph_sha256": "1caa7f33db8af9cbe17685493f4f23e46deb1c80ac2cd01c34ef3f8f7517bfe2",
+        "occurrences": 18
+      }
+    },
+    {
+      "pair": "publication--world",
+      "endpoints": [
+        "publication",
+        "world"
+      ],
+      "status": "PROPOSED_NO_API",
+      "directions": [
+        {
+          "from": "publication",
+          "to": "world",
+          "import_occurrences": 6,
+          "injected_calls": 0,
+          "contract": "Observed dependency only; exact port remains with accountable migration"
+        }
+      ],
+      "source_evidence": [
+        {
+          "from": "bot/src/native-hook-output.js",
+          "to": "bot/src/city-constraints.js",
+          "line": 4,
+          "type": "import"
+        }
+      ],
+      "validation": "Retain source and audience authority; design exact port in owning migration; observed imports do not prove runtime traffic.",
+      "lifecycle": "Observed proposal; no package/API/consumer claimed.",
+      "adoption_feature": "RF06",
+      "consumers": [],
+      "tests": [],
+      "observed_directions": [
+        {
+          "from": "publication",
+          "to": "world",
+          "import_occurrences": 6,
+          "injected_calls": 0
+        }
+      ],
+      "evidence_reference": {
+        "file": "docs/Implementation_Plans/Framework_Refactor/DEPENDENCY_GRAPH.json",
+        "pair": "publication--world",
+        "graph_sha256": "1caa7f33db8af9cbe17685493f4f23e46deb1c80ac2cd01c34ef3f8f7517bfe2",
+        "occurrences": 6
+      }
+    },
+    {
+      "pair": "session--world",
+      "endpoints": [
+        "session",
+        "world"
+      ],
+      "status": "PROPOSED_NO_API",
+      "directions": [
+        {
+          "from": "session",
+          "to": "world",
+          "import_occurrences": 23,
+          "injected_calls": 0,
+          "contract": "Observed dependency only; exact port remains with accountable migration"
+        },
+        {
+          "from": "world",
+          "to": "session",
+          "import_occurrences": 16,
+          "injected_calls": 0,
+          "contract": "Observed dependency only; exact port remains with accountable migration"
+        }
+      ],
+      "source_evidence": [
+        {
+          "from": "bot/src/action-continuation.js",
+          "to": "bot/src/autonomous-world.js",
+          "line": 6,
+          "type": "import"
+        }
+      ],
+      "validation": "Retain source and audience authority; design exact port in owning migration; observed imports do not prove runtime traffic.",
+      "lifecycle": "Observed proposal; no package/API/consumer claimed.",
+      "adoption_feature": "RF04",
+      "consumers": [],
+      "tests": [],
+      "observed_directions": [
+        {
+          "from": "session",
+          "to": "world",
+          "import_occurrences": 23,
+          "injected_calls": 0
+        },
+        {
+          "from": "world",
+          "to": "session",
+          "import_occurrences": 16,
+          "injected_calls": 0
+        }
+      ],
+      "evidence_reference": {
+        "file": "docs/Implementation_Plans/Framework_Refactor/DEPENDENCY_GRAPH.json",
+        "pair": "session--world",
+        "graph_sha256": "1caa7f33db8af9cbe17685493f4f23e46deb1c80ac2cd01c34ef3f8f7517bfe2",
+        "occurrences": 39
+      }
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 # Incremental migration and risk gates
 
-The supplied RF roadmap has 50 features. Only RF00 phase/feature documentation is active in this checkpoint. Future rows are dependencies, not completion records or generated empty framework directories.
+The supplied RF roadmap has 50 features. RF00 inventory is retained as historical evidence; RF01 now provides tested ports, dependency injection and executable import enforcement. RF02 file migrations have **not** begun and remain explicitly held by the owner. Future rows are dependencies, not completion records or generated empty framework directories.
 
 | Phase | Features | Preconditions | Exit evidence |
 |---|---:|---|---|

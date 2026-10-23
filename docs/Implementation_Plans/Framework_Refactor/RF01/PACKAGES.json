@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "frameworks": ["ai-provider", "character", "content", "daggerheart", "discord", "intent", "knowledge", "narrative", "npc", "operations", "persistence", "publication", "session", "world"],
+  "publicEntrypoints": {
+    "discord": ["bot/src/frameworks/discord/public.js"],
+    "narrative": ["bot/src/frameworks/narrative/public.js"],
+    "publication": ["bot/src/frameworks/publication/public.js"],
+    "session": ["bot/src/frameworks/session/public.js"],
+    "discord--publication": ["bot/src/framework-to-framework/discord--publication/public.js"],
+    "narrative--session": ["bot/src/framework-to-framework/narrative--session/public.js"],
+    "application": ["bot/src/application/composition/public.js"]
+  },
+  "externalCapabilityOwners": {
+    "node:sqlite": ["persistence", "tooling"],
+    "node:module": ["tooling"],
+    "node:vm": ["tooling"],
+    "openai": ["ai-provider"],
+    "discord.js": ["discord", "bootstrap"],
+    "@discordjs/voice": ["discord"]
+  },
+  "stableEntrypoints": ["bot/src/index.js", "bot/src/register-commands.js"],
+  "legacyOwnership": "docs/Implementation_Plans/Framework_Refactor/OWNERSHIP_DECISIONS.json"
+}

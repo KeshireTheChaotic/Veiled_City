@@ -1,0 +1,104 @@
+{
+  "base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+  "syntax_files": 23,
+  "syntax_failures": [],
+  "run_id": "RF01-F06-FROZEN-1",
+  "frozen_files": [
+    {
+      "path": "src/frameworks/discord/public.js",
+      "sha256": "ba937a34fe5d3a883264807c832f32830dc1e6170cfe2b5c3fc3253ff5eca37f"
+    },
+    {
+      "path": "src/frameworks/discord/contracts/committed-publication.js",
+      "sha256": "a4db2327dc3efb7e1cbde1d13750a5f673e4181d0e99a4a7bd7ce798c2b5d6f9"
+    },
+    {
+      "path": "src/frameworks/narrative/public.js",
+      "sha256": "6bedbf57cb1ecebec60eb39e20141bcb837bada0578b41eec32c2e39abbbfecd"
+    },
+    {
+      "path": "src/frameworks/narrative/contracts/opening-author.js",
+      "sha256": "20011cb721f25f8ed929abf20cecd2518fa63fa533b55a56ea0cc5a875ee6e5e"
+    },
+    {
+      "path": "src/frameworks/publication/public.js",
+      "sha256": "5cb26ad7dbedba1931616f13d1d95e962fe5f686a8e14dd8a5c783fb6640d693"
+    },
+    {
+      "path": "src/frameworks/publication/contracts/transport.js",
+      "sha256": "ae357c9a79e146483cfcc551223d75267e787d4c55d4c79a34d9a81ff3530272"
+    },
+    {
+      "path": "src/frameworks/session/public.js",
+      "sha256": "e4af1366273d66db52002daae7a30c4cc984a5ab3424bbdeabe2aa269f38e9bb"
+    },
+    {
+      "path": "src/frameworks/session/contracts/opening-authoring.js",
+      "sha256": "44aed68e2093e448066f1ba0f3f640ca45252dda8375a3d5fb0551410fa0a38a"
+    },
+    {
+      "path": "src/framework-to-framework/discord--publication/public.js",
+      "sha256": "0ca686e4bf3ffc51977aa10d7d30bdac18b44256463b520e0415c0cabcaa56aa"
+    },
+    {
+      "path": "src/framework-to-framework/narrative--session/public.js",
+      "sha256": "8cd417a623f9f2c726ce29e1aaa9658466a228e668bd2965b4dd4c72d75b760f"
+    },
+    {
+      "path": "src/application/composition/compose-services.js",
+      "sha256": "b5c0f6a01a9ea7cfab9bdcc29392d3e4cd78468e31f7707cd383342280b8687f"
+    },
+    {
+      "path": "src/application/composition/create-opening-services.js",
+      "sha256": "8c70b1efc7e01def3ac417dc5cb007e33516a8da87f8fc82074c2537bfc78ee0"
+    },
+    {
+      "path": "src/application/composition/public.js",
+      "sha256": "93122edb604c871497c7ff6bee17e15498ea992c31bdb5ba5de4a1c87776e568"
+    },
+    {
+      "path": "tooling/architecture/ast-imports.mjs",
+      "sha256": "0ee832ec57e826009cf562b75d8cfbe92e1519d741e7bcdef7db1c07a5649924"
+    },
+    {
+      "path": "tooling/architecture/boundary-checker.mjs",
+      "sha256": "886bc685602e60a3fe61b90333972a046178a6726b92e5d75e8de35b6098012a"
+    },
+    {
+      "path": "tooling/architecture/bridge-registry.mjs",
+      "sha256": "9e644b2ef902db92d0473baca3c95c9ac1aa8b3d2013adaa3f672ea373e8e77a"
+    },
+    {
+      "path": "tooling/architecture/check-boundaries.mjs",
+      "sha256": "74f492a468c5fbe4a25a1cde1abb17cc33fb7236eaa4a4c7bda3986cb5ed7ecc"
+    },
+    {
+      "path": "tooling/architecture/read-project.mjs",
+      "sha256": "592d4dedcceb6ee8f431bbab48b48036d85920da58bc4b64295ce858ceb00abc"
+    },
+    {
+      "path": "tests/ai-gm-2026-10/rf01-f02.test.mjs",
+      "sha256": "9c6a504a5b8a3584a95eb9d1091d96692f650c08ded99cc19ea6041531eaa7c3"
+    },
+    {
+      "path": "tests/ai-gm-2026-10/rf01-f03.test.mjs",
+      "sha256": "c5e380c73a1f82be5e6a4522aca873807daf9ea8fe527b76504e81ea2e35804e"
+    },
+    {
+      "path": "tests/ai-gm-2026-10/rf01-f04.test.mjs",
+      "sha256": "1f5454c8686b5e2c0649c3f29091fb66f1179551c9c3c658f8f1271b224b87f5"
+    },
+    {
+      "path": "tests/ai-gm-2026-10/rf01-f05.test.mjs",
+      "sha256": "c4768abf6fc6cb44ca2ef2db5a3d5c3bed39f572cf500db8b2fd7c53de52a80f"
+    },
+    {
+      "path": "tests/ai-gm-2026-10/rf01-f06.test.mjs",
+      "sha256": "f7d3a119360a23dd9fbeea155428f522d38991ce2b052850ab6b654f09817ac9"
+    }
+  ],
+  "finished_utc": "2026-10-23T14:41:59.0368654Z",
+  "exit": 0,
+  "command": "node --test --test-concurrency=1 --test-reporter=tap tests/ai-gm-2026-10/rf01-f04.test.mjs tests/ai-gm-2026-10/rf01-f06.test.mjs",
+  "started_utc": "2026-10-23T14:41:56.5630792Z"
+}
