@@ -53,7 +53,7 @@ Implementation SHA `079ab386c23aca1876a436bfe609e31907f2b633`. Frozen run `p10-f
 | A12 | PASS | Cases8,27: separate saved private locations excluded from public packet, no witness/party/location inference |
 | A13 | PASS | Cases15,16: no entitled safe location; actionable owner message and native provisional camera; PC data/resources unchanged |
 | A14 | PASS | Case15: pre-existing placement-history marker blocks initial reset; decline and invalid owner preserve state. Full historical movement adjudication is outside this delta |
-| A15 | PASS | Cases1,4,8,10,17,22,23: independent SQLite connections, worker-thread isolates, stale-worker fence, repeated present, exact ACK preservation; live OS-process crash/restart not qualified |
+| A15 | PASS | Cases1,4,8,10,17,22,23: independent SQLite connections, worker-thread isolates, stale-worker fence, repeated present, exact ACK preservation; corrective `p10-f08-prepared-refresh-race.test.mjs` forces two isolates to read `prepared_refresh` before release and proves one author/send claim. Live OS-process crash/restart not qualified |
 | A16 | PASS | Cases3,8,24: pause at planner/writer boundaries, no draft/send, version-bound resume; completed cohort ACKs unchanged after pause |
 | A17 | PASS | Case16: native new provisional location from empty entitled setting; no PC placement or mechanical result |
 | A18 | PASS | Cases1,10,27: other-owner hook and nested/contradictory GM-label canaries excluded from actual writer packets/output; semantic leakage by a live model remains unqualified |

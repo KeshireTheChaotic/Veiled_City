@@ -1,0 +1,35 @@
+{
+  "run_id": "p10-f08-prepared-refresh-race-20261022-01",
+  "tested_base_sha": "738cd6082b12a42bfedbc98d5ae39f73eef99328",
+  "branch": "codex/clean-ai-gm-2026-10",
+  "command": "cd bot; node --test --test-concurrency=1 --test-reporter=tap tests/ai-gm-2026-10/p10-f08-prepared-refresh-race.test.mjs",
+  "exit_code": 0,
+  "summary": {
+    "tests": 1,
+    "pass": 1,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "duration_ms": 10076.0856,
+    "changed_file_syntax_checks": "3/3 passed"
+  },
+  "assertion": "Two worker-thread isolates on independent SQLite connections both read prepared_refresh before a shared release barrier; the durable CAS allowed one writer and one acknowledged send, and the job completed.",
+  "files_sha256": {
+    "bot/src/session-opening-runner.js": "229206d89eca5872042ab4adabacaf8e0c04783981e2161f4a82a4363c128665",
+    "bot/tests/ai-gm-2026-10/p10-f08-prepared-refresh-race.test.mjs": "d8e868764d6b05376dd9844d12fff8bdde3e310e30cdebf38214bc9d31b15e5c",
+    "bot/tests/ai-gm-2026-10/p10-prepared-refresh-worker.mjs": "505a6783be6efcf09ba5ee5c5d291fdb9da1c326288f75d85adc3265107bbddb"
+  },
+  "test_environment": {
+    "database": "disposable SQLite temporary directory",
+    "workers": "two worker-thread isolates with separate SQLite connections",
+    "provider": "mocked; one writer invocation; zero paid calls/tokens/spend",
+    "discord": "mocked; one acknowledged send",
+    "network_or_production_data": false
+  },
+  "limitations": [
+    "Does not certify live Discord acknowledgment semantics.",
+    "Does not certify production OS-process crash recovery or narrative quality.",
+    "The prior P10 27-test frozen union was not rerun because its associated source/tests were unchanged."
+  ],
+  "release": "NOT AUTHORIZED"
+}

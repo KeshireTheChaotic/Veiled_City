@@ -1,7 +1,7 @@
 # P10-F08 — execution ledger
 
 **Feature:** Frozen acceptance, rollback and release boundaries  
-**Status:** OFFLINE DELTA PASS / 9 FEATURE CASES
+**Status:** OFFLINE DELTA PASS / 9 FINAL-UNION CASES + 1 CORRECTIVE RACE CASE
 **Planning branch / SHA:** `codex/clean-ai-gm-2026-10` / `08e965bbfb1920ac2492a2350a17e5f9785d253a`  
 **Release:** NOT AUTHORIZED
 
@@ -40,3 +40,12 @@ Record meaningful implementation checkpoints append-only. Never claim the planni
 Implementation commit: 079ab386c23aca1876a436bfe609e31907f2b633. Run p10-final-20261022-01 completed once, blocking: exit 0, 27 passed / 0 failed / 0 skipped / 0 cancelled, 22595.7921ms; 26 changed JS/MJS syntax checks passed. This feature contributes 9 passing cases in the final union. Exact command, all production/test SHA256 values and case names: ../../evidence/P10_FINAL.json. Tested baseline HEAD was 08e965bbfb1920ac2492a2350a17e5f9785d253a plus frozen manifest fingerprint 28b915d6d4f087973179cf42eb93659bcdfc8427abee9bda5f863041efffb162; that exact tested code/test delta was committed above. No production/test change followed the final union.
 
 Measured mock totals across the union: 33 planner invocations, 37 writer invocations, plus 3 mocked model-adapter requests; real provider calls/tokens/spend 0/0/$0. No model configuration or creative-output limit changed. Native acceptance is not semantic quality proof. The phase acceptance/hold/rollback matrix bounds this result; live Discord, provider speed, full OS-process crash recovery and production recovery remain NOT QUALIFIED. No owner question or critical blocker outstanding. Release NOT AUTHORIZED.
+
+## Corrective delta — durable prepared-refresh ownership (2026-10-22)
+
+- Review finding: two independent SQLite connections could both read a `prepared_refresh` job before either writer changed its status. The in-memory flight map does not coordinate those connections.
+- Implementation: `bot/src/session-opening-runner.js` now transactionally compares the exact `prepared_refresh` status and source event, transitions the winner to `publishing`, and returns the live row for a losing claimant before authoring starts. No schema or publication receipt changes.
+- Fresh regression: `bot/tests/ai-gm-2026-10/p10-f08-prepared-refresh-race.test.mjs` starts two worker-thread isolates on separate SQLite connections, barriers both after reading `prepared_refresh`, releases the race together, and asserts one writer invocation, one acknowledged send and a completed job. New worker: `bot/tests/ai-gm-2026-10/p10-prepared-refresh-worker.mjs`.
+- Run `p10-f08-prepared-refresh-race-20261022-01`: one blocking invocation from `bot/`: `node --test --test-concurrency=1 --test-reporter=tap tests/ai-gm-2026-10/p10-f08-prepared-refresh-race.test.mjs`; **exit 0, 1 passed, 0 failed/cancelled/skipped, 10076.0856ms**. Both changed MJS files and the runner passed `node --check`. No prior passing test was rerun.
+- Tested base HEAD: `738cd6082b12a42bfedbc98d5ae39f73eef99328`; working tree contains this local corrective delta. SHA256: runner `229206d89eca5872042ab4adabacaf8e0c04783981e2161f4a82a4363c128665`; test `d8e868764d6b05376dd9844d12fff8bdde3e310e30cdebf38214bc9d31b15e5c`; worker `505a6783be6efcf09ba5ee5c5d291fdb9da1c326288f75d85adc3265107bbddb`. Structured evidence: `../../evidence/P10_F08_PREPARED_REFRESH_RACE.json`.
+- Mock usage: one writer and one Discord acknowledgment; paid provider requests/tokens/spend `0/0/$0`. Real Discord behavior and live multi-process crash recovery remain unqualified. Rollback: revert the runner claim and remove only the new test/worker/evidence; no schema or runtime data migration exists. Release remains NOT AUTHORIZED.

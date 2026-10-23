@@ -42,6 +42,15 @@ async function execute({db,guild,gm,key}){
   if(['planning','publishing'].includes(row.status))return row;
   if(row.status==='prepared_refresh'){
     if(db.isDirectorPaused(guild.id))return row;
+    const claimed=db.transaction(()=>{
+      const live=assertSessionOpeningAttempt(db,guild.id,key);
+      if(live.status!=='prepared_refresh'||live.source_event!==row.source_event)return null;
+      return db.transitionCityRecord(guild.id,{kind:'session_opening_job',key,
+        expectedStatus:'prepared_refresh',expectedSourceEvent:live.source_event,status:'publishing',data:live.data});
+    });
+    // The GM-approved refresh may be resumed by several bot processes at once.
+    // Only the worker that atomically claims this exact prepared receipt may author.
+    if(!claimed)return inspectSessionOpening(db,guild.id,key);
     try{return await deliverSessionOpening({db,guild,gm,key});}
     catch(error){return save(db,guild.id,inspectSessionOpening(db,guild.id,key),'needs_review',{hold_code:code(error)});}
   }
