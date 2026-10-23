@@ -1,5 +1,5 @@
 /** Audience-safe native viewpoint for GM-owned local fiction. No inferred placement, PC knowledge or effects. */
-import {createHash} from 'node:crypto';
+import {jsonHash} from './kernel/json-hash.js';
 import {currentScene,scenePresence,sceneAccess} from './scene-continuity.js';
 import {conversationPrincipal} from './conversation-principal.js';
 import {factVisibleTo} from './disclosure-authority.js';
@@ -7,7 +7,7 @@ import {activeEvidence,objectiveEvidence,evidenceType} from './epistemic.js';
 import {protectedPvpScope} from './pvp-output.js';
 import {assemblyOrientation} from './assembly-state.js';
 import {actorReferenceVisible} from './npc-cognition-projection.js';
-export const sceneFictionHash=value=>createHash('sha256').update(JSON.stringify(value)).digest('hex');
+export const sceneFictionHash=value=>jsonHash(value);
 export function sceneFictionFailure(reason){return Object.assign(new Error(`Scene fiction held: ${reason}. No character action or outcome was inferred.`),
   {code:'SCENE_FICTION',expected:true,diagnostic:{category:reason}});}
 const visible=(row,scope)=>row&&factVisibleTo({...row,subject_character_id:row.subject_character_id||row.subject_key,

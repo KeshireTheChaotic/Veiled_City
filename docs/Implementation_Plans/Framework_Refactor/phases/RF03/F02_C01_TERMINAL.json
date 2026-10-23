@@ -1,0 +1,64 @@
+{
+  "run_id": "RF03-F02-C01",
+  "base_sha": "ab72fd352131871af7f5878d7f3302216746f02f",
+  "started": "2026-10-23T18:58:46.057Z",
+  "finished": "2026-10-23T18:58:48.484Z",
+  "tests": {
+    "command": "node --test --test-reporter=tap --test-concurrency=1 bot/tests/ai-gm-2026-10/rf03-f02-c01.test.mjs",
+    "exit": 0,
+    "summary": [
+      "# tests 33",
+      "# pass 33",
+      "# fail 0",
+      "# skipped 0",
+      "# duration_ms 1334.6036"
+    ],
+    "log_sha256": "95b620962e384a7e231df897be852c9ac6bfeb350e1897f915da53c3f3a79d8a"
+  },
+  "gate": {
+    "command": "node bot/tooling/architecture/check-boundaries.mjs --ratchet --phase RF03",
+    "exit": 0,
+    "summary": [],
+    "log_sha256": "208932e68ef06aed6d84679cae9d7a0cb28de9c311fbf91d291a98aa81ab790c"
+  },
+  "syntax_count": 9,
+  "files": [
+    {
+      "path": "bot/src/native-feature-catalog.js",
+      "sha256": "da427624dc711981b65b92cc2c45949ab1b944cace583156409fa306ee87decd"
+    },
+    {
+      "path": "bot/src/native-adversary-context.js",
+      "sha256": "37b7e5ec4ce2b8b35574c1af5e2b798ba8fabb15b2c195189cd56337d5d1a54b"
+    },
+    {
+      "path": "bot/src/scene-fiction-context.js",
+      "sha256": "abb4060ae974f63d9bb0baf6c4cff4f7928a4089dc0db03405502cf5e4f86521"
+    },
+    {
+      "path": "bot/src/kernel/json-hash.js",
+      "sha256": "a04bd1ffe5b975faca989735358529115fd5031a9e5ddbc3ea02ecde4e5b7332"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/feature-catalog.js",
+      "sha256": "2a13ed8116d18c67d661c6e0b05af39f081ccf3a126d855c7a2b78ac3542a401"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/native-failure.js",
+      "sha256": "012340403f53822c556f3b5a759b3c710700ef77764631c72973d8db5761ec0b"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/adversary-contexts.js",
+      "sha256": "13b38e65729574c3da66a1bc5b1479a68a0453d80e2b0c692f43c620d5e9fcc2"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/public.js",
+      "sha256": "3d16f7f771d012134182d65dbf773097b07b6a4c6430a44a7030d8c7646b93f8"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf03-f02-c01.test.mjs",
+      "sha256": "75fbd32debeaa3e06e44cde1d9fc41291b760bfb2a46797d435bf16132daf15e"
+    }
+  ],
+  "native_definitions_sha256": "58baf77cc9cb2b5f38e1714422c64131f2f533b4bf09254b8f8729ccd64d1e16"
+}

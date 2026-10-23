@@ -1,0 +1,156 @@
+{
+  "projector_moves": [
+    {
+      "old_path": "bot/src/native-adversary-break-the-hold.js",
+      "new_path": "bot/src/frameworks/daggerheart/adversary-contexts.js",
+      "export": "projectNativeAdversaryBreakTheHoldContext"
+    },
+    {
+      "old_path": "bot/src/native-adversary-professional-entry.js",
+      "new_path": "bot/src/frameworks/daggerheart/adversary-contexts.js",
+      "export": "projectNativeAdversaryProfessionalEntryContext"
+    },
+    {
+      "old_path": "bot/src/native-adversary-mark-the-variable.js",
+      "new_path": "bot/src/frameworks/daggerheart/adversary-contexts.js",
+      "export": "projectNativeAdversaryMarkTheVariableContext"
+    },
+    {
+      "old_path": "bot/src/native-adversary-readout.js",
+      "new_path": "bot/src/frameworks/daggerheart/adversary-contexts.js",
+      "export": "projectNativeAdversaryReadoutContext"
+    },
+    {
+      "old_path": "bot/src/native-adversary-ride-the-current.js",
+      "new_path": "bot/src/frameworks/daggerheart/adversary-contexts.js",
+      "export": "projectNativeAdversaryRideTheCurrentContext"
+    },
+    {
+      "old_path": "bot/src/native-adversary-peripheral.js",
+      "new_path": "bot/src/frameworks/daggerheart/adversary-contexts.js",
+      "export": "projectNativeAdversaryPeripheralContext"
+    },
+    {
+      "old_path": "bot/src/native-adversary-steal-the-focus.js",
+      "new_path": "bot/src/frameworks/daggerheart/adversary-contexts.js",
+      "export": "projectNativeAdversaryStealTheFocusContext"
+    },
+    {
+      "old_path": "bot/src/native-adversary-sympathetic-relay.js",
+      "new_path": "bot/src/frameworks/daggerheart/adversary-contexts.js",
+      "export": "projectNativeAdversarySympatheticRelayContext"
+    },
+    {
+      "old_path": "bot/src/native-adversary-snatch-a-link.js",
+      "new_path": "bot/src/frameworks/daggerheart/adversary-contexts.js",
+      "export": "projectNativeAdversarySnatchALinkContext"
+    },
+    {
+      "old_path": "bot/src/native-adversary-flow-around-it.js",
+      "new_path": "bot/src/frameworks/daggerheart/adversary-contexts.js",
+      "export": "projectNativeAdversaryFlowAroundItContext"
+    },
+    {
+      "old_path": "bot/src/native-adversary-drag-down.js",
+      "new_path": "bot/src/frameworks/daggerheart/adversary-contexts.js",
+      "export": "projectNativeAdversaryDragDownContext"
+    },
+    {
+      "old_path": "bot/src/native-adversary-blank-spot.js",
+      "new_path": "bot/src/frameworks/daggerheart/adversary-contexts.js",
+      "export": "projectNativeAdversaryBlankSpotContext"
+    },
+    {
+      "old_path": "bot/src/native-adversary-route-around.js",
+      "new_path": "bot/src/frameworks/daggerheart/adversary-contexts.js",
+      "export": "projectNativeAdversaryRouteAroundContext"
+    },
+    {
+      "old_path": "bot/src/native-adversary-terms-first.js",
+      "new_path": "bot/src/frameworks/daggerheart/adversary-contexts.js",
+      "export": "projectNativeAdversaryTermsFirstContext"
+    },
+    {
+      "old_path": "bot/src/native-adversary-pin-to-the-deal.js",
+      "new_path": "bot/src/frameworks/daggerheart/adversary-contexts.js",
+      "export": "projectNativeAdversaryPinToTheDealContext"
+    },
+    {
+      "old_path": "bot/src/native-adversary-i-saw-that.js",
+      "new_path": "bot/src/frameworks/daggerheart/adversary-contexts.js",
+      "export": "projectNativeAdversaryISawThatContext"
+    },
+    {
+      "old_path": "bot/src/native-adversary-self-fulfilling-event.js",
+      "new_path": "bot/src/frameworks/daggerheart/adversary-contexts.js",
+      "export": "projectNativeAdversarySelfFulfillingEventContext"
+    },
+    {
+      "old_path": "bot/src/native-adversary-always-a-price.js",
+      "new_path": "bot/src/frameworks/daggerheart/adversary-contexts.js",
+      "export": "projectNativeAdversaryAlwaysAPriceContext"
+    },
+    {
+      "old_path": "bot/src/native-adversary-bad-future.js",
+      "new_path": "bot/src/frameworks/daggerheart/adversary-contexts.js",
+      "export": "projectNativeAdversaryBadFutureContext"
+    },
+    {
+      "old_path": "bot/src/native-adversary-exit-clause.js",
+      "new_path": "bot/src/frameworks/daggerheart/adversary-contexts.js",
+      "export": "projectNativeAdversaryExitClauseContext"
+    },
+    {
+      "old_path": "bot/src/native-adversary-predatory-grace.js",
+      "new_path": "bot/src/frameworks/daggerheart/adversary-contexts.js",
+      "export": "projectNativeAdversaryPredatoryGraceContext"
+    },
+    {
+      "old_path": "bot/src/native-adversary-reputation-attack.js",
+      "new_path": "bot/src/frameworks/daggerheart/adversary-contexts.js",
+      "export": "projectNativeAdversaryReputationAttackContext"
+    },
+    {
+      "old_path": "bot/src/native-adversary-call-security.js",
+      "new_path": "bot/src/frameworks/daggerheart/adversary-contexts.js",
+      "export": "projectNativeAdversaryCallSecurityContext"
+    },
+    {
+      "old_path": "bot/src/native-adversary-urban-cover.js",
+      "new_path": "bot/src/frameworks/daggerheart/adversary-contexts.js",
+      "export": "projectNativeAdversaryUrbanCoverContext"
+    },
+    {
+      "old_path": "bot/src/native-adversary-root-snare.js",
+      "new_path": "bot/src/frameworks/daggerheart/adversary-contexts.js",
+      "export": "projectNativeAdversaryRootSnareContext"
+    },
+    {
+      "old_path": "bot/src/native-adversary-loophole.js",
+      "new_path": "bot/src/frameworks/daggerheart/adversary-contexts.js",
+      "export": "projectNativeAdversaryLoopholeContext"
+    },
+    {
+      "old_path": "bot/src/native-adversary-conflicting-duty.js",
+      "new_path": "bot/src/frameworks/daggerheart/adversary-contexts.js",
+      "export": "projectNativeAdversaryConflictingDutyContext"
+    }
+  ],
+  "catalog_exports": [
+    "inspectNativeFeatureOccurrence",
+    "compileNativeFeatures",
+    "featureDisposition",
+    "executableNativeFeatures",
+    "compileNativeFeatureRuleContexts",
+    "nativeFeatureRuleContext",
+    "nativeFeatureRuleContextsForTemplate",
+    "compileNativeActors",
+    "nativeActorTaxonomy",
+    "nativeSignalFeatureTarget"
+  ],
+  "definitions_unchanged": true,
+  "dispositions": {
+    "supported": 78,
+    "review_only": 75
+  }
+}

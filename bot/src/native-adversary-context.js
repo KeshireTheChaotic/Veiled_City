@@ -1,37 +1,13 @@
+import {createNativeAdversaryContextProjectors} from './frameworks/daggerheart/public.js';
 /** Bound existing adversary provenance, never NPC creation, statistics, knowledge or execution permission. */
 import {nativeEncounterActor} from './native-encounter-relations.js';
 import {nativeActorControl} from './native-actor-control.js';
 import {inspectArbitrationOrigin} from './scene-intent-board.js';
-import {executableNativeFeatures,featureDisposition,nativeFeatureRuleContextsForTemplate} from './native-feature-catalog.js';
+import {executableNativeFeatures,featureDisposition,nativeFeatureRuleContext,nativeFeatureRuleContextsForTemplate} from './native-feature-catalog.js';
 import {sceneFictionHash as hash} from './scene-fiction-context.js';
-import {projectNativeAdversaryBreakTheHoldContext} from './native-adversary-break-the-hold.js';
-import {projectNativeAdversaryProfessionalEntryContext} from './native-adversary-professional-entry.js';
-import {projectNativeAdversaryMarkTheVariableContext} from './native-adversary-mark-the-variable.js';
-import {projectNativeAdversaryReadoutContext} from './native-adversary-readout.js';
-import {projectNativeAdversaryRideTheCurrentContext} from './native-adversary-ride-the-current.js';
-import {projectNativeAdversaryPeripheralContext} from './native-adversary-peripheral.js';
-import {projectNativeAdversaryStealTheFocusContext} from './native-adversary-steal-the-focus.js';
-import {projectNativeAdversarySympatheticRelayContext} from './native-adversary-sympathetic-relay.js';
-import {projectNativeAdversarySnatchALinkContext} from './native-adversary-snatch-a-link.js';
-import {projectNativeAdversaryFlowAroundItContext} from './native-adversary-flow-around-it.js';
-import {projectNativeAdversaryDragDownContext} from './native-adversary-drag-down.js';
-import {projectNativeAdversaryBlankSpotContext} from './native-adversary-blank-spot.js';
-import {projectNativeAdversaryRouteAroundContext} from './native-adversary-route-around.js';
-import {projectNativeAdversaryTermsFirstContext} from './native-adversary-terms-first.js';
-import {projectNativeAdversaryPinToTheDealContext} from './native-adversary-pin-to-the-deal.js';
-import {projectNativeAdversaryISawThatContext} from './native-adversary-i-saw-that.js';
-import {projectNativeAdversarySelfFulfillingEventContext} from './native-adversary-self-fulfilling-event.js';
-import {projectNativeAdversaryAlwaysAPriceContext} from './native-adversary-always-a-price.js';
-import {projectNativeAdversaryBadFutureContext} from './native-adversary-bad-future.js';
-import {projectNativeAdversaryExitClauseContext} from './native-adversary-exit-clause.js';
-import {projectNativeAdversaryPredatoryGraceContext} from './native-adversary-predatory-grace.js';
-import {projectNativeAdversaryReputationAttackContext} from './native-adversary-reputation-attack.js';
-import {projectNativeAdversaryCallSecurityContext} from './native-adversary-call-security.js';
-import {projectNativeAdversaryUrbanCoverContext} from './native-adversary-urban-cover.js';
-import {projectNativeAdversaryRootSnareContext} from './native-adversary-root-snare.js';
-import {projectNativeAdversaryLoopholeContext} from './native-adversary-loophole.js';
-import {projectNativeAdversaryConflictingDutyContext} from './native-adversary-conflicting-duty.js';
 import {arbitrationFailure as fail} from './gm-arbitration-contract.js';
+const {projectNativeAdversaryBreakTheHoldContext,projectNativeAdversaryProfessionalEntryContext,projectNativeAdversaryMarkTheVariableContext,projectNativeAdversaryReadoutContext,projectNativeAdversaryRideTheCurrentContext,projectNativeAdversaryPeripheralContext,projectNativeAdversaryStealTheFocusContext,projectNativeAdversarySympatheticRelayContext,projectNativeAdversarySnatchALinkContext,projectNativeAdversaryFlowAroundItContext,projectNativeAdversaryDragDownContext,projectNativeAdversaryBlankSpotContext,projectNativeAdversaryRouteAroundContext,projectNativeAdversaryTermsFirstContext,projectNativeAdversaryPinToTheDealContext,projectNativeAdversaryISawThatContext,projectNativeAdversarySelfFulfillingEventContext,projectNativeAdversaryAlwaysAPriceContext,projectNativeAdversaryBadFutureContext,projectNativeAdversaryExitClauseContext,projectNativeAdversaryPredatoryGraceContext,projectNativeAdversaryReputationAttackContext,projectNativeAdversaryCallSecurityContext,projectNativeAdversaryUrbanCoverContext,projectNativeAdversaryRootSnareContext,projectNativeAdversaryLoopholeContext,projectNativeAdversaryConflictingDutyContext}=createNativeAdversaryContextProjectors({featureDisposition:(...args)=>featureDisposition(...args),nativeFeatureRuleContext:(...args)=>nativeFeatureRuleContext(...args)});
+
 
 /** A template/display name does not bind a person to an adversary or make its features available. */
 export function nativeAdversaryFeatureContext(db,guild,origin,actor,{library}={}){

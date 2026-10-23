@@ -12,3 +12,5 @@ export {alternateNativeUnarmedTrait,validateNativeUnarmedTraitOperation} from '.
 export {createTypedRollResolver} from './typed-roll-execution.js';
 export {createTypedRollProof} from './typed-roll-proof.js';
 export {createTypedRequestSelection} from './typed-request-selection.js';
+export {createNativeFeatureCatalog} from './feature-catalog.js';
+export {createNativeAdversaryContextProjectors} from './adversary-contexts.js';
