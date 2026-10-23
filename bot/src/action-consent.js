@@ -5,6 +5,7 @@ import { currentScene } from "./scene-continuity.js";
 import { indexWorldEvent } from "./city-calendar.js";
 import {typedRollProof} from "./typed-roll-proof.js";
 import {overlapsOwnerActionTerminal} from "./owner-action-terminal.js";
+import {createActionConsentTerms} from "./frameworks/daggerheart/action-consent-terms.js";
 
 export const consentHash=value=>createHash("sha256").update(JSON.stringify(value)).digest("hex");
 function fail(message){throw Object.assign(new Error(message),{code:"SCENE_ACTION_WINDOW"});}
@@ -12,8 +13,7 @@ function closed(input,fields){
   if(!input||typeof input!=="object"||Array.isArray(input)||Object.keys(input).some(key=>!fields.includes(key)))
     fail("Closed action-consent fields required.");
 }
-const resources=value=>Array.isArray(value)&&value.length<=32&&new Set(value).size===value.length
-  &&value.every(key=>typeof key==="string"&&/^[a-z][a-z0-9_-]*:[^\s]{1,180}$/i.test(key));
+const {termsFor}=createActionConsentTerms({fail});
 
 /** Re-read the current owner, exact immutable source and accepted occurrence before consent can be used. */
 export function consentAction(db,guild,key){
@@ -60,19 +60,6 @@ function inspectActionSource(db,guild,key,completed,historical=false){
     fail("Consent action owner, principal, source, audience or scene is stale.");
   return {row,source,scene,principal};
 }
-function termsFor(window,accepted,input){
-  if(!resources(input.reads)||!resources(input.writes)||!Array.isArray(input.required_participants)
-    ||!input.required_participants.length||input.required_participants.length>12
-    ||new Set(input.required_participants).size!==input.required_participants.length
-    ||typeof input.operation!=="string"||!input.operation||typeof input.location_key!=="string"||!input.location_key)
-    fail("Consent needs bounded exact resources and participants.");
-  return {window:window.record_key,window_revision:window.data.revision,accepted_intent:accepted.record_key,
-    actor:accepted.data.actor,source_event:accepted.source_event,source_hash:accepted.data.source_hash,
-    operation:input.operation,reads:[...input.reads].sort(),writes:[...input.writes].sort(),location_key:input.location_key,
-    required_participants:[...input.required_participants].sort(),scene:accepted.data.scene,session_id:accepted.data.session_id,
-    source_audience:accepted.visibility,source_subject:accepted.subject_key||null};
-}
-
 export function requestActionConsent(db,guild,input){
   closed(input,["window","expected_revision","accepted_intent","reads","writes","location_key","operation","participation",
     "required_participants","consequences","expires_minute","pvp_agreement"]);

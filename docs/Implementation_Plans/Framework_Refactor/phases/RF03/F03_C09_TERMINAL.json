@@ -1,0 +1,62 @@
+{
+  "feature": "RF03-F03-C09",
+  "status": "QUALIFIED_SLICE_ONLY",
+  "base_commit": "4ac8b61",
+  "started_utc": "2026-10-23T22:55:00Z",
+  "finished_utc": "2026-10-23T22:56:38Z",
+  "changed_modules": [
+    "bot/src/action-consent.js",
+    "bot/src/frameworks/daggerheart/action-consent-terms.js",
+    "bot/tests/ai-gm-2026-10/rf03-f03-c09.test.mjs"
+  ],
+  "source_sha256": {
+    "bot/src/action-consent.js": "d2ab210e2673b3d6cd321fcba2e6ca7f2b942ae82ef1cc12fd7b1aa6cf9a95bb",
+    "bot/src/frameworks/daggerheart/action-consent-terms.js": "9246814d082b28c22dec54568addda60ea77664f392b50a30688f8dc7363b223",
+    "bot/tests/ai-gm-2026-10/rf03-f03-c09.test.mjs": "36c4a8abfa9f1442258d7d7fa5cc64530e5f40147688ba241d54da5341a97719"
+  },
+  "syntax": {
+    "paths": [
+      "bot/src/action-consent.js",
+      "bot/src/frameworks/daggerheart/action-consent-terms.js",
+      "bot/tests/ai-gm-2026-10/rf03-f03-c09.test.mjs"
+    ],
+    "exit": 0
+  },
+  "test": {
+    "command": "node --test --test-reporter=tap --test-concurrency=1 bot/tests/ai-gm-2026-10/rf03-f03-c09.test.mjs",
+    "exit": 0,
+    "tests": 4,
+    "pass": 4,
+    "fail": 0,
+    "skipped": 0,
+    "duration_ms": 60.8265,
+    "blocking_wall_ms": 232,
+    "log": "f03-c09.log",
+    "log_sha256": "8b1d66a0c52e62b093d20eb7db06b82f4e48c443f6c86a6092da5e840193a821"
+  },
+  "architecture_gate": {
+    "command": "node bot/tooling/architecture/check-boundaries.mjs --ratchet --phase RF03",
+    "exit": 0,
+    "source_modules": 386,
+    "unowned": 0,
+    "import_occurrences": 2308,
+    "largest_cycle": 182,
+    "raw_violations": 2601,
+    "accepted_legacy_occurrences": 2601,
+    "active_violation_groups": 0,
+    "transition_errors": 0,
+    "pass": true,
+    "log": "f03-c09-gate.log",
+    "log_sha256": "88818070fa2040cbc9e1e0acdfddf93efba83dedeb18f03231750705a3cf08db"
+  },
+  "cost": {
+    "provider_calls": 0,
+    "provider_dollars": 0,
+    "codex_usage": "UNMEASURED"
+  },
+  "holds": [
+    "Action-consent record persistence, source/owner validation, transaction integration, and production database behavior are outside this pure native term contract test.",
+    "RF03 remains incomplete; this slice does not qualify the wider consent or PvP workflow."
+  ],
+  "release": "NOT AUTHORIZED"
+}
