@@ -1,0 +1,62 @@
+{
+  "feature": "RF03-F03-C13",
+  "status": "QUALIFIED_SLICE_ONLY",
+  "base_commit": "03642a9",
+  "started_utc": "2026-10-23T23:06:44Z",
+  "finished_utc": "2026-10-23T23:08:17Z",
+  "changed_modules": [
+    "bot/src/pc-death.js",
+    "bot/src/frameworks/daggerheart/pc-death-outcomes.js",
+    "bot/tests/ai-gm-2026-10/rf03-f03-c13.test.mjs"
+  ],
+  "source_sha256": {
+    "bot/src/pc-death.js": "ec63e0573f1aed13f3dbcbdf2bd83a8d2b12e968de1d833254c7e73576d1034b",
+    "bot/src/frameworks/daggerheart/pc-death-outcomes.js": "bd4098c32c7280995aff3be3bd7d4268243ed9bd4a6653815186c4fd4a8814a5",
+    "bot/tests/ai-gm-2026-10/rf03-f03-c13.test.mjs": "33c31a6ec702c6a348e38f7c8ee5b3140d30b42be06621c10ff82e6607350fef"
+  },
+  "syntax": {
+    "paths": [
+      "bot/src/pc-death.js",
+      "bot/src/frameworks/daggerheart/pc-death-outcomes.js",
+      "bot/tests/ai-gm-2026-10/rf03-f03-c13.test.mjs"
+    ],
+    "exit": 0
+  },
+  "test": {
+    "command": "node --test --test-reporter=tap --test-concurrency=1 bot/tests/ai-gm-2026-10/rf03-f03-c13.test.mjs",
+    "exit": 0,
+    "tests": 3,
+    "pass": 3,
+    "fail": 0,
+    "skipped": 0,
+    "duration_ms": 61.2216,
+    "blocking_wall_ms": 239,
+    "log": "f03-c13.log",
+    "log_sha256": "579169c0813039a9aef4a1e5207b4eba6bfd771d3c4c9bd00342ee6d1a5a0b05"
+  },
+  "architecture_gate": {
+    "command": "node bot/tooling/architecture/check-boundaries.mjs --ratchet --phase RF03",
+    "exit": 0,
+    "source_modules": 392,
+    "unowned": 0,
+    "import_occurrences": 2316,
+    "largest_cycle": 182,
+    "raw_violations": 2601,
+    "accepted_legacy_occurrences": 2601,
+    "active_violation_groups": 0,
+    "transition_errors": 0,
+    "pass": true,
+    "log": "f03-c13-gate.log",
+    "log_sha256": "cd618396fb644a30234418a0592dc360e78ef6770d2d2dfa84460636352aee2f"
+  },
+  "cost": {
+    "provider_calls": 0,
+    "provider_dollars": 0,
+    "codex_usage": "UNMEASURED"
+  },
+  "holds": [
+    "Owner/source/roll ancestry, state mutation, transaction rollback, recovery allocation, restart replay and delivery behavior remain in the current death workflow and were not tested here.",
+    "RF03 remains incomplete; no release authorization."
+  ],
+  "release": "NOT AUTHORIZED"
+}

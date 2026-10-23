@@ -11,6 +11,7 @@ import {validateIncomingDamageApplication} from "./pc-incoming.js";
 import {validateAllyHealingApplication} from "./pc-effects.js";
 import {settlePreRollFearForIncoming} from './pre-roll-fear.js';
 import {createPcDeathEligibility} from './frameworks/daggerheart/pc-death-eligibility.js';
+import {riskItAllOutcome,avoidDeathOutcome} from './frameworks/daggerheart/pc-death-outcomes.js';
 export {hopeCap} from "./pc-native-eligibility.js";
 const hash=v=>createHash("sha256").update(JSON.stringify(v)).digest("hex");
 function fail(message){throw Object.assign(new Error(message),{code:"PC_DEATH_MOVE",expected:true});}
@@ -76,21 +77,21 @@ export function choosePcDeathMove(db,guild,user,input,{interactionId,rng=d}={}){
     const choice=indexWorldEvent(db,guild,{key:`${input.request}:choice`,kind:"pc_death_owner_choice",title:"Owner-selected native SRD death move",
       source_id:`player:${user}`,visibility:"character",subject_key:f.pc.id,session_id:f.row.data.session,scene:f.row.data.scene,
       details:{author:user,request:input.request,revision:input.expected_revision,move,principal:f.principal.revision,interaction:interactionId}},user);
-    let result,status="resolved",roll=null,payload=null,scar=false;
+    let result,status="resolved",roll=null,payload=null,scar=false,deathOutcome=null;
     if(move==="risk_it_all"){
       payload={...dualityRoll({},rng),roll_type:"pc_death",request:input.request,move};
-      result=payload.duality==="Fear"?"dead":payload.duality==="Critical"?"recovered":"allocate_recovery";
+      result=riskItAllOutcome(payload.duality);
       if(result==="allocate_recovery")status="awaiting_allocation";
     }else if(move==="avoid_death"){
       const hope=rng(12);if(!Number.isSafeInteger(hope)||hope<1||hope>12)fail("Native Hope die out of range.");
-      payload={id:randomUUID(),roll_type:"pc_death",request:input.request,move,hope};scar=hope<=f.pc.data.level;
-      result=scar&&hopeCap(f.pc.data)===1?"journey_ended":"unconscious";
+      payload={id:randomUUID(),roll_type:"pc_death",request:input.request,move,hope};
+      deathOutcome=avoidDeathOutcome(f.pc.data,hope,f.pc.data.level);scar=deathOutcome.scar;result=deathOutcome.result;
     }else {result="blaze_pending";status="awaiting_final_action";}
     if(payload)roll=db.addRoll(guild,f.row.data.session,user,f.pc.id,"pc_death",payload);
     db.updateCharacterData(f.pc.id,data=>{
       data.death_state={request:input.request,status:result};
       if(result==="recovered"){data.resources.hp.current=0;data.resources.stress.current=0;}
-      if(move==="avoid_death"){data.resources.hope_max=hopeCap(data)-(scar?1:0);data.resources.hope=Math.min(data.resources.hope,data.resources.hope_max);}
+      if(move==="avoid_death"){data.resources.hope_max=deathOutcome.hope_max;data.resources.hope=Math.min(data.resources.hope,data.resources.hope_max);}
     });
     if(["dead","journey_ended"].includes(result))db.setCharacterStatus(f.pc.id,"dead",f.row.data.session);
     const after=snapshot(db.getCharacter(f.pc.id)),material={version:1,request:input.request,request_digest:f.row.data.digest,
@@ -126,13 +127,13 @@ export function validatePcDeathOutcome(db,guild,key){
     if(![r?.hope,r?.fear].every(v=>Number.isSafeInteger(v)&&v>=1&&v<=12)||r.modifier!==0||r.experience!==0
       ||r.advantage!==0||r.disadvantage!==0||r.adv_net!==0||r.total!==r.hope+r.fear||r.adv_dice?.length||r.helper_dice?.length
       ||r.duality!==(r.hope===r.fear?"Critical":r.hope>r.fear?"Hope":"Fear"))fail("Unmodified native death dice arithmetic required.");
-    result=r.duality==="Fear"?"dead":r.duality==="Critical"?"recovered":"allocate_recovery";
+    result=riskItAllOutcome(r.duality);
     if(result==="recovered"){expected.data.resources.hp.current=0;expected.data.resources.stress.current=0;}
   }else if(data.move==="avoid_death"){
     if(!Number.isSafeInteger(r?.hope)||r.hope<1||r.hope>12)fail("Native death Hope die required.");
-    scar=r.hope<=expected.data.level;const cap=hopeCap(expected.data)-(scar?1:0);
-    result=cap===0?"journey_ended":"unconscious";expected.data.resources.hope_max=cap;
-    expected.data.resources.hope=Math.min(expected.data.resources.hope,cap);
+    const outcome=avoidDeathOutcome(expected.data,r.hope,expected.data.level);
+    scar=outcome.scar;result=outcome.result;expected.data.resources.hope_max=outcome.hope_max;
+    expected.data.resources.hope=Math.min(expected.data.resources.hope,outcome.hope_max);
   }else if(data.move==="blaze_of_glory")result="blaze_pending";
   else fail("Unknown native death move.");
   expected.data.death_state={request:data.request,status:result};

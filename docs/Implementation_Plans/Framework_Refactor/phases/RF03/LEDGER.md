@@ -192,3 +192,7 @@ Daggerheart now owns the two current source-defined environment roll-opportunity
 ## Corrective F03-C12 qualified PvP profile terms
 
 The exact current PvP profile terms validator now runs in Daggerheart, with current/historical owner lookup and clock reads supplied by `pvp-profiles.js`. Four fresh cases passed, exit 0, 62.4318 ms; three syntax checks and the RF03 ratchet passed. Gate: 391 sources, zero unowned/active groups/transition errors, largest cycle 182, 2,601 accepted existing transition occurrences. Full evidence `F03_C12_TERMINAL.json`; provider cost $0, Codex usage UNMEASURED. Profile source/audience/signature/record transactions and complete PvP execution remain unqualified. RF03 INCOMPLETE; RF04 NOT STARTED; RELEASE NOT AUTHORIZED.
+
+## Corrective F03-C13 qualified death-move result mapping
+
+Daggerheart now owns the deterministic Risk It All and Avoid Death outcome mapping, called from both the choice transaction and saved-outcome verifier. Three fresh tests passed, exit 0, 61.2216 ms; three syntax checks and the RF03 ratchet passed. Gate: 392 source modules, zero unowned/active groups/transition errors, largest cycle 182, 2,601 accepted legacy occurrences. Full evidence `F03_C13_TERMINAL.json`; provider spend $0, Codex usage UNMEASURED. Receipt/persistence/recovery integration is not qualified; RF03 remains INCOMPLETE, RF04 NOT STARTED, RELEASE NOT AUTHORIZED.
