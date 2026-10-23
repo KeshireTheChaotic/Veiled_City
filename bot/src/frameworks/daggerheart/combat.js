@@ -33,7 +33,3 @@ export function hpMarksForDamage(c,damage){
   if(c.major_threshold!=null && n>=c.major_threshold) return 2;
   return 1;
 }
-export function combatantLine(c){
-  const cond=c.conditions?.length?` • ${c.conditions.join(", ")}`:"";
-  return `\`${c.id.slice(0,8)}\` **${c.display_name}** [${c.role}] — HP ${c.hp_current}/${c.hp_max}${c.stress_max?` • Stress ${c.stress_current}/${c.stress_max}`:""} • ${c.status}${cond}`;
-}

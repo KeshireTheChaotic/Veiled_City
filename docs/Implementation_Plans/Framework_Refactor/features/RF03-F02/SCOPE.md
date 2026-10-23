@@ -1,0 +1,3 @@
+# RF03-F02 — Combat, encounters and native catalog
+
+Active after F01 qualified core slice (479d366), with typed/resource and advancement work locally held for coupled interfaces. Separate existing combat formatting into Discord ownership before moving pure native HP/damage/build helpers; extract exact encounter-budget arithmetic from the still-mixed encounter workflow. Preserve all conditions, target checks and transactions in existing callers. Inspect current catalog statuses; never activate review-only entries. Fresh synthetic deterministic tests of modified helpers, no old fixtures or suite. No gameplay or schema changes.

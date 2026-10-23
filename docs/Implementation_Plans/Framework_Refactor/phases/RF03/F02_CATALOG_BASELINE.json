@@ -1,0 +1,9 @@
+{
+  "statuses": {
+    "supported": 78,
+    "review_only": 75
+  },
+  "total": 153,
+  "source": "bot/src/native-feature-definitions.json",
+  "sha256": "58baf77cc9cb2b5f38e1714422c64131f2f533b4bf09254b8f8729ccd64d1e16"
+}

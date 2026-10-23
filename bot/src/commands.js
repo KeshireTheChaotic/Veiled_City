@@ -1,3 +1,4 @@
+import {combatantLine} from './frameworks/discord/public.js';
 /** Discord command schema and interaction dispatcher. Authorization and privacy checks belong at command boundaries; persistence belongs in VeiledDB. */
 import {
   PermissionFlagsBits,
@@ -12,7 +13,7 @@ import {reviewTypedRollOutcome} from "./typed-roll-outcomes.js";
 import { publishJournal, postJournalEntry, publishEventResults, postGmLog, postStateError, postPrivateRelay, syncConfiguredSurfaces, postPlayMessage, sendPlayerPrivate, deliverHandout, deliverQueuedTurn } from "./publishing.js";
 import { EncounterLibrary, livePcRoster, partyTier, baseBattlePoints, DIFFICULTY_ADJUSTMENTS, autoBuildComposition, recomputeBudget, battlePointCost, HEAVY_ROLES, defaultObjective, manageWorldEncounter, recordWorldEncounterOutcome, validateWorldEncounterActivation, worldCombatantDrafts, bindWorldCombatants } from "./encounter.js";
 import { prepareLevelup, applyLevelupToData, legalAdvancements, tierAchievement } from "./character-system.js";
-import { buildCombatants, hpMarksForDamage, combatantLine } from "./combat.js";
+import { buildCombatants, hpMarksForDamage } from "./frameworks/daggerheart/public.js";
 import { applyAuthoritativeMutation } from "./state.js";
 import { manageEvidence, evidenceView } from "./evidence-custody.js";
 import { organizationRequest, organizationInbox } from "./owned-community.js";
@@ -2475,3 +2476,4 @@ GM notes: ${a.draft.gm_notes}`:""}`.slice(0,1950):"No aftermath draft exists for
   }
   return true;
 }
+

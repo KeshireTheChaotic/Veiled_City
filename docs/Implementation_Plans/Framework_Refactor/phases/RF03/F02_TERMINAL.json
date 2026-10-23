@@ -1,0 +1,64 @@
+{
+  "started": "2026-10-23T17:58:25.913Z",
+  "finished": "2026-10-23T17:58:26.626Z",
+  "base_sha": "479d36617b854fc96d425419124ccb508cba5852",
+  "tests": {
+    "exit": 0,
+    "summary": "# tests 6\n# pass 6\n# fail 0\n# skipped 0\n# duration_ms 66.8884"
+  },
+  "gate": {
+    "exit": 0,
+    "summary": ""
+  },
+  "syntax": 12,
+  "files": [
+    {
+      "path": "bot/src/commands.js",
+      "sha256": "d448c84318940ecfbd0558b2951f1260a5c0acafc828bffd6f328fe7d19df82f"
+    },
+    {
+      "path": "bot/src/encounter.js",
+      "sha256": "537e319bf76239a6d9d6ef3e191e6fef86b7966ce7aa76a6a83a3c072db921c3"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/public.js",
+      "sha256": "420b4e466972b1e8e42934a3510ac44c7a34f367f1ebfbc97953045e953ee301"
+    },
+    {
+      "path": "bot/src/frameworks/discord/public.js",
+      "sha256": "1fe52a58ca80835fd3108d99d33fb6eb07359f94cd6d111444015439a2a3dd6f"
+    },
+    {
+      "path": "bot/src/native-feature-damage.js",
+      "sha256": "f6fe8f4dfd4d329bb72381ccaa7397bd26bffc76a837b4e4c3ebd2ba1b8de89e"
+    },
+    {
+      "path": "bot/src/native-feature-hit.js",
+      "sha256": "e4ee1464c41a43517fd06e1c09d7bc0d088f2082ae14d1b345be8c890153daec"
+    },
+    {
+      "path": "bot/src/native-feature-passives.js",
+      "sha256": "75f9dcad6066724bc8345ff67d30b65bb548d31f52bff47a93d39fc2f8f8508b"
+    },
+    {
+      "path": "bot/src/roll-collaboration.js",
+      "sha256": "0fc1db08acb65094593483ea9ad16b2b0b96a1d9fb4269c243780eeca3a19d1c"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/combat.js",
+      "sha256": "f1d437d87408840ac4ba4459b66a9f3874f1e8aa6f7a011b80901849d95328ce"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/encounter-budget.js",
+      "sha256": "9f29472f663e423d4a3eef712ece962aec49bcba21d978f6ff13d8938ca1f23b"
+    },
+    {
+      "path": "bot/src/frameworks/discord/combatant-text.js",
+      "sha256": "7afed5eb7477850736c51e313fb0a4ccab74bc22c3962a1a656c1fa190fcb0e8"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf03-f02.test.mjs",
+      "sha256": "5976d929eaf804e17d7165ea6791ca321ba93102f37a06b9bcb69bd8b6962735"
+    }
+  ]
+}

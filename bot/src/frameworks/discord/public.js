@@ -2,3 +2,4 @@ export {createDiscordPublicationCapability} from './contracts/committed-publicat
 export {createInteractionTextDelivery} from './delivery.js';
 export {buildCommands} from './command-definitions.js';
 export {commandCharacterCount,validateCommandSchema,assertValidCommandSchema} from './command-schema.js';
+export {combatantLine} from './combatant-text.js';

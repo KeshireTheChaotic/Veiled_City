@@ -6,7 +6,7 @@ import { cityAudit, cityKey, cityObject, indexWorldEvent } from "./city-calendar
 import { rollRevision, rollBreakdown, rollTraitBreakdown, reserveRollAmendment } from "./roll-requests.js";
 import {reserveRollPartyDisclosure,validateRollSharePreview,sourceConfirmedRollAttempt} from "./roll-sharing.js";
 import { dualityRoll, parseDice, d } from "./frameworks/daggerheart/public.js";
-import { hpMarksForDamage } from "./combat.js";
+import { hpMarksForDamage } from "./frameworks/daggerheart/public.js";
 import { recordObservedAttack } from "./encounter.js";
 import { StateConflictError, PermissionError, UserInputError } from "./kernel/errors.js";
 import { finalizeTypedRollAction } from "./typed-roll-outcomes.js";

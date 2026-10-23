@@ -7,7 +7,7 @@ import {typedRollProof} from './typed-roll-proof.js';
 import {validateIncomingDamageApplication,incomingAttackEvidence} from './pc-incoming.js';
 import {indexWorldEvent} from './city-calendar.js';
 import {arbitrationFailure as fail} from './gm-arbitration-contract.js';
-import {adversaryHpState} from './combat.js';
+import {adversaryHpState} from './frameworks/daggerheart/public.js';
 import {applyNativeStressPassive} from './native-stress-passives.js';
 
 const FEATURE='adversary:wraith-pack:many-deaths';

@@ -7,7 +7,7 @@ import {activeCityProxy} from './city-constraints.js';
 import {indexWorldEvent} from './city-calendar.js';
 import {historicalActionSource} from './action-consent.js';
 import {arbitrationFailure as fail} from './gm-arbitration-contract.js';
-import {hpMarksForDamage} from './combat.js';
+import {hpMarksForDamage} from './frameworks/daggerheart/public.js';
 
 const HANDLER='first_severe_to_major',library=()=>new EncounterLibrary('../content');
 function savedDamage(db,guild,request,data){

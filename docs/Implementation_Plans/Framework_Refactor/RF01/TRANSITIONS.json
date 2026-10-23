@@ -366,17 +366,6 @@
       "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
     },
     {
-      "id": "382c4f77be2936456889c60fd227f6f2dedfe760e7e90ef8fa85562c9d6f219f",
-      "code": "LEGACY_MODULE_LOCATION",
-      "from": "bot/src/combat.js",
-      "owner": "daggerheart",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF03-F02",
-      "expires_after": "RF03",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
-    },
-    {
       "id": "86f15d395bf22ceb00595dc430ee6570c692c1209a4751b4e23fe47d1512a523",
       "code": "LEGACY_MODULE_LOCATION",
       "from": "bot/src/commands.js",
@@ -5442,20 +5431,6 @@
       "to": "bot/src/character-system.js",
       "kind": "static",
       "specifier": "./character-system.js",
-      "owner": "application",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF06-F04",
-      "expires_after": "RF06",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
-      "id": "179eac400e0b19802165932d8f4df6df9a87350bbe88bbfc6bd1ded41da76c38",
-      "code": "IMPORTS_PRIVATE_API",
-      "from": "bot/src/commands.js",
-      "to": "bot/src/combat.js",
-      "kind": "static",
-      "specifier": "./combat.js",
       "owner": "application",
       "max_occurrences": 1,
       "remove_in_feature": "RF06-F04",
