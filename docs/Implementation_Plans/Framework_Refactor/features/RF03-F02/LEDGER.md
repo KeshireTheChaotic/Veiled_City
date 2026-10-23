@@ -41,6 +41,10 @@ The existing disabled-device hold now executes in Daggerheart-owned `device-use-
 
 The exact Static Wraith Feedback stakes contract and the existing group-feature stakes delegation now run through Daggerheart-owned `feature-reaction-stakes.js`. Fresh test: 3/3 passed, exit 0, 57.5757 ms; three changed JS/MJS syntax checks passed. RF03 ratchet passed at 396 modules, zero unowned, 2,324 imports, 2,600 accepted existing obligations, zero active groups/errors. Exact evidence is in `F02_C06_TERMINAL.json`. No provider cost. F02 remains active; release not authorized.
 
+## Corrective C07 — qualified native Feedback reaction outcome
+
+Daggerheart now computes the exact existing Feedback success/failure consequence plan: a failure adds one Stress and binds device shutdown to the immutable effect receipt key; success leaves both unchanged. Verified roll, owner, mutation and receipt transaction remain in the provider. Fresh test: 4/4 passed, exit 0, 60.4162 ms; three changed JS/MJS syntax checks passed. RF03 ratchet passed at 397 modules, zero unowned, 2,326 imports, 2,600 accepted existing obligations, zero active groups/errors. Exact evidence in `F02_C07_TERMINAL.json`. Provider cost 0; release not authorized.
+
 ## Corrective C04 — qualified native feature cost policy
 
 The pure feature cost calculation now resides in `frameworks/daggerheart/feature-costs.js`; the current feature-window module imports and re-exports it without changing the transaction paths. The group-feature provider now imports the native function directly, removing its exact cycle edge to the feature-window provider. Final fresh direct-native test: 3/3 passed, exit 0, 61.3319 ms; four changed JS/MJS syntax checks passed. RF03 ratchet exit 0: 394 modules, zero unowned, 2,320 imports, largest cycle 182, 2,600 accepted prior obligations, zero active groups/errors. Three provider-import attempts failed before assertions due an observed `RANGE_BANDS` cold-import cycle in `pvp-attacks.js`; provider startup remains unqualified. Exact evidence and hashes are in `F02_C04_TERMINAL.json`. Rollback this C04 slice only. RF03 remains incomplete; release not authorized.

@@ -1,0 +1,5 @@
+# RF03-F02 C07 — Native Feedback reaction outcome
+
+Extract only the existing pure outcome calculation for the supported Static Wraith Feedback reaction. The native policy receives the already verified success result, current Stress, Stress maximum, and effect receipt key. On success it preserves Stress and leaves the device enabled. On failure it adds exactly one Stress and records that the selected device is disabled by the effect receipt. Preserve the current full-Stress failure code. Keep owner/roll verification, device source validation, database mutation, mutation ancestry, receipt creation, passive follow-up and transaction boundaries in `native-feature-effects.js`.
+
+Do not change roll mechanics, consequences, narrative language, audience, player control, or resource choices. Add a new direct-native offline test under `bot/tests/ai-gm-2026-10/`; run only that frozen test, changed JS/MJS syntax, and the RF03 ratchet. Rollback only this native outcome function, provider call, focused test and evidence.

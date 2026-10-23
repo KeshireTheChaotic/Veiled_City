@@ -11,6 +11,7 @@ import {applyNativeStressPassive} from './native-stress-passives.js';
 import {nativeDeviceUseIssue} from './frameworks/daggerheart/device-use-eligibility.js';
 export {nativeDeviceUseIssue} from './frameworks/daggerheart/device-use-eligibility.js';
 import {createFeatureReactionStakes} from './frameworks/daggerheart/feature-reaction-stakes.js';
+import {planFeedbackReactionOutcome} from './frameworks/daggerheart/feature-reaction-outcomes.js';
 
 const FEEDBACK='adversary:static-wraith:feedback';
 const effectKey=decision=>`feature-effect:${hash(decision)}`;
@@ -63,8 +64,8 @@ export function applyFeatureReactionOutcome(db,guild,decision,request){
       ||request.data.breakdown.trait!=='Instinct'||proof.difficulty!==12||proof.outcome==='needs_review')throw fail('feature_actual_owner_reaction');
     validateFeatureInvitation(db,guild,row,terminal);
     const pc=db.getCharacter(n.character),before=structuredClone(pc.data.resources),device=pc.data.inventory.find(i=>i?.id===n.device_key),success=proof.outcome==='success';
-    if(!success&&before.stress.current>=before.stress.max)throw fail('feature_stress_overflow_adapter_required');
-    if(!success)db.updateCharacterData(pc.id,data=>{data.resources.stress.current++;data.inventory.find(i=>i?.id===n.device_key).disabled_by=key;});
+    const outcome=planFeedbackReactionOutcome({success,stressCurrent:before.stress.current,stressMax:before.stress.max,effectKey:key});
+    if(outcome.stress_delta)db.updateCharacterData(pc.id,data=>{data.resources.stress.current+=outcome.stress_delta;data.inventory.find(i=>i?.id===n.device_key).disabled_by=outcome.device_disabled_by;});
     const current=db.getCharacter(pc.id),after=current.data.resources,nextDevice=current.data.inventory.find(i=>i?.id===n.device_key),
       mutation=db.recordMutation(guild,{sessionId:row.data.origin.session,actorType:'ai_gm',actorId:'native:unified-gm',sourceLayer:'native_feature',
         mutationType:'verified_feedback_reaction',entityKey:pc.id,visibility:'character',before:{resources:before,device_hash:hash(device)},

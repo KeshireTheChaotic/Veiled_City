@@ -1,0 +1,12 @@
+✔ successful Feedback reaction leaves Stress and device unchanged (0.7752ms)
+✔ failed Feedback reaction adds one Stress and ties device shutdown to its exact receipt (0.1039ms)
+✔ failed Feedback reaction at Stress capacity remains held (0.247ms)
+✔ invalid or missing native reaction evidence cannot produce an outcome (0.4975ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 60.4162
