@@ -93,5 +93,12 @@
     "Historical tests/suite scripts were metadata-only, never imported or executed.",
     "1374 projected obligations and the 211-module SCC remain future migration work.",
     "No live Discord/provider/production database or CI/deployment access."
-  ]
+  ],
+  "audit_tooling_commit": "88f1952a275d0648e95c710a98651c235c72d01e",
+  "readiness": {
+    "RF00": "OFFLINE AUDIT/DESIGN PASS",
+    "RF01_through_RF07": "NOT IMPLEMENTED",
+    "architectural_isolation": "INCOMPLETE: explicit obligations remain",
+    "release": "NOT AUTHORIZED"
+  }
 }
