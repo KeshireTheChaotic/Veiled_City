@@ -11,3 +11,7 @@ Extract the existing tier/slot/level-up policy from character-system.js into Dag
 ## Corrective C02 — native typed projection and owner trait choice contracts
 
 Relocate unchanged mechanical-boundary-v9, ordinary-effect-schema and native-unarmed-traits into Daggerheart after confirming exact current consumers. Keep authenticated verifier callbacks, source/recipient binding, no-RNG projection and pre-roll owner choice semantics. No shims or copied validators. Fresh source/grant/receipt/proposal and owner choice tests, no previous unaffected test reruns.
+
+## Corrective C03 — typed roll execution and receipts
+
+Extract the complete existing resolveTypedNativeRolls native policy into Daggerheart with explicit source/mechanics/notice capabilities. Preserve loop order, exact operation keys, owner/source/audience/replay and native receipt writes. Intent owns authored-envelope capability; daggerheart--intent connects it to native executor. Actual commitGmTurn injects that connector. Legacy typed-mechanics retains only the existing provider wiring (no native rules); its eventual application placement/provider public adoption remains explicitly accountable, not hidden through a forwarded old native implementation. One existing synchronous outer transaction remains; no preview execution and no RNG choice by a model. Fresh typed source/replay/receipt integration tests.

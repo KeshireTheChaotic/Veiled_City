@@ -1,0 +1,107 @@
+{
+  "owner_authorization": "Owner RF03 corrective completion amendment, chat reply 2026-10-23: individual residual reassignment only after native extraction/integration/fresh qualification; no unextracted mechanics deferral.",
+  "native_implementation": "bot/src/frameworks/daggerheart/typed-roll-execution.js",
+  "native_sha256": "2fbe5f507ad508ffcc30df4f38626b5c038b36b0bacaa4c72801a061732281a6",
+  "test": "bot/tests/ai-gm-2026-10/rf03-f01-c03.test.mjs",
+  "test_sha256": "5679623887a80d1125b73b0e77c4deacd0d2ca72bbea0b4b8b174685e56a09dc",
+  "terminal": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F01_C03_TERMINAL.json",
+  "actual_consumer": "bot/src/turn-orchestration.js commitGmTurn -> supplied connectTypedRolls -> actual native resolver",
+  "records": [
+    {
+      "original": {
+        "id": "07a78b375b22f4d46429d21149d97c2216469d85e3842e688e16239d9265e2c4",
+        "code": "LEGACY_MODULE_LOCATION",
+        "from": "bot/src/typed-mechanics.js",
+        "owner": "daggerheart",
+        "max_occurrences": 1,
+        "remove_in_feature": "RF03-F01",
+        "expires_after": "RF03",
+        "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+        "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
+      },
+      "current": {
+        "id": "07a78b375b22f4d46429d21149d97c2216469d85e3842e688e16239d9265e2c4",
+        "code": "LEGACY_MODULE_LOCATION",
+        "from": "bot/src/typed-mechanics.js",
+        "owner": "daggerheart",
+        "max_occurrences": 1,
+        "remove_in_feature": "RF06-F03",
+        "expires_after": "RF06",
+        "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+        "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
+      },
+      "intended_owner": "application",
+      "completed_native_responsibility": "All typed source/owner/scope/selection/replay checks and effect/action receipt generation moved to tested Daggerheart executor. This source retains only existing imported provider wiring; other native provider modules remain separate RF03 obligations.",
+      "dependency": "Application composition cannot import the legacy publication provider; source/intent/native public services plus the RF06-F03 notice/publication port must replace remaining wiring before physical application relocation.",
+      "removal_criteria": "Move provider-only composition into application with public adapters and delete this legacy path; no native rule implementation remains here."
+    },
+    {
+      "original": {
+        "id": "28fdf3ab93dcbb82165408233169903e655df846a46eb70c7c9de351e52fb732",
+        "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+        "from": "bot/src/typed-mechanics.js",
+        "to": "bot/src/authored-turn-envelope.js",
+        "kind": "static",
+        "specifier": "./authored-turn-envelope.js",
+        "owner": "daggerheart",
+        "max_occurrences": 1,
+        "remove_in_feature": "RF03-F01",
+        "expires_after": "RF03",
+        "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+        "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+      },
+      "current": {
+        "id": "28fdf3ab93dcbb82165408233169903e655df846a46eb70c7c9de351e52fb732",
+        "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+        "from": "bot/src/typed-mechanics.js",
+        "to": "bot/src/authored-turn-envelope.js",
+        "kind": "static",
+        "specifier": "./authored-turn-envelope.js",
+        "owner": "daggerheart",
+        "max_occurrences": 1,
+        "remove_in_feature": "RF05-F02",
+        "expires_after": "RF05",
+        "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+        "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+      },
+      "intended_owner": "intent",
+      "completed_native_responsibility": "All typed source/owner/scope/selection/replay checks and effect/action receipt generation moved to tested Daggerheart executor. This source retains only existing imported provider wiring; other native provider modules remain separate RF03 obligations.",
+      "dependency": "Actual intent envelope reader has no migrated public provider; RF05-F02 owns authored source adoption.",
+      "removal_criteria": "Replace this exact provider import with its owning public capability at application composition; retain native receipts and one transaction."
+    },
+    {
+      "original": {
+        "id": "4c598dd05a7b1c45878b1fc0bd020bb4f572822aabc20dc8984c53bded042792",
+        "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+        "from": "bot/src/typed-mechanics.js",
+        "to": "bot/src/native-publications.js",
+        "kind": "static",
+        "specifier": "./native-publications.js",
+        "owner": "daggerheart",
+        "max_occurrences": 1,
+        "remove_in_feature": "RF03-F01",
+        "expires_after": "RF03",
+        "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+        "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+      },
+      "current": {
+        "id": "4c598dd05a7b1c45878b1fc0bd020bb4f572822aabc20dc8984c53bded042792",
+        "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+        "from": "bot/src/typed-mechanics.js",
+        "to": "bot/src/native-publications.js",
+        "kind": "static",
+        "specifier": "./native-publications.js",
+        "owner": "daggerheart",
+        "max_occurrences": 1,
+        "remove_in_feature": "RF06-F03",
+        "expires_after": "RF06",
+        "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+        "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+      },
+      "intended_owner": "publication",
+      "completed_native_responsibility": "All typed source/owner/scope/selection/replay checks and effect/action receipt generation moved to tested Daggerheart executor. This source retains only existing imported provider wiring; other native provider modules remain separate RF03 obligations.",
+      "dependency": "Transactionally coupled notice/outbox reservation remains in legacy native-publications.js; RF06-F03 must expose actual publication provider before old import can retire.",
+      "removal_criteria": "Replace this exact provider import with its owning public capability at application composition; retain native receipts and one transaction."
+    }
+  ]
+}

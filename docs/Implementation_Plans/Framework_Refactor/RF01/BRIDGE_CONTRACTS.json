@@ -611,21 +611,17 @@
         "daggerheart",
         "intent"
       ],
-      "status": "PROPOSED_NO_API",
+      "status": "ADOPTED",
       "directions": [
         {
           "from": "intent",
           "to": "daggerheart",
-          "import_occurrences": 53,
-          "injected_calls": 0,
-          "contract": "Observed dependency only; exact port remains with accountable migration"
+          "contract": "Exact authored input reader and accepted typed intents for native owner/source/selection validation."
         },
         {
           "from": "daggerheart",
           "to": "intent",
-          "import_occurrences": 61,
-          "injected_calls": 0,
-          "contract": "Observed dependency only; exact port remains with accountable migration"
+          "contract": "Native resolved/contribution/clarification dispositions and source-pinned action receipts; no invented successful outcome."
         }
       ],
       "source_evidence": [
@@ -636,11 +632,15 @@
           "type": "import"
         }
       ],
-      "validation": "Retain source and audience authority; design exact port in owning migration; observed imports do not prove runtime traffic.",
-      "lifecycle": "Observed proposal; no package/API/consumer claimed.",
-      "adoption_feature": "RF03",
-      "consumers": [],
-      "tests": [],
+      "validation": "Native resolver independently verifies exact accepted source/owner/scope, current selection and immutable replay receipts. Intent supplies authored-envelope reader only; adapter copies no mechanics.",
+      "lifecycle": "Actual commitGmTurn injects connector while existing provider wiring remains in legacy typed-mechanics pending RF05-F05 composition/public-provider adoption. No execution in preview.",
+      "adoption_feature": "RF03-F01",
+      "consumers": [
+        "bot/src/turn-orchestration.js"
+      ],
+      "tests": [
+        "bot/tests/ai-gm-2026-10/rf03-f01-c03.test.mjs"
+      ],
       "observed_directions": [
         {
           "from": "intent",
@@ -660,7 +660,8 @@
         "pair": "daggerheart--intent",
         "graph_sha256": "1caa7f33db8af9cbe17685493f4f23e46deb1c80ac2cd01c34ef3f8f7517bfe2",
         "occurrences": 114
-      }
+      },
+      "public_api": "bot/src/framework-to-framework/daggerheart--intent/public.js"
     },
     {
       "pair": "daggerheart--knowledge",

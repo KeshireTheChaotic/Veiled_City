@@ -3588,8 +3588,8 @@
       "from": "bot/src/typed-mechanics.js",
       "owner": "daggerheart",
       "max_occurrences": 1,
-      "remove_in_feature": "RF03-F01",
-      "expires_after": "RF03",
+      "remove_in_feature": "RF06-F03",
+      "expires_after": "RF06",
       "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
       "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
     },
@@ -21326,8 +21326,8 @@
       "specifier": "./authored-turn-envelope.js",
       "owner": "daggerheart",
       "max_occurrences": 1,
-      "remove_in_feature": "RF03-F01",
-      "expires_after": "RF03",
+      "remove_in_feature": "RF05-F02",
+      "expires_after": "RF05",
       "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
@@ -21340,8 +21340,8 @@
       "specifier": "./native-publications.js",
       "owner": "daggerheart",
       "max_occurrences": 1,
-      "remove_in_feature": "RF03-F01",
-      "expires_after": "RF03",
+      "remove_in_feature": "RF06-F03",
+      "expires_after": "RF06",
       "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },

@@ -1,3 +1,4 @@
+import {connectTypedRolls} from './framework-to-framework/daggerheart--intent/public.js';
 /** Shared production turn commit boundary: native state, proposals and intent receipts commit before publication. */
 import { applyAuthoritativeMutation, applyCanonProposalDrafts } from "./state.js";
 import { validateDecisionAdvisory } from "./decision-advisory.js";
@@ -37,7 +38,7 @@ export function commitGmTurn({db,guild,session,result,scope,speaker,label,meta={
     });
     // Dice RNG occurs only in final commit. Preview never samples dice and cannot accidentally reroll.
     mutation.gmNativeActions=executeUnifiedGmActions(db,guild.id,mutation.unifiedArbitration||[],{library:new EncounterLibrary(content?.root||'../content')});
-    const nativeRolls=resolveTypedNativeRolls(db,guild.id,scope,result.player_intents||[],meta.messageId||'');
+    const nativeRolls=resolveTypedNativeRolls(db,guild.id,scope,result.player_intents||[],meta.messageId||'',{connectTypedRolls});
     mutation.intents=[...(mutation.intents||[]),...nativeRolls];
     if(mutation.gmNativeActions.length||nativeRolls.some(row=>row.status==='accepted'&&row.data.intent?.feature==='pvp'))prepareAuthorizedTurnOutput(db,guild.id,result,scope,{
       sourceRef:nativeDirectorNarrativeSource(result)||(meta.messageId&&scope.actorCharacterId?worldInputKey(meta.messageId,scope.actorCharacterId):null),world:mutation.world,

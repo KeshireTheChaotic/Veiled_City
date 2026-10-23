@@ -55,6 +55,12 @@
     ],
     "character--daggerheart": [
       "bot/src/framework-to-framework/character--daggerheart/public.js"
+    ],
+    "intent": [
+      "bot/src/frameworks/intent/public.js"
+    ],
+    "daggerheart--intent": [
+      "bot/src/framework-to-framework/daggerheart--intent/public.js"
     ]
   },
   "externalCapabilityOwners": {
