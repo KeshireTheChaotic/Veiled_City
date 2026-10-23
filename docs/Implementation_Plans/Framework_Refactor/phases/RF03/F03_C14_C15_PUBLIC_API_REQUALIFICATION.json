@@ -1,0 +1,28 @@
+{
+  "features": ["RF03-F03-C14", "RF03-F03-C15"],
+  "reason": "C14 now exports the native PvP attack terms factory through the registered Daggerheart public API, and pvp-attacks.js consumes that API.",
+  "base_sha": "6a054ad14994f8b56b021dfde8965c9a6c572e87",
+  "test_union": {
+    "command": "node --test bot/tests/ai-gm-2026-10/rf03-f03-c14.test.mjs bot/tests/ai-gm-2026-10/rf03-f03-c15.test.mjs",
+    "exit": 0,
+    "passed": 5,
+    "failed": 0,
+    "skipped": 0,
+    "duration_ms": 354.0201,
+    "log": "f03-c14-c15-public-api.log",
+    "log_sha256": "DD04BC35508639C891116ED80058D417B099C03460BF8B3C9136E98717F3E55D"
+  },
+  "syntax": {"exit": 0, "changed_js_mjs_files": 4},
+  "architecture_ratchet": {"exit": 0, "source_modules": 402, "unowned": 0, "import_occurrences": 2336, "largest_cycle": 182, "accepted_legacy_occurrences": 2600, "active_violation_groups": 0, "transition_errors": 0, "log": "f03-c14-c15-public-api-gate.log", "log_sha256": "ECBDA36D24CC06B93CB3F5691A13787DA2712613210B8CD92E859FF8C23E6BF7"},
+  "source_sha256": {
+    "bot/src/frameworks/daggerheart/public.js": "CC53E146BA4FB73BE60DB364F0DD768E23DA1613A5F063ABE254DB9C250BAC26",
+    "bot/src/pvp-attacks.js": "6A36AAD71CD2D5E306C782F6B86BF9E5BD6E376D3D7B2FB8390A4CD65B65D623",
+    "bot/tests/ai-gm-2026-10/rf03-f03-c14.test.mjs": "2AD15AD01700FEF902838AE833B17654D27624F1D0430183479A1D06DF696B52",
+    "bot/tests/ai-gm-2026-10/rf03-f03-c15.test.mjs": "4F24AEB1B1D42881AC046245EB8EE188EB0EF5AF6BDC848ED98C8DB5122DF01F"
+  },
+  "provider_calls": 0,
+  "provider_cost_usd": 0,
+  "codex_usage": "UNMEASURED",
+  "limitations": ["C14 policy cases and C15 provider cold import/hash passed through the public API integration.", "Full authorized attack, roll, damage, persistence, receipts, Discord and live behavior remain unqualified."],
+  "release_authorized": false
+}

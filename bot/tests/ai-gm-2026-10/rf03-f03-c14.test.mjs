@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
-import {createPvpAttackTerms} from '../../src/frameworks/daggerheart/pvp-attack-terms.js';
+import {createPvpAttackTerms} from '../../src/frameworks/daggerheart/public.js';
 
 function fail(message){throw Object.assign(new Error(message),{code:'NARRATIVE_PVP',expected:true});}
 const bands=['Melee','Very Close','Close','Far','Very Far'];

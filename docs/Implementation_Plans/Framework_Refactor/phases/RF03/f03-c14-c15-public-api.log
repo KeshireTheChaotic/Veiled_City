@@ -1,0 +1,13 @@
+✔ unarmed terms preserve current Proficiency, permitted traits and Melee range (0.8342ms)
+✔ one exact equipped weapon determines range, damage expression and damage type (0.1108ms)
+✔ unavailable attacks, duplicate or stale weapons, range and malformed stats remain held (0.3508ms)
+✔ existing PvP attack provider supplies source range bands to native terms logic (0.3654ms)
+✔ native PvP attack provider cold-imports and hashes the current attack actor snapshot (0.7565ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 354.0201

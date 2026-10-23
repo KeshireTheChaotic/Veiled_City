@@ -5,7 +5,7 @@ import {personalCharacter} from "./personal-continuity.js";
 import {scenePresence,sceneAccess,RANGE_BANDS} from "./scene-continuity.js";
 import {indexWorldEvent} from "./city-calendar.js";
 import {rollTraitBreakdown} from "./roll-requests.js";
-import {d,dualityRoll} from "./frameworks/daggerheart/public.js";
+import {d,dualityRoll,createPvpAttackTerms} from "./frameworks/daggerheart/public.js";
 import {captureAttackFear,pendingPvpFear} from "./pvp-fear-gate.js";
 import {assertPcCanAct,assertPcAttackable} from "./pc-native-eligibility.js";
 import {blazeActionAuthorization,blazeCriticalResult,validateBlazeSavedRoll} from "./pc-death.js";
@@ -19,7 +19,6 @@ import {stageDamagePvp} from './pvp-profiles.js';
 import {reserveCampaignAttackNotices} from './native-publications.js';
 import {settlePvpDamageAction} from './pvp-damage.js';
 import {consentAction} from './action-consent.js';
-import {createPvpAttackTerms} from './frameworks/daggerheart/pvp-attack-terms.js';
 const hash=v=>createHash("sha256").update(JSON.stringify(v)).digest("hex");
 const CAMPAIGN_PREPARATION=Symbol('native-campaign-attack-preparation');
 export const campaignAttackActorHash=pc=>hash({status:pc.status,traits:pc.data.traits,proficiency:pc.data.proficiency,
