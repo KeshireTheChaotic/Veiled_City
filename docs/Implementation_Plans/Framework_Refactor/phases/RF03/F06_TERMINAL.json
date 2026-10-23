@@ -1,0 +1,19 @@
+{
+  "base_sha": "4b287597ab7f06e64dd1fa5cdc5f91ab0fb264df",
+  "started": "2026-10-23T18:08:05.045Z",
+  "finished": "2026-10-23T18:08:05.793Z",
+  "exit": 1,
+  "syntax_exit": 0,
+  "summary": [
+    "# tests 6",
+    "# pass 5",
+    "# fail 1",
+    "# skipped 0",
+    "# duration_ms 619.7487"
+  ],
+  "test_sha256": "5b82c204b46f6a9ef5c08b5c62b2a0ea93ea089b30aece91733e30434a5c1139",
+  "production_sha256": "3f7416bb01c3e1760666d7a68dc14c9d63f9e1102ec39dceb557346b3cf549ca",
+  "provider_calls": 0,
+  "provider_cost": 0,
+  "codex_cost": "UNMEASURED"
+}

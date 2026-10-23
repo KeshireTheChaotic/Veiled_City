@@ -1,0 +1,15 @@
+{
+  "started": "2026-10-23T18:12:53.095Z",
+  "finished": "2026-10-23T18:12:54.295Z",
+  "tested_sha": "4b287597ab7f06e64dd1fa5cdc5f91ab0fb264df",
+  "gates": {
+    "RF02": {
+      "exit": 0,
+      "sha256": "d73854d69f400292449da4208dae3d53136dbef4ad80768603caeb8c2eb240e1"
+    },
+    "strict": {
+      "exit": 1,
+      "sha256": "2d6ecb4a91a32c9f2f7418f286ad00fbf9bb252f4ce28127445aa82abbdb60d3"
+    }
+  }
+}

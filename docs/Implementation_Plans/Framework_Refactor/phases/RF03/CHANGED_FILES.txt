@@ -1,0 +1,32 @@
+M	bot/src/commands.js
+M	bot/src/encounter.js
+M	bot/src/fear-reservations.js
+A	bot/src/framework-to-framework/daggerheart--discord/public.js
+R087	bot/src/combat.js	bot/src/frameworks/daggerheart/combat.js
+R100	bot/src/dice.js	bot/src/frameworks/daggerheart/dice.js
+A	bot/src/frameworks/daggerheart/encounter-budget.js
+A	bot/src/frameworks/daggerheart/environment-eligibility.js
+A	bot/src/frameworks/daggerheart/fear-reservation-proof.js
+A	bot/src/frameworks/daggerheart/pc-resources.js
+A	bot/src/frameworks/daggerheart/public.js
+R100	bot/src/rules-srd.js	bot/src/frameworks/daggerheart/rules-srd.js
+A	bot/src/frameworks/discord/combatant-text.js
+M	bot/src/frameworks/discord/public.js
+M	bot/src/gm-native-rolls.js
+M	bot/src/gm.js
+M	bot/src/native-environment-context.js
+M	bot/src/native-feature-damage.js
+M	bot/src/native-feature-hit.js
+M	bot/src/native-feature-passives.js
+M	bot/src/pc-death.js
+M	bot/src/pc-effects.js
+M	bot/src/pc-incoming.js
+M	bot/src/pc-native-eligibility.js
+M	bot/src/pvp-attacks.js
+M	bot/src/pvp-damage.js
+M	bot/src/pvp-rounds.js
+M	bot/src/roll-collaboration.js
+M	bot/src/roll-requests.js
+M	docs/Implementation_Plans/Framework_Refactor/RF01/BRIDGE_CONTRACTS.json
+M	docs/Implementation_Plans/Framework_Refactor/RF01/PACKAGES.json
+M	docs/Implementation_Plans/Framework_Refactor/RF01/TRANSITIONS.json

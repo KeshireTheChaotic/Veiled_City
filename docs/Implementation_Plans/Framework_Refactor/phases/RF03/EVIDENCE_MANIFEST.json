@@ -1,0 +1,226 @@
+{
+  "base_sha": "1db80db085b2b18a93fb80a8f51b538b2af7eec5",
+  "current_code_sha": "4b287597ab7f06e64dd1fa5cdc5f91ab0fb264df",
+  "summary": {
+    "sourceModules": 393,
+    "unowned": 0,
+    "importOccurrences": 2348,
+    "internalImportOccurrences": 2173,
+    "cycleComponents": 1,
+    "largestCycle": 211,
+    "rawViolationOccurrences": 2801,
+    "acceptedLegacyOccurrences": 2801,
+    "activeViolationGroups": 0,
+    "transitionErrors": 0,
+    "pass": true
+  },
+  "transition_identity_preserved": true,
+  "removed_records": [
+    "382c4f77be2936456889c60fd227f6f2dedfe760e7e90ef8fa85562c9d6f219f",
+    "eec436dd61753a1b227045d89327acf71d4a517b9a48a3b3b9f51037b25527c4",
+    "eaafb78e77cee5b4e4ac750752f60b16c8791818999aff318b4b53d3f2e24be2",
+    "7ebd5ec4d698197aabd37cd972a1ee8cedf3b8effdad7f95277ecaec8736fb90",
+    "179eac400e0b19802165932d8f4df6df9a87350bbe88bbfc6bd1ded41da76c38",
+    "8a0f182b427a9ae7c0b3bd835b4b6514c359fd457f3ec4a1c8babc04eb1118c9"
+  ],
+  "new_records": 0,
+  "baseline_sha256": "213b8e19491ae0ebcbcf85321b00ba40768420f27233e8d84f84ccad96cb84d6",
+  "catalog": {
+    "statuses": {
+      "supported": 78,
+      "review_only": 75
+    },
+    "total": 153,
+    "source": "bot/src/native-feature-definitions.json",
+    "sha256": "58baf77cc9cb2b5f38e1714422c64131f2f533b4bf09254b8f8729ccd64d1e16"
+  },
+  "remaining_by_feature": {
+    "RF03-F03": 176,
+    "RF04-F04": 178,
+    "RF05-F02": 198,
+    "RF05-F05": 94,
+    "RF03-F01": 425,
+    "RF05-F03": 239,
+    "RF04-F03": 96,
+    "RF04-F01": 294,
+    "RF06-F02": 18,
+    "RF04-F05": 45,
+    "RF06-F04": 161,
+    "RF06-F05": 44,
+    "RF06-F03": 146,
+    "RF05-F01": 4,
+    "RF05-F04": 66,
+    "RF03-F02": 218,
+    "RF03-F04": 336,
+    "RF04-F02": 41
+  },
+  "tests": {
+    "unique_RF03_cases": 31,
+    "initial_failed_assertions": 2,
+    "targeted_repairs_passed": 2,
+    "full_union_rerun": "NOT RUN: unchanged passing tests not rerun per owner; completed feature results and immutable implementation hashes aggregated",
+    "executed_case_total": 33,
+    "latest_test_files": [
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf03-f01.test.mjs",
+        "sha256": "1bd66682706638fe9387087bdadf0a6ef46fa6bf21464506b96062984d455891"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf03-f02.test.mjs",
+        "sha256": "5976d929eaf804e17d7165ea6791ca321ba93102f37a06b9bcb69bd8b6962735"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf03-f03.test.mjs",
+        "sha256": "c9069605e010dce1cff7ece2598b73f2092a3fca3dc351df4dbf85886259b97d"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf03-f04.test.mjs",
+        "sha256": "2138ea0b14ec29f6e745e71d9757ed690b80787735e95d9033f2c42d863adf6a"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf03-f05.test.mjs",
+        "sha256": "f6131bcbc48cbef792095b5c457a0e5e32adfca80a27f02b844e2a3de224a100"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf03-f06.test.mjs",
+        "sha256": "b914304b125a1c73ff76c79ac4807fc4a794f384fe66b37e524bb322d3354288"
+      }
+    ]
+  },
+  "files": [
+    {
+      "path": "bot/src/frameworks/daggerheart/combat.js",
+      "sha256": "f1d437d87408840ac4ba4459b66a9f3874f1e8aa6f7a011b80901849d95328ce"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/dice.js",
+      "sha256": "6534195eb0441d0c9982616a5d79e71f5067ddc863883a4cabda17072b6c865c"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/encounter-budget.js",
+      "sha256": "9f29472f663e423d4a3eef712ece962aec49bcba21d978f6ff13d8938ca1f23b"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/environment-eligibility.js",
+      "sha256": "57c93bc3ce22f7e304806c8533228853a0b76fc2c5d77d908a7c4f71d35665e9"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/fear-reservation-proof.js",
+      "sha256": "0bf24653c113db4b87c6aef12f756674edd3f9fd025839abf07962f6f3ff2966"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/pc-resources.js",
+      "sha256": "17717072597b0b84b876a369516fbe0a02aa6a42816b9ba2a7d8f5f7cb741c47"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/public.js",
+      "sha256": "818371ff85de0bc6f282e7087f6ddd0620379b6774eb00704d0d3813d4d6cc56"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/rules-srd.js",
+      "sha256": "406537d0549082a06e24b0a12fe57c8f1d2727b711c8acddd02ec19c56a3c5cd"
+    },
+    {
+      "path": "bot/src/framework-to-framework/daggerheart--discord/public.js",
+      "sha256": "7c34b45caf0784952aa450def360c3e9c5c7f6d5dd80bfd2da8c929f98579b3d"
+    },
+    {
+      "path": "bot/src/pc-effects.js",
+      "sha256": "3f7416bb01c3e1760666d7a68dc14c9d63f9e1102ec39dceb557346b3cf549ca"
+    },
+    {
+      "path": "bot/src/pc-native-eligibility.js",
+      "sha256": "3f638c03f97abc6d74a6b4ff2a6df18e378a0fcf91ba0482cbcb24df9a52b8aa"
+    },
+    {
+      "path": "bot/src/native-environment-context.js",
+      "sha256": "171bb7a62bdf471f9456d3cd517fdbf773f0e6a2967dff0d479c8c1ae40d79ec"
+    },
+    {
+      "path": "bot/src/fear-reservations.js",
+      "sha256": "64d354c43f8c802c7903314cb1bf41a5ff54fa03178b99a1d304ffd0b3e27cd1"
+    },
+    {
+      "path": "bot/src/encounter.js",
+      "sha256": "537e319bf76239a6d9d6ef3e191e6fef86b7966ce7aa76a6a83a3c072db921c3"
+    },
+    {
+      "path": "bot/src/commands.js",
+      "sha256": "71d01f69d36ce7a8389ffa6e589af1e2320cd136c8781a04d409f6929a2e49c6"
+    }
+  ],
+  "logs": [
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf03-f01-architecture.log",
+      "sha256": "33873852472486a9e4d9f60bfd313c778f45ea6e40ff6207ec5e45ab630cd9d9"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf03-f01.log",
+      "sha256": "c4acb2cc911674e726906db0233bb2707b991d520ba46b5204efdc106fe93968"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf03-f02-architecture.log",
+      "sha256": "c92a3c123a9068ae0216662c5e3f27c7d938b708a3e98ce39061f97c2282c8ee"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf03-f02.log",
+      "sha256": "25c79b16e6eb4dc41b0ab8682e9efbc61ee05b0f4b875b4f92fb515fced4fab6"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf03-f03-architecture.log",
+      "sha256": "206b16d350521a962672cc45d3638dba0b72bb1dcc46e6ebace69d0812232d74"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf03-f03-repair.log",
+      "sha256": "48b4bdcc491f9e5ce9d7285f71c9e6da9a8d3b51935f97fcbf2be883ec27dd7c"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf03-f03.log",
+      "sha256": "f564fb8d0998e8ce936be7616b0e9cd612a04f6ed727c19b1b181a7552d2d15e"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf03-f04-architecture.log",
+      "sha256": "22d4d2e77f8f08af15942a765129bc09d643860f125c54393ed0a3c1bbb06924"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf03-f04.log",
+      "sha256": "791ba432d3f7238d97d4681872f273746124c21620734176a84896ed717d8603"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf03-f05-architecture.log",
+      "sha256": "a736981971684da23aed2d7f2b217afbfddbf86364f824f0b65d884871edecb2"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf03-f05.log",
+      "sha256": "b3f60708bc0ec83392a4228de72946fc8db3a8700d4af14f59f967c1a9e2fd83"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf03-f06-insufficient.log",
+      "sha256": "9f318716c32b43d942500bf4357df62ca56fd78a37f77733678bc23cc2dad4b2"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf03-f06-repair.log",
+      "sha256": "ead2ee5a3e0fb3b0d2e8de398dc46a1541f58db64614691a2c10ddb11516a4fa"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf03-f06.log",
+      "sha256": "3221af79c499c2053b14147af85edeef1c7083d4287e50c7fa2f14e56035d346"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf03-final-rf02.log",
+      "sha256": "d73854d69f400292449da4208dae3d53136dbef4ad80768603caeb8c2eb240e1"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf03-final-strict.log",
+      "sha256": "2d6ecb4a91a32c9f2f7418f286ad00fbf9bb252f4ce28127445aa82abbdb60d3"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf03-preflight-rf02.log",
+      "sha256": "ef7709f35673b8f0fb9ad1f3cb7141ec9d0a5181dabed8456da9b270dae08285"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf03-preflight-rf03.log",
+      "sha256": "a53653546265468fe66fd3ef0a34f10d21040ea63caf385ee8d17603fa62f093"
+    }
+  ]
+}

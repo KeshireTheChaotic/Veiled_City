@@ -1,3 +1,5 @@
+> Current status (2026-10-23): RF02 prerequisite reconciled; RF03 source implementation active, qualified slices committed, full phase INCOMPLETE. Historical prerequisite-hold text below is retained as evidence and superseded by the later owner amendment and current acceptance matrix.
+
 # RF03 — Prerequisite review only
 
 Intake branch `codex/clean-ai-gm-2026-10`, actual HEAD `08372894bc097abe7e537b0924f020261034de5e`, initially clean worktree. The kickoff's historical `bd85d23` reference is not a reset target. Root AGENTS.md applies.

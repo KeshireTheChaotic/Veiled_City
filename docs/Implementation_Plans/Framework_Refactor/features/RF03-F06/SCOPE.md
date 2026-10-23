@@ -1,0 +1,3 @@
+# RF03-F06 — Fresh affected-code integration and honest closeout
+
+Base4b28759. New disposable SQLite repository fake exercises modified pc-effects production review/owner approval/apply/projection path, exact native resource arithmetic, receipt replay, injected write failure rollback and source/control revocation. No production DB or native schema changes. Fake repository semantics are explicitly scoped and do not prove VeiledDB persistence/savepoint equivalence. Do not run unchanged passing feature tests again; aggregate their frozen source hashes and terminal evidence instead (owner no-rerun rule). One new bounded blocking batch, concise results, exact paths/SHAs/holds. Phase must remain INCOMPLETE while native interfaces and RF03 isolation obligations remain.

@@ -1,0 +1,15 @@
+{
+  "started": "2026-10-23T18:10:18.262Z",
+  "finished": "2026-10-23T18:10:18.696Z",
+  "exit": 0,
+  "syntax_exit": 0,
+  "test_sha256": "b914304b125a1c73ff76c79ac4807fc4a794f384fe66b37e524bb322d3354288",
+  "summary": [
+    "# tests 1",
+    "# pass 1",
+    "# fail 0",
+    "# skipped 0",
+    "# duration_ms 389.0696"
+  ],
+  "reason": "New additional native insufficient-resource integration case; existing passing tests not rerun."
+}
