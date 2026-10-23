@@ -1,0 +1,62 @@
+{
+  "feature": "RF03-F03-C10",
+  "status": "QUALIFIED_SLICE_ONLY",
+  "base_commit": "9150988",
+  "started_utc": "2026-10-23T22:59:36Z",
+  "finished_utc": "2026-10-23T23:00:55Z",
+  "changed_modules": [
+    "bot/src/pc-death.js",
+    "bot/src/frameworks/daggerheart/pc-death-eligibility.js",
+    "bot/tests/ai-gm-2026-10/rf03-f03-c10.test.mjs"
+  ],
+  "source_sha256": {
+    "bot/src/pc-death.js": "dc6d24d711fde692700e69be0ffa6169355671695810dbe384e32431a28108f3",
+    "bot/src/frameworks/daggerheart/pc-death-eligibility.js": "19baddd2cb23af629656c69f80b583d081ccff9f2c97d64f418ac5f4e0cfa4bf",
+    "bot/tests/ai-gm-2026-10/rf03-f03-c10.test.mjs": "a00bc35fbbb02b88dc6f61e116fc1d8f9efd2c7956bff1054fe934228ecbd620"
+  },
+  "syntax": {
+    "paths": [
+      "bot/src/pc-death.js",
+      "bot/src/frameworks/daggerheart/pc-death-eligibility.js",
+      "bot/tests/ai-gm-2026-10/rf03-f03-c10.test.mjs"
+    ],
+    "exit": 0
+  },
+  "test": {
+    "command": "node --test --test-reporter=tap --test-concurrency=1 bot/tests/ai-gm-2026-10/rf03-f03-c10.test.mjs",
+    "exit": 0,
+    "tests": 3,
+    "pass": 3,
+    "fail": 0,
+    "skipped": 0,
+    "duration_ms": 62.5751,
+    "blocking_wall_ms": 237,
+    "log": "f03-c10.log",
+    "log_sha256": "eab4ffbe774be8df00a8c9b448d7e0949368161c07a2ed90c355f951727b6dff"
+  },
+  "architecture_gate": {
+    "command": "node bot/tooling/architecture/check-boundaries.mjs --ratchet --phase RF03",
+    "exit": 0,
+    "source_modules": 388,
+    "unowned": 0,
+    "import_occurrences": 2311,
+    "largest_cycle": 182,
+    "raw_violations": 2601,
+    "accepted_legacy_occurrences": 2601,
+    "active_violation_groups": 0,
+    "transition_errors": 0,
+    "pass": true,
+    "log": "f03-c10-gate.log",
+    "log_sha256": "fbb89630154bee7872f79e3b98a11040455be2b956cbeffad79781e6b6cebe32"
+  },
+  "cost": {
+    "provider_calls": 0,
+    "provider_dollars": 0,
+    "codex_usage": "UNMEASURED"
+  },
+  "holds": [
+    "Owner-authenticated death move transactions, saved dice replay, recovery allocation, death receipts, production persistence, and Discord publication are outside these eligibility tests.",
+    "RF03 remains incomplete; F03 PvP/Fear/death workflows and phase transition debt remain."
+  ],
+  "release": "NOT AUTHORIZED"
+}

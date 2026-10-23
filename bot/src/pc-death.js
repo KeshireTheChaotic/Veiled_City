@@ -10,10 +10,12 @@ import {historicalActionSource,consentAction} from "./action-consent.js";
 import {validateIncomingDamageApplication} from "./pc-incoming.js";
 import {validateAllyHealingApplication} from "./pc-effects.js";
 import {settlePreRollFearForIncoming} from './pre-roll-fear.js';
+import {createPcDeathEligibility} from './frameworks/daggerheart/pc-death-eligibility.js';
 export {hopeCap} from "./pc-native-eligibility.js";
 const hash=v=>createHash("sha256").update(JSON.stringify(v)).digest("hex");
 function fail(message){throw Object.assign(new Error(message),{code:"PC_DEATH_MOVE",expected:true});}
 function closed(v,keys){if(!v||Array.isArray(v)||Object.keys(v).length!==keys.length||keys.some(k=>!(k in v)))fail("Closed native death-choice fields required.");}
+const {assertFinalHp:finalHp,assertDeathMapping}=createPcDeathEligibility({fail});
 function requestProof(db,guild,user,key){
   const row=db.getCityRecord(guild,"pc_death_move_request",key),data=row?.data,pc=data&&db.getCharacter(data.character);
   if(!pc||pc.guild_id!==guild||user!==data.owner||pc.owner_user_id!==user)fail("Only the current affected owner may select or inspect a death move.");
@@ -27,19 +29,6 @@ function requestProof(db,guild,user,key){
   if(cause.subject_key!==pc.id||cause.source_event!==row.source_event||cause.data.after.hp.current!==cause.data.after.hp.max
     ||key!==(cause.data.cause_type==="verified_npc_attack"?`${cause.data.roll.replace(/:roll$/u,"")}:death`:`${cause.data.group}:death`))fail("Actual native final-HP cause required; no model-created death request.");
   return {row,pc,principal,cause};
-}
-function finalHp(pc){const r=pc.data.resources;
-  if(!Number.isSafeInteger(r?.hp?.max)||r.hp.max<1||r.hp.max>12||r.hp.current!==r.hp.max||!Number.isSafeInteger(r.stress?.current)
-    ||!Number.isSafeInteger(r.stress?.max)||r.stress.max<1||r.stress.current<0||r.stress.current>r.stress.max
-    ||!Number.isSafeInteger(pc.data.level)||pc.data.level<1||pc.data.level>10||hopeCap(pc.data)<1
-    ||!Number.isSafeInteger(r.hope)||r.hope<0||r.hope>hopeCap(pc.data))fail("Verified final HP, Stress, level and Hope slots required before native death dice.");
-}
-function assertDeathMapping(pc,move){
-  const sources=[...(pc.data.inventory||[]),...(pc.data.domain_cards||[]),...(pc.data.features||[]),...(pc.data.transformations||[]),pc.data.transformation]
-    .filter(v=>v&&(typeof v==="string"||v.active!==false&&v.equipped!==false));
-  const special=new Set(["Hallowed Heroplate","Reliquary of the Sightless Saint","Won’t Stay Dead","Won't Stay Dead","Reanimated"]);
-  if(sources.some(v=>typeof v==="object"&&v.death_move||move==="risk_it_all"&&special.has(typeof v==="string"?v:v.name)))
-    fail("Owned death feature requires a supported native mapping/review before dice; vanilla options are not silently discarded.");
 }
 export function reviewPcDeathMove(db,guild,user,key){return db.transaction(()=>{
   const f=requestProof(db,guild,user,key);
