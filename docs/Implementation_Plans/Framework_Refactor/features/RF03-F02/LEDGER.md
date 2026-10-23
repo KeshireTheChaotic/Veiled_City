@@ -72,3 +72,7 @@ The pure feature cost calculation now resides in `frameworks/daggerheart/feature
 ## Corrective C13 — qualified native provider cold import
 
 Two circular-import initialization failures were resolved by deferring only Daggerheart adapter construction until first use. The actual `native-feature-windows.js` provider cold-import test passed 1/1, exit 0, 352.0213 ms, exercising provider-backed feature cost and feature-reaction stakes. Four changed JS/MJS syntax checks passed; RF03 ratchet passed at 401 modules, zero unowned, zero active groups/errors. Initial failure, final results and hashes are in `F02_C13_TERMINAL.json`. This does not prove complete application startup, database-backed execution, or live behavior. F02 remains active; release unauthorized.
+
+## Corrective C14 — qualified native feature proposal shape
+
+Daggerheart now validates the existing fixed handler/version/disposition/stakes/actor/operation shape for native adversary feature reactions; current provider source, descriptor, occurrence, scene, audience and transaction checks remain unchanged. Fresh test passed 2/2, exit 0, 62.2399 ms; three changed syntax checks passed. RF03 ratchet exit 0:402 modules, zero unowned, 2,336 imports, 2,600 accepted occurrences, zero active groups/errors. Exact hashes and logs: `F02_C14_TERMINAL.json`. Full feature execution, database receipts and live behavior remain unqualified; F02 and RF03 remain incomplete; release unauthorized.

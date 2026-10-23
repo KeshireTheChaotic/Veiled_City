@@ -14,6 +14,7 @@ import {historicalActionSource} from './action-consent.js';
 import {assertPcCanAct} from './pc-native-eligibility.js';
 import {featureCostPlan} from './frameworks/daggerheart/feature-costs.js';
 import {nativeFeatureTriggerEligible} from './frameworks/daggerheart/feature-trigger-eligibility.js';
+import {featureChoiceProposalIssue} from './frameworks/daggerheart/feature-choice-policy.js';
 export {featureCostPlan} from './frameworks/daggerheart/feature-costs.js';
 
 export const FEATURE_PHASES=Object.freeze(['before_attack','after_hit','before_damage_applied','after_damage','on_pc_action','on_scene_event','spotlight_action']);
@@ -153,9 +154,7 @@ export function authorizeFeatureChoice(db,guild,origin,entry,p,feature,{library=
   const disposition=featureDisposition(feature?.feature_key);
   if(disposition.status!=='supported'||hash(disposition.feature)!==hash(feature))
     throw fail('feature_choice_requires_qualified_native_descriptor');
-  if(!['blood_rush_hold_position','feedback'].includes(feature?.native_handler)||p.proposal_version!==2||p.disposition!=='native_feature_resolution'
-    ||p.stakes_kind!=='native_feature'||p.experience_ref||p.advantage||p.disadvantage
-    ||entry.actor.type!=='npc'||entry.operation!=='reaction')throw fail('feature_choice_shape_or_handler');
+  const issue=featureChoiceProposalIssue(feature,p,entry);if(issue)throw fail(issue);
   const window=inspectFeatureWindow(db,guild,p.trigger_ref,{library}),v=window.data,a=actorFacts(db,guild,entry.actor.key,feature.template_hash,library);
   if(window.status!=='pending'||v.feature!==feature.feature_key||v.actor!==entry.actor.key||v.scene!==origin.binding.scene
     ||entry.target_refs.length!==1||entry.target_refs[0]!==v.target||!featureWindowChoices(db,guild,origin.scope).some(w=>w.trigger_ref===window.record_key)

@@ -1,0 +1,15 @@
+{
+  "feature": "RF03-F02-C14",
+  "status": "QUALIFIED_NATIVE_PROPOSAL_SHAPE_ONLY",
+  "branch": "codex/clean-ai-gm-2026-10",
+  "base_sha": "3024cf91d5bf107f42bef10761368c1532f7b26a",
+  "test": {"path": "bot/tests/ai-gm-2026-10/rf03-f02-c14.test.mjs", "command": "node --test bot/tests/ai-gm-2026-10/rf03-f02-c14.test.mjs", "exit": 0, "passed": 2, "failed": 0, "skipped": 0, "duration_ms": 62.2399, "log": "f02-c14.log", "log_sha256": "360317C1F7D8D8675A35A6D974DE7763E847DC977478E3ABF94A603B0AD5494C"},
+  "syntax": {"exit": 0, "changed_js_mjs_files": 3},
+  "architecture_ratchet": {"command": "node bot/tooling/architecture/check-boundaries.mjs --ratchet --phase RF03", "exit": 0, "source_modules": 402, "unowned": 0, "import_occurrences": 2336, "largest_cycle": 182, "raw_violation_occurrences": 2600, "accepted_legacy_occurrences": 2600, "active_violation_groups": 0, "transition_errors": 0, "log": "f02-c14-gate.log", "log_sha256": "ECBDA36D24CC06B93CB3F5691A13787DA2712613210B8CD92E859FF8C23E6BF7"},
+  "source_sha256": {"bot/src/frameworks/daggerheart/feature-choice-policy.js": "BD8BE1DBA64DB3D76E665B54AC9B5B4423F467D9CBD50CF9850AF960BF761F43", "bot/src/native-feature-windows.js": "9BA41109A5A05170CA6AF97B76280853FB9F414EA3518CA5E09AFA8649EF65AE", "bot/tests/ai-gm-2026-10/rf03-f02-c14.test.mjs": "AEB67F51EBB7AB054F7487E73C56535018AB5127B37537B4F506B99CAC35112F"},
+  "provider_calls": 0,
+  "provider_cost_usd": 0,
+  "codex_usage": "UNMEASURED",
+  "limitations": ["Only the fixed source-independent proposal shape is qualified.", "Source catalog, descriptor hash, occurrence, scene, audience, resource, transaction and full feature execution remain unqualified.", "No live gameplay or production behavior is certified."],
+  "release_authorized": false
+}
