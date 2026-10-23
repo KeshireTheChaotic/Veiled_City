@@ -180,3 +180,7 @@ Daggerheart now owns the existing standard-damage passive and fixed-damage expre
 ## Corrective F03-C10 qualified death-move eligibility
 
 The exact final-HP/resource bounds and special-owned-feature hold moved to the native Daggerheart policy; `pc-death.js` retains every stateful source/owner/roll/transaction/receipt operation. Fresh test `rf03-f03-c10.test.mjs`: 3/3 passed, exit 0, 62.5751 ms; three syntax checks passed. RF03 ratchet exit 0: 388 modules, zero unowned/active groups/transition errors, largest cycle 182, 2,601 accepted legacy occurrences. Exact evidence `F03_C10_TERMINAL.json`; provider cost $0, Codex usage UNMEASURED. Death workflow replay and persistence remain unverified. RF03 remains INCOMPLETE; RF04 NOT STARTED; RELEASE NOT AUTHORIZED.
+
+## Corrective F03-C11 qualified PvP damage defenses
+
+Daggerheart now owns the existing active-owned-source, damage-type, Armor, condition, threshold, and HP validation contract. `pvp-damage.js` retains source grouping, owner/consent checks, transactions, mutations and receipts. Fresh test `rf03-f03-c11.test.mjs`: 4/4 passed, exit 0, 61.2745 ms; three syntax checks passed. RF03 ratchet exit 0: 389 modules, zero unowned/active groups/transition errors, largest cycle 182, 2,601 accepted legacy occurrences. Full evidence `F03_C11_TERMINAL.json`; provider cost $0, Codex usage UNMEASURED. Full PvP damage workflow/replay remains unqualified. RF03 INCOMPLETE; RF04 NOT STARTED; RELEASE NOT AUTHORIZED.

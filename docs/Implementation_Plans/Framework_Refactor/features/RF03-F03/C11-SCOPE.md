@@ -1,0 +1,5 @@
+# RF03-F03 corrective C11 — native PvP damage defense validation
+
+Extract the existing exact defense-source validation from `pvp-damage.js` into Daggerheart. Preserve closed input keys, source review requirement, active owned item/card matching, resistance/immunity type coverage, two-threshold Armor mapping, native baseline-only rule, active-condition hold, verified threshold/HP/Armor bounds, and established failure codes/messages. Keep damage grouping, source/presence checks, target owner consent, transaction, mutation and receipts in `pvp-damage.js`.
+
+Create fresh deterministic contract tests under `bot/tests/ai-gm-2026-10/` for valid base and owned defenses and representative mismatch/hold paths. Do not run legacy tests or suites. Freeze and run one blocking targeted batch, syntax-check changed JS/MJS, and run the RF03 architecture ratchet once. No database, dice, state mutation, gameplay expansion, provider or network access. Record source hashes and exact terminal outcomes here and in a machine-readable terminal record. Roll back only C11's native module, delegation, tests and evidence together.
