@@ -1,0 +1,5 @@
+# RF03-F04 corrective C02 — native environmental roll-opportunity contract
+
+Move the existing two feature identities/handler-kind rules and the pure `validateEnvironmentOddsProposal` contract into Daggerheart. Preserve exact supported status, passive trigger, target policy, roll protocol, zero costs, profile-template match, owner action/session/scene match, proposal references/disposition/stakes/advantage semantics, rule basis and result receipt fields. The environment provider retains scene, action, profile, source, audience and database proof; no ordinary-fiction behavior or writer policy is changed.
+
+Use current production native feature records as test authority and fresh test inputs only in `bot/tests/ai-gm-2026-10/`. Do not invoke historical tests/fixtures. Freeze then run one blocking focused test batch, changed JS/MJS syntax checks, and one RF03 architecture ratchet. Record exact outcomes and hashes. No DB, provider, network, or new creative limitation. Roll back this native contract, provider wiring, fresh test and evidence as one checkpoint.

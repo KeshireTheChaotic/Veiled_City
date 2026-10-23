@@ -6,7 +6,8 @@ import {arbitrationFailure as fail} from './gm-arbitration-contract.js';
 import {nativeHouseErratum} from './native-house-errata.js';
 import {createNativeStandardDamage} from './frameworks/daggerheart/standard-damage-passives.js';
 import {activeCityProxy} from './city-constraints.js';
-const nativeDamage=createNativeStandardDamage({compileNativeFeatures,hash,nativeHouseErratum,fail});
+const nativeDamage=createNativeStandardDamage({compileNativeFeatures:(...args)=>compileNativeFeatures(...args),hash:value=>hash(value),
+  nativeHouseErratum:(...args)=>nativeHouseErratum(...args),fail});
 export const {nativeDamageBonusExpression,nativeStandardDamage}=nativeDamage;
 
 export function nativeAttackPassives(db,guild,{npc,combatant,character,encounter,binding,template,library}){

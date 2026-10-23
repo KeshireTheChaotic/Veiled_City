@@ -3,14 +3,14 @@
   "status": "QUALIFIED_SLICE_ONLY",
   "base_commit": "ea1569a",
   "started_utc": "2026-10-23T22:56:38Z",
-  "finished_utc": "2026-10-23T22:59:36Z",
+  "finished_utc": "2026-10-23T23:04:26Z",
   "changed_modules": [
     "bot/src/native-feature-passives.js",
     "bot/src/frameworks/daggerheart/standard-damage-passives.js",
     "bot/tests/ai-gm-2026-10/rf03-f02-c03.test.mjs"
   ],
   "source_sha256": {
-    "bot/src/native-feature-passives.js": "760a149328c83ff8e322e9df00ea800b81bcaf738688b018cde759148bc890eb",
+    "bot/src/native-feature-passives.js": "f4291dd088e391d5d415206e733132c1ae9a134221b839346600a2787c5f6c9b",
     "bot/src/frameworks/daggerheart/standard-damage-passives.js": "00ae964aa24ae4bd1af3209c1998ff7a35dcabb9d7f9c287a14c7e595b2fb0d4",
     "bot/tests/ai-gm-2026-10/rf03-f02-c03.test.mjs": "2eb202aaf7996e8c98a09d48ae0bcc22e47fc2d496bbcae5e084e8f3a1cf1d09"
   },
@@ -29,16 +29,28 @@
     "authority": "RF03-F02 scope requires review-only entries to remain inactive."
   },
   "test": {
-    "command": "node --test --test-reporter=tap --test-concurrency=1 bot/tests/ai-gm-2026-10/rf03-f02-c03.test.mjs",
-    "exit": 0,
-    "tests": 4,
-    "pass": 4,
-    "fail": 0,
+    "command": "node --test --test-reporter=tap --test-concurrency=1 bot/tests/ai-gm-2026-10/rf03-f02-c03.test.mjs bot/tests/ai-gm-2026-10/rf03-f04-c02.test.mjs",
+    "exit": 1,
+    "tests": 7,
+    "pass": 6,
+    "fail": 1,
     "skipped": 0,
-    "duration_ms": 366.8908,
-    "blocking_wall_ms": 542,
-    "log": "f02-c03-final.log",
-    "log_sha256": "4a30c99f531527b763370944fdc464c38979fa35cabcbc26873d010482fd8581",
+    "duration_ms": 713.1247,
+    "blocking_wall_ms": 895,
+    "log": "f02-c03-f04-c02-final.log",
+    "log_sha256": "0b2609dd6d3584c098e263e7d09d12665265918b8313f7fdf955af398dfde16b",
+    "c03_cases": "All four C03 fresh cases passed in this union; the single failed case belonged to F04 and was the provider-source assertion, later repaired by a targeted passing rerun.",
+    "earlier_single_file_attempt": {
+      "command": "node --test --test-reporter=tap --test-concurrency=1 bot/tests/ai-gm-2026-10/rf03-f02-c03.test.mjs",
+      "exit": 0,
+      "tests": 4,
+      "pass": 4,
+      "fail": 0,
+      "duration_ms": 366.8908,
+      "log": "f02-c03-final.log",
+      "log_sha256": "4a30c99f531527b763370944fdc464c38979fa35cabcbc26873d010482fd8581",
+      "qualification": "superseded as latest-source evidence when the provider added lazy dependency wiring"
+    },
     "pre_guard_attempt": {
       "tests": 3,
       "pass": 3,
@@ -51,17 +63,17 @@
   "architecture_gate": {
     "command": "node bot/tooling/architecture/check-boundaries.mjs --ratchet --phase RF03",
     "exit": 0,
-    "source_modules": 387,
+    "source_modules": 390,
     "unowned": 0,
-    "import_occurrences": 2309,
+    "import_occurrences": 2313,
     "largest_cycle": 182,
     "raw_violations": 2601,
     "accepted_legacy_occurrences": 2601,
     "active_violation_groups": 0,
     "transition_errors": 0,
     "pass": true,
-    "log": "f02-c03-final-gate.log",
-    "log_sha256": "62b8341286817509e911f00befa101c153bc9d34d6d4666132b2d1d02eeeaa0d"
+    "log": "f02-c03-f04-c02-final-gate.log",
+    "log_sha256": "2718db78779dbf5b0690f72cb2c0ca69339cc52dd6d1603fab0745c1be6a7bf9"
   },
   "cost": {
     "provider_calls": 0,

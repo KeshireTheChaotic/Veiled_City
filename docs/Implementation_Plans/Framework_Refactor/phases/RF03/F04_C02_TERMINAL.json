@@ -1,0 +1,91 @@
+{
+  "feature": "RF03-F04-C02",
+  "status": "QUALIFIED_SLICE_ONLY",
+  "base_commit": "4e32b3d",
+  "started_utc": "2026-10-23T23:02:09Z",
+  "finished_utc": "2026-10-23T23:04:26Z",
+  "changed_modules": [
+    "bot/src/native-environment-noise.js",
+    "bot/src/frameworks/daggerheart/environment-odds-contract.js",
+    "bot/tests/ai-gm-2026-10/rf03-f04-c02.test.mjs"
+  ],
+  "source_sha256": {
+    "bot/src/native-environment-noise.js": "db01712b9b4a0afcf60cde9732cf4f7f3b4c50e25adb5103c5eb0874cb04596e",
+    "bot/src/frameworks/daggerheart/environment-odds-contract.js": "70457b0f0406e8338b6ce91e62de5d89ca5b6e45486024ee2bda9666ddbb86ff",
+    "bot/tests/ai-gm-2026-10/rf03-f04-c02.test.mjs": "0745f664a9c89783e228f0dc58a6bb8a5f2a5c72b96ed3ed61446b078170cdad"
+  },
+  "syntax": {
+    "union_paths": [
+      "bot/src/native-feature-passives.js",
+      "bot/src/frameworks/daggerheart/standard-damage-passives.js",
+      "bot/src/native-environment-noise.js",
+      "bot/src/frameworks/daggerheart/environment-odds-contract.js",
+      "bot/tests/ai-gm-2026-10/rf03-f02-c03.test.mjs",
+      "bot/tests/ai-gm-2026-10/rf03-f04-c02.test.mjs"
+    ],
+    "union_exit": 0,
+    "changed_test_recheck_exit": 0
+  },
+  "test_evidence": {
+    "unique_f04_cases": 3,
+    "final_unique_cases_passed": 3,
+    "union_command": "node --test --test-reporter=tap --test-concurrency=1 bot/tests/ai-gm-2026-10/rf03-f02-c03.test.mjs bot/tests/ai-gm-2026-10/rf03-f04-c02.test.mjs",
+    "union_exit": 1,
+    "union_tests": 7,
+    "union_pass": 6,
+    "union_fail": 1,
+    "union_duration_ms": 713.1247,
+    "union_log": "f02-c03-f04-c02-final.log",
+    "union_log_sha256": "0b2609dd6d3584c098e263e7d09d12665265918b8313f7fdf955af398dfde16b",
+    "failed_case": "existing environment provider delegates the same exported contract to Daggerheart",
+    "failure_cause": "The test expected eager {hash,fail}; provider injection was changed to lazy hash:value=>hash(value) to avoid an actual ESM initialization cycle.",
+    "repair": {
+      "command": "node --test --test-reporter=tap --test-concurrency=1 --test-name-pattern 'existing environment provider delegates' bot/tests/ai-gm-2026-10/rf03-f04-c02.test.mjs",
+      "exit": 0,
+      "tests": 1,
+      "pass": 1,
+      "fail": 0,
+      "skipped": 0,
+      "duration_ms": 339.7516,
+      "blocking_wall_ms": 508,
+      "log": "f04-c02-repair.log",
+      "log_sha256": "cfb7591d296a21d2b8bf40b1e91f1b372a266b9e1740bfe7ca6588a8d800b4a7"
+    },
+    "initial_import_failure": {
+      "exit": 1,
+      "log": "f04-c02.log",
+      "log_sha256": "6049838298000dc74b6722b2104e7ba565abe81a73a98b1d152ced1eb9ba0ffb",
+      "diagnosis": "Eager provider hash evaluation reached sceneFictionContext during an ESM initialization cycle; both hash injections are now lazy."
+    },
+    "intermediate_import_failure": {
+      "exit": 1,
+      "log": "f02-c03-f04-c02-union.log",
+      "log_sha256": "66fe9b76d6c01a3e908741cccdd8f026f8e7f99b5037cbe5cd9abe0398917503"
+    }
+  },
+  "architecture_gate": {
+    "command": "node bot/tooling/architecture/check-boundaries.mjs --ratchet --phase RF03",
+    "exit": 0,
+    "source_modules": 390,
+    "unowned": 0,
+    "import_occurrences": 2313,
+    "largest_cycle": 182,
+    "raw_violations": 2601,
+    "accepted_legacy_occurrences": 2601,
+    "active_violation_groups": 0,
+    "transition_errors": 0,
+    "pass": true,
+    "log": "f02-c03-f04-c02-final-gate.log",
+    "log_sha256": "2718db78779dbf5b0690f72cb2c0ca69339cc52dd6d1603fab0745c1be6a7bf9"
+  },
+  "cost": {
+    "provider_calls": 0,
+    "provider_dollars": 0,
+    "codex_usage": "UNMEASURED"
+  },
+  "holds": [
+    "This is a pure proposal contract, not scene persistence, roll application, or the world-authoring/Daggerheart integration boundary.",
+    "Full environmental instance creation, audience and source ancestry remain held in the source provider."
+  ],
+  "release": "NOT AUTHORIZED"
+}
