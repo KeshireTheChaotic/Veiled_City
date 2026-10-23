@@ -13,3 +13,7 @@ Hold: operational-metrics.js, turn-trace-context.js, turn-latency.js have shared
 Rollback feature checkpoint before dependents; no schema/data rollback. Provider calls/tokens/spend 0/0/$0; Codex/runtime cost UNMEASURED, cache behavior unchanged. No new narrative restriction or owner question. Result SHA follows checkpoint. RELEASE NOT AUTHORIZED.
 
 Feature checkpoint: `7594ed9afeb59adbab1adb5966f68fbd1c67eda0`.
+
+## Resulting local SHA
+
+`7594ed9afeb59adbab1adb5966f68fbd1c67eda0` — REPRESENTATIVE_COMPLETE_SHARED_INSTRUMENTATION_HELD. Documentation closeout subsequently records the full evidence map without changing tested code. Revert later dependent checkpoints first, then this feature commit, preserving owner edits. No data rollback/reset/clean. RF03 not started; RELEASE NOT AUTHORIZED.

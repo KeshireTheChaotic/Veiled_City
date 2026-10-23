@@ -808,10 +808,711 @@
     "RF02-F04": "247d34b162894c79eb4262229d7317347e64bafe",
     "RF02-F03": "7594ed9afeb59adbab1adb5966f68fbd1c67eda0",
     "RF02-F02": "a21ff94a628214c01bdfa0284330b39bcd96505a",
-    "RF02-F01": "8eb49634beb8228cf5f1c0398ba73ca90ac3bde0"
+    "RF02-F01": "8eb49634beb8228cf5f1c0398ba73ca90ac3bde0",
+    "RF02-F06": "dea0183de4e602f7fea67de22b50ac96582e214d"
   },
   "gate_log_sha256": {
     "rf02-f06-architecture.log": "ef7709f35673b8f0fb9ad1f3cb7141ec9d0a5181dabed8456da9b270dae08285",
     "rf02-f06-strict.log": "65b84871ebdab832585e50c530edfeeeb45a3fd6423aa167e3f46f678cd80a42"
-  }
+  },
+  "qualifying_code_head": "dea0183de4e602f7fea67de22b50ac96582e214d",
+  "changed_paths": [
+    {
+      "status": "M",
+      "files": [
+        "bot/package.json"
+      ]
+    },
+    {
+      "status": "M",
+      "files": [
+        "bot/src/assembly-publications.js"
+      ]
+    },
+    {
+      "status": "M",
+      "files": [
+        "bot/src/character-export.js"
+      ]
+    },
+    {
+      "status": "M",
+      "files": [
+        "bot/src/character-narrative.js"
+      ]
+    },
+    {
+      "status": "M",
+      "files": [
+        "bot/src/city-commands.js"
+      ]
+    },
+    {
+      "status": "M",
+      "files": [
+        "bot/src/city-consequences.js"
+      ]
+    },
+    {
+      "status": "M",
+      "files": [
+        "bot/src/city-constraints.js"
+      ]
+    },
+    {
+      "status": "M",
+      "files": [
+        "bot/src/city-groups.js"
+      ]
+    },
+    {
+      "status": "M",
+      "files": [
+        "bot/src/commands.js"
+      ]
+    },
+    {
+      "status": "M",
+      "files": [
+        "bot/src/concept-context.js"
+      ]
+    },
+    {
+      "status": "M",
+      "files": [
+        "bot/src/config.js"
+      ]
+    },
+    {
+      "status": "M",
+      "files": [
+        "bot/src/db.js"
+      ]
+    },
+    {
+      "status": "M",
+      "files": [
+        "bot/src/discord/privacy.js"
+      ]
+    },
+    {
+      "status": "M",
+      "files": [
+        "bot/src/frameworks/character/README.md"
+      ]
+    },
+    {
+      "status": "A",
+      "files": [
+        "bot/src/frameworks/character/file-names.js"
+      ]
+    },
+    {
+      "status": "A",
+      "files": [
+        "bot/src/frameworks/character/narrative-text.js"
+      ]
+    },
+    {
+      "status": "A",
+      "files": [
+        "bot/src/frameworks/character/public.js"
+      ]
+    },
+    {
+      "status": "M",
+      "files": [
+        "bot/src/frameworks/content/README.md"
+      ]
+    },
+    {
+      "status": "R100",
+      "files": [
+        "bot/src/content.js",
+        "bot/src/frameworks/content/content.js"
+      ]
+    },
+    {
+      "status": "A",
+      "files": [
+        "bot/src/frameworks/content/public.js"
+      ]
+    },
+    {
+      "status": "A",
+      "files": [
+        "bot/src/frameworks/content/root.js"
+      ]
+    },
+    {
+      "status": "M",
+      "files": [
+        "bot/src/frameworks/discord/README.md"
+      ]
+    },
+    {
+      "status": "R054",
+      "files": [
+        "bot/src/discord/delivery.js",
+        "bot/src/frameworks/discord/delivery.js"
+      ]
+    },
+    {
+      "status": "M",
+      "files": [
+        "bot/src/frameworks/discord/public.js"
+      ]
+    },
+    {
+      "status": "M",
+      "files": [
+        "bot/src/frameworks/operations/README.md"
+      ]
+    },
+    {
+      "status": "A",
+      "files": [
+        "bot/src/frameworks/operations/error-policy.js"
+      ]
+    },
+    {
+      "status": "R100",
+      "files": [
+        "bot/src/logger.js",
+        "bot/src/frameworks/operations/logger.js"
+      ]
+    },
+    {
+      "status": "R100",
+      "files": [
+        "bot/src/opening-diagnostics.js",
+        "bot/src/frameworks/operations/opening-diagnostics.js"
+      ]
+    },
+    {
+      "status": "A",
+      "files": [
+        "bot/src/frameworks/operations/public.js"
+      ]
+    },
+    {
+      "status": "M",
+      "files": [
+        "bot/src/gm-action-review.js"
+      ]
+    },
+    {
+      "status": "M",
+      "files": [
+        "bot/src/historical-archive.js"
+      ]
+    },
+    {
+      "status": "M",
+      "files": [
+        "bot/src/index.js"
+      ]
+    },
+    {
+      "status": "M",
+      "files": [
+        "bot/src/kernel/README.md"
+      ]
+    },
+    {
+      "status": "R056",
+      "files": [
+        "bot/src/errors.js",
+        "bot/src/kernel/errors.js"
+      ]
+    },
+    {
+      "status": "R100",
+      "files": [
+        "bot/src/serial-queue.js",
+        "bot/src/kernel/serial-queue.js"
+      ]
+    },
+    {
+      "status": "A",
+      "files": [
+        "bot/src/kernel/zip-store.js"
+      ]
+    },
+    {
+      "status": "M",
+      "files": [
+        "bot/src/long-projects.js"
+      ]
+    },
+    {
+      "status": "M",
+      "files": [
+        "bot/src/memory-clusters.js"
+      ]
+    },
+    {
+      "status": "M",
+      "files": [
+        "bot/src/native-experience-eligibility.js"
+      ]
+    },
+    {
+      "status": "M",
+      "files": [
+        "bot/src/native-publications.js"
+      ]
+    },
+    {
+      "status": "M",
+      "files": [
+        "bot/src/native-unarmed-traits.js"
+      ]
+    },
+    {
+      "status": "M",
+      "files": [
+        "bot/src/opening-cohort-runner.js"
+      ]
+    },
+    {
+      "status": "M",
+      "files": [
+        "bot/src/opening-entry.js"
+      ]
+    },
+    {
+      "status": "M",
+      "files": [
+        "bot/src/opening-flow.js"
+      ]
+    },
+    {
+      "status": "M",
+      "files": [
+        "bot/src/owner-action-terminal.js"
+      ]
+    },
+    {
+      "status": "M",
+      "files": [
+        "bot/src/personal-continuity.js"
+      ]
+    },
+    {
+      "status": "M",
+      "files": [
+        "bot/src/pre-roll-fear-notice.js"
+      ]
+    },
+    {
+      "status": "M",
+      "files": [
+        "bot/src/publication-outbox.js"
+      ]
+    },
+    {
+      "status": "M",
+      "files": [
+        "bot/src/publishing.js"
+      ]
+    },
+    {
+      "status": "M",
+      "files": [
+        "bot/src/pvp-menu.js"
+      ]
+    },
+    {
+      "status": "M",
+      "files": [
+        "bot/src/pvp-safety-commands.js"
+      ]
+    },
+    {
+      "status": "M",
+      "files": [
+        "bot/src/roll-collaboration.js"
+      ]
+    },
+    {
+      "status": "M",
+      "files": [
+        "bot/src/roll-declaration-review.js"
+      ]
+    },
+    {
+      "status": "M",
+      "files": [
+        "bot/src/roll-menu.js"
+      ]
+    },
+    {
+      "status": "M",
+      "files": [
+        "bot/src/roll-options.js"
+      ]
+    },
+    {
+      "status": "M",
+      "files": [
+        "bot/src/roll-requests.js"
+      ]
+    },
+    {
+      "status": "M",
+      "files": [
+        "bot/src/roll-sharing.js"
+      ]
+    },
+    {
+      "status": "M",
+      "files": [
+        "bot/src/scene-continuity.js"
+      ]
+    },
+    {
+      "status": "M",
+      "files": [
+        "bot/src/session-opening-runner.js"
+      ]
+    },
+    {
+      "status": "M",
+      "files": [
+        "bot/src/simulation-commands.js"
+      ]
+    },
+    {
+      "status": "M",
+      "files": [
+        "bot/src/simulation-motivation.js"
+      ]
+    },
+    {
+      "status": "M",
+      "files": [
+        "bot/src/simulation-strategy.js"
+      ]
+    },
+    {
+      "status": "M",
+      "files": [
+        "bot/src/story-commands.js"
+      ]
+    },
+    {
+      "status": "M",
+      "files": [
+        "bot/src/typed-roll-outcomes.js"
+      ]
+    },
+    {
+      "status": "M",
+      "files": [
+        "bot/src/typed-roll-proof.js"
+      ]
+    },
+    {
+      "status": "M",
+      "files": [
+        "bot/src/world-encounter-beats.js"
+      ]
+    },
+    {
+      "status": "A",
+      "files": [
+        "bot/tests/ai-gm-2026-10/rf02-f01.test.mjs"
+      ]
+    },
+    {
+      "status": "A",
+      "files": [
+        "bot/tests/ai-gm-2026-10/rf02-f02.test.mjs"
+      ]
+    },
+    {
+      "status": "A",
+      "files": [
+        "bot/tests/ai-gm-2026-10/rf02-f03.test.mjs"
+      ]
+    },
+    {
+      "status": "A",
+      "files": [
+        "bot/tests/ai-gm-2026-10/rf02-f04.test.mjs"
+      ]
+    },
+    {
+      "status": "A",
+      "files": [
+        "bot/tests/ai-gm-2026-10/rf02-f05.test.mjs"
+      ]
+    },
+    {
+      "status": "A",
+      "files": [
+        "bot/tests/ai-gm-2026-10/rf02-f06.test.mjs"
+      ]
+    },
+    {
+      "status": "M",
+      "files": [
+        "bot/tooling/architecture/ast-imports.mjs"
+      ]
+    },
+    {
+      "status": "M",
+      "files": [
+        "bot/tooling/architecture/boundary-checker.mjs"
+      ]
+    },
+    {
+      "status": "M",
+      "files": [
+        "docs/Implementation_Plans/Framework_Refactor/CODEX_START_HERE.md"
+      ]
+    },
+    {
+      "status": "M",
+      "files": [
+        "docs/Implementation_Plans/Framework_Refactor/PHASE_DEPENDENCIES.md"
+      ]
+    },
+    {
+      "status": "M",
+      "files": [
+        "docs/Implementation_Plans/Framework_Refactor/README.md"
+      ]
+    },
+    {
+      "status": "M",
+      "files": [
+        "docs/Implementation_Plans/Framework_Refactor/RF01/PACKAGES.json"
+      ]
+    },
+    {
+      "status": "M",
+      "files": [
+        "docs/Implementation_Plans/Framework_Refactor/RF01/TRANSITIONS.json"
+      ]
+    },
+    {
+      "status": "A",
+      "files": [
+        "docs/Implementation_Plans/Framework_Refactor/RF02/ACCEPTANCE_MATRIX.md"
+      ]
+    },
+    {
+      "status": "A",
+      "files": [
+        "docs/Implementation_Plans/Framework_Refactor/RF02/CURRENT_BRIDGE_REGISTRY.md"
+      ]
+    },
+    {
+      "status": "A",
+      "files": [
+        "docs/Implementation_Plans/Framework_Refactor/RF02/CURRENT_DEPENDENCY_GRAPH.json"
+      ]
+    },
+    {
+      "status": "A",
+      "files": [
+        "docs/Implementation_Plans/Framework_Refactor/RF02/CURRENT_OWNERSHIP.csv"
+      ]
+    },
+    {
+      "status": "A",
+      "files": [
+        "docs/Implementation_Plans/Framework_Refactor/RF02/F01_DEBT.json"
+      ]
+    },
+    {
+      "status": "A",
+      "files": [
+        "docs/Implementation_Plans/Framework_Refactor/RF02/F01_TERMINAL.json"
+      ]
+    },
+    {
+      "status": "A",
+      "files": [
+        "docs/Implementation_Plans/Framework_Refactor/RF02/F02_DEBT.json"
+      ]
+    },
+    {
+      "status": "A",
+      "files": [
+        "docs/Implementation_Plans/Framework_Refactor/RF02/F02_TERMINAL.json"
+      ]
+    },
+    {
+      "status": "A",
+      "files": [
+        "docs/Implementation_Plans/Framework_Refactor/RF02/F03_DEBT.json"
+      ]
+    },
+    {
+      "status": "A",
+      "files": [
+        "docs/Implementation_Plans/Framework_Refactor/RF02/F03_TERMINAL.json"
+      ]
+    },
+    {
+      "status": "A",
+      "files": [
+        "docs/Implementation_Plans/Framework_Refactor/RF02/F04_ATTEMPT_1.json"
+      ]
+    },
+    {
+      "status": "A",
+      "files": [
+        "docs/Implementation_Plans/Framework_Refactor/RF02/F04_DEBT.json"
+      ]
+    },
+    {
+      "status": "A",
+      "files": [
+        "docs/Implementation_Plans/Framework_Refactor/RF02/F04_TERMINAL.json"
+      ]
+    },
+    {
+      "status": "A",
+      "files": [
+        "docs/Implementation_Plans/Framework_Refactor/RF02/F05_DEBT.json"
+      ]
+    },
+    {
+      "status": "A",
+      "files": [
+        "docs/Implementation_Plans/Framework_Refactor/RF02/F05_TERMINAL.json"
+      ]
+    },
+    {
+      "status": "A",
+      "files": [
+        "docs/Implementation_Plans/Framework_Refactor/RF02/F06_TERMINAL.json"
+      ]
+    },
+    {
+      "status": "A",
+      "files": [
+        "docs/Implementation_Plans/Framework_Refactor/RF02/FINAL_EVIDENCE.json"
+      ]
+    },
+    {
+      "status": "A",
+      "files": [
+        "docs/Implementation_Plans/Framework_Refactor/RF02/KICKOFF.md"
+      ]
+    },
+    {
+      "status": "A",
+      "files": [
+        "docs/Implementation_Plans/Framework_Refactor/RF02/LOCAL_HOLDS.json"
+      ]
+    },
+    {
+      "status": "A",
+      "files": [
+        "docs/Implementation_Plans/Framework_Refactor/RF02/LOCAL_HOLDS.md"
+      ]
+    },
+    {
+      "status": "A",
+      "files": [
+        "docs/Implementation_Plans/Framework_Refactor/RF02/PRESERVATION_AUDIT.json"
+      ]
+    },
+    {
+      "status": "A",
+      "files": [
+        "docs/Implementation_Plans/Framework_Refactor/RF02/RELOCATION_CROSSWALK.csv"
+      ]
+    },
+    {
+      "status": "A",
+      "files": [
+        "docs/Implementation_Plans/Framework_Refactor/features/RF02-F01/LEDGER.md"
+      ]
+    },
+    {
+      "status": "A",
+      "files": [
+        "docs/Implementation_Plans/Framework_Refactor/features/RF02-F01/SCOPE.md"
+      ]
+    },
+    {
+      "status": "A",
+      "files": [
+        "docs/Implementation_Plans/Framework_Refactor/features/RF02-F02/LEDGER.md"
+      ]
+    },
+    {
+      "status": "A",
+      "files": [
+        "docs/Implementation_Plans/Framework_Refactor/features/RF02-F02/SCOPE.md"
+      ]
+    },
+    {
+      "status": "A",
+      "files": [
+        "docs/Implementation_Plans/Framework_Refactor/features/RF02-F03/LEDGER.md"
+      ]
+    },
+    {
+      "status": "A",
+      "files": [
+        "docs/Implementation_Plans/Framework_Refactor/features/RF02-F03/SCOPE.md"
+      ]
+    },
+    {
+      "status": "A",
+      "files": [
+        "docs/Implementation_Plans/Framework_Refactor/features/RF02-F04/LEDGER.md"
+      ]
+    },
+    {
+      "status": "A",
+      "files": [
+        "docs/Implementation_Plans/Framework_Refactor/features/RF02-F04/SCOPE.md"
+      ]
+    },
+    {
+      "status": "A",
+      "files": [
+        "docs/Implementation_Plans/Framework_Refactor/features/RF02-F05/LEDGER.md"
+      ]
+    },
+    {
+      "status": "A",
+      "files": [
+        "docs/Implementation_Plans/Framework_Refactor/features/RF02-F05/SCOPE.md"
+      ]
+    },
+    {
+      "status": "A",
+      "files": [
+        "docs/Implementation_Plans/Framework_Refactor/features/RF02-F06/LEDGER.md"
+      ]
+    },
+    {
+      "status": "A",
+      "files": [
+        "docs/Implementation_Plans/Framework_Refactor/features/RF02-F06/SCOPE.md"
+      ]
+    },
+    {
+      "status": "A",
+      "files": [
+        "docs/Implementation_Plans/Framework_Refactor/phases/RF02/LEDGER.md"
+      ]
+    },
+    {
+      "status": "A",
+      "files": [
+        "docs/Implementation_Plans/Framework_Refactor/phases/RF02/SCOPE.md"
+      ]
+    }
+  ],
+  "post_commit_source_config_drift": []
 }

@@ -13,3 +13,7 @@ Removed 1 resolved live transition record; raw 2815, zero active/unowned; cycle2
 Rollback F04 checkpoint before dependents; no data/schema rollback. Provider calls/tokens/spend 0/0/$0; caches unchanged; Codex/runtime costs UNMEASURED. No owner question or narrative restriction. Checkpoint SHA follows. RELEASE NOT AUTHORIZED.
 
 Feature checkpoint: `247d34b162894c79eb4262229d7317347e64bafe`.
+
+## Resulting local SHA
+
+`247d34b162894c79eb4262229d7317347e64bafe` — PURE_SLICE_COMPLETE_MIXED_WORKFLOWS_HELD. Documentation closeout subsequently records the full evidence map without changing tested code. Revert later dependent checkpoints first, then this feature commit, preserving owner edits. No data rollback/reset/clean. RF03 not started; RELEASE NOT AUTHORIZED.
