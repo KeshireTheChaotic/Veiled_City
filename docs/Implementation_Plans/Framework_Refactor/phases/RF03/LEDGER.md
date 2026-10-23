@@ -196,3 +196,7 @@ The exact current PvP profile terms validator now runs in Daggerheart, with curr
 ## Corrective F03-C13 qualified death-move result mapping
 
 Daggerheart now owns the deterministic Risk It All and Avoid Death outcome mapping, called from both the choice transaction and saved-outcome verifier. Three fresh tests passed, exit 0, 61.2216 ms; three syntax checks and the RF03 ratchet passed. Gate: 392 source modules, zero unowned/active groups/transition errors, largest cycle 182, 2,601 accepted legacy occurrences. Full evidence `F03_C13_TERMINAL.json`; provider spend $0, Codex usage UNMEASURED. Receipt/persistence/recovery integration is not qualified; RF03 remains INCOMPLETE, RF04 NOT STARTED, RELEASE NOT AUTHORIZED.
+
+## Corrective F03-C14 qualified PC attack terms
+
+Daggerheart now calculates the existing unarmed/equipped weapon damage expression, type, permitted range, and target Evasion. `pvp-attacks.js` retains all authorization and transaction behavior. Fresh test `rf03-f03-c14.test.mjs`: 4/4 passed, exit 0, 63.7534 ms; three syntax checks and the RF03 ratchet passed. Gate: 393 source modules, zero unowned/active groups/transition errors, largest cycle 182, 2,601 accepted legacy occurrences. Full evidence `F03_C14_TERMINAL.json`; provider spend $0, Codex usage UNMEASURED. Full attack and damage replay remains unqualified; RF03 incomplete, RF04 not started, release not authorized.

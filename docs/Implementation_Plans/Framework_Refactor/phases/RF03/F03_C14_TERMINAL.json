@@ -1,0 +1,62 @@
+{
+  "feature": "RF03-F03-C14",
+  "status": "QUALIFIED_SLICE_ONLY",
+  "base_commit": "ffc736c",
+  "started_utc": "2026-10-23T23:08:17Z",
+  "finished_utc": "2026-10-23T23:09:34Z",
+  "changed_modules": [
+    "bot/src/pvp-attacks.js",
+    "bot/src/frameworks/daggerheart/pvp-attack-terms.js",
+    "bot/tests/ai-gm-2026-10/rf03-f03-c14.test.mjs"
+  ],
+  "source_sha256": {
+    "bot/src/pvp-attacks.js": "6d2866b627494f6152ffc26d09d762615f361b7c5f137cae35a602cd2a617c94",
+    "bot/src/frameworks/daggerheart/pvp-attack-terms.js": "098e22e0f18dfe7c4f6889488b483249a968f0b34b310200b0f879fb39981ba3",
+    "bot/tests/ai-gm-2026-10/rf03-f03-c14.test.mjs": "48a9f7875ee2509330d0b337b1fe0c6e7cc572fe22e72dc7a3e6abb70fbe7076"
+  },
+  "syntax": {
+    "paths": [
+      "bot/src/pvp-attacks.js",
+      "bot/src/frameworks/daggerheart/pvp-attack-terms.js",
+      "bot/tests/ai-gm-2026-10/rf03-f03-c14.test.mjs"
+    ],
+    "exit": 0
+  },
+  "test": {
+    "command": "node --test --test-reporter=tap --test-concurrency=1 bot/tests/ai-gm-2026-10/rf03-f03-c14.test.mjs",
+    "exit": 0,
+    "tests": 4,
+    "pass": 4,
+    "fail": 0,
+    "skipped": 0,
+    "duration_ms": 63.7534,
+    "blocking_wall_ms": 246,
+    "log": "f03-c14.log",
+    "log_sha256": "91c822093a44cb5cb8d3d037e939390b8f06f2e645412b1d55035760b0e31226"
+  },
+  "architecture_gate": {
+    "command": "node bot/tooling/architecture/check-boundaries.mjs --ratchet --phase RF03",
+    "exit": 0,
+    "source_modules": 393,
+    "unowned": 0,
+    "import_occurrences": 2317,
+    "largest_cycle": 182,
+    "raw_violations": 2601,
+    "accepted_legacy_occurrences": 2601,
+    "active_violation_groups": 0,
+    "transition_errors": 0,
+    "pass": true,
+    "log": "f03-c14-gate.log",
+    "log_sha256": "17ccacf955da17090aebb8b620031bcaaad3253f76da97099a626eea7a34d2a8"
+  },
+  "cost": {
+    "provider_calls": 0,
+    "provider_dollars": 0,
+    "codex_usage": "UNMEASURED"
+  },
+  "holds": [
+    "Actual presence, line-of-sight, owner/source/consent, native roll, modifier, Fear, target approval, transaction, receipt, and replay integration were not exercised.",
+    "RF03 remains incomplete."
+  ],
+  "release": "NOT AUTHORIZED"
+}

@@ -19,12 +19,14 @@ import {stageDamagePvp} from './pvp-profiles.js';
 import {reserveCampaignAttackNotices} from './native-publications.js';
 import {settlePvpDamageAction} from './pvp-damage.js';
 import {consentAction} from './action-consent.js';
+import {createPvpAttackTerms} from './frameworks/daggerheart/pvp-attack-terms.js';
 const hash=v=>createHash("sha256").update(JSON.stringify(v)).digest("hex");
 const CAMPAIGN_PREPARATION=Symbol('native-campaign-attack-preparation');
 export const campaignAttackActorHash=pc=>hash({status:pc.status,traits:pc.data.traits,proficiency:pc.data.proficiency,
   inventory:pc.data.inventory,conditions:pc.data.conditions});
 function fail(message){throw Object.assign(new Error(message),{code:"NARRATIVE_PVP",expected:true});}
 function closed(input,keys){if(!input||Array.isArray(input)||Object.keys(input).length!==keys.length||keys.some(k=>!(k in input)))fail("Closed native PC attack fields required.");}
+const {calculatePvpAttackTerms}=createPvpAttackTerms({fail,rangeBands:RANGE_BANDS});
 function mechanics(db,guild,input,{campaign=false,nativePreparation=null}={}){
   const ctx=validateDamageAttackIntent(db,guild,input.attack),{row,contract}=ctx;
   const pc=db.getCharacter(row.data.actor),target=db.getCharacter(row.data.target),ruling=db.getRulesRuling(guild,input.ruling);
@@ -44,23 +46,8 @@ function mechanics(db,guild,input,{campaign=false,nativePreparation=null}={}){
   for(const presence of [actorPresence,targetPresence])if(presence?.data.state!=="actually_present"||presence.location_key!==contract.data.location_key
     ||db.getWorldEvent(guild,presence.source_event)?.status!=="active")fail("Current source-backed actual attack/target presence required.");
   if(!sceneAccess(db,guild,{observer_type:"character",observer_key:pc.id,target_type:"character",target_key:target.id,sense:"sight"}))fail("Attack needs actual line of sight.");
-  let range,damage,damage_type;
-  const proficiency=pc.data.proficiency;
-  if(!Number.isSafeInteger(proficiency)||proficiency<1||proficiency>50)fail("Verified current Proficiency required.");
-  if(input.kind==="unarmed"){
-    if(input.weapon!==null||!["Strength","Finesse"].includes(input.trait))fail("Reviewed unarmed Strength/Finesse only.");
-    range="Melee";damage=`${proficiency}d4`;damage_type="physical";
-  }else if(input.kind==="weapon"){
-    const weapons=(pc.data.inventory||[]).filter(w=>w?.name===input.weapon&&w.equipped===true),weapon=weapons[0];
-    if(weapons.length!==1||!weapon||weapon.trait!==input.trait||!RANGE_BANDS.includes(weapon.range)
-      ||!Number.isSafeInteger(weapon.damage_die)||weapon.damage_die<2||weapon.damage_die>1000
-      ||!Number.isSafeInteger(weapon.damage_modifier)||Math.abs(weapon.damage_modifier)>100
-      ||!["physical","magic"].includes(weapon.damage_type))fail("Exact equipped weapon trait/range/damage metadata required; missing source stays pending ruling.");
-    range=weapon.range;damage=`${proficiency}d${weapon.damage_die}${weapon.damage_modifier?`${weapon.damage_modifier>0?"+":""}${weapon.damage_modifier}`:""}`;damage_type=weapon.damage_type;
-  }else fail("Unsupported spell/feature PC-target mapping; no adversary-to-PC conversion. Keep pending native ruling.");
   const actualRange=actorPresence.data.zone===targetPresence.data.zone?"Melee":targetPresence.data.range;
-  if(!RANGE_BANDS.includes(actualRange)||RANGE_BANDS.indexOf(actualRange)>RANGE_BANDS.indexOf(range))fail("Native target outside current weapon range.");
-  if(!Number.isSafeInteger(target.data.evasion)||target.data.evasion<1||target.data.evasion>100)fail("Verified current target Evasion required, never adversary Difficulty.");
+  const {range,damage,damage_type,evasion}=calculatePvpAttackTerms(input,pc,target,actualRange);
   // Reuse the native modifier inventory/authority checks without entering the adversary attack path.
   const breakdown=rollTraitBreakdown(db,guild,{trait:input.trait,kind:"attack",adjudication:ruling?.ruling||proposal?.explanation||'',
     modifier_keys:input.modifier_keys,source_event:ctx.accepted.source_event,accepted_intent:ctx.accepted.record_key},pc);
@@ -74,7 +61,7 @@ function mechanics(db,guild,input,{campaign=false,nativePreparation=null}={}){
     target_principal:ctx.participants.find(p=>p.character===target.id).principal_revision,
     actor_presence:hash(actorPresence),target_presence:hash(targetPresence),ruling:hash(campaign?nativeBasis:ruling),breakdown,
     ...(campaign?{native_proposal_hash:hash(proposal)}:{})};
-  return {...ctx,pc,target,snapshot,range,damage,damage_type,evasion:target.data.evasion,breakdown,
+  return {...ctx,pc,target,snapshot,range,damage,damage_type,evasion,breakdown,
     ...(campaign?{native_rule_basis:nativeBasis}:{})};
 }
 function inventory(db,guild){

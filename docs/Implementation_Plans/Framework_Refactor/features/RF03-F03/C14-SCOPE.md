@@ -1,0 +1,5 @@
+# RF03-F03 corrective C14 — native PC attack terms
+
+Extract the existing deterministic attack-term calculation from `pvp-attacks.js` into Daggerheart: verified current Proficiency; exact unarmed or one equipped weapon; supported trait, damage die/modifier/type; actual range-band comparison; and target Evasion. Inject the unchanged range-band list and established failure constructor. Preserve all current error messages and output fields. Keep owner/consent/source/ruling, actual presence/line-of-sight, modifier proof, brawl/Fear, RNG, saved rolls, transactions, target authorization, and receipts in their existing provider.
+
+Use fresh synthetic inputs derived from the current source shape only in `bot/tests/ai-gm-2026-10/`. Freeze one focused batch; syntax-check changed JS/MJS; run RF03 ratchet once. Do not use inherited tests/fixtures or expand supported actions. Record exact outcomes and hashes, provider cost, and unverified workflow boundaries. Roll back this code/provider/test/evidence together.
