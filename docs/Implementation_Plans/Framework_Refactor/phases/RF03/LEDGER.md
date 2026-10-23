@@ -204,3 +204,9 @@ Daggerheart now calculates the existing unarmed/equipped weapon damage expressio
 ## Corrective F02-C04 qualified native feature cost policy
 
 The pure feature cost calculation now executes in Daggerheart-owned `feature-costs.js`; the existing feature-window source imports and re-exports it while leaving authorization and payment transactions unchanged. Fresh direct-native tests: 3/3 passed, zero failed/skipped, exit 0, 59.7413 ms; three changed JS/MJS syntax checks passed. RF03 ratchet exit 0: 394 modules, zero unowned, 2,320 imports, largest cycle 182, 2,601 accepted earlier obligations, zero active violation groups/errors. Two provider-import attempts failed before assertions because of an observed `RANGE_BANDS` cold-import cycle in `pvp-attacks.js`; provider startup remains a local hold. Exact source and log hashes are in `F02_C04_TERMINAL.json`. No provider spend; Codex usage UNMEASURED. RF03 remains INCOMPLETE; RF04 NOT STARTED; RELEASE NOT AUTHORIZED.
+
+## Corrective F02-C04/C05 evidence correction
+
+C04's final run after group-feature direct adoption is the evidence recorded in `F02_C04_TERMINAL.json`: 3/3 passed in 61.3319 ms, four changed syntax checks passed, and the RF03 ratchet passed with 2,600 accepted old occurrences and zero transition errors. The exact obsolete group-feature import record is preserved in `F02_C04_RETIRED.json`. Provider cold import remains held due the observed `RANGE_BANDS` initialization cycle.
+
+C05 moves the unchanged disabled-device eligibility check into Daggerheart. Fresh test: 3/3 passed, exit 0, 59.6546 ms; three changed JS/MJS syntax checks passed. RF03 ratchet exit 0:395 modules, zero unowned, 2,322 imports, 2,600 accepted existing occurrences, zero active groups/errors. Exact hashes/logs are in `F02_C05_TERMINAL.json`. No provider cost; Codex usage UNMEASURED. RF03 remains INCOMPLETE; RF04 NOT STARTED; RELEASE NOT AUTHORIZED.

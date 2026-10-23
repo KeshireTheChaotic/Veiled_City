@@ -8,15 +8,11 @@ import {arbitrationFailure as fail} from './gm-arbitration-contract.js';
 import {isGroupFeature,groupFeatureStakes,groupReactionState,applyGroupReactionOutcome,settleGroupFeature} from './native-group-features.js';
 import {reserveGmArbitrationNotice} from './native-publications.js';
 import {applyNativeStressPassive} from './native-stress-passives.js';
+import {nativeDeviceUseIssue} from './frameworks/daggerheart/device-use-eligibility.js';
+export {nativeDeviceUseIssue} from './frameworks/daggerheart/device-use-eligibility.js';
 
 const FEEDBACK='adversary:static-wraith:feedback';
 const effectKey=decision=>`feature-effect:${hash(decision)}`;
-/** Restriction only: an inventory marker never certifies a new effect or grants reset authority. */
-export function nativeDeviceUseIssue(pc,accepted){
-  if(accepted?.data.type!=='interact'||accepted.data.operation!=='use_device')return null;
-  const device=pc?.data.inventory?.find(i=>i?.id===accepted.data.target_key);
-  return device?.disabled_by?'NATIVE_DEVICE_RESET_REQUIRED':null;
-}
 export function featureReactionStakes(feature){
   if(isGroupFeature(feature))return groupFeatureStakes(feature);
   if(feature!==FEEDBACK)throw fail('feature_reaction_stakes_adapter');
