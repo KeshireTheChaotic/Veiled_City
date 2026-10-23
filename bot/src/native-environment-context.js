@@ -1,3 +1,4 @@
+import {environmentEncounterRejection} from './frameworks/daggerheart/public.js';
 /** Exact encounter environment provenance. Planning/eligibility only, never an effect or disclosure grant. */
 import {EncounterLibrary} from './encounter.js';
 import {currentScene} from './scene-continuity.js';
@@ -18,13 +19,10 @@ export function nativeEnvironmentBinding(db,guild,{encounter:ref,scene,location}
     proposal=binding&&db.getCityRecord(guild,'encounter_proposal',binding.data.proposal),
     source=proposal&&db.getWorldEvent(guild,proposal.source_event),
     template=encounter&&library.environments.find(e=>e.name===encounter.environment_name);
-  if(!encounter||encounter.guild_id!==guild||encounter.session_id!==actual.session_id||encounter.status!=='active'
-    ||db.getCurrentEncounter(actual.session_id)?.id!==ref||actual.key!==scene||!location
-    ||binding?.status!=='active'||proposal?.status!=='accepted'||proposal.data.encounter_id!==ref
-    ||proposal.data.scene!==scene||proposal.location_key!==location||proposal.data.environment!==encounter.environment_name
-    ||source?.status!=='active'||binding.source_event!==source.event_key||source.session_id!==actual.session_id||source.scene!==scene
-    ||!proposal.data.reviewed_by||!template||Number(template.tier)!==Number(encounter.tier))
-    throw fail('environment_native_encounter_location_source');
+  const rejection=environmentEncounterRejection({guild,ref,scene,location,actual,encounter,
+    currentEncounter:encounter&&encounter.guild_id===guild&&encounter.session_id===actual.session_id&&encounter.status==='active'
+      ?db.getCurrentEncounter(actual.session_id):null,binding,proposal,source,template});
+  if(rejection)throw fail(rejection);
   // Delegation is an additive native receipt, not a forged human review string.
   const activation=binding.data.native_activation
     ?inspectNativeEncounterActivation(db,guild,binding.data.native_activation,{current:true}):null;

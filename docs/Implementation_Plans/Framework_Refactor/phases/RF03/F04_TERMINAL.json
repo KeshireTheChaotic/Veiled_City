@@ -1,0 +1,32 @@
+{
+  "base_sha": "0d346430636e23a6ffc1a20634602b571d9e1a54",
+  "started": "2026-10-23T18:03:41.079Z",
+  "finished": "2026-10-23T18:03:41.978Z",
+  "syntax": 4,
+  "tests": {
+    "exit": 0,
+    "summary": "# tests 4\n# pass 4\n# fail 0\n# skipped 0\n# duration_ms 61.5875"
+  },
+  "gate": {
+    "exit": 0,
+    "summary": ""
+  },
+  "files": [
+    {
+      "path": "bot/src/frameworks/daggerheart/environment-eligibility.js",
+      "sha256": "57c93bc3ce22f7e304806c8533228853a0b76fc2c5d77d908a7c4f71d35665e9"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/public.js",
+      "sha256": "818371ff85de0bc6f282e7087f6ddd0620379b6774eb00704d0d3813d4d6cc56"
+    },
+    {
+      "path": "bot/src/native-environment-context.js",
+      "sha256": "171bb7a62bdf471f9456d3cd517fdbf773f0e6a2967dff0d479c8c1ae40d79ec"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf03-f04.test.mjs",
+      "sha256": "2138ea0b14ec29f6e745e71d9757ed690b80787735e95d9033f2c42d863adf6a"
+    }
+  ]
+}

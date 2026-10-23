@@ -4,3 +4,4 @@ export {adversaryHpState,wouldMarkLastAdversaryHp,buildCombatants,hpMarksForDama
 export {BATTLE_POINT_COSTS,HEAVY_ROLES,DIFFICULTY_ADJUSTMENTS,tierForLevel,baseBattlePoints,battlePointCost,derivedAdjustments,recomputeBudget} from './encounter-budget.js';
 export {fearReservationHash,fearReservationFailure,inspectFearReservation,reservedCampaignFear} from './fear-reservation-proof.js';
 export {hopeCap,pcEffectResource} from './pc-resources.js';
+export {environmentEncounterRejection} from './environment-eligibility.js';
