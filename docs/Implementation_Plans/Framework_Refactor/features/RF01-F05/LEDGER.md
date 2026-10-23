@@ -17,3 +17,5 @@ Imports: final source scan 377 modules / zero unowned; zero active unauthorized 
 Rollback: Reverse reader/validator registry integration and restore current registry from original RF00 snapshot/history; no runtime data change.
 
 No critical blocker or new creative-output restriction. No owner question pending. Provider calls/tokens/spend 0/0/$0; Codex tokens/cost and runtime performance UNMEASURED. No provider cache use; no global runtime cache introduced. No old suite/fixture execution, production DB, live provider/Discord, CI, push, merge, deployment or restart. RELEASE NOT AUTHORIZED.
+
+Implementation checkpoint SHA: `8611b1db8d90652a31a1f0dafe5b39981c4cce23` (F01–F06 together, tested working-tree content preserved). The following closeout commit changes documentation/evidence only; passing unchanged tests are not rerun. Rollback closeout first, then `git revert 8611b1db8d90652a31a1f0dafe5b39981c4cce23`, preserving later edits. RF02 not started. RELEASE NOT AUTHORIZED.

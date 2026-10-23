@@ -383,5 +383,320 @@
       "pass": true,
       "firstErrors": []
     }
-  }
+  },
+  "implementation_sha": "8611b1db8d90652a31a1f0dafe5b39981c4cce23",
+  "changed_paths": [
+    {
+      "status": "M",
+      "path": "bot/package-lock.json"
+    },
+    {
+      "status": "M",
+      "path": "bot/package.json"
+    },
+    {
+      "status": "A",
+      "path": "bot/src/application/composition/README.md"
+    },
+    {
+      "status": "A",
+      "path": "bot/src/application/composition/compose-services.js"
+    },
+    {
+      "status": "A",
+      "path": "bot/src/application/composition/create-opening-services.js"
+    },
+    {
+      "status": "A",
+      "path": "bot/src/application/composition/public.js"
+    },
+    {
+      "status": "A",
+      "path": "bot/src/application/workflows/README.md"
+    },
+    {
+      "status": "A",
+      "path": "bot/src/bootstrap/README.md"
+    },
+    {
+      "status": "A",
+      "path": "bot/src/framework-to-framework/discord--publication/public.js"
+    },
+    {
+      "status": "A",
+      "path": "bot/src/framework-to-framework/narrative--session/public.js"
+    },
+    {
+      "status": "A",
+      "path": "bot/src/frameworks/ai-provider/README.md"
+    },
+    {
+      "status": "A",
+      "path": "bot/src/frameworks/character/README.md"
+    },
+    {
+      "status": "A",
+      "path": "bot/src/frameworks/content/README.md"
+    },
+    {
+      "status": "A",
+      "path": "bot/src/frameworks/daggerheart/README.md"
+    },
+    {
+      "status": "A",
+      "path": "bot/src/frameworks/discord/README.md"
+    },
+    {
+      "status": "A",
+      "path": "bot/src/frameworks/discord/contracts/committed-publication.js"
+    },
+    {
+      "status": "A",
+      "path": "bot/src/frameworks/discord/public.js"
+    },
+    {
+      "status": "A",
+      "path": "bot/src/frameworks/intent/README.md"
+    },
+    {
+      "status": "A",
+      "path": "bot/src/frameworks/knowledge/README.md"
+    },
+    {
+      "status": "A",
+      "path": "bot/src/frameworks/narrative/README.md"
+    },
+    {
+      "status": "A",
+      "path": "bot/src/frameworks/narrative/contracts/opening-author.js"
+    },
+    {
+      "status": "A",
+      "path": "bot/src/frameworks/narrative/public.js"
+    },
+    {
+      "status": "A",
+      "path": "bot/src/frameworks/npc/README.md"
+    },
+    {
+      "status": "A",
+      "path": "bot/src/frameworks/operations/README.md"
+    },
+    {
+      "status": "A",
+      "path": "bot/src/frameworks/persistence/README.md"
+    },
+    {
+      "status": "A",
+      "path": "bot/src/frameworks/publication/README.md"
+    },
+    {
+      "status": "A",
+      "path": "bot/src/frameworks/publication/contracts/transport.js"
+    },
+    {
+      "status": "A",
+      "path": "bot/src/frameworks/publication/public.js"
+    },
+    {
+      "status": "A",
+      "path": "bot/src/frameworks/session/README.md"
+    },
+    {
+      "status": "A",
+      "path": "bot/src/frameworks/session/contracts/opening-authoring.js"
+    },
+    {
+      "status": "A",
+      "path": "bot/src/frameworks/session/public.js"
+    },
+    {
+      "status": "A",
+      "path": "bot/src/frameworks/world/README.md"
+    },
+    {
+      "status": "A",
+      "path": "bot/src/kernel/README.md"
+    },
+    {
+      "status": "A",
+      "path": "bot/tests/ai-gm-2026-10/rf01-f02.test.mjs"
+    },
+    {
+      "status": "A",
+      "path": "bot/tests/ai-gm-2026-10/rf01-f03.test.mjs"
+    },
+    {
+      "status": "A",
+      "path": "bot/tests/ai-gm-2026-10/rf01-f04.test.mjs"
+    },
+    {
+      "status": "A",
+      "path": "bot/tests/ai-gm-2026-10/rf01-f05.test.mjs"
+    },
+    {
+      "status": "A",
+      "path": "bot/tests/ai-gm-2026-10/rf01-f06.test.mjs"
+    },
+    {
+      "status": "A",
+      "path": "bot/tooling/architecture/ast-imports.mjs"
+    },
+    {
+      "status": "A",
+      "path": "bot/tooling/architecture/boundary-checker.mjs"
+    },
+    {
+      "status": "A",
+      "path": "bot/tooling/architecture/bridge-registry.mjs"
+    },
+    {
+      "status": "A",
+      "path": "bot/tooling/architecture/check-boundaries.mjs"
+    },
+    {
+      "status": "A",
+      "path": "bot/tooling/architecture/read-project.mjs"
+    },
+    {
+      "status": "M",
+      "path": "docs/Implementation_Plans/Framework_Refactor/BRIDGE_REGISTRY.md"
+    },
+    {
+      "status": "M",
+      "path": "docs/Implementation_Plans/Framework_Refactor/PHASE_DEPENDENCIES.md"
+    },
+    {
+      "status": "M",
+      "path": "docs/Implementation_Plans/Framework_Refactor/README.md"
+    },
+    {
+      "status": "A",
+      "path": "docs/Implementation_Plans/Framework_Refactor/RF01/ACCEPTANCE_MATRIX.md"
+    },
+    {
+      "status": "A",
+      "path": "docs/Implementation_Plans/Framework_Refactor/RF01/BASELINE_EVIDENCE.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/Implementation_Plans/Framework_Refactor/RF01/BRIDGE_CONTRACTS.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/Implementation_Plans/Framework_Refactor/RF01/ENFORCEMENT.md"
+    },
+    {
+      "status": "A",
+      "path": "docs/Implementation_Plans/Framework_Refactor/RF01/F02_TERMINAL.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/Implementation_Plans/Framework_Refactor/RF01/F03_TERMINAL.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/Implementation_Plans/Framework_Refactor/RF01/F04_ATTEMPT_1.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/Implementation_Plans/Framework_Refactor/RF01/F04_TERMINAL.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/Implementation_Plans/Framework_Refactor/RF01/F05_TERMINAL.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/Implementation_Plans/Framework_Refactor/RF01/F06_TERMINAL.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/Implementation_Plans/Framework_Refactor/RF01/FINAL_EVIDENCE.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/Implementation_Plans/Framework_Refactor/RF01/GATE_LAUNCH_ATTEMPT_1.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/Implementation_Plans/Framework_Refactor/RF01/GATE_TERMINAL.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/Implementation_Plans/Framework_Refactor/RF01/PACKAGES.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/Implementation_Plans/Framework_Refactor/RF01/REGISTRY_FINAL_TERMINAL.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/Implementation_Plans/Framework_Refactor/RF01/RF00_BRIDGE_REGISTRY.md"
+    },
+    {
+      "status": "A",
+      "path": "docs/Implementation_Plans/Framework_Refactor/RF01/TRANSITIONS.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/Implementation_Plans/Framework_Refactor/RF01/TRANSITION_BASELINE.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/Implementation_Plans/Framework_Refactor/features/RF01-F01/LEDGER.md"
+    },
+    {
+      "status": "A",
+      "path": "docs/Implementation_Plans/Framework_Refactor/features/RF01-F01/SCOPE.md"
+    },
+    {
+      "status": "A",
+      "path": "docs/Implementation_Plans/Framework_Refactor/features/RF01-F02/LEDGER.md"
+    },
+    {
+      "status": "A",
+      "path": "docs/Implementation_Plans/Framework_Refactor/features/RF01-F02/SCOPE.md"
+    },
+    {
+      "status": "A",
+      "path": "docs/Implementation_Plans/Framework_Refactor/features/RF01-F03/LEDGER.md"
+    },
+    {
+      "status": "A",
+      "path": "docs/Implementation_Plans/Framework_Refactor/features/RF01-F03/SCOPE.md"
+    },
+    {
+      "status": "A",
+      "path": "docs/Implementation_Plans/Framework_Refactor/features/RF01-F04/LEDGER.md"
+    },
+    {
+      "status": "A",
+      "path": "docs/Implementation_Plans/Framework_Refactor/features/RF01-F04/SCOPE.md"
+    },
+    {
+      "status": "A",
+      "path": "docs/Implementation_Plans/Framework_Refactor/features/RF01-F05/LEDGER.md"
+    },
+    {
+      "status": "A",
+      "path": "docs/Implementation_Plans/Framework_Refactor/features/RF01-F05/SCOPE.md"
+    },
+    {
+      "status": "A",
+      "path": "docs/Implementation_Plans/Framework_Refactor/features/RF01-F06/LEDGER.md"
+    },
+    {
+      "status": "A",
+      "path": "docs/Implementation_Plans/Framework_Refactor/features/RF01-F06/SCOPE.md"
+    },
+    {
+      "status": "A",
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF01/LEDGER.md"
+    },
+    {
+      "status": "A",
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF01/SCOPE.md"
+    }
+  ]
 }
