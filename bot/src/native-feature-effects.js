@@ -10,14 +10,11 @@ import {reserveGmArbitrationNotice} from './native-publications.js';
 import {applyNativeStressPassive} from './native-stress-passives.js';
 import {nativeDeviceUseIssue} from './frameworks/daggerheart/device-use-eligibility.js';
 export {nativeDeviceUseIssue} from './frameworks/daggerheart/device-use-eligibility.js';
+import {createFeatureReactionStakes} from './frameworks/daggerheart/feature-reaction-stakes.js';
 
 const FEEDBACK='adversary:static-wraith:feedback';
 const effectKey=decision=>`feature-effect:${hash(decision)}`;
-export function featureReactionStakes(feature){
-  if(isGroupFeature(feature))return groupFeatureStakes(feature);
-  if(feature!==FEEDBACK)throw fail('feature_reaction_stakes_adapter');
-  return 'On a failed Instinct reaction, mark 1 Stress and the electronic device shuts down until repaired or reset. On success it does not. Your roll is not assumed.';
-}
+export const featureReactionStakes=createFeatureReactionStakes({isGroupFeature,groupFeatureStakes});
 function paymentProof(db,guild,row){
   const n=row.data.native,cost=db.getCityRecord(guild,'gm_action_cost_receipt',`gm-feature-cost:${hash(row.record_key)}`);
   const {payment_source,...paid}=cost?.data||{},payment=payment_source&&db.getWorldEvent(guild,payment_source);

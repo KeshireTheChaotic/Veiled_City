@@ -1,0 +1,11 @@
+✔ supported Feedback reaction retains exact native stakes text (0.442ms)
+✔ native group features retain their existing delegated stakes (0.0814ms)
+✔ unsupported feature keys remain held by the native failure contract (0.2469ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 57.5757
