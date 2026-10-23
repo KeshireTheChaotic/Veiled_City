@@ -10,3 +10,7 @@ RF02-F04,bot/src/character-export.js#zipStore+CRC+headers,bot/src/kernel/zip-sto
 RF02-F04,bot/src/character-export.js#safeText+safeStem,bot/src/frameworks/character/file-names.js,character,EXTRACTED
 RF02-F04,bot/src/character-narrative.js#normalizeNarrativeMarkdown+narrativeRelativePath,bot/src/frameworks/character/narrative-text.js,character,EXTRACTED
 RF02-F05,bot/src/discord/delivery.js,bot/src/frameworks/discord/delivery.js,discord,MOVED_WITH_EXPLICIT_SPLIT_PORT
+RF02-F06,bot/src/command-definitions.js,bot/src/frameworks/discord/command-definitions.js,discord,MOVED_UNCHANGED_OWNER_RECONCILIATION
+RF02-F06,bot/src/command-schema.js,bot/src/frameworks/discord/command-schema.js,discord,MOVED_UNCHANGED_OWNER_RECONCILIATION
+RF02-F06,bot/src/ai-gm-test-selection.js,bot/src/frameworks/operations/ai-gm-test-selection.js,operations,MOVED_UNCHANGED_OWNER_RECONCILIATION
+RF02-F06,bot/src/typed-intent-qualification.js,bot/src/frameworks/operations/typed-intent-qualification.js,operations,MOVED_UNCHANGED_OWNER_RECONCILIATION

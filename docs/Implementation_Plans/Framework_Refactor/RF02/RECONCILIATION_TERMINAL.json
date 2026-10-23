@@ -1,0 +1,50 @@
+{
+  "run_id": "RF02-F06-RECONCILIATION-1",
+  "syntax_count": 9,
+  "rf03_exit": 0,
+  "base_sha": "08372894bc097abe7e537b0924f020261034de5e",
+  "finished_utc": "2026-10-23T17:49:44.1948067Z",
+  "started_utc": "2026-10-23T17:49:35.0303464Z",
+  "test_exit": 0,
+  "command": "node --test --test-concurrency=1 --test-reporter=tap bot/tests/ai-gm-2026-10/rf02-f06-reconciliation.test.mjs",
+  "rf02_exit": 0,
+  "frozen_files": [
+    {
+      "sha256": "7df79800e5898d2cc63370393e53b199f3cf5c7d38f502f4accdfd69c8a375c0",
+      "path": "bot/src/commands.js"
+    },
+    {
+      "sha256": "97c12fe79b55ab2c198e86da4c494d90559ab929bff29e7769065161c31e418c",
+      "path": "bot/src/frameworks/discord/command-definitions.js"
+    },
+    {
+      "sha256": "a46e05a69e80cb5a06393349ef552564048df8137383d5aedbfba776cb303c7e",
+      "path": "bot/src/frameworks/discord/command-schema.js"
+    },
+    {
+      "sha256": "6fbea033cd8d93af969f70f1e970417847e403062ad5e1a23fda25ae8636e14f",
+      "path": "bot/src/frameworks/discord/public.js"
+    },
+    {
+      "sha256": "0d07cf6575257bcafe2f79a1f182fed5979ac545926265e57bbc0f25151a8f76",
+      "path": "bot/src/frameworks/operations/ai-gm-test-selection.js"
+    },
+    {
+      "sha256": "6f8db5bab9c2a966e0943a2f7a43e50c7adb9299fe1792e2026867c0d88cfd27",
+      "path": "bot/src/frameworks/operations/typed-intent-qualification.js"
+    },
+    {
+      "sha256": "6359366cdfb24e8e6511775469056c17874b17cc83d06468db25192456e8d039",
+      "path": "bot/src/register-commands.js"
+    },
+    {
+      "sha256": "294eeacc20e816740f129cda253a78c83241f667fa2bd2160dcf97c3d46bec97",
+      "path": "bot/tests/ai-gm-2026-10/rf02-f06-reconciliation.test.mjs"
+    },
+    {
+      "sha256": "517b55d7fbf9260d3c4338ec2c45a9c6ff8ccaea2c26a70ac93b49aa8a79050f",
+      "path": "bot/tooling/architecture/transition-audit.mjs"
+    }
+  ],
+  "strict_exit": 1
+}

@@ -103,7 +103,7 @@ const deliverInteractionText=createInteractionTextDelivery({splitDiscordText});
 
 const interactionQueue=new KeyedSerialQueue();
 
-export { buildCommands } from "./command-definitions.js";
+export { buildCommands } from './frameworks/discord/public.js';
 
 function json(c){ return c?.data ?? {}; }
 function exportAttachments(files){

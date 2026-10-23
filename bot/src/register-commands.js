@@ -2,7 +2,7 @@
 import "dotenv/config";
 import { REST, Routes } from "discord.js";
 import { buildCommands } from "./commands.js";
-import { assertValidCommandSchema } from "./command-schema.js";
+import { assertValidCommandSchema } from './frameworks/discord/public.js';
 
 const token=process.env.DISCORD_TOKEN;
 const appId=process.env.DISCORD_CLIENT_ID;

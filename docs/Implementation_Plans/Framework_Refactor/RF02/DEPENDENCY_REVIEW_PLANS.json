@@ -1,0 +1,112 @@
+{
+  "ai-review.js": [
+    "RF05-F05",
+    "application",
+    "Eight intent/world/NPC/knowledge imports coordinate review mutations; needs thin multi-owner workflow after producer APIs."
+  ],
+  "character-export.js": [
+    "RF06-F02",
+    "character--persistence",
+    "Remaining private facts/canon/relationship queries need entitled native read-view mapping; only independent formatting extracted."
+  ],
+  "character-narrative.js": [
+    "RF06-F02",
+    "character--persistence",
+    "Remaining native narrative/character lookups need scoped read-view mapping, not duplicated DB queries."
+  ],
+  "character-observation.js": [
+    "RF04-F05",
+    "character with character--session/world/daggerheart mappings",
+    "Principal/scene/world witness/native incoming-control evidence crosses three owners and their cycle; source projection contracts must precede replacement."
+  ],
+  "character-system.js": [
+    "RF03-F01",
+    "daggerheart with character--daggerheart mapping",
+    "Class/domain/trait/advancement are native rules used by roll requests, narration and menus; establish native rule projection."
+  ],
+  "content-packages.js": [
+    "RF05-F05",
+    "application with content--world/content--intent mappings",
+    "Rights/public approval transactions combine world source/audit/seed mutations and intent stateRevision; three-owner workflow after world and interpreter APIs."
+  ],
+  "diagnostics/session5-reader.js": [
+    "RF06-F02",
+    "persistence with knowledge/operations views",
+    "Private SQLite and disclosure predicates require storage ownership and entitled diagnostic projection. No production DB access."
+  ],
+  "discord/chunking.js": [
+    "RF06-F03",
+    "discord--publication",
+    "Native outbox/publishing/pvp-output consumers need injected formatter; direct move creates cross-framework edges."
+  ],
+  "discord/interaction-lifecycle.js": [
+    "RF06-F04",
+    "discord with discord--operations binding",
+    "One shared WeakMap and metrics observer span bootstrap/handlers; inject one lifecycle object at command composition."
+  ],
+  "discord/privacy.js": [
+    "RF06-F03",
+    "discord--publication",
+    "Publishing and diagnostic consumers must receive exact recipient/GM channel guards through native transport capabilities."
+  ],
+  "evaluation-harness.js": [
+    "RF05-F02",
+    "operations with intent--operations mapping",
+    "Calls responseObligation/worldRequirements from interpreter; needs its public capability, not copied lexical policy."
+  ],
+  "failure-trace.js": [
+    "RF06-F03",
+    "operations with operations--publication mapping",
+    "Publishing consumes private source/error/commit recovery categories; wire redacted observer while splitting publication recovery."
+  ],
+  "operational-metrics.js": [
+    "RF06-F05",
+    "operations",
+    "Shared process salt/counters and async trace have provider/narrative/publication/Discord consumers; root must wire one observer after their ports."
+  ],
+  "operations/diagnostics.js": [
+    "RF06-F04",
+    "operations with discord--operations mapping",
+    "Calls channel guards and original shared routing/metrics; inject at command diagnostic composition."
+  ],
+  "operations/health.js": [
+    "RF06-F05",
+    "operations",
+    "Native status reports close over original metrics and latency singletons; move with one-instance observer wiring."
+  ],
+  "operations/overview.js": [
+    "RF04-F05",
+    "operations--world",
+    "Imports simulation helpers; world public read-only projection and observation adapter needed."
+  ],
+  "pvp-menu.js": [
+    "RF06-F04",
+    "discord with daggerheart--discord/session/world mappings",
+    "Menu executes session evidence, native consent/PvP/Fear/death and publication; native ports feed later command-family decomposition."
+  ],
+  "roll-menu.js": [
+    "RF06-F04",
+    "discord with daggerheart--discord/publication mappings",
+    "Directly executes roll options/collaboration/requests/rulings and receipt publication; command-family source/controller/ack injection needed."
+  ],
+  "routing-diagnostics.js": [
+    "RF06-F04",
+    "discord with discord--persistence mapping",
+    "Channel exclusivity and shared rate-limited notice map have bootstrap/DB/diagnostic consumers; explicit channel configuration boundary needed."
+  ],
+  "tracked-turn.js": [
+    "RF06-F05",
+    "operations",
+    "Queue wrapper closes over withTurnTrace/turnLatency; preserve single root-composed instance and scheduling."
+  ],
+  "turn-latency.js": [
+    "RF06-F05",
+    "operations",
+    "Latency imports shared metrics and is used by publication/health/bootstrap; root observer composition must preserve identity."
+  ],
+  "turn-trace-context.js": [
+    "RF06-F05",
+    "operations",
+    "One AsyncLocalStorage and SQL-read proxy are shared by DB/provider/publication/GM; consumer observer ports and single context wiring needed."
+  ]
+}
