@@ -1,0 +1,43 @@
+{
+  "removed_records": 2,
+  "removed": [
+    {
+      "id": "7246646fe45fdd6afec581b64d0467e759d721e06f20d10e4a2758ad374736f5",
+      "code": "LEGACY_MODULE_LOCATION",
+      "from": "bot/src/content.js",
+      "owner": "content",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF02-F02",
+      "expires_after": "RF02",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
+    },
+    {
+      "id": "0e1438ac6935301949902c2094b67fb6edc7c67b284a808f297ebe769d7de4d0",
+      "code": "IMPORTS_PRIVATE_API",
+      "from": "bot/src/index.js",
+      "to": "bot/src/content.js",
+      "kind": "static",
+      "specifier": "./content.js",
+      "owner": "bootstrap",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF06-F05",
+      "expires_after": "RF06",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    }
+  ],
+  "summary": {
+    "sourceModules": 381,
+    "unowned": 0,
+    "importOccurrences": 2317,
+    "internalImportOccurrences": 2144,
+    "cycleComponents": 1,
+    "largestCycle": 211,
+    "rawViolationOccurrences": 2823,
+    "acceptedLegacyOccurrences": 2823,
+    "activeViolationGroups": 0,
+    "transitionErrors": 3,
+    "pass": false
+  }
+}

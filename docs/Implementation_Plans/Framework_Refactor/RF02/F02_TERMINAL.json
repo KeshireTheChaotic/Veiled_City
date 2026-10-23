@@ -1,0 +1,43 @@
+{
+  "command": "node --test --test-concurrency=1 --test-reporter=tap bot/tests/ai-gm-2026-10/rf02-f02.test.mjs",
+  "run_id": "RF02-F02-1",
+  "base_sha": "8eb49634beb8228cf5f1c0398ba73ca90ac3bde0",
+  "test_exit": 0,
+  "finished_utc": "2026-10-23T16:56:16.3776471Z",
+  "started_utc": "2026-10-23T16:56:14.1879782Z",
+  "gate_exit": 0,
+  "syntax_files": 6,
+  "frozen_files": [
+    {
+      "sha256": "3be8d5d1cbe51eb39ba392b3c5cbf8918f08da963b206e2e04c1b96ec0225484",
+      "path": "bot/src/config.js"
+    },
+    {
+      "sha256": "e643c545d04e6062ff91002072d2acd4b76b1dbe423992ca58cb8c239e8d5fd1",
+      "path": "bot/src/index.js"
+    },
+    {
+      "sha256": "86875dc9ae71e3ac43fba93e9b6eba597d5ff41a9d1e2c4f843294b964e12855",
+      "path": "bot/src/frameworks/content/content.js"
+    },
+    {
+      "sha256": "10efda958196226dda745ee8484f238950ddcc69f1c9de4d0656393ad485c569",
+      "path": "bot/src/frameworks/content/root.js"
+    },
+    {
+      "sha256": "bce1c8900afc7de3c8c6b5cc4e199fb408125af49d76a204c64b662c773bbe85",
+      "path": "bot/src/frameworks/content/public.js"
+    },
+    {
+      "sha256": "c0344be08778e387c9bf5c4b603ef68504a4fdf249edbf9688c54c957fd3389f",
+      "path": "bot/tests/ai-gm-2026-10/rf02-f02.test.mjs"
+    }
+  ],
+  "summary": {
+    "tests": 5,
+    "pass": 5,
+    "fail": 0,
+    "duration_ms": 160.3629
+  },
+  "log_sha256": "8d347f6e4ae6129146240f783373a73d0a45c00e99ec942a7bddbbe470ffb955"
+}

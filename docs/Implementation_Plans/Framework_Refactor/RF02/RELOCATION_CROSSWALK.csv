@@ -2,3 +2,5 @@ feature,old_path,new_path,owner,state
 RF02-F01,bot/src/errors.js,bot/src/kernel/errors.js,kernel,SPLIT_AND_MOVED
 RF02-F01,bot/src/errors.js,bot/src/frameworks/operations/error-policy.js,operations,POLICY_SEPARATED
 RF02-F01,bot/src/serial-queue.js,bot/src/kernel/serial-queue.js,kernel,MOVED
+RF02-F02,bot/src/content.js,bot/src/frameworks/content/content.js,content,MOVED_UNCHANGED
+RF02-F02,bot/src/config.js#CONTENT_ROOT,bot/src/frameworks/content/root.js,content,EXTRACTED_EXACT_RESOLVER

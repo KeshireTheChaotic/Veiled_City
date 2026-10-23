@@ -1,0 +1,5 @@
+# RF02-F02 — Read-only content index and root resolution
+
+Active after F01 checkpoint. Move content.js unchanged into content framework, public export, update bootstrap import. Extract exact CONTENT_ROOT resolution from config into content-owned resolver and update config call, preserving cwd/env/default behavior. Test actual relocated constructor and resolver against fresh disposable public/GM/private/seeded Markdown fixtures, cache isolation and subprocess cwd/environment overrides. No campaign content edits or importing old fixtures.
+
+content-packages.js is not pure: world cityObject/cityKey/requireCitySource/seed-draft and intent stateRevision dependencies plus native transactions, approval/privacy/provenance workflows. Hold its wholesale relocation for RF04-F01/F05 (world integration) and RF05-F02 (revision contract); do not copy helpers or move native approvals into a generic loader. Continue independently safe index migration. No new exception, facade, rules or narrative restriction. One frozen blocking batch and changed syntax/RF02 gate. Revert checkpoint before later consumers; no data rollback. RELEASE NOT AUTHORIZED.

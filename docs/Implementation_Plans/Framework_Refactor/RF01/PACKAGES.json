@@ -40,6 +40,9 @@
     ],
     "operations": [
       "bot/src/frameworks/operations/public.js"
+    ],
+    "content": [
+      "bot/src/frameworks/content/public.js"
     ]
   },
   "externalCapabilityOwners": {

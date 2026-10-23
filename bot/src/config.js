@@ -1,5 +1,6 @@
 /** Runtime configuration loader with fail-fast type/range validation. */
 import path from "node:path";
+import {resolveContentRoot} from './frameworks/content/public.js';
 import {parseModelPricing} from './operational-metrics.js';
 
 const BUILTIN_VOICES=new Set(["alloy","ash","ballad","coral","echo","fable","nova","onyx","sage","shimmer","verse","marin","cedar"]);
@@ -61,7 +62,7 @@ export function loadConfig(){
     gmProgressEnabled:enumEnv('GM_PROGRESS_ENABLED','false',['true','false'])==='true',
     typingRefreshMs:numberEnv("GM_TYPING_REFRESH_MS",8000,{min:4000,max:30000,integer:true}),
     dbPath:path.resolve(cwd,process.env.DATABASE_PATH||"./data/veiled_city.sqlite"),
-    contentRoot:path.resolve(cwd,process.env.CONTENT_ROOT||"../content"),
+    contentRoot:resolveContentRoot({cwd}),
     maxRecentMessages:numberEnv("MAX_RECENT_MESSAGES",28,{min:1,max:500,integer:true}),
     maxContentChunks:numberEnv("MAX_CONTENT_CHUNKS",8,{min:1,max:100,integer:true}),
     maxRulesChunks:numberEnv("MAX_RULES_CHUNKS",6,{min:1,max:100,integer:true}),

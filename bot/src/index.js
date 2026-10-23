@@ -4,7 +4,7 @@ import path from "node:path";
 import { Client, GatewayIntentBits, Partials } from "discord.js";
 import { loadConfig } from "./config.js";
 import { VeiledDB } from "./db.js";
-import { ContentIndex } from "./content.js";
+import { ContentIndex } from "./frameworks/content/public.js";
 import { GMService } from "./gm.js";
 import { handleCommand } from "./commands.js";
 import { applyAuthoritativeMutation } from "./state.js";
