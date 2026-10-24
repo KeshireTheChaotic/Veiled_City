@@ -1,0 +1,17 @@
+[
+  {
+    "name": "validateBackgroundIdentity",
+    "original_sha256": "0bf0ea5ffdb916cf8958987e045a327563c436d2fde0cc74591a8ee6dd69ab91",
+    "extraction": "unchanged declaration body; source retrieval/origin/failure callbacks fixed"
+  },
+  {
+    "name": "backgroundIdentityContext",
+    "original_sha256": "3010b29a9cd161683300134ede035ef7f369e49fb3a7fa0143e0ffa5b5b9cfde",
+    "extraction": "unchanged declaration body; source retrieval/origin/failure callbacks fixed"
+  },
+  {
+    "name": "BACKGROUND_WORLD_KINDS",
+    "original_sha256": "5b2bf9a285b0544312b4fcc75f5f71d65ebe0464ceefc00816a58a495dbedc8b",
+    "identity": "one unchanged frozen constant, own World identity materializer now consumes it internally"
+  }
+]

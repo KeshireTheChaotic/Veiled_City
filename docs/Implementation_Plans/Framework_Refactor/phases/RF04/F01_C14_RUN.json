@@ -1,0 +1,13 @@
+{
+  "run_id": "RF04_F01_C14_FIXTURE_REPAIR",
+  "repair": "Fresh record helper now establishes its own source event before saving source-bound records, as required by real SQLite foreign key. Only two tests call this helper; other eight passing tests not rerun.",
+  "test_path": "bot/tests/ai-gm-2026-10/rf04-f01-c14.test.mjs",
+  "test_exit": 0,
+  "test_sha256": "974f3fe9a474cc7c77cbf81aaf2cecbae75d597062d537526456d95b51a10f4a",
+  "production_fingerprint": "unchanged from F01_C14_RUN-initial.json",
+  "start": "2026-10-24T17:38:35.3981839-05:00",
+  "end": "2026-10-24T17:38:36.4286941-05:00",
+  "syntax_exit": 0,
+  "selector": "current world drafts|GM context uses supplied",
+  "base_sha": "a2acbcafa4382230cd703dc05a9b9b77d2d2a7c1"
+}

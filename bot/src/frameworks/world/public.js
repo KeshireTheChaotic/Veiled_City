@@ -25,3 +25,5 @@ export {createWorldOperationAuthority} from './operation-authority.js';
 export {resolvePlaceReference,preflightPlaceIdentity,preflightNpcIdentity} from './location-language.js';
 
 export {createWorldIdentityRules} from './identity-rules.js';
+
+export {BACKGROUND_WORLD_KINDS,createBackgroundIdentityRules} from './background-identities.js';

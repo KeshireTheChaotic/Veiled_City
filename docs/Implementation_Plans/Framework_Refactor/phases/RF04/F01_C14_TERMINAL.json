@@ -1,0 +1,76 @@
+{
+  "initial": {
+    "test_exit": 1,
+    "architecture_exit": 0,
+    "start": "2026-10-24T17:38:10.3445133-05:00",
+    "base_sha": "a2acbcafa4382230cd703dc05a9b9b77d2d2a7c1",
+    "end": "2026-10-24T17:38:13.7425272-05:00",
+    "syntax": [
+      {
+        "path": "bot/src/world-background-identities.js",
+        "exit": 0
+      },
+      {
+        "path": "bot/src/autonomous-world.js",
+        "exit": 0
+      },
+      {
+        "path": "bot/src/frameworks/world/background-identities.js",
+        "exit": 0
+      },
+      {
+        "path": "bot/src/frameworks/world/identity-rules.js",
+        "exit": 0
+      },
+      {
+        "path": "bot/src/frameworks/world/public.js",
+        "exit": 0
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f01-c14.test.mjs",
+        "exit": 0
+      }
+    ],
+    "run_id": "RF04_F01_C14",
+    "hashes": {
+      "bot/src/frameworks/world/identity-rules.js": "98ccb98bdd0368f4f3b6216c97bafa7e33b65da8f929ced5b47120c8c385d9b0",
+      "bot/tests/ai-gm-2026-10/rf04-f01-c14.test.mjs": "3bf3909c9970b62cbfb5187b0835e4d6827f68d5e41fb6e5b3a21b73f5d494c6",
+      "bot/src/frameworks/world/background-identities.js": "db1863a8f63a91bd11565148fc2cd911271b50179ac584212ddca2c28b8649ba",
+      "bot/src/world-background-identities.js": "a7559079c2c10bd67ec43e2fa53eeb806ef4d953b45251be172de931580dcb81",
+      "bot/src/autonomous-world.js": "863eaf68781430bf6512c7d1f8e1aaa7712d8cdad0b8feafefa2d4620a0d3533",
+      "bot/src/frameworks/world/public.js": "8a3cc2c3f49f59807cb87f3799f47ea1100c4aef3d94f1f48bba9d6c44394422"
+    }
+  },
+  "repair": {
+    "run_id": "RF04_F01_C14_FIXTURE_REPAIR",
+    "repair": "Fresh record helper now establishes its own source event before saving source-bound records, as required by real SQLite foreign key. Only two tests call this helper; other eight passing tests not rerun.",
+    "test_path": "bot/tests/ai-gm-2026-10/rf04-f01-c14.test.mjs",
+    "test_exit": 0,
+    "test_sha256": "974f3fe9a474cc7c77cbf81aaf2cecbae75d597062d537526456d95b51a10f4a",
+    "production_fingerprint": "unchanged from F01_C14_RUN-initial.json",
+    "start": "2026-10-24T17:38:35.3981839-05:00",
+    "end": "2026-10-24T17:38:36.4286941-05:00",
+    "syntax_exit": 0,
+    "selector": "current world drafts|GM context uses supplied",
+    "base_sha": "a2acbcafa4382230cd703dc05a9b9b77d2d2a7c1"
+  },
+  "tests_unique": 10,
+  "qualified_unique": 10,
+  "executions": 12,
+  "initial_pass": 8,
+  "initial_fail": 2,
+  "repair_pass": 2,
+  "repair_fail": 0,
+  "syntax_checks": 7,
+  "architecture_exit": 0,
+  "provider_calls": 0,
+  "provider_tokens": 0,
+  "provider_cost_usd": 0,
+  "codex_usage": "UNMEASURED",
+  "release": "NOT AUTHORIZED",
+  "phase_status": "INCOMPLETE",
+  "cumulative_fresh_tests": 133,
+  "cumulative_executions": 148,
+  "cumulative_test_files": 14,
+  "cumulative_syntax": 76
+}

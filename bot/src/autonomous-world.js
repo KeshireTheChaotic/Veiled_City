@@ -19,7 +19,7 @@ import {assertPcCanAct} from "./pc-native-eligibility.js";
 import {continuationAuthorization} from "./action-continuation.js";
 import {verifiedWorldAuthoringContext,worldIdentityOrigin,privateWorldIdentityForGm,assertIndependentWorldIdentity,assertWorldIdentityNames} from './world-authorship.js';
 import {narrativeSourceVisible} from './scene-fiction-context.js';
-import {BACKGROUND_WORLD_KINDS,validateBackgroundIdentity} from './world-background-identities.js';
+import {validateBackgroundIdentity} from './world-background-identities.js';
 import {nativeVipAdmission} from './native-environment-access.js';
 const hash=value=>createHash("sha256").update(JSON.stringify(value)).digest("hex").slice(0,40);
 export const AUTONOMOUS_WORLD_VERSION=2;
@@ -340,4 +340,4 @@ export function autonomousWorldContext(db,guild,scope,messageId){
 
 import {createWorldIdentityRules} from './frameworks/world/public.js';
 let worldIdentities;
-function identities(){return worldIdentities??=createWorldIdentityRules({verifiedWorldAuthoringContext:(...args)=>verifiedWorldAuthoringContext(...args),currentScene:(...args)=>currentScene(...args),privateWorldIdentityForGm:(...args)=>privateWorldIdentityForGm(...args),worldIdentityOrigin:(...args)=>worldIdentityOrigin(...args),assertIndependentWorldIdentity:(...args)=>assertIndependentWorldIdentity(...args),assertWorldIdentityNames:(...args)=>assertWorldIdentityNames(...args),BACKGROUND_WORLD_KINDS,validateBackgroundIdentity:(...args)=>validateBackgroundIdentity(...args),configureSimulationEntity:(...args)=>configureSimulationEntity(...args),validateMinorIdentity:(...args)=>validateMinorIdentity(...args),recordScenePresence:(...args)=>recordScenePresence(...args),activeCityProxy:(...args)=>activeCityProxy(...args),stateRevision:(...args)=>stateRevision(...args),fail:(...args)=>fail(...args)});}
+function identities(){return worldIdentities??=createWorldIdentityRules({verifiedWorldAuthoringContext:(...args)=>verifiedWorldAuthoringContext(...args),currentScene:(...args)=>currentScene(...args),privateWorldIdentityForGm:(...args)=>privateWorldIdentityForGm(...args),worldIdentityOrigin:(...args)=>worldIdentityOrigin(...args),assertIndependentWorldIdentity:(...args)=>assertIndependentWorldIdentity(...args),assertWorldIdentityNames:(...args)=>assertWorldIdentityNames(...args),validateBackgroundIdentity:(...args)=>validateBackgroundIdentity(...args),configureSimulationEntity:(...args)=>configureSimulationEntity(...args),validateMinorIdentity:(...args)=>validateMinorIdentity(...args),recordScenePresence:(...args)=>recordScenePresence(...args),activeCityProxy:(...args)=>activeCityProxy(...args),stateRevision:(...args)=>stateRevision(...args),fail:(...args)=>fail(...args)});}

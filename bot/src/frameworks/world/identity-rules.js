@@ -2,8 +2,9 @@
 import {jsonHash as sceneFictionHash} from '../../kernel/json-hash.js';
 import {cityAudit,cityObject,indexWorldEvent} from './city-calendar.js';
 import {preflightPlaceIdentity,preflightNpcIdentity} from './location-language.js';
+import {BACKGROUND_WORLD_KINDS} from './background-identities.js';
 const hash=value=>sceneFictionHash(value).slice(0,40);
-export function createWorldIdentityRules({verifiedWorldAuthoringContext,currentScene,privateWorldIdentityForGm,worldIdentityOrigin,assertIndependentWorldIdentity,assertWorldIdentityNames,BACKGROUND_WORLD_KINDS,validateBackgroundIdentity,configureSimulationEntity,validateMinorIdentity,recordScenePresence,activeCityProxy,stateRevision,fail}){
+export function createWorldIdentityRules({verifiedWorldAuthoringContext,currentScene,privateWorldIdentityForGm,worldIdentityOrigin,assertIndependentWorldIdentity,assertWorldIdentityNames,validateBackgroundIdentity,configureSimulationEntity,validateMinorIdentity,recordScenePresence,activeCityProxy,stateRevision,fail}){
 function worldAuthority(db,guild){
   return {gm_authority_mode:"autonomous",auto_create_locations:true,auto_create_npcs:true,human_review_policy:"conflicts_only",
     audit_autonomous_worldbuilding:true,...db.getCityRecord(guild,"gm_authority","campaign")?.data};

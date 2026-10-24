@@ -1,0 +1,98 @@
+TAP version 13
+# Subtest: background kind constant retains one frozen identity at original and current readers
+ok 1 - background kind constant retains one frozen identity at original and current readers
+  ---
+  duration_ms: 1.0046
+  type: 'test'
+  ...
+# Subtest: a new ordinary background definition is validated without actor, canon, knowledge or resource writes
+ok 2 - a new ordinary background definition is validated without actor, canon, knowledge or resource writes
+  ---
+  duration_ms: 178.9991
+  type: 'test'
+  ...
+# Subtest: background layer does not silently create geography and needs packaged identity evidence
+ok 3 - background layer does not silently create geography and needs packaged identity evidence
+  ---
+  duration_ms: 160.03
+  type: 'test'
+  ...
+# Subtest: packaged identity collisions include aliases and malformed package evidence stays held
+ok 4 - packaged identity collisions include aliases and malformed package evidence stays held
+  ---
+  duration_ms: 169.9541
+  type: 'test'
+  ...
+# Subtest: current world drafts and protected reference-only identities cannot be replaced
+not ok 5 - current world drafts and protected reference-only identities cannot be replaced
+  ---
+  duration_ms: 167.3263
+  type: 'test'
+  location: 'D:\\Library\\Development\\Veiled_City\\bot\\tests\\ai-gm-2026-10\\rf04-f01-c14.test.mjs:35:1'
+  failureType: 'testCodeFailure'
+  error: 'FOREIGN KEY constraint failed'
+  code: 'ERR_SQLITE_ERROR'
+  stack: |-
+    VeiledDB.saveCityRecord (file:///D:/Library/Development/Veiled_City/bot/src/db.js:384:8)
+    Object.save (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf04-f01-c14.test.mjs:16:141)
+    TestContext.<anonymous> (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf04-f01-c14.test.mjs:36:23)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: established entity aliases and NPC display names participate in collision checking
+ok 6 - established entity aliases and NPC display names participate in collision checking
+  ---
+  duration_ms: 389.5151
+  type: 'test'
+  ...
+# Subtest: record and NPC scan coverage limits remain explicit holds instead of incomplete collision clearance
+ok 7 - record and NPC scan coverage limits remain explicit holds instead of incomplete collision clearance
+  ---
+  duration_ms: 175.6794
+  type: 'test'
+  ...
+# Subtest: GM context uses supplied origin verifier, favors current anchor and stays identity-only with no hidden-source bypass
+not ok 8 - GM context uses supplied origin verifier, favors current anchor and stays identity-only with no hidden-source bypass
+  ---
+  duration_ms: 167.5258
+  type: 'test'
+  location: 'D:\\Library\\Development\\Veiled_City\\bot\\tests\\ai-gm-2026-10\\rf04-f01-c14.test.mjs:48:1'
+  failureType: 'testCodeFailure'
+  error: 'FOREIGN KEY constraint failed'
+  code: 'ERR_SQLITE_ERROR'
+  stack: |-
+    VeiledDB.saveCityRecord (file:///D:/Library/Development/Veiled_City/bot/src/db.js:384:8)
+    Object.save (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf04-f01-c14.test.mjs:16:141)
+    TestContext.<anonymous> (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf04-f01-c14.test.mjs:49:115)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: actual World identity materializer consumes its own background constant and real moved validator
+ok 9 - actual World identity materializer consumes its own background constant and real moved validator
+  ---
+  duration_ms: 173.8913
+  type: 'test'
+  ...
+# Subtest: original background provider reaches moved validation without certifying unsourced context
+ok 10 - original background provider reaches moved validation without certifying unsourced context
+  ---
+  duration_ms: 221.6562
+  type: 'test'
+  ...
+1..10
+# tests 10
+# suites 0
+# pass 8
+# fail 2
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2296.9625
