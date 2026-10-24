@@ -101,3 +101,7 @@ export {createEncounterGroundingRules} from './encounter-grounding-rules.js';
 export {createEnvironmentWitnessRules} from './environment-witness-rules.js';
 
 export {createConsequenceReconciliationRules} from './consequence-reconciliation-rules.js';
+
+export {createEnvironmentOutputRules,environmentOutcomeKinds} from './environment-output-rules.js';
+
+export {createEnvironmentDispatchRules} from './environment-dispatch-rules.js';

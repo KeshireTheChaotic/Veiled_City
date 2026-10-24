@@ -1,0 +1,58 @@
+TAP version 13
+# Subtest: closed environmental feature dispatch preserves exact peer, source, options and authored text
+ok 1 - closed environmental feature dispatch preserves exact peer, source, options and authored text
+  ---
+  duration_ms: 11.0393
+  type: 'test'
+  ...
+# Subtest: upload registration and start commit together and rollback together on failed native start
+ok 2 - upload registration and start commit together and rollback together on failed native start
+  ---
+  duration_ms: 27.0649
+  type: 'test'
+  ...
+# Subtest: upload advance and adjustment pass only exact intended payload and reject added fields
+ok 3 - upload advance and adjustment pass only exact intended payload and reject added fields
+  ---
+  duration_ms: 8.4984
+  type: 'test'
+  ...
+# Subtest: candidate locators require exact source and audience and do not themselves certify receipts
+ok 4 - candidate locators require exact source and audience and do not themselves certify receipts
+  ---
+  duration_ms: 47.1473
+  type: 'test'
+  ...
+# Subtest: arrival output requires actual native receipt, current scene, matching audience and sourced identity
+ok 5 - arrival output requires actual native receipt, current scene, matching audience and sourced identity
+  ---
+  duration_ms: 23.4847
+  type: 'test'
+  ...
+# Subtest: countdown-step output rejects superseded source and never treats unknown kind as a certificate
+ok 6 - countdown-step output rejects superseded source and never treats unknown kind as a certificate
+  ---
+  duration_ms: 26.4879
+  type: 'test'
+  ...
+# Subtest: held witness projection is propagated without fallback testimony or fabricated source
+ok 7 - held witness projection is propagated without fallback testimony or fabricated source
+  ---
+  duration_ms: 9.4528
+  type: 'test'
+  ...
+# Subtest: actual providers delegate source filtering and unknown operation rejection without services
+ok 8 - actual providers delegate source filtering and unknown operation rejection without services
+  ---
+  duration_ms: 0.2687
+  type: 'test'
+  ...
+1..8
+# tests 8
+# suites 0
+# pass 8
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 618.1051

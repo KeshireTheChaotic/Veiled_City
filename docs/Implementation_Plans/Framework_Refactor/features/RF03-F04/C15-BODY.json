@@ -1,0 +1,26 @@
+{
+  "base_sha": "31a0fa6392f0e4ad7fd86eec69fe59336e63fe1a",
+  "modules": [
+    {
+      "source": "bot/src/native-environment-output.js",
+      "target": "bot/src/frameworks/daggerheart/environment-output-rules.js",
+      "body_equivalent": true,
+      "body_sha256": "acf0bf5a606b810de5bea87ff5c585ff07d95d5a096a2e19b468de903a91b44b",
+      "constant_byte_equivalent": true,
+      "methods": [
+        "nativeEnvironmentOutputCandidates",
+        "nativeEnvironmentOutput"
+      ]
+    },
+    {
+      "source": "bot/src/native-environment-dispatch.js",
+      "target": "bot/src/frameworks/daggerheart/environment-dispatch-rules.js",
+      "body_equivalent": true,
+      "body_sha256": "4e4fad59344ff0074f226918a9b5516b1cd206bad79fae4548d5488b5900160e",
+      "constant_byte_equivalent": false,
+      "methods": [
+        "executeEnvironmentProposal"
+      ]
+    }
+  ]
+}

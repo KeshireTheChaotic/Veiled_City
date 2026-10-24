@@ -1,0 +1,3 @@
+# RF03-F04 C15 — Environmental native dispatch and receipt-selected output
+
+Extract unchanged closed proposal branch selection and transactional upload registration/start, exact advance/adjust payloads, receipt-kind candidate locators and read-side current audience/source/scene/step verification. Existing fixed native receipt text and candidate cap unchanged; no new creative restriction or generic effect path. Original providers bind explicit effect/source/projector peers; no Discord delivery/authoring moved. Fresh SQLite dispatch/output tests exercise transaction rollback and source binding with mocks at upstream peers. One frozen batch. Witness feature local validator hold remains independent and unqualified. RELEASE NOT AUTHORIZED.

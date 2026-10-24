@@ -1,0 +1,92 @@
+{
+  "test_exit": 0,
+  "start": "2026-10-24T16:15:45.5738665-05:00",
+  "run_id": "F04_C15",
+  "base_sha": "31a0fa6392f0e4ad7fd86eec69fe59336e63fe1a",
+  "end": "2026-10-24T16:15:47.3016634-05:00",
+  "architecture_exit": 0,
+  "hashes": {
+    "bot/src/frameworks/daggerheart/environment-output-rules.js": "ab0287cdd5b8b515653ba03295514ddb2cbb59ba3c6956e1b21d8697030dd00d",
+    "bot/src/native-environment-dispatch.js": "ecc9a1f1b939b4a130c3de5799e5a7f92d9fdf00b9d19e2620035f5d12b15a7d",
+    "bot/src/frameworks/daggerheart/environment-dispatch-rules.js": "13a2c993816bbcdcce761c01ba93119e2630ce90d6b005a0fba026b8151bc0b9",
+    "bot/src/native-environment-output.js": "141e6f401ab06e3252dd175dc64ad59e1c686ff885658f0a53c4817f807d06ff",
+    "bot/src/frameworks/daggerheart/public.js": "b26f3adae08df91b17f17f22acf7c5fb412f2d6846064ab065dedf752b2f580d",
+    "bot/tests/ai-gm-2026-10/rf03-f04-c15.test.mjs": "3af9257e51cc756f9a4fddfb1556f27a0ba7937d9e8303fe271fcd2562aa2f2c"
+  },
+  "syntax": [
+    {
+      "exit": 0,
+      "path": "bot/src/native-environment-output.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/native-environment-dispatch.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/frameworks/daggerheart/environment-output-rules.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/frameworks/daggerheart/environment-dispatch-rules.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/frameworks/daggerheart/public.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/tests/ai-gm-2026-10/rf03-f04-c15.test.mjs"
+    }
+  ],
+  "unique_tests": 8,
+  "executions": 8,
+  "pass": 8,
+  "fail": 0,
+  "tap_duration_ms": 618.1051,
+  "syntax_pass": 6,
+  "body_equivalence": {
+    "base_sha": "31a0fa6392f0e4ad7fd86eec69fe59336e63fe1a",
+    "modules": [
+      {
+        "source": "bot/src/native-environment-output.js",
+        "target": "bot/src/frameworks/daggerheart/environment-output-rules.js",
+        "body_equivalent": true,
+        "body_sha256": "acf0bf5a606b810de5bea87ff5c585ff07d95d5a096a2e19b468de903a91b44b",
+        "constant_byte_equivalent": true,
+        "methods": [
+          "nativeEnvironmentOutputCandidates",
+          "nativeEnvironmentOutput"
+        ]
+      },
+      {
+        "source": "bot/src/native-environment-dispatch.js",
+        "target": "bot/src/frameworks/daggerheart/environment-dispatch-rules.js",
+        "body_equivalent": true,
+        "body_sha256": "4e4fad59344ff0074f226918a9b5516b1cd206bad79fae4548d5488b5900160e",
+        "constant_byte_equivalent": false,
+        "methods": [
+          "executeEnvironmentProposal"
+        ]
+      }
+    ]
+  },
+  "gate": {
+    "sourceModules": 487,
+    "unowned": 0,
+    "importOccurrences": 2532,
+    "internalImportOccurrences": 2356,
+    "cycleComponents": 1,
+    "largestCycle": 182,
+    "rawViolationOccurrences": 2485,
+    "acceptedLegacyOccurrences": 2485,
+    "activeViolationGroups": 0,
+    "transitionErrors": 0,
+    "pass": true
+  },
+  "limitations": "Actual native dispatch and output policy with disposable SQLite savepoint transaction. Effect/receipt verification/source projection peers explicitly mocked; actual production provider early guards exercised. No live upload/publication or underlying full source producer certification; witness remains unqualified.",
+  "provider_calls": 0,
+  "provider_cost_usd": 0,
+  "codex_usage": "UNMEASURED",
+  "release": "NOT AUTHORIZED"
+}
