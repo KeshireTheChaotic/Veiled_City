@@ -1,0 +1,9 @@
+{
+  "base_sha": "8e5e81856280ed1decbbb76726a2350ac4fcaab4",
+  "source": "bot/src/encounter.js",
+  "target": "bot/src/frameworks/daggerheart/encounter-composition-rules.js",
+  "body_equivalent": true,
+  "body_sha256": "d302d8fae8b02dc29f741f079fe820ccbdaac7dc9d126f6ce60a11a932ab08de",
+  "creative_objective_body_sha256": "494aaa8ebd3d476e758218a0d850492f319df261e30f554f267d7f5cc8a375fc",
+  "world_producer_and_memory_retained": true
+}

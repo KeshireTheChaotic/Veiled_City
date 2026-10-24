@@ -94,3 +94,4 @@ export {createEnvironmentImagingRules} from './environment-imaging-rules.js';
 export {createEnvironmentRecordingRules} from './environment-recording-rules.js';
 export {createEnvironmentSceneRules} from './environment-scene-rules.js';
 export {createPvpAgreementRules} from './pvp-agreement-rules.js';
+export {createEncounterCompositionRules} from './encounter-composition-rules.js';

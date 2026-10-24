@@ -1,0 +1,3 @@
+# RF03-F01 C29 — Native roster tier and encounter composition
+
+Extract unchanged live-PC roster eligibility, native party tier and automatic battle-point composition policy, keeping actual crypto random-index timing/count and all budgets, role preferences, duplicate/solo caps and Minion body multiplication. Content filesystem/library/source identity, creative objective choices, world observations/learning and world encounter producer stay in the original mixed module; no whole coupled move. Fresh deterministic composition fixtures and actual provider linkage tests, no paid services/production DB or inferred PC participation. One frozen batch/syntax/ratchet.

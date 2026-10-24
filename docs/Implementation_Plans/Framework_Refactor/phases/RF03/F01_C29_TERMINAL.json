@@ -1,0 +1,69 @@
+{
+  "syntax": [
+    {
+      "path": "bot/src/encounter.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/encounter-composition-rules.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/public.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf03-f01-c29.test.mjs",
+      "exit": 0
+    }
+  ],
+  "base_sha": "8e5e81856280ed1decbbb76726a2350ac4fcaab4",
+  "test_exit": 0,
+  "duration_ms": 523.6458,
+  "hashes": {
+    "bot/src/encounter.js": "666a934b05a187dbc28d798cac83f6fe844be0c4728b26333deca78bf2184ea7",
+    "bot/src/frameworks/daggerheart/public.js": "010d346848fee156e0df7a76a3d848e2d23772542075cbddad934bc75c49ac32",
+    "bot/tests/ai-gm-2026-10/rf03-f01-c29.test.mjs": "4a5452283bf8f9b238000bbf974f31651462a41084c63a65328bfeb7a6f41250",
+    "bot/src/frameworks/daggerheart/encounter-composition-rules.js": "3a7bcfac44d034163ba71e50869aaade101346003359eebaf6ebd4194c683361"
+  },
+  "start": "2026-10-24T16:03:49.3191909-05:00",
+  "run_id": "F01_C29",
+  "architecture_exit": 0,
+  "end": "2026-10-24T16:03:50.7016019-05:00",
+  "unique_tests": 7,
+  "executions": 7,
+  "pass": 7,
+  "fail": 0,
+  "tap_duration_ms": 471.3149,
+  "syntax_pass": 4,
+  "body_equivalence": {
+    "base_sha": "8e5e81856280ed1decbbb76726a2350ac4fcaab4",
+    "source": "bot/src/encounter.js",
+    "target": "bot/src/frameworks/daggerheart/encounter-composition-rules.js",
+    "body_equivalent": true,
+    "body_sha256": "d302d8fae8b02dc29f741f079fe820ccbdaac7dc9d126f6ce60a11a932ab08de",
+    "creative_objective_body_sha256": "494aaa8ebd3d476e758218a0d850492f319df261e30f554f267d7f5cc8a375fc",
+    "world_producer_and_memory_retained": true
+  },
+  "gate": {
+    "mode": "ratchet",
+    "phase": "RF03",
+    "sourceModules": 482,
+    "unowned": 0,
+    "importOccurrences": 2518,
+    "internalImportOccurrences": 2343,
+    "cycleComponents": 1,
+    "largestCycle": 182,
+    "rawViolationOccurrences": 2485,
+    "acceptedLegacyOccurrences": 2485,
+    "activeViolationGroups": 0,
+    "transitionErrors": 0,
+    "pass": true,
+    "firstErrors": []
+  },
+  "limitations": "Actual native encounter math/composition and actual legacy provider linkage. Deterministic random-index capability used for core policy; actual provider test has one possible candidate. Content library, world actor/presence/encounter activation and native world-memory producers remain outside this delta; no state/database/native dice or world generation certification.",
+  "provider_calls": 0,
+  "provider_cost_usd": 0,
+  "codex_usage": "UNMEASURED",
+  "release": "NOT AUTHORIZED"
+}

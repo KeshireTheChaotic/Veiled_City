@@ -1,0 +1,52 @@
+TAP version 13
+# Subtest: actual native roster qualification retains only established present/late/guest nondead PCs without changing source rows
+ok 1 - actual native roster qualification retains only established present/late/guest nondead PCs without changing source rows
+  ---
+  duration_ms: 0.9291
+  type: 'test'
+  ...
+# Subtest: native party tier derives from highest established level and empty roster keeps its existing tier-one default
+ok 2 - native party tier derives from highest established level and empty roster keeps its existing tier-one default
+  ---
+  duration_ms: 0.1231
+  type: 'test'
+  ...
+# Subtest: Minion composition uses actual native cost and PC-count body multiplication with existing duplicate cap
+ok 3 - Minion composition uses actual native cost and PC-count body multiplication with existing duplicate cap
+  ---
+  duration_ms: 0.3312
+  type: 'test'
+  ...
+# Subtest: one Solo consumes only printed native cost and cannot be duplicated to fill unused budget
+ok 4 - one Solo consumes only printed native cost and cannot be duplicated to fill unused budget
+  ---
+  duration_ms: 0.1123
+  type: 'test'
+  ...
+# Subtest: balanced and boss source role preferences remain native while all returned points stay within budget
+ok 5 - balanced and boss source role preferences remain native while all returned points stay within budget
+  ---
+  duration_ms: 0.1577
+  type: 'test'
+  ...
+# Subtest: wrong-tier or Social-only catalog cannot create native hostile composition and zero budget performs no random draw
+ok 6 - wrong-tier or Social-only catalog cannot create native hostile composition and zero budget performs no random draw
+  ---
+  duration_ms: 0.2786
+  type: 'test'
+  ...
+# Subtest: actual legacy provider delegates roster/tier/composition to the native engine without constructing world actors
+ok 7 - actual legacy provider delegates roster/tier/composition to the native engine without constructing world actors
+  ---
+  duration_ms: 0.2284
+  type: 'test'
+  ...
+1..7
+# tests 7
+# suites 0
+# pass 7
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 471.3149

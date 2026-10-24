@@ -1,0 +1,33 @@
+{
+  "syntax": [
+    {
+      "path": "bot/src/encounter.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/encounter-composition-rules.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/public.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf03-f01-c29.test.mjs",
+      "exit": 0
+    }
+  ],
+  "base_sha": "8e5e81856280ed1decbbb76726a2350ac4fcaab4",
+  "test_exit": 0,
+  "duration_ms": 523.6458,
+  "hashes": {
+    "bot/src/encounter.js": "666a934b05a187dbc28d798cac83f6fe844be0c4728b26333deca78bf2184ea7",
+    "bot/src/frameworks/daggerheart/public.js": "010d346848fee156e0df7a76a3d848e2d23772542075cbddad934bc75c49ac32",
+    "bot/tests/ai-gm-2026-10/rf03-f01-c29.test.mjs": "4a5452283bf8f9b238000bbf974f31651462a41084c63a65328bfeb7a6f41250",
+    "bot/src/frameworks/daggerheart/encounter-composition-rules.js": "3a7bcfac44d034163ba71e50869aaade101346003359eebaf6ebd4194c683361"
+  },
+  "start": "2026-10-24T16:03:49.3191909-05:00",
+  "run_id": "F01_C29",
+  "architecture_exit": 0,
+  "end": "2026-10-24T16:03:50.7016019-05:00"
+}
