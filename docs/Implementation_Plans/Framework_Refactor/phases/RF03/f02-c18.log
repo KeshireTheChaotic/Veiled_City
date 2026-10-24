@@ -1,0 +1,46 @@
+TAP version 13
+# Subtest: exact native causal Fear and remaining adversary HP qualify an optional source-pinned candidate
+ok 1 - exact native causal Fear and remaining adversary HP qualify an optional source-pinned candidate
+  ---
+  duration_ms: 65.4439
+  type: 'test'
+  ...
+# Subtest: verified incoming hit adds one native private Stress receipt once, including after reopen
+ok 2 - verified incoming hit adds one native private Stress receipt once, including after reopen
+  ---
+  duration_ms: 72.386
+  type: 'test'
+  ...
+# Subtest: changed causal opportunity holds only the extra effect and preserves committed incoming damage
+ok 3 - changed causal opportunity holds only the extra effect and preserves committed incoming damage
+  ---
+  duration_ms: 71.7738
+  type: 'test'
+  ...
+# Subtest: Signal-Touched preconsequence choice cannot be bypassed by automatic additional Stress
+ok 4 - Signal-Touched preconsequence choice cannot be bypassed by automatic additional Stress
+  ---
+  duration_ms: 74.5117
+  type: 'test'
+  ...
+# Subtest: receipt failure rolls optional Stress, mutation and source back without changing base damage
+ok 5 - receipt failure rolls optional Stress, mutation and source back without changing base damage
+  ---
+  duration_ms: 64.2794
+  type: 'test'
+  ...
+# Subtest: actual Many Deaths provider cold-imports with the existing candidate/proof/apply API
+ok 6 - actual Many Deaths provider cold-imports with the existing candidate/proof/apply API
+  ---
+  duration_ms: 304.6122
+  type: 'test'
+  ...
+1..6
+# tests 6
+# suites 0
+# pass 6
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 720.1092

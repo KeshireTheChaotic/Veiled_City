@@ -1,0 +1,3 @@
+# RF03-F02 C18 — Complete Many Deaths causal Fear/hit policy
+
+Extract unchanged candidate/eligibility/effect/saved-proof policy into Daggerheart. Preserve HR01 exact source/remaining HP/native hit/cost/Fear ancestry, one Stress after actual saved incoming damage, owner Signal-Touched/overflow local review, immutable replay and independent attack preservation. Existing provider supplies source/catalog and other native callbacks only; reuse native HP representation/hash/failure. Fresh SQLite tests must prove full optional effect/replay/rollback and no trigger from a GM die or unrelated Fear claim. Catalog occurrence scope/ledger retained. Freeze one batch; exact body/syntax/gate. No gameplay or rule activation change.

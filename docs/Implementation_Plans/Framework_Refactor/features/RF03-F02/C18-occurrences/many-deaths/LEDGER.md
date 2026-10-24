@@ -1,0 +1,7 @@
+# Many Deaths ledger
+
+IMPLEMENTED / TESTS PENDING under C18. Provider0/$0; Codex UNMEASURED; release NOT AUTHORIZED.
+
+## C18 complete native Many Deaths causal hit/effect policy
+
+Base 2a635100bbc1816ac736cfb4f3cb61303d0ca4f9. Complete current native candidate/eligibility/effect/saved proof extracted unchanged to daggerheart/adversary-hit-rules; actual provider binds named source/native peers. Native adversary HP/hash/failure reused. Fresh6/6pass,exit0,720.1092ms,4syntax pass. Real SQLite demonstrates causal PC Fear receipt and HP requirement, one owner-private Stress receipt/reopen replay, optional-effect-only review on changed causal source, protected Signal-Touched preconsequence choice, transaction rollback preserving independent base attack/damage and actual provider cold import. Upstream typed/native hit/consent/source auth and stress passive are explicit mocks, not separately certified. Individual Many Deaths scope/ledger retained; HR01/source/status unchanged. Body hashes/commands/terminal in F02_C18. Three obsolete hash/failure records retired with originals, architecture-only final gate427sources,2400imports,SCC182,2522accepted,zero active/unowned/integrity errors. No deadline changes or passing test reruns. Rollback checkpoint with exact3retirements. Provider0/$0; Codex UNMEASURED; RELEASE NOT AUTHORIZED. F02/RF03 remain incomplete.
