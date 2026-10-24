@@ -1,0 +1,17 @@
+{
+  "base_sha": "24a53bf065126c6eb10d73576e820e15a9bfc809",
+  "source": "bot/src/native-environment-trace.js",
+  "target": "bot/src/frameworks/daggerheart/environment-trace-rules.js",
+  "body_equivalent": true,
+  "body_sha256": "03b0e76b7ff03006b16af1a96ac4720bc7b2f6af8746d2252a2967bce43431cd",
+  "exports": [
+    "registerEnvironmentTraceRisk",
+    "captureEnvironmentTrace",
+    "traceOfferForRisk",
+    "traceDecisionForOffer",
+    "prepareEnvironmentTrace",
+    "inspectEnvironmentTrace",
+    "chooseEnvironmentTrace",
+    "inspectEnvironmentTraceResult"
+  ]
+}

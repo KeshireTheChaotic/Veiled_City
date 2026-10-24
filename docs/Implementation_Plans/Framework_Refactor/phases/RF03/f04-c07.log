@@ -1,0 +1,64 @@
+TAP version 13
+# Subtest: pre-dice risk and actual failed action create only a GM-private trace and never silently spend Hope or grant knowledge
+ok 1 - pre-dice risk and actual failed action create only a GM-private trace and never silently spend Hope or grant knowledge
+  ---
+  duration_ms: 76.6894
+  type: 'test'
+  ...
+# Subtest: exact current owner may optionally pay one Hope once; restart replay uses immutable result and never spends twice
+ok 2 - exact current owner may optionally pay one Hope once; restart replay uses immutable result and never spends twice
+  ---
+  duration_ms: 84.9767
+  type: 'test'
+  ...
+# Subtest: owner may leave this trace without spending, surrender or NPC/public disclosure
+ok 3 - owner may leave this trace without spending, surrender or NPC/public disclosure
+  ---
+  duration_ms: 82.6589
+  type: 'test'
+  ...
+# Subtest: foreign owner, forged revision and unauthenticated or nonexact choice cannot authorize Hope
+ok 4 - foreign owner, forged revision and unauthenticated or nonexact choice cannot authorize Hope
+  ---
+  duration_ms: 77.8269
+  type: 'test'
+  ...
+# Subtest: failed native result ancestry is required and stale optional capture preserves the original failed action receipt
+ok 5 - failed native result ancestry is required and stale optional capture preserves the original failed action receipt
+  ---
+  duration_ms: 74.3117
+  type: 'test'
+  ...
+# Subtest: payment transaction failure restores Hope, pending offer and GM trace atomically
+ok 6 - payment transaction failure restores Hope, pending offer and GM trace atomically
+  ---
+  duration_ms: 84.2267
+  type: 'test'
+  ...
+# Subtest: current context changes hold new choices while historical saved result remains readable without new spending
+ok 7 - current context changes hold new choices while historical saved result remains readable without new spending
+  ---
+  duration_ms: 93.753
+  type: 'test'
+  ...
+# Subtest: native suppression requires an actual independently resolved owner action and applies only to this trace
+ok 8 - native suppression requires an actual independently resolved owner action and applies only to this trace
+  ---
+  duration_ms: 93.5884
+  type: 'test'
+  ...
+# Subtest: native rule/offer corruption and insufficient Hope fail closed without paying or altering original outcome
+ok 9 - native rule/offer corruption and insufficient Hope fail closed without paying or altering original outcome
+  ---
+  duration_ms: 90.906
+  type: 'test'
+  ...
+1..9
+# tests 9
+# suites 0
+# pass 9
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 830.8713

@@ -1,0 +1,33 @@
+{
+  "test_exit": 0,
+  "architecture_exit": 0,
+  "syntax": [
+    {
+      "exit": 0,
+      "path": "bot/src/native-environment-trace.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/frameworks/daggerheart/environment-trace-rules.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/frameworks/daggerheart/public.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/tests/ai-gm-2026-10/rf03-f04-c07.test.mjs"
+    }
+  ],
+  "duration_ms": 887.504,
+  "end": "2026-10-24T05:44:02.6888654-05:00",
+  "run_id": "F04_C07",
+  "base_sha": "24a53bf065126c6eb10d73576e820e15a9bfc809",
+  "start": "2026-10-24T05:44:00.8690337-05:00",
+  "hashes": {
+    "bot/src/native-environment-trace.js": "f4db3a47e047f8b354221e4aab42127320d3b867118138f8370640f4f8841780",
+    "bot/tests/ai-gm-2026-10/rf03-f04-c07.test.mjs": "86d4017da46c57aa5f8789023f9647aa9ee0abd667e8595d4cee9c471930f125",
+    "bot/src/frameworks/daggerheart/environment-trace-rules.js": "3fd39b25bd15fd76c9981476e587dbee9fc780406b03fd488f7f6d8c786f14d0",
+    "bot/src/frameworks/daggerheart/public.js": "7efa5b5b9c5ae1d22dc922b8c01c985de4f6c6e829ac38e8f47b43d034078383"
+  }
+}
