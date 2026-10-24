@@ -1,0 +1,44 @@
+{
+  "architecture_exit": 0,
+  "frozen_hashes": [
+    {
+      "sha256": "A4276FA4B55A3BB7672F2A85AD93B2E854A4F15E85225077AC77BD450883B057",
+      "path": "bot/src/pvp-campaign-execution.js"
+    },
+    {
+      "sha256": "B48274342339F0697E669C8714D76C4DDA117FC7637E84DBC45F64F1F30AA5D8",
+      "path": "bot/src/frameworks/daggerheart/pvp-campaign-scope-rules.js"
+    },
+    {
+      "sha256": "157A8EF227E8C3C8768C1A901DCD5A9A3FF00C126375FB61ECE8C2F015A315C1",
+      "path": "bot/src/frameworks/daggerheart/public.js"
+    },
+    {
+      "sha256": "B67FDD3A25C807C2DA6E2636DB2E377113F92A092C72CE84549BDB1C9634B341",
+      "path": "bot/tests/ai-gm-2026-10/rf03-f03-c24.test.mjs"
+    }
+  ],
+  "syntax": [
+    {
+      "exit": 0,
+      "path": "bot/src/pvp-campaign-execution.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/frameworks/daggerheart/pvp-campaign-scope-rules.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/frameworks/daggerheart/public.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/tests/ai-gm-2026-10/rf03-f03-c24.test.mjs"
+    }
+  ],
+  "started": "2026-10-24T09:56:41.8784803Z",
+  "ended": "2026-10-24T09:56:43.5714545Z",
+  "base_sha": "05e84a37b942e2c97659af617d20d724736eb543",
+  "test_exit": 0,
+  "run_id": "RF03-F03-C24"
+}

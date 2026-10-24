@@ -1,0 +1,3 @@
+# RF03-F03 C24 — Native campaign attack scope and current/historical authority
+
+Extract complete unchanged campaign scope creation/source mutation/validation policy. Original provider binds current/historical owner/action/target/placement/source capabilities. Fresh disposable SQLite tests integrate actual native safety policy with actual new campaign scope: explicit GM mode and authenticated source/current actual unproxied owners/local placement, no fabricated consent/signatures/defender choices, exact immutable scope/replay/reopen, current stop/mode/source revision rejection versus committed ancestry, mutation/terms/contract rollback and original input revocation. Native safety/authority remains enforced; no gameplay change. One frozen targeted test/syntax/gate batch.

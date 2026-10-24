@@ -1,0 +1,52 @@
+TAP version 13
+# Subtest: explicit native GM mode allows attack adjudication scope without manufacturing either owner consent or an outcome
+ok 1 - explicit native GM mode allows attack adjudication scope without manufacturing either owner consent or an outcome
+  ---
+  duration_ms: 66.1545
+  type: 'test'
+  ...
+# Subtest: sticky owner safety stop blocks new execution while preserving independently committed campaign scope ancestry
+ok 2 - sticky owner safety stop blocks new execution while preserving independently committed campaign scope ancestry
+  ---
+  duration_ms: 72.2535
+  type: 'test'
+  ...
+# Subtest: later mode disable prevents current scope reuse without rewriting the saved native policy revision
+ok 3 - later mode disable prevents current scope reuse without rewriting the saved native policy revision
+  ---
+  duration_ms: 67.436
+  type: 'test'
+  ...
+# Subtest: missing placement, travel or proxy control cannot create campaign attack scope
+ok 4 - missing placement, travel or proxy control cannot create campaign attack scope
+  ---
+  duration_ms: 67.9377
+  type: 'test'
+  ...
+# Subtest: scope contract failure atomically rolls back its immutable terms, mutation and native source
+ok 5 - scope contract failure atomically rolls back its immutable terms, mutation and native source
+  ---
+  duration_ms: 53.8824
+  type: 'test'
+  ...
+# Subtest: scene end permits read-only committed scope ancestry; retracted original player input remains a hard hold
+ok 6 - scene end permits read-only committed scope ancestry; retracted original player input remains a hard hold
+  ---
+  duration_ms: 65.2074
+  type: 'test'
+  ...
+# Subtest: actual campaign provider cold-imports original native scope APIs
+ok 7 - actual campaign provider cold-imports original native scope APIs
+  ---
+  duration_ms: 319.2763
+  type: 'test'
+  ...
+1..7
+# tests 7
+# suites 0
+# pass 7
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 782.7631

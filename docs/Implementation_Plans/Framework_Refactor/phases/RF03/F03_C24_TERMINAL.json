@@ -1,0 +1,36 @@
+{
+  "base_sha": "05e84a37b942e2c97659af617d20d724736eb543",
+  "unique_tests": 7,
+  "executions": 7,
+  "pass": 7,
+  "fail": 0,
+  "exit": 0,
+  "duration_ms": 782.7631,
+  "syntax_pass": 4,
+  "body_equivalence": true,
+  "body_sha256": "e2ccbb983df20243497541325a70f2433fb3bb1d003a062957aed9d605132c42",
+  "hashes": {
+    "bot/src/pvp-campaign-execution.js": "a4276fa4b55a3bb7672f2a85ad93b2e854a4f15e85225077ac77bd450883b057",
+    "bot/src/frameworks/daggerheart/pvp-campaign-scope-rules.js": "b48274342339f0697e669c8714d76c4dda117fc7637e84dbc45f64f1f30aa5d8",
+    "bot/src/frameworks/daggerheart/public.js": "157a8ef227e8c3c8768c1a901dcd5a9a3ff00c126375fb61ece8c2f015a315c1",
+    "bot/tests/ai-gm-2026-10/rf03-f03-c24.test.mjs": "b67fdd3a25c807c2da6e2636db2e377113f92a092c72ce84549bdb1c9634b341"
+  },
+  "gate": {
+    "sourceModules": 444,
+    "unowned": 0,
+    "importOccurrences": 2442,
+    "internalImportOccurrences": 2267,
+    "cycleComponents": 1,
+    "largestCycle": 182,
+    "rawViolationOccurrences": 2498,
+    "acceptedLegacyOccurrences": 2498,
+    "activeViolationGroups": 0,
+    "transitionErrors": 0,
+    "pass": true
+  },
+  "limitations": "Actual native campaign scope and safety policy run together. Current/historical owner/action/target/presence authentication and event storage boundaries explicitly mocked; no full production or live publication proof.",
+  "provider_calls": 0,
+  "provider_cost_usd": 0,
+  "codex_usage": "UNMEASURED",
+  "release": "NOT AUTHORIZED"
+}
