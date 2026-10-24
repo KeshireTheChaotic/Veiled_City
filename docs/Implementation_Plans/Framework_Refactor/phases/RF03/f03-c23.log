@@ -1,0 +1,58 @@
+TAP version 13
+# Subtest: each owner seals only their own attempted response before either may execute actual native dice
+ok 1 - each owner seals only their own attempted response before either may execute actual native dice
+  ---
+  duration_ms: 38.7537
+  type: 'test'
+  ...
+# Subtest: higher final total wins over lower Critical; terminal stake remains separate from player narrative or damage
+ok 2 - higher final total wins over lower Critical; terminal stake remains separate from player narrative or damage
+  ---
+  duration_ms: 53.1937
+  type: 'test'
+  ...
+# Subtest: actual narrative Fear receipt and gate take precedence over next-round continuation
+ok 3 - actual narrative Fear receipt and gate take precedence over next-round continuation
+  ---
+  duration_ms: 70.2793
+  type: 'test'
+  ...
+# Subtest: three strikes require actual paired owner dice and both fresh continuations for each next round
+ok 4 - three strikes require actual paired owner dice and both fresh continuations for each next round
+  ---
+  duration_ms: 134.506
+  type: 'test'
+  ...
+# Subtest: native pairing failure rolls back the second roll, source and verdict while preserving the first owner roll
+ok 5 - native pairing failure rolls back the second roll, source and verdict while preserving the first owner roll
+  ---
+  duration_ms: 45.6503
+  type: 'test'
+  ...
+# Subtest: changed trait or revoked owner choice prevents dice without guessing another trait or response
+ok 6 - changed trait or revoked owner choice prevents dice without guessing another trait or response
+  ---
+  duration_ms: 40.9695
+  type: 'test'
+  ...
+# Subtest: saved paired verdict corruption is rejected by full native terminal proof after reopen
+ok 7 - saved paired verdict corruption is rejected by full native terminal proof after reopen
+  ---
+  duration_ms: 58.2843
+  type: 'test'
+  ...
+# Subtest: actual round provider cold-imports native APIs and preserves separately owned narrative authorship exports
+ok 8 - actual round provider cold-imports native APIs and preserves separately owned narrative authorship exports
+  ---
+  duration_ms: 324.4209
+  type: 'test'
+  ...
+1..8
+# tests 8
+# suites 0
+# pass 8
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 839.3224

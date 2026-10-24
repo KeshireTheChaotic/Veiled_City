@@ -1,0 +1,44 @@
+{
+  "ended": "2026-10-24T09:55:06.5743078Z",
+  "syntax": [
+    {
+      "path": "bot/src/pvp-rounds.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/pvp-round-rules.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/public.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf03-f03-c23.test.mjs",
+      "exit": 0
+    }
+  ],
+  "started": "2026-10-24T09:55:04.8123887Z",
+  "base_sha": "19f4d47bedc7c400bf38f8c0f3005d36c26dd601",
+  "architecture_exit": 0,
+  "frozen_hashes": [
+    {
+      "sha256": "9217AFF982C53A86054100EF3945E8CD359477AFE30645E1A6FBEF126A2E1063",
+      "path": "bot/src/pvp-rounds.js"
+    },
+    {
+      "sha256": "94A79D4785AF6CFAC51118E0F95ECF13290F534B8C7C514892D0B74BEFF7DE16",
+      "path": "bot/src/frameworks/daggerheart/pvp-round-rules.js"
+    },
+    {
+      "sha256": "9A29C433EF5D9F518F5327FACC566523FCED32C81FA16724F2AF085B89DEF79E",
+      "path": "bot/src/frameworks/daggerheart/public.js"
+    },
+    {
+      "sha256": "0B466A76771AC03C8040883BDFCE2A74DFF2483336D92377D9FA0371024F0380",
+      "path": "bot/tests/ai-gm-2026-10/rf03-f03-c23.test.mjs"
+    }
+  ],
+  "run_id": "RF03-F03-C23",
+  "test_exit": 0
+}

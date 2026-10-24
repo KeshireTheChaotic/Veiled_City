@@ -1,0 +1,36 @@
+{
+  "base_sha": "19f4d47bedc7c400bf38f8c0f3005d36c26dd601",
+  "unique_tests": 8,
+  "executions": 8,
+  "pass": 8,
+  "fail": 0,
+  "exit": 0,
+  "duration_ms": 839.3224,
+  "syntax_pass": 4,
+  "body_equivalence": true,
+  "body_sha256": "d7d25282f928a5a0f23c1a9639828f7f16c6cf2ab3567622bc8913c6780c903b",
+  "hashes": {
+    "bot/src/pvp-rounds.js": "9217aff982c53a86054100ef3945e8cd359477afe30645e1a6fbef126a2e1063",
+    "bot/src/frameworks/daggerheart/pvp-round-rules.js": "94a79d4785af6cfac51118e0f95ecf13290f534b8c7c514892d0b74beff7de16",
+    "bot/src/frameworks/daggerheart/public.js": "9a29c433ef5d9f518f5327facc566523fced32c81fa16724f2af085b89def79e",
+    "bot/tests/ai-gm-2026-10/rf03-f03-c23.test.mjs": "0b466a76771ac03c8040883bdfce2a74dff2483336d92377d9fa0371024f0380"
+  },
+  "gate": {
+    "sourceModules": 443,
+    "unowned": 0,
+    "importOccurrences": 2440,
+    "internalImportOccurrences": 2265,
+    "cycleComponents": 1,
+    "largestCycle": 182,
+    "rawViolationOccurrences": 2498,
+    "acceptedLegacyOccurrences": 2498,
+    "activeViolationGroups": 0,
+    "transitionErrors": 0,
+    "pass": true
+  },
+  "limitations": "Actual new native round factory plus native Fear gate and Duality dice run together. Owner agreement/source authentication/window coordination/terminal settlement/notice/continuation implementations remain mocks. No full upstream or publication qualification.",
+  "provider_calls": 0,
+  "provider_cost_usd": 0,
+  "codex_usage": "UNMEASURED",
+  "release": "NOT AUTHORIZED"
+}
