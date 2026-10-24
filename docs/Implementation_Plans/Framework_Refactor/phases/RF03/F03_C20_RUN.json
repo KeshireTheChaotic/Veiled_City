@@ -1,0 +1,34 @@
+{
+  "test_exit": 1,
+  "architecture_exit": 0,
+  "base_sha": "ab8d71d60049cb48dace0ccbaa4dde54ecf14071",
+  "run_id": "RF03-F03-C20",
+  "ended": "2026-10-24T09:39:42.9965373Z",
+  "syntax": [
+    {
+      "path": "bot/src/pvp-campaign-policy.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/pvp-fear-gate.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/pvp-safety-rules.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/pvp-fear-gate-rules.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/public.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf03-f03-c20.test.mjs",
+      "exit": 0
+    }
+  ],
+  "started": "2026-10-24T09:39:41.3131800Z"
+}

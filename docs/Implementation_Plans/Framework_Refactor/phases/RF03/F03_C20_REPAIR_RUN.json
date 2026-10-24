@@ -1,0 +1,7 @@
+{
+  "test_exit": 0,
+  "reason": "The new test assumed one verifier callback, while existing native pending/resolved filters independently validate scope twice. Assert verified authority rather than incidental invocation count; production unchanged.",
+  "run_id": "RF03-F03-C20-repair",
+  "test_syntax_exit": 0,
+  "ended": "2026-10-24T09:39:52.0109307Z"
+}

@@ -1,0 +1,50 @@
+{
+  "base_sha": "ab8d71d60049cb48dace0ccbaa4dde54ecf14071",
+  "unique_tests": 9,
+  "executions": 10,
+  "initial": {
+    "pass": 8,
+    "fail": 1,
+    "exit": 1,
+    "duration_ms": 724.6932
+  },
+  "repair": {
+    "pass": 1,
+    "fail": 0,
+    "exit": 0,
+    "duration_ms": 108.2235
+  },
+  "repair_reason": "New test incorrectly asserted exactly one verification callback although existing filters verify twice. Assert authority was verified, not incidental callback count. Production unchanged; failed case only rerun.",
+  "syntax_pass": 6,
+  "repair_test_syntax": 1,
+  "body_equivalence": true,
+  "body_hashes": {
+    "pvp-campaign-policy": "64e8e2dbfaf260376a5a4322c6ebf55a9441209fd4939ce2e56408d2c4e0950c",
+    "pvp-fear-gate": "bdd7ffb5a05d84c8fc3e70cce8f45fcc60b65edeaa30f740b326b0e05c035223"
+  },
+  "hashes": {
+    "bot/src/pvp-campaign-policy.js": "406578cf69b418611ff5c9a0bd51cba59db440480a2ac8fe5cab900fc50409b4",
+    "bot/src/pvp-fear-gate.js": "99c290caf76065d85733f500e7dfbeb52c20ce2e8b399d1f01d4a1876d5175df",
+    "bot/src/frameworks/daggerheart/pvp-safety-rules.js": "426da4954c08f51fe6917074c0066dcb172076dcbf9068d979b67322fe3f5fab",
+    "bot/src/frameworks/daggerheart/pvp-fear-gate-rules.js": "9e90962d09a46195f42311f8afafaf6bde8b29404d5eaaa41c6470eb62888b08",
+    "bot/src/frameworks/daggerheart/public.js": "f7a40aaad14a8353474edc7f0bb1814300d4cdad7c36fe62ff05da3cd60a201c",
+    "bot/tests/ai-gm-2026-10/rf03-f03-c20.test.mjs": "89494053ec23c511d6a19dbb0a3bbd3c94aed5e544c6ac90fb4dd908345a0e46"
+  },
+  "gate": {
+    "sourceModules": 437,
+    "unowned": 0,
+    "importOccurrences": 2426,
+    "internalImportOccurrences": 2251,
+    "cycleComponents": 1,
+    "largestCycle": 182,
+    "rawViolationOccurrences": 2503,
+    "acceptedLegacyOccurrences": 2503,
+    "activeViolationGroups": 0,
+    "transitionErrors": 0,
+    "pass": true
+  },
+  "provider_calls": 0,
+  "provider_cost_usd": 0,
+  "codex_usage": "UNMEASURED",
+  "release": "NOT AUTHORIZED"
+}

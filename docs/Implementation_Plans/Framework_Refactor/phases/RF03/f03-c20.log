@@ -1,0 +1,84 @@
+TAP version 13
+# Subtest: campaign mode requires authenticated GM input and preserves exact native source history across restart
+ok 1 - campaign mode requires authenticated GM input and preserves exact native source history across restart
+  ---
+  duration_ms: 36.9295
+  type: 'test'
+  ...
+# Subtest: campaign policy corruption rejects authority and failed mode projection rolls its mutation/event back
+ok 2 - campaign policy corruption rejects authority and failed mode projection rolls its mutation/event back
+  ---
+  duration_ms: 32.2438
+  type: 'test'
+  ...
+# Subtest: current owner alone sets a private sticky safety stop before unfinished-window recovery and replay
+ok 3 - current owner alone sets a private sticky safety stop before unfinished-window recovery and replay
+  ---
+  duration_ms: 38.003
+  type: 'test'
+  ...
+# Subtest: ownership change preserves prior sticky stop as a hold and cannot transfer private inspection to a stranger
+ok 4 - ownership change preserves prior sticky stop as a hold and cannot transfer private inspection to a stranger
+  ---
+  duration_ms: 25.3132
+  type: 'test'
+  ...
+# Subtest: attack Fear is immediately gated even without a paired contest and never changes campaign currency
+ok 5 - attack Fear is immediately gated even without a paired contest and never changes campaign currency
+  ---
+  duration_ms: 39.8388
+  type: 'test'
+  ...
+# Subtest: paired Fear waits for actual saved owner dice then gates in native participant order without optional advancement
+ok 6 - paired Fear waits for actual saved owner dice then gates in native participant order without optional advancement
+  ---
+  duration_ms: 80.2467
+  type: 'test'
+  ...
+# Subtest: partial closure keeps real Fear obligation and resolved status requires a separately validated effect
+ok 7 - partial closure keeps real Fear obligation and resolved status requires a separately validated effect
+  ---
+  duration_ms: 54.6371
+  type: 'test'
+  ...
+# Subtest: campaign-wide pending Fear crosses only separately verified matching native scope
+not ok 8 - campaign-wide pending Fear crosses only separately verified matching native scope
+  ---
+  duration_ms: 30.4441
+  type: 'test'
+  location: 'D:\\Library\\Development\\Veiled_City\\bot\\tests\\ai-gm-2026-10\\rf03-f03-c20.test.mjs:41:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    2 !== 1
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 1
+  actual: 2
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf03-f03-c20.test.mjs:42:493)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: actual safety and Fear gate providers cold-import their original interfaces
+ok 9 - actual safety and Fear gate providers cold-import their original interfaces
+  ---
+  duration_ms: 316.3946
+  type: 'test'
+  ...
+1..9
+# tests 9
+# suites 0
+# pass 8
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 724.6932
