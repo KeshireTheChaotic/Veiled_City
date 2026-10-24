@@ -49,3 +49,4 @@ export {createAdversaryAttackPassiveRules} from './adversary-attack-passive-rule
 export {createAdversaryHitRules} from './adversary-hit-rules.js';
 export {createConditionRecoveryRules} from './condition-recovery-rules.js';
 export {createAdversaryBindingRules} from './adversary-binding-rules.js';
+export {createIncomingAttackRules} from './incoming-attack-rules.js';

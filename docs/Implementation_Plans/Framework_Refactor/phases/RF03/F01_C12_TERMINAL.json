@@ -1,0 +1,43 @@
+{
+  "base_sha": "7356041b2ea026f2e33ba86ca3c6ee645352138f",
+  "unique_tests": 9,
+  "executions": 12,
+  "initial": {
+    "pass": 6,
+    "fail": 3,
+    "exit": 1,
+    "duration_ms": 1217.7466
+  },
+  "repair": {
+    "pass": 3,
+    "fail": 0,
+    "exit": 0,
+    "duration_ms": 399.1398
+  },
+  "repair_reason": "Three new fixtures supplied d20=6 with modifier3 against Evasion10, correctly producing misses instead of intended hit paths. Only failed cases rerun after corrected RNG fixtures; production unchanged.",
+  "syntax_pass": 4,
+  "repair_test_syntax": 1,
+  "body_equivalence": true,
+  "body_sha256": "fff34898c934188603749d572b207f1962dd3a7f3624c24dd8a97baad5059056",
+  "hashes": {
+    "bot/src/pc-incoming.js": "60785b4c48a3f3e51766a9ac0cc36316b8c6933633e5d9f21f6f4f45ec899a48",
+    "bot/src/frameworks/daggerheart/incoming-attack-rules.js": "1318fb77bbe7d0954af606e7a1be26b24c5483effa73d85800d01de98d89b009",
+    "bot/src/frameworks/daggerheart/public.js": "b6f380d5337800638c549ea69c65a0e5502c73cdb28820a2b5ed0bfea32b1125",
+    "bot/tests/ai-gm-2026-10/rf03-f01-c12.test.mjs": "1f56e416699ec84d159b4bd448ed42729d26f576f9a99fd1254e4be9d0676de8"
+  },
+  "gate": {
+    "sources": 430,
+    "imports": 2406,
+    "largest_cycle": 182,
+    "accepted_occurrences": 2515,
+    "active": 0,
+    "unowned": 0,
+    "integrity_errors": 0,
+    "exit": 0
+  },
+  "limitations": "Actual native incoming/Volley/dice/damage/owner receipt policy runs. Source/current-owner/decision/Fear-cost/condition/feature peers are mocks; no full upstream, production persistence, live delivery or all passive/Professional Entry combinations qualified.",
+  "provider_calls": 0,
+  "provider_cost_usd": 0,
+  "codex_usage": "UNMEASURED",
+  "release": "NOT AUTHORIZED"
+}

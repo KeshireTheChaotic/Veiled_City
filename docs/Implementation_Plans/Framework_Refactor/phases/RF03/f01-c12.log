@@ -1,0 +1,131 @@
+TAP version 13
+# Subtest: NPC attack preparation stays private and unrolled until affected owner review and defense confirmation
+ok 1 - NPC attack preparation stays private and unrolled until affected owner review and defense confirmation
+  ---
+  duration_ms: 98.4616
+  type: 'test'
+  ...
+# Subtest: natural20 NPC attack saves Critical damage and only target owner chooses Armor/HP
+ok 2 - natural20 NPC attack saves Critical damage and only target owner chooses Armor/HP
+  ---
+  duration_ms: 108.4875
+  type: 'test'
+  ...
+# Subtest: native miss saves no damage and cannot manufacture Armor/HP or reroll on replay
+ok 3 - native miss saves no damage and cannot manufacture Armor/HP or reroll on replay
+  ---
+  duration_ms: 103.0091
+  type: 'test'
+  ...
+# Subtest: changed owner principal/source/proxy guards reject execution before NPC dice
+ok 4 - changed owner principal/source/proxy guards reject execution before NPC dice
+  ---
+  duration_ms: 99.5084
+  type: 'test'
+  ...
+# Subtest: failed incoming damage receipt rolls HP/Armor/owner choice and mutation back
+not ok 5 - failed incoming damage receipt rolls HP/Armor/owner choice and mutation back
+  ---
+  duration_ms: 98.7621
+  type: 'test'
+  location: 'D:\\Library\\Development\\Veiled_City\\bot\\tests\\ai-gm-2026-10\\rf03-f01-c12.test.mjs:60:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /injected incoming effect failure/. Input:
+    
+    'Error: Actual hit and affected owner Armor decision required.'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+  error: 'Actual hit and affected owner Armor decision required.'
+  stack: |-
+    fail (file:///D:/Library/Development/Veiled_City/bot/src/frameworks/daggerheart/incoming-attack-rules.js:11:44)
+    file:///D:/Library/Development/Veiled_City/bot/src/frameworks/daggerheart/incoming-attack-rules.js:481:80
+    Object.transaction (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf03-f01-c12.test.mjs:24:132)
+    Object.resolveIncomingDamage (file:///D:/Library/Development/Veiled_City/bot/src/frameworks/daggerheart/incoming-attack-rules.js:474:13)
+    Object.resolve (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf03-f01-c12.test.mjs:37:450)
+    file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf03-f01-c12.test.mjs:61:124
+    getActual (node:assert:611:5)
+    strict.throws (node:assert:759:24)
+    TestContext.<anonymous> (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf03-f01-c12.test.mjs:61:111)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+  operator: 'throws'
+  stack: |-
+    TestContext.<anonymous> (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf03-f01-c12.test.mjs:61:111)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: final HP leaves the native death choice pending with the affected owner
+not ok 6 - final HP leaves the native death choice pending with the affected owner
+  ---
+  duration_ms: 101.9689
+  type: 'test'
+  location: 'D:\\Library\\Development\\Veiled_City\\bot\\tests\\ai-gm-2026-10\\rf03-f01-c12.test.mjs:63:1'
+  failureType: 'testCodeFailure'
+  error: 'Actual hit and affected owner Armor decision required.'
+  code: 'PC_EFFECT_AUTHORITY'
+  stack: |-
+    fail (file:///D:/Library/Development/Veiled_City/bot/src/frameworks/daggerheart/incoming-attack-rules.js:11:44)
+    file:///D:/Library/Development/Veiled_City/bot/src/frameworks/daggerheart/incoming-attack-rules.js:481:80
+    Object.transaction (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf03-f01-c12.test.mjs:24:132)
+    Object.resolveIncomingDamage (file:///D:/Library/Development/Veiled_City/bot/src/frameworks/daggerheart/incoming-attack-rules.js:474:13)
+    Object.resolve (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf03-f01-c12.test.mjs:37:450)
+    TestContext.<anonymous> (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf03-f01-c12.test.mjs:64:94)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+  ...
+# Subtest: shared Volley saves one attack/damage draw and independent owner targets without repeated Fear
+not ok 7 - shared Volley saves one attack/damage draw and independent owner targets without repeated Fear
+  ---
+  duration_ms: 132.0096
+  type: 'test'
+  location: 'D:\\Library\\Development\\Veiled_City\\bot\\tests\\ai-gm-2026-10\\rf03-f01-c12.test.mjs:66:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    1 !== 3
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 3
+  actual: 1
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf03-f01-c12.test.mjs:69:154)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: a withheld Volley defense stays owned and does not force that PC to confirm or spend Armor
+ok 8 - a withheld Volley defense stays owned and does not force that PC to confirm or spend Armor
+  ---
+  duration_ms: 102.0948
+  type: 'test'
+  ...
+# Subtest: actual incoming provider cold-imports with current receipt and owner-defense APIs
+ok 9 - actual incoming provider cold-imports with current receipt and owner-defense APIs
+  ---
+  duration_ms: 299.9968
+  type: 'test'
+  ...
+1..9
+# tests 9
+# suites 0
+# pass 6
+# fail 3
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1217.7466
