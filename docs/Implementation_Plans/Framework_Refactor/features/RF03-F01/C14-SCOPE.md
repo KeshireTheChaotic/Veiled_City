@@ -1,0 +1,3 @@
+# RF03-F01 C14 — Professional Entry native evidence and encounter consumption
+
+Extract complete existing native Professional Entry algorithm unchanged. Preserve GM-established fiction as valid native evidence, explicit encounter evidence precedence, exact action/target/current-source and first qualifying roll per encounter, immutable use receipts, current versus historical proof. Actual provider supplies current scene/presence and event writer capabilities; no new narrative restrictions or mechanics. Fresh SQLite fixtures exercise actual evidence producer, qualifier, use, replay/reopen, source revocation and rollback. Do not certify upstream GM authentication, full GM roll or live publication. Freeze once, targeted tests/syntax and architecture ratchet.

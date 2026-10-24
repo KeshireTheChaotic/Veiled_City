@@ -1,0 +1,36 @@
+{
+  "base_sha": "9943da75816cc25461fbf95214133aea77daf8ca",
+  "unique_tests": 7,
+  "executions": 7,
+  "pass": 7,
+  "fail": 0,
+  "exit": 0,
+  "duration_ms": 606.9634,
+  "syntax_pass": 4,
+  "body_equivalence": true,
+  "body_sha256": "3977f4253c743086468ce98cd8507e02078220ceb7568b95afc00d390a5f7864",
+  "hashes": {
+    "bot/src/native-professional-entry.js": "753a40ca9f9edf285ad38d9e99856a57118b69b9f6ef1d837a63bdf96240f352",
+    "bot/src/frameworks/daggerheart/professional-entry-rules.js": "a08284995b43c432aa49a1d14d19510a98d340843294f7cb7f807f4931ec22ac",
+    "bot/src/frameworks/daggerheart/public.js": "e9f471626fb6e130e1da53af5aaa907d2d8d2cb3ca10b5a3c8d77694315f3fad",
+    "bot/tests/ai-gm-2026-10/rf03-f01-c14.test.mjs": "cd08955c76c4f6796836c890c4139910b361e7712df628805d5d376966f61669"
+  },
+  "gate": {
+    "sourceModules": 432,
+    "unowned": 0,
+    "importOccurrences": 2416,
+    "internalImportOccurrences": 2241,
+    "cycleComponents": 1,
+    "largestCycle": 182,
+    "rawViolationOccurrences": 2511,
+    "acceptedLegacyOccurrences": 2511,
+    "activeViolationGroups": 0,
+    "transitionErrors": 0,
+    "pass": true
+  },
+  "retired_records": 3,
+  "provider_calls": 0,
+  "provider_cost_usd": 0,
+  "codex_usage": "UNMEASURED",
+  "release": "NOT AUTHORIZED"
+}

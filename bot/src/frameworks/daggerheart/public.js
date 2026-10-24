@@ -51,3 +51,4 @@ export {createConditionRecoveryRules} from './condition-recovery-rules.js';
 export {createAdversaryBindingRules} from './adversary-binding-rules.js';
 export {createIncomingAttackRules} from './incoming-attack-rules.js';
 export {createGroupFeatureExecutionRules} from './group-feature-execution-rules.js';
+export {createProfessionalEntryRules} from './professional-entry-rules.js';

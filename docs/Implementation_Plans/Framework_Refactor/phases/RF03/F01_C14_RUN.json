@@ -1,0 +1,27 @@
+{
+  "run_id": "RF03-F01-C14",
+  "started": "2026-10-24T09:34:29.5818308Z",
+  "base_sha": "9943da75816cc25461fbf95214133aea77daf8ca",
+  "test_exit": 0,
+  "syntax": [
+    {
+      "exit": 0,
+      "path": "bot/src/native-professional-entry.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/frameworks/daggerheart/professional-entry-rules.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/frameworks/daggerheart/public.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/tests/ai-gm-2026-10/rf03-f01-c14.test.mjs"
+    }
+  ],
+  "ended": "2026-10-24T09:34:31.0770123Z",
+  "architecture_exit": 1,
+  "architecture_note": "Initial checker returned three obsolete transition errors; exit reconstructed from terminal report (PowerShell last-exit variable overwritten by git rev-parse before serializing)."
+}
