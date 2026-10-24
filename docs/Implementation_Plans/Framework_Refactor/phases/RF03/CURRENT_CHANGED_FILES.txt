@@ -1,7 +1,13 @@
 bot/src/action-consent.js
 bot/src/ai-intents.js
+bot/src/application/composition/environment-scene.js
+bot/src/application/composition/public.js
+bot/src/application/composition/pvp-agreements.js
 bot/src/consent-native.js
+bot/src/encounter.js
 bot/src/fear-reservations.js
+bot/src/framework-to-framework/daggerheart--narrative/public.js
+bot/src/framework-to-framework/daggerheart--world/public.js
 bot/src/frameworks/daggerheart/action-consent-rules.js
 bot/src/frameworks/daggerheart/actor-control-rules.js
 bot/src/frameworks/daggerheart/adversary-attack-passive-rules.js
@@ -12,6 +18,7 @@ bot/src/frameworks/daggerheart/condition-recovery-rules.js
 bot/src/frameworks/daggerheart/consent-response-rules.js
 bot/src/frameworks/daggerheart/defensive-feature-rules.js
 bot/src/frameworks/daggerheart/encounter-activation-rules.js
+bot/src/frameworks/daggerheart/encounter-composition-rules.js
 bot/src/frameworks/daggerheart/encounter-relation-rules.js
 bot/src/frameworks/daggerheart/environment-access-rules.js
 bot/src/frameworks/daggerheart/environment-acoustic-rules.js
@@ -24,6 +31,7 @@ bot/src/frameworks/daggerheart/environment-imaging-rules.js
 bot/src/frameworks/daggerheart/environment-recording-rules.js
 bot/src/frameworks/daggerheart/environment-recovery-rules.js
 bot/src/frameworks/daggerheart/environment-rule-contexts.js
+bot/src/frameworks/daggerheart/environment-scene-rules.js
 bot/src/frameworks/daggerheart/environment-trace-rules.js
 bot/src/frameworks/daggerheart/equipped-attack-rules.js
 bot/src/frameworks/daggerheart/evidence-analysis-rules.js
@@ -51,6 +59,7 @@ bot/src/frameworks/daggerheart/pre-roll-fear-recovery-rules.js
 bot/src/frameworks/daggerheart/pre-roll-fear-rules.js
 bot/src/frameworks/daggerheart/professional-entry-rules.js
 bot/src/frameworks/daggerheart/public.js
+bot/src/frameworks/daggerheart/pvp-agreement-rules.js
 bot/src/frameworks/daggerheart/pvp-attack-rules.js
 bot/src/frameworks/daggerheart/pvp-authorship-rules.js
 bot/src/frameworks/daggerheart/pvp-brawl-rules.js
@@ -74,12 +83,17 @@ bot/src/frameworks/daggerheart/rules-arbitration-rules.js
 bot/src/frameworks/daggerheart/stress-passive-rules.js
 bot/src/frameworks/daggerheart/typed-roll-outcome-rules.js
 bot/src/frameworks/daggerheart/unarmed-attack-rules.js
+bot/src/frameworks/narrative/contracts/pvp-agreement.js
+bot/src/frameworks/narrative/public.js
+bot/src/frameworks/world/contracts/environment-scene.js
+bot/src/frameworks/world/public.js
 bot/src/gm-action-capability.js
 bot/src/gm-action-review.js
 bot/src/gm-action-ruling.js
 bot/src/gm-mechanical-v9.js
 bot/src/gm-native-rolls.js
 bot/src/gm-ruling-schema.js
+bot/src/index.js
 bot/src/kernel/application-authority.js
 bot/src/long-projects.js
 bot/src/mechanical-native-v9.js
@@ -118,6 +132,7 @@ bot/src/native-environment-private-room.js
 bot/src/native-environment-procedure.js
 bot/src/native-environment-recording.js
 bot/src/native-environment-recovery.js
+bot/src/native-environment-scene.js
 bot/src/native-environment-sealed-docket.js
 bot/src/native-environment-thin-walls.js
 bot/src/native-environment-third-rail-spirit.js
@@ -192,6 +207,7 @@ bot/tests/ai-gm-2026-10/rf03-f01-c25.test.mjs
 bot/tests/ai-gm-2026-10/rf03-f01-c26.test.mjs
 bot/tests/ai-gm-2026-10/rf03-f01-c27.test.mjs
 bot/tests/ai-gm-2026-10/rf03-f01-c28.test.mjs
+bot/tests/ai-gm-2026-10/rf03-f01-c29.test.mjs
 bot/tests/ai-gm-2026-10/rf03-f02-c15.test.mjs
 bot/tests/ai-gm-2026-10/rf03-f02-c16.test.mjs
 bot/tests/ai-gm-2026-10/rf03-f02-c17.test.mjs
@@ -215,6 +231,7 @@ bot/tests/ai-gm-2026-10/rf03-f03-c28.test.mjs
 bot/tests/ai-gm-2026-10/rf03-f03-c29.test.mjs
 bot/tests/ai-gm-2026-10/rf03-f03-c30.test.mjs
 bot/tests/ai-gm-2026-10/rf03-f03-c31.test.mjs
+bot/tests/ai-gm-2026-10/rf03-f03-c32.test.mjs
 bot/tests/ai-gm-2026-10/rf03-f04-c03.test.mjs
 bot/tests/ai-gm-2026-10/rf03-f04-c04.test.mjs
 bot/tests/ai-gm-2026-10/rf03-f04-c05.test.mjs
@@ -225,6 +242,9 @@ bot/tests/ai-gm-2026-10/rf03-f04-c09.test.mjs
 bot/tests/ai-gm-2026-10/rf03-f04-c10.test.mjs
 bot/tests/ai-gm-2026-10/rf03-f04-c11.test.mjs
 bot/tests/ai-gm-2026-10/rf03-f04-c12.test.mjs
+bot/tests/ai-gm-2026-10/rf03-f04-c13.test.mjs
+bot/tests/ai-gm-2026-10/rf03-f05-c04.test.mjs
+bot/tests/ai-gm-2026-10/rf03-f05-c05.test.mjs
 bot/tests/ai-gm-2026-10/rf03-f06-c03.test.mjs
 bot/tests/ai-gm-2026-10/rf03-f06-c04.test.mjs
 docs/Implementation_Plans/Framework_Refactor/phases/RF03/F01_C06_TERMINAL.json
@@ -250,6 +270,7 @@ docs/Implementation_Plans/Framework_Refactor/phases/RF03/F01_C25_TERMINAL.json
 docs/Implementation_Plans/Framework_Refactor/phases/RF03/F01_C26_TERMINAL.json
 docs/Implementation_Plans/Framework_Refactor/phases/RF03/F01_C27_TERMINAL.json
 docs/Implementation_Plans/Framework_Refactor/phases/RF03/F01_C28_TERMINAL.json
+docs/Implementation_Plans/Framework_Refactor/phases/RF03/F01_C29_TERMINAL.json
 docs/Implementation_Plans/Framework_Refactor/phases/RF03/F02_C15_TERMINAL.json
 docs/Implementation_Plans/Framework_Refactor/phases/RF03/F02_C16_TERMINAL.json
 docs/Implementation_Plans/Framework_Refactor/phases/RF03/F02_C17_TERMINAL.json
@@ -273,6 +294,7 @@ docs/Implementation_Plans/Framework_Refactor/phases/RF03/F03_C28_TERMINAL.json
 docs/Implementation_Plans/Framework_Refactor/phases/RF03/F03_C29_TERMINAL.json
 docs/Implementation_Plans/Framework_Refactor/phases/RF03/F03_C30_TERMINAL.json
 docs/Implementation_Plans/Framework_Refactor/phases/RF03/F03_C31_TERMINAL.json
+docs/Implementation_Plans/Framework_Refactor/phases/RF03/F03_C32_TERMINAL.json
 docs/Implementation_Plans/Framework_Refactor/phases/RF03/F04_C03_TERMINAL.json
 docs/Implementation_Plans/Framework_Refactor/phases/RF03/F04_C04_TERMINAL.json
 docs/Implementation_Plans/Framework_Refactor/phases/RF03/F04_C05_TERMINAL.json
@@ -283,5 +305,8 @@ docs/Implementation_Plans/Framework_Refactor/phases/RF03/F04_C09_TERMINAL.json
 docs/Implementation_Plans/Framework_Refactor/phases/RF03/F04_C10_TERMINAL.json
 docs/Implementation_Plans/Framework_Refactor/phases/RF03/F04_C11_TERMINAL.json
 docs/Implementation_Plans/Framework_Refactor/phases/RF03/F04_C12_TERMINAL.json
+docs/Implementation_Plans/Framework_Refactor/phases/RF03/F04_C13_TERMINAL.json
+docs/Implementation_Plans/Framework_Refactor/phases/RF03/F05_C04_TERMINAL.json
+docs/Implementation_Plans/Framework_Refactor/phases/RF03/F05_C05_TERMINAL.json
 docs/Implementation_Plans/Framework_Refactor/phases/RF03/F06_C03_TERMINAL.json
 docs/Implementation_Plans/Framework_Refactor/phases/RF03/F06_C04_TERMINAL.json

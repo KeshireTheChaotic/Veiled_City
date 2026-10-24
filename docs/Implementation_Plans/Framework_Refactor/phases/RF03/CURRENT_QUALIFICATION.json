@@ -1,16 +1,16 @@
 {
-  "head": "644dfdbd9737c7ad90c52c37342a51b8834d5181",
+  "head": "87e28defba97cff3a12720039532b9347c8028b4",
   "phase_status": "INCOMPLETE",
   "feature_statuses": {
-    "F01": "INCOMPLETE: native GM ruling/arbitration/action review, ordinary effect proof/application, evidence analysis, encounter activation, schema, roll sharing/declaration/finalization and mechanical projections now extracted and scoped-qualified. Encounter/source/publication integration and residual producer ownership still require reconciliation.",
+    "F01": "INCOMPLETE: native roster/tier/automatic encounter composition now extracted and scoped-qualified. Remaining grounded encounter approval/activation/actor mapping and native consequence/publication/source policy decomposition still require audit and completion.",
     "F02": "SCOPED_NATIVE_DECOMPOSITION_COMPLETE / LOCAL INTEGRATION HOLDS: inventoried native policy extracted; source bindings explicitly accountable to named future features; full phase combat paths still require F01/F03 peers.",
-    "F03": "INCOMPLETE: native clause/ratification/disclosure, external owner terms/replies and pre-roll announcement eligibility now extracted and scoped-qualified. Native bilateral agreement source in narrative-pvp.js still needs actual native/narrative composition; actual NPC/threat/incoming and other peer qualification remains.",
-    "F04": "INCOMPLETE: added native emergency cleanup, Sirens Outside, Door Chain, imaging clue and owner recording. Actual native recording→upload registration→oneFear countdown integration qualified with explicit source/ancestry mocks. Remaining witnesses/scene/device handlers and world pair adoption remain; Closing Time Moves unsupported.",
-    "F05": "PARTIAL: adopted intent/native, character advancement and command display pairs; complete receipt-backed native/narrative and world pair not adopted",
-    "F06": "PARTIAL: 467unique passing cases/505case executions/58fresh files; actual changed provider entrypoints loaded. Full native agreement/environment/pair phase exit not satisfied."
+    "F03": "SCOPED_NATIVE_EXTRACTION_PROGRESS / NOT FULL PHASE QUALIFICATION: bilateral agreement source policy now genuinely extracted and adopted through native/narrative pair, with actual native clause integration. Exact residual source/publication/world producer dependencies and broader peer workflows remain accountable; do not mark RF03 complete.",
+    "F04": "INCOMPLETE: native scene CodeBlue/Cascade/Memory/Correction extracted and adopted through real native/world pair; actual emergency recovery and recording/countdown integration scoped-qualified. Witness/remaining source/native handler decomposition and world source producer workflows pending; Closing Time Moves unsupported.",
+    "F05": "PARTIAL ACTUAL ADOPTION: intent/native, character advancement, command display, scoped native/world scene and native/narrative bilateral agreement pairs adopted. Broader native receipt-to-writer and other world source contracts not yet fully qualified.",
+    "F06": "PARTIAL: 500unique cases/550executions/63fresh files. Actual scoped pair/native integrations qualified; remaining native encounter/environment and broad source pipeline exit not met."
   },
-  "fresh_unique_passed": 467,
-  "case_executions": 505,
+  "fresh_unique_passed": 500,
+  "case_executions": 550,
   "evidence": [
     {
       "id": "F01_C06",
@@ -838,6 +838,71 @@
         "duration_ms": 475.0521
       },
       "limitations": "Actual changed provider ESM imports and exact owner terms/opt-in/closed native record guards; no full authoritative source/native bilateral agreement/world producer/publication qualification."
+    },
+    {
+      "id": "F04_C13",
+      "file": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F04_C13_TERMINAL.json",
+      "sha256": "2867037fafef9bacfea61002bc5ba8bc45ebff23ddc1b18933060379d20c4875",
+      "unique_passed": 9,
+      "case_executions": 9,
+      "terminal": {
+        "final_test_exit": 0,
+        "duration_ms": 854.7346,
+        "shared_batch": null
+      },
+      "limitations": "Actual newly extracted scene rules plus actual native emergency recovery and feature-cost planner run with disposable SQLite. Current origin/profile/catalog/opportunity/audience/established fact/source/presence/native owner action/ancestry capabilities explicit mocks. Narrative context aggregation unchanged in original provider; no actual world producer/writer/publication qualification."
+    },
+    {
+      "id": "F05_C04",
+      "file": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F05_C04_TERMINAL.json",
+      "sha256": "54d8a367b80ec3ea22c6af0bb027b7dff153ae83037a21f285df3871373a8559",
+      "unique_passed": 4,
+      "case_executions": 16,
+      "terminal": {
+        "final_test_exit": 0,
+        "duration_ms": 1143.9938,
+        "shared_batch": null
+      },
+      "limitations": "Actual native/world consumer/pair and SQLite native scene/recovery tests run together; real fixed source registration/application initialization exercised offline through actual modules. Source/profile/owner/opportunity/ancestry/presence/catalog verifiers mocked in SQLite cases. No bot startup/real source pipeline/paid provider/Discord/writer or all-world-edge certification."
+    },
+    {
+      "id": "F03_C32",
+      "file": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F03_C32_TERMINAL.json",
+      "sha256": "931c5c8387a420a4f22cc59a9c4ff4a5fde9717b032d83f5a60bb75d11cdf595",
+      "unique_passed": 9,
+      "case_executions": 9,
+      "terminal": {
+        "final_test_exit": 0,
+        "duration_ms": 644.9913,
+        "shared_batch": "F03_C32_F05_C05"
+      },
+      "limitations": "Actual complete native bilateral agreement engine/paired narrative consumer and actual native clause authority run together with disposable SQLite. Current accepted source/target predicate/owner principal/scene/traits/safety/damage peers and source indexing/notice/terminal continuation callbacks explicitly mocked; actual entrypoint/bootstrap composition separately exercised without services. No actual full native round/dice/writer/Discord/production qualification."
+    },
+    {
+      "id": "F05_C05",
+      "file": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F05_C05_TERMINAL.json",
+      "sha256": "23f4eacb231c8a5cfd030cea19b56c937be85d72bc678be85157ea9a714bad82",
+      "unique_passed": 4,
+      "case_executions": 4,
+      "terminal": {
+        "final_test_exit": 0,
+        "duration_ms": 644.9913,
+        "shared_batch": "F03_C32_F05_C05"
+      },
+      "limitations": "Actual complete native bilateral agreement engine/paired narrative consumer and actual native clause authority run together with disposable SQLite. Current accepted source/target predicate/owner principal/scene/traits/safety/damage peers and source indexing/notice/terminal continuation callbacks explicitly mocked; actual entrypoint/bootstrap composition separately exercised without services. No actual full native round/dice/writer/Discord/production qualification."
+    },
+    {
+      "id": "F01_C29",
+      "file": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F01_C29_TERMINAL.json",
+      "sha256": "dab2239c842a865f4cf0d28248247d310c4a55aa0a6dfbac92c92a3ec4edad11",
+      "unique_passed": 7,
+      "case_executions": 7,
+      "terminal": {
+        "final_test_exit": 0,
+        "duration_ms": 471.3149,
+        "shared_batch": null
+      },
+      "limitations": "Actual native encounter math/composition and actual legacy provider linkage. Deterministic random-index capability used for core policy; actual provider test has one possible candidate. Content library, world actor/presence/encounter activation and native world-memory producers remain outside this delta; no state/database/native dice or world generation certification."
     }
   ],
   "sourceHashes": {
@@ -864,7 +929,7 @@
     "bot/src/frameworks/daggerheart/pc-death-rules.js": "d539828ef86c24ab4472cc19ebf70e6bb8d0a1135c5aa887960dc18aaa020dc6",
     "bot/src/frameworks/daggerheart/pre-roll-fear-recovery-rules.js": "ce3121acd9eb41212323304a81127ae7eb8815e70225858fc40331ad3e0a1293",
     "bot/src/frameworks/daggerheart/pre-roll-fear-rules.js": "27b4f79e5d4a2c60b1db07e98ba24215b4c04423292f5aaa1fc4ad02323a5d49",
-    "bot/src/frameworks/daggerheart/public.js": "5b3db004e880f743e1253cd9af6288c245a81d8d496e8dca98c989e3b4350a02",
+    "bot/src/frameworks/daggerheart/public.js": "010d346848fee156e0df7a76a3d848e2d23772542075cbddad934bc75c49ac32",
     "bot/src/frameworks/daggerheart/pvp-damage-rules.js": "4e7dfbcd44de6a8dad7c99e87b4b4cdfe22103c45b2daa320fa0a64dd0fc7527",
     "bot/src/frameworks/daggerheart/roll-collaboration-rules.js": "fc34174a80e8c3fa9ef4863379ee870e2275a42c697991bba1e4573756054bba",
     "bot/src/frameworks/daggerheart/roll-modifier-rules.js": "4a750b7ec87c9d697459a5c33d694fdb30d531bd57d08c69bd7fc98e202f9b29",
@@ -1069,19 +1134,39 @@
     "bot/tests/ai-gm-2026-10/rf03-f04-c12.test.mjs": "c1f4c3bb3aeafe1195ecc2ccc433cac72869a5b4d00d19f0458bc0270675e455",
     "bot/src/native-environment-recording.js": "8b46e0e815fdb258985a220136d96236f88baa39d1041a973985fc05482f3852",
     "bot/tests/ai-gm-2026-10/rf03-f06-c04.test.mjs": "20b91b9f54ba7f2650b3999a5d155fbbfd189338636dd551f1e6e7789ca1289b",
-    "bot/src/narrative-pvp.js": "e9333d96ae689181fcc90ff8ef6d9a9a0d7b58419b1bd9023c98ff182bdc1a8d"
+    "bot/src/narrative-pvp.js": "baf69c1cf0afd9c258c42c692b64df47059cc9909a509ae5a57c6e3e878b89ef",
+    "bot/src/frameworks/daggerheart/environment-scene-rules.js": "acfe38304a0271808c2e30ead9da3bcbecd94d75a983b026d096c9303a2e426b",
+    "bot/src/native-environment-scene.js": "b83f00d5a8987b2be3f9739b54da341757a43a045f60335ce0b92c4674e5664d",
+    "bot/tests/ai-gm-2026-10/rf03-f04-c13.test.mjs": "04bf0fa25897f42366ae8ab5022282679c60cd9842e1fd715f195fd100e36429",
+    "bot/src/framework-to-framework/daggerheart--world/public.js": "126bd8874f6df2dc527cdd5dbb3b3a2f5b5ff169e406accfc04b35c984961d8e",
+    "bot/src/frameworks/world/contracts/environment-scene.js": "252af77f61a45fe4db154fe0780656b096ff7dd287b5addd069fc41e1a49ff38",
+    "bot/src/application/composition/environment-scene.js": "a2b36a06d9395562b703d9b05e75813379d7f1b8f3c58a6daf638014508f78c0",
+    "bot/src/index.js": "fdd0978109c0d1f6006aa503cb5de8a673360cb6ae7b6cdd1011adf8f1a5edb0",
+    "bot/tests/ai-gm-2026-10/rf03-f05-c04.test.mjs": "0cdad7f23c1720fa6acb0377364f3810ec83722fd37b9f38f212c232eacfcd9f",
+    "bot/src/frameworks/world/public.js": "f91214e4a8ce72637d24510f4531ebbec4fdddca08e8f6f1874e114f1fdcba90",
+    "bot/src/application/composition/public.js": "8b579c00254a1267bb5668f92bfcbe5bc58b4a7e11d5bbbf091eb0c26303020b",
+    "bot/src/application/composition/pvp-agreements.js": "6e768cd53dd68733572e6d6ef894f0e69cce16eef60296cbdd9587311ecd75d0",
+    "bot/tests/ai-gm-2026-10/rf03-f05-c05.test.mjs": "45848e51ed84e7be6c6c166ca83a3a9b29d7f63ab4790f6abb90765aeccea726",
+    "bot/tests/ai-gm-2026-10/rf03-f03-c32.test.mjs": "533fb4e3c9a29e097f8c9d319dd516df85e51e912ec181b1c5b4e475e23b19e5",
+    "bot/src/frameworks/narrative/public.js": "a3964543734f1bbf462784a52cd7fccc25bf637780296df4a09310757cf2c68a",
+    "bot/src/frameworks/daggerheart/pvp-agreement-rules.js": "8c5096ec63a202ba75023cbae3bea7659508776451ddeab57b9416b520b0f203",
+    "bot/src/framework-to-framework/daggerheart--narrative/public.js": "f4a1d7c45d5cc62705d4b48b7e4a2d00c5ba86c6bd9a4d8150d173135ab2a343",
+    "bot/src/frameworks/narrative/contracts/pvp-agreement.js": "6be5b12243afc474e655b1cdb24d3b9b22c30708a977fccd2d2fc38898a6925b",
+    "bot/src/encounter.js": "666a934b05a187dbc28d798cac83f6fe844be0c4728b26333deca78bf2184ea7",
+    "bot/tests/ai-gm-2026-10/rf03-f01-c29.test.mjs": "4a5452283bf8f9b238000bbf974f31651462a41084c63a65328bfeb7a6f41250",
+    "bot/src/frameworks/daggerheart/encounter-composition-rules.js": "3a7bcfac44d034163ba71e50869aaade101346003359eebaf6ebd4194c683361"
   },
   "architecture": {
     "mode": "ratchet",
     "phase": "RF03",
-    "sourceModules": 472,
+    "sourceModules": 482,
     "unowned": 0,
-    "importOccurrences": 2498,
-    "internalImportOccurrences": 2323,
+    "importOccurrences": 2518,
+    "internalImportOccurrences": 2343,
     "cycleComponents": 1,
     "largestCycle": 182,
-    "rawViolationOccurrences": 2487,
-    "acceptedLegacyOccurrences": 2487,
+    "rawViolationOccurrences": 2485,
+    "acceptedLegacyOccurrences": 2485,
     "activeViolationGroups": 0,
     "transitionErrors": 0,
     "pass": true,
@@ -1150,11 +1235,11 @@
       "gameplay_change": false
     }
   ],
-  "fresh_test_files": 58,
-  "changed_syntax_passes": 296,
+  "fresh_test_files": 63,
+  "changed_syntax_passes": 332,
   "syntax_failures_repaired": 3,
   "test_file_parse_failures_repaired": 3,
-  "evidence_note": "Aggregate of completed feature batches only, no frozen full-union run. Initial test-file parse failures are counted separately. C12 required two sequential fixture repairs (source-index journaling then missing clock methods), only failed cases rerun; production unchanged. Actual source/owner/world/publication peers are not certified by mocks.",
+  "evidence_note": "Targeted completed fresh batches only, no final frozen union/live certification. C13world ownership produced a rejected direct native import; F05C04 corrected via actual source consumer/pair/bootstrap with no baseline exception. Nine associated C13cases and three lifecycle cases rerun only after their actual call path/lifecycle code changed. Shared C32/F05C05 thirteen-case batch counts9+4once, not duplicate cases/duration.",
   "local_holds": [
     {
       "feature": "RF03-F04",
@@ -1163,8 +1248,10 @@
     },
     {
       "feature": "RF03-F05",
-      "reason": "Complete native receipt-to-narrative and native-world producer pair adoption not implemented."
-    },
+      "reason": "Scoped scene native/world and bilateral agreement native/narrative pairs now adopted. Broader native receipt-to-writer and other world producer/source integration remain unqualified."
+    }
+  ],
+  "resolved_holds": [
     {
       "feature": "RF03-F03",
       "source": "bot/src/narrative-pvp.js",
@@ -1181,7 +1268,26 @@
         "pvpOwnerContext",
         "stagePvpAttempts"
       ],
-      "smallest_safe_implementation": "Extract exact native agreement policy into Daggerheart and adopt an explicit narrative consumer port through daggerheart--narrative in actual application composition. Keep original source/current owner/publication capabilities and historical receipts; no forwarding facade, new cross-owner import, rebaseline, duplicate rule or hidden service locator. Qualify native positive independent owner signatures, termination/recovery and actual composition before closure."
+      "smallest_safe_implementation": "Extract exact native agreement policy into Daggerheart and adopt an explicit narrative consumer port through daggerheart--narrative in actual application composition. Keep original source/current owner/publication capabilities and historical receipts; no forwarding facade, new cross-owner import, rebaseline, duplicate rule or hidden service locator. Qualify native positive independent owner signatures, termination/recovery and actual composition before closure.",
+      "resolved_by": [
+        "F03_C32",
+        "F05_C05"
+      ],
+      "resolution": "Actual native policy extracted, source consumer/pair/application bootstrap adopted and fresh native agreement→clause integration qualified with disclosed upstream mocks."
+    }
+  ],
+  "scoped_pair_adoption": [
+    {
+      "pair": "daggerheart--world",
+      "evidence": "F05_C04",
+      "scope": "native scene effect service only",
+      "broader_coverage": "NOT QUALIFIED"
+    },
+    {
+      "pair": "daggerheart--narrative",
+      "evidence": "F05_C05",
+      "scope": "native bilateral agreement source and clause/round consumers only",
+      "broader_coverage": "NOT QUALIFIED"
     }
   ]
 }

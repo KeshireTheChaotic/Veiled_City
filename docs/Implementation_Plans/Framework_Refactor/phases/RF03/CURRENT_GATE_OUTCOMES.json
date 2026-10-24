@@ -1,8 +1,10 @@
 {
-  "head": "644dfdbd9737c7ad90c52c37342a51b8834d5181",
-  "timestamp": "2026-10-24T06:10:02.3078468-05:00",
   "rf02_ratchet_exit": 0,
+  "end": "2026-10-24T16:05:08.8531089-05:00",
+  "head": "87e28defba97cff3a12720039532b9347c8028b4",
   "rf03_ratchet_exit": 0,
+  "start": "2026-10-24T16:05:06.8004749-05:00",
   "rf03_strict_exit": 1,
+  "tests_rerun": 0,
   "strict_expected": "failure while accepted legacy debt remains"
 }

@@ -1,20 +1,19 @@
 # RF03 current offline acceptance
 
-**INCOMPLETE.** Code checkpoint 644dfdbd9737c7ad90c52c37342a51b8834d5181. Owner edits preserved. RF04 implementation has not begun.
+**INCOMPLETE.** Code checkpoint 87e28defba97cff3a12720039532b9347c8028b4. Owner edits preserved;RF04 implementation not begun.
 
-| Contract | Evidence | Result and remaining gap |
+| Contract | Evidence | Qualification and remaining gap |
 |---|---|---|
-| Native requests/dice/resources/GM guards | F01 C06–C28 | Scoped extraction qualified; encounter/source/publication provider decomposition and full source integration still accountable. |
-| Adversary/native catalog | F02 C01–C22 | Scoped decomposition complete;153definitions/78supported/75review_only preserved; full peer/source/runtime integration pending. |
-| PvP, immediate Fear and independent player clauses | F03 C16–C31 | Scoped native rounds/safety/attack/damage/death/Fear/group/clauses/consent/notice policy qualified. Native bilateral agreement remains in narrative-pvp.js (C32hold); actual source/NPC/incoming/publication integration pending. |
-| Native environment/source progress | F04 C03–C12 | Context/audience/acoustics/countdown/trace/admission/emergency/arrival/resident/imaging/recording exercised; actual native recording→upload registration→oneFear start runs together with SQLite. Witness/scene/other handlers and world pair adoption pending. Closing Time Moves unsupported internal hold. |
-| Receipt/agency/privacy | Fresh SQLite cases | Saved histories/reopen/rollback exercised with explicit peer mocks; no live/native-source or cross-process Discord guarantee inferred. |
-| Actual framework pairs | F05,F01 C03/C05 | Intent/native, character advancement and command display adopted. Complete native–narrative/native–world producer pairs remain missing. |
-| Actual provider entrypoints | F06 C03/C04 | Current ESM providers load and native early guards/field projections pass; not complete gameplay or source pipeline. |
-| Enforcement | RF02/RF03ratchets0;strictRF03=1EXPECTED | 472sources/2498imports/SCC182/2487accepted legacy occurrences;zero active/unowned/integrity. 532RF03 records {"RF03-F01":228,"RF03-F03":131,"RF03-F04":173}. Ratchet pass is not full isolation. |
-| Completed targeted evidence | CURRENT_QUALIFICATION/terminal records | 467unique passing cases/505case executions/58fresh files;296syntax passes. 3initial file parse failures separately repaired. No unchanged passing reruns/full-union claim. |
-| Live services/narrative quality | No authorization or execution | NOT QUALIFIED. Provider0calls/0tokens/$0;Codex UNMEASURED;RELEASE NOT AUTHORIZED. |
+| Native requests/dice/resources/GM and encounter math | F01 C06–C29 | Scoped native extraction qualified, including roster/tier/composition. Grounded encounter approval/activation and remaining consequence/publication/source guards still require completion. |
+| Adversary/native catalog | F02 C01–C22 | Scoped decomposition complete;153definitions/78supported/75review_only unchanged. Broader native/source/runtime integration accountable. |
+| PvP/immediate Fear/independent owner authority | F03 C16–C32 | Native policy extracted/scoped-qualified; C32agreement→native clause integration now uses actual agreement core. Upstream source/NPC/notice/native round and broader workflow qualification incomplete. |
+| Environment/native causal effects | F04 C03–C13 | Actual native scene→emergency recovery and recording→registration→oneFear countdown exercised. Scene cost/receipt policy now through actual native/world pair. Witness/other native handler/source producer work remains; Closing Time Moves unsupported. |
+| Actual paired boundaries | F05 C04/C05 plus earlier F05 | Scoped native/world scene and native/narrative bilateral agreement adopted through consumer-owned interfaces/pair/application bootstrap. Broader native receipt-to-writer and other world routes not fully qualified. |
+| Receipt/agency/privacy | Fresh disposable SQLite cases | Immutable histories, restart/rollback/private/control guards exercised with disclosed upstream mocks. No actual source authentication/live/Discord guarantee inferred. |
+| Enforcement | RF02/RF03ratchets0;strictRF03=1EXPECTED | 482sources/2518imports/SCC182/2485accepted occurrences;zero active/unowned/integrity. 532RF03 records {"RF03-F01":228,"RF03-F03":131,"RF03-F04":173}. Passing ratchet is not full isolation. |
+| Completed targeted evidence | CURRENT_QUALIFICATION/terminal records | 500unique passing cases/550case executions/63fresh files/332syntax passes. Initial file failures and changed-code reruns individually recorded; no unchanged passing reruns or frozen union claim. |
+| Live services/narrative quality | No authorization or invocation | NOT QUALIFIED. Provider0calls/0tokens/$0;Codex UNMEASURED;RELEASE NOT AUTHORIZED. |
 
-Exact records/modules/edges/deadlines in CURRENT_RF03_OBLIGATIONS.json. C32native bilateral agreement remains RF03 implementation work despite old future-phase classification. No critical blocker/new creative restriction/owner question. Continue independently safe RF03 work; do not begin RF04.
+Exact records/modules/edges/deadlines: CURRENT_RF03_OBLIGATIONS.json. C32local hold resolved for native extraction/adoption; full phase still incomplete. No critical blocker, new creative restriction or owner question. Next exact work remains RF03-F01 encounter validation and RF03-F04 witnesses, followed by remaining native source/pair qualification.
 
-Rollback feature commits in reverse order with corresponding exact retirement metadata; evidence checkpoints independently. Preserve owner edits, no reset/clean/data migration. **RELEASE NOT AUTHORIZED.**
+Rollback feature checkpoints in reverse order with their exact transition records; coupled native/pair/bootstrap changes together. Metadata checkpoints independently reversible. Preserve owner edits; no reset/clean/data migration. **RELEASE NOT AUTHORIZED.**
