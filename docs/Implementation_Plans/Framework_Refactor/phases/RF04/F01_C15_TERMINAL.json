@@ -1,0 +1,46 @@
+{
+  "syntax": [
+    {
+      "exit": 0,
+      "path": "bot/src/world-authorship.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/frameworks/world/authorship.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/frameworks/world/public.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/tests/ai-gm-2026-10/rf04-f01-c15.test.mjs"
+    }
+  ],
+  "architecture_exit": 0,
+  "base_sha": "5e14ac98849100dc2d71337f7011f8f9395b23d3",
+  "test_exit": 0,
+  "hashes": {
+    "bot/src/frameworks/world/authorship.js": "149c87b4ab75a740bde20d84280c85333133fd06a058ae164d13985cb2b47dd2",
+    "bot/src/world-authorship.js": "bf1caa7b7676fa8c96c34eff866113c0c899235f8195848610ccf396237b5bc6",
+    "bot/tests/ai-gm-2026-10/rf04-f01-c15.test.mjs": "64f0a6839de30d7e4cea321812cac804aa243400b8b858e025da11296260bb96",
+    "bot/src/frameworks/world/public.js": "6486e420dd149ea2ee8bd81b1f249677caf24e2f9b78a222039b6f0eb1fa9620"
+  },
+  "end": "2026-10-24T17:42:26.9085536-05:00",
+  "start": "2026-10-24T17:42:22.8798142-05:00",
+  "run_id": "RF04_F01_C15",
+  "tests": 14,
+  "passed": 14,
+  "failed": 0,
+  "duration_ms": 3015.3654,
+  "provider_calls": 0,
+  "provider_tokens": 0,
+  "provider_cost_usd": 0,
+  "codex_usage": "UNMEASURED",
+  "release": "NOT AUTHORIZED",
+  "phase_status": "INCOMPLETE",
+  "cumulative_fresh_tests": 147,
+  "cumulative_executions": 162,
+  "cumulative_test_files": 15,
+  "cumulative_syntax": 80
+}

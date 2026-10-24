@@ -345,7 +345,7 @@ old_path,new_path,owner,move_phase,action,reverse_dependents,import_obligations
 "bot/src/voice.js","bot/src/application/workflows/voice.js","application","RF06","DECOMPOSE_BEFORE_MOVE","1","3"
 "bot/src/window-coordinator.js","bot/src/frameworks/session/window-coordinator.js","session","RF04","DECOMPOSE_BEFORE_MOVE","2","7"
 "bot/src/world-authoring.js","bot/src/frameworks/world/world-authoring.js","world","RF04","EXTRACT_PORTS_BEFORE_MOVE","1","2"
-"bot/src/world-authorship.js","bot/src/frameworks/world/world-authorship.js","world","RF04","EXTRACT_PORTS_BEFORE_MOVE","16","4"
+"bot/src/world-authorship.js","bot/src/frameworks/world/authorship.js","world","RF04","WORLD_PROVENANCE_EXTRACTED_SINGLE_CONTEXT_MAP_NATIVE_AUDIENCE_KNOWLEDGE_SOURCE_PROVIDER_REMAINS","16","4"
 "bot/src/world-background-identities.js","bot/src/frameworks/world/background-identities.js","world","RF04","BACKGROUND_IDENTITY_RULES_EXTRACTED_SINGLE_CONSTANT_ADOPTED_PROVENANCE_RETRIEVAL_PROVIDER_REMAINS","5","2"
 "bot/src/world-encounter-beats.js","bot/src/frameworks/world/world-encounter-beats.js","world","RF04","DECOMPOSE_BEFORE_MOVE","3","7"
 "bot/src/world-identity-persistence.js","bot/src/frameworks/world/world-identity-persistence.js","world","RF04","EXTRACT_PORTS_BEFORE_MOVE","1","5"

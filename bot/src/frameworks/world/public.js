@@ -27,3 +27,5 @@ export {resolvePlaceReference,preflightPlaceIdentity,preflightNpcIdentity} from 
 export {createWorldIdentityRules} from './identity-rules.js';
 
 export {BACKGROUND_WORLD_KINDS,createBackgroundIdentityRules} from './background-identities.js';
+
+export {createWorldAuthorshipRules} from './authorship.js';

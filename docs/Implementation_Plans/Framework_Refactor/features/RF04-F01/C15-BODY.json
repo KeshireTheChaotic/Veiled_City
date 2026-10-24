@@ -1,0 +1,31 @@
+{
+  "declarations": [
+    {
+      "name": "createSeededWorldContext",
+      "original_sha256": "8057f32b3eff017cefea3852f5e55a7d9cfd37dac8e29b649be1c350c28747e2"
+    },
+    {
+      "name": "assertWorldIdentityNames",
+      "original_sha256": "c77c0960a11b3f55eaf878a9979c34e9a7f34f1a9b89d0bd08e440e017249361"
+    },
+    {
+      "name": "assertIndependentWorldIdentity",
+      "original_sha256": "cca8be15eca3e7e652fabd6c849a182506e94ed306f0238bc74248b0e912fc0d"
+    },
+    {
+      "name": "verifiedWorldAuthoringContext",
+      "original_sha256": "6e152dc64cabb67cdb6c607a2fecf8b2a88f304c2262f3976edc2c4cd4d86b9a"
+    },
+    {
+      "name": "privateWorldIdentityForGm",
+      "original_sha256": "0465d2f72eac700f95b9f55e2ecea01d4debe701ea3f4c34e52258058199b914"
+    },
+    {
+      "name": "worldIdentityOrigin",
+      "original_sha256": "fae56e703db42257acf0211fe3aeb2200e5c8bab7926fc69e2b79a6199f942aa"
+    }
+  ],
+  "whole_body_sha256": "affef3cd4eb95ded6ece9a64e49f51baa7f9e1875e42237a0ebc22f78bf1c107",
+  "extraction": "all bodies/constants/private helper/WeakMap unchanged; export modifiers removed inside fixed-capability constructor; source provider retains one service",
+  "hash": "same kernel jsonHash underlying original sceneFictionHash"
+}

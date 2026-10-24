@@ -1,0 +1,94 @@
+TAP version 13
+# Subtest: native context requires registered audience, exact database/guild and matching scope binding
+ok 1 - native context requires registered audience, exact database/guild and matching scope binding
+  ---
+  duration_ms: 180.1231
+  type: 'test'
+  ...
+# Subtest: revalidated native audience binding must match the original current authoring frame
+ok 2 - revalidated native audience binding must match the original current authoring frame
+  ---
+  duration_ms: 188.2426
+  type: 'test'
+  ...
+# Subtest: seeded context exposes only current source metadata, never the private premise or execution authority
+ok 3 - seeded context exposes only current source metadata, never the private premise or execution authority
+  ---
+  duration_ms: 187.5923
+  type: 'test'
+  ...
+# Subtest: nested and copied derived contexts cannot mint a second private-seed capability
+ok 4 - nested and copied derived contexts cannot mint a second private-seed capability
+  ---
+  duration_ms: 171.827
+  type: 'test'
+  ...
+# Subtest: seed data or derived scope changes invalidate the live seed capability
+ok 5 - seed data or derived scope changes invalidate the live seed capability
+  ---
+  duration_ms: 172.9213
+  type: 'test'
+  ...
+# Subtest: protected PC aliases and current human proxy names cannot become new autonomous identities
+ok 6 - protected PC aliases and current human proxy names cannot become new autonomous identities
+  ---
+  duration_ms: 171.6718
+  type: 'test'
+  ...
+# Subtest: human assertion cannot establish a named identity, while independent GM-camera fiction uses its own origin
+ok 7 - human assertion cannot establish a named identity, while independent GM-camera fiction uses its own origin
+  ---
+  duration_ms: 163.855
+  type: 'test'
+  ...
+# Subtest: current public origin is an identity receipt and grants no execution permission
+ok 8 - current public origin is an identity receipt and grants no execution permission
+  ---
+  duration_ms: 171.8319
+  type: 'test'
+  ...
+# Subtest: character-private origin never crosses to party or another character audience
+ok 9 - character-private origin never crosses to party or another character audience
+  ---
+  duration_ms: 182.4385
+  type: 'test'
+  ...
+# Subtest: source retraction and current NPC identity change make origin unavailable without altering historical receipt
+ok 10 - source retraction and current NPC identity change make origin unavailable without altering historical receipt
+  ---
+  duration_ms: 180.1306
+  type: 'test'
+  ...
+# Subtest: original-format saved identity reader survives database reopen without becoming a new grant
+ok 11 - original-format saved identity reader survives database reopen without becoming a new grant
+  ---
+  duration_ms: 181.1595
+  type: 'test'
+  ...
+# Subtest: GM-private identity ancestry remains GM-only across reopen and explicitly denies publication authority
+ok 12 - GM-private identity ancestry remains GM-only across reopen and explicitly denies publication authority
+  ---
+  duration_ms: 181.0144
+  type: 'test'
+  ...
+# Subtest: contradictory private labels and changed seed/frame source fail historical private identity qualification
+ok 13 - contradictory private labels and changed seed/frame source fail historical private identity qualification
+  ---
+  duration_ms: 185.5357
+  type: 'test'
+  ...
+# Subtest: actual original source provider preserves independent-origin and protected-identity checks and rejects JSON context
+ok 14 - actual original source provider preserves independent-origin and protected-identity checks and rejects JSON context
+  ---
+  duration_ms: 180.0013
+  type: 'test'
+  ...
+1..14
+# tests 14
+# suites 0
+# pass 14
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 3015.3654
