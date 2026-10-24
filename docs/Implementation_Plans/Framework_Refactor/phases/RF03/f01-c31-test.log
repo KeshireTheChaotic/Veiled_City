@@ -1,0 +1,64 @@
+TAP version 13
+# Subtest: pending native request is preserved and unsupported immediate outcome fails closed
+ok 1 - pending native request is preserved and unsupported immediate outcome fails closed
+  ---
+  duration_ms: 31.9216
+  type: 'test'
+  ...
+# Subtest: source-verified action outcome projects privately and replays after restart without a second receipt
+ok 2 - source-verified action outcome projects privately and replays after restart without a second receipt
+  ---
+  duration_ms: 30.0447
+  type: 'test'
+  ...
+# Subtest: neutral native review requires exact persisted review proof rather than narrative success
+ok 3 - neutral native review requires exact persisted review proof rather than narrative success
+  ---
+  duration_ms: 32.0181
+  type: 'test'
+  ...
+# Subtest: held PvP needs matching accepted source, player actor, opponent, plan and campaign review
+ok 4 - held PvP needs matching accepted source, player actor, opponent, plan and campaign review
+  ---
+  duration_ms: 38.6024
+  type: 'test'
+  ...
+# Subtest: pending native damage takes precedence over a resolved ordinary receipt
+ok 5 - pending native damage takes precedence over a resolved ordinary receipt
+  ---
+  duration_ms: 30.949
+  type: 'test'
+  ...
+# Subtest: dependency and coordination states require exact source ancestry and actual native window action
+ok 6 - dependency and coordination states require exact source ancestry and actual native window action
+  ---
+  duration_ms: 44.4359
+  type: 'test'
+  ...
+# Subtest: unverified player outcome remains an attempt while pending and private replies keep their own recipients
+ok 7 - unverified player outcome remains an attempt while pending and private replies keep their own recipients
+  ---
+  duration_ms: 23.8761
+  type: 'test'
+  ...
+# Subtest: native story-stake or neutral closure requires its exact persisted proposal and terms
+ok 8 - native story-stake or neutral closure requires its exact persisted proposal and terms
+  ---
+  duration_ms: 32.6181
+  type: 'test'
+  ...
+# Subtest: actual provider delegates costless empty reconciliation without starting services
+ok 9 - actual provider delegates costless empty reconciliation without starting services
+  ---
+  duration_ms: 0.2255
+  type: 'test'
+  ...
+1..9
+# tests 9
+# suites 0
+# pass 9
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 710.3833

@@ -99,3 +99,5 @@ export {createEncounterCompositionRules} from './encounter-composition-rules.js'
 export {createEncounterGroundingRules} from './encounter-grounding-rules.js';
 
 export {createEnvironmentWitnessRules} from './environment-witness-rules.js';
+
+export {createConsequenceReconciliationRules} from './consequence-reconciliation-rules.js';

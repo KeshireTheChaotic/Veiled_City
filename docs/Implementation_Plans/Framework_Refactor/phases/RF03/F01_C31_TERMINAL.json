@@ -1,0 +1,64 @@
+{
+  "syntax": [
+    {
+      "exit": 0,
+      "path": "bot/src/consequence-reconciliation.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/frameworks/daggerheart/consequence-reconciliation-rules.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/frameworks/daggerheart/public.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/tests/ai-gm-2026-10/rf03-f01-c31.test.mjs"
+    }
+  ],
+  "end": "2026-10-24T16:14:25.8292445-05:00",
+  "base_sha": "f21db88c480cd749cb7928bfc29e1895fe2c2778",
+  "test_exit": 0,
+  "architecture_exit": 0,
+  "hashes": {
+    "bot/src/consequence-reconciliation.js": "b0acc9e8843f51ba84645f02e70787ff8378b27d43a8359146322ff44e5853ce",
+    "bot/src/frameworks/daggerheart/public.js": "acf74ae4f85be0811f8520b649a1b3babf619162b805ac5b6514fe125136c506",
+    "bot/src/frameworks/daggerheart/consequence-reconciliation-rules.js": "e322339c17eabfc26bbfab7490d83af4665d699afc08b8aa547e11760db5efba",
+    "bot/tests/ai-gm-2026-10/rf03-f01-c31.test.mjs": "c65a58069d0b4daa8e68c3393aa46b7deae1b3535db5b86d5e38f40467d33192"
+  },
+  "run_id": "F01_C31",
+  "start": "2026-10-24T16:14:24.1451624-05:00",
+  "unique_tests": 9,
+  "executions": 9,
+  "pass": 9,
+  "fail": 0,
+  "tap_duration_ms": 710.3833,
+  "syntax_pass": 4,
+  "body_equivalence": {
+    "base_sha": "f21db88c480cd749cb7928bfc29e1895fe2c2778",
+    "source": "bot/src/consequence-reconciliation.js",
+    "target": "bot/src/frameworks/daggerheart/consequence-reconciliation-rules.js",
+    "body_equivalent": true,
+    "body_sha256": "2beac825ef5ed89af16ced2ea515349109cd39bc8e3a7178e1609e4d6a78e900",
+    "owner_dirty_normalized_content_equal_to_HEAD": true
+  },
+  "gate": {
+    "sourceModules": 485,
+    "unowned": 0,
+    "importOccurrences": 2527,
+    "internalImportOccurrences": 2351,
+    "cycleComponents": 1,
+    "largestCycle": 182,
+    "rawViolationOccurrences": 2485,
+    "acceptedLegacyOccurrences": 2485,
+    "activeViolationGroups": 0,
+    "transitionErrors": 0,
+    "pass": true
+  },
+  "limitations": "Actual native reconciliation and disposable SQLite persistence/restart. PvP accepted-source/target/consent/damage and saved roll proof are explicit mocks; no actual upstream source, rolls, resource effects or writer/publication qualification.",
+  "provider_calls": 0,
+  "provider_cost_usd": 0,
+  "codex_usage": "UNMEASURED",
+  "release": "NOT AUTHORIZED"
+}

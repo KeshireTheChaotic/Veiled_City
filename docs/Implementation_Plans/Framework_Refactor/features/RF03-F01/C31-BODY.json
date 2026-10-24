@@ -1,0 +1,8 @@
+{
+  "base_sha": "f21db88c480cd749cb7928bfc29e1895fe2c2778",
+  "source": "bot/src/consequence-reconciliation.js",
+  "target": "bot/src/frameworks/daggerheart/consequence-reconciliation-rules.js",
+  "body_equivalent": true,
+  "body_sha256": "2beac825ef5ed89af16ced2ea515349109cd39bc8e3a7178e1609e4d6a78e900",
+  "owner_dirty_normalized_content_equal_to_HEAD": true
+}

@@ -1,0 +1,3 @@
+# RF03-F01 C31 — Receipt-first consequence reconciliation
+
+Extract unchanged native disposition precedence and exact action/source/owner/target/dependency/request/receipt matching. Preserve existing unresolved-claim wording check and native reconciliation projection receipts; no new narrative restriction or authority. Normalize comparison confirms apparent owner dirty source equals HEAD before edit. Fresh SQLite fixtures with explicit peer source/verifier capabilities; native policy runs actual, never rolls/spends/publishes. One frozen targeted batch, changed syntax and architecture check only. RELEASE NOT AUTHORIZED.
