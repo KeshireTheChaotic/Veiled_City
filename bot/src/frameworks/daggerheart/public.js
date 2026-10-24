@@ -52,3 +52,5 @@ export {createAdversaryBindingRules} from './adversary-binding-rules.js';
 export {createIncomingAttackRules} from './incoming-attack-rules.js';
 export {createGroupFeatureExecutionRules} from './group-feature-execution-rules.js';
 export {createProfessionalEntryRules} from './professional-entry-rules.js';
+export {createEncounterRelationRules} from './encounter-relation-rules.js';
+export {createDefensiveFeatureRules} from './defensive-feature-rules.js';

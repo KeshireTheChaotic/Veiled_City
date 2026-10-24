@@ -1,0 +1,34 @@
+{
+  "test_exit": 1,
+  "started": "2026-10-24T09:36:24.5870600Z",
+  "run_id": "RF03-F01-C15",
+  "ended": "2026-10-24T09:36:26.6675579Z",
+  "syntax": [
+    {
+      "exit": 0,
+      "path": "bot/src/native-encounter-relations.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/native-defense-aura.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/frameworks/daggerheart/encounter-relation-rules.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/frameworks/daggerheart/defensive-feature-rules.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/frameworks/daggerheart/public.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/tests/ai-gm-2026-10/rf03-f01-c15.test.mjs"
+    }
+  ],
+  "base_sha": "8ae7be1c2d3e9b707c16a6dd19c7aae6060fd522",
+  "architecture_exit": 1
+}

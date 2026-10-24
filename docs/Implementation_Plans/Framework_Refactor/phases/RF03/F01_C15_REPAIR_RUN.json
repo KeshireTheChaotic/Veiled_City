@@ -1,0 +1,7 @@
+{
+  "ended": "2026-10-24T09:36:39.1717523Z",
+  "test_exit": 0,
+  "run_id": "RF03-F01-C15-repair",
+  "reason": "New request fixture omitted fields added by its own repository, so the readback hash was correctly different. Restore saved row identity; production unchanged.",
+  "test_syntax_exit": 0
+}

@@ -1,0 +1,16 @@
+TAP version 13
+# Subtest: post-dice Formation reconciliation retains only certified saved odds and rejects unrelated authority changes
+ok 1 - post-dice Formation reconciliation retains only certified saved odds and rejects unrelated authority changes
+  ---
+  duration_ms: 136.6421
+  type: 'test'
+  ...
+1..1
+# tests 1
+# suites 0
+# pass 1
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 201.0611

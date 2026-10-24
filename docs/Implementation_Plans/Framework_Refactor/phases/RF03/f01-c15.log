@@ -1,0 +1,78 @@
+TAP version 13
+# Subtest: native encounter actor distinguishes actual living NPC presence from player or proxy control
+ok 1 - native encounter actor distinguishes actual living NPC presence from player or proxy control
+  ---
+  duration_ms: 55.5774
+  type: 'test'
+  ...
+# Subtest: Stack Formation uses remaining native HP and preserves saved Difficulty after later legitimate damage
+ok 2 - Stack Formation uses remaining native HP and preserves saved Difficulty after later legitimate damage
+  ---
+  duration_ms: 67.649
+  type: 'test'
+  ...
+# Subtest: post-dice Formation reconciliation retains only certified saved odds and rejects unrelated authority changes
+not ok 3 - post-dice Formation reconciliation retains only certified saved odds and rejects unrelated authority changes
+  ---
+  duration_ms: 75.092
+  type: 'test'
+  location: 'D:\\Library\\Development\\Veiled_City\\bot\\tests\\ai-gm-2026-10\\rf03-f01-c15.test.mjs:33:1'
+  failureType: 'testCodeFailure'
+  error: 'Unified GM arbitration held: formation_actual_saved_roll_scope'
+  code: 'GM_ARBITRATION'
+  stack: |-
+    nativeArbitrationFailure (file:///D:/Library/Development/Veiled_City/bot/src/frameworks/daggerheart/native-failure.js:2:71)
+    Object.reconcileNativeFormationBreakdown (file:///D:/Library/Development/Veiled_City/bot/src/frameworks/daggerheart/defensive-feature-rules.js:159:83)
+    TestContext.<anonymous> (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf03-f01-c15.test.mjs:34:493)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: Plausible Denial uses only campaign Veil Exposure, with immutable private native proof
+ok 4 - Plausible Denial uses only campaign Veil Exposure, with immutable private native proof
+  ---
+  duration_ms: 66.0628
+  type: 'test'
+  ...
+# Subtest: Consensus Pressure threshold transitions do not retroactively rewrite its saved defense
+ok 5 - Consensus Pressure threshold transitions do not retroactively rewrite its saved defense
+  ---
+  duration_ms: 67.787
+  type: 'test'
+  ...
+# Subtest: Local Mesh needs independently source-verified native alliance and local access; proximity alone grants nothing
+ok 6 - Local Mesh needs independently source-verified native alliance and local access; proximity alone grants nothing
+  ---
+  duration_ms: 144.3276
+  type: 'test'
+  ...
+# Subtest: alliance pointer failure rolls back relationship, immutable receipt and source event atomically
+ok 7 - alliance pointer failure rolls back relationship, immutable receipt and source event atomically
+  ---
+  duration_ms: 79.8991
+  type: 'test'
+  ...
+# Subtest: retracted original GM evidence invalidates alliance receipt without inventing a replacement relationship
+ok 8 - retracted original GM evidence invalidates alliance receipt without inventing a replacement relationship
+  ---
+  duration_ms: 133.109
+  type: 'test'
+  ...
+# Subtest: actual relation and defense providers retain original callable interfaces
+ok 9 - actual relation and defense providers retain original callable interfaces
+  ---
+  duration_ms: 309.2761
+  type: 'test'
+  ...
+1..9
+# tests 9
+# suites 0
+# pass 8
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1070.3784

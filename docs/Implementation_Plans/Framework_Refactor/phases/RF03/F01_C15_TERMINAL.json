@@ -1,0 +1,51 @@
+{
+  "base_sha": "8ae7be1c2d3e9b707c16a6dd19c7aae6060fd522",
+  "unique_tests": 9,
+  "executions": 10,
+  "initial": {
+    "pass": 8,
+    "fail": 1,
+    "exit": 1,
+    "duration_ms": 1070.3784
+  },
+  "repair": {
+    "pass": 1,
+    "fail": 0,
+    "exit": 0,
+    "duration_ms": 201.0611
+  },
+  "repair_reason": "Request fixture was not updated with its own persisted key field; saved-request identity correctly failed. Fixed fixture only; failed case only rerun.",
+  "syntax_pass": 6,
+  "repair_test_syntax": 1,
+  "body_equivalence": true,
+  "body_hashes": {
+    "native-encounter-relations": "3f751191562df7fce22e5568ecd890b259dfd045640343643d18a4db6ba49ca1",
+    "native-defense-aura": "e07478b83805003d952d8582cc6aeda4d94f0b1ce4f930b88deffd02c3971a6a"
+  },
+  "hashes": {
+    "bot/src/native-encounter-relations.js": "8cf438af685eab053e6af87894237761f41cc4a92fc3078c22539a471f69792d",
+    "bot/src/native-defense-aura.js": "7a079c6cf016df3f9a79558d24d084a9cbab2ab2782fd9108ffb2fd19d61cf40",
+    "bot/src/frameworks/daggerheart/encounter-relation-rules.js": "b6f9c62a76baeb94f4cc9e060cc651da877ee9c386d63f9024e79d70e5091261",
+    "bot/src/frameworks/daggerheart/defensive-feature-rules.js": "963065706fb1c52cf565daad0651f6ce633a88c67bfc26083ba56fa33b809db4",
+    "bot/src/frameworks/daggerheart/public.js": "572cb2c79f6ab2f6c4be72792a5556f82eb03c31cfc96f5c64bdb492529ba49c",
+    "bot/tests/ai-gm-2026-10/rf03-f01-c15.test.mjs": "d92744b55e00747d47dd4fa7a1e0e783fc19ec7fb1cf8eb7dba84b0e8e89cfc7"
+  },
+  "gate": {
+    "sourceModules": 434,
+    "unowned": 0,
+    "importOccurrences": 2420,
+    "internalImportOccurrences": 2245,
+    "cycleComponents": 1,
+    "largestCycle": 182,
+    "rawViolationOccurrences": 2505,
+    "acceptedLegacyOccurrences": 2505,
+    "activeViolationGroups": 0,
+    "transitionErrors": 0,
+    "pass": true
+  },
+  "retired_records": 6,
+  "provider_calls": 0,
+  "provider_cost_usd": 0,
+  "codex_usage": "UNMEASURED",
+  "release": "NOT AUTHORIZED"
+}
