@@ -1,0 +1,56 @@
+{
+  "end": "2026-10-24T17:03:44.2237802-05:00",
+  "base_sha": "2c76c01e48b0188d0b1a18644fc43da33c00e1a9",
+  "hashes": {
+    "bot/src/frameworks/world/public.js": "676bf84bd1c915cca2934cf0e4a8929e1e82abd0addeabc5b43634ed854108c5",
+    "bot/src/frameworks/world/commitments.js": "45bbc7c65ff7416b2f0819b720be5e68920878173fe40d4bc8eaf188f14aa232",
+    "bot/src/city-core.js": "a49fd93ebdac9e5543b226691231f060fa63c60cd86cc3bb12dcef54d07ad5b6",
+    "bot/tests/ai-gm-2026-10/rf04-f01-c04.test.mjs": "b7189d013be6fb9730662b966bdea47485cd940b649f45c9fc107c17f8700572"
+  },
+  "syntax": [
+    {
+      "exit": 0,
+      "path": "bot/src/city-core.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/frameworks/world/commitments.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/frameworks/world/public.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/tests/ai-gm-2026-10/rf04-f01-c04.test.mjs"
+    }
+  ],
+  "test_exit": 0,
+  "run_id": "RF04_F01_C04",
+  "start": "2026-10-24T17:03:42.4135118-05:00",
+  "architecture_exit": 0,
+  "unique_tests": 8,
+  "executions": 8,
+  "pass": 8,
+  "fail": 0,
+  "tap_duration_ms": 802.7035,
+  "syntax_pass": 4,
+  "gate": {
+    "sourceModules": 502,
+    "unowned": 0,
+    "importOccurrences": 2572,
+    "internalImportOccurrences": 2395,
+    "cycleComponents": 1,
+    "largestCycle": 182,
+    "rawViolationOccurrences": 2484,
+    "acceptedLegacyOccurrences": 2484,
+    "activeViolationGroups": 0,
+    "transitionErrors": 0,
+    "pass": true
+  },
+  "limitations": "Actual world commitments/calendar/source with SQLite savepoints; native owner-consent source proof and proxy identity explicitly mocked. No standalone PC choice, production persistence or live publication qualification.",
+  "provider_calls": 0,
+  "provider_cost_usd": 0,
+  "codex_usage": "UNMEASURED",
+  "release": "NOT AUTHORIZED"
+}

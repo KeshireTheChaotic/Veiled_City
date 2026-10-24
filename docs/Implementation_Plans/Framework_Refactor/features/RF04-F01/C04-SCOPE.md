@@ -1,0 +1,3 @@
+# RF04-F01 C04 — Source-bound world commitments
+
+Extract unchanged world appointment/obligation/schedule/replay/cancel policy. Native owner-consent verification remains an injected native peer, never copied into World or replaced by supplied accepted_by fields. Preserve original legacy mode/historical readers and current independently verified owner terms; do not infer attendance, movement, acceptance or resources. Fresh SQLite tests cover pending offer, exact separate owner proof, current control, conflict, commit rollback/reopen/replay/cancel. One frozen batch, changed syntax and phase-aware ratchet.

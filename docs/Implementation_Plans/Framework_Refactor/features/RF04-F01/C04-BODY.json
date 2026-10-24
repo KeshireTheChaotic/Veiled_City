@@ -1,0 +1,8 @@
+{
+  "base_sha": "2c76c01e48b0188d0b1a18644fc43da33c00e1a9",
+  "source": "bot/src/city-core.js",
+  "target": "bot/src/frameworks/world/commitments.js",
+  "body_equivalent": true,
+  "body_sha256": "0c030bfd791bce48df93fc06c1e222b28c7db9a1ddacfa0f0f5d88f88f5a07bb",
+  "native_consent_proof_not_copied": true
+}
