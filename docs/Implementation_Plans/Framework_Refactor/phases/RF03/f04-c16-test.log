@@ -1,0 +1,46 @@
+TAP version 13
+# Subtest: current supported exact native template reaches world profile producer with unchanged authored proposal
+ok 1 - current supported exact native template reaches world profile producer with unchanged authored proposal
+  ---
+  duration_ms: 15.9299
+  type: 'test'
+  ...
+# Subtest: unsupported native template stays GM-private and is not silently promoted after restart or later support
+ok 2 - unsupported native template stays GM-private and is not silently promoted after restart or later support
+  ---
+  duration_ms: 13.7893
+  type: 'test'
+  ...
+# Subtest: different current location cannot manufacture environment presence and remains a scoped review
+ok 3 - different current location cannot manufacture environment presence and remains a scoped review
+  ---
+  duration_ms: 12.5933
+  type: 'test'
+  ...
+# Subtest: context source failure is retained as a review while unrelated implementation faults propagate
+ok 4 - context source failure is retained as a review while unrelated implementation faults propagate
+  ---
+  duration_ms: 14.3232
+  type: 'test'
+  ...
+# Subtest: unsealed origin, extra field or oversized combined request never invokes source producer
+ok 5 - unsealed origin, extra field or oversized combined request never invokes source producer
+  ---
+  duration_ms: 8.834
+  type: 'test'
+  ...
+# Subtest: actual provider reaches native request-budget guard without services or source creation
+ok 6 - actual provider reaches native request-budget guard without services or source creation
+  ---
+  duration_ms: 0.2167
+  type: 'test'
+  ...
+1..6
+# tests 6
+# suites 0
+# pass 6
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 547.4709

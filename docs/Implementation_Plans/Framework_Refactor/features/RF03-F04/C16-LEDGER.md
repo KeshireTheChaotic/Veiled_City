@@ -1,0 +1,5 @@
+# RF03-F04 C16 ledger
+
+SCOPED NATIVE PROFILE QUALIFICATION COMPLETE
+
+Base c38be882e23d4ad7e472956f08b8d5c8430cae61. Remaining native profile proposal closed fields/source/current location/supported template/review-replay rules extracted unchanged into environment-profile-proposal-rules. Existing world profile establishment and native narrative context are explicit provider capabilities, not copied.6/6fresh cases pass,exit0,TAP547.4709ms;4syntax pass. Actual SQLite qualifies positive supported template delegation, no silent held-review promotion after restart/later support, current location/source holds, retained source error versus propagating unexpected fault, malformed/budget/invalid origin fail closed and actual provider entryguard. Source/context/profile/catalog peers mocked; actual full producer not qualified. Exact native body/hash/terminal F04_C16. Gate493sources2548importsSCC1822485acceptedzero active/unowned/integrity. No transitions/catalogsupport/gameplay/creative changes. Rollback provider/nativefactory/public/tests together. Provider0/$0,Codex UNMEASURED;RF03 incomplete;RF04 not started;RELEASE NOT AUTHORIZED.

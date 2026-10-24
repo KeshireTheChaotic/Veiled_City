@@ -1,0 +1,3 @@
+# RF03-F04 C16 — Native environment profile proposal qualification
+
+Extract unchanged closed profile proposal/source/current location/supported native template selection and immutable held-review policy. Existing world profile establishment and actual narrative context builder remain injected source responsibilities; no support activation, arbitrary model ability or retroactive promotion. Fresh SQLite tests exercise native qualifier with mocked source/context/catalog/profile creation peers, no providers or production data. Freeze once, blocking targeted tests plus changed syntax/architecture. RELEASE NOT AUTHORIZED.

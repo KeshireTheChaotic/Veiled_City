@@ -109,3 +109,5 @@ export {createEnvironmentDispatchRules} from './environment-dispatch-rules.js';
 export {createNativeNoticeRules,noticeHash} from './native-notice-rules.js';
 
 export {createMechanicalOutcomeProjection} from './mechanical-outcome-projection.js';
+
+export {createEnvironmentProfileProposalRules} from './environment-profile-proposal-rules.js';

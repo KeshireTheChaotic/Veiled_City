@@ -1,0 +1,32 @@
+{
+  "hashes": {
+    "bot/src/frameworks/daggerheart/public.js": "b49a9612c8d671292101bd0f563594c6253109c37472c7adc9ca12023dcd6b15",
+    "bot/src/frameworks/daggerheart/environment-profile-proposal-rules.js": "b5d2acc00c299bd716c85f575e3543670bd3e51c022b6636e464552a1f1d5774",
+    "bot/tests/ai-gm-2026-10/rf03-f04-c16.test.mjs": "6a6dda77ba70e4647176b3f0fc02bf0ad621d3f226d1c1beaa7198c3790d813c",
+    "bot/src/native-environment-proposals.js": "8e70ed490579181319c93816b3933e98418a386ac679e5768e91dae6fd06bf7c"
+  },
+  "syntax": [
+    {
+      "path": "bot/src/native-environment-proposals.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/environment-profile-proposal-rules.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/public.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf03-f04-c16.test.mjs",
+      "exit": 0
+    }
+  ],
+  "start": "2026-10-24T16:25:24.5387060-05:00",
+  "base_sha": "c38be882e23d4ad7e472956f08b8d5c8430cae61",
+  "end": "2026-10-24T16:25:26.1162464-05:00",
+  "architecture_exit": 0,
+  "test_exit": 0,
+  "run_id": "F04_C16"
+}
