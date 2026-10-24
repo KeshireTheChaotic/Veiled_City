@@ -39,3 +39,4 @@ export {createGmCapabilityRules} from './gm-capability-rules.js';
 export {createGmExecutionRules} from './gm-execution-rules.js';
 export {createRollModifierRules} from './roll-modifier-rules.js';
 export {createRollParticipationRules} from './roll-participation-rules.js';
+export {createPvpDamageRules} from './pvp-damage-rules.js';

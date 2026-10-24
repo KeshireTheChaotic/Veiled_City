@@ -1,0 +1,64 @@
+TAP version 13
+# Subtest: native Critical damage is separate, saved once, and target alone reviews and chooses Armor
+ok 1 - native Critical damage is separate, saved once, and target alone reviews and chooses Armor
+  ---
+  duration_ms: 93.5783
+  type: 'test'
+  ...
+# Subtest: saved native damage replay does not reroll and corrupted arithmetic cannot pass proof
+ok 2 - saved native damage replay does not reroll and corrupted arithmetic cannot pass proof
+  ---
+  duration_ms: 71.1722
+  type: 'test'
+  ...
+# Subtest: withdrawn source consent prevents new dice and foreign owner cannot choose defenses
+ok 3 - withdrawn source consent prevents new dice and foreign owner cannot choose defenses
+  ---
+  duration_ms: 70.4085
+  type: 'test'
+  ...
+# Subtest: injected effect receipt failure restores HP, Armor, choice source, authority and damage state
+ok 4 - injected effect receipt failure restores HP, Armor, choice source, authority and damage state
+  ---
+  duration_ms: 76.4051
+  type: 'test'
+  ...
+# Subtest: direct damage cannot spend Armor and review is required before any HP commitment
+ok 5 - direct damage cannot spend Armor and review is required before any HP commitment
+  ---
+  duration_ms: 80.0244
+  type: 'test'
+  ...
+# Subtest: stale target compare-and-set fails and native campaign owner refresh preserves all saved dice
+ok 6 - stale target compare-and-set fails and native campaign owner refresh preserves all saved dice
+  ---
+  duration_ms: 95.4712
+  type: 'test'
+  ...
+# Subtest: final HP creates an owner-private death choice and keeps the dependent action unterminated
+ok 7 - final HP creates an owner-private death choice and keeps the dependent action unterminated
+  ---
+  duration_ms: 82.6545
+  type: 'test'
+  ...
+# Subtest: immutable grouping and exact owner status do not grant an outcome or disclose to attacker
+ok 8 - immutable grouping and exact owner status do not grant an outcome or disclose to attacker
+  ---
+  duration_ms: 74.775
+  type: 'test'
+  ...
+# Subtest: actual PvP damage provider keeps all native lifecycle entry points
+ok 9 - actual PvP damage provider keeps all native lifecycle entry points
+  ---
+  duration_ms: 295.0137
+  type: 'test'
+  ...
+1..9
+# tests 9
+# suites 0
+# pass 9
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1008.4147
