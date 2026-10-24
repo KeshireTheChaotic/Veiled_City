@@ -2,6 +2,10 @@
 
 ACTIVE. Base479d366. No new limitations or rule changes authorized.
 
+## Corrective C15 — complete native Feedback consequence boundary qualified
+
+Invitation/payment/withdrawal/effect commit/saved-effect ancestry moved unchanged to Daggerheart, called by existing provider with explicit native/source/notice dependencies. Seven fresh SQLite cases passed,exit0,646.6213ms; four syntax checks passed. Exact original3absent narrative-hash/intent-error import records retired; final RF03 ratchet passed with2551accepted old occurrences and zero active/unowned/errors. Owner dice, successful/no-effect, failure/device/Stress, rollback, exact withdrawal and replay exercised; upstream native verifiers mocked. F02_C15_TERMINAL.json records hashes and actual outcomes. No source disposition/deadline/gameplay change; RF03 incomplete, release unauthorized.
+
 ## F02 qualified arithmetic and presentation separation
 
 Base479d366. Native combat math relocated; Discord combatantLine extracted before move, commands compose both public APIs. Exact encounter budget/tier/role arithmetic extracted into daggerheart/encounter-budget.js; encounter.js retains real source/scene/state orchestration, importing and re-exporting only extracted native functions, not forwarding a monolith. Two transition records retired; zero new violations/unowned/integrity errors, 2801 raw remaining occurrences, SCC211 unchanged. Fresh rf03-f02.test.mjs six passed, zero failed/skipped, exit0, 66.8884ms; 12 syntax checks exit0, RF03 architecture exit0. Hashes and terminal evidence F02_TERMINAL.json. Catalog baseline153 =78supported/75review_only; definitions untouched, SHA in F02_CATALOG_BASELINE.json.

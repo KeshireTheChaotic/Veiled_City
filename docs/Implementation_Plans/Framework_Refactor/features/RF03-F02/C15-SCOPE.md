@@ -1,0 +1,5 @@
+# RF03-F02 C15 — Complete native Feedback reaction effect
+
+Extract all existing owner-reaction invitation/payment verification, withdrawal, effect commitment and saved-effect ancestry from native-feature-effects.js into Daggerheart. Reuse source-qualified trigger/stakes/outcome rules. Keep group-feature execution and Stress passive services single-sourced through explicit native callbacks; publication reservation is an explicit callback. Preserve exact key hashes, byte order of saved materials, private visibility, device reference, native Stress consequences, transactions and replay. No catalog disposition or gameplay change.
+
+Fresh disposable SQLite cases verify exact native reaction success/failure, owner/current-resource and actual-roll rejection, mutation/receipt rollback, withdrawal, group delegation and reopen/replay without repeated state changes. Current decision/window/typed-roll/passive verifiers are explicit dependencies, not newly certified implementations. Record source/body hashes and actual terminal results, retire only absent exact hash/error imports. No live or paid activity; rollback the feature as one checkpoint.

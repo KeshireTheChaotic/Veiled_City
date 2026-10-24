@@ -1,0 +1,52 @@
+TAP version 13
+# Subtest: failed owner reaction applies one Stress and source-bound device shutdown, then replays after reopen
+ok 1 - failed owner reaction applies one Stress and source-bound device shutdown, then replays after reopen
+  ---
+  duration_ms: 49.7302
+  type: 'test'
+  ...
+# Subtest: successful native reaction changes no resources or device state
+ok 2 - successful native reaction changes no resources or device state
+  ---
+  duration_ms: 43.3271
+  type: 'test'
+  ...
+# Subtest: changed current owner, unreviewed result or stale resource snapshot cannot apply a feature consequence
+ok 3 - changed current owner, unreviewed result or stale resource snapshot cannot apply a feature consequence
+  ---
+  duration_ms: 50.9641
+  type: 'test'
+  ...
+# Subtest: failed receipt write rolls back resource, device, mutation and source event together
+ok 4 - failed receipt write rolls back resource, device, mutation and source event together
+  ---
+  duration_ms: 39.6479
+  type: 'test'
+  ...
+# Subtest: exact owner withdrawal cancels only its pending occurrence without treating silence as failed dice
+ok 5 - exact owner withdrawal cancels only its pending occurrence without treating silence as failed dice
+  ---
+  duration_ms: 46.0255
+  type: 'test'
+  ...
+# Subtest: group reaction routes retain the original independent native service and notice callbacks
+ok 6 - group reaction routes retain the original independent native service and notice callbacks
+  ---
+  duration_ms: 41.8583
+  type: 'test'
+  ...
+# Subtest: existing provider cold-imports with the extracted native effect engine and exact stakes
+ok 7 - existing provider cold-imports with the extracted native effect engine and exact stakes
+  ---
+  duration_ms: 279.1127
+  type: 'test'
+  ...
+1..7
+# tests 7
+# suites 0
+# pass 7
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 646.6213
