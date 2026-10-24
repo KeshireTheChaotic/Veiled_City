@@ -3,3 +3,6 @@ export {createEnvironmentSceneConsumer,environmentSceneConsumer} from './contrac
 export {createDirectorCadence} from './director-cadence.js';
 
 export {cityObject,cityKey,cityInteger,cityVisibility,cityAudit,calendarStatus,configureCalendar,indexWorldEvent,scheduleCityEvent,reviewCityEvent,processCityDue} from './city-calendar.js';
+
+export {requireCitySource,cityStrings,requireCityRecord} from './city-source.js';
+export {createCityCoreRules,INSTITUTION_ACTIONS} from './city-core-rules.js';

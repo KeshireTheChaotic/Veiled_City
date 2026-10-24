@@ -1,0 +1,30 @@
+{
+  "base_sha": "19e3dd7e25ea6774a266756b90bf42af4a375e13",
+  "source": "bot/src/city-core.js",
+  "targets": [
+    "bot/src/frameworks/world/city-source.js",
+    "bot/src/frameworks/world/city-core-rules.js"
+  ],
+  "primitives": [
+    "requireCitySource",
+    "cityStrings",
+    "requireCityRecord"
+  ],
+  "methods": [
+    "updateCityCore",
+    "assignDistrictLocation",
+    "addWorldLink",
+    "inspectInstitutionAction",
+    "submitInstitutionAction",
+    "reviewInstitutionAction",
+    "executeInstitutionAction",
+    "runInstitutionDirector"
+  ],
+  "private_helpers": [
+    "fields",
+    "validateInstitutionAction"
+  ],
+  "body_equivalent": true,
+  "body_sha256": "a29bd74ea597ab76ef6a2c15e6d696b8a5600f3d6df8abde32ce2ab0d8f2f6e9",
+  "retained": "Institution knowledge report, cross-domain feature flags, commitment workflow, GM-private context and opportunity source producer"
+}

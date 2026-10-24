@@ -1,0 +1,64 @@
+TAP version 13
+# Subtest: World civic action proceeds from established institution without PC engagement and records request-only consequence
+ok 1 - World civic action proceeds from established institution without PC engagement and records request-only consequence
+  ---
+  duration_ms: 38.7244
+  type: 'test'
+  ...
+# Subtest: major institution policy awaits explicit human review then changes only its world policy
+ok 2 - major institution policy awaits explicit human review then changes only its world policy
+  ---
+  duration_ms: 45.3479
+  type: 'test'
+  ...
+# Subtest: saved completed action replays after database restart and pause without repeated world spending
+ok 3 - saved completed action replays after database restart and pause without repeated world spending
+  ---
+  duration_ms: 38.6813
+  type: 'test'
+  ...
+# Subtest: autonomous institution Director commits a durable cycle receipt and does not repeat its actions
+ok 4 - autonomous institution Director commits a durable cycle receipt and does not repeat its actions
+  ---
+  duration_ms: 36.19
+  type: 'test'
+  ...
+# Subtest: source retraction, rightful control change and unavailable service remain independent holds before capacity spend
+ok 5 - source retraction, rightful control change and unavailable service remain independent holds before capacity spend
+  ---
+  duration_ms: 42.3603
+  type: 'test'
+  ...
+# Subtest: world execution rolls capacity, source event and completed status back when event audit fails
+ok 6 - world execution rolls capacity, source event and completed status back when event audit fails
+  ---
+  duration_ms: 36.746
+  type: 'test'
+  ...
+# Subtest: civic records cannot silently restructure jurisdiction, jump descriptors or resolve harm against a PC
+ok 7 - civic records cannot silently restructure jurisdiction, jump descriptors or resolve harm against a PC
+  ---
+  duration_ms: 25.4489
+  type: 'test'
+  ...
+# Subtest: strict causal world links reject a new cycle instead of promoting an actor allegation to objective cause
+ok 8 - strict causal world links reject a new cycle instead of promoting an actor allegation to objective cause
+  ---
+  duration_ms: 79.5272
+  type: 'test'
+  ...
+# Subtest: original source reader uses exact World guard and cannot accept missing or inactive source
+ok 9 - original source reader uses exact World guard and cannot accept missing or inactive source
+  ---
+  duration_ms: 29.0606
+  type: 'test'
+  ...
+1..9
+# tests 9
+# suites 0
+# pass 9
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 833.1025

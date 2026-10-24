@@ -1,0 +1,61 @@
+{
+  "test_exit": 0,
+  "syntax": [
+    {
+      "exit": 0,
+      "path": "bot/src/city-core.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/frameworks/world/city-source.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/frameworks/world/city-core-rules.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/frameworks/world/public.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/tests/ai-gm-2026-10/rf04-f01-c03.test.mjs"
+    }
+  ],
+  "base_sha": "19e3dd7e25ea6774a266756b90bf42af4a375e13",
+  "end": "2026-10-24T17:01:33.7286763-05:00",
+  "architecture_exit": 0,
+  "hashes": {
+    "bot/tests/ai-gm-2026-10/rf04-f01-c03.test.mjs": "e1cbcd42ab958e791539a76d99ea932c0c82cf61282585ec799b58d67e541609",
+    "bot/src/frameworks/world/city-source.js": "626332276cbc5169d75dddebb3e9b117bbe2cfba436452efc6e7a7c83e505383",
+    "bot/src/frameworks/world/public.js": "7b9e15076e2ee33be57a8e7947c7cde3897aaa1150e40250f1d04582e00be17f",
+    "bot/src/frameworks/world/city-core-rules.js": "24dfbbbe6b41d54ea8946e688cd3f1c4de16534a3f1b27f6d6c6728a9c74caad",
+    "bot/src/city-core.js": "7d5108e940d2257254a03a975d71f4cb489a83b25d369c8acd512132cc97048d"
+  },
+  "start": "2026-10-24T17:01:31.8218452-05:00",
+  "run_id": "RF04_F01_C03",
+  "unique_tests": 9,
+  "executions": 9,
+  "pass": 9,
+  "fail": 0,
+  "tap_duration_ms": 833.1025,
+  "syntax_pass": 5,
+  "gate": {
+    "sourceModules": 501,
+    "unowned": 0,
+    "importOccurrences": 2568,
+    "internalImportOccurrences": 2391,
+    "cycleComponents": 1,
+    "largestCycle": 182,
+    "rawViolationOccurrences": 2484,
+    "acceptedLegacyOccurrences": 2484,
+    "activeViolationGroups": 0,
+    "transitionErrors": 0,
+    "pass": true
+  },
+  "limitations": "Actual world institutional policy/source/calendar with fresh disposable SQLite repository; current controller/delegation/service/native opportunity peers explicit mocks. No production/native mechanical effect or broad world autonomy qualification.",
+  "provider_calls": 0,
+  "provider_cost_usd": 0,
+  "codex_usage": "UNMEASURED",
+  "release": "NOT AUTHORIZED"
+}
