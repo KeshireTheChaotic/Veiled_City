@@ -1,0 +1,377 @@
+{
+  "head": "6f431477ce1af3212e7b12c1740c9bc42c7d0446",
+  "phase_status": "INCOMPLETE",
+  "feature_statuses": {
+    "F01": "INCOMPLETE: qualified native slices; remaining native workflows listed individually",
+    "F02": "INCOMPLETE: qualified feature windows/Feedback/defense/passives; remaining hit/condition workflows",
+    "F03": "INCOMPLETE: qualified consent/death/Fear/damage; remaining PvP offers/attacks/rounds/Fear moves",
+    "F04": "INCOMPLETE: native rules/contexts/binding/audience qualified; world producers and native handler decomposition pending",
+    "F05": "PARTIAL: adopted intent/native, character advancement and command display pairs; complete receipt-backed native/narrative and world pair not adopted",
+    "F06": "PARTIAL: fresh scoped native/SQLite evidence aggregated; full affected-flow exit acceptance not established"
+  },
+  "fresh_unique_passed": 141,
+  "case_executions": 147,
+  "evidence": [
+    {
+      "id": "F01_C06",
+      "file": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F01_C06_TERMINAL.json",
+      "sha256": "41bcff83e427b13932d6b635e8b044a6146eb347947146fba82173297929fd2e",
+      "unique_passed": 8,
+      "terminal": {
+        "test_exit": 0,
+        "duration_ms": 14459.8153
+      },
+      "limitations": "See exact feature ledger and terminal; scoped mocks do not certify upstream services."
+    },
+    {
+      "id": "F01_C07",
+      "file": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F01_C07_TERMINAL.json",
+      "sha256": "2a7421623d4736b3702dd726c0103d29eb18e314e5e0605d3c95d158fc66dea8",
+      "unique_passed": 11,
+      "terminal": {
+        "test_exit": 0,
+        "duration_ms": 42332.4516
+      },
+      "limitations": [
+        "Real disposable SQLite repository; dependent current source and native verifiers are mocks, not qualified by this batch.",
+        "Legacy providers bind the extracted native implementations; their remaining producer/publication integration and dependent native services remain accountable work.",
+        "No schema/gameplay/receipt changes or live behavior certification."
+      ]
+    },
+    {
+      "id": "F03_C16",
+      "file": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F03_C16_TERMINAL.json",
+      "sha256": "ba4d0129b7f45b90c40df5efb7aee59ea0506ccfadf3f6ed5b8d8634e266ef3b",
+      "unique_passed": 10,
+      "terminal": {
+        "test_exit": 0,
+        "duration_ms": 737.4518
+      },
+      "limitations": [
+        "Real disposable SQLite fixture; incoming/PvP damage, authored action, healing and source/principal verifiers supplied as explicit mocks.",
+        "Blaze test exercises actual native approval/automatic-Critical/consumption against a newly saved synthetic downstream native roll receipt; does not certify the downstream roll runner.",
+        "No production persistence, paid provider, Discord or live qualification."
+      ]
+    },
+    {
+      "id": "F04_C03",
+      "file": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F04_C03_TERMINAL.json",
+      "sha256": "b51c5a2cc176af66245283ca7c8d65d4c971eb9eb76e22d260a2f5ab9418f7c8",
+      "unique_passed": 22,
+      "terminal": {
+        "test_exit": 0,
+        "duration_ms": 434.273
+      },
+      "limitations": [
+        "Native context rule bodies and positive actual provider/catalog bindings qualified; environment scene/world-authority instance service remains separately accountable.",
+        "No feature execution, mutation, world authoring, disclosure, live Discord or semantic narrative quality is qualified."
+      ]
+    },
+    {
+      "id": "F02_C15",
+      "file": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F02_C15_TERMINAL.json",
+      "sha256": "d4f43af238a1ef42aef34c490e2c9f52002352a2861e09c65df2b803c2f674c4",
+      "unique_passed": 7,
+      "terminal": {
+        "test_exit": 0,
+        "duration_ms": 646.6213
+      },
+      "limitations": [
+        "Current decision/window/typed-roll proofs and group/passive implementations are explicit mocked capabilities in core cases; their implementations remain separately accountable.",
+        "Real disposable SQLite used; no production VeiledDB, publication delivery or live behavior certification."
+      ]
+    },
+    {
+      "id": "F03_C17",
+      "file": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F03_C17_TERMINAL.json",
+      "sha256": "a11d68ac8ec5d00ae92b386509c42da7d5a9c673279c5be55f0b8ba989103c25",
+      "unique_passed": 8,
+      "terminal": {
+        "initial": {
+          "exit": 1,
+          "pass": 7,
+          "fail": 1,
+          "duration_ms": 794.8676
+        },
+        "repair": {
+          "exit": 0,
+          "pass": 1,
+          "duration_ms": 120.4491
+        }
+      },
+      "limitations": "See exact feature ledger and terminal; scoped mocks do not certify upstream services."
+    },
+    {
+      "id": "F03_C18",
+      "file": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F03_C18_TERMINAL.json",
+      "sha256": "a674fb9c8a3251dc720197857690fd47040106b4510828b662be15b50286a977",
+      "unique_passed": 10,
+      "terminal": {
+        "pass": 10,
+        "fail": 0,
+        "exit": 0,
+        "duration_ms": 1056.8737
+      },
+      "limitations": "explicit mock ports; no live or production equivalence claimed"
+    },
+    {
+      "id": "F02_C16",
+      "file": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F02_C16_TERMINAL.json",
+      "sha256": "1f3b1c98e475d25d8785e649507bf83fe31600243e84dfa347234df05406e34f",
+      "unique_passed": 9,
+      "terminal": {
+        "initial": {
+          "pass": 2,
+          "fail": 5,
+          "exit": 1,
+          "duration_ms": 701.4353
+        },
+        "repair": {
+          "pass": 5,
+          "fail": 0,
+          "exit": 0,
+          "duration_ms": 426.1483
+        },
+        "feedback_extension": {
+          "pass": 2,
+          "fail": 0,
+          "exit": 0,
+          "duration_ms": 252.2702
+        }
+      },
+      "limitations": "Mocked source catalog/current scene/control/native damage proof; no production persistence, provider, Discord or semantic narrative qualification. Feedback Fear balance uses explicit transaction-aware mocked repository field; SQLite verifies receipts/Stress rollback."
+    },
+    {
+      "id": "F01_C08",
+      "file": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F01_C08_TERMINAL.json",
+      "sha256": "9831a7cca3f6334e983a8553c9a71d14f242e734f0310ccb7a163ee310972081",
+      "unique_passed": 7,
+      "terminal": {
+        "pass": 7,
+        "fail": 0,
+        "exit": 0,
+        "duration_ms": 585.972
+      },
+      "limitations": "See exact feature ledger and terminal; scoped mocks do not certify upstream services."
+    },
+    {
+      "id": "F01_C09",
+      "file": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F01_C09_TERMINAL.json",
+      "sha256": "2483bcf92da39931c36c1567a879198af63c8c2748580cac9b9b125b0c030c49",
+      "unique_passed": 9,
+      "terminal": {
+        "pass": 9,
+        "fail": 0,
+        "exit": 0,
+        "duration_ms": 1107.9217
+      },
+      "limitations": "Source context/intent authentication, incoming/group/feature/Professional Entry verifiers and spotlight peer policies are explicit mock ports; no claim their implementation or live delivery is qualified."
+    },
+    {
+      "id": "F01_C10",
+      "file": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F01_C10_TERMINAL.json",
+      "sha256": "800a82c8822e572367885f88f27824e41498d3b74f921393f97300c6c6d5b01b",
+      "unique_passed": 8,
+      "terminal": {
+        "pass": 8,
+        "fail": 0,
+        "exit": 0,
+        "duration_ms": 687.3694
+      },
+      "limitations": "Source authentication, current narrative/scene/environment and accepted-action validators explicitly mocked. Eligibility only, no actual owner enrollment/spending/dice or live certification."
+    },
+    {
+      "id": "F03_C19",
+      "file": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F03_C19_TERMINAL.json",
+      "sha256": "d74f9107b2a00eb21d5b1c6e7fb85e8c6633972d43abc20eaf5e3509257ce77c",
+      "unique_passed": 9,
+      "terminal": {
+        "pass": 9,
+        "fail": 0,
+        "exit": 0,
+        "duration_ms": 1008.4147
+      },
+      "limitations": "Attack/contract/source authentication and continuation/death/publication peers are explicit mocks. Production persistence, PvP attack generation, live delivery and semantic narrative quality not qualified."
+    },
+    {
+      "id": "F01_C11",
+      "file": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F01_C11_TERMINAL.json",
+      "sha256": "9dc4b4f2167a0e474c7b3a1ffafdea1abf61e39b27e164b341216e9b3ff46444",
+      "unique_passed": 8,
+      "terminal": {
+        "pass": 8,
+        "fail": 0,
+        "exit": 0,
+        "duration_ms": 712.2564
+      },
+      "limitations": "Accepted-source/current owner, native encounter and resulting request adjudication are explicit mocked ports. This verifies native eligibility, not actual downstream dice/effects or production authority/persistence."
+    },
+    {
+      "id": "F04_C04",
+      "file": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F04_C04_TERMINAL.json",
+      "sha256": "07f5db1f3d3697ef817f53e18b72f7b861092b956bb5ca19e85e9f5fc707aee4",
+      "unique_passed": 8,
+      "terminal": {
+        "pass": 8,
+        "fail": 0,
+        "exit": 0,
+        "duration_ms": 625.7766
+      },
+      "limitations": "Exact production encounter-review SQL runs against disposable SQLite; current catalog/scene/activation/authentication/source-visibility ports are explicit mocks. World profile producer, full world pair and live output not qualified."
+    },
+    {
+      "id": "F02_C17",
+      "file": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F02_C17_TERMINAL.json",
+      "sha256": "8820b78e1605f34c9e700c96e37e85bd399db3701f96d284dd1c0221c3169d68",
+      "unique_passed": 7,
+      "terminal": {
+        "pass": 7,
+        "fail": 0,
+        "exit": 0,
+        "duration_ms": 689.3689
+      },
+      "limitations": "Real saved attack/damage receipt and charge proof run in SQLite; catalog, world/scene/native encounter and original source auth are explicit mocks. Full production native damage runner and live publication not newly qualified."
+    }
+  ],
+  "sourceHashes": {
+    "bot/src/action-consent.js": "71c6ed7e9cca1ae09c0e714d629ab1816f9591df35e64de096d6b2714d661413",
+    "bot/src/fear-reservations.js": "4e655087b280bf4f6f3aafcae954d9203a7ded2c4eb647b2cd5cd8cf851ce4ac",
+    "bot/src/frameworks/daggerheart/action-consent-rules.js": "efc6af37cda90f512a33e06e34eb2a20270c8c683b9938134746be1fd097a43a",
+    "bot/src/frameworks/daggerheart/actor-control-rules.js": "9242cc8076ccb1c801e015a1b2852dd20c272e022789fc9eeab40d3b2a918a7e",
+    "bot/src/frameworks/daggerheart/adversary-attack-passive-rules.js": "d586837a8f510df87ee7f40e7352ffe1c2bebffb42a0d0e3e651d9caad358d3c",
+    "bot/src/frameworks/daggerheart/adversary-damage-defense-rules.js": "1d1a6880192e4c203e2c9d3bb0eaff497f8b32c64c1ba93ae909de761d68660a",
+    "bot/src/frameworks/daggerheart/environment-audience-rules.js": "fa7fb92c0fa1921df88674e7babc8c0c797ea371f8cfd773f74509baaee99731",
+    "bot/src/frameworks/daggerheart/environment-binding-rules.js": "427f20260c9a4b88951865b0f2f4d6574dae5441baf1497fb5dd126516e45561",
+    "bot/src/frameworks/daggerheart/environment-rule-contexts.js": "4241171ee05a2f648533d9fd8a4d4eec6a55f7f8b862d6b38fafebe193cef861",
+    "bot/src/frameworks/daggerheart/equipped-attack-rules.js": "6d305e22c8cb6e2bd74c85c3dd381065693d8cf1e4102a1eb6619daf7326a268",
+    "bot/src/frameworks/daggerheart/experience-eligibility-rules.js": "fc7d63018ced5b7e4465a454f541080eaf874d861bfb86e1f7fbf3ab475d8286",
+    "bot/src/frameworks/daggerheart/fear-reservation-writer.js": "03b50bad70404fc82bddd92cd9693f4687f261253c62ae3c2fbe0e0858d94587",
+    "bot/src/frameworks/daggerheart/feature-effect-rules.js": "bc37fba29f8725a812ead6ed4d9f991b75d64eb04a8a283aca104f967fdbc05d",
+    "bot/src/frameworks/daggerheart/feature-window-rules.js": "c9a3bba765bda6e36e87075abf3a13fe0b7e335be7a6a93417d5de5b45609d4b",
+    "bot/src/frameworks/daggerheart/gm-capability-rules.js": "4507656e8030ac406cda78cddcc88c0a2a20b710dd4608ad6fdd5d83a593ffda",
+    "bot/src/frameworks/daggerheart/gm-execution-rules.js": "1d48a8c3147d8c51d74246ab9b780698eb1ff1c14d148e78f7ac69d77678a40c",
+    "bot/src/frameworks/daggerheart/pc-death-rules.js": "d539828ef86c24ab4472cc19ebf70e6bb8d0a1135c5aa887960dc18aaa020dc6",
+    "bot/src/frameworks/daggerheart/pre-roll-fear-recovery-rules.js": "ce3121acd9eb41212323304a81127ae7eb8815e70225858fc40331ad3e0a1293",
+    "bot/src/frameworks/daggerheart/pre-roll-fear-rules.js": "27b4f79e5d4a2c60b1db07e98ba24215b4c04423292f5aaa1fc4ad02323a5d49",
+    "bot/src/frameworks/daggerheart/public.js": "7ae4cafeac3b393c51db636f3c3219ffbb4b2a0cb80665d3cefefd037f395d0a",
+    "bot/src/frameworks/daggerheart/pvp-damage-rules.js": "4e7dfbcd44de6a8dad7c99e87b4b4cdfe22103c45b2daa320fa0a64dd0fc7527",
+    "bot/src/frameworks/daggerheart/roll-collaboration-rules.js": "fc34174a80e8c3fa9ef4863379ee870e2275a42c697991bba1e4573756054bba",
+    "bot/src/frameworks/daggerheart/roll-modifier-rules.js": "4a750b7ec87c9d697459a5c33d694fdb30d531bd57d08c69bd7fc98e202f9b29",
+    "bot/src/frameworks/daggerheart/roll-options-rules.js": "ddad1ca41c690e8ea09ca1bfc5cc031c69a7883361b235f5fff5966c2c5311bf",
+    "bot/src/frameworks/daggerheart/roll-participation-rules.js": "86c53d5e5e2010253fbd02de959b07cc291dccd9a5a44c1c6b03951c8714dcfc",
+    "bot/src/frameworks/daggerheart/roll-request-rules.js": "59187967465e3dd93b358db162eb9bd257c048128a094005c968016db835ea1b",
+    "bot/src/frameworks/daggerheart/unarmed-attack-rules.js": "1cde3f53d43c544ad5dea69dd2fab38858fa745eec0cffc145658865836bf3c4",
+    "bot/src/gm-action-capability.js": "f27ff0ea45ff0180fca6fd2adf21d0f4936ba5fb833f17ad0009d13348156667",
+    "bot/src/gm-native-rolls.js": "b9a9dcc778f7eed42242555af54756cd3d896c6548a347f778840db1309dcad2",
+    "bot/src/native-actor-control.js": "bd8dbaba062a4dffa9f749ee80939eb76ac4fe1f7044522af2788811e592cf54",
+    "bot/src/native-environment-auction.js": "231afbfba4447561c6d9b9ed3d8db02baa6fd1c38a7fc18d7316063372837902",
+    "bot/src/native-environment-audience.js": "2613c53728dcc37e58400f35cf57885b348d0ced077963d2666d85b87b069e48",
+    "bot/src/native-environment-chain-of-title.js": "81f2e1c329ed64f5d62251e1edb737ae02f19a8cbb9d5ff46e14fe7b37864af4",
+    "bot/src/native-environment-consensus-engine.js": "f35d120504c9ef741bcdfa979d76f1cd8e2640e8239fde3767f4faccf0344ccf",
+    "bot/src/native-environment-containment-shutters.js": "3c5cf320a6f65c332939bc2319094c51dadb19f93ff8f0bf4b528640668344bf",
+    "bot/src/native-environment-contaminated-scene.js": "b2d5bbea9923ddc68fefe5e7d8938ce9cdb43eb4395bb67d6b02e4d53518c25a",
+    "bot/src/native-environment-context.js": "8cf86ceb2a7f4ba18f9623e64769f49ffbe71da291e8d18842508c66562ea6c8",
+    "bot/src/native-environment-everyone-is-watching.js": "ca3e03ed1acccf390dd59916ee819144f4cea76b56a6c78134fec6934168899e",
+    "bot/src/native-environment-express-through-memory.js": "a2fc2438b5b3acbc3d0216ccdd88daffe8ba84f4bbd5b77253c51337db08a156",
+    "bot/src/native-environment-guest-right.js": "647a3bac6c2cc311e7b092a3944d7769c8795443b9ac902eeff3a2f9aa568a20",
+    "bot/src/native-environment-last-train-rules.js": "e022da815b36c27c409f8a08b6b83379b7c52fbd2476102ecd12640516e8680a",
+    "bot/src/native-environment-market-neutrality.js": "b73da811e5cf9502e630d1aee9069d61a57570f344d542cdce2fc70042b938e0",
+    "bot/src/native-environment-metaphor-physics.js": "a0d89f64e5cc2ed1996e8a8d6c88174856d98c9bedeb877709068a043bc3173a",
+    "bot/src/native-environment-model-room.js": "4e3a4ed9b5e7ee6239ac3e9f79e32127e8010a84500830e3d9e616be1029fd19",
+    "bot/src/native-environment-no-consensus.js": "f7619aff413da969e4ec6ee025bb6b3c4a28e50b728225331e083a1ebb57e1f9",
+    "bot/src/native-environment-no-ordinary-signal.js": "6b631346e689009cfa6cc7b95cc1e07a25124b3dffe3e31a1ea5066f4407a52a",
+    "bot/src/native-environment-price-offer.js": "6f264fc3b0f397252fc1b8d6add6f09905cc5a739b9d7070b31b2c82b284168b",
+    "bot/src/native-environment-private-room.js": "daf043da5bca3c88ce0d7070a1ad1014f3c3df64fed832d0fd5806fdeb60a7f7",
+    "bot/src/native-environment-procedure.js": "44e765d6dc7517d3e8469f4a14a32eaf40c87c9b928d8ba6387a82e301fda339",
+    "bot/src/native-environment-sealed-docket.js": "17f462b9c60db666e738834a6956681c79f73b74a1504bbd62f0bd9fcbd1f09e",
+    "bot/src/native-environment-thin-walls.js": "f9166eae2808a587b76bec76ccfb2c06a78ad74acf16b8d4b9c19e6fbb1c2f1c",
+    "bot/src/native-environment-third-rail-spirit.js": "567b01724cc43ca334a5350f624532fab1eee40de44f5ee84724a405528c103c",
+    "bot/src/native-environment-three-vectors.js": "5ee1cf63f8da08ecbab82d5f60281fd2b9f0ffcfb49e2b9af357daf22f186ce3",
+    "bot/src/native-environment-wrong-offering.js": "439980b4d753544e80f752b8e4e18b5e860613d50c1ee758d1ff6f0531d1a3fe",
+    "bot/src/native-equipped-attacks.js": "9cb177bf8416d1f2d375cdf241876ab9ef00a72d1f8cc8b55387ad127c4e13c6",
+    "bot/src/native-experience-eligibility.js": "8fb4f3ca5dd1c33c4ae2b615b8fb44c95bebfa1e3ba44afb6e25fdc21215e4d4",
+    "bot/src/native-feature-damage.js": "3b231e4020593bc0c1ee4b3f735f84928fe1ff360cb0629bf7be0fa629edfc37",
+    "bot/src/native-feature-effects.js": "ad5c79d1a8301ba09dd5e3418a67ff15ddc0b08a47e3cdd3198e91aaa7cd962d",
+    "bot/src/native-feature-passives.js": "5e093d963d2675108968e9b8797375c68af88e7b41ee0a020e523b6d69c6113b",
+    "bot/src/native-feature-windows.js": "570b36313992d4dd5035f157b5980a6fb8133a597849c61e702f217f1f4c27a7",
+    "bot/src/native-roll-modifiers.js": "68f8c044e1198ec38ee7a77dfca334b0f0a91d207119f586b2c802f4932efec6",
+    "bot/src/native-roll-participation.js": "f0e2c58478793ba400b44d7b6bf853f226933c72591658a32b671cde94adecfc",
+    "bot/src/native-unarmed-attacks.js": "b79804d9f50f6a86a1bfbe499643843eb3bc487a6b3a943624cda7da27a2e2e8",
+    "bot/src/pc-death.js": "dd5af3fbe9f710c97bf1d2fda957cdb2eeb4c7d25f95229dae35c50cdfdb0bea",
+    "bot/src/pre-roll-fear-recovery.js": "1c467d9ad84c7d39d6f1701da79c82adc902156b76981ff4c5b045cc41e80b07",
+    "bot/src/pre-roll-fear.js": "6df027a22fff3b5bef85ef93e768028de49f34c7a441e6e40039d11a8db90126",
+    "bot/src/pvp-damage.js": "3a7042d63521e81e124f3761468a6fd0bc0be95ab03e111b650b34d3e69fc1dc",
+    "bot/src/roll-collaboration.js": "8613073251279a8dcf7ea9bb34d84958fd841b7d9469ec7b405a5349da51677a",
+    "bot/src/roll-options.js": "c96ad19c7d33443aee24b93f23d423853db30800223abcd637a5e079f849863d",
+    "bot/src/roll-requests.js": "4f6acf17db4bc06e78c63b14ff4fdb2ee540ef373bc80194cd6dfc93cd146d33",
+    "bot/tests/ai-gm-2026-10/rf03-f01-c06.test.mjs": "ebb1e04688dec1906256ade1713f69052b88add7ae46b8128ad713a05bdd4543",
+    "bot/tests/ai-gm-2026-10/rf03-f01-c07.test.mjs": "109d5fcc770ad72ab1ebe9766fc0d49ef4105a5621d7e700b20059fc6de1dfc9",
+    "bot/tests/ai-gm-2026-10/rf03-f01-c08.test.mjs": "a7e68d42e813239994ecb4b1ee1bd5924b130aad556568c3f60cb0e95326edda",
+    "bot/tests/ai-gm-2026-10/rf03-f01-c09.test.mjs": "4a615baee6b8df490339d87c1dc8f5879d48016419af403f67684062a69ada22",
+    "bot/tests/ai-gm-2026-10/rf03-f01-c10.test.mjs": "85e930e15857a772353865763605057512474c92a0bb8930c3cf6de6a2de3c91",
+    "bot/tests/ai-gm-2026-10/rf03-f01-c11.test.mjs": "70c2227d906bacebb09be6ac45c6a9d753a8dd37afcdea0515ea53a6f82e481e",
+    "bot/tests/ai-gm-2026-10/rf03-f02-c15.test.mjs": "949aff6c6625ff4fed256f8174295799cea6ffad5f5e96f52edf20cd1c7ca763",
+    "bot/tests/ai-gm-2026-10/rf03-f02-c16.test.mjs": "91374a5fd7826204c1a45c98d0fde63c1bd62f4522913b2839201f9faa4f3092",
+    "bot/tests/ai-gm-2026-10/rf03-f02-c17.test.mjs": "5c092605b1812f5ccd8b5a6823a8d453466f935280d1ec7c16c065d14c59732d",
+    "bot/tests/ai-gm-2026-10/rf03-f03-c16.test.mjs": "d26563ee2ba5550ff84824108d6860a4e512605f387f76e9867ac35699b994c2",
+    "bot/tests/ai-gm-2026-10/rf03-f03-c17.test.mjs": "dd22392dec9a55290a38ffe657112edc71b5e0cb5b9c44142635e80674b0ae83",
+    "bot/tests/ai-gm-2026-10/rf03-f03-c18.test.mjs": "161aafde23338a1ea4155360ced19e85a02499de6c552007ef1b52ac0a9f5d8c",
+    "bot/tests/ai-gm-2026-10/rf03-f03-c19.test.mjs": "bb0d09909086d69f2c47a94bbb704160ca4e6a05b2b055cc278f5e0b976c9668",
+    "bot/tests/ai-gm-2026-10/rf03-f04-c03.test.mjs": "925450825faffb7fb223fa3f5b332d9ed3746cff52be80406946d2768145fbfa",
+    "bot/tests/ai-gm-2026-10/rf03-f04-c04.test.mjs": "b94a45c08d968d54f14b1c5ef3318c6f3d46d2eff85bf2805a3954683ffec2cf"
+  },
+  "architecture": {
+    "sourceModules": 426,
+    "unowned": 0,
+    "importOccurrences": 2398,
+    "internalImportOccurrences": 2223,
+    "cycleComponents": 1,
+    "largestCycle": 182,
+    "rawViolationOccurrences": 2525,
+    "acceptedLegacyOccurrences": 2525,
+    "activeViolationGroups": 0,
+    "transitionErrors": 0,
+    "pass": true
+  },
+  "remaining_rf03": {
+    "RF03-F01": 245,
+    "RF03-F03": 131,
+    "RF03-F02": 27,
+    "RF03-F04": 179
+  },
+  "qualified_provider_residuals_2": 171,
+  "no_unchanged_passing_test_reruns": true,
+  "no_fresh_union_run": "Owner rule: aggregate immutable evidence rather than rerun unchanged passing tests.",
+  "cost": {
+    "provider_calls": 0,
+    "provider_tokens": 0,
+    "provider_usd": 0,
+    "codex": "UNMEASURED"
+  },
+  "critical_blockers": 0,
+  "new_creative_restrictions": 0,
+  "owner_questions": [],
+  "live_provider_discord_production_recovery": "NOT QUALIFIED",
+  "release": "NOT AUTHORIZED",
+  "source_assets": {
+    "bot/src/native-feature-definitions.json": {
+      "sha256": "58baf77cc9cb2b5f38e1714422c64131f2f533b4bf09254b8f8729ccd64d1e16",
+      "unchanged": true
+    },
+    "bot/src/native-house-errata.json": {
+      "sha256": "6f679f50272861ccc01f5b189d0fc5d9947e5df350df372cb52f97df93a28964",
+      "unchanged": true
+    },
+    "content/GM_PRIVATE/ENVIRONMENTS/environments.json": {
+      "sha256": "0b5f5004caf4d761c33ce851a020e081a2b6fb980526a38fcc51c7eaec413898",
+      "unchanged": true
+    }
+  },
+  "catalog": {
+    "total": 153,
+    "dispositions": {
+      "supported": 78,
+      "review_only": 75
+    }
+  }
+}

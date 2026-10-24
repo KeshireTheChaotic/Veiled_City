@@ -1,0 +1,6 @@
+{
+  "ended": "2026-10-24T00:39:45.6356178Z",
+  "rf02_ratchet_exit": 0,
+  "expected_strict_failure": true,
+  "rf03_strict_exit": 1
+}

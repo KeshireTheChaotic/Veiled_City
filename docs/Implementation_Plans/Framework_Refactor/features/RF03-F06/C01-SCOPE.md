@@ -1,0 +1,3 @@
+# RF03-F06 C01 — Current native delta evidence
+
+Aggregate only newly authored changed-code tests and their completed terminal evidence, current source hashes/body-equivalence checks, actual phase-aware/strict architecture results, exact native source asset preservation, changed files and precise remaining obligations. Do not rerun unchanged passing cases or infer full release/live/persistence certification. Account individually authorized residual deadlines, preserve frozen identities/maxima and restore original deadlines on rollback. RF03 stays incomplete until remaining native/interface requirements are satisfied.

@@ -1,34 +1,20 @@
-# RF03 acceptance — current delta only
+# RF03 acceptance — current qualified delta
 
-**Phase status: IN PROGRESS / INCOMPLETE. RF04 not started.** RF02 prerequisite reconciliation passed at 1db80db085b2b18a93fb80a8f51b538b2af7eec5. Complete Daggerheart structural isolation is not established. This matrix distinguishes passed changed-code cases from still-unimplemented boundaries.
+**INCOMPLETE.** Code checkpoint 6f431477ce1af3212e7b12c1740c9bc42c7d0446. This matrix supersedes the previous stale checkpoint matrix; historical feature ledgers remain evidence. RF04 implementation has not begun.
 
-| Required contract | Actual fresh offline evidence | Qualification |
+| Contract | Current fresh evidence | Qualification and remaining gap |
 |---|---|---|
-| Natural Hope/Fear, totals, critical, modifiers, advantage/helpers and GM die-family semantics | F01 six deterministic cases | Qualified pure arithmetic; player roll runner unqualified |
-| Difficulty, modifiers and stakes fixed before roll | F01 explicit GM Difficulty arithmetic only | Native source/request/stakes integration NOT QUALIFIED |
-| Declared Fear and pre-roll announcement | F03 reservation ancestry and reserved funds read proof | Announcement/interrupt/effect runner NOT QUALIFIED |
-| Player-owned choices/no unauthorized PC effect | F06 actual private review/approve/apply; nonowner rejected; source/control revoked | Qualified modified PC-effect path with mocked source repository |
-| Resource spending, Armor and damage | F02 native thresholds; F03 pool/marked arithmetic; F06 actual Hope/Armor effect | Qualified delta; attack/damage/Armor interaction runner NOT QUALIFIED |
-| Invalid/insufficient requests | F01 invalid dice; F03 resource boundaries; F06 insufficient approved Hope | Qualified exercised contracts |
-| PvP permissions/reaction | C14 native attack-term cases and C15 actual provider cold import; requalified through Daggerheart public API | Partial only; owner authorization, dice, damage, persistence and saved-receipt path NOT QUALIFIED |
-| Narrative proposal cannot grant mechanical effect | F06 missing cause/private audience rejected | Qualified exercised PC-effect boundary only |
-| Failed transactions preserve original state | F06 injected mutation failure rolls resource/status back in disposable SQLite repository fake | Qualified fake repository integration, production unit of work NOT QUALIFIED |
-| Receipt identity/replay/recovery | F06 same native PC-effect receipt replay after DB reopen | Qualified exercised path; publication/uncertain-send recovery NOT QUALIFIED |
-| Framework public interfaces | RF03 ratchet exit 0 at commit dc9cf45; registered command pair and Daggerheart public attack-term API | Zero unowned/new/active violations; current transition manifest has 958 RF03 records (963 maximum occurrences); 2,600 all-phase counted occurrences remain accepted |
-| World profile cannot grant effects | F04 four source/encounter qualification cases, no mutation APIs | Qualified necessary native predicate; full world pair NOT QUALIFIED |
-| Native catalog dispositions | Source SHA unchanged;153entries78supported75review_only | Preserved; native handler integration NOT QUALIFIED |
-| Full phase structural isolation | SCC211 unchanged; unmigrated native workflows remain | NOT COMPLETE |
-| Live Discord/provider/gameplay quality | No live calls/data | NOT QUALIFIED |
+| Native dice, exact request, Difficulty/stakes, owner optional choices | F01 C06/C07/C08/C09/C10/C11 | Native requests, current/saved source proof, player roll/contribution/options, structured Experience, contextual odds, Help/Tag eligibility, autonomous NPC decision/cost/d20 execution and unarmed/equipped eligibility exercised. Source/scene and other native peers remain explicit mocked ports. Remaining native ruling/resource/incoming/group/defense workflows not fully isolated. |
+| Feature catalog and dispositions | F02 C01–C17; current source hashes in CURRENT_QUALIFICATION | All153definitions preserved:78supported/75review_only. Feedback windows/payment/effect, Blood Rush, Contingency Stack and Pack Pressure have fresh stateful cases. Remaining on-hit and condition handlers still require full native extraction and qualification. |
+| Consent, Fear interruption and owner death choices | F03 C16/C17/C18 | Death lifecycle, exact separate owner cooperation consent, immutable pre-roll Fear reservation/notice/debit/recovery and death-terminal guards qualified for exercised paths. Upstream source/principal and publication proof ports are mocks, not live certification. |
+| Player-versus-player damage and Armor | F03 C19 | Actual damage dice/Critical proof, target review/Armor choice, source-bound grouping, stale-sheet owner recovery, final-HP pending death choice, rollback and reopen replay qualified in disposable SQLite. Attack/contract/safety/brawl and continuation/notice peers mocked; their own native implementations remain pending. |
+| Environment source and audience | F04 C03/C04 |22native rule contexts, actual native encounter-review SQL, immutable encounter locator, private recipient/current local viewpoint and original public camera behavior qualified. Full world profile producer, remaining native handlers and real world pair incomplete. No world fact creation moved into mechanics. |
+| Transaction and replay | Fresh cases across above slices | Disposable SQLite validates tested rollback/reopen paths. Fixture schema/authentication adapters explicit; no general VeiledDB/savepoint, cross-process publication or uncertain-send equivalence inferred. |
+| Actual integration pairs | Existing F05 and F01 C03/C05 | Character advancement, typed intent/unified adjudication and command display adopted. Complete receipt-backed Daggerheart–narrative and Daggerheart–world producer integration not adopted. No unused wrapper or forwarded legacy orchestrator claimed. |
+| Architecture enforcement | RF02/RF03 ratchets exit0; strict RF03 exit1 EXPECTED |426sources,2398imports,largest cycle182,zero unowned/new-active groups/integrity errors.2525all-phase legacy occurrences accepted.582RF03records remain: F01 245,F02 27,F03 131,F04 179. Passing ratchets do not establish isolation or phase exit. |
+| Fresh qualification evidence | CURRENT_QUALIFICATION and individual terminal/RUN files |141unique cases across15new test files;147executions include6failed-fixture repair executions. Unchanged passing cases not rerun. Evidence aggregated by native body/source hashes; no complete union execution claimed. |
+| Live provider/Discord/production recovery/semantic narrative quality | No live services, paid model or production data | NOT QUALIFIED. Provider calls/tokens/cost0/0/$0; Codex UNMEASURED. |
 
-## Local implementation obligations
+Exact unresolved records, sources, dependencies and deadlines: CURRENT_RF03_OBLIGATIONS.json. These are implementation obligations, not evidence that remaining work is impossible. Individual authorized residual reassignments preserve original identities/edges/maxima/frozen baseline; they do not certify runtime adoption.
 
-- F01: character creation source vocabulary, source-pinned typed request/provider integration and remaining atomic resource/receipt workflows. Level advancement policy has been extracted; `character-system.js` retains creation metadata/validation and is not claimed isolated.
-- F02: immutable source loading remains in `native-feature-catalog.js`; source-qualified feature and encounter/world authoring integration remains partly coupled. Catalog native policy no longer imports narrative hashing or intent error policy. Selected feature cost, trigger, group, outcome, and proposal-shape contracts have focused tests; full feature workflows remain unqualified.
-- F03: `pvp-fear-moves.js` still combines world targets, native effect commit, notices/review; preserve its private AUTO_FE identity and exact native receipt recovery while decomposing it. Consent/death/PvP paths still require consumer-owned ports; C14/C15 qualify attack terms and provider cold import only.
-- F04: world profile producer still mixes opaque world-authoring/audience/session/source/persistence; expose those actual source interfaces and compose them before a real daggerheart--world adapter can replace it.
-- F05: command display pair adopted only. Typed intent-to-native and committed native-to-narrative adapters remain unimplemented; do not forward the old orchestrator.
-- F06: final native runner equivalence and complete phase exit tests await those changed implementations. Existing passing tests must not be repeated unless their associated implementation changes.
-
-## Rollback and authorization
-
-Use the exact local checkpoints in LEDGER.md, reverse chronological order, preserving unrelated/user edits. No database schema/data changes. No release, push, PR, merge, CI, deploy, restart, production access or live provider spending authorized. **RELEASE NOT AUTHORIZED.**
+Rollback local checkpoints in reverse order with their exact retired records. Metadata-only reconciliation restores its recorded original deadlines independently. Preserve owner edits; no reset/clean/database migration. Next work remains RF03 native decomposition and missing integration, then final RF03-F06 acceptance. **RELEASE NOT AUTHORIZED.**
