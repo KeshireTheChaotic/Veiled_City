@@ -1,0 +1,17 @@
+[
+  {
+    "name": "subscribeConsequence",
+    "original_sha256": "b647916bf4481faa50735850f736f8ad9e4d131f2f780327ae23a97872e35c71",
+    "extraction": "unchanged body and handler/authority references captured by fixed factory"
+  },
+  {
+    "name": "coordinateConsequences",
+    "original_sha256": "1ac470c9dc87b4bc34f2cd3018cfff7fd14bd29810899bd9ae6fb2e7e2d69104",
+    "extraction": "unchanged body and handler/authority references captured by fixed factory"
+  },
+  {
+    "name": "reviewConsequence",
+    "original_sha256": "1be48c41669762ad42d3006f5c96dc8e08768a2e65f9cb8067299d959d052c76",
+    "extraction": "unchanged body and handler/authority references captured by fixed factory"
+  }
+]

@@ -1,0 +1,76 @@
+TAP version 13
+# Subtest: subscription is a private source-bound proposal without execution or knowledge and can cancel
+ok 1 - subscription is a private source-bound proposal without execution or knowledge and can cancel
+  ---
+  duration_ms: 179.9257
+  type: 'test'
+  ...
+# Subtest: typed subscriptions reject unsupported handlers, missing source and unbounded events
+ok 2 - typed subscriptions reject unsupported handlers, missing source and unbounded events
+  ---
+  duration_ms: 163.2904
+  type: 'test'
+  ...
+# Subtest: pause, disabled flag and zero budget leave cursor and proposal state untouched
+ok 3 - pause, disabled flag and zero budget leave cursor and proposal state untouched
+  ---
+  duration_ms: 179.7703
+  type: 'test'
+  ...
+# Subtest: source location and event class filter before durable pending proposals; restart does not duplicate
+ok 4 - source location and event class filter before durable pending proposals; restart does not duplicate
+  ---
+  duration_ms: 199.2313
+  type: 'test'
+  ...
+# Subtest: existing causal path, source fanout and per-pass budgets bound work without applying it
+ok 5 - existing causal path, source fanout and per-pass budgets bound work without applying it
+  ---
+  duration_ms: 196.8601
+  type: 'test'
+  ...
+# Subtest: proposal callback failure rolls cursor, pending receipt and audit back together
+ok 6 - proposal callback failure rolls cursor, pending receipt and audit back together
+  ---
+  duration_ms: 221.7346
+  type: 'test'
+  ...
+# Subtest: defer and reject preserve proposal history without invoking any domain handler
+ok 7 - defer and reject preserve proposal history without invoking any domain handler
+  ---
+  duration_ms: 180.1026
+  type: 'test'
+  ...
+# Subtest: native grant rejection fails closed as a durable private blocked record before domain effects
+ok 8 - native grant rejection fails closed as a durable private blocked record before domain effects
+  ---
+  duration_ms: 191.9806
+  type: 'test'
+  ...
+# Subtest: handler failure rolls domain effect back while retaining blocked receipt, then retry applies once
+ok 9 - handler failure rolls domain effect back while retaining blocked receipt, then retry applies once
+  ---
+  duration_ms: 203.2746
+  type: 'test'
+  ...
+# Subtest: retracted pending source blocks execution and retains the original proposal reference
+ok 10 - retracted pending source blocks execution and retains the original proposal reference
+  ---
+  duration_ms: 220.9277
+  type: 'test'
+  ...
+# Subtest: actual original service handler reaches extracted workflow and World engine, replaying once after restart
+ok 11 - actual original service handler reaches extracted workflow and World engine, replaying once after restart
+  ---
+  duration_ms: 206.6431
+  type: 'test'
+  ...
+1..11
+# tests 11
+# suites 0
+# pass 11
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2632.7651

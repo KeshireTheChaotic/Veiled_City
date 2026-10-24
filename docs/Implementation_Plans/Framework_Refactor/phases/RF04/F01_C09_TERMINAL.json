@@ -1,0 +1,46 @@
+{
+  "run_id": "RF04_F01_C09",
+  "start": "2026-10-24T17:17:07.9032457-05:00",
+  "test_exit": 0,
+  "architecture_exit": 0,
+  "hashes": {
+    "bot/src/city-consequences.js": "c06b114777bde62f25c5bb574cadc3589760b72a7ffcdcc48cfd323870eb5c66",
+    "bot/src/frameworks/world/public.js": "2d71ebf2fbe60aa8c0cdfd0a7024f20284ecfbb0c51948f80b668075f350bcf7",
+    "bot/tests/ai-gm-2026-10/rf04-f01-c09.test.mjs": "d99eadba7832d1429f54598e23b4674818ff754ecdffa01480a274dafd7eb611",
+    "bot/src/frameworks/world/consequences.js": "8c78475429b968ad959e45a4023b66c9de9744ddc0631d945e51b92fcb8fe520"
+  },
+  "base_sha": "a1db2f079674d8c63f45d4931a7aba07344c003b",
+  "syntax": [
+    {
+      "exit": 0,
+      "path": "bot/src/city-consequences.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/frameworks/world/consequences.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/frameworks/world/public.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/tests/ai-gm-2026-10/rf04-f01-c09.test.mjs"
+    }
+  ],
+  "end": "2026-10-24T17:17:11.5488586-05:00",
+  "tests": 11,
+  "passed": 11,
+  "failed": 0,
+  "duration_ms": 2632.7651,
+  "provider_calls": 0,
+  "provider_tokens": 0,
+  "provider_cost_usd": 0,
+  "codex_usage": "UNMEASURED",
+  "release": "NOT AUTHORIZED",
+  "phase_status": "INCOMPLETE",
+  "cumulative_fresh_tests": 83,
+  "cumulative_executions": 83,
+  "cumulative_test_files": 9,
+  "cumulative_syntax": 38
+}

@@ -30,7 +30,7 @@ old_path,new_path,owner,move_phase,action,reverse_dependents,import_obligations
 "bot/src/city-calendar.js","bot/src/frameworks/world/city-calendar.js","world","RF04","IMPLEMENTATION_MOVED_RF04_F01_C02_ORIGINAL_READER_REMOVE_RF04_F05","121","0"
 "bot/src/city-civic.js","bot/src/frameworks/world/infrastructure.js","world","RF04","WORLD_NETWORK_EXTRACTED_MIXED_CIVIC_KNOWLEDGE_REVIEW_REMAINS","9","1"
 "bot/src/city-commands.js","bot/src/application/workflows/city-commands.js","application","RF06","DECOMPOSE_BEFORE_MOVE","1","6"
-"bot/src/city-consequences.js","bot/src/frameworks/world/city-consequences.js","world","RF04","EXTRACT_PORTS_BEFORE_MOVE","4","2"
+"bot/src/city-consequences.js","bot/src/frameworks/world/consequences.js","world","RF04","WORLD_QUEUE_REVIEW_EXTRACTED_NATIVE_AUTHORITY_AND_DOMAIN_HANDLER_COMPOSITION_REMAINS","4","2"
 "bot/src/city-constraints.js","bot/src/frameworks/world/availability.js","world","RF04","WORLD_AVAILABILITY_EXTRACTED_NATIVE_INTENT_SESSION_SOURCE_COMPOSITION_REMAINS","38","3"
 "bot/src/city-core.js","bot/src/frameworks/world/city-core-rules.js;bot/src/frameworks/world/city-source.js;bot/src/frameworks/world/commitments.js;bot/src/frameworks/world/city-context.js","world","RF04","WORLD_RULES_EXTRACTED_SOURCE_COMPOSITION_AND_KNOWLEDGE_FLAGS_REMAIN","30","2"
 "bot/src/city-depth.js","bot/src/frameworks/world/city-depth.js","world","RF04","EXTRACT_PORTS_BEFORE_MOVE","5","1"
