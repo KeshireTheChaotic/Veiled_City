@@ -1,3 +1,4 @@
+import {initializeEnvironmentScene} from './application/composition/public.js';
 /** Discord runtime orchestration for message routing, serialized GM turns, world-director passes, and post-commit publication. */
 import "dotenv/config";
 import path from "node:path";
@@ -40,6 +41,7 @@ import {enqueueTrackedTurn} from './tracked-turn.js';
 import {currentTurnTrace} from './turn-trace-context.js';
 import {runSessionOpening} from './session-opening-runner.js';
 
+initializeEnvironmentScene();
 const config=loadConfig();
 const log=createLogger(config.logLevel);
 const db=new VeiledDB(config.dbPath,path.resolve(process.cwd(),"./sql/schema.sql"),{sqlMetrics:true});

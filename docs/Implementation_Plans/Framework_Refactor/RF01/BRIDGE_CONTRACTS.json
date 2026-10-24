@@ -1031,21 +1031,17 @@
         "daggerheart",
         "world"
       ],
-      "status": "PROPOSED_NO_API",
+      "status": "ADOPTED",
       "directions": [
-        {
-          "from": "daggerheart",
-          "to": "world",
-          "import_occurrences": 115,
-          "injected_calls": 0,
-          "contract": "Observed dependency only; exact port remains with accountable migration"
-        },
         {
           "from": "world",
           "to": "daggerheart",
-          "import_occurrences": 43,
-          "injected_calls": 0,
-          "contract": "Observed dependency only; exact port remains with accountable migration"
+          "contract": "Exact existing current source/profile/audience/presence/established fact/GM opportunity capabilities; source providers retain their old obligations."
+        },
+        {
+          "from": "daggerheart",
+          "to": "world",
+          "contract": "Original native checked scene-effect/receipt API and read-only historical/current projections; no PC authority, rule or transaction copied into adapter."
         }
       ],
       "source_evidence": [
@@ -1054,13 +1050,24 @@
           "to": "bot/src/city-calendar.js",
           "line": 5,
           "type": "import"
+        },
+        {
+          "from": "bot/src/application/composition/environment-scene.js",
+          "to": "bot/src/framework-to-framework/daggerheart--world/public.js",
+          "line": 1,
+          "type": "import"
         }
       ],
-      "validation": "Retain source and audience authority; design exact port in owning migration; observed imports do not prove runtime traffic.",
-      "lifecycle": "Observed proposal; no package/API/consumer claimed.",
-      "adoption_feature": "RF03",
-      "consumers": [],
-      "tests": [],
+      "validation": "Native factory validates complete named capabilities; world consumer requires complete service once, rejects replacement. Every effect retains existing native validation/transaction.",
+      "lifecycle": "One fixed world consumer accepts its own registered source factory; application composition maps that source capability through the native/world pair at index bootstrap before runtime services. No database/model/client/world mutation during composition. Native historical receipts and original APIs retained; standalone readers require explicit initialization.",
+      "adoption_feature": "RF03-F05",
+      "consumers": [
+        "bot/src/application/composition/environment-scene.js"
+      ],
+      "tests": [
+        "bot/tests/ai-gm-2026-10/rf03-f04-c13.test.mjs",
+        "bot/tests/ai-gm-2026-10/rf03-f05-c04.test.mjs"
+      ],
       "observed_directions": [
         {
           "from": "daggerheart",
@@ -1080,7 +1087,9 @@
         "pair": "daggerheart--world",
         "graph_sha256": "1caa7f33db8af9cbe17685493f4f23e46deb1c80ac2cd01c34ef3f8f7517bfe2",
         "occurrences": 158
-      }
+      },
+      "public_api": "bot/src/framework-to-framework/daggerheart--world/public.js",
+      "scope": "Adopted scene-effect service only; other observed native/world edges and source producer isolation remain separately accountable."
     },
     {
       "pair": "discord--narrative",

@@ -1,0 +1,16 @@
+{
+  "base_sha": "4fdf27724a0b79a6cd92768d4d8ee43b5f1cf995",
+  "source": "bot/src/native-environment-scene.js",
+  "target": "bot/src/frameworks/daggerheart/environment-scene-rules.js",
+  "body_equivalent": true,
+  "body_sha256": "673eb2cb826813d09ee654d9b2f0f9a3f32cdbf478efbe21cf6feff466b03a9d",
+  "exports": [
+    "validateMundaneEnvironmentDetail",
+    "validateMaintenanceMemoryFact",
+    "applyEnvironmentSceneAction",
+    "inspectEnvironmentSceneEffect",
+    "environmentSceneProjection"
+  ],
+  "context_aggregation_retained": true,
+  "context_body_sha256": "8b0b0ec953717cdbab4ddb5cda2e631667f53436fc254fb15d613d49a8e8efef"
+}

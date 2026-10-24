@@ -1,0 +1,80 @@
+{
+  "syntax": [
+    {
+      "exit": 0,
+      "path": "bot/src/native-environment-scene.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/frameworks/daggerheart/environment-scene-rules.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/frameworks/daggerheart/public.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/tests/ai-gm-2026-10/rf03-f04-c13.test.mjs"
+    }
+  ],
+  "base_sha": "4fdf27724a0b79a6cd92768d4d8ee43b5f1cf995",
+  "run_id": "F04_C13",
+  "hashes": {
+    "bot/src/frameworks/daggerheart/environment-scene-rules.js": "acfe38304a0271808c2e30ead9da3bcbecd94d75a983b026d096c9303a2e426b",
+    "bot/src/native-environment-scene.js": "ea530d8313734f2ef2b105c2ef284e0b833048749faa12e2e3d32ba34b5d56ca",
+    "bot/src/frameworks/daggerheart/public.js": "32812bca05f1fec5ee0be0b918984d5780344504a923e3fdfe67d67e6482b994",
+    "bot/tests/ai-gm-2026-10/rf03-f04-c13.test.mjs": "094e604ded6338919cee755c0523923859aafaae5a5e899c45b4faf5de872f62"
+  },
+  "test_exit": 0,
+  "start": "2026-10-24T15:45:23.8296691-05:00",
+  "architecture_exit": 1,
+  "end": "2026-10-24T15:45:31.0050585-05:00",
+  "duration_ms": 914.3818,
+  "unique_tests": 9,
+  "executions": 9,
+  "pass": 9,
+  "fail": 0,
+  "tap_duration_ms": 854.7346,
+  "syntax_pass": 4,
+  "body_equivalence": {
+    "base_sha": "4fdf27724a0b79a6cd92768d4d8ee43b5f1cf995",
+    "source": "bot/src/native-environment-scene.js",
+    "target": "bot/src/frameworks/daggerheart/environment-scene-rules.js",
+    "body_equivalent": true,
+    "body_sha256": "673eb2cb826813d09ee654d9b2f0f9a3f32cdbf478efbe21cf6feff466b03a9d",
+    "exports": [
+      "validateMundaneEnvironmentDetail",
+      "validateMaintenanceMemoryFact",
+      "applyEnvironmentSceneAction",
+      "inspectEnvironmentSceneEffect",
+      "environmentSceneProjection"
+    ],
+    "context_aggregation_retained": true,
+    "context_body_sha256": "8b0b0ec953717cdbab4ddb5cda2e631667f53436fc254fb15d613d49a8e8efef"
+  },
+  "gate": {
+    "mode": "ratchet",
+    "phase": "RF03",
+    "sourceModules": 477,
+    "unowned": 0,
+    "importOccurrences": 2507,
+    "internalImportOccurrences": 2332,
+    "cycleComponents": 1,
+    "largestCycle": 182,
+    "rawViolationOccurrences": 2485,
+    "acceptedLegacyOccurrences": 2485,
+    "activeViolationGroups": 0,
+    "transitionErrors": 0,
+    "pass": true,
+    "firstErrors": []
+  },
+  "retired_records": 2,
+  "limitations": "Actual newly extracted scene rules plus actual native emergency recovery and feature-cost planner run with disposable SQLite. Current origin/profile/catalog/opportunity/audience/established fact/source/presence/native owner action/ancestry capabilities explicit mocks. Narrative context aggregation unchanged in original provider; no actual world producer/writer/publication qualification.",
+  "provider_calls": 0,
+  "provider_cost_usd": 0,
+  "codex_usage": "UNMEASURED",
+  "release": "NOT AUTHORIZED",
+  "architecture_repair_evidence": "F05_C04",
+  "actual_pair_sqlite_reexecutions": 9,
+  "note": "Initial native-only9pass; direct native import was rejected by architecture. Actual world consumer/pair/application bootstrap adopted in coupled F05C04 correction; the9SQLite cases were rerun only after their actual call path changed, all pass. Their rerun executions counted in F05C04, not unique tests here."
+}

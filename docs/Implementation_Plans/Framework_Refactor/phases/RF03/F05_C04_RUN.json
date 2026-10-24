@@ -1,0 +1,65 @@
+{
+  "duration_ms": 1143.9938,
+  "start": "2026-10-24T15:49:37.7681572-05:00",
+  "new_unique_tests": 3,
+  "run_id": "F05_C04",
+  "hashes": {
+    "bot/src/frameworks/daggerheart/public.js": "32812bca05f1fec5ee0be0b918984d5780344504a923e3fdfe67d67e6482b994",
+    "bot/src/framework-to-framework/daggerheart--world/public.js": "126bd8874f6df2dc527cdd5dbb3b3a2f5b5ff169e406accfc04b35c984961d8e",
+    "bot/src/frameworks/world/contracts/environment-scene.js": "81b4b59701ae53e6a6abbc77500e4e31228bca9ab7ddc0bcc19b83c964ba35a4",
+    "bot/src/frameworks/daggerheart/environment-scene-rules.js": "acfe38304a0271808c2e30ead9da3bcbecd94d75a983b026d096c9303a2e426b",
+    "bot/src/application/composition/environment-scene.js": "ab6fd3942e88b2d9dfc36335a0350cc413ad609d7b536e678727219a12bcb7a2",
+    "bot/tests/ai-gm-2026-10/rf03-f04-c13.test.mjs": "04bf0fa25897f42366ae8ab5022282679c60cd9842e1fd715f195fd100e36429",
+    "bot/src/index.js": "28eadbba02a02151d253c95165d122fe87001165ecbecb4e0743bd5385023ed1",
+    "bot/tests/ai-gm-2026-10/rf03-f05-c04.test.mjs": "8df3a4712ec8005fbef1986e8b8e62ffc8bd67155411c8291cffc9160df33143",
+    "bot/src/frameworks/world/public.js": "07632c6dbd7d61ad98e0b1af9f1543826159ed1ac645bed175209d62c4e11da9",
+    "bot/src/native-environment-scene.js": "d01d5f4756ce9baab76d0c0b228cd95c1fc598f30c4b58e1232cbeda4e10b5fb"
+  },
+  "end": "2026-10-24T15:49:40.2319834-05:00",
+  "syntax": [
+    {
+      "exit": 0,
+      "path": "bot/src/native-environment-scene.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/frameworks/daggerheart/environment-scene-rules.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/frameworks/daggerheart/public.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/frameworks/world/contracts/environment-scene.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/frameworks/world/public.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/framework-to-framework/daggerheart--world/public.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/application/composition/environment-scene.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/index.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/tests/ai-gm-2026-10/rf03-f04-c13.test.mjs"
+    },
+    {
+      "exit": 0,
+      "path": "bot/tests/ai-gm-2026-10/rf03-f05-c04.test.mjs"
+    }
+  ],
+  "test_exit": 0,
+  "base_sha": "4fdf27724a0b79a6cd92768d4d8ee43b5f1cf995",
+  "associated_changed_call_path_reruns": 9,
+  "architecture_exit": 1
+}

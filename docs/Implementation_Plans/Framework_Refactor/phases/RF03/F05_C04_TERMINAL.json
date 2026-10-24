@@ -1,0 +1,151 @@
+{
+  "duration_ms": 1143.9938,
+  "start": "2026-10-24T15:49:37.7681572-05:00",
+  "new_unique_tests": 3,
+  "run_id": "F05_C04",
+  "hashes": {
+    "bot/src/frameworks/daggerheart/public.js": "32812bca05f1fec5ee0be0b918984d5780344504a923e3fdfe67d67e6482b994",
+    "bot/src/framework-to-framework/daggerheart--world/public.js": "126bd8874f6df2dc527cdd5dbb3b3a2f5b5ff169e406accfc04b35c984961d8e",
+    "bot/src/frameworks/world/contracts/environment-scene.js": "81b4b59701ae53e6a6abbc77500e4e31228bca9ab7ddc0bcc19b83c964ba35a4",
+    "bot/src/frameworks/daggerheart/environment-scene-rules.js": "acfe38304a0271808c2e30ead9da3bcbecd94d75a983b026d096c9303a2e426b",
+    "bot/src/application/composition/environment-scene.js": "ab6fd3942e88b2d9dfc36335a0350cc413ad609d7b536e678727219a12bcb7a2",
+    "bot/tests/ai-gm-2026-10/rf03-f04-c13.test.mjs": "04bf0fa25897f42366ae8ab5022282679c60cd9842e1fd715f195fd100e36429",
+    "bot/src/index.js": "28eadbba02a02151d253c95165d122fe87001165ecbecb4e0743bd5385023ed1",
+    "bot/tests/ai-gm-2026-10/rf03-f05-c04.test.mjs": "8df3a4712ec8005fbef1986e8b8e62ffc8bd67155411c8291cffc9160df33143",
+    "bot/src/frameworks/world/public.js": "07632c6dbd7d61ad98e0b1af9f1543826159ed1ac645bed175209d62c4e11da9",
+    "bot/src/native-environment-scene.js": "d01d5f4756ce9baab76d0c0b228cd95c1fc598f30c4b58e1232cbeda4e10b5fb"
+  },
+  "end": "2026-10-24T15:49:40.2319834-05:00",
+  "syntax": [
+    {
+      "exit": 0,
+      "path": "bot/src/native-environment-scene.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/frameworks/daggerheart/environment-scene-rules.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/frameworks/daggerheart/public.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/frameworks/world/contracts/environment-scene.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/frameworks/world/public.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/framework-to-framework/daggerheart--world/public.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/application/composition/environment-scene.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/index.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/tests/ai-gm-2026-10/rf03-f04-c13.test.mjs"
+    },
+    {
+      "exit": 0,
+      "path": "bot/tests/ai-gm-2026-10/rf03-f05-c04.test.mjs"
+    }
+  ],
+  "test_exit": 0,
+  "base_sha": "4fdf27724a0b79a6cd92768d4d8ee43b5f1cf995",
+  "associated_changed_call_path_reruns": 9,
+  "architecture_exit": 1,
+  "unique_tests": 4,
+  "executions": 16,
+  "pass": 4,
+  "fail": 0,
+  "initial": {
+    "exit": 0,
+    "pass": 12,
+    "tap_duration_ms": 1089.526,
+    "new_unique": 3,
+    "associated_C13_call_path_reruns": 9
+  },
+  "composition_repair": {
+    "end": "2026-10-24T15:51:33.1176451-05:00",
+    "associated_changed_composition_reruns": 3,
+    "new_unique_tests": 1,
+    "reason": "Architecture rejected new-to-legacy and private bootstrap edges. Replaced legacy public re-export with explicit fixed world source registration and used application public entrypoint. No baseline exception. Consumer/application lifecycle code changed;3associated lifecycle cases rerun plus1new source lifecycle case. C13SQLite unchanged native/pair cases not rerun.",
+    "duration_ms": 525.394,
+    "syntax": [
+      {
+        "path": "bot/src/frameworks/world/contracts/environment-scene.js",
+        "exit": 0
+      },
+      {
+        "path": "bot/src/frameworks/world/public.js",
+        "exit": 0
+      },
+      {
+        "path": "bot/src/native-environment-scene.js",
+        "exit": 0
+      },
+      {
+        "path": "bot/src/application/composition/environment-scene.js",
+        "exit": 0
+      },
+      {
+        "path": "bot/src/application/composition/public.js",
+        "exit": 0
+      },
+      {
+        "path": "bot/src/index.js",
+        "exit": 0
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf03-f05-c04.test.mjs",
+        "exit": 0
+      }
+    ],
+    "hashes": {
+      "bot/src/index.js": "cabd4c73c8de26e980ae89b25b0699155cd66d3c0fd313f2587dbb0486a3b0d2",
+      "bot/src/application/composition/environment-scene.js": "a2b36a06d9395562b703d9b05e75813379d7f1b8f3c58a6daf638014508f78c0",
+      "bot/src/frameworks/world/public.js": "f91214e4a8ce72637d24510f4531ebbec4fdddca08e8f6f1874e114f1fdcba90",
+      "bot/src/frameworks/world/contracts/environment-scene.js": "252af77f61a45fe4db154fe0780656b096ff7dd287b5addd069fc41e1a49ff38",
+      "bot/src/application/composition/public.js": "9c7abc0042cc35c20b9f299e4a59b74dbb09e5fc1c2eae1ae582fd02ac0b641d",
+      "bot/src/native-environment-scene.js": "b83f00d5a8987b2be3f9739b54da341757a43a045f60335ce0b92c4674e5664d",
+      "bot/tests/ai-gm-2026-10/rf03-f05-c04.test.mjs": "0cdad7f23c1720fa6acb0377364f3810ec83722fd37b9f38f212c232eacfcd9f"
+    },
+    "test_exit": 0,
+    "start": "2026-10-24T15:51:32.2561983-05:00",
+    "pass": 4,
+    "tap_duration_ms": 469.9547,
+    "new_unique": 1,
+    "associated_changed_lifecycle_reruns": 3
+  },
+  "final_test_exit": 0,
+  "syntax_pass": 17,
+  "gate": {
+    "mode": "ratchet",
+    "phase": "RF03",
+    "sourceModules": 477,
+    "unowned": 0,
+    "importOccurrences": 2507,
+    "internalImportOccurrences": 2332,
+    "cycleComponents": 1,
+    "largestCycle": 182,
+    "rawViolationOccurrences": 2485,
+    "acceptedLegacyOccurrences": 2485,
+    "activeViolationGroups": 0,
+    "transitionErrors": 0,
+    "pass": true,
+    "firstErrors": []
+  },
+  "limitations": "Actual native/world consumer/pair and SQLite native scene/recovery tests run together; real fixed source registration/application initialization exercised offline through actual modules. Source/profile/owner/opportunity/ancestry/presence/catalog verifiers mocked in SQLite cases. No bot startup/real source pipeline/paid provider/Discord/writer or all-world-edge certification.",
+  "provider_calls": 0,
+  "provider_cost_usd": 0,
+  "codex_usage": "UNMEASURED",
+  "release": "NOT AUTHORIZED"
+}

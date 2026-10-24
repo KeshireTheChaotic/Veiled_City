@@ -1,0 +1,48 @@
+{
+  "end": "2026-10-24T15:51:33.1176451-05:00",
+  "associated_changed_composition_reruns": 3,
+  "new_unique_tests": 1,
+  "reason": "Architecture rejected new-to-legacy and private bootstrap edges. Replaced legacy public re-export with explicit fixed world source registration and used application public entrypoint. No baseline exception. Consumer/application lifecycle code changed;3associated lifecycle cases rerun plus1new source lifecycle case. C13SQLite unchanged native/pair cases not rerun.",
+  "duration_ms": 525.394,
+  "syntax": [
+    {
+      "path": "bot/src/frameworks/world/contracts/environment-scene.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/frameworks/world/public.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/native-environment-scene.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/application/composition/environment-scene.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/application/composition/public.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/index.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf03-f05-c04.test.mjs",
+      "exit": 0
+    }
+  ],
+  "hashes": {
+    "bot/src/index.js": "cabd4c73c8de26e980ae89b25b0699155cd66d3c0fd313f2587dbb0486a3b0d2",
+    "bot/src/application/composition/environment-scene.js": "a2b36a06d9395562b703d9b05e75813379d7f1b8f3c58a6daf638014508f78c0",
+    "bot/src/frameworks/world/public.js": "f91214e4a8ce72637d24510f4531ebbec4fdddca08e8f6f1874e114f1fdcba90",
+    "bot/src/frameworks/world/contracts/environment-scene.js": "252af77f61a45fe4db154fe0780656b096ff7dd287b5addd069fc41e1a49ff38",
+    "bot/src/application/composition/public.js": "9c7abc0042cc35c20b9f299e4a59b74dbb09e5fc1c2eae1ae582fd02ac0b641d",
+    "bot/src/native-environment-scene.js": "b83f00d5a8987b2be3f9739b54da341757a43a045f60335ce0b92c4674e5664d",
+    "bot/tests/ai-gm-2026-10/rf03-f05-c04.test.mjs": "0cdad7f23c1720fa6acb0377364f3810ec83722fd37b9f38f212c232eacfcd9f"
+  },
+  "test_exit": 0,
+  "start": "2026-10-24T15:51:32.2561983-05:00"
+}

@@ -1,0 +1,64 @@
+TAP version 13
+# Subtest: native medical scene effect preserves its exact source/cost and leaves PC response and resources unselected
+ok 1 - native medical scene effect preserves its exact source/cost and leaves PC response and resources unselected
+  ---
+  duration_ms: 72.2094
+  type: 'test'
+  ...
+# Subtest: native service scene effect preserves its exact source/cost and leaves PC response and resources unselected
+ok 2 - native service scene effect preserves its exact source/cost and leaves PC response and resources unselected
+  ---
+  duration_ms: 98.3873
+  type: 'test'
+  ...
+# Subtest: native memory scene effect preserves its exact source/cost and leaves PC response and resources unselected
+ok 3 - native memory scene effect preserves its exact source/cost and leaves PC response and resources unselected
+  ---
+  duration_ms: 74.643
+  type: 'test'
+  ...
+# Subtest: native correction scene effect preserves its exact source/cost and leaves PC response and resources unselected
+ok 4 - native correction scene effect preserves its exact source/cost and leaves PC response and resources unselected
+  ---
+  duration_ms: 130.0754
+  type: 'test'
+  ...
+# Subtest: actual native emergency cleanup consumes the actual new scene-effect proof after an independent successful owner action
+ok 5 - actual native emergency cleanup consumes the actual new scene-effect proof after an independent successful owner action
+  ---
+  duration_ms: 80.7969
+  type: 'test'
+  ...
+# Subtest: restart replay never charges printed Fear twice and rejects a changed same-occurrence mundane proposal
+ok 6 - restart replay never charges printed Fear twice and rejects a changed same-occurrence mundane proposal
+  ---
+  duration_ms: 73.397
+  type: 'test'
+  ...
+# Subtest: source-bound service qualification refuses unrelated infrastructure without inventing numerical damage
+ok 7 - source-bound service qualification refuses unrelated infrastructure without inventing numerical damage
+  ---
+  duration_ms: 65.7875
+  type: 'test'
+  ...
+# Subtest: native receipt failure rolls back declaration, presence and printed Fear without affecting PC resources
+ok 8 - native receipt failure rolls back declaration, presence and printed Fear without affecting PC resources
+  ---
+  duration_ms: 65.4197
+  type: 'test'
+  ...
+# Subtest: current scene, source and audience changes hold new output while immutable historical memory still requires its original established anchor
+ok 9 - current scene, source and audience changes hold new output while immutable historical memory still requires its original established anchor
+  ---
+  duration_ms: 73.4837
+  type: 'test'
+  ...
+1..9
+# tests 9
+# suites 0
+# pass 9
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 854.7346

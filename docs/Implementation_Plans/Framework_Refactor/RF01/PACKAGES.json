@@ -61,6 +61,12 @@
     ],
     "daggerheart--intent": [
       "bot/src/framework-to-framework/daggerheart--intent/public.js"
+    ],
+    "world": [
+      "bot/src/frameworks/world/public.js"
+    ],
+    "daggerheart--world": [
+      "bot/src/framework-to-framework/daggerheart--world/public.js"
     ]
   },
   "externalCapabilityOwners": {

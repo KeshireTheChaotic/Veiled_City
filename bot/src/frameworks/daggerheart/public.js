@@ -92,3 +92,4 @@ export {createConsentResponseRules} from './consent-response-rules.js';
 export {createPreRollFearNoticeRules} from './pre-roll-fear-notice-rules.js';
 export {createEnvironmentImagingRules} from './environment-imaging-rules.js';
 export {createEnvironmentRecordingRules} from './environment-recording-rules.js';
+export {createEnvironmentSceneRules} from './environment-scene-rules.js';

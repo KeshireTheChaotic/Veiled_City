@@ -1,0 +1,31 @@
+{
+  "mode": "ratchet",
+  "phase": "RF03",
+  "sourceModules": 477,
+  "unowned": 0,
+  "importOccurrences": 2507,
+  "internalImportOccurrences": 2332,
+  "cycleComponents": 1,
+  "largestCycle": 182,
+  "rawViolationOccurrences": 2487,
+  "acceptedLegacyOccurrences": 2485,
+  "activeViolationGroups": 2,
+  "transitionErrors": 0,
+  "pass": false,
+  "firstErrors": [
+    {
+      "code": "NEW_TO_LEGACY_IMPORT",
+      "from": "bot/src/frameworks/world/public.js",
+      "to": "bot/src/native-environment-scene.js",
+      "owner": "world",
+      "line": 2
+    },
+    {
+      "code": "IMPORTS_PRIVATE_API",
+      "from": "bot/src/index.js",
+      "to": "bot/src/application/composition/environment-scene.js",
+      "owner": "bootstrap",
+      "line": 1
+    }
+  ]
+}
