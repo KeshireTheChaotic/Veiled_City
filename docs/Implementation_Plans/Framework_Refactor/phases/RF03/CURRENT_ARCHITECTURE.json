@@ -1,20 +1,13 @@
 {
-  "head": "ebf248b492f9b0de1f1c34aac71097c7f095a6ab",
-  "summary": {
-    "sourceModules": 429,
-    "unowned": 0,
-    "importOccurrences": 2404,
-    "internalImportOccurrences": 2229,
-    "cycleComponents": 1,
-    "largestCycle": 182,
-    "rawViolationOccurrences": 2515,
-    "acceptedLegacyOccurrences": 2515,
-    "activeViolationGroups": 0,
-    "transitionErrors": 0,
-    "pass": true
-  },
-  "manifest_sha256": "17d341b70206914636706de108e225b45e547b7e82b1a2da9dbe0df92aa63235",
-  "baseline_sha256": "213b8e19491ae0ebcbcf85321b00ba40768420f27233e8d84f84ccad96cb84d6",
-  "activeViolations": [],
-  "transitionErrors": []
+  "sourceModules": 442,
+  "unowned": 0,
+  "importOccurrences": 2438,
+  "internalImportOccurrences": 2263,
+  "cycleComponents": 1,
+  "largestCycle": 182,
+  "rawViolationOccurrences": 2498,
+  "acceptedLegacyOccurrences": 2498,
+  "activeViolationGroups": 0,
+  "transitionErrors": 0,
+  "pass": true
 }

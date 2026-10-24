@@ -1,6 +1,8 @@
 {
-  "expected_strict_failure": true,
+  "rf03_strict_exit": 1,
+  "rf03_ratchet_exit": 0,
   "rf02_ratchet_exit": 0,
-  "ended": "2026-10-24T00:52:16.9188013Z",
-  "rf03_strict_exit": 1
+  "head": "b7994ce4b2739cfbfb2ace3671bd9923c0b82d33",
+  "strict_expected": "failure while legacy debt remains",
+  "timestamp": "2026-10-24T09:52:11.6035291Z"
 }

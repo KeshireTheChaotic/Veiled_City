@@ -1,16 +1,16 @@
 {
-  "head": "ebf248b492f9b0de1f1c34aac71097c7f095a6ab",
+  "head": "b7994ce4b2739cfbfb2ace3671bd9923c0b82d33",
   "phase_status": "INCOMPLETE",
   "feature_statuses": {
-    "F01": "INCOMPLETE: qualified native slices; remaining native workflows listed individually",
+    "F01": "INCOMPLETE: added incoming/Volley, group reactions/conditions/spotlight, Professional Entry, NPC alliance/defense, Memory Leech and PC effects/healing; native GM ruling, ordinary follow-through, encounter activation and remaining source policy still pending.",
     "F02": "SCOPED_NATIVE_DECOMPOSITION_COMPLETE / LOCAL INTEGRATION HOLDS: inventoried native policy extracted; source bindings explicitly accountable to named future features; full phase combat paths still require F01/F03 peers.",
-    "F03": "INCOMPLETE: qualified consent/death/Fear/damage; remaining PvP offers/attacks/rounds/Fear moves",
-    "F04": "INCOMPLETE: native rules/contexts/binding/audience qualified; world producers and native handler decomposition pending",
+    "F03": "INCOMPLETE: added exact damage-consent lifecycle, native PC attack terms/dice/receipts, sticky safety controls and immediate Fear gates. Round/brawl/Fear-move and remaining authority/orchestration decomposition pending.",
+    "F04": "INCOMPLETE: source/binding/audience, acoustic recovery/odds and upload countdown/action ancestry qualified. Other native handler rules and world producer integration pending; Closing Time Moves remains pre-existing unsupported readiness hold.",
     "F05": "PARTIAL: adopted intent/native, character advancement and command display pairs; complete receipt-backed native/narrative and world pair not adopted",
-    "F06": "PARTIAL: fresh scoped native/SQLite evidence aggregated; full affected-flow exit acceptance not established"
+    "F06": "PARTIAL: 257 unique passing cases across30 fresh files;273case executions plus1initial test-file parse failure. Full affected native workflow and pair integration exit not satisfied."
   },
-  "fresh_unique_passed": 163,
-  "case_executions": 169,
+  "fresh_unique_passed": 257,
+  "case_executions": 273,
   "evidence": [
     {
       "id": "F01_C06",
@@ -283,6 +283,197 @@
         "duration_ms": 170.809
       },
       "limitations": "Immutable source relocation/loader only, no state or live execution."
+    },
+    {
+      "id": "F01_C12",
+      "file": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F01_C12_TERMINAL.json",
+      "sha256": "ada4a2906e6cc0f61a111867aebeead2da9d2543c506775dfa7923d91244bf8c",
+      "unique_passed": 9,
+      "terminal": {
+        "initial": {
+          "pass": 6,
+          "fail": 3,
+          "exit": 1,
+          "duration_ms": 1217.7466
+        },
+        "repair": {
+          "pass": 3,
+          "fail": 0,
+          "exit": 0,
+          "duration_ms": 399.1398
+        }
+      },
+      "limitations": "Actual native incoming/Volley/dice/damage/owner receipt policy runs. Source/current-owner/decision/Fear-cost/condition/feature peers are mocks; no full upstream, production persistence, live delivery or all passive/Professional Entry combinations qualified."
+    },
+    {
+      "id": "F01_C13",
+      "file": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F01_C13_TERMINAL.json",
+      "sha256": "53a6d013531faa934af1f5f73144a31ff7f75c23a2901bbf762691efd3a32eca",
+      "unique_passed": 9,
+      "terminal": {
+        "pass": 9,
+        "fail": 0,
+        "exit": 0,
+        "duration_ms": 1409.722
+      },
+      "limitations": "Real nested SQLite group lifecycle, owner reaction choice, condition expiry and receipt policy; current source/catalog/GM decision/native roll proof/notice/stress passive callbacks mocked. No full production or live publication qualification."
+    },
+    {
+      "id": "F01_C14",
+      "file": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F01_C14_TERMINAL.json",
+      "sha256": "5b6b67201cb888eb6a109d2693107be90ba293d28494789e95efa982f675fee1",
+      "unique_passed": 7,
+      "terminal": {
+        "pass": 7,
+        "fail": 0,
+        "exit": 0,
+        "duration_ms": 606.9634
+      },
+      "limitations": "See feature ledger: actual native rules with explicitly mocked upstream/current owner/source/native peer capabilities; no production or live qualification."
+    },
+    {
+      "id": "F01_C15",
+      "file": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F01_C15_TERMINAL.json",
+      "sha256": "840c0d1af96b7fa7dcba9b7ce91563641d2623fc725f9a9f2ce98c17d709fa84",
+      "unique_passed": 9,
+      "terminal": {
+        "initial": {
+          "pass": 8,
+          "fail": 1,
+          "exit": 1,
+          "duration_ms": 1070.3784
+        },
+        "repair": {
+          "pass": 1,
+          "fail": 0,
+          "exit": 0,
+          "duration_ms": 201.0611
+        }
+      },
+      "limitations": "See feature ledger: actual native rules with explicitly mocked upstream/current owner/source/native peer capabilities; no production or live qualification."
+    },
+    {
+      "id": "F01_C16",
+      "file": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F01_C16_TERMINAL.json",
+      "sha256": "cf454ee8c6e08517f34cc2c1bcfe9268b9b020b6fc63853cab5849778fe0866c",
+      "unique_passed": 8,
+      "terminal": {
+        "pass": 8,
+        "fail": 0,
+        "exit": 0,
+        "duration_ms": 926.1615
+      },
+      "limitations": "See feature ledger: actual native rules with explicitly mocked upstream/current owner/source/native peer capabilities; no production or live qualification."
+    },
+    {
+      "id": "F01_C17",
+      "file": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F01_C17_TERMINAL.json",
+      "sha256": "5b0f8a70da4c1fbae6a51b8edcf369322bb878e36a430e505674f596349cdea2",
+      "unique_passed": 9,
+      "terminal": {
+        "pass": 9,
+        "fail": 0,
+        "exit": 0,
+        "duration_ms": 1022.9948
+      },
+      "limitations": "See feature ledger: actual native rules with explicitly mocked upstream/current owner/source/native peer capabilities; no production or live qualification."
+    },
+    {
+      "id": "F03_C20",
+      "file": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F03_C20_TERMINAL.json",
+      "sha256": "0a859ebd5cb7bb22c7306df4c513e4568e438eda048ad12a8b1e7e3d40a8dcf4",
+      "unique_passed": 9,
+      "terminal": {
+        "initial": {
+          "pass": 8,
+          "fail": 1,
+          "exit": 1,
+          "duration_ms": 724.6932
+        },
+        "repair": {
+          "pass": 1,
+          "fail": 0,
+          "exit": 0,
+          "duration_ms": 108.2235
+        }
+      },
+      "limitations": "See feature ledger: actual native rules with explicitly mocked upstream/current owner/source/native peer capabilities; no production or live qualification."
+    },
+    {
+      "id": "F03_C21",
+      "file": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F03_C21_TERMINAL.json",
+      "sha256": "17455a761691edfa657494c13eee1c173fba96964276d1cdb09c7bf121c15629",
+      "unique_passed": 8,
+      "terminal": {
+        "initial": {
+          "pass": 7,
+          "fail": 1,
+          "exit": 1,
+          "duration_ms": 808.7901
+        },
+        "repair": {
+          "pass": 1,
+          "fail": 0,
+          "exit": 0,
+          "duration_ms": 118.7319
+        }
+      },
+      "limitations": "See feature ledger: actual native rules with explicitly mocked upstream/current owner/source/native peer capabilities; no production or live qualification."
+    },
+    {
+      "id": "F03_C22",
+      "file": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F03_C22_TERMINAL.json",
+      "sha256": "c0b4a72c2162214509e42c7dd64c49ae6e0afc092ae2e39e4f96ddcadb98f2ea",
+      "unique_passed": 9,
+      "terminal": {
+        "initial": {
+          "pass": 0,
+          "file_failure": 1,
+          "exit": 1,
+          "duration_ms": 48.8828
+        },
+        "repair": {
+          "pass": 9,
+          "fail": 0,
+          "exit": 0,
+          "duration_ms": 1050.3046
+        }
+      },
+      "limitations": "See feature ledger: actual native rules with explicitly mocked upstream/current owner/source/native peer capabilities; no production or live qualification."
+    },
+    {
+      "id": "F04_C05",
+      "file": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F04_C05_TERMINAL.json",
+      "sha256": "0f309f24d55b58a5c3c15aaeda3912806900fce02911288d2b3f1b9983759003",
+      "unique_passed": 8,
+      "terminal": {
+        "initial": {
+          "pass": 4,
+          "fail": 4,
+          "exit": 1,
+          "duration_ms": 574.1572
+        },
+        "repair": {
+          "pass": 4,
+          "fail": 0,
+          "exit": 0,
+          "duration_ms": 197.9664
+        }
+      },
+      "limitations": "See feature ledger: actual native rules with explicitly mocked upstream/current owner/source/native peer capabilities; no production or live qualification."
+    },
+    {
+      "id": "F04_C06",
+      "file": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F04_C06_TERMINAL.json",
+      "sha256": "bbc74e28be2046b9ac4f3f41d813bd05343d10cc2aac73dcbe1e420c3fc89d40",
+      "unique_passed": 9,
+      "terminal": {
+        "pass": 9,
+        "fail": 0,
+        "exit": 0,
+        "duration_ms": 1166.7847
+      },
+      "limitations": "See feature ledger: actual native rules with explicitly mocked upstream/current owner/source/native peer capabilities; no production or live qualification."
     }
   ],
   "sourceHashes": {
@@ -309,7 +500,7 @@
     "bot/src/frameworks/daggerheart/pc-death-rules.js": "d539828ef86c24ab4472cc19ebf70e6bb8d0a1135c5aa887960dc18aaa020dc6",
     "bot/src/frameworks/daggerheart/pre-roll-fear-recovery-rules.js": "ce3121acd9eb41212323304a81127ae7eb8815e70225858fc40331ad3e0a1293",
     "bot/src/frameworks/daggerheart/pre-roll-fear-rules.js": "27b4f79e5d4a2c60b1db07e98ba24215b4c04423292f5aaa1fc4ad02323a5d49",
-    "bot/src/frameworks/daggerheart/public.js": "6edd73957879d11d10cc46e768b0c3718187a70b762c1dd8f1b82912233c2a34",
+    "bot/src/frameworks/daggerheart/public.js": "8c2c4acb372c9f26f2507c26b6719f2ed0a135dc7d480796960817fc4cb46b18",
     "bot/src/frameworks/daggerheart/pvp-damage-rules.js": "4e7dfbcd44de6a8dad7c99e87b4b4cdfe22103c45b2daa320fa0a64dd0fc7527",
     "bot/src/frameworks/daggerheart/roll-collaboration-rules.js": "fc34174a80e8c3fa9ef4863379ee870e2275a42c697991bba1e4573756054bba",
     "bot/src/frameworks/daggerheart/roll-modifier-rules.js": "4a750b7ec87c9d697459a5c33d694fdb30d531bd57d08c69bd7fc98e202f9b29",
@@ -382,25 +573,62 @@
     "bot/tests/ai-gm-2026-10/rf03-f03-c18.test.mjs": "161aafde23338a1ea4155360ced19e85a02499de6c552007ef1b52ac0a9f5d8c",
     "bot/tests/ai-gm-2026-10/rf03-f03-c19.test.mjs": "bb0d09909086d69f2c47a94bbb704160ca4e6a05b2b055cc278f5e0b976c9668",
     "bot/tests/ai-gm-2026-10/rf03-f04-c03.test.mjs": "925450825faffb7fb223fa3f5b332d9ed3746cff52be80406946d2768145fbfa",
-    "bot/tests/ai-gm-2026-10/rf03-f04-c04.test.mjs": "b94a45c08d968d54f14b1c5ef3318c6f3d46d2eff85bf2805a3954683ffec2cf"
+    "bot/tests/ai-gm-2026-10/rf03-f04-c04.test.mjs": "b94a45c08d968d54f14b1c5ef3318c6f3d46d2eff85bf2805a3954683ffec2cf",
+    "bot/src/pc-incoming.js": "60785b4c48a3f3e51766a9ac0cc36316b8c6933633e5d9f21f6f4f45ec899a48",
+    "bot/src/frameworks/daggerheart/incoming-attack-rules.js": "1318fb77bbe7d0954af606e7a1be26b24c5483effa73d85800d01de98d89b009",
+    "bot/tests/ai-gm-2026-10/rf03-f01-c12.test.mjs": "1f56e416699ec84d159b4bd448ed42729d26f576f9a99fd1254e4be9d0676de8",
+    "bot/src/native-group-features.js": "a641aca5191b840902909a956c7f29e0d4a600e72529683649daf1b16a92ed4d",
+    "bot/src/frameworks/daggerheart/group-feature-execution-rules.js": "d17a17f5027c3ba975297b94e2a6bb4d3df40342e49eed7f26424e4c156db74e",
+    "bot/tests/ai-gm-2026-10/rf03-f01-c13.test.mjs": "6092e28cbce9fa791b3bba2cee0530ce352f624b84e17fb718d8e30a7c6e3047",
+    "bot/src/native-professional-entry.js": "753a40ca9f9edf285ad38d9e99856a57118b69b9f6ef1d837a63bdf96240f352",
+    "bot/src/frameworks/daggerheart/professional-entry-rules.js": "a08284995b43c432aa49a1d14d19510a98d340843294f7cb7f807f4931ec22ac",
+    "bot/tests/ai-gm-2026-10/rf03-f01-c14.test.mjs": "cd08955c76c4f6796836c890c4139910b361e7712df628805d5d376966f61669",
+    "bot/src/native-encounter-relations.js": "8cf438af685eab053e6af87894237761f41cc4a92fc3078c22539a471f69792d",
+    "bot/src/native-defense-aura.js": "7a079c6cf016df3f9a79558d24d084a9cbab2ab2782fd9108ffb2fd19d61cf40",
+    "bot/src/frameworks/daggerheart/encounter-relation-rules.js": "b6f9c62a76baeb94f4cc9e060cc651da877ee9c386d63f9024e79d70e5091261",
+    "bot/src/frameworks/daggerheart/defensive-feature-rules.js": "963065706fb1c52cf565daad0651f6ce633a88c67bfc26083ba56fa33b809db4",
+    "bot/tests/ai-gm-2026-10/rf03-f01-c15.test.mjs": "d92744b55e00747d47dd4fa7a1e0e783fc19ec7fb1cf8eb7dba84b0e8e89cfc7",
+    "bot/src/native-stress-passives.js": "4f32d720dec59f5026892cf8b089562d058c7fe846ab7c30e200827be27fd6a0",
+    "bot/src/frameworks/daggerheart/stress-passive-rules.js": "4b8413132a86f9b5bcf9deaa26619fa0832d116d8fab207df11855f54c7c8095",
+    "bot/tests/ai-gm-2026-10/rf03-f01-c16.test.mjs": "31fb13c27404bb1782e4326fe2b169af0846a8854bfc6ff194d821c5515697e4",
+    "bot/src/pc-effects.js": "54eeb16893fb05dfd3172fa84ef2ef30f9fdb953e40192243b15508d50fc81a1",
+    "bot/src/frameworks/daggerheart/pc-effect-rules.js": "366f4e731c9759e0d936b1731ff7270e538be21512bd749e0b338108dcb3dc92",
+    "bot/tests/ai-gm-2026-10/rf03-f01-c17.test.mjs": "c9780c3fd2be8166489417ddeb995ba9fe43e61405dd446fe52c0f96bc1bcdec",
+    "bot/src/pvp-campaign-policy.js": "406578cf69b418611ff5c9a0bd51cba59db440480a2ac8fe5cab900fc50409b4",
+    "bot/src/pvp-fear-gate.js": "99c290caf76065d85733f500e7dfbeb52c20ce2e8b399d1f01d4a1876d5175df",
+    "bot/src/frameworks/daggerheart/pvp-safety-rules.js": "426da4954c08f51fe6917074c0066dcb172076dcbf9068d979b67322fe3f5fab",
+    "bot/src/frameworks/daggerheart/pvp-fear-gate-rules.js": "9e90962d09a46195f42311f8afafaf6bde8b29404d5eaaa41c6470eb62888b08",
+    "bot/tests/ai-gm-2026-10/rf03-f03-c20.test.mjs": "89494053ec23c511d6a19dbb0a3bbd3c94aed5e544c6ac90fb4dd908345a0e46",
+    "bot/src/pvp-profiles.js": "79a631b1d73701929b0153b3517a2f796b8d871bac1e5ecd092ab5f1d1c636b9",
+    "bot/src/frameworks/daggerheart/pvp-profile-rules.js": "aa4d67ac10d92d436ada8b6c063042842067b158b82bb911ff8796b438f41eb9",
+    "bot/tests/ai-gm-2026-10/rf03-f03-c21.test.mjs": "47795c9c7609d08274d967f6ea6617c669ac16a3cb698c70a5497aa302e4dde1",
+    "bot/src/pvp-attacks.js": "70977a2b6fb53fc20421dc196841af6a53e7f7ab763bbca4b687970c7e194bf4",
+    "bot/src/frameworks/daggerheart/pvp-attack-rules.js": "27aceef6b3d989982a5be3190c7869d899748fcb9b1c65e271ca173aa72e7528",
+    "bot/tests/ai-gm-2026-10/rf03-f03-c22.test.mjs": "a5aac27ddb90ed458edb2639417e281f5bfad727a28dd6833b899c6fb7df9775",
+    "bot/src/native-environment-noise.js": "ea6fb366b8f06c7beb740be4c24424b3b81ca8d0b6d1a6ba950df7ac132d2a58",
+    "bot/src/frameworks/daggerheart/environment-acoustic-rules.js": "628584cdd4c123acb97494c9de4cc769fb8d95fecc0b2a25b41e84dab6cc5293",
+    "bot/tests/ai-gm-2026-10/rf03-f04-c05.test.mjs": "834b0c6132be0f4e0b2d342c4a86d1b0aa5e8127b7e6130f869b4d26c195ae66",
+    "bot/src/native-environment-countdown.js": "044eef43e75b4bd0d69ffda71a49d86b858b25c574df238284b9f3a60dbd4d3a",
+    "bot/src/frameworks/daggerheart/environment-countdown-rules.js": "b9b04763c421a81f6ec65ff2909ee8850d2b005cba63eee1c108fa595351c865",
+    "bot/tests/ai-gm-2026-10/rf03-f04-c06.test.mjs": "15a35f06dd67a270ac5d211e49d9eaf849b83b042e964a6a08607fe3fd68d8bb"
   },
   "architecture": {
-    "sourceModules": 429,
+    "sourceModules": 442,
     "unowned": 0,
-    "importOccurrences": 2404,
-    "internalImportOccurrences": 2229,
+    "importOccurrences": 2438,
+    "internalImportOccurrences": 2263,
     "cycleComponents": 1,
     "largestCycle": 182,
-    "rawViolationOccurrences": 2515,
-    "acceptedLegacyOccurrences": 2515,
+    "rawViolationOccurrences": 2498,
+    "acceptedLegacyOccurrences": 2498,
     "activeViolationGroups": 0,
     "transitionErrors": 0,
     "pass": true
   },
   "remaining_rf03": {
-    "RF03-F01": 245,
+    "RF03-F01": 233,
     "RF03-F03": 131,
-    "RF03-F04": 179
+    "RF03-F04": 174
   },
   "qualified_provider_residuals_2": 171,
   "no_unchanged_passing_test_reruns": true,
@@ -447,6 +675,22 @@
       "bytes_preserved": true,
       "only_production_reader": "bot/src/native-feature-catalog.js",
       "gameplay_change": false
+    }
+  ],
+  "fresh_test_files": 30,
+  "changed_syntax_passes": 169,
+  "syntax_failures_repaired": 1,
+  "test_file_parse_failures_repaired": 1,
+  "evidence_note": "Cumulative scoped completed batches since 2985a2d; fixture repairs rerun only failed cases. No frozen union rerun; unchanged passing rules preserved. Historical terminal hashes stay immutable; current source hashes refreshed.",
+  "local_holds": [
+    {
+      "feature": "RF03-F04",
+      "occurrence": "Closing Time Moves",
+      "reason": "Existing missing completed-exchange producer, established alternate-exit receipts and current/saved route consumers; readiness remains held, not supported."
+    },
+    {
+      "feature": "RF03-F05",
+      "reason": "Complete native receipt-to-narrative and native-world producer pair adoption not implemented."
     }
   ]
 }

@@ -1,0 +1,8 @@
+D:\Library\Development\Veiled_City\bot\tests\ai-gm-2026-10\rf03-f03-c22.test.mjs:33
+ const f=fixture(t),row=f.ready();f.changeTarget(pc=>pc.data.evasion=15);assert.throws(()=>f.roll(row),/compare-and-set is stale/);assert.equal(f.count('rolls'),0);f.changeTarget(pc=>pc.data.evasion=12);const source=f.db.getWorldEvent(f.guild,row.source_event);f.event(null,null,{...source,status:'retracted'});assert.throws(()=>f.roll(row),/source changed/retracted/);assert.equal(f.count('rolls'),0);
+                                                                                                                                                                                                                                                                                                                                                     ^
+
+SyntaxError: Invalid regular expression flags
+    at checkSyntax (node:internal/main/check_syntax:72:5)
+
+Node.js v24.19.0
