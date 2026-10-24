@@ -1,0 +1,70 @@
+TAP version 13
+# Subtest: three actual attributed accounts create a private native testimony receipt without truth or PC effects
+ok 1 - three actual attributed accounts create a private native testimony receipt without truth or PC effects
+  ---
+  duration_ms: 178.3626
+  type: 'test'
+  ...
+# Subtest: exact native receipt replays across restart and rejects a changed judgment
+ok 2 - exact native receipt replays across restart and rejects a changed judgment
+  ---
+  duration_ms: 196.8241
+  type: 'test'
+  ...
+# Subtest: local incident needs an independently established earlier event rather than this GM input
+ok 3 - local incident needs an independently established earlier event rather than this GM input
+  ---
+  duration_ms: 181.2671
+  type: 'test'
+  ...
+# Subtest: private true detail, absent actor, proxy control and secret witness knowledge remain ineligible
+ok 4 - private true detail, absent actor, proxy control and secret witness knowledge remain ineligible
+  ---
+  duration_ms: 217.7812
+  type: 'test'
+  ...
+# Subtest: speech source tampering, changed native readback and unanchored subjective judgment are rejected
+ok 5 - speech source tampering, changed native readback and unanchored subjective judgment are rejected
+  ---
+  duration_ms: 236.2387
+  type: 'test'
+  ...
+# Subtest: failed native receipt rolls mutation and source back without partial testimony
+ok 6 - failed native receipt rolls mutation and source back without partial testimony
+  ---
+  duration_ms: 168.0015
+  type: 'test'
+  ...
+# Subtest: historical receipt survives scene change while current projection and another recipient remain denied
+ok 7 - historical receipt survives scene change while current projection and another recipient remain denied
+  ---
+  duration_ms: 194.2073
+  type: 'test'
+  ...
+# Subtest: changed native mutation ancestry is never accepted as a historical certificate
+ok 8 - changed native mutation ancestry is never accepted as a historical certificate
+  ---
+  duration_ms: 192.2739
+  type: 'test'
+  ...
+# Subtest: actual provider reaches native closed-shape guards without services or GM source fabrication
+ok 9 - actual provider reaches native closed-shape guards without services or GM source fabrication
+  ---
+  duration_ms: 0.219
+  type: 'test'
+  ...
+# Subtest: authorized field-order correction accepts only the existing exact closed proposal fields
+ok 10 - authorized field-order correction accepts only the existing exact closed proposal fields
+  ---
+  duration_ms: 171.479
+  type: 'test'
+  ...
+1..10
+# tests 10
+# suites 0
+# pass 10
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2192.6623

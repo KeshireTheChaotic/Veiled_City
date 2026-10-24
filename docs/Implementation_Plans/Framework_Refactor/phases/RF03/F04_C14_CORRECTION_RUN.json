@@ -1,0 +1,22 @@
+{
+  "start": "2026-10-24T16:16:31.6241802-05:00",
+  "architecture_exit": 0,
+  "run_id": "F04_C14_CORRECTION",
+  "syntax": [
+    {
+      "exit": 0,
+      "path": "bot/src/frameworks/daggerheart/environment-witness-rules.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/tests/ai-gm-2026-10/rf03-f04-c14.test.mjs"
+    }
+  ],
+  "end": "2026-10-24T16:16:34.7171397-05:00",
+  "hashes": {
+    "bot/tests/ai-gm-2026-10/rf03-f04-c14.test.mjs": "a598583f3290dfbc802b290d4f170c99b5395afb0113e0829aa459e864ad0489",
+    "bot/src/frameworks/daggerheart/environment-witness-rules.js": "82d6ebf71e75d3a2dc0230cafbe71213e732e0c5b384f7a4a84a315646a845d9"
+  },
+  "base_sha": "8d73cbcce0ae70ed1b29e1e0f206ffe3dc32beb7",
+  "test_exit": 0
+}

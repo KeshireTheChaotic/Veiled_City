@@ -14,7 +14,7 @@ function feature(){
   return d.feature;
 }
 function shape(p){
-  if(!exact(p,'accounts,environment,feature_ref,inconsistency,incident_ref,version')||p.version!==1
+  if(!exact(p,'accounts,environment,feature_ref,incident_ref,inconsistency,version')||p.version!==1
     ||p.feature_ref!==featureKey||!ref(p.environment)||!ref(p.incident_ref)||!Array.isArray(p.accounts)||p.accounts.length!==3
     ||p.accounts.some(a=>!exact(a,'evidence_ref,npc,truth_ref,unit_ref')||Object.values(a).some(v=>!ref(v)))
     ||new Set(p.accounts.map(a=>a.npc)).size!==3||new Set(p.accounts.map(a=>a.unit_ref)).size!==3
