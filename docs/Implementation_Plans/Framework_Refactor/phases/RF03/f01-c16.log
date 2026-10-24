@@ -1,0 +1,58 @@
+TAP version 13
+# Subtest: Memory Leech clears one native NPC Stress after the first verified PC mark and replays after restart
+ok 1 - Memory Leech clears one native NPC Stress after the first verified PC mark and replays after restart
+  ---
+  duration_ms: 79.9966
+  type: 'test'
+  ...
+# Subtest: a leech with zero native Stress records consumption without granting or manufacturing a resource
+ok 2 - a leech with zero native Stress records consumption without granting or manufacturing a resource
+  ---
+  duration_ms: 73.0583
+  type: 'test'
+  ...
+# Subtest: earlier independently verified PC Stress consumes the first-mark opportunity without retroactive NPC benefit
+ok 3 - earlier independently verified PC Stress consumes the first-mark opportunity without retroactive NPC benefit
+  ---
+  duration_ms: 86.8407
+  type: 'test'
+  ...
+# Subtest: late or revoked NPC presence holds only the optional NPC consequence and retains the completed PC receipt
+ok 4 - late or revoked NPC presence holds only the optional NPC consequence and retains the completed PC receipt
+  ---
+  duration_ms: 72.3453
+  type: 'test'
+  ...
+# Subtest: foreign/proxy NPC control cannot receive a native passive effect
+ok 5 - foreign/proxy NPC control cannot receive a native passive effect
+  ---
+  duration_ms: 74.9849
+  type: 'test'
+  ...
+# Subtest: failed passive receipt commit atomically restores NPC Stress, event and mutation without changing the PC mark
+ok 6 - failed passive receipt commit atomically restores NPC Stress, event and mutation without changing the PC mark
+  ---
+  duration_ms: 72.1221
+  type: 'test'
+  ...
+# Subtest: corrupted original PC cause invalidates historical native passive and replay holds without repeating its mutation
+ok 7 - corrupted original PC cause invalidates historical native passive and replay holds without repeating its mutation
+  ---
+  duration_ms: 84.5718
+  type: 'test'
+  ...
+# Subtest: actual Stress passive provider cold-imports with its original interfaces
+ok 8 - actual Stress passive provider cold-imports with its original interfaces
+  ---
+  duration_ms: 313.7786
+  type: 'test'
+  ...
+1..8
+# tests 8
+# suites 0
+# pass 8
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 926.1615

@@ -54,3 +54,4 @@ export {createGroupFeatureExecutionRules} from './group-feature-execution-rules.
 export {createProfessionalEntryRules} from './professional-entry-rules.js';
 export {createEncounterRelationRules} from './encounter-relation-rules.js';
 export {createDefensiveFeatureRules} from './defensive-feature-rules.js';
+export {createStressPassiveRules} from './stress-passive-rules.js';

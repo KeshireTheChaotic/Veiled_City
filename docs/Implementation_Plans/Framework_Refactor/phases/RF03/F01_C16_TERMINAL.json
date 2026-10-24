@@ -1,0 +1,36 @@
+{
+  "base_sha": "1df17707cdf34e9d695b06d6432776945d6bbd5d",
+  "unique_tests": 8,
+  "executions": 8,
+  "pass": 8,
+  "fail": 0,
+  "exit": 0,
+  "duration_ms": 926.1615,
+  "syntax_pass": 4,
+  "body_equivalence": true,
+  "body_sha256": "8b96439448330050cfa4e1d27c499fd41c5a5cedd15208b0ff21737f5b150109",
+  "hashes": {
+    "bot/src/native-stress-passives.js": "4f32d720dec59f5026892cf8b089562d058c7fe846ab7c30e200827be27fd6a0",
+    "bot/src/frameworks/daggerheart/stress-passive-rules.js": "4b8413132a86f9b5bcf9deaa26619fa0832d116d8fab207df11855f54c7c8095",
+    "bot/src/frameworks/daggerheart/public.js": "a52b66b447b501cb36325ab7590abe1fe52184bea1fa2998fc378c3e9b388acc",
+    "bot/tests/ai-gm-2026-10/rf03-f01-c16.test.mjs": "31fb13c27404bb1782e4326fe2b169af0846a8854bfc6ff194d821c5515697e4"
+  },
+  "gate": {
+    "sourceModules": 435,
+    "unowned": 0,
+    "importOccurrences": 2422,
+    "internalImportOccurrences": 2247,
+    "cycleComponents": 1,
+    "largestCycle": 182,
+    "rawViolationOccurrences": 2503,
+    "acceptedLegacyOccurrences": 2503,
+    "activeViolationGroups": 0,
+    "transitionErrors": 0,
+    "pass": true
+  },
+  "retired_records": 2,
+  "provider_calls": 0,
+  "provider_cost_usd": 0,
+  "codex_usage": "UNMEASURED",
+  "release": "NOT AUTHORIZED"
+}

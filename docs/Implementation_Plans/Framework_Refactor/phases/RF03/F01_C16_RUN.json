@@ -1,0 +1,26 @@
+{
+  "architecture_exit": 1,
+  "base_sha": "1df17707cdf34e9d695b06d6432776945d6bbd5d",
+  "started": "2026-10-24T09:38:06.1917365Z",
+  "test_exit": 0,
+  "run_id": "RF03-F01-C16",
+  "ended": "2026-10-24T09:38:07.9862016Z",
+  "syntax": [
+    {
+      "path": "bot/src/native-stress-passives.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/stress-passive-rules.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/public.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf03-f01-c16.test.mjs",
+      "exit": 0
+    }
+  ]
+}

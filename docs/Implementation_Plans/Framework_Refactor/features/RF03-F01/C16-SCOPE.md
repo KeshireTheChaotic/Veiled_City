@@ -1,0 +1,3 @@
+# RF03-F01 C16 — Memory Leech first Stress native consequence
+
+Extract unchanged complete native passive consequence, causality, first-mark history, receipt/mutation ancestry and local-review policy. Existing provider binds catalog/current source/encounter/native proof callbacks. A completed player Stress receipt always precedes this separate optional NPC Stress clear; no changed PC/resource/dice/narrative authority. Fresh SQLite tests run actual native consequence/inspection with exact source ordering, replay/reopen, absent/invalid/late source, already-consumed mark, no available NPC Stress, corruption and atomic rollback. Explicit mock upstream source/feature proof; no full production integration. One frozen targeted batch; changed syntax and phase ratchet.

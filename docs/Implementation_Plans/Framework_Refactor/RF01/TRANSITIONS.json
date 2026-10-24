@@ -13628,20 +13628,6 @@
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
     {
-      "id": "4259768b78afe883dc659cc70ed756ce6bdc61432591c90ca7d67540e1651807",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/native-stress-passives.js",
-      "to": "bot/src/scene-fiction-context.js",
-      "kind": "static",
-      "specifier": "./scene-fiction-context.js",
-      "owner": "daggerheart",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF03-F01",
-      "expires_after": "RF03",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
       "id": "3d42010987b0aa928dceb837af1abea19b1bc4a74ad67009284604387423c756",
       "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
       "from": "bot/src/native-stress-passives.js",
@@ -28081,20 +28067,6 @@
       "max_occurrences": 1,
       "remove_in_feature": "RF05-F03",
       "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
-    },
-    {
-      "id": "bbdef13489492fac1375b6eb6831dc3bc03fab3328b642769e5b232bfc069ff8",
-      "code": "CYCLIC_IMPORT_EDGE",
-      "from": "bot/src/native-stress-passives.js",
-      "to": "bot/src/scene-fiction-context.js",
-      "kind": "static",
-      "specifier": "./scene-fiction-context.js",
-      "owner": "daggerheart",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF03-F01",
-      "expires_after": "RF03",
       "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
       "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
     },

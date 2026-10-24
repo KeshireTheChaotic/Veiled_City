@@ -1,0 +1,7 @@
+# Taste the Fear ledger
+
+Individual catalog occurrence covered by C16. Preserve first native PC Stress mark and existing NPC-only clear. Pending fresh qualification; release NOT AUTHORIZED.
+
+## F01 C16 native first Stress consequence
+
+Base 1df17707cdf34e9d695b06d6432776945d6bbd5d. Entire Memory Leech native passive causality/first-mark/commit/inspection policy extracted unchanged into daggerheart/stress-passive-rules.js; existing provider binds named source/catalog/encounter/native-peer callbacks. Fresh8/8pass,exit0,926.1615ms;4syntax pass. Real disposable SQLite qualifies first verified PC mark before one NPC Stress clear, zero-Stress consumption without resource creation, prior mark non-retroactivity, revoked presence local hold preserving PC outcome, non-world-control hold, atomic event/mutation/NPC rollback on failed receipt write, original-cause corruption rejection and held replay without repeat mutation, reopen and actual provider cold import. Source/current presence/catalog/upstream completed effect proof ports mocked explicitly; production source authentication/live integration unqualified. Native body exact-match. Two obsolete records retired with originals retained; architecture-only final gate435sources,2422imports,SCC182,2503accepted,zero active/unowned/integrity errors. No deadline changes or passing tests rerun. Hashes and terminal F01_C16. Rollback checkpoint with2retirements together. Provider0/$0; Codex UNMEASURED; RELEASE NOT AUTHORIZED. RF03 remains incomplete.
