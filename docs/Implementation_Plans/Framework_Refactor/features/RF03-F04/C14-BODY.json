@@ -1,0 +1,12 @@
+{
+  "base_sha": "32f32c605bdc7e425927d64f11eacc21e5404e6f",
+  "source": "bot/src/native-environment-witnesses.js",
+  "target": "bot/src/frameworks/daggerheart/environment-witness-rules.js",
+  "body_equivalent": true,
+  "body_sha256": "4799b208f72fd39ba954e657fb01dafb33b7a88b1613ebf30cc13b6bba50c2da",
+  "exports": [
+    "applyEnvironmentWitnessAccounts",
+    "inspectEnvironmentWitnessAccounts",
+    "environmentWitnessAccountsProjection"
+  ]
+}

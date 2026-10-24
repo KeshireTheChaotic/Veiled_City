@@ -1,0 +1,251 @@
+TAP version 13
+# Subtest: three actual attributed accounts create a private native testimony receipt without truth or PC effects
+not ok 1 - three actual attributed accounts create a private native testimony receipt without truth or PC effects
+  ---
+  duration_ms: 167.4753
+  type: 'test'
+  location: 'D:\\Library\\Development\\Veiled_City\\bot\\tests\\ai-gm-2026-10\\rf03-f04-c14.test.mjs:18:1'
+  failureType: 'testCodeFailure'
+  error: 'environment_witness_closed_three_account_proposal'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    fail (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf03-f04-c14.test.mjs:10:1342)
+    shape (file:///D:/Library/Development/Veiled_City/bot/src/frameworks/daggerheart/environment-witness-rules.js:23:11)
+    Object.applyEnvironmentWitnessAccounts (file:///D:/Library/Development/Veiled_City/bot/src/frameworks/daggerheart/environment-witness-rules.js:90:3)
+    Object.apply (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf03-f04-c14.test.mjs:16:361)
+    TestContext.<anonymous> (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf03-f04-c14.test.mjs:18:140)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.start (node:internal/test_runner/test:1242:17)
+    startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17)
+  ...
+# Subtest: exact native receipt replays across restart and rejects a changed judgment
+not ok 2 - exact native receipt replays across restart and rejects a changed judgment
+  ---
+  duration_ms: 180.9049
+  type: 'test'
+  location: 'D:\\Library\\Development\\Veiled_City\\bot\\tests\\ai-gm-2026-10\\rf03-f04-c14.test.mjs:19:1'
+  failureType: 'testCodeFailure'
+  error: 'environment_witness_closed_three_account_proposal'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    fail (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf03-f04-c14.test.mjs:10:1342)
+    shape (file:///D:/Library/Development/Veiled_City/bot/src/frameworks/daggerheart/environment-witness-rules.js:23:11)
+    Object.applyEnvironmentWitnessAccounts (file:///D:/Library/Development/Veiled_City/bot/src/frameworks/daggerheart/environment-witness-rules.js:90:3)
+    Object.apply (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf03-f04-c14.test.mjs:16:361)
+    TestContext.<anonymous> (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf03-f04-c14.test.mjs:19:112)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+  ...
+# Subtest: local incident needs an independently established earlier event rather than this GM input
+not ok 3 - local incident needs an independently established earlier event rather than this GM input
+  ---
+  duration_ms: 170.9775
+  type: 'test'
+  location: 'D:\\Library\\Development\\Veiled_City\\bot\\tests\\ai-gm-2026-10\\rf03-f04-c14.test.mjs:20:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /local_established_supernatural_incident/. Input:
+    
+    'Error: environment_witness_closed_three_account_proposal'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+  error: 'environment_witness_closed_three_account_proposal'
+  stack: |-
+    fail (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf03-f04-c14.test.mjs:10:1342)
+    shape (file:///D:/Library/Development/Veiled_City/bot/src/frameworks/daggerheart/environment-witness-rules.js:23:11)
+    Object.applyEnvironmentWitnessAccounts (file:///D:/Library/Development/Veiled_City/bot/src/frameworks/daggerheart/environment-witness-rules.js:90:3)
+    Object.apply (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf03-f04-c14.test.mjs:16:361)
+    file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf03-f04-c14.test.mjs:20:244
+    getActual (node:assert:611:5)
+    strict.throws (node:assert:759:24)
+    TestContext.<anonymous> (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf03-f04-c14.test.mjs:20:231)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+  operator: 'throws'
+  stack: |-
+    TestContext.<anonymous> (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf03-f04-c14.test.mjs:20:231)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: private true detail, absent actor, proxy control and secret witness knowledge remain ineligible
+not ok 4 - private true detail, absent actor, proxy control and secret witness knowledge remain ineligible
+  ---
+  duration_ms: 162.5533
+  type: 'test'
+  location: 'D:\\Library\\Development\\Veiled_City\\bot\\tests\\ai-gm-2026-10\\rf03-f04-c14.test.mjs:21:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /authenticated_established_fact/. Input:
+    
+    'Error: environment_witness_closed_three_account_proposal'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+  error: 'environment_witness_closed_three_account_proposal'
+  stack: |-
+    fail (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf03-f04-c14.test.mjs:10:1342)
+    shape (file:///D:/Library/Development/Veiled_City/bot/src/frameworks/daggerheart/environment-witness-rules.js:23:11)
+    Object.applyEnvironmentWitnessAccounts (file:///D:/Library/Development/Veiled_City/bot/src/frameworks/daggerheart/environment-witness-rules.js:90:3)
+    Object.apply (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf03-f04-c14.test.mjs:16:361)
+    file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf03-f04-c14.test.mjs:21:175
+    getActual (node:assert:611:5)
+    strict.throws (node:assert:759:24)
+    TestContext.<anonymous> (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf03-f04-c14.test.mjs:21:162)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+  operator: 'throws'
+  stack: |-
+    TestContext.<anonymous> (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf03-f04-c14.test.mjs:21:162)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: speech source tampering, changed native readback and unanchored subjective judgment are rejected
+not ok 5 - speech source tampering, changed native readback and unanchored subjective judgment are rejected
+  ---
+  duration_ms: 170.2415
+  type: 'test'
+  location: 'D:\\Library\\Development\\Veiled_City\\bot\\tests\\ai-gm-2026-10\\rf03-f04-c14.test.mjs:22:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /speech_reader_changed/. Input:
+    
+    'Error: environment_witness_closed_three_account_proposal'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+  error: 'environment_witness_closed_three_account_proposal'
+  stack: |-
+    fail (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf03-f04-c14.test.mjs:10:1342)
+    shape (file:///D:/Library/Development/Veiled_City/bot/src/frameworks/daggerheart/environment-witness-rules.js:23:11)
+    Object.applyEnvironmentWitnessAccounts (file:///D:/Library/Development/Veiled_City/bot/src/frameworks/daggerheart/environment-witness-rules.js:90:3)
+    Object.apply (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf03-f04-c14.test.mjs:16:361)
+    file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf03-f04-c14.test.mjs:22:204
+    getActual (node:assert:611:5)
+    strict.throws (node:assert:759:24)
+    TestContext.<anonymous> (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf03-f04-c14.test.mjs:22:191)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+  operator: 'throws'
+  stack: |-
+    TestContext.<anonymous> (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf03-f04-c14.test.mjs:22:191)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: failed native receipt rolls mutation and source back without partial testimony
+not ok 6 - failed native receipt rolls mutation and source back without partial testimony
+  ---
+  duration_ms: 159.3544
+  type: 'test'
+  location: 'D:\\Library\\Development\\Veiled_City\\bot\\tests\\ai-gm-2026-10\\rf03-f04-c14.test.mjs:23:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /Injected witness receipt/. Input:
+    
+    'Error: environment_witness_closed_three_account_proposal'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+  error: 'environment_witness_closed_three_account_proposal'
+  stack: |-
+    fail (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf03-f04-c14.test.mjs:10:1342)
+    shape (file:///D:/Library/Development/Veiled_City/bot/src/frameworks/daggerheart/environment-witness-rules.js:23:11)
+    Object.applyEnvironmentWitnessAccounts (file:///D:/Library/Development/Veiled_City/bot/src/frameworks/daggerheart/environment-witness-rules.js:90:3)
+    Object.apply (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf03-f04-c14.test.mjs:16:361)
+    file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf03-f04-c14.test.mjs:23:139
+    getActual (node:assert:611:5)
+    strict.throws (node:assert:759:24)
+    TestContext.<anonymous> (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf03-f04-c14.test.mjs:23:126)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+  operator: 'throws'
+  stack: |-
+    TestContext.<anonymous> (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf03-f04-c14.test.mjs:23:126)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: historical receipt survives scene change while current projection and another recipient remain denied
+not ok 7 - historical receipt survives scene change while current projection and another recipient remain denied
+  ---
+  duration_ms: 152.404
+  type: 'test'
+  location: 'D:\\Library\\Development\\Veiled_City\\bot\\tests\\ai-gm-2026-10\\rf03-f04-c14.test.mjs:24:1'
+  failureType: 'testCodeFailure'
+  error: 'environment_witness_closed_three_account_proposal'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    fail (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf03-f04-c14.test.mjs:10:1342)
+    shape (file:///D:/Library/Development/Veiled_City/bot/src/frameworks/daggerheart/environment-witness-rules.js:23:11)
+    Object.applyEnvironmentWitnessAccounts (file:///D:/Library/Development/Veiled_City/bot/src/frameworks/daggerheart/environment-witness-rules.js:90:3)
+    Object.apply (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf03-f04-c14.test.mjs:16:361)
+    TestContext.<anonymous> (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf03-f04-c14.test.mjs:24:139)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+  ...
+# Subtest: changed native mutation ancestry is never accepted as a historical certificate
+not ok 8 - changed native mutation ancestry is never accepted as a historical certificate
+  ---
+  duration_ms: 172.6696
+  type: 'test'
+  location: 'D:\\Library\\Development\\Veiled_City\\bot\\tests\\ai-gm-2026-10\\rf03-f04-c14.test.mjs:25:1'
+  failureType: 'testCodeFailure'
+  error: 'environment_witness_closed_three_account_proposal'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    fail (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf03-f04-c14.test.mjs:10:1342)
+    shape (file:///D:/Library/Development/Veiled_City/bot/src/frameworks/daggerheart/environment-witness-rules.js:23:11)
+    Object.applyEnvironmentWitnessAccounts (file:///D:/Library/Development/Veiled_City/bot/src/frameworks/daggerheart/environment-witness-rules.js:90:3)
+    Object.apply (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf03-f04-c14.test.mjs:16:361)
+    TestContext.<anonymous> (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf03-f04-c14.test.mjs:25:116)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+  ...
+# Subtest: actual provider reaches native closed-shape guards without services or GM source fabrication
+ok 9 - actual provider reaches native closed-shape guards without services or GM source fabrication
+  ---
+  duration_ms: 0.2413
+  type: 'test'
+  ...
+1..9
+# tests 9
+# suites 0
+# pass 1
+# fail 8
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1808.5776

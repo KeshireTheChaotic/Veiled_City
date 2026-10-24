@@ -97,3 +97,5 @@ export {createPvpAgreementRules} from './pvp-agreement-rules.js';
 export {createEncounterCompositionRules} from './encounter-composition-rules.js';
 
 export {createEncounterGroundingRules} from './encounter-grounding-rules.js';
+
+export {createEnvironmentWitnessRules} from './environment-witness-rules.js';

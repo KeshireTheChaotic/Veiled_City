@@ -1,0 +1,70 @@
+{
+  "run_id": "F04_C14",
+  "syntax": [
+    {
+      "path": "bot/src/native-environment-witnesses.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/environment-witness-rules.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/public.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf03-f04-c14.test.mjs",
+      "exit": 0
+    }
+  ],
+  "base_sha": "32f32c605bdc7e425927d64f11eacc21e5404e6f",
+  "architecture_exit": 0,
+  "hashes": {
+    "bot/src/frameworks/daggerheart/environment-witness-rules.js": "c4637a4d9b023bc2f8c64f5d846b9d1b6d96614c99088229eeabd2979442a476",
+    "bot/tests/ai-gm-2026-10/rf03-f04-c14.test.mjs": "5e6cc598e00fca400b0e837739aaa0d031634f91c7d83783eea44e27aa2857cc",
+    "bot/src/frameworks/daggerheart/public.js": "5f7438864fc02def7b82414527270a5744a1df2b63e57e5c4ca9dd24434d4287",
+    "bot/src/native-environment-witnesses.js": "fa11bb98e1336fa0702e7e5dafcb68de63898c7d5125a625bf731f92cf1e4368"
+  },
+  "start": "2026-10-24T16:12:16.2930245-05:00",
+  "end": "2026-10-24T16:12:19.0979045-05:00",
+  "test_exit": 1,
+  "unique_tests": 9,
+  "executions": 9,
+  "pass": 1,
+  "fail": 8,
+  "tap_duration_ms": 1808.5776,
+  "syntax_pass": 4,
+  "body_equivalence": {
+    "base_sha": "32f32c605bdc7e425927d64f11eacc21e5404e6f",
+    "source": "bot/src/native-environment-witnesses.js",
+    "target": "bot/src/frameworks/daggerheart/environment-witness-rules.js",
+    "body_equivalent": true,
+    "body_sha256": "4799b208f72fd39ba954e657fb01dafb33b7a88b1613ebf30cc13b6bba50c2da",
+    "exports": [
+      "applyEnvironmentWitnessAccounts",
+      "inspectEnvironmentWitnessAccounts",
+      "environmentWitnessAccountsProjection"
+    ]
+  },
+  "gate": {
+    "sourceModules": 484,
+    "unowned": 0,
+    "importOccurrences": 2525,
+    "internalImportOccurrences": 2349,
+    "cycleComponents": 1,
+    "largestCycle": 182,
+    "rawViolationOccurrences": 2485,
+    "acceptedLegacyOccurrences": 2485,
+    "activeViolationGroups": 0,
+    "transitionErrors": 0,
+    "pass": true
+  },
+  "status": "HELD_VALIDATOR_DEFECT_OWNER_QUESTION_PENDING",
+  "qualification": "NOT QUALIFIED",
+  "blocker": "Existing shape exact(p,'accounts,environment,feature_ref,inconsistency,incident_ref,version') compares sorted actual fields against an unsorted expected list. Every otherwise valid proposal fails before source certification.",
+  "provider_calls": 0,
+  "provider_cost_usd": 0,
+  "codex_usage": "UNMEASURED",
+  "release": "NOT AUTHORIZED"
+}
