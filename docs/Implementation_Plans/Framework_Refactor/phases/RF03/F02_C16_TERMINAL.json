@@ -1,0 +1,51 @@
+{
+  "base_sha": "3bee5de4ac2e048b2bce5757541bbc69b7ed7975",
+  "unique_cases": 9,
+  "executions": 14,
+  "initial": {
+    "pass": 2,
+    "fail": 5,
+    "exit": 1,
+    "duration_ms": 701.4353
+  },
+  "repair": {
+    "pass": 5,
+    "fail": 0,
+    "exit": 0,
+    "duration_ms": 426.1483
+  },
+  "feedback_extension": {
+    "pass": 2,
+    "fail": 0,
+    "exit": 0,
+    "duration_ms": 252.2702
+  },
+  "repair_reason": "New SQLite combatant fixture omitted id; production unchanged. Only five failed cases rerun.",
+  "syntax_checks": 4,
+  "additional_test_syntax": 2,
+  "body_equivalence": true,
+  "body_sha256": "d18799c42cb3b48826ce717420a4b1e1f93cc2f50e60cf8f34612048ea4a0dc5",
+  "hashes": {
+    "bot/src/native-feature-windows.js": "570b36313992d4dd5035f157b5980a6fb8133a597849c61e702f217f1f4c27a7",
+    "bot/src/frameworks/daggerheart/feature-window-rules.js": "c9a3bba765bda6e36e87075abf3a13fe0b7e335be7a6a93417d5de5b45609d4b",
+    "bot/src/frameworks/daggerheart/public.js": "0f6427730b02c044da920ee42567cb5e679a8164cfd1cbf3dd524bafd17ba11a",
+    "bot/tests/ai-gm-2026-10/rf03-f02-c16.test.mjs": "91374a5fd7826204c1a45c98d0fde63c1bd62f4522913b2839201f9faa4f3092",
+    "docs/Implementation_Plans/Framework_Refactor/RF01/TRANSITIONS.json": "175e606b74627500c171231f24fe7c2ecee0fda8dc3c26523f6024a3fcbc054c"
+  },
+  "retired_transition_count": 3,
+  "gate": {
+    "sources": 413,
+    "imports": 2367,
+    "largest_cycle": 182,
+    "accepted_occurrences": 2548,
+    "active": 0,
+    "unowned": 0,
+    "integrity_errors": 0,
+    "exit": 0
+  },
+  "limitations": "Mocked source catalog/current scene/control/native damage proof; no production persistence, provider, Discord or semantic narrative qualification. Feedback Fear balance uses explicit transaction-aware mocked repository field; SQLite verifies receipts/Stress rollback.",
+  "provider_calls": 0,
+  "provider_cost_usd": 0,
+  "codex_usage": "UNMEASURED",
+  "release": "NOT AUTHORIZED"
+}

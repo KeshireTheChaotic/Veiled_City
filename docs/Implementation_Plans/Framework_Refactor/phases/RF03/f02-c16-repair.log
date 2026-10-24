@@ -1,0 +1,40 @@
+TAP version 13
+# Subtest: native two-HP damage creates one private occurrence and exact eligible choice, without an effect
+ok 1 - native two-HP damage creates one private occurrence and exact eligible choice, without an effect
+  ---
+  duration_ms: 70.4866
+  type: 'test'
+  ...
+# Subtest: Blood Rush commits exactly one NPC Stress recovery, immutable receipt and restart replay
+ok 2 - Blood Rush commits exactly one NPC Stress recovery, immutable receipt and restart replay
+  ---
+  duration_ms: 73.2612
+  type: 'test'
+  ...
+# Subtest: failure after Stress and mutation writes rolls the complete native execution back
+ok 3 - failure after Stress and mutation writes rolls the complete native execution back
+  ---
+  duration_ms: 68.1126
+  type: 'test'
+  ...
+# Subtest: source/recipient/control or occurrence depth changes cannot authorize execution
+ok 4 - source/recipient/control or occurrence depth changes cannot authorize execution
+  ---
+  duration_ms: 66.1747
+  type: 'test'
+  ...
+# Subtest: one occurrence cannot be reserved by two decisions, and nonreaction operation cannot pay
+ok 5 - one occurrence cannot be reserved by two decisions, and nonreaction operation cannot pay
+  ---
+  duration_ms: 82.9045
+  type: 'test'
+  ...
+1..5
+# tests 5
+# suites 0
+# pass 5
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 426.1483

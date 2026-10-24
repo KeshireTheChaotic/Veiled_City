@@ -32,3 +32,4 @@ export {createActionConsentRules,consentHash} from './action-consent-rules.js';
 export {createFearReservationWriter} from './fear-reservation-writer.js';
 export {createPreRollFearRules} from './pre-roll-fear-rules.js';
 export {createPreRollFearRecoveryRules} from './pre-roll-fear-recovery-rules.js';
+export {createFeatureWindowRules,FEATURE_PHASES,MAX_FEATURE_DEPTH} from './feature-window-rules.js';
