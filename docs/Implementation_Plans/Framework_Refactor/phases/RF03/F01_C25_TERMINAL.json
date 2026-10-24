@@ -1,0 +1,38 @@
+{
+  "base_sha": "90a2899fa880416a587eed54e9affc01011901e7",
+  "unique_tests": 7,
+  "executions": 7,
+  "pass": 7,
+  "fail": 0,
+  "exit": 0,
+  "duration_ms": 664.7974,
+  "syntax_pass": 4,
+  "body_equivalence": true,
+  "body_sha256": "e6c1bd92e8df32ddb35441b3a82f5cdb9a0cc82adb3db6e925d9b12d13f1bf7b",
+  "hashes": {
+    "bot/src/roll-sharing.js": "73f8854e54aa4ee4815a5acafdbf878138aa53a90463fb1c77910edef962f91e",
+    "bot/src/frameworks/daggerheart/roll-sharing-rules.js": "48eca36a1cdc16298de4ced5e8ffc06cc96d690b985aa6eb383384eedba6b6ef",
+    "bot/src/frameworks/daggerheart/public.js": "18569ede22ffc0b00696c056d826d3fcc47c34f8b7e4f494595c0343316b77fa",
+    "bot/tests/ai-gm-2026-10/rf03-f01-c25.test.mjs": "8eb31e6d24bbc5d4d7d6343e24ec47a6896360340465e4c1264df4960b7d0913"
+  },
+  "gate": {
+    "sourceModules": 455,
+    "unowned": 0,
+    "importOccurrences": 2464,
+    "internalImportOccurrences": 2289,
+    "cycleComponents": 1,
+    "largestCycle": 182,
+    "rawViolationOccurrences": 2494,
+    "acceptedLegacyOccurrences": 2494,
+    "activeViolationGroups": 0,
+    "transitionErrors": 0,
+    "pass": true
+  },
+  "retired_records": 1,
+  "mock_send_calls": 1,
+  "limitations": "Native owner-preview/source/material and async publication handoff exercised with SQLite and mocked publication service. This is not actual outbox concurrency, uncertain-send, durable acknowledgment or Discord exactly-once qualification.",
+  "provider_calls": 0,
+  "provider_cost_usd": 0,
+  "codex_usage": "UNMEASURED",
+  "release": "NOT AUTHORIZED"
+}

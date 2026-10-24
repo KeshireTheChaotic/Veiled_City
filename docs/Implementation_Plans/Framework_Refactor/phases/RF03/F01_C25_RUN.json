@@ -1,0 +1,44 @@
+{
+  "started": "2026-10-24T10:23:55.1870413Z",
+  "run_id": "RF03-F01-C25",
+  "base_sha": "90a2899fa880416a587eed54e9affc01011901e7",
+  "ended": "2026-10-24T10:23:56.8595214Z",
+  "architecture_exit": 1,
+  "test_exit": 0,
+  "syntax": [
+    {
+      "exit": 0,
+      "path": "bot/src/roll-sharing.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/frameworks/daggerheart/roll-sharing-rules.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/frameworks/daggerheart/public.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/tests/ai-gm-2026-10/rf03-f01-c25.test.mjs"
+    }
+  ],
+  "frozen_hashes": [
+    {
+      "sha256": "73F8854E54AA4EE4815A5ACAFDBF878138AA53A90463FB1C77910EDEF962F91E",
+      "path": "bot/src/roll-sharing.js"
+    },
+    {
+      "sha256": "48ECA36A1CDC16298DE4CED5E8FFC06CC96D690B985AA6EB383384EEDBA6B6EF",
+      "path": "bot/src/frameworks/daggerheart/roll-sharing-rules.js"
+    },
+    {
+      "sha256": "18569EDE22FFC0B00696C056D826D3FCC47C34F8B7E4F494595C0343316B77FA",
+      "path": "bot/src/frameworks/daggerheart/public.js"
+    },
+    {
+      "sha256": "8EB31E6D24BBC5D4D7D6343E24EC47A6896360340465E4C1264DF4960B7D0913",
+      "path": "bot/tests/ai-gm-2026-10/rf03-f01-c25.test.mjs"
+    }
+  ]
+}

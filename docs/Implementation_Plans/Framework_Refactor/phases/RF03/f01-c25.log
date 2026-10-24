@@ -1,0 +1,52 @@
+TAP version 13
+# Subtest: private owner preview captures only the exact accepted attempt without publishing or adding party disclosure
+ok 1 - private owner preview captures only the exact accepted attempt without publishing or adding party disclosure
+  ---
+  duration_ms: 32.4441
+  type: 'test'
+  ...
+# Subtest: foreign owner, outcome-claim or PC-target prose cannot become a reviewed party attempt
+ok 2 - foreign owner, outcome-claim or PC-target prose cannot become a reviewed party attempt
+  ---
+  duration_ms: 32.6527
+  type: 'test'
+  ...
+# Subtest: changed saved native material or protected PvP scope invalidates a context preview rather than broadening disclosure
+ok 3 - changed saved native material or protected PvP scope invalidates a context preview rather than broadening disclosure
+  ---
+  duration_ms: 31.3909
+  type: 'test'
+  ...
+# Subtest: saved affirmative disclosure formats only native total/status and the exact owner-reviewed attempt
+ok 4 - saved affirmative disclosure formats only native total/status and the exact owner-reviewed attempt
+  ---
+  duration_ms: 30.0888
+  type: 'test'
+  ...
+# Subtest: queue, reserve and async publication pass the same source-bound identity to mocked outbox without creating their own delivery receipt
+ok 5 - queue, reserve and async publication pass the same source-bound identity to mocked outbox without creating their own delivery receipt
+  ---
+  duration_ms: 41.3737
+  type: 'test'
+  ...
+# Subtest: private, wrong-author or revoked source fails before asynchronous publication boundary
+ok 6 - private, wrong-author or revoked source fails before asynchronous publication boundary
+  ---
+  duration_ms: 46.8199
+  type: 'test'
+  ...
+# Subtest: actual owner roll-sharing provider cold-imports original async publication and preview interfaces
+ok 7 - actual owner roll-sharing provider cold-imports original async publication and preview interfaces
+  ---
+  duration_ms: 375.5891
+  type: 'test'
+  ...
+1..7
+# tests 7
+# suites 0
+# pass 7
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 664.7974
