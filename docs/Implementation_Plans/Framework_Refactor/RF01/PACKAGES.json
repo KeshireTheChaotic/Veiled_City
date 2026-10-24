@@ -67,6 +67,9 @@
     ],
     "daggerheart--world": [
       "bot/src/framework-to-framework/daggerheart--world/public.js"
+    ],
+    "daggerheart--narrative": [
+      "bot/src/framework-to-framework/daggerheart--narrative/public.js"
     ]
   },
   "externalCapabilityOwners": {

@@ -1,0 +1,3 @@
+# RF03-F05 C05 — Native bilateral agreement/narrative consumer adoption
+
+Resolve F03C32unextracted mechanics through real narrative consumer-owned interface and explicit paired native engine. Original source/provider/narration code stays in the existing narrative source module while actual native agreement policy is removed into Daggerheart. Application public bootstrap composes one fixed consumer before runtime; no generic registry, model authority, hidden service locator or forwarding facade. Fresh pair/actual bootstrap lifecycle plus native SQLite agreement/clauses tests; no broader native receipt-to-writer certification from unit tests. No new narrative restrictions/gameplay or native receipt format changes.

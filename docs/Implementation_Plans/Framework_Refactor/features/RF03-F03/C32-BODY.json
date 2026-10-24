@@ -1,0 +1,21 @@
+{
+  "base_sha": "1a02825ecb7ae9f98d43997d7114253313dbf1ee",
+  "source": "bot/src/narrative-pvp.js",
+  "target": "bot/src/frameworks/daggerheart/pvp-agreement-rules.js",
+  "original_normalized_sha256": "e9333d96ae689181fcc90ff8ef6d9a9a0d7b58419b1bd9023c98ff182bdc1a8d",
+  "body_equivalent": true,
+  "body_sha256": "7418f1fb7c8490ebb5fd9f2b209da07a0fac883f09ede079b7051402f33b1fda",
+  "exports": [
+    "pvpOwnerContext",
+    "proposePvp",
+    "reviewPvp",
+    "pvpInbox",
+    "revisePvp",
+    "validatePvpAgreement",
+    "respondPvp",
+    "stagePvpAttempts"
+  ],
+  "original_inventory_owner": "narrative",
+  "original_inventory_deadline": "RF05-F03",
+  "native_policy_remains_RF03": true
+}

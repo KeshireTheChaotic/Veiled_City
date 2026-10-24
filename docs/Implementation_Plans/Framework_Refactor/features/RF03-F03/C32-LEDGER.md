@@ -1,24 +1,7 @@
 # RF03-F03 C32 ledger
 
-LOCAL IMPLEMENTATION HOLD / NOT COMPLETE / NOT AN OWNER QUESTION
+SCOPED NATIVE EXTRACTION AND ACTUAL ADOPTION QUALIFIED / COMPLETE PIPELINE STILL PENDING
 
-{
-  "feature": "RF03-F03",
-  "source": "bot/src/narrative-pvp.js",
-  "source_sha256": "e9333d96ae689181fcc90ff8ef6d9a9a0d7b58419b1bd9023c98ff182bdc1a8d",
-  "original_owner": "narrative",
-  "original_deadline": "RF05-F03",
-  "reason": "Confirmed native bilateral agreement/owner/terms/signature/attempt staging responsibilities remain in narrative-owned source despite original future deadline. They remain RF03 native work; no reassignment or completion claimed.",
-  "functions": [
-    "proposePvp",
-    "reviewPvp",
-    "revisePvp",
-    "respondPvp",
-    "validatePvpAgreement",
-    "pvpOwnerContext",
-    "stagePvpAttempts"
-  ],
-  "smallest_safe_implementation": "Extract exact native agreement policy into Daggerheart and adopt an explicit narrative consumer port through daggerheart--narrative in actual application composition. Keep original source/current owner/publication capabilities and historical receipts; no forwarding facade, new cross-owner import, rebaseline, duplicate rule or hidden service locator. Qualify native positive independent owner signatures, termination/recovery and actual composition before closure."
-}
+Original local implementation hold and exact old source hash are retained in commit4fdf277 and its C32ledger. This implementation resolves that native-code hold; it does not certify every source producer or full narrative pipeline.
 
-Discovery from current source and actual callers; no native code or transition record changed by this hold. Next step is implementation and fresh native/agreement/application integration tests, not a documentation-only phase exit. Release not authorized.
+Base 1a02825ecb7ae9f98d43997d7114253313dbf1ee. Former C32local hold resolved for scoped native extraction/adoption: complete existing bilateral owner/terms/signature/agreement/attempt staging policy removed from narrative-pvp.js into Daggerheart, byte-equivalent function body and old native versions/keys/terms preserved. Narrative source module retains original imported source providers and API/reexports, registers only fixed source factory. Actual daggerheart--narrative pair/application bootstrap supplies native service before runtime; no forwarding native implementation, hidden registry, arbitrary lookup, import exception or duplicate policy.9/9native SQLite cases pass within shared13case batch,exit0,TAP644.9913ms;7assigned changed-file syntax checks pass (other4assignedF05C05). Independent two-owner reviewed signatures/current membership, replay/reopen, immutable counteroffer invalidation, neutral withdrawal/Fear-window callbacks/no winner, second-signature rollback, current principal/scene/expiry/source holds, mandatory safety/campaign hold before ordinary sibling work and actual new agreement→actual native clause authority after neutral result exercised. Current accepted source/owner/traits/target/scene/safety/damage/source-index/notice/terminal peers explicit mocks; full native rounds/dice/source authentication/writer/publication remain unqualified. Original narrative inventory owner/RF05deadline not changed; native responsibility actually extracted now, not deferred. Gate 481sources,2515imports,SCC182,2485accepted,zero active/unowned/integrity. Rollback coupled C32/F05C05native/source/consumer/pair/bootstrap/publicregistry together. Provider0/$0,Codex UNMEASURED;RF03 incomplete;RF04 not started;RELEASE NOT AUTHORIZED.

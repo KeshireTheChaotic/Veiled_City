@@ -1,0 +1,88 @@
+TAP version 13
+# Subtest: actual native/narrative pair requires two independently reviewed current-owner signatures before agreement authority exists
+ok 1 - actual native/narrative pair requires two independently reviewed current-owner signatures before agreement authority exists
+  ---
+  duration_ms: 56.1489
+  type: 'test'
+  ...
+# Subtest: other users and unreviewed owners cannot inspect private agreement data or sign on a participant behalf
+ok 2 - other users and unreviewed owners cannot inspect private agreement data or sign on a participant behalf
+  ---
+  duration_ms: 26.1319
+  type: 'test'
+  ...
+# Subtest: native exact agreement and source receipts survive SQLite restart without duplicate consent or agreement writes
+ok 3 - native exact agreement and source receipts survive SQLite restart without duplicate consent or agreement writes
+  ---
+  duration_ms: 52.3349
+  type: 'test'
+  ...
+# Subtest: counteroffer changes immutable terms revision and invalidates old independent signatures rather than silently broadening consent
+ok 4 - counteroffer changes immutable terms revision and invalidates old independent signatures rather than silently broadening consent
+  ---
+  duration_ms: 53.8034
+  type: 'test'
+  ...
+# Subtest: independent owner withdrawal records a neutral result and invokes mandatory Fear/window handling without a winner, cost or forfeit
+ok 5 - independent owner withdrawal records a neutral result and invokes mandatory Fear/window handling without a winner, cost or forfeit
+  ---
+  duration_ms: 42.3376
+  type: 'test'
+  ...
+# Subtest: failed final native agreement write rolls back the second signature and its source without deleting the first owner approval
+ok 6 - failed final native agreement write rolls back the second signature and its source without deleting the first owner approval
+  ---
+  duration_ms: 51.0003
+  type: 'test'
+  ...
+# Subtest: current owner, scene, expiry or terms-source revocation holds authority without rewriting original agreement history
+ok 7 - current owner, scene, expiry or terms-source revocation holds authority without rewriting original agreement history
+  ---
+  duration_ms: 54.138
+  type: 'test'
+  ...
+# Subtest: native attempt staging prioritizes current safety and stale native campaign scope without affecting an independent sibling
+ok 8 - native attempt staging prioritizes current safety and stale native campaign scope without affecting an independent sibling
+  ---
+  duration_ms: 108.2742
+  type: 'test'
+  ...
+# Subtest: actual native neutral-result agreement context feeds actual native per-player clause authority without a mocked owner-context waiver
+ok 9 - actual native neutral-result agreement context feeds actual native per-player clause authority without a mocked owner-context waiver
+  ---
+  duration_ms: 38.7152
+  type: 'test'
+  ...
+# Subtest: uncomposed narrative consumer cannot supply native agreement authority and incomplete services fail closed
+ok 10 - uncomposed narrative consumer cannot supply native agreement authority and incomplete services fail closed
+  ---
+  duration_ms: 0.8059
+  type: 'test'
+  ...
+# Subtest: actual native/narrative pair supplies native checked API without policy duplication or source calls for an empty attempt set
+ok 11 - actual native/narrative pair supplies native checked API without policy duplication or source calls for an empty attempt set
+  ---
+  duration_ms: 0.8573
+  type: 'test'
+  ...
+# Subtest: fixed narrative source factory registration is explicit, lazy and cannot be silently replaced
+ok 12 - fixed narrative source factory registration is explicit, lazy and cannot be silently replaced
+  ---
+  duration_ms: 0.1512
+  type: 'test'
+  ...
+# Subtest: actual application bootstrap binds original narrative agreement entrypoints once without DB, model, client or game mutation
+ok 13 - actual application bootstrap binds original narrative agreement entrypoints once without DB, model, client or game mutation
+  ---
+  duration_ms: 0.2067
+  type: 'test'
+  ...
+1..13
+# tests 13
+# suites 0
+# pass 13
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 644.9913

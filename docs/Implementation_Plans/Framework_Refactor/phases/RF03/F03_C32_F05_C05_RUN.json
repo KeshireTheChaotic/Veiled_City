@@ -1,0 +1,68 @@
+{
+  "run_id": "F03_C32_F05_C05",
+  "hashes": {
+    "bot/src/frameworks/daggerheart/public.js": "0abbb2b61f97409cbdeff0ad7fae817a9fbf30d540e093cd7db31d347620452e",
+    "bot/src/application/composition/public.js": "8b579c00254a1267bb5668f92bfcbe5bc58b4a7e11d5bbbf091eb0c26303020b",
+    "bot/src/application/composition/pvp-agreements.js": "6e768cd53dd68733572e6d6ef894f0e69cce16eef60296cbdd9587311ecd75d0",
+    "bot/tests/ai-gm-2026-10/rf03-f05-c05.test.mjs": "45848e51ed84e7be6c6c166ca83a3a9b29d7f63ab4790f6abb90765aeccea726",
+    "bot/tests/ai-gm-2026-10/rf03-f03-c32.test.mjs": "533fb4e3c9a29e097f8c9d319dd516df85e51e912ec181b1c5b4e475e23b19e5",
+    "bot/src/frameworks/narrative/public.js": "a3964543734f1bbf462784a52cd7fccc25bf637780296df4a09310757cf2c68a",
+    "bot/src/narrative-pvp.js": "baf69c1cf0afd9c258c42c692b64df47059cc9909a509ae5a57c6e3e878b89ef",
+    "bot/src/frameworks/daggerheart/pvp-agreement-rules.js": "8c5096ec63a202ba75023cbae3bea7659508776451ddeab57b9416b520b0f203",
+    "bot/src/index.js": "fdd0978109c0d1f6006aa503cb5de8a673360cb6ae7b6cdd1011adf8f1a5edb0",
+    "bot/src/framework-to-framework/daggerheart--narrative/public.js": "f4a1d7c45d5cc62705d4b48b7e4a2d00c5ba86c6bd9a4d8150d173135ab2a343",
+    "bot/src/frameworks/narrative/contracts/pvp-agreement.js": "6be5b12243afc474e655b1cdb24d3b9b22c30708a977fccd2d2fc38898a6925b"
+  },
+  "end": "2026-10-24T15:59:20.8511195-05:00",
+  "test_exit": 0,
+  "base_sha": "1a02825ecb7ae9f98d43997d7114253313dbf1ee",
+  "duration_ms": 702.0244,
+  "start": "2026-10-24T15:59:18.9462177-05:00",
+  "syntax": [
+    {
+      "exit": 0,
+      "path": "bot/src/narrative-pvp.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/frameworks/daggerheart/pvp-agreement-rules.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/frameworks/daggerheart/public.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/frameworks/narrative/contracts/pvp-agreement.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/frameworks/narrative/public.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/framework-to-framework/daggerheart--narrative/public.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/application/composition/pvp-agreements.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/application/composition/public.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/index.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/tests/ai-gm-2026-10/rf03-f03-c32.test.mjs"
+    },
+    {
+      "exit": 0,
+      "path": "bot/tests/ai-gm-2026-10/rf03-f05-c05.test.mjs"
+    }
+  ],
+  "architecture_exit": 0
+}
