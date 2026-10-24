@@ -1,0 +1,58 @@
+TAP version 13
+# Subtest: exact authenticated owner acceptance invokes only its native domain response and returns a private receipt
+ok 1 - exact authenticated owner acceptance invokes only its native domain response and returns a private receipt
+  ---
+  duration_ms: 33.0107
+  type: 'test'
+  ...
+# Subtest: questions, conditions, quoted agreement and authorize false remain nonbinding with original text preserved
+ok 2 - questions, conditions, quoted agreement and authorize false remain nonbinding with original text preserved
+  ---
+  duration_ms: 116.9665
+  type: 'test'
+  ...
+# Subtest: native reply replay across SQLite restart does not invoke domain handler a second time
+ok 3 - native reply replay across SQLite restart does not invoke domain handler a second time
+  ---
+  duration_ms: 31.4699
+  type: 'test'
+  ...
+# Subtest: stale revision, expiry, disabled opt-in and retracted proposal source cannot authorize a response
+ok 4 - stale revision, expiry, disabled opt-in and retracted proposal source cannot authorize a response
+  ---
+  duration_ms: 31.2123
+  type: 'test'
+  ...
+# Subtest: receipt failure rolls back domain response and owner source together without manufacturing consent
+ok 5 - receipt failure rolls back domain response and owner source together without manufacturing consent
+  ---
+  duration_ms: 32.6136
+  type: 'test'
+  ...
+# Subtest: external native terms narrow project details and exact owner proof delegates unchanged source/current revision to repository
+ok 6 - external native terms narrow project details and exact owner proof delegates unchanged source/current revision to repository
+  ---
+  duration_ms: 13.2092
+  type: 'test'
+  ...
+# Subtest: commitment and negotiation replies provide only exact owner authorization, never an automatic world consequence
+ok 7 - commitment and negotiation replies provide only exact owner authorization, never an automatic world consequence
+  ---
+  duration_ms: 57.1963
+  type: 'test'
+  ...
+# Subtest: owner decline/defer and exact submitted project choice remain separate native decisions
+ok 8 - owner decline/defer and exact submitted project choice remain separate native decisions
+  ---
+  duration_ms: 60.3389
+  type: 'test'
+  ...
+1..8
+# tests 8
+# suites 0
+# pass 8
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 450.2195

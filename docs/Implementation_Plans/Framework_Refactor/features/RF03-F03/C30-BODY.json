@@ -1,0 +1,26 @@
+{
+  "base_sha": "3f7963dccb243845f8e7c39e3391d5c4a50e9f3f",
+  "modules": [
+    {
+      "source": "bot/src/owner-consent.js",
+      "target": "bot/src/frameworks/daggerheart/owner-consent-rules.js",
+      "body_equivalent": true,
+      "body_sha256": "23377692c33a37c209e78daebdb38ca519e14b459908ee7f0118eec26e5aaa8f",
+      "exports": [
+        "externalConsentTerms",
+        "externalConsentKey",
+        "hasOwnerConsent"
+      ]
+    },
+    {
+      "source": "bot/src/consent-native.js",
+      "target": "bot/src/frameworks/daggerheart/consent-response-rules.js",
+      "body_equivalent": true,
+      "body_sha256": "a333c123415753e849d2ebde3131f38dc747af1a5ac03d6c6415bdef1191c8c8",
+      "exports": [
+        "consentOffers",
+        "respondConsent"
+      ]
+    }
+  ]
+}
