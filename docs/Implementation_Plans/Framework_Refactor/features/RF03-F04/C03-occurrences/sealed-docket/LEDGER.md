@@ -1,0 +1,7 @@
+# RF03-F04 C03 occurrence ledger
+
+Feature: environment:archive-beneath-the-courthouse:sealed-docket. Status: IMPLEMENTED / TEST PENDING. Base 606509de88c0e2ccb3fcb38a1108b80d77b6e65e.
+
+Changed module: bot/src/native-environment-sealed-docket.js; native owner: daggerheart/environment-rule-contexts.js (createNativeEnvironmentSealedDocketContext). Existing projectNativeEnvironmentSealedDocketContext, nativeEnvironmentSealedDocketSituation APIs retained. Exact body unchanged apart from export placement and reuse of established neutral JSON hash. Fresh test: rf03-f04-c03.test.mjs occurrence environment:archive-beneath-the-courthouse:sealed-docket. Source provider/scene integration remains unqualified; no catalog disposition change. Provider0/$0, Codex UNMEASURED, release NOT AUTHORIZED.
+
+Qualified native context policy: this occurrence's one fresh source/provider case passed in the22-case batch (22/22,exit0,434.273ms total). Native body SHA256 2a8c3c39d6231678981249809b2a9d4eb4e332a5840a7285dc7514ac9a1f784b; provider SHA256 17f462b9c60db666e738834a6956681c79f73b74a1504bbd62f0bd9fcbd1f09e. Tested current source/descriptor, actual provider import, absent exposure, review-only, changed handler/hash/template/printed rule and no execution fields. Underlying source/scene effects remain unqualified. Shared25syntax checks passed; final RF03 gate passed after44exact obsolete hash-edge retirements. Full actual evidence F04_C03_TERMINAL.json.

@@ -1,0 +1,7 @@
+# RF03-F04 C03 occurrence ledger
+
+Feature: environment:archive-beneath-the-courthouse:chain-of-title. Status: IMPLEMENTED / TEST PENDING. Base 606509de88c0e2ccb3fcb38a1108b80d77b6e65e.
+
+Changed module: bot/src/native-environment-chain-of-title.js; native owner: daggerheart/environment-rule-contexts.js (createNativeEnvironmentChainOfTitleContext). Existing projectNativeEnvironmentChainOfTitleContext, nativeEnvironmentChainOfTitleSituation APIs retained. Exact body unchanged apart from export placement and reuse of established neutral JSON hash. Fresh test: rf03-f04-c03.test.mjs occurrence environment:archive-beneath-the-courthouse:chain-of-title. Source provider/scene integration remains unqualified; no catalog disposition change. Provider0/$0, Codex UNMEASURED, release NOT AUTHORIZED.
+
+Qualified native context policy: this occurrence's one fresh source/provider case passed in the22-case batch (22/22,exit0,434.273ms total). Native body SHA256 42468c6f06efc0762761b791611232c25c42d44f536cce2654d6dcd579d8dcaa; provider SHA256 81f2e1c329ed64f5d62251e1edb737ae02f19a8cbb9d5ff46e14fe7b37864af4. Tested current source/descriptor, actual provider import, absent exposure, review-only, changed handler/hash/template/printed rule and no execution fields. Underlying source/scene effects remain unqualified. Shared25syntax checks passed; final RF03 gate passed after44exact obsolete hash-edge retirements. Full actual evidence F04_C03_TERMINAL.json.

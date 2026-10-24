@@ -1,0 +1,7 @@
+# RF03-F04 C03 occurrence ledger
+
+Feature: environment:storm-drain-shrine:wrong-offering. Status: IMPLEMENTED / TEST PENDING. Base 606509de88c0e2ccb3fcb38a1108b80d77b6e65e.
+
+Changed module: bot/src/native-environment-wrong-offering.js; native owner: daggerheart/environment-rule-contexts.js (createNativeEnvironmentWrongOfferingContext). Existing projectNativeEnvironmentWrongOfferingContext, nativeEnvironmentWrongOfferingSituation APIs retained. Exact body unchanged apart from export placement and reuse of established neutral JSON hash. Fresh test: rf03-f04-c03.test.mjs occurrence environment:storm-drain-shrine:wrong-offering. Source provider/scene integration remains unqualified; no catalog disposition change. Provider0/$0, Codex UNMEASURED, release NOT AUTHORIZED.
+
+Qualified native context policy: this occurrence's one fresh source/provider case passed in the22-case batch (22/22,exit0,434.273ms total). Native body SHA256 bd967a604f9e6090b71662770af98539b450f154a534f22a70955ac6e20e286e; provider SHA256 439980b4d753544e80f752b8e4e18b5e860613d50c1ee758d1ff6f0531d1a3fe. Tested current source/descriptor, actual provider import, absent exposure, review-only, changed handler/hash/template/printed rule and no execution fields. Underlying source/scene effects remain unqualified. Shared25syntax checks passed; final RF03 gate passed after44exact obsolete hash-edge retirements. Full actual evidence F04_C03_TERMINAL.json.

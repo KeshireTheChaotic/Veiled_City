@@ -1,0 +1,7 @@
+# RF03-F04 C03 occurrence ledger
+
+Feature: environment:apartment-veil-breach:thin-walls. Status: IMPLEMENTED / TEST PENDING. Base 606509de88c0e2ccb3fcb38a1108b80d77b6e65e.
+
+Changed module: bot/src/native-environment-thin-walls.js; native owner: daggerheart/environment-rule-contexts.js (createNativeEnvironmentThinWallsContext). Existing projectNativeEnvironmentThinWallsContext, nativeEnvironmentThinWallsSituation APIs retained. Exact body unchanged apart from export placement and reuse of established neutral JSON hash. Fresh test: rf03-f04-c03.test.mjs occurrence environment:apartment-veil-breach:thin-walls. Source provider/scene integration remains unqualified; no catalog disposition change. Provider0/$0, Codex UNMEASURED, release NOT AUTHORIZED.
+
+Qualified native context policy: this occurrence's one fresh source/provider case passed in the22-case batch (22/22,exit0,434.273ms total). Native body SHA256 5a2f2b8ea73adf741e65dc0ad239975ed3f52edd8741798bc9ba7760c2202340; provider SHA256 f9166eae2808a587b76bec76ccfb2c06a78ad74acf16b8d4b9c19e6fbb1c2f1c. Tested current source/descriptor, actual provider import, absent exposure, review-only, changed handler/hash/template/printed rule and no execution fields. Underlying source/scene effects remain unqualified. Shared25syntax checks passed; final RF03 gate passed after44exact obsolete hash-edge retirements. Full actual evidence F04_C03_TERMINAL.json.

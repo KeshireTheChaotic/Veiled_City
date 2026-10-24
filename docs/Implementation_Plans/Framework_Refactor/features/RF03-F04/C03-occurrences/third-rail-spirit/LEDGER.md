@@ -1,0 +1,7 @@
+# RF03-F04 C03 occurrence ledger
+
+Feature: environment:dead-platform:third-rail-spirit. Status: IMPLEMENTED / TEST PENDING. Base 606509de88c0e2ccb3fcb38a1108b80d77b6e65e.
+
+Changed module: bot/src/native-environment-third-rail-spirit.js; native owner: daggerheart/environment-rule-contexts.js (createNativeEnvironmentThirdRailSpiritContext). Existing projectNativeEnvironmentThirdRailSpiritContext, nativeEnvironmentThirdRailSpiritSituation APIs retained. Exact body unchanged apart from export placement and reuse of established neutral JSON hash. Fresh test: rf03-f04-c03.test.mjs occurrence environment:dead-platform:third-rail-spirit. Source provider/scene integration remains unqualified; no catalog disposition change. Provider0/$0, Codex UNMEASURED, release NOT AUTHORIZED.
+
+Qualified native context policy: this occurrence's one fresh source/provider case passed in the22-case batch (22/22,exit0,434.273ms total). Native body SHA256 ecc219d7ea22d7391490c6455dd869532d360a2f371cffdeee4dbdb5345be31e; provider SHA256 567b01724cc43ca334a5350f624532fab1eee40de44f5ee84724a405528c103c. Tested current source/descriptor, actual provider import, absent exposure, review-only, changed handler/hash/template/printed rule and no execution fields. Underlying source/scene effects remain unqualified. Shared25syntax checks passed; final RF03 gate passed after44exact obsolete hash-edge retirements. Full actual evidence F04_C03_TERMINAL.json.

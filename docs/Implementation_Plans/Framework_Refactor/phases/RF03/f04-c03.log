@@ -1,0 +1,142 @@
+TAP version 13
+# Subtest: environment:glass-market-grand-concourse:auction-of-consequences exact native source context and real provider binding
+ok 1 - environment:glass-market-grand-concourse:auction-of-consequences exact native source context and real provider binding
+  ---
+  duration_ms: 300.8683
+  type: 'test'
+  ...
+# Subtest: environment:archive-beneath-the-courthouse:chain-of-title exact native source context and real provider binding
+ok 2 - environment:archive-beneath-the-courthouse:chain-of-title exact native source context and real provider binding
+  ---
+  duration_ms: 3.5852
+  type: 'test'
+  ...
+# Subtest: environment:veil-anchor-chamber:consensus-engine exact native source context and real provider binding
+ok 3 - environment:veil-anchor-chamber:consensus-engine exact native source context and real provider binding
+  ---
+  duration_ms: 3.101
+  type: 'test'
+  ...
+# Subtest: environment:aster-vale-predictive-lab:containment-shutters exact native source context and real provider binding
+ok 4 - environment:aster-vale-predictive-lab:containment-shutters exact native source context and real provider binding
+  ---
+  duration_ms: 3.7186
+  type: 'test'
+  ...
+# Subtest: environment:occult-crime-scene:contaminated-scene exact native source context and real provider binding
+ok 5 - environment:occult-crime-scene:contaminated-scene exact native source context and real provider binding
+  ---
+  duration_ms: 3.3049
+  type: 'test'
+  ...
+# Subtest: environment:glass-market-grand-concourse:everyone-is-watching exact native source context and real provider binding
+ok 6 - environment:glass-market-grand-concourse:everyone-is-watching exact native source context and real provider binding
+  ---
+  duration_ms: 2.6143
+  type: 'test'
+  ...
+# Subtest: environment:dead-platform:express-through-memory exact native source context and real provider binding
+ok 7 - environment:dead-platform:express-through-memory exact native source context and real provider binding
+  ---
+  duration_ms: 2.624
+  type: 'test'
+  ...
+# Subtest: environment:pale-court-townhouse:guest-right exact native source context and real provider binding
+ok 8 - environment:pale-court-townhouse:guest-right exact native source context and real provider binding
+  ---
+  duration_ms: 2.5418
+  type: 'test'
+  ...
+# Subtest: environment:dead-platform:last-train-rules exact native source context and real provider binding
+ok 9 - environment:dead-platform:last-train-rules exact native source context and real provider binding
+  ---
+  duration_ms: 2.576
+  type: 'test'
+  ...
+# Subtest: environment:abandoned-mall-glass-market:no-violence-in-the-aisles exact native source context and real provider binding
+ok 10 - environment:abandoned-mall-glass-market:no-violence-in-the-aisles exact native source context and real provider binding
+  ---
+  duration_ms: 3.194
+  type: 'test'
+  ...
+# Subtest: environment:networked-dream:metaphor-is-physics exact native source context and real provider binding
+ok 11 - environment:networked-dream:metaphor-is-physics exact native source context and real provider binding
+  ---
+  duration_ms: 2.9872
+  type: 'test'
+  ...
+# Subtest: environment:aster-vale-predictive-lab:model-room exact native source context and real provider binding
+ok 12 - environment:aster-vale-predictive-lab:model-room exact native source context and real provider binding
+  ---
+  duration_ms: 2.5065
+  type: 'test'
+  ...
+# Subtest: environment:rupture-district:no-consensus exact native source context and real provider binding
+ok 13 - environment:rupture-district:no-consensus exact native source context and real provider binding
+  ---
+  duration_ms: 2.497
+  type: 'test'
+  ...
+# Subtest: environment:district-blackout:no-ordinary-signal exact native source context and real provider binding
+ok 14 - environment:district-blackout:no-ordinary-signal exact native source context and real provider binding
+  ---
+  duration_ms: 2.4886
+  type: 'test'
+  ...
+# Subtest: environment:abandoned-mall-glass-market:everything-has-a-price exact native source context and real provider binding
+ok 15 - environment:abandoned-mall-glass-market:everything-has-a-price exact native source context and real provider binding
+  ---
+  duration_ms: 2.4771
+  type: 'test'
+  ...
+# Subtest: environment:pale-court-townhouse:private-room exact native source context and real provider binding
+ok 16 - environment:pale-court-townhouse:private-room exact native source context and real provider binding
+  ---
+  duration_ms: 2.5058
+  type: 'test'
+  ...
+# Subtest: environment:after-hours-emergency-department:hipaa-and-procedure exact native source context and real provider binding
+ok 17 - environment:after-hours-emergency-department:hipaa-and-procedure exact native source context and real provider binding
+  ---
+  duration_ms: 3.5131
+  type: 'test'
+  ...
+# Subtest: environment:archive-beneath-the-courthouse:sealed-docket exact native source context and real provider binding
+ok 18 - environment:archive-beneath-the-courthouse:sealed-docket exact native source context and real provider binding
+  ---
+  duration_ms: 3.0606
+  type: 'test'
+  ...
+# Subtest: environment:apartment-veil-breach:thin-walls exact native source context and real provider binding
+ok 19 - environment:apartment-veil-breach:thin-walls exact native source context and real provider binding
+  ---
+  duration_ms: 2.545
+  type: 'test'
+  ...
+# Subtest: environment:dead-platform:third-rail-spirit exact native source context and real provider binding
+ok 20 - environment:dead-platform:third-rail-spirit exact native source context and real provider binding
+  ---
+  duration_ms: 2.533
+  type: 'test'
+  ...
+# Subtest: environment:occult-crime-scene:three-vectors exact native source context and real provider binding
+ok 21 - environment:occult-crime-scene:three-vectors exact native source context and real provider binding
+  ---
+  duration_ms: 2.4759
+  type: 'test'
+  ...
+# Subtest: environment:storm-drain-shrine:wrong-offering exact native source context and real provider binding
+ok 22 - environment:storm-drain-shrine:wrong-offering exact native source context and real provider binding
+  ---
+  duration_ms: 2.4825
+  type: 'test'
+  ...
+1..22
+# tests 22
+# suites 0
+# pass 22
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 434.273

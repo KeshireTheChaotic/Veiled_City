@@ -1,0 +1,3 @@
+# RF03-F04 C03 — environment:pale-court-townhouse:guest-right
+
+Move the exact source-qualified projector projectNativeEnvironmentGuestRightContext and its scoped situation reader from bot/src/native-environment-guest-right.js into the native createNativeEnvironmentGuestRightContext factory. Preserve printed rule, descriptor/source hashes, supported disposition, no-effect authority and output fields. Existing world/native source lookup is supplied explicitly; no new execution, canon or player decision is granted. Test this occurrence against current production descriptor/text plus stale/unexposed/review-only inputs. Rollback native factory/provider/evidence together.

@@ -1,0 +1,213 @@
+{
+  "run_id": "RF03-F04-C03",
+  "start": "2026-10-23T23:59:58.5056274Z",
+  "end": "2026-10-24T00:00:00.6888954Z",
+  "test_exit": 0,
+  "syntax_files": 25,
+  "syntax_failed": [],
+  "gate_exit": 1,
+  "base_sha": "606509de88c0e2ccb3fcb38a1108b80d77b6e65e",
+  "status": "22_NATIVE_CONTEXT_OCCURRENCES_QUALIFIED_SOURCE_ADOPTION_PARTIAL",
+  "command": "node --test --test-reporter=tap bot/tests/ai-gm-2026-10/rf03-f04-c03.test.mjs",
+  "passed": 22,
+  "failed": 0,
+  "skipped": 0,
+  "duration_ms": 434.273,
+  "occurrences": {
+    "environment:glass-market-grand-concourse:auction-of-consequences": {
+      "unchanged": true,
+      "body_sha256": "6e1982b5a3c546e59a23b6f2c04f13424f7ab95936de510ce11461d6d8a590e0",
+      "provider_sha256": "231afbfba4447561c6d9b9ed3d8db02baa6fd1c38a7fc18d7316063372837902"
+    },
+    "environment:archive-beneath-the-courthouse:chain-of-title": {
+      "unchanged": true,
+      "body_sha256": "42468c6f06efc0762761b791611232c25c42d44f536cce2654d6dcd579d8dcaa",
+      "provider_sha256": "81f2e1c329ed64f5d62251e1edb737ae02f19a8cbb9d5ff46e14fe7b37864af4"
+    },
+    "environment:veil-anchor-chamber:consensus-engine": {
+      "unchanged": true,
+      "body_sha256": "a911aa0a6730dd3a4e808e7441366401e1e651340033a069b4d315c559e531be",
+      "provider_sha256": "f35d120504c9ef741bcdfa979d76f1cd8e2640e8239fde3767f4faccf0344ccf"
+    },
+    "environment:aster-vale-predictive-lab:containment-shutters": {
+      "unchanged": true,
+      "body_sha256": "5c3d0ffbb703eecc7f1bb709827a85f1e473439e3f561ca1ae65da23fad9a87a",
+      "provider_sha256": "3c5cf320a6f65c332939bc2319094c51dadb19f93ff8f0bf4b528640668344bf"
+    },
+    "environment:occult-crime-scene:contaminated-scene": {
+      "unchanged": true,
+      "body_sha256": "3878bad5041882742f6e8f1181c47c16e2cf0b661682865bd933bd7b5e463965",
+      "provider_sha256": "b2d5bbea9923ddc68fefe5e7d8938ce9cdb43eb4395bb67d6b02e4d53518c25a"
+    },
+    "environment:glass-market-grand-concourse:everyone-is-watching": {
+      "unchanged": true,
+      "body_sha256": "4bfd5dad79a9ec1ab8e6a9595ce71ded4bfc853b4ebf393e6dba1408c008e31f",
+      "provider_sha256": "ca3e03ed1acccf390dd59916ee819144f4cea76b56a6c78134fec6934168899e"
+    },
+    "environment:dead-platform:express-through-memory": {
+      "unchanged": true,
+      "body_sha256": "77f9285327876a9cdaed68511de0011311fcf22f7f303dec92fe70ff0c9873fb",
+      "provider_sha256": "a2fc2438b5b3acbc3d0216ccdd88daffe8ba84f4bbd5b77253c51337db08a156"
+    },
+    "environment:pale-court-townhouse:guest-right": {
+      "unchanged": true,
+      "body_sha256": "e2b654b7effd5f2f218c45162783cf7072d64a46d898fbf161c383c74bd40118",
+      "provider_sha256": "647a3bac6c2cc311e7b092a3944d7769c8795443b9ac902eeff3a2f9aa568a20"
+    },
+    "environment:dead-platform:last-train-rules": {
+      "unchanged": true,
+      "body_sha256": "c8d9f47e9f194365a17e444d1de954b4d40b75951d29ce7cca365d9d2493b615",
+      "provider_sha256": "e022da815b36c27c409f8a08b6b83379b7c52fbd2476102ecd12640516e8680a"
+    },
+    "environment:abandoned-mall-glass-market:no-violence-in-the-aisles": {
+      "unchanged": true,
+      "body_sha256": "a14d72a909e1465e7212f596fdd7e21718c41bf3ebfab238f1cab0004d447c72",
+      "provider_sha256": "b73da811e5cf9502e630d1aee9069d61a57570f344d542cdce2fc70042b938e0"
+    },
+    "environment:networked-dream:metaphor-is-physics": {
+      "unchanged": true,
+      "body_sha256": "5261140c5a7fe15a7d671d87510f1612ea8ec18286f841ddfaff40ac38170115",
+      "provider_sha256": "a0d89f64e5cc2ed1996e8a8d6c88174856d98c9bedeb877709068a043bc3173a"
+    },
+    "environment:aster-vale-predictive-lab:model-room": {
+      "unchanged": true,
+      "body_sha256": "ee9e4d804018e37c23b405ddb68325a1a80779d460ef080923d74a96faf4393b",
+      "provider_sha256": "4e3a4ed9b5e7ee6239ac3e9f79e32127e8010a84500830e3d9e616be1029fd19"
+    },
+    "environment:rupture-district:no-consensus": {
+      "unchanged": true,
+      "body_sha256": "9dc536796ef8ad7a04145b48058b970d6dd55370bad559120e6169259d448bd3",
+      "provider_sha256": "f7619aff413da969e4ec6ee025bb6b3c4a28e50b728225331e083a1ebb57e1f9"
+    },
+    "environment:district-blackout:no-ordinary-signal": {
+      "unchanged": true,
+      "body_sha256": "8c28f4f7495f004a5c4ec5741b276cd43b9b0a70a1f706be680a04f4c0b6b01e",
+      "provider_sha256": "6b631346e689009cfa6cc7b95cc1e07a25124b3dffe3e31a1ea5066f4407a52a"
+    },
+    "environment:abandoned-mall-glass-market:everything-has-a-price": {
+      "unchanged": true,
+      "body_sha256": "592f824c2bf68aa16b6bb57646563072b3dd16cf9094bc1a8222c4926faa6987",
+      "provider_sha256": "6f264fc3b0f397252fc1b8d6add6f09905cc5a739b9d7070b31b2c82b284168b"
+    },
+    "environment:pale-court-townhouse:private-room": {
+      "unchanged": true,
+      "body_sha256": "44053efd3db2e6200e9df77e7084a41e27fb90e6ed286ea8a10ffac3a9dda5c8",
+      "provider_sha256": "daf043da5bca3c88ce0d7070a1ad1014f3c3df64fed832d0fd5806fdeb60a7f7"
+    },
+    "environment:after-hours-emergency-department:hipaa-and-procedure": {
+      "unchanged": true,
+      "body_sha256": "0a13b5f7d613dfa97d7f9f6dbd5ae4a9e067ea8d04841f7275774d8f8d36bf80",
+      "provider_sha256": "44e765d6dc7517d3e8469f4a14a32eaf40c87c9b928d8ba6387a82e301fda339"
+    },
+    "environment:archive-beneath-the-courthouse:sealed-docket": {
+      "unchanged": true,
+      "body_sha256": "2a8c3c39d6231678981249809b2a9d4eb4e332a5840a7285dc7514ac9a1f784b",
+      "provider_sha256": "17f462b9c60db666e738834a6956681c79f73b74a1504bbd62f0bd9fcbd1f09e"
+    },
+    "environment:apartment-veil-breach:thin-walls": {
+      "unchanged": true,
+      "body_sha256": "5a2f2b8ea73adf741e65dc0ad239975ed3f52edd8741798bc9ba7760c2202340",
+      "provider_sha256": "f9166eae2808a587b76bec76ccfb2c06a78ad74acf16b8d4b9c19e6fbb1c2f1c"
+    },
+    "environment:dead-platform:third-rail-spirit": {
+      "unchanged": true,
+      "body_sha256": "ecc219d7ea22d7391490c6455dd869532d360a2f371cffdeee4dbdb5345be31e",
+      "provider_sha256": "567b01724cc43ca334a5350f624532fab1eee40de44f5ee84724a405528c103c"
+    },
+    "environment:occult-crime-scene:three-vectors": {
+      "unchanged": true,
+      "body_sha256": "7859c14fb7821cab67ee9d426d8362f1ba486dcad1743b99a8f628715b73c14d",
+      "provider_sha256": "5ee1cf63f8da08ecbab82d5f60281fd2b9f0ffcfb49e2b9af357daf22f186ce3"
+    },
+    "environment:storm-drain-shrine:wrong-offering": {
+      "unchanged": true,
+      "body_sha256": "bd967a604f9e6090b71662770af98539b450f154a534f22a70955ac6e20e286e",
+      "provider_sha256": "439980b4d753544e80f752b8e4e18b5e860613d50c1ee758d1ff6f0531d1a3fe"
+    }
+  },
+  "source_sha256": {
+    "bot/src/frameworks/daggerheart/environment-rule-contexts.js": "4241171ee05a2f648533d9fd8a4d4eec6a55f7f8b862d6b38fafebe193cef861",
+    "bot/src/frameworks/daggerheart/public.js": "6c8b06c8d24471e05dd979b9a1fd5f1d1db33e0f609a574a9aa46f21a7075335",
+    "bot/tests/ai-gm-2026-10/rf03-f04-c03.test.mjs": "925450825faffb7fb223fa3f5b332d9ed3746cff52be80406946d2768145fbfa",
+    "bot/src/native-environment-auction.js": "231afbfba4447561c6d9b9ed3d8db02baa6fd1c38a7fc18d7316063372837902",
+    "bot/src/native-environment-chain-of-title.js": "81f2e1c329ed64f5d62251e1edb737ae02f19a8cbb9d5ff46e14fe7b37864af4",
+    "bot/src/native-environment-consensus-engine.js": "f35d120504c9ef741bcdfa979d76f1cd8e2640e8239fde3767f4faccf0344ccf",
+    "bot/src/native-environment-containment-shutters.js": "3c5cf320a6f65c332939bc2319094c51dadb19f93ff8f0bf4b528640668344bf",
+    "bot/src/native-environment-contaminated-scene.js": "b2d5bbea9923ddc68fefe5e7d8938ce9cdb43eb4395bb67d6b02e4d53518c25a",
+    "bot/src/native-environment-everyone-is-watching.js": "ca3e03ed1acccf390dd59916ee819144f4cea76b56a6c78134fec6934168899e",
+    "bot/src/native-environment-express-through-memory.js": "a2fc2438b5b3acbc3d0216ccdd88daffe8ba84f4bbd5b77253c51337db08a156",
+    "bot/src/native-environment-guest-right.js": "647a3bac6c2cc311e7b092a3944d7769c8795443b9ac902eeff3a2f9aa568a20",
+    "bot/src/native-environment-last-train-rules.js": "e022da815b36c27c409f8a08b6b83379b7c52fbd2476102ecd12640516e8680a",
+    "bot/src/native-environment-market-neutrality.js": "b73da811e5cf9502e630d1aee9069d61a57570f344d542cdce2fc70042b938e0",
+    "bot/src/native-environment-metaphor-physics.js": "a0d89f64e5cc2ed1996e8a8d6c88174856d98c9bedeb877709068a043bc3173a",
+    "bot/src/native-environment-model-room.js": "4e3a4ed9b5e7ee6239ac3e9f79e32127e8010a84500830e3d9e616be1029fd19",
+    "bot/src/native-environment-no-consensus.js": "f7619aff413da969e4ec6ee025bb6b3c4a28e50b728225331e083a1ebb57e1f9",
+    "bot/src/native-environment-no-ordinary-signal.js": "6b631346e689009cfa6cc7b95cc1e07a25124b3dffe3e31a1ea5066f4407a52a",
+    "bot/src/native-environment-price-offer.js": "6f264fc3b0f397252fc1b8d6add6f09905cc5a739b9d7070b31b2c82b284168b",
+    "bot/src/native-environment-private-room.js": "daf043da5bca3c88ce0d7070a1ad1014f3c3df64fed832d0fd5806fdeb60a7f7",
+    "bot/src/native-environment-procedure.js": "44e765d6dc7517d3e8469f4a14a32eaf40c87c9b928d8ba6387a82e301fda339",
+    "bot/src/native-environment-sealed-docket.js": "17f462b9c60db666e738834a6956681c79f73b74a1504bbd62f0bd9fcbd1f09e",
+    "bot/src/native-environment-thin-walls.js": "f9166eae2808a587b76bec76ccfb2c06a78ad74acf16b8d4b9c19e6fbb1c2f1c",
+    "bot/src/native-environment-third-rail-spirit.js": "567b01724cc43ca334a5350f624532fab1eee40de44f5ee84724a405528c103c",
+    "bot/src/native-environment-three-vectors.js": "5ee1cf63f8da08ecbab82d5f60281fd2b9f0ffcfb49e2b9af357daf22f186ce3",
+    "bot/src/native-environment-wrong-offering.js": "439980b4d753544e80f752b8e4e18b5e860613d50c1ee758d1ff6f0531d1a3fe"
+  },
+  "source_assets": {
+    "bot/src/native-feature-definitions.json": {
+      "sha256": "58baf77cc9cb2b5f38e1714422c64131f2f533b4bf09254b8f8729ccd64d1e16",
+      "semantic_source_unchanged": true
+    },
+    "bot/src/native-house-errata.json": {
+      "sha256": "6f679f50272861ccc01f5b189d0fc5d9947e5df350df372cb52f97df93a28964",
+      "semantic_source_unchanged": true
+    },
+    "content/GM_PRIVATE/ENVIRONMENTS/environments.json": {
+      "sha256": "0b5f5004caf4d761c33ce851a020e081a2b6fb980526a38fcc51c7eaec413898",
+      "semantic_source_unchanged": true
+    }
+  },
+  "log_sha256": "c86ab3fdeb85b37e05ef7bf94cc8680b815e08820b90888b06a71877caac6bb9",
+  "initial_architecture": {
+    "mode": "ratchet",
+    "phase": "RF03",
+    "sourceModules": 407,
+    "unowned": 0,
+    "importOccurrences": 2348,
+    "internalImportOccurrences": 2172,
+    "cycleComponents": 1,
+    "largestCycle": 182,
+    "rawViolationOccurrences": 2554,
+    "acceptedLegacyOccurrences": 2554,
+    "activeViolationGroups": 0,
+    "transitionErrors": 44,
+    "pass": false,
+    "firstErrors": []
+  },
+  "final_architecture": {
+    "mode": "ratchet",
+    "phase": "RF03",
+    "sourceModules": 407,
+    "unowned": 0,
+    "importOccurrences": 2348,
+    "internalImportOccurrences": 2172,
+    "cycleComponents": 1,
+    "largestCycle": 182,
+    "rawViolationOccurrences": 2554,
+    "acceptedLegacyOccurrences": 2554,
+    "activeViolationGroups": 0,
+    "transitionErrors": 0,
+    "pass": true,
+    "firstErrors": []
+  },
+  "final_gate_exit": 0,
+  "final_gate_log_sha256": "bab3b3ce89a6a817ff8756a430a08f9fb571dc4886a0bc64516106dc43a3bdbb",
+  "retired_evidence": "F04_C03_RETIRED.json",
+  "provider_calls": 0,
+  "provider_cost_usd": 0,
+  "codex_usage": "UNMEASURED",
+  "limitations": [
+    "Native context rule bodies and positive actual provider/catalog bindings qualified; environment scene/world-authority instance service remains separately accountable.",
+    "No feature execution, mutation, world authoring, disclosure, live Discord or semantic narrative quality is qualified."
+  ],
+  "release_authorized": false
+}

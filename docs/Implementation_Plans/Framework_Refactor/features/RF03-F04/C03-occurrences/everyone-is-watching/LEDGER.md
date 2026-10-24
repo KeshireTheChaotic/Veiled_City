@@ -1,0 +1,7 @@
+# RF03-F04 C03 occurrence ledger
+
+Feature: environment:glass-market-grand-concourse:everyone-is-watching. Status: IMPLEMENTED / TEST PENDING. Base 606509de88c0e2ccb3fcb38a1108b80d77b6e65e.
+
+Changed module: bot/src/native-environment-everyone-is-watching.js; native owner: daggerheart/environment-rule-contexts.js (createNativeEnvironmentEveryoneIsWatchingContext). Existing projectNativeEnvironmentEveryoneIsWatchingContext, nativeEnvironmentEveryoneIsWatchingSituation APIs retained. Exact body unchanged apart from export placement and reuse of established neutral JSON hash. Fresh test: rf03-f04-c03.test.mjs occurrence environment:glass-market-grand-concourse:everyone-is-watching. Source provider/scene integration remains unqualified; no catalog disposition change. Provider0/$0, Codex UNMEASURED, release NOT AUTHORIZED.
+
+Qualified native context policy: this occurrence's one fresh source/provider case passed in the22-case batch (22/22,exit0,434.273ms total). Native body SHA256 4bfd5dad79a9ec1ab8e6a9595ce71ded4bfc853b4ebf393e6dba1408c008e31f; provider SHA256 ca3e03ed1acccf390dd59916ee819144f4cea76b56a6c78134fec6934168899e. Tested current source/descriptor, actual provider import, absent exposure, review-only, changed handler/hash/template/printed rule and no execution fields. Underlying source/scene effects remain unqualified. Shared25syntax checks passed; final RF03 gate passed after44exact obsolete hash-edge retirements. Full actual evidence F04_C03_TERMINAL.json.

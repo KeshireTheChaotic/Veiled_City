@@ -1,25 +1,9 @@
-/** Source-qualified GM auction prompt; auction terms remain fiction and audience-bound. */
+/** Existing source bindings; exact feature policy lives in Daggerheart. */
 import {nativeEnvironmentInstanceForScope} from './native-environment-instance.js';
 import {environmentProposalContract} from './native-environment-capabilities.js';
 import {featureDisposition,nativeFeatureRuleContext} from './native-feature-catalog.js';
-import {sceneFictionHash as hash} from './scene-fiction-context.js';
-
-const FEATURE='environment:glass-market-grand-concourse:auction-of-consequences';
-const RULE='**Auction of Consequences — Action:** Put a campaign-relevant relic, secret, or person’s contract up for sale. Bids can include non-monetary costs.';
-
-export function projectNativeEnvironmentAuctionContext(capabilities){
-  const exposed=capabilities?.features?.find(row=>row.key===FEATURE);
-  if(!exposed)return [];
-  const disposition=featureDisposition(FEATURE),feature=disposition.feature,
-    contract=environmentProposalContract(feature),source=nativeFeatureRuleContext(FEATURE);
-  if(disposition.status!=='supported'||feature.native_handler!=='environment_auction_context'
-    ||contract?.handler!=='environment_auction_context'||contract?.entry!=='scene_context'
-    ||hash(feature)!==exposed.hash||source?.catalog_status!=='supported'
-    ||source.source_hash!==feature.source_hash||source.template_hash!==feature.template_hash||source.printed_rule!==RULE)return [];
-  return [{receipt_kind:'native_environment_feature_context',receipt_ref:capabilities.instance,source_ref:feature.source_ref,
-    text:source.printed_rule,authority:'Source-bound GM auction prompt; auction fiction remains GM-authored and audience-bound. Context alone records no bid, sale, transfer or PC commitment.'}];
-}
-
-export function nativeEnvironmentAuctionSituation(db,guild,scope,location){
-  return projectNativeEnvironmentAuctionContext(nativeEnvironmentInstanceForScope(db,guild,scope,location));
-}
+import {createNativeEnvironmentAuctionContext} from './frameworks/daggerheart/environment-rule-contexts.js';
+let nativeContext;
+function context(){return nativeContext??=createNativeEnvironmentAuctionContext({nativeEnvironmentInstanceForScope:(...args)=>nativeEnvironmentInstanceForScope(...args),environmentProposalContract:(...args)=>environmentProposalContract(...args),featureDisposition:(...args)=>featureDisposition(...args),nativeFeatureRuleContext:(...args)=>nativeFeatureRuleContext(...args)});}
+export function projectNativeEnvironmentAuctionContext(...args){return context().projectNativeEnvironmentAuctionContext(...args);}
+export function nativeEnvironmentAuctionSituation(...args){return context().nativeEnvironmentAuctionSituation(...args);}

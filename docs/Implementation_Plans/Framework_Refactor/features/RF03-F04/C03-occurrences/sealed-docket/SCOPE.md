@@ -1,0 +1,3 @@
+# RF03-F04 C03 — environment:archive-beneath-the-courthouse:sealed-docket
+
+Move the exact source-qualified projector projectNativeEnvironmentSealedDocketContext and its scoped situation reader from bot/src/native-environment-sealed-docket.js into the native createNativeEnvironmentSealedDocketContext factory. Preserve printed rule, descriptor/source hashes, supported disposition, no-effect authority and output fields. Existing world/native source lookup is supplied explicitly; no new execution, canon or player decision is granted. Test this occurrence against current production descriptor/text plus stale/unexposed/review-only inputs. Rollback native factory/provider/evidence together.

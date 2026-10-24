@@ -1,0 +1,7 @@
+# RF03-F04 C03 occurrence ledger
+
+Feature: environment:after-hours-emergency-department:hipaa-and-procedure. Status: IMPLEMENTED / TEST PENDING. Base 606509de88c0e2ccb3fcb38a1108b80d77b6e65e.
+
+Changed module: bot/src/native-environment-procedure.js; native owner: daggerheart/environment-rule-contexts.js (createNativeEnvironmentProcedureContext). Existing projectNativeEnvironmentProcedureContext, nativeEnvironmentProcedureSituation APIs retained. Exact body unchanged apart from export placement and reuse of established neutral JSON hash. Fresh test: rf03-f04-c03.test.mjs occurrence environment:after-hours-emergency-department:hipaa-and-procedure. Source provider/scene integration remains unqualified; no catalog disposition change. Provider0/$0, Codex UNMEASURED, release NOT AUTHORIZED.
+
+Qualified native context policy: this occurrence's one fresh source/provider case passed in the22-case batch (22/22,exit0,434.273ms total). Native body SHA256 0a13b5f7d613dfa97d7f9f6dbd5ae4a9e067ea8d04841f7275774d8f8d36bf80; provider SHA256 44e765d6dc7517d3e8469f4a14a32eaf40c87c9b928d8ba6387a82e301fda339. Tested current source/descriptor, actual provider import, absent exposure, review-only, changed handler/hash/template/printed rule and no execution fields. Underlying source/scene effects remain unqualified. Shared25syntax checks passed; final RF03 gate passed after44exact obsolete hash-edge retirements. Full actual evidence F04_C03_TERMINAL.json.

@@ -1,0 +1,7 @@
+# RF03-F04 C03 occurrence ledger
+
+Feature: environment:pale-court-townhouse:guest-right. Status: IMPLEMENTED / TEST PENDING. Base 606509de88c0e2ccb3fcb38a1108b80d77b6e65e.
+
+Changed module: bot/src/native-environment-guest-right.js; native owner: daggerheart/environment-rule-contexts.js (createNativeEnvironmentGuestRightContext). Existing projectNativeEnvironmentGuestRightContext, nativeEnvironmentGuestRightSituation APIs retained. Exact body unchanged apart from export placement and reuse of established neutral JSON hash. Fresh test: rf03-f04-c03.test.mjs occurrence environment:pale-court-townhouse:guest-right. Source provider/scene integration remains unqualified; no catalog disposition change. Provider0/$0, Codex UNMEASURED, release NOT AUTHORIZED.
+
+Qualified native context policy: this occurrence's one fresh source/provider case passed in the22-case batch (22/22,exit0,434.273ms total). Native body SHA256 e2b654b7effd5f2f218c45162783cf7072d64a46d898fbf161c383c74bd40118; provider SHA256 647a3bac6c2cc311e7b092a3944d7769c8795443b9ac902eeff3a2f9aa568a20. Tested current source/descriptor, actual provider import, absent exposure, review-only, changed handler/hash/template/printed rule and no execution fields. Underlying source/scene effects remain unqualified. Shared25syntax checks passed; final RF03 gate passed after44exact obsolete hash-edge retirements. Full actual evidence F04_C03_TERMINAL.json.

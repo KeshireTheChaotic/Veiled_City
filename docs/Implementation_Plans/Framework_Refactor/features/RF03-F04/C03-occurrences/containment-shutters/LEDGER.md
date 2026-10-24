@@ -1,0 +1,7 @@
+# RF03-F04 C03 occurrence ledger
+
+Feature: environment:aster-vale-predictive-lab:containment-shutters. Status: IMPLEMENTED / TEST PENDING. Base 606509de88c0e2ccb3fcb38a1108b80d77b6e65e.
+
+Changed module: bot/src/native-environment-containment-shutters.js; native owner: daggerheart/environment-rule-contexts.js (createNativeEnvironmentContainmentShuttersContext). Existing projectNativeEnvironmentContainmentShuttersContext, nativeEnvironmentContainmentShuttersSituation APIs retained. Exact body unchanged apart from export placement and reuse of established neutral JSON hash. Fresh test: rf03-f04-c03.test.mjs occurrence environment:aster-vale-predictive-lab:containment-shutters. Source provider/scene integration remains unqualified; no catalog disposition change. Provider0/$0, Codex UNMEASURED, release NOT AUTHORIZED.
+
+Qualified native context policy: this occurrence's one fresh source/provider case passed in the22-case batch (22/22,exit0,434.273ms total). Native body SHA256 5c3d0ffbb703eecc7f1bb709827a85f1e473439e3f561ca1ae65da23fad9a87a; provider SHA256 3c5cf320a6f65c332939bc2319094c51dadb19f93ff8f0bf4b528640668344bf. Tested current source/descriptor, actual provider import, absent exposure, review-only, changed handler/hash/template/printed rule and no execution fields. Underlying source/scene effects remain unqualified. Shared25syntax checks passed; final RF03 gate passed after44exact obsolete hash-edge retirements. Full actual evidence F04_C03_TERMINAL.json.

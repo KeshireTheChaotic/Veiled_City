@@ -1,0 +1,7 @@
+# RF03-F04 C03 ledger
+
+Status: 22 NATIVE CONTEXT OCCURRENCES QUALIFIED / SOURCE ADOPTION PARTIAL. Base `606509de88c0e2ccb3fcb38a1108b80d77b6e65e`.
+
+22 current environment source-rule occurrence bodies extracted into Daggerheart, with22 explicit source-provider bindings and one public native factory collection. Exact individual paths/factories in F04_C03_OCCURRENCES.json; individual occurrence scopes/ledgers maintained. All22native bodies statically unchanged; source definitions/errata/environment text unchanged. No source disposition/native handler enabled or modified.
+
+Frozen fresh22/22passed,exit0,434.273ms;25syntax checks passed. Tests verify every current descriptor/printed source, actual updated provider/catalog binding, absent exposure, changed source/template/descriptor/handler/printed rule, review-only and no execution fields. Underlying world/scene authority is an explicit mocked callback in core cases; no world or mechanical execution qualification. Initial gate found44obsolete narrative-hash import/cycle records. Exact full originals preserved and retired in F04_C03_RETIRED.json; final architecture-only rerun exit0:407sources,zero unowned,2348imports,SCC182,2554accepted older occurrences,zero active groups/errors. No tests rerun. Full source/body/test/log hashes, timestamps and actual results F04_C03_TERMINAL.json/F04_C03_RUN.json. No deadline extension. Provider0/$0, Codex UNMEASURED; release NOT AUTHORIZED.

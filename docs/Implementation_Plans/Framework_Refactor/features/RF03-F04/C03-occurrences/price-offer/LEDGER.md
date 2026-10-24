@@ -1,0 +1,7 @@
+# RF03-F04 C03 occurrence ledger
+
+Feature: environment:abandoned-mall-glass-market:everything-has-a-price. Status: IMPLEMENTED / TEST PENDING. Base 606509de88c0e2ccb3fcb38a1108b80d77b6e65e.
+
+Changed module: bot/src/native-environment-price-offer.js; native owner: daggerheart/environment-rule-contexts.js (createNativeEnvironmentPriceOfferContext). Existing projectNativeEnvironmentPriceOfferContext, nativeEnvironmentPriceOfferSituation APIs retained. Exact body unchanged apart from export placement and reuse of established neutral JSON hash. Fresh test: rf03-f04-c03.test.mjs occurrence environment:abandoned-mall-glass-market:everything-has-a-price. Source provider/scene integration remains unqualified; no catalog disposition change. Provider0/$0, Codex UNMEASURED, release NOT AUTHORIZED.
+
+Qualified native context policy: this occurrence's one fresh source/provider case passed in the22-case batch (22/22,exit0,434.273ms total). Native body SHA256 592f824c2bf68aa16b6bb57646563072b3dd16cf9094bc1a8222c4926faa6987; provider SHA256 6f264fc3b0f397252fc1b8d6add6f09905cc5a739b9d7070b31b2c82b284168b. Tested current source/descriptor, actual provider import, absent exposure, review-only, changed handler/hash/template/printed rule and no execution fields. Underlying source/scene effects remain unqualified. Shared25syntax checks passed; final RF03 gate passed after44exact obsolete hash-edge retirements. Full actual evidence F04_C03_TERMINAL.json.

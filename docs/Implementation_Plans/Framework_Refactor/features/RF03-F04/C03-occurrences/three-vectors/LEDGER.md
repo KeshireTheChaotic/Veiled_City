@@ -1,0 +1,7 @@
+# RF03-F04 C03 occurrence ledger
+
+Feature: environment:occult-crime-scene:three-vectors. Status: IMPLEMENTED / TEST PENDING. Base 606509de88c0e2ccb3fcb38a1108b80d77b6e65e.
+
+Changed module: bot/src/native-environment-three-vectors.js; native owner: daggerheart/environment-rule-contexts.js (createNativeEnvironmentThreeVectorsContext). Existing projectNativeEnvironmentThreeVectorsContext, nativeEnvironmentThreeVectorsSituation APIs retained. Exact body unchanged apart from export placement and reuse of established neutral JSON hash. Fresh test: rf03-f04-c03.test.mjs occurrence environment:occult-crime-scene:three-vectors. Source provider/scene integration remains unqualified; no catalog disposition change. Provider0/$0, Codex UNMEASURED, release NOT AUTHORIZED.
+
+Qualified native context policy: this occurrence's one fresh source/provider case passed in the22-case batch (22/22,exit0,434.273ms total). Native body SHA256 7859c14fb7821cab67ee9d426d8362f1ba486dcad1743b99a8f628715b73c14d; provider SHA256 5ee1cf63f8da08ecbab82d5f60281fd2b9f0ffcfb49e2b9af357daf22f186ce3. Tested current source/descriptor, actual provider import, absent exposure, review-only, changed handler/hash/template/printed rule and no execution fields. Underlying source/scene effects remain unqualified. Shared25syntax checks passed; final RF03 gate passed after44exact obsolete hash-edge retirements. Full actual evidence F04_C03_TERMINAL.json.

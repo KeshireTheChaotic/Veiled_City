@@ -1,0 +1,7 @@
+# RF03-F04 C03 occurrence ledger
+
+Feature: environment:networked-dream:metaphor-is-physics. Status: IMPLEMENTED / TEST PENDING. Base 606509de88c0e2ccb3fcb38a1108b80d77b6e65e.
+
+Changed module: bot/src/native-environment-metaphor-physics.js; native owner: daggerheart/environment-rule-contexts.js (createNativeEnvironmentMetaphorPhysicsContext). Existing projectNativeEnvironmentMetaphorPhysicsContext, nativeEnvironmentMetaphorPhysicsSituation APIs retained. Exact body unchanged apart from export placement and reuse of established neutral JSON hash. Fresh test: rf03-f04-c03.test.mjs occurrence environment:networked-dream:metaphor-is-physics. Source provider/scene integration remains unqualified; no catalog disposition change. Provider0/$0, Codex UNMEASURED, release NOT AUTHORIZED.
+
+Qualified native context policy: this occurrence's one fresh source/provider case passed in the22-case batch (22/22,exit0,434.273ms total). Native body SHA256 5261140c5a7fe15a7d671d87510f1612ea8ec18286f841ddfaff40ac38170115; provider SHA256 a0d89f64e5cc2ed1996e8a8d6c88174856d98c9bedeb877709068a043bc3173a. Tested current source/descriptor, actual provider import, absent exposure, review-only, changed handler/hash/template/printed rule and no execution fields. Underlying source/scene effects remain unqualified. Shared25syntax checks passed; final RF03 gate passed after44exact obsolete hash-edge retirements. Full actual evidence F04_C03_TERMINAL.json.

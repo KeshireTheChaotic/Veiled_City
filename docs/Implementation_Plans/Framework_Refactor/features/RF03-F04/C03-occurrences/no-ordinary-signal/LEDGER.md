@@ -1,0 +1,7 @@
+# RF03-F04 C03 occurrence ledger
+
+Feature: environment:district-blackout:no-ordinary-signal. Status: IMPLEMENTED / TEST PENDING. Base 606509de88c0e2ccb3fcb38a1108b80d77b6e65e.
+
+Changed module: bot/src/native-environment-no-ordinary-signal.js; native owner: daggerheart/environment-rule-contexts.js (createNativeEnvironmentNoOrdinarySignalContext). Existing projectNativeEnvironmentNoOrdinarySignalContext, nativeEnvironmentNoOrdinarySignalSituation APIs retained. Exact body unchanged apart from export placement and reuse of established neutral JSON hash. Fresh test: rf03-f04-c03.test.mjs occurrence environment:district-blackout:no-ordinary-signal. Source provider/scene integration remains unqualified; no catalog disposition change. Provider0/$0, Codex UNMEASURED, release NOT AUTHORIZED.
+
+Qualified native context policy: this occurrence's one fresh source/provider case passed in the22-case batch (22/22,exit0,434.273ms total). Native body SHA256 8c28f4f7495f004a5c4ec5741b276cd43b9b0a70a1f706be680a04f4c0b6b01e; provider SHA256 6b631346e689009cfa6cc7b95cc1e07a25124b3dffe3e31a1ea5066f4407a52a. Tested current source/descriptor, actual provider import, absent exposure, review-only, changed handler/hash/template/printed rule and no execution fields. Underlying source/scene effects remain unqualified. Shared25syntax checks passed; final RF03 gate passed after44exact obsolete hash-edge retirements. Full actual evidence F04_C03_TERMINAL.json.

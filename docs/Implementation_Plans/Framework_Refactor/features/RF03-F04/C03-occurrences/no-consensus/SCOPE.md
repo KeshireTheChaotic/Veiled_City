@@ -1,0 +1,3 @@
+# RF03-F04 C03 — environment:rupture-district:no-consensus
+
+Move the exact source-qualified projector projectNativeEnvironmentNoConsensusContext and its scoped situation reader from bot/src/native-environment-no-consensus.js into the native createNativeEnvironmentNoConsensusContext factory. Preserve printed rule, descriptor/source hashes, supported disposition, no-effect authority and output fields. Existing world/native source lookup is supplied explicitly; no new execution, canon or player decision is granted. Test this occurrence against current production descriptor/text plus stale/unexposed/review-only inputs. Rollback native factory/provider/evidence together.

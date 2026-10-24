@@ -2,6 +2,10 @@
 
 ACTIVE; native predicate extraction first. No independent execution or disclosure grant.
 
+## Corrective C03 —22 exact environment source-rule occurrences isolated
+
+Complete projector bodies for22 passive/action environment contexts now reside in Daggerheart with named source callbacks; current providers bind the same source catalog/instance/contract services. Individual scopes/ledgers in C03-occurrences. Native bodies and source assets unchanged. Fresh22/22passed,exit0,434.273ms;25syntax checks passed.44exact obsolete narrative-hash imports/cycle records retired; final RF03 ratchet exit0,zero active/unowned/errors,2554accepted old occurrences. Source/canonical-world/scene producer integration remains separately accountable; no new deadline. Exact evidence F04_C03_TERMINAL.json. RF03 incomplete; no RF04 work started; release unauthorized.
+
 ## F04 necessary native eligibility extracted
 
 Base0d34643. environment-eligibility.js owns the exact existing encounter/profile/source/review eligibility predicate; native-environment-context.js invokes it before activation and review SQL, which remain unchanged. Current-encounter read remains short-circuited until active campaign/session encounter eligibility. Four fresh tests passed, zero failed/skipped, exit0,61.5875ms; four changed syntax checks passed; RF03 ratchet exit0. F04_TERMINAL.json records tested hashes and terminal outcomes. No predicate grants an effect, disclosure, PC presence or resources.

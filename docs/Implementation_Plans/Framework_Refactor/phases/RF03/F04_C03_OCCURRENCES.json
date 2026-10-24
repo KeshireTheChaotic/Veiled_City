@@ -1,0 +1,247 @@
+{
+  "base_sha": "606509de88c0e2ccb3fcb38a1108b80d77b6e65e",
+  "occurrences": [
+    {
+      "feature": "environment:glass-market-grand-concourse:auction-of-consequences",
+      "provider": "bot/src/native-environment-auction.js",
+      "factory": "createNativeEnvironmentAuctionContext",
+      "exports": [
+        "projectNativeEnvironmentAuctionContext",
+        "nativeEnvironmentAuctionSituation"
+      ],
+      "projector": "projectNativeEnvironmentAuctionContext",
+      "stem": "auction"
+    },
+    {
+      "feature": "environment:archive-beneath-the-courthouse:chain-of-title",
+      "provider": "bot/src/native-environment-chain-of-title.js",
+      "factory": "createNativeEnvironmentChainOfTitleContext",
+      "exports": [
+        "projectNativeEnvironmentChainOfTitleContext",
+        "nativeEnvironmentChainOfTitleSituation"
+      ],
+      "projector": "projectNativeEnvironmentChainOfTitleContext",
+      "stem": "chain-of-title"
+    },
+    {
+      "feature": "environment:veil-anchor-chamber:consensus-engine",
+      "provider": "bot/src/native-environment-consensus-engine.js",
+      "factory": "createNativeEnvironmentConsensusEngineContext",
+      "exports": [
+        "projectNativeEnvironmentConsensusEngineContext",
+        "nativeEnvironmentConsensusEngineSituation"
+      ],
+      "projector": "projectNativeEnvironmentConsensusEngineContext",
+      "stem": "consensus-engine"
+    },
+    {
+      "feature": "environment:aster-vale-predictive-lab:containment-shutters",
+      "provider": "bot/src/native-environment-containment-shutters.js",
+      "factory": "createNativeEnvironmentContainmentShuttersContext",
+      "exports": [
+        "projectNativeEnvironmentContainmentShuttersContext",
+        "nativeEnvironmentContainmentShuttersSituation"
+      ],
+      "projector": "projectNativeEnvironmentContainmentShuttersContext",
+      "stem": "containment-shutters"
+    },
+    {
+      "feature": "environment:occult-crime-scene:contaminated-scene",
+      "provider": "bot/src/native-environment-contaminated-scene.js",
+      "factory": "createNativeEnvironmentContaminatedSceneContext",
+      "exports": [
+        "projectNativeEnvironmentContaminatedSceneContext",
+        "nativeEnvironmentContaminatedSceneSituation"
+      ],
+      "projector": "projectNativeEnvironmentContaminatedSceneContext",
+      "stem": "contaminated-scene"
+    },
+    {
+      "feature": "environment:glass-market-grand-concourse:everyone-is-watching",
+      "provider": "bot/src/native-environment-everyone-is-watching.js",
+      "factory": "createNativeEnvironmentEveryoneIsWatchingContext",
+      "exports": [
+        "projectNativeEnvironmentEveryoneIsWatchingContext",
+        "nativeEnvironmentEveryoneIsWatchingSituation"
+      ],
+      "projector": "projectNativeEnvironmentEveryoneIsWatchingContext",
+      "stem": "everyone-is-watching"
+    },
+    {
+      "feature": "environment:dead-platform:express-through-memory",
+      "provider": "bot/src/native-environment-express-through-memory.js",
+      "factory": "createNativeEnvironmentExpressThroughMemoryContext",
+      "exports": [
+        "projectNativeEnvironmentExpressThroughMemoryContext",
+        "nativeEnvironmentExpressThroughMemorySituation"
+      ],
+      "projector": "projectNativeEnvironmentExpressThroughMemoryContext",
+      "stem": "express-through-memory"
+    },
+    {
+      "feature": "environment:pale-court-townhouse:guest-right",
+      "provider": "bot/src/native-environment-guest-right.js",
+      "factory": "createNativeEnvironmentGuestRightContext",
+      "exports": [
+        "projectNativeEnvironmentGuestRightContext",
+        "nativeEnvironmentGuestRightSituation"
+      ],
+      "projector": "projectNativeEnvironmentGuestRightContext",
+      "stem": "guest-right"
+    },
+    {
+      "feature": "environment:dead-platform:last-train-rules",
+      "provider": "bot/src/native-environment-last-train-rules.js",
+      "factory": "createNativeEnvironmentLastTrainRulesContext",
+      "exports": [
+        "projectNativeEnvironmentLastTrainRulesContext",
+        "nativeEnvironmentLastTrainRulesSituation"
+      ],
+      "projector": "projectNativeEnvironmentLastTrainRulesContext",
+      "stem": "last-train-rules"
+    },
+    {
+      "feature": "environment:abandoned-mall-glass-market:no-violence-in-the-aisles",
+      "provider": "bot/src/native-environment-market-neutrality.js",
+      "factory": "createNativeEnvironmentMarketNeutralityContext",
+      "exports": [
+        "projectNativeEnvironmentMarketNeutralityContext",
+        "nativeEnvironmentMarketNeutralitySituation"
+      ],
+      "projector": "projectNativeEnvironmentMarketNeutralityContext",
+      "stem": "market-neutrality"
+    },
+    {
+      "feature": "environment:networked-dream:metaphor-is-physics",
+      "provider": "bot/src/native-environment-metaphor-physics.js",
+      "factory": "createNativeEnvironmentMetaphorPhysicsContext",
+      "exports": [
+        "projectNativeEnvironmentMetaphorPhysicsContext",
+        "nativeEnvironmentMetaphorPhysicsSituation"
+      ],
+      "projector": "projectNativeEnvironmentMetaphorPhysicsContext",
+      "stem": "metaphor-physics"
+    },
+    {
+      "feature": "environment:aster-vale-predictive-lab:model-room",
+      "provider": "bot/src/native-environment-model-room.js",
+      "factory": "createNativeEnvironmentModelRoomContext",
+      "exports": [
+        "projectNativeEnvironmentModelRoomContext",
+        "nativeEnvironmentModelRoomSituation"
+      ],
+      "projector": "projectNativeEnvironmentModelRoomContext",
+      "stem": "model-room"
+    },
+    {
+      "feature": "environment:rupture-district:no-consensus",
+      "provider": "bot/src/native-environment-no-consensus.js",
+      "factory": "createNativeEnvironmentNoConsensusContext",
+      "exports": [
+        "projectNativeEnvironmentNoConsensusContext",
+        "nativeEnvironmentNoConsensusSituation"
+      ],
+      "projector": "projectNativeEnvironmentNoConsensusContext",
+      "stem": "no-consensus"
+    },
+    {
+      "feature": "environment:district-blackout:no-ordinary-signal",
+      "provider": "bot/src/native-environment-no-ordinary-signal.js",
+      "factory": "createNativeEnvironmentNoOrdinarySignalContext",
+      "exports": [
+        "projectNativeEnvironmentNoOrdinarySignalContext",
+        "nativeEnvironmentNoOrdinarySignalSituation"
+      ],
+      "projector": "projectNativeEnvironmentNoOrdinarySignalContext",
+      "stem": "no-ordinary-signal"
+    },
+    {
+      "feature": "environment:abandoned-mall-glass-market:everything-has-a-price",
+      "provider": "bot/src/native-environment-price-offer.js",
+      "factory": "createNativeEnvironmentPriceOfferContext",
+      "exports": [
+        "projectNativeEnvironmentPriceOfferContext",
+        "nativeEnvironmentPriceOfferSituation"
+      ],
+      "projector": "projectNativeEnvironmentPriceOfferContext",
+      "stem": "price-offer"
+    },
+    {
+      "feature": "environment:pale-court-townhouse:private-room",
+      "provider": "bot/src/native-environment-private-room.js",
+      "factory": "createNativeEnvironmentPrivateRoomContext",
+      "exports": [
+        "projectNativeEnvironmentPrivateRoomContext",
+        "nativeEnvironmentPrivateRoomSituation"
+      ],
+      "projector": "projectNativeEnvironmentPrivateRoomContext",
+      "stem": "private-room"
+    },
+    {
+      "feature": "environment:after-hours-emergency-department:hipaa-and-procedure",
+      "provider": "bot/src/native-environment-procedure.js",
+      "factory": "createNativeEnvironmentProcedureContext",
+      "exports": [
+        "projectNativeEnvironmentProcedureContext",
+        "nativeEnvironmentProcedureSituation"
+      ],
+      "projector": "projectNativeEnvironmentProcedureContext",
+      "stem": "procedure"
+    },
+    {
+      "feature": "environment:archive-beneath-the-courthouse:sealed-docket",
+      "provider": "bot/src/native-environment-sealed-docket.js",
+      "factory": "createNativeEnvironmentSealedDocketContext",
+      "exports": [
+        "projectNativeEnvironmentSealedDocketContext",
+        "nativeEnvironmentSealedDocketSituation"
+      ],
+      "projector": "projectNativeEnvironmentSealedDocketContext",
+      "stem": "sealed-docket"
+    },
+    {
+      "feature": "environment:apartment-veil-breach:thin-walls",
+      "provider": "bot/src/native-environment-thin-walls.js",
+      "factory": "createNativeEnvironmentThinWallsContext",
+      "exports": [
+        "projectNativeEnvironmentThinWallsContext",
+        "nativeEnvironmentThinWallsSituation"
+      ],
+      "projector": "projectNativeEnvironmentThinWallsContext",
+      "stem": "thin-walls"
+    },
+    {
+      "feature": "environment:dead-platform:third-rail-spirit",
+      "provider": "bot/src/native-environment-third-rail-spirit.js",
+      "factory": "createNativeEnvironmentThirdRailSpiritContext",
+      "exports": [
+        "projectNativeEnvironmentThirdRailSpiritContext",
+        "nativeEnvironmentThirdRailSpiritSituation"
+      ],
+      "projector": "projectNativeEnvironmentThirdRailSpiritContext",
+      "stem": "third-rail-spirit"
+    },
+    {
+      "feature": "environment:occult-crime-scene:three-vectors",
+      "provider": "bot/src/native-environment-three-vectors.js",
+      "factory": "createNativeEnvironmentThreeVectorsContext",
+      "exports": [
+        "projectNativeEnvironmentThreeVectorsContext",
+        "nativeEnvironmentThreeVectorsSituation"
+      ],
+      "projector": "projectNativeEnvironmentThreeVectorsContext",
+      "stem": "three-vectors"
+    },
+    {
+      "feature": "environment:storm-drain-shrine:wrong-offering",
+      "provider": "bot/src/native-environment-wrong-offering.js",
+      "factory": "createNativeEnvironmentWrongOfferingContext",
+      "exports": [
+        "projectNativeEnvironmentWrongOfferingContext",
+        "nativeEnvironmentWrongOfferingSituation"
+      ],
+      "projector": "projectNativeEnvironmentWrongOfferingContext",
+      "stem": "wrong-offering"
+    }
+  ]
+}

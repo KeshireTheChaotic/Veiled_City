@@ -1,0 +1,3 @@
+# RF03-F04 C03 — environment:dead-platform:express-through-memory
+
+Move the exact source-qualified projector projectNativeEnvironmentExpressThroughMemoryContext and its scoped situation reader from bot/src/native-environment-express-through-memory.js into the native createNativeEnvironmentExpressThroughMemoryContext factory. Preserve printed rule, descriptor/source hashes, supported disposition, no-effect authority and output fields. Existing world/native source lookup is supplied explicitly; no new execution, canon or player decision is granted. Test this occurrence against current production descriptor/text plus stale/unexposed/review-only inputs. Rollback native factory/provider/evidence together.
