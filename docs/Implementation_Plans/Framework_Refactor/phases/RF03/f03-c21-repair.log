@@ -1,0 +1,16 @@
+TAP version 13
+# Subtest: revised terms clear earlier approvals and require fresh private review of the exact revision
+ok 1 - revised terms clear earlier approvals and require fresh private review of the exact revision
+  ---
+  duration_ms: 55.1243
+  type: 'test'
+  ...
+1..1
+# tests 1
+# suites 0
+# pass 1
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 118.7319

@@ -1,0 +1,26 @@
+{
+  "ended": "2026-10-24T09:41:18.9159486Z",
+  "syntax": [
+    {
+      "exit": 0,
+      "path": "bot/src/pvp-profiles.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/frameworks/daggerheart/pvp-profile-rules.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/frameworks/daggerheart/public.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/tests/ai-gm-2026-10/rf03-f03-c21.test.mjs"
+    }
+  ],
+  "base_sha": "adf5959076647db08e5c3d53914fa28811312d10",
+  "test_exit": 1,
+  "started": "2026-10-24T09:41:17.2194869Z",
+  "run_id": "RF03-F03-C21",
+  "architecture_exit": 0
+}

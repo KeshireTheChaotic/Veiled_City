@@ -1,0 +1,90 @@
+TAP version 13
+# Subtest: damage offer is private immutable input requiring each distinct owner review and approval before exact edges lock
+ok 1 - damage offer is private immutable input requiring each distinct owner review and approval before exact edges lock
+  ---
+  duration_ms: 62.4304
+  type: 'test'
+  ...
+# Subtest: locked consent stages only an exact source-bound attack request without dice, effects or resource payment
+ok 2 - locked consent stages only an exact source-bound attack request without dice, effects or resource payment
+  ---
+  duration_ms: 66.3137
+  type: 'test'
+  ...
+# Subtest: owner withdrawal is neutral, preserves committed ancestry and never silently re-enrolls on replay
+ok 3 - owner withdrawal is neutral, preserves committed ancestry and never silently re-enrolls on replay
+  ---
+  duration_ms: 64.0516
+  type: 'test'
+  ...
+# Subtest: different owner or principal, revoked declaration and altered terms cannot inherit consent
+ok 4 - different owner or principal, revoked declaration and altered terms cannot inherit consent
+  ---
+  duration_ms: 59.3607
+  type: 'test'
+  ...
+# Subtest: revised terms clear earlier approvals and require fresh private review of the exact revision
+not ok 5 - revised terms clear earlier approvals and require fresh private review of the exact revision
+  ---
+  duration_ms: 47.2086
+  type: 'test'
+  location: 'D:\\Library\\Development\\Veiled_City\\bot\\tests\\ai-gm-2026-10\\rf03-f03-c21.test.mjs:33:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /Review complete private/. Input:
+    
+    'Error: Consent interaction replay cannot change decision or terms.'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+  error: 'Consent interaction replay cannot change decision or terms.'
+  stack: |-
+    fail (file:///D:/Library/Development/Veiled_City/bot/src/frameworks/daggerheart/pvp-profile-rules.js:8:44)
+    file:///D:/Library/Development/Veiled_City/bot/src/frameworks/daggerheart/pvp-profile-rules.js:167:57
+    Object.transaction (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf03-f03-c21.test.mjs:12:1094)
+    Object.respondDamagePvp (file:///D:/Library/Development/Veiled_City/bot/src/frameworks/daggerheart/pvp-profile-rules.js:158:13)
+    Object.respond (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf03-f03-c21.test.mjs:17:312)
+    file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf03-f03-c21.test.mjs:34:465
+    getActual (node:assert:611:5)
+    strict.throws (node:assert:759:24)
+    TestContext.<anonymous> (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf03-f03-c21.test.mjs:34:452)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+  operator: 'throws'
+  stack: |-
+    TestContext.<anonymous> (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf03-f03-c21.test.mjs:34:452)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: failed target-edge write rolls back second signature, source, contract status and permissions together
+ok 6 - failed target-edge write rolls back second signature, source, contract status and permissions together
+  ---
+  duration_ms: 50.9683
+  type: 'test'
+  ...
+# Subtest: changed native target permission proof fails closed even after both owners have approved
+ok 7 - changed native target permission proof fails closed even after both owners have approved
+  ---
+  duration_ms: 62.4973
+  type: 'test'
+  ...
+# Subtest: actual profile provider cold-imports all original owner-consent and staging interfaces
+ok 8 - actual profile provider cold-imports all original owner-consent and staging interfaces
+  ---
+  duration_ms: 324.9026
+  type: 'test'
+  ...
+1..8
+# tests 8
+# suites 0
+# pass 7
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 808.7901

@@ -1,0 +1,7 @@
+{
+  "test_syntax_exit": 0,
+  "test_exit": 0,
+  "run_id": "RF03-F03-C21-repair",
+  "ended": "2026-10-24T09:41:25.6095283Z",
+  "reason": "New revision review fixture reused an already authenticated interaction ID, correctly triggering immutable replay protection first. Use a fresh interaction for new terms; production unchanged."
+}

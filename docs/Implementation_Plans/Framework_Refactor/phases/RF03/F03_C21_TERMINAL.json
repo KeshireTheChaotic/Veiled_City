@@ -1,0 +1,45 @@
+{
+  "base_sha": "adf5959076647db08e5c3d53914fa28811312d10",
+  "unique_tests": 8,
+  "executions": 9,
+  "initial": {
+    "pass": 7,
+    "fail": 1,
+    "exit": 1,
+    "duration_ms": 808.7901
+  },
+  "repair": {
+    "pass": 1,
+    "fail": 0,
+    "exit": 0,
+    "duration_ms": 118.7319
+  },
+  "repair_reason": "New terms fixture reused authenticated old interaction, correctly triggering immutable replay before review guard. Fresh interaction only; production unchanged, failed case only rerun.",
+  "syntax_pass": 4,
+  "repair_test_syntax": 1,
+  "body_equivalence": true,
+  "body_sha256": "dc03259be050d45ec2a69b2a53fcb269720b20267fdeb6249f38bbedbf18671b",
+  "hashes": {
+    "bot/src/pvp-profiles.js": "79a631b1d73701929b0153b3517a2f796b8d871bac1e5ecd092ab5f1d1c636b9",
+    "bot/src/frameworks/daggerheart/pvp-profile-rules.js": "aa4d67ac10d92d436ada8b6c063042842067b158b82bb911ff8796b438f41eb9",
+    "bot/src/frameworks/daggerheart/public.js": "9af7f6808cf7dbec5a6deaed1b305b0a4c0ac66135c3f387ffcb660719f51721",
+    "bot/tests/ai-gm-2026-10/rf03-f03-c21.test.mjs": "47795c9c7609d08274d967f6ea6617c669ac16a3cb698c70a5497aa302e4dde1"
+  },
+  "gate": {
+    "sourceModules": 438,
+    "unowned": 0,
+    "importOccurrences": 2428,
+    "internalImportOccurrences": 2253,
+    "cycleComponents": 1,
+    "largestCycle": 182,
+    "rawViolationOccurrences": 2503,
+    "acceptedLegacyOccurrences": 2503,
+    "activeViolationGroups": 0,
+    "transitionErrors": 0,
+    "pass": true
+  },
+  "provider_calls": 0,
+  "provider_cost_usd": 0,
+  "codex_usage": "UNMEASURED",
+  "release": "NOT AUTHORIZED"
+}
