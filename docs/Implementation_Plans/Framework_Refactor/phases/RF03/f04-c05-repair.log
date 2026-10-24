@@ -1,0 +1,34 @@
+TAP version 13
+# Subtest: resolved exact owner quieting creates one native causal receipt and persists without resources or repeated mutation
+ok 1 - resolved exact owner quieting creates one native causal receipt and persists without resources or repeated mutation
+  ---
+  duration_ms: 36.0042
+  type: 'test'
+  ...
+# Subtest: later legitimate quieting ends current disadvantage but preserves an already saved native odds proof
+ok 2 - later legitimate quieting ends current disadvantage but preserves an already saved native odds proof
+  ---
+  duration_ms: 28.6588
+  type: 'test'
+  ...
+# Subtest: failed outcome, substituted action and another recipient scope cannot clear or read the native condition
+ok 3 - failed outcome, substituted action and another recipient scope cannot clear or read the native condition
+  ---
+  duration_ms: 28.7002
+  type: 'test'
+  ...
+# Subtest: revoked original owner cause invalidates current and historical quiet proof without rewriting the saved receipt
+ok 4 - revoked original owner cause invalidates current and historical quiet proof without rewriting the saved receipt
+  ---
+  duration_ms: 33.2214
+  type: 'test'
+  ...
+1..4
+# tests 4
+# suites 0
+# pass 4
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 197.9664

@@ -1,0 +1,44 @@
+[
+  {
+    "id": "b3a53080eacc1c9a37a80bc071ed3b200e3ecb9d0a5687873350b2fb35e7775b",
+    "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+    "from": "bot/src/native-environment-noise.js",
+    "to": "bot/src/scene-fiction-context.js",
+    "kind": "static",
+    "specifier": "./scene-fiction-context.js",
+    "owner": "daggerheart",
+    "max_occurrences": 1,
+    "remove_in_feature": "RF03-F04",
+    "expires_after": "RF03",
+    "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+    "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+  },
+  {
+    "id": "9729f3a76e014e2bec090bd10073b32cabd95fd7a814462b0113c92ef9af5915",
+    "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+    "from": "bot/src/native-environment-noise.js",
+    "to": "bot/src/gm-arbitration-contract.js",
+    "kind": "static",
+    "specifier": "./gm-arbitration-contract.js",
+    "owner": "daggerheart",
+    "max_occurrences": 1,
+    "remove_in_feature": "RF03-F04",
+    "expires_after": "RF03",
+    "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+    "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+  },
+  {
+    "id": "8d1d57d51b26d1c00eed81760cf4168ef245955516eba022be2082e90f853b4f",
+    "code": "CYCLIC_IMPORT_EDGE",
+    "from": "bot/src/native-environment-noise.js",
+    "to": "bot/src/scene-fiction-context.js",
+    "kind": "static",
+    "specifier": "./scene-fiction-context.js",
+    "owner": "daggerheart",
+    "max_occurrences": 1,
+    "remove_in_feature": "RF03-F04",
+    "expires_after": "RF03",
+    "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+    "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+  }
+]

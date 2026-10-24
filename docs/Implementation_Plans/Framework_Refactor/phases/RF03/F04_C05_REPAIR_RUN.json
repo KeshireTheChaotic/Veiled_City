@@ -1,0 +1,7 @@
+{
+  "test_syntax_exit": 0,
+  "run_id": "RF03-F04-C05-repair",
+  "reason": "New profile fixture incorrectly used a private-scope string; native profiles store the full audience scope object. Correct fixture shape; production unchanged. Failed four cases only.",
+  "ended": "2026-10-24T09:48:22.7835557Z",
+  "test_exit": 0
+}

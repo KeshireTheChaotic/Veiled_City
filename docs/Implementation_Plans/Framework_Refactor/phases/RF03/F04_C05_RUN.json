@@ -1,0 +1,26 @@
+{
+  "base_sha": "eeefad54f8e670c86b7ec996c8f480d5392999c6",
+  "syntax": [
+    {
+      "path": "bot/src/native-environment-noise.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/environment-acoustic-rules.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/public.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf03-f04-c05.test.mjs",
+      "exit": 0
+    }
+  ],
+  "architecture_exit": 1,
+  "run_id": "RF03-F04-C05",
+  "test_exit": 1,
+  "started": "2026-10-24T09:47:59.5636862Z",
+  "ended": "2026-10-24T09:48:01.1814951Z"
+}

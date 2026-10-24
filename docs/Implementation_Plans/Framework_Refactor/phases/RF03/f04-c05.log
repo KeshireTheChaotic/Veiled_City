@@ -1,0 +1,118 @@
+TAP version 13
+# Subtest: environment acoustic odds qualify the exact source-bound GM applicability ruling without rolling or deciding for the PC
+ok 1 - environment acoustic odds qualify the exact source-bound GM applicability ruling without rolling or deciding for the PC
+  ---
+  duration_ms: 24.8778
+  type: 'test'
+  ...
+# Subtest: resolved exact owner quieting creates one native causal receipt and persists without resources or repeated mutation
+not ok 2 - resolved exact owner quieting creates one native causal receipt and persists without resources or repeated mutation
+  ---
+  duration_ms: 23.019
+  type: 'test'
+  location: 'D:\\Library\\Development\\Veiled_City\\bot\\tests\\ai-gm-2026-10\\rf03-f04-c05.test.mjs:22:1'
+  failureType: 'testCodeFailure'
+  error: 'Unified GM arbitration held: environment_noise_clear_native_ancestry'
+  code: 'GM_ARBITRATION'
+  stack: |-
+    nativeArbitrationFailure (file:///D:/Library/Development/Veiled_City/bot/src/frameworks/daggerheart/native-failure.js:2:71)
+    inspectNativeEnvironmentNoiseClear (file:///D:/Library/Development/Veiled_City/bot/src/frameworks/daggerheart/environment-acoustic-rules.js:69:11)
+    file:///D:/Library/Development/Veiled_City/bot/src/frameworks/daggerheart/environment-acoustic-rules.js:54:5
+    Object.transaction (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf03-f04-c05.test.mjs:13:1185)
+    Object.clearNativeEnvironmentNoise (file:///D:/Library/Development/Veiled_City/bot/src/frameworks/daggerheart/environment-acoustic-rules.js:25:13)
+    Object.clear (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf03-f04-c05.test.mjs:17:114)
+    TestContext.<anonymous> (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf03-f04-c05.test.mjs:23:61)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+  ...
+# Subtest: later legitimate quieting ends current disadvantage but preserves an already saved native odds proof
+not ok 3 - later legitimate quieting ends current disadvantage but preserves an already saved native odds proof
+  ---
+  duration_ms: 22.9345
+  type: 'test'
+  location: 'D:\\Library\\Development\\Veiled_City\\bot\\tests\\ai-gm-2026-10\\rf03-f04-c05.test.mjs:25:1'
+  failureType: 'testCodeFailure'
+  error: 'Unified GM arbitration held: environment_noise_clear_native_ancestry'
+  code: 'GM_ARBITRATION'
+  stack: |-
+    nativeArbitrationFailure (file:///D:/Library/Development/Veiled_City/bot/src/frameworks/daggerheart/native-failure.js:2:71)
+    inspectNativeEnvironmentNoiseClear (file:///D:/Library/Development/Veiled_City/bot/src/frameworks/daggerheart/environment-acoustic-rules.js:69:11)
+    file:///D:/Library/Development/Veiled_City/bot/src/frameworks/daggerheart/environment-acoustic-rules.js:54:5
+    Object.transaction (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf03-f04-c05.test.mjs:13:1185)
+    Object.clearNativeEnvironmentNoise (file:///D:/Library/Development/Veiled_City/bot/src/frameworks/daggerheart/environment-acoustic-rules.js:25:13)
+    Object.clear (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf03-f04-c05.test.mjs:17:114)
+    TestContext.<anonymous> (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf03-f04-c05.test.mjs:26:37)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+  ...
+# Subtest: failed acoustic receipt rolls back its mutation/event and leaves the condition active
+ok 4 - failed acoustic receipt rolls back its mutation/event and leaves the condition active
+  ---
+  duration_ms: 24.4353
+  type: 'test'
+  ...
+# Subtest: failed outcome, substituted action and another recipient scope cannot clear or read the native condition
+not ok 5 - failed outcome, substituted action and another recipient scope cannot clear or read the native condition
+  ---
+  duration_ms: 23.2352
+  type: 'test'
+  location: 'D:\\Library\\Development\\Veiled_City\\bot\\tests\\ai-gm-2026-10\\rf03-f04-c05.test.mjs:31:1'
+  failureType: 'testCodeFailure'
+  error: 'Unified GM arbitration held: environment_noise_clear_native_ancestry'
+  code: 'GM_ARBITRATION'
+  stack: |-
+    nativeArbitrationFailure (file:///D:/Library/Development/Veiled_City/bot/src/frameworks/daggerheart/native-failure.js:2:71)
+    inspectNativeEnvironmentNoiseClear (file:///D:/Library/Development/Veiled_City/bot/src/frameworks/daggerheart/environment-acoustic-rules.js:69:11)
+    file:///D:/Library/Development/Veiled_City/bot/src/frameworks/daggerheart/environment-acoustic-rules.js:54:5
+    Object.transaction (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf03-f04-c05.test.mjs:13:1185)
+    Object.clearNativeEnvironmentNoise (file:///D:/Library/Development/Veiled_City/bot/src/frameworks/daggerheart/environment-acoustic-rules.js:25:13)
+    Object.clear (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf03-f04-c05.test.mjs:17:114)
+    TestContext.<anonymous> (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf03-f04-c05.test.mjs:32:291)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+  ...
+# Subtest: revoked original owner cause invalidates current and historical quiet proof without rewriting the saved receipt
+not ok 6 - revoked original owner cause invalidates current and historical quiet proof without rewriting the saved receipt
+  ---
+  duration_ms: 23.2335
+  type: 'test'
+  location: 'D:\\Library\\Development\\Veiled_City\\bot\\tests\\ai-gm-2026-10\\rf03-f04-c05.test.mjs:34:1'
+  failureType: 'testCodeFailure'
+  error: 'Unified GM arbitration held: environment_noise_clear_native_ancestry'
+  code: 'GM_ARBITRATION'
+  stack: |-
+    nativeArbitrationFailure (file:///D:/Library/Development/Veiled_City/bot/src/frameworks/daggerheart/native-failure.js:2:71)
+    inspectNativeEnvironmentNoiseClear (file:///D:/Library/Development/Veiled_City/bot/src/frameworks/daggerheart/environment-acoustic-rules.js:69:11)
+    file:///D:/Library/Development/Veiled_City/bot/src/frameworks/daggerheart/environment-acoustic-rules.js:54:5
+    Object.transaction (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf03-f04-c05.test.mjs:13:1185)
+    Object.clearNativeEnvironmentNoise (file:///D:/Library/Development/Veiled_City/bot/src/frameworks/daggerheart/environment-acoustic-rules.js:25:13)
+    Object.clear (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf03-f04-c05.test.mjs:17:114)
+    TestContext.<anonymous> (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf03-f04-c05.test.mjs:35:27)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+  ...
+# Subtest: Local Memory grants only the source-defined native Advantage for the exact declared action and GM ruling
+ok 7 - Local Memory grants only the source-defined native Advantage for the exact declared action and GM ruling
+  ---
+  duration_ms: 21.6815
+  type: 'test'
+  ...
+# Subtest: actual acoustic provider cold-imports native odds, quieting and historical proof interfaces
+ok 8 - actual acoustic provider cold-imports native odds, quieting and historical proof interfaces
+  ---
+  duration_ms: 334.6904
+  type: 'test'
+  ...
+1..8
+# tests 8
+# suites 0
+# pass 4
+# fail 4
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 574.1572

@@ -1,0 +1,46 @@
+{
+  "base_sha": "eeefad54f8e670c86b7ec996c8f480d5392999c6",
+  "unique_tests": 8,
+  "executions": 12,
+  "initial": {
+    "pass": 4,
+    "fail": 4,
+    "exit": 1,
+    "duration_ms": 574.1572
+  },
+  "repair": {
+    "pass": 4,
+    "fail": 0,
+    "exit": 0,
+    "duration_ms": 197.9664
+  },
+  "repair_reason": "Fixture used a scope string instead of native full audience-scope object; native receipt key/source validation correctly rejected it. Shape corrected only; failed four cases rerun, production unchanged.",
+  "syntax_pass": 4,
+  "repair_test_syntax": 1,
+  "body_equivalence": true,
+  "body_sha256": "2e6a82d6fff7122983cb713bbe0aa8d44145e18dea868e7afefde2e39e970a99",
+  "hashes": {
+    "bot/src/native-environment-noise.js": "ea6fb366b8f06c7beb740be4c24424b3b81ca8d0b6d1a6ba950df7ac132d2a58",
+    "bot/src/frameworks/daggerheart/environment-acoustic-rules.js": "628584cdd4c123acb97494c9de4cc769fb8d95fecc0b2a25b41e84dab6cc5293",
+    "bot/src/frameworks/daggerheart/public.js": "17f5adb7750875d0c605fbaa0dae3b11fc7be7401d0947c68e4c2a5d075a484e",
+    "bot/tests/ai-gm-2026-10/rf03-f04-c05.test.mjs": "834b0c6132be0f4e0b2d342c4a86d1b0aa5e8127b7e6130f869b4d26c195ae66"
+  },
+  "gate": {
+    "sourceModules": 441,
+    "unowned": 0,
+    "importOccurrences": 2435,
+    "internalImportOccurrences": 2260,
+    "cycleComponents": 1,
+    "largestCycle": 182,
+    "rawViolationOccurrences": 2500,
+    "acceptedLegacyOccurrences": 2500,
+    "activeViolationGroups": 0,
+    "transitionErrors": 0,
+    "pass": true
+  },
+  "retired_records": 3,
+  "provider_calls": 0,
+  "provider_cost_usd": 0,
+  "codex_usage": "UNMEASURED",
+  "release": "NOT AUTHORIZED"
+}
