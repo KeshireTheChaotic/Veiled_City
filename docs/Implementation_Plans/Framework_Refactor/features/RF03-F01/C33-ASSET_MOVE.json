@@ -1,0 +1,11 @@
+{
+  "base_sha": "c9f3f2ab6eb5a34b2a900e7e9e4b4e1ebf05ee90",
+  "source": "bot/src/native-house-errata.json",
+  "target": "bot/src/frameworks/daggerheart/native-house-errata.json",
+  "sha256": "6f679f50272861ccc01f5b189d0fc5d9947e5df350df372cb52f97df93a28964",
+  "byte_identical": true,
+  "actual_readers": [
+    "bot/src/native-house-errata.js",
+    "bot/src/native-feature-catalog.js"
+  ]
+}

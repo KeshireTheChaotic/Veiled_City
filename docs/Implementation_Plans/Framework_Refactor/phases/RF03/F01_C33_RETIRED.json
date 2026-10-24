@@ -1,0 +1,16 @@
+{
+  "reason": "Exact source asset moved byte-identical; original location no longer exists.",
+  "records": [
+    {
+      "id": "8e9fa2b042fb6b5ca1a66c62cf13eb1adb280fa5489b0b446f66b21ef2d8621e",
+      "code": "LEGACY_MODULE_LOCATION",
+      "from": "bot/src/native-house-errata.json",
+      "owner": "daggerheart",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF03-F01",
+      "expires_after": "RF03",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
+    }
+  ]
+}

@@ -1,0 +1,5 @@
+# RF03-F01 C33 ledger
+
+PHYSICAL IMMUTABLE SOURCE MOVE QUALIFIED
+
+Base c9f3f2ab6eb5a34b2a900e7e9e4b4e1ebf05ee90. Physical byte-identical native-house-errata.json move into Daggerheart only, separate from already extracted errata algorithm. Both actual filesystem readers updated and migration crosswalk records move. SHA6f679f50272861ccc01f5b189d0fc5d9947e5df350df372cb52f97df93a28964 unchanged.3/3fresh source cases pass,exit0,TAP427.0218ms;3syntax pass. Actual native errata loader returns every exact frozen authored entry/source/hash/interpretation/status, catalog reader reconciles feature sources and both load from unrelated working directory. No review-only feature activated. Initial architecture1solely INVALID+UNUSED same vanished location ID; retired exact single original with full record retained, no tests rerun. Architecture-only final gate494sources2549importsSCC1822484acceptedzero active/unowned/integrity. No baseline/deadline/maxima/source rule changes. Hashes/terminal F01_C33. Rollback asset/readers/crosswalk and single retired record together. Provider0/$0,Codex UNMEASURED;RF03 incomplete;RELEASE NOT AUTHORIZED.

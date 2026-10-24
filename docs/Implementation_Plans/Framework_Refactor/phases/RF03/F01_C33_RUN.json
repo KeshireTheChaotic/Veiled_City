@@ -1,0 +1,28 @@
+{
+  "hashes": {
+    "bot/tests/ai-gm-2026-10/rf03-f01-c33.test.mjs": "56b3beca5d515527f0122caebd481cac1c7930a102389ef72cb4697971923af8",
+    "bot/src/native-feature-catalog.js": "48432087c8cb6cf04f45812721bafdd678d1073023b13c12c159b9f42eb8604a",
+    "bot/src/native-house-errata.js": "328f91b204a5b2c0e9cde0ef6f1610f4d62181b5518639d246d950366a11dfb7",
+    "bot/src/frameworks/daggerheart/native-house-errata.json": "6f679f50272861ccc01f5b189d0fc5d9947e5df350df372cb52f97df93a28964"
+  },
+  "base_sha": "c9f3f2ab6eb5a34b2a900e7e9e4b4e1ebf05ee90",
+  "run_id": "F01_C33",
+  "architecture_exit": 1,
+  "syntax": [
+    {
+      "exit": 0,
+      "path": "bot/src/native-house-errata.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/native-feature-catalog.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/tests/ai-gm-2026-10/rf03-f01-c33.test.mjs"
+    }
+  ],
+  "test_exit": 0,
+  "start": "2026-10-24T16:27:47.5091996-05:00",
+  "end": "2026-10-24T16:27:48.9317315-05:00"
+}

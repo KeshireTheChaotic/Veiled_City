@@ -1,0 +1,16 @@
+{
+  "mode": "ratchet",
+  "phase": "RF03",
+  "sourceModules": 494,
+  "unowned": 0,
+  "importOccurrences": 2549,
+  "internalImportOccurrences": 2372,
+  "cycleComponents": 1,
+  "largestCycle": 182,
+  "rawViolationOccurrences": 2484,
+  "acceptedLegacyOccurrences": 2484,
+  "activeViolationGroups": 0,
+  "transitionErrors": 0,
+  "pass": true,
+  "firstErrors": []
+}
