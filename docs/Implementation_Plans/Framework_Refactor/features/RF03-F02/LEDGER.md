@@ -2,6 +2,8 @@
 
 ACTIVE. Base479d366. No new limitations or rule changes authorized.
 
+After C15's complete native effect extraction and fresh qualification, only residual native-effect provider dependency binding was assigned to exact RF04/RF05/RF06 producer/composition features under the owner amendment. Native target algorithms retain independent RF03 obligations. Full original/current IDs, unchanged native hash, test evidence and removal criteria in QUALIFIED_PROVIDER_RESIDUALS.json. This is deferred provider integration, not qualified runtime integration; no new records/identities/maxima/baseline or rule changes.
+
 ## Corrective C15 — complete native Feedback consequence boundary qualified
 
 Invitation/payment/withdrawal/effect commit/saved-effect ancestry moved unchanged to Daggerheart, called by existing provider with explicit native/source/notice dependencies. Seven fresh SQLite cases passed,exit0,646.6213ms; four syntax checks passed. Exact original3absent narrative-hash/intent-error import records retired; final RF03 ratchet passed with2551accepted old occurrences and zero active/unowned/errors. Owner dice, successful/no-effect, failure/device/Stress, rollback, exact withdrawal and replay exercised; upstream native verifiers mocked. F02_C15_TERMINAL.json records hashes and actual outcomes. No source disposition/deadline/gameplay change; RF03 incomplete, release unauthorized.

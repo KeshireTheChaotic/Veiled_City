@@ -2,6 +2,8 @@
 
 ACTIVE; native predicate extraction first. No independent execution or disclosure grant.
 
+After C03 qualified each of22native occurrence bodies, its legacy source-provider binding records were individually reassigned to RF04-F05's actual world/profile-to-native public integration, under the owner amendment. Individual occurrence ledgers contain exact IDs; QUALIFIED_PROVIDER_RESIDUALS.json preserves full original/current records, qualification and removal criteria. No new records/baseline/maxima changes. The native instance/world producer itself remains separately accountable; this does not grant its completion or defer any unextracted native feature mechanics.
+
 ## Corrective C03 —22 exact environment source-rule occurrences isolated
 
 Complete projector bodies for22 passive/action environment contexts now reside in Daggerheart with named source callbacks; current providers bind the same source catalog/instance/contract services. Individual scopes/ledgers in C03-occurrences. Native bodies and source assets unchanged. Fresh22/22passed,exit0,434.273ms;25syntax checks passed.44exact obsolete narrative-hash imports/cycle records retired; final RF03 ratchet exit0,zero active/unowned/errors,2554accepted old occurrences. Source/canonical-world/scene producer integration remains separately accountable; no new deadline. Exact evidence F04_C03_TERMINAL.json. RF03 incomplete; no RF04 work started; release unauthorized.

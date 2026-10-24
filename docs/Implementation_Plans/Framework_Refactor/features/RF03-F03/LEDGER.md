@@ -2,6 +2,8 @@
 
 ACTIVE. Native choices and receipts must remain unchanged.
 
+After C16 qualified the full native death lifecycle, exact remaining source/native-service bindings in the provider were individually assigned to their named RF04 source producers and RF05-F05 application composition under the owner amendment. Native implementations in dependent targets retain their RF03 obligations. Full original/current IDs, unchanged native hash, test evidence and removal criteria in QUALIFIED_PROVIDER_RESIDUALS.json. Runtime provider adoption remains deferred and unisolated; no new exception or native mechanics deferral.
+
 ## Corrective C16 — complete native death lifecycle qualified
 
 Eleven owner-selected death lifecycle algorithms plus their source/mutation/receipt helpers extracted into Daggerheart, using the already-qualified outcome/eligibility policy. Existing provider supplies named source/native capabilities only; native body unchanged. Fresh10/10 passed,exit0,737.4518ms; four syntax checks passed. Real disposable SQLite validates owner choice, saved ancestry, recovery, Blaze, healing-backed wake, rollback and reopen/replay against explicitly mocked upstream verifiers. Two removed old import/re-export cycle records retired with full originals; final RF03 gate exit0,zero active/unowned/errors,2598accepted occurrences. Exact evidence F03_C16_TERMINAL.json. Underlying source/damage/native providers remain RF03 or their existing owning phases; no new deferral. RF03 incomplete; release unauthorized.

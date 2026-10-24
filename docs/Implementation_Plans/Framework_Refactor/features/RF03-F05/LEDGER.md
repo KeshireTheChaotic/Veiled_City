@@ -2,6 +2,10 @@
 
 ACTIVE. No narrative, delivery or mechanical authority granted by presentation mapping.
 
+## Current provider/public API adoption versus deferred integration
+
+C06/C07 roll request/collaboration/option services, C16 death lifecycle, C15 Feedback effects and C03 environment contexts now execute their extracted Daggerheart implementations through current explicitly bound providers. Actual qualified native policy adoption is established; final source/native/publication service instances still require the named public-producer/application workflows. Under owner amendment,132exact provider-only records across these slices were individually assigned to accountable RF04–RF06 features; full source/test hashes, original/current identities, dependencies and removal conditions are in QUALIFIED_PROVIDER_RESIDUALS.json. No native target policy was deferred. Native-to-narrative full receipt projection and remaining native/provider services remain unresolved RF03 work; this entry does not claim a new pair adapter or completed F05.
+
 ## F05 command integration adopted
 
 Base599f2eb. Existing commands now consume daggerheart--discord/nativeCombatantLine. Pair owns explicit native-state-to-Discord field projection; Discord retains text rendering. No new rejection, gameplay rule, extra native validation, publication authorization or acknowledgment fabrication. Existing registry record updated with actual command consumer and fresh test reference; other proposed pairs unchanged. Two tests passed/zero failed/skipped,exit0,415.3442ms; three syntax checks and RF03 ratchet passed. F05_TERMINAL.json hashes/results.

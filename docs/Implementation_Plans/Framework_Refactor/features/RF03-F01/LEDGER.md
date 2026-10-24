@@ -2,6 +2,10 @@
 
 ACTIVE. Base 1db80db; reconciliation gates pass. Changes and qualification pending. Provider cost0; Codex cost UNMEASURED.
 
+## Qualified provider-only residual reconciliation
+
+After C06/C07 native extraction and fresh qualification, exact old provider/source/transport import records were individually reassigned under the owner's corrective amendment. No native implementation or target obligation was deferred. The character-system class/trait source import remains RF03-F01. Exact originals/current deadlines, each native source hash/test evidence, source dependency and removal criterion: QUALIFIED_PROVIDER_RESIDUALS.json and QUALIFIED_PROVIDER_CROSSWALK.csv. RF05-F05 owns final application binding, RF04-F01/F03/F04 the specific world/identity/session producers, RF06-F03 native notices/transport. These remain unisolated runtime providers, not completed integrations. No new IDs/count/owner/baseline changes; no test/enforcement code modified or paid calls.
+
 ## Corrective C07 — native collaboration and option engines qualified
 
 Complete existing participation/cost/dice/operation-receipt and private option policy now lives in Daggerheart, invoked by lazy existing providers. Native bodies unchanged. Fresh SQLite batch11/11 passed,exit0,42332.4516ms; six syntax checks and RF03 ratchet passed at405sources,zero unowned/active/errors,SCC182. Verified paid-option/reopen replay, exact independent Tag Team approval, pre-roll Fear-before-RNG, original atomic rollback, protected reaction resources and private option boundaries. Other native/source verifier dependencies mocked and remain separately accountable; no deadline deferred. Terminal evidence F01_C07_TERMINAL.json. RF03 incomplete; release unauthorized.

@@ -1,0 +1,19 @@
+{
+  "base_sha": "bc0a8c990d112c30b6997c5c9ca7c55e75389208",
+  "changed_records": 132,
+  "new_records": 0,
+  "removed_records": 0,
+  "immutable_identity_errors": 0,
+  "native_source_hash_drift": 0,
+  "frozen_baseline_sha256": "213b8e19491ae0ebcbcf85321b00ba40768420f27233e8d84f84ccad96cb84d6",
+  "remaining_rf03_records": 777,
+  "by_feature": {
+    "RF03-F03": 176,
+    "RF03-F01": 346,
+    "RF03-F02": 61,
+    "RF03-F04": 194
+  },
+  "transition_manifest_sha256": "9c4eb7b2fad093d65e0f2480cd1839ba85e84e4c613704df05ffdc0776f7f12c",
+  "provider_cost_usd": 0,
+  "release_authorized": false
+}
