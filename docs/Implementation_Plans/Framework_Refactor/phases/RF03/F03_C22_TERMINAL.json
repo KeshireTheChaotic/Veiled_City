@@ -1,0 +1,50 @@
+{
+  "base_sha": "d126215d8d7c02b97018f021e742504f039693fb",
+  "unique_tests": 9,
+  "case_executions": 9,
+  "initial_parse": {
+    "pass": 0,
+    "file_failure": 1,
+    "exit": 1,
+    "duration_ms": 48.8828
+  },
+  "repair": {
+    "pass": 9,
+    "fail": 0,
+    "exit": 0,
+    "duration_ms": 1050.3046
+  },
+  "repair_reason": "Generated fresh-test regex slash syntax fixed; no feature cases ran initially. No production repair after freeze.",
+  "syntax_initial": {
+    "production_pass": 3,
+    "test_fail": 1
+  },
+  "repair_test_syntax": 1,
+  "only_native_change": "Select calculatePvpAttackTerms from factory capability object, rather than invoke non-callable object. Restores intended existing attack rules.",
+  "expected_body_equivalence": true,
+  "original_body_sha256": "b04ec15bb99e5cd1c56e7c04559a724b7d1f76633331fe62d512e138ba2d6212",
+  "body_sha256": "f0823ebc09eee98a44e49cfcfbea0006ff226ec06ca44e2abb9e9e876e42c47f",
+  "hashes": {
+    "bot/src/pvp-attacks.js": "70977a2b6fb53fc20421dc196841af6a53e7f7ab763bbca4b687970c7e194bf4",
+    "bot/src/frameworks/daggerheart/pvp-attack-rules.js": "27aceef6b3d989982a5be3190c7869d899748fcb9b1c65e271ca173aa72e7528",
+    "bot/src/frameworks/daggerheart/public.js": "93e3449b4f100ce362a67d457e9ec4f8e2d0c800f993225746fd8b9c0f6cabd0",
+    "bot/tests/ai-gm-2026-10/rf03-f03-c22.test.mjs": "a5aac27ddb90ed458edb2639417e281f5bfad727a28dd6833b899c6fb7df9775"
+  },
+  "gate": {
+    "sourceModules": 439,
+    "unowned": 0,
+    "importOccurrences": 2431,
+    "internalImportOccurrences": 2256,
+    "cycleComponents": 1,
+    "largestCycle": 182,
+    "rawViolationOccurrences": 2503,
+    "acceptedLegacyOccurrences": 2503,
+    "activeViolationGroups": 0,
+    "transitionErrors": 0,
+    "pass": true
+  },
+  "provider_calls": 0,
+  "provider_cost_usd": 0,
+  "codex_usage": "UNMEASURED",
+  "release": "NOT AUTHORIZED"
+}

@@ -1,0 +1,64 @@
+TAP version 13
+# Subtest: actual attack-terms adapter prepares Proficiency damage and exact target Evasion without owner choices or dice
+ok 1 - actual attack-terms adapter prepares Proficiency damage and exact target Evasion without owner choices or dice
+  ---
+  duration_ms: 73.4236
+  type: 'test'
+  ...
+# Subtest: separate reviewed owners authorize one actual Duality attack, saved native proof and restart replay without reroll
+ok 2 - separate reviewed owners authorize one actual Duality attack, saved native proof and restart replay without reroll
+  ---
+  duration_ms: 91.7031
+  type: 'test'
+  ...
+# Subtest: Critical succeeds against high Evasion while leaving optional resources and damage to separate native workflows
+ok 3 - Critical succeeds against high Evasion while leaving optional resources and damage to separate native workflows
+  ---
+  duration_ms: 89.8447
+  type: 'test'
+  ...
+# Subtest: pre-roll Fear or pending immediate consequence blocks dice after preparation without consuming owner choices
+ok 4 - pre-roll Fear or pending immediate consequence blocks dice after preparation without consuming owner choices
+  ---
+  duration_ms: 75.9344
+  type: 'test'
+  ...
+# Subtest: changed target sheet or original GM source invalidates a pending attack before dice
+ok 5 - changed target sheet or original GM source invalidates a pending attack before dice
+  ---
+  duration_ms: 88.8067
+  type: 'test'
+  ...
+# Subtest: failed attack receipt write restores saved dice and request terminal link atomically
+ok 6 - failed attack receipt write restores saved dice and request terminal link atomically
+  ---
+  duration_ms: 80.2291
+  type: 'test'
+  ...
+# Subtest: miss with Fear saves its unchanged native result and opens a separate consequence without damage
+ok 7 - miss with Fear saves its unchanged native result and opens a separate consequence without damage
+  ---
+  duration_ms: 83.4646
+  type: 'test'
+  ...
+# Subtest: native campaign preparation uses its private authority and base Evasion without fabricating defender consent
+ok 8 - native campaign preparation uses its private authority and base Evasion without fabricating defender consent
+  ---
+  duration_ms: 75.0032
+  type: 'test'
+  ...
+# Subtest: actual native PC attack provider cold-import retains its interfaces and actor fingerprint
+ok 9 - actual native PC attack provider cold-import retains its interfaces and actor fingerprint
+  ---
+  duration_ms: 318.1004
+  type: 'test'
+  ...
+1..9
+# tests 9
+# suites 0
+# pass 9
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1050.3046

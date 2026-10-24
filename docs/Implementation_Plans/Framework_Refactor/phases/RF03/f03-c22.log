@@ -1,0 +1,37 @@
+TAP version 13
+# file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf03-f03-c22.test.mjs:33
+#  const f=fixture(t),row=f.ready();f.changeTarget(pc=>pc.data.evasion=15);assert.throws(()=>f.roll(row),/compare-and-set is stale/);assert.equal(f.count('rolls'),0);f.changeTarget(pc=>pc.data.evasion=12);const source=f.db.getWorldEvent(f.guild,row.source_event);f.event(null,null,{...source,status:'retracted'});assert.throws(()=>f.roll(row),/source changed/retracted/);assert.equal(f.count('rolls'),0);
+#                                                                                                                                                                                                                                                                                                                                                      ^
+# SyntaxError: Invalid regular expression flags
+#     at compileSourceTextModule (node:internal/modules/esm/utils:318:16)
+#     at ModuleLoader.moduleStrategy (node:internal/modules/esm/translators:89:18)
+#     at \#translate (node:internal/modules/esm/loader:434:20)
+#     at afterLoad (node:internal/modules/esm/loader:502:29)
+#     at ModuleLoader.loadAndTranslate (node:internal/modules/esm/loader:507:12)
+#     at \#getOrCreateModuleJobAfterResolve (node:internal/modules/esm/loader:560:36)
+#     at afterResolve (node:internal/modules/esm/loader:607:52)
+#     at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:613:12)
+#     at node:internal/modules/esm/loader:632:32
+#     at TracingChannel.tracePromise (node:diagnostics_channel:362:14)
+# Node.js v24.19.0
+# Subtest: bot\\tests\\ai-gm-2026-10\\rf03-f03-c22.test.mjs
+not ok 1 - bot\\tests\\ai-gm-2026-10\\rf03-f03-c22.test.mjs
+  ---
+  duration_ms: 43.3482
+  type: 'test'
+  location: 'D:\\Library\\Development\\Veiled_City\\bot\\tests\\ai-gm-2026-10\\rf03-f03-c22.test.mjs:1:1'
+  failureType: 'testCodeFailure'
+  exitCode: 1
+  signal: ~
+  error: 'test failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+1..1
+# tests 1
+# suites 0
+# pass 0
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 48.8828

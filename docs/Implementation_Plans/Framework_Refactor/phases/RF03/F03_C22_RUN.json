@@ -1,0 +1,26 @@
+{
+  "base_sha": "d126215d8d7c02b97018f021e742504f039693fb",
+  "architecture_exit": 0,
+  "run_id": "RF03-F03-C22",
+  "ended": "2026-10-24T09:43:37.8416111Z",
+  "syntax": [
+    {
+      "path": "bot/src/pvp-attacks.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/pvp-attack-rules.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/public.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf03-f03-c22.test.mjs",
+      "exit": 1
+    }
+  ],
+  "test_exit": 1,
+  "started": "2026-10-24T09:43:36.8646997Z"
+}

@@ -58,3 +58,4 @@ export {createStressPassiveRules} from './stress-passive-rules.js';
 export {createPvpSafetyRules} from './pvp-safety-rules.js';
 export {createPvpFearGateRules} from './pvp-fear-gate-rules.js';
 export {createPvpProfileRules} from './pvp-profile-rules.js';
+export {createPvpAttackRules} from './pvp-attack-rules.js';
