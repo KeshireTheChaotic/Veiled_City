@@ -1,0 +1,3 @@
+# RF04-F01 C01 — World Director queue policy
+
+Extract unchanged pending-pass selection, round completion and scene-transition replacement policy from director.js into World. Keep eligible controlled-player roster selection in original provider until Session extraction and structured post-turn review/blocked-output formatting outside World. Inject roster source and timestamp solely for deterministic tests; actual provider uses same existing roster policy and new Date().toISOString timing. Queue metadata is not fictional-time progression, PC presence or a mechanical effect. Actual index consumer keeps same export call. Fresh disposable SQLite tests, one frozen batch, no old suites or passing reruns.

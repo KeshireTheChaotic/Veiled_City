@@ -1,0 +1,12 @@
+{
+  "base_sha": "401389284df98c95184638816ed568ca8ed45229",
+  "source": "bot/src/director.js",
+  "target": "bot/src/frameworks/world/director-cadence.js",
+  "original_body_sha256": "4baea9104849f75c592284a76a080ba36bd9de39d75906235b9e744b5d8ff87d",
+  "only_changes": [
+    "factory/capability seam",
+    "Date timestamp expression injected at same branch and timing"
+  ],
+  "cadence_body_equivalent_after_timestamp_substitution": true,
+  "retained": "Session roster source and cross-domain review/presentation remain original source."
+}

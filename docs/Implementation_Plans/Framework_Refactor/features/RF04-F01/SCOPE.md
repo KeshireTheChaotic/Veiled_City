@@ -1,0 +1,3 @@
+# RF04-F01 — World services and autonomous simulation
+
+Active at401389284df98c95184638816ed568ca8ed45229. Isolate current world Director cadence, civic fictional time/events, world facts and identity/autonomous proposals. Preserve ordinary invention and independent faction/NPC progression; other-framework rules remain their own injected capabilities. Native mechanics, canon/knowledge, session attendance and narrative writing do not move into World. Each cohesive slice requires current source/consumer/state review, body/path evidence, fresh tests and exact debt retirement. No deadline extensions or behavior changes. All remaining RF phases owner-authorized; no push/CI/services/production DB/paid providers. RELEASE NOT AUTHORIZED.

@@ -1,0 +1,58 @@
+TAP version 13
+# Subtest: world pass waits for existing eligible resolved player roles without ordering or fictional clock advancement
+ok 1 - world pass waits for existing eligible resolved player roles without ordering or fictional clock advancement
+  ---
+  duration_ms: 45.4565
+  type: 'test'
+  ...
+# Subtest: pending pass replays after database restart without recording another actor or resetting progress
+ok 2 - pending pass replays after database restart without recording another actor or resetting progress
+  ---
+  duration_ms: 44.2578
+  type: 'test'
+  ...
+# Subtest: explicit scene transition replaces only a queued round pass and preserves exact source label reason and timestamp
+ok 3 - explicit scene transition replaces only a queued round pass and preserves exact source label reason and timestamp
+  ---
+  duration_ms: 41.8755
+  type: 'test'
+  ...
+# Subtest: existing non-round pass is retained and no new queue replaces its original metadata
+ok 4 - existing non-round pass is retained and no new queue replaces its original metadata
+  ---
+  duration_ms: 29.7528
+  type: 'test'
+  ...
+# Subtest: new scene transition queues independently of attendance without placing or choosing for any character
+ok 5 - new scene transition queues independently of attendance without placing or choosing for any character
+  ---
+  duration_ms: 35.0717
+  type: 'test'
+  ...
+# Subtest: no session or eligible roles cannot synthesize a completed round
+ok 6 - no session or eligible roles cannot synthesize a completed round
+  ---
+  duration_ms: 33.7069
+  type: 'test'
+  ...
+# Subtest: actual provider preserves current controlled-role eligibility without treating offline proxy owners or absent PCs as attendees
+ok 7 - actual provider preserves current controlled-role eligibility without treating offline proxy owners or absent PCs as attendees
+  ---
+  duration_ms: 54.2395
+  type: 'test'
+  ...
+# Subtest: world construction requires both exact source capabilities and performs no source reads itself
+ok 8 - world construction requires both exact source capabilities and performs no source reads itself
+  ---
+  duration_ms: 0.4159
+  type: 'test'
+  ...
+1..8
+# tests 8
+# suites 0
+# pass 8
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 360.8207

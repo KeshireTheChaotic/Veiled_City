@@ -64,32 +64,8 @@ export function eligibleRoundUsers(db,sessionId){
   return [...users];
 }
 
-/** Queue the next durable world-director pass after a resolved party turn. */
-export function queueDirectorAfterPartyTurn(db,session,userId,stateReview){
-  if(!session?.id) return null;
-  const existing=db.getPendingDirectorPass(session.id);
-  const scene=stateReview?.scene;
-  if(scene?.decision==="transition"){
-    const replacement={layer:"scene",scene_label:String(scene.label||"").trim(),reason:String(scene.reason||"Scene transition").trim(),source_user_id:String(userId||""),queued_at:new Date().toISOString()};
-    if(existing?.layer==="round"){ db.setDirectorState(session.id,{pending_pass:replacement}); return replacement; }
-    if(existing) return existing;
-    return db.queueDirectorPass(session.id,replacement);
-  }
-  if(existing) return existing;
-  const state=db.recordDirectorActor(session.id,userId);
-  const eligible=eligibleRoundUsers(db,session.id);
-  if(!eligible.length) return null;
-  const acted=new Set(state.acted_user_ids||[]);
-  if(eligible.every(id=>acted.has(id))){
-    return db.queueDirectorPass(session.id,{
-      layer:"round",
-      round_number:Number(state.round_number||1),
-      reason:"Every currently present player-controlled role has completed at least one GM-resolved table action in this director cadence.",
-      source_user_id:String(userId||"")
-    });
-  }
-  return null;
-}
+/** Existing runtime source composition; Session eligibility remains separately owned. */
+export function queueDirectorAfterPartyTurn(...args){return cadence().queueDirectorAfterPartyTurn(...args);}
 
 export function describeBlockedAction(row){
   const raw=String(row?.error||row?.reason||"This state action is not permitted in the current scope.");
@@ -141,3 +117,7 @@ export function lowConfidenceReviewItems(result,threshold=55){
 export function normalizeDirectorConfidence(result,threshold=55){
   return {...result,review_required:false};
 }
+
+import {createDirectorCadence} from './frameworks/world/public.js';
+let worldCadence;
+function cadence(){return worldCadence??=createDirectorCadence({eligibleRoundUsers,now:()=>new Date().toISOString()});}

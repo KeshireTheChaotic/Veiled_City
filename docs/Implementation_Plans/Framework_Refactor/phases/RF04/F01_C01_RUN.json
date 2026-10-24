@@ -1,0 +1,32 @@
+{
+  "test_exit": 0,
+  "syntax": [
+    {
+      "exit": 0,
+      "path": "bot/src/director.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/frameworks/world/director-cadence.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/frameworks/world/public.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/tests/ai-gm-2026-10/rf04-f01-c01.test.mjs"
+    }
+  ],
+  "hashes": {
+    "bot/tests/ai-gm-2026-10/rf04-f01-c01.test.mjs": "08dbe92aac6fe33e903032d7b08d0d2e1e5aba0c20c839d9c02bad7305ea1a6a",
+    "bot/src/frameworks/world/director-cadence.js": "5134bcb87094c2c8f115b8dde4da264406536de5c6e3feb209a9656f4e20aa15",
+    "bot/src/frameworks/world/public.js": "e2ea3199b976e53a6327f181ce077c001d8e6d2959378c24ec390ad60b4f4019",
+    "bot/src/director.js": "a4e40af1e4fed145b5d93f5275ee4a2deae1e8d99aefbd587d8573c9406a98c7"
+  },
+  "architecture_exit": 0,
+  "run_id": "RF04_F01_C01",
+  "base_sha": "401389284df98c95184638816ed568ca8ed45229",
+  "start": "2026-10-24T16:55:08.1842537-05:00",
+  "end": "2026-10-24T16:55:09.6697865-05:00"
+}
