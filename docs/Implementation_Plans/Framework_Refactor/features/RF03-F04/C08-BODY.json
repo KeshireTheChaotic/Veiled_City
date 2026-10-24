@@ -1,0 +1,12 @@
+{
+  "base_sha": "d90b5161ee158489b59f6c41c5deef65fc9db2d4",
+  "source": "bot/src/native-environment-access.js",
+  "target": "bot/src/frameworks/daggerheart/environment-access-rules.js",
+  "body_equivalent": true,
+  "body_sha256": "ae023e68161d2928fff8ef4dab51dede6e8ce19b4d75b8343eccc2c4e7d89eef",
+  "exports": [
+    "establishEnvironmentAdmission",
+    "inspectEnvironmentAdmission",
+    "nativeVipAdmission"
+  ]
+}

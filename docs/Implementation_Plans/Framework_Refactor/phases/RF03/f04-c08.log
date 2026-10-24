@@ -1,0 +1,58 @@
+TAP version 13
+# Subtest: source-backed invitation produces native admission while leaving PC location, locked door and resources unchanged
+ok 1 - source-backed invitation produces native admission while leaving PC location, locked door and resources unchanged
+  ---
+  duration_ms: 27.3511
+  type: 'test'
+  ...
+# Subtest: restart replay verifies original receipt without duplicating admission or moving the character
+ok 2 - restart replay verifies original receipt without duplicating admission or moving the character
+  ---
+  duration_ms: 24.5589
+  type: 'test'
+  ...
+# Subtest: credential must name exact current character, floor and method, never a general social claim
+ok 3 - credential must name exact current character, floor and method, never a general social claim
+  ---
+  duration_ms: 18.5909
+  type: 'test'
+  ...
+# Subtest: successful actual owner deception is separate from a credential and saved ancestry stays readable after scene changes
+ok 4 - successful actual owner deception is separate from a credential and saved ancestry stays readable after scene changes
+  ---
+  duration_ms: 24.6502
+  type: 'test'
+  ...
+# Subtest: failed or substituted deception and nonlocal public floor cannot create native permission
+ok 5 - failed or substituted deception and nonlocal public floor cannot create native permission
+  ---
+  duration_ms: 17.2788
+  type: 'test'
+  ...
+# Subtest: current owner/principal/layout changes invalidate execution while immutable original native receipt remains
+ok 6 - current owner/principal/layout changes invalidate execution while immutable original native receipt remains
+  ---
+  duration_ms: 26.0608
+  type: 'test'
+  ...
+# Subtest: receipt failure rolls back native source and mutation without creating admission
+ok 7 - receipt failure rolls back native source and mutation without creating admission
+  ---
+  duration_ms: 24.3911
+  type: 'test'
+  ...
+# Subtest: corrupted native ancestry and another private audience cannot reuse a saved admission
+ok 8 - corrupted native ancestry and another private audience cannot reuse a saved admission
+  ---
+  duration_ms: 30.5217
+  type: 'test'
+  ...
+1..8
+# tests 8
+# suites 0
+# pass 8
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 266.7639
