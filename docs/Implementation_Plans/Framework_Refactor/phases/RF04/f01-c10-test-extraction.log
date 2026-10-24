@@ -1,0 +1,82 @@
+TAP version 13
+# Subtest: configured readiness and operation catalog are read-only; pause and policy expiry remove readiness
+ok 1 - configured readiness and operation catalog are read-only; pause and policy expiry remove readiness
+  ---
+  duration_ms: 181.7509
+  type: 'test'
+  ...
+# Subtest: live native grant binds exact source, payload, operation and target; JSON clone is no capability
+ok 2 - live native grant binds exact source, payload, operation and target; JSON clone is no capability
+  ---
+  duration_ms: 170.4652
+  type: 'test'
+  ...
+# Subtest: unavailable source, expired policy and denied operation cannot mint a grant
+ok 3 - unavailable source, expired policy and denied operation cannot mint a grant
+  ---
+  duration_ms: 172.544
+  type: 'test'
+  ...
+# Subtest: unknown actor evidence is not rescued by model authority labels
+ok 4 - unknown actor evidence is not rescued by model authority labels
+  ---
+  duration_ms: 178.452
+  type: 'test'
+  ...
+# Subtest: source, policy and Director changes invalidate already minted grant without state mutation
+ok 5 - source, policy and Director changes invalidate already minted grant without state mutation
+  ---
+  duration_ms: 184.1472
+  type: 'test'
+  ...
+# Subtest: private grant requires explicit permission and revalidates current owner-principal revision
+ok 6 - private grant requires explicit permission and revalidates current owner-principal revision
+  ---
+  duration_ms: 177.8384
+  type: 'test'
+  ...
+# Subtest: native service subscribe grant requires independently established bounded service evidence
+ok 7 - native service subscribe grant requires independently established bounded service evidence
+  ---
+  duration_ms: 169.4797
+  type: 'test'
+  ...
+# Subtest: historical accepted receipt remains readable after current policy expiry and database reopen
+ok 8 - historical accepted receipt remains readable after current policy expiry and database reopen
+  ---
+  duration_ms: 207.7199
+  type: 'test'
+  ...
+# Subtest: tampered receipt ancestry and duplicate system audit are rejected; older reader route preserved
+ok 9 - tampered receipt ancestry and duplicate system audit are rejected; older reader route preserved
+  ---
+  duration_ms: 188.4525
+  type: 'test'
+  ...
+# Subtest: saved strategy requires exact native receipt, blueprint and current private-owner evidence
+ok 10 - saved strategy requires exact native receipt, blueprint and current private-owner evidence
+  ---
+  duration_ms: 217.5092
+  type: 'test'
+  ...
+# Subtest: execution frame authorizes only exact ready step and restores its previous frame after error or async result
+ok 11 - execution frame authorizes only exact ready step and restores its previous frame after error or async result
+  ---
+  duration_ms: 193.6156
+  type: 'test'
+  ...
+# Subtest: source provider exposes same readiness/catalog and cannot treat independent service metadata as a live grant
+ok 12 - source provider exposes same readiness/catalog and cannot treat independent service metadata as a live grant
+  ---
+  duration_ms: 181.3595
+  type: 'test'
+  ...
+1..12
+# tests 12
+# suites 0
+# pass 12
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2715.2625

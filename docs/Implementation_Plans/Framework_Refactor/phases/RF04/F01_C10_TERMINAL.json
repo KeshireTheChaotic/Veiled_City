@@ -1,0 +1,49 @@
+{
+  "test_exit": 0,
+  "hashes": {
+    "bot/src/native-world-operations.js": "da5d79bcf66638661dd559e59f4c41713539486c1def0eea29010954a3de6931",
+    "bot/src/frameworks/world/public.js": "950c793a214b055bc32aaa397410911181b898867912279eb2ecec7e1de2befc",
+    "bot/src/frameworks/world/operation-authority.js": "ea209e75b0847c11a74c61790b795104d8987eb4c7da8c2b59f8d91e6533344b",
+    "bot/tests/ai-gm-2026-10/rf04-f01-c10.test.mjs": "ba145a03b4750286998c86d9c670a2b7c3ebe7a71d5fb4553a8e721591493e9f"
+  },
+  "start": "2026-10-24T17:21:09.4031267-05:00",
+  "syntax": [
+    {
+      "path": "bot/src/native-world-operations.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/frameworks/world/operation-authority.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/frameworks/world/public.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf04-f01-c10.test.mjs",
+      "exit": 0
+    }
+  ],
+  "base_sha": "251de34a7e9511fcdbd3245e6f3fa2a98435cd5f",
+  "run_id": "RF04_F01_C10_KERNEL_ADOPTION",
+  "end": "2026-10-24T17:21:13.0696973-05:00",
+  "architecture_exit": 0,
+  "rerun_reason": "Actual source hash dependency changed from Narrative wrapper to identical kernel implementation after initial extraction pass; source and tests frozen again.",
+  "tests": 12,
+  "unique": 12,
+  "executions": 24,
+  "passed_latest": 12,
+  "failed": 0,
+  "duration_ms": 2654.2084,
+  "provider_calls": 0,
+  "provider_tokens": 0,
+  "provider_cost_usd": 0,
+  "codex_usage": "UNMEASURED",
+  "release": "NOT AUTHORIZED",
+  "phase_status": "INCOMPLETE",
+  "cumulative_fresh_tests": 95,
+  "cumulative_executions": 107,
+  "cumulative_test_files": 10,
+  "cumulative_syntax": 46
+}

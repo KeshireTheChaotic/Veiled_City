@@ -1,0 +1,21 @@
+{
+  "source_body_sha256": "3ceefa6c558ed0dcf5979d27f9e621114c05e803c2cb452c7eba312e6f081ef6",
+  "extraction": "all declaration bodies unchanged, export modifiers removed inside fixed factory; single original-path provider instance",
+  "exports": [
+    "nativeWorldCoordinatorReady",
+    "nativeWorldOperationCatalog",
+    "prepareNativeWorldOperation",
+    "nativeWorldOperationAllows",
+    "nativeWorldOperationOrigin",
+    "inspectNativeWorldOperationReceipt",
+    "nativeWorldStrategyAllowed",
+    "nativeWorldStrategyScope",
+    "withNativeStrategyExecution",
+    "nativeWorldStrategyStepAllowed"
+  ],
+  "hash_adoption": {
+    "original": "sceneFictionHash(value) => jsonHash(value)",
+    "current": "same imported kernel jsonHash(value)",
+    "reason": "Eliminate World-to-Narrative helper dependency without hash-byte/serialization/identity change."
+  }
+}

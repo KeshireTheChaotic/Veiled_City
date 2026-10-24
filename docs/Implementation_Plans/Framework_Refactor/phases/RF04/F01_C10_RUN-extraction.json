@@ -1,0 +1,32 @@
+{
+  "end": "2026-10-24T17:20:05.2545649-05:00",
+  "test_exit": 0,
+  "syntax": [
+    {
+      "path": "bot/src/native-world-operations.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/frameworks/world/operation-authority.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/frameworks/world/public.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf04-f01-c10.test.mjs",
+      "exit": 0
+    }
+  ],
+  "architecture_exit": 0,
+  "base_sha": "251de34a7e9511fcdbd3245e6f3fa2a98435cd5f",
+  "hashes": {
+    "bot/tests/ai-gm-2026-10/rf04-f01-c10.test.mjs": "95f218147f8edc6ed5c81790b20cb45b0f836b366b74ad7b59cd341d6fbbbfc1",
+    "bot/src/frameworks/world/public.js": "950c793a214b055bc32aaa397410911181b898867912279eb2ecec7e1de2befc",
+    "bot/src/native-world-operations.js": "156f5e80a1859a756f804135cfcbf37d2f6bc28b361d072f4ee66cca72e45f65",
+    "bot/src/frameworks/world/operation-authority.js": "736f2551027c311053ed9396e5a186c89c86a92478d89f8c579c4fee0aa9e186"
+  },
+  "start": "2026-10-24T17:20:01.5283657-05:00",
+  "run_id": "RF04_F01_C10"
+}

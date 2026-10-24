@@ -19,3 +19,5 @@ export {requireWorldLocation} from './city-source.js';
 export {queueCivicChange,connectCity,recalculateInfrastructure,changeCityService,applyNpcServiceOutcome} from './infrastructure.js';
 
 export {createWorldConsequences} from './consequences.js';
+
+export {createWorldOperationAuthority} from './operation-authority.js';
