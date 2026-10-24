@@ -75,3 +75,5 @@ export {createEvidenceAnalysisRules} from './evidence-analysis-rules.js';
 export {createGmRulingContract} from './gm-ruling-contract.js';
 export {createEncounterActivationRules} from './encounter-activation-rules.js';
 export {createRollSharingRules} from './roll-sharing-rules.js';
+export {createRollDeclarationReviewRules} from './roll-declaration-review-rules.js';
+export {createTypedRollOutcomeRules} from './typed-roll-outcome-rules.js';

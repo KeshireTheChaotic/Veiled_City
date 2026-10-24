@@ -1,0 +1,70 @@
+TAP version 13
+# Subtest: actual native saved-roll proof finalizes a private outcome and real intent dependency without promoting the public declaration
+ok 1 - actual native saved-roll proof finalizes a private outcome and real intent dependency without promoting the public declaration
+  ---
+  duration_ms: 65.5109
+  type: 'test'
+  ...
+# Subtest: missing Difficulty keeps saved dice neutral; exact human review resolves a new receipt without changing the original roll
+ok 2 - missing Difficulty keeps saved dice neutral; exact human review resolves a new receipt without changing the original roll
+  ---
+  duration_ms: 73.2386
+  type: 'test'
+  ...
+# Subtest: human review cannot change saved traits or options while supplying missing Difficulty
+ok 3 - human review cannot change saved traits or options while supplying missing Difficulty
+  ---
+  duration_ms: 64.2067
+  type: 'test'
+  ...
+# Subtest: forged saved result mismatch fails actual native proof before typed outcome receipt creation
+ok 4 - forged saved result mismatch fails actual native proof before typed outcome receipt creation
+  ---
+  duration_ms: 66.4978
+  type: 'test'
+  ...
+# Subtest: native finalization failure rolls action, receipt, adjudication and dependency back while retaining earlier saved dice
+ok 5 - native finalization failure rolls action, receipt, adjudication and dependency back while retaining earlier saved dice
+  ---
+  duration_ms: 56.0478
+  type: 'test'
+  ...
+# Subtest: Critical reaction success with no Difficulty does not create action feature windows or environmental traces
+ok 6 - Critical reaction success with no Difficulty does not create action feature windows or environmental traces
+  ---
+  duration_ms: 63.0226
+  type: 'test'
+  ...
+# Subtest: human declaration review forwards only the captured exact owner authorization to native contribution
+ok 7 - human declaration review forwards only the captured exact owner authorization to native contribution
+  ---
+  duration_ms: 58.5387
+  type: 'test'
+  ...
+# Subtest: policy-model reviewer or foreign private scope cannot authorize a captured owner roll declaration
+ok 8 - policy-model reviewer or foreign private scope cannot authorize a captured owner roll declaration
+  ---
+  duration_ms: 52.2382
+  type: 'test'
+  ...
+# Subtest: a persisted private outcome receipt cannot be silently promoted on replay
+ok 9 - a persisted private outcome receipt cannot be silently promoted on replay
+  ---
+  duration_ms: 69.1165
+  type: 'test'
+  ...
+# Subtest: actual native declaration and typed outcome providers cold-import their original APIs
+ok 10 - actual native declaration and typed outcome providers cold-import their original APIs
+  ---
+  duration_ms: 362.7146
+  type: 'test'
+  ...
+1..10
+# tests 10
+# suites 0
+# pass 10
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1009.336

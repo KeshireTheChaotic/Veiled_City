@@ -1,0 +1,41 @@
+{
+  "base_sha": "9a9aeb6f1c31ceec80af8893890a19559a51831a",
+  "unique_tests": 10,
+  "executions": 10,
+  "pass": 10,
+  "fail": 0,
+  "exit": 0,
+  "duration_ms": 1009.336,
+  "syntax_pass": 6,
+  "body_equivalence": true,
+  "body_hashes": {
+    "roll-declaration-review": "43149e7ac17107ff79772887ded5647895c2f72474698b181effb9dd867b9eb4",
+    "typed-roll-outcomes": "41f49d20ef25cfa696a2f4ede4da87ae229d457fd4152b02a01592452061bb38"
+  },
+  "hashes": {
+    "bot/src/roll-declaration-review.js": "210b37017ab2a79a4e955709298a467e114d18fbdc7dc3498c3806d33eba30ab",
+    "bot/src/typed-roll-outcomes.js": "86a753a941764bdf93cbf5a6466ab9f1ad58d06af1b49d606921781ffac714ad",
+    "bot/src/frameworks/daggerheart/roll-declaration-review-rules.js": "b29b1fc1f28e81aa2a801f82ae057adaef04ef9b769312f7d2c52219b2eccb06",
+    "bot/src/frameworks/daggerheart/typed-roll-outcome-rules.js": "18ade4e6212bc96036336aa954c96ea16043ad22a8c824358976cd412b20cab4",
+    "bot/src/frameworks/daggerheart/public.js": "abb310aeaa3fbdfc0197e6a875f88fa42a3db8c40d6060891dcb02a25c4f289a",
+    "bot/tests/ai-gm-2026-10/rf03-f01-c26.test.mjs": "e2685b6fced0d2af78d72d2de777fe9d57b5e242921370a1de782ad6d94e99b4"
+  },
+  "gate": {
+    "sourceModules": 457,
+    "unowned": 0,
+    "importOccurrences": 2468,
+    "internalImportOccurrences": 2293,
+    "cycleComponents": 1,
+    "largestCycle": 182,
+    "rawViolationOccurrences": 2494,
+    "acceptedLegacyOccurrences": 2494,
+    "activeViolationGroups": 0,
+    "transitionErrors": 0,
+    "pass": true
+  },
+  "limitations": "Actual native Duality saved dice/proof/new finalizer and actual intent transition run together with SQLite; current owner/source/contribution/plan-drain/feature-window/trace and breakdown/amendment services explicitly mocked. No complete collaboration/request/production/live qualification.",
+  "provider_calls": 0,
+  "provider_cost_usd": 0,
+  "codex_usage": "UNMEASURED",
+  "release": "NOT AUTHORIZED"
+}

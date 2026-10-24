@@ -1,0 +1,60 @@
+{
+  "ended": "2026-10-24T10:28:44.5836568Z",
+  "syntax": [
+    {
+      "path": "bot/src/roll-declaration-review.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/typed-roll-outcomes.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/roll-declaration-review-rules.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/typed-roll-outcome-rules.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/public.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf03-f01-c26.test.mjs",
+      "exit": 0
+    }
+  ],
+  "frozen_hashes": [
+    {
+      "path": "bot/src/roll-declaration-review.js",
+      "sha256": "210B37017AB2A79A4E955709298A467E114D18FBDC7DC3498C3806D33EBA30AB"
+    },
+    {
+      "path": "bot/src/typed-roll-outcomes.js",
+      "sha256": "86A753A941764BDF93CBF5A6466AB9F1AD58D06AF1B49D606921781FFAC714AD"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/roll-declaration-review-rules.js",
+      "sha256": "B29B1FC1F28E81AA2A801F82AE057ADAEF04EF9B769312F7D2C52219B2ECCB06"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/typed-roll-outcome-rules.js",
+      "sha256": "18ADE4E6212BC96036336AA954C96EA16043AD22A8C824358976CD412B20CAB4"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/public.js",
+      "sha256": "ABB310AEAA3FBDFC0197E6A875F88FA42A3DB8C40D6060891DCB02A25C4F289A"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf03-f01-c26.test.mjs",
+      "sha256": "E2685B6FCED0D2AF78D72D2DE777FE9D57B5E242921370A1DE782AD6D94E99B4"
+    }
+  ],
+  "architecture_exit": 0,
+  "run_id": "RF03-F01-C26",
+  "base_sha": "9a9aeb6f1c31ceec80af8893890a19559a51831a",
+  "test_exit": 0,
+  "started": "2026-10-24T10:28:42.4951294Z"
+}
