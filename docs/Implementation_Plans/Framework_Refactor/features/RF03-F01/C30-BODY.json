@@ -1,0 +1,15 @@
+{
+  "base_sha": "a78c7754e3c7667cd2d8ac80f55792dd9a55e9af",
+  "source": "bot/src/encounter.js",
+  "target": "bot/src/frameworks/daggerheart/encounter-grounding-rules.js",
+  "methods": [
+    "encounterActors",
+    "manageWorldEncounter",
+    "worldCombatantDrafts",
+    "bindWorldCombatants",
+    "validateWorldEncounterActivation"
+  ],
+  "body_equivalent": true,
+  "body_sha256": "49a7c71d32ae17ded20df8ef42044b7d9551f82cc43d3eee68da7bc4971ef88f",
+  "world_memory_and_creative_producers_retained": true
+}

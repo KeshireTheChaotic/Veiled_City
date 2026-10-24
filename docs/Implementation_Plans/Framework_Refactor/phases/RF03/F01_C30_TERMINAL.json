@@ -1,0 +1,71 @@
+{
+  "end": "2026-10-24T16:10:23.2704285-05:00",
+  "test_exit": 0,
+  "run_id": "F01_C30",
+  "architecture_exit": 0,
+  "syntax": [
+    {
+      "path": "bot/src/encounter.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/encounter-grounding-rules.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/public.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf03-f01-c30.test.mjs",
+      "exit": 0
+    }
+  ],
+  "base_sha": "a78c7754e3c7667cd2d8ac80f55792dd9a55e9af",
+  "hashes": {
+    "bot/src/frameworks/daggerheart/public.js": "740156b0d063b6b7699a47d2e59f34c95ccb1819f4033ed4800cd19a92102a44",
+    "bot/tests/ai-gm-2026-10/rf03-f01-c30.test.mjs": "20cb4593054ba9aff1bd0c9493a5bc8a96c41f233faba5f3ea9327095a03d68e",
+    "bot/src/frameworks/daggerheart/encounter-grounding-rules.js": "e6e6c1eeb17550714b5831236a73998be12da04f989d6bcc2e9b8be1c2cac6d1",
+    "bot/src/encounter.js": "ebfb1d4708fdba91dcc474b18edeca91ce217f9719f942abf23c2278c652c9b8"
+  },
+  "start": "2026-10-24T16:10:21.3081068-05:00",
+  "unique_tests": 10,
+  "executions": 10,
+  "pass": 10,
+  "fail": 0,
+  "tap_duration_ms": 981.7293,
+  "syntax_pass": 4,
+  "body_equivalence": {
+    "base_sha": "a78c7754e3c7667cd2d8ac80f55792dd9a55e9af",
+    "source": "bot/src/encounter.js",
+    "target": "bot/src/frameworks/daggerheart/encounter-grounding-rules.js",
+    "methods": [
+      "encounterActors",
+      "manageWorldEncounter",
+      "worldCombatantDrafts",
+      "bindWorldCombatants",
+      "validateWorldEncounterActivation"
+    ],
+    "body_equivalent": true,
+    "body_sha256": "49a7c71d32ae17ded20df8ef42044b7d9551f82cc43d3eee68da7bc4971ef88f",
+    "world_memory_and_creative_producers_retained": true
+  },
+  "gate": {
+    "sourceModules": 483,
+    "unowned": 0,
+    "importOccurrences": 2523,
+    "internalImportOccurrences": 2347,
+    "cycleComponents": 1,
+    "largestCycle": 182,
+    "rawViolationOccurrences": 2485,
+    "acceptedLegacyOccurrences": 2485,
+    "activeViolationGroups": 0,
+    "transitionErrors": 0,
+    "pass": true
+  },
+  "limitations": "Actual new native review/activation policy, existing native roster/math and real disposable SQLite savepoint transactions. Current source authentication, world presence, actor source and native activation peer are explicit mocks. No upstream world producer, actual production database, live services or outbox qualification.",
+  "provider_calls": 0,
+  "provider_cost_usd": 0,
+  "codex_usage": "UNMEASURED",
+  "release": "NOT AUTHORIZED"
+}

@@ -1,0 +1,70 @@
+TAP version 13
+# Subtest: human review creates only sourced actors with actual native budget and preserves alternative objective
+ok 1 - human review creates only sourced actors with actual native budget and preserves alternative objective
+  ---
+  duration_ms: 55.0168
+  type: 'test'
+  ...
+# Subtest: saved accepted review replays across database restart without creating a second encounter
+ok 2 - saved accepted review replays across database restart without creating a second encounter
+  ---
+  duration_ms: 54.2382
+  type: 'test'
+  ...
+# Subtest: review source revocation and changed actor binding fail before committing encounter
+ok 3 - review source revocation and changed actor binding fail before committing encounter
+  ---
+  duration_ms: 55.3591
+  type: 'test'
+  ...
+# Subtest: remote actor or absent second PC cannot be manufactured by encounter budgeting
+ok 4 - remote actor or absent second PC cannot be manufactured by encounter budgeting
+  ---
+  duration_ms: 61.7802
+  type: 'test'
+  ...
+# Subtest: wrong tier and group-body templates remain held without changing canonical actors
+ok 5 - wrong tier and group-body templates remain held without changing canonical actors
+  ---
+  duration_ms: 88.1054
+  type: 'test'
+  ...
+# Subtest: audit failure rolls encounter, binding and reviewed status back in one native transaction
+ok 6 - audit failure rolls encounter, binding and reviewed status back in one native transaction
+  ---
+  duration_ms: 46.682
+  type: 'test'
+  ...
+# Subtest: activation revalidates saved roster, composition, scene and native activation proof
+ok 7 - activation revalidates saved roster, composition, scene and native activation proof
+  ---
+  duration_ms: 65.0527
+  type: 'test'
+  ...
+# Subtest: single-body drafts and exact world actor tags bind actual combatants without duplicates
+ok 8 - single-body drafts and exact world actor tags bind actual combatants without duplicates
+  ---
+  duration_ms: 56.2619
+  type: 'test'
+  ...
+# Subtest: declining a proposal neither creates combat nor spends resources and persists human review
+ok 9 - declining a proposal neither creates combat nor spends resources and persists human review
+  ---
+  duration_ms: 45.7471
+  type: 'test'
+  ...
+# Subtest: actual provider reaches native guards without initializing production services
+ok 10 - actual provider reaches native guards without initializing production services
+  ---
+  duration_ms: 0.2545
+  type: 'test'
+  ...
+1..10
+# tests 10
+# suites 0
+# pass 10
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 981.7293
