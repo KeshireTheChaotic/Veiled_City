@@ -1,16 +1,16 @@
 {
-  "head": "b7994ce4b2739cfbfb2ace3671bd9923c0b82d33",
+  "head": "cc0cbe990b537942809063cb9ee21325baaab805",
   "phase_status": "INCOMPLETE",
   "feature_statuses": {
-    "F01": "INCOMPLETE: added incoming/Volley, group reactions/conditions/spotlight, Professional Entry, NPC alliance/defense, Memory Leech and PC effects/healing; native GM ruling, ordinary follow-through, encounter activation and remaining source policy still pending.",
+    "F01": "INCOMPLETE: native GM ruling/arbitration/action review, ordinary effect proof/application, evidence analysis, encounter activation, schema, roll sharing/declaration/finalization and mechanical projections now extracted and scoped-qualified. Encounter/source/publication integration and residual producer ownership still require reconciliation.",
     "F02": "SCOPED_NATIVE_DECOMPOSITION_COMPLETE / LOCAL INTEGRATION HOLDS: inventoried native policy extracted; source bindings explicitly accountable to named future features; full phase combat paths still require F01/F03 peers.",
-    "F03": "INCOMPLETE: added exact damage-consent lifecycle, native PC attack terms/dice/receipts, sticky safety controls and immediate Fear gates. Round/brawl/Fear-move and remaining authority/orchestration decomposition pending.",
-    "F04": "INCOMPLETE: source/binding/audience, acoustic recovery/odds and upload countdown/action ancestry qualified. Other native handler rules and world producer integration pending; Closing Time Moves remains pre-existing unsupported readiness hold.",
+    "F03": "INCOMPLETE: native rounds, campaign scope, hazard reactions, terminal projections, multiplayer opportunities/locks and immediate Fear policies now separated and scoped-qualified. Player-authored conflict clauses/owner-consent and actual world/NPC/native-peer qualification remain.",
+    "F04": "INCOMPLETE: added exact optional owner intrusion trace Hope rules and VIP admission. Remaining environment handlers and world producer/native integration pending; Closing Time Moves unsupported internal hold remains.",
     "F05": "PARTIAL: adopted intent/native, character advancement and command display pairs; complete receipt-backed native/narrative and world pair not adopted",
-    "F06": "PARTIAL: 257 unique passing cases across30 fresh files;273case executions plus1initial test-file parse failure. Full affected native workflow and pair integration exit not satisfied."
+    "F06": "PARTIAL: 413 unique passing cases across50fresh files;446case executions. Actual provider cold imports qualified for latest delta, complete native workflow and pair exit still not satisfied."
   },
-  "fresh_unique_passed": 257,
-  "case_executions": 273,
+  "fresh_unique_passed": 413,
+  "case_executions": 446,
   "evidence": [
     {
       "id": "F01_C06",
@@ -474,6 +474,266 @@
         "duration_ms": 1166.7847
       },
       "limitations": "See feature ledger: actual native rules with explicitly mocked upstream/current owner/source/native peer capabilities; no production or live qualification."
+    },
+    {
+      "id": "F01_C18",
+      "file": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F01_C18_TERMINAL.json",
+      "sha256": "99503d9490c06fd1add84a6b05919efd4dca7e1f85c2a401fd8e55008b57d3ab",
+      "unique_passed": 8,
+      "case_executions": 8,
+      "terminal": {
+        "initial_test_exit": 0,
+        "final_test_exit": 0,
+        "duration_ms": 800.1813
+      },
+      "limitations": "Actual new ruling rules, native rule-reference resolver and current shared proposal validator. Current owner/action/scene and lower native adjudication callbacks mocked; shared schema and lower source orchestration remain RF03 work. No live narrative/production qualification."
+    },
+    {
+      "id": "F01_C19",
+      "file": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F01_C19_TERMINAL.json",
+      "sha256": "e917b8038abccb2fe420ab34f0ff41d5f7d96b454a765cf9c8da245221d1bbc4",
+      "unique_passed": 7,
+      "case_executions": 7,
+      "terminal": {
+        "initial_test_exit": 0,
+        "final_test_exit": 0,
+        "duration_ms": 701.101
+      },
+      "limitations": "Actual native arbitration and ordinary GM ruling, shared proposal validator and native references run together; owner/source/window and request preparation remain explicit mocks. No full production or live source/service qualification."
+    },
+    {
+      "id": "F01_C20",
+      "file": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F01_C20_TERMINAL.json",
+      "sha256": "e15362a71c25e1991079c68de14a2db6bfc62c5d8ec787ff2ed54484508b8a9f",
+      "unique_passed": 8,
+      "case_executions": 8,
+      "terminal": {
+        "initial_test_exit": 0,
+        "final_test_exit": 0,
+        "duration_ms": 672.9232
+      },
+      "limitations": "Actual native review policy with nested disposable SQLite; current owner/source/terminal marker/lower native revalidation and ordinary effect adapters mocked. No full production or live recovery qualification."
+    },
+    {
+      "id": "F01_C21",
+      "file": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F01_C21_TERMINAL.json",
+      "sha256": "b0f041272c5605bf0eca30a775071090d4f8a0dce5fbf4243d0a8255deb842e7",
+      "unique_passed": 10,
+      "case_executions": 10,
+      "terminal": {
+        "initial_test_exit": 0,
+        "final_test_exit": 0,
+        "duration_ms": 1086.3655
+      },
+      "limitations": "Actual native GM ruling, arbitration, new ordinary proof and effect engines run together in disposable SQLite. Source/owner authentication and world observation/dispatch native feature effect branches explicitly mocked. Full world producer, non-exercised feature branches and publication not newly certified."
+    },
+    {
+      "id": "F01_C22",
+      "file": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F01_C22_TERMINAL.json",
+      "sha256": "6db5e1beae1a6d2a52590176611ccced57a233243af0baa31d8ed8fb05a323e7",
+      "unique_passed": 8,
+      "case_executions": 8,
+      "terminal": {
+        "initial_test_exit": 0,
+        "final_test_exit": 0,
+        "duration_ms": 785.1008
+      },
+      "limitations": "Actual native document/custody/claim proof and opaque application principal authorization with disposable SQLite. Upstream ordinary owner action/result proof and production custody/source services mocked. No world truth, transfer, disclosure or live quality qualified."
+    },
+    {
+      "id": "F01_C23",
+      "file": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F01_C23_TERMINAL.json",
+      "sha256": "a9866ab059b0f23149f77322b0e4902a4bbe62bd48ddcd2ba85ff953df41d4e7",
+      "unique_passed": 7,
+      "case_executions": 7,
+      "terminal": {
+        "initial_test_exit": 0,
+        "final_test_exit": 0,
+        "duration_ms": 438.7603
+      },
+      "limitations": "Native contract/provider and actual typed-intent schema consumer integration exercised. Contract only validates structure; native semantic effect/rule authority remains separate. Existing intent-to-shared-provider import explicitly remains legacy integration debt, not isolation."
+    },
+    {
+      "id": "F01_C24",
+      "file": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F01_C24_TERMINAL.json",
+      "sha256": "66c37d5f472c5bc99d9cfb9731bdb1ee1a77ae2b75cc3cc595a40b37128a3740",
+      "unique_passed": 8,
+      "case_executions": 8,
+      "terminal": {
+        "initial_test_exit": 0,
+        "final_test_exit": 0,
+        "duration_ms": 861.1289
+      },
+      "limitations": "Actual native delegation/receipt policy and opaque application principal in SQLite; world encounter producer and current owner/placement/control source services mocked. No new NPC/PC facts, gameplay activation policy or live world/service qualification."
+    },
+    {
+      "id": "F01_C25",
+      "file": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F01_C25_TERMINAL.json",
+      "sha256": "91ddc7075a1928fe5c4b84fe7ba89e9f1a5a9c7f4f5fff077aab995bdb561587",
+      "unique_passed": 7,
+      "case_executions": 7,
+      "terminal": {
+        "initial_test_exit": 0,
+        "final_test_exit": 0,
+        "duration_ms": 664.7974
+      },
+      "limitations": "Native owner-preview/source/material and async publication handoff exercised with SQLite and mocked publication service. This is not actual outbox concurrency, uncertain-send, durable acknowledgment or Discord exactly-once qualification."
+    },
+    {
+      "id": "F01_C26",
+      "file": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F01_C26_TERMINAL.json",
+      "sha256": "e42f9a605398f0800da4c180dd7930015696118069ce1e70d4d25d9430fbac57",
+      "unique_passed": 10,
+      "case_executions": 10,
+      "terminal": {
+        "initial_test_exit": 0,
+        "final_test_exit": 0,
+        "duration_ms": 1009.336
+      },
+      "limitations": "Actual native Duality saved dice/proof/new finalizer and actual intent transition run together with SQLite; current owner/source/contribution/plan-drain/feature-window/trace and breakdown/amendment services explicitly mocked. No complete collaboration/request/production/live qualification."
+    },
+    {
+      "id": "F01_C27",
+      "file": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F01_C27_TERMINAL.json",
+      "sha256": "e520bd85350b0fbe8ec5ec54216611af10d5fd0a0629aa4d92ec6476813c824c",
+      "unique_passed": 4,
+      "case_executions": 20,
+      "terminal": {
+        "initial_test_exit": 0,
+        "final_test_exit": 0,
+        "duration_ms": 1069.4598
+      },
+      "limitations": "Actual neutral capability and associated native document/activation authorities exercised after physical import relocation. Unrelated provider/world/native policies unchanged, no broad suite or production/live qualification."
+    },
+    {
+      "id": "F01_C28",
+      "file": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F01_C28_TERMINAL.json",
+      "sha256": "d073890910e71470ef37e874fc159c6a9d9d0bd6ec7039387dadb589ba4cf428",
+      "unique_passed": 10,
+      "case_executions": 10,
+      "terminal": {
+        "initial_test_exit": 0,
+        "final_test_exit": 0,
+        "duration_ms": 436.9183
+      },
+      "limitations": "Actual audience authority, native exact selection, mechanical boundary and SQLite run together; accepted source/current audience/incoming receipt/Fear/GM decision/outcome producers are explicit mocks. No full writer, native attack runner or publication qualification."
+    },
+    {
+      "id": "F03_C23",
+      "file": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F03_C23_TERMINAL.json",
+      "sha256": "896b79ee761decc5d7f6a9ac9496008ae7f2504df9a8b4722c7fbd356bb7d94e",
+      "unique_passed": 8,
+      "case_executions": 8,
+      "terminal": {
+        "initial_test_exit": 0,
+        "final_test_exit": 0,
+        "duration_ms": 839.3224
+      },
+      "limitations": "Actual new native round factory plus native Fear gate and Duality dice run together. Owner agreement/source authentication/window coordination/terminal settlement/notice/continuation implementations remain mocks. No full upstream or publication qualification."
+    },
+    {
+      "id": "F03_C24",
+      "file": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F03_C24_TERMINAL.json",
+      "sha256": "dd1400b0ab1b1b59a1aea026c7ccdfbe6c16dea67243ac645c2dd9ac95f4dd31",
+      "unique_passed": 7,
+      "case_executions": 7,
+      "terminal": {
+        "initial_test_exit": 0,
+        "final_test_exit": 0,
+        "duration_ms": 782.7631
+      },
+      "limitations": "Actual native campaign scope and safety policy run together. Current/historical owner/action/target/presence authentication and event storage boundaries explicitly mocked; no full production or live publication proof."
+    },
+    {
+      "id": "F03_C25",
+      "file": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F03_C25_TERMINAL.json",
+      "sha256": "d82fc52edf20d6eec24911e8fa833fa070d812f8d8f76fd24f31d0460588244d",
+      "unique_passed": 7,
+      "case_executions": 7,
+      "terminal": {
+        "initial_test_exit": 0,
+        "final_test_exit": 0,
+        "duration_ms": 608.2566
+      },
+      "limitations": "Actual new reaction adapter, native Duality arithmetic in explicit request-executor mock and nested SQLite. Upstream attack/owner/hazard authentication and actual request/collaboration services remain independent qualification."
+    },
+    {
+      "id": "F03_C26",
+      "file": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F03_C26_TERMINAL.json",
+      "sha256": "c4f7327adac87d6c12552d7d3b48f97e8d237cf0d477014e6bfca81e9c097868",
+      "unique_passed": 7,
+      "case_executions": 7,
+      "terminal": {
+        "initial_test_exit": 0,
+        "final_test_exit": 0,
+        "duration_ms": 628.377
+      },
+      "limitations": "New terminal rules plus actual native Fear gate, attempt-key and actual production intent transition run in disposable SQLite. Fixture terminal outcome and native Fear effect authority are upstream mocks; no full publication or source provenance certification."
+    },
+    {
+      "id": "F03_C27",
+      "file": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F03_C27_TERMINAL.json",
+      "sha256": "2701d7cee1fe5e39e220494aca53e9e17c783bb7d8d41e8b1905a5f05d6069fd",
+      "unique_passed": 9,
+      "case_executions": 9,
+      "terminal": {
+        "initial_test_exit": 1,
+        "final_test_exit": 0,
+        "duration_ms": 447.5915
+      },
+      "limitations": "Actual complete native brawl factory and disposable SQLite. Current owner/contract/window/source/attack proof services explicit mocks. Version4 campaign grouping, withdrawal branch and positive simultaneous-sibling Fear exception are preserved but not newly qualified. No full PvP/world/publication integration."
+    },
+    {
+      "id": "F03_C28",
+      "file": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F03_C28_TERMINAL.json",
+      "sha256": "59fe35bbb6c4aee7729ee28862f1698860e80f893acdeff16e7a30a7e0807ae5",
+      "unique_passed": 11,
+      "case_executions": 12,
+      "terminal": {
+        "initial_test_exit": 1,
+        "final_test_exit": 0,
+        "duration_ms": 944.2748
+      },
+      "limitations": "Actual native selection/context/trigger/gate/effect/clock creation and advance/receipt/recovery logic plus disposable SQLite. Native saved attack verification, source indexing, owner, brawl ordering, world/NPC producers, encounter, incoming effects and continuation settlement are explicit mocks. Narrative paired rounds, NPC preparation/threat/incoming routes and existing real world producer are preserved but not newly qualified. One failed assertion compared an undefined optional property with persisted JSON; only failed assertion repaired/rerun."
+    },
+    {
+      "id": "F04_C07",
+      "file": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F04_C07_TERMINAL.json",
+      "sha256": "f4950719156d42776a43ba3b5d1d6878cc9203cafb7be8f5e11a2e7202b12592",
+      "unique_passed": 9,
+      "case_executions": 9,
+      "terminal": {
+        "initial_test_exit": 0,
+        "final_test_exit": 0,
+        "duration_ms": 830.8713
+      },
+      "limitations": "Actual full native trace factory with disposable SQLite and owner resource mutation. Catalog/errata/native action/roll proof/current source/scene/instance/ancestry/notice reservation services explicitly mocked. No full native roll finalizer, scene source producer, NPC knowledge or publication qualification."
+    },
+    {
+      "id": "F04_C08",
+      "file": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F04_C08_TERMINAL.json",
+      "sha256": "49f326d6fc9f65b1893e3de744393281a728b426796fbb55cf8c5170f6c29f4c",
+      "unique_passed": 8,
+      "case_executions": 8,
+      "terminal": {
+        "initial_test_exit": 0,
+        "final_test_exit": 0,
+        "duration_ms": 266.7639
+      },
+      "limitations": "Actual complete native admission rules and SQLite receipt/read-side SQL. Profile/feature/current owner/fact/deception/native outcome/ancestry producer capabilities explicitly mocked. Actual world credential/source producer and movement path not qualified; no movement occurs."
+    },
+    {
+      "id": "F06_C03",
+      "file": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F06_C03_TERMINAL.json",
+      "sha256": "235a11f9990b1d50a368ddacc3e15cd85c1049730da0f0808856ec064733edd7",
+      "unique_passed": 3,
+      "case_executions": 3,
+      "terminal": {
+        "initial_test_exit": 0,
+        "final_test_exit": 0,
+        "duration_ms": 4297.055
+      },
+      "limitations": "Actual complete current ESM graph cold imports and safe early provider guards only; no native full workflow, writer, world producer or publication qualification."
     }
   ],
   "sourceHashes": {
@@ -500,7 +760,7 @@
     "bot/src/frameworks/daggerheart/pc-death-rules.js": "d539828ef86c24ab4472cc19ebf70e6bb8d0a1135c5aa887960dc18aaa020dc6",
     "bot/src/frameworks/daggerheart/pre-roll-fear-recovery-rules.js": "ce3121acd9eb41212323304a81127ae7eb8815e70225858fc40331ad3e0a1293",
     "bot/src/frameworks/daggerheart/pre-roll-fear-rules.js": "27b4f79e5d4a2c60b1db07e98ba24215b4c04423292f5aaa1fc4ad02323a5d49",
-    "bot/src/frameworks/daggerheart/public.js": "8c2c4acb372c9f26f2507c26b6719f2ed0a135dc7d480796960817fc4cb46b18",
+    "bot/src/frameworks/daggerheart/public.js": "249224007cd78d39131e2a0aad486e93ca39aadeab50a9f044dc8770fcf0e12c",
     "bot/src/frameworks/daggerheart/pvp-damage-rules.js": "4e7dfbcd44de6a8dad7c99e87b4b4cdfe22103c45b2daa320fa0a64dd0fc7527",
     "bot/src/frameworks/daggerheart/roll-collaboration-rules.js": "fc34174a80e8c3fa9ef4863379ee870e2275a42c697991bba1e4573756054bba",
     "bot/src/frameworks/daggerheart/roll-modifier-rules.js": "4a750b7ec87c9d697459a5c33d694fdb30d531bd57d08c69bd7fc98e202f9b29",
@@ -610,29 +870,103 @@
     "bot/tests/ai-gm-2026-10/rf03-f04-c05.test.mjs": "834b0c6132be0f4e0b2d342c4a86d1b0aa5e8127b7e6130f869b4d26c195ae66",
     "bot/src/native-environment-countdown.js": "044eef43e75b4bd0d69ffda71a49d86b858b25c574df238284b9f3a60dbd4d3a",
     "bot/src/frameworks/daggerheart/environment-countdown-rules.js": "b9b04763c421a81f6ec65ff2909ee8850d2b005cba63eee1c108fa595351c865",
-    "bot/tests/ai-gm-2026-10/rf03-f04-c06.test.mjs": "15a35f06dd67a270ac5d211e49d9eaf849b83b042e964a6a08607fe3fd68d8bb"
+    "bot/tests/ai-gm-2026-10/rf03-f04-c06.test.mjs": "15a35f06dd67a270ac5d211e49d9eaf849b83b042e964a6a08607fe3fd68d8bb",
+    "bot/src/gm-action-ruling.js": "7fa21f2c4079b63fca21f5d2578bb49b96f72284546207200ac69e398815f1ba",
+    "bot/src/frameworks/daggerheart/gm-ruling-rules.js": "04c6ad85ce72dd0a6a5d7bf9c32f8429f64a962127e46593ce6bd1dbabc6d9fb",
+    "bot/tests/ai-gm-2026-10/rf03-f01-c18.test.mjs": "b265e31cdde8b2c32306252f801cc5b2bb0e3281945e35c9b37d2a791dd1026f",
+    "bot/src/rules-arbitration.js": "aa4d47ca9ca5c4940de78d1c5ad4154375934cf4a525bfe92eebf980b834e851",
+    "bot/src/frameworks/daggerheart/rules-arbitration-rules.js": "4b6b7840221fd697cff9b602280b005b45baef685ffa37bc4e497396b6eb6870",
+    "bot/tests/ai-gm-2026-10/rf03-f01-c19.test.mjs": "0df3fce72f9971240f209790854b00696cfa5e9f792b0455a0b1fd96bbefbdd0",
+    "bot/src/gm-action-review.js": "6c132544a8fc5bd88344198b49176d08e33fe17af2f3cfc3b3bf14bfb269bd6b",
+    "bot/src/frameworks/daggerheart/gm-action-review-rules.js": "ebb47bde52e44166663dad4d44db2bec2e9a62c6bcf55ca8b882fc16c42e8540",
+    "bot/tests/ai-gm-2026-10/rf03-f01-c20.test.mjs": "d0fc3e2a728d55312508685a98621180f56bdcf718d6ac7419b65e3925c3223f",
+    "bot/src/ordinary-effect-proof.js": "a5456b3072135b6443498aace5b8a6ff5a9ad57f6e3852ec7f0d3322b2b0e0cc",
+    "bot/src/ordinary-effects.js": "9e10028503c55049a573c2b81f51e5d52ab2b02c03ae25171a7077af65439803",
+    "bot/src/frameworks/daggerheart/ordinary-effect-proof-rules.js": "9aeb9ffa906b23fe0e472431ed6951703846ec846c0dffb2a99172435134add4",
+    "bot/src/frameworks/daggerheart/ordinary-effect-rules.js": "a0a696fa3225014f8df923c7f5d5e94f48fb81a0c6e903d0003ce5948643762b",
+    "bot/tests/ai-gm-2026-10/rf03-f01-c21.test.mjs": "12e3df55b6a33424c15d00e0e9a5f95caaa8e499f8a105ca36ee94109b84e8aa",
+    "bot/src/native-evidence-analysis.js": "c4358985d802a360e140836f24458c6eeb109eeac631dc3d9e9e2fd3522dbdf5",
+    "bot/src/frameworks/daggerheart/evidence-analysis-rules.js": "65f0b889b06372e741a30ef4aa69ea700300f69b0206408be4d1e46cc40daa10",
+    "bot/tests/ai-gm-2026-10/rf03-f01-c22.test.mjs": "81579138bfe0e957585aeae9f19a2dfc30f6fb85e5d17a1353048505ad940868",
+    "bot/src/gm-ruling-schema.js": "24e88a1717c03ce1f0106d52b3ec99d6d6c032c54169b0df9187ca7a08c968b1",
+    "bot/src/frameworks/daggerheart/gm-ruling-contract.js": "150c6874c7b22fb743164af8c692aff453c319539622c806c912bef70f030cab",
+    "bot/tests/ai-gm-2026-10/rf03-f01-c23.test.mjs": "99ab1672cc089aa993b3bb023aa7b8460fe7189d7f67bc4ee0330e5e012e98ed",
+    "bot/src/native-encounter-activation.js": "b87cd22498704fccecf09902ca21047785aa272aa367236958297cfebb00a970",
+    "bot/src/frameworks/daggerheart/encounter-activation-rules.js": "8f7e3312e98255324c3ae313e9e7d0e682fb4f3840eb089fdb9468863326d1b5",
+    "bot/tests/ai-gm-2026-10/rf03-f01-c24.test.mjs": "ed423484cda84c7e3a598b636326c246a8d005a2ac02a631bf6532b913275577",
+    "bot/src/roll-sharing.js": "73f8854e54aa4ee4815a5acafdbf878138aa53a90463fb1c77910edef962f91e",
+    "bot/src/frameworks/daggerheart/roll-sharing-rules.js": "48eca36a1cdc16298de4ced5e8ffc06cc96d690b985aa6eb383384eedba6b6ef",
+    "bot/tests/ai-gm-2026-10/rf03-f01-c25.test.mjs": "8eb31e6d24bbc5d4d7d6343e24ec47a6896360340465e4c1264df4960b7d0913",
+    "bot/src/roll-declaration-review.js": "210b37017ab2a79a4e955709298a467e114d18fbdc7dc3498c3806d33eba30ab",
+    "bot/src/typed-roll-outcomes.js": "86a753a941764bdf93cbf5a6466ab9f1ad58d06af1b49d606921781ffac714ad",
+    "bot/src/frameworks/daggerheart/roll-declaration-review-rules.js": "b29b1fc1f28e81aa2a801f82ae057adaef04ef9b769312f7d2c52219b2eccb06",
+    "bot/src/frameworks/daggerheart/typed-roll-outcome-rules.js": "18ade4e6212bc96036336aa954c96ea16043ad22a8c824358976cd412b20cab4",
+    "bot/tests/ai-gm-2026-10/rf03-f01-c26.test.mjs": "e2685b6fced0d2af78d72d2de777fe9d57b5e242921370a1de782ad6d94e99b4",
+    "bot/src/kernel/application-authority.js": "58554e42ec04ca5908ca7ac6e96225b1690a8025a273d4d0e836df4bd4054901",
+    "bot/src/ai-intents.js": "0b44facf864223dd4506759867ad827eece38f570ec9e76b8326bcb622cd7cf3",
+    "bot/src/long-projects.js": "63aca104d021c694cfc38bad0c6fabc83779cd0829c22cac948d3934233a544e",
+    "bot/src/narrative-director-source.js": "64fe7707e4a4fe8d0d5a436e2e3472b030bf320bea92315dedad6626a966cf50",
+    "bot/src/native-world-operations.js": "6b206856d020e72743acbfe38b1b49bf390dcbb9c6ef46b3ae5816a73c8b98aa",
+    "bot/src/world-simulation-receipts.js": "6ecd6b3e22980359d4f86f064b8ba87bb9ecb60c53af2ad7327399adccd26de1",
+    "bot/tests/ai-gm-2026-10/rf03-f01-c27.test.mjs": "23dabebd7b30f50296bf0a05352e32af695025c717b977ec381496326abd1e2e",
+    "bot/tests/ai-gm-2026-10/rf03-f01-c28.test.mjs": "714a961df1d87297b6eb4a691af2950e97b25c638f4c07f033c8991cfe0a397d",
+    "bot/src/mechanical-native-v9.js": "929ddd1d5797dff0933c47ec12ef35680d75e147e1bf533e95b495611abd7302",
+    "bot/src/frameworks/daggerheart/mechanical-projection-rules.js": "ba5be64ebcea1e67013110d8dc7c68f167dc8994ab0b256dd517ed0716c55114",
+    "bot/src/frameworks/daggerheart/gm-mechanical-proposal-rules.js": "6ad8aa3c0c48d545f77ba31438f111d890523c0c8692dd22d9f6d1ff31d805fa",
+    "bot/src/gm-mechanical-v9.js": "c8b23e61cb8ed35e31882c95626308374d32ac46a41bc7217a138765bfe0b2b8",
+    "bot/src/pvp-rounds.js": "9217aff982c53a86054100ef3945e8cd359477afe30645e1a6fbef126a2e1063",
+    "bot/src/frameworks/daggerheart/pvp-round-rules.js": "94a79d4785af6cfac51118e0f95ecf13290f534b8c7c514892d0b74beff7de16",
+    "bot/tests/ai-gm-2026-10/rf03-f03-c23.test.mjs": "0b466a76771ac03c8040883bdfce2a74dff2483336d92377d9fa0371024f0380",
+    "bot/src/pvp-campaign-execution.js": "a4276fa4b55a3bb7672f2a85ad93b2e854a4f15e85225077ac77bd450883b057",
+    "bot/src/frameworks/daggerheart/pvp-campaign-scope-rules.js": "b48274342339f0697e669c8714d76c4dda117fc7637e84dbc45f64f1f30aa5d8",
+    "bot/tests/ai-gm-2026-10/rf03-f03-c24.test.mjs": "b67fdd3a25c807c2da6e2636db2e377113f92a092c72ce84549bdb1c9634b341",
+    "bot/src/pvp-reactions.js": "266fba6ea363441a61847cbe893340bc0b358909de62ec79eaa77a93cc3499d3",
+    "bot/src/frameworks/daggerheart/pvp-reaction-rules.js": "986cbc8c09b8a5023efc4102f2d1779b86dadd3ef5122d543c147a24d3b6011d",
+    "bot/tests/ai-gm-2026-10/rf03-f03-c25.test.mjs": "09aeadaa5bffbb000c4b37e0a4a803e4b51f4c877b9ad1114b85a10ba4439fd4",
+    "bot/src/pvp-terminal.js": "70393fc7d65408b6e39e83642666ee9580925f6ce17118c82cfb60d6e45e4d2c",
+    "bot/src/frameworks/daggerheart/pvp-terminal-rules.js": "c335e36da46c025e3917248a53716bfaf15242ee693bfd3ec0534a3322e08ad0",
+    "bot/tests/ai-gm-2026-10/rf03-f03-c26.test.mjs": "0f3e4408ba44d93f8b840d6c9d115b5c6555a20f517e121c6018a2e270cd52b7",
+    "bot/tests/ai-gm-2026-10/rf03-f03-c27.test.mjs": "186d0f59630ed8cee48ae2b37afcab4319f48865db917505717fdb4e8a3ef408",
+    "bot/src/pvp-brawl.js": "7e5716ea63b1866d0c5c677d0703a2223d709886f1c1edc366a7ca1955e551f4",
+    "bot/src/frameworks/daggerheart/pvp-brawl-rules.js": "0ad5071693a734ed6b501a0a8f33708697bb0125a77dc8b6f5c5ed6f14465daa",
+    "bot/tests/ai-gm-2026-10/rf03-f03-c28.test.mjs": "fdfee334aca391e751fbfaaf8ee6c6652b91c6e7d4647a9ffc692a0c85fcc152",
+    "bot/src/frameworks/daggerheart/pvp-fear-move-rules.js": "ebd00ddc3d00271e58e65ee3452cf01d1866142b1a8937327525697896142ddb",
+    "bot/src/pvp-fear-moves.js": "c55488d155729cda7e346bedd8c2143729c9217dff93e2103cf5620403984f60",
+    "bot/src/native-environment-trace.js": "f4db3a47e047f8b354221e4aab42127320d3b867118138f8370640f4f8841780",
+    "bot/tests/ai-gm-2026-10/rf03-f04-c07.test.mjs": "86d4017da46c57aa5f8789023f9647aa9ee0abd667e8595d4cee9c471930f125",
+    "bot/src/frameworks/daggerheart/environment-trace-rules.js": "3fd39b25bd15fd76c9981476e587dbee9fc780406b03fd488f7f6d8c786f14d0",
+    "bot/src/native-environment-access.js": "bd8be634df8e885c8e4babc0467de8f85824c0e6de965e0d2cc7687124054020",
+    "bot/tests/ai-gm-2026-10/rf03-f04-c08.test.mjs": "eba9bfd9a03ce4db21b3cbd8c3e4f6727df4a833cce424e51216ec5b42bf0c87",
+    "bot/src/frameworks/daggerheart/environment-access-rules.js": "723ececb092be7fd83e539a873d2c005a4aeeaf45f4df92aea24b3916ab76351",
+    "bot/tests/ai-gm-2026-10/rf03-f06-c03.test.mjs": "e04a3cbb33f02760d90f4f4f634e7e28a34ba9228f54aca9dd7e723f79e97da2"
   },
   "architecture": {
-    "sourceModules": 442,
+    "mode": "ratchet",
+    "phase": "RF03",
+    "sourceModules": 463,
     "unowned": 0,
-    "importOccurrences": 2438,
-    "internalImportOccurrences": 2263,
+    "importOccurrences": 2480,
+    "internalImportOccurrences": 2305,
     "cycleComponents": 1,
     "largestCycle": 182,
-    "rawViolationOccurrences": 2498,
-    "acceptedLegacyOccurrences": 2498,
+    "rawViolationOccurrences": 2488,
+    "acceptedLegacyOccurrences": 2488,
     "activeViolationGroups": 0,
     "transitionErrors": 0,
-    "pass": true
+    "pass": true,
+    "firstErrors": []
   },
   "remaining_rf03": {
-    "RF03-F01": 233,
-    "RF03-F03": 131,
-    "RF03-F04": 174
+    "remaining_records": 533,
+    "by_feature": {
+      "RF03-F01": 228,
+      "RF03-F03": 131,
+      "RF03-F04": 174
+    }
   },
   "qualified_provider_residuals_2": 171,
   "no_unchanged_passing_test_reruns": true,
-  "no_fresh_union_run": "Owner rule: aggregate immutable evidence rather than rerun unchanged passing tests.",
+  "no_fresh_union_run": true,
   "cost": {
     "provider_calls": 0,
     "provider_tokens": 0,
@@ -675,13 +1009,21 @@
       "bytes_preserved": true,
       "only_production_reader": "bot/src/native-feature-catalog.js",
       "gameplay_change": false
+    },
+    {
+      "source": "bot/src/application-authority.js",
+      "target": "bot/src/kernel/application-authority.js",
+      "sha256": "58554e42ec04ca5908ca7ac6e96225b1690a8025a273d4d0e836df4bd4054901",
+      "bytes_preserved": true,
+      "owner": "kernel",
+      "gameplay_change": false
     }
   ],
-  "fresh_test_files": 30,
-  "changed_syntax_passes": 169,
-  "syntax_failures_repaired": 1,
-  "test_file_parse_failures_repaired": 1,
-  "evidence_note": "Cumulative scoped completed batches since 2985a2d; fixture repairs rerun only failed cases. No frozen union rerun; unchanged passing rules preserved. Historical terminal hashes stay immutable; current source hashes refreshed.",
+  "fresh_test_files": 50,
+  "changed_syntax_passes": 261,
+  "syntax_failures_repaired": 2,
+  "test_file_parse_failures_repaired": 2,
+  "evidence_note": "Aggregate of completed targeted fresh batches only. Two initial fresh test-file parse failures repaired separately from case executions; associated source-path change in C27 justified16reruns, not unchanged reruns. No fresh full union or live qualification claim.",
   "local_holds": [
     {
       "feature": "RF03-F04",

@@ -1,0 +1,3 @@
+# RF03-F06 C03 — Actual provider entrypoint compatibility and continued evidence
+
+Fresh changed-code-only cold import and safe read-only entrypoint checks for the newly decomposed mechanical, brawl, intrusion trace, immediate Fear and admission providers. Exercise native early guards through actual production ESM imports without runtime startup, services, provider calls or production DB. Aggregate completed feature terminal evidence/source hashes and exact RF03 obligations; do not rerun unchanged passing cases. Phase-aware RF02/RF03 ratchets plus expected strict failure remain architecture checks, not full native pair certification. Full phase remains incomplete until missing native handlers and actual two-framework runtime adoption are qualified.

@@ -1,0 +1,12 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {createHash} from 'node:crypto';
+import * as player from '../../src/mechanical-native-v9.js';
+import * as gm from '../../src/gm-mechanical-v9.js';
+import * as brawl from '../../src/pvp-brawl.js';
+import * as trace from '../../src/native-environment-trace.js';
+import * as fear from '../../src/pvp-fear-moves.js';
+import * as access from '../../src/native-environment-access.js';
+test('actual mechanical providers link through native factory public APIs and preserve early no-authority rejection',()=>{const sentinel=Error('unissued actual audience'),authority={inspect(){throw sentinel;}};assert.throws(()=>player.nativeMechanicalInput(null,'offline',{authority,grant:{}},'typed'),e=>e===sentinel);assert.throws(()=>player.nativeMechanicalOutput(null,'offline',{authority,grant:{}},{}),e=>e===sentinel);assert.throws(()=>gm.projectNativeGmProposal(null,'offline',{}),e=>e.code==='SCENE_FICTION'&&e.diagnostic.category==='gm_proposal_shape');});
+test('actual coordination and environment providers retain independently safe early guards through the complete current ESM graph',()=>{assert.equal(brawl.brawlBatchMayFinish(null,'offline',{data:{offer:{}}},[]),false);assert.equal(trace.captureEnvironmentTrace({getCityRecord:()=>null},'offline','no-source'),null);assert.throws(()=>trace.chooseEnvironmentTrace(null,'offline','model',{},{}),e=>e.code==='GM_ARBITRATION');assert.throws(()=>access.establishEnvironmentAdmission(null,'offline',{},{}),e=>e.code==='GM_ARBITRATION');});
+test('actual Fear provider preserves its original digest and no-obligation behavior without exposing an autonomous execution token',()=>{for(const value of [undefined,null,{receipt:'native-c03',value:1}])assert.equal(fear.fearRevision(value),createHash('sha256').update(JSON.stringify(value)??'undefined').digest('hex'));assert.equal(fear.resolveAutonomousPvpFear({getCityRecord:()=>null},'offline','absent'),null);assert.equal(Object.keys(fear).includes('AUTO_FE'),false);assert.throws(()=>fear.establishFearContext(null,'offline','model',{},{}),e=>e.code==='NARRATIVE_PVP');});

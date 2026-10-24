@@ -1,14 +1,13 @@
 {
-  "head": "b7994ce4b2739cfbfb2ace3671bd9923c0b82d33",
-  "remaining_records": 538,
+  "head": "cc0cbe990b537942809063cb9ee21325baaab805",
+  "remaining_records": 533,
   "by_feature": {
-    "RF03-F01": 233,
+    "RF03-F01": 228,
     "RF03-F03": 131,
     "RF03-F04": 174
   },
   "by_module": {
     "RF03-F01": {
-      "bot/src/application-authority.js": 1,
       "bot/src/character-system.js": 1,
       "bot/src/consequence-reconciliation.js": 1,
       "bot/src/encounter.js": 11,
@@ -18,7 +17,7 @@
       "bot/src/gm-ruling-schema.js": 1,
       "bot/src/mechanical-native-v9.js": 4,
       "bot/src/native-defense-aura.js": 8,
-      "bot/src/native-encounter-activation.js": 9,
+      "bot/src/native-encounter-activation.js": 7,
       "bot/src/native-encounter-relations.js": 8,
       "bot/src/native-evidence-analysis.js": 2,
       "bot/src/native-group-features.js": 18,
@@ -34,8 +33,8 @@
       "bot/src/pc-incoming.js": 18,
       "bot/src/pc-native-eligibility.js": 2,
       "bot/src/roll-declaration-review.js": 6,
-      "bot/src/roll-sharing.js": 8,
-      "bot/src/rules-arbitration.js": 11,
+      "bot/src/roll-sharing.js": 7,
+      "bot/src/rules-arbitration.js": 10,
       "bot/src/typed-roll-outcomes.js": 8,
       "bot/src/typed-roll-proof.js": 10,
       "bot/src/roll-requests.js": 1
@@ -75,17 +74,6 @@
     }
   },
   "records": [
-    {
-      "id": "cfc74c581ab6fed0d2ed01fbd7923d49547de9ebb1e9ecfafa7f9f6e0f73b0ca",
-      "code": "LEGACY_MODULE_LOCATION",
-      "from": "bot/src/application-authority.js",
-      "owner": "daggerheart",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF03-F01",
-      "expires_after": "RF03",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
-    },
     {
       "id": "d1377e4a21ea16e2204ce9502ba0dbd4885e03198c32d6c112d6be87bbcb517b",
       "code": "LEGACY_MODULE_LOCATION",
@@ -1109,20 +1097,6 @@
       "to": "bot/src/city-calendar.js",
       "kind": "static",
       "specifier": "./city-calendar.js",
-      "owner": "daggerheart",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF03-F01",
-      "expires_after": "RF03",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
-      "id": "3715686d9a7646ac2cc0a64a8d5de1eb6d6dd595924090df1b859e55cb186545",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/native-encounter-activation.js",
-      "to": "bot/src/scene-fiction-context.js",
-      "kind": "static",
-      "specifier": "./scene-fiction-context.js",
       "owner": "daggerheart",
       "max_occurrences": 1,
       "remove_in_feature": "RF03-F01",
@@ -3455,20 +3429,6 @@
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
     {
-      "id": "e8a60b6070a710ef09aa4ca5b107c0adc2d61925761087fff801632dc2ba4646",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/rules-arbitration.js",
-      "to": "bot/src/gm-arbitration-contract.js",
-      "kind": "static",
-      "specifier": "./gm-arbitration-contract.js",
-      "owner": "daggerheart",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF03-F01",
-      "expires_after": "RF03",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
       "id": "89afb0ad1e3db8212ad6cd42bfc8bce739637f411c31ca93c69f0d09fbd02a89",
       "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
       "from": "bot/src/typed-roll-outcomes.js",
@@ -3797,20 +3757,6 @@
       "to": "bot/src/native-actor-control.js",
       "kind": "static",
       "specifier": "./native-actor-control.js",
-      "owner": "daggerheart",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF03-F01",
-      "expires_after": "RF03",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
-    },
-    {
-      "id": "078034d9e6a86ea8ee1b04f932dd0b232c020a1c007ae1e30af579ac7739f708",
-      "code": "CYCLIC_IMPORT_EDGE",
-      "from": "bot/src/native-encounter-activation.js",
-      "to": "bot/src/scene-fiction-context.js",
-      "kind": "static",
-      "specifier": "./scene-fiction-context.js",
       "owner": "daggerheart",
       "max_occurrences": 1,
       "remove_in_feature": "RF03-F01",
@@ -7101,20 +7047,6 @@
       "to": "bot/src/native-publications.js",
       "kind": "static",
       "specifier": "./native-publications.js",
-      "owner": "daggerheart",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF03-F01",
-      "expires_after": "RF03",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
-    },
-    {
-      "id": "fb4f0edad7c528e71fe798f959f42ccdaa6e946946d354cdd4a5b2522c733c85",
-      "code": "CYCLIC_IMPORT_EDGE",
-      "from": "bot/src/roll-sharing.js",
-      "to": "bot/src/native-notice.js",
-      "kind": "static",
-      "specifier": "./native-notice.js",
       "owner": "daggerheart",
       "max_occurrences": 1,
       "remove_in_feature": "RF03-F01",
