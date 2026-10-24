@@ -1,0 +1,41 @@
+{
+  "base_sha": "c253fa698d632b9ed9a0cc502509df9e36a3fe94",
+  "unique_tests": 10,
+  "executions": 10,
+  "pass": 10,
+  "fail": 0,
+  "exit": 0,
+  "duration_ms": 1086.3655,
+  "syntax_pass": 6,
+  "body_equivalence": true,
+  "body_hashes": {
+    "ordinary-effect-proof": "8d60337b9a4929c5041e05ad156ac069d6288781fd3c4e8d4d6be8dc1dfc98a2",
+    "ordinary-effects": "07ec6c2a96e7596cab26ed38d06059f62983f9678b66458a4a2569a0040cc0fa"
+  },
+  "hashes": {
+    "bot/src/ordinary-effect-proof.js": "a5456b3072135b6443498aace5b8a6ff5a9ad57f6e3852ec7f0d3322b2b0e0cc",
+    "bot/src/ordinary-effects.js": "768d406d5fde6494a67daf598cb79904de00781a6920e35cc8c4c188007d3e60",
+    "bot/src/frameworks/daggerheart/ordinary-effect-proof-rules.js": "9aeb9ffa906b23fe0e472431ed6951703846ec846c0dffb2a99172435134add4",
+    "bot/src/frameworks/daggerheart/ordinary-effect-rules.js": "a0a696fa3225014f8df923c7f5d5e94f48fb81a0c6e903d0003ce5948643762b",
+    "bot/src/frameworks/daggerheart/public.js": "bf3d01b2e7436235701e218c9b05cb30b2fb1106ac5e2cd6373b293d2731ea76",
+    "bot/tests/ai-gm-2026-10/rf03-f01-c21.test.mjs": "12e3df55b6a33424c15d00e0e9a5f95caaa8e499f8a105ca36ee94109b84e8aa"
+  },
+  "gate": {
+    "sourceModules": 451,
+    "unowned": 0,
+    "importOccurrences": 2456,
+    "internalImportOccurrences": 2281,
+    "cycleComponents": 1,
+    "largestCycle": 182,
+    "rawViolationOccurrences": 2497,
+    "acceptedLegacyOccurrences": 2497,
+    "activeViolationGroups": 0,
+    "transitionErrors": 0,
+    "pass": true
+  },
+  "limitations": "Actual native GM ruling, arbitration, new ordinary proof and effect engines run together in disposable SQLite. Source/owner authentication and world observation/dispatch native feature effect branches explicitly mocked. Full world producer, non-exercised feature branches and publication not newly certified.",
+  "provider_calls": 0,
+  "provider_cost_usd": 0,
+  "codex_usage": "UNMEASURED",
+  "release": "NOT AUTHORIZED"
+}

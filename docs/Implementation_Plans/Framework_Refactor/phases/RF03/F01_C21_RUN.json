@@ -1,0 +1,60 @@
+{
+  "test_exit": 0,
+  "architecture_exit": 0,
+  "syntax": [
+    {
+      "path": "bot/src/ordinary-effect-proof.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/ordinary-effects.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/ordinary-effect-proof-rules.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/ordinary-effect-rules.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/public.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf03-f01-c21.test.mjs",
+      "exit": 0
+    }
+  ],
+  "started": "2026-10-24T10:12:55.3774777Z",
+  "frozen_hashes": [
+    {
+      "path": "bot/src/ordinary-effect-proof.js",
+      "sha256": "A5456B3072135B6443498AACE5B8A6FF5A9AD57F6E3852EC7F0D3322B2B0E0CC"
+    },
+    {
+      "path": "bot/src/ordinary-effects.js",
+      "sha256": "768D406D5FDE6494A67DAF598CB79904DE00781A6920E35CC8C4C188007D3E60"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/ordinary-effect-proof-rules.js",
+      "sha256": "9AEB9FFA906B23FE0E472431ED6951703846EC846C0DFFB2A99172435134ADD4"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/ordinary-effect-rules.js",
+      "sha256": "A0A696FA3225014F8DF923C7F5D5E94F48FB81A0C6E903D0003CE5948643762B"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/public.js",
+      "sha256": "BF3D01B2E7436235701E218C9B05CB30B2FB1106AC5E2CD6373B293D2731EA76"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf03-f01-c21.test.mjs",
+      "sha256": "12E3DF55B6A33424C15D00E0E9A5F95CAAA8E499F8A105CA36EE94109B84E8AA"
+    }
+  ],
+  "base_sha": "c253fa698d632b9ed9a0cc502509df9e36a3fe94",
+  "ended": "2026-10-24T10:12:57.5646882Z",
+  "run_id": "RF03-F01-C21"
+}

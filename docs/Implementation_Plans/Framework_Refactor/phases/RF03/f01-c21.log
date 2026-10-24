@@ -1,0 +1,70 @@
+TAP version 13
+# Subtest: actual four-layer no-roll ruling produces source-verified owner-private observation and replay after restart
+ok 1 - actual four-layer no-roll ruling produces source-verified owner-private observation and replay after restart
+  ---
+  duration_ms: 71.5836
+  type: 'test'
+  ...
+# Subtest: exact source-established delegated scene change retains its native child causal binding without claiming PC decisions
+ok 2 - exact source-established delegated scene change retains its native child causal binding without claiming PC decisions
+  ---
+  duration_ms: 68.0674
+  type: 'test'
+  ...
+# Subtest: unsupported generated resource outcome holds only its own proposal while independent licensed observation completes
+ok 3 - unsupported generated resource outcome holds only its own proposal while independent licensed observation completes
+  ---
+  duration_ms: 62.1247
+  type: 'test'
+  ...
+# Subtest: refreshing accepted metadata after movement cannot relocate the original saved native causal ruling
+ok 4 - refreshing accepted metadata after movement cannot relocate the original saved native causal ruling
+  ---
+  duration_ms: 66.5024
+  type: 'test'
+  ...
+# Subtest: changed visible source invalidates immutable observation projection without replacing the saved effect
+ok 5 - changed visible source invalidates immutable observation projection without replacing the saved effect
+  ---
+  duration_ms: 67.1856
+  type: 'test'
+  ...
+# Subtest: failed follow-through receipt preserves earlier native action completion but rolls its own world child and result back
+ok 6 - failed follow-through receipt preserves earlier native action completion but rolls its own world child and result back
+  ---
+  duration_ms: 75.3578
+  type: 'test'
+  ...
+# Subtest: a forged no-roll state mutation cannot become a follow-through prerequisite merely because the action says resolved
+ok 7 - a forged no-roll state mutation cannot become a follow-through prerequisite merely because the action says resolved
+  ---
+  duration_ms: 65.3128
+  type: 'test'
+  ...
+# Subtest: owner-private effect cannot be promoted to party or another recipient, and changed native child is rejected
+ok 8 - owner-private effect cannot be promoted to party or another recipient, and changed native child is rejected
+  ---
+  duration_ms: 71.2188
+  type: 'test'
+  ...
+# Subtest: owner-scoped context exposes only action locators and pending prerequisites without granting new execution
+ok 9 - owner-scoped context exposes only action locators and pending prerequisites without granting new execution
+  ---
+  duration_ms: 52.9667
+  type: 'test'
+  ...
+# Subtest: actual ordinary effect providers cold-import original proof/application/locator interfaces
+ok 10 - actual ordinary effect providers cold-import original proof/application/locator interfaces
+  ---
+  duration_ms: 397.5253
+  type: 'test'
+  ...
+1..10
+# tests 10
+# suites 0
+# pass 10
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1086.3655
