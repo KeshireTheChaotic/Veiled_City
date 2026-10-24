@@ -1,0 +1,9 @@
+{
+  "test_exit": 0,
+  "end": "2026-10-24T05:42:06.1498063-05:00",
+  "test_sha256": "186d0f59630ed8cee48ae2b37afcab4319f48865db917505717fdb4e8a3ef408",
+  "syntax_exit": 0,
+  "duration_ms": 509.1314,
+  "start": "2026-10-24T05:42:05.5872246-05:00",
+  "reason": "Fresh test-file regex parse failure; zero feature cases executed before repair; production code unchanged."
+}

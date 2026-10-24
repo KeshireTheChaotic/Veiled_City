@@ -1,0 +1,23 @@
+{
+  "base_sha": "82d25584076c8be780f35da18c92d5795f0b6026",
+  "source": "bot/src/pvp-brawl.js",
+  "target": "bot/src/frameworks/daggerheart/pvp-brawl-rules.js",
+  "body_equivalent": true,
+  "body_sha256": "790bf62e5dcfc36562f2a8d1afc9ffa74b7c770d7124c33355a171df25d79499",
+  "exports": [
+    "brawlAdmission",
+    "reserveBrawlAttack",
+    "verifyBrawlAttack",
+    "consumeBrawlAttack",
+    "brawlBatchMayFinish",
+    "assertBrawlFearOrder",
+    "orderedBrawlFear",
+    "assertBrawlDamageSources",
+    "pvpWindowDamageSources",
+    "releaseBrawlLocks",
+    "cancelBrawlForWithdrawal",
+    "cancelBrawlForSafety",
+    "reviewBrawlOpportunity",
+    "passBrawlOpportunity"
+  ]
+}

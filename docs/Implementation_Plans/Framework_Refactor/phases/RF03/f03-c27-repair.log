@@ -1,0 +1,64 @@
+TAP version 13
+# Subtest: independently reviewed attacks share one native target window without deciding dice, damage or owner reactions
+ok 1 - independently reviewed attacks share one native target window without deciding dice, damage or owner reactions
+  ---
+  duration_ms: 34.0692
+  type: 'test'
+  ...
+# Subtest: first consumed native roll locks membership, prevents late joins and replays saved reservation proof after restart
+ok 2 - first consumed native roll locks membership, prevents late joins and replays saved reservation proof after restart
+  ---
+  duration_ms: 43.4448
+  type: 'test'
+  ...
+# Subtest: current target sheet changes or corrupted reservation ancestry hold rather than inventing permission
+ok 3 - current target sheet changes or corrupted reservation ancestry hold rather than inventing permission
+  ---
+  duration_ms: 25.5039
+  type: 'test'
+  ...
+# Subtest: all actual simultaneous hit damage sources must be grouped once and pending sibling damage holds Armor
+ok 4 - all actual simultaneous hit damage sources must be grouped once and pending sibling damage holds Armor
+  ---
+  duration_ms: 68.6813
+  type: 'test'
+  ...
+# Subtest: only exact independently reviewed private owner pass counts and interaction replay never creates a second pass
+ok 5 - only exact independently reviewed private owner pass counts and interaction replay never creates a second pass
+  ---
+  duration_ms: 23.9536
+  type: 'test'
+  ...
+# Subtest: fair opportunity pacing and pending actions cannot be bypassed by model-specified turn order
+ok 6 - fair opportunity pacing and pending actions cannot be bypassed by model-specified turn order
+  ---
+  duration_ms: 33.0414
+  type: 'test'
+  ...
+# Subtest: actual saved owner safety stop cancels pending hostile permission while preserving committed dice and damage references
+ok 7 - actual saved owner safety stop cancels pending hostile permission while preserving committed dice and damage references
+  ---
+  duration_ms: 60.5563
+  type: 'test'
+  ...
+# Subtest: reservation failure rolls back window, pointer, source and opportunity together
+ok 8 - reservation failure rolls back window, pointer, source and opportunity together
+  ---
+  duration_ms: 23.9003
+  type: 'test'
+  ...
+# Subtest: simultaneous Fear recovery follows native reservation order, not insertion order, and blocks out-of-order resolution
+ok 9 - simultaneous Fear recovery follows native reservation order, not insertion order, and blocks out-of-order resolution
+  ---
+  duration_ms: 61.6734
+  type: 'test'
+  ...
+1..9
+# tests 9
+# suites 0
+# pass 9
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 447.5915

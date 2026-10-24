@@ -79,3 +79,4 @@ export {createRollDeclarationReviewRules} from './roll-declaration-review-rules.
 export {createTypedRollOutcomeRules} from './typed-roll-outcome-rules.js';
 export {createMechanicalProjectionRules} from './mechanical-projection-rules.js';
 export {createGmMechanicalProposalRules} from './gm-mechanical-proposal-rules.js';
+export {createPvpBrawlRules} from './pvp-brawl-rules.js';

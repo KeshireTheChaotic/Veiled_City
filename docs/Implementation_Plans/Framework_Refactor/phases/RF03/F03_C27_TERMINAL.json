@@ -1,0 +1,96 @@
+{
+  "base_sha": "82d25584076c8be780f35da18c92d5795f0b6026",
+  "duration_ms": 116.6488,
+  "architecture_exit": 0,
+  "hashes": {
+    "bot/tests/ai-gm-2026-10/rf03-f03-c27.test.mjs": "9b989704554a33f0b459efd2ded5dd8118703cd89df4d846c936c353910e8de1",
+    "bot/src/pvp-brawl.js": "7e5716ea63b1866d0c5c677d0703a2223d709886f1c1edc366a7ca1955e551f4",
+    "bot/src/frameworks/daggerheart/public.js": "86046d91d5ad5fa939ea066c42fb7ed777912c36a33455af471ca86ebaa6f859",
+    "bot/src/frameworks/daggerheart/pvp-brawl-rules.js": "0ad5071693a734ed6b501a0a8f33708697bb0125a77dc8b6f5c5ed6f14465daa"
+  },
+  "syntax": [
+    {
+      "exit": 0,
+      "path": "bot/src/pvp-brawl.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/frameworks/daggerheart/pvp-brawl-rules.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/frameworks/daggerheart/public.js"
+    },
+    {
+      "exit": 1,
+      "path": "bot/tests/ai-gm-2026-10/rf03-f03-c27.test.mjs"
+    }
+  ],
+  "run_id": "F03_C27",
+  "start": "2026-10-24T05:41:53.7319709-05:00",
+  "end": "2026-10-24T05:41:54.8013358-05:00",
+  "test_exit": 1,
+  "unique_tests": 9,
+  "executions": 9,
+  "pass": 9,
+  "fail": 0,
+  "initial_file_parse_failure": {
+    "exit": 1,
+    "duration_ms": 59.2592,
+    "feature_cases_executed": 0
+  },
+  "repair": {
+    "test_exit": 0,
+    "end": "2026-10-24T05:42:06.1498063-05:00",
+    "test_sha256": "186d0f59630ed8cee48ae2b37afcab4319f48865db917505717fdb4e8a3ef408",
+    "syntax_exit": 0,
+    "duration_ms": 509.1314,
+    "start": "2026-10-24T05:42:05.5872246-05:00",
+    "reason": "Fresh test-file regex parse failure; zero feature cases executed before repair; production code unchanged."
+  },
+  "tap_duration_ms": 447.5915,
+  "body_equivalence": {
+    "base_sha": "82d25584076c8be780f35da18c92d5795f0b6026",
+    "source": "bot/src/pvp-brawl.js",
+    "target": "bot/src/frameworks/daggerheart/pvp-brawl-rules.js",
+    "body_equivalent": true,
+    "body_sha256": "790bf62e5dcfc36562f2a8d1afc9ffa74b7c770d7124c33355a171df25d79499",
+    "exports": [
+      "brawlAdmission",
+      "reserveBrawlAttack",
+      "verifyBrawlAttack",
+      "consumeBrawlAttack",
+      "brawlBatchMayFinish",
+      "assertBrawlFearOrder",
+      "orderedBrawlFear",
+      "assertBrawlDamageSources",
+      "pvpWindowDamageSources",
+      "releaseBrawlLocks",
+      "cancelBrawlForWithdrawal",
+      "cancelBrawlForSafety",
+      "reviewBrawlOpportunity",
+      "passBrawlOpportunity"
+    ]
+  },
+  "gate": {
+    "mode": "ratchet",
+    "phase": "RF03",
+    "sourceModules": 460,
+    "unowned": 0,
+    "importOccurrences": 2474,
+    "internalImportOccurrences": 2299,
+    "cycleComponents": 1,
+    "largestCycle": 182,
+    "rawViolationOccurrences": 2488,
+    "acceptedLegacyOccurrences": 2488,
+    "activeViolationGroups": 0,
+    "transitionErrors": 0,
+    "pass": true,
+    "firstErrors": []
+  },
+  "limitations": "Actual complete native brawl factory and disposable SQLite. Current owner/contract/window/source/attack proof services explicit mocks. Version4 campaign grouping, withdrawal branch and positive simultaneous-sibling Fear exception are preserved but not newly qualified. No full PvP/world/publication integration.",
+  "provider_calls": 0,
+  "provider_cost_usd": 0,
+  "codex_usage": "UNMEASURED",
+  "release": "NOT AUTHORIZED"
+}

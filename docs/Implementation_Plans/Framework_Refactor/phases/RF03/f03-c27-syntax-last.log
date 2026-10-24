@@ -1,0 +1,8 @@
+D:\Library\Development\Veiled_City\bot\tests\ai-gm-2026-10\rf03-f03-c27.test.mjs:20
+test('current target sheet changes or corrupted reservation ancestry hold rather than inventing permission',t=>{const f=fixture(t),a=f.reserve();f.pcs.C.data.hp.current=5;assert.throws(()=>f.reserve('B'),/Target lock/source/sheet changed/);f.pcs.C.data.hp.current=6;const opp=f.op(a.record_key);opp.data.ordinal=9;f.db.saveCityRecord(f.guild,{...opp,key:opp.record_key});assert.throws(()=>f.native.verifyBrawlAttack(f.db,f.guild,a),/Exact native brawl opportunity/);assert.equal(f.get(a.record_key).data.roll,undefined);});
+                                                                                                                                                                                                            ^
+
+SyntaxError: Invalid regular expression flags
+    at checkSyntax (node:internal/main/check_syntax:72:5)
+
+Node.js v24.19.0
