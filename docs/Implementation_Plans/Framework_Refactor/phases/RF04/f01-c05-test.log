@@ -1,0 +1,58 @@
+TAP version 13
+# Subtest: reference is private, deduplicated, read-only and contains no transfer grant
+ok 1 - reference is private, deduplicated, read-only and contains no transfer grant
+  ---
+  duration_ms: 24.2049
+  type: 'test'
+  ...
+# Subtest: native and publication receipts stay excluded, including private compound actions
+ok 2 - native and publication receipts stay excluded, including private compound actions
+  ---
+  duration_ms: 123.9201
+  type: 'test'
+  ...
+# Subtest: weather annotations use fictional time without rewriting original evidence
+ok 3 - weather annotations use fictional time without rewriting original evidence
+  ---
+  duration_ms: 17.6567
+  type: 'test'
+  ...
+# Subtest: existing retrieval budgets and deterministic order remain unchanged
+ok 4 - existing retrieval budgets and deterministic order remain unchanged
+  ---
+  duration_ms: 76.6132
+  type: 'test'
+  ...
+# Subtest: disabled and insufficient context never writes an opportunity
+ok 5 - disabled and insufficient context never writes an opportunity
+  ---
+  duration_ms: 30.5404
+  type: 'test'
+  ...
+# Subtest: world proposals remain source-bound private suggestions and replay once after reopen
+ok 6 - world proposals remain source-bound private suggestions and replay once after reopen
+  ---
+  duration_ms: 30.4831
+  type: 'test'
+  ...
+# Subtest: proposal and audit share a transaction; failed audit leaves no partial proposal
+ok 7 - proposal and audit share a transaction; failed audit leaves no partial proposal
+  ---
+  duration_ms: 115.463
+  type: 'test'
+  ...
+# Subtest: original mixed-module callers reach the moved World policies
+ok 8 - original mixed-module callers reach the moved World policies
+  ---
+  duration_ms: 423.6352
+  type: 'test'
+  ...
+1..8
+# tests 8
+# suites 0
+# pass 8
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 923.2668

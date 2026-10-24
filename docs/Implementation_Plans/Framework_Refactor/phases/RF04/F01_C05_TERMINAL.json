@@ -1,0 +1,48 @@
+{
+  "hashes": {
+    "bot/src/frameworks/world/public.js": "74288d5eeaecae308151161d72e7a41cd0a98519f64fa058280fca2409c02a43",
+    "bot/src/city-core.js": "807824e7b5413ee0d28e03ad1b6c529654b1b1f2d65fa45361926a432241537b",
+    "bot/src/frameworks/world/city-context.js": "5904ba4c8ddac5458bc1e312adf98cf7cc449795eadd8f13e3658ee59877e8b1",
+    "bot/tests/ai-gm-2026-10/rf04-f01-c05.test.mjs": "1a032b8b5a85cbb4fd7251eb34c3789e49ac67768fbf9878dc89cc6438610016"
+  },
+  "run_id": "RF04_F01_C05",
+  "end": "2026-10-24T17:08:19.3360797-05:00",
+  "start": "2026-10-24T17:08:17.3982285-05:00",
+  "syntax": [
+    {
+      "path": "bot/src/city-core.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/frameworks/world/city-context.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/frameworks/world/public.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf04-f01-c05.test.mjs",
+      "exit": 0
+    }
+  ],
+  "base_sha": "ef172a3f76b939b26d52985a78c1fb2662f45953",
+  "test_exit": 0,
+  "architecture_exit": 0,
+  "tests": 8,
+  "passed": 8,
+  "failed": 0,
+  "unique": 8,
+  "executions": 8,
+  "duration_ms": 923.2668,
+  "provider_calls": 0,
+  "provider_tokens": 0,
+  "provider_cost_usd": 0,
+  "codex_usage": "UNMEASURED",
+  "release": "NOT AUTHORIZED",
+  "phase_status": "INCOMPLETE",
+  "cumulative_fresh_tests": 41,
+  "cumulative_executions": 41,
+  "cumulative_test_files": 5,
+  "cumulative_syntax": 21
+}

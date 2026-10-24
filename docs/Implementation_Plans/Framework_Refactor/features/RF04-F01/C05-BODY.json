@@ -1,0 +1,12 @@
+[
+  {
+    "name": "cityContext",
+    "original_sha256": "7dc35c9660b189769f5f7e11b3f951185d12b4602554925eac01f8b1d5cc5c22",
+    "extraction": "exact declaration; unchanged behavior"
+  },
+  {
+    "name": "proposeCityOpportunity",
+    "original_sha256": "ad48b6b21174109da9e87e47a40476569d891b7495000b72aa147576ff7f3162",
+    "extraction": "exact declaration; unchanged behavior"
+  }
+]

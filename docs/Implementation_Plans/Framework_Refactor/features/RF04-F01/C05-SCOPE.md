@@ -1,0 +1,3 @@
+# RF04-F01 C05 — GM-private world reference and proposals
+
+Extract the two unchanged city-core reference/opportunity bodies into World. Preserve retrieval order, record exclusions, GM-only authority label, weather temporal annotation, current retrieval budgets, proposal source identity/replay/audit and provisional authority. Original source reader delegates own World API. No audience entitlement, player action, canon promotion, mechanics, creative restriction, schema or deadline change. Fresh disposable SQLite tests qualify this extraction; authenticated production source/publishing remains unqualified. Freeze before one blocking batch. Roll back new module/public/provider/test together. RELEASE NOT AUTHORIZED.
