@@ -1,0 +1,81 @@
+{
+  "test_exit": 0,
+  "architecture_exit": 0,
+  "hashes": {
+    "bot/tests/ai-gm-2026-10/rf03-f01-c28.test.mjs": "714a961df1d87297b6eb4a691af2950e97b25c638f4c07f033c8991cfe0a397d",
+    "bot/src/frameworks/daggerheart/public.js": "7e069caacf3b873668596d7b0f290b68b42e911b71e15485f365beee94f5b13e",
+    "bot/src/mechanical-native-v9.js": "929ddd1d5797dff0933c47ec12ef35680d75e147e1bf533e95b495611abd7302",
+    "bot/src/frameworks/daggerheart/mechanical-projection-rules.js": "ba5be64ebcea1e67013110d8dc7c68f167dc8994ab0b256dd517ed0716c55114",
+    "bot/src/frameworks/daggerheart/gm-mechanical-proposal-rules.js": "6ad8aa3c0c48d545f77ba31438f111d890523c0c8692dd22d9f6d1ff31d805fa",
+    "bot/src/gm-mechanical-v9.js": "c8b23e61cb8ed35e31882c95626308374d32ac46a41bc7217a138765bfe0b2b8"
+  },
+  "start": "2026-10-24T05:40:00.7202568-05:00",
+  "duration_ms": 493.2413,
+  "base_sha": "6971b2a6a45d6ef381af2190e7dd3c59ee415bc5",
+  "run_id": "F01_C28",
+  "end": "2026-10-24T05:40:02.2570120-05:00",
+  "syntax": [
+    {
+      "path": "bot/src/mechanical-native-v9.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/gm-mechanical-v9.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/mechanical-projection-rules.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/gm-mechanical-proposal-rules.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/public.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf03-f01-c28.test.mjs",
+      "exit": 0
+    }
+  ],
+  "unique_tests": 10,
+  "executions": 10,
+  "pass": 10,
+  "fail": 0,
+  "tap_duration_ms": 436.9183,
+  "body_equivalence": {
+    "mechanical-native-v9": {
+      "sha256": "d3dbb33973875bf3649626df7c9dd54cdda59cdb9463718e8a46f911e788d690",
+      "body_equivalent": true,
+      "exception": "Only equivalent already-injected selection callback wrappers removed; exact selection native implementation unchanged."
+    },
+    "gm-mechanical-v9": {
+      "sha256": "76ee9d98c56027988611d82028e720d71dc98f49e12449b6012304b0b6b26fdd",
+      "body_equivalent": true,
+      "exception": null
+    }
+  },
+  "gate": {
+    "mode": "ratchet",
+    "phase": "RF03",
+    "sourceModules": 459,
+    "unowned": 0,
+    "importOccurrences": 2472,
+    "internalImportOccurrences": 2297,
+    "cycleComponents": 1,
+    "largestCycle": 182,
+    "rawViolationOccurrences": 2488,
+    "acceptedLegacyOccurrences": 2488,
+    "activeViolationGroups": 0,
+    "transitionErrors": 0,
+    "pass": true,
+    "firstErrors": []
+  },
+  "limitations": "Actual audience authority, native exact selection, mechanical boundary and SQLite run together; accepted source/current audience/incoming receipt/Fear/GM decision/outcome producers are explicit mocks. No full writer, native attack runner or publication qualification.",
+  "provider_calls": 0,
+  "provider_cost_usd": 0,
+  "codex_usage": "UNMEASURED",
+  "release": "NOT AUTHORIZED"
+}

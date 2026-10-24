@@ -1,0 +1,15 @@
+{
+  "base_sha": "6971b2a6a45d6ef381af2190e7dd3c59ee415bc5",
+  "bodies": {
+    "mechanical-native-v9": {
+      "sha256": "d3dbb33973875bf3649626df7c9dd54cdda59cdb9463718e8a46f911e788d690",
+      "body_equivalent": true,
+      "exception": "Only equivalent already-injected selection callback wrappers removed; exact selection native implementation unchanged."
+    },
+    "gm-mechanical-v9": {
+      "sha256": "76ee9d98c56027988611d82028e720d71dc98f49e12449b6012304b0b6b26fdd",
+      "body_equivalent": true,
+      "exception": null
+    }
+  }
+}

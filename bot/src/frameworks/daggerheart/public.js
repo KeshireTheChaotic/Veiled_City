@@ -77,3 +77,5 @@ export {createEncounterActivationRules} from './encounter-activation-rules.js';
 export {createRollSharingRules} from './roll-sharing-rules.js';
 export {createRollDeclarationReviewRules} from './roll-declaration-review-rules.js';
 export {createTypedRollOutcomeRules} from './typed-roll-outcome-rules.js';
+export {createMechanicalProjectionRules} from './mechanical-projection-rules.js';
+export {createGmMechanicalProposalRules} from './gm-mechanical-proposal-rules.js';

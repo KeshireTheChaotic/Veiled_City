@@ -1,0 +1,70 @@
+TAP version 13
+# Subtest: player request is read-only native input, never a roll or resource commitment
+ok 1 - player request is read-only native input, never a roll or resource commitment
+  ---
+  duration_ms: 26.2529
+  type: 'test'
+  ...
+# Subtest: actual native exact selection requires accepted request ancestry and never guesses from a sole pending roll
+ok 2 - actual native exact selection requires accepted request ancestry and never guesses from a sole pending roll
+  ---
+  duration_ms: 41.9125
+  type: 'test'
+  ...
+# Subtest: each player principal, actor, scene, session and source mismatch fails before native input can be used
+ok 3 - each player principal, actor, scene, session and source mismatch fails before native input can be used
+  ---
+  duration_ms: 76.0392
+  type: 'test'
+  ...
+# Subtest: stale source and copied audience capability cannot authorize input or receipt projection
+ok 4 - stale source and copied audience capability cannot authorize input or receipt projection
+  ---
+  duration_ms: 24.0714
+  type: 'test'
+  ...
+# Subtest: saved native character output replays from SQLite and never manufactures missing receipts
+ok 5 - saved native character output replays from SQLite and never manufactures missing receipts
+  ---
+  duration_ms: 36.3404
+  type: 'test'
+  ...
+# Subtest: native adversary d20 receipt is private to its defended character with immutable saved roll detail
+ok 6 - native adversary d20 receipt is private to its defended character with immutable saved roll detail
+  ---
+  duration_ms: 33.8333
+  type: 'test'
+  ...
+# Subtest: legitimate native GM attack projection invokes exact immediate Fear authority and never executes the attack
+ok 7 - legitimate native GM attack projection invokes exact immediate Fear authority and never executes the attack
+  ---
+  duration_ms: 24.7065
+  type: 'test'
+  ...
+# Subtest: human reviewed offer and role strings cannot replace actual Fear or native decision authority
+ok 8 - human reviewed offer and role strings cannot replace actual Fear or native decision authority
+  ---
+  duration_ms: 31.4281
+  type: 'test'
+  ...
+# Subtest: GM exact actor, target, stat block, feature and source task are all source-bound
+ok 9 - GM exact actor, target, stat block, feature and source task are all source-bound
+  ---
+  duration_ms: 25.8508
+  type: 'test'
+  ...
+# Subtest: GM projection preserves owner defense wait and rejects completed requests or unsupported routes
+ok 10 - GM projection preserves owner defense wait and rejects completed requests or unsupported routes
+  ---
+  duration_ms: 35.311
+  type: 'test'
+  ...
+1..10
+# tests 10
+# suites 0
+# pass 10
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 436.9183
