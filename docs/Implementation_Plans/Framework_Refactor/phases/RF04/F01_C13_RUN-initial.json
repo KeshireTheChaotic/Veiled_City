@@ -1,0 +1,32 @@
+{
+  "architecture_exit": 0,
+  "hashes": {
+    "bot/src/autonomous-world.js": "0d9170895f46abc235e04806dafd450d92d2f1b3a1fc9f18ebd11d63d5f93131",
+    "bot/tests/ai-gm-2026-10/rf04-f01-c13.test.mjs": "6df4a6e2e07038c7582700d9a82e65fa711a0e9c19865fc2fb714569c0ff5484",
+    "bot/src/frameworks/world/public.js": "658bdb830ecfbe776a0200494b854f7ba815b7a1890f89454a2390f2cd0f458f",
+    "bot/src/frameworks/world/identity-rules.js": "d29cfc741d4d24949c12c814def209441ba8320ad7731d6e87ed8be28cf99601"
+  },
+  "start": "2026-10-24T17:32:13.8581194-05:00",
+  "end": "2026-10-24T17:32:18.1020485-05:00",
+  "test_exit": 1,
+  "run_id": "RF04_F01_C13",
+  "base_sha": "d5cb5eb1b687f2e74c935460dc82c01d61211b34",
+  "syntax": [
+    {
+      "path": "bot/src/autonomous-world.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/frameworks/world/identity-rules.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/frameworks/world/public.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf04-f01-c13.test.mjs",
+      "exit": 0
+    }
+  ]
+}

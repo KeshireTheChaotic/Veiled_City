@@ -1,0 +1,13 @@
+{
+  "base_sha": "d5cb5eb1b687f2e74c935460dc82c01d61211b34",
+  "test_exit": 0,
+  "production_fingerprint": "unchanged from F01_C13_RUN-initial.json",
+  "test_sha256": "802e2c1a78aa96dcd24fa9c4d8cab7cfe323e47091f00b5b13b783a4b1efb53b",
+  "test_path": "bot/tests/ai-gm-2026-10/rf04-f01-c13.test.mjs",
+  "end": "2026-10-24T17:32:43.1494100-05:00",
+  "run_id": "RF04_F01_C13_FIXTURE_REPAIR",
+  "selector": "NPC can inhabit the same-source",
+  "syntax_exit": 0,
+  "repair": "Only second NPC fixture display name changed to distinct name; initial existing collision check prevented offcamera predicate. No production change; 13 passing cases not rerun.",
+  "start": "2026-10-24T17:32:42.1886631-05:00"
+}

@@ -22,7 +22,7 @@ old_path,new_path,owner,move_phase,action,reverse_dependents,import_obligations
 "bot/src/authored-turn-envelope.js","bot/src/frameworks/intent/authored-turn-envelope.js","intent","RF05","EXTRACT_PORTS_BEFORE_MOVE","9","3"
 "bot/src/authority-policy.js","bot/src/frameworks/daggerheart/authority-policy.js","daggerheart","RF03","PILOT_MOVE_CANDIDATE","1","0"
 "bot/src/authority-projection.js","bot/src/frameworks/knowledge/authority-projection.js","knowledge","RF04","PILOT_MOVE_CANDIDATE","2","0"
-"bot/src/autonomous-world.js","bot/src/frameworks/world/autonomous-world.js","world","RF04","DECOMPOSE_BEFORE_MOVE","14","14"
+"bot/src/autonomous-world.js","bot/src/frameworks/world/identity-rules.js;owning PC action/source adapters pending","world","RF04","ORDINARY_WORLD_IDENTITY_EXTRACTED_PLAYER_SOURCE_MOVEMENT_NATIVE_ADJUDICATION_COMPOSITION_REMAINS","14","14"
 "bot/src/character-export.js","bot/src/frameworks/character/character-export.js","character","RF02","PILOT_MOVE_CANDIDATE","4","0"
 "bot/src/character-narrative.js","bot/src/frameworks/character/character-narrative.js","character","RF02","PILOT_MOVE_CANDIDATE","2","0"
 "bot/src/character-observation.js","bot/src/frameworks/character/character-observation.js","character","RF02","EXTRACT_PORTS_BEFORE_MOVE","5","5"

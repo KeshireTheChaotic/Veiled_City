@@ -1,0 +1,31 @@
+{
+  "declarations": [
+    {
+      "name": "worldAuthority",
+      "original_sha256": "c32d3040b1aa87cb23356c92cde4bb3356df6ea280267117297ba8810a7485de",
+      "extraction": "unchanged declaration body; original source capabilities captured by fixed factory"
+    },
+    {
+      "name": "establishNarrativeEntity",
+      "original_sha256": "6af40e45886ded96053b32d08a4f418e58a5c6cc9e6699e027dd6c2d3f3040c3",
+      "extraction": "unchanged declaration body; original source capabilities captured by fixed factory"
+    },
+    {
+      "name": "establishNativeNarrativeEntity",
+      "original_sha256": "1446f09c4050c1b1c0f69fabfd2a02b50b6ed09c0a3b2d95ad0784481a3a7c1e",
+      "extraction": "unchanged declaration body; original source capabilities captured by fixed factory"
+    },
+    {
+      "name": "configureWorldAuthority",
+      "original_sha256": "250532d46912196dc394ac5727cf80aae48b0a541d052ae7bcda6dfa05ab5823",
+      "extraction": "unchanged declaration body; original source capabilities captured by fixed factory"
+    },
+    {
+      "name": "retconAutonomousEntity",
+      "original_sha256": "85ea54194198bfdd8ae5a923777ed79ff4457bec07ca12c718ca89cf4b430ba6",
+      "extraction": "unchanged declaration body; original source capabilities captured by fixed factory"
+    }
+  ],
+  "hash_adoption": "same existing kernel jsonHash, same 40-character source-key truncation",
+  "player_workflows": "Original player-source capture, native movement/access/continuation/roll and PC declaration paths remain outside World identity rules"
+}

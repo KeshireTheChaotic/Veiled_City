@@ -23,3 +23,5 @@ export {createWorldConsequences} from './consequences.js';
 export {createWorldOperationAuthority} from './operation-authority.js';
 
 export {resolvePlaceReference,preflightPlaceIdentity,preflightNpcIdentity} from './location-language.js';
+
+export {createWorldIdentityRules} from './identity-rules.js';
