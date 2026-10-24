@@ -1,0 +1,58 @@
+TAP version 13
+# Subtest: original named reader and world API preserve one exact module/function identity
+ok 1 - original named reader and world API preserve one exact module/function identity
+  ---
+  duration_ms: 0.8733
+  type: 'test'
+  ...
+# Subtest: calendar reads only authoritative fictional minutes and epoch cannot silently change
+ok 2 - calendar reads only authoritative fictional minutes and epoch cannot silently change
+  ---
+  duration_ms: 38.9919
+  type: 'test'
+  ...
+# Subtest: calendar audit failure rolls back its source configuration
+ok 3 - calendar audit failure rolls back its source configuration
+  ---
+  duration_ms: 23.7912
+  type: 'test'
+  ...
+# Subtest: event sources preserve private audience and cannot become party or another character visibility
+ok 4 - event sources preserve private audience and cannot become party or another character visibility
+  ---
+  duration_ms: 32.5284
+  type: 'test'
+  ...
+# Subtest: existing world event replays across restart without accepting replacement narrative or rewriting original source
+ok 5 - existing world event replays across restart without accepting replacement narrative or rewriting original source
+  ---
+  duration_ms: 32.9532
+  type: 'test'
+  ...
+# Subtest: world event and its audit remain atomic after a write failure
+ok 6 - world event and its audit remain atomic after a write failure
+  ---
+  duration_ms: 26.9033
+  type: 'test'
+  ...
+# Subtest: major scheduled event requires existing explicit review and firing records deadline without attendance or mechanics
+ok 7 - major scheduled event requires existing explicit review and firing records deadline without attendance or mechanics
+  ---
+  duration_ms: 34.9624
+  type: 'test'
+  ...
+# Subtest: schedule replay and explicit reschedule/cancel preserve original actor-independent world event identity
+ok 8 - schedule replay and explicit reschedule/cancel preserve original actor-independent world event identity
+  ---
+  duration_ms: 33.5538
+  type: 'test'
+  ...
+1..8
+# tests 8
+# suites 0
+# pass 8
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 296.8938

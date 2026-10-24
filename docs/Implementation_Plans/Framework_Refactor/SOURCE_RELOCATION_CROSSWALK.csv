@@ -27,7 +27,7 @@ old_path,new_path,owner,move_phase,action,reverse_dependents,import_obligations
 "bot/src/character-narrative.js","bot/src/frameworks/character/character-narrative.js","character","RF02","PILOT_MOVE_CANDIDATE","2","0"
 "bot/src/character-observation.js","bot/src/frameworks/character/character-observation.js","character","RF02","EXTRACT_PORTS_BEFORE_MOVE","5","5"
 "bot/src/character-system.js","bot/src/frameworks/character/character-system.js","character","RF06","NATIVE_EXTRACTED_QUALIFIED_SOURCE_ADOPTION_DEFERRED:RF06-F07","4","0"
-"bot/src/city-calendar.js","bot/src/frameworks/world/city-calendar.js","world","RF04","PILOT_MOVE_CANDIDATE","121","0"
+"bot/src/city-calendar.js","bot/src/frameworks/world/city-calendar.js","world","RF04","IMPLEMENTATION_MOVED_RF04_F01_C02_ORIGINAL_READER_REMOVE_RF04_F05","121","0"
 "bot/src/city-civic.js","bot/src/frameworks/world/city-civic.js","world","RF04","EXTRACT_PORTS_BEFORE_MOVE","9","1"
 "bot/src/city-commands.js","bot/src/application/workflows/city-commands.js","application","RF06","DECOMPOSE_BEFORE_MOVE","1","6"
 "bot/src/city-consequences.js","bot/src/frameworks/world/city-consequences.js","world","RF04","EXTRACT_PORTS_BEFORE_MOVE","4","2"

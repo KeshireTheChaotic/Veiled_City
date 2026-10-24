@@ -1,0 +1,23 @@
+{
+  "base_sha": "a3bb662307d779da7e93c64ed80c21d8721fe5cf",
+  "source": "bot/src/city-calendar.js",
+  "target": "bot/src/frameworks/world/city-calendar.js",
+  "byte_identical": true,
+  "sha256": "72b4cb0df5e0c3c54038e26073f6091b8c861c1266d5df947c0538e84c82ff9e",
+  "original_exports": [
+    "cityObject",
+    "cityKey",
+    "cityInteger",
+    "cityVisibility",
+    "cityAudit",
+    "calendarStatus",
+    "configureCalendar",
+    "indexWorldEvent",
+    "scheduleCityEvent",
+    "reviewCityEvent",
+    "processCityDue"
+  ],
+  "original_imports": [],
+  "compatibility_reader_removal": "RF04-F05",
+  "full_caller_adoption": false
+}

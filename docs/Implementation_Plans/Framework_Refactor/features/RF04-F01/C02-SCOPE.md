@@ -1,0 +1,3 @@
+# RF04-F01 C02 — Fictional calendar and world-event identity
+
+Pure physical move of self-contained, no-import World module into its framework, separate from behavioral decomposition. Original API stays a temporary exact named reexport with RF04-F05 removal after source consumers adopt proper contracts; this does not certify the legacy caller graph isolated. Preserve exact date/time arithmetic, epoch immutability, source/event audience boundary, event history/replay, major schedule review and deadline-only firing. No PC attendance/actions, new canon or native effects inferred. Fresh SQLite fixtures test real source functions, nested rollback and current/historical replay; no production DB. One frozen batch/syntax/ratchet.

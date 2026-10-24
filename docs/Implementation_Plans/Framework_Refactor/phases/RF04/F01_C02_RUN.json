@@ -1,0 +1,32 @@
+{
+  "end": "2026-10-24T16:57:43.5238353-05:00",
+  "test_exit": 0,
+  "syntax": [
+    {
+      "exit": 0,
+      "path": "bot/src/city-calendar.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/frameworks/world/city-calendar.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/frameworks/world/public.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/tests/ai-gm-2026-10/rf04-f01-c02.test.mjs"
+    }
+  ],
+  "hashes": {
+    "bot/src/frameworks/world/public.js": "934d04e924720fbc35fe4947fd20a4d1b1015dfa21e59c58d42fe38a685036c2",
+    "bot/src/frameworks/world/city-calendar.js": "72b4cb0df5e0c3c54038e26073f6091b8c861c1266d5df947c0538e84c82ff9e",
+    "bot/src/city-calendar.js": "203d023d22fab8318cb211692a17a95a9a8db40d0338c14222a02deb080fb316",
+    "bot/tests/ai-gm-2026-10/rf04-f01-c02.test.mjs": "52c779a92055a54dc20474b35c94d7767af39a6670f5240bcf012ccd8ae5a4b7"
+  },
+  "base_sha": "a3bb662307d779da7e93c64ed80c21d8721fe5cf",
+  "run_id": "RF04_F01_C02",
+  "start": "2026-10-24T16:57:42.2001788-05:00",
+  "architecture_exit": 0
+}
