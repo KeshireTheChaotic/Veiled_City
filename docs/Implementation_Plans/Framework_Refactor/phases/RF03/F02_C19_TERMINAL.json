@@ -1,0 +1,41 @@
+{
+  "base_sha": "086dd9d70f29a7abe79bd38b10027bd60b7269f1",
+  "tests": {
+    "pass": 6,
+    "fail": 0,
+    "exit": 0,
+    "duration_ms": 595.9807
+  },
+  "syntax_pass": 4,
+  "body_equivalence": true,
+  "body_sha256": "8d56b341e2ed11826aed236351b6d1dc71ea68ae150381a81ac6008e0a332d0e",
+  "hashes": {
+    "bot/src/native-condition-recovery.js": "f17f81699e7c4b9a4232b759f1dc56ae87f769996d85446f36d821c5d8dfb98a",
+    "bot/src/frameworks/daggerheart/condition-recovery-rules.js": "fcddbcf20bd1d0726dc1727cebb09a34e453cfb87d5b9749a5c166c9d1279627",
+    "bot/src/frameworks/daggerheart/public.js": "dd91f1771915ea2a54eb4c1e85fe4845b643f494acc442be32c6a42d1889d37a",
+    "bot/tests/ai-gm-2026-10/rf03-f02-c19.test.mjs": "3e4b74f9d4fabc0aae3ac9223852cfba1562350f3d106e395fde1932c0354e3d"
+  },
+  "retired_records": 3,
+  "gate": {
+    "exit": 0,
+    "mode": "ratchet",
+    "phase": "RF03",
+    "sourceModules": 428,
+    "unowned": 0,
+    "importOccurrences": 2402,
+    "internalImportOccurrences": 2227,
+    "cycleComponents": 1,
+    "largestCycle": 182,
+    "rawViolationOccurrences": 2519,
+    "acceptedLegacyOccurrences": 2519,
+    "activeViolationGroups": 0,
+    "transitionErrors": 0,
+    "pass": true,
+    "firstErrors": []
+  },
+  "limitations": "Original condition/ordinary action/prerequisite/current-principal verifiers explicitly mocked; real native cleanup/source/mutation proof executes in SQLite. No new upstream or live qualification.",
+  "provider_calls": 0,
+  "provider_cost_usd": 0,
+  "codex_usage": "UNMEASURED",
+  "release": "NOT AUTHORIZED"
+}

@@ -1,0 +1,9 @@
+{
+  "gate_exit": 1,
+  "test_exit": 0,
+  "started": "2026-10-24T00:46:03.0816259Z",
+  "ended": "2026-10-24T00:46:04.6331553Z",
+  "syntax_checked": 4,
+  "syntax_failures": [],
+  "run_id": "RF03-F02-C19"
+}

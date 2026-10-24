@@ -1,0 +1,46 @@
+TAP version 13
+# Subtest: resolved exact owner action clears only its native condition marker and persists a private receipt
+ok 1 - resolved exact owner action clears only its native condition marker and persists a private receipt
+  ---
+  duration_ms: 47.3881
+  type: 'test'
+  ...
+# Subtest: private saved receipt cannot authorize a different recipient on replay
+ok 2 - private saved receipt cannot authorize a different recipient on replay
+  ---
+  duration_ms: 44.5122
+  type: 'test'
+  ...
+# Subtest: wrong native action target or failed prerequisite cannot clear a condition
+ok 3 - wrong native action target or failed prerequisite cannot clear a condition
+  ---
+  duration_ms: 50.3081
+  type: 'test'
+  ...
+# Subtest: failed receipt write restores condition marker, source, mutation and native condition status
+ok 4 - failed receipt write restores condition marker, source, mutation and native condition status
+  ---
+  duration_ms: 40.7821
+  type: 'test'
+  ...
+# Subtest: immutable clear ancestry rejects revoked receipt source without reapplying sheet changes
+ok 5 - immutable clear ancestry rejects revoked receipt source without reapplying sheet changes
+  ---
+  duration_ms: 46.1865
+  type: 'test'
+  ...
+# Subtest: actual condition recovery provider cold-imports with both current APIs
+ok 6 - actual condition recovery provider cold-imports with both current APIs
+  ---
+  duration_ms: 299.9178
+  type: 'test'
+  ...
+1..6
+# tests 6
+# suites 0
+# pass 6
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 595.9807

@@ -47,3 +47,4 @@ export {createEnvironmentBindingRules} from './environment-binding-rules.js';
 export {createAdversaryDamageDefenseRules} from './adversary-damage-defense-rules.js';
 export {createAdversaryAttackPassiveRules} from './adversary-attack-passive-rules.js';
 export {createAdversaryHitRules} from './adversary-hit-rules.js';
+export {createConditionRecoveryRules} from './condition-recovery-rules.js';

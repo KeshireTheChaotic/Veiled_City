@@ -1,0 +1,3 @@
+# RF03-F02 C19 — Exact owner-action native condition recovery
+
+Extract unchanged native condition clear action/result/ancestry/current-owner/receipt transaction into Daggerheart. Existing source/ordinary/native-condition verifier ports remain explicit, native hash/failure reused. Only original supported Flashbang until-cleared Vulnerable condition can use this policy; no new recovery method. Preserve saved-marker identity, source/action/prerequisite/current owner, replay privacy and mutation/receipt rollback. Fresh disposable SQLite positive/negative/reopen/foreign-source/receipt corruption/failure tests. Freeze once, body equality, syntax and ratchet; no new gameplay or narrative restriction.
