@@ -1,0 +1,37 @@
+{
+  "base_sha": "e441eda8eddd148b1a31c2faffd9cb26f7e2bb2d",
+  "unique_tests": 7,
+  "executions": 7,
+  "pass": 7,
+  "fail": 0,
+  "exit": 0,
+  "duration_ms": 701.101,
+  "syntax_pass": 4,
+  "body_equivalence": true,
+  "body_sha256": "6f4284d54eff8b06dae96860a03c77c8ebc53762a8273b78b04a0045a494b702",
+  "hashes": {
+    "bot/src/rules-arbitration.js": "aa4d47ca9ca5c4940de78d1c5ad4154375934cf4a525bfe92eebf980b834e851",
+    "bot/src/frameworks/daggerheart/rules-arbitration-rules.js": "4b6b7840221fd697cff9b602280b005b45baef685ffa37bc4e497396b6eb6870",
+    "bot/src/frameworks/daggerheart/public.js": "6cb5a1fece01e97cc883d1201ba8902e054893ca108293bcdf31bdb1e7af5568",
+    "bot/tests/ai-gm-2026-10/rf03-f01-c19.test.mjs": "0df3fce72f9971240f209790854b00696cfa5e9f792b0455a0b1fd96bbefbdd0"
+  },
+  "gate": {
+    "sourceModules": 448,
+    "unowned": 0,
+    "importOccurrences": 2450,
+    "internalImportOccurrences": 2275,
+    "cycleComponents": 1,
+    "largestCycle": 182,
+    "rawViolationOccurrences": 2497,
+    "acceptedLegacyOccurrences": 2497,
+    "activeViolationGroups": 0,
+    "transitionErrors": 0,
+    "pass": true
+  },
+  "retired_records": 1,
+  "limitations": "Actual native arbitration and ordinary GM ruling, shared proposal validator and native references run together; owner/source/window and request preparation remain explicit mocks. No full production or live source/service qualification.",
+  "provider_calls": 0,
+  "provider_cost_usd": 0,
+  "codex_usage": "UNMEASURED",
+  "release": "NOT AUTHORIZED"
+}

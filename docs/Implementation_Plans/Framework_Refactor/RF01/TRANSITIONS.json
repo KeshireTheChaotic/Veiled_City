@@ -16931,20 +16931,6 @@
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
     {
-      "id": "e8a60b6070a710ef09aa4ca5b107c0adc2d61925761087fff801632dc2ba4646",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/rules-arbitration.js",
-      "to": "bot/src/gm-arbitration-contract.js",
-      "kind": "static",
-      "specifier": "./gm-arbitration-contract.js",
-      "owner": "daggerheart",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF03-F01",
-      "expires_after": "RF03",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
       "id": "2ce8e213e5c8fe3795d40e37a893a2270fa73b5ddc40fef24af83d87bf76c51c",
       "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
       "from": "bot/src/scene-action-window.js",

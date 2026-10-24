@@ -1,0 +1,44 @@
+{
+  "started": "2026-10-24T10:06:08.2919393Z",
+  "frozen_hashes": [
+    {
+      "sha256": "AA4D47CA9CA5C4940DE78D1C5AD4154375934CF4A525BFE92EEBF980B834E851",
+      "path": "bot/src/rules-arbitration.js"
+    },
+    {
+      "sha256": "4B6B7840221FD697CFF9B602280B005B45BAEF685FFA37BC4E497396B6EB6870",
+      "path": "bot/src/frameworks/daggerheart/rules-arbitration-rules.js"
+    },
+    {
+      "sha256": "6CB5A1FECE01E97CC883D1201BA8902E054893CA108293BCDF31BDB1E7AF5568",
+      "path": "bot/src/frameworks/daggerheart/public.js"
+    },
+    {
+      "sha256": "0DF3FCE72F9971240F209790854B00696CFA5E9F792B0455A0B1FD96BBEFBDD0",
+      "path": "bot/tests/ai-gm-2026-10/rf03-f01-c19.test.mjs"
+    }
+  ],
+  "syntax": [
+    {
+      "path": "bot/src/rules-arbitration.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/rules-arbitration-rules.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/public.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf03-f01-c19.test.mjs",
+      "exit": 0
+    }
+  ],
+  "ended": "2026-10-24T10:06:10.0313865Z",
+  "base_sha": "e441eda8eddd148b1a31c2faffd9cb26f7e2bb2d",
+  "architecture_exit": 1,
+  "test_exit": 0,
+  "run_id": "RF03-F01-C19"
+}

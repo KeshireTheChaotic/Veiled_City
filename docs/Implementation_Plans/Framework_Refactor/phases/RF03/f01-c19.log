@@ -1,0 +1,52 @@
+TAP version 13
+# Subtest: actual native GM ruling and arbitration create one private grounded pending request and exact replay after restart
+ok 1 - actual native GM ruling and arbitration create one private grounded pending request and exact replay after restart
+  ---
+  duration_ms: 42.0916
+  type: 'test'
+  ...
+# Subtest: actual no-roll native receipt settles only costless observation and captures feature timing after its saved receipt
+ok 2 - actual no-roll native receipt settles only costless observation and captures feature timing after its saved receipt
+  ---
+  duration_ms: 41.2124
+  type: 'test'
+  ...
+# Subtest: withdrawn owner source range blocks native preparation, and unsupported source rules remain a scoped hold
+ok 3 - withdrawn owner source range blocks native preparation, and unsupported source rules remain a scoped hold
+  ---
+  duration_ms: 68.7375
+  type: 'test'
+  ...
+# Subtest: native saved adjudication rejects another owner audience and altered exact request trait without replacement mechanics
+ok 4 - native saved adjudication rejects another owner audience and altered exact request trait without replacement mechanics
+  ---
+  duration_ms: 44.6154
+  type: 'test'
+  ...
+# Subtest: failure after native request or no-roll completion rolls the entire coupled ruling transaction back
+ok 5 - failure after native request or no-roll completion rolls the entire coupled ruling transaction back
+  ---
+  duration_ms: 70.2523
+  type: 'test'
+  ...
+# Subtest: native envelopes cannot claim resolution without receipts or bypass no-roll consent and costs
+ok 6 - native envelopes cannot claim resolution without receipts or bypass no-roll consent and costs
+  ---
+  duration_ms: 31.3885
+  type: 'test'
+  ...
+# Subtest: actual arbitration provider cold-imports all original rule and adjudication interfaces
+ok 7 - actual arbitration provider cold-imports all original rule and adjudication interfaces
+  ---
+  duration_ms: 329.2585
+  type: 'test'
+  ...
+1..7
+# tests 7
+# suites 0
+# pass 7
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 701.101
