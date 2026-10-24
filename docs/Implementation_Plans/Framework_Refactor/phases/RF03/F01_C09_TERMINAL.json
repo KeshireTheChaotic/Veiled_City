@@ -1,0 +1,56 @@
+{
+  "base_sha": "d5ce442f606108d283f839e80b26a10612b6ef55",
+  "tests": {
+    "pass": 9,
+    "fail": 0,
+    "exit": 0,
+    "duration_ms": 1107.9217
+  },
+  "syntax_pass": 8,
+  "bodies": [
+    {
+      "source": "native-actor-control.js",
+      "native": "actor-control-rules.js",
+      "unchanged": true,
+      "sha256": "b0c414bc78b9608cdece0868ba8d4f2f1715ef4085f975139cd9959d754202a6"
+    },
+    {
+      "source": "gm-action-capability.js",
+      "native": "gm-capability-rules.js",
+      "unchanged": true,
+      "sha256": "c6151452d73cd9bf4191c1e7149f5ca59a53798700ae9c0788490da7543d7d77"
+    },
+    {
+      "source": "gm-native-rolls.js",
+      "native": "gm-execution-rules.js",
+      "unchanged": true,
+      "sha256": "f4870639d8db2c4854caba5710da7c03868392e8594a8fc36d51f9a1460b73ed"
+    }
+  ],
+  "hashes": {
+    "bot/src/native-actor-control.js": "bd8dbaba062a4dffa9f749ee80939eb76ac4fe1f7044522af2788811e592cf54",
+    "bot/src/frameworks/daggerheart/actor-control-rules.js": "9242cc8076ccb1c801e015a1b2852dd20c272e022789fc9eeab40d3b2a918a7e",
+    "bot/src/gm-action-capability.js": "f27ff0ea45ff0180fca6fd2adf21d0f4936ba5fb833f17ad0009d13348156667",
+    "bot/src/frameworks/daggerheart/gm-capability-rules.js": "4507656e8030ac406cda78cddcc88c0a2a20b710dd4608ad6fdd5d83a593ffda",
+    "bot/src/gm-native-rolls.js": "b9a9dcc778f7eed42242555af54756cd3d896c6548a347f778840db1309dcad2",
+    "bot/src/frameworks/daggerheart/gm-execution-rules.js": "1d48a8c3147d8c51d74246ab9b780698eb1ff1c14d148e78f7ac69d77678a40c",
+    "bot/src/frameworks/daggerheart/public.js": "89161fe5864f66ac6f542206cdb7c9191ca068389f5caa5d2a47bbbd047d848e",
+    "bot/tests/ai-gm-2026-10/rf03-f01-c09.test.mjs": "4a615baee6b8df490339d87c1dc8f5879d48016419af403f67684062a69ada22"
+  },
+  "retired_records": 7,
+  "gate": {
+    "exit": 0,
+    "sources": 417,
+    "imports": 2375,
+    "largest_cycle": 182,
+    "accepted_occurrences": 2539,
+    "active": 0,
+    "unowned": 0,
+    "integrity_errors": 0
+  },
+  "limitations": "Source context/intent authentication, incoming/group/feature/Professional Entry verifiers and spotlight peer policies are explicit mock ports; no claim their implementation or live delivery is qualified.",
+  "provider_calls": 0,
+  "provider_cost_usd": 0,
+  "codex_usage": "UNMEASURED",
+  "release": "NOT AUTHORIZED"
+}

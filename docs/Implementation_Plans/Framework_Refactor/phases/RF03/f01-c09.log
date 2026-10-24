@@ -1,0 +1,64 @@
+TAP version 13
+# Subtest: actual native decision/cost/executor preserves d20 family and exact Fear before receipt replay
+ok 1 - actual native decision/cost/executor preserves d20 family and exact Fear before receipt replay
+  ---
+  duration_ms: 80.5668
+  type: 'test'
+  ...
+# Subtest: receipt write failure rolls native cost and saved roll back together
+ok 2 - receipt write failure rolls native cost and saved roll back together
+  ---
+  duration_ms: 68.1201
+  type: 'test'
+  ...
+# Subtest: manual authority, private range and proxied NPC hold before dice or spend
+ok 3 - manual authority, private range and proxied NPC hold before dice or spend
+  ---
+  duration_ms: 73.5746
+  type: 'test'
+  ...
+# Subtest: committed decision proof is historical provenance, and altered immutable NPC source fails
+ok 4 - committed decision proof is historical provenance, and altered immutable NPC source fails
+  ---
+  duration_ms: 75.6957
+  type: 'test'
+  ...
+# Subtest: native actor classification recognizes PC, proxy, autonomous NPC and unsupported actor without authority
+ok 5 - native actor classification recognizes PC, proxy, autonomous NPC and unsupported actor without authority
+  ---
+  duration_ms: 70.9765
+  type: 'test'
+  ...
+# Subtest: unresolved dependencies create a continuation without RNG, costs or invented success
+ok 6 - unresolved dependencies create a continuation without RNG, costs or invented success
+  ---
+  duration_ms: 111.1355
+  type: 'test'
+  ...
+# Subtest: owner reaction invitation is pending, exact and privately withdrawable without inferred dice
+ok 7 - owner reaction invitation is pending, exact and privately withdrawable without inferred dice
+  ---
+  duration_ms: 104.0327
+  type: 'test'
+  ...
+# Subtest: owner principal change and unauthenticated model reaction input cannot execute dice
+ok 8 - owner principal change and unauthenticated model reaction input cannot execute dice
+  ---
+  duration_ms: 76.5934
+  type: 'test'
+  ...
+# Subtest: native receipt arithmetic rejects fabricated saved result and actual providers cold-import
+ok 9 - native receipt arithmetic rejects fabricated saved result and actual providers cold-import
+  ---
+  duration_ms: 373.3281
+  type: 'test'
+  ...
+1..9
+# tests 9
+# suites 0
+# pass 9
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1107.9217

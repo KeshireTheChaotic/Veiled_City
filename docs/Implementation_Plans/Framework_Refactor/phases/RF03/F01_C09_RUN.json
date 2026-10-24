@@ -1,0 +1,9 @@
+{
+  "test_exit": 0,
+  "syntax_failures": [],
+  "syntax_checked": 8,
+  "ended": "2026-10-24T00:24:30.6669900Z",
+  "started": "2026-10-24T00:24:28.4260156Z",
+  "gate_exit": 1,
+  "run_id": "RF03-F01-C09"
+}

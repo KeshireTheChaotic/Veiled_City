@@ -1,0 +1,85 @@
+[
+  {
+    "old": "native-actor-control.js",
+    "native": "actor-control-rules.js",
+    "factory": "createActorControlRules",
+    "start": "export function nativeActorControl(",
+    "caps": [
+      "activeCityProxy"
+    ]
+  },
+  {
+    "old": "gm-action-capability.js",
+    "native": "gm-capability-rules.js",
+    "factory": "createGmCapabilityRules",
+    "start": "export function nativeReactionTarget(",
+    "caps": [
+      "buildNarrativeContext",
+      "activeCityProxy",
+      "consentAction",
+      "historicalActionSource",
+      "scenePresence",
+      "sceneAccess",
+      "conversationPrincipal",
+      "actorReferenceVisible",
+      "typedRollProof",
+      "isPvpIntent",
+      "narrativeSourceVisible",
+      "compileNativeFeatures",
+      "inspectGroupFeatureChild",
+      "planNativeSpotlight",
+      "recordNativeSpotlight",
+      "nativeActorControl",
+      "preRollFearOpportunity",
+      "commitPreRollFearCost"
+    ],
+    "values": [
+      "RANGE_BANDS"
+    ],
+    "extra": "import {featureCostPlan} from './feature-costs.js';\n"
+  },
+  {
+    "old": "gm-native-rolls.js",
+    "native": "gm-execution-rules.js",
+    "factory": "createGmExecutionRules",
+    "start": "function dependencyState(",
+    "caps": [
+      "inspectNativeGmDecision",
+      "commitGmActionCost",
+      "prepareArbitratedIncomingAttack",
+      "prepareArbitratedVolley",
+      "inspectVolley",
+      "EncounterLibrary",
+      "personalCharacter",
+      "conversationPrincipal",
+      "captureWorldInput",
+      "persistPlayerIntents",
+      "adjudicateAcceptedIntent",
+      "contributeRoll",
+      "rollRevision",
+      "consentAction",
+      "historicalActionSource",
+      "typedRollProof",
+      "indexWorldEvent",
+      "commitFeatureChoice",
+      "commitFeatureReactionCost",
+      "applyFeatureReactionOutcome",
+      "validateFeatureInvitation",
+      "featureReactionStakes",
+      "cancelFeatureReaction",
+      "commitNativeNpcAlliance",
+      "prepareGroupFeature",
+      "inspectGroupFeature",
+      "groupReactionState",
+      "groupReactionDetails",
+      "groupReactionOptions",
+      "professionalEntryRollState",
+      "commitProfessionalEntryUse",
+      "inspectProfessionalEntryUse"
+    ],
+    "values": [
+      "PROFESSIONAL_ENTRY"
+    ],
+    "extra": "import {gmD20Roll,d} from './dice.js';\n"
+  }
+]
