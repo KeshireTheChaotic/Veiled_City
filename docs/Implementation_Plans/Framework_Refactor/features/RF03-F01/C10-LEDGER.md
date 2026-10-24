@@ -1,0 +1,7 @@
+# RF03-F01 C10 ledger
+
+IMPLEMENTED / TESTS PENDING. Base a60e50dfcfcfdd14b091ab89e5632d06f9cde949. Provider0/$0, Codex UNMEASURED; release NOT AUTHORIZED. Rollback native factories/provider/public export/evidence together.
+
+## C10 complete ordinary roll and collaboration eligibility
+
+Base a60e50dfcfcfdd14b091ab89e5632d06f9cde949. Native ordinary contextual modifier and Help/Tag eligibility preparation/current/saved proof extracted unchanged into daggerheart/roll-modifier-rules and roll-participation-rules. Actual providers bind named callbacks only. Eight fresh cases8pass/0fail,exit0,687.3694ms;6syntax pass. Real SQLite validates source/mutation rollback, immutable context/modifier identity/reopen, exact contextual terms/current evidence, distinct Help and two-owner Tag eligibility without enrollment/spend/dice, inaccessible/private/net-disadvantage rejection, changed presence and saved-proof/disabled-authority distinction; actual providers cold-import. Source/authentication/current context/environment ports are explicit mocks; actual owner execution remains independently qualified at collaboration core. Two obsolete failure-import transition records retired with originals retained. Architecture-only final gate419sources,2381imports,SCC182,2537accepted,zero active/unowned/integrity errors. No deadline changes or passed test reruns. Body/hash/terminal evidence in F01_C10 files. Rollback checkpoint and exact2retirements together. Provider0/$0; Codex UNMEASURED; release NOT AUTHORIZED. F01/RF03 remain incomplete.

@@ -1,0 +1,30 @@
+[
+  {
+    "id": "d8b1de4730dd0478ea1ea22ad65306b3f425458241339fdf7cf0d098c371557a",
+    "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+    "from": "bot/src/native-roll-modifiers.js",
+    "to": "bot/src/gm-arbitration-contract.js",
+    "kind": "static",
+    "specifier": "./gm-arbitration-contract.js",
+    "owner": "daggerheart",
+    "max_occurrences": 1,
+    "remove_in_feature": "RF03-F01",
+    "expires_after": "RF03",
+    "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+    "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+  },
+  {
+    "id": "13eece2540e0e93efc3605a2c90e759fa3b0221a7d8b81fa88ccc6d81e6a5356",
+    "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+    "from": "bot/src/native-roll-participation.js",
+    "to": "bot/src/gm-arbitration-contract.js",
+    "kind": "static",
+    "specifier": "./gm-arbitration-contract.js",
+    "owner": "daggerheart",
+    "max_occurrences": 1,
+    "remove_in_feature": "RF03-F01",
+    "expires_after": "RF03",
+    "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+    "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+  }
+]

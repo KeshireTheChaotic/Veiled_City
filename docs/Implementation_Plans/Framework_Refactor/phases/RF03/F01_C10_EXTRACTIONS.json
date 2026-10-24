@@ -1,0 +1,36 @@
+[
+  {
+    "old": "native-roll-modifiers.js",
+    "native": "roll-modifier-rules.js",
+    "factory": "createRollModifierRules",
+    "caps": [
+      "inspectArbitrationOrigin",
+      "consentAction",
+      "historicalActionSource",
+      "gmRulingContext",
+      "nativeGmSceneContext",
+      "narrativeSourceVisible",
+      "indexWorldEvent",
+      "isPvpIntent",
+      "prepareEnvironmentNoiseOdds",
+      "prepareEnvironmentMemoryOdds",
+      "inspectEnvironmentNoiseOdds"
+    ]
+  },
+  {
+    "old": "native-roll-participation.js",
+    "native": "roll-participation-rules.js",
+    "factory": "createRollParticipationRules",
+    "caps": [
+      "inspectArbitrationOrigin",
+      "consentAction",
+      "historicalActionSource",
+      "sceneAccess",
+      "scenePresence",
+      "mayKnowRoll",
+      "narrativeSourceVisible",
+      "indexWorldEvent",
+      "isPvpIntent"
+    ]
+  }
+]

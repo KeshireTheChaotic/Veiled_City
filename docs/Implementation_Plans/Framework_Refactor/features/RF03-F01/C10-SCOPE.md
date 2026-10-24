@@ -1,0 +1,3 @@
+# RF03-F01 C10 — Complete contextual roll and collaboration eligibility
+
+Extract unchanged native ordinary modifier and Help/Tag Team eligibility issuance/history/current-use into Daggerheart. Keep source scene/ruling/environment/action ports in actual providers, reuse neutral hash/native failure. Preserve source range/owner/session/audience/presence, exact context, independent action intent and owner enrollment/spending separation. Fresh SQLite tests cover contextual Advantage with source/reopen/rollback, contextual rejection, separate Help/Tag eligibility, private/access/presence and immutable source guards. No new rule, choice or narrative restriction. Freeze one batch; source body equivalence, changed syntax and ratchet.
