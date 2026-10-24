@@ -5,3 +5,7 @@ import {createAdvancementRules} from '../../frameworks/daggerheart/public.js';
 export function connectCharacterAdvancement(catalog){
   return createCharacterAdvancementPort(createAdvancementRules(catalog));
 }
+
+import {createCharacterCreationConsumer} from '../../frameworks/character/public.js';
+import {createCharacterCreationRules} from '../../frameworks/daggerheart/public.js';
+export function connectCharacterCreation({catalog,consumer=createCharacterCreationConsumer()}){return consumer.bind(createCharacterCreationRules(catalog));}

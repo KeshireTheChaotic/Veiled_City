@@ -4,3 +4,5 @@ export {initializeEnvironmentScene} from './environment-scene.js';
 export {initializePvpAgreements} from './pvp-agreements.js';
 
 export {initializeNativeOutcomes} from './native-outcomes.js';
+
+export {initializeCharacterCreation} from './character-creation.js';

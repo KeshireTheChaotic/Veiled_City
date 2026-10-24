@@ -122,10 +122,13 @@
       "lifecycle": "Adopted by current level command consumers. Shared creation/PvP source vocabulary still legacy and explicitly unisolated.",
       "adoption_feature": "RF03-F01",
       "consumers": [
-        "bot/src/commands.js"
+        "bot/src/commands.js",
+        "bot/src/application/composition/character-creation.js"
       ],
       "tests": [
-        "bot/tests/ai-gm-2026-10/rf03-f01-c01.test.mjs"
+        "bot/tests/ai-gm-2026-10/rf03-f01-c01.test.mjs",
+        "bot/tests/ai-gm-2026-10/rf03-f01-c34.test.mjs",
+        "bot/tests/ai-gm-2026-10/rf03-f05-c07.test.mjs"
       ],
       "observed_directions": [
         {
@@ -147,7 +150,8 @@
         "graph_sha256": "1caa7f33db8af9cbe17685493f4f23e46deb1c80ac2cd01c34ef3f8f7517bfe2",
         "occurrences": 2
       },
-      "public_api": "bot/src/framework-to-framework/character--daggerheart/public.js"
+      "public_api": "bot/src/framework-to-framework/character--daggerheart/public.js",
+      "scope": "Native advancement plus character creation domain/trait/loadout validation; source vocabulary and concept/hook policy remain character-owned."
     },
     {
       "pair": "character--discord",

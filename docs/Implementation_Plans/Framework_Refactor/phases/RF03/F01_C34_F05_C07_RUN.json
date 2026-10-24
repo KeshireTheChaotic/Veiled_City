@@ -1,0 +1,67 @@
+{
+  "run_id": "F01_C34_F05_C07",
+  "syntax": [
+    {
+      "exit": 0,
+      "path": "bot/src/character-system.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/frameworks/daggerheart/character-creation-rules.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/frameworks/daggerheart/public.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/frameworks/character/contracts/creation.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/frameworks/character/public.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/framework-to-framework/character--daggerheart/public.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/application/composition/character-creation.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/application/composition/public.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/index.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/tests/ai-gm-2026-10/rf03-f01-c34.test.mjs"
+    },
+    {
+      "exit": 0,
+      "path": "bot/tests/ai-gm-2026-10/rf03-f05-c07.test.mjs"
+    }
+  ],
+  "hashes": {
+    "bot/src/character-system.js": "e00e812709a980f202d2d712080e3884e220cba2ca08919b8ee2d1aef096c99c",
+    "bot/src/application/composition/character-creation.js": "98c96213b38e054295831c49984a2bab765a09b08dec5797d8e0132f8f4a2d1f",
+    "bot/tests/ai-gm-2026-10/rf03-f01-c34.test.mjs": "c7d637967da96f294a62b36022bea514aedc22e373d0f8c3b9a1c2d49fc123b0",
+    "bot/tests/ai-gm-2026-10/rf03-f05-c07.test.mjs": "88b9788adf89d52fd36a30d39a32fc5d3220163f57dd1673360ba88385cbb264",
+    "bot/src/frameworks/character/contracts/creation.js": "b577b9a088cc87b6ff892ea48b021ca8055dd7907b0d66eb1d3995544ce8b2b9",
+    "bot/src/framework-to-framework/character--daggerheart/public.js": "f322e83d39e1dc1982f593b5c1afb0cd104a2349e00a0a32e6a4b4ea91737f29",
+    "bot/src/frameworks/daggerheart/public.js": "dcffac639e40dcd31b6d0deb9dd17367ebd461fc50914df2dea1ab48050c5e41",
+    "bot/src/frameworks/daggerheart/character-creation-rules.js": "173724b4a9415baacf579f194a8c4accda7534b0adfb614e6fc090a0a5f0e4f4",
+    "bot/src/frameworks/character/public.js": "5654b19602e0a8f190bb5331eeb5dd63960943b0a338f747bbfe507ab9c815df",
+    "bot/src/application/composition/public.js": "9472d495bd8b0fdb672e6ad49462f8d1d849fb1f4274695f3691167b9a7a820e",
+    "bot/src/index.js": "43a519764495406ca9a5bc1b494443e385d5568c062c59272ab4912a8889b141"
+  },
+  "architecture_exit": 0,
+  "base_sha": "25d1b4ea1bacb88c3b94a1055c43b3d410d02061",
+  "start": "2026-10-24T16:30:16.6022415-05:00",
+  "test_exit": 0,
+  "end": "2026-10-24T16:30:19.7821319-05:00"
+}

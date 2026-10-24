@@ -1,0 +1,10 @@
+{
+  "base_sha": "25d1b4ea1bacb88c3b94a1055c43b3d410d02061",
+  "source": "bot/src/character-system.js",
+  "target": "bot/src/frameworks/daggerheart/character-creation-rules.js",
+  "domain_trait_body_equivalent": true,
+  "body_sha256": "3e04e27e0812185e86d099aad3e122bf2844a111e101823cfcd5d8d15542def9",
+  "starting_loadout_checks_equivalent": true,
+  "starting_loadout_sha256": "0ef9575deb450e811e6472e719322d3c4c270493111383dbf879f7d9d7d354b1",
+  "retained": "Single character-owned class/domain/trait source vocabulary, normalization and hook/name review"
+}

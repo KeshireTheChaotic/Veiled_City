@@ -111,3 +111,5 @@ export {createNativeNoticeRules,noticeHash} from './native-notice-rules.js';
 export {createMechanicalOutcomeProjection} from './mechanical-outcome-projection.js';
 
 export {createEnvironmentProfileProposalRules} from './environment-profile-proposal-rules.js';
+
+export {createCharacterCreationRules} from './character-creation-rules.js';

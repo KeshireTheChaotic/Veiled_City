@@ -1,0 +1,58 @@
+TAP version 13
+# Subtest: every current class retains source-defined official domains and exactly one permitted custom replacement
+ok 1 - every current class retains source-defined official domains and exactly one permitted custom replacement
+  ---
+  duration_ms: 1.2988
+  type: 'test'
+  ...
+# Subtest: native creation trait spread retains exact values, name casing, numeric input behavior and nonmutation
+ok 2 - native creation trait spread retains exact values, name casing, numeric input behavior and nonmutation
+  ---
+  duration_ms: 0.2371
+  type: 'test'
+  ...
+# Subtest: native starting loadout validates only existing counts without choosing Experiences or cards
+ok 3 - native starting loadout validates only existing counts without choosing Experiences or cards
+  ---
+  duration_ms: 0.1643
+  type: 'test'
+  ...
+# Subtest: actual concept consumer composes native mechanics while retaining character-owned name and hook policy
+ok 4 - actual concept consumer composes native mechanics while retaining character-owned name and hook policy
+  ---
+  duration_ms: 0.3579
+  type: 'test'
+  ...
+# Subtest: existing ordinary source matching behavior is preserved rather than silently tightening native creation rules
+ok 5 - existing ordinary source matching behavior is preserved rather than silently tightening native creation rules
+  ---
+  duration_ms: 0.1097
+  type: 'test'
+  ...
+# Subtest: fixed creation consumer fails closed before binding and forbids source/service replacement
+ok 6 - fixed creation consumer fails closed before binding and forbids source/service replacement
+  ---
+  duration_ms: 0.7772
+  type: 'test'
+  ...
+# Subtest: actual two-framework adapter and once-only bootstrap preserve native validator results through source consumer
+ok 7 - actual two-framework adapter and once-only bootstrap preserve native validator results through source consumer
+  ---
+  duration_ms: 0.3358
+  type: 'test'
+  ...
+# Subtest: application initializes creation before runtime configuration and pair imports only character/native public interfaces
+ok 8 - application initializes creation before runtime configuration and pair imports only character/native public interfaces
+  ---
+  duration_ms: 0.5618
+  type: 'test'
+  ...
+1..8
+# tests 8
+# suites 0
+# pass 8
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 597.3769
