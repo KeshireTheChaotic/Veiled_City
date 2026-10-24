@@ -1,0 +1,44 @@
+{
+  "started": "2026-10-24T10:03:53.0961727Z",
+  "ended": "2026-10-24T10:03:54.8220214Z",
+  "run_id": "RF03-F01-C18",
+  "syntax": [
+    {
+      "path": "bot/src/gm-action-ruling.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/gm-ruling-rules.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/public.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf03-f01-c18.test.mjs",
+      "exit": 0
+    }
+  ],
+  "architecture_exit": 0,
+  "base_sha": "bdcdc9dac2ddf3c13557937ef28ed98154554f1d",
+  "test_exit": 0,
+  "frozen_hashes": [
+    {
+      "path": "bot/src/gm-action-ruling.js",
+      "sha256": "7FA21F2C4079B63FCA21F5D2578BB49B96F72284546207200AC69E398815F1BA"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/gm-ruling-rules.js",
+      "sha256": "04C6AD85CE72DD0A6A5D7BF9C32F8429F64A962127E46593CE6BD1DBABC6D9FB"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/public.js",
+      "sha256": "A1CA16F1140C275DCB4014EC8820420CA2515C1927F80859769D889108C9ADB3"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf03-f01-c18.test.mjs",
+      "sha256": "B265E31CDDE8B2C32306252F801CC5B2BB0E3281945E35C9B37D2A791DD1026F"
+    }
+  ]
+}

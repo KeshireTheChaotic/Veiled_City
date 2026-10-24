@@ -1,0 +1,38 @@
+{
+  "base_sha": "bdcdc9dac2ddf3c13557937ef28ed98154554f1d",
+  "unique_tests": 8,
+  "executions": 8,
+  "pass": 8,
+  "fail": 0,
+  "exit": 0,
+  "duration_ms": 800.1813,
+  "syntax_pass": 4,
+  "body_equivalence": true,
+  "body_sha256": "79d15c961d1239e936745663373c3447f1c94e87d7f2cbf7e7734cdc951ec8c1",
+  "prompt_unchanged": true,
+  "prompt_sha256": "2c66c6f978d6b68114fd7b83c75c527d882725c14cd754d7efc0ee7e3d742dea",
+  "hashes": {
+    "bot/src/gm-action-ruling.js": "7fa21f2c4079b63fca21f5d2578bb49b96f72284546207200ac69e398815f1ba",
+    "bot/src/frameworks/daggerheart/gm-ruling-rules.js": "04c6ad85ce72dd0a6a5d7bf9c32f8429f64a962127e46593ce6bd1dbabc6d9fb",
+    "bot/src/frameworks/daggerheart/public.js": "a1ca16f1140c275dcb4014ec8820420ca2515c1927f80859769d889108c9adb3",
+    "bot/tests/ai-gm-2026-10/rf03-f01-c18.test.mjs": "b265e31cdde8b2c32306252f801cc5b2bb0e3281945e35c9b37d2a791dd1026f"
+  },
+  "gate": {
+    "sourceModules": 447,
+    "unowned": 0,
+    "importOccurrences": 2448,
+    "internalImportOccurrences": 2273,
+    "cycleComponents": 1,
+    "largestCycle": 182,
+    "rawViolationOccurrences": 2498,
+    "acceptedLegacyOccurrences": 2498,
+    "activeViolationGroups": 0,
+    "transitionErrors": 0,
+    "pass": true
+  },
+  "limitations": "Actual new ruling rules, native rule-reference resolver and current shared proposal validator. Current owner/action/scene and lower native adjudication callbacks mocked; shared schema and lower source orchestration remain RF03 work. No live narrative/production qualification.",
+  "provider_calls": 0,
+  "provider_cost_usd": 0,
+  "codex_usage": "UNMEASURED",
+  "release": "NOT AUTHORIZED"
+}

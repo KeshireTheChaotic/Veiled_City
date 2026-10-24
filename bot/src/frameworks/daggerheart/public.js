@@ -66,3 +66,4 @@ export {createPvpRoundRules} from './pvp-round-rules.js';
 export {createPvpCampaignScopeRules} from './pvp-campaign-scope-rules.js';
 export {createPvpReactionRules} from './pvp-reaction-rules.js';
 export {createPvpTerminalRules} from './pvp-terminal-rules.js';
+export {createGmRulingRules} from './gm-ruling-rules.js';
