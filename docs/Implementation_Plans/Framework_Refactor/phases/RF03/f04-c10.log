@@ -1,0 +1,58 @@
+TAP version 13
+# Subtest: Sirens Outside uses actual printed native cost and a distinct ordinary world producer; replay never spends again
+ok 1 - Sirens Outside uses actual printed native cost and a distinct ordinary world producer; replay never spends again
+  ---
+  duration_ms: 51.2467
+  type: 'test'
+  ...
+# Subtest: reserved Fear or wrong category cannot be spent by an environmental identity request
+ok 2 - reserved Fear or wrong category cannot be spent by an environmental identity request
+  ---
+  duration_ms: 35.3971
+  type: 'test'
+  ...
+# Subtest: Door Chain native receipt creates no cost, movement or compelled PC response and retains actual current resident proof
+ok 3 - Door Chain native receipt creates no cost, movement or compelled PC response and retains actual current resident proof
+  ---
+  duration_ms: 46.2551
+  type: 'test'
+  ...
+# Subtest: Door Chain preserves creative identity fields while rejecting changed role, remote placement or invented native cost
+ok 4 - Door Chain preserves creative identity fields while rejecting changed role, remote placement or invented native cost
+  ---
+  duration_ms: 41.6401
+  type: 'test'
+  ...
+# Subtest: private identity receipt cannot be promoted to party or reused by another recipient for either native feature
+ok 5 - private identity receipt cannot be promoted to party or reused by another recipient for either native feature
+  ---
+  duration_ms: 90.0061
+  type: 'test'
+  ...
+# Subtest: identity producer, native cost, source and receipt roll back together after final receipt failure
+ok 6 - identity producer, native cost, source and receipt roll back together after final receipt failure
+  ---
+  duration_ms: 90.4974
+  type: 'test'
+  ...
+# Subtest: identity/source corruption invalidates receipt proof without undoing prior presence or charging again
+ok 7 - identity/source corruption invalidates receipt proof without undoing prior presence or charging again
+  ---
+  duration_ms: 105.2785
+  type: 'test'
+  ...
+# Subtest: current Door Chain scene changes hold new output while preserved historical source proof stays inspectable
+ok 8 - current Door Chain scene changes hold new output while preserved historical source proof stays inspectable
+  ---
+  duration_ms: 49.1504
+  type: 'test'
+  ...
+1..8
+# tests 8
+# suites 0
+# pass 8
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 582.1638

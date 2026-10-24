@@ -1,0 +1,28 @@
+{
+  "base_sha": "6e302afd8028bea4eae088242780523f46893b9f",
+  "modules": [
+    {
+      "source": "bot/src/native-environment-arrivals.js",
+      "target": "bot/src/frameworks/daggerheart/environment-arrival-rules.js",
+      "body_equivalent": true,
+      "body_sha256": "0251abbba146bf67ef6a3c62123ac3572ab21f7586bad08cdbeedf69f48c13b5",
+      "exports": [
+        "applyEnvironmentArrival",
+        "inspectEnvironmentArrival"
+      ]
+    },
+    {
+      "source": "bot/src/native-environment-door-chain.js",
+      "target": "bot/src/frameworks/daggerheart/environment-door-chain-rules.js",
+      "body_equivalent": true,
+      "body_sha256": "fb64dc6456af4542ae467f21b79bc8f9ed5fc680d192ec752eb5c0d4fc88f237",
+      "exports": [
+        "validateDoorChainProposal",
+        "applyEnvironmentDoorChain",
+        "inspectEnvironmentDoorChain",
+        "environmentDoorChainProjection",
+        "nativeEnvironmentDoorChainSituation"
+      ]
+    }
+  ]
+}

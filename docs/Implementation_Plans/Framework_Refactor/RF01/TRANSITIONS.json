@@ -24644,20 +24644,6 @@
       "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
     },
     {
-      "id": "0554653674318e54a3dcd799ab42821ae78daaa22f03fa13d67c005aa71d2e8f",
-      "code": "CYCLIC_IMPORT_EDGE",
-      "from": "bot/src/native-environment-arrivals.js",
-      "to": "bot/src/native-feature-windows.js",
-      "kind": "static",
-      "specifier": "./native-feature-windows.js",
-      "owner": "daggerheart",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF03-F04",
-      "expires_after": "RF03",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
-    },
-    {
       "id": "37b156457240a808e30268e10c3c1fd3202115fff1eb890d98d57494f05baccf",
       "code": "CYCLIC_IMPORT_EDGE",
       "from": "bot/src/native-environment-arrivals.js",

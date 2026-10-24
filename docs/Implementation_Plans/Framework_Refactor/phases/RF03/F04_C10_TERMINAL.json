@@ -1,0 +1,99 @@
+{
+  "syntax": [
+    {
+      "path": "bot/src/native-environment-arrivals.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/native-environment-door-chain.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/environment-arrival-rules.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/environment-door-chain-rules.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/public.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf03-f04-c10.test.mjs",
+      "exit": 0
+    }
+  ],
+  "architecture_exit": 1,
+  "base_sha": "6e302afd8028bea4eae088242780523f46893b9f",
+  "test_exit": 0,
+  "run_id": "F04_C10",
+  "start": "2026-10-24T05:56:15.1535535-05:00",
+  "duration_ms": 640.3517,
+  "end": "2026-10-24T05:56:16.7880555-05:00",
+  "hashes": {
+    "bot/src/frameworks/daggerheart/environment-door-chain-rules.js": "a6346115aa07a7b4fe269026bd0e926b21f164e40456e39ad8b901b0923dac19",
+    "bot/src/frameworks/daggerheart/public.js": "71efc5827bbf6b59f03489d8ee89805c27dcc8d3d27af7c056cb73615855d2be",
+    "bot/src/native-environment-door-chain.js": "0f16cdd68e49c66a2f6798fddb31745ebd15b65e1f76bf4f8c84c215f2e8ba7f",
+    "bot/src/native-environment-arrivals.js": "7bbf271dc5468f45e442033cd65aee81775525d3d9228e8e071a1d9c21e4be3c",
+    "bot/src/frameworks/daggerheart/environment-arrival-rules.js": "f68be663e873aa6a433112ab21923e4872e359edeec475a2e99b56309821be15",
+    "bot/tests/ai-gm-2026-10/rf03-f04-c10.test.mjs": "1bc020070575860c47aa678806d5e510bc21354f86daea6a90b7c1a4f005fa2c"
+  },
+  "unique_tests": 8,
+  "executions": 8,
+  "pass": 8,
+  "fail": 0,
+  "tap_duration_ms": 582.1638,
+  "syntax_pass": 6,
+  "body_equivalence": {
+    "base_sha": "6e302afd8028bea4eae088242780523f46893b9f",
+    "modules": [
+      {
+        "source": "bot/src/native-environment-arrivals.js",
+        "target": "bot/src/frameworks/daggerheart/environment-arrival-rules.js",
+        "body_equivalent": true,
+        "body_sha256": "0251abbba146bf67ef6a3c62123ac3572ab21f7586bad08cdbeedf69f48c13b5",
+        "exports": [
+          "applyEnvironmentArrival",
+          "inspectEnvironmentArrival"
+        ]
+      },
+      {
+        "source": "bot/src/native-environment-door-chain.js",
+        "target": "bot/src/frameworks/daggerheart/environment-door-chain-rules.js",
+        "body_equivalent": true,
+        "body_sha256": "fb64dc6456af4542ae467f21b79bc8f9ed5fc680d192ec752eb5c0d4fc88f237",
+        "exports": [
+          "validateDoorChainProposal",
+          "applyEnvironmentDoorChain",
+          "inspectEnvironmentDoorChain",
+          "environmentDoorChainProjection",
+          "nativeEnvironmentDoorChainSituation"
+        ]
+      }
+    ]
+  },
+  "gate": {
+    "mode": "ratchet",
+    "phase": "RF03",
+    "sourceModules": 466,
+    "unowned": 0,
+    "importOccurrences": 2486,
+    "internalImportOccurrences": 2311,
+    "cycleComponents": 1,
+    "largestCycle": 182,
+    "rawViolationOccurrences": 2487,
+    "acceptedLegacyOccurrences": 2487,
+    "activeViolationGroups": 0,
+    "transitionErrors": 0,
+    "pass": true,
+    "firstErrors": []
+  },
+  "retired_records": 1,
+  "limitations": "Actual native source-defined feature policy, same native feature cost planner and disposable SQLite. Original ordinary NPC world identity creation/source/current owner/audience/presence/catalog/opportunity peers explicitly mocked. Actual world producer/native pair integration and publication not qualified.",
+  "provider_calls": 0,
+  "provider_cost_usd": 0,
+  "codex_usage": "UNMEASURED",
+  "release": "NOT AUTHORIZED"
+}
