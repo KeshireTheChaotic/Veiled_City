@@ -3,7 +3,10 @@ bot/src/fear-reservations.js
 bot/src/frameworks/daggerheart/action-consent-rules.js
 bot/src/frameworks/daggerheart/actor-control-rules.js
 bot/src/frameworks/daggerheart/adversary-attack-passive-rules.js
+bot/src/frameworks/daggerheart/adversary-binding-rules.js
 bot/src/frameworks/daggerheart/adversary-damage-defense-rules.js
+bot/src/frameworks/daggerheart/adversary-hit-rules.js
+bot/src/frameworks/daggerheart/condition-recovery-rules.js
 bot/src/frameworks/daggerheart/environment-audience-rules.js
 bot/src/frameworks/daggerheart/environment-binding-rules.js
 bot/src/frameworks/daggerheart/environment-rule-contexts.js
@@ -14,6 +17,7 @@ bot/src/frameworks/daggerheart/feature-effect-rules.js
 bot/src/frameworks/daggerheart/feature-window-rules.js
 bot/src/frameworks/daggerheart/gm-capability-rules.js
 bot/src/frameworks/daggerheart/gm-execution-rules.js
+bot/src/frameworks/daggerheart/native-feature-definitions.json
 bot/src/frameworks/daggerheart/pc-death-rules.js
 bot/src/frameworks/daggerheart/pre-roll-fear-recovery-rules.js
 bot/src/frameworks/daggerheart/pre-roll-fear-rules.js
@@ -28,6 +32,8 @@ bot/src/frameworks/daggerheart/unarmed-attack-rules.js
 bot/src/gm-action-capability.js
 bot/src/gm-native-rolls.js
 bot/src/native-actor-control.js
+bot/src/native-adversary-context.js
+bot/src/native-condition-recovery.js
 bot/src/native-environment-auction.js
 bot/src/native-environment-audience.js
 bot/src/native-environment-chain-of-title.js
@@ -54,8 +60,10 @@ bot/src/native-environment-three-vectors.js
 bot/src/native-environment-wrong-offering.js
 bot/src/native-equipped-attacks.js
 bot/src/native-experience-eligibility.js
+bot/src/native-feature-catalog.js
 bot/src/native-feature-damage.js
 bot/src/native-feature-effects.js
+bot/src/native-feature-hit.js
 bot/src/native-feature-passives.js
 bot/src/native-feature-windows.js
 bot/src/native-roll-modifiers.js
@@ -77,6 +85,10 @@ bot/tests/ai-gm-2026-10/rf03-f01-c11.test.mjs
 bot/tests/ai-gm-2026-10/rf03-f02-c15.test.mjs
 bot/tests/ai-gm-2026-10/rf03-f02-c16.test.mjs
 bot/tests/ai-gm-2026-10/rf03-f02-c17.test.mjs
+bot/tests/ai-gm-2026-10/rf03-f02-c18.test.mjs
+bot/tests/ai-gm-2026-10/rf03-f02-c19.test.mjs
+bot/tests/ai-gm-2026-10/rf03-f02-c20.test.mjs
+bot/tests/ai-gm-2026-10/rf03-f02-c21.test.mjs
 bot/tests/ai-gm-2026-10/rf03-f03-c16.test.mjs
 bot/tests/ai-gm-2026-10/rf03-f03-c17.test.mjs
 bot/tests/ai-gm-2026-10/rf03-f03-c18.test.mjs

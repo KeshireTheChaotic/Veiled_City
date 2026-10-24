@@ -1,0 +1,3 @@
+# RF03-F02 C22 — Qualified native source completion and residual accountability
+
+Reconcile individually only the17remaining F02 provider-only bindings/locations after C18–C21 extraction, adoption and completed fresh qualification. Preserve IDs/edges/count maxima/baseline; source peer native implementations retain RF03 obligations. No source/enforcement/gameplay changes or passed test reruns. Native source decomposition for inventoried F02 sources can close, while runtime/public producer adoption and other RF03 native combat workflows remain explicit local holds. One phase-aware architecture check and accurate current evidence/rollback.

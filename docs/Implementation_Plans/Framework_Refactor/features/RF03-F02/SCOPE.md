@@ -10,3 +10,7 @@ Extract all native catalog descriptor/hash/handler/source/taxonomy validation in
 ## Corrective C02 — native owner errata contract
 
 Move the existing immutable errata registry validation and GM-private review-contract projection into the Daggerheart framework. Keep JSON/card/catalog source reads in the existing source provider and pass their exact immutable values plus catalog/hash/error capabilities to the native factory. Preserve errata IDs, source hashes, supported/review_only states, handler versions, returned fields and failure codes. The actual existing unified adjudication consumer must continue to receive the native review contract through its provider. Add fresh tests for authentic source hashes, changed/unknown source, unsupported handler/version and no execution authority; do not enable or alter any review-only entry.
+
+## Current scoped completion
+
+C18–C22 complete native policy extraction for all inventoried F02 source modules. Remaining provider-only integration/public source adoption has exact individually authorized future owners/deadlines; native F01/F03/F04 targets remain RF03 obligations. F02 scoped source decomposition complete with local integration holds; no full phase/combat isolation/live qualification. See CURRENT_QUALIFICATION and F02_C22_RESIDUALS.

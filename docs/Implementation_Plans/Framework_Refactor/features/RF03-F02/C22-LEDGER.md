@@ -1,0 +1,11 @@
+# RF03-F02 C22 ledger
+
+IMPLEMENTED / GATE PENDING. Code HEAD ebf248b492f9b0de1f1c34aac71097c7f095a6ab.17exact residual records individually reassigned under owner amendment; complete original/current/evidence/dependency/removal information in F02_C22_RESIDUALS. No record added/deleted or maximum changed. Other RF03 native targets remain independently accountable. Provider0/$0; Codex UNMEASURED; RELEASE NOT AUTHORIZED.
+
+## C22 F02 inventoried native decomposition closure / integration local holds
+
+Code checkpoint ebf248b492f9b0de1f1c34aac71097c7f095a6ab. All remaining inventoried F02 rule bodies extracted/adopted and qualified by C18–C20; immutable definition asset moved byte-identical and sole production reader qualified by C21.17existing provider-only integration/location records individually reassigned under owner amendment; full original/current IDs, source edges, maxima, evidence, dependency and exact accountable future feature/removal criteria in F02_C22_RESIDUALS. No native target responsibility deferred: native encounter/source/ordinary/group/incoming peers retain independent F01/F03/F04 RF03 obligations. Native catalog filesystem composition remains only a source-loading provider, now accountable to RF05-F05.
+
+F02 status: SCOPED NATIVE DECOMPOSITION COMPLETE, WITH LOCAL INTEGRATION HOLDS. This does not claim full combat isolation, production startup or all native peer behavior. RF03 phase exit remains INCOMPLETE. All F02-origin RF03 deadline records resolved or qualified/responsibly reassigned; zeroF02records remain. RF03 ratchet429sources,2404imports,SCC182,2515accepted legacy occurrences,zero active/unowned/integrity errors,exit0. No tests rerun for metadata. Current cumulative delta163unique passing cases/169executions across19fresh files;116changed syntax/test checks (including repairs). Exact current hashes/results/remaining555RF03records (F01 245,F03 131,F04 179) in CURRENT evidence files. No RF04 implementation begun.
+
+Rollback C22 restores only17recorded original deadlines; revert C21 physical asset and loader with its single retired location record, then C20,C19,C18 native extraction checkpoints with exact retired records. Keep user edits. Provider0/$0; Codex UNMEASURED; no owner questions/new restrictions/critical blockers. RELEASE NOT AUTHORIZED.

@@ -1,19 +1,19 @@
 {
-  "head": "6f431477ce1af3212e7b12c1740c9bc42c7d0446",
+  "head": "ebf248b492f9b0de1f1c34aac71097c7f095a6ab",
   "summary": {
-    "sourceModules": 426,
+    "sourceModules": 429,
     "unowned": 0,
-    "importOccurrences": 2398,
-    "internalImportOccurrences": 2223,
+    "importOccurrences": 2404,
+    "internalImportOccurrences": 2229,
     "cycleComponents": 1,
     "largestCycle": 182,
-    "rawViolationOccurrences": 2525,
-    "acceptedLegacyOccurrences": 2525,
+    "rawViolationOccurrences": 2515,
+    "acceptedLegacyOccurrences": 2515,
     "activeViolationGroups": 0,
     "transitionErrors": 0,
     "pass": true
   },
-  "manifest_sha256": "b1b97b6778ee0f2094c07ae1dd4c6aad4b544b99418b520572c292e9900a6a27",
+  "manifest_sha256": "17d341b70206914636706de108e225b45e547b7e82b1a2da9dbe0df92aa63235",
   "baseline_sha256": "213b8e19491ae0ebcbcf85321b00ba40768420f27233e8d84f84ccad96cb84d6",
   "activeViolations": [],
   "transitionErrors": []
