@@ -1,0 +1,46 @@
+TAP version 13
+# Subtest: actual successful owner action authorizes only departure of its exact hazard and a private native receipt
+ok 1 - actual successful owner action authorizes only departure of its exact hazard and a private native receipt
+  ---
+  duration_ms: 37.4546
+  type: 'test'
+  ...
+# Subtest: restart replay does not resolve a second event or restore the historical hazard
+ok 2 - restart replay does not resolve a second event or restore the historical hazard
+  ---
+  duration_ms: 34.6239
+  type: 'test'
+  ...
+# Subtest: failed action, wrong target or unsupported effect cannot substitute for a verified owner success
+ok 3 - failed action, wrong target or unsupported effect cannot substitute for a verified owner success
+  ---
+  duration_ms: 28.1068
+  type: 'test'
+  ...
+# Subtest: changed hazard source must be established before recovery; mere source labels never authorize cleanup
+ok 4 - changed hazard source must be established before recovery; mere source labels never authorize cleanup
+  ---
+  duration_ms: 33.8509
+  type: 'test'
+  ...
+# Subtest: receipt failure rolls back the source, mutation and hazard departure together
+ok 5 - receipt failure rolls back the source, mutation and hazard departure together
+  ---
+  duration_ms: 33.6499
+  type: 'test'
+  ...
+# Subtest: saved private native recovery rejects foreign owner, audience and corrupted ancestry without changing the original resources
+ok 6 - saved private native recovery rejects foreign owner, audience and corrupted ancestry without changing the original resources
+  ---
+  duration_ms: 41.6063
+  type: 'test'
+  ...
+1..6
+# tests 6
+# suites 0
+# pass 6
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 278.9218

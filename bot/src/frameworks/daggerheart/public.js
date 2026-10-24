@@ -83,3 +83,4 @@ export {createPvpBrawlRules} from './pvp-brawl-rules.js';
 export {createEnvironmentTraceRules} from './environment-trace-rules.js';
 export {createPvpFearMoveRules} from './pvp-fear-move-rules.js';
 export {createEnvironmentAccessRules} from './environment-access-rules.js';
+export {createEnvironmentRecoveryRules} from './environment-recovery-rules.js';

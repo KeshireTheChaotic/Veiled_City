@@ -1,0 +1,3 @@
+# RF03-F04 C09 — Native emergency cleanup after owner outcome
+
+Extract unchanged exact successful owner-action emergency cleanup and immutable private resolution proof. Source effect, owner/action/outcome, historical ancestry and scene-presence producers injected. Native validation never substitutes a successful action, moves PCs, spends resources or restores historical hazards. Fresh disposable SQLite tests cover native positive cleanup, exact target/outcome, current hazard, replay/restart, private/history ancestry and rollback through explicit mocked world/source producers. One frozen batch plus changed-file syntax/ratchet; release not authorized.
