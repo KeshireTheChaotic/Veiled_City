@@ -1,0 +1,72 @@
+TAP version 13
+# Subtest: exact voluntary participation needs separate authenticated responses from every owner
+ok 1 - exact voluntary participation needs separate authenticated responses from every owner
+  ---
+  duration_ms: 70.0786
+  type: 'test'
+  ...
+# Subtest: interaction replay survives SQLite reopen and cannot change its decision
+ok 2 - interaction replay survives SQLite reopen and cannot change its decision
+  ---
+  duration_ms: 55.5432
+  type: 'test'
+  ...
+# Subtest: revoke and decline remain terminal, and cooperation cannot stand in for PvP
+ok 3 - revoke and decline remain terminal, and cooperation cannot stand in for PvP
+  ---
+  duration_ms: 79.5973
+  type: 'test'
+  ...
+# Subtest: foreign owner, stale principal, stale window and expired offer fail before response
+ok 4 - foreign owner, stale principal, stale window and expired offer fail before response
+  ---
+  duration_ms: 54.4266
+  type: 'test'
+  ...
+# Subtest: exact declaration ancestry rejects withdrawal, privacy relabel, source edits and future framing
+ok 5 - exact declaration ancestry rejects withdrawal, privacy relabel, source edits and future framing
+  ---
+  duration_ms: 63.0181
+  type: 'test'
+  ...
+# Subtest: atomic response rollback removes both authenticated source and consent row
+ok 6 - atomic response rollback removes both authenticated source and consent row
+  ---
+  duration_ms: 54.07
+  type: 'test'
+  ...
+# Subtest: read-only terminal history requires the exact resolved native receipt and saved roll
+not ok 7 - read-only terminal history requires the exact resolved native receipt and saved roll
+  ---
+  duration_ms: 58.2398
+  type: 'test'
+  location: 'D:\\Library\\Development\\Veiled_City\\bot\\tests\\ai-gm-2026-10\\rf03-f03-c17.test.mjs:85:1'
+  failureType: 'testCodeFailure'
+  error: 'Exact native terminal action receipt required for read-only history.'
+  code: 'SCENE_ACTION_WINDOW'
+  stack: |-
+    fail (file:///D:/Library/Development/Veiled_City/bot/src/frameworks/daggerheart/action-consent-rules.js:8:44)
+    Object.completedActionSource (file:///D:/Library/Development/Veiled_City/bot/src/frameworks/daggerheart/action-consent-rules.js:31:92)
+    TestContext.<anonymous> (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf03-f03-c17.test.mjs:90:24)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: actual provider keeps public exports and byte-identical consent hashing
+ok 8 - actual provider keeps public exports and byte-identical consent hashing
+  ---
+  duration_ms: 290.0533
+  type: 'test'
+  ...
+1..8
+# tests 8
+# suites 0
+# pass 7
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 794.8676

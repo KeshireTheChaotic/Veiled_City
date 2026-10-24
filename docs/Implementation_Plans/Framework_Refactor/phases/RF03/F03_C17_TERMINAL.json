@@ -1,0 +1,40 @@
+{
+  "base_sha": "adac41a5056b159a3d8c2ba0a91023e81d9daef7",
+  "status": "QUALIFIED_SCOPED",
+  "unique_tests": 8,
+  "executions": 9,
+  "initial": {
+    "exit": 1,
+    "pass": 7,
+    "fail": 1,
+    "duration_ms": 794.8676
+  },
+  "repair": {
+    "exit": 0,
+    "pass": 1,
+    "duration_ms": 120.4491
+  },
+  "fixture_correction": "Missing receipt.data.request reference; no production change or passing-case rerun.",
+  "body_equivalence": true,
+  "body_sha256": "f22f36ad684e4ba9f3e1b615305acf45efb5e6584c41449f5ecd1b43a647262f",
+  "hashes": {
+    "bot/src/action-consent.js": "71c6ed7e9cca1ae09c0e714d629ab1816f9591df35e64de096d6b2714d661413",
+    "bot/src/frameworks/daggerheart/action-consent-rules.js": "efc6af37cda90f512a33e06e34eb2a20270c8c683b9938134746be1fd097a43a",
+    "bot/src/frameworks/daggerheart/public.js": "bbea50a56617c9d99e9c78896b6a146aebaa64cd23916e5134c756b4b8e29074",
+    "bot/tests/ai-gm-2026-10/rf03-f03-c17.test.mjs": "dd22392dec9a55290a38ffe657112edc71b5e0cb5b9c44142635e80674b0ae83"
+  },
+  "architecture": {
+    "sources": 409,
+    "imports": 2353,
+    "largest_cycle": 182,
+    "accepted_occurrences": 2551,
+    "active": 0,
+    "unowned": 0,
+    "integrity_errors": 0,
+    "exit": 0
+  },
+  "provider_calls": 0,
+  "provider_cost_usd": 0,
+  "codex_usage": "UNMEASURED",
+  "release": "NOT AUTHORIZED"
+}
