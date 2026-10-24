@@ -1,0 +1,13 @@
+{
+  "rf03_strict_exit": 1,
+  "start": "2026-10-24T06:09:59.5019219-05:00",
+  "base_sha": "644dfdbd9737c7ad90c52c37342a51b8834d5181",
+  "end": "2026-10-24T06:10:02.3078468-05:00",
+  "syntax_exit": 0,
+  "run_id": "F06_C04",
+  "test_exit": 0,
+  "rf03_ratchet_exit": 0,
+  "duration_ms": 550.5347,
+  "test_sha256": "20b91b9f54ba7f2650b3999a5d155fbbfd189338636dd551f1e6e7789ca1289b",
+  "rf02_ratchet_exit": 0
+}

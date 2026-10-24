@@ -1,0 +1,3 @@
+# RF03-F06 C04 — Changed provider interface linkage and exact remaining authority gap
+
+Fresh actual ESM entrypoint checks for newly extracted owner terms/replies/player clauses/native environmental record/recording guards. Aggregate only completed fresh targeted evidence without repeating passed tests; exact RF02/RF03 ratchets and expected strict failure, current source hashes and individual obligations. Record newly confirmed narrative-pvp.js native agreement policy still under narrative inventory ownership/deadline; that code remains RF03 native extraction work regardless of old RF05 metadata. No new exception, facade, global locator, baseline edit or full phase certification.

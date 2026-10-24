@@ -1,10 +1,10 @@
 {
-  "head": "cc0cbe990b537942809063cb9ee21325baaab805",
-  "remaining_records": 533,
+  "head": "644dfdbd9737c7ad90c52c37342a51b8834d5181",
+  "remaining_records": 532,
   "by_feature": {
     "RF03-F01": 228,
     "RF03-F03": 131,
-    "RF03-F04": 174
+    "RF03-F04": 173
   },
   "by_module": {
     "RF03-F01": {
@@ -58,7 +58,7 @@
     },
     "RF03-F04": {
       "bot/src/native-environment-access.js": 16,
-      "bot/src/native-environment-arrivals.js": 18,
+      "bot/src/native-environment-arrivals.js": 17,
       "bot/src/native-environment-capabilities.js": 1,
       "bot/src/native-environment-countdown.js": 15,
       "bot/src/native-environment-dispatch.js": 3,
@@ -3967,20 +3967,6 @@
       "to": "bot/src/native-environment-instance.js",
       "kind": "static",
       "specifier": "./native-environment-instance.js",
-      "owner": "daggerheart",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF03-F04",
-      "expires_after": "RF03",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
-    },
-    {
-      "id": "0554653674318e54a3dcd799ab42821ae78daaa22f03fa13d67c005aa71d2e8f",
-      "code": "CYCLIC_IMPORT_EDGE",
-      "from": "bot/src/native-environment-arrivals.js",
-      "to": "bot/src/native-feature-windows.js",
-      "kind": "static",
-      "specifier": "./native-feature-windows.js",
       "owner": "daggerheart",
       "max_occurrences": 1,
       "remove_in_feature": "RF03-F04",

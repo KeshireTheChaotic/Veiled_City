@@ -1,0 +1,28 @@
+TAP version 13
+# Subtest: actual current owner-consent providers link to native policy and preserve exact external offer projection and opt-in guard
+ok 1 - actual current owner-consent providers link to native policy and preserve exact external offer projection and opt-in guard
+  ---
+  duration_ms: 1.862
+  type: 'test'
+  ...
+# Subtest: actual native imaging provider accepts creative finding and clue without a patient or predetermined PC response field
+ok 2 - actual native imaging provider accepts creative finding and clue without a patient or predetermined PC response field
+  ---
+  duration_ms: 0.3022
+  type: 'test'
+  ...
+# Subtest: actual recording provider rejects an unauthenticated choice through its native engine before any repository or artifact call
+ok 3 - actual recording provider rejects an unauthenticated choice through its native engine before any repository or artifact call
+  ---
+  duration_ms: 0.266
+  type: 'test'
+  ...
+1..3
+# tests 3
+# suites 0
+# pass 3
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 475.0521

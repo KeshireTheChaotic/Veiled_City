@@ -1,16 +1,16 @@
 {
-  "head": "cc0cbe990b537942809063cb9ee21325baaab805",
+  "head": "644dfdbd9737c7ad90c52c37342a51b8834d5181",
   "phase_status": "INCOMPLETE",
   "feature_statuses": {
     "F01": "INCOMPLETE: native GM ruling/arbitration/action review, ordinary effect proof/application, evidence analysis, encounter activation, schema, roll sharing/declaration/finalization and mechanical projections now extracted and scoped-qualified. Encounter/source/publication integration and residual producer ownership still require reconciliation.",
     "F02": "SCOPED_NATIVE_DECOMPOSITION_COMPLETE / LOCAL INTEGRATION HOLDS: inventoried native policy extracted; source bindings explicitly accountable to named future features; full phase combat paths still require F01/F03 peers.",
-    "F03": "INCOMPLETE: native rounds, campaign scope, hazard reactions, terminal projections, multiplayer opportunities/locks and immediate Fear policies now separated and scoped-qualified. Player-authored conflict clauses/owner-consent and actual world/NPC/native-peer qualification remain.",
-    "F04": "INCOMPLETE: added exact optional owner intrusion trace Hope rules and VIP admission. Remaining environment handlers and world producer/native integration pending; Closing Time Moves unsupported internal hold remains.",
+    "F03": "INCOMPLETE: native clause/ratification/disclosure, external owner terms/replies and pre-roll announcement eligibility now extracted and scoped-qualified. Native bilateral agreement source in narrative-pvp.js still needs actual native/narrative composition; actual NPC/threat/incoming and other peer qualification remains.",
+    "F04": "INCOMPLETE: added native emergency cleanup, Sirens Outside, Door Chain, imaging clue and owner recording. Actual native recording→upload registration→oneFear countdown integration qualified with explicit source/ancestry mocks. Remaining witnesses/scene/device handlers and world pair adoption remain; Closing Time Moves unsupported.",
     "F05": "PARTIAL: adopted intent/native, character advancement and command display pairs; complete receipt-backed native/narrative and world pair not adopted",
-    "F06": "PARTIAL: 413 unique passing cases across50fresh files;446case executions. Actual provider cold imports qualified for latest delta, complete native workflow and pair exit still not satisfied."
+    "F06": "PARTIAL: 467unique passing cases/505case executions/58fresh files; actual changed provider entrypoints loaded. Full native agreement/environment/pair phase exit not satisfied."
   },
-  "fresh_unique_passed": 413,
-  "case_executions": 446,
+  "fresh_unique_passed": 467,
+  "case_executions": 505,
   "evidence": [
     {
       "id": "F01_C06",
@@ -734,6 +734,110 @@
         "duration_ms": 4297.055
       },
       "limitations": "Actual complete current ESM graph cold imports and safe early provider guards only; no native full workflow, writer, world producer or publication qualification."
+    },
+    {
+      "id": "F03_C29",
+      "file": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F03_C29_TERMINAL.json",
+      "sha256": "81cea098457b3f4d714f851c9dd2e5a2a2513b902b64d14c38f1858ffba3549b",
+      "unique_passed": 9,
+      "case_executions": 9,
+      "terminal": {
+        "initial_test_exit": 1,
+        "final_test_exit": 0,
+        "duration_ms": 492.0847
+      },
+      "limitations": "Actual complete native clause/draft/ratification/disclosure/scope-review policy and disposable SQLite. Current independent owner/terminal context/source indexing and queued publication capabilities explicitly mocked. No actual native contest terminal producer or Discord/outbox acknowledgment qualification."
+    },
+    {
+      "id": "F03_C30",
+      "file": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F03_C30_TERMINAL.json",
+      "sha256": "705f82910d984d0b7842bb2ef41d605c65570c37d28ed36bda235ab79ea7124b",
+      "unique_passed": 8,
+      "case_executions": 8,
+      "terminal": {
+        "initial_test_exit": 0,
+        "final_test_exit": 0,
+        "duration_ms": 450.2195
+      },
+      "limitations": "Actual exact native offer terms and response policy with disposable SQLite. Current owner/personal continuity/source/organization/arc/project/evidence handlers and hasOwnerConsent repository truth are explicit mocks. No actual downstream domain execution or full native PvP agreement source qualification."
+    },
+    {
+      "id": "F03_C31",
+      "file": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F03_C31_TERMINAL.json",
+      "sha256": "6a289e63e5d3ff29690a6538350fd4fb5277535c30f7d930d9d5cadc7e4c0566",
+      "unique_passed": 6,
+      "case_executions": 6,
+      "terminal": {
+        "initial_test_exit": 0,
+        "final_test_exit": 0,
+        "duration_ms": 170.1099
+      },
+      "limitations": "Actual native exact announcement eligibility/reservation guards and SQLite; pre-roll and GM decision source/native proof and queued publication repository supplied as mocks. Renderer/publisher body unchanged, no new transport/acknowledgment/uncertain-send qualification."
+    },
+    {
+      "id": "F04_C09",
+      "file": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F04_C09_TERMINAL.json",
+      "sha256": "80471d18d2e2246acb9a469b5a48ac56a08e0fdb42cbcc0c84ea512bd1ab4b40",
+      "unique_passed": 6,
+      "case_executions": 6,
+      "terminal": {
+        "initial_test_exit": 0,
+        "final_test_exit": 0,
+        "duration_ms": 278.9218
+      },
+      "limitations": "Actual complete native recovery rules and disposable SQLite. Original effect/source/current owner/native owner action/outcome/ancestry and presence producers explicitly mocked. No full owner-action/world-hazard/source integration or publication qualification."
+    },
+    {
+      "id": "F04_C10",
+      "file": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F04_C10_TERMINAL.json",
+      "sha256": "202d42f608ac8da1352423e3b072a85b7103efde38e6f7aed6f5ed48d4e9cc03",
+      "unique_passed": 8,
+      "case_executions": 8,
+      "terminal": {
+        "initial_test_exit": 0,
+        "final_test_exit": 0,
+        "duration_ms": 582.1638
+      },
+      "limitations": "Actual native source-defined feature policy, same native feature cost planner and disposable SQLite. Original ordinary NPC world identity creation/source/current owner/audience/presence/catalog/opportunity peers explicitly mocked. Actual world producer/native pair integration and publication not qualified."
+    },
+    {
+      "id": "F04_C11",
+      "file": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F04_C11_TERMINAL.json",
+      "sha256": "8e292e30d7cec4807c36a30de08bfcf2c4d6edb89d06c34f0d751505d1d05f92",
+      "unique_passed": 6,
+      "case_executions": 6,
+      "terminal": {
+        "initial_test_exit": 0,
+        "final_test_exit": 0,
+        "duration_ms": 253.6198
+      },
+      "limitations": "Actual complete native diagnostic clue rules and disposable SQLite; origin/profile/catalog/opportunity/current audience/source producer capabilities explicitly mocked. Creative text is preserved, not semantically certified. No real patient/world/native writer/publication qualification."
+    },
+    {
+      "id": "F04_C12",
+      "file": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F04_C12_TERMINAL.json",
+      "sha256": "30b9affeaa6263941594ed89e2f549a94b963cc359569e8b6b75c42e33c292d7",
+      "unique_passed": 8,
+      "case_executions": 13,
+      "terminal": {
+        "initial_test_exit": 1,
+        "final_test_exit": 0,
+        "duration_ms": 631.1495
+      },
+      "limitations": "Actual new recording and previously qualified native upload registration/countdown/cost run together with disposable SQLite. Owner/ordinary action outcome/current scene/observation/source-index journal/historical ancestry/artifact repository/catalog/opportunity capabilities explicitly mocked. No actual network upload, recipient knowledge, production source or publication qualification. Two sequential fixture deficiencies repaired; only failed cases rerun."
+    },
+    {
+      "id": "F06_C04",
+      "file": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F06_C04_TERMINAL.json",
+      "sha256": "953789114792b065d7fdee32b2b7b0cd68ffd3a61a55cebc35a72e039b614fb0",
+      "unique_passed": 3,
+      "case_executions": 3,
+      "terminal": {
+        "initial_test_exit": 0,
+        "final_test_exit": 0,
+        "duration_ms": 475.0521
+      },
+      "limitations": "Actual changed provider ESM imports and exact owner terms/opt-in/closed native record guards; no full authoritative source/native bilateral agreement/world producer/publication qualification."
     }
   ],
   "sourceHashes": {
@@ -760,7 +864,7 @@
     "bot/src/frameworks/daggerheart/pc-death-rules.js": "d539828ef86c24ab4472cc19ebf70e6bb8d0a1135c5aa887960dc18aaa020dc6",
     "bot/src/frameworks/daggerheart/pre-roll-fear-recovery-rules.js": "ce3121acd9eb41212323304a81127ae7eb8815e70225858fc40331ad3e0a1293",
     "bot/src/frameworks/daggerheart/pre-roll-fear-rules.js": "27b4f79e5d4a2c60b1db07e98ba24215b4c04423292f5aaa1fc4ad02323a5d49",
-    "bot/src/frameworks/daggerheart/public.js": "249224007cd78d39131e2a0aad486e93ca39aadeab50a9f044dc8770fcf0e12c",
+    "bot/src/frameworks/daggerheart/public.js": "5b3db004e880f743e1253cd9af6288c245a81d8d496e8dca98c989e3b4350a02",
     "bot/src/frameworks/daggerheart/pvp-damage-rules.js": "4e7dfbcd44de6a8dad7c99e87b4b4cdfe22103c45b2daa320fa0a64dd0fc7527",
     "bot/src/frameworks/daggerheart/roll-collaboration-rules.js": "fc34174a80e8c3fa9ef4863379ee870e2275a42c697991bba1e4573756054bba",
     "bot/src/frameworks/daggerheart/roll-modifier-rules.js": "4a750b7ec87c9d697459a5c33d694fdb30d531bd57d08c69bd7fc98e202f9b29",
@@ -938,30 +1042,57 @@
     "bot/src/native-environment-access.js": "bd8be634df8e885c8e4babc0467de8f85824c0e6de965e0d2cc7687124054020",
     "bot/tests/ai-gm-2026-10/rf03-f04-c08.test.mjs": "eba9bfd9a03ce4db21b3cbd8c3e4f6727df4a833cce424e51216ec5b42bf0c87",
     "bot/src/frameworks/daggerheart/environment-access-rules.js": "723ececb092be7fd83e539a873d2c005a4aeeaf45f4df92aea24b3916ab76351",
-    "bot/tests/ai-gm-2026-10/rf03-f06-c03.test.mjs": "e04a3cbb33f02760d90f4f4f634e7e28a34ba9228f54aca9dd7e723f79e97da2"
+    "bot/tests/ai-gm-2026-10/rf03-f06-c03.test.mjs": "e04a3cbb33f02760d90f4f4f634e7e28a34ba9228f54aca9dd7e723f79e97da2",
+    "bot/src/frameworks/daggerheart/pvp-authorship-rules.js": "b8b430876d59e6f7e65fe6ee41cfd024a0c787ee1e8c082b826119ced44fdef4",
+    "bot/tests/ai-gm-2026-10/rf03-f03-c29.test.mjs": "0c41fca675ffa1c4d2938c37a59b756c8ed708f69cab863eee731c393b55b048",
+    "bot/src/pvp-authorship.js": "2ac00ec66e063045d3d2a64f71286d80927bb818845c31dc0152924660c6afad",
+    "bot/src/consent-native.js": "3cde277f88db2f95b630d5d9280f2a67c291e04378024ce124fa68af58aa153b",
+    "bot/src/owner-consent.js": "f14b804ce4004fad2d7615e362370291e6fd7e1f0900f5376e863f464a509f32",
+    "bot/src/frameworks/daggerheart/owner-consent-rules.js": "c5f2108e9286f6be17b70fec42ee4d67da9bd8fc180c065e2811eccee48ef98b",
+    "bot/src/frameworks/daggerheart/consent-response-rules.js": "c05e40c91765aacd93bc2c903419beeb5621bef36d2379cfa95c7a9595ab3d46",
+    "bot/tests/ai-gm-2026-10/rf03-f03-c30.test.mjs": "2a08fc0724a1b8a7f750674dfb128a4129fcec63ab14277af33723ace867b1e3",
+    "bot/src/pre-roll-fear-notice.js": "9b4856e4c3f9aff5e4312d6bb444895a045c156524af96ca2250c1d7132af62d",
+    "bot/src/frameworks/daggerheart/pre-roll-fear-notice-rules.js": "0d20909108dbb167b6b170818af54cf02ec34a5d7e09a6a830412d4f6652c0c4",
+    "bot/tests/ai-gm-2026-10/rf03-f03-c31.test.mjs": "d28e13b0e7278ab184e40a2525b4e59a5f73622f792253f5a4a60678db297dd8",
+    "bot/src/native-environment-recovery.js": "7eff3c501643be37ed83d7aa7180b15bb627d6684c383571a1d0d63065705e47",
+    "bot/tests/ai-gm-2026-10/rf03-f04-c09.test.mjs": "3ea55edb81129e9b7aa0015b8a1a4348e3937231934ad3c5396e07594bf09c50",
+    "bot/src/frameworks/daggerheart/environment-recovery-rules.js": "7dc5ecdeac6b43e4c40f81238b67b0b48908c6146ce6882034b09488ea56147c",
+    "bot/src/frameworks/daggerheart/environment-door-chain-rules.js": "a6346115aa07a7b4fe269026bd0e926b21f164e40456e39ad8b901b0923dac19",
+    "bot/src/native-environment-door-chain.js": "0f16cdd68e49c66a2f6798fddb31745ebd15b65e1f76bf4f8c84c215f2e8ba7f",
+    "bot/src/native-environment-arrivals.js": "7bbf271dc5468f45e442033cd65aee81775525d3d9228e8e071a1d9c21e4be3c",
+    "bot/src/frameworks/daggerheart/environment-arrival-rules.js": "f68be663e873aa6a433112ab21923e4872e359edeec475a2e99b56309821be15",
+    "bot/tests/ai-gm-2026-10/rf03-f04-c10.test.mjs": "1bc020070575860c47aa678806d5e510bc21354f86daea6a90b7c1a4f005fa2c",
+    "bot/src/native-environment-imaging.js": "b49f0b100f1b71c3223451a03dc37301fd7df7451440871d9125f0616d0e4034",
+    "bot/src/frameworks/daggerheart/environment-imaging-rules.js": "43473da5146e456e4e77b7af3a18c044740eed2399fcda14cbe323569f91eb71",
+    "bot/tests/ai-gm-2026-10/rf03-f04-c11.test.mjs": "dfcdc4539205744440513a42a199dec5f2738dffead0918b74a7838e30bbb913",
+    "bot/src/frameworks/daggerheart/environment-recording-rules.js": "3a07ddf969008f2d3c65af52a867835b8b5a99e97db2e3e4a725fc8806be3967",
+    "bot/tests/ai-gm-2026-10/rf03-f04-c12.test.mjs": "c1f4c3bb3aeafe1195ecc2ccc433cac72869a5b4d00d19f0458bc0270675e455",
+    "bot/src/native-environment-recording.js": "8b46e0e815fdb258985a220136d96236f88baa39d1041a973985fc05482f3852",
+    "bot/tests/ai-gm-2026-10/rf03-f06-c04.test.mjs": "20b91b9f54ba7f2650b3999a5d155fbbfd189338636dd551f1e6e7789ca1289b",
+    "bot/src/narrative-pvp.js": "e9333d96ae689181fcc90ff8ef6d9a9a0d7b58419b1bd9023c98ff182bdc1a8d"
   },
   "architecture": {
     "mode": "ratchet",
     "phase": "RF03",
-    "sourceModules": 463,
+    "sourceModules": 472,
     "unowned": 0,
-    "importOccurrences": 2480,
-    "internalImportOccurrences": 2305,
+    "importOccurrences": 2498,
+    "internalImportOccurrences": 2323,
     "cycleComponents": 1,
     "largestCycle": 182,
-    "rawViolationOccurrences": 2488,
-    "acceptedLegacyOccurrences": 2488,
+    "rawViolationOccurrences": 2487,
+    "acceptedLegacyOccurrences": 2487,
     "activeViolationGroups": 0,
     "transitionErrors": 0,
     "pass": true,
     "firstErrors": []
   },
   "remaining_rf03": {
-    "remaining_records": 533,
+    "remaining_records": 532,
     "by_feature": {
       "RF03-F01": 228,
       "RF03-F03": 131,
-      "RF03-F04": 174
+      "RF03-F04": 173
     }
   },
   "qualified_provider_residuals_2": 171,
@@ -1019,11 +1150,11 @@
       "gameplay_change": false
     }
   ],
-  "fresh_test_files": 50,
-  "changed_syntax_passes": 261,
-  "syntax_failures_repaired": 2,
-  "test_file_parse_failures_repaired": 2,
-  "evidence_note": "Aggregate of completed targeted fresh batches only. Two initial fresh test-file parse failures repaired separately from case executions; associated source-path change in C27 justified16reruns, not unchanged reruns. No fresh full union or live qualification claim.",
+  "fresh_test_files": 58,
+  "changed_syntax_passes": 296,
+  "syntax_failures_repaired": 3,
+  "test_file_parse_failures_repaired": 3,
+  "evidence_note": "Aggregate of completed feature batches only, no frozen full-union run. Initial test-file parse failures are counted separately. C12 required two sequential fixture repairs (source-index journaling then missing clock methods), only failed cases rerun; production unchanged. Actual source/owner/world/publication peers are not certified by mocks.",
   "local_holds": [
     {
       "feature": "RF03-F04",
@@ -1033,6 +1164,24 @@
     {
       "feature": "RF03-F05",
       "reason": "Complete native receipt-to-narrative and native-world producer pair adoption not implemented."
+    },
+    {
+      "feature": "RF03-F03",
+      "source": "bot/src/narrative-pvp.js",
+      "source_sha256": "e9333d96ae689181fcc90ff8ef6d9a9a0d7b58419b1bd9023c98ff182bdc1a8d",
+      "original_owner": "narrative",
+      "original_deadline": "RF05-F03",
+      "reason": "Confirmed native bilateral agreement/owner/terms/signature/attempt staging responsibilities remain in narrative-owned source despite original future deadline. They remain RF03 native work; no reassignment or completion claimed.",
+      "functions": [
+        "proposePvp",
+        "reviewPvp",
+        "revisePvp",
+        "respondPvp",
+        "validatePvpAgreement",
+        "pvpOwnerContext",
+        "stagePvpAttempts"
+      ],
+      "smallest_safe_implementation": "Extract exact native agreement policy into Daggerheart and adopt an explicit narrative consumer port through daggerheart--narrative in actual application composition. Keep original source/current owner/publication capabilities and historical receipts; no forwarding facade, new cross-owner import, rebaseline, duplicate rule or hidden service locator. Qualify native positive independent owner signatures, termination/recovery and actual composition before closure."
     }
   ]
 }

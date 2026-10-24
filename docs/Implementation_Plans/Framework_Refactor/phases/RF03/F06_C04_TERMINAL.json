@@ -1,0 +1,43 @@
+{
+  "rf03_strict_exit": 1,
+  "start": "2026-10-24T06:09:59.5019219-05:00",
+  "base_sha": "644dfdbd9737c7ad90c52c37342a51b8834d5181",
+  "end": "2026-10-24T06:10:02.3078468-05:00",
+  "syntax_exit": 0,
+  "run_id": "F06_C04",
+  "test_exit": 0,
+  "rf03_ratchet_exit": 0,
+  "duration_ms": 550.5347,
+  "test_sha256": "20b91b9f54ba7f2650b3999a5d155fbbfd189338636dd551f1e6e7789ca1289b",
+  "rf02_ratchet_exit": 0,
+  "unique_tests": 3,
+  "executions": 3,
+  "pass": 3,
+  "fail": 0,
+  "tap_duration_ms": 475.0521,
+  "syntax_pass": 1,
+  "hashes": {
+    "bot/tests/ai-gm-2026-10/rf03-f06-c04.test.mjs": "20b91b9f54ba7f2650b3999a5d155fbbfd189338636dd551f1e6e7789ca1289b"
+  },
+  "gate": {
+    "mode": "ratchet",
+    "phase": "RF03",
+    "sourceModules": 472,
+    "unowned": 0,
+    "importOccurrences": 2498,
+    "internalImportOccurrences": 2323,
+    "cycleComponents": 1,
+    "largestCycle": 182,
+    "rawViolationOccurrences": 2487,
+    "acceptedLegacyOccurrences": 2487,
+    "activeViolationGroups": 0,
+    "transitionErrors": 0,
+    "pass": true,
+    "firstErrors": []
+  },
+  "provider_calls": 0,
+  "provider_cost_usd": 0,
+  "codex_usage": "UNMEASURED",
+  "release": "NOT AUTHORIZED",
+  "limitations": "Actual changed provider ESM imports and exact owner terms/opt-in/closed native record guards; no full authoritative source/native bilateral agreement/world producer/publication qualification."
+}
