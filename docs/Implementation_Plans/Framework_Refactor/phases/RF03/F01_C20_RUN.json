@@ -1,0 +1,44 @@
+{
+  "frozen_hashes": [
+    {
+      "sha256": "6C132544A8FC5BD88344198B49176D08E33FE17AF2F3CFC3B3BF14BFB269BD6B",
+      "path": "bot/src/gm-action-review.js"
+    },
+    {
+      "sha256": "EBB47BDE52E44166663DAD4D44DB2BEC2E9A62C6BCF55CA8B882FC16C42E8540",
+      "path": "bot/src/frameworks/daggerheart/gm-action-review-rules.js"
+    },
+    {
+      "sha256": "CBF8632C9D4E0BCB7E5AD30A34ED191D711CAC7A89192C835ACA9B9366062846",
+      "path": "bot/src/frameworks/daggerheart/public.js"
+    },
+    {
+      "sha256": "D0FC3E2A728D55312508685A98621180F56BDCF718D6AC7419B65E3925C3223F",
+      "path": "bot/tests/ai-gm-2026-10/rf03-f01-c20.test.mjs"
+    }
+  ],
+  "syntax": [
+    {
+      "exit": 0,
+      "path": "bot/src/gm-action-review.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/frameworks/daggerheart/gm-action-review-rules.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/frameworks/daggerheart/public.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/tests/ai-gm-2026-10/rf03-f01-c20.test.mjs"
+    }
+  ],
+  "base_sha": "2ef5ef1936cc34bde0115a3ceea74b1ed2e713bb",
+  "run_id": "RF03-F01-C20",
+  "architecture_exit": 0,
+  "ended": "2026-10-24T10:08:16.6490374Z",
+  "test_exit": 0,
+  "started": "2026-10-24T10:08:14.9444995Z"
+}

@@ -1,0 +1,36 @@
+{
+  "base_sha": "2ef5ef1936cc34bde0115a3ceea74b1ed2e713bb",
+  "unique_tests": 8,
+  "executions": 8,
+  "pass": 8,
+  "fail": 0,
+  "exit": 0,
+  "duration_ms": 672.9232,
+  "syntax_pass": 4,
+  "body_equivalence": true,
+  "body_sha256": "2cc057159cbf7f85785ffe975a53833bf6163884b82ef5886608eb7ccbffa360",
+  "hashes": {
+    "bot/src/gm-action-review.js": "6c132544a8fc5bd88344198b49176d08e33fe17af2f3cfc3b3bf14bfb269bd6b",
+    "bot/src/frameworks/daggerheart/gm-action-review-rules.js": "ebb47bde52e44166663dad4d44db2bec2e9a62c6bcf55ca8b882fc16c42e8540",
+    "bot/src/frameworks/daggerheart/public.js": "cbf8632c9d4e0bcb7e5ad30a34ed191d711cac7a89192c835aca9b9366062846",
+    "bot/tests/ai-gm-2026-10/rf03-f01-c20.test.mjs": "d0fc3e2a728d55312508685a98621180f56bdcf718d6ac7419b65e3925c3223f"
+  },
+  "gate": {
+    "sourceModules": 449,
+    "unowned": 0,
+    "importOccurrences": 2452,
+    "internalImportOccurrences": 2277,
+    "cycleComponents": 1,
+    "largestCycle": 182,
+    "rawViolationOccurrences": 2497,
+    "acceptedLegacyOccurrences": 2497,
+    "activeViolationGroups": 0,
+    "transitionErrors": 0,
+    "pass": true
+  },
+  "limitations": "Actual native review policy with nested disposable SQLite; current owner/source/terminal marker/lower native revalidation and ordinary effect adapters mocked. No full production or live recovery qualification.",
+  "provider_calls": 0,
+  "provider_cost_usd": 0,
+  "codex_usage": "UNMEASURED",
+  "release": "NOT AUTHORIZED"
+}

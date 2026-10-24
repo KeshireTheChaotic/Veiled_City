@@ -1,0 +1,58 @@
+TAP version 13
+# Subtest: review inbox is private status; stranger receives nothing and GM diagnostics do not become owner approval
+ok 1 - review inbox is private status; stranger receives nothing and GM diagnostics do not become owner approval
+  ---
+  duration_ms: 35.6153
+  type: 'test'
+  ...
+# Subtest: expected stale source stays auditable and non-executable while unexpected storage failure propagates
+ok 2 - expected stale source stays auditable and non-executable while unexpected storage failure propagates
+  ---
+  duration_ms: 26.3381
+  type: 'test'
+  ...
+# Subtest: only original owner can withdraw and terminalize their declaration; saved review remains readable after restart
+ok 3 - only original owner can withdraw and terminalize their declaration; saved review remains readable after restart
+  ---
+  duration_ms: 33.0054
+  type: 'test'
+  ...
+# Subtest: replacement requires a distinct current declaration from the same actual owner
+ok 4 - replacement requires a distinct current declaration from the same actual owner
+  ---
+  duration_ms: 36.4679
+  type: 'test'
+  ...
+# Subtest: saved-rule recovery requires authenticated GM and the exact native missing-rule review, never a capability override
+ok 5 - saved-rule recovery requires authenticated GM and the exact native missing-rule review, never a capability override
+  ---
+  duration_ms: 59.4326
+  type: 'test'
+  ...
+# Subtest: terminal marker failure restores review status, original action and new source in the same transaction
+ok 6 - terminal marker failure restores review status, original action and new source in the same transaction
+  ---
+  duration_ms: 30.7794
+  type: 'test'
+  ...
+# Subtest: effect retry or withdrawal uses separate non-authorizing controls and preserves the original completed action
+ok 7 - effect retry or withdrawal uses separate non-authorizing controls and preserves the original completed action
+  ---
+  duration_ms: 38.5489
+  type: 'test'
+  ...
+# Subtest: actual native review provider cold-imports original inbox and operation APIs
+ok 8 - actual native review provider cold-imports original inbox and operation APIs
+  ---
+  duration_ms: 338.2047
+  type: 'test'
+  ...
+1..8
+# tests 8
+# suites 0
+# pass 8
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 672.9232

@@ -1,0 +1,117 @@
+/** Native scoped action review, separate authenticated GM revalidation and owner terminal choices. */
+import {createHash} from 'node:crypto';
+import {StateConflictError} from '../../kernel/errors.js';
+export function createGmActionReviewRules({capabilities}){
+const {consentAction,personalCharacter,indexWorldEvent,adjudicateGmRuling,currentScene,recordOwnerActionTerminal,ordinaryActionProof,applyOrdinaryEffects,conversationPrincipal}=capabilities||{};
+if([consentAction,personalCharacter,indexWorldEvent,adjudicateGmRuling,currentScene,recordOwnerActionTerminal,ordinaryActionProof,applyOrdinaryEffects,conversationPrincipal].some(fn=>typeof fn!=='function'))throw new TypeError('Native action review capabilities required');
+const hash=v=>createHash("sha256").update(JSON.stringify(v)).digest("hex");
+const principalFailures=new Set(["Active session required.","Select an authenticated current controlled role.",
+  "Controller attendance required.","Active campaign character required."]);
+const messages={feature_permission:"This needs a verified character capability; no power was granted.",
+  native_adapter_absence:"This effect needs a supported native adapter; no effect was applied.",
+  world_epistemic:"Current scene evidence is missing; no hidden fact was invented.",
+  rules_ambiguity:"A verified applicable rule is missing; no dice or cost was authorized.",
+  authorization_or_clarification:"Current authorization or clarification is required; no effect was applied."};
+function fail(message){throw new StateConflictError(message);}
+function inventory(db,guild){const rows=[];
+  for(let offset=0;offset<10000;offset+=100){const page=db.listCityRecords(guild,{kind:"unsupported_action",includeGM:true,limit:100,offset});
+    rows.push(...page);if(page.length<100)return rows;}
+  fail("Review inventory needs bounded GM inspection; no authority is silently truncated.");
+}
+function actionReviewInbox(db,guild,user,{gm=false}={}){
+  if(!db.getActiveSession(guild))return [];
+  const scene=currentScene(db,guild),assignment=scene.session_id&&db.activeAssignment(scene.session_id,user);
+  if(!gm&&(!assignment||db.getCharacter(assignment.character_id)?.owner_user_id!==user))return [];
+  const pc=gm?null:personalCharacter(db,guild,user);
+  return inventory(db,guild).filter(r=>gm||r.data.owner===user&&r.data.actor===pc.id&&r.data.session===scene.session_id)
+    .map(r=>{let proof=null;try{
+      proof=r.data.effect_proposal?ordinaryActionProof(db,guild,r.data.action,{mode:r.data.private_scene?'private':'party',
+        actorUserId:r.data.owner,actorCharacterId:r.data.actor}):consentAction(db,guild,r.data.action);
+    }catch(error){
+      if(!['SCENE_ACTION_WINDOW','ORDINARY_EFFECT'].includes(error.code)&&!principalFailures.has(error.message))throw error;
+      // Expected stale proof remains auditable, never executable; unexpected storage/runtime faults propagate.
+    }
+      const live=!!proof;
+      return {review:r.record_key,revision:hash(r),action:r.data.action,status:r.status,
+        category:r.data.category,current_source:live,attempt:proof?.row.data.source_span||null,
+        message:`${messages[r.data.category]} ${live?r.data.alternative:"The original source is stale; use a new owner declaration, never replay it."}`,
+        ...(r.data.effect_proposal?{effect_review:true}:{}),...(gm?{reason_code:r.data.reason_code,source:r.source_event,ruling:r.data.ruling}:{}),
+        authority:"Status only; never consent, dice, success or effect permission."};});
+}
+/** Called only by windowOperation with authenticated Discord user / native isGM. Model fields cannot supply gm. */
+function actionReviewOperation(db,guild,user,input,{gm=false}={}){
+  const {op,...args}=input;
+  if(op==="action-review-inbox"){
+    if(Object.keys(args).length)fail("Review inbox takes no foreign scope.");return actionReviewInbox(db,guild,user,{gm});
+  }
+  if(['action-review-effect-retry','action-review-effect-withdraw'].includes(op)){
+    if(Object.keys(args).sort().join(',')!=='review,revision')fail('Closed exact effect review required.');
+    return db.transaction(()=>{
+      const r=db.getCityRecord(guild,'unsupported_action',args.review);
+      if(!r?.data.effect_proposal||r.status!=='needs_review'||hash(r)!==args.revision)fail('Effect review changed or is terminal.');
+      const scope={mode:r.data.private_scene?'private':'party',actorUserId:r.data.owner,actorCharacterId:r.data.actor};
+      if(op==='action-review-effect-retry'){
+        if(!gm)fail('Authenticated GM revalidation required; no approval override.');
+        ordinaryActionProof(db,guild,r.data.action,scope);
+      }else{
+        const p=conversationPrincipal(db,guild,user,r.data.actor);
+        if(p.kind!=='owner'||p.user!==r.data.owner)fail('Only the original current owner may withdraw this follow-through.');
+      }
+      const source=indexWorldEvent(db,guild,{key:`effect-review:${hash([r.record_key,args.revision,user,op])}`,
+        kind:'ordinary_effect_review',title:'Scoped follow-through review, not action authority',source_id:`${gm?'human_gm':'player'}:${user}`,
+        visibility:'gm',session_id:r.data.session,scene:r.data.scene,
+        details:{review:r.record_key,operation:op,reviewer:user,non_authorizing:true}},user);
+      db.saveCityRecord(guild,{...r,key:r.record_key,status:op==='action-review-effect-withdraw'?'withdrawn':'needs_review',
+        data:{...r.data,effect_review_source:source.event_key}});
+      if(op==='action-review-effect-retry')applyOrdinaryEffects(db,guild,[r.data.effect_proposal],scope);
+      return actionReviewInbox(db,guild,user,{gm}).find(item=>item.review===r.record_key);
+    });
+  }
+  const fields=op==="action-review-retry"?["review","revision","ruling_key"]
+    :op==="action-review-replace"?["review","revision","replacement"]:["review","revision"];
+  if(!["action-review-retry","action-review-withdraw","action-review-replace"].includes(op)
+    ||Object.keys(args).sort().join(",")!==fields.sort().join(","))fail("Closed exact native review operation required.");
+  return db.transaction(()=>{
+    const r=db.getCityRecord(guild,"unsupported_action",args.review),a=r&&db.getCityRecord(guild,"typed_intent",r.data.action);
+    if(!r||args.revision!==hash(r)||r.status!=="needs_review")fail("Review changed or is terminal; inspect its current private status.");
+    if(r.data.effect_proposal)fail('Use the scoped effect review controls; saved action outcomes cannot be withdrawn or replaced here.');
+    if(r.visibility!=="gm"||r.source_event!==a?.source_event||r.data.source_hash!==a.data.source_hash
+      ||r.data.actor!==a.data.actor||r.data.owner!==a.data.owner_user_id||r.data.principal_revision!==a.data.actor_principal_revision)
+      fail("Exact source-bound review ancestry required.");
+    const proof=consentAction(db,guild,a?.record_key),scope={mode:a.visibility==="character"?"private":"party",
+      actorUserId:a.data.owner_user_id,actorCharacterId:a.data.actor};
+    if(op==="action-review-retry"){
+      const ruling=db.getCityRecord(guild,"gm_action_ruling",r.data.ruling),saved=db.getRulesRuling(guild,args.ruling_key);
+      if(!gm||!saved||r.data.reason_code!=="RULE_UNVERIFIED"||r.data.original_resolution!=="roll_required"
+        ||ruling?.data.proposal.disposition!=="standard_action_roll"||ruling.data.proposal.saved_ruling_key!==args.ruling_key)
+        fail("Authenticated GM and the exact missing saved rule required; no capability/adapter override.");
+      const source=indexWorldEvent(db,guild,{key:`gm-action-review:${hash([r.record_key,args.revision,hash(saved)])}`,
+        kind:"gm_action_review",source_id:`human_gm:${user}`,title:"Revalidate exact saved rule",visibility:"gm",
+        session_id:proof.scene.session_id,scene:proof.scene.key,details:{human_reviewed:true,review:r.record_key,
+          proposal_hash:ruling.data.proposal_hash,previous_hash:hash(ruling),rule_hash:hash(saved)}},user);
+      db.saveCityRecord(guild,{kind:"gm_action_review_receipt",key:source.event_key,status:"authorized",
+        source_event:source.event_key,visibility:"gm",data:{version:1,review:r.record_key,event_hash:hash(source),reviewer:user,
+          authority:"Authenticated GM saved-rule revalidation only; no new intent, ability, cost or effect."}});
+      adjudicateGmRuling(db,guild,a.record_key,ruling.data.proposal,scope,{reviewRef:source.event_key});
+    }else{
+      if(proof.principal.user!==user)fail("Only the current action owner may withdraw or replace their intent.");
+      if(op==="action-review-replace"){
+        const next=consentAction(db,guild,args.replacement);
+        if(next.principal.user!==user||next.row.data.actor!==a.data.actor||next.row.source_event===a.source_event)
+          fail("Replacement needs a distinct current owner-authored declaration; it is not an inferred tactic.");
+      }
+      const source=indexWorldEvent(db,guild,{key:`action-review-choice:${hash([r.record_key,user,op,args.replacement||null])}`,
+        kind:"action_review_choice",source_id:`player:${user}`,title:"Owner's native review choice",visibility:"character",subject_key:a.data.actor,
+        session_id:proof.scene.session_id,scene:proof.scene.key,details:{author:user,character_id:a.data.actor,
+          review:r.record_key,choice:op,replacement:args.replacement||null}},user);
+      db.saveCityRecord(guild,{...r,key:r.record_key,status:op==="action-review-withdraw"?"withdrawn":"superseded",
+        data:{...r.data,choice_source:source.event_key,replacement:args.replacement||null}});
+      const terminal=db.saveCityRecord(guild,{...a,key:a.record_key,data:{...a.data,gm_review_terminal:source.event_key}});
+      recordOwnerActionTerminal(db,guild,terminal,source.event_key);
+    }
+    return actionReviewInbox(db,guild,user,{gm}).find(row=>row.review===r.record_key);
+  });
+}
+
+return Object.freeze({actionReviewInbox,actionReviewOperation});
+}
