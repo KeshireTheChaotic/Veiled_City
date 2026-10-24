@@ -1,0 +1,3 @@
+# RF03-F01 C32 — Native notice source and audience proof
+
+Extract complete existing read-only notice revision/current scene/owner/saved roll/explicit disclosure/native attack/modifier/participation/PvP/Fear receipt guards unchanged. Preserve closed deterministic native texts and delegate existing roll formatting/source projection peers; native code neither authorizes dice nor chooses resources nor sends messages. Original module becomes provider composition only; no broad coupled-module forwarding. Fresh SQLite source records test valid and denied private/party/disclosed/native history paths, revisions and current recipients. One frozen batch and changed syntax only. No gameplay/creative/publishing changes; RELEASE NOT AUTHORIZED.

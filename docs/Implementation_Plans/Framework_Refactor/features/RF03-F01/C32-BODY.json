@@ -1,0 +1,8 @@
+{
+  "base_sha": "60e241a0d7f22711a3c91d9ebb2e726be901af04",
+  "source": "bot/src/native-notice.js",
+  "target": "bot/src/frameworks/daggerheart/native-notice-rules.js",
+  "body_equivalent": true,
+  "body_sha256": "a49e81cc9809822ce4b5d0cec14bb032153e393f6267fa009310a5cb3b4aee45",
+  "constant_byte_equivalent": true
+}

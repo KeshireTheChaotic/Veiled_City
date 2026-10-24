@@ -1,0 +1,64 @@
+TAP version 13
+# Subtest: current owner private notice reads exact source and revision across restart without any effect
+ok 1 - current owner private notice reads exact source and revision across restart without any effect
+  ---
+  duration_ms: 39.5176
+  type: 'test'
+  ...
+# Subtest: stale scene, revision, revoked owner source and changed PC control fail before rendering
+ok 2 - stale scene, revision, revoked owner source and changed PC control fail before rendering
+  ---
+  duration_ms: 57.1046
+  type: 'test'
+  ...
+# Subtest: another player receives no private roll without exact authenticated owner disclosure
+ok 3 - another player receives no private roll without exact authenticated owner disclosure
+  ---
+  duration_ms: 60.9511
+  type: 'test'
+  ...
+# Subtest: party roll requires saved native result plus separately authored matching public disclosure
+ok 4 - party roll requires saved native result plus separately authored matching public disclosure
+  ---
+  duration_ms: 64.1086
+  type: 'test'
+  ...
+# Subtest: saved typed equipped attack and contributing native modifiers reverify historical receipts
+ok 5 - saved typed equipped attack and contributing native modifiers reverify historical receipts
+  ---
+  duration_ms: 47.7352
+  type: 'test'
+  ...
+# Subtest: GM private decision and native attack status reject stale projection revisions without choices or dice
+ok 6 - GM private decision and native attack status reject stale projection revisions without choices or dice
+  ---
+  duration_ms: 38.5911
+  type: 'test'
+  ...
+# Subtest: private damage notice retains owner Armor and death choices while rejecting stale status
+ok 7 - private damage notice retains owner Armor and death choices while rejecting stale status
+  ---
+  duration_ms: 37.1519
+  type: 'test'
+  ...
+# Subtest: Fear effect output requires resolved trigger and exact saved private owner terms
+ok 8 - Fear effect output requires resolved trigger and exact saved private owner terms
+  ---
+  duration_ms: 47.0207
+  type: 'test'
+  ...
+# Subtest: unknown notice kind and private use of public approved projection are denied
+ok 9 - unknown notice kind and private use of public approved projection are denied
+  ---
+  duration_ms: 33.3341
+  type: 'test'
+  ...
+1..9
+# tests 9
+# suites 0
+# pass 9
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 4747.8359

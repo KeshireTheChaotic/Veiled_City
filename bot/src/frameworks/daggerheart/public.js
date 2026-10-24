@@ -105,3 +105,5 @@ export {createConsequenceReconciliationRules} from './consequence-reconciliation
 export {createEnvironmentOutputRules,environmentOutcomeKinds} from './environment-output-rules.js';
 
 export {createEnvironmentDispatchRules} from './environment-dispatch-rules.js';
+
+export {createNativeNoticeRules,noticeHash} from './native-notice-rules.js';

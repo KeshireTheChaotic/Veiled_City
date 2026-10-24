@@ -1,0 +1,32 @@
+{
+  "end": "2026-10-24T16:18:31.8452549-05:00",
+  "run_id": "F01_C32",
+  "start": "2026-10-24T16:18:24.8864199-05:00",
+  "test_exit": 0,
+  "hashes": {
+    "bot/src/frameworks/daggerheart/public.js": "44c030ee6da638d54c286748f17238e91320d96f44848b47858d3ca90fa56b6f",
+    "bot/src/frameworks/daggerheart/native-notice-rules.js": "cfe9f5d602e4142474ee2d9d87a5f3507d0e1a30d9eaa60dee5223164a807c14",
+    "bot/src/native-notice.js": "ddecfa1bc84467d6e2e87b7a706a6944714f7773b5e911c524cfc60eb0999478",
+    "bot/tests/ai-gm-2026-10/rf03-f01-c32.test.mjs": "97ae9c240ea1dd876d37f781200c90a99de7cf94f53e3fe874daf3b97204e01e"
+  },
+  "base_sha": "60e241a0d7f22711a3c91d9ebb2e726be901af04",
+  "architecture_exit": 0,
+  "syntax": [
+    {
+      "path": "bot/src/native-notice.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/native-notice-rules.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/public.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf03-f01-c32.test.mjs",
+      "exit": 0
+    }
+  ]
+}
