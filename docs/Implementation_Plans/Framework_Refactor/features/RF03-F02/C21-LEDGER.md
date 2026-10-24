@@ -1,0 +1,7 @@
+# RF03-F02 C21 ledger
+
+IMPLEMENTED / TESTS PENDING. Base c1a667d366f43d5bd77210b4658f2696ea49ce3e. Physical move only; original source bytes preserved. Provider0/$0; Codex UNMEASURED; RELEASE NOT AUTHORIZED.
+
+## C21 immutable native definition asset relocation
+
+Base c1a667d366f43d5bd77210b4658f2696ea49ce3e. Byte-identical native-feature-definitions.json moved from legacy root to frameworks/daggerheart; sole production filesystem loader updated. This physical move is separate from prior native policy decomposition. Exact original/new paths and SHA retained in F02_C21_ASSET_MOVE. Fresh4/4pass,exit0,170.809ms;2syntax pass. Actual loader imports from unrelated working directory; all153source definitions retain native identity, source refs/hashes/handlers/status,78supported/75review_only,8Signal taxonomy classifications, current printed rule and readonly descriptors. No database/provider/native effect invoked, no changed game rule/disposition. One original asset-location record became invalid+unused after source deletion (same ID twice reported), retired once with original retained. Architecture-only final gate429sources,2404imports,SCC182,2515accepted,zero active/unowned/integrity errors. Prior immutable terminal files legitimately reference old asset path; current evidence must use relocation map. No passing tests rerun. Rollback move, loader and original location record together. Provider0/$0; Codex UNMEASURED; RELEASE NOT AUTHORIZED. F02 awaiting only qualified provider residual reconciliation; RF03 incomplete.

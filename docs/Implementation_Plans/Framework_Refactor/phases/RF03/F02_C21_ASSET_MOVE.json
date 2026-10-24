@@ -1,0 +1,8 @@
+{
+  "source": "bot/src/native-feature-definitions.json",
+  "target": "bot/src/frameworks/daggerheart/native-feature-definitions.json",
+  "sha256": "58baf77cc9cb2b5f38e1714422c64131f2f533b4bf09254b8f8729ccd64d1e16",
+  "bytes_preserved": true,
+  "only_production_reader": "bot/src/native-feature-catalog.js",
+  "gameplay_change": false
+}

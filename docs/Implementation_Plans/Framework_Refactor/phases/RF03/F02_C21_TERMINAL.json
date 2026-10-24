@@ -1,0 +1,49 @@
+{
+  "base_sha": "c1a667d366f43d5bd77210b4658f2696ea49ce3e",
+  "tests": {
+    "pass": 4,
+    "fail": 0,
+    "exit": 0,
+    "duration_ms": 170.809
+  },
+  "syntax_pass": 2,
+  "move": {
+    "source": "bot/src/native-feature-definitions.json",
+    "target": "bot/src/frameworks/daggerheart/native-feature-definitions.json",
+    "sha256": "58baf77cc9cb2b5f38e1714422c64131f2f533b4bf09254b8f8729ccd64d1e16",
+    "bytes_preserved": true,
+    "only_production_reader": "bot/src/native-feature-catalog.js",
+    "gameplay_change": false
+  },
+  "hashes": {
+    "bot/src/frameworks/daggerheart/native-feature-definitions.json": "58baf77cc9cb2b5f38e1714422c64131f2f533b4bf09254b8f8729ccd64d1e16",
+    "bot/src/native-feature-catalog.js": "6d992058152d79bda8b3cda9a22c1d51a65d66a750e3234ce2c912423a1e95c8",
+    "bot/tests/ai-gm-2026-10/rf03-f02-c21.test.mjs": "effe848e3831ebc68fad735c506f49f5c11cfe000176e92720d699617369d887"
+  },
+  "retired_records": 1,
+  "gate": {
+    "exit": 0,
+    "mode": "ratchet",
+    "phase": "RF03",
+    "sourceModules": 429,
+    "unowned": 0,
+    "importOccurrences": 2404,
+    "internalImportOccurrences": 2229,
+    "cycleComponents": 1,
+    "largestCycle": 182,
+    "rawViolationOccurrences": 2515,
+    "acceptedLegacyOccurrences": 2515,
+    "activeViolationGroups": 0,
+    "transitionErrors": 0,
+    "pass": true,
+    "firstErrors": []
+  },
+  "source_count": 153,
+  "supported": 78,
+  "review_only": 75,
+  "source_only_no_database": true,
+  "provider_calls": 0,
+  "provider_cost_usd": 0,
+  "codex_usage": "UNMEASURED",
+  "release": "NOT AUTHORIZED"
+}

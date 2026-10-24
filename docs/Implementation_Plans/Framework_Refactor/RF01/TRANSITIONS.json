@@ -1899,17 +1899,6 @@
       "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
     },
     {
-      "id": "0ad651097d6bd6a6e485d6037aec3be3ba636101f61787a76e3c7c734c0cae1e",
-      "code": "LEGACY_MODULE_LOCATION",
-      "from": "bot/src/native-feature-definitions.json",
-      "owner": "daggerheart",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF03-F02",
-      "expires_after": "RF03",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
-    },
-    {
       "id": "a52c05033c6e17f0ca7ad7a3fd86c85fa84194d80ff4cda9849b64537bdeb521",
       "code": "LEGACY_MODULE_LOCATION",
       "from": "bot/src/native-feature-effects.js",

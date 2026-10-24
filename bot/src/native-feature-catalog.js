@@ -2,7 +2,7 @@
 import fs from 'node:fs';
 import {createNativeFeatureCatalog} from './frameworks/daggerheart/public.js';
 const read=relative=>JSON.parse(fs.readFileSync(new URL(relative,import.meta.url),'utf8'));
-const catalog=createNativeFeatureCatalog({definitions:read('./native-feature-definitions.json'),authoredRules:read('./native-house-errata.json'),readAdversaries:()=>read('../../content/GM_PRIVATE/ADVERSARIES/adversaries.json'),readEnvironments:()=>read('../../content/GM_PRIVATE/ENVIRONMENTS/environments.json')});
+const catalog=createNativeFeatureCatalog({definitions:read('./frameworks/daggerheart/native-feature-definitions.json'),authoredRules:read('./native-house-errata.json'),readAdversaries:()=>read('../../content/GM_PRIVATE/ADVERSARIES/adversaries.json'),readEnvironments:()=>read('../../content/GM_PRIVATE/ENVIRONMENTS/environments.json')});
 export function inspectNativeFeatureOccurrence(...args){return catalog.inspectNativeFeatureOccurrence(...args);}
 export function compileNativeFeatures(...args){return catalog.compileNativeFeatures(...args);}
 export function featureDisposition(...args){return catalog.featureDisposition(...args);}
