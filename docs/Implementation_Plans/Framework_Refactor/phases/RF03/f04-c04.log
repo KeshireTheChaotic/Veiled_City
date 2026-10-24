@@ -1,0 +1,58 @@
+TAP version 13
+# Subtest: exact native review SQL and current encounter evidence create a read-only environment binding
+ok 1 - exact native review SQL and current encounter evidence create a read-only environment binding
+  ---
+  duration_ms: 40.2005
+  type: 'test'
+  ...
+# Subtest: forged review, source and template revisions cannot satisfy a saved native locator
+ok 2 - forged review, source and template revisions cannot satisfy a saved native locator
+  ---
+  duration_ms: 39.8256
+  type: 'test'
+  ...
+# Subtest: native encounter delegation needs its own activation proof in addition to review
+ok 3 - native encounter delegation needs its own activation proof in addition to review
+  ---
+  duration_ms: 44.3662
+  type: 'test'
+  ...
+# Subtest: original public camera remains usable without creating PC location or knowledge
+ok 4 - original public camera remains usable without creating PC location or knowledge
+  ---
+  duration_ms: 34.6104
+  type: 'test'
+  ...
+# Subtest: private source cannot be shared or reassigned even to another authenticated character
+ok 5 - private source cannot be shared or reassigned even to another authenticated character
+  ---
+  duration_ms: 34.3499
+  type: 'test'
+  ...
+# Subtest: a different character viewer requires independent current owner and actual local presence
+ok 6 - a different character viewer requires independent current owner and actual local presence
+  ---
+  duration_ms: 33.1813
+  type: 'test'
+  ...
+# Subtest: same private recipient current inspection preserves principal revision and source visibility
+ok 7 - same private recipient current inspection preserves principal revision and source visibility
+  ---
+  duration_ms: 34.3369
+  type: 'test'
+  ...
+# Subtest: actual environment proof providers cold-import with unchanged reader APIs
+ok 8 - actual environment proof providers cold-import with unchanged reader APIs
+  ---
+  duration_ms: 295.5683
+  type: 'test'
+  ...
+1..8
+# tests 8
+# suites 0
+# pass 8
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 625.7766

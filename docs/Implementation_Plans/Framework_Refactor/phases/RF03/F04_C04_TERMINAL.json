@@ -1,0 +1,55 @@
+{
+  "base_sha": "896b12ff8b1bdcff8bfc0cd17a64b0c9fa048000",
+  "tests": {
+    "pass": 8,
+    "fail": 0,
+    "exit": 0,
+    "duration_ms": 625.7766
+  },
+  "syntax_pass": 6,
+  "bodies": [
+    {
+      "source": "native-environment-audience.js",
+      "native": "environment-audience-rules.js",
+      "unchanged": true,
+      "sha256": "b109fb002532dfcc62b6eadd8f41cf5982d2658087f000ce6dcbaa3c62e9e700"
+    },
+    {
+      "source": "native-environment-context.js",
+      "native": "environment-binding-rules.js",
+      "unchanged": true,
+      "sha256": "ba636d926f630269a46789ef78ba9cf72aafcb88b89624c814f617c195eb12df"
+    }
+  ],
+  "hashes": {
+    "bot/src/native-environment-audience.js": "2613c53728dcc37e58400f35cf57885b348d0ced077963d2666d85b87b069e48",
+    "bot/src/frameworks/daggerheart/environment-audience-rules.js": "fa7fb92c0fa1921df88674e7babc8c0c797ea371f8cfd773f74509baaee99731",
+    "bot/src/native-environment-context.js": "8cf86ceb2a7f4ba18f9623e64769f49ffbe71da291e8d18842508c66562ea6c8",
+    "bot/src/frameworks/daggerheart/environment-binding-rules.js": "427f20260c9a4b88951865b0f2f4d6574dae5441baf1497fb5dd126516e45561",
+    "bot/src/frameworks/daggerheart/public.js": "471825965bcd5b01a067ec26ce04ff5d5e730716a41671fc78fa9dce3d652a35",
+    "bot/tests/ai-gm-2026-10/rf03-f04-c04.test.mjs": "b94a45c08d968d54f14b1c5ef3318c6f3d46d2eff85bf2805a3954683ffec2cf"
+  },
+  "retired_records": 4,
+  "gate": {
+    "exit": 0,
+    "mode": "ratchet",
+    "phase": "RF03",
+    "sourceModules": 424,
+    "unowned": 0,
+    "importOccurrences": 2394,
+    "internalImportOccurrences": 2219,
+    "cycleComponents": 1,
+    "largestCycle": 182,
+    "rawViolationOccurrences": 2531,
+    "acceptedLegacyOccurrences": 2531,
+    "activeViolationGroups": 0,
+    "transitionErrors": 0,
+    "pass": true,
+    "firstErrors": []
+  },
+  "limitations": "Exact production encounter-review SQL runs against disposable SQLite; current catalog/scene/activation/authentication/source-visibility ports are explicit mocks. World profile producer, full world pair and live output not qualified.",
+  "provider_calls": 0,
+  "provider_cost_usd": 0,
+  "codex_usage": "UNMEASURED",
+  "release": "NOT AUTHORIZED"
+}

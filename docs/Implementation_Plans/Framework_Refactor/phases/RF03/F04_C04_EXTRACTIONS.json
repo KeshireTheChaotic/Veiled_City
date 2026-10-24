@@ -1,0 +1,29 @@
+[
+  {
+    "old": "native-environment-audience.js",
+    "native": "environment-audience-rules.js",
+    "factory": "createEnvironmentAudienceRules",
+    "start": "export function assertEnvironmentAudience(",
+    "caps": [
+      "narrativeSourceVisible",
+      "conversationPrincipal",
+      "currentScene",
+      "scenePresence"
+    ]
+  },
+  {
+    "old": "native-environment-context.js",
+    "native": "environment-binding-rules.js",
+    "factory": "createEnvironmentBindingRules",
+    "start": "export function nativeEnvironmentBinding(",
+    "caps": [
+      "EncounterLibrary",
+      "currentScene",
+      "executableNativeFeatures",
+      "nativeActorTaxonomy",
+      "nativeFeatureRuleContextsForTemplate",
+      "inspectNativeEncounterActivation"
+    ],
+    "extra": "import {environmentEncounterRejection} from './environment-eligibility.js';\n"
+  }
+]

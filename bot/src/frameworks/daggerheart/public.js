@@ -42,3 +42,5 @@ export {createRollParticipationRules} from './roll-participation-rules.js';
 export {createPvpDamageRules} from './pvp-damage-rules.js';
 export {createEquippedAttackRules} from './equipped-attack-rules.js';
 export {createUnarmedAttackRules} from './unarmed-attack-rules.js';
+export {createEnvironmentAudienceRules} from './environment-audience-rules.js';
+export {createEnvironmentBindingRules} from './environment-binding-rules.js';
