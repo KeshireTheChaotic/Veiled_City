@@ -1,0 +1,8 @@
+{
+  "base_sha": "4657569ee0143e444d726bbf46f207a5ad540c64",
+  "source": "bot/src/pre-roll-fear-notice.js",
+  "target": "bot/src/frameworks/daggerheart/pre-roll-fear-notice-rules.js",
+  "body_equivalent": true,
+  "body_sha256": "4f19ca0965da046148c141a3fb0f439a6e87cd8db42bb88a20262ee55180ff67",
+  "rendering_and_publish_body": "unchanged; still in original publication producer"
+}

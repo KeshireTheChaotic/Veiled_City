@@ -1,0 +1,3 @@
+# RF03-F03 C31 — Native pre-roll Fear notice eligibility
+
+Separate unchanged exact private-owner/current native GM decision/pre-roll request proof and reservation identity from existing publication rendering/transport. Native guards preserve one reserved base Fear, printed cost, source/board/entry/actor/target/proposal and current owner. Announcement is neither consent nor roll/effect. Root publisher retains acknowledged-delivery historical shortcut and existing uncertain-send behavior unchanged. Fresh SQLite guard/reservation tests with mocked pre-roll/GM decision/publication reservation peers; no actual transport qualification. One frozen batch/syntax/ratchet.

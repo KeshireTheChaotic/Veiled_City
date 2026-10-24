@@ -1,0 +1,46 @@
+TAP version 13
+# Subtest: actual native eligibility exposes exact private announcement metadata without executing dice or spending the reservation
+ok 1 - actual native eligibility exposes exact private announcement metadata without executing dice or spending the reservation
+  ---
+  duration_ms: 14.4271
+  type: 'test'
+  ...
+# Subtest: party scope, another player or changed current owner cannot receive a native pre-roll announcement
+ok 2 - party scope, another player or changed current owner cannot receive a native pre-roll announcement
+  ---
+  duration_ms: 13.6442
+  type: 'test'
+  ...
+# Subtest: current native decision exact board, entry, source origin and standard attack cannot be substituted
+ok 3 - current native decision exact board, entry, source origin and standard attack cannot be substituted
+  ---
+  duration_ms: 12.6768
+  type: 'test'
+  ...
+# Subtest: exact queued publication reservation identity replays across SQLite restart without claiming delivery or consent
+ok 4 - exact queued publication reservation identity replays across SQLite restart without claiming delivery or consent
+  ---
+  duration_ms: 20.7685
+  type: 'test'
+  ...
+# Subtest: completed or wrong-source pre-roll state cannot mint a fresh reservation
+ok 5 - completed or wrong-source pre-roll state cannot mint a fresh reservation
+  ---
+  duration_ms: 23.2592
+  type: 'test'
+  ...
+# Subtest: native base cost and unauthorized Experience or modifier changes cannot be smuggled into notice authority
+ok 6 - native base cost and unauthorized Experience or modifier changes cannot be smuggled into notice authority
+  ---
+  duration_ms: 14.0647
+  type: 'test'
+  ...
+1..6
+# tests 6
+# suites 0
+# pass 6
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 170.1099

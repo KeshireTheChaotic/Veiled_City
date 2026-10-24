@@ -1,0 +1,68 @@
+{
+  "start": "2026-10-24T06:04:10.1592119-05:00",
+  "duration_ms": 230.4305,
+  "architecture_exit": 0,
+  "hashes": {
+    "bot/src/pre-roll-fear-notice.js": "9b4856e4c3f9aff5e4312d6bb444895a045c156524af96ca2250c1d7132af62d",
+    "bot/src/frameworks/daggerheart/public.js": "bb2945ff63a7cc280be95a054c3f569e739b7e0878618df56633fc43fdf3d8c1",
+    "bot/src/frameworks/daggerheart/pre-roll-fear-notice-rules.js": "0d20909108dbb167b6b170818af54cf02ec34a5d7e09a6a830412d4f6652c0c4",
+    "bot/tests/ai-gm-2026-10/rf03-f03-c31.test.mjs": "d28e13b0e7278ab184e40a2525b4e59a5f73622f792253f5a4a60678db297dd8"
+  },
+  "syntax": [
+    {
+      "path": "bot/src/pre-roll-fear-notice.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/pre-roll-fear-notice-rules.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/public.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf03-f03-c31.test.mjs",
+      "exit": 0
+    }
+  ],
+  "test_exit": 0,
+  "end": "2026-10-24T06:04:11.2871979-05:00",
+  "base_sha": "4657569ee0143e444d726bbf46f207a5ad540c64",
+  "run_id": "F03_C31",
+  "unique_tests": 6,
+  "executions": 6,
+  "pass": 6,
+  "fail": 0,
+  "tap_duration_ms": 170.1099,
+  "syntax_pass": 4,
+  "body_equivalence": {
+    "base_sha": "4657569ee0143e444d726bbf46f207a5ad540c64",
+    "source": "bot/src/pre-roll-fear-notice.js",
+    "target": "bot/src/frameworks/daggerheart/pre-roll-fear-notice-rules.js",
+    "body_equivalent": true,
+    "body_sha256": "4f19ca0965da046148c141a3fb0f439a6e87cd8db42bb88a20262ee55180ff67",
+    "rendering_and_publish_body": "unchanged; still in original publication producer"
+  },
+  "gate": {
+    "mode": "ratchet",
+    "phase": "RF03",
+    "sourceModules": 470,
+    "unowned": 0,
+    "importOccurrences": 2494,
+    "internalImportOccurrences": 2319,
+    "cycleComponents": 1,
+    "largestCycle": 182,
+    "rawViolationOccurrences": 2487,
+    "acceptedLegacyOccurrences": 2487,
+    "activeViolationGroups": 0,
+    "transitionErrors": 0,
+    "pass": true,
+    "firstErrors": []
+  },
+  "limitations": "Actual native exact announcement eligibility/reservation guards and SQLite; pre-roll and GM decision source/native proof and queued publication repository supplied as mocks. Renderer/publisher body unchanged, no new transport/acknowledgment/uncertain-send qualification.",
+  "provider_calls": 0,
+  "provider_cost_usd": 0,
+  "codex_usage": "UNMEASURED",
+  "release": "NOT AUTHORIZED"
+}
