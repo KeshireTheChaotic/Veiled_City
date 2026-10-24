@@ -1,0 +1,7 @@
+# RF03-F02 C20 ledger
+
+IMPLEMENTED / TESTS PENDING. Base adc17b84dc77b7471c11ef9aae0d287fd7f235a1. Provider0/$0; Codex UNMEASURED; release NOT AUTHORIZED. Rollback checkpoint together.
+
+## C20 complete current native adversary binding and feature context
+
+Base adc17b84dc77b7471c11ef9aae0d287fd7f235a1. Native actor/template/control/scene qualification,27context projector composition, current proof and necessary feature precondition extracted unchanged to daggerheart/adversary-binding-rules; actual provider binds source/catalog/current-native-peer capabilities. Existing native projectors reused. Fresh6/6pass,exit0,598.6041ms,4syntax pass. Actual current catalog/template/printed rule executes with new SQLite source snapshots: exact bound cue, required matching supported feature, private proof/no execution/disclosure, proxy/scene exclusion, stale origin/template rejection, reopen and actual provider cold import. Source/encounter/control authenticity remains mocked by named snapshot ports; no full world/session/native execution or live qualification. Body equality/hash/terminal F02_C20. Three obsolete hash/failure records retired; architecture-only final gate429sources,2404imports,SCC182,2516accepted,zero active/unowned/integrity errors. No deadline changes or passing tests rerun. Rollback checkpoint with exact3retirements. Provider0/$0; Codex UNMEASURED; RELEASE NOT AUTHORIZED. F02 awaiting immutable source location/provider reconciliation; RF03 remains incomplete.

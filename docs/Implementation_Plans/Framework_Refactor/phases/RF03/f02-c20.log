@@ -1,0 +1,46 @@
+TAP version 13
+# Subtest: current source catalog and actual printed adversary contexts require exact native actor binding
+ok 1 - current source catalog and actual printed adversary contexts require exact native actor binding
+  ---
+  duration_ms: 34.9768
+  type: 'test'
+  ...
+# Subtest: necessary native feature precondition returns only the same qualified source and context
+ok 2 - necessary native feature precondition returns only the same qualified source and context
+  ---
+  duration_ms: 34.2493
+  type: 'test'
+  ...
+# Subtest: proxy control, different scene or missing local eligibility rejects current binding
+ok 3 - proxy control, different scene or missing local eligibility rejects current binding
+  ---
+  duration_ms: 78.4991
+  type: 'test'
+  ...
+# Subtest: saved native context rejects changed origin or template fingerprint
+ok 4 - saved native context rejects changed origin or template fingerprint
+  ---
+  duration_ms: 46.3652
+  type: 'test'
+  ...
+# Subtest: source-bound context reopens unchanged and malformed native actor locators fail closed
+ok 5 - source-bound context reopens unchanged and malformed native actor locators fail closed
+  ---
+  duration_ms: 30.6214
+  type: 'test'
+  ...
+# Subtest: actual bound adversary provider cold-imports with all three native APIs
+ok 6 - actual bound adversary provider cold-imports with all three native APIs
+  ---
+  duration_ms: 259.0132
+  type: 'test'
+  ...
+1..6
+# tests 6
+# suites 0
+# pass 6
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 598.6041

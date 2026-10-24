@@ -1,0 +1,3 @@
+# RF03-F02 C20 — Complete bound adversary feature source context
+
+Extract unchanged current native actor/control/scene/template binding,27qualified context projector composition, current proof/revalidation and necessary feature precondition into Daggerheart. Source catalog and current encounter/origin/control capabilities remain explicit. Reuse actual existing native projectors/catalog; no NPC creation/rule/effect/knowledge or execution/disclosure grant. Fresh SQLite current source/control snapshots, current production immutable catalog/template/printed-rule matching, stale-source/template/scene/proxy, reopen and actual provider cold import. Freeze once; exact body/syntax/gate.
