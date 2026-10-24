@@ -1,0 +1,32 @@
+[
+  {
+    "name": "worldActorControl",
+    "original_sha256": "bc624704ef3eea8cb6ba2970727d7634a9ad8b665d52057ccf485668a5888cca",
+    "extraction": "unchanged body; external source capabilities captured by fixed factory"
+  },
+  {
+    "name": "assertWorldActorControl",
+    "original_sha256": "b711308a2b148b75ffd41d1f11998b6201bc57a519d6ad5f6b85240116087184",
+    "extraction": "unchanged body; external source capabilities captured by fixed factory"
+  },
+  {
+    "name": "assertNpcAvailability",
+    "original_sha256": "b501d3b676e0d809b5039dd66bf543552b686b6e572373b18ea4c16fc6f04c59",
+    "extraction": "unchanged body; external source capabilities captured by fixed factory"
+  },
+  {
+    "name": "npcAvailability",
+    "original_sha256": "0341d745839a406c84ff248263f9e4b3aee1589dab74cb1821c6475f69c3b4f7",
+    "extraction": "unchanged body; external source capabilities captured by fixed factory"
+  },
+  {
+    "name": "assertInstitutionDelegation",
+    "original_sha256": "059313fc078e87f0d1256303c37b12f379542a7aa200aab0fe2b633dd246d9e0",
+    "extraction": "unchanged body; external source capabilities captured by fixed factory"
+  },
+  {
+    "name": "assertQueuedCompatibility",
+    "original_sha256": "9dc170610d0481820c3472ecb307a77bde6978adbabe6012652a7bc8a03e16d2",
+    "extraction": "unchanged body; external source capabilities captured by fixed factory"
+  }
+]

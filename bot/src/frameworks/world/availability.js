@@ -1,0 +1,79 @@
+/** World scheduling and delegation constraints; native control and current session proxy evidence stay external. */
+import {StateConflictError} from '../../kernel/errors.js';
+export function createWorldAvailability({nativeActorControl,activeCityProxy,delegationPolicy,nativeWorldStrategyStepAllowed}){
+function worldActorControl(db,guildId,type,key){
+  return nativeActorControl(db,guildId,type,key).owner_control_type;
+}
+function assertWorldActorControl(db,guildId,type,key){
+  if(type==='npc'&&db.getCharacter(key))throw new Error('Player characters cannot be controlled as NPCs.');
+  const control=worldActorControl(db,guildId,type,key);
+  if(control!=='ai_world')throw new StateConflictError(`World actor ${control} control requires its rightful principal; no autonomous takeover.`);
+  return control;
+}
+function assertNpcAvailability(db,guildId,key,action){
+  assertWorldActorControl(db,guildId,'npc',key);
+  if(db.getCharacter(key)) throw new Error("Player characters cannot be controlled as NPCs.");
+  const lifecycle=db.getSimulationEntity(guildId,"npc",key)?.state||{};
+  if(lifecycle.removed||["dead","removed"].includes(lifecycle.status)) throw new Error("Dead or removed NPCs are unavailable.");
+  if(activeCityProxy(db,guildId,key)) throw new Error("An active human NPC proxy retains voluntary control.");
+  const clock=db.getSimulationClock(guildId);
+  const commitment=db.overlappingCommitment(guildId,`npc:${key}`,clock.minute,clock.minute+1);
+  if(commitment&&commitment.location_key&&action.location_key&&commitment.location_key!==action.location_key)
+    throw new Error("NPC has an incompatible established commitment; cancel or delegate explicitly.");
+  if(action.type==="travel"){
+    const state=db.getSimulationEntity(guildId,"npc",key)?.state;
+    const route=db.cityEdges(guildId,"route").find(edge=>edge.from_key===state?.location_key&&edge.to_key===action.location_key);
+    if(route&&(action.delay_minutes||0)<route.duration_minutes) throw new Error("Travel delay is shorter than the established route duration.");
+  }
+}
+function npcAvailability(db,guildId,key){
+  const clock=db.getSimulationClock(guildId);
+  return {location_key:db.getSimulationEntity(guildId,"npc",key)?.state?.location_key||"",
+    proxy_controlled:!!activeCityProxy(db,guildId,key),
+    current_commitment:db.overlappingCommitment(guildId,`npc:${key}`,clock.minute,clock.minute+1)?.record_key||null,
+    preferences:db.listCityRecords(guildId,{kind:"routine",actor:key,includeGM:true,limit:4})
+      .flatMap(row=>row.data.intervals.filter(slot=>slot.start<=clock.minute&&slot.end>clock.minute)).slice(0,4),
+    authority:"routine_preferences_are_not_actual_position"};
+}
+function assertInstitutionDelegation(db,guildId,institution,input){
+  assertQueuedCompatibility(db,guildId,{id:input.key,entity_key:`institution:${institution.record_key}`,data:input});
+  const roles=institution.data.personnel||[];
+  if(!roles.length&&!input.personnel_key) return;
+  const role=db.getCityRecord(guildId,"personnel",input.personnel_key||"");
+  if(!role||role.status!=="active"||role.data.institution!==institution.record_key||!role.data.actions.includes(input.type))
+    throw new Error("No established personnel delegation authorizes this institutional action.");
+  if(activeCityProxy(db,guildId,role.data.npc)) throw new Error("Delegated NPC is under human proxy control.");
+  assertNpcAvailability(db,guildId,role.data.npc,{type:input.type,location_key:input.location_key||input.jurisdiction});
+  if(role.data.capacity<1) throw new Error("Delegated personnel have no operational capacity.");
+  if(role.data.dissent_actions?.includes(input.type)) throw new Error("Established personnel dissent blocks this delegated procedure.");
+}
+function assertQueuedCompatibility(db,guildId,record){
+  if(record.data.strategy_key){
+    const plan=db.getCityRecord(guildId,"strategy",record.data.strategy_key);
+    if(plan?.data.reviewed_by==="ai_policy"){
+      const policy=delegationPolicy(db,guildId);
+      if((plan.data.native_world_origin||db.getCityCalendar(guildId).flags.strategies!==true)&&!nativeWorldStrategyStepAllowed(db,guildId,plan,record.data)||policy.mode!=="routine_delegated"||!policy.allow.includes("strategy.run")
+        ||policy.revision!==plan.data.delegation_revision||policy.expires_minute===null||db.getSimulationClock(guildId).minute>=policy.expires_minute)
+        throw new Error("Queued AI plan no longer has execution delegation; review or cancel explicitly.");
+    }
+    if(!plan||plan.status!=="active"||plan.data.revision!==record.data.strategy_revision) throw new Error("Strategy no longer authorizes this queued step.");
+    if(db.getWorldEvent(guildId,plan.source_event)?.status!=="active") throw new Error("Strategy source retracted; reconcile before spending.");
+  }
+  if(db.getCityCalendar(guildId).flags.conflict_mediation!==true) return;
+  const action=record.data,queued=db.queuedActorActions(guildId,record.entity_key);
+  for(const other of queued){
+    if(other.id===record.id) break;
+    const peer=other.data;
+    if((action.type==="travel"||peer.type==="travel")
+      &&(action.location_key||action.target_key)!==(peer.location_key||peer.target_key))
+      throw new Error(`Earlier queued action ${other.id} has incompatible travel/location; cancel, defer or seek GM review.`);
+  }
+  if(action.strategy_key){
+    const plan=db.getCityRecord(guildId,"strategy",action.strategy_key);
+    if(!plan||plan.status!=="active"||plan.data.revision!==action.strategy_revision) throw new Error("Strategy no longer authorizes this queued step.");
+    const source=db.getWorldEvent(guildId,plan.source_event);
+    if(!source||source.status!=="active") throw new Error("Strategy source retracted; reconcile before spending.");
+  }
+}
+return Object.freeze({worldActorControl,assertWorldActorControl,assertNpcAvailability,npcAvailability,assertInstitutionDelegation,assertQueuedCompatibility});
+}

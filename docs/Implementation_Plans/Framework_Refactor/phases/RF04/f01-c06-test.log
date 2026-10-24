@@ -1,0 +1,70 @@
+TAP version 13
+# Subtest: factory is inert and eligible autonomous availability does not mutate world or PC state
+ok 1 - factory is inert and eligible autonomous availability does not mutate world or PC state
+  ---
+  duration_ms: 24.0015
+  type: 'test'
+  ...
+# Subtest: current native ownership and PC identity prevent autonomous takeover
+ok 2 - current native ownership and PC identity prevent autonomous takeover
+  ---
+  duration_ms: 43.2278
+  type: 'test'
+  ...
+# Subtest: human proxy, removed lifecycle and incompatible commitment remain current blockers
+ok 3 - human proxy, removed lifecycle and incompatible commitment remain current blockers
+  ---
+  duration_ms: 59.5653
+  type: 'test'
+  ...
+# Subtest: route duration uses actual source position and does not move the actor
+ok 4 - route duration uses actual source position and does not move the actor
+  ---
+  duration_ms: 30.7509
+  type: 'test'
+  ...
+# Subtest: routine suggestions remain private preferences distinct from actual position after restart
+ok 5 - routine suggestions remain private preferences distinct from actual position after restart
+  ---
+  duration_ms: 35.6298
+  type: 'test'
+  ...
+# Subtest: personnel delegation requires active matching role, capacity and absence of dissent or human proxy
+ok 6 - personnel delegation requires active matching role, capacity and absence of dissent or human proxy
+  ---
+  duration_ms: 64.8315
+  type: 'test'
+  ...
+# Subtest: queue compatibility honors only earlier actions and never reserves or spends resources
+ok 7 - queue compatibility honors only earlier actions and never reserves or spends resources
+  ---
+  duration_ms: 40.192
+  type: 'test'
+  ...
+# Subtest: source retraction and strategy revision fail before queued execution even with mediation off
+ok 8 - source retraction and strategy revision fail before queued execution even with mediation off
+  ---
+  duration_ms: 51.84
+  type: 'test'
+  ...
+# Subtest: AI strategy delegation revalidates exact revision, expiry, permission and native source capability
+ok 9 - AI strategy delegation revalidates exact revision, expiry, permission and native source capability
+  ---
+  duration_ms: 79.6622
+  type: 'test'
+  ...
+# Subtest: actual original source reader delegates unchanged guard and preserves shared error class
+ok 10 - actual original source reader delegates unchanged guard and preserves shared error class
+  ---
+  duration_ms: 435.6208
+  type: 'test'
+  ...
+1..10
+# tests 10
+# suites 0
+# pass 10
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 945.0679

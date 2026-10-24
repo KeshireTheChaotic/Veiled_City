@@ -1,0 +1,46 @@
+{
+  "hashes": {
+    "bot/src/frameworks/world/public.js": "185daa71423fe93892c44e23dd07b6bdead47de019e1b88ecbcd048c772f8887",
+    "bot/tests/ai-gm-2026-10/rf04-f01-c06.test.mjs": "956b5102cb48b0c5fae5684bdc33fae854bbd53f3e683768060069d19ddadb67",
+    "bot/src/frameworks/world/availability.js": "d6eb55b1cbadb8f805857ea836df9d6a9a437f9cb60e84cbafa89a812c50085a",
+    "bot/src/city-constraints.js": "d8e9919fecc1643e7902ba708cfec1a23913052e85efb15f5476cd7be76c5236"
+  },
+  "start": "2026-10-24T17:09:52.2390538-05:00",
+  "test_exit": 0,
+  "run_id": "RF04_F01_C06",
+  "syntax": [
+    {
+      "path": "bot/src/city-constraints.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/frameworks/world/availability.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/frameworks/world/public.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf04-f01-c06.test.mjs",
+      "exit": 0
+    }
+  ],
+  "end": "2026-10-24T17:09:54.2026458-05:00",
+  "architecture_exit": 0,
+  "base_sha": "298f5d71e4216c6916aaf3a8ccac7e5ad57910d2",
+  "tests": 10,
+  "passed": 10,
+  "failed": 0,
+  "duration_ms": 945.0679,
+  "provider_calls": 0,
+  "provider_tokens": 0,
+  "provider_cost_usd": 0,
+  "codex_usage": "UNMEASURED",
+  "release": "NOT AUTHORIZED",
+  "phase_status": "INCOMPLETE",
+  "cumulative_fresh_tests": 51,
+  "cumulative_executions": 51,
+  "cumulative_test_files": 6,
+  "cumulative_syntax": 25
+}
