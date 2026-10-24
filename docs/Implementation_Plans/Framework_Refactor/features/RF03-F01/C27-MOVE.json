@@ -1,0 +1,25 @@
+{
+  "source": "bot/src/application-authority.js",
+  "target": "bot/src/kernel/application-authority.js",
+  "sha256": "58554e42ec04ca5908ca7ac6e96225b1690a8025a273d4d0e836df4bd4054901",
+  "bytes_preserved": true,
+  "consumers": [
+    "bot/src/ai-intents.js",
+    "bot/src/long-projects.js",
+    "bot/src/narrative-director-source.js",
+    "bot/src/native-encounter-activation.js",
+    "bot/src/native-evidence-analysis.js",
+    "bot/src/native-world-operations.js",
+    "bot/src/ordinary-effects.js",
+    "bot/src/world-simulation-receipts.js"
+  ],
+  "fresh_affected_tests": [
+    "bot/tests/ai-gm-2026-10/rf03-f01-c22.test.mjs",
+    "bot/tests/ai-gm-2026-10/rf03-f01-c24.test.mjs"
+  ],
+  "owner": "kernel",
+  "behavior_change": false,
+  "crosswalk_original": "\"bot/src/application-authority.js\",\"bot/src/frameworks/daggerheart/application-authority.js\",\"daggerheart\",\"RF03\",\"PILOT_MOVE_CANDIDATE\",\"8\",\"0\"",
+  "crosswalk_current": "\"bot/src/application-authority.js\",\"bot/src/kernel/application-authority.js\",\"kernel\",\"RF03\",\"COMPLETED_C27_BYTE_IDENTICAL_KERNEL_MOVE\",\"8\",\"0\"",
+  "rationale": "Context/operation identity WeakSet is a neutral in-process primitive: no campaign rule, source/audience meaning, player policy, DB schema, model or Discord singleton. Original runtime bytecode and API preserved; one canonical issuer/verifier, not a forwarded duplicate."
+}

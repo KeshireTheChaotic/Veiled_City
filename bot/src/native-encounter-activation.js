@@ -1,5 +1,5 @@
 /** Explicitly delegated bookkeeping activation. No actor creation, spotlight, PC action, dice or damage. */
-import {principalAllows} from './application-authority.js';
+import {principalAllows} from './kernel/application-authority.js';
 import {manageWorldEncounter,EncounterLibrary,livePcRoster,encounterActors} from './encounter.js';
 import {nativeActorControl} from './native-actor-control.js';
 import {indexWorldEvent} from './city-calendar.js';

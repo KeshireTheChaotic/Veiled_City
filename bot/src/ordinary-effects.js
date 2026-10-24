@@ -5,7 +5,7 @@ import {validateIntent} from './ai-intent-contracts.js';
 import {activeCityProxy} from './city-constraints.js';
 import {worldInputKey} from './autonomous-world.js';
 import {conversationPrincipal} from './conversation-principal.js';
-import {applicationPrincipal} from './application-authority.js';
+import {applicationPrincipal} from './kernel/application-authority.js';
 import {applyRoutineEvidenceAnalysis,verifyRoutineEvidenceAnalysis,routineEvidenceContext} from './native-evidence-analysis.js';
 import {clearNativeConditionFromOutcome} from './native-condition-recovery.js';
 import {activeNativeConditions} from './native-group-features.js';

@@ -5,7 +5,7 @@ import {mkdtempSync,rmSync} from 'node:fs';
 import {tmpdir} from 'node:os';
 import {join} from 'node:path';
 import {createEvidenceAnalysisRules} from '../../src/frameworks/daggerheart/evidence-analysis-rules.js';
-import {applicationPrincipal,principalAllows} from '../../src/application-authority.js';
+import {applicationPrincipal,principalAllows} from '../../src/kernel/application-authority.js';
 import {jsonHash as hash} from '../../src/kernel/json-hash.js';
 function fixture(t){
  const dir=mkdtempSync(join(tmpdir(),'vc-document-c22-')),file=join(dir,'document.sqlite');let sql=new DatabaseSync(file),failure=false,paused=false,enabled=true,outcome='resolved_no_roll';t.after(()=>{sql.close();rmSync(dir,{recursive:true,force:true});});sql.exec('CREATE TABLE records(kind TEXT,key TEXT,body TEXT,PRIMARY KEY(kind,key));CREATE TABLE events(key TEXT PRIMARY KEY,body TEXT);CREATE TABLE handouts(id TEXT PRIMARY KEY,body TEXT);');

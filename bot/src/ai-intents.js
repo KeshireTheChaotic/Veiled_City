@@ -13,7 +13,7 @@ import { manageStrategy } from "./simulation-strategy.js";
 import { ContextPlanner } from "./context-planner.js";
 import { proposeArcBeat } from "./personal-continuity.js";
 import { manageLongProject, projectPhaseRevision, reconcileLongProject } from "./long-projects.js";
-import { applicationPrincipal } from "./application-authority.js";
+import { applicationPrincipal } from "./kernel/application-authority.js";
 import { inspectNpcAction } from "./simulation.js";
 import { inspectInstitutionAction,submitInstitutionAction,executeInstitutionAction } from "./city-core.js";
 import { manageMemoryCluster, memoryMaintenanceCandidate } from "./memory-clusters.js";

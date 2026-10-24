@@ -1,5 +1,5 @@
 /** Native reading of an already visible, owner-held original. No custody, facts, disclosure or inferred conclusions. */
-import {principalAllows} from './application-authority.js';
+import {principalAllows} from './kernel/application-authority.js';
 import {ordinaryActionProof,ordinaryPrerequisite,effectHash} from './ordinary-effect-proof.js';
 
 

@@ -5,7 +5,7 @@ import {mkdtempSync,rmSync} from 'node:fs';
 import {tmpdir} from 'node:os';
 import {join} from 'node:path';
 import {createEncounterActivationRules} from '../../src/frameworks/daggerheart/encounter-activation-rules.js';
-import {applicationPrincipal,principalAllows} from '../../src/application-authority.js';
+import {applicationPrincipal,principalAllows} from '../../src/kernel/application-authority.js';
 import {jsonHash as hash} from '../../src/kernel/json-hash.js';
 function fixture(t,{present=true}={}){
  const dir=mkdtempSync(join(tmpdir(),'vc-activation-c24-')),file=join(dir,'activation.sqlite');let sql=new DatabaseSync(file),failure=false,paused=false,attending=present,npcControl='ai_world',ownerControl='owner',worldCalls=0;

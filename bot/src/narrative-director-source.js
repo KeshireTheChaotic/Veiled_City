@@ -4,7 +4,7 @@ import {currentScene} from './scene-continuity.js';
 import {indexWorldEvent} from './city-calendar.js';
 import {narrativeSourceVisible,sceneFictionHash as hash,sceneFictionFailure} from './scene-fiction-context.js';
 import {worldNarrativeBridgePacket,worldDirectorBridgeBeats,nativeFearClockConsequenceSnapshot} from './world-narrative-bridge.js';
-import {applicationPrincipal} from './application-authority.js';
+import {applicationPrincipal} from './kernel/application-authority.js';
 import {prepareWorldSimulationObservation} from './world-simulation-receipts.js';
 import {configureWorldEncounterCatalog,snapshotNativeEncounterCandidates} from './world-encounter-beats.js';
 const sourceBinding=Symbol('native-director-narrative-source');

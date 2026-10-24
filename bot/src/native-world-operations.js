@@ -1,5 +1,5 @@
 /** Readiness for already delegated, source-validated world operations. Never an administrative-policy bypass. */
-import {applicationPrincipal,principalAllows} from './application-authority.js';
+import {applicationPrincipal,principalAllows} from './kernel/application-authority.js';
 import {sceneFictionHash as hash} from './scene-fiction-context.js';
 import {actorSource} from './simulation-motivation.js';
 import {conversationPrincipal} from './conversation-principal.js';

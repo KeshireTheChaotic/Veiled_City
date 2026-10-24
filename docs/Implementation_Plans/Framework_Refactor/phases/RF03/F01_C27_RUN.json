@@ -1,0 +1,109 @@
+{
+  "base_sha": "97c586cd202c1e83c4fe8aa3258c1e14c0ce89f7",
+  "frozen_hashes": [
+    {
+      "path": "bot/src/kernel/application-authority.js",
+      "sha256": "58554E42EC04CA5908CA7AC6E96225B1690A8025A273D4D0E836DF4BD4054901"
+    },
+    {
+      "path": "bot/src/ai-intents.js",
+      "sha256": "0B44FACF864223DD4506759867AD827EECE38F570EC9E76B8326BCB622CD7CF3"
+    },
+    {
+      "path": "bot/src/long-projects.js",
+      "sha256": "63ACA104D021C694CFC38BAD0C6FABC83779CD0829C22CAC948D3934233A544E"
+    },
+    {
+      "path": "bot/src/narrative-director-source.js",
+      "sha256": "64FE7707E4A4FE8D0D5A436E2E3472B030BF320BEA92315DEDAD6626A966CF50"
+    },
+    {
+      "path": "bot/src/native-encounter-activation.js",
+      "sha256": "B87CD22498704FCCECF09902CA21047785AA272AA367236958297CFEBB00A970"
+    },
+    {
+      "path": "bot/src/native-evidence-analysis.js",
+      "sha256": "C4358985D802A360E140836F24458C6EEB109EEAC631DC3D9E9E2FD3522DBDF5"
+    },
+    {
+      "path": "bot/src/native-world-operations.js",
+      "sha256": "6B206856D020E72743ACBFE38B1B49BF390DCBB9C6EF46B3AE5816A73C8B98AA"
+    },
+    {
+      "path": "bot/src/ordinary-effects.js",
+      "sha256": "9E10028503C55049A573C2B81F51E5D52AB2B02C03AE25171A7077AF65439803"
+    },
+    {
+      "path": "bot/src/world-simulation-receipts.js",
+      "sha256": "6ECD6B3E22980359D4F86F064B8BA87BB9ECB60C53AF2AD7327399ADCCD26DE1"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf03-f01-c22.test.mjs",
+      "sha256": "81579138BFE0E957585AEAE9F19A2DFC30F6FB85E5D17A1353048505AD940868"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf03-f01-c24.test.mjs",
+      "sha256": "ED423484CDA84C7E3A598B636326C246A8D005A2AC02A631BF6532B913275577"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf03-f01-c27.test.mjs",
+      "sha256": "23DABEBD7B30F50296BF0A05352E32AF695025C717B977EC381496326ABD1E2E"
+    }
+  ],
+  "ended": "2026-10-24T10:34:06.3096483Z",
+  "syntax": [
+    {
+      "exit": 0,
+      "path": "bot/src/kernel/application-authority.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/ai-intents.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/long-projects.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/narrative-director-source.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/native-encounter-activation.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/native-evidence-analysis.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/native-world-operations.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/ordinary-effects.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/world-simulation-receipts.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/tests/ai-gm-2026-10/rf03-f01-c22.test.mjs"
+    },
+    {
+      "exit": 0,
+      "path": "bot/tests/ai-gm-2026-10/rf03-f01-c24.test.mjs"
+    },
+    {
+      "exit": 0,
+      "path": "bot/tests/ai-gm-2026-10/rf03-f01-c27.test.mjs"
+    }
+  ],
+  "architecture_exit": 1,
+  "affected_rerun_reason": "C22/C24 actual authority source moved and production imports changed; only these two previously passing fresh test files rerun.",
+  "run_id": "RF03-F01-C27",
+  "started": "2026-10-24T10:34:03.7054944Z",
+  "test_exit": 0
+}

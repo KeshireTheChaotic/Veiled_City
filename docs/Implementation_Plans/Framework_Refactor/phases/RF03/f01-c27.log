@@ -1,0 +1,130 @@
+TAP version 13
+# Subtest: entitled document context exposes an existing bounded claim and never certifies it as world truth or transfers custody
+ok 1 - entitled document context exposes an existing bounded claim and never certifies it as world truth or transfers custody
+  ---
+  duration_ms: 62.4679
+  type: 'test'
+  ...
+# Subtest: only opaque actual application authority can record owner-private analysis and restart replay keeps exact unverified claim
+ok 2 - only opaque actual application authority can record owner-private analysis and restart replay keeps exact unverified claim
+  ---
+  duration_ms: 63.2114
+  type: 'test'
+  ...
+# Subtest: private original or custody source cannot be promoted to party or inspected by another recipient
+ok 3 - private original or custody source cannot be promoted to party or inspected by another recipient
+  ---
+  duration_ms: 83.8037
+  type: 'test'
+  ...
+# Subtest: changed custody revision or ownership invalidates current analysis without changing its saved receipt
+ok 4 - changed custody revision or ownership invalidates current analysis without changing its saved receipt
+  ---
+  duration_ms: 84.1837
+  type: 'test'
+  ...
+# Subtest: failed native owner outcome, Director pause and disabled service cannot produce an analysis receipt
+ok 5 - failed native owner outcome, Director pause and disabled service cannot produce an analysis receipt
+  ---
+  duration_ms: 61.7137
+  type: 'test'
+  ...
+# Subtest: mismatched custody receipt cannot substitute an apparently matching document metadata history
+ok 6 - mismatched custody receipt cannot substitute an apparently matching document metadata history
+  ---
+  duration_ms: 59.3907
+  type: 'test'
+  ...
+# Subtest: failed analysis write preserves the original artifact and custody without any partial receipt
+ok 7 - failed analysis write preserves the original artifact and custody without any partial receipt
+  ---
+  duration_ms: 58.8257
+  type: 'test'
+  ...
+# Subtest: actual document analysis provider cold-imports original context, execution and verification APIs
+ok 8 - actual document analysis provider cold-imports original context, execution and verification APIs
+  ---
+  duration_ms: 386.5616
+  type: 'test'
+  ...
+# Subtest: explicit operator delegation and opaque application authority produce one native bookkeeping receipt and additive binding link
+ok 9 - explicit operator delegation and opaque application authority produce one native bookkeeping receipt and additive binding link
+  ---
+  duration_ms: 92.3973
+  type: 'test'
+  ...
+# Subtest: Director pause or expired/missing delegation cannot activate a new encounter
+ok 10 - Director pause or expired/missing delegation cannot activate a new encounter
+  ---
+  duration_ms: 96.766
+  type: 'test'
+  ...
+# Subtest: player-proxy NPC or non-owner current controlled roster cannot receive delegated activation
+ok 11 - player-proxy NPC or non-owner current controlled roster cannot receive delegated activation
+  ---
+  duration_ms: 84.1837
+  type: 'test'
+  ...
+# Subtest: completed encounter activation remains immutable under later pause and never invokes the world producer again
+ok 12 - completed encounter activation remains immutable under later pause and never invokes the world producer again
+  ---
+  duration_ms: 98.4473
+  type: 'test'
+  ...
+# Subtest: saved bookkeeping survives attendance ending while current activation proof remains held
+ok 13 - saved bookkeeping survives attendance ending while current activation proof remains held
+  ---
+  duration_ms: 95.8131
+  type: 'test'
+  ...
+# Subtest: receipt failure restores proposal, encounter, binding, source and mutation atomically
+ok 14 - receipt failure restores proposal, encounter, binding, source and mutation atomically
+  ---
+  duration_ms: 55.9541
+  type: 'test'
+  ...
+# Subtest: zero initial attendees allow native NPC bookkeeping without placing an unplaced PC
+ok 15 - zero initial attendees allow native NPC bookkeeping without placing an unplaced PC
+  ---
+  duration_ms: 67.3965
+  type: 'test'
+  ...
+# Subtest: actual delegated activation provider cold-imports original execution and readback APIs
+ok 16 - actual delegated activation provider cold-imports original execution and readback APIs
+  ---
+  duration_ms: 392.6532
+  type: 'test'
+  ...
+# Subtest: actual neutral primitive grants only the exact issued context and operation
+ok 17 - actual neutral primitive grants only the exact issued context and operation
+  ---
+  duration_ms: 0.4958
+  type: 'test'
+  ...
+# Subtest: serialized, copied or inherited token fields never reproduce the actual in-process capability
+ok 18 - serialized, copied or inherited token fields never reproduce the actual in-process capability
+  ---
+  duration_ms: 0.2838
+  type: 'test'
+  ...
+# Subtest: canonical relative and absolute imports share one issuer/verifier identity without a forwarding facade
+ok 19 - canonical relative and absolute imports share one issuer/verifier identity without a forwarding facade
+  ---
+  duration_ms: 0.5658
+  type: 'test'
+  ...
+# Subtest: physical move preserves original source bytes and every actual production consumer names the one kernel primitive
+ok 20 - physical move preserves original source bytes and every actual production consumer names the one kernel primitive
+  ---
+  duration_ms: 1.9723
+  type: 'test'
+  ...
+1..20
+# tests 20
+# suites 0
+# pass 20
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1069.4598
