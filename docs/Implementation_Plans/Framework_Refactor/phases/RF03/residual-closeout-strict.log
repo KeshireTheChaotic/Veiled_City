@@ -1,0 +1,39 @@
+{
+  "mode": "strict",
+  "phase": "RF03",
+  "sourceModules": 497,
+  "unowned": 0,
+  "importOccurrences": 2557,
+  "internalImportOccurrences": 2380,
+  "cycleComponents": 1,
+  "largestCycle": 182,
+  "rawViolationOccurrences": 2484,
+  "pass": false,
+  "firstErrors": [
+    {
+      "code": "LEGACY_MODULE_LOCATION",
+      "from": "bot/src/action-consent.js",
+      "owner": "daggerheart"
+    },
+    {
+      "code": "LEGACY_MODULE_LOCATION",
+      "from": "bot/src/action-continuation.js",
+      "owner": "session"
+    },
+    {
+      "code": "LEGACY_MODULE_LOCATION",
+      "from": "bot/src/action-dependency.js",
+      "owner": "intent"
+    },
+    {
+      "code": "LEGACY_MODULE_LOCATION",
+      "from": "bot/src/ai-intent-contracts.js",
+      "owner": "intent"
+    },
+    {
+      "code": "LEGACY_MODULE_LOCATION",
+      "from": "bot/src/ai-intents.js",
+      "owner": "intent"
+    }
+  ]
+}

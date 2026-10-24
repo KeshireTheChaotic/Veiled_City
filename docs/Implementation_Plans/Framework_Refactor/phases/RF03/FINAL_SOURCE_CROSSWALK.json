@@ -1,0 +1,725 @@
+{
+  "base_sha": "4c693b40dc511db23bf8932bb293806c76e47b11",
+  "current_legacy_ownership_manifest_unchanged": true,
+  "rows": [
+    {
+      "source": "bot/src/character-system.js",
+      "original_row": "\"bot/src/character-system.js\",\"bot/src/frameworks/character/character-system.js\",\"character\",\"RF02\",\"PILOT_MOVE_CANDIDATE\",\"4\",\"0\"",
+      "current_row": "\"bot/src/character-system.js\",\"bot/src/frameworks/character/character-system.js\",\"character\",\"RF06\",\"NATIVE_EXTRACTED_QUALIFIED_SOURCE_ADOPTION_DEFERRED:RF06-F07\",\"4\",\"0\"",
+      "native_evidence": [
+        {
+          "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F01_C01_TERMINAL.json",
+          "sha256": "7ea613445f7c4ad5da28e089a072ac0ce608dc6c46a0bc4f1de74095568a2222"
+        },
+        {
+          "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F01_C34_TERMINAL.json",
+          "sha256": "8f573aec9de280d57013308c6ca06f0f7779cf1d9e6a25c52000d3c54cca75b8"
+        },
+        {
+          "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F05_C07_TERMINAL.json",
+          "sha256": "8dfa9233819dbda2b24d56612995cfc0dfb4cf152286860dee0a4d5d47d6f962"
+        }
+      ],
+      "remaining_source_responsibility": "Single character vocabulary, class name normalization and name/hook review remain; native domain/trait/starting loadout rules and advancement are extracted, genuinely adopted and tested."
+    },
+    {
+      "source": "bot/src/consent-native.js",
+      "original_row": "\"bot/src/consent-native.js\",\"bot/src/frameworks/daggerheart/consent-native.js\",\"daggerheart\",\"RF03\",\"DECOMPOSE_BEFORE_MOVE\",\"1\",\"8\"",
+      "current_row": "\"bot/src/consent-native.js\",\"bot/src/frameworks/daggerheart/consent-native.js\",\"daggerheart\",\"RF05\",\"NATIVE_EXTRACTED_QUALIFIED_SOURCE_ADOPTION_DEFERRED:RF04-F01+RF04-F02+RF04-F03+RF05-F02+RF05-F05\",\"1\",\"8\"",
+      "native_evidence": [
+        {
+          "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F03_C30_TERMINAL.json",
+          "sha256": "705f82910d984d0b7842bb2ef41d605c65570c37d28ed36bda235ab79ea7124b"
+        }
+      ],
+      "remaining_source_responsibility": "Only explicit current source/native-peer/notice capabilities and existing historical/public entrypoints remain; authoritative native rule policy is in Daggerheart and is qualified by the referenced terminal evidence."
+    },
+    {
+      "source": "bot/src/consequence-reconciliation.js",
+      "original_row": "\"bot/src/consequence-reconciliation.js\",\"bot/src/frameworks/daggerheart/consequence-reconciliation.js\",\"daggerheart\",\"RF03\",\"PILOT_MOVE_CANDIDATE\",\"1\",\"0\"",
+      "current_row": "\"bot/src/consequence-reconciliation.js\",\"bot/src/frameworks/daggerheart/consequence-reconciliation.js\",\"daggerheart\",\"RF05\",\"NATIVE_EXTRACTED_QUALIFIED_SOURCE_ADOPTION_DEFERRED:RF05-F05\",\"1\",\"0\"",
+      "native_evidence": [
+        {
+          "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F01_C31_TERMINAL.json",
+          "sha256": "0a0988c545612cae792cce25ffcb020155725e211683c992834be2b3d586e5de"
+        }
+      ],
+      "remaining_source_responsibility": "Only explicit current source/native-peer/notice capabilities and existing historical/public entrypoints remain; authoritative native rule policy is in Daggerheart and is qualified by the referenced terminal evidence."
+    },
+    {
+      "source": "bot/src/encounter.js",
+      "original_row": "\"bot/src/encounter.js\",\"bot/src/frameworks/daggerheart/encounter.js\",\"daggerheart\",\"RF03\",\"EXTRACT_PORTS_BEFORE_MOVE\",\"17\",\"5\"",
+      "current_row": "\"bot/src/encounter.js\",\"bot/src/frameworks/daggerheart/encounter.js\",\"daggerheart\",\"RF05\",\"NATIVE_EXTRACTED_QUALIFIED_SOURCE_ADOPTION_DEFERRED:RF04-F01+RF04-F02+RF04-F04+RF05-F05\",\"17\",\"5\"",
+      "native_evidence": [
+        {
+          "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F01_C29_TERMINAL.json",
+          "sha256": "dab2239c842a865f4cf0d28248247d310c4a55aa0a6dfbac92c92a3ec4edad11"
+        },
+        {
+          "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F01_C30_TERMINAL.json",
+          "sha256": "a9f96f408ac1257855b94703d623a5c23d6b6cfa0eed3dc56a01bd080d2cd873"
+        }
+      ],
+      "remaining_source_responsibility": "World content/library/creative objective producer and native-result-to-NPC-observation/learning remain; roster/composition, grounded review/activation/mapping rules extracted and tested."
+    },
+    {
+      "source": "bot/src/gm-action-review.js",
+      "original_row": "\"bot/src/gm-action-review.js\",\"bot/src/frameworks/daggerheart/gm-action-review.js\",\"daggerheart\",\"RF03\",\"DECOMPOSE_BEFORE_MOVE\",\"2\",\"6\"",
+      "current_row": "\"bot/src/gm-action-review.js\",\"bot/src/frameworks/daggerheart/gm-action-review.js\",\"daggerheart\",\"RF05\",\"NATIVE_EXTRACTED_QUALIFIED_SOURCE_ADOPTION_DEFERRED:RF04-F01+RF04-F03+RF04-F04+RF05-F05\",\"2\",\"6\"",
+      "native_evidence": [
+        {
+          "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F01_C20_TERMINAL.json",
+          "sha256": "e15362a71c25e1991079c68de14a2db6bfc62c5d8ec787ff2ed54484508b8a9f"
+        }
+      ],
+      "remaining_source_responsibility": "Only explicit current source/native-peer/notice capabilities and existing historical/public entrypoints remain; authoritative native rule policy is in Daggerheart and is qualified by the referenced terminal evidence."
+    },
+    {
+      "source": "bot/src/gm-action-ruling.js",
+      "original_row": "\"bot/src/gm-action-ruling.js\",\"bot/src/frameworks/daggerheart/gm-action-ruling.js\",\"daggerheart\",\"RF03\",\"EXTRACT_PORTS_BEFORE_MOVE\",\"9\",\"2\"",
+      "current_row": "\"bot/src/gm-action-ruling.js\",\"bot/src/frameworks/daggerheart/gm-action-ruling.js\",\"daggerheart\",\"RF05\",\"NATIVE_EXTRACTED_QUALIFIED_SOURCE_ADOPTION_DEFERRED:RF04-F04+RF05-F05\",\"9\",\"2\"",
+      "native_evidence": [
+        {
+          "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F01_C18_TERMINAL.json",
+          "sha256": "99503d9490c06fd1add84a6b05919efd4dca7e1f85c2a401fd8e55008b57d3ab"
+        }
+      ],
+      "remaining_source_responsibility": "Only explicit current source/native-peer/notice capabilities and existing historical/public entrypoints remain; authoritative native rule policy is in Daggerheart and is qualified by the referenced terminal evidence."
+    },
+    {
+      "source": "bot/src/gm-mechanical-v9.js",
+      "original_row": "\"bot/src/gm-mechanical-v9.js\",\"bot/src/frameworks/daggerheart/gm-mechanical-v9.js\",\"daggerheart\",\"RF03\",\"EXTRACT_PORTS_BEFORE_MOVE\",\"0\",\"2\"",
+      "current_row": "\"bot/src/gm-mechanical-v9.js\",\"bot/src/frameworks/daggerheart/gm-mechanical-v9.js\",\"daggerheart\",\"RF05\",\"NATIVE_EXTRACTED_QUALIFIED_SOURCE_ADOPTION_DEFERRED:RF05-F03+RF05-F05\",\"0\",\"2\"",
+      "native_evidence": [
+        {
+          "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F01_C28_TERMINAL.json",
+          "sha256": "d073890910e71470ef37e874fc159c6a9d9d0bd6ec7039387dadb589ba4cf428"
+        }
+      ],
+      "remaining_source_responsibility": "Only explicit current source/native-peer/notice capabilities and existing historical/public entrypoints remain; authoritative native rule policy is in Daggerheart and is qualified by the referenced terminal evidence."
+    },
+    {
+      "source": "bot/src/gm-ruling-schema.js",
+      "original_row": "\"bot/src/gm-ruling-schema.js\",\"bot/src/frameworks/daggerheart/gm-ruling-schema.js\",\"daggerheart\",\"RF03\",\"PILOT_MOVE_CANDIDATE\",\"2\",\"0\"",
+      "current_row": "\"bot/src/gm-ruling-schema.js\",\"bot/src/frameworks/daggerheart/gm-ruling-schema.js\",\"daggerheart\",\"RF06\",\"NATIVE_EXTRACTED_QUALIFIED_SOURCE_ADOPTION_DEFERRED:RF06-F07\",\"2\",\"0\"",
+      "native_evidence": [
+        {
+          "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F01_C23_TERMINAL.json",
+          "sha256": "a9866ab059b0f23149f77322b0e4902a4bbe62bd48ddcd2ba85ff953df41d4e7"
+        }
+      ],
+      "remaining_source_responsibility": "Only explicit current source/native-peer/notice capabilities and existing historical/public entrypoints remain; authoritative native rule policy is in Daggerheart and is qualified by the referenced terminal evidence."
+    },
+    {
+      "source": "bot/src/mechanical-native-v9.js",
+      "original_row": "\"bot/src/mechanical-native-v9.js\",\"bot/src/frameworks/daggerheart/mechanical-native-v9.js\",\"daggerheart\",\"RF03\",\"EXTRACT_PORTS_BEFORE_MOVE\",\"1\",\"3\"",
+      "current_row": "\"bot/src/mechanical-native-v9.js\",\"bot/src/frameworks/daggerheart/mechanical-native-v9.js\",\"daggerheart\",\"RF06\",\"NATIVE_EXTRACTED_QUALIFIED_SOURCE_ADOPTION_DEFERRED:RF05-F03+RF05-F05+RF06-F03\",\"1\",\"3\"",
+      "native_evidence": [
+        {
+          "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F01_C04_TERMINAL.json",
+          "sha256": "a33be0723e4c10dbd493abe29a0078d8647f61d447951e467c246d4d6e2e8fcd"
+        },
+        {
+          "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F01_C28_TERMINAL.json",
+          "sha256": "d073890910e71470ef37e874fc159c6a9d9d0bd6ec7039387dadb589ba4cf428"
+        },
+        {
+          "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F05_C06_TERMINAL.json",
+          "sha256": "a2c4a44388bd755d3fd1f1b2939e0eade0be42713f7367dcd17a90ea86e0ed3f"
+        }
+      ],
+      "remaining_source_responsibility": "Only explicit current source/native-peer/notice capabilities and existing historical/public entrypoints remain; authoritative native rule policy is in Daggerheart and is qualified by the referenced terminal evidence."
+    },
+    {
+      "source": "bot/src/native-defense-aura.js",
+      "original_row": "\"bot/src/native-defense-aura.js\",\"bot/src/frameworks/daggerheart/native-defense-aura.js\",\"daggerheart\",\"RF03\",\"DECOMPOSE_BEFORE_MOVE\",\"3\",\"5\"",
+      "current_row": "\"bot/src/native-defense-aura.js\",\"bot/src/frameworks/daggerheart/native-defense-aura.js\",\"daggerheart\",\"RF05\",\"NATIVE_EXTRACTED_QUALIFIED_SOURCE_ADOPTION_DEFERRED:RF04-F01+RF04-F04+RF05-F05\",\"3\",\"5\"",
+      "native_evidence": [
+        {
+          "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F01_C15_TERMINAL.json",
+          "sha256": "840c0d1af96b7fa7dcba9b7ce91563641d2623fc725f9a9f2ce98c17d709fa84"
+        }
+      ],
+      "remaining_source_responsibility": "Only explicit current source/native-peer/notice capabilities and existing historical/public entrypoints remain; authoritative native rule policy is in Daggerheart and is qualified by the referenced terminal evidence."
+    },
+    {
+      "source": "bot/src/native-encounter-activation.js",
+      "original_row": "\"bot/src/native-encounter-activation.js\",\"bot/src/frameworks/daggerheart/native-encounter-activation.js\",\"daggerheart\",\"RF03\",\"EXTRACT_PORTS_BEFORE_MOVE\",\"3\",\"4\"",
+      "current_row": "\"bot/src/native-encounter-activation.js\",\"bot/src/frameworks/daggerheart/native-encounter-activation.js\",\"daggerheart\",\"RF05\",\"NATIVE_EXTRACTED_QUALIFIED_SOURCE_ADOPTION_DEFERRED:RF04-F01+RF04-F04+RF05-F05\",\"3\",\"4\"",
+      "native_evidence": [
+        {
+          "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F01_C24_TERMINAL.json",
+          "sha256": "66c37d5f472c5bc99d9cfb9731bdb1ee1a77ae2b75cc3cc595a40b37128a3740"
+        }
+      ],
+      "remaining_source_responsibility": "Only explicit current source/native-peer/notice capabilities and existing historical/public entrypoints remain; authoritative native rule policy is in Daggerheart and is qualified by the referenced terminal evidence."
+    },
+    {
+      "source": "bot/src/native-encounter-relations.js",
+      "original_row": "\"bot/src/native-encounter-relations.js\",\"bot/src/frameworks/daggerheart/native-encounter-relations.js\",\"daggerheart\",\"RF03\",\"DECOMPOSE_BEFORE_MOVE\",\"7\",\"5\"",
+      "current_row": "\"bot/src/native-encounter-relations.js\",\"bot/src/frameworks/daggerheart/native-encounter-relations.js\",\"daggerheart\",\"RF05\",\"NATIVE_EXTRACTED_QUALIFIED_SOURCE_ADOPTION_DEFERRED:RF04-F01+RF04-F04+RF05-F05\",\"7\",\"5\"",
+      "native_evidence": [
+        {
+          "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F01_C15_TERMINAL.json",
+          "sha256": "840c0d1af96b7fa7dcba9b7ce91563641d2623fc725f9a9f2ce98c17d709fa84"
+        }
+      ],
+      "remaining_source_responsibility": "Only explicit current source/native-peer/notice capabilities and existing historical/public entrypoints remain; authoritative native rule policy is in Daggerheart and is qualified by the referenced terminal evidence."
+    },
+    {
+      "source": "bot/src/native-environment-access.js",
+      "original_row": "\"bot/src/native-environment-access.js\",\"bot/src/frameworks/daggerheart/native-environment-access.js\",\"daggerheart\",\"RF03\",\"DECOMPOSE_BEFORE_MOVE\",\"3\",\"8\"",
+      "current_row": "\"bot/src/native-environment-access.js\",\"bot/src/frameworks/daggerheart/native-environment-access.js\",\"daggerheart\",\"RF05\",\"NATIVE_EXTRACTED_QUALIFIED_SOURCE_ADOPTION_DEFERRED:RF04-F01+RF04-F03+RF04-F04+RF05-F02+RF05-F03+RF05-F05\",\"3\",\"8\"",
+      "native_evidence": [
+        {
+          "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F04_C08_TERMINAL.json",
+          "sha256": "49f326d6fc9f65b1893e3de744393281a728b426796fbb55cf8c5170f6c29f4c"
+        }
+      ],
+      "remaining_source_responsibility": "Only explicit current source/native-peer/notice capabilities and existing historical/public entrypoints remain; authoritative native rule policy is in Daggerheart and is qualified by the referenced terminal evidence."
+    },
+    {
+      "source": "bot/src/native-environment-arrivals.js",
+      "original_row": "\"bot/src/native-environment-arrivals.js\",\"bot/src/frameworks/daggerheart/native-environment-arrivals.js\",\"daggerheart\",\"RF03\",\"EXTRACT_PORTS_BEFORE_MOVE\",\"2\",\"8\"",
+      "current_row": "\"bot/src/native-environment-arrivals.js\",\"bot/src/frameworks/daggerheart/native-environment-arrivals.js\",\"daggerheart\",\"RF05\",\"NATIVE_EXTRACTED_QUALIFIED_SOURCE_ADOPTION_DEFERRED:RF04-F01+RF05-F02+RF05-F03+RF05-F05\",\"2\",\"8\"",
+      "native_evidence": [
+        {
+          "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F04_C10_TERMINAL.json",
+          "sha256": "202d42f608ac8da1352423e3b072a85b7103efde38e6f7aed6f5ed48d4e9cc03"
+        }
+      ],
+      "remaining_source_responsibility": "Only explicit current source/native-peer/notice capabilities and existing historical/public entrypoints remain; authoritative native rule policy is in Daggerheart and is qualified by the referenced terminal evidence."
+    },
+    {
+      "source": "bot/src/native-environment-capabilities.js",
+      "original_row": "\"bot/src/native-environment-capabilities.js\",\"bot/src/frameworks/daggerheart/native-environment-capabilities.js\",\"daggerheart\",\"RF03\",\"PILOT_MOVE_CANDIDATE\",\"26\",\"0\"",
+      "current_row": "\"bot/src/native-environment-capabilities.js\",\"bot/src/frameworks/daggerheart/native-environment-capabilities.js\",\"daggerheart\",\"RF06\",\"NATIVE_EXTRACTED_QUALIFIED_SOURCE_ADOPTION_DEFERRED:RF06-F07\",\"26\",\"0\"",
+      "native_evidence": [
+        {
+          "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/C07_TERMINAL.json",
+          "sha256": "b28b83ed08debf83df904663e119281555a0c0bd2eafa97c57684e481e1424bd"
+        },
+        {
+          "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F04_C17_TERMINAL.json",
+          "sha256": "aa4a25cf0f2e11ac8f21ae0bf0416b6d112b2d83104335e91dd42376c9eba1ed"
+        }
+      ],
+      "remaining_source_responsibility": "Only explicit current source/native-peer/notice capabilities and existing historical/public entrypoints remain; authoritative native rule policy is in Daggerheart and is qualified by the referenced terminal evidence."
+    },
+    {
+      "source": "bot/src/native-environment-countdown.js",
+      "original_row": "\"bot/src/native-environment-countdown.js\",\"bot/src/frameworks/daggerheart/native-environment-countdown.js\",\"daggerheart\",\"RF03\",\"DECOMPOSE_BEFORE_MOVE\",\"7\",\"7\"",
+      "current_row": "\"bot/src/native-environment-countdown.js\",\"bot/src/frameworks/daggerheart/native-environment-countdown.js\",\"daggerheart\",\"RF05\",\"NATIVE_EXTRACTED_QUALIFIED_SOURCE_ADOPTION_DEFERRED:RF04-F01+RF04-F04+RF05-F02+RF05-F03+RF05-F05\",\"7\",\"7\"",
+      "native_evidence": [
+        {
+          "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F04_C06_TERMINAL.json",
+          "sha256": "bbc74e28be2046b9ac4f3f41d813bd05343d10cc2aac73dcbe1e420c3fc89d40"
+        }
+      ],
+      "remaining_source_responsibility": "Only explicit current source/native-peer/notice capabilities and existing historical/public entrypoints remain; authoritative native rule policy is in Daggerheart and is qualified by the referenced terminal evidence."
+    },
+    {
+      "source": "bot/src/native-environment-dispatch.js",
+      "original_row": "\"bot/src/native-environment-dispatch.js\",\"bot/src/frameworks/daggerheart/native-environment-dispatch.js\",\"daggerheart\",\"RF03\",\"EXTRACT_PORTS_BEFORE_MOVE\",\"1\",\"2\"",
+      "current_row": "\"bot/src/native-environment-dispatch.js\",\"bot/src/frameworks/daggerheart/native-environment-dispatch.js\",\"daggerheart\",\"RF05\",\"NATIVE_EXTRACTED_QUALIFIED_SOURCE_ADOPTION_DEFERRED:RF04-F01+RF05-F02+RF05-F05\",\"1\",\"2\"",
+      "native_evidence": [
+        {
+          "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F04_C15_TERMINAL.json",
+          "sha256": "1bc3336018334d18099d46c3d0a26889fab5f9072ba40c29e30eda7a702bc74c"
+        }
+      ],
+      "remaining_source_responsibility": "Only explicit current source/native-peer/notice capabilities and existing historical/public entrypoints remain; authoritative native rule policy is in Daggerheart and is qualified by the referenced terminal evidence."
+    },
+    {
+      "source": "bot/src/native-environment-door-chain.js",
+      "original_row": "\"bot/src/native-environment-door-chain.js\",\"bot/src/frameworks/daggerheart/native-environment-door-chain.js\",\"daggerheart\",\"RF03\",\"DECOMPOSE_BEFORE_MOVE\",\"2\",\"9\"",
+      "current_row": "\"bot/src/native-environment-door-chain.js\",\"bot/src/frameworks/daggerheart/native-environment-door-chain.js\",\"daggerheart\",\"RF05\",\"NATIVE_EXTRACTED_QUALIFIED_SOURCE_ADOPTION_DEFERRED:RF04-F01+RF04-F04+RF05-F02+RF05-F03+RF05-F05\",\"2\",\"9\"",
+      "native_evidence": [
+        {
+          "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F04_C10_TERMINAL.json",
+          "sha256": "202d42f608ac8da1352423e3b072a85b7103efde38e6f7aed6f5ed48d4e9cc03"
+        }
+      ],
+      "remaining_source_responsibility": "Only explicit current source/native-peer/notice capabilities and existing historical/public entrypoints remain; authoritative native rule policy is in Daggerheart and is qualified by the referenced terminal evidence."
+    },
+    {
+      "source": "bot/src/native-environment-imaging.js",
+      "original_row": "\"bot/src/native-environment-imaging.js\",\"bot/src/frameworks/daggerheart/native-environment-imaging.js\",\"daggerheart\",\"RF03\",\"DECOMPOSE_BEFORE_MOVE\",\"2\",\"6\"",
+      "current_row": "\"bot/src/native-environment-imaging.js\",\"bot/src/frameworks/daggerheart/native-environment-imaging.js\",\"daggerheart\",\"RF05\",\"NATIVE_EXTRACTED_QUALIFIED_SOURCE_ADOPTION_DEFERRED:RF04-F01+RF04-F04+RF05-F02+RF05-F03+RF05-F05\",\"2\",\"6\"",
+      "native_evidence": [
+        {
+          "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F04_C11_TERMINAL.json",
+          "sha256": "8e292e30d7cec4807c36a30de08bfcf2c4d6edb89d06c34f0d751505d1d05f92"
+        }
+      ],
+      "remaining_source_responsibility": "Only explicit current source/native-peer/notice capabilities and existing historical/public entrypoints remain; authoritative native rule policy is in Daggerheart and is qualified by the referenced terminal evidence."
+    },
+    {
+      "source": "bot/src/native-environment-noise.js",
+      "original_row": "\"bot/src/native-environment-noise.js\",\"bot/src/frameworks/daggerheart/native-environment-noise.js\",\"daggerheart\",\"RF03\",\"EXTRACT_PORTS_BEFORE_MOVE\",\"3\",\"6\"",
+      "current_row": "\"bot/src/native-environment-noise.js\",\"bot/src/frameworks/daggerheart/native-environment-noise.js\",\"daggerheart\",\"RF05\",\"NATIVE_EXTRACTED_QUALIFIED_SOURCE_ADOPTION_DEFERRED:RF04-F01+RF05-F02+RF05-F05\",\"3\",\"6\"",
+      "native_evidence": [
+        {
+          "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F04_C05_TERMINAL.json",
+          "sha256": "0f309f24d55b58a5c3c15aaeda3912806900fce02911288d2b3f1b9983759003"
+        }
+      ],
+      "remaining_source_responsibility": "Only explicit current source/native-peer/notice capabilities and existing historical/public entrypoints remain; authoritative native rule policy is in Daggerheart and is qualified by the referenced terminal evidence."
+    },
+    {
+      "source": "bot/src/native-environment-output.js",
+      "original_row": "\"bot/src/native-environment-output.js\",\"bot/src/frameworks/daggerheart/native-environment-output.js\",\"daggerheart\",\"RF03\",\"DECOMPOSE_BEFORE_MOVE\",\"3\",\"4\"",
+      "current_row": "\"bot/src/native-environment-output.js\",\"bot/src/frameworks/daggerheart/native-environment-output.js\",\"daggerheart\",\"RF05\",\"NATIVE_EXTRACTED_QUALIFIED_SOURCE_ADOPTION_DEFERRED:RF04-F01+RF04-F04+RF05-F02+RF05-F03+RF05-F05\",\"3\",\"4\"",
+      "native_evidence": [
+        {
+          "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F04_C15_TERMINAL.json",
+          "sha256": "1bc3336018334d18099d46c3d0a26889fab5f9072ba40c29e30eda7a702bc74c"
+        }
+      ],
+      "remaining_source_responsibility": "Only explicit current source/native-peer/notice capabilities and existing historical/public entrypoints remain; authoritative native rule policy is in Daggerheart and is qualified by the referenced terminal evidence."
+    },
+    {
+      "source": "bot/src/native-environment-proposals.js",
+      "original_row": "\"bot/src/native-environment-proposals.js\",\"bot/src/frameworks/daggerheart/native-environment-proposals.js\",\"daggerheart\",\"RF03\",\"EXTRACT_PORTS_BEFORE_MOVE\",\"1\",\"5\"",
+      "current_row": "\"bot/src/native-environment-proposals.js\",\"bot/src/frameworks/daggerheart/native-environment-proposals.js\",\"daggerheart\",\"RF05\",\"NATIVE_EXTRACTED_QUALIFIED_SOURCE_ADOPTION_DEFERRED:RF04-F01+RF05-F02+RF05-F03+RF05-F05\",\"1\",\"5\"",
+      "native_evidence": [
+        {
+          "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F04_C16_TERMINAL.json",
+          "sha256": "2d4f4dbc1688a93c19185fd98494b314d3a3260e03bec7e4aa6157e9a809fc64"
+        }
+      ],
+      "remaining_source_responsibility": "Only explicit current source/native-peer/notice capabilities and existing historical/public entrypoints remain; authoritative native rule policy is in Daggerheart and is qualified by the referenced terminal evidence."
+    },
+    {
+      "source": "bot/src/native-environment-recording.js",
+      "original_row": "\"bot/src/native-environment-recording.js\",\"bot/src/frameworks/daggerheart/native-environment-recording.js\",\"daggerheart\",\"RF03\",\"DECOMPOSE_BEFORE_MOVE\",\"2\",\"4\"",
+      "current_row": "\"bot/src/native-environment-recording.js\",\"bot/src/frameworks/daggerheart/native-environment-recording.js\",\"daggerheart\",\"RF05\",\"NATIVE_EXTRACTED_QUALIFIED_SOURCE_ADOPTION_DEFERRED:RF04-F01+RF04-F04+RF05-F02+RF05-F03+RF05-F05\",\"2\",\"4\"",
+      "native_evidence": [
+        {
+          "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F04_C12_TERMINAL.json",
+          "sha256": "30b9affeaa6263941594ed89e2f549a94b963cc359569e8b6b75c42e33c292d7"
+        }
+      ],
+      "remaining_source_responsibility": "Only explicit current source/native-peer/notice capabilities and existing historical/public entrypoints remain; authoritative native rule policy is in Daggerheart and is qualified by the referenced terminal evidence."
+    },
+    {
+      "source": "bot/src/native-environment-recovery.js",
+      "original_row": "\"bot/src/native-environment-recovery.js\",\"bot/src/frameworks/daggerheart/native-environment-recovery.js\",\"daggerheart\",\"RF03\",\"DECOMPOSE_BEFORE_MOVE\",\"2\",\"5\"",
+      "current_row": "\"bot/src/native-environment-recovery.js\",\"bot/src/frameworks/daggerheart/native-environment-recovery.js\",\"daggerheart\",\"RF05\",\"NATIVE_EXTRACTED_QUALIFIED_SOURCE_ADOPTION_DEFERRED:RF04-F01+RF04-F04+RF05-F02+RF05-F03+RF05-F05\",\"2\",\"5\"",
+      "native_evidence": [
+        {
+          "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F04_C09_TERMINAL.json",
+          "sha256": "80471d18d2e2246acb9a469b5a48ac56a08e0fdb42cbcc0c84ea512bd1ab4b40"
+        }
+      ],
+      "remaining_source_responsibility": "Only explicit current source/native-peer/notice capabilities and existing historical/public entrypoints remain; authoritative native rule policy is in Daggerheart and is qualified by the referenced terminal evidence."
+    },
+    {
+      "source": "bot/src/native-environment-trace.js",
+      "original_row": "\"bot/src/native-environment-trace.js\",\"bot/src/frameworks/daggerheart/native-environment-trace.js\",\"daggerheart\",\"RF03\",\"DECOMPOSE_BEFORE_MOVE\",\"4\",\"8\"",
+      "current_row": "\"bot/src/native-environment-trace.js\",\"bot/src/frameworks/daggerheart/native-environment-trace.js\",\"daggerheart\",\"RF06\",\"NATIVE_EXTRACTED_QUALIFIED_SOURCE_ADOPTION_DEFERRED:RF04-F01+RF04-F04+RF05-F02+RF05-F03+RF05-F05+RF06-F03\",\"4\",\"8\"",
+      "native_evidence": [
+        {
+          "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F04_C07_TERMINAL.json",
+          "sha256": "f4950719156d42776a43ba3b5d1d6878cc9203cafb7be8f5e11a2e7202b12592"
+        }
+      ],
+      "remaining_source_responsibility": "Only explicit current source/native-peer/notice capabilities and existing historical/public entrypoints remain; authoritative native rule policy is in Daggerheart and is qualified by the referenced terminal evidence."
+    },
+    {
+      "source": "bot/src/native-environment-witnesses.js",
+      "original_row": "\"bot/src/native-environment-witnesses.js\",\"bot/src/frameworks/daggerheart/native-environment-witnesses.js\",\"daggerheart\",\"RF03\",\"DECOMPOSE_BEFORE_MOVE\",\"2\",\"11\"",
+      "current_row": "\"bot/src/native-environment-witnesses.js\",\"bot/src/frameworks/daggerheart/native-environment-witnesses.js\",\"daggerheart\",\"RF05\",\"NATIVE_EXTRACTED_QUALIFIED_SOURCE_ADOPTION_DEFERRED:RF04-F01+RF04-F02+RF04-F03+RF04-F04+RF05-F02+RF05-F03+RF05-F05\",\"2\",\"11\"",
+      "native_evidence": [
+        {
+          "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F04_C14_TERMINAL.json",
+          "sha256": "f3c48ec16f073c860f79bfd2993305db2d84676e4ea4469b2352d0ece4bbacb8"
+        }
+      ],
+      "remaining_source_responsibility": "Only explicit current source/native-peer/notice capabilities and existing historical/public entrypoints remain; authoritative native rule policy is in Daggerheart and is qualified by the referenced terminal evidence."
+    },
+    {
+      "source": "bot/src/native-evidence-analysis.js",
+      "original_row": "\"bot/src/native-evidence-analysis.js\",\"bot/src/frameworks/daggerheart/native-evidence-analysis.js\",\"daggerheart\",\"RF03\",\"PILOT_MOVE_CANDIDATE\",\"2\",\"0\"",
+      "current_row": "\"bot/src/native-evidence-analysis.js\",\"bot/src/frameworks/daggerheart/native-evidence-analysis.js\",\"daggerheart\",\"RF05\",\"NATIVE_EXTRACTED_QUALIFIED_SOURCE_ADOPTION_DEFERRED:RF05-F05\",\"2\",\"0\"",
+      "native_evidence": [
+        {
+          "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F01_C22_TERMINAL.json",
+          "sha256": "6db5e1beae1a6d2a52590176611ccced57a233243af0baa31d8ed8fb05a323e7"
+        }
+      ],
+      "remaining_source_responsibility": "Only explicit current source/native-peer/notice capabilities and existing historical/public entrypoints remain; authoritative native rule policy is in Daggerheart and is qualified by the referenced terminal evidence."
+    },
+    {
+      "source": "bot/src/native-group-features.js",
+      "original_row": "\"bot/src/native-group-features.js\",\"bot/src/frameworks/daggerheart/native-group-features.js\",\"daggerheart\",\"RF03\",\"DECOMPOSE_BEFORE_MOVE\",\"14\",\"8\"",
+      "current_row": "\"bot/src/native-group-features.js\",\"bot/src/frameworks/daggerheart/native-group-features.js\",\"daggerheart\",\"RF06\",\"NATIVE_EXTRACTED_QUALIFIED_SOURCE_ADOPTION_DEFERRED:RF04-F01+RF04-F03+RF04-F04+RF05-F03+RF05-F05+RF06-F03\",\"14\",\"8\"",
+      "native_evidence": [
+        {
+          "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F01_C13_TERMINAL.json",
+          "sha256": "53a6d013531faa934af1f5f73144a31ff7f75c23a2901bbf762691efd3a32eca"
+        }
+      ],
+      "remaining_source_responsibility": "Only explicit current source/native-peer/notice capabilities and existing historical/public entrypoints remain; authoritative native rule policy is in Daggerheart and is qualified by the referenced terminal evidence."
+    },
+    {
+      "source": "bot/src/native-house-errata.js",
+      "original_row": "\"bot/src/native-house-errata.js\",\"bot/src/frameworks/daggerheart/native-house-errata.js\",\"daggerheart\",\"RF03\",\"EXTRACT_PORTS_BEFORE_MOVE\",\"6\",\"2\"",
+      "current_row": "\"bot/src/native-house-errata.js\",\"bot/src/frameworks/daggerheart/native-house-errata.js\",\"daggerheart\",\"RF06\",\"NATIVE_EXTRACTED_QUALIFIED_SOURCE_ADOPTION_DEFERRED:RF05-F02+RF06-F07\",\"6\",\"2\"",
+      "native_evidence": [
+        {
+          "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F02_C02_TERMINAL.json",
+          "sha256": "f3f035a86f6ec8682d28f703fd0159eaf133accab1c7cce67f5b82b00668ee23"
+        },
+        {
+          "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F01_C33_TERMINAL.json",
+          "sha256": "3637624766604395acedbaa0b72fbcf0bf5515bcccf4dc37034ed4014f3879ec"
+        }
+      ],
+      "remaining_source_responsibility": "Only explicit current source/native-peer/notice capabilities and existing historical/public entrypoints remain; authoritative native rule policy is in Daggerheart and is qualified by the referenced terminal evidence."
+    },
+    {
+      "source": "bot/src/native-notice.js",
+      "original_row": "\"bot/src/native-notice.js\",\"bot/src/frameworks/daggerheart/native-notice.js\",\"daggerheart\",\"RF03\",\"DECOMPOSE_BEFORE_MOVE\",\"5\",\"4\"",
+      "current_row": "\"bot/src/native-notice.js\",\"bot/src/frameworks/daggerheart/native-notice.js\",\"daggerheart\",\"RF06\",\"NATIVE_EXTRACTED_QUALIFIED_SOURCE_ADOPTION_DEFERRED:RF04-F03+RF04-F04+RF05-F02+RF05-F05+RF06-F03\",\"5\",\"4\"",
+      "native_evidence": [
+        {
+          "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F01_C32_TERMINAL.json",
+          "sha256": "980ac58271141f7171d79c4945b9b5bf71dace1e90570b75a6b6edd931abcffd"
+        }
+      ],
+      "remaining_source_responsibility": "Only explicit current source/native-peer/notice capabilities and existing historical/public entrypoints remain; authoritative native rule policy is in Daggerheart and is qualified by the referenced terminal evidence."
+    },
+    {
+      "source": "bot/src/native-professional-entry.js",
+      "original_row": "\"bot/src/native-professional-entry.js\",\"bot/src/frameworks/daggerheart/native-professional-entry.js\",\"daggerheart\",\"RF03\",\"DECOMPOSE_BEFORE_MOVE\",\"4\",\"4\"",
+      "current_row": "\"bot/src/native-professional-entry.js\",\"bot/src/frameworks/daggerheart/native-professional-entry.js\",\"daggerheart\",\"RF05\",\"NATIVE_EXTRACTED_QUALIFIED_SOURCE_ADOPTION_DEFERRED:RF04-F01+RF04-F04+RF05-F05\",\"4\",\"4\"",
+      "native_evidence": [
+        {
+          "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F01_C14_TERMINAL.json",
+          "sha256": "5b6b67201cb888eb6a109d2693107be90ba293d28494789e95efa982f675fee1"
+        }
+      ],
+      "remaining_source_responsibility": "Only explicit current source/native-peer/notice capabilities and existing historical/public entrypoints remain; authoritative native rule policy is in Daggerheart and is qualified by the referenced terminal evidence."
+    },
+    {
+      "source": "bot/src/native-stress-passives.js",
+      "original_row": "\"bot/src/native-stress-passives.js\",\"bot/src/frameworks/daggerheart/native-stress-passives.js\",\"daggerheart\",\"RF03\",\"EXTRACT_PORTS_BEFORE_MOVE\",\"4\",\"3\"",
+      "current_row": "\"bot/src/native-stress-passives.js\",\"bot/src/frameworks/daggerheart/native-stress-passives.js\",\"daggerheart\",\"RF05\",\"NATIVE_EXTRACTED_QUALIFIED_SOURCE_ADOPTION_DEFERRED:RF04-F01+RF04-F04+RF05-F05\",\"4\",\"3\"",
+      "native_evidence": [
+        {
+          "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F01_C16_TERMINAL.json",
+          "sha256": "cf454ee8c6e08517f34cc2c1bcfe9268b9b020b6fc63853cab5849778fe0866c"
+        }
+      ],
+      "remaining_source_responsibility": "Only explicit current source/native-peer/notice capabilities and existing historical/public entrypoints remain; authoritative native rule policy is in Daggerheart and is qualified by the referenced terminal evidence."
+    },
+    {
+      "source": "bot/src/ordinary-effect-proof.js",
+      "original_row": "\"bot/src/ordinary-effect-proof.js\",\"bot/src/frameworks/daggerheart/ordinary-effect-proof.js\",\"daggerheart\",\"RF03\",\"EXTRACT_PORTS_BEFORE_MOVE\",\"12\",\"4\"",
+      "current_row": "\"bot/src/ordinary-effect-proof.js\",\"bot/src/frameworks/daggerheart/ordinary-effect-proof.js\",\"daggerheart\",\"RF05\",\"NATIVE_EXTRACTED_QUALIFIED_SOURCE_ADOPTION_DEFERRED:RF04-F03+RF04-F04+RF05-F05\",\"12\",\"4\"",
+      "native_evidence": [
+        {
+          "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F01_C21_TERMINAL.json",
+          "sha256": "b0f041272c5605bf0eca30a775071090d4f8a0dce5fbf4243d0a8255deb842e7"
+        }
+      ],
+      "remaining_source_responsibility": "Only explicit current source/native-peer/notice capabilities and existing historical/public entrypoints remain; authoritative native rule policy is in Daggerheart and is qualified by the referenced terminal evidence."
+    },
+    {
+      "source": "bot/src/ordinary-effects.js",
+      "original_row": "\"bot/src/ordinary-effects.js\",\"bot/src/frameworks/daggerheart/ordinary-effects.js\",\"daggerheart\",\"RF03\",\"EXTRACT_PORTS_BEFORE_MOVE\",\"3\",\"5\"",
+      "current_row": "\"bot/src/ordinary-effects.js\",\"bot/src/frameworks/daggerheart/ordinary-effects.js\",\"daggerheart\",\"RF05\",\"NATIVE_EXTRACTED_QUALIFIED_SOURCE_ADOPTION_DEFERRED:RF04-F01+RF04-F04+RF05-F02+RF05-F05\",\"3\",\"5\"",
+      "native_evidence": [
+        {
+          "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F01_C21_TERMINAL.json",
+          "sha256": "b0f041272c5605bf0eca30a775071090d4f8a0dce5fbf4243d0a8255deb842e7"
+        }
+      ],
+      "remaining_source_responsibility": "Only explicit current source/native-peer/notice capabilities and existing historical/public entrypoints remain; authoritative native rule policy is in Daggerheart and is qualified by the referenced terminal evidence."
+    },
+    {
+      "source": "bot/src/outcome-preview.js",
+      "original_row": "\"bot/src/outcome-preview.js\",\"bot/src/frameworks/daggerheart/outcome-preview.js\",\"daggerheart\",\"RF03\",\"PILOT_MOVE_CANDIDATE\",\"1\",\"0\"",
+      "current_row": "\"bot/src/outcome-preview.js\",\"bot/src/frameworks/world/outcome-preview.js\",\"world\",\"RF04\",\"READ_ONLY_WORLD_PREVIEW_NO_NATIVE_MECHANICS:RF04-F01\",\"1\",\"0\"",
+      "native_evidence": [],
+      "remaining_source_responsibility": "Read-only GM-private hypothetical world preview. No dice, resource, native receipt, Difficulty or PC outcome rule exists here. Inventory assignment was overbroad; source is retained for world migration, not deferred native mechanics."
+    },
+    {
+      "source": "bot/src/owner-consent.js",
+      "original_row": "\"bot/src/owner-consent.js\",\"bot/src/frameworks/daggerheart/owner-consent.js\",\"daggerheart\",\"RF03\",\"EXTRACT_PORTS_BEFORE_MOVE\",\"3\",\"1\"",
+      "current_row": "\"bot/src/owner-consent.js\",\"bot/src/frameworks/daggerheart/owner-consent.js\",\"daggerheart\",\"RF05\",\"NATIVE_EXTRACTED_QUALIFIED_SOURCE_ADOPTION_DEFERRED:RF05-F02+RF05-F05\",\"3\",\"1\"",
+      "native_evidence": [
+        {
+          "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F03_C30_TERMINAL.json",
+          "sha256": "705f82910d984d0b7842bb2ef41d605c65570c37d28ed36bda235ab79ea7124b"
+        }
+      ],
+      "remaining_source_responsibility": "Only explicit current source/native-peer/notice capabilities and existing historical/public entrypoints remain; authoritative native rule policy is in Daggerheart and is qualified by the referenced terminal evidence."
+    },
+    {
+      "source": "bot/src/pc-effects.js",
+      "original_row": "\"bot/src/pc-effects.js\",\"bot/src/frameworks/daggerheart/pc-effects.js\",\"daggerheart\",\"RF03\",\"EXTRACT_PORTS_BEFORE_MOVE\",\"5\",\"4\"",
+      "current_row": "\"bot/src/pc-effects.js\",\"bot/src/frameworks/daggerheart/pc-effects.js\",\"daggerheart\",\"RF05\",\"NATIVE_EXTRACTED_QUALIFIED_SOURCE_ADOPTION_DEFERRED:RF04-F01+RF04-F03+RF04-F04+RF05-F05\",\"5\",\"4\"",
+      "native_evidence": [
+        {
+          "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F01_C17_TERMINAL.json",
+          "sha256": "5b0f8a70da4c1fbae6a51b8edcf369322bb878e36a430e505674f596349cdea2"
+        }
+      ],
+      "remaining_source_responsibility": "Only explicit current source/native-peer/notice capabilities and existing historical/public entrypoints remain; authoritative native rule policy is in Daggerheart and is qualified by the referenced terminal evidence."
+    },
+    {
+      "source": "bot/src/pc-incoming.js",
+      "original_row": "\"bot/src/pc-incoming.js\",\"bot/src/frameworks/daggerheart/pc-incoming.js\",\"daggerheart\",\"RF03\",\"DECOMPOSE_BEFORE_MOVE\",\"15\",\"5\"",
+      "current_row": "\"bot/src/pc-incoming.js\",\"bot/src/frameworks/daggerheart/pc-incoming.js\",\"daggerheart\",\"RF05\",\"NATIVE_EXTRACTED_QUALIFIED_SOURCE_ADOPTION_DEFERRED:RF04-F01+RF04-F03+RF04-F04+RF05-F05\",\"15\",\"5\"",
+      "native_evidence": [
+        {
+          "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F01_C12_TERMINAL.json",
+          "sha256": "ada4a2906e6cc0f61a111867aebeead2da9d2543c506775dfa7923d91244bf8c"
+        }
+      ],
+      "remaining_source_responsibility": "Only explicit current source/native-peer/notice capabilities and existing historical/public entrypoints remain; authoritative native rule policy is in Daggerheart and is qualified by the referenced terminal evidence."
+    },
+    {
+      "source": "bot/src/pc-native-eligibility.js",
+      "original_row": "\"bot/src/pc-native-eligibility.js\",\"bot/src/frameworks/daggerheart/pc-native-eligibility.js\",\"daggerheart\",\"RF03\",\"PILOT_MOVE_CANDIDATE\",\"15\",\"0\"",
+      "current_row": "\"bot/src/pc-native-eligibility.js\",\"bot/src/frameworks/daggerheart/pc-native-eligibility.js\",\"daggerheart\",\"RF05\",\"NATIVE_EXTRACTED_QUALIFIED_SOURCE_ADOPTION_DEFERRED:RF05-F05\",\"15\",\"0\"",
+      "native_evidence": [
+        {
+          "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F03_C02_TERMINAL.json",
+          "sha256": "bd0d67a595b1fea05af586484b696c40f845bde1b236fd63ceb462f2f5ee70ac"
+        }
+      ],
+      "remaining_source_responsibility": "Only explicit current source/native-peer/notice capabilities and existing historical/public entrypoints remain; authoritative native rule policy is in Daggerheart and is qualified by the referenced terminal evidence."
+    },
+    {
+      "source": "bot/src/pre-roll-fear-notice.js",
+      "original_row": "\"bot/src/pre-roll-fear-notice.js\",\"bot/src/frameworks/daggerheart/pre-roll-fear-notice.js\",\"daggerheart\",\"RF03\",\"EXTRACT_PORTS_BEFORE_MOVE\",\"3\",\"2\"",
+      "current_row": "\"bot/src/pre-roll-fear-notice.js\",\"bot/src/frameworks/daggerheart/pre-roll-fear-notice.js\",\"daggerheart\",\"RF06\",\"NATIVE_EXTRACTED_QUALIFIED_SOURCE_ADOPTION_DEFERRED:RF05-F05+RF06-F03\",\"3\",\"2\"",
+      "native_evidence": [
+        {
+          "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F03_C31_TERMINAL.json",
+          "sha256": "6a289e63e5d3ff29690a6538350fd4fb5277535c30f7d930d9d5cadc7e4c0566"
+        }
+      ],
+      "remaining_source_responsibility": "Publication reservation/recipient selection/formatting and historical notice API remain; native request/eligibility/choice/source/receipt policy extracted and tested."
+    },
+    {
+      "source": "bot/src/pvp-attacks.js",
+      "original_row": "\"bot/src/pvp-attacks.js\",\"bot/src/frameworks/daggerheart/pvp-attacks.js\",\"daggerheart\",\"RF03\",\"DECOMPOSE_BEFORE_MOVE\",\"16\",\"5\"",
+      "current_row": "\"bot/src/pvp-attacks.js\",\"bot/src/frameworks/daggerheart/pvp-attacks.js\",\"daggerheart\",\"RF06\",\"NATIVE_EXTRACTED_QUALIFIED_SOURCE_ADOPTION_DEFERRED:RF04-F01+RF04-F03+RF04-F04+RF05-F02+RF05-F05+RF06-F03\",\"16\",\"5\"",
+      "native_evidence": [
+        {
+          "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F03_C22_TERMINAL.json",
+          "sha256": "c0b4a72c2162214509e42c7dd64c49ae6e0afc092ae2e39e4f96ddcadb98f2ea"
+        }
+      ],
+      "remaining_source_responsibility": "Only explicit current source/native-peer/notice capabilities and existing historical/public entrypoints remain; authoritative native rule policy is in Daggerheart and is qualified by the referenced terminal evidence."
+    },
+    {
+      "source": "bot/src/pvp-authority.js",
+      "original_row": "\"bot/src/pvp-authority.js\",\"bot/src/frameworks/daggerheart/pvp-authority.js\",\"daggerheart\",\"RF03\",\"PILOT_MOVE_CANDIDATE\",\"22\",\"0\"",
+      "current_row": "\"bot/src/pvp-authority.js\",\"bot/src/frameworks/daggerheart/pvp-authority.js\",\"daggerheart\",\"RF06\",\"NATIVE_EXTRACTED_QUALIFIED_SOURCE_ADOPTION_DEFERRED:RF06-F07\",\"22\",\"0\"",
+      "native_evidence": [
+        {
+          "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/C07_TERMINAL.json",
+          "sha256": "b28b83ed08debf83df904663e119281555a0c0bd2eafa97c57684e481e1424bd"
+        }
+      ],
+      "remaining_source_responsibility": "Only explicit current source/native-peer/notice capabilities and existing historical/public entrypoints remain; authoritative native rule policy is in Daggerheart and is qualified by the referenced terminal evidence."
+    },
+    {
+      "source": "bot/src/pvp-authorship.js",
+      "original_row": "\"bot/src/pvp-authorship.js\",\"bot/src/frameworks/daggerheart/pvp-authorship.js\",\"daggerheart\",\"RF03\",\"EXTRACT_PORTS_BEFORE_MOVE\",\"7\",\"4\"",
+      "current_row": "\"bot/src/pvp-authorship.js\",\"bot/src/frameworks/daggerheart/pvp-authorship.js\",\"daggerheart\",\"RF06\",\"NATIVE_EXTRACTED_QUALIFIED_SOURCE_ADOPTION_DEFERRED:RF04-F01+RF05-F05+RF06-F03\",\"7\",\"4\"",
+      "native_evidence": [
+        {
+          "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F03_C29_TERMINAL.json",
+          "sha256": "81cea098457b3f4d714f851c9dd2e5a2a2513b902b64d14c38f1858ffba3549b"
+        }
+      ],
+      "remaining_source_responsibility": "Only explicit current source/native-peer/notice capabilities and existing historical/public entrypoints remain; authoritative native rule policy is in Daggerheart and is qualified by the referenced terminal evidence."
+    },
+    {
+      "source": "bot/src/pvp-brawl.js",
+      "original_row": "\"bot/src/pvp-brawl.js\",\"bot/src/frameworks/daggerheart/pvp-brawl.js\",\"daggerheart\",\"RF03\",\"EXTRACT_PORTS_BEFORE_MOVE\",\"7\",\"4\"",
+      "current_row": "\"bot/src/pvp-brawl.js\",\"bot/src/frameworks/daggerheart/pvp-brawl.js\",\"daggerheart\",\"RF05\",\"NATIVE_EXTRACTED_QUALIFIED_SOURCE_ADOPTION_DEFERRED:RF04-F01+RF04-F03+RF04-F04+RF05-F05\",\"7\",\"4\"",
+      "native_evidence": [
+        {
+          "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F03_C27_TERMINAL.json",
+          "sha256": "2701d7cee1fe5e39e220494aca53e9e17c783bb7d8d41e8b1905a5f05d6069fd"
+        }
+      ],
+      "remaining_source_responsibility": "Only explicit current source/native-peer/notice capabilities and existing historical/public entrypoints remain; authoritative native rule policy is in Daggerheart and is qualified by the referenced terminal evidence."
+    },
+    {
+      "source": "bot/src/pvp-campaign-execution.js",
+      "original_row": "\"bot/src/pvp-campaign-execution.js\",\"bot/src/frameworks/daggerheart/pvp-campaign-execution.js\",\"daggerheart\",\"RF03\",\"EXTRACT_PORTS_BEFORE_MOVE\",\"3\",\"3\"",
+      "current_row": "\"bot/src/pvp-campaign-execution.js\",\"bot/src/frameworks/daggerheart/pvp-campaign-execution.js\",\"daggerheart\",\"RF05\",\"NATIVE_EXTRACTED_QUALIFIED_SOURCE_ADOPTION_DEFERRED:RF04-F01+RF04-F04+RF05-F05\",\"3\",\"3\"",
+      "native_evidence": [
+        {
+          "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F03_C24_TERMINAL.json",
+          "sha256": "dd1400b0ab1b1b59a1aea026c7ccdfbe6c16dea67243ac645c2dd9ac95f4dd31"
+        }
+      ],
+      "remaining_source_responsibility": "Only explicit current source/native-peer/notice capabilities and existing historical/public entrypoints remain; authoritative native rule policy is in Daggerheart and is qualified by the referenced terminal evidence."
+    },
+    {
+      "source": "bot/src/pvp-campaign-policy.js",
+      "original_row": "\"bot/src/pvp-campaign-policy.js\",\"bot/src/frameworks/daggerheart/pvp-campaign-policy.js\",\"daggerheart\",\"RF03\",\"EXTRACT_PORTS_BEFORE_MOVE\",\"10\",\"1\"",
+      "current_row": "\"bot/src/pvp-campaign-policy.js\",\"bot/src/frameworks/daggerheart/pvp-campaign-policy.js\",\"daggerheart\",\"RF05\",\"NATIVE_EXTRACTED_QUALIFIED_SOURCE_ADOPTION_DEFERRED:RF04-F01+RF05-F05\",\"10\",\"1\"",
+      "native_evidence": [
+        {
+          "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F03_C20_TERMINAL.json",
+          "sha256": "0a859ebd5cb7bb22c7306df4c513e4568e438eda048ad12a8b1e7e3d40a8dcf4"
+        }
+      ],
+      "remaining_source_responsibility": "Only explicit current source/native-peer/notice capabilities and existing historical/public entrypoints remain; authoritative native rule policy is in Daggerheart and is qualified by the referenced terminal evidence."
+    },
+    {
+      "source": "bot/src/pvp-fear-gate.js",
+      "original_row": "\"bot/src/pvp-fear-gate.js\",\"bot/src/frameworks/daggerheart/pvp-fear-gate.js\",\"daggerheart\",\"RF03\",\"PILOT_MOVE_CANDIDATE\",\"8\",\"0\"",
+      "current_row": "\"bot/src/pvp-fear-gate.js\",\"bot/src/frameworks/daggerheart/pvp-fear-gate.js\",\"daggerheart\",\"RF05\",\"NATIVE_EXTRACTED_QUALIFIED_SOURCE_ADOPTION_DEFERRED:RF05-F05\",\"8\",\"0\"",
+      "native_evidence": [
+        {
+          "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F03_C20_TERMINAL.json",
+          "sha256": "0a859ebd5cb7bb22c7306df4c513e4568e438eda048ad12a8b1e7e3d40a8dcf4"
+        }
+      ],
+      "remaining_source_responsibility": "Only explicit current source/native-peer/notice capabilities and existing historical/public entrypoints remain; authoritative native rule policy is in Daggerheart and is qualified by the referenced terminal evidence."
+    },
+    {
+      "source": "bot/src/pvp-fear-moves.js",
+      "original_row": "\"bot/src/pvp-fear-moves.js\",\"bot/src/frameworks/daggerheart/pvp-fear-moves.js\",\"daggerheart\",\"RF03\",\"DECOMPOSE_BEFORE_MOVE\",\"12\",\"9\"",
+      "current_row": "\"bot/src/pvp-fear-moves.js\",\"bot/src/frameworks/daggerheart/pvp-fear-moves.js\",\"daggerheart\",\"RF05\",\"NATIVE_EXTRACTED_QUALIFIED_SOURCE_ADOPTION_DEFERRED:RF04-F01+RF04-F04+RF05-F05\",\"12\",\"9\"",
+      "native_evidence": [
+        {
+          "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F03_C28_TERMINAL.json",
+          "sha256": "59fe35bbb6c4aee7729ee28862f1698860e80f893acdeff16e7a30a7e0807ae5"
+        }
+      ],
+      "remaining_source_responsibility": "Ordinary NPC identity/entity/scene-presence and source-bound threat establishment producer remains; native immediate Fear choice/context ancestry/advancement/recovery and effect validation extracted and tested."
+    },
+    {
+      "source": "bot/src/pvp-profiles.js",
+      "original_row": "\"bot/src/pvp-profiles.js\",\"bot/src/frameworks/daggerheart/pvp-profiles.js\",\"daggerheart\",\"RF03\",\"EXTRACT_PORTS_BEFORE_MOVE\",\"8\",\"3\"",
+      "current_row": "\"bot/src/pvp-profiles.js\",\"bot/src/frameworks/daggerheart/pvp-profiles.js\",\"daggerheart\",\"RF05\",\"NATIVE_EXTRACTED_QUALIFIED_SOURCE_ADOPTION_DEFERRED:RF04-F01+RF04-F04+RF05-F05\",\"8\",\"3\"",
+      "native_evidence": [
+        {
+          "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F03_C21_TERMINAL.json",
+          "sha256": "17455a761691edfa657494c13eee1c173fba96964276d1cdb09c7bf121c15629"
+        }
+      ],
+      "remaining_source_responsibility": "Only explicit current source/native-peer/notice capabilities and existing historical/public entrypoints remain; authoritative native rule policy is in Daggerheart and is qualified by the referenced terminal evidence."
+    },
+    {
+      "source": "bot/src/pvp-reactions.js",
+      "original_row": "\"bot/src/pvp-reactions.js\",\"bot/src/frameworks/daggerheart/pvp-reactions.js\",\"daggerheart\",\"RF03\",\"EXTRACT_PORTS_BEFORE_MOVE\",\"2\",\"1\"",
+      "current_row": "\"bot/src/pvp-reactions.js\",\"bot/src/frameworks/daggerheart/pvp-reactions.js\",\"daggerheart\",\"RF05\",\"NATIVE_EXTRACTED_QUALIFIED_SOURCE_ADOPTION_DEFERRED:RF04-F03+RF05-F05\",\"2\",\"1\"",
+      "native_evidence": [
+        {
+          "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F03_C25_TERMINAL.json",
+          "sha256": "d82fc52edf20d6eec24911e8fa833fa070d812f8d8f76fd24f31d0460588244d"
+        }
+      ],
+      "remaining_source_responsibility": "Only explicit current source/native-peer/notice capabilities and existing historical/public entrypoints remain; authoritative native rule policy is in Daggerheart and is qualified by the referenced terminal evidence."
+    },
+    {
+      "source": "bot/src/pvp-rounds.js",
+      "original_row": "\"bot/src/pvp-rounds.js\",\"bot/src/frameworks/daggerheart/pvp-rounds.js\",\"daggerheart\",\"RF03\",\"DECOMPOSE_BEFORE_MOVE\",\"5\",\"5\"",
+      "current_row": "\"bot/src/pvp-rounds.js\",\"bot/src/frameworks/daggerheart/pvp-rounds.js\",\"daggerheart\",\"RF06\",\"NATIVE_EXTRACTED_QUALIFIED_SOURCE_ADOPTION_DEFERRED:RF04-F01+RF04-F04+RF05-F05+RF06-F03\",\"5\",\"5\"",
+      "native_evidence": [
+        {
+          "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F03_C23_TERMINAL.json",
+          "sha256": "896b79ee761decc5d7f6a9ac9496008ae7f2504df9a8b4722c7fbd356bb7d94e"
+        }
+      ],
+      "remaining_source_responsibility": "Only explicit current source/native-peer/notice capabilities and existing historical/public entrypoints remain; authoritative native rule policy is in Daggerheart and is qualified by the referenced terminal evidence."
+    },
+    {
+      "source": "bot/src/pvp-terminal.js",
+      "original_row": "\"bot/src/pvp-terminal.js\",\"bot/src/frameworks/daggerheart/pvp-terminal.js\",\"daggerheart\",\"RF03\",\"EXTRACT_PORTS_BEFORE_MOVE\",\"3\",\"1\"",
+      "current_row": "\"bot/src/pvp-terminal.js\",\"bot/src/frameworks/daggerheart/pvp-terminal.js\",\"daggerheart\",\"RF05\",\"NATIVE_EXTRACTED_QUALIFIED_SOURCE_ADOPTION_DEFERRED:RF05-F02+RF05-F05\",\"3\",\"1\"",
+      "native_evidence": [
+        {
+          "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F03_C26_TERMINAL.json",
+          "sha256": "c4f7327adac87d6c12552d7d3b48f97e8d237cf0d477014e6bfca81e9c097868"
+        }
+      ],
+      "remaining_source_responsibility": "Only explicit current source/native-peer/notice capabilities and existing historical/public entrypoints remain; authoritative native rule policy is in Daggerheart and is qualified by the referenced terminal evidence."
+    },
+    {
+      "source": "bot/src/roll-declaration-review.js",
+      "original_row": "\"bot/src/roll-declaration-review.js\",\"bot/src/frameworks/daggerheart/roll-declaration-review.js\",\"daggerheart\",\"RF03\",\"EXTRACT_PORTS_BEFORE_MOVE\",\"1\",\"3\"",
+      "current_row": "\"bot/src/roll-declaration-review.js\",\"bot/src/frameworks/daggerheart/roll-declaration-review.js\",\"daggerheart\",\"RF05\",\"NATIVE_EXTRACTED_QUALIFIED_SOURCE_ADOPTION_DEFERRED:RF04-F01+RF04-F03+RF05-F05\",\"1\",\"3\"",
+      "native_evidence": [
+        {
+          "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F01_C26_TERMINAL.json",
+          "sha256": "e42f9a605398f0800da4c180dd7930015696118069ce1e70d4d25d9430fbac57"
+        }
+      ],
+      "remaining_source_responsibility": "Only explicit current source/native-peer/notice capabilities and existing historical/public entrypoints remain; authoritative native rule policy is in Daggerheart and is qualified by the referenced terminal evidence."
+    },
+    {
+      "source": "bot/src/roll-requests.js",
+      "original_row": "\"bot/src/roll-requests.js\",\"bot/src/frameworks/daggerheart/roll-requests.js\",\"daggerheart\",\"RF03\",\"DECOMPOSE_BEFORE_MOVE\",\"18\",\"8\"",
+      "current_row": "\"bot/src/roll-requests.js\",\"bot/src/frameworks/daggerheart/roll-requests.js\",\"daggerheart\",\"RF05\",\"NATIVE_EXTRACTED_QUALIFIED_SOURCE_ADOPTION_DEFERRED:RF05-F05\",\"18\",\"8\"",
+      "native_evidence": [
+        {
+          "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F01_TERMINAL.json",
+          "sha256": "24e1999e2b2c22a1d7f81021667f2dfadf7e72ab42c4361e1dda2b419a09ade5"
+        }
+      ],
+      "remaining_source_responsibility": "Publication reservation/recipient selection/formatting and historical notice API remain; native request/eligibility/choice/source/receipt policy extracted and tested."
+    },
+    {
+      "source": "bot/src/roll-sharing.js",
+      "original_row": "\"bot/src/roll-sharing.js\",\"bot/src/frameworks/daggerheart/roll-sharing.js\",\"daggerheart\",\"RF03\",\"EXTRACT_PORTS_BEFORE_MOVE\",\"4\",\"3\"",
+      "current_row": "\"bot/src/roll-sharing.js\",\"bot/src/frameworks/daggerheart/roll-sharing.js\",\"daggerheart\",\"RF06\",\"NATIVE_EXTRACTED_QUALIFIED_SOURCE_ADOPTION_DEFERRED:RF05-F05+RF06-F03\",\"4\",\"3\"",
+      "native_evidence": [
+        {
+          "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F01_C25_TERMINAL.json",
+          "sha256": "91ddc7075a1928fe5c4b84fe7ba89e9f1a5a9c7f4f5fff077aab995bdb561587"
+        }
+      ],
+      "remaining_source_responsibility": "Only explicit current source/native-peer/notice capabilities and existing historical/public entrypoints remain; authoritative native rule policy is in Daggerheart and is qualified by the referenced terminal evidence."
+    },
+    {
+      "source": "bot/src/rules-arbitration.js",
+      "original_row": "\"bot/src/rules-arbitration.js\",\"bot/src/frameworks/daggerheart/rules-arbitration.js\",\"daggerheart\",\"RF03\",\"EXTRACT_PORTS_BEFORE_MOVE\",\"8\",\"5\"",
+      "current_row": "\"bot/src/rules-arbitration.js\",\"bot/src/frameworks/daggerheart/rules-arbitration.js\",\"daggerheart\",\"RF05\",\"NATIVE_EXTRACTED_QUALIFIED_SOURCE_ADOPTION_DEFERRED:RF04-F01+RF04-F04+RF05-F05\",\"8\",\"5\"",
+      "native_evidence": [
+        {
+          "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F01_C19_TERMINAL.json",
+          "sha256": "e917b8038abccb2fe420ab34f0ff41d5f7d96b454a765cf9c8da245221d1bbc4"
+        }
+      ],
+      "remaining_source_responsibility": "Only explicit current source/native-peer/notice capabilities and existing historical/public entrypoints remain; authoritative native rule policy is in Daggerheart and is qualified by the referenced terminal evidence."
+    },
+    {
+      "source": "bot/src/typed-roll-outcomes.js",
+      "original_row": "\"bot/src/typed-roll-outcomes.js\",\"bot/src/frameworks/daggerheart/typed-roll-outcomes.js\",\"daggerheart\",\"RF03\",\"EXTRACT_PORTS_BEFORE_MOVE\",\"2\",\"3\"",
+      "current_row": "\"bot/src/typed-roll-outcomes.js\",\"bot/src/frameworks/daggerheart/typed-roll-outcomes.js\",\"daggerheart\",\"RF05\",\"NATIVE_EXTRACTED_QUALIFIED_SOURCE_ADOPTION_DEFERRED:RF04-F04+RF05-F02+RF05-F05\",\"2\",\"3\"",
+      "native_evidence": [
+        {
+          "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F01_C26_TERMINAL.json",
+          "sha256": "e42f9a605398f0800da4c180dd7930015696118069ce1e70d4d25d9430fbac57"
+        }
+      ],
+      "remaining_source_responsibility": "Only explicit current source/native-peer/notice capabilities and existing historical/public entrypoints remain; authoritative native rule policy is in Daggerheart and is qualified by the referenced terminal evidence."
+    },
+    {
+      "source": "bot/src/typed-roll-proof.js",
+      "original_row": "\"bot/src/typed-roll-proof.js\",\"bot/src/frameworks/daggerheart/typed-roll-proof.js\",\"daggerheart\",\"RF03\",\"EXTRACT_PORTS_BEFORE_MOVE\",\"16\",\"1\"",
+      "current_row": "\"bot/src/typed-roll-proof.js\",\"bot/src/frameworks/daggerheart/typed-roll-proof.js\",\"daggerheart\",\"RF05\",\"NATIVE_EXTRACTED_QUALIFIED_SOURCE_ADOPTION_DEFERRED:RF05-F05\",\"16\",\"1\"",
+      "native_evidence": [
+        {
+          "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F01_C04_TERMINAL.json",
+          "sha256": "a33be0723e4c10dbd493abe29a0078d8647f61d447951e467c246d4d6e2e8fcd"
+        }
+      ],
+      "remaining_source_responsibility": "Only explicit current source/native-peer/notice capabilities and existing historical/public entrypoints remain; authoritative native rule policy is in Daggerheart and is qualified by the referenced terminal evidence."
+    }
+  ]
+}

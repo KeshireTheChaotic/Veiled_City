@@ -1,10 +1,10 @@
 {
+  "head": "4c693b40dc511db23bf8932bb293806c76e47b11",
+  "start": "2026-10-24T16:35:34.4982734-05:00",
+  "end": "2026-10-24T16:35:37.7589006-05:00",
   "rf02_ratchet_exit": 0,
-  "end": "2026-10-24T16:05:08.8531089-05:00",
-  "head": "87e28defba97cff3a12720039532b9347c8028b4",
   "rf03_ratchet_exit": 0,
-  "start": "2026-10-24T16:05:06.8004749-05:00",
   "rf03_strict_exit": 1,
-  "tests_rerun": 0,
-  "strict_expected": "failure while accepted legacy debt remains"
+  "strict_expected": "failure while 2484accepted legacy occurrences remain",
+  "tests_rerun": 0
 }

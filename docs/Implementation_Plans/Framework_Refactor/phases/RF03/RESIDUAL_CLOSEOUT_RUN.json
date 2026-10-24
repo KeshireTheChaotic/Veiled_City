@@ -1,0 +1,14 @@
+{
+  "strict_exit": 1,
+  "rf03_exit": 0,
+  "strict_expected": 1,
+  "base_sha": "4c693b40dc511db23bf8932bb293806c76e47b11",
+  "run_id": "RF03_RESIDUAL_CLOSEOUT",
+  "tests_run": 0,
+  "audit_sha256": "bcc59f1aaf704897042d1bba6b7bb3bbb72f3b1a600cf1242929d52b1391f516",
+  "reason": "Only qualified residual transition metadata changed; passing tests not rerun.",
+  "start": "2026-10-24T16:35:34.4982734-05:00",
+  "transition_sha256": "715580a8430002cdf31943c39815b03b48ec51b7cab22fd579057a18059ea8db",
+  "end": "2026-10-24T16:35:37.7589006-05:00",
+  "rf02_exit": 0
+}

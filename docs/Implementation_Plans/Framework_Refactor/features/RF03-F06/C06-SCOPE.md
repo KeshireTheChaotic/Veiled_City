@@ -1,0 +1,3 @@
+# RF03-F06 C06 — Final scoped corrective qualification
+
+Aggregate immutable completed changed-code evidence and exact source hashes after native rule extraction and actual source consumer/pair adoption. No unchanged passing test rerun or broad/frozen legacy union. Verify actual terminal outcomes including witness initial failures and authorized correction, shared batch accounting, actual native context/writer packet/acceptance/readback/restart, source/agency/privacy/native receipt/rollback cases and architecture gates. Distinguish mocked repository/source/provider boundaries from VeiledDB/live deployment. Record qualified residual deadlines and exact rollback; do not start RF04 or certify full isolation. RELEASE NOT AUTHORIZED.

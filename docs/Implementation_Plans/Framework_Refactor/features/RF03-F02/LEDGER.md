@@ -1,5 +1,8 @@
 # RF03-F02 ledger
 
+> Current closeout at 4c693b40dc511db23bf8932bb293806c76e47b11: SCOPED COMPLETE: source catalog/native adversary policy already extracted and qualified; documented later source adoption remains. Full isolation/live behavior NOT QUALIFIED; historical entries below retain their original statuses.
+
+
 ACTIVE. Base479d366. No new limitations or rule changes authorized.
 
 After C15's complete native effect extraction and fresh qualification, only residual native-effect provider dependency binding was assigned to exact RF04/RF05/RF06 producer/composition features under the owner amendment. Native target algorithms retain independent RF03 obligations. Full original/current IDs, unchanged native hash, test evidence and removal criteria in QUALIFIED_PROVIDER_RESIDUALS.json. This is deferred provider integration, not qualified runtime integration; no new records/identities/maxima/baseline or rule changes.

@@ -1,0 +1,55 @@
+{
+  "resumed_at": "87e28defba97cff3a12720039532b9347c8028b4",
+  "code_checkpoint": "4c693b40dc511db23bf8932bb293806c76e47b11",
+  "commits": [
+    {
+      "sha": "a78c7754e3c7667cd2d8ac80f55792dd9a55e9af",
+      "subject": "RF03-F06 record scoped native pair qualification checkpoint"
+    },
+    {
+      "sha": "32f32c605bdc7e425927d64f11eacc21e5404e6f",
+      "subject": "RF03-F01 extract and qualify grounded encounter review rules"
+    },
+    {
+      "sha": "f21db88c480cd749cb7928bfc29e1895fe2c2778",
+      "subject": "RF03-F04 isolate witness rules and record original validator hold"
+    },
+    {
+      "sha": "31a0fa6392f0e4ad7fd86eec69fe59336e63fe1a",
+      "subject": "RF03-F01 isolate receipt-first consequence reconciliation"
+    },
+    {
+      "sha": "8d73cbcce0ae70ed1b29e1e0f206ffe3dc32beb7",
+      "subject": "RF03-F04 isolate environmental native dispatch and output guards"
+    },
+    {
+      "sha": "60e241a0d7f22711a3c91d9ebb2e726be901af04",
+      "subject": "RF03-F04 correct authorized witness field ordering and qualify receipts"
+    },
+    {
+      "sha": "df0fcc8b0cd55e9e5b335d3084a59abc7caf3dbb",
+      "subject": "RF03-F01 isolate native notice proof and audience guards"
+    },
+    {
+      "sha": "c38be882e23d4ad7e472956f08b8d5c8430cae61",
+      "subject": "RF03-F05 adopt native receipt projections through writer pipeline"
+    },
+    {
+      "sha": "de15110857899a91abfa852a17bdd92c168cea35",
+      "subject": "RF03-F04 isolate native environment profile qualification"
+    },
+    {
+      "sha": "c9f3f2ab6eb5a34b2a900e7e9e4b4e1ebf05ee90",
+      "subject": "RF03-F04 assign environmental capability source to native framework"
+    },
+    {
+      "sha": "25d1b4ea1bacb88c3b94a1055c43b3d410d02061",
+      "subject": "RF03-F01 relocate immutable native errata source with both readers"
+    },
+    {
+      "sha": "4c693b40dc511db23bf8932bb293806c76e47b11",
+      "subject": "RF03-F01 F05 adopt native character creation validation"
+    }
+  ],
+  "metadata_closeout": "This document is committed by the final RF03 closeout commit; obtain its exact HEAD with git rev-parse HEAD."
+}

@@ -1,5 +1,7 @@
 # Veiled City framework isolation
 
+> Current checkpoint: RF03 scoped corrective completion with individually documented later-phase source adoption. See [current acceptance](phases/RF03/ACCEPTANCE_MATRIX.md), [exact residual obligations](phases/RF03/FINAL_QUALIFIED_RESIDUALS.json) and [qualification](phases/RF03/CURRENT_QUALIFICATION.json). Full isolation/live deployment remain unqualified; RF04 not started; RELEASE NOT AUTHORIZED. Historical RF00–RF02 snapshots below retain original counts and statuses.
+
 RF00 is an offline inventory and migration design, anchored to `f43d002693cb4ee38038b5dbb2c1049de95b3ffd` on `codex/clean-ai-gm-2026-10`. It does not relocate or modify application implementation. The owner handoff is preserved at [its supplied path](../phases/RF00/Veiled_City_RF00_Framework_Isolation_Sol_6_1_Medium_Handoff.md).
 
 Read root AGENTS.md first, then the [owner behavior specification](../OWNER_AI_GM_BEHAVIOR_SPEC.md), complementary [ENGINE constitution](../../../content/ENGINE/AI_GM_CONSTITUTION.md), [test policy](../TEST_PROTOCOL.md), [no-poll policy](../TEST_EXECUTION_NO_POLL.md), then the active [RF02 scope](phases/RF02/SCOPE.md) and feature pair. Historical P-series and RF00/RF01 audit evidence remain unchanged; the live package policy and exact transition list evolve with authorized migrations.

@@ -1,5 +1,7 @@
 # RF03-F04 C14 ledger
 
+> Current status: owner-authorized field-order correction qualified10/10; original validator hold RESOLVED. Historical initial failure/hold retained below.
+
 LOCAL HOLD / NOT QUALIFIED / OWNER VALIDATOR CORRECTION QUESTION PENDING
 
 Base 32f32c605bdc7e425927d64f11eacc21e5404e6f. Complete witness native body extracted unchanged into environment-witness-rules; original provider supplies explicit source/speech/knowledge/current owner/native proof ports. Initial frozen9cases:1closed-invalid-provider guard pass,8fail at original closed-three-account validator,exit1,TAP1808.5776ms;4syntax pass. Exact production defect: expected sorted field list reverses incident_ref/inconsistency, making every legitimate source proposal impossible. No positive effect/SQLite/knowledge/receipt behavior qualified; these failures are method evidence, not proof source-authorized witnesses cannot work. Concrete owner question asks permission to correct only field ordering under no-gameplay-change boundary; restriction on this correction only, independent work continues. Original native body exact; hashes/log F04_C14. Ratchet484sources2525imports2485acceptedSCC182zero active/unowned/integrity. No transitions/catalog/support/creative changes. Rollback extraction/provider/public/tests together. Provider0/$0,Codex UNMEASURED;RF03 incomplete;RELEASE NOT AUTHORIZED.

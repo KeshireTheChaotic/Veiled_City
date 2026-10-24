@@ -1,16 +1,16 @@
 {
-  "head": "87e28defba97cff3a12720039532b9347c8028b4",
-  "phase_status": "INCOMPLETE",
+  "head": "4c693b40dc511db23bf8932bb293806c76e47b11",
+  "phase_status": "SCOPED_CORRECTIVE_COMPLETE_WITH_DEFERRED_SOURCE_ADOPTION",
   "feature_statuses": {
-    "F01": "INCOMPLETE: native roster/tier/automatic encounter composition now extracted and scoped-qualified. Remaining grounded encounter approval/activation/actor mapping and native consequence/publication/source policy decomposition still require audit and completion.",
-    "F02": "SCOPED_NATIVE_DECOMPOSITION_COMPLETE / LOCAL INTEGRATION HOLDS: inventoried native policy extracted; source bindings explicitly accountable to named future features; full phase combat paths still require F01/F03 peers.",
-    "F03": "SCOPED_NATIVE_EXTRACTION_PROGRESS / NOT FULL PHASE QUALIFICATION: bilateral agreement source policy now genuinely extracted and adopted through native/narrative pair, with actual native clause integration. Exact residual source/publication/world producer dependencies and broader peer workflows remain accountable; do not mark RF03 complete.",
-    "F04": "INCOMPLETE: native scene CodeBlue/Cascade/Memory/Correction extracted and adopted through real native/world pair; actual emergency recovery and recording/countdown integration scoped-qualified. Witness/remaining source/native handler decomposition and world source producer workflows pending; Closing Time Moves unsupported.",
-    "F05": "PARTIAL ACTUAL ADOPTION: intent/native, character advancement, command display, scoped native/world scene and native/narrative bilateral agreement pairs adopted. Broader native receipt-to-writer and other world source contracts not yet fully qualified.",
-    "F06": "PARTIAL: 500unique cases/550executions/63fresh files. Actual scoped pair/native integrations qualified; remaining native encounter/environment and broad source pipeline exit not met."
+    "F01": "SCOPED COMPLETE: native requests/dice/resources, encounter review, consequences/notices and creation validators extracted/adopted/qualified. 227 exact residual source/workflow/publication records accountable to named later features.",
+    "F02": "SCOPED COMPLETE: source catalog/native adversary policy already extracted and qualified; documented later source adoption remains.",
+    "F03": "SCOPED COMPLETE: native PvP/Fear/consent/death/agreement policy extracted/adopted/qualified. 131 exact residual source/notice/world producer bindings deferred with evidence.",
+    "F04": "SCOPED COMPLETE: native environment eligibility/effects/dispatch/source qualification/descriptors extracted and qualified; approved witness defect corrected. 173 exact residual source producer/adoption records accountable. Existing unsupported Closing Time Moves stays held.",
+    "F05": "SCOPED COMPLETE: actual native intent, character creation/advancement, Discord display, world scene, narrative agreement and mechanical publication/writer adapters adopted. Broader source producers/publication lifecycle remain explicitly later-phase.",
+    "F06": "SCOPED OFFLINE QUALIFICATION COMPLETE: immutable targeted terminals, actual writer packet/acceptance/readback/restart, native rollback/receipt/agency/privacy evidence and phase-aware gates aggregated; no live or full-isolation certification."
   },
-  "fresh_unique_passed": 500,
-  "case_executions": 550,
+  "fresh_unique_passed": 574,
+  "case_executions": 633,
   "evidence": [
     {
       "id": "F01_C06",
@@ -903,6 +903,127 @@
         "shared_batch": null
       },
       "limitations": "Actual native encounter math/composition and actual legacy provider linkage. Deterministic random-index capability used for core policy; actual provider test has one possible candidate. Content library, world actor/presence/encounter activation and native world-memory producers remain outside this delta; no state/database/native dice or world generation certification."
+    },
+    {
+      "id": "F01_C30",
+      "file": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F01_C30_TERMINAL.json",
+      "sha256": "a9f96f408ac1257855b94703d623a5c23d6b6cfa0eed3dc56a01bd080d2cd873",
+      "unique_passed": 10,
+      "terminal": {
+        "test_exit": 0,
+        "tap_duration_ms": 981.7293
+      },
+      "limitations": "Actual new native review/activation policy, existing native roster/math and real disposable SQLite savepoint transactions. Current source authentication, world presence, actor source and native activation peer are explicit mocks. No upstream world producer, actual production database, live services or outbox qualification."
+    },
+    {
+      "id": "F04_C14",
+      "file": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F04_C14_TERMINAL.json",
+      "sha256": "f3c48ec16f073c860f79bfd2993305db2d84676e4ea4469b2352d0ece4bbacb8",
+      "unique_passed": 10,
+      "terminal": {
+        "test_exit": 0,
+        "tap_duration_ms": 2192.6623
+      },
+      "limitations": "Actual new native witness policy and native hash/epistemic functions with disposable SQLite savepoint persistence/reopen. Upstream accepted speech, authenticated established-fact proof, catalog/profile/current owner/audience/rendering/source journal capabilities explicitly mocked. No upstream source producer, actual narrative writer or Discord/semantic contradiction certification."
+    },
+    {
+      "id": "F01_C31",
+      "file": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F01_C31_TERMINAL.json",
+      "sha256": "0a0988c545612cae792cce25ffcb020155725e211683c992834be2b3d586e5de",
+      "unique_passed": 9,
+      "terminal": {
+        "test_exit": 0,
+        "tap_duration_ms": 710.3833
+      },
+      "limitations": "Actual native reconciliation and disposable SQLite persistence/restart. PvP accepted-source/target/consent/damage and saved roll proof are explicit mocks; no actual upstream source, rolls, resource effects or writer/publication qualification."
+    },
+    {
+      "id": "F04_C15",
+      "file": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F04_C15_TERMINAL.json",
+      "sha256": "1bc3336018334d18099d46c3d0a26889fab5f9072ba40c29e30eda7a702bc74c",
+      "unique_passed": 8,
+      "terminal": {
+        "test_exit": 0,
+        "tap_duration_ms": 618.1051
+      },
+      "limitations": "Actual native dispatch and output policy with disposable SQLite savepoint transaction. Effect/receipt verification/source projection peers explicitly mocked; actual production provider early guards exercised. No live upload/publication or underlying full source producer certification; witness remains unqualified."
+    },
+    {
+      "id": "F01_C32",
+      "file": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F01_C32_TERMINAL.json",
+      "sha256": "980ac58271141f7171d79c4945b9b5bf71dace1e90570b75a6b6edd931abcffd",
+      "unique_passed": 9,
+      "terminal": {
+        "test_exit": 0,
+        "tap_duration_ms": 4747.8359
+      },
+      "limitations": "Actual native notice guards/hash/read-only render and disposable SQLite source/roll records/reopen. Current principal, attack/modifier/participation/PvP/Fear/typed receipt verifiers and existing formatters are explicit mocks; no original outbox/publication or full native source pipeline proof."
+    },
+    {
+      "id": "F05_C06",
+      "file": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F05_C06_TERMINAL.json",
+      "sha256": "a2c4a44388bd755d3fd1f1b2939e0eade0be42713f7367dcd17a90ea86e0ed3f",
+      "unique_passed": 8,
+      "terminal": {
+        "test_exit": 0,
+        "tap_duration_ms": 7637.3793
+      },
+      "limitations": "Actual mechanical projection, native notice/roll formatting/current principal/source checks, original publication entrypoint, actual context builder/authorNarrativeRequests/establishNarrativeUnits/renderNarrativeUnit and SQLite reopen; real effect execution and source producers not invoked. Repository fixture implements only changed read/write contracts with SQLite savepoints, not full VeiledDB persistence. Two mocked writer calls; no model/semantic-quality/live Discord/transport/outbox proof. Wider world-source/publication migration remains later-phase accountable."
+    },
+    {
+      "id": "F04_C16",
+      "file": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F04_C16_TERMINAL.json",
+      "sha256": "2d4f4dbc1688a93c19185fd98494b314d3a3260e03bec7e4aa6157e9a809fc64",
+      "unique_passed": 6,
+      "terminal": {
+        "test_exit": 0,
+        "tap_duration_ms": 547.4709
+      },
+      "limitations": "Actual native profile proposal qualification and durable SQLite held-review replay. Catalog support/source authentication/context/profile producer are explicit mocks. Actual world profile production, source policy changes and complete runtime not qualified."
+    },
+    {
+      "id": "F04_C17",
+      "file": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F04_C17_TERMINAL.json",
+      "sha256": "aa4a25cf0f2e11ac8f21ae0bf0416b6d112b2d83104335e91dd42376c9eba1ed",
+      "unique_passed": 3,
+      "terminal": {
+        "test_exit": 0,
+        "tap_duration_ms": 189.058
+      },
+      "limitations": "Actual current native descriptor/catalog/qualifier compatibility only. No source/effect execution or provider/publication qualification."
+    },
+    {
+      "id": "F01_C33",
+      "file": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F01_C33_TERMINAL.json",
+      "sha256": "3637624766604395acedbaa0b72fbcf0bf5515bcccf4dc37034ed4014f3879ec",
+      "unique_passed": 3,
+      "terminal": {
+        "test_exit": 0,
+        "tap_duration_ms": 427.0218
+      },
+      "limitations": "Actual two immutable source readers and native source/handler validation, including independent working directory. No native execution, production DB or transport qualification."
+    },
+    {
+      "id": "F01_C34",
+      "file": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F01_C34_TERMINAL.json",
+      "sha256": "8f573aec9de280d57013308c6ca06f0f7779cf1d9e6a25c52000d3c54cca75b8",
+      "unique_passed": 5,
+      "terminal": {
+        "test_exit": 0,
+        "tap_duration_ms": 597.3769
+      },
+      "limitations": "Actual native creation/domain/trait/loadout rules and source consumer/pair/bootstrap lifecycle. Current creation source vocabulary is actual; no character state persistence, player decisions, full startup or live service qualification."
+    },
+    {
+      "id": "F05_C07",
+      "file": "docs/Implementation_Plans/Framework_Refactor/phases/RF03/F05_C07_TERMINAL.json",
+      "sha256": "8dfa9233819dbda2b24d56612995cfc0dfb4cf152286860dee0a4d5d47d6f962",
+      "unique_passed": 3,
+      "terminal": {
+        "test_exit": 0,
+        "tap_duration_ms": 597.3769
+      },
+      "limitations": "Actual native creation/domain/trait/loadout rules and source consumer/pair/bootstrap lifecycle. Current creation source vocabulary is actual; no character state persistence, player decisions, full startup or live service qualification."
     }
   ],
   "sourceHashes": {
@@ -929,7 +1050,7 @@
     "bot/src/frameworks/daggerheart/pc-death-rules.js": "d539828ef86c24ab4472cc19ebf70e6bb8d0a1135c5aa887960dc18aaa020dc6",
     "bot/src/frameworks/daggerheart/pre-roll-fear-recovery-rules.js": "ce3121acd9eb41212323304a81127ae7eb8815e70225858fc40331ad3e0a1293",
     "bot/src/frameworks/daggerheart/pre-roll-fear-rules.js": "27b4f79e5d4a2c60b1db07e98ba24215b4c04423292f5aaa1fc4ad02323a5d49",
-    "bot/src/frameworks/daggerheart/public.js": "010d346848fee156e0df7a76a3d848e2d23772542075cbddad934bc75c49ac32",
+    "bot/src/frameworks/daggerheart/public.js": "dcffac639e40dcd31b6d0deb9dd17367ebd461fc50914df2dea1ab48050c5e41",
     "bot/src/frameworks/daggerheart/pvp-damage-rules.js": "4e7dfbcd44de6a8dad7c99e87b4b4cdfe22103c45b2daa320fa0a64dd0fc7527",
     "bot/src/frameworks/daggerheart/roll-collaboration-rules.js": "fc34174a80e8c3fa9ef4863379ee870e2275a42c697991bba1e4573756054bba",
     "bot/src/frameworks/daggerheart/roll-modifier-rules.js": "4a750b7ec87c9d697459a5c33d694fdb30d531bd57d08c69bd7fc98e202f9b29",
@@ -968,7 +1089,7 @@
     "bot/src/native-environment-wrong-offering.js": "439980b4d753544e80f752b8e4e18b5e860613d50c1ee758d1ff6f0531d1a3fe",
     "bot/src/native-equipped-attacks.js": "9cb177bf8416d1f2d375cdf241876ab9ef00a72d1f8cc8b55387ad127c4e13c6",
     "bot/src/native-experience-eligibility.js": "8fb4f3ca5dd1c33c4ae2b615b8fb44c95bebfa1e3ba44afb6e25fdc21215e4d4",
-    "bot/src/native-feature-catalog.js": "6d992058152d79bda8b3cda9a22c1d51a65d66a750e3234ce2c912423a1e95c8",
+    "bot/src/native-feature-catalog.js": "48432087c8cb6cf04f45812721bafdd678d1073023b13c12c159b9f42eb8604a",
     "bot/src/native-feature-damage.js": "3b231e4020593bc0c1ee4b3f735f84928fe1ff360cb0629bf7be0fa629edfc37",
     "bot/src/native-feature-effects.js": "ad5c79d1a8301ba09dd5e3418a67ff15ddc0b08a47e3cdd3198e91aaa7cd962d",
     "bot/src/native-feature-hit.js": "a72a6e6a1602a233d0ca768f8e014ec39fa1ff244739cbf5282749ce03298919",
@@ -1141,10 +1262,10 @@
     "bot/src/framework-to-framework/daggerheart--world/public.js": "126bd8874f6df2dc527cdd5dbb3b3a2f5b5ff169e406accfc04b35c984961d8e",
     "bot/src/frameworks/world/contracts/environment-scene.js": "252af77f61a45fe4db154fe0780656b096ff7dd287b5addd069fc41e1a49ff38",
     "bot/src/application/composition/environment-scene.js": "a2b36a06d9395562b703d9b05e75813379d7f1b8f3c58a6daf638014508f78c0",
-    "bot/src/index.js": "fdd0978109c0d1f6006aa503cb5de8a673360cb6ae7b6cdd1011adf8f1a5edb0",
+    "bot/src/index.js": "43a519764495406ca9a5bc1b494443e385d5568c062c59272ab4912a8889b141",
     "bot/tests/ai-gm-2026-10/rf03-f05-c04.test.mjs": "0cdad7f23c1720fa6acb0377364f3810ec83722fd37b9f38f212c232eacfcd9f",
     "bot/src/frameworks/world/public.js": "f91214e4a8ce72637d24510f4531ebbec4fdddca08e8f6f1874e114f1fdcba90",
-    "bot/src/application/composition/public.js": "8b579c00254a1267bb5668f92bfcbe5bc58b4a7e11d5bbbf091eb0c26303020b",
+    "bot/src/application/composition/public.js": "9472d495bd8b0fdb672e6ad49462f8d1d849fb1f4274695f3691167b9a7a820e",
     "bot/src/application/composition/pvp-agreements.js": "6e768cd53dd68733572e6d6ef894f0e69cce16eef60296cbdd9587311ecd75d0",
     "bot/tests/ai-gm-2026-10/rf03-f05-c05.test.mjs": "45848e51ed84e7be6c6c166ca83a3a9b29d7f63ab4790f6abb90765aeccea726",
     "bot/tests/ai-gm-2026-10/rf03-f03-c32.test.mjs": "533fb4e3c9a29e097f8c9d319dd516df85e51e912ec181b1c5b4e475e23b19e5",
@@ -1152,33 +1273,70 @@
     "bot/src/frameworks/daggerheart/pvp-agreement-rules.js": "8c5096ec63a202ba75023cbae3bea7659508776451ddeab57b9416b520b0f203",
     "bot/src/framework-to-framework/daggerheart--narrative/public.js": "f4a1d7c45d5cc62705d4b48b7e4a2d00c5ba86c6bd9a4d8150d173135ab2a343",
     "bot/src/frameworks/narrative/contracts/pvp-agreement.js": "6be5b12243afc474e655b1cdb24d3b9b22c30708a977fccd2d2fc38898a6925b",
-    "bot/src/encounter.js": "666a934b05a187dbc28d798cac83f6fe844be0c4728b26333deca78bf2184ea7",
+    "bot/src/encounter.js": "ebfb1d4708fdba91dcc474b18edeca91ce217f9719f942abf23c2278c652c9b8",
     "bot/tests/ai-gm-2026-10/rf03-f01-c29.test.mjs": "4a5452283bf8f9b238000bbf974f31651462a41084c63a65328bfeb7a6f41250",
-    "bot/src/frameworks/daggerheart/encounter-composition-rules.js": "3a7bcfac44d034163ba71e50869aaade101346003359eebaf6ebd4194c683361"
+    "bot/src/frameworks/daggerheart/encounter-composition-rules.js": "3a7bcfac44d034163ba71e50869aaade101346003359eebaf6ebd4194c683361",
+    "bot/tests/ai-gm-2026-10/rf03-f01-c30.test.mjs": "20cb4593054ba9aff1bd0c9493a5bc8a96c41f233faba5f3ea9327095a03d68e",
+    "bot/src/frameworks/daggerheart/encounter-grounding-rules.js": "e6e6c1eeb17550714b5831236a73998be12da04f989d6bcc2e9b8be1c2cac6d1",
+    "bot/src/frameworks/daggerheart/environment-witness-rules.js": "82d6ebf71e75d3a2dc0230cafbe71213e732e0c5b384f7a4a84a315646a845d9",
+    "bot/tests/ai-gm-2026-10/rf03-f04-c14.test.mjs": "a598583f3290dfbc802b290d4f170c99b5395afb0113e0829aa459e864ad0489",
+    "bot/src/native-environment-witnesses.js": "fa11bb98e1336fa0702e7e5dafcb68de63898c7d5125a625bf731f92cf1e4368",
+    "bot/src/consequence-reconciliation.js": "b0acc9e8843f51ba84645f02e70787ff8378b27d43a8359146322ff44e5853ce",
+    "bot/src/frameworks/daggerheart/consequence-reconciliation-rules.js": "e322339c17eabfc26bbfab7490d83af4665d699afc08b8aa547e11760db5efba",
+    "bot/tests/ai-gm-2026-10/rf03-f01-c31.test.mjs": "c65a58069d0b4daa8e68c3393aa46b7deae1b3535db5b86d5e38f40467d33192",
+    "bot/src/frameworks/daggerheart/environment-output-rules.js": "ab0287cdd5b8b515653ba03295514ddb2cbb59ba3c6956e1b21d8697030dd00d",
+    "bot/src/native-environment-dispatch.js": "ecc9a1f1b939b4a130c3de5799e5a7f92d9fdf00b9d19e2620035f5d12b15a7d",
+    "bot/src/frameworks/daggerheart/environment-dispatch-rules.js": "13a2c993816bbcdcce761c01ba93119e2630ce90d6b005a0fba026b8151bc0b9",
+    "bot/src/native-environment-output.js": "141e6f401ab06e3252dd175dc64ad59e1c686ff885658f0a53c4817f807d06ff",
+    "bot/tests/ai-gm-2026-10/rf03-f04-c15.test.mjs": "3af9257e51cc756f9a4fddfb1556f27a0ba7937d9e8303fe271fcd2562aa2f2c",
+    "bot/src/frameworks/daggerheart/native-notice-rules.js": "cfe9f5d602e4142474ee2d9d87a5f3507d0e1a30d9eaa60dee5223164a807c14",
+    "bot/src/native-notice.js": "ddecfa1bc84467d6e2e87b7a706a6944714f7773b5e911c524cfc60eb0999478",
+    "bot/tests/ai-gm-2026-10/rf03-f01-c32.test.mjs": "97ae9c240ea1dd876d37f781200c90a99de7cf94f53e3fe874daf3b97204e01e",
+    "bot/src/native-outcome-output.js": "8740c082f60a755f085961851f2918928d7074390cf0f71f70d9d54387c69ecb",
+    "bot/src/frameworks/daggerheart/mechanical-outcome-projection.js": "42ec39b3b0977b6fdbc8e48fabd195ca19cd7f7f8b3096a181924b32a638f78a",
+    "bot/src/framework-to-framework/daggerheart--publication/public.js": "3dafd8538dd61a6e516aaae97fb2bfe80638922ef886dd5890f609e11c2df949",
+    "bot/src/application/composition/native-outcomes.js": "90f2ced5c4008f8efad4a667bca6174396b6e5ad1613f1be614ccd59ef876717",
+    "bot/src/frameworks/publication/public.js": "9dcc8412b92d0220e4ab2b6d27f491cc58b877d8fd8738c24b10ad46597c05a1",
+    "bot/tests/ai-gm-2026-10/rf03-f05-c06.test.mjs": "c5fd50f3b253fcacc06e43145b85ca331beeb24b51ec22a4671fa88846a7c840",
+    "bot/src/frameworks/publication/contracts/native-outcome.js": "55893ba56a152991ade8b5202ca575ffb21fac39406a12cb154032c8c1e39a69",
+    "bot/src/frameworks/daggerheart/environment-profile-proposal-rules.js": "b5d2acc00c299bd716c85f575e3543670bd3e51c022b6636e464552a1f1d5774",
+    "bot/tests/ai-gm-2026-10/rf03-f04-c16.test.mjs": "6a6dda77ba70e4647176b3f0fc02bf0ad621d3f226d1c1beaa7198c3790d813c",
+    "bot/src/native-environment-proposals.js": "8e70ed490579181319c93816b3933e98418a386ac679e5768e91dae6fd06bf7c",
+    "bot/tests/ai-gm-2026-10/rf03-f04-c17.test.mjs": "67e98f885b7f7a89142f38e87a2108eaf97613016e6bc9830e119327a1b99327",
+    "bot/src/native-environment-capabilities.js": "1036c481da84dc03889c9675cd28bd6638d1fe26de192eb314875a4b14a0f54f",
+    "bot/src/frameworks/daggerheart/environment-capability-catalog.js": "37f21517d9d39c586ee69cd1b1cbf8f08099a7d383c0e1118b9db5d0cdc28770",
+    "bot/tests/ai-gm-2026-10/rf03-f01-c33.test.mjs": "56b3beca5d515527f0122caebd481cac1c7930a102389ef72cb4697971923af8",
+    "bot/src/native-house-errata.js": "328f91b204a5b2c0e9cde0ef6f1610f4d62181b5518639d246d950366a11dfb7",
+    "bot/src/frameworks/daggerheart/native-house-errata.json": "6f679f50272861ccc01f5b189d0fc5d9947e5df350df372cb52f97df93a28964",
+    "bot/src/character-system.js": "e00e812709a980f202d2d712080e3884e220cba2ca08919b8ee2d1aef096c99c",
+    "bot/src/application/composition/character-creation.js": "98c96213b38e054295831c49984a2bab765a09b08dec5797d8e0132f8f4a2d1f",
+    "bot/tests/ai-gm-2026-10/rf03-f01-c34.test.mjs": "c7d637967da96f294a62b36022bea514aedc22e373d0f8c3b9a1c2d49fc123b0",
+    "bot/tests/ai-gm-2026-10/rf03-f05-c07.test.mjs": "88b9788adf89d52fd36a30d39a32fc5d3220163f57dd1673360ba88385cbb264",
+    "bot/src/frameworks/character/contracts/creation.js": "b577b9a088cc87b6ff892ea48b021ca8055dd7907b0d66eb1d3995544ce8b2b9",
+    "bot/src/framework-to-framework/character--daggerheart/public.js": "f322e83d39e1dc1982f593b5c1afb0cd104a2349e00a0a32e6a4b4ea91737f29",
+    "bot/src/frameworks/daggerheart/character-creation-rules.js": "173724b4a9415baacf579f194a8c4accda7534b0adfb614e6fc090a0a5f0e4f4",
+    "bot/src/frameworks/character/public.js": "5654b19602e0a8f190bb5331eeb5dd63960943b0a338f747bbfe507ab9c815df"
   },
   "architecture": {
     "mode": "ratchet",
     "phase": "RF03",
-    "sourceModules": 482,
+    "sourceModules": 497,
     "unowned": 0,
-    "importOccurrences": 2518,
-    "internalImportOccurrences": 2343,
+    "importOccurrences": 2557,
+    "internalImportOccurrences": 2380,
     "cycleComponents": 1,
     "largestCycle": 182,
-    "rawViolationOccurrences": 2485,
-    "acceptedLegacyOccurrences": 2485,
+    "rawViolationOccurrences": 2484,
+    "acceptedLegacyOccurrences": 2484,
     "activeViolationGroups": 0,
     "transitionErrors": 0,
     "pass": true,
     "firstErrors": []
   },
   "remaining_rf03": {
-    "remaining_records": 532,
-    "by_feature": {
-      "RF03-F01": 228,
-      "RF03-F03": 131,
-      "RF03-F04": 173
-    }
+    "remaining_records": 0,
+    "by_feature": {},
+    "qualified_residuals_reassigned": 531
   },
   "qualified_provider_residuals_2": 171,
   "no_unchanged_passing_test_reruns": true,
@@ -1187,7 +1345,8 @@
     "provider_calls": 0,
     "provider_tokens": 0,
     "provider_usd": 0,
-    "codex": "UNMEASURED"
+    "codex": "UNMEASURED",
+    "mock_writer_calls_this_closeout": 2
   },
   "critical_blockers": 0,
   "new_creative_restrictions": 0,
@@ -1195,10 +1354,6 @@
   "live_provider_discord_production_recovery": "NOT QUALIFIED",
   "release": "NOT AUTHORIZED",
   "source_assets": {
-    "bot/src/native-house-errata.json": {
-      "sha256": "6f679f50272861ccc01f5b189d0fc5d9947e5df350df372cb52f97df93a28964",
-      "unchanged": true
-    },
     "content/GM_PRIVATE/ENVIRONMENTS/environments.json": {
       "sha256": "0b5f5004caf4d761c33ce851a020e081a2b6fb980526a38fcc51c7eaec413898",
       "unchanged": true
@@ -1207,6 +1362,10 @@
       "sha256": "58baf77cc9cb2b5f38e1714422c64131f2f533b4bf09254b8f8729ccd64d1e16",
       "unchanged_bytes": true,
       "previous_path": "bot/src/native-feature-definitions.json"
+    },
+    "bot/src/frameworks/daggerheart/native-house-errata.json": {
+      "sha256": "6f679f50272861ccc01f5b189d0fc5d9947e5df350df372cb52f97df93a28964",
+      "unchanged": true
     }
   },
   "catalog": {
@@ -1233,22 +1392,30 @@
       "bytes_preserved": true,
       "owner": "kernel",
       "gameplay_change": false
+    },
+    {
+      "source": "bot/src/native-house-errata.json",
+      "target": "bot/src/frameworks/daggerheart/native-house-errata.json",
+      "sha256": "6f679f50272861ccc01f5b189d0fc5d9947e5df350df372cb52f97df93a28964",
+      "bytes_preserved": true,
+      "owner": "daggerheart",
+      "gameplay_change": false
     }
   ],
-  "fresh_test_files": 63,
-  "changed_syntax_passes": 332,
+  "fresh_test_files": 74,
+  "changed_syntax_passes": 387,
   "syntax_failures_repaired": 3,
   "test_file_parse_failures_repaired": 3,
-  "evidence_note": "Targeted completed fresh batches only, no final frozen union/live certification. C13world ownership produced a rejected direct native import; F05C04 corrected via actual source consumer/pair/bootstrap with no baseline exception. Nine associated C13cases and three lifecycle cases rerun only after their actual call path/lifecycle code changed. Shared C32/F05C05 thirteen-case batch counts9+4once, not duplicate cases/duration.",
+  "evidence_note": "574unique passing cases/633actual case executions/74fresh files/387syntax passes. Targeted immutable batches only, no full union rerun. New witness initial8fail preserved, resolved solely by owner-authorized field-order correction; associated validator case rerun only after validator code changed. Native creation and mechanical receipt-to-writer adoption qualified with actual native pipeline and disclosed repository/source/model mocks. Shared creation batch count5+3once. Native rule/cost/owner/audience/receipt bodies otherwise preserved; provider0calls/0tokens/$0, mock writer2calls, Codex UNMEASURED. Live/release/full-isolation NOT QUALIFIED.",
   "local_holds": [
     {
       "feature": "RF03-F04",
       "occurrence": "Closing Time Moves",
-      "reason": "Existing missing completed-exchange producer, established alternate-exit receipts and current/saved route consumers; readiness remains held, not supported."
+      "reason": "Existing missing completed-exchange/alternate-exit/current-and-saved-route source contracts; still unsupported. No feature activation in this architectural phase."
     },
     {
-      "feature": "RF03-F05",
-      "reason": "Scoped scene native/world and bilateral agreement native/narrative pairs now adopted. Broader native receipt-to-writer and other world producer/source integration remain unqualified."
+      "feature": "RF04-RF06",
+      "reason": "531 exact qualified residual source/workflow/publication dependencies remain unisolated; exact per-record accountability in FINAL_QUALIFIED_RESIDUALS.json. Full author/source/VeiledDB/live outbox/Discord paths not qualified by mocks."
     }
   ],
   "resolved_holds": [
@@ -1274,6 +1441,17 @@
         "F05_C05"
       ],
       "resolution": "Actual native policy extracted, source consumer/pair/application bootstrap adopted and fresh native agreement→clause integration qualified with disclosed upstream mocks."
+    },
+    {
+      "feature": "RF03-F04",
+      "occurrence": "Everybody Saw Something Different",
+      "resolved_by": "F04_C14",
+      "resolution": "Owner authorized only sorted field-order defect correction. Ten fresh cases pass; no other native or creative rule changed."
+    },
+    {
+      "feature": "RF03-F05",
+      "resolved_by": "F05_C06",
+      "resolution": "Actual native mechanical receipt projection now flows through fixed publication consumer/pair/bootstrap into actual context/writer packet, unit acceptance and reader/restart. Wider world/publication routes remain unqualified."
     }
   ],
   "scoped_pair_adoption": [
@@ -1288,6 +1466,20 @@
       "evidence": "F05_C05",
       "scope": "native bilateral agreement source and clause/round consumers only",
       "broader_coverage": "NOT QUALIFIED"
+    },
+    {
+      "pair": "daggerheart--publication",
+      "evidence": "F05_C06",
+      "scope": "native mechanical receipt read-side projection into actual writer/publication consumers",
+      "broader_coverage": "NOT QUALIFIED"
+    },
+    {
+      "pair": "character--daggerheart",
+      "evidence": "F01_C34/F05_C07",
+      "scope": "native creation validation in actual concept consumer; advancement already adopted",
+      "broader_coverage": "NOT QUALIFIED"
     }
-  ]
+  ],
+  "full_architectural_isolation": false,
+  "qualified_provider_residuals_final": 531
 }
