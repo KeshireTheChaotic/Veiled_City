@@ -1,0 +1,94 @@
+{
+  "end": "2026-10-24T05:58:28.1949527-05:00",
+  "duration_ms": 112.5719,
+  "hashes": {
+    "bot/src/frameworks/daggerheart/pvp-authorship-rules.js": "b8b430876d59e6f7e65fe6ee41cfd024a0c787ee1e8c082b826119ced44fdef4",
+    "bot/tests/ai-gm-2026-10/rf03-f03-c29.test.mjs": "4733aa92b31d88b28b21f7bf1a3b50cf898f33b2b9c39b47ace07b459cd40d8b",
+    "bot/src/frameworks/daggerheart/public.js": "912ad44ce034a5a7442572fba953ef85fb132b816eef8ce74630142d3c9d4f23",
+    "bot/src/pvp-authorship.js": "2ac00ec66e063045d3d2a64f71286d80927bb818845c31dc0152924660c6afad"
+  },
+  "architecture_exit": 0,
+  "syntax": [
+    {
+      "exit": 0,
+      "path": "bot/src/pvp-authorship.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/frameworks/daggerheart/pvp-authorship-rules.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/frameworks/daggerheart/public.js"
+    },
+    {
+      "exit": 1,
+      "path": "bot/tests/ai-gm-2026-10/rf03-f03-c29.test.mjs"
+    }
+  ],
+  "test_exit": 1,
+  "base_sha": "ce9ac42812b88f9d69517ea918196e2e70cab981",
+  "start": "2026-10-24T05:58:27.1355616-05:00",
+  "run_id": "F03_C29",
+  "unique_tests": 9,
+  "executions": 9,
+  "pass": 9,
+  "fail": 0,
+  "tap_duration_ms": 492.0847,
+  "initial_file_parse_failure": {
+    "exit": 1,
+    "duration_ms": 55.7861,
+    "feature_cases_executed": 0
+  },
+  "repair": {
+    "start": "2026-10-24T05:58:44.2665639-05:00",
+    "duration_ms": 549.9232,
+    "test_sha256": "0c41fca675ffa1c4d2938c37a59b756c8ed708f69cab863eee731c393b55b048",
+    "reason": "Fresh test-file SQL string quote parse failure before feature execution; fixed test only; no production changes.",
+    "test_exit": 0,
+    "end": "2026-10-24T05:58:44.8666505-05:00",
+    "syntax_exit": 0
+  },
+  "syntax_pass": 3,
+  "body_equivalence": {
+    "base_sha": "ce9ac42812b88f9d69517ea918196e2e70cab981",
+    "source": "bot/src/pvp-authorship.js",
+    "target": "bot/src/frameworks/daggerheart/pvp-authorship-rules.js",
+    "body_equivalent": true,
+    "body_sha256": "6088b2d94f1ed70d744a7069703156a96349379cf13a9b3649af009a4d1e5e17",
+    "exports": [
+      "draftPvpNarrative",
+      "authorPvpNarrative",
+      "pvpNarrationInbox",
+      "reviewPvpDraft",
+      "ratifyPvpClause",
+      "validatePvpClause",
+      "reviewPvpNarrative",
+      "sharePvpNarrative",
+      "pvpProjection",
+      "reviewPvpScope"
+    ],
+    "templates_and_draft_workflow": "Unchanged existing owner-controlled authorization forms and private prose retention; no new policy."
+  },
+  "gate": {
+    "mode": "ratchet",
+    "phase": "RF03",
+    "sourceModules": 467,
+    "unowned": 0,
+    "importOccurrences": 2488,
+    "internalImportOccurrences": 2313,
+    "cycleComponents": 1,
+    "largestCycle": 182,
+    "rawViolationOccurrences": 2487,
+    "acceptedLegacyOccurrences": 2487,
+    "activeViolationGroups": 0,
+    "transitionErrors": 0,
+    "pass": true,
+    "firstErrors": []
+  },
+  "limitations": "Actual complete native clause/draft/ratification/disclosure/scope-review policy and disposable SQLite. Current independent owner/terminal context/source indexing and queued publication capabilities explicitly mocked. No actual native contest terminal producer or Discord/outbox acknowledgment qualification.",
+  "provider_calls": 0,
+  "provider_cost_usd": 0,
+  "codex_usage": "UNMEASURED",
+  "release": "NOT AUTHORIZED"
+}

@@ -1,0 +1,64 @@
+TAP version 13
+# Subtest: verified winner and affected owner independently authorize only their own native success or reaction clauses
+ok 1 - verified winner and affected owner independently authorize only their own native success or reaction clauses
+  ---
+  duration_ms: 49.4083
+  type: 'test'
+  ...
+# Subtest: ambiguous free prose is preserved in an author-private noncanonical draft with recoverable rejection, never a PC outcome
+ok 2 - ambiguous free prose is preserved in an author-private noncanonical draft with recoverable rejection, never a PC outcome
+  ---
+  duration_ms: 35.6148
+  type: 'test'
+  ...
+# Subtest: private draft preview requires author invitation and GM preview alone never ratifies player behavior
+ok 3 - private draft preview requires author invitation and GM preview alone never ratifies player behavior
+  ---
+  duration_ms: 38.8256
+  type: 'test'
+  ...
+# Subtest: invited affected owner ratifies exactly their own UTF-16 source span, never the rest of another player draft
+ok 4 - invited affected owner ratifies exactly their own UTF-16 source span, never the rest of another player draft
+  ---
+  duration_ms: 43.7702
+  type: 'test'
+  ...
+# Subtest: independent exact review and bilateral disclosure create one party projection; seeing text is not consent to a reaction
+ok 5 - independent exact review and bilateral disclosure create one party projection; seeing text is not consent to a reaction
+  ---
+  duration_ms: 73.9315
+  type: 'test'
+  ...
+# Subtest: private-only terms and unreviewed or substituted text never authorize party disclosure
+ok 6 - private-only terms and unreviewed or substituted text never authorize party disclosure
+  ---
+  duration_ms: 42.4952
+  type: 'test'
+  ...
+# Subtest: native clause receipt failure rolls back original authorization source and bundle together
+ok 7 - native clause receipt failure rolls back original authorization source and bundle together
+  ---
+  duration_ms: 43.2498
+  type: 'test'
+  ...
+# Subtest: retracted author source and changed controller invalidate clause proof while retaining original saved result
+ok 8 - retracted author source and changed controller invalidate clause proof while retaining original saved result
+  ---
+  duration_ms: 43.2113
+  type: 'test'
+  ...
+# Subtest: GM scope review records an audit request without authorizing player behavior or publication
+ok 9 - GM scope review records an audit request without authorizing player behavior or publication
+  ---
+  duration_ms: 47.365
+  type: 'test'
+  ...
+1..9
+# tests 9
+# suites 0
+# pass 9
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 492.0847

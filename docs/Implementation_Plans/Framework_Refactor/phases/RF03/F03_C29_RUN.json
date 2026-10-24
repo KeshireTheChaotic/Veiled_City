@@ -1,0 +1,33 @@
+{
+  "end": "2026-10-24T05:58:28.1949527-05:00",
+  "duration_ms": 112.5719,
+  "hashes": {
+    "bot/src/frameworks/daggerheart/pvp-authorship-rules.js": "b8b430876d59e6f7e65fe6ee41cfd024a0c787ee1e8c082b826119ced44fdef4",
+    "bot/tests/ai-gm-2026-10/rf03-f03-c29.test.mjs": "4733aa92b31d88b28b21f7bf1a3b50cf898f33b2b9c39b47ace07b459cd40d8b",
+    "bot/src/frameworks/daggerheart/public.js": "912ad44ce034a5a7442572fba953ef85fb132b816eef8ce74630142d3c9d4f23",
+    "bot/src/pvp-authorship.js": "2ac00ec66e063045d3d2a64f71286d80927bb818845c31dc0152924660c6afad"
+  },
+  "architecture_exit": 0,
+  "syntax": [
+    {
+      "exit": 0,
+      "path": "bot/src/pvp-authorship.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/frameworks/daggerheart/pvp-authorship-rules.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/frameworks/daggerheart/public.js"
+    },
+    {
+      "exit": 1,
+      "path": "bot/tests/ai-gm-2026-10/rf03-f03-c29.test.mjs"
+    }
+  ],
+  "test_exit": 1,
+  "base_sha": "ce9ac42812b88f9d69517ea918196e2e70cab981",
+  "start": "2026-10-24T05:58:27.1355616-05:00",
+  "run_id": "F03_C29"
+}

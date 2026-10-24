@@ -1,0 +1,8 @@
+D:\Library\Development\Veiled_City\bot\tests\ai-gm-2026-10\rf03-f03-c29.test.mjs:12
+ return {db,guild,owners,proposal,resolution,terms,native,base,author,selection,event,queued:()=>queued,setFailure:v=>failKind=v,retract:key=>sql.prepare('UPDATE events SET body=json_set(body,'$.status','retracted') WHERE key=?').run(key),reopen(){sql.close();sql=new DatabaseSync(file);},counts:()=>({records:sql.prepare('SELECT count(*) n FROM records').get().n,events:sql.prepare('SELECT count(*) n FROM events').get().n})};
+                                                                                                                                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+SyntaxError: missing ) after argument list
+    at checkSyntax (node:internal/main/check_syntax:72:5)
+
+Node.js v24.19.0

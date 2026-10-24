@@ -1,0 +1,20 @@
+{
+  "base_sha": "ce9ac42812b88f9d69517ea918196e2e70cab981",
+  "source": "bot/src/pvp-authorship.js",
+  "target": "bot/src/frameworks/daggerheart/pvp-authorship-rules.js",
+  "body_equivalent": true,
+  "body_sha256": "6088b2d94f1ed70d744a7069703156a96349379cf13a9b3649af009a4d1e5e17",
+  "exports": [
+    "draftPvpNarrative",
+    "authorPvpNarrative",
+    "pvpNarrationInbox",
+    "reviewPvpDraft",
+    "ratifyPvpClause",
+    "validatePvpClause",
+    "reviewPvpNarrative",
+    "sharePvpNarrative",
+    "pvpProjection",
+    "reviewPvpScope"
+  ],
+  "templates_and_draft_workflow": "Unchanged existing owner-controlled authorization forms and private prose retention; no new policy."
+}

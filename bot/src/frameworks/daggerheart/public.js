@@ -86,3 +86,4 @@ export {createEnvironmentAccessRules} from './environment-access-rules.js';
 export {createEnvironmentRecoveryRules} from './environment-recovery-rules.js';
 export {createEnvironmentArrivalRules} from './environment-arrival-rules.js';
 export {createEnvironmentDoorChainRules} from './environment-door-chain-rules.js';
+export {createPvpAuthorshipRules} from './pvp-authorship-rules.js';
