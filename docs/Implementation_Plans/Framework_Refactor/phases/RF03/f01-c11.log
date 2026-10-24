@@ -1,0 +1,58 @@
+TAP version 13
+# Subtest: unarmed preparation uses exact native NPC Difficulty and Proficiency d4 without owner dice
+ok 1 - unarmed preparation uses exact native NPC Difficulty and Proficiency d4 without owner dice
+  ---
+  duration_ms: 55.2785
+  type: 'test'
+  ...
+# Subtest: unarmed current use rejects changed target while historical reader preserves committed source
+ok 2 - unarmed current use rejects changed target while historical reader preserves committed source
+  ---
+  duration_ms: 48.9779
+  type: 'test'
+  ...
+# Subtest: unarmed source and player/proxy target cannot be relabeled into native NPC attack
+ok 3 - unarmed source and player/proxy target cannot be relabeled into native NPC attack
+  ---
+  duration_ms: 52.3299
+  type: 'test'
+  ...
+# Subtest: failed private native request rolls unarmed source and mutation preparation back
+ok 4 - failed private native request rolls unarmed source and mutation preparation back
+  ---
+  duration_ms: 43.0327
+  type: 'test'
+  ...
+# Subtest: equipped preparation requires the existing owned weapon and exact human-approved attack source
+ok 5 - equipped preparation requires the existing owned weapon and exact human-approved attack source
+  ---
+  duration_ms: 50.1771
+  type: 'test'
+  ...
+# Subtest: missing or ambiguous equipped approval cannot invent equipment, rule or attack mapping
+ok 6 - missing or ambiguous equipped approval cannot invent equipment, rule or attack mapping
+  ---
+  duration_ms: 41.61
+  type: 'test'
+  ...
+# Subtest: equipped current placement changes fail while saved approved attack ancestry remains readable
+ok 7 - equipped current placement changes fail while saved approved attack ancestry remains readable
+  ---
+  duration_ms: 48.1242
+  type: 'test'
+  ...
+# Subtest: actual attack providers cold-import and expose only the same preparation/proof APIs
+ok 8 - actual attack providers cold-import and expose only the same preparation/proof APIs
+  ---
+  duration_ms: 303.8602
+  type: 'test'
+  ...
+1..8
+# tests 8
+# suites 0
+# pass 8
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 712.2564

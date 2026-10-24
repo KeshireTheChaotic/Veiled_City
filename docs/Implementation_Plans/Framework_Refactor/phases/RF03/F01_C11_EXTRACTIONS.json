@@ -1,0 +1,40 @@
+[
+  {
+    "old": "native-equipped-attacks.js",
+    "native": "equipped-attack-rules.js",
+    "factory": "createEquippedAttackRules",
+    "caps": [
+      "inspectArbitrationOrigin",
+      "consentAction",
+      "historicalActionSource",
+      "nativeEncounterActor",
+      "nativeActorControl",
+      "scenePresence",
+      "sceneAccess",
+      "narrativeSourceVisible",
+      "indexWorldEvent",
+      "adjudicateAcceptedIntent",
+      "isPvpIntent"
+    ]
+  },
+  {
+    "old": "native-unarmed-attacks.js",
+    "native": "unarmed-attack-rules.js",
+    "factory": "createUnarmedAttackRules",
+    "caps": [
+      "inspectArbitrationOrigin",
+      "consentAction",
+      "historicalActionSource",
+      "nativeEncounterActor",
+      "nativeActorControl",
+      "scenePresence",
+      "sceneAccess",
+      "narrativeSourceVisible",
+      "indexWorldEvent",
+      "adjudicateAcceptedIntent",
+      "isPvpIntent",
+      "assertNonPvpCombatant"
+    ],
+    "extra": "import {validateNativeUnarmedTraitOperation} from './native-unarmed-traits.js';\n"
+  }
+]

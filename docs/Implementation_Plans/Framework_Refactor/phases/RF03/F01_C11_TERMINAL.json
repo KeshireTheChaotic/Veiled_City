@@ -1,0 +1,55 @@
+{
+  "base_sha": "5d3f1eeb199ad89542d9056eb98b3238ec2834c4",
+  "tests": {
+    "pass": 8,
+    "fail": 0,
+    "exit": 0,
+    "duration_ms": 712.2564
+  },
+  "syntax_pass": 6,
+  "bodies": [
+    {
+      "source": "native-equipped-attacks.js",
+      "native": "equipped-attack-rules.js",
+      "unchanged": true,
+      "sha256": "c40e60a88cf3cce0c8e97a996d96ccdc9346a0a9c75557642966554f4ef70c6b"
+    },
+    {
+      "source": "native-unarmed-attacks.js",
+      "native": "unarmed-attack-rules.js",
+      "unchanged": true,
+      "sha256": "a97beb1927250c2f1cc32c9f109ea03a99bcc0f89ebfbcb5b1bc9c128643a3e7"
+    }
+  ],
+  "hashes": {
+    "bot/src/native-equipped-attacks.js": "9cb177bf8416d1f2d375cdf241876ab9ef00a72d1f8cc8b55387ad127c4e13c6",
+    "bot/src/frameworks/daggerheart/equipped-attack-rules.js": "6d305e22c8cb6e2bd74c85c3dd381065693d8cf1e4102a1eb6619daf7326a268",
+    "bot/src/native-unarmed-attacks.js": "b79804d9f50f6a86a1bfbe499643843eb3bc487a6b3a943624cda7da27a2e2e8",
+    "bot/src/frameworks/daggerheart/unarmed-attack-rules.js": "1cde3f53d43c544ad5dea69dd2fab38858fa745eec0cffc145658865836bf3c4",
+    "bot/src/frameworks/daggerheart/public.js": "3466e47fbfecb90b6fc4ec353bead9a6e56ab727d6b32c1966bc7fdaf2ce9740",
+    "bot/tests/ai-gm-2026-10/rf03-f01-c11.test.mjs": "70c2227d906bacebb09be6ac45c6a9d753a8dd37afcdea0515ea53a6f82e481e"
+  },
+  "retired_records": 2,
+  "gate": {
+    "exit": 0,
+    "mode": "ratchet",
+    "phase": "RF03",
+    "sourceModules": 422,
+    "unowned": 0,
+    "importOccurrences": 2389,
+    "internalImportOccurrences": 2214,
+    "cycleComponents": 1,
+    "largestCycle": 182,
+    "rawViolationOccurrences": 2535,
+    "acceptedLegacyOccurrences": 2535,
+    "activeViolationGroups": 0,
+    "transitionErrors": 0,
+    "pass": true,
+    "firstErrors": []
+  },
+  "limitations": "Accepted-source/current owner, native encounter and resulting request adjudication are explicit mocked ports. This verifies native eligibility, not actual downstream dice/effects or production authority/persistence.",
+  "provider_calls": 0,
+  "provider_cost_usd": 0,
+  "codex_usage": "UNMEASURED",
+  "release": "NOT AUTHORIZED"
+}

@@ -40,3 +40,5 @@ export {createGmExecutionRules} from './gm-execution-rules.js';
 export {createRollModifierRules} from './roll-modifier-rules.js';
 export {createRollParticipationRules} from './roll-participation-rules.js';
 export {createPvpDamageRules} from './pvp-damage-rules.js';
+export {createEquippedAttackRules} from './equipped-attack-rules.js';
+export {createUnarmedAttackRules} from './unarmed-attack-rules.js';

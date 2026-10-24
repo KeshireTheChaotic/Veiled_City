@@ -1,0 +1,9 @@
+{
+  "run_id": "RF03-F01-C11",
+  "ended": "2026-10-24T00:31:56.0643184Z",
+  "test_exit": 0,
+  "syntax_checked": 6,
+  "started": "2026-10-24T00:31:54.3077992Z",
+  "gate_exit": 1,
+  "syntax_failures": []
+}

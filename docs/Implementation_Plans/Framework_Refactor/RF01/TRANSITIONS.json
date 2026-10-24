@@ -12953,20 +12953,6 @@
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
     {
-      "id": "304ccc63a4f0f2a68f723647f7f946cc8503c7415fd1366698979e527b515360",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/native-equipped-attacks.js",
-      "to": "bot/src/gm-arbitration-contract.js",
-      "kind": "static",
-      "specifier": "./gm-arbitration-contract.js",
-      "owner": "daggerheart",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF03-F01",
-      "expires_after": "RF03",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
       "id": "7fa9c33f7b9d3a1da8a3264043ced8ce170909dfc18014b557b856ada9aaeee3",
       "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
       "from": "bot/src/native-established-fact.js",
@@ -14023,20 +14009,6 @@
       "to": "bot/src/city-calendar.js",
       "kind": "static",
       "specifier": "./city-calendar.js",
-      "owner": "daggerheart",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF03-F01",
-      "expires_after": "RF03",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
-      "id": "9718acd34a4c21f9ef13c8754f89162c902df552371c38efeef1a2bc69a94f14",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/native-unarmed-attacks.js",
-      "to": "bot/src/gm-arbitration-contract.js",
-      "kind": "static",
-      "specifier": "./gm-arbitration-contract.js",
       "owner": "daggerheart",
       "max_occurrences": 1,
       "remove_in_feature": "RF03-F01",
