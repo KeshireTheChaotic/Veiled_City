@@ -1,0 +1,70 @@
+TAP version 13
+# Subtest: service validation accepts established world consumers and rejects PC, unknown service and untyped bounds
+ok 1 - service validation accepts established world consumers and rejects PC, unknown service and untyped bounds
+  ---
+  duration_ms: 197.451
+  type: 'test'
+  ...
+# Subtest: service denial is opt-in and checks only relevant actions without changing resources
+ok 2 - service denial is opt-in and checks only relevant actions without changing resources
+  ---
+  duration_ms: 178.4088
+  type: 'test'
+  ...
+# Subtest: effective service condition and both current sources revalidate before world action costs
+ok 3 - effective service condition and both current sources revalidate before world action costs
+  ---
+  duration_ms: 194.9025
+  type: 'test'
+  ...
+# Subtest: already adjudicated delivery changes only finite NPC materials with private immutable receipt and restart replay
+ok 4 - already adjudicated delivery changes only finite NPC materials with private immutable receipt and restart replay
+  ---
+  duration_ms: 203.3218
+  type: 'test'
+  ...
+# Subtest: caller fields, amount and exact reviewed delivery evidence cannot forge a transfer
+ok 5 - caller fields, amount and exact reviewed delivery evidence cannot forge a transfer
+  ---
+  duration_ms: 187.6577
+  type: 'test'
+  ...
+# Subtest: NPC knowledge source failure, human proxy and native ownership hold without balance changes
+ok 6 - NPC knowledge source failure, human proxy and native ownership hold without balance changes
+  ---
+  duration_ms: 178.167
+  type: 'test'
+  ...
+# Subtest: co-location must be actual and saved balance revisions cannot be reused after a source change
+ok 7 - co-location must be actual and saved balance revisions cannot be reused after a source change
+  ---
+  duration_ms: 180.3773
+  type: 'test'
+  ...
+# Subtest: finite balances reject insolvency, overflow and fractional resources before any write
+ok 8 - finite balances reject insolvency, overflow and fractional resources before any write
+  ---
+  duration_ms: 208.6317
+  type: 'test'
+  ...
+# Subtest: audit failure rolls back both actual SQL balances and receipt; later retry succeeds once
+ok 9 - audit failure rolls back both actual SQL balances and receipt; later retry succeeds once
+  ---
+  duration_ms: 207.2302
+  type: 'test'
+  ...
+# Subtest: original World source reader reaches moved validation and stable revision identity
+ok 10 - original World source reader reaches moved validation and stable revision identity
+  ---
+  duration_ms: 191.124
+  type: 'test'
+  ...
+1..10
+# tests 10
+# suites 0
+# pass 10
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2409.6637

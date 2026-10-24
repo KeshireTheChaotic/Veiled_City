@@ -1,0 +1,21 @@
+[
+  {
+    "name": "validateServiceAccess",
+    "original_sha256": "a5077eb71f71636c4cb6a7c63c8d7bbe3c7ae0d516ee159cba5c5335ad2e1868",
+    "extraction": "unchanged declaration body, fixed peer source capabilities"
+  },
+  {
+    "name": "assertServiceAccess",
+    "original_sha256": "792fe9cdd56a36446d2a41dfeb912b55744c32390f34d3443b11bc27268dc4c8",
+    "extraction": "unchanged declaration body, fixed peer source capabilities"
+  },
+  {
+    "name": "transferSupply",
+    "original_sha256": "97a93b0cdb2e3d9ba36e1aac855a1e52c8c50d7b8b9360146cbf3d29d8ed6c09",
+    "extraction": "unchanged declaration body, fixed peer source capabilities"
+  },
+  {
+    "name": "supplyRevision",
+    "original_sha256": "9e99d327d5a140f5c29152138d1f574804556a1d3e81b49259835e9c84af55d1"
+  }
+]

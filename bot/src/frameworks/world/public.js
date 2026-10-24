@@ -12,3 +12,5 @@ export {createWorldCommitments} from './commitments.js';
 export {cityContext,proposeCityOpportunity} from './city-context.js';
 
 export {createWorldAvailability} from './availability.js';
+
+export {supplyRevision,createWorldSupply} from './supply-dependencies.js';

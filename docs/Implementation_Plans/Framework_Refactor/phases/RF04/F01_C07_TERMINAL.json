@@ -1,0 +1,48 @@
+{
+  "hashes": {
+    "bot/src/frameworks/world/public.js": "9b153519bb85ad2666c1e5eab7ba28ab4be09ab16aeba5b61e47f10ebb7d00d2",
+    "bot/src/supply-dependencies.js": "8eeaf62f33d459163042a9f615347b101ed8028a96110cbc5ba4e24da2cecd2e",
+    "bot/tests/ai-gm-2026-10/rf04-f01-c07.test.mjs": "42872b5b882a97ad5d85902909c3c5620265834fffe1f68a278de4a97fad86ed",
+    "bot/src/frameworks/world/supply-dependencies.js": "495d115432c7bbd44bbd547f77fd4ce98462415d81ace020810647f236a5c30e"
+  },
+  "start": "2026-10-24T17:11:56.0938673-05:00",
+  "end": "2026-10-24T17:11:59.5182085-05:00",
+  "architecture_exit": 0,
+  "base_sha": "35d42e1d5875745e70a93363d29815a6a0e9cfa8",
+  "syntax": [
+    {
+      "exit": 0,
+      "path": "bot/src/supply-dependencies.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/frameworks/world/supply-dependencies.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/frameworks/world/public.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/tests/ai-gm-2026-10/rf04-f01-c07.test.mjs"
+    }
+  ],
+  "test_exit": 0,
+  "run_id": "RF04_F01_C07",
+  "initial_architecture_exit": 1,
+  "architecture_repair": "Retired one exact vanished original cycle edge; no source/test changes or rerun.",
+  "tests": 10,
+  "passed": 10,
+  "failed": 0,
+  "duration_ms": 2409.6637,
+  "provider_calls": 0,
+  "provider_tokens": 0,
+  "provider_cost_usd": 0,
+  "codex_usage": "UNMEASURED",
+  "release": "NOT AUTHORIZED",
+  "phase_status": "INCOMPLETE",
+  "cumulative_fresh_tests": 61,
+  "cumulative_executions": 61,
+  "cumulative_test_files": 7,
+  "cumulative_syntax": 29
+}
