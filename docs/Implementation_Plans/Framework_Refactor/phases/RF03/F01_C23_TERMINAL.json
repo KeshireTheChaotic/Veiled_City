@@ -1,0 +1,36 @@
+{
+  "base_sha": "20673a33871095573e84d2e2ff521d763f5a4f60",
+  "unique_tests": 7,
+  "executions": 7,
+  "pass": 7,
+  "fail": 0,
+  "exit": 0,
+  "duration_ms": 438.7603,
+  "syntax_pass": 4,
+  "body_equivalence": true,
+  "body_sha256": "2e2f7cf677a806824135f416506db80141561061b0f822243867c01180c8854b",
+  "hashes": {
+    "bot/src/gm-ruling-schema.js": "24e88a1717c03ce1f0106d52b3ec99d6d6c032c54169b0df9187ca7a08c968b1",
+    "bot/src/frameworks/daggerheart/gm-ruling-contract.js": "150c6874c7b22fb743164af8c692aff453c319539622c806c912bef70f030cab",
+    "bot/src/frameworks/daggerheart/public.js": "62797c15313620e516aa3b10d33f4cd136e034a85a2c617449e458f2993b75d4",
+    "bot/tests/ai-gm-2026-10/rf03-f01-c23.test.mjs": "99ab1672cc089aa993b3bb023aa7b8460fe7189d7f67bc4ee0330e5e012e98ed"
+  },
+  "gate": {
+    "sourceModules": 453,
+    "unowned": 0,
+    "importOccurrences": 2460,
+    "internalImportOccurrences": 2285,
+    "cycleComponents": 1,
+    "largestCycle": 182,
+    "rawViolationOccurrences": 2497,
+    "acceptedLegacyOccurrences": 2497,
+    "activeViolationGroups": 0,
+    "transitionErrors": 0,
+    "pass": true
+  },
+  "limitations": "Native contract/provider and actual typed-intent schema consumer integration exercised. Contract only validates structure; native semantic effect/rule authority remains separate. Existing intent-to-shared-provider import explicitly remains legacy integration debt, not isolation.",
+  "provider_calls": 0,
+  "provider_cost_usd": 0,
+  "codex_usage": "UNMEASURED",
+  "release": "NOT AUTHORIZED"
+}

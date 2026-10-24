@@ -72,3 +72,4 @@ export {createGmActionReviewRules} from './gm-action-review-rules.js';
 export {createOrdinaryEffectProofRules} from './ordinary-effect-proof-rules.js';
 export {createOrdinaryEffectRules} from './ordinary-effect-rules.js';
 export {createEvidenceAnalysisRules} from './evidence-analysis-rules.js';
+export {createGmRulingContract} from './gm-ruling-contract.js';

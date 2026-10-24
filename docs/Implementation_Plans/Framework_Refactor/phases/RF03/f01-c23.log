@@ -1,0 +1,52 @@
+TAP version 13
+# Subtest: native contract validates the unchanged closed candidate without modifying it or creating authority
+ok 1 - native contract validates the unchanged closed candidate without modifying it or creating authority
+  ---
+  duration_ms: 1.0221
+  type: 'test'
+  ...
+# Subtest: structural contract accepts an unverified capability proposal without pretending its existence or use is authorized
+ok 2 - structural contract accepts an unverified capability proposal without pretending its existence or use is authorized
+  ---
+  duration_ms: 0.5887
+  type: 'test'
+  ...
+# Subtest: historical narrative no-roll form retains nullable trait and Difficulty rather than forcing a player roll
+ok 3 - historical narrative no-roll form retains nullable trait and Difficulty rather than forcing a player roll
+  ---
+  duration_ms: 0.3349
+  type: 'test'
+  ...
+# Subtest: native schema preserves exact integer ranges, trait vocabulary and distinct bounded source references
+ok 4 - native schema preserves exact integer ranges, trait vocabulary and distinct bounded source references
+  ---
+  duration_ms: 0.2358
+  type: 'test'
+  ...
+# Subtest: nested structural fields remain closed while existing creative explanations stay ordinary text
+ok 5 - nested structural fields remain closed while existing creative explanations stay ordinary text
+  ---
+  duration_ms: 0.1445
+  type: 'test'
+  ...
+# Subtest: actual shared provider and actual typed-intent consumer use the same native contract with all historical closed forms intact
+ok 6 - actual shared provider and actual typed-intent consumer use the same native contract with all historical closed forms intact
+  ---
+  duration_ms: 365.5065
+  type: 'test'
+  ...
+# Subtest: actual GM ruling provider retains the exact same contract exports used by its native validation capability
+ok 7 - actual GM ruling provider retains the exact same contract exports used by its native validation capability
+  ---
+  duration_ms: 0.3063
+  type: 'test'
+  ...
+1..7
+# tests 7
+# suites 0
+# pass 7
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 438.7603
