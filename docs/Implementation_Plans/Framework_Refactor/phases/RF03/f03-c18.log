@@ -1,0 +1,70 @@
+TAP version 13
+# Subtest: one existing Fear is reserved with immutable native ancestry, not paid or rolled during planning
+ok 1 - one existing Fear is reserved with immutable native ancestry, not paid or rolled during planning
+  ---
+  duration_ms: 63.7229
+  type: 'test'
+  ...
+# Subtest: acknowledgment requires exact private recipient and source-qualified native notice before debit
+ok 2 - acknowledgment requires exact private recipient and source-qualified native notice before debit
+  ---
+  duration_ms: 86.4442
+  type: 'test'
+  ...
+# Subtest: outer native transaction rolls reservation transition back when exact debit fails
+ok 3 - outer native transaction rolls reservation transition back when exact debit fails
+  ---
+  duration_ms: 77.0829
+  type: 'test'
+  ...
+# Subtest: candidate filtering and current inspection reject invisible or stale request, source and owner
+ok 4 - candidate filtering and current inspection reject invisible or stale request, source and owner
+  ---
+  duration_ms: 69.5244
+  type: 'test'
+  ...
+# Subtest: ordinary cancellation only releases unused unsent permission and replay does not refund Fear
+ok 5 - ordinary cancellation only releases unused unsent permission and replay does not refund Fear
+  ---
+  duration_ms: 60.1401
+  type: 'test'
+  ...
+# Subtest: reviewed recovery distinguishes uncertain, acknowledged but unused, and committed interruption
+ok 6 - reviewed recovery distinguishes uncertain, acknowledged but unused, and committed interruption
+  ---
+  duration_ms: 76.5369
+  type: 'test'
+  ...
+# Subtest: authenticated GM recovery cannot resume cancelled permission or reverse committed effects
+ok 7 - authenticated GM recovery cannot resume cancelled permission or reverse committed effects
+  ---
+  duration_ms: 97.8528
+  type: 'test'
+  ...
+# Subtest: settlement preserves dead PC agency and emits review without changing original owner action
+ok 8 - settlement preserves dead PC agency and emits review without changing original owner action
+  ---
+  duration_ms: 118.0895
+  type: 'test'
+  ...
+# Subtest: death terminal guard requires exact affected owner native outcome
+ok 9 - death terminal guard requires exact affected owner native outcome
+  ---
+  duration_ms: 54.1261
+  type: 'test'
+  ...
+# Subtest: all actual Fear providers cold-import with unchanged APIs
+ok 10 - all actual Fear providers cold-import with unchanged APIs
+  ---
+  duration_ms: 284.2953
+  type: 'test'
+  ...
+1..10
+# tests 10
+# suites 0
+# pass 10
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1056.8737

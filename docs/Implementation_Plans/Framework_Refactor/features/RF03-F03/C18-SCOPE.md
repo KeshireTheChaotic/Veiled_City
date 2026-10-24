@@ -1,0 +1,5 @@
+# RF03-F03 C18 — Complete pre-roll Fear lifecycle and reviewed recovery
+
+Extract unchanged reservation-state issuance, source-bound pre-roll NPC interruption policy and authenticated exact-state recovery into native Daggerheart factories. Reuse native reservation proof; existing three providers retain authenticated scene/intent/notice/attack ports only. Preserve acknowledged owner delivery before NPC execution, one existing Fear, immutable transitions, death/owner recovery and prohibition on refund/rewriting committed effects. No scope change, source mutation or new narrative restriction.
+
+Fresh SQLite fixtures qualify reservation, immutable proof/replay, exact delivery, debit/hold, cancellation versus uncertainty, reviewed recovery, principal/source revision and death-terminal protections. Source and attack/payment/publication verifiers remain explicit mocks. Actual provider cold import. Freeze once; one blocking batch and batch repair only. Exact unchanged native body comparison, changed syntax and phase ratchet.

@@ -1,0 +1,55 @@
+{
+  "base_sha": "a8072bb30ecf2e9495985aa4e46a08b27321afd7",
+  "tests": {
+    "pass": 10,
+    "fail": 0,
+    "exit": 0,
+    "duration_ms": 1056.8737
+  },
+  "syntax_pass": 8,
+  "gate": {
+    "exit": 0,
+    "sources": 412,
+    "imports": 2361,
+    "largest_cycle": 182,
+    "accepted_occurrences": 2551,
+    "unowned": 0,
+    "active": 0,
+    "integrity_errors": 0
+  },
+  "bodies": [
+    {
+      "source": "fear-reservations.js",
+      "native": "fear-reservation-writer.js",
+      "unchanged": true,
+      "sha256": "8c7208f1a1f652f1d239e012c81837bf7e3827ef468616b883e821f18ba7f3e0"
+    },
+    {
+      "source": "pre-roll-fear.js",
+      "native": "pre-roll-fear-rules.js",
+      "unchanged": true,
+      "sha256": "070aa4809024ce6d9994688071327b6c22d650d9ad205cf6143cb569e5619579"
+    },
+    {
+      "source": "pre-roll-fear-recovery.js",
+      "native": "pre-roll-fear-recovery-rules.js",
+      "unchanged": true,
+      "sha256": "60eb66fd69240d50f11f1d0ae4739f37ed9a433be49b699063016c8e17a92960"
+    }
+  ],
+  "hashes": {
+    "bot/src/fear-reservations.js": "4e655087b280bf4f6f3aafcae954d9203a7ded2c4eb647b2cd5cd8cf851ce4ac",
+    "bot/src/frameworks/daggerheart/fear-reservation-writer.js": "03b50bad70404fc82bddd92cd9693f4687f261253c62ae3c2fbe0e0858d94587",
+    "bot/src/pre-roll-fear.js": "6df027a22fff3b5bef85ef93e768028de49f34c7a441e6e40039d11a8db90126",
+    "bot/src/frameworks/daggerheart/pre-roll-fear-rules.js": "27b4f79e5d4a2c60b1db07e98ba24215b4c04423292f5aaa1fc4ad02323a5d49",
+    "bot/src/pre-roll-fear-recovery.js": "1c467d9ad84c7d39d6f1701da79c82adc902156b76981ff4c5b045cc41e80b07",
+    "bot/src/frameworks/daggerheart/pre-roll-fear-recovery-rules.js": "ce3121acd9eb41212323304a81127ae7eb8815e70225858fc40331ad3e0a1293",
+    "bot/src/frameworks/daggerheart/public.js": "a3ce654577ce7abe9636cf171770ef98df5420a5658c7f5ddf0d93e2b2a41bf4",
+    "bot/tests/ai-gm-2026-10/rf03-f03-c18.test.mjs": "161aafde23338a1ea4155360ced19e85a02499de6c552007ef1b52ac0a9f5d8c"
+  },
+  "source_auth_attack_verdict_publication": "explicit mock ports; no live or production equivalence claimed",
+  "provider_calls": 0,
+  "provider_cost_usd": 0,
+  "codex_usage": "UNMEASURED",
+  "release": "NOT AUTHORIZED"
+}
