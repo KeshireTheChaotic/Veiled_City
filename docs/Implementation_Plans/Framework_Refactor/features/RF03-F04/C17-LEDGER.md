@@ -1,0 +1,5 @@
+# RF03-F04 C17 ledger
+
+NATIVE DESCRIPTOR OWNERSHIP QUALIFIED
+
+Base de15110857899a91abfa852a17bdd92c168cea35. Single unchanged native environment contract source table now owned by Daggerheart; original provider binds actual native qualifier. Every descriptor byte preserved except exported binding name; no forwarding old implementation, duplicate catalog or support change.3/3fresh cases pass,exit0,TAP189.058ms;3syntax pass. Every descriptor qualifies against actual supported current catalog, open mundane property/value freedom and explicit owner optional Hope/VIP methods preserved, review-only/wrong-handler/wrong-cost remains rejected. Current source compatibility only; no effect/producer/live certification. Hashes/terminal F04_C17. Ratchet494sources2549importsSCC1822485acceptedzero active/unowned/integrity. No transitions/deadlines/gameplay/new creative restrictions. Rollback source table extraction/provider import/tests together. Provider0/$0,Codex UNMEASURED;RF03 incomplete;RELEASE NOT AUTHORIZED.

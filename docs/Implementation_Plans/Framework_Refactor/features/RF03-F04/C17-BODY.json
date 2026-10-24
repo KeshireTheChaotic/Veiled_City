@@ -1,0 +1,8 @@
+{
+  "base_sha": "de15110857899a91abfa852a17bdd92c168cea35",
+  "source": "bot/src/native-environment-capabilities.js",
+  "target": "bot/src/frameworks/daggerheart/environment-capability-catalog.js",
+  "body_equivalent_except_export_name": true,
+  "body_sha256": "ed8c222c7f5d71b7ceeaeea0fde12c282d540c4832ca5316da6d821ea34b6f9a",
+  "no_descriptor_or_rule_changes": true
+}

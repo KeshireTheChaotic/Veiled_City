@@ -1,0 +1,59 @@
+{
+  "architecture_exit": 0,
+  "start": "2026-10-24T16:26:46.9395058-05:00",
+  "test_exit": 0,
+  "run_id": "F04_C17",
+  "syntax": [
+    {
+      "path": "bot/src/native-environment-capabilities.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/environment-capability-catalog.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf03-f04-c17.test.mjs",
+      "exit": 0
+    }
+  ],
+  "end": "2026-10-24T16:26:48.1669033-05:00",
+  "base_sha": "de15110857899a91abfa852a17bdd92c168cea35",
+  "hashes": {
+    "bot/tests/ai-gm-2026-10/rf03-f04-c17.test.mjs": "67e98f885b7f7a89142f38e87a2108eaf97613016e6bc9830e119327a1b99327",
+    "bot/src/native-environment-capabilities.js": "1036c481da84dc03889c9675cd28bd6638d1fe26de192eb314875a4b14a0f54f",
+    "bot/src/frameworks/daggerheart/environment-capability-catalog.js": "37f21517d9d39c586ee69cd1b1cbf8f08099a7d383c0e1118b9db5d0cdc28770"
+  },
+  "unique_tests": 3,
+  "executions": 3,
+  "pass": 3,
+  "fail": 0,
+  "tap_duration_ms": 189.058,
+  "syntax_pass": 3,
+  "body_equivalence": {
+    "base_sha": "de15110857899a91abfa852a17bdd92c168cea35",
+    "source": "bot/src/native-environment-capabilities.js",
+    "target": "bot/src/frameworks/daggerheart/environment-capability-catalog.js",
+    "body_equivalent_except_export_name": true,
+    "body_sha256": "ed8c222c7f5d71b7ceeaeea0fde12c282d540c4832ca5316da6d821ea34b6f9a",
+    "no_descriptor_or_rule_changes": true
+  },
+  "gate": {
+    "sourceModules": 494,
+    "unowned": 0,
+    "importOccurrences": 2549,
+    "internalImportOccurrences": 2372,
+    "cycleComponents": 1,
+    "largestCycle": 182,
+    "rawViolationOccurrences": 2485,
+    "acceptedLegacyOccurrences": 2485,
+    "activeViolationGroups": 0,
+    "transitionErrors": 0,
+    "pass": true
+  },
+  "limitations": "Actual current native descriptor/catalog/qualifier compatibility only. No source/effect execution or provider/publication qualification.",
+  "provider_calls": 0,
+  "provider_cost_usd": 0,
+  "codex_usage": "UNMEASURED",
+  "release": "NOT AUTHORIZED"
+}

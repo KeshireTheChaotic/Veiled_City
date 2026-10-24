@@ -1,0 +1,27 @@
+{
+  "architecture_exit": 0,
+  "start": "2026-10-24T16:26:46.9395058-05:00",
+  "test_exit": 0,
+  "run_id": "F04_C17",
+  "syntax": [
+    {
+      "path": "bot/src/native-environment-capabilities.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/environment-capability-catalog.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf03-f04-c17.test.mjs",
+      "exit": 0
+    }
+  ],
+  "end": "2026-10-24T16:26:48.1669033-05:00",
+  "base_sha": "de15110857899a91abfa852a17bdd92c168cea35",
+  "hashes": {
+    "bot/tests/ai-gm-2026-10/rf03-f04-c17.test.mjs": "67e98f885b7f7a89142f38e87a2108eaf97613016e6bc9830e119327a1b99327",
+    "bot/src/native-environment-capabilities.js": "1036c481da84dc03889c9675cd28bd6638d1fe26de192eb314875a4b14a0f54f",
+    "bot/src/frameworks/daggerheart/environment-capability-catalog.js": "37f21517d9d39c586ee69cd1b1cbf8f08099a7d383c0e1118b9db5d0cdc28770"
+  }
+}

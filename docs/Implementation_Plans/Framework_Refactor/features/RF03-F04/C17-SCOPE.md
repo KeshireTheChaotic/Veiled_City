@@ -1,0 +1,3 @@
+# RF03-F04 C17 — Native environmental capability source ownership
+
+Move the single existing code-owned environmental contract table into Daggerheart, separately from already extracted qualifier/native effects. Preserve every descriptor byte except export identifier; original provider binds the same native qualifier to this one table. No duplicate catalog, support activation, new creative limit or effect permission. Fresh tests exercise current source compatibility and exact open mundane detail/owner choice descriptors with actual current native catalog; no legacy tests/fixtures. One frozen batch and changed syntax. RELEASE NOT AUTHORIZED.
