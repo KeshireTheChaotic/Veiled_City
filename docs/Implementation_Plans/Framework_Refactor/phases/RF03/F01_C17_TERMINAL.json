@@ -1,0 +1,35 @@
+{
+  "base_sha": "fa1dec7edf83cd656d43f45bc2657f0a8aa46d05",
+  "unique_tests": 9,
+  "executions": 9,
+  "pass": 9,
+  "fail": 0,
+  "exit": 0,
+  "duration_ms": 1022.9948,
+  "syntax_pass": 4,
+  "body_equivalence": true,
+  "body_sha256": "6320f4019441f27f817d9a6f4c70844ee2820591141cb23dff49a94504d6c44e",
+  "hashes": {
+    "bot/src/pc-effects.js": "54eeb16893fb05dfd3172fa84ef2ef30f9fdb953e40192243b15508d50fc81a1",
+    "bot/src/frameworks/daggerheart/pc-effect-rules.js": "366f4e731c9759e0d936b1731ff7270e538be21512bd749e0b338108dcb3dc92",
+    "bot/src/frameworks/daggerheart/public.js": "36ab9b29407482c69532f5eecb84a0567e2b632439b8be6baaeb35dedf23efb0",
+    "bot/tests/ai-gm-2026-10/rf03-f01-c17.test.mjs": "c9780c3fd2be8166489417ddeb995ba9fe43e61405dd446fe52c0f96bc1bcdec"
+  },
+  "gate": {
+    "sourceModules": 440,
+    "unowned": 0,
+    "importOccurrences": 2433,
+    "internalImportOccurrences": 2258,
+    "cycleComponents": 1,
+    "largestCycle": 182,
+    "rawViolationOccurrences": 2503,
+    "acceptedLegacyOccurrences": 2503,
+    "activeViolationGroups": 0,
+    "transitionErrors": 0,
+    "pass": true
+  },
+  "provider_calls": 0,
+  "provider_cost_usd": 0,
+  "codex_usage": "UNMEASURED",
+  "release": "NOT AUTHORIZED"
+}

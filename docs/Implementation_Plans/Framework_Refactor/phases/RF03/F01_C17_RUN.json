@@ -1,0 +1,26 @@
+{
+  "started": "2026-10-24T09:46:24.1478529Z",
+  "architecture_exit": 0,
+  "test_exit": 0,
+  "run_id": "RF03-F01-C17",
+  "ended": "2026-10-24T09:46:26.0796166Z",
+  "base_sha": "fa1dec7edf83cd656d43f45bc2657f0a8aa46d05",
+  "syntax": [
+    {
+      "path": "bot/src/pc-effects.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/pc-effect-rules.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/public.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf03-f01-c17.test.mjs",
+      "exit": 0
+    }
+  ]
+}

@@ -1,0 +1,64 @@
+TAP version 13
+# Subtest: GM feature review remains private unspent entitlement until the exact affected owner reviews and approves
+ok 1 - GM feature review remains private unspent entitlement until the exact affected owner reviews and approves
+  ---
+  duration_ms: 80.5965
+  type: 'test'
+  ...
+# Subtest: stale resource sheet, source or current principal cannot consume a saved uncommitted feature entitlement
+ok 2 - stale resource sheet, source or current principal cannot consume a saved uncommitted feature entitlement
+  ---
+  duration_ms: 77.4504
+  type: 'test'
+  ...
+# Subtest: effect receipt failure atomically restores resource, mutation and applied authority status
+ok 3 - effect receipt failure atomically restores resource, mutation and applied authority status
+  ---
+  duration_ms: 62.2588
+  type: 'test'
+  ...
+# Subtest: positive native Stress triggers the optional NPC passive only after the separately committed owner effect
+ok 4 - positive native Stress triggers the optional NPC passive only after the separately committed owner effect
+  ---
+  duration_ms: 67.7186
+  type: 'test'
+  ...
+# Subtest: PvP or death sources cannot generate Hope through a reviewed feature
+ok 5 - PvP or death sources cannot generate Hope through a reviewed feature
+  ---
+  duration_ms: 57.5005
+  type: 'test'
+  ...
+# Subtest: generated input can consume only exact approved owner-private native authority and cannot substitute amount or audience
+ok 6 - generated input can consume only exact approved owner-private native authority and cannot substitute amount or audience
+  ---
+  duration_ms: 67.6362
+  type: 'test'
+  ...
+# Subtest: ally healing requires independent healer source review/choice and target approval before native HP clears
+ok 7 - ally healing requires independent healer source review/choice and target approval before native HP clears
+  ---
+  duration_ms: 85.2257
+  type: 'test'
+  ...
+# Subtest: private healer declaration cannot be promoted to a shared source and native projection detects changed applied resource
+ok 8 - private healer declaration cannot be promoted to a shared source and native projection detects changed applied resource
+  ---
+  duration_ms: 123.4255
+  type: 'test'
+  ...
+# Subtest: actual PC effect provider cold-imports all original review, healing, application and projection APIs
+ok 9 - actual PC effect provider cold-imports all original review, healing, application and projection APIs
+  ---
+  duration_ms: 331.5085
+  type: 'test'
+  ...
+1..9
+# tests 9
+# suites 0
+# pass 9
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1022.9948
