@@ -14,3 +14,7 @@ export function requireCityRecord(db,guildId,kind,key){
   if(!row||row.status!=="active") throw new Error(`Active ${kind} not found in this campaign.`);
   return row;
 }
+
+export const requireWorldLocation=(db,guildId,key)=>{
+  if(!db.getSimulationEntity(guildId,"location",key)) throw new Error("Location is not established in this campaign.");
+};

@@ -1,0 +1,37 @@
+[
+  {
+    "name": "queueCivicChange",
+    "original_sha256": "00fb2e41cd1786dd53b9d298ffc5a2e9e01473f4f6af0601780969641f30d17b",
+    "extraction": "exact body, own-framework source imports"
+  },
+  {
+    "name": "connectCity",
+    "original_sha256": "75128ada7c2eb056f9f66da87c3610e2933179a21b3e121c21b2014d8333eed8",
+    "extraction": "exact body, own-framework source imports"
+  },
+  {
+    "name": "infrastructureComponent",
+    "original_sha256": "73a320e5ad62691cd3c8921347194d8c616481a40a5b8fb623ce450c064ec0a4",
+    "extraction": "exact body, own-framework source imports"
+  },
+  {
+    "name": "recalculateInfrastructure",
+    "original_sha256": "3fcea3b6ea05f6a0d15ef3969c697fb8c3de43496143024acced23faf3e17b0f",
+    "extraction": "exact body, own-framework source imports"
+  },
+  {
+    "name": "changeCityService",
+    "original_sha256": "d1ef67be3f131f03b4395046f69aa3c44c0c7b2726026a3f974c4cc1e5ea035f",
+    "extraction": "exact body, own-framework source imports"
+  },
+  {
+    "name": "applyNpcServiceOutcome",
+    "original_sha256": "5ee202fa26fa687a4cffc82bb8e8d1e0f2b45175ca98d85fdfc371643a5a0511",
+    "extraction": "exact body, own-framework source imports"
+  },
+  {
+    "name": "location",
+    "renamed": "requireWorldLocation",
+    "original_sha256": "ce61484a8bd6cd0f221e29f4c8a6bcfba57bfa097a1d8424dd1e7ff286dbc425"
+  }
+]

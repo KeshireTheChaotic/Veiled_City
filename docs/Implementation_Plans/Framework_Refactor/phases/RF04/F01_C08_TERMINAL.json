@@ -1,0 +1,51 @@
+{
+  "start": "2026-10-24T17:14:35.0651342-05:00",
+  "run_id": "RF04_F01_C08",
+  "architecture_exit": 0,
+  "test_exit": 0,
+  "base_sha": "028f91682883d0c31a827a7b9d604fd79584c222",
+  "hashes": {
+    "bot/tests/ai-gm-2026-10/rf04-f01-c08.test.mjs": "59314d3f5ff5aaf81ceb400eff6980571990664c1d5b2d1194f95dc8e0b44ce1",
+    "bot/src/frameworks/world/public.js": "1819fc667bd0e347a6794425329700515cea7e28ab85c10fe9411e6b14d9d3ea",
+    "bot/src/frameworks/world/city-source.js": "25d1cc0eb8532263d2ad6f4af5c85fa657c98b49d74cefefbeaa11bca3ad2557",
+    "bot/src/frameworks/world/infrastructure.js": "98a2fab4d033f5ce152357b6354172000753aa251640c1d6bae4abce394e39df",
+    "bot/src/city-civic.js": "39168be8ca53940f6516f39318366526c9c0a97491a681c2e760bc474eb9f903"
+  },
+  "end": "2026-10-24T17:14:38.5696392-05:00",
+  "syntax": [
+    {
+      "path": "bot/src/city-civic.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/frameworks/world/infrastructure.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/frameworks/world/city-source.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/frameworks/world/public.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf04-f01-c08.test.mjs",
+      "exit": 0
+    }
+  ],
+  "tests": 11,
+  "passed": 11,
+  "failed": 0,
+  "duration_ms": 2446.6961,
+  "provider_calls": 0,
+  "provider_tokens": 0,
+  "provider_cost_usd": 0,
+  "codex_usage": "UNMEASURED",
+  "release": "NOT AUTHORIZED",
+  "phase_status": "INCOMPLETE",
+  "cumulative_fresh_tests": 72,
+  "cumulative_executions": 72,
+  "cumulative_test_files": 8,
+  "cumulative_syntax": 34
+}

@@ -14,3 +14,6 @@ export {cityContext,proposeCityOpportunity} from './city-context.js';
 export {createWorldAvailability} from './availability.js';
 
 export {supplyRevision,createWorldSupply} from './supply-dependencies.js';
+
+export {requireWorldLocation} from './city-source.js';
+export {queueCivicChange,connectCity,recalculateInfrastructure,changeCityService,applyNpcServiceOutcome} from './infrastructure.js';

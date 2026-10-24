@@ -1,0 +1,76 @@
+TAP version 13
+# Subtest: dependency propagation uses all and any redundancy while preserving independent location state
+ok 1 - dependency propagation uses all and any redundancy while preserving independent location state
+  ---
+  duration_ms: 229.2395
+  type: 'test'
+  ...
+# Subtest: cycle and self-edge rejection leave the established topology unchanged
+ok 2 - cycle and self-edge rejection leave the established topology unchanged
+  ---
+  duration_ms: 170.1194
+  type: 'test'
+  ...
+# Subtest: major deterioration produces one pending proposal across restart without applying an outcome
+ok 3 - major deterioration produces one pending proposal across restart without applying an outcome
+  ---
+  duration_ms: 178.29
+  type: 'test'
+  ...
+# Subtest: actual mixed civic review applies pending World service once and retains original receipt
+ok 4 - actual mixed civic review applies pending World service once and retains original receipt
+  ---
+  duration_ms: 176.6185
+  type: 'test'
+  ...
+# Subtest: a significant dependency connection remains queued until explicit review
+ok 5 - a significant dependency connection remains queued until explicit review
+  ---
+  duration_ms: 173.4438
+  type: 'test'
+  ...
+# Subtest: withdrawn or foreign source and invalid service values cannot change established service
+ok 6 - withdrawn or foreign source and invalid service values cannot change established service
+  ---
+  duration_ms: 163.5788
+  type: 'test'
+  ...
+# Subtest: propagation audit failure rolls back edge, service and location projections in one real transaction
+ok 7 - propagation audit failure rolls back edge, service and location projections in one real transaction
+  ---
+  duration_ms: 165.9062
+  type: 'test'
+  ...
+# Subtest: service-condition audit failure preserves all upstream and downstream state
+ok 8 - service-condition audit failure preserves all upstream and downstream state
+  ---
+  duration_ms: 169.524
+  type: 'test'
+  ...
+# Subtest: route and channel records grant neither PC movement nor recipient knowledge
+ok 9 - route and channel records grant neither PC movement nor recipient knowledge
+  ---
+  duration_ms: 175.6631
+  type: 'test'
+  ...
+# Subtest: resolved NPC repair affects only established location-linked services and preserves native caller transaction
+ok 10 - resolved NPC repair affects only established location-linked services and preserves native caller transaction
+  ---
+  duration_ms: 177.1673
+  type: 'test'
+  ...
+# Subtest: source reexport identity preserves current civic callers without duplicate service implementations
+ok 11 - source reexport identity preserves current civic callers without duplicate service implementations
+  ---
+  duration_ms: 171.7723
+  type: 'test'
+  ...
+1..11
+# tests 11
+# suites 0
+# pass 11
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2446.6961
