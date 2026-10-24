@@ -1,0 +1,36 @@
+{
+  "base_sha": "d9d6ddf76f9901807629d47d8ca764799c5c0bc4",
+  "unique_tests": 7,
+  "executions": 7,
+  "pass": 7,
+  "fail": 0,
+  "exit": 0,
+  "duration_ms": 608.2566,
+  "syntax_pass": 4,
+  "body_equivalence": true,
+  "body_sha256": "9722d82ab3eb2e7453f1dfcebc6ab58a237064bfb620d83da3c9aab42f0fcbfe",
+  "hashes": {
+    "bot/src/pvp-reactions.js": "266fba6ea363441a61847cbe893340bc0b358909de62ec79eaa77a93cc3499d3",
+    "bot/src/frameworks/daggerheart/pvp-reaction-rules.js": "986cbc8c09b8a5023efc4102f2d1779b86dadd3ef5122d543c147a24d3b6011d",
+    "bot/src/frameworks/daggerheart/public.js": "1e9408e0d77286a67c56e6eea3105e7480f265b49a7b303bba9df6737e68db22",
+    "bot/tests/ai-gm-2026-10/rf03-f03-c25.test.mjs": "09aeadaa5bffbb000c4b37e0a4a803e4b51f4c877b9ad1114b85a10ba4439fd4"
+  },
+  "gate": {
+    "sourceModules": 445,
+    "unowned": 0,
+    "importOccurrences": 2444,
+    "internalImportOccurrences": 2269,
+    "cycleComponents": 1,
+    "largestCycle": 182,
+    "rawViolationOccurrences": 2498,
+    "acceptedLegacyOccurrences": 2498,
+    "activeViolationGroups": 0,
+    "transitionErrors": 0,
+    "pass": true
+  },
+  "limitations": "Actual new reaction adapter, native Duality arithmetic in explicit request-executor mock and nested SQLite. Upstream attack/owner/hazard authentication and actual request/collaboration services remain independent qualification.",
+  "provider_calls": 0,
+  "provider_cost_usd": 0,
+  "codex_usage": "UNMEASURED",
+  "release": "NOT AUTHORIZED"
+}

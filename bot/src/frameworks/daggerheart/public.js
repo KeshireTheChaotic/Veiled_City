@@ -64,3 +64,4 @@ export {createEnvironmentAcousticRules} from './environment-acoustic-rules.js';
 export {createEnvironmentCountdownRules} from './environment-countdown-rules.js';
 export {createPvpRoundRules} from './pvp-round-rules.js';
 export {createPvpCampaignScopeRules} from './pvp-campaign-scope-rules.js';
+export {createPvpReactionRules} from './pvp-reaction-rules.js';

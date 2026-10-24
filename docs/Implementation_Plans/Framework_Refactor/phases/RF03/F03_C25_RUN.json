@@ -1,0 +1,44 @@
+{
+  "test_exit": 0,
+  "syntax": [
+    {
+      "exit": 0,
+      "path": "bot/src/pvp-reactions.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/frameworks/daggerheart/pvp-reaction-rules.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/frameworks/daggerheart/public.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/tests/ai-gm-2026-10/rf03-f03-c25.test.mjs"
+    }
+  ],
+  "frozen_hashes": [
+    {
+      "sha256": "266FBA6EA363441A61847CBE893340BC0B358909DE62EC79EAA77A93CC3499D3",
+      "path": "bot/src/pvp-reactions.js"
+    },
+    {
+      "sha256": "986CBC8C09B8A5023EFC4102F2D1779B86DADD3EF5122D543C147A24D3B6011D",
+      "path": "bot/src/frameworks/daggerheart/pvp-reaction-rules.js"
+    },
+    {
+      "sha256": "1E9408E0D77286A67C56E6EEA3105E7480F265B49A7B303BBA9DF6737E68DB22",
+      "path": "bot/src/frameworks/daggerheart/public.js"
+    },
+    {
+      "sha256": "09AEADAA5BFFBB000C4B37E0A4A803E4B51F4C877B9AD1114B85A10BA4439FD4",
+      "path": "bot/tests/ai-gm-2026-10/rf03-f03-c25.test.mjs"
+    }
+  ],
+  "run_id": "RF03-F03-C25",
+  "base_sha": "d9d6ddf76f9901807629d47d8ca764799c5c0bc4",
+  "started": "2026-10-24T09:58:13.8977349Z",
+  "architecture_exit": 0,
+  "ended": "2026-10-24T09:58:15.4154293Z"
+}
