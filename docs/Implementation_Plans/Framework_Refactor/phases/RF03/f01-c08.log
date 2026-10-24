@@ -1,0 +1,52 @@
+TAP version 13
+# Subtest: exact structured eligibility is private and does not choose Experience, spend Hope or roll
+ok 1 - exact structured eligibility is private and does not choose Experience, spend Hope or roll
+  ---
+  duration_ms: 36.5111
+  type: 'test'
+  ...
+# Subtest: receipt identity survives reopen without duplicate issuance or sheet changes
+ok 2 - receipt identity survives reopen without duplicate issuance or sheet changes
+  ---
+  duration_ms: 33.631
+  type: 'test'
+  ...
+# Subtest: only unique exact applicable structured Experience entries qualify
+ok 3 - only unique exact applicable structured Experience entries qualify
+  ---
+  duration_ms: 30.6852
+  type: 'test'
+  ...
+# Subtest: saved receipt validates prior exact Experience while current use rejects sheet edits
+ok 4 - saved receipt validates prior exact Experience while current use rejects sheet edits
+  ---
+  duration_ms: 34.4479
+  type: 'test'
+  ...
+# Subtest: current owner and exact request source/audience cannot be substituted
+ok 5 - current owner and exact request source/audience cannot be substituted
+  ---
+  duration_ms: 31.8814
+  type: 'test'
+  ...
+# Subtest: corrupted native event ancestry is rejected and failed source writes leave no receipt
+ok 6 - corrupted native event ancestry is rejected and failed source writes leave no receipt
+  ---
+  duration_ms: 33.9886
+  type: 'test'
+  ...
+# Subtest: terminal resolved request cannot mint new availability and actual provider cold-imports
+ok 7 - terminal resolved request cannot mint new availability and actual provider cold-imports
+  ---
+  duration_ms: 318.2935
+  type: 'test'
+  ...
+1..7
+# tests 7
+# suites 0
+# pass 7
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 585.972

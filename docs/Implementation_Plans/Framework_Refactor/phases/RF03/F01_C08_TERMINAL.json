@@ -1,0 +1,32 @@
+{
+  "base_sha": "a02d63bf361c01933677a84a41f2a121d2d19449",
+  "tests": {
+    "pass": 7,
+    "fail": 0,
+    "exit": 0,
+    "duration_ms": 585.972
+  },
+  "syntax_pass": 4,
+  "body_equivalence": true,
+  "body_sha256": "49781c5799639cf03e0a6e2fdb1023fbd15c69b31d60ca04bffdf6e835b66b06",
+  "hashes": {
+    "bot/src/native-experience-eligibility.js": "8fb4f3ca5dd1c33c4ae2b615b8fb44c95bebfa1e3ba44afb6e25fdc21215e4d4",
+    "bot/src/frameworks/daggerheart/experience-eligibility-rules.js": "fc7d63018ced5b7e4465a454f541080eaf874d861bfb86e1f7fbf3ab475d8286",
+    "bot/src/frameworks/daggerheart/public.js": "0f2a4723beecbcb307527717878ce7ae117ae67cc83970fb07ce9325abe48c63",
+    "bot/tests/ai-gm-2026-10/rf03-f01-c08.test.mjs": "a7e68d42e813239994ecb4b1ee1bd5924b130aad556568c3f60cb0e95326edda"
+  },
+  "gate": {
+    "sources": 414,
+    "imports": 2369,
+    "largest_cycle": 182,
+    "accepted_occurrences": 2548,
+    "active": 0,
+    "unowned": 0,
+    "integrity_errors": 0,
+    "exit": 0
+  },
+  "provider_calls": 0,
+  "provider_cost_usd": 0,
+  "codex_usage": "UNMEASURED",
+  "release": "NOT AUTHORIZED"
+}

@@ -1,0 +1,3 @@
+# RF03-F01 C08 — Exact structured Experience eligibility
+
+Extract the complete native eligibility issuance/current validation/saved-roll proof and lookup into Daggerheart, with existing authenticated action/owner/event capabilities at provider. Preserve immutable receipt identity, exact action range/source/audience/session/operation/trait/roll kind and uniquely matching structured Experience entry. Eligibility never selects an Experience or pays Hope. Fresh SQLite source/reopen/replay/stale-sheet/owner/receipt tests, exact native body equality and actual provider cold import. One frozen targeted batch, changed syntax and ratchet. Rollback checkpoint together; no gameplay change or new restriction.
