@@ -1,0 +1,3 @@
+# RF03-F03 C26 — Native terminal receipt to action-window projection
+
+Extract unchanged terminal window/attempt/dependency projection behind explicit native attempt-key, immediate Fear and intent-transition capabilities. Preserve caller-owned transaction, exact terminal receipt identity, mandatory native Fear hold before closure, current window revision, private original actor attempt, neutral/losing/winning dependency outcomes and replay. Fresh SQLite tests integrate actual native Fear gate and actual production action-dependency transition with new terminal policy; qualify pending versus verified effects, replay/reopen, rollback and invalid receipt. Do not claim real upstream outcome proof or full window/pub integration. One frozen fresh batch plus syntax/gate.

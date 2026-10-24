@@ -1,0 +1,52 @@
+TAP version 13
+# Subtest: pending actual native Fear obligation prevents terminal window, attempt and dependency closure
+ok 1 - pending actual native Fear obligation prevents terminal window, attempt and dependency closure
+  ---
+  duration_ms: 32.1804
+  type: 'test'
+  ...
+# Subtest: verified Fear effect permits private original-actor terminal projection and replay after restart without another window revision
+ok 2 - verified Fear effect permits private original-actor terminal projection and replay after restart without another window revision
+  ---
+  duration_ms: 50.0457
+  type: 'test'
+  ...
+# Subtest: native losing and neutral results map to failed or blocked dependencies without manufacturing a player reaction
+ok 3 - native losing and neutral results map to failed or blocked dependencies without manufacturing a player reaction
+  ---
+  duration_ms: 55.2576
+  type: 'test'
+  ...
+# Subtest: failed real intent transition rolls window, lifecycle and private attempt back within the caller transaction
+ok 4 - failed real intent transition rolls window, lifecycle and private attempt back within the caller transaction
+  ---
+  duration_ms: 24.3506
+  type: 'test'
+  ...
+# Subtest: unresolved native interrupt blocks terminal dependency projection and does not erase the existing window
+ok 5 - unresolved native interrupt blocks terminal dependency projection and does not erase the existing window
+  ---
+  duration_ms: 28.3392
+  type: 'test'
+  ...
+# Subtest: foreign or unresolved terminal receipt cannot close the original actor window
+ok 6 - foreign or unresolved terminal receipt cannot close the original actor window
+  ---
+  duration_ms: 25.5376
+  type: 'test'
+  ...
+# Subtest: actual terminal provider cold-imports the original window settlement API
+ok 7 - actual terminal provider cold-imports the original window settlement API
+  ---
+  duration_ms: 338.9798
+  type: 'test'
+  ...
+1..7
+# tests 7
+# suites 0
+# pass 7
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 628.377

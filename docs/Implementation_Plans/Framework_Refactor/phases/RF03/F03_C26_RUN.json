@@ -1,0 +1,44 @@
+{
+  "run_id": "RF03-F03-C26",
+  "base_sha": "14d5d127e2e5c2d93f8f3c95dc9c9d090e100f40",
+  "syntax": [
+    {
+      "exit": 0,
+      "path": "bot/src/pvp-terminal.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/frameworks/daggerheart/pvp-terminal-rules.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/frameworks/daggerheart/public.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/tests/ai-gm-2026-10/rf03-f03-c26.test.mjs"
+    }
+  ],
+  "architecture_exit": 0,
+  "frozen_hashes": [
+    {
+      "sha256": "70393FC7D65408B6E39E83642666EE9580925F6CE17118C82CFB60D6E45E4D2C",
+      "path": "bot/src/pvp-terminal.js"
+    },
+    {
+      "sha256": "C335E36DA46C025E3917248A53716BFAF15242EE693BFD3EC0534A3322E08AD0",
+      "path": "bot/src/frameworks/daggerheart/pvp-terminal-rules.js"
+    },
+    {
+      "sha256": "E47CCC7BE5F7F36EBC503BFE490B4E6C11A5406E647462A19230C82EB4C4C2D2",
+      "path": "bot/src/frameworks/daggerheart/public.js"
+    },
+    {
+      "sha256": "0F3E4408BA44D93F8B840D6C9D115B5C6555A20F517E121C6018A2E270CD52B7",
+      "path": "bot/tests/ai-gm-2026-10/rf03-f03-c26.test.mjs"
+    }
+  ],
+  "ended": "2026-10-24T10:00:25.5123098Z",
+  "started": "2026-10-24T10:00:23.9059131Z",
+  "test_exit": 0
+}
