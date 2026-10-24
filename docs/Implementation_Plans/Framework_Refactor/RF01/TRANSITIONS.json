@@ -11108,20 +11108,6 @@
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
     {
-      "id": "69baa3cb5997897962fe560f7549c72b8cc282ca895fe953c803872beec4033d",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/native-environment-countdown.js",
-      "to": "bot/src/gm-arbitration-contract.js",
-      "kind": "static",
-      "specifier": "./gm-arbitration-contract.js",
-      "owner": "daggerheart",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF03-F04",
-      "expires_after": "RF03",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
       "id": "0554424ae54fb7baf917e25a3f6058b12f7e746da9494dbb9c8b1da6fb4fabba",
       "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
       "from": "bot/src/native-environment-dispatch.js",
@@ -25039,20 +25025,6 @@
       "to": "bot/src/gm-action-capability.js",
       "kind": "static",
       "specifier": "./gm-action-capability.js",
-      "owner": "daggerheart",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF03-F04",
-      "expires_after": "RF03",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
-    },
-    {
-      "id": "1a6114199e251cb891c09589f395e034170b7271f1573e50fd983c396d6d218d",
-      "code": "CYCLIC_IMPORT_EDGE",
-      "from": "bot/src/native-environment-countdown.js",
-      "to": "bot/src/native-feature-windows.js",
-      "kind": "static",
-      "specifier": "./native-feature-windows.js",
       "owner": "daggerheart",
       "max_occurrences": 1,
       "remove_in_feature": "RF03-F04",

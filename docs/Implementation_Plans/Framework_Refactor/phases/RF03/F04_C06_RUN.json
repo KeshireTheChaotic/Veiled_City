@@ -1,0 +1,44 @@
+{
+  "test_exit": 0,
+  "run_id": "RF03-F04-C06",
+  "architecture_exit": 1,
+  "base_sha": "d08bdaf5fd312a67d97389e2ba6f8a1cc0e0c955",
+  "started": "2026-10-24T09:50:37.1091254Z",
+  "frozen_hashes": [
+    {
+      "sha256": "044EEF43E75B4BD0D69FFDA71A49D86B858B25C574DF238284B9F3A60DBD4D3A",
+      "path": "bot/src/native-environment-countdown.js"
+    },
+    {
+      "sha256": "B9B04763C421A81F6EC65FF2909EE8850D2B005CBA63EEE1C108FA595351C865",
+      "path": "bot/src/frameworks/daggerheart/environment-countdown-rules.js"
+    },
+    {
+      "sha256": "8C2C4ACB372C9F26F2507C26B6719F2ED0A135DC7D480796960817FC4CB46B18",
+      "path": "bot/src/frameworks/daggerheart/public.js"
+    },
+    {
+      "sha256": "15A35F06DD67A270AC5D211E49D9EAF849B83B042E964A6A08607FE3FD68D8BB",
+      "path": "bot/tests/ai-gm-2026-10/rf03-f04-c06.test.mjs"
+    }
+  ],
+  "ended": "2026-10-24T09:50:39.2110781Z",
+  "syntax": [
+    {
+      "exit": 0,
+      "path": "bot/src/native-environment-countdown.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/frameworks/daggerheart/environment-countdown-rules.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/frameworks/daggerheart/public.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/tests/ai-gm-2026-10/rf03-f04-c06.test.mjs"
+    }
+  ]
+}

@@ -1,0 +1,64 @@
+TAP version 13
+# Subtest: actual clear video registration precedes one native Fear debit and private immutable countdown start
+ok 1 - actual clear video registration precedes one native Fear debit and private immutable countdown start
+  ---
+  duration_ms: 79.4019
+  type: 'test'
+  ...
+# Subtest: four distinct native fictional occurrences complete the clock; replay never ticks twice or spends more Fear
+ok 2 - four distinct native fictional occurrences complete the clock; replay never ticks twice or spends more Fear
+  ---
+  duration_ms: 168.3681
+  type: 'test'
+  ...
+# Subtest: failed initial native receipt restores Fear, clock and source/mutation atomically
+ok 3 - failed initial native receipt restores Fear, clock and source/mutation atomically
+  ---
+  duration_ms: 60.9726
+  type: 'test'
+  ...
+# Subtest: reserved Fear, unclear footage and private audience denial cannot start or disclose upload state
+ok 4 - reserved Fear, unclear footage and private audience denial cannot start or disclose upload state
+  ---
+  duration_ms: 62.2997
+  type: 'test'
+  ...
+# Subtest: redirect is selected by an exact resolved owner action and ends only this external route
+ok 5 - redirect is selected by an exact resolved owner action and ends only this external route
+  ---
+  duration_ms: 111.7443
+  type: 'test'
+  ...
+# Subtest: saved owner action ancestry survives scene end without granting new current execution, and source retraction invalidates it
+ok 6 - saved owner action ancestry survives scene end without granting new current execution, and source retraction invalidates it
+  ---
+  duration_ms: 91.8254
+  type: 'test'
+  ...
+# Subtest: head rollback cannot hide a committed native step or make its occurrence reusable
+ok 7 - head rollback cannot hide a committed native step or make its occurrence reusable
+  ---
+  duration_ms: 85.1632
+  type: 'test'
+  ...
+# Subtest: failed native step pointer rolls back the clock, immutable step and source/mutation together
+ok 8 - failed native step pointer rolls back the clock, immutable step and source/mutation together
+  ---
+  duration_ms: 75.971
+  type: 'test'
+  ...
+# Subtest: actual countdown provider cold-imports and preserves its separate pre-existing unsupported feature status
+ok 9 - actual countdown provider cold-imports and preserves its separate pre-existing unsupported feature status
+  ---
+  duration_ms: 352.4625
+  type: 'test'
+  ...
+1..9
+# tests 9
+# suites 0
+# pass 9
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1166.7847
