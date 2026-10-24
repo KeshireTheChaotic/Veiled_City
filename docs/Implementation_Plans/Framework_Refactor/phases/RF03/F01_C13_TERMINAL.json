@@ -1,0 +1,37 @@
+{
+  "base_sha": "0143ed4f57a4616e8f666bf1c6d47ca40d66f48c",
+  "unique_tests": 9,
+  "executions": 9,
+  "pass": 9,
+  "fail": 0,
+  "exit": 0,
+  "duration_ms": 1409.722,
+  "syntax_pass": 4,
+  "body_equivalence": true,
+  "body_sha256": "badca5a06327311fc3a697af831f0532c21a092b781feb7279abc9849e450c3d",
+  "hashes": {
+    "bot/src/native-group-features.js": "a641aca5191b840902909a956c7f29e0d4a600e72529683649daf1b16a92ed4d",
+    "bot/src/frameworks/daggerheart/group-feature-execution-rules.js": "d17a17f5027c3ba975297b94e2a6bb4d3df40342e49eed7f26424e4c156db74e",
+    "bot/src/frameworks/daggerheart/public.js": "aa502f7e7e330129739850eb3772632ec169d6deb7dc1352ed4b9e71b5833d94",
+    "bot/tests/ai-gm-2026-10/rf03-f01-c13.test.mjs": "6092e28cbce9fa791b3bba2cee0530ce352f624b84e17fb718d8e30a7c6e3047"
+  },
+  "gate": {
+    "sourceModules": 431,
+    "unowned": 0,
+    "importOccurrences": 2413,
+    "internalImportOccurrences": 2238,
+    "cycleComponents": 1,
+    "largestCycle": 182,
+    "rawViolationOccurrences": 2514,
+    "acceptedLegacyOccurrences": 2514,
+    "activeViolationGroups": 0,
+    "transitionErrors": 0,
+    "pass": true
+  },
+  "retired_records": 1,
+  "limitations": "Real nested SQLite group lifecycle, owner reaction choice, condition expiry and receipt policy; current source/catalog/GM decision/native roll proof/notice/stress passive callbacks mocked. No full production or live publication qualification.",
+  "provider_calls": 0,
+  "provider_cost_usd": 0,
+  "codex_usage": "UNMEASURED",
+  "release": "NOT AUTHORIZED"
+}

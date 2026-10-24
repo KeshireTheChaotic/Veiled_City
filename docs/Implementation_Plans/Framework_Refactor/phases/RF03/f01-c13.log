@@ -1,0 +1,64 @@
+TAP version 13
+# Subtest: native group preparation saves exact independent owner invitation without reaction dice or effects
+ok 1 - native group preparation saves exact independent owner invitation without reaction dice or effects
+  ---
+  duration_ms: 81.3026
+  type: 'test'
+  ...
+# Subtest: failed Flashbang reaction commits one private Stress/condition receipt and reopens without reapplication
+ok 2 - failed Flashbang reaction commits one private Stress/condition receipt and reopens without reapplication
+  ---
+  duration_ms: 119.0472
+  type: 'test'
+  ...
+# Subtest: ordinary Flashbang success waits for the exact owner choice before applying any consequence
+ok 3 - ordinary Flashbang success waits for the exact owner choice before applying any consequence
+  ---
+  duration_ms: 109.5991
+  type: 'test'
+  ...
+# Subtest: native Critical Flashbang reaction ignores both feature effects without Hope/Fear changes
+ok 4 - native Critical Flashbang reaction ignores both feature effects without Hope/Fear changes
+  ---
+  duration_ms: 104.6091
+  type: 'test'
+  ...
+# Subtest: failed group effect write restores PC state, mutation, condition and child progress
+ok 5 - failed group effect write restores PC state, mutation, condition and child progress
+  ---
+  duration_ms: 100.7681
+  type: 'test'
+  ...
+# Subtest: All Lanes Stop requires the independently observed exact cohort and preserves independent current owners
+ok 6 - All Lanes Stop requires the independently observed exact cohort and preserves independent current owners
+  ---
+  duration_ms: 112.841
+  type: 'test'
+  ...
+# Subtest: native spotlight expiry ends only the source-bound All Lanes Stop duration and remains replayable
+ok 7 - native spotlight expiry ends only the source-bound All Lanes Stop duration and remains replayable
+  ---
+  duration_ms: 164.8062
+  type: 'test'
+  ...
+# Subtest: Command the Blood requires owner choice; command remains held while exact Hope payment is explicit
+ok 8 - Command the Blood requires owner choice; command remains held while exact Hope payment is explicit
+  ---
+  duration_ms: 233.0665
+  type: 'test'
+  ...
+# Subtest: actual group provider cold-imports with unchanged condition, choice and spotlight APIs
+ok 9 - actual group provider cold-imports with unchanged condition, choice and spotlight APIs
+  ---
+  duration_ms: 309.225
+  type: 'test'
+  ...
+1..9
+# tests 9
+# suites 0
+# pass 9
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1409.722

@@ -1,0 +1,26 @@
+{
+  "ended": "2026-10-24T09:32:48.8224755Z",
+  "syntax": [
+    {
+      "exit": 0,
+      "path": "bot/src/native-group-features.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/frameworks/daggerheart/group-feature-execution-rules.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/frameworks/daggerheart/public.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/tests/ai-gm-2026-10/rf03-f01-c13.test.mjs"
+    }
+  ],
+  "base_sha": "0143ed4f57a4616e8f666bf1c6d47ca40d66f48c",
+  "architecture_exit": 1,
+  "started": "2026-10-24T09:32:46.5450624Z",
+  "test_exit": 0,
+  "run_id": "RF03-F01-C13"
+}
