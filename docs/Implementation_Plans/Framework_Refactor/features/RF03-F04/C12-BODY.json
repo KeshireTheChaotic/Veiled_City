@@ -1,0 +1,11 @@
+{
+  "base_sha": "abcba10d1c3b24ca37b7a4952319dca3d3c8281b",
+  "source": "bot/src/native-environment-recording.js",
+  "target": "bot/src/frameworks/daggerheart/environment-recording-rules.js",
+  "body_equivalent": true,
+  "body_sha256": "762685bc6f724168c49eb8d69892d249cd4c3292e84aae635a58a2b66ac5cbc1",
+  "exports": [
+    "createNativeEnvironmentRecording",
+    "inspectNativeEnvironmentRecording"
+  ]
+}

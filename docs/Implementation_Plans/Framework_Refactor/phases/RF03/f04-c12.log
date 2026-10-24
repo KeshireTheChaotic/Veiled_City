@@ -1,0 +1,132 @@
+TAP version 13
+# Subtest: successful exact owner recording choice creates a private durable video, not recipient knowledge or PC effects
+not ok 1 - successful exact owner recording choice creates a private durable video, not recipient knowledge or PC effects
+  ---
+  duration_ms: 69.0485
+  type: 'test'
+  location: 'D:\\Library\\Development\\Veiled_City\\bot\\tests\\ai-gm-2026-10\\rf03-f04-c12.test.mjs:15:1'
+  failureType: 'testCodeFailure'
+  error: 'environment_recording_saved_owner_artifact_ancestry'
+  code: 'GM_ARBITRATION'
+  stack: |-
+    fail (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf03-f04-c12.test.mjs:12:3545)
+    Object.inspectNativeEnvironmentRecording (file:///D:/Library/Development/Veiled_City/bot/src/frameworks/daggerheart/environment-recording-rules.js:78:76)
+    TestContext.<anonymous> (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf03-f04-c12.test.mjs:15:500)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.start (node:internal/test_runner/test:1242:17)
+    startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17)
+  ...
+# Subtest: actual native recording proof feeds native upload registration and one-Fear countdown without fabricated human artifact ancestry
+not ok 2 - actual native recording proof feeds native upload registration and one-Fear countdown without fabricated human artifact ancestry
+  ---
+  duration_ms: 61.45
+  type: 'test'
+  location: 'D:\\Library\\Development\\Veiled_City\\bot\\tests\\ai-gm-2026-10\\rf03-f04-c12.test.mjs:16:1'
+  failureType: 'testCodeFailure'
+  error: 'environment_recording_saved_owner_artifact_ancestry'
+  code: 'GM_ARBITRATION'
+  stack: |-
+    fail (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf03-f04-c12.test.mjs:12:3545)
+    Object.inspectNativeEnvironmentRecording (file:///D:/Library/Development/Veiled_City/bot/src/frameworks/daggerheart/environment-recording-rules.js:78:76)
+    inspectNativeEnvironmentRecording (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf03-f04-c12.test.mjs:12:4595)
+    recordingCreator (file:///D:/Library/Development/Veiled_City/bot/src/frameworks/daggerheart/environment-countdown-rules.js:37:15)
+    file:///D:/Library/Development/Veiled_City/bot/src/frameworks/daggerheart/environment-countdown-rules.js:76:84
+    Object.transaction (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf03-f04-c12.test.mjs:12:2171)
+    Object.establishEnvironmentUploadRecording (file:///D:/Library/Development/Veiled_City/bot/src/frameworks/daggerheart/environment-countdown-rules.js:69:13)
+    TestContext.<anonymous> (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf03-f04-c12.test.mjs:16:198)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+  ...
+# Subtest: restart and same action replay retain the one artifact and exact original owner upload choice
+not ok 3 - restart and same action replay retain the one artifact and exact original owner upload choice
+  ---
+  duration_ms: 61.5706
+  type: 'test'
+  location: 'D:\\Library\\Development\\Veiled_City\\bot\\tests\\ai-gm-2026-10\\rf03-f04-c12.test.mjs:17:1'
+  failureType: 'testCodeFailure'
+  error: 'environment_recording_saved_owner_artifact_ancestry'
+  code: 'GM_ARBITRATION'
+  stack: |-
+    fail (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf03-f04-c12.test.mjs:12:3545)
+    inspectNativeEnvironmentRecording (file:///D:/Library/Development/Veiled_City/bot/src/frameworks/daggerheart/environment-recording-rules.js:78:76)
+    file:///D:/Library/Development/Veiled_City/bot/src/frameworks/daggerheart/environment-recording-rules.js:22:25
+    Object.transaction (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf03-f04-c12.test.mjs:12:2171)
+    Object.createNativeEnvironmentRecording (file:///D:/Library/Development/Veiled_City/bot/src/frameworks/daggerheart/environment-recording-rules.js:15:13)
+    Object.create (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf03-f04-c12.test.mjs:12:4686)
+    TestContext.<anonymous> (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf03-f04-c12.test.mjs:17:188)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+  ...
+# Subtest: device name or appearance never substitutes for explicit equipped native video/upload capability
+ok 4 - device name or appearance never substitutes for explicit equipped native video/upload capability
+  ---
+  duration_ms: 54.8704
+  type: 'test'
+  ...
+# Subtest: invisible or PC subjects and unavailable current observation cannot authorize an artifact or disclosure
+ok 5 - invisible or PC subjects and unavailable current observation cannot authorize an artifact or disclosure
+  ---
+  duration_ms: 62.7855
+  type: 'test'
+  ...
+# Subtest: foreign owner, failed native action or mismatched authored interaction cannot select recording/upload
+ok 6 - foreign owner, failed native action or mismatched authored interaction cannot select recording/upload
+  ---
+  duration_ms: 54.0102
+  type: 'test'
+  ...
+# Subtest: final native receipt failure rolls back artifact, both source/mutation chains and upload choice
+ok 7 - final native receipt failure rolls back artifact, both source/mutation chains and upload choice
+  ---
+  duration_ms: 62.1698
+  type: 'test'
+  ...
+# Subtest: saved owner/source ancestry is revalidated without creating new footage or giving a new controller old private access
+not ok 8 - saved owner/source ancestry is revalidated without creating new footage or giving a new controller old private access
+  ---
+  duration_ms: 69.6463
+  type: 'test'
+  location: 'D:\\Library\\Development\\Veiled_City\\bot\\tests\\ai-gm-2026-10\\rf03-f04-c12.test.mjs:22:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /original_native_cause_changed/. Input:
+    
+    'Error: environment_recording_saved_owner_artifact_ancestry'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+  error: 'environment_recording_saved_owner_artifact_ancestry'
+  stack: |-
+    fail (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf03-f04-c12.test.mjs:12:3545)
+    Object.inspectNativeEnvironmentRecording (file:///D:/Library/Development/Veiled_City/bot/src/frameworks/daggerheart/environment-recording-rules.js:78:76)
+    file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf03-f04-c12.test.mjs:22:506
+    getActual (node:assert:611:5)
+    strict.throws (node:assert:759:24)
+    TestContext.<anonymous> (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf03-f04-c12.test.mjs:22:486)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+  operator: 'throws'
+  stack: |-
+    TestContext.<anonymous> (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf03-f04-c12.test.mjs:22:486)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+1..8
+# tests 8
+# suites 0
+# pass 4
+# fail 4
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 574.3542

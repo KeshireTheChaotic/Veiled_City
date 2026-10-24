@@ -1,0 +1,102 @@
+{
+  "end": "2026-10-24T06:07:20.2125775-05:00",
+  "hashes": {
+    "bot/src/frameworks/daggerheart/public.js": "5b3db004e880f743e1253cd9af6288c245a81d8d496e8dca98c989e3b4350a02",
+    "bot/src/frameworks/daggerheart/environment-recording-rules.js": "3a07ddf969008f2d3c65af52a867835b8b5a99e97db2e3e4a725fc8806be3967",
+    "bot/tests/ai-gm-2026-10/rf03-f04-c12.test.mjs": "8a890ea023bbe8ad9ee63b45ad195a74197b3e85629ff3bab09516fce4cb7353",
+    "bot/src/native-environment-recording.js": "8b46e0e815fdb258985a220136d96236f88baa39d1041a973985fc05482f3852"
+  },
+  "syntax": [
+    {
+      "exit": 0,
+      "path": "bot/src/native-environment-recording.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/frameworks/daggerheart/environment-recording-rules.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/frameworks/daggerheart/public.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/tests/ai-gm-2026-10/rf03-f04-c12.test.mjs"
+    }
+  ],
+  "architecture_exit": 0,
+  "start": "2026-10-24T06:07:18.6848037-05:00",
+  "base_sha": "abcba10d1c3b24ca37b7a4952319dca3d3c8281b",
+  "test_exit": 1,
+  "duration_ms": 631.1495,
+  "run_id": "F04_C12",
+  "unique_tests": 8,
+  "executions": 13,
+  "pass": 8,
+  "fail": 0,
+  "initial": {
+    "pass": 4,
+    "fail": 4,
+    "exit": 1,
+    "tap_duration_ms": 574.3542
+  },
+  "repair": {
+    "test_sha256": "c5bdb3fe6efdd864778e984f3ce67054c79045da189e30adea1203239c34ab1d",
+    "reason": "Fixture ownerAuthoredSource incorrectly inferred source_id player prefix; actual repository checks a city/world_event_index actor mutation. Added explicit mocked source-index journal and matching owner check. Production unchanged; only4failed cases rerun.",
+    "start": "2026-10-24T06:07:57.3625692-05:00",
+    "syntax_exit": 0,
+    "test_exit": 1,
+    "end": "2026-10-24T06:07:57.8127345-05:00",
+    "duration_ms": 398.8729,
+    "pass": 3,
+    "fail": 1,
+    "tap_duration_ms": 343.2818
+  },
+  "integration_repair": {
+    "test_sha256": "c1f4c3bb3aeafe1195ecc2ccc433cac72869a5b4d00d19f0458bc0270675e455",
+    "end": "2026-10-24T06:08:13.5849704-05:00",
+    "reason": "New integration fixture omitted SQLite clock repository methods needed by actual native countdown start. Added complete get/change clock fixture implementation; production unchanged, only remaining failed integration rerun.",
+    "syntax_exit": 0,
+    "duration_ms": 216.9839,
+    "test_exit": 0,
+    "start": "2026-10-24T06:08:13.3157234-05:00",
+    "pass": 1,
+    "fail": 0,
+    "tap_duration_ms": 162.4176
+  },
+  "final_test_exit": 0,
+  "syntax_pass": 4,
+  "syntax_repair_pass": 2,
+  "body_equivalence": {
+    "base_sha": "abcba10d1c3b24ca37b7a4952319dca3d3c8281b",
+    "source": "bot/src/native-environment-recording.js",
+    "target": "bot/src/frameworks/daggerheart/environment-recording-rules.js",
+    "body_equivalent": true,
+    "body_sha256": "762685bc6f724168c49eb8d69892d249cd4c3292e84aae635a58a2b66ac5cbc1",
+    "exports": [
+      "createNativeEnvironmentRecording",
+      "inspectNativeEnvironmentRecording"
+    ]
+  },
+  "gate": {
+    "mode": "ratchet",
+    "phase": "RF03",
+    "sourceModules": 472,
+    "unowned": 0,
+    "importOccurrences": 2498,
+    "internalImportOccurrences": 2323,
+    "cycleComponents": 1,
+    "largestCycle": 182,
+    "rawViolationOccurrences": 2487,
+    "acceptedLegacyOccurrences": 2487,
+    "activeViolationGroups": 0,
+    "transitionErrors": 0,
+    "pass": true,
+    "firstErrors": []
+  },
+  "limitations": "Actual new recording and previously qualified native upload registration/countdown/cost run together with disposable SQLite. Owner/ordinary action outcome/current scene/observation/source-index journal/historical ancestry/artifact repository/catalog/opportunity capabilities explicitly mocked. No actual network upload, recipient knowledge, production source or publication qualification. Two sequential fixture deficiencies repaired; only failed cases rerun.",
+  "provider_calls": 0,
+  "provider_cost_usd": 0,
+  "codex_usage": "UNMEASURED",
+  "release": "NOT AUTHORIZED"
+}

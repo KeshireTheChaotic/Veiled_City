@@ -1,0 +1,9 @@
+{
+  "test_sha256": "c1f4c3bb3aeafe1195ecc2ccc433cac72869a5b4d00d19f0458bc0270675e455",
+  "end": "2026-10-24T06:08:13.5849704-05:00",
+  "reason": "New integration fixture omitted SQLite clock repository methods needed by actual native countdown start. Added complete get/change clock fixture implementation; production unchanged, only remaining failed integration rerun.",
+  "syntax_exit": 0,
+  "duration_ms": 216.9839,
+  "test_exit": 0,
+  "start": "2026-10-24T06:08:13.3157234-05:00"
+}

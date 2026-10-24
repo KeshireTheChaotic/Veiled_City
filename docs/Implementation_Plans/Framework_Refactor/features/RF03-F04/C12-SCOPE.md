@@ -1,0 +1,3 @@
+# RF03-F04 C12 — Exact owner recording and upload artifact authority
+
+Extract unchanged owner-recording choice, explicit equipment/video/upload mapping, visible non-PC subject/current route, native successful owner action and immutable private artifact ancestry policy. Preserve one artifact/action, no automatic PC disclosure or recipient knowledge, original native saved versions and exact authored interaction. Fresh SQLite tests integrate newly extracted recording with actual already-qualified native upload registration/countdown policy, using source/owner/scene/ancestry and artifact repository mocks. No real network upload/knowledge/publication claim; one frozen batch/syntax/ratchet. No new narrative or player restriction.
