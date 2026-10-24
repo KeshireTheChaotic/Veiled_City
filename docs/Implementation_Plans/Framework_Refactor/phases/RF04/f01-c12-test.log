@@ -1,0 +1,58 @@
+TAP version 13
+# Subtest: isolated World source and original reader retain exact exported function identity
+ok 1 - isolated World source and original reader retain exact exported function identity
+  ---
+  duration_ms: 1.8082
+  type: 'test'
+  ...
+# Subtest: existing names and aliases resolve without placing an unplaced character or spending resources
+ok 2 - existing names and aliases resolve without placing an unplaced character or spending resources
+  ---
+  duration_ms: 183.4271
+  type: 'test'
+  ...
+# Subtest: ambiguous place names request clarification; relative inside uses only established native location
+ok 3 - ambiguous place names request clarification; relative inside uses only established native location
+  ---
+  duration_ms: 173.4833
+  type: 'test'
+  ...
+# Subtest: private interpreted referent is limited to its current character and source author
+ok 4 - private interpreted referent is limited to its current character and source author
+  ---
+  duration_ms: 176.3995
+  type: 'test'
+  ...
+# Subtest: source references revalidate across SQLite reopen and source retraction without rewriting saved context
+ok 5 - source references revalidate across SQLite reopen and source retraction without rewriting saved context
+  ---
+  duration_ms: 200.0707
+  type: 'test'
+  ...
+# Subtest: retracted frame and unresolved interpretation never become a source-qualified candidate
+ok 6 - retracted frame and unresolved interpretation never become a source-qualified candidate
+  ---
+  duration_ms: 180.7437
+  type: 'test'
+  ...
+# Subtest: protected location collisions reveal no matches while same-owner private references remain reusable
+ok 7 - protected location collisions reveal no matches while same-owner private references remain reusable
+  ---
+  duration_ms: 174.9442
+  type: 'test'
+  ...
+# Subtest: NPC preflight covers current aliases and reference-only hidden identities without inventing a person
+ok 8 - NPC preflight covers current aliases and reference-only hidden identities without inventing a person
+  ---
+  duration_ms: 194.4166
+  type: 'test'
+  ...
+1..8
+# tests 8
+# suites 0
+# pass 8
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1774.5507

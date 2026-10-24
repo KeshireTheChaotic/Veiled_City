@@ -10,7 +10,7 @@ import { configureSimulationEntity } from "./simulation.js";
 import { validateMinorIdentity } from "./city-depth.js";
 import {normalizeEntityKey as normalizeNpcKey} from './kernel/entity-key.js';
 import { stateRevision } from "./ai-intents.js";
-import { resolvePlaceReference, preflightPlaceIdentity, preflightNpcIdentity } from "./location-language.js";
+import { resolvePlaceReference, preflightPlaceIdentity, preflightNpcIdentity } from "./frameworks/world/public.js";
 import { currentAcceptedIntent, currentTypedMovement } from "./typed-intents.js";
 import { movementAdjudication } from "./rules-arbitration.js";
 import { contextMemoriesForScope } from "./context-memory.js";

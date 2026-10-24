@@ -1,0 +1,9 @@
+{
+  "old": "bot/src/location-language.js",
+  "new": "bot/src/frameworks/world/location-language.js",
+  "original_sha256": "890bc8e1e253149d4463fe0c487876731b32a5a431f987dfaaca9d87d2c31a35",
+  "new_sha256": "8c38f182c53017a364fc611d1f07b9a3959f805623f8a38b83ce2dde30b0c97e",
+  "only_body_difference": "relative kernel import ../../kernel/entity-key.js; every declaration unchanged",
+  "owning_consumer_adopted": "bot/src/autonomous-world.js",
+  "remaining_compatibility": "Native/Intent consumers retain exact old reader until RF04-F05 proper pair adoption; not full isolation; no deadline extension"
+}

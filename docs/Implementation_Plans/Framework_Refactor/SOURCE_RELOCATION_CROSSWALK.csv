@@ -99,7 +99,7 @@ old_path,new_path,owner,move_phase,action,reverse_dependents,import_obligations
 "bot/src/index.js","bot/src/index.js","bootstrap","RF06","DECOMPOSE_BEFORE_MOVE","0","35"
 "bot/src/legacy-authority.js","bot/src/frameworks/knowledge/legacy-authority.js","knowledge","RF04","PILOT_MOVE_CANDIDATE","0","0"
 "bot/src/lifecycle-output.js","bot/src/frameworks/publication/lifecycle-output.js","publication","RF06","EXTRACT_PORTS_BEFORE_MOVE","3","1"
-"bot/src/location-language.js","bot/src/frameworks/world/location-language.js","world","RF04","EXTRACT_PORTS_BEFORE_MOVE","4","1"
+"bot/src/location-language.js","bot/src/frameworks/world/location-language.js","world","RF04","ISOLATED_IMPLEMENTATION_MOVED_WORLD_CONSUMER_ADOPTED_NATIVE_INTENT_READER_REMOVAL_RF04-F05","4","1"
 "bot/src/logger.js","bot/src/frameworks/operations/logger.js","operations","RF02","PILOT_MOVE_CANDIDATE","1","0"
 "bot/src/long-projects.js","bot/src/frameworks/world/long-projects.js","world","RF04","DECOMPOSE_BEFORE_MOVE","4","4"
 "bot/src/mechanical-boundary-v9.js","bot/src/frameworks/daggerheart/mechanical-boundary-v9.js","daggerheart","RF03","PILOT_MOVE_CANDIDATE","2","0"
