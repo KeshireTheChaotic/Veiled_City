@@ -1,0 +1,3 @@
+# RF03-F04 C11 — Native diagnostic clue record
+
+Extract unchanged source-defined diagnostic clue qualification, exact GM opportunity, immutable scoped record/proof and current projection. Preserve existing creative impossible finding/clue strings, modalities and limits without adding a narrative restriction or patient/PC/mechanical outcome. Source/profile/scene/audience/catalog/opportunity supplied by existing providers. Fresh disposable SQLite native positive creative record, replay/history, source/audience/corruption/rollback tests; producer authentication explicitly mocked. One frozen batch plus changed-file syntax/ratchet.

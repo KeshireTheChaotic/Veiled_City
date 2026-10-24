@@ -90,3 +90,4 @@ export {createPvpAuthorshipRules} from './pvp-authorship-rules.js';
 export {createOwnerConsentRules} from './owner-consent-rules.js';
 export {createConsentResponseRules} from './consent-response-rules.js';
 export {createPreRollFearNoticeRules} from './pre-roll-fear-notice-rules.js';
+export {createEnvironmentImagingRules} from './environment-imaging-rules.js';

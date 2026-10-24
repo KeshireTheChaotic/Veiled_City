@@ -1,0 +1,14 @@
+{
+  "base_sha": "e57c93e3bac1ef1128f37dfbfba534a92a2c091e",
+  "source": "bot/src/native-environment-imaging.js",
+  "target": "bot/src/frameworks/daggerheart/environment-imaging-rules.js",
+  "body_equivalent": true,
+  "body_sha256": "bab599a2f412b7b9ca5e6b511c6a111b460aa409795488448699806c0d0d71a2",
+  "exports": [
+    "validateImagingRecordProposal",
+    "applyEnvironmentImagingRecord",
+    "inspectEnvironmentImagingRecord",
+    "environmentImagingProjection",
+    "nativeEnvironmentImagingSituation"
+  ]
+}

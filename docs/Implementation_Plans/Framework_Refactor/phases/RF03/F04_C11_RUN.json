@@ -1,0 +1,33 @@
+{
+  "base_sha": "e57c93e3bac1ef1128f37dfbfba534a92a2c091e",
+  "hashes": {
+    "bot/src/native-environment-imaging.js": "b49f0b100f1b71c3223451a03dc37301fd7df7451440871d9125f0616d0e4034",
+    "bot/src/frameworks/daggerheart/environment-imaging-rules.js": "43473da5146e456e4e77b7af3a18c044740eed2399fcda14cbe323569f91eb71",
+    "bot/src/frameworks/daggerheart/public.js": "7d5153402083d051daeebe1e9fb9a510cc7a82be2843c606faa08a4e759b057b",
+    "bot/tests/ai-gm-2026-10/rf03-f04-c11.test.mjs": "dfcdc4539205744440513a42a199dec5f2738dffead0918b74a7838e30bbb913"
+  },
+  "duration_ms": 312.9168,
+  "architecture_exit": 0,
+  "start": "2026-10-24T06:05:10.8294445-05:00",
+  "test_exit": 0,
+  "end": "2026-10-24T06:05:12.2563959-05:00",
+  "run_id": "F04_C11",
+  "syntax": [
+    {
+      "exit": 0,
+      "path": "bot/src/native-environment-imaging.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/frameworks/daggerheart/environment-imaging-rules.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/frameworks/daggerheart/public.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/tests/ai-gm-2026-10/rf03-f04-c11.test.mjs"
+    }
+  ]
+}

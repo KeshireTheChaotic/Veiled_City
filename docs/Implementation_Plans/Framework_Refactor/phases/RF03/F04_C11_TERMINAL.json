@@ -1,0 +1,74 @@
+{
+  "base_sha": "e57c93e3bac1ef1128f37dfbfba534a92a2c091e",
+  "hashes": {
+    "bot/src/native-environment-imaging.js": "b49f0b100f1b71c3223451a03dc37301fd7df7451440871d9125f0616d0e4034",
+    "bot/src/frameworks/daggerheart/environment-imaging-rules.js": "43473da5146e456e4e77b7af3a18c044740eed2399fcda14cbe323569f91eb71",
+    "bot/src/frameworks/daggerheart/public.js": "7d5153402083d051daeebe1e9fb9a510cc7a82be2843c606faa08a4e759b057b",
+    "bot/tests/ai-gm-2026-10/rf03-f04-c11.test.mjs": "dfcdc4539205744440513a42a199dec5f2738dffead0918b74a7838e30bbb913"
+  },
+  "duration_ms": 312.9168,
+  "architecture_exit": 0,
+  "start": "2026-10-24T06:05:10.8294445-05:00",
+  "test_exit": 0,
+  "end": "2026-10-24T06:05:12.2563959-05:00",
+  "run_id": "F04_C11",
+  "syntax": [
+    {
+      "exit": 0,
+      "path": "bot/src/native-environment-imaging.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/frameworks/daggerheart/environment-imaging-rules.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/frameworks/daggerheart/public.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/tests/ai-gm-2026-10/rf03-f04-c11.test.mjs"
+    }
+  ],
+  "unique_tests": 6,
+  "executions": 6,
+  "pass": 6,
+  "fail": 0,
+  "tap_duration_ms": 253.6198,
+  "syntax_pass": 4,
+  "body_equivalence": {
+    "base_sha": "e57c93e3bac1ef1128f37dfbfba534a92a2c091e",
+    "source": "bot/src/native-environment-imaging.js",
+    "target": "bot/src/frameworks/daggerheart/environment-imaging-rules.js",
+    "body_equivalent": true,
+    "body_sha256": "bab599a2f412b7b9ca5e6b511c6a111b460aa409795488448699806c0d0d71a2",
+    "exports": [
+      "validateImagingRecordProposal",
+      "applyEnvironmentImagingRecord",
+      "inspectEnvironmentImagingRecord",
+      "environmentImagingProjection",
+      "nativeEnvironmentImagingSituation"
+    ]
+  },
+  "gate": {
+    "mode": "ratchet",
+    "phase": "RF03",
+    "sourceModules": 471,
+    "unowned": 0,
+    "importOccurrences": 2496,
+    "internalImportOccurrences": 2321,
+    "cycleComponents": 1,
+    "largestCycle": 182,
+    "rawViolationOccurrences": 2487,
+    "acceptedLegacyOccurrences": 2487,
+    "activeViolationGroups": 0,
+    "transitionErrors": 0,
+    "pass": true,
+    "firstErrors": []
+  },
+  "limitations": "Actual complete native diagnostic clue rules and disposable SQLite; origin/profile/catalog/opportunity/current audience/source producer capabilities explicitly mocked. Creative text is preserved, not semantically certified. No real patient/world/native writer/publication qualification.",
+  "provider_calls": 0,
+  "provider_cost_usd": 0,
+  "codex_usage": "UNMEASURED",
+  "release": "NOT AUTHORIZED"
+}
