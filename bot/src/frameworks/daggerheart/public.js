@@ -73,3 +73,4 @@ export {createOrdinaryEffectProofRules} from './ordinary-effect-proof-rules.js';
 export {createOrdinaryEffectRules} from './ordinary-effect-rules.js';
 export {createEvidenceAnalysisRules} from './evidence-analysis-rules.js';
 export {createGmRulingContract} from './gm-ruling-contract.js';
+export {createEncounterActivationRules} from './encounter-activation-rules.js';

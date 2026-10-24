@@ -1,0 +1,58 @@
+TAP version 13
+# Subtest: explicit operator delegation and opaque application authority produce one native bookkeeping receipt and additive binding link
+ok 1 - explicit operator delegation and opaque application authority produce one native bookkeeping receipt and additive binding link
+  ---
+  duration_ms: 72.6306
+  type: 'test'
+  ...
+# Subtest: Director pause or expired/missing delegation cannot activate a new encounter
+ok 2 - Director pause or expired/missing delegation cannot activate a new encounter
+  ---
+  duration_ms: 56.8412
+  type: 'test'
+  ...
+# Subtest: player-proxy NPC or non-owner current controlled roster cannot receive delegated activation
+ok 3 - player-proxy NPC or non-owner current controlled roster cannot receive delegated activation
+  ---
+  duration_ms: 49.2383
+  type: 'test'
+  ...
+# Subtest: completed encounter activation remains immutable under later pause and never invokes the world producer again
+ok 4 - completed encounter activation remains immutable under later pause and never invokes the world producer again
+  ---
+  duration_ms: 56.2926
+  type: 'test'
+  ...
+# Subtest: saved bookkeeping survives attendance ending while current activation proof remains held
+ok 5 - saved bookkeeping survives attendance ending while current activation proof remains held
+  ---
+  duration_ms: 67.6548
+  type: 'test'
+  ...
+# Subtest: receipt failure restores proposal, encounter, binding, source and mutation atomically
+ok 6 - receipt failure restores proposal, encounter, binding, source and mutation atomically
+  ---
+  duration_ms: 53.6353
+  type: 'test'
+  ...
+# Subtest: zero initial attendees allow native NPC bookkeeping without placing an unplaced PC
+ok 7 - zero initial attendees allow native NPC bookkeeping without placing an unplaced PC
+  ---
+  duration_ms: 66.1887
+  type: 'test'
+  ...
+# Subtest: actual delegated activation provider cold-imports original execution and readback APIs
+ok 8 - actual delegated activation provider cold-imports original execution and readback APIs
+  ---
+  duration_ms: 363.4681
+  type: 'test'
+  ...
+1..8
+# tests 8
+# suites 0
+# pass 8
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 861.1289

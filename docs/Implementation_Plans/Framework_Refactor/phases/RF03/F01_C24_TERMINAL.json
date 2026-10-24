@@ -1,0 +1,37 @@
+{
+  "base_sha": "e440cf120c7773b892db38a7a1a575ecaced8cb8",
+  "unique_tests": 8,
+  "executions": 8,
+  "pass": 8,
+  "fail": 0,
+  "exit": 0,
+  "duration_ms": 861.1289,
+  "syntax_pass": 4,
+  "body_equivalence": true,
+  "body_sha256": "885367ae5aae3bad80378156dcdca09b57b65e581b1c575e05bf19f270f86c07",
+  "hashes": {
+    "bot/src/native-encounter-activation.js": "10db100e33a50bc262328d1a7f445a19b73cf265595a619c17d256b783d60b5f",
+    "bot/src/frameworks/daggerheart/encounter-activation-rules.js": "8f7e3312e98255324c3ae313e9e7d0e682fb4f3840eb089fdb9468863326d1b5",
+    "bot/src/frameworks/daggerheart/public.js": "f4a28378aea6e6fc6c3192389b30e26eddc6bb0844559712e7f5d3cd9df60723",
+    "bot/tests/ai-gm-2026-10/rf03-f01-c24.test.mjs": "b91d49244a307ff2b3c937b2ceeea3aad6051b1fdb4dde299ed03a0acbb32a45"
+  },
+  "gate": {
+    "sourceModules": 454,
+    "unowned": 0,
+    "importOccurrences": 2462,
+    "internalImportOccurrences": 2287,
+    "cycleComponents": 1,
+    "largestCycle": 182,
+    "rawViolationOccurrences": 2495,
+    "acceptedLegacyOccurrences": 2495,
+    "activeViolationGroups": 0,
+    "transitionErrors": 0,
+    "pass": true
+  },
+  "retired_records": 2,
+  "limitations": "Actual native delegation/receipt policy and opaque application principal in SQLite; world encounter producer and current owner/placement/control source services mocked. No new NPC/PC facts, gameplay activation policy or live world/service qualification.",
+  "provider_calls": 0,
+  "provider_cost_usd": 0,
+  "codex_usage": "UNMEASURED",
+  "release": "NOT AUTHORIZED"
+}

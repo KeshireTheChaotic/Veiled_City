@@ -1,0 +1,44 @@
+{
+  "syntax": [
+    {
+      "exit": 0,
+      "path": "bot/src/native-encounter-activation.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/frameworks/daggerheart/encounter-activation-rules.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/frameworks/daggerheart/public.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/tests/ai-gm-2026-10/rf03-f01-c24.test.mjs"
+    }
+  ],
+  "run_id": "RF03-F01-C24",
+  "frozen_hashes": [
+    {
+      "sha256": "10DB100E33A50BC262328D1A7F445A19B73CF265595A619C17D256B783D60B5F",
+      "path": "bot/src/native-encounter-activation.js"
+    },
+    {
+      "sha256": "8F7E3312E98255324C3AE313E9E7D0E682FB4F3840EB089FDB9468863326D1B5",
+      "path": "bot/src/frameworks/daggerheart/encounter-activation-rules.js"
+    },
+    {
+      "sha256": "F4A28378AEA6E6FC6C3192389B30E26EDDC6BB0844559712E7F5D3CD9DF60723",
+      "path": "bot/src/frameworks/daggerheart/public.js"
+    },
+    {
+      "sha256": "B91D49244A307FF2B3C937B2CEEEA3AAD6051B1FDB4DDE299ED03A0ACBB32A45",
+      "path": "bot/tests/ai-gm-2026-10/rf03-f01-c24.test.mjs"
+    }
+  ],
+  "base_sha": "e440cf120c7773b892db38a7a1a575ecaced8cb8",
+  "architecture_exit": 1,
+  "test_exit": 0,
+  "ended": "2026-10-24T10:20:43.6818040Z",
+  "started": "2026-10-24T10:20:41.7227741Z"
+}
