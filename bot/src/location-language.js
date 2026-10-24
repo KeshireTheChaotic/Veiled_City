@@ -1,5 +1,5 @@
 /** Visibility-safe identity/referent resolution; understands destinations but never grants travel or access. */
-import { normalizeNpcKey } from "./npc-cognition.js";
+import {normalizeEntityKey as normalizeNpcKey} from './kernel/entity-key.js';
 const normalized=value=>normalizeNpcKey(String(value||"").replace(/^(?:the|my|our)\s+/i,""));
 export function resolvePlaceReference(db,guild,character,phrase,{mode="party",user=""}={}){
   const wanted=normalized(phrase),pc=db.getCharacter(character);

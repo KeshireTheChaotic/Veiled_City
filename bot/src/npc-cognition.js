@@ -22,15 +22,7 @@ function overlapScore(a,b){
   return score;
 }
 
-export function normalizeNpcKey(value){
-  return String(value||"")
-    .trim()
-    .toLowerCase()
-    .normalize("NFKD")
-    .replace(/[\u0300-\u036f]/g,"")
-    .replace(/[^a-z0-9]+/g,"-")
-    .replace(/^-+|-+$/g,"");
-}
+
 
 function parseJson(value,fallback){
   try{const parsed=JSON.parse(value||"");return Array.isArray(fallback)&&!Array.isArray(parsed)?fallback:parsed;}catch{return fallback;}
@@ -320,3 +312,6 @@ export function seedNpcCognition({db,content,guildId,actorId="system",incrementa
   });
   return counts;
 }
+
+import {normalizeEntityKey as normalizeNpcKey} from './kernel/entity-key.js';
+export {normalizeEntityKey as normalizeNpcKey} from './kernel/entity-key.js';

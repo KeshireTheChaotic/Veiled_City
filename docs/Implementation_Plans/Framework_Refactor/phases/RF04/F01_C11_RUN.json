@@ -1,0 +1,79 @@
+{
+  "start": "2026-10-24T17:24:18.5074684-05:00",
+  "syntax": [
+    {
+      "exit": 0,
+      "path": "bot/src/autonomous-world.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/city-depth.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/db.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/location-language.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/npc-cognition.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/seed-data.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/seed-drafts.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/simulation-commands.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/simulation.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/state.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/world-authoring.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/kernel/entity-key.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/tests/ai-gm-2026-10/rf04-f01-c11.test.mjs"
+    }
+  ],
+  "end": "2026-10-24T17:24:20.7697424-05:00",
+  "test_exit": 0,
+  "hashes": {
+    "bot/src/simulation-commands.js": "c7dcf2b2cabb7ee876d886f7d338d15f16d51d6bd44e1a5bec382668ac64598e",
+    "bot/src/city-depth.js": "c578377a35c7d38ffba3a95eb25fc0f34ddbc9183a51a716a7f3f1edf175205f",
+    "bot/src/autonomous-world.js": "da7531529652fe258090230aae93bbf50ad01d92fa2d6ca857c95dd7d1bd039b",
+    "bot/src/state.js": "b371172a69c695b15c17aa882fb974df96348325f201a7226c5e07e59d0b488b",
+    "bot/src/db.js": "65d2179e79aafb927a87ef62d5569dd01a2d5d813cabee2cb70526322d5e96aa",
+    "bot/src/simulation.js": "4a19244d99c9b1f577dc79272dad1a6a38956ce1fab5550bf4e6c6042a46c2de",
+    "bot/src/location-language.js": "890bc8e1e253149d4463fe0c487876731b32a5a431f987dfaaca9d87d2c31a35",
+    "bot/tests/ai-gm-2026-10/rf04-f01-c11.test.mjs": "ecce23d438c579ba60feff2c5a1e93139d3356443c084e3c929e8d29041a214a",
+    "bot/src/world-authoring.js": "a6936a35de71ac2559106b0b0f437e2baf0482bd14d31aaf31d8889bbaf5cb17",
+    "bot/src/seed-data.js": "5e89cd24c0d5c8ac7d625f1cf727321bb1e313a3ee65a213fca4a001888fc13c",
+    "bot/src/kernel/entity-key.js": "874094a6ecac6757cd8a0ab0c2355db0bf94484ecda05df9de975ed40a4ac26e",
+    "bot/src/npc-cognition.js": "3e93868a65ab77c0c134ecd691704f0faf0444209a465a506ba5f0b2d4e22a61",
+    "bot/src/seed-drafts.js": "4f50306f106f0e9911a6b9ab6c2772bc2fbbe11b50997423247f004c5528e6f6"
+  },
+  "base_sha": "a4a9718c5251de1b315e2129cc77e49c65262c2a",
+  "architecture_exit": 0,
+  "run_id": "RF04_F01_C11",
+  "initial_architecture_exit": 1,
+  "metadata_repair": "Individually retire 14 solved exact records: source edges removed or SCC-only classification no longer present. Strict initial audit rejected out-of-scope SCC changes, then exact graph evidence verified each. Source/tests unchanged; no test rerun."
+}

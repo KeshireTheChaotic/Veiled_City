@@ -8,7 +8,7 @@ import {nativeMovementConditionIssue} from './native-group-features.js';
 import { activeCityProxy } from "./city-constraints.js";
 import { configureSimulationEntity } from "./simulation.js";
 import { validateMinorIdentity } from "./city-depth.js";
-import { normalizeNpcKey } from "./npc-cognition.js";
+import {normalizeEntityKey as normalizeNpcKey} from './kernel/entity-key.js';
 import { stateRevision } from "./ai-intents.js";
 import { resolvePlaceReference, preflightPlaceIdentity, preflightNpcIdentity } from "./location-language.js";
 import { currentAcceptedIntent, currentTypedMovement } from "./typed-intents.js";

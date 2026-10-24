@@ -4,7 +4,7 @@ import { requireCitySource, updateCityCore } from "./city-core.js";
 import { configureSimulationEntity } from "./simulation.js";
 import { configureMystery } from "./story-continuity.js";
 import { validateMinorIdentity } from "./city-depth.js";
-import { normalizeNpcKey } from "./npc-cognition.js";
+import {normalizeEntityKey as normalizeNpcKey} from './kernel/entity-key.js';
 const kinds=["faction","location","institution","npc","mystery","relationship"];
 function materialize(db,content,guildId,input,actorId){
   const {kind,key,data,source_event}=input;cityObject(data);

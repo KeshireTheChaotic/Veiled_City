@@ -1,6 +1,7 @@
 /** Fictional-time NPC/faction simulation. Models propose intent; bounded application rules resolve and persist outcomes. */
 import { randomInt, randomUUID } from "node:crypto";
-import { normalizeNpcKey, retrieveNpcCognition } from "./npc-cognition.js";
+import {retrieveNpcCognition} from './npc-cognition.js';
+import {normalizeEntityKey as normalizeNpcKey} from './kernel/entity-key.js';
 import { submitInstitutionAction, runInstitutionDirector, proposeCityOpportunity } from "./city-core.js";
 import { assertNpcAvailability, npcAvailability, activeCityProxy, assertQueuedCompatibility, worldActorControl, assertWorldActorControl } from "./city-constraints.js";
 import { applyNpcServiceOutcome } from "./city-civic.js";

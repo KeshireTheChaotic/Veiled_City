@@ -13,7 +13,7 @@ import { randomUUID, createHash } from "node:crypto";
 import { DatabaseSync } from "node:sqlite";
 import {StateConflictError} from "./kernel/errors.js";
 import { processCityDue } from "./city-calendar.js";
-import { normalizeNpcKey } from "./npc-cognition.js";
+import {normalizeEntityKey as normalizeNpcKey} from './kernel/entity-key.js';
 import { archiveScenePresence } from "./scene-continuity.js";
 import { relationshipEvidence } from "./presentation-evidence.js";
 import { activeEvidence, evidenceType } from "./epistemic.js";

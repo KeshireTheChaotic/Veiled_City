@@ -1,0 +1,46 @@
+TAP version 13
+# Subtest: shared formatter preserves established byte semantics across entity names and accented source keys
+ok 1 - shared formatter preserves established byte semantics across entity names and accented source keys
+  ---
+  duration_ms: 0.8727
+  type: 'test'
+  ...
+# Subtest: original NPC export retains the same function identity and reflected function name
+ok 2 - original NPC export retains the same function identity and reflected function name
+  ---
+  duration_ms: 0.0833
+  type: 'test'
+  ...
+# Subtest: all eleven modified consumers use the same kernel binding and mixed cognitive imports remain intact
+ok 3 - all eleven modified consumers use the same kernel binding and mixed cognitive imports remain intact
+  ---
+  duration_ms: 46.5338
+  type: 'test'
+  ...
+# Subtest: actual SQLite collision reader retains accent equivalence and campaign isolation after reopen
+ok 4 - actual SQLite collision reader retains accent equivalence and campaign isolation after reopen
+  ---
+  duration_ms: 174.3147
+  type: 'test'
+  ...
+# Subtest: actual World reference consumer resolves normalized existing place without movement or fabricated reference
+ok 5 - actual World reference consumer resolves normalized existing place without movement or fabricated reference
+  ---
+  duration_ms: 0.4045
+  type: 'test'
+  ...
+# Subtest: protected name preflight retains zero-secret collision output under shared normalization
+ok 6 - protected name preflight retains zero-secret collision output under shared normalization
+  ---
+  duration_ms: 0.5776
+  type: 'test'
+  ...
+1..6
+# tests 6
+# suites 0
+# pass 6
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 713.5333

@@ -1,0 +1,257 @@
+{
+  "reason": "Exact current graph audit; 11 removed source-edge classifications and 3 solved SCC-only classifications. No baseline/ID/maximum/deadline expansion; source edge preservation audited individually.",
+  "evidence": [
+    {
+      "original": {
+        "id": "78eee8c56ab94ee29d76f31adb2d1631431ba3eb3ff3cd9abdb655422d292241",
+        "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+        "from": "bot/src/autonomous-world.js",
+        "to": "bot/src/npc-cognition.js",
+        "kind": "static",
+        "specifier": "./npc-cognition.js",
+        "owner": "world",
+        "max_occurrences": 1,
+        "remove_in_feature": "RF04-F01",
+        "expires_after": "RF04",
+        "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+        "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+      },
+      "original_source_edge_present": false,
+      "disposition": "Exact former import removed: one unchanged string formatter now shared through kernel."
+    },
+    {
+      "original": {
+        "id": "9195e43752506697c68a582429243ea62e6465ac6f0e8d4578cbb55ae04b311c",
+        "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+        "from": "bot/src/city-depth.js",
+        "to": "bot/src/npc-cognition.js",
+        "kind": "static",
+        "specifier": "./npc-cognition.js",
+        "owner": "world",
+        "max_occurrences": 1,
+        "remove_in_feature": "RF04-F01",
+        "expires_after": "RF04",
+        "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+        "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+      },
+      "original_source_edge_present": false,
+      "disposition": "Exact former import removed: one unchanged string formatter now shared through kernel."
+    },
+    {
+      "original": {
+        "id": "87a2b049882cd91a13ca6486f09646e41269941e52c1558a7d345fd65e34b362",
+        "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+        "from": "bot/src/db.js",
+        "to": "bot/src/npc-cognition.js",
+        "kind": "static",
+        "specifier": "./npc-cognition.js",
+        "owner": "persistence",
+        "max_occurrences": 1,
+        "remove_in_feature": "RF06-F02",
+        "expires_after": "RF06",
+        "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+        "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+      },
+      "original_source_edge_present": false,
+      "disposition": "Exact former import removed: one unchanged string formatter now shared through kernel."
+    },
+    {
+      "original": {
+        "id": "fe8c0332799f969fc2aba71f61e4389384951f5d207a909ae879c6645d17bb5d",
+        "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+        "from": "bot/src/location-language.js",
+        "to": "bot/src/npc-cognition.js",
+        "kind": "static",
+        "specifier": "./npc-cognition.js",
+        "owner": "world",
+        "max_occurrences": 1,
+        "remove_in_feature": "RF04-F01",
+        "expires_after": "RF04",
+        "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+        "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+      },
+      "original_source_edge_present": false,
+      "disposition": "Exact former import removed: one unchanged string formatter now shared through kernel."
+    },
+    {
+      "original": {
+        "id": "bf22201e91eebc62a175ea59c5a428d254ac5dacd3e9f9bfa9ec44bfbaa39cb6",
+        "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+        "from": "bot/src/seed-drafts.js",
+        "to": "bot/src/npc-cognition.js",
+        "kind": "static",
+        "specifier": "./npc-cognition.js",
+        "owner": "world",
+        "max_occurrences": 1,
+        "remove_in_feature": "RF04-F01",
+        "expires_after": "RF04",
+        "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+        "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+      },
+      "original_source_edge_present": false,
+      "disposition": "Exact former import removed: one unchanged string formatter now shared through kernel."
+    },
+    {
+      "original": {
+        "id": "43ae45009e9aab2d49aec8d23a1e000070d19bf7acee25d11b67c5a16d6d21d4",
+        "code": "IMPORTS_PRIVATE_API",
+        "from": "bot/src/simulation-commands.js",
+        "to": "bot/src/npc-cognition.js",
+        "kind": "static",
+        "specifier": "./npc-cognition.js",
+        "owner": "application",
+        "max_occurrences": 1,
+        "remove_in_feature": "RF06-F04",
+        "expires_after": "RF06",
+        "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+        "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+      },
+      "original_source_edge_present": false,
+      "disposition": "Exact former import removed: one unchanged string formatter now shared through kernel."
+    },
+    {
+      "original": {
+        "id": "9e9a2acee538bfd3161a9e58fad290a53377ec46c17bf356efc9bdc5bcecb324",
+        "code": "IMPORTS_PRIVATE_API",
+        "from": "bot/src/state.js",
+        "to": "bot/src/npc-cognition.js",
+        "kind": "static",
+        "specifier": "./npc-cognition.js",
+        "owner": "application",
+        "max_occurrences": 1,
+        "remove_in_feature": "RF05-F05",
+        "expires_after": "RF05",
+        "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+        "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+      },
+      "original_source_edge_present": false,
+      "disposition": "Exact former import removed: one unchanged string formatter now shared through kernel."
+    },
+    {
+      "original": {
+        "id": "2fd8cab9c797c70f9c097a34dc3990b56c073e4341d188b4f1f3abfda1f949f5",
+        "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+        "from": "bot/src/world-authoring.js",
+        "to": "bot/src/npc-cognition.js",
+        "kind": "static",
+        "specifier": "./npc-cognition.js",
+        "owner": "world",
+        "max_occurrences": 1,
+        "remove_in_feature": "RF04-F01",
+        "expires_after": "RF04",
+        "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+        "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+      },
+      "original_source_edge_present": false,
+      "disposition": "Exact former import removed: one unchanged string formatter now shared through kernel."
+    },
+    {
+      "original": {
+        "id": "4f016c89ecbd2ed4348d09436bbd41a31ab3f9fa2ed37993236ca53ece7c650f",
+        "code": "CYCLIC_IMPORT_EDGE",
+        "from": "bot/src/autonomous-world.js",
+        "to": "bot/src/npc-cognition.js",
+        "kind": "static",
+        "specifier": "./npc-cognition.js",
+        "owner": "world",
+        "max_occurrences": 1,
+        "remove_in_feature": "RF04-F01",
+        "expires_after": "RF04",
+        "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+        "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+      },
+      "original_source_edge_present": false,
+      "disposition": "Exact former import removed: one unchanged string formatter now shared through kernel."
+    },
+    {
+      "original": {
+        "id": "43d79b2c2e030698bee651b61d3f39673908df49e6b86454009bad04f652bacb",
+        "code": "CYCLIC_IMPORT_EDGE",
+        "from": "bot/src/autonomous-world.js",
+        "to": "bot/src/location-language.js",
+        "kind": "static",
+        "specifier": "./location-language.js",
+        "owner": "world",
+        "max_occurrences": 1,
+        "remove_in_feature": "RF04-F01",
+        "expires_after": "RF04",
+        "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+        "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+      },
+      "original_source_edge_present": true,
+      "disposition": "Cycle classification eliminated: location-language is now a kernel-only leaf outside SCC. Actual source edge remains; any independent cross-framework debt remains active."
+    },
+    {
+      "original": {
+        "id": "5d88ac0b40d7d65f34a2f257ff3bcf8b4009cf52076624379fff9fe6069535a6",
+        "code": "CYCLIC_IMPORT_EDGE",
+        "from": "bot/src/city-depth.js",
+        "to": "bot/src/npc-cognition.js",
+        "kind": "static",
+        "specifier": "./npc-cognition.js",
+        "owner": "world",
+        "max_occurrences": 1,
+        "remove_in_feature": "RF04-F01",
+        "expires_after": "RF04",
+        "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+        "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+      },
+      "original_source_edge_present": false,
+      "disposition": "Exact former import removed: one unchanged string formatter now shared through kernel."
+    },
+    {
+      "original": {
+        "id": "2ee4669e89d861189fdab5fa1519a630e11de4fb46d476ce242e5fb5f42c161e",
+        "code": "CYCLIC_IMPORT_EDGE",
+        "from": "bot/src/location-language.js",
+        "to": "bot/src/npc-cognition.js",
+        "kind": "static",
+        "specifier": "./npc-cognition.js",
+        "owner": "world",
+        "max_occurrences": 1,
+        "remove_in_feature": "RF04-F01",
+        "expires_after": "RF04",
+        "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+        "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+      },
+      "original_source_edge_present": false,
+      "disposition": "Exact former import removed: one unchanged string formatter now shared through kernel."
+    },
+    {
+      "original": {
+        "id": "7ddd903823641c277842651668c236f4058d95d5e576fec9258d9b1b85e90657",
+        "code": "CYCLIC_IMPORT_EDGE",
+        "from": "bot/src/pvp-fear-moves.js",
+        "to": "bot/src/location-language.js",
+        "kind": "static",
+        "specifier": "./location-language.js",
+        "owner": "daggerheart",
+        "max_occurrences": 1,
+        "remove_in_feature": "RF04-F01",
+        "expires_after": "RF04",
+        "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+        "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+      },
+      "original_source_edge_present": true,
+      "disposition": "Cycle classification eliminated: location-language is now a kernel-only leaf outside SCC. Actual source edge remains; any independent cross-framework debt remains active."
+    },
+    {
+      "original": {
+        "id": "a4ad19ebaec8a71cf7319136b694eed914e19a5d47124671c57ee9e3bdb9e829",
+        "code": "CYCLIC_IMPORT_EDGE",
+        "from": "bot/src/typed-intents.js",
+        "to": "bot/src/location-language.js",
+        "kind": "static",
+        "specifier": "./location-language.js",
+        "owner": "intent",
+        "max_occurrences": 1,
+        "remove_in_feature": "RF05-F02",
+        "expires_after": "RF05",
+        "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+        "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+      },
+      "original_source_edge_present": true,
+      "disposition": "Cycle classification eliminated: location-language is now a kernel-only leaf outside SCC. Actual source edge remains; any independent cross-framework debt remains active."
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "source": "bot/src/npc-cognition.js#normalizeNpcKey",
+  "original_declaration_sha256": "152991240afca622b651079eb02874f83b6b87cc762f430af9d64fd19eefe599",
+  "kernel": "bot/src/kernel/entity-key.js",
+  "ownership": "kernel: pure string format; no NPC cognition, domain validator, source or state",
+  "changed_consumers": [
+    "bot/src/autonomous-world.js",
+    "bot/src/city-depth.js",
+    "bot/src/db.js",
+    "bot/src/location-language.js",
+    "bot/src/npc-cognition.js",
+    "bot/src/seed-data.js",
+    "bot/src/seed-drafts.js",
+    "bot/src/simulation-commands.js",
+    "bot/src/simulation.js",
+    "bot/src/state.js",
+    "bot/src/world-authoring.js"
+  ],
+  "compatibility": "original exported function name and function identity retained via alias; complete body unchanged; mixed imports retain all other bindings"
+}

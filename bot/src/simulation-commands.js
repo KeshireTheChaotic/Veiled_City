@@ -4,7 +4,7 @@ import { PermissionError, NotFoundError } from "./kernel/errors.js";
 import { applySimulationUpdates, configureSimulationEntity, simulationOverview, submitNpcAction,
   resolveNpcAction, shareInformation, processSimulationEvents } from "./simulation.js";
 import { publishSimulationHooks } from "./publishing.js";
-import { normalizeNpcKey } from "./npc-cognition.js";
+import {normalizeEntityKey as normalizeNpcKey} from './kernel/entity-key.js';
 import { proposeGoalTransition, reviewGoalTransition, runMotivationCycle } from "./simulation-motivation.js";
 import { subscribeConsequence, coordinateConsequences, reviewConsequence } from "./city-consequences.js";
 import { transferSupply } from "./supply-dependencies.js";

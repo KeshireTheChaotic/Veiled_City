@@ -2,7 +2,8 @@
 import fs from "node:fs";
 import path from "node:path";
 import { createHash } from "node:crypto";
-import { normalizeNpcKey, seedNpcCognition } from "./npc-cognition.js";
+import {seedNpcCognition} from './npc-cognition.js';
+import {normalizeEntityKey as normalizeNpcKey} from './kernel/entity-key.js';
 import { configureSimulationEntity } from "./simulation.js";
 import { backfillSeedData } from "./seed-drafts.js";
 
