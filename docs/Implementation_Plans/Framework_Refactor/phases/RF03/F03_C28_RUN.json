@@ -1,0 +1,33 @@
+{
+  "end": "2026-10-24T05:47:56.6070303-05:00",
+  "test_exit": 1,
+  "hashes": {
+    "bot/src/frameworks/daggerheart/public.js": "9e4386e629dc6e96cb908faaae18b160112cc6fb19b0bcbad552cb40e2e6c0cf",
+    "bot/tests/ai-gm-2026-10/rf03-f03-c28.test.mjs": "34b8e8cbbeb0e64b79de74a84f8450c4f715a5dec82d908e29942168a3bfe646",
+    "bot/src/frameworks/daggerheart/pvp-fear-move-rules.js": "ebd00ddc3d00271e58e65ee3452cf01d1866142b1a8937327525697896142ddb",
+    "bot/src/pvp-fear-moves.js": "c55488d155729cda7e346bedd8c2143729c9217dff93e2103cf5620403984f60"
+  },
+  "start": "2026-10-24T05:47:54.7525883-05:00",
+  "duration_ms": 944.2748,
+  "run_id": "F03_C28",
+  "base_sha": "d400a81d4d4f6f6f86ee5316cc5a8344b2502e53",
+  "architecture_exit": 0,
+  "syntax": [
+    {
+      "path": "bot/src/pvp-fear-moves.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/pvp-fear-move-rules.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/public.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf03-f03-c28.test.mjs",
+      "exit": 0
+    }
+  ]
+}

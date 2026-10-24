@@ -1,0 +1,9 @@
+{
+  "start": "2026-10-24T05:48:14.4291838-05:00",
+  "duration_ms": 215.3128,
+  "test_exit": 0,
+  "syntax_exit": 0,
+  "test_sha256": "fdfee334aca391e751fbfaaf8ee6c6652b91c6e7d4647a9ffc692a0c85fcc152",
+  "end": "2026-10-24T05:48:14.6933836-05:00",
+  "reason": "Failed fresh fixture assertion compared in-memory undefined property to JSON persistence; compare persisted representation. Production unchanged; only failed case rerun."
+}

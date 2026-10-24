@@ -1,0 +1,26 @@
+{
+  "base_sha": "d400a81d4d4f6f6f86ee5316cc5a8344b2502e53",
+  "source": "bot/src/pvp-fear-moves.js",
+  "target": "bot/src/frameworks/daggerheart/pvp-fear-move-rules.js",
+  "exports": [
+    "establishFearContext",
+    "assertFearIncomingExecution",
+    "selectFearMove",
+    "applyFearMove",
+    "validateFearEffect",
+    "renderFearEffect",
+    "resolveAutonomousPvpFear",
+    "resumeAutonomousPvpFear",
+    "fearInbox",
+    "reconcileFearMove"
+  ],
+  "world_producer_retained": true,
+  "changes": [
+    "Native producer call receives existing read-only context proof and inventory callbacks.",
+    "Content/library access injected without mutable duplicate content store.",
+    "Original native functions and world NPC bodies otherwise unchanged; private autonomous Symbol exists only inside native factory."
+  ],
+  "native_body_sha256": "e3c83f89520f237fa795907904bfb9450c36b0cedbf094d15eacb2ecda725026",
+  "world_declarations_sha256": "f3bf732490b519d9d031d30cde5bbe3e27b74d129078a0d2507c6fed6df4c6cc",
+  "world_producer_sha256": "7ecf00485584b1cd22fa9f477f06dcaaeca2984408f0cbe03da4ae4b3d25279c"
+}

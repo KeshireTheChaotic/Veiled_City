@@ -1,0 +1,104 @@
+{
+  "end": "2026-10-24T05:47:56.6070303-05:00",
+  "test_exit": 1,
+  "hashes": {
+    "bot/src/frameworks/daggerheart/public.js": "9e4386e629dc6e96cb908faaae18b160112cc6fb19b0bcbad552cb40e2e6c0cf",
+    "bot/tests/ai-gm-2026-10/rf03-f03-c28.test.mjs": "34b8e8cbbeb0e64b79de74a84f8450c4f715a5dec82d908e29942168a3bfe646",
+    "bot/src/frameworks/daggerheart/pvp-fear-move-rules.js": "ebd00ddc3d00271e58e65ee3452cf01d1866142b1a8937327525697896142ddb",
+    "bot/src/pvp-fear-moves.js": "c55488d155729cda7e346bedd8c2143729c9217dff93e2103cf5620403984f60"
+  },
+  "start": "2026-10-24T05:47:54.7525883-05:00",
+  "duration_ms": 944.2748,
+  "run_id": "F03_C28",
+  "base_sha": "d400a81d4d4f6f6f86ee5316cc5a8344b2502e53",
+  "architecture_exit": 0,
+  "syntax": [
+    {
+      "path": "bot/src/pvp-fear-moves.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/pvp-fear-move-rules.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/public.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf03-f03-c28.test.mjs",
+      "exit": 0
+    }
+  ],
+  "unique_tests": 11,
+  "executions": 12,
+  "pass": 11,
+  "fail": 0,
+  "initial": {
+    "pass": 10,
+    "fail": 1,
+    "exit": 1,
+    "duration_ms": 887.646
+  },
+  "repair": {
+    "start": "2026-10-24T05:48:14.4291838-05:00",
+    "duration_ms": 215.3128,
+    "test_exit": 0,
+    "syntax_exit": 0,
+    "test_sha256": "fdfee334aca391e751fbfaaf8ee6c6652b91c6e7d4647a9ffc692a0c85fcc152",
+    "end": "2026-10-24T05:48:14.6933836-05:00",
+    "reason": "Failed fresh fixture assertion compared in-memory undefined property to JSON persistence; compare persisted representation. Production unchanged; only failed case rerun.",
+    "pass": 1,
+    "fail": 0,
+    "tap_duration_ms": 159.938
+  },
+  "syntax_pass": 4,
+  "syntax_repair_pass": 1,
+  "body_adapters": {
+    "base_sha": "d400a81d4d4f6f6f86ee5316cc5a8344b2502e53",
+    "source": "bot/src/pvp-fear-moves.js",
+    "target": "bot/src/frameworks/daggerheart/pvp-fear-move-rules.js",
+    "exports": [
+      "establishFearContext",
+      "assertFearIncomingExecution",
+      "selectFearMove",
+      "applyFearMove",
+      "validateFearEffect",
+      "renderFearEffect",
+      "resolveAutonomousPvpFear",
+      "resumeAutonomousPvpFear",
+      "fearInbox",
+      "reconcileFearMove"
+    ],
+    "world_producer_retained": true,
+    "changes": [
+      "Native producer call receives existing read-only context proof and inventory callbacks.",
+      "Content/library access injected without mutable duplicate content store.",
+      "Original native functions and world NPC bodies otherwise unchanged; private autonomous Symbol exists only inside native factory."
+    ],
+    "native_body_sha256": "e3c83f89520f237fa795907904bfb9450c36b0cedbf094d15eacb2ecda725026",
+    "world_declarations_sha256": "f3bf732490b519d9d031d30cde5bbe3e27b74d129078a0d2507c6fed6df4c6cc",
+    "world_producer_sha256": "7ecf00485584b1cd22fa9f477f06dcaaeca2984408f0cbe03da4ae4b3d25279c"
+  },
+  "gate": {
+    "mode": "ratchet",
+    "phase": "RF03",
+    "sourceModules": 462,
+    "unowned": 0,
+    "importOccurrences": 2478,
+    "internalImportOccurrences": 2303,
+    "cycleComponents": 1,
+    "largestCycle": 182,
+    "rawViolationOccurrences": 2488,
+    "acceptedLegacyOccurrences": 2488,
+    "activeViolationGroups": 0,
+    "transitionErrors": 0,
+    "pass": true,
+    "firstErrors": []
+  },
+  "limitations": "Actual native selection/context/trigger/gate/effect/clock creation and advance/receipt/recovery logic plus disposable SQLite. Native saved attack verification, source indexing, owner, brawl ordering, world/NPC producers, encounter, incoming effects and continuation settlement are explicit mocks. Narrative paired rounds, NPC preparation/threat/incoming routes and existing real world producer are preserved but not newly qualified. One failed assertion compared an undefined optional property with persisted JSON; only failed assertion repaired/rerun.",
+  "provider_calls": 0,
+  "provider_cost_usd": 0,
+  "codex_usage": "UNMEASURED",
+  "release": "NOT AUTHORIZED"
+}

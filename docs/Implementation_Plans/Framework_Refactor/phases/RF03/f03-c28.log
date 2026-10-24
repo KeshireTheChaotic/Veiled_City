@@ -1,0 +1,206 @@
+TAP version 13
+# Subtest: native immediate Fear selection and one real clock effect have independent signed dice, decision, mutation and gate receipts
+ok 1 - native immediate Fear selection and one real clock effect have independent signed dice, decision, mutation and gate receipts
+  ---
+  duration_ms: 86.8813
+  type: 'test'
+  ...
+# Subtest: saved effect and database restart replay never advance a clock twice or select a replacement decision
+ok 2 - saved effect and database restart replay never advance a clock twice or select a replacement decision
+  ---
+  duration_ms: 80.4291
+  type: 'test'
+  ...
+# Subtest: actual changed target after selection holds the obligation rather than overwriting external progress
+ok 3 - actual changed target after selection holds the obligation rather than overwriting external progress
+  ---
+  duration_ms: 81.8619
+  type: 'test'
+  ...
+# Subtest: failed effect receipt atomically rolls back clock, trigger and gate without erasing the pending obligation
+ok 4 - failed effect receipt atomically rolls back clock, trigger and gate without erasing the pending obligation
+  ---
+  duration_ms: 83.6232
+  type: 'test'
+  ...
+# Subtest: forged saved dice or GM context source cannot be replaced by model authority labels
+ok 5 - forged saved dice or GM context source cannot be replaced by model authority labels
+  ---
+  duration_ms: 76.2647
+  type: 'test'
+  ...
+# Subtest: held selection recovery revalidates native source and changes only selection state, never waiving Fear or adding effects
+ok 6 - held selection recovery revalidates native source and changes only selection state, never waiving Fear or adding effects
+  ---
+  duration_ms: 76.254
+  type: 'test'
+  ...
+# Subtest: autonomous native delegate can use an established contextual clock exactly once without calling the NPC producer
+not ok 7 - autonomous native delegate can use an established contextual clock exactly once without calling the NPC producer
+  ---
+  duration_ms: 88.4987
+  type: 'test'
+  location: 'D:\\Library\\Development\\Veiled_City\\bot\\tests\\ai-gm-2026-10\\rf03-f03-c28.test.mjs:25:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    ... Skipped lines
+    
+      {
+        data: {
+          after: {
+            clock_key: 'clock-c28',
+            label: 'Pier attention',
+    ...
+          },
+    -     complication_ref: undefined,
+          context: 'pvp-fear-context:f1a43ac11ea697248cd9b80896c0c4068ed2a4bb3944791c28f803122228f996',
+          decision: 'pvp-fear-decision:c8b6a6670c087e0676b6e95feb4ce37a0ab3cd5b2e665291b30e8af8f8ffab32',
+          effect_digest: '42e25b1b85924c4fccfe0a3be9d9298f3695b51d1a4b3102d719e86eb1d4ac7e',
+          hold_refs: [],
+          idempotency_key: 'pvp-fear-effect:pvp-fear:3fb65a384040bdd0f0b2c0bd3d13b44ff5cbdd0b',
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    kind: 'pvp_fear_effect_receipt'
+    key: 'pvp-fear-effect:pvp-fear:3fb65a384040bdd0f0b2c0bd3d13b44ff5cbdd0b'
+    status: 'resolved'
+    source_event: 'pvp-fear-context-source:576686689d9eaa48e443100195f86b173fb109f86b79c387241dd9f606bbf5f3'
+    visibility: 'party'
+    subject_key: ~
+    data:
+      version: 1
+      trigger: 'pvp-fear:3fb65a384040bdd0f0b2c0bd3d13b44ff5cbdd0b'
+      decision: 'pvp-fear-decision:c8b6a6670c087e0676b6e95feb4ce37a0ab3cd5b2e665291b30e8af8f8ffab32'
+      context: 'pvp-fear-context:f1a43ac11ea697248cd9b80896c0c4068ed2a4bb3944791c28f803122228f996'
+      source_event: 'pvp-fear-context-source:576686689d9eaa48e443100195f86b173fb109f86b79c387241dd9f606bbf5f3'
+      source_hash: '7cc2b9aa52770c1df5d11b367607cc7531a2807455505e8067e8917375cc090a'
+      scene: 'scene-c28'
+      session: 'session-c28'
+      proposal: 'contract-c28'
+      terms_hash: 'terms-c28'
+      move_kind: 'clock_advance'
+      target: 'clock-c28'
+      native_mutation_refs:
+        0: 'mutation-2'
+      before:
+        clock_key: 'clock-c28'
+        value: 0
+        max_value: 4
+        label: 'Pier attention'
+        visibility: 'party'
+        subject_user_id: ~
+        subject_character_id: ~
+      after:
+        clock_key: 'clock-c28'
+        value: 1
+        max_value: 4
+        label: 'Pier attention'
+        visibility: 'party'
+        subject_user_id: ~
+        subject_character_id: ~
+      hold_refs:
+      authority: 'autonomous_v1'
+      npc_action_ref: ~
+      npc_action_hash: ~
+      npc_mutation_ref: ~
+      visibility: 'party'
+      subject_key: ~
+      applied_by: 'autonomous_pvp_fear'
+      idempotency_key: 'pvp-fear-effect:pvp-fear:3fb65a384040bdd0f0b2c0bd3d13b44ff5cbdd0b'
+      effect_digest: '42e25b1b85924c4fccfe0a3be9d9298f3695b51d1a4b3102d719e86eb1d4ac7e'
+    record_key: 'pvp-fear-effect:pvp-fear:3fb65a384040bdd0f0b2c0bd3d13b44ff5cbdd0b'
+  actual:
+    kind: 'pvp_fear_effect_receipt'
+    key: 'pvp-fear-effect:pvp-fear:3fb65a384040bdd0f0b2c0bd3d13b44ff5cbdd0b'
+    status: 'resolved'
+    source_event: 'pvp-fear-context-source:576686689d9eaa48e443100195f86b173fb109f86b79c387241dd9f606bbf5f3'
+    visibility: 'party'
+    subject_key: ~
+    data:
+      version: 1
+      trigger: 'pvp-fear:3fb65a384040bdd0f0b2c0bd3d13b44ff5cbdd0b'
+      decision: 'pvp-fear-decision:c8b6a6670c087e0676b6e95feb4ce37a0ab3cd5b2e665291b30e8af8f8ffab32'
+      context: 'pvp-fear-context:f1a43ac11ea697248cd9b80896c0c4068ed2a4bb3944791c28f803122228f996'
+      source_event: 'pvp-fear-context-source:576686689d9eaa48e443100195f86b173fb109f86b79c387241dd9f606bbf5f3'
+      source_hash: '7cc2b9aa52770c1df5d11b367607cc7531a2807455505e8067e8917375cc090a'
+      scene: 'scene-c28'
+      session: 'session-c28'
+      proposal: 'contract-c28'
+      terms_hash: 'terms-c28'
+      move_kind: 'clock_advance'
+      target: 'clock-c28'
+      native_mutation_refs:
+        0: 'mutation-2'
+      before:
+        clock_key: 'clock-c28'
+        value: 0
+        max_value: 4
+        label: 'Pier attention'
+        visibility: 'party'
+        subject_user_id: ~
+        subject_character_id: ~
+      after:
+        clock_key: 'clock-c28'
+        value: 1
+        max_value: 4
+        label: 'Pier attention'
+        visibility: 'party'
+        subject_user_id: ~
+        subject_character_id: ~
+      hold_refs:
+      authority: 'autonomous_v1'
+      npc_action_ref: ~
+      npc_action_hash: ~
+      npc_mutation_ref: ~
+      visibility: 'party'
+      subject_key: ~
+      applied_by: 'autonomous_pvp_fear'
+      idempotency_key: 'pvp-fear-effect:pvp-fear:3fb65a384040bdd0f0b2c0bd3d13b44ff5cbdd0b'
+      effect_digest: '42e25b1b85924c4fccfe0a3be9d9298f3695b51d1a4b3102d719e86eb1d4ac7e'
+    record_key: 'pvp-fear-effect:pvp-fear:3fb65a384040bdd0f0b2c0bd3d13b44ff5cbdd0b'
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf03-f03-c28.test.mjs:25:555)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: when the independently injected world producer offers nothing, autonomous native fallback creates a distinct initial clock receipt then advances it once
+ok 8 - when the independently injected world producer offers nothing, autonomous native fallback creates a distinct initial clock receipt then advances it once
+  ---
+  duration_ms: 81.3865
+  type: 'test'
+  ...
+# Subtest: manual authority preserves the obligation without authoring or native effects, while paused paired triggers stay sealed
+ok 9 - manual authority preserves the obligation without authoring or native effects, while paused paired triggers stay sealed
+  ---
+  duration_ms: 71.5103
+  type: 'test'
+  ...
+# Subtest: private native effect renders only for its exact recipient; source retraction and changed scene invalidate current proof
+ok 10 - private native effect renders only for its exact recipient; source retraction and changed scene invalidate current proof
+  ---
+  duration_ms: 85.9895
+  type: 'test'
+  ...
+# Subtest: native factory contains no NPC identity creation and its private autonomous capability is never returned
+ok 11 - native factory contains no NPC identity creation and its private autonomous capability is never returned
+  ---
+  duration_ms: 0.6579
+  type: 'test'
+  ...
+1..11
+# tests 11
+# suites 0
+# pass 10
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 887.646
