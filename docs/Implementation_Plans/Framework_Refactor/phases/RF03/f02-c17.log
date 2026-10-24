@@ -1,0 +1,52 @@
+TAP version 13
+# Subtest: Contingency Stack changes only the first verified severe result to two marks and consumes one immutable charge
+ok 1 - Contingency Stack changes only the first verified severe result to two marks and consumes one immutable charge
+  ---
+  duration_ms: 65.4618
+  type: 'test'
+  ...
+# Subtest: ordinary damage or a human-proxied adversary never spends this automatic native charge
+ok 2 - ordinary damage or a human-proxied adversary never spends this automatic native charge
+  ---
+  duration_ms: 46.7507
+  type: 'test'
+  ...
+# Subtest: fabricated attack result and mismatched saved damage cannot authorize defense
+ok 3 - fabricated attack result and mismatched saved damage cannot authorize defense
+  ---
+  duration_ms: 56.8387
+  type: 'test'
+  ...
+# Subtest: failed charge write rolls receipt and source back in the unchanged enclosing damage transaction
+ok 4 - failed charge write rolls receipt and source back in the unchanged enclosing damage transaction
+  ---
+  duration_ms: 47.2038
+  type: 'test'
+  ...
+# Subtest: Pack Pressure uses actual living local allies and caps the native modifier at two
+ok 5 - Pack Pressure uses actual living local allies and caps the native modifier at two
+  ---
+  duration_ms: 54.3456
+  type: 'test'
+  ...
+# Subtest: Pack Pressure rejects stale template and excludes proxies or separate zones
+ok 6 - Pack Pressure rejects stale template and excludes proxies or separate zones
+  ---
+  duration_ms: 46.6743
+  type: 'test'
+  ...
+# Subtest: actual defense/passive providers cold-import with existing native damage APIs
+ok 7 - actual defense/passive providers cold-import with existing native damage APIs
+  ---
+  duration_ms: 300.2489
+  type: 'test'
+  ...
+1..7
+# tests 7
+# suites 0
+# pass 7
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 689.3689

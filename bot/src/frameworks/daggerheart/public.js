@@ -44,3 +44,5 @@ export {createEquippedAttackRules} from './equipped-attack-rules.js';
 export {createUnarmedAttackRules} from './unarmed-attack-rules.js';
 export {createEnvironmentAudienceRules} from './environment-audience-rules.js';
 export {createEnvironmentBindingRules} from './environment-binding-rules.js';
+export {createAdversaryDamageDefenseRules} from './adversary-damage-defense-rules.js';
+export {createAdversaryAttackPassiveRules} from './adversary-attack-passive-rules.js';

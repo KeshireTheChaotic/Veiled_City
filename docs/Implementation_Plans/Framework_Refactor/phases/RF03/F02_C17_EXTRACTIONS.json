@@ -1,0 +1,41 @@
+[
+  {
+    "old": "native-feature-damage.js",
+    "native": "adversary-damage-defense-rules.js",
+    "factory": "createAdversaryDamageDefenseRules",
+    "start": "const HANDLER=",
+    "caps": [
+      "compileNativeFeatures",
+      "EncounterLibrary",
+      "currentScene",
+      "scenePresence",
+      "activeCityProxy",
+      "indexWorldEvent",
+      "historicalActionSource"
+    ],
+    "extra": "import {hpMarksForDamage} from './combat.js';\n",
+    "names": [
+      "nativeAdversaryDamageDefense",
+      "inspectAdversaryDamageDefense"
+    ]
+  },
+  {
+    "old": "native-feature-passives.js",
+    "native": "adversary-attack-passive-rules.js",
+    "factory": "createAdversaryAttackPassiveRules",
+    "start": "const nativeDamage=",
+    "caps": [
+      "compileNativeFeatures",
+      "scenePresence",
+      "sceneAccess",
+      "nativeHouseErratum",
+      "activeCityProxy"
+    ],
+    "extra": "import {createNativeStandardDamage} from './standard-damage-passives.js';\n",
+    "names": [
+      "nativeDamageBonusExpression",
+      "nativeStandardDamage",
+      "nativeAttackPassives"
+    ]
+  }
+]

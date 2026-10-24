@@ -1,0 +1,59 @@
+{
+  "base_sha": "eeeda8e2a6031897ba484622883040e18e233b11",
+  "tests": {
+    "pass": 7,
+    "fail": 0,
+    "exit": 0,
+    "duration_ms": 689.3689
+  },
+  "syntax_pass": 6,
+  "bodies": [
+    {
+      "source": "native-feature-damage.js",
+      "native": "adversary-damage-defense-rules.js",
+      "unchanged": true,
+      "sha256": "48796f5f71e219a540fa5a7e9e2673a91c0c1ca4e43dd26f77b483a510393237"
+    },
+    {
+      "source": "native-feature-passives.js",
+      "native": "adversary-attack-passive-rules.js",
+      "unchanged": true,
+      "sha256": "15a3373a46213e6abcc8c9ddaceeab9d16184d6590d6adacecef58eec1502686"
+    }
+  ],
+  "hashes": {
+    "bot/src/native-feature-damage.js": "3b231e4020593bc0c1ee4b3f735f84928fe1ff360cb0629bf7be0fa629edfc37",
+    "bot/src/frameworks/daggerheart/adversary-damage-defense-rules.js": "1d1a6880192e4c203e2c9d3bb0eaff497f8b32c64c1ba93ae909de761d68660a",
+    "bot/src/native-feature-passives.js": "5e093d963d2675108968e9b8797375c68af88e7b41ee0a020e523b6d69c6113b",
+    "bot/src/frameworks/daggerheart/adversary-attack-passive-rules.js": "d586837a8f510df87ee7f40e7352ffe1c2bebffb42a0d0e3e651d9caad358d3c",
+    "bot/src/frameworks/daggerheart/public.js": "7ae4cafeac3b393c51db636f3c3219ffbb4b2a0cb80665d3cefefd037f395d0a",
+    "bot/tests/ai-gm-2026-10/rf03-f02-c17.test.mjs": "5c092605b1812f5ccd8b5a6823a8d453466f935280d1ec7c16c065d14c59732d"
+  },
+  "occurrences": [
+    "adversary:aster-vale-catastrophe-analyst:contingency-stack",
+    "adversary:pale-court-thrall:pack-pressure"
+  ],
+  "retired_records": 6,
+  "gate": {
+    "exit": 0,
+    "mode": "ratchet",
+    "phase": "RF03",
+    "sourceModules": 426,
+    "unowned": 0,
+    "importOccurrences": 2398,
+    "internalImportOccurrences": 2223,
+    "cycleComponents": 1,
+    "largestCycle": 182,
+    "rawViolationOccurrences": 2525,
+    "acceptedLegacyOccurrences": 2525,
+    "activeViolationGroups": 0,
+    "transitionErrors": 0,
+    "pass": true,
+    "firstErrors": []
+  },
+  "limitations": "Real saved attack/damage receipt and charge proof run in SQLite; catalog, world/scene/native encounter and original source auth are explicit mocks. Full production native damage runner and live publication not newly qualified.",
+  "provider_calls": 0,
+  "provider_cost_usd": 0,
+  "codex_usage": "UNMEASURED",
+  "release": "NOT AUTHORIZED"
+}

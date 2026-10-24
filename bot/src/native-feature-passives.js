@@ -1,32 +1,11 @@
 /** Reviewed passive modifiers from native encounter/presence, never model numeric proposals. */
 import {compileNativeFeatures} from './native-feature-catalog.js';
-import {sceneFictionHash as hash} from './scene-fiction-context.js';
 import {scenePresence,sceneAccess} from './scene-continuity.js';
-import {arbitrationFailure as fail} from './gm-arbitration-contract.js';
 import {nativeHouseErratum} from './native-house-errata.js';
-import {createNativeStandardDamage} from './frameworks/daggerheart/standard-damage-passives.js';
 import {activeCityProxy} from './city-constraints.js';
-const nativeDamage=createNativeStandardDamage({compileNativeFeatures:(...args)=>compileNativeFeatures(...args),hash:value=>hash(value),
-  nativeHouseErratum:(...args)=>nativeHouseErratum(...args),fail});
-export const {nativeDamageBonusExpression,nativeStandardDamage}=nativeDamage;
-
-export function nativeAttackPassives(db,guild,{npc,combatant,character,encounter,binding,template,library}){
-  const feature=compileNativeFeatures().find(f=>f.actor_name===template.name&&f.native_handler==='pack_pressure');
-  if(!feature)return [];
-  if(hash(template)!==feature.template_hash)throw fail('passive_template_source_changed');
-  const target=scenePresence(db,guild,'character',character),allies=[];
-  for(const b of binding.data.combatants){
-    if(b.actor===npc||b.id===combatant.id)continue;
-    const ally=db.listCombatants(encounter.id).find(c=>c.id===b.id),presence=scenePresence(db,guild,'npc',b.actor),entity=db.getSimulationEntity(guild,'npc',b.actor);
-    if(ally?.base_name!==template.name||ally.status!=='active'||ally.hp_current<1||activeCityProxy(db,guild,b.actor)
-      ||hash(library.findAdversary(ally.base_name))!==feature.template_hash
-      ||presence?.data.state!=='actually_present'||db.getWorldEvent(guild,presence.source_event)?.status!=='active'
-      ||presence.location_key!==target.location_key||entity?.state.location_key!==target.location_key||entity.state.removed||['dead','removed'].includes(entity.state.status)
-      ||presence.data.zone!==target.data.zone||!sceneAccess(db,guild,{observer_type:'npc',observer_key:b.actor,target_type:'character',target_key:character,sense:'sight'}))continue;
-    // Same native zone proves Melee, a conservative subset of Very Close. No guessed pairwise range.
-    allies.push({actor:b.actor,combatant:b.id,state_hash:hash(ally),presence_hash:hash(presence),entity_hash:hash(entity),range:'Melee'});
-  }
-  allies.sort((a,b)=>a.actor.localeCompare(b.actor));
-  return [{feature:feature.feature_key,feature_hash:hash(feature),template_hash:feature.template_hash,source_hash:feature.source_hash,
-    actor:npc,target:character,modifier:Math.min(2,allies.length),allies}];
-}
+import {createAdversaryAttackPassiveRules} from './frameworks/daggerheart/public.js';
+let nativeRules;
+function rules(){return nativeRules??=createAdversaryAttackPassiveRules({capabilities:{compileNativeFeatures:(...args)=>compileNativeFeatures(...args),scenePresence:(...args)=>scenePresence(...args),sceneAccess:(...args)=>sceneAccess(...args),nativeHouseErratum:(...args)=>nativeHouseErratum(...args),activeCityProxy:(...args)=>activeCityProxy(...args)}});}
+export function nativeDamageBonusExpression(...args){return rules().nativeDamageBonusExpression(...args);}
+export function nativeStandardDamage(...args){return rules().nativeStandardDamage(...args);}
+export function nativeAttackPassives(...args){return rules().nativeAttackPassives(...args);}

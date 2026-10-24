@@ -1,0 +1,3 @@
+# RF03-F02 C17 — Complete Contingency Stack and Pack Pressure native policy
+
+Extract unchanged first-severe-to-major defense issuance/charge/saved proof and Pack Pressure local ally qualification into Daggerheart with existing catalog/encounter/source/scene ports. Reuse native standard-damage and HP threshold policies. Never infer allies from name alone, restore a consumed charge, change dice or apply PC damage. Fresh SQLite source/actual saved damage/once-only charge/reopen/readback/rollback/invalid-owner and passive ally cap/source/control tests. Preserve source definitions/dispositions, native outcome/receipt identity and transaction placement. Individual occurrences have own scopes/ledgers. Freeze one batch; full native body equality, syntax and gate.
