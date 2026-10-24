@@ -1,0 +1,58 @@
+TAP version 13
+# Subtest: entitled document context exposes an existing bounded claim and never certifies it as world truth or transfers custody
+ok 1 - entitled document context exposes an existing bounded claim and never certifies it as world truth or transfers custody
+  ---
+  duration_ms: 39.6463
+  type: 'test'
+  ...
+# Subtest: only opaque actual application authority can record owner-private analysis and restart replay keeps exact unverified claim
+ok 2 - only opaque actual application authority can record owner-private analysis and restart replay keeps exact unverified claim
+  ---
+  duration_ms: 48.9567
+  type: 'test'
+  ...
+# Subtest: private original or custody source cannot be promoted to party or inspected by another recipient
+ok 3 - private original or custody source cannot be promoted to party or inspected by another recipient
+  ---
+  duration_ms: 57.5088
+  type: 'test'
+  ...
+# Subtest: changed custody revision or ownership invalidates current analysis without changing its saved receipt
+ok 4 - changed custody revision or ownership invalidates current analysis without changing its saved receipt
+  ---
+  duration_ms: 51.8877
+  type: 'test'
+  ...
+# Subtest: failed native owner outcome, Director pause and disabled service cannot produce an analysis receipt
+ok 5 - failed native owner outcome, Director pause and disabled service cannot produce an analysis receipt
+  ---
+  duration_ms: 39.7696
+  type: 'test'
+  ...
+# Subtest: mismatched custody receipt cannot substitute an apparently matching document metadata history
+ok 6 - mismatched custody receipt cannot substitute an apparently matching document metadata history
+  ---
+  duration_ms: 46.1111
+  type: 'test'
+  ...
+# Subtest: failed analysis write preserves the original artifact and custody without any partial receipt
+ok 7 - failed analysis write preserves the original artifact and custody without any partial receipt
+  ---
+  duration_ms: 44.5957
+  type: 'test'
+  ...
+# Subtest: actual document analysis provider cold-imports original context, execution and verification APIs
+ok 8 - actual document analysis provider cold-imports original context, execution and verification APIs
+  ---
+  duration_ms: 381.098
+  type: 'test'
+  ...
+1..8
+# tests 8
+# suites 0
+# pass 8
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 785.1008

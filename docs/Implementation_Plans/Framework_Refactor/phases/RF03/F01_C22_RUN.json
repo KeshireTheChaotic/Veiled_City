@@ -1,0 +1,44 @@
+{
+  "frozen_hashes": [
+    {
+      "path": "bot/src/native-evidence-analysis.js",
+      "sha256": "727967E1612FB0CBA59790624A2CD88B14EF5C44A405AE77A07323121C54253A"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/evidence-analysis-rules.js",
+      "sha256": "65F0B889B06372E741A30EF4AA69EA700300F69B0206408BE4D1E46CC40DAA10"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/public.js",
+      "sha256": "0883854BA06A5841704166A09564D0EAC86144E057B6C2D91B0947CC22C54A08"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf03-f01-c22.test.mjs",
+      "sha256": "F6C6488D2B5E2C79081239E41A71C5616051F5C4CE33B60FDEAB77AD18D1B62D"
+    }
+  ],
+  "ended": "2026-10-24T10:15:04.2307694Z",
+  "test_exit": 0,
+  "started": "2026-10-24T10:15:02.4404451Z",
+  "run_id": "RF03-F01-C22",
+  "base_sha": "90bfd3bfb330b5f990431528f07d9cbcd71576a5",
+  "syntax": [
+    {
+      "path": "bot/src/native-evidence-analysis.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/evidence-analysis-rules.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/public.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf03-f01-c22.test.mjs",
+      "exit": 0
+    }
+  ],
+  "architecture_exit": 0
+}
