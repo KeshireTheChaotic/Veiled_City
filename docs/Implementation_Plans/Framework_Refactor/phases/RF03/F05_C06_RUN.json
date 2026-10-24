@@ -1,0 +1,62 @@
+{
+  "test_exit": 0,
+  "end": "2026-10-24T16:23:20.3718154-05:00",
+  "syntax": [
+    {
+      "exit": 0,
+      "path": "bot/src/native-outcome-output.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/frameworks/daggerheart/mechanical-outcome-projection.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/frameworks/daggerheart/public.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/frameworks/publication/contracts/native-outcome.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/frameworks/publication/public.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/framework-to-framework/daggerheart--publication/public.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/application/composition/native-outcomes.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/application/composition/public.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/index.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/tests/ai-gm-2026-10/rf03-f05-c06.test.mjs"
+    }
+  ],
+  "run_id": "F05_C06",
+  "architecture_exit": 0,
+  "start": "2026-10-24T16:23:11.3454823-05:00",
+  "hashes": {
+    "bot/src/native-outcome-output.js": "8740c082f60a755f085961851f2918928d7074390cf0f71f70d9d54387c69ecb",
+    "bot/src/frameworks/daggerheart/mechanical-outcome-projection.js": "42ec39b3b0977b6fdbc8e48fabd195ca19cd7f7f8b3096a181924b32a638f78a",
+    "bot/src/framework-to-framework/daggerheart--publication/public.js": "3dafd8538dd61a6e516aaae97fb2bfe80638922ef886dd5890f609e11c2df949",
+    "bot/src/application/composition/native-outcomes.js": "90f2ced5c4008f8efad4a667bca6174396b6e5ad1613f1be614ccd59ef876717",
+    "bot/src/application/composition/public.js": "b778750dabe529682c7f0582d2b2e6ebd6b7ad69b710d4bc9b6e9c4ec880ae01",
+    "bot/src/frameworks/publication/public.js": "9dcc8412b92d0220e4ab2b6d27f491cc58b877d8fd8738c24b10ad46597c05a1",
+    "bot/tests/ai-gm-2026-10/rf03-f05-c06.test.mjs": "c5fd50f3b253fcacc06e43145b85ca331beeb24b51ec22a4671fa88846a7c840",
+    "bot/src/frameworks/publication/contracts/native-outcome.js": "55893ba56a152991ade8b5202ca575ffb21fac39406a12cb154032c8c1e39a69",
+    "bot/src/frameworks/daggerheart/public.js": "8d8d20853e8147184e21b2223d80ebc8bd5a968e6b74e7c56f992af618b08dba",
+    "bot/src/index.js": "ea94f2b9f9e19b389d56b9e46c7d8df23984d159f5db078819938ea771393e95"
+  },
+  "base_sha": "df0fcc8b0cd55e9e5b335d3084a59abc7caf3dbb"
+}

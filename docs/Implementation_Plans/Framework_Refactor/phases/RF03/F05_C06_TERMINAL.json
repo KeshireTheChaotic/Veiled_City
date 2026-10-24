@@ -1,0 +1,128 @@
+{
+  "test_exit": 0,
+  "end": "2026-10-24T16:23:20.3718154-05:00",
+  "syntax": [
+    {
+      "exit": 0,
+      "path": "bot/src/native-outcome-output.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/frameworks/daggerheart/mechanical-outcome-projection.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/frameworks/daggerheart/public.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/frameworks/publication/contracts/native-outcome.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/frameworks/publication/public.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/framework-to-framework/daggerheart--publication/public.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/application/composition/native-outcomes.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/application/composition/public.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/index.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/tests/ai-gm-2026-10/rf03-f05-c06.test.mjs"
+    }
+  ],
+  "run_id": "F05_C06",
+  "architecture_exit": 0,
+  "start": "2026-10-24T16:23:11.3454823-05:00",
+  "hashes": {
+    "bot/src/native-outcome-output.js": "8740c082f60a755f085961851f2918928d7074390cf0f71f70d9d54387c69ecb",
+    "bot/src/frameworks/daggerheart/mechanical-outcome-projection.js": "42ec39b3b0977b6fdbc8e48fabd195ca19cd7f7f8b3096a181924b32a638f78a",
+    "bot/src/framework-to-framework/daggerheart--publication/public.js": "3dafd8538dd61a6e516aaae97fb2bfe80638922ef886dd5890f609e11c2df949",
+    "bot/src/application/composition/native-outcomes.js": "90f2ced5c4008f8efad4a667bca6174396b6e5ad1613f1be614ccd59ef876717",
+    "bot/src/application/composition/public.js": "b778750dabe529682c7f0582d2b2e6ebd6b7ad69b710d4bc9b6e9c4ec880ae01",
+    "bot/src/frameworks/publication/public.js": "9dcc8412b92d0220e4ab2b6d27f491cc58b877d8fd8738c24b10ad46597c05a1",
+    "bot/tests/ai-gm-2026-10/rf03-f05-c06.test.mjs": "c5fd50f3b253fcacc06e43145b85ca331beeb24b51ec22a4671fa88846a7c840",
+    "bot/src/frameworks/publication/contracts/native-outcome.js": "55893ba56a152991ade8b5202ca575ffb21fac39406a12cb154032c8c1e39a69",
+    "bot/src/frameworks/daggerheart/public.js": "8d8d20853e8147184e21b2223d80ebc8bd5a968e6b74e7c56f992af618b08dba",
+    "bot/src/index.js": "ea94f2b9f9e19b389d56b9e46c7d8df23984d159f5db078819938ea771393e95"
+  },
+  "base_sha": "df0fcc8b0cd55e9e5b335d3084a59abc7caf3dbb",
+  "unique_tests": 8,
+  "executions": 8,
+  "pass": 8,
+  "fail": 0,
+  "tap_duration_ms": 7637.3793,
+  "syntax_pass": 10,
+  "body_equivalence": {
+    "base_sha": "df0fcc8b0cd55e9e5b335d3084a59abc7caf3dbb",
+    "source": "bot/src/native-outcome-output.js",
+    "target": "bot/src/frameworks/daggerheart/mechanical-outcome-projection.js",
+    "mechanical_branch_sha256": "3876a4ddd855b149d3eb3b891621cbd13dc15849aae1958b94dc5bddc4504c01",
+    "original_branches_preserved": true,
+    "world_branches_retained": true,
+    "changes": "Only native subset dispatch/envelope and factory seams. Exact original mechanical branch bodies, source checks and deterministic text retained.",
+    "branch_proofs": [
+      {
+        "name": "environment/ordinary",
+        "byte_equivalent": true,
+        "sha256": "b714132250f3bd852bfb787171c54a5c2bbbd0e278383d09875f9985f96e102f"
+      },
+      {
+        "name": "attack",
+        "byte_equivalent": true,
+        "sha256": "61f1e1c4bbcee3f1537b50cdcb6534ab1c5a8e87b0cc087c33d6c317452c676e"
+      },
+      {
+        "name": "PC effects",
+        "byte_equivalent": true,
+        "sha256": "798916737fa5d61dd36082bd1798f5f759c4005cbe4e3009095fa1fd585daec8"
+      },
+      {
+        "name": "saved roll",
+        "byte_equivalent": true,
+        "sha256": "3ccee6c84ae50f56cdfb6e962b9f64cc55c20b627d7322f92cb8d1d921cda3e7"
+      },
+      {
+        "name": "world observation",
+        "byte_equivalent": true,
+        "sha256": "025fd9702c7d50ad4fe19482a2e8f7a68f17890738d89f5cb192d962fd020c72"
+      },
+      {
+        "name": "custody/commitment",
+        "byte_equivalent": true,
+        "sha256": "4cb10a675ab05f7207603879afda0a56d7a8c905678ae7616ed8708ac73f1e99"
+      }
+    ]
+  },
+  "gate": {
+    "sourceModules": 492,
+    "unowned": 0,
+    "importOccurrences": 2546,
+    "internalImportOccurrences": 2369,
+    "cycleComponents": 1,
+    "largestCycle": 182,
+    "rawViolationOccurrences": 2485,
+    "acceptedLegacyOccurrences": 2485,
+    "activeViolationGroups": 0,
+    "transitionErrors": 0,
+    "pass": true
+  },
+  "limitations": "Actual mechanical projection, native notice/roll formatting/current principal/source checks, original publication entrypoint, actual context builder/authorNarrativeRequests/establishNarrativeUnits/renderNarrativeUnit and SQLite reopen; real effect execution and source producers not invoked. Repository fixture implements only changed read/write contracts with SQLite savepoints, not full VeiledDB persistence. Two mocked writer calls; no model/semantic-quality/live Discord/transport/outbox proof. Wider world-source/publication migration remains later-phase accountable.",
+  "mock_writer_calls": 2,
+  "provider_calls": 0,
+  "provider_cost_usd": 0,
+  "codex_usage": "UNMEASURED",
+  "release": "NOT AUTHORIZED"
+}

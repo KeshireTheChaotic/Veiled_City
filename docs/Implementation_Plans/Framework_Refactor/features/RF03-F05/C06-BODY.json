@@ -1,0 +1,41 @@
+{
+  "base_sha": "df0fcc8b0cd55e9e5b335d3084a59abc7caf3dbb",
+  "source": "bot/src/native-outcome-output.js",
+  "target": "bot/src/frameworks/daggerheart/mechanical-outcome-projection.js",
+  "mechanical_branch_sha256": "3876a4ddd855b149d3eb3b891621cbd13dc15849aae1958b94dc5bddc4504c01",
+  "original_branches_preserved": true,
+  "world_branches_retained": true,
+  "changes": "Only native subset dispatch/envelope and factory seams. Exact original mechanical branch bodies, source checks and deterministic text retained.",
+  "branch_proofs": [
+    {
+      "name": "environment/ordinary",
+      "byte_equivalent": true,
+      "sha256": "b714132250f3bd852bfb787171c54a5c2bbbd0e278383d09875f9985f96e102f"
+    },
+    {
+      "name": "attack",
+      "byte_equivalent": true,
+      "sha256": "61f1e1c4bbcee3f1537b50cdcb6534ab1c5a8e87b0cc087c33d6c317452c676e"
+    },
+    {
+      "name": "PC effects",
+      "byte_equivalent": true,
+      "sha256": "798916737fa5d61dd36082bd1798f5f759c4005cbe4e3009095fa1fd585daec8"
+    },
+    {
+      "name": "saved roll",
+      "byte_equivalent": true,
+      "sha256": "3ccee6c84ae50f56cdfb6e962b9f64cc55c20b627d7322f92cb8d1d921cda3e7"
+    },
+    {
+      "name": "world observation",
+      "byte_equivalent": true,
+      "sha256": "025fd9702c7d50ad4fe19482a2e8f7a68f17890738d89f5cb192d962fd020c72"
+    },
+    {
+      "name": "custody/commitment",
+      "byte_equivalent": true,
+      "sha256": "4cb10a675ab05f7207603879afda0a56d7a8c905678ae7616ed8708ac73f1e99"
+    }
+  ]
+}

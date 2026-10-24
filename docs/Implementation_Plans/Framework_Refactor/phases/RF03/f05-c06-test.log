@@ -1,0 +1,58 @@
+TAP version 13
+# Subtest: fixed publication consumer requires composition and immutable complete native binding
+ok 1 - fixed publication consumer requires composition and immutable complete native binding
+  ---
+  duration_ms: 0.7896
+  type: 'test'
+  ...
+# Subtest: native-publication pair selects only mechanical responsibilities and rejects uncertified or extra input fields
+ok 2 - native-publication pair selects only mechanical responsibilities and rejects uncertified or extra input fields
+  ---
+  duration_ms: 34.8759
+  type: 'test'
+  ...
+# Subtest: native PC resource projection requires exact owner source and actual injected native proof without applying effects
+ok 3 - native PC resource projection requires exact owner source and actual injected native proof without applying effects
+  ---
+  duration_ms: 44.2715
+  type: 'test'
+  ...
+# Subtest: saved native attack projection is private to exact original actor and never grants damage or a defender response
+ok 4 - saved native attack projection is private to exact original actor and never grants damage or a defender response
+  ---
+  duration_ms: 99.4085
+  type: 'test'
+  ...
+# Subtest: actual application composition and original publication entrypoint use real native notice source guards and saved text
+ok 5 - actual application composition and original publication entrypoint use real native notice source guards and saved text
+  ---
+  duration_ms: 48.7021
+  type: 'test'
+  ...
+# Subtest: actual native context builder and writer packet receive only audience-qualified native receipt projection
+ok 6 - actual native context builder and writer packet receive only audience-qualified native receipt projection
+  ---
+  duration_ms: 127.3654
+  type: 'test'
+  ...
+# Subtest: actual writer excludes pending native result rather than claiming model-proposed success
+ok 7 - actual writer excludes pending native result rather than claiming model-proposed success
+  ---
+  duration_ms: 63.6122
+  type: 'test'
+  ...
+# Subtest: application bootstrap installs native projection before runtime construction and adapter imports only its two public frameworks
+ok 8 - application bootstrap installs native projection before runtime construction and adapter imports only its two public frameworks
+  ---
+  duration_ms: 2.7023
+  type: 'test'
+  ...
+1..8
+# tests 8
+# suites 0
+# pass 8
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 7637.3793

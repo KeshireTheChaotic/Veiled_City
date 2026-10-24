@@ -920,7 +920,7 @@
         "daggerheart",
         "publication"
       ],
-      "status": "PROPOSED_NO_API",
+      "status": "ADOPTED",
       "directions": [
         {
           "from": "daggerheart",
@@ -945,11 +945,15 @@
           "type": "import"
         }
       ],
-      "validation": "Retain source and audience authority; design exact port in owning migration; observed imports do not prove runtime traffic.",
-      "lifecycle": "Observed proposal; no package/API/consumer claimed.",
-      "adoption_feature": "RF03",
-      "consumers": [],
-      "tests": [],
+      "validation": "Fixed native outcome consumer and exact native receipt/current owner/audience/source proof; locators never authorize an effect or disclosure.",
+      "lifecycle": "Original publication module registers its fixed source factory; index binds native read-only projection service before constructing services.",
+      "adoption_feature": "RF03-F05",
+      "consumers": [
+        "bot/src/application/composition/native-outcomes.js"
+      ],
+      "tests": [
+        "bot/tests/ai-gm-2026-10/rf03-f05-c06.test.mjs"
+      ],
       "observed_directions": [
         {
           "from": "daggerheart",
@@ -969,7 +973,9 @@
         "pair": "daggerheart--publication",
         "graph_sha256": "1caa7f33db8af9cbe17685493f4f23e46deb1c80ac2cd01c34ef3f8f7517bfe2",
         "occurrences": 34
-      }
+      },
+      "public_api": "bot/src/framework-to-framework/daggerheart--publication/public.js",
+      "scope": "Mechanical receipt authoring/publication projection only. World observation, owner scene entry, custody and commitment source rendering remain original publication responsibilities; wider legacy publication adoption deferred."
     },
     {
       "pair": "daggerheart--session",
