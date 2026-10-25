@@ -9,3 +9,4 @@ export * from './scoped-query.js';
 export {createMemoryClusters} from './memory-clusters.js';
 export {createEvidenceRules,epistemicSchema} from './epistemic.js';
 export {createMemoryLifecycle} from './memory-lifecycle.js';
+export * from './historical-archive.js';

@@ -1,0 +1,64 @@
+TAP version 13
+# Subtest: archive move preserves one signer and original exported identities, changing only the kernel import
+ok 1 - archive move preserves one signer and original exported identities, changing only the kernel import
+  ---
+  duration_ms: 0.7797
+  type: 'test'
+  ...
+# Subtest: preview requires explicit administrative permission and a genuinely ended campaign session
+ok 2 - preview requires explicit administrative permission and a genuinely ended campaign session
+  ---
+  duration_ms: 179.5
+  type: 'test'
+  ...
+# Subtest: verified backup, archive annotation and receipt are atomic while original source and unfinished row stay immutable
+ok 3 - verified backup, archive annotation and receipt are atomic while original source and unfinished row stay immutable
+  ---
+  duration_ms: 180.3997
+  type: 'test'
+  ...
+# Subtest: stale or tampered preview fails before backup, original mutation or archive annotation
+ok 4 - stale or tampered preview fails before backup, original mutation or archive annotation
+  ---
+  duration_ms: 183.346
+  type: 'test'
+  ...
+# Subtest: preview token cannot cross GM, guild or expiry boundary
+ok 5 - preview token cannot cross GM, guild or expiry boundary
+  ---
+  duration_ms: 186.1977
+  type: 'test'
+  ...
+# Subtest: live native response obligation holds archive locally without manufacturing an answer or erasing history
+ok 6 - live native response obligation holds archive locally without manufacturing an answer or erasing history
+  ---
+  duration_ms: 172.7108
+  type: 'test'
+  ...
+# Subtest: uncertain outbox publication holds administrative archive and preserves exact durable delivery truth
+ok 7 - uncertain outbox publication holds administrative archive and preserves exact durable delivery truth
+  ---
+  duration_ms: 179.1637
+  type: 'test'
+  ...
+# Subtest: archive audit failure rolls annotations, backup and receipt back while original unfinished records remain
+ok 8 - archive audit failure rolls annotations, backup and receipt back while original unfinished records remain
+  ---
+  duration_ms: 181.0466
+  type: 'test'
+  ...
+# Subtest: operation receipt replay remains exact after SQLite restart and in a fresh process with a different signer secret
+ok 9 - operation receipt replay remains exact after SQLite restart and in a fresh process with a different signer secret
+  ---
+  duration_ms: 729.561
+  type: 'test'
+  ...
+1..9
+# tests 9
+# suites 0
+# pass 9
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2507.46

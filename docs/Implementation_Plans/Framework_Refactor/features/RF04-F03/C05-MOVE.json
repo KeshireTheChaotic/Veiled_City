@@ -1,0 +1,9 @@
+{
+  "base_sha": "e6e01992ce2c68b1c710294c658a3ec1ecad093a",
+  "from": "bot/src/historical-archive.js",
+  "to": "bot/src/frameworks/knowledge/historical-archive.js",
+  "original_sha256": "1c299be3012e20b86dc6f17b4efad80b413c633be8e4ee66d2687b2c3bacbfce",
+  "moved_sha256": "1536b68e81469a4061df400964241b737900041d891c589cb98f5621d32a56fa",
+  "only_change": "relative kernel error import",
+  "old_reader_remove_in": "RF04-F05"
+}

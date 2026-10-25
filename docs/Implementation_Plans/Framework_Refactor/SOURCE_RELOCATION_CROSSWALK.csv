@@ -93,7 +93,7 @@ old_path,new_path,owner,move_phase,action,reverse_dependents,import_obligations
 "bot/src/gm-world-scope.js","bot/src/frameworks/narrative/gm-world-scope.js","narrative","RF05","EXTRACT_PORTS_BEFORE_MOVE","2","3"
 "bot/src/gm.js","bot/src/application/workflows/gm.js","application","RF06","DECOMPOSE_BEFORE_MOVE","1","66"
 "bot/src/handout.js","bot/src/frameworks/publication/handout.js","publication","RF06","EXTRACT_PORTS_BEFORE_MOVE","4","1"
-"bot/src/historical-archive.js","bot/src/frameworks/knowledge/historical-archive.js","knowledge","RF04","EXTRACT_PORTS_BEFORE_MOVE","2","1"
+"bot/src/historical-archive.js","bot/src/frameworks/knowledge/historical-archive.js","knowledge","RF04","LEAF_ISOLATED_OLD_READER_RF04_F05","2","1"
 "bot/src/history-reconciliation.js","bot/src/frameworks/knowledge/history-reconciliation.js","knowledge","RF04","EXTRACT_PORTS_BEFORE_MOVE","3","1"
 "bot/src/idempotency.js","bot/src/framework-to-framework/discord--persistence/idempotency.js","discord--persistence","RF06","PILOT_MOVE_CANDIDATE","1","0"
 "bot/src/index.js","bot/src/index.js","bootstrap","RF06","DECOMPOSE_BEFORE_MOVE","0","35"

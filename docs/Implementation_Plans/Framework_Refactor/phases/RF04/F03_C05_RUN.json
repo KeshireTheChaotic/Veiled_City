@@ -1,0 +1,32 @@
+{
+  "syntax": [
+    {
+      "exit": 0,
+      "path": "bot/src/frameworks/knowledge/historical-archive.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/frameworks/knowledge/public.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/historical-archive.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/tests/ai-gm-2026-10/rf04-f03-c05.test.mjs"
+    }
+  ],
+  "test_exit": 0,
+  "end": "2026-10-24T21:11:55.9865016-05:00",
+  "base_sha": "e6e01992ce2c68b1c710294c658a3ec1ecad093a",
+  "architecture_exit": 0,
+  "start": "2026-10-24T21:11:52.4792740-05:00",
+  "hashes": {
+    "bot/src/frameworks/knowledge/public.js": "4f608cc1c1b651088ba534f0beeb217ba2d29c45dfda7e87c874c59a91bda45b",
+    "bot/tests/ai-gm-2026-10/rf04-f03-c05.test.mjs": "b3569f467a395a194ce328d1fad5b985001a97892ec61c560b683b13f29d86dd",
+    "bot/src/frameworks/knowledge/historical-archive.js": "1536b68e81469a4061df400964241b737900041d891c589cb98f5621d32a56fa",
+    "bot/src/historical-archive.js": "4050d877c24616df45fb04e9c0f3364f713a5f037abbb1bb7c6811034fccc29f"
+  },
+  "run_id": "RF04_F03_C05"
+}
