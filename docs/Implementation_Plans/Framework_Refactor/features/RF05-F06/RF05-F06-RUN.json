@@ -486,5 +486,44 @@
       "database_access": 0,
       "codex_usage": "UNMEASURED"
     }
+  },
+  "after_c12_refresh": {
+    "implementation_head_before_evidence_commit": "5af97889c61547fcd38a4cde7be17102de4ce61b",
+    "current_gm_sha256": "0490E6D83BC6B1097012FB699DA9D280CFD6856015B679ECF35D54FE97344D83",
+    "frozen_affected_union": {
+      "launches": 1,
+      "exit_code": 0,
+      "passed": 21,
+      "failed": 0,
+      "duration_ms": 6055.9301,
+      "test_files": 12
+    },
+    "syntax": {
+      "exit_code": 0,
+      "passed": 5,
+      "failed": 0
+    },
+    "architecture": {
+      "exit_code": 1,
+      "source_modules": 581,
+      "unowned": 0,
+      "imports": 2747,
+      "internal_imports": 2570,
+      "largest_cycle": 181,
+      "active_violation_groups": 955,
+      "transition_errors": 955,
+      "changed_path_findings": 0,
+      "changed_path_transition_errors": 0
+    },
+    "remaining_rf05_f04_transition_entries": 51,
+    "qualification": "CURRENT GM CONSUMER UNION PASSES; RF05 PHASE INCOMPLETE / ARCHITECTURE GATE FAILED",
+    "cost": {
+      "provider_calls": 0,
+      "provider_tokens": 0,
+      "provider_usd": 0,
+      "network": 0,
+      "database_access": 0,
+      "codex_usage": "UNMEASURED"
+    }
   }
 }

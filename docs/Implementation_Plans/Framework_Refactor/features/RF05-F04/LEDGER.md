@@ -1,6 +1,6 @@
 # RF05-F04 execution ledger
 
-**Status:** PARTIAL — model selection and ten public-API slices qualified; 52 assigned RF05-F04 transition entries remain.
+**Status:** PARTIAL — model selection and eleven public-API slices qualified; 51 assigned RF05-F04 transition entries remain.
 **Base HEAD:** `b515fdb1f48da98b66564010ed87930e07cf7338`
 **Scope:** [`SCOPE.md`](SCOPE.md)
 
@@ -67,3 +67,7 @@ The import-free arbitration contract moved byte-identically to Intent. The GM no
 ## C11 — Operations turn-trace public API
 
 The AsyncLocalStorage trace module moved byte-identically to Operations; GM now imports from Operations public, while the root compatibility path continues sharing the same instance. The fresh affected-code union passed **17/17** across eleven files, exit **0**, duration **1,435.4649 ms**; syntax passed **5/5**. A new async regression verified cross-await context sharing and guild filtering across both paths. The architecture ratchet remains failed with 580 modules, zero unowned, 2,745 imports, and 955 groups/errors; changed paths have no findings. The GM private-import transition was retired and preserved, while the root module-location assignment remains. **52** F04 entries remain. See `C11-SCOPE.md`, `C11-LEDGER.md`, `C11-RUN.json`, and `C11-RETIRED.json`. Release remains NOT AUTHORIZED.
+
+## C12 — Operations metrics public API
+
+The operational metrics module moved byte-identically to Operations (same git blob) and now uses the Operations-owned turn trace; GM imports metrics from Operations public, while the root compatibility path keeps one class and singleton for 16 other consumers. The frozen affected-GM union passed **21/21** across twelve files, exit **0**, duration **6,055.9301 ms**; syntax passed **5/5**. The new regression verifies identity, trace retry/stage accounting with guild filtering, and that snapshots/incidents retain no prompt or reference text. Architecture ratchet remains failed with 581 modules, zero unowned, 2,747 imports, and 955 groups/errors; changed paths have no findings. The GM private-import transition was retired and preserved; the root module-location assignment remains. **51** F04 entries remain. See `C12-SCOPE.md`, `C12-LEDGER.md`, `C12-RUN.json`, and `C12-RETIRED.json`. Release remains NOT AUTHORIZED.

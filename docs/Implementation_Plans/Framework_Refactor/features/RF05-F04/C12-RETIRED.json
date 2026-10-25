@@ -1,0 +1,21 @@
+{
+  "feature": "RF05-F04-C12",
+  "original_manifest_sha256": "F9056C8C1F7C7E091AF0814BA5FA3153DE31AB78BC221FA0C2471A477BF18BB9",
+  "baseline_sha256": "c06895366ededa396d77132fea8d91ace036c0f369bcf880ab1a898a1a1370d3",
+  "retired": [
+    {
+      "id": "8a8741b10098f1133f6eddaaea564be46205579c1f50f39ba81ccc95f524ae71",
+      "code": "IMPORTS_PRIVATE_API",
+      "from": "bot/src/gm.js",
+      "to": "bot/src/operational-metrics.js",
+      "kind": "static",
+      "specifier": "./operational-metrics.js",
+      "owner": "application",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF05-F04",
+      "expires_after": "RF05",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    }
+  ]
+}

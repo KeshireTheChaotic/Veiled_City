@@ -43,3 +43,7 @@ The GM arbitration schema import now uses Intent public. The complete affected-G
 ### Current GM refresh after RF05-F04 C11
 
 The GM now imports Operations turn-trace functionality through its public API. The fresh affected-GM union passed **17/17** across eleven files, exit **0**, duration **1,435.4649 ms**; changed JavaScript/MJS syntax passed **5/5**. The async-local trace regression verifies identity and isolation across awaits through public and compatibility paths. RF05 ratchet remains failed with 580 modules, zero unowned, 2,745 imports, and 955 groups/errors. C11 changed paths have no findings; RF05-F04 has 52 assignments remaining. See `features/RF05-F04/C11-RUN.json`; final phase-wide union remains for F06 qualification.
+
+### Current GM refresh after RF05-F04 C12
+
+The GM now imports operational metrics through the Operations public API. The fresh affected-GM union passed **21/21** across twelve files, exit **0**, duration **6,055.9301 ms**; changed JavaScript/MJS syntax passed **5/5**. The metrics regression verifies shared identity, trace accounting and closed telemetry fields through public and compatibility paths. RF05 ratchet remains failed with 581 modules, zero unowned, 2,747 imports, and 955 groups/errors. C12 changed paths have no findings; RF05-F04 has 51 assignments remaining. See `features/RF05-F04/C12-RUN.json`; final phase-wide union remains for F06 qualification.

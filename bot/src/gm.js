@@ -41,7 +41,7 @@ import {budgetTurnPrompt,referenceContextPlan,referenceSessionContext,partitionR
 import {referenceKnowledgeScopedTurnStorage} from './framework-to-framework/ai-provider--knowledge/public.js';
 import { recoverOptionalTurnFields } from "./turn-recovery.js";
 import { projectAuthorityRecords } from "./authority-projection.js";
-import { operationalMetrics, measureStage, measureNative } from "./operational-metrics.js";
+import { operationalMetrics, measureStage, measureNative } from "./frameworks/operations/public.js";
 import { scopedSceneMemory } from "./scoped-memory.js";
 import {gmWorldPartsSchema,GM_WORLD_NARRATIVE_PROMPT} from './frameworks/narrative/public.js';
 import {turnTraceFor} from './frameworks/operations/public.js';

@@ -1,0 +1,38 @@
+{
+  "feature":"RF05-F04-C12",
+  "status":"SCOPED_OPERATIONS_METRICS_PUBLIC_IMPORT_QUALIFIED",
+  "base_head":"5af97889c61547fcd38a4cde7be17102de4ce61b",
+  "branch":"codex/clean-ai-gm-2026-10",
+  "move":{"from":"bot/src/operational-metrics.js","to":"bot/src/frameworks/operations/operational-metrics.js","git_blob_before":"98bd6bbf7eaf9ee882f0765a1bd3152858bb26ad","git_blob_after":"98bd6bbf7eaf9ee882f0765a1bd3152858bb26ad","byte_identical":true,"trace_import_resolves_to":"bot/src/frameworks/operations/turn-trace-context.js"},
+  "tests":{"command":"cd bot; node --import ./scripts/offline-guard.mjs --test --test-concurrency=1 --test-reporter=tap <12 files>","start":"2026-10-25T10:47:58.7244968-05:00","end":"2026-10-25T10:48:04.8286354-05:00","launches":1,"exit_code":0,"tests":21,"passed":21,"failed":0,"cancelled":0,"skipped":0,"duration_ms":6055.9301,"test_files":12,
+    "log":"docs/Implementation_Plans/Framework_Refactor/phases/RF05/rf05-f04-c12-test.log","log_sha256":"F02825C9A1B4B953599B019875351F6FD417F28DFCDA4CC70F3240D1A3C3BE82","files":[
+    {"path":"bot/tests/ai-gm-2026-10/rf05-f02-model-transport.test.mjs","sha256":"61CB01C78EF723F69777FA6969FF321E16A33A88C9637FB7AB3207EC464F705A"},
+    {"path":"bot/tests/ai-gm-2026-10/rf05-f03-c02.test.mjs","sha256":"4AC2DB877406009C2FD44568C6EE2836FFC7CCE75DCF0F2988B0685FC11D3BA5"},
+    {"path":"bot/tests/ai-gm-2026-10/rf05-f04-c02.test.mjs","sha256":"46BBA60461D70518285805D7DB789A86D02A97DB5DDA4F33AEAFFFB37800E7A5"},
+    {"path":"bot/tests/ai-gm-2026-10/rf05-f04-c03.test.mjs","sha256":"70C5CFE574BAED1818BD3F05F8698AB9758A61C2A1FE44883ADE0FE8DD43ACD5"},
+    {"path":"bot/tests/ai-gm-2026-10/rf05-f04-c05.test.mjs","sha256":"25A121360C5271ED88BA639EAA7BF8F43F45ADB4F5FEA0B3B4C760243B38EDDF"},
+    {"path":"bot/tests/ai-gm-2026-10/rf05-f04-c06.test.mjs","sha256":"5C53AA6A251724612EC7146B4B6D527D5534941C79C206820C3F04417C9C236F"},
+    {"path":"bot/tests/ai-gm-2026-10/rf05-f04-c07.test.mjs","sha256":"DB50482D430F738D6A3BDF8FB652196541C3B2FF89440E9825F052C7D54A9527"},
+    {"path":"bot/tests/ai-gm-2026-10/rf05-f04-c08.test.mjs","sha256":"2E5BE6A3554C78944F60749FAB274D2498CABB5B28273FFC72B2286BBBFD6DD7"},
+    {"path":"bot/tests/ai-gm-2026-10/rf05-f04-c09.test.mjs","sha256":"633666D3FB093868003B9D11F00173E40757B35145F04D066B270EF9BDB44194"},
+    {"path":"bot/tests/ai-gm-2026-10/rf05-f04-c10.test.mjs","sha256":"083E2A6EB26E12F73030930C8745D86EE5B9D4406C665D4876BD3A5C7BB33EC3"},
+    {"path":"bot/tests/ai-gm-2026-10/rf05-f04-c11.test.mjs","sha256":"1BC733EC4ED89572D335FE524D289C227860F113212B066937B44888CFC0DF2B"},
+    {"path":"bot/tests/ai-gm-2026-10/rf05-f04-c12.test.mjs","sha256":"A7069E8A42A29A001CDFB83BEB725ED4AEDABB161385E40DFFD4696D8D4F88F0"}
+  ]},
+  "syntax":{"exit_code":0,"passed":5,"failed":0,"files":["bot/src/operational-metrics.js","bot/src/frameworks/operations/operational-metrics.js","bot/src/frameworks/operations/public.js","bot/src/gm.js","bot/tests/ai-gm-2026-10/rf05-f04-c12.test.mjs"]},
+  "changed_source_sha256":{
+    "bot/src/gm.js":"0490E6D83BC6B1097012FB699DA9D280CFD6856015B679ECF35D54FE97344D83",
+    "bot/src/operational-metrics.js":"FD36D36793B8D94F3ACFEDED4FE8B8820061F70AF2C361C1703119FFEA983A05",
+    "bot/src/frameworks/operations/operational-metrics.js":"5E521B32D2231226E678726A4F04046060EA93C36DB2A270BECE521238340AE0",
+    "bot/src/frameworks/operations/public.js":"67AC46FAB136A1E4806019702BB81C79028F7617346A6D8536EB0995BBF277E5",
+    "bot/tests/ai-gm-2026-10/rf05-f04-c12.test.mjs":"A7069E8A42A29A001CDFB83BEB725ED4AEDABB161385E40DFFD4696D8D4F88F0",
+    "docs/Implementation_Plans/Framework_Refactor/RF01/TRANSITIONS.json":"AEA167D53DFD156A3D0B2FA24988FB8A90A562C6F97B17F5BF9A891F8013CFE3",
+    "docs/Implementation_Plans/Framework_Refactor/features/RF05-F04/C12-RETIRED.json":"677D6DEC326D240B13CAD9491AFC8A5B60BC81F572C4E9E0EC6E7593FA4F6789",
+    "docs/Implementation_Plans/Framework_Refactor/SOURCE_RELOCATION_CROSSWALK.csv":"68D0C402CE79C62F9E006C5DC32C93606A1EB8384870F44846D1D38F09E77CB7"
+  },
+  "transition":{"retired_id":"8a8741b10098f1133f6eddaaea564be46205579c1f50f39ba81ccc95f524ae71","original_manifest_sha256":"F9056C8C1F7C7E091AF0814BA5FA3153DE31AB78BC221FA0C2471A477BF18BB9","retired_record":"C12-RETIRED.json","entries_before":2403,"entries_after":2402,"retained_location_transition":"c325db32238f8b8c337062787e8ae4e65a4825ea09c608e1929644917ae839d7","compatibility_consumers_retained":16,"remaining_rf05_f04_entries":51},
+  "architecture":{"command":"node bot/tooling/architecture/check-boundaries.mjs --ratchet --phase RF05","log":"docs/Implementation_Plans/Framework_Refactor/phases/RF05/rf05-f04-c12-architecture.log","log_sha256":"1AF84FEAF738049FE669B3DC7073DF187238381B1C023F878ABAE379DF5DECDC","full_report":"bot/.reports/rf05-f04-c12-architecture.json (git-ignored, not committed)","exit_code":1,"source_modules":581,"unowned":0,"imports":2747,"internal_imports":2570,"largest_cycle":181,"raw_violation_occurrences":2422,"accepted_legacy_occurrences":1462,"active_violation_groups":955,"transition_errors":955,"new_module_findings":0,"gm_public_import_findings":0,"changed_path_transition_errors":0,"preexisting_active_root_consumer_findings":["758968042694f87b158198e977a444c4e21f5ddd659d3f78d978588daf23829a opening-cohort-runner.js (RF04-F04)","42121162417c974b4159c4c3ada874c5c0441ccde6407ac22c40d97b579de6b4 session-opening-runner.js (RF04-F04)"]},
+  "cost":{"provider_calls":0,"provider_tokens":0,"provider_usd":0,"network":0,"database_access":0,"codex_usage":"UNMEASURED"},
+  "qualification":"C12 metrics/public-import contract qualified; root location hold, 16 compatibility consumers and RF05 debt remain; release NOT AUTHORIZED",
+  "rollback":"Revert only the C12 commit: restore the GM import, move the module back to its root path, remove the public export and restore the exact transition from C12-RETIRED.json. Preserve all prior work and existing user edits."
+}

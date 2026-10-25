@@ -117,5 +117,16 @@
     "batch_failed": 0,
     "batch_duration_ms": 1435.4649,
     "current_gm_sha256": "FBB457F91F1BCA4C10A54F333DF8A0DEE287C80039D57FDB51AA3130DD4DF06B"
+  },
+  "refresh_after_c12": {
+    "test_source_sha256": "25A121360C5271ED88BA639EAA7BF8F43F45ADB4F5FEA0B3B4C760243B38EDDF",
+    "launches": 1,
+    "exit_code": 0,
+    "passed": 1,
+    "failed": 0,
+    "batch_passed": 21,
+    "batch_failed": 0,
+    "batch_duration_ms": 6055.9301,
+    "current_gm_sha256": "0490E6D83BC6B1097012FB699DA9D280CFD6856015B679ECF35D54FE97344D83"
   }
 }

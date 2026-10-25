@@ -240,7 +240,7 @@ old_path,new_path,owner,move_phase,action,reverse_dependents,import_obligations
 "bot/src/opening-entry.js","bot/src/application/workflows/opening-entry.js","application","RF06","DECOMPOSE_BEFORE_MOVE","2","9"
 "bot/src/opening-flow.js","bot/src/application/workflows/opening-flow.js","application","RF06","DECOMPOSE_BEFORE_MOVE","1","1"
 "bot/src/opening-world-bridge.js","bot/src/framework-to-framework/session--world/opening-world-bridge.js","session--world","RF04","EXTRACT_PORTS_BEFORE_MOVE","2","2"
-"bot/src/operational-metrics.js","bot/src/frameworks/operations/operational-metrics.js","operations","RF02","PILOT_MOVE_CANDIDATE","19","0"
+"bot/src/operational-metrics.js","bot/src/frameworks/operations/operational-metrics.js","operations","RF02","MOVED_BYTE_IDENTICAL; PUBLIC_API_ADOPTED; ROOT_COMPATIBILITY_REEXPORT_RETAINED","19","0"
 "bot/src/operations/diagnostics.js","bot/src/frameworks/operations/diagnostics.js","operations","RF02","EXTRACT_PORTS_BEFORE_MOVE","1","1"
 "bot/src/operations/health.js","bot/src/frameworks/operations/health.js","operations","RF02","PILOT_MOVE_CANDIDATE","1","0"
 "bot/src/operations/overview.js","bot/src/frameworks/operations/overview.js","operations","RF02","EXTRACT_PORTS_BEFORE_MOVE","1","1"
