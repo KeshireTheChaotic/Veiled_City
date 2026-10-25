@@ -22,7 +22,7 @@ import { validatePostTurnStateReview,POST_TURN_REVIEW_CATEGORIES } from "./direc
 import { retrieveNpcCognition } from "./npc-cognition.js";
 import { npcDirectorSchema, simulationUpdateSchema, SIMULATION_PROMPT } from "./simulation-schema.js";
 import { simulationContext } from "./simulation.js";
-import { cityContext } from "./city-core.js";
+import { cityContext } from "./frameworks/world/public.js";
 import { historyContext } from "./city-civic.js";
 import { minorNpcSchema } from "./city-depth.js";
 import { materialClaimSchema, NARRATIVE_CONTRACT, validateNarrativeClaims } from "./narrative-integrity.js";

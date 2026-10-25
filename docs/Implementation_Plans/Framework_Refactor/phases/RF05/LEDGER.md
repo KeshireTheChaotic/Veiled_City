@@ -44,3 +44,7 @@ The bridge registry's `ai-provider--knowledge` entry referenced `rf05-f03-prompt
 ### RF05 gate update after RF04 Option B reassignment
 
 The owner-approved metadata-only correction reassigned 12 exact Publication-owned consumer edges from RF04 to RF06-F03. The current RF05 ratchet now fails with 955 active violation groups and 955 transition errors (exit 1), down from 967. This is not RF05 completion: remaining RF04-era debt and RF05 feature obligations still fail the gate. No RF05 source or tests changed in this reconciliation; no tests were rerun.
+
+### RF05-F04 C03 — World public civic-context import
+
+On base commit `b4ac04107f6dd8492f55ccb9faf9275a1560dd60`, the application GM module adopted the already published World `cityContext` API. The final fresh test passed 1/1 (exit 0; 625.478 ms), with changed JavaScript syntax 2/2 pass. The exact obsolete import transition was retired and preserved; the RF05 gate remains failed at 955 active groups/errors with zero unowned modules and no active changed-path findings. RF05-F04 now has 60 assigned entries remaining. Details and hashes are in `features/RF05-F04/C03-RUN.json`; no provider or production database use. RF05 remains INCOMPLETE and release NOT AUTHORIZED.

@@ -1,0 +1,72 @@
+{
+  "feature": "RF05-F04-C03",
+  "status": "COMPLETE_FOR_SCOPED_IMPORT_SLICE",
+  "base_commit": "b4ac04107f6dd8492f55ccb9faf9275a1560dd60",
+  "branch": "codex/clean-ai-gm-2026-10",
+  "changed_code": [
+    {
+      "path": "bot/src/gm.js",
+      "owner": "application",
+      "change": "Import cityContext from the World public API",
+      "sha256": "18D95C46C8A0E7843109D605F4DFE51291F96EA8729EB1748F91FDD3463A6132"
+    }
+  ],
+  "tests": {
+    "path": "bot/tests/ai-gm-2026-10/rf05-f04-c03.test.mjs",
+    "sha256": "70C5CFE574BAED1818BD3F05F8698AB9758A61C2A1FE44883ADE0FE8DD43ACD5",
+    "command": "cd bot; node --test --test-concurrency=1 --test-reporter=tap tests/ai-gm-2026-10/rf05-f04-c03.test.mjs",
+    "final_launch_count": 1,
+    "initial_repaired_launch": {
+      "exit_code": 1,
+      "passed": 0,
+      "failed": 1,
+      "reason": "Test expected two fake DB queries but both APIs were invoked; actual was four. Test expectation corrected; production code unchanged."
+    },
+    "final": {
+      "exit_code": 0,
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "duration_ms": 625.478
+    },
+    "syntax": {
+      "files": [
+        "bot/src/gm.js",
+        "bot/tests/ai-gm-2026-10/rf05-f04-c03.test.mjs"
+      ],
+      "exit_code": 0,
+      "passed": 2,
+      "failed": 0
+    }
+  },
+  "architecture": {
+    "command": "node bot/tooling/architecture/check-boundaries.mjs --ratchet --phase RF05",
+    "exit_code": 1,
+    "phase_gate_pass": false,
+    "source_modules": 572,
+    "unowned_modules": 0,
+    "imports": 2732,
+    "active_violation_groups": 955,
+    "transition_errors": 955,
+    "changed_path_findings": [],
+    "remaining_gate_debt_is_preexisting": true
+  },
+  "transition": {
+    "retired_id": "bc2b84be1b485b3cf0bcc69b77180fa5bbe85a0b48def3d1590cd8a18e18a4e4",
+    "retired_record": "docs/Implementation_Plans/Framework_Refactor/features/RF05-F04/C03-RETIRED.json",
+    "manifest_sha256": "E11757427F1E17F71079BE76C2E3E5C1D08F3429CB4DF07EED2ED333A0DA9025",
+    "baseline_changed": false,
+    "maximum_count_increased": false,
+    "unrelated_deadlines_changed": false,
+    "remaining_rf05_f04_entries": 60
+  },
+  "cost": {
+    "provider_calls": 0,
+    "provider_tokens": 0,
+    "provider_usd": 0,
+    "live_database_or_network": false,
+    "codex_usage": "UNMEASURED"
+  },
+  "release": "NOT_AUTHORIZED",
+  "rollback": "Restore the GM import and exact transition from C03-RETIRED.json; remove only C03 test and evidence."
+}

@@ -7959,20 +7959,6 @@
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
     {
-      "id": "bc2b84be1b485b3cf0bcc69b77180fa5bbe85a0b48def3d1590cd8a18e18a4e4",
-      "code": "IMPORTS_PRIVATE_API",
-      "from": "bot/src/gm.js",
-      "to": "bot/src/city-core.js",
-      "kind": "static",
-      "specifier": "./city-core.js",
-      "owner": "application",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF05-F04",
-      "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
       "id": "df82f4dc873ca72d5a992ac4f3c97f054ac820af40cc2faf0957e82ca6af1df5",
       "code": "IMPORTS_PRIVATE_API",
       "from": "bot/src/gm.js",
