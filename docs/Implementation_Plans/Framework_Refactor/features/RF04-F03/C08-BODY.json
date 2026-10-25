@@ -1,0 +1,12 @@
+{
+  "base_sha": "604260f13e099b2e6790c91d08e1c11b2f4349c2",
+  "original_source_sha256": "a173965b966e0a0cc2a1ad79bbf85bf899e409bf6f94b68f1e68075ec7f041af",
+  "policy_body_sha256": "10ff656e9f8fc52fba633b2ba6e11beeb766d9fedbf51b198a74d26b057be958",
+  "body_unchanged": true,
+  "dependencies": [
+    "resolvePlaceReference",
+    "preflightNpcIdentity",
+    "narrativeSourceVisible",
+    "worldIdentityOrigin"
+  ]
+}

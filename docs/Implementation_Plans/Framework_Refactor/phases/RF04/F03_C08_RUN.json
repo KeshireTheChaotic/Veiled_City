@@ -1,0 +1,32 @@
+{
+  "start": "2026-10-24T21:16:26.5609905-05:00",
+  "base_sha": "604260f13e099b2e6790c91d08e1c11b2f4349c2",
+  "syntax": [
+    {
+      "exit": 0,
+      "path": "bot/src/frameworks/knowledge/entity-memory.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/frameworks/knowledge/public.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/entity-memory.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/tests/ai-gm-2026-10/rf04-f03-c08.test.mjs"
+    }
+  ],
+  "test_exit": 0,
+  "hashes": {
+    "bot/src/frameworks/knowledge/public.js": "929b4474a0ae141be2bb702403653b2e9b4b7a06295f286b6f6a963e84690c72",
+    "bot/tests/ai-gm-2026-10/rf04-f03-c08.test.mjs": "9a8fbbb57d5938ad4a105e0eaff657817214b355b610f522b990f8c04b22fff8",
+    "bot/src/entity-memory.js": "07cfa39366cb6d24833b94a4208cd31009fdee206326fe89df960889f9d44830",
+    "bot/src/frameworks/knowledge/entity-memory.js": "4e830116b3d53015bbc58bf337127b49b435ed8616509d014bcec3bc9738ee26"
+  },
+  "run_id": "RF04_F03_C08",
+  "architecture_exit": 0,
+  "end": "2026-10-24T21:16:29.2923068-05:00"
+}

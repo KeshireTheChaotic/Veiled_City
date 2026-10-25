@@ -1,0 +1,52 @@
+TAP version 13
+# Subtest: current established location and NPC references remain available without creating identities, profiles or movement
+ok 1 - current established location and NPC references remain available without creating identities, profiles or movement
+  ---
+  duration_ms: 170.4829
+  type: 'test'
+  ...
+# Subtest: unverified combined proposal is retained as nonbinding reason without materializing an ordinary world identity
+ok 2 - unverified combined proposal is retained as nonbinding reason without materializing an ordinary world identity
+  ---
+  duration_ms: 175.5568
+  type: 'test'
+  ...
+# Subtest: private established reference is usable only within its original character audience without revealing protected details
+ok 3 - private established reference is usable only within its original character audience without revealing protected details
+  ---
+  duration_ms: 171.9093
+  type: 'test'
+  ...
+# Subtest: ambiguous or mismatched native location resolution remains a candidate rather than silently substituting identity
+ok 4 - ambiguous or mismatched native location resolution remains a candidate rather than silently substituting identity
+  ---
+  duration_ms: 179.6333
+  type: 'test'
+  ...
+# Subtest: source-bound authored identity separately requires current narrative visibility and qualified World origin
+ok 5 - source-bound authored identity separately requires current narrative visibility and qualified World origin
+  ---
+  duration_ms: 187.2448
+  type: 'test'
+  ...
+# Subtest: missing source context and non-array results remain empty without authoring or arbitrary mutation
+ok 6 - missing source context and non-array results remain empty without authoring or arbitrary mutation
+  ---
+  duration_ms: 171.4256
+  type: 'test'
+  ...
+# Subtest: actual original source provider reaches extracted established-reference selector without new authority
+ok 7 - actual original source provider reaches extracted established-reference selector without new authority
+  ---
+  duration_ms: 167.5636
+  type: 'test'
+  ...
+1..7
+# tests 7
+# suites 0
+# pass 7
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1720.3925
