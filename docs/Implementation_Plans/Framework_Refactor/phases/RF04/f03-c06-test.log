@@ -1,0 +1,70 @@
+TAP version 13
+# Subtest: moved context schema and prompt preserve existing authority contract without a new output restriction
+ok 1 - moved context schema and prompt preserve existing authority contract without a new output restriction
+  ---
+  duration_ms: 185.9413
+  type: 'test'
+  ...
+# Subtest: shared descriptive memory stores authorized source excerpt rather than model summary and leaves unplaced PC untouched
+ok 2 - shared descriptive memory stores authorized source excerpt rather than model summary and leaves unplaced PC untouched
+  ---
+  duration_ms: 181.7331
+  type: 'test'
+  ...
+# Subtest: temporary context remains unpersisted and unsupported model-only summary never establishes evidence
+ok 3 - temporary context remains unpersisted and unsupported model-only summary never establishes evidence
+  ---
+  duration_ms: 187.6061
+  type: 'test'
+  ...
+# Subtest: private owner description stays character-private on save, read and SQLite reopen
+ok 4 - private owner description stays character-private on save, read and SQLite reopen
+  ---
+  duration_ms: 208.116
+  type: 'test'
+  ...
+# Subtest: distinct private recipient surface creates only that recipient memory without leaking to shared or another private scope
+ok 5 - distinct private recipient surface creates only that recipient memory without leaking to shared or another private scope
+  ---
+  duration_ms: 233.8942
+  type: 'test'
+  ...
+# Subtest: private turn never persists another recipient proposed message, and absent party recipient receives no memory
+ok 6 - private turn never persists another recipient proposed message, and absent party recipient receives no memory
+  ---
+  duration_ms: 369.5752
+  type: 'test'
+  ...
+# Subtest: stale source, mismatched author/private mode and missing authenticated input fail before saving context
+ok 7 - stale source, mismatched author/private mode and missing authenticated input fail before saving context
+  ---
+  duration_ms: 183.9363
+  type: 'test'
+  ...
+# Subtest: read projection rejects legacy unbound, contradictory audience and retracted source while originals remain
+ok 8 - read projection rejects legacy unbound, contradictory audience and retracted source while originals remain
+  ---
+  duration_ms: 204.2096
+  type: 'test'
+  ...
+# Subtest: caller transaction rolls descriptive record and lifecycle identity back together after a failed revision write
+ok 9 - caller transaction rolls descriptive record and lifecycle identity back together after a failed revision write
+  ---
+  duration_ms: 187.3369
+  type: 'test'
+  ...
+# Subtest: original context source provider reaches extracted save, selector and fail-closed scoped reader
+ok 10 - original context source provider reaches extracted save, selector and fail-closed scoped reader
+  ---
+  duration_ms: 199.2444
+  type: 'test'
+  ...
+1..10
+# tests 10
+# suites 0
+# pass 10
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2660.8651
