@@ -1,0 +1,13 @@
+{
+  "unique_qualified_cases": 11,
+  "executions": 12,
+  "initial_exit": 1,
+  "repair_exit": 0,
+  "syntax_checks": 5,
+  "architecture_exit": 0,
+  "retained_fixture_failures": 1,
+  "provider_calls": 0,
+  "provider_cost_usd": 0,
+  "codex_usage": "UNMEASURED",
+  "release": "NOT AUTHORIZED"
+}

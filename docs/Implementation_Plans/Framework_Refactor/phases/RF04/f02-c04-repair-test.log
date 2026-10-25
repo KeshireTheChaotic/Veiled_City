@@ -1,0 +1,16 @@
+TAP version 13
+# Subtest: query relevance selects an actor from memories without treating all world actors as current scene occupants
+ok 1 - query relevance selects an actor from memories without treating all world actors as current scene occupants
+  ---
+  duration_ms: 165.7984
+  type: 'test'
+  ...
+1..1
+# tests 1
+# suites 0
+# pass 1
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 665.9872

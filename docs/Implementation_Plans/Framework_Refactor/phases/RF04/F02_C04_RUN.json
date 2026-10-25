@@ -1,0 +1,32 @@
+{
+  "run_id": "RF04_F02_C04",
+  "start": "2026-10-24T20:59:37.7787555-05:00",
+  "hashes": {
+    "bot/src/npc-cognition.js": "697c0ec0a30560e4b3af82841068afebaf5423fcf5999793fc893dcffebffc8d",
+    "bot/tests/ai-gm-2026-10/rf04-f02-c04.test.mjs": "87c55230139f5d9d50c5066215f44634f19e82bc03567cf841608637bf1e9a9f",
+    "bot/src/frameworks/npc/cognition.js": "75f0cf80c5cc45b5fb7df1ef9712c87f74cc3c4a9461d3808f8acf6a77c5a841",
+    "bot/src/frameworks/npc/public.js": "2550f0882a00b577e58408c84cc45543cfd3c20810f847544f568d1401966d50"
+  },
+  "test_exit": 1,
+  "end": "2026-10-24T20:59:41.2285940-05:00",
+  "syntax": [
+    {
+      "path": "bot/src/frameworks/npc/cognition.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/frameworks/npc/public.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/npc-cognition.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf04-f02-c04.test.mjs",
+      "exit": 0
+    }
+  ],
+  "base_sha": "f833953b2eae613fdeb8daebf8b7c067d3cdd66a",
+  "architecture_exit": 0
+}

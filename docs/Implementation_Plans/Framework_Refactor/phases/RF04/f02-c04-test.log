@@ -1,0 +1,243 @@
+TAP version 13
+# Subtest: explicit dossier traits preserve defaults and reject inferred or malformed personality mechanics
+ok 1 - explicit dossier traits preserve defaults and reject inferred or malformed personality mechanics
+  ---
+  duration_ms: 157.7735
+  type: 'test'
+  ...
+# Subtest: trusted dossier import creates actor beliefs, secrets and goals but no global fact, player knowledge or resource grant
+ok 2 - trusted dossier import creates actor beliefs, secrets and goals but no global fact, player knowledge or resource grant
+  ---
+  duration_ms: 168.0743
+  type: 'test'
+  ...
+# Subtest: seed receipts survive reopen and incremental import never overwrites an authored actor or duplicates memories
+ok 3 - seed receipts survive reopen and incremental import never overwrites an authored actor or duplicates memories
+  ---
+  duration_ms: 181.1286
+  type: 'test'
+  ...
+# Subtest: failed seed audit rolls back profiles, imported evidence, memories, goals and completion receipt
+ok 4 - failed seed audit rolls back profiles, imported evidence, memories, goals and completion receipt
+  ---
+  duration_ms: 171.9367
+  type: 'test'
+  ...
+# Subtest: unrelated global canon does not seed an NPC awareness or inferred decision score
+ok 5 - unrelated global canon does not seed an NPC awareness or inferred decision score
+  ---
+  duration_ms: 173.8986
+  type: 'test'
+  ...
+# Subtest: retrieval preserves rumor, secret knowledge, historical source status and explicit non-canon authority in GM packet
+ok 6 - retrieval preserves rumor, secret knowledge, historical source status and explicit non-canon authority in GM packet
+  ---
+  duration_ms: 176.1162
+  type: 'test'
+  ...
+# Subtest: recordRecall false is read-only while true reinforces only actually returned memory records
+ok 7 - recordRecall false is read-only while true reinforces only actually returned memory records
+  ---
+  duration_ms: 167.7416
+  type: 'test'
+  ...
+# Subtest: context retirement hides a packet reversibly without deleting goals, beliefs or memory receipts
+ok 8 - context retirement hides a packet reversibly without deleting goals, beliefs or memory receipts
+  ---
+  duration_ms: 170.9564
+  type: 'test'
+  ...
+# Subtest: query relevance selects an actor from memories without treating all world actors as current scene occupants
+not ok 9 - query relevance selects an actor from memories without treating all world actors as current scene occupants
+  ---
+  duration_ms: 233.4543
+  type: 'test'
+  location: 'D:\\Library\\Development\\Veiled_City\\bot\\tests\\ai-gm-2026-10\\rf04-f02-c04.test.mjs:55:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+    + [
+    +   {
+    +     activity_tier: 'supporting',
+    +     capabilities: [],
+    +     continuity_authority: 'Dialogue quotations establish only what was said. Interpretations, promises, refusals and tactical history are actor-owned, not canon/consent, future decisions or new adversary features. De-escalation and retreat remain valid. Corrections preserve original memories; consider active corrective testimony without imposing one global belief. Retracted, superseded or unverified sources are historical testimony, not authority for new consequences. Tactical history grants no new feature, bonus or immunity; preparations require existing sourced goal/review/resource services.',
+    +     decision_profile: {},
+    +     display_name: 'Archivist',
+    +     goals: [],
+    +     knowledge: [],
+    +     knowledge_boundaries: [],
+    +     memories: [
+    +       {
+    +         confidence: 100,
+    +         content: 'Bridge foundations inspected',
+    +         corrections: [],
+    +         created_at: '2026-10-25 01:59:39',
+    +         created_tick: 0,
+    +         evidence_active: false,
+    +         guild_id: 'archive',
+    +         id: '77e77bc4-2737-42a1-a4dd-ee1421ee3248',
+    +         importance: 80,
+    +         last_recalled_at: null,
+    +         memory_type: 'episodic',
+    +         npc_key: 'archivist',
+    +         recall_count: 0,
+    +         sentiment: 0,
+    +         source_ref: '',
+    +         source_scene: '',
+    +         source_session: null,
+    +         source_status: 'unverified',
+    +         source_type: 'observed',
+    +         status: 'active',
+    +         subject_key: '',
+    +         subject_type: 'entity',
+    +         superseded_by: null,
+    +         tags: [],
+    +         tags_json: '[]',
+    +         updated_at: '2026-10-25 01:59:39',
+    +         visibility: 'gm'
+    +       }
+    +     ],
+    +     memory_clusters: [
+    +       {
+    +         kind: 'subjective-cluster',
+    +         source_ref: 'witness'
+    +       }
+    +     ],
+    +     npc_key: 'archivist',
+    +     persistent_state: {},
+    +     portrayal: '',
+    +     public_identity: '',
+    +     role: '',
+    +     scene_observations: null
+    +   },
+    +   {
+    +     activity_tier: 'supporting',
+    +     capabilities: [],
+    +     continuity_authority: 'Dialogue quotations establish only what was said. Interpretations, promises, refusals and tactical history are actor-owned, not canon/consent, future decisions or new adversary features. De-escalation and retreat remain valid. Corrections preserve original memories; consider active corrective testimony without imposing one global belief. Retracted, superseded or unverified sources are historical testimony, not authority for new consequences. Tactical history grants no new feature, bonus or immunity; preparations require existing sourced goal/review/resource services.',
+    +     decision_profile: {},
+    +     display_name: 'Baker',
+    +     goals: [],
+    +     knowledge: [],
+    +     knowledge_boundaries: [],
+    +     memories: [],
+    +     memory_clusters: [
+    +       {
+    +         kind: 'subjective-cluster',
+    +         source_ref: 'witness'
+    +       }
+    +     ],
+    +     npc_key: 'baker',
+    +     persistent_state: {},
+    +     portrayal: '',
+    +     public_identity: '',
+    +     role: '',
+    +     scene_observations: null
+    +   }
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0:
+      npc_key: 'archivist'
+      display_name: 'Archivist'
+      role: ''
+      public_identity: ''
+      portrayal: ''
+      activity_tier: 'supporting'
+      decision_profile:
+      knowledge_boundaries:
+      capabilities:
+      persistent_state:
+      goals:
+      knowledge:
+      memories:
+        0:
+          id: '77e77bc4-2737-42a1-a4dd-ee1421ee3248'
+          guild_id: 'archive'
+          npc_key: 'archivist'
+          memory_type: 'episodic'
+          content: 'Bridge foundations inspected'
+          subject_type: 'entity'
+          subject_key: ''
+          sentiment: 0
+          importance: 80
+          confidence: 100
+          source_type: 'observed'
+          source_ref: ''
+          tags_json: '[]'
+          visibility: 'gm'
+          source_session: ~
+          source_scene: ''
+          created_tick: 0
+          status: 'active'
+          superseded_by: ~
+          recall_count: 0
+          last_recalled_at: ~
+          created_at: '2026-10-25 01:59:39'
+          updated_at: '2026-10-25 01:59:39'
+          tags:
+          source_status: 'unverified'
+          evidence_active: false
+          corrections:
+      continuity_authority: 'Dialogue quotations establish only what was said. Interpretations, promises, refusals and tactical history are actor-owned, not canon/consent, future decisions or new adversary features. De-escalation and retreat remain valid. Corrections preserve original memories; consider active corrective testimony without imposing one global belief. Retracted, superseded or unverified sources are historical testimony, not authority for new consequences. Tactical history grants no new feature, bonus or immunity; preparations require existing sourced goal/review/resource services.'
+      memory_clusters:
+        0:
+          kind: 'subjective-cluster'
+          source_ref: 'witness'
+      scene_observations: ~
+    1:
+      npc_key: 'baker'
+      display_name: 'Baker'
+      role: ''
+      public_identity: ''
+      portrayal: ''
+      activity_tier: 'supporting'
+      decision_profile:
+      knowledge_boundaries:
+      capabilities:
+      persistent_state:
+      goals:
+      knowledge:
+      memories:
+      continuity_authority: 'Dialogue quotations establish only what was said. Interpretations, promises, refusals and tactical history are actor-owned, not canon/consent, future decisions or new adversary features. De-escalation and retreat remain valid. Corrections preserve original memories; consider active corrective testimony without imposing one global belief. Retracted, superseded or unverified sources are historical testimony, not authority for new consequences. Tactical history grants no new feature, bonus or immunity; preparations require existing sourced goal/review/resource services.'
+      memory_clusters:
+        0:
+          kind: 'subjective-cluster'
+          source_ref: 'witness'
+      scene_observations: ~
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf04-f02-c04.test.mjs:56:406)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: world Director retrieval and proxy ranking remain distinct from actor ownership or world placement
+ok 10 - world Director retrieval and proxy ranking remain distinct from actor ownership or world placement
+  ---
+  duration_ms: 171.0487
+  type: 'test'
+  ...
+# Subtest: original source provider reaches extracted retrieval and trusted bootstrap using actual source dependencies
+ok 11 - original source provider reaches extracted retrieval and trusted bootstrap using actual source dependencies
+  ---
+  duration_ms: 175.684
+  type: 'test'
+  ...
+1..11
+# tests 11
+# suites 0
+# pass 10
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2443.9791

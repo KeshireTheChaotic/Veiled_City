@@ -1,0 +1,10 @@
+{
+  "end": "2026-10-24T20:59:49.6690344-05:00",
+  "run_id": "RF04_F02_C04_REPAIR",
+  "test_hash": "3a6afef09d8cf03dc5e1da7efe5d9805423898cbba10604e3be9f6fcd841df27",
+  "reason": "Fixture incorrectly expected unrelated query to suppress supporting actors despite existing supporting-tier salience; missing exact actor now exercises the empty lookup, no production restriction added.",
+  "syntax_exit": 0,
+  "start": "2026-10-24T20:59:48.8465979-05:00",
+  "base_sha": "f833953b2eae613fdeb8daebf8b7c067d3cdd66a",
+  "test_exit": 0
+}

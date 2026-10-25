@@ -1,0 +1,12 @@
+{
+  "original_source_sha256": "3becc9570d3e497bd6345c01c916fc7e6af8753cdfafd841d9471d9da7748109",
+  "policy_body_sha256": "1c08269d2562b5486894b505a28a20279d4fed3ab8b3647f04f7ff2be9fe3393",
+  "body_unchanged": true,
+  "dependencies": [
+    "narrativeContextEligible",
+    "clusterContext",
+    "sceneView",
+    "npcEvidenceActive",
+    "recordImportedNpcKnowledge"
+  ]
+}
