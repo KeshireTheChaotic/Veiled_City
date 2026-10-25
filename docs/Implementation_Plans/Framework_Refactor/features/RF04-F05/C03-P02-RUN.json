@@ -1,0 +1,64 @@
+{
+  "feature": "RF04-F05-C03-P02",
+  "status": "SCOPED_PREREQUISITE_QUALIFIED",
+  "base_head": "06140bf600fb3cd8982eb8f45b4bc54977d0652b",
+  "recorded_at_utc": "2026-10-25 08:44:45 UTC",
+  "changed_production_modules": [
+    "bot/src/frameworks/narrative/audience-authority.js",
+    "bot/src/frameworks/narrative/native-audience-grant.js",
+    "bot/src/frameworks/narrative/public.js",
+    "bot/src/audience-first-capability.js",
+    "bot/src/audience-native-v9.js"
+  ],
+  "sha256": {
+    "bot/src/audience-first-capability.js": "E73435B785CB00A6148819E1B40FE59B52B00AAA24130092FE550BCBFEA60796",
+    "bot/src/audience-native-v9.js": "1C0311AB8E0DD22FF4AE7269F099B11282D3A84880D8D97172FF3A292C4316DE",
+    "bot/src/frameworks/narrative/audience-authority.js": "32DE2E6E3C5DD9A2A9DC155B40E1035CFE8479D33746DB0901F5209E332C63CF",
+    "bot/src/frameworks/narrative/native-audience-grant.js": "546441B39852A18A3B1C3067F0717E62AC50C3E4F06B74B80802DE1027FCD0D2",
+    "bot/src/frameworks/narrative/public.js": "BCB10B50D4453481D6E62DBF605145DADFDFF0F30BE0A27F07834B6A676D2CE9",
+    "bot/tests/ai-gm-2026-10/rf04-f05-c03-p02.test.mjs": "99DF568B3FD167F02C7DB4A562F91FA34D540A0928BC2895608E4408CEFFC89B",
+    "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c03-p02-test.log": "B42638C398F7D0DB2E27E839912A0648E5E0A9A9050CF1886A9849F9EBBB495C",
+    "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c03-p02-architecture.log": "CDCC5126E9B915774B16C074049B249FEF0A789A4E15CC4B78DE3DE90C676A37"
+  },
+  "test": {
+    "path": "bot/tests/ai-gm-2026-10/rf04-f05-c03-p02.test.mjs",
+    "command": "node --test bot/tests/ai-gm-2026-10/rf04-f05-c03-p02.test.mjs",
+    "unique_cases": 1,
+    "executions": 1,
+    "exit_code": 0,
+    "passed": 1,
+    "failed": 0,
+    "tap_duration_ms": 506.2793
+  },
+  "syntax": {
+    "command": "node --check on all five changed JS production modules and the new MJS test",
+    "exit_code": 0,
+    "files": 6
+  },
+  "diff_check_exit_code": 0,
+  "architecture": {
+    "command": "node bot/tooling/architecture/check-boundaries.mjs --ratchet --phase RF04",
+    "exit_code": 0,
+    "source_modules": 565,
+    "unowned": 0,
+    "imports": 2720,
+    "largest_scc": 181,
+    "accepted_legacy_occurrences": 2442,
+    "active_violation_groups": 0,
+    "transition_errors": 0
+  },
+  "cost": {
+    "provider_calls": 0,
+    "discord_calls": 0,
+    "tokens": 0,
+    "usd": 0,
+    "codex_usage": "UNMEASURED"
+  },
+  "remaining_c03_hold": [
+    "Native Narrative context construction and source authorization remain outside the new Narrative-owned source API.",
+    "Bootstrap-reached application composition for narrative--world is not established.",
+    "No narrative--world adapter or workflow adoption was performed or qualified."
+  ],
+  "rollback": "Restore the original bodies of audience-first-capability.js and audience-native-v9.js, remove the two new Narrative modules and public exports, and remove this test and evidence together.",
+  "release": "NOT_AUTHORIZED"
+}
