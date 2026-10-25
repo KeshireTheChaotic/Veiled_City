@@ -2,7 +2,7 @@
 import OpenAI from 'openai';
 import {createHash} from 'node:crypto';
 import { AUTHORITY_POLICY } from "./frameworks/daggerheart/public.js";
-import { conversationPrincipal } from "./conversation-principal.js";
+import { conversationPrincipal } from "./frameworks/session/public.js";
 import {continuationInbox} from "./action-continuation.js";
 import {actionReviewInbox} from "./gm-action-review.js";
 import { authoredCandidatesSchema,currentAuthoredCandidatesSchema, AUTHORED_CANDIDATES_PROMPT } from "./authored-candidates.js";

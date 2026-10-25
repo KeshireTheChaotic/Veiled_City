@@ -7707,20 +7707,6 @@
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
     {
-      "id": "61fbe9207703ebe867a0ac4e3b99d565451b5f95cf6ddf7fe61d80fe551ce1a4",
-      "code": "IMPORTS_PRIVATE_API",
-      "from": "bot/src/gm.js",
-      "to": "bot/src/conversation-principal.js",
-      "kind": "static",
-      "specifier": "./conversation-principal.js",
-      "owner": "application",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF05-F04",
-      "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
       "id": "c238f236412baf054eb82cbba24a5b02ddade091e6037ceb3cdcca967d32d3d6",
       "code": "IMPORTS_PRIVATE_API",
       "from": "bot/src/gm.js",

@@ -1,0 +1,24 @@
+{
+  "feature": "RF05-F04-C02",
+  "reason": "The single source import was changed to the existing Session public API and a fresh test confirmed public/compatibility identity and actual owner principal behavior.",
+  "retired_transitions": [
+    {
+      "id": "61fbe9207703ebe867a0ac4e3b99d565451b5f95cf6ddf7fe61d80fe551ce1a4",
+      "code": "IMPORTS_PRIVATE_API",
+      "from": "bot/src/gm.js",
+      "to": "bot/src/conversation-principal.js",
+      "kind": "static",
+      "specifier": "./conversation-principal.js",
+      "owner": "application",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF05-F04",
+      "expires_after": "RF05",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    }
+  ],
+  "tests": ["bot/tests/ai-gm-2026-10/rf05-f04-c02.test.mjs"],
+  "baseline_changed": false,
+  "maximum_count_increased": false,
+  "deadline_changed": false
+}

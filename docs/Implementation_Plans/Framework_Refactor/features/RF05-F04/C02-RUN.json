@@ -1,0 +1,27 @@
+{
+  "feature": "RF05-F04-C02",
+  "status": "SCOPED_SLICE_QUALIFIED_FEATURE_PARTIAL",
+  "base_head": "e0bdf443a148b89f6642bbbd1c6d78e8b69576ec",
+  "branch": "codex/clean-ai-gm-2026-10",
+  "changed_code": [{"path":"bot/src/gm.js","owner":"application","change":"Import conversationPrincipal through the Session public API","sha256":"f5699f1530688d068f37296570f9a7e13c9395ea7d4002b9d6540e6642e0e1e8"}],
+  "tests": {
+    "files": [{"path":"bot/tests/ai-gm-2026-10/rf05-f04-c02.test.mjs","sha256":"46bba60461d70518285805d7db789a86d02a97db5dda4f33aeafffb37800e7a5"}],
+    "command":"cd bot; node --test --test-concurrency=1 --test-reporter=tap tests/ai-gm-2026-10/rf05-f04-c02.test.mjs",
+    "launch_count":1,"started_at":"2026-10-25T08:05:23.7406389-05:00","finished_at":"2026-10-25T08:05:24.7641727-05:00",
+    "exit_code":0,"passed":1,"failed":0,"duration_ms":964.9156,
+    "assertions":"Actual GMService import resolves; public and compatibility exports preserve identity; disposable SQLite authenticated owner principal matches expected owner, session, character, revision and authority; source uses Session public path."
+  },
+  "syntax":{"files":["bot/src/gm.js","bot/tests/ai-gm-2026-10/rf05-f04-c02.test.mjs"],"exit_code":0,"passed":2,"failed":0},
+  "architecture": {
+    "command":"node bot/tooling/architecture/check-boundaries.mjs --ratchet --phase RF05",
+    "initial":{"exit_code":1,"active_violation_groups":967,"transition_errors":968,"meaning":"The exact removed gm.js import was reported as UNUSED_TRANSITION."},
+    "after_exact_transition_retirement":{"exit_code":1,"active_violation_groups":967,"transition_errors":967,"source_modules":572,"unowned_modules":0,"imports":2732,"meaning":"The RF05 gate still fails on unrelated pre-existing transition debt; the exact obsolete transition error is gone. The changed gm.js path has no active violation or transition error."},
+    "initial_log":"docs/Implementation_Plans/Framework_Refactor/phases/RF05/rf05-f04-c02-architecture.log",
+    "final_log":"docs/Implementation_Plans/Framework_Refactor/phases/RF05/rf05-f04-c02-final-architecture.log","final_log_sha256":"41e78cba42c42b71bc607d7807635efe4e72cbfe41ce0d5fe96f949b74297d6e",
+    "final_report":"docs/Implementation_Plans/Framework_Refactor/phases/RF05/RF05-F04-C02-FINAL-ARCHITECTURE.json","final_report_sha256":"a54200b1bd89c85cdd88b753f5547eeee639d82e663572b602e80ef71466e445"
+  },
+  "transition_metadata":{"removed_exact_id":"61fbe9207703ebe867a0ac4e3b99d565451b5f95cf6ddf7fe61d80fe551ce1a4","original_record_preserved_in":"docs/Implementation_Plans/Framework_Refactor/features/RF05-F04/C02-RETIRED.json","manifest_sha256":"ecc86ca0b50c0ed6cb05f5f1e9f1aed766f3d25a4a55e8a732488e019988e1c8","baseline_changed":false,"maximum_count_increased":false,"other_deadlines_changed":false},
+  "cost":{"provider_calls":0,"provider_tokens":0,"provider_usd":0,"live_database_or_network":false,"codex_usage":"UNMEASURED"},
+  "release":"NOT_AUTHORIZED",
+  "rollback":"Restore gm.js's former compatibility import, restore the exact transition from C02-RETIRED.json, and remove only C02 test/evidence. Preserve unrelated user edits and prior RF05 work."
+}

@@ -16,7 +16,7 @@
 | RF05-F01 | COMPLETE FOR SCOPED BOUNDARY | Four fresh tests passed in the final frozen batch; changed-file syntax passed; exact path and cross-import transitions were removed after the corresponding source occurrences disappeared. The RF05 ratchet remains failed on prior RF04 transition debt. See `RF05-F01-LEDGER.md` and `RF05-F01-RUN.json`. |
 | RF05-F02 | COMPLETE FOR SCOPED RAW-TRANSPORT BOUNDARY | Final fresh test 7/7 pass, syntax 4/4 pass; architecture gate finds no changed-path violations but remains failed on prior RF04 debt. See `RF05-F02-LEDGER.md` and `RF05-F02-RUN.json`. |
 | RF05-F03 | PARTIAL — SCOPED SLICES QUALIFIED, 289 ASSIGNED TRANSITIONS LOCALLY HELD | Final frozen batch 9/9 pass, syntax 9/9 pass; no changed-path violations. See `RF05-F03-LEDGER.md`, `RF05-F03-RUN.json`, and `LOCAL_HOLDS.json`. |
-| RF05-F04 | PARTIAL — MODEL-SELECTION SLICE QUALIFIED; 62 ASSIGNED ENTRIES REMAIN | Fresh test 3/3 pass, syntax 5/5 pass; no changed-path findings. See `features/RF05-F04/LEDGER.md` and `RF05-F04-RUN.json`. |
+| RF05-F04 | PARTIAL — MODEL-SELECTION + ONE PUBLIC API IMPORT QUALIFIED; 61 ASSIGNED ENTRIES REMAIN | Original fresh test 3/3 pass; C02 fresh test 1/1 pass; changed-path findings absent for C02. See `features/RF05-F04/LEDGER.md`, `RF05-F04-RUN.json`, and `features/RF05-F04/C02-RUN.json`. |
 | RF05-F05 | PARTIAL — PURE MUTATION-RESULT AGGREGATION QUALIFIED; 442 ASSIGNED ENTRIES REMAIN | Fresh test 3/3 pass, syntax 3/3 pass; no changed-path findings. See `features/RF05-F05/LEDGER.md` and `RF05-F05-RUN.json`. |
 | RF05-F06 | QUALIFIED CHECKPOINT — PHASE GATE FAILED | One changed-code union member 7/7 pass, syntax 14/14 pass; architecture gate fails on 967 prior transition errors. See `features/RF05-F06/LEDGER.md` and `RF05-F06-RUN.json`. |
 
@@ -32,6 +32,10 @@
 - Release: NOT AUTHORIZED.
 - Rollback: revert only RF05-specific commits in reverse order; do not reset or clean the checkout and do not revert pre-existing user changes.
 - RF05-F04 has a qualified model-selection slice; continue its workflow decomposition and retain its 62 exact assigned transition obligations. RF05-F03 remains locally incomplete; its held transitions are not treated as resolved by later-phase work.
+
+### RF05-F04 C02 checkpoint — Session public principal import
+
+At base `e0bdf443a148b89f6642bbbd1c6d78e8b69576ec`, the application GM module now imports `conversationPrincipal` through the published Session interface. The fresh disposable-SQLite test passed 1/1 (single blocking launch, exit 0, 964.9156 ms); changed JavaScript syntax passed 2/2. This removes one exact RF05-F04 transition, preserving its entire original record in `features/RF05-F04/C02-RETIRED.json`; 61 F04 entries remain. The post-correction RF05 ratchet still exits 1 on 967 existing transition errors/groups, with 572 modules and zero unowned. The changed path has no active violation/error. See `features/RF05-F04/C02-RUN.json`; release remains NOT AUTHORIZED.
 
 ## Architecture gate correction — RF05-F03 test path
 
