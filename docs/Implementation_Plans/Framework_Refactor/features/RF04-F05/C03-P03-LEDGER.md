@@ -1,0 +1,17 @@
+# RF04-F05 C03-P03 ledger — Narrative context-builder ownership
+
+**Status:** SCOPED PREREQUISITE QUALIFIED; C03 remains locally held.  
+**Base HEAD:** `2e47c56513f24aaa91252857490f905ba9d638f0`.  
+**Scope:** See `C03-P03-SCOPE.md`.
+
+The next source boundary under review is `bot/src/narrative-authority-context.js` (145 lines): it currently constructs the Narrative writer packet and imports Scene/Session, Knowledge, World, NPC, and Narrative helpers plus the audience registration adapter. C03-P01 extracted recursive source visibility. C03-P02 extracted opaque audience authorization and grant revalidation. This step is intended to move only the context-builder implementation behind an injected Narrative-owned factory, leaving existing readers and all authorization policies intact.
+
+The context body was moved unchanged into `bot/src/frameworks/narrative/context-builder.js`, with 24 source/session/knowledge/NPC/world/memory/writer/registration functions provided as injected dependencies. `narrative-authority-context.js` now lazily composes those existing dependencies and keeps hoisted compatibility exports. The lazy compatibility initialization in `audience-native-v9.js` was also required to avoid reading cyclic ESM imports before initialization; it preserves the same one adapter instance and exported methods. A normalized source comparison confirmed the original context logic body is identical.
+
+Fresh test `bot/tests/ai-gm-2026-10/rf04-f05-c03-p03.test.mjs` passed **1/1**, exit **0**, TAP duration **699.0431 ms** after a final syntax-preserving source edit. It creates a disposable SQLite database and active session, indexes a native Director scene scope, compares the authorized output from the new Narrative capability with the compatibility API, and verifies camera/audience/PC-witness output, mismatched-scope rejection, retracted-source rejection, and the audience visibility projection. Earlier evidence is retained: two module-load failures exposed ESM temporal-dead-zone reads; after deferring adapter construction, a fixture assertion failed at an earlier owner guard; then the test passed twice, with the final pass after the final source edit. The P02 audience-grant test was rerun in the same batch and passed 1/1 with the lazy adapter fix.
+
+Changed-file syntax passed for four production JS files plus the new MJS test (exit 0); after the final source edit, all five checks passed again (exit 0). `git diff --check` passed. RF04 architecture ratchet passed (exit 0): **566** source modules, **0** unowned, **2722** imports, largest cycle **181**, **2442** accepted legacy occurrences, **0** active groups and **0** transition errors. Source/test/log hashes and each terminal outcome are in `C03-P03-RUN.json` and the referenced logs.
+
+Cost: providers 0, tokens 0, USD $0; Codex usage **UNMEASURED**. Rollback: restore the original context implementation in `narrative-authority-context.js`, remove the Narrative public export and `context-builder.js`, and revert the lazy grant adapter initialization if removing the import cycle. Restore the fresh test and evidence with the code.
+
+This extraction does not establish bootstrap-reached composition or an actual Narrative–World pair adapter; F05-C03 remains on local hold. No full writer/publication or live-runtime claim is made. RF04 remains incomplete; **RELEASE NOT AUTHORIZED**. Next exact independent work: inspect RF04 remaining feature scopes and continue the first unqualified, safe source-boundary slice.

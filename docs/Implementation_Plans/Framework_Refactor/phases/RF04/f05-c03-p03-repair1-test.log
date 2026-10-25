@@ -1,0 +1,26 @@
+file:///D:/Library/Development/Veiled_City/bot/src/audience-native-v9.js:5
+const adapter=createNativeAudienceGrantAdapter({buildNarrativeContext,sceneFictionHash,sceneFictionFailure});
+                                                                      ^
+
+ReferenceError: Cannot access 'sceneFictionHash' before initialization
+    at file:///D:/Library/Development/Veiled_City/bot/src/audience-native-v9.js:5:71
+    at ModuleJob.run (node:internal/modules/esm/module_job:439:25)
+    at async node:internal/modules/esm/loader:643:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v24.19.0
+✖ bot\tests\ai-gm-2026-10\rf04-f05-c03-p03.test.mjs (495.8378ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 501.2863
+
+✖ failing tests:
+
+test at bot\tests\ai-gm-2026-10\rf04-f05-c03-p03.test.mjs:1:1
+✖ bot\tests\ai-gm-2026-10\rf04-f05-c03-p03.test.mjs (495.8378ms)
+  'test failed'

@@ -1,0 +1,62 @@
+{
+  "feature": "RF04-F05-C03-P03",
+  "status": "SCOPED_PREREQUISITE_QUALIFIED",
+  "base_head": "2e47c56513f24aaa91252857490f905ba9d638f0",
+  "changed_production_modules": [
+    "bot/src/frameworks/narrative/context-builder.js",
+    "bot/src/frameworks/narrative/public.js",
+    "bot/src/narrative-authority-context.js",
+    "bot/src/audience-native-v9.js"
+  ],
+  "sha256": {
+    "bot/src/audience-native-v9.js": "5C5B8E0F24ACAE34AE713F1AD86F073926663AD51DB023DA23A098EFCA7AA3DD",
+    "bot/src/frameworks/narrative/context-builder.js": "110360D7FCA918315D980C2583F33AA695DFECF14914C0073DEECBAEAA625FBA",
+    "bot/src/frameworks/narrative/public.js": "73FF9A67F7FFE63B747A199AB9B7696E732870B08AA8EE815419E2F65E9B7E36",
+    "bot/src/narrative-authority-context.js": "3D2EF08C1A2DFD0AF74A06976797B02DED09C0D883C650B65EE79933CF0BB651",
+    "bot/tests/ai-gm-2026-10/rf04-f05-c03-p03.test.mjs": "E56F772BA494367743F82E2EF6494D63D2389C3D8DA421D6322C4130BAABC135",
+    "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c03-p03-initial-test.log": "D957BC32B1F59FB662803C3F9B6356AD6DC10D63511CACB8856A42674E67D9C7",
+    "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c03-p03-repair1-test.log": "2B0DFECCDCC16544DC23280A34BB4FD0555025D0CBEDF4C1DD96B67BC890D703",
+    "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c03-p02-p03-repair1-test.log": "E2632A1D934FC22E851BA8048279BCB80933F9EC0498A1DDC7136AC3E07201D7",
+    "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c03-p03-final-test.log": "AD3BBABD6FF625C7EDAE3C677E89B84E538119ED7C8237AAE1F2FC21C18B13B0",
+    "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c03-p03-final2-test.log": "F93442E30354F52AA94EC95C7C3A3C222AF1C52F8062F75353B99DA5B5AAB5F1",
+    "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c03-p03-final-architecture.log": "A5DF253D0360DE8AC610AFAEEFEC4642132A254E7E65AC8DDAF4A6988F738E8C"
+  },
+  "body_equivalence": "Original buildNarrativeContext and narrativeVisible bodies are identical after removal of export keywords and indentation normalization.",
+  "test": {
+    "path": "bot/tests/ai-gm-2026-10/rf04-f05-c03-p03.test.mjs",
+    "final_command": "node --test bot/tests/ai-gm-2026-10/rf04-f05-c03-p03.test.mjs",
+    "final_exit_code": 0,
+    "final_passed": 1,
+    "final_failed": 0,
+    "final_tap_duration_ms": 699.0431,
+    "final_case_duration_ms": 184.9508,
+    "previous_attempts": [
+      {"result": "module_load_failure", "cause": "buildNarrativeContext temporal-dead-zone cycle", "test_body_executed": false},
+      {"result": "module_load_failure", "cause": "sceneFictionHash temporal-dead-zone cycle", "test_body_executed": false},
+      {"result": "failed", "passed": 1, "failed": 1, "cause": "fixture included a missing private owner and correctly hit the earlier owner guard"},
+      {"result": "passed", "passed": 1, "failed": 0, "superseded_by_final_source_syntax edit": true}
+    ],
+    "p02_regression_rerun": {"command": "node --test bot/tests/ai-gm-2026-10/rf04-f05-c03-p02.test.mjs bot/tests/ai-gm-2026-10/rf04-f05-c03-p03.test.mjs", "p02_passed": 1, "p02_failed": 0, "p03_passed": 0, "p03_failed": 1, "exit_code": 1, "note": "P02 passed after its compatibility adapter changed to lazy initialization; P03 fixture failure was repaired and only P03 was rerun."}
+  },
+  "syntax": {"exit_code": 0, "files": 5, "command": "node --check on all changed JS/MJS source and test files"},
+  "diff_check_exit_code": 0,
+  "architecture": {
+    "command": "node bot/tooling/architecture/check-boundaries.mjs --ratchet --phase RF04",
+    "exit_code": 0,
+    "source_modules": 566,
+    "unowned": 0,
+    "imports": 2722,
+    "largest_scc": 181,
+    "accepted_legacy_occurrences": 2442,
+    "active_violation_groups": 0,
+    "transition_errors": 0
+  },
+  "cost": {"provider_calls": 0, "tokens": 0, "usd": 0, "codex_usage": "UNMEASURED"},
+  "remaining_c03_hold": [
+    "Bootstrap-reached application composition remains unproven.",
+    "No narrative--world adapter or actual cross-framework workflow adoption was performed.",
+    "Full writer/publication acceptance and live-provider behavior remain unqualified."
+  ],
+  "rollback": "Restore the original builder bodies in narrative-authority-context.js, remove the new context-builder.js and Narrative public export, and revert lazy audience adapter initialization if not retained for the adapter lifecycle.",
+  "release": "NOT_AUTHORIZED"
+}
