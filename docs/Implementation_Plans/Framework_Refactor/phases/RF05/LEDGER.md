@@ -24,6 +24,10 @@
 
 The schema and prompt were isolated under Narrative ownership and exposed through its public API; the application GM now imports that contract publicly while the native renderer and compatibility exports remain intact. One frozen blocking fresh batch covering C07 and six affected current-GM tests passed **13/13**, exit **0**, in **3,956.3878 ms**. Changed JavaScript syntax passed **5/5**. The phase architecture ratchet remains failed on **955** prior groups/errors: 576 modules, zero unowned, 2,739 imports. C07 changed paths have no boundary findings. The exact retired transition is preserved in the feature evidence; **56** F04 assignments remain. See `features/RF05-F04/C07-RUN.json`. RF05 remains incomplete; release is NOT AUTHORIZED.
 
+### RF05-F04 C08 — World minor-NPC schema public API
+
+The unchanged World-owned proposal schema is separated from the mixed city-depth mutation module and published through World public; GM now uses that API. The frozen affected-GM union passed **14/14** across eight fresh files, exit **0**, duration **1,349.9331 ms**; syntax passed **5/5**. RF05 ratchet remains failed with 577 modules, zero unowned, 2,741 imports, and 955 active groups/errors. The GM public edge/new schema have no findings; five existing findings and two expired transitions remain on unchanged `city-depth.js` edges. The exact GM import transition was retired and preserved; 55 F04 assignments remain. See `features/RF05-F04/C08-RUN.json`. RF05 remains incomplete; release is NOT AUTHORIZED.
+
 ## Phase closeout
 
 - Phase status: INCOMPLETE / IN PROGRESS.

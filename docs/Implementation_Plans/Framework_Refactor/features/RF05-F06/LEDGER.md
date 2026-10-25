@@ -16,6 +16,10 @@ After the Intent API change modified `gm.js`, the F06 transport test was run onc
 
 After C06 changed `gm.js` again, one blocking affected-code union ran the transport regression, three prior GM consumer regressions, C05 Intent adoption, and new C06 schema adoption. It passed **12/12**, exit **0**, duration **3,381.2046 ms**; changed JavaScript syntax passed **5/5**. The RF05 ratchet remains failed on **955** existing groups/errors with 575 modules and zero unowned. See `RF05-F06-RUN.json`'s `after_c06_refresh`; no provider, network, database, or legacy suite use.
 
+### Current-GM refresh after RF05-F04 C08
+
+The World schema public-import change refreshed the affected-GM union once: **14/14** passed across eight fresh test files, exit **0**, duration **1,349.9331 ms**; changed JavaScript/MJS syntax passed **5/5**. The RF05 ratchet remains failed with 577 modules, zero unowned, 2,741 imports, and 955 active groups/errors. RF05-F04 has 55 assignments remaining. Detailed test/source hashes and the existing `city-depth.js` findings are in `features/RF05-F04/C08-RUN.json`; phase-wide changed-code union remains reserved for final F06 qualification after implementation work is complete.
+
 ## Holds and rollback
 
 RF04 remains incomplete; RF05-F03 has 289 exact local holds, RF05-F04 has **57** remaining assigned transitions after C06, and RF05-F05 has 442. Revert only the eventual F06 evidence commit if needed; preserve the feature commits and pre-existing user edits. No provider spend or production access.

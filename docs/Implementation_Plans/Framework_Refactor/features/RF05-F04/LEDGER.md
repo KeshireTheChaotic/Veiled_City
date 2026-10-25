@@ -1,6 +1,6 @@
 # RF05-F04 execution ledger
 
-**Status:** PARTIAL — model selection and six public-API import slices qualified; 56 assigned RF05-F04 transition entries remain.
+**Status:** PARTIAL — model selection and seven public-API import slices qualified; 55 assigned RF05-F04 transition entries remain.
 **Base HEAD:** `b515fdb1f48da98b66564010ed87930e07cf7338`
 **Scope:** [`SCOPE.md`](SCOPE.md)
 
@@ -51,3 +51,7 @@ Moved the unchanged, data-only Narrative schema module into the Narrative framew
 ## C07 — Narrative GM-world contract public API
 
 The existing closed GM-world schema and prompt now live under Narrative ownership and are published through its public API. `gm.js` imports that API; the native renderer retains rendering, validation, storage, receipts, and compatibility exports. The fresh C07 regression plus six tests affected by the shared GM service passed **13/13**, exit **0**, in one blocking launch (**3,956.3878 ms**). Changed JavaScript syntax passed **5/5**. The RF05 ratchet remains failed on 955 existing groups/errors with 576 modules and zero unowned; changed paths have no findings. Transition `cc8076bdca29df6585e651bdf86e712bcfbf8fbf7bbc52f37b0a30f248a87f7d` was retired and preserved. **56** F04 assignments remain. Details and hashes: `C07-SCOPE.md`, `C07-RUN.json`, `C07-RETIRED.json`. Release remains NOT AUTHORIZED.
+
+## C08 — World minor-NPC schema public API
+
+The data-only World-owned `minorNpcSchema` now has its own World module and public export. `city-depth.js` retains mutation and persistence code plus the same compatibility object; `gm.js` uses World public. One frozen fresh union of eight changed-code test files passed **14/14**, exit **0**, duration **1,349.9331 ms**; syntax passed **5/5**. The architecture ratchet remains failed with 577 modules, zero unowned, 2,741 imports, and 955 active groups/errors. The GM public edge and new schema have no findings. Existing `city-depth.js` debt remains: five violation findings/two transition errors on unchanged location/edges. Transition `41a184d8e346809f13aa4feaf6a4c65501a4b20b1c040844046b09f4f857e886` is retired and preserved; **55** F04 entries remain. See `C08-SCOPE.md`, `C08-LEDGER.md`, `C08-RUN.json`, and `C08-RETIRED.json`. Release remains NOT AUTHORIZED.

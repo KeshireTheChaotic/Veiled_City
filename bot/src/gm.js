@@ -24,7 +24,7 @@ import { npcDirectorSchema, simulationUpdateSchema, SIMULATION_PROMPT } from "./
 import { simulationContext } from "./simulation.js";
 import { cityContext } from "./frameworks/world/public.js";
 import { historyContext } from "./city-civic.js";
-import { minorNpcSchema } from "./city-depth.js";
+import { minorNpcSchema } from "./frameworks/world/public.js";
 import { materialClaimSchema, NARRATIVE_CONTRACT, validateNarrativeClaims } from "./narrative-integrity.js";
 import { ContextPlanner } from "./context-planner.js";
 import { pacingAdvice, validatePacing } from "./story-continuity.js";

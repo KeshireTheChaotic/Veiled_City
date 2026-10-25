@@ -2,10 +2,9 @@
 import { cityObject, cityKey, cityInteger, cityAudit, scheduleCityEvent, indexWorldEvent } from "./city-calendar.js";
 import { requireCitySource, requireCityRecord, addWorldLink } from "./city-core.js";
 import {normalizeEntityKey as normalizeNpcKey} from './kernel/entity-key.js';
+import {minorNpcSchema} from './frameworks/world/minor-npc-schema.js';
+export {minorNpcSchema};
 
-export const minorNpcSchema={type:"object",additionalProperties:false,properties:{
-  name:{type:"string"},occupation:{type:"string"},public_identity:{type:"string"},portrayal:{type:"string"}
-},required:["name","occupation","public_identity","portrayal"]};
 function flag(db,guildId,key){if(db.getCityCalendar(guildId).flags[key]!==true) throw new Error(`The ${key} feature is opt-in and not enabled.`);}
 function actor(db,guildId,endpoint){
   const [type,...parts]=cityKey(endpoint).split(":"),key=parts.join(":");

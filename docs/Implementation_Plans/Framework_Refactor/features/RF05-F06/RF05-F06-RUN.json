@@ -80,7 +80,7 @@
   "phase_holds": {
     "rf04_incomplete": true,
     "rf05_f03_transition_entries": 289,
-    "rf05_f04_transition_entries": 56,
+    "rf05_f04_transition_entries": 55,
     "rf05_f05_transition_entries": 442,
     "release": "NOT_AUTHORIZED"
   },
@@ -314,6 +314,48 @@
       "changed_path_transition_errors": []
     },
     "remaining_rf05_f04_transition_entries": 56,
+    "qualification": "CURRENT AFFECTED-GM UNION PASSES; RF05 PHASE INCOMPLETE / ARCHITECTURE GATE FAILED",
+    "cost": {
+      "provider_calls": 0,
+      "provider_tokens": 0,
+      "provider_usd": 0,
+      "network": 0,
+      "database_access": 0,
+      "codex_usage": "UNMEASURED"
+    }
+  },
+  "after_c08_refresh": {
+    "implementation_head_before_evidence_commit": "9c5b5fc0ce8a3ab209efad9b009b20b9426e723c",
+    "current_gm_sha256": "857997703F78A533C41C7F2BAB784AF6C372BB14CF6467A4165DBEED72B4978A",
+    "frozen_affected_gm_batch": {
+      "launches": 1,
+      "exit_code": 0,
+      "passed": 14,
+      "failed": 0,
+      "duration_ms": 1349.9331,
+      "test_files": 8
+    },
+    "changed_javascript_mjs_syntax": {
+      "exit_code": 0,
+      "passed": 5,
+      "failed": 0
+    },
+    "architecture": {
+      "command": "node bot/tooling/architecture/check-boundaries.mjs --ratchet --phase RF05",
+      "exit_code": 1,
+      "source_modules": 577,
+      "unowned": 0,
+      "imports": 2741,
+      "internal_imports": 2564,
+      "largest_cycle": 181,
+      "active_violation_groups": 955,
+      "transition_errors": 955,
+      "gm_public_import_findings": 0,
+      "new_schema_findings": 0,
+      "existing_city_depth_findings": 5,
+      "existing_city_depth_transition_errors": 2
+    },
+    "remaining_rf05_f04_transition_entries": 55,
     "qualification": "CURRENT AFFECTED-GM UNION PASSES; RF05 PHASE INCOMPLETE / ARCHITECTURE GATE FAILED",
     "cost": {
       "provider_calls": 0,

@@ -1,0 +1,40 @@
+{
+  "feature": "RF05-F04-C08",
+  "status": "SCOPED_WORLD_SCHEMA_PUBLIC_IMPORT_QUALIFIED",
+  "base_head": "9c5b5fc0ce8a3ab209efad9b009b20b9426e723c",
+  "branch": "codex/clean-ai-gm-2026-10",
+  "tests": {
+    "launches": 1,
+    "exit_code": 0,
+    "passed": 14,
+    "failed": 0,
+    "duration_ms": 1349.9331,
+    "test_files": 8,
+    "files": [
+      {"path":"bot/tests/ai-gm-2026-10/rf05-f02-model-transport.test.mjs","sha256":"61CB01C78EF723F69777FA6969FF321E16A33A88C9637FB7AB3207EC464F705A"},
+      {"path":"bot/tests/ai-gm-2026-10/rf05-f03-c02.test.mjs","sha256":"4AC2DB877406009C2FD44568C6EE2836FFC7CCE75DCF0F2988B0685FC11D3BA5"},
+      {"path":"bot/tests/ai-gm-2026-10/rf05-f04-c02.test.mjs","sha256":"46BBA60461D70518285805D7DB789A86D02A97DB5DDA4F33AEAFFFB37800E7A5"},
+      {"path":"bot/tests/ai-gm-2026-10/rf05-f04-c03.test.mjs","sha256":"70C5CFE574BAED1818BD3F05F8698AB9758A61C2A1FE44883ADE0FE8DD43ACD5"},
+      {"path":"bot/tests/ai-gm-2026-10/rf05-f04-c05.test.mjs","sha256":"C2D1CB13B322E1EA2C2F5E468D88E2D7903E2EA30C0A17EE7826EE74D3DAD845"},
+      {"path":"bot/tests/ai-gm-2026-10/rf05-f04-c06.test.mjs","sha256":"5C53AA6A251724612EC7146B4B6D527D5534941C79C206820C3F04417C9C236F"},
+      {"path":"bot/tests/ai-gm-2026-10/rf05-f04-c07.test.mjs","sha256":"DB50482D430F738D6A3BDF8FB652196541C3B2FF89440E9825F052C7D54A9527"},
+      {"path":"bot/tests/ai-gm-2026-10/rf05-f04-c08.test.mjs","sha256":"2E5BE6A3554C78944F60749FAB274D2498CABB5B28273FFC72B2286BBBFD6DD7"}
+    ]
+  },
+  "syntax": {"exit_code":0,"passed":5,"failed":0},
+  "changed_source_sha256": {
+    "bot/src/gm.js":"857997703F78A533C41C7F2BAB784AF6C372BB14CF6467A4165DBEED72B4978A",
+    "bot/src/city-depth.js":"652BAEBF3ECBDDC567711B94A5E8AA42F1D8673FEBFB95DEDFC9105B3159D351",
+    "bot/src/frameworks/world/public.js":"7A6F53DF6BB51B94EAFB2F9ED5E7CE6CE532D0EC20D8CACDBA7ADC59A005686A",
+    "bot/src/frameworks/world/minor-npc-schema.js":"C73E2B5E998AE7C8F6F7657561D9EFF93128F8A3D54BA315DCF8349010648B96",
+    "bot/tests/ai-gm-2026-10/rf05-f04-c08.test.mjs":"2E5BE6A3554C78944F60749FAB274D2498CABB5B28273FFC72B2286BBBFD6DD7",
+    "docs/Implementation_Plans/Framework_Refactor/RF01/TRANSITIONS.json":"88731AD9C37D7F38B3B713DE2550622CD17CFAA978EAA908E63F87068E867BF7",
+    "docs/Implementation_Plans/Framework_Refactor/features/RF05-F04/C08-RETIRED.json":"A952B99977DD9C9AF79C47E1C516CAA2F05FD937D8FE3F787587A3A58CB43C67"
+  },
+  "transition": {"retired_id":"41a184d8e346809f13aa4feaf6a4c65501a4b20b1c040844046b09f4f857e886","original_manifest_sha256":"52B3BB927009151EFB22C4570990C01E2729EAA93166CAB3B5C8DC42D8D2A3F5","retired_record":"C08-RETIRED.json","remaining_rf05_f04_entries":55},
+  "architecture": {"command":"node bot/tooling/architecture/check-boundaries.mjs --ratchet --phase RF05","exit_code":1,"source_modules":577,"unowned":0,"imports":2741,"internal_imports":2564,"cycle_components":1,"largest_cycle":181,"raw_violation_occurrences":2427,"accepted_legacy_occurrences":1467,"active_violation_groups":955,"transition_errors":955,"new_schema_findings":0,"gm_public_import_findings":0,"existing_touched_city_depth_findings":5,"existing_touched_city_depth_transition_errors":2},
+  "existing_touched_findings": ["bb16292d939d20c4977b723de012aec7ab0be3625bca255160e1e4180717ae20","77817785b3bca5b86828aa8fd04da440ba0adeef5322e77e009667646d5427c7","492f8424f291c1855339d16d2436ada1bde3016558a6063a86ecf5693817494e","d92b84c21763122492d897efc92f32d259473c7360955522fffe460608482f04","bc5c80af73f8da2740d950d6e4c7b22d20153edc6b675c78b5fb1837e65a3994"],
+  "cost": {"provider_calls":0,"provider_tokens":0,"provider_usd":0,"network":0,"database_access":0,"codex_usage":"UNMEASURED"},
+  "qualification": "C08 scoped schema/public import qualified; RF05-F04 incomplete; RF05 architecture gate failed; release NOT AUTHORIZED",
+  "rollback": "Revert only the C08 implementation/evidence commit; preserve earlier feature commits and all pre-existing user edits."
+}

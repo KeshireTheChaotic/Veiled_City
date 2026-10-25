@@ -7959,20 +7959,6 @@
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
     {
-      "id": "41a184d8e346809f13aa4feaf6a4c65501a4b20b1c040844046b09f4f857e886",
-      "code": "IMPORTS_PRIVATE_API",
-      "from": "bot/src/gm.js",
-      "to": "bot/src/city-depth.js",
-      "kind": "static",
-      "specifier": "./city-depth.js",
-      "owner": "application",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF05-F04",
-      "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
       "id": "7912c2d1c3dc8c78cee2a247b3f4f4b3ffc97a40418b900390528cbf05e60bf3",
       "code": "IMPORTS_PRIVATE_API",
       "from": "bot/src/gm.js",
