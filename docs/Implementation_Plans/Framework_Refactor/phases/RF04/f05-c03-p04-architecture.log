@@ -1,0 +1,22 @@
+{
+  "mode": "ratchet",
+  "phase": "RF04",
+  "sourceModules": 572,
+  "unowned": 0,
+  "importOccurrences": 2732,
+  "internalImportOccurrences": 2555,
+  "cycleComponents": 1,
+  "largestCycle": 181,
+  "rawViolationOccurrences": 2435,
+  "acceptedLegacyOccurrences": 2434,
+  "activeViolationGroups": 1,
+  "transitionErrors": 0,
+  "pass": false,
+  "firstErrors": [
+    {
+      "code": "INVALID_BRIDGE_TEST_REFERENCE",
+      "from": "docs/Implementation_Plans/Framework_Refactor/RF01/BRIDGE_CONTRACTS.json",
+      "owner": "tooling"
+    }
+  ]
+}

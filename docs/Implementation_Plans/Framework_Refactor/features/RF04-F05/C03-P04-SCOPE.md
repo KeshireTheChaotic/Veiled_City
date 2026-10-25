@@ -1,0 +1,7 @@
+# RF04-F05-C03-P04 — Bootstrap-safe Narrative–World authorship switch-over
+
+Continue C03 only after P01–P03 have extracted Narrative source visibility, audience grant policy and the context builder. The target is a real source-owned Narrative capability that bootstrap can bind through the exact Narrative–World pair without importing compatibility modules, duplicating audience policy, changing privacy behavior, or bypassing the original grant instance.
+
+Inspect the current capability ownership and executable boundary gate before editing. The pair and application composition may be adopted only when both pair contracts are publicly reachable, an actual bootstrap-reached consumer uses them, the existing Narrative audience instance and its source/revalidation behavior remain authoritative, and the RF04 ratchet reports no newly introduced violations. If a required source API is still legacy-owned, record the exact dependency and retain the local hold; do not encode the legacy import as a new exception.
+
+Any accepted implementation requires fresh changed-code tests with a disposable database, actual current Narrative/Knowledge capability forwarding, compatibility-reader behavior, changed-file syntax checks, and one RF04 ratchet. No historical tests, broad validation, providers, production data, CI or release. Preserve all saved audience grants, private-source semantics, World identity receipts and PC agency. **RELEASE NOT AUTHORIZED.**
