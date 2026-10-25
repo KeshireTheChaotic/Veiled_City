@@ -1,0 +1,38 @@
+{
+  "feature": "RF05-F04-C10",
+  "status": "SCOPED_GM_ARBITRATION_PUBLIC_IMPORT_QUALIFIED",
+  "base_head": "f5619c45c3e0ba2dc288d42a94c580e047b25478",
+  "branch": "codex/clean-ai-gm-2026-10",
+  "tests": {
+    "launches":1,"exit_code":0,"passed":16,"failed":0,"duration_ms":1419.9164,"test_files":10,
+    "files":[
+      {"path":"bot/tests/ai-gm-2026-10/rf05-f02-model-transport.test.mjs","sha256":"61CB01C78EF723F69777FA6969FF321E16A33A88C9637FB7AB3207EC464F705A"},
+      {"path":"bot/tests/ai-gm-2026-10/rf05-f03-c02.test.mjs","sha256":"4AC2DB877406009C2FD44568C6EE2836FFC7CCE75DCF0F2988B0685FC11D3BA5"},
+      {"path":"bot/tests/ai-gm-2026-10/rf05-f04-c02.test.mjs","sha256":"46BBA60461D70518285805D7DB789A86D02A97DB5DDA4F33AEAFFFB37800E7A5"},
+      {"path":"bot/tests/ai-gm-2026-10/rf05-f04-c03.test.mjs","sha256":"70C5CFE574BAED1818BD3F05F8698AB9758A61C2A1FE44883ADE0FE8DD43ACD5"},
+      {"path":"bot/tests/ai-gm-2026-10/rf05-f04-c05.test.mjs","sha256":"25A121360C5271ED88BA639EAA7BF8F43F45ADB4F5FEA0B3B4C760243B38EDDF"},
+      {"path":"bot/tests/ai-gm-2026-10/rf05-f04-c06.test.mjs","sha256":"5C53AA6A251724612EC7146B4B6D527D5534941C79C206820C3F04417C9C236F"},
+      {"path":"bot/tests/ai-gm-2026-10/rf05-f04-c07.test.mjs","sha256":"DB50482D430F738D6A3BDF8FB652196541C3B2FF89440E9825F052C7D54A9527"},
+      {"path":"bot/tests/ai-gm-2026-10/rf05-f04-c08.test.mjs","sha256":"2E5BE6A3554C78944F60749FAB274D2498CABB5B28273FFC72B2286BBBFD6DD7"},
+      {"path":"bot/tests/ai-gm-2026-10/rf05-f04-c09.test.mjs","sha256":"633666D3FB093868003B9D11F00173E40757B35145F04D066B270EF9BDB44194"},
+      {"path":"bot/tests/ai-gm-2026-10/rf05-f04-c10.test.mjs","sha256":"083E2A6EB26E12F73030930C8745D86EE5B9D4406C665D4876BD3A5C7BB33EC3"}
+    ]
+  },
+  "syntax":{"exit_code":0,"passed":5,"failed":0},
+  "changed_source_sha256":{
+    "bot/src/gm.js":"6FB78074565D2A9ED77991EB440A039B519F8A3229AD5018D61FBB59FEDC2A7A",
+    "bot/src/gm-arbitration-contract.js":"AD0784276B998F88988D54346448509828DBFFC118DF732C9FBADC33B72E6D29",
+    "bot/src/frameworks/intent/gm-arbitration-contract.js":"4A54892C530945D5A227B311CFB802D48AD1A1D46A7CCCFB481FF7E0D0BADF1F",
+    "bot/src/frameworks/intent/public.js":"3C4381B28DD00EB0A985A857D9CD2E5015943883BC740F5A94FFCD3885AD5088",
+    "bot/tests/ai-gm-2026-10/rf05-f04-c10.test.mjs":"083E2A6EB26E12F73030930C8745D86EE5B9D4406C665D4876BD3A5C7BB33EC3",
+    "docs/Implementation_Plans/Framework_Refactor/RF01/TRANSITIONS.json":"E56506BE02FE6A025BE11AB6EA5F1F881C0BB0158019024BF6C4CC1364200FCF",
+    "docs/Implementation_Plans/Framework_Refactor/features/RF05-F04/C10-RETIRED.json":"1B9E91E3925CDBC561B764CAF4F5F1F3E5C49CA46502042663C68FB3F87E315F",
+    "docs/Implementation_Plans/Framework_Refactor/SOURCE_RELOCATION_CROSSWALK.csv":"047BB531A29FCC70A3F7E133855733A3D82A7FD7E2DA29C4D8B89ECAFFCA8FC6"
+  },
+  "transition":{"retired_id":"57e5bc30d209d7aa530428a034da2bc8fb26acf52065b046d599bb46c3d167cb","original_manifest_sha256":"709BC4461B42F11762D3BBC53259FAFA1CEA3AEEB4C1FFC00C003F1CFF4E48D7","retired_record":"C10-RETIRED.json","root_location_hold_retained":true,"remaining_rf05_f04_entries":53},
+  "architecture":{"command":"node bot/tooling/architecture/check-boundaries.mjs --ratchet --phase RF05","exit_code":1,"source_modules":579,"unowned":0,"imports":2743,"internal_imports":2566,"largest_cycle":181,"raw_violation_occurrences":2424,"accepted_legacy_occurrences":1464,"active_violation_groups":955,"transition_errors":955,"new_module_findings":0,"gm_public_import_findings":0,"existing_compatibility_consumer_findings":3,"changed_path_transition_errors":0},
+  "existing_compatibility_findings":["0f087e92887acba18084d3e63b38325d0dd3cf13e40625392bfae4397169187f","6027439adfc4e3209457bf566405b6788b0d4b6e59ced587cc22f33ab368eb78","278aeba5890605bca6ce3c4cd7496061f8a89ef6e9c7c56a5c451ce5dcbea4b1"],
+  "cost":{"provider_calls":0,"provider_tokens":0,"provider_usd":0,"network":0,"database_access":0,"codex_usage":"UNMEASURED"},
+  "qualification":"GM import slice qualified; other framework consumers remain on compatibility import; RF05 gate failed; release NOT AUTHORIZED",
+  "rollback":"Revert only the C10 implementation/evidence commit and restore the exact GM transition; keep compatibility source and preserve all earlier work."
+}

@@ -1,6 +1,6 @@
 # RF05-F04 execution ledger
 
-**Status:** PARTIAL — model selection and eight public-API slices qualified; 54 assigned RF05-F04 transition entries remain.
+**Status:** PARTIAL — model selection and nine public-API slices qualified; 53 assigned RF05-F04 transition entries remain.
 **Base HEAD:** `b515fdb1f48da98b66564010ed87930e07cf7338`
 **Scope:** [`SCOPE.md`](SCOPE.md)
 
@@ -59,3 +59,7 @@ The data-only World-owned `minorNpcSchema` now has its own World module and publ
 ## C09 — Intent decision-advisory boundary
 
 The decision-advisory implementation moved byte-identically into Intent, both GM and turn-commit consumers use Intent public, and the root reader is retained as a compatibility re-export. Final affected-code batch passed **15/15** across nine fresh files, exit **0**, duration **1,367.1831 ms**; syntax passed **7/7**. One earlier batch found a stale C05 import-shape assertion; only that assertion was broadened and the complete union rerun against the final test bytes. Architecture ratchet remains failed with 578 modules, zero unowned, and 955 existing groups/errors; zero changed-path findings. Two private-import transitions were retired and preserved. The root location transition remains active. RF05-F04 has **54** and RF05-F05 has **441** assignments remaining. See `C09-SCOPE.md`, `C09-LEDGER.md`, `C09-RUN.json`, and `C09-RETIRED.json`. Release remains NOT AUTHORIZED.
+
+## C10 — Intent GM-arbitration contract
+
+The import-free arbitration contract moved byte-identically to Intent. The GM now imports it through Intent public; the root path remains a compatibility re-export for other consumers. Fresh changed-code batch passed **16/16** across ten files, exit **0**, duration **1,419.9164 ms**; syntax passed **5/5**. No inherited arbitration tests were run. The architecture ratchet remains failed at 579 modules, zero unowned, 2,743 imports, and 955 existing groups/errors. The new module and GM public import have no findings; three existing World consumers still trigger compatibility-path cross-framework findings. Transition `57e5bc30d209d7aa530428a034da2bc8fb26acf52065b046d599bb46c3d167cb` is retired and preserved; root location hold remains. **53** F04 assignments remain. See `C10-SCOPE.md`, `C10-LEDGER.md`, `C10-RUN.json`, and `C10-RETIRED.json`. Release remains NOT AUTHORIZED.

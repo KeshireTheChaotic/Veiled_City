@@ -29,7 +29,7 @@ import { materialClaimSchema, NARRATIVE_CONTRACT, validateNarrativeClaims } from
 import { ContextPlanner } from "./context-planner.js";
 import { pacingAdvice, validatePacing } from "./story-continuity.js";
 import { portrayalPacket } from "./portrayal.js";
-import { intentArraySchema, INTENT_PROMPT, decisionAdvisorySchema, requiredDecisionAdvisorySchema, decisionPromptContext, decisionContext, validateDecisionAdvisory } from "./frameworks/intent/public.js";
+import { intentArraySchema, INTENT_PROMPT, decisionAdvisorySchema, requiredDecisionAdvisorySchema, decisionPromptContext, decisionContext, validateDecisionAdvisory, unifiedArbitrationSchema } from "./frameworks/intent/public.js";
 import { intentContext } from "./ai-intents.js";
 import {explicitSilence,semanticResponseObligation} from "./gameplay-intake.js";
 import { worldAdditionsSchema, sceneActionsSchema, worldConflictsSchema, AUTONOMOUS_WORLD_PROMPT, autonomousWorldContext, worldAuthority } from "./autonomous-world.js";
@@ -67,7 +67,6 @@ import {bindDirectorNarrativeSource,inheritDirectorNarrativeSource,nativeDirecto
 import {configureWorldEncounterCatalog} from './world-encounter-beats.js';
 import {buildNarrativeContext} from './narrative-authority-context.js';
 import {createArbitrationOrigin,arbitrationPromptBoard,bindArbitrationTurn} from './scene-intent-board.js';
-import {unifiedArbitrationSchema} from './gm-arbitration-contract.js';
 import {UNIFIED_ARBITRATION_PROMPT} from './gm-unified-arbitration.js';
 import {narrativeResponseV9Schema,NARRATIVE_V9_INSTRUCTIONS,NATIVE_CLAUSE_INSTRUCTIONS} from './narrative-writer-v9.js';
 import {createModelTransport} from './frameworks/ai-provider/public.js';

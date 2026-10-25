@@ -80,7 +80,7 @@
   "phase_holds": {
     "rf04_incomplete": true,
     "rf05_f03_transition_entries": 289,
-    "rf05_f04_transition_entries": 54,
+    "rf05_f04_transition_entries": 53,
     "rf05_f05_transition_entries": 441,
     "release": "NOT_AUTHORIZED"
   },
@@ -398,6 +398,47 @@
     "remaining_rf05_f04_transition_entries": 54,
     "remaining_rf05_f05_transition_entries": 441,
     "qualification": "CURRENT GM AND TURN-ORCHESTRATION UNION PASSES; RF05 PHASE INCOMPLETE / ARCHITECTURE GATE FAILED",
+    "cost": {
+      "provider_calls": 0,
+      "provider_tokens": 0,
+      "provider_usd": 0,
+      "network": 0,
+      "database_access": 0,
+      "codex_usage": "UNMEASURED"
+    }
+  },
+  "after_c10_refresh": {
+    "implementation_head_before_evidence_commit": "f5619c45c3e0ba2dc288d42a94c580e047b25478",
+    "current_gm_sha256": "6FB78074565D2A9ED77991EB440A039B519F8A3229AD5018D61FBB59FEDC2A7A",
+    "frozen_affected_union": {
+      "launches": 1,
+      "exit_code": 0,
+      "passed": 16,
+      "failed": 0,
+      "duration_ms": 1419.9164,
+      "test_files": 10
+    },
+    "syntax": {
+      "exit_code": 0,
+      "passed": 5,
+      "failed": 0
+    },
+    "architecture": {
+      "exit_code": 1,
+      "source_modules": 579,
+      "unowned": 0,
+      "imports": 2743,
+      "internal_imports": 2566,
+      "largest_cycle": 181,
+      "active_violation_groups": 955,
+      "transition_errors": 955,
+      "gm_public_import_findings": 0,
+      "new_module_findings": 0,
+      "existing_compatibility_consumer_findings": 3,
+      "changed_path_transition_errors": 0
+    },
+    "remaining_rf05_f04_transition_entries": 53,
+    "qualification": "CURRENT GM CONSUMER UNION PASSES; RF05 PHASE INCOMPLETE / ARCHITECTURE GATE FAILED",
     "cost": {
       "provider_calls": 0,
       "provider_tokens": 0,

@@ -35,3 +35,7 @@ The C07 Narrative public-contract change refreshed the current affected-GM union
 ### Current GM and turn-commit refresh after RF05-F04 C09
 
 The Intent decision-advisory move changed `gm.js` and `turn-orchestration.js`. The frozen affected-code union passed **15/15** across nine fresh tests, exit **0**, duration **1,367.1831 ms**; changed JavaScript/MJS syntax passed **7/7**. Architecture ratchet remains failed with 578 modules, zero unowned, 2,742 imports, and 955 groups/errors. RF05-F04 has 54 and RF05-F05 has 441 assignments remaining. Root compatibility source-location debt remains. See `features/RF05-F04/C09-RUN.json`; phase-wide union remains pending final F06 qualification.
+
+### Current GM refresh after RF05-F04 C10
+
+The GM arbitration schema import now uses Intent public. The complete affected-GM union passed **16/16** across ten fresh files, exit **0**, duration **1,419.9164 ms**; syntax passed **5/5**. RF05 ratchet remains failed with 579 modules, zero unowned, 2,743 imports, and 955 groups/errors. The GM public import/new module have no findings; three existing cross-framework consumer edges remain through the compatibility path. RF05-F04 has 53 assignments remaining. See `features/RF05-F04/C10-RUN.json`; final phase-wide union remains for F06 closeout.

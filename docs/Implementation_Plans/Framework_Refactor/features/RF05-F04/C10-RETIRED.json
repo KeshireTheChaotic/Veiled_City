@@ -1,0 +1,21 @@
+{
+  "feature": "RF05-F04-C10",
+  "original_manifest_sha256": "709BC4461B42F11762D3BBC53259FAFA1CEA3AEEB4C1FFC00C003F1CFF4E48D7",
+  "baseline_sha256": "c06895366ededa396d77132fea8d91ace036c0f369bcf880ab1a898a1a1370d3",
+  "retired": [
+    {
+      "id": "57e5bc30d209d7aa530428a034da2bc8fb26acf52065b046d599bb46c3d167cb",
+      "code": "IMPORTS_PRIVATE_API",
+      "from": "bot/src/gm.js",
+      "to": "bot/src/gm-arbitration-contract.js",
+      "kind": "static",
+      "specifier": "./gm-arbitration-contract.js",
+      "owner": "application",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF05-F04",
+      "expires_after": "RF05",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    }
+  ]
+}
