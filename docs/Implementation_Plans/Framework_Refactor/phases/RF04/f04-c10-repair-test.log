@@ -1,0 +1,30 @@
+✖ start with no attendees and present during a blocked planner regenerates only before commitment (1009.7481ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2167.4343
+
+✖ failing tests:
+
+test at bot\tests\ai-gm-2026-10\rf04-f04-c10.test.mjs:28:1
+✖ start with no attendees and present during a blocked planner regenerates only before commitment (1009.7481ms)
+  AssertionError [ERR_ASSERTION]: [{"audience":"private","character":"97b99cb6-0a32-4e0a-bf28-411ec8c917fd","user":"rin","status":"delivered","narrative_status":"VERIFIED_SCENE_DELIVERED","hook_verified":false,"narrative_generated":true,"narrative_verified":true,"narrative_quarantined":false,"fallback":false,"dramatic_coverage":"unverified"},{"audience":"party","character":null,"user":null,"status":"delivered","narrative_status":"VERIFIED_SCENE_DELIVERED","hook_verified":false,"narrative_generated":true,"narrative_verified":true,"narrative_quarantined":false,"fallback":false,"dramatic_coverage":"unverified"}]
+  + actual - expected
+  
+  + 'completed'
+  - 'needs_narrative_review'
+  
+      at TestContext.<anonymous> (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf04-f04-c10.test.mjs:73:9)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'completed',
+    expected: 'needs_narrative_review',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

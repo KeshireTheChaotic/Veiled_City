@@ -1,0 +1,67 @@
+{
+  "feature": "RF04-F04-C10",
+  "status": "SCOPED_QUALIFIED",
+  "base_head": "b6e05a46ad528511fc495e39267b2ba94f0b4e6f",
+  "production_code_changed": false,
+  "fresh_test": "bot/tests/ai-gm-2026-10/rf04-f04-c10.test.mjs",
+  "sha256": {
+    "test": "B5C6107359817E73182D7DB8E3C78252C69AC2962D2269380FE15DE9071CC2C4",
+    "commands_source_snapshot_with_preexisting_owner_edits": "ACA2FBD1317C3408EC31E40C4BD7901B8C6EC2D17C11A85942618A4A9C0B4425",
+    "session_opening_runner": "64E07BECE23A4A518BD81382796CE6E8B94C4A3B8E0542A700EE39C90251C722",
+    "gm": "CBE067F1E08683EE87A278F69FAB263A7247EDA66B6D4BC46329144FFEF0E0A2",
+    "pvp_output": "11B85D26E3E80CA8A9645A815DFEEE1436380CB53E5BA3BB6BE0C1E10E6BD994",
+    "publication_outbox": "011276BBC643438E3D15CC29A0D3251D0077E84A714C5526E287692D7B60B30E",
+    "final_test_log": "573576EB717DE11E54B472A7176AA68C0499424A7D69A3BF9C26BD541FA470B2",
+    "architecture_log": "503C39C68E5CF7199AF76486B6A0E2713CF43465E7FF909D03CC98A1E7B125CE"
+  },
+  "test_command": "node --test bot/tests/ai-gm-2026-10/rf04-f04-c10.test.mjs",
+  "result": {
+    "final_exit_code": 0,
+    "final_passed": 1,
+    "final_failed": 0,
+    "unique_cases_qualified": 1,
+    "case_executions": 3,
+    "final_tap_duration_ms": 2334.4831,
+    "case_duration_ms": 1197.5881,
+    "syntax_check": "node --check bot/tests/ai-gm-2026-10/rf04-f04-c10.test.mjs passed"
+  },
+  "batch_history": [
+    {"log":"phases/RF04/f04-c10-test.log","result":"exit 1; 0/1 pass; initial empty-session expectation used null instead of undefined"},
+    {"log":"phases/RF04/f04-c10-repair-test.log","result":"exit 1; 0/1 pass; expected review although both authored units were accepted and delivered"},
+    {"log":"phases/RF04/f04-c10-final-test.log","result":"exit 0; 1/1 pass; TAP 2334.4831 ms"}
+  ],
+  "coverage": [
+    "Actual production command dispatch starts a session with no initial attendees",
+    "A player checks in while the first planner request is held behind a deterministic promise barrier",
+    "Only the proven uncommitted snapshot is regenerated once from current roster state",
+    "Private character scene and shared camera scene pass the native writer acceptance path",
+    "Private and public messages receive distinct durable Discord acknowledgment receipts",
+    "No private source enters the public publication",
+    "No PC movement, placement, accepted action, resource change or other mechanical outcome is created"
+  ],
+  "architecture": {
+    "command": "npm --prefix bot run architecture:check",
+    "exit_code": 0,
+    "source_modules": 561,
+    "unowned": 0,
+    "imports": 2711,
+    "largest_scc": 181,
+    "accepted_legacy_occurrences": 2442,
+    "active_violation_groups": 0,
+    "transition_errors": 0
+  },
+  "mocks": {
+    "writer_calls_across_test_runs_that_reached_authoring": 4,
+    "discord_sends_across_test_runs_that_reached_authoring": 4,
+    "paid_provider_calls": 0,
+    "tokens": 0,
+    "cost_usd": 0,
+    "codex_usage": "UNMEASURED"
+  },
+  "limitations": [
+    "commands.js was an existing modified owner file and was not changed; test evidence is against the current worktree snapshot.",
+    "This is a same-process command-path test; cross-process scheduling requires separate evidence.",
+    "Mocked transport/provider boundaries do not qualify live services or semantic narrative quality."
+  ],
+  "release": "NOT_AUTHORIZED"
+}
