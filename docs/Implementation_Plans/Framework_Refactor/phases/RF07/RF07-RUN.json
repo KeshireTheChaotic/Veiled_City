@@ -1,0 +1,43 @@
+{
+  "phase": "RF07",
+  "status": "ENTRY_HOLD_READ_ONLY_RATCHET_FAILED",
+  "base_head": "cfc584da6a3aa1ba9c96a5fa88ff2a086c298761",
+  "branch": "codex/clean-ai-gm-2026-10",
+  "changed_modules": [],
+  "tests": {
+    "run": false,
+    "reason": "Documentation-only intake; no production code changed."
+  },
+  "syntax_checks": {
+    "run": false,
+    "reason": "No JavaScript changed."
+  },
+  "architecture": {
+    "command": "node bot/tooling/architecture/check-boundaries.mjs --ratchet --phase RF07",
+    "exit_code": 1,
+    "source_modules": 572,
+    "unowned": 0,
+    "imports": 2732,
+    "internal_imports": 2555,
+    "largest_cycle": 181,
+    "accepted_legacy_occurrences": 0,
+    "active_violation_groups": 2415,
+    "transition_errors": 2414,
+    "log": "rf07-entry-ratchet.log",
+    "sha256": "A052C595CEFA85E95088D1FE24437E7241501783121FEB00F56BC71DC0B2FAB9"
+  },
+  "phase_holds": {
+    "rf04_incomplete": true,
+    "rf05_incomplete": true,
+    "rf06_runtime_entry_held": true,
+    "rf07_feature_scopes": "NOT YET AUTHORITATIVELY DEFINED"
+  },
+  "cost": {
+    "provider_calls": 0,
+    "provider_tokens": 0,
+    "provider_usd": 0,
+    "codex_usage": "UNMEASURED"
+  },
+  "release": "NOT_AUTHORIZED",
+  "rollback": "Revert only the RF07 intake documentation checkpoint; preserve earlier phase work and user edits."
+}
