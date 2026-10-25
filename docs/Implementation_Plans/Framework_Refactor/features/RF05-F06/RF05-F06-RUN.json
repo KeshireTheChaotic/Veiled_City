@@ -1,0 +1,81 @@
+{
+  "feature": "RF05-F06",
+  "status": "QUALIFIED_CHECKPOINT_RF05_INCOMPLETE_GATE_FAILED",
+  "base_head": "9b69f51927fd5ec7e7b996c15c8f31ff2ae4d031",
+  "branch": "codex/clean-ai-gm-2026-10",
+  "tests": {
+    "changed_code_union_member": {
+      "file": "bot/tests/ai-gm-2026-10/rf05-f02-model-transport.test.mjs",
+      "reason_rerun": "gm.js is imported by GMService coverage and changed in RF05-F04 after the prior F02 pass.",
+      "launch_count": 1,
+      "exit_code": 0,
+      "passed": 7,
+      "failed": 0,
+      "duration_ms": 640.1087,
+      "log": "phases/RF05/rf05-f06-union-test.log",
+      "sha256": "9797E805DA0320550667B2946F065558767A73B5B4FF442A71FFE88544613153",
+      "test_source_sha256": "61CB01C78EF723F69777FA6969FF321E16A33A88C9637FB7AB3207EC464F705A"
+    },
+    "carried_forward": [
+      {"feature":"RF05-F01","passed":4,"exit_code":0,"duration_ms":65.9672,"test":"features/RF05-F01/RF05-F01-RUN.json"},
+      {"feature":"RF05-F02","passed":7,"exit_code":0,"duration_ms":657.8748,"test":"features/RF05-F02/RF05-F02-RUN.json"},
+      {"feature":"RF05-F03","passed":9,"exit_code":0,"duration_ms":95.8206,"test":"features/RF05-F03/RF05-F03-RUN.json"},
+      {"feature":"RF05-F04","passed":3,"exit_code":0,"duration_ms":65.2965,"test":"features/RF05-F04/RF05-F04-RUN.json"},
+      {"feature":"RF05-F05","passed":3,"exit_code":0,"duration_ms":63.5937,"test":"features/RF05-F05/RF05-F05-RUN.json"}
+    ]
+  },
+  "syntax": {
+    "files_checked": 14,
+    "passed": 14,
+    "failed": 0,
+    "exit_code": 0,
+    "log": "phases/RF05/rf05-f06-union-syntax.log",
+    "sha256": "1573038E7E64CB9AB895783BB296581D880C89107F01314502ADE666CE6D5DA7"
+  },
+  "architecture": {
+    "command": "node bot/tooling/architecture/check-boundaries.mjs --ratchet --phase RF05",
+    "exit_code": 1,
+    "source_modules": 572,
+    "unowned": 0,
+    "imports": 2732,
+    "internal_imports": 2555,
+    "largest_cycle": 181,
+    "active_violation_groups": 968,
+    "transition_errors": 967,
+    "changed_path_violations": [],
+    "changed_path_transition_errors": [],
+    "log": "phases/RF05/rf05-f06-architecture.log",
+    "sha256": "A7BE72D75370E04B7FBBB78822B7D6CBFE139CE9ED8BF0CA312546E7B3DC5DA5"
+  },
+  "phase_holds": {
+    "rf04_incomplete": true,
+    "rf05_f03_transition_entries": 289,
+    "rf05_f04_transition_entries": 62,
+    "rf05_f05_transition_entries": 442,
+    "release": "NOT_AUTHORIZED"
+  },
+  "changed_source_sha256": {
+    "bot/src/index.js": "F35E396E57EE1A22F553474CB7255BD572B84BFDA3308E7F074375BCF3EE06D2",
+    "bot/src/gm.js": "86660D1C51973F9790BAAC114721A03F7D72694354C93AB325D0816B84B1A59E",
+    "bot/src/state.js": "78229A708DF384C960E2BCB8F13B3F92567A090D2080F86053415A30BE1140BF",
+    "bot/src/frameworks/ai-provider/generation-feedback.js": "36F798FD0D08C5E1DD851D0B60A4E8ED43D0E423C1ED9B7E53BCD19DB217FBBF",
+    "bot/src/frameworks/ai-provider/model-transport.js": "DEFC16F5E80E576D6C8E1AF890904E5F80C4EEFA88C2BBE82B718A0588E8FFCE",
+    "bot/src/frameworks/ai-provider/prompt-budget.js": "7AB1A102173DC817114EDA23FD7FFD1F43BA04B41930F19138AC850067E02C3D",
+    "bot/src/frameworks/ai-provider/public.js": "47BA1DA9DD1C82C67137D116EEFD47CD54BE42F98AFAD8DD523619880A5B6E16",
+    "bot/src/frameworks/narrative/scene-observation-route.js": "311E5B5E4C2749821BF13FE7B39303BF8D42AA303D641C0ADC778CBBD0BD0FDB",
+    "bot/src/frameworks/narrative/model-selection.js": "1E6EE6C823C00E84D67FC3EB731BCD59D42B7A3D7864B47C58BAE0CCAAD14E6A",
+    "bot/src/frameworks/narrative/public.js": "49B1915A4E98C725E0CF630B80DF282A3DD382F80422BCF5B103D187CB915751",
+    "bot/src/framework-to-framework/ai-provider--knowledge/prompt-storage.js": "8E56CAC464992E914ED201784295E8E5D82583A706CB388222DBE6CC308EF107",
+    "bot/src/framework-to-framework/ai-provider--knowledge/public.js": "50515D8DF0F3A223DFEE71EE4B298EC1C2ECB4F784B2DB08B48B82A4C0E43FEA",
+    "bot/src/narrative-delegation.js": "707EBB1B9331926B30980E446EA8148388D1C94834C92BA8F0E651DC80B8744E",
+    "bot/src/application/workflows/state-mutation-results.js": "8EE210F7F383E985CF4F1DF499789668EA6455E698F93FB0F4D6C2ED53522799"
+  },
+  "cost": {
+    "provider_calls": 0,
+    "provider_tokens": 0,
+    "provider_usd": 0,
+    "codex_usage": "UNMEASURED"
+  },
+  "rollback": "Revert only RF05-F06 evidence if needed; preserve implementation commits and all pre-existing edits.",
+  "release": "NOT_AUTHORIZED"
+}

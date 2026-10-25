@@ -1,0 +1,14 @@
+bot/src/index.js=0
+bot/src/gm.js=0
+bot/src/state.js=0
+bot/src/frameworks/ai-provider/generation-feedback.js=0
+bot/src/frameworks/ai-provider/model-transport.js=0
+bot/src/frameworks/ai-provider/prompt-budget.js=0
+bot/src/frameworks/ai-provider/public.js=0
+bot/src/frameworks/narrative/scene-observation-route.js=0
+bot/src/frameworks/narrative/model-selection.js=0
+bot/src/frameworks/narrative/public.js=0
+bot/src/framework-to-framework/ai-provider--knowledge/prompt-storage.js=0
+bot/src/framework-to-framework/ai-provider--knowledge/public.js=0
+bot/src/narrative-delegation.js=0
+bot/src/application/workflows/state-mutation-results.js=0

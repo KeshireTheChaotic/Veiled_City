@@ -1,0 +1,15 @@
+✔ successful dispatch preserves request options and records usage, cache, and purpose telemetry (1.1028ms)
+✔ recoverable provider failure waits within the bounded retry policy then returns a response (0.3083ms)
+✔ terminal provider error does not retry and preserves privacy-safe error classification (0.327ms)
+✔ aborted operation does not dispatch a request (0.1467ms)
+✔ abort after provider response is recorded as a deadline and is never retried (0.1457ms)
+✔ retry configuration remains capped at five retries and honors the server deferral ceiling (0.3444ms)
+✔ application GMService keeps its request method as a transparent provider delegate (0.1377ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 640.1087
