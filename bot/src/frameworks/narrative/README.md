@@ -2,7 +2,7 @@
 
 Audience-scoped fiction authoring, portrayal, narrative validation and provisional fiction; all native effects and external source translation remain separately owned.
 
-Observed current source candidates: `audience-first-capability.js`, `audience-native-v9.js`, `concept-context.js`, `delegation-catalog.js`, `expansion-contracts.js`, `fresh-npc-authoring.js`. Complete accountable assignments and mixed-responsibility obligations are in the RF ownership manifest. None of those existing files moved in RF01.
+Observed current source candidates include `audience-first-capability.js`, `audience-native-v9.js`, `concept-context.js`, `delegation-catalog.js`, `expansion-contracts.js`, and `fresh-npc-authoring.js`. The read-only `scene-observation-route.js` classifier is now owned here and is exposed through the Narrative public API; it admits only conservative scene-description/current-situation queries and does not authorize action. Complete accountable assignments and mixed-responsibility obligations remain in the RF ownership manifest.
 
 This framework may use its own modules and neutral kernel primitives. Other capabilities arrive through consumer-owned contracts; it must not import another framework or a pair integration. Pair adapters alone map exactly two public framework APIs; application composition wires them.
 

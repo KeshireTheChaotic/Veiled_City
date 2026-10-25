@@ -2857,17 +2857,6 @@
       "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
     },
     {
-      "id": "35ac243edb4b5efdd6b762afc845acd75ccc91a44b54d66fcea203c8b8a179db",
-      "code": "LEGACY_MODULE_LOCATION",
-      "from": "bot/src/scene-observation-route.js",
-      "owner": "narrative",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF05-F03",
-      "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
-    },
-    {
       "id": "03090e0be81f410d983688f612a6d43d88ade4d6df3247f9430a684e340db583",
       "code": "LEGACY_MODULE_LOCATION",
       "from": "bot/src/scene-setup.js",
@@ -8382,20 +8371,6 @@
       "to": "bot/src/assembly-context.js",
       "kind": "static",
       "specifier": "./assembly-context.js",
-      "owner": "application",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF05-F04",
-      "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
-      "id": "435c774161c8db9c2e039f88689a52de03ec7f0b122153ca854cdbe55bb83315",
-      "code": "IMPORTS_PRIVATE_API",
-      "from": "bot/src/gm.js",
-      "to": "bot/src/scene-observation-route.js",
-      "kind": "static",
-      "specifier": "./scene-observation-route.js",
       "owner": "application",
       "max_occurrences": 1,
       "remove_in_feature": "RF05-F04",

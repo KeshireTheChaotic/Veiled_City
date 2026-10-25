@@ -1,6 +1,6 @@
 {
   "feature": "RF05-F03",
-  "status": "COMPLETE_FOR_SCOPED_PROMPT_BUDGET_AND_DISCLOSURE_BOUNDARY",
+  "status": "PARTIAL_SCOPED_SLICES_QUALIFIED_289_TRANSITIONS_HELD",
   "base_head": "8e778dbabb7dc80de85d828aab4f96dcf11b0c7a",
   "branch": "codex/clean-ai-gm-2026-10",
   "process_note": "Initial move and small adapter/API edits preceded creation of this feature scope and ledger; recorded in LEDGER.md. No tests or commit occurred before scope/ledger creation.",
@@ -10,6 +10,9 @@
     "bot/src/frameworks/ai-provider/prompt-budget.js",
     "bot/src/frameworks/ai-provider/public.js",
     "bot/src/frameworks/ai-provider/README.md",
+    "bot/src/frameworks/narrative/scene-observation-route.js",
+    "bot/src/frameworks/narrative/public.js",
+    "bot/src/frameworks/narrative/README.md",
     "bot/src/framework-to-framework/ai-provider--knowledge/prompt-storage.js",
     "bot/src/framework-to-framework/ai-provider--knowledge/public.js",
     "docs/Implementation_Plans/Framework_Refactor/RF01/PACKAGES.json",
@@ -23,26 +26,43 @@
     "application_consumer": "gm.js calls registered provider and pair APIs"
   },
   "tests": {
-    "path": "bot/tests/ai-gm-2026-10/rf05-f03-prompt-budget.test.mjs",
-    "launch_count": 1,
-    "exit_code": 0,
-    "passed": 6,
-    "failed": 0,
-    "duration_ms": 90.3717,
-    "terminal_summary": "phases/RF05/rf05-f03-test.log",
-    "sha256": "F0EAE26330345959A627CC9B5D38B6FED47948867C435DDE16B15230DDD843AE"
+    "final_batch": {
+      "files": [
+        "bot/tests/ai-gm-2026-10/rf05-f03-prompt-budget.test.mjs",
+        "bot/tests/ai-gm-2026-10/rf05-f03-scene-observation.test.mjs"
+      ],
+      "launch_count": 1,
+      "exit_code": 0,
+      "passed": 9,
+      "failed": 0,
+      "duration_ms": 95.8206,
+      "terminal_summary": "phases/RF05/rf05-f03-final-test.log",
+      "terminal_sha256": "3B9B1D961A8B04F78E03EC165260BA81AE5120275E2836BF5D9261CBB13BFCE8"
+    },
+    "prior_prompt_budget_only_batch": {
+      "launch_count": 1,
+      "exit_code": 0,
+      "passed": 6,
+      "duration_ms": 90.3717,
+      "note": "Prompt-budget test was run again in the final batch because gm.js changed its production import path; no test source was modified."
+    },
+    "prompt_budget_test_sha256": "F0EAE26330345959A627CC9B5D38B6FED47948867C435DDE16B15230DDD843AE",
+    "scene_observation_test_sha256": "C2433449CF328A60E15797FFDB57F1B8A75A82E4F92CA1438896127202937946"
   },
   "syntax": {
     "files_checked": [
       "bot/src/gm.js",
       "bot/src/frameworks/ai-provider/prompt-budget.js",
       "bot/src/frameworks/ai-provider/public.js",
+      "bot/src/frameworks/narrative/scene-observation-route.js",
+      "bot/src/frameworks/narrative/public.js",
       "bot/src/framework-to-framework/ai-provider--knowledge/prompt-storage.js",
       "bot/src/framework-to-framework/ai-provider--knowledge/public.js",
-      "bot/tests/ai-gm-2026-10/rf05-f03-prompt-budget.test.mjs"
+      "bot/tests/ai-gm-2026-10/rf05-f03-prompt-budget.test.mjs",
+      "bot/tests/ai-gm-2026-10/rf05-f03-scene-observation.test.mjs"
     ],
-    "exit_codes": [0, 0, 0, 0, 0, 0],
-    "log": "phases/RF05/rf05-f03-syntax.log",
+    "exit_codes": [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    "log": "phases/RF05/rf05-f03-final-syntax.log",
     "sha256": "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855"
   },
   "architecture": {
@@ -50,36 +70,47 @@
     "exit_code": 1,
     "source_modules": 570,
     "unowned": 0,
-    "imports": 2729,
+    "imports": 2730,
     "largest_cycle": 181,
-    "raw_occurrences": 2437,
-    "accepted_legacy_occurrences": 1464,
+    "raw_occurrences": 2435,
+    "accepted_legacy_occurrences": 1462,
     "active_violation_groups": 968,
     "transition_errors": 967,
     "changed_path_violations": [],
     "changed_path_transition_errors": [],
     "result": "Whole RF05 gate remains failed on prior RF04 transition debt; no active violation or transition error on changed F03 paths.",
-    "log": "phases/RF05/rf05-f03-architecture.log",
-    "sha256": "D890529AAD6F830C649890C8549E4CB226164B0DE0D79F1B0F40AF8F003ABBFB"
+    "log": "phases/RF05/rf05-f03-final-architecture.log",
+    "sha256": "A40C1E2F80F21FD22A710D201BB2F639B63FF9D4B74D79DD18912911DD22EDDE",
+    "changed_path_violations": [],
+    "changed_path_transition_errors": []
   },
   "removed_transition_ids": [
     "5994fd459e0f589040dee3b5b363381f4b6f9449ff62d6d68c3df52705dd38c8",
     "a0d900511b20d7c994d2c7b8558d1903769f89bda9152cc20bcb985990545bb0",
-    "f45aba2564f1e3ee5888c2e0cdd2391dede0d6a963f7411a9345f03d6eb1bfba"
+    "f45aba2564f1e3ee5888c2e0cdd2391dede0d6a963f7411a9345f03d6eb1bfba",
+    "35ac243edb4b5efdd6b762afc845acd75ccc91a44b54d66fcea203c8b8a179db",
+    "435c774161c8db9c2e039f88689a52de03ec7f0b122153ca854cdbe55bb83315"
   ],
   "source_sha256": {
-    "bot/src/gm.js": "CC29B79B9FC7B2AB8A570DD9EB54F2C61B2DD4D5817285B2707ADAF6E92BC58C",
+    "bot/src/gm.js": "F2D7D09F069AD3804E4E2C126EDF7DB70F075BF1F4BD1ABF13FD735070E193FF",
     "bot/src/frameworks/ai-provider/prompt-budget.js": "7AB1A102173DC817114EDA23FD7FFD1F43BA04B41930F19138AC850067E02C3D",
     "bot/src/frameworks/ai-provider/public.js": "47BA1DA9DD1C82C67137D116EEFD47CD54BE42F98AFAD8DD523619880A5B6E16",
     "bot/src/frameworks/ai-provider/README.md": "A517BAFF5F00059C32BF3CC263E3B7B7E360BC19893569E1E376EF6E70DCD0F2",
+    "bot/src/frameworks/narrative/scene-observation-route.js": "311E5B5E4C2749821BF13FE7B39303BF8D42AA303D641C0ADC778CBBD0BD0FDB",
+    "bot/src/frameworks/narrative/public.js": "41FD7AF86B5FAB597AAB85DFBBFDB51AE797ED19A6EC019C063827F64F7FF9A6",
+    "bot/src/frameworks/narrative/README.md": "CDAD1FCB6A85D739E0BF5FAA9EBB4371ECEF81237A7686F9189FEE67855AAC9B",
     "bot/src/framework-to-framework/ai-provider--knowledge/prompt-storage.js": "8E56CAC464992E914ED201784295E8E5D82583A706CB388222DBE6CC308EF107",
     "bot/src/framework-to-framework/ai-provider--knowledge/public.js": "50515D8DF0F3A223DFEE71EE4B298EC1C2ECB4F784B2DB08B48B82A4C0E43FEA",
     "docs/Implementation_Plans/Framework_Refactor/RF01/PACKAGES.json": "63AF9FAE8DE1C98A78FA263BB438995613B3F28D9B0A1A922DF468708EB99E9F",
     "docs/Implementation_Plans/Framework_Refactor/RF01/BRIDGE_CONTRACTS.json": "F98555E6C129A325A80367ED6958536492534B36AF266D3781A7D8143E49D01D",
-    "docs/Implementation_Plans/Framework_Refactor/RF01/TRANSITIONS.json": "333E7DB44F6526579B6320CDB9FA628A740E86C6F16FA2AF21254776BC85257D",
-    "bot/tests/ai-gm-2026-10/rf05-f03-prompt-budget.test.mjs": "F0EAE26330345959A627CC9B5D38B6FED47948867C435DDE16B15230DDD843AE"
+    "docs/Implementation_Plans/Framework_Refactor/RF01/TRANSITIONS.json": "0E4CFB50B84414FB1C0AE0ED4117E24C7DC39AA77C93BE2DE4FE42ACD435B963",
+    "bot/tests/ai-gm-2026-10/rf05-f03-prompt-budget.test.mjs": "F0EAE26330345959A627CC9B5D38B6FED47948867C435DDE16B15230DDD843AE",
+    "bot/tests/ai-gm-2026-10/rf05-f03-scene-observation.test.mjs": "C2433449CF328A60E15797FFDB57F1B8A75A82E4F92CA1438896127202937946",
+    "docs/Implementation_Plans/Framework_Refactor/features/RF05-F03/LOCAL_HOLDS.json": "81330D3B5BE24EE7278639E06887BC833D12483E9BBAB0D41DEA8D5B7FB5581C"
   },
-  "test_log_sha256": "70DA21B81120363E44517880DCF28F4D0B436B703A7279214F09AB563A691505",
+  "test_log_sha256": "3B9B1D961A8B04F78E03EC165260BA81AE5120275E2836BF5D9261CBB13BFCE8",
+  "local_hold_entry_count": 289,
+  "local_hold_file": "LOCAL_HOLDS.json",
   "cost": {
     "provider_calls": 0,
     "provider_tokens": 0,

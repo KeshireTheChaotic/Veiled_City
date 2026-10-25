@@ -1,6 +1,6 @@
 # RF05-F03 execution ledger
 
-**Status:** COMPLETE FOR SCOPED PROMPT-BUDGET AND DISCLOSURE BOUNDARY. RF05 phase gate remains failed on inherited RF04 debt.
+**Status:** PARTIAL — prompt-budget/disclosure slice qualified; remaining preassigned RF05-F03 source transitions remain locally held.
 **Base HEAD:** `8e778dbabb7dc80de85d828aab4f96dcf11b0c7a`
 **Scope:** [`SCOPE.md`](SCOPE.md)
 
@@ -13,7 +13,7 @@
 
 ## Process note
 
-The initial file move and small adapter/API edits began before this feature's scope and ledger were created. No tests were run and no commit was made before these records were written. This sequence was contrary to the phase protocol; it is recorded here so the remaining implementation, single frozen test batch, gate result, and commit are governed by this scope. Preserve the initial changes and do not reset them.
+The initial file move and small adapter/API edits began before this feature's scope and ledger were created. No tests were run and no commit was made before these records were written. This sequence was contrary to the phase protocol; it is recorded here so the remaining implementation, single frozen test batch, gate result, and commit are governed by this scope. Preserve the initial changes and do not reset them. Subsequent manifest reconciliation found a separate exact pilot move also assigned RF05-F03; this classifier was added to the scope and is now included.
 
 ## Implementation and qualification
 
@@ -23,10 +23,12 @@ Fresh test `bot/tests/ai-gm-2026-10/rf05-f03-prompt-budget.test.mjs` passed **6/
 
 RF05 ratchet exited **1**: 570 modules, zero unowned, 2729 imports, largest cycle 181, 2437 raw historical occurrences, 1464 accepted, 968 active groups, and 967 transition errors. There are **zero active violations or transition errors on F03's changed paths**. The phase gate remains unqualified because earlier RF04 transition debt is expired under RF05. No provider calls, tokens, or spend. Exact results and hashes are in `RF05-F03-RUN.json` and `phases/RF05/rf05-f03-*.log`.
 
+The exact source-observation pilot assigned to RF05-F03 is moved into Narrative and exposed at its public API; `gm.js` uses that public API. Its production behavior is tested separately in `rf05-f03-scene-observation.test.mjs`. Transition reconciliation found **289 RF05-F03 records remain** (36 legacy locations, 127 direct cross-framework edges, 124 cycle edges, 2 pair-boundary edges). They span mixed Narrative, native-environment, and mechanics modules and are not safe to remove wholesale. Their exact IDs/edges are retained in `LOCAL_HOLDS.json`; these holds keep F03 and the RF05 phase incomplete. No new exceptions or deadline changes are made.
+
 ## Holds and rollback
 
 RF04 and the phase-wide RF05 ratchet remain incomplete from earlier transition debt. Preserve Daggerheart source/receipt authority, existing disclosure predicate semantics, and the request-local non-persistent nature of these projections. Rollback only the RF05-F03 commit and restore its exact prior import paths/manifest entries if needed.
 
 ## Next step
 
-Next exact feature: RF05-F04, decompose provider/narrative/intent call paths into narrow application workflows without moving combined GM policy wholesale or introducing creative restrictions.
+Next independent feature: RF05-F04, decompose provider/narrative/intent call paths into narrow application workflows without moving combined GM policy wholesale or introducing creative restrictions. F03 remains locally incomplete until its recorded transition debt is resolved or separately authorized.

@@ -15,7 +15,7 @@
 |---|---|---|
 | RF05-F01 | COMPLETE FOR SCOPED BOUNDARY | Four fresh tests passed in the final frozen batch; changed-file syntax passed; exact path and cross-import transitions were removed after the corresponding source occurrences disappeared. The RF05 ratchet remains failed on prior RF04 transition debt. See `RF05-F01-LEDGER.md` and `RF05-F01-RUN.json`. |
 | RF05-F02 | COMPLETE FOR SCOPED RAW-TRANSPORT BOUNDARY | Final fresh test 7/7 pass, syntax 4/4 pass; architecture gate finds no changed-path violations but remains failed on prior RF04 debt. See `RF05-F02-LEDGER.md` and `RF05-F02-RUN.json`. |
-| RF05-F03 | COMPLETE FOR SCOPED PROMPT-BUDGET/DISCLOSURE BOUNDARY | Fresh test 6/6 pass, syntax 6/6 pass; no changed-path violations. See `RF05-F03-LEDGER.md` and `RF05-F03-RUN.json`. |
+| RF05-F03 | PARTIAL — SCOPED SLICES QUALIFIED, 289 ASSIGNED TRANSITIONS LOCALLY HELD | Final frozen batch 9/9 pass, syntax 9/9 pass; no changed-path violations. See `RF05-F03-LEDGER.md`, `RF05-F03-RUN.json`, and `LOCAL_HOLDS.json`. |
 | RF05-F04 | NEXT | Create its scope and ledger before workflow decomposition. |
 | RF05-F05–F06 | NOT STARTED | Create each feature's scope and ledger immediately before its work. |
 
@@ -24,9 +24,9 @@
 - Phase status: INCOMPLETE / IN PROGRESS.
 - RF05-F01 final fresh tests: 4/4 pass, exit 0, 65.9672 ms. Changed-code syntax: 4/4 checks pass, exit 0.
 - RF05-F02 final fresh tests: 7/7 pass, exit 0, 657.8748 ms; one initial 6/7 run failed only because the delegate normalized default options, then passed after exact option forwarding. Changed-code syntax: 4/4 checks pass, exit 0.
-- RF05-F03 fresh tests: 6/6 pass, exit 0, 90.3717 ms. Changed-code syntax: 6/6 checks pass, exit 0.
-- Latest phase-aware architecture ratchet: fail, exit 1; 570 source modules, zero unowned, 2729 imports, 968 active prior-phase groups and 967 transition errors. No F01–F03 changed-path violations or transition errors. RF04's gate passed at RF04, but unresolved RF04 records are expired under RF05; RF04 remains incomplete. This failure does not stop independent RF05 work.
+- RF05-F03 final frozen tests: 9/9 pass, exit 0, 95.8206 ms. Changed-code syntax: 9/9 checks pass, exit 0. The prompt-budget test was rerun because the associated `gm.js` import path changed; it passed again.
+- Latest phase-aware architecture ratchet: fail, exit 1; 570 source modules, zero unowned, 2730 imports, 968 active prior-phase groups and 967 transition errors. No F01–F03 changed-path violations or transition errors. RF04's gate passed at RF04, but unresolved RF04 records are expired under RF05; RF04 remains incomplete. RF05-F03 also retains 289 locally documented exact transition assignments. This failure does not stop independent RF05 work.
 - Architecture and changed-code evidence: recorded per feature; the final union is reserved for RF05-F06.
 - Release: NOT AUTHORIZED.
 - Rollback: revert only RF05-specific commits in reverse order; do not reset or clean the checkout and do not revert pre-existing user changes.
-- Next feature: RF05-F04.
+- Next independent feature: RF05-F04. RF05-F03 remains locally incomplete; its held transitions are not treated as resolved by later-phase work.

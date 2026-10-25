@@ -58,7 +58,7 @@ import {sceneFictionFailure,buildSceneFictionContext} from './scene-fiction-cont
 import {assemblyNarrativeCandidate} from './pvp-output.js';
 import {openingCohortNarrativeCandidate} from './opening-cohort-state.js';
 import {assemblyInputs,hookHash,certifyAssemblyPlan} from './assembly-context.js';
-import {sceneObservationOperation} from './scene-observation-route.js';
+import {sceneObservationOperation} from './frameworks/narrative/public.js';
 import {engagementKinds,bindSemanticEngagement,currentSemanticEngagement,semanticSceneOperation} from './semantic-engagement.js';
 import {authorNarrativeRequests,NARRATIVE_AUTHORITY_INSTRUCTIONS,narrativeResponseSchema} from './narrative-authority.js';
 import {openingEntryNarrativeCandidate} from './opening-entry-context.js';

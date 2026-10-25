@@ -1,0 +1,17 @@
+✔ Knowledge pair aliases only an exact source visible to the current private recipient (0.7695ms)
+✔ mismatched, archived, inactive, wrong-campaign, and different-provenance facts never become references (0.1485ms)
+✔ session and context plan projections reference only structurally identical retained details (0.8261ms)
+✔ roster projection defers only named descriptive strings and retains control and unknown fields (0.4819ms)
+✔ whole-turn budget keeps mandatory context and reports exact complete optional-record omissions (0.6139ms)
+✔ mandatory context overflow fails with an uncommitted diagnostic (0.2721ms)
+✔ read-only scene description phrases remain eligible for the existing observation path (0.6096ms)
+✔ current-situation queries remain observations and do not admit action intent (0.1175ms)
+✔ ambiguous, overlong, or quoted input stays on the existing semantic path (0.1455ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 95.8206
