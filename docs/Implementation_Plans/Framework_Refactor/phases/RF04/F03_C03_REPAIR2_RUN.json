@@ -1,0 +1,10 @@
+{
+  "end": "2026-10-24T21:08:00.1259820-05:00",
+  "start": "2026-10-24T21:07:59.2864397-05:00",
+  "reason": "Player-private source also requires native campaign player registration; createCharacter alone does not register player.",
+  "syntax_exit": 0,
+  "base_sha": "fc0942219c5ef52302ba771be5647519018e304e",
+  "test_hash": "96b734b146848a711965fd3f7ada09860144f73f273f01ef73c66d3dc9fce924",
+  "test_exit": 0,
+  "run_id": "RF04_F03_C03_REPAIR2"
+}

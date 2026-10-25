@@ -1,0 +1,3 @@
+# RF04-F03 C03 — Evidence types, ancestry and authenticated promotion
+
+Base fc0942219c5ef52302ba771be5647519018e304e. Isolate existing evidence schema and five exact ancestry/type/audience/observation/promotion predicates in Knowledge. Keep World event indexing/audit fixed external capabilities. Preserve cycle/depth bounds, historical uncertain classification, exact committed observation repetition, testimony ancestry, private source entitlement, AI cannot establish canon, and explicit GM fact-ruling/audit transaction. No new output restriction or authority change. Fresh disposable SQLite, real World source/audit; no live model. One frozen blocking batch/no polling/no passing rerun. Rollback engine/public/rootprovider/test/crosswalk together. RELEASE NOT AUTHORIZED.

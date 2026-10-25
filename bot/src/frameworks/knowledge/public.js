@@ -7,3 +7,4 @@ export * from './public-referents.js';
 export * from './relationship-state.js';
 export * from './scoped-query.js';
 export {createMemoryClusters} from './memory-clusters.js';
+export {createEvidenceRules,epistemicSchema} from './epistemic.js';

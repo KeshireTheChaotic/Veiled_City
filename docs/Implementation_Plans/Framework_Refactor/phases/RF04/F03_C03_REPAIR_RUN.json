@@ -1,0 +1,10 @@
+{
+  "base_sha": "fc0942219c5ef52302ba771be5647519018e304e",
+  "end": "2026-10-24T21:07:50.4108340-05:00",
+  "test_hash": "8e2ab166f3d0319dad23256efb6faa6673043c91fd52f36da0f64e96053cf3c2",
+  "start": "2026-10-24T21:07:49.5718002-05:00",
+  "test_exit": 1,
+  "reason": "Fresh private-source fixture used nonexistent character IDs; establish actual same-campaign characters and use native generated IDs in audience scope.",
+  "syntax_exit": 0,
+  "run_id": "RF04_F03_C03_REPAIR"
+}

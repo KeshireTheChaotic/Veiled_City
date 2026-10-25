@@ -1,0 +1,32 @@
+{
+  "base_sha": "fc0942219c5ef52302ba771be5647519018e304e",
+  "syntax": [
+    {
+      "path": "bot/src/frameworks/knowledge/epistemic.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/frameworks/knowledge/public.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/epistemic.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf04-f03-c03.test.mjs",
+      "exit": 0
+    }
+  ],
+  "hashes": {
+    "bot/src/frameworks/knowledge/public.js": "8e7e8ea8f4515cf73716fd327cad8ada301ecd131acb34f2c656f365baee4a17",
+    "bot/tests/ai-gm-2026-10/rf04-f03-c03.test.mjs": "2bbf0047ff9e619b8fcc7d1bdbf1f4826c65446f682e529d65f8f6f165486c75",
+    "bot/src/epistemic.js": "08b727ccbd8b1607c83b613701fc7aa309331e9f2d740913d4d56ed16f3c996f",
+    "bot/src/frameworks/knowledge/epistemic.js": "d608d6795a62938ef716795799fc404e72cc3bf7ee3e4af05aa335f3a361aa41"
+  },
+  "end": "2026-10-24T21:07:40.9625040-05:00",
+  "start": "2026-10-24T21:07:37.8731046-05:00",
+  "architecture_exit": 0,
+  "run_id": "RF04_F03_C03",
+  "test_exit": 1
+}
