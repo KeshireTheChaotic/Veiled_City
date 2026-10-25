@@ -14,7 +14,7 @@ The scene-observation classifier remains a conservative read-only optimization s
 
 ## Test and execution rules
 
-Author new deterministic tests at `bot/tests/ai-gm-2026-10/rf05-f03-prompt-budget.test.mjs` and `rf05-f03-scene-observation.test.mjs`. Exercise the moved functions and actual pair wrapper: authorized versus unauthorized private recipient visibility, mismatch/source staleness rejection, lossless mandatory native fact retention, session/context/roster projections, complete optional record selection and omission counts, safe mandatory-overflow failure, and unchanged read-only query admission. No DB, provider, Discord, historical test/fixture, broad suite, CI, production data, remote services, or polling. Run each new test file once in a frozen blocking batch, plus changed-file syntax and the RF05 architecture ratchet.
+Author new deterministic tests at `bot/tests/ai-gm-2026-10/rf05-f03-c01.test.mjs` and `rf05-f03-scene-observation.test.mjs`. Exercise the moved functions and actual pair wrapper: authorized versus unauthorized private recipient visibility, mismatch/source staleness rejection, lossless mandatory native fact retention, session/context/roster projections, complete optional record selection and omission counts, safe mandatory-overflow failure, and unchanged read-only query admission. No DB, provider, Discord, historical test/fixture, broad suite, CI, production data, remote services, or polling. Run each new test file once in a frozen blocking batch, plus changed-file syntax and the RF05 architecture ratchet.
 
 ## Exit evidence
 

@@ -38,7 +38,7 @@
         "bot/src/gm.js"
       ],
       "tests": [
-        "bot/tests/ai-gm-2026-10/rf05-f03-prompt-budget.test.mjs"
+        "bot/tests/ai-gm-2026-10/rf05-f03-c01.test.mjs"
       ],
       "observed_directions": [
         {

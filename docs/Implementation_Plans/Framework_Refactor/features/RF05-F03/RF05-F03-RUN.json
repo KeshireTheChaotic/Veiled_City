@@ -28,7 +28,7 @@
   "tests": {
     "final_batch": {
       "files": [
-        "bot/tests/ai-gm-2026-10/rf05-f03-prompt-budget.test.mjs",
+        "bot/tests/ai-gm-2026-10/rf05-f03-c01.test.mjs",
         "bot/tests/ai-gm-2026-10/rf05-f03-scene-observation.test.mjs"
       ],
       "launch_count": 1,
@@ -58,7 +58,7 @@
       "bot/src/frameworks/narrative/public.js",
       "bot/src/framework-to-framework/ai-provider--knowledge/prompt-storage.js",
       "bot/src/framework-to-framework/ai-provider--knowledge/public.js",
-      "bot/tests/ai-gm-2026-10/rf05-f03-prompt-budget.test.mjs",
+      "bot/tests/ai-gm-2026-10/rf05-f03-c01.test.mjs",
       "bot/tests/ai-gm-2026-10/rf05-f03-scene-observation.test.mjs"
     ],
     "exit_codes": [0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -104,7 +104,7 @@
     "docs/Implementation_Plans/Framework_Refactor/RF01/PACKAGES.json": "63AF9FAE8DE1C98A78FA263BB438995613B3F28D9B0A1A922DF468708EB99E9F",
     "docs/Implementation_Plans/Framework_Refactor/RF01/BRIDGE_CONTRACTS.json": "F98555E6C129A325A80367ED6958536492534B36AF266D3781A7D8143E49D01D",
     "docs/Implementation_Plans/Framework_Refactor/RF01/TRANSITIONS.json": "0E4CFB50B84414FB1C0AE0ED4117E24C7DC39AA77C93BE2DE4FE42ACD435B963",
-    "bot/tests/ai-gm-2026-10/rf05-f03-prompt-budget.test.mjs": "F0EAE26330345959A627CC9B5D38B6FED47948867C435DDE16B15230DDD843AE",
+    "bot/tests/ai-gm-2026-10/rf05-f03-c01.test.mjs": "F0EAE26330345959A627CC9B5D38B6FED47948867C435DDE16B15230DDD843AE",
     "bot/tests/ai-gm-2026-10/rf05-f03-scene-observation.test.mjs": "C2433449CF328A60E15797FFDB57F1B8A75A82E4F92CA1438896127202937946",
     "docs/Implementation_Plans/Framework_Refactor/features/RF05-F03/LOCAL_HOLDS.json": "81330D3B5BE24EE7278639E06887BC833D12483E9BBAB0D41DEA8D5B7FB5581C"
   },
@@ -118,5 +118,22 @@
     "codex_usage": "UNMEASURED"
   },
   "release": "NOT_AUTHORIZED",
-  "rollback": "Revert only the RF05-F03 commit; restore its old import/path/registry entries without reverting F01/F02 or pre-existing user edits."
+  "rollback": "Revert only the RF05-F03 commit; restore its old import/path/registry entries without reverting F01/F02 or pre-existing user edits.",
+  "gate_correction": {
+    "cause": "The bridge registry named a real fresh test using a filename outside the architecture checker's accepted pattern, creating one active violation group without a transition record.",
+    "change": "Renamed the unchanged test to bot/tests/ai-gm-2026-10/rf05-f03-c01.test.mjs and updated registry, scope, run-record, and ledger path references.",
+    "test_rerun": false,
+    "reason_not_rerun": "Test contents and production code are unchanged; prior passing result remains valid.",
+    "renamed_test_sha256": "F0EAE26330345959A627CC9B5D38B6FED47948867C435DDE16B15230DDD843AE",
+    "current_bridge_registry_sha256": "D572D1A3B30B972AA1B08EDFA9FFB8DE81CCA7D714D98260A5325C1657B18F9B",
+    "ratchets": {
+      "RF03": {"exit_code": 0, "source_modules": 572, "unowned": 0, "imports": 2732, "largest_cycle": 181, "raw_occurrences": 2434, "accepted_legacy_occurrences": 2434, "active_violation_groups": 0, "transition_errors": 0, "log": "phases/RF03/rf03-prompt-budget-path-correction-architecture.log", "sha256": "72AE73AB9ECDC0DB4DC2795AAB2423305B6DD6DA9632E40484CF37CEB1A91465"},
+      "RF04": {"exit_code": 0, "source_modules": 572, "unowned": 0, "imports": 2732, "largest_cycle": 181, "raw_occurrences": 2434, "accepted_legacy_occurrences": 2434, "active_violation_groups": 0, "transition_errors": 0, "log": "phases/RF04/rf04-prompt-budget-path-correction-architecture.log", "sha256": "BAC1B3E522D5D58DE82488870910BF8EDBF5D5CDCCD6611D8A0D6241B06541E4"},
+      "RF05": {"exit_code": 1, "source_modules": 572, "unowned": 0, "imports": 2732, "largest_cycle": 181, "raw_occurrences": 2434, "accepted_legacy_occurrences": 1462, "active_violation_groups": 967, "transition_errors": 967, "log": "phases/RF05/rf05-prompt-budget-path-correction-architecture.log", "sha256": "B81C0A93467EC392D0464D88878D064F63AD3F486809ED53F53BD53EB3F87E27"}
+    },
+    "provider_calls": 0,
+    "provider_tokens": 0,
+    "provider_usd": 0,
+    "release": "NOT_AUTHORIZED"
+  }
 }

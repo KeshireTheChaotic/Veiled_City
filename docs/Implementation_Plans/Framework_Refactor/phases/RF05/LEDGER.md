@@ -32,3 +32,7 @@
 - Release: NOT AUTHORIZED.
 - Rollback: revert only RF05-specific commits in reverse order; do not reset or clean the checkout and do not revert pre-existing user changes.
 - RF05-F04 has a qualified model-selection slice; continue its workflow decomposition and retain its 62 exact assigned transition obligations. RF05-F03 remains locally incomplete; its held transitions are not treated as resolved by later-phase work.
+
+## Architecture gate correction — RF05-F03 test path
+
+The bridge registry's `ai-provider--knowledge` entry referenced `rf05-f03-prompt-budget.test.mjs`, which the checker does not recognize as a fresh feature-test path. The test was renamed without content edits to `rf05-f03-c01.test.mjs`; registry, scope, and evidence references were updated. The test was not rerun because its contents and production dependencies are unchanged. Current RF03 and RF04 ratchets pass with zero active groups/errors. Current RF05 ratchet remains failed on **967** prior-phase groups and **967** transition errors (not 968); the extra group is removed. Exact outputs are the three `*-prompt-budget-path-correction-architecture.log` records under `phases/RF03`, `RF04`, and `RF05`. This correction does not resolve RF05 transition debt or complete RF04/RF05. Release remains NOT AUTHORIZED.
