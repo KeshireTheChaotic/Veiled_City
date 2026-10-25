@@ -1,0 +1,23 @@
+{
+  "base_sha": "d70a8cfc8625d760f7ec7d64ac2cf7c0d821be31",
+  "original_source_sha256": "ce9bb11a1a0c4b7b68bf31a99c5a943af537c762d844c877a6ede5f485ac8b21",
+  "policy_body_sha256": "f0e1421e3600ccc356ace53e36e3ebc6923f505b0230d4c45f8c963949775e55",
+  "body_unchanged": true,
+  "dependencies": [
+    "cityObject",
+    "cityKey",
+    "cityInteger",
+    "cityAudit",
+    "indexWorldEvent",
+    "requireCitySource",
+    "handoutPlayerView",
+    "organizationInbox",
+    "evidenceView",
+    "evidenceType",
+    "activeEvidence",
+    "conversationPrincipal",
+    "ownerSemanticSource",
+    "assertSemanticCandidateProof"
+  ],
+  "hash_substitution": "same shared kernel row revision/full JSON SHA256 truncated32hex; own scoped queries internal"
+}

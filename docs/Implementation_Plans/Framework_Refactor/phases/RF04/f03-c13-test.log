@@ -1,0 +1,70 @@
+TAP version 13
+# Subtest: only a current present owner assignment has personal continuity authority, never another controller
+ok 1 - only a current present owner assignment has personal continuity authority, never another controller
+  ---
+  duration_ms: 186.5299
+  type: 'test'
+  ...
+# Subtest: explicit owner statement is private, revisioned and source-bound without becoming world truth or PC resources
+ok 2 - explicit owner statement is private, revisioned and source-bound without becoming world truth or PC resources
+  ---
+  duration_ms: 192.4344
+  type: 'test'
+  ...
+# Subtest: optional invitation remains private nonbinding and an explicit decline carries no choice, movement or cost
+ok 3 - optional invitation remains private nonbinding and an explicit decline carries no choice, movement or cost
+  ---
+  duration_ms: 201.3214
+  type: 'test'
+  ...
+# Subtest: stale owner arc revision and changed native source hold response without silently rewriting the invitation
+ok 4 - stale owner arc revision and changed native source hold response without silently rewriting the invitation
+  ---
+  duration_ms: 196.5147
+  type: 'test'
+  ...
+# Subtest: owner may explicitly confirm an old structured candidate while preserving its original receipt and terms
+ok 5 - owner may explicitly confirm an old structured candidate while preserving its original receipt and terms
+  ---
+  duration_ms: 213.88
+  type: 'test'
+  ...
+# Subtest: new model-only candidate text has no native typed owner source and never enters personal state
+ok 6 - new model-only candidate text has no native typed owner source and never enters personal state
+  ---
+  duration_ms: 191.0779
+  type: 'test'
+  ...
+# Subtest: discovery reads own and shared records, preserving uncertain claims and hiding GM and other PC secrets
+ok 7 - discovery reads own and shared records, preserving uncertain claims and hiding GM and other PC secrets
+  ---
+  duration_ms: 194.5029
+  type: 'test'
+  ...
+# Subtest: actual native PC proxy principal may read shared records but cannot obtain owner-private arcs or workflows
+ok 8 - actual native PC proxy principal may read shared records but cannot obtain owner-private arcs or workflows
+  ---
+  duration_ms: 193.9399
+  type: 'test'
+  ...
+# Subtest: personal arc audit failure rolls private player source and continuity state back together
+ok 9 - personal arc audit failure rolls private player source and continuity state back together
+  ---
+  duration_ms: 193.2222
+  type: 'test'
+  ...
+# Subtest: saved private arcs and invitations survive restart with current source revisions and original source exports
+ok 10 - saved private arcs and invitations survive restart with current source revisions and original source exports
+  ---
+  duration_ms: 203.0403
+  type: 'test'
+  ...
+1..10
+# tests 10
+# suites 0
+# pass 10
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2479.427

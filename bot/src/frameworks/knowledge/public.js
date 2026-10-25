@@ -17,3 +17,4 @@ export {createHistoryReconciliation} from './history-reconciliation.js';
 export {createPresentationEvidence} from './presentation-evidence.js';
 export {createEvidenceCustody} from './evidence-custody.js';
 export {createOwnedCommunity} from './owned-community.js';
+export {createPersonalContinuity} from './personal-continuity.js';
