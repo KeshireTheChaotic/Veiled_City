@@ -1,0 +1,32 @@
+{
+  "base_sha": "90057319b0318eb2549887af94a1026dffab0116",
+  "architecture_exit": 0,
+  "syntax": [
+    {
+      "path": "bot/src/frameworks/session/assembly-context.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/frameworks/session/public.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/assembly-context.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf04-f04-c05.test.mjs",
+      "exit": 0
+    }
+  ],
+  "start": "2026-10-24T21:59:14.4787573-05:00",
+  "hashes": {
+    "bot/src/assembly-context.js": "0498fd7d6c6924be55a4af3de3bdcb6fc4b6aedd73cfbc4398876df703d80cf7",
+    "bot/src/frameworks/session/assembly-context.js": "b9c4e1e870773a825ae349f861899efa730f19cbd94ec1d0bbf98a3100845b8e",
+    "bot/src/frameworks/session/public.js": "e086c416fcc28fd647468bba4221183652fa17e52a37329226af9508c13e2397",
+    "bot/tests/ai-gm-2026-10/rf04-f04-c05.test.mjs": "7eb161a31bee37cf197007ec11c759b1b0826d4b2195a2479034001a6817690e"
+  },
+  "test_exit": 0,
+  "run_id": "RF04-F04-C05-frozen",
+  "end": "2026-10-24T21:59:20.0837739-05:00"
+}

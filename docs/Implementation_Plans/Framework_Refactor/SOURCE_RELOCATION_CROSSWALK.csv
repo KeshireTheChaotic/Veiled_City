@@ -9,7 +9,7 @@ old_path,new_path,owner,move_phase,action,reverse_dependents,import_obligations
 "bot/src/ai-intents.js","bot/src/frameworks/intent/ai-intents.js","intent","RF05","DECOMPOSE_BEFORE_MOVE","24","32"
 "bot/src/ai-review.js","bot/src/frameworks/operations/ai-review.js","operations","RF02","DECOMPOSE_BEFORE_MOVE","1","8"
 "bot/src/application-authority.js","bot/src/kernel/application-authority.js","kernel","RF03","COMPLETED_C27_BYTE_IDENTICAL_KERNEL_MOVE","8","0"
-"bot/src/assembly-context.js","bot/src/frameworks/session/assembly-context.js","session","RF04","EXTRACT_PORTS_BEFORE_MOVE","13","1"
+"bot/src/assembly-context.js","bot/src/frameworks/session/assembly-context.js","session","RF04","POLICY_EXTRACTED_SOURCE_ADOPTION_RF04_F05","13","1"
 "bot/src/assembly-delivery.js","bot/src/application/workflows/assembly-delivery.js","application","RF06","DECOMPOSE_BEFORE_MOVE","1","1"
 "bot/src/assembly-evidence.js","bot/src/frameworks/session/assembly-evidence.js","session","RF04","LEAF_ISOLATED_OLD_READER_RF04_F05","1","0"
 "bot/src/assembly-planning.js","bot/src/application/workflows/assembly-planning.js","application","RF06","DECOMPOSE_BEFORE_MOVE","3","4"

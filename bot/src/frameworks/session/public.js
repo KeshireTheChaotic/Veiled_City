@@ -8,3 +8,4 @@ export {createSceneContinuity,RANGE_BANDS} from './scene-continuity.js';
 export {createSceneSetup} from './scene-setup.js';
 export {createOpeningAttendance} from './opening-attendance.js';
 export {createSessionWorldEventConsumer,sessionWorldEvents} from './contracts/world-events.js';
+export {createAssemblyContext,hookHash,assemblySourceError} from './assembly-context.js';

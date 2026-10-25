@@ -1,0 +1,80 @@
+{
+  "base_sha": "90057319b0318eb2549887af94a1026dffab0116",
+  "original_source_sha256": "f2884bbc430f915666e1fea7e2775dbc7784edb6eea0dba64200bff6dd5882ac",
+  "declarations": [
+    {
+      "name": "hookHash",
+      "sha256": "6b7e4ddf9adaeed17682d8a28ff378a61a51fc75770666328fee72bb4b74b230"
+    },
+    {
+      "name": "assemblySourceError",
+      "sha256": "1d9e7fcdf983c38b454500c58c7118b51275283699670996c3e64482ddfa103b"
+    },
+    {
+      "name": "ownerFields",
+      "sha256": "7cd2d504a622163045110647710226e47d1b1014557630f36400d8bcb5a9682d"
+    },
+    {
+      "name": "privateLabels",
+      "sha256": "cd4ea631900a4e32db5e6bf7bb1719fbf1afbbcbd9ce9c5b9bb1e9f723c34b45"
+    },
+    {
+      "name": "visibilityLabel",
+      "sha256": "6c5aa80b52c5a5e8e63b02b17a148687c226d8bfe8d246446262802379d03653"
+    },
+    {
+      "name": "ownerVisible",
+      "sha256": "45acbd2dd08376786a5840a794d4174d10f3f19ab60e4ce141646b894af7d524"
+    },
+    {
+      "name": "ownerText",
+      "sha256": "5c73f122363cab63f4de7c26f20d37bc17276276bed60ab1c4c4d0532243dd9d"
+    },
+    {
+      "name": "displayed",
+      "sha256": "108b7aff4c43879037a4648ff17e348f9f291f6dd76abb8fe91bbfa13d437b88"
+    },
+    {
+      "name": "assemblyHookSources",
+      "sha256": "a416d4655540beabf8f562c16c1c9c0f7847364b60add82747565d7b60468779"
+    },
+    {
+      "name": "assemblyInputs",
+      "sha256": "a8895327e971736da2c971891ca4341e9caca86fd5f09b9f5ac4c15c6644c15e"
+    },
+    {
+      "name": "assemblyInputFingerprint",
+      "sha256": "c38e9638e94b4485b3531681e6c8cbe8bbcd1afa36a3f1b2261ffac89ad7b944"
+    },
+    {
+      "name": "certifyAssemblyPlan",
+      "sha256": "a21dcbdaa65d5ec414934380914f1a71672776c06417d99daf3039621aeb32a8"
+    },
+    {
+      "name": "assemblyPlanFreshness",
+      "sha256": "e70942a363a436e87c60078eca3e8cf2b8772e7ff3d109bc8b1a62ce32942fed"
+    },
+    {
+      "name": "assemblyHookSelection",
+      "sha256": "5330a7d2fbdc4cf1a5b106bfad6cd544c5fffe381cb9aeedfb723d4a0bca07ca"
+    },
+    {
+      "name": "assemblyHookProjection",
+      "sha256": "c1d5a9d844c9fa02660c122d0c5aee1aad5136856ab0b7856865f266b67cfa82"
+    },
+    {
+      "name": "assemblyWriterBrief",
+      "sha256": "a822c523f840e56237df03fd3d567c774145c4cf7808c16203447af4ffdb78f8"
+    }
+  ],
+  "exports": [
+    "assemblyHookSources",
+    "assemblyInputs",
+    "assemblyInputFingerprint",
+    "certifyAssemblyPlan",
+    "assemblyPlanFreshness",
+    "assemblyHookSelection",
+    "assemblyHookProjection",
+    "assemblyWriterBrief"
+  ]
+}
