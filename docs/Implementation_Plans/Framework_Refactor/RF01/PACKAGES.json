@@ -20,6 +20,9 @@
     "ai-provider": [
       "bot/src/frameworks/ai-provider/public.js"
     ],
+    "ai-provider--knowledge": [
+      "bot/src/framework-to-framework/ai-provider--knowledge/public.js"
+    ],
     "discord": [
       "bot/src/frameworks/discord/public.js"
     ],

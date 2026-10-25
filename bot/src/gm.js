@@ -38,7 +38,8 @@ import { entryReferenceContext } from "./scene-entry.js";
 import { OnlineSrd } from "./frameworks/daggerheart/public.js";
 import { interpretationSchema, CONTEXT_CONTRACT, interpretationContext, validateInterpretation } from "./narrative-context.js";
 import { epistemicSchema, evidenceType, activeEvidence } from "./epistemic.js";
-import { budgetTurnPrompt, referenceContextPlan, referenceSessionContext, partitionRosterContext, referenceTurnStorage } from "./prompt-budget.js";
+import {budgetTurnPrompt,referenceContextPlan,referenceSessionContext,partitionRosterContext} from './frameworks/ai-provider/public.js';
+import {referenceKnowledgeScopedTurnStorage} from './framework-to-framework/ai-provider--knowledge/public.js';
 import { recoverOptionalTurnFields } from "./turn-recovery.js";
 import { projectAuthorityRecords } from "./authority-projection.js";
 import { operationalMetrics, measureStage, measureNative } from "./operational-metrics.js";
@@ -796,7 +797,7 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
     // structuredResponse appends these fixed wrappers on every request; reserve them in addition to bounded correction headroom.
     const reserveChars=6000+(instructions.includes(AUTHORITY_POLICY)?0:AUTHORITY_POLICY.length+1)
       +INTENT_PROMPT.length+GM_WORLD_NARRATIVE_PROMPT.length+8;
-    const {input}=budgetTurnPrompt(referenceTurnStorage(sections,{guildId,
+    const {input}=budgetTurnPrompt(referenceKnowledgeScopedTurnStorage(sections,{guildId,
       scope:{mode:scope,actorUserId,actorCharacterId:ctx.actor_assignment?.character_id}}),{instructions,query:messageText,reserveChars});
     let turnSchema=ctx.decision_advisory?{...gmSchema,properties:{...gmSchema.properties,decision_advisory:requiredDecisionAdvisorySchema}}:gmSchema;
     if(arbitrationOrigin)turnSchema={...turnSchema,properties:{...turnSchema.properties,unified_arbitration:unifiedArbitrationSchema},required:[...turnSchema.required,'unified_arbitration']};

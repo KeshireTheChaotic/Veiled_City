@@ -1,0 +1,91 @@
+{
+  "feature": "RF05-F03",
+  "status": "COMPLETE_FOR_SCOPED_PROMPT_BUDGET_AND_DISCLOSURE_BOUNDARY",
+  "base_head": "8e778dbabb7dc80de85d828aab4f96dcf11b0c7a",
+  "branch": "codex/clean-ai-gm-2026-10",
+  "process_note": "Initial move and small adapter/API edits preceded creation of this feature scope and ledger; recorded in LEDGER.md. No tests or commit occurred before scope/ledger creation.",
+  "changed_modules": [
+    "bot/src/gm.js",
+    "bot/src/prompt-budget.js (deleted/moved)",
+    "bot/src/frameworks/ai-provider/prompt-budget.js",
+    "bot/src/frameworks/ai-provider/public.js",
+    "bot/src/frameworks/ai-provider/README.md",
+    "bot/src/framework-to-framework/ai-provider--knowledge/prompt-storage.js",
+    "bot/src/framework-to-framework/ai-provider--knowledge/public.js",
+    "docs/Implementation_Plans/Framework_Refactor/RF01/PACKAGES.json",
+    "docs/Implementation_Plans/Framework_Refactor/RF01/BRIDGE_CONTRACTS.json",
+    "docs/Implementation_Plans/Framework_Refactor/RF01/TRANSITIONS.json"
+  ],
+  "ownership": {
+    "request_budget_and_lossless_local_projection": "ai-provider",
+    "recipient_fact_visibility": "knowledge",
+    "two_framework_mapping": "ai-provider--knowledge pair public adapter",
+    "application_consumer": "gm.js calls registered provider and pair APIs"
+  },
+  "tests": {
+    "path": "bot/tests/ai-gm-2026-10/rf05-f03-prompt-budget.test.mjs",
+    "launch_count": 1,
+    "exit_code": 0,
+    "passed": 6,
+    "failed": 0,
+    "duration_ms": 90.3717,
+    "terminal_summary": "phases/RF05/rf05-f03-test.log",
+    "sha256": "F0EAE26330345959A627CC9B5D38B6FED47948867C435DDE16B15230DDD843AE"
+  },
+  "syntax": {
+    "files_checked": [
+      "bot/src/gm.js",
+      "bot/src/frameworks/ai-provider/prompt-budget.js",
+      "bot/src/frameworks/ai-provider/public.js",
+      "bot/src/framework-to-framework/ai-provider--knowledge/prompt-storage.js",
+      "bot/src/framework-to-framework/ai-provider--knowledge/public.js",
+      "bot/tests/ai-gm-2026-10/rf05-f03-prompt-budget.test.mjs"
+    ],
+    "exit_codes": [0, 0, 0, 0, 0, 0],
+    "log": "phases/RF05/rf05-f03-syntax.log",
+    "sha256": "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855"
+  },
+  "architecture": {
+    "check": "Framework boundary ratchet, mode ratchet, phase RF05",
+    "exit_code": 1,
+    "source_modules": 570,
+    "unowned": 0,
+    "imports": 2729,
+    "largest_cycle": 181,
+    "raw_occurrences": 2437,
+    "accepted_legacy_occurrences": 1464,
+    "active_violation_groups": 968,
+    "transition_errors": 967,
+    "changed_path_violations": [],
+    "changed_path_transition_errors": [],
+    "result": "Whole RF05 gate remains failed on prior RF04 transition debt; no active violation or transition error on changed F03 paths.",
+    "log": "phases/RF05/rf05-f03-architecture.log",
+    "sha256": "D890529AAD6F830C649890C8549E4CB226164B0DE0D79F1B0F40AF8F003ABBFB"
+  },
+  "removed_transition_ids": [
+    "5994fd459e0f589040dee3b5b363381f4b6f9449ff62d6d68c3df52705dd38c8",
+    "a0d900511b20d7c994d2c7b8558d1903769f89bda9152cc20bcb985990545bb0",
+    "f45aba2564f1e3ee5888c2e0cdd2391dede0d6a963f7411a9345f03d6eb1bfba"
+  ],
+  "source_sha256": {
+    "bot/src/gm.js": "CC29B79B9FC7B2AB8A570DD9EB54F2C61B2DD4D5817285B2707ADAF6E92BC58C",
+    "bot/src/frameworks/ai-provider/prompt-budget.js": "7AB1A102173DC817114EDA23FD7FFD1F43BA04B41930F19138AC850067E02C3D",
+    "bot/src/frameworks/ai-provider/public.js": "47BA1DA9DD1C82C67137D116EEFD47CD54BE42F98AFAD8DD523619880A5B6E16",
+    "bot/src/frameworks/ai-provider/README.md": "A517BAFF5F00059C32BF3CC263E3B7B7E360BC19893569E1E376EF6E70DCD0F2",
+    "bot/src/framework-to-framework/ai-provider--knowledge/prompt-storage.js": "8E56CAC464992E914ED201784295E8E5D82583A706CB388222DBE6CC308EF107",
+    "bot/src/framework-to-framework/ai-provider--knowledge/public.js": "50515D8DF0F3A223DFEE71EE4B298EC1C2ECB4F784B2DB08B48B82A4C0E43FEA",
+    "docs/Implementation_Plans/Framework_Refactor/RF01/PACKAGES.json": "63AF9FAE8DE1C98A78FA263BB438995613B3F28D9B0A1A922DF468708EB99E9F",
+    "docs/Implementation_Plans/Framework_Refactor/RF01/BRIDGE_CONTRACTS.json": "F98555E6C129A325A80367ED6958536492534B36AF266D3781A7D8143E49D01D",
+    "docs/Implementation_Plans/Framework_Refactor/RF01/TRANSITIONS.json": "333E7DB44F6526579B6320CDB9FA628A740E86C6F16FA2AF21254776BC85257D",
+    "bot/tests/ai-gm-2026-10/rf05-f03-prompt-budget.test.mjs": "F0EAE26330345959A627CC9B5D38B6FED47948867C435DDE16B15230DDD843AE"
+  },
+  "test_log_sha256": "70DA21B81120363E44517880DCF28F4D0B436B703A7279214F09AB563A691505",
+  "cost": {
+    "provider_calls": 0,
+    "provider_tokens": 0,
+    "provider_usd": 0,
+    "codex_usage": "UNMEASURED"
+  },
+  "release": "NOT_AUTHORIZED",
+  "rollback": "Revert only the RF05-F03 commit; restore its old import/path/registry entries without reverting F01/F02 or pre-existing user edits."
+}

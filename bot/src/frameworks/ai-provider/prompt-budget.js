@@ -1,6 +1,5 @@
 /** Whole-turn character budget: preserve mandatory authority and omit only complete optional records. No writes or provider calls. */
 import {createHash} from 'node:crypto';
-import {factVisibleTo} from './disclosure-authority.js';
 const separator="\n\n---\n\n";
 const encode=value=>typeof value==="string"?value:JSON.stringify(value)??"null";
 const render=(section,value=section.value)=>`${section.label}:\n${encode(value)}`;
@@ -49,7 +48,7 @@ const nativeStorageSections=new Set([
   'AUTONOMOUS WORLD (GM-private native creation/action context)'
 ]);
 /** Lossless request-local projection only. Immutable declarations/ledgers and persisted records are never rewritten. */
-export function referenceTurnStorage(sections,{guildId,scope}={}){
+export function referenceTurnStorage(sections,{guildId,scope,factVisibleTo=()=>false}={}){
   let aliases=0;
   const project=value=>{
     if(Array.isArray(value))return value.map(project);
