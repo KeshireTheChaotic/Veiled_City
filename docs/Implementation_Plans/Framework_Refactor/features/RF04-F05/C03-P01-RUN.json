@@ -1,0 +1,55 @@
+{
+  "feature": "RF04-F05-C03-P01",
+  "status": "SCOPED_QUALIFIED_PREREQUISITE_ONLY",
+  "base_head": "0b07e239040ad2cbe4843e74c0b905fab2e00d43",
+  "production_changes": [
+    "bot/src/frameworks/narrative/source-visibility.js",
+    "bot/src/frameworks/narrative/public.js",
+    "bot/src/scene-fiction-context.js"
+  ],
+  "sha256": {
+    "narrative_source_visibility": "B4FCBF453BE6EF11E78B2FBBEEABB0F9A7022D24E6146525CA81EFFA332D30CB",
+    "narrative_public": "0332A9C8FCBB94CD5644E0B0A61E34ADBFD355F718E3D150F74BF463E46A6955",
+    "compatibility_context": "752912DA6DBE45C8D50CAE2B3AF8D1E6EC98AC3961BC552140EE11F7D8B35270",
+    "fresh_test": "87520937641F80F37C618468FE6671FF986DDD3529767B9261B5B4B1EB1D055A",
+    "initial_test_log": "71272AEF2FA822CA0397027FAD9F146D99CFF578D39AB17EC6161BFDC40DC997",
+    "final_test_log": "E9C3DA77FADB969D101EECCB99E4FB5561943ED052A225FD8C2BBBBE73BAA7AD",
+    "architecture_log": "B1F36FCDCDCAAFE68F3A1B0E181177088C1BF19AC2571DA191A559215E4B1120"
+  },
+  "test": {
+    "path": "bot/tests/ai-gm-2026-10/rf04-f05-c03-p01.test.mjs",
+    "command": "node --test bot/tests/ai-gm-2026-10/rf04-f05-c03-p01.test.mjs",
+    "unique_cases": 1,
+    "executions": 2,
+    "initial": {"exit_code": 1, "passed": 0, "failed": 1, "reason": "test event fixture omitted required source_id"},
+    "final": {"exit_code": 0, "passed": 1, "failed": 0, "tap_duration_ms": 708.5687, "case_duration_ms": 184.8688},
+    "syntax": "node --check passed for the three changed production modules and the fresh test; changed test syntax passed again after fixture repair"
+  },
+  "coverage": [
+    "Public source remains visible to shared audience through actual event and evidence rows",
+    "Owner-private source is visible only to the exact character owner",
+    "A party event with a private ancestor remains private in recursive closure",
+    "Cycles fail closed",
+    "Retracted sources fail closed through new capability and compatibility path",
+    "Existing scene-fiction-context API delegates to the new Narrative-owned capability"
+  ],
+  "architecture": {
+    "command": "npm --prefix bot run architecture:check",
+    "exit_code": 0,
+    "source_modules": 563,
+    "unowned": 0,
+    "imports": 2716,
+    "largest_scc": 181,
+    "accepted_legacy_occurrences": 2442,
+    "active_violation_groups": 0,
+    "transition_errors": 0
+  },
+  "cost": {"provider_calls": 0, "tokens": 0, "usd": 0, "codex_usage": "UNMEASURED"},
+  "remaining_c03_hold": [
+    "Narrative context construction/audience issuance remains in legacy-owned modules.",
+    "An approved bootstrap-reached application composer for narrative--world is not established.",
+    "No narrative--world adapter or live workflow adoption was performed or qualified."
+  ],
+  "rollback": "Restore the original closure body in scene-fiction-context.js, remove the Narrative public export and new source-visibility module, and remove this fresh test/evidence together.",
+  "release": "NOT_AUTHORIZED"
+}

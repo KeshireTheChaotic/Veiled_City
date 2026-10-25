@@ -1,0 +1,18 @@
+npm notice run veiled-city-discord-gm@0.0.0.1 architecture:check
+npm notice run node tooling/architecture/check-boundaries.mjs --ratchet --phase RF02
+{
+  "mode": "ratchet",
+  "phase": "RF02",
+  "sourceModules": 563,
+  "unowned": 0,
+  "importOccurrences": 2716,
+  "internalImportOccurrences": 2540,
+  "cycleComponents": 1,
+  "largestCycle": 181,
+  "rawViolationOccurrences": 2442,
+  "acceptedLegacyOccurrences": 2442,
+  "activeViolationGroups": 0,
+  "transitionErrors": 0,
+  "pass": true,
+  "firstErrors": []
+}
