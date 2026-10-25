@@ -13,3 +13,7 @@ export function actorSource(...args){return motivation().actorSource(...args);}
 export function proposeGoalTransition(...args){return motivation().proposeGoalTransition(...args);}
 export function reviewGoalTransition(...args){return motivation().reviewGoalTransition(...args);}
 export function runMotivationCycle(...args){return motivation().runMotivationCycle(...args);}
+
+import {npcEvidenceProvider} from './frameworks/npc/public.js';
+const provideActorEvidence=()=>motivation().actorSource;
+npcEvidenceProvider.provideSource(provideActorEvidence);

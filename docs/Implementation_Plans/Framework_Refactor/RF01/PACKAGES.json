@@ -76,6 +76,9 @@
     ],
     "npc": [
       "bot/src/frameworks/npc/public.js"
+    ],
+    "npc--world": [
+      "bot/src/framework-to-framework/npc--world/public.js"
     ]
   },
   "externalCapabilityOwners": {

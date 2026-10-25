@@ -13522,20 +13522,6 @@
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
     {
-      "id": "f95a172588acb99779aba95bf62483af8f757dcd6ee1698014695c2f251434d1",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/native-world-operations.js",
-      "to": "bot/src/simulation-motivation.js",
-      "kind": "static",
-      "specifier": "./simulation-motivation.js",
-      "owner": "world",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F01",
-      "expires_after": "RF04",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
       "id": "e408b074564b2ac42b7cd26900874b95003718a44ef076ae933c9eb51b7c4ea2",
       "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
       "from": "bot/src/native-world-operations.js",
@@ -19127,20 +19113,6 @@
       "owner": "session",
       "max_occurrences": 1,
       "remove_in_feature": "RF04-F04",
-      "expires_after": "RF04",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
-      "id": "2cbcdc2cc64b447cc01597b64d6c88f01d3a6e7deb74251d5a6ccdcde3a25a4f",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/supply-dependencies.js",
-      "to": "bot/src/simulation-motivation.js",
-      "kind": "static",
-      "specifier": "./simulation-motivation.js",
-      "owner": "world",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F01",
       "expires_after": "RF04",
       "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
@@ -27839,20 +27811,6 @@
       "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
     },
     {
-      "id": "69d410edec083977ad457ba85890065e6e64018e5482969ba6eb14df0b5d8f6c",
-      "code": "CYCLIC_IMPORT_EDGE",
-      "from": "bot/src/native-world-operations.js",
-      "to": "bot/src/simulation-motivation.js",
-      "kind": "static",
-      "specifier": "./simulation-motivation.js",
-      "owner": "world",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F01",
-      "expires_after": "RF04",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
-    },
-    {
       "id": "12e7ce6a197666cc9eb7964600228128b72f005ca01cd016c910d705f90483dc",
       "code": "CYCLIC_IMPORT_EDGE",
       "from": "bot/src/native-world-operations.js",
@@ -32286,20 +32244,6 @@
       "owner": "session",
       "max_occurrences": 1,
       "remove_in_feature": "RF04-F04",
-      "expires_after": "RF04",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
-    },
-    {
-      "id": "92805c1da911cbfaea2e50ba2b9b50f0aaa0550da092ce0386ebec65975f3d70",
-      "code": "CYCLIC_IMPORT_EDGE",
-      "from": "bot/src/supply-dependencies.js",
-      "to": "bot/src/simulation-motivation.js",
-      "kind": "static",
-      "specifier": "./simulation-motivation.js",
-      "owner": "world",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F01",
       "expires_after": "RF04",
       "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
       "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."

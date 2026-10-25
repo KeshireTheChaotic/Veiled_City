@@ -6,3 +6,5 @@ export {initializePvpAgreements} from './pvp-agreements.js';
 export {initializeNativeOutcomes} from './native-outcomes.js';
 
 export {initializeCharacterCreation} from './character-creation.js';
+
+export {initializeNpcWorldEvidence} from './npc-world-evidence.js';

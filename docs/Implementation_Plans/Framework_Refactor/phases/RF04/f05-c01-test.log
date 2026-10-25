@@ -1,0 +1,88 @@
+TAP version 13
+# Subtest: fixed source and World consumer fail closed until composed and forbid replacement
+ok 1 - fixed source and World consumer fail closed until composed and forbid replacement
+  ---
+  duration_ms: 0.8189
+  type: 'test'
+  ...
+# Subtest: adapter forwards original exact inputs and original checked result without manufacturing authority
+ok 2 - adapter forwards original exact inputs and original checked result without manufacturing authority
+  ---
+  duration_ms: 0.1425
+  type: 'test'
+  ...
+# Subtest: production initialization is idempotent and uses the original single NPC source engine
+ok 3 - production initialization is idempotent and uses the original single NPC source engine
+  ---
+  duration_ms: 0.1494
+  type: 'test'
+  ...
+# Subtest: actual NPC evidence and World authority mint an exact live grant without canon or PC effects
+ok 4 - actual NPC evidence and World authority mint an exact live grant without canon or PC effects
+  ---
+  duration_ms: 179.818
+  type: 'test'
+  ...
+# Subtest: actual native goal proposal and approval persist and replay once through the connected NPC service
+ok 5 - actual native goal proposal and approval persist and replay once through the connected NPC service
+  ---
+  duration_ms: 191.2322
+  type: 'test'
+  ...
+# Subtest: current actor control is rechecked by the native domain after a grant and before goal approval
+ok 6 - current actor control is rechecked by the native domain after a grant and before goal approval
+  ---
+  duration_ms: 187.9371
+  type: 'test'
+  ...
+# Subtest: a model label or objective event cannot substitute for separately acquired NPC knowledge
+ok 7 - a model label or objective event cannot substitute for separately acquired NPC knowledge
+  ---
+  duration_ms: 216.3844
+  type: 'test'
+  ...
+# Subtest: policy and source changes invalidate the actual grant without overwriting pending history
+ok 8 - policy and source changes invalidate the actual grant without overwriting pending history
+  ---
+  duration_ms: 183.9863
+  type: 'test'
+  ...
+# Subtest: actual connected supply path checks original NPC evidence and replays one durable private receipt after restart
+ok 9 - actual connected supply path checks original NPC evidence and replays one durable private receipt after restart
+  ---
+  duration_ms: 186.1985
+  type: 'test'
+  ...
+# Subtest: source control failure and actual SQLite audit failure leave both supply balances and receipt unchanged
+ok 10 - source control failure and actual SQLite audit failure leave both supply balances and receipt unchanged
+  ---
+  duration_ms: 177.3251
+  type: 'test'
+  ...
+# Subtest: actual PC identity cannot be disguised as an autonomous NPC through the composed source interface
+ok 11 - actual PC identity cannot be disguised as an autonomous NPC through the composed source interface
+  ---
+  duration_ms: 178.7413
+  type: 'test'
+  ...
+# Subtest: current startup source binds pair before runtime services and retains static NPC provider registration reachability
+ok 12 - current startup source binds pair before runtime services and retains static NPC provider registration reachability
+  ---
+  duration_ms: 653.0654
+  type: 'test'
+  ...
+# Subtest: saved supply receipt replays in a fresh process without live NPC/World composition
+ok 13 - saved supply receipt replays in a fresh process without live NPC/World composition
+  ---
+  duration_ms: 637.5624
+  type: 'test'
+  ...
+1..13
+# tests 13
+# suites 0
+# pass 13
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 9735.5786

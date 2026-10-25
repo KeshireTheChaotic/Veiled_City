@@ -2723,21 +2723,17 @@
         "npc",
         "world"
       ],
-      "status": "PROPOSED_NO_API",
+      "status": "ADOPTED",
       "directions": [
         {
           "from": "world",
           "to": "npc",
-          "import_occurrences": 17,
-          "injected_calls": 0,
-          "contract": "Observed dependency only; exact port remains with accountable migration"
+          "contract": "Exact current db/campaign/actor/information/source and existing resource-check option; no requested world fact becomes acquired NPC knowledge."
         },
         {
           "from": "npc",
           "to": "world",
-          "import_occurrences": 14,
-          "injected_calls": 0,
-          "contract": "Observed dependency only; exact port remains with accountable migration"
+          "contract": "Original actorSource current control/source/acquired belief/feasibility result only; subjective secret evidence stays backend state, no canon/PC execution/publication grant."
         }
       ],
       "source_evidence": [
@@ -2746,13 +2742,23 @@
           "to": "bot/src/npc-cognition.js",
           "line": 11,
           "type": "import"
+        },
+        {
+          "from": "bot/src/application/composition/npc-world-evidence.js",
+          "to": "bot/src/framework-to-framework/npc--world/public.js",
+          "line": 1,
+          "type": "import"
         }
       ],
-      "validation": "Retain source and audience authority; design exact port in owning migration; observed imports do not prove runtime traffic.",
-      "lifecycle": "Observed proposal; no package/API/consumer claimed.",
-      "adoption_feature": "RF04",
-      "consumers": [],
-      "tests": [],
+      "validation": "One fixed NPC provider returns its original cached actor-source function; World consumer rejects missing or replaced service; original policy remains authoritative.",
+      "lifecycle": "Application bootstrap binds once before configuration/database/client. Root World operation authority and supply source consumers adopt own World interface. Original NPC source still composes legacy World/Knowledge/Session/native capabilities; not full producer isolation.",
+      "adoption_feature": "RF04-F05",
+      "consumers": [
+        "bot/src/application/composition/npc-world-evidence.js"
+      ],
+      "tests": [
+        "bot/tests/ai-gm-2026-10/rf04-f05-c01.test.mjs"
+      ],
       "observed_directions": [
         {
           "from": "world",
@@ -2772,7 +2778,9 @@
         "pair": "npc--world",
         "graph_sha256": "1caa7f33db8af9cbe17685493f4f23e46deb1c80ac2cd01c34ef3f8f7517bfe2",
         "occurrences": 31
-      }
+      },
+      "public_api": "bot/src/framework-to-framework/npc--world/public.js",
+      "scope": "Adopted actor-evidence service in two actual World consumers only; other observed NPC/World edges and source producer isolation remain accountable."
     },
     {
       "pair": "operations--persistence",

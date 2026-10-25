@@ -1,10 +1,9 @@
 /** Original World authority provider. Exactly one shared service retains all live grants and strategy frames. */
-import {actorSource} from './simulation-motivation.js';
 import {conversationPrincipal} from './conversation-principal.js';
 import {assertWorldActorControl} from './city-constraints.js';
-import {createWorldOperationAuthority} from './frameworks/world/public.js';
+import {createWorldOperationAuthority,worldNpcEvidence} from './frameworks/world/public.js';
 let worldAuthority;
-function authority(){return worldAuthority??=createWorldOperationAuthority({actorSource:(...args)=>actorSource(...args),conversationPrincipal:(...args)=>conversationPrincipal(...args),assertWorldActorControl:(...args)=>assertWorldActorControl(...args)});}
+function authority(){return worldAuthority??=createWorldOperationAuthority({actorSource:(...args)=>worldNpcEvidence.actorSource(...args),conversationPrincipal:(...args)=>conversationPrincipal(...args),assertWorldActorControl:(...args)=>assertWorldActorControl(...args)});}
 export function nativeWorldCoordinatorReady(...args){return authority().nativeWorldCoordinatorReady(...args);}
 export function nativeWorldOperationCatalog(...args){return authority().nativeWorldOperationCatalog(...args);}
 export function prepareNativeWorldOperation(...args){return authority().prepareNativeWorldOperation(...args);}

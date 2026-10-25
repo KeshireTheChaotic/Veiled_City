@@ -1,0 +1,3 @@
+# RF04-F05 — Actual RF04 pair adoption
+
+Start 966b88d6d468e311a5d484d028513241f153344e. Adopt exact npc--world, knowledge--world, knowledge--narrative, narrative--world and session--world interfaces as their source policies become available. This feature is an implementation dependency within active RF04, not phase completion or deadline extension. Each adapter imports only its two registered public APIs; thin application composition wires it. Source/transaction/identity/publication authority is never copied into bridge. Freeze fresh actual consumer tests and current architectural gate; no old suites, broad validation, polling, providers, production data or remote operations. F01/F02 and remaining RF04 source obligations stay incomplete. RELEASE NOT AUTHORIZED.

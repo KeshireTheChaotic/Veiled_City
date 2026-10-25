@@ -1,0 +1,72 @@
+{
+  "start": "2026-10-24T20:51:56.9657203-05:00",
+  "hashes": {
+    "bot/tests/ai-gm-2026-10/rf04-f05-c01.test.mjs": "157597cd09487a1612c312a406fc5d1a92b52d348eafd98d9771c9f758456733",
+    "bot/src/native-world-operations.js": "6c1ed0ffc7df1ce3a73808a5630eab87b2f57b69dcac70ff3bf808736d6a6c98",
+    "bot/src/frameworks/world/public.js": "1837f81181c9cee78d43511e00eade0a546972ac3b2449c9de992bab6518ad62",
+    "bot/src/application/composition/public.js": "1de5e1dce65d4ff20953935923e2ea88b3e10e241c6791aaa45239d6c3d0e818",
+    "bot/src/framework-to-framework/npc--world/public.js": "e1055d18fd7ecc32971bedf5c623e504b09fc4dc564cd9875619c5263a3b62be",
+    "bot/src/supply-dependencies.js": "854bfe1596c480a0bb39b5691b3333ea429850d8e78a563a1109b31f38f2ce58",
+    "bot/src/frameworks/world/contracts/npc-evidence.js": "a9fdcb745ab2c0a051ab3462ae0b42ff17653458071fafa9a42a779e9df8be47",
+    "bot/src/application/composition/npc-world-evidence.js": "61ac4abd538026725e20a16866c9432d07aa86b7a1c716d1e84733f784d57b24",
+    "bot/src/simulation-motivation.js": "d6e13974ea4d0d6552f2010afeeb2d6b6f301d647e3682a8cd87d3aa329ff330",
+    "bot/src/frameworks/npc/public.js": "9ea6a8688915834ac6d9c2e0b399805dd00d0f0e0eec2a01059194da05ee6796",
+    "bot/src/frameworks/npc/contracts/world-evidence-source.js": "c9cf6b40e48f333fbd9d2ed37db5e837b8dd2f8dfa9520abcb8deb5e1675ff7e",
+    "bot/src/index.js": "c15f3bb78dfb0e2eecd045159707868abf0d229eda277c73203bc66af08a8d00"
+  },
+  "run_id": "RF04_F05_C01_RF04_F02_C02",
+  "architecture_exit": 0,
+  "syntax": [
+    {
+      "exit": 0,
+      "path": "bot/src/frameworks/npc/contracts/world-evidence-source.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/frameworks/world/contracts/npc-evidence.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/frameworks/npc/public.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/frameworks/world/public.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/simulation-motivation.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/framework-to-framework/npc--world/public.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/application/composition/npc-world-evidence.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/application/composition/public.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/native-world-operations.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/supply-dependencies.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/index.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/tests/ai-gm-2026-10/rf04-f05-c01.test.mjs"
+    }
+  ],
+  "test_exit": 0,
+  "end": "2026-10-24T20:52:08.0700619-05:00",
+  "base_sha": "966b88d6d468e311a5d484d028513241f153344e"
+}
