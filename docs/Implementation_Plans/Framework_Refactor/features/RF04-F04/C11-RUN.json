@@ -1,0 +1,59 @@
+{
+  "feature": "RF04-F04-C11",
+  "status": "SCOPED_QUALIFIED",
+  "base_head": "dd3bb2c724d4cc983e9a41babfe9b917c01723b9",
+  "production_code_changed": false,
+  "test": "bot/tests/ai-gm-2026-10/rf04-f04-c11.test.mjs",
+  "sha256": {
+    "test": "82257E8CE4F0ABF799D9D3031C159BDEFE224792280420A9EA81A4D6DEF6C0E4",
+    "commands_source_snapshot_with_preexisting_owner_edits": "ACA2FBD1317C3408EC31E40C4BD7901B8C6EC2D17C11A85942618A4A9C0B4425",
+    "opening_entry": "3A5EBC7A2382595181D30C89EDC167B4B7E9B00C52D51A835CA0EF5CD779CD64",
+    "opening_flow": "B1C154EEBD5A76C935A3F93DD70237C38FECD693DEEF0212D62568A46DF70255",
+    "terminal_log": "5373D091EED63F22C5188E5B9F667A659BAE651A0A9E8922EC14A3067A8C8185",
+    "architecture_log": "503C39C68E5CF7199AF76486B6A0E2713CF43465E7FF909D03CC98A1E7B125CE"
+  },
+  "command": "node --test bot/tests/ai-gm-2026-10/rf04-f04-c11.test.mjs",
+  "result": {
+    "exit_code": 0,
+    "passed": 1,
+    "failed": 0,
+    "executions": 1,
+    "tap_duration_ms": 1850.2257,
+    "case_duration_ms": 713.0218,
+    "syntax_check": "node --check bot/tests/ai-gm-2026-10/rf04-f04-c11.test.mjs passed"
+  },
+  "coverage": [
+    "A zero-attendee opening is published and acknowledged before the owner joins",
+    "Late check-in authors a new source-bound private entry without rerunning planner or initial assembly",
+    "The original shared publication and exact durable acknowledgment bytes remain unchanged",
+    "The owner private packet and direct message do not enter the shared channel",
+    "The private entry has its own acknowledged publication receipt",
+    "No PC position, placement, accepted action or mechanical outcome is inferred"
+  ],
+  "architecture": {
+    "command": "npm --prefix bot run architecture:check",
+    "exit_code": 0,
+    "source_modules": 561,
+    "unowned": 0,
+    "imports": 2711,
+    "largest_scc": 181,
+    "accepted_legacy_occurrences": 2442,
+    "active_violation_groups": 0,
+    "transition_errors": 0
+  },
+  "mocks": {
+    "planner_calls": 1,
+    "writer_calls": 2,
+    "discord_sends": 2,
+    "paid_provider_calls": 0,
+    "tokens": 0,
+    "cost_usd": 0,
+    "codex_usage": "UNMEASURED"
+  },
+  "limitations": [
+    "Discord and provider are mocked; live delivery and model behavior are not qualified.",
+    "This does not qualify multi-process interaction handling or general narrative quality.",
+    "commands.js was pre-existing modified owner work and was tested without changing it."
+  ],
+  "release": "NOT_AUTHORIZED"
+}

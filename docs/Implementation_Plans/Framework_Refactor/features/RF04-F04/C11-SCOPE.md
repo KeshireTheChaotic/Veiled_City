@@ -1,0 +1,5 @@
+# RF04-F04 C11 — Additive private entry after opening delivery
+
+Use the real `/vc-session start` and `/vc-session present` command handlers to check a player in only after a zero-attendee public opening has completed and received its durable Discord acknowledgment. Verify that the later owner receives a separately sourced, private authored entry, while the original public message, opening plan and acknowledged receipt remain unchanged and are not sent again. Check that the character's established position and mechanics are unchanged.
+
+Create one fresh disposable-SQLite integration test under `bot/tests/ai-gm-2026-10/`, with mocked provider and Discord only. Keep session attendance, party assembly, private entry and position authority distinct. This slice adds no production source changes or new narrative constraints. Freeze before one blocking batch; do not poll. Record hashes, real terminal result, syntax and architecture ratchet. Preserve the existing owner edits and never run inherited tests. Rollback removes this test and its evidence only. RELEASE NOT AUTHORIZED.
