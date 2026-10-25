@@ -1,0 +1,10 @@
+{
+  "run_id": "RF04_F03_C15_REPAIR",
+  "test_exit": 0,
+  "syntax_exit": 0,
+  "base_sha": "111d72c62dafce1dce525a4c4420615891ea2da8",
+  "start": "2026-10-24T21:37:25.9316105-05:00",
+  "end": "2026-10-24T21:37:27.6201633-05:00",
+  "test_hash": "f4e42ed2aba1e291ec8c4ed8e74938d214287ee5523f4cbac08417aaeb36bb4c",
+  "reason": "Two receipt assertions compared native SQLite null-prototype rows with structuredClone plain objects; compare full JSON receipt bytes instead, no production changes."
+}

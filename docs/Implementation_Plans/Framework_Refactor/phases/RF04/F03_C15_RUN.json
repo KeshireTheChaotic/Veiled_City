@@ -1,0 +1,32 @@
+{
+  "base_sha": "111d72c62dafce1dce525a4c4420615891ea2da8",
+  "architecture_exit": 0,
+  "run_id": "RF04_F03_C15",
+  "syntax": [
+    {
+      "path": "bot/src/frameworks/knowledge/narrative-memory.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/frameworks/knowledge/public.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/narrative-memory.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf04-f03-c15.test.mjs",
+      "exit": 0
+    }
+  ],
+  "start": "2026-10-24T21:36:49.6544195-05:00",
+  "hashes": {
+    "bot/src/frameworks/knowledge/public.js": "6a249a19a356833a9663d3be7ad3f952a3823abf2079291083a4c92402d826d7",
+    "bot/src/frameworks/knowledge/narrative-memory.js": "e31fffe260433ad538b92efb177e1a1c82e66e46c8acefc7c60f6afc75a87f70",
+    "bot/tests/ai-gm-2026-10/rf04-f03-c15.test.mjs": "415e50d15c88045877fc997a22912ff0a82150d6f67929524c60672c1bee26e7",
+    "bot/src/narrative-memory.js": "3985d80be9df48ce980bddde54c47245288e8f468f2b643923720e5c8ef7d75b"
+  },
+  "end": "2026-10-24T21:36:55.3082867-05:00",
+  "test_exit": 1
+}

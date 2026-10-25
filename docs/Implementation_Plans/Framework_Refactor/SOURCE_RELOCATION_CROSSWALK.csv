@@ -118,7 +118,7 @@ old_path,new_path,owner,move_phase,action,reverse_dependents,import_obligations
 "bot/src/narrative-delegation.js","bot/src/frameworks/narrative/narrative-delegation.js","narrative","RF05","EXTRACT_PORTS_BEFORE_MOVE","2","1"
 "bot/src/narrative-director-source.js","bot/src/frameworks/narrative/narrative-director-source.js","narrative","RF05","DECOMPOSE_BEFORE_MOVE","5","6"
 "bot/src/narrative-integrity.js","bot/src/frameworks/narrative/narrative-integrity.js","narrative","RF05","DECOMPOSE_BEFORE_MOVE","6","5"
-"bot/src/narrative-memory.js","bot/src/frameworks/knowledge/narrative-memory.js","knowledge","RF04","EXTRACT_PORTS_BEFORE_MOVE","3","5"
+"bot/src/narrative-memory.js","bot/src/frameworks/knowledge/narrative-memory.js","knowledge","RF04","ACKNOWLEDGED_MEMORY_POLICY_EXTRACTED_SOURCE_PORTS_PENDING","3","5"
 "bot/src/narrative-opportunity-guidance.js","bot/src/frameworks/narrative/narrative-opportunity-guidance.js","narrative","RF05","PILOT_MOVE_CANDIDATE","1","0"
 "bot/src/narrative-opportunity-policy.js","bot/src/frameworks/narrative/narrative-opportunity-policy.js","narrative","RF05","PILOT_MOVE_CANDIDATE","1","0"
 "bot/src/narrative-pvp.js","bot/src/frameworks/narrative/narrative-pvp.js","narrative","RF05","DECOMPOSE_BEFORE_MOVE","8","13"

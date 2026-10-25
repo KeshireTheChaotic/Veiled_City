@@ -1,0 +1,13 @@
+# RF04-F03 remaining actual source adoption
+
+All22original Knowledge-owned module policies now have scoped fresh changed-code qualification. Nine independently isolated leaves were moved (C01eight + C05archive); thirteen coupled source policies were decomposed into fixed Knowledge factories. This is not full architectural isolation. The original22root source readers/providers and exact cross-framework dependencies remain accountable; no deadline was extended and no baseline expanded.
+
+- World source/index/audit and civic/project adapters: memory clusters, epistemic, presentation, custody, organization, personal continuity and narrative memory still compose original World services. Actual knowledge--world bridge adoption remains RF04-F05.
+- Narrative source visibility/salience/identity relevance: entity memory, lifecycle and acknowledged narrative memory need actual knowledge--narrative adoption without duplicating authorization or introducing initialization-dependent historical reads.
+- Session principal/scene/presence/native envelope sources: scoped memory, historical consistency, custody, personal continuity and semantic source proof require actual producer isolation in RF04-F04 and pair/application composition. The root conversation-principal source is Session-owned.
+- Publication handout projection remains an explicit source of personal continuity; exact publication/knowledge boundary must preserve private handout filtering.
+- Application ContextPlanner is currently application-owned per enforced manifest. NPC conversation receives it as fixed source capability; its thin use-case composition versus Knowledge retrieval responsibilities still require actual decomposition/adoption. Do not mislabel it as already isolated Knowledge.
+- Same-owner caches/services and reader exports must converge on own-framework composition as foreign sources are adopted. No duplicate HMAC signer, native grant WeakMap, receipt state, model/client/DB constructor or policy copy. Old leaf readers removal RF04-F05.
+- Actual source-safe native writer acceptance/output certification/mocked Discord/outbox uncertain recovery/private packets are freshly qualified by C15. This does not certify live transport, provider semantic quality/latency or production recovery.
+
+Continue independent RF04-F04 Session producer work, then remaining World producer decomposition/F05 adapters/F06 privacy/F07 qualification. RF04 remains INCOMPLETE and cannot exit with overdue transition obligations. Provider expenditure0;Codex usageUNMEASURED;RELEASE NOT AUTHORIZED.

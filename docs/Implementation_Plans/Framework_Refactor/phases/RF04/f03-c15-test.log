@@ -1,0 +1,177 @@
+TAP version 13
+# C15_MOCK_PROVIDER_CALLS 9
+# Subtest: actual native writer acceptance is GM-established memory, never audience recall or unplaced PC witness before delivery
+ok 1 - actual native writer acceptance is GM-established memory, never audience recall or unplaced PC witness before delivery
+  ---
+  duration_ms: 261.2609
+  type: 'test'
+  ...
+# Subtest: actual certified output delivery creates exact durable acknowledgment and idempotent camera recall without another model or send
+not ok 2 - actual certified output delivery creates exact durable acknowledgment and idempotent camera recall without another model or send
+  ---
+  duration_ms: 317.4375
+  type: 'test'
+  location: 'D:\\Library\\Development\\Veiled_City\\bot\\tests\\ai-gm-2026-10\\rf04-f03-c15.test.mjs:40:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+    + [Object: null prototype] {
+    - {
+        attempt_count: 1,
+        channel_id: 'mock-play',
+        created_at: '2026-10-25 02:36:50',
+        discord_message_id: 'mock-message-b1f1451d-68a0-4a67-8877-9d51deed451c',
+        guild_id: 'stage',
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    id: 'b1f1451d-68a0-4a67-8877-9d51deed451c'
+    guild_id: 'stage'
+    turn_id: '298a356f-cb9b-4796-9b74-55d728e29142'
+    surface: 'party'
+    ordinal: 0
+    visibility: 'party'
+    target_user_id: ~
+    target_character_id: 'ccb320aa-a441-4593-a815-53840a753c88'
+    channel_id: 'mock-play'
+    payload: 'Copper lamps cast warm light across the empty plaza.'
+    payload_hash: 'a8d1e80e3b4eadb21f4f8d2bac2814171500f9663724131d510b178ee2dc7660'
+    status: 'delivered'
+    discord_message_id: 'mock-message-b1f1451d-68a0-4a67-8877-9d51deed451c'
+    attempt_count: 1
+    last_failure: ''
+    created_at: '2026-10-25 02:36:50'
+    updated_at: '2026-10-25 02:36:50'
+  actual:
+    id: 'b1f1451d-68a0-4a67-8877-9d51deed451c'
+    guild_id: 'stage'
+    turn_id: '298a356f-cb9b-4796-9b74-55d728e29142'
+    surface: 'party'
+    ordinal: 0
+    visibility: 'party'
+    target_user_id: ~
+    target_character_id: 'ccb320aa-a441-4593-a815-53840a753c88'
+    channel_id: 'mock-play'
+    payload: 'Copper lamps cast warm light across the empty plaza.'
+    payload_hash: 'a8d1e80e3b4eadb21f4f8d2bac2814171500f9663724131d510b178ee2dc7660'
+    status: 'delivered'
+    discord_message_id: 'mock-message-b1f1451d-68a0-4a67-8877-9d51deed451c'
+    attempt_count: 1
+    last_failure: ''
+    created_at: '2026-10-25 02:36:50'
+    updated_at: '2026-10-25 02:36:50'
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf04-f03-c15.test.mjs:41:782)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: mixed acknowledged and uncertain real chunks grant no recall; restart and exact-message reconciliation recover without resend
+not ok 3 - mixed acknowledged and uncertain real chunks grant no recall; restart and exact-message reconciliation recover without resend
+  ---
+  duration_ms: 676.6772
+  type: 'test'
+  location: 'D:\\Library\\Development\\Veiled_City\\bot\\tests\\ai-gm-2026-10\\rf04-f03-c15.test.mjs:44:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+    + [Object: null prototype] {
+    - {
+        attempt_count: 1,
+        channel_id: 'mock-play',
+        created_at: '2026-10-25 02:36:51',
+        discord_message_id: 'mock-message-8f2ca3b0-f21b-482e-93b0-b3523d17e62f',
+        guild_id: 'stage',
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    id: '8f2ca3b0-f21b-482e-93b0-b3523d17e62f'
+    guild_id: 'stage'
+    turn_id: 'c7a33f49-c197-41f1-bcde-752732eb0e8e'
+    surface: 'party'
+    ordinal: 0
+    visibility: 'party'
+    target_user_id: ~
+    target_character_id: '9c11f092-b84a-4dff-b9c4-e94a67081a43'
+    channel_id: 'mock-play'
+    payload: |-
+      Copper lamps cast warm light across the quiet plaza. Copper lamps cast warm light across the quiet plaza. Copper lamps cast warm light across the quiet plaza. Copper lamps cast warm light across the quiet plaza. Copper lamps cast warm light across the quiet plaza. Copper lamps cast warm light across the quiet plaza. Copper lamps cast warm light across the quiet plaza. Copper lamps cast warm light across the quiet plaza. Copper lamps cast warm light across the quiet plaza. Copper lamps cast warm light across the quiet plaza. Copper lamps cast warm light across the quiet plaza. Copper lamps cast warm light across the quiet plaza. Copper lamps cast warm light across the quiet plaza. Copper lamps cast warm light across the quiet plaza. Copper lamps cast warm light across the quiet plaza. Copper lamps cast warm light across the quiet plaza. Copper lamps cast warm light across the quiet plaza. Copper lamps cast warm light across the quiet plaza. Copper lamps cast warm light across the quiet plaza. Copper lamps cast warm light across the quiet plaza. Copper lamps cast warm light across the quiet plaza. Copper lamps cast warm light across the quiet plaza. Copper lamps cast warm light across the quiet plaza. Copper lamps cast warm light across the quiet plaza. Copper lamps cast warm light across the quiet plaza.
+      
+    payload_hash: '65a088b3a22b86e4a9cdafc087c87ddbdb48458216643ef37a9ed65dde0130c9'
+    status: 'delivered'
+    discord_message_id: 'mock-message-8f2ca3b0-f21b-482e-93b0-b3523d17e62f'
+    attempt_count: 1
+    last_failure: ''
+    created_at: '2026-10-25 02:36:51'
+    updated_at: '2026-10-25 02:36:51'
+  actual:
+    id: '8f2ca3b0-f21b-482e-93b0-b3523d17e62f'
+    guild_id: 'stage'
+    turn_id: 'c7a33f49-c197-41f1-bcde-752732eb0e8e'
+    surface: 'party'
+    ordinal: 0
+    visibility: 'party'
+    target_user_id: ~
+    target_character_id: '9c11f092-b84a-4dff-b9c4-e94a67081a43'
+    channel_id: 'mock-play'
+    payload: |-
+      Copper lamps cast warm light across the quiet plaza. Copper lamps cast warm light across the quiet plaza. Copper lamps cast warm light across the quiet plaza. Copper lamps cast warm light across the quiet plaza. Copper lamps cast warm light across the quiet plaza. Copper lamps cast warm light across the quiet plaza. Copper lamps cast warm light across the quiet plaza. Copper lamps cast warm light across the quiet plaza. Copper lamps cast warm light across the quiet plaza. Copper lamps cast warm light across the quiet plaza. Copper lamps cast warm light across the quiet plaza. Copper lamps cast warm light across the quiet plaza. Copper lamps cast warm light across the quiet plaza. Copper lamps cast warm light across the quiet plaza. Copper lamps cast warm light across the quiet plaza. Copper lamps cast warm light across the quiet plaza. Copper lamps cast warm light across the quiet plaza. Copper lamps cast warm light across the quiet plaza. Copper lamps cast warm light across the quiet plaza. Copper lamps cast warm light across the quiet plaza. Copper lamps cast warm light across the quiet plaza. Copper lamps cast warm light across the quiet plaza. Copper lamps cast warm light across the quiet plaza. Copper lamps cast warm light across the quiet plaza. Copper lamps cast warm light across the quiet plaza.
+      
+    payload_hash: '65a088b3a22b86e4a9cdafc087c87ddbdb48458216643ef37a9ed65dde0130c9'
+    status: 'delivered'
+    discord_message_id: 'mock-message-8f2ca3b0-f21b-482e-93b0-b3523d17e62f'
+    attempt_count: 1
+    last_failure: ''
+    created_at: '2026-10-25 02:36:51'
+    updated_at: '2026-10-25 02:36:51'
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf04-f03-c15.test.mjs:45:1403)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: distinct actual private writer packets and deliveries stay owner-specific, including omission counts
+ok 4 - distinct actual private writer packets and deliveries stay owner-specific, including omission counts
+  ---
+  duration_ms: 426.3254
+  type: 'test'
+  ...
+# Subtest: source-retracted native output fails closed before mock Discord delivery and preserves existing accepted fiction
+ok 5 - source-retracted native output fails closed before mock Discord delivery and preserves existing accepted fiction
+  ---
+  duration_ms: 248.7037
+  type: 'test'
+  ...
+# Subtest: real source-authorized selection ranks before capacity and reports only eligible omitted memories
+ok 6 - real source-authorized selection ranks before capacity and reports only eligible omitted memories
+  ---
+  duration_ms: 490.6005
+  type: 'test'
+  ...
+# Subtest: acknowledgment persistence failure becomes uncertain and exact reconciliation restores memory without a second transport send
+ok 7 - acknowledgment persistence failure becomes uncertain and exact reconciliation restores memory without a second transport send
+  ---
+  duration_ms: 395.8473
+  type: 'test'
+  ...
+# Subtest: queue replay retains publication identities and disabled retention never forges a new memory or acknowledgment
+ok 8 - queue replay retains publication identities and disabled retention never forges a new memory or acknowledgment
+  ---
+  duration_ms: 1320.4692
+  type: 'test'
+  ...
+1..8
+# tests 8
+# suites 0
+# pass 6
+# fail 2
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 4642.4256

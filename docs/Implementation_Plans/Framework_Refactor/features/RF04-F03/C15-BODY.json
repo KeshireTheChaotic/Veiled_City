@@ -1,0 +1,17 @@
+{
+  "base_sha": "111d72c62dafce1dce525a4c4420615891ea2da8",
+  "original_source_sha256": "b47598b1da5f88601e883a00d000d8caaa10d14504c5b0bf3437b97f09c7faab",
+  "policy_body_sha256": "9dc6564b48847520358d506b7ac14e5f8404a977cbb7ea3bc08ec18b9d32a4a7",
+  "body_unchanged": true,
+  "dependencies": [
+    "narrativeSourceVisible",
+    "narrativeVisible",
+    "indexWorldEvent",
+    "rememberEntity",
+    "narrativeMemoryEpistemic",
+    "narrativeQueryRelevance",
+    "narrativeIdentityRelevance",
+    "BACKGROUND_WORLD_KINDS"
+  ],
+  "hash_substitution": "same full JSON SHA256; own paged record locator internal"
+}
