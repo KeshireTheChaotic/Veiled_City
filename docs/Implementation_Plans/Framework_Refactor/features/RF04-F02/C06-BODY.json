@@ -1,0 +1,17 @@
+{
+  "original_source_sha256": "a8c22834277860327f259fae97850be576acdcf5b30765c4730832b7583289a2",
+  "policy_body_sha256": "77b2d7f9966f84cd1440ddfab528e141dacb597b51f44f7ab93d9ad84ee741f7",
+  "body_unchanged": true,
+  "dependencies": [
+    "cityObject",
+    "cityKey",
+    "cityAudit",
+    "requireCitySource",
+    "activeCityProxy",
+    "assertNpcAvailability",
+    "actorState",
+    "submitNpcAction",
+    "ContextPlanner",
+    "sceneAccess"
+  ]
+}

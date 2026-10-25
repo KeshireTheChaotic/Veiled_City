@@ -1,0 +1,32 @@
+{
+  "end": "2026-10-24T21:02:20.0863351-05:00",
+  "test_exit": 0,
+  "run_id": "RF04_F02_C06",
+  "base_sha": "d83cf032a6c3f0524367686a0e793d6dc6d2ad1b",
+  "start": "2026-10-24T21:02:16.3353096-05:00",
+  "architecture_exit": 0,
+  "syntax": [
+    {
+      "exit": 0,
+      "path": "bot/src/frameworks/npc/conversations.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/frameworks/npc/public.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/npc-conversations.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/tests/ai-gm-2026-10/rf04-f02-c06.test.mjs"
+    }
+  ],
+  "hashes": {
+    "bot/src/frameworks/npc/public.js": "9df02f21183e7c626762476f16174e149e247c9185369a9e18f39a63a5237168",
+    "bot/tests/ai-gm-2026-10/rf04-f02-c06.test.mjs": "389f3e5142bc7d25b5f3d38b3dc0e6adedffa7870843618e319ad2fe8ab8bbc8",
+    "bot/src/npc-conversations.js": "cbb10bea659cf9bf4e071651731dc89578b2a3c7f518f79fc19cf1c4d5c126c0",
+    "bot/src/frameworks/npc/conversations.js": "6bc29c6eae2ac5677223d1867caed24624f98426ffc6bc18d439402c9bd2630a"
+  }
+}
