@@ -1,0 +1,1459 @@
+{
+  "base_sha": "953a3e7879058a933de5af9d31afd346f340aaf3",
+  "modules": [
+    {
+      "path": "bot/src/action-continuation.js",
+      "owner": "session",
+      "imports": [
+        {
+          "kind": "static",
+          "specifier": "node:crypto",
+          "line": 2,
+          "column": 0,
+          "importedNames": [
+            "createHash"
+          ]
+        },
+        {
+          "kind": "static",
+          "specifier": "./action-dependency.js",
+          "line": 3,
+          "column": 0,
+          "importedNames": [
+            "buildActionPlan",
+            "transitionAction",
+            "signalActionContinuation"
+          ]
+        },
+        {
+          "kind": "static",
+          "specifier": "./action-consent.js",
+          "line": 4,
+          "column": 0,
+          "importedNames": [
+            "consentAction",
+            "completedActionSource",
+            "historicalActionSource"
+          ]
+        },
+        {
+          "kind": "static",
+          "specifier": "./scene-continuity.js",
+          "line": 5,
+          "column": 0,
+          "importedNames": [
+            "currentScene"
+          ]
+        },
+        {
+          "kind": "static",
+          "specifier": "./autonomous-world.js",
+          "line": 6,
+          "column": 0,
+          "importedNames": [
+            "applyAutonomousWorld"
+          ]
+        },
+        {
+          "kind": "static",
+          "specifier": "./pc-native-eligibility.js",
+          "line": 7,
+          "column": 0,
+          "importedNames": [
+            "assertPcCanAct"
+          ]
+        },
+        {
+          "kind": "static",
+          "specifier": "./pvp-rounds.js",
+          "line": 8,
+          "column": 0,
+          "importedNames": [
+            "validatePvpResolutionReceipt"
+          ]
+        },
+        {
+          "kind": "static",
+          "specifier": "./pvp-fear-gate.js",
+          "line": 9,
+          "column": 0,
+          "importedNames": [
+            "pendingPvpFear"
+          ]
+        },
+        {
+          "kind": "static",
+          "specifier": "./pvp-damage.js",
+          "line": 10,
+          "column": 0,
+          "importedNames": [
+            "validatePvpDamageApplication"
+          ]
+        },
+        {
+          "kind": "static",
+          "specifier": "./pvp-attacks.js",
+          "line": 11,
+          "column": 0,
+          "importedNames": [
+            "validatePvpAttackRoll"
+          ]
+        },
+        {
+          "kind": "static",
+          "specifier": "./pvp-output.js",
+          "line": 12,
+          "column": 0,
+          "importedNames": [
+            "prepareContinuationOutput"
+          ]
+        },
+        {
+          "kind": "static",
+          "specifier": "./publication-outbox.js",
+          "line": 13,
+          "column": 0,
+          "importedNames": [
+            "queueTurnPublications"
+          ]
+        },
+        {
+          "kind": "static",
+          "specifier": "./typed-roll-proof.js",
+          "line": 14,
+          "column": 0,
+          "importedNames": [
+            "typedRollProof"
+          ]
+        }
+      ],
+      "exports": [
+        "continuationAuthorization",
+        "continuationInbox",
+        "drainActionContinuations",
+        "refreshActionContinuations",
+        "renderContinuationNotice"
+      ],
+      "base_git_blob_sha256": "cc18e211b4fd1794ae2386b7e08572e4bbc6797bcca6d52c2a9b7b6723119073"
+    },
+    {
+      "path": "bot/src/assembly-context.js",
+      "owner": "session",
+      "imports": [
+        {
+          "kind": "static",
+          "specifier": "node:crypto",
+          "line": 2,
+          "column": 0,
+          "importedNames": [
+            "createHash"
+          ]
+        },
+        {
+          "kind": "static",
+          "specifier": "./scene-continuity.js",
+          "line": 3,
+          "column": 0,
+          "importedNames": [
+            "currentScene",
+            "scenePresence"
+          ]
+        },
+        {
+          "kind": "static",
+          "specifier": "./opening-world-bridge.js",
+          "line": 4,
+          "column": 0,
+          "importedNames": [
+            "openingWorldOpportunities"
+          ]
+        }
+      ],
+      "exports": [
+        "assemblyHookProjection",
+        "assemblyHookSelection",
+        "assemblyHookSources",
+        "assemblyInputFingerprint",
+        "assemblyInputs",
+        "assemblyPlanFreshness",
+        "assemblySourceError",
+        "assemblyWriterBrief",
+        "certifyAssemblyPlan",
+        "hookHash"
+      ],
+      "base_git_blob_sha256": "f2884bbc430f915666e1fea7e2775dbc7784edb6eea0dba64200bff6dd5882ac"
+    },
+    {
+      "path": "bot/src/assembly-evidence.js",
+      "owner": "session",
+      "imports": [
+        {
+          "kind": "static",
+          "specifier": "node:crypto",
+          "line": 1,
+          "column": 0,
+          "importedNames": [
+            "createHash"
+          ]
+        }
+      ],
+      "exports": [
+        "assemblyCoverageEvidence"
+      ],
+      "base_git_blob_sha256": "593b0776fdfc0f824480545ecce28256794a7c13e6c75228496f7f57d3f34d55"
+    },
+    {
+      "path": "bot/src/assembly-readiness.js",
+      "owner": "session",
+      "imports": [
+        {
+          "kind": "static",
+          "specifier": "./assembly-state.js",
+          "line": 2,
+          "column": 0,
+          "importedNames": [
+            "assemblyDeliverySummary"
+          ]
+        },
+        {
+          "kind": "static",
+          "specifier": "./assembly-context.js",
+          "line": 3,
+          "column": 0,
+          "importedNames": [
+            "assemblyPlanFreshness"
+          ]
+        },
+        {
+          "kind": "static",
+          "specifier": "./session-opening.js",
+          "line": 4,
+          "column": 0,
+          "importedNames": [
+            "inspectSessionOpening"
+          ]
+        }
+      ],
+      "exports": [
+        "assemblyReadiness"
+      ],
+      "base_git_blob_sha256": "70fe06fb9bed26732497a6b9415a24d904a59a8793d4c0930c671b971289ed0c"
+    },
+    {
+      "path": "bot/src/assembly-state.js",
+      "owner": "session",
+      "imports": [
+        {
+          "kind": "static",
+          "specifier": "node:crypto",
+          "line": 2,
+          "column": 0,
+          "importedNames": [
+            "createHash"
+          ]
+        },
+        {
+          "kind": "static",
+          "specifier": "./scene-continuity.js",
+          "line": 3,
+          "column": 0,
+          "importedNames": [
+            "currentScene",
+            "scenePresence"
+          ]
+        },
+        {
+          "kind": "static",
+          "specifier": "./conversation-principal.js",
+          "line": 4,
+          "column": 0,
+          "importedNames": [
+            "conversationPrincipal"
+          ]
+        },
+        {
+          "kind": "static",
+          "specifier": "./assembly-delivery.js",
+          "line": 5,
+          "column": 0,
+          "importedNames": [
+            "assemblyPartsFor"
+          ]
+        },
+        {
+          "kind": "static",
+          "specifier": "./assembly-context.js",
+          "line": 6,
+          "column": 0,
+          "importedNames": [
+            "assemblyInputFingerprint"
+          ]
+        },
+        {
+          "kind": "static",
+          "specifier": "./session-opening.js",
+          "line": 7,
+          "column": 0,
+          "importedNames": [
+            "assertSessionOpeningAttempt"
+          ]
+        }
+      ],
+      "exports": [
+        "assemblyDeliverySummary",
+        "assemblyHash",
+        "assemblyOrientation",
+        "assemblyPlanHash",
+        "assemblySlots",
+        "legacyAssemblyState"
+      ],
+      "base_git_blob_sha256": "e7274a457fcad3b2d3398a481d1923e6eaa121d0529bb4fb83882abd1786f126"
+    },
+    {
+      "path": "bot/src/conversation-principal.js",
+      "owner": "session",
+      "imports": [
+        {
+          "kind": "static",
+          "specifier": "node:crypto",
+          "line": 2,
+          "column": 0,
+          "importedNames": [
+            "createHash"
+          ]
+        }
+      ],
+      "exports": [
+        "conversationPrincipal",
+        "historicalOwnerPrincipal"
+      ],
+      "base_git_blob_sha256": "dd6a4035be5fd8ce948d264a1a4960e1cfef41ca0e1b8a5e1c34a63e3b6f9ab8"
+    },
+    {
+      "path": "bot/src/dialogue-continuity.js",
+      "owner": "session",
+      "imports": [
+        {
+          "kind": "static",
+          "specifier": "./personal-continuity.js",
+          "line": 2,
+          "column": 0,
+          "importedNames": [
+            "personalCharacter"
+          ]
+        },
+        {
+          "kind": "static",
+          "specifier": "./scene-continuity.js",
+          "line": 3,
+          "column": 0,
+          "importedNames": [
+            "sceneAccess",
+            "sceneView",
+            "scenePresence",
+            "currentScene"
+          ]
+        },
+        {
+          "kind": "static",
+          "specifier": "./city-calendar.js",
+          "line": 4,
+          "column": 0,
+          "importedNames": [
+            "indexWorldEvent"
+          ]
+        },
+        {
+          "kind": "static",
+          "specifier": "./city-core.js",
+          "line": 5,
+          "column": 0,
+          "importedNames": [
+            "requireCitySource"
+          ]
+        },
+        {
+          "kind": "static",
+          "specifier": "./simulation-motivation.js",
+          "line": 6,
+          "column": 0,
+          "importedNames": [
+            "motivationKey"
+          ]
+        },
+        {
+          "kind": "static",
+          "specifier": "./city-constraints.js",
+          "line": 7,
+          "column": 0,
+          "importedNames": [
+            "activeCityProxy"
+          ]
+        },
+        {
+          "kind": "static",
+          "specifier": "./city-constraints.js",
+          "line": 8,
+          "column": 0,
+          "importedNames": [
+            "assertNpcAvailability"
+          ]
+        },
+        {
+          "kind": "static",
+          "specifier": "./conversation-principal.js",
+          "line": 9,
+          "column": 0,
+          "importedNames": [
+            "conversationPrincipal"
+          ]
+        },
+        {
+          "kind": "static",
+          "specifier": "./scene-fiction-context.js",
+          "line": 10,
+          "column": 0,
+          "importedNames": [
+            "narrativeSourceVisible"
+          ]
+        },
+        {
+          "kind": "static",
+          "specifier": "./disclosure-authority.js",
+          "line": 11,
+          "column": 0,
+          "importedNames": [
+            "factVisibleTo"
+          ]
+        },
+        {
+          "kind": "static",
+          "specifier": "./authored-turn-envelope.js",
+          "line": 12,
+          "column": 0,
+          "importedNames": [
+            "sourceSpanInsideQuote"
+          ]
+        },
+        {
+          "kind": "static",
+          "specifier": "./player-language.js",
+          "line": 13,
+          "column": 0,
+          "importedNames": [
+            "interpretAuthoredText"
+          ]
+        },
+        {
+          "kind": "static",
+          "specifier": "./public-referents.js",
+          "line": 14,
+          "column": 0,
+          "importedNames": [
+            "mentionsPublicIdentity"
+          ]
+        }
+      ],
+      "exports": [
+        "captureDialogue",
+        "interpretDialogue"
+      ],
+      "base_git_blob_sha256": "60704b59c696654a7f836fcbb8135390186d9e46f4afebf16035567af8d3cab0"
+    },
+    {
+      "path": "bot/src/frameworks/session/contracts/opening-authoring.js",
+      "owner": "session",
+      "imports": [],
+      "exports": [
+        "createOpeningAuthoringPort"
+      ],
+      "base_git_blob_sha256": "44aed68e2093e448066f1ba0f3f640ca45252dda8375a3d5fb0551410fa0a38a"
+    },
+    {
+      "path": "bot/src/frameworks/session/public.js",
+      "owner": "session",
+      "imports": [
+        {
+          "kind": "re-export",
+          "specifier": "./contracts/opening-authoring.js",
+          "line": 1,
+          "column": 0,
+          "importedNames": [
+            "createOpeningAuthoringPort"
+          ]
+        }
+      ],
+      "exports": [
+        "createOpeningAuthoringPort"
+      ],
+      "base_git_blob_sha256": "e4af1366273d66db52002daae7a30c4cc984a5ab3424bbdeabe2aa269f38e9bb"
+    },
+    {
+      "path": "bot/src/negotiations.js",
+      "owner": "session",
+      "imports": [
+        {
+          "kind": "static",
+          "specifier": "./city-calendar.js",
+          "line": 2,
+          "column": 0,
+          "importedNames": [
+            "cityObject",
+            "cityKey",
+            "cityInteger",
+            "cityAudit"
+          ]
+        },
+        {
+          "kind": "static",
+          "specifier": "./city-core.js",
+          "line": 3,
+          "column": 0,
+          "importedNames": [
+            "requireCitySource",
+            "requireCityRecord"
+          ]
+        },
+        {
+          "kind": "static",
+          "specifier": "./city-constraints.js",
+          "line": 4,
+          "column": 0,
+          "importedNames": [
+            "activeCityProxy",
+            "assertInstitutionDelegation"
+          ]
+        },
+        {
+          "kind": "static",
+          "specifier": "./simulation.js",
+          "line": 5,
+          "column": 0,
+          "importedNames": [
+            "actorState"
+          ]
+        },
+        {
+          "kind": "static",
+          "specifier": "./owner-consent.js",
+          "line": 6,
+          "column": 0,
+          "importedNames": [
+            "hasOwnerConsent"
+          ]
+        }
+      ],
+      "exports": [
+        "negotiateAgreement"
+      ],
+      "base_git_blob_sha256": "a6f31cc6e3fabb6352046f7351da6e6bc671f7bc5843af9c427fa7fd51120509"
+    },
+    {
+      "path": "bot/src/opening-cohort-state.js",
+      "owner": "session",
+      "imports": [
+        {
+          "kind": "static",
+          "specifier": "node:crypto",
+          "line": 2,
+          "column": 0,
+          "importedNames": [
+            "createHash"
+          ]
+        },
+        {
+          "kind": "static",
+          "specifier": "./assembly-context.js",
+          "line": 3,
+          "column": 0,
+          "importedNames": [
+            "assemblyInputFingerprint",
+            "assemblySourceError"
+          ]
+        },
+        {
+          "kind": "static",
+          "specifier": "./scene-continuity.js",
+          "line": 4,
+          "column": 0,
+          "importedNames": [
+            "currentScene"
+          ]
+        },
+        {
+          "kind": "static",
+          "specifier": "./city-calendar.js",
+          "line": 5,
+          "column": 0,
+          "importedNames": [
+            "indexWorldEvent"
+          ]
+        },
+        {
+          "kind": "static",
+          "specifier": "./session-opening.js",
+          "line": 6,
+          "column": 0,
+          "importedNames": [
+            "inspectSessionOpening"
+          ]
+        }
+      ],
+      "exports": [
+        "currentOpeningCohort",
+        "independentOpeningCameraBasis",
+        "inspectOpeningCohortSource",
+        "openingCohortEligible",
+        "openingCohortHash",
+        "openingCohortIsAdditive",
+        "openingCohortNarrativeCandidate",
+        "openingCohortRoster",
+        "openingCohortRosterRevision"
+      ],
+      "base_git_blob_sha256": "e95fc8428890f7bd7d2f818c0e2a8013f00cbf4eef8b7c87c5baeb267af66107"
+    },
+    {
+      "path": "bot/src/opening-entry-context.js",
+      "owner": "session",
+      "imports": [
+        {
+          "kind": "static",
+          "specifier": "./session-opening-attendance.js",
+          "line": 2,
+          "column": 0,
+          "importedNames": [
+            "inspectOpeningEntryOpportunity"
+          ]
+        },
+        {
+          "kind": "static",
+          "specifier": "./assembly-context.js",
+          "line": 3,
+          "column": 0,
+          "importedNames": [
+            "assemblyHookSources"
+          ]
+        },
+        {
+          "kind": "static",
+          "specifier": "./scene-continuity.js",
+          "line": 4,
+          "column": 0,
+          "importedNames": [
+            "currentScene"
+          ]
+        },
+        {
+          "kind": "static",
+          "specifier": "./scene-fiction-context.js",
+          "line": 5,
+          "column": 0,
+          "importedNames": [
+            "sceneFictionHash"
+          ]
+        },
+        {
+          "kind": "static",
+          "specifier": "./city-calendar.js",
+          "line": 6,
+          "column": 0,
+          "importedNames": [
+            "indexWorldEvent"
+          ]
+        }
+      ],
+      "exports": [
+        "openingEntryNarrativeCandidate",
+        "openingEntryProjection"
+      ],
+      "base_git_blob_sha256": "727811326d1e30db8e0e371af43fb74c1cbf606fbe586d27fdafecd01caa2c12"
+    },
+    {
+      "path": "bot/src/opening-entry-evidence.js",
+      "owner": "session",
+      "imports": [],
+      "exports": [
+        "openingEntryAuthoringCode",
+        "openingEntryDeliveryStatus",
+        "openingEntryEvidence"
+      ],
+      "base_git_blob_sha256": "c0596ec4a5b3dd808eec94bf762d7d1fde61f3aad991c8c28c1c9760fdee010f"
+    },
+    {
+      "path": "bot/src/owner-action-terminal.js",
+      "owner": "session",
+      "imports": [
+        {
+          "kind": "static",
+          "specifier": "node:crypto",
+          "line": 2,
+          "column": 0,
+          "importedNames": [
+            "createHash"
+          ]
+        },
+        {
+          "kind": "static",
+          "specifier": "./kernel/errors.js",
+          "line": 3,
+          "column": 0,
+          "importedNames": [
+            "StateConflictError"
+          ]
+        }
+      ],
+      "exports": [
+        "overlapsOwnerActionTerminal",
+        "recordOwnerActionTerminal"
+      ],
+      "base_git_blob_sha256": "b411994ced589dbc1d5fc56af93f8e791e7d1fad64803705903e24243cb28625"
+    },
+    {
+      "path": "bot/src/roster.js",
+      "owner": "session",
+      "imports": [],
+      "exports": [
+        "buildSessionRosterReport",
+        "chunkRosterReport"
+      ],
+      "base_git_blob_sha256": "0330c38d8ab651780f3e44efff39602258006caf418666faf1a8ec6ec1637b49"
+    },
+    {
+      "path": "bot/src/scene-action-window.js",
+      "owner": "session",
+      "imports": [
+        {
+          "kind": "static",
+          "specifier": "node:crypto",
+          "line": 2,
+          "column": 0,
+          "importedNames": [
+            "createHash"
+          ]
+        },
+        {
+          "kind": "static",
+          "specifier": "./scene-continuity.js",
+          "line": 3,
+          "column": 0,
+          "importedNames": [
+            "currentScene"
+          ]
+        },
+        {
+          "kind": "static",
+          "specifier": "./action-consent.js",
+          "line": 4,
+          "column": 0,
+          "importedNames": [
+            "consentAction",
+            "validateActionConsent"
+          ]
+        }
+      ],
+      "exports": [
+        "classifyResourceOverlap",
+        "coordinateTypedActionWindows",
+        "joinActionWindow",
+        "lockActionWindow",
+        "openActionWindow",
+        "resolveActionWindow"
+      ],
+      "base_git_blob_sha256": "5922f7fd3feaf2e8c1270a75f9964f5b4085607344e4e1a79135b88ff37312f0"
+    },
+    {
+      "path": "bot/src/scene-continuity.js",
+      "owner": "session",
+      "imports": [
+        {
+          "kind": "static",
+          "specifier": "./city-calendar.js",
+          "line": 2,
+          "column": 0,
+          "importedNames": [
+            "cityObject",
+            "cityKey",
+            "cityVisibility",
+            "cityAudit",
+            "indexWorldEvent"
+          ]
+        },
+        {
+          "kind": "static",
+          "specifier": "./city-core.js",
+          "line": 3,
+          "column": 0,
+          "importedNames": [
+            "requireCitySource"
+          ]
+        },
+        {
+          "kind": "static",
+          "specifier": "./city-constraints.js",
+          "line": 4,
+          "column": 0,
+          "importedNames": [
+            "activeCityProxy"
+          ]
+        },
+        {
+          "kind": "static",
+          "specifier": "./simulation-motivation.js",
+          "line": 5,
+          "column": 0,
+          "importedNames": [
+            "motivationKey"
+          ]
+        },
+        {
+          "kind": "static",
+          "specifier": "./kernel/errors.js",
+          "line": 6,
+          "column": 0,
+          "importedNames": [
+            "UserInputError",
+            "StateConflictError"
+          ]
+        },
+        {
+          "kind": "static",
+          "specifier": "./epistemic.js",
+          "line": 7,
+          "column": 0,
+          "importedNames": [
+            "activeEvidence"
+          ]
+        },
+        {
+          "kind": "static",
+          "specifier": "./native-group-features.js",
+          "line": 8,
+          "column": 0,
+          "importedNames": [
+            "nativeMovementConditionIssue"
+          ]
+        }
+      ],
+      "exports": [
+        "RANGE_BANDS",
+        "archiveScenePresence",
+        "assertNpcObservation",
+        "currentScene",
+        "lastVerifiedCharacterPresence",
+        "npcEvidenceActive",
+        "reconcileSceneArrival",
+        "recordCharacterArrival",
+        "recordScenePresence",
+        "sceneAccess",
+        "scenePresence",
+        "sceneView"
+      ],
+      "base_git_blob_sha256": "9f0660959dde11a75ca2e883600b5ed8f4c34d8a0673379a5d97f0a35b9c1703"
+    },
+    {
+      "path": "bot/src/scene-entry-native.js",
+      "owner": "session",
+      "imports": [
+        {
+          "kind": "static",
+          "specifier": "./personal-continuity.js",
+          "line": 2,
+          "column": 0,
+          "importedNames": [
+            "personalCharacter"
+          ]
+        },
+        {
+          "kind": "static",
+          "specifier": "./scene-continuity.js",
+          "line": 3,
+          "column": 0,
+          "importedNames": [
+            "currentScene",
+            "recordScenePresence"
+          ]
+        },
+        {
+          "kind": "static",
+          "specifier": "./ai-intents.js",
+          "line": 4,
+          "column": 0,
+          "importedNames": [
+            "stateRevision"
+          ]
+        },
+        {
+          "kind": "static",
+          "specifier": "./city-calendar.js",
+          "line": 5,
+          "column": 0,
+          "importedNames": [
+            "indexWorldEvent",
+            "cityAudit"
+          ]
+        },
+        {
+          "kind": "static",
+          "specifier": "node:crypto",
+          "line": 6,
+          "column": 0,
+          "importedNames": [
+            "randomUUID"
+          ]
+        },
+        {
+          "kind": "static",
+          "specifier": "./pc-native-eligibility.js",
+          "line": 7,
+          "column": 0,
+          "importedNames": [
+            "assertPcCanAct"
+          ]
+        },
+        {
+          "kind": "static",
+          "specifier": "./native-group-features.js",
+          "line": 8,
+          "column": 0,
+          "importedNames": [
+            "nativeMovementConditionIssue"
+          ]
+        },
+        {
+          "kind": "static",
+          "specifier": "./native-environment-access.js",
+          "line": 9,
+          "column": 0,
+          "importedNames": [
+            "nativeVipAdmission"
+          ]
+        }
+      ],
+      "exports": [
+        "configureEntryPolicy",
+        "locationMatches",
+        "mundaneEntryImpact",
+        "resolveMundaneEntry",
+        "reviewSceneEntry"
+      ],
+      "base_git_blob_sha256": "a462724f718afc5c77099a93130eb03960882ee63d3caf1fcbffd386b19bf0f5"
+    },
+    {
+      "path": "bot/src/scene-entry.js",
+      "owner": "session",
+      "imports": [
+        {
+          "kind": "static",
+          "specifier": "./personal-continuity.js",
+          "line": 2,
+          "column": 0,
+          "importedNames": [
+            "personalCharacter"
+          ]
+        },
+        {
+          "kind": "static",
+          "specifier": "./player-language.js",
+          "line": 3,
+          "column": 0,
+          "importedNames": [
+            "captureDeclaration",
+            "interpretAuthoredText"
+          ]
+        },
+        {
+          "kind": "static",
+          "specifier": "./scene-continuity.js",
+          "line": 4,
+          "column": 0,
+          "importedNames": [
+            "recordCharacterArrival",
+            "currentScene"
+          ]
+        },
+        {
+          "kind": "static",
+          "specifier": "./ai-intents.js",
+          "line": 5,
+          "column": 0,
+          "importedNames": [
+            "stateRevision"
+          ]
+        },
+        {
+          "kind": "static",
+          "specifier": "./city-calendar.js",
+          "line": 6,
+          "column": 0,
+          "importedNames": [
+            "cityAudit"
+          ]
+        },
+        {
+          "kind": "static",
+          "specifier": "./conversation-principal.js",
+          "line": 7,
+          "column": 0,
+          "importedNames": [
+            "conversationPrincipal"
+          ]
+        },
+        {
+          "kind": "static",
+          "specifier": "./scene-entry-native.js",
+          "line": 14,
+          "column": 0,
+          "importedNames": [
+            "locationMatches"
+          ]
+        },
+        {
+          "kind": "re-export",
+          "specifier": "./scene-entry-native.js",
+          "line": 15,
+          "column": 0,
+          "importedNames": [
+            "locationMatches"
+          ]
+        },
+        {
+          "kind": "static",
+          "specifier": "./scene-entry-native.js",
+          "line": 66,
+          "column": 0,
+          "importedNames": [
+            "reviewSceneEntry",
+            "configureEntryPolicy"
+          ]
+        },
+        {
+          "kind": "re-export",
+          "specifier": "./scene-entry-native.js",
+          "line": 71,
+          "column": 0,
+          "importedNames": [
+            "mundaneEntryImpact",
+            "resolveMundaneEntry"
+          ]
+        }
+      ],
+      "exports": [
+        "configureEntryPolicy",
+        "entryReferenceContext",
+        "entryTarget",
+        "locationMatches",
+        "mundaneEntryImpact",
+        "prepareSceneEntry",
+        "resolveMundaneEntry",
+        "reviewSceneEntry",
+        "routeSceneEntryMessage"
+      ],
+      "base_git_blob_sha256": "e1b772a9bfd2680910601278dab17027de9109d92441f492e3a944a60ffb68ab"
+    },
+    {
+      "path": "bot/src/scene-setup.js",
+      "owner": "session",
+      "imports": [
+        {
+          "kind": "static",
+          "specifier": "node:crypto",
+          "line": 2,
+          "column": 0,
+          "importedNames": [
+            "createHash",
+            "randomUUID"
+          ]
+        },
+        {
+          "kind": "static",
+          "specifier": "./conversation-principal.js",
+          "line": 3,
+          "column": 0,
+          "importedNames": [
+            "conversationPrincipal"
+          ]
+        },
+        {
+          "kind": "static",
+          "specifier": "./scene-continuity.js",
+          "line": 4,
+          "column": 0,
+          "importedNames": [
+            "currentScene",
+            "recordScenePresence"
+          ]
+        },
+        {
+          "kind": "static",
+          "specifier": "./city-calendar.js",
+          "line": 5,
+          "column": 0,
+          "importedNames": [
+            "indexWorldEvent"
+          ]
+        }
+      ],
+      "exports": [
+        "applyAuthoredInitialPosition",
+        "confirmSceneSetup",
+        "prepareSceneSetup",
+        "sceneSetupAvailability"
+      ],
+      "base_git_blob_sha256": "e38edc982d18a0c86ba52e56e6221eabdc264b646f5a198bbe49f4200ea7bc70"
+    },
+    {
+      "path": "bot/src/session-briefs.js",
+      "owner": "session",
+      "imports": [
+        {
+          "kind": "static",
+          "specifier": "./personal-continuity.js",
+          "line": 2,
+          "column": 0,
+          "importedNames": [
+            "personalCharacter",
+            "personalInbox"
+          ]
+        },
+        {
+          "kind": "static",
+          "specifier": "./history-reconciliation.js",
+          "line": 3,
+          "column": 0,
+          "importedNames": [
+            "reconcileHistory"
+          ]
+        },
+        {
+          "kind": "static",
+          "specifier": "./epistemic.js",
+          "line": 4,
+          "column": 0,
+          "importedNames": [
+            "evidenceType",
+            "activeEvidence"
+          ]
+        },
+        {
+          "kind": "static",
+          "specifier": "./pvp-output.js",
+          "line": 5,
+          "column": 0,
+          "importedNames": [
+            "scopedSessionRecap"
+          ]
+        }
+      ],
+      "exports": [
+        "formatSessionBrief",
+        "sessionBrief"
+      ],
+      "base_git_blob_sha256": "1c27291810c18163430f99903edada93451a9152c5b0b5e3ad20e7457618a86a"
+    },
+    {
+      "path": "bot/src/session-opening-attendance.js",
+      "owner": "session",
+      "imports": [
+        {
+          "kind": "static",
+          "specifier": "node:crypto",
+          "line": 2,
+          "column": 0,
+          "importedNames": [
+            "createHash"
+          ]
+        },
+        {
+          "kind": "static",
+          "specifier": "./city-calendar.js",
+          "line": 3,
+          "column": 0,
+          "importedNames": [
+            "indexWorldEvent"
+          ]
+        },
+        {
+          "kind": "static",
+          "specifier": "./conversation-principal.js",
+          "line": 4,
+          "column": 0,
+          "importedNames": [
+            "conversationPrincipal"
+          ]
+        }
+      ],
+      "exports": [
+        "carryOpeningAttendance",
+        "inspectOpeningEntryOpportunity",
+        "prepareOpeningEntryOpportunity",
+        "registerOpeningAttendance"
+      ],
+      "base_git_blob_sha256": "48a26f6f9c13eedf8013fbb9a36cff0f49cc98c6d17637f913c120986d683fc4"
+    },
+    {
+      "path": "bot/src/session-opening.js",
+      "owner": "session",
+      "imports": [
+        {
+          "kind": "static",
+          "specifier": "./scene-fiction-context.js",
+          "line": 2,
+          "column": 0,
+          "importedNames": [
+            "sceneFictionHash"
+          ]
+        },
+        {
+          "kind": "static",
+          "specifier": "./assembly-context.js",
+          "line": 3,
+          "column": 0,
+          "importedNames": [
+            "assemblyInputFingerprint"
+          ]
+        },
+        {
+          "kind": "static",
+          "specifier": "./city-calendar.js",
+          "line": 4,
+          "column": 0,
+          "importedNames": [
+            "indexWorldEvent"
+          ]
+        },
+        {
+          "kind": "static",
+          "specifier": "./assembly-state.js",
+          "line": 5,
+          "column": 0,
+          "importedNames": [
+            "assemblyPlanHash"
+          ]
+        }
+      ],
+      "exports": [
+        "assertSessionOpeningAttempt",
+        "assertSessionOpeningFence",
+        "assertSessionOpeningPublication",
+        "beginSessionOpeningAttempt",
+        "bindSessionOpeningTurn",
+        "inspectSessionOpening",
+        "rebaseSessionOpening",
+        "rebindSessionOpeningRefresh",
+        "scheduleSessionOpening"
+      ],
+      "base_git_blob_sha256": "76bc36c1f6a3a475b07206ca51cbe5213206c22cb20225705cb7b192298b28e3"
+    },
+    {
+      "path": "bot/src/story-continuity.js",
+      "owner": "session",
+      "imports": [
+        {
+          "kind": "static",
+          "specifier": "./city-calendar.js",
+          "line": 2,
+          "column": 0,
+          "importedNames": [
+            "cityObject",
+            "cityKey",
+            "cityAudit"
+          ]
+        },
+        {
+          "kind": "static",
+          "specifier": "./city-core.js",
+          "line": 3,
+          "column": 0,
+          "importedNames": [
+            "requireCitySource"
+          ]
+        },
+        {
+          "kind": "static",
+          "specifier": "./city-calendar.js",
+          "line": 4,
+          "column": 0,
+          "importedNames": [
+            "cityVisibility"
+          ]
+        },
+        {
+          "kind": "static",
+          "specifier": "./personal-continuity.js",
+          "line": 5,
+          "column": 0,
+          "importedNames": [
+            "personalCharacter"
+          ]
+        },
+        {
+          "kind": "static",
+          "specifier": "./ai-intents.js",
+          "line": 6,
+          "column": 0,
+          "importedNames": [
+            "stateRevision"
+          ]
+        },
+        {
+          "kind": "static",
+          "specifier": "./simulation-motivation.js",
+          "line": 7,
+          "column": 0,
+          "importedNames": [
+            "motivationKey"
+          ]
+        },
+        {
+          "kind": "static",
+          "specifier": "./gameplay-intake.js",
+          "line": 8,
+          "column": 0,
+          "importedNames": [
+            "explicitSilence",
+            "semanticResponseObligation"
+          ]
+        }
+      ],
+      "exports": [
+        "configureMystery",
+        "manageNarrativeSetup",
+        "mysteryView",
+        "pacingAdvice",
+        "recordMysteryAttempt",
+        "setPacingCues",
+        "suggestSetupPayoff",
+        "validatePacing"
+      ],
+      "base_git_blob_sha256": "8c5c8162b06158cafd77666de26fcbd002fdd5447d299621319c7063dd73a6c3"
+    },
+    {
+      "path": "bot/src/window-coordinator.js",
+      "owner": "session",
+      "imports": [
+        {
+          "kind": "static",
+          "specifier": "node:crypto",
+          "line": 2,
+          "column": 0,
+          "importedNames": [
+            "createHash"
+          ]
+        },
+        {
+          "kind": "static",
+          "specifier": "./action-consent.js",
+          "line": 3,
+          "column": 0,
+          "importedNames": [
+            "consentAction",
+            "requestActionConsent",
+            "respondActionConsent",
+            "validateActionConsent"
+          ]
+        },
+        {
+          "kind": "static",
+          "specifier": "./scene-continuity.js",
+          "line": 4,
+          "column": 0,
+          "importedNames": [
+            "currentScene"
+          ]
+        },
+        {
+          "kind": "static",
+          "specifier": "./conversation-principal.js",
+          "line": 5,
+          "column": 0,
+          "importedNames": [
+            "conversationPrincipal"
+          ]
+        },
+        {
+          "kind": "static",
+          "specifier": "./scene-action-window.js",
+          "line": 6,
+          "column": 0,
+          "importedNames": [
+            "joinActionWindow",
+            "lockActionWindow",
+            "resolveActionWindow"
+          ]
+        },
+        {
+          "kind": "static",
+          "specifier": "./narrative-pvp.js",
+          "line": 7,
+          "column": 0,
+          "importedNames": [
+            "validatePvpAgreement"
+          ]
+        },
+        {
+          "kind": "static",
+          "specifier": "./rules-arbitration.js",
+          "line": 8,
+          "column": 0,
+          "importedNames": [
+            "adjudicateAcceptedIntent"
+          ]
+        },
+        {
+          "kind": "static",
+          "specifier": "./action-dependency.js",
+          "line": 9,
+          "column": 0,
+          "importedNames": [
+            "transitionAction"
+          ]
+        },
+        {
+          "kind": "static",
+          "specifier": "./city-calendar.js",
+          "line": 10,
+          "column": 0,
+          "importedNames": [
+            "indexWorldEvent"
+          ]
+        },
+        {
+          "kind": "static",
+          "specifier": "./action-continuation.js",
+          "line": 11,
+          "column": 0,
+          "importedNames": [
+            "drainActionContinuations",
+            "continuationInbox"
+          ]
+        },
+        {
+          "kind": "static",
+          "specifier": "./gm-action-review.js",
+          "line": 12,
+          "column": 0,
+          "importedNames": [
+            "actionReviewOperation"
+          ]
+        },
+        {
+          "kind": "static",
+          "specifier": "./native-condition-recovery.js",
+          "line": 13,
+          "column": 0,
+          "importedNames": [
+            "clearNativeConditionFromOutcome"
+          ]
+        }
+      ],
+      "exports": [
+        "advanceActionWindow",
+        "reconcileWindowCustody",
+        "synchronizePvpWindow",
+        "windowOperation"
+      ],
+      "base_git_blob_sha256": "46f225cf8fc7aa00e97bd383a7ccd3822aa5fcbacb59f426385f2b5ba0ebefbe"
+    }
+  ],
+  "source_hash_contract": "base_git_blob_sha256 hashes exact committed blob bytes at base_sha; original worktree bytes for each moved implementation retained in C01-MOVE.json"
+}

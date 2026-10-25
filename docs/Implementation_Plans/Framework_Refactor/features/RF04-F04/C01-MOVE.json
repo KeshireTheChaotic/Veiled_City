@@ -1,0 +1,53 @@
+{
+  "base_sha": "953a3e7879058a933de5af9d31afd346f340aaf3",
+  "moves": [
+    {
+      "from": "bot/src/conversation-principal.js",
+      "to": "bot/src/frameworks/session/conversation-principal.js",
+      "original_sha256": "24642e6803e3f7701deb4be77f7e2e1a2e65e7485a05fb81c35d837e66faa65e",
+      "moved_sha256": "24642e6803e3f7701deb4be77f7e2e1a2e65e7485a05fb81c35d837e66faa65e",
+      "change": "byte-identical",
+      "remove_old_reader_in": "RF04-F05"
+    },
+    {
+      "from": "bot/src/owner-action-terminal.js",
+      "to": "bot/src/frameworks/session/owner-action-terminal.js",
+      "original_sha256": "eeba048498253a967563a42089f09dd90ebf18974dfe6ccc96a4cb1895d74062",
+      "moved_sha256": "5127e7be175d34aabeade0edd231c8f2d29833a57608acfd9679bfebb6441d33",
+      "change": "relative kernel error import only",
+      "remove_old_reader_in": "RF04-F05"
+    },
+    {
+      "from": "bot/src/opening-entry-evidence.js",
+      "to": "bot/src/frameworks/session/opening-entry-evidence.js",
+      "original_sha256": "c0596ec4a5b3dd808eec94bf762d7d1fde61f3aad991c8c28c1c9760fdee010f",
+      "moved_sha256": "c0596ec4a5b3dd808eec94bf762d7d1fde61f3aad991c8c28c1c9760fdee010f",
+      "change": "byte-identical",
+      "remove_old_reader_in": "RF04-F05"
+    },
+    {
+      "from": "bot/src/assembly-evidence.js",
+      "to": "bot/src/frameworks/session/assembly-evidence.js",
+      "original_sha256": "593b0776fdfc0f824480545ecce28256794a7c13e6c75228496f7f57d3f34d55",
+      "moved_sha256": "593b0776fdfc0f824480545ecce28256794a7c13e6c75228496f7f57d3f34d55",
+      "change": "byte-identical",
+      "remove_old_reader_in": "RF04-F05"
+    },
+    {
+      "from": "bot/src/roster.js",
+      "to": "bot/src/frameworks/session/roster.js",
+      "original_sha256": "0330c38d8ab651780f3e44efff39602258006caf418666faf1a8ec6ec1637b49",
+      "moved_sha256": "0330c38d8ab651780f3e44efff39602258006caf418666faf1a8ec6ec1637b49",
+      "change": "byte-identical",
+      "remove_old_reader_in": "RF04-F05"
+    }
+  ],
+  "consumers": [
+    "bot/src/assembly-state.js",
+    "bot/src/dialogue-continuity.js",
+    "bot/src/scene-entry.js",
+    "bot/src/scene-setup.js",
+    "bot/src/session-opening-attendance.js",
+    "bot/src/window-coordinator.js"
+  ]
+}

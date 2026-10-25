@@ -1,0 +1,88 @@
+TAP version 13
+# Subtest: five isolated Session moves preserve implementation fingerprints and historical exported identities
+ok 1 - five isolated Session moves preserve implementation fingerprints and historical exported identities
+  ---
+  duration_ms: 4.018
+  type: 'test'
+  ...
+# Subtest: current owner principal binds actual session assignment and revision without PC action, spending or placement
+ok 2 - current owner principal binds actual session assignment and revision without PC action, spending or placement
+  ---
+  duration_ms: 199.4562
+  type: 'test'
+  ...
+# Subtest: native current-role revision changes on reassignment and absent/no-role controllers receive no principal
+ok 3 - native current-role revision changes on reassignment and absent/no-role controllers receive no principal
+  ---
+  duration_ms: 193.13
+  type: 'test'
+  ...
+# Subtest: actual PC proxy context is distinct from owner-private identity and never qualifies as historical owner
+ok 4 - actual PC proxy context is distinct from owner-private identity and never qualifies as historical owner
+  ---
+  duration_ms: 189.0742
+  type: 'test'
+  ...
+# Subtest: offered NPC control is not a current role; explicit activation grants only its separate proxy context
+ok 5 - offered NPC control is not a current role; explicit activation grants only its separate proxy context
+  ---
+  duration_ms: 195.8847
+  type: 'test'
+  ...
+# Subtest: historical owner ancestry preserves dead or retired source readers without restoring live action authority
+ok 6 - historical owner ancestry preserves dead or retired source readers without restoring live action authority
+  ---
+  duration_ms: 194.3033
+  type: 'test'
+  ...
+# Subtest: actual owner native withdrawal creates a source-range tombstone, retained across restart and presentation retraction
+ok 7 - actual owner native withdrawal creates a source-range tombstone, retained across restart and presentation retraction
+  ---
+  duration_ms: 213.7294
+  type: 'test'
+  ...
+# Subtest: wrong controller or forged terminal choice cannot cancel another owner range or turn stale history into execution
+ok 8 - wrong controller or forged terminal choice cannot cancel another owner range or turn stale history into execution
+  ---
+  duration_ms: 203.3029
+  type: 'test'
+  ...
+# Subtest: truthful authoring codes never include provider body and opening evidence does not equate acknowledgment with semantic coverage
+ok 9 - truthful authoring codes never include provider body and opening evidence does not equate acknowledgment with semantic coverage
+  ---
+  duration_ms: 0.1828
+  type: 'test'
+  ...
+# Subtest: delivery truth derives from every actual status and message receipt, retaining fallback and uncertainty distinctions
+ok 10 - delivery truth derives from every actual status and message receipt, retaining fallback and uncertainty distinctions
+  ---
+  duration_ms: 0.19
+  type: 'test'
+  ...
+# Subtest: assembly dramatic intent revision changes with source or goal but never claims semantic fulfillment
+ok 11 - assembly dramatic intent revision changes with source or goal but never claims semantic fulfillment
+  ---
+  duration_ms: 0.1248
+  type: 'test'
+  ...
+# Subtest: real roster diagnostics distinguish present unassigned players, PC proxies and offered NPC roles without claiming co-location
+ok 12 - real roster diagnostics distinguish present unassigned players, PC proxies and offered NPC roles without claiming co-location
+  ---
+  duration_ms: 193.582
+  type: 'test'
+  ...
+# Subtest: six actual Session consumers adopt own public principal API without changing the source implementation
+ok 13 - six actual Session consumers adopt own public principal API without changing the source implementation
+  ---
+  duration_ms: 1.0641
+  type: 'test'
+  ...
+1..13
+# tests 13
+# suites 0
+# pass 13
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2082.4276

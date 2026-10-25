@@ -4,7 +4,7 @@ import { captureDeclaration, interpretAuthoredText } from "./player-language.js"
 import { recordCharacterArrival, currentScene } from "./scene-continuity.js";
 import { stateRevision } from "./ai-intents.js";
 import { cityAudit } from "./city-calendar.js";
-import { conversationPrincipal } from "./conversation-principal.js";
+import { conversationPrincipal } from './frameworks/session/public.js';
 export function entryTarget(text){
   if(interpretAuthoredText(text,{natural:true}).kind!=="attempt") return null;
   const clean=String(text).replace(/^(?:\s*<@!?\d+>\s*)+/,"").trim();

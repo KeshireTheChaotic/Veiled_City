@@ -1,7 +1,7 @@
 /** Native operational attendance only. No fictional position, disclosure, proxy or effect authority. */
 import {createHash} from 'node:crypto';
 import {indexWorldEvent} from './city-calendar.js';
-import {conversationPrincipal} from './conversation-principal.js';
+import {conversationPrincipal} from './frameworks/session/public.js';
 
 const KIND='opening_attendance_registration', ISSUER='native:session-attendance';
 const hash=value=>createHash('sha256').update(JSON.stringify(value)).digest('hex');

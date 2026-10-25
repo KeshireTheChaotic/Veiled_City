@@ -1,0 +1,17 @@
+{
+  "reason": "Existing exact leaf source/move evidence proves completed moves, but old candidate action label did not update; metadata-only status correction, targets/owners/deadlines/baseline unchanged.",
+  "original_rows": [
+    "\"bot/src/assembly-evidence.js\",\"bot/src/frameworks/session/assembly-evidence.js\",\"session\",\"RF04\",\"PILOT_MOVE_CANDIDATE\",\"1\",\"0\"",
+    "\"bot/src/authority-projection.js\",\"bot/src/frameworks/knowledge/authority-projection.js\",\"knowledge\",\"RF04\",\"PILOT_MOVE_CANDIDATE\",\"2\",\"0\"",
+    "\"bot/src/conversation-principal.js\",\"bot/src/frameworks/session/conversation-principal.js\",\"session\",\"RF04\",\"PILOT_MOVE_CANDIDATE\",\"57\",\"0\"",
+    "\"bot/src/disclosure-authority.js\",\"bot/src/frameworks/knowledge/disclosure-authority.js\",\"knowledge\",\"RF04\",\"PILOT_MOVE_CANDIDATE\",\"13\",\"0\"",
+    "\"bot/src/legacy-authority.js\",\"bot/src/frameworks/knowledge/legacy-authority.js\",\"knowledge\",\"RF04\",\"PILOT_MOVE_CANDIDATE\",\"0\",\"0\"",
+    "\"bot/src/narrative-records.js\",\"bot/src/frameworks/knowledge/narrative-records.js\",\"knowledge\",\"RF04\",\"PILOT_MOVE_CANDIDATE\",\"9\",\"0\"",
+    "\"bot/src/opening-entry-evidence.js\",\"bot/src/frameworks/session/opening-entry-evidence.js\",\"session\",\"RF04\",\"PILOT_MOVE_CANDIDATE\",\"2\",\"0\"",
+    "\"bot/src/provenance.js\",\"bot/src/frameworks/knowledge/provenance.js\",\"knowledge\",\"RF04\",\"PILOT_MOVE_CANDIDATE\",\"1\",\"0\"",
+    "\"bot/src/public-referents.js\",\"bot/src/frameworks/knowledge/public-referents.js\",\"knowledge\",\"RF04\",\"PILOT_MOVE_CANDIDATE\",\"2\",\"0\"",
+    "\"bot/src/relationship-state.js\",\"bot/src/frameworks/knowledge/relationship-state.js\",\"knowledge\",\"RF04\",\"PILOT_MOVE_CANDIDATE\",\"2\",\"0\"",
+    "\"bot/src/roster.js\",\"bot/src/frameworks/session/roster.js\",\"session\",\"RF04\",\"PILOT_MOVE_CANDIDATE\",\"1\",\"0\"",
+    "\"bot/src/scoped-query.js\",\"bot/src/frameworks/knowledge/scoped-query.js\",\"knowledge\",\"RF04\",\"PILOT_MOVE_CANDIDATE\",\"2\",\"0\""
+  ]
+}

@@ -1,7 +1,7 @@
 /** Read-only assembly identity, native orientation and legacy-state inspection. */
 import {createHash} from 'node:crypto';
 import {currentScene,scenePresence} from './scene-continuity.js';
-import {conversationPrincipal} from './conversation-principal.js';
+import {conversationPrincipal} from './frameworks/session/public.js';
 import {assemblyPartsFor} from './assembly-delivery.js';
 import {assemblyInputFingerprint} from './assembly-context.js';
 import {assertSessionOpeningAttempt} from './session-opening.js';

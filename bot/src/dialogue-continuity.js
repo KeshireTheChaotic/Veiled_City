@@ -6,7 +6,7 @@ import { requireCitySource } from "./city-core.js";
 import { motivationKey } from "./simulation-motivation.js";
 import { activeCityProxy } from "./city-constraints.js";
 import {assertNpcAvailability} from './city-constraints.js';
-import {conversationPrincipal} from './conversation-principal.js';
+import {conversationPrincipal} from './frameworks/session/public.js';
 import {narrativeSourceVisible} from './scene-fiction-context.js';
 import {factVisibleTo} from './disclosure-authority.js';
 import {sourceSpanInsideQuote} from './authored-turn-envelope.js';

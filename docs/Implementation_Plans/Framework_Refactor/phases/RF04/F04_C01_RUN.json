@@ -1,0 +1,102 @@
+{
+  "run_id": "RF04_F04_C01",
+  "base_sha": "953a3e7879058a933de5af9d31afd346f340aaf3",
+  "start": "2026-10-24T21:42:10.5245266-05:00",
+  "architecture_exit": 0,
+  "end": "2026-10-24T21:42:14.4004300-05:00",
+  "syntax": [
+    {
+      "exit": 0,
+      "path": "bot/src/frameworks/session/public.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/tests/ai-gm-2026-10/rf04-f04-c01.test.mjs"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/conversation-principal.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/frameworks/session/conversation-principal.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/owner-action-terminal.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/frameworks/session/owner-action-terminal.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/opening-entry-evidence.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/frameworks/session/opening-entry-evidence.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/assembly-evidence.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/frameworks/session/assembly-evidence.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/roster.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/frameworks/session/roster.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/assembly-state.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/dialogue-continuity.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/scene-entry.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/scene-setup.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/session-opening-attendance.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/window-coordinator.js"
+    }
+  ],
+  "hashes": {
+    "bot/src/frameworks/session/assembly-evidence.js": "593b0776fdfc0f824480545ecce28256794a7c13e6c75228496f7f57d3f34d55",
+    "bot/src/conversation-principal.js": "b59ba41b07030e80c18c6e0f8b38b9cfd5afcc14c6169dc73557343ddf55783c",
+    "bot/src/assembly-evidence.js": "7898bfd1e36a8ec49db4e384a2b624bf870e8706b1c257c16e32f41f0fecc9dd",
+    "bot/src/frameworks/session/conversation-principal.js": "24642e6803e3f7701deb4be77f7e2e1a2e65e7485a05fb81c35d837e66faa65e",
+    "bot/src/frameworks/session/opening-entry-evidence.js": "c0596ec4a5b3dd808eec94bf762d7d1fde61f3aad991c8c28c1c9760fdee010f",
+    "bot/src/frameworks/session/roster.js": "0330c38d8ab651780f3e44efff39602258006caf418666faf1a8ec6ec1637b49",
+    "bot/src/owner-action-terminal.js": "e219e5131f985ed1ec26b715df68d7ebfaa2811243b202103cce7d462839d89a",
+    "bot/src/window-coordinator.js": "adfcb4bea7a8739b57dec034c4412d48f4cdc39dc3afdaa4cafc552b96a706f1",
+    "bot/src/frameworks/session/owner-action-terminal.js": "5127e7be175d34aabeade0edd231c8f2d29833a57608acfd9679bfebb6441d33",
+    "bot/src/scene-setup.js": "0d588d12abca4abb6af3819e63f658266f17980ad81c58d5b233d394060986f5",
+    "bot/src/opening-entry-evidence.js": "c1b3013d4f26f7b1b2f78b36d0ae9c13bb80093baaaba4484c990a6f16f60b89",
+    "bot/tests/ai-gm-2026-10/rf04-f04-c01.test.mjs": "96af7cac4792c269d3e589e02eaaa7a0bdab6c988e02106f72d7e5bea1857a86",
+    "bot/src/scene-entry.js": "837cb79ffe2554bab10e49a44cd0df2bacf2c07ed9bffd9e439c53436ef1aee2",
+    "bot/src/roster.js": "9f6a953a38f3f8ef518c8edb8366a9b6f11c3158e12301f434ac52ae2815abc1",
+    "bot/src/dialogue-continuity.js": "c99f95f653893eb6d6b9b3831acff440946ce992b681281c6ffd6ba4096a9551",
+    "bot/src/session-opening-attendance.js": "05a0479cfc58552f4ed3fc6e6045025816738f5208aed92eb26fcbf78de7d836",
+    "bot/src/assembly-state.js": "361f4a6a4e8956547d627f5423eee0cbf3c28a619503d729bcbead81b6704b52",
+    "bot/src/frameworks/session/public.js": "87eeb9de4103edb631f2cf15c78bb3b96108f9576ac7d205cabc08d0e467cc83"
+  },
+  "test_exit": 0
+}

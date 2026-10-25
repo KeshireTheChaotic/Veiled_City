@@ -1,6 +1,6 @@
 /** Owner-private initial setup only. Never travel, adjudication of prior declarations, proxy consent or GM impersonation. */
 import {createHash,randomUUID} from 'node:crypto';
-import {conversationPrincipal} from './conversation-principal.js';
+import {conversationPrincipal} from './frameworks/session/public.js';
 import {currentScene,recordScenePresence} from './scene-continuity.js';
 import {indexWorldEvent} from './city-calendar.js';
 const hash=value=>createHash('sha256').update(JSON.stringify(value)).digest('hex');
