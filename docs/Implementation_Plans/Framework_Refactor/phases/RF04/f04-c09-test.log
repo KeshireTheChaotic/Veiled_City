@@ -1,0 +1,51 @@
+✖ two owners receive distinct native-accepted private scenes while shared publication omits both threads (963.0335ms)
+✖ party-labeled private response is held and cannot cross into shared or another owner publication (922.1718ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 0
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2982.0933
+
+✖ failing tests:
+
+test at bot\tests\ai-gm-2026-10\rf04-f04-c09.test.mjs:52:1
+✖ two owners receive distinct native-accepted private scenes while shared publication omits both threads (963.0335ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'needs_delivery_review'
+  - 'completed'
+  
+      at TestContext.<anonymous> (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf04-f04-c09.test.mjs:54:83)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'needs_delivery_review',
+    expected: 'completed',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at bot\tests\ai-gm-2026-10\rf04-f04-c09.test.mjs:72:1
+✖ party-labeled private response is held and cannot cross into shared or another owner publication (922.1718ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'needs_delivery_review'
+  - 'needs_narrative_review'
+           ^
+  
+      at TestContext.<anonymous> (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf04-f04-c09.test.mjs:75:9)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'needs_delivery_review',
+    expected: 'needs_narrative_review',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

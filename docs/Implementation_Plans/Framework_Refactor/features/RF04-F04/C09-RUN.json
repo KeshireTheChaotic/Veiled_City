@@ -1,0 +1,72 @@
+{
+  "feature": "RF04-F04-C09",
+  "status": "SCOPED_QUALIFIED",
+  "base_head": "4c27f0a6408c23913f28e92de837471a17a131e3",
+  "production_code_changed": false,
+  "fresh_test": "bot/tests/ai-gm-2026-10/rf04-f04-c09.test.mjs",
+  "test_sha256": "603A19CFCB2F5E3ACBFB24E8D5E918CBC9A6BB8C7BAF89643A63387A34A9AAC8",
+  "test_command": "node --test bot/tests/ai-gm-2026-10/rf04-f04-c09.test.mjs",
+  "test_result": {
+    "final_exit_code": 0,
+    "final_passed": 2,
+    "final_failed": 0,
+    "distinct_cases_qualified": 2,
+    "actual_case_executions_across_three_batches": 6,
+    "final_tap_duration_ms": 4804.568,
+    "syntax_check": "node --check bot/tests/ai-gm-2026-10/rf04-f04-c09.test.mjs passed"
+  },
+  "test_batches": [
+    {
+      "path": "phases/RF04/f04-c09-test.log",
+      "sha256": "A4E0B03C22E5ADD6EA778B21181A10D23AB6DBD3C053F826F78041FFD6AAF923",
+      "result": "exit 1; 0/2 passed; DM mock lacked acknowledged channel ID"
+    },
+    {
+      "path": "phases/RF04/f04-c09-repair-test.log",
+      "sha256": "46D59F16721FDD84065ADB275D4F17D56AE572459DE4FFF1C66598071A42218E",
+      "result": "exit 1; 0/2 passed; private fixture violated unplaced-camera viewpoint validation"
+    },
+    {
+      "path": "phases/RF04/f04-c09-final-test.log",
+      "sha256": "B1A0D9804B09FE3463E2375F6584376E7A496719A21CF142689DC7AA8190643A",
+      "result": "exit 0; 2/2 passed; TAP duration 4804.568 ms"
+    }
+  ],
+  "architecture": {
+    "command": "npm --prefix bot run architecture:check",
+    "log": "phases/RF04/f04-c09-architecture.log",
+    "sha256": "503C39C68E5CF7199AF76486B6A0E2713CF43465E7FF909D03CC98A1E7B125CE",
+    "exit_code": 0,
+    "source_modules": 561,
+    "unowned": 0,
+    "imports": 2711,
+    "largest_scc": 181,
+    "accepted_legacy_occurrences": 2442,
+    "active_violation_groups": 0,
+    "transition_errors": 0
+  },
+  "coverage": [
+    "Distinct private writer packets and owner-directed publication for two checked-in owners",
+    "Shared camera excludes both private threads and GM-only planner/hook material",
+    "Party-labeled private response is held; honest orientation is private to the affected owner",
+    "Independent valid owner scene and shared camera continue after another owner's held response",
+    "Three durable delivered publication receipts retain Discord message IDs",
+    "Opening runner replay preserves exact receipts and causes no additional send",
+    "No PC placement is inferred or written"
+  ],
+  "mocks": {
+    "writer_calls_across_all_batches": 18,
+    "discord_sends_across_all_batches": 18,
+    "discord_sends_per_batch": 6,
+    "paid_provider_calls": 0,
+    "tokens": 0,
+    "cost_usd": 0,
+    "codex_usage": "UNMEASURED"
+  },
+  "limitations": [
+    "Mocked provider and Discord are offline boundaries; live transport and provider behavior are not qualified.",
+    "Fixture acceptance is not a measure of general narrative quality.",
+    "RF04 isolation and the full phase remain incomplete."
+  ],
+  "release": "NOT_AUTHORIZED"
+}

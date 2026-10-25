@@ -1,0 +1,50 @@
+✖ two owners receive distinct native-accepted private scenes while shared publication omits both threads (1034.0541ms)
+✖ party-labeled private response is held and cannot cross into shared or another owner publication (994.9124ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 0
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3172.947
+
+✖ failing tests:
+
+test at bot\tests\ai-gm-2026-10\rf04-f04-c09.test.mjs:52:1
+✖ two owners receive distinct native-accepted private scenes while shared publication omits both threads (1034.0541ms)
+  AssertionError [ERR_ASSERTION]: [{"audience":"private","character":"6847229d-94e3-4185-b5f4-929330b30ae9","user":"ada","status":"delivered","narrative_status":"FALLBACK_DELIVERED","hook_verified":false,"narrative_generated":true,"narrative_verified":false,"narrative_quarantined":true,"fallback":true,"dramatic_coverage":"unverified"},{"audience":"private","character":"3b8e1141-937e-45e7-8859-c3fb34060134","user":"noor","status":"delivered","narrative_status":"FALLBACK_DELIVERED","hook_verified":false,"narrative_generated":true,"narrative_verified":false,"narrative_quarantined":true,"fallback":true,"dramatic_coverage":"unverified"},{"audience":"party","character":null,"user":null,"status":"delivered","narrative_status":"VERIFIED_SCENE_DELIVERED","hook_verified":false,"narrative_generated":true,"narrative_verified":true,"narrative_quarantined":false,"fallback":false,"dramatic_coverage":"unverified"}]
+  + actual - expected
+  
+  + 'needs_narrative_review'
+  - 'completed'
+  
+      at TestContext.<anonymous> (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf04-f04-c09.test.mjs:54:83)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'needs_narrative_review',
+    expected: 'completed',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at bot\tests\ai-gm-2026-10\rf04-f04-c09.test.mjs:72:1
+✖ party-labeled private response is held and cannot cross into shared or another owner publication (994.9124ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'FALLBACK_DELIVERED'
+  - 'VERIFIED_SCENE_DELIVERED'
+  
+      at TestContext.<anonymous> (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf04-f04-c09.test.mjs:77:9)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'FALLBACK_DELIVERED',
+    expected: 'VERIFIED_SCENE_DELIVERED',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
