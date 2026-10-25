@@ -17,6 +17,8 @@ import {assemblyInputs} from '../../src/assembly-context.js';
 import {assemblyNarrativeCandidate} from '../../src/pvp-output.js';
 import {openingCohortNarrativeCandidate} from '../../src/opening-cohort-state.js';
 import {authorNarrativeRequests} from '../../src/narrative-authority.js';
+import {initializeSessionWorldEvents} from '../../src/application/composition/public.js';
+initializeSessionWorldEvents();
 
 const here=dirname(fileURLToPath(import.meta.url));
 const schema=join(here,'..','..','sql','schema.sql');

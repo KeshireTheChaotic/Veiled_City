@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {fixture,barrier} from './p10-fixture.mjs';
 import {handleCommand} from '../../src/commands.js';
-import {openingErrorCode,openingDiagnostic} from '../../src/opening-diagnostics.js';
+import {openingErrorCode,openingDiagnostic} from '../../src/frameworks/operations/public.js';
 import {sessionOpeningStatus} from '../../src/session-opening-runner.js';
 function interaction(f,user,sub,onReply=()=>{}){
  const replies=[];return {id:`command-${sub}-${user}`,guildId:'g',guild:f.guild,commandName:'vc-session',user:{id:user,username:user},member:{displayName:user},

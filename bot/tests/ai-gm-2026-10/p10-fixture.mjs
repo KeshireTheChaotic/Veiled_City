@@ -7,6 +7,8 @@ import {GMService} from '../../src/gm.js';
 import {scheduleSessionOpening} from '../../src/session-opening.js';
 import {prepareOpeningEntryOpportunity} from '../../src/session-opening-attendance.js';
 import {assemblyHookSources} from '../../src/assembly-context.js';
+import {initializeSessionWorldEvents} from '../../src/application/composition/public.js';
+initializeSessionWorldEvents();
 export function barrier(){let resolve;const promise=new Promise(r=>resolve=r);return {promise,resolve};}
 export function fixture({active=true}={}){
   const dir=mkdtempSync(path.join(tmpdir(),'vc-p10-')),dbPath=path.join(dir,'session.sqlite'),

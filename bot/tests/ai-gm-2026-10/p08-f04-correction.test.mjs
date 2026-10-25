@@ -13,6 +13,8 @@ import {openingCohortNarrativeCandidate} from '../../src/opening-cohort-state.js
 import {authorNarrativeRequests} from '../../src/narrative-authority.js';
 import {recordCharacterArrival} from '../../src/scene-continuity.js';
 import {disposableCampaign} from './p08-correction-fixture.mjs';
+import {initializeSessionWorldEvents} from '../../src/application/composition/public.js';
+initializeSessionWorldEvents();
 
 function mockGuild(){
   let next=0,mode='acknowledge';const channel={id:'play-channel',isTextBased:()=>true,send:async()=>{
@@ -70,8 +72,8 @@ test('cohort remains inert without immutable acknowledged camera evidence and re
     let planned=0;
     const result=await runOpeningCohort({db,guild:{id:'guild-correction'},gm:{planAssembly:async()=>{planned++;return {};}}});
     assert.equal(result,null);assert.equal(planned,0);
-    assert.match(openingCohortStatus({status:'held_paused'}),/paused/);
-    assert.match(openingCohortStatus({status:'needs_review'}),/review/);
+    assert.match(openingCohortStatus({status:'held_paused',data:{}}),/paused/);
+    assert.match(openingCohortStatus({status:'needs_review',data:{}}),/review/);
     assert.equal(db.getCityRecord('guild-correction','opening_cohort_job',session.id),null);
   }finally{close();}
 });

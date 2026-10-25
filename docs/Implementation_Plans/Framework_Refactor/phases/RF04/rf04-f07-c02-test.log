@@ -1,0 +1,319 @@
+TAP version 13
+# Subtest: contradictory and nested authority labels fail closed while owner text survives
+ok 1 - contradictory and nested authority labels fail closed while owner text survives
+  ---
+  duration_ms: 255.742
+  type: 'test'
+  ...
+# Subtest: initial acknowledged camera accepts original rosters of zero or one, never two
+ok 2 - initial acknowledged camera accepts original rosters of zero or one, never two
+  ---
+  duration_ms: 0.3225
+  type: 'test'
+  ...
+# Subtest: writer brief carries an audience-authorized cue or a scene-specific open invitation
+ok 3 - writer brief carries an audience-authorized cue or a scene-specific open invitation
+  ---
+  duration_ms: 228.8068
+  type: 'test'
+  ...
+# Subtest: actual planner request includes the source-scoped read-only NPC and faction agenda
+ok 4 - actual planner request includes the source-scoped read-only NPC and faction agenda
+  ---
+  duration_ms: 0.9989
+  type: 'test'
+  ...
+# Subtest: two independent SQLite workers cannot both claim the same publication
+ok 5 - two independent SQLite workers cannot both claim the same publication
+  ---
+  duration_ms: 640.3395
+  type: 'test'
+  ...
+# Subtest: authoring ownership compares status, attempt, roster and source revision atomically
+ok 6 - authoring ownership compares status, attempt, roster and source revision atomically
+  ---
+  duration_ms: 251.3518
+  type: 'test'
+  ...
+# Subtest: zero-to-two and one-to-two openings publish one additive public opportunity with immutable ACKs
+ok 7 - zero-to-two and one-to-two openings publish one additive public opportunity with immutable ACKs
+  ---
+  duration_ms: 2866.6614
+  type: 'test'
+  ...
+# Subtest: cohort remains inert without immutable acknowledged camera evidence and reports pause/review truthfully
+ok 8 - cohort remains inert without immutable acknowledged camera evidence and reports pause/review truthfully
+  ---
+  duration_ms: 261.3444
+  type: 'test'
+  ...
+# Subtest: /vc-session assemble checks the additive cohort after a terminal initial opening without replaying it
+ok 9 - /vc-session assemble checks the additive cohort after a terminal initial opening without replaying it
+  ---
+  duration_ms: 233.7249
+  type: 'test'
+  ...
+# Subtest: zero-attendee camera is acknowledged through the real outbox and still enables one additive cohort after check-in
+ok 10 - zero-attendee camera is acknowledged through the real outbox and still enables one additive cohort after check-in
+  ---
+  duration_ms: 745.8524
+  type: 'test'
+  ...
+# Subtest: stale unsent planner work is archived and refreshed without changing the original camera or duplicating publication
+ok 11 - stale unsent planner work is archived and refreshed without changing the original camera or duplicating publication
+  ---
+  duration_ms: 678.3992
+  type: 'test'
+  ...
+# Subtest: Director pause during planner await holds before commit and resumes from a fresh unsent attempt
+ok 12 - Director pause during planner await holds before commit and resumes from a fresh unsent attempt
+  ---
+  duration_ms: 702.1925
+  type: 'test'
+  ...
+# Subtest: uncertain cohort send survives a new database connection without automatic resend or replanning
+ok 13 - uncertain cohort send survives a new database connection without automatic resend or replanning
+  ---
+  duration_ms: 3585.9149
+  type: 'test'
+  ...
+# Subtest: independent Node worker processes claim one session cohort and publish at most once
+not ok 14 - independent Node worker processes claim one session cohort and publish at most once
+  ---
+  duration_ms: 1718.733
+  type: 'test'
+  location: 'D:\\Library\\Development\\Veiled_City\\bot\\tests\\ai-gm-2026-10\\p08-f04-correction.test.mjs:173:1'
+  failureType: 'testCodeFailure'
+  error: "EPERM, Permission denied: \\\\?\\C:\\Users\\Keshi\\AppData\\Local\\Temp\\vc-p08-correction-loqqeJ '\\\\?\\C:\\Users\\Keshi\\AppData\\Local\\Temp\\vc-p08-correction-loqqeJ'"
+  code: 'EPERM'
+  stack: |-
+    rmSync (node:fs:1283:18)
+    close (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/p08-correction-fixture.mjs:14:140)
+    TestContext.<anonymous> (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/p08-f04-correction.test.mjs:199:72)
+    process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: cohort requires two distinct currently owner-controlled players
+ok 15 - cohort requires two distinct currently owner-controlled players
+  ---
+  duration_ms: 0.492
+  type: 'test'
+  ...
+# Subtest: pre-registered initial cohort is not replayed as a post-start additive opportunity
+ok 16 - pre-registered initial cohort is not replayed as a post-start additive opportunity
+  ---
+  duration_ms: 0.127
+  type: 'test'
+  ...
+# Subtest: cohort roster revision binds owner control and excludes absent attendees
+ok 17 - cohort roster revision binds owner control and excludes absent attendees
+  ---
+  duration_ms: 0.391
+  type: 'test'
+  ...
+# Subtest: manual assembly and established-party resume never launch a new cohort plan
+ok 18 - manual assembly and established-party resume never launch a new cohort plan
+  ---
+  duration_ms: 0.3663
+  type: 'test'
+  ...
+# Subtest: cohort status communicates delivery without claiming placement or party state
+ok 19 - cohort status communicates delivery without claiming placement or party state
+  ---
+  duration_ms: 0.1708
+  type: 'test'
+  ...
+# Subtest: zero-attendee planner rebases coalesced check-ins once, preserving attempt receipt and cross-connection claim
+ok 20 - zero-attendee planner rebases coalesced check-ins once, preserving attempt receipt and cross-connection claim
+  ---
+  duration_ms: 2149.2108
+  type: 'test'
+  ...
+# Subtest: a second revision during replanning is bounded and retains unsent history
+ok 21 - a second revision during replanning is bounded and retains unsent history
+  ---
+  duration_ms: 283.1351
+  type: 'test'
+  ...
+# Subtest: pause and source tampering cannot regenerate or send
+ok 22 - pause and source tampering cannot regenerate or send
+  ---
+  duration_ms: 249.0349
+  type: 'test'
+  ...
+# Subtest: restart delivers exact known-unsent prepared payload with no provider and immutable ACK
+ok 23 - restart delivers exact known-unsent prepared payload with no provider and immutable ACK
+  ---
+  duration_ms: 611.7976
+  type: 'test'
+  ...
+# Subtest: uncertain transport forbids recovery, reauthoring and replay across connection restart
+ok 24 - uncertain transport forbids recovery, reauthoring and replay across connection restart
+  ---
+  duration_ms: 502.2681
+  type: 'test'
+  ...
+# Subtest: failed uncommitted planner can receive one authenticated recovery without manual attempt 2
+ok 25 - failed uncommitted planner can receive one authenticated recovery without manual attempt 2
+  ---
+  duration_ms: 438.6386
+  type: 'test'
+  ...
+# Subtest: zero-attendee public camera is authored, acknowledged once and does not place anyone
+ok 26 - zero-attendee public camera is authored, acknowledged once and does not place anyone
+  ---
+  duration_ms: 2446.6079
+  type: 'test'
+  ...
+# Subtest: independent shared scene after failed uncommitted original, separate owner positions, cross-connection claim and immutable repeat
+ok 27 - independent shared scene after failed uncommitted original, separate owner positions, cross-connection claim and immutable repeat
+  ---
+  duration_ms: 503.3699
+  type: 'test'
+  ...
+# Subtest: original uncertain public transport cannot mint competing cohort
+ok 28 - original uncertain public transport cannot mint competing cohort
+  ---
+  duration_ms: 460.4975
+  type: 'test'
+  ...
+# Subtest: owner hooks guide actual private writer, authored units publish once and other secrets stay out
+ok 29 - owner hooks guide actual private writer, authored units publish once and other secrets stay out
+  ---
+  duration_ms: 752.9234
+  type: 'test'
+  ...
+# Subtest: entry exception retains redacted reason and honest versioned fallback
+ok 30 - entry exception retains redacted reason and honest versioned fallback
+  ---
+  duration_ms: 3469.629
+  type: 'test'
+  ...
+# Subtest: entry zero retains redacted reason and honest versioned fallback
+ok 31 - entry zero retains redacted reason and honest versioned fallback
+  ---
+  duration_ms: 560.2126
+  type: 'test'
+  ...
+# Subtest: entry held retains redacted reason and honest versioned fallback
+ok 32 - entry held retains redacted reason and honest versioned fallback
+  ---
+  duration_ms: 526.8529
+  type: 'test'
+  ...
+# Subtest: control changes during writer await fence draft/commit/send and cross-connection entry claim
+ok 33 - control changes during writer await fence draft/commit/send and cross-connection entry claim
+  ---
+  duration_ms: 511.1991
+  type: 'test'
+  ...
+# Subtest: typed setup diagnostics preserve owner boundary, history and explicit decline
+ok 34 - typed setup diagnostics preserve owner boundary, history and explicit decline
+  ---
+  duration_ms: 1186.7182
+  type: 'test'
+  ...
+# Subtest: no safe initial location permits invented provisional camera without character placement or resource changes
+ok 35 - no safe initial location permits invented provisional camera without character placement or resource changes
+  ---
+  duration_ms: 453.2448
+  type: 'test'
+  ...
+# Subtest: actual start and during-planner present commands ACK promptly, drain private entries and publish one shared opening
+ok 36 - actual start and during-planner present commands ACK promptly, drain private entries and publish one shared opening
+  ---
+  duration_ms: 1408.8544
+  type: 'test'
+  ...
+# Subtest: closed error and status projections cannot retain provider code/body, and fallback stays explicit
+ok 37 - closed error and status projections cannot retain provider code/body, and fallback stays explicit
+  ---
+  duration_ms: 0.1917
+  type: 'test'
+  ...
+# Subtest: two SQLite connections race one prepared refresh and only the durable claimant invokes the writer
+ok 38 - two SQLite connections race one prepared refresh and only the durable claimant invokes the writer
+  ---
+  duration_ms: 1026.7538
+  type: 'test'
+  ...
+# Subtest: check-in during writer await discards unsent draft and regenerates once before acceptance
+ok 39 - check-in during writer await discards unsent draft and regenerates once before acceptance
+  ---
+  duration_ms: 5191.1709
+  type: 'test'
+  ...
+# Subtest: committed scene cannot rebase on check-in during channel lookup; proven pre-send guard stays NOT_SENT
+ok 40 - committed scene cannot rebase on check-in during channel lookup; proven pre-send guard stays NOT_SENT
+  ---
+  duration_ms: 456.5448
+  type: 'test'
+  ...
+# Subtest: durable delivering part after restart remains uncertain without any writer retry
+ok 41 - durable delivering part after restart remains uncertain without any writer retry
+  ---
+  duration_ms: 1793.2962
+  type: 'test'
+  ...
+# Subtest: two isolated SQLite workers share one durable initial planner claim
+not ok 42 - two isolated SQLite workers share one durable initial planner claim
+  ---
+  duration_ms: 608.6286
+  type: 'test'
+  location: 'D:\\Library\\Development\\Veiled_City\\bot\\tests\\ai-gm-2026-10\\p10-f08.test.mjs:39:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    'done' !== 'planning'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'planning'
+  actual: 'done'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/p10-f08.test.mjs:42:136)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: explicit no-commit recovery fences a still-running stale worker without downgrade
+ok 43 - explicit no-commit recovery fences a still-running stale worker without downgrade
+  ---
+  duration_ms: 421.9063
+  type: 'test'
+  ...
+# Subtest: pause during writer blocks draft and send; stale recovery card is rejected and fresh authenticated card resumes once
+ok 44 - pause during writer blocks draft and send; stale recovery card is rejected and fresh authenticated card resumes once
+  ---
+  duration_ms: 882.7858
+  type: 'test'
+  ...
+# Subtest: actual model adapter preserves redacted provider, parse and deadline categories for opening lanes
+ok 45 - actual model adapter preserves redacted provider, parse and deadline categories for opening lanes
+  ---
+  duration_ms: 0.7104
+  type: 'test'
+  ...
+# Subtest: manual attempt-2 approval remains valid after an uncommitted autonomous epoch
+ok 46 - manual attempt-2 approval remains valid after an uncommitted autonomous epoch
+  ---
+  duration_ms: 436.764
+  type: 'test'
+  ...
+# Subtest: nested and contradictory private labels never enter actual public or owner writer packets
+ok 47 - nested and contradictory private labels never enter actual public or owner writer packets
+  ---
+  duration_ms: 1213.2606
+  type: 'test'
+  ...
+1..47
+# tests 47
+# suites 0
+# pass 45
+# fail 2
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 46341.8028

@@ -35,14 +35,14 @@ test('cohort roster revision binds owner control and excludes absent attendees',
 test('manual assembly and established-party resume never launch a new cohort plan',async()=>{
   for(const session of [{id:'manual-session',assembly_phase:'assembly',assembly_mode:'manual'},
     {id:'resume-session',assembly_phase:'party',assembly_mode:'auto'}]){
-    const db={getActiveSession:()=>session,getCityRecord:()=>null};
+    const db={getActiveSession:()=>session,getCityRecord:()=>null,isDirectorPaused:()=>false};
     const gm={planAssembly:()=>{throw new Error('planner must not run');}};
     assert.equal(await runOpeningCohort({db,guild:{id:'g'},gm}),null);
   }
 });
 
 test('cohort status communicates delivery without claiming placement or party state',()=>{
-  assert.match(openingCohortStatus({status:'delivered'}),/Shared opportunity acknowledged/);
-  assert.match(openingCohortStatus({status:'uncertain'}),/uncertain; held for review/);
-  assert.match(openingCohortStatus({status:'delivered'}),/does not establish arrival, location, cooperation, party state/);
+  assert.match(openingCohortStatus({status:'delivered',data:{}}),/Shared opportunity transport acknowledged/);
+  assert.match(openingCohortStatus({status:'uncertain',data:{}}),/uncertain; held for review/);
+  assert.match(openingCohortStatus({status:'delivered',data:{}}),/does not establish arrival, location, cooperation, party state/);
 });
