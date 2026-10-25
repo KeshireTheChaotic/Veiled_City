@@ -29,6 +29,8 @@ The exact source-observation pilot assigned to RF05-F03 is moved into Narrative 
 
 The existing soft Director guidance string was moved unchanged into Narrative and exported through its public API. The GM consumer uses the public import; the old root path remains a one-line compatibility re-export because three existing feature tests import it. The fresh changed-code test passed 1/1 (exit 0; 550.797 ms), and changed-file syntax passed 5/5. The root-location transition remains active; no RF05-F03 transition was retired. **289** assigned RF05-F03 entries remain, including this compatibility path. See `C02-SCOPE.md` and `C02-RUN.json`; release remains NOT AUTHORIZED.
 
+After RF05-F04 C05 changed the GM import module, the same fresh C02 test was rerun in the targeted three-test shared-GM batch. It passed 1/1 within the batch (exit 0, total duration 794.1741 ms); the current `gm.js` SHA-256 is `A1FDDA0B93E77867F1DA15D1E4D02759AA7CA32FDE9C0656454B5980E1D5F8A6`. See the C02 RUN record. No other production source changed.
+
 ## Holds and rollback
 
 RF04 and the phase-wide RF05 ratchet remain incomplete from earlier transition debt. Preserve Daggerheart source/receipt authority, existing disclosure predicate semantics, and the request-local non-persistent nature of these projections. Rollback only the RF05-F03 commit and restore its exact prior import paths/manifest entries if needed.

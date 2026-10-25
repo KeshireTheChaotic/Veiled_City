@@ -1,6 +1,6 @@
 # RF05-F06 execution ledger
 
-**Status:** QUALIFIED CHECKPOINT — RF05 PHASE INCOMPLETE / GATE FAILED.
+**Status:** QUALIFIED CURRENT-CODE CHECKPOINT — RF05 PHASE INCOMPLETE / GATE FAILED.
 **Base HEAD:** `9b69f51927fd5ec7e7b996c15c8f31ff2ae4d031`
 **Scope:** [`SCOPE.md`](SCOPE.md)
 
@@ -8,7 +8,11 @@
 
 One frozen changed-code union member was run: `rf05-f02-model-transport.test.mjs` passed **7/7**, exit **0**, duration **640.1087 ms**, one blocking launch. The test imports `GMService`; `gm.js` changed afterward in F04, so rerunning was justified. F01 (4/4), F03 (9/9), F04 (3/3), and F05 (3/3) focused fresh tests are carried forward from their exact passing records because their directly exercised production modules did not change afterward. Changed-code syntax passed **14/14**, exit **0**.
 
-The current RF05 architecture ratchet exited **1**: 572 source modules, zero unowned, 2732 imports, largest cycle 181, 968 active violation groups, and 967 transition errors. RF05-F03, F04, and F05 retain 289, 62, and 442 exact assignments respectively; earlier RF04 debt also remains expired under RF05. No changed-path violation or transition error was found in RF05's modified modules. This checkpoint does not qualify full RF05 isolation. See `RF05-F06-RUN.json` and the `rf05-f06-*` terminal logs for exact evidence.
+The original RF05 checkpoint ratchet exited **1**: 572 source modules, zero unowned, 2732 imports, largest cycle 181, 968 active violation groups, and 967 transition errors. After C05, the current RF05 ratchet exits **1**: **574** source modules, **zero unowned**, **2736** imports, largest cycle **181**, **955** active groups, and **955** transition errors. RF05-F03, F04, and F05 retain **289**, **58**, and **442** exact assignments respectively; earlier RF04 debt also remains expired under RF05. C05's new public Intent import has no changed-path boundary finding. This checkpoint does not qualify full RF05 isolation. See `RF05-F06-RUN.json` for current evidence and prior `rf05-f06-*` logs for historical results.
+
+## Current-code refresh after RF05-F04 C05
+
+After the Intent API change modified `gm.js`, the F06 transport test was run once: **7/7** passed, exit **0**, duration **559.3211 ms**. The three other fresh tests that import `GMService` and had last run against earlier GM bytes (RF05-F03 C02 and RF05-F04 C02/C03) were run together once: **3/3** passed, exit **0**, duration **794.1741 ms**. The new C05 regression already passed **1/1** against the same committed GM bytes. Current changed-code JavaScript syntax checks are **5/5** pass from C05. Current architecture result and all source/test hashes are summarized in `RF05-F06-RUN.json`'s `after_c05_refresh`. No provider, network, database, or legacy suite use.
 
 ## Holds and rollback
 

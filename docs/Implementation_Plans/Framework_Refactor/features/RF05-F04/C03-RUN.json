@@ -61,6 +61,7 @@
     "remaining_rf05_f04_entries": 60
   },
   "post_shared_gm_module_recheck": {"reason":"gm.js changed after the original slice; the GM World public-context import and compatibility behavior were rechecked.","current_gm_sha256":"2A594934EB73E0703929DB62F9C5A52831E833C8F08157AE56AA4B7B18A57AEF","test_sha256":"70C5CFE574BAED1818BD3F05F8698AB9758A61C2A1FE44883ADE0FE8DD43ACD5","batch_exit_code":0,"batch_passed":9,"batch_failed":0,"this_test_passed":1,"batch_duration_ms":1917.7243},
+  "post_c05_gm_recheck": {"reason":"gm.js changed again for the Intent public API; the World-context projection regression was rerun against the committed C05 bytes.","current_gm_sha256":"A1FDDA0B93E77867F1DA15D1E4D02759AA7CA32FDE9C0656454B5980E1D5F8A6","test_sha256":"70C5CFE574BAED1818BD3F05F8698AB9758A61C2A1FE44883ADE0FE8DD43ACD5","batch_exit_code":0,"batch_passed":3,"batch_failed":0,"this_test_passed":1,"batch_duration_ms":794.1741},
   "cost": {
     "provider_calls": 0,
     "provider_tokens": 0,
