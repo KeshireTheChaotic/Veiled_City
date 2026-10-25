@@ -2,7 +2,7 @@
 import { createHash } from "node:crypto";
 import {narrativeSourceVisible,sceneFictionHash as proofHash} from './scene-fiction-context.js';
 import {narrativeImportance} from './narrative-salience.js';
-import {listNarrativeRecords} from './narrative-records.js';
+import {listNarrativeRecords} from './frameworks/knowledge/public.js';
 import {BACKGROUND_WORLD_KINDS} from './world-background-identities.js';
 import {worldIdentityOrigin} from './world-authorship.js';
 

@@ -1,0 +1,66 @@
+{
+  "base_sha": "4bb74b8af61a26c086896040299d6283f3c9aa50",
+  "moves": [
+    {
+      "from": "bot/src/authority-projection.js",
+      "to": "bot/src/frameworks/knowledge/authority-projection.js",
+      "sha256": "3bc38af3af9bc67d9fd3c1923f492b13400dc9d73a1ee69d8315c679d5cddc1a",
+      "implementation_byte_identical": true,
+      "old_reader_remove_in": "RF04-F05"
+    },
+    {
+      "from": "bot/src/disclosure-authority.js",
+      "to": "bot/src/frameworks/knowledge/disclosure-authority.js",
+      "sha256": "7b332081088646f3800f66d86c84ddbab5df26a18bb6cc3b931d0b24375534b8",
+      "implementation_byte_identical": true,
+      "old_reader_remove_in": "RF04-F05"
+    },
+    {
+      "from": "bot/src/legacy-authority.js",
+      "to": "bot/src/frameworks/knowledge/legacy-authority.js",
+      "sha256": "5eab1f365f3655f47701f8453b5b0bb9cba103b4937203bdc4b2f6ec45c96eb4",
+      "implementation_byte_identical": true,
+      "old_reader_remove_in": "RF04-F05"
+    },
+    {
+      "from": "bot/src/narrative-records.js",
+      "to": "bot/src/frameworks/knowledge/narrative-records.js",
+      "sha256": "7f1d370e2b6e27287730e2ed594e8fd473a0aaa2c12c3499903e40f5b86314ec",
+      "implementation_byte_identical": true,
+      "old_reader_remove_in": "RF04-F05"
+    },
+    {
+      "from": "bot/src/provenance.js",
+      "to": "bot/src/frameworks/knowledge/provenance.js",
+      "sha256": "74fb8884faac1b5bfc78ee39b008174b7d02bdc336efdcc2e73224ebafa08e52",
+      "implementation_byte_identical": true,
+      "old_reader_remove_in": "RF04-F05"
+    },
+    {
+      "from": "bot/src/public-referents.js",
+      "to": "bot/src/frameworks/knowledge/public-referents.js",
+      "sha256": "6bc4d279c9342522fd9c7a46e920ee8c3e6602322bf276fcde8ea0ef51d4a467",
+      "implementation_byte_identical": true,
+      "old_reader_remove_in": "RF04-F05"
+    },
+    {
+      "from": "bot/src/relationship-state.js",
+      "to": "bot/src/frameworks/knowledge/relationship-state.js",
+      "sha256": "5070e9dee4966d46dfef5b919c232411c1a74f739ef971374f52a148e0169cee",
+      "implementation_byte_identical": true,
+      "old_reader_remove_in": "RF04-F05"
+    },
+    {
+      "from": "bot/src/scoped-query.js",
+      "to": "bot/src/frameworks/knowledge/scoped-query.js",
+      "sha256": "ca47ff8ef202ca0e95c3b52f83d32e6860be2206a182f472e6ed21ec4870e744",
+      "implementation_byte_identical": true,
+      "old_reader_remove_in": "RF04-F05"
+    }
+  ],
+  "own_consumers": [
+    "bot/src/memory-lifecycle.js",
+    "bot/src/narrative-memory.js",
+    "bot/src/personal-continuity.js"
+  ]
+}

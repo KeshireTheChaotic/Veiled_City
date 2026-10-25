@@ -1,0 +1,117 @@
+{
+  "architecture_exit": 0,
+  "syntax": [
+    {
+      "path": "bot/src/frameworks/knowledge/public.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/memory-lifecycle.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/narrative-memory.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/personal-continuity.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf04-f03-c01.test.mjs",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/authority-projection.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/frameworks/knowledge/authority-projection.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/disclosure-authority.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/frameworks/knowledge/disclosure-authority.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/legacy-authority.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/frameworks/knowledge/legacy-authority.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/narrative-records.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/frameworks/knowledge/narrative-records.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/provenance.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/frameworks/knowledge/provenance.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/public-referents.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/frameworks/knowledge/public-referents.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/relationship-state.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/frameworks/knowledge/relationship-state.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/scoped-query.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/frameworks/knowledge/scoped-query.js",
+      "exit": 0
+    }
+  ],
+  "start": "2026-10-24T21:04:36.0417922-05:00",
+  "base_sha": "4bb74b8af61a26c086896040299d6283f3c9aa50",
+  "test_exit": 1,
+  "end": "2026-10-24T21:04:39.7578502-05:00",
+  "run_id": "RF04_F03_C01",
+  "hashes": {
+    "bot/src/frameworks/knowledge/legacy-authority.js": "5eab1f365f3655f47701f8453b5b0bb9cba103b4937203bdc4b2f6ec45c96eb4",
+    "bot/src/narrative-memory.js": "f75d980ecbc44e60626eb14cf15827fa72a54c30f4c6b1e8cb2ff1873677c47e",
+    "bot/src/narrative-records.js": "ea0c4a72dfb8fcd34fb359661ee4ef0a96e74b61f4476fe8040327eb46a7dc1f",
+    "bot/src/scoped-query.js": "94e91c43a930f2583233651bea18992147615a12572ef3121fa5a88ac914376b",
+    "bot/src/relationship-state.js": "af773d9238c0056da70fac8e13017d3df7543e505cbf457eeae83a18d9700c50",
+    "bot/src/frameworks/knowledge/disclosure-authority.js": "7b332081088646f3800f66d86c84ddbab5df26a18bb6cc3b931d0b24375534b8",
+    "bot/src/frameworks/knowledge/public-referents.js": "6bc4d279c9342522fd9c7a46e920ee8c3e6602322bf276fcde8ea0ef51d4a467",
+    "bot/src/frameworks/knowledge/authority-projection.js": "3bc38af3af9bc67d9fd3c1923f492b13400dc9d73a1ee69d8315c679d5cddc1a",
+    "bot/src/frameworks/knowledge/relationship-state.js": "5070e9dee4966d46dfef5b919c232411c1a74f739ef971374f52a148e0169cee",
+    "bot/tests/ai-gm-2026-10/rf04-f03-c01.test.mjs": "ea5e2d9911e4e8ef8b2fca15f0a031bc5790c4e9980190a542f65b9dc446676c",
+    "bot/src/public-referents.js": "88d27090bd6f1815e8fe612e04531ab1bf300163188842f32d1bc8832f1dc6fd",
+    "bot/src/frameworks/knowledge/scoped-query.js": "ca47ff8ef202ca0e95c3b52f83d32e6860be2206a182f472e6ed21ec4870e744",
+    "bot/src/disclosure-authority.js": "cbf8e05a3b47ef3eb85f3a32955808479f318d0219666e6a520c633b8a723fce",
+    "bot/src/legacy-authority.js": "01cf9e0f95c1f0d335a3aab92572944d1185bee5c325500418ac9906c1b72b86",
+    "bot/src/personal-continuity.js": "853fa4c21919ae04b886106b8e30f9e7b500d1ead6075d7914b593fd723d3cee",
+    "bot/src/frameworks/knowledge/public.js": "a62274e7803f8168489202c0d594b397a53306c54be4f3c1a3bf071e9222cbcb",
+    "bot/src/frameworks/knowledge/provenance.js": "74fb8884faac1b5bfc78ee39b008174b7d02bdc336efdcc2e73224ebafa08e52",
+    "bot/src/provenance.js": "b41cdc82830e6b2c6602389a465baf66ae6901051f27c28ac95fbc98125be4ab",
+    "bot/src/memory-lifecycle.js": "598f8c0b34a510d15d722f2d0b737459dca8b4005c3b0f70fc41626ed6c2dfa5",
+    "bot/src/frameworks/knowledge/narrative-records.js": "7f1d370e2b6e27287730e2ed594e8fd473a0aaa2c12c3499903e40f5b86314ec",
+    "bot/src/authority-projection.js": "705d28169d08c8bd77e6f6239384f6993531c7f4b353a441d0213568ca2ff928"
+  }
+}

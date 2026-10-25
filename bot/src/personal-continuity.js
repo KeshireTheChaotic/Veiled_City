@@ -9,7 +9,7 @@ import { organizationInbox } from "./owned-community.js";
 import { evidenceView } from "./evidence-custody.js";
 import { evidenceType, activeEvidence } from "./epistemic.js";
 import { conversationPrincipal } from "./conversation-principal.js";
-import { scopedQueryPlan, queryScopedFacts } from "./scoped-query.js";
+import { scopedQueryPlan, queryScopedFacts } from './frameworks/knowledge/public.js';
 import {ownerSemanticSource,assertSemanticCandidateProof} from './semantic-candidate-source.js';
 export function personalCharacter(db,guild,userId,characterId){
   const session=db.getActiveSession(guild),assignment=session?db.activeAssignment(session.id,userId):null;

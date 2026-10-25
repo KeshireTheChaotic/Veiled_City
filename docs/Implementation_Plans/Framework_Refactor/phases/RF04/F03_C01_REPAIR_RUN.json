@@ -1,0 +1,10 @@
+{
+  "end": "2026-10-24T21:04:58.6265645-05:00",
+  "run_id": "RF04_F03_C01_REPAIR",
+  "reason": "Fresh fixture used unsupported causal relation; actual schema requires caused_by and asserted_by retains subjective attribution.",
+  "test_exit": 0,
+  "base_sha": "4bb74b8af61a26c086896040299d6283f3c9aa50",
+  "test_hash": "58148e0dae1a11a73ac0b9f41afea058b3e58991cbffb7af388e8ac1522b76ae",
+  "syntax_exit": 0,
+  "start": "2026-10-24T21:04:57.8143299-05:00"
+}

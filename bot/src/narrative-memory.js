@@ -3,7 +3,7 @@ import {sceneFictionHash as hash,narrativeSourceVisible} from './scene-fiction-c
 import {narrativeVisible} from './narrative-authority-context.js';
 import {indexWorldEvent} from './city-calendar.js';
 import {rememberEntity,narrativeMemoryEpistemic} from './memory-lifecycle.js';
-import {listNarrativeRecords} from './narrative-records.js';
+import {listNarrativeRecords} from './frameworks/knowledge/public.js';
 import {narrativeQueryRelevance,narrativeIdentityRelevance} from './narrative-relevance.js';
 import {BACKGROUND_WORLD_KINDS} from './world-background-identities.js';
 function memoryInput(db,guild,row,source,visibility,subject){
