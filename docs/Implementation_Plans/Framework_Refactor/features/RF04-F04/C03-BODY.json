@@ -1,0 +1,48 @@
+{
+  "base_sha": "3391e884a99a4a7b9e2e089eb4ed353a3109019f",
+  "original_source_sha256": "737dff68aae711685d89e694a7f61fbfdf4c14dc4e2b07390b5e72a9563e31de",
+  "declarations": [
+    {
+      "name": "hash",
+      "sha256": "7f3c3de3d984a83d3f2d5a2d27bd56fb11a9433ea375bc2583c10d81b58f1498"
+    },
+    {
+      "name": "fail",
+      "sha256": "e69e9cf50326d39e265e3fff60adb770565226e54d6d44e8dc70dab2539ffca5"
+    },
+    {
+      "name": "owner",
+      "sha256": "ef9c1792a9c5a214743e27d3030e9670b230b007a9c2374b31c9a4f13db2e0e1"
+    },
+    {
+      "name": "snapshot",
+      "sha256": "9948ffb4f764264377985429b446d84f91eca62ec3997c866b146017d7356c34"
+    },
+    {
+      "name": "setupGuidance",
+      "sha256": "a0b9f07c166a52cdb0371aad06690a241ec451f9c905573a66e180e42aecd4a7"
+    },
+    {
+      "name": "sceneSetupAvailability",
+      "sha256": "7de96dbbaaa33a57f1af2f2ccce5cc4890e2fe3ee8061261c5c13ad44aa4a15c"
+    },
+    {
+      "name": "prepareSceneSetup",
+      "sha256": "ba29c8e387499d44bad77cbba8d57656bd76367b901ad755a1bbd098454a4c2f"
+    },
+    {
+      "name": "confirmSceneSetup",
+      "sha256": "c158a0e0d09265129f66b9c4e9344689ce3bcd2ef11165ca198b02f65b9534f2"
+    },
+    {
+      "name": "applyAuthoredInitialPosition",
+      "sha256": "267f053861d895ef8af4389ee79b487f896c21c5e58419ece3e27351f914c584"
+    }
+  ],
+  "exports": [
+    "sceneSetupAvailability",
+    "prepareSceneSetup",
+    "confirmSceneSetup",
+    "applyAuthoredInitialPosition"
+  ]
+}

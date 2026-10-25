@@ -1,0 +1,32 @@
+{
+  "run_id": "RF04-F04-C03-frozen",
+  "start": "2026-10-24T21:52:24.7951579-05:00",
+  "end": "2026-10-24T21:52:29.0814124-05:00",
+  "base_sha": "3391e884a99a4a7b9e2e089eb4ed353a3109019f",
+  "test_exit": 0,
+  "hashes": {
+    "bot/src/frameworks/session/scene-setup.js": "3d8910d4223c2dfd50f5e9974ec1efa09fddff41a4c48e26b19da2da05db28d1",
+    "bot/tests/ai-gm-2026-10/rf04-f04-c03.test.mjs": "298f763db4f3a2f3845dbc722327be41d9f50d69e0ec3140c1c74d63de64f8b6",
+    "bot/src/scene-setup.js": "8c18175f4e907b796155a1541d47c37ffc9639d9d5b1b51ee5803829cac39741",
+    "bot/src/frameworks/session/public.js": "ffd453aa1b0a0c3ab3645b5fdc926a314935db4a27b239e42237e0598e1dfa7a"
+  },
+  "architecture_exit": 0,
+  "syntax": [
+    {
+      "exit": 0,
+      "path": "bot/src/frameworks/session/scene-setup.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/frameworks/session/public.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/scene-setup.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/tests/ai-gm-2026-10/rf04-f04-c03.test.mjs"
+    }
+  ]
+}
