@@ -73,6 +73,9 @@
     ],
     "daggerheart--publication": [
       "bot/src/framework-to-framework/daggerheart--publication/public.js"
+    ],
+    "npc": [
+      "bot/src/frameworks/npc/public.js"
     ]
   },
   "externalCapabilityOwners": {

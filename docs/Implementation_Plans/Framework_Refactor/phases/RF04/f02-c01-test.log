@@ -1,0 +1,118 @@
+TAP version 13
+# Subtest: stable motivation keys keep original export identity and exact kernel hash bytes
+ok 1 - stable motivation keys keep original export identity and exact kernel hash bytes
+  ---
+  duration_ms: 1.0416
+  type: 'test'
+  ...
+# Subtest: actor evidence stays subjective and secret, never canon or another actor knowledge
+ok 2 - actor evidence stays subjective and secret, never canon or another actor knowledge
+  ---
+  duration_ms: 176.5039
+  type: 'test'
+  ...
+# Subtest: imported knowledge mapping requires exact actor, original source and current content hash
+ok 3 - imported knowledge mapping requires exact actor, original source and current content hash
+  ---
+  duration_ms: 186.6927
+  type: 'test'
+  ...
+# Subtest: current native PC/proxy ownership and removed actor state block autonomous evidence use
+ok 4 - current native PC/proxy ownership and removed actor state block autonomous evidence use
+  ---
+  duration_ms: 182.4433
+  type: 'test'
+  ...
+# Subtest: source retraction, unknown belief and finite investigative feasibility are independent current checks
+ok 5 - source retraction, unknown belief and finite investigative feasibility are independent current checks
+  ---
+  duration_ms: 176.618
+  type: 'test'
+  ...
+# Subtest: faction awareness and institutional reports require their own acquired source evidence
+ok 6 - faction awareness and institutional reports require their own acquired source evidence
+  ---
+  duration_ms: 183.6011
+  type: 'test'
+  ...
+# Subtest: native information transfer requires its inspector and exact current report contents
+ok 7 - native information transfer requires its inspector and exact current report contents
+  ---
+  duration_ms: 169.1093
+  type: 'test'
+  ...
+# Subtest: goal proposal records source belief privately without committing goal, canon, PC action or resource outcome
+ok 8 - goal proposal records source belief privately without committing goal, canon, PC action or resource outcome
+  ---
+  duration_ms: 177.3352
+  type: 'test'
+  ...
+# Subtest: disabled feature and stale native grant do not authorize proposal or approval
+ok 9 - disabled feature and stale native grant do not authorize proposal or approval
+  ---
+  duration_ms: 181.158
+  type: 'test'
+  ...
+# Subtest: approved source-bound goal persists and replays once across SQLite reopen without resource spend
+ok 10 - approved source-bound goal persists and replays once across SQLite reopen without resource spend
+  ---
+  duration_ms: 182.2015
+  type: 'test'
+  ...
+# Subtest: rejected goal remains a historical proposal and never enters active NPC motives
+ok 11 - rejected goal remains a historical proposal and never enters active NPC motives
+  ---
+  duration_ms: 183.5081
+  type: 'test'
+  ...
+# Subtest: source or prior-goal changes and missing dependencies hold approval before any new goal state
+ok 12 - source or prior-goal changes and missing dependencies hold approval before any new goal state
+  ---
+  duration_ms: 176.6382
+  type: 'test'
+  ...
+# Subtest: pause, resume and reprioritization use authoritative lifecycle status without losing the existing goal
+ok 13 - pause, resume and reprioritization use authoritative lifecycle status without losing the existing goal
+  ---
+  duration_ms: 184.6663
+  type: 'test'
+  ...
+# Subtest: supersession retains old goal as superseded and creates only the specified new goal
+ok 14 - supersession retains old goal as superseded and creates only the specified new goal
+  ---
+  duration_ms: 183.3138
+  type: 'test'
+  ...
+# Subtest: goal approval audit failure rolls goal, lifecycle and receipt status back in actual SQLite
+ok 15 - goal approval audit failure rolls goal, lifecycle and receipt status back in actual SQLite
+  ---
+  duration_ms: 1142.6225
+  type: 'test'
+  ...
+# Subtest: bounded motivation cycle proposes from actual subjective evidence, replays none and honors Director pause
+ok 16 - bounded motivation cycle proposes from actual subjective evidence, replays none and honors Director pause
+  ---
+  duration_ms: 205.3669
+  type: 'test'
+  ...
+# Subtest: native callback cycle emits an exact source proposal and does not manufacture its domain commitment
+ok 17 - native callback cycle emits an exact source proposal and does not manufacture its domain commitment
+  ---
+  duration_ms: 174.2247
+  type: 'test'
+  ...
+# Subtest: actual original NPC source reaches extracted actor evidence, proposal and private audit policy
+ok 18 - actual original NPC source reaches extracted actor evidence, proposal and private audit policy
+  ---
+  duration_ms: 173.9537
+  type: 'test'
+  ...
+1..18
+# tests 18
+# suites 0
+# pass 18
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 4534.767

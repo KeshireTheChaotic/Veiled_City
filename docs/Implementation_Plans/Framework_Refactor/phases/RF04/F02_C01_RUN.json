@@ -1,0 +1,32 @@
+{
+  "hashes": {
+    "bot/src/frameworks/npc/motivation.js": "7a0fe78a55e978f9682dd9f905757ebe7c0f842f5e8326991214e70272af29c0",
+    "bot/src/simulation-motivation.js": "3344c3b76c9d1a94cd0ed0a328d137a505de74afff05be2e01bc022c6c00b8f3",
+    "bot/tests/ai-gm-2026-10/rf04-f02-c01.test.mjs": "c6b6b5e06115524220ec567fe38dd1742f49785e3963081bafb2d44a4db5195d",
+    "bot/src/frameworks/npc/public.js": "4e85701e0427db880337cf92f7242fc73e18011dea960876acba6b54cad5e8df"
+  },
+  "start": "2026-10-24T17:49:44.3361681-05:00",
+  "base_sha": "1d6a89e80f2fb7538e626cb2127b6cd013f21f00",
+  "architecture_exit": 0,
+  "syntax": [
+    {
+      "exit": 0,
+      "path": "bot/src/simulation-motivation.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/frameworks/npc/motivation.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/frameworks/npc/public.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/tests/ai-gm-2026-10/rf04-f02-c01.test.mjs"
+    }
+  ],
+  "end": "2026-10-24T17:49:49.8704498-05:00",
+  "run_id": "RF04_F02_C01",
+  "test_exit": 0
+}

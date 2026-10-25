@@ -321,7 +321,7 @@ old_path,new_path,owner,move_phase,action,reverse_dependents,import_obligations
 "bot/src/session-opening-runner.js","bot/src/application/workflows/session-opening-runner.js","application","RF06","DECOMPOSE_BEFORE_MOVE","4","4"
 "bot/src/session-opening.js","bot/src/frameworks/session/session-opening.js","session","RF04","EXTRACT_PORTS_BEFORE_MOVE","10","2"
 "bot/src/simulation-commands.js","bot/src/application/workflows/simulation-commands.js","application","RF06","DECOMPOSE_BEFORE_MOVE","1","7"
-"bot/src/simulation-motivation.js","bot/src/frameworks/npc/simulation-motivation.js","npc","RF04","EXTRACT_PORTS_BEFORE_MOVE","22","6"
+"bot/src/simulation-motivation.js","bot/src/frameworks/npc/motivation.js","npc","RF04","NPC_EVIDENCE_GOAL_CYCLE_EXTRACTED_CURRENT_WORLD_SOURCE_PROVIDER_COMPOSITION_REMAINS","22","6"
 "bot/src/simulation-schema.js","bot/src/frameworks/world/simulation-schema.js","world","RF04","EXTRACT_PORTS_BEFORE_MOVE","1","1"
 "bot/src/simulation-strategy.js","bot/src/frameworks/npc/simulation-strategy.js","npc","RF04","EXTRACT_PORTS_BEFORE_MOVE","4","6"
 "bot/src/simulation.js","bot/src/frameworks/world/simulation.js","world","RF04","DECOMPOSE_BEFORE_MOVE","18","8"

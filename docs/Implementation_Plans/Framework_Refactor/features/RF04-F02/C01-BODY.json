@@ -1,0 +1,39 @@
+{
+  "declarations": [
+    {
+      "name": "ownedKnowledgeSource",
+      "original_sha256": "47695c3de5c104029c3e13d5d6122dd2d9c59495aae43077408a68c90dc55356"
+    },
+    {
+      "name": "actorSource",
+      "original_sha256": "3bf54c0aa03ab65ad8fa80d735b54650772925f56d7e135d701af1390439e575"
+    },
+    {
+      "name": "currentGoal",
+      "original_sha256": "862ad9cb09ef60d72181353df20ff0608ab8d90a0f5cf13473e989d6e5cec27a"
+    },
+    {
+      "name": "proposeGoalTransition",
+      "original_sha256": "6cb377158b545ad346782592986e2e83af3c919d5d3717c52b4cbe47a2c2c5c0"
+    },
+    {
+      "name": "reviewGoalTransition",
+      "original_sha256": "5e18a12d5a141d44b91d65a5a2be77927570e458ff8b1321a6b5466d4b0733cd"
+    },
+    {
+      "name": "runMotivationCycle",
+      "original_sha256": "f6ead48dd6476af25d24d70e6d3d988c8d678f2ce598ad7d3da1d28de2865de2"
+    }
+  ],
+  "hash": "original sha256(JSON.stringify(value)).slice(0,32), now same kernel jsonHash; no key bytes change",
+  "exports": [
+    "ownedKnowledgeSource",
+    "actorSource",
+    "proposeGoalTransition",
+    "reviewGoalTransition",
+    "runMotivationCycle"
+  ],
+  "source": "bot/src/simulation-motivation.js",
+  "new_owner": "npc",
+  "source_wiring": "original provider retains actual World/source/authority capabilities; own NPC public API newly concrete"
+}
