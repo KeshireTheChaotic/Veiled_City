@@ -11,3 +11,4 @@ export {createSessionWorldEventConsumer,sessionWorldEvents} from './contracts/wo
 export {createAssemblyContext,hookHash,assemblySourceError} from './assembly-context.js';
 export {createSessionOpening} from './session-opening.js';
 export {createOpeningEntryContext} from './opening-entry-context.js';
+export {classifyResourceOverlap} from './action-window-overlap.js';

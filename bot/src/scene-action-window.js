@@ -2,6 +2,8 @@
 import { createHash } from "node:crypto";
 import { currentScene } from "./scene-continuity.js";
 import { consentAction, validateActionConsent } from "./action-consent.js";
+import {classifyResourceOverlap} from './frameworks/session/public.js';
+export {classifyResourceOverlap} from './frameworks/session/public.js';
 
 const reasons=new Set(["combat_spotlight","cooperative_operation","contested_resource","reaction_opportunity","direct_pc_conflict","gm_declared_beat"]);
 const terminal=new Set(["resolved","failed","blocked","declined"]);
@@ -44,16 +46,6 @@ export function openActionWindow(db,guild,input){
       native_beat:input.resources?identity:null,resources:input.resources||[],
       reason:input.reason,revision:1,participants:[],reaction_open:input.reason==="reaction_opportunity",
       authority:"Coordination boundary only; participant declarations and native receipts own outcomes."}});
-}
-
-export function classifyResourceOverlap(a,b){
-  const footprint=new Set([...a.reads,...a.writes]);
-  if([a.operation,b.operation].includes("testimony")&&[...b.reads,...b.writes].some(key=>footprint.has(key)))return "contradictory_testimony";
-  const sharedWrite=a.writes.filter(key=>b.writes.includes(key));
-  if(sharedWrite.length)return a.operation==="opposed"||b.operation==="opposed"?"opposed_action":"same_scarce_resource";
-  if(a.writes.some(key=>b.reads.includes(key))||b.writes.some(key=>a.reads.includes(key)))return "sequential_dependency";
-  if(["help","tag_team","group_action"].includes(a.operation)||["help","tag_team","group_action"].includes(b.operation))return "cooperative";
-  return "independent";
 }
 
 export function joinActionWindow(db,guild,windowKey,input){

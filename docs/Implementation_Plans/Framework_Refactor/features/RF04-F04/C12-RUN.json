@@ -1,0 +1,50 @@
+{
+  "feature": "RF04-F04-C12",
+  "status": "SCOPED_QUALIFIED",
+  "base_head": "0dc9f30ee8bcef392f0303173a89abbe286363ba",
+  "production_changes": [
+    "bot/src/frameworks/session/action-window-overlap.js",
+    "bot/src/frameworks/session/public.js",
+    "bot/src/scene-action-window.js"
+  ],
+  "sha256": {
+    "action_window_overlap": "3BD6F02CD8BBD1C6D993B1B665B91F53CE108A9DC0C2F968D2A2C77E7D92BBFE",
+    "session_public": "0B86392ABC93C1B084FE323A7DDF266C788A3542A2225EA081A72F9B6E6EA0D7",
+    "compatibility_provider": "CD96A708CF7C509031394684EA167B68BB44ACC79BCE109D9A825132ED71F6FB",
+    "fresh_test": "BFA8F223C14AF4238D08305253FE3F84CA23BADA5131171191912BA5C4C1F1E9",
+    "initial_test_log": "4A7FC1E7C62575D15D49AEE5DAB9C916E2D6F3BC6B856B18B59FCA1E77CF4408",
+    "repair_test_log": "098E550E2CD83D79CB5F04E8EF4ABCED021C56061D3110ACE5BD60D3D74E940A",
+    "architecture_log": "3957783D950543D872B3656AD7EB431D3B6F753F718B3E1418DA617CABE98CA9"
+  },
+  "test": {
+    "command": "node --test bot/tests/ai-gm-2026-10/rf04-f04-c12.test.mjs",
+    "unique_cases": 1,
+    "executions": 2,
+    "initial": {"exit_code": 1, "passed": 0, "failed": 1, "reason": "fixture used oppose instead of the exact supported token opposed"},
+    "final": {"exit_code": 0, "passed": 1, "failed": 0, "tap_duration_ms": 512.2038, "case_duration_ms": 0.6724},
+    "syntax": "node --check passed for all three changed JS modules and the fresh test; test syntax also passed after its correction"
+  },
+  "behavior_coverage": [
+    "Existing independent, contradictory testimony, scarce-resource, opposed-action, sequential-dependency and cooperative classifications are preserved.",
+    "Testimony conflict retains precedence when both operations cite the same read/write resource.",
+    "The old scene-action-window import path resolves to the exact same function object as Session public API."
+  ],
+  "architecture": {
+    "command": "npm --prefix bot run architecture:check",
+    "exit_code": 0,
+    "source_modules": 562,
+    "unowned": 0,
+    "imports": 2714,
+    "largest_scc": 181,
+    "accepted_legacy_occurrences": 2442,
+    "active_violation_groups": 0,
+    "transition_errors": 0
+  },
+  "cost": {"provider_calls": 0, "tokens": 0, "usd": 0, "codex_usage": "UNMEASURED"},
+  "limitations": [
+    "Stateful action-window coordination and its Daggerheart consent integration remain in the legacy provider.",
+    "This is an isolated pure policy responsibility, not completion of the Session framework or its pair boundary."
+  ],
+  "rollback": "Revert the three production paths and remove the fresh test and C12 evidence as one feature unit.",
+  "release": "NOT_AUTHORIZED"
+}
