@@ -1,0 +1,89 @@
+{
+  "feature": "RF05-F02",
+  "status": "COMPLETE_FOR_SCOPED_RAW_TRANSPORT_BOUNDARY",
+  "base_head": "14c75839ec7d5dc487b6c726805c4abfd355350b",
+  "branch": "codex/clean-ai-gm-2026-10",
+  "changed_modules": [
+    "bot/src/gm.js",
+    "bot/src/frameworks/ai-provider/model-transport.js",
+    "bot/src/frameworks/ai-provider/public.js",
+    "bot/src/frameworks/ai-provider/README.md",
+    "docs/Implementation_Plans/Framework_Refactor/RF01/PACKAGES.json",
+    "docs/Implementation_Plans/Framework_Refactor/RF01/TRANSITIONS.json"
+  ],
+  "ownership": {
+    "request_dispatch_and_bounded_retry": "ai-provider",
+    "OpenAI_client_construction": "application gm.js; retain frozen RF05-F04 external-capability transition",
+    "metrics_and_trace": "application callbacks injected into ai-provider",
+    "prompt_schema_and_structured_parse_policy": "application gm.js; unchanged"
+  },
+  "tests": {
+    "path": "bot/tests/ai-gm-2026-10/rf05-f02-model-transport.test.mjs",
+    "total_launches": 2,
+    "initial": {
+      "exit_code": 1,
+      "passed": 6,
+      "failed": 1,
+      "duration_ms": 660.9521,
+      "cause": "The acceptance assertion exposed default-option normalization in GMService.requestModel; implementation was changed to forward the original options object.",
+      "terminal_summary": "phases/RF05/rf05-f02-initial-test.log",
+      "sha256": "6A9AD835811FF3074C6A4A6B9F9E5D058A1055B8C53A793A891EB6CA06822CE6"
+    },
+    "final": {
+      "exit_code": 0,
+      "passed": 7,
+      "failed": 0,
+      "duration_ms": 657.8748,
+      "terminal_summary": "phases/RF05/rf05-f02-test.log",
+      "sha256": "61CB01C78EF723F69777FA6969FF321E16A33A88C9637FB7AB3207EC464F705A"
+    }
+  },
+  "syntax": {
+    "files_checked": [
+      "bot/src/gm.js",
+      "bot/src/frameworks/ai-provider/model-transport.js",
+      "bot/src/frameworks/ai-provider/public.js",
+      "bot/tests/ai-gm-2026-10/rf05-f02-model-transport.test.mjs"
+    ],
+    "exit_codes": [0, 0, 0, 0],
+    "log": "phases/RF05/rf05-f02-syntax.log",
+    "sha256": "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855"
+  },
+  "architecture": {
+    "check": "Framework boundary ratchet, mode ratchet, phase RF05",
+    "exit_code": 1,
+    "source_modules": 568,
+    "unowned": 0,
+    "imports": 2725,
+    "largest_cycle": 181,
+    "raw_occurrences": 2439,
+    "accepted_legacy_occurrences": 1467,
+    "active_violation_groups": 967,
+    "transition_errors": 967,
+    "changed_path_violations": [],
+    "changed_path_transition_errors": [],
+    "result": "Whole RF05 gate remains failed on prior RF04 transition debt; no active violation or transition error on changed F01/F02 provider/application paths.",
+    "log": "phases/RF05/rf05-f02-architecture.log",
+    "sha256": "480A2290F5845CF1CC9B4D71AF89F7D1B37AC1C1FBD550F9E45BDF68E11C54CB"
+  },
+  "removed_transition_ids": [
+    "9d5997dd2f768f84bffa18314b35622169aebe49bbd1e233eca4f245678db0ec"
+  ],
+  "source_sha256": {
+    "bot/src/gm.js": "67135DE4D4C993DFACF8A1152FBF6C50352BA9D19DE565F424D8CEA06C610A05",
+    "bot/src/frameworks/ai-provider/model-transport.js": "DEFC16F5E80E576D6C8E1AF890904E5F80C4EEFA88C2BBE82B718A0588E8FFCE",
+    "bot/src/frameworks/ai-provider/public.js": "A626B9006FA4AC7ABE9EC7F8542ED6891F7666E567AD43AA4BEBFE230DE16EFF",
+    "bot/src/frameworks/ai-provider/README.md": "8CC1A93C4BE2586E62157D67173C840193C5268CE6048DFE6137B6226F73F9F4",
+    "docs/Implementation_Plans/Framework_Refactor/RF01/PACKAGES.json": "F531FDCB50903397DFF766D115B066469DED6C0B2DA1A779C3CE4736D47C7C18",
+    "docs/Implementation_Plans/Framework_Refactor/RF01/TRANSITIONS.json": "F7EB6D16FDC02DBFD9BBE6AAD043512B3420F7F22E4DE1207B3DCA6D3B05D519",
+    "bot/tests/ai-gm-2026-10/rf05-f02-model-transport.test.mjs": "61CB01C78EF723F69777FA6969FF321E16A33A88C9637FB7AB3207EC464F705A"
+  },
+  "cost": {
+    "provider_calls": 0,
+    "provider_tokens": 0,
+    "provider_usd": 0,
+    "codex_usage": "UNMEASURED"
+  },
+  "release": "NOT_AUTHORIZED",
+  "rollback": "Revert only the RF05-F02 commit; preserve the RF05-F01 commit, user changes, and unrelated logs."
+}

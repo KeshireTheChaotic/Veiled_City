@@ -1,7 +1,6 @@
 /** AI GM service: prompt/context assembly, structured schemas, and model calls. It proposes state; state.js/VeiledDB enforce authority. */
-import OpenAI from "openai";
-import {randomUUID,createHash} from 'node:crypto';
-import {setTimeout as waitForRetry} from 'node:timers/promises';
+import OpenAI from 'openai';
+import {createHash} from 'node:crypto';
 import { AUTHORITY_POLICY } from "./frameworks/daggerheart/public.js";
 import { conversationPrincipal } from "./conversation-principal.js";
 import {continuationInbox} from "./action-continuation.js";
@@ -71,6 +70,7 @@ import {createArbitrationOrigin,arbitrationPromptBoard,bindArbitrationTurn} from
 import {unifiedArbitrationSchema} from './gm-arbitration-contract.js';
 import {UNIFIED_ARBITRATION_PROMPT} from './gm-unified-arbitration.js';
 import {narrativeResponseV9Schema,NARRATIVE_V9_INSTRUCTIONS,NATIVE_CLAUSE_INSTRUCTIONS} from './narrative-writer-v9.js';
+import {createModelTransport} from './frameworks/ai-provider/public.js';
 
 const routerSchema={
   type:"object",
@@ -370,6 +370,7 @@ export class GMService{
     this.metrics=metrics;if(config.modelPricing)this.metrics.configurePricing(config.modelPricing);
     this.ai=ai||new OpenAI({apiKey:config.openaiKey,timeout:Number(config.openaiRequestTimeoutMs||60000),
       maxRetries:0}); // Bounded retries below are observable; no hidden SDK request attempts.
+    this.modelTransport=createModelTransport({client:this.ai,config,metrics:this.metrics,traceForGuild:turnTraceFor});
     this.srd=srd||new OnlineSrd();
   }
 
@@ -386,42 +387,8 @@ export class GMService{
       text:{format:{type:"json_schema",name:"minor_npc_draft",strict:true,schema:minorNpcSchema}}},{guildId,label:"minor NPC draft"});
   }
 
-  async requestModel(request,{guildId,signal,retry=false,purpose='other'}={}){
-    const limit=Number.isInteger(this.config.openaiMaxRetries)?Math.max(0,Math.min(5,this.config.openaiMaxRetries)):1;
-    for(let attempt=0;attempt<=limit;attempt++){
-      if(signal?.aborted)throw Object.assign(new Error('Model operation cancelled before dispatch.'),{code:'AI_GENERATION_DEADLINE'});
-      const start=performance.now();
-      let response=null;
-      try{
-        response=await this.ai.responses.create(request,{signal,maxRetries:0});
-        if(signal?.aborted)throw Object.assign(new Error('Model response arrived after cancellation.'),{code:'AI_GENERATION_DEADLINE'});
-        this.metrics.record('model_request',{guildId,model:request.model,durationMs:performance.now()-start,
-          inputTokens:response?.usage?.input_tokens,outputTokens:response?.usage?.output_tokens,
-          cachedInputTokens:response?.usage?.input_tokens_details?.cached_tokens,retries:(attempt>0||retry)?1:0});
-        turnTraceFor(guildId)?.model(response?.usage,{purpose,model:request.model,ms:performance.now()-start,retry:attempt>0});
-        return response;
-      }catch(error){
-        const code=signal?.aborted?'AI_GENERATION_DEADLINE':'PROVIDER_ERROR';
-        turnTraceFor(guildId)?.model(response?.usage,{purpose,model:request.model,ms:performance.now()-start,retry:attempt>0,error:code});
-        this.metrics.record('model_request',{guildId,model:request.model,durationMs:performance.now()-start,status:'error',errorCode:code,
-          inputTokens:response?.usage?.input_tokens,outputTokens:response?.usage?.output_tokens,
-          cachedInputTokens:response?.usage?.input_tokens_details?.cached_tokens,
-          retries:(attempt>0||retry)?1:0});
-        this.metrics.incident('model',{guildId,reference:randomUUID(),code});
-        const recoverable=[408,409,429].includes(error.status)||error.status>=500
-          ||['APIConnectionError','APIConnectionTimeoutError'].includes(error.name);
-        if(signal?.aborted||!recoverable||attempt===limit)throw error;
-        // Preserve bounded provider retries without collecting headers, request bodies or SDK error messages.
-        const hint=error.headers?.get?.('retry-after')??error.headers?.['retry-after']??error.headers?.['Retry-After'];
-        const hintedMs=typeof hint==='string'?(/^\d+(?:\.\d+)?$/.test(hint.trim())
-          ?Number(hint)*1000:Date.parse(hint)-Date.now()):NaN;
-        const delayMs=Math.max(Math.min(1000,250*2**attempt),Number.isFinite(hintedMs)?Math.max(0,hintedMs):0);
-        // A long server delay is a bounded deferral, not permission to retry sooner than requested.
-        if(delayMs>1000)throw error;
-        await waitForRetry(delayMs,undefined,{signal});
-        if(signal?.aborted)throw error;
-      }
-    }
+  async requestModel(request,options={}){
+    return this.modelTransport.requestModel(request,options);
   }
 
   async requestStructured(req,options={}){

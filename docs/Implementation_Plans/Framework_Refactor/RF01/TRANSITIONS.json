@@ -8989,20 +8989,6 @@
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
     {
-      "id": "9d5997dd2f768f84bffa18314b35622169aebe49bbd1e233eca4f245678db0ec",
-      "code": "IMPORTS_PRIVATE_API",
-      "from": "bot/src/index.js",
-      "to": "bot/src/generation-feedback.js",
-      "kind": "static",
-      "specifier": "./generation-feedback.js",
-      "owner": "bootstrap",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF06-F05",
-      "expires_after": "RF06",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
       "id": "33b212363df2728116bf8dc6fb4975725376434374545de669be36e7f9d7b6a4",
       "code": "IMPORTS_PRIVATE_API",
       "from": "bot/src/index.js",

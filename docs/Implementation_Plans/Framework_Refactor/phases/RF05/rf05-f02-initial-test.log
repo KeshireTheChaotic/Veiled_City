@@ -1,0 +1,45 @@
+✔ successful dispatch preserves request options and records usage, cache, and purpose telemetry (1.1377ms)
+✔ recoverable provider failure waits within the bounded retry policy then returns a response (0.3164ms)
+✔ terminal provider error does not retry and preserves privacy-safe error classification (0.3454ms)
+✔ aborted operation does not dispatch a request (0.1528ms)
+✔ abort after provider response is recorded as a deadline and is never retried (0.1549ms)
+✔ retry configuration remains capped at five retries and honors the server deferral ceiling (0.3502ms)
+✖ application GMService keeps its request method as a transparent provider delegate (0.8478ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 6
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 660.9521
+
+✖ failing tests:
+
+test at tests\ai-gm-2026-10\rf05-f02-model-transport.test.mjs:89:1
+✖ application GMService keeps its request method as a transparent provider delegate (0.8478ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+
+    [
+      {
+        model: 'model-d'
+      },
+      {
+        guildId: 'g-1',
+        purpose: 'router',
+  +     retry: false,
+  +     signal: undefined
+      }
+    ]
+
+      at TestContext.<anonymous> (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf05-f02-model-transport.test.mjs:94:10)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ { model: 'model-d' }, { guildId: 'g-1', signal: undefined, retry: false, purpose: 'router' } ],
+    expected: [ { model: 'model-d' }, { guildId: 'g-1', purpose: 'router' } ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }

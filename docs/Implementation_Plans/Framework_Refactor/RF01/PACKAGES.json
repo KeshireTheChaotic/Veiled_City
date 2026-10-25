@@ -17,6 +17,9 @@
     "world"
   ],
   "publicEntrypoints": {
+    "ai-provider": [
+      "bot/src/frameworks/ai-provider/public.js"
+    ],
     "discord": [
       "bot/src/frameworks/discord/public.js"
     ],

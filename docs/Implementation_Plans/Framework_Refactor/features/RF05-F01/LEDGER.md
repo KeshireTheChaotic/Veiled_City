@@ -8,7 +8,7 @@
 
 - `bot/src/generation-feedback.js` has one production consumer in `bot/src/index.js`, and one direct import of application-owned `turn-trace-context.js`.
 - `beginGenerationFeedback` starts Discord typing, schedules an optional progress notice, calls the captured trace's `progress()` only after the reply resolves, and returns timer cleanup. It does not call a model or mutate native state.
-- Ownership matrix assigns `generation-feedback.js` to `ai-provider`, with an exact RF05-F01 path transition and exact direct-import transition. Both exact rows were removed only after the corresponding old path and import edge no longer existed; unrelated IDs, source edges, counts, and deadlines were preserved.
+- Ownership matrix assigns `generation-feedback.js` to `ai-provider`, with exact RF05-F01 path and direct-import transitions plus a bootstrap import transition originally assigned to RF06-F05. All three exact rows were removed only after the corresponding old path/import edges no longer existed; unrelated IDs, source edges, counts, and deadlines were preserved. RF05-F02 registered the provider public path and verified there are no remaining architecture findings on the changed provider/application paths.
 - The implementation will be moved unchanged except for injected `onProgress`; the application caller supplies the trace callback. Its sole production consumer uses the public API, so the old source path can be removed without retaining an unneeded facade.
 
 ## Implementation and test evidence
