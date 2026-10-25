@@ -1,0 +1,13 @@
+{
+  "base_sha": "c3da2809e17e9871e5ae2792bbc9d1fd7b3baaff",
+  "original_source_sha256": "38b5805d9d3da04e73d23bd46b002a838b448689388b53516d563d59fcf0d9a2",
+  "policy_body_sha256": "1cdc0780920e826be1272692e82ed08597b86591ad78a2d116b4bc0bd6bea42c",
+  "body_unchanged": true,
+  "dependencies": [
+    "conversationPrincipal",
+    "currentScene",
+    "overlapsOwnerActionTerminal",
+    "authoredTurnEnvelope"
+  ],
+  "hash_substitution": "Same full JSON SHA256; raw owner text hash remains exact UTF8 SHA256"
+}

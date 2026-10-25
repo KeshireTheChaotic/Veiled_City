@@ -18,3 +18,4 @@ export {createPresentationEvidence} from './presentation-evidence.js';
 export {createEvidenceCustody} from './evidence-custody.js';
 export {createOwnedCommunity} from './owned-community.js';
 export {createPersonalContinuity} from './personal-continuity.js';
+export {createSemanticCandidateProof} from './semantic-candidate-source.js';

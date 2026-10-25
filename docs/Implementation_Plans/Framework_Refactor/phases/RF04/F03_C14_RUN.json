@@ -1,0 +1,32 @@
+{
+  "syntax": [
+    {
+      "exit": 0,
+      "path": "bot/src/frameworks/knowledge/semantic-candidate-source.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/frameworks/knowledge/public.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/semantic-candidate-source.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/tests/ai-gm-2026-10/rf04-f03-c14.test.mjs"
+    }
+  ],
+  "run_id": "RF04_F03_C14",
+  "test_exit": 0,
+  "start": "2026-10-24T21:29:52.4408249-05:00",
+  "end": "2026-10-24T21:29:56.5823788-05:00",
+  "hashes": {
+    "bot/src/semantic-candidate-source.js": "3da847b3e6d3377d182da43fdfa66012282e0a87d3fe5bece4f1740a72aa30dd",
+    "bot/src/frameworks/knowledge/public.js": "d7af68c53a79ea60d565558b580acd907a15aa1267838d6cedd08c886dd283f7",
+    "bot/tests/ai-gm-2026-10/rf04-f03-c14.test.mjs": "d9ca51dacf551e9383129c987a37a567e2ba0b63d62034407c28b6d0c27ef91a",
+    "bot/src/frameworks/knowledge/semantic-candidate-source.js": "952fbbb012e21335c23f09a0a9cdbf0b69e8db01a9b7ce762d415320124f4a0f"
+  },
+  "architecture_exit": 0,
+  "base_sha": "c3da2809e17e9871e5ae2792bbc9d1fd7b3baaff"
+}

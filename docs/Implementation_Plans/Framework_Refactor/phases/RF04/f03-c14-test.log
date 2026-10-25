@@ -1,0 +1,82 @@
+TAP version 13
+# Subtest: native input capture and intent acceptance yield exact owner source proof without PC decision, movement or outcome
+ok 1 - native input capture and intent acceptance yield exact owner source proof without PC decision, movement or outcome
+  ---
+  duration_ms: 205.7688
+  type: 'test'
+  ...
+# Subtest: actual private optional candidate remains pending until explicit owner confirmation of its immutable words
+ok 2 - actual private optional candidate remains pending until explicit owner confirmation of its immutable words
+  ---
+  duration_ms: 203.2724
+  type: 'test'
+  ...
+# Subtest: actual private canon draft remains pending and exact proof terms and audience are required before native GM review
+ok 3 - actual private canon draft remains pending and exact proof terms and audience are required before native GM review
+  ---
+  duration_ms: 208.8229
+  type: 'test'
+  ...
+# Subtest: changed current controller revision invalidates saved optional proof without erasing native source or accepted history
+ok 4 - changed current controller revision invalidates saved optional proof without erasing native source or accepted history
+  ---
+  duration_ms: 203.4013
+  type: 'test'
+  ...
+# Subtest: changed scene invalidates prior optional proof and does not silently recapture owner declaration
+ok 5 - changed scene invalidates prior optional proof and does not silently recapture owner declaration
+  ---
+  duration_ms: 194.8695
+  type: 'test'
+  ...
+# Subtest: retracted world source holds proof while immutable authenticated envelope and typed intent remain readable
+ok 6 - retracted world source holds proof while immutable authenticated envelope and typed intent remain readable
+  ---
+  duration_ms: 205.5546
+  type: 'test'
+  ...
+# Subtest: tampered owner raw text or copied proof hashes cannot substitute the authenticated source
+ok 7 - tampered owner raw text or copied proof hashes cannot substitute the authenticated source
+  ---
+  duration_ms: 197.6856
+  type: 'test'
+  ...
+# Subtest: actual native consumed-span annotation prevents the same owner range becoming another optional proposal
+ok 8 - actual native consumed-span annotation prevents the same owner range becoming another optional proposal
+  ---
+  duration_ms: 202.651
+  type: 'test'
+  ...
+# Subtest: owner terminal-range capability and private audience independently prevent optional source reuse
+ok 9 - owner terminal-range capability and private audience independently prevent optional source reuse
+  ---
+  duration_ms: 196.4945
+  type: 'test'
+  ...
+# Subtest: non-first-person optional candidate and nonprivate canon request do not pass source proof despite fallible interpretation
+ok 10 - non-first-person optional candidate and nonprivate canon request do not pass source proof despite fallible interpretation
+  ---
+  duration_ms: 375.3165
+  type: 'test'
+  ...
+# Subtest: historical imported canon proposals retain old review compatibility but typed version cannot omit native binding
+ok 11 - historical imported canon proposals retain old review compatibility but typed version cannot omit native binding
+  ---
+  duration_ms: 190.7011
+  type: 'test'
+  ...
+# Subtest: saved native source proof survives restart and original source exports revalidate exact current ancestry
+ok 12 - saved native source proof survives restart and original source exports revalidate exact current ancestry
+  ---
+  duration_ms: 208.6551
+  type: 'test'
+  ...
+1..12
+# tests 12
+# suites 0
+# pass 12
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 3127.6972
