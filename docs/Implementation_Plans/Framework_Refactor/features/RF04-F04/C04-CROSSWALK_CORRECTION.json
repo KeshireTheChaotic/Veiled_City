@@ -1,0 +1,4 @@
+{
+  "reason": "Correct C03 actual extracted-policy status; previous exact text expected a different original action.",
+  "original": "\"bot/src/scene-setup.js\",\"bot/src/frameworks/session/scene-setup.js\",\"session\",\"RF04\",\"EXTRACT_PORTS_BEFORE_MOVE\",\"2\",\"1\""
+}

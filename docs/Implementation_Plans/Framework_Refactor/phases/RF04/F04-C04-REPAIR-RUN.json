@@ -1,0 +1,9 @@
+{
+  "test_exit": 0,
+  "base_sha": "a9a1249723b75af58a0d8b5b2d04304045dff21a",
+  "end": "2026-10-24T21:54:19.0078824-05:00",
+  "test_sha256": "7ef6705ad591b9857327a34d8d9b5f9a1be088099f0eee670979d587db426c6d",
+  "syntax_exit": 0,
+  "run_id": "RF04-F04-C04-targeted-repair",
+  "start": "2026-10-24T21:54:18.1565856-05:00"
+}

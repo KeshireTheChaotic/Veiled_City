@@ -1,0 +1,64 @@
+{
+  "base_sha": "a9a1249723b75af58a0d8b5b2d04304045dff21a",
+  "original_source_sha256": "9adcbabb822f89daab39d3909748ce8c17e5445375f34fd65808398242747a80",
+  "declarations": [
+    {
+      "name": "KIND",
+      "sha256": "37a82db3300c775f7620c25f4e88db1b3fd2c3913de0c90434787fdd92718124"
+    },
+    {
+      "name": "hash",
+      "sha256": "7f3c3de3d984a83d3f2d5a2d27bd56fb11a9433ea375bc2583c10d81b58f1498"
+    },
+    {
+      "name": "safeKey",
+      "sha256": "64606488c4438521bf7167a770b2e53b10487571363d466f8f8d162c2907c78a"
+    },
+    {
+      "name": "fail",
+      "sha256": "6da89d0a6413d338dd51c08e08030e09b193923958e52a6114d4c1056bf2b067"
+    },
+    {
+      "name": "binding",
+      "sha256": "af3c5d48e91bffee9b2815938c7c2fcd2b60eb51ecf45f70fa645c2907704e55"
+    },
+    {
+      "name": "createReceipt",
+      "sha256": "4bb618d481f39a073c60fcf33b5d5c801fd2ae2cb1cc03c4c0e620d5d24c1b3a"
+    },
+    {
+      "name": "verifyReceipt",
+      "sha256": "61a045590f09119998e658e85bf79523ba840a493141b30366a0f8fbbd9ac3e7"
+    },
+    {
+      "name": "registerOpeningAttendance",
+      "sha256": "facb1f23b1b43782b475352c1aa5536de065648ee53c6ced18b5e696f1ae83bd"
+    },
+    {
+      "name": "registerAttendance",
+      "sha256": "5e180468f84ca0f049b556b10bc6961f022d81c7153dbf4d9cf44287da827509"
+    },
+    {
+      "name": "carryOpeningAttendance",
+      "sha256": "071c557419ccfe970c4dac1e69b6d876e50cbfd8cdb75b0f313576a89b4fad4b"
+    },
+    {
+      "name": "inspectOpeningEntryOpportunity",
+      "sha256": "276e09c49e7eb86ea3408a84b6009ae83f9bd3eeb65f8ef706bf2a791bed73f0"
+    },
+    {
+      "name": "prepareOpeningEntryOpportunity",
+      "sha256": "6569711a8ee23ab60b1f7c889be3ad7a3e001279296d46bf9833f332bcf044b8"
+    },
+    {
+      "name": "carryAttendance",
+      "sha256": "0e4d456de1fd521f7d7b1bd548f0df3227908020731834666557f39f5336e797"
+    }
+  ],
+  "exports": [
+    "registerOpeningAttendance",
+    "carryOpeningAttendance",
+    "inspectOpeningEntryOpportunity",
+    "prepareOpeningEntryOpportunity"
+  ]
+}

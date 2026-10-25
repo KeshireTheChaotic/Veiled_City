@@ -1,0 +1,32 @@
+{
+  "end": "2026-10-24T21:54:05.7563449-05:00",
+  "hashes": {
+    "bot/src/frameworks/session/public.js": "8c0a95d77596668a670a5534ff08db3c55011ebc5d252aec413a8dc356567648",
+    "bot/src/frameworks/session/opening-attendance.js": "bcc34ff0e8e6b383578e6f5f1492934d582b0c996f912360a24bc050f488c09f",
+    "bot/src/session-opening-attendance.js": "8fb44e6f5875a4b3cffd641c632adeaf6e94aa1483e40f793c7d1464feecf4ce",
+    "bot/tests/ai-gm-2026-10/rf04-f04-c04.test.mjs": "ba87173cd08681253ee6c3459d3a73958e9231f0e52c08592adac3f512582fc5"
+  },
+  "syntax": [
+    {
+      "path": "bot/src/frameworks/session/opening-attendance.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/frameworks/session/public.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/session-opening-attendance.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf04-f04-c04.test.mjs",
+      "exit": 0
+    }
+  ],
+  "start": "2026-10-24T21:54:00.7418009-05:00",
+  "run_id": "RF04-F04-C04-frozen",
+  "test_exit": 1,
+  "architecture_exit": 0,
+  "base_sha": "a9a1249723b75af58a0d8b5b2d04304045dff21a"
+}

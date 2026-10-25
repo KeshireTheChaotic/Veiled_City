@@ -6,3 +6,4 @@ export * from './assembly-evidence.js';
 export * from './roster.js';
 export {createSceneContinuity,RANGE_BANDS} from './scene-continuity.js';
 export {createSceneSetup} from './scene-setup.js';
+export {createOpeningAttendance} from './opening-attendance.js';
