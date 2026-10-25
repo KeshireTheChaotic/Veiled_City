@@ -78,6 +78,19 @@
     "docs/Implementation_Plans/Framework_Refactor/RF01/TRANSITIONS.json": "F7EB6D16FDC02DBFD9BBE6AAD043512B3420F7F22E4DE1207B3DCA6D3B05D519",
     "bot/tests/ai-gm-2026-10/rf05-f02-model-transport.test.mjs": "61CB01C78EF723F69777FA6969FF321E16A33A88C9637FB7AB3207EC464F705A"
   },
+  "post_shared_gm_module_recheck": {
+    "reason": "The shared GM module changed after this scoped test's original qualification; the provider delegate was rechecked.",
+    "command": "cd bot; node --test --test-concurrency=1 --test-reporter=tap tests/ai-gm-2026-10/rf05-f02-model-transport.test.mjs tests/ai-gm-2026-10/rf05-f04-c02.test.mjs tests/ai-gm-2026-10/rf05-f04-c03.test.mjs",
+    "changed_gm_sha256": "2A594934EB73E0703929DB62F9C5A52831E833C8F08157AE56AA4B7B18A57AEF",
+    "test_sha256": "61CB01C78EF723F69777FA6969FF321E16A33A88C9637FB7AB3207EC464F705A",
+    "batch_exit_code": 0,
+    "batch_passed": 9,
+    "batch_failed": 0,
+    "f02_subtests_passed": 7,
+    "duration_ms": 1917.7243,
+    "provider_calls": 0,
+    "provider_usd": 0
+  },
   "cost": {
     "provider_calls": 0,
     "provider_tokens": 0,

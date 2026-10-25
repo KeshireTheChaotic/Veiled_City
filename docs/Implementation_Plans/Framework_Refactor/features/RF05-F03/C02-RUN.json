@@ -1,0 +1,30 @@
+{
+  "feature": "RF05-F03-C02",
+  "status": "COMPLETE_FOR_SCOPED_SOURCE_MOVE",
+  "base_commit": "0ea8d924149b36a6ae938d83463bf91e48c61732",
+  "branch": "codex/clean-ai-gm-2026-10",
+  "changed_code": [
+    {"path":"bot/src/frameworks/narrative/narrative-opportunity-guidance.js","owner":"narrative","sha256":"D5806AE7B37B39E20F5E727D199EBB068FB600425ADA60156E7189E68C962EB7"},
+    {"path":"bot/src/frameworks/narrative/public.js","owner":"narrative","sha256":"42CD18B76E78AD472ECBB6A0624500D912C24C51735E5FC2F20DF426BE7C411A"},
+    {"path":"bot/src/gm.js","owner":"application","sha256":"2A594934EB73E0703929DB62F9C5A52831E833C8F08157AE56AA4B7B18A57AEF"},
+    {"path":"bot/src/narrative-opportunity-guidance.js","owner":"narrative","change":"One-line compatibility re-export for existing in-repository test imports","sha256":"497E41203C60F83A700D256719E7B7638C0E53771C93E5845B151A292FE02D11"}
+  ],
+  "test": {
+    "path":"bot/tests/ai-gm-2026-10/rf05-f03-c02.test.mjs",
+    "sha256":"4AC2DB877406009C2FD44568C6EE2836FFC7CCE75DCF0F2988B0685FC11D3BA5",
+    "command":"cd bot; node --test --test-concurrency=1 --test-reporter=tap tests/ai-gm-2026-10/rf05-f03-c02.test.mjs",
+    "launch_count":1,
+    "exit_code":0,
+    "passed":1,
+    "failed":0,
+    "skipped":0,
+    "duration_ms":550.797
+  },
+  "superseded_prior_run":{"exit_code":0,"passed":1,"failed":0,"duration_ms":550.771,"qualified_for_final_bytes":false,"reason":"The compatibility re-export and final test assertion were restored afterward; the final bytes were separately run once as recorded above."},
+  "syntax":{"files":["bot/src/gm.js","bot/src/narrative-opportunity-guidance.js","bot/src/frameworks/narrative/narrative-opportunity-guidance.js","bot/src/frameworks/narrative/public.js","bot/tests/ai-gm-2026-10/rf05-f03-c02.test.mjs"],"exit_code":0,"passed":5,"failed":0},
+  "transitions":{"retired":[],"retained":["1887dafd7dc5c08aa05252ec6e558c14344f2605f22f6de2a42a13aa6e061303"],"retained_reason":"Existing in-repository P07 feature tests still import the compatibility path; only implementation moved.","manifest_sha256":"35C9238DAEF106218615BECDE81D106F7A563A65F689BD067C0B523D223C75C0","frozen_baseline_changed":false},
+  "architecture":{"command":"node bot/tooling/architecture/check-boundaries.mjs --ratchet --phase RF05","exit_code":1,"source_modules":573,"unowned":0,"active_violation_groups":955,"transition_errors":955,"changed_path_findings":[]},
+  "cost":{"provider_calls":0,"provider_tokens":0,"provider_usd":0,"production_database_or_network":false,"codex_usage":"UNMEASURED"},
+  "release":"NOT_AUTHORIZED",
+  "rollback":"Restore the original root constant module and GM import, remove the Narrative source/public export and fresh test, and restore only the exact RF05-F04 import transition from C04-RETIRED.json while retaining the RF05-F03 root-location record."
+}

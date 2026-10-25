@@ -15,8 +15,8 @@
 |---|---|---|
 | RF05-F01 | COMPLETE FOR SCOPED BOUNDARY | Four fresh tests passed in the final frozen batch; changed-file syntax passed; exact path and cross-import transitions were removed after the corresponding source occurrences disappeared. The RF05 ratchet remains failed on prior RF04 transition debt. See `RF05-F01-LEDGER.md` and `RF05-F01-RUN.json`. |
 | RF05-F02 | COMPLETE FOR SCOPED RAW-TRANSPORT BOUNDARY | Final fresh test 7/7 pass, syntax 4/4 pass; architecture gate finds no changed-path violations but remains failed on prior RF04 debt. See `RF05-F02-LEDGER.md` and `RF05-F02-RUN.json`. |
-| RF05-F03 | PARTIAL — SCOPED SLICES QUALIFIED, 289 ASSIGNED TRANSITIONS LOCALLY HELD | Final frozen batch 9/9 pass, syntax 9/9 pass; no changed-path violations. See `RF05-F03-LEDGER.md`, `RF05-F03-RUN.json`, and `LOCAL_HOLDS.json`. |
-| RF05-F04 | PARTIAL — MODEL-SELECTION + ONE PUBLIC API IMPORT QUALIFIED; 61 ASSIGNED ENTRIES REMAIN | Original fresh test 3/3 pass; C02 fresh test 1/1 pass; changed-path findings absent for C02. See `features/RF05-F04/LEDGER.md`, `RF05-F04-RUN.json`, and `features/RF05-F04/C02-RUN.json`. |
+| RF05-F03 | PARTIAL — SCOPED SLICES QUALIFIED, 289 ASSIGNED TRANSITIONS LOCALLY HELD | Final frozen batch 9/9 pass, syntax 9/9 pass; C02 guidance source move qualified, root compatibility-location transition remains active. See `RF05-F03-LEDGER.md`, `RF05-F03-RUN.json`, and `LOCAL_HOLDS.json`. |
+| RF05-F04 | PARTIAL — MODEL-SELECTION + THREE PUBLIC API IMPORTS QUALIFIED; 59 ASSIGNED ENTRIES REMAIN | Original fresh test 3/3 pass; C02, C03, and C04 import tests passed; changed-path findings absent. See `features/RF05-F04/LEDGER.md` and feature RUN records. |
 | RF05-F05 | PARTIAL — PURE MUTATION-RESULT AGGREGATION QUALIFIED; 442 ASSIGNED ENTRIES REMAIN | Fresh test 3/3 pass, syntax 3/3 pass; no changed-path findings. See `features/RF05-F05/LEDGER.md` and `RF05-F05-RUN.json`. |
 | RF05-F06 | QUALIFIED CHECKPOINT — PHASE GATE FAILED | One changed-code union member 7/7 pass, syntax 14/14 pass; architecture gate fails on 967 prior transition errors. See `features/RF05-F06/LEDGER.md` and `RF05-F06-RUN.json`. |
 
@@ -48,3 +48,11 @@ The owner-approved metadata-only correction reassigned 12 exact Publication-owne
 ### RF05-F04 C03 — World public civic-context import
 
 On base commit `b4ac04107f6dd8492f55ccb9faf9275a1560dd60`, the application GM module adopted the already published World `cityContext` API. The final fresh test passed 1/1 (exit 0; 625.478 ms), with changed JavaScript syntax 2/2 pass. The exact obsolete import transition was retired and preserved; the RF05 gate remains failed at 955 active groups/errors with zero unowned modules and no active changed-path findings. RF05-F04 now has 60 assigned entries remaining. Details and hashes are in `features/RF05-F04/C03-RUN.json`; no provider or production database use. RF05 remains INCOMPLETE and release NOT AUTHORIZED.
+
+### RF05-F03 C02 / RF05-F04 C04 — Narrative public guidance
+
+At base commit `0ea8d924149b36a6ae938d83463bf91e48c61732`, the unchanged Director guidance value moved into Narrative and is exported from its public API. The root path remains as a compatibility re-export for three existing tests, leaving the F03 source-location transition active. One fresh test passed 1/1 (exit 0; 550.797 ms); changed-file syntax passed 5/5. The RF05 ratchet remains failed at 955 active groups and 955 transition errors, with zero unowned modules and no active findings on changed paths. Only the exact F04 GM-import transition was retired. RF05-F03 has 289 and RF05-F04 has 59 assigned entries remaining. Evidence and hashes are in `features/RF05-F03/C02-RUN.json` and `features/RF05-F04/C04-RUN.json`. No model calls or spend; RF05 remains incomplete and release NOT AUTHORIZED.
+
+A targeted shared-GM recheck then ran the RF05-F02 transport, RF05-F04 C02 Session-principal, and RF05-F04 C03 World-context tests once after `gm.js` changed. The batch passed **9/9**, exit **0**, duration **1,917.7243 ms**. No legacy suites or broad validation ran; no provider calls or spend. Detailed test hashes and per-feature counts are in the affected feature RUN files.
+
+Because `gm.js` changed after the earlier RF05-F06 checkpoint, its recorded changed-code union does not qualify the current bytes. The targeted affected tests above are current evidence; the phase-wide changed-code union must be frozen and run at the next RF05-F06 qualification attempt after implementation work is complete.

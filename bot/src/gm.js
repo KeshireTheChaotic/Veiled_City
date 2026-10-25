@@ -12,7 +12,7 @@ import { contextMemorySchema, CONTEXT_MEMORY_PROMPT } from "./context-memory.js"
 import { presentationContext } from "./presentation-evidence.js";
 import {worldHookSeedForGm,worldRecordOriginForGm} from './world-sanctioned-sources.js';
 import {worldNarrativeBridgePacket} from './world-narrative-bridge.js';
-import {WORLD_DIRECTOR_OPPORTUNITY_GUIDANCE} from './narrative-opportunity-guidance.js';
+import {WORLD_DIRECTOR_OPPORTUNITY_GUIDANCE} from './frameworks/narrative/public.js';
 import {worldResolutionContext} from './world-resolution.js';
 import {openingWorldOpportunities} from './opening-world-bridge.js';
 import {createPrivateSeedOrigin,privateSeedPrompt,privateWorldSeedsSchema,bindPrivateSeedTurn} from './world-private-seeds.js';

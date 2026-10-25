@@ -21,6 +21,7 @@
     "final_report":"docs/Implementation_Plans/Framework_Refactor/phases/RF05/RF05-F04-C02-FINAL-ARCHITECTURE.json","final_report_sha256":"a54200b1bd89c85cdd88b753f5547eeee639d82e663572b602e80ef71466e445"
   },
   "transition_metadata":{"removed_exact_id":"61fbe9207703ebe867a0ac4e3b99d565451b5f95cf6ddf7fe61d80fe551ce1a4","original_record_preserved_in":"docs/Implementation_Plans/Framework_Refactor/features/RF05-F04/C02-RETIRED.json","manifest_sha256":"ecc86ca0b50c0ed6cb05f5f1e9f1aed766f3d25a4a55e8a732488e019988e1c8","baseline_changed":false,"maximum_count_increased":false,"other_deadlines_changed":false},
+  "post_shared_gm_module_recheck":{"reason":"gm.js changed after the original slice; the authenticated-principal test was re-run in a targeted fresh-test batch.","current_gm_sha256":"2A594934EB73E0703929DB62F9C5A52831E833C8F08157AE56AA4B7B18A57AEF","test_sha256":"46BBA60461D70518285805D7DB789A86D02A97DB5DDA4F33AEAFFFB37800E7A5","batch_exit_code":0,"batch_passed":9,"batch_failed":0,"this_test_passed":1,"batch_duration_ms":1917.7243},
   "cost":{"provider_calls":0,"provider_tokens":0,"provider_usd":0,"live_database_or_network":false,"codex_usage":"UNMEASURED"},
   "release":"NOT_AUTHORIZED",
   "rollback":"Restore gm.js's former compatibility import, restore the exact transition from C02-RETIRED.json, and remove only C02 test/evidence. Preserve unrelated user edits and prior RF05 work."

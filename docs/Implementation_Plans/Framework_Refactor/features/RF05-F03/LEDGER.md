@@ -25,6 +25,10 @@ RF05 ratchet originally exited **1**: 570 modules, zero unowned, 2729 imports, l
 
 The exact source-observation pilot assigned to RF05-F03 is moved into Narrative and exposed at its public API; `gm.js` uses that public API. Its production behavior is tested separately in `rf05-f03-scene-observation.test.mjs`. Transition reconciliation found **289 RF05-F03 records remain** (36 legacy locations, 127 direct cross-framework edges, 124 cycle edges, 2 pair-boundary edges). They span mixed Narrative, native-environment, and mechanics modules and are not safe to remove wholesale. Their exact IDs/edges are retained in `LOCAL_HOLDS.json`; these holds keep F03 and the RF05 phase incomplete. No new exceptions or deadline changes are made.
 
+## C02 — Narrative-owned Director guidance
+
+The existing soft Director guidance string was moved unchanged into Narrative and exported through its public API. The GM consumer uses the public import; the old root path remains a one-line compatibility re-export because three existing feature tests import it. The fresh changed-code test passed 1/1 (exit 0; 550.797 ms), and changed-file syntax passed 5/5. The root-location transition remains active; no RF05-F03 transition was retired. **289** assigned RF05-F03 entries remain, including this compatibility path. See `C02-SCOPE.md` and `C02-RUN.json`; release remains NOT AUTHORIZED.
+
 ## Holds and rollback
 
 RF04 and the phase-wide RF05 ratchet remain incomplete from earlier transition debt. Preserve Daggerheart source/receipt authority, existing disclosure predicate semantics, and the request-local non-persistent nature of these projections. Rollback only the RF05-F03 commit and restore its exact prior import paths/manifest entries if needed.

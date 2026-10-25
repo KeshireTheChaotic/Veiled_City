@@ -23,6 +23,8 @@ Changed-file syntax passed **4/4**, exit **0**. Architecture ratchet exited **1*
 
 Hashes and concise results are in `RF05-F02-RUN.json` and `phases/RF05/rf05-f02-*.log`. Provider calls 0, tokens 0, USD $0; Codex usage UNMEASURED.
 
+After later scoped imports changed the shared `gm.js` module, a fresh targeted recheck ran `rf05-f02-model-transport.test.mjs`, `rf05-f04-c02.test.mjs`, and `rf05-f04-c03.test.mjs` once. The batch passed **9/9**, exit **0**, duration **1,917.7243 ms**; all seven F02 tests passed. Exact batch details and the current GM hash are in `RF05-F02-RUN.json`.
+
 ## Holds and rollback
 
 RF04 remains incomplete and RF05's current ratchet reports prior-phase debt; this F02 slice remains independent. Do not change player-facing behavior or any native receipt path. Roll back only the RF05-F02 feature commit; preserve RF05-F01, prior history, user edits, and unrelated diagnostics.

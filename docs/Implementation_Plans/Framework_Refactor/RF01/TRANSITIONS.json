@@ -7833,20 +7833,6 @@
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
     {
-      "id": "2b47b1791f56a173edcc96b4b833d6797ed7c82ad05fb49a0060cfd85027eb1c",
-      "code": "IMPORTS_PRIVATE_API",
-      "from": "bot/src/gm.js",
-      "to": "bot/src/narrative-opportunity-guidance.js",
-      "kind": "static",
-      "specifier": "./narrative-opportunity-guidance.js",
-      "owner": "application",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF05-F04",
-      "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
       "id": "759eae7bcf028fb6bbf7d544661f953ec50a08045d695d51713d0180ff423eea",
       "code": "IMPORTS_PRIVATE_API",
       "from": "bot/src/gm.js",

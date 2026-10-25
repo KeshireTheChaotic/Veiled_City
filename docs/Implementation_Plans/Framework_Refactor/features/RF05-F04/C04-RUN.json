@@ -1,0 +1,17 @@
+{
+  "feature":"RF05-F04-C04",
+  "status":"COMPLETE_FOR_SCOPED_IMPORT_SLICE",
+  "base_commit":"0ea8d924149b36a6ae938d83463bf91e48c61732",
+  "branch":"codex/clean-ai-gm-2026-10",
+  "changed_code":[
+    {"path":"bot/src/gm.js","owner":"application","change":"Import existing soft Director guidance through Narrative public API","sha256":"2A594934EB73E0703929DB62F9C5A52831E833C8F08157AE56AA4B7B18A57AEF"},
+    {"path":"bot/src/frameworks/narrative/public.js","owner":"narrative","sha256":"42CD18B76E78AD472ECBB6A0624500D912C24C51735E5FC2F20DF426BE7C411A"},
+    {"path":"bot/src/frameworks/narrative/narrative-opportunity-guidance.js","owner":"narrative","sha256":"D5806AE7B37B39E20F5E727D199EBB068FB600425ADA60156E7189E68C962EB7"}
+  ],
+  "shared_test":{"path":"bot/tests/ai-gm-2026-10/rf05-f03-c02.test.mjs","sha256":"4AC2DB877406009C2FD44568C6EE2836FFC7CCE75DCF0F2988B0685FC11D3BA5","exit_code":0,"passed":1,"failed":0,"duration_ms":550.797},
+  "architecture":{"phase":"RF05","exit_code":1,"active_violation_groups":955,"transition_errors":955,"changed_path_findings":[]},
+  "transition":{"retired_id":"2b47b1791f56a173edcc96b4b833d6797ed7c82ad05fb49a0060cfd85027eb1c","record":"docs/Implementation_Plans/Framework_Refactor/features/RF05-F04/C04-RETIRED.json","manifest_sha256":"35C9238DAEF106218615BECDE81D106F7A563A65F689BD067C0B523D223C75C0","root_path_transition_retained":"1887dafd7dc5c08aa05252ec6e558c14344f2605f22f6de2a42a13aa6e061303","remaining_rf05_f04_entries":59},
+  "cost":{"provider_calls":0,"provider_tokens":0,"provider_usd":0,"codex_usage":"UNMEASURED"},
+  "release":"NOT_AUTHORIZED",
+  "rollback":"Restore gm.js's former import and exact transition; remove only the new Narrative constant/public export/test/evidence."
+}

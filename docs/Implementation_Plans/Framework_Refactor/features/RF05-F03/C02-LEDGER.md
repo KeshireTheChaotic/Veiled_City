@@ -1,0 +1,12 @@
+# RF05-F03 C02 ledger — Narrative opportunity guidance ownership
+
+**Status:** COMPLETE FOR THE NARRATIVE IMPLEMENTATION MOVE; the root-path transition remains a compatibility hold and RF05-F03 remains partial.
+**Base commit:** `0ea8d924149b36a6ae938d83463bf91e48c61732`.
+
+The exact existing Director guidance moved to `bot/src/frameworks/narrative/narrative-opportunity-guidance.js` (SHA-256 `D5806AE7B37B39E20F5E727D199EBB068FB600425ADA60156E7189E68C962EB7`). This matches the frozen ownership-manifest source hash, so the value's implementation text is unchanged. The Narrative public API now exports the constant, and the production GM imports the public path. Three existing repository tests still import `bot/src/narrative-opportunity-guidance.js`; that path remains a one-line compatibility re-export. Its exact root-location transition remains active until those test sources can be migrated within an authorized fresh-test scope. No duplicate guidance implementation remains.
+
+Fresh test `bot/tests/ai-gm-2026-10/rf05-f03-c02.test.mjs` (SHA-256 `4AC2DB877406009C2FD44568C6EE2836FFC7CCE75DCF0F2988B0685FC11D3BA5`) passed **1/1**, exit **0**, duration **550.797 ms**. It loads the actual GM service, verifies that the Narrative public and compatibility exports retain the same value, and confirms the GM prompt uses the public import. Changed-file syntax checks passed **5/5**, exit **0**.
+
+Only the exact RF05-F04 GM-import transition was retired in C04; the RF05-F03 root-location transition remains active and is not claimed resolved. The RF05 ratchet remains failed: **573** source modules, **0** unowned, **955** active groups and **955** transition errors. Changed-path inspection found no active violations for the GM, Narrative public/source modules, or compatibility re-export. No provider, database, network, or inherited test was run; model calls **0**, cost **$0**. RF05-F03 retains **289** assigned entries, including this compatibility location. The fresh test is shared evidence for RF05-F04 C04's consumer-import slice; see that feature record. Release remains **NOT AUTHORIZED**.
+
+Rollback only this slice by restoring the original root implementation and GM import, removing the Narrative source/public export and test, and restoring the exact RF05-F04 import transition from `C04-RETIRED.json`; keep the RF05-F03 root-location transition active. Preserve earlier RF05 changes and the five pre-existing user edits.

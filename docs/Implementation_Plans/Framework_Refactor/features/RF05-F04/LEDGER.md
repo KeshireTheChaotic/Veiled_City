@@ -1,6 +1,6 @@
 # RF05-F04 execution ledger
 
-**Status:** PARTIAL — model-selection and one public-API import slice qualified; 61 assigned RF05-F04 transition entries remain.
+**Status:** PARTIAL — model selection and three public-API import slices qualified; 59 assigned RF05-F04 transition entries remain.
 **Base HEAD:** `b515fdb1f48da98b66564010ed87930e07cf7338`
 **Scope:** [`SCOPE.md`](SCOPE.md)
 
@@ -31,3 +31,9 @@ The RF05 ratchet first reported the absent exact import as `UNUSED_TRANSITION` (
 ## C03 — World public civic-context adoption
 
 `gm.js` now imports `cityContext` from the World public API. The fresh final test passed 1/1 (exit 0, 625.478 ms) after correcting a test-only expected query count; no production code changed between the initial failed test and the successful final run. Changed JavaScript syntax passed 2/2. The RF05 ratchet remains failed with 955 active groups and 955 transition errors; changed-path inspection found no `gm.js` violations. Exact transition `bc2b84be1b485b3cf0bcc69b77180fa5bbe85a0b48def3d1590cd8a18e18a4e4` was retired and preserved. 60 F04 entries remain. See `C03-SCOPE.md`, `C03-LEDGER.md`, `C03-RETIRED.json`, and `C03-RUN.json`. No provider spend; release remains NOT AUTHORIZED.
+
+## C04 — Narrative public soft-guidance import
+
+The GM now consumes the existing soft Director guidance through Narrative's public API. RF05-F03 C02 moved the exact constant; the root path remains as a compatibility re-export. The content hash matches its frozen owner-manifest source hash. Shared fresh test passed 1/1 (exit 0; 550.797 ms); changed-file syntax passed 5/5. The exact F04 private-import transition was retired and preserved in `C04-RETIRED.json`; the F03 source-location transition remains active. **59** RF05-F04 entries remain. See `C04-SCOPE.md`, `C04-LEDGER.md`, and `C04-RUN.json`; the RF05 gate remains failed on unrelated debt and release remains NOT AUTHORIZED.
+
+Because `gm.js` changed after C02 and C03, their already-fresh feature tests were each re-run in a targeted shared-module batch. The Session-principal and World-context tests passed 1/1 each within the 9/9 batch (exit 0; 1,917.7243 ms total). Their current GM hash and test hashes are captured in the respective RUN files.

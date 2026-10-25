@@ -6,3 +6,4 @@ export {createNativeAudienceGrantAdapter} from './native-audience-grant.js';
 export {createNarrativeContextBuilder} from './context-builder.js';
 export {sceneObservationOperation} from './scene-observation-route.js';
 export {narrativeModel} from './model-selection.js';
+export {WORLD_DIRECTOR_OPPORTUNITY_GUIDANCE} from './narrative-opportunity-guidance.js';
