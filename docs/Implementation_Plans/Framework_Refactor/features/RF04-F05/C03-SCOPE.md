@@ -1,0 +1,5 @@
+# RF04-F05 C03 — World authorship source-capability composition
+
+Base `070ef3d572baa461f9915a4b9f1796fb940ae017`. Replace the World-owned authorship provider's direct imports of Narrative audience/source checks and Knowledge disclosure/record readers with two exact two-framework adapters. Keep a thin application composition that assembles both pair capabilities for the existing World factory. Preserve function identity and call/error behavior; keep the original single cached World rules instance and all seed/source policy in its existing owner. No changes to narrative behavior, audience rules, mechanics, persistence, or creative permissions.
+
+Add fresh changed-code-only tests under `bot/tests/ai-gm-2026-10/` for both pair contracts, unchanged capability forwarding, application composition, and representative existing World authorship behavior. Run one frozen targeted test batch, changed-file syntax checks, and the RF04 architecture ratchet. Record source hashes, exact terminal results, costs, violations, and rollback. No legacy tests, live provider, production DB, broad validation, or network. RELEASE NOT AUTHORIZED.
