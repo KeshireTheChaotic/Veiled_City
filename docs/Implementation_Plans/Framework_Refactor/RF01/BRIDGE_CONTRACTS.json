@@ -3275,13 +3275,14 @@
         }
       ],
       "validation": "Actual Session consumers call original World issuer under unchanged native source/audience validation and transaction receipts. Missing/replaced issuer fails closed. This does not certify all Session/World traffic.",
-      "lifecycle": "Only native event issuance adopted by attendance and initial setup; remaining observed directions remain unisolated RF04 obligations.",
+      "lifecycle": "Only native event issuance adopted by attendance, initial setup and opening scheduling; remaining observed directions remain unisolated RF04 obligations.",
       "adoption_feature": "RF04",
       "consumers": [
         "bot/src/application/composition/session-world-events.js"
       ],
       "tests": [
-        "bot/tests/ai-gm-2026-10/rf04-f05-c02.test.mjs"
+        "bot/tests/ai-gm-2026-10/rf04-f05-c02.test.mjs",
+        "bot/tests/ai-gm-2026-10/rf04-f04-c06.test.mjs"
       ],
       "observed_directions": [
         {

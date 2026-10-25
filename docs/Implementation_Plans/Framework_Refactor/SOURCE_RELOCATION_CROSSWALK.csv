@@ -319,7 +319,7 @@ old_path,new_path,owner,move_phase,action,reverse_dependents,import_obligations
 "bot/src/session-opening-attendance.js","bot/src/frameworks/session/session-opening-attendance.js","session","RF04","POLICY_EXTRACTED_NATIVE_WORLD_ISSUER_ADOPTED_OTHER_READERS_OPEN","4","1"
 "bot/src/session-opening-recovery.js","bot/src/application/workflows/session-opening-recovery.js","application","RF06","DECOMPOSE_BEFORE_MOVE","1","5"
 "bot/src/session-opening-runner.js","bot/src/application/workflows/session-opening-runner.js","application","RF06","DECOMPOSE_BEFORE_MOVE","4","4"
-"bot/src/session-opening.js","bot/src/frameworks/session/session-opening.js","session","RF04","EXTRACT_PORTS_BEFORE_MOVE","10","2"
+"bot/src/session-opening.js","bot/src/frameworks/session/session-opening.js","session","RF04","POLICY_EXTRACTED_NATIVE_WORLD_ISSUER_ADOPTED_OTHER_READERS_OPEN","10","2"
 "bot/src/simulation-commands.js","bot/src/application/workflows/simulation-commands.js","application","RF06","DECOMPOSE_BEFORE_MOVE","1","7"
 "bot/src/simulation-motivation.js","bot/src/frameworks/npc/motivation.js","npc","RF04","NPC_RULES_EXTRACTED_ACTOR_SOURCE_REGISTERED_TWO_WORLD_CONSUMERS_ADOPTED_OTHER_SOURCE_COMPOSITION_REMAINS","22","6"
 "bot/src/simulation-schema.js","bot/src/frameworks/world/simulation-schema.js","world","RF04","EXTRACT_PORTS_BEFORE_MOVE","1","1"
