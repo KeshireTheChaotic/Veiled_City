@@ -8015,20 +8015,6 @@
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
     {
-      "id": "9adda1062fb5ec114195328c1ff9008f15f9722203ff40fe98e27b719e6564b4",
-      "code": "IMPORTS_PRIVATE_API",
-      "from": "bot/src/gm.js",
-      "to": "bot/src/ai-intent-contracts.js",
-      "kind": "static",
-      "specifier": "./ai-intent-contracts.js",
-      "owner": "application",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF05-F04",
-      "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
       "id": "41746b9e27b48fcf6392db460d6c3eefe830da53cba955693ad704539ec3aa99",
       "code": "IMPORTS_PRIVATE_API",
       "from": "bot/src/gm.js",

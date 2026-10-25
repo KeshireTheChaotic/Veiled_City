@@ -29,7 +29,7 @@ import { materialClaimSchema, NARRATIVE_CONTRACT, validateNarrativeClaims } from
 import { ContextPlanner } from "./context-planner.js";
 import { pacingAdvice, validatePacing } from "./story-continuity.js";
 import { portrayalPacket } from "./portrayal.js";
-import { intentArraySchema, INTENT_PROMPT } from "./ai-intent-contracts.js";
+import { intentArraySchema, INTENT_PROMPT } from "./frameworks/intent/public.js";
 import { intentContext } from "./ai-intents.js";
 import { decisionAdvisorySchema, requiredDecisionAdvisorySchema, decisionPromptContext, decisionContext, validateDecisionAdvisory } from "./decision-advisory.js";
 import {explicitSilence,semanticResponseObligation} from "./gameplay-intake.js";

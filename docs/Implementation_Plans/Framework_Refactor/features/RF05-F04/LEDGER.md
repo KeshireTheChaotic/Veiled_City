@@ -1,6 +1,6 @@
 # RF05-F04 execution ledger
 
-**Status:** PARTIAL — model selection and three public-API import slices qualified; 59 assigned RF05-F04 transition entries remain.
+**Status:** PARTIAL — model selection and four public-API import slices qualified; 58 assigned RF05-F04 transition entries remain.
 **Base HEAD:** `b515fdb1f48da98b66564010ed87930e07cf7338`
 **Scope:** [`SCOPE.md`](SCOPE.md)
 
@@ -37,3 +37,7 @@ The RF05 ratchet first reported the absent exact import as `UNUSED_TRANSITION` (
 The GM now consumes the existing soft Director guidance through Narrative's public API. RF05-F03 C02 moved the exact constant; the root path remains as a compatibility re-export. The content hash matches its frozen owner-manifest source hash. Shared fresh test passed 1/1 (exit 0; 550.797 ms); changed-file syntax passed 5/5. The exact F04 private-import transition was retired and preserved in `C04-RETIRED.json`; the F03 source-location transition remains active. **59** RF05-F04 entries remain. See `C04-SCOPE.md`, `C04-LEDGER.md`, and `C04-RUN.json`; the RF05 gate remains failed on unrelated debt and release remains NOT AUTHORIZED.
 
 Because `gm.js` changed after C02 and C03, their already-fresh feature tests were each re-run in a targeted shared-module batch. The Session-principal and World-context tests passed 1/1 each within the 9/9 batch (exit 0; 1,917.7243 ms total). Their current GM hash and test hashes are captured in the respective RUN files.
+
+## C05 — Intent contract public API
+
+The existing Intent prompt, schema, validator, and operation contracts now live under Intent ownership. `gm.js` imports the same schema and prompt through Intent's public API; the root file remains a compatibility re-export for other production consumers. The fresh C05 test passed **1/1** (exit **0**, one launch, **550.7978 ms**); changed JavaScript syntax passed **5/5**. The RF05 ratchet remains failed with **955** pre-existing groups/errors, **574** modules, and zero unowned modules. The new GM public import has no boundary finding; four other framework consumers still use the root compatibility path and remain held under their exact existing transitions. Exact transition `9adda1062fb5ec114195328c1ff9008f15f9722203ff40fe98e27b719e6564b4` was retired and preserved; **58** F04 entries remain. See `C05-SCOPE.md`, `C05-LEDGER.md`, `C05-RETIRED.json`, and `C05-RUN.json`. No provider, network, or database use; release remains NOT AUTHORIZED.

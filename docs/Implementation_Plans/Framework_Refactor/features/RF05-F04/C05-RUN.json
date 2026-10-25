@@ -1,0 +1,20 @@
+{
+  "feature": "RF05-F04-C05",
+  "status": "COMPLETE_FOR_SCOPED_IMPORT_SLICE",
+  "base_commit": "caa88b2e0d0e26c6bc4e2ca3879359f1c3c50794",
+  "branch": "codex/clean-ai-gm-2026-10",
+  "changed_code": [
+    {"path":"bot/src/gm.js","owner":"application","change":"Use Intent public API","sha256":"A1FDDA0B93E77867F1DA15D1E4D02759AA7CA32FDE9C0656454B5980E1D5F8A6"},
+    {"path":"bot/src/ai-intent-contracts.js","owner":"intent","change":"Compatibility re-export","sha256":"E9B9C43FC8B5A0EC8D38F0CAF625122693656E45635B0F26A21538A26BC5CE78"},
+    {"path":"bot/src/frameworks/intent/ai-intent-contracts.js","owner":"intent","change":"Original implementation moved byte-for-byte","sha256":"585F1971D099C434E30AE14CFA44C78F817EAAFADBAB72E1289D6CC406827AE2"},
+    {"path":"bot/src/frameworks/intent/public.js","owner":"intent","change":"Export existing contracts","sha256":"B4479FEBDE219EC42D42D6A2CE16CE7277A31AB1C6933DD19786DDB66491CC0E"},
+    {"path":"bot/src/frameworks/intent/README.md","owner":"intent","change":"Document public contract boundary","sha256":"0E3BC49F793BF2B85B6B65F29903282F50912AA39A303F8FA86ABCD79FBEEC3D"}
+  ],
+  "fresh_test": {"path":"bot/tests/ai-gm-2026-10/rf05-f04-c05.test.mjs","sha256":"C2D1CB13B322E1EA2C2F5E468D88E2D7903E2EA30C0A17EE7826EE74D3DAD845","launches":1,"exit_code":0,"passed":1,"failed":0,"duration_ms":550.7978},
+  "syntax": {"exit_code":0,"passed":5,"failed":0,"files":["bot/src/gm.js","bot/src/ai-intent-contracts.js","bot/src/frameworks/intent/ai-intent-contracts.js","bot/src/frameworks/intent/public.js","bot/tests/ai-gm-2026-10/rf05-f04-c05.test.mjs"]},
+  "architecture": {"phase":"RF05","exit_code":1,"source_modules":574,"unowned":0,"import_occurrences":2736,"active_violation_groups":955,"transition_errors":955,"changed_public_import_findings":0,"retained_compatibility_consumer_findings":4},
+  "transition": {"retired_id":"9adda1062fb5ec114195328c1ff9008f15f9722203ff40fe98e27b719e6564b4","record":"docs/Implementation_Plans/Framework_Refactor/features/RF05-F04/C05-RETIRED.json","original_manifest_sha256":"35C9238DAEF106218615BECDE81D106F7A563A65F689BD067C0B523D223C75C0","current_manifest_sha256":"45390102A001F991450BD01CD88DB89CE3DFB3630697AB099058E975C96C6D86","remaining_rf05_f04_entries":58},
+  "cost": {"provider_calls":0,"provider_tokens":0,"provider_usd":0,"network":0,"database_access":0,"codex_usage":"UNMEASURED"},
+  "release": "NOT_AUTHORIZED",
+  "rollback": "Restore gm.js's prior root import and the exact retired transition; restore the original root implementation; remove only the new Intent public export, moved implementation, and C05 test/evidence. Preserve the compatibility reader and all unrelated edits."
+}
