@@ -1,0 +1,29 @@
+{
+  "feature": "RF04-F07",
+  "status": "AUDIT_COMPLETE_PHASE_EXIT_NOT_MET",
+  "base_head": "c20d0b0d86d067a54de0d4bf8a252ed146c4c021",
+  "tests_run": 0,
+  "reason_no_tests": "Audit-only documentation slice; no production source changed and the active fresh tests already cover their recorded source slices.",
+  "latest_architecture_evidence": {
+    "source_run": "features/RF04-F06/F06-RUN.json",
+    "exit_code": 0,
+    "source_modules": 566,
+    "unowned": 0,
+    "imports": 2722,
+    "largest_scc": 181,
+    "accepted_legacy_occurrences": 2442,
+    "active_violation_groups": 0,
+    "transition_errors": 0
+  },
+  "phase_exit": "NOT_MET",
+  "open_features": [
+    "F01: residual World source producers and consumers remain in local holds.",
+    "F02: source producer and cross-framework NPC adoption obligations remain.",
+    "F03: actual Knowledge adapters and source integration remain.",
+    "F04: unqualified Session/action-window and complete opening/publication workflows remain.",
+    "F05-C03: Narrative--World bootstrap composition and actual consumer adoption remain locally held."
+  ],
+  "cost": {"provider_calls": 0, "tokens": 0, "usd": 0, "codex_usage": "UNMEASURED"},
+  "rollback": "Remove only the F07 audit scope, ledger, acceptance matrix and run record.",
+  "release": "NOT_AUTHORIZED"
+}
