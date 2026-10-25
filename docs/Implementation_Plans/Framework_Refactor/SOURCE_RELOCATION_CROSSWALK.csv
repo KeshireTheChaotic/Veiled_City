@@ -248,7 +248,7 @@ old_path,new_path,owner,move_phase,action,reverse_dependents,import_obligations
 "bot/src/ordinary-effect-schema.js","bot/src/frameworks/daggerheart/ordinary-effect-schema.js","daggerheart","RF03","PILOT_MOVE_CANDIDATE","3","0"
 "bot/src/ordinary-effects.js","bot/src/frameworks/daggerheart/ordinary-effects.js","daggerheart","RF05","NATIVE_EXTRACTED_QUALIFIED_SOURCE_ADOPTION_DEFERRED:RF04-F01+RF04-F04+RF05-F02+RF05-F05","3","5"
 "bot/src/outcome-preview.js","bot/src/frameworks/world/outcome-preview.js","world","RF04","READ_ONLY_WORLD_PREVIEW_NO_NATIVE_MECHANICS:RF04-F01","1","0"
-"bot/src/owned-community.js","bot/src/frameworks/knowledge/owned-community.js","knowledge","RF04","EXTRACT_PORTS_BEFORE_MOVE","6","6"
+"bot/src/owned-community.js","bot/src/frameworks/knowledge/owned-community.js","knowledge","RF04","ORGANIZATION_POLICY_EXTRACTED_SOURCE_PORTS_PENDING","6","6"
 "bot/src/owner-action-terminal.js","bot/src/frameworks/session/owner-action-terminal.js","session","RF04","EXTRACT_PORTS_BEFORE_MOVE","7","1"
 "bot/src/owner-consent.js","bot/src/frameworks/daggerheart/owner-consent.js","daggerheart","RF05","NATIVE_EXTRACTED_QUALIFIED_SOURCE_ADOPTION_DEFERRED:RF05-F02+RF05-F05","3","1"
 "bot/src/pc-death.js","bot/src/frameworks/daggerheart/pc-death.js","daggerheart","RF03","EXTRACT_PORTS_BEFORE_MOVE","12","3"

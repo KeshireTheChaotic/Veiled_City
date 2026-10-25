@@ -1,0 +1,19 @@
+{
+  "base_sha": "e06246821e66f87c4694f48dffdb76eb7f7c0fac",
+  "original_source_sha256": "526afeda8343ebf411f441336499734ba7d1c08453c64a7c1cc75415942fc650",
+  "policy_body_sha256": "10f56dab11e8d0970c371701c21f5a0bab6362e41d3b34878113b8711e11d8b1",
+  "body_unchanged": true,
+  "dependencies": [
+    "cityObject",
+    "cityKey",
+    "cityAudit",
+    "indexWorldEvent",
+    "personalCharacter",
+    "requireCitySource",
+    "requireCityRecord",
+    "updateCityCivic",
+    "manageLongProject",
+    "actorSource"
+  ],
+  "hash_substitution": "Same kernel row revision/full JSON SHA256 truncated32hex"
+}
