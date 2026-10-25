@@ -1,6 +1,6 @@
 # RF05-F04 execution ledger
 
-**Status:** PARTIAL — model selection and four public-API import slices qualified; 58 assigned RF05-F04 transition entries remain.
+**Status:** PARTIAL — model selection and five public-API import slices qualified; 57 assigned RF05-F04 transition entries remain.
 **Base HEAD:** `b515fdb1f48da98b66564010ed87930e07cf7338`
 **Scope:** [`SCOPE.md`](SCOPE.md)
 
@@ -43,3 +43,7 @@ Because `gm.js` changed after C02 and C03, their already-fresh feature tests wer
 The existing Intent prompt, schema, validator, and operation contracts now live under Intent ownership. `gm.js` imports the same schema and prompt through Intent's public API; the root file remains a compatibility re-export for other production consumers. The fresh C05 test passed **1/1** (exit **0**, one launch, **550.7978 ms**); changed JavaScript syntax passed **5/5**. The RF05 ratchet remains failed with **955** pre-existing groups/errors, **574** modules, and zero unowned modules. The new GM public import has no boundary finding; four other framework consumers still use the root compatibility path and remain held under their exact existing transitions. Exact transition `9adda1062fb5ec114195328c1ff9008f15f9722203ff40fe98e27b719e6564b4` was retired and preserved; **58** F04 entries remain. See `C05-SCOPE.md`, `C05-LEDGER.md`, `C05-RETIRED.json`, and `C05-RUN.json`. No provider, network, or database use; release remains NOT AUTHORIZED.
 
 After C05 changed `gm.js`, the fresh C02 and C03 import tests and the shared C04 Narrative-guidance test were each rerun once in one blocking three-test batch. All **3/3** passed (exit **0**, total **794.1741 ms**). C05's own fresh test had already passed against these same GM bytes. The current GM hash is recorded in all affected RUN files; this closes stale test evidence without rerunning tests whose associated production code did not change.
+
+## C06 — Narrative proposal-schema public API
+
+Moved the unchanged, data-only Narrative schema module into the Narrative framework, explicitly exported all 19 contracts, retained the root compatibility re-export, and switched the two GM schema imports to Narrative public API. The new fresh test plus the five existing fresh tests importing current `GMService` passed **12/12** in one frozen batch (exit **0**, **3,381.2046 ms**); changed JavaScript syntax passed **5/5**. RF05 ratchet remains failed on **955** existing groups/errors, with 575 modules and zero unowned. The exact GM import finding/error is gone; two existing consumers still use the compatibility path. Exact transition `eba1e3e1be87a71d8f22b88a6c02da7e495f5ce53f41f75c699bab80934481b1` is retired and preserved. **57** RF05-F04 assignments remain. See `C06-SCOPE.md`, `C06-LEDGER.md`, `C06-RETIRED.json`, and `C06-RUN.json`. No provider/network/database use; release remains NOT AUTHORIZED.

@@ -1,0 +1,27 @@
+{
+  "feature": "RF05-F04-C06",
+  "status": "COMPLETE_FOR_SCOPED_SCHEMA_PUBLIC_API_SLICE",
+  "base_head": "b3e205947e088a98f2043761abf5f7c4c05995dd",
+  "branch": "codex/clean-ai-gm-2026-10",
+  "changed_code": [
+    {"path":"bot/src/gm.js","owner":"application","change":"Import narrativeRequestSchema and nativeOutcomeSchema from Narrative public API","sha256":"C2C5596695D0D462263F540A206431FD096692CB5D61C6A486583630E4E584FA"},
+    {"path":"bot/src/gm-fiction-schema.js","owner":"narrative","change":"Preserved root compatibility re-export","sha256":"F3FE065FF82F199FC06117CDBF856742CDFBE34D64F8F10165623E589FC3BAD5"},
+    {"path":"bot/src/frameworks/narrative/gm-fiction-schema.js","owner":"narrative","change":"Original 19-schema implementation moved byte-for-byte","sha256":"92B9CEDC74403903B00DA7ADED800253F17EA5215FD1997A08E98EA0CBA3BFF1"},
+    {"path":"bot/src/frameworks/narrative/public.js","owner":"narrative","change":"Explicitly export existing schema contracts","sha256":"B857309804A23DCCAFD306BF27B905069C6498ED35E18746A87E8296FB99C8B9"}
+  ],
+  "fresh_test": {"path":"bot/tests/ai-gm-2026-10/rf05-f04-c06.test.mjs","sha256":"5C53AA6A251724612EC7146B4B6D527D5534941C79C206820C3F04417C9C236F","exit_code":0,"passed":1,"failed":0,"duration_ms":3381.2046,"batch_tests":6,"batch_passed":12,"batch_failed":0,"launches":1},
+  "affected_gm_union": [
+    {"path":"bot/tests/ai-gm-2026-10/rf05-f02-model-transport.test.mjs","sha256":"61CB01C78EF723F69777FA6969FF321E16A33A88C9637FB7AB3207EC464F705A"},
+    {"path":"bot/tests/ai-gm-2026-10/rf05-f03-c02.test.mjs","sha256":"4AC2DB877406009C2FD44568C6EE2836FFC7CCE75DCF0F2988B0685FC11D3BA5"},
+    {"path":"bot/tests/ai-gm-2026-10/rf05-f04-c02.test.mjs","sha256":"46BBA60461D70518285805D7DB789A86D02A97DB5DDA4F33AEAFFFB37800E7A5"},
+    {"path":"bot/tests/ai-gm-2026-10/rf05-f04-c03.test.mjs","sha256":"70C5CFE574BAED1818BD3F05F8698AB9758A61C2A1FE44883ADE0FE8DD43ACD5"},
+    {"path":"bot/tests/ai-gm-2026-10/rf05-f04-c05.test.mjs","sha256":"C2D1CB13B322E1EA2C2F5E468D88E2D7903E2EA30C0A17EE7826EE74D3DAD845"},
+    {"path":"bot/tests/ai-gm-2026-10/rf05-f04-c06.test.mjs","sha256":"5C53AA6A251724612EC7146B4B6D527D5534941C79C206820C3F04417C9C236F"}
+  ],
+  "syntax": {"exit_code":0,"passed":5,"failed":0,"files":["bot/src/gm.js","bot/src/gm-fiction-schema.js","bot/src/frameworks/narrative/gm-fiction-schema.js","bot/src/frameworks/narrative/public.js","bot/tests/ai-gm-2026-10/rf05-f04-c06.test.mjs"]},
+  "architecture": {"phase":"RF05","exit_code":1,"source_modules":575,"unowned":0,"import_occurrences":2738,"active_violation_groups":955,"transition_errors":955,"largest_cycle":181,"gm_schema_import_findings":0,"root_schema_consumer_findings":2},
+  "transition": {"retired_id":"eba1e3e1be87a71d8f22b88a6c02da7e495f5ce53f41f75c699bab80934481b1","record":"docs/Implementation_Plans/Framework_Refactor/features/RF05-F04/C06-RETIRED.json","original_manifest_sha256":"45390102A001F991450BD01CD88DB89CE3DFB3630697AB099058E975C96C6D86","current_manifest_sha256":"5023F3AFE63B4E48F870526B872018858117A404EC8680CE1716C9458ADE016E","baseline_sha256":"c06895366ededa396d77132fea8d91ace036c0f369bcf880ab1a898a1a1370d3","baseline_changed":false,"maximum_count_increased":false,"remaining_rf05_f04_entries":57},
+  "cost": {"provider_calls":0,"provider_tokens":0,"provider_usd":0,"network":0,"database_access":0,"codex_usage":"UNMEASURED"},
+  "release": "NOT_AUTHORIZED",
+  "rollback": "Restore the GM's former root schema import and the exact retired transition; restore the original root schema implementation; remove the new Narrative schema copy/public export and C06 test/evidence. Preserve other consumers and all unrelated edits."
+}

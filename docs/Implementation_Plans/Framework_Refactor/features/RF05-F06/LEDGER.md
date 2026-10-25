@@ -14,9 +14,11 @@ The original RF05 checkpoint ratchet exited **1**: 572 source modules, zero unow
 
 After the Intent API change modified `gm.js`, the F06 transport test was run once: **7/7** passed, exit **0**, duration **559.3211 ms**. The three other fresh tests that import `GMService` and had last run against earlier GM bytes (RF05-F03 C02 and RF05-F04 C02/C03) were run together once: **3/3** passed, exit **0**, duration **794.1741 ms**. The new C05 regression already passed **1/1** against the same committed GM bytes. Current changed-code JavaScript syntax checks are **5/5** pass from C05. Current architecture result and all source/test hashes are summarized in `RF05-F06-RUN.json`'s `after_c05_refresh`. No provider, network, database, or legacy suite use.
 
+After C06 changed `gm.js` again, one blocking affected-code union ran the transport regression, three prior GM consumer regressions, C05 Intent adoption, and new C06 schema adoption. It passed **12/12**, exit **0**, duration **3,381.2046 ms**; changed JavaScript syntax passed **5/5**. The RF05 ratchet remains failed on **955** existing groups/errors with 575 modules and zero unowned. See `RF05-F06-RUN.json`'s `after_c06_refresh`; no provider, network, database, or legacy suite use.
+
 ## Holds and rollback
 
-RF04 remains incomplete; RF05-F03 has 289 exact local holds, RF05-F04 has **58** remaining assigned transitions after C05, and RF05-F05 has 442. Revert only the eventual F06 evidence commit if needed; preserve the feature commits and pre-existing user edits. No provider spend or production access.
+RF04 remains incomplete; RF05-F03 has 289 exact local holds, RF05-F04 has **57** remaining assigned transitions after C06, and RF05-F05 has 442. Revert only the eventual F06 evidence commit if needed; preserve the feature commits and pre-existing user edits. No provider spend or production access.
 
 ## Next step
 

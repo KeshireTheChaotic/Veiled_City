@@ -62,7 +62,7 @@ import {sceneObservationOperation,narrativeModel} from './frameworks/narrative/p
 import {engagementKinds,bindSemanticEngagement,currentSemanticEngagement,semanticSceneOperation} from './semantic-engagement.js';
 import {authorNarrativeRequests,NARRATIVE_AUTHORITY_INSTRUCTIONS,narrativeResponseSchema} from './narrative-authority.js';
 import {openingEntryNarrativeCandidate} from './opening-entry-context.js';
-import {nativeOutcomeSchema,narrativeRequestSchema} from './gm-fiction-schema.js';
+import {nativeOutcomeSchema,narrativeRequestSchema} from './frameworks/narrative/public.js';
 import {coordinateNarrative} from './narrative-delegation.js';
 import {bindDirectorNarrativeSource,inheritDirectorNarrativeSource,nativeDirectorNarrativeSource} from './narrative-director-source.js';
 import {configureWorldEncounterCatalog} from './world-encounter-beats.js';

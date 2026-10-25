@@ -8365,20 +8365,6 @@
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
     {
-      "id": "eba1e3e1be87a71d8f22b88a6c02da7e495f5ce53f41f75c699bab80934481b1",
-      "code": "IMPORTS_PRIVATE_API",
-      "from": "bot/src/gm.js",
-      "to": "bot/src/gm-fiction-schema.js",
-      "kind": "static",
-      "specifier": "./gm-fiction-schema.js",
-      "owner": "application",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF05-F04",
-      "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
       "id": "d89ead338927e7eb90ab5723e8005f69b0ffa5abe43f9574100cbc5dbea72408",
       "code": "IMPORTS_PRIVATE_API",
       "from": "bot/src/gm.js",
