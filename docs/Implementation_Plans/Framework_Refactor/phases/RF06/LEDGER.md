@@ -30,3 +30,7 @@ Complete the held RF05-owned boundaries or obtain a separately recorded owner de
 ## Owner-authorized Option B publication dependencies
 
 The RF04 owner-authorized deadline reconciliation assigns 12 existing consumer edges to RF06-F03 because their exact targets are Publication-owned output, outbox, transport or handout modules in the relocation crosswalk. RF06-F03's manifest count is now 191 (179 prior + 12 reassigned); this is assignment evidence, not implementation or phase entry. The source edges remain active and require RF06 publication API adoption and fresh affected-code tests before retirement. No RF06 production source or test changed. The RF06 entry gate remains held until RF03–RF05 interfaces and commit semantics qualify. Exact original/updated records and RF04/RF05/RF06 gate results: `../RF04/DEADLINE-REASSIGNMENT.json`. Release remains NOT AUTHORIZED.
+
+## RF06 persistence inventory checkpoint
+
+At `a9069bbbd75ff0fa0648c50e90812ff59a240ee3`, a read-only inspection of `bot/src/db.js` recorded its 2,436 lines, 13 imports, 411 direct SQL call sites, and the connection/schema, synchronous transaction, repository, embedded domain-orchestration, and durable turn/publication receipt seams. The specific decomposition observations and sequencing rules are in [`PERSISTENCE-BOUNDARY-INVENTORY.md`](PERSISTENCE-BOUNDARY-INVENTORY.md). No source or database was changed or opened, so no tests or syntax checks were run. RF06 runtime work remains held by its existing entry gate; this inventory does not qualify an RF06 implementation feature or release.
