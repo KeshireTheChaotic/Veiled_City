@@ -1,0 +1,81 @@
+{
+  "run_id": "RF04-F04-C07-final",
+  "base_sha": "dd9912ecd2dc49812bab727d1e103b4141d269a4",
+  "start": "2026-10-25T03:12:54-05:00",
+  "end": "2026-10-25T08:16:43.177Z",
+  "scope": "Owner-private opening entry context extraction, audience and source acceptance",
+  "hashes": {
+    "bot/src/frameworks/session/opening-entry-context.js": "5bbc6517ff469b05fff2fc5195675a47286691b06f78ca9b3c33e1e6c5a1fb0c",
+    "bot/src/frameworks/session/public.js": "92668978c02eff2ed755146c8255501f8b7bfaa0a123206d5407c7fe3da7097b",
+    "bot/src/opening-entry-context.js": "c43a634d15c73838fa1ad1ba1a4d94efb277cbb60f8c0587ab0328e86a2c8033",
+    "bot/tests/ai-gm-2026-10/rf04-f04-c07.test.mjs": "80f04c84fa28bfcd0b050795a27f93a24d23ec0409d3cb607b7c3cbee53d4730",
+    "docs/Implementation_Plans/Framework_Refactor/RF01/TRANSITIONS.json": "d2207637e088d3f2ef35d5a2931635ea8b026f3a3f6a725c30681f7a45c27091",
+    "docs/Implementation_Plans/Framework_Refactor/phases/RF04/F04_C07_RETIRED.json": "b4ca561d794d13280efa1dc2b3ac2e6c5dd388e74086701e39b87a0f52f12346",
+    "docs/Implementation_Plans/Framework_Refactor/features/RF04-F04/C07-SCOPE.md": "bc52118bae97cc292fb1383f2eb5d8764c27859df1ccdd73a8b70b9aa654bd1d",
+    "docs/Implementation_Plans/Framework_Refactor/features/RF04-F04/C07-LEDGER.md": "1c2e50e8c8680b813bb9619d179fd282ff1c6f7705b15a4125118ed028453230",
+    "docs/Implementation_Plans/Framework_Refactor/phases/RF04/LEDGER.md": "ecc0b0b647480391b659f962c2462447005aebb113f0b458081f36d50bc3ce24"
+  },
+  "syntax": {
+    "exit": 0,
+    "files": [
+      "bot/src/frameworks/session/opening-entry-context.js",
+      "bot/src/frameworks/session/public.js",
+      "bot/src/opening-entry-context.js",
+      "bot/tests/ai-gm-2026-10/rf04-f04-c07.test.mjs"
+    ]
+  },
+  "tests": [
+    {
+      "command": "node --test bot/tests/ai-gm-2026-10/rf04-f04-c07.test.mjs",
+      "exit": 1,
+      "tests": 9,
+      "pass": 5,
+      "fail": 4,
+      "duration_ms": 2893.9614,
+      "disposition": "Assertion-contract mismatch; retained, repaired, and targeted final batch passed."
+    },
+    {
+      "command": "node --test bot/tests/ai-gm-2026-10/rf04-f04-c07.test.mjs",
+      "exit": 0,
+      "tests": 9,
+      "pass": 9,
+      "fail": 0,
+      "duration_ms": 3428.0227,
+      "qualifies": true
+    }
+  ],
+  "non_test_attempts": [
+    {
+      "kind": "test_module_load",
+      "exit": 1,
+      "tests_executed": 0,
+      "reason": "Missing exports from Session public entrypoint; fixed by composing existing owner readers directly."
+    },
+    {
+      "kind": "syntax_check",
+      "exit": 1,
+      "tests_executed": 0,
+      "reason": "await in non-async test declaration; corrected before frozen final batch."
+    }
+  ],
+  "architecture": {
+    "command": "node tooling/architecture/check-boundaries.mjs --ratchet --phase RF04",
+    "exit": 0,
+    "source_modules": 561,
+    "unowned": 0,
+    "import_occurrences": 2711,
+    "cycle_components": 1,
+    "largest_cycle": 181,
+    "raw_violation_occurrences": 2442,
+    "accepted_legacy_occurrences": 2442,
+    "active_violation_groups": 0,
+    "transition_errors": 0
+  },
+  "cost": {
+    "live_provider_calls": 0,
+    "model_tokens": 0,
+    "provider_cost_usd": 0,
+    "codex_usage": "UNMEASURED"
+  },
+  "rollback": "Remove Session factory/public export, restore original wrapper and exact three archived RF01 transition records; remove C07 test and ledgers/run records."
+}

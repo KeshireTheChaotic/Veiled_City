@@ -1,0 +1,26 @@
+{
+  "base_sha": "dd9912ecd2dc49812bab727d1e103b4141d269a4",
+  "original_source_sha256": "727811326d1e30db8e0e371af43fb74c1cbf606fbe586d27fdafecd01caa2c12",
+  "declarations": [
+    {
+      "name": "display",
+      "sha256": "d8e9b4873a2cc3b8aa15a9be53ae2aaad1d63bef270e19542f7ad41b92d01153"
+    },
+    {
+      "name": "fail",
+      "sha256": "5ea77e19f8bafdb0586be90530c54c5d6b27715f178b4d84a4f8e875cd2d8b05"
+    },
+    {
+      "name": "openingEntryProjection",
+      "sha256": "47772295869e26abbc60869800a9c8a66fefd6cfcbff2c1ecfdaf2e66cdad0e0"
+    },
+    {
+      "name": "openingEntryNarrativeCandidate",
+      "sha256": "15894187fa0049c26e062346d5963f266810ed157e5e67927f24f01b79b02399"
+    }
+  ],
+  "exports": [
+    "openingEntryProjection",
+    "openingEntryNarrativeCandidate"
+  ]
+}

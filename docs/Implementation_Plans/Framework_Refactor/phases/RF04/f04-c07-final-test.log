@@ -1,0 +1,17 @@
+✔ private entry narrative candidate binds only the checked-in owner and native source, not arrival or PC choice (202.8834ms)
+✔ actual creative authoring packet includes only Ada source material and native authorizer accepts a private scene unit (272.4392ms)
+✔ writer returning party-visible text for a private owner scope is rejected before an accepted narrative draft (205.3761ms)
+✔ changed owner-private narrative source invalidates an earlier authoring scope (206.2701ms)
+✔ absent owner or current role cannot create a private authoring source for another player (469.6563ms)
+✔ changed owner material and Director scene make the earlier private scope stale with no automatic position (400.4414ms)
+✔ no accepted creative scene returns honest bounded orientation and does not claim an authored hook or delivered narrative (216.8128ms)
+✔ owner source replay keeps original immutable scope and another owner cannot receive its private material (190.9799ms)
+✔ native position is not inferred from attendance after context and output acceptance (262.2733ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3428.0227
