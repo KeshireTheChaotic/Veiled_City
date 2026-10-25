@@ -1,0 +1,12 @@
+✔ provider feedback sends typing and reports one completed progress notice through its injected callback (2.3717ms)
+✔ disabled progress never schedules or invokes the application callback (0.4722ms)
+✔ enabled progress remains safe when the optional callback is omitted (0.3775ms)
+✔ stopping before delayed progress prevents a stale notice and trace callback (0.4639ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 65.9672

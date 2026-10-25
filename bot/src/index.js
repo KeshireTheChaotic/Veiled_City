@@ -35,7 +35,7 @@ import { beginTurnAttempt, advanceTurnAttempt, turnFailureNotice, isTurnReplay }
 import { validateChannelRouting, shouldSendInactiveSessionNotice } from "./routing-diagnostics.js";
 import { operationalMetrics, measureStage,measureNative } from "./operational-metrics.js";
 import { resumeAutonomousPvpFear, setPvpFearContentIndex } from "./pvp-fear-moves.js";
-import {beginGenerationFeedback} from './generation-feedback.js';
+import {beginGenerationFeedback} from './frameworks/ai-provider/public.js';
 import {turnLatency} from './turn-latency.js';
 import {enqueueTrackedTurn} from './tracked-turn.js';
 import {currentTurnTrace} from './turn-trace-context.js';
@@ -550,7 +550,8 @@ async function processTurnEnvelope(message,directMention,audience,processor){
     operationalMetrics.record('native_replay',{guildId:message.guild.id});return attempt;
   }
   turnLatency.bind(message.guild.id,attempt.turn_id,currentTurnTrace());
-  const stopFeedback=beginGenerationFeedback(message,config);
+  const trace=currentTurnTrace();
+  const stopFeedback=beginGenerationFeedback(message,config,{onProgress:()=>trace?.progress()});
   try{
     await measureStage(operationalMetrics,`${audience}_turn_envelope`,()=>processor(message,directMention,attempt),{guildId:message.guild.id});
     const after=db.getTurnAttempt(attempt.turn_id);

@@ -718,17 +718,6 @@
       "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
     },
     {
-      "id": "39b4acd9e7b7c96777f5881d61185b05b5a3eca73cf22da6879122879580e513",
-      "code": "LEGACY_MODULE_LOCATION",
-      "from": "bot/src/generation-feedback.js",
-      "owner": "ai-provider",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF05-F01",
-      "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
-    },
-    {
       "id": "c6ca4edf58f7074699f617379cc0eb74df7179cc71d6fbc7872aa48918b34b4a",
       "code": "LEGACY_MODULE_LOCATION",
       "from": "bot/src/gm-action-capability.js",
@@ -6854,20 +6843,6 @@
       "owner": "narrative",
       "max_occurrences": 1,
       "remove_in_feature": "RF05-F03",
-      "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
-      "id": "3716dce6b3b9d08aaf0a8d6e20164122a5394e2d5830baf2e8e23a78f98331af",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/generation-feedback.js",
-      "to": "bot/src/turn-trace-context.js",
-      "kind": "static",
-      "specifier": "./turn-trace-context.js",
-      "owner": "ai-provider",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF05-F01",
       "expires_after": "RF05",
       "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."

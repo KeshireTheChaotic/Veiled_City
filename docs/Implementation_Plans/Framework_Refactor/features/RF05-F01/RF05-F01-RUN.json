@@ -1,0 +1,72 @@
+{
+  "feature": "RF05-F01",
+  "status": "COMPLETE_FOR_SCOPED_BOUNDARY",
+  "base_head": "72479cbf51c6abe836e57335d3de5284c969e0e1",
+  "branch": "codex/clean-ai-gm-2026-10",
+  "changed_modules": [
+    "bot/src/index.js",
+    "bot/src/frameworks/ai-provider/generation-feedback.js",
+    "bot/src/frameworks/ai-provider/public.js",
+    "bot/src/generation-feedback.js (deleted)"
+  ],
+  "ownership": {
+    "provider_feedback": "ai-provider",
+    "operational_trace": "application; injected through onProgress",
+    "cross_framework_pair": null
+  },
+  "tests": {
+    "path": "bot/tests/ai-gm-2026-10/rf05-f01-generation-feedback.test.mjs",
+    "launch_count": 1,
+    "exit_code": 0,
+    "passed": 4,
+    "failed": 0,
+    "duration_ms": 65.9672,
+    "terminal_summary": "phases/RF05/rf05-f01-test.log",
+    "sha256": "BA34E0DB4FCAC3230C4C3463C16B2326C330E02F32F2A5E595AE1CED0E7CB457"
+  },
+  "syntax": {
+    "files_checked": [
+      "bot/src/index.js",
+      "bot/src/frameworks/ai-provider/generation-feedback.js",
+      "bot/src/frameworks/ai-provider/public.js",
+      "bot/tests/ai-gm-2026-10/rf05-f01-generation-feedback.test.mjs"
+    ],
+    "all_exit_codes": [0, 0, 0, 0],
+    "log": "phases/RF05/rf05-f01-syntax.log"
+  },
+  "architecture": {
+    "command": "node tooling/architecture/check-boundaries.mjs --ratchet --phase RF05",
+    "exit_code": 1,
+    "source_modules": 567,
+    "unowned": 0,
+    "imports": 2722,
+    "largest_cycle": 181,
+    "raw_historical_occurrences": 2440,
+    "accepted_legacy_occurrences": 1467,
+    "active_violation_groups": 968,
+    "transition_errors": 968,
+    "result": "FAIL; prior RF04 transition obligations expired at RF05 while RF04 remains incomplete; not a passing phase gate",
+    "log": "phases/RF05/rf05-f01-architecture.log"
+  },
+  "removed_transition_ids": [
+    "39b4acd9e7b7c96777f5881d61185b05b5a3eca73cf22da6879122879580e513",
+    "3716dce6b3b9d08aaf0a8d6e20164122a5394e2d5830baf2e8e23a78f98331af"
+  ],
+  "source_sha256": {
+    "bot/src/index.js": "F35E396E57EE1A22F553474CB7255BD572B84BFDA3308E7F074375BCF3EE06D2",
+    "bot/src/frameworks/ai-provider/generation-feedback.js": "36F798FD0D08C5E1DD851D0B60A4E8ED43D0E423C1ED9B7E53BCD19DB217FBBF",
+    "bot/src/frameworks/ai-provider/public.js": "6D0099C742363623862D035E83338F04408F4F1C36E8B68D5A5A5DC3F6ACE07B",
+    "docs/Implementation_Plans/Framework_Refactor/RF01/TRANSITIONS.json": "E5997ECA4A0E895FDD3CD052E1A9D642D9E7A963723BC70E64A11690114ACA00"
+  },
+  "test_log_sha256": "6FF3C257E1021C9B31641E9E23580526EB2BB5AC5AB216782DC7B1102B7AFABF",
+  "syntax_log_sha256": "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+  "architecture_log_sha256": "A0D1B9F060BD6E428DCF7DFB9D5CE28F1BB38CD5B0BBC6C8243172FC227DA6DD",
+  "cost": {
+    "provider_calls": 0,
+    "provider_tokens": 0,
+    "provider_usd": 0,
+    "codex_usage": "UNMEASURED"
+  },
+  "release": "NOT_AUTHORIZED",
+  "rollback": "Revert only the RF05-F01 commit; preserve all pre-existing user edits and unrelated RF04 logs."
+}
