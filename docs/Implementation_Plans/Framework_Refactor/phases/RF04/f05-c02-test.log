@@ -1,0 +1,64 @@
+TAP version 13
+# Subtest: actual receipt producer fails closed before composition and rolls native registration audit back
+ok 1 - actual receipt producer fails closed before composition and rolls native registration audit back
+  ---
+  duration_ms: 177.132
+  type: 'test'
+  ...
+# Subtest: Session-owned consumer forwards identical arguments results and thrown errors, forbidding missing or replaced issuer
+ok 2 - Session-owned consumer forwards identical arguments results and thrown errors, forbidding missing or replaced issuer
+  ---
+  duration_ms: 0.2075
+  type: 'test'
+  ...
+# Subtest: inert application bootstrap binds the original World issuer exactly once and real registration and carry use native provenance
+ok 3 - inert application bootstrap binds the original World issuer exactly once and real registration and carry use native provenance
+  ---
+  duration_ms: 183.6383
+  type: 'test'
+  ...
+# Subtest: native World validation remains in its provider and rejects forged mutation ancestry and private disclosure promotion
+ok 4 - native World validation remains in its provider and rejects forged mutation ancestry and private disclosure promotion
+  ---
+  duration_ms: 173.1066
+  type: 'test'
+  ...
+# Subtest: actual initial setup producer uses real World issuance for owner-private confirmation and preserves other character and all resources
+ok 5 - actual initial setup producer uses real World issuance for owner-private confirmation and preserves other character and all resources
+  ---
+  duration_ms: 191.8364
+  type: 'test'
+  ...
+# Subtest: real World event audit failure rolls Session carry and setup effects back without erasing the prior receipt
+ok 6 - real World event audit failure rolls Session carry and setup effects back without erasing the prior receipt
+  ---
+  duration_ms: 184.1671
+  type: 'test'
+  ...
+# Subtest: stale source and changed owner role fail through actual consumers while prior immutable receipts remain
+ok 7 - stale source and changed owner role fail through actual consumers while prior immutable receipts remain
+  ---
+  duration_ms: 200.7595
+  type: 'test'
+  ...
+# Subtest: saved carry acknowledgement replays in a fresh process without issuer composition and never reapplies a later owner assignment
+ok 8 - saved carry acknowledgement replays in a fresh process without issuer composition and never reapplies a later owner assignment
+  ---
+  duration_ms: 655.3924
+  type: 'test'
+  ...
+# Subtest: bootstrap and bridge source have exact two public API owners and both real Session consumers removed direct World imports
+ok 9 - bootstrap and bridge source have exact two public API owners and both real Session consumers removed direct World imports
+  ---
+  duration_ms: 1.0344
+  type: 'test'
+  ...
+1..9
+# tests 9
+# suites 0
+# pass 9
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2656.069

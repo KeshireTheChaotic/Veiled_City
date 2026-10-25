@@ -1,0 +1,103 @@
+TAP version 13
+# Subtest: pre-start registration creates a native mutation-backed GM receipt without role, scene, placement or consent
+ok 1 - pre-start registration creates a native mutation-backed GM receipt without role, scene, placement or consent
+  ---
+  duration_ms: 175.6338
+  type: 'test'
+  ...
+# Subtest: duplicate registration after reopen preserves original receipt and switching owned character supersedes only that source
+not ok 2 - duplicate registration after reopen preserves original receipt and switching owned character supersedes only that source
+  ---
+  duration_ms: 187.6979
+  type: 'test'
+  location: 'D:\\Library\\Development\\Veiled_City\\bot\\tests\\ai-gm-2026-10\\rf04-f04-c04.test.mjs:21:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + undefined
+    - 'attendance-registration:switch'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'attendance-registration:switch'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf04-f04-c04.test.mjs:22:763)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+  ...
+# Subtest: wrong owner retired character invalid interaction and active session cannot register
+ok 3 - wrong owner retired character invalid interaction and active session cannot register
+  ---
+  duration_ms: 177.4114
+  type: 'test'
+  ...
+# Subtest: carry establishes native attendance and owner role only; historical acknowledgement never reapplies control across a second connection
+ok 4 - carry establishes native attendance and owner role only; historical acknowledgement never reapplies control across a second connection
+  ---
+  duration_ms: 193.1579
+  type: 'test'
+  ...
+# Subtest: carry isolates retracted source and changed owner status as local holds while another valid registration succeeds
+ok 5 - carry isolates retracted source and changed owner status as local holds while another valid registration succeeds
+  ---
+  duration_ms: 186.6146
+  type: 'test'
+  ...
+# Subtest: forged binding or missing native mutation never becomes an assigned role
+ok 6 - forged binding or missing native mutation never becomes an assigned role
+  ---
+  duration_ms: 368.0688
+  type: 'test'
+  ...
+# Subtest: carry native audit failure rolls assigned attendance registration and source back then one retry succeeds
+ok 7 - carry native audit failure rolls assigned attendance registration and source back then one retry succeeds
+  ---
+  duration_ms: 188.4025
+  type: 'test'
+  ...
+# Subtest: entry opportunity needs owner attendance and its native receipt grants neither execution nor publication
+ok 8 - entry opportunity needs owner attendance and its native receipt grants neither execution nor publication
+  ---
+  duration_ms: 231.9472
+  type: 'test'
+  ...
+# Subtest: entry replay after database reopen proves original native source and stale control revokes only that opportunity
+ok 9 - entry replay after database reopen proves original native source and stale control revokes only that opportunity
+  ---
+  duration_ms: 201.0463
+  type: 'test'
+  ...
+# Subtest: entry opportunity rejects a retracted source, edited authority bit or wrong owner without choosing a fictional outcome
+ok 10 - entry opportunity rejects a retracted source, edited authority bit or wrong owner without choosing a fictional outcome
+  ---
+  duration_ms: 186.6476
+  type: 'test'
+  ...
+# Subtest: failed native entry event audit leaves no partial opportunity or source and original source reader reaches extracted receipts
+ok 11 - failed native entry event audit leaves no partial opportunity or source and original source reader reaches extracted receipts
+  ---
+  duration_ms: 192.5259
+  type: 'test'
+  ...
+# Subtest: prior session carry cannot be invoked for a later session and empty session carry does not manufacture attendees
+ok 12 - prior session carry cannot be invoked for a later session and empty session carry does not manufacture attendees
+  ---
+  duration_ms: 1270.7977
+  type: 'test'
+  ...
+1..12
+# tests 12
+# suites 0
+# pass 11
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 4045.5211

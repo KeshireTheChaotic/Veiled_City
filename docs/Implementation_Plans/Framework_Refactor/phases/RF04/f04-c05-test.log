@@ -1,0 +1,82 @@
+TAP version 13
+# Subtest: owner source projection excludes nested contradictory privacy labels and retains exact source hash and player narrative
+ok 1 - owner source projection excludes nested contradictory privacy labels and retains exact source hash and player narrative
+  ---
+  duration_ms: 192.1899
+  type: 'test'
+  ...
+# Subtest: private planning retains legitimate GM hooks and independently native NPC faction agenda without committing any world effect
+ok 2 - private planning retains legitimate GM hooks and independently native NPC faction agenda without committing any world effect
+  ---
+  duration_ms: 202.1303
+  type: 'test'
+  ...
+# Subtest: plan certification requires one actual owner entry each and cannot select another character source
+ok 3 - plan certification requires one actual owner entry each and cannot select another character source
+  ---
+  duration_ms: 208.2641
+  type: 'test'
+  ...
+# Subtest: source fingerprint detects character changes during planning and saved freshness remains honest across restart
+ok 4 - source fingerprint detects character changes during planning and saved freshness remains honest across restart
+  ---
+  duration_ms: 215.8735
+  type: 'test'
+  ...
+# Subtest: certified public throughline is rebuilt from the current entitled cue, never planner prose or owner-private hooks
+ok 5 - certified public throughline is rebuilt from the current entitled cue, never planner prose or owner-private hooks
+  ---
+  duration_ms: 188.5393
+  type: 'test'
+  ...
+# Subtest: public selection rejects stale unknown private or execution-authorized cue instead of laundering source references
+ok 6 - public selection rejects stale unknown private or execution-authorized cue instead of laundering source references
+  ---
+  duration_ms: 200.052
+  type: 'test'
+  ...
+# Subtest: private writer brief receives only current owner sources and never the other private cue or GM planner agenda
+ok 7 - private writer brief receives only current owner sources and never the other private cue or GM planner agenda
+  ---
+  duration_ms: 200.418
+  type: 'test'
+  ...
+# Subtest: changed owner material revokes saved hook references and absent or reassigned owner cannot project a private brief
+ok 8 - changed owner material revokes saved hook references and absent or reassigned owner cannot project a private brief
+  ---
+  duration_ms: 205.0783
+  type: 'test'
+  ...
+# Subtest: no valid beat preserves creative nonbinding camera direction without fabricating a shared PC location
+ok 9 - no valid beat preserves creative nonbinding camera direction without fabricating a shared PC location
+  ---
+  duration_ms: 194.1334
+  type: 'test'
+  ...
+# Subtest: existing party resume keeps independent continuity and historical private renderer remains explicit material rather than new outcome
+ok 10 - existing party resume keeps independent continuity and historical private renderer remains explicit material rather than new outcome
+  ---
+  duration_ms: 199.5896
+  type: 'test'
+  ...
+# Subtest: unsupported owner material remains unverified rather than converting GM-only proposals into player sources
+ok 11 - unsupported owner material remains unverified rather than converting GM-only proposals into player sources
+  ---
+  duration_ms: 196.4139
+  type: 'test'
+  ...
+# Subtest: actual original source path has no verified Director cue and preserves hash/error identities and audience-safe brief
+ok 12 - actual original source path has no verified Director cue and preserves hash/error identities and audience-safe brief
+  ---
+  duration_ms: 200.6769
+  type: 'test'
+  ...
+1..12
+# tests 12
+# suites 0
+# pass 12
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2929.3929

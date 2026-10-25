@@ -1,5 +1,21 @@
 # RF04 ledger
 
+## Evidence corrections, 2026-10-25
+
+The repaired final files for F02-C03, F02-C04, F03-C01, F03-C03, F03-C04, F03-C15 and F04-C04 were run together after fixture repair: **83/83 passed**, exit 0, TAP 24,534.2691 ms. The first complete run was 82/83; the only failure was F04-C04's missing test setup for the existing Session/World event composition. Its fixture now initializes that composition; no production code changed. `RF04_REPAIRED_WHOLE_FILES_RUN.json` records exact test hashes, times, terminal hashes, the failed run and final run. The final TAP log is `../../../../bot/tests/ai-gm-2026-10/rf04-repaired-whole-files-final-20261025.log`.
+
+The following 29 diagnostic logs are now committed with this evidence, covering F04 C02-C07 and F05-C02. These were previously untracked; their content is retained unchanged:
+
+- F04-C02: `f04-c02-architecture.log`, `f04-c02-repair-architecture.log`, `f04-c02-repair-syntax.log`, `f04-c02-repair-test.log`, `f04-c02-syntax.log`, `f04-c02-test.log`.
+- F04-C03: `f04-c03-architecture.log`, `f04-c03-syntax.log`, `f04-c03-test.log`.
+- F04-C04: `f04-c04-architecture.log`, `f04-c04-repair-syntax.log`, `f04-c04-repair-test.log`, `f04-c04-syntax.log`, `f04-c04-test.log`.
+- F04-C05: `f04-c05-architecture.log`, `f04-c05-syntax.log`, `f04-c05-test.log`.
+- F04-C06: `f04-c06-architecture.log`, `f04-c06-final-architecture.log`, `f04-c06-syntax.log`, `f04-c06-test.log`.
+- F04-C07: `f04-c07-architecture.log`, `f04-c07-repair-test.log`, `f04-c07-syntax.log`, `f04-c07-test.log`.
+- F05-C02: `f05-c02-architecture.log`, `f05-c02-final-architecture.log`, `f05-c02-syntax.log`, `f05-c02-test.log`.
+
+These evidence corrections do not complete RF04 switch-over work or qualify live provider, Discord, production recovery, or broader application behavior. Existing F05-C03 hold and remaining phase work remain open; release is not authorized.
+
 ACTIVE — actual start401389284df98c95184638816ed568ca8ed45229. RF03 scoped prerequisite met; old references are not reset targets. Intake matrix records 86current world/NPC/knowledge/session modules and exact source/reverse edges/debt/state candidates. Current497sources2557importsSCC1822484acceptedlegacy,zero active/unowned/integrity. Full isolation/runtime not qualified. Source implementation starts with F01Director cadence, preserving existing structured post-turn review/presentation and session roster policy as separately accountable responsibilities. Owner authorizes later RF phases serially; no subagents, remote actions, services or production data. Provider0/$0;Codex UNMEASURED;RELEASE NOT AUTHORIZED.
 
 ## F01 C01 World Director cadence

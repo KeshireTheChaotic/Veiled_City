@@ -1,0 +1,102 @@
+✔ private entry narrative candidate binds only the checked-in owner and native source, not arrival or PC choice (208.0832ms)
+✖ actual creative authoring packet includes only Ada source material and native authorizer accepts a private scene unit (212.2175ms)
+✖ writer returning party-visible text for a private owner scope is rejected before an accepted narrative draft (215.4232ms)
+✔ changed owner-private narrative source invalidates an earlier authoring scope (207.8801ms)
+✖ absent owner or current role cannot create a private authoring source for another player (201.1508ms)
+✖ changed owner material and Director scene make the earlier private scope stale with no automatic position (203.448ms)
+✔ no accepted creative scene returns honest bounded orientation and does not claim an authored hook or delivered narrative (228.4999ms)
+✔ owner source replay keeps original immutable scope and another owner cannot receive its private material (202.2765ms)
+✔ native position is not inferred from attendance after context and output acceptance (256.8229ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 5
+ℹ fail 4
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2893.9614
+
+✖ failing tests:
+
+test at bot\tests\ai-gm-2026-10\rf04-f04-c07.test.mjs:26:1
+✖ actual creative authoring packet includes only Ada source material and native authorizer accepts a private scene unit (212.2175ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(serialized.includes('bell-maker sing underwater'))
+  
+      at TestContext.<anonymous> (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf04-f04-c07.test.mjs:27:475)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at bot\tests\ai-gm-2026-10\rf04-f04-c07.test.mjs:30:1
+✖ writer returning party-visible text for a private owner scope is rejected before an accepted narrative draft (215.4232ms)
+  AssertionError [ERR_ASSERTION]: Missing expected rejection.
+      at async TestContext.<anonymous> (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf04-f04-c07.test.mjs:31:118)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at bot\tests\ai-gm-2026-10\rf04-f04-c07.test.mjs:38:1
+✖ absent owner or current role cannot create a private authoring source for another player (201.1508ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+  + Comparison {}
+  - Comparison {
+  -   code: 'SESSION_OPENING_ATTENDANCE'
+  - }
+  
+      at TestContext.<anonymous> (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf04-f04-c07.test.mjs:39:275)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: Controller attendance required.
+        at inspectPrincipal (file:///D:/Library/Development/Veiled_City/bot/src/frameworks/session/conversation-principal.js:20:11)
+        at conversationPrincipal (file:///D:/Library/Development/Veiled_City/bot/src/frameworks/session/conversation-principal.js:4:10)
+        at Object.inspectOpeningEntryOpportunity (file:///D:/Library/Development/Veiled_City/bot/src/frameworks/session/opening-attendance.js:97:19)
+        at inspectOpeningEntryOpportunity (file:///D:/Library/Development/Veiled_City/bot/src/session-opening-attendance.js:6:75)
+        at inspectOpeningEntryOpportunity (file:///D:/Library/Development/Veiled_City/bot/src/opening-entry-context.js:6:82)
+        at Object.openingEntryProjection (file:///D:/Library/Development/Veiled_City/bot/src/frameworks/session/opening-entry-context.js:9:21)
+        at openingEntryProjection (file:///D:/Library/Development/Veiled_City/bot/src/opening-entry-context.js:7:62)
+        at assert.throws.code (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf04-f04-c07.test.mjs:39:286)
+        at getActual (node:assert:611:5)
+        at strict.throws (node:assert:759:24),
+    expected: { code: 'SESSION_OPENING_ATTENDANCE' },
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at bot\tests\ai-gm-2026-10\rf04-f04-c07.test.mjs:42:1
+✖ changed owner material and Director scene make the earlier private scope stale with no automatic position (203.448ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf04-f04-c07.test.mjs:43:216)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: { code: 'SCENE_FICTION' },
+    operator: 'throws',
+    diff: 'simple'
+  }

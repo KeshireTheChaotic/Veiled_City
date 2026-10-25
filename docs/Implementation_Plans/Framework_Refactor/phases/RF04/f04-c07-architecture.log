@@ -1,0 +1,38 @@
+{
+  "mode": "ratchet",
+  "phase": "RF04",
+  "sourceModules": 561,
+  "unowned": 0,
+  "importOccurrences": 2709,
+  "internalImportOccurrences": 2533,
+  "cycleComponents": 1,
+  "largestCycle": 180,
+  "rawViolationOccurrences": 2441,
+  "acceptedLegacyOccurrences": 2438,
+  "activeViolationGroups": 3,
+  "transitionErrors": 7,
+  "pass": false,
+  "firstErrors": [
+    {
+      "code": "MISSING_NAMED_EXPORT",
+      "from": "bot/src/opening-entry-context.js",
+      "to": "bot/src/frameworks/session/public.js",
+      "owner": "session",
+      "line": 3
+    },
+    {
+      "code": "MISSING_NAMED_EXPORT",
+      "from": "bot/src/opening-entry-context.js",
+      "to": "bot/src/frameworks/session/public.js",
+      "owner": "session",
+      "line": 3
+    },
+    {
+      "code": "MISSING_NAMED_EXPORT",
+      "from": "bot/src/opening-entry-context.js",
+      "to": "bot/src/frameworks/session/public.js",
+      "owner": "session",
+      "line": 3
+    }
+  ]
+}

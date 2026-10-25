@@ -1,0 +1,82 @@
+TAP version 13
+# Subtest: zero-attendee authenticated opening keeps immutable native origin, queues once and never asserts PC placement or delivery
+ok 1 - zero-attendee authenticated opening keeps immutable native origin, queues once and never asserts PC placement or delivery
+  ---
+  duration_ms: 194.2291
+  type: 'test'
+  ...
+# Subtest: native scheduling rejects absent GM authorization and manual mode remains held without consuming attempt
+ok 2 - native scheduling rejects absent GM authorization and manual mode remains held without consuming attempt
+  ---
+  duration_ms: 351.3202
+  type: 'test'
+  ...
+# Subtest: one source-bound native initial attempt preserves original hash bytes and cannot be duplicated
+ok 3 - one source-bound native initial attempt preserves original hash bytes and cannot be duplicated
+  ---
+  duration_ms: 178.1687
+  type: 'test'
+  ...
+# Subtest: check-in during uncommitted planning requires exactly one native epoch and retains original attempt and historical plan
+ok 4 - check-in during uncommitted planning requires exactly one native epoch and retains original attempt and historical plan
+  ---
+  duration_ms: 208.7202
+  type: 'test'
+  ...
+# Subtest: real two-worker two-connection concurrent epoch claims have one winner, stale loser and one durable authenticated source
+ok 5 - real two-worker two-connection concurrent epoch claims have one winner, stale loser and one durable authenticated source
+  ---
+  duration_ms: 1141.8528
+  type: 'test'
+  ...
+# Subtest: committed or uncertain turn state blocks superseding even without a Discord acknowledgement
+ok 6 - committed or uncertain turn state blocks superseding even without a Discord acknowledgement
+  ---
+  duration_ms: 368.0557
+  type: 'test'
+  ...
+# Subtest: queued uncertain and delivered durable outbox rows each defeat no-send proof and their exact receipts are preserved
+ok 7 - queued uncertain and delivered durable outbox rows each defeat no-send proof and their exact receipts are preserved
+  ---
+  duration_ms: 549.4787
+  type: 'test'
+  ...
+# Subtest: Director pause prevents attempt and rebase; completed status is not downgraded or reauthored
+ok 8 - Director pause prevents attempt and rebase; completed status is not downgraded or reauthored
+  ---
+  duration_ms: 183.4299
+  type: 'test'
+  ...
+# Subtest: epoch mutation failure rolls source history plan and status back and exact retry is permitted
+ok 9 - epoch mutation failure rolls source history plan and status back and exact retry is permitted
+  ---
+  duration_ms: 187.4635
+  type: 'test'
+  ...
+# Subtest: saved turn binding pins original attempt and epoch; unrelated turn cannot become a publication proof
+ok 10 - saved turn binding pins original attempt and epoch; unrelated turn cannot become a publication proof
+  ---
+  duration_ms: 194.173
+  type: 'test'
+  ...
+# Subtest: native explicit reviewed refresh issues attempt two with original attempt retained and no automatic attempt three
+ok 11 - native explicit reviewed refresh issues attempt two with original attempt retained and no automatic attempt three
+  ---
+  duration_ms: 200.9276
+  type: 'test'
+  ...
+# Subtest: native origin and attempt tampering are held rather than repaired by silently rewriting immutable source
+ok 12 - native origin and attempt tampering are held rather than repaired by silently rewriting immutable source
+  ---
+  duration_ms: 182.8458
+  type: 'test'
+  ...
+1..12
+# tests 12
+# suites 0
+# pass 12
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 4872.6695

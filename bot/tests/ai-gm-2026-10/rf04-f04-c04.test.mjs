@@ -7,7 +7,9 @@ import {fileURLToPath} from 'node:url';
 import {VeiledDB} from '../../src/db.js';
 import {createOpeningAttendance,conversationPrincipal} from '../../src/frameworks/session/public.js';
 import {indexWorldEvent} from '../../src/frameworks/world/public.js';
+import {initializeSessionWorldEvents} from '../../src/application/composition/public.js';
 import * as original from '../../src/session-opening-attendance.js';
+initializeSessionWorldEvents();
 function foyer(t){
  const folder=mkdtempSync(join(tmpdir(),'rf04-attendance-c04-')),file=join(folder,'attend.sqlite'),schema=fileURLToPath(new URL('../../sql/schema.sql',import.meta.url));let db=new VeiledDB(file,schema);db.ensureCampaign('gathering');for(const u of ['keeper','guest'])db.upsertPlayer('gathering',u,u);const pc=db.createCharacter('gathering','keeper','Rook'),alternate=db.createCharacter('gathering','keeper','Peregrine'),other=db.createCharacter('gathering','guest','Finch'),api=createOpeningAttendance({indexWorldEvent});
  const register=(id='registration-main',name='Rook')=>api.registerOpeningAttendance(db,'gathering','keeper',id,name),start=()=>db.startSession('gathering','A public opening'),entry=(s,id='check-in-main')=>{db.assignCharacter(s.id,'keeper',pc.id);db.setPresence(s.id,'keeper','present');return api.prepareOpeningEntryOpportunity(db,'gathering','keeper',pc.id,id);};

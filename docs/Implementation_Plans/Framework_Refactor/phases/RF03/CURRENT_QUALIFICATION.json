@@ -1402,11 +1402,11 @@
       "gameplay_change": false
     }
   ],
-  "fresh_test_files": 74,
+  "fresh_test_files": 110,
   "changed_syntax_passes": 387,
   "syntax_failures_repaired": 3,
   "test_file_parse_failures_repaired": 3,
-  "evidence_note": "574unique passing cases/633actual case executions/74fresh files/387syntax passes. Targeted immutable batches only, no full union rerun. New witness initial8fail preserved, resolved solely by owner-authorized field-order correction; associated validator case rerun only after validator code changed. Native creation and mechanical receipt-to-writer adoption qualified with actual native pipeline and disclosed repository/source/model mocks. Shared creation batch count5+3once. Native rule/cost/owner/audience/receipt bodies otherwise preserved; provider0calls/0tokens/$0, mock writer2calls, Codex UNMEASURED. Live/release/full-isolation NOT QUALIFIED.",
+  "evidence_note": "574 unique passing cases / 633 actual case executions / 110 distinct RF03 fresh test files / 387 changed-file syntax passes cumulatively. The resumed segment contributed 74 unique cases, 83 executions, 11 files, and 55 syntax checks. Targeted immutable batches only, no full union rerun. New witness initial8fail preserved, resolved solely by owner-authorized field-order correction; associated validator case rerun only after validator code changed. Native creation and mechanical receipt-to-writer adoption qualified with actual native pipeline and disclosed repository/source/model mocks. Shared creation batch count5+3once. Native rule/cost/owner/audience/receipt bodies otherwise preserved; provider0calls/0tokens/$0, mock writer2calls, Codex UNMEASURED. Live/release/full-isolation NOT QUALIFIED.",
   "local_holds": [
     {
       "feature": "RF03-F04",

@@ -1,0 +1,509 @@
+TAP version 13
+# Subtest: strategy proposal preserves a private subjective plan without resolving an action or spending resources
+ok 1 - strategy proposal preserves a private subjective plan without resolving an action or spending resources
+  ---
+  duration_ms: 170.9853
+  type: 'test'
+  ...
+# Subtest: actual World action receipt determines cost and reconciliation once across SQLite restart
+ok 2 - actual World action receipt determines cost and reconciliation once across SQLite restart
+  ---
+  duration_ms: 196.6419
+  type: 'test'
+  ...
+# Subtest: dependent steps submit and reconcile on separate opportunities without skipping native receipts
+ok 3 - dependent steps submit and reconcile on separate opportunities without skipping native receipts
+  ---
+  duration_ms: 197.3941
+  type: 'test'
+  ...
+# Subtest: delayed actual action is cancelled by pause with no resource payment or later automatic replay
+ok 4 - delayed actual action is cancelled by pause with no resource payment or later automatic replay
+  ---
+  duration_ms: 180.6819
+  type: 'test'
+  ...
+# Subtest: pause after actual completion reconciles cost rather than cancelling or charging twice
+ok 5 - pause after actual completion reconciles cost rather than cancelling or charging twice
+  ---
+  duration_ms: 188.2838
+  type: 'test'
+  ...
+# Subtest: existing plan guards reject authority injection, PC targeting, cycles and disclosure substitution before saving
+ok 6 - existing plan guards reject authority injection, PC targeting, cycles and disclosure substitution before saving
+  ---
+  duration_ms: 178.836
+  type: 'test'
+  ...
+# Subtest: missing actor knowledge and native PC identity never become valid strategy ownership
+ok 7 - missing actor knowledge and native PC identity never become valid strategy ownership
+  ---
+  duration_ms: 173.774
+  type: 'test'
+  ...
+# Subtest: stale source blocks new execution durably without changing resources or prior receipt history
+ok 8 - stale source blocks new execution durably without changing resources or prior receipt history
+  ---
+  duration_ms: 193.853
+  type: 'test'
+  ...
+# Subtest: resource shortage and fictional deadline hold only the current plan without synthetic action outcomes
+ok 9 - resource shortage and fictional deadline hold only the current plan without synthetic action outcomes
+  ---
+  duration_ms: 182.2496
+  type: 'test'
+  ...
+# Subtest: audit failure rolls actual action, resource, goal progress and plan submission back before recording blocked state
+ok 10 - audit failure rolls actual action, resource, goal progress and plan submission back before recording blocked state
+  ---
+  duration_ms: 188.0534
+  type: 'test'
+  ...
+# Subtest: replan needs a new acquired source, immutable owner and objective, and never reuses executed step keys
+ok 11 - replan needs a new acquired source, immutable owner and objective, and never reuses executed step keys
+  ---
+  duration_ms: 196.0091
+  type: 'test'
+  ...
+# Subtest: Director pause and disabled strategies leave active plans and resources unchanged
+ok 12 - Director pause and disabled strategies leave active plans and resources unchanged
+  ---
+  duration_ms: 179.6333
+  type: 'test'
+  ...
+# Subtest: serialized provenance cannot manufacture native execution or change the original accepted payload
+ok 13 - serialized provenance cannot manufacture native execution or change the original accepted payload
+  ---
+  duration_ms: 168.6606
+  type: 'test'
+  ...
+# Subtest: saved native-origin plan is held without its current receipt even while legacy strategies are enabled
+ok 14 - saved native-origin plan is held without its current receipt even while legacy strategies are enabled
+  ---
+  duration_ms: 177.0773
+  type: 'test'
+  ...
+# Subtest: actor budget excludes duplicates and forwards only explicit delegated review to the mocked intent boundary
+ok 15 - actor budget excludes duplicates and forwards only explicit delegated review to the mocked intent boundary
+  ---
+  duration_ms: 179.4709
+  type: 'test'
+  ...
+# Subtest: original source exports reach the extracted proposal and lifecycle without a second policy implementation
+ok 16 - original source exports reach the extracted proposal and lifecycle without a second policy implementation
+  ---
+  duration_ms: 171.4707
+  type: 'test'
+  ...
+# Subtest: explicit dossier traits preserve defaults and reject inferred or malformed personality mechanics
+ok 17 - explicit dossier traits preserve defaults and reject inferred or malformed personality mechanics
+  ---
+  duration_ms: 165.1371
+  type: 'test'
+  ...
+# Subtest: trusted dossier import creates actor beliefs, secrets and goals but no global fact, player knowledge or resource grant
+ok 18 - trusted dossier import creates actor beliefs, secrets and goals but no global fact, player knowledge or resource grant
+  ---
+  duration_ms: 167.3368
+  type: 'test'
+  ...
+# Subtest: seed receipts survive reopen and incremental import never overwrites an authored actor or duplicates memories
+ok 19 - seed receipts survive reopen and incremental import never overwrites an authored actor or duplicates memories
+  ---
+  duration_ms: 181.2
+  type: 'test'
+  ...
+# Subtest: failed seed audit rolls back profiles, imported evidence, memories, goals and completion receipt
+ok 20 - failed seed audit rolls back profiles, imported evidence, memories, goals and completion receipt
+  ---
+  duration_ms: 156.2547
+  type: 'test'
+  ...
+# Subtest: unrelated global canon does not seed an NPC awareness or inferred decision score
+ok 21 - unrelated global canon does not seed an NPC awareness or inferred decision score
+  ---
+  duration_ms: 167.0762
+  type: 'test'
+  ...
+# Subtest: retrieval preserves rumor, secret knowledge, historical source status and explicit non-canon authority in GM packet
+ok 22 - retrieval preserves rumor, secret knowledge, historical source status and explicit non-canon authority in GM packet
+  ---
+  duration_ms: 186.7249
+  type: 'test'
+  ...
+# Subtest: recordRecall false is read-only while true reinforces only actually returned memory records
+ok 23 - recordRecall false is read-only while true reinforces only actually returned memory records
+  ---
+  duration_ms: 178.2336
+  type: 'test'
+  ...
+# Subtest: context retirement hides a packet reversibly without deleting goals, beliefs or memory receipts
+ok 24 - context retirement hides a packet reversibly without deleting goals, beliefs or memory receipts
+  ---
+  duration_ms: 171.8389
+  type: 'test'
+  ...
+# Subtest: query relevance selects an actor from memories without treating all world actors as current scene occupants
+ok 25 - query relevance selects an actor from memories without treating all world actors as current scene occupants
+  ---
+  duration_ms: 224.2838
+  type: 'test'
+  ...
+# Subtest: world Director retrieval and proxy ranking remain distinct from actor ownership or world placement
+ok 26 - world Director retrieval and proxy ranking remain distinct from actor ownership or world placement
+  ---
+  duration_ms: 2235.1778
+  type: 'test'
+  ...
+# Subtest: original source provider reaches extracted retrieval and trusted bootstrap using actual source dependencies
+ok 27 - original source provider reaches extracted retrieval and trusted bootstrap using actual source dependencies
+  ---
+  duration_ms: 164.2785
+  type: 'test'
+  ...
+# Subtest: all eight moved leaf implementations retain original bytes and original exported function identities
+ok 28 - all eight moved leaf implementations retain original bytes and original exported function identities
+  ---
+  duration_ms: 7.1139
+  type: 'test'
+  ...
+# Subtest: disclosure predicate partitions public, owner-player, owner-character and GM facts
+ok 29 - disclosure predicate partitions public, owner-player, owner-character and GM facts
+  ---
+  duration_ms: 0.1447
+  type: 'test'
+  ...
+# Subtest: disclosure failure codes contain no private text and require every proposed audience to qualify
+ok 30 - disclosure failure codes contain no private text and require every proposed audience to qualify
+  ---
+  duration_ms: 0.1274
+  type: 'test'
+  ...
+# Subtest: authority index retains source revision hash and full detail pages are independent copies
+ok 31 - authority index retains source revision hash and full detail pages are independent copies
+  ---
+  duration_ms: 0.3445
+  type: 'test'
+  ...
+# Subtest: public identity matcher respects complete Unicode word boundaries and grants no action interpretation
+ok 32 - public identity matcher respects complete Unicode word boundaries and grants no action interpretation
+  ---
+  duration_ms: 0.553
+  type: 'test'
+  ...
+# Subtest: lexical authority inventory rejects general mechanical routing without executing any old workflow
+ok 33 - lexical authority inventory rejects general mechanical routing without executing any old workflow
+  ---
+  duration_ms: 0.5091
+  type: 'test'
+  ...
+# Subtest: directional relationships persist source perspective and milestones without assigning PC feelings
+ok 34 - directional relationships persist source perspective and milestones without assigning PC feelings
+  ---
+  duration_ms: 184.4078
+  type: 'test'
+  ...
+# Subtest: model hypotheses cannot author PC feelings or debt while NPC-owned interpretation remains subjective
+ok 35 - model hypotheses cannot author PC feelings or debt while NPC-owned interpretation remains subjective
+  ---
+  duration_ms: 170.1529
+  type: 'test'
+  ...
+# Subtest: actual database relationship writer reaches moved implementation and rolls directional state back atomically
+ok 36 - actual database relationship writer reaches moved implementation and rolls directional state back atomically
+  ---
+  duration_ms: 168.3189
+  type: 'test'
+  ...
+# Subtest: narrative record locator explicitly pages real SQLite records above the native one-page limit
+ok 37 - narrative record locator explicitly pages real SQLite records above the native one-page limit
+  ---
+  duration_ms: 182.8277
+  type: 'test'
+  ...
+# Subtest: scoped query expansion uses only independently authorized own aliases and rejects changed audience or source
+ok 38 - scoped query expansion uses only independently authorized own aliases and rejects changed audience or source
+  ---
+  duration_ms: 182.7214
+  type: 'test'
+  ...
+# Subtest: scoped fact search keeps party and own facts while excluding GM and unrelated private material
+ok 39 - scoped fact search keeps party and own facts while excluding GM and unrelated private material
+  ---
+  duration_ms: 175.8467
+  type: 'test'
+  ...
+# Subtest: provenance explanation is read-only, explicitly uncertain, private and campaign-scoped
+ok 40 - provenance explanation is read-only, explicitly uncertain, private and campaign-scoped
+  ---
+  duration_ms: 170.9392
+  type: 'test'
+  ...
+# Subtest: three actual Knowledge consumers import their own public API after the leaf move
+ok 41 - three actual Knowledge consumers import their own public API after the leaf move
+  ---
+  duration_ms: 0.6439
+  type: 'test'
+  ...
+# Subtest: evidence schema and legacy type defaults preserve model uncertainty and old record readers
+ok 42 - evidence schema and legacy type defaults preserve model uncertainty and old record readers
+  ---
+  duration_ms: 1.4005
+  type: 'test'
+  ...
+# Subtest: active ancestry follows fact sources and rejects missing, archived, retracted and cyclic references
+ok 43 - active ancestry follows fact sources and rejects missing, archived, retracted and cyclic references
+  ---
+  duration_ms: 186.6458
+  type: 'test'
+  ...
+# Subtest: objective evidence excludes confident testimony and hypotheses while retaining committed observations
+ok 44 - objective evidence excludes confident testimony and hypotheses while retaining committed observations
+  ---
+  duration_ms: 180.8675
+  type: 'test'
+  ...
+# Subtest: untyped draft defaults to a hypothesis and caller cannot mutate the returned source-ref copy
+ok 45 - untyped draft defaults to a hypothesis and caller cannot mutate the returned source-ref copy
+  ---
+  duration_ms: 1777.0549
+  type: 'test'
+  ...
+# Subtest: typed ancestry rejects unknown fields, missing sources, unsupported truth promotion and unsourced testimony
+ok 46 - typed ancestry rejects unknown fields, missing sources, unsupported truth promotion and unsourced testimony
+  ---
+  duration_ms: 155.978
+  type: 'test'
+  ...
+# Subtest: character and player source ancestry qualifies only its acting audience and GM-only source never leaks
+ok 47 - character and player source ancestry qualifies only its acting audience and GM-only source never leaks
+  ---
+  duration_ms: 174.0007
+  type: 'test'
+  ...
+# Subtest: observation draft must exactly repeat committed observation and never infer an outcome
+ok 48 - observation draft must exactly repeat committed observation and never infer an outcome
+  ---
+  duration_ms: 159.3991
+  type: 'test'
+  ...
+# Subtest: explicit GM establishment keeps prior uncertain ancestry, private audience and durable ruling audit after restart
+ok 49 - explicit GM establishment keeps prior uncertain ancestry, private audience and durable ruling audit after restart
+  ---
+  duration_ms: 176.7818
+  type: 'test'
+  ...
+# Subtest: failed establishment audit rolls fact provenance and ruling event back together
+ok 50 - failed establishment audit rolls fact provenance and ruling event back together
+  ---
+  duration_ms: 163.1553
+  type: 'test'
+  ...
+# Subtest: original evidence provider reaches isolated rules and preserves historical fact ancestry without cross-campaign grant
+ok 51 - original evidence provider reaches isolated rules and preserves historical fact ancestry without cross-campaign grant
+  ---
+  duration_ms: 168.7979
+  type: 'test'
+  ...
+# Subtest: parent and audience scoped identity does not grant possession, knowledge or equivalence across places
+ok 52 - parent and audience scoped identity does not grant possession, knowledge or equivalence across places
+  ---
+  duration_ms: 174.9758
+  type: 'test'
+  ...
+# Subtest: rename preserves scoped aliases while attempted parent or audience substitution is rejected
+ok 53 - rename preserves scoped aliases while attempted parent or audience substitution is rejected
+  ---
+  duration_ms: 172.5478
+  type: 'test'
+  ...
+# Subtest: memory revision replay retains the same evidence key without copying a second revision
+ok 54 - memory revision replay retains the same evidence key without copying a second revision
+  ---
+  duration_ms: 179.489
+  type: 'test'
+  ...
+# Subtest: correction and retraction preserve old assertion and source ancestry instead of overwriting history
+ok 55 - correction and retraction preserve old assertion and source ancestry instead of overwriting history
+  ---
+  duration_ms: 174.6418
+  type: 'test'
+  ...
+# Subtest: expiry uses fictional ticks and explicit pending reference protection rather than wall clock
+ok 56 - expiry uses fictional ticks and explicit pending reference protection rather than wall clock
+  ---
+  duration_ms: 177.8367
+  type: 'test'
+  ...
+# Subtest: private source cannot establish a public memory and retracted source stops current retrieval without deletion
+ok 57 - private source cannot establish a public memory and retracted source stops current retrieval without deletion
+  ---
+  duration_ms: 172.7489
+  type: 'test'
+  ...
+# Subtest: native_fact label requires the actual resolved receipt while subjective labels do not confer native effects
+ok 58 - native_fact label requires the actual resolved receipt while subjective labels do not confer native effects
+  ---
+  duration_ms: 171.6732
+  type: 'test'
+  ...
+# Subtest: caller transaction keeps failed identity and revision write atomic without changing primitive contract
+ok 59 - caller transaction keeps failed identity and revision write atomic without changing primitive contract
+  ---
+  duration_ms: 174.4785
+  type: 'test'
+  ...
+# Subtest: V2 World identity requires exact independently checked native unit projection and remains GM-private before delivery
+ok 60 - V2 World identity requires exact independently checked native unit projection and remains GM-private before delivery
+  ---
+  duration_ms: 177.3612
+  type: 'test'
+  ...
+# Subtest: World memory source visibility and immutable unit hash block altered or unsupported V2 projections
+ok 61 - World memory source visibility and immutable unit hash block altered or unsupported V2 projections
+  ---
+  duration_ms: 174.1757
+  type: 'test'
+  ...
+# Subtest: a claimed native disclosure with no durable acknowledgments cannot become public World memory
+ok 62 - a claimed native disclosure with no durable acknowledgments cannot become public World memory
+  ---
+  duration_ms: 176.9056
+  type: 'test'
+  ...
+# Subtest: original memory provider reaches extracted identity retrieval and preserves existing epistemic mapping
+ok 63 - original memory provider reaches extracted identity retrieval and preserves existing epistemic mapping
+  ---
+  duration_ms: 174.4687
+  type: 'test'
+  ...
+# C15_MOCK_PROVIDER_CALLS 9
+# Subtest: actual native writer acceptance is GM-established memory, never audience recall or unplaced PC witness before delivery
+ok 64 - actual native writer acceptance is GM-established memory, never audience recall or unplaced PC witness before delivery
+  ---
+  duration_ms: 1289.8872
+  type: 'test'
+  ...
+# Subtest: actual certified output delivery creates exact durable acknowledgment and idempotent camera recall without another model or send
+ok 65 - actual certified output delivery creates exact durable acknowledgment and idempotent camera recall without another model or send
+  ---
+  duration_ms: 317.0107
+  type: 'test'
+  ...
+# Subtest: mixed acknowledged and uncertain real chunks grant no recall; restart and exact-message reconciliation recover without resend
+ok 66 - mixed acknowledged and uncertain real chunks grant no recall; restart and exact-message reconciliation recover without resend
+  ---
+  duration_ms: 669.9719
+  type: 'test'
+  ...
+# Subtest: distinct actual private writer packets and deliveries stay owner-specific, including omission counts
+ok 67 - distinct actual private writer packets and deliveries stay owner-specific, including omission counts
+  ---
+  duration_ms: 393.4759
+  type: 'test'
+  ...
+# Subtest: source-retracted native output fails closed before mock Discord delivery and preserves existing accepted fiction
+ok 68 - source-retracted native output fails closed before mock Discord delivery and preserves existing accepted fiction
+  ---
+  duration_ms: 254.305
+  type: 'test'
+  ...
+# Subtest: real source-authorized selection ranks before capacity and reports only eligible omitted memories
+ok 69 - real source-authorized selection ranks before capacity and reports only eligible omitted memories
+  ---
+  duration_ms: 500.4019
+  type: 'test'
+  ...
+# Subtest: acknowledgment persistence failure becomes uncertain and exact reconciliation restores memory without a second transport send
+ok 70 - acknowledgment persistence failure becomes uncertain and exact reconciliation restores memory without a second transport send
+  ---
+  duration_ms: 362.7134
+  type: 'test'
+  ...
+# Subtest: queue replay retains publication identities and disabled retention never forges a new memory or acknowledgment
+ok 71 - queue replay retains publication identities and disabled retention never forges a new memory or acknowledgment
+  ---
+  duration_ms: 371.033
+  type: 'test'
+  ...
+# Subtest: pre-start registration creates a native mutation-backed GM receipt without role, scene, placement or consent
+ok 72 - pre-start registration creates a native mutation-backed GM receipt without role, scene, placement or consent
+  ---
+  duration_ms: 796.0849
+  type: 'test'
+  ...
+# Subtest: duplicate registration after reopen preserves original receipt and switching owned character supersedes only that source
+ok 73 - duplicate registration after reopen preserves original receipt and switching owned character supersedes only that source
+  ---
+  duration_ms: 181.8779
+  type: 'test'
+  ...
+# Subtest: wrong owner retired character invalid interaction and active session cannot register
+ok 74 - wrong owner retired character invalid interaction and active session cannot register
+  ---
+  duration_ms: 170.2301
+  type: 'test'
+  ...
+# Subtest: carry establishes native attendance and owner role only; historical acknowledgement never reapplies control across a second connection
+ok 75 - carry establishes native attendance and owner role only; historical acknowledgement never reapplies control across a second connection
+  ---
+  duration_ms: 192.1502
+  type: 'test'
+  ...
+# Subtest: carry isolates retracted source and changed owner status as local holds while another valid registration succeeds
+ok 76 - carry isolates retracted source and changed owner status as local holds while another valid registration succeeds
+  ---
+  duration_ms: 180.3437
+  type: 'test'
+  ...
+# Subtest: forged binding or missing native mutation never becomes an assigned role
+ok 77 - forged binding or missing native mutation never becomes an assigned role
+  ---
+  duration_ms: 356.9532
+  type: 'test'
+  ...
+# Subtest: carry native audit failure rolls assigned attendance registration and source back then one retry succeeds
+ok 78 - carry native audit failure rolls assigned attendance registration and source back then one retry succeeds
+  ---
+  duration_ms: 170.6039
+  type: 'test'
+  ...
+# Subtest: entry opportunity needs owner attendance and its native receipt grants neither execution nor publication
+ok 79 - entry opportunity needs owner attendance and its native receipt grants neither execution nor publication
+  ---
+  duration_ms: 177.3693
+  type: 'test'
+  ...
+# Subtest: entry replay after database reopen proves original native source and stale control revokes only that opportunity
+ok 80 - entry replay after database reopen proves original native source and stale control revokes only that opportunity
+  ---
+  duration_ms: 192.0729
+  type: 'test'
+  ...
+# Subtest: entry opportunity rejects a retracted source, edited authority bit or wrong owner without choosing a fictional outcome
+ok 81 - entry opportunity rejects a retracted source, edited authority bit or wrong owner without choosing a fictional outcome
+  ---
+  duration_ms: 179.6886
+  type: 'test'
+  ...
+# Subtest: failed native entry event audit leaves no partial opportunity or source and original source reader reaches extracted receipts
+ok 82 - failed native entry event audit leaves no partial opportunity or source and original source reader reaches extracted receipts
+  ---
+  duration_ms: 177.913
+  type: 'test'
+  ...
+# Subtest: prior session carry cannot be invoked for a later session and empty session carry does not manufacture attendees
+ok 83 - prior session carry cannot be invoked for a later session and empty session carry does not manufacture attendees
+  ---
+  duration_ms: 177.8525
+  type: 'test'
+  ...
+1..83
+# tests 83
+# suites 0
+# pass 83
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 24534.2691

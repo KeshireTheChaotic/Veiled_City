@@ -1,5 +1,7 @@
 # RF04-F04 C04 evidence
 
+2026-10-25 whole-file verification: the first complete seven-file run found a test-only setup omission: the legacy attendance reader requires the native Session/World event issuer to be composed, as in application startup. The fixture now initializes that existing composition; no production code changed. The final complete batch passed 83/83 (exit 0). See [aggregate run record](../../phases/RF04/RF04_REPAIRED_WHOLE_FILES_RUN.json); both terminal logs are retained.
+
 SCOPED QUALIFIED / actual adapter adoption incomplete.
 
 ## F04 C04 Native operational attendance and entry receipts

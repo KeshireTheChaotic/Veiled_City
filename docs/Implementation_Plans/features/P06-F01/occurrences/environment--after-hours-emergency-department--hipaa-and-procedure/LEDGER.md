@@ -2,7 +2,7 @@
 
 Status: SUPPORTED; TARGETED PASS.
 
-- Branch: codex/clean-ai-gm-2026-10; source implementation commit: `ee614362bd21e8b7ac18cf1a1244f3cf13677d68`; exact tests/hashes: [P06-F16 evidence](../../../../../evidence/P06_F16_TARGETED.json).
+- Branch: codex/clean-ai-gm-2026-10; source implementation commit: `ee61436f5454f18ab0f7d179de9449e6e879ecaa`; exact tests/hashes: [P06-F16 evidence](../../../../../evidence/P06_F16_TARGETED.json).
 - Changed modules: `native-feature-definitions.json`, `native-feature-catalog.js`, `native-environment-capabilities.js`, `native-environment-procedure.js`, `native-environment-scene.js`.
 - Fresh tests: `bot/tests/ai-gm-2026-10/p06-f16.test.mjs`; p06-f01 catalog count; p06-f04 through f15 shared affected tests.
 - Actual result: 44 tests; initial batch 43/44; only p06-f16 reran and passed 4/4. Final unique cases 44/44; changed JS/MJS syntax 6/6; JSON 2/2. Evidence: [P06-F16](../../../evidence/P06_F16_TARGETED.json).

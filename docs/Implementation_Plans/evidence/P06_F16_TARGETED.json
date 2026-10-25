@@ -4,7 +4,7 @@
   "audit_anchor": "9e7bf0687357cf96fbe2ea09a04b3e9d2975f6a3",
   "branch": "codex/clean-ai-gm-2026-10",
   "start_head": "d2ba81c777db7a19af78df61fe751f4359721899",
-  "implementation_commit": "ee614362bd21e8b7ac18cf1a1244f3cf13677d68",
+  "implementation_commit": "ee61436f5454f18ab0f7d179de9449e6e879ecaa",
   "run_id": "p06-f16-20261021-a",
   "initial_batch": {"command": "node --test --test-reporter=tap tests/ai-gm-2026-10/p06-f01.test.mjs tests/ai-gm-2026-10/p06-f04.test.mjs tests/ai-gm-2026-10/p06-f05.test.mjs tests/ai-gm-2026-10/p06-f06.test.mjs tests/ai-gm-2026-10/p06-f07.test.mjs tests/ai-gm-2026-10/p06-f08.test.mjs tests/ai-gm-2026-10/p06-f09.test.mjs tests/ai-gm-2026-10/p06-f10.test.mjs tests/ai-gm-2026-10/p06-f11.test.mjs tests/ai-gm-2026-10/p06-f12.test.mjs tests/ai-gm-2026-10/p06-f13.test.mjs tests/ai-gm-2026-10/p06-f14.test.mjs tests/ai-gm-2026-10/p06-f15.test.mjs tests/ai-gm-2026-10/p06-f16.test.mjs", "exit_code": 1, "tests": 44, "passed": 43, "failed": 1, "cancelled": 0, "skipped": 0, "duration_ms": 1079.8679, "failure": "One new F16 assertion expected the phrase 'is inferred'; the production contract says context creates no permission or access decision. Only the failed assertion was changed."},
   "repair_batch": {"run_id": "p06-f16-20261021-a-repair-1", "command": "node --test --test-reporter=tap tests/ai-gm-2026-10/p06-f16.test.mjs", "exit_code": 0, "tests": 4, "passed": 4, "failed": 0, "cancelled": 0, "skipped": 0, "duration_ms": 318.248},

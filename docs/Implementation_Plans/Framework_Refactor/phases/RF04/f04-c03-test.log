@@ -1,0 +1,88 @@
+TAP version 13
+# Subtest: owner offer is private and nonbinding, with both exact disclosure choices and no placement or mechanical effect
+ok 1 - owner offer is private and nonbinding, with both exact disclosure choices and no placement or mechanical effect
+  ---
+  duration_ms: 191.4402
+  type: 'test'
+  ...
+# Subtest: private confirmation creates original owner-native choice arrival and presence atomically; replay survives database restart
+ok 2 - private confirmation creates original owner-native choice arrival and presence atomically; replay survives database restart
+  ---
+  duration_ms: 200.9434
+  type: 'test'
+  ...
+# Subtest: decline is a durable exact choice and never establishes position, arrival or native action
+ok 3 - decline is a durable exact choice and never establishes position, arrival or native action
+  ---
+  duration_ms: 188.4705
+  type: 'test'
+  ...
+# Subtest: hidden private dangerous and cost-bearing places never become safe initial options or owner diagnostics
+ok 4 - hidden private dangerous and cost-bearing places never become safe initial options or owner diagnostics
+  ---
+  duration_ms: 193.9265
+  type: 'test'
+  ...
+# Subtest: autonomously authored location requires current public source and cannot be retconned into an old offer
+ok 5 - autonomously authored location requires current public source and cannot be retconned into an old offer
+  ---
+  duration_ms: 192.2446
+  type: 'test'
+  ...
+# Subtest: wrong owner, absent role and proxy role cannot make or confirm another player initial position
+ok 6 - wrong owner, absent role and proxy role cannot make or confirm another player initial position
+  ---
+  duration_ms: 188.0227
+  type: 'test'
+  ...
+# Subtest: changed current control revision invalidates the old offer even for the same owner and character
+ok 7 - changed current control revision invalidates the old offer even for the same owner and character
+  ---
+  duration_ms: 191.3373
+  type: 'test'
+  ...
+# Subtest: scene location and assembly revisions reject old choice without erasing pending offer
+ok 8 - scene location and assembly revisions reject old choice without erasing pending offer
+  ---
+  duration_ms: 238.7481
+  type: 'test'
+  ...
+# Subtest: expired or altered offer cannot establish position and genuine provider errors are not hidden as setup unavailability
+ok 9 - expired or altered offer cannot establish position and genuine provider errors are not hidden as setup unavailability
+  ---
+  duration_ms: 239.2806
+  type: 'test'
+  ...
+# Subtest: saved position and historical placement remain distinct diagnostic holds; no setup bypasses an active encounter
+ok 10 - saved position and historical placement remain distinct diagnostic holds; no setup bypasses an active encounter
+  ---
+  duration_ms: 386.6086
+  type: 'test'
+  ...
+# Subtest: native presence audit failure rolls choice event location arrival and confirmation back then allows exact retry
+ok 11 - native presence audit failure rolls choice event location arrival and confirmation back then allows exact retry
+  ---
+  duration_ms: 187.2863
+  type: 'test'
+  ...
+# Subtest: actual native accepted owner declaration sets only initial position and exact private disclosure, with durable declaration replay
+ok 12 - actual native accepted owner declaration sets only initial position and exact private disclosure, with durable declaration replay
+  ---
+  duration_ms: 228.7288
+  type: 'test'
+  ...
+# Subtest: unsupported or cross-owner authored declaration is held and original source reader reaches extracted policy
+ok 13 - unsupported or cross-owner authored declaration is held and original source reader reaches extracted policy
+  ---
+  duration_ms: 197.5441
+  type: 'test'
+  ...
+1..13
+# tests 13
+# suites 0
+# pass 13
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 3321.8493

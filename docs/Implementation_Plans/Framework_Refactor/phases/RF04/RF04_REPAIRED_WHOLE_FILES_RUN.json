@@ -1,0 +1,52 @@
+{
+  "run_id": "RF04_REPAIRED_WHOLE_FILES_20261025",
+  "phase": "RF04",
+  "purpose": "Run every case in each of the seven repaired final test files as a single frozen batch.",
+  "base_head": "3905b5469bcb6d4b718340f37347e967c7d728cf",
+  "production_files_changed": false,
+  "test_files": [
+    {"path": "bot/tests/ai-gm-2026-10/rf04-f02-c03.test.mjs", "sha256": "390330ECDA4BD26EA09AC1F0C66AD380F76DEC0D717293082E2154D3D811A273"},
+    {"path": "bot/tests/ai-gm-2026-10/rf04-f02-c04.test.mjs", "sha256": "3A6AFEF09D8CF03DC5E1DA7EFE5D9805423898CBBA10604E3BE9F6FCD841DF27"},
+    {"path": "bot/tests/ai-gm-2026-10/rf04-f03-c01.test.mjs", "sha256": "58148E0DAE1A11A73AC0B9F41AFEA058B3E58991CBFFB7AF388E8AC1522B76AE"},
+    {"path": "bot/tests/ai-gm-2026-10/rf04-f03-c03.test.mjs", "sha256": "96B734B146848A711965FD3F7ADA09860144F73F273F01EF73C66D3DC9FCE924"},
+    {"path": "bot/tests/ai-gm-2026-10/rf04-f03-c04.test.mjs", "sha256": "00E780AB0A640EDCCC83C4B8BA6349EF783E282A6DFFEDF49FE25D89E15B97AA"},
+    {"path": "bot/tests/ai-gm-2026-10/rf04-f03-c15.test.mjs", "sha256": "F4E42ED2ABA1E291EC8C4ED8E74938D214287EE5523F4CBAC08417AAEB36BB4C"},
+    {"path": "bot/tests/ai-gm-2026-10/rf04-f04-c04.test.mjs", "sha256": "616C0009540602A255534368D9C660FE49646D762FDECC0AF3E2608D9890BD88"}
+  ],
+  "initial_whole_file_run": {
+    "start": "2026-10-25T07:53:22.6445686-05:00",
+    "end": "2026-10-25T07:53:46.8203988-05:00",
+    "exit_code": 1,
+    "passed": 82,
+    "failed": 1,
+    "skipped": 0,
+    "duration_ms": 24119.142,
+    "failure": "F04-C04 original source reader lacked the native Session/World event issuer composition; not a production failure.",
+    "terminal_log": "../../../../bot/tests/ai-gm-2026-10/rf04-repaired-whole-files-20261025.log",
+    "terminal_log_sha256": "824A3163036FD0F0586C3653F45BDFE1CDB199DC3C6E773CA5CCABC5B7A44E7F"
+  },
+  "fixture_repair": {
+    "path": "bot/tests/ai-gm-2026-10/rf04-f04-c04.test.mjs",
+    "change": "Initialize the existing Session/World event composition before exercising the historical attendance reader.",
+    "syntax_command": "node --check tests/ai-gm-2026-10/rf04-f04-c04.test.mjs",
+    "syntax_exit_code": 0,
+    "production_changed": false
+  },
+  "final_whole_file_run": {
+    "command": "cd bot; node --test --test-concurrency=1 --test-reporter=tap tests/ai-gm-2026-10/rf04-f02-c03.test.mjs tests/ai-gm-2026-10/rf04-f02-c04.test.mjs tests/ai-gm-2026-10/rf04-f03-c01.test.mjs tests/ai-gm-2026-10/rf04-f03-c03.test.mjs tests/ai-gm-2026-10/rf04-f03-c04.test.mjs tests/ai-gm-2026-10/rf04-f03-c15.test.mjs tests/ai-gm-2026-10/rf04-f04-c04.test.mjs",
+    "start": "2026-10-25T07:54:14.3607735-05:00",
+    "end": "2026-10-25T07:54:38.9522478-05:00",
+    "exit_code": 0,
+    "passed": 83,
+    "failed": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "duration_ms": 24534.2691,
+    "terminal_log": "../../../../bot/tests/ai-gm-2026-10/rf04-repaired-whole-files-final-20261025.log",
+    "terminal_log_sha256": "91264050F5B419625EC13E0677BD0C2E111414BAB4A5B6AB36F2702BC87ADB71"
+  },
+  "provider_calls": 0,
+  "provider_tokens": 0,
+  "provider_cost_usd": 0,
+  "live_discord_or_database": false
+}

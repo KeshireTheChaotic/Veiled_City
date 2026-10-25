@@ -1,0 +1,22 @@
+TAP version 13
+# Subtest: actual owner-established native arrival uses original key bytes and replays without extra source or position mutation
+ok 1 - actual owner-established native arrival uses original key bytes and replays without extra source or position mutation
+  ---
+  duration_ms: 196.5371
+  type: 'test'
+  ...
+# Subtest: scene archival preserves native last verified position as read-only history without minting a new arrival or witness
+ok 2 - scene archival preserves native last verified position as read-only history without minting a new arrival or witness
+  ---
+  duration_ms: 187.8409
+  type: 'test'
+  ...
+1..2
+# tests 2
+# suites 0
+# pass 2
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 874.6117
