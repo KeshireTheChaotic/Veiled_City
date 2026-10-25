@@ -16,7 +16,7 @@ After the Intent API change modified `gm.js`, the F06 transport test was run onc
 
 ## Holds and rollback
 
-RF04 remains incomplete; RF05-F03 has 289 exact local holds, RF05-F04 has 62 remaining assigned transitions, and RF05-F05 has 442. Revert only the eventual F06 evidence commit if needed; preserve the feature commits and pre-existing user edits. No provider spend or production access.
+RF04 remains incomplete; RF05-F03 has 289 exact local holds, RF05-F04 has **58** remaining assigned transitions after C05, and RF05-F05 has 442. Revert only the eventual F06 evidence commit if needed; preserve the feature commits and pre-existing user edits. No provider spend or production access.
 
 ## Next step
 

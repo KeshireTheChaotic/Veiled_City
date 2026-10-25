@@ -50,7 +50,7 @@
   "phase_holds": {
     "rf04_incomplete": true,
     "rf05_f03_transition_entries": 289,
-    "rf05_f04_transition_entries": 62,
+    "rf05_f04_transition_entries": 58,
     "rf05_f05_transition_entries": 442,
     "release": "NOT_AUTHORIZED"
   },
