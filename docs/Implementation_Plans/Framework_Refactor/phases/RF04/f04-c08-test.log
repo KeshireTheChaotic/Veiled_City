@@ -1,0 +1,19 @@
+✔ zero-attendee opening runs through actual native writer acceptance and mocked public publication exactly once (484.5331ms)
+✖ unavailable writer delivers only honest orientation and retains narrative review without claiming authored fiction (202.8277ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 1
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1888.4105
+
+✖ failing tests:
+
+test at bot\tests\ai-gm-2026-10\rf04-f04-c08.test.mjs:49:1
+✖ unavailable writer delivers only honest orientation and retains narrative review without claiming authored fiction (202.8277ms)
+  TypeError: Cannot read properties of undefined (reading 'data')
+      at TestContext.<anonymous> (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf04-f04-c08.test.mjs:51:183)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7)

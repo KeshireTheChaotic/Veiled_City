@@ -1,0 +1,74 @@
+{
+  "run_id": "RF04-F04-C08-repair-qualified",
+  "base_sha": "892fad0c16c940a97cbcb4409c144270cea978eb",
+  "end": "2026-10-25T08:25:58.674Z",
+  "hashes": {
+    "bot/tests/ai-gm-2026-10/rf04-f04-c08.test.mjs": "69650e61629aafe0b34bd501fdb38c2e7c0d2154a2f648805a358db52534ce6b",
+    "docs/Implementation_Plans/Framework_Refactor/features/RF04-F04/C08-SCOPE.md": "4ae5fae64f38241d079b3d1b2e67f8769e4aa5fedd4f1479f8b7b707681a0e6d",
+    "docs/Implementation_Plans/Framework_Refactor/features/RF04-F04/C08-LEDGER.md": "7fca5e9667f9b63dbfad8c19680c6793823f26449fe3c7d5d22e4c4b7aca3018",
+    "docs/Implementation_Plans/Framework_Refactor/phases/RF04/LEDGER.md": "6a99cc8e9682ddfccd86cc0fc068a6643d2b50dc1393390edbd49ee6d9cedf1f",
+    "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f04-c08-test.log": "7381192b54aa4450b92c21bf45eb42f299fea8018946b797e46662e8fb5ab9b8",
+    "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f04-c08-repair-test.log": "c36895fee3c94cb0e214b4245571450801fc17aae3f22fc15d8a0d473eb3382b",
+    "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f04-c08-architecture.log": "04f92733546f97881641ba0b3c1c05fc9015c5e2ec7c50de804bcb25a222c0b3"
+  },
+  "syntax": [
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf04-f04-c08.test.mjs",
+      "exit": 0,
+      "final": true
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf04-f04-c08.test.mjs",
+      "exit": 0,
+      "final": false
+    }
+  ],
+  "tests": [
+    {
+      "command": "node --test bot/tests/ai-gm-2026-10/rf04-f04-c08.test.mjs",
+      "exit": 1,
+      "tests": 2,
+      "pass": 1,
+      "fail": 1,
+      "duration_ms": 1888.4105,
+      "log": "f04-c08-test.log"
+    },
+    {
+      "command": "node --test --test-name-pattern='writer capability absence|provider failure' bot/tests/ai-gm-2026-10/rf04-f04-c08.test.mjs",
+      "exit": 0,
+      "tests": 2,
+      "pass": 2,
+      "fail": 0,
+      "duration_ms": 1625.6099,
+      "log": "f04-c08-repair-test.log"
+    }
+  ],
+  "qualification": {
+    "unique_cases": 3,
+    "case_executions": 4,
+    "model_invocations": 3,
+    "live_provider_calls": 0,
+    "provider_tokens": 0,
+    "provider_cost_usd": 0,
+    "mocked_discord_sends": 2,
+    "live_discord": false,
+    "production_database": false
+  },
+  "architecture": {
+    "command": "node tooling/architecture/check-boundaries.mjs --ratchet --phase RF04",
+    "exit": 0,
+    "source_modules": 561,
+    "unowned": 0,
+    "import_occurrences": 2711,
+    "largest_cycle": 181,
+    "accepted_legacy_occurrences": 2442,
+    "active_violations": 0,
+    "transition_errors": 0
+  },
+  "known_holds": [
+    "actual /vc-session command route not exercised",
+    "live Discord/provider behavior and semantic narrative quality unqualified",
+    "provider exception remains needs_review with no fallback send"
+  ],
+  "rollback": "Remove C08 fresh test and its scope/ledger/run evidence only; production code is unchanged."
+}

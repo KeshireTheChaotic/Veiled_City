@@ -1,0 +1,5 @@
+# RF04-F04 C08 — Actual session-opening runner acceptance
+
+Base `892fad0c16c940a97cbcb4409c144270cea978eb`. Exercise the production `runSessionOpening` → Session/World source checks → GM opening authoring → Narrative native acceptance → Publication outbox → `deliverQueuedTurn` pipeline using a disposable SQLite database, a mocked GM provider method, and a mocked Discord channel. Include zero-attendee public-camera delivery, exact durable acknowledgment replay without a second authoring call or send, and a truthful orientation fallback when the writer is unavailable. Do not infer attendance, placement, PC action, cooperation, or native effects. Preserve current prose freedom and all existing policy.
+
+Fresh changed-code-only tests under `bot/tests/ai-gm-2026-10/`; no inherited suite or paid provider. Freeze one blocking batch, no polling. Changed-file syntax and RF04 boundary ratchet. Record exact SHA, state hashes, costs and unverified live behavior. Rollback test/scope/ledger/run artifacts only; production code changes require separate feature authority. RELEASE NOT AUTHORIZED.
