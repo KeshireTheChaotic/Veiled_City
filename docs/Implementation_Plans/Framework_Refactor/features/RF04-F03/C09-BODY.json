@@ -1,0 +1,9 @@
+{
+  "base_sha": "036febe508d2e226acf097df1a06fd345bd482ba",
+  "original_source_sha256": "83cb6e990acb856dca1ab58fcdd321f606ea5ee6c1f5fa2a62217518eece09a1",
+  "policy_body_sha256": "625c3b57dfd8e906285cb8452ce0e0e12732a3ea893d009f232a7f0a81abcfe5",
+  "body_unchanged": true,
+  "dependencies": [
+    "sceneView"
+  ]
+}

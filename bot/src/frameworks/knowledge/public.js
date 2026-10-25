@@ -13,3 +13,4 @@ export * from './historical-archive.js';
 export {createContextMemory} from './context-memory.js';
 export {createScopedMemory} from './scoped-memory.js';
 export {createEntityMemory} from './entity-memory.js';
+export {createHistoryReconciliation} from './history-reconciliation.js';

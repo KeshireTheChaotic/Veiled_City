@@ -1,0 +1,3 @@
+# RF04-F03 C09 — Read-only historical consistency proposals
+
+Base 036febe508d2e226acf097df1a06fd345bd482ba. Extract exact structural reconciliation policy into Knowledge with one fixed Session scene-view capability. Preserve disabled behavior, custody/canon/report/source lineage/strategy/resource receipt/commitment comparisons, private bounded findings/coverage and explicit human/source repair requirements. No semantic truth adjudication, automatic repair, refunded resources, rerolls, PC control or canon rewriting. Fresh disposable SQLite/current recorded sources and actual source provider; scene-view mismatch seam explicit. One frozen blocking batch/no polling/no unchanged passing rerun. Rollback history/public/provider/test/crosswalk together. RELEASE NOT AUTHORIZED.

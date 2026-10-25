@@ -1,0 +1,58 @@
+TAP version 13
+# Subtest: disabled reconciliation returns no finding and does not inspect or change native state
+ok 1 - disabled reconciliation returns no finding and does not inspect or change native state
+  ---
+  duration_ms: 170.8571
+  type: 'test'
+  ...
+# Subtest: conflicting unique-original custody produces only a private sourced review finding and retains both documents
+ok 2 - conflicting unique-original custody produces only a private sourced review finding and retains both documents
+  ---
+  duration_ms: 173.9726
+  type: 'test'
+  ...
+# Subtest: institutional case report ownership mismatch is recorded without transferring knowledge or repairing the case
+ok 3 - institutional case report ownership mismatch is recorded without transferring knowledge or repairing the case
+  ---
+  duration_ms: 170.6769
+  type: 'test'
+  ...
+# Subtest: stale plan source, ended objective and fictional deadline remain findings without executing, replanning or charging
+ok 4 - stale plan source, ended objective and fictional deadline remain findings without executing, replanning or charging
+  ---
+  duration_ms: 181.0307
+  type: 'test'
+  ...
+# Subtest: actual resource receipt arithmetic mismatch is reported without refund, charge or reroll
+ok 5 - actual resource receipt arithmetic mismatch is reported without refund, charge or reroll
+  ---
+  duration_ms: 167.0564
+  type: 'test'
+  ...
+# Subtest: overlapping actual commitments are distinct from competing wishes and not cancelled automatically
+ok 6 - overlapping actual commitments are distinct from competing wishes and not cancelled automatically
+  ---
+  duration_ms: 172.3243
+  type: 'test'
+  ...
+# Subtest: scene mismatch uses native actual position as evidence and excludes expected-only appearances
+ok 7 - scene mismatch uses native actual position as evidence and excludes expected-only appearances
+  ---
+  duration_ms: 192.342
+  type: 'test'
+  ...
+# Subtest: bounded finding coverage stays honest and original source provider remains read-only across restart
+ok 8 - bounded finding coverage stays honest and original source provider remains read-only across restart
+  ---
+  duration_ms: 189.4905
+  type: 'test'
+  ...
+1..8
+# tests 8
+# suites 0
+# pass 8
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1921.3285
