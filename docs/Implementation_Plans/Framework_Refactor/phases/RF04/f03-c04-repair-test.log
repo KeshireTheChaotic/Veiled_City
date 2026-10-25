@@ -1,0 +1,22 @@
+TAP version 13
+# Subtest: V2 World identity requires exact independently checked native unit projection and remains GM-private before delivery
+ok 1 - V2 World identity requires exact independently checked native unit projection and remains GM-private before delivery
+  ---
+  duration_ms: 187.2981
+  type: 'test'
+  ...
+# Subtest: World memory source visibility and immutable unit hash block altered or unsupported V2 projections
+ok 2 - World memory source visibility and immutable unit hash block altered or unsupported V2 projections
+  ---
+  duration_ms: 178.0986
+  type: 'test'
+  ...
+1..2
+# tests 2
+# suites 0
+# pass 2
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 873.1596

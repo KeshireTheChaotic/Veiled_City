@@ -1,0 +1,13 @@
+{
+  "base_sha": "f32e8ebfe7d4c874306a4e2638ad2ad9de971192",
+  "original_source_sha256": "e1f173b168550eddfbad44b19d28819e94b85fd015d49ca08c4d24a13b9b04c7",
+  "policy_body_sha256": "01479c06816245c3c7b46199faabcff7a7d25e6b130cc937f90470a7c9fc76ff",
+  "body_unchanged": true,
+  "dependencies": [
+    "narrativeSourceVisible",
+    "narrativeImportance",
+    "BACKGROUND_WORLD_KINDS",
+    "worldIdentityOrigin"
+  ],
+  "hash_substitution": "same full JSON SHA256"
+}

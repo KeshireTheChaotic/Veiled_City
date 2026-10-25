@@ -1,0 +1,10 @@
+{
+  "run_id": "RF04_F03_C04_REPAIR",
+  "syntax_exit": 0,
+  "test_exit": 0,
+  "test_hash": "00e780ab0a640edccc83c4b8ba6349ef783e282a6dffedf49fe25d89e15b97aa",
+  "base_sha": "f32e8ebfe7d4c874306a4e2638ad2ad9de971192",
+  "reason": "Two fresh GM-private fixture inputs omitted explicit null subject required to match persisted native GM source; change only those two cases, no production changes.",
+  "start": "2026-10-24T21:09:50.6566827-05:00",
+  "end": "2026-10-24T21:09:51.7617066-05:00"
+}
