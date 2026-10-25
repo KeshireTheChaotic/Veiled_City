@@ -1,0 +1,178 @@
+TAP version 13
+# Subtest: zero-attendee opening runs through actual native writer acceptance and mocked public publication exactly once
+ok 1 - zero-attendee opening runs through actual native writer acceptance and mocked public publication exactly once
+  ---
+  duration_ms: 439.7505
+  type: 'test'
+  ...
+# Subtest: writer capability absence delivers honest orientation and retains narrative review without claiming authored fiction
+ok 2 - writer capability absence delivers honest orientation and retains narrative review without claiming authored fiction
+  ---
+  duration_ms: 259.0748
+  type: 'test'
+  ...
+# Subtest: provider failure keeps a scoped review hold and sends no orientation or generated text
+ok 3 - provider failure keeps a scoped review hold and sends no orientation or generated text
+  ---
+  duration_ms: 200.8044
+  type: 'test'
+  ...
+# Subtest: two owners receive distinct native-accepted private scenes while shared publication omits both threads
+ok 4 - two owners receive distinct native-accepted private scenes while shared publication omits both threads
+  ---
+  duration_ms: 1447.2121
+  type: 'test'
+  ...
+# Subtest: party-labeled private response is held and cannot cross into shared or another owner publication
+ok 5 - party-labeled private response is held and cannot cross into shared or another owner publication
+  ---
+  duration_ms: 1006.9042
+  type: 'test'
+  ...
+# Subtest: a transport without a Responses client can be constructed, as before the extraction
+ok 6 - a transport without a Responses client can be constructed, as before the extraction
+  ---
+  duration_ms: 0.6375
+  type: 'test'
+  ...
+# Subtest: dispatch without a Responses client fails as a recorded provider error and is not retried
+ok 7 - dispatch without a Responses client fails as a recorded provider error and is not retried
+  ---
+  duration_ms: 2.1462
+  type: 'test'
+  ...
+# Subtest: successful dispatch preserves request options and records usage, cache, and purpose telemetry
+ok 8 - successful dispatch preserves request options and records usage, cache, and purpose telemetry
+  ---
+  duration_ms: 1.0632
+  type: 'test'
+  ...
+# Subtest: recoverable provider failure waits within the bounded retry policy then returns a response
+ok 9 - recoverable provider failure waits within the bounded retry policy then returns a response
+  ---
+  duration_ms: 0.3075
+  type: 'test'
+  ...
+# Subtest: terminal provider error does not retry and preserves privacy-safe error classification
+ok 10 - terminal provider error does not retry and preserves privacy-safe error classification
+  ---
+  duration_ms: 0.3283
+  type: 'test'
+  ...
+# Subtest: aborted operation does not dispatch a request
+ok 11 - aborted operation does not dispatch a request
+  ---
+  duration_ms: 0.1387
+  type: 'test'
+  ...
+# Subtest: abort after provider response is recorded as a deadline and is never retried
+ok 12 - abort after provider response is recorded as a deadline and is never retried
+  ---
+  duration_ms: 0.1683
+  type: 'test'
+  ...
+# Subtest: retry configuration remains capped at five retries and honors the server deferral ceiling
+ok 13 - retry configuration remains capped at five retries and honors the server deferral ceiling
+  ---
+  duration_ms: 0.3419
+  type: 'test'
+  ...
+# Subtest: application GMService keeps its request method as a transparent provider delegate
+ok 14 - application GMService keeps its request method as a transparent provider delegate
+  ---
+  duration_ms: 0.1287
+  type: 'test'
+  ...
+# Subtest: GM receives the Narrative-owned soft guidance through its public API
+ok 15 - GM receives the Narrative-owned soft guidance through its public API
+  ---
+  duration_ms: 0.914
+  type: 'test'
+  ...
+# Subtest: GM imports the Session public principal without changing identity or authenticated owner result
+ok 16 - GM imports the Session public principal without changing identity or authenticated owner result
+  ---
+  duration_ms: 180.7598
+  type: 'test'
+  ...
+# Subtest: GM uses the World public city context without changing its GM-only projection
+ok 17 - GM uses the World public city context without changing its GM-only projection
+  ---
+  duration_ms: 1.5348
+  type: 'test'
+  ...
+# Subtest: GM consumes the unchanged Intent contract through its public API
+ok 18 - GM consumes the unchanged Intent contract through its public API
+  ---
+  duration_ms: 0.9679
+  type: 'test'
+  ...
+# Subtest: GM consumes unchanged Narrative-owned proposal schemas through the public API
+ok 19 - GM consumes unchanged Narrative-owned proposal schemas through the public API
+  ---
+  duration_ms: 1.6852
+  type: 'test'
+  ...
+# Subtest: GM consumes unchanged GM-world schema and prompt through the Narrative public API
+ok 20 - GM consumes unchanged GM-world schema and prompt through the Narrative public API
+  ---
+  duration_ms: 0.9556
+  type: 'test'
+  ...
+# Subtest: GM uses the World public minor-NPC schema without changing its contract
+ok 21 - GM uses the World public minor-NPC schema without changing its contract
+  ---
+  duration_ms: 2.9159
+  type: 'test'
+  ...
+# Subtest: Intent public API preserves decision advisory behavior and both application consumers use it
+ok 22 - Intent public API preserves decision advisory behavior and both application consumers use it
+  ---
+  duration_ms: 3.1032
+  type: 'test'
+  ...
+# Subtest: GM arbitration schemas use Intent public and preserve the compatibility contract
+ok 23 - GM arbitration schemas use Intent public and preserve the compatibility contract
+  ---
+  duration_ms: 2.8347
+  type: 'test'
+  ...
+# Subtest: Operations public and compatibility paths share the same async-local trace
+ok 24 - Operations public and compatibility paths share the same async-local trace
+  ---
+  duration_ms: 2.3699
+  type: 'test'
+  ...
+# Subtest: Operations public and compatibility paths share one metrics implementation and singleton
+ok 25 - Operations public and compatibility paths share one metrics implementation and singleton
+  ---
+  duration_ms: 0.5157
+  type: 'test'
+  ...
+# Subtest: metrics record retries and stage timing in the Operations-owned turn trace
+ok 26 - metrics record retries and stage timing in the Operations-owned turn trace
+  ---
+  duration_ms: 1.7893
+  type: 'test'
+  ...
+# Subtest: snapshots and incidents keep closed aggregate fields, not prompt or campaign content
+ok 27 - snapshots and incidents keep closed aggregate fields, not prompt or campaign content
+  ---
+  duration_ms: 0.64
+  type: 'test'
+  ...
+# Subtest: GM imports metrics through Operations public
+ok 28 - GM imports metrics through Operations public
+  ---
+  duration_ms: 2.6084
+  type: 'test'
+  ...
+1..28
+# tests 28
+# suites 0
+# pass 28
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 8508.7217

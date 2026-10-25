@@ -32,3 +32,7 @@ RF04 remains incomplete and RF05's current ratchet reports prior-phase debt; thi
 ## Next step
 
 Next exact feature: RF05-F03, the context-budget and disclosure boundary. Continue to preserve RF04's outstanding phase holds.
+
+## C02 — Restore deferred Responses-client validation
+
+Corrective: RF05-F02 had added a construction-time `client.responses.create` check that the original request path lacked, breaking qualified RF04-F04 C08/C09 (0/5 at HEAD). Removed only that check; dispatch failure behavior is the original one. Final batch 28/28 across 15 files, exit 0; RF04 ratchet passes; RF05 unchanged at 955. See `C02-LEDGER.md`. Release NOT AUTHORIZED.

@@ -1,0 +1,155 @@
+{
+  "feature": "RF05-F02-C02",
+  "base_head": "70dacfc48d5da9a5f12c85d9abc0fab46144fdbe",
+  "branch": "codex/clean-ai-gm-2026-10",
+  "syntax": {
+    "files": [
+      "bot/src/frameworks/ai-provider/model-transport.js",
+      "bot/tests/ai-gm-2026-10/rf05-f02-c02.test.mjs"
+    ],
+    "passed": 2,
+    "failed": 0
+  },
+  "tests": {
+    "selection": "new slice tests + fresh ai-gm-2026-10 tests directly importing a changed production module",
+    "files": [
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f04-c08.test.mjs",
+        "sha256": "69650E61629AAFE0B34BD501FDB38C2E7C0D2154A2F648805A358DB52534CE6B"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f04-c09.test.mjs",
+        "sha256": "603A19CFCB2F5E3ACBFB24E8D5E918CBC9A6BB8C7BAF89643A63387A34A9AAC8"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf05-f02-c02.test.mjs",
+        "sha256": "0157AA933AD6D51386569CB1402F4508BC3D525DF71C22FB6BF86AC562A6BDA7"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf05-f02-model-transport.test.mjs",
+        "sha256": "61CB01C78EF723F69777FA6969FF321E16A33A88C9637FB7AB3207EC464F705A"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf05-f03-c02.test.mjs",
+        "sha256": "4AC2DB877406009C2FD44568C6EE2836FFC7CCE75DCF0F2988B0685FC11D3BA5"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf05-f04-c02.test.mjs",
+        "sha256": "46BBA60461D70518285805D7DB789A86D02A97DB5DDA4F33AEAFFFB37800E7A5"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf05-f04-c03.test.mjs",
+        "sha256": "70C5CFE574BAED1818BD3F05F8698AB9758A61C2A1FE44883ADE0FE8DD43ACD5"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf05-f04-c05.test.mjs",
+        "sha256": "25A121360C5271ED88BA639EAA7BF8F43F45ADB4F5FEA0B3B4C760243B38EDDF"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf05-f04-c06.test.mjs",
+        "sha256": "5C53AA6A251724612EC7146B4B6D527D5534941C79C206820C3F04417C9C236F"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf05-f04-c07.test.mjs",
+        "sha256": "DB50482D430F738D6A3BDF8FB652196541C3B2FF89440E9825F052C7D54A9527"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf05-f04-c08.test.mjs",
+        "sha256": "2E5BE6A3554C78944F60749FAB274D2498CABB5B28273FFC72B2286BBBFD6DD7"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf05-f04-c09.test.mjs",
+        "sha256": "633666D3FB093868003B9D11F00173E40757B35145F04D066B270EF9BDB44194"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf05-f04-c10.test.mjs",
+        "sha256": "083E2A6EB26E12F73030930C8745D86EE5B9D4406C665D4876BD3A5C7BB33EC3"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf05-f04-c11.test.mjs",
+        "sha256": "1BC733EC4ED89572D335FE524D289C227860F113212B066937B44888CFC0DF2B"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf05-f04-c12.test.mjs",
+        "sha256": "A7069E8A42A29A001CDFB83BEB725ED4AEDABB161385E40DFFD4696D8D4F88F0"
+      }
+    ],
+    "command": "cd bot; node --import ./scripts/offline-guard.mjs --test --test-concurrency=1 --test-reporter=tap <files>",
+    "launches": 1,
+    "start": "2026-10-25T16:11:21.250Z",
+    "end": "2026-10-25T16:11:29.796Z",
+    "exit_code": 0,
+    "tests": 28,
+    "passed": 28,
+    "failed": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "duration_ms": 8508.7217,
+    "log": "docs/Implementation_Plans/Framework_Refactor/phases/RF05/rf05-f02-c02-test.log",
+    "log_sha256": "095DDC730A675C206EF0530A14BAA271CB4DE31B7397A66F8D90FE14D6B2E639"
+  },
+  "architecture": {
+    "RF04": {
+      "exit_code": 0,
+      "source_modules": 581,
+      "unowned": 0,
+      "imports": 2747,
+      "largest_cycle": 181,
+      "accepted_legacy_occurrences": 2422,
+      "active_violation_groups": 0,
+      "transition_errors": 0,
+      "log": "docs/Implementation_Plans/Framework_Refactor/phases/RF05/rf05-f02-c02-rf04-architecture.log",
+      "log_sha256": "FA738F5A485B72C4BFD8D824F7D947CFD5286D02EC31BD31CCCA8CF30D72219F",
+      "changed_path_active_findings": []
+    },
+    "RF05": {
+      "exit_code": 1,
+      "source_modules": 581,
+      "unowned": 0,
+      "imports": 2747,
+      "largest_cycle": 181,
+      "accepted_legacy_occurrences": 1462,
+      "active_violation_groups": 955,
+      "transition_errors": 955,
+      "log": "docs/Implementation_Plans/Framework_Refactor/phases/RF05/rf05-f02-c02-rf05-architecture.log",
+      "log_sha256": "5B73645E9CD3077F70E5CA1A46A69DA2E44EB336180DFC628E91749AD0614148",
+      "changed_path_active_findings": []
+    }
+  },
+  "transition": {
+    "retired": [],
+    "original_manifest_sha256": "AEA167D53DFD156A3D0B2FA24988FB8A90A562C6F97B17F5BF9A891F8013CFE3",
+    "manifest_sha256_after": "AEA167D53DFD156A3D0B2FA24988FB8A90A562C6F97B17F5BF9A891F8013CFE3",
+    "entries_after": 2402,
+    "remaining_by_feature": {
+      "RF04-F01": 398,
+      "RF04-F02": 48,
+      "RF04-F03": 121,
+      "RF04-F04": 273,
+      "RF04-F05": 115,
+      "RF05-F02": 250,
+      "RF05-F03": 289,
+      "RF05-F04": 51,
+      "RF05-F05": 441,
+      "RF06-F02": 17,
+      "RF06-F03": 191,
+      "RF06-F04": 160,
+      "RF06-F05": 43,
+      "RF06-F07": 5
+    }
+  },
+  "changed_sha256": {
+    "bot/src/frameworks/ai-provider/model-transport.js": "D3F6D0035E6C16AF0312B85FD6C047A24A563F2035E54B27EA37903DEC6FF9EA"
+  },
+  "cost": {
+    "provider_calls": 0,
+    "provider_tokens": 0,
+    "provider_usd": 0,
+    "network": 0,
+    "production_database": 0,
+    "agent_usage": "UNMEASURED"
+  },
+  "release": "NOT AUTHORIZED",
+  "rollback": "Revert only the RF05-F02 C02 commit to restore the construction-time Responses-client check.",
+  "status": "SCOPED_QUALIFIED"
+}

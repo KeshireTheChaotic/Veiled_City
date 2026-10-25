@@ -5,7 +5,6 @@ import {setTimeout as waitForRetry} from 'node:timers/promises';
 export function createModelTransport({client,config,metrics,traceForGuild=()=>null,
   now=()=>performance.now(),wait=waitForRetry,randomId=randomUUID}={}){
   if(!config)throw new TypeError('AI provider configuration is required.');
-  if(!client?.responses?.create)throw new TypeError('AI Responses client is required.');
   async function requestModel(request,{guildId,signal,retry=false,purpose='other'}={}){
     const limit=Number.isInteger(config.openaiMaxRetries)?Math.max(0,Math.min(5,config.openaiMaxRetries)):1;
     for(let attempt=0;attempt<=limit;attempt++){

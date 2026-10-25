@@ -96,3 +96,7 @@ Moved the AsyncLocalStorage trace module byte-identically into Operations and ro
 ### RF05-F04 C12 — Operations metrics public import
 
 Moved the operational metrics module byte-identically into Operations and routed the GM import through Operations public; the moved module now shares the Operations-owned turn trace. Fresh affected-code union passed 21/21 across twelve files (exit 0, 6,055.9301 ms); syntax passed 5/5. The new regression verified public/compatibility identity, trace retry and stage accounting, and that telemetry snapshots retain no prompt or reference text. RF05 ratchet remains failed with 581 modules, zero unowned, 2,747 imports, and 955 groups/errors; C12 paths have no findings. The exact GM import transition is retired and preserved; root location hold remains. RF05-F04 has 51 assignments remaining. See `features/RF05-F04/C12-RUN.json`. RF05 remains incomplete; release NOT AUTHORIZED.
+
+### RF05-F02 C02 — Restore deferred Responses-client validation
+
+Reconciliation found RF04-F04 C08/C09 failing at HEAD because RF05-F02 added a construction-time Responses-client check. Removed only that check, restoring dispatch-time failure. 28/28 across 15 files, exit 0; RF04 ratchet passes, RF05 955 groups/errors unchanged, no changed-path findings. See `features/RF05-F02/C02-LEDGER.md`. Release NOT AUTHORIZED.
