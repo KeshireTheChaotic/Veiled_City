@@ -1,6 +1,6 @@
 # RF05-F05 execution ledger
 
-**Status:** PARTIAL — pure result-aggregation slice qualified; 442 assigned RF05-F05 transition entries remain.
+**Status:** PARTIAL — pure result-aggregation slice qualified; 441 assigned RF05-F05 transition entries remain.
 **Base HEAD:** `410cbd024c4f2cb4b0a0d26413da03cc625e64e6`
 **Scope:** [`SCOPE.md`](SCOPE.md)
 
@@ -21,3 +21,8 @@ The broader RF05-F05 transition debt remains unresolved. Revert only this featur
 ## Next step
 
 Continue with other independently supportable RF05 work and preserve the phase's incomplete status until its actual acceptance obligations are met.
+
+
+### C09 shared Intent import refresh
+
+C09 changed `turn-orchestration.js` to consume `validateDecisionAdvisory` through Intent public and retired this feature's exact private-import transition `c0781b4074f000b11290a1671eaa926ec868bae1ff4f88cb70bc83d038522d09`. No RF05-F05 mutation behavior changed. **441** RF05-F05 assignments remain; see `../RF05-F04/C09-RUN.json` and `C09-RETIRED.json` for exact evidence. RF05-F05's own scoped mutation helper remains unchanged.

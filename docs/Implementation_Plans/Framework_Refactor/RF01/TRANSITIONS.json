@@ -8015,20 +8015,6 @@
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
     {
-      "id": "c68d2ed4dcedd5fc7841e88cfa427f0fea8b7777c3026cd2ea9c019d1de66bbf",
-      "code": "IMPORTS_PRIVATE_API",
-      "from": "bot/src/gm.js",
-      "to": "bot/src/decision-advisory.js",
-      "kind": "static",
-      "specifier": "./decision-advisory.js",
-      "owner": "application",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF05-F04",
-      "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
       "id": "c9968c9fbc4f79993ae1fb24f6488610216483939ddaa66d7e80afe25b493de3",
       "code": "IMPORTS_PRIVATE_API",
       "from": "bot/src/gm.js",
@@ -18731,20 +18717,6 @@
       "max_occurrences": 1,
       "remove_in_feature": "RF04-F04",
       "expires_after": "RF04",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
-      "id": "c0781b4074f000b11290a1671eaa926ec868bae1ff4f88cb70bc83d038522d09",
-      "code": "IMPORTS_PRIVATE_API",
-      "from": "bot/src/turn-orchestration.js",
-      "to": "bot/src/decision-advisory.js",
-      "kind": "static",
-      "specifier": "./decision-advisory.js",
-      "owner": "application",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF05-F05",
-      "expires_after": "RF05",
       "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },

@@ -80,8 +80,8 @@
   "phase_holds": {
     "rf04_incomplete": true,
     "rf05_f03_transition_entries": 289,
-    "rf05_f04_transition_entries": 55,
-    "rf05_f05_transition_entries": 442,
+    "rf05_f04_transition_entries": 54,
+    "rf05_f05_transition_entries": 441,
     "release": "NOT_AUTHORIZED"
   },
   "changed_source_sha256": {
@@ -357,6 +357,47 @@
     },
     "remaining_rf05_f04_transition_entries": 55,
     "qualification": "CURRENT AFFECTED-GM UNION PASSES; RF05 PHASE INCOMPLETE / ARCHITECTURE GATE FAILED",
+    "cost": {
+      "provider_calls": 0,
+      "provider_tokens": 0,
+      "provider_usd": 0,
+      "network": 0,
+      "database_access": 0,
+      "codex_usage": "UNMEASURED"
+    }
+  },
+  "after_c09_refresh": {
+    "implementation_head_before_evidence_commit": "abf798ce26439d88938a8ab4cb2e61f382c37a08",
+    "current_gm_sha256": "E522D2DBDE59B16DFDEE05BB1A184BA75E31BE8AF95F6511F2A56C02EA5B952F",
+    "current_turn_orchestration_sha256": "60CDD10D266D6475E9B5F74D82107CEE0E44AFFC98E3FF8BBF8BF2A0F495C289",
+    "frozen_affected_union": {
+      "launches": 1,
+      "exit_code": 0,
+      "passed": 15,
+      "failed": 0,
+      "duration_ms": 1367.1831,
+      "test_files": 9
+    },
+    "syntax": {
+      "exit_code": 0,
+      "passed": 7,
+      "failed": 0
+    },
+    "architecture": {
+      "exit_code": 1,
+      "source_modules": 578,
+      "unowned": 0,
+      "imports": 2742,
+      "internal_imports": 2565,
+      "largest_cycle": 181,
+      "active_violation_groups": 955,
+      "transition_errors": 955,
+      "changed_path_findings": 0,
+      "changed_path_transition_errors": 0
+    },
+    "remaining_rf05_f04_transition_entries": 54,
+    "remaining_rf05_f05_transition_entries": 441,
+    "qualification": "CURRENT GM AND TURN-ORCHESTRATION UNION PASSES; RF05 PHASE INCOMPLETE / ARCHITECTURE GATE FAILED",
     "cost": {
       "provider_calls": 0,
       "provider_tokens": 0,

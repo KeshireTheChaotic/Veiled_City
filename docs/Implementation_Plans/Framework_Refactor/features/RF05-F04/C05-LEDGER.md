@@ -10,3 +10,7 @@ The fresh test `bot/tests/ai-gm-2026-10/rf05-f04-c05.test.mjs` passed **1/1**, e
 Only transition `9adda1062fb5ec114195328c1ff9008f15f9722203ff40fe98e27b719e6564b4` was retired and preserved in `C05-RETIRED.json`. The transition manifest SHA-256 after removal is `45390102A001F991450BD01CD88DB89CE3DFB3630697AB099058E975C96C6D86`; **58** RF05-F04 transition entries remain. Full file hashes and terminal outcomes are in `C05-RUN.json`.
 
 Rollback only this C05 slice: restore the GM import and its exact transition; restore the former root implementation; remove the Intent public export, moved implementation, and C05-only test/evidence. Preserve the compatibility path for the other callers and all five pre-existing user edits. Release remains **NOT AUTHORIZED**.
+
+### C05 regression refresh after C09
+
+The GM's Intent public import now contains additional named contracts. The fresh C05 test's import check was broadened to continue asserting `intentArraySchema` and `INTENT_PROMPT` on that public import. It passed 1/1 as part of C09's complete affected-code batch (15/15 overall; exit 0; 1,367.1831 ms). Current test hash and GM hash are in `C05-RUN.json` under `refresh_after_c09`.

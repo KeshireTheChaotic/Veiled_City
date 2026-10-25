@@ -1,7 +1,7 @@
 import {connectTypedRolls} from './framework-to-framework/daggerheart--intent/public.js';
 /** Shared production turn commit boundary: native state, proposals and intent receipts commit before publication. */
 import { applyAuthoritativeMutation, applyCanonProposalDrafts } from "./state.js";
-import { validateDecisionAdvisory } from "./decision-advisory.js";
+import { validateDecisionAdvisory } from "./frameworks/intent/public.js";
 import { queueTurnPublications } from "./publication-outbox.js";
 import { resolveTypedNativeRolls } from "./typed-mechanics.js";
 import { reconcileConsequences } from "./consequence-reconciliation.js";

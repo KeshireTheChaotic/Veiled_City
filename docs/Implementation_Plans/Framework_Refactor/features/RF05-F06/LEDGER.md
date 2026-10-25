@@ -31,3 +31,7 @@ RF05 remains incomplete. Preserve the dependency hold on RF06's exact domain int
 ### Current-GM refresh after RF05-F04 C07
 
 The C07 Narrative public-contract change refreshed the current affected-GM union: **13/13** passed across seven fresh test files, exit **0**, duration **3,956.3878 ms**; changed JavaScript syntax passed **5/5**. The ratchet remains failed with 576 modules, zero unowned, 2,739 imports, and 955 existing groups/errors. RF05-F04 has 56 assignments remaining. Detailed C07 test/source hashes are in `features/RF05-F04/C07-RUN.json`; the phase-wide changed-code union remains reserved for final F06 qualification after implementation work is complete.
+
+### Current GM and turn-commit refresh after RF05-F04 C09
+
+The Intent decision-advisory move changed `gm.js` and `turn-orchestration.js`. The frozen affected-code union passed **15/15** across nine fresh tests, exit **0**, duration **1,367.1831 ms**; changed JavaScript/MJS syntax passed **7/7**. Architecture ratchet remains failed with 578 modules, zero unowned, 2,742 imports, and 955 groups/errors. RF05-F04 has 54 and RF05-F05 has 441 assignments remaining. Root compatibility source-location debt remains. See `features/RF05-F04/C09-RUN.json`; phase-wide union remains pending final F06 qualification.

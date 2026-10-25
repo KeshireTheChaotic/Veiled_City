@@ -12,6 +12,6 @@ test('GM consumes the unchanged Intent contract through its public API',()=>{
   assert.equal(intentPublic.intentArraySchema.maxItems,4);
   assert.equal(intentPublic.validateIntent({}),false);
   const source=readFileSync(new URL('../../src/gm.js',import.meta.url),'utf8');
-  assert.match(source,/import\s*\{\s*intentArraySchema\s*,\s*INTENT_PROMPT\s*\}\s*from\s*["']\.\/frameworks\/intent\/public\.js["']/);
+  assert.match(source,/import\s*\{[^}]*\bintentArraySchema\b[^}]*\bINTENT_PROMPT\b[^}]*\}\s*from\s*["']\.\/frameworks\/intent\/public\.js["']/);
   assert.doesNotMatch(source,/import\s*\{\s*intentArraySchema\s*,\s*INTENT_PROMPT\s*\}\s*from\s*["']\.\/ai-intent-contracts\.js["']/);
 });

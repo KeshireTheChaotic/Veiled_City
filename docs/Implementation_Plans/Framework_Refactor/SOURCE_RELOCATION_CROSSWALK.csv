@@ -50,7 +50,7 @@ old_path,new_path,owner,move_phase,action,reverse_dependents,import_obligations
 "bot/src/continuity-routing.js","bot/src/application/workflows/continuity-routing.js","application","RF06","DECOMPOSE_BEFORE_MOVE","0","3"
 "bot/src/conversation-principal.js","bot/src/frameworks/session/conversation-principal.js","session","RF04","LEAF_ISOLATED_OLD_READER_RF04_F05","57","0"
 "bot/src/db.js","bot/src/frameworks/persistence/db.js","persistence","RF06","DECOMPOSE_BEFORE_MOVE","1","13"
-"bot/src/decision-advisory.js","bot/src/frameworks/intent/decision-advisory.js","intent","RF05","PILOT_MOVE_CANDIDATE","2","0"
+"bot/src/decision-advisory.js","bot/src/frameworks/intent/decision-advisory.js","intent","RF05","MOVED_BYTE_IDENTICAL; PUBLIC_API_ADOPTED; ROOT_COMPATIBILITY_REEXPORT_RETAINED","2","0"
 "bot/src/delegation-catalog.js","bot/src/frameworks/narrative/delegation-catalog.js","narrative","RF05","EXTRACT_PORTS_BEFORE_MOVE","1","1"
 "bot/src/diagnostics/session5-reader.js","bot/src/frameworks/operations/session5-reader.js","operations","RF02","EXTRACT_PORTS_BEFORE_MOVE","0","1"
 "bot/src/dialogue-continuity.js","bot/src/frameworks/session/dialogue-continuity.js","session","RF04","DECOMPOSE_BEFORE_MOVE","3","11"

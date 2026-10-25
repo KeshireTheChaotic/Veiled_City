@@ -1,6 +1,6 @@
 {
   "feature": "RF05-F05",
-  "status": "PARTIAL_MUTATION_RESULT_SLICE_QUALIFIED_442_TRANSITIONS_REMAIN",
+  "status": "PARTIAL_MUTATION_RESULT_SLICE_QUALIFIED_441_TRANSITIONS_REMAIN",
   "base_head": "410cbd024c4f2cb4b0a0d26413da03cc625e64e6",
   "branch": "codex/clean-ai-gm-2026-10",
   "changed_modules": [
@@ -13,7 +13,9 @@
     "framework_or_pair_imports_added": 0
   },
   "tests": {
-    "files": ["bot/tests/ai-gm-2026-10/rf05-f05-mutation-results.test.mjs"],
+    "files": [
+      "bot/tests/ai-gm-2026-10/rf05-f05-mutation-results.test.mjs"
+    ],
     "launch_count": 1,
     "exit_code": 0,
     "passed": 3,
@@ -25,7 +27,11 @@
   },
   "syntax": {
     "files_checked": 3,
-    "exit_codes": [0, 0, 0],
+    "exit_codes": [
+      0,
+      0,
+      0
+    ],
     "log": "phases/RF05/rf05-f05-mutation-results-syntax.log",
     "sha256": "214CD37F0FE28710E98D9CC33FF2BE111FEB9E7CA538496C614B2E6B44933C65"
   },
@@ -66,5 +72,11 @@
     "codex_usage": "UNMEASURED"
   },
   "release": "NOT_AUTHORIZED",
-  "rollback": "Revert only the RF05-F05 mutation-result checkpoint; preserve earlier RF05 commits, existing user edits, and RF04 diagnostic logs."
+  "rollback": "Revert only the RF05-F05 mutation-result checkpoint; preserve earlier RF05 commits, existing user edits, and RF04 diagnostic logs.",
+  "after_c09_import_retirement": {
+    "retired_id": "c0781b4074f000b11290a1671eaa926ec868bae1ff4f88cb70bc83d038522d09",
+    "retirement_evidence": "../RF05-F04/C09-RETIRED.json",
+    "remaining_rf05_f05_transition_entries": 441,
+    "behavioral_scope": "No RF05-F05 mutation behavior changed; C09 only changed the shared decision-advisory import to Intent public."
+  }
 }

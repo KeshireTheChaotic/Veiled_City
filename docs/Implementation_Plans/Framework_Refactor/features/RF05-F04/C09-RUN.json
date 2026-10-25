@@ -1,0 +1,51 @@
+{
+  "feature": "RF05-F04-C09",
+  "status": "SCOPED_INTENT_MODULE_MOVE_AND_PUBLIC_IMPORT_QUALIFIED",
+  "base_head": "abf798ce26439d88938a8ab4cb2e61f382c37a08",
+  "branch": "codex/clean-ai-gm-2026-10",
+  "pre_repair_batch": {"launches":1,"exit_code":1,"passed":14,"failed":1,"reason":"Existing C05 test expected exactly two names in the GM Intent public import; production and C09 tests passed. The C05 assertion alone was broadened, then the full union was run against final bytes."},
+  "tests": {
+    "launches": 1,
+    "exit_code": 0,
+    "passed": 15,
+    "failed": 0,
+    "duration_ms": 1367.1831,
+    "test_files": 9,
+    "files": [
+      {"path":"bot/tests/ai-gm-2026-10/rf05-f02-model-transport.test.mjs","sha256":"61CB01C78EF723F69777FA6969FF321E16A33A88C9637FB7AB3207EC464F705A"},
+      {"path":"bot/tests/ai-gm-2026-10/rf05-f03-c02.test.mjs","sha256":"4AC2DB877406009C2FD44568C6EE2836FFC7CCE75DCF0F2988B0685FC11D3BA5"},
+      {"path":"bot/tests/ai-gm-2026-10/rf05-f04-c02.test.mjs","sha256":"46BBA60461D70518285805D7DB789A86D02A97DB5DDA4F33AEAFFFB37800E7A5"},
+      {"path":"bot/tests/ai-gm-2026-10/rf05-f04-c03.test.mjs","sha256":"70C5CFE574BAED1818BD3F05F8698AB9758A61C2A1FE44883ADE0FE8DD43ACD5"},
+      {"path":"bot/tests/ai-gm-2026-10/rf05-f04-c05.test.mjs","sha256":"25A121360C5271ED88BA639EAA7BF8F43F45ADB4F5FEA0B3B4C760243B38EDDF"},
+      {"path":"bot/tests/ai-gm-2026-10/rf05-f04-c06.test.mjs","sha256":"5C53AA6A251724612EC7146B4B6D527D5534941C79C206820C3F04417C9C236F"},
+      {"path":"bot/tests/ai-gm-2026-10/rf05-f04-c07.test.mjs","sha256":"DB50482D430F738D6A3BDF8FB652196541C3B2FF89440E9825F052C7D54A9527"},
+      {"path":"bot/tests/ai-gm-2026-10/rf05-f04-c08.test.mjs","sha256":"2E5BE6A3554C78944F60749FAB274D2498CABB5B28273FFC72B2286BBBFD6DD7"},
+      {"path":"bot/tests/ai-gm-2026-10/rf05-f04-c09.test.mjs","sha256":"633666D3FB093868003B9D11F00173E40757B35145F04D066B270EF9BDB44194"}
+    ]
+  },
+  "syntax": {"exit_code":0,"passed":7,"failed":0,"files":["bot/src/gm.js","bot/src/turn-orchestration.js","bot/src/decision-advisory.js","bot/src/frameworks/intent/decision-advisory.js","bot/src/frameworks/intent/public.js","bot/tests/ai-gm-2026-10/rf05-f04-c05.test.mjs","bot/tests/ai-gm-2026-10/rf05-f04-c09.test.mjs"]},
+  "changed_source_sha256": {
+    "bot/src/gm.js":"E522D2DBDE59B16DFDEE05BB1A184BA75E31BE8AF95F6511F2A56C02EA5B952F",
+    "bot/src/turn-orchestration.js":"60CDD10D266D6475E9B5F74D82107CEE0E44AFFC98E3FF8BBF8BF2A0F495C289",
+    "bot/src/decision-advisory.js":"7FA9C460B0656B51372065C1F63EC414D30CF4FF257D69CC0B1EC6E64913EFD4",
+    "bot/src/frameworks/intent/decision-advisory.js":"C266582463F08077A42EF47225A6C59E6B5564847B2943F8654F2E716EB7D7E3",
+    "bot/src/frameworks/intent/public.js":"FFCC63C18D39015692286EBAEBCC147F0196D56C0CEB9E1CE4AB7432C9511B9B",
+    "bot/tests/ai-gm-2026-10/rf05-f04-c05.test.mjs":"25A121360C5271ED88BA639EAA7BF8F43F45ADB4F5FEA0B3B4C760243B38EDDF",
+    "bot/tests/ai-gm-2026-10/rf05-f04-c09.test.mjs":"633666D3FB093868003B9D11F00173E40757B35145F04D066B270EF9BDB44194",
+    "docs/Implementation_Plans/Framework_Refactor/RF01/TRANSITIONS.json":"709BC4461B42F11762D3BBC53259FAFA1CEA3AEEB4C1FFC00C003F1CFF4E48D7",
+    "docs/Implementation_Plans/Framework_Refactor/features/RF05-F04/C09-RETIRED.json":"4EE071CEF7FC22D371B9ED3731D8F28734189F2F45954E75667555E426A9F83F",
+    "docs/Implementation_Plans/Framework_Refactor/SOURCE_RELOCATION_CROSSWALK.csv":"BC72FF775DF77910F2D82A1E2FB19E9051B3F3E1C0C11002215088F0DEA5C502"
+  },
+  "transition": {
+    "retired_ids":["c68d2ed4dcedd5fc7841e88cfa427f0fea8b7777c3026cd2ea9c019d1de66bbf","c0781b4074f000b11290a1671eaa926ec868bae1ff4f88cb70bc83d038522d09"],
+    "original_manifest_sha256":"88731AD9C37D7F38B3B713DE2550622CD17CFAA978EAA908E63F87068E867BF7",
+    "retired_record":"C09-RETIRED.json",
+    "retained_location_transition":"da6b9fd102adc717ad12a977333d35955f3a7023555875b77b1e953a6ec9485d",
+    "remaining_rf05_f04_entries":54,
+    "remaining_rf05_f05_entries":441
+  },
+  "architecture": {"command":"node bot/tooling/architecture/check-boundaries.mjs --ratchet --phase RF05","exit_code":1,"source_modules":578,"unowned":0,"imports":2742,"internal_imports":2565,"largest_cycle":181,"raw_violation_occurrences":2425,"accepted_legacy_occurrences":1465,"active_violation_groups":955,"transition_errors":955,"changed_path_findings":0,"changed_path_transition_errors":0},
+  "cost": {"provider_calls":0,"provider_tokens":0,"provider_usd":0,"network":0,"database_access":0,"codex_usage":"UNMEASURED"},
+  "qualification":"C09 scoped move/public imports qualified; the root compatibility-location hold and RF05 debt remain; release NOT AUTHORIZED",
+  "rollback":"Revert only C09 runtime and evidence changes, restoring both exact transitions; preserve previous work and user edits."
+}

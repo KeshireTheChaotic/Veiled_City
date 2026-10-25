@@ -1,6 +1,6 @@
 # RF05-F04 execution ledger
 
-**Status:** PARTIAL — model selection and seven public-API import slices qualified; 55 assigned RF05-F04 transition entries remain.
+**Status:** PARTIAL — model selection and eight public-API slices qualified; 54 assigned RF05-F04 transition entries remain.
 **Base HEAD:** `b515fdb1f48da98b66564010ed87930e07cf7338`
 **Scope:** [`SCOPE.md`](SCOPE.md)
 
@@ -55,3 +55,7 @@ The existing closed GM-world schema and prompt now live under Narrative ownershi
 ## C08 — World minor-NPC schema public API
 
 The data-only World-owned `minorNpcSchema` now has its own World module and public export. `city-depth.js` retains mutation and persistence code plus the same compatibility object; `gm.js` uses World public. One frozen fresh union of eight changed-code test files passed **14/14**, exit **0**, duration **1,349.9331 ms**; syntax passed **5/5**. The architecture ratchet remains failed with 577 modules, zero unowned, 2,741 imports, and 955 active groups/errors. The GM public edge and new schema have no findings. Existing `city-depth.js` debt remains: five violation findings/two transition errors on unchanged location/edges. Transition `41a184d8e346809f13aa4feaf6a4c65501a4b20b1c040844046b09f4f857e886` is retired and preserved; **55** F04 entries remain. See `C08-SCOPE.md`, `C08-LEDGER.md`, `C08-RUN.json`, and `C08-RETIRED.json`. Release remains NOT AUTHORIZED.
+
+## C09 — Intent decision-advisory boundary
+
+The decision-advisory implementation moved byte-identically into Intent, both GM and turn-commit consumers use Intent public, and the root reader is retained as a compatibility re-export. Final affected-code batch passed **15/15** across nine fresh files, exit **0**, duration **1,367.1831 ms**; syntax passed **7/7**. One earlier batch found a stale C05 import-shape assertion; only that assertion was broadened and the complete union rerun against the final test bytes. Architecture ratchet remains failed with 578 modules, zero unowned, and 955 existing groups/errors; zero changed-path findings. Two private-import transitions were retired and preserved. The root location transition remains active. RF05-F04 has **54** and RF05-F05 has **441** assignments remaining. See `C09-SCOPE.md`, `C09-LEDGER.md`, `C09-RUN.json`, and `C09-RETIRED.json`. Release remains NOT AUTHORIZED.

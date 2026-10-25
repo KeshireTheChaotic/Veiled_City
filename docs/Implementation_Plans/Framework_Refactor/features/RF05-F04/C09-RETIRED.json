@@ -1,0 +1,35 @@
+{
+  "feature": "RF05-F04-C09",
+  "original_manifest_sha256": "88731AD9C37D7F38B3B713DE2550622CD17CFAA978EAA908E63F87068E867BF7",
+  "baseline_sha256": "c06895366ededa396d77132fea8d91ace036c0f369bcf880ab1a898a1a1370d3",
+  "retired": [
+    {
+      "id": "c68d2ed4dcedd5fc7841e88cfa427f0fea8b7777c3026cd2ea9c019d1de66bbf",
+      "code": "IMPORTS_PRIVATE_API",
+      "from": "bot/src/gm.js",
+      "to": "bot/src/decision-advisory.js",
+      "kind": "static",
+      "specifier": "./decision-advisory.js",
+      "owner": "application",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF05-F04",
+      "expires_after": "RF05",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    },
+    {
+      "id": "c0781b4074f000b11290a1671eaa926ec868bae1ff4f88cb70bc83d038522d09",
+      "code": "IMPORTS_PRIVATE_API",
+      "from": "bot/src/turn-orchestration.js",
+      "to": "bot/src/decision-advisory.js",
+      "kind": "static",
+      "specifier": "./decision-advisory.js",
+      "owner": "application",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF05-F05",
+      "expires_after": "RF05",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    }
+  ]
+}
