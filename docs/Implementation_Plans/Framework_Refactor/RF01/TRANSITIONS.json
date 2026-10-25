@@ -8127,20 +8127,6 @@
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
     {
-      "id": "0100afe6e8d5d090579b29adb38eb9f1fc8c51bfcfcc96021e446222ff7dc2e2",
-      "code": "IMPORTS_PRIVATE_API",
-      "from": "bot/src/gm.js",
-      "to": "bot/src/turn-trace-context.js",
-      "kind": "static",
-      "specifier": "./turn-trace-context.js",
-      "owner": "application",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF05-F04",
-      "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
       "id": "56e93f8b286edfc59eef4dd157c1c446627f3365ca12a923e83a1ab112648d94",
       "code": "IMPORTS_PRIVATE_API",
       "from": "bot/src/gm.js",

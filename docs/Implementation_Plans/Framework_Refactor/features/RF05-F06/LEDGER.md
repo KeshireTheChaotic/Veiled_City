@@ -39,3 +39,7 @@ The Intent decision-advisory move changed `gm.js` and `turn-orchestration.js`. T
 ### Current GM refresh after RF05-F04 C10
 
 The GM arbitration schema import now uses Intent public. The complete affected-GM union passed **16/16** across ten fresh files, exit **0**, duration **1,419.9164 ms**; syntax passed **5/5**. RF05 ratchet remains failed with 579 modules, zero unowned, 2,743 imports, and 955 groups/errors. The GM public import/new module have no findings; three existing cross-framework consumer edges remain through the compatibility path. RF05-F04 has 53 assignments remaining. See `features/RF05-F04/C10-RUN.json`; final phase-wide union remains for F06 closeout.
+
+### Current GM refresh after RF05-F04 C11
+
+The GM now imports Operations turn-trace functionality through its public API. The fresh affected-GM union passed **17/17** across eleven files, exit **0**, duration **1,435.4649 ms**; changed JavaScript/MJS syntax passed **5/5**. The async-local trace regression verifies identity and isolation across awaits through public and compatibility paths. RF05 ratchet remains failed with 580 modules, zero unowned, 2,745 imports, and 955 groups/errors. C11 changed paths have no findings; RF05-F04 has 52 assignments remaining. See `features/RF05-F04/C11-RUN.json`; final phase-wide union remains for F06 qualification.

@@ -1,6 +1,6 @@
 # RF05-F04 execution ledger
 
-**Status:** PARTIAL — model selection and nine public-API slices qualified; 53 assigned RF05-F04 transition entries remain.
+**Status:** PARTIAL — model selection and ten public-API slices qualified; 52 assigned RF05-F04 transition entries remain.
 **Base HEAD:** `b515fdb1f48da98b66564010ed87930e07cf7338`
 **Scope:** [`SCOPE.md`](SCOPE.md)
 
@@ -63,3 +63,7 @@ The decision-advisory implementation moved byte-identically into Intent, both GM
 ## C10 — Intent GM-arbitration contract
 
 The import-free arbitration contract moved byte-identically to Intent. The GM now imports it through Intent public; the root path remains a compatibility re-export for other consumers. Fresh changed-code batch passed **16/16** across ten files, exit **0**, duration **1,419.9164 ms**; syntax passed **5/5**. No inherited arbitration tests were run. The architecture ratchet remains failed at 579 modules, zero unowned, 2,743 imports, and 955 existing groups/errors. The new module and GM public import have no findings; three existing World consumers still trigger compatibility-path cross-framework findings. Transition `57e5bc30d209d7aa530428a034da2bc8fb26acf52065b046d599bb46c3d167cb` is retired and preserved; root location hold remains. **53** F04 assignments remain. See `C10-SCOPE.md`, `C10-LEDGER.md`, `C10-RUN.json`, and `C10-RETIRED.json`. Release remains NOT AUTHORIZED.
+
+## C11 — Operations turn-trace public API
+
+The AsyncLocalStorage trace module moved byte-identically to Operations; GM now imports from Operations public, while the root compatibility path continues sharing the same instance. The fresh affected-code union passed **17/17** across eleven files, exit **0**, duration **1,435.4649 ms**; syntax passed **5/5**. A new async regression verified cross-await context sharing and guild filtering across both paths. The architecture ratchet remains failed with 580 modules, zero unowned, 2,745 imports, and 955 groups/errors; changed paths have no findings. The GM private-import transition was retired and preserved, while the root module-location assignment remains. **52** F04 entries remain. See `C11-SCOPE.md`, `C11-LEDGER.md`, `C11-RUN.json`, and `C11-RETIRED.json`. Release remains NOT AUTHORIZED.

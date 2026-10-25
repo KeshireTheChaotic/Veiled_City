@@ -336,7 +336,7 @@ old_path,new_path,owner,move_phase,action,reverse_dependents,import_obligations
 "bot/src/turn-orchestration.js","bot/src/application/workflows/turn-orchestration.js","application","RF06","DECOMPOSE_BEFORE_MOVE","1","13"
 "bot/src/turn-pipeline.js","bot/src/application/workflows/turn-pipeline.js","application","RF06","DECOMPOSE_BEFORE_MOVE","0","1"
 "bot/src/turn-recovery.js","bot/src/application/workflows/turn-recovery.js","application","RF06","DECOMPOSE_BEFORE_MOVE","1","2"
-"bot/src/turn-trace-context.js","bot/src/frameworks/operations/turn-trace-context.js","operations","RF02","PILOT_MOVE_CANDIDATE","11","0"
+"bot/src/turn-trace-context.js","bot/src/frameworks/operations/turn-trace-context.js","operations","RF02","MOVED_BYTE_IDENTICAL; PUBLIC_API_ADOPTED; ROOT_COMPATIBILITY_REEXPORT_RETAINED","11","0"
 "bot/src/typed-intent-qualification.js","bot/src/frameworks/operations/typed-intent-qualification.js","operations","RF02","PILOT_MOVE_CANDIDATE","0","0"
 "bot/src/typed-intents.js","bot/src/frameworks/intent/typed-intents.js","intent","RF05","DECOMPOSE_BEFORE_MOVE","4","8"
 "bot/src/typed-mechanics.js","bot/src/frameworks/daggerheart/typed-mechanics.js","daggerheart","RF03","EXTRACT_PORTS_BEFORE_MOVE","1","2"
