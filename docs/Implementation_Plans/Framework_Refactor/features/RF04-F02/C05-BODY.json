@@ -1,0 +1,11 @@
+{
+  "original_source_sha256": "5415209d48c48bf8b9d4573386fece37475fc9737e60dcfff42e8c8d637b7a82",
+  "policy_body_sha256": "fa3555e726376afb1ec2b7c21637b1e129b5b8c17343ce107a2a6ab71fb69726",
+  "body_unchanged": true,
+  "dependencies": [
+    "narrativeSourceVisible",
+    "conversationPrincipal",
+    "indexWorldEvent"
+  ],
+  "hash_substitution": "sceneFictionHash is jsonHash; same full JSON SHA256 bytes"
+}
