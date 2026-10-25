@@ -1,0 +1,57 @@
+{
+  "architecture_exit": 1,
+  "end": "2026-10-24T21:56:42.8779170-05:00",
+  "syntax": [
+    {
+      "path": "bot/src/frameworks/session/contracts/world-events.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/frameworks/session/public.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/framework-to-framework/session--world/public.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/application/composition/session-world-events.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/application/composition/public.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/index.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/scene-setup.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/session-opening-attendance.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf04-f05-c02.test.mjs",
+      "exit": 0
+    }
+  ],
+  "hashes": {
+    "bot/src/scene-setup.js": "3709a293be31fd48f1d1827dcf49ad400a9dbd8da1cd20455ea6446ff0e34249",
+    "bot/src/framework-to-framework/session--world/public.js": "1ab212bad7276419aaf4daddb2521d80fc123a05050db3300baf19b148db15b5",
+    "bot/tests/ai-gm-2026-10/rf04-f05-c02.test.mjs": "ac73c217c7eeee1cf43b7d52b2496978a9f0bed3052c3fc428a396092b915b39",
+    "bot/src/application/composition/session-world-events.js": "a9b1bf158d4da59cae099182928056476d0207c4305001fb8a3db2bb325eea74",
+    "bot/src/index.js": "91843e1edee1b5e5a0ec9d16b2a82533e380a63b9fe4391e7ebc889daf7e573b",
+    "bot/src/frameworks/session/contracts/world-events.js": "f39c313903f71e327a6c1718ed644fe100a54f39751ba7978896adf26850667d",
+    "bot/src/session-opening-attendance.js": "691cdcc67509d26abb48043bcd9a2edc8cc47be9d69580305a420972ea78905a",
+    "bot/src/frameworks/session/public.js": "46151233238e1cd02808db0002754660c8433a029ffa6bc6b7ee99e6663344f8",
+    "bot/src/application/composition/public.js": "aa7b4bc5857c10bee82e59cd57fa6dc375819b44fa714899a103af4b16ac038d"
+  },
+  "run_id": "RF04-F05-C02-frozen",
+  "start": "2026-10-24T21:56:37.2913646-05:00",
+  "base_sha": "d50aadfabf3fe9b7386c475f523ec2aa7d29167b",
+  "test_exit": 0
+}

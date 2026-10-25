@@ -1,4 +1,4 @@
-import {initializeEnvironmentScene,initializePvpAgreements,initializeNativeOutcomes,initializeCharacterCreation,initializeNpcWorldEvidence} from './application/composition/public.js';
+import {initializeEnvironmentScene,initializePvpAgreements,initializeNativeOutcomes,initializeCharacterCreation,initializeNpcWorldEvidence,initializeSessionWorldEvents} from './application/composition/public.js';
 /** Discord runtime orchestration for message routing, serialized GM turns, world-director passes, and post-commit publication. */
 import "dotenv/config";
 import path from "node:path";
@@ -46,6 +46,7 @@ initializePvpAgreements();
 initializeNativeOutcomes();
 initializeCharacterCreation();
 initializeNpcWorldEvidence();
+initializeSessionWorldEvents();
 const config=loadConfig();
 const log=createLogger(config.logLevel);
 const db=new VeiledDB(config.dbPath,path.resolve(process.cwd(),"./sql/schema.sql"),{sqlMetrics:true});

@@ -3249,14 +3249,14 @@
         "session",
         "world"
       ],
-      "status": "PROPOSED_NO_API",
+      "status": "ADOPTED",
       "directions": [
         {
           "from": "session",
           "to": "world",
           "import_occurrences": 23,
           "injected_calls": 0,
-          "contract": "Observed dependency only; exact port remains with accountable migration"
+          "contract": "Single Session-owned indexWorldEvent capability; exact original arguments/results/errors; immutable bootstrap identity. Other observed dependencies unresolved."
         },
         {
           "from": "world",
@@ -3274,11 +3274,15 @@
           "type": "import"
         }
       ],
-      "validation": "Retain source and audience authority; design exact port in owning migration; observed imports do not prove runtime traffic.",
-      "lifecycle": "Observed proposal; no package/API/consumer claimed.",
+      "validation": "Actual Session consumers call original World issuer under unchanged native source/audience validation and transaction receipts. Missing/replaced issuer fails closed. This does not certify all Session/World traffic.",
+      "lifecycle": "Only native event issuance adopted by attendance and initial setup; remaining observed directions remain unisolated RF04 obligations.",
       "adoption_feature": "RF04",
-      "consumers": [],
-      "tests": [],
+      "consumers": [
+        "bot/src/application/composition/session-world-events.js"
+      ],
+      "tests": [
+        "bot/tests/ai-gm-2026-10/rf04-f05-c02.test.mjs"
+      ],
       "observed_directions": [
         {
           "from": "session",
@@ -3298,7 +3302,8 @@
         "pair": "session--world",
         "graph_sha256": "1caa7f33db8af9cbe17685493f4f23e46deb1c80ac2cd01c34ef3f8f7517bfe2",
         "occurrences": 39
-      }
+      },
+      "public_api": "bot/src/framework-to-framework/session--world/public.js"
     }
   ]
 }

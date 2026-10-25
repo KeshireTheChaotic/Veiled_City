@@ -17315,20 +17315,6 @@
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
     {
-      "id": "d57922a6b61bab7e58ca7806420b798953e12c37e4cd5fd4280eb32df6cab93f",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/scene-setup.js",
-      "to": "bot/src/city-calendar.js",
-      "kind": "static",
-      "specifier": "./city-calendar.js",
-      "owner": "session",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F04",
-      "expires_after": "RF04",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
       "id": "689084dbf343a2e433dbd29dcccc2eece9b5d3a5456676be3b404bf943d2d4a0",
       "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
       "from": "bot/src/scoped-memory.js",
@@ -17614,20 +17600,6 @@
       "to": "bot/src/pvp-output.js",
       "kind": "static",
       "specifier": "./pvp-output.js",
-      "owner": "session",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F04",
-      "expires_after": "RF04",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
-      "id": "0a3b393192956494ea17800a5aa7ef092a5b39b143b41d62f79331b8e1a10826",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/session-opening-attendance.js",
-      "to": "bot/src/city-calendar.js",
-      "kind": "static",
-      "specifier": "./city-calendar.js",
       "owner": "session",
       "max_occurrences": 1,
       "remove_in_feature": "RF04-F04",

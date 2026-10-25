@@ -8,3 +8,4 @@ export {initializeNativeOutcomes} from './native-outcomes.js';
 export {initializeCharacterCreation} from './character-creation.js';
 
 export {initializeNpcWorldEvidence} from './npc-world-evidence.js';
+export {initializeSessionWorldEvents} from './session-world-events.js';
