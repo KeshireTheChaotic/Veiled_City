@@ -1,0 +1,76 @@
+{
+  "base_sha": "d5f1e740ea27584c0006ca4d01d487032dced27d",
+  "original_source_sha256": "9f0660959dde11a75ca2e883600b5ed8f4c34d8a0673379a5d97f0a35b9c1703",
+  "extracted": [
+    {
+      "name": "currentScene",
+      "sha256": "892e45d6624d52d61f2c3920b80daf9ad9ec851fb8059153764860287c6b8d17"
+    },
+    {
+      "name": "presenceKey",
+      "sha256": "7131c67ae16b9e8a58db54869fe6751b14d17021321e1244bd72d8dba448940e"
+    },
+    {
+      "name": "scenePresence",
+      "sha256": "56b4f35b5ca51e9692dea0947b250bfa663d2024dac44dcb9c217210c4c76677"
+    },
+    {
+      "name": "lastVerifiedCharacterPresence",
+      "sha256": "144c6327e578514c71e1ec3c40a9e0f2efb0ebe11ba2c357052552c80ad41932"
+    },
+    {
+      "name": "reconcileSceneArrival",
+      "sha256": "2f95414d73c7c364bdbe2ba1e3c2faefb141028d4cf70a39b2cbe70fd0e65f16"
+    },
+    {
+      "name": "recordCharacterArrival",
+      "sha256": "49763be073faacdb0ef6ce46bbaa93a60c64aa2b5453841504673b94b7d578e7"
+    },
+    {
+      "name": "records",
+      "sha256": "ba0d618c746ad3b6bd52960a9fa5c3c7a1c621d345a739b46e51788c0ebd070a"
+    },
+    {
+      "name": "recordScenePresence",
+      "sha256": "c19715e067603761be4d73b75854473aa44b9ab3addbb7e05039483b9f72885f"
+    },
+    {
+      "name": "accessFromRows",
+      "sha256": "2a7a9e8acd4acac049916f09b75618c8d3ef4ce1b388bae7d84d4ed578021bb7"
+    },
+    {
+      "name": "sceneAccess",
+      "sha256": "e7e5efb3934b8722635d8d8029b4bae201272b2d40e0dd319c87e8c19396c794"
+    },
+    {
+      "name": "sceneView",
+      "sha256": "7aecaae21009818cfafbe427ed11f65a5c7f069768ec93344adec12efa3951c6"
+    },
+    {
+      "name": "archiveScenePresence",
+      "sha256": "fdba92c34595e9a94842b31b57de37f269757349e31e31d27d4d24f83b778984"
+    }
+  ],
+  "retained": [
+    {
+      "name": "npcEvidenceActive",
+      "sha256": "0c7915f4a9eedda0289df82405bfcb204f082be83839d02f80765df28d8376e8"
+    },
+    {
+      "name": "assertNpcObservation",
+      "sha256": "02ca941aa25aa5ebdfbd2993752422807ebb921c5075216b25c41bf251b4ea94"
+    }
+  ],
+  "bodies_unchanged": true,
+  "dependencies": [
+    "cityObject",
+    "cityKey",
+    "cityVisibility",
+    "cityAudit",
+    "indexWorldEvent",
+    "requireCitySource",
+    "activeCityProxy",
+    "nativeMovementConditionIssue"
+  ],
+  "hash_substitution": "same truncated32hex full JSON SHA256; range array shared original/new exports"
+}

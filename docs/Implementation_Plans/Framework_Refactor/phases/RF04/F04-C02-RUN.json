@@ -1,0 +1,32 @@
+{
+  "syntax": [
+    {
+      "exit": 0,
+      "path": "bot/src/frameworks/session/scene-continuity.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/frameworks/session/public.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/scene-continuity.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/tests/ai-gm-2026-10/rf04-f04-c02.test.mjs"
+    }
+  ],
+  "base_sha": "d5f1e740ea27584c0006ca4d01d487032dced27d",
+  "start": "2026-10-24T21:49:49.2889480-05:00",
+  "run_id": "RF04-F04-C02-frozen",
+  "end": "2026-10-24T21:49:53.3083974-05:00",
+  "architecture_exit": 1,
+  "test_exit": 1,
+  "hashes": {
+    "bot/src/frameworks/session/scene-continuity.js": "caa7860e50feaa83cf7bb6e40923fbfb25b36702638181d8cc0484710d5dca7d",
+    "bot/src/scene-continuity.js": "ea062471fc72796b0613b0516e081d9d86c873db9b0ac67b5d6693319b0b6f0a",
+    "bot/tests/ai-gm-2026-10/rf04-f04-c02.test.mjs": "0c4759393f868f857c2f1ab7df096f2d5923290a52feb16351a90355e9aaf4ca",
+    "bot/src/frameworks/session/public.js": "63b43a617727476cf30c5c5c4f5e78965cda0dcd2acb4aa35a816e0aa3b68538"
+  }
+}

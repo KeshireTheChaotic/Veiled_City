@@ -1,0 +1,33 @@
+{
+  "reason": "Exact original hash-only scene-to-NPC source edge removed; JSON SHA256 truncated32hex preserves existing IDs.",
+  "entries": [
+    {
+      "id": "267dbaf275bb9e59042c7aca3aecde7e4ba06f817f7d1a679c87543d902a4470",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/scene-continuity.js",
+      "to": "bot/src/simulation-motivation.js",
+      "kind": "static",
+      "specifier": "./simulation-motivation.js",
+      "owner": "session",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F04",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    },
+    {
+      "id": "cac717bd9ce82e30e2d0601149515ad060039e3d9822bf4646c138e09e2645ee",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "from": "bot/src/scene-continuity.js",
+      "to": "bot/src/simulation-motivation.js",
+      "kind": "static",
+      "specifier": "./simulation-motivation.js",
+      "owner": "session",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F04",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+    }
+  ]
+}

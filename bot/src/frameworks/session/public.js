@@ -4,3 +4,4 @@ export * from './owner-action-terminal.js';
 export * from './opening-entry-evidence.js';
 export * from './assembly-evidence.js';
 export * from './roster.js';
+export {createSceneContinuity,RANGE_BANDS} from './scene-continuity.js';

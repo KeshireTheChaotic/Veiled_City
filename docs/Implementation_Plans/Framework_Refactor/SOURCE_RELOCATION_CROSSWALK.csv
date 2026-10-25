@@ -298,7 +298,7 @@ old_path,new_path,owner,move_phase,action,reverse_dependents,import_obligations
 "bot/src/rules-arbitration.js","bot/src/frameworks/daggerheart/rules-arbitration.js","daggerheart","RF05","NATIVE_EXTRACTED_QUALIFIED_SOURCE_ADOPTION_DEFERRED:RF04-F01+RF04-F04+RF05-F05","8","5"
 "bot/src/rules-srd.js","bot/src/frameworks/daggerheart/rules-srd.js","daggerheart","RF03","PILOT_MOVE_CANDIDATE","1","0"
 "bot/src/scene-action-window.js","bot/src/frameworks/session/scene-action-window.js","session","RF04","EXTRACT_PORTS_BEFORE_MOVE","3","1"
-"bot/src/scene-continuity.js","bot/src/frameworks/session/scene-continuity.js","session","RF04","DECOMPOSE_BEFORE_MOVE","95","7"
+"bot/src/scene-continuity.js","bot/src/frameworks/session/scene-continuity.js","session","RF04","OCCUPANCY_EXTRACTED_NPC_EVIDENCE_STILL_MIXED","95","7"
 "bot/src/scene-description.js","bot/src/frameworks/narrative/scene-description.js","narrative","RF05","EXTRACT_PORTS_BEFORE_MOVE","2","5"
 "bot/src/scene-entry-native.js","bot/src/frameworks/session/scene-entry-native.js","session","RF04","DECOMPOSE_BEFORE_MOVE","3","6"
 "bot/src/scene-entry.js","bot/src/frameworks/session/scene-entry.js","session","RF04","EXTRACT_PORTS_BEFORE_MOVE","3","4"
