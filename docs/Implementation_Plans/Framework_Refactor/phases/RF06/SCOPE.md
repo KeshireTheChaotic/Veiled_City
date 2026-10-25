@@ -6,7 +6,7 @@ Isolate persistence, outbox/publication and Discord transport, command workflows
 
 ## Entry gate
 
-The roadmap requires domain interfaces and the exact commit contract from RF03–RF05. The current checkout does not meet that gate: RF04 remains incomplete and RF05's RF06 qualification checkpoint records a failed architecture ratchet plus 289 RF03-feature holds, 62 RF04/F04 assignments, and 442 RF05/F05 assignments. In particular, `state.js` and `turn-orchestration.js` still contain unresolved native commit orchestration. Until those interfaces are qualified, RF06 runtime migrations are held. Read-only source inventory and plan reconciliation may continue.
+The roadmap requires domain interfaces and the exact commit contract from RF03–RF05. The current checkout does not meet that gate: RF04 remains incomplete and RF05's current qualification checkpoint records a failed architecture ratchet plus 289 RF05-F03 holds, 58 RF05-F04 assignments, and 442 RF05-F05 assignments. In particular, `state.js` and `turn-orchestration.js` still contain unresolved native commit orchestration. Until those interfaces are qualified, RF06 runtime migrations are held. Read-only source inventory and plan reconciliation may continue.
 
 ## Known ownership assignments
 

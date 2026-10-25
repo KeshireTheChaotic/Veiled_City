@@ -7,7 +7,7 @@
 
 ## Prerequisite evidence
 
-The roadmap states that RF06 requires domain interfaces and the exact commit contract from RF03–RF05. RF04 remains incomplete. RF05 is recorded as an incomplete checkpoint: architecture ratchet failed with 967 transition errors; RF05-F03/F04/F05 retain 289/62/442 exact assigned entries. `state.js` still contains cross-domain mutation/commit orchestration and `turn-orchestration.js` remains a mixed transactional commit workflow. These are explicit sequencing dependencies, not evidence of a critical runtime defect. RF06 runtime changes therefore remain locally held while safe static planning continues.
+The roadmap states that RF06 requires domain interfaces and the exact commit contract from RF03–RF05. RF04 remains incomplete. RF05 is recorded as an incomplete checkpoint: architecture ratchet failed; RF05-F03/F04/F05 currently retain 289/58/442 exact assigned entries. `state.js` still contains cross-domain mutation/commit orchestration and `turn-orchestration.js` remains a mixed transactional commit workflow. These are explicit sequencing dependencies, not evidence of a critical runtime defect. RF06 runtime changes therefore remain locally held while safe static planning continues.
 
 ## Source inventory
 
@@ -34,3 +34,7 @@ The RF04 owner-authorized deadline reconciliation assigns 12 existing consumer e
 ## RF06 persistence inventory checkpoint
 
 At `a9069bbbd75ff0fa0648c50e90812ff59a240ee3`, a read-only inspection of `bot/src/db.js` recorded its 2,436 lines, 13 imports, 411 direct SQL call sites, and the connection/schema, synchronous transaction, repository, embedded domain-orchestration, and durable turn/publication receipt seams. The specific decomposition observations and sequencing rules are in [`PERSISTENCE-BOUNDARY-INVENTORY.md`](PERSISTENCE-BOUNDARY-INVENTORY.md). No source or database was changed or opened, so no tests or syntax checks were run. RF06 runtime work remains held by its existing entry gate; this inventory does not qualify an RF06 implementation feature or release.
+
+## Current dependency refresh
+
+At HEAD `be962d06c5b90975b6658755f9b268a4b09e15e6` on `codex/clean-ai-gm-2026-10`, RF05 still fails its architecture ratchet (exit 1): 574 source modules, zero unowned, 2,736 imports, 955 active groups and 955 transition errors. The RF05-F06 evidence hash is `2736502A3D9C0EB13166505C65E20853699B7F3BE0E7065B68A0340F8EF1CC91`. `db.js` remains unchanged at SHA-256 `65D2179E79AAFB927A87EF62D5569DD01A2D5D813CABEE2CB70526322D5E96AA`, matching the inspected inventory source. This is a documentation-only reconciliation; it does not open a database, alter a persistence contract, qualify RF05, or clear the RF06 entry gate. No tests or syntax checks were run.
