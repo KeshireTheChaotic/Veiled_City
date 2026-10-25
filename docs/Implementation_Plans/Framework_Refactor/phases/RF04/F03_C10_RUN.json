@@ -1,0 +1,42 @@
+{
+  "architecture_exit": 1,
+  "hashes": {
+    "bot/src/frameworks/knowledge/public.js": "13ba51b7e00e9665f21ba54df84532ced6f75dea908956e1b5f6202370d1bd9a",
+    "bot/src/ai-intents.js": "581dbaa593e9409793cf3e459b4f7c1dc9b40475b0c05f132acf5f902746c85d",
+    "bot/src/frameworks/knowledge/presentation-evidence.js": "f8d3e74b5f0fbb89d4d02d45560121cb6ce8fbee336908682dbfa6083d5af135",
+    "bot/src/presentation-evidence.js": "9492d8440c4c15cbc9a5f114ecc7daaa082ac68b58126d84dc8d7c43a61dd85f",
+    "bot/tests/ai-gm-2026-10/rf04-f03-c10.test.mjs": "d257b72c3cb5c63d10db308e05570aa05d73727c33cdddefcf16834bee141c4f",
+    "bot/src/kernel/state-revision.js": "8f83a933e6a1d455020e58c4d2517c5ec4ed38e51119024e6be70c4064409ddd"
+  },
+  "base_sha": "9242a6068e65464b2a877cf225eabaea442aab5d",
+  "run_id": "RF04_F03_C10",
+  "start": "2026-10-24T21:19:22.4834028-05:00",
+  "end": "2026-10-24T21:19:25.5770503-05:00",
+  "test_exit": 0,
+  "syntax": [
+    {
+      "exit": 0,
+      "path": "bot/src/frameworks/knowledge/presentation-evidence.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/frameworks/knowledge/public.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/presentation-evidence.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/kernel/state-revision.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/ai-intents.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/tests/ai-gm-2026-10/rf04-f03-c10.test.mjs"
+    }
+  ]
+}

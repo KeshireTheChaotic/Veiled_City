@@ -1,0 +1,14 @@
+{
+  "base_sha": "9242a6068e65464b2a877cf225eabaea442aab5d",
+  "original_source_sha256": "9201e90ed80eaad66fc37d8f9509b194bdf8e45fcaa0e118fe7b46bcb02fea77",
+  "policy_body_sha256": "8c2e3daaf1c60b35b7e613aa233b81a2b3292002d40104505e2bed70ac2c5adb",
+  "body_unchanged": true,
+  "dependencies": [
+    "typedEvidence",
+    "objectiveEvidence",
+    "activeEvidence",
+    "cityAudit",
+    "indexWorldEvent"
+  ],
+  "kernel_revision": "Exact original stateRevision; original Intent export now same function, no JSON byte/sentinel change"
+}

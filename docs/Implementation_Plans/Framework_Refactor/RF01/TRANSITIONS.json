@@ -14782,20 +14782,6 @@
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
     {
-      "id": "3f1578ee8906785218b120a08cc002adc4a78ff6474bf17d4bd17b46ae71f06b",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/presentation-evidence.js",
-      "to": "bot/src/ai-intents.js",
-      "kind": "static",
-      "specifier": "./ai-intents.js",
-      "owner": "knowledge",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F03",
-      "expires_after": "RF04",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
       "id": "f45aba2564f1e3ee5888c2e0cdd2391dede0d6a963f7411a9345f03d6eb1bfba",
       "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
       "from": "bot/src/prompt-budget.js",

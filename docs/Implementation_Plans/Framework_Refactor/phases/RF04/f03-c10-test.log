@@ -1,0 +1,64 @@
+TAP version 13
+# Subtest: kernel row revision preserves original Intent function identity, reflected name, JSON bytes and absent sentinel
+ok 1 - kernel row revision preserves original Intent function identity, reflected name, JSON bytes and absent sentinel
+  ---
+  duration_ms: 1.1136
+  type: 'test'
+  ...
+# Subtest: uncertain legacy and model relationships retain perspective and cannot become PC consent or debt
+ok 2 - uncertain legacy and model relationships retain perspective and cannot become PC consent or debt
+  ---
+  duration_ms: 165.0025
+  type: 'test'
+  ...
+# Subtest: artifact accepted facts require exact objective source text and the proposed audience before presentation
+ok 3 - artifact accepted facts require exact objective source text and the proposed audience before presentation
+  ---
+  duration_ms: 182.1014
+  type: 'test'
+  ...
+# Subtest: source-backed rumor or confident model assertion does not become an artifact canonical fact
+ok 4 - source-backed rumor or confident model assertion does not become an artifact canonical fact
+  ---
+  duration_ms: 177.397
+  type: 'test'
+  ...
+# Subtest: GM review adds private sourced metadata without rewriting original handout or canon and survives restart
+ok 5 - GM review adds private sourced metadata without rewriting original handout or canon and survives restart
+  ---
+  duration_ms: 179.4477
+  type: 'test'
+  ...
+# Subtest: missing reviewer, stale target revision and closed-field violations fail before review metadata is committed
+ok 6 - missing reviewer, stale target revision and closed-field violations fail before review metadata is committed
+  ---
+  duration_ms: 165.5118
+  type: 'test'
+  ...
+# Subtest: review audit failure rolls native review event and annotation back without touching the original
+ok 7 - review audit failure rolls native review event and annotation back without touching the original
+  ---
+  duration_ms: 166.0234
+  type: 'test'
+  ...
+# Subtest: retracted review ancestry remains historical metadata with current evidence_active false
+ok 8 - retracted review ancestry remains historical metadata with current evidence_active false
+  ---
+  duration_ms: 173.9798
+  type: 'test'
+  ...
+# Subtest: presentation views retain exact campaign isolation and full-key access beyond recent summary
+ok 9 - presentation views retain exact campaign isolation and full-key access beyond recent summary
+  ---
+  duration_ms: 194.1185
+  type: 'test'
+  ...
+1..9
+# tests 9
+# suites 0
+# pass 9
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1926.8786

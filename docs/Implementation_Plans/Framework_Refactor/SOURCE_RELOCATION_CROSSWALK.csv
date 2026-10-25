@@ -261,7 +261,7 @@ old_path,new_path,owner,move_phase,action,reverse_dependents,import_obligations
 "bot/src/pre-roll-fear-notice.js","bot/src/frameworks/daggerheart/pre-roll-fear-notice.js","daggerheart","RF06","NATIVE_EXTRACTED_QUALIFIED_SOURCE_ADOPTION_DEFERRED:RF05-F05+RF06-F03","3","2"
 "bot/src/pre-roll-fear-recovery.js","bot/src/frameworks/daggerheart/pre-roll-fear-recovery.js","daggerheart","RF03","PILOT_MOVE_CANDIDATE","2","0"
 "bot/src/pre-roll-fear.js","bot/src/frameworks/daggerheart/pre-roll-fear.js","daggerheart","RF03","DECOMPOSE_BEFORE_MOVE","9","5"
-"bot/src/presentation-evidence.js","bot/src/frameworks/knowledge/presentation-evidence.js","knowledge","RF04","EXTRACT_PORTS_BEFORE_MOVE","4","2"
+"bot/src/presentation-evidence.js","bot/src/frameworks/knowledge/presentation-evidence.js","knowledge","RF04","PRESENTATION_POLICY_EXTRACTED_INTENT_HASH_DEPENDENCY_REMOVED","4","2"
 "bot/src/prompt-budget.js","bot/src/frameworks/ai-provider/prompt-budget.js","ai-provider","RF05","EXTRACT_PORTS_BEFORE_MOVE","1","1"
 "bot/src/provenance.js","bot/src/frameworks/knowledge/provenance.js","knowledge","RF04","PILOT_MOVE_CANDIDATE","1","0"
 "bot/src/public-referents.js","bot/src/frameworks/knowledge/public-referents.js","knowledge","RF04","PILOT_MOVE_CANDIDATE","2","0"

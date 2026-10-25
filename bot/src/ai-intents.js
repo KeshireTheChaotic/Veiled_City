@@ -38,7 +38,8 @@ const adapters=new Map();
 export const FEATURE_FLAGS={institution:'institutions',roll:"roll_requests",setup:"narrative_setups",organization:"player_organizations",influence:"audience_influence",evidence:"evidence_custody",dialogue:"dialogue_history",encounter:"encounter_intelligence",goal:"emergent_goals",consequence:"consequences",scene:"scene_continuity",group:"emergent_groups",
   strategy:"strategies",arc:"personal_arcs",discovery:"discovery",project:"long_projects",mediation:"conflict_mediation",
   memory:"memory_consolidation",density:"activity_density"};
-export const stateRevision=row=>row?hash(row):"absent";
+import {stateRevision} from './kernel/state-revision.js';
+export {stateRevision} from './kernel/state-revision.js';
 export function registerIntentAdapter(feature,adapter){adapters.set(feature,adapter);}
 export function delegationPolicy(db,guild){
   return db.getCityRecord(guild,"ai_delegation","campaign")?.data||{mode:"manual",revision:0,allow:[],max_operations:1,max_cost:0,expires_minute:null};
