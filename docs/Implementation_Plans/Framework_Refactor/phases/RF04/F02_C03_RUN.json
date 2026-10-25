@@ -1,0 +1,32 @@
+{
+  "architecture_exit": 0,
+  "end": "2026-10-24T20:57:59.5194682-05:00",
+  "start": "2026-10-24T20:57:53.9112897-05:00",
+  "base_sha": "be50cba788bb4f0727612416f24041e9ed0b0106",
+  "run_id": "RF04_F02_C03",
+  "test_exit": 1,
+  "hashes": {
+    "bot/tests/ai-gm-2026-10/rf04-f02-c03.test.mjs": "8aff2e93130557eeab22a84dc384a5c55a2deaa26708622e3602548271e3cfdd",
+    "bot/src/frameworks/npc/public.js": "aae01850fddc8a6926bb9729d92c596a0406e79900e7882466eb698d8cc62b01",
+    "bot/src/frameworks/npc/strategy.js": "ee2fb1f12abccd5f722ba5fe7fb27628d6f534c329d3e7ed75ae0617d164277d",
+    "bot/src/simulation-strategy.js": "c353b1697dc28562444d015c972b00ac5aa9d640edbf6ea7c11a458417c84e39"
+  },
+  "syntax": [
+    {
+      "exit": 0,
+      "path": "bot/src/frameworks/npc/strategy.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/frameworks/npc/public.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/src/simulation-strategy.js"
+    },
+    {
+      "exit": 0,
+      "path": "bot/tests/ai-gm-2026-10/rf04-f02-c03.test.mjs"
+    }
+  ]
+}

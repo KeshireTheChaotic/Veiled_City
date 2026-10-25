@@ -1,0 +1,16 @@
+TAP version 13
+# Subtest: actor budget excludes duplicates and forwards only explicit delegated review to the mocked intent boundary
+ok 1 - actor budget excludes duplicates and forwards only explicit delegated review to the mocked intent boundary
+  ---
+  duration_ms: 178.464
+  type: 'test'
+  ...
+1..1
+# tests 1
+# suites 0
+# pass 1
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 685.3776

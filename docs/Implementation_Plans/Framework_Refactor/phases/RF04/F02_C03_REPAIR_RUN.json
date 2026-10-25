@@ -1,0 +1,10 @@
+{
+  "start": "2026-10-24T20:58:13.2652701-05:00",
+  "base_sha": "be50cba788bb4f0727612416f24041e9ed0b0106",
+  "end": "2026-10-24T20:58:14.1030811-05:00",
+  "reason": "One fixture assumed database row ordering; both eligible duplicate plans now explicitly use delegated review, exact selected row verified.",
+  "syntax_exit": 0,
+  "test_exit": 0,
+  "run_id": "RF04_F02_C03_REPAIR",
+  "test_hash": "390330ecda4bd26ea09ac1f0c66ad380f76dec0d717293082e2154d3d811a273"
+}

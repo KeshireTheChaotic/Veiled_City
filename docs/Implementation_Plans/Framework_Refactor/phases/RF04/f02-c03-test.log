@@ -1,0 +1,126 @@
+TAP version 13
+# Subtest: strategy proposal preserves a private subjective plan without resolving an action or spending resources
+ok 1 - strategy proposal preserves a private subjective plan without resolving an action or spending resources
+  ---
+  duration_ms: 177.3319
+  type: 'test'
+  ...
+# Subtest: actual World action receipt determines cost and reconciliation once across SQLite restart
+ok 2 - actual World action receipt determines cost and reconciliation once across SQLite restart
+  ---
+  duration_ms: 194.3082
+  type: 'test'
+  ...
+# Subtest: dependent steps submit and reconcile on separate opportunities without skipping native receipts
+ok 3 - dependent steps submit and reconcile on separate opportunities without skipping native receipts
+  ---
+  duration_ms: 199.9466
+  type: 'test'
+  ...
+# Subtest: delayed actual action is cancelled by pause with no resource payment or later automatic replay
+ok 4 - delayed actual action is cancelled by pause with no resource payment or later automatic replay
+  ---
+  duration_ms: 196.4839
+  type: 'test'
+  ...
+# Subtest: pause after actual completion reconciles cost rather than cancelling or charging twice
+ok 5 - pause after actual completion reconciles cost rather than cancelling or charging twice
+  ---
+  duration_ms: 187.9063
+  type: 'test'
+  ...
+# Subtest: existing plan guards reject authority injection, PC targeting, cycles and disclosure substitution before saving
+ok 6 - existing plan guards reject authority injection, PC targeting, cycles and disclosure substitution before saving
+  ---
+  duration_ms: 175.5926
+  type: 'test'
+  ...
+# Subtest: missing actor knowledge and native PC identity never become valid strategy ownership
+ok 7 - missing actor knowledge and native PC identity never become valid strategy ownership
+  ---
+  duration_ms: 181.8008
+  type: 'test'
+  ...
+# Subtest: stale source blocks new execution durably without changing resources or prior receipt history
+ok 8 - stale source blocks new execution durably without changing resources or prior receipt history
+  ---
+  duration_ms: 198.0091
+  type: 'test'
+  ...
+# Subtest: resource shortage and fictional deadline hold only the current plan without synthetic action outcomes
+ok 9 - resource shortage and fictional deadline hold only the current plan without synthetic action outcomes
+  ---
+  duration_ms: 182.8967
+  type: 'test'
+  ...
+# Subtest: audit failure rolls actual action, resource, goal progress and plan submission back before recording blocked state
+ok 10 - audit failure rolls actual action, resource, goal progress and plan submission back before recording blocked state
+  ---
+  duration_ms: 191.1538
+  type: 'test'
+  ...
+# Subtest: replan needs a new acquired source, immutable owner and objective, and never reuses executed step keys
+ok 11 - replan needs a new acquired source, immutable owner and objective, and never reuses executed step keys
+  ---
+  duration_ms: 192.8683
+  type: 'test'
+  ...
+# Subtest: Director pause and disabled strategies leave active plans and resources unchanged
+ok 12 - Director pause and disabled strategies leave active plans and resources unchanged
+  ---
+  duration_ms: 178.8785
+  type: 'test'
+  ...
+# Subtest: serialized provenance cannot manufacture native execution or change the original accepted payload
+ok 13 - serialized provenance cannot manufacture native execution or change the original accepted payload
+  ---
+  duration_ms: 1297.6105
+  type: 'test'
+  ...
+# Subtest: saved native-origin plan is held without its current receipt even while legacy strategies are enabled
+ok 14 - saved native-origin plan is held without its current receipt even while legacy strategies are enabled
+  ---
+  duration_ms: 175.6076
+  type: 'test'
+  ...
+# Subtest: actor budget excludes duplicates and forwards only explicit delegated review to the mocked intent boundary
+not ok 15 - actor budget excludes duplicates and forwards only explicit delegated review to the mocked intent boundary
+  ---
+  duration_ms: 187.6998
+  type: 'test'
+  location: 'D:\\Library\\Development\\Veiled_City\\bot\\tests\\ai-gm-2026-10\\rf04-f02-c03.test.mjs:90:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    0 !== 1
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 1
+  actual: 0
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf04-f02-c03.test.mjs:91:507)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: original source exports reach the extracted proposal and lifecycle without a second policy implementation
+ok 16 - original source exports reach the extracted proposal and lifecycle without a second policy implementation
+  ---
+  duration_ms: 181.5289
+  type: 'test'
+  ...
+1..16
+# tests 16
+# suites 0
+# pass 15
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 4589.6032

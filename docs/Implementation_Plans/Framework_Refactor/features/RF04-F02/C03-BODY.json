@@ -1,0 +1,29 @@
+{
+  "base_sha": "be50cba788bb4f0727612416f24041e9ed0b0106",
+  "original_source_sha256": "231c5e1e8f585bd4582b4e11b21812880c6569abc4bb92a037bdeb0f7988cffc",
+  "policy_body_sha256": "3094526c6926e4335249e0595d1103ffc7274de4374971df8da8c0cf8ec00deb",
+  "same_body": true,
+  "functions": [
+    "manageStrategy",
+    "executeStrategyStep",
+    "runStrategyOpportunity"
+  ],
+  "dependencies": [
+    "cityObject",
+    "cityKey",
+    "cityInteger",
+    "cityAudit",
+    "submitInstitutionAction",
+    "reviewInstitutionAction",
+    "actorSource",
+    "ACTION_TYPES",
+    "ACTION_COSTS",
+    "actorState",
+    "submitNpcAction",
+    "delegateStrategy",
+    "nativeWorldOperationAllows",
+    "nativeWorldOperationOrigin",
+    "nativeWorldStrategyAllowed",
+    "withNativeStrategyExecution"
+  ]
+}

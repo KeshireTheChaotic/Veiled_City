@@ -323,7 +323,7 @@ old_path,new_path,owner,move_phase,action,reverse_dependents,import_obligations
 "bot/src/simulation-commands.js","bot/src/application/workflows/simulation-commands.js","application","RF06","DECOMPOSE_BEFORE_MOVE","1","7"
 "bot/src/simulation-motivation.js","bot/src/frameworks/npc/motivation.js","npc","RF04","NPC_RULES_EXTRACTED_ACTOR_SOURCE_REGISTERED_TWO_WORLD_CONSUMERS_ADOPTED_OTHER_SOURCE_COMPOSITION_REMAINS","22","6"
 "bot/src/simulation-schema.js","bot/src/frameworks/world/simulation-schema.js","world","RF04","EXTRACT_PORTS_BEFORE_MOVE","1","1"
-"bot/src/simulation-strategy.js","bot/src/frameworks/npc/simulation-strategy.js","npc","RF04","EXTRACT_PORTS_BEFORE_MOVE","4","6"
+"bot/src/simulation-strategy.js","bot/src/frameworks/npc/strategy.js","npc","RF04","STRATEGY_POLICY_EXTRACTED_SOURCE_PORTS_PENDING","4","6"
 "bot/src/simulation.js","bot/src/frameworks/world/simulation.js","world","RF04","DECOMPOSE_BEFORE_MOVE","18","8"
 "bot/src/source-communication.js","bot/src/frameworks/intent/source-communication.js","intent","RF05","PILOT_MOVE_CANDIDATE","5","0"
 "bot/src/state.js","bot/src/application/workflows/state.js","application","RF06","DECOMPOSE_BEFORE_MOVE","4","35"
