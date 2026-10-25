@@ -17,7 +17,8 @@
 | RF05-F02 | COMPLETE FOR SCOPED RAW-TRANSPORT BOUNDARY | Final fresh test 7/7 pass, syntax 4/4 pass; architecture gate finds no changed-path violations but remains failed on prior RF04 debt. See `RF05-F02-LEDGER.md` and `RF05-F02-RUN.json`. |
 | RF05-F03 | PARTIAL — SCOPED SLICES QUALIFIED, 289 ASSIGNED TRANSITIONS LOCALLY HELD | Final frozen batch 9/9 pass, syntax 9/9 pass; no changed-path violations. See `RF05-F03-LEDGER.md`, `RF05-F03-RUN.json`, and `LOCAL_HOLDS.json`. |
 | RF05-F04 | PARTIAL — MODEL-SELECTION SLICE QUALIFIED; 62 ASSIGNED ENTRIES REMAIN | Fresh test 3/3 pass, syntax 5/5 pass; no changed-path findings. See `features/RF05-F04/LEDGER.md` and `RF05-F04-RUN.json`. |
-| RF05-F05–F06 | NOT STARTED | Create each feature's scope and ledger immediately before its work. |
+| RF05-F05 | PARTIAL — PURE MUTATION-RESULT AGGREGATION QUALIFIED; 442 ASSIGNED ENTRIES REMAIN | Fresh test 3/3 pass, syntax 3/3 pass; no changed-path findings. See `features/RF05-F05/LEDGER.md` and `RF05-F05-RUN.json`. |
+| RF05-F06 | NOT STARTED | Phase qualification follows independently supportable RF05-F05 work. |
 
 ## Phase closeout
 
@@ -25,7 +26,7 @@
 - RF05-F01 final fresh tests: 4/4 pass, exit 0, 65.9672 ms. Changed-code syntax: 4/4 checks pass, exit 0.
 - RF05-F02 final fresh tests: 7/7 pass, exit 0, 657.8748 ms; one initial 6/7 run failed only because the delegate normalized default options, then passed after exact option forwarding. Changed-code syntax: 4/4 checks pass, exit 0.
 - RF05-F03 final frozen tests: 9/9 pass, exit 0, 95.8206 ms. Changed-code syntax: 9/9 checks pass, exit 0. The prompt-budget test was rerun because the associated `gm.js` import path changed; it passed again.
-- Latest phase-aware architecture ratchet: fail, exit 1; 570 source modules, zero unowned, 2730 imports, 968 active prior-phase groups and 967 transition errors. No F01–F03 changed-path violations or transition errors. RF04's gate passed at RF04, but unresolved RF04 records are expired under RF05; RF04 remains incomplete. RF05-F03 also retains 289 locally documented exact transition assignments. This failure does not stop independent RF05 work.
+- Latest phase-aware architecture ratchet after F05-F05: fail, exit 1; 572 source modules, zero unowned, 2732 imports, 968 active prior-phase groups and 967 transition errors. No F01–F05 changed-path violations or transition errors. RF04's gate passed at RF04, but unresolved RF04 records are expired under RF05; RF04 remains incomplete. RF05-F03 retains 289 locally documented exact assignments; F04 retains 62 and F05 retains 442. This failure does not stop independent RF05 work.
 - Architecture and changed-code evidence: recorded per feature; the final union is reserved for RF05-F06.
 - Release: NOT AUTHORIZED.
 - Rollback: revert only RF05-specific commits in reverse order; do not reset or clean the checkout and do not revert pre-existing user changes.

@@ -1,0 +1,23 @@
+# RF05-F05 execution ledger
+
+**Status:** PARTIAL — pure result-aggregation slice qualified; 442 assigned RF05-F05 transition entries remain.
+**Base HEAD:** `410cbd024c4f2cb4b0a0d26413da03cc625e64e6`
+**Scope:** [`SCOPE.md`](SCOPE.md)
+
+## Source evidence
+
+`state.js` is classified as an application-owned legacy module. `assertMutationSuccess` is a pure application receipt aggregator used twice by `state.js`; its behavior is independent of the surrounding database and native validators. This slice moves only that function to `application/workflows` and uses the same-owner application import rule. The larger `state.js` decomposition remains under its existing RF06 source assignment.
+
+## Implementation and verification
+
+Moved the unchanged `assertMutationSuccess` function into `application/workflows/state-mutation-results.js`; `state.js` imports it and retains both call sites. This is an application-to-application boundary. No native validator, persistence method, transaction, Daggerheart rule, or receipt meaning changed.
+
+Fresh test `bot/tests/ai-gm-2026-10/rf05-f05-mutation-results.test.mjs`: **3/3 passed**, exit **0**, duration **63.5937 ms**, one launch. It covers ordinary success, expected canon conflicts, blocked results, failure ordering, exact error code/message, and preserved failure-row references. Changed JavaScript syntax: **3/3 passed**, exit **0**. RF05 architecture ratchet: **failed**, exit **1**, with 572 modules, zero unowned, 2732 imports, 968 active historical violation groups, and 967 transition errors. Changed-path findings for `state.js` and the new helper: **zero violations and zero transition errors**. The **442** exact entries assigned to RF05-F05 remain (81 legacy locations, 20 direct framework imports, 67 private API imports, 274 cycle edges). No provider calls, tokens, or spend. Exact outputs and hashes are in `RF05-F05-RUN.json` and `phases/RF05/rf05-f05-mutation-results-*.log`.
+
+## Holds and rollback
+
+The broader RF05-F05 transition debt remains unresolved. Revert only this feature's checkpoint; preserve RF05-F01 through F04 and all pre-existing user edits. Provider calls and spend remain zero.
+
+## Next step
+
+Continue with other independently supportable RF05 work and preserve the phase's incomplete status until its actual acceptance obligations are met.

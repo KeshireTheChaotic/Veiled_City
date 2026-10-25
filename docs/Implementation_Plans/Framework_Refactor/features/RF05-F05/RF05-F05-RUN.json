@@ -1,0 +1,70 @@
+{
+  "feature": "RF05-F05",
+  "status": "PARTIAL_MUTATION_RESULT_SLICE_QUALIFIED_442_TRANSITIONS_REMAIN",
+  "base_head": "410cbd024c4f2cb4b0a0d26413da03cc625e64e6",
+  "branch": "codex/clean-ai-gm-2026-10",
+  "changed_modules": [
+    "bot/src/state.js",
+    "bot/src/application/workflows/state-mutation-results.js"
+  ],
+  "ownership": {
+    "mutation_result_aggregation": "application",
+    "native_commit_orchestration_and_callers": "state.js application owner",
+    "framework_or_pair_imports_added": 0
+  },
+  "tests": {
+    "files": ["bot/tests/ai-gm-2026-10/rf05-f05-mutation-results.test.mjs"],
+    "launch_count": 1,
+    "exit_code": 0,
+    "passed": 3,
+    "failed": 0,
+    "duration_ms": 63.5937,
+    "log": "phases/RF05/rf05-f05-mutation-results-test.log",
+    "sha256": "9A5B7BB78FCA0C98E15E0C06EB8225392E04E7F6DEC82DC65C8C05C4EAC551C3",
+    "test_source_sha256": "06C911A358FAD7D878B672BA926406E95DCD34C906DDFC9D16068A03207EDE12"
+  },
+  "syntax": {
+    "files_checked": 3,
+    "exit_codes": [0, 0, 0],
+    "log": "phases/RF05/rf05-f05-mutation-results-syntax.log",
+    "sha256": "214CD37F0FE28710E98D9CC33FF2BE111FEB9E7CA538496C614B2E6B44933C65"
+  },
+  "architecture": {
+    "command": "node bot/tooling/architecture/check-boundaries.mjs --ratchet --phase RF05",
+    "exit_code": 1,
+    "source_modules": 572,
+    "unowned": 0,
+    "imports": 2732,
+    "internal_imports": 2555,
+    "largest_cycle": 181,
+    "active_violation_groups": 968,
+    "transition_errors": 967,
+    "changed_path_violations": [],
+    "changed_path_transition_errors": [],
+    "result": "Whole phase gate remains failed on existing transition debt; this slice has no changed-path violations or transition errors.",
+    "log": "phases/RF05/rf05-f05-mutation-results-architecture.log",
+    "sha256": "A7BE72D75370E04B7FBBB78822B7D6CBFE139CE9ED8BF0CA312546E7B3DC5DA5"
+  },
+  "transitions": {
+    "removed_ids": [],
+    "remaining_rf05_f05_entries": 442,
+    "remaining_by_code": {
+      "LEGACY_MODULE_LOCATION": 81,
+      "DIRECT_CROSS_FRAMEWORK_IMPORT": 20,
+      "IMPORTS_PRIVATE_API": 67,
+      "CYCLIC_IMPORT_EDGE": 274
+    }
+  },
+  "source_sha256": {
+    "bot/src/state.js": "78229A708DF384C960E2BCB8F13B3F92567A090D2080F86053415A30BE1140BF",
+    "bot/src/application/workflows/state-mutation-results.js": "8EE210F7F383E985CF4F1DF499789668EA6455E698F93FB0F4D6C2ED53522799"
+  },
+  "cost": {
+    "provider_calls": 0,
+    "provider_tokens": 0,
+    "provider_usd": 0,
+    "codex_usage": "UNMEASURED"
+  },
+  "release": "NOT_AUTHORIZED",
+  "rollback": "Revert only the RF05-F05 mutation-result checkpoint; preserve earlier RF05 commits, existing user edits, and RF04 diagnostic logs."
+}

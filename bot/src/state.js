@@ -36,6 +36,7 @@ import {applyOrdinaryEffects} from './ordinary-effects.js';
 import {isCharacterSourceSpan} from './source-communication.js';
 import {sourceSpanInsideQuote} from './authored-turn-envelope.js';
 import {applyPrivateSeedTurn} from './world-private-seeds.js';
+import {assertMutationSuccess} from './application/workflows/state-mutation-results.js';
 
 export function summarizeRoster(rows){
   return rows.map(r=>({
@@ -421,23 +422,6 @@ export function applyNpcCognitionDrafts(db,guildId,{memories=[],knowledge=[],goa
     }catch(err){out.goals.push({ok:false,error:String(err.message||err),draft});}
   }
   return out;
-}
-
-export function assertMutationSuccess({events=[],relationships=[],handouts=[],npcMemories=[],npcKnowledge=[],npcGoals=[]}={}){
-  const failures=[];
-  for(const [kind,rows] of [["event",events],["relationship",relationships],["handout",handouts],["npc_memory",npcMemories],["npc_knowledge",npcKnowledge],["npc_goal",npcGoals]]){
-    rows.forEach((row,index)=>{
-      // Canon conflicts are expected control-flow and remain committed for GM resolution.
-      if(row?.ok===false&&!row?.expectedConflict&&!row?.blocked) failures.push({kind,index,error:row.error||"mutation failed",row});
-    });
-  }
-  if(failures.length){
-    const err=new Error(`Authoritative state mutation rejected: ${failures.map(f=>`${f.kind}[${f.index}]: ${f.error}`).join("; ")}`);
-    err.code="STATE_MUTATION_REJECTED";
-    err.failures=failures;
-    throw err;
-  }
-  return true;
 }
 
 /**
