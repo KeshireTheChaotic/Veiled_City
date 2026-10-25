@@ -1,0 +1,12 @@
+{
+  "base_sha": "efb71c723529802b8f2215e26d6bbcf3384e7a7c",
+  "original_source_sha256": "c7e89436d26b6998e67555695c32364bb6d05192f3d3df0c0cc1aaa0c4baa041",
+  "policy_body_sha256": "3b0227459acb5d0a8f5dd1b9c866237a51bdff731834f1c1c805e0b568fcaab5",
+  "body_unchanged": true,
+  "dependencies": [
+    "cityObject",
+    "cityKey",
+    "cityAudit",
+    "requireCitySource"
+  ]
+}

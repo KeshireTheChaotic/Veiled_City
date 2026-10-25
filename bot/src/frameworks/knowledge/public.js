@@ -6,3 +6,4 @@ export * from './provenance.js';
 export * from './public-referents.js';
 export * from './relationship-state.js';
 export * from './scoped-query.js';
+export {createMemoryClusters} from './memory-clusters.js';

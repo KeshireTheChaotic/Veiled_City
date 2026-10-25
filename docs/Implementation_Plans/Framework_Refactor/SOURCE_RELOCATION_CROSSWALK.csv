@@ -104,7 +104,7 @@ old_path,new_path,owner,move_phase,action,reverse_dependents,import_obligations
 "bot/src/long-projects.js","bot/src/frameworks/world/long-projects.js","world","RF04","DECOMPOSE_BEFORE_MOVE","4","4"
 "bot/src/mechanical-boundary-v9.js","bot/src/frameworks/daggerheart/mechanical-boundary-v9.js","daggerheart","RF03","PILOT_MOVE_CANDIDATE","2","0"
 "bot/src/mechanical-native-v9.js","bot/src/frameworks/daggerheart/mechanical-native-v9.js","daggerheart","RF06","NATIVE_EXTRACTED_QUALIFIED_SOURCE_ADOPTION_DEFERRED:RF05-F03+RF05-F05+RF06-F03","1","3"
-"bot/src/memory-clusters.js","bot/src/frameworks/knowledge/memory-clusters.js","knowledge","RF04","EXTRACT_PORTS_BEFORE_MOVE","5","3"
+"bot/src/memory-clusters.js","bot/src/frameworks/knowledge/memory-clusters.js","knowledge","RF04","CLUSTER_POLICY_EXTRACTED_SOURCE_PORTS_PENDING","5","3"
 "bot/src/memory-lifecycle.js","bot/src/frameworks/knowledge/memory-lifecycle.js","knowledge","RF04","EXTRACT_PORTS_BEFORE_MOVE","3","4"
 "bot/src/message-span-ledger.js","bot/src/frameworks/intent/message-span-ledger.js","intent","RF05","PILOT_MOVE_CANDIDATE","1","0"
 "bot/src/movement-language.js","bot/src/frameworks/intent/movement-language.js","intent","RF05","EXTRACT_PORTS_BEFORE_MOVE","0","1"

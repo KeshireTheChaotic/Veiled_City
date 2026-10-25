@@ -1,0 +1,76 @@
+TAP version 13
+# Subtest: private actor cluster preserves contradictory testimony, source confidence and all original memories
+ok 1 - private actor cluster preserves contradictory testimony, source confidence and all original memories
+  ---
+  duration_ms: 175.2297
+  type: 'test'
+  ...
+# Subtest: cross-actor memories, duplicate refs, foreign campaign memories and changed actor revisions cannot consolidate
+ok 2 - cross-actor memories, duplicate refs, foreign campaign memories and changed actor revisions cannot consolidate
+  ---
+  duration_ms: 176.0358
+  type: 'test'
+  ...
+# Subtest: cluster restart and consolidate replay preserve revision and never replace source memories
+ok 3 - cluster restart and consolidate replay preserve revision and never replace source memories
+  ---
+  duration_ms: 183.8886
+  type: 'test'
+  ...
+# Subtest: revision stores source history and reversion is idempotent without deleting or globally reconciling testimony
+ok 4 - revision stores source history and reversion is idempotent without deleting or globally reconciling testimony
+  ---
+  duration_ms: 181.915
+  type: 'test'
+  ...
+# Subtest: retracted source removes current cluster context while retained history and original memories survive reopen
+ok 5 - retracted source removes current cluster context while retained history and original memories survive reopen
+  ---
+  duration_ms: 186.9218
+  type: 'test'
+  ...
+# Subtest: cluster creation audit failure rolls record and audit back without modifying source memories
+ok 6 - cluster creation audit failure rolls record and audit back without modifying source memories
+  ---
+  duration_ms: 176.8215
+  type: 'test'
+  ...
+# Subtest: faction, institutional and campaign clusters use only their separate recorded source domains
+ok 7 - faction, institutional and campaign clusters use only their separate recorded source domains
+  ---
+  duration_ms: 187.8026
+  type: 'test'
+  ...
+# Subtest: maintenance suggests source-backed consolidation with durable actor cursor and no automatic domain commitment
+ok 8 - maintenance suggests source-backed consolidation with durable actor cursor and no automatic domain commitment
+  ---
+  duration_ms: 195.8707
+  type: 'test'
+  ...
+# Subtest: maintenance recommends revert after lost source and retains prior cluster and memories until explicit handling
+ok 9 - maintenance recommends revert after lost source and retains prior cluster and memories until explicit handling
+  ---
+  duration_ms: 188.5377
+  type: 'test'
+  ...
+# Subtest: disabled consolidation reads none and proposals hold without rewriting existing memory history
+ok 10 - disabled consolidation reads none and proposals hold without rewriting existing memory history
+  ---
+  duration_ms: 179.7651
+  type: 'test'
+  ...
+# Subtest: original cluster source reaches moved policy and actual NPC retrieval consumes its private actor-only claims
+ok 11 - original cluster source reaches moved policy and actual NPC retrieval consumes its private actor-only claims
+  ---
+  duration_ms: 185.8155
+  type: 'test'
+  ...
+1..11
+# tests 11
+# suites 0
+# pass 11
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2534.1418
